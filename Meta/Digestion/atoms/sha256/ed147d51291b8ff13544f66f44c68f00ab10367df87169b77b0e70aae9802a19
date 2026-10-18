@@ -1,0 +1,50 @@
+**Theorem 305.3 (The precise tail condition on a saturated second head).**
+Let $\tau>0$ and take an entire positive nonincreasing vanishing
+sequence with
+
+$$
+a_2=1-11\tau,\quad (a_3,\ldots,a_7)=(13,10,9,8,6)\tau,
+\quad1\ge a_1\ge a_2.
+\tag{305.4}
+$$
+
+The tail is subject only to the sequence order, not initially to
+$a_8\le5\tau$. At the closed cap $5\tau$, feasibility in either
+original class is equivalent to
+
+$$
+a_1+7\tau\le1\quad\hbox{and}\quad a_8\le5\tau.
+\tag{305.5}
+$$
+
+In those feasible cases both optima are attained at $5\tau$. If
+$a_8>5\tau$, every original competitor in either class has error
+at least
+
+$$
+5\tau+\frac{a_8-5\tau}{11}>5\tau.
+\tag{305.6}
+$$
+
+**Proof.** Order gives $1-11\tau\ge13\tau$, hence
+$\tau\le1/24$. The first necessary relation of 299.1 gives
+$a_1+7\tau\le1$ at cap $5\tau$, regardless of the tail.
+The five weighted late terms in (305.2) sum to $211\tau$.
+With $j_a=a+2$, (305.2) at that cap becomes
+$a_2+11\tau+4(a_8-5\tau)\le1$, so (305.4) forces
+$a_8\le5\tau$. Conversely, under (305.5) all hypotheses of
+Theorem 300.1 hold. Its one common stopped law and counted completion
+attain $5\tau$; its old five-late lower bound proves optimality.
+At a general error $r$, (305.3) gives
+$44r\ge a_2+211\tau+4a_8-1=200\tau+4a_8$,
+which is exactly (305.6).
+
+For example, take $\tau=1/24$, $a_1=a_2=a_3=13/24$,
+$a_8=11/48$, the other late amplitudes as in (305.4), and
+$a_n=(5/24)2^{-(n-9)}$ for $n\ge9$. The closed tie
+$a_9=5/24$ is allowed. At the tested cap $5/24$ the six-late
+left-minus-right reading is $1/12$, and (305.6) gives $37/176$.
+This excludes that cap in both classes; it supplies no feasible $N$
+allocation there and therefore no separator. Attainment of the general
+larger-cap bound (305.6) is not asserted. $\square$
+

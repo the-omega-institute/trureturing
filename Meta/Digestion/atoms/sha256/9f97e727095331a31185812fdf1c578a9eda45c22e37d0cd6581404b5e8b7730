@@ -1,0 +1,4 @@
+**Corollary 49.2 (failure of every threshold dual on the specified planes).** For this $N$ and every density in (R.248), no Hermitian $Y$ satisfying $Y\otimes I_3\succeq D_\rho D_\rho^\dagger$ can have $\operatorname{Tr}Y\leq T$.
+
+**Proof.** Weak duality from Theorem 7.1 gives $p(\rho)\leq\operatorname{Tr}Y$, contradicting (R.248). This argument includes singular $Y$ and singular $\rho$; it uses no inverse of $Y$. $\square$
+

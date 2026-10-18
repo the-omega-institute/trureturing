@@ -1,0 +1,13 @@
+## 5. Weighted occupation with arbitrary long-gap leakage
+
+For an integer cap $J\ge2$, a noncap integer $1\le j<J$, a nonnegative integer
+$m$, and $s>0$, define
+
+$$
+U_m(s,j)=\sum_{k\ge1} k^m e^{-sk}w_j(k).
+$$
+
+Here $w_j$ is the actual capped kernel of Lemma 4.1 at a noncap level, where it equals
+$\mathsf P(T_j\le k<T_{j+1})$. The saturated kernel $w_J$ is excluded from this
+definition and from the occupation bounds below.
+

@@ -1,0 +1,10 @@
+## 12. The common-realization gate
+
+The joint Gram construction in Section 10 has a source-level prerequisite
+that is easy to lose under conditioning. A jointly realized path family
+consists of one source set $S$, one state map $z:S\to\mathcal V$, and one
+legal continuation/readout contract such that every path response factors
+through that same $z$. If a path uses a separately chosen state map after
+conditioning on a complement $\eta$, a joint lift to one $z$ must be supplied
+before its Gram operator can be added to the other paths.
+

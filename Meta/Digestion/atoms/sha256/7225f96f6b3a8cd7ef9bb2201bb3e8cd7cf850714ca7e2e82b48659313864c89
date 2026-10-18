@@ -1,0 +1,88 @@
+**Theorem 4.2 (finite exact all-path admissibility).** Suppose structural
+saturation has no clash. There is an effectively constructed Presburger
+guard $A(p,q)$, conjoined with the original finite-atom and natural-collapse
+guards, such that the following are equivalent at each $(p,q)$:
+
+1. the branch has an admissible code valuation on every declared slot;
+2. the selected unfolding $C_s^*:=\sigma^{\delta_s}V_{v(s)}^*$ is admissible
+   on every slot and satisfies every branch record;
+3. $A(p,q)$ holds.
+
+A branch with a negative-weight constructor cycle from which a terminal is
+reachable is discarded. For every other branch, let $d(v,t)$ be the minimum
+weight of a directed path from $v$ to terminal state $t$, when reachable,
+including a path of length zero. Apart from (NAC.13) and the initial guards,
+$A$ consists exactly of
+
+$$
+\ell_t(p,q)+\delta_s+d(v(s),t)\ge0
+\quad\text{for every }s\in S\text{ and reachable terminal }t.
+\tag{NAC.16}
+$$
+
+**Proof.** Any solution of the branch has the forest relations (NAC.11).
+Saturation has reconciled every parallel pair descriptor by both child
+equations. Thus choosing one descriptor gives (NAC.15) without forgetting
+another definition. A discarded relative-potential discrepancy has a
+leafless component; all corresponding shifted values are $O$, so the
+reconciliation still holds there. Leaf descriptors agree precisely when
+(NAC.13) holds.
+
+Following any directed path $\pi$ to terminal $t$ in any solution forces
+an actual code leaf with label
+
+$$
+\ell_t(p,q)+\delta_s+\operatorname{wt}(\pi)
+\tag{NAC.17}
+$$
+
+when the starting slot is $s$. This statement is proved by induction on
+the path length using (NAC.15), and does not depend on free-state values.
+Every graph state contains a representative slot, so every negative cycle
+is reachable from a slot. If it can reach a terminal, traverse it $N$ times
+before taking a path to that terminal. Its negative weight makes (NAC.17)
+negative for sufficiently large $N$, at every fixed finite $(p,q)$. No
+admissible solution exists in this case.
+
+Otherwise, in the subgraph from which a terminal is reachable, there are
+no negative cycles. For fixed endpoints, removing cycles never increases
+the weight of a path. The minimum is therefore attained by a path with
+no repeated vertex, or the empty path. This supplies an entirely finite
+way to compute every $d(v,t)$: enumerate those finitely many simple paths.
+The same finite cycle enumeration decides the preceding negative-cycle test.
+No shortest-path termination hypothesis is being assumed.
+
+Every path weight is at least its computed minimum, so nonnegativity of
+all forced labels (NAC.17) is equivalent to the finite list (NAC.16).
+It is necessary in every admissible valuation. The initial affine guards
+and (NAC.13) are also necessary.
+
+For sufficiency take the selected unfolding. Assigning free states $O$
+introduces no leaf. Its remaining leaves are exactly the finite paths to
+the retained terminals. Equations (NAC.16)--(NAC.17) make every such leaf
+nonnegative in every original slot, not only at the common output. All
+shift relations follow from the forest, with marks handling inconsistent
+cycles; all pair records follow from the reconciled descriptors; all
+leaves follow from (NAC.13). Marked pair records have both children $O$.
+Hence every branch record holds and every slot is admissible.
+
+The guard is a finite conjunction of affine integer equalities and
+inequalities in natural parameters. This is Presburger. Components with
+negative cycles having no path to a terminal impose no leaf-label
+inequality; their selected unfolding is permitted. They are not rejected
+by a finite-tree occurs check. The argument proves all three equivalences.
+
+The distinctions can also be seen directly on native equations. For
+$\rho X=\langle X,\alpha\rangle$, the collapse branch has $q=0$ and
+$X=[1]$, retaining the actual finite witness $X=\beta$ of
+[NIC, Proposition 3.4][NIC]. The raw branch instead gives
+$X=F(\sigma^{-1}X,[-1])$ and fails admissibility. For
+$\rho X=\langle\alpha,X\rangle$, the collapse branch would require
+$0=q+1$ with $q\ge0$; the raw branch gives
+$X=F([-1],\sigma^{-1}X)$. Both fail. For
+$\rho X=\langle X,X\rangle$, the raw branch is
+$X=F(\sigma^{-1}X,\sigma^{-1}X)$: its negative cycles have no terminal,
+and its selected value is $O$, expanding to the valid $\Omega$.
+These evaluations use the all-path guard just proved, rather than a
+free-unary occurs check. $\square$
+

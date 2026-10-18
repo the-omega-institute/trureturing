@@ -1,0 +1,81 @@
+**定理 446.3（同一宏观轮廓的绝对对数矩）。** 将（CM.1）的 \(g\)
+在非正半轴补成零，则 \(g\) 是连续分布函数，在 \(u>0\) 上有严格
+正密度 \(g'(u)\)，且
+
+\[
+\int_0^\infty g'(u)\,du=1,\qquad
+\int_0^\infty g'(u)|\log u|\,du<\infty.
+\tag{CM.10}
+\]
+
+其对数矩精确给出
+
+\[
+\boxed{
+d_*=1-\gamma_E-\int_0^\infty g'(u)\log u\,du,
+\qquad
+d_*-\log t_*=1+B_*-\int_0^\infty g'(u)\log u\,du.
+}
+\tag{CM.11}
+\]
+
+**证明：密度与两个边界。** 经典 Dirichlet 级数在任意正 \(u\)
+紧区间上可逐项求导。若其下端为 \(a>0\)，导数级数绝对值由
+\(\sum_{n\ge2}(\log n)n^{-1-a}<\infty\) 一致支配；该级数的收敛由
+整数尾积分支付。因此
+
+\[
+g'(u)=\frac{\sum_{n\ge2}(\log n)n^{-1-u}}{\zeta(1+u)^2}>0.
+\]
+
+又 \(0<g(u)=u/Q(u)\le u\)，故 \(g(0+)=0\)；（CM.1）后的指数尾界
+给 \(g(\infty)=1\)。这支付连续分布函数的两个端点。基本微积分给
+\(\int_\varepsilon^R g'=g(R)-g(\varepsilon)\)，令
+\(\varepsilon\downarrow0\)、\(R\to\infty\)，由非负性得到总密度为一。
+
+对 \(0<\varepsilon<1<R\)，分别积分分部，得到
+
+\[
+\begin{aligned}
+\int_\varepsilon^1(-\log u)g'(u)\,du
+&=g(\varepsilon)\log\varepsilon
++\int_\varepsilon^1\frac{g(u)}u\,du,\\
+\int_1^R(\log u)g'(u)\,du
+&=[g(R)-1]\log R
++\int_1^R\frac{1-g(u)}u\,du.
+\end{aligned}
+\tag{CM.12}
+\]
+
+两个边界项分别满足
+\(|g(\varepsilon)\log\varepsilon|\le\varepsilon|\log\varepsilon|\to0\)
+和 \(|[g(R)-1]\log R|\le(3/2)2^{-R}\log R\to0\)。两份右侧积分
+均已由（CM.1）的近端和远端主导支付。非负被积函数的极限于是给
+
+\[
+\int_0^1(-\log u)g'(u)\,du=\int_0^1\frac{du}{Q(u)},\qquad
+\int_1^\infty(\log u)g'(u)\,du
+=\int_1^\infty\frac{1-g(u)}u\,du.
+\]
+
+这同时证明（CM.10）的绝对对数可积性。相减并代入原 \(d_*\) 定义，
+得到（CM.11）的第一式；再用原 \(\log t_*=-\gamma_E-B_*\)，得到
+第二式。证毕。
+
+（CM.11）把（CM.5）的常数级系数写成
+\(Ct_*^2[1+B_*-\int_0^\infty g'(u)\log u\,du]\)。§441 的宏观交点
+由 \(C/Q(u)\) 控制；本节的下一常数由同一轮廓
+\(g(u)=u/Q(u)\) 的完整对数矩控制。点态交点与全域矩是这份实际
+前缀轮廓的两种不同读出，原 \(J_z\) 和时钟始终相同。
+
+本节结论属于（PX.2）的完整首补偿积分及其阻尼零点。完整 Robin
+配对在更新粗糙前缀和所有整数纤维后仍需共同的有符号估计；上述
+对数矩表示没有支付该估计。
+
+**来源。** 实轴绝对收敛 Euler 乘积、经典 ζ Dirichlet 级数及其局部
+一致逐项微分、指数积分模型、支配收敛和积分分部为经典供应；ζ 级数
+参见 [NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1)。Mertens
+归一化、移动近段和 Euler 尾预算均沿用 §445。完整损失的常数级一致
+匹配、实际阻尼零点的常数级残量，以及同一宏观轮廓的对数矩表示为
+本仓推导（repo-derived）。
+

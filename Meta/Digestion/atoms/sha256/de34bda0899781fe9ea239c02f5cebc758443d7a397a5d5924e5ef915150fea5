@@ -1,0 +1,121 @@
+**Theorem 25.4 (Topological and equivariant realization of the same count).**
+Normalize $h=c_1(\mathcal O(1))$ by $\int_Xh^4=1$.
+The symbol class of Theorem 25.3 is the Dolbeault symbol twisted by
+$[\mathcal O(m)]-[\mathcal O(m-2)]$. Its index integral is
+
+$$
+\begin{aligned}
+\operatorname{ind}D^+
+&=\int_{\mathbb {CP}^{4}}
+(e^{mh}-e^{(m-2)h})\left(\frac h{1-e^{-h}}\right)^5\\
+&=\frac{m^3}{3}+\frac{3m^2}{2}+\frac{13m}{6}+1=N_m.
+\end{aligned}
+\tag{25.6}
+$$
+
+For the compact torus $T=(S^1)^3$, use the polynomial representation
+convention in which $z_0,z_1,z_2,z_3,z_{13}$ have characters
+$1,a,c,b,ab$. The bundle linearizations are chosen so that these are the
+characters of $H^0(\mathcal O(1))$; this specifies the convention even if
+a contragredient convention for geometric point coordinates is used.
+Then the equivariant complex is
+
+$$
+\mathcal O(m-2)\otimes\mathbb C_{ab}
+\xrightarrow{f}\mathcal O(m),
+\tag{25.7}
+$$
+
+not the untwisted source with its original linearization. With invariant
+metrics, its harmonic representation has graded character
+
+$$
+\sum_{m\ge0}\operatorname{ch}_T\ker D_m^+\,t^m
+=\frac{1-abt^2}
+{(1-t)(1-at)(1-bt)(1-ct)(1-abt)}.
+\tag{25.8}
+$$
+
+Each legal occupancy character $a^Ub^Vc^W$ occurs once in degree $m$.
+
+Proof. The Euler sequence for projective space gives
+$\operatorname{Td}(TX)=(h/(1-e^{-h}))^5$ in cohomology.
+Its required truncation is
+
+$$
+1+\frac52h+\frac{35}{12}h^2+\frac{25}{12}h^3+h^4.
+$$
+
+The classical Dolbeault index formula (Atiyah–Singer, with the complex
+Riemann–Roch specialization described in Freed §§2.2, 3.1 and 4) is the
+intermediate input in
+(25.6). For direct coefficient evaluation, the $h^4$ coefficient of
+$e^{dh}\operatorname{Td}(TX)$ is
+
+$$
+\frac{d^4}{24}+\frac{5d^3}{12}
++\frac{35d^2}{24}+\frac{25d}{12}+1
+=\frac{(d+1)(d+2)(d+3)(d+4)}{24}.
+$$
+
+Subtract its values at $d=m$ and $m-2$ to obtain (25.6).
+This polynomial calculation is compatible with the vanishing cases
+$m=0,1$, rather than interpreting a negative polynomial degree as a
+nonexistent negative replica space. The small values are
+
+| $m$ | Candidate monomials $\dim\mathcal P_m$ | Relation-source monomials $\dim\mathcal P_{m-2}$ | $N_m$ |
+| ---: | ---: | ---: | ---: |
+| 0 | 1 | 0 | 1 |
+| 1 | 5 | 0 | 5 |
+| 2 | 15 | 1 | 14 |
+| 3 | 35 | 5 | 30 |
+| 4 | 70 | 15 | 55 |
+| 5 | 126 | 35 | 91 |
+
+Both terms in $f$ have character $ab$, which proves equivariance with
+exactly the twist (25.7). Average any Hermitian metrics over the compact
+torus. The differential and its adjoint then intertwine the action;
+harmonic representatives, the quotient map, and the finite Bargmann
+orthogonal realization are equivariant. Injectivity of multiplication
+gives the character difference and hence the product series (25.8).
+
+For the multiplicity statement, put $R=m-W$. The monomials in the target
+sector have exponent vectors
+
+$$
+\nu(k)=(R-U-V+k,U-k,W,V-k,k),
+\quad \max(0,U+V-R)\le k\le\min(U,V).
+\tag{25.9}
+$$
+
+If the interval has $D$ integer points, the relation source in (25.7)
+has ordinary sector $(m-2,U-1,V-1,W)$. Its interval has $D-1$ points:
+its lower bound is the same as in (25.9) and its upper bound is smaller
+by one. If $D=1$ this source is empty, including the low-degree cases.
+The difference of multiplicities is one. This is the sector calculation
+of Toric §§23.5–23.7, now matched to the equivariant elliptic complex.
+
+The legal sectors are precisely the lattice points of
+
+$$
+mP,\qquad
+P=\{(x,y,z):0\le z\le1,\ 0\le x,y\le1-z\}.
+$$
+
+At each integer $W$, $U,V$ range independently from zero to $m-W$.
+Thus their number is $\sum_{W=0}^m(m-W+1)^2=N_m$.
+At the apex four facets meet in dimension three, so this pyramid is
+nonsimple. No smooth Delzant conclusion is inferred from it.
+The original $D$-dimensional sector remains a whole weight space under
+torus averaging: an invariant density operator can retain all
+within-sector coherence. The positive operator $H_m$ selects only its
+one zero direction. Averaging and zero-energy selection are different
+operations. $\square$
+
+The toric Euler–Maclaurin literature, for example Cappell–Maxim–Schürmann–
+Shaneson, [*Equivariant toric geometry and Euler-Maclaurin formulae — an
+overview*][EM25], supplies general equivariant counting context.
+The proof above uses the explicitly twisted polynomial sequence and
+smooth ambient index; it does not apply a smooth toric formula directly
+to the singular apex.
+

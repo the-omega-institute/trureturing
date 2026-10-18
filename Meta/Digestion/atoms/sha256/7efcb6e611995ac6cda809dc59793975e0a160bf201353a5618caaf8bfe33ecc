@@ -1,0 +1,69 @@
+**Theorem 5.1 (explicit native shortest separators and exact peak).**
+For two histories in the same attained entry with different lags put
+
+$$
+d(h,h')=\begin{cases}
+\displaystyle D+\min_{j\in J:\ n_j(h)\ne n_j(h')}
+             \left\lfloor\frac{\min(n_j(h),n_j(h'))}{2}\right\rfloor,
+ &\text{if this slot set is nonempty},\\
+\infty,&\text{otherwise}.
+\end{cases}
+\tag{LQF.13}
+$$
+
+This is exactly the shortest length of a literal whole-tree word whose
+two replies differ. With the maximum over no different-lag pairs
+defined to be zero, the optimal worst peak is
+
+$$
+M_\eta=\max_{h,h'\in\mathscr H_\eta:\ \tau(h)\ne\tau(h')}d(h,h').
+\tag{LQF.14}
+$$
+
+An infinite value means local impossibility. Every finite value is
+attained by a real finite controller. Thus (LQF.14) is also the minimum
+third coordinate of Theorem 4.2's nonempty frontier.
+
+Proof. For atomic ages $n<m$, put $s=\lfloor n/2\rfloor$.
+The actual word $R^s$ separates them: its reply at $n$ is alpha or
+beta and at $m$ is a different constructor. If $|v|<s$, then
+$n\ge2|v|+2$. Since $w(v)\le2|v|$, (LQF.5) says that both
+ages reply branch, including the empty word when this inequality
+applies. Hence the shortest atomic separator has exactly length $s$.
+For $n=0$ or $1$ the root itself separates the pair and the same
+formula gives zero. This is a full-reply argument; presence agreement
+alone would not suffice.
+
+In a complete entry, words above the slots and words in displayed
+slots cannot distinguish the histories. A hidden slot with equal
+exponents cannot distinguish them either. At any differing hidden
+slot the atomic argument, with the mandatory $D$-letter prefix,
+gives exactly the term in (LQF.13). Minimizing over these possibilities
+proves that formula. A minimizing word is a literal $w_jR^s$.
+
+Take any correct controller and a different-lag pair. Until their
+first unequal reply, determinism gives the same queries and decisions.
+They cannot terminate with a common output, so such a reply must occur
+on their finite runs. Its word has length at least $d(h,h')$.
+The controller's worst peak is consequently at least (LQF.14).
+
+If the maximum is finite, choose a shortest separator for every
+different-lag pair and query their finite union in a fixed order.
+Histories sharing the resulting transcript cannot have different lags,
+since their chosen separator would have different replies. Output
+the common lag, stopping earlier if already determined. Every submitted
+word has length at most (LQF.14), proving attainment. If there are no
+such pairs, halt without reading. If a pair has no separator, Theorem
+3.2 proves impossibility. Finally Theorem 3.2 normalizes the attaining
+strategy and Theorem 4.2 includes a dominating frontier vector; the
+peak lower bound forces that vector's peak to equal (LQF.14).
+$\square$
+
+The sufficiency argument is the ordinary finite pair-separation method,
+now with the proved native distance (LQF.13). For the peak coordinate
+alone, adaptivity does not improve on a suitable finite nonadaptive
+list. Such a list may spend many more calls or letters in total.
+Different pairs can require different words; their shortest separators
+are not one simultaneous query. The three-coordinate frontier, rather
+than this maximum alone, decides joint call and total-length budgets.
+

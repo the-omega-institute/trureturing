@@ -1,0 +1,49 @@
+### 87.2. Comparison geometry and spectral expansion
+
+We use the following proved section-86 facts, with their full original-channel scope. On
+X=St(C⁸,C⁴⊗Cᵈ)×U(8), d≥4, the comparison function F is at least 1/4. Near (3) it has a smooth minimum manifold M with Hessian kernel exactly TM and positive definite normal Hessian. Its points are calibrated, balanced frames with
+
+\[
+ C_f=S+\tfrac12WN_f,\quad \sum_fN_f=0,\quad
+ S^*S=(\tfrac12-h/8)I_2,\quad W^*W=(h/2)I_2,\quad
+ S^*W=i\beta I_2.                                       \tag{10}
+\]
+
+Here h is near 1/2 and β near zero. The global fixed-A_m witness bound holds on this whole manifold, including its complex cross-bit marker overlaps. To verify it directly, put T_i=√2(S+(−1)^iW/2). Equations (10) give
+
+\[
+ T_i^*T_i=2\{S^*S+W^*W/4+(-1)^i(S^*W+W^*S)/2\}=I_2.
+\]
+
+Moreover a_fi=T_i conjugate(b_fi). Balance gives Σ_f|b_fi〉〈b_fi|=2I₂ separately for both fixed bits. Thus, writing H_i^m for this fixed-bit qubit Gram, one has H_i^m≤2I₄ and the corresponding A_m Gram is (H_i^m)ᵀ. Let H_i be the correct-output bit-i Gram of any original B, including arbitrary rank and output leakage. It is positive semidefinite and Tr H_i≤4. The fixed rank-two projection P₀=(J₄/4)⊗I₂ in bit coordinates sees only these same-bit sectors, so
+
+\[
+ \operatorname{Tr}(P_0K)=\tfrac14\sum_i\operatorname{Tr}(H_i^mH_i)
+       \le\tfrac12\sum_i\operatorname{Tr}H_i\le4,
+ \qquad \operatorname{Tr}(P_0T)=5.
+\]
+
+Ky Fan's variational inequality therefore gives F(A_m,B)≥Tr(P₀(T−K))/4≥1/4 for every original B. In particular every physical new-environment derivative at m is nonnegative. This argument does not require the cross-bit marker overlap to be real or equal to 3/4: the imaginary term S^*W=iβI₂ cancels in T_i^*T_i. Locally the section-86 normal Hessian result also gives F_old≥1/4+c dist(x,M)². These statements include the full plus/minus cross coupling and wrong-output blocks.
+
+At the base the top two eigenvalues of T−K are 1/2,1/2. All others are at most zero, including on the disphenoid boundary. In plus/minus coordinates the top projection and reduced resolvent are
+
+\[
+ P=\operatorname{diag}(ss^*,ss^*),\quad s=\tfrac12(1,1,1,1)^T,
+ \qquad
+ \mathcal R=\operatorname{diag}\left(
+ \sum_a{2P_a\over1+u_a},\ \sum_a{2P_a\over7u_a-1}\right),
+ \quad P_a={\chi_a\chi_a^T\over4}.                       \tag{11}
+\]
+
+The gap is at least 1/2 uniformly. For K=K₀+sK₁+s²K₂+o(s²), spectral perturbation of the isolated cluster gives
+
+\[
+ F={1\over4}-{s\over4}\operatorname{Tr}(PK_1)
+   +{s^2\over4}\operatorname{Tr}(-PK_2+PK_1\mathcal R K_1P)
+   +o(s^2).                                             \tag{12}
+\]
+
+This formula keeps all cross blocks. Since dF_old=0 and the flat noise derivative is zero, no second old comparison derivative contributes to q.
+
+The old calibrated tangent is described by C_f and N_f. Its dimension is 4(12+2)=56. There are a further eight independent bit-frame phase coordinates in B; changing A correspondingly leaves C,N unchanged. They lie in TM. Every mixed noise source vanishes on TM: the physical noise derivative is a nonnegative smooth function on M and is zero at the base for the flat R. Thus its differential there is zero. The eight phases are retained as zero directions, not removed by a change of the fixed target bit basis.
+

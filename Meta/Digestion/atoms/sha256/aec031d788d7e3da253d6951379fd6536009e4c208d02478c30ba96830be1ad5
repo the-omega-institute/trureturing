@@ -1,0 +1,51 @@
+**推论 47.4（两项必要精度与一个联合充分条件）。** 对每个 $N\ge3$ 和
+$0<D=\delta+25(2\eta-\eta^2)\le1$，有
+
+$$
+\max\{5\sqrt\delta,25\sqrt{\eta/2}\}
+\le R_\infty^{\rm cmd}(\delta,\eta)
+\le R_N^{\rm cmd}(\delta,\eta)
+\le\sqrt{\delta^2+D^2+(5D+\sqrt{50D})^2}
+<14\sqrt D.
+\tag{47.21}
+$$
+
+因此，$\varepsilon>0$ 时任何允许的控制器若保证全部来源及联合历史的
+INITIAL误差不超过 $\varepsilon$，必要有
+
+$$
+\delta\le\varepsilon^2/25,\qquad
+\eta\le2\varepsilon^2/625.
+\tag{47.22}
+$$
+
+反过来，$N\ge3$ 且
+
+$$
+0<\delta+25(2\eta-\eta^2)\le\min\{1,\varepsilon^2/196\}
+\tag{47.23}
+$$
+
+是三更新四Read取得误差严格小于 $\varepsilon$ 的充分条件。两者不合并成尖锐阈值。
+对满足上述正有效容差域的函数 $\delta(\varepsilon),\eta(\varepsilon)$ 和
+$N(\varepsilon)\ge3$，当 $\varepsilon\downarrow0$，还有阶意义下的关系
+
+$$
+R_{N(\varepsilon)}^{\rm cmd}
+ (\delta(\varepsilon),\eta(\varepsilon))=O(\varepsilon)
+\quad\Longleftrightarrow\quad
+\delta(\varepsilon)=O(\varepsilon^2),\quad
+\eta(\varepsilon)=O(\varepsilon^2).
+\tag{47.24}
+$$
+
+证明。定义47.1允许全部增益取1。把公共区间证书确定性插入原记录，任一新合同
+控制器在这个子合同上仍是§46允许的因果控制器；因此定理46.2的Read阻塞仍适用。
+$\delta=0$ 时该项只是零。定义47.1也允许全部读误差取零，故定理47.2给第二项；
+$\eta=0$ 时该项只是零。控制器类包含关系及定理47.3给余下上界。
+平方下界即得（47.22）；（47.23）代入已构造程序的严格上界即得充分性，未假设
+下确界达到。最后 $\eta\le\zeta\le2\eta$，所以
+$\delta+25\eta\le D\le\delta+50\eta$。下界逐坐标给必要的二次阶，上界给联合
+充分的二次阶，证明（47.24）。固定任一正 $\eta$ 时精确Read也留下正风险下限，
+任意增加原菜单更新、保存或Read次数都不能消去它。证毕。
+

@@ -1,0 +1,20 @@
+**定义 38.1（两个指定操作的共同观察格）。** 沿用 [原卷 §35.10 与定义 36.1](SYMPLECTIC_PREDICTIVE_COMPLETION.md#3510-原生守卫固定仿射分支与反辛符号) 的组成坐标 $C=(U,V)^{\mathsf T}$。实际未拒绝组成属于 $\mathbb N_0^2$；本章在整数差量所在的 $\mathbb Z^2$ 上研究关系，并另供带标准内积的实平面来比较几何。指定
+
+$$
+\mathsf R=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+其中 $\mathsf R(U,V)=(-V,U)$ 是所选实平面的四分之一周旋转；$M(U,V)=(V,U+V)$ 是 Fibonacci 组成的一指标递推。$\mathsf R$ 是额外的几何比较操作，不被定义为原生输入；特别是它不保持全部非负组成。实际一个空窗口仍使用 $S=M^3$，并重置接缝，不能把 $M$ 的一指标步当成一个实际窗口。
+
+满秩整数子格是由两个实线性无关整数向量生成的子群 $\Lambda\subseteq\mathbb Z^2$。它的指数 $[\mathbb Z^2:\Lambda]$ 有限。定义
+
+$$
+C\sim_\Lambda C'\quad\Longleftrightarrow\quad C-C'\in\Lambda,
+\qquad
+\pi_\Lambda(C)=[C]\in\mathbb Z^2/\Lambda.
+$$
+
+这是保留整数剩余类的观察关系。称 $\Lambda$ 为 $\mathsf R,M$ 的共同观察格，若两者都能在同一个商上给出由 $[C]\mapsto[AC]$ 定义的操作。关系可以限制到实际非负组成，但本章的格分类以整个整数差量群为域；它本身不宣称所有商类都由某个固定原生初始化取得。
+

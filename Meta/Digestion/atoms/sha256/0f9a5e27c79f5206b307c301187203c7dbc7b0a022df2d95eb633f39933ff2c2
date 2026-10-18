@@ -1,0 +1,21 @@
+**Proposition 2.2 (soundness for the full native family).** If
+$V_{\mathrm{SR}}$ accepts, every complete arbitrary-donor native template of
+length $n$ has $\mu$-mass at most $C^n$.
+
+**Proof.** Expand the product $\prod_i\mu(x_i)$ by the component index at
+each coordinate. For a fixed index tuple, restrict the same native relation to
+$\prod_iS_{\ell_i}$. Theorem 1.2 bounds its mass by
+$\prod_iR_{S_{\ell_i}}(w_{\ell_i})$. Summing the index tuples gives
+$(\sum_\ell R_{S_\ell}(w_\ell))^n\le C^n$. The summation indices are an
+analytical expansion, not a component label supplied to the reader and not a
+new Read. Whole-block weights remain whole-block weights. $\square$
+
+An accepted cap therefore gives the usual original-task consequence from
+[NPC, Theorem 7.1] and [FMR, §6]:
+$M_1(D)\ge\lceil C^{-2^{D-d}}\rceil$ for $D\ge d$ and
+$\lambda\ge-2^{-d}\log_2C$, with the original perfect scaffold and paid literal
+acquisition. This is a lower witness, not an upper cover implementation.
+No separate code construction is claimed here; whenever a canonical fiber is
+realized, the cited [FMR] implementation charges its full original-root scan
+and exports only the complete first-membership name.
+

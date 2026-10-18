@@ -1,0 +1,20 @@
+**Proposition 4.1 (All lengths and actual no reset).** At the exact candidate, every nonempty legal word matrix has rank two, and no legal block makes its visible past and future conditionally independent.
+
+Proof. Put $G=[B;C_0]$, $Q_{\rm mat}=[I,0]$, $U=[I;0]$ and $V=[0,I]$. Then $M_0=GQ_{\rm mat}$, $M_1=UDV$, $Q_{\rm mat}G=B$, $VG=C_0$, $Q_{\rm mat}U=I$, and
+
+$$
+\det B=bs(a-p)>0,\quad\det C_0=-s,\quad\det D=pq>0,\quad\det R=-pqs\ne0.
+$$
+
+After a zero, completed atoms $0,10$ transfer by $B,R$. A word beginning with zero has form $GTQ_{\rm mat}$ or $GTDV$, where $T$ is a product of these invertible atoms. A longer word beginning with one has prefix $UR$ and the same continuation; the singleton one is $UDV$. Full-rank outside injections/projections and invertible middle factors give rank two at every length. The empty word retains rank four.
+
+To prove a law-level statement, set $m=p(1+q)$ and compute $lB=(b-ms,ms)/Z$. The matrices
+
+$$
+E=\begin{pmatrix}l\\lB\end{pmatrix},\qquad O=[\mathbf1,B\mathbf1],\qquad
+\det E=\frac{m(b+p)s-bp}{Z^2}<0,\quad\det O=b-a=p-q<0
+\tag{4.2}
+$$
+
+are invertible: $p<q$, and $(1+q)(b+p)s<b$ on the auxiliary range. For each legal $w$, $M_{0w0}=GT_wQ_{\rm mat}$ with invertible $T_w=Q_{\rm mat}M_wG$. Since $\lambda G=l$, the actual table $H_{ij}=P_t([0^{i+1}w0^{j+1}])$, $i,j\in\{0,1\}$, is $ET_wO$. Its determinant is nonzero. Past/future conditional independence given $w$ would factor this very table into a column times a row, contradicting its determinant. $\square$
+

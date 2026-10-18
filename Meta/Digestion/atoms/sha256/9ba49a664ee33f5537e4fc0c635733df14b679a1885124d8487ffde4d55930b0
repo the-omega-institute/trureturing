@@ -1,0 +1,81 @@
+**Theorem 3.1 (Same-law $L^2$ bounds without first-order balance).** Assume (1.5)–(1.6). Define the
+constants $\mathsf B_L$ and $K_L$ and the variables
+
+$$
+\begin{aligned}
+\mathsf B_L&=L+2(1+2^{L/2})A_P,& K_L&=L/2+2A_P,\\
+V_C^{\rm abs}&=\sum_i|\ell_i(X)-\ell_i(Z_CX)|,&
+u_{C,i}&=\ell_i-\mathbb E_P[\ell_i\mid\mathcal H_C].
+\end{aligned}
+\tag{3.1}
+$$
+
+The different typography distinguishes the constant $\mathsf B_L$ from the legal word set $B_L$. Then
+
+$$
+\|V_C^{\rm abs}\|_2\le\mathsf B_L,\quad \|D_C\|_2\le\mathsf B_L,
+\quad \left\|\sum_i|u_{C,i}|\right\|_2\le K_L,\qquad
+a_C(X_C;Y)=\sum_i u_{C,i}
+\quad\text{in }L^2(P)\text{ and almost surely}.
+\tag{3.2}
+$$
+
+Both series are absolutely convergent almost surely. In particular the normalized score $a_C$ is a series
+of centered original losses.
+
+Proof. Translate to $C=[1,L]$. For an exterior site let $e$ be its defect in (2.4). Domination and
+invariance of $b_i^C$ under replacement give
+
+$$
+\|q_i-b_i^C\|_2=\sqrt e,\qquad
+\|q_i\circ Z_C-b_i^C\|_2^2
+=\int(q_i-b_i^C)^2\,d((Z_C)_*P)\le2^Le.
+\tag{3.3}
+$$
+
+For $x\in\{0,1\}$ and $s,t\in[0,1]$, $|(x-s)^2-(x-t)^2|\le2|s-t|$. Exterior bits are unchanged, so (3.3)
+and the triangle inequality imply
+
+$$
+\|\ell_i-\ell_i\circ Z_C\|_2\le2(1+2^{L/2})\sqrt e.
+\tag{3.4}
+$$
+
+Each interior absolute difference is at most one. Minkowski therefore bounds every finite sum of absolute
+differences by $\mathsf B_L$ in $L^2$. Exhaust the sites increasingly; monotone convergence applied to
+the squares gives $\mathbb E_P(V_C^{\rm abs})^2\le\mathsf B_L^2$, hence finiteness almost surely. Since
+$|D_C|\le V_C^{\rm abs}$, its bound follows. This strengthens the supplier's $L^1$ conclusion using its
+bounded density and actual $L^2$ defects; $L^1$ alone would not supply the second moment.
+
+For the sharper estimate, denote conditional projection onto $\mathcal H_C$ by $\Pi_C$. At an exterior
+site, $g_i=(X_i-b_i^C)^2$ is $\mathcal H_C$-measurable. Orthogonal projection and the same loss
+inequality give
+
+$$
+\|u_{C,i}\|_2=\|(I-\Pi_C)(\ell_i-g_i)\|_2
+\le\|\ell_i-g_i\|_2\le2\sqrt e.
+\tag{3.5}
+$$
+
+At an interior site, $0\le\ell_i\le1$. If $z=\Pi_C\ell_i$, its conditional variance is at most
+$z-z^2\le1/4$, so $\|u_{C,i}\|_2\le1/2$. Minkowski and monotone convergence now bound the absolute sum by
+$K_L$.
+
+For completeness, let $F_n$ exhaust $\mathbb Z$ by finite sets and put
+$D_{C,n}=\sum_{i\in F_n}(\ell_i-\ell_i\circ Z_C)$. The square-integrable majorant just proved gives
+$D_{C,n}\to D_C$ in $L^2$. Conditional projection is continuous in $L^2$, and each $\ell_i\circ Z_C$ is
+$\mathcal H_C$-measurable. Thus
+
+$$
+D_C-\Pi_CD_C
+=\lim_n(D_{C,n}-\Pi_CD_{C,n})
+=\lim_n\sum_{i\in F_n}u_{C,i}=\sum_i u_{C,i}.
+\tag{3.6}
+$$
+
+The last series also converges almost surely and in $L^2$ by its absolute majorant. Disintegration
+identifies $\Pi_CD_C=m_C(Y)$ and $D_C=d_C(X_C;Y)$, proving (3.2). Only differences and centered losses
+were summed; no infinite raw total loss was subtracted from another. The centered estimate itself uses
+stationarity and (1.6); the band and supplied cocycle supply its identification at legal completions.
+$\square$
+

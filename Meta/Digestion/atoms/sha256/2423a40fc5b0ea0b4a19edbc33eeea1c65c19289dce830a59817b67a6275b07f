@@ -1,0 +1,22 @@
+**Theorem 5.2 (retained-context phase ratio and lifetime distinction).** Under Assumption 5.1, fix a reached context $C$ with $k\ge1$ holes. Compare common deterministic exact policies from that same new entry on all sources in its complete fiber. Their strict optimal phase ratios for distinct addresses and actual calls, relative to the minimum new determining evidence, are both two. The evidence benchmark is $M=\sum_i m(U_i)$; the common hole traversal uses exactly $2M-k$ phase addresses and calls.
+
+Let $m_{\rm out}(C)$ be the number of concrete labelled leaves retained outside the holes. For this specified producer followed by this specified reacquisition traversal,
+
+$$
+\begin{aligned}
+n_0(T)&=d_0(T)=2\bigl(m_{\rm out}(C)+M\bigr)-1,\\
+n_1(T)&=d_1(T)=2M-k,\\
+n_{\rm lifetime}(T)&=n_0(T)+n_1(T),\\
+|Q_0\cup Q_1|-|Q_0|&=0.
+\end{aligned}
+\tag{NDR.10}
+$$
+
+Here $Q_j$ is the set of addresses actually requested in phase $j$. The lifetime-distinct expression is not the phase price $d_1$.
+
+**Proof.** This is the `repo-derived` retained-context application of the native discovery bound. The actual producer and complete cut give the full independent completion domain (NDR.9) and exactly the common initial information in Assumption 1.3. Thus the certificate application in Definition 2.1 and Theorems 3.1 and 4.1 apply to the new task entry. Their phase lower bounds hold against arbitrary deep requests and repeats, not just against the traversal. The retained $C$ is not treated as a hidden shape oracle for any $U_i$.
+
+The producer reads every original node once; the hidden subtrees and fixed outside leaves give $m(T)=m_{\rm out}(C)+M$. The hole traversal reads only original actual nodes in the union of the $k$ hole cones, each once. The supplied counts yield the first two lines of (NDR.10). Every phase-one call is a genuinely new call after entry, so calls add. But $Q_0=\operatorname{Pos}(T)$ and $Q_1\subseteq\operatorname{Pos}(T)$, so there are zero new lifetime-distinct addresses in this continuation. The phase-one lower bound on $d_1$ cannot become a positive lower bound on $|Q_1\setminus Q_0|$.
+
+The last equality is for the specified traversal. Another policy may probe absent addresses not present in $Q_0$; the theorem makes no equality assertion for its lifetime-distinct count. If $k=0$, the retained context already is the whole tree and a full-tree value task needs no new source calls; the positive-denominator ratios of Theorem 4.1 are then inapplicable. $\square$
+

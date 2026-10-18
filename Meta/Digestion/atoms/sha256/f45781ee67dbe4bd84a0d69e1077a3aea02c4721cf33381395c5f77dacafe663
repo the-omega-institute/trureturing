@@ -1,0 +1,19 @@
+**Lemma 28.3 (Error at active and deciding updates).** On every finite sequence of positive gap lengths processed while active, including its deciding update,
+
+$$
+G_j>0,\qquad
+\left|\log G_n-S_n\right|<\kappa,\qquad
+S_n=\sum_{j=1}^n\log\ell_j.
+\tag{28.3}
+$$
+
+Proof. The predecessor has $2^{-b}<G_{j-1}<2^b$, including $G_0=1$. Hence $x_j=G_{j-1}\ell_j>2^{-b-1}$ and nearest rounding gives
+
+$$
+\frac{|G_j-x_j|}{x_j}\le2^{b-p_j}
+\le\frac1{128(j+1)^2}=:e_j<1/2.
+\tag{28.4}
+$$
+
+It follows that $G_j>0$ and the absolute logarithmic error at that update is at most $e_j/(1-e_j)<2e_j$. Since $\sum_{j\ge1}(j+1)^{-2}<1$, their total is below $1/64<\kappa$. The predecessor of a deciding update is active, so the argument includes that update. It is a pathwise error bound, not a claim that the rounded product is a martingale. $\square$
+

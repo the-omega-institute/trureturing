@@ -1,0 +1,93 @@
+### 3.2 充分优化解码的局部一致估计
+
+此处需要最小错误辨识解析理论的一个定量局部后果，而不假设 SRM 精确最优。正定加权 Gram 矩阵的最优检测器解析依赖已有供应，见 [Singal–Ghosh][SG] 定理 3.2、4.1–4.2 及 §4.2 末尾；在这里的等先验规范化中，对应其加权 Gram 矩阵的是 $G/M$。以下局部推导给出本定理所需的特定余项。
+
+设 $G=I+H$ 是正定的 $M\times M$ Gram 矩阵，$H$ Hermitian、$\operatorname{diag}(H)=0$，范数充分小。令 $S=\sqrt G$，以 $\mathbb C^M$ 中的列 $v_i=Se_i$ 表示规范化状态。其等先验优化成功率记为 $P_{\mathrm{opt}}(G)$，SRM 成功率为
+
+$$
+P_{\mathrm{SRM}}(G)=\frac1M\sum_iS_{ii}^2.
+$$
+
+坐标测量附近的带标签正交测量用局部坐标 $V=\exp(K)$ 表示，其中 $K$ 反 Hermitian 且对角为零；测量向量为 $\mu_i=V^\dagger e_i$。成功函数为
+
+$$
+F(K,G)=\frac1M\sum_i|(VS)_{ii}|^2.
+$$
+
+在 $G=I$ 时，
+
+$$
+F(K,I)=1-\frac{\|K\|_{\mathrm{HS}}^2}{M}+O(\|K\|^3).
+$$
+
+因而在这些实局部坐标中的 Hessian 负定。实解析隐函数定理给出唯一的邻近平稳测量 $K(G)$，并使其解析依赖 $G$。
+
+这一平稳测量对所有 POVM 最优，不仅在正交测量类中最优。置
+
+$$
+\rho_i=|v_i\rangle\langle v_i|,
+\qquad Q_i=|\mu_i\rangle\langle\mu_i|,
+\qquad \Gamma=\frac1M\sum_i\rho_iQ_i.
+$$
+
+对测量旋转的平稳性给出 $\Gamma=\Gamma^\dagger$；另有
+
+$$
+\left(\Gamma-\frac{\rho_i}{M}\right)\mu_i=0.
+$$
+
+在 $G=I$ 时，$\Gamma-\rho_i/M$ 在 $\mu_i^\perp$ 上的限制为 $I/M$。由连续性，缩小邻域后，这些限制对有限多个 $i$ 一致正定，故
+
+$$
+\Gamma-\frac{\rho_i}{M}\succeq0.
+$$
+
+对任意 POVM $(R_i)$，其成功率为
+
+$$
+\operatorname{Tr}\Gamma-
+\sum_i\operatorname{Tr}\left[\left(\Gamma-\frac{\rho_i}{M}\right)R_i\right]
+\le\operatorname{Tr}\Gamma.
+$$
+
+每个被减去的迹均因两因子半正定而非负，$(Q_i)$ 达到 $\operatorname{Tr}\Gamma$。这证明解析局部检测器在完整 POVM 类中的最优性；所用是普通半正定对偶证书。
+
+$H$ 的零对角给出 $S_{ii}=1+O(\|H\|^2)$，而非对角 $S_{ij}=O(\|H\|)$。在 $K=0$ 微分有
+
+$$
+dF(0,G)[K]
+=\frac2M\sum_{i<j}(S_{ii}-S_{jj})
+\operatorname{Re}(K_{ij}S_{ji}).
+\tag{3.3}
+$$
+
+故零点梯度为 $O(\|H\|^3)$。可逆 Hessian 在局部一致远离奇异，因而 $K(G)=O(\|H\|^3)$，Taylor 公式给出邻域内一致估计
+
+$$
+0\le P_{\mathrm{opt}}(G)-P_{\mathrm{SRM}}(G)=O(\|H\|^6).
+\tag{3.4}
+$$
+
+展开
+
+$$
+S=I+\frac H2-\frac{H^2}{8}+\frac{H^3}{16}
+-\frac{5H^4}{128}+O(\|H\|^5),
+$$
+
+再将对角项平方，得到优化错误
+
+$$
+\begin{aligned}
+E(G)=1-P_{\mathrm{opt}}(G)
+&=\frac{\operatorname{Tr}(H^2)}{4M}
+-\frac{\operatorname{Tr}(H^3)}{8M}\\
+&\quad+\frac{5\operatorname{Tr}(H^4)
+-\sum_i((H^2)_{ii})^2}{64M}
++O(\|H\|^5).
+\end{aligned}
+\tag{3.5}
+$$
+
+此处全部范数和常数均在固定维数 $M$ 中解释。式（3.4）允许六阶或更高阶的测量改善，没有把 SRM 当作有限正 $x$ 的精确最优测量。
+

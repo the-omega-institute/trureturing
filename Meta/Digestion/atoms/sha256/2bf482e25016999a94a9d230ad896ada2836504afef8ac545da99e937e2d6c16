@@ -1,0 +1,16 @@
+**Definition 1.3 (strict route equality).** A labeled partial route has its
+actual domain, its full label word and its successor. Equality of two such
+routes, after a declared comparison of label types, means equality of all
+three. Agreement on their common domain is a weaker assertion. A coordinate
+route can have no executable label, but a probe's event or resource word
+cannot be erased by treating its state map as a relabeling. Pure relabeling
+units and inverses concern partial coordinate maps; an immediate inverse
+cancellation is an identity on its actual domain, which need not be the
+whole chart.
+
+The strict path-relation descent criterion is reused from Process Geometry,
+Theorem 1.4: equality of domains, full labels and successors on generating
+relations is equivalent to descent through their compositional congruence.
+The total-domain tree normalization in Transport--Memory Completion §1.7
+has whole-fiber bijections as a hypothesis.
+

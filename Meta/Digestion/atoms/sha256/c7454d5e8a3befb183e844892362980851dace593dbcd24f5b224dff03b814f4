@@ -1,0 +1,35 @@
+**Theorem 5.2 (RA separation on the same all-finite program).** On a quiescent
+call for $(u_h,P)$, RA uses one attempt, retains the ten-cell row, and has
+
+$$
+\begin{aligned}
+T&=2^{h+2}+h+2,\\
+A&=h2^{h+2}+2+\frac{(h+1)(h+4)}2,\\
+Q_{\rm peak}&=h+1,\qquad
+W_{\rm aux}+W_{\rm operand}=\Theta(h+1)\ \hbox{bits}.
+\end{aligned}
+\tag{CWS.11}
+$$
+
+The private candidate is also at most ten cells. More generally, with $b$
+unknown finite writer updates, every candidate still has at most ten cells,
+the accepted row is still the equality row, and the acquisition workspace is
+$O(h+b+1)$ bits, with at most $b$ failures. These statements concern RA,
+not a separate stationary or height-informed algorithm.
+
+Proof. Guard depth is $h+1$. Exterior traversal reads only the root and emits
+two holes. The only comparison visits each of the $2^{h+1}-1$ positions in
+each hidden tree, with no mismatch. Its body therefore reads every position
+of $u_h$ once. Guard search and validation add $h+3$ Reads and
+$(h+1)(h+4)/2$ address letters. Apply (CWS.5) and (CWS.10).
+The guard and deepest operand have $h+1$ cells; all other paths, the fixed
+cut, constant candidate and logarithmic indices give the matching upper
+bound. This is a lower bound for the stated RA representation only.
+
+Under updates, the source is always a root pair of identical iterates of
+$t_h$. The exterior and reached holes never change. A comparison may
+temporarily report a mismatch, but its ten-cell candidate fails validation
+if it crossed an update. Successful comparisons are of identical trees.
+Each $\rho$ increases height by at most one, hence $H\le h+1+b$; use
+Theorems 3.4 and 4.4. There is no bound $b$ in the code. $\square$
+

@@ -1,0 +1,93 @@
+### 86.1 每个 low label 的整个二维 fibre
+
+对上述实际 $K_j,N_j$，取
+
+$$
+J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger
+$$
+
+为该实际标签固定的 isometry，并置
+
+$$
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,
+$$
+
+$$
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger:\mathbb C^5\to\mathbb C^2,\qquad
+B_j=K_jJ_jQ_j^{-1/2},
+$$
+
+$$
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2}.
+$$
+
+$K_j=\sqrt{p_j}K_{h_j}$ 的秩是二，因其下方 $2\times2$ minor 非零且 null 行列式为零；其核由 $(s_0,-bz_j/h_1,-dw_j/h_2)^T$ 张成，$n_{h_j}$ 与此核正交。因此 $N_j$ 支撑在 $\operatorname{ran}K_j^\dagger$，$Q_j\succ0$，所有逆都在整个实际二维 fibre 上定义。于是
+
+$$
+B_jC_j=K_jE^\dagger,\qquad C_j^\dagger F_jC_j=EN_jE^\dagger,
+$$
+
+$$
+B_j^\dagger B_j+F_j=I_2,\qquad
+L_j^{\rm dec}:=B_j^\dagger B_j\succ0.
+\tag{RC.159}
+$$
+
+ $L_j^{\rm dec}$  是终端 live CP map 的 effect，与归一化矩阵 $L$  不同。选定
+
+$$
+g(u)=\frac2{(1+u)^2},\qquad G_{\rm time}(u)=\frac{2u}{1+u},
+$$
+
+$$
+S_j(u)=\sqrt{I-G_{\rm time}(u)F_j},
+$$
+
+$$
+R_j(u)=g(u)F_j[I-G_{\rm time}(u)F_j]^{-1}.
+\tag{RC.160}
+$$
+
+对当前 survivor 矩阵 $Y$，第 $\ell$ 个跳跃 CP 密度为
+
+$$
+Y\longmapsto w_\ell g(u)\operatorname{tr}
+[F_jS_j(u)^{-1}YS_j(u)^{-1}]P_f.
+$$
+
+not-yet-failed propagator 从 $u$ 到 $v$ 为 $\operatorname{Ad}_{S_j(v)S_j(u)^{-1}}$，故初始 fibre 输入的每个原失败分量恰为
+
+$$
+Y\longmapsto w_\ell g(u)\operatorname{tr}(F_jY)P_f.
+$$
+
+终端只对幸存者施加到五模 live 空间的 isometry
+
+$$
+EB_j(I-F_j)^{-1/2}.
+$$
+
+源容量的广义 Rayleigh 恒等式是
+
+$$
+\frac{\lambda_{\max}(F_j)}{1-\lambda_{\max}(F_j)}
+=\frac{b_j}{\operatorname{cap}(h_j)}.
+$$
+
+因此 $S_j(u)$ 直到 $u=1$ 都可逆，且沿固定谱基积分得到
+
+$$
+\int_0^1\|R_j(u)\|_{\rm op}\,du
+=-\log(1-\lambda_{\max}(F_j))
+=\log(1+b_j/\operatorname{cap}(h_j))\le A.
+$$
+
+这给出实际 FIRST 事件时间 $6+u$。饱和标签取 $b_j=b_A\operatorname{cap}(h_j)$，活动量恰为 $A$；pure-live 标签 $b_j=0$，活动量为零。这些都是整个实际 fibre 上的读数，不是仅在输入态支撑上的读数。没有终端失败原子、强制截止吸收或失败后的正载体动作。任意 prescribed-path 定理的使用仍须保留其独立假设
+
+$$
+\mathcal L_{\rm dec}^{\dagger}(I)
+=I-\int_0^1B(u)\,du\succ0.
+$$
+
+这里 $B(u)$ 指一般 prescribed-path 的拉回失败 effect 密度，区别于 live 矩阵 $B_j$；一般非交换路径仍须满足 FA68–70 的整条路径条件和指定终端 CP map，不能仅由 endpoint live-effect coercivity 推出。本构造选择 (RC.160)；必要性没有把竞争者的时间法则固定成 $g$。
+

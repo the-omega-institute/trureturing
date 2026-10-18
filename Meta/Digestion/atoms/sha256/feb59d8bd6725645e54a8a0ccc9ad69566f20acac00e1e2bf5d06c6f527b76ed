@@ -1,0 +1,20 @@
+### 7.1 Interior samples and a uniform polynomial bound
+
+Fix $\epsilon>e_0$, and choose $\Delta_\epsilon,m$ as in
+Theorem 2.2. For $0\le j\le m$ let
+
+$$
+\kappa_j=\frac{H(j+1)}{m+2},\qquad
+w_j(t)=\binom mj t^j(1-t)^{m-j},\qquad t=k/H,
+$$
+
+$$
+P_m(k)=\sum_{j=0}^m A(\kappa_j)w_j(k/H).
+\tag{7.1}
+$$
+
+Every sample $\kappa_j$ is strictly between $0$ and $H$. These are
+samples of the explicit radius function, not encodings of endpoints.
+The expression is a single polynomial of degree at most $m$ on the
+whole real line; its approximation assertion concerns every $0<k<H$.
+

@@ -1,0 +1,39 @@
+**Proposition 4.2 (which path-list prices fail to transfer).** If instead
+one encodes each absolute path by the RCA list codec, let $D_L,D_I,D_1$
+sum terminal depths, internal depths, and depths of one-child vertices.
+Then
+
+$$
+\begin{aligned}
+p_S^{\rm paths}&=1+2(V+D_L+D_I)=4D_L+2D_1+3,\\
+p_B^{\rm paths}&=1+2(L+D_L),\\
+p_S^{\rm paths}-p_B^{\rm paths}&=2(V-L+D_I).
+\end{aligned}
+$$
+
+In particular PVC's full-binary simplification omits $2D_1$ on this unary
+carrier. For the meter's $m=k+2$ cells under an outer socket at depth $a$,
+absolute path lists alone require at least
+
+$$
+\begin{aligned}
+p_S^{\rm paths}&\ge24m^2+204m+2a(24m+1)+3,\\
+p_B^{\rm paths}&\ge8m^2+90m+2a(8m+1)+3.
+\end{aligned}
+$$
+
+Proof. A path item of length $d$ costs $2d+2$ bits and the list has one
+terminal bit. If $b,u$ count two-child/one-child vertices, $L=b+1$ and
+$V=2b+u+1$. Summing child depths over edges gives
+$D_L=D_{\rm binary}+2b+u$; internal depth sum is
+$D_{\rm binary}+D_1$. Substitution gives the three identities. The unary
+three-vertex chain already has S path-body size 13, whereas $4D_L+3=11$.
+
+A cell component has 23 vertices, total relative depth 66 and eight
+terminals at relative depth four. Its $m$-cell tape spine has $24m+1$
+vertices, total depth $(24m+1)a+12m^2+78m$, and terminal depth sum
+$(8m+1)a+4m^2+37m$. Substitution in the item counts gives the lower bounds.
+They hold for this explicit absolute-path codec class. Prefix-sharing
+mask/contour bodies avoid the premise. No total-price superiority, smallest
+codec or time/energy conclusion is inferred. ∎
+

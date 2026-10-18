@@ -1,0 +1,27 @@
+**Attribution 11.1 (Canonical mathematical owners).** The source
+relationships used in this volume are as follows.
+
+| Owner | Exact inherited content |
+| --- | --- |
+| [Original: fixed-state tail nonuniformity and erasure-risk jump][O], Proposition 2.1, (2.2), Definition 9.1 and (9.4) | Original stationary law, separator clock, actual endpoint indices and full arbitrary-address paid protocol. |
+| Original, Lemma 3.1 and Sections 8–11 | Complementary finite products, endpoint measurability, terminal-section bounds, zero-record results and the overlapping one-read optimum. Half-line measurability grants no runtime read here. |
+| Original, Sections 12–14 | Finite whole-reply-tree signatures and same-seed stopped-law representation for a hard paid-read cap. These do not by themselves preserve an installed row graph. |
+| [Paid Risk: return mass and endpoint classification][P], Sections 1–5 | Same source and paid contract, terminal masses, one-read return-mass envelope and its seed-event criterion, one-read optimum, and finite probe/local-block cost family. |
+| [Two Read: exact almost-sure endpoint risk][E2], Theorem 6.1 and Section 8 | Unrestricted two-read value, literal complete-controller convention, initialization averaging, equality rigidity and the minimum three/six-row costs for attaining the one/two-read optima. |
+| [Two Installed: exact two-read installed frontier][I2], Theorems 6.1 and 10.1, Section 9 | Quantitative at-most-two-read-row bound $T$, the full two-read installed frontier, and its actual three/four/six-row tables. |
+| [Three Read: exact almost-sure endpoint risk][E3], Sections 3–7 and 9–12 | Unrestricted $S_3=Z+D$, component and equality comparisons, all optimal-policy sharing obstruction, actual nine-row attainer and exact minimum $M_3=9$. |
+
+The new bounds in Sections 4–5 concern three paid reads under small
+installed budgets. In particular the four-row attainer is inherited,
+while its optimality against all three-read four-row competitors is a
+new conclusion here. The two-label bound and the five-row table provide
+a matched new quantitative value. Sections 6–8 supply new common-source
+attained points with all runtime states and paid costs. Section 10
+changes the signature carrier from reply-tree occurrences to installed
+rows, retaining fixed successors and every start law; this is the
+additional ingredient proving installed-budget attainment. These results
+are `repo-derived` ordinary consequences and proofs relative to the
+listed sources. No new literature search or exhaustive originality
+claim is asserted. Nested references in those owners supply no additional
+premise of this volume.
+

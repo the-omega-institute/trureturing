@@ -1,0 +1,36 @@
+**Theorem 10.3 (Actual finite-radius risk and strict nonattainment).** The same stationary law satisfies
+
+$$
+d(P)\le D_1(P)=\mathsf D_1(p)<\frac{1800}{12559}\le c_\star,
+\qquad
+c_\star-d(P)\ge c_0-\mathsf D_1(p)>0.
+\tag{10.5}
+$$
+
+Proof. Formula (4.7) at length three gives
+
+$$
+P([000])=\frac{H(p)}{Z}.
+\tag{10.6}
+$$
+
+Since a center one forces both neighbors zero, stationarity and (4.7) give
+$P([010])=P(X_0=1)=1/Z$.
+For conditioning on $X_{-1},X_1$, every neighbor pattern except $00$ forces the center zero. The $00$ fiber contributes its exact weighted conditional variance, so
+
+$$
+D_1(P)=h(P([000]),P([010]))
+=\frac{H(p)}{Z(H(p)+1)}=\mathsf D_1(p).
+\tag{10.7}
+$$
+
+Both predictors in this comparison belong to $P$. Let $q_{1,0}=\mathbb E_P[X_0\mid X_{-1},X_1]$. The tower property gives $q_{1,0}=\mathbb E_P[q_0\mid X_{-1},X_1]$. Conditional projection and vanishing of the cross term yield
+
+$$
+D_1(P)=\mathbb E_P(X_0-q_0)^2+
+\mathbb E_P(q_0-q_{1,0})^2\ge d(P),
+\tag{10.8}
+$$
+
+where the equality between full-exterior risk and density is the supplied interface (1.8). Inequality (3.3), established on a nonempty fixed subfamily using only finite rational continuity, and (1.3) prove (10.5). No continuity of $d(P)$, no limiting approximation to its posterior, and no optimization over this parameter family is used. $\square$
+

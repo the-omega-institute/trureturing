@@ -1,0 +1,48 @@
+**Definition 164.1 (Original and finite domains).** Retain the actual
+countable labeled source, static prime answers, full measurable carrier,
+unchanged consumer and nonatomic targets of
+[Definition 154.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_III.md#154-the-actual-comparison-and-its-complete-six-coordinate-models).
+In particular $n(\xi)$ is the actual first absent prime, the distinct
+original marks are $\theta_j=(B_1,1/(j+2))$, and for an entire positive
+nonincreasing vanishing sequence the separately declared targets are
+
+$$
+\lambda_\xi^a=(1-a_{n(\xi)})\delta_{\theta_0}
+                 +a_{n(\xi)}\delta_{\theta_{n(\xi)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\longrightarrow0.
+\tag{164.1}
+$$
+
+The classes are exactly Acquisition Resources, Definition 90.1, with
+zero advice, one source-independent seed, actual almost-sure finite
+handoff and at most two actual requests including repetitions. $N$
+preselects its schedule and obtains its replies; $O$ uses an increasing
+preselected schedule and stops at its first queried zero or exhaustion.
+Original competitors retain arbitrary addresses and full-carrier outputs.
+All errors are uniform suprema over the actual source set, without a
+source distribution. The results here concern the selected marked laws,
+not a change of any original nonatomic target.
+
+Fix an arbitrary integer $L\ge3$. Put $B_L=\{0,1\}^L$,
+$J_L=\{0,\ldots,L\}$, $m=3(2^L-1)+1$, and
+$x=(a_1,\ldots,a_L,e)$. For every zero-containing word $w$ with first
+zero $n$, include the three distinct event rows
+
+$$
+(w,\{0\}),\quad(w,\{n\}),\quad(w,\{0,n\}),
+\qquad
+1-a_n-e,\quad a_n-e,\quad1-e
+\tag{164.2}
+$$
+
+as their demands. For $1^L$ include $(1^L,\{0\})$ with demand $1-e$.
+Let $d(x)\in\mathbb R^m$ be this affine demand vector. Words are ordered
+lexicographically and their rows as in (164.2). Negative singleton
+demands remain in the system. The finite all-positive word is a target
+bookkeeping device for actual tails, not an infinite all-positive source.
+
+For a probability vector $p$, the two-point target has TV
+$\max\{0,1-a_n-p(0),a_n-p(n),1-p(0)-p(n)\}$, as in Proposition 155.2.
+Thus (164.2) retains exactly the complete TV constraint, including its
+independent union row and every multiple-zero word.
+

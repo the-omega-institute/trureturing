@@ -1,0 +1,189 @@
+**Theorem 10.2 (unconditional linear weighted-return compatibility).** Every table of Definition 10.1 satisfies
+
+$$
+\mathcal C\le5000V_\pi.
+\tag{10.2}
+$$
+
+The constant is independent of the finite carriers, their stochastic entries and their stationary masses. No configuration-risk, irreducibility, reversibility, mixing or additional resource hypothesis is imposed. At $V_\pi=0$, (10.2) is exactly the original compatibility inequality (3.2).
+
+Proof. Take the stationary alternating analysis chain
+
+$$
+X_0\ \xrightarrow{B}\ Y_0\ \xrightarrow{A}\ X_1
+\ \xrightarrow{B}\ Y_1\ \xrightarrow{A}\ X_2\ \cdots,
+\qquad X_0\sim\pi.
+$$
+
+Set $c_i=u_{X_i}$, $U_i=1-c_i$ and $V_i=v_{Y_i}$. The two flow identities imply stationarity under a shift of one complete $BA$ pair, including all joint finite windows. Consequently
+
+$$
+\mathbb E|c_{i+1}-c_i|=V_\pi,
+\qquad
+\mathbb E|c_i-c_0|\le iV_\pi.
+\tag{10.3}
+$$
+
+The second assertion follows by the triangle inequality and the first one. This chain describes finite compositions of the actual acquired kernels. It does not condition the original source on infinite noncompletion, and its index is not a runtime clock.
+
+For $0\le j\le3$, let
+
+$$
+t_j=\left(\prod_{i=0}^{j}U_i\right)
+       \left(\prod_{i=0}^{j-1}V_i\right)(1-V_j),
+\qquad
+H^{\rm act}=1-V_0+V_0U_1(1-V_1),
+\tag{10.4}
+$$
+
+where an empty product equals one. Iterating the exact individual generation equations (2.3) gives, for any real function $g$ on $[a,b]$,
+
+$$
+\sum_x\pi_xg(u_x)Q_x(w_{j,1})
+=\mathbb E[g(c_0)t_j],
+\qquad
+\tau W(E_\beta)=\mathbb EH^{\rm act}.
+\tag{10.5}
+$$
+
+Indeed $w_{j,1}$ has $j$ noncompleting beta-alpha pairs, followed by p-beta and suspended-beta. Its successive synthetic probabilities are $U_iV_i$ for $i<j$ and $U_j(1-V_j)$ at the end; the intervening transitions are precisely the displayed $B,A$ path. The suspended event has immediate beta probability $1-V_0$, or alpha followed by $w_{0,1}$ with probability $V_0U_1(1-V_1)$. In particular its p factor before comparison is $U_1$, not $U_0$. These identities expand finite words of the complete laws; they neither normalize a weighted return kernel nor replace either complete law.
+
+Replace only the later p factors in these finite expressions by $U_0$:
+
+$$
+t_j^0=U_0^{j+1}\left(\prod_{i=0}^{j-1}V_i\right)(1-V_j),
+\qquad
+H^0=1-V_0+U_0V_0(1-V_1).
+\tag{10.6}
+$$
+
+All factors lie in $[0,1]$. The identity obtained by changing one factor at a time therefore yields
+
+$$
+|t_j-t_j^0|\le\sum_{i=1}^{j}|c_i-c_0|,
+\qquad
+|H^{\rm act}-H^0|\le|c_1-c_0|.
+$$
+
+Together with (10.3), this gives
+
+$$
+\mathbb E|t_j-t_j^0|\le\frac{j(j+1)}2V_\pi,
+\qquad
+\mathbb E|H^{\rm act}-H^0|\le V_\pi.
+\tag{10.7}
+$$
+
+For a fixed $c\in[a,b]$ and $z=(z_0,z_1,z_2,z_3)\in[a,b]^4$, put $U=1-c$ and
+
+$$
+\begin{aligned}
+P(c,z)&=U(1-z_0)+U^2z_0(1-z_1)+U^3z_0z_1(1-z_2),\\
+H(c,z)&=1-z_0+Uz_0(1-z_1)=1-cz_0-Uz_0z_1,\\
+T(c,z)&=U^3z_0z_1(1-z_2),\\
+Z(c,z)&=U^4z_0z_1z_2(1-z_3),\\
+f_c(z)&=P(c,z)-\chi H(c,z)-\zeta_0\\
+&\quad-106(b-c)(T(c,z)-T_a)-365(c-a)(Z(c,z)-q_*)\\
+&\quad+\frac1{10}(c-a)(b-c).
+\end{aligned}
+\tag{10.8}
+$$
+
+Define $F^0=\mathbb Ef_{c_0}(V_0,V_1,V_2,V_3)$. By (10.5), this is exactly the expression for $\mathcal C$ with $t_j,H^{\rm act}$ replaced by $t_j^0,H^0$. The two root weights still use $c_0$; constants and the tent term have not changed. Since $b-a=1/15$ and $0<\chi<2$, (10.7) implies
+
+$$
+\begin{aligned}
+|\mathcal C-F^0|
+&\le\left(1+3+\chi+\frac{106}{15}\,3
+                         +\frac{365}{15}\,6\right)V_\pi\\
+&\le174V_\pi.
+\end{aligned}
+\tag{10.9}
+$$
+
+The first two errors are those for $w_{1,1},w_{2,1}$ in $E_p$; $w_{0,1}$ has zero error. The bounds for the weighted $w_{2,1}$ and $w_{3,1}$ use their nonnegative root weights bounded by $106/15$ and $365/15$. The displayed coefficient is $4+\chi+106/5+146<174$.
+
+We now control $F^0$ on the same joint chain. Regard the binary endpoint tuple $z\in\{a,b\}^4$ as an edge
+
+$$
+(z_0,z_1,z_2)\longrightarrow(z_1,z_2,z_3)
+\tag{10.10}
+$$
+
+of the eight-vertex overlap graph from Section 3, with edge weight $f_c(z)$. On a cyclic word $s$, the mean of its $j$th word term is $U^{j+1}(n_j(s)-n_{j+1}(s))$, and the mean of $H$ is $1-cn_1(s)-Un_2(s)$. Hence its mean edge weight is exactly $R_s(15(b-c))$ of (3.7): $U-3/5=b-c$ and $2/3-U=c-a$. The supplied complete simple-cycle certificate (3.7)–(3.8) therefore gives nonpositive total weight on every directed simple cycle, for every $c\in[a,b]$. It is reused without a second cycle enumeration. Any closed walk has nonpositive total weight, since successively cutting at repeated vertices decomposes it into directed simple cycles.
+
+For each vertex $s$ define $h_c(s)$ as the maximum total $f_c$ weight of a vertex-simple directed path starting at $s$, allowing any endpoint and the zero-length path. Such paths have at most seven edges and form a finite set. Deleting a nonpositive cycle from any walk cannot decrease its total weight and preserves its start and endpoint. Thus $h_c(s)$ is also the maximum over all finite walks starting at $s$. Prepend an edge $s\to t$ to a maximizing path starting at $t$ and delete cycles if needed. It follows that
+
+$$
+f_c(s\to t)\le h_c(s)-h_c(t).
+\tag{10.11}
+$$
+
+This finite-path shortening is the sign-reversed elementary step in [KARP, Lemma 1 proof, printed p.2]. It is used here inside the source-specific proof, without any graph hypothesis about the actual acquired carrier.
+
+The potential can be chosen uniformly Lipschitz in its parameter. For every endpoint tuple in (10.8), direct differentiation gives
+
+$$
+|\partial_cP|\le1+2+3=6,\qquad
+|\partial_cH|=z_0(1-z_1)\le1,\qquad
+|\partial_cT|\le3,\qquad |\partial_cZ|\le4.
+$$
+
+Both $T,T_a$ and $Z,q_*$ lie in $[0,1]$, so their corresponding absolute differences are at most one. Also
+
+$$
+\left|\partial_c\frac{(c-a)(b-c)}{10}\right|
+=\frac{|a+b-2c|}{10}\le\frac1{150}.
+$$
+
+The product rule, the two root weights at most $1/15$, and $\chi<2$ consequently give
+
+$$
+|\partial_cf_c(z)|
+\le6+2+106\left(1+\frac3{15}\right)
+        +365\left(1+\frac4{15}\right)+\frac1{150}
+=\frac{89631}{150}<600.
+\tag{10.12}
+$$
+
+Every simple-path weight is therefore $4200$-Lipschitz as a function of $c$. The finite maximum defining $h_c(s)$ has the same bound: if each path function changes by at most $4200|c-d|$, taking its maximum at the two parameters preserves that inequality in both directions. Hence
+
+$$
+|h_c(s)-h_d(s)|\le4200|c-d|
+\quad(c,d\in[a,b]).
+\tag{10.13}
+$$
+
+This argument also applies at ties between maximizing paths and at zero-weight cycles.
+
+Conditionally on the entire acquired analysis path, round each $V_i$ independently to $\xi_i\in\{a,b\}$, with
+
+$$
+\Pr(\xi_i=b\mid\text{path})=\frac{V_i-a}{b-a},
+\qquad \mathbb E(\xi_i\mid\text{path})=V_i.
+\tag{10.14}
+$$
+
+Distinct time positions use independent proof coins, even when the same suspended configuration recurs. The expression $f_c$ is affine separately in each of its four $z$ arguments. Conditional independence thus preserves each of its monomials, including all their correlations with $c_0$:
+
+$$
+F^0=\mathbb Ef_{c_0}(\xi_0,\xi_1,\xi_2,\xi_3).
+\tag{10.15}
+$$
+
+The rounded joint process stays stationary under the shift of one acquired pair. Put $S_i=(\xi_i,\xi_{i+1},\xi_{i+2})$. In particular $(c_0,S_0)$ and $(c_1,S_1)$ have the same distribution. Apply (10.11) to the edge $S_0\to S_1$ at its actual parameter $c_0$, use this joint stationarity, and then (10.13):
+
+$$
+\begin{aligned}
+F^0
+&\le\mathbb E\bigl[h_{c_0}(S_0)-h_{c_0}(S_1)\bigr]\\
+&=\mathbb E\bigl[h_{c_1}(S_1)-h_{c_0}(S_1)\bigr]\\
+&\le4200\mathbb E|c_1-c_0|=4200V_\pi.
+\end{aligned}
+\tag{10.16}
+$$
+
+All expectations are finite because the graph is finite and its path weights are bounded on the compact parameter interval. The equality does not assume stationarity conditional on $c_0$, independence between p and suspended emissions, or independence of the acquired configurations. Such a conditional-stationarity premise would be unjustified when $u$ varies.
+
+Combining (10.9) and (10.16) gives $\mathcal C\le4374V_\pi\le5000V_\pi$. The stated constant is merely sufficient. If $V_\pi=0$, every nonnegative summand defining $V_\pi$ in (10.1) vanishes, so every positive stationary actual $BA$ edge conserves $u$. All finite-product errors and the potential increment in this proof vanish as well, giving $\mathcal C\le0$, precisely (3.2). The argument alters no emission, acquired kernel, stationary row, target or complete law of the given table. Its paths, rounding coins and potentials are analysis objects. $\square$
+

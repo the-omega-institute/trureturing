@@ -1,0 +1,68 @@
+**Proposition 14.5 (instantiated complete joint CP successor).** For a
+fixed actual height $x\in\{a,b\}$ and seed $u$, abbreviate
+$k=x+z_u$, $p(k)=(k,c-k,Z,c-k,k)$, and define, almost everywhere,
+
+$$
+\begin{aligned}
+\lambda_{x,u}(t)&=\frac{(z'_u(t))_+}{x+z_u(t)}
+                 +\frac{(-z'_u(t))_+}{c-x-z_u(t)},\\
+S_{x,u}(t)&=\exp\left(-\int_0^t\lambda_{x,u}(s)\,ds\right),
+&q_x(u)&=S_{x,u}(T_u),\\
+K_{x,u}(t)&=\sqrt{S_{x,u}(t)}
+       \operatorname{diag}_{i=0}^4\sqrt{\frac{p_i(k(t))}{p_i(x)}},\\
+\gamma_{x,u,i}(t)&=\lambda_{x,u}(t)-(\log p_i(k(t)))',
+&J_{x,u,i}(t)&=\sqrt{\gamma_{x,u,i}(t)}\,|f\rangle\langle i|K_{x,u}(t).
+\end{aligned}
+\tag{AC.44}
+$$
+
+Index $4$ is original mode $13$. These are the credited canonical kernels
+with zero transported increment. For every conditional joint
+specimen/reference/archive input $\rho^h_{SR}$, where the actual
+classical history $h$ has height $x$, the unnormalized live and
+Borel-time/mode failure outputs, including the seed probability, are
+
+$$
+\begin{aligned}
+\mathsf L_{h,u}(\rho^h_{SR})&=\nu(u)q_x(u)\rho^h_{SR},\\
+\mathsf F_{h,u,i}(E)(\rho^h_{SR})
+ &=\nu(u)\int_{E\cap[0,T_u]}
+ (J_{x,u,i}(t)\otimes I_R)\rho^h_{SR}
+ (J_{x,u,i}(t)^\dagger\otimes I_R)\,dt .
+\end{aligned}
+\tag{AC.45}
+$$
+
+Retain $U$, the actual outcome, exact first time and original mode on
+failure, and the actual old source/preparation/epoch, archive,
+clock/reference/calibration, permissions, controller and selection/update
+inputs. Append the requested command and its actual status. Integrate
+(AC.45) over the same actual old-history law; no history, reference or
+record factorization is imposed. The latent $h$ in this expression is
+not an accessible label.
+
+Proof. AC regularity and compact strict support make every charge finite,
+so $0<q_x(u)\leq1$. The logarithmic probability derivatives are
+$k'/k,-k'/(c-k),0,-k'/(c-k),k'/k$. Their maximum is $\lambda$,
+so each $\gamma_i\geq0$. The squared $i$th diagonal entry of $K(t)$
+has almost-everywhere derivative $-\gamma_i(t)|K_{ii}(t)|^2$.
+Integration proves, entry by entry,
+
+$$
+K(T_u)^\dagger K(T_u)+
+ \sum_{i=0}^4\int_0^{T_u}J_i(t)^\dagger J_i(t)\,dt=I_5,
+\qquad K(T_u)=\sqrt{q_x(u)}I_5.
+\tag{AC.46}
+$$
+
+The second identity uses the height return and constant relative phase.
+The kernels are CP and their integrated effects sum to identity.
+Tensoring by identity gives (AC.45) on every joint input, including
+entangled ones. Conditioning a failure may change the reference state;
+it is the displayed joint operation, not a replacement reference
+marginal. Absolute continuity gives no extra event atom at a finite
+corner. Finite live concatenation composes these branch kernels,
+translates their actual timestamps and preserves the first failure.
+This instantiates the credited CP law; it is not a new instrument
+construction from the original observation menu. $\square$
+

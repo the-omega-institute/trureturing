@@ -1,0 +1,45 @@
+**定义 1.2（同父历史与全部矩阵）。** 固定
+
+$$
+36<z<37,\qquad33<Y<34,\qquad
+H_4=(0,J,24,M,48,J,z,M,Y).
+\tag{1.3}
+$$
+
+记 $\mathcal F(H)$ 为实现完整字面历史 $H$ 的所有合法世界。令
+
+$$
+j=b+c,\quad t=1+b>1,\quad u=2t-1=1+2b>1,\quad n=r+j.
+$$
+
+$p$ 始终表示实际第五个 $M$ 的响应，$H_5=(H_4,M,p)$。一般迹恒等式为
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r+A_{21}b+A_{12}c.
+\tag{1.4}
+$$
+
+下表列出所有已经取得的祖先；$Q_M$ 专指第五个 $M$ 后的实际矩阵。
+
+| 原时钟 | 实际矩阵 | 迹 | 已取得响应 |
+| --- | --- | --- | --- |
+| $0$ | $I$ | $1$ | $d+g(0)=0$ |
+| $1$ | $J$ | $j$ | $d+g(1)j=24$ |
+| $2$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $t$ | $d+g(2)t=48$ |
+| $3$ | $JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $n$ | $d+g(3)n=z$ |
+| $4$ | $MJMJ=\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ | $d+g(4)u=Y$ |
+| $5$ | $Q_M=M^2JMJ=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u=1+r+3b+c$ | $d+g(5)(n+u)=p$ |
+
+从这个实际 $H_5$ 出发，全部第六、最终矩阵和迹为：
+
+| 第六动作 | 原时钟及最终动作 | 实际矩阵 | 迹 |
+| --- | --- | --- | --- |
+| $J$ | $6$ | $JQ_M=\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $1+2r+2b+c=2n+t-j$ |
+| $M$ | $6$ | $MQ_M=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $2+r+5b+c=n+2u$ |
+| $J$ | $7,J$ | $Q_M=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $1+r+3b+c$ |
+| $J$ | $7,M$ | $MJQ_M=\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2+5b+c$ |
+| $M$ | $7,J$ | $JMQ_M=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $1+4r+3b+2c$ |
+| $M$ | $7,M$ | $M^2Q_M=\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $3+2r+8b+2c$ |
+
+这些是按式 (1.2) 左乘后用式 (1.4) 取迹的恒等式。所有矩阵非负、可逆且无零行；与逐项正的 $P$ 相乘后逐项正，故全部迹严格正。它们一律乘同一个 $g$ 在相应原时钟的值。
+

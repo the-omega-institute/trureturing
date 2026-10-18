@@ -1,0 +1,50 @@
+**Definition 9.1 (Positive law, phases and budget).** Fix finite $n\ge1$,
+the full no11 word set $B_n$ of Definition 1.1, and one known law
+$p_u>0$ with $\sum_{u\in B_n}p_u=1$. Use the legal Hilbert space of
+Definition 8.3 and the negative-phase convention
+
+$$
+|\psi_\theta\rangle=\sum_{u\in B_n}\sqrt{p_u}\,e^{-i\theta_u}|u\rangle.
+\tag{9.1}
+$$
+
+A same-phase reference is supplied. Choose its common phase to be zero,
+so $\theta^0=0$; all phase coordinates below are real local lifts near
+this reference. This choice removes no relative phase nuisance direction.
+Fix $\eta_i\ge0$ with $\sum_{i=1}^n\eta_i=1$. On each of $N\ge1$
+independent preparations, choose a site independently with probability
+$\eta_i$ and record that choice.
+
+At site $i$ use the resolved quadrature instrument of Chapter 8. Its
+two-mode blocks are precisely the legal pairs $e=(u,v)$ with
+$u_i=0,v_i=1$ and all other bits equal. Their basis is
+
+$$
+|\pm_{\pi/2};e\rangle
+=\frac{|u\rangle\pm e^{-i\pi/2}|v\rangle}{\sqrt2}.
+\tag{9.2}
+$$
+
+A word which cannot be paired at this site is a blocked singleton and
+has its own recorded outcome. Thus the record is either $(i,e,+)$,
+$(i,e,-)$ or $(i,w,\mathrm{blocked})$. No sign, edge, selected site or
+blocked word is discarded.
+
+For the pulse notation of Definition 8.3, the same basis is obtained
+with $R_i(\beta_{\rm pulse},t)=\exp(-itH_i(\beta_{\rm pulse}))$,
+$\beta_{\rm pulse}=-\alpha-\pi/2=-\pi$ modulo $2\pi$, and $t=\pi/4$.
+Here
+
+$$
+H_i(\beta_{\rm pulse})
+=P_{i-1}\bigl(e^{i\beta_{\rm pulse}}|1\rangle\langle0|
++e^{-i\beta_{\rm pulse}}|0\rangle\langle1|\bigr)_iP_{i+1},
+\quad P_0=P_{n+1}=I.
+\tag{9.3}
+$$
+
+The final bit zero records $+$ and bit one records $-$ on its pair,
+as in Chapter 8. The bit order, generator phase and negative state
+phase therefore refer to one instrument. This additional coherent
+menu is not supplied by the classical no11 grammar alone.
+

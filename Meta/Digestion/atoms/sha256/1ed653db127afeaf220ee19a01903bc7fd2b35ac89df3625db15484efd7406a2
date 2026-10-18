@@ -1,0 +1,46 @@
+## 91. Literature boundaries and the unresolved dual
+
+The following primary results are used only at the stated interfaces. Huang--
+Zhang, June 2005 author manuscript, §2 opening and Theorem 2.1, distinguishes
+one real quadratic-form equal-trace decomposition from the stronger two-form
+complex Hermitian statement. The real transfer fails for
+$A=\operatorname{diag}(1,-1)$ and $B=\begin{pmatrix}0&1\\1&0\end{pmatrix}$:
+a nonzero real vector cannot satisfy both quadratic equations. Uhlmann,
+*Roofs and Convexity*, Propositions 2.2 and 3.5, gives common flat
+ decompositions and attainment under compactness and continuous extreme payoff;
+it does not retain the present covariance, capacity and joint objective.
+Dette--Melas, Theorem 3.1 with (3.2)--(3.4), requires a specified information
+matrix and Chebyshev systems. The nine coordinates in (FA.118) do not form
+such a system: on the pure-live sheet the three $b$-coordinates vanish.
+Xia--Wang--Sheu, Theorem 3, has a separate equality exception whose hypotheses
+are not those of the capacity-cleared quartic terms here. Leppäjärvi--Sedlák,
+Definition 7 in §6.1, requires equality of each output CP map, which is why
+(FA.99)--(FA.100) are stated componentwise. Zhu--Zhang--An--Zeng, (2)--(4),
+gives a Stiefel parameterization for a fixed state decomposition but no global
+finite-activity certificate. Hsieh--Tavakoli--Ku--Skrzypczyk, Result 1,
+defines robustness into non-interactive instruments; that SDP is not the
+actual-label integrated-rate resource used here. Pinelis, Theorem 1,
+Corollaries 4--5 and Proposition 6, supports finite atomic extreme
+representations under its compact cone hypotheses; (FA.118) supplies the
+nine-coordinate original-data specialization.
+
+A valid conditional dual upper bound for the still-unsolved global problem is
+obtained from matrices $Y,Z$ and $\lambda\ge0$ satisfying, on every
+$h\in\mathscr C$,
+
+$$
+ h^TYh\ge|\ell(h)|+\lambda|z|,
+\qquad
+ h^TYh+t\mathfrak c(h)n_h^TZn_h
+ \ge|\ell(h)+t\mathfrak c(h)f(h)|+\lambda|z|.
+\tag{FA.119}
+$$
+Integration bounds the unhalved low-label objective
+$\sum_jp_j|\ell(h_j)+b_jf(h_j)|$ by
+$\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau$.
+Consequently the full record TV is at most
+$[H_0+\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau]/2$.
+No all-parameter choice of $Y,Z,\lambda$, common contacts or positive weights
+is supplied here; (FA.119) is a precise missing bridge, not an evaluated
+frontier.
+

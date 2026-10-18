@@ -1,0 +1,24 @@
+**Proposition 3.3 (an incomparable exact-clock competitor).** Any
+deterministic source-blind all-source procedure acquiring the exact
+right clock $c(u)$ on quiescent inputs must, on $u_h$, query
+$R^{h+1}$. Consequently its peak operand and total letter traffic there
+are at least $h+1$. In contrast, on $\bar u_h$, replacing RA's left
+guard search by right descent gives a validated right stamp $c=2$ with
+six Reads and four letters. Neither fixed extreme-ray choice dominates
+both orientations.
+
+Proof. Flip only the rightmost alpha leaf of $u_h$ to beta. The two
+sources have identical native replies at every address other than
+$R^{h+1}$; strict extensions are absent in both. Their complete
+$\{L,R\}$ rows are the same disequality row, whereas their right
+clocks differ by one. If the procedure omitted that address on $u_h$,
+deterministic transcript induction would make it omit it on the flipped
+source and return the same value, a contradiction. This compares the
+exact $c$ target, not every sufficient temporal relation.
+
+For $\bar u_h$ the right guard is alpha at depth one, the exterior reads
+the root, and the pair comparison terminates at its first branch/alpha
+mismatch. The guard search, comparison and validation give the stated
+counts. Its left stamp instead equals $h+1$ and its left guard is deep.
+Both protocols still work on all sources without family advice. $\square$
+

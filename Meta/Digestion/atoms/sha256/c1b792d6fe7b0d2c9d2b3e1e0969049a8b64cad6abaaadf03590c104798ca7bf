@@ -1,0 +1,81 @@
+**约定 50.9（承重对应与复用范围）。** 本节实际生产到实际消费的链是
+
+$$
+\text{原同源共享增益状态律}\ \longrightarrow\
+(y_0,y_2,c_1,c_2)\text{的已取得关系（50.6）}\ \longrightarrow\
+J_{\rm acquired}\ \longrightarrow\
+\text{同一首锚的 }y_3/\widehat\mu\ \longrightarrow\
+\text{原帽INITIAL解码及其残余}.
+\tag{50.33}
+$$
+
+每条箭头的必要合同分别是：同一个不可替换的原来源发生及当前寄存器、精确准备
+与公共标架、原纯虚方向及精确锚、单次增益同时作用于两槽、逐次公共正增益下界、
+实际四Read的误差界与事件顺序、保留记录、初读后的因果选择，以及同一INITIAL目标。
+如果两槽的增益可以独立变化，可见响应只约束其自身乘积，不能认证隐藏乘积；
+如果方向或锚不精确，（50.6）的投影式与末读式都需要新的误差项；如果缺少初读
+或它的来源身份，$\alpha A$ 不再是同一初态的参照；如果只保存后来当前读，不保存
+所用证据，则当前数值没有自动携带这个证书。上述变化都不在本节合同内。
+
+基础复用及其与本节新增普通推导的对应如下。
+
+| 既有来源与实际接口 | 此处消费或比较的范围 |
+| --- | --- |
+| 本卷§§37–40的 $E\oplus\mathbb H$、纯内部及锚操作、首锚盲线 | 给出（50.6）的真实状态与不可逆丢失；完整词秩不冒充单历史取得 |
+| 本卷§§45–47的球帽投影、层间隙、负分支、稳定消费者及命令记录下界 | 直接用于（50.10）、（50.13）、（50.18）–（50.21）；没有把这些解码工具重命名为新结果 |
+| 本卷§48的精确致动小更新预算及达到性 | 其 $\eta=0$ 合同已给零至两更新的精确风险与三更新逼近门槛；这里复用已有零端点与非达性，不重复预算证明。它不从 $\eta>0$ 的实际响应生产共享增益证书，亦不提供（50.7）–（50.12）的生产／消费关系 |
+| 本卷§49的精确致动全噪声后验中心及停止门槛 | 同一来源与Read误差合同在 $\eta=0$ 下给 $R_1(\delta)=R_2(\delta)=\sqrt{\delta^2+M(\delta)^2}$，并给 $\delta\ge15$ 的全预算值；这些精确致动风险继续按§49解释。本节三更新四Read的隐藏执行乘积仍须（50.6）–（50.12）的同历史生产与消费，后验中心不供应隐藏执行数值，也不将精确致动风险等同于 $\eta>0$ 的风险。 |
+| [Recovery Geometry](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) §3、§19式（19.105），以及 [LeastSquaresReconstructionNoiseBound](../../../D5/S3/Observer/Linear/LeastSquaresReconstructionNoiseBound.lean) | 复用候选半距、校准分母与一般线性误差原则；其给定观测模型或校准样本不供应本节（50.6）的原菜单生产关系 |
+| [Transport Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §§48–60 | 原实际树、真实Read／拒绝、INITIAL、取得合同、生产及同源身份义务；其Clifford整树动作不等于这里的连续帽来源与共享增益操作 |
+| [供应容量实际成果](../../reports/fib-supplier-capacity/README.md)及其 `six_call_material.py`、`read_memory.py`、`controller87.py` | 实际树构造、原动作、真实响应及消费者表与实验中的authentic函数分开；离线 `supplier(z,w)` 和所需同源信息不是本节允许免费调用的生产者 |
+| [Parameterized Cross Product Recovery](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) §§49–63 | 自由树／共享叶对、三锚数值未来、有限报告生产、整数参考程序与源侧费用；目标、替换动作及有限表示合同均不同，未用于推定隐藏乘积 |
+| [FixedHistoryComposition](../../../D5/S3/Arith/FibonacciAtomic/FixedHistoryComposition.lean) 的 `result` | 原Clifford三窗与固定组成的真实源像及连接支撑，不供应到本节 $\mathcal D_2$ 的动作交织映射 |
+| [KBonacciResonantBlockResponses](../../../D5/S1/Words/AdmissibleWords/KBonacciResonantBlockResponses.lean) | 原序Boolean词、部分自动机拒绝与完整块响应给联合可达记录及有限视界签名；其离散来源与块控制不认证本节连续两槽的实际增益乘积 |
+| [Atomic](FIBONACCI_ATOMIC_RELATION_GENERATION.md) §426与 [几何Library接口](../../../Library/Geometry/frenzymath2026poincarelibrary.md) | 前者是实际Möbius数组的完整前缀运输，后者为几何刚性与上游几何前提；均未作为（50.6）的源／增益证明前提 |
+
+局部公开及私有源码、上述有界理论窗口与钉版Mathlib的检索用于检查这些真实接口，
+不作全库穷尽或全局新颖性声明。钉版
+[Mathlib `CrossProduct`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/CrossProduct.lean)
+的 `cross_cross_eq_smul_sub_smul'` 给三重叉积恒等式；
+[InnerProductSpace/Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Basic.lean)
+的 `abs_real_inner_le_norm`、`real_inner_self_eq_norm_sq` 给相应经典估计。
+这里直接用它们的普通数学内容，不声称导入编译。一般激励、标量回归、区间中点、
+球投影与纤维半距均为复用工具；本节的 `repo-derived` 承重关系是原菜单按初读
+选择的投影、同一真实累计增益的有限生产与首锚消费，以及保留原来源的合并实例。
+
+主要文献范围是 Henk J. van Waarde、Jaap Eising、Harry L. Trentelman、
+M. Kanat Camlibel，*Data informativity: a new perspective on data-driven analysis and control*，
+[arXiv:1908.00468v3](https://arxiv.org/html/1908.00468v3)，Definition1与§II：
+性质须对与实际数据相容的全部系统成立，取得某个控制性质不必识别完整系统。
+本节只认证消费者所需的 $\gamma_1\gamma_2$，没有据这个一般原则取得逐次全部
+执行参数。其线性输入／状态模型也不供应本节的单历史破坏性动作、帽来源或共享
+增益。Stephen Boyd、Lieven Vandenberghe，*Convex Optimization*，
+[作者公开正文](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§6.4.2，
+提供集合式最坏情形误差的成熟背景；有界误差集合本身不发行一个实际校准样本，
+也不令对抗误差独立。上述一手文献用于核对方法与边界，不主张本节为这些方法的
+发明，也不从限定检索未命中推断文献中不存在相同结果。
+
+原生FIB替代路线仍有实质内容，但它回答另一组已经给定的来源／动作问题：
+Transport Memory的实际整树执行与已取得档案可保持原 $q_H$，并能在另行真实
+供应的authentic信息下形成有限消费者；Parameterized Recovery可从其实际三锚
+在声明表示与收缩条件下生产有限未来近似。二者的对象、目标、参数、拒绝、更新
+与费用不能按名字或维数直接搬入本节。特别是尚无从其实际自由树发生到这里独立
+无界 $a$、未标记两帽 $b$、共享衰减的一个保Read、保INITIAL、保合法原动作与
+同一历史的交织映射。本节不假定这个缺失箭头，更不把authentic字母表计数当作
+原生三维观察已经取得了执行证书。
+
+有限事件在本节只表示四个三维实报告、两条实方向命令、一个锚、公共参数、
+区间及Stop所形成的有限实数记录。$a$ 无界，所以其精确坐标没有统一位宽；
+准确相等、方向归一化、区间端点、开闭分支、除法、平方根和精确实数输出都有
+独立表示与计算义务。$m\downarrow0$ 时消费分母界退化，$A\downarrow0$ 时
+证书精度界退化；（50.15）明列这些代价，没有推出免费精度或物理校准。
+本节没有承诺有限位传感器、整数参考实现、最少记录维数、最小更新数、尖锐
+minimax常数、任意致动分类、付费节约或物理实现。
+
+局部Read空间仍为三维 $E$，状态载体仍七维 $W$，来源仍是两三维隐藏帽层与独立
+三维可见量形成的六维族。增加的是实际记录能认证的一个执行乘积，未把来源维数
+改成三维，也未把取得、预测、可达、存储和物理成本合并。假设15.1中的原生完整
+旋转关系、忠实可运输位移、实际资源成本、同一环境的贯通与任务容量四桥仍全部
+未证。纯理论的这条条件取得关系不能独自回答原生来源为何可达、实际仪器如何
+发行可信Read精度，或为何物理位置恰有三维。
+

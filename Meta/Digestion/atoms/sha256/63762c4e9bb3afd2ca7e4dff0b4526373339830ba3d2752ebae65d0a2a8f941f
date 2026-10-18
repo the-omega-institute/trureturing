@@ -1,0 +1,34 @@
+**Proposition 8.5 (a regular original property retained across both unknown offsets).**
+There is a four-state public selector such that its choice of whether
+to select the root recovers the property “both native leaf counts
+are even” simultaneously for the invocation, validation and Return
+sources, despite unknown $n,j$ and possible nonuniqueness of all
+three trees.
+
+Proof. Let $Q=(\mathbb Z/2\mathbb Z)^2$, use leaf states
+$(1,0),(0,1)$, pair transition coordinatewise addition, and accept
+only $(0,0)$. Its state is the parity vector
+$\eta(t)=(N_\alpha(t),N_\beta(t))\bmod2$. The substitution satisfies
+
+$$
+\eta(\rho t)=T_2\eta(t),\qquad T_2(x,y)=(y,x+y).
+\tag{NRF.40}
+$$
+
+This follows by counting the two leaf images and adding through
+pairs. The map is invertible, with inverse $(a,b)\mapsto(b-a,a)$.
+Hence $\eta(t)=0$ if and only if $\eta(\rho^k t)=0$ for every
+$k\ge0$. The root is selected exactly when its state is zero.
+The predicate $P=\{\varepsilon\}$ therefore gives the same
+Boolean answer for $u,\rho^n u,\rho^{n+j}u$ on every actual
+returning history.
+
+The distinct sources $\langle\alpha,\alpha\rangle$ and
+$\langle\beta,\beta\rangle$ give the same positive root boundary
+at epoch zero. They remain compatible without a whole-source
+reconstruction. A bare root row also admits $\alpha$, whose parity
+vector is nonzero, so that bare row cannot recover this property.
+This is a particular original-source consumer covered by Theorem
+7.3; its additional persistence follows from the explicitly proved
+invariance (NRF.40), not from an assumed Return snapshot. $\square$
+

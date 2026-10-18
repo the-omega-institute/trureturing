@@ -1,0 +1,35 @@
+**Proposition 63.1 (the exact remaining certificate gap).** At half beta any feasible (S.59) with ordered positive spectrum and $3\leq k\leq9$ must satisfy all of
+
+$$
+\frac{31}{50}<s<T,\qquad
+ t>\frac32(T-s),\qquad f(s,t)<d,\qquad
+2s+2t+\lambda_3>2T.
+\tag{S.87}
+$$
+
+These are necessary conditions, not a characterization of feasible centers. The exclusions of Section 62 are already enforced by $f(s,t)<d$.
+
+Proof. The first three conditions are (S.75) and (S.78). For the last one, the two phase basis tests give $\operatorname{Tr}M_0+\operatorname{Tr}M_1>2T$. In the conjugated defect coordinates this sum equals $\operatorname{Tr}(\operatorname{diag}(\omega,\omega,0)\widehat P)$. The rank-five allocation in (S.22) bounds it by $2s+2t+\lambda_3$. This is exactly failure of the spread exclusion (S.28), reused within the nonlinear relaxation.
+
+The rank-three spectrum $(7/10,1/4,1/20)$ is inconclusive for these conditions. It has $31/50<s<T$ and
+
+$$
+3s+2t=\frac{13}{5}>3T,\qquad
+2s+2t+\lambda_3=\frac{39}{20}>2T.
+$$
+
+Indeed $h<71/100$ gives $3T<513/200<13/5$ and $2T<171/100<39/20$. Its $\Delta=17/50$ is independent of $h$; $C(s,t)$ decreases with $h$, so
+
+$$
+\begin{aligned}
+f(7/10,1/4)
+&<\frac14-\frac{17}{50}\left[
+\frac1{4(7/10)+2(71/100)}
++\frac{1/4}{(7/10)(4(1/4)+2(71/100))}\right]\\
+&=\frac{85251}{714868}<\frac3{25}<\frac{29}{200}<d.
+\end{aligned}
+\tag{S.88}
+$$
+
+The last inequality also uses $h<71/100$. Thus none of the displayed certificates excludes it. No common $Z$, strict all-direction relaxed point, or actual channel is supplied by this scalar calculation. $\square$
+

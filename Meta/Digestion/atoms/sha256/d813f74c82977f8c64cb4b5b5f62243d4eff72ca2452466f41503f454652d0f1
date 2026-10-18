@@ -1,0 +1,20 @@
+**Corollary 4.5 (Exact reduced value and sharp low original region).**
+Let $\nu_C(\tau,u)$ be the complete eight-bit minimum in its own
+catalog with the actual full head and all rows of 1.4. Then
+
+$$
+\nu_N(\tau,u)=\nu_O(\tau,u)=5\tau+24u/253.
+$$
+
+In the original family, cap $E=5\tau+24u/253$ is feasible in
+either class exactly when $253v\le24u$. On this entire region,
+both original minima equal $E$ and are attained.
+
+Proof. The credited complete $253$ lower and the complete law of
+4.1–4.4 match on eight bits. Its exact original error equals $E$
+when $253v\le24u$. When $253v>24u$, Corollary 3.4 excludes
+$E$ for every original competitor. Thus the boundary concerns actual
+ninth obligations in the full classes. This evaluation uses the
+credited $253$ certificate and full head allowance, without endpoint
+rediscovery. $\square$
+

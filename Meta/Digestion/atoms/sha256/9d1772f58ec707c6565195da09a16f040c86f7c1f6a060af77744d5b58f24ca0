@@ -1,0 +1,39 @@
+**Theorem 8.7 (exact root minimum four for the new bit).** Under the
+same premises and pointwise code $\sigma^\dagger$, the least worst-case
+call count among root-only readers with at most nine installed states
+is exactly four. One attaining reader uses the five complete Halts of
+Theorem 8.4 and these four Reads:
+
+| Read state | Actual literal | On $\alpha$ | On $\beta$ | On $\mathsf{branch}$ | On $\mathsf{absent}$ |
+| --- | --- | --- | --- | --- | --- |
+| $Q_2$ | $LRR$ | $H_2$ | $Q_1$ | $Q_1$ | $Q_1$ |
+| $Q_1$ | $LLR$ | $H_1$ | $Q_3$ | $Q_3$ | $Q_3$ |
+| $Q_3$ | $RLR$ | $H_3$ | $Q_4$ | $Q_4$ | $Q_4$ |
+| $Q_4$ | $RRR$ | $H_4$ | $H_0$ | $H_0$ | $H_0$ |
+
+Its faithful entries are $\iota_R^\dagger(0)=Q_2$ and
+$\iota_R^\dagger(1)=Q_1$.
+
+**Proof.** At any $Q_j$ the representative is reached, and its alpha
+reply occurs exactly when $h=j$. Entry zero tests $2,1,3,4$ in that
+order and returns zero if all tests are non-alpha. This classifies every
+possible target from that entry in at most four calls. Entry one tests
+$1,3,4$. A target two always has code zero by (NRE.16), so no target
+two can enter there; all targets allowed at entry one are therefore
+classified in at most three calls. This reasoning uses the prescribed
+code only to exclude target two at the second entry, and covers every
+permitted finite filling and every zero-target beta placement. All
+sixteen successor entries are installed, although absence at these
+representatives is unattained. The five Halts return the fixed whole
+rows of Definition 2.2.
+
+The distinct states $Q_2,Q_1$ recover the complete bit at entry and
+leave no separate copy accessible later. The code-zero origin $u_{z_a}$
+has target zero and actually traverses $Q_2,Q_1,Q_3,Q_4,H_0$, attaining
+four calls. The positive witnesses in Proposition 8.5 reach the four
+corresponding positive Halts; together these paths reach all nine
+installed states. Thus the stated upper is attained on the entire-domain
+contract. Theorem 8.6 excludes every at-most-nine-state competitor using
+at most three calls, including any smaller call budget. The least call
+count at budget nine is consequently exactly four. $\square$
+

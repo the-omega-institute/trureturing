@@ -1,0 +1,30 @@
+**Theorem 1.3 (Explicit arbitrary-prefix certificate).** For every
+integer $N\ge1$ and real $0<\rho<1$, put
+
+$$
+C=\frac{128(1+\rho)}{1-\rho},\qquad
+K=4N+10+\lceil\log_2 C\rceil,\qquad
+B(N,\rho)=2^{16NK+4}.
+\tag{1.2}
+$$
+
+Then
+
+$$
+d_{N,B(N,\rho)}>\rho.
+\tag{1.3}
+$$
+
+Equivalently, at $m=B(N,\rho)$ there is no real vector satisfying both
+
+$$
+\operatorname{rank}H_m(u)\le N,\qquad
+(1-\rho)\sqrt j\le u_j\le(1+\rho)\sqrt j
+\quad(1\le j\le2m+1).
+\tag{1.4}
+$$
+
+The equivalence uses the attained minimum, not an assumption that a
+strict inequality for each vector automatically remains strict under an
+infimum.
+

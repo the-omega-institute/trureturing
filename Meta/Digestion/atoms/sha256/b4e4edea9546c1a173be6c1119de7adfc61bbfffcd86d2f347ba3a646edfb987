@@ -1,0 +1,49 @@
+**Theorem 6.2 (exact balanced two-window image).** The normal exponents of
+$E(t)$ and $E(\rho t)$ are
+
+$$
+(k_0,k_1)=(P-Q,P+Q),\qquad (P,Q)\in I_s^2,
+\tag{DAF.13}
+$$
+
+and every point of $I_s^2$ is realized by an actual balanced word. Consequently
+$q_H(\mathcal B_s)$ has exactly $(s+1)^2$ values.
+
+Proof. A beta at position $a_j+j$, counting positions from zero, contributes
+$(-1)^{a_j+j}$ to $k_0$ in (DAF.11); an alpha contributes zero. Thus $k_0=P-Q$.
+In the substituted word alpha contributes the block $B$ and beta contributes
+$BA=S$. Every beta block is even and contributes $(-1)^{a_j}$ to the exponent.
+The $2s$ alpha blocks contribute alternating $+1,-1$, because only alpha blocks
+change the preceding parity. They cancel. Hence $k_1=P+Q$.
+
+Each of $P,Q$ is a sum of $s$ signs and lies in $I_s$. To realize any prescribed
+sign word $z_0,\ldots,z_{2s-1}$, set $a_0=0$ if $z_0=1$ and $a_0=1$ otherwise,
+then increment $a_j$ by one precisely when the desired sign changes. This gives
+a nondecreasing sequence with last term at most $1+(2s-1)=2s$. The actual word
+
+$$
+\alpha^{a_0}\beta\,
+\alpha^{a_1-a_0}\beta\,\cdots\,
+\alpha^{a_{2s-1}-a_{2s-2}}\beta\,
+\alpha^{2s-a_{2s-1}}
+\tag{DAF.14}
+$$
+
+has exactly $2s$ of each atom and the required signs. Independently choose the
+$s$ even and $s$ odd signs to attain every $P,Q\in I_s$. The map in (DAF.13)
+is injective, with inverse $P=(k_0+k_1)/2$, $Q=(k_1-k_0)/2$.
+
+TM29.5's actual-image phase formula here gives
+
+$$
+p_0=p_1=0,\qquad
+\epsilon_0=(2s-k_0)/2\bmod2,\qquad
+\epsilon_1=(4s-k_1)/2\bmod2.
+\tag{DAF.15}
+$$
+
+Thus the exponent pair determines both whole windows, and normal-form
+uniqueness gives the converse. Composition is fixed. Brackets do not affect the
+associative product; every realizing word has actual full-tree bracketings.
+This proves the exact number of initial boundary values on the whole slice.
+

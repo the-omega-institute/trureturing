@@ -1,0 +1,66 @@
+**Proposition 7.3 (the precise recovery relation retained).** Under
+the original paid handoff, continuity and authentication assumptions,
+the existing native cover constructions realize
+
+$$
+(E(t),D,p,\text{at most one actual literal reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NCE.48}
+$$
+
+Proof. The first arrow is exactly the supplied reply-to-factor
+decoder of a paid native admissible cover, with its experiment
+chosen after $p$ and before $k$. The two inverse maps on the
+attained factor and trajectory images are (NCE.6) and recovery
+of first branch count and alpha-stage presence from Convention 1.3.
+The new lower bounds the complete alphabets of every such service;
+it does not add another acquisition operation. $\square$
+
+**Open problem 7.4 (sharpness, convergence and the unchanged programme).**
+Determine exact $\lambda$, the general finite $M_1(D)$, and matching
+native primal constructions or stronger all-correlated converses.
+In particular the new bound does not settle $M_1(3)$, exact
+$Z_3(n)$ or exact $\sigma_3$. A single dual with an attained
+mass cap does not show that arbitrary optimal covers can saturate it.
+
+The supplied FMR structure is retained:
+
+$$
+\lambda=\sup_{d\ge1}2^{-d}\sigma_d,\qquad
+0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\quad
+\phi=\lim_{h\to\infty}2^{-h}\log_2U_h,
+\quad U_0=1,\quad U_{h+1}=1+U_h^2.
+\tag{NCE.49}
+$$
+
+Each $\sigma_d$ is itself an infimum over all joint lengths. This
+source gives a uniform lower at $d=3$, rather than effective
+lower endpoints converging to $\lambda$. A bound of the form
+$\sigma_d\ge n^{-1}\log_2K_d(n)-\eta_d(n)$ with an explicit
+uniform $\eta_d(n)\to0$, or a convergent family of sufficient
+dual certificates, remains an original missing relation. No
+completeness of the heavy-target method is asserted.
+
+The inverse in (NCE.48) recovers the selected temporal factor,
+not the whole source, past hidden histories, the complete code,
+authenticity of $k$, or physical space and time. The broader
+minimal-relations, internal-observer and mutual-recovery programme
+still requires explicit object and operation correspondences and
+their resource bounds. Preparation, installed tables, workspace,
+word length, final predictors, handoff, isolation, authentication
+and physical time retain all their original separate charges.
+The strict lower leaves these sharp and broader objectives open.
+
+[LTR]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_ONE_READ_MEMORY.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NBP]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md
+[NCM]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[D5-source]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[D5-read]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[D5-present]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5-quotient]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean
+[D5-compact]: https://github.com/the-omega-institute/trureturing/blob/87b4c51addc0da5ef8847a9adc723bde11a3f908/D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean
+

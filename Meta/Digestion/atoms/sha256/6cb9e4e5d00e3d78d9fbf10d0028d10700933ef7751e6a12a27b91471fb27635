@@ -1,0 +1,8 @@
+**假设 23.3（全部未来的确定性误差接口）。** 取 $0<|\lambda|<1$，初值 $z_0\in[-L,L]$，$L\ge0$、$\varepsilon\ge0$，并从第 $n\ge0$ 步起取得
+
+$$
+y_{n+k}=\lambda^{n+k}z_0+e_k,\qquad |e_k|\le\varepsilon,\quad k\ge0.
+$$
+
+误差按最坏情况取任意合法序列，不假设独立、可平均抵消、能放大重测或有旧快照。
+

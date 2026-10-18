@@ -1,0 +1,29 @@
+**Definition 5.4 (bounded source locator).** Initialize the canonical
+represented entrance/reservoir from this immutable cover, not from current
+source16. Clear tally, entry/exit flags and saved endpoints. Copy the
+actual constructed $1^b$ to rem. While rem is nonempty, perform the
+following finite word operations in written order.
+
+1. Decode only the represented physical control/version/PC and its next
+   actual row; compare with the fixed entry/exit sets and the retained
+   unary $j$. Save these two finite test results in word fields before
+   Step reuses its temporaries. An exit without a saved entry, or another
+   qualifying entry after the first, is binding failure.
+2. Execute exactly one Step on that state/reservoir. If it returns a
+   simulated failure, take description/dependency/binding failure according
+   to its first failing check. Otherwise the new tally is the successor
+   tally. Tail rem once.
+3. On the saved entry test copy this successor tally to $e$ and set the
+   entry flag. On the saved exit test copy it to $f$ and terminate the
+   locator successfully. These are compiled bank copies and flag writes.
+
+If rem empties without both endpoints, return NoOccurrence. The search
+never executes a represented row after $b$; unsuccessful search cannot
+wait for a source call that might occur later. On success cancel $e$
+from $f$, require $t\le f-e$, construct $1^k$ by Cat of $1^e,1^t$,
+and require $a\le e\le k\le f\le b$. Emit $U(k)$ separately.
+Set start=$e$, end=$f$, anchor-kind=1 and anchor to the exact four-field
+tuple $(m,j,\text{unified-row origin},\text{complete request origins})$.
+The origins identify this already completed occurrence now; their later
+delivery is not asserted at its older entry or selected cut.
+

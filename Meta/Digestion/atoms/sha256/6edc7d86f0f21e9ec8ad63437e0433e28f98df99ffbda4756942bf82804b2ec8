@@ -1,0 +1,19 @@
+### 91.4. Exact remaining boundary
+
+No compactness or numerical radius is needed for Theorem 91.1. All zeros
+of \(H_*\) are retained as unresolved fibres of this argument, including
+possible coordinate, unit, chosen-minor and actual pole degeneracies.
+The density of their complement does not settle them: an additional basis
+could in principle exist at an isolated parameter. No limiting argument
+here erases that possibility.
+
+The delivered central and half-parameter neighborhood theorems remain
+separate conclusions. At the center the canonical-basis uniqueness
+assertion is false because the exact noncanonical completion exists;
+its fixed-pair quartet exclusion is supplied by the independent ambient
+pair-gap theorem. The present proof supplies a finite-exception extension
+along the specified actual curve. Classification of the retained finite
+fibres, or a division-free obstruction covering them, remains the route
+to a whole-punctured-branch statement.
+
+

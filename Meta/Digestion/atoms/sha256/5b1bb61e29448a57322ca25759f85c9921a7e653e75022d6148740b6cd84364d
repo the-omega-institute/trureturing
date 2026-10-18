@@ -1,0 +1,27 @@
+**Proposition 8.5 (invariant-only obstruction and field-count boundary).**
+An initial record, even a full initial tree, cannot recover the lag
+of a later root-cut row with no later advancing supplement. Likewise,
+on the orbit of $\langle\alpha,\alpha\rangle$, complete
+$\{L,R\}$ rows together with source functions invariant under $\rho$
+at every capture cannot recover arbitrary lags. The $c_0-1$ integer
+fields in Corollary 8.2 or Theorem 8.3 are sufficient organizations,
+not representation-independent lower bounds on the number of fields.
+
+Proof. Fix the same first capture and retained initial state. Perform
+zero versus one update before a quiescent later root capture. Its
+complete row is the same root hole with singleton partition. Both
+decoder inputs coincide while the required lags differ. For the
+two-hole orbit, both subtrees are always equal, so every complete
+row is the same equality row and every invariant source function
+is unchanged. The same zero/one comparison applies. Public index
+labels or fixed coding of those invariant values cannot separate it.
+This is why §2 retains phase-sensitive data for arbitrary cuts.
+
+Integers can encode tuples, and some particular disconnected row
+fibers determine more than the uniform overlap guarantee. Thus a
+count of scalar fields is not an alphabet lower bound. The supplied
+$2^{c_0-1}$ collision fiber gives a lower bound on joint attained
+supplementary values, while §§3, 4, 6 and 7 prove their stated native
+state or traffic bounds. None asserts a general scalar dimension
+minimum. $\square$
+

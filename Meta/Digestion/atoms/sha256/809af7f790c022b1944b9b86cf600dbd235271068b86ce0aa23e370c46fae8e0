@@ -1,0 +1,13 @@
+**Example 8.3 (maxima of different runs cannot be added).** On the same whole fiber, consider the following correct service. Read the epoch-zero root. If it is a leaf, perform two actual updates, then halt with the already known concrete row. If it is a branch, read $R$ at epoch zero and halt with the one-hole row. Its sourcewise costs are
+
+$$
+ c_A(u)=
+ \begin{cases}
+ (1,2,0),&u\in\{\alpha,\beta\},\\
+ (2,0,1),&u=\langle x,\alpha\rangle\text{ or }\langle x,\beta\rangle.
+ \end{cases}
+\tag{JRF.8.5}
+$$
+
+The updates in the first case precede the genuine halt; no stopped service is resumed. With weights $(1,1,1)$ the same-source maximum is three, whereas the sum of separate coordinate maxima is $2+2+1=5$. Each maximum in the latter expression is individually real, but they cannot be combined into one actual run. The example illustrates the distinction between the objectives; it does not assert that this particular service is Pareto minimal.
+

@@ -1,0 +1,116 @@
+**Theorem 91.1 (Full-carrier, arbitrary-address necessary bound).** For
+every sequence (73.3), every $0\le\varepsilon\le1$, and every
+$A\in\mathcal N_2$ with $e_a(A)\le\varepsilon$,
+
+$$
+5\varepsilon\ge a_1+a_3+a_4-1.
+\tag{91.1}
+$$
+
+The same bound holds in $\mathcal O_2$. It is a necessary obstruction,
+not a complete feasibility test on five patterns.
+
+**Proof.** First consider the five finite words
+
+$$
+w_t=1^t0^{4-t}\quad(0\le t\le4),\qquad
+(H_0,H_1,H_2,H_3,H_4)
+ =\bigl(\{1\},\{0,2\},\{3\},\{4\},\{0\}\bigr),
+\tag{91.2}
+$$
+
+where a label $j$ means tape $\theta_j$. Fix a deterministic rule
+asking at most two preselected low coordinates and then outputting a
+label. Coordinate $i$ changes from zero to one at $t=i$ on this ordered
+list of words. Thus two distinct queried low coordinates partition the
+list into at most three contiguous transcript cells. Output must be
+constant within each cell. The only intersection between distinct
+required output sets in (91.2) is $H_1\cap H_4=\{0\}$.
+
+If two distinct low coordinates were constant on both $w_1$ and $w_4$,
+both would have to equal coordinate 1: those two words differ at
+coordinates 2, 3 and 4. Therefore with two distinct low coordinates no
+cell contains both rows 1 and 4. Its common output satisfies at most
+one required event, and the total score is at most three. With only one
+distinct low coordinate there are at most two cells; only a cell
+containing rows 1 and 4 can score twice, so again the total is at most
+three. With no low coordinate there is one cell and its score is at
+most two. Repetitions do not refine these partitions. In all cases,
+
+$$
+\sum_{t=0}^4\mathbf1_{\{\text{output on }w_t\in H_t\}}\le3.
+\tag{91.3}
+$$
+
+This bounds every possible deterministic terminal choice, including
+base output and unqueried marks.
+
+Now take the original $A$, with arbitrary addresses and full-carrier
+output. Use the measurable projection $\pi_4$ of (83.7), retaining
+$\theta_1,\ldots,\theta_4$ and sending every other original tape to
+$\theta_0$. It fixes each target with first absence at most four and
+sends each later target to $\delta_{\theta_0}$. Pullback of events gives
+the TV contraction (83.8), so the projected law remains within
+$\varepsilon$ of the corresponding projected target.
+
+For each integer $m\ge5$, choose five actual sources $x_{t,m}$ whose
+first four replies are $w_t$ and whose replies at indices $5,\ldots,m$
+are all zero. Boundaries, Theorem 35.2 supplies these finite patterns
+in the original Fibonacci windows. For each $m$, the whole finite family
+is fixed before any seed is used. Its first absences are respectively
+$1,2,3,4,5$; no infinite all-positive source is involved.
+
+Let $R(s)$ be the seed-selected sequence of at most two requested indices,
+and put
+
+$$
+\gamma_m=\mathsf P_A\{\max R(s)>m\},\qquad\max\varnothing=0.
+\tag{91.4}
+$$
+
+Every such sequence is finite almost surely, so continuity from above
+gives $\gamma_m\to0$. This is the preselected-sequence form of the
+common high-address control used in (70.3)--(70.4); it imposes no fixed
+address ceiling. Work on the common full-measure finite-handoff and
+hard-bound event furnished by countability of $X$. Outside the event
+in (91.4), all high requested replies, at indices $5,\ldots,m$, are
+the same zero at all five sources. Two sources agreeing at the selected
+low coordinates therefore have the same complete acquired transcript.
+Finite execution transport, Source-Correlated Laws, Lemma 45.3, gives
+the same output at that seed. The induction is over each actual finite
+execution and requires no common transition bound. Projection yields a
+common label in each transcript cell, so (91.3) applies there.
+
+On the exceptional high-address event the score is at most five.
+Integration therefore bounds the sum of the five projected output-event
+probabilities by $3+2\gamma_m$. The five TV constraints give the lower
+bounds
+
+$$
+\begin{array}{c|c|c}
+\text{low word}&\text{projected output event}&\text{required probability}\\
+\hline
+0000&\{\theta_1\}&a_1-\varepsilon\\
+1000&\{\theta_0,\theta_2\}&1-\varepsilon\\
+1100&\{\theta_3\}&a_3-\varepsilon\\
+1110&\{\theta_4\}&a_4-\varepsilon\\
+1111&\{\theta_0\}&1-\varepsilon
+\end{array}
+\tag{91.5}
+$$
+
+The last row uses the projected target at the actual first absence 5.
+Hence
+
+$$
+a_1+a_3+a_4+2-5\varepsilon\le3+2\gamma_m.
+\tag{91.6}
+$$
+
+Letting $m\to\infty$ proves (91.1). Comparison sources can vary with
+$m$, but never with an individual seed. Their unprescribed real prime
+tails remain actual finite supports. Proposition 90.2 gives the
+$\mathcal O_2$ conclusion. Only necessity used these five words; upper
+constructions must still check the whole cube and every actual tail.
+$\square$
+

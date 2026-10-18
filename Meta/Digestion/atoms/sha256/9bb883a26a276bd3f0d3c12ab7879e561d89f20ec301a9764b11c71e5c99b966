@@ -1,0 +1,23 @@
+**Proposition 4.1 (exact compact sizes).** At a target cut let $C$ count
+all actually constructed tape cells, $c$ present finite locations and
+$q=q_\circ$. The two actual geometric bodies have sizes
+
+$$
+\begin{aligned}
+V&=147+2q+c+24C,& L&=74+q+8C,\\
+p_S&=2V=294+4q+2c+48C,\\
+p_B&=4(V-1)+2L=732+10q+4c+112C.
+\end{aligned}
+$$
+
+For native ordinal $k$, $C=2+A(k)+k$, with $A(k)\le k$. For this one fixed
+apparatus these body sizes are linear in $k$; wrappers, M/T bodies and the
+native computation constructing or decoding them are additional.
+
+Proof. UAS Theorem 4.2's recount uses the same 74 tape components and this
+new finite $q$. Every tape cell adds 24 vertices/eight terminals; a present
+finite bit adds one vertex and no terminal. Definitions 3.3–3.4 give the
+two sizes. Initially there are two meter cells; each native row constructs
+one receipt cell and at most one nonmeter cell. Hence the displayed $C$
+identity and bound. No bound on retained runtime material follows. ∎
+

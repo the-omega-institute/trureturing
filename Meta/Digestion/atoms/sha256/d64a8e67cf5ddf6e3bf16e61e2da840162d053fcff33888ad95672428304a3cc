@@ -1,0 +1,40 @@
+**定理 18.1.4（相对熵数据处理与范围）。** 对任意有限通道 $K$，有
+
+$$
+\boxed{0\le \eta_{\mathrm{KL}}(K)\le 1.}
+$$
+
+并且对所有分布 $p,q$，
+
+$$
+\boxed{
+D(pK\Vert qK)\le D(p\Vert q).
+}
+$$
+
+**证明。**
+
+非负性来自相对熵的非负性。对每个 $y$ 使用加权 log-sum 不等式：
+
+$$
+\left(\sum_x a_x\right)\log\frac{\sum_x a_x}{\sum_x b_x}
+\le
+\sum_x a_x\log\frac{a_x}{b_x},
+$$
+
+取 $a_x=p(x)K(y\mid x)$、$b_x=q(x)K(y\mid x)$，再对 $y$ 求和，得到
+
+$$
+\begin{aligned}
+D(pK\Vert qK)
+&=\sum_y\left(\sum_xp(x)K(y\mid x)\right)
+\log\frac{\sum_xp(x)K(y\mid x)}{\sum_xq(x)K(y\mid x)}\\
+&\le\sum_{x,y}p(x)K(y\mid x)\log\frac{p(x)}{q(x)}\\
+&=D(p\Vert q).
+\end{aligned}
+$$
+
+零或无穷情形由同一不等式的扩展约定处理。对有限正比值取上确界即得范围。证毕。
+
+<a id="section-18-2"></a>
+

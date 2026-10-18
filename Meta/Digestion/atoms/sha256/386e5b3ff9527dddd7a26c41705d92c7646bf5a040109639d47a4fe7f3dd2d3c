@@ -1,0 +1,159 @@
+**Definition 77.1 (the unchanged source, literal carrier and complete laws).**
+Definition64.5 of the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md)
+is incorporated by reference to its unchanged full body, including all its
+measures, strata, kinetic coefficients, domains, traces and multipliers.
+The following record specifies that same target for use here; it introduces
+no replacement carrier. Definitions55.1,60.1,66.1 and67.1 retain every
+literal label, bracket, left/right address and distinct occurrence, immutable
+INITIAL, the original fixed cap and source-independent actor initialization,
+complete contexts and candidates, their original guards, every actual
+acceptance/refusal, numerical Read, destructive action, absorbing Stop and
+every actually acquired chronological record.
+
+For an authentic nonempty finite full binary occurrence tree $D$, write
+$o$ for the current root, $n=|D|$, and $\mathcal E_D$ for its inherited
+seams together with two distinct grounded stubs at every current leaf.
+$X_D$ has all these intrinsic unit cables and no additional identifications.
+Each source port has atomic mass one; ground ends have no atomic mass and
+have zero trace. Each open cable has density $0<\delta\le1$. Thus
+
+$$
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_{e\in\mathcal E_D}dx_e,
+\qquad \mathcal K_{D,1}=L^2(X_D,\mu_\delta),
+\qquad
+\mathcal K_{D,2}^{\rm hc}
+=\left[L^2(X_D^2\setminus\Delta,
+                 \mu_\delta\otimes\mu_\delta)\right]_{\rm sym},
+\quad \Delta=\{(x,x):x\in X_D\}.
+\tag{77.1}
+$$
+
+Here $\delta_p$ denotes a Dirac mass, distinct from $\delta$.
+Source incidence, including stubs, is two at the root and three at every
+nonroot port. There are $n-1$ inherited seams and $n+1$ stubs, hence $2n$
+cables. The one-position norm is
+
+$$
+\|F\|_{D,1}^2=\sum_{p\in D}|F(p)|^2
+                  +\delta\sum_e\int_0^1|F_e(x)|^2dx.
+\tag{77.2}
+$$
+
+Before exchange restriction, the two-position space retains every ordered
+distinct atomic pair, both orders of every atom/cable slice, every
+different-cable rectangle, and both triangles $x<y$ and $x>y$ of each
+same-cable square. Write $C_{ef}=e\times f$ if $e\ne f$, and let
+$C_{ee}$ be the union of those two open triangles. Its norm is
+
+$$
+\begin{aligned}
+\|F\|_{D,2}^2={}&\sum_{p\ne q}|F(p,q)|^2
+ +\delta\sum_{e,q}\int_0^1|F(e,x;q)|^2dx
+ +\delta\sum_{p,e}\int_0^1|F(p;e,y)|^2dy\\
+ &+\delta^2\sum_{e,f}\int_{C_{ef}}|F|^2dxdy.
+\end{aligned}
+\tag{77.3}
+$$
+
+The counts are $n(n-1)$ atomic coordinates, $4n^2$ slices and $4n^2$
+cells before symmetry; each of the $2n$ same-cable cells is dissected,
+not discarded. Total one-position and two-position measures are
+$n+2n\delta$ and $n(n-1)+4n^2\delta+4n^2\delta^2$ respectively.
+Every interval and cell keeps its entire function space. These measures
+and counts are neither finite mode counts nor physical masses or prices.
+
+$\mathcal Q_{D,1}$ consists of cable $H^1$ functions whose endpoint
+traces match the corresponding atomic values and vanish at grounded
+ends. $\mathcal Q_{D,2}$ consists of symmetric piecewise $H^1$ functions
+on all rectangles and both dissected triangles, and $H^1$ functions on
+all slices, with every cell boundary at a port equal to the corresponding
+slice and every slice endpoint equal to the corresponding atomic pair.
+The missing value $(p,p)$ is zero in these endpoint conditions. Ground
+traces vanish in either coordinate; both same-cable diagonal traces
+vanish. This also imposes the shared-port collision condition on slices
+from different incident cables. No pointwise corner trace for an arbitrary
+rectangle $H^1$ function is assumed. The exact kinetic forms are
+
+$$
+\begin{aligned}
+k_{\delta,1}(F)&=\sum_e\int_0^1|F'_e|^2dx,\\
+k_{\delta,2}(F)&=\sum_{e,q}\int_0^1|\partial_xF(e,x;q)|^2dx
+ +\sum_{p,e}\int_0^1|\partial_yF(p;e,y)|^2dy\\
+ &\quad+\delta\sum_{e,f}\int_{C_{ef}}
+                (|\partial_xF|^2+|\partial_yF|^2)dxdy.
+\end{aligned}
+\tag{77.4}
+$$
+
+These retain derivative coefficient one on cables and slices, coefficient
+$\delta$ on cells, and the commissioned operator factor $a>0$.
+Let $A_{\delta,D,N}$ be the operator associated with $a k_{\delta,N}$
+on exactly these domains. With commissioned $a,g>0$, $\nu\ge0$, and
+$\phi_A(p)=\phi(p)=2^{-|p|}$ on atoms and zero on open cables, both full
+prescriptions remain
+
+$$
+\begin{aligned}
+G_D^{\rm c}(p,q)&=\langle e_p,L^{-1}e_q\rangle
+ =\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},\\
+G_D^{\rm k}(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,
+\qquad d(p,q)=|p|+|q|-2|p\wedge q|,\\
+U_{D,1}^{\diamond}(x)&=-g\phi_A(x),\\
+U_{D,2}^{\diamond}(x,y)&=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{\{x=p,y=q\in D,\ p\ne q\}}G_D^{\diamond}(p,q),\\
+\mathcal T_{\delta,D,N}^{\diamond}&=A_{\delta,D,N}+U_{D,N}^{\diamond},
+\qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\end{aligned}
+\tag{77.5}
+$$
+
+$L$ is55.2's infinite unit-conductance occurrence Laplacian on
+$\{L,R\}^*$, with diagonal two at its root, three elsewhere and $-1$
+on parent–child seams. $L_D=I_D^*LI_D$ keeps those diagonals and kills
+the missing exterior seams. The common inverse keeps its decay-at-infinity
+law. Both entire kernels, including diagonals, retain their respective
+boundary laws. The common one-body $\phi$ is unchanged for both; the
+killed pair prescription does not replace it by a killed one-body field.
+The pair multiplier has equal values on $(p,q)$ and $(q,p)$ and vanishes
+on every other stratum. The one-body multiplier remains additive on mixed
+strata. These are separately commissioned operators, with no inferred
+physical mediator or free switch between them.
+
+The original cap-three history of55.6/64.1 is retained independently.
+Its immutable INITIAL is $t=\langle\beta,\alpha\rangle$, $H=3$,
+and its Clifford port has $E(\alpha)=A$, $E(\beta)=B$,
+$A^2=1$, $B^2=-1$, $AB+BA=1$. Its complete history is
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{77.6}
+$$
+
+The initial, accepted and refused-candidate leaf counts are $2,3,5$.
+The installed current tree after acceptance is
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, with ordered source
+vertices $(o,L,R,LL,LR)$ and leaf labels $R:\beta$, $LL:\beta$,
+$LR:\alpha$. The refused candidate is
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\langle\beta,\alpha\rangle\rangle$; it is never installed and gives
+no candidate Read. Refusal leaves the current tree and accepted index
+unchanged. INITIAL and the literal tag-one target $(1,(1,1),BA,A+B)$,
+the original reference, clock and retained records remain unchanged;
+no event follows Stop. The complete historical ten-pair tables are
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&L\,R&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G_D^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}.
+\tag{77.7}
+$$
+
+They belong to that source version and history. All the additional original
+matrix, field and spectral data of55.6 remain on that same source. No
+calculation here creates another Read or replaces an original target.
+

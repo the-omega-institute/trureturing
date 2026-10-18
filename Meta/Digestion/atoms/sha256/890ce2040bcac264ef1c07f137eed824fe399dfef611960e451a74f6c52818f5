@@ -1,0 +1,29 @@
+**Definition 9.1 (The unchanged closed class and its third-budget cost).**
+Use exactly [Two Read, Definition 8.1][TwoRead], including its finite
+nonempty installed set $K$, fixed instructions
+$\operatorname{Read}(t)$ and $\operatorname{Halt}(h)$, reply-only update
+$\delta$, measurable initialization $c_{\rm init}$ on the given
+independent seed space, finite instruction durations, and no silent
+instruction. The seed is not read after initialization. Every action,
+branch, program position and output distinction usable at runtime is
+in the current element of $K$. In particular there is no additional
+reply register, clock, counter, phase, archive or output latch.
+All installed rows, including unused rows and halt rows, count in $|K|$.
+
+Keep the original $J_p$, fixed $j$, $h_\phi$, $v_\phi$, $a,b,\eta,c$,
+$\sigma$, and $q_3,L_3$ of Definitions 1.1--1.3. Define
+
+$$
+M_3(p,j,\nu)=\min\bigl\{|K|:
+q_3=1,\ L_3=1-S_3
+\text{ in that closed class}\bigr\},
+\tag{9.1}
+$$
+
+where $S_3$ is the already proved value (5.10), and the minimum of an
+empty set is $+\infty$. This is an implementation question for a
+subclass attaining the unrestricted optimum, not a new definition of
+the unrestricted protocols. Their possible internal nonreturn after
+finitely many calls remains as in Definition 1.2. The condition in
+(9.1) remains almost-sure budgeted return.
+

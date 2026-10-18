@@ -1,0 +1,17 @@
+**Assumption 2.2 (reused original-class reduction and actual-label rigidity).** At the original source and sharp-cost/error equality face, FA69–72 and corrected RC67/75 give each existing supported-nonzero actual low label its own $p_j>0$, circle direction $h_j$ and $b_j\in[0,t\operatorname{cap}(h_j)]$, with
+
+$$
+K_j=\sqrt{p_j}\overline K_{h_j},\quad
+N_j=p_jb_j n_{h_j}n_{h_j}^T,\quad
+\sum_jp_jh_jh_j^T=I_3,\quad \sum_jN_j=M,
+$$
+
+$$
+\sum_jp_j|z_j|\ge s/s_0,\qquad
+2T_{\rm actual}=H_{\rm high}+\sum_jp_j|\ell(h_j)+b_jf(h_j)|.
+$$
+
+The supported low encoder is onto a two-dimensional fibre and the live decoder is injective; both supported CP maps have Kraus rank one. Distinct supported live directions cannot occupy the same actual low label, even when the starting competitor is complex and multi-Kraus. These are equality consequences for the existing label, not permission to read or refine its hidden Kraus index. The high supported coefficient Gram is $\operatorname{diag}(1-\delta,0,0)$ and the low Gram is $\operatorname{diag}(\delta,1,1)$. The positive high mass is mandatory.
+
+Supported-zero nonzero full-$M_5$ low labels remain admitted. Each encoder Kraus matrix then kills $E$, so all its supported live/failure maps, contrast and height contributions vanish. Such labels remain actual labels and count if generated. Finite whole-fibre positive survival excludes a nonzero supported encoder with failure-only composition, but does not exclude supported-zero labels. Necessity retains every admitted original time law and TP survivor control. At $t=0$ the capacity forces $M=0$, contrary to $m_1,m_2>0$, so this class is empty. These supplier statements are reused, not new claims of source, minimax, cost, survival or capacity certification.
+

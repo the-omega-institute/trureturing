@@ -1,0 +1,14 @@
+**假设 6.1（取得卷12.5的完整地址呈现）。** 使用该命题供应的公共有限编码，而不另假定免费树安装。地址为有限左右布尔串，原生回复为 $\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent}$。有公开可逆代码 $\iota_v$ 及有限树 $T_q$，以固定右梳槽容纳各 $O_r(q)$ 的局部代码；槽根地址为
+
+$$
+\pi_r=[\mathsf{right}]^r[\mathsf{left}]\quad(r<h-1),\qquad
+\pi_{h-1}=[\mathsf{right}]^{h-1},\qquad
+u_r=\pi_r[\mathsf{left}],
+$$
+
+$$
+\operatorname{readout}(u_r,T_q)=\iota_v(O_r(q)).
+$$
+
+对任意有限地址 $u$，停在外壳分支处的回复恒为 $\mathsf{branch}$，走出外壳或局部树的回复为 $\mathsf{absent}$，落入槽 $r$ 的局部树时回复为公开有限函数 $\psi_{u,r}(\iota_v(O_r(q)))$。因此非恒定地址由一次切口查询及公开解码回答，恒定地址无需切口；反向切口由一次 $u_r$ 读出及 $\iota_v^{-1}$ 回答。这一双向菜单保持依先前回复适应选择下一查询。每棵呈现有 $4h$ 个叶、$4h-1$ 个内部节点，叶组成均为 $(2h,2h)$。这些是此承诺族的来源前提，不是对所有 FIB 树的结论。
+

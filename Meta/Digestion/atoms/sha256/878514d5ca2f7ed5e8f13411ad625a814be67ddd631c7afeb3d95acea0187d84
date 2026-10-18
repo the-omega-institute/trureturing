@@ -1,0 +1,49 @@
+### 五、把物理射线写成信息通道
+
+先区分射线种类。真空中的伽马射线是光子，沿光速传播；阿尔法和贝塔射线分别是有质量粒子或带电粒子，不能直接套用“光子永远追不上”的论证。[www.nist.gov](https://www.nist.gov/system/files/documents/oles/DHS_102-06-PPEGuideFinalReport-3-20-07.pdf?utm_source=chatgpt.com)
+
+在狭义相对论的普通因果结构中，光速是因果影响传播的上限。[www.einstein-online.info](https://www.einstein-online.info/en/explandict/light-cone/?utm_source=chatgpt.com)
+
+但是：
+
+```math
+\text{无法从后面追上同一光子}
+\ne
+\text{所有信息永远无法被任何方式接收}.
+```
+
+设完整历史为 $`h`$，衰变后的全局状态为
+
+```math
+\mathcal E(h)
+=
+\bigl(S'(h),R(h),A(h),E(h)\bigr),
+```
+
+其中：
+
+- $`S'`$：衰变后的残余物；
+- $`R`$：自由传播的射线；
+- $`A`$：挡板或吸收体；
+- $`E`$：其他环境自由度。
+
+观察者只能使用可访问投影：
+
+```math
+O_A(h)=\Pi_A\bigl(\mathcal E(h)\bigr).
+```
+
+定义观察纤维：
+
+```math
+\mathcal F_A(y)=\{h:O_A(h)=y\}.
+```
+
+若两个历史 $`h,h'`$ 满足
+
+```math
+O_A(h)=O_A(h'),
+```
+
+那么对于只依赖 $`A`$ 的观察者，它们是不可区分的。
+

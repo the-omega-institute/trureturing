@@ -1,0 +1,30 @@
+**Lemma 7.3 (Original-output metric for the phase problem).** With the
+notation of Lemma 2.2,
+
+$$
+y(k,\alpha,\beta)=D(A(k)U(\alpha),B(k)U(\beta)),
+\qquad A(k)=2\sqrt{k(H-k)},\quad B(k)=2\sqrt{Zk},
+$$
+
+and
+
+$$
+\|D(v,w)\|_2^2=4\|v\|_2^2+\|w\|_2^2.
+$$
+
+The $02$ projection followed by $R_{-\delta_{02}}$, with its real
+plane identified isometrically with $\mathbb C$, is a norm-one map
+$\pi:\mathbb R^{10}\to\mathbb C$ satisfying
+$\pi y=B(k)e^{i\beta}$.
+
+**Proof.** The negative amplitude convention makes the doubled coherence
+pair $2\sqrt{p_ip_j}U(\delta_{ij}+h_i-h_j)$. The five increment
+differences in their original order are
+$\alpha,\beta,\alpha,-\alpha,-\alpha$. Thus the five blocks before the
+fixed preparation rotations are $(v,w,v,Jv,Jv)$, where
+$v=A(k)U(\alpha)$ and $w=B(k)U(\beta)$.
+Each of the four copies of $v$ contributes its squared norm;
+the preparation rotations and $J$ are orthogonal. The $02$ block is
+exactly the asserted complex response. All ten coordinates, their factor
+of two and their Euclidean metric are retained. $\square$
+

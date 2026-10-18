@@ -1,0 +1,20 @@
+**Definition 35.2 (a sufficient common-space condition for this joint domain).** For the actual $N=N_{\beta,\theta,T}$, define
+
+$$
+\widehat\kappa_7(N)
+=\min_{\substack{W\subseteq\operatorname{Herm}_0(3)\\
+                 \dim_{\mathbb R}W=2}}
+ \max_{0\ne X\in W}\frac{\|N(X)\|_1}{\|X\|_1}.
+\tag{R.167}
+$$
+
+This uses the contraction-value convention of [R. Ibarrondo and M. Sanz, *Contraction and Expansion Values of Quantum Channels*, arXiv:2607.04950v1, Definition 2, (13); Lemma 4, (17)–(18)](https://arxiv.org/html/2607.04950v1). The index seven denotes codimension six in the eight-dimensional real space $\operatorname{Herm}_0(3)$, not an output dimension. The maximum is continuous in $W$ by compact unit-sphere parametrization in orthonormal local frames; compactness of the real Grassmannian gives the minimum. A sufficient class condition for (R.166) is
+
+$$
+\forall\beta,\theta,T\text{ in (R.166)},\qquad
+\widehat\kappa_7(N_{\beta,\theta,T})\leq\sqrt{1-\beta}.
+\tag{R.168}
+$$
+
+Indeed, for any such actual channel and any real two-dimensional $W$, $\dim(W\cap\mathcal H_0)\geq2+7-8=1$. Evaluating its maximum ratio on a nonzero intersection vector and then minimizing over $W$ yields $m_0(N)\leq\widehat\kappa_7(N)$. This standard intersection argument is consumed only as a sufficient route to the source-specific inequality (R.166). The two spanning vectors of $W$ need not individually have zero $22$ entry, but every linear combination must obey the contraction bound. Bounds on two separately chosen directions do not suffice. No uniform estimate (R.168) is established here; Theorem 33.1 prevents imposing its orthogonalized kernel coherence plane as a universal choice of $W$.
+

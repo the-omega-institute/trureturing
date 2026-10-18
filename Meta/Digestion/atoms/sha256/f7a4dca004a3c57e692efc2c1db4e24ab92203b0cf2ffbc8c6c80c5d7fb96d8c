@@ -1,0 +1,213 @@
+**Theorem 60.1 (actual-label equality obstruction).** The assertions
+about $Z_{\rm cf}$ and probabilities in Theorem 59.2 hold for the
+whole necessity scope of Convention 59.1.
+
+Proof. Reuse JR Theorem 42.1 at its original hypotheses. On the
+supported algebra, every sharp-cost error optimizer satisfies
+
+$$
+\Lambda_\Phi=\Lambda_*=D(\cdot)D^\dagger+T(\cdot)T^\dagger+
+S(\cdot)S^\dagger,\quad G_f=M,\quad G_o=0,
+\quad Q_H=(1-u)D^\dagger D+(1-v)T^\dagger T.
+\tag{JRH.9}
+$$
+
+Each high branch has zero supported nonlive mass. Every nonzero low
+encoder/live-decoder Kraus product is, after removing a common phase,
+
+$$
+K=xD+zT+wS,\qquad x,z,w\in\mathbb R,\quad
+x^2=\theta z^2+\omega w^2,\quad x\ne0.
+\tag{JRH.10}
+$$
+
+These are consequences of JR.45–JR.48's vanishing rank/triangle slack,
+not assumptions of real or Schur controls. CA Lemma 3.1 excludes a
+nonzero rank-one matrix even in the full complex span: if $x\ne0$
+the $(1,2)$ minor is $h_1h_2x^2\ne0$; if $x=0$, column $0$
+and a nonzero column $1$ or $2$ are independent. Thus every nonzero
+low product has rank exactly two. High products and all analytic
+refinements remain attached to their actual labels.
+
+On $\operatorname{ran}M$ the height-difference matrix is
+
+$$
+\Xi=M^{1/2}\Delta M^{1/2}=
+\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix}.
+\tag{JRH.11}
+$$
+
+Its eigenvalues $\lambda_\pm=(-d_f\pm L_f)/2$ have strict
+opposite signs. Unit eigenvectors are
+$e_-=(1,t_f)^T/\sqrt{1+t_f^2}$ and
+$e_+=(t_f,-1)^T/\sqrt{1+t_f^2}$, in coordinates $(1,2)$.
+Put $B_\pm=M^{1/2}e_\pm e_\pm^\dagger M^{1/2}$, embedded
+in three coordinates. Then $B_-+B_+=M$ and
+$\operatorname{tr}(B_\pm\Delta)=\lambda_\pm$.
+
+Since $\sum_\alpha N_\alpha=M$, write
+$N_\alpha=M^{1/2}E_\alpha M^{1/2}$ with $E_\alpha\succeq0$
+and $\sum E_\alpha=I_2$. This uses the inverse of $M^{1/2}$ only
+on its support. For a positive $E$ set
+$a=\lambda_+\langle e_+,Ee_+\rangle$ and
+$b=-\lambda_-\langle e_-,Ee_-\rangle$, both nonnegative. Its
+trace-norm deficit is exactly
+
+$$
+\operatorname{tr}(E|\Xi|)-|\operatorname{tr}(E\Xi)|
+=a+b-|a-b|=2\min(a,b)\ge0.
+\tag{JRH.12}
+$$
+
+Equality requires one diagonal pairing to vanish. Positivity then kills
+the entire corresponding row and column: the other spectral line is
+the whole support of $E$, unless $E=0$. Consequently
+
+$$
+\sum_\alpha|\operatorname{tr}(N_\alpha\Delta)|\le L_f,
+\quad\text{with equality exactly when each nonzero }N_\alpha
+=q_\alpha B_+\text{ or }q_\alpha B_-,\quad q_\alpha>0.
+\tag{JRH.13}
+$$
+
+The $q_\alpha$ sum to one on each sign. This proves the full
+positive-POVM equality characterization, not only equality for a chosen
+spectral measurement. Nonnegative deficits give the same almost-everywhere
+conclusion in the admitted integral model.
+
+Choose arbitrary encoder Kraus $C_{\alpha b}$ and live-decoder Kraus
+$B_{\alpha a}$. With $K_{\alpha ab}=B_{\alpha a}C_{\alpha b}$,
+full TP and $G_o=0$ give
+
+$$
+\begin{aligned}
+2\operatorname{TV}_{\rm generated}
+&=\sum_\alpha\left|\sum_{a,b}\ell(K_{\alpha ab})+
+ \operatorname{tr}(N_\alpha\Delta)\right|\\
+&\le\sum_{\alpha,a,b}|\ell(K_{\alpha ab})|+
+ \sum_\alpha|\operatorname{tr}(N_\alpha\Delta)|\\
+&\le U_s+L_f=2\mathcal T(s).
+\end{aligned}
+\tag{JRH.14}
+$$
+
+Here the universal live bound $U_s$ is the six-ray sum in JR.51
+for $s\ge s_0$ and $k\Delta A+J_s$ from JR.58–JR.59 for
+$s\le s_0$. JR Theorem 43.2, Proposition 44.2 and Theorem 45.1
+give finite actual attainment at every $s$. Thus TV $=\mathcal T(s)$
+forces equality both in JRH.13 and in every actual-label triangle
+inequality in JRH.14. If the chosen height record coarsens the full
+generated label, contraction and the same upper bound first force
+equality for the full generated label. In a saturated label all nonzero
+live-product height differences and its failure difference have the same
+sign. This argument never makes $a,b$ into acquired labels.
+
+The source-specific row sign needed here is as follows. Suppose a
+nonzero real null $K$ in JRH.10 has
+$\operatorname{ran}B_-\subseteq\operatorname{ran}K^\dagger$.
+Its right kernel is spanned by
+
+$$
+\nu=\left(1,-\frac{bz}{h_1x},-\frac{dw}{h_2x}\right)^T.
+\tag{JRH.15}
+$$
+
+The first row of $K\nu$ is zero by the null equation, and the last
+two rows vanish directly. Orthogonality to $b_-$ is equivalent to
+
+$$
+z=-q_fw,\qquad q_f=\frac{dh_1}{bh_2}
+ \sqrt{\frac{m_2}{m_1}}\,t_f>0.
+\tag{JRH.16}
+$$
+
+Here $w\ne0$, since otherwise $z=x=0$. Substitution gives
+
+$$
+\begin{aligned}
+\frac{\ell(K)}{w^2}
+={}&\Delta A(\theta q_f^2+\omega)+\Delta Bq_f^2+\Delta C
+ -2\zeta q_f\\
+&\quad\pm2(\eta-\xi q_f)\sqrt{\theta q_f^2+\omega}.
+\end{aligned}
+\tag{JRH.17}
+$$
+
+Both signs are strictly positive throughout the conditional source box.
+For clarity, the sufficient outward rational bounds derived in §67 are
+
+$$
+\begin{gathered}
+.49<m_1<.50,\quad .34<m_2<.35,\quad
+.58<dh_1/(bh_2)<.60,\quad 0<\theta<.015,\quad0<\omega<.0021,\\
+\Delta C>.00167,\quad .0188<\xi<.0191,\quad
+.0175<\eta<.0178,\qquad .39<t_f<.42.
+\end{gathered}
+\tag{JRH.18}
+$$
+
+They imply $.18<q_f<.22$,
+$\sqrt{\theta q_f^2+\omega}<.054$ and
+$0<\eta-\xi q_f<.014416$. Dropping the other positive terms in
+JRH.17 gives the strict universal lower bound
+
+$$
+\ell(K)/w^2>.00167-.108(.014416)
+=.000113072>1/10000.
+\tag{JRH.19}
+$$
+
+It remains to justify that this row test applies to an entire arbitrary
+actual fibre. Suppose $N_\alpha=q_\alpha B_-$, $q_\alpha>0$,
+and its supported live map is nonzero. A high fibre cannot have such
+failure by JRH.9. A low fibre has some nonzero product
+$B_{a_0}C_{b_0}$ of rank two. Thus $d_\alpha=2$,
+$C_{b_0}$ is onto, and $B_{a_0}$ is injective. For every other
+nonzero encoder Kraus $C_b$, injectivity makes $B_{a_0}C_b\ne0$;
+rank-one exclusion makes it rank two, so $C_b$ is onto. For every
+nonzero decoder Kraus $B_a$, surjectivity of $C_{b_0}$ makes
+$B_aC_{b_0}\ne0$ and rank two, so $B_a$ is injective. Hence
+every product of nonzero factors has rank two with
+$\ker(B_aC_b)=\ker C_b$.
+
+Let $F_\alpha$ be the decoder's total failure effect. It is nonzero.
+For every nonzero $C_b$, the positive operator
+$N_b=C_b^\dagger F_\alpha C_b$ is nonzero because $C_b$ is onto.
+The positive sum $\sum_bN_b=q_\alpha B_-$ forces each $N_b$ to
+have exactly the line $\operatorname{ran}B_-$ as its range.
+It annihilates $\ker C_b$, so this line lies in the row space of
+every $B_aC_b$. Equations JRH.17–JRH.19 therefore make EVERY
+nonzero live product's height difference positive. Their total is
+strictly positive, whereas the actual-label failure difference is
+$q_\alpha\lambda_-<0$. The label's triangle inequality is strict,
+contrary to JRH.14. Thus each negative spectral label has its whole
+supported live map zero. Its acquisition effect equals its failure
+effect, because $G_o=0$ and the decoder is full TP. Summing these
+labels gives $Z_{\rm cf}\succeq B_-$.
+
+For $s\ge s_0$, JR.47 restricts all nonzero low products to the
+four real rays $(\sqrt u,\sigma\sqrt v,\tau)$, up to a scalar,
+where $\sigma,\tau=\pm1$. Compatibility of $B_+$ with the row
+space would instead require
+
+$$
+z/w=\frac{dh_1}{bh_2}\sqrt{m_2/m_1}\,t_f^{-1}
+>\frac{.58(.82)}{.42}>1.
+\tag{JRH.20}
+$$
+
+The four rays have $|z/w|=\sqrt v\le1$, so compatibility is
+impossible. Applying the same surjective/injective argument to a
+positive-spectral failure label excludes any nonzero live product
+there, irrespective of its sign. All failure labels are then supported
+live-zero. Conversely every supported live-zero label's effect is its
+failure effect. Hence $Z_{\rm cf}=B_-+B_+=M$.
+
+Taking the Born pairing of $B_-$ gives JRH.8. Its square never
+vanishes: $m_1(64-y)/128\ge .49(37/128)$, whereas
+$t_f^2m_2/2<.42^2(.35)/2$, and the former is strictly greater.
+The formula covers both $e$ signs and every $n$. In the strong range
+pairing $M$ gives the stated exact probabilities, maximized at $y=5$.
+These are unconditional actual acquisition probabilities. No weak
+minimum-certain-failure claim or additive error gap follows. $\square$
+

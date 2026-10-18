@@ -1,0 +1,36 @@
+**Definition 1.1 (native values and four replies).** Throughout,
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\\
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\qquad
+T_j=\rho^j\alpha.
+\end{aligned}
+$$
+
+These are nonempty finite ordered trees. Pairing is free; $\rho$ is the
+displayed interpreted substitution. An expression uses finite native
+grounds, pairing, variables and supplied numeral powers of $\rho$.
+Repeated occurrences of a variable denote one whole value. Numerals
+are fixed in each input, with no common bound across inputs.
+
+An original address is a word over $\{L,R\}$. Write $r_u(p)$ for
+$\alpha$, $\beta$ or $\mathsf{branch}$ at a reached address, and
+$\mathsf{absent}$ otherwise. Descendants of an absent address remain
+absent. For $n,h\in\mathbb N$, put
+
+$$
+\begin{aligned}
+u\simeq_n v
+&\iff\forall |p|<n\quad r_u(p)=r_v(p),\\
+u\equiv_h v
+&\iff\forall |p|\le h\quad r_u(p)=r_v(p).
+\end{aligned}
+$$
+
+Thus $\simeq_0$ is universal and $\equiv_h$ is exactly
+$\simeq_{h+1}$. The strict-depth notation will be used for generated
+certificates; the target predicate always uses inclusive depth.
+

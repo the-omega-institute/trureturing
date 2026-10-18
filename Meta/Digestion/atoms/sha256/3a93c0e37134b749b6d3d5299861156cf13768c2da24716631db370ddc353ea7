@@ -1,0 +1,53 @@
+**命题 477.1（双锚定矩的有限重构）。** 对全部 $0<t\le N+1$，有
+
+$$
+C_N(t)=\psi(t)-t(\log t-1)h_N+t\ell_N.
+$$
+
+**证明。** 这里 $\psi(t)=\sum_{1\le r\le\lfloor t\rfloor}\Lambda(r)$ 是实际 Chebyshev 函数。
+复用有限 Dirichlet 卷积 $\mu*\log=\Lambda$，有
+
+$$
+\begin{aligned}
+\psi(t)
+&=\sum_{1\le r\le\lfloor t\rfloor}\sum_{m\mid r}\mu(m)\log(r/m)\\
+&=\sum_{1\le m\le\lfloor t\rfloor}\mu(m)
+  \sum_{1\le k\le\lfloor t/m\rfloor}\log k
+=\sum_{1\le m\le\lfloor t\rfloor}\mu(m)\log(\lfloor t/m\rfloor!).
+\end{aligned}
+$$
+
+当 $t\le N+1$ 时，可将其截在 $N$：$m>t$ 时只有 $\log(0!)=0$，
+可能遗漏的端点 $m=t=N+1$ 也只有 $\log(1!)=0$。
+锚点 $t/(N+1)\le1$ 的阶乘对数同样为零。展开原 $\eta$，得到
+
+$$
+\begin{aligned}
+\sum_{m=1}^N\mu(m)\eta(t/m)
+ &=\psi(t)-t(\log t-1)H_N+tL_N,\\
+-M_N\eta(t/(N+1))
+ &=\frac{M_Nt}{N+1}\bigl(\log t-\log(N+1)-1\bigr).
+\end{aligned}
+$$
+
+相加即得结论，包含 $t=N+1$。$\square$
+
+**定义与等价矩表示。** 在逆尺度坐标 $a>0$ 上定义有限有符号测度
+
+$$
+\nu_N=\sum_{m=1}^N\mu(m)\delta_{1/m}-M_N\delta_{1/(N+1)}.
+$$
+
+由点质量的定义，直接得到
+
+$$
+\int d\nu_N=0,\qquad
+\int a\,d\nu_N=h_N,\qquad
+\int a\log a\,d\nu_N=-\ell_N,
+\qquad C_N(t)=\int\eta(ta)\,d\nu_N(a).
+$$
+
+缩放后的平滑核为 $-ta\log(ta)+ta$，其积分正是
+$-t(\log t-1)h_N+t\ell_N$。因此平滑修正处于 $t$ 与 $t\log t$ 的线性包络中。
+总质量为零不使两个加权矩为零；两个 $N+1$ 锚定修正均保留在上式中。
+

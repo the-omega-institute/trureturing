@@ -1,0 +1,25 @@
+## 375. Scope of the resulting global owner-count reduction
+
+Combine Theorems 341.2 and 348.2 with Theorems 356.1 and 365.1.
+The following reduction is in the low-sixth, six-actual-edge,
+four-distinct-fixed-frame source normal form. It does not assert
+complete flat exclusion.
+
+Retain exactly six actual labels M,V,C,D,Z,U, the unique flat
+sigma=(M,C,D,V,C,D), genuine tau=(Z,M,C,D,M,C), original connected
+circles of degree at least six and full angle sums 2*pi. All other
+owners are genuine. The scalar conditions are
+
+    c,d,v>1, m>1+c+d, v<=m-2, z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1 and z<u+m+1.
+
+The two gaps come from the complete-star maximum-gap theorem in
+Sections 318–321 with all its original hypotheses, recalled in Section
+356. The M/Z implication uses the first, and the
+new M/U implications use the second; neither gap is discarded.
+
+Put P={M,Z,U} and L={V,C,D}. An owner's P expense is the sum of all
+its original slots labelled in P, with the two transverse repetitions
+counted separately. The complete genuine P capacity is 5*pi.
+

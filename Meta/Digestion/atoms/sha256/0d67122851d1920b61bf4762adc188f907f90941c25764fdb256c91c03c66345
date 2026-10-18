@@ -1,0 +1,41 @@
+**Corollary 4.4 (exponential fresh-Read order after optimal naming).**
+Reuse the original alphabet optimum $M_1(D)$, its effective acquired
+realization from [PPF, Theorem 5.1][PPF], and the credited limit and
+strict upper bound
+
+$$
+\lambda=\lim_{D\to\infty}2^{-D}\log_2 M_1(D)<\frac3{16}
+\tag{NPH.14}
+$$
+
+from [FMR, Theorem 3.3][FMR] and [D3, Theorem 4.1][D3]. For any
+family of exact history-recovery extensions starting only from
+optimal original exports, with worst new-call bound $q(D)$,
+
+$$
+\liminf_{D\to\infty}\frac{q(D)}{2^D}
+\ge\frac{\log_2 3}{8}-\frac\lambda2
+>\frac{\log_2 3}{8}-\frac3{32}>0.
+\tag{NPH.15}
+$$
+
+For any specified family of effective optimal preparers, the minimum
+worst new-call cost of content recovery is therefore
+$\Theta(2^D)$, when local work, storage and final output are allowed
+to grow and are charged separately.
+
+Proof. Substitute $m=M_1(D)$ in (NPH.11), divide by $2^D$ and
+take the lower limit, using (NPH.14). The last constant is positive
+because $\log_2 3>1>3/4$. Theorem 4.3 gives a uniform upper
+bound $2^D$ for each specified effective preparer. No sharp leading
+constant follows. $\square$
+
+At $D=3$, Theorem 3.3 gives at least nine actual preparation
+transcripts, whereas [D3, Theorem 2.3][D3] gives $M_1(3)=4$.
+Thus no optimal four-name export alone recovers that earlier sequence.
+Equation (NPH.15) also excludes recovery with just one new Read from
+optimal exports for all sufficiently large $D$. The depth-three
+comparison alone does not exclude one new Read, since $4\cdot4$
+exceeds nine. These statements do not contradict the original feasible
+one-request prediction service.
+

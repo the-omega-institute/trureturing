@@ -1,0 +1,21 @@
+**Definition 296.1 (The remaining common-budget alternative).**
+On the original full domain, the positive assertion remains: for
+every full $y\ge0$ with $\Delta_O(y)\le1$, there is one unrestricted
+full $V\ge0$ and $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Q(y)-Q(V))\le\theta.
+$$
+
+All signed residuals and nonzero zero-cost $V$ at $\theta=1$ are legal.
+The negative alternative remains one same actual $(b,e)\in H_N$, one
+full feasible $\lambda\ge0$ with mass $M\ge1$, and one actual unit-$O$
+score with $F_{Q(y)}(b,e)>M$, together with an actual original $N$
+attainer and a uniform strict lower certificate against every original
+arbitrary-address, full-carrier $O$ competitor. The source-independent
+common seed, zero advice, sourcewise almost-sure finite handoff, hard
+two actual calls, all words and labels, independent union rows,
+positive actual tails and positive closed caps remain part of both
+alternatives.
+

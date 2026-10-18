@@ -1,0 +1,16 @@
+**Convention 1.2 (credited canonical representatives).** Write
+$C_0=\langle\alpha,\alpha\rangle$,
+$S_1=\{\alpha,\beta,C_0\}$ and
+$S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}$.
+The [FMR] map $\pi_D$ preserves every constructor reply in $W_D$ and
+replaces a branch at the depth-$(D-1)$ cutoff by $C_0$. It preserves
+every permitted target factor, fixes $S_D$, and is computable from the
+paid boundary scan. Every finite experiment on $S_D$ is a function of
+one boundary reply in the same block or is constant. These are credited
+canonicalization facts, not additional assumptions on competitors.
+In particular $|S_3|=123$, $|S_4|=15131$ and $|S_5|=228947163$.
+Every full-family canonical code constructed below exports a fixed-width
+name, with public scan/control/allocation and padded finite computation;
+all other acquired dependence is isolated under the service in
+Definition 1.1. No private preparation transcript is later accessible.
+

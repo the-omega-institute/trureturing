@@ -1,0 +1,44 @@
+### 93.5. Generic pair rigidity and mixed exclusion
+
+The radial involution fixes \(z,k,t\) and sends
+\[
+ X\longmapsto t/(1+k^2)-X,\qquad G\longmapsto-R/\bar G.
+\]
+The full normalized \(\Theta\) identities of §89 hold generically and
+specialize through the new source construction. They require no unit
+assumption on the old derivative \(F_k\).
+
+Use the complete all-six-order overlap norm \(N\) from §§79,89. For
+\(\rho(a\otimes c)=a\iota(c)\), the transported identity \(\rho(N)=0\)
+bounds multiplication rank by 380. The map is onto a twenty-dimensional
+algebra, so its kernel has dimension 380. In basis \(y^r\otimes y^s\),
+indexed by \(20r+s\), the leading 380-by-380 principal minor is
+**52 modulo 61**. The equivalent row order with seven swaps
+\[
+ (22,23),(36,37),(57,58),(140,141),(163,164),(194,195),(361,362)
+\]
+has residue 9. Thus the ranks agree in characteristic zero and the image
+ideal is \(\ker\rho\). Every arbitrary physical orthogonal generic pair
+has orthogonal mean spinors. Full lift uniqueness places its second ray
+in \(S_3\Theta\) of the first, up to phase. The uniform
+within-union bipartite theorem excludes all-generic noncanonical triples.
+
+For aligned rays use the complete original §90 quintic construction.
+The scalar cofactor resultants \(r_0,r_2\), leading quintic coefficient,
+and actual Cayley-pole factor are nonzero polynomials of degree less than
+196. Irreducibility of \(Q\) proves none vanishes at its roots; their residues are respectively 9, 45, 43 and 3 at the good map. All constant-channel, finite rank
+and pole cases of §90 are therefore retained.
+The aligned norm residues are:
+
+~~~text
+d:44; V:35; K_a:11; J_a:22; F_a:49;
+(2-id)^2+K_a:43; (2+id)^2+K_a:11.
+~~~
+
+Construct the §90.4 mixed norm in the 200-dimensional tensor algebra,
+using both signs of the aligned square root, all three repeated
+positions, all generic orders and the original input normalization.
+Its full multiplication determinant is **41 modulo 61**. Hence it is
+invertible in characteristic zero and excludes every original
+generic–aligned orthogonal edge.
+

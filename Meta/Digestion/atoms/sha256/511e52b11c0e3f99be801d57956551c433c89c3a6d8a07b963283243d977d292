@@ -1,0 +1,33 @@
+**定义 13.3（Condition $\mathsf Q$: three repeated queries, including a possible control cycle）。** Choose $E$ as in Convention 13.1, $w,e\in\mathbb F_2$, $i=1-w$, $h_e=1-e$, and a bijection $G:\mathbb F_2\to U_Y$. Choose two markers $\theta_w,\theta_i$, each in the disjoint set
+
+$$
+\operatorname{Stop}(U_Y)\sqcup\{\mathrm{Final},\mathrm{Cross}\},
+\tag{13.5}
+$$
+
+with at most one $\mathrm{Cross}$. Thus there are eight marker patterns before choosing any literal Stop labels. For each actual phase $j$, abbreviate $b=q_2^B(j)$ and $c=q_3^B(j)$. Define
+
+$$
+T_j(\operatorname{Stop}(L))=L,\qquad
+T_j(\mathrm{Final})=G(h_e\oplus c).
+\tag{13.6}
+$$
+
+A first raw response is $x=v\oplus q_1(j)$. Its required literal return is the following table. An undefined entry must have no actual phase satisfying its row conditions.
+
+| Component, first raw response and further condition | Required return |
+| --- | --- |
+| $v=i$, $x=e$ | $G(e\oplus b)$ |
+| $v=w$, $x=e$, $b=0$ | $G(e\oplus c)$ |
+| $v=w$, $x=e$, $b=1$, $\theta_i=\operatorname{Stop}(L)$ | $L$ |
+| $v=w$, $x=e$, $b=1$, $\theta_i=\mathrm{Final}$ | $G(h_e\oplus c)$ |
+| $v=w$, $x=e$, $b=1$, $\theta_i=\mathrm{Cross}$ | $L$ if $\theta_w=\operatorname{Stop}(L)$ and $c=0$; otherwise undefined |
+| Either $v$, $x=h_e$, $\theta_v=\operatorname{Stop}(L)$ | $L$ |
+| Either $v$, $x=h_e$, $\theta_v=\mathrm{Final}$ | $G(h_e\oplus b)$ |
+| $v=w$, $x=h_e$, $\theta_w=\mathrm{Cross}$, $b=0$ | $T_j(\theta_i)$ |
+| $v=w$, $x=h_e$, $\theta_w=\mathrm{Cross}$, $b=1$ | $G(e\oplus c)$ |
+| $v=i$, $x=h_e$, $\theta_i=\mathrm{Cross}$, $b=0$ | $T_j(\theta_w)$ |
+| $v=i$, $x=h_e$, $\theta_i=\mathrm{Cross}$, $b=1$ | Undefined |
+
+Condition $\mathsf Q$ says that every entry selected by each $v\in\mathbb F_2,j\in J$ is defined and equals $\lambda_v(j)$. At most one Cross makes each occurrence of (13.6) defined. This is an explicit comparison of the original tables with three translations of one physical charge, including the phases outside the intermediate window. The markers specify the eight complementary-exit patterns forced in the proof below; they do not range over a controller graph, a word menu or hidden runtime data.
+

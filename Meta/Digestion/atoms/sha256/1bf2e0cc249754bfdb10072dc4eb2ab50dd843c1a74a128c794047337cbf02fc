@@ -1,0 +1,39 @@
+**Definition 10.2 (settled conditional residual value and remaining questions).**
+Definition 1.3 remains the unchanged original mathematical target.
+RC58–66 and JR's initial branch conditionally evaluate it throughout
+$\bar\tau<\tau<1$ by EP.18c. RC identifies the first vanishing
+factor as $d_+$, proves that its simple zero is the genuine
+three-to-four contact/rank transition, glues the two value branches
+with their normalized multipliers, and excludes later interior
+support/rank transitions. Its exact common finite attainments cover
+that full parameter range. Those matters are no longer left open in
+this companion. They are conditional on the specified CG/JR premises
+and RC's named finite comparisons, not reauthenticated by the local
+proof.
+
+What this companion additionally evaluates is the coefficient of
+$\varepsilon$ after the credited $\Gamma\sqrt\varepsilon$ gain,
+and the constant term after $\Gamma/\sqrt\varepsilon$ in every
+normalized optimal multiplier. Sections 6–7 prove EP.35 and EP.9,
+with no unevaluated contact derivative, and identify exactly the same
+RC branch and objective scales. No numerical sign or value of $K_1$,
+explicit radius for the local expansions or uniform remainder constant
+is supplied. The local proof alone is not offered as an independent
+entire-interval evaluation.
+
+A certificate boundary, a three-atom feasibility cap and loss of
+three-label height optimality are different notions. Grouped PSD ranks,
+real-null atom counts, actual low live-bearing label counts, inaccessible
+Kraus multiplicity, exact-report attenuation alphabets and total acquired
+alphabets remain distinct. The theorem settles the stated endpoint
+minimum of low live-bearing labels; minimum total alphabet, arbitrary
+whole-instrument uniqueness and classification of complete five-mode
+optimizers or individual labelled failure CP measures remain separate
+questions.
+
+The local four-actual-low-label minimum is proved here with the common
+decoder and arbitrary-multiplicity argument. No new global actual-label
+minimum is asserted by combining RC's real-atom count with RH's lemma.
+RC's eleven/twelve construction counts and the local minimum remain
+different statements.
+

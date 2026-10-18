@@ -1,0 +1,18 @@
+**Proposition 7.1 (Exact count and access audit).** The table has exactly
+
+$$
+M(s,J)=3+(2H-1)(J+1)
+$$
+
+listed configurations and obeys Definition 2.2.
+
+**Proof.** There are $2H-1$ evidence coordinates and $J+1$ simultaneously retained level
+values, plus $w,d_0,d_1$. Unreachable pairs are still counted. The zero, one, waiting,
+label, holding, saturation, and impossible-input rows are all defined and stochastic.
+The fresh coin changes only the listed successor. Evidence addition and threshold
+comparison are compiled into destinations; no mutable arithmetic workspace, gap count,
+residence register, random tape, phase, overshoot, likelihood register, clock, or hidden
+suffix exists. A saturated gap continues to consume each actual zero. Resetting level zero
+resets only the observer category, never the source. The initial wait and the terminal
+closing bit are actual reads. $\square$
+

@@ -1,0 +1,118 @@
+**Theorem 1.3 (complete-boundary absorber and exact adjacent-repeat locus).**
+For any encoder $e$ in NARC Assumption 9.1 define the public set
+
+$$
+\mathcal J(e)=\{z\in\mathbb Z:1\le z<q,\ e(0,z)=e(0,z-1)\}.
+\tag{NARZ.1.1}
+$$
+
+For every finite budget $k\ge0$, both-cut recovery at every
+nonnegative lag with at most $k$ chronological native Reads is
+equivalent to $D_k$ on both full reference states of every attained
+class and on the complete states $S_0(z)$ of (NARC.10.4) for
+$z\in\mathcal J(e)$ only. Each retained $S_0(z)$ contains every
+$(a,b)\in C_{e(0,z)}$ with $b\le z$, including all its positive-age
+alternatives.
+
+Under the full reference certificates, $\mathcal J(e)$ is exactly
+the locus where a complete zero-containing boundary state has an
+age-one target different from its age-zero target. Thus absence of
+adjacent repeated labels in row zero suffices to extend positive-lag
+service to nonnegative-lag service at the same budget. It is not a
+necessary condition: an adjacent repeat may have a successful complete
+boundary certificate. The equivalence does not assert failure or
+logical independence of the retained tests.
+
+**Proof.** Necessity follows from NARC Theorem 10.2 by retaining fewer
+of its necessary boundary tests. For sufficiency assume the stated
+reference and retained boundary certificates. Full reference
+readability forces $d=a-b$ to be injective in each class, by the
+supplied collision obstruction in NARC Theorem 9.2. Equivalently, equal
+right-reference ages must have equal $b$ targets, and equal $d$ and
+$b$ then fix $a$.
+
+Fix $0\le z<q$ and retain the entire $S_0(z)$, with ages
+$n=z+a-b=a+(z-b)$ and targets $b$. Since $a\ge0$ and $b\le z$,
+an age-zero origin is uniquely $(0,z)$, with target $z$. An age-one
+origin can only be $(0,z-1)$, at lag one and target $z-1$, or
+$(1,z)$, at lag zero and target $z$, when these pairs are in the
+square and class. The two possible age-one origins have the same
+difference $1-z$, so injectivity permits at most one of them in that
+class. For $z\ge1$, the differing-target origin $(0,z-1)$ belongs
+to this boundary class exactly when $e(0,z-1)=e(0,z)$, which is
+exactly $z\in\mathcal J(e)$. Otherwise an age-one origin, if
+present, has the same target as age zero. This proves the exact
+locus assertion, including same-target zero/one occurrences.
+
+For $z\notin\mathcal J(e)$ and $z\ge1$, take the right full
+reference witness for $C_{e(0,z)}$, restrict it to every member with
+$b\le z$, and translate by $\Delta=z-Z$. Its reference ages are
+$Z+a-b\ge2$, and its translated indexed state is exactly $S_0(z)$.
+Lemma 1.2 supplies a depth-at-most-$k$ actual tree, keeping every
+origin in that complete fiber. The reference witness uses
+$\mathcal M_q$. Since $z<q$ and $Z=q+1$, $\Delta<0$, so every
+replacement $P_s$ with $s\ge2$ still has $s\le3q+1$; the other
+paid replacements are $E$ or $P_2$. The resulting tree therefore
+supplies $D_k$ in precisely the finite menu of NARC Definition 10.1.
+At $z=0$ all retained origins have $b=0$, so $D_0$ already holds.
+Every omitted boundary test has now been supplied.
+
+Together with the assumed complete certificates at
+$\mathcal J(e)$, these are all the boundary tests of NARC Theorem 10.2.
+That theorem yields every nonnegative lag and both cuts. In detail,
+all left-hidden ages are positive, and a right entry has an age-zero
+candidate only at the recognizable input
+$(e(0,z),\mathcal R^R_z)$ with $z<q$. Its positive-support translation
+serves every other entry. Initialization always uses the full fiber
+of NARC Theorem 5.2; each actual reply keeps every compatible origin, and
+the actual original survives. A terminal common target $v$ gives
+its own lag $z-v$. Nothing selects a hidden original from a
+target-constant leaf or consults the discarded row.
+
+For nonnecessity, reuse the published encoder $e_{17}$ of NARC Definition
+11.1: (NARC.11.7) gives $e_{17}(0,10)=e_{17}(0,11)=6$, whereas
+NARC Theorem 11.5 certifies all its complete zero fibers with budget two.
+Their lawful schedules are already supplied there. A repeat alone
+therefore implies neither failure nor the need for an extra call.
+When $q=1$, $\mathcal J(e)$ is empty and every target is zero,
+so the equivalence includes zero-call service. For arbitrary $q$,
+the proof uses only target constancy at budget zero and the same
+finite-tree induction at higher budgets. Empty reply supports are
+vacuous throughout. $\square$
+
+The mathematical suppliers of Theorem 1.3 are NARC Theorems 5.2, 9.2
+and 10.2 and the native menu of NARC Definition 5.3. The two-read
+equality, defect, saturated-boundary and packing results of NARC §§13--16
+remain their own results; no shape restriction from them is needed
+for Lemma 1.2. The incremental statements here are the common-target
+translation and its exact row-zero locus for arbitrary finite budgets.
+They are `repo-derived` ordinary deductions under these suppliers.
+The literature-attested target-conflict ingredient is Charpenay,
+Le Treust and Roumy, [*Optimal Zero-Error Coding for Computing under
+Pairwise Shared Side Information*, arXiv:2211.03649v2, Definitions
+II.1 and III.1](https://arxiv.org/html/2211.03649v2): different required
+outputs at a common compatible side-information value must be
+separated. The permitted-query distinction is Nowak, [*The Geometry
+of Generalized Binary Search*, arXiv:0910.4397v5, §§I--II and
+V.A](https://arxiv.org/html/0910.4397v5). Their probabilistic
+prefix-code rate and binary hypothesis-identification bounds,
+respectively, do not supply the native missing-$P_1$ replacement or
+the adjacent-repeat equivalence. This bounded correspondence makes
+no global priority claim.
+
+Every actual $E$ costs one chronological call at the hidden-slot
+word, and every actual $P_t$ costs one at a whole word of length
+$1+\lceil t/2\rceil$. These are the same payment and address
+conventions as NARC Definition 12.3. Lemma 1.2 preserves the call upper
+bound; it asserts no equality of submitted lengths or of other
+resource coordinates before and after translation. Acquiring and
+storing whole rows, parsing, retained-label and public-table
+representation, local arithmetic, changing workspace, address
+production, total submitted length, output size and physical time
+remain separate costs. Runtime thresholds at unbounded lags remain
+input-dependent. No uniform address bound, fixed finite Moore
+implementation, physical service or kernel verification follows.
+The unrestricted $q=18$ and $q=19$ cover questions under both lag
+conventions remain the unresolved questions of NARC Definition 16.3;
+absorbing a redundant boundary test constructs neither cover.
+

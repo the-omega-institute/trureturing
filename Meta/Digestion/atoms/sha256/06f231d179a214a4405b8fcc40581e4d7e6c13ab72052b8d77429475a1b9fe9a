@@ -1,0 +1,32 @@
+### 77.3. Converting the contraction inequality to the sharp support bound
+
+Choose local Schmidt bases of c₀ so that c₀=(|00>+|11>)/sqrt(2). Let A and B be the 2×2 matrices whose columns are the coordinates of P_A a_i and P_B b_i in these bases. Each is a compression of an isometry, hence is a contraction. Under the usual vectorization identification, the projections of c and d onto the anchor product support have coefficient matrices ABᵀ/sqrt(2) and AZBᵀ/sqrt(2). Therefore
+
+    sqrt(F)=|Tr(ABᵀ)|/2,
+    ||Qd||²=(1/2)||(AZBᵀ)₀||²_F.
+
+Equation (3) gives 2sqrt(F)≤1+||Qd||², or ℓ≤2(1−sqrt(F)). Since d is a unit vector, also ℓ≤1. This proves the upper bound in (1).
+
+For sharpness on F∈[1/4,1], use local dimension three with c₀=(|00>+|11>)/sqrt(2). For t∈[0,1] set
+
+    v=sqrt(t)e_1+sqrt(1−t)e_2,
+    a_0=b_0=(e_0+v)/sqrt(2),
+    a_1=b_1=(e_0−v)/sqrt(2).
+
+The local pairs are orthonormal. Direct expansion gives
+
+    c=(|00>+v⊗v)/sqrt(2),
+    d=(e_0⊗v+v⊗e_0)/sqrt(2),
+    F=(1+t)²/4,  ||Qd||²=t,  ℓ=1−t=2(1−sqrt(F)).
+
+For F∈[0,1/4], instead choose θ∈[0,π/4], v=cos(θ)e_0+i sin(θ)e_1, and
+
+    a_0=b_0=(v+e_2)/sqrt(2),
+    a_1=b_1=(v−e_2)/sqrt(2).
+
+Now c=(v⊗v+|22>)/sqrt(2), d=(v⊗e_2+e_2⊗v)/sqrt(2), and
+
+    F=cos²(2θ)/4,  Qd=0,  ℓ=1.
+
+These two families cover the whole interval, agree at F=1/4, and prove exact attainment of (1), including F=0 and F=1.
+

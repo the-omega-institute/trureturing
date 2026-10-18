@@ -1,0 +1,140 @@
+**Theorem 11.1 (static structural consequences at the same root).**
+Under Assumption 10.1, the following strict inequalities hold:
+
+$$
+\begin{gathered}
+0<D_u<D_v,\quad E_{\ell,12}<0,\quad l_u,l_v>0,\quad
+l_u>2|E_{\ell,12}|,\\
+E_{\ell,11}>0,\quad E_{\ell,22}-E_{\ell,11}>0,\quad
+4E_{\ell,11}(E_{\ell,22}-E_{\ell,11})>l_v^2,\\
+\ell(h)>0\quad\hbox{whenever }u\ge0.
+\end{gathered}
+\tag{FC.29}
+$$
+
+Proof. All decimals in this proof are exact terminating rationals.
+GC Definition 6.1, equivalently the source rows of
+[ST Definition 10.1](FIB_NATIVE_COMPLETE_CONTINUATION_SATURATED_CONTACT_TRANSITIONS.md),
+implies the following wider open rational intervals, by comparing
+each dyadic endpoint with the displayed rational endpoint:
+
+| Source coordinate | Open rational interval |
+| --- | --- |
+| $h_0$ | $(0.984,0.985)$ |
+| $h_1$ | $(0.706,0.707)$ |
+| $h_2$ | $(0.809,0.810)$ |
+| $a$ | $(0.0656,0.0657)$ |
+| $b$ | $(0.1459,0.1461)$ |
+| $c_{\rm src}$ | $(0.0154,0.0156)$ |
+| $d$ | $(0.0987,0.0989)$ |
+
+Use the exact matrix (GC.28). With $q_*=11/64$, direct trace
+multiplication gives all entries of the symmetric $N$:
+
+$$
+\begin{gathered}
+N_{00}=q_*(h_0^2-h_1^2),\quad
+N_{11}=q_*(b^2-a^2),\quad N_{22}=q_*d^2,\quad
+N_{12}=ac_{\rm src}\Delta_{12},\\
+N_{01}=(h_0a+h_1b)\Delta_{01},\qquad
+N_{02}=(h_0c_{\rm src}+h_2d)\Delta_{02},\qquad N_{ji}=N_{ij},\\
+\Delta_{01}=(\sqrt{999}-\sqrt{295})/128,\quad
+\Delta_{02}=(\sqrt{27}-\sqrt5)/16,\quad
+\Delta_{12}=(\sqrt{37}-\sqrt{59})/16.
+\end{gathered}
+\tag{FC.30}
+$$
+
+For explicit rational comparisons one may use
+$31.606<\sqrt{999}<31.607$, $17.175<\sqrt{295}<17.176$,
+$5.196<\sqrt{27}<5.197$, $2.236<\sqrt5<2.237$,
+$6.082<\sqrt{37}<6.083$, and $7.681<\sqrt{59}<7.682$.
+Each assertion follows by squaring its positive endpoints. In
+particular $\Delta_{01}>0.112$,
+$0<\Delta_{02}<0.186$ and $-0.101<\Delta_{12}<0$.
+
+The cancelled ratio
+
+$$
+\alpha=\frac1{1+c_{\rm src}dh_1/(abh_2)},\qquad
+\beta=1-\alpha,\qquad
+\delta=\frac{ab}{h_0h_1}+\frac{c_{\rm src}d}{h_0h_2}
+\tag{FC.31}
+$$
+
+avoids treating a repeated numerator and denominator as unrelated.
+For instance the lower and upper bounds for $\alpha$ are
+$[1+0.0156\cdot0.0989\cdot0.707/
+(0.0656\cdot0.1459\cdot0.809)]^{-1}$ and
+$[1+0.0154\cdot0.0987\cdot0.706/
+(0.0657\cdot0.1461\cdot0.810)]^{-1}$.
+Positive rational multiplication and division in (FC.31) give
+
+$$
+0.876<\alpha<0.879,\qquad 0.121<\beta<0.124,\qquad
+0.0156<\delta<0.0159.
+\tag{FC.32}
+$$
+
+Here are sufficient endpoint comparisons for all the structural
+height bounds, using $G=LNL$. Put
+
+$$
+\begin{aligned}
+L_{11}&=q_*\left[0.0156(0.984^2-0.707^2)
+                 +(0.1459^2-0.0657^2)/0.879\right],\\
+U_{11}&=q_*\left[0.0159(0.985^2-0.706^2)
+                 +(0.1461^2-0.0656^2)/0.876\right],\\
+L_{\rm gap}&=q_*\left[0.0987^2/0.124
+                 -(0.1461^2-0.0656^2)/0.876\right].
+\end{aligned}
+\tag{FC.33}
+$$
+
+Cross multiplication of positive denominators gives
+$0.00456<L_{11}<E_{\ell,11}<U_{11}<0.00465$ and
+$E_{\ell,22}-E_{\ell,11}>L_{\rm gap}>0.01015$.
+The latter difference cancels $G_{00}$ exactly.
+Also $\sqrt{\alpha\beta}>0.325$,
+$\sqrt{\delta/\alpha}>0.133$ and
+$\sqrt{\delta/\beta}<0.363$, by (FC.32) and squared rational
+comparisons. Consequently
+
+$$
+\begin{aligned}
+0<-E_{\ell,12}
+&<0.0657\cdot0.0156\cdot0.101/0.325
+ =0.0003185136<0.00032,\\
+l_u&>2(0.133)(0.984\cdot0.0656+0.706\cdot0.1459)(0.112)
+ =0.0049918223936>0.0049,\\
+0<l_v&<2(0.363)(0.985\cdot0.0156+0.810\cdot0.0989)(0.186)
+ =0.0128925621<0.013.
+\end{aligned}
+\tag{FC.34}
+$$
+
+Further, $b^2/\alpha<0.1461^2/0.876<0.025$, whereas
+$d^2/\beta>0.0987^2/0.124>0.078$. This proves $D_u<D_v$.
+The signs of $E_{\ell,12},l_u,l_v$ also follow directly from
+(FC.30). Finally
+
+$$
+4(0.00456)(0.01015)=0.000185136>0.000169=0.013^2,
+\qquad 0.0049>2(0.00032).
+\tag{FC.35}
+$$
+
+For $u\ge0$, the term $u(l_u+2E_{\ell,12}v)$ is nonnegative.
+Writing $\gamma_\ell=E_{\ell,22}-E_{\ell,11}>0$ therefore gives
+
+$$
+\ell\ge E_{\ell,11}+\gamma_\ell v^2+l_vv
+\ge E_{\ell,11}-\frac{l_v^2}{4\gamma_\ell}>0.
+\tag{FC.36}
+$$
+
+This includes $u=0$. These are consequences of enclosure membership
+for the same source expressions. They neither isolate a root nor
+prove TP at the corners or other points of the enclosing box.
+$\square$
+

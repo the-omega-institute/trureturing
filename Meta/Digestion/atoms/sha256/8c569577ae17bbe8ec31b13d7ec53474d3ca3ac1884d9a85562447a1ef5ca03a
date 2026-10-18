@@ -1,0 +1,57 @@
+**Theorem 80.1 (two open parameter neighborhoods).** At \(b=\pm1/2\),
+the only common-flat orthonormal input basis is the canonical basis, up to
+column phases and permutation. There exists \(\varepsilon>0\), which may
+be chosen less than \(1/4\), such that the same uniqueness holds whenever
+\[
+|b-1/2|<\varepsilon\quad\text{or}\quad|b+1/2|<\varepsilon.
+\tag{80.1}
+\]
+For every such \(b\), the fixed mutually-unbiased pair \((I_6,H_0(b))\)
+cannot be part of a quartet. The radius here is existential.
+
+At \(b=1/2\), a common-flat orthonormal basis containing a canonical ray is
+entirely canonical by Proposition 60.1. A basis containing none would contain
+an orthogonal noncanonical triple, contrary to Theorem 79.1. This proves the
+positive pointwise statement without presupposing intersection with the
+canonical set.
+
+The negative parameter is transported by the exact identity
+\[
+H_0(-b)=\operatorname{diag}(I_3,-I_3)\,H_0(b)
+ \begin{pmatrix}0&I_3\\I_3&0\end{pmatrix}.
+\tag{80.2}
+\]
+These monomial factors preserve flatness and orthogonality. Swapping input
+channels also maps the canonical ray set onto its negative-parameter set,
+so the same pointwise statement holds at \(-1/2\).
+
+For the neighborhood assertion, take \(K=[1/4,3/4]\). Corollary 62.2 gives
+\(\eta_K>0\) separating every noncanonical common-flat orthonormal input
+basis at \(b\in K\) from the moving canonical basis modulo phases and
+permutations. If uniqueness failed arbitrarily close to \(1/2\), choose
+\(b_n\to1/2\) and such noncanonical unitary bases \(W_n\). Compactness of
+\(U(6)\) gives a convergent subsequence. Orthonormality and original
+input/output flatness are closed conditions, so its limit \(W_*\) is a
+common-flat basis at \(1/2\). Pointwise uniqueness makes it canonical up
+to a fixed column phase/permutation choice. The full Gram matrix remains
+the identity in the limit; distinct orthogonal columns cannot collide.
+Continuity of the canonical matrix \(C(b)\) then makes the distance from
+\(W_n\) to the moving canonical class tend to zero, contradicting
+\(\eta_K\). This gives an open interval. Equation (80.2) gives its negative
+counterpart; shrink the common radius below \(1/4\).
+
+Finally keep the input/output convention explicit. A unitary column basis
+\(B\) is unbiased to both \(I_6\) and \(H_0(b)\) exactly when
+\(W=H_0(b)^*B\) is unitary and both \(W\) and \(H_0(b)W=B\) are flat.
+Thus the unique ordinary common-unbiased basis is
+\(H_0(b)C(b)/\sqrt6\), up to column phases and permutation, where \(C(b)\)
+is the unit-entry canonical **input** matrix of (62.1). Two additional bases
+in a quartet would have that same column-ray set. Their relative unitary
+would be monomial, which cannot be flat. This proves the fixed-pair
+no-quartet corollary on (80.1).
+
+No numerical radius is asserted, and these intervals have not been shown
+to join the central neighborhood of §§67–69. The entire nonzero open branch
+and the general dimension-six fourth-MUB problem remain outside this result.
+
+

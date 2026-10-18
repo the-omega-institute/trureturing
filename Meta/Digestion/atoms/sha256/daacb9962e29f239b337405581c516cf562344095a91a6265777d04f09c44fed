@@ -1,0 +1,23 @@
+**Convention 25.1 (primary machinery and exact correspondence).**
+The Hölder/log-partition, maximum-entropy gluing, Gibbs identity and
+binary incidence-rank arguments are mature mathematical machinery.
+The repository-derived deductions here are Theorem 21.2's optimum over
+arbitrary globally compensating positive whole-scope tables, its
+extensive forest gap, §22's exact-global-marginal and positive-carrier
+entropy gaps, and §23's proper-rank comparison. They carry no worldwide
+priority or Lean-certification assertion.
+
+| Primary source | Supplied machinery and exact transfer boundary |
+| --- | --- |
+| R. Cosson and D. Shah, *Quantifying Variational Approximation for Log-Partition Function*, arXiv:2102.10196v2, §2.2, equations (8)–(12), and §3, equations (13)–(15) [primary text][ForestCS] | Tree appearance probabilities and an average-parameter identity yield a convex log-partition upper, with power reweighting as a particular construction. Here a selected object is an entire original four-seed block potential; all original variables remain in every sum, and (GDB.85) is a pointwise average-log identity. The proof above establishes the required finite Hölder direction. Their quantitative results for pairwise models with nonnegative energy potentials are not transferred to arbitrary native hard joint factors. Definition 20.3 is not asserted to contain every tree-reweighted representation. |
+| M. J. Wainwright and M. I. Jordan, *Graphical Models, Exponential Families, and Variational Inference*, DOI 10.1561/2200000001, Proposition 7.1, pp.168–169, equations (7.4)–(7.7) [primary text][ForestWJ] | Dropping marginal constraints increases maximum entropy; convex mixtures and outer marginal sets produce variational uppers. Lemma 22.2 proves the needed four-ary forest entropy formula, including zero separator events. The energy retains every original whole weight once. The pairwise specialization in their §7.2 is not imported as a native representation theorem. |
+| A. Atserias and P. G. Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Lemma 12 and Theorem 4 [primary text][ForestAK] | Running intersection/join-tree acyclicity gives local-to-global extension. The gluing in §22 is this mature mechanism on common actual edge variables. Its obstruction already supplies a global law, so extension existence alone does not control entropy loss. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, arXiv:1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][ForestR] | Binary log-supermodular factorization gives per-cover domination and a Bethe lower bound. No such hypothesis or unrestricted native upper direction is supplied here. Neither theorem is used to infer a cap for arbitrary native weights. |
+
+The source-specific bridge is the actual tuple bijection of Theorem
+12.3, the positive entire-alphabet law of Definition 12.4, the exact
+mass and unrestricted comparison in §13, and the paid full-family code
+of §17. These suppliers are reused once for both certificate classes.
+The symmetrization and rank steps only reindex finite sums on that one
+carrier; they grant no operation on an unknown source.
+

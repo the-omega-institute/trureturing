@@ -1,0 +1,17 @@
+**Convention 7.1 (unchanged task and explicit reused interfaces).** Retain the complete model of Sections 1–2: one finite stationary graph, current state as its sole changing configuration, correctness and actual termination on every Boolean input, distinct original costs, and both caps $8,W$ on every same run. Adaptive coordinate choices, sharing, repeated queries, paid post-certificate traffic and syntactic cycles remain allowed. All installed states count. No order normalization, history, selector, counter, clock, phase, computed address or residual entry is added.
+
+Use $V,F_p,b_p,e_p,e_d,E_B,D_B,E_{\rm cut},u$ from Section 2. The supplied interfaces there apply to every such competitor. In particular [SI, Theorem 2.2][SI19] gives nonempty host sets, fresh live queries, one support per fixed cell and host, unique axis hosts, and actual fixed live successors. Its successor assertion is
+
+$$
+p=(h,z),\quad p_\varepsilon=(h+\varepsilon,z+1-\varepsilon)\in V
+\quad\Longrightarrow\quad
+\delta(q,\varepsilon)\in F_{p_\varepsilon}.
+\tag{15}
+$$
+
+For an actual occurrence with support $S$, the child in (15) has support $S\cup\{i(q)\}$. Each desired reply can be realized separately on a completion of that occurrence's exposed assignment. A reply word whose final counts lie in $V$ is actual and live throughout: each earlier count is bounded by its final live count, correctness forbids an earlier terminal, and freshness permits the next requested reply.
+
+The equal-support, nested-support and equal-hit exclusions and count separation (3) retain exactly their stated conditional suppliers. The local diagonal argument of [SI, Theorem 4.1][SI19] has the following useful scope: a consecutive segment of cells on one diagonal, each with one support, has the same support throughout. Adjacent cells are the two live children of their common parent; (15) identifies their unique supports. No singleton premise is needed on that parent or outside the segment.
+
+[SI, Theorems 5.2 and 9.3][SI19] supply the same-graph identity (4) and live-pool localization. [SI, Theorems 9.4 and 10.4][SI19] supply span-at-most-four compensation. [SI, Lemma 10.2][SI19] supplies right-cut separation (5), hence zero sharing for gaps ending at five or earlier. Every internal depth of a consecutive gap is noncommon and has $e_d\ge1$. Depths zero and one are common-support; eight is the formal endpoint. None of these interfaces asserts a free operation on the running graph or removes certified traffic.
+

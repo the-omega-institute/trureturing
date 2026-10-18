@@ -1,0 +1,26 @@
+**Proposition 11.5 (finite realization with authentic exact calibration).** With the finite calibration alphabet of Assumption 10.1 and $0<\epsilon<1$, a common finite nominal observer satisfying Definition 11.1 exists exactly when every nonempty calibration cell is a singleton. At $\epsilon=0$, it exists exactly when every nonempty cell is a singleton and every installed triple satisfies $r=p+q$. At $\epsilon\ge1$, the one-state construction of Theorem 11.3 suffices without calibration. These are conditional existence statements given authentic source-bound supply and the installed model data.
+
+**Proof (11.5).** Singleton cells are necessary by Theorem 11.3, and finitely many labels then imply a finite parameter menu. For sufficiency reuse the fixed-law generator of Theorem 5.1, with its actual-history certificate. For each unequal installed triple choose $\eta=\min(\epsilon/2,\kappa/4)>0$, so $\eta\le\epsilon$ and $2\eta<\kappa$. With the notation of Definition 4.1 put
+
+$$
+N=N_1(\eta)=\min\{k:\delta_k\le\eta\}.
+$$
+
+The supplied carrier is $I,R_0,\ldots,R_4,A_0,\ldots,A_{N-1}$, with $6+N$ total configurations and $5+N$ reached after reads. Its total update resets every singleton $j$ to $R_j$, uses $R_0,R_4\mapsto R_4$ and $R_1,R_2,R_3\mapsto R_2$ on $B$, and advances startup labels to the cutoff and then to the dominant $R_d$. Its rows at $R_i$ are the literal rows $v_i$, its rows at $A_k$ are the actual startup one-step rows, and its row at $I$ is the first-read law $(1/5,1/5,1/5,2/5)$ in order $(0,1,3,B)$. Its decoder is the product of these normalized rows along this very $U$. Splitting off the first factor proves (11.1) at every configuration, including zero factors; row normalization proves coherence and normalization.
+
+Theorem 2.1 exhausts the actual histories, and Theorem 5.1 proves their errors for this product decoder. Pure histories are exact. At $B^{k+1}$ with $k\ge N$ the error at horizon $H$ is $\delta_k(1-u^H)\le\eta$. For a transient $A_k$, $k<N$, put $m=N-k$. The error is zero for $H\le m$, and for $H>m$ is
+
+$$
+\frac{u^N}{a^k+b^k}(1-u^{H-m})\le\delta_N\le\eta.
+$$
+
+The empty-law supremum error is $u^N/5\le\eta$. These are the existing estimates of Theorem 5.1: before the cutoff the only altered continuation is the common prefix $B^m$, after which the generator uses $F_d$ instead of the residual startup mixture. Its transient decoder is thus the generated law, not an unchanged exact startup profile past the cutoff. The non-strict cutoff includes equality $\delta_N=\eta$.
+
+If $d=2$, the saturated forecast gives report $0$ probability zero while the actual minority component still gives it positive probability; total $U$ sends it to exact $R_0$. If $d=4$, the analogous true-positive forecast-zero reports are $1,3$, resetting to exact $R_1,R_3$. Equation (11.1) has both sides zero on the preceding null forecast cylinder, and the actual successor has its required exact pure law. No source-positive history is excluded.
+
+At $a=b$, reuse the exact equality construction of Theorems 2.2 and 4.3. Five pure labels and one half-mixture label $A$ suffice for post-read-only queries, with initialization at $A$, a $B$ self-loop there and singleton resets. Equal holding rates make conditioning that half-mixture on $B$ return the same law, and its singleton reports identify their pure successors. With a queryable empty boundary add $I$ with the true first-read row and $B\mapsto A$, giving seven configurations. These machines satisfy (11.1) exactly. Initialization at $A$ in the post-read convention supplies no different hidden prior: the first actual read still filters the stated uniform $\pi$, and its unqueried pre-read forecast is not an actual source generator.
+
+Take the disjoint union of the finitely many supplied machines, keep the model block within the retained configuration, let $c$ install its authentic label's block, and define the one common $U,Q$ blockwise. Accuracy and (11.1) hold blockwise, proving positive-tolerance sufficiency and a finite sufficient carrier bound. At zero tolerance an unequal member is excluded by the infinite exact-law image of Theorem 2.2; finite equality blocks give sufficiency. No optimal sum of compatible state counts is asserted.
+
+For a fixed unequal model in the existing small-error regime, the old common-decoder lower bound and this supplier still bracket the initialized minimum for the actual-query conditional-update contract by $6+N_2(\epsilon)$ and $6+N_1(\epsilon)$. The original global self-generated interval in Theorem 5.1 remains its own result. When these endpoints differ, no new sharp compatible-generator minimum or equality of the two minimization problems is supplied. $\square$
+

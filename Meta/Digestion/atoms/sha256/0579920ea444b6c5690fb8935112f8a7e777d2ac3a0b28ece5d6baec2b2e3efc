@@ -1,0 +1,22 @@
+**Definition 2.1 (the supplied atomic reply functions).** Use the
+all-word formulas of [SLH, proof of Theorem 6.2 and §6.3][SLH], and
+the $E,P_t,S_t$ notation and shortest words of [AOF, Definition
+8.2][AOF]. For an age $n\ge0$ their replies are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t\ (t\ge2)&n<t&n=t&n=t+1&n\ge t+2\\
+S_t\ (t\ge2)&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{LQF.5}
+$$
+
+These are functions realized by actual words, not new permitted tests.
+$E$ is the empty suffix. A nonempty suffix $v$ of weight
+$w(v)=\#L(v)+2\#R(v)$ gives $P_{w(v)}$ when it ends in $R$,
+and $S_{w(v)+1}$ when it ends in $L$. The final-edge guard matters:
+an $L$-ending word at $n=w(v)$ is absent, not alpha. This is the
+existing guarded atomic formula, including ages zero and one.
+

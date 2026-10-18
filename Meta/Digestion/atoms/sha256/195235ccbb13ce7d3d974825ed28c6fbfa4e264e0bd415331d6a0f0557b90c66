@@ -1,0 +1,11 @@
+**命题 20.4（离开实际像的 Lipschitz 延拓存在）。** 令 $\mathcal A=W_3(\mathcal D_{L,H,d_0})$，则 $x_3=f(W_3)$ 在 $\mathcal A$ 上良定义且 $K_*$-Lipschitz。它有到全部 $(\mathbb R^3)^3$ 的向量延拓，常数至多 $\sqrt3K_*$；此存在性不供应有限求值器或像外数据的实际来源身份。
+
+证明。定理5.1给良定义，定理17.1给 Lipschitz。对每个输出坐标 $i$ 使用 McShane 标量延拓（文献见约定23.1）：
+
+$$
+\overline f_i(y)=\sup_{z'\in\mathcal A}
+\{f_i(z')-K_*d(y,z')\}.
+$$
+
+固定一个 $z_0\in\mathcal A$，三角不等式和像内 Lipschitz 给被取上确界的每项至多 $f_i(z_0)+K_*d(y,z_0)$；$z'=z_0$ 又给有限下界，故值有限。若 $y\in\mathcal A$，像内不等式使每项至多 $f_i(y)$，$z'=y$ 达到等号。各项关于 $y$ 的 Lipschitz 常数为 $K_*$，取上确界仍保持，三个坐标的 Euclidean 组合给 $\sqrt3K_*$。本证明不需要像闭合、紧性或有限树集。无限上确界和抽象纤维选择各有自己的实现义务；取得与位成本由下一命题的直接公式承担。
+

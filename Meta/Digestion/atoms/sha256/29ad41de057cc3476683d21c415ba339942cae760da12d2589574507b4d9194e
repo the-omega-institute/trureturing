@@ -1,0 +1,36 @@
+**Lemma 4.3 (A lawful beta quotient on the full actual hull).** In the
+preceding homogeneous space put
+
+$$
+N=\operatorname{span}_{\mathbb R}
+\{F(k,\alpha,\beta_1)-F(k,\alpha,\beta_2)\}.
+$$
+
+For a finite-error model, quotienting the actual affine hull by $N$
+gives a literal model of affine dimension $d-\dim N$, independent of
+$\beta$, with the same decoded output. No guard property of that
+quotient is asserted.
+
+Proof. The first-coordinate covector $\lambda_0$ annihilates $N$,
+so $N$ lies in the direction space of the homogeneous affine slice.
+The difference family in this definition satisfies Lemma 4.1, since
+the two endpoints of each difference have the same height and each
+lawful probability leg acts linearly on their difference. Thus the
+differences whose heights lie in any open subinterval already span
+$N$.
+
+For a nonempty probability command choose those differences inside
+$I_a$. Their images under $T_a$ are again differences at the same
+height and $\alpha$. Therefore $T_aN\subseteq N$; the reverse
+command gives equality. Every phase command sends a same-$(k,\alpha)$
+beta pair to another such pair at $\alpha+t/2$, so its homogeneous
+map also preserves $N$, with equality by the negative command.
+All decoder rows annihilate $N$ by Theorem 2.1. Hence each nonempty
+command descends to a fixed affine map on the quotient and the
+decoder factors through it. Empty-domain commands can be assigned
+arbitrary quotient maps. Every required literal identity and decoded
+value is retained. The quotient image spans the quotient affine hull,
+whose dimension is $d-\dim N$. Identifying additional heights could
+destroy guard recovery; this quotient is used only in $\mathsf L$.
+$\square$
+

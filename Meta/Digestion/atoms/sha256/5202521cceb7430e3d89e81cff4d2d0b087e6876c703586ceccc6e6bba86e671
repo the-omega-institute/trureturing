@@ -1,0 +1,2 @@
+**Assumption 8.3 (an effective specialization).** An optional effective law-output contract supplies exact rational $p,q,r,\epsilon$ in binary, integer and rational arithmetic, and an output request for either a finite symbolic law descriptor, one finite-word probability, or a full finite-horizon law. Scratch registers, static data and output storage are included in the total represented cost. This assumption does not alter the actual-symbol update or supply the observer with a recording-age clock.
+

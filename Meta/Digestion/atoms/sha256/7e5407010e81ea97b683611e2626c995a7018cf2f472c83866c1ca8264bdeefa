@@ -1,0 +1,56 @@
+**定义 10.1（继承 IV 的全部 256 槽）。** 以下接口是 [IV，定义 13.1–13.2、定理 13.3 及第 14 节](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 的完整原根准则。令
+
+$$
+\mathcal S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\qquad
+\mathcal V=\bigcup_{i=1}^7\{J,M\}^i.
+$$
+
+$|\mathcal S|=256$、$|\mathcal V|=254$。选择一个完整源组 $\mathbf P=(P_q)_{q\in\mathcal S}$，每个源都满足严格正、秩一、迹一，允许任意重复，包括同一叶对的两个源相同。可写
+
+$$
+P_q=\begin{pmatrix}a_q&b_q\\c_q&1-a_q\end{pmatrix},\quad
+0<a_q<1,\ b_q,c_q>0,\ b_qc_q=a_q(1-a_q).                  \tag{10.1}
+$$
+
+这是保留全部 256 个秩方程的 768 个环境源坐标，不是无约束源空间维数。
+
+对非空前缀 $u=E_1\cdots E_i$，设
+
+$$
+A_u=E_i\cdots E_1,\quad
+\mathcal D_u=\{(w,e):u\text{ 是 }w\text{ 的前缀}\};
+$$
+
+$\mathcal D_\varnothing=\mathcal S$，$A_\varnothing=I$。在每个 $\mathcal D_u$ 中固定一个参考槽 $q_u$。令
+
+$$
+t_u(P)=\operatorname{tr}(A_uP),\qquad
+\ell_u(P)=(t_u(P)-1,\ i\,t_u(P),\ i^2t_u(P),\ i^3t_u(P)).
+                                                               \tag{10.2}
+$$
+
+对唯一堆叠向量 $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$，其中 $x_q\in\mathbb R^4$，完整矩阵 $B(\mathbf P)$ 的每一行为
+
+$$
+(Bx)_{u,q}
+=\ell_u(P_q)x_q-\ell_u(P_{q_u})x_{q_u},
+\quad u\in\mathcal V,\quad q\in\mathcal D_u\setminus\{q_u\}.
+                                                               \tag{10.3}
+$$
+
+各深度行数为
+
+$$
+(254,252,248,240,224,192,128),
+$$
+
+因深度 $i$ 有 $2^i$ 个前缀，各有 $2^{8-i}$ 个槽，去掉一个参考后为 $256-2^i$ 行；总计 $1538$ 行。全部 $256$ 个四系数块给出 $1024$ 列。保留一个完整空间
+
+$$
+U=\ker B(\mathbf P),\qquad
+G_qx=x_q,\qquad
+D_wx=x_{(w,0)}-x_{(w,1)}\in\mathbb R^4.                    \tag{10.4}
+$$
+
+$D_w$ 的四个系数分量全被保留，不指定某个单一系数承担分离。
+

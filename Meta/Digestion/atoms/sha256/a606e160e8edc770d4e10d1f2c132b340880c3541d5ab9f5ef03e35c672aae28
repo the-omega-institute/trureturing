@@ -1,0 +1,38 @@
+**Definition 1.1 (original source).** Use mode order $(0,1,2,3,13)$, with Lean
+index $4$ denoting mode $13$. For $b=(X,Y,Z)$ put $r=1-Z$ and
+
+$$
+\begin{aligned}
+\operatorname{ValidBase}(b)&\iff 0<Z<1,\quad 0<X<r,\quad 0<Y<r,\\
+J(b)&=(\max(0,X+Y-r),\min(X,Y)),\\
+p(b,k)&=(r-X-Y+k,X-k,Z,Y-k,k),\\
+d&=(1,-1,0,-1,1),\\
+I_b(k)&=p_0^{-1}+p_1^{-1}+p_3^{-1}+p_{13}^{-1},\qquad
+w_i(k)=\frac{d_i}{p_i(b,k)I_b(k)}.
+\end{aligned}
+$$
+
+An original control has a finite duration $T\geq0$, continuous real controls
+$k,\chi$ on $[0,T]$, $k(t)\in J(b)$, finite total variation of $\chi$, and
+either absolute continuity of both controls or a finite piecewise $C^1$
+partition with continuous derivative rates on its closed pieces. This is the
+`OriginalControl` definition of the committed supplier. A based loop also has
+$k(0)=k(T)=k_0$ and $\chi(T)-\chi(0)=2\pi m$, $m\in\mathbb Z$.
+
+Fix one positive preparation $p(b,k_0)$ and one real phase vector $\theta$
+with $\theta_2=0$. Set $\chi_0=d^{\mathsf T}\theta$. The actual lift is
+
+$$
+v_i(t)=\theta_i+\int_0^t w_i(k(s))\chi'(s)\,ds,
+\qquad h=v(T)-\theta.
+\tag{1.1}
+$$
+
+The finite piecewise $C^1$ alternative also gives absolute continuity on this
+compact interval: apply the fundamental theorem on each piece and telescope.
+Consequently all integrals here are ordinary absolutely continuous integrals;
+finite variation alone is not being substituted for that regularity. The
+supplied identities $w_2=0$ and $d^{\mathsf T}w=1$ give
+$v_2(t)=0$ and $d^{\mathsf T}v(t)=\chi(t)$. The state convention is
+$\psi_i(t)=\sqrt{p_i(b,k(t))}\exp(-iv_i(t))$.
+

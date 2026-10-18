@@ -1,0 +1,44 @@
+**Definition 5.2 (the finite row compiler).** Take the fixed native rows of
+PR57.D1 and the AIF dispatcher, including their finite bootstrap variants.
+For each row, enumerate its finitely many control/token/latch bit patterns,
+the eight-track bytes in its bounded cell roles, the finite endpoint alias
+patterns, and its allowed input bit when it is IN. Use the following table
+to assign the core effect. Afterwards combine its receipt and control
+effects as described below. A row guard and permission failure admits no
+executing patch.
+
+| Native core row | Structural operands and exact core effect |
+| --- | --- |
+| RD($i,j$) | Inspect the actual current cell at the named head. Decode the original symbol into the specified finite latch. No core head or tape-symbol change. The original testing row, if any, tests that symbol with its original finite immediate. |
+| WR($i,s$) | At the original writable ordinary cell assign precisely the original symbol or latched bit. Other symbol/mark/seal tracks retain their original values. Source writes act on these actual cells, including invalid source packets. |
+| ML($i$), MR($i$) | Follow the displayed adjacent-cell route, apply the original boundary guard, clear the old head mark and set the new mark, and retarget that head link. There is no offset arithmetic. |
+| EX($i$) | At the original right marker change its symbol to blank, append one new R cell, and leave the ordinary head on the old cell, now blank. Its core head link therefore stays there. This is not the meter append-head convention. |
+| BF($f$) | Inspect the specified finite operand-latch bits, use exactly the eight-entry truth table $f$, and assign the result-latch bit. There are exactly 256 three-input tables. |
+| IN($i$) | Assign the actually supplied bit to the designated input latch and take the prescribed control successor. Do not write or move a tape. Both physical raw bits have their patches, including a bit outside $\operatorname{Adm}$. |
+| OUT($j$) | Release exactly the specified output-latch bit at its original public output permission. This does not acquire private data into a different output latch. |
+| TOK($a,b$) | Transfer exactly the original finite availability/owner token; no arbitrary block data or address is copied. |
+| CTL | Take exactly the finite original control/phase/fence/seal edge. A designated cell seal mark, when present, is in its actual bounded addressed footprint. Commitment interprets already prepared material; it does not atomically construct an unbounded request, counter, or row. |
+| Boot boundary constructor and bit installer | At the fixed port's actual empty/partial word append one original boundary cell, or perform the specified single-bit installation assignment, with the original finite boot successor. There is no preconstructed data arena. |
+
+Every executing row also changes the old meter append R into the original
+ordinary or fence receipt, appends a new meter R, moves its append mark,
+and retargets its append-head link to that new R. A meter read head remains
+at its original cell unless the original core moves it. In particular,
+when that read head is on the old append R, it stays on the cell now holding
+the receipt. Overlap between a core meter operation and the receipt side
+effect is resolved by the original finite joint rule on that shared cell,
+not by two inconsistent copies of its byte. The native control successor
+and all finite register assignments occur in the same patch.
+
+For specificity the finite enumeration orders rows by their installed
+number, bytes lexicographically in original track order, register bits
+lexicographically, and the bounded named-role equality partitions
+lexicographically. Reject inconsistent endpoint/mark patterns. For each
+remaining pattern apply the displayed finite symbol/Boolean/mark effect,
+then the receipt rule and original combined-overlap convention. Expand the
+four templates of Definition 5.1 in that order, assigning old target bits
+once in first-role/track occurrence order, appending the core cell before the receipt
+cell if both exist. This constructs a finite literal patch table. It is a
+per-row finite construction, rather than an appeal to an unspecified
+universal graph machine.
+

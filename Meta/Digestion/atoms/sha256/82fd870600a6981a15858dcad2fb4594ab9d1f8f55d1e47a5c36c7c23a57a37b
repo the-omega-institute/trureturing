@@ -1,0 +1,50 @@
+### 定理 33.3（holonomy 缺陷的望远镜界）
+
+若每条 \(\mathcal E_{e_k}\) 都是 CPTP，则
+
+\[
+\|\mathcal E_{e_k}\|_{1\to1,\mathrm{Herm}}\le1.
+\]
+
+于是
+
+\[
+\boxed{
+\|\Omega_\gamma\|_{1\to1,\mathrm{Herm}}
+\le
+\sum_{k=1}^n
+\|\mathcal E_{e_k}-\operatorname{id}\|_{1\to1,\mathrm{Herm}}.
+}
+\]
+
+#### 证明
+
+令
+
+\[
+E_k=\mathcal E_{e_k}.
+\]
+
+代数恒等式给出
+
+\[
+E_n\cdots E_1-I
+=
+\sum_{k=1}^{n}
+E_n\cdots E_{k+1}
+(E_k-I)
+E_{k-1}\cdots E_1.
+\]
+
+CPTP 映射在 Hermitian trace norm 下是收缩，因此每个前后乘积的诱导范数不超过一。对上式取范数并使用三角不等式，得到
+
+\[
+\|E_n\cdots E_1-I\|
+\le
+\sum_{k=1}^n\|E_k-I\|.
+\]
+
+证毕。
+
+该定理给出三角网络闭环的严格误差预算。如果每条边都接近恒等传输，则整个闭环的非平坦缺陷至多线性累积。
+

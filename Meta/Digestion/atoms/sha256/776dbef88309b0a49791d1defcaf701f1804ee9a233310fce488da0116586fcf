@@ -1,0 +1,101 @@
+### 77.2. A complete quintic quotient, including the omitted chart
+
+Set \(b=1/2\) in (75.26), and retain its variables \(D,T,a,c\). Write
+\[
+ K=D^2+4T=s^2,\quad J=D-2T+6,\quad F_0=D^2+(T+1)^2,\quad
+ \kappa=(1/2-i)\sqrt{11/5}.
+\]
+The input reconstruction is
+\[
+ u=(s+D)/2,\quad v=(s-D)/2,\quad
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\quad
+ g=\frac{s(a+ic)}{\kappa}.                                   \tag{77.1}
+\]
+Every nonconstant finite ray has \(K>0\). The pole polynomial (75.36)
+does not vanish at \(b^2=1/4\), and the finite \(s=0\) cases are the two
+constant canonical rays. Thus these exclusions lose no noncanonical
+aligned input at the specified parameter.
+
+The first two rows of the linear system (75.26) have determinant a
+nonzero scalar times \(KJF_0\). At \(J=0\), their two augmented minors,
+with the right-hand side moved to its own column, are
+\[
+ 33(T-3)(5T^2-22T+37),\qquad
+ -\frac{33}{2}(T+1)(5T^2-22T+37).                             \tag{77.2}
+\]
+The quadratic has discriminant \(-256\), so the two minors cannot both
+vanish for real \(T\). Since \(K,F_0>0\), every solution therefore admits
+the unique Cramer solutions \(a=A(D,T),c=C_a(D,T)\) from those two rows.
+These definitions refer to the printed original polynomials in (75.26),
+not to an auxiliary numerical fit.
+
+The primitive numerators of the remaining consistency and norm equations
+are the following integer polynomials:
+\[
+\begin{aligned}
+ F={}&-91D^4+228D^3T+286D^3-99D^2T^2-414D^2T-299D^2\\
+     &+98DT^3+1284DT^2+674DT-168T^4-104T^3-728T^2-792T,\\
+ N={}&109D^6-404D^5T-704D^5+433D^4T^2+2012D^4T+963D^4\\
+     &-352D^3T^3-3540D^3T^2-4400D^3T-572D^3\\
+     &+460D^2T^4+4786D^2T^3+11710D^2T^2+5206D^2T-130D^2\\
+     &-80DT^5-1288DT^4-7096DT^3-7576DT^2-1688DT\\
+     &+160T^6+2088T^5+12704T^4+18992T^3+7424T^2-792T.
+\end{aligned}                                                   \tag{77.3}
+\]
+In the allowed chart, \(F=N=0\) is equivalent to the three linear
+original equations and \(K(a^2+c^2)=11/4\). Exact elimination gives
+\[
+\begin{aligned}
+ \operatorname{Res}_T(F,N)
+   &=4857532416D^4(D-1)(D^2+4)^2(5D^2+16D+64)^2Q(D)f(D),\\
+ Q(D)&=4401D^4-26064D^3-6144D^2+139776D+173056,\\
+ f(D)&=375110171D^5-8916868590D^4+40906895520D^3\\
+     &\hspace{12mm}-77786080640D^2+72033832960D-29539434496.
+\end{aligned}                                                   \tag{77.4}
+\]
+At \(D=0\), the common equations imply \(T(T+1)=0\), so \(K\leq0\).
+At \(D=1\), they imply \(4T+1=0\), so \(K=0\). Both quadratic factors
+have no real zero. For \(Q\), the signed Euclidean Sturm chain starting
+with \(Q,Q'\) has signs \((+,-,+,+,+)\) at \(-\infty\) and
+\((+,+,+,-,+)\) at \(+\infty\), hence no real zero.
+
+Define
+\[
+\begin{aligned}
+ p(D)={}&114047721647124035355853D^4
+          -2505469425841722936728842D^3\\
+        &+7945256094215455341030448D^2
+          -9563607328530302248289792D\\
+        &+4919733805467906194268928,\\
+ c_0={}&673563651603438045093120,\qquad \tau(D)=p(D)/c_0.
+\end{aligned}                                                   \tag{77.5}
+\]
+The exact ideal identity in \(\mathbb Q[D,T]\) is
+\[
+ \langle F,N,f\rangle=\langle f,c_0T-p(D)\rangle.              \tag{77.6}
+\]
+It can be reconstructed by rational polynomial division from
+(77.3)–(77.5). Consequently \(T=\tau(D)\) at every remaining solution.
+The Sturm chain for \(f\) has signs \((-,+,-,-,+,-)\) at \(-\infty\)
+and \((+,+,+,-,-,-)\) at \(+\infty\), giving exactly three real roots.
+Each of the following rational intervals contains one of them:
+\[
+ \frac{(172239608,172239609)}{10^8},\qquad
+ \frac{(199204026,199204028)}{10^8},\qquad
+ \frac{(1843634963,1843634964)}{10^8}.                         \tag{77.7}
+\]
+Ordinary rational Horner evaluation of \(D^2+4\tau(D)\) and
+\(D-2\tau(D)+6\) on these intervals gives, respectively,
+\[
+ (K,J)\in(4,5)\times(7,8),\quad
+ (3/10,2/5)\times(9,10),\quad
+ (368,369)\times(10,11).                                     \tag{77.8}
+\]
+Substitution of \(T=\tau(D)\) and the Cramer solutions into all three
+polynomials (75.26) and \(K(a^2+c^2)-11/4\) gives zero modulo \(f\).
+Thus all three real roots are admissible and each yields both signs
+\(s=\pm\sqrt K\). Sign change is precisely dephased \(\Theta\), while
+synchronous permutation supplies three distinct unique-coordinate
+positions. Distinct roots remain distinct because \(D=u-v\) is recovered
+from the finite Cayley coordinates. This proves the count eighteen.
+

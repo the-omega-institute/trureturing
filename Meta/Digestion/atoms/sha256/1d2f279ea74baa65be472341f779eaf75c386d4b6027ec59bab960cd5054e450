@@ -1,0 +1,65 @@
+### 95.5. Singular fibres give complex star directions
+
+Suppose U_f has rank one. Choose a nonzero vector n supported on fibre f with Un=0. Both coordinates of n are nonzero, since each of the two columns of U_f is nonzero. If v∈ker U has v_f=0 and z∈C, define
+
+\[
+ S_f(z,v)=z n v^*+\overline z\,v n^*.
+                                                                    \tag{25}
+\]
+
+This full eight-coordinate matrix is Hermitian, has zero entire original fibre blocks, and annihilates U*. It therefore belongs to 𝓥 and is supported only on edges incident to f. Its value in (23) is
+
+\[
+ q(S_f(z,v))=-2\operatorname{Re}[z^2A_f(v)],\qquad
+ A_f(v)=\sum_{i\in f,\,j\notin f}c_{ij}n_i^2\overline{v_j}^{2}.
+                                                                    \tag{26}
+\]
+
+Since every complex z is allowed, nonnegativity forces A_f(v)=0. Every star (25) thus has zero polarization with every member of 𝓥 by (24).
+
+**At least two singular fibres.** Choose two singular fibres f,g whose complement C, consisting of the other two fibres, has rank U_C=2. Such a choice always exists. With exactly two or three singular fibres, the complement of any chosen two contains an invertible fibre. If all four are singular, rank U=2 gives two independent fibre column lines; choose those as C and the other two as f,g.
+
+Let n_f,n_g be local kernel vectors on f,g. For arbitrary p∈C² on f and r∈C² on g, choose v,w∈ker U with
+
+\[
+ v_f=0,\quad v_g=r,\quad U_Cv_C=-U_gr,\qquad
+ w_g=0,\quad w_f=p,\quad U_Cw_C=-U_fp.                    \tag{27}
+\]
+
+These equations are solvable because U_C is surjective. The two stars S_f(z,v), S_g(y,w) overlap only on the cross block fg. Their zero polarization is
+
+\[
+ -2\operatorname{Re}\left[
+ z\overline y\sum_{i\in f,\,j\in g}
+       c_{ij}(n_f)_i p_i\overline{r_j}\,\overline{(n_g)_j}
+                         \right]=0.                       \tag{28}
+\]
+
+Arbitrary complex phase of z makes the inner sum zero. Taking p and r to be individual coordinate vectors gives c_ij(n_f)_i overline((n_g)_j)=0 for every entry of that cross block. Both local kernel vectors have no zero coordinate, so every such c_ij is zero, contradicting (22). This excludes two, three, and four singular fibres, including all complex-phase and coincident-line possibilities.
+
+**Exactly one singular fibre.** Let f be the singular fibre and g,h,k the three invertible ones. Fix its local kernel vector n. For arbitrary u∈C² define v∈ker U by
+
+\[
+ v_g=U_g^{-1}u,\qquad v_h=-U_h^{-1}u,\qquad v_f=v_k=0.
+                                                                    \tag{29}
+\]
+
+For arbitrary p∈C² choose w∈ker U with w_f=p, w_k=−U_k⁻¹U_fp, and w_g=w_h=0. The matrix Y=wv*+vw* is Hermitian and annihilates U*. Its vector supports lie in the disjoint groups of entire fibres {f,k} and {g,h}, so its original fibre blocks vanish. Thus Y∈𝓥. Its edges shared with S_f(z,v) are exactly fg and fh. Their zero polarization, with arbitrary complex phase of z, yields
+
+\[
+ \sum_{i\in f}n_i p_i
+  \left[\sum_{j\in g}c_{ij}\overline{(U_g^{-1}u)_j}^{2}
+       +\sum_{j\in h}c_{ij}\overline{(U_h^{-1}u)_j}^{2}
+  \right]=0.                                                 \tag{30}
+\]
+
+Every n_i is nonzero and p is arbitrary, so each bracket vanishes. For fixed i∈f set
+
+\[
+ Q_\ell(u)=\sum_{j\in\ell}c_{ij}
+                    \overline{(U_\ell^{-1}u)_j}^{2},
+                     \qquad \ell\in\{g,h,k\}.                \tag{31}
+\]
+
+Apply (29)–(30) to each pair of invertible fibres, using the remaining invertible fibre to construct w. This gives Q_g+Q_h=Q_g+Q_k=Q_h+Q_k=0, hence every Q_ℓ vanishes identically. Since U_ℓ is invertible, U_ℓ⁻¹u ranges over C². Its two coordinate-vector values force both corresponding coefficients c_ij to vanish. This again contradicts (22), excluding one singular fibre.
+

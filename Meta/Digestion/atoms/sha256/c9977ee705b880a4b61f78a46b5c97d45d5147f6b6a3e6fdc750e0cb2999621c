@@ -1,0 +1,85 @@
+**Proposition 1.2 (Exact source and straight commands).** The actual
+current-ray space from this arbitrary fixed preparation is exactly
+
+$$
+\mathcal M=(0,H)\times\mathbb T^2.
+$$
+
+Its coordinates $(k,\alpha,\beta)$ have phase increments
+$h=\theta-\theta^{\rm in}=(u,v,0,v,u)$ with
+$\alpha=u-v$, $\beta=u$. For every $s,t\in\mathbb R$ the original
+straight commands act by
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),\qquad
+\operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M:0<k+s<H\},
+$$
+
+$$
+Q_t(k,\alpha,\beta)
+=\left(k,\alpha+\frac t2,\beta+\left(\frac12-\frac kr\right)t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M.
+$$
+
+Proof. The reciprocal sum and phase rates are
+
+$$
+I(k)=\frac r{k(H-k)},\qquad
+w_+(k)=\frac{H-k}{r}=\frac12-\frac kr,\qquad
+w_-(k)=-\frac kr.
+$$
+
+The equal rates within the two groups give equal increments, regardless
+of the preparation phases. Thus
+
+$$
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi,\qquad
+d\alpha=\frac12d\chi,\qquad
+d\beta=\left(\frac12-\frac kr\right)d\chi.
+$$
+
+Both changes between $(u,v)$ and $(\alpha,\beta)$ have integer
+coefficients, with inverse $u=\beta$, $v=\beta-\alpha$, and so are
+inverse changes of circle coordinates. To check equality of rays, set
+$\zeta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$ and use the representative
+
+$$
+\left(
+\sqrt{k}e^{-i(\zeta_0+u)},
+\sqrt{H-k}e^{-i(\zeta_1+v)},
+\sqrt Z,
+\sqrt{H-k}e^{-i(\zeta_3+v)},
+\sqrt{k}e^{-i(\zeta_{13}+u)}
+\right).
+$$
+
+The fixed positive middle component forces any scalar relating two such
+representatives of one ray to be one. Their moduli determine $k$, and
+the remaining positive amplitudes determine $u,v$ modulo $2\pi$.
+Conversely these data determine the representative. There is no further
+quotient.
+
+Integration along a fixed-phase probability leg and a fixed-height phase
+leg gives $P_s,Q_t$. The straight probability segment is interior if and
+only if its endpoint is, by convexity of $(0,H)$. The command $t$ is a
+signed real input, not a circle input reduced modulo a period.
+
+It remains to verify that all displayed phase pairs are actual. Choose
+$k_1\ne k_0$ in $(0,H)$, and put $d_k=k_1-k_0$. The chronological
+rectangle $P_{d_k},Q_t,P_{-d_k},Q_{-t}$ fixes $k,\alpha$ and adds
+$-d_kt/r$ to $\beta$. For any target real representatives
+$\alpha_*,\beta_*$, let
+
+$$
+L=2\alpha_*,\qquad
+q=\beta_*-\left(\frac12-\frac{k_0}{r}\right)L,\qquad
+t=-\frac{rq}{d_k}.
+$$
+
+Perform that rectangle, then $Q_L$ at $k_0$, then $P_{k-k_0}$.
+The endpoint is the target $(k,\alpha_*,\beta_*)$ on the phase circles.
+Every leg is finite and lawful. This proves reachability using the
+original two controls, without adding independent phase controls.
+$\square$
+

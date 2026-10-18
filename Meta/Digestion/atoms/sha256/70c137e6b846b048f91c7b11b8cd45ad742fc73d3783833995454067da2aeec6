@@ -1,0 +1,135 @@
+## 132. What real classical records retain, and what quantum retention supplies
+
+**Definition C-132.1 (Program-first real records with no quantum memory).**
+A comparator first acts only on the $m$ program copies, using a real
+instrument, real blank ancillas and no initial non-real resource. Its output
+is a classical record and, if desired, real prepared states conditioned on
+that record; it retains no quantum subsystem or correlation with the original
+program for a later interaction with the data. Equivalently its record has
+real positive effects $F_z$, $\sum_zF_z=I$, and every retained quantum
+state is prepared from the record alone. It then chooses a label-independent
+data channel from that record and the known parameters. Allowing arbitrary
+complex later data channels only enlarges this comparison class. This is a
+program-first restriction; it is not imposed on C-129 or C-130, nor on the
+complex PVM record of C-121.4.
+
+**Theorem C-132.2 (Sharp comparator error and exact real-record axis distance).**
+For all $m,t,\eta$, the minimax unhalved diamond error of C-132.1 is exactly
+$c$. Every such record has identical laws under $X_a,-X_a$, and identical
+laws under $X_b,-X_b$, including adaptive real program-only instruments.
+For one copy its law is identical for all four labels. For two copies,
+the largest total variation between its laws for axis $a$ and axis $b$ is
+exactly
+
+$$
+\delta_{\mathrm{axis},2}^{\mathbb R}=4c^2/25.
+\tag{C132.1}
+$$
+
+This distinguishability is attained by a real-producing instrument with a
+projective measurement on the two actual original copies. In particular, a retained
+real statistic $Z_a\in\{-1,0,1\}$ has expectation $4c^2/25$ on axis $a$
+and zero on axis $b$, for either sign. Neither this statistic nor any other
+real classical record reveals the opposite sign for any finite $m$.
+Compared with this comparator, C-130.2 reduces the worst-label channel error
+by exactly $c-[c-D_m]_+=\min\{c,D_m\}$, strictly positive when $m\ge1$
+and $c>0$.
+
+Proof. Let
+
+$$
+D=(1-\eta)JJ^\dagger/5+\eta I_{25}/25,\qquad
+A_a=JX_aJ^\dagger,\quad A_b=JX_bJ^\dagger.
+\tag{C132.2}
+$$
+
+Here $D$ is real diagonal, $A_d$ is Hermitian and purely imaginary,
+$A_d^{\mathsf T}=-A_d$, and $\rho_{\sigma X_d}=D+\sigma uA_d$.
+Every real instrument effect $F_z$ is real symmetric, so
+
+$$
+\operatorname{tr}(F_z\rho_{X_d}^{\otimes m})
+ =\operatorname{tr}(F_z(\rho_{X_d}^{\otimes m})^{\mathsf T})
+ =\operatorname{tr}(F_z\rho_{-X_d}^{\otimes m}).
+\tag{C132.3}
+$$
+
+Adaptive real Kraus products also have real symmetric effects and obey the
+same identity. This equality of numbers uses transposition algebraically;
+it does not implement transposition on the unknown quantum state. Any
+later data channel selected by the record is consequently the same averaged
+channel $N_d$ for the two opposite signs. Since their target distance is
+$2c$ by (C121.8), the triangle inequality forces worst error at least $c$.
+The real zero-program channel $T_\eta(0,0)$ attains $c$ simultaneously
+for every label. Real output states depending only on the record cannot
+alter this equality of induced channels. At one copy the term
+$\operatorname{tr}(F_zA_d)$ vanishes, so the entire record law depends only
+on $D$ and is also axis independent. Subtracting (C130.4) from the
+attained comparator error $c$ gives the stated gap. It is positive for
+$m\ge1,c>0$ because the reused $D_m\ge D_1=2c/5>0$.
+
+More generally any real effect sees only the global-conjugation average
+
+$$
+\Omega_{d,m}=\tfrac12\left[
+ (D+uA_d)^{\otimes m}+(D-uA_d)^{\otimes m}\right].
+\tag{C132.4}
+$$
+
+At two copies
+$\Omega_{a,2}-\Omega_{b,2}
+ =u^2(A_a\otimes A_a-A_b\otimes A_b)$.
+The two tensor terms have disjoint four-dimensional supports. Each has
+eigenvalues $+1,+1,-1,-1$ on its support, because $A_d$ has eigenvalues
+$+1,-1$ on its matching pair. Hence the half trace norm of this difference
+is $4u^2$. Any POVM's classical total variation is bounded by this half
+trace norm: for the set of positive probability differences use its sum
+effect $0\le F\le I$, and bound $\operatorname{tr}(F\Delta)$ by the trace
+of the positive part of the trace-zero Hermitian $\Delta$.
+
+The bound is attained by the positive/negative spectral projections of
+$A_a\otimes A_a-A_b\otimes A_b$, which are real matrices. Explicitly,
+within the $d\otimes d$ matching sector identify $Je_j,Je_k$ with
+$|0\rangle,|1\rangle$. The $+1$ vectors of $H\otimes H$ are
+$(|00\rangle-|11\rangle)/\sqrt2$ and
+$(|01\rangle+|10\rangle)/\sqrt2$; its $-1$ vectors are
+$(|00\rangle+|11\rangle)/\sqrt2$ and
+$(|01\rangle-|10\rangle)/\sqrt2$.
+They are a real Bell basis, measurable using a real Hadamard and controlled
+bit flip after the real matching-sector test. Assign positive axis-test
+outcome to the $+1$ subspace for $a$ and the $-1$ subspace for $b$;
+assign negative outcome to the other two subspaces, and retain the full
+orthogonal complement as a third outcome. Its effect is the positive
+spectral projector just described, and its probability difference between
+axes is $4u^2=4c^2/25$. Recording the outcome and preparing a real blank
+gives the required real-producing instrument with no quantum memory.
+More explicitly, complete these eight real Bell vectors by the $617$
+original computational vectors outside the two pair-product sectors.
+For each vector $v$ take the Kraus matrix $|z(v),0\rangle\langle v|$,
+where $z(v)$ is its assigned classical outcome and the second factor is
+a fixed real blank. These real matrices have completeness operator $I_{625}$,
+so the instrument is CP and TP on the entire two-program algebra, including
+unpromised complex inputs and arbitrary references.
+
+For the separate statistic $Z_a$, measure the three real projections
+
+$$
+\Pi_{a,\pm}=\tfrac12(P_{d_a}\otimes P_{d_a}
+                    \pm A_a\otimes A_a),\qquad
+\Pi_{a,0}=I-P_{d_a}\otimes P_{d_a},
+\tag{C132.5}
+$$
+
+and record $\pm1,0$. On axis $a$ its probabilities are
+$2w^2+2u^2,2w^2-2u^2,1-4w^2$; on axis $b$ they are
+$2w^2,2w^2,1-4w^2$. These follow directly from
+$\operatorname{tr}(P_{d_a}\rho_X)=2w$ and
+$\operatorname{tr}(A_a\rho_{\sigma X_a})=2\sigma u$,
+$\operatorname{tr}(A_a\rho_{\sigma X_b})=0$.
+They are nonnegative even at $c=s$, sum to one, and give the stated
+expectation. The single statistic's total variation is $2u^2$; the optimal
+axis-test record using both sectors has the larger value $4u^2$ in
+(C132.1). This distinguishes a statistic's signed expectation from optimal
+classical distinguishability. Equation (C132.3) still excludes sign
+information from either record. QED.
+

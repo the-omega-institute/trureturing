@@ -1,0 +1,23 @@
+**定理 22.2（三步恒等的精确因子化）。** 在定义 22.1 下，以下条件等价：$\pi M^3=\pi$；$\pi$ 消去 $2\mathbb Z^2$；存在唯一同态 $\bar\pi:\mathbb F_2^2\to A$ 使
+
+$$
+\pi=\bar\pi\,r,\qquad
+r:\mathbb Z^2\longrightarrow\mathbb Z^2/2\mathbb Z^2=\mathbb F_2^2.
+$$
+
+因而模二商是全部此类加法观察的通用商，但一个特定观察的像可以少于四个元素。
+
+证明。直接乘法给
+
+$$
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+M^3-I=\begin{pmatrix}0&2\\2&2\end{pmatrix}=2M,
+\qquad
+\det M=-1,\qquad
+M^{-1}=\begin{pmatrix}-1&1\\1&0\end{pmatrix}.
+$$
+
+$M$ 在 $\mathbb Z^2$ 上可逆，所以 $(M^3-I)\mathbb Z^2=2M\mathbb Z^2=2\mathbb Z^2$。同态性使 $\pi(M^3v)=\pi(v)$ 当且仅当 $\pi((M^3-I)v)=0$，从而得到前两个条件等价。若 $\pi$ 消去偶向量，定义 $\bar\pi([v])=\pi(v)$；代表之差为偶向量保证良定义。反向因子化必消去偶向量，且 $r$ 满射保证 $\bar\pi$ 唯一。
+
+像由两个阶至多二的元素 $u=\pi(1,0)$、$v=\pi(0,1)$ 生成，故至多四类。只有在 $u,v$ 非零且 $u\ne v$，亦即它们在这个二元向量群内独立时，$0,u,v,u+v$ 才两两不同。允许进一步合并的观察不受四类下界约束。$\square$
+

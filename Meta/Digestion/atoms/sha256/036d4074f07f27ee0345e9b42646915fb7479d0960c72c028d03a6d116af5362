@@ -1,0 +1,79 @@
+### 78.5. Regular projection, exact resultant, and component exclusions
+
+Let \(\operatorname{prem}_v\) be pseudo-remainder with the conventional
+multiplier \(\operatorname{lc}(Q)^{\deg P-\deg Q+1}\). Define
+\[
+\begin{aligned}
+A_Yv+B_Y&=\operatorname{pp}_-
+ \left(\frac{\operatorname{prem}_v(Y,Q)}{\beta_0^2a^3F_8^2}\right),\\
+A_Dv+B_D&=\operatorname{pp}_+
+ \left(\frac{\operatorname{prem}_v(D,Q)}{\beta_0^2a^2F_8}\right),\\
+F_{16}&=\operatorname{pp}_+
+ \left(\frac{A_YB_D-B_YA_D}{\beta_0aF_8}\right),\\
+R_Y&=\operatorname{rem}_x(KA_Y^2-LA_YB_Y+q_2B_Y^2,F_{16}),\\
+R_D&=\operatorname{pp}_+\operatorname{rem}_x(KA_D^2-LA_DB_D+q_2B_D^2,F_{16}).
+\end{aligned}                                                    \tag{78.12}
+\]
+All three indicated divisions are exact up to the retained nonzero rational
+constants; the quotient polynomials have respectively total degrees
+15,15,16. The \(x\)-leading coefficient of \(F_{16}\) is the nonzero constant
+38238657380352. Both \(F_{16}=R_Y=0\) are necessary, even if
+\(A_Y=B_Y=0\); no division by either linear coefficient has been made.
+
+Here are deterministic rules for the exact projection certificate. Start
+\(V_0=F_{16}\), \(V_1=\operatorname{pp}_+(R_Y)\). For successive pairs
+\(A,B\), compute \(P=\operatorname{prem}_x(A,B)\). Let \(c\) be the gcd over
+\(\mathbb Z[y]\) of its coefficients in \(x\), including their integer
+content, chosen with positive leading coefficient in \(y\). Append
+\(P/c\), retaining its sign, and record \(c\). The degrees in \(x\) are
+16,15,14,...,1,0; the last polynomial is 1. At each of the first fourteen
+steps, \(c\) is a nonzero rational multiple of \(\operatorname{lc}_x(A)^2\).
+These are exact rational polynomial division identities.
+
+For degrees \(n+1,n,n-1\), the resultant recurrence is
+\[
+\operatorname{Res}(A,B)=c^n\operatorname{lc}_x(B)^{2-2n}
+ \operatorname{Res}(B,P/c).
+\tag{78.13}
+\]
+(The sign \((-1)^{n(n+1)}\) is 1.) Consequently the primitive resultant is
+\(\operatorname{pp}_+(c_{14}/\operatorname{lc}_x(V_{14})^2)\), where
+\(V_{14}\) has degree two. It has degree 304. This is a polynomial
+resultant identity, so necessity does not assume that intermediate leading
+coefficients remain nonzero after specialization.
+
+Its exact primitive factorization is the product of the polynomials in
+§78.A with the multiplicities in their labels. Their real-root counts are:
+
+| Multiplicity | Factor degrees, in printed order | Real-root counts |
+|---|---|---|
+| 1 | 4,8,20,52 | 0,0,8,8 |
+| 2 | 2,4,4,14,30,50 | 0,0,0,0,10,10 |
+| 3 | 4 | 0 |
+
+Each count follows by the signed primitive Sturm sequence over the integers.
+Thus only factors of degrees 20,30,50,52 need be considered. On each, all
+fourteen nonterminal contents, the \(x\)-coefficient of \(V_{15}\), and the
+factor derivative are units. The next table gives their sixteen nonzero
+multiplication-norm residues, in that order. Reduction retains the full
+factor degree and every rational denominator.
+
+| Degree | Prime | Sixteen residues |
+|---|---|---|
+|20|97|6,75,72,70,75,2,6,85,32,75,72,47,94,73,35,40|
+|52|107|23,87,62,40,23,4,48,47,86,25,49,92,102,86,53,104|
+|30|101|14,88,68,100,25,49,96,79,78,58,56,13,43,85,45,63|
+|50|97|93,66,66,73,9,8,61,88,91,50,4,27,54,93,12,65|
+
+For each real candidate factor \(f\), reduce \(V_{15}=A(y)x+B(y)\) modulo
+\(f\) and set \(x=-B/A\) in \(\mathbb Q[y]/(f)\). This uniquely determines
+its possible \(x\). For a short exact replay, §78.A also prints the three
+numerators \(P_{\mathrm{proj},d}\), \(d=52,30,50\): substitution shows
+\(x=P_{\mathrm{proj},d}/f'\) satisfies \(V_{15}=0\). The certified units
+make these expressions the same unique solution. Exact homogeneous
+substitution and polynomial division give \(F_8=0\) on degree 52 and
+\(a=0\) on degree 30, both excluded above. On degree 50 they give
+\(A_Y=B_Y=0\), while \(A_D\) and \(R_D\) are units: their multiplication
+norms modulo 97 are 12 and 17. Thus the second compatibility is impossible.
+These exclusions do not require irreducibility or numerical approximations.
+

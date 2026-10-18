@@ -1,0 +1,51 @@
+**Lemma 5.1 (one full-law comparison).** Define
+
+$$
+D_0=\mathbb E_\zeta\operatorname{TV}(Q_x,P_{p,r}).
+$$
+
+Then
+
+$$
+D_0\le600e+31L.
+\tag{5.1}
+$$
+
+**Proof.** The same subtraction used in (4.6) gives
+
+$$
+u^*_{a,x}-a=U(G_a-g^*_{a,x}),
+\qquad
+b-u^*_{b,x}=U(g^*_{b,x}-G_b),
+\qquad U=311/624<1/2.
+$$
+
+With (4.3),
+
+$$
+\mathbb E_\zeta|u_x-r|
+\le\frac{1539}{40}\delta+U(L+H)
+\le390e+L.
+\tag{5.2}
+$$
+
+Couple the complete generator from the analysis pair $(r,x)$ to the native fixed-parameter source with parameter $r$, holding that reference parameter fixed for its entire future. Couple the first p emission maximally. Its mismatch probability is $|u_x-r|$. After a matched beta, use the original $B$ row. If its suspended emission mark differs from the current reference mark, declare this coupling unsuccessful; otherwise the suspended emissions agree exactly. A matched alpha uses the original $A$ row and continues with the same mark.
+
+The two types of acquired mark changes have total stationary probability $2J$, so the declared-failure term is at most $(2/3)2J$. The successful continuation subrow is bounded entrywise by $\lambda K$, with $\lambda=4/15$, and $\zeta K=\zeta$. Therefore the configuration-average full-law comparison satisfies
+
+$$
+D_0\le\mathbb E_\zeta|u_x-r|+\frac43J+\frac4{15}D_0.
+\tag{5.3}
+$$
+
+This follows either from the complete-law coupling or by applying its cylinder recursion to finite future partitions and passing to their increasing refinement. Both generators complete almost surely by the regular survival bound, and the unique infinite outcomes remain in the carrier with zero mass. No finite-word approximation is treated as the complete law.
+
+Use $J\le16L$ from (4.7), (5.2), and divide by $1-4/15$:
+
+$$
+D_0\le\frac{15}{11}\left(390e+\frac{67}{3}L\right)
+\le600e+31L.
+$$
+
+The mark is used only to choose a reference law in this proof. The original decoder still reads $x$ and has complete law $Q_x$. $\square$
+

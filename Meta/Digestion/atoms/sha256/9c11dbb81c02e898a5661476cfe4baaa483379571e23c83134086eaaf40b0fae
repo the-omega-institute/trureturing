@@ -1,0 +1,44 @@
+## 8. References and mathematical correspondences
+
+The following citations specify the mathematical interfaces used in
+the definitions and proofs above.
+
+| Source | Reused content and boundary |
+| --- | --- |
+| [ARH, Assumption 1.3, Proposition 2.1, Lemma 19.2 and Application 26.1][ARH] | Complete acquired fiber, both endpoint guards, paid producer, native injectivity/clock, and the exact finite feedback classification. Constructor elimination and the graph results of §§19–32 do not assert unrestricted Cartesian residuals for every positive history. |
+| [ABC, Theorems 2.2–2.3 and 3.2][ABC] | Native/normal-code bijection, rank translation, image bounds and guarded navigation. No ambient free-code replacement for native pairing is made. |
+| [CAR, Definition 2.1, Theorem 2.2 proof and Lemma 4.1][CAR] | Constructor mass, its positive-child formula, and arithmetic equality/navigation on fixed finite atomic templates. Its cycle-covered whole-source coordinates require atomic coverage; arbitrary residuals here are not declared atomic. |
+| [CRF, Proposition 1.3 and §§2–6, Open problem 9.1][CRF] | Exact constructor-elimination charts and their physical-word/resource interface. Those hypotheses are not automatically conferred on the family here by an existence section. |
+| [GRS, Proposition 2.1 and §§4–5][GRS] | Entire acquired graph correspondence and its action/resources under its own hypotheses. The same original source controls both copies. Selecting representatives can change prices, as its Proposition 7.1 explains. |
+| [SRF, Definition 1.1, Lemma 1.3 and §§2–3][SRF] | Original-root routing, synchronous family resources, and separate coordinate and same-run objectives. A residual witness is not a common physical action. |
+| [TPO, Corollaries 4.2–4.4][TPO] | Nondefinability in its specified ambient term-power language. A formula-dependent finite substitution does not define the all-shape native normal domain or its total canonicalization graph. |
+| [NSF, Lemmas 3.2, 4.1–4.2, Theorem 4.3 and Corollary 4.4][NSF] | Existential native feasibility, equal-mass nonleaf shape markers, block replacement, scalar preservation and formula-dependent witnesses. Scalar preservation already supplies the atomic-rank projection extension in the proof of Corollary 3.2. Witness templates are not the entire source domain. |
+| [NPL, Theorems 4.1, 5.3, 6.2, 7.1 and 8.1–8.2][NPL] | Exact finite/infinite native images, whole-row image classification, exterior bounded recovery, and exact entire-finite-fiber resources under the common-state and actual-action hypotheses of §6. These are the supplier applications in Definition 6.2; neither an output list nor a section replaces the original domain. |
+| [NativeGroundSeparation][NGS], including private statements | `count_length`, `evaluated_length`, `compound_mass_ne`, `bounded_eval_injective`, `code_mass`, `code_injective` and public `simultaneous_ground_separation` establish the finite Boolean free-magma separation mechanism with fixed finite term-length bounds. They do not contain unbounded atomic-rank parameters or coupled native $\rho$ decorations. The proof of Theorem 3.1 uses the equal-mass method with constructor mass and the native clock. |
+| [FIB whitebox volume][FIB] | Its observer, information and resource distinctions separate a mathematical completion from actual source information, as in Definition 6.2. |
+
+The primary citations below specify the transfer conditions in the
+proof of Theorem 3.1 and Proposition 7.1 and the endpoint convention
+in Definition 4.3.
+
+| Primary source | Mathematical passage and correspondence |
+| --- | --- |
+| H. Comon and P. Lescanne, [*Equational Problems and Disunification*][CL], §3.2 Lemma 1, Appendix B.3, and §6.2; PDF pp. 15, 35–36 and 30 | finite conjunctions of nontrivial syntactic disequations have ground solutions over the stated infinite sort carriers. Appendix B.3 uses the finite, in its induction at-most-one, one-variable solution property. Section 6.2 explicitly says the preceding free-term results do not hold for general equational theories and discusses special extensions. Proposition 7.1 is the concrete native obstruction to importing that finite-exception proof. |
+| A. Reuß, [*Normalization of Horn Clauses with Disequality Constraints*][REUSS], §2.1 p. 16, §3.2.4 Theorem 18 and Corollary 17 pp. 59–60, §3.3 pp. 65–67 | hom-disequalities compare images after a given tree homomorphism. Theorem 18 constructs a finite list of ground terms eliminating an existential variable for its stated labeled-path disequalities and automata predicate, uniformly in the remaining substitution. This is a relevant existing finite-witness result. Section 3.3 handles homomorphic-image comparisons in its specified Horn/automata classes. No singleton rank-independent native completion is inferred without an exact encoding and its hypotheses. |
+| G. Godoy, O. Giménez, L. Ramos and C. Àlvarez, [*The HOM problem is decidable*][HOM], §§2.1–2.2, Definition 2.4, PDF pp. 3–4 | ranked-tree homomorphisms use specified constructor images and substitution. At the end of §2.1 a path disequality is true if either endpoint is missing, as well as when both reached subtrees differ. Native signed histories instead require both endpoints reached for either sign. The automata results cannot silently replace this guard contract. |
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[CAR]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[CRF]: RECURSIVE_RELATIONAL_OBSERVATION_CONSTRUCTOR_RESOURCE_FRONTIER.md
+[GRS]: RECURSIVE_RELATIONAL_OBSERVATION_GRAPH_RESOURCE_SEPARATION.md
+[SRF]: RECURSIVE_RELATIONAL_OBSERVATION_SYNCHRONOUS_RESOURCE_FRONTIER.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[FIB]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[NSF]: https://github.com/the-omega-institute/trureturing/blob/9289f512403121af5115e3af0d808f85f11d481b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NPL]: https://github.com/the-omega-institute/trureturing/blob/b343383cdf485cdff33784b18c37ba5b6954f1f1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[NGS]: https://github.com/the-omega-institute/trureturing/blob/ac6649d4d23e9d97ab24c2cc0922937e31acc87c/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation.lean
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+[REUSS]: https://mediatum.ub.tum.de/doc/1116533/document.pdf
+[HOM]: https://www.cs.upc.edu/~ggodoy/papers/homproblem2.pdf
+

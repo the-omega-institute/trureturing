@@ -1,0 +1,16 @@
+**Definition 261.3 (Intrinsic changed weight).** Let $N_L,O_L$
+denote the convex sets of complete normalized finite kernels and set
+
+$$
+\begin{split}
+\omega(p)&=\min\{t\in[0,1]:p=(1-t)o+tn,
+                                  \ o\in O_L,\ n\in N_L\},\\
+\rho(p)&=\min_{q\in O_L}\max_w\operatorname{TV}(p_w,q_w).
+\end{split}
+\tag{261.4}
+$$
+
+The value $\omega(p)$ depends on the full kernel, rather than on
+a chosen table decomposition. It is distinct from the score
+oscillation $\omega_y$ of Definition 253.1.
+

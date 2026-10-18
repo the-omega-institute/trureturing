@@ -1,0 +1,65 @@
+**Theorem 6.1 (complete marked-output defect).** Choose $0<h<a$ and
+$a+h+d<c$. For every $L>0$ define, for $u\geq0$,
+
+$$
+J(u)=\frac{u h^2}{(a+u)((a+u)^2-h^2)},\qquad
+D(a,h,d)=\max_{0\leq u\leq d}J(u).
+\tag{AC.15}
+$$
+
+Then the actual input mixtures satisfy
+$\bar\rho_a=(\bar\rho_{a-h}+\bar\rho_{a+h})/2$, whereas the prescribed
+complete output mixtures satisfy exactly
+
+$$
+\operatorname{dist}\left(\bar\Omega_a,
+ \tfrac12(\bar\Omega_{a-h}+\bar\Omega_{a+h})\right)=D(a,h,d)>0.
+\tag{AC.16}
+$$
+
+Consequently every common specimen-only processor has worst complete-output
+error at least $D(a,h,d)/2$ on these twelve actual histories. The equality
+in (AC.16) computes the entire ideal output defect, including the quantum
+live block and marked exact-time densities. It does not compute the optimal
+full-instrument simulator.
+
+Proof. The input equality is (AC.7). At displacement $u=vt$, elementary
+fraction subtraction gives
+
+$$
+S_a(t)-\tfrac12(S_{a-h}(t)+S_{a+h}(t))=J(u).
+\tag{AC.17}
+$$
+
+In (AC.10) the affine terms cancel, so the terminal live-block difference
+is $J(d)(2cP_-+ZP_2)$, positive with trace $J(d)$. Differentiating
+(AC.17) shows that the total failure-density difference is $-vJ'(vt)$.
+Each marked component is its fixed nonnegative weight from (AC.9).
+Since the weights sum to one, the complete half-norm is exactly
+
+$$
+\tfrac12\left[J(d)+\int_0^d|J'(u)|\,du\right].
+\tag{AC.18}
+$$
+
+To evaluate it, put $t=a+u$. The sign of $J'(u)$ is the sign of
+$N(t)=-2t^3+3at^2-ah^2$. Here $N(a)=a(a^2-h^2)>0$,
+$N'(t)=-6t(t-a)<0$ for $t>a$, and $N(3a/2)=-ah^2<0$.
+Thus $J$ increases to one positive maximum and then decreases, with
+$J(0)=0$. Its variation on $[0,d]$ is $2D-J(d)$, including the case
+where the interval ends before the maximum. This proves (AC.16).
+
+Let $\eta=\Phi(\bar\rho_a)$; by input equality it is also the actual
+processed outer mixture. Put
+$\bar e_x=\tfrac14\sum_{\beta,m}e_{x,\beta,m}$ for the four nuisance
+choices. Convexity and the triangle inequality give
+
+$$
+D\leq\bar e_a+\tfrac12(\bar e_{a-h}+\bar e_{a+h})
+\leq2\max_{x,\beta,m}e_{x,\beta,m}.
+\tag{AC.19}
+$$
+
+This uses one common map on the actual mixtures, without postselection or
+an additional observed mixture label. $\square$
+

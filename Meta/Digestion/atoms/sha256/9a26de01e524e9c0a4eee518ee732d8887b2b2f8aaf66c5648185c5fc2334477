@@ -1,0 +1,49 @@
+**Lemma 8.2 (Actual periods of the real command $4\pi$).**
+Let $T=Q_{4\pi}$ and $\rho=k/H\in(0,1)$.
+On actual rays, in $(k,u,v)$ coordinates,
+
+$$
+T(k,u,v)=(k,u-2\pi\rho,v-2\pi\rho).
+$$
+
+For every integer $j\ge1$,
+
+$$
+T^jx=x\quad\Longleftrightarrow\quad j\rho\in\mathbb Z.
+$$
+
+If $\rho=m/q$ is reduced, every ray at that height has least
+positive period $q$; irrational $\rho$ has no positive finite
+period. Every positive-width band contains rays with arbitrarily
+large prime least periods, at heights strictly inside the band.
+
+**Proof.** The native increments of $Q_{4\pi}$ in $u,v$ are
+
+$$
+4\pi\left(\frac12-\frac kr\right)=2\pi(1-\rho),
+\qquad -4\pi k/r=-2\pi\rho,
+$$
+
+because $r=2H$. On their two circles these equal the displayed
+common shift. Repeating gives $-2\pi j\rho$ on both circles.
+The positive middle amplitude fixes the common ray phase, and
+the positive bottom groups distinguish both circle values, by
+Lemma 1.2 and Proposition 1.3. Thus equality of rays is exactly
+$j\rho\in\mathbb Z$. Equivalently all bottom amplitudes acquire
+the same factor $e^{2\pi ij\rho}$ while the middle amplitude is
+unchanged, so the factor must be one. It is not a removable ray
+gauge. The period and irrationality conclusions follow immediately.
+
+Given any bound $B$, choose a prime $p>B$ so large that
+$p(b-a)/H>1$. Such primes exist: if all primes formed a finite
+list, any prime divisor of one plus their product would lie
+outside that list. The open interval
+$(pa/H,pb/H)$ has length greater than one, so contains an integer
+$m$ strictly between its endpoints. For example the least
+integer strictly greater than its left endpoint is at most one
+above it and hence below the right endpoint. Since $0<a<b<H$,
+we have $0<m<p$, so $m/p$ is reduced. The height $k=Hm/p$
+lies strictly inside the band and has exact period $p$.
+Proposition 7.2 makes each such ray an actual finitely reachable
+state from the fixed preparation. $\square$
+

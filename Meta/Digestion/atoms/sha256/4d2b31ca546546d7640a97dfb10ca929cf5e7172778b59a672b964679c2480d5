@@ -1,0 +1,23 @@
+## 252. The original U budget excludes a repeated-U exit
+
+Each of the four interacting owners has genuine P expense greater
+than pi. Their total exceeds 4*pi, while all genuine M/Z expense in
+the entire triangulation is 3*pi. Therefore core U expense exceeds pi,
+and all genuine U expense outside K is strictly less than pi.
+
+An outside owner carrying U is genuine (U occurs in no flat owner).
+It is either axial-U with transverse pair {C,D}, or single-high
+transverse-U with distinct pair {U,b}, b in {C,D}. There is at most one
+owner of the latter type. Such an owner cannot have a U axis: since
+u>m and b<m-2, one has u>b+2. In the exact individual response for its
+transverse U angle, the two positive coefficients satisfy
+ A+B=2*(u-1)/(u+b)>1.
+The established response inequality gives theta_U+2*beta_U>pi.
+These are three original U slots of that owner, already exceeding the
+entire remaining outside-U budget. This argument does not presume
+that its other axis is different from U.
+
+If Q=U, an exit face {U,U,B} cannot belong to an axial-U/{C,D} owner.
+Any outside matching owner must have distinct transverse pair {U,B}
+and a U axis, just excluded. Hence Q is not U.
+

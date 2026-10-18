@@ -1,0 +1,39 @@
+### 3.3 对全部探针和参考的有限参数下界
+
+若 $0\le\delta<x$，式（3.4）使每条边的以下分母严格为正，定义
+
+$$
+a_{c\leftarrow b}
+=\frac{T_{c\leftarrow b}}
+{T_{c\leftarrow b}+T_{b\leftarrow c}}.
+$$
+
+这是可行分配。对每个来源，
+
+$$
+\eta_b\ge\sum_{c\sim b}T_{c\leftarrow b}^2
+\ge(x-\delta)^2L_b(a).
+$$
+
+取最大值，得到
+
+$$
+\delta\ge\kappa_n(x-\delta)^2.
+\tag{3.5}
+$$
+
+函数 $t\mapsto\kappa_n(x-t)^2-t$ 在 $[0,x]$ 严格递减，起点为正、终点为负，只有一个零点。解方程并有理化，其零点为
+
+$$
+\frac{4\kappa_nx^2}{(1+\sqrt{1+4\kappa_nx})^2}=v_n(x),
+$$
+
+所以 $\delta\ge v_n(x)$。若 $\delta\ge x>0$，因该零点在 $(0,x)$，仍有 $\delta\ge v_n(x)$。$x=0$ 时下界为零。于是对每个合同和每个协议都成立，对全部准备、有限参考、测量及随机化取下确界仍成立，证明 (A)。固定 $n$ 下
+
+$$
+v_n(x)=\kappa_nx^2+O_n(x^3).
+\tag{3.6}
+$$
+
+没有假定最优探针的存在、连续性或收敛。
+

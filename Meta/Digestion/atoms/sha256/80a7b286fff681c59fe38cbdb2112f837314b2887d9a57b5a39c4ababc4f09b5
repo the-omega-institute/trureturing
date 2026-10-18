@@ -1,0 +1,77 @@
+**Theorem 3.2 (Exact finite CPTP scalar realization).** Define
+
+$$
+\begin{gathered}
+B_f=\sqrt{c_f}\,v_f^TD^\dagger:\mathbb C^5\longrightarrow\mathbb C,
+\qquad R_f=Dv_f:\mathbb C\longrightarrow\mathbb C^5,\\
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,\qquad
+\operatorname{Dec}_f(y)=R_fyR_f^\dagger.
+\end{gathered}
+\tag{3.3}
+$$
+
+They realize $T_\xi\in\mathfrak C_1$ with fourteen fixed flags and
+whole-block TP decoding. The channel $S$ is TP, unital, Hilbert–Schmidt
+self-adjoint and stationary on all complex matrices.
+
+Proof. Orthogonal summands in (1.4) make every $v_f$ unit.
+Put $v_{\mathrm A}(\theta,\phi)=\sqrt{3/7}w_+(\theta)
++\sqrt{4/7}w_-(\phi)$ and
+$v_{\mathrm B}(\theta)=\sqrt{2/3}d+\sqrt{1/3}w_+(\theta)$.
+Write $P_{\mathrm A},P_{\mathrm B}$ for their projectors.
+The nine-point A average integrates $PXP$ exactly: every coefficient has
+planar bidegree $(4,0),(3,1),(2,2),(1,3)$ or $(0,4)$.
+At even degrees zero, two and four, the three-point circle rule leaves
+only zero frequency. At bidegrees $(3,1),(1,3)$ the degree-one factor
+has zero discrete and continuous mean, killing any degree-three alias.
+The B rule has five points and every frequency lies between $-4$ and
+$4$, so all its nonzero frequencies vanish. The quadratic projector
+averages are exact by the same argument. These are coefficient-tensor
+identities, valid for arbitrary complex $X$. With normalized circle
+measures,
+
+$$
+S(X)=\frac72\int P_{\mathrm A}XP_{\mathrm A}
++\frac32\int P_{\mathrm B}XP_{\mathrm B}.
+\tag{3.4}
+$$
+
+The two projector-sum contributions are exactly
+
+$$
+\frac72\left(\frac3{14}R_++\frac27R_-\right)
+=\frac34R_++R_-,\qquad
+\frac32\left(\frac23R_0+\frac16R_+\right)
+=R_0+\frac14R_+.
+\tag{3.5}
+$$
+
+Hence $\sum_fc_fP_f=I$,
+$\sum_fB_f^\dagger B_f=I_5$ and $R_f^\dagger R_f=1$.
+Every rectangular sandwich remains positive after arbitrary reference
+amplification. These normalization identities give encoder TP and each
+decoder's TP on all of $M_1$. The composite Kraus matrices are
+$\sqrt{c_f}DP_fD^\dagger$, all rank one. Every quantum path factors
+through its declared scalar; flags are consumed in decoding.
+This matches
+[FiniteStateChannel.QuantumChannel](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
+with input/output index set $\mathrm{Fin}\,5$, and
+[finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
+with Kraus index $F$, matrices $\sqrt{c_f}DP_fD^\dagger$, and its
+hypothesis $\sum_fC_f^\dagger C_f=I_5$. For a scalar decoder the
+input index is $\mathrm{Fin}\,1$, the output index is $\mathrm{Fin}\,5$,
+and the single Kraus matrix is $R_f$.
+The branch probability identity agrees with
+[finite_kraus_instrument_born_marginal](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean):
+for a complete mode read its outcome index is $\mathsf S$, its Kraus
+index is a singleton, and its Kraus matrix at outcome $s$ is $\Pi_s$.
+
+Each sandwich $P_fXP_f$ is self-adjoint as a superoperator; normalization
+gives both $S(I)=I$ and TP. Shifting either angle in (3.4) proves
+commutation with $\operatorname{Ad}_{G(\theta,\phi)}$ on all complex
+matrices, hence with the actual waits. The integrals identify an already
+finite fixed channel, not a continuous flag or independent physical
+phase control. These properties describe this construction only; they
+impose no projector, unitality or reality condition on competitors.
+$\square$
+

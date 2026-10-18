@@ -1,0 +1,118 @@
+**Theorem 238.1 (Head allocation at the sharp low cap).**
+Let
+
+$$
+0<t\le\tfrac12,\qquad t\le v\le1-t,\qquad
+v\le u\le1-\tfrac{2t}{3},\qquad
+(a_1,\ldots,a_7)=(u,v,t,t,t,t,t).
+\tag{238.1}
+$$
+
+Retain any positive nonincreasing vanishing actual tail with
+$a_8\le5t/9$. On the original source and resource domain of §243,
+both N and O have attained optimal uniform error $5t/9$.
+For this entire sequence and every positive closed cap $c$, both
+classes are feasible exactly when $c\ge5t/9$.
+The increment is the head region in (238.1); the lower certificate
+and the equal-head core in §§230–231 are reused.
+
+Proof. Put $\tau=t/9$ and $B_0=1-2t$. Start with the core whose
+rows below have probability $\tau$ times their integer weight, and
+put the remaining mass $B_0$ on empty output zero.
+
+| Schedule | Outputs $0,10,11$ | Weight |
+| --- | --- | --- |
+| $12$ | $(0,2,0)$ | 2 |
+| $12$ | $(0,2,7)$ | 1 |
+| $13$ | $(1,3,0)$ | 2 |
+| $14$ | $(1,4,0)$ | 1 |
+| $15$ | $(1,5,0)$ | 1 |
+| $23$ | $(0,3,0)$ | 2 |
+| $24$ | $(0,4,0)$ | 1 |
+| $25$ | $(2,5,0)$ | 1 |
+| $34$ | $(0,4,0)$ | 1 |
+| $34$ | $(0,4,6)$ | 1 |
+| $35$ | $(0,5,0)$ | 1 |
+| $45$ | $(0,5,0)$ | 1 |
+| $46$ | $(0,6,7)$ | 1 |
+| $56$ | $(0,6,7)$ | 2 |
+
+Their weights sum to 18. Every first-zero class has correct integer
+count four, independent of its suffix. Let $E_n$ be the integer
+count at positive labels other than the actual first-zero label.
+With $x=w_2,y=w_3,z=w_4,q=w_5$ and $k=y+z+q$, direct expansion gives
+
+$$
+\begin{aligned}
+E_1&=1+3x+3y+2z+2q-2xy-xz-xq-yz-yq-zq,\\
+E_2&=4+k-k(k-1)/2,&E_3&=5-zq,&E_4&=4-q,\\
+E_5&=3,&E_6&=1,&E_7&=1.
+\end{aligned}
+\tag{238.2}
+$$
+
+For $E_1$, $x=y=0$ gives $1+2z+2q-zq\le4$;
+$x+y=1$ gives $4+z+q-zq\le5$; and $x=y=1$ gives $5-zq\le5$.
+For $E_2$, $k=0,1,2,3$ gives $4,5,5,4$.
+The other bounds follow from their displayed polynomials.
+Thus every word has outside-pair mass at most $5\tau$.
+At the positive word the core counts are 13 at zero, one at six and
+four at seven. Including the empty branch, its base is $1-5\tau$.
+This verifies the reused core on all words, rather than only chain words.
+
+Set $d_1=u-t$, $d_2=v-t$ and
+
+$$
+r_1=(d_1-d_2-3\tau)_+,\qquad
+s=d_1-d_2-r_1=\min(d_1-d_2,3\tau).
+$$
+
+The hypotheses give $0\le d_2\le B_0$, $d_1\ge d_2$,
+$d_1\le B_0+3\tau$ and hence $d_2+r_1\le B_0$.
+Replace $d_2$ of the empty mass by $R=(1,2;1,2,0)$,
+and $r_1$ by the singleton $(1;1,0)$.
+Of the first core row, change only its zero-cell output from zero to
+one on mass $s_1=\min(s,2\tau)$. Make that same change on mass
+$s_2=s-s_1$ of the second core row. The capacities
+$s_1\le2\tau$, $s_2\le\tau$ make all masses nonnegative, including
+$t=1/2$ when the empty branch vanishes. Total mass stays one.
+
+Every changed output is from zero to the correct actual label:
+$R$ changes only classes one and two, the singleton only class one,
+and the two relabelings only $w_1=0$. Therefore the outside-pair
+mass $\tau E_n$ is unchanged, class one gains $d_2+r_1+s=d_1$,
+class two gains $d_2$, and later correct masses do not change.
+For every zero word,
+
+$$
+p_w(n)=a_n-5\tau,\quad
+p_w(0)=1-a_n+5\tau-\tau E_n,\quad
+p_w(0)+p_w(n)=1-\tau E_n\ge1-5\tau.
+\tag{238.3}
+$$
+
+These imply each independent row (237.1), and the correct event has
+error exactly $5\tau$. The positive base stays $1-5\tau$.
+Definition 237.2 gives one actual O law and its same-seed N completion.
+Every actual tail has exact error $\max(5\tau,a_n)=5\tau$.
+
+For the lower bound, the full zero-cost score of §230 has
+$\beta=(0,0,4,8,7,8,8)$, $K=63$ and yields the necessary original
+cut $4a_3+8a_4+7a_5+8a_6+8a_7\le63c$.
+At (238.1) it is $35t\le63c$. If a competitor had smaller error,
+a positive intermediate closed cap below $5t/9$ and the original
+necessity of §110.2 would contradict this cut. This covers arbitrary
+addresses and full-carrier outputs, even when additional tail entries
+are active at the smaller cap. The constructed law attains equality;
+larger caps use the same law. ∎
+
+Only the subfamily $v=t$ lies in the displayed hull slice $b_2=b_3$.
+There the lower hull slack is $5t/9$ and the upper expression is
+$u+5t/9\le1-t/9\le1$. Its mass-one completed law witnesses $H_N$.
+For $v>t$ the original cap theorem still holds, without asserting hull
+membership. At $t=v=1/2,u=2/3$, both first zero-cell relabelings are
+complete; the correct counts divided by 18 are seven for class one
+and four otherwise. This closed endpoint is a legal head allocation.
+No equal-head core, old plateau endpoint or generic transport is counted
+as an additional mathematical region.
+

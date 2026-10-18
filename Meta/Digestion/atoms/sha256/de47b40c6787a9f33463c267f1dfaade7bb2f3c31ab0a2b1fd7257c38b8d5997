@@ -1,0 +1,32 @@
+**Proposition 5.2 (an injective scalar gives a lawful inverse).** For
+any known finite $K\subseteq\mathcal C_d(H)$, if one of $A,B,C,D$
+is injective on the whole $K$, its corresponding chronological word
+gives a complete-target inverse using at most eight total readings.
+
+**Proof.** Select the first injective coordinate in the order
+$A,B,C,D$, with word $EF$ as in (3.2).
+Execute sixth $E$ and immediately read. Its only reachable raw
+response is $\delta$ and its retained child is $K$, as in (5.4).
+Then execute seventh $F$ and immediately read the actual raw $v$.
+For every real $w,v$, the retained set
+
+$$
+K\cap\mathcal F(H,E,w)\cap\mathcal F(H,E,w,F,v)
+\tag{5.6}
+$$
+
+has at most one member by injectivity of the selected scalar on $K$.
+At a reachable $v$, actual membership gives a member, so return its
+entire $(P,g,\delta)$; this is unique. On unreachable responses the
+policy can have any fixed answer. A known singleton may stop earlier;
+an empty known set has no actual input. The six acquired ancestor
+readings and the two immediate further readings give at most eight.
+For a three-world $K$, an injective coordinate makes its collision
+product nonzero, so (5.3) also directly gives $\neg L_2(K,H)$.
+No unchosen response or three-coordinate vector is acquired. ∎
+
+This TT interface and the distinction between whole-three and proper-pair
+children are established in
+[Nonzero-Terminal, Proposition 7.2](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md).
+The proofs above give their exact zero-sixth raw-response specialization.
+

@@ -1,0 +1,23 @@
+### 7.3 Exact updates, saturated guards and persistence
+
+For every real $s,t$ define ambient affine maps
+
+$$
+\mathcal U_s:\quad
+K'=K+s,\qquad
+f_j'=\sum_{h=0}^j\binom jh s^{j-h}f_h
+\quad(0\le j\le m),
+\tag{7.10}
+$$
+
+$$
+\mathcal V_t:\quad
+K'=K,\qquad f_j'=R_{t/2}f_j
+\quad(0\le j\le m).
+\tag{7.11}
+$$
+
+At $s=0$ the expressions have their polynomial values, including
+$s^0=1$. The only affine offset in (7.10) is $s$ in the stored height.
+The phase map is linear.
+

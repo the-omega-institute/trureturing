@@ -1,0 +1,90 @@
+**Proposition 74.1 (complete source-box comparison basis).** In this
+proposition alone evaluate expressions throughout the independent
+nine-coordinate box $\mathcal B_9$ of RC.4, not only at its root.
+Use CG.112–.113 for $S_0,S_{01},S_{02}$,
+$H=1000\eta_0\operatorname{adj}S_0$,
+$Q^{0i}=\eta_i\operatorname{adj}S_{0i}$, the positive-pivot
+amplitudes CG.134, and
+$m_1=1-H_{11}-Q^{01}_{00}$, $m_2=1-H_{22}-Q^{02}_{00}$.
+All pivot and other denominators below are positive. In addition to
+JR.52's seven amplitude intervals, the following strict comparisons
+hold on the entire box. Define
+
+$$
+\begin{gathered}
+a_{\rm sp}=(L_f-d_f)/2,\quad b_{\rm sp}=(L_f+d_f)/2,\quad
+t_f=-2z_f/(d_f+L_f),\\
+e_-=(1,t_f)^T/\sqrt{1+t_f^2},\qquad
+e_+=(t_f,-1)^T/\sqrt{1+t_f^2},\\
+q_f=\frac{dh_1}{bh_2}\sqrt{\frac{m_2}{m_1}}t_f.
+\end{gathered}
+$$
+
+| Expression | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $v_0$ | $0$ | $1/5$ |
+| $v^\dagger$ | $1/5$ | $3/10$ |
+| $q_f$ | $18/100$ | $22/100$ |
+| $\sqrt{\theta q_f^2+\omega}$ | $0$ | $54/1000$ |
+| $\Delta C$ | $167/100000$ | $168/100000$ |
+| $\eta-\xi q_f$ | $0$ | $14416/10^6$ |
+| $4\mathsf b(1/5)$ | $-1$ | $0$ |
+
+For either sign of $x/w$, every nonzero compatible direction
+$z=-q_fw$, $x^2=(\theta q_f^2+\omega)w^2$ obeys
+
+$$
+\ell(\mathbf c)>w^2/10^4.
+\tag{FA.27}
+$$
+
+Here compatibility means that the rank-one failure direction $n(\mathbf c)$
+is proportional to $M_2^{1/2}e_-$, $M_2=\operatorname{diag}(m_1,m_2)$.
+Thus this is a whole compatible-direction assertion, not a sample.
+
+**Proof.** These are inequalities of explicit rational/radical
+expressions. A directed integer evaluation sufficient to reproduce the
+table is the following. Embed each of the nine rational centre-radius
+intervals RC.4 independently in denominator $D=2^{256}$, outward
+rounding both endpoints. Use outward endpoint sums, products and
+quotients (only positive denominators occur); use integer-square-root
+endpoints $[\lfloor\sqrt{aD}\rfloor,\lceil\sqrt{bD}\rceil]/D$ for
+$[a/D,b/D]$. Form the three source slack matrices, their first-row
+cofactor adjugates, the three positive pivots and amplitudes, then
+$m_i,\theta,\omega,N,d_f,z_f,L_f,t_f,q_f$ in the displayed order.
+In particular no $\eta_i$ is held at its centre. Besides the table,
+the resulting intervals lie strictly inside
+$0.01378914<\theta<0.01378916$,
+$0.00192116<\omega<0.00192117$,
+$0.49685026<m_1<0.49685027$,
+$0.34447392<m_2<0.34447394$ and
+$0.19893729<q_f<0.19893731$.
+These latter rounded intervals are outputs of the full box calculation,
+not independent replacements used to assert a source identity. The
+arithmetic prescription uses exactly the nine centres in RC.4 and
+CG.118's directed square-root rule; integer endpoint comparisons give
+the stated rational margins. No determinant or TP equality is imposed
+off root, and the construction uses no inverse of a singular source
+matrix.
+
+Substitution of $z=-q_fw$ gives
+
+$$
+\frac{\ell(\mathbf c)}{w^2}
+=\Delta A(\theta q_f^2+\omega)+\Delta Bq_f^2+\Delta C-2\zeta q_f
+ \ \pm2(\eta-\xi q_f)\sqrt{\theta q_f^2+\omega}.
+$$
+
+The first two terms and $-2\zeta q_f$ are nonnegative, with signs
+from JR.49–.52. The table bounds the remainder below by
+$0.00167-0.108(0.014416)=0.000113072>10^{-4}$.
+This proves FA.27 for both signs. The relation between $z/w$ and
+$e_-$ follows by equating the ratio of the last two entries in
+$n=(0,dw/h_2,-bz/h_1)$; it includes either common sign.
+Here $w=0$ in this compatible line would force the zero vector and
+is excluded. At the conditional root $e_\pm$ are precisely the
+positive/negative spectral directions of
+$\Xi=\begin{psmallmatrix}-d_f&z_f\\z_f&0\end{psmallmatrix}$;
+off root they are only the vectors given by the same formulas.
+$\square$
+

@@ -1,0 +1,38 @@
+**Definition 3.1 (construction).** Fix $q\ge3$ and set
+
+$$
+N=2q+2,\qquad s=N-1=2q+1,\qquad
+\eta=\frac1{20N},\qquad
+v_i=u_i=\frac{17}{50}+i\eta.
+\tag{3.1}
+$$
+
+Thus $1/3<u_i=v_i<39/100<2/5$, and both emission vectors have distinct entries. Let $J$ have every entry $1/N$, and put
+
+$$
+C=\frac12(I+J),\quad A=C,
+\quad \pi=\tau=\frac1N\mathbf1^{\mathsf T}.
+\tag{3.2}
+$$
+
+Define the columns
+
+$$
+z=e_0-e_1,\qquad
+b_i=(-1)^{s-i}\binom{s}{i},\qquad
+M=\max_i\binom{s}{i},\qquad
+\theta_0=\frac1{4NM}.
+\tag{3.3}
+$$
+
+For every real $|\theta|\le\theta_0$, set
+
+$$
+B_\theta=C+\theta z b^{\mathsf T},
+\qquad L_\theta=SB_\theta VA,
+\qquad g_\theta=SB_\theta(1-v).
+\tag{3.4}
+$$
+
+Here $S=\operatorname{diag}(1-v)$ is fixed across the entire family. Parameters $q,N$ describe the installed table, not the actual number of source Reads or an observer clock.
+

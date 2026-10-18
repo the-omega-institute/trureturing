@@ -1,0 +1,55 @@
+**Definition 11.3 (one assignment's actual expansion).** To update bank
+parity $p$ to the other bank $t$, perform the following finite recipe.
+All scratch words remain retained. At entry the source version is sealed;
+no partially constructed version is treated as active.
+
+1. Execute a CTL entering the register-operation purpose. Tail on Base
+   scratch precedes Base(t). Base executes Home(t); MR(t), then
+   RD(t); Append(1); MR(t) for each existing data cell, followed by
+   RD(R); Append(0). Append sep to its result and seal it. Its full
+   body with arena entry head $h$ and $b$ existing data cells is
+   $2h+5b+6$, before the sep, seal and scratch positioning. This is
+   the actually measured starting offset $U(b)$.
+2. Tail on length scratch. Perform a dry emission of the new bank fields.
+   For each unchanged field use Field(p,i) and SegmentCount. For a copy
+   field use Field(p,j). For a cons field count one extra symbol before
+   that same field. For tail, read the source field; if nonempty move
+   past its first bit, then count its remainder; if empty emit nothing.
+   Count each field sep as one additional mark. These dry emissions
+   append exactly $1^\ell$; append 0, sep and a sealing CTL. They do
+   not change the bank or issue a simulated primitive.
+3. Tail(t). Repeat precisely the same finite emission, now copying the
+   actual bits and appending an actual sep after every field. Empty
+   assignment emits only its field sep. Cons appends its literal bit;
+   tail uses the same empty test and first-bit move as in step 2.
+   Append F and execute the bank seal CTL. There is no Allocate call:
+   each emitted symbol's EX constructs its own initialized data cell.
+   A delimiter is appended exactly once. This append construction
+   does not use Allocate's zero-fill-body price as a full helper price.
+4. Construct the creation ordinal $U(c)$ by scanning descriptor port 36
+   from L to its current R, appending one 1 to Base scratch for each
+   completed descriptor terminator F, then 0, sep and a seal. The new
+   ordinal is the number of preceding actual descriptors, not a receipt
+   index. No descriptor is appended until this scan ends.
+5. Tail(36). Append the unary literal owner and bank port, copy $U(b)$
+   from the preceding Base-scratch word, copy $U(\ell)$ from the latest
+   length word, append flags 10, copy the latest $U(c)$, append F and
+   seal this descriptor. Field copies use LastScratch and the complete
+   unary-copy graph, including terminal zeros. Literal bits and F use
+   Append. Change parity and restore the caller's purpose by one CTL.
+
+The descriptor is exactly owner, port, actual base, payload length,
+initialized/mutability flags and actual creation ordinal. The written
+10 means initialized and no longer mutable, not an extra acquired right. It describes the
+payload before F, not the other bank or a mathematical string. In step 4
+there is one newly appended Base scratch word after $U(b)$, so the base
+is found with offset 1 and the ordinal with offset 0. Counting descriptors
+requires no descriptor of the descriptor stream. Its closed end is the
+current R, and it is not extended during that scan. No old bank is erased.
+
+A field read for an empty test uses Field and RD(test sep). A first-bit
+test uses Field and RD(test 0), on the nonempty branch of its preceding
+empty test. Its two successors are static native labels. Neither test
+changes bank parity. They leave their actual head and latch successors;
+subsequent routines reposition from those actual heads.
+

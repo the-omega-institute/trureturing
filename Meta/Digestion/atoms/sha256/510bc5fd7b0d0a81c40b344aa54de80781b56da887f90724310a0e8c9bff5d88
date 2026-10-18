@@ -1,0 +1,13 @@
+**Theorem 21.1 (causal capped labels attaining the supplied average law).** Fix an integer $D\ge1$ before the first paid Read. Retain a $D$-valued label $z$ initialized to zero, with the same acquired count/finite-field boundary. In (SC.46) replace the rank write by
+
+$$
+z'=\min\{D-1,z+\min(D,O_{\kappa,x}(A',B'))\}.
+\tag{SC.51}
+$$
+
+For every finite acquired prefix, $z=\min(r,D-1)$, without retaining $r$. On every nonempty terminal $100$ count fiber its image has $\min(D,F(A,B))$ values, and its optimal conditional exact reconstruction success, even with all original $V$ and independent decoder randomization, is the already supplied $\min(D,F(A,B))/F(A,B)$. It has zero error on every member of that fiber exactly when $F(A,B)\le D$. Data alone uses $\lceil\log_2D\rceil$ fixed bits. Exact counters, finite fields, installed $D$, metadata, work and output are not included in that number.
+
+Proof. All offsets are nonnegative. Thus clipping commutes with adding an offset, and replacing that offset by its cap at $D$ leaves clipping at $D-1$ unchanged. Induction proves (SC.51). By Theorem 19.2, ranks traverse the whole interval $0,\ldots,F-1$, whose clipped image has $\min(D,F)$ values. Every actual label $z$ is a valid full rank in that fiber; inverse rank $z$ selects one representative from its label class. Theorem 9.3 then gives the conditional success and zero-error criterion for the actual uniform fiber and fixed common prior. This is an acquired realization of that existing probability law, not a change of prior or selection of favorable histories.
+
+The count calculation can itself be capped, with a distinct arithmetic proof. In (SC.50), stop and return $D$ only after an exact division produces $b_i\ge D$; monotonicity proves that the final binomial is at least $D$. Before that crossing $b_{i-1}<D$, so its numerator is less than $D(n+3)$. Do not cap a numerator before dividing it. Cap the positive feasible products and nonnegative sums at $D$; zero terms stay zero. The identities $\min(D,a+b)=\min(D,\min(D,a)+\min(D,b))$ and the corresponding identity for products of nonnegative integers justify these operations. Therefore offsets capped at $D$ are correct using a fixed number of $O(\log(D+1)+\log(n+2))$-bit buffers, with $O((n+1)^2[1+\log(D+1)+\log(n+2)]^2)$ conservative bit work per transaction. This workspace belongs to (SC.51), rather than being inferred from a residue or an exact-count implementation. $D=1$ gives one label and zero data bits, with its non-data costs still present. $\square$
+

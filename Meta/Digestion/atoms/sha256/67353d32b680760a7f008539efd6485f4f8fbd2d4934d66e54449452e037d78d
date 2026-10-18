@@ -1,0 +1,14 @@
+**Proposition 262.4 (Scope of the family and its nearest conversion).**
+The nearest three-daughter law has pair probability $k-t/3$ at
+$110$, and exact marked-target error $e+t/3$. The profile in
+(262.1) is outside $H_3$, and admits the same-cap stopped law
+(262.3). It is therefore no original separator.
+
+**Proof.** On $110$ the old exceptional label is three, and its
+converted cell is $(2e_3+e_1)/3$. Thus the pair event loses $t/3$.
+The distance bound gives the matching upper cap. For $H_3$ one
+would need $b_3\ge4e$, whereas $4e\ge12/5>9/10$.
+The explicit law (262.3) proves same-cap feasibility. The amplitudes
+are also within the existing Section 113 supplier. Distances of
+specified laws yield no new amplitude coverage. $\square$
+

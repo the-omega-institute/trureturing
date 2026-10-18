@@ -1,0 +1,58 @@
+**定义 2.1（固定来源、全部槽和一个响应矩阵）。** 取
+
+$$
+\mathcal S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\qquad
+\mathcal V=\bigcup_{i=1}^7\{J,M\}^i.
+\tag{2.1}
+$$
+
+共有 $256$ 槽和 $254$ 非空前缀。固定一个任意合法来源元组 $\mathbf P=(P_q)_{q\in\mathcal S}\in\mathcal P^{\mathcal S}$；不同槽的来源可以重合，包括同叶两槽。若 $v=E_1\cdots E_i$，令 $A_v=E_i\cdots E_1$，$\mathcal D_v$ 为以 $v$ 为前缀的全部叶槽，$\mathcal D_\varnothing=\mathcal S$。按 $J<M$、$0<1$ 的字典序选 $q_v\in\mathcal D_v$ 为首槽。置
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+\tag{2.2}
+$$
+
+每槽系数块 $x_q=(x_{q0},x_{q1},x_{q2},x_{q3})^{\mathsf T}$ 定义
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad\delta_q=-x_{q0}.
+\tag{2.3}
+$$
+
+线性推理允许零块；合法世界最终必须满足 $x_q\ne0$。其归一化响应恰为 $\ell_v(P_q)x_q$。定义完整 $1538\times1024$ 矩阵
+
+$$
+(B(\mathbf P)x)_{v,q}
+=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},\qquad
+q\in\mathcal D_v\setminus\{q_v\},\ v\in\mathcal V,
+\tag{2.4}
+$$
+
+并始终取这个矩阵的整个共同核 $U=\ker B(\mathbf P)$。各深度行数为
+
+$$
+(254,252,248,240,224,192,128),\qquad
+\sum_{i=1}^7(256-2^i)=1538.
+\tag{2.5}
+$$
+
+全部 $768$ 个来源环境坐标仍满足 $256$ 个秩一方程与所有严格不等式 (1.2)；$768$ 不是无约束合法空间的维数。矩阵条目是整数仿射多项式，因为
+
+$$
+t_v(P_q)=(A_v)_{22}+((A_v)_{11}-(A_v)_{22})a_q
+ +(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{2.6}
+$$
+
+完整块映射为
+
+$$
+G_qx=x_q,\qquad
+D_wx=x_{(w,0)}-x_{(w,1)}\in\mathbb R^4.
+\tag{2.7}
+$$
+
+$D_w$ 包括常数系数及全部三个非常数系数，不能换成某一个系数差或某一个样本差。
+

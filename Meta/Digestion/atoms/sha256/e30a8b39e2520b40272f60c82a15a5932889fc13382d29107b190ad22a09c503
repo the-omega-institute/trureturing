@@ -1,0 +1,107 @@
+**例 220.22（A compensated occurrence inside the actual $H_N$）。**
+At $L=6$ use code labels $1,2,3,4$, suffix addresses $5,6$, and
+$h=1/25$. Set
+
+$$
+ (b_1,\ldots,b_6;e)
+ =(12/25,12/25,12/25,21/50,21/50,9/25;6/25).
+ \tag{220.18}
+$$
+
+The nine-table block is that of 220.21. The fixed stopped remainder
+$\kappa$ is the following complete allocation of mass $3/5$:
+
+| Table | Weight |
+| --- | --- |
+| $O(1,2;0,2,3)$ | 2/25 |
+| $O(1,2;1,2,3)$ | 1/50 |
+| $O(1,2;1,2,4)$ | 3/50 |
+| $O(1,3;1,3,0)$ | 3/50 |
+| $O(1,4;1,4,0)$ | 1/50 |
+| $O(2,3;0,3,0)$ | 1/50 |
+| $O(2,3;0,3,4)$ | 1/50 |
+| $O(2,4;0,4,0)$ | 1/25 |
+| $O(3,5;0,5,0)$ | 1/10 |
+| $O(4,5;0,5,0)$ | 3/50 |
+| $O(4,5;0,5,6)$ | 1/50 |
+| $O(4,6;0,6,0)$ | 1/50 |
+| $O(5,6;0,6,0)$ | 2/25 |
+
+Then $\lambda=\kappa+\eta$ has mass $24/25$ and its affine
+anchor fill is $R/25$, producing one probability law $p_N$.
+Equivalently add $R/25$ to $\lambda$ to obtain one feasible mass-one
+configuration; its $G$ column is zero. Replace the whole block by
+four gates of mass $1/25$ and empty zero of mass $1/5$, giving one
+stopped law $p_O$ with the same total mass and anchor fill.
+
+All hull coordinates are nonincreasing and positive, $b_2=b_3$,
+and $b_6\ge e$. The tail sum is $42/25=7e$; the other hull
+expression equals $12/25\le1$. Feasibility is supplied by the full
+$3(2^6-1)+1=190$ independent rows, not inferred from this hull check.
+The rowwise class minima of the two actual laws are
+
+| First zero | $N$ base | $N$ correct | $N$ pair | $O$ base | $O$ correct | $O$ pair |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 13/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 2 | 12/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 3 | 13/25 | 6/25 | 19/25 | 13/25 | 6/25 | 19/25 |
+| 4 | 27/50 | 9/50 | 19/25 | 31/50 | 9/50 | 4/5 |
+| 5 | 29/50 | 9/50 | 19/25 | 31/50 | 9/50 | 4/5 |
+| 6 | 33/50 | 3/25 | 39/50 | 7/10 | 3/25 | 41/50 |
+
+Positive base is $19/25$ for $N$ and $4/5$ for $O$.
+Compare each row with $1-b_n-e$, $b_n-e$, $1-e$.
+These are minima over all words in each class of these same laws;
+the minimizing words need not coincide. In particular class-two
+pair minimum $19/25$ is not the sum $12/25+6/25$ of independent
+singleton minima.
+
+For a direct formula put $x_j=w_j$. The gated base polynomial is
+
+$$
+\begin{aligned}
+50p_O(w,0)={}&32-2x_1-2x_2-3x_3-3x_4-4x_5\\
+ &+2x_1x_2+3x_1x_3+x_1x_4+x_2x_3+2x_2x_4\\
+ &+5x_3x_5+3x_4x_5+x_4x_6+4x_5x_6.
+\end{aligned}\tag{220.19}
+$$
+
+Write $\sigma_1=00,\sigma_2=01,\sigma_3=10,\sigma_4=11$ and
+
+$$
+ D(w)=1+\sum_{a\le4:\ w_a=0}
+                   (d_H((x_5,x_6),\sigma_a)-1)\ge0.
+$$
+
+For a fixed two-bit word only its matching code contributes $-1$;
+the other terms are zero or one, proving the displayed inequality.
+The listed allocations give
+
+$$
+\begin{gathered}
+ p_N(w,0)=p_O(w,0)-D(w)/25,\\
+ p_O(w,n)=b_n-e\quad(w\in\Omega_n),\\
+ p_N(w,n)=p_O(w,n)+[\,(x_5,x_6)=\overline{\sigma_n}\,]/25
+                   \quad(n\le4),
+\end{gathered}\tag{220.20}
+$$
+
+and the correct coordinates coincide for $n=5,6$.
+The polynomial follows by summing the thirteen stopped tables and
+four gates; the Hamming identity gives the base difference and the
+extra correct coordinate. Evaluating the remaining Boolean variables
+in each first-zero class gives the displayed class minima, proving
+all 190 rows with the independent pair event retained.
+
+For the entire nine-table block all four actual deficits and all four
+zero-face minima are exactly $1/25$. If the eight donors are kept in
+the remainder and only the code table is replaced by constants,
+each of four labels requires $1/25$: $4/25$ is required from a block
+of mass $1/25$. If the whole block is replaced by its least-demand
+constants, the remaining constant-zero mass is $5/25$.
+At the positive word the unchanged remainder contributes $11/25$,
+so base becomes $16/25<19/25$. Gates instead give base $20/25$.
+These are obstructions to those local constant operations at this
+actual feasible point. The two actual laws both satisfy the cap;
+there is no original $N/O$ separator here.
+

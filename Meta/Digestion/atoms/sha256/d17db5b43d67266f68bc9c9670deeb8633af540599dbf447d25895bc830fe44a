@@ -1,0 +1,50 @@
+**Definition 9.1 (carriers, conventions and unchanged functional).** Use the original words $w_{j,0}=(\beta\alpha)^j\alpha$, $w_{j,1}=(\beta\alpha)^j\beta\beta$, $j\ge0$. The p carrier contains all these finite completed words and $(\beta\alpha)^\infty$; the suspended carrier contains $\beta$, all $\alpha w_{j,c}$, and $\alpha(\beta\alpha)^\infty$. Completion and the unique original Stop are rendered by $I_c$ as in §1; all future Reads, finite fields and permissions are retained. TV is the event supremum, equal to half the countable $\ell^1$ distance on these carriers.
+
+Write $t_1=1/3,t_2=2/5$, $S=[t_1,t_2]^2$ and $I_0=[3/8,5/13]$. For $t\in[t_1,t_2]$, put $a_t=t(1-t)$ and retain the complete source laws
+
+$$
+P_{p,t}(w_{j,0})=t a_t^j,\qquad
+P_{p,t}(w_{j,1})=(1-t)^2a_t^j,
+$$
+
+$$
+P_{\beta,t}(\beta)=1-t,\qquad
+P_{\beta,t}(\alpha w_{j,c})=tP_{p,t}(w_{j,c}).
+\tag{9.1}
+$$
+
+For every $(u,v)\in S$, without imposing $u=v$, put $a=(1-u)v,b=(1-u)(1-v)$ and retain
+
+$$
+G_p^{u,v}(w_{j,0})=ua^j,\qquad
+G_p^{u,v}(w_{j,1})=ba^j,
+$$
+
+$$
+G_\beta^{u,v}(\beta)=1-v,\qquad
+G_\beta^{u,v}(\alpha w_{j,c})=vG_p^{u,v}(w_{j,c}).
+\tag{9.2}
+$$
+
+All infinite-word masses in (9.1)–(9.2) are zero. Indeed $u+b=1-a$, so the completed p masses sum to 1, with mass $a^L\le(4/15)^L$ surviving $L$ returns; the suspended surviving mass is $va^L\le(2/5)(4/15)^L$. The source bounds are $a_t^L\le(6/25)^L$ and $ta_t^L\le(2/5)(6/25)^L$. The same normalized complete laws and both infinite outcomes remain in every distance below.
+
+Set
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750},\qquad d_s=2\rho_s.
+$$
+
+For every Borel probability $\omega$ on the entire rectangle and every $r\in I_0$, retain exactly (2.3):
+
+$$
+\Psi(\omega,r)=
+\max_{s\in\{p,\beta\},\ t\in\{t_1,t_2,r\}}
+\left(\int_S\operatorname{TV}(G_s^{u,v},P_{s,t})\,d\omega-\rho_s\right),
+\qquad
+\gamma=\min_{\omega\in\mathcal P(S),\ r\in I_0}\Psi(\omega,r).
+\tag{9.3}
+$$
+
+The integral takes TV of each individual law before averaging; it is not the TV of a marginalized mixture. $\omega$ is an analysis comparison measure, with no finite-support restriction, and supplies no observer register or sampler.
+

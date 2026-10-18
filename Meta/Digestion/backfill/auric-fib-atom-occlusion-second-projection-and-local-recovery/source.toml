@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-occlusion-second-projection-and-local-recovery"
+path = "docs/develop/theory/AURIC_FIB_ATOM_OCCLUSION_SECOND_PROJECTION_AND_LOCAL_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

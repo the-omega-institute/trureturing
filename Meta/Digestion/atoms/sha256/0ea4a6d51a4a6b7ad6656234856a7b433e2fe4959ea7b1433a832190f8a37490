@@ -1,0 +1,33 @@
+**Lemma 4.2 (coordinate errors).** In the endpoint-suspended table,
+
+$$
+\mathbb E_\zeta|g_x-g^*_{r,x}|\le\frac{513}{20}\delta,
+\qquad
+\mathbb E_\zeta|u_x-u^*_{r,x}|\le\frac{1539}{40}\delta.
+\tag{4.3}
+$$
+
+**Proof.** From (3.1),
+
+$$
+g_x=(1-u_x)d_x,
+\qquad
+t_x=(1-u_x)\sum_yB_{xy}v_y\sum_{x'}A_{yx'}f_{x'}.
+$$
+
+Replacing $f_{x'}$ by $F_{v_y}$ in the second formula changes its $\pi$-average absolute value by at most
+
+$$
+\frac23\frac25\sum_{y,x'}\tau_yA_{yx'}|f_{x'}-F_{v_y}|
+\le\frac4{15}\delta.
+$$
+
+Together with (3.6) this yields
+
+$$
+\mathbb E_\zeta|(1-u_x)c_x-T_r|\le\frac{19}{15}\delta.
+\tag{4.4}
+$$
+
+Multiply this residual by $d_x/c_x\le(2/3)/c_a=81/4$ for the first bound, and by $1/c_x\le1/c_a=243/8$ for the second. The resulting factors are $513/20$ and $1539/40$. $\square$
+

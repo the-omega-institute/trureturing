@@ -1,0 +1,65 @@
+### theorem 4.1: 定理 3：输出分辨未来闭包定理
+
+设 $d$ 是隐藏方向。则以下命题等价：
+
+1. 所有未来输出记录都无法区分 $p_\kappa$ 与 $p_{\kappa+t}$；
+2. 对所有输出词 $\omega$ 和末端测试 $g$，有
+
+   $$
+   dM_\omega g=0;
+   $$
+
+3. $d$ 湮灭整个递归观察空间 $V_\infty$。
+
+如果存在某个词 $\omega$ 使
+
+$$
+dM_\omega g\neq0,
+$$
+
+则该记录事件概率为
+
+$$
+\Pr_{p_\kappa}(\omega,g)=
+A_{\omega,g}
++
+\kappa\,dM_\omega g,
+$$
+
+因而可以更新 $\kappa$。
+
+#### 证明
+
+由
+
+$$
+p_\kappa=p_*+\kappa d
+$$
+
+可得
+
+$$
+p_\kappa M_\omega g=
+p_*M_\omega g+\kappa(dM_\omega g).
+$$
+
+所以记录概率对 $\kappa$ 是否敏感，完全由
+
+$$
+dM_\omega g
+$$
+
+决定。
+
+而 $V_\infty$ 正是所有 $M_\omega g$ 的线性张成，因此
+
+$$
+dV_\infty=0
+$$
+
+当且仅当所有未来记录都对 $\kappa$ 不敏感。
+
+证毕。
+
+---
+

@@ -1,0 +1,49 @@
+**Theorem 5.1 (The attained wedge).**
+If (1.4) holds and $181v\ge75u$, both original minima are attained and
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+=\min_{A\in\mathcal O_2}e_a(A)=E_{\rm sum}.
+\tag{5.1}
+$$
+
+Every positive closed cap $c$ is feasible in either class exactly when
+$c\ge E_{\rm sum}$.
+
+Proof. Set in (4.1)
+
+$$
+x=\frac{1536}{53}(u-v),\qquad
+y=12(u+v)-x=\frac{12}{53}(181v-75u),\qquad W=12(u+v).
+\tag{5.2}
+$$
+
+The weights are nonnegative and $W\le24\tau$. The identities
+
+$$
+181x+128y=3072u,\qquad75x+128y=3072v,\qquad
+22W/3072=11(u+v)/128
+\tag{5.3}
+$$
+
+make all three entries of (4.2) equal to $E_{\rm sum}$.
+
+For every original competitor the full $N$ score (2.4), with its original
+closed-cap transport, gives
+
+$$
+128e_a(A)\ge
+2a_2-2+11a_3+13a_4+13a_5+12a_6+11a_7+11(a_8+a_9)
+=640\tau+11(u+v).
+\tag{5.4}
+$$
+
+Here the three contributions are $-22\tau$, $552\tau$ and
+$110\tau+11(u+v)$. Apply the score at positive caps decreasing to the
+actual error; representatives may change with the cap. A smaller cap
+activating more tail coordinates remains covered by 1.3. At error one
+the bound is immediate from $E_{\rm sum}\le331/1536<1$.
+Counted completion gives the same lower bound for stopped competitors.
+It matches the explicit common law, and that law works at every larger
+cap. This proves attainment and the closed-cap classification. $\square$
+

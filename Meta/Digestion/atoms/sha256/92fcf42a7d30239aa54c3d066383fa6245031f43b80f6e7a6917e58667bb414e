@@ -1,0 +1,15 @@
+**Mathematical citation 2.2 (reused mechanisms).** The greatest-invariant
+subkernel construction is already present in
+[MaximalForwardInvariantSubkernel](../../../D5/S1/FixedPoints/MaximalForwardInvariantSubkernel.lean),
+`maximal_forward_invariant_subkernel`, for a total self-map.
+[TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean),
+`typed_finite_view_kernel`, relates typed finite-path views, refinement and
+complete behavior. [DynamicsDescent](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean),
+`dynamics_descends_iff`, supplies the fiber-preserving total-map criterion.
+[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean),
+`contextual_equivalence_is_greatest` and `signature_extension_refines`,
+supply strong partial-operation congruence and signature enlargement.
+Theorem 2.1 uses these established mechanisms with explicit complete-response
+and selector conditions; these mechanisms are intermediate ingredients, not
+a claim of new fixed-point or factorization theory.
+

@@ -1,0 +1,27 @@
+**定理 15.2（独立截面的完整保持判据）。** 若 $p\in\mathcal N^\circ$，则环境测地在整个 $I$ 内仍属于 $\mathcal N^\circ$，当且仅当
+
+$$
+ \omega=0
+ \quad\text{或}\quad
+ \begin{cases}
+ q_0v_{25}+q_{25}v_0-q_2v_5-q_5v_2=0,\\
+ v_0v_{25}-v_2v_5=0.
+ \end{cases}
+ \tag{15.1}
+$$
+
+初点不在 $\mathcal N^\circ$ 时没有保持性结论。这里的条件涵盖 $(X,Y,Z,\kappa)$ 及其四个独立速度参数；它不是只在一个端点或一个特例上的曲率测试。
+
+**证明。** 令 $F(a)=a_0a_{25}-a_2a_5$，并令
+$B(a,b)=a_0b_{25}+a_{25}b_0-a_2b_5-a_5b_2$。严格正性给出
+$F(q)=0\Longleftrightarrow p_0p_{25}=p_2p_5$。对 $\omega>0$，代入测地式得
+
+$$
+ F(q(t))=c^2F(q)+\frac{2cs}{\omega}B(q,v)
+ +\frac{4s^2}{\omega^2}F(v),\qquad
+ c=\cos(\omega t/2),\quad s=\sin(\omega t/2).
+$$
+
+若 (15.1) 成立，右端恒为零；结合归一化及 $I$ 上严格正性，得 $p(t)\in\mathcal N^\circ$。反之，$I$ 包含零的一个开邻域，在其中 $c\ne0$；除以 $c^2$ 并令 $z=\tan(\omega t/2)$，所得多项式
+$2zB(q,v)/\omega+4z^2F(v)/\omega^2$ 在一段区间为零，故两项系数均为零。这个局部必要条件又使原式在整个 $I$ 恒零，包括 $c=0$ 的点。$\omega=0$ 时 $u=v=0$，路径为常值。证毕。
+

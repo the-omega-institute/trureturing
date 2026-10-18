@@ -1,0 +1,19 @@
+**Corollary 6.2 (a fixed rational installation and its acquisition costs).** Already $S=\{1,2\}$, $b=1/2$ and $\mu=(1/2,1/2)$ suffice in (6.1). On (6.3),
+
+$$
+\frac{\nu_{h_n}(1)}{\nu_{h_n}(2)}=(25/27)^{N_n},\qquad
+z_{h_n}-\frac9{25}=\frac{19}{225}\nu_{h_n}(1).
+\tag{6.5}
+$$
+
+The probability of that actual prefix is
+
+$$
+\frac12(2/9)^{N_n}+\frac12(6/25)^{N_n},
+\tag{6.6}
+$$
+
+between $\frac12(6/25)^{N_n}$ and $(6/25)^{N_n}$. For a specified finite $w$ and positive rational slack, adequate identity padding can be found by terminating rational arithmetic. This is a possible positive-history witness, not a claim that a single source run will produce it, nor a repeated-run or expected-waiting guarantee. There is no permission to restart after a different seed or completion. Its actual paid acquisition length, its small occurrence probability, private computation and synthetic future-output length are separate quantities.
+
+**Proof.** The ratio of balanced likelihood factors is $(2/9)/(6/25)=25/27$. The squared-beta source masses differ by $4/9-9/25=19/225$. These give (6.5); direct word likelihood gives (6.6). Powers of $25/27$ tend to zero, so the stated rational search for an individually specified slack terminates. ∎
+

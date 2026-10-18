@@ -1,0 +1,29 @@
+**Theorem 5.2 (arbitrary signed fibers and opposite-sign feasibility).**
+Emptiness of (NSF.3) is decidable, without its nonemptiness promise.
+A nonempty answer supplies one finite original source satisfying
+every retained constraint. The same holds after any finite Boolean
+combination of fixed-coordinate tests, complete-row tests and tests
+on fixed native transforms of one or more copies of the source.
+
+Proof. Apply Lemma 5.1 to the complete predicate (NSF.3). In particular
+the old row is tested as a complete row; equivalently use ARH's old
+class filling with all pairwise cross-class disequalities and its
+exact constructor reconstruction. All records share the same $u$.
+For two-source questions use independent $u,v$, each satisfying the
+*whole* retained predicate. Copies of $u$ inside its own records stay
+shared. Witness reconstruction in Lemma 5.1 proves every record and
+the concrete old exterior simultaneously. $\square$
+
+For example, to ask whether a reached equality is forced, its
+counterquery imposes both reach guards and the opposite equality bit
+in addition to the full retained input. To ask whether the *guarded
+positive predicate itself* is forced, its counterquery also permits a
+failed guard. These are different questions. On $u=\beta$, the signed
+record $(0,L,1,R,\ne)$ is false despite the second endpoint existing;
+the negation of its guarded equality is true because the first endpoint
+is absent. Lemma 5.1 keeps that distinction.
+
+A witness returned here is an offline hypothetical source consistent
+with the query. It is never identified with the actual source and is
+never added as a source-bearing cache at entry.
+

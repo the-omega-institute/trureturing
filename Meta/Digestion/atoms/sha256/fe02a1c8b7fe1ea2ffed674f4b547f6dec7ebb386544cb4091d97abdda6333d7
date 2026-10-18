@@ -1,0 +1,43 @@
+## 7. The universal stopped inequality
+
+The scored correct row at class $6$ gives $c_6\le b_6-e+\varepsilon$, hence
+
+$$
+3G\le b_6-e+9\varepsilon.
+$$
+
+The stock identity, the six lower bounds on $c_n$, and $h_+\le e+\varepsilon$ give
+
+$$
+T\ge S-7e-7\varepsilon.
+$$
+
+Using $T=G+r_1+r_2+r_6$ and the three upper bounds $r_i\le e+\varepsilon$ gives
+
+$$
+G\ge S-10e-10\varepsilon.
+$$
+
+Combining with the preceding upper bound on $3G$ yields
+
+$$
+3S-b_6-29e\le39\varepsilon=39\cdot1386\eta=216216s.
+$$
+
+Together with $s\ge0$, this proves the finite stopped theorem
+
+$$
+\boxed{s\ge0,\qquad 3S-b_6-29e\le216216s.}
+$$
+
+Equivalently, with $C=216216$,
+
+$$
+\boxed{
+Cb_2+(4C+3)b_3+(5C+3)b_4+(5C+3)b_5+(5C+2)b_6+(4C+3)b_7+(4C+3)b_8
+\le C+(44C+29)e.
+}
+$$
+
+The constant is an exact certificate constant, deliberately coarse rather than optimized. When $s=0$, every charged mass is zero and the same proof directly gives $3S-b_6\le29e$; no division or limiting argument is used. The argument is for one common normalized allocation throughout. It uses no auxiliary hull, ordering of finite profiles, scalar renormalization, separate marginal optima, or counterfactual probability budgets.
+

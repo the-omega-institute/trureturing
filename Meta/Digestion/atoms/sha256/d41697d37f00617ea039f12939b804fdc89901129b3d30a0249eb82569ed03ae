@@ -1,0 +1,22 @@
+**Definition 2.1 (budgeted boundary image).** Define
+
+$$
+B_{k,d}(u)=(s,t)=\bigl(H_P^{(k)}u,\operatorname{tail}_d(u)\bigr),\qquad
+Q_{k,d}=B_{k,d}(U_k).
+\tag{2.1}
+$$
+
+The full typed representation is $(k,d,B_{k,d}(u))$. Equivalently,
+
+$$
+Q_{k,d}=\{(s,t)\in\mathbb F_q^m\times\mathbb F_q^d:\quad
+ s-H_D^{(k,d)}t\in\operatorname{im}H_A^{(k,d)},\quad
+ -s\in\operatorname{im}H_F^{(k)}\}.
+\tag{2.2}
+$$
+
+Indeed, the first condition supplies $v$ with $H_A^{(k,d)}v=s-H_D^{(k,d)}t$,
+and the second supplies a completion $f$; together they give $(v,t,f)\in C$.
+The converse follows from such a codeword. Thus $Q_{k,d}$ is the actual
+linear image, rather than all formal pairs $(s,t)$.
+

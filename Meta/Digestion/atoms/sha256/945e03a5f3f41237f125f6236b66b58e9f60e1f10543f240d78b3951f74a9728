@@ -1,0 +1,10 @@
+## 6. The sharp universal diagonal envelope
+
+The scalar allocation and common effect in this section reuse JR
+§§36–38 under Comparison 2.5. Its proof uses the same joint determinant
+and contrast constraint with arbitrary nonnegative diagonal test
+weights, rather than only the three original-height averages. The full
+derivation is retained to support the uncovered comparison and
+perturbation arguments; these scalar laws are not counted as additional
+knowledge.
+

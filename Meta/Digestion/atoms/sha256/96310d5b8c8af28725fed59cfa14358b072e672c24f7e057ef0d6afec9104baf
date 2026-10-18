@@ -1,0 +1,8 @@
+**Corollary 88.2 (composite integral-point indices).** Under the hypotheses and notation of Theorem 85.1, assume $N\ge81$. Every affine integral point $K\ne\pm R$ with $\delta(K)=(5,D,5D)$ has $X(K)=5DB_{Nk}$, where $k$ has one of the forms in Theorem 88.1. If $k$ is composite, then
+
+$$Nk\ge N(6N+1)^2.$$
+
+**Proof.** Theorem 85.1 supplies the positive odd multiplier $k>1$, $3\nmid k$, and the same-kernel equation. Apply Theorem 88.1. ∎
+
+These are necessary restrictions. They do not assert existence of either surviving form, exclude all original-support squares, or establish a universal WSS exclusion. The remaining possibility $Q_q(L_t)=q$ times a square at an original-support prime is not ruled out here.
+

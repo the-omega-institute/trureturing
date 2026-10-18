@@ -1,0 +1,22 @@
+**Proposition 1.3 (passive sufficiency does not price an action).** The law
+of $\partial_p(t)$ determines the law of the passive target trajectory, but
+the law of the next useful Read generally requires the conditional experiment
+
+$$
+K_c(w,y)=
+\Pr_\mu\bigl(\operatorname{Read}_t(w)=y\mid\partial_p(t)=c\bigr)
+\tag{1.4}
+$$
+
+for all legal words $w$, together with the joint compatibility of replies at
+different words. A boundary marginal alone contains neither (1.4) nor its
+same-source updates after a reply.
+
+**Proof.** AAR13.3 gives the first assertion. An active encoder chooses its
+next word from the current transcript. Two source laws can have the same
+descriptor marginal while assigning different off-boundary replies inside
+one descriptor fibre. The next-word reply and the posterior after that reply
+then differ. A single marginal of the descriptor cannot determine either
+quantity. The explicit native separation in Sections 2--3 supplies the
+strict cost consequence. $\square$
+

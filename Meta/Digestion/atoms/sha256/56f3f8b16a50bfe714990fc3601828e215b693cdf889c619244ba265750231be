@@ -1,0 +1,12 @@
+**Definition 1.1 (source notation).** The following symbols denote the specified mathematical constructions, with their own hypotheses and domains.
+
+| Symbol | Source and facts used |
+| --- | --- |
+| GCA | [General-cut acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_CUT_ACQUISITION.md), §§1–2: the initialized $G_{\rm sel}$; §§4–6: completed-predecessor replay, actual general selectors and returning received-reference calls; §§7–8: original stopping route, finite growth and prices; §9.4: the remaining common-instance problem. |
+| ARC | [Actor-local Reserve recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md), Definitions 4.1 and 5.1–5.4: the parked original client, inlined auxiliary source caller, outer entrance and completed-cycle capture; §§6–7: actual raw codec and positioned publication; Definition 11.1: the unchanged original task. |
+| CAP | [Capacity coherence and growth](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md), Definitions 2.2–2.4 and 4.6, Lemmas 4.7 and 6.7: original roles, finite canonical source ingress and full acknowledged return; §§5,16–17: genuine capacity/guard operations and terminal/horizon boundaries. |
+| AIF | [Acquired input frontier and replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md), Definitions 2.2–2.6: canonical-prefix input domains, actual primitive successors, original continuation/audit experiments and terminal readout. |
+| UAS | [Growing unary storage atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md), §§2–3: raw support/boundary inverses and canonical joint-memory/history kernels; §§5–6: the after-overwrite owner fibre, original-source successor coordinates and the unproved global task bridge. |
+| SSA | [Structural storage atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md), §§3–4,7: raw support/boundary and historical kernels on its declared structural image; Proposition 10.2: an inserted-phase observation obstruction for its own complete-physical-successor task. |
+| CYCLE | [Growing paid view cycle](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md), §§1–3,11–12: independently defined historical views and their paid cycle on its separately initialized $G_\circ$. |
+

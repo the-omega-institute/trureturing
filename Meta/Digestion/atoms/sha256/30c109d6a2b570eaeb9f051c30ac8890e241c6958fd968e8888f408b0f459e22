@@ -1,0 +1,18 @@
+**Definition 3.1 (the motif).** Put
+
+$$
+A=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,
+\quad Q=\langle C,A\rangle,
+$$
+
+$$
+(u_0,u_1,u_2,u_3,u_4)=
+(C,J,\langle C,C\rangle,\langle J,J\rangle,\langle A,Q\rangle).
+$$
+
+Let $P=\{u_0,u_1,u_2,u_3,u_4\}\subseteq S_3$. The six targets other
+than $LL$ have own-coordinate witnesses on $P$; $LL$ is the sole residual
+target. The four core states $u_0,u_1,u_2,u_3$ have distinct $LL$ factors,
+while every native reply has at most three values on that core.
+

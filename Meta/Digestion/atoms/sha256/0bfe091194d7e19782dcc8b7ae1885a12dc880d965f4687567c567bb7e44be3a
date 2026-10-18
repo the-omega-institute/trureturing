@@ -1,0 +1,28 @@
+**Definition 1.2 (row).** The public $P$ is any finite prefix-free address set,
+including the empty cut and the root cut. Put $O=P\cap\operatorname{Pos}(u)$.
+Reuse [NAR, Definition 1.2][NAR] and [ACPD] `literalRecord`: $C_P(u)$ is the
+literal ordered exterior with the entire subtree at each reached $p\in O$
+replaced by an address-marked hole, and
+
+$$
+R_P(u)=(C_P(u),\pi_P(u)),\qquad
+p\sim_{\pi_P(u)}q\ \Longleftrightarrow\ u|_p=u|_q.
+\tag{CWS.1}
+$$
+
+Different classes assert disequality. Every unreached cut address has a
+concrete blocking strict-prefix leaf in the exterior; these guards are part
+of the literal output, not just absence flags. Prefix freeness ensures that
+such a blocking leaf is not hidden behind another cut hole.
+For $P=\varnothing$ the output intrinsically contains the whole tree. For
+$P=\{\varepsilon\}$ it is the constant root hole and singleton partition.
+The output is an actual readable retained object.
+
+**Mathematical citation 1.3 (reused native certificate).** [CNA, Theorem 2.2
+and §4][CNA], using [NDP] `original_present_transport`, supplies two facts:
+present addresses and branches persist; two equal leaf replies at one address
+enclose zero global updates. A left-only search from the root obtains such
+a leaf without knowing height. Branch and absent replies do not certify a
+quiet interval. This volume applies that existing guard to a different
+computation; it does not recreate the full-tree acquisition theorem.
+

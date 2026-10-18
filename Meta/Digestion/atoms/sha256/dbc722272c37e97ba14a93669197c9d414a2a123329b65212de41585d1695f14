@@ -1,0 +1,69 @@
+**Definition 1.1 (canonical blocks and whole-block potentials).** Fix
+$d\ge1$. Use the credited canonical alphabet
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad C_0=\langle\alpha,\alpha\rangle,\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}.
+$$
+
+Let $W_d=\{q:|q|\le d-1\}$, $m_d=|W_d|=2^d-1$, and let
+$\Gamma_q:S_d\to G_q$ be the credited complete temporal factor. Its
+reply map $h_q:G_q\to\mathcal A$ satisfies
+$h_q(\Gamma_q(u))=r_u(q)$, where
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$. The
+root range has exactly three replies and every nonroot range has all
+four; these values are obtained by the canonical trees along the path.
+
+An owned-seed network on $n$ original blocks has a finite seed set $J$.
+Each seed $c$ has a nonempty domain $T_c\subseteq\mathcal A$, a distinct
+actual owner port $o_c=(i_c,q_c)$, and a table at every occurrence. A
+port $(i,q)$ is prescribed either by a constant in $G_q$ or by
+$B_{i,q}(s_c)$ for one seed $c$, with
+
+$$
+h_{q_c}(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{SCP.1}
+$$
+
+The same seed variable is used at every repeated, self, or cyclic
+occurrence. Put
+
+$$
+O_i=\{c:i_c=i\},\qquad
+I_i=\{c:c\text{ occurs in at least one port of block }i\},\qquad
+\nu(c)=|\{i:c\in I_i\}|.
+$$
+
+For $s\in\mathcal S:=\prod_{c\in J}T_c$, let $z_{i,q}(s)$ be the
+prescribed factor. For arbitrary nonnegative whole-block weights
+$w_i:S_d\to[0,\infty)$ define
+
+$$
+\Phi_i^{w_i}(s)=\sum_{u\in S_d}w_i(u)
+       \prod_{q\in W_d}{\bf1}_{\{\Gamma_q(u)=z_{i,q}(s)\}},\qquad
+Z_{\mathcal N}(w_1,\ldots,w_n)=\sum_{s\in\mathcal S}\prod_{i=1}^n\Phi_i^{w_i}(s).
+\tag{SCP.2}
+$$
+
+RRN's two-way correspondence identifies this with the mass of the
+corresponding complete native template. Each $\Phi_i$ is zero or the
+weight of its uniquely reconstructed actual block. Thus each original
+joint block weight is used exactly once, even when many ports share a
+seed. If a domain is empty, the seed sum and the native solution set
+are empty. With no seeds there is one empty assignment, whose value may
+still be zero because of incompatible constants or zero weights.
+
+For $L\ge1$, let $\mathfrak N_{d,L}(n)$ be the networks with
+$\nu(c)\le L$; write $\mathfrak N_{d,\infty}(n)$ for the unrestricted
+class. Define the hard pressures
+
+$$
+\beta_{d,L}(w)=\sup_{n\ge1}\sup_{\mathcal N\in\mathfrak N_{d,L}(n)}
+ Z_{\mathcal N}(w,\ldots,w)^{1/n},\qquad \beta_d=\beta_{d,\infty}.
+\tag{SCP.3}
+$$
+
+All lengths, arbitrary donor choices, repeated occurrences, cycles,
+guards, compatibility zeros, and correlated whole-block weights remain
+in these suprema.
+

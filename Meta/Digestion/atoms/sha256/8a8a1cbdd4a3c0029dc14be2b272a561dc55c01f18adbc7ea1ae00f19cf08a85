@@ -1,0 +1,71 @@
+**定理 43.2（两层半径已足够产生尖锐制备误差）。** 对两种来源、任意 $N\in\mathbb N_0$ 和所有定义43.1的控制器，精确Read均有下界
+
+$$
+\min_{J\in\{2,I\}}\mathcal R_N^J(0;R,\epsilon,n)
+ \ge \sqrt{R\epsilon}>0.
+\tag{43.6}
+$$
+
+写 $n=r+v$，复用 (41.7) 的 $g_0=0$、$g_1=|r|$、$g_2=\max(|r|,|v|)$、$g_N=1$（$N\ge3$）。在 $g_N=1$ 的预算下，两风险均恰为 $\sqrt{R\epsilon}$，由原菜单的一条有限历史达到。特别地，任意公开 $n$ 的 $N\ge3$、以及 $n=1$ 的任意 $N\ge1$ 均满足此结论。给定 $h\ge0$，在这些预算下保证最坏初态误差不超过 $h$ 的制备条件恰为
+
+$$
+\epsilon\le\frac{h^2}{R}.
+\tag{43.7}
+$$
+
+证明。先覆盖全部控制器，复用定理40.2的首锚盲线，补上它与声明制备来源的实际交。固定任意控制器，在共同 $a=0$ 的首锚前分支上，每次Read都报告真实值零；因此内部控制、Read选择和停止都源无关地确定。若此分支没有锚，或首次锚之前执行了零控制，取任意单位 $t_0\perp n$，来源 $b_\pm=\pm Ut_0$ 都在 $\mathcal D_2$，其完整记录相同，初态半距为 $U\ge\sqrt{R\epsilon}$。零控制覆盖整个状态，所以即使以后有锚也不能分开它们。
+
+其余情形首次锚处于某个有限事件，之前的非零内部积为 $p=c_1\cdots c_k$，空积为1。令 $\widehat p=p/|p|$，选 $\varsigma\in\{1,-1\}$ 使
+
+$$
+\ell=\varsigma\widehat p^{-1},\qquad
+\alpha=\langle n,\ell\rangle
+ =|\operatorname{Re}(n\widehat p)|\ge0,
+\qquad \nu=\sqrt{1-\alpha^2}.
+\tag{43.8}
+$$
+
+当实部为零时固定选 $\varsigma=1$。若 $\nu>0$，取 $t=(n-\alpha\ell)/\nu$；若 $\nu=0$，任选单位 $t\perp\ell$。均有 $t\perp\ell$、$|t|=1$、$\langle n,t\rangle=\nu$。置
+
+$$
+H=\sqrt{U^2-L^2}=2\sqrt{R\epsilon},
+\qquad b_0=Lt,\qquad b_1=Lt+H\ell.
+\tag{43.9}
+$$
+
+两点半径恰为 $L,U$，法向内积分别为 $L\nu$、$L\nu+H\alpha$，均非负，所以已在较小来源 $\mathcal D_2$ 内。其差乘 $p$ 为实四元数 $H\varsigma|p|$；首锚读相同，首锚后的整个当前状态也相同。此前全部读数都是零，此后逐事件的真实读、动作和停止相同；任意重复Read和可数记录都由相同有限前缀保持相等。两个初始来源的半径各自固定为 $L$ 或 $U$，没有在过程中另选初始来源。
+
+这使两原初态在同一完整记录的候选纤维中相距 $H$。直接应用§25–26及[Recovery Geometry 定理3.2](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)的既有候选纤维半径下界，任意共同 $W$ 值输出至少对一个初态有误差 $H/2$，得到 (43.6)。它不要求候选的中点属于来源；也没有把后来已经合并的状态作为恢复目标。
+
+再构造上界。定理41.2的单位控制在 $g_N=1$ 时允许选择实际前缀 $p$，使 $|p|=1$、$np=\varsigma\in\{1,-1\}$。$|r|=1$ 时直接锚，纯虚 $n$ 时一个内部控制 $-n$ 后接锚；一般 $n$ 可用两个单位纯虚控制使 $p=\bar n$ 后接锚。后一构造也可显式写为：取公开单位 $c_1\perp v$，令 $c_2=-c_1\bar n$。因 $\operatorname{Re}(c_2)=-\langle c_1,v\rangle=0$、$|c_2|=1$、$c_1c_2=\bar n$，两者确在原内部菜单中。$v=0$ 时任取公开单位 $c_1$；需要较小预算时采用前述直接或单内部控制构造。
+
+保留初读、每次内部更新后的Read、首锚后的Read以及全部动作和停止，随后停止；至多3次更新、4次Read。初读给 $a$，首锚读给 $w=\operatorname{Im}(bp)$。写
+
+$$
+bp=\varsigma s+w,\qquad s=\langle b,n\rangle\ge0,
+\qquad q=|w|\le U.
+\tag{43.10}
+$$
+
+对 $\mathcal D_I$，同一 $w$ 的合法实部恰为闭区间
+
+$$
+\begin{aligned}
+\ell_0(q)&=\sqrt{\max\{L^2-q^2,0\}},&
+u_0(q)&=\sqrt{U^2-q^2},\\
+\ell_0(q)&\le s\le u_0(q),&
+m(q)&=\frac{\ell_0(q)+u_0(q)}2.
+\end{aligned}
+\tag{43.11}
+$$
+
+较小来源 $\mathcal D_2$ 的候选也在这个区间；$q>L$ 时它只有上端点，但允许的 $W$ 值估计仍可采用同一中点。对 $q\le L$，$u_0^2-\ell_0^2=U^2-L^2$ 给 $u_0-\ell_0\le H$；对 $L<q\le U$，$\ell_0=0$ 且 $u_0\le H$。最大区间宽 $H$ 在 $q=L$ 达到。因而有限历史的明确估计
+
+$$
+\widehat a=a,\qquad
+\widehat b=(\varsigma m(q)+w)p^{-1}
+\tag{43.12}
+$$
+
+对两来源均有 $|\widehat x-x|=|m(q)-s|\le H/2$。结合全控制器下界得等式，并直接得到 (43.7)。保留全部记录而在估计时仅使用初读与首锚读没有更改记录合同。证毕。
+

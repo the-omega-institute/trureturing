@@ -1,0 +1,9 @@
+**Definition 6.1 (the reachable scalar cover).** For $a\ne b$, put
+
+$$
+T_\theta=\{0\}\cup\{\delta_k:k\ge0\},\qquad
+S_\theta=T_\theta\cup\{1\}.
+$$
+
+For a bounded scalar set $T$, let $C(T,2\epsilon)$ be the smallest number of closed intervals of length at most $2\epsilon$ covering $T$. Endpoints zero and one represent the dominant and minority pure laws; zero is not claimed to occur as an unresolved finite posterior.
+

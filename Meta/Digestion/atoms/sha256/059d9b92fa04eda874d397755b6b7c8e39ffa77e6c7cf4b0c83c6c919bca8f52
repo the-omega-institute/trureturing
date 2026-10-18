@@ -1,0 +1,62 @@
+**Theorem 6.2 (strict actual overload in a genuinely late long pool).**
+For $P_g$, all actual live prefixes at $R_\varepsilon$ are exactly
+the $N_L$ prefixes of counts $(g,g+2)$ and the $N_H$ prefixes of
+counts $(p,2)$ in Definition 4.1. Consequently
+
+$$
+\lambda(R_\varepsilon)
+=\frac{\binom{2g}{g-1}}{\binom{2g+2}{g}}
+ +\frac{\binom{2g}{2}}{\binom{2g+2}{2}}
+=\frac{5g^2}{(2g+2)(2g+1)}>1,
+\qquad \lim_{g\to\infty}\lambda(R_\varepsilon)=\frac54.
+\tag{IC.31}
+$$
+
+Its common-support depths are precisely $0,1,\ldots,p$ and the
+formal endpoint $n$. The terminal gap $(p,n)$ has span $2g+4$,
+ends after $e_*=p+4$, and contains $R_\varepsilon$ in its pool.
+In particular $P_g$ belongs to none of
+$\mathfrak C,\mathfrak C_5,\mathfrak A_5$.
+
+Proof. The parent partition and absence of return edges in Theorem 5.1
+give exactly the stated entrances to $R_\varepsilon$. They are all
+live, and their distinct literal words give distinct actual prefixes.
+There are no other entrances at any depth. Apply (IC.30) to them.
+Writing the two binomial ratios with common denominator gives
+$g(g+2)$ and $2g(2g-1)$ as their numerators, summing to $5g^2$.
+Strictness is equivalent to
+
+$$
+g^2-6g-2=(g-3)^2-11>0\qquad(g\ge8).
+$$
+
+The limit follows by dividing numerator and denominator by $g^2$.
+In particular this is actual all-history overload, rather than an
+arbitrarily chosen overloaded family of abstract set pairs.
+
+All histories through depth $p$ expose the same successive
+$\mathsf I$ prefixes, and no redirection occurs before then.
+For later depths compare two actual complete runs. Choose an $L$
+prefix, complete $\mathsf U$ with $g-1$ ones, and set
+$\mathsf Y=11$. Its run is $\mathsf I,\mathsf X,\mathsf U,
+\mathsf Y$, ending through $B_1,B_2$, with total weight $k$.
+Before its final query it has $(p,p+3)$, so every query is preceded
+by a live history. Compare the $H$ run
+$\mathsf U=0^p,\mathsf X=00$ used in Theorem 5.1; it too is
+live before every query. Their support sets differ at each depth
+$p<d<n$: during the early two coordinates they contain different
+partial blocks, during $\mathsf U$ they contain different full early
+blocks, and during the late block they still omit different coordinates
+until the final exposure. Thus none of these depths is common-support.
+This proves the exact list of common depths.
+
+The sole nonsingle-step gap has span $n-p=p+4=2g+4>5$ and
+right endpoint $n>p+4=e_*$. State $R_\varepsilon$ occurs at
+internal depth $p+2$, so is in that remaining late pool. If the pool
+satisfied SI11's both-conflict condition, its state would have mass at
+most one, contrary to (IC.31). The gap is not the terminal span-five
+exception, so the same contradiction excludes $\mathfrak C_5$;
+its late span also directly excludes $\mathfrak A_5$.
+An overloaded state does not by itself imply $D>E+u$, and no such
+inference has been made. $\square$
+

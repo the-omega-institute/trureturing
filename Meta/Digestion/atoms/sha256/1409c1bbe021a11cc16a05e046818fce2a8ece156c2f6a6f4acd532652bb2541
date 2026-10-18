@@ -1,0 +1,19 @@
+**Definition 6.1 (a mandatory bounded-update completion premise).** Fix
+$r\ge1,d\ge2,L\ge4$. Consider a direct conditional-integration
+cap route with the following necessary condition on any accepted
+nontrivial label $(d,L,\mu,C)$, where $C<1$ and $\mu$ is a
+strictly positive rational law on the entire $S_d$:
+
+For every positive-mass original owned-seed network of incidence at
+most $L$, its terminal witness under the GDB individual-total-bijection
+contraction must have connected $r$-owner resampling support. The
+route uses that connectedness to integrate the specified full
+conditionals into a unique global law. Its only fallback accepts
+$C\ge1$.
+
+This defines a necessary mathematical premise, regardless of the
+internal finite proof language used to witness it. Connectedness alone
+is not asserted to prove a mass bound. This route is not the full
+JTC recursive grammar, its RCE range extension, the COK inequality,
+or a class containing all their existing rules.
+

@@ -1,0 +1,118 @@
+**Theorem 5.1.** Let M be any allowed finite COMPLETE same-update observer, with arbitrary finite carrier and arbitrary stochastic entries. For either j_β=law or j_β=conf, put
+
+$$
+\varepsilon _p=R_{\mathrm{conf},p}(M)-\rho _p,\qquad \varepsilon _\beta =R_{j_\beta ,\beta }(M)-\rho _\beta .
+$$
+
+Then
+
+$$
+A_p \varepsilon _p+A_\beta  \varepsilon _\beta +A_G E_G(M)\ge \eta /4.\tag{5.3}
+$$
+
+The bound has no state-count, period, prior-mass-floor, regular-emission or marginalized-defect hypothesis.
+
+**Proof.** Use the single common π,τ,B from Lemma 2.1. The suspended law bounds hold with ρ_β+ε_β in either order, by TV convexity. The supplied separate lower bounds, or the common-row endpoint triangle inequality, give ε_p,ε_β≥0.
+
+For each p state x choose a comparison N_x=N_{ω_x}∈G_p and let e_x=TV(Q_x,N_x), $e=\sum_x\pi_xe_x$. Choices may approach the infimum arbitrarily closely; no minimizing mixture or effective description of it is required.
+
+Let $\overline T=\sum_x\pi_x\mathbb E_{\omega_x}[T(Z)]$, and let $\overline S$ be the corresponding average of the likelihood-normalized suspended scores in Lemma 3.1. The p mixture ∑π_xN_x is within e of ∑π_xQ_x. Its E_p probability is 412/729−δ_pT̄. The two pure-endpoint risk bounds therefore imply
+
+$$
+|\overline T-1/2|\le (\varepsilon _p+e)/\delta _p.\tag{5.4}
+$$
+
+For the suspended comparison, put $R_x=\sum_y B_{xy}W_y$ and let S_x be the β-conditional law of N_x. Write $q_x=N_x([\beta])\ge3/5$ and $\widehat q_x=Q_x([\beta])=1-u_x$. Exact individual generation gives $Q_x(\beta E)=\widehat q_xR_x(E)$, whereas N_x(βE)=q_xS_x(E). For every residual event E,
+
+$$
+q_x|R_x(E)-S_x(E)|\le |Q_x(\beta E)-N_x(\beta E)|+|q_x-\widehat q_x|R_x(E)\le 2e_x.
+$$
+
+Consequently
+
+$$
+\operatorname{TV}(R_x,S_x)\le (10/3)e_x.\tag{5.5}
+$$
+
+This argument divides only by the comparison probability q_x. If $\widehat q_x=0$, R_x is still the installed actual successor-law mixture; it is not being called a conditional law of a zero event. Thus (5.5) respects the original zero-probability convention.
+
+Because πB=τ, the actual suspended marginal ∑τ_yW_y equals ∑π_xR_x. Equation (5.5) places it within (10/3)e of ∑π_xS_x. The latter's E_β probability is 22/27−δ_βS̄. The two suspended endpoint bounds give
+
+$$
+|\overline S-1/2|\le [\varepsilon _\beta +(10/3)e]/\delta _\beta .\tag{5.6}
+$$
+
+Every d(ω_x) is nonnegative. From (5.4)–(5.6),
+
+$$
+\begin{aligned}
+\sum_x\pi_xd(\omega_x)&=\overline T-\overline S\le D,\\
+D&=\frac{\varepsilon_p+e}{\delta_p}
++\frac{\varepsilon_\beta+(10/3)e}{\delta_\beta}.
+\end{aligned}
+\tag{5.7}
+$$
+
+Choose for each x the pure endpoint P_{p,r_{i(x)}} supplied by Lemma 4.1. Their mean distance from the actual Q_x is at most
+
+$$
+Z_0:=\sum_x\pi _x\operatorname{TV}(Q_x,P_{p,r_{i(x)}})\le e+CD.\tag{5.8}
+$$
+
+This is only an analysis comparison. The observer, its kernels and its decoded laws have not been changed.
+
+Let $q=\sum_{x:i(x)=2}\pi_x$. Comparing configuration losses against each endpoint gives
+
+$$
+q\delta _p\le \rho _p+\varepsilon _p+Z_0,\qquad (1-q)\delta _p\le \rho _p+\varepsilon _p+Z_0,
+$$
+
+hence |q−1/2|≤(ε_p+Z_0)/δ_p.
+
+Choose any actually supported k₀≥3 and put $r_0=r_{k_0}$. The complete word w_{3,1} has probability J(r)=r³(1−r)⁵. Its derivative has the sign of 3−8r. Therefore, throughout [3/8,5/13],
+
+$$
+J(r)\ge J(5/13)=J(2/5)+\eta >J(1/3).
+$$
+
+The last endpoint comparison follows also from 1944·6561>32·390625. Write $P_i=P_{p,r_i}$. For any probability law $T$ on this complete carrier, including its infinite noncompletion outcome, the coordinate triangle identity is
+
+$$
+\begin{aligned}
+&\operatorname{TV}(P_1,T)+\operatorname{TV}(T,P_2)-\operatorname{TV}(P_1,P_2)\\
+&\quad=\sum_w \operatorname{dist}\!\left(T(w),[\min(P_1(w),P_2(w)),\max(P_1(w),P_2(w))]\right).
+\end{aligned}
+$$
+
+Apply it to T=P_{p,r₀}. The single complete word w_{3,1} contributes at least η, so, writing d_i=TV(P_{p,r_i},P_{p,r₀}),
+
+$$
+d_1+d_2\ge \delta _p+\eta ,\qquad |d_2-d_1|\le \delta _p.
+$$
+
+The same common-row configuration loss against this actual supported depth is thus at least
+
+$$
+\begin{aligned}
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_0})
+&\ge (1-q)d_1+qd_2-Z_0\\
+&\ge \rho_p+\eta/2-\varepsilon_p-2Z_0.
+\end{aligned}
+$$
+
+Its upper bound is ρ_p+ε_p by Lemma 2.1. It follows that
+
+$$
+\varepsilon _p+Z_0\ge \eta /4.
+$$
+
+Using (5.7)–(5.8) gives
+
+$$
+\varepsilon _p+e+C\{(\varepsilon _p+e)/\delta _p+[\varepsilon _\beta +(10/3)e]/\delta _\beta \}\ge \eta /4.
+$$
+
+Let the chosen comparison errors decrease to e_G:=∑π_xg(x). Lemma 2.1 gives e_G≤E_G(M). The expression is increasing in this error, and expanding its coefficients proves (5.3). Every coordinate used belongs to the same observer, prior, record fibre and actual-history domain. ∎
+
+The proof uses the actual p→β flow after common-row extraction. The competitor still has its complete original suspended α update and every other required update. No operation or generation obligation is removed because a particular inequality needs only one edge.
+

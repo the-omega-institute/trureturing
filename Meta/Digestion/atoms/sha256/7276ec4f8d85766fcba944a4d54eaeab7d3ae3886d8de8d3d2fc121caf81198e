@@ -1,0 +1,37 @@
+**引理 2.1（transport, projection and the three directions）。** Use $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$ and $\varphi=(1+\sqrt5)/2$. For a nonzero unit label with actual initial counts $(m,n)$, put $r=\|b\|$ and $s=\sqrt\Delta$. The ordinary source algebra of PCR §§1–5,16 gives
+
+$$
+q_1=r^m s^n,\qquad q_2=r^n s^{m+n},\qquad
+q_{j+2}=q_jq_{j+1}\quad(j\ge1).
+$$
+
+The future directions have period three. With $w=x_2\times x_1$,
+
+$$
+|x_0\cdot w|\ge q_2^2,\qquad
+q_2\le q_0q_1,\qquad
+x_3=\operatorname{sgn}(x_0\cdot w)\,w,
+$$
+
+where the sign of zero is zero. A zero unit label has $x_j=0$ for $j\ge1$, even when $x_0\ne0$. If $\Delta=0$, the unconditional algebra gives $x_j=0$ for $j\ge2$.
+
+**证明。** The interpretation transport
+$E_p(\rho t)=E_{(b,b\times a)}(t)$ holds at the leaves and is preserved by every ordered node. The transported pair is orthogonal. On an orthogonal pair, homogeneity supplies the two displayed norm monomials; cyclic permutation of its three oriented unit axes is a proper rotation of order three and commutes with cross products. This proves the recurrence and direction cycle by node induction, including all label signs.
+
+To specify the actual projection premise, set
+$A=\|a\|^2,B=\|b\|^2,C=a\cdot b$, $K_0=b\times a$,
+$U=K_0\times a=Ca-Ab$ and $V=K_0\times b=Ba-Cb$.
+The upper triangular cross table for $a,b,K_0,U,V$ is
+
+$$
+\begin{aligned}
+a\times b&=-K_0,&a\times K_0&=-U,&a\times U&=AK_0,&a\times V&=CK_0,\\
+b\times K_0&=-V,&b\times U&=CK_0,&b\times V&=BK_0,\\
+K_0\times U&=-\Delta a,&K_0\times V&=-\Delta b,&U\times V&=-\Delta K_0 .
+\end{aligned}
+$$
+
+These identities follow from the vector triple-product identity, with diagonal zero and reversed entries negated. Structural induction yields the descriptors used in PCR §16. In a nonzero unit-label branch the $C$ factors disappear and one can use signed positive monomials in $A,B,\Delta$ times $a,b,K_0,-U,V$. Their positive projections onto the correctly signed direction of $w$ are respectively
+$s/r,r,s,s^2/r,rs$. Give $A,B,\Delta$ degrees $(2,0),(0,2),(2,2)$ and those five vectors degrees $(1,0),(0,1),(1,1),(2,1),(1,2)$. Each table entry preserves degree. If the descriptor has $A$ exponent $i$, its signed projection is
+$(AB/\Delta)^i q_2/q_1\ge q_2/q_1$, since $AB\ge\Delta$. Multiplication by $\|w\|=q_1q_2$ gives the first inequality, and comparison of a projection with $q_0$ gives the second. The same signed table fixes the sign of $x_3$. Zero and dependent branches follow without division. These are properties of jointly realized source histories, not assumptions about arbitrary triples.
+

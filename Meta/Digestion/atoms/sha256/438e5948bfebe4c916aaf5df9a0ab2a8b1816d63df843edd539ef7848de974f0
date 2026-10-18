@@ -1,0 +1,68 @@
+### 69.2 A compact integer-polynomial problem
+
+Use 21 real variables
+\((x_1,\ldots,x_5,y_1,\ldots,y_5,u_1,\ldots,u_5,v_1,\ldots,v_5,r)\)
+and define
+
+\[
+ z=(1,x_1+iy_1,\ldots,x_5+iy_5),\qquad
+ w=(1,u_1+iv_1,\ldots,u_5+iv_5),
+\]
+
+\[
+ Q=\left(1+\sum_{j=1}^5(x_ju_j+y_jv_j)\right)^2
+  +\left(\sum_{j=1}^5(x_jv_j-y_ju_j)\right)^2-6.
+\tag{69.3}
+\]
+
+In particular \(Q=|z^*w|^2-6\). Let \(T\subset\mathbb R^{21}\) be
+defined by the eleven equalities and three weak inequalities
+
+\[
+\begin{aligned}
+ x_j^2+y_j^2-1&=0,&u_j^2+v_j^2-1&=0 &&(1\le j\le5),\\
+ r^2-3&=0,&r&\ge0,\\
+ 1-10Q&\ge0,&1+10Q&\ge0.
+\end{aligned}
+\tag{69.4}
+\]
+
+Thus \(r=\sqrt3\) on \(T\); the other algebraic conjugate is excluded.
+The set is closed and bounded, hence compact. It is nonempty: choose
+\(z=(1,1,1,1,1,1)\),
+\(w=(1,1,1,-1,i,(1-2i)/\sqrt5)\), and \(r=\sqrt3\).
+Then \(|2+i+(1-2i)/\sqrt5|^2=6\), so \(Q=0\).
+
+Define the following polynomial matrix, with conjugation fixing the
+real indeterminate \(r\):
+
+\[
+ A_2(r)=2J_3+(-3+ir)I_3,\qquad
+ B(r)=\begin{pmatrix}A_2(r)&A_2(r)\\
+ \overline{A_2(r)}&-\overline{A_2(r)}\end{pmatrix}.
+\tag{69.5}
+\]
+
+In particular \(B(\sqrt3)=2\sqrt6H_\star\). Put
+
+\[
+ F_{a,j}=\bigl(\Re(B(r)a)_j\bigr)^2+
+          \bigl(\Im(B(r)a)_j\bigr)^2-24,
+ \qquad G=\sum_{a\in\{z,w\}}\sum_{j=0}^5F_{a,j}^2.
+\tag{69.6}
+\]
+
+These formulas define integer polynomials in the 21 real variables,
+and \(G\ge0\). If \(G=0\) on \(T\), all twelve summands vanish, giving
+\(z/\sqrt6,w/\sqrt6\in\mathcal F(H_\star)\). The exact central gap
+in §68 instead requires
+
+\[
+ |Q|\ge\delta=\frac{9\sqrt7-21}{14}>\frac15>\frac1{10}.
+\]
+
+Here \(\delta>1/5\) follows from
+\(45^2\cdot7-119^2=14>0\), comparing positive quantities. This
+contradicts (69.4). Hence \(G\) has a strictly positive attained minimum
+on the entire compact set \(T\).
+

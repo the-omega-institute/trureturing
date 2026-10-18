@@ -1,0 +1,34 @@
+**假设 24.2（严格的单系统保持与另供的双系统）。** 在同一个 $\mathcal H$ 上定义三个投影
+
+$$
+N_x=\operatorname{diag}(0,1,0,0,1),\quad
+N_y=\operatorname{diag}(0,0,0,1,1),\quad
+N_z=\operatorname{diag}(0,0,1,0,0).
+$$
+
+全输入单系统保持指一个固定、线性、同域 CPTP 通道 $\mathcal N$ 满足
+
+$$
+\operatorname{tr}(N_a\mathcal N(\rho))=\operatorname{tr}(N_a\rho)
+\quad\text{对每个密度态 }\rho\text{ 及 }a=x,y,z.
+$$
+
+数学引文与应用。[HiddenRelations 定理 C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md#29-同一五模式的全输入保真方形记录与稳定子块)已经给出更强的完整分类：在定义 24.1 的标签对应下，上述通道恰为
+
+$$
+\mathcal N(\rho)=\Gamma\circ\rho,\qquad
+\Gamma\succeq0,\quad\Gamma_{ss}=1.
+$$
+
+因而所有 $p_s$ 和 $\kappa$ 都保持；通道仍可消去相干性，不必是恒等通道。这里消费这个 Schur 分类，不另把“不能改变 $\kappa$”作为较弱的新分类。
+
+投影的核与像说明同一前提为何如此强。写 $\mathcal N(\rho)=\sum_\nu K_\nu\rho K_\nu^\dagger$。对任意占位投影 $P=N_a$，全输入条件等价于 $\sum_\nu K_\nu^\dagger P K_\nu=P$。若 $v\in\ker P$，则
+
+$$
+0=\sum_\nu\|PK_\nu v\|^2,
+$$
+
+所以每个 $K_\nu$ 保持 $\ker P$。迹保持还给 $\mathcal N^*(I-P)=I-P$；对 $v\in\operatorname{im}P=\ker(I-P)$ 同理得到 $K_\nu v\in\operatorname{im}P$。故所有 Kraus 算子同时保持三个投影的共同特征空间。五个联合特征标签 $v_s$ 互异，每个共同空间是一维，因而每个 $K_\nu$ 都在五标签基中对角。这正是原 Schur 分类的算子对应。
+
+下文另供两个可区分系统 $\mathcal H_1\otimes\mathcal H_2$；$|s,t\rangle$ 与 $|t,s\rangle$ 是不同基向量，除非 $s=t$。在涉及乘积输入的条目中，假定两个系统由两次独立准备得到相同的态，联合输入为 $\rho\otimes\rho$。这是准备资源的假设，不是从一份未知态克隆出另一份。双系统只要求保持总加和占位，不满足上述固定单系统通道的全输入合同。
+

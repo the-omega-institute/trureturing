@@ -1,0 +1,23 @@
+## 352. Global exclusion of the opposite-M exit
+
+Suppose any actual owner has fixed frame, up to exchanging axes or
+the two transverse labels,
+
+    kappa=(W,M,D,C,M,D).                            (352.1)
+
+It is not sigma, hence genuine. Four-distinctness forces
+W in {V,Z,U}. Its axial cosh r is below 3*m by (350.5), including
+the explicit gap when W=U. Equations (350.1) and (350.4) supply every
+other condition in (351.1). Thus beta_M(kappa)>pi/3.
+
+Kappa and eta are distinct owners because kappa has C whereas eta
+does not. Their real original M slots contribute
+
+    2*beta_M(kappa)+theta_M(eta)>2*pi/3+pi/3=pi.
+
+This contradicts the complete genuine M capacity. Consequently no
+owner of type (352.1) exists anywhere under (349.1). No claim that it
+meets a source face is used. Even if a face self-glues, kappa's two
+transverse M slots and eta's axial M slot remain three distinct
+original occurrences.
+

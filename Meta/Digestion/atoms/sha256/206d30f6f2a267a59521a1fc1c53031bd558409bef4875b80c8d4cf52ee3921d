@@ -1,0 +1,100 @@
+**Lemma 97.1 (A six-event adaptive score bound).** Every original
+$A\in\mathcal A_2$ with $e_a(A)\le\varepsilon$, $0\le\varepsilon\le1$,
+satisfies $w+z\le6\varepsilon$.
+
+**Proof.** First use the following six rows on the complete four-bit cube;
+label $j$ denotes original tape $\theta_j$. Each row has weight one.
+
+$$
+\begin{array}{c|c|c}
+ b&H_b&\eta_b(H_b)\\\hline
+0101&\{0,1\}&1\\
+0110&\{0,1\}&1\\
+1000&\{0,2\}&1\\
+1100&\{3\}&w\\
+1110&\{4\}&z\\
+1111&\{0\}&1
+\end{array}
+\tag{97.1}
+$$
+
+The last target is the projected base target, not an infinite
+all-positive source. For a deterministic depth-two tree, partition the
+rows first by its root bit. In either child at most one further bit can
+be queried. If $B$ is any subset of the displayed rows, its best
+constant-output score is
+
+$$
+c(B)=\max_{0\le j\le4}\sum_{b\in B}\mathbf1_{\{j\in H_b\}}.
+\tag{97.2}
+$$
+
+Its best depth-one score after root $i$ is
+$\max\{c(B),\max_{j\ne i}[c(B\cap\{b_j=0\})+
+ c(B\cap\{b_j=1\})]\}$. Substitution of the six rows gives
+
+$$
+\begin{array}{c|cc}
+\text{root index}&\text{zero-child maximum}&\text{one-child maximum}\\\hline
+1&2&2\\2&1&3\\3&2&2\\4&2&2
+\end{array}
+\tag{97.3}
+$$
+
+This is a complete root-and-child calculation: a constant leaf may choose
+any label, including an unqueried mark. For example, after root 1 answers
+one the rows are $1000,1100,1110,1111$ with required sets
+$\{0,2\},\{3\},\{4\},\{0\}$. Query 2 splits them into a singleton
+and three distinct singleton-required labels; query 3 leaves the first
+two rows together and the last two together; query 4 separates the last
+row from the other three. Their maximum total scores are respectively
+$2,2,2$. After root 1 answers zero the two remaining rows can both
+score. The formula (97.2) calculates the other entries without any
+assumption on suffix zeros. Stopping at the root has score at most
+$\max_j\sum_b\mathbf1_{\{j\in H_b\}}=4$, and repeating a question
+only leaves a fixed-answer continuation. Thus every deterministic
+hard-two low-coordinate tree has score at most four.
+
+Transport this bound to an arbitrary original $A$. Use the measurable
+projection $\pi_4$ from (83.7): it keeps $\theta_1,\ldots,\theta_4$
+and sends every other original tape to $\theta_0$. It contracts TV,
+fixes targets at $n\le4$, and sends every later target to base. For
+each $m\ge5$, Boundaries, Theorem 35.2 gives sixteen actual sources
+$x_{b,m}$, one for every $b\in\{0,1\}^4$, with low word $b$ and
+replies zero at indices $5,\ldots,m$. Choose the whole countable family
+before using the seed. Their first absences are the first low zeros,
+or exactly 5 at $1111$. Their unprescribed prime tails remain actual
+finite supports.
+
+Countability of $X$ gives the common probability-one seed event
+$G=\bigcap_x\{\text{finite handoff at }x,\ K_{A,x}\le2\}$.
+The common finite-forest event $J_{A,2,m}$ of (74.4) has probability
+$\gamma_m\to0$. Indeed at a fixed seed the first two requests across
+all actual sources occupy at most three binary query nodes, with a
+finite largest index. Processing without a further request adds no node;
+countable source and record unions ensure measurability. This argument
+requires no exact output law, address ceiling or processing horizon.
+
+On $G\setminus J_{A,2,m}$, every execution at the sixteen comparison
+sources uses only indices at most $m$ and terminates. High replies there
+are the common fixed zeros. Contract those questions and repeated
+questions. Whole-execution induction from Source-Correlated Laws,
+Lemma 45.3, identifies the resulting projected outputs with one
+low-coordinate tree of depth at most two. All low words are represented,
+so both children at every surviving node correspond to actual
+executions; no hypothetical infinite-source execution is needed.
+Complete processing between questions has the same continuation whenever
+its acquired replies agree, even if its length varies by transcript.
+The score is at most four on this whole seed event and at most six
+elsewhere. Consequently the sum of the six projected event probabilities
+is at most $4+2\gamma_m$. Each projected law is within $\varepsilon$
+of its projected target, so (97.1) gives
+
+$$
+4+w+z-6\varepsilon\le4+2\gamma_m.
+\tag{97.4}
+$$
+
+Let $m\to\infty$. No comparison source depends on an individual seed,
+and no seed mass is conditioned away. $\square$
+

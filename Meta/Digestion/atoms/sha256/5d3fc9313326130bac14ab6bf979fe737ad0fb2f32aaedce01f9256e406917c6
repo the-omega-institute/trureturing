@@ -1,0 +1,246 @@
+**Theorem 210.8 (Exact five-coordinate joint stock threshold).**
+Let $L\ge7$, $J=\{j_1<j_2<j_3<j_4<j_5\}\subseteq\{3,\ldots,L\}$.
+In the input family impose $E=0$ and
+
+$$
+\gamma_{j_1}=\cdots=\gamma_{j_4}=g,\qquad
+\gamma_{j_5}=h,\qquad \gamma_j=0\ (j\notin J,\ j\ge3),
+\quad d\ge0,\quad g\ge2d,\quad 0\le h\le g.
+$$
+
+Correct suffixes and early pair allocation, including $00$, are free.
+Put
+
+$$
+u=g-d,\qquad v=(h-d)_+,\qquad
+B_*=4u+\max(d,v/4).
+\tag{210.32}
+$$
+
+At each prescribed $B\ge0$, there exists an input of these totals and
+stock $B$ with $O$ excess at most $d$ if and only if $B\ge B_*$,
+if and only if there exists such an input with $N$ excess at most $d$.
+For every $B\ge B_*$ an explicit common score has
+$T=u$, $S=B-u$ and both excesses exactly $d$.
+At this fixed $T=u$ the exact least pair stock is
+$3u+\max(d,v/4)$. Thus every actual $O$ input in the stated class
+with cost at most $d$ has a same-$Q$, same-$W$ $N$ representative
+of cost $d$; for $d\le1$ take $\theta=0$ in (210.4).
+Adding any prescribed early correct rows to the constructed score
+preserves its cost $d$, so the threshold remains sufficient for
+arbitrary $E$. Necessity and automatic affordability here require
+$E=0$. At $B>B_*$ no assertion that $d$ is the minimum excess is made.
+
+**Proof.** For an actual competitor project all early pair mass onto
+the five selected zero indicators $Z_i=\mathbf1_{w_{j_i}=0}$.
+This includes early $00$ and gives one measure of mass $S$.
+By the existing guards in 208.2, cost at most $d$ and $E=0$ imply
+
+$$
+m_i\ge2(\gamma_{j_i}-d)_+,\qquad
+D_{ij}=\int(1-Z_i)Z_j\,d\nu\ge(\gamma_{j_j}-d)_+,
+\qquad T\ge g-d=u.
+\tag{210.33}
+$$
+
+For every Boolean vector $(z_1,\ldots,z_5)$,
+
+$$
+2z_1+z_2+\sum_{1\le i<j\le4}(1-z_i)z_j+(1-z_4)z_5\le4.
+\tag{210.34}
+$$
+
+To prove it let $k=z_1+z_2+z_3$. The first three coordinates give
+$(5k-k^2)/2$: the terms $2z_1+z_2$ compensate their ordered linear
+coefficients. If $z_4=1$, the whole expression is
+$3+(3k-k^2)/2$; if $z_4=0$ it is $(5k-k^2)/2+z_5$.
+Each is at most four for $k=0,1,2,3$. Integrating (210.34) and
+then using (210.33) gives
+
+$$
+4S\ge2m_1+m_2+\sum_{i<j\le4}D_{ij}+D_{45}\ge12u+v.
+\tag{210.35}
+$$
+
+The single stopped table $(j_1,j_2;0,j_2,j_3)$ collects at least
+$m_1+2g$, so $B+d\ge2u+2g$, or $B\ge4u+d$.
+This is the ordered-triple mechanism of 208.2, applied within this
+proof. Combining (210.35) with $T\ge u$ gives
+$B\ge4u+v/4$, proving $B\ge B_*$. At fixed $T=u$ subtract $u$.
+These lower bounds use whole legal tables on the actual input and
+impose no condition on its correct suffixes.
+
+For attainment suppose first $u>0$. In local zero-subset coordinates
+$\{1,2,3,4,5\}$ let $\nu_0$ put mass $u$ on each of
+$\{1,2,4\},\{1,3,4\},\{2,3,4\}$.
+Let $\nu_1$ put mass $u/3$ on every $Z\cup\{5\}$ with
+$Z\subseteq\{1,2,3,4\}$ of size two or three. These are the
+three-internal forced-terminal and subset-block atoms already supplied
+by 201.2, used here on a common five-coordinate carrier.
+Define
+
+$$
+\alpha=\frac{3v}{4u},\qquad x=(d-v/4)_+,\qquad q=B-B_*\ge0,
+\qquad \nu=(1-\alpha)\nu_0+\alpha\nu_1+(x+q)\delta_\varnothing.
+\tag{210.36}
+$$
+
+Since $0\le v\le u$ and $d\le u$, these are nonnegative weights
+with $0\le\alpha\le3/4$. Their total is
+$3u+v/4+x+q=B-u$. Lift half of each atom onto each actual pair
+word $w(\{1\}\cup\{j_i:i\in Z\})$ and
+$w(\{2\}\cup\{j_i:i\in Z\})$; set all inactive bits to one.
+Take $T=u$. Place correct rows by the threshold construction of 203.2:
+for selected $i<j$ let $a_{ij}=\nu(Z_i=1,Z_j=0)$, and give class
+$j_i$ length measure on $t\in[0,\gamma_{j_i})$ with later bit
+$j_j$ one exactly when $t<a_{ij}$. This defines finitely many full
+words and preserves all correct totals. It uses no acquisition seed.
+
+It suffices first to bound the core with $q=0$ and fifth total $v+d$.
+When $h<d$ this total can subsequently be reduced to $h$.
+Counting the atoms in (210.36) gives, with $I_0=\{1,2,3\}$,
+
+$$
+\begin{aligned}
+m_i&=2u\ (i\in I_0),&m_4&=3u-3v/4,&m_5&=5v/2,\\
+D_{ij}&=u\ (i<j\le4),&D_{i5}&=v\ (i\le4),\\
+a_{ij}&=u\ (i<j\text{ in }I_0),&a_{i4}&=3v/4\ (i\in I_0),\\
+a_{i5}&=2u-3v/2\ (i\in I_0),&a_{45}&=c_*=3u-9v/4.
+\end{aligned}
+\tag{210.37}
+$$
+
+The $11$ pair masses are $v/4+x$ within $I_0$ or from $I_0$ to 4,
+$u-3v/4+x$ from $I_0$ to 5, and $x$ for $(4,5)$.
+For example these also follow from $p_{11}=S-m_i-D_{ij}$.
+The first four marginals are at least $2u\ge g$; the fifth unary
+half-mass deficit is $(v+d-5v/4)_+=x\le d$.
+Each directed target deficit is at most $d$.
+Thus $\kappa\le d$ in (203.6): its paired first deficit vanishes
+because a first index of an active ordered pair is among the first four.
+The non-$11$ proof (203.14)–(203.18) controls those cells jointly,
+including every earlier and unqueried correct label.
+
+For every late pair except $(4,5)$ its $11$ pair mass is at least
+$v/4+x=\max(v/4,d)$, since $u\ge v$.
+After adding $T=u$ it covers every correct total at most $g=u+d$.
+For $(4,5)$ an earlier label contributes at most
+$a_{i4}=3v/4\le u$ in $11$; there is no later positive class.
+Thus that $11$ cell also has no excess. No positive terminal shortage
+is added to the non-$11$ allowance.
+
+For an early query followed by $j_i$, $i\in I_0$, the two early-zero
+cells contain no late correct reward. Its $10$ excess is at most $d$.
+The $11$ baseline covers $g$, since its pair mass is
+$(u+v/4+x)/2\ge d$. For early/$j_4$, the only possible positive
+gains, in $10$ and $11$, are bounded respectively by
+
+$$
+A=(d-u/2+3v/8)_+,\qquad
+C=(d-u+v/2-x/2)_+.
+\tag{210.38}
+$$
+
+Indeed the $10$ correct maximum is at most $g$, and its pair baseline
+is $m_4/2$; the $11$ correct maximum is at most $g$, and its zero
+baseline is $u+(S-m_4)/2=2u-v/2+x/2$.
+Each of $A,C$ is at most $d$. If both are positive, then
+
+$$
+A+C=2d-3u/2+7v/8-x/2
+ \le3d/2-3u/2+v\le d,
+$$
+
+using $x\ge d-v/4$ and $d/2+v\le3u/2$.
+If at most one is positive its individual bound suffices.
+
+For early/$j_5$, earlier $10$ rewards are at most $v+d$:
+for $i\in I_0$ they are
+$(g-a_{i5})_+=(d-u+3v/2)_+\le v+d$;
+for class 4 they are $(g-c_*)_+=(d-2u+9v/4)_+\le v+d$.
+The fifth reward is $v+d$, so its $10$ excess is at most $x\le d$.
+The largest earlier $11$ reward is at most $\min(u+d,c_*)$, because
+$c_*\ge2u-3v/2$. It satisfies
+$\min(u+d,c_*)\le u+c_*/2$: if $c_*\le2u$ use the first term
+$c_*$, and if $c_*\ge2u$ use $u+d\le2u\le u+c_*/2$.
+The zero baseline is $u+(c_*+x)/2$, so the $11$ gain is zero.
+The head pair has excess $g-u=d$.
+This bounds every complete early pair with one $d$.
+
+Inactive queries supply singleton or constant information on the core;
+the full catalog completion of 207.2 includes empty rules, repetitions
+and reversals and every output label. Therefore $\Delta_N\le d$.
+The stopped head table $(1,2;1,2,j_1)$ attains $W+d$, proving both
+costs exactly $d$. Reduce the fifth class when $h<d$; the head
+attainer is unaffected. Add the surplus pair mass $q$ at the empty
+selected subset. It changes neither threshold cutoff nor correct row,
+increases each fixed table by at most $q$, and increases the anchor
+and this head reward by exactly $q$. Hence both costs remain $d$.
+Arbitrary early $C$ additions have the same monotonicity and are all
+collected by that head table. This proves the sufficient arbitrary-$E$
+extension, without using $E=0$ necessity outside its domain.
+
+If $u=0$, $g\ge2d$ forces $g=h=d=0$.
+For any $B\ge0$ take only early pair mass $B$ at
+$w(\{1\})$, with $T=0$; both costs are zero. No division by $u$
+is used. The construction also includes $d=0$ with $u>0$,
+$h=0,d,g$, arbitrary address gaps, and the branch equality $v=4d$.
+The old $d=0$ equal-five endpoint from 202.11 is an application of
+that supplier, not an additional assertion of new endpoint coverage.
+
+The pointwise cut also has a useful input consequence with arbitrary
+$E$ and arbitrary ordered selected totals. Put
+$r_i=(\gamma_{j_i}-E-d)_+$. The same actual guards and (210.34) give
+
+$$
+4S\ge4r_1+3r_2+2r_3+3r_4+r_5,\qquad
+B\ge2r_1+\gamma_{j_2}+\gamma_{j_3}-E-d.
+\tag{210.39}
+$$
+
+The coefficients follow by counting target occurrences in the six
+directed terms, the extra $(4,5)$ term, and $2m_1+m_2$.
+The second inequality is the same whole stopped table lower bound.
+These are necessary only; they do not imply a certificate by themselves.
+
+For a boundary illustrating the joint budget, set $d=1,u=v=3$ and
+omit $x=1/4$ from (210.36). Then $S=39/4$, $T=3$, $g=h=4$,
+$B=51/4$. The marginal and directed conditions still hold, but
+$(j_1,j_2;0,j_2,j_3)$ has excess
+$m_1+2g-B=6+8-51/4=5/4$.
+The full upper bound is also $5/4$: for late pairs other than $(4,5)$,
+the non-$11$ allowance is at most one and the $11$ shortage at most
+$1/4$; $(4,5)$ has no $11$ shortage.
+Early/first-three has gain at most $1+1/8$,
+early/4 gains at most $5/8+0$, and early/5 at most $1/4$;
+the head costs one. Catalog completion gives both complete costs
+$5/4$. Adding the missing $1/4$ yields $B_*=13$ and cost one.
+This is a failure of a simultaneous-cell shortcut, not an acquisition
+counterexample.
+
+The common five-slot value $g=h=5d,B_*=17d$ is the endpoint already
+displayed in 210.6. At $d=1,g=h=9$ the other branch gives
+$B_*=34$, $S=26$, $T=8$, $K=79$ and both costs one.
+At $d=1,g=2,h=1/2$ it gives $B_*=5$, $S=4$, $T=1$,
+$K=27/2$ and both costs one. These substitutions illustrate the
+$v/4$ branch and the $h<d$ domain within the same theorem.
+
+Applying the existing finite-prefix transport argument of 207.20 to
+this score gives, for any original $N_2$ or $O_2$ closed-cap attainer,
+
+$$
+g\sum_{i=1}^4a_{j_i}+h a_{j_5}
+ \le d+(4g+h+B)\varepsilon.
+\tag{210.40}
+$$
+
+Indeed the target event score is
+$W+g\sum_{i=1}^4a_{j_i}+h a_{j_5}-K\varepsilon$,
+$K=4g+h+B$, while complete support is $W+d$.
+The arbitrary-address and actual-tail passage is precisely 110.2
+with 207.20's finite-prefix argument, not an assumption restricting
+competitors to these five queries. This is a necessary amplitude
+inequality only. At the shared endpoint it reads
+$5\sum_{i=1}^5a_{j_i}\le1+42\varepsilon$ after normalization $d=1$.
+$\square$
+

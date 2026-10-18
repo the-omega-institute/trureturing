@@ -1,0 +1,12 @@
+**定义 19.6.1（二元通道）。** 令 $\mathcal X=\mathcal Y=\{0,1\}$，取 $0\le p\le1/2$，并令
+
+$$
+K_p(y\mid x)=
+\begin{cases}
+1-p,&y=x,\\
+p,&y\ne x.
+\end{cases}
+$$
+
+<a id="claim-19-6-2"></a>
+

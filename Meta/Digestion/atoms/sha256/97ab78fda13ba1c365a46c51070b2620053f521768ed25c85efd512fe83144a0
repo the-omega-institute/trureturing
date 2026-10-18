@@ -1,0 +1,30 @@
+**命题 15.3（同一可见均值路径的隐藏误差与守卫读出）。** 对任意严格正曲线 $p(t)$，令
+
+$$
+ \bar p(t)=p^*(X(t),Y(t),Z(t)),\qquad
+ \kappa^*(t)=\frac{X(t)Y(t)}{r(t)},\qquad
+ \Delta(t)=r(t)\kappa(t)-X(t)Y(t).
+$$
+
+在 $r(t)>0$ 时，完整隐藏差异精确为
+
+$$
+ \kappa(t)-\kappa^*(t)=\frac{\Delta(t)}{r(t)}.
+ \tag{15.2}
+$$
+
+这里 $p^*$ 是声明的条件独立完成；它严格正且与 $p(t)$ 共享整个 $(X,Y,Z)$ 路径，只有实际来源满足 $\kappa=\kappa^*$ 时它才等于该来源。对 [OBSERVER《观察者与算术关系》](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md) 定义 A-14.3，要求实际从 $(s,C)=(0,0)$ 初始化、读取同一模式的精确首次数量 $Q=(0,2,3,5,7)_I$，在粗化前计算 $D_7=\mathbf1_{7\mid Q}$，随后只保存奇数事件 $A$ 并在同一状态输入固定高端模式。只要 $Y(t)+Z(t)>0$，其条件菜单满足
+
+$$
+ \begin{aligned}
+ d_7(p)-d_7(\bar p)&=\frac{2\Delta}{r},\\
+ (\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_p
+ &=\frac{(Z,Y-\kappa,\kappa)}{Y+Z},\\
+ (\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_p-(\Pr(18\mid A),\Pr(26\mid A),\Pr(\bot\mid A))_{\bar p}
+ &=\frac{\Delta}{r(Y+Z)}(0,-1,1).
+ \end{aligned}
+ \tag{15.3}
+$$
+
+**证明。** (15.2) 是本卷 §1 的完成式与 $\Delta=r\kappa-XY$ 的消元。命题 A-14.4 给出 $d_7=1-X-Y-Z+2\kappa$ 及三项菜单；代入 $\kappa^*=XY/r$ 即得 (15.3)。严格正源时 $Y+Z>0$，且三项菜单质量均为正。$\bar p$ 是同一可见路径点上的数学完成，其菜单是按同一合同计算的预测；式子不授予第二个实际来源、独立重采样或新增准备。单次取得 $Q$ 不认证总体均值 $d_7$，同源、同状态和既定菜单合同仍是适用条件。证毕。
+

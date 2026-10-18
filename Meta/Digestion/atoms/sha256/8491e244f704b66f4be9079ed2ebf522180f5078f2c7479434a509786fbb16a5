@@ -1,0 +1,12 @@
+**定义 5.3.1（未来响应等价）。** 对 $u,u'\in\mathcal U$ 定义
+
+$$
+u\sim_{\mathcal V}u'
+\quad\Longleftrightarrow\quad
+K(v\mid u)=K(v\mid u')\quad\forall v\in\mathcal V.
+$$
+
+这是一个等价关系；记商映射为 $q_{\mathcal V}:\mathcal U\to\mathcal U/{\sim_{\mathcal V}}$。
+
+<a id="claim-5-3-2"></a>
+

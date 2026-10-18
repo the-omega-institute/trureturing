@@ -1,0 +1,24 @@
+**Lemma 4.3 (fractional native gluing).** For every $D\ge1$,
+
+$$
+z_{D+1}\le z_D^2+1.
+\tag{FMR.19}
+$$
+
+Proof. For $H,J\in\mathcal H_D$ the actual branch set
+$\langle H,J\rangle=\{\langle x,y\rangle:x\in H,y\in J\}$
+is admissible in $S_{D+1}$. Its root target is constant branch;
+a target $sq$ uses the $s$-child's witnessing experiment, with the
+literal prefix $s$ attached. A constant witness remains zero-Read.
+These are original-root literals after the outer $R$ is attached.
+The two-leaf set $\{\alpha,\beta\}$ is also admissible: Read its root
+once and compute every requested factor from its label.
+
+Given a fractional depth-$D$ cover, assign the branch set
+$\langle H,J\rangle$ weight $w_Hw_J$, adding weights if sets coincide,
+and the two-leaf set weight one. A branch $\langle x,y\rangle$ receives
+coverage $(\sum_{H\ni x}w_H)(\sum_{J\ni y}w_J)\ge1$, and each leaf
+receives coverage one. The total weight is $z_D^2+1$ for an optimal
+cover. This constructs allowable fibers; it imposes no product
+restriction on competing fibers. $\square$
+

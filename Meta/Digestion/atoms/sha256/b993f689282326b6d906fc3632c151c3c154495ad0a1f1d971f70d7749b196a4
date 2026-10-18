@@ -1,0 +1,41 @@
+### 定义 37.2（有限 carré du champ 与二阶型）
+
+对实函数 \(f,g:V\to\mathbb R\)，定义
+
+\[
+\Gamma(f,g)
+=
+\frac12\left(
+L(fg)-fLg-gLf
+\right),
+\qquad
+\Gamma(f)=\Gamma(f,f).
+\]
+
+直接展开得到
+
+\[
+\Gamma(f,g)(x)
+=
+\frac1{2\mu_x}
+\sum_yc_{xy}
+\bigl(f(y)-f(x)\bigr)
+\bigl(g(y)-g(x)\bigr),
+\]
+
+因此
+
+\[
+\sum_x\mu_x\Gamma(f)(x)=\mathcal E(f).
+\]
+
+定义二阶型
+
+\[
+\Gamma_2(f)
+=
+\frac12L\Gamma(f)-\Gamma(f,Lf).
+\]
+
+这里 \(\Gamma_2\) 是有限函数 \(V\to\mathbb R\)。所有量都是有限和与有限矩阵乘法，不需要先给出连续流形。
+

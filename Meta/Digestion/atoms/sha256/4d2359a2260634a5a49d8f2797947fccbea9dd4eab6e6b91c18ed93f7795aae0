@@ -1,0 +1,34 @@
+**Definition 3.1 (Inherited caps and quantitative losses).** Use
+[Three Endpoint, Sections 3–7][E3]'s quantities
+
+$$
+\begin{gathered}
+K=a^2\eta,\qquad J=2a\eta^2,\qquad K_0=a^2c\eta,\\
+Z=\frac a2+K_0+K,\qquad D=K+J,\qquad
+S_3=Z+D=\frac a2+3a^2\eta+2\eta^3.
+\end{gathered}
+\tag{3.1}
+$$
+
+Define
+
+$$
+\begin{aligned}
+g_1&=d\eta^2,&
+g_2&=\frac{\eta(b^2+a^2d^2)}2,&
+g_3&=\frac{a\eta dc}2,\\
+g_4&=\frac{a^2\eta d^2}2,&
+g_5&=ac\eta bd,&
+g_6&=\frac{db^6}2,&
+g_7&=\frac{b^7}2,\\
+\rho(p)&=\min_{1\le i\le7}g_i.
+\end{aligned}
+\tag{3.2}
+$$
+
+Every $g_i$ is positive by (1.4). The roles of $g_1,g_2,g_3$
+are the first-one, mixed-parity and adjacent-zero losses;
+$g_4,g_5$ handle the remaining last-edge geometries;
+$g_6,g_7$ handle unequal same-phase and wrong-phase labels.
+Sections 4–8 prove the full forcing statement needed to use them.
+

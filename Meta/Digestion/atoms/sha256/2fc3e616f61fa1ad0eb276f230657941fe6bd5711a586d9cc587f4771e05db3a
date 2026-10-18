@@ -1,0 +1,23 @@
+**Example 9.2 (two distinct pumping mechanisms).** With
+$x=\langle y,y\rangle$ and $y\ne\alpha$, choose $y$ to expand a
+nonleaf normal code with constant rank zero on a shape with $M$ leaves.
+Then $y\ne\alpha$, and the normal output code of $x$ has $2M$ leaves.
+Varying $M$ gives shape pumping with fixed ranks and preserves the
+repeated occurrence of $y$ exactly.
+
+For a rank-only illustration, reuse the classification in
+[SourceTransportCentralizer][D5-CENTRAL] and ABC:
+
+$$
+\rho^2x=\langle\rho x,x\rangle
+\quad\Longleftrightarrow\quad
+x=T_j\text{ for some }j\ge0.
+\tag{NPL.25}
+$$
+
+Its possible output codes all have shape $c$ but unbounded rank $j$.
+This is an already supplied atomic classification, used only to
+illustrate why a shape-only finiteness test is insufficient. Neither
+this example nor Example 9.1 is a replacement for Theorem 3.5's general
+original-solution argument.
+

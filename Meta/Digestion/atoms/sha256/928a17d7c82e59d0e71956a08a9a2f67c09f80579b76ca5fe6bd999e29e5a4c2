@@ -1,0 +1,14 @@
+**Theorem 7.4 (relational reconstruction in both directions).** With the same source grammar and finite marker supplies, the precedence/incidence expression of Definition 7.3, the held record (SC.3), and the raw history at the third latch determine one another on their actual images.
+
+Proof. The generic prefix-count inverse is already supplied by [Joint Moment Fibers](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md), Proposition 3.1: here its letters are the retry types $X,Y$. Specifically (SC.4) and $p$ recover
+
+$$
+u=X^{x_1}Y\,X^{x_2-x_1}Y\cdots
+X^{x_q-x_{q-1}}Y\,X^{p-x_q}.
+\tag{SC.5}
+$$
+
+For $q=0$, this means $u=X^p$. Each pair $X_i,Y_j$ has exactly one orientation by (SC.4), so the relation is the unique retry order of (SC.5). The return incidences give the three $J_i$ without confusing occurrences in different segments. The actual seed and the table in Theorem 6.2 then complete (SC.1). Conversely parsing $h$ supplies each retry identity, its cross-kind precedence, every return incidence, seed and marker record; (SC.5) returns exactly the same $u$. Thus the inverse includes the marker-local records rather than treating their shared identities as a source of raw-event order.
+
+The prefix inverse itself is reused, not a new generic theorem. The source-specific step is that its arguments are produced by the original paid seed parser, and that the separately acquired return incidences restore the raw events that the finite marker records held away. $\square$
+

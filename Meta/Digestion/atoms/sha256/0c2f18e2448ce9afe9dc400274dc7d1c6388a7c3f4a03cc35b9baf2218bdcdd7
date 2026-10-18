@@ -1,0 +1,28 @@
+**Proposition 7.1 (the source-pole spectral exception).** For
+$o_s=(k_o,\alpha_o,\beta_o+s)$, the original source points $o_s$ have the
+same base coordinate. In the constant-density family and the strict regime
+(3.8), their full attractive operators obey
+
+$$
+H_{g,o_s}=S_s H_{g,o}S_s^{-1},\qquad
+D(H_{g,o_s})=S_sD(H_{g,o}),
+\tag{7.1}
+$$
+
+and their form domains are transported by the same unitary. Consequently
+the entire spectrum with multiplicities, and in particular the ground
+energy, is independent of $\beta_o$ at fixed $(k_o,\alpha_o)$.
+Unitary-invariant scalar spectral data of the pole therefore factor through
+this quotient. This statement does not apply to the fixed-pole,
+state-dependent responses in Theorems 5.2 and 6.1.
+
+Proof. The free translation symmetry gives
+$\Gamma_{o_s}(k,\alpha,\beta)=\Gamma_o(k,\alpha,\beta-s)$. Changing
+variables in the potential integral gives
+$q_{g,o_s}[S_sf]=q_{g,o}[f]$. The free form domain is invariant under
+$S_s$, so the variational definition of the operator transports its full
+domain and gives (7.1). Spectral calculus gives the spectral statement.
+For example (5.1) translates the amplitude by $\pi$ while keeping the
+pole fixed; (7.1) instead translates the pole and the amplitude together.
+Those comparisons are distinct. $\square$
+

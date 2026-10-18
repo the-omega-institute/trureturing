@@ -1,0 +1,83 @@
+**Proposition 16.1 (Reduced minima, original correspondence and the gap).**
+For both complete reduced problems,
+
+$$
+5\tau+\frac{11u}{117}
+ \le\nu_N(\tau,u)\le\nu_O(\tau,u)
+ \le5\tau+\frac{22u}{217}.
+\tag{16.1}
+$$
+
+For each class and every continuation in (1.4),
+
+$$
+\nu_C(\tau,u)\le m_C(\tau,u,v),\qquad
+\nu_C(\tau,u)=m_C(\tau,u,0).
+\tag{16.2}
+$$
+
+At $u=0$ both reduced minima and the allowed original minima
+equal $5\tau$. For $u>0$ the interval in (16.1) has positive width
+
+$$
+\frac{187u}{117\cdot217}.
+\tag{16.3}
+$$
+
+Proof. Each eight-bit catalog is finite and the full-row maximum
+is continuous on its probability simplex, so its minimum exists
+separately. The credited head-independent 43-charge inequality
+of XVII 312.2 gives $43e\ge215\tau$, hence a lower bound
+$5\tau$ in both catalogs.
+
+For the stronger lower endpoint reuse precisely the same-law bridge
+of 7.1. At any feasible eight-bit cap $e\in[0,1]$, extend the
+same complete allocation by ignoring nine and set the auxiliary
+finite amplitude $b_9=e$. If $q=p_+(0)\ge1-e$, the new
+first-zero-nine probabilities are $(q,0,q)$ and its demands
+are $(1-2e,0,1-e)$. Each holds separately, as does the
+positive row. This costs no query and requires no order condition.
+Apply the full $Y_{128}$ relation (2.4) to this one allocation
+and subtract $11b_9=11e$. Its eight-coordinate left side is
+
+$$
+2a_2+11a_3+13a_4+13a_5+12a_6+11a_7+11a_8
+ =2+585\tau+11u.
+\tag{16.4}
+$$
+
+Thus $117e\ge585\tau+11u$.
+This is the credited full-$N$ lower consequence, not a new score.
+It includes arbitrary independent $N$ outputs.
+Counted completion yields $\nu_N\le\nu_O$, and Theorem 13.1
+gives their common upper bound. Their relevant caps are below one.
+
+For (16.2), use the original compact correspondence of 8.1 in
+each class separately. Restrict any nine-bit feasible law by fixing
+input nine to zero and projecting label nine to zero, contracting
+constant observations within its schedule. Low correct events
+are unchanged, and their base and union events improve.
+The positive eight-word is the former first-zero-nine word.
+Its new base mass is the old $p(0)+p(9)\ge1-e$ by the
+independent $P_9$ row, for every actual $a_9$.
+Hence $\nu_C\le m_C$ for any allowed $v$.
+These are finite proof representations, not free observations.
+
+Conversely take an eight-bit minimizer in its own class.
+At $v=0$, every actual amplitude beyond eight is at most
+$5\tau\le\nu_C$. The common-seed execution of its complete
+tables has the original cap $\nu_C$: every low first absence
+is covered by its rows, and every later one by the exact identity
+$\max\{1-p_+(0),a_n\}\le\nu_C$.
+Thus $m_C(\tau,u,0)\le\nu_C$.
+The original necessity correspondence retains all arbitrary addresses
+and Borel outputs and preserves class feasibility, not an arbitrary
+starting law. This is the supplied R1 correspondence at its precise
+scope. It never replaces the actual $a_9$ of a specified sequence.
+
+When $u=0$, necessarily $v=0$ and (16.1)–(16.2) give the
+exact value $5\tau$. Subtracting the lower endpoint of (16.1)
+from its upper gives (16.3), positive for $u>0$.
+Neither minimax optimality of $K$ nor equality $\nu_N=\nu_O$
+for $u>0$ follows. $\square$
+

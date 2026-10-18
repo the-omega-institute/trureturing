@@ -1,0 +1,31 @@
+**Corollary 4.3 (finite length bounds and exact source witnesses).** Every
+finite upper triple $(q,d,L)$ is decidable. An accepted triple has a
+finite actual service. For any constructed skeleton with fixed words,
+exact reachable leaves, coordinate maxima and same-run weighted maxima
+are computable; every nonempty leaf has a finite original-source witness.
+
+Proof. In addition to the finite choices in Theorem 4.2, enumerate the
+finitely many physical words of length at most $L$. Test (GRS.15), then
+decide $E_t$ for each leaf and require $L_t\le L$ only where $E_t$ is
+true. All remaining tests are either WS2S sentences with fixed words or
+integer comparisons. A comparator within the triple bound has every
+reached address of length at most $L$; unreachable parts can be deleted
+as in the necessity proof. Thus this finite enumeration is complete.
+
+For a nonempty leaf extract a finite $y$ satisfying its exact path and
+domain, then form the original $F(y)$. The reply correspondence puts
+this source on that actual leaf. Every admitted source reaches one leaf,
+and the leaf costs are precisely $(k_t,d_t,L_t)$. Taking each coordinate
+maximum gives $b(A)$; taking the weighted sum at each leaf BEFORE its
+maximum gives $W_\lambda(A)$. Distinct coordinate maxima need not have
+the same witness. $\square$
+
+At $q=0$, (GRS.15) asks for one whole-row label valid throughout the
+entire fiber. A zero-read controller cannot use updates to learn a label.
+Early halts are not padded with reads, so neither zero-budget statements
+nor later price statements charge unreachable or post-halt actions.
+The finite-control argument is the established [JRF, §4][JRF] and
+[SRF, §2][SRF] method. The source, action and whole-row obligations that
+permit its use on the entire graph are Propositions 2.1 and 3.2 and
+Lemma 2.2, rather than a change in those suppliers' scopes.
+

@@ -1,0 +1,23 @@
+**Lemma 3.2 (stationary computation of the full row).** If the source is
+constant throughout RA's exterior and comparison phases, the candidate is
+exactly the encoding of $R_P(u)$ for that source.
+
+Proof. Induct over its finite exterior preorder. At a cut position, presence
+and prefix freeness authorize precisely the marked hole and stop descent.
+Else the literal constructor is read; a branch schedules both children and
+a leaf schedules none. `after` exhausts exactly this grammar, so no literal
+child, blocking guard or reached hole is omitted. This is the `cutExterior`
+object of [ACPD], not a point-reply vector.
+
+For each pair of actual hidden subtrees, `same` compares constructors in
+common preorder. A mismatch witnesses unequal trees. If constructors agree,
+a leaf has no children and a branch schedules both children; exhaustion
+therefore proves equality by structural induction. Conversely identical
+finite trees cause no mismatch and exhaust together. Every unordered pair
+is compared and its result appended, including disequalities. Consequently
+the matrix is the exact equivalence relation, without relying on transitivity
+of possibly mixed replies. The encoding recovers `literalRecord`, and [ACPD]
+`canonicalRow_record_iff` supplies its equivalence with canonical row information.
+Neither a hidden-subtree equality port nor an acquired full tree was used.
+$\square$
+

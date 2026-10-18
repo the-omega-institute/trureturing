@@ -1,0 +1,26 @@
+**Proposition 4.2 (a common acquired defect producer).** Under Assumption
+4.1, the existing traversal followed by finite inverse parsing computes
+$d(u)$ on every actual $u$, and terminates sourcewise. Its preparation raw
+read count and submitted address length are exactly
+
+$$
+2\ell(u)-1,\qquad
+A(u)=\sum_{q\in\mathsf{Addr}(u)}|q|.
+\tag{IDC.4.1}
+$$
+
+Parsing, local description construction, output and the complete cut are
+additional costs. This is an upper construction, with no preparation,
+work, retention or physical-cost optimality assertion.
+
+**Proof.** Reuse [SLH, Proposition 53.2][SLH]'s traversal and reconstruction,
+including its original finite node trace. Its actual node count is
+$|\mathsf{Addr}(u)|$, and its literal length sum is $A(u)$. A full binary
+tree with $\ell$ leaves has $\ell-1$ internal nodes, by the leaf base
+case and addition across a pair; thus it has $2\ell-1$ nodes. After the
+complete description is restored, Reuse 2.2's finite computation gives
+$\nu(u)$ and the recurrence gives $c(u)$. Subtraction returns $d(u)$.
+All these stages terminate on each finite source. Their workspace can
+vary with the source; the cut does not retroactively remove their costs.
+$\square$
+

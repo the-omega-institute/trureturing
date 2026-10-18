@@ -1,0 +1,54 @@
+**Proposition 175.1 (The sharp core inside the residual strip).** Use
+the seven-cell core (118.5) at the parameters of Proposition 118.2:
+
+$$
+A=(17/20,17/20,16/25,31/50,27/50),\qquad e_0=17/60.
+\tag{175.1}
+$$
+
+For every finite $L\ge6$ choose $g_6\ge\cdots\ge g_L>0$ with
+
+$$
+W=\frac{7g_6+\sum_{i=7}^Lg_i}{3}\le1,
+\qquad E=\frac{4g_6+\sum_{i=7}^Lg_i}{3},\qquad r=1-W.
+\tag{175.2}
+$$
+
+The amplitudes and cap of (173.1) have actual active length $L$ and
+original same-seed $O_2$ and $N_2$ attainers with exact uniform error
+$\varepsilon=17r/60+E$. Every actual tail error equals this cap.
+For $r>0$, they satisfy
+
+$$
+D_3-3\varepsilon=\frac r{10}>0,\qquad
+1-a_2=\frac{3r}{20},\qquad
+\frac{D_3-3\varepsilon}{1-a_2}=\frac23,
+\quad a_1=a_2<1.
+\tag{175.3}
+$$
+
+The case $r=0$ is included in feasibility, but the displayed ratio
+is asserted only for $r>0$.
+
+**Proof.** The parameters
+$\delta=3/20$, $\alpha=0$, $t=3/5$, $u=1/25$, $v=1/50$
+satisfy (118.1). Theorem 118.1 and its formulas (118.5), (118.11)
+give the core, with scalar weights $w=1/2$, $x=1/15$, $y=13/60$,
+$z=1/20$, total mass one, and $q_{1^5}(0)=43/60=1-e_0$.
+These are reused core facts from
+[Section 118](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#118-a-sharp-five-active-family-with-unequal-late-amplitudes),
+not an additional proof of the five-active optimum. The core residual
+sum is
+
+$$
+D_{\rm core}=(16/25+31/50+27/50)-3(17/60)=19/20,
+\qquad D_{\rm core}-3e_0=1/10.
+$$
+
+Apply Theorem 173.1 at $m=5$ and (174.2). Tightness of the reused
+core tail row proves equality on every actual tail. The head identity
+in (174.2) gives the slack and ratio. Freely unequal late residuals,
+late plateaus and $W=1$ are all covered by the same finite proof.
+The old core's optimality does not imply optimality of the extended
+cap. $\square$
+

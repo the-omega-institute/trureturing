@@ -1,0 +1,15 @@
+**Lemma 5.2 (disjoint stationary paths and one-Read variation).**
+On a reply vector where two entries terminate with different whole
+outputs, their running-state paths are disjoint. If two vectors each
+have entry-output pair $\{R_0,R_j\}$ and differ at at most one installed
+Read, their positive orientations agree.
+
+Proof. If the two paths on one fixed vector met at a Read, its stationary
+deterministic suffix would be the same for both entries, giving the same
+terminal output. Thus they cannot meet. If only Read $K$ changes between
+two vectors, at least one of the disjoint entry paths on the first
+avoids $K$. Every reply along that whole path is unchanged on the second
+vector. The same entry therefore has the same output there. Since both
+vectors have the same two different outputs, the entries cannot exchange
+which output they return. A change at no Read is included. $\square$
+

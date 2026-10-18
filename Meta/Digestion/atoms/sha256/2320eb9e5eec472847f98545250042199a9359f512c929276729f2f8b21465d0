@@ -1,0 +1,12 @@
+**定义 C-138.1（指定的一份参考）。** 取
+
+$$
+R=\operatorname{span}(f_0,f_2),\qquad
+\widehat N_Rf_0=0,\quad\widehat N_Rf_2=2f_2,\qquad
+r=(f_0+f_2)/\sqrt2,\quad\zeta_r=P_r.
+\tag{C138.1}
+$$
+
+$A^r_{\mathcal F}$ 是 $A^{\zeta_r}_{\mathcal F}$ 的简记。
+$e_if_j$ 表示 $e_i\otimes f_j$，不把两个参考电荷误作额外系统能级。
+

@@ -1,0 +1,45 @@
+## 323. The bad-eta bound and a genuine rho endpoint
+
+Set p=sqrt((m-1)*(z-1)) and q=sqrt((m+1)*(z+1)). The axial
+half-angle product makes bad-eta equivalent to q*Le>=p*Je, or
+
+    p*q<=v^2+d^2+2*v*d*(q-p)/(q+p).                (323.1)
+
+Indeed expand q*[(v+d)^2-p^2]>=p*[q^2-(v-d)^2] and divide
+by p+q. Since z>m>1,
+
+    q/p<=(m+1)/(m-1), 0<(q-p)/(q+p)<=1/m.
+
+It follows that
+
+    z<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1).       (323.2)
+
+Here p*q>(m-1)*(z-1), and Zb increases with each positive v,d.
+
+We first show c<m/2, using neither the flat product nor the M budget.
+If c>=m/2, then m>4, d<m/2-1 and v<=m-2. The right side of
+(323.1) is strictly less than (m-2)^2*(5/4+1/m). But
+
+    p*q>(m-1)*(z-1)>(m-1)*(m+c)>=3*m*(m-1)/2,
+    3*m*(m-1)/2-(m-2)^2*(5/4+1/m)
+      =(m^3+10*m^2-4*m-16)/(4*m)>0,
+
+a contradiction. The last numerator is positive for m>4 because
+m^3-4*m>0 and 10*m^2-16>0.
+
+At u0=z+m+1 the rho L numerator is
+
+    Lr0=(v+d)^2-(z+m)*(c-1)=Le+z*(m-c)-m*c+1>Le>0.
+
+The strict comparison uses c<m/2 and z>m. Increasing u from its
+actual value to u0 decreases Lr linearly but keeps it positive, while
+Jr increases from its positive actual value. Hence the whole scalar
+interpolation remains genuine. Furthermore
+
+    d(Lr/Jr)/du=[-(c-1)*Jr-(c+1)*Lr]/Jr^2<0.
+
+Thus S(rho) strictly decreases. It suffices to prove (322.5) at this
+genuine endpoint. This is a comparison of rho's response with fixed
+other parameters, not a claim that the changed u preserves a global
+shared-length metric or any unrelated star.
+

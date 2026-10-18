@@ -1,0 +1,76 @@
+**Definition 243.3 (Supplier boundaries and remaining universal goal).**
+The full-score quotient, signed hull vertices, weak duality and
+one-residual budget are owned by §§198–199 and §229.
+The 63-charge lower and 14-row low core of §§230–231 are reused;
+§238 adds their two-head capacity allocation. The old $\rho=2$
+family and its uniform prefix pullback in §§233–235 are reused;
+§239 adds higher simultaneous layers from one measure and their exact
+signed-cone scope. Its flat displayed eliminated interval gives no
+additional lower strength over §240. Sections 240 and 241 give their
+full literal cuts, gapped embeddings and the stated attained regions;
+the half and $r=1$ endpoints are reused. Section 242 uses the existing
+§117 seven-coordinate lower and its gapped zero-cost direction,
+§113.2 residual lower, §§87 and 176 unit laws and §§113–114
+saturated-head supplier. Its new upper constructions have exactly the
+union (242.2), with the high intersection counted once.
+General tail transport and kernel realization carry no repeated credit.
+
+The normalized degree-two kernel theorem §109.1 and its
+StoppedCoefficientRealization statement require an actual normalized
+probability vector on every Boolean word. For
+$p_w=c+\sum_i l_iw_i+\sum_{i<j}Q^{\rm ker}_{ij}w_iw_j$, their
+coordinate criterion is
+$c\ge\sum_i(\sum_{j>i}(-Q^{\rm ker}_{ij})_+-l_i)_+$;
+the common scalar schedule-mass bound follows from normalization.
+They do not apply to a dual score quotient $Q(V)$.
+The PreselectedResidualBound statement requires one common catalog law,
+all-word TV bounds, $0\le c$ and the exact strict active cutoff;
+it supplies the residual interface of §113.2 under those hypotheses.
+These library correspondences are reuse, without a new compiled or
+kernel-validated assertion. Exact-law obstruction §112.2 has another
+O law at the same cap and remains an exact-law obstruction.
+
+The ordinary finite cell, counting and polynomial arguments supply the
+proofs here. Blackwell's *Comparison of Experiments*, §§2–5, compares
+common decision rules and risk vectors; a generic postprocessor there
+does not supply increasing first-zero schedules with two actual requests.
+Kaibel's *Basic Polyhedral Theory*, Theorems 1(ii), 8 and 10, supplies
+the finite polyhedral framework, while our vertices and cells retain
+the specific original constraints. Zaev's *On the Monge–Kantorovich
+Problem with Additional Linear Constraints*, arXiv:1404.4962v1,
+Problem 1.3 and Theorem 2.1, uses one joint measure with its specified
+marginals and linear constraints; separately optimal rows here are not
+such a joint measure. Bertschinger–Rauh, *The Blackwell Relation Defines
+No Lattice*, arXiv:1401.3146v1, Example 18, distinguishes conic
+representations from stochastic common normalization. These are the
+bounded source comparisons of §§213.21 and 219.10, rather than extra
+load-bearing hard-two theorems. No exhaustive literature exclusion,
+worldwide originality, or semantic nonoverlap with every older convex
+consequence is asserted.
+
+The unrestricted positive obligation remains: for every $L\ge3$ and
+every actual full $y\ge0$ with $\Delta_O(y)\le1$, produce one
+unrestricted full $V\ge0$ and one jointly paid signed residual as in
+(237.6). Original competitors have no fixed quotient, law, anchor,
+unary, canonical decomposition or positive-only-residual restriction.
+The alternative negative obligation still requires the same actual
+$(b,e)\in H_N$, one full feasible $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ and $M=\sum\lambda\ge1$, an actual
+full unit-O $y$, and strict $F_{Q(y)}(b,e)>M$, with the original
+source, resource, positive-tail and closed-cap correspondence.
+None of the off-$H_N$ detectors or relative cone failures supplies it.
+
+Consequently the comparison for every entire positive nonincreasing
+vanishing sequence and every positive closed cap remains open:
+
+$$
+\mathcal F_N(a,c)\ne\varnothing
+\ \Longrightarrow\
+\mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing.
+\tag{243.4}
+$$
+
+The attained families above settle their precise domains. They neither
+identify $H_N$ with $H_L$ nor give a universal one-budget certificate
+or an original N/O separator.
+

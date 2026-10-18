@@ -1,0 +1,72 @@
+**定理 2.2（对任意八个实数成立的线性逆）。** 定义线性映射
+
+$$
+\mathcal L(U,V)_i=\operatorname{tr}(A_i(U+iV)),\qquad 0\le i\le7,
+\tag{2.3}
+$$
+
+其中 $U,V$ 暂为互相独立的任意二阶实矩阵，$A_i$ 来自定义 1.3。则 $\mathcal L$ 是从 $\operatorname{Mat}_2(\mathbb R)^2$ 到 $\mathbb R^8$ 的线性双射。
+
+其逆 $\mathcal R$ 可按以下次序计算。对任意 $f=(f_0,\ldots,f_7)\in\mathbb R^8$，置
+
+$$
+\begin{aligned}
+\eta_1&=(f_6-f_4)/2,&\eta_0&=f_4-4\eta_1,\\
+\kappa_1&=(f_7-f_5)/2,&\kappa_0&=f_5-5\kappa_1,\\
+\gamma_1&=(2f_3-f_1-\kappa_1-\kappa_0)/4,
+&\beta_1&=2\gamma_1-\kappa_1,\\
+\gamma_0&=f_3-3\gamma_1,&\beta_0&=f_1-\beta_1,\\
+\alpha_0&=f_0,
+&\alpha_1&=(f_2-\alpha_0-\beta_0-2\beta_1)/2.
+\end{aligned}
+\tag{2.4}
+$$
+
+那么
+
+$$
+\mathcal R(f)=
+\bigl(\Psi(\alpha_0,\beta_0,\gamma_0,\eta_0),
+\Psi(\alpha_1,\beta_1,\gamma_1,\eta_1)\bigr).
+\tag{2.5}
+$$
+
+下标零、一表示 $U,V$ 的迹坐标，不表示两个采集世界。
+
+证明。用引理 2.1 给 $U,V$ 分别取坐标 $(\alpha_j,\beta_j,\gamma_j,\eta_j)$。因 $K=2B-M$，它们的 $K$ 迹为 $\kappa_j=2\gamma_j-\beta_j$。式 (2.3) 的八个方程恰是
+
+$$
+\begin{aligned}
+f_0&=\alpha_0,\\
+f_1&=\beta_0+\beta_1,\\
+f_2&=\alpha_0+\beta_0+2\alpha_1+2\beta_1,\\
+f_3&=\gamma_0+3\gamma_1,\\
+f_4&=\eta_0+4\eta_1,\\
+f_5&=\kappa_0+5\kappa_1,\\
+f_6&=\eta_0+6\eta_1,\\
+f_7&=\kappa_0+7\kappa_1.
+\end{aligned}
+\tag{2.6}
+$$
+
+相减 $f_6-f_4$、$f_7-f_5$，先得到式 (2.4) 的前两行。再由
+
+$$
+2f_3-f_1
+=2\gamma_0-\beta_0+6\gamma_1-\beta_1
+=\kappa_0+\kappa_1+4\gamma_1
+$$
+
+得到 $\gamma_1$，继而由 $\kappa_1=2\gamma_1-\beta_1$ 得到 $\beta_1$。第三、第一时钟方程给出 $\gamma_0,\beta_0$；初读和第二时钟方程给出 $\alpha_0,\alpha_1$。所以每个解都只能是式 (2.4)。
+
+也须验证这些数对任意 $f$ 都确实给出解。定义直接保证 $f_0,f_1,f_2,f_3,f_4,f_6$ 的方程；所构造的零阶 $K$ 坐标满足
+
+$$
+2\gamma_0-\beta_0
+=2f_3-f_1-6\gamma_1+\beta_1
+=2f_3-f_1-4\gamma_1-\kappa_1
+=\kappa_0.
+$$
+
+因而 $f_5,f_7$ 的方程也成立。引理 2.1 实现两组坐标，证明存在性与唯一性。全过程只除以固定的 $2$ 和 $4$，没有关于数据一般位置的假设。∎
+

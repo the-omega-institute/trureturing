@@ -1,0 +1,48 @@
+**定义 11.1（完备化后仍需满足的联合条件）。** The unknown-source
+and unknown-shape task remains the common-source system of
+Definition 5.2. For any three distinct legal sources on one common
+$H(Y,z)$, gains and drifts are forced by (3.2). The exact
+$L_2$ obligation is (5.6), with the responses (5.4) evaluated on
+those same three fixed worlds: for each sixth atom $E$, one
+response $v_E$ must retain a set on which both seventh atoms have
+a collision. The colliding pair may depend on both atoms, while
+$v_E$ is shared across the seventh-action requirements for that
+$E$. These are actual response partitions, not labels acquired
+from the ancestor or separately realized pairs.
+
+Theorem 7.2 supplies an exact family with different sources and
+gain shapes at every history in (7.5); compatibility of all six
+ancestor readings alone does not impose (5.6). At $H_*$,
+Theorem 10.1 supplies a compact domain for the entire complete-world
+fiber after adjoining its exact six source-boundary targets. The
+responses (5.4), being polynomial in the coefficient/source ambient
+coordinates, extend continuously to that closure. On
+$(\mathcal F^+)^3$, the equations (5.6) define a closed incidence
+set: for each $E$, choose the two collision pairs, equate their
+common sixth responses and the two respective seventh responses,
+and take the finite union over those choices, then the intersection
+over $E$. This incidence set is compact. The needed locus also
+requires three distinct legal positive members; a limit may instead
+coalesce on a diagonal or meet an added boundary target. Compactness
+alone therefore supplies neither such a legal triple nor its
+exclusion. This is a constraint on the exact common-history system,
+not a claim that an auxiliary boundary target is physically legal.
+
+The known-shape and known-source conclusions of the
+[whole-class companion, Theorems 4.1 and 5.1](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md),
+the known-initial-root inverse of
+[VIII, Theorem 2.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md),
+and the gain-ray, slice and band results of
+[VII, Theorems 8.2, 9.1 and 10.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md)
+retain exactly the hypotheses in Definition 5.1. In particular the
+six-point source boundary does not count interior components or
+exclude interior singularities, and gives no global smoothness,
+sixth-response injectivity, effective inverse, conditioning or
+stability conclusion. The open mathematical alternatives are still
+an exact legal solution of (5.2) and (5.6) for one common real
+$Y,z$, or an everywhere obstruction for those equations. Theorem
+10.1 restricts only $H_*$ and its fixed affine copies. Neither
+that restriction nor a solution of its triple question would alone
+supply the earlier-history bridge required by Definition 5.3 for
+the unrestricted original eight-versus-nine problem.
+

@@ -1,0 +1,19 @@
+## 2. The complete eight-coordinate table system
+
+Consider one normalized allocation of whole deterministic stopped tables on coordinates $1,\ldots,8$ and labels $0,\ldots,8$. For a word $w\in\{0,1\}^8$ with first zero $n$, let $p_w(\ell)$ be the probability of output label $\ell$, put
+
+$$
+c_n(w)=p_w(n),
+\qquad D_n(w)=1-p_w(0)-p_w(n).
+$$
+
+At a closed cap $e$, every nonpositive word has the three independent requirements
+
+$$
+p_w(0)\ge 1-b_n-e,
+\qquad c_n(w)\ge b_n-e,
+\qquad D_n(w)\le e.
+$$
+
+The positive word $+=11111111$ has the independent requirement $p_+(0)\ge1-e$. These are imposed for every original $A$, $C$, and $P$ row, including words with several later zeros, negative correct demands, arbitrary labels, and rows whose eventual score coefficient is zero. Constants, singleton schedules, repetitions, and ignored replies remain in the same system. Let $u_n$ denote the sole-zero word with its only zero at $n$.
+

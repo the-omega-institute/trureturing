@@ -1,0 +1,38 @@
+**Theorem 9.2 (attained maximal count on an open weak region).**
+On the whole finite feasible original domain let
+$M_{\max}=\max n(s,t)$. Under Assumption 1.2,
+$$
+M_{\max}\in\{8,9,10\}.
+\tag{GC.42}
+$$
+It is attained at finite parameters, and
+$$
+\mathcal U_{\max}=
+\{(s,A):t=e^A-1>t_0,
+        0<s<s_0\tau_{\max}(t),
+        n(s,t)=M_{\max}\}
+\tag{GC.43}
+$$
+is nonempty and ordinary open in the original $(s,A)$ plane.
+
+Proof. The weak upper bound is ten, the strong upper bound is eight
+by Theorem 9.1, and ST supplies a weak open region with count eight.
+The nonempty image of $n$ is thus a subset of the finite integer set
+bounded by ten with at least one value eight. Its greatest value is
+one of (GC.42) and occurs at a finite point. This argument uses no
+compactification at infinite budget.
+
+Theorem 8.1 makes the weak maximal stratum
+$\{n>M_{\max}-1\}=\{n=M_{\max}\}$ relatively open.
+Intersecting it with the strict weak interior gives an ordinary
+open subset. If $M_{\max}=8$, ST's open eight-total region shows
+this intersection is nonempty. If $M_{\max}=9$ or $10$, Theorem
+5.2 excludes the entire weak minimum-budget boundary and Theorem
+9.1 excludes the strong line. A maximizing point must have
+$t>t_0$, $s<s_0\tau_{\max}(t)$, possibly $s=0$.
+Its relatively open maximal neighborhood contains points with
+$s>0$. Around any such point all weak feasibility inequalities
+are strict, giving an ordinary open neighborhood with the same
+maximal count. The smooth bijection $A=\log(1+t)$ preserves
+openness. $\square$
+

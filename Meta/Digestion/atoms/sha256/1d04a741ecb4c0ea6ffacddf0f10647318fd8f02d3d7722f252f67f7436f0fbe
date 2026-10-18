@@ -1,0 +1,89 @@
+**Proposition 10.2 (Five- and six-row lower realizations).** The
+following complete tables attain $F$ and $V$ respectively, with
+their actual full-source terminal masses and costs.
+
+| Row | Five-row instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $L(2)$ | $S$ | $P$ |
+| $S$ | $L(4)$ | $U$ | $P$ |
+| $U$ | $L(6)$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $ac\eta$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $c^2\eta$ | $ac^2\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+c^3)/2$ | $a/2$ | $3$ |
+
+| Row | Six-row instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $L(1)$ | $S$ | $P$ |
+| $S$ | $L(0)$ | $U$ | $Q$ |
+| $U$ | $L(3)$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $01$ | $h_0(1-\sigma)$ | $\eta/2$ | $a\eta/2$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $t\eta$ | $a^3\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+tc)/2$ | $a/2$ | $3$ |
+
+Proof. In phase zero the five-row table queries the three
+mutually disjoint pairs beginning at $j+2,j+4,j+6$, all exterior
+to target $j$. Their zero and one probabilities are $c,2\eta$.
+Thus the first-three-record source masses follow by multiplying
+preceding zero factors, the one probability and the phase factor.
+The independent target gives factor $a$ for correctness. In phase
+one all calls are paid separators, and $000$ succeeds precisely
+on $S_0=\sigma$, giving $a/2$. The additional phase-zero
+$000$ mass is an error for that fixed output. The source masses
+sum to one using $\eta(1+c+c^2)=(1-c^3)/2$, and the correct
+sum is $F$. Its exact cost law is
+
+$$
+\mathbb P(N=1)=\eta,\quad \mathbb P(N=2)=c\eta,\quad
+\mathbb P(N=3)=1-\eta(1+c),\quad
+\mathbb E N=3-\eta(2+c).
+\tag{10.2}
+$$
+
+For the six-row table the phase-zero root pair is
+$\{j+1,j+2\}$, exterior to the target. After zero it queries
+$\{j,j+1\}$, introducing the target. On $01$ the heavier
+triple in order $j,j+1,j+2$ is
+$(1-\sigma,\sigma,\sigma)$, weight $a^2b=a\eta$,
+with complementary weight $ab^2$. Its phase-weighted source and
+correct masses are therefore $\eta/2,a\eta/2$, with the
+displayed minority target output. On $001$ the first triple is
+constant, probability $t$, and the disjoint last pair
+$\{j+3,j+4\}$ disagrees, probability $2\eta$. Its source
+mass is $t\eta$, and correctness requires the triple constantly
+$\sigma$, giving $a^3\eta$. The $1$ mass uses root-target
+independence; $000$ succeeds only in phase one. Normalization is
+
+$$
+\eta+\eta/2+t\eta+(1+tc)/2
+=3\eta/2+(1+t)/2=1.
+\tag{10.3}
+$$
+
+The correct sum is $V$. Its exact costs are
+
+$$
+\mathbb P(N=1)=\eta,\quad\mathbb P(N=2)=\eta/2,\quad
+\mathbb P(N=3)=1-3\eta/2,\quad
+\mathbb E N=3-5\eta/2.
+\tag{10.4}
+$$
+
+Both tables halt on every formal binary input within three calls.
+Their installed costs include all output rows. Equations (1.2)
+verify both actual endpoints, and $\sigma$ verifies both biases.
+Constant initialization leaves every given independent seed law
+unchanged. $\square$
+

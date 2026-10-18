@@ -1,0 +1,47 @@
+**Lemma 3.1 (finite-support limits of physical read trees).** Fix $K,A$.
+Consider a sequence of finite physical skeletons of read depth at most
+$K$ and epochs in $[N,N+A]$. There is a subsequence with a fixed tree
+shape, fixed epoch at every read vertex, and, at each such vertex, either
+a fixed physical word or a sequence of words leaving every finite subset
+of $\mathcal W$.
+
+Give an escaping vertex the auxiliary label $\infty$ and define its
+auxiliary reply to be $\mathsf{absent}$. For each fixed original source
+$u\in\mathcal T$, its complete reply path in the selected skeletons is
+eventually the reply path in this finite auxiliary tree. The assertion
+holds jointly for any fixed finite collection of original sources.
+
+Proof. There are finitely many rooted four-reply shapes of bounded depth
+and finitely many monotone epoch assignments. Select an infinite
+subsequence on which these choices are fixed. There are now finitely
+many word coordinates. For one coordinate, if some word occurs infinitely
+often, restrict to those indices. Otherwise each word occurs finitely
+often; since the word set is countable, select successively indices
+outside each increasing finite initial word set. This coordinate then
+leaves every finite set. Repeat for the finitely many coordinates.
+Earlier properties persist under subsequences.
+
+The native fact making this compactification useful is
+
+$$
+\{p:r_{\rho^n u}(p)\ne\mathsf{absent}\}
+       =\operatorname{Pos}(\rho^n u),
+\qquad |\operatorname{Pos}(\rho^n u)|<\infty .
+\tag{NFO.8}
+$$
+
+It holds for every finite original $u$ and every fixed finite $n$ because
+(NFO.1) maps finite trees to finite trees. Thus an escaping word coordinate
+at epoch $n$ eventually has exactly the auxiliary absent reply on $u$.
+A constant word coordinate has its fixed literal reply. There are only
+finitely many vertices, so all their replies stabilize simultaneously
+for this $u$. Induction down the fixed finite tree then stabilizes the
+entire path, including early halts. Take the maximum of these finitely
+many stabilization indices for finitely many chosen sources.
+
+The subsequence step is the standard finite-product compactness argument
+for the one-point compactification of a countable discrete set. Its
+native input is (NFO.8), not a uniform depth bound for the whole fiber.
+No procedure computing the stabilizing subsequence is asserted.
+$\square$
+

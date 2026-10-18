@@ -1,0 +1,51 @@
+**Proposition 3.1 (credited synthesis with explicit live mass).** Fix
+$a_0,q_0\in(0,c)$, $q_0\ne a_0$, before choosing $x,\beta,m$.
+From the same preparation at $a_0$, execute a unit fixed-height phase leg
+of increment $2\pi m$, the four unit rectangle legs with relative vertices
+
+$$
+(a_0,0),\ (q_0,0),\ (q_0,B),\ (a_0,B),\ (a_0,0),
+\qquad
+B=\frac{r(\pi m-\beta)-2\pi m a_0}{q_0-a_0},
+\tag{AC.5}
+$$
+
+then a unit zero-relative-phase leg $a_0\to x$. This six-unit original
+history has endpoint (AC.3), the stated real residual, both original
+regularity alternatives and finite phase variation
+$2\pi|m|+2|B|$. Each finite strict height catalogue has a common positive
+support margin.
+
+For the examples fix $c=1/4$, $Z=r=1/2$, $a_0=1/8$, $q_0=1/16$ and
+$\theta=0$. Then $B=8\beta-4\pi m$. Under canonical execution the
+actual live probability at time six is
+
+$$
+q_x=\frac13
+\begin{cases}
+(c-a_0)/(c-x),&x\leq a_0,\\
+a_0/x,&x\geq a_0.
+\end{cases}
+\tag{AC.6}
+$$
+
+Every previous failure retains its original stopped archive.
+
+Proof. The all-sector construction in the [rectangle Scribe][FRTB], also
+used in Quantum Carrier Minimum Proposition 7.2, has residual
+$2\pi m w(a_0)+B(w(q_0)-w(a_0))$.
+On the double wall $w(q_0)-w(a_0)=-(q_0-a_0)(1,1,0,1,1)/r$.
+Substitution gives $(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$
+coordinate by coordinate. The final leg has $\chi'=0$, so changes no
+residual. Heights stay between $a_0,q_0,x$; all pieces are affine and
+join continuously. This verifies strict support, finite variation and
+both regularity alternatives. The composition supplier keeps each literal
+prefix and translates real phases at its matching join.
+
+For the rational preparation, the fixed-height and rectangle phase legs
+have zero survival charge. The rectangle descent and ascent have survival
+$2/3$ and $1/2$. The final monotone leg contributes the factor in (AC.6),
+by the credited hazard $\lambda=(k')_+/k+(-k')_+/(c-k)$.
+Multiplication proves (AC.6). This is a positive live branch of one stopped
+experiment, not a repeat-until-success preparation. $\square$
+

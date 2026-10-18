@@ -1,0 +1,9 @@
+# k-bonacci 自校准获取资源续卷 IX：共同 Boolean 矩、保留信用与低尾精确比较
+
+This volume continues
+[Continuation VIII, §206](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VIII.md).
+It uses ordinary mathematical definitions and proofs. Throughout,
+$x_+=\max\{x,0\}$, empty sums are zero, and a maximum of an empty
+family of nonnegative quantities is zero. All displayed weak inequalities
+include their equality endpoints.
+

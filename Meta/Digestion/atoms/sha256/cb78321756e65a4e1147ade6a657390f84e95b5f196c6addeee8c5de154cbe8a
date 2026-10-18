@@ -1,0 +1,18 @@
+**Proposition 8.1 (a partial cell is not a byte).** At $C_1(h)$ only $z.0$
+has been created. That single child is not a complete $F_8$ cell.
+The old source head, native PC and original meter still have their
+entry values. The partial-tree decoder in §5 applies; the old
+complete-byte decoder applied directly to this new component does
+not. At $C_{24}(h)$ the new byte is complete, but Proposition 4.3
+still separates append completion from an EX successor.
+
+Proof. Definitions 3.1–3.2 give $w_1=0$ and
+$P_1=\{\varepsilon,0\}$. Thus the new cell-root occurrence at $z.0$
+is still a terminal; it has neither the complete $F_8$ scaffold nor
+its eight bit children. It cannot satisfy the complete-byte decoder's
+shape premise. The frame in Theorem 3.4 leaves the old head, PC and
+meter fixed. Theorem 5.2 decodes this actual partial tree, including
+its phase. At cut 24, Theorem 3.4 gives the complete $C_U(c_R)$
+subtree, while Proposition 4.3 identifies the remaining old-symbol,
+control and meter effects of EX. ∎
+

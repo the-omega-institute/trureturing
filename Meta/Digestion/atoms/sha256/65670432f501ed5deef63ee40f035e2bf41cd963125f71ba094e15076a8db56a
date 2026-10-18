@@ -1,0 +1,23 @@
+## 310. The low sixth-label case
+
+Suppose v<=m-2. The one-upper-gap complete-star lemma, with low set
+{C,D,V}, gives u>m. Thus neither U nor Z can be a selected flat axis.
+Nor can M,Z,U be transverse in a flat. Every flat's reservoir pair
+therefore lies in {C,D,V}. The source sigma, with pair {C,D}, uses the
+unique M pi slot. Every other flat avoids M entirely as a selected axis.
+
+Any such other flat has at least one selected H axis, since two special
+axes violate the fixed-pair barrier. Choose its largest selected H
+value x. Its other axis is either H-valued at most x or special with
+shifted value strictly below the sum of its transverse pair values.
+The axial-flat product implies that x is at least one plus that sum.
+Thus X lies outside its transverse pair and is numerically larger than
+both members. Since its available H axes and pair all lie in {C,D,V},
+it selects the unique numerically largest member A of this three-label
+set and has the other two labels as its pair. If the numerical maximum
+is tied, there is no such owner at all.
+
+The genuine A witness gives p_A<=1, so at most one such additional
+owner exists. Together with sigma this gives at most two flat owners.
+An A pi slot already used by sigma only reduces this bound.
+

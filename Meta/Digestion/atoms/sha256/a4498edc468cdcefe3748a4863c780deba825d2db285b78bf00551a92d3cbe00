@@ -1,0 +1,33 @@
+**命题 199.7（完整证书失败产生有限概率见证）。** 设 $y\ge0$、
+$\Delta_O(y)\le1$ 且 $Q(y)\notin E_N$。则存在 $b\in H$、完整 $N$ 配置
+$\lambda\ge0$ 及 $M=\sum_D\lambda_D\ge1$，令
+$$
+x=(1-M^{-1})\alpha+M^{-1}b,
+$$
+则 $x\in Q_L$，配置 $\lambda/M$ 是质量一的完整 $N$ 概率向量，并且
+$$
+G_N(\lambda/M)\ge h(x),
+\qquad y\!\cdot d(x)>y\!\cdot\mathbf r+1\ge
+ y\!\cdot\mathbf r+\Delta_O(y).
+\tag{199.16}
+$$
+所以所有完整 $O$ 概率配置都被同一评分的严格 support gap 排除。
+
+**证明。** 由定理 199.3 的 (II) 取 $b,\lambda,M$。凸性给
+$x\in Q_L$，且
+$$
+\mathbf r+M^{-1}G_N\lambda\ge
+\mathbf r+M^{-1}h(b)=d(x).
+$$
+因为 $F_y(b)>M$，
+$$
+ y\!\cdot d(x)=y\!\cdot\mathbf r+M^{-1}F_y(b)
+ >y\!\cdot\mathbf r+1
+ \ge y\!\cdot\mathbf r+\Delta_O(y).
+$$
+右端是完整 $O$ 目录在评分 $y$ 下的最大值，故严格支撑间隔排除了任意完整
+$O$ 概率配置。若 $x$ 位于辅助零容量或非活跃坐标边界，沿用定理 168.1 的
+正闭帽平台和定理 110.2 的原始运输；该平台的每个活跃幅严格高于正帽，证明不需要
+所有确定表有正质量，也不需要所有事件行严格松弛。内部方向的定量间隔沿用定理
+169.2。此命题是由证书失败推出见证的条件命题，不反向声称存在失败评分。$\square$
+

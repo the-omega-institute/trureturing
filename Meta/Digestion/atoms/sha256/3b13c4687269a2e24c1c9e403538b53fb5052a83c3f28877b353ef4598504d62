@@ -1,0 +1,44 @@
+**Proposition 4.2 (exact source fiber and four complete rows).** The entire
+successful fiber of (SJM.14)–(SJM.16) is
+
+$$
+D_3=\{U(y,z):y,z\in\mathcal T\}.
+\tag{SJM.18}
+$$
+
+Every source reaches all four $Q$ holes, with the same exterior
+$\langle\square_1,\langle\square_2,\langle\square_3,\square_4\rangle\rangle\rangle$.
+Its complete row is exactly one of
+
+$$
+\begin{array}{c|c}
+ r_0&z=y\ne\rho y,Fy\\
+ r_1&z=\rho y\ne y,Fy\\
+ r_2&z=Fy\ne y,\rho y\\
+ r_3&z,y,\rho y,Fy\text{ are pairwise distinct}.
+\end{array}
+\tag{SJM.19}
+$$
+
+All four rows are attained.
+
+*Proof.* The literals force every displayed pair root and the explicit $\beta$
+leaf, so every successful source has the form
+$\langle z,\langle y,\langle v,\langle\beta,w\rangle\rangle\rangle\rangle$.
+The first record in (SJM.15) compares the current epoch-one subtree at $RL$,
+which is $\rho y$, with the original subtree $v$ at $RRL$; hence $v=\rho y$.
+The second record gives $w=v$. Thus the source is exactly (SJM.17), and all
+endpoints are reached by (SJM.14). Conversely every $U(y,z)$ satisfies the
+literals and both equalities. The three inequalities follow from (SJM.4), so
+both directions give the entire fiber, including all guards.
+
+The four target holes contain $z,y,\rho y,Fy$. The three reference values
+$y,\rho y,Fy$ are pairwise unequal by (SJM.4). Therefore the arbitrary $z$
+can equal at most one reference value. It equals one of them or differs from
+all three, giving exactly the four complete partitions (SJM.19); no inequality
+between $z$ and a reference is assumed before selecting that case. The choices
+$z=y$, $z=\rho y$, $z=Fy$ attain $r_0,r_1,r_2$, and $z=\rho^2y$ attains
+$r_3$, since $\kappa(\rho^2y)=\kappa(y)+2$ differs from the offsets
+$0,1,3$. The exterior and reached set are fixed, so these are the complete rows,
+not merely labels. $\square$
+

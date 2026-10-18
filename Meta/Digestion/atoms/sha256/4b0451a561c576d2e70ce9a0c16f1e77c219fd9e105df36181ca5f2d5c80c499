@@ -1,0 +1,27 @@
+## 162. Excluding the smaller-companion return: setting
+
+This exclusion uses Sections 137--155 independently of the capacity
+argument in Sections 156--161.
+
+Use the source's actual finite ideal face pairing, complete circular edge
+links, minimum degree six, fixed paired frames and one common positive
+generalized length field satisfying every original 2*pi edge equation.
+A nonempty flat set in the exactly-four-H case supplies distinct labels
+H={M,C,D,Z}, with cosh lengths
+
+    m>1+c+d>c+2,       z>1+m+c>2c+3.
+
+Every H value is at most z. Every Z occurrence is genuine. The genuine
+escape tau=(Z,M,C,D,M,C) is the sole owner in the dominant axial Z run.
+Its two Z faces are paired to the two return faces of a different owner
+rho. The two transverse Z slots of rho have equal angle gamma>pi/2.
+There is no other owner with obtuse transverse Z angles, since each
+such owner would contribute two angles greater than pi/2 to Z.
+
+We rule out the remaining companion-C frame
+
+    rho=(M,Z,C,Z,Z,C).                             (162.1)
+
+All roles and faces below are actual local slots, even when a face has
+two equal Z labels.
+

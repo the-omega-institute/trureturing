@@ -1,0 +1,48 @@
+**定义 1.3（第五 M 后的正源坐标）。** The six cumulative matrices in
+(1.3) are
+
+$$
+\begin{gathered}
+I,\ J,\ L,\ J+L,\ C,\ Q,\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\\
+C=J(J+L)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix}
+=I+2J+2L-C.
+\end{gathered}                                                   \tag{1.5}
+$$
+
+For each fixed world put $\eta=(QP)_{22}>0$, $R=P/\eta$ and $F=\eta f$.
+Since $Q^{-1}=\left(\begin{smallmatrix}-2&1\\3&-1\end{smallmatrix}\right)$,
+the unique positive rank-one chart is
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(1-2x)y&1-2x\\(3x-1)y&3x-1\end{pmatrix},
+\qquad \frac13<x<\frac12,\quad y>0.                           \tag{1.6}
+$$
+
+Indeed the $(2,2)$ entry of $QR$ is one, and its rank-one determinant
+gives the $(1,1)$ entry $xy$. Multiplying by $Q^{-1}$ gives the displayed
+$R$; its four entries are positive exactly on the stated strip. Conversely
+this strip gives positive rank-one representatives, with
+$P=R/\operatorname{tr}R$ and $f=(\operatorname{tr}R)F$.
+
+Write $s=x+y$, $p=xy$. The traces against the six matrices in (1.5) are
+
+$$
+(T_0,T_1,T_2,T_3,T_4,T_5)
+=(s+2x-2p-1,\ 1-x-s+3p,\ s-2p,\ 1-x+p,\ s-p,\ p+1).
+                                                               \tag{1.7}
+$$
+
+Each is positive. Every world satisfies the entire set of equations
+
+$$
+F(i)T_i+d=(0,24,48,312/5,\widehat Y,\widehat z)_i
+\quad(0\le i\le5).                                           \tag{1.8}
+$$
+
+The sixth-$J$ and sixth-$M$ traces are respectively $s,s+1$, obtained
+by multiplying $QR$ by the individual atom. No ancestor equation is
+discarded by this change of coordinates.
+

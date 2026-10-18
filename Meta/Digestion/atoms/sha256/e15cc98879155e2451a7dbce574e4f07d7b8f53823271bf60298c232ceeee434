@@ -1,0 +1,30 @@
+**Theorem 4.1 (Weighted actual-tail comparison).** Define
+
+$$
+\eta_{H,P}(R)=\sum_{k\ge R}(k-R+1)a_k,\qquad
+T_P=\sum_{k\ge0}(k+1)a_k.
+\tag{4.1}
+$$
+
+For every stationary binary $P$ and every $R\ge0$,
+
+$$
+\tau_P(R)\le\eta_{H,P}(R).
+\tag{4.2}
+$$
+
+Both sides may be infinite.
+
+Proof. Adding (3.1) cancels the two factors $1/2$. Tonelli's theorem for nonnegative terms [Probability][K] gives
+
+$$
+\begin{aligned}
+\tau_P(R)
+&\le\sum_{r\ge R}\sum_{k\ge r}a_k\\
+&=\sum_{k\ge R}\left(\sum_{r=R}^{k}1\right)a_k
+=\sum_{k\ge R}(k-R+1)a_k.
+\end{aligned}
+$$
+
+Thus no unproved absolute-convergence or boundary-rate assumption is used in the interchange. $\square$
+

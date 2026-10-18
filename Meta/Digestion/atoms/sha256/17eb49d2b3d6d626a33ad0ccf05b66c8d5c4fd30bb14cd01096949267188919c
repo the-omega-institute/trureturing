@@ -1,0 +1,22 @@
+## 10. The remaining full-row and physical-word obligations
+
+**Open problem 10.1 (uniform separation after finite-image classification).**
+On an arbitrary infinite admitted signed fiber whose complete row image
+has been classified as finite, decide whether
+
+$$
+\exists h\ge0\ \forall u,v\in D,\quad
+\left[\forall |p|\le h, r_u(p)=r_v(p)\right]
+\Longrightarrow R_Q(u)=R_Q(v).
+\tag{NPL.28}
+$$
+
+Theorem 6.2 gives a bounded physical consumer for the reached set and
+concrete exterior. Each remaining row predicate has decidable native
+existential feasibility by NSF. Nevertheless the complete relation
+between arbitrarily deep common prefixes and different partition bits
+is not decided by these facts. Example 9.4 refutes the proposed inference
+from a finite image alone. NSF Theorem 6.1 decides each supplied $h$,
+but enumerating those decisions still lacks a general negative stopping
+rule. The new projection theorem does not assert one.
+

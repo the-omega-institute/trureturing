@@ -1,0 +1,32 @@
+**Definition 3.4 (feasible row diameter and block hypotheses).** For a nonzero nonnegative matrix $B$ with finite row and column sets, let
+
+$$
+I_B=\{u:(B\mathbf1)_u>0\},\qquad
+K_B(u,v)=\frac{B(u,v)}{(B\mathbf1)_u}\quad(u\in I_B),
+$$
+
+and set
+
+$$
+\delta(B)=\max_{u,u'\in I_B}\operatorname{TV}\bigl(K_B(u,\cdot),K_B(u',\cdot)\bigr).
+\tag{3.6}
+$$
+
+A single feasible row gives diameter zero. The zero matrix is excluded rather than assigned a contraction value. For the quotient word matrices below, both index sets are $S$.
+
+For this component independently in each direction, assume integers $m_+,m_-\ge1$ and numbers $0\le\rho_+,\rho_-<1$ such that
+
+$$
+\begin{split}
+&\text{for every }w\in\{0,1\}^{m_+}\text{ with }\bar\lambda\bar M_w\mathbf1>0,
+\qquad\delta(\bar M_w)\le\rho_+,\\
+&\text{for every }w\in\{0,1\}^{m_-}\text{ with }\bar\lambda\check{\bar M}_w\mathbf1>0,
+\qquad\delta(\check{\bar M}_w)\le\rho_-.
+\end{split}
+\tag{3.7}
+$$
+
+In the second line, $w$ is read in reverse-motion order: its first letter is the first emitted label encountered going left. Matrix products follow that order. The lengths, contractions, quotient, and quotient state count may all depend on $C$ and on the original parameter $\theta$.
+
+Since every $\bar\lambda_u>0$, a stationary word has positive probability exactly when its matrix is nonzero. Thus (3.7) covers every word that can receive positive probability after further conditioning. It assumes no positivity of every row, no aperiodicity, and no common terminal state. The identity quotient always meets (3.2) and (3.3); it need not meet (3.7).
+

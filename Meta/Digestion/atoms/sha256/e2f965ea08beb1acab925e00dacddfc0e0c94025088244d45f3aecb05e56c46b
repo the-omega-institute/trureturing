@@ -1,0 +1,131 @@
+**Theorem 8.2 (native finite-neighborhood pressure separation).** For
+every fixed $d\ge2$ and every integer $R\ge0$, there are arbitrarily
+large pairs $\mathcal A_R,\mathcal B_R\in\mathfrak N_{d,3}(n)$
+with the same $n$, seed count, full marked profile $p_R$ and
+full-support law (GDB.34), the same number of actual tuples, and
+
+$$
+\mathcal P(\mathcal B_R)-\mathcal P(\mathcal A_R)\ge\frac35.
+\tag{GDB.37}
+$$
+
+Both may be padded by identical constant-alpha blocks to a common
+dyadic length $K$, preserving all these profile agreements and a pressure
+gap greater than $3/10$ per padded original block.
+
+Proof. We first give the finite graph ingredient with explicit constants.
+For every integer $g\ge2$ there are arbitrarily large finite simple
+graphs with no isolated vertices, maximum degree at most $1000$, girth
+greater than $g$, $e\ge5v$, and
+
+$$
+m_G(b)\ge e/5\qquad\text{for every binary coloring }b.
+\tag{GDB.38}
+$$
+
+Here is an elementary probabilistic derivation, used only inside this
+native construction. On even $N\ge\max(6,4g)$ vertices, take the
+union of $1000$ independent uniform perfect matchings. It is a loopless
+multigraph with $m=500N$ edges counted with multiplicity. For any fixed
+cut its expected crossing count is at most
+$1000N^2/(4(N-1))\le3m/5$. Expose matching partners one pair at
+a time. Conditional completions for two alternative next partners
+couple by switching two matching edges, changing the final cut count
+by at most two. The Doob martingale therefore has increments of absolute
+value at most two over at most $m$ steps. The usual Azuma bound gives
+
+$$
+\Pr\{\text{this cut has at least }3m/4\text{ crossing edges}\}
+ \le\exp(-9m/3200).
+$$
+
+Union over at most $2^N$ cuts gives
+$\exp((\ln2-45/32)N)<1/2$. This is the standard bounded-difference
+probabilistic method; no new general concentration theorem is asserted.
+
+For each $2\le\ell\le g$, enumerate ordered candidate cycles
+with distinct matching-labelled edges and their matching colors.
+In a parallel-edge cycle of length two the colors are distinct.
+There are at most $N^\ell1000^\ell$ candidates.
+Required edges within any one matching must be disjoint;
+otherwise their probability is zero. For disjoint prescribed edges,
+the successive matching denominators are at least $N/2$ when
+$N\ge4g$, so the probability is at most $(2/N)^\ell$. This
+also bounds colored parallel-edge cycles at $\ell=2$. Thus the
+expected total short-cycle count is at most
+$B_g=\sum_{\ell=2}^g2000^\ell$. By Markov's inequality its count
+is at most $2B_g$ with probability at least $1/2$. The strict cut
+probability bound makes the intersection of these two good events
+nonempty. Choose arbitrarily large even $N\ge\max(6,4g,64B_g)$.
+
+Delete one edge from each listed short cycle, using at most
+$a\le2B_g\le m/16$ deletions, and remove isolated vertices. The
+remaining graph is simple, has the required girth and maximum degree,
+and has $e=m-a\ge15m/16\ge5v$, since $v\le N$. Every coloring
+leaves at least $m/4-a\ge(m-a)/5=e/5$ monochromatic edges.
+Since $v\ge2e/1000$, its size grows without bound with $N$.
+All the final properties, including (GDB.38), can be checked on a finite
+graph by finite enumeration. Consequently exhaustive search selects a
+graph of any required girth and minimum size effectively, without a
+useful efficiency assertion.
+
+Choose such $G$ with girth greater than $4R+4$, with its public edge
+orientations and cyclic orders. Let $G\sqcup G$ be its disjoint
+two-sheet cover and $G\times K_2$ its bipartite double cover. Lift
+the orders and orientations from $G$, and put
+
+$$
+\mathcal A_R=\mathcal N_d(G\sqcup G),\qquad
+\mathcal B_R=\mathcal N_d(G\times K_2).
+\tag{GDB.39}
+$$
+
+Both graphs have $2v$ vertices and $2e$ edges. Hence both networks
+have exactly $n=6e$ original blocks, $4e$ seeds and $2^{2v}$
+actual tuples. Their full block laws are identical.
+
+To verify the marked-profile assertion, project each decorated native
+incidence graph to that of $G$. In both covers every block and seed
+has two preimages. The connector cycles at a vertex preserve the sheet;
+only a traversal through an original edge block exchanges sheets in
+the bipartite cover. An odd sheet change along a closed walk therefore
+projects, after collapsing connector gadgets, to an odd closed walk
+in $G$, of no greater length. Such a walk contains an odd cycle.
+A discrepancy between induced radius-$R$ balls would give such a
+closed walk of length at most $2R+1$: two paths from the root of
+length at most $R$, with possibly one edge between their endpoints.
+The girth choice excludes it. Map a lifted root and each vertex reached
+by a path of length at most $R$ to the endpoint of the same projected
+path in the other cover. The exclusion makes this map independent of
+the chosen path and preserves every induced edge. Reversing the covers
+gives its inverse. All port tables, constants, owner marks and weight
+tables are unchanged. Internal connector cycles cause no sheet change
+and lift identically. Since each base root has exactly
+two preimages, both block-rooted and seed-rooted profile distributions
+are exactly equal, including their counts. No spin assignment is made
+part of these fixed marks.
+
+Every coloring of $G\sqcup G$ has at least $2e/5$ monochromatic
+edges. Its raw spin sum is at most
+
+$$
+2^{2v}t^{2e/5}=2^{2v-4e}.
+$$
+
+The bipartite double cover has at least two proper colorings, each of
+weight one. Its raw sum is at least two. The common normalization
+$(W_d^{\rm wt})^{-6e}$ in (GDB.35) cancels in their ratio, so
+
+$$
+\mathcal P(\mathcal B_R)-\mathcal P(\mathcal A_R)
+ \ge\frac{1-2v+4e}{6e}
+ \ge\frac23-\frac{v}{3e}\ge\frac35.
+$$
+
+Finally choose $K=2^{\lceil\log_2 n\rceil}$. Pad both networks
+by $K-n$ constant-alpha blocks with no seeds. These isolated marked
+blocks add exactly the same mixture to their profiles. Their raw weights
+are one and their normalized weights are $(W_d^{\rm wt})^{-1}$,
+so the mass ratio is unchanged. Since $K<2n$, dividing the logarithmic
+ratio by $K$ gives a gap greater than $3/10$. $\square$
+

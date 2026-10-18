@@ -1,0 +1,13 @@
+**命题 68.1（同旧行异新行与无限候选）。** 取 $P=\{LL,R\}$、$q=L$、$F[v]=\langle v,\alpha\rangle$，固定外部 $C=\langle\langle\square_1,\alpha\rangle,\square_2\rangle$ 及两个不同旧类，$H=\varnothing$。则 $D_b=\mathcal T$，定理67.1排除任意认证纪元的有限统一新 raw 预算。特别地，原来源
+
+$$
+u=\langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,
+\qquad
+v=\langle\langle\alpha,\alpha\rangle,\beta\rangle
+\tag{SLH.68.1}
+$$
+
+具有同一个实际旧行，而 $Q=\{L,R\}$ 的完整新分区不同。
+
+证明。两个旧孔分别为 $\alpha$ 与 $\langle\alpha,\alpha\rangle$，或为 $\alpha$ 与 $\beta$，都满足旧不等式。新左右子树只在第一棵相等。空历史给两个类语言均为 $\mathcal T$，所以 $D_b=\mathcal T$；无限预算障碍由定理67.1给出，不由这一对有限反例单独推出。$\square$
+

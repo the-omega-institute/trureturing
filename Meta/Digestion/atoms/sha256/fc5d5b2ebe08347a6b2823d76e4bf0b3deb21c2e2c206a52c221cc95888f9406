@@ -1,0 +1,38 @@
+**Theorem 5.5 (Uniform error in the original ten-output norm).** For
+every actual current ray,
+
+$$
+\begin{aligned}
+\|\mathcal D_\varepsilon(E_\varepsilon(k,\alpha,\beta))
+-y(k,\alpha,\beta)\|_2^2
+&=16H^2F_\varepsilon(k/H)\\
+&\le16H^2(T-\mu).
+\end{aligned}
+$$
+
+In particular the bound is independent of both phases, and is uniform
+arbitrarily close to either boundary of the original open height interval.
+
+Proof. For $x=k/H$, Definitions 4.1 and 5.1 give
+
+$$
+\begin{aligned}
+\widehat A(E_\varepsilon(k,\alpha,\beta))
+&=2H\sqrt T\bigl[(1+\varepsilon a)e^{(\lambda+\varepsilon b)x}
+-\varepsilon e^{(\lambda-1)x}\bigr]U(\alpha)\\
+&=2H R_\varepsilon(x)U(\alpha).
+\end{aligned}
+$$
+
+Using $A(k)=2Hs(x)$ and the original Gram matrix of Lemma 1.4,
+the squared error is therefore exactly
+
+$$
+4\bigl(2H R_\varepsilon(x)-A(k)\bigr)^2+B(k)^2
+=16H^2\bigl((R_\varepsilon(x)-s(x))^2+\tau x\bigr).
+$$
+
+Theorem 4.6 supplies the uniform bound. This is a pointwise identity
+in the original ten outputs, not a change of norm or an average over
+phases. $\square$
+

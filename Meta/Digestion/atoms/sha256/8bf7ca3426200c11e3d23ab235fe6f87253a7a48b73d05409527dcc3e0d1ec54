@@ -1,0 +1,3 @@
+**Definition 14.1 (coefficient and control tables).** Cases are ordered lexicographically in $(\eta,\epsilon,\sigma)$ with the signs $-1,+1$. The polynomial in each case is precisely the cleared gap from Theorem 4.1 after its listed exact double factors have been removed. A quotient row $j$ encloses the coefficient of $x^j$. A control row $(d,j,k)$ encloses the $k$th Bernstein control on $y\in[j/2^d,(j+1)/2^d]$ after $x=2y-1$. All coefficient/control endpoints are integers with denominator $2^{300}$. The rational partition endpoints below certify the complete covering, including endpoints. No unlisted leaf or sampled-angle convention is implicit.
+
+

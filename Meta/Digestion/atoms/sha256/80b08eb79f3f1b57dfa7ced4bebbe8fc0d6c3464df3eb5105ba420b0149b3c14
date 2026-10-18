@@ -1,0 +1,18 @@
+**Lemma 3.1 (Endpoint interaction).** Let $r\ge1$ be the least visible order of a permitted finite-order law $Q$. Put $K=K_Q$ at that order and $\varphi(ua)=\log K(a\mid u)$ on $B_{r+1}$. If $r\ge2$, there is $w\in B_{r-1}$ beginning and ending in $0$ such that
+
+$$
+J(w)=\varphi(1w1)-\varphi(1w0)-\varphi(0w1)+\varphi(0w0)\ne0.
+\tag{3.1}
+$$
+
+**Proof.** A full-support order-zero law would be iid with positive one-bit probability for $1$, contradicting the prohibition of $11$. Thus the least order is positive. Suppose $r\ge2$ and all differences (3.1) vanish. For every legal suffix $w$ of length $r-1$, compare $K(\cdot\mid0w)$ and $K(\cdot\mid1w)$ whenever both histories are legal.
+
+If $w$ begins with $1$, only history $0w$ is legal. If $w$ ends with $1$, the next bit is forced to $0$, so all available rows agree. In the remaining case $w$ begins and ends with $0$, both center choices in each row are positive, and $J(w)=0$ says
+
+$$
+\frac{K(1\mid1w)}{K(0\mid1w)}
+=\frac{K(1\mid0w)}{K(0\mid0w)}.
+$$
+
+Row normalization forces these two binary distributions to coincide. In all cases $K(a\mid bw)=K(a\mid0w)$ on every legal history $bw$. The normalized kernel $K'(a\mid w)=K(a\mid0w)$ therefore represents the conditional next-bit distribution of the same law given its entire past. It has order at most $r-1$, contradicting minimality. $\square$
+

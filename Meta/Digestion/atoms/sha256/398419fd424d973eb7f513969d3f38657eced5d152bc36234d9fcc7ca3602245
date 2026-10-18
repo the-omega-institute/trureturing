@@ -1,0 +1,28 @@
+**Proposition 3.2 (finite completion is not unconditional progress).**
+There is no uniform finite primitive deadline to idle admission, even for
+one fixed $H$. There is also no guarantee of reaching idle without the
+remaining required external supply.
+
+Proof. AIF's payload loop has the five rows test, IN, WR, payload move,
+length move, with one final zero test. Immediately after input number
+$r$, $1\le r\le d$, exactly
+
+$$
+3+5(d-r)+1=5(d-r)+4
+\tag{RCA.2}
+$$
+
+further primitives are needed just to leave that loop. Thereafter parsing,
+source work, records, copies and acknowledgement remain. Arbitrarily long
+finite TagRead addresses are lawful on the same finite-capacity source;
+descent beyond a leaf gives literal `absent`. Taking $r=1$ and unbounded
+$d$ defeats any proposed common finite deadline.
+
+For failure of unconditional progress take $d=2,r=1$. The prescribed WR,
+two moves and next length test reach the second payload IN. Without its
+next supplied bit there is no Advance-only path to idle. Alternatively,
+an actor can perpetually extend an unfinished unary length with ones;
+every finite prefix remains extendible, but no complete frame is reached.
+Neither example uses a malformed lawful prefix, a hostile writer or a
+crash. ∎
+

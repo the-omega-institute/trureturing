@@ -1,0 +1,85 @@
+## 4. Supplied forest, initial and actual-payment interfaces
+
+The following premises are reused with their original mathematical ownership. The new signed-short proofs begin in Section 5. Stating these interfaces in full identifies what those proofs consume; it does not claim a new proof of the supplied forest or payment results.
+
+**Supplied interface 4.1 (Positive-forest hitting comparison).** Lower-source Theorem 5.1, proved there from the positive directed forests in Section 4 and the marked and complementary forest sums in Section 5, has this form. Let $P,Q$ be stochastic on the same $\mathcal S$ with the two common absorbing labels, and suppose $\gamma\ge1$ satisfies
+
+$$
+\gamma^{-1}P(x,y)\le Q(x,y)\le\gamma P(x,y)
+\quad(x,y\in\mathcal S).
+\tag{4.1}
+$$
+
+They have the same positive-edge support. Let $\mathcal Z$ be its vertices with no positive directed path to $d_1$, and let
+
+$$
+V=\mathcal S\setminus(\mathcal Z\cup\{d_1\}),\qquad
+n=|V|\le |\mathcal S|-2\le M-2.
+\tag{4.2}
+$$
+
+For the actual probabilities $h_P,h_Q$ of ever hitting $d_1$, including time zero,
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),\qquad
+|h_P(x)-h_Q(x)|\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.3}
+$$
+
+Here $d_0\in\mathcal Z$ supplies the second excluded boundary label in (4.2). The hitting functions are zero on $\mathcal Z$ and one at $d_1$. Closed non-target classes are included in $\mathcal Z$; making their rows identities analytically preserves the hitting values. The forest proof uses $n$ edges per forest, and the common positive marked and complementary sums give (4.3). It requires no global absorption, irreducibility, aperiodicity, spectral gap or lower bound on positive exits. Zero edges, self-loops, hitting values zero and one and an empty interior $n=0$ are included. We use this supplied theorem, rather than the coarser elimination exponent of uniform-source Lemma 4.1.
+
+**Supplied interface 4.2 (Actual stationary initial row).** Define
+
+$$
+R_r(q)=\sum_{k\ge1}k^rq^k,\qquad
+r_H(q)=\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}.
+\tag{4.4}
+$$
+
+For the actual $\nu_i$ in (3.2), lower-source Lemma 6.1 and uniform-source Lemma 5.1 give
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q)\le\frac{2\delta}{\mu_0(q)},
+\qquad
+\|u-v\|_{\rm TV}=\frac12\sum_x|u(x)-v(x)|.
+\tag{4.5}
+$$
+
+The supplier compares the first-wait weights $g_i(b)=\sum_{k\ge\max(1,b)}F_i(k)q^k$, whose normalizers are $Z_i\mu_i$. Its excess normalizer is bounded by $\delta(R_9+R_8)$, with $Z_0\mu_0=R_{10}+R_9$. The common map $b\mapsto\eta A^bC$ then contracts variation. This uses the actual stationary first wait and common initialization, including initial stopping, even for arbitrary retuning. It does not import the machine-dependent $O(s^2)$ initial estimate of fixed-observer-source Lemma 24.2.
+
+**Supplied interface 4.3 (Actual live epochs).** Follow the full history while holding an actually emitted label fixed thereafter. If $Y_n$ is the state just after the tick at $\tau_n$, define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},\qquad
+Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t.
+\tag{4.6}
+$$
+
+Under the actual target $i$, $Y_0$ has law $\nu_i$ and the epoch kernel is $U_i$. For a compliant observer the supplied identities and inequalities are
+
+$$
+N<\infty\ \text{almost surely},\qquad Y_N=d_D,\qquad
+N\le Q_T\le T,\qquad \mathbb E_iN<\infty.
+\tag{4.7}
+$$
+
+These are fixed-observer-source Lemma 25.1, lower-source Lemma 7.1 and uniform-source Lemma 6.1. If stopping is before or at the first tick, $N=0$. Otherwise each live $Y_0,\ldots,Y_{N-1}$ follows an actually read tick and commits to a next read: the $N$ live epochs are charged to those distinct paid ticks. If a zero run contains the actual stop, the next analytical tick only records the frozen label; it is not added to $Q_T$. Thus (4.7) does not charge an unread closing tick or assert that every undertaken epoch is completed operationally.
+
+**Supplied interface 4.4 (Predictable actual-bit payment).** Fixed-observer-source Lemma 25.3, lower-source Lemma 7.2 and uniform-source Lemma 6.2 give
+
+$$
+\mathbb E_iQ_T\le B(1-q)\mathbb E_iT.
+\tag{4.8}
+$$
+
+The source-history hazards used there are $f_i(b)/S_i(b)$ after a tick and $b\ge1$ ensuing zeros, zero just after a tick, and $S_i(b)/\sum_{v\ge b}S_i(v)$ before the first tick. The envelope bounds each by $B(1-q)$, including the stationary first-wait hazard. With independent proof coins exposed for predictability, $\{T>t\}$ is known before $X_t$, and the supplier sums $\mathbf1_{\{T>t\}}X_t$ over precisely the undertaken reads. Those coins are not retained observer information. That enlarged payment filtration is not used to condition epoch drifts on future update coins.
+
+Consequently (4.7)–(4.8) give, separately under each actual source,
+
+$$
+\mathbb E_iN\le B(1-q)\mathbb E_iT.
+\tag{4.9}
+$$
+
+This is the only conversion from epochs to reads used below. It neither multiplies a random number of interrupted epochs by a full mean gap nor assumes independence between a terminal decision and its current gap duration. The initial interval and terminal partial interval remain paid through the actual $T$.
+

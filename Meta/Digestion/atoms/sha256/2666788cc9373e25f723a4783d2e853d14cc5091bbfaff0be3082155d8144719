@@ -1,0 +1,58 @@
+**Definition 13.4 (Publish and actual Call rights).** Publish serializes
+a fixed tagged result tuple with Frame and Cat. It measures and copies
+that binary word from its actual bank field into a fresh port-39 block,
+using Base, a dry SegmentCount, real SegmentCopy, F and seal, and the
+complete descriptor creation of Definition 11.3. Payload is one word,
+so there are no inter-field sep cells inside it. The same expansion
+writes immutable cover and package archive records. Archive kind tags
+are actual written bits. Numeric package/cover IDs are the list-count
+words, copied into the published payload.
+
+For cross-owner delivery choose the predeclared consumer $C$, mailbox
+port 48 and receiver port 40. The client is the original frame actor
+$C=A$; installation transfers the unused consumer receiver-port token
+to that client by one actual TOK. Original source-frame deliveries still
+use their actor archive on 24–31. Service payloads are not interleaved
+into that original row stream. Before each stage, measure the arena Base,
+construct its actual length argument, execute the complete initialized
+Allocate, and write its full descriptor. Allocate includes its delimiter
+once. Position sender, destination and length by the recorded Base/Seek
+or actual delimiter scans. The six-row copy of Proposition 6.3 then
+performs each stage, including its final length test, seal and TOK. The
+second stage begins only after the mailbox seal and authorized handoff.
+Its sender and counter are repositioned by those same paid scans.
+The mailbox's idle writer/availability token is transferred to this
+channel setup by an actual TOK and returned after acknowledgement by an
+actual TOK; these are additional to the two copy-body handoffs. The
+receiver's installed client writer token authorizes its own setup rows.
+Client receiver blocks append after its old cells; none aliases the
+mailbox, service archive or source. Their actual creation chain and the
+payload's version/seed/cover binding are retained with the delivery.
+Only the final receiver seal enables its read token. This version then
+always serially prints that received result, with no further external
+choice. After the completion record, recover the receiver base from its
+staged placement record and Seek(40); recopy the sender's actual payload
+length to 35 and position that counter. The print loop is RD(35,5);
+on a leading 1, RD(40,4); OUT(4); MR(40); MR(35), then repeat; on 0 exit.
+Its complete tested body is $5l+1$, of which $3l$ is RD/OUT/data-head work.
+Length recovery, both positionings, public read authority, acknowledgement
+and final return remain additional paid rows. No free access to a bank
+or unsealed receiver is used. Independent extra client reads or optional
+printing choices are outside this fixed canonical-frame graph; adding
+such choices would require their own retained control-input relation
+before claiming replay closure for them.
+
+The service availability token is a finite token distinct from source
+ownership. At the installed Ready it belongs to $C$. A request begins
+with its actual TOK to the handler and reserve CTL; busy or missing-token
+attempts are illegal and unexecuted. After full outcome delivery, client acknowledgement and the common
+frame-return bank updates, that common return performs the TOK to $C$,
+followed by the Ready CTL. Publish itself never executes a Ready return.
+The fixed client may keep its received immutable packages and read tokens;
+repeated calls use that same installed token relation. A numeric $p$ alone
+never grants it. Unknown $p$ with the token yields executed NoPackage;
+known $p$ without the token yields no transition. A returned historical
+token bit never executes this live TOK. Installation pays for the token's
+finite encoded initial state and its first handoff. More clients or token
+minting are not claimed by this one-client construction.
+

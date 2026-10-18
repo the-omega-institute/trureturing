@@ -1,0 +1,11 @@
+### 82.1. Original-channel theorem and equality classification
+
+Let F=F_(4,2) be the logical channel from C^4 tensor C^2 to C^4 defined by
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  for f!=g.
+
+All diamond norms are unhalved and permit arbitrary references. Use the fixed input and output maximally-correlated encodings J_in and J_out. Let A,B:C^8->C^4 be original CPTP maps, and put
+
+    delta=||(A tensor B)J_in-J_out F||diamond.
+

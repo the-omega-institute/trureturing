@@ -1,0 +1,48 @@
+**Definition 271.1 (Balanced suffix measure and allocation charges).**
+Let $J=\{3,\ldots,L\}$ and $m=L-2$.
+Use the subset measure of
+[Section 201.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md)
+and its use in
+[Section 207.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+Write $c_m=4-2/\lceil(m+1)/2\rceil$.
+For $m=2q-1$, each suffix with $q$ zeros has weight
+$2m/(q\binom mq)$.
+For $m=2q$, each $q$-zero suffix has weight $2/\binom mq$,
+and each $(q+1)$-zero suffix has weight
+$2q/((q+1)\binom m{q+1})$.
+All other weights are zero. Denote this finite measure by $\nu$.
+Its mass is $c_m$, each zero marginal is 2, and for $m\ge2$
+each pair of distinct suffix bits has cell masses
+$(1,1,1,c_m-3)$ in order $00,01,10,11$.
+For $m=1$, $\nu$ is mass 2 on the sole zero suffix.
+
+Fix one complete feasible $\lambda$ as in (268.1), at arbitrary
+mass $M$, without imposing $H_L$. Retain $s_+,s_j,\mathcal T,E_b$
+of Definition 268.1 and define
+
+$$
+\begin{aligned}
+\eta&=\mu_+(1)+\mu_+(2),\\
+r_1(z)&=\mu_{01z}(\{0,1\})-(M-e),&
+r_2(z)&=\mu_{10z}(\{0,2\})-(M-e),\\
+\chi_1(z)&=\mu_{01z}(2),&
+\chi_2(z)&=\mu_{10z}(1),\\
+R_{\rm pair}&=\tfrac12\int(r_1+r_2)\,d\nu,&
+X_{\rm cross}&=\tfrac12\int(\chi_1+\chi_2)\,d\nu.
+\end{aligned}
+\tag{271.1}
+$$
+
+For each full deterministic table put
+
+$$
+\begin{aligned}
+t_D&=\sum_{j\in J}([D(v^j)=j]-[D(+)=j]),\\
+a_D&=\tfrac12\int([D(01z)\in J]+[D(10z)\in J])\,d\nu,\\
+g_D&=a_D-t_D,\qquad G_{\rm seed}=\sum_D\lambda_Dg_D.
+\end{aligned}
+\tag{271.2}
+$$
+
+These charges retain every terminal label and the same allocation.
+

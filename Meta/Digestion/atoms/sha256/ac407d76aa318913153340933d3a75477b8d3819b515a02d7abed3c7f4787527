@@ -1,0 +1,4 @@
+**Corollary 6.3 (Additional path-mergeability condition).** Suppose a positive-mass irreducible component satisfies: for every distinct state pair $i,j$ there are a common word $w$ and state $v$ such that $(M_w)_{iv}>0$ and $(M_w)_{jv}>0$. Then it satisfies the supplier in Corollary 6.2.
+
+Proof. This is [Travers, Definition 6][TR]. Its Lemma 5 supplies a flag-state block of length relatively prime to the component period. Apply Corollary 6.2. The path-mergeability construction is a reused sufficient condition. $\square$
+

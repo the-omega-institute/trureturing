@@ -1,0 +1,27 @@
+**Construction 3.1 (The precise reused law $P^0$).**
+Each row is $O(i,j;r_0,r_{10},r_{11})$ of mass $k/24$.
+These are exactly the sixteen tables of XVIII 319.1.
+
+| $i$ | $j$ | $r_0$ | $r_{10}$ | $r_{11}$ | $k$ |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 2 | 1 | 2 | 0 | 4 |
+| 1 | 2 | 1 | 2 | 3 | 2 |
+| 1 | 2 | 1 | 2 | 4 | 1 |
+| 1 | 2 | 1 | 2 | 5 | 1 |
+| 1 | 3 | 1 | 3 | 0 | 3 |
+| 1 | 4 | 0 | 4 | 0 | 1 |
+| 2 | 3 | 0 | 3 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 5 | 1 |
+| 3 | 5 | 0 | 5 | 0 | 1 |
+| 3 | 6 | 0 | 6 | 0 | 1 |
+| 4 | 5 | 0 | 5 | 0 | 1 |
+| 4 | 6 | 0 | 6 | 0 | 1 |
+| 5 | 6 | 0 | 6 | 0 | 1 |
+| 6 | 7 | 0 | 7 | 0 | 1 |
+
+The counts sum to 24. The $(1,4)$ first output is zero. The class-1
+correct count is eleven, whereas the distinct head-filled law in XVII
+300.1 has twelve. $P^0$ ignores bits eight and nine.
+

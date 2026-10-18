@@ -1,0 +1,48 @@
+**Proposition 17.2 (the obstruction is an acquired input, not a no-service certificate).** Take $P=\{L,RL\}$, outside
+$C=\langle\square_1,\langle\square_2,\alpha\rangle\rangle$, two distinct
+old classes $x,y$, no literals, and the equality record $(0,L,0,R,=)$.
+Its entire source fiber is
+
+$$
+\{\langle\langle y,\alpha\rangle,
+          \langle y,\alpha\rangle\rangle:y\in\mathcal T\}.
+\tag{ARH.17.3}
+$$
+
+The old-coordinate relation is exactly $x=\langle y,\alpha\rangle$.
+For $Q=\{L,R\}$ the complete target row is constant and needs zero new
+reads. This presentation is outside $\mathfrak S$ as defined above.
+
+Proof. Both compared epoch-zero endpoints are originally reached, so
+the equality is precisely $x=\langle y,\alpha\rangle$. Its old
+inequality $x\ne y$ holds automatically by finite node count. These
+implications reverse and give (ARH.17.3). Paid original traversal and
+comparison, followed by the complete access cut, realize the retained
+record. Both target holes are reached and equal, and the outside is
+$\langle\square_1,\square_2\rangle$. This is a complete zero-read output.
+
+To check failed eligibility of this actual presentation, consider the
+pattern cell in which both old class patterns are complete binary
+skeletons to relative frontier depth $d$. With no literal conditions
+and with both endpoints reached, this cell survives the initial checks.
+Its retained equality compares $t_x$ with
+$\langle t_y,\alpha\rangle$. Down the left side, some depth-$d$
+variable of $t_x$ faces a nonground pair in the corresponding depth-$(d-1)$
+part of $t_y$. That child comparison is unsupported. The false comparison
+on the right side is not a short circuit under Definition 10.1. Constraint
+eligibility precedes emptiness, so this cell makes the presentation fail.
+No conclusion about service impossibility follows from that failure.
+$\square$
+
+Theorem 17.1 and Theorem 8.2 concern different representation classes.
+The fixed-power graph of $\rho$ is synchronous by Lemma 11.2 although it
+has no finite ordinary-cell compilation in the sense of §8. Conversely,
+the ordinary equation (ARH.17.1) already fails same-root convolution
+recognizability. Finite constructor syntax and fixed-power synchronous
+graphs therefore cannot be combined by asserting an unproved closure
+under arbitrary subtree offsets. Replacing coordinates, solving a
+contextual equation first, or using richer automata may cover excluded
+presentations, but each such extension owes an exact source and target
+correspondence and a terminating finite-prefix test. No undecidability
+claim follows from either representation boundary.
+

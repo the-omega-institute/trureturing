@@ -1,0 +1,129 @@
+**Theorem 19.1 (The same endpoint in all four contracts).** For
+each $0<Z<1$, every fixed preparation, and $n\in\{2,3\}$,
+the capacities of all four classes equal $v(Z)$ from (18.1),
+and their finite tolerance sets are all $[v(Z),\infty)$.
+The attaining witnesses have exact encoding at every truncated
+path, every intermediate time, and every prefix of every finite
+lawful concatenation, with the same current-state uniform error.
+
+**Proof of Theorem 19.1.** The inclusions at each fixed dimension
+budget are
+
+$$
+\mathfrak F_{\le n}^{\rm gp}\subseteq
+\mathfrak F_{\le n}^{\rm g}\subseteq
+\mathfrak F_{\le n}^{\rm lit},\qquad
+\mathfrak F_{\le n}^{\rm gp}\subseteq
+\mathfrak F_{\le n}^{\rm p}\subseteq
+\mathfrak F_{\le n}^{\rm lit}.
+\tag{19.1}
+$$
+
+Therefore the literal lower bounds of Theorem 7.6, Theorem 10.2,
+and Theorem 17.2 are lower bounds for each corresponding stronger
+class. The direction of inclusion is essential: the quotient of
+Lemma 13.3 was only required to be literal and is not being
+asserted to recover guards.
+
+Below the transition use the actual annulus of Theorem 8.1, with
+$\gamma_*<0$ and $C_*$ from (18.3). Its image and recovered
+height, as proved in Proposition 8.2, are
+
+$$
+2H\sqrt{T_\tau-\tau}<\|z\|<2H\sqrt{T_\tau},\qquad
+\kappa(z)=\frac1{\gamma_*}
+\log\frac{\|z\|}{2H\sqrt{T_\tau}}.
+$$
+
+The exact straight guards are $0<\kappa(z)+s<H$ for every real
+$s$ and the whole actual image for every real $t$. The fixed
+maps are $e^{\gamma_*s}I$ and $R_{t/2}$. This includes zero,
+negative, and empty-domain commands. The original preparation
+initializes $z=\rho(k_0)U(0)$, with all preparation phases still
+in the fixed original decoder $D$. Recovering height from the
+actual stored norm adds no external input and changes no affine
+readout requirement.
+
+To match the full path contract explicitly, use the parameters
+of Proposition 9.1. For prescribed integrable velocities on
+$[0,T_{\rm p}]$ put
+
+$$
+\eta(u)=\int_0^u a_c(v)\,dv,\qquad
+\Delta=\eta(T_{\rm p}),\qquad
+L=\int_0^{T_{\rm p}}b_c(u)\,du,\qquad
+C_{\rm p}=\int_0^{T_{\rm p}}\eta(u)b_c(u)\,du.
+$$
+
+The native all-times guard and endpoint remain
+
+$$
+0<k+\eta(u)<H\quad\text{for every }u\in[0,T_{\rm p}],
+\tag{19.2}
+$$
+
+$$
+k'=k+\Delta,\qquad \alpha'=\alpha+L/2,\qquad
+\beta'=\beta+(1/2-k/r)L-C_{\rm p}/r.
+\tag{19.3}
+$$
+
+The proof of these formulas, the existence of the mixed integral,
+and the equivalence of (19.2) to
+$k+\min\eta>0$, $k+\max\eta<H$ are Proposition 9.1.
+In particular, the extrema are attained on the compact time
+interval; lawful endpoints alone are not a substitute for
+(19.2). The negative mixed term remains in the true source.
+
+Theorem 9.2 supplies the fixed annular path map
+
+$$
+z\longmapsto e^{\gamma_*\Delta}R_{L/2}z
+$$
+
+on the exact recoverable guard
+$0<\kappa(z)+\eta(u)<H$ for every $u$. It is defined even for
+a prescribed path with empty guard. Substitution into (19.3)
+is its exact encoding identity; the mixed term is invisible
+only because this particular encoder forgets $\beta$.
+For every truncation, replace the upper integration limit by
+the truncated time and retain that truncation's own all-times
+guard. The same identity holds. For two concatenated paths,
+Proposition 9.1 gives the full source triple
+
+$$
+(\Delta_1+\Delta_2,\ L_1+L_2,
+ C_1+C_2+\Delta_1L_2),
+$$
+
+and its guard is the first full guard together with the second
+full guard from the actual intervening height. The encoded maps
+compose by adding $\Delta$ and $L$, consistently with this
+source formula and the permitted loss of $\beta$. Induction
+gives every finite lawful concatenation. Exact latent encoding
+at each current state lets Theorem 8.1 apply at each time without
+accumulating readout error.
+
+At and above the transition, use the actual one-coordinate
+height witness of Theorems 10.1–10.2:
+
+$$
+E_{\rm h}(k,\alpha,\beta)=K=k,\qquad q(K)=0,
+$$
+
+with probability update $K\mapsto K+s$, phase update $K\mapsto K$,
+and prescribed-path update $K\mapsto K+\Delta$. Its full path
+guard is exactly $0<K+\eta(u)<H$ for all $u$; its straight
+guards are the corresponding special cases. The same truncation
+and concatenation identities are exact. Its error is $v(Z)$.
+The zero-dimensional literal witness also attains that value,
+but is not used to supply recoverable guards.
+
+The annulus uses two real coordinates and the height witness one,
+so each belongs to the combined class at both budgets two and
+three. These matching upper witnesses, together with (19.1),
+prove every capacity equality. The endpoints are included because
+these are actual attaining models, and larger finite tolerances
+are satisfied by the same models. Equality of capacities does
+not assert equality of the four model classes. $\square$
+

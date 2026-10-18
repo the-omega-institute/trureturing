@@ -1,0 +1,35 @@
+**Theorem 5.1 (Both erasure sums for every finite-hidden proper renewal law).** If $P=P_\theta$ is proper renewal for any finite $N$ and $\theta\in\Theta_N$, choose $K,\varepsilon$ from Lemma 3.2. Then
+
+$$
+e_L(j),e_R(j)\le P([0^j])\le(1-\varepsilon)^{\lfloor j/K\rfloor}
+\quad(j\ge1),
+\tag{5.1}
+$$
+
+and, including both $j=0$ terms,
+
+$$
+A_P\le2\sum_{j\ge0}(1-\varepsilon)^{\lfloor j/K\rfloor/2}
+=\frac{2K}{1-\sqrt{1-\varepsilon}}<\infty.
+\tag{5.2}
+$$
+
+**Proof.** Let $G_j^L$ be the event that some retained bit among $X_{-j},\ldots,X_{-1}$ is one. It belongs to $\mathcal L_j$. On that event the nearest left exterior one is retained, and the whole right half-line, hence almost surely its nearest one, is also retained. Proposition 4.1 expresses $q_0$ using exactly those two distances, with the forced-neighbor cases included. Thus $\mathbf1_{G_j^L}q_0$ has an $\mathcal L_j$-measurable version. Since $\mathcal L_j\subseteq\mathcal E_0$, the tower identity gives
+
+$$
+p_j^L=\mathbb E_P[q_0\mid\mathcal L_j],\qquad
+\mathbf1_{G_j^L}p_j^L=\mathbf1_{G_j^L}q_0.
+\tag{5.3}
+$$
+
+Both predictors lie in $[0,1]$ on the complementary event, so
+
+$$
+e_L(j)\le P((G_j^L)^c)=P([0^j]).
+\tag{5.4}
+$$
+
+For the right side, let $G_j^R$ be the event that some $X_1,\ldots,X_j$ is one. The field $\mathcal R_j$ retains its nearest right anchor and the entire left half-line. Proposition 4.1 makes $\mathbf1_{G_j^R}q_0$ measurable there, and the same tower identity gives equality of $p_j^R$ and $q_0$ on this event. Therefore $e_R(j)\le P([0^j])$ separately. This argument does not need reversibility.
+
+Lemma 3.2 now gives (5.1). At $j=0$ each squared error is at most one; neither error is set to zero. For each integer $t\ge0$ there are exactly $K$ nonnegative $j$ with $\lfloor j/K\rfloor=t$. Summing the resulting geometric series proves (5.2). All fields, event probabilities and projections belong to the same actual $P$. The constants depend on that law. $\square$
+

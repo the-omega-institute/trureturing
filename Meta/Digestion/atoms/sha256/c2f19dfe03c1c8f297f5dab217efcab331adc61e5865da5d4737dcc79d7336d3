@@ -1,0 +1,39 @@
+## The coefficient hierarchy and the E2 boundary
+
+The first-order statistic \(S_j\) is only the first coefficient of an exact
+finite polynomial. Define
+\[
+ \Phi_j(X):=\prod_{p\mid B_j}(1+b_{p,j}X)^{h_p}
+       =\sum_{q=0}^{H_j}E_{q,j}X^q,
+ \qquad H_j:=\sum_{p\mid B_j}h_p.
+ \tag{E2.1}
+\]
+Here \(E_{0,j}=1\), \(E_{1,j}=S_j\), and
+\[
+ E_{2,j}=T_j
+ =\sum_{p\mid B_j}\binom{h_p}{2}b_{p,j}^2
+  +\sum_{p<q}h_ph_qb_{p,j}b_{q,j}.
+ \tag{E2.2}
+\]
+Evaluating at \(X=m_j\) and using \(B_j=1+m_ju_j\) gives the exact hierarchy
+\[
+ u_j=\sum_{q=1}^{H_j}m_j^{q-1}E_{q,j}.
+ \tag{E2.3}
+\]
+For \(Q\ge1\), write
+\[
+ U_{j,Q}:=\sum_{q=1}^{Q}m_j^{q-1}E_{q,j}
+ \quad (Q\le H_j).
+\]
+Then
+\[
+ \boxed{u_j\equiv U_{j,Q}\pmod {m_j^Q}}.
+ \tag{E2.4}
+\]
+Thus the second-order corrected depth statistic
+\[
+ \widehat S_j:=U_{j,2}=S_j+m_jT_j
+\]
+satisfies \(\widehat S_j\equiv u_j\pmod {m_j^2}\). This is an exact
+coefficient identity, not a new recurrence for the factorization data.
+

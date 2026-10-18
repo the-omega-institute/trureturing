@@ -1,0 +1,52 @@
+**Proposition 10.1 (Source-relative improvement).** The refined scalar discrepancy can be used in the same target-specific interface as the mass bound of lower-source Lemma 6.2. It reduces the cutoff dependence from tenth power to ninth power with the explicit large-cutoff maximum, yielding the necessary exponent $8/9$ instead of the credited $4/5$. No matching exponent is established.
+
+Proof. Lower-source equation (6.10) and uniform-source equation (5.9) subtract the same target-specific clipped kernel, then bound its variation by $\pi_0+\pi_1$. Equations (5.5) and (5.10) keep that subtraction signed, including its normalized tail drift. In fact the coefficients also obey
+
+$$
+P_L\le\pi_1,\qquad N_L\le\pi_0,\qquad
+\kappa_L\le\max\{\pi_0,\pi_1\}\le\pi_0+\pi_1,
+\tag{10.1}
+$$
+
+since $(f_1-f_0)_+\le f_1$ and $(f_0-f_1)_+\le f_0$ termwise. Thus the new additive coefficient fits the old proof object and assumptions, while retaining additional information.
+
+The old short-total estimate uses $\sum_{k\le L}k^9\le L^{10}$. The retained positive and negative masses instead use $\Delta_H(k)\le\delta k^8$ and $\varepsilon\le\delta R_8/R_9$, giving (6.1). Near the endpoint their bound is $s^{10}L^9\max\{1,sL\}$ rather than a constant times $s^{10}L^{10}$. The price of live epochs still contributes one more factor $s$; no payment or source law changes. In the regime $sL\le1$ this makes the cutoff power nine. In the other regime (8.12) explicitly retains the normalization cost.
+
+For comparison, lower-source Theorem 9.1 gives on its same source/risk-only neighborhood the credited affine-budget estimate
+
+$$
+\mathbb E_iT\ge\frac{b\,9!}{8B^2}\frac{s^{-11}}{X_M^{10}},
+\tag{10.2}
+$$
+
+and its Theorem 10.1 derives necessary growth $\Omega(s^{-4/5})$ for the same fixed-target cubic hypothesis. Those prior results and their forest proof retain their ownership. The new consequence comes from the signed coefficient; it does not reclassify the old lower result as a new discovery.
+
+To see the distinction in excluded growth rates, let a compliant family satisfy $M(s)=O(s^{-\beta})$ for some $0\le\beta<8/9$. Then $X_{M(s)}=O(s^{-\beta})$, so $sX_{M(s)}\to0$. The affine-budget bound in (8.4) consequently gives a fixed positive multiple of $s^{-11+9\beta}$ as a target lower bound eventually. Since $11-9\beta>3$, this contradicts a fixed cubic upper constant. This excludes, in particular, growth exponents $4/5\le\beta<8/9$ that the prior necessary $4/5$ statement alone does not exclude. Theorem 9.1 gives the full quantitative $\Omega(s^{-8/9})$ consequence without assuming a power law or remaining in this regime. Finally $8/9>4/5$ follows from $8\cdot5>4\cdot9$. $\square$
+
+**Supplied comparison 10.2 (Sufficient exponent one).** The supplied upper proposal is titled “A paid geometric-mark controller with O(s^(-1)) complete states and O(s^(-3)) mean under both exact renewal sources.” Its independent check is titled “The finite geometric-mark and lazy-walk cubic upper proposal passes this bounded independent handwritten check.” These are supplied proposal-and-check statements, not final-source approval. They describe a source-blind survival-flag realization on fully read gaps, followed by a bounded midpoint-calibrated lazy walk, at the known common $q$.
+
+For exact correspondence, their public design constants are
+
+$$
+p_i(q)=\frac{Z_i(q^2)}{Z_i(q)},\quad
+\Delta(q)=p_1(q)-p_0(q),\quad
+\ell=\log\frac{1-\alpha}{\alpha},\quad
+c=\frac{a}{9\cdot2^{10}}>0.
+\tag{10.3}
+$$
+
+They reuse fixed-observer-source Proposition 27.2 for $\Delta(e^{-s})=cs+O_H(s^2)$. With walk threshold $L^{\rm up}=\lceil2\ell/\Delta(q)\rceil$, distinct from the lower-proof cutoff $L_M$, the supplied controller lists $4L^{\rm up}+1$ complete configurations, including its first-wait state and both labels. On a source-only endpoint neighborhood, the proposal and check supply
+
+$$
+\begin{gathered}
+4L^{\rm up}+1\le(16\ell/c+5)s^{-1},\\
+\mathbb E_{i,e^{-s}}T\le
+ (176\ell/c^2+44/c+7)s^{-3}\quad(i=0,1),
+\end{gathered}
+\tag{10.4}
+$$
+
+together with both selected risks, both almost-sure stops and both finite means. Their optional design outside the positive-separation branch uses the already credited fixed finite classifier. Its source credits, additional hypotheses and exact real-probability allowance remain those of the supplied upper proposal and check. No upper final manuscript is being approved or used here.
+
+Equations (10.3)–(10.4) are comparison context, not premises of Theorems 7.1–9.1. Those lower proofs do not use a geometric mark, the upper walk, its source separation, its fallback certificate or an unrestricted cubic benchmark. The cubic target bound in Theorem 9.1 is simply a hypothesis about a proposed compliant family. The source-relative necessary exponent $8/9$ and separately supplied sufficient exponent $1$ therefore leave a gap; neither a sharp exponent nor a minimum budget follows.
+

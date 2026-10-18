@@ -1,0 +1,30 @@
+**Definition 4.1 (the finite native fractional cover).** Define the
+rational finite linear program
+
+$$
+z_D=\min\left\{
+\sum_{H\in\mathcal H_D}w_H:
+w_H\ge0,\quad
+\sum_{H\ni x}w_H\ge1\quad(x\in S_D)
+\right\}.
+\tag{FMR.16}
+$$
+
+Its dual is
+
+$$
+z_D=\max\left\{
+\sum_{x\in S_D}y_x:
+y_x\ge0,\quad
+\sum_{x\in H}y_x\le1\quad(H\in\mathcal H_D)
+\right\}.
+\tag{FMR.17}
+$$
+
+Both have attained rational optima by finite linear programming
+duality: singleton covers make the primal feasible, and its objective
+can be restricted to at most $N_D$; singleton dual constraints put
+each $y_x$ in $[0,1]$. Their finite rational constraint matrices
+therefore admit optimal rational vertices. No source distribution is
+assumed by these nonnegative dual weights.
+

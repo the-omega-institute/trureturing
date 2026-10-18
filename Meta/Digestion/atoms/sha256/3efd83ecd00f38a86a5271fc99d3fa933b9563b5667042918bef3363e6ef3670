@@ -1,0 +1,56 @@
+**Proposition 11.3 (Larger reference rank invalidates phase entropy minimality).**
+Put $D_\delta=6+3\delta^2$ and define coefficient matrices
+
+$$
+B_\delta=\frac1{\sqrt{D_\delta}}
+\begin{pmatrix}
+\delta&1&1\\1&\delta&1\\1&1&\delta
+\end{pmatrix},\qquad
+A_\delta=\frac1{\sqrt{D_\delta}}
+\begin{pmatrix}
+\delta&1&-1\\-1&\delta&1\\1&-1&\delta
+\end{pmatrix}.
+\tag{11.9}
+$$
+
+For all sufficiently small $\delta>0$, the reference
+$B_\delta$ is strictly positive and has rank three,
+$|A_\delta|=B_\delta$ entrywise, and the phase-perturbed
+state has strictly smaller von Neumann entropy.
+
+Proof. Their squared singular-value lists are
+
+$$
+p_\delta=
+\frac{((2+\delta)^2,(1-\delta)^2,(1-\delta)^2)}{D_\delta},
+\qquad
+q_\delta=
+\frac{(3+\delta^2,3+\delta^2,\delta^2)}{D_\delta}.
+\tag{11.10}
+$$
+
+Indeed the unnormalized reference is
+$(\delta-1)I+\mathbf1\mathbf1^{\mathsf T}$. The other
+matrix is $\delta I$ plus a real skew-symmetric matrix
+whose square is $\mathbf1\mathbf1^{\mathsf T}-3I$.
+These give (11.10). At $\delta=0$,
+
+$$
+H(p_0)=\log3-\frac13\log2>\log2=H(q_0),
+\tag{11.11}
+$$
+
+where the strict inequality is equivalent to $3^3>2^4$.
+Finite-dimensional entropy is continuous, so the inequality
+persists for all sufficiently small positive $\delta$.
+At $0<\delta<1$, the reference eigenvalues $2+\delta$
+and $\delta-1$ are all nonzero, and every entry is
+positive. This proves the claimed full-support example.
+$\square$
+
+In this example the top reduced eigenvalue decreases, but
+for $0<\delta<1/2$ the second partial sum increases.
+Consequently the positive-matrix Perron bound survives while
+full majorization fails. The rank-two path reference in
+Theorems 8.2 and 11.2 is a substantive hypothesis.
+

@@ -1,0 +1,8 @@
+# FIB two-read law radius and frozen-prefix obstruction
+
+Every lawful protocol with a hard total budget of two paid reads has an exact full-law representative within radius five of its original hidden endpoint. The radius five is sharp. A particular three-read law also shows that a valid two-read placement cannot always be frozen and extended: its prescribed first two placements preserve the target and prefix-reply law, but no continuation of that prefix preserves the complete target/output/return/count law.
+
+These are ordinary mathematical proofs over the original stationary biased XOR source. The substantive increment is the universal two-read upper bound and the specified prefix-extension obstruction, as supplied in the two-read proposal and its independent mathematical check. The stopping-law lower bound, zero/one-budget values, and exponential upper bound retain their existing ownership. The universal polynomial-versus-superpolynomial radius question remains open.
+
+**Reference convention.** This volume is mathematical reference input, without Lean-kernel certification. It uses the `generic-v1` text convention without asserting ingestion or a ledger state. Once integrated, its existing text is retained; additions and corrections belong after the terminal append anchor. The proofs below carry their conclusions directly.
+

@@ -1,0 +1,13 @@
+## Degree-class consequence
+
+If the high quotient classes have degrees 8 and 14, with counts `a` and `b`,
+then the 3-star edge count and the theorem give
+
+```
+N = 16*k,
+4*a + 7*b = 24*k.
+```
+For exactly one high degree-8 class (`a=1`), the first possible solution is
+`k=6`, namely `N=96` and `b=20`. Candidate counts with `N=40` or `N=72`
+are therefore impossible before any angle or co-volume calculation.
+

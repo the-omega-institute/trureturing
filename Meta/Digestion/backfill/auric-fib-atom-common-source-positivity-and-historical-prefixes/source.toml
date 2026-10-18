@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-common-source-positivity-and-historical-prefixes"
+path = "docs/develop/theory/AURIC_FIB_ATOM_COMMON_SOURCE_POSITIVITY_AND_HISTORICAL_PREFIXES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

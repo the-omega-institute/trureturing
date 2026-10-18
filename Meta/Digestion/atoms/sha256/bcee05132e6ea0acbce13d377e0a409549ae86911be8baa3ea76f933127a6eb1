@@ -1,0 +1,10 @@
+### 72.3 Two local CP repairs and their surviving coefficients
+
+For each branch and each party replace Q by
+
+    Q'=Q+⊕_f(I_(d_f)−Q_ff),                              (6)
+
+and set every nonzero-charge block P_(a,f), a≠f, to zero. Each added block is positive by the completeness relation. Hence Q'≥0 and Q'_ff=I, so (6) defines a CPTP map satisfying (1). The cross-fibre Q_fg are unchanged. Repair both parties this way. For f≠g the effective encoded product coefficient remains Q^A_fg[i,j]Q^B_fg[i,j], whereas all within-fibre effective matrix units become δ_ij|ff><ff|, exactly as in the target.
+
+The Choi rank of the repaired local map is rank Q'≤N, proving the stated finite environment bound. Conversely every G,H∈G gives local maps of this form, and their encoded product is J_out F_(G⊙H). The Schur product theorem supplies positivity; the diagonal fibre blocks remain I.
+

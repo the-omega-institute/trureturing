@@ -1,0 +1,54 @@
+**Definition 3.2 (Complete table and persistent state set).** Retain
+exactly the configurations of [C, Definition 5.1]: $w,d_0,d_1$ and all
+
+$$
+(a,z),\qquad a\in\mathbb Z,\quad -H<a<H,\quad z\in\mathcal Z_J.
+\tag{3.3}
+$$
+
+Initialize in $w$. For every integer $u$ set
+
+$$
+\Gamma(u)=\begin{cases}
+d_1,&u\ge H,\\
+d_0,&u\le-H,\\
+(u,1),&-H<u<H.
+\end{cases}
+\tag{3.4}
+$$
+
+Every bit row is specified below.
+
+| Configuration and read bit | Successors and probabilities |
+| --- | --- |
+| $w$, zero | $w$ with probability one |
+| $w$, one | $(0,1)$ with probability one |
+| $(a,j)$, zero, $1\le j<J$ | $(a,j)$ with probability $1-2^{-j}$; $(a,j+1)$ with probability $2^{-j}$ |
+| $(a,J)$, zero | $(a,J)$ with probability $1-2^{-J}$; $(a,\dagger)$ with probability $2^{-J}$ |
+| $(a,\dagger)$, zero | $(a,\dagger)$ with probability one |
+| $(a,z)$, one, every $z\in\mathcal Z_J$ | $\Gamma(a+\widehat n_z)$ with probability $1-p_{B,z}$; $\Gamma(a+\widehat n_z+1)$ with probability $p_{B,z}$ |
+| $d_0$, either bit | $d_0$ with probability one |
+| $d_1$, either bit | $d_1$ with probability one |
+
+Coincident destinations have their probabilities added. The label rows
+specify unused future inputs; entry into a label already stops. Tick
+rows following zero zeros are specified even when unreachable because
+$K\ge1$. Nonterminal ticks reset the phase to one without resetting
+the source. After phase death, every subsequent zero still performs its
+paid read and holds in $(a,\dagger)$ until the actual closing one.
+
+The only active retained distinctions are the finite integer coordinate
+$a$ and phase $z$. Neither the real proof score nor a count of gaps,
+reads, zero holding times or precision bits is a retained field. The
+threshold comparison and jumps in (3.4) denote installed successors;
+they are not runtime arithmetic subroutines or additional work phases.
+The complete listed count is
+
+$$
+M_J=3+(2H-1)(J+1)
+ =3+\bigl(2\lceil A2^{rJ}/J\rceil-1\bigr)(J+1).
+\tag{3.5}
+$$
+
+All listed configurations count, regardless of reachability or probability.
+

@@ -1,0 +1,13 @@
+**约定 2.1（Gram 数据与五个向量）。** 对任意制备置
+
+$$
+\begin{gathered}
+A=|a|^2,\quad B=|b|^2,\quad C=a\cdot b,\quad
+\Delta=AB-C^2,\\
+K=b\times a,\qquad L=K\times a=Ca-Ab,\qquad
+N=K\times b=Ba-Cb,\qquad F(a,b)=(b,K).
+\end{gathered}
+$$
+
+$F$ 是解释参数的数学映射，不是实际源菜单中的动作。$\Delta>0$ 恰表示 $a,b$ 线性独立。
+

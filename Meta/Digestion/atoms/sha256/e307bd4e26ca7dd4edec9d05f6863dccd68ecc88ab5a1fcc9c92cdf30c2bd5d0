@@ -1,0 +1,25 @@
+### 99.4. The lambda-lambda entry and mixed off-diagonal entries
+
+Write (a,b,c)=(a_p,b_p,c_p) and e=D/p. Primitive tangents for the lambda_p covering are
+
+ L1=2a z2-2p b z3-20D c t,
+ L2=A0 z1-B0 z3-15e t,
+ L3=a z2-p b z1-5D c t,
+ A0=(15e+1)/2, B0=(1-15e)/2.
+
+The tangency points are (c,2a,2b) on H1, (1,A0,B0) on H2 and (c,b,a) on H3. Factors 2 in L1 are units at all good odd places and cause no omitted global factor.
+
+For lambda_p against lambda_q, the second triple is (q,1,q), so the pairing is the product of (L1 L3,q). At q set t=1,z1=-b/c,z2=a/c and choose the Hensel root z3 of z3^2=(b/c)^2-15e with z3=-b/c modulo q. All three conics hold. The reductions are
+
+ L1=4p b^2/c modulo q,
+ L3=2p b^2/c modulo q.
+
+They are units. Their product has character (8p^2 b^4/c^2/q)=(2/q)=1. The preceding all-place argument proves <lambda_p,lambda_q>=+1. This vanishing has been derived, not assumed.
+
+For lambda_p against mu_q, the second triple is (1,q,q), so use (L2 L3,q). Choose instead z3=b/c modulo q at the same local point. Then
+
+ L2=-b/c modulo q,
+ L3=2p b^2/c modulo q.
+
+Their product character is (-2p b^3/c^2/q)=(b/q), since q=1 modulo 24 and (p/q)=1. All other factors are1, proving <lambda_p,mu_q>=X. Interchanging p and q proves <lambda_q,mu_p>=Y, with its separately normalized certificate.
+

@@ -1,0 +1,38 @@
+**Lemma 5.1 (The stationary initial mixture bound).** With the actual initial rows (3.2), define
+
+$$
+R_j(q)=\sum_{k\ge1}k^jq^k,
+\qquad
+r_H(q)=\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}.
+\tag{5.1}
+$$
+
+For every retuned observer at the selected $q$,
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q)\le\frac{2\delta}{\mu_0(q)}.
+\tag{5.2}
+$$
+
+Proof. Put
+
+$$
+g_i(b)=\sum_{k\ge\max(1,b)}F_i(k)q^k,
+\qquad \mathcal W_i=\sum_{k\ge1}(k+1)F_i(k)q^k=Z_i\mu_i.
+\tag{5.3}
+$$
+
+Each $k$ occurs in $g_i(b)$ for exactly $b=0,\ldots,k$, so $\sum_b g_i(b)=\mathcal W_i$. The exact first-tick law is $g_i(b)/\mathcal W_i$. Premise (2.3) gives $g_1(b)\ge g_0(b)$ and
+
+$$
+0\le\mathcal W_1-\mathcal W_0
+\le\delta\sum_{k\ge1}(k+1)k^8q^k
+=\delta(R_9+R_8),
+\qquad \mathcal W_0=R_{10}+R_9.
+\tag{5.4}
+$$
+
+If $\mathcal W_1>\mathcal W_0$, normalizing $g_1-g_0$ exhibits the label-one first-tick law as a mixture containing $\mathcal W_0/\mathcal W_1$ times the label-zero law. Its total-variation distance is at most $(\mathcal W_1-\mathcal W_0)/\mathcal W_1$, which is at most $r_H(q)$ by (5.4). If the normalizers agree, the laws agree.
+
+Passing each first-tick law through the common stochastic map $b\mapsto\eta A^bC$ contracts total variation. Indeed each finite-state event has conditional probability in $[0,1]$ under that map, so its two averages differ by at most the input variation. This proves the first bound. Since $R_8\le R_9$ and $\mu_0=(R_{10}+R_9)/R_9$, it proves the second. By (2.8) this is $O_H(s)$ uniformly over machines. Initialization may depend on $q$ and may stop immediately; the contraction still uses the same map under both labels. $\square$
+

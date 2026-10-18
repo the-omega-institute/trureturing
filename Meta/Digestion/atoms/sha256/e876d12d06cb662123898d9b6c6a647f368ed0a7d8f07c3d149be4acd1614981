@@ -1,0 +1,35 @@
+**Definition 3.1 (completion and finite descriptions).** Let
+$\widehat{\mathcal T}$ be the space of finite or infinite ordered binary
+trees, with leaf labels $\alpha,\beta$ and the four-valued prefix topology.
+It is the closed valid-tree subspace of the countable product of the four
+reply symbols, hence compact. Finite trees are isolated by their finite
+full prefixes. Pairing is continuous. Extending $\rho$ at leaves and
+branches gives a continuous, prefix-nonexpanding operation. Indeed matching
+leaf roots have equal finite images, and matching branch roots reduce to
+the children at one smaller depth; induction on the requested depth proves
+nonexpansion, including absence. Iterate for every fixed exponent.
+
+Let $\Omega$ be the unique completion with a branch at every address.
+[ABC, §1.3][ABC] supplies the atomic recurrence and injective indices;
+[NLC, Lemma 3.1][NLC] gives $\mu(T_j)=\lfloor j/2\rfloor$. Thus
+$T_j\to\Omega$ as $j\to\infty$, and
+
+$$
+j\ge2h+2\quad\Longrightarrow\quad T_j\equiv_h\Omega.
+\tag{PAC.8}
+$$
+
+A finite generalized description has grammar
+
+$$
+X::=[q]\mid[\infty]\mid F(X,X),
+\qquad E([q])=T_q,\quad E([\infty])=\Omega,
+\quad E(F(X,Y))=\langle E(X),E(Y)\rangle.
+\tag{PAC.9}
+$$
+
+There is one $[\infty]$ symbol: all divergent atomic coordinates have the
+same completion $\Omega$, even though their actual finite ranks remain
+separate in the support. This symbol is not a variable or a finite source.
+The finite ranks $q$ are natural parameters or guarded affine expressions.
+

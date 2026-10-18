@@ -1,0 +1,14 @@
+**定理 53.7（每个承诺替换像上的相对非正规性）。** 对任意固定 $N\ge0$，不存在普通有限自底向上树自动机，在全部承诺输入 $y\in\rho^N[\mathcal T]$ 上准确判断 $E(y)$。因此实际取得后仅保留一位的正纤维不必具有有限字面约束所用的普通正规树表示。
+
+**证明。** 使用有限树自动机的标准确定化：非确定自动机可把一棵子树的全部可达状态集作为确定状态，故只需排除确定自动机。此供应见 Comon 等，[*Tree Automata Techniques and Applications*，定理1.1.9的确定化及 §1.5 的树同余方法](https://inria.hal.science/hal-03367725/document)；下述承诺像对应由本源直接给出。
+
+$\mathcal T$ 无限且 $\rho^N$ 单射，所以 $\rho^N[\mathcal T]$ 无限。有限状态迫使存在不同原树 $x,z$，使其像 $a=\rho^Nx$、$b=\rho^Nz$ 在自动机中取得同一根状态。于是 $\langle a,a\rangle$ 与 $\langle a,b\rangle$ 取得相同根状态，但两者都是承诺像中的真实有限树：
+
+$$
+\langle a,a\rangle=\rho^N\langle x,x\rangle,
+\qquad
+\langle a,b\rangle=\rho^N\langle x,z\rangle.
+$$
+
+第一棵的 $E$ 为一，第二棵因单射性 $a\ne b$ 而为零，矛盾。此论证同时给正语言非正规及即使只要求承诺像内正确也不可能的更强结论；没有从任意像外树制造反例。$\square$
+

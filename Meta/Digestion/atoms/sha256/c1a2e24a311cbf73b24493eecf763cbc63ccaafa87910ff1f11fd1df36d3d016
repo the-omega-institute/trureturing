@@ -1,0 +1,79 @@
+**Theorem 9.2 (arbitrary-code adaptive class and alphabet bounds).**
+Under Assumption 9.1, every attained class satisfies
+
+$$
+|C_\gamma|\le6\cdot2^k-5.
+\tag{NARC.9.1}
+$$
+
+Consequently, with exactly $q$ attained labels,
+
+$$
+q\le6\cdot2^k-5.
+\tag{NARC.9.2}
+$$
+
+These are necessary bounds under each lag convention. They cover
+arbitrary deterministic acquired encoders, adaptive actual words,
+different cut-specific controllers, repeated target coordinates and
+early halts; they are not sufficient readability or packing criteria.
+
+**Proof.** The supplied common-translation obstruction [NAR, Theorem
+16.3][NAR] makes $d$ injective on each class even if arbitrarily many
+adaptive current Reads are allowed. Indeed, its two-slot specialization
+identifies two same-code, same-$d$ distinct origins with the same whole
+current tree and entire acquired entry at legal positive lags, but
+different required outputs. Equal entry and equal earlier replies force
+the same next request or halt; the equal current trees give the same
+next reply. Thus increasing the call budget cannot remove that
+obstruction. We use this supplier rather than a one-call assumption.
+
+Fix $Z=q+1$. By Theorem 5.2 both visible regions at normalized clock
+$Z$ have complete fiber $C_\gamma$, under either convention. The right
+hidden ages are $Z+d\in[2,2q]$; the left hidden ages are
+$q+Z-d\in[q+2,3q]$. Order the $m=|C_\gamma|$ origins by increasing
+$d$. Their right hidden ages increase strictly and their left hidden
+ages decrease strictly.
+
+Consider one of the two controllers on its own full acquired entry.
+Root and visible-slot requests have entry-constant replies by Theorem
+5.2 and can be simulated locally. Each hidden request is an $E$, $P_t$
+or $S_t$ experiment by Definition 5.3. Its reply cells are intervals
+in the ordered origins. A $P_t$ has two tails and at most two singleton
+cells; an $S_t$ has two tails and at most one singleton. Injectivity of
+$d$ is essential here: a singleton age contains at most one origin.
+$E$ is constant branch on these reference ages. Intersecting an
+interval support with a reply cell again gives an interval support.
+Thus every nonempty adaptive transcript leaf is an ordered interval,
+even for a sparse class or response-dependent next address.
+
+Let $L_j=3\cdot2^j-2$, so $L_0=1$ and $L_j=2L_{j-1}+2$ for
+$j\ge1$. A depth-zero tree has at most one nonempty leaf. Inductively,
+each tail after a first request has at most $L_{j-1}$ leaves, and each
+singleton cell has at most one, regardless of the subsequent control.
+There are therefore at most $2L_{j-1}+2=L_j$ leaves. An $S_t$, a
+constant request or an early halt gives no more. This proves the bound
+for every adaptive depth-$j$ tree. A terminating deterministic program
+on this finite entry induces such a tree: at each common transcript
+its next action is fixed, and at most four replies and $j$ calls can
+occur. Uncharged computation adds no source-dependent branches.
+
+Correctness of the right-visible controller makes $b$ constant on
+each of its at most $L_k$ interval leaves, because the required lag is
+$Z-b$. Its leaf partition therefore has at most $L_k-1$ boundaries
+between consecutive ordered origins. Independently, correctness of
+the left-visible controller makes $a$ constant on each of its at most
+$L_k$ leaves, with at most $L_k-1$ boundaries in the same $d$ order;
+reversing age order does not change the number or contiguity of blocks.
+The common refinement has at most $2L_k-1$ nonempty blocks. Each block
+fixes both $a$ and $b$ and hence contains only one origin. It follows
+that $m\le2L_k-1=6\cdot2^k-5$.
+
+This counts transcript blocks, not distinct outputs: the same $b$ or
+$a$ may occur in several separated leaves. The two partitions are
+mathematical partitions of the same origin class from two lawful
+families of complete histories; no execution combines different cuts
+or splices their sources. Finally, the $q$ nonempty attained classes
+partition the $q^2$ allowed originals. Summing (NARC.9.1) gives
+$q^2\le q(6\cdot2^k-5)$, proving (NARC.9.2). $\square$
+

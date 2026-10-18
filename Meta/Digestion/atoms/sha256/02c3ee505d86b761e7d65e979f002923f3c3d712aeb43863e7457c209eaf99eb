@@ -1,0 +1,37 @@
+**定理 235.3（Necessary cuts from the same complete configuration）。**
+For every $L\ge m\ge4$ and $(b,e)\in H_N$,
+
+$$
+F_{q_m^L}(b,e)\le0.
+\tag{235.2}
+$$
+
+For an original $N$ cap attainer at actual active length $L_a\ge m$,
+
+$$
+b_m a_2+(d_m-1)a_3+d_m\sum_{n=4}^ma_n
+              \le b_m+[(m+1)d_m-1]\varepsilon.
+\tag{235.3}
+$$
+
+The same necessary bound holds for original $O$ attainers. Here
+$b_m=d_m-m+2$ in both occurrences is the coefficient of 233.1.
+
+证明。 For the same full feasible $\lambda$ at the same $(b,e)$,
+
+$$
+F_{q_m^L}(b,e)=Z_m^L\cdot h(b,e)
+\le Z_m^L\cdot G_N\lambda\le M\Delta_N(Z_m^L)=0.
+$$
+
+The mass may be any finite $M$; no normalization is used here.
+For the original statement use I, 110.2 at the stated actual
+active length and pair its normalized complete event vector with
+$Z_m^{L_a}$. The demand reward is
+$s_m+t_m+\sum_n\gamma_na_n-[(m+1)d_m-1]\varepsilon$,
+whereas the support is $s_m+t_m+b_m$. Rearranging gives (235.3).
+Every independent union row is paid by its own $P$ weight. The
+transport preserves arbitrary original addresses and full-carrier
+outputs. These are necessary cuts, not a sufficiency theorem or
+a seven-active classification. $\square$
+

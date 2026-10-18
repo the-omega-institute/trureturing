@@ -1,0 +1,6 @@
+**约定 13.12（供应关系与未决范围）。** [原卷定理11.2](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#112-最小未来边界的全路径公式)、[定理11.5](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#114-恢复所需的最小附加记忆)、[定理11.7](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#115-完整边词的记忆饱和与时间记录)供应全路径核、已知边词恢复及补充字母表；定理12.2供应成功实际分支的固定词取得和相同最优事件数。定理13.3以实际差分核和（12.2）解码建立逐素数因果高位表，定理13.5–13.6消费该表，并以原来源共同像碰撞给全部竞争者下界。定理27.2–27.3供应通用候选支持及秩证书，不单独决定本仿射族最小 $K$；本节另给源特定支持、完整地址及下界。
+
+作为 literature-attested 中间框架，预定鉴别词、按已获响应选择输入及具名输入—输出语义沿用 Markus Theo Frohme, *Active Automata Learning with Adaptive Distinguishing Sequences*, [arXiv:1902.01139v1](https://arxiv.org/abs/1902.01139v1), §2.4、§6.1；David Lee and Mihalis Yannakakis, *Testing finite-state machines: state identification and verification*, [DOI 10.1109/12.272431](https://doi.org/10.1109/12.272431)。破坏性输入及实际相容候选的边界也可参照 Petra van den Bos and Frits Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2), Definitions12、14、17、20。通用鉴别理论不是（13.3）的原仿射计算、（13.10）的因果更新或（13.16）的完整最优数的替代证明；本节不主张世界新颖性。
+
+精确数（13.16）、（13.20）、（13.21）限于各自明定的原完整双因子来源及读取词汇，不宣称所有仿射网络记忆最优值相同。一般固定词有（13.5）及重复身份的（13.6），重复身份的全面精确合并仍须另外分析。带标签Read、无标签Read、捆绑Read的真实响应及命令边界各自承担，不能仅由改记号运输最小数。此分离既不缩减初始支持，也不将原初目标改成当前状态，更不从原费用单位推出物理优化。
+

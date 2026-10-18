@@ -1,0 +1,45 @@
+## 11.1 Capacity at a dimension bound
+
+Fix $0<Z<1$, put $r=1-Z$ and $H=r/2$, and write
+$$
+e_*=\sqrt{4ZH}=\sqrt{2Z(1-Z)}.
+$$
+For an integer $n\ge 0$, let $\mathfrak F_{\le n}(Z)$ be the class of all
+models of Definition 2.1 whose encoder dimension is some
+$d\in\{0,\ldots,n\}$. The preparation is arbitrary but fixed when a model
+is considered: $0<k_0<H$ and all preparation phases are allowed. The
+notation below suppresses this preparation because changing it only rotates
+the five output pairs by a fixed orthogonal map, while the command formulas
+in $(k,\alpha,\beta)$ are unchanged. The initial height changes a producing
+history, not the reachable current-ray domain.
+
+For $A\in\mathfrak F_{\le n}(Z)$ define
+$$
+\operatorname{err}(A)
+ =\sup_{x\in\mathcal M}\|q_A(x)-y(x)\|_2\in[0,+\infty],
+\qquad
+e_n^{\mathrm{aff}}(Z)
+ =\inf_{A\in\mathfrak F_{\le n}(Z)}\operatorname{err}(A),
+$$
+with the convention $\inf\varnothing=+\infty$. Define the finite-tolerance
+set
+$$
+\mathcal A_{\le n,Z}
+ =\{\varepsilon\in[0,\infty):
+       \exists A\in\mathfrak F_{\le n}(Z),\
+       \operatorname{err}(A)\le\varepsilon\}.
+$$
+The norm is the original Euclidean norm on all ten outputs. The class is
+nonempty and contains a finite-error model for every $n$: use the unique
+zero-dimensional encoder, its unique affine updates, and the constant zero
+decoder. Thus $e_n^{\mathrm{aff}}(Z)<\infty$. Models with infinite error
+cannot witness a finite tolerance.
+
+The set $\mathcal A_{\le n,Z}$ is upward closed and has infimum
+$e_n^{\mathrm{aff}}(Z)$. For every $\varepsilon>e_n^{\mathrm{aff}}(Z)$,
+the definition of an infimum supplies a model of error at most
+$\varepsilon$ (indeed, of error strictly below it). Its lower endpoint is
+in $\mathcal A_{\le n,Z}$ exactly when some model attains the infimum. These
+statements concern a fixed dimension bound and do not identify the endpoint
+for positive $n$ below the transition.
+

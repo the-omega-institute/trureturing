@@ -1,0 +1,19 @@
+**定义 5.1（全常词域及各自 minimax）。** 对每个 $m\ge3$，令
+
+$$
+\mathcal W_m=\{T\in\mathcal T:w(T)=\alpha^m\}.
+$$
+
+域包括该词的全部有序满二叉括号形。生产者按定义2.1实际取得来源，切口后仅保留词，$E$ 为常量；不保留展开位置、族标志或其他形状信息。对任务 $F$ 为 $\tau$、字面树、完整坐标或完整回复描述之一，定义
+
+$$
+\begin{aligned}
+\mathsf Q_m(F)&=\min_{\pi\text{ 在 }\mathcal W_m\text{ 正确}}
+      \max_{T\in\mathcal W_m}Q(\pi,T),\\
+\mathsf A_m(F)&=\min_{\pi\text{ 在 }\mathcal W_m\text{ 正确}}
+      \max_{T\in\mathcal W_m}A(\pi,T).
+\end{aligned}
+$$
+
+这些是两个单独的最坏价格优化；未默认两个未知最优规则相同。下面给出一个共同规则同时满足两个上界。
+

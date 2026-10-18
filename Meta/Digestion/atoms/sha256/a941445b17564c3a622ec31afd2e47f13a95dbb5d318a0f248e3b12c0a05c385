@@ -1,0 +1,40 @@
+**Counterexample 8.2 (complete rows do not calibrate a free outside switch).**
+Use first cut $P=\{R\}$ and later cut $Q=\{L\}$. The two authentic
+histories are
+
+$$
+\begin{array}{c|c|c|c}
+ &U_{v_0}&k&U_{v_1}\\ \hline
+H_0&\langle\alpha,\beta\rangle&0&\langle\alpha,\beta\rangle\\
+H_1&\langle\alpha,\alpha\rangle&1&\langle\beta,\beta\rangle.
+\end{array}
+\tag{AAR.27}
+$$
+
+Both first rows are $\langle\alpha,\square_R\rangle$ with one
+reached hole and its singleton partition. Both later rows are
+$\langle\square_L,\beta\rangle$, again with the identical complete
+singleton partition. The first acquired leaf record is $(L,0)$
+in both histories and the later outside record is $(R,1)$ in
+both. Thus all those decoder inputs agree but the lags differ.
+There are no blocked holes or unverified disequalities to repair.
+
+These are operationally realizable full-state comparisons. A
+first producer can Read$(L)$ as guard, run the CWS body for $P$
+and validate $L$; a second can do the same with guard $R$ and
+cut $Q$. Both guards are present leaves in both alternatives.
+On a nonleaf or absent proposed guard reply, the producer can invoke
+the supplied all-source RA fallback; that branch is unused on these
+witnesses.
+The complete chronological query/reply lists coincide across
+the alternatives at each call: the first body reads root and
+$L$, the second root and $R$, and there is no pair of holes
+requiring comparison. With identical code, controls and public
+input, local states, outputs, capacities and cleanup coincide
+as well. Insert the one update only between calls in $H_1$.
+No scheduler event or identity is exposed. These legal traces
+show why arbitrary outside replacement lacks the relation
+provided by (AAR.6), (AAR.21) or (AAR.23). In $H_0$ the later
+beta is not a certified phase-sensitive minimizer; the
+minimum-certified scalar theorem is therefore not contradicted.
+

@@ -1,0 +1,37 @@
+**Proposition 25.2 (boundaries of the resource inference).** A nominal
+three-dimensional output span does not imply the obstruction (CG.185),
+and a three-dimensional carrier does not suffice for optimal performance.
+Omitting an accessible entanglement share from the cut can invalidate
+the dimension obstruction. None of these facts supplies a native
+acquisition or timing service.
+
+Proof. The qutrit dephasing channel has Kraus matrices $P_0,P_1,P_2$
+of rank one and has a measure-and-prepare factorization with scalar
+quantum fibres, despite its three-dimensional output span. Its witness
+pairing is $3-2\cdot3=-3$. Conversely the qutrit identity channel has
+Choi matrix $|\Omega\rangle\langle\Omega|$ of Schmidt number three.
+If it always outputs live, its canonical failure mass at height $5$ is
+zero, whereas the ideal mass is $6/11$. The effect of the entire failure
+register therefore gives $E\geq6/11>E_*$. Three-dimensional coherence
+is necessary here, not a sufficient performance specification.
+
+At the rank-two boundary $L=\operatorname{diag}(1,1,0)$,
+$|\operatorname{tr}L|^2=2\|L\|_F^2=4$; the non-strict sign in
+(CG.186) is essential. For $L=I_3$, its witness pairing is $9-6=3$.
+These also distinguish homogeneous CP/TNI calculations from an
+incorrect trace-one or TP restriction on each live branch.
+
+Finally, standard qutrit teleportation uses a maximally entangled qutrit
+pair, a nine-outcome Bell measurement at the encoder and a controlled
+unitary on the retained receiver share to realize the identity channel.
+For each Bell outcome $(a,b)\in\{0,1,2\}^2$, the unnormalized receiver
+state is $W_{ab}\rho W_{ab}^\dagger/9$ for the corresponding qutrit
+Weyl unitary. The correction $W_{ab}^\dagger$ gives $\rho/9$, and
+the nine outcomes sum to $\rho$, also at reference amplification.
+Counting only the classical Bell outcome would assign scalar fibres to
+a Schmidt-number-three channel. That assignment fails Definition 21.2:
+the retained receiver qutrit is an accessible quantum payload, and is
+not an independent blank. Counting it jointly removes the contradiction.
+This is a counterexample to the omitted-share premise, not a permitted
+extra resource for the original experiment. $\square$
+

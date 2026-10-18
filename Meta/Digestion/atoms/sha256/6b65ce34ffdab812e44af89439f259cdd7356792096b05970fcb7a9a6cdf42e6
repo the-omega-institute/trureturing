@@ -1,0 +1,56 @@
+**Lemma 4.1 (local norm inequality, including exponent zero).** For a
+certificate of Definition 2.1 let
+
+$$
+\begin{aligned}
+h&=-\sum_z Q_v(z)\log_2 Q_v(z),&
+a&=\sum_z Q_v(z)\log_2\Phi_v(z),\\
+\ell_e&=\tfrac12\big(\log_2\nu_e(0)+\log_2\nu_e(1)\big).
+\end{aligned}
+\tag{WBF.16}
+$$
+
+The first two quantities do not depend on $v$. For every vertex,
+
+$$
+\log_2 N_v\ge
+\mathbb E_P\log_2 f_v(s_{\operatorname{st}(v)})
+ +\theta_v h+\theta_v\sum_{e\ni v}\ell_e.
+\tag{WBF.17}
+$$
+
+Also $h\le4$, $\ell_e\le-1$ and $h=\log_2 T-2a$.
+
+Proof. If $\theta_v>0$, write
+$M_v=\sum_z\nu_{\operatorname{st}(v)}(z)f_v(z)^{1/\theta_v}$
+and define the strictly positive probability
+$R_v(z)=\nu_{\operatorname{st}(v)}(z)f_v(z)^{1/\theta_v}/M_v$.
+Expanding its relative entropy against $Q_v$ gives
+
+$$
+\begin{aligned}
+0\le D_2(Q_v\Vert R_v)
+&=-h-\mathbb E_{Q_v}\log_2\nu_{\operatorname{st}(v)}
+   -\theta_v^{-1}\mathbb E_{Q_v}\log_2 f_v+\log_2 M_v.
+\end{aligned}
+\tag{WBF.18}
+$$
+
+Relative entropy is nonnegative, for example by applying concavity
+of the logarithm to
+$\mathbb E_{Q_v}(R_v/Q_v)=1$; every entry here is positive.
+The fair edge marginals of Lemma 3.2 yield
+$\mathbb E_{Q_v}\log_2\nu_{\operatorname{st}(v)}
+=\sum_{e\ni v}\ell_e$. Multiply (WBF.18) by $\theta_v$
+and use $\log_2N_v=\theta_v\log_2M_v$ to get (WBF.17).
+If $\theta_v=0$, the asserted inequality is just
+$\log_2\max_z f_v(z)\ge\mathbb E_{Q_v}\log_2 f_v(z)$.
+No limit of a changing exponent or reference law is needed.
+
+The entropy of sixteen states is at most four, by relative entropy
+against the uniform law. Since $\nu_e(0)+\nu_e(1)=1$,
+$\nu_e(0)\nu_e(1)\le1/4$, giving $\ell_e\le-1$.
+Finally (WBF.14) implies
+$\log_2Q_v=2\log_2\Phi_v-\log_2T$; taking expectations
+proves the last identity. $\square$
+

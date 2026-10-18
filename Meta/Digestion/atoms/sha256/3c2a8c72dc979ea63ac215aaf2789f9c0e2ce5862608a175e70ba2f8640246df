@@ -1,0 +1,81 @@
+**Theorem 6.1 (effective value and attainment).** For every rational
+$\lambda\ge0$, the value $W_\lambda^*$ in (CRF.4) is computable
+and attained by a legal actual service.
+
+If $\lambda_q=\lambda_\ell=0$, its value is zero on every
+instance. If $\lambda_q+\lambda_\ell>0$ and recovery is
+negative, its value is infinity. On every positive recovery
+instance the value is a finite rational attained by a finite
+skeleton, and an actual source attains its worst weighted cost.
+
+Proof. Apply the reasoning of JRF Theorem 7.1 only after supplying
+Theorems 3.4, 4.2 and 4.3. Corollary 5.4's static traversal proves
+zero value when only updates are priced, including all weights
+zero. On a negative branch Theorem 5.3 forces an infinite weighted
+supremum whenever either read or length has positive weight.
+The same pointwise total static traversal attains that extended
+value; it does not have an infinite run on any finite source.
+
+On a positive branch let
+
+$$
+B_0=\lambda_qK_0+\lambda_\ell L_0.
+\tag{CRF.17}
+$$
+
+The static supplier bounds the optimum by $B_0$.
+When $\lambda_q+\lambda_\ell>0$, normalize any comparator
+with weighted value at most $B_0$ using Proposition 5.1.
+Sourcewise dominance, before taking any supremum, cannot increase
+its weighted value. Actual updates are at most $U_N$.
+If $\lambda_q>0$, its read bound is
+$k_\lambda=\lfloor B_0/\lambda_q\rfloor$.
+If $\lambda_q=0<\lambda_\ell$, its length bound is
+$L_\lambda=\lfloor B_0/\lambda_\ell\rfloor$ and cleanup
+gives read bound $k_\lambda=L_\lambda+s_N$.
+These reductions cover comparators with initially unbounded
+unpriced coordinates.
+
+For each rational threshold $z\in[0,B_0]$, use the finitely many
+skeleton shapes with read depth at most $k_\lambda$ and epochs
+in $[N,M_N]$. Require correctness and, on every reachable leaf,
+
+$$
+\lambda_q k_t+\lambda_a b_t+
+                   \lambda_\ell L_t(\mathbf p)\le z.
+\tag{CRF.18}
+$$
+
+If $\lambda_\ell>0$, every reached word has length at most
+$\lfloor B_0/\lambda_\ell\rfloor$. Enumerate those words,
+and test (CRF.18) only at reachable leaves using Theorem 4.3.
+Unreachable subtrees may be replaced by halts as in Theorem 4.2,
+so this restriction excludes no relevant comparator.
+
+If $\lambda_\ell=0$, then $\lambda_q>0$ and each left-hand
+cost is independent of the words. For every numerically violating
+leaf require $\neg E_t(\mathbf p)$. Intersect these word-regular
+relations with (CRF.11), and decide emptiness with no bound on
+physical words. Theorem 3.4 proves exactly the additional
+unbounded-address predicate needed on this zero-weight face.
+It is not obtained from the finite-length enumeration.
+
+Every original comparator with value at most $z$ has, after the
+sourcewise reductions and finite unrolling, a passing certificate
+with no larger cost. Conversely, a passing certificate performs
+exactly the charged actions on every source and obeys (CRF.18).
+These are both paid comparator directions for each threshold.
+
+Choose a positive common denominator $d$ of the weights. Every
+finite run sum lies in $d^{-1}\mathbb N$; every bounded nonempty
+set of such sums has a maximum on that lattice. Test the finite
+list $0,1/d,\ldots,B_0$. The static supplier ensures a true test.
+The first true threshold is the exact infimum: a smaller feasible
+value would be a smaller true lattice threshold. Extract its
+finite service and its worst-source witness by Theorem 4.3.
+
+This minimizes the maximum of the sum on one source. It does not
+minimize $\lambda\cdot b(A)$ or choose a source independently
+for each summand. The Pareto basis in §5 is not substituted for
+these threshold tests. $\square$
+

@@ -1,0 +1,92 @@
+**Theorem 13.1 (both extreme anchor classes are unit at equality).**
+Every chosen complete positive geometric cover $\mathcal C$ of
+Definition 1.2 with $q=19$ satisfies
+
+$$
+G(\mathcal C)=13\quad\Longrightarrow\quad g_0=g_{18}=0.
+\tag{NAGC.13.1}
+$$
+
+Thus equality forces every edge of both extreme anchor classes to
+have unit length. The assertion quantifies over the full family
+$\mathcal P_t^+$ for each anchor, without a restriction on the
+macro words, initial points or positive outer lengths beyond
+Definition 1.2.
+
+**Proof, the lower extreme in the orientation $N_9=19$.** Assume
+$G=13$ and $N_9=19$. All hypotheses of Assumption 10.1 hold.
+Lemma 11.1 gives $S_0^a=[0,9]_{\mathbb Z}$ and
+$\gamma_0^a=0$. Suppose $\gamma_0^b>0$. Since $(0,0)\in C_0$,
+its second-coordinate projection has minimum zero. Lemma 10.2
+makes it duplicate residue zero. The same lemma forbids any other
+class meeting $b=0$ from having positive second-coordinate gap,
+because that class would also duplicate residue zero.
+
+Lemma 11.2 gives exactly four classes meeting $b=0$. Apart from
+$C_0$, the other three must therefore have zero second-coordinate
+gap, projection $[0,9]_{\mathbb Z}$ and labels in $\{0,3,6,9\}$.
+Their labels are distinct and none is zero, so they are precisely
+$C_3,C_6,C_9$. This contradicts Lemma 12.1. Hence
+$\gamma_0^b=0$. The existing identity (NAGC.7.2) for this same
+class gives $g_0=\gamma_0^a+\gamma_0^b=0$.
+
+**Proof, the upper extreme and the other orientation.** Consider
+coordinate complementation and transposition, with transformed
+classes relabeled by their transformed anchors:
+
+$$
+\begin{aligned}
+R(a,b)&=(18-a,18-b),&
+ \mathcal C^R_t&=R(C_{18-t}),\\
+T(a,b)&=(b,a),&
+ \mathcal C^T_t&=T(C_t).
+\end{aligned}
+\tag{NAGC.13.2}
+$$
+
+For either transformation, reverse each path list to restore
+increasing difference order. These are bijections of the square,
+so they preserve complete disjoint coverage. Under $R$ an original
+$A$ edge reversed becomes an $A$ edge of the same length, and
+likewise for $B$; under $T$ the reversed edges exchange $A$ and
+$B$. Reversal takes each complete triple to a complete triple
+and preserves its middle edge. Thus each transformation preserves
+the six-triple normal form with three triples of each direction,
+all positive lengths and the unit-middle conditions. The transformed
+anchor is exactly the one used in (NAGC.13.2), and strict increase
+of the transformed difference excludes any other diagonal point.
+Each image class is therefore a nineteen-point subset satisfying
+every hypothesis of the converse in [NARC, Theorem 13.3][NARC].
+That converse supplies both-cut readability at every positive lag,
+so each image class belongs to the full family $\mathcal P_t^+$
+of Definition 1.2. Together with the preserved disjoint whole-square
+coverage, [NARC, Theorem 14.2][NARC] supplies the same full native
+encoder-service contract for each image cover. These are thus
+positive geometric covers. The existing identity (NAGC.4.1) gives
+
+$$
+G(\mathcal C^R)=G(\mathcal C^T)=G(\mathcal C),\qquad
+ g_t(\mathcal C^R)=g_{18-t}(\mathcal C),\qquad
+ g_t(\mathcal C^T)=g_t(\mathcal C).
+\tag{NAGC.13.3}
+$$
+
+Complementation preserves the line $a=9$ and its incidence count.
+For the orientation already treated, $\mathcal C^R$ therefore
+satisfies $G=13$ and $N_9=19$. Applying the lower-extreme result
+to this cover yields $g_0(\mathcal C^R)=0$, hence
+$g_{18}(\mathcal C)=0$ as well.
+
+Finally, Proposition 8.3 says every equality cover has either
+$(N_9,M_9)=(19,16)$ or $(16,19)$. In the latter case $T$
+exchanges the two incidence counts, so $\mathcal C^T$ has
+$N_9=19$. The two extreme conclusions just proved apply to it,
+and (NAGC.13.3) transfers both to the original $\mathcal C$.
+This exhausts the alternatives in Proposition 8.3.
+
+All these transformations act within the positive geometric family.
+No invariance of the additional nonnegative first-step condition is
+used. Finally (NAGC.4.1) expresses $g_t$ as the sum of the eighteen
+nonnegative integers $\ell_i-1$. Its vanishing is exactly the
+assertion that all eighteen lengths are one. $\square$
+

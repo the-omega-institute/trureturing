@@ -1,0 +1,39 @@
+**Application 26.9 (a one-read consumer of two complete rows).** Let
+$H_0=\varnothing$ and $Q=\{LL,LR,RL,RR\}$. The entire retained fiber is
+$\{u_j:j\ge0\}$. Its complete original rows are exactly
+
+$$
+\begin{array}{c|c|c|c}
+j&\text{reached cuts}&\text{entire exterior}&\text{complete partition}\\
+\hline
+0&(RL,RR)&\langle\beta,\langle\square_1,\square_2\rangle\rangle
+ &\{\{1\},\{2\}\}\\
+\ge1&(LL,LR,RL,RR)&
+\langle\langle\square_1,\square_2\rangle,
+        \langle\square_3,\square_4\rangle\rangle
+ &\{\{1,4\},\{2\},\{3\}\}.
+\end{array}
+\tag{CS.26.25}
+$$
+
+At every certified permitted epoch $r$, one paid read at $L^{r+1}$
+returns $\beta$ exactly when $j=0$ and $\mathsf{Pair}$ exactly when
+$j\ge1$, selecting these entire rows.
+
+Proof. The empty intersection leaves all $j\ge0$. At $j=0$ the original
+left child is $T_1=\beta$, so $LL,LR$ are absent, while $RL,RR$ contain
+$\beta,\alpha$. This gives the first row, including its concrete exterior
+leaf. At $j\ge1$ all four cuts are reached, and their whole values in
+lexicographic order are
+
+$$
+T_j,\quad T_{j-1},\quad T_{j+1},\quad T_j.
+$$
+
+Index distinctness gives exactly the second partition. All exterior
+nodes are the three displayed pairs. The read is (CS.26.23) with $t=0$;
+its whole reached subtree is $T_{j+1}$. Both rows occur at the same
+retained input, so zero reads cannot distinguish them under deterministic
+common control, even with unobserved real updates. Thus one is also the
+minimum new-read count for this particular example. $\square$
+

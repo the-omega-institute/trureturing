@@ -1,0 +1,24 @@
+### 3.14 Scope of the constructive conclusions
+
+The rational pair in Proposition 3.6 exhibits two exact endpoints in one
+fixed-area affine fiber of Theorem 3.5. The uniform one-circle state in §2.7
+exhibits failure of ray return, whereas the variable-reference rectangle in
+Proposition 2.7 exhibits a relative phase after a zero-winding loop. The
+odd-winding, zero-area construction in §3.7 isolates a different obstruction:
+a discrete component can change while the real area stays fixed.
+
+These instances illustrate distinct statements with distinct hypotheses.
+The complete real reachability assertion is supplied by the pole argument and
+finite rectangle synthesis of Theorem 3.2. The all-sector integer-lift proof
+of Theorem 3.3 supplies every candidate phase class. The determinant of
+Theorem 3.10 gives unique synthesis coordinates in general position, with
+the stated positive-margin condition on singular limits. Neither an example
+nor a rank at one parameter replaces these quantified arguments.
+
+The endpoint product identity holds on every legal basis vector of the
+specified tensor product. Theorem 3.12 proves both directions of history
+equivalence for every full-support initial state under its declared coherence
+menu. It identifies a group element rather than a path, and the broader
+variational competitor in Theorem 2.9 is not an execution of the restricted
+control law. These domains are part of the conclusions.
+

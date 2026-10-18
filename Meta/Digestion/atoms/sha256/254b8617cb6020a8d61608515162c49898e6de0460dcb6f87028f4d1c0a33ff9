@@ -1,0 +1,18 @@
+**定理 5.4.1（线性记忆的秩下界）。** 假设一个 $r$ 维线性记忆表示存在向量 $\phi(u_i)\in\mathbb R^r$ 与 $\psi(v_j)\in\mathbb R^r$，满足
+
+$$
+K(v_j\mid u_i)=\langle\psi(v_j),\phi(u_i)\rangle.
+$$
+
+则
+
+$$
+\boxed{\operatorname{rank}(H)\le r.}
+$$
+
+特别地，若摘要是 $s$ 个经典记忆状态的概率向量，或是 $s$ 个确定状态的 one-hot 向量，则 $\operatorname{rank}(H)\le s$。
+
+**证明。** 令 $\Phi$ 为第 $i$ 行等于 $\phi(u_i)^\mathsf T$ 的 $m\times r$ 矩阵，令 $\Psi$ 为第 $j$ 列等于 $\psi(v_j)$ 的 $r\times n$ 矩阵。则 $H=\Phi\Psi$，故矩阵秩不超过 $r$。经典概率记忆只是该线性表示的特殊情形。证毕。
+
+<a id="claim-5-4-2"></a>
+

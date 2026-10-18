@@ -1,0 +1,33 @@
+**Corollary 8.7 (strict baseline-attainment threshold and limiting necessity).** If an original observer simultaneously attains the two declared baseline radii, meaning precisely
+
+$$
+R_{\mathrm{conf},p}=\rho_p,\qquad
+R_{\mathrm{conf},\beta}=\rho_\beta,
+\quad\hbox{equivalently }e=0,
+$$
+
+then
+
+$$
+\operatorname{osc}(M)>\frac{449}{97600}.
+\tag{8.34}
+$$
+
+More generally, for $e<T$, one has $\operatorname{osc}(M)>898(T-e)$. Let $t_0$ be the unique positive root of
+
+$$
+\lambda P(t_0)+R(t_0)=D_\lambda.
+\tag{8.35}
+$$
+
+Then $e=0$ implies $\operatorname{osc}(M)\ge t_0$, and every sequence of original observers with $e(M_n)\to0$ satisfies
+
+$$
+\liminf_{n\to\infty}\operatorname{osc}(M_n)\ge t_0.
+\tag{8.36}
+$$
+
+Proof. Equation (8.34) is the strict specialization of (8.7), since $898/195200=449/97600$. The polynomial $J(t)=\lambda P(t)+R(t)$ is continuous, starts at zero, is strictly increasing on $[0,\infty)$ and tends to infinity. This proves uniqueness and positivity in (8.35). Equation (8.8) gives $J(\operatorname{osc}(M))\ge D_\lambda-A_\lambda e(M)$. For $e=0$, monotonicity gives the non-strict root bound. For the sequence, oscillations lie in $[0,1]$; a subsequence converging to their liminf and continuity give $J(\liminf\operatorname{osc}(M_n))\ge D_\lambda$. This proves (8.36). Neither root equality nor the existence of the sequence is asserted. ∎
+
+Here simultaneous baseline attainment is a specified objective. An unknown unrestricted optimizer might have $e>0$; calling it an optimum does not license the $e=0$ specialization.
+

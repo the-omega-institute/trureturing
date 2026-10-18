@@ -1,0 +1,32 @@
+**Definition 5.1 (the final native formulas).** Expand the named code
+templates by $E$ after §4. Their native grammar is
+
+$$
+A::=g\mid T_{n_j+c}\mid\rho^a(z_l)\mid\langle A,A\rangle,
+\qquad a,c\in\mathbb N,\quad g\in\mathcal T.
+\tag{PDC.14}
+$$
+
+A fixed primitive expands to a fixed $T_a$. Include in $\Gamma$:
+
+1. the whole translated disequality for every retained negative,
+   including all old class inequalities and all off-task inequalities;
+2. (PDC.13) for every nonprimitive residual.
+
+Keep repetitions. Positive definitions have been solved by §§3–4,
+and the free part by (PDC.6). Literals and both guards were settled by
+the exact original cell. The domain is exactly
+
+$$
+\mathcal C=\{(\mathbf n,\mathbf z)\in
+ \mathbb N^k\times\mathcal T^m:K(\mathbf n)\land
+       \Gamma(\mathbf n,\mathbf z)\}.
+\tag{PDC.15}
+$$
+
+In particular $\Gamma$ has no residual-positive conjunct. It is a list
+of disequalities in (PDC.14), evaluated as native expressions on the
+entire Cartesian product. This last interpretation also applies
+outside $\mathcal C$; normal-code identities are asserted only on
+the admitted domain.
+

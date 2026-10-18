@@ -1,0 +1,32 @@
+**Lemma 5.2 (uniform arithmetic support and forgetting finite coordinates).**
+Each predicate (NAC.19) has a uniform effective Presburger formula in
+$(p,w_r)$, on $A_\tau(p)$. If an original contact has a larger finite
+residual tuple $f_r$ agreeing with $f_{r,\tau}(p)$ on $F_{r,\tau}$, its
+entire finite support is contained in (NAC.19) at every original rank tuple.
+
+**Proof.** The uniform formula is exactly the supplied parametric-template
+interface [FNS, Corollary 2.6][FNS], or equivalently [SFS, Lemma 5.1][SFS]
+with [URR, Theorem 3.1 and Corollary 3.2][URR]. Its hypotheses hold because
+Theorem 4.3 supplies a finite syntax of nonnegative rank atoms and pairs,
+and every remaining residual has the full Cartesian domain before the
+entire original negative conjunction.
+
+More explicitly, substitute those finite templates in every occurrence.
+The resulting finite list has the URR mixed grammar with scalar variables
+$(p,w_r)$. Its one residual separator is uniform over these scalars. After
+that substitution all comparisons are between finite templates of atoms.
+Bottom-up normal pairing branches finitely on whether two primitive
+children have ranks $a=b+1$; in that case they collapse to $[b+2]$.
+Otherwise their raw pair remains a normal node. In each arithmetic branch
+normal-code equality is equality of the finite shapes and corresponding
+ranks. Taking the native complements for the whole negative list and
+conjoining $P$ gives the desired Presburger formula. No arbitrary finite
+barrier tree is encoded by an assumed integer parameterization; the finite
+templates have already been forced by the contact graph.
+
+For support inclusion, any finite witness with all of $f_r$ fixed still
+has the selected subset fixed. Its other formerly fixed values may simply
+be used as values of $z'_r$. It satisfies the same $P$ and the same entire
+$\Delta$. This proves inclusion pointwise, before taking a scalar closure.
+$\square$
+

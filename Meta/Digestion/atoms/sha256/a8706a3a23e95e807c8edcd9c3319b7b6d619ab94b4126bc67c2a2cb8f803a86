@@ -1,0 +1,13 @@
+**Proposition 58.1.** Suppose every coordinate of \(x,y\in\mathbb C^3\)
+has modulus one and every coordinate of \(H_0(x,y)\) has modulus one.
+If \((x,y)/\sqrt6\) is orthogonal to either zero-mode canonical ray,
+then it is one of the six canonical rays. This includes \(a=0\).
+
+All statements concern the same shared input phases and the two original
+output channels. Explicitly, a unit vector \(v\) is common-unbiased to
+the column bases \((I,H_0)\) if and only if
+\((x,y)=\sqrt6H_0^*v\) and \(H_0(x,y)=\sqrt6v\) both have unit entries.
+The corresponding canonical column rays are \(H_0c_l^\epsilon\),
+and the common unitary transport preserves every inner product.
+Only a common projective phase of the input is free.
+

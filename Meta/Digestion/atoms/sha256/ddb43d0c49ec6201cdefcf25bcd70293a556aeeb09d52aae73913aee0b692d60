@@ -1,0 +1,4 @@
+**Corollary 5.2 (Strong zero under hypothetical renewal attainment).** If a finite-hidden proper renewal law $P$ attains $c_\star$, Premise 2.3 applies to the explicit posterior of Proposition 4.1.
+
+**Proof.** Theorem 5.1 pays exactly $A_P<\infty$ from (2.5), and attainment supplies the other hypothesis. Direct's fixed-version agreement allows its strong-zero conclusion to use the explicit renewal version and its translates. The set of configurations with ones unbounded in both directions is shift invariant, conull and saturated under finite modifications. Intersecting with it retains those properties for the supplied strong-zero domain. Under attainment, (4.4) also makes (4.2) defined on every such nearest-anchor fiber, with forced neighbors interpreted as in Proposition 4.1. All subsequent insertions are therefore evaluated with the same original-law loss functions. $\square$
+

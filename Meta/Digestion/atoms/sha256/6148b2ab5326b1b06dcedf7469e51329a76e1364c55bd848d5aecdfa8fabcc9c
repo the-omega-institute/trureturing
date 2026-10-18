@@ -1,0 +1,37 @@
+**定义 9.1（非负完整纤维与消元坐标）。** Use Euclidean coordinates
+
+$$
+(a,b,c,k_0,k_1,k_2,k_3,d)\in\mathbb R^8,\qquad
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+ g(T)=\sum_{j=0}^3k_jT^j.
+\tag{9.1}
+$$
+
+Let $\mathcal F=\mathcal F_{48/5,-532/5}$ and let
+$\mathcal F^+$ be the set satisfying the same six equations,
+with $g\ne0$ and source conditions
+$0\le a\le1$, $b,c\ge0$, $bc=a(1-a)$. These auxiliary
+sources have rank one because their trace is one and determinant
+is zero. They are legal witnesses only when all entries are positive.
+Theorem 8.1 excludes $u=0$ throughout $\mathcal F^+$.
+Degree drops remain present through zero leading coefficients.
+
+For $u>0$ put $D=uv(u+v)>0$, and define
+
+$$
+\begin{aligned}
+A_4&=96v(u+v)-288u(u+v)+(1248/5)uv,\\
+B_4&=D-4v(u+v)+6u(u+v)-4uv,\\
+A_5&=360v(u+v)-960u(u+v)+624uv,\\
+B_5&=4D-15v(u+v)+20u(u+v)-10uv,\\
+Q_i&=D+T_iB_i,\qquad N_i=y_iD-T_iA_i\quad(i=4,5),\\
+y_4&=48/5,\qquad y_5=-532/5,\qquad
+\mathscr E=N_4Q_5-N_5Q_4.
+\end{aligned}
+\tag{9.2}
+$$
+
+Here $A_i=D\gamma_i$ and $B_i=D\kappa_i$ are scalars,
+not cumulative matrices. The remaining equations are exactly
+$dQ_i=N_i$. Thus no denominator clearing changes compatibility.
+

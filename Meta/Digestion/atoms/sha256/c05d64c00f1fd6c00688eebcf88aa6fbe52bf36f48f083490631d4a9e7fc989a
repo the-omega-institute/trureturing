@@ -1,0 +1,4 @@
+**数学引文 15.1（实际供应与不越界复用）。** 本节源码供应取 [`34f64f79d3e83a2f67ef70925e595d281cb6ee03`](https://github.com/the-omega-institute/trureturing/tree/34f64f79d3e83a2f67ef70925e595d281cb6ee03)。本卷定理 2.2 给有限调用上界和真实原生坐标，定理 3.2 及运输与记忆命题 23.12 给共同源前缀求值和实际补全，定理 6.2、7.2 给尖锐核对族；本节直接消费这些供应，不重证其一般结论。
+
+[`ActualObserverAbsorbingNormalization`](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.lean) 的正规化与 [`ActualObserverFiniteTable`](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.lean) 的 `admissible_competitor_table_coverage` 保留 `Allowed N U` 的叶数上限。它们没有证明本节全部原树上的有限菜单覆盖。[Joint Moment Fibers §28–30](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md) 的完整前沿／叶敏感任务与 [`ActualJointResponseCostCore.result`](../../../D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.lean) 的 `0<m`、`Positive (F i)`、prototype 单射及相应成员验证成本，也不实例化为 (SLH.10.1) 的任意未知回复向量。那些准入前提没有在本节被免费给予；它们的有限表不承担这里的全深覆盖证明。
+

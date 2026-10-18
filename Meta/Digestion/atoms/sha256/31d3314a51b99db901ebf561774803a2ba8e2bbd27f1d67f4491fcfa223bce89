@@ -1,0 +1,14 @@
+### 命题 14.4（输出的非负性与归一化）
+
+对每组定义 14.2 的数据 $T$，有 $\operatorname{Dist}_{\mathbb B^3}(P_T)$。
+
+证明：每个求和项为非负因子的乘积。交换有限求和并依次使用三个核的归一化，得
+
+$$
+\sum_{a,b,c\in\mathbb B}P_T(a,b,c)
+=\sum_{\alpha,\beta,\gamma}\mu_\alpha(\alpha)\mu_\beta(\beta)\mu_\gamma(\gamma)
+=\left(\sum_\alpha\mu_\alpha(\alpha)\right)\left(\sum_\beta\mu_\beta(\beta)\right)\left(\sum_\gamma\mu_\gamma(\gamma)\right)=1.
+$$
+
+证毕。
+

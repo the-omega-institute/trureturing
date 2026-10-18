@@ -1,0 +1,45 @@
+**Definition 4.1 (one joint support sentence).** For a recognized
+nonclash tuple and face $K$, substitute only its forced finite residuals
+$f_K(\mathbf t,\mathbf q)$ into each chart's *whole* $\Delta$. Leave
+all other residual names independent within that source. Grounds and
+$T_{q_i}$ keep the syntax in the mixed grammar. [URR, Corollary 3.2][URR]
+therefore computes its exact feasible support in all natural parameters;
+conjoin every chart's $P$. Call the conjunction
+$\Phi_K(\mathbf t,\mathbf q,\mathbf v)$, where $\mathbf v$ lists the
+original scalar names in $K$. It means existence of finite residual
+fillings satisfying all chart negatives at these same scalar values,
+with forced finite values held exactly fixed. Independence between
+alternative sources makes conjunction of these support tests exact.
+
+Define the Presburger sentence
+
+$$
+\mathcal C_K:\quad
+\exists\mathbf t\,\exists\mathbf q\quad
+ A_K(\mathbf t,\mathbf q)\ \land\
+ \forall b\in\mathbb N\ \exists\mathbf v\quad
+ \left[\Phi_K(\mathbf t,\mathbf q,\mathbf v)
+           \land\bigwedge_{i\in K}v_i\ge b\right].
+\tag{TOS.7}
+$$
+
+Every finite scalar and forced finite atomic index is fixed **before**
+all lower-bound requests. One joint tuple meets all coordinate bounds.
+Equal individual supports or separately unbounded marginals cannot
+replace this sentence. For example the Presburger support
+$\{(v_1,v_2):v_1=0\text{ or }v_2=0\}$ has both marginals unbounded
+and has no jointly cofinal tuple for $b>0$. If $K$ is empty, (TOS.7)
+reduces to finite support nonemptiness.
+
+URR supplies exact support, not a whole-image replacement by its
+separator. The unforced residuals remain free for the later prefix
+construction. Arithmetic quantifier elimination decides (TOS.7): the
+integer formulation in [Haase et al., §2 and Corollary 3][PA] covers
+Boolean affine constraints; natural quantifiers are integer quantifiers
+guarded by nonnegativity. Eliminate blocks from inside out, rewriting
+universals by negated existentials. Once truth is decided, enumeration
+of finite $\mathbf t,\mathbf q$ with their remaining decidable sentence
+extracts witnesses and terminates in the true case. Likewise a true
+finite-bound support query extracts $\mathbf v$. No complexity or
+uniform cost bound is inferred.
+

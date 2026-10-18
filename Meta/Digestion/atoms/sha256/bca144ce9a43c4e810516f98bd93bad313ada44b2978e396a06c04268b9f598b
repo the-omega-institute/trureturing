@@ -1,0 +1,65 @@
+**Theorem 8.2 (global necessary TT patterns).** If three distinct
+members of $\mathcal K_{\mathbf c,d}$ have all four terminal columns
+noninjective, no column is constant and the three pair multiplicities
+are exactly $(2,1,1)$. The repeated coordinate subset is $BC$, $BD$
+or $CD$. Up to relabeling worlds, the complete canonical assignments
+are
+
+$$
+\begin{array}{c|cccc}
+\text{repeat}&A&B&C&D\\ \hline
+BC&A_1=A_2\ne A_3&B_1=B_3\ne B_2&C_1=C_3\ne C_2&D_2=D_3\ne D_1\\
+BD&A_1=A_2\ne A_3&B_1=B_3\ne B_2&C_2=C_3\ne C_1&D_1=D_3\ne D_2\\
+CD&A_1=A_2\ne A_3&B_2=B_3\ne B_1&C_1=C_3\ne C_2&D_1=D_3\ne D_2.
+\end{array}
+\tag{8.1}
+$$
+
+All three normalized seventh gains have one common nonzero sign.
+None of the listed assignments is asserted feasible.
+
+**Proof.** If $A$ is constant, a collision in $B$ violates $AB$
+injection. If $B,C$ or $D$ is constant, a collision in $A$ violates,
+respectively, $AB,AC$ or $AD$ injection. This excludes every
+constant-column configuration.
+
+For completeness, a distinct pair cannot share $B,C,D$.
+Their terminal gains have a common sign; multiply both $X$ by that
+sign to make them positive. Solving the three equalities gives
+
+$$
+X_1=\begin{pmatrix}a&b\\c&e\end{pmatrix},\quad
+X_2=\begin{pmatrix}a&b-\epsilon\\c-\epsilon&e+\epsilon\end{pmatrix},
+\qquad
+\det X_2=\epsilon(a+b+c-\epsilon).
+\tag{8.2}
+$$
+
+Here $ae=bc$. If $\epsilon=0$, reconstruction gives equal worlds.
+The only other root, $\epsilon=a+b+c$, gives $b_2=-a-c<0$,
+contradicting positivity. Even if the two displayed determinant
+roots coincide, factorization leaves no additional branch.
+Every other three-coordinate subset contains one of $AB,AC,AD$.
+Thus each pair can occupy at most two columns.
+
+All four columns are now proper. Let the $A$ pair be $\{1,2\}$.
+It cannot occur in $B,C,D$. Those three columns use the other
+two pairs, and cannot all use one pair by (8.2).
+One pair therefore occurs twice and the other once.
+Swapping worlds one and two if necessary makes the repeated pair
+$\{1,3\}$, giving exactly (8.1).
+Equivalently, each possible $(2,2,0)$ partition
+$AB\mid CD$, $AC\mid BD$, $AD\mid BC$ contains a forbidden
+pair involving $A$, so all such configurations are excluded.
+
+Finally every terminal offset from $d$ has the sign of $f_i(7)$.
+With mixed signs among three worlds, only one same-sign pair can
+collide in any column. Four colliding columns would make that pair
+share $AB$, impossible. Thus all three signs agree.
+Original seventh signs are obtained by multiplication by the one
+common $\lambda$. ∎
+
+This strengthens the predecessor's remaining constant-$C$,
+$AC\mid BD$ and repeated-$AC$ possibilities: they are all excluded
+for every $\mathbf c,d$ in (1.2), rather than only at $H_*$.
+

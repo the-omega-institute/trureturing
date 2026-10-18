@@ -1,0 +1,62 @@
+**Lemma 9.3 (The limiting error corridor survives degree collapse).**
+Suppose $R_n\in\mathcal E_2$ and
+$T_n=J_\tau(R_n)\to T<\infty$ for a fixed $\tau>0$.
+There is a profile $R\in\mathcal E_2$ with $J_\tau(R)\le T$.
+It can be chosen to satisfy the limiting annihilator equation in
+Lemma 9.1, including when that equation has lower degree.
+
+Proof. The value at $x=1$ gives $T_n\ge\tau$, so $T\ge\tau$.
+The defining inequality for $J_\tau$ gives at every scalar point
+
+$$
+|R_n(x)-s(x)|\le\sqrt{T_n-\tau x},\qquad
+|R_n(x)|\le\frac12+\sqrt{T_n}.
+\tag{9.1}
+$$
+
+Thus the profiles have a common bound. Apply Lemma 9.1, then
+Lemma 9.2, to obtain $F$ with $F'=R$ as distributions for an
+ordinary analytic $R\in\mathcal E_2$. Subtract the ordinary
+primitive of $R$ from $F$. Its distributional derivative is zero,
+so the preceding lemma makes it constant as a distribution.
+Both functions are continuous, hence they differ by that constant
+pointwise: a continuous function inducing the zero distribution
+is zero, since a nonzero value has a neighborhood detected by a
+smooth test function after taking a real component. In particular,
+
+$$
+F(b)-F(a)=\int_a^bR(x)\,dx\qquad(0<a<b<1).
+$$
+
+For each such interval, (9.1) and the triangle inequality give
+
+$$
+\left|\int_a^b(R_n(x)-s(x))\,dx\right|
+\le\int_a^b\sqrt{T_n-\tau x}\,dx.
+\tag{9.2}
+$$
+
+The integral on the left converges through uniform convergence
+of the primitives. On the right use
+
+$$
+\left|\sqrt{T_n-\tau x}-\sqrt{T-\tau x}\right|
+\le\sqrt{|T_n-T|},
+$$
+
+valid for the nonnegative radicands. This gives uniform
+convergence even when $T=\tau$ and the endpoint radius is zero.
+Passing to the limit in (9.2), dividing by $b-a$, and shrinking
+intervals about any interior point gives by continuity
+
+$$
+|R(x)-s(x)|\le\sqrt{T-\tau x}\qquad(0<x<1).
+$$
+
+Continuity of the analytic profile and the scalar center and
+radius passes this inequality to $x=0,1$ as well. Thus
+$J_\tau(R)\le T$. The equation and its possible degree collapse
+were retained throughout this argument. No convergence of
+$R_n$ pointwise, of latent encoders, or of update matrices has
+been assumed. $\square$
+

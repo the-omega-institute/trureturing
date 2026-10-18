@@ -1,0 +1,16 @@
+**定义 C-132.1（三种实际输入域）。** 对 $\mathcal F\in\{\mathcal F_{\rm all},\mathcal F_Q\}$，
+$n\ge1$，分别定义
+
+$$
+\begin{aligned}
+\mathcal I_n(\mathcal F)&=\{\rho^{\otimes n}:\rho\in\mathcal F\},\\
+\mathcal P_n(\mathcal F)&=\{\rho_1\otimes\cdots\otimes\rho_n:\rho_i\in\mathcal F\ (\forall i)\},\\
+\mathcal S_n(\mathcal F)&=\operatorname{conv}_{\rm fin}\mathcal P_n(\mathcal F).
+\end{aligned}
+\tag{C132.1}
+$$
+
+它们依次为 iid、独立但可不同分布，以及每个分支的每个因子均属于零假设的乘积混合。
+最后一种允许由混合标签产生关联，不要求无条件独立；其限定是每个分支的全部因子均为零假设。
+$\operatorname{conv}_{\rm fin}\mathcal I_n$ 亦包含在最后一域中。
+

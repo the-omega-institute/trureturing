@@ -1,0 +1,83 @@
+**Definition 7.1 (separate resource coordinates).**
+A source-summary alphabet count is $|E(A)|$, or the supplemental
+maximum on actual fibers in (SCC.12). The combined retained state
+also includes any $B(a)$, $z$, old slot index, old clock, control,
+framing and address materialization required by the declared service.
+For example, the uncompressed old slot index has $D$ bits, and its
+clock lies between zero and $(r-1)(H+1)+3H$ under the present epoch
+window. Those bounds only describe operands; their correlations,
+encoding and acquisition costs are not optimized by the source-code
+count. New endpoint inputs, local arithmetic space, installed tables,
+peak acquisition storage, provenance validation and all paid Reads
+are additional coordinates.
+
+A quotient by component translations removes exactly the distinction
+irrelevant to every allowed future switch in this finite service.
+When $z$ pins a component, that translation is no longer free. When
+a new bridge joins components, their relative translation becomes
+relevant. This is task-relative memory; neither the quotient nor its
+price is asserted to encode arbitrary tree geometry, full histories
+or physical spacetime.
+
+**Mathematical citation 7.2 (exact supplier correspondence).**
+The following ingredients have the displayed roles.
+
+| Supplier | Correspondence and limit |
+| --- | --- |
+| [GenealogicalFiberTransport][SOURCE], `Source`, `substitution` | Finite ordered full trees and the actual alpha/beta substitution used in (SCC.1). |
+| [DelayedOriginalReadout][CLOCK], `rightClock`, `right_clock_iterate`, `right_clock_readout`, `rights` | $c(T_n)=n$, clock transport, and physical right-spine queries. `original_decoder_service` requires a given epoch and supplies no unknown epoch to this service. |
+| [NativeDepthPatterns][DEPTH], `original_present_transport` | The subtree at each original $w_i$ remains its pure iterate. No claim about a previously absent address is substituted for this premise. |
+| [ActualCutPartitionDecoder][ROW], `literalRecord`, `canonicalRow_record_iff` | A complete acquired row includes the literal exterior and every hidden comparison. The initially acquired empty-cut row is literal source information. No later complete row is silently added to (SCC.3). |
+| [Native Alpha Recut Memory][NAR], §§10–16, especially Assumption 16.1 and Reuse 16.2 | The separated-age native family and initial acquisition of $a_i$. Its reference-code results concern their stated cut-row and current-port inputs, not this two-clock switch contract. |
+| [Adaptive Acquired Reference Frontier][AAR], Proposition 6.3, Counterexample 8.2, Definition 10.1 | Signed calibration is reused; a free outside switch already fails; the retained $m(X_a)$ must be respected via (SCC.15). Its all-source acquisition frontier is a different resource statement. |
+| [Native Cross-Epoch Relations][NCE], Theorem 5.1, Theorem 6.2, Corollary 6.3 | Common-source existence precedes uniqueness, and identified signed differences form potentials. Those graph facts are reused, not claimed as new graph algebra. |
+
+**Mathematical citation 7.3 (literature and the remaining scope).**
+Charpenay, Le Treust and Roumy, [*Optimal Zero-Error Coding for
+Computing under Pairwise Shared Side Information*, arXiv:2211.03649v2][ZERO],
+Definition III.1, joins two source inputs when a shared compatible
+side-information value requires different target outputs. Theorem
+III.4's proof outline uses proper colorings as exactly the feasible
+zero-error encoders. That separation principle is
+`literature-attested`; its probabilistic block model, expected coding
+lengths and asymptotic rate are not the adversarial one-export
+alphabet objective here.
+
+In the present service, the source symbol is $a$, side information is
+$(i,k,j,l)$ together with any old code, and the target on a compatible
+pair is $l-k-(j-i)q-a_j+a_i$. Equations (SCC.9)–(SCC.10) establish
+which pairs really share a chronological native realization. They
+show that inside each retained fiber the characteristic graph has
+exactly all edges between distinct relative profiles and none within
+one profile. The finite cardinality arguments exploit that special
+structure; a generic characteristic-graph quotation does not supply
+it. No probability law, entropy or asymptotic equipartition is used.
+
+The all-encoder native characterization, its fixed-minimum actual
+fibers, the closed independent-box and pinned joining counts, and
+their common-history recovery correspondence are `repo-derived`
+ordinary mathematical deductions from these suppliers. This attribution
+makes no globally original-mathematics claim. The already documented
+signed calibration identity and graph-potential calculus remain
+reused ingredients.
+
+**Open problem 7.4 (extensions beyond this service).**
+The exact all-encoder criterion for shorter or source-dependent epoch
+windows requires its actual native conflict relation; (SCC.9) need
+not be legal there. For all finite native trees, or for later services
+that receive cut rows or paid current-source Reads, one must determine
+their complete compatible observations before transferring any
+alphabet count. Joint optimization of retention, acquisition,
+materialized addresses and total or peak memory is also not supplied
+by (SCC.12). These are distinct missing interfaces; none follows by
+forgetting the source, history or retained-$z$ restrictions above.
+
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[SOURCE]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[CLOCK]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[ROW]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[ZERO]: https://arxiv.org/html/2211.03649v2
+

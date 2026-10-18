@@ -1,0 +1,21 @@
+**Proposition 7.1 (All probability guards are equivalent to height
+recovery on fibers).** An arbitrary encoder admits all predicates in
+Definition 2.3 if and only if each of its fibers has one height.
+Equivalently there is a well-defined function
+$K_E:E(\mathcal M)\to(0,H)$ with $K_E(E(k,\alpha,\beta))=k$.
+
+**Proof of Proposition 7.1.** Suppose a fiber contains heights
+$k<l$. Choose $s=H-(k+l)/2$. Then
+
+$$
+k+s=H-(l-k)/2\in(0,H),\qquad l+s=H+(l-k)/2>H.
+$$
+
+The two states disagree on the lawfulness of this same command.
+A single predicate at their common encoding cannot report both
+indicators. Conversely, if height is constant on each fiber, the
+assignment $K_E(E(k,\alpha,\beta))=k$ is unambiguous, and
+$g_s(z)=1$ exactly when $0<K_E(z)+s<H$ gives all guards. No
+continuity or measurable selection is needed: every represented value
+has its unique height. $\square$
+

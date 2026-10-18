@@ -1,0 +1,69 @@
+## 6. Faithful finite consumers and mathematical boundaries
+
+Under (2.1), $\eta_P(R):=\tau_P(R)$ is an attainment-independent finite
+vanishing allowance, although the assertion gives no effective way to
+evaluate it. If Theorem 4.2 supplies a nonzero $S_P(h_D)$, [Multiword,
+Theorem 3.1][M] applies directly: some finite integers $R,r\ge0$ give
+
+$$
+\left|\sum_{i\in[a_D-R,b_D+R]}
+\mathbb E_P[h_D(X_D)(X_i-q_{r,i})^2]\right|
+>\|h_D\|_\infty\left[\eta_P(R)+2(|D|+2R)\sqrt{\bar c/(r+1)}\right],
+\tag{6.1}
+$$
+
+where $D=[a_D,b_D]$. The consumer therefore certifies $d(P)<c_\star$.
+[Intrinsic, Corollary 3.4][I] translates existence of a normalized
+intrinsic witness at these radii into the corresponding strict
+$\ell^1$ distance from the finite loss vector to
+$\operatorname{range}(E_{\theta,|D|}^{\mathsf T})$. Its exact collar,
+annihilator and dual threshold are used unchanged. Neither criterion
+provides the missing nonzero contrast.
+
+Every finite predictor in (6.1) uses actual cylinder masses. For a positive
+radius-$r$ exterior fiber $(u,v)$ its value is
+$\lambda M_uM_1M_v\mathbf1/(\lambda M_uAM_v\mathbf1)$; empty words give
+the prior at $r=0$. Zero denominators contribute zero and are not divided
+by; retained forcing neighbors give zero numerator. All block/window
+overlaps and both endpoint seams remain. The finite-certificate converse
+to a nonzero full response is not asserted: a certificate can contradict
+an attainer's projection budget without demonstrating $S_P(h_D)\ne0$.
+
+For a law with the stated band, suppose one separately supplies an actual-law allowance
+$\tau_P(R)\le B\rho^{\lfloor R/m\rfloor}$ for every $R\ge0$, with finite
+$B\ge0$, integer $m\ge1$ and $0\le\rho<1$. It verifies the remaining
+$A_P<\infty$ hypothesis of the general construction:
+
+$$
+\sqrt{e_L(j)}+\sqrt{e_R(j)}
+\le\sqrt{2B}\rho^{\lfloor j/m\rfloor/2},\qquad
+A_P\le\frac{\sqrt{2B}\,m}{1-\sqrt\rho}.
+\tag{6.2}
+$$
+
+Indeed $e_L(j)+e_R(j)\le\tau_P(j)$ and
+$(\sqrt u+\sqrt v)^2\le2(u+v)$; each exponent in the resulting geometric
+sum occurs $m$ times. For $\rho=0$ use $0^0=1$; only the first $m$ terms
+can remain. If $B=0$, every defect vanishes. This is a conditional
+consumption calculation, not a supplied general finite-hidden rate theorem.
+Mere summability of $e_L+e_R$ does not justify the square-root sum used in
+(3.8), and an attained-law projection budget is not substituted for it.
+
+The band restricts only the hypotheses of the conditional construction;
+it does not redefine $\Theta_N$. For example deterministic all-zero laws
+remain in (1.1) and fail the free posterior band. Structural hidden zeros
+are still permitted even when the band derives positivity of compatible
+visible conditional completions. An incompatible seam always has zero
+conditional mass; null exterior records carry no asserted pointwise
+balance. Nonzero $T_{C,f}$ means nonzero on positive $\mu_C$ probability,
+not a value chosen on a null record. A zero direction, a direction zero
+on actual support, or positive kernel dimension alone gives no witness.
+
+The cocycle is a measurable function on a saturated conull
+finite-modification relation. No continuous extension to all legal
+configurations, finite-boundary dependence, finite-range potential,
+visible Markov order or identity with a conditional log-probability ratio
+has been proved. The original finite hidden presentation supplies none of
+these missing bridges. In particular a finite-visible-order cancellation
+argument has a different hypothesis and cannot be applied to (1.1).
+

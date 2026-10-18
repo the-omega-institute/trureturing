@@ -1,0 +1,23 @@
+### 14.4 Uniform atomic obstruction and a fine-word witness
+
+At \(s=1/5\), every state in \(W\) has mass \(1/5\), so every word has mass \(1/625\). Direct endpoint splitting gives
+\[
+625\,\mu_s[A=a,B=b]=
+\begin{pmatrix}
+345&40&60\\
+52&40&8\\
+48&20&12
+\end{pmatrix}_{a,b}. \tag{14.10}
+\]
+The six off-diagonal fiber counts are \(40,60,52,8,48,20\), all divisible by \(4\), and total \(228\). After the dominance reductions, each quotient-side error count is a multiple of \(4\), while their sum is \(228\); hence one is at least \(116\). For any unreduced quotient rule, correcting a diagonal output replaces the loss pair \((1,1)\) by \((0,0)\), and replacing a third label on an off-diagonal fiber replaces \((1,1)\) by \((0,1)\) or \((1,0)\). These replacements remain constant on each record fiber and weakly decrease each risk. The original rule therefore has maximum error count at least that of its reduced rule, hence at least \(116\). Rule (14.8) selects \(60+52=112\) atoms for \(A\), giving error counts \((116,112)\), so
+\[
+V_Q(1/5)=116/625,\qquad V_{\rm full}(1/5)=T(1,1/5)=114/625. \tag{14.11}
+\]
+
+The full-word lower bound \(R_A+R_B\ge D\) is attained by a single fine action: start with \(g_\ast Q\), then on exactly
+\[
+(\mathrm{high},\mathrm{zero},\mathrm{low},\mathrm{zero}),\qquad
+(\mathrm{high},\mathrm{middle},\mathrm{low},\mathrm{zero})
+\]
+change the output on record \((0,1)\) from \(B=1\) to \(A=0\). Each word has mass \(1/625\); the resulting one classifier has error counts \((114,114)\). Thus the full-word optimum exists on the original source while no deterministic \(Q\)-action reaches it. The obstruction is literal whole-fiber divisibility, not a failure of loss measurability.
+

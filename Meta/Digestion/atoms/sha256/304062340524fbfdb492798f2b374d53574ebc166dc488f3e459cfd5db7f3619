@@ -1,0 +1,29 @@
+### 86.2 同一个计入成本的 high 和 complement 完成
+
+固定明确类型的 isometries
+
+$$
+W_\perp:\mathbb C^2\to\operatorname{ran}(E)^\perp,\qquad
+J_0:\mathbb C^2\to\mathbb C^3.
+$$
+
+使用一个 high encoder
+
+$$
+C_H=
+\begin{pmatrix}
+\sqrt{1-\delta}\,DE^\dagger\\
+W_\perp^\dagger
+\end{pmatrix}
+:\mathbb C^5\to\mathbb C^3\oplus\mathbb C^2.
+\tag{RC.161}
+$$
+
+整个五维 fibre 都计为 high acquisition，活动量为零。终端 TP map 的两个 Kraus 矩阵是
+
+$$
+E[I_3\ 0],\qquad EJ_0[0\ I_2].
+$$
+
+将上述两个矩阵分别记为 $R_{H,0},R_{H,1}$。它们的 $R_{H,0}^\dagger R_{H,0}+R_{H,1}^\dagger R_{H,1}=I_5$，故定义全 $M_5$ 上的同一个 TP decoder。其 Kraus 索引不成为可读控制。补空间 qubit 内部相干保留，块间交叉项在终端处理时消去。high report 固定为 $+1$，因为其 supported effect 的 $01$  元为零。该完成属于允许的原 JR 类，在补空间上明确区别于固定 CA10。
+

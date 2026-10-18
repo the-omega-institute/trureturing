@@ -1,0 +1,68 @@
+## 5. Same-alphabet full-support separation
+
+Use the explicit binary construction of [RCE, Proposition 7.1][RCE], identifying $[16]$ with the rows $s\in\mathbb F_2^4$ in binary order. For each two-dimensional subspace $U$ of the dual $(\mathbb F_2^4)^*$ choose its first ordered basis $(\ell_1,\ell_2)$ in the lexicographic binary order, and define its column by
+
+$$
+H(s,U)=2\ell_1(s)+\ell_2(s)\in\{0,1,2,3\}.
+$$
+
+There are fifteen nonzero dual vectors. After choosing a first one, fourteen lie outside its one-dimensional span and can be the second basis vector. Each two-dimensional subspace has three possible first nonzero vectors and two possible second ones, hence six ordered bases. Every independent ordered pair spans exactly one such subspace, so the column count is
+
+$$
+\frac{15\cdot14}{3\cdot2}=35.
+$$
+
+To prove separation, translate any four distinct rows so that one is zero and the others are $a,b,c$. Their span has dimension two or three. In dimension two they are its three nonzero vectors; an isomorphism of that span onto $\mathbb F_2^2$ sends them to the three nonzero outputs. In dimension three they are a basis; prescribe those same three distinct nonzero outputs to define a surjective linear map. In either case extend a basis of the span to a basis of $\mathbb F_2^4$ and choose any images for the additional vectors. The resulting map has two independent component functionals, spanning a listed dual subspace $U$. Replacing the components by the selected basis of $U$ applies an invertible linear map to the output and preserves its four distinct values. Undoing the initial translation adds the same output to all four values, also preserving distinctness. Thus the column $U$ separates the original four rows.
+
+Append twenty-nine constant-zero columns. Since $35+29=64=2^6$, this gives a separating hash with $m=16$, $h=6$, and $d=h+5=11$. Section 2 therefore gives $16^2=256$ distinct actual tagged-product states on the same native alphabet $S_{11}$.
+
+Let $u$ be uniform on all of $S_{11}$, set $\delta=1/256$, and define
+
+$$
+\mu_\delta=\frac{255}{256}\mu+\frac1{256}u.
+$$
+
+Every state has mass at least $1/(256|S_{11}|)>0$. The mixture is rational and normalized since both constituent laws are probabilities and $255/256+1/256=1$. Moreover
+
+$$
+\operatorname{TV}(\mu_\delta,\mu)
+=\frac1{256}\operatorname{TV}(u,\mu)\le\frac1{256}.
+$$
+
+The pressure stability inequality of [RCE, Convention 1.4][RCE] gives
+
+$$
+\beta_{11}(\mu_\delta)
+\le\frac9{256}+\frac1{256}
+=\frac5{128}.
+$$
+
+Because $\beta$ is the supremum over all finite lengths, this is the simultaneous bound
+
+$$
+A_n^{(11)}(\mu_\delta)\le\left(\frac5{128}\right)^n
+\quad(n\ge1).
+$$
+
+If the full grammar accepted $(11,\mu_\delta,C)$, append the legal stability node from $\mu_\delta$ back to $\mu$. Its final cap is the positive rational number $C+\operatorname{TV}(\mu_\delta,\mu)$, and the exact threshold above forces
+
+$$
+C+\operatorname{TV}(\mu_\delta,\mu)\ge\frac1{16}.
+$$
+
+Since $\operatorname{TV}(\mu_\delta,\mu)\le1/256$, every accepted cap satisfies
+
+$$
+C\ge\frac1{16}-\frac1{256}=\frac{15}{256}.
+$$
+
+The rational inequalities
+
+$$
+\frac5{128}=\frac{10}{256}<\frac3{64}=\frac{12}{256}<\frac{15}{256}
+$$
+
+show that `C=3/64` is a valid strict all-length pressure cap rejected by every finite `V_rec+range` certificate on this same full-support probability and same `S_{11}`. No support argument has been moved to another alphabet.
+
+The diagonal obstruction of [JPL, Theorem 6.4][JPL] concerns exactly its finite nonnegative separable-majorant language with scalar cap summation; [JPL, Proposition 7.1][JPL] shows that the existing full joint leaf already accepts that diagonal law at its exact pressure. The present obstruction concerns the entire $V_{\mathrm{rec+range}}$ grammar on the tagged product. Its threshold accounts for every old leaf, positive scaffold, arbitrary range support and stability ancestor. Neither obstruction is a statement about every certificate language.
+

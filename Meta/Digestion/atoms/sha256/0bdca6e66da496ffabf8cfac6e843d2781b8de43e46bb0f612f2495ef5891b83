@@ -1,0 +1,9 @@
+**Definition 2.4 (compiler instance relation).** The word-boundary relation
+here is RCA Proposition 11.4's represented register/bank/descriptor/parity
+relation with the injective relocation 32–39 to 64–71 and the syntactic
+register count of $G$. Interior helper cuts have its raw partial-bank
+relation. Source/destination distinctness, fixed-field numbering and
+closed-end scans are the same conditions; they refer to these actual new
+owned tapes. This is a use of the supplied compiler relation, not a claim
+that its old unused-verifier condition holds on CAP's occupied ports.
+

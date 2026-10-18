@@ -1,0 +1,20 @@
+**Proposition 2.5 (finite enumeration and its remaining quantifier).**
+Put $a=|W_d|$ and $g=\max_q|G_q|$. At most
+
+$$
+(g+nag^4)^{na}
+\tag{NDR.12}
+$$
+
+complete templates need be considered at fixed $d,n$. Hence $K_d(n)$,
+$Z_d(n)$ and every rational weighted maximum in Theorem 2.2 are decidable
+finite problems. The fixed language does not impose a size or width bound
+on the templates needed as $n$ varies.
+
+**Proof.** For each of $na$ targets there are at most $g$ constants,
+and at most $na g^4$ choices of donor, experiment and four-reply decoder.
+Enumerate all choices, evaluate all tuples, and discard empty sets.
+Finite set cover, finite rational linear programming and finite sums then
+give the stated computations. This is a finite termination argument, not
+a useful complexity estimate or an algorithm for a limit. $\square$
+

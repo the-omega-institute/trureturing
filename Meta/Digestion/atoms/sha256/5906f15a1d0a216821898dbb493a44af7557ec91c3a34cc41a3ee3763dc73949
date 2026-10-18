@@ -1,0 +1,22 @@
+**Lemma 1.5 (Preparation-dependent decoder and exact metric factors).**
+For all actual rays,
+
+$$
+y=D(A(k)U(\alpha),B(k)U(\beta)),\qquad
+D^{\mathsf T}D=4I_2\oplus I_2.
+$$
+
+Thus $\|D(a,b)\|_2^2=4\|a\|_2^2+\|b\|_2^2$, and $y$ is uniformly
+bounded on $\mathcal M$.
+
+**Proof of Lemma 1.5.** The negative phase convention gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$;
+the expectations are twice its real and imaginary parts. The increment
+differences in edge order are $\alpha,\beta,\alpha,-\alpha,-\alpha$.
+Since $U(-\alpha)=JU(\alpha)$, this is exactly the asserted
+factorization. The four first-pair blocks contribute $4I_2$, the other
+pair contributes $I_2$, and there are no cross terms. The maps $O,J$
+are orthogonal. Finally $A(k)\le H$ and $B(k)<2\sqrt{ZH}$.
+Preparation affects the fixed rotations and exact initialization, not
+these norm factors. $\square$
+

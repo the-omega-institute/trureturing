@@ -1,0 +1,65 @@
+**Theorem 64.6 (admissible harmonic calibration and the missing operator relation).**
+For each $N=1,2$ and $f\in\mathscr H_{D,N}$, let $E_Nf$ minimize $k_{\delta,N}$
+over all form vectors with $R_NF=f$. Put
+\[
+\begin{aligned}
+\langle f,B_Nh\rangle&=k_{\delta,N}(E_Nf,E_Nh),\\
+F_N&=E_N^*E_N=I+(E_N-J_N)^*(E_N-J_N),\\
+S_N&=F_N^{-1/2},\qquad W_N=E_NS_N,\\
+\beta_1&=\sqrt{3\delta/2},\qquad
+\beta_2=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta.
+\end{aligned}                                                    \tag{64.11}
+\]
+These are supplied preparation/identification maps defined by the same measure
+and form rule, with no fit of a separate kinetic scale, potential, pair coefficient
+or clock in either sector. They are independent of $g,\nu$ and the pair choice.
+They satisfy
+\[
+\begin{gathered}
+R_NE_N=I,\qquad W_N^*W_N=I,\qquad
+\|E_N-J_N\|\le\beta_N,\\
+B_1=L_D,\qquad 0\le B_2-K_{D,2}\le18\delta I,\qquad
+A_{\delta,D,N}E_N=J_NaB_N.
+\end{gathered}
+\]
+In particular $W_Nf$ lies in the actual operator domain of (64.8), has full norm
+$\|f\|$, and is an admissible finite-energy hard-core preparation. Its calibration
+mixes distinct-port data only; it cannot produce an atomic collision. Its kinetic
+preparation energy has the uniform bound
+\[
+a k_{\delta,N}(W_Nf)\le a(6N+18\delta\mathbf1_{N=2})\|f\|^2,
+\]
+since $\|K_{D,N}\|\le6N$ and $\|S_N\|\le1$.
+
+Proof. On the closed form subspace $Z_N=\ker R_N$, (64.9) makes $k$ an equivalent
+complete form norm. Solve
+$k(z,v)=-k(I_Nf,v)$ for $v\in Z_N$ by the Hilbert-space representation theorem,
+and set $E_Nf=I_Nf+z$. This gives existence, uniqueness, linearity and
+$k(E_Nf,Z_N)=0$, as well as the minimum. Exchange symmetry is retained in this
+construction. Comparing the minimum with the first inequality in (64.9) and with
+(64.10) proves the two matrix bounds for $B_N$. In particular
+\[
+k_{\delta,2}(E_2f-I_2f)
+=k_{\delta,2}(I_2f)-k_{\delta,2}(E_2f)\le18\delta\|f\|^2.
+\]
+This difference has zero atomic values. The fast-state bound (64.9) therefore gives
+$\|E_2f-I_2f\|\le9\sqrt2\,\delta\|f\|$. Combine it with the trial norm in (64.10)
+to obtain $\beta_2$. For one particle the linear lift already annihilates $Z_1$
+in the kinetic form, so $E_1=I_1$ and $\beta_1$ follows. Orthogonality of atomic and
+continuum strata gives the formula for $F_N$; thus $S_N$ exists and $W_N$ is an
+isometry into the whole retained space.
+
+Every form test $v$ decomposes as $E_NR_Nv+(v-E_NR_Nv)$, with its second term in
+$Z_N$. Hence
+\[
+a k_{\delta,N}(E_Nf,v)=\langle aB_Nf,R_Nv\rangle
+=\langle J_NaB_Nf,v\rangle .
+\]
+The defining operator criterion for a closed form proves the displayed operator
+identity and puts $E_Nf$, and therefore $W_Nf$, in $\operatorname{Dom}(A)$.
+The bounded potential does not change that operator domain. This is the needed
+input/domain/operator relation, proved on the untruncated continuum. Merely
+imposing a named barrier or interpolating a collision-free trial would not prove
+this relation: the trial $I_2$ need not itself satisfy the operator criterion.
+$\square$
+

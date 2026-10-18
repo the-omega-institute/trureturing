@@ -1,0 +1,36 @@
+**Theorem 62.4 (authentic renewal: common compression and exact killed update).** Let a whole-rho candidate actually be accepted, let $D'=\operatorname{Pos}(\rho s)$, and let $\mathcal B$ be the authentic old beta-leaf mask. Let $J_Ne_S=e_S$ be the unchanged-bank injection. Old addresses and occupations retain their identities. For the common prescription,
+
+$$
+G^{\rm c}_{D'}|_{D\times D}=G^{\rm c}_D,
+\qquad
+J_N^*H^{\rm c}_{D',N}J_N=H^{\rm c}_{D,N}.
+\tag{62.7}
+$$
+
+Equality of this compression does not give $H^{\rm c}_{D',N}J_N=J_NH^{\rm c}_{D,N}$. Born-child hopping survives in the latter difference. In the one-particle case it is exactly (60.7); in an occupation it moves each occupied beta leaf to each empty born child with coefficient $-a$.
+
+For the killed prescription let $U:\mathbb C^{\mathcal B}\to\ell^2(D)$ have columns $e_p$, $p\in\mathcal B$, and put $G=L_D^{-1}$. If $\mathcal B$ is empty the update is zero. Otherwise
+
+$$
+\begin{aligned}
+G^{\rm k}_{D'}|_{D\times D}
+&=\left(L_D-\frac23UU^*\right)^{-1}\\
+&=G+GU\left(\frac32I-U^*GU\right)^{-1}U^*G.
+\end{aligned}
+\tag{62.8}
+$$
+
+All inverse factors displayed here exist and the increment is nonnegative entrywise. For an old occupation basis vector,
+
+$$
+\langle J_Ne_S,H^{\rm k}_{D',N}J_Ne_S\rangle
+-\langle e_S,H^{\rm k}_{D,N}e_S\rangle
+=-\nu\sum_{\{p,q\}\subset S}
+\left[G^{\rm k}_{D'}(p,q)-G^{\rm k}_D(p,q)\right].
+\tag{62.9}
+$$
+
+Proof. TM22–23 and §58.2 give precisely two new children at each old beta leaf. Old diagonals, old seams and the root field are unchanged. This proves (62.7), since a new occupied site is absent in $J_Ne_S$. It also identifies the nonzero born hopping rather than asserting intertwining.
+
+In old/new site blocks, $L_{D'}$ has old block $L_D$, new block $3I$, and two $-1$ entries from each beta leaf to its children. The old Schur complement is therefore $L_D-(2/3)UU^*$. Positivity of $L_{D'}$ implies positivity of that complement. The inverse identity in (62.8) follows by multiplying its proposed right-hand side by that complement. Positivity also gives $I-(2/3)U^*GU>0$. Its nonnegative inverse follows from the convergent series in $(2/3)U^*GU$, whose spectral radius is below one. All entries of $G$ are nonnegative, so the increment is entrywise nonnegative. Finally a basis occupation has zero hopping expectation, and every unchanged diagonal cancels in the energy comparison. $\square$
+

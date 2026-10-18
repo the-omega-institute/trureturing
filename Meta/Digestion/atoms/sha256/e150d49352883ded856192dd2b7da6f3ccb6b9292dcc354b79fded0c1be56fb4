@@ -1,0 +1,29 @@
+**Lemma 10.3 (Equality in the final one after two zero edges).**
+Let $E,F$ be disjoint active zero edges and let $G$ be the next active
+edge. Equality in the inherited bound
+
+$$
+m(E=0,F=0,G=1)\le a^2c\eta
+\tag{10.1}
+$$
+
+holds exactly when $G$ is vertex-disjoint from both $E,F$ and
+$T\in E\cup F$. The maximizing label on this one leaf is then uniquely
+$h_\alpha(\sigma)$.
+
+Proof. Unpack Lemma 4.2. For a disjoint $G$, target in a zero pair
+gives exactly $a^2c\eta$, whereas target in $G$ gives
+$c^2\eta/2<a^2c\eta$, and exterior target gives
+$ac^2\eta<a^2c\eta$. These inequalities are strict by
+$c<2a^2$ and $c<a$.
+
+A repeated edge makes the one reply impossible. For an extension,
+the possible maxima are $ac\eta/2$ and $a^2\eta/2$; they are
+strictly smaller than the bound by $a>1/2$ and $c>1/2$.
+For a join of the two zero pairs the possible maxima are
+$\eta^2/2$ and $a\eta^2$. The latter strictly bounds the former
+and is strictly below $a^2c\eta$, since $b<c$. These are all the
+incidences. In the equality case the target pair's two orientation
+weights $a^2,b^2$ have a common positive factor from the other
+components; their strict inequality gives the unique label. $\square$
+

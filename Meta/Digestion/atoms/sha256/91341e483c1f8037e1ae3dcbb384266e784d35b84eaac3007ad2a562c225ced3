@@ -1,0 +1,41 @@
+## 7. Scope and open continuation
+
+Theorem 3.1 gives the exact signed local-prefix lifting criterion for the
+entire declared Cartesian grammar (SLP.1), including arbitrary fixed finite
+coordinates, simultaneous scalar divergence, both closure implications,
+zero dimensions and empty negative conjunctions. Corollary 3.2 requires
+explicit neighborhood feasibility. Theorem 5.1 gives the terminating
+empty-stratum versus actual all-depth joint-witness choice for the specified
+five-hole pair and every protected negative history in its stated class.
+It uses neither a partition nor a signed predicate assigned to a limit.
+
+The general NIC5.5 alternative remains open. Arbitrary positive residual
+relations, coupled navigation restrictions and the complete search for
+source-compatible contacts of arbitrary row pairs are not covered by the
+Cartesian premise. Deciding each supplied depth, checking a supplied
+productive certificate or deciding feasibility for supplied finite $f$
+does not give a terminating all-depth choice for the full declared NIC
+class. Additional retained root-depth or $Q$-support restrictions must
+likewise be preserved or eliminated by an exact domain correspondence;
+they are not presumed Cartesian.
+
+**Open problem 7.1 (contact charts beyond the Cartesian premise).**
+Determine whether an arbitrary pair of complete NIC signed image covers
+can be refined into finitely many source-faithful charts whose remaining
+joint-prefix obligation admits independent live prefix contexts as in
+Lemma 2.1, possibly after separate atomic coordinates and finite barriers
+have been retained. Such a reduction must preserve every positive residual
+relation, every guarded sign and both exact source maps in both directions.
+A finite contact certificate would still need a terminating synthesis and
+coverage proof for the entire original class. A concrete native obstruction
+to this proposed chart reduction would instead identify a different proof
+route. Neither result is supplied by the present volume.
+
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+

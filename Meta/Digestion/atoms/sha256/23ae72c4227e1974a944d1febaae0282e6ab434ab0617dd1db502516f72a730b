@@ -1,0 +1,44 @@
+**Theorem 5.2 (whole-calculus floor).** Every acceptance by the exact
+$V_{\mathrm{rec}}$ grammar satisfies $C\ge F_d(\mu)$. In particular
+arbitrary grouping, scaffold recursion and stability cannot cross
+this floor.
+
+Proof. Every partition into target cells has
+
+$$
+\sum_y\left(\sum_{x\in\text{cell }y}\mu(x)\right)^2
+\ge\sum_{x\in P}\mu(x)^2,
+\tag{RCE.22}
+$$
+
+so $F_d\le J_d$ and Theorem 4.4 already implies the assertion.
+Here is also a direct rule-by-rule proof, independent of the
+boundary entropy lemma.
+
+The ordinary joint leaf obeys (RCE.22). For any feasible $P$,
+$P^m$ is feasible in the grouped interface, and its squared
+point-mass sum is $(\sum_{x\in P}\mu(x)^2)^m$. The grouped
+test therefore forces $C\ge\|\mu|_P\|_2$ at every $m$.
+A light bundle support obeys
+$C\ge\mu(P)\ge\|\mu|_P\|_2$; a heavy one obeys (RCE.22)
+for its selected bundle.
+
+For a height-$h$ scaffold, let $k=2^h$ and pull any feasible
+positive support back to a subset of $S_{d_0}^k$. Each projection
+$P_i$ is feasible, since its every fine target is a coarse target.
+Nonnegativity gives
+
+$$
+\sum_{x\in P}\mu(x)^2
+\le\prod_{i=1}^k\sum_{u\in P_i}\nu(u)^2
+\le F_{d_0}(\nu)^{2k}.
+$$
+
+Thus $F_d(\nu^{\uparrow})\le F_{d_0}(\nu)^k$, the direction
+needed for the scaffold rule. Finally $F_d$ is a maximum of
+Euclidean restriction norms, so it is monotone and subadditive,
+and $F_d(v)\le\sum_xv(x)$ for $v\ge0$. The same positive-part
+argument as Lemma 2.2 proves
+$F_d(\mu)\le F_d(\nu)+\operatorname{TV}(\mu,\nu)$.
+Induction through stability completes the direct proof. $\square$
+

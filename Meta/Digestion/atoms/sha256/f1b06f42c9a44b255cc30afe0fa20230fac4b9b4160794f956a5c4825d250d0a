@@ -1,0 +1,80 @@
+**Lemma 12.1 (Six distinct read rows and three distinct halt rows).**
+Every deterministic attaining start in Proposition 11.1 visits at least
+six distinct read states and at least three distinct halt states on
+positive source sections. This lower bound concerns states of the
+original installed table, allowing sharing at different branches and
+depths, rather than occurrences in an unrolled tree.
+
+Proof. Denote the actual root read state by $r$, and its two
+successors by $r_0,r_1$, with edge instructions $F,H$ respectively.
+Let $r_{00}$ be the required third read at edge $G$.
+These are names for reached table states, whose distinctness must be
+proved. There are two further mandatory third-read occurrences,
+selected as follows.
+
+If $T\in E$, take $r_{10}$ at the joining edge $P$ of $E,H$ and
+$r_{11}$ at the fresh extension $W$ of $E$ outside $E\cup H$.
+The edges $P,W$ are distinct: $P$ meets $H$, whereas $W$ adds a
+vertex outside $H$. Each meets $E$, whereas $G$ is disjoint from
+$E$. Thus the three mandatory third-read states
+$r_{00},r_{10},r_{11}$ are pairwise distinct by their fixed addresses.
+If $r_0=r_1$, their zero successors would coincide. Those successors
+are $r_{00}$ and $r_{10}$, whose addresses have just been shown
+different. Hence $r_0\ne r_1$, even if $F=H$ as addresses.
+
+Suppose instead $T\in F$. At $01$ there is a mandatory third read
+$r_{01}$ on the joining edge $P$ of $E,F$. This edge meets $E$.
+If $T\in H$, select the required $r_{11}$ on a fresh extension
+$W$ of $H$ outside $E\cup H$. Its two vertices are outside $E$,
+so $W\ne P$. Also $G\ne P$, since $G$ is disjoint from $E$.
+The only possible sharing among these third occurrences is therefore
+$r_{00}=r_{11}$ with the same address $G=W$.
+That sharing is impossible by their actual zero successors: both
+zero replies have positive mass; after $000$ the successor halts
+with $h_\beta(\sigma)$, whereas after $110$ it halts with a
+phase-$\alpha$ label. The phase state pairs are disjoint.
+Thus $r_{00},r_{01},r_{11}$ are three distinct states even when
+two of their addresses coincide. If $r_0=r_1$, their instructions
+force $F=H$; their one successors would then identify $r_{01}$
+with $r_{11}$, contradicting $P\ne W$. Hence again
+$r_0\ne r_1$.
+
+If $T\in F\setminus H$, select the required $r_{10}$ on the
+edge $W$ joining $T$ to the zero pair $H$. This edge is disjoint
+from $E$, because both $T$ and $H$ are outside $E$; so it differs
+from $P$, which meets $E$. It meets $F$ at $T$, so differs from
+$G$, which is disjoint from $F$. Also $G\ne P$. Thus
+$r_{00},r_{01},r_{10}$ are pairwise distinct. In this case $F,H$
+have different addresses since one contains $T$ and the other does
+not, so $r_0\ne r_1$ directly.
+
+It remains to exclude sharing across execution depths. In every case
+$E$ differs from $F,H$, since those edges are disjoint from it;
+therefore $r$ is distinct from $r_0,r_1$. Each of $r_0,r_1$
+has at least one fixed successor that is a read state: for $r_0$
+use its zero successor $r_{00}$; for $r_1$ use one of the mandatory
+third reads in the applicable case. Every mandatory third read has
+both replies positive and both fixed successors are halt states by
+Proposition 11.1. It therefore cannot be the same state as either
+$r_0$ or $r_1$: the reply whose successor is a read would instead
+have to lead to a halt. Nor can it be $r$, whose two successors
+are reads. This proves six distinct installed read rows in every case.
+Extra optional read rows, if present, cannot reduce their number.
+
+There are three distinct required halt labels. The positive $000$
+and $001$ leaves require $h_\beta(\sigma)$ and
+$h_\alpha(\sigma)$. If $T\in E$, the two leaves of the join at
+$10$ require opposite phase-$\alpha$ spins; if $T\in F$, use
+the join at $01$ instead. These labels uniquely require a halt with
+$h_\alpha(1-\sigma)$ as well. A halt state has one fixed label,
+so three halt rows are necessary and cannot be read rows.
+
+The proof used actual equal-state consequences of the fixed update
+map, including an output conflict when literal addresses alone do
+not separate rows. It placed no topological ordering on the installed
+graph. Null branches may have cycles, arbitrary further reads or
+other outputs; the contradiction always uses a positive reply section
+and its fixed successor. Likewise extra installed or uninitialized
+rows are still counted and cannot remove these required states.
+$\square$
+

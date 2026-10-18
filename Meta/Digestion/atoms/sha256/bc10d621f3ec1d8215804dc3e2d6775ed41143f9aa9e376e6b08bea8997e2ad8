@@ -1,0 +1,38 @@
+**Definition 1.2 (Same-law convention and actual P8 fields).** Fix one $\theta\in\Theta_N$. The stationary joint law of [Universal, Proposition 4.2][U] is
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^{b}M_{x_i}(h_i,h_{i+1}),\qquad
+P_\theta([w]_a)=\lambda M_w\mathbf1.
+\tag{1.2}
+$$
+
+Right and left consistency use $A\mathbf1=\mathbf1$ and $\lambda A=\lambda$, respectively. Every $11$ cylinder has zero mass, so the visible marginal $P=P_\theta$ is supported on the two-sided no11 space. All clocks are the original emitted-bit integer coordinates. In each argument, classes, classifiers, posterior versions and expectations belong to this $J_\theta$ and its $P$, rather than separately specified conditional models.
+
+For integers $r,R\ge0$, use exactly [Conditional Response, §2][P8]'s fields
+
+$$
+\begin{aligned}
+\mathcal E_0&=\sigma(X_j:j\ne0),\\
+\mathcal G_L(r)&=\sigma(X_{-r},\ldots,X_{-1},X_j:j\ge1),\\
+\mathcal G_R(r)&=\sigma(X_j:j\le-1,X_1,\ldots,X_r),
+\end{aligned}
+$$
+
+$$
+q=\mathbb E_P[X_0\mid\mathcal E_0],\quad
+p_L(r)=\mathbb E_P[X_0\mid\mathcal G_L(r)],\quad
+p_R(r)=\mathbb E_P[X_0\mid\mathcal G_R(r)],
+$$
+
+$$
+e_L(r)=\mathbb E_P(q-p_L(r))^2,\quad
+e_R(r)=\mathbb E_P(q-p_R(r))^2,\quad
+\tau_P(R)=\sum_{r\ge R}(e_L(r)+e_R(r)).
+\tag{1.3}
+$$
+
+Empty coordinate lists at $r=0$ give no information. Both fields retain their entire opposite half-line. The series is allowed to be infinite. The supplied original risk identity is $d(P)=\mathbb E_P(X_0-q)^2\le c_\star$. [Conditional Response, §1][P8] also supplies $0<1800/12559\le c_\star\le3-2\sqrt2$.
+
+All conditional expectations have $[0,1]$ measurable versions. Zero-total finite fibers have zero weight and require no division. On a neighbor-one event, $X_0=q=0$ and the full loss is zero. A one-sided defect vanishes there if its field retains the forcing neighbor. Both fields retain both neighbors for $r\ge1$; at $r=0$, $\mathcal G_L(0)$ omits $X_{-1}$ and $\mathcal G_R(0)$ omits $X_1$. Thus full forced-zero loss does not imply a blanket radius-zero forced-zero defect.
+

@@ -1,0 +1,32 @@
+**Theorem 5.2 (exact residual after every allowed optimization).** At
+Definition 5.1's law, every graph of Definition 1.4 satisfies
+
+$$
+\begin{aligned}
+\min F&=\left(\frac{4\sqrt{1985}}{619}\right)^n,\\
+Z_G&=\left(\frac{128}{619}\right)^n
+       \left[1+\left(\frac{31}{32}\right)^n\right],\\
+\log_2\min F-\log_2Z_G
+&=n\kappa-\log_2\left[1+\left(\frac{31}{32}\right)^n\right]
+>n\kappa-1,\\
+\kappa&=\tfrac12\log_2 1985-5>\tfrac13.
+\end{aligned}
+\tag{WBF.25}
+$$
+
+Proof. Substitute $A,B$ into Theorem 4.2:
+$T=31760/383161$ and $\sqrt T=4\sqrt{1985}/619$.
+The expression for $Z_G$ is precisely the credited partition
+(WBF.6). Dividing these positive values and taking logarithms gives
+the exact difference. Since $0<(31/32)^n<1$, its final logarithm
+is less than one. Finally
+
+$$
+1985^3=7821346625>4294967296=2^{32}
+\tag{WBF.26}
+$$
+
+implies $\tfrac12\log_2 1985-5>1/3$ by taking logarithms
+and dividing by six. Thus the strict positive residual does not
+depend on a decimal approximation. $\square$
+

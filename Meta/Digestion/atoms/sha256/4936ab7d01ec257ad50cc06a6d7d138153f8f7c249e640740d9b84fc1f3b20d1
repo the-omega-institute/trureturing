@@ -1,0 +1,26 @@
+**Lemma 3.3 (compactness and the inherited six-atom bound).** Bounded-trace slices of $\mathcal C_2$ are compact. Every $L\in\mathcal C_2$ has at most six singular atoms. The feasible coefficient set in (PG.13) is compact and nonempty at every $s\in[0,1]$.
+
+Proof. The unit singular locus of (PG.14) is compact. Its projectors lie in the trace-one Hermitian affine space of real dimension eight. Any convex combination with more than nine projectors has an affine dependence; move its weights along that dependence until one becomes zero, preserving nonnegative weights and the represented matrix. Repetition gives nine. The convex hull is therefore a compact image of a nine-point simplex and nine copies of that compact set. Multiplication by a bounded nonnegative trace gives compact cone slices. This is the IR nine-atom compactness argument.
+
+For clarity the sharper CA decomposition retains the plane slack: write $L=J WJ^\dagger+X$, where $J$ embeds the coefficient $(T,S)$ plane, $W\succeq0$, $X=AA^\dagger\succeq0$, and $A$ has minimal column rank. The quadratic part exists exactly when the Takagi singular values of $A^TBA$, padded to length three, obey $\tau_1\le\tau_2+\tau_3$. Indeed, after Takagi congruence, a null decomposition with coefficient rows of total covariance $I$ implies $\tau_1\sum_j|t_{1j}|^2\le\sum_{i>1}\tau_i\sum_j|t_{ij}|^2$, giving necessity. Conversely choose unit phases $\eta_i$ with $\sum_i\tau_i\eta_i^2=0$, which is possible precisely by this triangle inequality. If one value is zero use the cancelling pair $1,i$ on the equal nonzero values; all zero values are unrestricted. For three positive values choose
+$\eta_1^2=1$, $\eta_2^2=-c+i\sqrt{1-c^2}$,
+$c=(\tau_1^2+\tau_2^2-\tau_3^2)/(2\tau_1\tau_2)$, and
+$\eta_3^2=-(\tau_1+\tau_2\eta_2^2)/\tau_3$.
+All have modulus one, including degenerate triangles. With $A^TBA=U\operatorname{diag}(\tau)U^T$, multiply $A\overline U\operatorname{diag}(\eta)$ by half the first $\operatorname{rank}A$ rows of
+
+$$
+\begin{pmatrix}1&1&1&1\\1&1&-1&-1\\1&-1&1&-1\end{pmatrix}.
+$$
+
+Its four columns are null and have projector sum $X$. This uses the finite Takagi factorization, whose ordinary proof and factor independence are supplied in CA Lemma 4.1. Spectral decomposition of $W$ adds at most two plane atoms. Both directions retain the full complex plane, its quadratic intersection, all ranks and zero/repeated Takagi values. Thus this is CA's six-atom result, not a new restriction to real atoms.
+
+In (PG.13), all four positive matrices are bounded by $I$, and cone closure just proved makes the feasible set closed. The linear failure constraints are closed as well. For nonemptiness put
+
+$$
+H_r=\tfrac12(|D\rangle\langle D|+|T\rangle\langle T|+rsX_c),\quad
+L_r=\tfrac12|S\rangle\langle S|,\quad N_r=M/2.
+\tag{PG.16}
+$$
+
+The high block is positive for $s\le1$, the low atom is singular, and $\Theta(X_c)=\kappa X_{01}$. These matrices satisfy every equation. $\square$
+

@@ -1,0 +1,40 @@
+**命题 C-77.1（同一全正纤维上的归一化平方和）。** 在 C-76 的条件下，令
+$\mathscr R=\sqrt{p_0p_1p_3p_{13}}>0$。则
+
+$$
+\mathcal C^2=
+\frac{16\mathscr R}{r^2}
+\left(\sinh^2(2\eta)+\sin^2\frac\chi2\right),
+\qquad
+\mathcal C=0\ \Longleftrightarrow\
+\eta=0,\ \chi=0\pmod{2\pi}.
+\tag{C77.1}
+$$
+
+这是 C-12.2、C-73.4 的相位敏感行列式在带标记椭圆坐标和纯态 concurrence 归一化中的应用。
+
+证明。令 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$。实际复乘积差为
+
+$$
+r\det\mathsf B
+=e^{-i(\theta_1+\theta_3)}(ae^{-i\chi}-b).
+$$
+
+去掉共同相位后，
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac4{r^2}|ae^{-i\chi}-b|^2,\\
+|ae^{-i\chi}-b|^2
+&=a^2+b^2-2ab\cos\chi
+=(a-b)^2+4ab\sin^2(\chi/2).
+\end{aligned}
+$$
+
+由 $a/b=e^{4\eta}$ 得
+$a=\sqrt{ab}\,e^{2\eta}$、$b=\sqrt{ab}\,e^{-2\eta}$，所以
+$a-b=2\sqrt{ab}\sinh(2\eta)$。再用 $ab=\mathscr R$ 即得全部系数。
+正性使前因子严格正，两平方同时零恰要求 $\eta=0$ 和 $\chi=0\bmod2\pi$。
+因而概率椭圆成为圆只消去幅度不平衡项，四角相位不闭合项仍可非零。证毕。
+

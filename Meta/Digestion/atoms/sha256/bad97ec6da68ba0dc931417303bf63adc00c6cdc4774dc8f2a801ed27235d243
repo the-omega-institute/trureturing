@@ -1,0 +1,46 @@
+### 82.5. Calibrated equality normal form and two normalized coherent tests
+
+Write B_f=H_f and
+
+    N_f=conjugate(B_f) Z B_f^T.
+
+Each N_f is traceless Hermitian unitary. Equations (8)--(10) give
+
+    C_f=S+conjugate(v_f)W N_f,
+    D_f=S N_f+conjugate(v_f)W.                        (14)
+
+Since rank S=2 and rank(QB_0)=3, the N_f span the full three-dimensional real Pauli space. A linear relation among Hermitian Pauli matrices has a real coefficient kernel, and its complexification is the complex coefficient kernel. Since that kernel is one-dimensional, v can be chosen real after a common phase change of v and W. Thus
+
+    ||v||=1,  sum_f v_f N_f=0,
+    C_f=S+v_f W N_f, D_f=S N_f+v_f W.                (15)
+
+Retain S^*W=lambda I_2 and ||W||_F^2=a. Every C_f and D_f has norm one, so Cgram-J_4 and M-I_4 are trace zero.
+
+Let |f,+>=(|f,0>+|f,1>)/sqrt(2) and |f,->=(|f,0>-|f,1>)/sqrt(2). The following two logical inputs are normalized:
+
+    |psi_+>=(1/2)sum_f |f,+>,
+    |psi_->=(1/2)sum_f |f,->.
+
+Their physical product outputs, represented on the output MC support, are Cgram^T/4 and M^T/4; their target outputs are J_4/4 and I_4/4. From (15) and Tr N_f=0,
+
+    (Cgram-J_4)s=-a s,  s=(1,1,1,1)^T/2,
+    M v=a v.
+
+For the first identity, sum C_f=4S and <C_f,S>=p; for the second, sum v_fD_f=W and <D_f,W>=a v_f. A trace-zero Hermitian matrix with eigenvalue q has trace norm at least 2|q|. Therefore these two normalized tests give
+
+    delta>=a/2,   delta>=|1-a|/2.                    (16)
+
+At delta=1/4 the only possible value is
+
+    a=1/2,  p=7/8.                                  (17)
+
+Now take the trace of C_f^*C_f=I_2/2 in (15). The mixed term vanishes because S^*W is scalar and N_f is traceless. Hence
+
+    1=p+v_f^2 a.
+
+Together with (17), this proves
+
+    v_f=epsilon_f/2,  epsilon_f in {+1,-1}.           (18)
+
+In particular every coordinate is nonzero; this conclusion is not assumed at any earlier division in the calibrated case.
+

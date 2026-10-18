@@ -1,0 +1,23 @@
+**Definition 30.1 (graph-row decision).** Compute $\mathcal L$ and every
+target description of §27. If the list is empty, return YES with an
+explicit empty-domain flag. If $Q=\{\varepsilon\}$, return YES with
+inclusive original bound $H=0$. Otherwise require, on every listed
+pattern, both of the following:
+
+- $O_t=\varnothing$.
+- Every unordered pair of reached holes passes the positive branch of
+  Definition 29.3.
+
+If either requirement fails, return NO, retaining that pattern and its
+failed exterior or hole-pair witness data. If all pass, let $h_{t,qr}$
+be the positive bounds from Definition 29.3 and return YES with
+
+$$
+H=\max\bigl(\{d\}\cup
+     \{h_{t,qr}:t\in\mathcal L,\ \{q,r\}\subseteq J_t,\ q\ne r\}\bigr).
+\tag{ARH.30.1}
+$$
+
+An empty set of hole pairs contributes no bound. This definition is a
+finite algorithm on the original common input, not a source-size cutoff.
+

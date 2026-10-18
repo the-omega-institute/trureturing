@@ -1,0 +1,57 @@
+## 1. Scope and exact normalized pieces
+
+This volume proves a local bridge between finite signed feasibility and
+prefix witnesses on exact Cartesian pieces. It uses the native trees
+
+$$
+\mathcal T ::= \alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\rho\alpha=\beta,
+\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle .
+$$
+
+The unary symbol is interpreted by these equations. It is not a free
+constructor. A completion tree may be finite or infinite; its finite prefix
+of depth $h$ is the four-valued reply table on words of length at most $h$.
+An infinite coordinate means a completion tree with an infinite branch. A
+finite tree is isolated by the replies through one more level than its height.
+
+In this volume a normalized Cartesian piece has the form
+
+$$
+C(\mathbf n,\mathbf z)
+ := P(\mathbf n)\ \land\
+\bigwedge_{j=1}^{s} A_j(\mathbf n,\mathbf z)\ne B_j(\mathbf n,\mathbf z),
+\tag{SLP.1}
+$$
+
+where $P$ is Presburger, and every $A_j,B_j$ is a finite mixed native
+template built from fixed finite trees, $T_{n_i+c}=\rho^{n_i+c}\alpha$,
+decorated residuals $\rho^a z_r$, and ordered pairing. Repeated residual
+names are shared. The conjunction is empty when $s=0$. For an acquired-source
+application, both directions of its owning image correspondence must prove
+that all endpoint guards, positive links, complete-row tests, navigation
+cases and the whole old exterior and partition are retained by this formula
+and its source map. The residual product before the negatives must be the
+full Cartesian product $\mathcal T^m$. These are input hypotheses;
+[NIC, Theorem 4.3][NIC] does not assert that every arbitrary signed image
+piece eliminates all residual restrictions into this form.
+
+For a finite set $F\subseteq\{1,\ldots,m\}$ and a finite tuple
+$f\in\mathcal T^F$, write
+
+$$
+S_f=\{\mathbf n\in\mathbb N^k:
+ P(\mathbf n)\land
+ \exists \mathbf z_{\bar F}\in\mathcal T^{\bar F}
+ \;\bigwedge_j A_j(\mathbf n,f,\mathbf z_{\bar F})\ne
+ B_j(\mathbf n,f,\mathbf z_{\bar F})\}.
+\tag{SLP.2}
+$$
+
+$S_f$ is the entire feasible scalar support after the finite residual
+coordinates have been fixed. It is not a selected representative support.
+NSF supplies a decision and a finite witness for membership in (SLP.2) when
+the supplied finite $f$ is present; no decision for unknown $f$ is assumed.
+

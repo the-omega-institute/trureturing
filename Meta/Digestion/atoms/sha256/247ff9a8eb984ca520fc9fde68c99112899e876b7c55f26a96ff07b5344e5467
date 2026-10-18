@@ -1,0 +1,27 @@
+**Definition 3.1 (codes and the two designated fibers).** For an
+auxiliary target depth $d\ge1$ set
+
+$$
+\mathcal C_1=\{0,1\},\qquad P_1=0,\quad Q_1=1,\qquad
+E_1(u)=\begin{cases}0,&u\text{ is a leaf},\\1,&u\text{ is a branch}.
+\end{cases}
+$$
+
+Recursively define
+
+$$
+\begin{aligned}
+\mathcal C_{d+1}&=\mathcal C_d\times\mathcal C_d,\\
+E_{d+1}(\langle u,v\rangle)&=(E_d(u),E_d(v)),\\
+E_{d+1}(\alpha)&=(P_d,P_d),\qquad
+E_{d+1}(\beta)=(Q_d,Q_d),\\
+P_{d+1}&=(P_d,Q_d),\qquad Q_{d+1}=(Q_d,P_d).
+\end{aligned}
+\tag{LTR.7}
+$$
+
+$P_d\ne Q_d$. Leaf codes are absorbed into two branch-code pairs.
+Neither a separate leaf selector nor a label survives outside this
+code. The recursion counts this particular construction, not the
+minimum $M_1$.
+

@@ -1,0 +1,32 @@
+**Lemma 5.1 (Commuting phase and height actions on the actual space).**
+The maps induced by $Q_{2\delta}$ give a representation $V_\delta$
+of the abstract circle on $X$, with
+
+$$
+V_\delta F(k,\alpha)=F(k,\alpha+\delta),\quad
+V_\delta V_\eta=V_{\delta+\eta},\quad
+V_0=I,\quad V_\delta^{-1}=V_{-\delta}.
+$$
+
+The covector $\lambda_0$ is invariant, and every $A_t$ from Lemma
+4.2 commutes with every $V_\delta$.
+
+Proof. Beta independence makes the first formula true. Changing a
+real representative of $\delta$ by $2\pi$ gives identical values
+on all actual $F$. Products, inverses and the zero-parameter map likewise
+agree on these spanning states, so they are operator identities
+on $X$. The same argument proves $\lambda_0V_\delta=\lambda_0$.
+This is a fixed covector and does not yet assert an affine center.
+
+For a lawful pair of heights,
+
+$$
+T_aV_\delta F(k,\alpha)=F(k+a,\alpha+\delta)
+                         =V_\delta T_aF(k,\alpha).
+$$
+
+The two source orders can have different beta coordinates, which
+this encoder forgets. For $|a|<H$ the interval $I_a$ spans $X$ by
+Lemma 4.1, proving full operator commutation there. Subdivision in
+Lemma 4.2 then proves commutation for all $A_t$. $\square$
+

@@ -1,0 +1,26 @@
+### 74.2 Target Choi support and a kernel witness
+
+Use the unnormalized input-first Choi convention
+
+    J(C)=Σ_(x,y)|x><y|⊗C(|x><y|),
+    Tr_out J(C)=I_(kd).
+
+Let u=d^(-1/2)(1,...,1) in C^d and let j_k be the all-ones vector in C^k. On the span of |f,i>_in|ff>_out, the target Choi matrix is isometrically identified with
+
+    K=I_k⊗(I_d−uu*) + j_k j_k*⊗uu*.
+
+It is zero on the orthogonal complement of that span. Hence its nonzero eigenvalues are k once and 1 with multiplicity k(d−1). In particular,
+
+    dim S=k(d−1)+1,  S=range J(T),
+    <x,J(T)x>≥||x||²  for x∈S.                           (3)
+
+If rank J(C)≤k(d−1), restricting J(C) to the subspace S has a nontrivial kernel by rank-nullity. Thus there is nonzero
+
+    x∈S∩ker J(C).
+
+Since S lies in the displayed target-coordinate span, x can be written uniquely as
+
+    x=Σ_f x_f⊗|ff>,   x_f∈span{|f,i>:1≤i≤d}.
+
+The input vectors x_f live in mutually orthogonal fibre spaces. Put n_f=||x_f|| and s=Σ_f n_f>0.
+

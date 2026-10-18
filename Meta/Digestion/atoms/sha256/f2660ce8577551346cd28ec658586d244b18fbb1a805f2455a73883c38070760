@@ -1,0 +1,11 @@
+**Convention 4.4 (why complete boundaries matter).** Matching a printed
+numeral, a tuple parse, a print-loop head PC or an isolated exit PC does
+not satisfy Definition 4.1. The prefix-free code $\{0,10,110\}$ already
+shows the logical defect of inferring an occurrence boundary from prefix
+freeness: codeword10 is a suffix of codeword110. This elementary example
+is not an actual-$Q$ collision. Here the observed successful entry edge,
+all intermediate rows and the successful callback exit establish the
+complete occurrence. A start inside an old print does not supply its
+missing $E_0$ witness. A later genuine complete interval can be selected,
+but then its own target binding must pass $k=N$.
+

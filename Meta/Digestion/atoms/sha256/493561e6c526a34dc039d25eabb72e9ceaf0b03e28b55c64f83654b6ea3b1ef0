@@ -1,0 +1,65 @@
+**Lemma 4.3 (The extremal singleton and its exact radical).** Define
+
+$$
+\alpha=\frac{17\sqrt{17}+3+\sqrt{10458+198\sqrt{17}}}
+{80\sqrt{17}}.
+\tag{4.6}
+$$
+
+Then $\|H_{\{N\}}\|_{\rm op}=\alpha$ and
+$27/50<\alpha<11/20$.
+
+Proof. The $L$ block of $H_{\{N\}}$ is
+
+$$
+F_N=\frac1{680}
+\begin{pmatrix}353+3r&18+6r\\18+6r&-64\end{pmatrix}.
+\tag{4.7}
+$$
+
+Its trace is $\tau=(289+3r)/680>0$, and its determinant is
+$-(173+3r)/3400<0$. Its positive eigenvalue is the positive root of
+
+$$
+p(z)=z^2-\tau z-\frac{173+3r}{3400}.
+\tag{4.8}
+$$
+
+The quadratic formula gives
+
+$$
+\frac{289+3r+\sqrt{177786+3366r}}{1360}=\alpha,
+\tag{4.9}
+$$
+
+because $177786+3366r=17(10458+198r)$ and $r^2=17$.
+The other root is negative and has smaller absolute value, since
+the trace is positive.
+
+Direct substitution gives the exact signs
+
+$$
+p(27/50)=\frac{1907-555r}{170000}<0,\qquad
+p(11/20)=\frac{243-45r}{13600}>0.
+\tag{4.10}
+$$
+
+Indeed $r>4$ proves the first, and $r<5$ proves the second.
+The quadratic has only one positive root, so these signs place it
+strictly between the two indicated rational numbers.
+
+On $V$, $H_{\{N\}}=-S(\Pi_N)|_V$ is negative semidefinite by complete
+positivity. Since $S$ is trace preserving and
+$\operatorname{tr}(H_{\{N\}})=0$, this block has negative trace
+$-\tau$. A positive semidefinite matrix has norm at most its trace;
+hence its absolute norm is at most
+
+$$
+\tau<\frac{289+3(25/6)}{680}
+=\frac{603}{1360}<\frac{27}{50}<\alpha.
+\tag{4.11}
+$$
+
+The largest absolute eigenvalue of the whole residual is consequently
+the positive eigenvalue $\alpha$ of (4.7). $\square$
+

@@ -1,0 +1,87 @@
+**Theorem 3.1 (decidable eligibility and exact accumulation set).** For
+every representation of Definition 2.1, eligibility in Definition 2.3
+is decidable. On an eligible representation the complete accumulation
+set of $D_{r_*}$ is effectively computed as the finite set
+
+$$
+\mathcal K=\{K_{b,A,\mathbf c}:A\ne\varnothing,
+\ \mathbf c\in E_{b,A}\},
+\tag{AAB.9}
+$$
+
+where $K_{b,A,\mathbf c}$ evaluates the actual finite pairing template
+$U_b$, replacing every atomic occurrence belonging to coordinate $i\in A$
+by $\Omega$ and every other occurrence by its actual finite atom
+$T_{c_i+\text{offset}}$. Each point is a finite constructor context with
+finite grounds and $\Omega$ fillings. For each listed point and depth $h$,
+an actual source in $D_{r_*}$ with that inclusive prefix is computable.
+If a cofinal-fiber set is infinite, the anchor has infinitely many
+accumulation points; rejection is not a negative answer to $J_B$.
+
+Proof. Formula (AAB.8) is first-order Presburger arithmetic. Finiteness
+of a set in $\mathbb N^F$ is equivalent to the sentence
+
+$$
+\exists L\ \forall\mathbf c\quad
+E_{b,A}(\mathbf c)\Longrightarrow
+\bigwedge_{i\in F}c_i\le L.
+\tag{AAB.10}
+$$
+
+Presburger decision determines this sentence, including when $F$ is
+empty. On a finite answer find a bound $L$ by decidable successive bound
+queries, then test every tuple in that finite box. The first decision
+guarantees this search's termination. This gives all of $E_{b,A}$, not
+an undiscovered subset. Only finitely many $b,A$ occur.
+
+For a listed profile, choose for each $t$ a feasible tuple with
+$\mathbf v_F=\mathbf c$ and all $v_i\ge t$ for $i\in A$, using (AAB.8).
+Every used coordinate has a fixed syntactic atomic occurrence address.
+At those addresses the divergent atoms converge to $\Omega$; fixed
+atoms and all explicit pair nodes remain unchanged. Hence the resulting
+actual sources converge to $K_{b,A,\mathbf c}$. Their output values
+are infinitely many: at least one used rank diverges, and its atomic
+index is injective. A subsequence of distinct sources witnesses
+accumulation. At a requested $h$, taking $v_i\ge2h+2$ for every
+divergent coordinate suffices, since all offsets are nonnegative and
+$\mu(T_{v_i+c})>h$. Theorem 2.2 lifts the arithmetic witness to the
+same original source with all acquired constraints.
+
+Conversely, consider any prefix-convergent sequence of distinct anchor
+sources. An infinite subsequence belongs to one piece in (AAB.7).
+Choose its used rank tuples. For each of the finitely many coordinates,
+extract a subsequence on which it is constant if some value occurs
+infinitely often; otherwise extract one on which it tends to infinity.
+These successive extractions retain earlier constants and divergence.
+If all coordinates were constant, the output template would be constant,
+contradicting distinctness. Thus the diverging set $A$ is nonempty.
+The fixed coordinates have a tuple $\mathbf c$, and the subsequence
+itself proves (AAB.8), with the full joint predicate $S_b$ intact.
+Its limit is exactly $K_{b,A,\mathbf c}$. Prefix limits are unique, so
+the original accumulation point is in (AAB.9).
+
+For exactness of the finiteness test, within one fixed piece the profile
+map $(A,\mathbf c)\mapsto K_{b,A,\mathbf c}$ is injective. At a chosen
+syntactic occurrence of any used coordinate, its subtree is either
+$\Omega$ or the atom of that coordinate plus its fixed offset. Different
+finite ranks give different atoms; a finite atom differs from $\Omega$.
+Different profiles therefore differ at some finite reply. In particular
+an infinite $E_{b,A}$ gives infinitely many different accumulation points.
+A finite union of the finite sets obtained on acceptance has no others,
+by exhaustion. Overlap between pieces may give duplicate descriptions
+but changes neither conclusion.
+
+Every computed point is infinite. If (AAB.9) is empty, an infinite anchor
+fiber would, by the same finite-piece subsequence argument, produce a
+nonempty profile, a contradiction. Thus an empty basis means a finite
+anchor fiber, not an omitted contact. Ground pieces and empty pieces
+are included by the zero-dimensional conventions. $\square$
+
+To compare two descriptions in (AAB.9), expand their finite grounds,
+treat $\Omega$ as one distinguished terminal, and recursively replace
+$\langle\Omega,\Omega\rangle$ by $\Omega$. Equality of the resulting
+finite descriptions decides equality of their completion trees. A
+remaining finite leaf distinguishes its tree from $\Omega$; otherwise
+ordered pair comparison reduces recursively. Deduplication is optional.
+Occurrences of $\Omega$ are mathematical holes, not acquired labels.
+

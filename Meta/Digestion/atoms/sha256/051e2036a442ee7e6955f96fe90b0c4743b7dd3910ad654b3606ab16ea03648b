@@ -1,0 +1,75 @@
+**Theorem 59.2 (Lossless density reduction for radii and lawful caps).** The map $\Pi$ is positive, additive, positively homogeneous and mass-preserving. It is idempotent, fixes every original target, and contracts event-supremum TV between probability measures. The space $P_{\mathcal G}$ is complete and separable in TV. For every occupied cylinder $C$,
+
+$$
+\inf_{v\in P_{\mathcal G}}\sup_{y\in C}\operatorname{TV}(v,\mu_y)
+=\rho_\mu(C).
+\tag{59.4}
+$$
+
+Consequently the original sharp value is exactly
+
+$$
+R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{v\in P_{\mathcal G}}
+                       \sup_{y\in C_m(x)}\operatorname{TV}(v,\mu_y).
+\tag{59.5}
+$$
+
+Moreover, for each cap $\eta\in[0,1]$, a lawful preparation within cap $\eta$ exists if and only if one exists whose prepared laws all belong to $P_{\mathcal G}$. The latter preparation hands tapes in the original $(\Theta,\mathcal F)$ to the same consumer on the same static source. Thus this restriction preserves cap feasibility, endpoint attainment and exact acquisition separately, on arbitrary measurable carriers.
+
+**Proof.** Both measures in the Lebesgue decomposition are finite and positive. Uniqueness makes their absolutely continuous and singular parts additive and positively homogeneous. Conditional expectation exists without a regular conditional distribution: for any nonnegative integrable $h$, apply Radon--Nikodym on $(\Theta,\mathcal G,\sigma|_{\mathcal G})$ to the finite measure $B\mapsto\int_B h\,d\sigma$. Its density is nonnegative, has the same integral as $h$, and is unique almost everywhere. Uniqueness gives additivity and positive homogeneity. A $\mathcal G$-measurable $h$ is its own conditional expectation. These statements prove all the asserted algebraic properties of $\Pi$, including
+
+$$
+\Pi\nu(\Theta)=\nu(\Theta),\qquad
+\rho\le\nu\Longrightarrow\Pi\rho\le\Pi\nu,
+\qquad \Pi\mu_y=\mu_y.
+\tag{59.6}
+$$
+
+Its image among probability laws is precisely $P_{\mathcal G}$, on which it is the identity.
+
+For the TV contraction, take probabilities $v,w$, dominate them by $\alpha=v+w$, and let their densities be $u,t$. Their greatest common submeasure is $\rho=\min(u,t)\alpha$. The event $\{u>t\}$ and its complement show directly that
+
+$$
+\operatorname{TV}(v,w)=\int(u-t)_+\,d\alpha
+                     =1-\rho(\Theta).
+\tag{59.7}
+$$
+
+By (59.6), $\Pi\rho$ is a common submeasure of $\Pi v$ and $\Pi w$ with the same mass. Their positive residual measures each have total mass $1-\rho(\Theta)$, so every event discrepancy between them is bounded by that number. Hence
+
+$$
+\operatorname{TV}(\Pi v,\Pi w)\le\operatorname{TV}(v,w),
+\qquad
+\operatorname{TV}(\Pi v,\mu_y)\le\operatorname{TV}(v,\mu_y).
+\tag{59.8}
+$$
+
+Applying the second inequality to each center gives one inequality in (59.4); inclusion $P_{\mathcal G}\subseteq\mathcal P(\Theta,\mathcal F)$ gives the other. Each cylinder is handled separately, with no presumed center attainer or exchange of extrema. Equation (59.5) then follows in the original order of quantifiers.
+
+The rational level sets of the countably many $f_i$ generate $\mathcal G$, so their finite Boolean combinations form a countable generating algebra. Every $\mathcal G$-measurable set can be approximated in $\sigma$-measure by this algebra: the class of approximable sets contains the algebra, is closed under complements, and is closed under countable unions by first truncating a union to finitely many terms under the finite measure. Rational simple functions over the algebra are consequently dense in $L^1(\sigma|_{\mathcal G})$. This space is separable and complete. Its inclusion in $L^1(\sigma)$ is isometric, and its nonnegative integral-one subset is closed. For two densities in that subset, (59.7) gives
+
+$$
+\operatorname{TV}(g\sigma,k\sigma)=\frac12\int|g-k|\,d\sigma.
+\tag{59.9}
+$$
+
+This proves the asserted completeness and separability of $P_{\mathcal G}$ even when the full tape sigma algebra has no countable-generation property.
+
+It remains to establish the operational assertion; contraction alone would not establish it. Suppose a lawful preparation has laws $\lambda_y$. Lemma 45.3 supplies, for each actual $x$, common finite-record submeasures $\rho_{x,m}\le\lambda_y$ for every $y\in C_m(x)$, with masses tending to one. Thus $\Pi\rho_{x,m}\le\Pi\lambda_y$ throughout that cylinder, with unchanged mass. The greatest common submeasure $\ell'_C$ of the countable family $(\Pi\lambda_y)_{y\in C}$ therefore satisfies
+
+$$
+a'_{C_m(x)}:=\ell'_{C_m(x)}(\Theta)
+\ge\rho_{x,m}(\Theta)\longrightarrow1.
+\tag{59.10}
+$$
+
+These greatest submeasures exist by the same countable RN-infimum argument as Theorem 46.4. They increase under cylinder refinement and are dominated along source $x$ by $\Pi\lambda_x$.
+
+For completeness, their actual realization is the positive-increment construction of that theorem. At the root use $\Delta_X=\ell'_X$; at every other occupied node with parent $C^-$ use $\Delta_C=\ell'_C-\ell'_{C^-}$. Preload an original-tape coordinate $W_C$ of law $\Delta_C/\Delta_C(\Theta)$ when its mass is positive, and a fixed tape when it is zero. All these coordinates and an independent uniform $U\in(0,1)$ belong from the start to one source-independent product seed. At a reached node $C$, hand over $W_C$ if $U<a'_C$; otherwise query the next actual prime. The node-output submeasure is $\Delta_C$, since reaching a non-root node implies $U\ge a'_{C^-}$. Along each actual source the submeasures telescope to $\ell'_{C_m(x)}$, and (59.10) gives a finite actual handoff almost surely with total output law $\Pi\lambda_x$.
+
+Finite records and output-event preimages are measurable interval and coordinate events, or countable unions of them. The normalized coordinates are probability laws on the original arbitrary measurable tapes; the countable product gives a seed directly. The consumer receives the selected tape, with no further record input. This uses no conditional sampling kernel implementing $\Pi$, and supplies no uniform horizon, effectiveness or finite-description sampler. By (59.8) the new uniform error is no greater than that of $\lambda$. Conversely any lawful preparation valued in $P_{\mathcal G}$ is already a lawful preparation on the original carrier.
+
+The finite-measure decomposition and conditional-expectation ingredients are standard: see Fremlin, *Measure Theory*, [232I, Lebesgue decomposition](https://www1.essex.ac.uk/maths/people/fremlin/chap23.pdf), and [242J(b)--(g), printed pp. 13--14](https://www1.essex.ac.uk/maths/people/fremlin/chap24.pdf). Their inputs here are finite tape measures and a sigma subalgebra of a probability space. The acquisition bridge is the original prime-prefix construction of Theorem 46.4. The conclusion is their lossless reduction for this fixed acquisition problem, rather than a new conditional-expectation or product-measure theorem. $\square$
+
+The range in (59.2) is target-defined modulo null sets. Changing countably many density versions changes its sigma algebra only modulo the common null ideal. More generally take another positive target mixture $\sigma'=\sum_i a_i\mu_{x_i}$, with $a_i>0$ and $\sum_i a_i=1$. Its density $w=d\sigma'/d\sigma=\sum_i a_i f_i$ is $\mathcal G$-measurable, finite and positive almost everywhere. The new target densities are $f_i'=f_i/w$, and conversely $1/w=\sum_i2^{-i}f_i'$. These two formulas identify the density-generated sigma algebras modulo their common null ideal. They also identify their law ranges by $g\sigma=(g/w)\sigma'$. Thus enumeration and positive mixture weights do not change the reduced probability-law range.
+

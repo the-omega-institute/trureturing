@@ -1,0 +1,101 @@
+## 18. Suppliers, new scope and the remaining coupled problem
+
+The new source-relative result is the combination of a decidable
+presentation family, its exact whole-row disagreement language, and the
+finite descending test with a complete paid consumer. The family inclusion
+and the two active non-orbit examples show an infinite class of genuinely
+coupled inputs beyond the literal-history and whole-source orbit fragments.
+Theorem 17.1 locates a different precise representation obstruction.
+These are ordinary `repo-derived` deductions. Finite automata closure,
+productive-state calculations, syntactic cancellation, the image parser
+and the inherited read/service bridge are reused methods, not newly
+claimed general mathematics. There is no global-priority claim.
+
+The supplier correspondence is bounded and explicit.
+
+- [SLH, §§59–62 and 74.2–74.4][SLH] supplies the complete old-row and
+  prefix-pattern correspondence, original-coordinate locality, and the
+  literal-only entire-row criterion. Proposition 3.2 supplies the
+  guarded relation extension. Proposition 10.3 checks their exact
+  interfaces without dropping any old or endpoint condition.
+- [SLH, §69][SLH] already uses aligned suffix coordinates and finite-set
+  descriptions of whole trees and their iterates for finite historical
+  VALUE minimax. The shared-coordinate idea and its finite-tree semantics
+  are supply. The present full-row disagreement problem includes unknown
+  whole exterior trees and new complete equality partitions, so it is
+  not a renamed finite VALUE task. No extension of that minimax formula
+  to this task is claimed.
+- [SLH, §§70–73][SLH] retains its known-ancestor and joint-extension
+  results. Section 2 retains static/serial existence equivalence, and
+  §§4–8 retain their root-certificate classification and ordinary-cell
+  barriers. Theorem 14.1 supplies an effective family decision in addition
+  to those existence and special-fiber results.
+- [TATA][TATA], Theorems 1.1.9, 1.3.1 and 1.7.4, supplies determinization,
+  Boolean closure and productive-state emptiness for finite ranked-tree
+  automata. Here every alphabet, state set, template and formula is
+  finite, and padding validity is explicitly part of the language.
+  Lemma 11.2 states the concrete interpreted-graph construction;
+  Theorem 13.1 proves the exact finite-prefix recurrence. Neither a
+  general tree-homomorphism closure nor an emptiness theorem alone
+  supplies the whole-source/full-row bridges.
+- The weak-second-order finite-tree correspondence in [TATA, Lemma 3.3.4
+  and Theorem 3.3.8][TATA] is alternative background for the aligned
+  finite-set supplier in §69. It is not needed by the direct automata
+  construction here. No quantified support is silently restricted to a
+  visible finite window, and no MONA execution is asserted.
+- Pinned [mathlib DFA][ST-DFA] and [NFA][ST-NFA] provide word-automaton
+  closure and determinization results such as `DFA.accepts_compl`,
+  `DFA.accepts_inter` and `NFA.toDFA_correct`. Their word domains are not
+  the finite ranked-tree tuple domain here. They are not an exact Lean
+  supplier of this coupled criterion. The bounded inspected sources
+  supply no compiled application of Theorem 14.1.
+
+For raw-price scope, the [serial-price supplier (SCR)](https://github.com/the-omega-institute/trureturing/blob/4aa70704d18ea51257d443e0c58a4d5af0da90c7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md),
+Assumption 1.1 and Definition 1.2, has the exact specialization
+$H=H_0$, $H_{\rm rel}=\varnothing$. Its entire domain $D$ then equals
+$\mathcal U_R(H_0,\varnothing)$: the original free trees, arbitrary
+original cuts, concrete old context, repeated classes and every old
+cross-class disequality coincide. Its complete access cut includes every
+accessible source-bearing bit. The target is the same entire original
+$R_Q(u)$, and the two service classes have the same certified $N$,
+arbitrary finite physical addresses, deterministic source-total behavior,
+static restriction or real serial updates on one register. Actual new
+raw calls are counted with repetitions; acquisition, entry, addresses,
+local work, memory, certification, updates, archives and output remain
+separately paid. Empty relation history introduces no comparison port.
+SCR Theorems 4.2, 5.2 and 6.1 supply complete-row terminal predicates,
+the two-way strategy correspondence and effective exact prices for this
+literal-only domain, including zero, infinity and attaining services.
+These are reused ordinary supplier results; no extension of their
+minimax construction to arbitrary coupled relation constraints is made.
+
+SCR Theorem 7.2 supplies a strict separation within that specialization.
+It uses $P=\{\varepsilon\}$ with the single root-hole old row,
+$H_0=((0,RL,\mathsf{absent}))$, $H_{\rm rel}=\varnothing$ and $Q=\{L\}$.
+Its entire fiber is
+$\{\alpha,\beta\}\cup\{\langle x,b\rangle:x\in\mathcal T,
+\ b\in\{\alpha,\beta\}\}$.
+The four complete outputs are the two concrete leaf rows and the two
+one-hole rows $\langle\square_1,\alpha\rangle$ and
+$\langle\square_1,\beta\rangle$, each with its unique one-class partition.
+At the same initial $N=0$ or $N=2$, the static minimum is two new reads
+and the serial minimum is one. The serial upper bound uses one real
+paid update; its raw improvement does not make that update free.
+The supplier's lower bounds cover every finite physical address and
+all permitted deterministic services on this entire infinite fiber.
+Thus universal equality of the two minima is false already for
+$H_{\rm rel}=\varnothing$, hence also over the unrestricted class that
+contains it. This qualifies the price wording in Definition 9.1:
+literal-only exact prices are supplied, and blanket equality is refuted;
+computing the two prices for arbitrary coupled histories, and thereby
+deciding equality for each such input, remain outside these results.
+
+Source comparison starts with the immutable predecessor and this volume's
+existing results, then the named pinned library interfaces, then the
+cited author text. This is a bounded overlap and hypothesis check, not
+an exhaustive literature survey. The new decision is not attributed to
+[TABG][TABG] or [OSD][OSD]: no exact reduction of all the present interpreted
+constraints and prefix quantifiers to those theories is supplied. Related
+full-bispectrum and late-contact results have no established source map
+to this tree task and are not premises.
+

@@ -1,0 +1,17 @@
+**Convention 8.2 (reused formal and literature interfaces).** The following
+existing results fix the applicable boundaries; none supplies the
+missing original entry judgments.
+
+| Source | Exact use and hypotheses |
+| --- | --- |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean`, `operational_replay`, `reached_prefix_replay`, and its owning `Blueprint/D5/` Scribe | Replay/chronology follow from their actual run and reply-prefix premises. No replay implementation is added or counted as a new result here. |
+| `NativeFullSourceProducer.lean`, including private `traverse`, `production_reads`, `stationary`, public `native_source_producer`, and its owning Scribe | A fixed abstract source-blind traversal returns each finite source with its stated chronology and reads. It supplies neither this annex's installed entries nor its current channel authority. |
+| `NativeSourceSelectorCode.lean`, `selector_code_correct`/`realization`; `NativeSerialEffective.lean`, `OriginalCodeRealization`, `original_code_service_simulation`, private `erased_reads`/`erased_external`; their owning Scribes | Genuine-state numerical realization and its erased evaluator/external observation are their explicit interfaces. They do not equate that observation with this original complete-successor $Q$. |
+| `D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean` and `PredictiveMemoryMinimalQuotient.lean`, with their owning Scribes | The former presupposes typed partial edges/labels/readout; the latter presupposes both readout and update factorization. Undefinedness cannot be silently identified with defined unexecuted `none`. Neither premise is created by a history encoding. |
+| [Pinned mathlib `Function.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean), `FactorsThrough`/`factorsThrough_iff` | `literature-attested`: factorization requires constancy on the projection's fibres; the total-factor equivalence has a nonempty codomain hypothesis. Corollary 2.3 applies this elementary necessity to the concrete pair, rather than introducing another quotient. |
+| [Pinned mathlib `Encoding`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/Encoding.lean), `Encoding.decode_encode`; [StateTransition](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean), `Respects`/`tr_reaches` | `literature-attested`: an encoding requires its decoding law; reachability transport requires an already supplied simulation with one-or-more matching steps and termination matching. Neither gives original domains, equal receipts or actor access. |
+| Devriese, Patrignani, Piessens and Keuchel, [*Modular, Fully-abstract Compilation by Approximate Back-translation*](https://arxiv.org/pdf/1703.09988v4), LMCS13(4:2), DOI10.23638/LMCS-13(4:2)2017, §§1 and6, Theorem6.3 | `literature-attested`: preservation/reflection of contextual equivalence quantify over valid contexts of the specified calculi; Theorem6.3 concerns closed well-typed source terms and the specified compiler, with equitermination observations. This distinguishes endpoint encoding from contextual recovery. It supplies no admission, complete-successor or receipt theorem for this carrier. |
+
+No global literature novelty, library nonexistence, primitive minimality
+or derivation of update laws from the two syntax leaves is asserted.
+

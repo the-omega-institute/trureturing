@@ -1,0 +1,15 @@
+**定理6.1。** 固定任意允许先验和一台合格抽象有限实核观察者 M。对每个 $\varepsilon>0$，存在一台来源独立、时间齐次、全收费、有限 COMPLETE、有理有效核观察者 $M_\varepsilon$，从第一笔 Read 前定义，精确保留每配置同更新生成，同一模型同时满足
+
+$$
+R_j(\mathcal H_s;M_\varepsilon)\le R_j(\mathcal H_s;M)+\varepsilon
+\quad(s=p,\beta;\ j=\mathrm{law},\mathrm{conf}),
+$$
+
+$$
+\Delta_{\rm all}(M_\varepsilon)=\Delta_4(M_\varepsilon)
+\le\Delta_4(M)+\varepsilon.
+\tag{6.1}
+$$
+
+**证明。** §3给 $M^\circ$；§4保持其周期流并逼近发射。联合核连续，a 与 $\kappa$ 可任意小，选精度使(5.1)及(5.2)均小于 $\varepsilon$。第三锁存后抽有理 $\widehat\pi_0$；(4.2)使每条实际历史严格走相应模式行，故所有正有限返回历史共用相同界。结合(3.5)得(6.1)。早期仍公平，第三写入后的随机抽取属于同一原字母更新，早期和终端缺陷0。每配置解码定义为该同更新程序的完整律；不从边缘风险反推生成。原来源、记录、权限及(2.3)未改变。证毕。
+

@@ -1,0 +1,75 @@
+**Theorem 6.3 (terminating whole-row consumer on the represented class).**
+First apply NPL Theorem 5.3 to the entire input. If its whole-row image
+is infinite, no uniform finite-new-read controller exists under
+Assumption 6.1. If it is finite, let its exact attained row list be
+$\mathcal R$. Supply exact atomic-output representations for all but
+at most one member of $\mathcal R$, and test their eligibility as in
+Theorem 3.1. On acceptance there is a terminating decision of finite
+original-prefix determination on the entire $D$:
+
+- If every distinct pair is excluded by Theorem 4.1, the maximum of
+  their exclusion depths is a determining depth $H$.
+- If some pair is productive, its actual finite sources at every
+  requested depth obstruct uniformly raw-bounded whole-row recovery.
+
+For at most one attained row take $H=0$. Empty $D$ has only a vacuous
+logical determination conclusion. Failure of an offered cover or of
+eligibility rejects this represented class; it is not a recovery NO.
+
+On the determining outcome and $D\ne\varnothing$, at every authentic
+permitted $N$ there is a lawful static whole-row service with sufficient
+bounds
+
+$$
+\begin{aligned}
+q_0&=2(2^{H+1}-1),&a_0&=0,\\
+\max|p_{\rm physical}|&\le H+\lceil N/2\rceil,&
+\ell_0&\le q_0(H+\lceil N/2\rceil).
+\end{aligned}
+\tag{AAB.20}
+$$
+
+Proof. A source-total controller with at most $K$ new reads has at
+most $4^K$ terminal outputs: its common deterministic control and
+four-valued reply histories give a finite reply tree. This is [NPL,
+Lemma 6.1][NPL], and excludes uniform raw bounds for the infinite
+whole-row image. In the finite case every pair has an eligible anchor
+because at most one row lacks one. Apply Theorem 4.1 to each of the
+finitely many pairs. Exclusion depths can be maximized. A pair with
+different rows at a prefix of that maximum would contradict its own
+exclusion. Conversely a productive pair contradicts every possible
+determining depth. This proves the full-domain choice and retains
+the complete row image, rather than a finite source sample.
+
+For the positive service reuse ARH's prefix-to-static direction of
+(2.3), with [SLH, Theorem 2.2][SLH]'s paid decoder at the actual $N$.
+Request all original replies at $|p|\le H$. There are $2^{H+1}-1$
+such addresses, each decoded by at most two actual current-register
+reads of length at most $H+\lceil N/2\rceil$. No new update or old
+version access is used. This proves (AAB.20), counting actual repeated
+calls as well.
+
+Enumerate finite native candidate trees and test each against the
+complete retained input and the recovered original prefix. Membership
+on a finite candidate is decidable by direct evaluation. The actual
+source guarantees a successful candidate, so this local computation
+terminates sourcewise. Output its full $R_Q$. Determination makes
+that row common to all successful candidates and to the actual
+source; the chosen candidate is not identified with that source.
+Then enter absorbing Halt. Preparation, candidate enumeration and
+installation are effective but receive no uniform time, storage or
+free-cost guarantee. This is the original legal service interface,
+not an additional semantic observation mechanism. $\square$
+
+Irrespective of a uniform obstruction, every finite original source
+admits the existing source-total paid static traversal at $N$: decode
+its root, and after each decoded branch decode its two original
+children. It terminates on that finite tree and uses at most
+$2|\operatorname{Pos}(u)|$ new reads, as in [ARH, §31][ARH]. This is
+a source-dependent bound, not a uniform bound on an infinite domain.
+The sufficient bounds in (AAB.20), the coordinate-worst vector and
+the same-source weighted value in (AAB.19) establish no global optimum.
+Outputting a row does not erase old records or other accessible fields.
+A complete successor retention operation and its exact new source
+fiber require a separately supplied, paid original legal contract.
+

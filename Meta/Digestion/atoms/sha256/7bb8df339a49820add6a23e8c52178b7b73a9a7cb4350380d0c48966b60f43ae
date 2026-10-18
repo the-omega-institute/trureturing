@@ -1,0 +1,16 @@
+## 488. 奇数半常数裕量与二幂补齐的准确成本
+
+本节从实际素数 $2$ 的几何前缀比较两种整数裕量。奇数半常数形式的文献入口是 Washington–Yang，*The Robin inequality for odd integers*，[arXiv:2008.04787](https://arxiv.org/abs/2008.04787)。近期 [odd Robin 有限核心](https://github.com/n0zer0d4y/simple-zeros-hilbert-robin-epstein/blob/f0c55f48e0710ea7f52b4eff2fa1dd7f9f1b2d92/lean/SimpleZerosHilbertRobinEpstein/OddRobin/OddRobinCore.lean) 给出实际约数和的范围剪枝；这里复用约数和乘法性与既有二幂补齐结构，推导其完整对数裕量之间的成本。没有以有限剪枝代替全整数域比较。
+
+设 $m\ge3$ 为奇数，$E=\log m>1$，$L=\log2$。定义
+
+$$
+\Delta_{\rm odd}(m)=\gamma-\log2+\log\log E-\log\frac{\sigma(m)}m,
+$$
+
+$$
+\Delta(n)=\gamma+\log\log\log n-\log\frac{\sigma(n)}n.
+$$
+
+第一式为正恰是 $\sigma(m)<(e^\gamma/2)m\log\log m$；第二式为正恰是普通 Robin 不等式。所有取对数的量均为正。
+

@@ -1,0 +1,80 @@
+## 44. Thermodynamics is relative to a reference and an observation level
+
+For a reference state \(\pi_\beta\), define the relative free-energy defect
+
+\[
+\mathfrak F_\beta(\rho)
+=
+\beta^{-1}D(\rho\Vert\pi_\beta),
+\tag{44.1}
+\]
+
+up to an additive reference constant. In a finite Gibbs realization
+
+\[
+\pi_\beta
+=
+\frac{e^{-\beta H}}{\operatorname{tr}(e^{-\beta H})},
+\]
+
+this is equivalent to
+
+\[
+\mathfrak F_\beta(\rho)
+=
+\operatorname{tr}(H\rho)-\beta^{-1}S_{\mathrm{vN}}(\rho)
+-\text{constant}.
+\tag{44.2}
+\]
+
+The word “relative” has two independent meanings in the project:
+
+1. the state is compared with a chosen reference equilibrium or product state;
+2. the observer sees only a quotient \(\mathsf O(\rho)\), so the measured defect is relative to an observation algebra.
+
+For a coarse-graining \(\mathsf O\) represented by a completely positive trace-preserving map,
+
+\[
+D(\rho\Vert\pi_\beta)
+\geq
+D(\mathsf O\rho\Vert\mathsf O\pi_\beta).
+\tag{44.3}
+\]
+
+Define the lost relative information
+
+\[
+\mathfrak I_{\mathsf O}(\rho\Vert\pi_\beta)
+=
+D(\rho\Vert\pi_\beta)
+-
+D(\mathsf O\rho\Vert\mathsf O\pi_\beta)
+\geq 0.
+\tag{44.4}
+\]
+
+This is the observation-level information ledger. It is the mathematically controlled version of local information escape. It depends on \(\mathsf O\) and \(\pi_\beta\); it is not an absolute scalar called “heat”.
+
+For the FIB carrier, \(\mathsf O_{\mathrm{FIB}}(p)=(X,Y,Z)\) forgets \(\kappa\). On the sector \(z=0\), the conditional defect is
+
+\[
+(1-Z)
+D\!\left(
+p_{xy\mid z=0}
+\middle\|
+p_{x\mid z=0}p_{y\mid z=0}
+\right),
+\]
+
+which vanishes exactly at
+
+\[
+(1-Z)\kappa-XY=0.
+\]
+
+The hidden joint mode \(25\) therefore provides a finite exact example of a reference-dependent, observation-dependent thermodynamic defect.
+
+For classical Markov dynamics, the relative free-energy functional decreases under detailed-balance evolution. The entropy-production and free-energy identities separate spontaneous relaxation from externally maintained housekeeping dissipation. See Ge and Qian, arXiv:0911.3984. For quantum Markov semigroups, quantum detailed balance gives the corresponding equilibrium and entropy-production structure through relative entropy of the forward and backward evolution. See Fagnola and Rebolledo, arXiv:1212.1366.
+
+This supports the project's static-field convention: the compatible field state may be static, while \(\tau\) is a bookkeeping parameter for a chosen generator. Physical time is a further realization of \(\tau\), requiring an operational clock and a continuum limit. The mathematical entropy ledger can be established before that physical interpretation.
+

@@ -1,0 +1,32 @@
+**Lemma 2.2 (Normalization, stationarity and the initial mean).** The law in Definition 2.1 is stationary. Its defining sums and moments are finite at every interior $q$, and
+
+$$
+S_i(0)=S_i(1)=1,\qquad
+\sum_{b\ge0}S_i(b)=\mu_i,\qquad
+\mathbb E_{i,q}\tau=\beta_i.
+\tag{2.4}
+$$
+
+Proof. Polynomial growth times $q^k$ is summable with every fixed polynomial weight. For each $k\ge1$, its mass occurs in $S_i(b)$ for $b=0,\ldots,k$. Interchanging nonnegative sums gives the middle identity in (2.4). Weighting by $b$ instead gives $\sum_b bS_i(b)=\sum_k k(k+1)f_i(k)/2$, proving the last identity.
+
+For stationarity, consider only as a proof variable the countdown $R_t$ to the next tick. From a positive value $b$ it moves to $b-1$; from zero it draws a fresh value $K$ with law $f_i$. Its candidate stationary mass is $\pi(b)=S_i(b)/\mu_i$. Its incoming mass at $b\ge0$ is
+
+$$
+\pi(b+1)+\pi(0)f_i(b)
+=\frac{S_i(b+1)+f_i(b)}{\mu_i}
+=\pi(b).
+\tag{2.5}
+$$
+
+Here $f_i(0)=0$ and $S_i(0)=S_i(1)$ handle $b=0$. Start this chain with $\pi$ and take $X_t=\mathbf1_{\{R_t=0\}}$. Its first zero value occurs at $\tau=R_0$, and the future renewals use independent draws of $K$. This is (2.3), so the observed process is stationary. Equivalently, size-bias a cycle by its $K+1$ sites and choose a uniform site: each possible forward wait $0,\ldots,K$ receives one site. Neither construction supplies the observer with a countdown or initial age. $\square$
+
+Write
+
+$$
+R_m(t)=\sum_{k\ge1}k^m e^{-tk},\qquad
+g(t)=\frac{R_{d-r}(t)}{R_d(t)},\qquad A_r=\frac{(d-r)!}{d!}.
+\tag{2.6}
+$$
+
+For nonnegative integer $m$ this is the ordinary power sum. Negative indices will be used only in the explicitly bounded sums of Section 6.
+

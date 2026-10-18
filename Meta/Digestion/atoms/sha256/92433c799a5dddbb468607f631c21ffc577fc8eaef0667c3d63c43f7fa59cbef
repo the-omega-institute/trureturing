@@ -1,0 +1,38 @@
+**命题 200.7（真正失败必须具有的守卫冲突）。** 以下均使用完整目录评分。
+
+1. 若 $y\ge0$、$\Delta_O(y)=0$ 且 $Q(y)\notin D_N(0)+P_H$，则存在
+   $3\le j\le L$ 使 $c_j(y)>0$。
+2. 若 $y\ge0$、$\delta=\Delta_O(y)\le1$ 且 $Q(y)\notin E_N$，则对定理
+   199.3 给出的任意 $b\in H$、完整 $N$ 配置 $\lambda\ge0$ 和质量
+   $M=\sum_D\lambda_D\ge1$，其中 $G_N\lambda\ge h(b)$、$F_y(b)>M$，有
+   $$
+   \Gamma(y)>M-\delta\ge1-\delta.
+   \tag{200.18}
+   $$
+3. 在[定义 165.1 与定理 165.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#165-a-unique-radial-direction-away-from-the-first-two-prefix)的闭域
+   $Q_L$ 内，设 $x=(1-t)\alpha+tb$，$b\in H$、$0<t\le1$，且某非负评分的
+   完整停止支持间隔 $g_{\rm sep}=y\cdot d(x)-B_O(y)>0$。则
+   $$
+   g_{\rm sep}=tF_y(b)-\delta
+      \le t\Gamma(y)-(1-t)\delta,\qquad
+   \Gamma(y)\ge\frac{g_{\rm sep}+(1-t)\delta}{t}>0.
+   \tag{200.19}
+   $$
+
+**证明。** 第一项是 (200.17) 的逆否命题。第二项将
+$M<F_y(b)\le\delta+\Gamma(y)$ 移项即可；所用 $b,\lambda,M$ 的存在性来自
+定理 199.3，不在此假定存在一个实际失败评分。第三项由
+$d(x)-\mathbf r=t(d(b)-\mathbf r)$ 和定理 200.4 直接得到 (200.19)。
+该计算只对所显示的 $Q_L$ 径向表示使用，$t=0$ 不作除法。
+
+上述每一种失败都强制 $\Gamma(y)>0$，从而某个 $c_j(y)>0$。这等价于：对每个
+候选较早地址 $i<j$，都有一个字 $w\in W_j(y)$ 在 $i$ 处回答一。这样的正基或
+pair 支持必涉及至少两个不同首零类，否则该单一首零位置本身就是共同守卫，与
+$c_j>0$ 矛盾。这是必要条件，不是分离的充分条件。$\square$
+
+将第三项解释为原始有限帽分离时，还必须有完整 $N$ 概率可行见证，并使用既有
+[定理 167.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#167-exact-radial-intervals-and-the-missing-budget-exchange)的径向概率区间、
+[定理 168.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#168-closed-auxiliary-boundaries-and-the-original-positive-domain)的残差范围与正闭帽运输，以及定理 110.2 的原始类保持运输。
+辅助方向的支持间隔本身不提供这样的原始实现；命题 199.7 则给出完整证书失败时
+取得有限概率见证的既有条件结论。
+

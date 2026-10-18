@@ -1,0 +1,11 @@
+**Theorem 5.2 (why the midpoint construction does not identify the two contracts).** The attaining common decoder of Theorem 4.2 does not satisfy the self-generated-law condition at its saturated state.
+
+**Proof (5.2).** Its decoded law there is $G_\beta$ with $0<\beta=\delta_{N_2}/2<1$. Conditioning this law on a next $B$ changes its fast-component mass to
+
+$$
+\beta'=\frac{\beta u}{(1-\beta)v+\beta u}
+=\frac{\beta\theta}{1-\beta+\beta\theta}<\beta.
+$$
+
+The state update on $B$ stays at $R_d$ and therefore still decodes $G_\beta$. Theorem 3.1 separates these two residual profiles. A self-generated profile would instead have its conditional tail equal to the decoder at that successor. Thus common-law optimality alone does not settle the stronger optimum. This distinction does not affect the actual-history guarantee already proved for the midpoint observer. $\square$
+

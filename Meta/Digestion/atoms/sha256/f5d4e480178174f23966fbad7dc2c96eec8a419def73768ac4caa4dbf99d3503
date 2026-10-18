@@ -1,0 +1,51 @@
+**Definition 10.2 (oriented square torus).** Let $m\ge3$ be an
+integer, put $n=m^2$, and take vertices
+$V=(\mathbb Z/m\mathbb Z)^2$. There are $2n$ distinct undirected
+edges, with the public orientations
+
+$$
+e^x_{x,y}:(x,y)\longrightarrow(x+1,y),\qquad
+e^y_{x,y}:(x,y)\longrightarrow(x,y+1).
+\tag{OCC.30}
+$$
+
+All indices are modulo $m$. Let $s^x_{x,y},s^y_{x,y}\in\mathbb F_2$
+be their bits and set $\operatorname{bit}(0)=\alpha$,
+$\operatorname{bit}(1)=\beta$. The block at $v=(x,y)$ is
+
+$$
+x_v(s)=\left\langle
+ \left\langle\operatorname{bit}(s^x_{x,y}),
+                    \operatorname{bit}(s^y_{x,y})\right\rangle,
+ \left\langle\operatorname{bit}(s^x_{x-1,y}),
+                    \operatorname{bit}(s^y_{x,y-1})\right\rangle
+ \right\rangle\in S_3.
+\tag{OCC.31}
+$$
+
+Its outgoing east and north bits are owned at its actual $LL$ and
+$LR$ ports. Its incoming west and south bits occupy $RL$ and $RR$.
+Thus $O_v=(s^x_{x,y},s^y_{x,y})$ is the whole actual owner tuple.
+The incoming bits have distinct outside owners $(x-1,y)$ and
+$(x,y-1)$. Each seed has prescribed incidence exactly two.
+
+For clarity, the complete native template fixes the factors at
+$\varepsilon,L,R$ to $(0,0)$. At each terminal port it queries that
+edge's designated actual owner, using the total table
+
+$$
+\delta(\alpha)=(2,1),\qquad \delta(\beta)=(1,0),\qquad
+\delta(\mathsf{branch})=\delta(\mathsf{absent})=(2,1).
+\tag{OCC.32}
+$$
+
+Every value belongs to that terminal target's attained factor range.
+At an owner the equation queries itself; its two unused inputs have
+output reply alpha, different from either unused input. These are
+actual binary guards, not a promised source alphabet. The three branch
+equations and four leaf equations force exactly (OCC.31).
+Conversely every edge vector builds these actual blocks and satisfies
+all equations. Actual owner replies recover every edge bit. This is
+the credited GDB carrier with both solution directions explicit; its
+full solution set has $2^{2n}$ tuples before weights are applied.
+

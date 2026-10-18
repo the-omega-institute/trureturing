@@ -1,0 +1,56 @@
+**Theorem 3.1 (regular-incidence comparison).** Suppose every surviving
+variable belongs to exactly $r$ factor scopes, for an integer $r\ge1$.
+With finite counting norms on each full factor domain,
+
+$$
+Z(\Phi)\le B_F(\Phi):=\prod_f\|\Phi_f\|_r
+\le B_{\rm inc}(\Phi)
+=\prod_f\prod_{c\in I_f}\|m_{fc}\|_r^{1/k_f},
+\tag{INB.10}
+$$
+
+where here $m_{fc}(a)=\sum_{z:z_c=a}\Phi_f(z)$. This includes
+arbitrary full joint tables, zeros and cycles. Over the same set of
+whole-scope compensations (INB.9),
+
+$$
+\inf_{\Psi}B_F(\Psi)\le\inf_{\Psi}B_{\rm inc}(\Psi).
+\tag{INB.11}
+$$
+
+Proof. Choose any strictly positive probability $q_c$ on each $T_c$.
+On its scope put
+
+$$
+f_f(z)=\Phi_f(z)\prod_{c\in I_f}q_c(z_c)^{-1/r}.
+$$
+
+Every variable appears $r$ times, so under the product probability
+$\prod_cq_c$, the integral of $\prod_ff_f$ is exactly $Z(\Phi)$.
+Also $\int f_f^r\,d q_{I_f}=\sum_z\Phi_f(z)^r$. Finner's
+generalized Hölder inequality, in the inspected attributed restatement
+[Lubetzky–Zhao, Theorem 3.1][LZ], applies: its scopes are nonempty,
+its exponents are $r\ge1$, and at each coordinate their reciprocal
+sum is $r/r=1$. It yields the first inequality in (INB.10). This is
+a product integration carrier, not an assertion that the constrained
+actual seeds are independent.
+
+For each port, nonnegativity and integer $r\ge1$ give
+
+$$
+\sum_a\left(\sum_{z:z_c=a}\Phi_f(z)\right)^r
+\ge\sum_z\Phi_f(z)^r.
+$$
+
+Indeed expansion of an integer power includes the individual $r$th
+powers and has only nonnegative additional terms. Taking $r$th roots
+and the geometric mean over the $k_f$ ports proves the second
+inequality. The final equality follows from Theorem 2.2 with counting
+seed measures. Apply this comparison to each $\Psi$ satisfying
+(INB.9), whose partition sum is still $Z$, and take infima. $\square$
+
+Regular incidence is essential to the stated common exponent and counting
+normalization. No claim that bounded native incidence implies regularity
+is made. The inequality is a comparison of these two estimates on the
+same tables; §5's varying seed measures are not included in (INB.11).
+

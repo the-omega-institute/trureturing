@@ -1,0 +1,16 @@
+**Definition 8.1 (the precise decomposition class).** Fix integers
+$L,g\ge1$, let $n=g(L+1)$, and partition $[n]$ into $g$ groups
+of size $L+1$. On the original $d=1$ blocks let
+
+$$
+B_{L,g}=\{x\in S_1^n:
+            x_i=x_j\text{ whenever }i,j\text{ are in one group}\}.
+\tag{SIR.41}
+$$
+
+An exact fixed-coordinate restricted decomposition covers this full
+relation by full solution sets of $\mathfrak N_{1,L}(n)$, each
+contained in $B_{L,g}$, with no new blocks, variables or cut.
+This class describes the same-solution section mechanism, not
+all possible admissible covers containing the relation.
+

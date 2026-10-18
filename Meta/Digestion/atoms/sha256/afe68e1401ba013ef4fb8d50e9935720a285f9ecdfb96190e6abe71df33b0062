@@ -1,0 +1,32 @@
+**Definition 68.3 (Regular densities on disjoint original-tape blocks).** As an additional supplier hypothesis, specify the following data from the original targets and tape structure. Let $B_n\in\mathcal F$, $n\ge1$, be pairwise disjoint. For each $n$, let $\tau_n$ be a probability on the original tapes, supported on $B_n$, absolutely continuous with respect to $\sigma$, and with a $\mathcal G$-measurable density $r_n=d\tau_n/d\sigma$. Let $S_n$ be a nonempty compact metric space with metric $d_n$ and its Borel sigma algebra, and let $T_n:B_n\to S_n$ be a measurable rank whose extension by a fixed point off $B_n$ has a $\mathcal G$-measurable version modulo $\sigma$-null sets. Require
+
+$$
+\rho_n=(T_n)_*\tau_n,\qquad
+\rho_n(V)>0\quad\text{for every nonempty open }V\subseteq S_n.
+\tag{68.6}
+$$
+
+A density version $r_n$ is zero off $B_n$ almost everywhere. Let $\omega_n:[0,\infty)\to[0,\infty)$ be finite and nondecreasing, with $\omega_n(0)=0$ and $\omega_n(a)\to0$ as $a\downarrow0$. Define the fixed normalized class
+
+$$
+\begin{aligned}
+\mathcal A_n=\{u\in C(S_n;\mathbb R):\;&u\ge0,\quad\int u\,d\rho_n=1,\\
+&|u(s)-u(t)|\le\omega_n(d_n(s,t))\quad(s,t\in S_n)\}.
+\end{aligned}
+\tag{68.7}
+$$
+
+It contains the constant function $1$. With $\mathcal P(\mathbb N)$ denoting the probability vectors on the positive integers, set
+
+$$
+\begin{aligned}
+\mathcal R&=\left\{\sum_{n\ge1}a_n\,u_n(T_n)\tau_n:
+       a\in\mathcal P(\mathbb N),\ u_n\in\mathcal A_n\right\},\\
+P_{\mathcal R}&=\left\{\sum_{n\ge1}a_n r_n\,u_n(T_n):
+       a\in\mathcal P(\mathbb N),\ u_n\in\mathcal A_n\right\}.
+\end{aligned}
+\tag{68.8}
+$$
+
+The factor $u_n(T_n)$ in a measure means integration against $\tau_n$ on the actual block. The density sum is taken modulo null sets, with zero off the union of the blocks. Its nonnegative terms have integrals $a_n$, so every member of $P_{\mathcal R}$ has integral one, is likelihood measurable modulo null sets, and defines exactly the corresponding law in $\mathcal R\subseteq P_{\mathcal G}$. If $a_n>0$, its law conditional on the measurable event $B_n$ has density $u_n(T_n)$ relative to $\tau_n$. This is conditioning on a declared tape block, not on a source or a preparation failure. No disintegration of the original tape space is assumed. Zero-mass blocks can use $u_n=1$.
+

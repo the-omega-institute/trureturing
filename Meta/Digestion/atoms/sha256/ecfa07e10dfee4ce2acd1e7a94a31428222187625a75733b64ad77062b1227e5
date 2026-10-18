@@ -1,0 +1,58 @@
+**定义 47.1（在证明前指定的供应与域）。** 设 $n\ge10$，记
+
+$$
+\ell=n-7\ge3,\qquad d=n-2=\ell+5,\qquad m=n-1=\ell+6,\qquad T=\ell-1=n-8.
+$$
+
+使用互异标签 $p,q,u_1,u_2,u_3,u_4,x,v_1,\ldots,v_\ell$，记 $U=(u_1,u_2,u_3,u_4)$、$\overline U=(u_4,u_3,u_2,u_1)$、$V=(v_1,\ldots,v_\ell)$。取第 24 节在有序遗漏标签
+
+$$
+(z_1,\ldots,z_d)=(u_1,u_2,u_3,u_4,x,v_1,\ldots,v_\ell)
+$$
+
+上的种子，其供应集与完整邻域并分别记为 $\mathcal S_*$、$\mathcal D_*$。指定以下遗漏 $p$ 的准备供应：
+
+$$
+\begin{aligned}
+P_0&=(p,[\overline U,x,q,V]),\\
+P^U_r&=(p,[u_4,\ldots,u_{r+1},x,u_r,\ldots,u_1,q,V]),&&1\le r\le3,\\
+P^V_t&=(p,[\overline U,q,v_1,\ldots,v_t,x,v_{t+1},\ldots,v_\ell]),&&1\le t\le T,\\
+P_*&=(p,[x,\overline U,v_1,q,v_2,\ldots,v_\ell]).
+\end{aligned}
+$$
+
+它们组成 $\mathcal P$，其大小为 $\ell+4=n-3$。再指定
+
+$$
+Q_L=(q,[p,x,V,\overline U]),\qquad Q_R=(q,[p,V,x,\overline U]),
+$$
+
+并记
+
+$$
+\mathcal S^-=\mathcal S_*\cup\mathcal P\cup\{Q_L,Q_R\},\qquad
+\mathcal D^-=N(\mathcal S^-).
+$$
+
+闭域重接供应和预留供应为
+
+$$
+A=(x,[p,q,V,\overline U]),\qquad
+B_t=(q,[p,v_1,\ldots,v_t,x,v_{t+1},\ldots,v_\ell,\overline U]),\quad1\le t\le T.
+$$
+
+对 $0\le k\le T$，在任何边界性质证明前定义
+
+$$
+\mathcal S_{n,k}=\mathcal S^-\cup\{A,B_1,\ldots,B_k\},\qquad
+\mathcal D_{n,k}=\mathcal D^-\cup\bigcup_{t=1}^kN(B_t),
+$$
+
+$\Omega_{n,k}$ 为圆序属于 $\mathcal D_{n,k}$ 的全部实际排列，剩余预留供应为 $B_{k+1},\ldots,B_T$。各供应的原生有向代表取上述括号内序列；对遗漏标签 $s$、残余代表 $W$，原生端点为
+
+$$
+L_j=(\operatorname{rot}_jW,s),\qquad R_j=L_jb,\qquad R_jc=L_{j+1},
+$$
+
+指标按 $m$ 循环。正、负号分别表示当前定向实际圈沿 $L_j\to R_j$ 或反向经过旧 $b$ 切口。
+

@@ -1,0 +1,5 @@
+source_id = "fibonacci-atomic-relation-generation-robin-odd-mobius-harmonic-rate"
+path = "docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_ODD_MOBIUS_HARMONIC_RATE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

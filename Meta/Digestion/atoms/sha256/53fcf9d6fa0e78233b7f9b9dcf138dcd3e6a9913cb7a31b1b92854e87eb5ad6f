@@ -1,0 +1,64 @@
+**定义 46.2（The same-word parent response family）。** At a cut $a$, retain the actual literal parent set
+
+$$
+\mathcal B_a=\{B\in\{0,1\}^m:B\text{ avoids }1^k,\
+ B_i=1\ (i<a),\ B_a=0\}.
+\tag{46.3}
+$$
+
+Let $\tau(B)$ be its actual terminal run of ones. Its arithmetic root response and actual image are
+
+$$
+e_B(j)=\bigoplus_{i=0}^{m-1}B_i c_{i-j},\qquad
+E_B=\{j\in P:e_B(j)=1\},\qquad
+\mathcal R_a=\{E_B:B\in\mathcal B_a\}.
+\tag{46.4}
+$$
+
+A successful source observes $e_B(j)$ as its first endpoint difference. Formula (46.4) does not turn a rejecting source's output into a binary difference. Both $E_B$ and $\tau(B)$ belong to this same parent, with its same first zero.
+
+For use in the minimum below, the supplied literal image mechanisms [S10, Interface 2.1] and [CR46, Theorem 2.2] give the following descriptions. They are consumed parent interfaces, rather than separate cost results. At odd critical width $m=k$,
+
+$$
+\begin{aligned}
+\mathcal R_0&=\{E\subseteq P:|E|\text{ even},\ 0\notin E\},\\
+\mathcal R_a&=\{E\subseteq P:|E|\text{ even},\ \{0,a\}\subseteq E,\
+ E\cap\{1,\ldots,a-1\}=\varnothing\}\quad(a>0).
+\end{aligned}
+\tag{46.5}
+$$
+
+Its actual unique word is $B_i=\bigoplus_{j=0}^i\mathbf1_E(j)$, $0\le i<k$. Empty and full masks are retained whenever (46.5) permits them.
+
+For $m>k$ and $g=1$, put $L=m-a-1$, let $H_0=\varnothing$, $H_a=\{0,a\}$ for $a>0$, and let $V_a$ be the ordered consecutive vertices $[a+1,m]\pmod T$. Then
+
+$$
+\mathcal R_a=
+\begin{cases}
+\{H_a\mathbin\triangle F:F\subseteq V_a,\ |F|\text{ even}\},&L<k,\\
+\{H_a\mathbin\triangle F:F\subseteq P,\ |F|\text{ even},\
+ F\ne\{a+1,m\}\pmod T\},&L=k,\\
+\{E\subseteq P:|E|\text{ even}\},&L\ge k+1.
+\end{cases}
+\tag{46.6}
+$$
+
+In the first line the path vertices are distinct. In the second line the excluded mask has the unique free inverse $1^k$. In the last line a full physical cycle fits in the free suffix. Since $g=1$, $m>k$ necessarily implies $m\ge k+2$.
+
+For $m>k$ and $g\ge2$, define disjoint actual coordinate-position sets
+
+$$
+A_j=\{i:0\le i<m,\ i\equiv j\text{ or }j-1\pmod T\},\qquad j\in P.
+\tag{46.7}
+$$
+
+A mask $E$ lies in $\mathcal R_a$ precisely when
+
+$$
+\mathbf1_E(j)=|A_j\cap[0,a-1]|\pmod2
+\quad\text{at each }j\text{ with }A_j\cap[a+1,m-1]=\varnothing.
+\tag{46.8}
+$$
+
+All other actual coordinates are independently free. These formulas retain repeated physical residue positions and the forced bit $B_a=0$. They grant no additional space to the first parent.
+

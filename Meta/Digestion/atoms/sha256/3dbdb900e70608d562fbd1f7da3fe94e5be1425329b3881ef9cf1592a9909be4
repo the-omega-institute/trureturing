@@ -1,0 +1,56 @@
+**Lemma 10.3 (Every open height strip spans).**
+For every nonempty open interval $J\subset(a,b)$,
+
+$$
+\operatorname{aff}E(J\times\mathbb T^2)=\mathscr H.
+$$
+
+This includes arbitrary unbounded encoder images and zero-dimensional
+affine hulls.
+
+**Proof.** Denote the hull on the left by $\mathscr H_J$.
+When $J,J+s\subset(a,b)$, the factor identity gives
+$\mathcal A_s\mathscr H_J=\mathscr H_{J+s}$.
+On $E(J\times\mathbb T^2)$ the composition
+$\mathcal A_{-s}\mathcal A_s$ is the identity, and the opposite
+composition is the identity on the translated strip. Extending
+these identities by affine combinations shows that the two hulls
+are affinely isomorphic. Their dimensions agree.
+
+Choose $J_0$ with the smallest possible hull dimension $d$.
+Such a minimum is achieved because all these dimensions are
+integers in $\{0,\ldots,n\}$. Shrink $J_0$ if necessary so that
+its closure is interior and its length is strictly less than
+$\ell$. The smaller hull is contained in the original one and
+has dimension at least the same minimum $d$, so its dimension
+is still $d$.
+
+All translates of $J_0$ with interior closure have dimension $d$.
+If two overlap, their intersection is a nonempty open interval.
+Its hull has dimension at least $d$ and is contained in both
+$d$-dimensional hulls. Thus the two hulls coincide. The permissible
+translation parameters form an interval; any two parameters can
+be joined by finitely many steps smaller than the length of
+$J_0$. Consecutive translates then overlap. All their hulls
+therefore equal one affine space $\mathscr H^\circ$.
+These translates cover $(a,b)$, so the interior image lies in
+$\mathscr H^\circ$. Every other open strip lies in this space
+and has dimension at least $d$; it too spans $\mathscr H^\circ$.
+
+Endpoints require an affine argument, since $E$ need not be
+continuous. Fix $h\in(a,b)$ and set $s=a-h$.
+Choose a nonempty open $J\subset(h,b)$. Both $J$ and $J+s$
+are interior, so the preceding identities give
+$\mathcal A_s\mathscr H^\circ=\mathscr H^\circ$.
+For all $u,v$,
+
+$$
+E(a,u,v)=\mathcal A_s E(h,u,v)\in\mathscr H^\circ.
+$$
+
+For the other endpoint set $s=b-h$ and take
+$J\subset(a,h)$, obtaining the same conclusion for $E(b,u,v)$.
+Hence $\mathscr H=\mathscr H^\circ$. No limit or norm bound
+was used. The argument with $d=0$ simply identifies nonempty
+singleton hulls at every step. $\square$
+

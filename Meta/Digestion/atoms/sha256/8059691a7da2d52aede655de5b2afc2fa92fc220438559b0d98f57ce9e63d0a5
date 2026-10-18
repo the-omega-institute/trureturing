@@ -1,0 +1,86 @@
+### 217.1 Shared notation and the single-budget certificate
+
+For $L\ge3$, let $\Omega={0,1}^L\setminus\{1^L\}$,
+$n(w)$ be the first zero, and $\Omega_j={w:n(w)=j}$. The word $w(Z)$ has
+zero set exactly $Z$; multiple-zero words are retained. A full score consists
+of independent $A_w,C_w,P_w,T\ge0$ and
+
+$$
+g_V(w,\ell)=A_w1_{\ell=0}+C_w1_{\ell=n(w)}+P_w1_{\ell\in\{0,n(w)\}},
+\qquad g_V(1^L,\ell)=T1_{\ell=0}.
+$$
+
+All labels $0,\ldots,L$ are maximized in every cell, including earlier and
+unqueried labels. A complete N pair has cells $00,01,10,11$; an increasing O
+pair has $0,10,11$ after merging $00,01$. Empty and singleton schedules are
+included. N reversals permute cells and repeated requests give singleton
+information, while still counting as actual requests. The O pair catalog uses
+distinct increasing addresses; its normalized information partitions do not
+grant a free repeated or ignored original request.
+For example at word 0100, the legal N table $(3,4;1,0,0,0)$ emits
+the earlier unqueried label 1 and has base/correct/pair readings $(0,1,1)$.
+Replacing that output by zero gives $(1,0,1)$ and loses the correct row.
+No such pruning is used. Donor-label domination below is proved only for
+each constructed score, while unrestricted inputs retain the full catalog.
+Write
+
+$$
+W=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\quad
+\Delta_C=B_C-W,\quad
+\beta_j=\sum_{\Omega_j}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T,
+$$
+
+where $C=N,O$ and $B_C$ is the complete catalog support. The quotient is
+$Q(V)=(\beta,K)$. The anchor is $R=(1,2;1,2,0)$, and $Q$ permits arbitrary
+cancellations, suffixes, terminal mass, early or late $P$, changed unaries and
+changed baselines. Every stated fixed-Q minimum ranges over all nonnegative
+full scores of that quotient, with no constructor-support restriction.
+Coefficients are dual proof weights, not source laws.
+
+The same hull and demand notation is used throughout:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0, b_2=b_3,\\
+&(L+1)e\le\sum_{j\ge3}b_j,\quad b_1+\sum_{j\ge3}b_j-(L+1)e\le1\},\\
+F_q(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad \alpha=(1,1,0,\ldots,0),\\
+\sigma_H(q)&=\max_{H_L}F_q,
+\end{aligned}
+$$
+
+and $H_N$ consists of those $b\in H_L$ admitting one complete
+$\lambda\ge0$ with $G_N\lambda\ge h(b)$, where $h=d-r$ and $r$ is the full
+anchor event vector. In $h(b)$ and $F_q(b)$ the argument b denotes the
+entire hull point, including e. The matrix $G_N=(z_D-r)_D$ has a column for every complete N
+table D. Here $z_D$ records independently whether D emits zero, the word's
+first-zero label, or either label, together with its positive-word zero event.
+The demands at every zero word are $1-b_n-e$ for $A$,
+$b_n-e$ for $C$, and $1-e$ for $P$; the positive row is $1-e$. Negative
+singleton demands are never clipped. A single certificate is
+
+$$
+V\ge0,\quad 0\le\theta\le1,\quad
+\Delta_N(V)+\theta\le1,\quad
+\sigma_H(q-Q(V))\le\theta.
+\tag{217.1}
+$$
+
+For the same full feasible $\lambda$ of mass $M=\sum_D\lambda_D$, the
+identity $V\cdot h(b)=F_{Q(V)}(b)$ and nonnegativity give
+
+$$
+F_q(b)=V\cdot h(b)+F_{q-Q(V)}(b)
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max(1,M).
+$$
+
+The last inequality uses $(1-\theta)M+\theta\le\max(1,M)$.
+This applies to a conic $\lambda$ of any mass; it does not identify such a
+vector with a normalized acquisition law. No component of $h$ is replaced
+by its positive part. These are the existing full-event and signed-residual
+suppliers of Continuation VI 199.3–199.4. An exact-fiber minimizer yields
+an affordable certificate when the actual full unit-O input has $\Delta_O\le1$ (or a
+separately established cost bound at most one); $	heta=1$ may retain a nonzero
+zero-cost core.
+

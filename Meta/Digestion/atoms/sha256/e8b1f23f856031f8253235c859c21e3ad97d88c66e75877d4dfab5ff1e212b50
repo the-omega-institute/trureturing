@@ -1,0 +1,16 @@
+## 188. The fifth source axis is strictly subdominant
+
+Retain the exact actual paired-frame, finite face-pairing, complete circular
+edge-link, minimum-six, shared positive length and zero-curvature hypotheses.
+There are exactly five reservoir labels H={M,C,D,Z,U}, a nonempty flat set,
+and a maximal-selected escape tau=(Z,M,C,D,M,C). Write cosh lengths as
+m,c,d,z,u. Let sigma be its source flat, with axial M and reservoir pair
+{C,D}. Sections 130--136 and 182--187 give
+
+ m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+ u>T(m,z)>m-2,
+ T(m,z)=2*sqrt(m^2-1)*sqrt((z-1)/(z+1))-m.
+
+All five reservoirs are genuinely witnessed. Every flat selects its axes;
+U has no flat zero occurrence and p_U<=1. All Z occurrences are genuine.
+

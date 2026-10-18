@@ -1,0 +1,26 @@
+**Assumption 1.2 (original finite-word native menu).** On the whole $\mathcal K_3$, supply the independent constrained flips
+
+$$
+H_j^{(3)}=\left.P_{j-1}^0 X_jP_{j+1}^0\right|_{\mathcal K_3},\quad
+P_j^0=|0\rangle\langle0|_j,\quad P_0^0=P_4^0=I,
+\quad e^{-itH_j^{(3)}}\quad(t\in\mathbb R).
+$$
+
+Only the selected drive is on; drift and all other drives are zero. Allow arbitrary finite serial words and the empty word, together with the single repeatedly usable forward installation
+
+$$
+S_{13}=\exp(i\pi n_1n_3/2)=\operatorname{diag}(1,1,1,1,i),\qquad
+n_1=\operatorname{diag}(0,1,0,0,1).
+$$
+
+The sole terminal measurement is $\{n_1,I-n_1\}$. At budget $k\in\mathbb Z_{\geq0}$ at most $k$ actual forward calls of $S_{13}$ may occur. Implementing $S_{13}^{-1}=S_{13}^3$ costs three calls. The flips have period $2\pi$, so a nonnegative-time formulation gives the same flip words. The exact zero-phase finite-word group is $DSO(5)D^\dagger$, by [the owner, Theorem 64.1, (IX.1)](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#44-固定相位菜单的实际有限字达到), under its Definition 55.1 and Assumption 55.2. Its unlimited-budget universality supplies no fixed-budget bound.
+
+For two fixed actual output states define $B_k$ as the maximum of
+
+$$
+\left|\operatorname{Tr}\bigl[n_1 W(\rho^{\rm ph}-\sigma^{\rm ph})W^\dagger\bigr]\right|
+\tag{P.3}
+$$
+
+over these words. Settings may depend on the known candidate pair and a common already obtained classical record, but the same setting must act on both unknown labels. Different budgets may use different optimizing settings. There is no ancillary quantum bypass, accessible reference, extra input copy, intermediate measurement, postselection, nonunitary preprocessing or free preparation of an input or history. Input supply is a hypothesis. This is the owner's ideal independent-drive menu, not the fixed-total-Hamiltonian waiting menu. A terminal measurement returns one bit, not the exact probability in (P.3).
+

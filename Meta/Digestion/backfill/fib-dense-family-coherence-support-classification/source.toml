@@ -1,0 +1,5 @@
+source_id = "fib-dense-family-coherence-support-classification"
+path = "docs/develop/theory/FIB_DENSE_FAMILY_COHERENCE_SUPPORT_CLASSIFICATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

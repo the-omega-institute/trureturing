@@ -1,0 +1,31 @@
+**Definition 2.1 (maximal-rank positive lift).** A positive lift is a triple of
+integers $a,b,c>1$ with $a,b,c$ pairwise distinct such that both
+$(a,b,c)$ and $(a+1,b+1,c+1)$ are multiplicatively dependent and every
+two-element subtuple of each triple is multiplicatively independent.
+
+For a maximal-rank dependent triple, choose a primitive relation
+
+$$
+a^{r}b^{s}c^{t}=1,
+\qquad (r,s,t)\in\mathbb Z^3\setminus\{(0,0,0)\},
+\qquad \gcd(|r|,|s|,|t|)=1.
+$$
+
+Pairwise independence makes all three exponents nonzero. Exactly one exponent
+has sign different from the other two. Permute the three coordinates so that
+the exceptional exponent of the unshifted relation is the $c$ exponent, then
+change the sign of the relation. This gives
+
+$$
+c^{n_1}=a^{k_1}b^{m_1},
+\qquad k_1,m_1,n_1>0,
+\qquad \gcd(k_1,m_1,n_1)=1.
+$$
+
+For the shifted relation, if its exceptional coordinate is also $c$, the same
+permutation and sign convention give the $F$ branch. If its exceptional
+coordinate is $a$ or $b$, interchange $a$ and $b$ if necessary; this gives the
+$G$ branch. Thus the finite coverage is: three choices for the exceptional
+coordinate of the first relation, a sign reversal, one possible $a,b$ swap,
+and the two second-relation branches below. No other sign pattern is used.
+

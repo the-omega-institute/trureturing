@@ -1,0 +1,15 @@
+## Continuity of the shared curvature map
+
+On the open set where all coordinates are `> 1`, the two radicands above stay
+positive.  Polynomial operations, positive square roots, and division
+therefore make `localCosine s · o` continuous on a neighbourhood of `Ω`.
+`Real.arccos` is continuous on `[-1,1]` (and the displayed strict cosine
+bound holds on `Ω`), so each local angle is continuous on `Ω`.  Since `star s e`
+is finite,
+
+```
+K_e(x) = 2π - ∑ o ∈ star s e, angle s x o
+```
+
+is continuous for every `e`; hence `K : Ω → ℝ^E` is a continuous map.
+

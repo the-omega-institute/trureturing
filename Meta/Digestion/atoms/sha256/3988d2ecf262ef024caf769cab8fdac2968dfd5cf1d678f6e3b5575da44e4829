@@ -1,0 +1,51 @@
+**Theorem 365.5 (Distance from every original stopped law).** With the entire profile and parameter range of (365.5), every original arbitrary-address, full-carrier $A\in\mathcal O_2$ satisfies
+
+$$
+\sup_{x\in X}\operatorname{TV}(\nu_{p_t,x},\nu_{A,x})\ge\delta_t.
+\tag{365.14}
+$$
+
+In particular the endpoint lower bound is $1/2368$. No original stopped acquisition can weakly dominate all canonical marked-event values of $p_t$ on all actual sources. Nevertheless $e_a(p_*)=e_a(p_t)=e_*$ with $p_*\in\mathcal O_2$; (365.14) is a law-distance assertion and gives no strict target-error separation.
+
+*Proof.* Quantitative distances from all original competitors and resulting risk bounds already occur in [XV 270.1–270.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md). Here the specific canonical-order and every-funded-odd-list obstruction is supplied by (365.11). We apply the original transport of 110.2 and Source-Correlated Laws 45.3 to that score, retaining the following details.
+
+Fix $A$ and let the left side of (365.14) be $d$. Countability of $X$ gives one conull seed set on which its executions are lawful, finish and obey the hard request bound at every actual source. The preselected schedule has at most two addresses on this set: otherwise a finite all-one pattern on its first three requests, realized by 363.1, would force a third actual request. Repeated static addresses do not prevent that all-one pattern. The same finite-pattern argument and the prescribed exhaustion rule exclude an infinite positive schedule. Replace the rule on a null complement by the empty schedule. Its entire maximum selected address $M$ is finite almost surely, so
+
+$$
+\gamma_m=\mathsf P\{M>m\}\longrightarrow0.
+\tag{365.15}
+$$
+
+For each $m\ge8$ choose, before sampling seeds, one actual source $x_{w,m}$ for every $w\in B_7$, with low word $w$ and replies zero at addresses $8,\ldots,m$. The sources vary with $m$; the finite-pattern theorem supplies all $128$ of them for each $m$. Project the full carrier by the measurable map
+
+$$
+\pi(\theta_j)=\theta_j\ (1\le j\le7),\qquad
+\pi(\tau)=\theta_0\quad\text{for every other tape }\tau.
+\tag{365.16}
+$$
+
+It fixes the entire law $p_t$ and contracts TV, so the projected law of $A$ at each $x_{w,m}$ is within $d$ of $p_t(w)$.
+
+Since this witness family is finite and handoff is sourcewise almost surely finite, choose a finite transition cutoff $t_m$ for which the late-handoff probability is at most $1/m$ at each of its sources. Simulate the seed-fixed rule with low replies $w$ and fixed higher replies zero through $m$. Output $\theta_0$ if a requested address exceeds $m$, the transition cutoff is exceeded, or a third actual request is attempted. Otherwise project its output by $\pi$. The coupled simulation and the actual execution on $x_{w,m}$ agree unless $M>m$ or handoff is late. The whole-event coupling bound of Source-Correlated Laws 45.3 gives a complete low law $q^{(m)}$ with
+
+$$
+\max_{w\in B_7}\operatorname{TV}(q^{(m)}_w,p_t(w))
+                                      \le d+\gamma_m+\frac1m.
+\tag{365.17}
+$$
+
+This simulation remains in $\mathscr O_7$. A low zero stops before a larger high address. On positive low exhaustion, any high continuation has fixed replies. Removing those fixed requests from the finite representation leaves an empty, singleton or increasing low pair schedule. Any repeated static query is redundant in that representation; in the simulated and original executions it is still charged. For a fixed seed the transition cutoff is constant on each stopped low cell, because the acquired transcript there is identical. Thus cutoffs do not split a first-zero cell into its two unqueried continuations. Finite-record measurability gives one probability distribution over the finite complete stopped catalog, not a separate choice of weights for each word.
+
+The simplex of those catalog weights is compact. Pass to a convergent subsequence; its limit defines $q\in\mathscr O_7$, and continuity of all finitely many law coordinates gives
+$\max_w\operatorname{TV}(q_w,p_t(w))\le d$. Every canonical row is an event, so
+
+$$
+\frac{125}{8}+5t=Y\cdot z(p_t)
+                  \le Y\cdot z(q)+37d\le16+37d.
+\tag{365.18}
+$$
+
+This proves (365.14). If the unprojected original law dominated the three marked events on every actual source, projection could only increase its base and union events and would preserve its correct marked event. The same finite witness families, truncation and compact limit would give a finite canonical dominator, contradicting Theorem 365.2.
+
+The compact convex catalog argument is an application of ordinary finite-dimensional polyhedral theory; see Volker Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorems 7, 8 and 10](https://arxiv.org/abs/1001.2161v1). The whole-vector comparison viewpoint is also present in David Blackwell, [*Comparison of Experiments* (1951), §§2–3, Theorem 2](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf). Neither general result supplies the paid stopped catalog invariant (365.8); that invariant is the explicit all-cell calculation above. $\square$
+

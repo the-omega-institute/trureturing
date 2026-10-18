@@ -1,0 +1,117 @@
+**Theorem 49.1 (same-source restrictions and distinct limiting responses).**
+Let $R_{\sigma,\kappa}(t)$ be the semigroup of the complete
+$D$-independent restriction, transported to $\mathscr H_B$ by $J$.
+Let $Z_{\sigma,\kappa}(t)$ be the attractive semigroup of the actual
+native $\kappa=0$ leaf with unit pole $q_0$, coupling $g$ and cutoff
+$\tau_s$ or $\tau_b$ indexed by the same $a$. These are different
+constructions. Their whole-base strong limits are
+
+$$
+\begin{array}{c|ccc}
+ &\text{projected full evolution}&\text{complete restriction}
+                       &\text{actual zero leaf}\\ \hline
+\mathrm{raw}&S_t&S_t&S_t\\
+\mathrm{unit}&B_b(t)&T_{gc_0/(2\pi)}(t)&T_{gc_0}(t).
+\end{array}
+\tag{49.1}
+$$
+
+For the raw family this comparison can also be made at its first
+scale. Define the fixed operator
+
+$$
+\mathcal L_t=\int_0^t S_{t-u}M_\phi S_u\,du.
+\tag{49.2}
+$$
+
+Then strongly on every fixed base input,
+
+$$
+\begin{aligned}
+R_{{\rm raw},\kappa}(t)
+ &=S_t+r_s\frac{gm_s}{2\pi}\mathcal L_t+o(r_s),\\
+Z_{{\rm raw},\kappa}(t)
+ &=S_t+r_s gm_s\mathcal L_t+o(r_s).
+\end{aligned}
+\tag{49.3}
+$$
+
+On $h_*$ the difference between the projected full raw coefficient
+$A_s(t)$ and the restricted coefficient is strictly positive in
+its pairing with $h_*$. Similarly
+
+$$
+\langle[B_b(t)-T_{gc_0/(2\pi)}(t)]h_*,h_*\rangle>0.
+\tag{49.4}
+$$
+
+Thus restriction does not recover the full projected response, even
+when their raw leading limits agree.
+
+Proof. The exact complete-domain restriction is [G, (23.5)]:
+
+$$
+\overline T_\kappa[h]
+ -\frac g{2\pi}\int_B\overline W_\kappa(q)|h(q)|^2d\nu_B,
+\qquad h\in\overline{\mathcal F}_\kappa,
+\tag{49.5}
+$$
+
+where $\overline W_\kappa=\int_{\mathbb T}W_\kappa\,dD$ is an
+integral, not an average. Its normalization remains $g/(2\pi)$.
+The actual leaf has the complete domain $\overline{\mathcal F}_0$
+and its own field $V_{0,\tau}$, divided by $S(\tau)$ for unit
+charge, with coupling $g$. Equations (34.3)--(34.5) give the
+unit multiplier limits $c_0\phi$ in both constructions; bounded
+perturbation and (46.1) prove their two unit limits in (49.1).
+The raw integrated asymptotic (45.4) is
+$\overline V_{\kappa,\tau_s}=r_s m_s\phi+o(r_s)$ uniformly.
+The same scalar sine and nonzero visible-mode argument at the
+actual leaf gives $V_{0,\tau_s}=r_s m_s\phi+o(r_s)$ uniformly.
+
+The perturbing raw multipliers in these two comparison problems
+are $O(r_s)$. Their second and higher bounded-potential Duhamel
+terms are $O(r_s^2)$. The first terms, (46.1), and the uniform
+field asymptotics therefore prove (49.3). In the first terms the
+uniformly bounded free factors converge strongly at each integration
+time, so dominated integration gives $\mathcal L_t$. The free
+zeroth term differs from $S_t$ by $O_t(a)=o(r_s)$.
+This also proves the raw comparison limits in (49.1).
+
+For strictness in the raw coefficient, insert (46.10) into (44.3).
+On surviving height paths $\int_0^t\phi(K_u)du>0$ and
+$gc_sF(x)>0$. The strict inequality $e^z-1>z$ for $z>0$
+shows that $A_s(t)h_*$ strictly exceeds its term linear in the
+potential. The latter is
+$gc_s(2\pi)^{-1}\int_{\mathbb R}F(x)dx\,\mathcal L_t h_*
+ =gm_s(2\pi)^{-1}\mathcal L_t h_*$, proving the claimed pairing.
+For the unit family, strict Jensen inequality in $D$, on the same
+surviving paths, gives
+
+$$
+\frac1{2\pi}\int_{\mathbb T}
+ e^{gc_0G_{\beta b}(D)\int_0^t\phi(K_u)du}\,dD
+ >e^{(gc_0/(2\pi))\int_0^t\phi(K_u)du},
+\tag{49.6}
+$$
+
+because $\int G_{\beta b}dD=1$ and $G_{\beta b}$ is nonconstant.
+Multiplication by the positive terminal $\phi(K_t)/(2\pi)$ and
+expectation prove (49.4).
+
+The source distinctions are exactly Theorem 34.2. At the unit cutoff
+the original full conditional source has density
+$\phi(k)G_{\beta b}(D)/(J_\phi(2\pi)^2)$ relative to $d\mu$.
+The actual leaf has raw measure $d\nu_B$ and its embedded source
+is supported on $D=0$. The hidden-Haar-smeared source associated
+with (49.5) has density
+$\phi(k)/(J_\phi(2\pi)^3)$ relative to $d\mu$.
+At every finite $b$ these differ. In the raw regime the original
+conditional source has width $r_s$ and law (32.11); its field
+mass tends to zero and its total source charge is (32.12).
+The common weak unscaled source limit does not identify its
+response coefficient with either comparison in (49.3).
+All these statements retain the original time, raw measures,
+both absorbing faces, controls, covariance and preparations.
+$\square$
+

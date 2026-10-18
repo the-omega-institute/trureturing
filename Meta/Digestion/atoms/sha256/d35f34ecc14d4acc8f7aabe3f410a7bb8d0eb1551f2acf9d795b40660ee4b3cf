@@ -1,0 +1,54 @@
+**Theorem 13.2 (wrapped-path transfer and native constants).** The
+contract of Definition 13.1 implies the quantitative contract of
+Assumption 11.3 with $\epsilon_n=\eta_n$, $d_a=1$, $d_b=2$.
+On the target-only event of Theorem 12.1 it therefore forces
+
+$$
+\begin{aligned}
+\liminf_n\eta_n V_n^a&\ge S,&
+\liminf_n\eta_n\mathsf V_{\chi,n}&\ge S/2,\\
+\liminf_n\eta_n L_n&\ge\frac{\sqrt5}{2}S,&
+\liminf_n\eta_n^2E_n&\ge\frac{5\pi^2}{24}S.
+\end{aligned}
+\tag{13.2}
+$$
+
+Proof. Eventually $\eta_n<\pi$. For either circle, the difference of
+the two continuous real lifts starts at zero. If its circle distance
+is at most $\eta_n$ throughout the connected interval $[0,T]$, that
+difference lies in the union of the disjoint closed intervals
+$[2\pi j-\eta_n,2\pi j+\eta_n]$. Continuity and its initial value
+force it to stay in the interval with $j=0$. Thus the two real phase
+differences are uniformly at most $\eta_n$, even if each path has
+many windings. Applying the exact inverse of (11.3) gives
+
+$$
+\begin{aligned}
+\|a_n-W^1_{\cdot\wedge S}\|_\infty&\le\eta_n,\\
+\|b_n-W^2_{\cdot\wedge S}\|_\infty&\le2\eta_n,\\
+\|J_n-J^\lambda_{\cdot\wedge S}\|_\infty
+ &\le r(1+2|c_0|)\eta_n.
+\end{aligned}
+\tag{13.3}
+$$
+
+This also proves the required full chronological convergence. Lifetime
+convergence makes each rational $t<S$ an executed pre-death interval
+for all sufficiently large $n$. Substitution in (12.1) gives (13.2).
+In particular, reusing the equal-control-tube constants for $\eta_n$
+would neglect the factor two in $b=2(\widetilde\alpha-\alpha_0)$.
+The phase lift uses the original $2\pi$ periods, not a doubled period.
+
+Conversely, on complete held triples, first-level errors $e_a,e_b$
+and chronological error $e_J$ imply
+
+$$
+D_{\max}(\bar q_n,\bar q^\lambda)
+\le\max\{e_a,e_b/2,|c_0|e_b+e_J/r\}.
+\tag{13.4}
+$$
+
+This follows from (11.3) and the Lipschitz circle projection. A small
+first-level error alone gives no bound on $e_J$. Thus the forward
+transfer does not omit the full-lift or lifetime obligations. $\square$
+

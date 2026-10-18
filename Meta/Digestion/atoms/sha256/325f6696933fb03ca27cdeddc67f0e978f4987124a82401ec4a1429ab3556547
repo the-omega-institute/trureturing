@@ -1,0 +1,4 @@
+## 99. Unique principal normers and an intrinsic missing-partner bound
+
+The three-dimensional quotient form for occupancy \((2,1,1,0)\) in §98 retains full outside dependence. This section obtains additional restrictions from the complete norm SDP itself: uniqueness of the principal normer, a positive definite dual metric, and two quantitative inequalities that eliminate the actual missing-partner rows. These inequalities are necessary conditions. Their comparison with \(1/16\), and hence exclusion of this support below quarter error, remains open.
+

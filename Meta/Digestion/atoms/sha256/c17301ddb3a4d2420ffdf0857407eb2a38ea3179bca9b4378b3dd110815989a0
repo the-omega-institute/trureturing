@@ -1,0 +1,23 @@
+**定义 2.3（Finite complex Gram coherence number）。** For a nonzero positive
+semidefinite $5\times5$ matrix $C$, let
+
+$$
+k(C)=\min\left\{
+\max_{1\le a\le m}|\operatorname{supp}_B z_a|:
+m\ge1,\quad z_a\in\mathbb C^5\setminus\{0\},\quad
+C=\sum_{a=1}^m z_az_a^\dagger
+\right\}.
+\tag{2.3}
+$$
+
+Here $\operatorname{supp}_B z$ is the set of nonzero coordinates in the
+fixed original basis $B$. All finite lengths and all complex phases and
+norms are allowed. Nonnegative coefficients can be absorbed into the
+vectors by their square roots, and zero terms are omitted. The Hermitian
+spectral theorem gives a finite decomposition, so the set of possible
+maximal supports is a nonempty subset of $\{1,2,3,4,5\}$ and has a minimum.
+Multiplication of $C$ by a positive scalar leaves $k(C)$ unchanged, since
+scaling every vector by the corresponding positive square root is a
+bijection between its decompositions. This is the inherited C-109
+definition, with its quantifiers explicit.
+

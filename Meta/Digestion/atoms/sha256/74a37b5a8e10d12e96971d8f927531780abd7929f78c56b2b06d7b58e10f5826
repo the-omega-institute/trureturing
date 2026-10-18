@@ -1,0 +1,31 @@
+**Proposition 6.3 (the added-row correspondence).** Starting from the encoded
+actual pre-row state of this 74-role instance and its authentic input,
+Step74 has a finite word expansion and returns exactly its complete actual
+successor/event/receipt. It includes new bootstrap, gate, importer,
+callback and return rows as well as every original CAP row and invalid
+source overwrite phase.
+
+Proof. RCA Proposition 12.5 supplies the ten local opcode cases and the
+meter overlap rule. Here its finite port alternatives are explicitly
+extended to 74, and token/control effects are the finite table of
+Definition 6.2; no old 64-port theorem is applied without this change.
+For each newly added row, RD still selects the same marked symbol,
+WR/EX/ML/MR have those same local cell effects, and its finite CTL/TOK
+field selects exactly its installed phase/slot. Ingress classification
+uses the actual inlined call site. In particular an auxiliary 13 IN is
+not erased because an original automatic command with equal bytes
+would be computed. Outer second-bit IN exists only in the first-0
+branch; callback imports are RD, not IN. Bootstrap supply uses the
+captured description's serialization, while its raw store remains
+partially written until DONE. These checks cover every new row kind.
+
+All list and field operations have finite source words, and each table
+case uses only earlier terminating macros. No Step case recursively
+executes a semantic recovery request. Represented code may itself be
+executing an earlier Step, but its next transition is still one literal
+native row. The copied actual row input ensures that an IN-before-WR
+cut has the changed latch with the still-old destination, and EX-before-WR
+has its actual blank cell. This gives correspondence at every interior
+cut, rather than just word or service boundaries. Historical tokens
+remain encoded data throughout. ∎
+

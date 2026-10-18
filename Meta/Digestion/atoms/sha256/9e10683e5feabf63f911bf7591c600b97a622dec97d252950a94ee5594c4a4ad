@@ -1,0 +1,87 @@
+**Theorem 43.7 (Every measurable radius attainer has diameter twice its radius).** Suppose $0\le\delta<1$ and $h>0$. If an admissible procedure, full law family and common reference attain (43.11), write $r=\rho_\nu=(1-\delta)h/(2-\delta)$. Then their diameter satisfies
+
+$$
+\Delta=2r.
+\tag{43.26}
+$$
+
+The same diameter conclusion holds for a fixed admissible family whose best reference radius (43.3) equals $r$, even if that infimum is not attained. Consequently, for $0<\delta<1$ and $h>0$, no procedure and law family can minimize both global measurable radius and diameter. At $\delta=0$ simultaneous optima exist, and they also exist when $h=0$ or $\delta=1$.
+
+**Proof.** Use the envelope $M$ of Theorem 43.2. Since $\delta<1$ and this radius is minimal, its inequalities give
+
+$$
+h\le\nu(H_{x_*})+r\le M+r
+\le\frac r{1-\delta}+r=h.
+\tag{43.27}
+$$
+
+Thus all inequalities are equalities, and with $q=h/(2-\delta)$,
+
+$$
+\nu(H_{x_*})=M=q,\qquad r=(1-\delta)q.
+\tag{43.28}
+$$
+
+Take the anchor truncations $A_m$ and actual matching high-target sources $y_m$ from (43.9). They satisfy $A_m\subseteq F_{y_m}$ and $A_m\uparrow H_{x_*}$. Because $S_{y_m}$ is disjoint from $F_{y_m}$,
+
+$$
+\nu(S_{y_m})\le\nu(H_{y_m})-\nu(A_m)
+\le q-\nu(A_m)\longrightarrow0.
+\tag{43.29}
+$$
+
+This is a bound on their correct-proposal mass under the fixed reference, not a claim that the comparison laws converge or that their correct events are nested. On the actual comparison law, conditional error gives
+
+$$
+(1-\delta)h_{y_m}\le\mu_{y_m}(S_{y_m})
+\le\nu(S_{y_m})+r.
+\tag{43.30}
+$$
+
+Using the diameter on the anchor event and then the error hypothesis therefore yields
+
+$$
+\begin{aligned}
+\mu_{x_*}(A_m)
+&\le\mu_{y_m}(A_m)+\Delta
+\le\delta h_{y_m}+\Delta\\
+&\le\Delta+\frac{\delta}{1-\delta}
+\bigl[\nu(S_{y_m})+r\bigr].
+\end{aligned}
+\tag{43.31}
+$$
+
+Taking the limit of the fixed-anchor probabilities and using (43.29) gives
+
+$$
+h\le\Delta+\frac{\delta r}{1-\delta}
+=\Delta+\delta q,
+\qquad \Delta\ge h-\delta q=2r.
+\tag{43.32}
+$$
+
+This includes $\delta=0$; division was only by $1-\delta>0$. The reverse bound is (43.20), proving (43.26).
+
+For the assertion about a reference infimum, suppose $\operatorname{rad}(\mu)=r$. For any $\varepsilon>0$, choose one reference with $\rho_\nu\le r+\varepsilon$ and use its envelope $M$. Theorem 43.2 and the anchor event give
+
+$$
+M\le q+\frac{\varepsilon}{1-\delta},\qquad
+\nu(H_{x_*})\ge q-\varepsilon,\qquad
+M-\nu(H_{x_*})\le\frac{2-\delta}{1-\delta}\varepsilon.
+$$
+
+Without assuming equality in the envelope bound, the same truncations instead give $\nu(S_{y_m})\le M-\nu(A_m)$. Repeating (43.30)--(43.31) and taking the fixed-anchor limit yields
+
+$$
+\begin{aligned}
+h&\le\Delta+\frac{\delta}{1-\delta}
+\bigl[M-\nu(H_{x_*})+\rho_\nu\bigr]\\
+&\le\Delta+\delta q+
+\frac{\delta(3-2\delta)}{(1-\delta)^2}\varepsilon.
+\end{aligned}
+$$
+
+Letting $\varepsilon$ decrease to zero proves $\Delta\ge h-\delta q=2r$. Equation (43.20) applied to each such reference gives $\Delta\le2r+2\varepsilon$, and hence $\Delta\le2r$. No limit of measures or construction of an unattained center is used.
+
+By Theorem 42.2 the global measurable diameter minimum is $t=(1-\delta)h$. If $0<\delta<1$ and $h>0$, (43.26) gives $2r=2t/(2-\delta)>t$. Thus a radius attainer cannot also minimize measurable diameter. The explicit measurable attainer in (43.15) has anchor-to-other-law distance $2r$: its difference is $2r\delta_a-r\delta_b-r\delta_{p_n}$. Two distinct nonanchor laws differ by $r(\delta_{p_n}-\delta_{p_m})$ and have distance $r$, confirming the diameter directly on actual occupied source classes. At $\delta=0$ the midpoint finite attainer has diameter $h$ and radius $h/2$, equal to both measurable minima. At $h=0$ or $\delta=1$ the common-law constructions have diameter and radius zero. $\square$
+

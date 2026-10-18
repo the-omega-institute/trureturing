@@ -1,0 +1,45 @@
+**Lemma 53.3 (full early vectors).** The top nonzero eigenvalue
+$\ell_d$ of $H_dF_d$ has a nonnegative right eigenvector $u_d$ with
+$\|u_d\|_2=1$, and
+
+$$
+\ell_d\to C_*,\quad u_d\to p\text{ in }L^2,\quad
+x_d:=F_du_d\to Vp\text{ in }L^1,\quad
+m_d:=\int F_du_d^2\to\mu.
+\tag{53.4}
+$$
+
+The $x_d$ have bounded $L^1$ and $L^2$ norms.
+
+Proof. P (104.6),(104.9) give $F_d\to V$ in $L^2$, bounded
+$L^2$ and supremum norms, and $H_dF_d\to K_{\rm rec}$ in operator
+norm. The source-fixing shears tend strongly to identity, and their
+conjugation of a compact operator converges in norm, so these statements
+hold in (53.1)'s coordinates. For each fixed $s$, truncating the heat
+integral below a positive time makes $Q_d(t)F_d$ Hilbert–Schmidt by
+the column bound and $F_d\in L^2$; the omitted norm is at most
+$\delta\|F_d\|_\infty$. Thus $H_dF_d$ is compact. The symmetric
+sandwich $F_d^{1/2}H_dF_d^{1/2}$ is compact too: its positive-time
+squared Hilbert–Schmidt norm is at most
+$\sup q_d(t)\langle F_d,Q_d(t)F_d\rangle
+\le\sup q_d(t)\|F_d\|_2^2$, and the same truncation applies.
+It is positive selfadjoint and its top vector can be chosen nonnegative
+by the modulus Rayleigh inequality. The nonzero spectra of the two
+products coincide, with multiplicities; applying $H_dF_d^{1/2}$
+to that vector constructs a nonnegative $u_d$.
+
+P87–88 identify the nonzero canonical reconstruction spectrum with
+the compact canonical selfadjoint Birman–Schwinger spectrum, with
+isolated simple top $C_*$. Compact spectral perturbation gives
+$\ell_d\to C_*$. The equation $u_d=\ell_d^{-1}H_dF_du_d$
+and compact norm convergence make these vectors precompact in the
+full $L^2$ norm. Every nonnegative normalized cluster is $p$.
+Cauchy–Schwarz now gives
+$\|F_du_d-Vp\|_1\le\|F_d\|_2\|u_d-p\|_2+
+\|F_d-V\|_2\|p\|_2\to0$; bounded multiplication bounds $\|x_d\|_2$.
+Finally $u_d^2\to p^2$ in $L^1$; uniform boundedness and convergence
+in measure of $F_d$ give $\int F_du_d^2\to\int Vp^2$ by truncation
+against the fixed integrable $p^2$. Also $0<A_p<\infty$ since
+$V,p\in L^2$ and both are positive. No rate or positive $L^2$ gap
+for $H_c$ is used. $\square$
+

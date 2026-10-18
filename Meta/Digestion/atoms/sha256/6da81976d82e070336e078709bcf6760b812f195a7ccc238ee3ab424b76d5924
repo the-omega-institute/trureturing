@@ -1,0 +1,61 @@
+**Theorem 9.1 (Complete arbitrary-readout capacity table).** For every
+fixed arbitrary preparation and every $0<Z<1$, put
+
+$$
+e_*=\sqrt{2Z(1-Z)},\qquad
+R_0=
+\begin{cases}
+1-Z/2,&0<Z<2/3,\\
+e_*,&2/3\le Z<1.
+\end{cases}
+$$
+
+The literal and guard-recoverable capacities and finite tolerance sets
+are exactly the following. Every finite value in the table is attained
+by a single model.
+
+| Dimension budget | $e_n^{\rm arb}(Z)$ | $\mathcal A_n^{\rm arb}(Z)$ | $e_{n,g}^{\rm arb}(Z)$ | $\mathcal A_{n,g}^{\rm arb}(Z)$ |
+| --- | --- | --- | --- | --- |
+| $n=0$ | $R_0$ | $[R_0,\infty)$ | $+\infty$; class empty | $\varnothing$ |
+| $n=1$ | $R_0$ | $[R_0,\infty)$ | $R_0$ | $[R_0,\infty)$ |
+| $n\ge2$ | $e_*$ | $[e_*,\infty)$ | $e_*$ | $[e_*,\infty)$ |
+
+Every entry is unchanged when all prescribed paths and intermediate
+truncations of Definition 2.4 are required. In particular, with that
+superscript convention,
+
+$$
+e_n^{\mathrm{arb,path}}=e_n^{\rm arb},\qquad
+e_{n,g}^{\mathrm{arb,path}}=e_{n,g}^{\rm arb},
+$$
+
+and the corresponding finite tolerance sets are equal as well.
+
+**Proof of Theorem 9.1.** Theorem 6.2 gives the lower bound $R_0$
+for every model with dimension at most one, including a constant
+encoder. Proposition 7.3 supplies matching zero- and one-dimensional
+witnesses. Thus the first two literal capacities equal $R_0$ and
+are attained. Proposition 7.1 excludes every zero-dimensional guard
+model, while the height witness attains $R_0$ with guards in dimension
+one. Since the guard class is a subclass of the literal class, its
+one-dimensional lower bound is the same.
+
+For every larger finite dimension budget, Theorem 4.1 gives the lower
+bound $e_*$. The annular witness in Theorem 5.4 attains it in two
+coordinates with exact guards. Padding as in Definition 2.2 makes it
+available at every budget $n\ge2$. Lemma 7.2 gives the stated values
+and transition. A witness of error at most $\epsilon$ works for every
+larger tolerance. The attained lower bounds exclude every smaller
+tolerance and include equality, proving exactly the displayed closed
+intervals. The empty class has no finite tolerance.
+
+For the path claims, each stronger class is a subclass of its
+straight-command class. All preceding lower bounds and the
+zero-dimensional guard exclusion therefore persist. Conversely,
+Theorem 8.2 puts each matching optimal witness directly in the
+corresponding stronger class, with Proposition 8.3 providing the
+all-times guards when required. These two directions prove equality
+of the capacities and of their attained tolerance sets. No equality
+of classes, or guard recovery for an arbitrary literal factor, is
+inferred from equality of their numerical capacities. $\square$
+

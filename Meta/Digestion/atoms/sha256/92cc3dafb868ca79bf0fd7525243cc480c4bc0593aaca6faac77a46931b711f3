@@ -1,0 +1,52 @@
+**Assumption 17.1 (causal code, entire entry and conditional services).**
+Use the actual ordered-tree algebra, homomorphic substitution and
+complete-row semantics of [NAR, Definitions 1.1--1.2][NAR-RW]. Thus
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{n+2}=\langle T_{n+1},T_n\rangle=\rho^{n+2}\alpha.
+\tag{NARC.17.1}
+$$
+
+The allowed originals are all
+$X_{a,b}=\langle T_a,T_{16+b}\rangle$, $0\le a,b\le15$.
+Genuinely acquire the entire initial empty-cut row, compute the
+restricted encoder $e_{16}$ of Definition 11.1 from that row, and
+export only its label before the future lag and visible region are
+chosen. Discard the row, its parsed coordinates and every other
+source-bearing field. Retain the acquisition, export, discard and
+same-original pure-$\rho$ premises of Assumptions 5.1 and 9.1.
+Require positive lags; the conditional fiber below also satisfies
+the nonnegative-lag convention.
+
+Condition on label $1$, visible region $R$, cut $\{L\}$, and genuine
+acquisition of the entire later row
+
+$$
+\mathcal I=
+\left(1,R,
+ \bigl(\langle\square_L,T_{33}\rangle,\{\{L\}\}\bigr)\right).
+\tag{NARC.17.2}
+$$
+
+Equality includes every literal exterior label and bracket, the
+reached left hole and the complete singleton partition. The partition
+supplies no hidden-visible comparison. The current actual tree is
+stationary throughout capture and all subsequent native Reads.
+Every finite original-root word is a legal constructor query, including
+absent addresses, with replies in the order
+$\mathcal A=(\bot,\alpha,\beta,\mathsf b)$.
+Every invocation, including a repeated request, counts as one
+chronological Read.
+
+A separately supplied terminating compiler may use only this common
+acquired entry and public source and encoder data. It installs one
+common table and one common initial state for the entire compatible
+fiber, then closes access to all mutable compilation inputs and
+workspace. It cannot select a table using the unknown actual origin,
+hidden age or lag. Acquisition, encoding, export, later capture,
+parsing, compilation, installation and initialization are distinct
+conditional services with separate costs.
+

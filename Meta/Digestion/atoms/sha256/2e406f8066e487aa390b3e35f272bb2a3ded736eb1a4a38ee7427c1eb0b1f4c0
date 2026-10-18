@@ -1,0 +1,42 @@
+### 32.2. 整个前缀与逐分支完整逆
+
+**exact parameterization.**
+
+Choose a basis f,h of the known V. For any actual prefix through clock k, retain every real coefficient pair (A,B) other than (0,0), with the single whole polynomial q=A f+B h, and set its single drift delta=a0-q(0). Retain every source (r,b,c) satisfying 0<r<1, b,c>0 and bc=r(1-r). Simultaneously impose yi=delta+q(i)T_i(r,b,c) for every acquired i=1,...,k, with the actual table above and with the initial equation a0=delta+q(0). Equivalently, when q(i)=0 require yi=delta; when q(i) is nonzero require T_i=(yi-delta)/q(i). At an acquired clock 6 the condition is y6=delta. Every preceding ancestor equation remains imposed.
+
+**both directions.**
+
+A promised compatible world has a unique basis coefficient pair and its own strict source, so it appears in this set. Conversely every retained pair and source supplies one whole nonzero degree-at-most-three gain, one constant drift, and one strict rank-one trace-one source reproducing every acquired response. Hence the set is the ENTIRE promised compatible fiber. The same source satisfies all gain and record equations; no gain coefficient is assigned its own source.
+
+**cardinality and actions.**
+
+This parameterization can have infinite components before the final inverse. No finite-prefix bound is assumed. The next action is the next fixed letter for the entire fiber, so action legality requires no artificial candidate-list argument. Empty fibers describe incompatible records. An optional stop is allowed only when this entire promised fiber is a singleton. The demonstrated protocol can simply acquire all eight readings.
+
+**1. Determine the drift and the exhaustive intercept branch.**
+
+Put d=y6, gamma=a0-d and z_i=yi-d, including z0=gamma. Since the initial trace is one, every compatible world has g(0)=gamma. Delta02 nonzero implies e0 is a nonzero functional. Therefore gamma nonzero and gamma zero are the two exhaustive branches, determined by the actual record. All later recovery must stay within that same branch and the same entire V.
+
+**2. In the nonzero-intercept branch recover a positive repeated trace and then the entire gain.**
+
+Fix any basis f,h and let D=Delta57, which is known nonzero. The unique coefficients expressing e0=u e5+v e7 are u=(f(0)h(7)-f(7)h(0))/D and v=(f(5)h(0)-f(0)h(5))/D: substituting either basis element verifies both equations. Thus this identity holds for every polynomial in V, with no unknown-world choice. Let T=j+2r, strictly positive. The actual table gives z5=T g(5), z7=T g(7), and hence u z5+v z7=T gamma. When gamma is nonzero, define T=(u z5+v z7)/gamma, check T>0, and only then set s5=z5/T, s7=z7/T. The unique whole gain is g=((s5 h(7)-s7 h(5))/D)f+((f(5)s7-f(7)s5)/D)h. Substitution at 5 and 7 verifies its two values; bijectivity makes this the only possible polynomial. Check its intercept gamma and nonzeroness. A true world recovers its original T and gain and passes. Either s5 or s7 may be zero; neither is divided out. They cannot both vanish for a legal nonzero gain. Neither u nor v is divided out, so their individual vanishing causes no omitted branch.
+
+**3. In the zero-intercept branch identify its whole one-dimensional gain space and recover the scale.**
+
+A nonzero functional on a two-dimensional space has a one-dimensional kernel. For a concrete basis-dependent representative choose h0=h(0)f-f(0)h. Since e0 is nonzero, its coefficients are not both zero; independence of f,h makes h0 nonzero. It has h0(0)=0 and h0(i)=-Delta0i. In particular h0(2) and h0(4) are nonzero by the two assumed determinants. Every compatible nonzero gain with gamma=0 is exactly eta h0 for one nonzero real eta. Set A2=z2/h0(2) and A4=z4/h0(4). The actual even traces give A2=eta(1+b), A4=eta(1+2b). Therefore eta=2 A2-A4 and eta b=A4-A2. Check eta nonzero before defining b=(A4-A2)/eta and g=eta h0. Negative eta is allowed. A true world passes and is recovered. A formal eta=0 is an incompatible record, not an excluded legal gain. The kernel direction was determined by V, rather than supplied as a hidden true-gain label. Both even physical samples are nonzero in this branch, as a consequence of the assumptions and eta nonzero.
+
+**4. Once the gain is known, recover the off-diagonal coordinate and retain all even equations.**
+
+For a nonzero gain, g(2) and g(4) cannot both vanish because their simultaneous evaluation kernel is zero. In the nonzero-intercept branch, if g(2) is nonzero set b=z2/g(2)-1. If g(2)=0, then g(4) is nonzero and set b=(z4/g(4)-1)/2, while retaining z2=0. If both samples are nonzero either formula gives the same b for a compatible record, and both equations must be checked. In the zero-intercept branch use the b already recovered and check these same two equations. Enforce b>0. Every division uses a now-known nonzero sample or the fixed nonzero integer two; no zero sample is canceled.
+
+**5. Recover all remaining source coordinates using the active odd rows.**
+
+Any two zeros among g(1),g(3),g(5) would contradict the corresponding nonzero determinant Delta13, Delta15, or Delta35. Thus at least two of these samples are nonzero. Their actual traces are j, j+r, j+2r. If g(1) and g(3) are nonzero, put t1=z1/g(1), t3=z3/g(3), r=t3-t1, j=t1. If g(1) is nonzero and g(3)=0, then g(5) is nonzero: put t1=z1/g(1), t5=z5/g(5), r=(t5-t1)/2, j=t1. If g(1)=0, then g(3),g(5) are both nonzero: put t3=z3/g(3), t5=z5/g(5), r=t5-t3, j=2t3-t5. These cases are exhaustive, and the all-active case belongs to the first. Set c=j-b and retain every unused odd equation, including z_i=0 at any zero sample. The row coefficient differences are respectively one, two, and one, always nonzero. No discriminant or diagonal-root selection is involved. Enforce 0<r<1, c>0, and bc=r(1-r). With b>0, these conditions imply a strictly positive trace-one matrix with determinant zero and hence rank exactly one.
+
+**6. Necessity, sufficiency, and equality of the entire final fiber to a singleton.**
+
+Require one whole nonzero g in V, the drift condition d=a0-g(0), the complete strict source conditions, and every equation y0=d+g(0), y1=d+j g(1), y2=d+(1+b)g(2), y3=d+(j+r)g(3), y4=d+(1+2b)g(4), y5=d+(j+2r)g(5), y6=d, y7=d+(j+2r)g(7). Every actual promised world follows the derivations and passes all these checks, proving necessity and nonemptiness. Conversely a passing result is itself a complete promised world and reproduces all eight acquisitions, proving sufficient membership. All competing worlds have the same d and gamma by step 1, the same entire gain by step 2 or 3, the same b by step 3 or 4, and the same r,j,c by step 5. Hence there is at most one passing world. Together with nonemptiness this closes the ENTIRE promised eight-read fiber, including every source, gain, and drift, to exactly one world.
+
+**7. Check all signs, degrees, roots, and divisions.**
+
+The proof uses the known nonzero determinants, nonzero gamma only in its declared branch, the recovered T only after checking its positivity, h0(2),h0(4) only after proving them nonzero, eta only after checking nonzeroness, and physical gain samples only after whole-gain recovery and an explicit nonzero branch. All other scalar denominators are fixed nonzero integers or known nonsingular linear systems. It never divides by g(6), g(0) in the zero-intercept branch, a possibly zero g(5) or g(7), a leading coefficient, a discriminant, a source determinant, or a drift difference. Zero-sample equations survive undivided. No exact degree or square-free assumption enters: polynomial evaluation and two-dimensional linear algebra include lower degrees and repeated roots automatically. Both signs of gain scale, r=1/2, both possible diagonal branches, symmetric or nonsymmetric sources, and arbitrary positive off-diagonal sizes are included. Illegal boundary sources never substitute for an interior source.
+

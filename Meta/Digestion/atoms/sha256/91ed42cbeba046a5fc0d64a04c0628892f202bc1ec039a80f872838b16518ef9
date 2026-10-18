@@ -1,0 +1,48 @@
+**Definition 5.1 (the finite common instrument).** Fix $s\in[0,1]$
+and write $R_s$ as in (RE.20). Define
+
+$$
+B_{r,\epsilon}^{(s)}
+=\frac{K_{r,s}+\epsilon\sqrt{R_s}S}{2\sqrt{R_s}}.
+\tag{RE.27}
+$$
+
+On supported inputs prescribe the following actual encoder branches;
+each displayed matrix acts by $A\mapsto CAC^\dagger$:
+
+| Acquired label | Joint fibre dimension | Encoder Kraus matrix |
+| --- | --- | --- |
+| $(r,H)$ | $3$ | $\sqrt{(R_s-1)/(2R_s)}K_{r,s}$ |
+| $(r,R_\epsilon)$ | $2$ | $(U_{r,\epsilon}^{(s)})^\dagger B_{r,\epsilon}^{(s)}$ |
+| $(r,T)$ | $2$ | $\sqrt{(1-s^2)/2}\,V_T^\dagger T$ |
+| $(r,f_k)$, $k=1,2$ | $1$ | $\sqrt{m_k/2}\langle k|$ |
+
+There are two $R_\epsilon$ branches for each $r$. The zero $T$ branch
+is removed when $s=1$. Decode the $H$ fibre into live output by $E$;
+decode $R_\epsilon$ by $EU_{r,\epsilon}^{(s)}$ and $T$ by $EV_T$.
+Each live decoder is the isometric CP map $X\mapsto VXV^\dagger$
+on its entire fibre. Each $f_k$ decoder sends scalar $z$ to
+$z w_\ell g(t)dt\,P_f$ in all five original failure sectors.
+It has no live output.
+
+For five-mode inputs replace every supported encoder matrix $C$ by
+$CE^\dagger$. For each $r$ add a scalar branch
+
+$$
+\mathcal C_{r,\perp}(A)=\frac12\operatorname{tr}(QA),
+\tag{RE.28}
+$$
+
+decoded to $z g(t)dt\,P_f$ solely at original failure label $2$.
+For example, the CP trace in (RE.28) has rows
+$\langle(e_0-e_4)/\sqrt2|/\sqrt2$ and
+$\langle(e_1-e_3)/\sqrt2|/\sqrt2$.
+Their Kraus multiplicity is discarded, not a retained quantum system.
+The branch's joint quantum fibre is scalar.
+
+The acquisition output is the actual classical tag in this table and
+only its stated fibre. The prescription includes permanently discarding
+all other input-dependent dilation systems before the cut. A native
+claim would additionally have to supply the lawful operations enacting
+this instrument; no such claim is made by specifying its CP maps.
+

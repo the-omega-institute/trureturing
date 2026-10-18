@@ -1,0 +1,29 @@
+**定义 68.1（An all-one-root archive with arbitrary INITIAL labels）。** Retain the original matched reader (1.1)–(1.2), whole jointly attainable history prior (1.3), immutable INITIAL labels and costs of Definition 1.3. Assume
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m.
+\tag{68.1}
+$$
+
+Then $P=\mathbb Z/T\mathbb Z$ and $1\le h\le m-2$: $h=m-1$ would give $T=2m$ and contradict coprimality. Both declared alphabets contain all $m$-bit words; actual cross-block rejection remains absorbing and visible only at a completed endpoint. Fix any full target $f:Q\to Y$ and either remembered free INITIAL value $v$. Actually issue $1^m$ as the root, and condition on successful difference one. The candidates and their current records are exactly
+
+$$
+(v,-j,s),\quad j\in\{0,m\},\ 0\le s<h;
+\qquad (v\oplus1,-j+m,s+m).
+\tag{68.2}
+$$
+
+They share their own free-value/root archive. This is an acquired mixed-tail pair, not a common-tail prior or an independently chosen phase rectangle. Write $F_v(j,s)=f(v,-j,s)$; no condition on $f$ elsewhere is imposed. For $0\le r<h$, define $\mathcal C_v(r)$ by
+
+$$
+\begin{aligned}
+&F_v\text{ constant on }\{0,m\}\times[h-r,h),\\
+&F_v(j,\cdot)\text{ constant on }[0,h-r)\quad\text{separately for }j=0,m.
+\end{aligned}
+\tag{68.3}
+$$
+
+Intervals contain integer INITIAL tails, and empty-set constancy is true. Let $\Delta_{\rm ad}(v)$ be the minimum additional worst-branch fee after this paid root. Let $\Delta_{\rm child\text{-}pre}(v)$ be the same minimum with one preset literal suffix required for this archive only, allowing endpoint-based stopping and decoding. Both count every actually emitted complete block, including waits, padding and blocks that reject before their endpoint; neither permits a reset, copy, hidden initial clock, intermediate read or borrowed sibling information. Absence of a uniformly finite correct continuation means $+\infty$.
+
+For a chosen subset $I\subseteq\mathbb F_2$ of these actual positive archives, let $I_{\rm live}$ contain the $v\in I$ whose entire pair table is nonconstant. Constant archives stop at their root endpoint. Let $\Gamma(I)$ be the minimum additional worst-branch fee with a single shared literal suffix required on all selected live archives, each source stopping and decoding from its own retained archive; take infinity when none is uniformly finite. This imposes no requirement on unselected root-zero siblings or other sources.
+

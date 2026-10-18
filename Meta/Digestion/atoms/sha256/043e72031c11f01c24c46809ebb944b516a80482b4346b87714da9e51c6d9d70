@@ -1,0 +1,16 @@
+**推论 13.3.3（量子概率的偶数阶首项）。** 若 $G=-iH/\hbar$，$H=H^\dagger$，且纯态 $\psi\in\operatorname{ran}P_A$ 满足 $P_BH^\nu\psi\ne0$，则
+
+$$
+\boxed{
+\|P_BT_t\psi\|^2
+=
+\frac{t^{2\nu}}{(\nu!)^2\hbar^{2\nu}}
+\|P_BH^\nu\psi\|^2
+ +O(t^{2\nu+1}).
+}
+$$
+
+所以“距离为两步”只说明概率至多从四阶开始；若两条二步路径相消，实际首项可以更高，甚至永远不存在。
+
+<a id="section-13-4"></a>
+

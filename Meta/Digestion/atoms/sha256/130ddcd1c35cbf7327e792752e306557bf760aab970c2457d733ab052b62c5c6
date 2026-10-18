@@ -1,0 +1,42 @@
+**Definition 102.1 (actual critical eigenstates and their compact charge).**
+Retain all fixed data, raw measures, operators and full complex domains
+of Definitions 75.1 and 81.1. In particular $a>0$ and the admissible
+signed $\kappa\ne0$ are fixed, both height faces are Dirichlet, and
+$W_{s^2}$ uses the heat clock of $B$, independently of $a$. For $s>0$
+put
+
+$$
+\begin{aligned}
+g_s&=\chi_cs^3,& E_s&=E_{s^2}(g_s),&
+\epsilon_c(s)&=s^2E_s,\\
+m_s&=-E_s/a>0,& r_s&=-\epsilon_c(s)/s^8>0,&
+F_s&=\mathcal U_s\psi_s,
+\end{aligned}
+\tag{102.1}
+$$
+
+where $\psi_s$ is any actual normalized complex ground state of
+$aS-g_sW_{s^2}$, whose negative attainment in $D(S)$ is Proposition
+75.2. Thus $\epsilon_c(s)$ is the critical infimum denoted by
+$\epsilon_s^c$ in (91.1), and $m_s=r_ss^6/a$. The symbol $U_s$ below
+is the potential in (81.1); $\mathcal U_s$ is the unitary map there.
+For a fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of
+positive measure define
+
+$$
+\begin{aligned}
+J_K&=\int_K V(\xi)\Phi_c(\xi)d\xi,\\
+\mathfrak A_s(K)&=\int_K
+ \phi(k_0+\varepsilon s r)U_s(\xi)F_s(\xi)d\xi,
+ \qquad \xi=(r,y,z,w),\\
+\mathscr D_m&=I\times\{q\in\mathbb R^3:1\le\sqrt m\,d(q)\le2\},
+ \qquad d(q)=\sqrt{q^{\mathsf T}M^{-1}q}.
+\end{aligned}
+\tag{102.2}
+$$
+
+The overlap is used only for sufficiently small $s$ that $K\subset
+\Omega_s$. Strict positivity from Theorem 88.1 and Lemma 82.1 gives
+$0<J_K<\infty$; finiteness also follows directly from boundedness of
+$V$ and local $L^2$ integrability of $\Phi_c$.
+

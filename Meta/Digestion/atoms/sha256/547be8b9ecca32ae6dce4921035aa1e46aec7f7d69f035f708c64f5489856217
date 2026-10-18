@@ -1,0 +1,173 @@
+**Theorem 3.2 (Positive-activity optimal site design).** Write
+$F_*=\mathscr F(t_*)$. The unique maximizer among all site
+distributions is
+
+$$
+\boxed{
+\omega^*=\frac{(F_*,1,F_*)}{1+2F_*},\qquad
+\gamma^*=\frac{t_*F_*}{1+2F_*}.
+}
+\tag{3.9}
+$$
+
+For every finite $a,b>0$, the active gap is simple and reflection
+even. A rank-one certificate suffices for global optimality, including
+comparison with every nonsymmetric distribution and every boundary.
+
+Proof. Put $e_+=(e_1+e_3)/\sqrt2$, $o=(e_1-e_3)/\sqrt2$, and
+
+$$
+\begin{aligned}
+g&=\frac{e_0+\sqrt{2a}\,e_++a e_{13}}s,\\
+h&=\frac{\sqrt{2a}(e_0-e_{13})+(a-1)e_+}s,\\
+k&=\frac{a e_0-\sqrt{2a}\,e_++e_{13}}s,\\
+u&=\frac{\sqrt b\,g-s e_2}{\sqrt Z}.
+\end{aligned}
+\tag{3.10}
+$$
+
+Direct inner products show that $(\psi,u,h,k,o)$ is orthonormal,
+with $\psi=(sg+\sqrt b\,e_2)/\sqrt Z$. Let $A=K_1+K_3$ and
+$\Delta=K_1-K_3$. Substitution into (3.2) gives
+
+$$
+A|_{\psi^\perp}=\operatorname{diag}(0,1,2,1)
+\quad\text{in the order }(u,h,k,o),
+\tag{3.11}
+$$
+
+$$
+\Delta u=\Delta k=0,\qquad
+\Delta h=-o,\qquad\Delta o=-h,
+\tag{3.12}
+$$
+
+and
+
+$$
+K_2=ww^{\mathsf T},\qquad
+w=\sqrt{c_0}\,u+\sqrt{c_1}\,h+\sqrt{c_2}\,k.
+\tag{3.13}
+$$
+
+All these are identities in an ordinary orthonormal space; no
+weighted occupation-coordinate quotient is treated as Euclidean.
+
+For symmetric weights $(x,y,x)$ with $x,y>0$ and $2x+y=1$,
+the odd eigenvalue is $x$, and the even block on $\psi^\perp$ is
+
+$$
+M(x)=\operatorname{diag}(0,x,2x)+y\,cc^{\mathsf T},
+\qquad c=(\sqrt{c_0},\sqrt{c_1},\sqrt{c_2})^{\mathsf T}.
+\tag{3.14}
+$$
+
+Its secular function is
+$1+y\sum_{j=0}^2c_j/(jx-\lambda)$. Its derivative with respect
+to $\lambda$ is strictly positive off its three poles. At successive
+ends of $(0,x)$ and $(x,2x)$ it runs from $-\infty$ to
+$+\infty$, and on $(2x,\infty)$ it runs from $-\infty$ to
+one. Thus its three eigenvalues satisfy
+
+$$
+0<\lambda_1<x<\lambda_2<2x<\lambda_3.
+\tag{3.15}
+$$
+
+The first root is strictly positive by its open interval.
+The poles themselves are not eigenvalues
+because every $c_j>0$. This also proves simplicity and identifies
+$\lambda_1$ as the full gap.
+
+Writing $\lambda_1=xt$, the secular equation is
+$(y/x)\mathscr F(t)=1$. Hence all positive symmetric weights
+are parameterized by $t\in(0,t_0)$ through
+
+$$
+x=\frac{\mathscr F(t)}{1+2\mathscr F(t)},\qquad
+y=\frac1{1+2\mathscr F(t)},\qquad
+\gamma(t)=\frac{t\mathscr F(t)}{1+2\mathscr F(t)}.
+\tag{3.16}
+$$
+
+Differentiation yields
+
+$$
+\gamma'(t)=
+\frac{2\mathscr F(t)^2
+-c_1/(1-t)^2-2c_2/(2-t)^2}
+{(1+2\mathscr F(t))^2}.
+\tag{3.17}
+$$
+
+It is positive before the root (3.7) and negative afterward,
+because its numerator is
+$2(\mathscr F-\mathscr R)(\mathscr F+\mathscr R)$.
+This proves unique optimality within symmetric weights.
+
+For a certificate against all weights, use
+
+$$
+v=\frac{\sqrt{c_0}}{t_*}u
+-\frac{\sqrt{c_1}}{1-t_*}h
+-\frac{\sqrt{c_2}}{2-t_*}k,\qquad
+L=v^{\mathsf T}v
+=\frac{c_0}{t_*^2}
++\frac{c_1}{(1-t_*)^2}
++\frac{c_2}{(2-t_*)^2}.
+\tag{3.18}
+$$
+
+Then $v\perp\psi$, $w^{\mathsf T}v=F_*$, and (3.16) gives
+$H_{\omega^*}v=\gamma^*v$. Reflection and (3.11) give
+
+$$
+v^{\mathsf T}K_1v=v^{\mathsf T}K_3v
+=\frac12\left[\frac{c_1}{(1-t_*)^2}
++\frac{2c_2}{(2-t_*)^2}\right]
+=F_*^2=v^{\mathsf T}K_2v.
+\tag{3.19}
+$$
+
+The middle equality is (3.7). Since the candidate weights sum
+to one, $\gamma^*=F_*^2/L$. Therefore
+$Y_*=vv^{\mathsf T}/L$ is positive semidefinite, has trace one,
+annihilates $\psi$, and satisfies
+$\operatorname{Tr}(Y_*K_i)=\gamma^*$ for every site. For all
+$\omega\in\Delta_3$,
+
+$$
+\gamma(\omega)\le
+\frac{v^{\mathsf T}H_\omega v}{L}
+=\sum_i\omega_i\operatorname{Tr}(Y_*K_i)=\gamma^*.
+\tag{3.20}
+$$
+
+The candidate attains this upper bound by (3.15).
+
+If another distribution attains it, equality in the Rayleigh
+quotient implies $H_\omega v=\gamma^*v$. Write
+$x=(\omega_1+\omega_3)/2$ and
+$\delta=(\omega_1-\omega_3)/2$. Its odd component, by (3.12), is
+$-\delta v_h o$. But
+$v_h=-\sqrt{c_1}/(1-t_*)\ne0$, so $\delta=0$.
+The $u$ coordinate then gives
+
+$$
+(1-2x)\sqrt{c_0}F_*
+=\gamma^*\frac{\sqrt{c_0}}{t_*},
+\tag{3.21}
+$$
+
+which fixes the center weight at $1/(1+2F_*)$ and both endpoint
+weights at $F_* /(1+2F_*)$. This proves global uniqueness.
+If any weight is zero, the positive-law legal graph disconnects
+as in §3.3, and its gap is zero. $\square$
+
+The trace-one spectral certificate is the classical $E$-optimal
+design mechanism; see [Dette and Grigoriev, Theorem 2.1 and
+Remark 2.1][DG3]. The source-specific conclusion here is the
+explicit reduction (3.10)–(3.14), the selected root and the
+nonzero odd coupling that proves uniqueness for these grouped sites.
+A general equivalence theorem alone does not supply these facts.
+

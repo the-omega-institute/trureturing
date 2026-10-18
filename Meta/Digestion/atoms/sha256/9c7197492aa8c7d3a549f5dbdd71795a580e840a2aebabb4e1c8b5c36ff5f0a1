@@ -1,0 +1,6 @@
+### 107.5. Infima at ranks seven and four or five
+
+Define three auxiliary coefficient distributions. Let \(u\) have weight \(1/6\) at even indices \(0,2,6\), weight \(1/8\) at odd indices \(1,3,5,7\), and zero at \(4\). Let \(v_4\) have weight \(1/4\) at \(0,2,5,7\) and zero elsewhere. Let \(v_5\) have weight \(1/6\) at \(0,2,6\), weight \(1/4\) at \(5,7\), and zero elsewhere. All have even/odd totals \(1/2\).
+
+For \(0<\varepsilon<1\), replace the coefficients of \(G_*\) by \((1-\varepsilon)g_*+\varepsilon u\), and those of \(H_*\) by \((1-\varepsilon)h_*+\varepsilon v_h\), with \(h=4\) or \(5\). The resulting calibrated physical pair has exactly ranks \((7,h)\). The unique first kernel is the Fourier mode \(k=4\), whose eight coordinates are all nonzero. Formula (107.9) is continuous in these finite coefficient arrays, so their complete norms converge to \(d\). The lower bound proves that the infimum in each stated exact-rank class is precisely \(d\). This infimum construction imposes no quotient or common-normer condition on the approximating pairs.
+

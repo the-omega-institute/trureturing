@@ -1,0 +1,16 @@
+**引理 447.1（完整指数平均恒等式）。** 令
+
+\[
+h(y)=k(\log(y/2)+\gamma_E)+\frac1y,\qquad y>0.
+\]
+
+则对每个 \(x>0\)，完整地有
+
+\[
+G(x)=e^x\int_x^\infty e^{-y}h(y)\,dy
+ =\int_0^\infty e^{-v}h(x+v)\,dv,
+\qquad
+e^x\int_x^\infty e^{-y}\,dy=1.
+\tag{EA.1}
+\]
+

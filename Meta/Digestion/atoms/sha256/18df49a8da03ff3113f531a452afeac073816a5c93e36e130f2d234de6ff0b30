@@ -1,0 +1,23 @@
+**Definition 37.1 (explicit frontier parameter).** On $[v_0,1]$ put
+
+$$
+\mathfrak f(v)=\sqrt{v(\theta v+\omega)}
+              +\sqrt{(1-v)(1-\theta v-\omega)}.
+\tag{JR.30}
+$$
+
+For $0\leq s\leq s_0$ set $v_s=1$. For $s_0<s\leq1$ let $v_s$
+be the unique point in $[v_0,1)$ with $\mathfrak f(v_s)=s$.
+An expression requiring no optimization or implicit root choice is
+
+$$
+v_s=
+\frac{(1+\theta)(1-s^2-\omega)+2\omega s^2
+ +2s\sqrt{1-s^2}\sqrt{\theta(1-s^2)+\omega k}}
+ {(1+\theta)^2-4\theta s^2}
+ \qquad(s_0\leq s\leq1).
+\tag{JR.31}
+$$
+
+The formula agrees with the first case at $s=s_0$.
+

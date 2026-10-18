@@ -1,0 +1,70 @@
+**Theorem 10.2 (Joint path Gram and exact capacity).** If
+
+$$
+G_w=A_w\otimes I_3,\qquad A_w\succeq0,
+$$
+
+for every $w\in\mathcal W$, then
+
+$$
+\boxed{
+G_{\mathcal W}:=\mathscr R_{\mathcal W}^{\mathsf T}\mathscr R_{\mathcal W}
+ =A_{\mathcal W}\otimes I_3,\qquad
+A_{\mathcal W}:=\sum_{w\in\mathcal W}A_w.
+}
+\tag{10.2}
+$$
+
+Consequently, in the same linear-decoder sense as Theorem 9.3, the exact
+linear boundary capacity of the joint path family is
+
+$$
+\boxed{
+\operatorname{rank}\mathscr R_{\mathcal W}
+ =3\operatorname{rank}A_{\mathcal W}.
+}
+\tag{10.3}
+$$
+
+If one path family is enlarged from $\mathcal W$ to
+$\mathcal W\cup\{u\}$, its exact additional capacity is
+
+$$
+\boxed{
+3\bigl(\operatorname{rank}(A_{\mathcal W}+A_u)
+       -\operatorname{rank}A_{\mathcal W}\bigr),
+}
+$$
+
+which can be zero even when $\mathscr R_u$ has positive rank.
+
+**Proof.** The joint map is a direct sum, so
+
+$$
+G_{\mathcal W}=\sum_{w\in\mathcal W}G_w
+ =\left(\sum_{w\in\mathcal W}A_w\right)\otimes I_3.
+$$
+
+The rank identity for a Kronecker product gives (10.3). The last formula is
+the difference of the two joint ranks. Since the summands are positive
+semidefinite, adding a path cannot decrease the rank, but it need not add a
+new multiplicity direction. $\square$
+
+This gives a precise distinction between a new path and a new response mode.
+For example, with two multiplicity coordinates,
+
+$$
+A_1=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+A_2=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+$$
+
+each path has rank-three response, but their joint family still has capacity
+$3$. In contrast, replacing $A_2$ by
+
+$$
+\begin{pmatrix}0&0\\0&1\end{pmatrix}
+$$
+
+gives joint capacity $6$. The distinction is invisible to a count that adds
+the individual ranks.
+

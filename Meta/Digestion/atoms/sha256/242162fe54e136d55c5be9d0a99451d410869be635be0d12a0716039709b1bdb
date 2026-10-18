@@ -1,0 +1,25 @@
+**Open problem 9.2 (the unchanged effective lower bridge).** Produce
+certified all-competitor lower endpoints converging to the original
+$\lambda$, with effective error, or establish an appropriate exact-rate
+theorem. One sufficient bridge would be explicit uniform errors
+
+$$
+\sigma_d\ge \frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{NDR.37}
+$$
+
+effective in the stated parameters. Another would be a complete effective
+lower-certificate hierarchy over the unrestricted templates of §2, with
+a proved approximation error. Neither is supplied here. Finite type
+computations in §3 compare finite quantities; NCE's sufficient weights
+cover all cycles but have no established completeness theorem.
+
+By Corollary 7.4, finite component enumeration cannot be made complete by
+uniform subexponential per-fiber repair at the fixed original-block
+interface. Lawful changes of variables that retain shared relations and
+global certificates are alternative possible mechanisms; all-competitor
+coverage and vanishing loss remain required. Finite vocabulary, binary
+closure, graph existence and finite LP decidability alone do not establish
+those properties.
+

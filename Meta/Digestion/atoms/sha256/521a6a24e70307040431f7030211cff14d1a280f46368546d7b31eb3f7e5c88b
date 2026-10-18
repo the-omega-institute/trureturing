@@ -1,0 +1,10 @@
+**Definition 5.1 (credited full-alphabet law).** Use [GDB, Definition
+12.4][GDB]: on all $123$ members of $S_3$, assign raw weight
+$63$ to each of the eight even perfect height-two trees and weight
+$1$ to every other state. The total is $8\cdot63+115=619$.
+Normalize to the strictly positive law $\mu$ on the entire alphabet.
+On the complete native graph solutions this gives
+$A=63/619$ and $B=1/619$. The restriction to perfect trees is a
+constraint of that native template; no source shape has been deleted
+from the task or from the law.
+

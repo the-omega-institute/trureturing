@@ -1,0 +1,14 @@
+## 3. 三、线性层只差一维，但乘法闭包立即恢复全部五态
+
+定义代数闭包序列：
+
+$$
+\mathcal A_0=\mathcal B,
+$$
+
+$$
+\mathcal A_{n+1}=
+\operatorname{span}
+\{fg:f,g\in\mathcal A_n\}.
+$$
+

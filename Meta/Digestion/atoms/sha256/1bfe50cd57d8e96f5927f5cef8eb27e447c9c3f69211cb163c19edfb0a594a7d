@@ -1,0 +1,21 @@
+**定理 35.4（三循环与全位置置换都留下两种尺度）。** 对实对称正定矩阵 $H$，条件 $P^THP=H$ 当且仅当
+
+$$
+H=\lambda_{\parallel}\Pi_{\parallel}
++\lambda_{\perp}\Pi_{\perp},
+\qquad \lambda_{\parallel}>0,\quad\lambda_{\perp}>0.
+$$
+
+两个权重独立；即使要求全部三位置置换 $S_3$ 都为 $H$ 等距，也不能迫使它们相等。若另存在一个对固定欧氏参考正交、同时满足 $R^THR=H$ 的线性映射 $R$，把参考单位共同向量 $e_{\parallel}=\mathbf1/\sqrt3$ 送到某个参考单位相对向量 $u_{\perp}\in E_{\perp}$，则必有 $\lambda_{\parallel}=\lambda_{\perp}$。不增加这种额外等距性时，权重相等须作为独立假设。
+
+证明（35.4）。将 $H$ 写成一般对称矩阵。循环共轭把三个对角元循环置换，把三个无序坐标对的非对角元也循环置换，所以不变条件恰使对角元同为 $d$、非对角元同为 $e$。因此
+
+$$
+H=(d-e)I+e\mathbf1\mathbf1^T
+=(d+2e)\Pi_{\parallel}+(d-e)\Pi_{\perp}.
+$$
+
+共同线上特征值为 $d+2e$，相对平面上两个特征值均为 $d-e$；正定当且仅当这两个数都正。反向任取两个正数，以 $e=(\lambda_{\parallel}-\lambda_{\perp})/3$、$d=(\lambda_{\parallel}+2\lambda_{\perp})/3$ 构造此型，就满足全部条件。每个位置置换均固定 $\mathbf1$ 且保持其欧氏正交补，因而保持两个投影。故例如 $2\Pi_{\parallel}+\Pi_{\perp}$ 已是全 $S_3$ 不变的权重不等反例。
+
+在额外条件下，$e_{\parallel}^THe_{\parallel}=\lambda_{\parallel}$，$u_{\perp}^THu_{\perp}=\lambda_{\perp}$。由于 $Re_{\parallel}=u_{\perp}$ 且 $R$ 为 $H$ 等距，这两值相等。参考正交性明确保证所讨论的方向比较使用同一欧氏单位尺度；任意可逆变换不能代替该条件。例如对任意不等的两正权重，取一个欧氏正交映射 $O$ 将共同方向与一个相对方向交换，$R=H^{-1/2}OH^{1/2}$ 仍满足 $R^THR=H$，但送 $e_{\parallel}$ 到 $\sqrt{\lambda_{\parallel}/\lambda_{\perp}}\,u_{\perp}$，没有保持参考单位长度。故单说“有一个混合方向的 $H$ 等距变换”不足以推出权重相等。上述额外对称的实际可执行性及其物理解释也没有由 $C_3$ 或 $S_3$ 取得。$\square$
+

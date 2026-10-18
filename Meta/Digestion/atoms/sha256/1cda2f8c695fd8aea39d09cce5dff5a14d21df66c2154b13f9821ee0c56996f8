@@ -1,0 +1,6 @@
+**Reading contract.** These are ordinary mathematical statements and
+> proofs, not Lean-certified results or a native execution certificate.
+> The volume uses `generic-v1` claim shapes and retains its final append
+> anchor. Its source instance is the fixed repository snapshot
+> `07a301c6d4fbb7c6bf19d8d9820b4f5e9d21c942`.
+

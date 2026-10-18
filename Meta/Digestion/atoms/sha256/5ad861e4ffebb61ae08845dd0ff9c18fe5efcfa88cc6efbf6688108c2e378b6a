@@ -1,0 +1,7 @@
+**Definition 1.4 (safety endpoints).** Invocation, validation and Return are
+separate events. Our validation event is the last guard Read. Validation
+safety asserts $R=R_P(U_v)$ there and implies existence of an instantaneous
+in-call version with row $R$. It asserts neither the invocation row nor the
+row at the separate Return event. The endpoint obstructions and special-cut
+exceptions are [CNA, §7][CNA]; no new endpoint guarantee is implicit below.
+

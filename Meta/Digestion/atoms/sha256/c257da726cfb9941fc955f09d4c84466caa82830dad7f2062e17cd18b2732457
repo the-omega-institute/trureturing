@@ -1,0 +1,17 @@
+**定义 20.3（最小动态补充维数）。** 令 $r_\infty=\operatorname{rank}\mathcal O_d$、$r_0=\operatorname{rank}C$。标准秩—零度及商维数公式给
+
+$$
+d_{\mathrm{mem}}=\dim\mathcal M_{\mathrm{dyn}}
+=r_\infty-r_0.
+$$
+
+在线性附加记录 $L:V\to\mathbb R^m$ 中，要求联合记录 $(C,L)$ 足以恢复全部未来读出，最少额外坐标数亦为 $r_\infty-r_0$。
+
+其线性代数依据是 $\ker(C,L)\subseteq N_\infty$，故
+
+$$
+r_\infty\le\operatorname{rank}(C,L)\le r_0+m.
+$$
+
+在 $V/N_\infty$ 上选取当前读出遗漏方向的坐标达到下界；$N_\infty$ 的 $T$ 不变性使该联合记录有自主后继。零补充恰好要求 $\ker C$ 在 $T$ 下不变。这里维数不是比特容量，也不是这些坐标已经被实际取得的证明；精确实坐标可要求无界精度。
+

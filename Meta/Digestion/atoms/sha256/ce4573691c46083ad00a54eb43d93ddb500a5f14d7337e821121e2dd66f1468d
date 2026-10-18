@@ -1,0 +1,29 @@
+**Lemma 21.1 (the cycle action on whole stars).** Under Definition
+20.2, write $K=\ker H$. Its projection on each star is exactly
+
+$$
+K|_{\operatorname{st}(v)}
+ =\{u\in\mathbb F_2^4:\textstyle\sum_a u_a=0\}.
+\tag{GDB.87}
+$$
+
+Also, for every proper $F\subsetneq V$, the rows of $H$ indexed by
+$F$ are independent. Under uniform counting on $\mathbb F_2^E$,
+$H_Fs$ is uniform on $\mathbb F_2^F$.
+
+Proof. Every element of $K$ has even incident parity. Conversely choose
+any even collection of edges incident to $v$. Pair their other endpoints
+and join each pair by a path in the connected graph $G-v$. The mod-two
+sum of these paths and the selected incident edges has even degree at
+every vertex and exactly the desired restriction at $v$. Paths may
+intersect: mod-two addition preserves the even-degree assertion. This
+proves (GDB.87), including the empty selection.
+
+As in Theorem 13.1, $H^{\mathsf T}b=0$ says $b_u=b_v$ at every edge;
+connectedness makes $b$ constant. The sole nonzero row dependence is
+therefore the sum of all rows. No proper subset contains that dependence.
+Consequently $H_F$ is onto, each value has $2^{2n-|F|}$ preimages,
+and its uniform image is the stated uniform law. This counting identity
+does not assert independence under the weighted native Gibbs law.
+$\square$
+

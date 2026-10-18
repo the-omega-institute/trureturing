@@ -1,0 +1,17 @@
+### 453.8 来源、非重复范围及证据边界
+
+§419 是实际 Fibonacci \(e_n\) 的逐二幂链终端；§421、§423 是 \(H_{\rm raw}\) 的素核／固定复杂度层主项。本单元处理原 \(I_\psi\) 中真实普通 Möbius 的固定二倍配对，并在 \(p\asymp x\) 上计算完整相邻纤维的面板。§§429、435 已给其他增长 Euler 过滤器的实际窗口及反向补集；这里没有重发其结果或声称“补集补偿”这个原则的新颖性。§452 的输入空间算子成本也没有被当成真实 Möbius 达到最坏情况的证据。
+
+直接复用范围：§§422、424、425.3–5、429.2–3；既有第一 Mertens 供应；Johnston–Yang v2 的上述无条件 Chebyshev 误差供应。新增推导为（DP.13）–（DP.16）的实际有限截止与 Abel 付款、（DP.17）–（DP.25）的同一二倍纤维面板及显式常数，以及以精确面板保留全部补集的（DP.27）–（DP.31）。不作全球原创性声明。
+
+（DG.1）–（DG.6）给出本节使用的解析下界、正常收敛及原约定联系。Stieltjes 经典约定仍沿用既有源说明及 DLMF §25.2.4；梯形误差、有限分部积分与正常收敛只是经典中间工具。保存的 FLINT 向外区间只作交叉参考，没有作为解析下界前提或 Lean 定理。
+
+本次读取的源快照 SHA-256：
+
+* `docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md`：`eb0bcb3fad6aaded820f8e6d3c8cb07008068c694a7747ac369cd1f5ad96acda`。
+* `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/robin-kernel-diagonal.json`：`29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d`。
+* `https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-robin-boundary/robin-kernel-diagonal.md`：`1f8347eda47d65d874dbda10c053fc1ee743ac040b99470350b3b279c33f45c7`。
+* `Library/Weil/johnstonyang2022pnt.md`：`adb7c7bc038556fe195dc977121a4fe9a34d804e0578c81964b4e8c3a2a779d8`。
+
+这些源与经典供给的归属保持原记录。本节是纸面证明；原临界有符号估计、其常数和全范围仍未解决。
+

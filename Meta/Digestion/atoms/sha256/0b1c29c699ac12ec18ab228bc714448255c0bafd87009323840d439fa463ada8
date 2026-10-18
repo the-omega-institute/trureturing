@@ -1,0 +1,13 @@
+**Definition 2.1 (the reused evidence baseline).** The two full-tree clauses of `ActualTreeReadoutAcquisition.source_foundation` supply the following facts on the entire $\mathcal T$: matching every actual labelled leaf reply of a reference tree forces equality with that tree; changing one actual leaf label changes no reply at any other address. These clauses concern all trees, independently of the theorem's additional third-image and Boolean-strategy clauses.
+
+Their exact application to (NDR.3) gives
+
+$$
+\operatorname{cert}_C(T)=M_C(T).
+\tag{NDR.4}
+$$
+
+Indeed the union of the hidden labelled leaf records suffices. Replies at all fixed outside leaves are already determined by $C$, so the supplied full-leaf uniqueness criterion applies to the full tree. Conversely, if $J$ omits a hidden leaf address $a$, flip just that leaf. Its hole value remains a member of $\mathcal T$ and the modified whole source remains in $\mathcal U_C$. The supplied locality clause leaves every reply on $J$ unchanged, while the tree differs. Every one of the $M_C(T)$ hidden leaves is necessary. This is a reuse of leaf-address rigidity, rather than an additional rigidity theorem.
+
+The same locality also forces every successful acquisition run to request every hidden leaf address. If a run halts without requesting $a$, replay the same policy on the flipped source. Induction on the finite chronological history gives the same requests and replies: at each step the histories agree, hence the next action agrees, and the requested address is not $a$. The same terminal tree would then be returned for two different sources. This contradicts Assumption 1.3. This replay uses full-tree correctness in the specified family, not the original Boolean `Strategy.correct` condition.
+

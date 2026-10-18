@@ -1,0 +1,13 @@
+## 321. Application and exact scope
+
+In the current mixed-flat six-edge class, the maximal selected value
+is m, while Z and another edge U exceed m. Every flat is axial-selected,
+and no flat has a transverse occurrence of a value greater than m-2.
+Consequently both Z and U have wholly genuine stars. Apply the lemma
+to the larger of z,u. The two largest other values are the smaller of
+z,u and m. This proves abs(z-u)<m+1, including ties among lower values.
+
+In particular a local source-front angle assignment with u>=z+m+1
+cannot extend to the actual complete U star. It may still be a correct
+counterexample to a weaker scalar relaxation that omitted this bound.
+

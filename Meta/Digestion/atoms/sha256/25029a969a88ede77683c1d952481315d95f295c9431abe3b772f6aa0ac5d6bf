@@ -1,0 +1,64 @@
+**Lemma 3.2 (all six losses, uniformly on the interval).** For (3.1), all
+four endpoint losses are zero, and for every $r\in I$,
+
+$$
+\operatorname{TV}(\pi_4Q_B,\pi_4P_{p,r})<\frac3{100}<\rho_p,
+\qquad
+\operatorname{TV}(\pi_4W_A,\pi_4P_{\beta,r})<\frac1{50}<\rho_\beta.
+\tag{3.5}
+$$
+
+In particular the two remaining integrated losses are strictly negative
+for every allowed $r_\star$, with slack greater than
+$866183/45562500$ and $52/3375$, respectively.
+
+**Proof.** Inside the endpoint boxes the positive-difference events are
+$E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and
+$E_\beta=\{\beta,\alpha w_{0,1}\}$. The endpoint event differences
+have half-widths $\rho_p,\rho_\beta$ and midpoints $C,H$.
+Equation (3.2) and the endpoint TV identity of [PAIR, (11.30)] therefore
+give both endpoint distances exactly. Grouping the level-four tail
+loses no endpoint TV: all its finite atoms have the same endpoint order,
+and the infinite masses are zero. This proves the four endpoint claims
+on the prescribed complete projection.
+
+Here is a uniform bound that retains all TV sign changes. Set
+$r_-=3/8$, $r_+=5/13$. For a phase $s$ and a fixed descriptor $D$, put
+
+$$
+B_s(D)=\frac12\sum_{e\in\mathscr F_s}
+ \max\{|D(e)-P_{s,r_-}(e)|,\ |D(e)-P_{s,r_+}(e)|\}.
+\tag{3.6}
+$$
+
+Every native cell mass in these partitions is monotone on $I$.
+For a monomial $r^m(1-r)^n$ its derivative, after a positive factor is
+removed, has sign $m-(m+n)r$. At p the exponents are $(j+1,j)$ and
+$(j,j+2)$ for $0\le j<4$, and $(4,4)$ for the complete tail.
+At suspension they are $(0,1)$ for beta, $(j+2,j)$ and $(j+1,j+2)$
+for the prefixed atoms, and $(5,4)$ for the complete tail.
+None of these derivative signs changes in the interior of $I$;
+the p cell $(3,1)$ has its turning point at the left boundary.
+Thus every native cell lies between its two boundary values, and
+
+$$
+\operatorname{TV}(\pi_4D,\pi_4P_{s,r})\le B_s(D)\qquad(r\in I).
+\tag{3.7}
+$$
+
+Absolute values and their ties are retained in (3.6); no open sign-cell
+restriction occurs. Substitution of (2.1)--(2.4) gives the exact bounds
+
+$$
+B_p(Q_B)=
+\frac{1823868392951336233193569}{63639949162687538135040000}
+<\frac3{100},
+\qquad
+B_\beta(W_A)=\frac{272417}{14829750}<\frac1{50}.
+\tag{3.8}
+$$
+
+These are finite positive-denominator rational comparisons. The tail
+summands are the full level-four cells, including infinity. Finally,
+subtracting the radii gives the stated rational slacks. $\square$
+

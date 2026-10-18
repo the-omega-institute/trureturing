@@ -1,0 +1,16 @@
+**Lemma 2.3 (Exhaustive geometry).** Two same-parity calls repeat an
+active edge, use adjacent distinct active edges, or use edges with
+disjoint vertex sets. In the last case the target lies in the first
+edge, in the second, or in neither. With opposite address parities,
+exactly one call is active in each phase, and the other is a
+separator. These alternatives exhaust all integer addresses.
+
+Proof. Edges of the integer spin line are precisely the pairs
+$\{\ell,\ell+1\}$. Distinct pairs either share their single
+intermediate endpoint or have no common vertex. For opposite
+parities, activity is determined by the phase in (1.1). Negative
+indices, arbitrary distances and acquisition order introduce no
+further incidence. Constraints on disjoint spin sets multiply within
+each phase of this one realization; the two phase alternatives are
+then added as disjoint events. $\square$
+

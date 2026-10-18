@@ -1,0 +1,25 @@
+**lemma 6.2 (The same actual orbit gives the two-angle moments).** For every
+continuous function on the two angle circles, its forward-time Cesàro mean
+along $(\omega_+t,\omega_-t)$ is its normalized two-circle integral.
+The actual nonnegative orbit, and also its rational-time suborbit, is dense
+in the torus (6.1).
+
+Proof. The ratio $\omega_+/\omega_-$ is irrational, since its square is
+$(21+5\sqrt{17})/4$. For every nonzero integer pair $(k,l)$,
+$k\omega_++l\omega_-\ne0$ and
+
+$$
+\frac1W\int_0^W e^{i(k\omega_++l\omega_-)t}\,dt
+=\frac{e^{i(k\omega_++l\omega_-)W}-1}
+{iW(k\omega_++l\omega_-)}\longrightarrow0.
+\tag{6.4}
+$$
+
+This proves the assertion for trigonometric polynomials. Uniform
+trigonometric approximation of continuous periodic functions proves it for
+all continuous functions. A nonnegative continuous bump supported in any
+nonempty open patch has positive torus integral, so the forward orbit must
+enter that patch. Its preimage is open in nonnegative time and contains a
+nonnegative rational time. This proves both density statements. Only
+suprema and mathematical averages are being identified. $\square$
+

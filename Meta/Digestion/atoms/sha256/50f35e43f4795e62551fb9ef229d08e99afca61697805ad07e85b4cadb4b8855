@@ -1,0 +1,73 @@
+**复用定理 2.3（IV 的精确源投影）。** 记 $r=\operatorname{rank}B$，$[B;T]$ 表示竖直拼接。该固定源元组能实现完整原根失败系统，当且仅当
+
+$$
+\begin{aligned}
+\operatorname{rank}[B;G_q]&>r&& (q\in\mathcal S),\\
+P_{(w,0)}\ne P_{(w,1)}\quad\text{或}\quad
+\operatorname{rank}[B;D_w]&>r&& (w\in\{J,M\}^7).
+\end{aligned}
+\tag{2.10}
+$$
+
+用 $\Phi(\mathbf P)$ 表示这组全部守卫，并令
+
+$$
+\mathfrak S_7=\{\mathbf P\in\mathcal P^{\mathcal S}:\Phi(\mathbf P)\}.
+\tag{2.11}
+$$
+
+则 $\mathfrak S_7\ne\varnothing$ 当且仅当每个全域至多八读确定性协议失败；$\mathfrak S_7=\varnothing$ 当且仅当存在一个全域至多八读协议。
+
+为说明本卷使用该已证投影的确切接口，$Bx=0$ 等价于所有共享响应方程
+
+$$
+\ell_v(P_q)x_q=z_v\quad(q\in\mathcal D_v),
+\qquad z_v=\ell_v(P_{q_v})x_{q_v}.
+\tag{2.12}
+$$
+
+此等价在整个线性核上成立，包括含零块的向量。对任意线性映射 $T$，秩与零化度给出
+
+$$
+\operatorname{rank}[B;T]-\operatorname{rank}B
+=\operatorname{rank}(T|_{\mathcal U}).
+\tag{2.13}
+$$
+
+例如将 $(Bx,Tx)$ 的像投影到 $\operatorname{im}B$，其核恰为 $\{(0,Tu):u\in\mathcal U\}$，即得此式。因此每个必需守卫是相应映射在同一个 $\mathcal U$ 上非零。全部守卫成立后，IV 定理 13.3 的有限子空间回避才给出一个同时合法的向量：对每个必需映射 $T_j$ 选 $u_j\in\mathcal U$ 和分量 $L_j$ 使 $L_j(u_j)\ne0$；则
+
+$$
+u(t)=\sum_{j=1}^m t^{j-1}u_j
+\tag{2.14}
+$$
+
+的每个 $L_j(u(t))$ 都是非零多项式，因为其 $t^{j-1}$ 系数就是 $L_j(u_j)$。在这些有限根集之外取同一个 $t$，即可同时使全部 $G_qx$ 和全部适用的 $D_wx$ 非零。这里 $256\le m\le384$；分别找到不同映射的见证，不等于已得到同时合法世界。
+
+其原根含义也仍按 IV：每叶的两个不同固定目标实现其全部祖先读数；每个选定响应子纤维包含相应后代目标族。沿 (1.4) 向上归纳，两个动作与所有停止节点均得到失败。反向展开 $L_7(\mathcal I_0,(0))$ 则选出这样的固定叶对和共同祖先响应。初读平移 (1.5) 将此结论双向输运到全域。这些是复用的源投影与有限树结论，秩与零化度及有限子空间回避本身不计为本卷新结果。
+
+若需显式区分全部秩层，可沿用 IV 的平方子式记法
+
+$$
+\mu_k(C)=\sum_{|I|=|J|=k}\det(C_{I,J})^2,\qquad\mu_0(C)=1,
+$$
+
+超出矩阵行列数时取零。令
+
+$$
+s_w=2(a_{(w,0)}-a_{(w,1)})^2
++(b_{(w,0)}-b_{(w,1)})^2+(c_{(w,0)}-c_{(w,1)})^2.
+$$
+
+则 (2.10) 等价于有限公式
+
+$$
+\bigvee_{r=0}^{1024}\left[
+\mu_r(B)>0\ \land\ \mu_{r+1}(B)=0
+\ \land\ \bigwedge_q\mu_{r+1}([B;G_q])>0
+\ \land\ \bigwedge_w\bigl(s_w>0\ \lor\ \mu_{r+1}([B;D_w])>0\bigr)
+\right].
+\tag{2.15}
+$$
+
+它消去 $1024$ 个增益及漂移自由坐标和 $254$ 个共享响应，保留上述全部合法源约束。此处的规模计数及公式不提供可行性值或计算资源界。若 $\mathcal U=\{0\}$，全部增益守卫均失败；该秩层并未被排除在定义之外。
+

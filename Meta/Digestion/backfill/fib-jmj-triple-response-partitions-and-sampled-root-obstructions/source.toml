@@ -1,0 +1,5 @@
+source_id = "fib-jmj-triple-response-partitions-and-sampled-root-obstructions"
+path = "docs/develop/theory/FIB_JMJ_TRIPLE_RESPONSE_PARTITIONS_AND_SAMPLED_ROOT_OBSTRUCTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

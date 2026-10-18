@@ -1,0 +1,76 @@
+## 122. 固定 iid 相干族上的成本及同族比较
+
+**假设 C-122.1（成本所需的固定来源与相位）。**
+除 C-121.1 的实际测量和独立均匀设置外，每轮实际输入独立同分布的
+C-120.1 状态 $\rho_\gamma$，相对于固定读数具有已校准的实非负相位。
+固定 $r\in(0,1)$ 及最低相干 $g=\gamma_0\in(0,1)$，
+承诺 $\gamma\in[g,1]$，在数据之前选 $\lambda=g/3$。
+固定 $\alpha\in(0,1)$，令 $A=\log(1/\alpha)$；以下均为自然对数。
+这是假设于有功效来源的成本结论，不把纠缠来源作为 C-121.1 的可分离零假设。
+
+**定理 C-122.2（有限停止给出的平均单份成本界）。**
+在假设 C-122.1 下，设
+
+$$
+d_{\mathrm s}(g)=\frac{3+g}{4}\log(1+g/3)
++\frac{1-g}{4}\log(1-g).
+\tag{C122.1}
+$$
+
+则 $d_{\mathrm s}(g)>0$，且 (C121.3) 的停止时刻满足
+
+$$
+\mathbb E\tau\le B_{\mathrm s}(r,g,\alpha)
+:=\frac{A+\log(1+g/3)}{r\,d_{\mathrm s}(g)}<\infty.
+\tag{C122.2}
+$$
+
+$\tau$ 既是全部轮数，也是实际制备份数。
+
+证明。由 C-120.1 与 (C121.5)，得分 iid 且分布为
+
+$$
+\Pr(V=1)=\frac{r(3+\gamma)}4,\qquad
+\Pr(V=-3)=\frac{r(1-\gamma)}4,\qquad
+\Pr(V=0)=1-r.
+\tag{C122.3}
+$$
+
+令 $Y_n=\log(1+(g/3)V_n)$、$S_N=\sum_{n=1}^NY_n=\log E_N$，
+则 $\log(1-g)\le Y_n\le b_g:=\log(1+g/3)$，并且
+
+$$
+\begin{aligned}
+\mu:=\mathbb E Y_n
+&=r\,d_{\mathrm s}(g)
++\frac{r(\gamma-g)}4\log\frac{1+g/3}{1-g}
+\ge r\,d_{\mathrm s}(g),\\
+d_{\mathrm s}(0)&=0,\qquad
+d_{\mathrm s}'(g)=\tfrac14\log\frac{1+g/3}{1-g}>0.
+\end{aligned}
+\tag{C122.4}
+$$
+
+故 $\mu>0$。先只在有限 $m$ 上停止：
+
+$$
+S_{\tau\wedge m}=\sum_{n=1}^mY_n\mathbf1_{\{\tau\ge n\}},\qquad
+\mathbb E S_{\tau\wedge m}=\mu\,\mathbb E(\tau\wedge m).
+\tag{C122.5}
+$$
+
+此等式由有限求和、$Y_n$ 与过去的独立性及
+$\{\tau\ge n\}\in\mathcal F_{n-1}$ 得到。
+若 $\tau\le m$，首次越界前 $S_{\tau-1}<A$，故
+$S_\tau<A+b_g$；若 $\tau>m$，则 $S_m<A$。
+所以在所有路径上 $S_{\tau\wedge m}\le A+b_g$，进而
+
+$$
+\mathbb E(\tau\wedge m)\le\frac{A+b_g}{\mu}
+\le\frac{A+b_g}{r\,d_{\mathrm s}(g)}.
+\tag{C122.6}
+$$
+
+对非负停止时间使用单调收敛，得到 (C122.2)，同时证明有限均值及几乎必然停止。
+没有对尚未证明可积的无界停止时间使用可选停止或 Wald 恒等式。证毕。
+

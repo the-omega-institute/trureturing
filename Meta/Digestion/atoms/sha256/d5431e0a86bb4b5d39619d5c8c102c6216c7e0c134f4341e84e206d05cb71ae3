@@ -1,0 +1,20 @@
+**接口 2.2（First-zero loss and literal responses, reused）。** If an $m$-bit block has its first zero after $a<m$ leading ones, an initial tail $s$ survives that prefix exactly when $s+a<k$. For two sources with the same initial value and phase which both survive, the zero makes their current records identical. They remain identical under every subsequent common action. This is the first-zero interface of [S1, Lemmas 4.2–4.3 and Theorem 5.2]; the bound $m<k$ ensures that no remaining internal run can reject a survivor in this one block.
+
+For a successful block $x_0\cdots x_{m-1}$ at absolute block index $t$, its endpoint difference on INITIAL phase $j$ is the literal sum
+
+$$
+q_t(j)=\bigoplus_{i=0}^{m-1}x_i c_{-j+tm+i}.
+\tag{2.2}
+$$
+
+Equivalently, its full phase response on the ordered path $[tm,tm+m]\pmod T$ has charges $x_0$, $x_{i-1}\oplus x_i$ at internal vertex $tm+i$, and $x_{m-1}$ at the right endpoint, and is zero elsewhere. The charges on the full path have even total parity. This is [S10, Interface 2.1; S15, equation (1.3)]. Restriction to the actual subgroup $P$ need not have even parity.
+
+In particular, the root word $1^m$ rejects precisely the tails $s\ge H$. On success its response is
+
+$$
+q_0(j)=\mathbf1_{\{0,m\}}(j),
+\tag{2.3}
+$$
+
+because the two contributions at each internal vertex cancel. A pulse consisting of one literal one at absolute position $i$ has response supported on $\{i,i+1\}\pmod T$. These response interfaces do not supply an optimum for (2.1); legality, acquired archives, and the global comparison of all root actions are proved next.
+

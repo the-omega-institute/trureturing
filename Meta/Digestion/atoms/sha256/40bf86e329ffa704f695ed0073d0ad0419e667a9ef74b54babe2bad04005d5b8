@@ -1,0 +1,139 @@
+**Lemma 87.1.** On \(0<|b|<1\), the conditions
+\(\mathscr F=0\) and \(\beta\ne0\) imply \(\sigma>0\).
+
+Here is a finite exact ideal certificate, including every parameter fibre.
+Work in \(\mathbb Q(b)[x,y]\) and start with rows
+\(f_0=A,f_1=D_0,f_2=C_0\), reconstructed by (87.5)–(87.6).
+Two traces below use lexicographic order and graded reverse lexicographic
+order, in both cases \(x>y\). For clarity their operations are:
+
+- \(M(j)\): divide \(f_j\) by its leading coefficient.
+- \(S(j,a,c;k,d,e)\): form \(x^ay^cf_j-x^dy^ef_k\).
+- \(R(j;j_1,\ldots,j_m)\): divide \(f_j\) by the ordered list of
+  previous rows, and retain the remainder. At each step use the first
+  listed leading monomial dividing the current leading monomial; subtract
+  its exact coefficient multiple. If none divides, move that leading
+  term to the remainder. Continue until zero. This fixes all quotients.
+
+Each displayed row is the result of its operation. No claim that these
+rows form a Gröbner basis is required. They are simply rational polynomial
+identities expressing their outputs in the ideal of the three seeds.
+
+Lexicographic trace:
+
+```text
+3: M(0)
+4: M(1)
+5: R(2;0,1)
+6: M(5)
+7: S(4,0,0;6,0,1)
+8: R(7;6,4,3)
+9: M(8)
+10: S(9,1,0;6,0,2)
+11: R(10;9,6,4,3)
+12: M(11)
+13: S(12,0,1;9,0,0)
+14: R(13;12,6,3)
+15: M(14)
+16: S(15,0,1;12,0,0)
+17: R(16;15)
+18: M(17)
+19: S(15,1,0;6,0,0)
+20: R(19;18,15)
+21: S(3,0,0;6,1,0)
+22: R(21;18,15)
+23: M(22)
+24: S(23,0,1;18,0,0)
+25: R(24;23,15)
+26: M(25)
+27: S(26,0,1;23,0,0)
+28: R(27;26,15)
+29: M(28)
+30: S(29,0,1;26,0,0)
+31: R(30;29,15)
+32: M(31)
+33: S(32,0,1;29,0,0)
+34: R(33;32,15)
+35: M(34)
+36: S(35,0,1;32,0,0)
+37: R(15;35)
+```
+
+Graded reverse lexicographic trace:
+
+```text
+3: M(0)
+4: M(1)
+5: R(2;0,1)
+6: M(5)
+7: S(4,0,0;6,0,1)
+8: R(7;6,4,3)
+9: M(8)
+10: S(3,0,0;6,1,0)
+11: R(10;6,9,4,3)
+12: M(11)
+13: S(12,1,0;9,0,1)
+14: R(13;6,12,9,4,3)
+15: M(14)
+16: S(15,0,1;9,0,0)
+17: R(16;15,6,12,3)
+18: M(17)
+19: S(18,0,1;12,0,0)
+20: R(19;18,15,6,3)
+21: M(20)
+22: S(21,0,1;15,0,0)
+23: R(22;21,18)
+24: M(23)
+25: S(24,0,1;18,0,0)
+26: R(25;24,21)
+27: S(21,1,0;6,0,0)
+28: R(21;24)
+```
+
+The terminal rows are, respectively, \((f_{37},f_{35})\) and
+\((f_{28},f_{24})\), and both pairs equal
+\[
+ \ell_x=x+\frac{9-3b^2}{b^2+9},\qquad
+ \ell_y=y+\frac{-b^3+3b}{b^2+9}.                       \tag{87.7}
+\]
+To check all scalar specialization failures, collect the reduced
+coefficient denominators of every row and division quotient, and the
+numerators and denominators of every leading coefficient inverted in
+an \(M\) operation. Let \(P_L,P_R\) be their squarefree least common
+multiples, up to nonzero rational constants. Direct reconstruction gives
+\[
+ \gcd(P_L,P_R)=b(b-3)(b+3)(b^2-3)(b^2+3)(b^2+9)Q_b,
+ \quad Q_b=b^8-33b^6+387b^4+729b^2+324.                \tag{87.8}
+\]
+For an explicit factor inventory, put \(z=b^2\) and let \(P_0\) denote
+the product in (87.8). Then, up to nonzero constants,
+\[
+\begin{aligned}
+ P_L/P_0={}&(2z+9)(3z^2+10z-9)
+ (4z^3-81z^2-252z-135)\\
+ &\cdot(2z^4-75z^3+2943z^2-16929z-61965)\\
+ &\cdot(z^4-18z^3+1440z^2-486z-8505)\\
+ &\cdot(473z^6+6552z^5+31653z^4+28296z^3
+                 -170829z^2-279936z+98415),\\
+ P_R/P_0={}&(z^4+9z^3-351z^2+1053z+2916)\\
+ &\cdot(7z^7+36z^6+711z^5-23220z^4-14499z^3
+                    +825228z^2+3636981z+2755620)\\
+ &\cdot(343z^{11}-6174z^{10}-14778z^9+641871z^8+380700z^7
+       -26240598z^6-50719446z^5+384290892z^4\\
+ &\hspace{18mm}+1928284461z^3+3102906852z^2+127545840z-3228504075)\\
+ &\cdot(49z^{12}-1638z^{11}+40851z^{10}-363528z^9-1169640z^8
+       +22370580z^7+56458134z^6-821017296z^5\\
+ &\hspace{18mm}-1374024303z^4+11763623682z^3+57002538807z^2
+                    +106615567656z+58113073350).
+\end{aligned}                                                    \tag{87.9}
+\]
+The gcd in (87.8) follows by exact univariate division of these factors.
+All its factors are nonzero on the puncture, since in particular
+\[
+ Q_b=b^8+354b^4+729b^2+324+33b^4(1-b^2)>0.
+\]
+At least one complete trace therefore specializes at every target
+parameter. If \(A=D_0=C_0=0\), its terminal equations (87.7) give
+\(x=3(b^2-3)/(b^2+9)\), \(y=b(b^2-3)/(b^2+9)\).
+Substitution gives \(\beta=0\), a contradiction. This proves the lemma.
+

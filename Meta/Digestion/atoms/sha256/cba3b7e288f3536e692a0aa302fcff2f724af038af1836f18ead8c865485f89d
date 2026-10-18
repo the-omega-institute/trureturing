@@ -1,0 +1,14 @@
+**Definition 4.2 (the fixed minimax quantity).** For one common map of
+Definition 3.1, using the entire target (CG.15) and metric (CG.11), set
+
+$$
+E(\Phi)=\max_{(x,\beta,m)\in\mathcal H}
+ \operatorname{dist}\bigl(\Phi(\rho_{x,\beta,m}),
+                              \Omega_{x,\beta,m}\bigr),\qquad
+E_* =\inf_{\Phi\ \mathrm{common\ CPTP}}E(\Phi).
+\tag{CG.20}
+$$
+
+All twelve targets remain prescribed, including those not used in a
+particular necessary lower test.
+

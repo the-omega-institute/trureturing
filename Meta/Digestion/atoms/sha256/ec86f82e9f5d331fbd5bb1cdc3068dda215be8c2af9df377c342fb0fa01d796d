@@ -1,0 +1,22 @@
+**Definition 2.1 (finite interface and weights).** Let $S$ be a finite
+nonempty set, $Q$ a finite target index set, and $\mathcal A$ a finite
+experiment index set. For $q\in Q$ let $g_q:S\to Y_q$; for
+$a\in\mathcal A$ let $r_a:S\to V_a$. A constant experiment is
+allowed. Fix an integer $m\ge2$ and assume every experiment has at
+most $m$ replies. Local and
+joint admissibility mean exactly (NCM.8), with $g_q,r_a$ in place of
+$\Gamma_q,r_{(-)}(a)$, and arbitrary queried coordinate permitted.
+
+Give each $x\in S$ a positive weight $w(x)$. Write
+
+$$
+w(P)=\sum_{x\in P}w(x),\qquad
+\Omega(B)=\sum_{x\in B}\prod_{i=1}^n w(x_i).
+\tag{NCM.10}
+$$
+
+A nonempty $P\subseteq S$ is range feasible if
+$|g_q(P)|\le m$ for every $q\in Q$. This is a necessary condition
+for a coordinate projection of a jointly admissible set; it is not
+asserted sufficient.
+

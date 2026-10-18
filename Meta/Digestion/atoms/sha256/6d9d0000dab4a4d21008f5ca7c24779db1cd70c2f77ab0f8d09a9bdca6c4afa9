@@ -1,0 +1,24 @@
+**Definition 3.1 (count separation).** Give $V$ the strict partial order
+
+$$
+(h,z)\prec(g,w)
+\quad\Longleftrightarrow\quad
+g-h\ge2\ \text{ and }\ z-w\ge2.
+\tag{SI.9}
+$$
+
+An antichain is a set containing no two comparable distinct cells.
+Put $w_0=2K+2L-4=2n-2$. For $0\le j\le K-2$, define
+
+$$
+\begin{aligned}
+\mathcal A_j={}&
+  (\{j,j+1\}\times\{0,\ldots,L-1\})\\
+&\cup(\{0,\ldots,j-1\}\times\{0,1\})\\
+&\cup(\{j+2,\ldots,K-1\}\times\{L-2,L-1\}),
+\end{aligned}
+\tag{SI.10}
+$$
+
+where an empty integer range contributes nothing.
+

@@ -1,0 +1,20 @@
+**Definition 5.1 (The annular representation and its fixed readout).**
+Set
+
+$$
+E_2(k,\alpha,\beta)=\exp(k/H)U(\alpha)\in\mathbb R^2,
+\qquad
+\mathscr S_2=\{z\in\mathbb R^2:1<\|z\|_2<\exp(1)\}.
+$$
+
+On $\mathscr S_2$ define
+
+$$
+K(z)=H\log\|z\|_2,\qquad
+\mathcal R_2(z)=D\left(A(K(z))\frac{z}{\|z\|_2},0\right).
+$$
+
+This is one fixed nonlinear readout. If an ambient function is desired,
+assign the value zero to every $z\notin\mathscr S_2$. No operation
+ever uses that extension on a lawfully encoded execution.
+

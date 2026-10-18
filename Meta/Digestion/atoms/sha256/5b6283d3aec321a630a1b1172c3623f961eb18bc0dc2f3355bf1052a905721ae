@@ -1,0 +1,22 @@
+**Definition 15.1 (explicit graph conditions).** For an integer
+$r\ge0$, put
+
+$$
+K=4(r+4),\qquad B(r)=2r(2\cdot3^K-1).
+\tag{GDB.66}
+$$
+
+Consider a connected simple 4-regular graph satisfying
+
+$$
+\operatorname{girth}(G)>K,\qquad
+|\delta U|\ge |U|/4\quad(0<|U|\le n/2).
+\tag{GDB.67}
+$$
+
+For any set $P\subseteq E$ of at most $r$ pinned edges, call a
+vertex exceptional if it is within graph distance $K$ of an
+endpoint of an edge in $P$. There are at most $B(r)$ exceptional
+vertices: a radius-$K$ ball in a maximum-degree-four graph has at
+most $1+4\sum_{j=0}^{K-1}3^j=2\cdot3^K-1$ vertices.
+

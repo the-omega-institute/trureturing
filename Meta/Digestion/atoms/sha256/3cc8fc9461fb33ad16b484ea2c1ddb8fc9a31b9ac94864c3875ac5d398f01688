@@ -1,0 +1,37 @@
+**Proposition 8.5 (codec-specific path-list sizes).** For the actual
+finite full storage tree let $V$ be vertices, $\ell$ terminals,
+$I=V-\ell$, $D_B$ the sum of terminal depths and $D_I$ the sum of
+internal depths. Its chosen bodies have exact lengths
+
+$$
+p_S=1+2(V+D_B+D_I)=4D_B+3,\qquad
+p_B=1+2(\ell+D_B),\qquad
+p_S-p_B=2(I+D_I).
+\tag{PVC.14}
+$$
+
+If the meter component's outer path has length $a_m$ and the target has
+$k$ receipts, then in particular
+
+$$
+p_S\ge1+k(k+1)+2k(a_m+2).
+\tag{PVC.15}
+$$
+
+Proof. Each path-list item has $1+(|p|+1)+|p|=2|p|+2$ bits and the
+list has one final bit. Summing over nodes or terminals gives the first
+expressions. The elementary full-binary-tree identity
+$D_B=D_I+2I$ follows by summing child depths over all edges: total
+nonroot depth is $2D_I+2I$, also $D_B+D_I$. Since $V=2I+1$,
+substitution gives $p_S=4D_B+3$ and the difference.
+
+The receipt numbered $j=1,\ldots,k$ is cell $j+1$ of the meter word,
+whose first cell is L, and has cell-root path length $a_m+j+1$.
+These distinct mandatory support
+items alone contribute $\sum_j(2(a_m+j+1)+2)$, plus the list terminator,
+which is PVC.15. Wrapper framing can only add bits; PVC.10 then applies
+to the actual full result length. These bounds concern explicit path
+lists, not every tree codec, succinct representation or native algorithm.
+They imply no total fee dominance: validation, banks, installation and
+retained later costs also change. ∎
+

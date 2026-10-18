@@ -1,0 +1,12 @@
+## 8. 八、有限共同生成器与 AURIC 纤维
+
+当前项目关于 compatible complete-law flows 和 finite common generators 的工作，可以在有限 AURIC 窗口中先得到一个完全严格的有限版本。
+
+设 $P$ 是一个有限维概率多面体，$b$ 是边界读出。定义边界纤维
+
+$$
+P_b=\{p\in P:B(p)=b\}.
+$$
+
+若 $P_b$ 的仿射维数为 $d_b$，则 Carathéodory 定理给出：
+

@@ -1,0 +1,65 @@
+**定理 71.1（保留有限数据上的联合投影判据）。** 从定义70.1的有限 $C,\pi,H,q$，可有效决定每个 $E_b$ 是有限还是无限；有限时可无遗漏地列出全部元组，允许空表，并为每个所列元组构造满足所有旧类语言和不等式的完整原来源见证。算法没有读取未知来源，也不以该见证替换实际来源。
+
+证明。固定 $b\in B_{\rm out}\setminus A$。首先把定理29.3给出的 $L_b(H)$ 稀疏语法沿实际保留的 $F$ 拉回。在普通状态，一个已知配对必须使用唯一的孩子乘积产生式；若没有该产生式则此分支条件不可行。具体叶须被当前状态允许；孔出现记录该位置的语法状态。通用状态 $\star$ 接受所有具体子树，在配对下给两个 $\star$。对同一类的全部内部孔出现所记录的语言取交，再与该类自身的 $L_a(H)$ 相交。任何具体部分的冲突使全部候选为空；否则得到仍属有限无环稀疏语法的语言 $M_a$，满足
+
+$$
+\bigl[(\forall a\in A, v_a\in L_a(H))\land
+                 F[\mathbf v]\in L_b(H)\bigr]
+\quad\Longleftrightarrow\quad
+\forall a\in A, v_a\in M_a.
+\tag{SLH.71.1}
+$$
+
+此等价由沿 $F$ 的构造归纳给出。分支处恰要求两个孩子，孔处恰要求对应语言；同类多次出现的约束必须同时成立，所以是交而不是并或任取一次。交的构造、空性和有限性直接复用命题66.3的稀疏语法递推，普通状态沿有限支持下降，只有通用状态允许任意大的有限树。这里尚未丢掉任何旧不等式；(SLH.71.1) 只是处理同一个复合值的语言成员关系。
+
+置 $J=B\setminus(A\cup\{b\})$，并只按这些其余旧类的整个语言划分
+
+$$
+J_f=\{c\in J:L_c(H)\text{ 有限}\},\qquad J_\infty=J\setminus J_f.
+$$
+
+由同一递推决定此划分并列全每个有限语言。令 $\mathscr R_f$ 为所有选择 $r_c\in L_c(H)$、$c\in J_f$ 且彼此不同的有限元组；$J_f$ 为空时它含唯一空元组，若没有相异选择则它为空。对 $\mathbf r\in\mathscr R_f$ 置
+
+$$
+\begin{aligned}
+S_{\mathbf r}&=\{r_c:c\in J_f\},\\
+P_{\mathbf r}&=\{\mathbf v:\ v_a\in M_a\setminus S_{\mathbf r}\ (a\in A),\quad
+                              v_a\ne v_d\ (a\ne d)\},\\
+T_{\mathbf r}&=\{\mathbf v\in P_{\mathbf r}:F[\mathbf v]\notin S_{\mathbf r}\}.
+\end{aligned}
+\tag{SLH.71.2}
+$$
+
+则准确的联合消元式为
+
+$$
+E_b=\bigcup_{\mathbf r\in\mathscr R_f}T_{\mathbf r}.
+\tag{SLH.71.3}
+$$
+
+从完整见证到右侧，限制其 $J_f$ 坐标即可：所有旧不等式强制内值和 $z_b=F[\mathbf v]$ 避开 $S_{\mathbf r}$。反向给定 $\mathbf v\in T_{\mathbf r}$，先令 $z_A=\mathbf v$、$z_b=F[\mathbf v]$、$z_{J_f}=\mathbf r$。式 (SLH.71.1) 给全部已选成员条件，(SLH.71.2) 给除新复合值与内值之外的全部相异条件，余下的相异由 (SLH.70.3) 保证。然后按固定次序为每个 $c\in J_\infty$ 选择 $L_c(H)$ 中不同于已经选择的全部有限多个值的树。其语言无限，所以每次可选；以有限树的有效枚举和语法成员检查寻找，逐步均终止。得到完整相异赋值，并由定理60.2回到同一个实际原行与全部 $H$。这些无限语言只用于有限禁止集之外的存在选择，不把无限族压成固定代表来服务未来任务。
+
+下面给终止的有限性测试。对每个 $\mathbf r$，令 $k=|A|\ge1$。从每个 $M_a$ 用定理61.1的截断递推取至多 $k+|S_{\mathbf r}|$ 个不同成员，不足时列全；删去 $S_{\mathbf r}$ 后再截到 $k$ 项。所得集合 $W_a$ 满足
+
+$$
+W_a\subseteq M_a\setminus S_{\mathbf r},\qquad
+|W_a|=\min\{k,|M_a\setminus S_{\mathbf r}|\}.
+\tag{SLH.71.4}
+$$
+
+若第一次已取足 $k+|S_{\mathbf r}|$ 项，删去禁止集仍至少剩 $k$ 项；否则已列全。故定理61.1所用的有限 Hall 判据准确决定 $P_{\mathbf r}$ 是否非空，并在非空时给一份相异元组。这里 Hall 的指标是内部不同类 $A$，值仍是实际有限原树；不是把重复孔当成互异指标。
+
+若 $P_{\mathbf r}$ 为空，则 $T_{\mathbf r}$ 为空。若 $P_{\mathbf r}$ 非空且某个 $M_a$ 无限，固定一份相异元组的其他坐标，只变化 $a$ 并避开 $S_{\mathbf r}$ 和其他坐标的有限值，就得到无限多个 $P_{\mathbf r}$ 元组。命题70.3的单射性说明每个固定 $w\in S_{\mathbf r}$ 至多满足一次 $F[\mathbf v]=w$；删去至多 $|S_{\mathbf r}|$ 个元组后 $T_{\mathbf r}$ 仍无限。反之若全部 $M_a$ 有限，列全其有限乘积并逐项检查 (SLH.71.2)，便得到准确有限的 $T_{\mathbf r}$，包括被全部排除的情形。因此
+
+$$
+E_b\text{ 无限}\quad\Longleftrightarrow\quad
+\exists\mathbf r\in\mathscr R_f\quad
+\bigl[P_{\mathbf r}\ne\varnothing\ \land\
+              \exists a\in A, M_a\text{ 无限}\bigr].
+\tag{SLH.71.5}
+$$
+
+右侧的全部测试有限终止。若为假，仅须枚举各非空的有限乘积，过滤并对有限并去重；无限 $M_a$ 但 $P_{\mathbf r}$ 为空的分支直接跳过。这列出的恰为 $E_b$，并非一个有界深度近似。对每个列出者按 (SLH.71.3) 的反向构造得到完整来源见证。
+
+所复用的树语言有限性见 [Comon 等，*Tree Automata Techniques and Applications*, §1.7，Theorem 1.7.6](https://inria.hal.science/hal-03367725/document)；有限 Hall 结论见 [Hall, *On Representatives of Subsets*](https://doi.org/10.1112/jlms/s1-10.37.26)。本证明使用的是定理29.3、61.1、命题66.3已经给出的特殊语法与截断，不把通用判定性当成取得过程。全局相等与不等的更一般空性见 [Barguñó 等，Theorem 5.22、Corollaries 5.23–5.24](https://arxiv.org/abs/1302.6960v2)；它们本身不提供 (SLH.71.3) 的正元组有限性或原来源执行。这里的承重对应是重复类的共同逆像、全部剩余类的联合扩张，以及每个扩张回到实际保留行的同一来源。$\square$
+

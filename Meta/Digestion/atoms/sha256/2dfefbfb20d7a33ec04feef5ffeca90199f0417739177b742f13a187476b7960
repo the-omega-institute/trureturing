@@ -1,0 +1,42 @@
+**Corollary 2.5 (Path strictness and cluster comparison).** Every
+open path of length $n\ge3$ satisfies
+
+$$
+B_{\rm prod}<W-\Lambda.
+\tag{2.12}
+$$
+
+For a disjoint union of cliques containing at least one edge,
+
+$$
+\gamma+\Lambda\le W.
+\tag{2.13}
+$$
+
+Proof. A path of length at least three contains an induced
+three-vertex path. For the second assertion, write $H_C$ for
+the component parent of clique $C$. Its star-shaped legal
+generator has trace
+
+$$
+\operatorname{tr}H_C=\sum_{i\in C}(a_i+d_i)=W_C.
+\tag{2.14}
+$$
+
+All its nonzero eigenvalues are positive. Therefore
+$W_C-\Lambda_C\ge0$. If $|C|\ge2$, it has at least two
+positive eigenvalues and its smallest one satisfies
+$\gamma_C\le W_C-\Lambda_C$. The tensor-sum spectrum gives
+$\gamma=\min_C\gamma_C$ and $\Lambda=\sum_C\Lambda_C$.
+Choose one nontrivial clique and sum the nonnegative component
+deficits to obtain (2.13). $\square$
+
+The edge hypothesis is necessary here. A graph consisting only
+of isolated sites has $\Lambda=W$ and $\gamma=\min_iw_i>0$,
+so it violates (2.13). Also, (2.12) is a strict failure of
+product sharpness, not a refutation of the spectral comparison
+on a connected path. In the quantum representation the relevant
+positive vector is $Dg_x$, with parity applied to reach a top
+eigenvector of $H$. The positive ground state (1.4) and this
+top eigenvector are different objects.
+

@@ -1,0 +1,48 @@
+**Definition 1.3 (canonical blocks and full temporal factors).** Put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle u,v\rangle:u,v\in S_d\},
+\quad
+W_d=\{q:|q|\le d-1\},\quad m_d=2^d-1.
+\tag{COK.3}
+$$
+
+For $x\in S_d$, the full temporal factor at $q\in W_d$ is
+$g_q(x)=\Gamma_q(x)$. If $q$ ends at an original branch, it is $(0,0)$.
+Otherwise let $\ell$ be the first blocking original leaf and write $r$
+for the residual suffix beyond it. With $e(\alpha)=0,e(\beta)=1$,
+
+$$
+\Gamma_q(x)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(\#L(r)+2\#R(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{COK.4}
+$$
+
+The [AAR, §§12–13][AAR] decoder on attained factors is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{COK.5}
+$$
+
+It equals $r_{\rho^kx}(q)$ for every $k\ge0$. Conversely the full
+trajectory recovers $(b,c)$. Write $h(z)=\operatorname{Pred}(z,0)$,
+$G_q=\Gamma_q[S_d]$, and $r_q(x)=r_x(q)$. The full factor vector
+separates $S_d$. [FMR, Lemma 2.2][FMR] supplies canonicalization
+$\pi_d$ preserving all these factors and boundary replies, including
+variable shapes. Every arbitrary finite experiment on a canonical
+block is a function of one actual boundary reply in that same block,
+or a constant. This assertion includes literals beyond the boundary;
+it imposes no target-prefix restriction on a competitor.
+

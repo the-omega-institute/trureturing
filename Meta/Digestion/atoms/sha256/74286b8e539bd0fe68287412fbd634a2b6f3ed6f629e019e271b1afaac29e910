@@ -1,0 +1,12 @@
+**定义 A-4.1（相容剩余类）。** 固定素数 $`p`$。$`k\in\mathbb{\text{ℕ}}_0`$，模 $`p^0=1`$ 为单点；$`r_k\in\mathbb{\text{ℤ}}/p^k\mathbb{\text{ℤ}}`$ 且 $`r_{k+1}\bmod p^k=r_k`$。定义
+
+
+```math
+\mathbb{\text{ℤ}}_p=\varprojlim_{k\ge0}\mathbb{\text{ℤ}}/p^k\mathbb{\text{ℤ}}.
+```
+
+
+每个相容地址唯一写为 $`\sum_{i\ge0}a_ip^i`$，$`0\le a_i\lt p`$。采用 $`v_p(0)=+\infty,|0|_p=0`$，非零差的距离为 $`d_p(a,b)=p^{-v_p(a-b)}`$。[A-L2；A-R8–A-R10]
+
+逆极限上的加法、乘法逐剩余类进行；约化是环同态，故结果仍相容。拓扑取有限离散环乘积的子空间拓扑，其邻域基为固定模 $`p^k`$ 类的柱集，等价于上述距离拓扑。置 $`\mathbb{\text{ℚ}}_p=\mathrm{Frac}(\mathbb{\text{ℤ}}_p)`$；非零元素唯一为 $`p^eu`$，$`e\in\mathbb{\text{ℤ}}`$、$`u\in\mathbb{\text{ℤ}}_p^\times`$，赋值延拓为 $`e`$。这里单位恰是模 $`p`$ 非零的地址：各有限层的逆相容，给逆极限中的逆；非零 $`p`$ 进整数取其首个非零位得到这种分解，两个首位单位的积仍非零，故赋值相加，也说明 $`\mathbb{\text{ℤ}}_p`$ 无零因子。
+

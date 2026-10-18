@@ -1,0 +1,165 @@
+**Theorem 12.1 (global first seam from the matching data).** Assume
+$\mathrm M$ and AC.54 at fixed $t>t_0$, and let
+
+$$
+\tau_c=\sum_{i=0}^4p_i|z_i|,\quad s_c=s_0\tau_c,\quad
+A=\log(1+t).
+\tag{AC.59}
+$$
+
+Then this $\tau_c$ is exactly AC.42's platform endpoint, and
+$\sqrt\alpha<\tau_c<\tau_{\max}(t)$.
+There is a positive right neighborhood of $s_c$ on which global
+original optimizers are given by the same three pure and two saturated
+contacts with positive weights and analytic active-side parameters.
+For any $10\times2$ matrix $N_T$ whose columns form a basis of
+$\ker J$, define
+
+$$
+\mathscr H=N_T^TD_xN_T\succ0,\qquad
+q_T=N_T^T\nabla_xk\ne0,\qquad
+\chi=q_T^T\mathscr H^{-1}q_T>0.
+\tag{AC.60}
+$$
+
+The scalar is independent of the chosen tangent basis, and
+
+$$
+\mathcal T_A(s)=\mathcal T_A(s_c)
+ -\frac{(s-s_c)^2}{4s_0^2\chi}+O((s-s_c)^3)
+\quad(s\downarrow s_c\text{ from the right}).
+\tag{AC.61}
+$$
+
+At the seam the value is $C^1$ and necessarily not $C^2$: its left
+second derivative is zero and its right second derivative equals
+$-1/(2s_0^2\chi)<0$. On both local sides and at the seam the minimum
+number of supported-nonzero low labels is five and the minimum total
+actual acquisition alphabet is six. The pure residual Gram has rank
+three and the physical failure covariance has rank two.
+
+Proof. AC.47 and the exact positive moment match attain $v_t(0)$.
+Every other top optimizer must have zero gap for this same certificate.
+For an interior $0<b<tc(h)$, endpoint interpolation equality requires
+both endpoint gaps to be zero at the same direction. The disjoint
+sheet zero sets exclude that. Hence all its supported data are among
+exactly the five given sheet contacts. Lemma 10.3 makes their aggregate
+weights unique. Thus every top optimizer has the same $k$, proving
+AC.59 is the structural platform endpoint. Theorem 9.2 gives the
+strict lower bound. Lemma 11.1 supplies a positive-weight feasible
+curve with increasing $k$, so $\tau_c<\tau_{\max}(t)$.
+
+For local continuation use $\lambda$ as a parameter in
+
+$$
+\mathcal L(x,d;\lambda)=
+\sum_i p_i\epsilon_iH_{\eta_i}(\phi_i)+\lambda k(x)
+-d\cdot\left(\sum_i p_i\Gamma_{\eta_i}(\phi_i)-B(t)\right).
+\tag{AC.62}
+$$
+
+At $\lambda=0$ its stationarity and moment equations have the
+nonsingular Jacobian AC.52. The analytic implicit function theorem
+gives $x(\lambda),d(\lambda)$; no independent nonsingularity
+hypothesis has been inserted.
+
+Global sufficiency requires more than local stationarity. Around each
+old contact, height and report signs are fixed. The corresponding
+smooth signed gap still has value and derivative zero and strictly
+positive second derivative, so on a sufficiently small neighborhood
+it remains nonnegative and has that contact as its only zero.
+On the complement of all five contact neighborhoods the original
+absolute-value gap is continuous and strictly positive on a compact
+union of two circles. It has a positive minimum. Uniform continuity
+preserves that margin under small perturbations, including the axes,
+$z=0$, zero-height directions and every chart's infinity. The opposite
+height sign also has a strict margin near each contact. Consequently
+for sufficiently small $\lambda\ge0$,
+
+$$
+d(\lambda)\cdot\Gamma_\eta(\phi)
+ \ge|H_\eta(\phi)|+\lambda|z(\phi)|
+\quad\text{for the entire two circles}.
+\tag{AC.63}
+$$
+
+No new zero or unexamined sign sector has been discarded.
+
+For completeness the physical common multipliers of this coordinate
+dual are, with zero-based matrix indices,
+
+$$
+Y=\begin{pmatrix}
+d_0&\sqrt\alpha d_1/2&\sqrt\beta d_2/2\\
+\sqrt\alpha d_1/2&\alpha d_3&\sqrt{\alpha\beta}d_4/2\\
+\sqrt\beta d_2/2&\sqrt{\alpha\beta}d_4/2&0
+\end{pmatrix},
+\tag{AC.64}
+$$
+
+$$
+Z=\frac1t\begin{pmatrix}
+\beta d_5h_2^2/d_{\rm src}^2&
+-\sqrt{\alpha\beta}d_7h_1h_2/(2b_{\rm src}d_{\rm src})\\
+-\sqrt{\alpha\beta}d_7h_1h_2/(2b_{\rm src}d_{\rm src})&
+\alpha(d_5+d_6)h_1^2/b_{\rm src}^2
+\end{pmatrix}.
+\tag{AC.65}
+$$
+
+Then $d\Gamma_0=h^TYh$ and
+$d\Gamma_1=h^TYh+tc\widehat n^TZ\widehat n$.
+The physical $1/t$ factor is essential, and
+$dB(t)=\operatorname{tr}Y+\operatorname{tr}(ZM_2)$.
+For any original competitor's own $b$ the endpoint chord gives AC.18.
+Integration of its complete moments and $k\ge\tau$ yields
+$v\le dB(t)-\lambda\tau$. The continued family matches this upper
+bound at $\tau=k(\lambda)$ and is realized by §13. It is therefore
+a global original optimizer, not only a five-variable-family stationary
+point or a polynomial root.
+
+Differentiate AC.62's equations at zero:
+
+$$
+-D_xx'-J^Td'+\nabla_xk=0,\qquad Jx'=0.
+\tag{AC.66}
+$$
+
+Writing $x'=N_T\xi$ gives $\mathscr H\xi=q_T$ and
+$dk/d\lambda=\chi$. Lemmas 10.3 and 11.1 prove positivity.
+Under $N_T\mapsto N_TR$ for invertible $R$, the transformations
+$\mathscr H\mapsto R^T\mathscr HR$ and $q_T\mapsto R^Tq_T$
+leave $\chi$ invariant. If desired, for a two-by-two $\mathscr H$,
+
+$$
+\chi=\frac{\mathscr H_{22}q_1^2-2\mathscr H_{12}q_1q_2+
+ \mathscr H_{11}q_2^2}
+ {\mathscr H_{11}\mathscr H_{22}-\mathscr H_{12}^2}.
+\tag{AC.67}
+$$
+
+Thus $k(\lambda)=\tau_c+\chi\lambda+O(\lambda^2)$ is strictly
+increasing and analytically invertible. Stationarity on the fixed
+moment manifold gives $dv/d\lambda=-\lambda\,dk/d\lambda$,
+so $dv/dk=-\lambda$ and
+
+$$
+v(k)=v_t(0)-(k-\tau_c)^2/(2\chi)+O((k-\tau_c)^3).
+\tag{AC.68}
+$$
+
+The transformations $T=(H_0+v)/2$ and $s=s_0k$ give AC.61 with
+its stated HALF factors. The left branch is constant by Theorem 8.1,
+proving both differentiability assertions.
+
+The five weights remain positive; the exact zero set and its disjoint
+sheet structure persist. The same equality and weight-independence
+argument forces every optimizer to use all five aggregate supported
+contacts. FA69 forbids combining different effective supported live
+directions into one actual low label, regardless of hidden Kraus
+multiplicity. Positive fixed high acquired mass requires at least one
+additional actual high label. Section 13 realizes exactly five low
+plus one high, proving the minimum six. Three distinct pure $h_i$
+with positive weights give rank-three pure Gram; the two saturated
+effects continue to sum to $M_2\succ0$. $\square$
+

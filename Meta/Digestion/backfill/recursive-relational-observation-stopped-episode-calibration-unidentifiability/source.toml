@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-stopped-episode-calibration-unidentifiability"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_EPISODE_CALIBRATION_UNIDENTIFIABILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

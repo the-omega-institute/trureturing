@@ -1,0 +1,36 @@
+**Example 342.1 (A probability law outside the normalized $N$ class).**
+Let $L=3$, $t=3/4$, and
+
+$$
+f(w)=(1-w_1)w_2+w_1w_3,\qquad
+k_0=t(1-f),\quad k_1=1-k_0,\quad k_2=k_3=0.
+\tag{342.1}
+$$
+
+All word laws are probability vectors. Set
+$v=(-t,t,0,0)$, $c=(t,1-t,0,0)$,
+$\ell_2=v$, $Q_{12}=-v$, $Q_{13}=v$, with other coefficients zero.
+For $g_{12}=v$ and other $g=0$, the data of (341.3) give
+$U_1=(t,0,0,0)$, $T_1=2t$, and $U_i=T_i=0$ for $i=2,3$.
+The coordinate inequality holds, but the scalar inequality fails.
+In fact no other $g$ makes both hold.
+
+Proof. Suppose a normalized complete $N$ allocation gave (342.1).
+Couple its cells to deterministic tables by II 140.3. Because
+$k_0=0$ at every $f=1$ word, every positive-weight deterministic
+table must avoid output zero at those four words. Such a table
+can output zero on at most one of $001,110$. Here is the full
+schedule check. An empty or singleton zero-output cell contains
+an $f=1$ word. For pair $(1,2)$, the cell of $110$ also contains
+$111$, so it cannot output zero there. For pair $(1,3)$,
+the cell of $001$ also contains $011$. For pair $(2,3)$,
+the cell of $001$ contains $101$, and the cell of $110$ contains
+$010$. These exhaust all distinct sorted pairs. Repeats and
+reversals contract or permute the same observations.
+Therefore every such table has
+$[D(001)=0]+[D(110)=0]\le1$; the shared normalized mixture
+has $k_0(001)+k_0(110)\le1$. Formula (342.1) makes this
+$2t=3/2$. The contradiction proves nonmembership, and Theorem
+341.2 then rules out every alternative $g$. This is a law-realizability
+obstruction, without an original amplitude-profile separator. $\square$
+

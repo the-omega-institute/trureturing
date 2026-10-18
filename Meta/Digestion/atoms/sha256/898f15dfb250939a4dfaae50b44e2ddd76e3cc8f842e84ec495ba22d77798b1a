@@ -1,0 +1,85 @@
+**Proposition 14.1 (exhausted complement and private AND/OR arms).**
+Consider a shared pair from Corollary 3.2, with supports $S,T$ at
+$p=(h,z),p'=(g,w)$ and gaps $r=g-h,s=z-w$. Put $\ell=n-b$.
+Suppose the common-cone bound is tight:
+
+$$
+|S\cup T|=g+z-\ell.
+$$
+
+Set
+
+$$
+C=T_b\setminus(S\cup T),\quad N=n-g-z,\quad
+A_1=K-1-g,\quad A_0=L-1-z.
+\tag{CL.54}
+$$
+
+For every reply word with $A_1$ ones and $A_0$ zeros, the $N$ common
+available queries, including the query after its last reply, form a
+permutation of $C$. At that final shared state, the zero successor
+has a live occurrence extending the higher-hit history and queries
+a coordinate in $S\setminus T$. The one successor has a live
+occurrence extending the lower-hit history and queries a coordinate
+in $T\setminus S$. These two successor states are distinct. The
+surviving lower and higher contexts have residual predicates
+
+$$
+\operatorname{AND}\bigl((T\setminus S)\cup([n]\setminus T_b)\bigr),
+\qquad
+\operatorname{OR}\bigl((S\setminus T)\cup([n]\setminus T_b)\bigr),
+\tag{CL.55}
+$$
+
+respectively. These predicates describe those actual contexts, not
+a context-independent residual attached to an installed state.
+
+Proof. Tightness gives $|C|=N=A_1+A_0+1\ge1$. Every prefix of a
+word with the specified counts is live for both histories. The proof
+of Theorem 3.1 works for any such word: its fixed-successor induction
+uses only these partial count bounds. It gives $N$ distinct common
+available coordinates in $C$. Since $|C|=N$, these exhaust $C$.
+No agreement of the original exposed assignments is required.
+
+After all $N-1$ replies and before the last query, the lower and
+higher counts are, respectively,
+
+$$
+(K-1-r,L-1),\qquad(K-1,L-1-s).
+\tag{CL.56}
+$$
+
+A one reply leaves the lower context live at $(K-r,L-1)$ and
+certifies the higher. A zero reply leaves the higher context live
+at $(K-1,L-s)$ and certifies the lower. The gaps $r,s\ge2$
+guarantee the asserted surviving liveness. After that reply the
+surviving supports are respectively $S\cup C$ and $T\cup C$.
+Their depths are $n-r$ and $n-s$, both at most $b-1$ by
+$r,s\ge\ell+1$ in (CL.14), and both remain above $a$.
+The envelope and freshness therefore put their next fixed labels in
+
+$$
+T_b\setminus(S\cup C)=T\setminus S,\qquad
+T_b\setminus(T\cup C)=S\setminus T,
+\tag{CL.57}
+$$
+
+respectively. These private sets are nonempty and disjoint, so the
+successor states are distinct.
+
+Tightness also gives $|T\setminus S|=r-\ell$ and
+$|S\setminus T|=s-\ell$. Exactly $r$ coordinates remain unread in
+the surviving lower context, and its $K-r$ old ones require all
+$r$ to be one. Exactly $s$ remain unread in the surviving higher
+context, and its $K-1$ old ones require at least one more. Their
+unread sets are precisely those displayed in (CL.55), proving the
+predicates. This covers $N=1$, $b=n$ and unequal original depths.
+$\square$
+
+The proposition locates two arms in existing live pools. It does not
+show that either arm supplies an additional installed host or a
+never-live state. Different words and witnesses may reuse states.
+The certified occurrence still follows the same fixed successor and
+pays every subsequent visit. This diagnostic contributes no separate
+term to $\mu_B$, $E_B$ or a global compensation sum.
+

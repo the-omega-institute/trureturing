@@ -1,0 +1,52 @@
+## 6. Arbitrary finite kernels, including zero emissions
+
+**Proof of Theorem 2.1.** Lemma 4.1 proves the first assertion. Fix an arbitrary allowed original observer and a supported $r_{k_0}\in I_0$. Reuse the common paid-history extraction [MIXSEP] (Lemma 2.1): on one original record fiber it yields p and suspended carriers, original acquired kernels $B,A$, stationary rows $\pi B=\tau$, $\tau A=\pi$, and simultaneous pure-target configuration bounds by the original $R_{{\rm conf},s}$ for every supported depth. Its proof uses finite positive paid rejection histories exposing each supported depth, followed by actual returns and Cesaro averaging; it includes countable priors. All positive stationary coordinates are reachable after finite positive actual histories. The extracted table uses the original emissions and exact own-generated raw laws $Q_x,W_y$; no emission positivity is assumed. For the suspended configuration bound, retain the same extraction proof with its loss linear in the suspended row, as expressly allowed after that supplied lemma. The proof can retain all four risk orders on this one row; no suspended law bound is being substituted for a suspended configuration bound.
+
+Apply that lemma's bounded-statistic assertion to $f(x)=\sum_z(BA)_{xz}\operatorname{TV}(Q_x,Q_z)$. Formula (2.1) on the same fiber is precisely its actual-history expectation. Hence the common stationary row satisfies
+
+$$
+V:=\sum_x\pi_xf(x)\le\mathcal V(M).
+\tag{6.1}
+$$
+
+Delete zero-row labels in both phases. From $\pi B=\tau$, a zero-$\tau$ suspended label receives no $B$ transition from a positive-$\pi$ p label; from $\tau A=\pi$, the converse holds for $A$. Thus the remaining label sets are closed under all noncompleting acquired and synthetic transitions, since the latter use those same kernels. Install the resulting stationary table by the same finite product realization used in Lemma 5.1. Its fourth decoder laws remain $Q_x,W_y$, and its pure-target risks are no greater than the original ones. This comparison changes only the private latch distribution and earlier own-generated laws; it does not change the source or actual histories and asserts no budget preservation.
+
+Now reuse [CLIP] (Theorem 3.1, (3.9)–(3.10)) on that stationary table, clipping emissions into $[1/3,2/5]$ and preserving both acquired flows. In terms of the original nonnegative excesses define
+
+$$
+T_p=(30\varepsilon_p+20\varepsilon_\beta)/11,\qquad
+T_\beta=(12\varepsilon_p+30\varepsilon_\beta)/11.
+\tag{6.2}
+$$
+
+The regenerated clipped laws $\widehat Q,\widehat W$ satisfy
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,\widehat Q_x)\le T_p,\quad
+\sum_y\tau_y\operatorname{TV}(W_y,\widehat W_y)\le T_\beta,
+$$
+
+and both clipped configuration risks increase by at most the corresponding $T_s$. These are average full-law comparisons on this common stationary row, including any original infinite noncompletion mass. The supplied clipping proof derives emission control from endpoint risk excess, so it covers original zero and unit emissions rather than imposing regularity on the arbitrary competitor.
+
+Let $\widehat V$ be (5.1) for the clipped p laws. Triangle inequalities and $\pi C=\pi$ give
+
+$$
+\widehat V\le V+2T_p.
+\tag{6.3}
+$$
+
+Apply Lemma 5.1 to this one clipped table. The resulting finite tag measure is a particular $\omega$ in (2.3). Use the same supported $r_{k_0}$. Its three-target functional is bounded by its all-supported pure-target configuration risks. These equal its all-positive-history risks by [CLIP] (Proposition 2.3), since its acquired tag row is fixed; the equality includes the paid rejection exposure and the entire countable posterior. Therefore
+
+$$
+\begin{aligned}
+\gamma&\le\max\{\varepsilon_p+T_p+(4/11)(V+2T_p),\\
+&\hspace{43mm}\varepsilon_\beta+T_\beta+(6/11)(V+2T_p)\}\\
+&=\max\left\{\frac{691\varepsilon_p+380\varepsilon_\beta}{121}+\frac4{11}V,
+\frac{492\varepsilon_p+691\varepsilon_\beta}{121}+\frac6{11}V\right\}\\
+&\le\frac{1183}{121}e+\frac6{11}\mathcal V(M).
+\end{aligned}
+\tag{6.4}
+$$
+
+This proves (2.4), without enumeration of configurations or a finite history grid. Equations (2.5) and the stated liminf consequence follow algebraically. The prior can vary because $\gamma$ minimizes over all $r\in I_0$, while each original extraction is performed on its own single installed prior and actual model. No coordinates from different actual models are identified. $\square$
+

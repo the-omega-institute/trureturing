@@ -1,0 +1,20 @@
+**Assumption 2.3 (finite positive-multiplier joint attainment).**
+In addition to Assumption 1.1, fix a finite $t\ge t_0$, $\lambda>0$,
+a finite $y\in\mathbb R^8$ and a common law $\pi$ such that
+
+$$
+\begin{gathered}
+d(x)=y\cdot\Gamma(x)-|\ell+b_xf|-\lambda|u|\ge0
+\quad\text{for every }x\in X,\\
+\int\Gamma\,d\pi=B(t),\qquad
+J_t(\pi)+\lambda K(\pi)=y\cdot B(t).
+\end{gathered}
+\tag{PC.8}
+$$
+
+Thus $y\cdot B=C_t(\lambda)$ by weak duality. The inequality is on
+the entire cylinder. It is not a sampled inequality or a condition
+only at occupied points. This assumption supplies attainment also
+when a boundary point is under consideration; it contains no
+existence theorem for finite duals at all boundaries.
+

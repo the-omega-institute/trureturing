@@ -1,0 +1,60 @@
+**Theorem 7.1 (finite coordinate values to the complete operation).**
+For every control satisfying (SC.1)–(SC.3), every $T>0,n\geq1$ and every
+complete table satisfying (SC.8), the polygon of Definition 3.1 is a
+strictly positive original control with exact return height $a$, and
+
+$$
+d_{\rm op}(\mathcal I_{k,\chi},\mathcal I_{\widetilde k,\widetilde\chi})
+\leq\min(1,3B+P),
+\tag{SC.20}
+$$
+
+where $B$ is (SC.11) and $P$ is (SC.13). With Proposition 5.2's paid
+current-sector certificate and endpoint replacements, use $P_{\rm loop}$
+instead. The bound holds on arbitrary five-dimensional live inputs with
+arbitrary unchanged quantum references, and on the supplied stopped
+extension. It therefore applies to the credited qutrit representation with
+every actual correlated archive retained. For $T=0$ both instruments are
+the identity, the table can be empty, and the error is zero.
+
+Proof. Proposition 4.2 and finite polygon regularity establish the first
+claim. For each original mode apply Lemma 6.1 to the nonnegative rates in
+Lemma 6.2. Thus
+
+$$
+\|m_i-\widetilde m_i\|_1\leq2e_i\leq4B.
+\tag{SC.21}
+$$
+
+By (SC.5), Lemma 6.1 and Proposition 5.1, each terminal diagonal difference
+has modulus at most $e_i/2+P$, using attenuation at most one. Hence
+
+$$
+\|K_T-\widetilde K_T\|_{\rm op}\leq B+P.
+\tag{SC.22}
+$$
+
+This also holds after adjoining the identical stopped entry. For any joint
+input the blocks $\rho^R_{ii}$ are positive and their traces sum to at most
+one. Therefore (SC.6) and (SC.21) bound the entire integrated failure
+difference norm by $4B$. For the success map, contractions $K,L$ obey
+
+$$
+\|K\rho K^*-L\rho L^*\|_1\leq2\|K-L\|_{\rm op},
+$$
+
+also with an identity on $R$: add and subtract $L\rho K^*$ and apply the
+trace-class ideal inequality. These arguments require no dimension bound
+on $R$. The half-sum in (SC.7) is at most $(B+P)+2B=3B+P$.
+Normalized complete outputs supply the cap one. For the current-loop
+polygon use Proposition 5.2 in (SC.22). $\square$
+
+The argument uses the initial-mode attenuation $u_i$, rather than first
+bounding source-family loss densities and then dividing by $p_i(a)$ or a
+terminal survival floor. The only denominators in the certificate are the
+actual support margin and the fixed source parameter $r$. This improves a
+sufficient bound for this acquisition consumer; it is not an inverse
+stability result and does not remove the supplier's low-survival inverse
+obstruction. The nonnegative-rate lemma is elementary mature calculus; its
+combination with actual sampled source controls is the application here.
+

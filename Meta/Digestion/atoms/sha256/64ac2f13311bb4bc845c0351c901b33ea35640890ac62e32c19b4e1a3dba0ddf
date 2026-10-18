@@ -1,0 +1,24 @@
+**Assumption 1.3 (authentic entry and legal service).** The retained state is
+the complete accessible state of the cut in [ARH, Assumption 1.3][ARH]. The
+same original-root register has actually reached a common certified epoch
+$N$ at least all recorded epochs. A service may perform only paid original-root
+reads at finite physical words, forward applications of $\rho$ on that register,
+and an absorbing halt. It has no reset, clone, reroot, source identity,
+membership query, unknown-subtree equality port, free chart, timing channel or
+control state carrying an unlisted source distinction. Updates carry no extra
+source-dependent information. Every source in $D^{-}$ must terminate with its
+correct full $R_Q$.
+
+Define the requested determining-prefix predicate by
+
+$$
+\operatorname{PrefDet}(D^{-},Q,h)\;:\Longleftrightarrow\;
+\forall u,v\in D^{-},
+\left(\forall |p|\le h,\ r_u(p)=r_v(p)\right)
+\Longrightarrow R_Q(u)=R_Q(v).
+\tag{RNL.4}
+$$
+
+The question is whether some $h$ satisfies (RNL.4), with a finite paid static
+consumer when it does and an exact finite-source obstruction when it does not.
+

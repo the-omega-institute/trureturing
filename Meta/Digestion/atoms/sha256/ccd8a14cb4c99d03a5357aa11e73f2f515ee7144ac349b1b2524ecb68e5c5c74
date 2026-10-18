@@ -1,0 +1,20 @@
+**约定 47.2（仓内运输与读取结果的实际前提）。** 下列路径的结果只在其原假设下适用；它们不从原向量 Read/$\rho$ 菜单产生参考状态。
+
+| 仓内真源路径 | 复用位置及条件 |
+| --- | --- |
+| `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md` | 第 19.10–19.12 项区分不变量记录、协变输出、种子条件及实际联合记录纤维分解，前提是目标在实际联合纤维上恒定；第 20.7 项的同来源 XOR 校准位是另行取得变量；第 20.9 项区分被动坐标运输与物理移动／事件记录。纤维分解不取得缺失数据。 |
+| `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md` | 第 11 节假设有类型的运输映射、路径／相干及分辨率数据。 |
+| `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md` | 第 40 节假设 transition cocycle 及实际像／拼接条件。 |
+| `docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md` | 第 347、397 节运输联合事件／规范数据，开放路径有端点标架及 holonomy 义务；无已观测关系时不能推断标架。 |
+| `docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md` | 第 377 节另给群、表示、运输、二胞及测度，不由原 FIB 语法供应原生参考句柄。 |
+| `docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md` | 第 19 节给 $SO(3)$ 边运输与权重；第 44 节使用不同的 $W=E$ 加 $H$ 仪器、严格球冠和明确操作／制备菜单，不能当成本卷原接口权限。 |
+| `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean` | `FreeMagma Bool` 来源中 `true` 对应 $\alpha$，有替换／计数、单射和谱系组成纤维；不供应向量评价校准或物理逆操作。 |
+| `D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean` | 使用带地址的 $\alpha$／$\beta$／分支／缺席四符号读取及有限 frontier 回退，是不同于原向量 Read 的端口。 |
+| `D5/S3/Observer/AgencyHolonomy/MemoryTransport.lean` | 组合已经给定的记忆映射。 |
+| `D5/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy.lean` | 假设已经给定可见环路数据。 |
+| `D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.lean` | 假设已经给定群系数及全局标架拼接数据。 |
+| `Library/Geometry/darpo2009vectorproduct.md` | 区分相容向量积恒等式／分类与完整 $SO(7)$ 协变，区分反事实控制字识别与一条实际历史取得；这里不借用七维或解析可逆控制定理。 |
+| `Library/Geometry/singerwu2011vectordiffusion.md` | 假设加权正交边块、反向转置对称；流形近似另需局部 PCA／切标架采样条件。这里不借用流形极限或图估计定理。 |
+
+此表前五个理论路径与五个 D5／两个 Library 路径对应修订 `29b8128bae35565e814eba59541bd28934aa64ac` 的相关完整节或模块；几何卷第 19、44 节及本卷第 1–23 节对应修订 `55c7d475f0367a2c7cc3989dedefad8e4552a04e` 的已发表正文。来源定位不等于重新编译这些 Lean 模块；本卷没有从它们冒领已形式化的参考取得定理。
+

@@ -1,0 +1,18 @@
+**Proposition 9.4 (an actual fiber attaining the contraction boundary).**
+For dyadic $n=2^H\ge4$ and $d\ge2$, put $D=d+H$. Embed the
+two alternating rows from Theorem 4.1 at the same perfect frontier.
+There is a correct full-family code with exactly $|S_D|-1$ attained
+names, the scan bounds (GDB.43), and one merged name for those two
+canonical states. At that name, one fixed actual frontier-root reply
+recovers the phase and every requested factor. Its length is $H+1$.
+
+Proof. Use the merged-or-singleton assignment of Theorem 9.3 with
+this two-row admissible relation. Above-cut factors are branch. Below
+the cut each original leaf is determined from the single queried phase
+by its known parity; compute its factor for the requested suffix.
+No initially absent target is omitted. The complete scan, isolation,
+canonical inverse images and all-count decoder give the same full-family
+argument. Merging two distinct canonical states reduces the alphabet
+by exactly one. This is an actual observer consequence of global phase
+dependence, not a claim that this code is optimal. $\square$
+

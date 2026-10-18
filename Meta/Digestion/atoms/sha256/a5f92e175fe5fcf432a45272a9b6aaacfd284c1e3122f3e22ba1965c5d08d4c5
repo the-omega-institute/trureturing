@@ -1,0 +1,61 @@
+**Theorem 6.4 (inherited cuts on one actual prefix and residual slack).**
+Fix the actual prefix of Definition 6.1 and put $t=|S_0|$.
+Every original common-support cut $b$ with $t<b<n$ becomes a
+common-support residual depth $b-t$, with support $T_b\setminus S_0$.
+The formal endpoint $n$ becomes $N$. Form the increasing list consisting
+of $t$, all original cuts strictly after $t$, and $n$. Suppose its
+successive distances are at most four and $N\ge6$, $3\le q\le N-2$.
+Let $P$ be the one residual graph constructed by the fixed-prefix
+restriction in the proof of Theorem 6.2. On the original installed vector,
+
+$$
+m(R)\ge q(N-q+1)+\nu_P+E_{{\rm reg},P}
+ +b_{{\rm short},P}+2\tau_P.
+\tag{6.1}
+$$
+
+The suffix $P$ on a subscript specifies the incidence quantities of that
+same residual graph, with its own parameters and cuts. In particular the
+weaker $m(R)\ge q(N-q+1)$ is [SI, Theorem 10.8][SI]. Its qualified
+residual grid minimum is exact. Neither simultaneous attainment of all
+prefix constraints in one original graph nor disjointness of different
+prefix restrictions is asserted. Gaps before this fixed prefix are
+unrestricted.
+
+Proof. The no-copy residual construction in Theorem 6.2 uses only the
+fixed actual old assignment, and works for any nonconstant $q$.
+It gives a complete correct terminating graph with at most $m(R)$
+states and both residual caps $N,C_R$. At a live residual prefix with
+$j$ new ones and $z'$ new zeros the original counts are
+$(h_0+j,t-h_0+z')$. Residual liveness gives
+$h_0+j\le k-1$ and
+$t-h_0+z'\le t-h_0+N-q=n-k=L-1$.
+Thus the corresponding original occurrence stays live. Its fixed label
+is fresh by Lemma 2.2, so no intervening old-$S_0$ query is suppressed
+on this live part. Induction identifies the residual live history with
+an actual original extension, with the same endpoint and newly exposed
+assignment. Conversely every such live extension appears in the residual
+subsequence construction. Its arbitrarily completed unrealized edges
+remain unreachable on actual completions.
+
+At residual depth $b-t$ an original cut forces total support $T_b$,
+so every residual support is $T_b\setminus S_0$. In particular
+$S_0\subseteq T_b$. This proves inheritance, including the formal
+endpoint separately. Residual depth zero is common even if the original
+depth $t$ was ambiguous. The inherited cuts have spacing at most four;
+additional residual cuts only subdivide them. Hence every gap of $P$
+has span at most four. Its costs are exactly the distinct original
+$c_i=s_i+4$ on $R$, reindexed in their original increasing order.
+Apply Theorem 5.6 to this one residual graph and use $|Q(P)|\le m(R)$
+to obtain (6.1).
+
+The cut inheritance and numerical residual bound are precisely the
+credited [SI, Theorem 10.8][SI] application of [CP, Theorem 5.1][CP].
+The explicit short-block term in (6.1) follows from Section 4; its terminal
+term is the credited SI margin. Repeating the proof for different actual
+prefixes keeps the same original $m_i$ throughout. Their restricted
+state sets can overlap; neither summing their lower bounds nor subtracting
+lower bounds on overlapping coordinate sets assigns available states.
+This graph restriction is mathematical and supplies no free runtime
+reset, residual entry, address computation or transition. $\square$
+

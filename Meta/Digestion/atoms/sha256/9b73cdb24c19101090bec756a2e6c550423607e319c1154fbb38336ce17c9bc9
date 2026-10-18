@@ -1,0 +1,74 @@
+**Lemma 11.4 (separated column triples with a lawful zero boundary).**
+Let $B,A_1,A_2,A_3$ be nonnegative integers, with
+$c\in\{4,5,6\}$, $0\le B<A_1$, $A_2=A_1+1<A_3$,
+$A_1-B\ge10$, and public integer $q>A_3$.
+Add the symmetric pairs $(A_i,B),(B,A_i)$, $i=1,2,3$, to the
+maximum-$c$ base. Suppose $B=0$ if $c=6$, and suppose also
+
+$$
+B\ge1\quad\text{or}\quad A_3\ge A_2+2.
+\tag{NARC.11.5}
+$$
+
+For this class, the target $v$ on every feasible fiber in Definition
+11.3 is readable with at most two actual Reads under either lag
+convention. The partition schedule is first $Q(1)$, then
+$Q(B-A_2)$ after ambiguous absence or $Q(4)$ after ambiguous
+branch, with the actual lower-threshold replacements in the proof.
+This supplies classes $4,5,6$ of Definition 11.1 at
+
+$$
+(B;A_1,A_2,A_3)=
+(2;12,13,14),\quad(1;11,12,13),\quad(0;10,11,13).
+\tag{NARC.11.6}
+$$
+
+All three lower offsets equal $-11$. The lemma is a sufficient class
+family, not a characterization of every two-read class or encoder.
+
+**Proof.** The negative extras have $(u,v)=(B-A_i,A_i)$,
+with distinct $u\le-10$. The base negative arm has $u\ge-c$
+and target $c$, and positive extras have $(A_i-B,B)$ with $u\ge10$.
+First $Q(1)$ has singleton middle targets $c-1,c-2$. On its lower
+cell, $Q(B-A_2)$ gives targets $(A_3,A_2,A_1,c)$: its two
+singleton positions are $B-A_2$ and $B-A_1$, and all base points
+lie above these positions. On its upper cell, $Q(4)$ gives
+$c-3,c-4,c-5$ in its first three positions when present. Its last
+cell contains all positive extras, with target $B$. At $c=4$ the
+beta base cell is absent, and at $c=5$ all three positions are
+present. At $c=6$ the last cell also contains the base point $u=6$
+with target zero, explaining the sufficient condition $B=0$.
+Every terminal partition is therefore target-constant.
+
+It remains to realize the thresholds on feasible actual fibers.
+Right visibility with $h=0$ already has $v=0$ throughout and halts.
+Otherwise $h\ge1$; this is also true on every left-visible fiber.
+First $P_{h+1}$ and upper $P_{h+4}$ are then legal. A nonconstant
+lower cell requires a negative extra, since all its base points have
+target $c$. For right visibility such an extra has $v=A_i\le z$
+and $h=z$, so $h\ge A_1$. Put $t=h+B-A_2$. Thus $t\ge B-1$.
+If $t\ge2$, use actual $P_t$. If $t=0$, use actual $E$, whose
+reply is exactly the partition at threshold zero.
+
+The only possible negative threshold is $t=-1$, requiring $B=0$
+and $h=A_1$. Then only the $A_1$ negative extra can be feasible;
+it has age zero, while every lower base age is at least
+$A_1-c\ge4$. Actual $E$ separates their targets. At $t=1$, every
+feasible negative extra has age $h+B-A_i\ge B$, and the lower base
+ages are again positive. If $B\ge1$ this whole lower support is
+positive. If $B=0$, then $h=A_2+1$, and (NARC.11.5) excludes
+the $A_3$ extra; the remaining extra ages are one and two. Thus
+the support is still positive, and actual $P_2$ with the threshold-one
+reply map of Theorem 10.2 realizes the desired partition. No $P_1$
+is submitted. These cases exhaust $t<2$ whenever the lower target
+is nonconstant. Feasibility restrictions can only remove points.
+
+For left visibility, an ambiguous lower cell still requires
+$z\ge A_1$, but $h=q+z$. Its threshold satisfies
+$h+B-A_2\ge q+B-1\ge2$, so no exceptional lower request is
+needed. Symmetry gives the same target partitions on both cuts.
+The three instances (NARC.11.6) satisfy every hypothesis. The
+consecutive zero-column triple of Proposition 10.3 fails precisely
+the gap premise at its problematic clock, and that proposition
+proves that dropping the premise wholesale is invalid. $\square$
+

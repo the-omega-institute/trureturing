@@ -1,0 +1,114 @@
+**Theorem 24.1 (local minimum alphabet and all interfaces).** Under
+Convention 18.1, on the entire platform $0\le s\le s_c(t)$ and
+the active interval AC.120, every original optimizer has at least
+five supported-nonzero actual low outcomes and at least six total
+actual outcomes. These minima are attained by one common instrument
+with joint fibre dimensions $(2,2,2,2,2,5)$ at each parameter point.
+It simultaneously satisfies the complete complex-input, passive-reference,
+five-labelled Borel-output, twelve-error, sharp-cost, finite-activity
+and absolute-FIRST conditions of the original experiment.
+
+Proof. At zero multiplier the unique top aggregate law was proved
+in Theorem 22.1; on the active side equality in AC.110 gives the
+same exact zero-set restriction for the current certificate. Each
+strictly intermediate height would require both endpoint contacts at
+one direction, which Theorem 20.1 excludes. The independent five
+moment columns and positive solution weights require all five aggregate
+masses. FA69's rigidity is about each existing actual low outcome:
+different effective supported directions cannot be merged inside one
+such outcome, whatever its inaccessible Kraus multiplicity. Positive
+fixed high acquired mass requires a further high outcome. A finite
+alphabet with fewer outcomes cannot carry the five positive masses;
+in the stipulated measurable model the same zero-slack argument is
+almost everywhere, and a positive nonatomic alphabet is already infinite.
+Extra nonzero full-$M_5$ outcomes whose supported restrictions vanish
+remain allowed and counted. They cannot reduce this lower bound.
+
+For attainment use precisely §13's full-fibre constructor with
+
+$$
+K_i=\sqrt{p_i}(s_0D+z_iT+w_iS),\qquad
+N_i=p_i\eta_i t c(h_i)n_in_i^T.
+\tag{AC.129}
+$$
+
+The two complete moment identities have already been proved. For the
+typed row-space isometries $J_i:\mathbb C^2\to\operatorname{ran}K_i^\dagger$,
+AC.69–.70 gives $B_iC_i=K_iE^\dagger$,
+$C_i^\dagger F_iC_i=EN_iE^\dagger$,
+$B_i^\dagger B_i+F_i=I_2$ and $I_2-F_i\succ0$ on the entire
+qubit fibre. Take AC.71's fixed simulator density
+$g(u)=2/(1+u)^2$ only for this attainer, with current-survivor jumps
+AC.72 and terminal survivor isometry $EB_i(I-F_i)^{-1/2}$.
+The three pure outcomes have zero activity. The two saturated outcomes
+have activity exactly $\log(1+t)$ and least terminal survival
+eigenvalue $1/(1+t)>0$.
+
+Choose fixed isometries $W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The single high encoder is
+$C_H=(\sqrt{1-\delta}DE^\dagger;W_\perp^\dagger)$ into a
+jointly counted five-dimensional fibre. Its rate is zero and its TP
+decoder has the two inaccessible Kraus matrices $E[I_3\ 0]$ and
+$EJ_0[0\ I_2]$. Thus its coherent complementary share is acquired
+and counted before decoding. This is the allowed free JR completion,
+explicitly distinct from CA10's certain-failure completion. Splitting
+off a supported-zero complementary outcome would add an actual label.
+
+Source-root TP and the exact Gram/failure sums give total encoder
+effect $I_5$. Expanding the low Gram gives
+$\delta D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$;
+the high supported term adds $(1-\delta)D(\cdot)D^\dagger$.
+Consequently, for every complex $X\in M_5$, the complete outputs
+are exactly AC.75–.76, and on every passive reference they are
+AC.77 and the amplified live Kraus conjugations. In particular the
+failure reference operator is
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$, multiplied by
+$w_\ell\int_{\mathcal B}g(u)du$ and $P_f$; it is not the
+unconditional reference marginal. The weights
+$(0,1/4,1/2,1/4,0)$ remain five separate Borel components, with
+labels $0,13$ individually zero. The terminal live map has its stated
+CP effect $L_{\rm dec}=I-F_i$ and isometry normalization. No
+arbitrary prescribed noncommuting time law is inferred merely from
+endpoint coercivity; such laws retain FA68's full path-cost hypotheses.
+
+All twelve specimens lie in $P$. Their complete stopped-cq outputs
+are therefore exactly the original simulator outputs, compared with
+the ideal coherent blocks and ideal $f_y$ of AC.3. Under the named
+HALF minimax/error identification, for each sign pair
+$e_{5,e,n}=e_{27,e,n}=E_*$ and $e_{16,e,n}<E_*$. The maximum
+error is not substituted for all twelve individual errors.
+
+Only the high fibre has dimension at least three. Its acquired
+probability is $(1-\delta)A_y$, where $A_y=\sum h_i^2p_{yi}$;
+$h_0>h_1$ makes the worst history $27$. JR's original sharp-cost
+identity gives $(1-\delta)A_{27}=\mathsf C(s)$ throughout this weak
+range. Every low acquisition probability uses
+$K_i^\dagger K_i+N_i$, including future failure; no acceptance or
+survival division occurs. Maximum low reports $\operatorname{sgn}z_i$
+and high report plus give $C_sk_u\ge s$, with equality on the active
+side; Proposition 22.2 permits platform attenuation when desired.
+No hidden Kraus index becomes a readable decoder control.
+
+The chosen jump construction is chronologically TP at every cut,
+with absorbing first failure at absolute time $6+u$. Only not-yet-failed
+carriers receive terminal processing; there is neither deadline
+absorption nor later positive-carrier action. Necessity in AC.110
+retains every admitted competitor time law, not only this $g$.
+All rates and activity integrals are on entire jointly counted fibres.
+This proves simultaneous attainment at the original mathematical scope.
+$\square$
+
+The five low projection lines, two nonzero physical failure lines,
+five supported-nonzero outcomes, six total actual outcomes, hidden
+Kraus multiplicity and joint quantum dimensions are different counts.
+The minimum is attained without asserting that every implementation
+uses exactly six: splitting and supported-zero outcomes remain admitted.
+Both endpoints of $I$, zero request and threshold attainment are
+included. No axis, zero-height or zero-weight degeneration occurs in
+this rectangle; elsewhere those cases remain in the original comparison
+class and require their own analysis. At $t=0$, $M_2\succ0$ makes
+the class empty before any division by $t$. The strong fixed-source
+four-low counts at normalized budgets $r=1,2$ and five-low counts at
+every other feasible $r$ retain FA's separate scope; there is no
+reachable six-low strong region inferred here.
+

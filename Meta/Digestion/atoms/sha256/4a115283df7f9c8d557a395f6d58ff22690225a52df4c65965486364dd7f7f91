@@ -1,0 +1,73 @@
+**Theorem 187.2 (Fixed graph, exact late base and subunit family).**
+For every $L\ge6$ and $g_6\ge\cdots\ge g_L\ge0$ with
+$W=(7g_6+\sum_{i=7}^Lg_i)/3\le1$, use Definition 186.1 at $m=5$
+with the declared core. The resulting profile belongs to $H_L$,
+and
+
+$$
+S-(L+1)\varepsilon=\frac r{10},\qquad
+1-a_1=\frac{3r}{20},\qquad
+\rho_N\le\rho_O\le\rho_E\le1-g_6.
+\tag{187.3}
+$$
+
+The first identity is $D_3-3\varepsilon=r/10$. It is positive
+exactly when $r>0$. If $g_L>0$, the actual active length is $L$
+and the budget bound is strictly below one. The closed boundary
+$W=1$ is feasible; it retains the strict budget bound when $g_6>0$
+but has zero excess.
+
+For every first-zero class $6\le n\le L$, the sparse law has
+
+$$
+p_u(0)=1-\varepsilon,\qquad p_u(n)=g_n,\qquad
+1-p_u(0)-p_u(n)=\varepsilon-g_n.
+\tag{187.4}
+$$
+
+The same base value holds at $1^L$ and hence for every actual first
+absence $n(x)>L$. It has TV exactly $\varepsilon$ on those classes and every permitted
+actual tail, including $a_{L+1}=\varepsilon$. Its positive suffix
+graph is the triangle $2-3-4$ plus edge $4-5$ when $r>0$,
+with every label $\ge6$ isolated; when $r=0$ all these edges vanish.
+Thus Theorem 184.2 has $2L+2$ energy systems without any growing
+late graph.
+
+**Proof.** The parameters satisfy (118.1): in particular
+$u+v=3/50\le1/15=4\delta/9$ and $t+u=17/20=1-\delta$.
+The other bounds follow directly from (187.1). The core supplier
+therefore supplies all its words and its tight positive-prefix row.
+Apply Theorem 186.2. Since $A_2=A_3$, the extended profile has
+$a_2=a_3$. The excess identity of Proposition 174.2, applied to
+$A_3+A_4+A_5-6e_0=1/10$, gives the first part of (187.3).
+Also $1-a_1=r(1-A_1)=3r/20$. Hence
+$a_1+S-(L+1)\varepsilon=1-r/20\le1$, establishing (182.3).
+The conic inequality comes from the same separated anchor;
+$E_m$ membership follows from Proposition 176.2.
+Tightness of the core turns (186.9) into (187.4), also at $1^L$,
+so the exact actual-tail conclusion follows from (186.3).
+
+For the graph, (118.5) has first-cell support $\{0,i\}$,
+middle output $j$ and exhaustion support $\{0,j+1,\ldots,5\}$
+on schedule $(i,j)$. For a positive schedule mass $\beta$, coupling
+first masses $a_s$ to exhaustion masses $b_k$ with coefficient
+$a_sb_k/\beta$ reproduces every cell. Its endpoints are canonical
+or zero-first and hence in $E_5$. The base polynomial from the
+seven schedules, with the fixed weights above, is
+
+$$
+q_u(0)=3z-z(u_2+u_3+u_4)
+ +(w-5\delta/9)u_1u_2+zu_1u_3+zu_1u_4
+ +z(u_2u_3+u_2u_4+u_3u_4+u_4u_5).
+\tag{187.5}
+$$
+
+Its suffix edges on labels at least two have coefficients $z$.
+The sparse residual base contributes only $g_6u_1u_2$, never a
+suffix-suffix term after any first zero. Thus the corresponding
+suffix coefficients are $rz$ on precisely the displayed four
+edges, and zero on edges incident to labels $\ge6$.
+This statement concerns the common suffix graph; a particular
+first-zero class retains only its induced remaining edges.
+The all-word criterion with $C=\{2\}$ follows. $\square$
+

@@ -1,0 +1,43 @@
+## 346. A closed subset of the actual D normal circle
+
+Before gluing, take one separate closed interval for every original
+local edge whose actual global label is D. Its two endpoints are its
+two original edge-in-face incidences. The actual face pairings glue
+these endpoints in pairs. By hypothesis the resulting finite normal
+link is one connected circle. Distinct intervals remain distinct edges
+of this circle, including repeated visits to an owner and loops.
+
+Let S consist of the following original D intervals:
+
+1. Both transverse D intervals of sigma, its local edges 14 and 23.
+2. Every axial D interval of every owner whose fixed transverse pair
+   is {M,C} or {V,C}.
+
+This selection is by actual original interval. It contains both sigma
+intervals even if their endpoints are glued together, and it includes
+each axial interval of every distinct owner separately.
+
+Each sigma D interval has one endpoint on an MCD face and the other on
+a VCD face. More explicitly, edge 14 is on F3 and F2, while edge 23 is
+on F4 and F1. Each axial D interval with pair MC has both endpoints on
+MCD faces; each axial D interval with pair VC has both endpoints on
+VCD faces. Section 345 therefore proves the following endpoint-level
+statement:
+
+    Every endpoint of an interval in S is paired to an endpoint
+    of another interval in S, possibly the same interval.       (346.1)
+
+Thus the image of S is a nonempty union of complete connected components
+of the normal-link graph. Indeed an endpoint-gluing vertex has its two
+incident half-edges paired by the actual face identification; (346.1)
+leaves no half-edge leaving S. A finite edge path starting in S stays
+in S, so connectedness forces S to contain every original D interval.
+This is a statement about the actual D circle, not a separately marked
+graph or an assumed connected source-face graph.
+
+But eta has two original D intervals, both transverse with companion
+V and axes Z,U. It is not sigma, and neither interval is an axial D
+interval with pair MC or VC. They therefore lie outside S. This
+contradicts connectedness and proves that (343.1) is impossible. Together
+with the source-companion case, it proves (341.3). QED.
+

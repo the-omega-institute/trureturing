@@ -1,0 +1,46 @@
+**Theorem 13.1 (E7: complete-state threshold).** Fix exactly this source pair and one $0<\alpha<1/2$, independently of $s$. Suppose that for every sufficiently small $s>0$ there is a finite integer $M(s)\ge2$ and a design
+
+$$
+\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha).
+\tag{13.1}
+$$
+
+Thus both risks, both almost-sure stops and both finite pointwise paid means hold at each selected $s$. Suppose additionally that one fixed target $i_\star\in\{0,1\}$ and one fixed constant $0<C_T<\infty$ satisfy
+
+$$
+\mathbb E_{i_\star,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}
+\quad\text{for every sufficiently small }s>0.
+\tag{13.2}
+$$
+
+Set $c_T=(C_\alpha/C_T)^{1/8}>0$. Then, eventually,
+
+$$
+C_T\ge C_\alpha,
+\qquad M(s)\ge2+\frac b{2\delta}\left(\frac{c_T}s-1\right),
+\tag{13.3}
+$$
+
+and once $c_T/s\ge2$,
+
+$$
+M(s)-2\ge\frac{bc_T}{4\delta}s^{-1}.
+\tag{13.4}
+$$
+
+In particular $M(s)=\Omega_{H_c,\alpha,C_T}(s^{-1})$.
+
+Proof. Intersect the family and upper-bound neighborhoods with $s_\alpha$ from Theorem 12.1. At each $s$ there, apply that theorem to the selected actual finite budget and fixed target. Its eighth-power term and (13.2) imply
+
+$$
+C_Ts^{-3}\ge\frac{C_\alpha s^{-11}}{X_{M(s)}^8},
+\qquad X_{M(s)}^8\ge\frac{C_\alpha}{C_T}s^{-8}.
+\tag{13.5}
+$$
+
+All divided quantities are positive. The increasing eighth root gives $X_{M(s)}\ge c_T/s$. Substitute $X_{M(s)}=1+2\delta(M(s)-2)/b$ and divide by $2\delta/b>0$ to obtain (13.3). When $c_T/s\ge2$, $c_T/s-1\ge c_T/(2s)$, proving (13.4). Independently, the cubic term of (12.2) and (13.2) imply $C_T\ge C_\alpha$. A family with a smaller fixed cubic constant cannot meet the hypotheses. $\square$
+
+No power-law form, monotonicity or regularity of $M(s)$ is used. Both $sL_M\le1$ and $sL_M>1$ regimes are covered by Theorem 12.1. The target, risk, polynomial and eventual upper constant are fixed; pointwise finite means alone do not imply (13.2). The opposing mean is finite pointwise but need not be cubic. A changing target, varying risk, changing polynomial or removal of opposing compliance is a different statement.
+
+At a fixed budget, (12.2) retains eleventh-power order with explicit eighth-power deterioration in the affine budget. For a cubic paid mean, predictable payment permits only $O(s^{-2})$ live epochs under that target. The small-cutoff entropy is bounded by a multiple of $s^{10}L^8$, and Pinsker uses its product with actual live occupation. This explains the necessary $sL$ scale; (12.2)–(13.5) give the full all-regime proof rather than relying on that diagnostic calculation.
+

@@ -1,0 +1,40 @@
+**Corollary 18.2 (Attained tolerance endpoints and retained distinctions).**
+In the literal class, the finite achievable tolerance set at
+either budget two or budget three is $[v(Z),\infty)$.
+For $0<Z<2/3$ the optimal positive radial amplitude is the same
+unique amplitude
+
+$$
+\rho(k)=2H\sqrt{T_\tau}\,e^{\gamma_*k}
+$$
+
+as in Theorem 7.6. Its annular model attains error $v(Z)$ at
+every phase pair of the actual interior height $k=Hx_\tau$,
+where $x_\tau$ is the unique contact in Theorem 7.5. For
+$Z\ge2/3$ the zero decoder attains the error infimum, although
+none of its lawful states attains its error supremum. The
+transition value is $v(2/3)=2/3$.
+
+**Proof of Corollary 18.2.** The annulus of Theorem 8.1 is an
+actual budget-two model, hence also a budget-three model, with
+the stated attained error and interior maximizing height. Its
+radial uniqueness and the contact statements are precisely
+Theorems 7.5–7.6 and 8.1, with the parameter map (18.3).
+Theorem 10.2 supplies the zero decoder and its strict pointwise
+error inequality in the other range, including the transition.
+Theorem 17.2 excludes every tolerance below $v(Z)$; the stated
+single witnesses include the endpoint and every larger finite
+tolerance. $\square$
+
+The uniqueness here is only that of the optimal positive radial
+amplitude, not of arbitrary optimizing affine realizations. The
+scalar limits of Proposition 10.4 also apply to the shared value
+$v(Z)$, including the limit $1/2$ as $Z\downarrow0$ and $2/3$
+as $Z\uparrow2/3$ from below. In the latter limit the radial
+exponent tends to $-\infty$; the separate transition witness
+supplies attainment there. Scalar maxima at $x=0,1$ or scalar
+parameter limits do not extend an arbitrary encoder or the source
+to $k=0,H$ or to $Z=0,1$. Escaping radial parameters and varying
+arbitrary encoders cannot improve the value, because (17.2)
+already bounds every competitor before taking an infimum.
+

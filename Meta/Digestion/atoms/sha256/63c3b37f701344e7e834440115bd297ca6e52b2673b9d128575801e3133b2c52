@@ -1,0 +1,61 @@
+**Theorem 31.2 (fully counted payload and its exact family tradeoff).**
+At the cut in Definition 30.1 the joint quantum fibre dimensions are
+$3,2,2,1,1,1$ for each value of $r$. The probability of a fibre of
+dimension at least three, on EVERY normalized complex qutrit input, is
+
+$$
+\begin{aligned}
+p_{\geq3}^{(s)}(\rho)
+ &=A(\rho)+s^2B(\rho)\\
+ &=\sum_{i=0}^2 H_{ii,*}\rho_{ii}
+     +s^2\bigl(b^2\rho_{00}+a^2\rho_{11}\bigr),\\
+p_{\geq3}^{(s)}(\rho)-p_{\geq3}^{(0)}(\rho)
+ &=s^2\bigl(b^2\rho_{00}+a^2\rho_{11}\bigr).
+\end{aligned}
+\tag{JR.12}
+$$
+
+In particular $p_{\geq3}^{(s)}(\rho)>498/1000$ for every such input.
+On the actual histories this equals
+
+$$
+\sum_iH_{ii,*}p_{yi}
+  +s^2\left((Q_*^{01})_{11}\frac y{128}
+             +(Q_*^{01})_{00}\frac{64-y}{128}\right).
+\tag{JR.13}
+$$
+
+It is independent of both signs. If $\gamma=s\kappa$ denotes the
+phase-record coefficient in (JR.9), the additional qutrit probability
+is exactly $(\gamma/\kappa)^2B(\rho)$ in this family. It is strictly
+positive for $s>0$ whenever $\rho_{00}+\rho_{11}>0$, and is zero
+on $|2\rangle\langle2|$. This is an attained family tradeoff, not a
+universal lower envelope over all implementations.
+
+Proof. Equation (JR.11) makes each $L$ branch rank three, including
+$s=0$ and $s=1$. The nonzero $T,S$ branches have rank two, and the
+failure branches retain only scalars. Thus the only high-dimensional
+branches are the two $L$ branches. Summing their probabilities cancels
+the phase term in (JR.8) and proves (JR.12). The lower bound follows
+from the three strict diagonal enclosures in Theorem 22.1 and
+$\operatorname{tr}\rho=1$. Substitution gives (JR.13).
+
+On an arbitrary normalized five-mode input $\sigma$, the same accounting
+uses the unnormalized compression $\rho=E^\dagger\sigma E$ in (JR.12),
+and $p_{r,\perp}=\operatorname{tr}((I_5-P)\sigma)/2$.
+There is no asserted positive qutrit mass on an input supported entirely
+in $V^\perp$. Passive-reference inputs use their reduced input density
+for these probabilities, while their full conditional reference states
+are those in Theorem 30.2.
+
+The acquisition instrument outputs only its actual classical label and
+the indicated fibre. A coherent dilation used to enact it must discard
+its other systems permanently before this cut; retaining any such system
+that execution can use changes the dimension being counted. Independent
+blank systems introduced later require no input memory, but a later
+accessible entanglement share is not a blank and cannot be omitted.
+Under the stated no-bypass premise, the displayed decoders use only
+the indicated fibre and generated label. Hence the count contains every
+future-accessible input-dependent quantum system. It is not a count of
+just the transmitted subsystem or the nominal output span. $\square$
+

@@ -1,0 +1,70 @@
+**Theorem 5.1 (restriction at an actual live Boolean prefix).** Fix
+one Boolean graph of Definition 1.2. For every actual live prefix
+with exposed set $S$, assignment $\eta_S$ and $h$ exposed ones,
+put
+
+$$
+R=[n]\setminus S,\qquad N=|R|,\qquad q=k-h.
+\tag{CP.23}
+$$
+
+There is a total Boolean threshold graph on $R$, with one
+input-independent running start and the same two output terminals,
+whose installed running count is at most $m(R)$ and whose uniform
+query and letter caps are simultaneously $N$ and $C_R$. If
+$N\ge6$ and $3\le q\le N-2$, then
+
+$$
+\boxed{\quad m(R)\ge F(N,q)=2N+\max(q,N-q+1)-4.\quad}
+\tag{CP.24}
+$$
+
+In particular, at residual threshold $q=3$ or $q=N-2$,
+
+$$
+m(R)\ge3(N-2).
+\tag{CP.25}
+$$
+
+These inequalities hold simultaneously for all qualifying actual
+prefixes of the same original installed graph.
+
+Proof. Lift the graph to the native full fiber as in Corollary 4.2.
+The actual cube prefix in that lift is live, so PCA Theorem 34.3
+implies that the original Boolean prefix queried every coordinate in
+$S$ once. Its paid costs are exactly $|S|$ and $C_S$. Every
+assignment on $R$ extends this prefix, since the graph is
+deterministic and all of its previous tests are in $S$. Its remaining
+path therefore has at most $n-|S|=N$ queries and $W-C_S=C_R$
+letters. Its required output is threshold $q$ on those $N$ bits.
+
+Fix the coordinates of $S$ to $\eta_S$. Retain only $R$-labelled
+states occurring after this prefix on at least one completion.
+Suppress chains of $S$-labelled states along their now fixed
+successors. The initial such chain is finite. A retained edge realized
+by some completion also has a finite such chain after it: otherwise
+that actual completion would loop. Each chain reaches a retained
+state or one of the two original terminals. Since the residual is
+live, its initial chain cannot terminate independently of the $R$
+input, and hence reaches a retained running start.
+
+If an edge at a retained state is realized by no completion after
+the prefix, give it an arbitrary terminal successor. For each fixed
+$R$ input, induction follows exactly its original subsequence of
+$R$-labelled states. Each outgoing edge in that induction is realized
+by this same completion, so no newly assigned impossible edge becomes
+reachable. This proves correctness and termination on every $R$
+input, even if unrealized union paths in the original graph cycle.
+
+No state has been copied. The installed running count is at most
+$m(R)$; suppressing the fixed-coordinate visits can only reduce
+both suffix charges on each input. The resulting graph thus has
+both caps $N,C_R$. Reindexing $R$ preserves the distinct positive
+original positions and costs $c_i=s_i+4$. Apply Corollary 4.2 at
+$(N,q)$ to obtain (CP.24), and Corollary 4.3 for (CP.25).
+
+Every application begins with the same multiplicity vector $(m_i)$.
+The restricted graphs are proof objects; the original apparatus
+receives neither an input restriction nor a free transition.
+$\square$
+

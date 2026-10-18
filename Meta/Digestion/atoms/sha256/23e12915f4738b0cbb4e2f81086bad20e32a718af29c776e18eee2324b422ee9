@@ -1,0 +1,25 @@
+**Definition 3.2 (two distinct delivery contracts).** Under the
+programme-source recording contract, a classical command source actually
+continues generating and recording its waveform through $T$, even when the
+specimen has failed. Its full output supplies (SC.8). The data are generated
+by that continuing command source; a failed specimen does not execute its
+unvisited live tail. This is an additional service beyond the canonical
+stopped instrument, with its own permission, calibration, work and storage.
+
+Under the specimen-only contract, the recorder supplies only rows actually
+obtained while live, then the actual failure time/mode and absorbing
+successor. Failure before a complete table returns an incomplete
+whole-programme certificate. No missing suffix is filled from a law, a
+guessed programme or a retry. Surviving through the known return checkpoint
+and receiving all rows can yield the pointwise certificate below. Neither
+contract automatically supplies a joint nondisturbing sensor; §8 adds its
+explicit premise for a joint-output comparison.
+
+An illegal sensor or control request returns its visible unexecuted rejection
+and no executed successor. A legal sensor failure retains its partial values,
+clock/calibration flags, reason and declared successor. Missing permission,
+source identity or calibration, ambiguous winding, arithmetic overflow or
+exhausted precision yields an inconclusive acquisition result. Unflagged
+violation of a promised sensor or regularity inequality is outside the
+theorem; no universal violation detector is constructed.
+

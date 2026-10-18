@@ -1,0 +1,59 @@
+**Theorem 7.1 (full-class lower limits).** For all original policies,
+including arbitrary Borel feedback, independent randomization and
+variable counts,
+
+$$
+\liminf_{n\to\infty}\inf_{\substack{\kappa\in\mathcal K\\
+\mathcal P,g:\,M\le n}}
+\left[n\mathcal R_\kappa(\mathcal P,g)-C_\kappa\right]\ge0.
+\tag{7.1}
+$$
+
+There is also $c_\tau>0$, depending only on the fixed native data and
+horizon, such that for every $n\ge1$ and every such pair
+
+$$
+\mathcal R_\kappa(\mathcal P,g)\ge\frac{c_\tau}{n+1}.
+\tag{7.2}
+$$
+
+Proof. First take exactly $n$ queries. Fix $\eta$ and use
+$h=\tau/(2\sqrt n)$ in (6.6); for sufficiently large $n$ it lies
+in the range of Lemma 6.1. Then $h\to0$ and $nh\to\infty$. After
+multiplication by $n$, the lower bound is
+
+$$
+\frac{A_{h,\eta,\kappa}^2}
+{A_{h,\eta,\kappa}+C_\eta\sqrt h+C_\eta/(nh)}
+\ge A_{h,\eta,\kappa}-C_\eta\sqrt h-C_\eta/(nh).
+\tag{7.3}
+$$
+
+Lemma 6.1 makes this $A_{\eta,\kappa}-o_\eta(1)$ uniformly in
+parameter and policy. Both original faces are restored by the ordered
+limit
+
+$$
+0\le C_\kappa-A_{\eta,\kappa}
+\le w_+\int_I(1-\chi_\eta)d\pi\longrightarrow0
+\quad(\eta\downarrow0),
+\tag{7.4}
+$$
+
+uniformly in $\kappa$. Indeed $\chi_\eta=1$ outside the two
+$2\eta$ boundary layers, and $\pi$ has no endpoint atoms. Choose
+$\eta$ first and $n$ second. This proves (7.1) without an uncontrolled
+diagonal choice or an interior-height restriction.
+
+For finite budgets fix one nonzero $\chi_\eta$ and one sufficiently
+small $0<h_0<\tau$. By (6.4), $A_{h_0,\eta,\kappa}$ has a common
+positive lower bound. It is bounded above as well, and the denominator
+in (6.6) is at most $D_\tau(n+1)$ for a fixed finite $D_\tau$.
+This proves (7.2) for every $n\ge1$.
+
+The proofs conditioned on the independent seed as part of $P_s$;
+no property of its law entered a constant. They thus include every
+allowed randomization. Lemma 2.2 converts any at-most-$n$ policy into
+an exactly-$n$ pair with identical risk and extends both inequalities
+to variable counts. $\square$
+

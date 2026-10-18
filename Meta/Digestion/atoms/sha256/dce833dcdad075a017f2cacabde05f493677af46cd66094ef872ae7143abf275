@@ -1,0 +1,28 @@
+**Data interface 369.1 (The complete $H_7$ data).** Write
+
+$$
+x=(b_1,b_2,b_4,b_5,b_6,b_7,e),\qquad b_3=b_2.
+\tag{369.1}
+$$
+
+Let $\mathcal D_7$ be exactly the dataset of [XIX 344.1–344.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#344-the-exact-seven-coordinate-dataset-and-its-finite-identities): [`calibration238-complete-n-h7/H7-certificate.json`](https://github.com/the-omega-institute/trureturing-experiments/blob/1be64035b2fc5d379ba49b52cb0c402010286922/calibration238-complete-n-h7/H7-certificate.json), schema `research161-H7-complete-normalized-common-allocation-v1`, $2{,}579{,}533$ bytes, SHA256 `621bed2ac570875c2bcb96796338e753ba045c544aa30fb8e1af8702cc94581d`. Rational strings specify exact rational numbers.
+
+Its $481$ rows define $P=\{x:Ax\le B\}$. Rows $0,\ldots,9$, denoted $Dx\le d$, are the ten inequalities defining $H_7$: the descending chain from $b_1\le1$ through $e\le b_7$, then $-e\le0$, then
+
+$$
+8e-b_2-b_4-b_5-b_6-b_7\le0,\qquad
+b_1+b_2+b_4+b_5+b_6+b_7-8e\le1.
+\tag{369.2}
+$$
+
+The remaining $471$ rows come from its complete nonnegative cut scores $c_i$, $0\le i<471$. Words are lexicographic with $w_1$ first. Row $3t$, $3t+1$, $3t+2$ carries $A,C,P$ at the $t$th zero word, $0\le t<127$; row $381$ carries $T$ at $1^7$. A sparse weight list specifies a full score in these $382$ slots.
+
+The geometry and lifts are inherited in their entirety: XIX 344.2 supplies all $1606$ vertices of $P$, and at each vertex one complete normalized stopped allocation satisfying every row of (368.6). XIX 345.1 supplies
+
+$$
+P=\Pi_{N,7}\cap H_7=\Pi_{O,7}\cap H_7,
+\tag{369.3}
+$$
+
+where the two $\Pi$ sets mean mass-one complete feasibility. Thus $P$ is nonempty and bounded, and each real $x\in P$ has one simultaneous stopped lift: take one convex combination of its vertex allocations with the same coefficients on every cell and row. This volume does not replace those cuts, their complete geometry, their lifts or the normalized attained region.
+

@@ -1,0 +1,26 @@
+## 359. Every opposite-M owner is impossible
+
+Suppose an actual kappa has axes w,c and pair m,d. Its other axis label W is V,Z,or U, so w<9m/4 by (358.5). Its cosine is
+
+    C=N/sqrt(D(w)D(c)),
+    D(x)=x²+m²+d²+2xmd−1,
+    N=d(w+c)+m(wc+d²−m²+1).
+
+It increases with w since m>d. Increase w to r0=9m/4. There r0 c<m² by (358.4). The d derivative has sign numerator (m²−1)P, where
+
+    P=(c+r0)d⁴+4m(cr0+1)d³+6m²(c+r0)d²
+      +4m[cr0(m²−cr0)+m²+c²+r0²−1]d
+      +(c+r0)[m⁴−c²r0²+c²+r0²−1]>0.
+
+Thus increase d to d0=m−c−2, using (357.4). The polynomial
+
+    Q_M(m,c)=16[D(r0)D(c)−4N²] at d=d0
+
+is positive for m>4,1<c<4m/9 by the second certificate in Section 364. The comparison cosine has absolute value below 1/2, so the actual beta_M(kappa)>π/3.
+
+Kappa and eta are distinct because kappa contains D and eta does not. Their original M slots cost
+
+    2 beta_M(kappa)+theta_M(eta)>π,
+
+contradicting the genuine M capacity. No opposite-M owner exists anywhere.
+

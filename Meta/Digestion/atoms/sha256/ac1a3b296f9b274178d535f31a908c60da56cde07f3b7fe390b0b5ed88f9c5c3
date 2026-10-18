@@ -1,0 +1,14 @@
+**定义 220.3（Eligible-coordinate reset）。** Define
+
+$$
+ E(y)=\{a:\ C_w\le A_w\text{ for every }w\ne1^L
+                                  \text{ with }w_a=0\}.
+$$
+
+This is wordwise domination, stronger than a sign of $\beta_a$.
+For $I\subseteq E(y)$ let $f_I$ fix $1^L$, keep the first-zero bit
+$n(w)$ zero, set every other bit in $I$ to one, and keep all other bits.
+Push $A,C,P$ together by this same map, summing collisions, and keep $T$.
+The resulting score is $\rho_Iy$. For fixed $I$ this is a linear map;
+choosing $E(y)$ depends on the input.
+

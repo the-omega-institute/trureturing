@@ -1,0 +1,57 @@
+**Proposition 2.3 (Current observability, image and static capacity).** The
+original output smoothly separates all current rays. The four response
+coordinates have exactly the source image
+
+$$
+\mathscr Z=\left\{(z_\alpha,z_\beta):
+ 0<t<4HZ,\quad
+ \|z_\alpha\|^2=\frac{Ht}{Z}-\frac{t^2}{4Z^2},
+ \quad t=\|z_\beta\|^2\right\}.
+$$
+
+Both pair angles are arbitrary. The least dimension of an arbitrary encoder
+with a fixed affine decoder for the current output alone is four.
+
+**Proof.** The $02$ block recovers
+
+$$
+k=\frac{\|y_{02}\|^2}{4Z}.
+$$
+
+Removing the known preparation rotations from the $02$ and $01$ blocks
+and dividing by the now known positive radii $B(k),A(k)$ recovers
+$U(\beta),U(\alpha)$. This is a smooth circle-valued inverse on the
+image; it does not choose a global real angle branch. Thus the output is a
+smooth embedding of the current rays. This reconstruction is a mathematical
+function of ideal expectations, not a finite-measurement acquisition claim.
+
+For the response image, $t=4kZ$ gives $0<t<4HZ$, and substitution into
+$\|z_\alpha\|^2=4k(H-k)$ gives the stated equation. Conversely that
+inequality puts $k=t/(4Z)$ in $(0,H)$, the equation gives the correct
+positive radius for $z_\alpha$, and Proposition 1.3 realizes both angles.
+Hence every point in the displayed set is an actual encoded ray.
+
+Lemma 2.2 gives an affine decoder of dimension four. For the lower bound,
+fix any interior $k$. Proposition 1.3 realizes the full product of the two
+circles of positive radii $A(k),B(k)$. If
+
+$$
+c+\ell_\alpha\cdot z_\alpha+\ell_\beta\cdot z_\beta=0
+$$
+
+on this product, compare opposite values of $\alpha$ with $\beta$ held
+fixed. This gives $\ell_\alpha\cdot U(\alpha)=0$ for all $\alpha$,
+so $\ell_\alpha=0$. Opposite values of $\beta$ give
+$\ell_\beta=0$, and then $c=0$. The affine hull is therefore
+$\mathbb R^4$. The map $D$ is injective, as is already seen from its first
+two blocks after undoing their fixed rotations. Thus the output affine hull
+has dimension four. Any affine decoder from $\mathbb R^n$ has image affine
+hull of dimension at most $n$, regardless of its encoder or offset.
+Consequently $n\ge4$.
+
+These are precisely the parent's double-wall Theorems 8.4 and 8.6 and
+equations (8.18)–(8.21), with $(z_a,z_b)=(z_\alpha,z_\beta)$ and
+$r/2=H$. They are reused static facts, not a continuation closure theorem.
+The curved image has dimension three while its affine hull has dimension
+four. $\square$
+

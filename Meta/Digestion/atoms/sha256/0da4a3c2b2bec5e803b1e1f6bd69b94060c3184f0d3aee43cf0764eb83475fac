@@ -1,0 +1,11 @@
+**假设 164.1（固定提升与两种次序）。** 本章复用[前卷固定版本的第101–103、106–107章](https://github.com/the-omega-institute/trureturing/blob/b9b4a62b69908c14f2b3ceb07204620db61aa862/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)：在 $\mathbb C^2$ 上取 Pauli 矩阵 $X,Y$，并固定
+
+$$
+a=U_\alpha=-iX,\qquad b=U_\beta=-iY,
+\qquad U_{\langle s,t\rangle}=U_sU_t.
+$$
+
+于是 $a^2=b^2=-I$、$ab=-ba$。空贡献的矩阵读出为 $I$，树读出是有序叶矩阵乘积。对列状态 $U_sU_t$ 的右因子先执行；本卷路径仍按左到右叶序先走 $s$ 再走 $t$。这是两个已分别指定的读出次序，不将路径的时间顺序当作矩阵的实际执行顺序。
+
+这项量子表示是额外数学合同。用于真实相干比较时，还须已取得固定相位的共同实现、控制及参照，并保留将再次接入的环境和来源接缝，条件仍为前卷第107–110章。平面图或 Nelson–Picken 的量子连接背景不供应这里的 $a,b$ 或比较仪器。
+

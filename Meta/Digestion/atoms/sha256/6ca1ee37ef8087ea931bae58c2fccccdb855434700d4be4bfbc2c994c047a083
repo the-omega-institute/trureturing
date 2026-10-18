@@ -1,0 +1,34 @@
+**定理 10.2（Exact complete deadline-four count for disjoint lower-label sets）。** Throughout the full target domain, if $|\Lambda[O]|=3$ and $r=4$, then
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=N+6.}
+\tag{10.3}
+$$
+
+Proof of the arbitrary-controller lower bound. Here $U_0$ and $U_1$ are disjoint. Take $w,d,M$ from Lemma 10.1 and put $e=w\oplus d$. Let $X=V(b_w,e)$ be the word row issued by these mixed sources at index two. Its $O$ charge is zero, so they still have raw scalar $e$ afterwards and must enter a word row $F=V(X,e)$ at index three. Since that is their last block, both scalar updates of $F$ halt with the two distinct labels in $U_w$. This row is a genuine final separator.
+
+The row $F$ cannot be an initial root, since each root's mandatory root-zero scalar update emits. It cannot be $b_w$, whose mixed-child update emits $X$. Nor can it be $b_i$, $i=1-w$: $q_1$ is nonconstant on $O$, so at the mandatory first occurrence of $b_i$ both raw scalar children contain actual labels of $U_i$, whereas both fixed scalar Halts of $F$ are in the disjoint set $U_w$. Lemma 10.1 makes $b_0,b_1$ distinct, and their zero-leading words distinguish both from the all-one root rows.
+
+The intermediate $X$ is also distinct from all these rows. It is not $F$, since its scalar $e$ successor must emit $F$. If $X=b_w$, the edge $V(b_w,e)=b_w$ would repeat at index two and force $F=b_w$. If $X=b_i$, its mandatory first occurrence has an actual $O$ source with raw response $e$. The fixed edge $V(b_i,e)=F$ sends that source to $F$ at index two. Lemma 10.1 makes its word safe there, and either scalar Halt returns a $U_w$ label instead of the source's $U_i$ label. This is a conflict on an actual cross-depth union, not a ban on cross-depth reuse.
+
+If $X$ is a distinct initial root $a_i$, its raw $e$ edge is either its mandatory root-zero edge to $b_i$, or its positive-root edge containing fresh $C$. The former would identify $F=b_i$, already excluded. The latter sends an actual $C$ source to $F$ at index one. GLOBAL then makes its installed word the common zero-leading first suffix, which succeeds on that source; neither of its $U_w$ scalar Halts can return $C$. If the initial root is shared, both its scalar edges are the already excluded $b_0,b_1$. Thus $X$ is distinct from every root, both first queries and $F$.
+
+With distinct initial roots, the six rows $a_0,a_1,b_0,b_1,X,F$ are therefore compulsory. It remains to allow a shared root $a$. If there were at most five word rows, they would have to be exactly $a,b_0,b_1,X,F$. Both scalar edges of $a$ emit. Each $b_y$ has actual $O$ lower sources in both raw children, so neither edge can directly halt with $C$ or a label of $U_{1-y}$. Its first support also has $C$ and both labels of $U_y$, so it has at most one scalar Halt exit. The row $F$ returns only $U_w$. By Lemma 10.1 no active successful $C$/lower source uses a bottom exit after the root. Hence some scalar Halt exit of $X$ must return the actual label $C$. Its other scalar edge $e$ already emits $F$, leaving no lower Halt exit at $X$. Both labels of $U_i$, $i=1-w$, could then be returned only by $b_i$, which has at most one scalar Halt exit. Contradiction.
+
+Delayed $R$ paths may use other responses but cannot return a $C$/lower source in this argument. Delayed $C$ was explicitly retained in the shared-root case and in the positive-root conflict. Arbitrary waits, repeated literal words, safe all-one actions and attempted row reuse have not been discarded. Six word rows and the $N$ different actual Halt outputs are necessary.
+
+For complete attainment reuse precisely the four-block certificate of Theorem 6.1, with its words (2.2), (2.4), (2.5), the two roots and root updates of §5, first-query updates (6.6) as specified there, and $c(v)=a_v$, $c(\bot)=H_{L_\bot}$. More explicitly, choosing a leaf $S$ absent from $H$, let $i$ be its singleton component, $w=1-i$, and name the remaining joined classes $D_0,E_0$. The six word rows are $a_0,a_1,b_0,b_1,p_2,p_3$; their words are $1^m,1^m,B_1,B_1,B_2,B_3$. Their entire scalar table is
+
+$$
+\begin{aligned}
+V(a_v,v)&=b_v,&V(a_v,1-v)&=H_C,\\
+V(b_i,i)&=H_{(D_0)_i},&V(b_i,1-i)&=H_{S_i},\\
+V(b_w,w)&=p_2,&V(b_w,1-w)&=H_{S_w},\\
+V(p_2,w)&=p_3,&V(p_2,1-w)&=H_{(E_0)_w},\\
+V(p_3,w)&=H_{(D_0)_w},&V(p_3,1-w)&=H_{(E_0)_w}.
+\end{aligned}
+\tag{10.4}
+$$
+
+Every word-row bottom update is $H_R$ and every actual Halt row self-updates. The exact supports are $\Gamma_{a_v}=\mathcal R_v$, $\Gamma_{b_v}=\mathcal S_v$, (6.5) with $\beta=w$, (6.7), and the exact Halt images (5.6). The ranks are $4,3,2,1,0$ on roots, first queries, $p_2,p_3,H_y$. The already proved same-word seams of Theorem 2.1 give all-source closure and safety, including a possible all-one $B_2$, for the single stream $1^m\mid B_1\mid B_2\mid B_3$. This is the existing complete upper certificate consumed at its original hypotheses, with six word rows; it is not imposed on competitors. It matches the new lower bound. ∎
+

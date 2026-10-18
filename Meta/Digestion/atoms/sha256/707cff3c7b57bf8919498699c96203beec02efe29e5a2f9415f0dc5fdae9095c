@@ -1,0 +1,20 @@
+### Corollary 2.2 (exact positive scale fibre)
+
+For the data in Theorem 2.1, all strictly positive rank-one realizations are exactly
+
+$$
+R=\frac{S}{t},\qquad \alpha=t>0,\qquad \beta=\kappa t,\qquad D\text{ fixed}.
+$$
+
+Equivalently, two realizations have the same data exactly when some $\lambda>0$ satisfies
+
+$$
+R'=\lambda^{-1}R,\qquad
+\alpha'=\lambda\alpha,\qquad
+\beta'=\lambda\beta,\qquad D'=D.
+$$
+
+#### Proof
+
+The recovered effective relation is $S=\alpha R$. If another realization has the same data, Theorem 2.1 gives $\alpha'R'=S$ and $\beta'/\alpha'=\kappa=\beta/\alpha$. Taking $t=\alpha'$ gives the displayed parameterization. Conversely, substitution preserves every reading and preserves positivity and rank one. ∎
+

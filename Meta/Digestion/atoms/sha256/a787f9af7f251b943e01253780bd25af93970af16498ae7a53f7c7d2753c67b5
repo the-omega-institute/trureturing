@@ -1,0 +1,47 @@
+**Lemma 3.4 (First zero, same-parity second call).** The retained
+first-zero supports are $Z_R,Z_A,Z_I$ for a type-$I$ root and
+$Z_R,Z_A,Z_D$ for a type-$D$ root. Every other same-parity
+configuration is impossible or dominated for all real $\lambda$.
+
+Proof. Write $f$ for the second edge in phase $\alpha$, and
+$\beta=1-\alpha$. In phase $\beta$ both calls are separators,
+so all that phase lies on $00$. In particular $h_\beta(\sigma)$
+has joint mass $a/2$ there. No individual endpoint state has prior
+larger than $a/2$. Consequently $M_{00}=a/2$ exactly in every
+same-parity configuration.
+
+If $f=e$, the zero constraint in phase $\alpha$ has probability
+$c$, so $W_{00}=(1+c)/2=z$ and $01$ is impossible. This gives
+$Z_R$; the repeated call is still charged.
+
+If $e,f$ are adjacent, their zero-zero probability is $1-3\eta$,
+so $W_{00}=[1+(1-3\eta)]/2=u$. The other leaf has
+$(W_{01},M_{01})=(\eta/2,a\eta/2)$ by Lemma 2.2, irrespective
+of the target position or orientation. This gives $Z_A$.
+
+For vertex-disjoint edges, $W_{00}=(1+c^2)/2=v$ and
+$W_{01}=\tfrac12 c(2\eta)=\eta c$. On $01$ the target incidences
+give the following exact maxima:
+
+$$
+\begin{array}{c|c}
+\text{target position}&M_{01}\\ \hline
+\text{in }e&a^2\eta\\
+\text{in }f&\eta c/2\\
+\text{in neither}&a\eta c
+\end{array}
+\tag{3.6}
+$$
+
+The first row multiplies a touching zero-edge majority mass $a^2$
+by the disjoint one probability and phase prior. The second uses
+the fair target on a one edge, and the third uses the independent
+majority target factor. For type $I$ only the first row is possible,
+giving $Z_I$. For type $D$ the second or third row is possible.
+Choosing $f$ away from both $e$ and the target realizes the third.
+It dominates the second because $a>1/2$, while all leaf masses
+$W$ and the $00$ maximum remain unchanged. This is pointwise
+domination of $M-\lambda W$ for every real $\lambda$, including
+after taking positive parts. Thus $Z_D$ suffices for type $D$.
+$\square$
+

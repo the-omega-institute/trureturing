@@ -1,0 +1,21 @@
+**定理 4.1（Simultaneous endpoint refinement）。** Under all hypotheses of Theorem 3.1, choose additional labels $D,E$ in a containing label set, distinct from each other and from $\{R,A\}\cup\lambda[I]$. Replace the low-tail labels at phases $j=0$ and $j=m$ by $D$ and $E$, respectively, retaining (1.6) elsewhere and the separately specified label at initial $\bot$. Denote the refined INITIAL target by $f_{D,E}$. Then, with the same $h,e$ from the band and outside label,
+
+$$
+C_{\rm ad}(f_{D,E})=C_{\rm pre}(f_{D,E})=hQ+1+e.
+\tag{4.1}
+$$
+
+The preset optimum is attained by one common literal stream across both successful root children, with endpoint-dependent stopping.
+
+Proof. Coarsening the two fresh labels $D,E$ to $A$ recovers exactly $f$. Applying this map only to returned labels converts any correct adaptive protocol for $f_{D,E}$ to a protocol for $f$ of the same or smaller fee, without altering any action or observation. Theorem 3.1 therefore supplies the adaptive lower bound. This step is only a lower bound; it does not infer a common preset stream from separately optimized children.
+
+For attainment use exactly the literal stream (3.5)–(3.9) and its ordinary scan alternatives from the proof of Theorem 3.1. Root $1^m$ rejects the high tails with label $R$. On the root-zero child, phases 0 and $m$ are absent, and the target and decoder agree exactly with the proof of Theorem 3.1. On the root-positive child the support is precisely $\{0,m\}$, with labels $D,E$; every such source has a low INITIAL tail. The common index-one word starts zero, so both are safe even when their current tail is $k-1$.
+
+Phase $m$ is the left endpoint of $W_1$ and its response is zero because this word starts zero. Phase 0 lies outside $W_1$. Every further first-tour window lies above $m$, so neither source has a nonzero scan response. Hence both remain on this child through the first $Q$ paid blocks. The common main word at index $Q$ has $q_Q(0)=1$ by (3.7), whereas phase $m$ lies outside $W_Q$ and has response zero. At this endpoint the positive-root child therefore returns $D$ on difference one and $E$ on difference zero, and stops at total fee $Q+1$.
+
+The parity compensation in (3.7) is important here. Phase 0 is an observed source on this child, and is assigned response one rather than used as an absent donor. Compensation is at phase $k$, which the root excluded from this child and the scan excluded from the other continuing child. Its possible response one makes the first main bit one but forces the second bit zero, as proved above. Thus this shared word remains safe and actually distinguishes $D,E$. Later rows may compensate at 0 because this root-positive child has already stopped; no later observation on it is needed or borrowed. The root-zero child still has the same missing phase 0 and the same literal safety as before.
+
+There is no exceptional surcharge beyond (2.3). In particular, if $Q=2$, $m$ is odd, $h=1$, and $A$ is a band label, then $p=0$ and the special convention $c(A)=0$ decodes $z$ on the root-zero child while the very same main word distinguishes $D,E$ on the positive child. If $A$ is fresh, $e=1$ and the frontier row separates $z$ as in Theorem 3.1; the positive-root child has already stopped. If $h\ge2$, the first frontier row already exists and handles $z$ with no extra tour, irrespective of whether its label also occurs in the band.
+
+Every active branch uses an initial segment of this one stream, all its seams are strict, and its latest stopping endpoint costs $hQ+1+e$. Both free values use the same differences; the initially known $\bot$ stops free with its specified label. This actual common-stream upper bound matches the adaptive lower bound. ∎
+

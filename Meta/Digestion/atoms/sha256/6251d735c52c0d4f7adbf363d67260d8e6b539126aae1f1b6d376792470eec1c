@@ -1,0 +1,103 @@
+**Proposition 5.1 (compatible overlap clocks and all pairs, but no
+common finite original).** There are three complete native records
+whose overlap graph is complete and whose overlap-clock differences
+are all zero, such that each pair is realized at equal epochs by one
+finite original, but the triple has empty $E$. Every record has three
+distinct hidden classes. Removing any one record removes the
+obstruction.
+
+Proof. Use the following cuts and literal addressed exteriors:
+
+$$
+\begin{aligned}
+P_0&=\{LL,LRLL,LRLR,LRR\},\\
+C_0&=\left\langle
+ \left\langle\square_{LL},
+   \left\langle\left\langle\square_{LRLL},\square_{LRLR}\right\rangle,
+                 \square_{LRR}\right\rangle\right\rangle,\alpha
+ \right\rangle,\\
+P_1&=\{LL,LRL,LRRL,LRRR\},\\
+C_1&=\left\langle
+ \left\langle\square_{LL},
+   \left\langle\square_{LRL},
+                 \left\langle\square_{LRRL},\square_{LRRR}\right\rangle
+   \right\rangle\right\rangle,\alpha\right\rangle,\\
+P_2&=\{LLL,LLR,LRL,LRR\},\\
+C_2&=\left\langle
+ \left\langle\left\langle\square_{LLL},\square_{LLR}\right\rangle,
+               \left\langle\square_{LRL},\square_{LRR}\right\rangle
+ \right\rangle,\alpha\right\rangle.
+\end{aligned}
+\tag{NUE.15}
+$$
+
+The partitions, in class order, are
+
+$$
+\begin{aligned}
+\pi_0&=\bigl\{\{LL,LRLL\},\{LRLR\},\{LRR\}\bigr\},\\
+\pi_1&=\bigl\{\{LL\},\{LRL,LRRL\},\{LRRR\}\bigr\},\\
+\pi_2&=\bigl\{\{LLL,LRR\},\{LLR\},\{LRL\}\bigr\}.
+\end{aligned}
+\tag{NUE.16}
+$$
+
+Within each displayed partition every two different classes are
+required to have unequal values. Set
+$d=\langle\alpha,\beta\rangle$,
+$e=\langle d,\beta\rangle$, and
+
+$$
+S(A,B,C)=\left\langle\left\langle A,\langle B,C\rangle\right\rangle,
+                                      \alpha\right\rangle.
+\tag{NUE.17}
+$$
+
+The three pair witnesses, each with seven leaves, are as follows.
+The class-value columns use exactly the class orders in (NUE.16).
+
+| Records | Original at both epochs zero | Values for first row | Values for second row |
+| --- | --- | --- | --- |
+| $0,1$ | $S(\alpha,d,e)$ | $(\alpha,\beta,e)$ | $(\alpha,d,\beta)$ |
+| $0,2$ | $S(d,e,\alpha)$ | $(d,\beta,\alpha)$ | $(\alpha,\beta,e)$ |
+| $1,2$ | $S(e,\alpha,d)$ | $(e,\alpha,\beta)$ | $(d,\beta,\alpha)$ |
+
+Substitution into (NUE.15) checks the entire exterior. Each displayed
+class triple is pairwise distinct, by leaf label or by being a leaf,
+a two-leaf tree, or a three-leaf tree. Hence these witnesses satisfy
+all disequalities, not merely the repeated-class equalities.
+
+For the overlap calculation, each $P_i$ covers exactly the left
+root cylinder. Its visible cells in [NAR, Definition 12.2][NAR] are
+exactly the depth-four words starting with $R$. These sets coincide
+and are nonempty. Every row exposes the identical concrete right
+subtree $\alpha$. Thus every shared visible-cell clock agrees and
+every edge difference is zero. The overlap equations admit the
+chronological tuple $(0,0,0)$.
+
+Now suppose one original realizes the triple. Row zero forces a
+literal $\alpha$ at $R$. Homomorphic transport preserves this
+address and makes its later value $T_{n_i}$. Rows one and two again
+expose $\alpha$ there. Since $T_j=\alpha$ only for $j=0$, both
+later epochs are zero. The three exteriors therefore concern one
+unchanged tree $S(A,B,C)$. They require $A,B,C$ all to be branches
+where their children occur, and their repeated classes impose
+
+$$
+A=B|_L,\qquad B=C|_L,\qquad C=A|_L.
+\tag{NUE.18}
+$$
+
+Let $\ell(x)$ be the positive finite number of leaves of $x$.
+Being the left child of a full binary tree strictly lowers that
+number. Equation (NUE.18) yields
+
+$$
+\ell(A)<\ell(B)<\ell(C)<\ell(A),
+\tag{NUE.19}
+$$
+
+which is impossible. This proves the unbounded negative claim for
+all finite originals, rather than only for the displayed witnesses.
+$\square$
+

@@ -1,0 +1,65 @@
+**Definition 1.2 (all original competitors and jointly acquired cost).**
+Allow every original complex, coherent and potentially noncovariant
+common error optimizer $\Phi$, with an actually supplied factorization
+
+$$
+\Phi=\sum_a\mathcal R_a\mathcal E_a,\qquad
+\sum_a\mathcal E_a^\dagger(I)=I_5,\qquad E(\Phi)=E_*.
+\tag{EP.4}
+$$
+
+The encoders are CP. Each decoder is full-output TP on its WHOLE
+quantum fibre of dimension $d_a$; only its supported live restriction
+is TNI. Besides finite instruments, necessity covers convergent
+countable instruments and exactly the CG Convention 21.3/JR Definition
+41.1 extension: measurable finite fibre dimensions, measurable encoder
+and live-decoder Kraus fields, integrable effects and live Choi
+matrices, and full-output TP decoders almost everywhere. An integral
+encoder density need not be individually TNI relative to its reference
+measure. No arbitrary disintegration or infinite-dimensional extension
+is asserted.
+
+At the same acquisition cut, $d_a$ jointly counts every future-accessible
+input-dependent quantum share: specimen, memory, controller, environment
+and entanglement shares. Everything else in a dilation is permanently
+inaccessible before the cut. A later accessible correlated share is not
+an independent blank. Define
+
+$$
+Q_H=\sum_{a:d_a\geq3}\mathcal E_a^\dagger(I),\qquad
+\mathsf W=\max_{y,e,n}\operatorname{tr}(Q_HE\rho_{y,e,n}E^\dagger).
+\tag{EP.5}
+$$
+
+This charges ACQUIRED high-fibre mass, including branches later failing.
+Let $R$ retain the entire actual generated classical record. A binary
+report is a common classical processing of that record; its supported
+plus effect is $F$. With $q_y=\sqrt{y(64-y)}/128$ and the positive
+source constant $\kappa$ below, the original contrast is
+
+$$
+\Gamma_y(F)=\frac14\sum_{e,n}en\operatorname{tr}(F\rho_{y,e,n}),
+\qquad \mathsf V(F)=\frac{|\Gamma_y(F)|}{\kappa q_y}
+                  =\frac{2|\operatorname{Re}F_{01}|}{\kappa}.
+\tag{EP.6}
+$$
+
+The four-sign sum compares conditional laws and is not a prior. For the
+credited sharp cost $\mathsf C(s)$ the original height objective is
+
+$$
+\mathcal T(s)=\sup\left\{
+\operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+}):
+E(\Phi)=E_*,\ \mathsf W=\mathsf C(s),\ \mathsf V(F)\geq s\right\},
+\qquad\operatorname{TV}(P,Q)=\frac12\int|dP-dQ|.
+\tag{EP.7}
+$$
+
+Other entries of $F$ and the forgotten complete channel are free for
+necessity. An inaccessible Kraus index cannot select a decoder or become
+part of $R$. There is no prior, hidden or readable old history, helper,
+specimen copy, callback, retry, reset, bypass, postselection, survival
+division, extra time or recovered discarded environment. Passive
+references are inaccessible to execution. All operations and choices
+are fixed before receipt of the unknown specimen.
+

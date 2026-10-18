@@ -1,0 +1,46 @@
+**Theorem 4.5 (all-program atomic-orbit lower bound and attained orders).**
+Let an arbitrary deterministic source-blind protocol recover exact
+two-capture lag on all native sources, with root cuts and the complete
+state convention of Theorem 3.4. For an analysis integer $B\ge2$,
+consider its quiescent first calls on $T_n$, $B\le n\le2B$.
+Their complete first states must have at least $B+1$ distinct values.
+Put $d_B=\lfloor B/2\rfloor$ and
+$q_B=\lceil\log_4(B+1)\rceil$. On some one of these calls it submits
+at least $q_B$ words of length at least $d_B$. Hence
+
+$$
+\max T\ge q_B,\qquad \max A\ge d_Bq_B,
+\qquad \max Q\ge d_B.
+\tag{CAB.11}
+$$
+
+Theorem 4.2 on these same inputs attains worst-case orders
+$\Theta(\log(B+2))$ Reads, $\Theta(B\log(B+2))$ letters and
+$\Theta(B)$ peak operand length, with $O(\log(B+2))$ retained stamp
+bits and a constant complete row. These are source-family orders,
+not universal mutable-space optimality or exact Read constants.
+
+Proof. Continue each first call by $2B-n$ genuine updates and a
+quiescent second call at the identical $T_{2B}$. Equal complete first
+states would produce identical continuations with distinct required
+lags. This proves the state separation even if later producers are
+causal functions of the retained state.
+
+The native saturation supplier `atomic_extremes` in [CLI] says
+$w(p)+2\le n$ implies a branch reply, with
+$w(p)=\#L(p)+2\#R(p)\le2|p|$. Every address shorter than $d_B$
+therefore replies branch on this entire family. Contract all query
+nodes with one surviving reply in the finite decision tree induced
+by these terminating calls. It has at least $B+1$ distinct terminal
+states and degree at most four. A tree all of whose paths have fewer
+than $q_B$ branching nodes has fewer than $B+1$ leaves. Some run
+therefore contains $q_B$ informative queries, all of length at least
+$d_B$. The traffic product in (CAB.11) is on that same run.
+
+For attainment, $c(T_n)=n$ and its rightmost depth is $\lfloor n/2\rfloor$.
+(CAB.10) gives the upper orders, and the state and traffic lower bounds
+give the matching orders. The source has $2F_{n+1}-1$ nodes, where
+$F_0=0,F_1=1$, by the native recurrence. The protocol avoids acquiring
+that exponentially large hidden literal tree. In comparison RA$\ell$
+on these root cuts uses $n+1$ Reads for $n\ge2$. $\square$
+

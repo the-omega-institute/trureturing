@@ -1,0 +1,27 @@
+**定理 167.1（线性平面变换与退化情形）。** 对任意实线性平面映射 $L$，有限折线及第161章的可积分连续路径都有
+
+$$
+A(LP)=\det(L)A(P),\qquad
+T_L(\mathbf q,A)=(L\mathbf q,\det(L)A).
+$$
+
+$T_L$ 是 $H_{\mathbb R}$ 的群同态；当且仅当 $L$ 可逆时，它是自同构。平面共同缩放 $L=sI$ 给
+
+$$
+(u,v,A)\longmapsto(su,sv,s^2A),\qquad s\in\mathbb R.
+$$
+
+$s=0$ 将全部摘要送到零，是退化同态；$s\ne0$ 在实群上可逆。一般缩放和一般 $L$ 不自动保持整数单位原子摘要像。
+
+证明（167.1）。写 $L=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$，对向量 $p,q$ 展开得
+
+$$
+\det(Lp,Lq)=(ad-bc)\det(p,q).
+$$
+
+有限折线逐段代入面积和式即得。分段 $C^1$ 或连续有界变差路径经线性变换仍属于同一积分域；将 $Lq$ 及 $d(Lq)=L\,dq$ 代入积分，或在 Riemann–Stieltjes 分割和中用同一行列式恒等式，再取极限，得到连续公式。
+
+由 $\det(L\mathbf q,L\mathbf r)=\det(L)\det(\mathbf q,\mathbf r)$，$T_L$ 的乘积中心项与先乘再变换完全一致，端点项也一致，故是同态。$L$ 可逆时 $T_{L^{-1}}$ 是其逆，因为 $\det(L^{-1})\det L=1$。若 $L$ 奇异，则 $\det L=0$，所有 $(0,A)$ 都被送到同一零摘要，已经不单射，不能是自同构；其像端点也只能在 $\operatorname{im}L$ 中。
+
+缩放的行列式为 $s^2$，得到所列式和零缩放的退化。例 $s=1/2$ 将单位 $\alpha$ 的端点变成 $(1/2,0)$，既不在 $S_+$ 也不在 $H_{\mathbb Z}$。即使 $L$ 为整数可逆矩阵，实群同态也不必保持本卷格点：取 $L=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$，它把 $(0,1,0)$ 送为 $(1,1,0)$ 的两倍面积坐标，违反 $D\equiv uv\pmod2$。因此限制到特定原子像须另验闭合；实群可逆性没有替代这项检查。$\square$
+

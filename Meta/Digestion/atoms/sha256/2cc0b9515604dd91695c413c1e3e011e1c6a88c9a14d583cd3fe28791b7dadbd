@@ -1,0 +1,28 @@
+**Lemma 7.2 (Actual stopping and every paid bit).** Under both sources the actual controller stops almost surely, and
+
+$$
+T=1+\tau+\sum_{n=1}^N(K_n+1)\quad\text{almost surely},\qquad
+\mathbb E_iT=1+\beta_i+\mu_i\mathbb E_iN<\infty.
+\tag{7.5}
+$$
+
+Proof. The waiting phase reads $\tau$ zeros and the first one. Every later begun gap is read through its actual closing one, including the terminating gap. Saturation retains less information but skips no bits. The decision is emitted on the same paid closing one that causes exit. Thus the pathwise equality counts the initial wait, every overflow suffix, every holding-update gap, every closing one and the terminal bit. No undertaken terminal gap has an unread suffix.
+
+At each selected $s$, $\tau$ and every $K_n$ are finite almost surely by their laws. Lemma 7.1 makes $N$ finite almost surely. The finite sum then proves actual almost-sure termination under each source.
+
+For the mean, $\{N\ge n\}$ is determined by $\mathcal F_{n-1}$ before gap $n$ is drawn; it is independent of $K_n$. Therefore
+
+$$
+\mathbb E_i[(K_n+1)\mathbf1_{\{N\ge n\}}]=\mu_i\mathsf P_i(N\ge n).
+\tag{7.6}
+$$
+
+Tonelli applies to the nonnegative sum even before its integrability is known, and gives
+
+$$
+\mathbb E_i\sum_{n=1}^N(K_n+1)=\sum_{n\ge1}\mu_i\mathsf P_i(N\ge n)=\mu_i\mathbb E_iN.
+\tag{7.7}
+$$
+
+Combine Lemmas 2.3, 3.1 and 7.1 for finite expectation and the mean equality. This is predictable inclusion, not independence of a duration from its score or terminal decision. It prices this complete-gap controller; it asserts no complete-gap mean formula for an arbitrary observer stopping partway through zeros. $\square$
+

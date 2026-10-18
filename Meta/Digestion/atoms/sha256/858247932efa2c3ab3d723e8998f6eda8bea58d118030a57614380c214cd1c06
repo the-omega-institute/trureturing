@@ -1,0 +1,47 @@
+**Definition 2.2 (external actor and canonical request frames).** At a
+physically enabled prescribed public IN, an external actor in a common ready
+state has two raw supply edges, 0 and 1, returning to that ready state.
+Either bit is consumed into the input latch, takes the installed control
+successor and appends its receipt, even if the consumed word is no longer
+extendible to a canonical frame. IN does not validate that word, write a
+tape or move a head. Such an occurrence is executed; it is not `none`.
+The actor has no private-source argument or private read port. Its choices
+may be independent, or functions
+of already acquired public data. Future choices are not part of the adapter
+state and are not included in its reconstruction task.
+
+A canonical source frame has a three-bit port tag, $U(d)=1^d0$, and a
+$d$-bit payload. Fix the tags ReadE `000`, Rho `001`, TagRead `010`, Left
+`011`, Right `100`. ReadE and Rho have empty payloads; a TagRead payload is
+the submitted address, with 0 meaning L and 1 meaning R. A Left/Right
+payload is the unique prefix code of its complete context tree: branch 0,
+alpha 11, beta 10. These finite codes are supplied material; parsing and
+converting them to the adapter's token format are paid public work. Context
+names are generated canonically from their actual creation references. An
+independently chosen name, program or schedule is additional input if an
+interface admits it.
+
+Let $\mathsf C$ be exactly this set of complete well-typed source frames,
+and let $\mathsf P=\{p:\exists w\in\mathsf C,\ p\preceq w\}$, where
+$\preceq$ is the word-prefix relation, including equality. At a prescribed
+source-frame IN, let $p(h)$ be the already consumed prefix of
+the current ingress frame, empty at its first IN. The admissible task-input
+bits are exactly
+
+$$
+\operatorname{Adm}(h)=\{b\in\{0,1\}:p(h)b\in\mathsf P\}.
+$$
+
+This restricts the continuation task, not the physical raw supply edges.
+It depends on the declared frame syntax and already acquired input, not
+on the private source, its future reply or future input. No input filter or
+new checking primitive is installed. Any implemented syntax check uses
+and pays for public parsing work. Behavior after a consumed noncanonical
+prefix is not specified here beyond the actual IN successor just described.
+
+All actual ingress prefixes extendible to canonical well-typed frames are
+retained in $\mathcal R_H$. Every finite address and every finite context
+tree is included, even when its whole source modification will reject. Canonical
+framing removes encoding choices, not command choices. Repeated equal
+commands remain different occurrences in their actual order.
+

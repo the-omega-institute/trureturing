@@ -1,0 +1,13 @@
+**Theorem 9.4 (Global scalar attainment).** For each $\tau>0$ there
+exists $R\in\mathcal E_2$ with $J_\tau(R)=T_4(\tau)$.
+
+Proof. The zero profile makes the infimum finite, and
+$J_\tau(R)\ge\tau$ for every profile by the scalar endpoint
+$x=1$. Choose a minimizing sequence with
+$J_\tau(R_n)\to T_4(\tau)$. Lemma 9.3 supplies $R$ with
+$J_\tau(R)\le T_4(\tau)$. The reverse inequality is the
+definition of the infimum, proving equality. The subsequence
+argument admits escaping roots and collisions; it uses bounded
+primitives and normalized polynomial coefficients, not a presumed
+compact spectral parameter set. $\square$
+

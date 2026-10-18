@@ -1,0 +1,51 @@
+**引理 463.1（系数的完整表示）。** 对全部 $v\ge0$，
+
+$$
+\boxed{\quad
+a(v)=\frac12\int_0^1(1-t)^2
+ \left[e^{-v(1-t)}+e^{-v(1+t)}\right]dt.
+\quad}
+\tag{RVF.6}
+$$
+
+因此 a 在非负轴连续，且
+
+$$
+a(0)=\tfrac13,\qquad 0<a(v)\le\tfrac13\quad(v\ge0),
+\qquad a(v)<\tfrac13\quad(v>0).
+\tag{RVF.7}
+$$
+
+**证明。** $p(0)=p'(0)=p''(0)=0$ 且 $p'''(s)=e^s+e^{-s}$。
+有限区间上的三次 FTC 或 Taylor 积分余项给
+
+$$
+p(v)=\frac12\int_0^v(v-s)^2(e^s+e^{-s})\,ds\qquad(v\ge0).
+\tag{RVF.8}
+$$
+
+对 v>0 乘以 $e^{-v}/v^3$ 并置 s=vt，得到 RVF.6。
+右侧在 v=0 的值是 $\int_0^1(1-t)^2dt=1/3$，且其被积函数在每个
+有限参数窗口联合连续，故它给出准确的连续零端点。
+两指数均严格正，且在 v,t 的所列域均不超过 1，得到 RVF.7 的
+正性和上界。v>0 时第二指数在整个 [0,1] 小于 1，权重在 [0,1) 正，
+故积分上界严格。证毕。
+
+换元还把同一系数写成紧支撑的正 Laplace 混合：
+
+$$
+a(v)=\int_0^2 e^{-\lambda v}w(\lambda)\,d\lambda,
+\qquad
+w(\lambda)=\begin{cases}
+\lambda^2/2,&0\le\lambda\le1,\\
+(2-\lambda)^2/2,&1\le\lambda\le2.
+\end{cases}
+\tag{RVF.9}
+$$
+
+两段在 λ=1 一致，且 $\int_0^2w=1/3$。
+右侧还定义全实轴上的光滑延拓，以下导数使用该延拓。
+有限 λ 区间允许逐次在积分号下求导；因而对每个整数 j≥0 和 v≥0，
+$(-1)^ja^{(j)}(v)=\int_0^2\lambda^je^{-\lambda v}w(\lambda)d\lambda>0$。
+这里的正指数混合属于递归系数 a。
+

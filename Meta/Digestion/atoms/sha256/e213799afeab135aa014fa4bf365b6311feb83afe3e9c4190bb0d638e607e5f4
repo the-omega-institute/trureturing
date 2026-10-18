@@ -1,0 +1,57 @@
+**Definition 14.1 (one joint source with a latent convention).** Fix distinct
+$k,l\in(0,c)$. In addition to (PR.34), the source has a classical
+convention $g\in\{0,1\}$ and emits
+
+$$
+Y=\pi(m)\mathbin{\oplus}g,\qquad \pi(m)=m\bmod2\in\{0,1\}.
+\tag{PR.49}
+$$
+
+The source parameter domain includes every $(g,\beta,m)$. This latch is an
+explicit added source output port: the source copies and XORs its classical
+programme-sector field. It is not a nondisturbing measurement of the
+unknown specimen's parity. The programme, $g$ and any source-sensitive
+callback are unavailable to the observer unless explicitly delivered.
+Granting the latch strengthens the following obstruction.
+
+A fixed acquisition stage, before the requested continuation, has live
+record $C$ in a standard Borel space $\mathcal C$. Its actual live
+accessible output measure for each source parameter is
+
+$$
+\mu_g(dz)\,
+ |\psi_{k,\beta,m}\rangle\langle\psi_{k,\beta,m}|
+ \otimes|\pi(m)\oplus g\rangle\langle\pi(m)\oplus g|,
+\qquad q_g=\mu_g(\mathcal C)\leq1.
+\tag{PR.50}
+$$
+
+The subprobability $\mu_g$ is independent of $\beta,m$. $C,Y$ include
+all accessible history-bearing assistance; no quantum calibration token,
+readable programme, additional correlated receiver/reference, timing
+side port or archive is omitted. Common history-independent ancillas are
+allowed. Other actual fields remain jointly present and unread. Every dead
+acquisition outcome retains its actual archive and absorbing $f$.
+
+After the stage one common finite adaptive endpoint protocol may use only
+$C,Y$ and common permitted metadata. Equivalently its accepted operations
+are a measurable kernel of trace-nonincreasing CP maps selected by the
+actual $(z,y)$. Every accepted specimen must be exactly
+$\psi_{l,\beta,m}$ for all $g,\beta,m$. A dead branch cannot produce an
+accepted live original successor. This contract specifies which ports are
+available at this stage; additional observations or interventions during
+acquisition are a different acquisition design.
+
+Put $\nu=\mu_0+\mu_1$ and choose Radon–Nikodym densities
+$f_g=d\mu_g/d\nu$. Define, up to $\nu$-null sets,
+
+$$
+O=\{f_0>0,f_1>0\},\qquad
+E_g=\{f_g>0,f_{1-g}=0\},\qquad e_g=\mu_g(E_g).
+\tag{PR.51}
+$$
+
+Here exclusivity is measure-theoretic, not a statement about topological
+supports. The laws and their exclusive sets are analytical objects; their
+definition gives the observer neither a law oracle nor an executable decoder.
+

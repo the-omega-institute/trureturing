@@ -1,0 +1,31 @@
+**接口 1.3（Supplied histories, inversion and later missed arc）。** Each candidate is a whole actual source, rather than a product of reachable marginals. For every $v,j,s$, the supplied witness [IC, (1.3); S1, Convention 1.3; S15, Section 1] chooses
+
+$$
+\ell\equiv0\pmod m,\quad \ell\equiv-j\pmod T,\quad \ell\ge s+2,
+\qquad d=\bigoplus_{i=\ell-s}^{\ell-1}c_i,
+\qquad w=(v\oplus d)0^{\ell-s-1}1^s,
+\tag{1.4}
+$$
+
+where $c_i=\mathbf1_{\{0,T-1\}}(i\bmod T)$ is the matched cycle of [S2, Theorem 14.1]. Generalized CRT applies because $g\mid j$. The separating zero makes $w$ legal; its value, phase, tail and complete-block length are jointly the required ones. Its unobserved length is not an input. The same actual root succeeds precisely at $s<h$, has charge support $\{0,m\}$, and yields (1.2). An all-one history of complete-block length at least $k$ separately realizes initial bottom.
+
+For an even full-path support $E\subseteq W_t$, use the supplied literal inverse
+
+$$
+\mathcal B_t(E)_i=\bigoplus_{r=0}^i\mathbf1_E(tm+r\bmod T),\qquad 0\le i<m.
+\tag{1.5}
+$$
+
+Its successful charge is $\mathbf1_E$ on the full path and zero outside, with first bit $\mathbf1_E(tm)$ and last bit $\mathbf1_E((t+1)m)$. This is [IC, (1.4)–(1.5); S10, Interface 2.1; S15, Section 1], not a separate word-existence theorem. For a finite support $A$ and a donor $d\notin A$, put $\widehat A^{\,d}=A\cup\{d\}$ when $|A|$ is odd, and $\widehat A^{\,d}=A$ otherwise.
+
+The path $W_1$ runs through $m,\ldots,T-1,0,\ldots,a$; $W_2$ starts at $a$ and contains $H$ and the excluded vertex $m$. Thus $O\cap H=\varnothing$, $O\subset W_1$, and $m$ occurs strictly after $a$ at path position $h+1\le m-1$. Write $c=3m\pmod T$. The ambient complement of $W_2$ is the $h$ vertices immediately after $c$, so
+
+$$
+O\subset W_3\setminus\{c\},\qquad
+d_3=\begin{cases}0,&a+m<T,\\m,&a+m\ge T\end{cases}
+\ \in\ \{0,m\}\cap(W_3\setminus\{c\}).
+\tag{1.6}
+$$
+
+This is the later-window geometry used in [MC, Theorem 2.1]. Indeed, in the first case $c=a+m>m$ and $W_3$ wraps through zero; in the second $c=m-2h-2<m$ and $W_3$ reaches $m$ strictly after its start. The inequalities $h<m$ and $m>h+1$ give the stated inclusions. Donors $0,m$ are excluded INITIAL phases in this archive, even when they are actual phases of other archives.
+

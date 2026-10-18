@@ -1,0 +1,56 @@
+**Proposition 7.1 (terminal nonvacuity at every original cost vector).**
+For every parameter choice of Assumption 1.1 there is a complete correct
+graph at both caps with consecutive gap $I_5$, all other gaps of span one,
+and $2^n-1$ running states. It belongs to both $\mathfrak A_5$ and
+$\mathfrak C$. It separates $\mathfrak A_5$ from SI10's class with
+no late gap of span at least five; it does not separate from SI11's
+$\mathfrak C$.
+
+Proof. Set $a=n-5\ge2$ and install a distinct state $q_v$ for every
+binary word $v$ of length $d<n$, with start $q_\varepsilon$.
+For $d<a$, its fixed label is $d+1$. For $d\ge a$ put
+$j=d-a+1\in\{1,\ldots,5\}$. If the first bit of $v$ is zero,
+the label is $a+j$. If that bit is one, the label is $a+j+1$
+for $j\le4$ and $a+1$ for $j=5$.
+For $d<n-1$ the $\epsilon$ successor is $q_{v\epsilon}$;
+at $d=n-1$ it is terminal one exactly when $v\epsilon$ has at
+least $k$ ones. This specifies every fixed row, including rows only
+visited after certification. The first-bit information is contained in
+the counted state name, not supplied by an external selector.
+
+Every input reads coordinates $1,\ldots,a$ and then one of the two
+permutations
+
+$$
+(a+1,a+2,a+3,a+4,a+5),\qquad
+(a+2,a+3,a+4,a+5,a+1).
+$$
+
+Thus every word is an actual consistent reply word, every input is correct,
+and every run pays exactly $n,W$. There are $2^n-1$ running vertices;
+the two terminals remain outside $m$. The graph is above-grid: choose
+one distinct live vertex for each cell, and also the exclusively certified
+vertex $q_{0^L}$, which exists because $L<n$.
+
+Every depth through $a$ has a fixed-prefix support. At depth $a$, the
+cell $(K-3,L-3)$ has both counts positive, so actual prefixes with either
+specified first reply exist. At the next four depths choose the additional
+counts respectively
+
+$$
+(1,0),\quad(1,1),\quad(1,2),\quad(2,2).
+$$
+
+Both branch orders realize these counts with live prefixes. Their supports
+at each depth $a+j$, $1\le j\le4$, differ: one includes $a+1$ and
+omits $a+j+1$, while the other does the reverse. Hence each such depth is
+ambiguous and $a,n$ are consecutive cuts. Every earlier gap has span one.
+Each installed tree vertex has one incoming prefix, so every live state
+satisfies (TS.25) vacuously. This proves both claimed memberships and
+explains why this witness supplies no separation from $\mathfrak C$.
+
+The full-fiber lift of Section 9 uses exactly $2^n-1+4+r$ preparation
+states at caps $n+1,W+3$, preserving all rows and their paid visits.
+It is an above-grid realization, not an attained example of margin one.
+$\square$
+

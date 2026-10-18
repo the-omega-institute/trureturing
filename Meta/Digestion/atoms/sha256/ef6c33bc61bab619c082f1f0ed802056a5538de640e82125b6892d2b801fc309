@@ -1,0 +1,38 @@
+**Definition 2.4 (synchronized layer and payload).** Fix any finite list
+$\mathcal V$ of coordinate/epoch slots $(i,a)$, including $(i,0)$ for
+each $i$. Repetitions are allowed. Add finitely many fixed expression
+slots if needed. Serialize these raw finite native values in a fixed
+binary list, using a binary terminal $\mathsf{cell}_j$ for slot $j$
+and a nullary terminator. Call the resulting tree
+$\operatorname{Payload}_{\mathcal V}(\mathbf u)$. Slot wrappers lie
+outside the native value subtrees. The source slots make this map
+injective. There is no $\mathsf{tick}$ inside a payload.
+
+Let $\mathsf{Emit}:K_m$ serialize slot $(i,a)$ as
+$v_iT_aT_{a+1}$ and each expression slot as
+$E^{\sharp}(\mathbf v)\alpha\beta$. Define
+
+$$
+\begin{aligned}
+\mathsf F_m\,g\,k
+={}&\mathsf{nd}\,(k\,\mathsf A\cdots\mathsf A)\\
+&\bigl(\mathsf{nd}\,(k\,\mathsf B\cdots\mathsf B)\\
+&\quad\bigl(g(\lambda x_1\cdots x_m.
+  g(\lambda y_1\cdots y_m.
+  k\,(\mathsf P x_1y_1)\cdots(\mathsf P x_my_m)))\bigr)\bigr),\\
+\mathsf C\,g
+={}&\mathsf{nd}\,(g\,\mathsf{Emit})
+                  (\mathsf{tick}\,(\mathsf C(\mathsf F_mg))),\\
+\mathsf S={}&\mathsf C\,\mathsf Q_m.
+\end{aligned}
+$$
+
+Both $\mathsf F_m:D_m\to D_m$ and $\mathsf C:D_m\to o$ have
+order $4$. The scheme with start symbol $\mathsf S$ is denoted
+$\mathcal G_{m,\mathcal V}$. All lambdas can be lifted to finitely
+many nonterminals. Each captured variable has type among
+$o,V,K_m,D_m$, so the lifted nonterminals have order at most $4$.
+The finitely many numeral expansions and payload slots are effective
+finite syntax. This is an upper bound on order, with no minimal-order
+assertion.
+

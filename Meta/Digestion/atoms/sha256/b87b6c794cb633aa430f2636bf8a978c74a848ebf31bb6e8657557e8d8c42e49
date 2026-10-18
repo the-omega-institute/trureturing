@@ -1,0 +1,30 @@
+## 10. The exact residual feasibility problem
+
+The original all-degree positive critical existence question is now equivalent to the following restricted existential question:
+
+$$
+\begin{gathered}
+\exists\,m\in\mathbb Z,\ m\ge5,\quad
+\exists\,b\in\mathbb Z,\ 2\le b\le m-2,\quad
+\exists\,a\in\mathbb Z,\ m-1\le a\le m+b-2,\\
+\exists\,\rho\in I_b,\quad
+\exists\,R\in\mathbb R[t],\ \deg R\le m-1,\\
+a=m-1\ \Longrightarrow\ b\equiv m\pmod2,\\
+u_k=F_{k-1}-\rho F_k\ne0\quad(0\le k\le2m-2),\\
+u_kR(k)=1\quad(0\le k\le a),\qquad
+u_kR(k+2)=1\quad(a\le k\le2m-2),\\
+\det\mathcal D\ne0,
+\end{gathered}
+\tag{10.1}
+$$
+
+where $\mathcal D$ is exactly (2.1), at the retained original clocks (1.6). For a particular fixed $m$, omit only the outer existential quantifier on $m$; every other condition remains.
+
+**Proof of equivalence.** A solution of the original criterion is an interpolation candidate, so Theorem 3.1 forces every restriction displayed in (10.1). Conversely every solution of (10.1) satisfies the original interpolation and nonsingularity requirements without altering any equation or domain. Equation (2.6) then constructs the gain output. No sufficiency claim is made for the inequalities and cells alone. $\square$
+
+A positive answer requires at least one exact witness satisfying all of (10.1), including nonsingularity. A uniform negative answer requires excluding every such tuple for every integer $m\ge5$. Neither is established here. No positive candidate is supplied.
+
+The left-extrapolation argument needs $m$ consecutive retained original clocks with the required tail parity. Within the surviving window neither block used in Sections 6 and 8 is guaranteed to exist. For $b\le m-2$ the initially forced real roots leave at least two degrees of the allowed degree bound available, so nonreal conjugate pairs are no longer excluded by that root count. The real-rooted concavity proof for $b=m-1$ therefore does not automatically extend. These identify the limits of the arguments, not evidence of feasibility.
+
+No value or sign of $\det\mathcal D$ is determined by these proofs. Its independence from $\rho$ is (2.8), not a decision of (10.1). A finite encoding, a determinant expression, or membership in a residual cell is not a solved feasibility problem.
+

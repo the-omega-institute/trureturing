@@ -1,0 +1,80 @@
+**Corollary 77.8 (exact unequal lengths and the pointwise thinning threshold).**
+Fix the single source77.2. For every fixed $0<\delta\le1$, source
+reference volumes $m_p=1/\delta$, positive prescribed reference volume
+$m_g$ for each distinct ground chamber, and every fixed admissible
+aperture and transition-profile choice of72.4, no required planar
+assembly exists for all sufficiently small positive $\varepsilon$.
+More precisely, use the planar scaling $s=2$ in that prescribed metric.
+To distinguish the geometric radius constant from the substitution
+symbol, write $\rho_{\rm geom}=\omega_1^{-1}=1/2$ and denote72.4's
+aperture by $\alpha_{\rm ap}$. Then
+
+$$
+q=\rho_{\rm geom}\tan\alpha_{\rm ap}>0,
+\qquad r=\sqrt\varepsilon,
+\qquad h_v(\varepsilon)=\sqrt\varepsilon\,c_v-q\varepsilon,
+\qquad
+L_{vw}(\varepsilon)=1+\sqrt\varepsilon(c_v+c_w)-2q\varepsilon.
+\tag{77.21}
+$$
+
+The coefficients $c_v>0$ are exactly those of the fixed chamber data,
+for all source and ground centres. Set
+
+$$
+C=\max_v c_v,
+\qquad c_{\min}=\min_v c_v,
+\qquad
+\varepsilon_*=
+\min\left\{1,\left(\frac{c_{\min}}{2q}\right)^2,
+                \left(\frac1{40C}\right)^2\right\}>0.
+\tag{77.22}
+$$
+
+For every $0<\varepsilon<\varepsilon_*$ the necessary centre drawing
+is impossible. In particular no72.13 assembly exists at any such
+$\varepsilon$ where the other chamber construction requirements hold.
+
+**Proof and quantifier order.** For a fixed source,72.4 permits choosing
+$0<\alpha_{\rm ap}<\pi/4$ after the finite proposed skeleton's incident
+angle and clearance margins. Ground caps also respect reflection and
+avoid the equator. We grant every such source-adaptive choice; after
+that choice the aperture, reference volumes and transition profiles
+remain fixed during thinning. Disjoint caps make each chamber's volume
+coefficient, and therefore $c_v$, depend on its degree, reference volume,
+aperture and profile, independently of the actual incident directions.
+The finite fixed list has $0<c_{\min}\le C<\infty$.
+The metric theorem77.3 already applies to any drawing, so defining
+arbitrary finite positive $c_v,q$ in(77.21) does not presuppose that a
+compatible planar skeleton exists.
+
+For $0<\varepsilon<\varepsilon_*$,
+
+$$
+q\sqrt\varepsilon<\frac{c_{\min}}2,
+\qquad
+h_v=\sqrt\varepsilon(c_v-q\sqrt\varepsilon)
+ >\frac{c_v}{2}\sqrt\varepsilon>0,
+\qquad
+1<L_{vw}\le1+2C\sqrt\varepsilon<1+\frac1{20}=\frac{21}{20}.
+\tag{77.23}
+$$
+
+Thus every exact prescribed centre length belongs to the excluded closed
+interval $[19/20,21/20]$, and77.7 followed by77.3 gives the contradiction.
+Arbitrary unequal fixed ground volumes and unequal stubs are included.
+These plate offsets are not source heights or source-seam depths.
+
+The quantifiers are one separately legal fixed source, then every allowed
+fixed $\delta$, ground-volume list and source-adaptive fixed aperture/profile
+choice, then existence of its data-dependent $\varepsilon_*>0$, then
+nonexistence for every $0<\varepsilon<\varepsilon_*$. If a proposed
+fixed-data assembly family supplies its own geometric validity threshold
+$\varepsilon_0$, every $0<\varepsilon<\min\{\varepsilon_0,\varepsilon_*\}$
+contradicts it. There is no common aperture or threshold over all sources
+or profiles. Centre positions, angles and clearances may vary freely
+with $\varepsilon$; no limiting embedding or uniform nondegeneracy is
+used. Allowing the aperture, profiles or volumes to vary with
+$\varepsilon$ is a different fixed-data contract;77.3 still excludes any
+individual length vector in its stated box. $\square$
+

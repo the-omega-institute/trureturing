@@ -1,0 +1,19 @@
+**Lemma 5.3 (single-query marginals do not preserve an adaptive law).** At
+$D=5$ and $p=RLLLL$, consider canonical sources with first-leaf positions
+$j=4$ and $j=5$. Put a fair bit $X$ into the leaf label of the off-path
+subtree at $RR$, put a fair bit
+
+$$
+Y=X\oplus\mathbf 1_{\{j=5\}}
+\tag{5.5}
+$$
+
+into the off-path subtree at $RLR$, and put $\alpha$ at the other siblings.
+Vary the target leaf label independently. Every individual coordinate $X$
+and $Y$ is fair conditional on the position, but the pair $(X,Y)$ identifies
+whether $j=4$ or $j=5$. All these sources satisfy the same height bound.
+
+Thus replacing the persistent source by independently redrawn replies with
+the same one-word marginals changes the legal joint experiment. This is a
+joint-law obstruction, not an additional expected-optimum separation.
+

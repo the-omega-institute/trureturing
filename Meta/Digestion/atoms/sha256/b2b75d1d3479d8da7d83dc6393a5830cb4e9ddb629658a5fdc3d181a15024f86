@@ -1,0 +1,23 @@
+**定理 3.1（Endpoint-return cost law）。** For every $k\ge2$, every $1\le m<k$, and every label choice in Definition 2.1, under each original literal alphabet,
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)
+=N:=\left\lceil\frac{T}{m}\right\rceil
+=\left\lceil\frac{k+1}{m}\right\rceil.
+\tag{3.1}
+$$
+
+One attaining stream, common to both free values, is
+
+$$
+\begin{aligned}
+B_0&=1^m,\\
+B_t&=0^m &&(1\le t\le N-2),\\
+B_{N-1}&=0^z1\,0^{m-z-1},
+\qquad z=T-1-(N-1)m.
+\end{aligned}
+\tag{3.2}
+$$
+
+Thus exactly $N-2$ complete zero blocks occur between the root and the final pulse; this set is empty when $N=2$. Every wait and every padding position belongs to an emitted complete block.
+

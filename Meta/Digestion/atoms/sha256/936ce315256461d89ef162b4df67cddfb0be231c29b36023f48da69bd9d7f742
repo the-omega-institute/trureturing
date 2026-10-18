@@ -1,0 +1,89 @@
+**Theorem 15.2 (finite source-compatible opposite-sign embedding).**
+For the original source define
+$$
+h_*=(1,0,1/\sqrt\beta),\qquad
+f_*=-\frac{11d^2}{64h_2^2\beta}<0,\qquad
+\ell_*=\delta N_{00}+\frac{N_{22}}\beta+
+                    \frac{2\sqrt\delta N_{02}}{\sqrt\beta}>0.
+\tag{GC.69}
+$$
+For every finite
+$$
+t>\max\left\{t_0,\frac{\ell_*}{\mathfrak c(h_*)|f_*|}\right\}
+\tag{GC.70}
+$$
+there is a finite original feasible common law with positive pure and
+saturated masses at this same $h_*$. Merging just that pair strictly
+lowers actual TV by (GC.68), preserving all common moments and
+contrast. No optimality of this law is asserted.
+
+Proof. Formula (GC.28) gives
+$\Delta_{11}=-11/64$, $\Delta_{22}=0$, $\Delta_{02}>0$.
+The source matrices therefore give
+$$
+N_{22}=11d^2/64>0,\qquad
+N_{02}=(h_0c+h_2d)\Delta_{02}>0.
+$$
+Together with $N_{00}>0$, these prove (GC.69), including the cross
+term in $\ell_*$. The point $h_*$ is on the ellipse, and (GC.70)
+makes its pure signed height positive and its saturated signed height
+strictly negative.
+
+It remains to place both endpoint masses in the same legal common
+law. Work first with failure intensity, whose measure is $t\mathfrak c$
+times saturated coefficient measure. Choose a sufficiently small
+$a_0>0$ with $a_0<\beta W$ and put intensity $a_0/2$ at each
+unit-circle point $(u,v)=(0,\pm1)$. Put intensity
+$(\mu-a_0)/4$ at each of the four sign points with
+$$
+u_c^2=\frac{\alpha V}{\mu-a_0},\qquad
+v_c^2=\frac{\beta W-a_0}{\mu-a_0}.
+\tag{GC.71}
+$$
+Both squares are strictly positive, sum to one, and are below one:
+$\mu=\alpha V+\beta W$ and $a_0<\beta W$ imply each assertion.
+The full intensity moments are
+$$
+\int1=\mu,\qquad\int u^2=\alpha V,\qquad\int uv=0.
+$$
+Dividing each intensity weight by its own positive
+$t\mathfrak c(h)$ gives legal saturated coefficient masses. The
+capacity depends only on squared coordinates, so sign symmetry
+makes their live Gram diagonal. Their complete physical failure
+covariance is $M$ by Proposition 12.2.
+
+At $a_0=0$ the four sign points are precisely (GC.62) in angular
+coordinates, since $u_c^2=\alpha u_F$ and $v_c^2=\beta v_F$.
+Their residual pure Gram is (GC.63), strictly positive for $t>t_0$.
+Weights, coordinates and capacities are continuous as $a_0\downarrow0$,
+so the residual diagonal remains strictly positive for sufficiently
+small $a_0>0$. From this residual subtract a pure axial pair at
+$(0,\pm1)$, of total coefficient mass $\eta>0$ small enough to
+leave every diagonal entry positive. Its Gram is
+$\eta\operatorname{diag}(1,0,1/\beta)$. If the remaining diagonal
+is $(r_0,r_1,r_2)$, each subtraction has zero $Q_\alpha$ trace, so
+$$
+r_0=\alpha r_1+\beta r_2>0.
+$$
+Represent it explicitly by four pure rays
+$$
+h_{\sigma,\upsilon}=
+ (1,\sigma\sqrt{r_1/r_0},\upsilon\sqrt{r_2/r_0}),\qquad
+p_{\sigma,\upsilon}=r_0/4.
+\tag{GC.72}
+$$
+They lie on the original ellipse, have exactly that diagonal Gram
+and zero odd and mixed moments. Together with the pure axial pair
+and the six saturated points they have total live Gram $I_3$ and
+hence coefficient mass one. All masses are positive, all capacities
+are pure or saturated, and the failure sum is exactly $M$.
+In particular $h_*$ has pure mass $\eta/2>0$ and saturated mass
+$a_0/[2t\mathfrak c(h_*)]>0$ in this very finite law.
+Take as a requested contrast its achieved contrast, or any smaller
+nonnegative request. Proposition 12.2 verifies every common-data
+premise of Proposition 10.1, so the law is an original feasible
+instrument with the sharp weak joint cost and complete outputs.
+Only the positive-$v$ pair is merged in (GC.66). Its strict opposite
+heights give the asserted loss, while every moment and its achieved
+contrast are unchanged. $\square$
+

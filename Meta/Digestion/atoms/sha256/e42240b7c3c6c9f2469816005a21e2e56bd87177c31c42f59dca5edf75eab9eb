@@ -1,0 +1,130 @@
+**Theorem 13.2 (Representation-independent joint-population bound).**
+Every original legal complex scalar port obeys
+
+$$
+\sum_iL_{ij}=q_j,\quad\sum_{i,j}L_{ij}=1,\quad L_{ij}\ge0,
+\qquad
+\boxed{e(T)\ge1-F(L)
+       \ge B_{\rm pop}-\frac{15}{8}\sqrt{\mathfrak R_{\rm pop}(L)}.}
+\tag{13.3}
+$$
+
+No condition on the reality of the original Kraus factors, covariance,
+unitality, the other channel coherences or a chosen realization is
+assumed. If $e(T)<B_{\rm pop}$, then
+
+$$
+\mathfrak R_{\rm pop}(L)
+\ge\left[\frac8{15}(B_{\rm pop}-e(T))\right]^2.
+\tag{13.4}
+$$
+
+Proof. A scalar measure-and-prepare representation, spectrally refined
+in each independent factor, gives
+
+$$
+\chi_T=\sum_f\lambda_f(a_fa_f^\dagger)\otimes(c_fc_f^\dagger),
+\quad \lambda_f\ge0,\quad\sum_f\lambda_f=1,
+\quad \|a_f\|=\|c_f\|=1.
+\tag{13.5}
+$$
+
+The input vector is the conjugate measurement vector. Since the sector
+projections are real this conjugation preserves its populations.
+Write $u_{fi}=\|R_ia_f\|^2$, $v_{fi}=\|R_ic_f\|^2$.
+Then $L_{ij}=\sum_f\lambda_fu_{fi}v_{fj}$. Positivity gives
+nonnegative entries, and the full input marginal $I_5/5$ gives
+the asserted column sums; its trace gives total mass one. This uses
+the HSR equivalence with its TP normalization, not separability
+without a marginal.
+
+Use the credited actual-time survival moment $\mathscr S(T)$ in
+(9.3) and QEC Proposition 2.2. Its complex-product estimate (9.4)
+holds for every term of (13.5), before any replacement. To recall
+why complex phases are allowed, the same-sector swap and trace
+terms are bounded by $u_iv_i$ each; the two cross-sector terms
+are bounded by $2\sqrt{u_iv_iu_jv_j}$ each. These are the
+ordinary complex Cauchy–Schwarz bounds, not real-factor assumptions.
+Averaging their linear terms gives the corresponding entries of $L$.
+For each pair,
+
+$$
+\sum_f\lambda_f\sqrt{u_{fi}v_{fi}u_{fj}v_{fj}}
+\le\sqrt{\left(\sum_f\lambda_fu_{fi}v_{fi}\right)
+          \left(\sum_f\lambda_fu_{fj}v_{fj}\right)}
+=\sqrt{L_{ii}L_{jj}}.
+\tag{13.6}
+$$
+
+Thus $\mathscr S(T)\le F(L)$ and the actual-menu comparison
+$e(T)\ge1-\mathscr S(T)$ proves the first bound. No zero
+population is divided by.
+
+For the product reference $Q=pq^T$, direct substitution in (13.2)
+gives $F(Q)=x^TPx$, $x_i=\sqrt{p_i}$, $\|x\|=1$,
+where $P$ is exactly (9.7). Its credited exact certificate
+(9.8)–(9.9) yields
+
+$$
+F(Q)\le\frac9{20}-c_{\rm pop}.
+\tag{13.7}
+$$
+
+In particular this step reuses the same positive-definite matrix,
+not a new unrestricted endpoint certificate.
+
+It remains to compare $F(L)$ with $F(Q)$. The elementary finite-law
+square-root bound gives
+
+$$
+\begin{aligned}
+\|L-Q\|_1
+&=\sum_{i,j}|\sqrt{L_{ij}}-\sqrt{Q_{ij}}|
+                    (\sqrt{L_{ij}}+\sqrt{Q_{ij}})\\
+&\le\sqrt{\mathfrak R_{\rm pop}(L)}
+       \sqrt{\sum_{i,j}(\sqrt{L_{ij}}+\sqrt{Q_{ij}})^2}
+\le2\sqrt{\mathfrak R_{\rm pop}(L)}.
+\end{aligned}
+\tag{13.8}
+$$
+
+The last inequality uses both total masses equal to one and their
+square-root affinity at most one. It is the usual Hellinger/TV
+comparison; the repository's
+[finite-law Hellinger inequality](../../../D5/S3/TotalVariation/Hellinger.lean)
+uses this same no-half squared discrepancy and supplies an even
+stronger normalized bound. No new general distance theorem is claimed.
+
+Every coefficient of the linear part of $F$ is in $[0,1/2]$:
+this follows from (9.3), $4<\sqrt{17}<25/6$ and direct rational
+comparison. Since $\sum(L-Q)=0$, subtract $1/4$ from each
+coefficient. Its absolute change is at most
+$\|L-Q\|_1/4\le\sqrt{\mathfrak R_{\rm pop}(L)}/2$.
+For the nonlinear part put $s_i=\sqrt{L_{ii}}$,
+$t_i=\sqrt{Q_{ii}}$, and let $C_b$ be the symmetric matrix with
+zero diagonal and $(C_b)_{ij}=2b_{ij}$ for $i\ne j$.
+That part is $s^TC_bs$. One has $\|s\|,\|t\|\le1$
+and $\|s-t\|\le\sqrt{\mathfrak R_{\rm pop}(L)}$.
+Its maximum absolute row sum is
+
+$$
+\|C_b\|_{\rm op}\le\frac{149+9\sqrt{17}}{272}
+<\frac{373}{544}<\frac{11}{16}.
+\tag{13.9}
+$$
+
+Consequently
+
+$$
+|s^TC_bs-t^TC_bt|
+\le(\|s\|+\|t\|)\|C_b\|_{\rm op}\|s-t\|
+\le\frac{11}{8}\sqrt{\mathfrak R_{\rm pop}(L)}.
+\tag{13.10}
+$$
+
+Adding the linear and nonlinear estimates gives
+$F(L)\le F(Q)+(15/8)\sqrt{\mathfrak R_{\rm pop}(L)}$.
+Together with (13.7) this proves the second bound of (13.3).
+Rearranging and squaring nonnegative quantities proves (13.4).
+$\square$
+

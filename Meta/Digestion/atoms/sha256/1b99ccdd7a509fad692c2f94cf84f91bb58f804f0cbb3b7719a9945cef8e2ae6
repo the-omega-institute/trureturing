@@ -1,0 +1,15 @@
+**Theorem 7.1 (every optimum uses the activity budget).** At every
+nonempty weak finite-budget point each original height optimizer has
+$\mathsf A=A$.
+
+Proof. In the strict interior, Theorem 6.1 gives a positive-measure
+set with $b=tc$. FA69's whole-fibre necessity for any admitted time
+law requires activity at least
+$\log(1+b/c)=\log(1+t)=A$ on those labels. Feasibility gives the
+opposite bound. At the minimum-budget boundary, FA79's capacity
+equality classification supplies saturated failure-carrying mass,
+including the floor and its collapsed residual case. It yields the
+same conclusion without extending Proposition 4.1 to that boundary.
+The statement concerns the maximum, supremum or essential supremum
+of actual whole-fibre activity, as appropriate. $\square$
+

@@ -1,0 +1,67 @@
+**Proposition 6.1 (Three reads and three output rows).** Define
+
+$$
+V=\frac a2+a\eta\left(\frac32+a^2\right),\qquad
+t=a^3+b^3=1-3\eta.
+\tag{6.1}
+$$
+
+A complete six-row table attains $V$. Consequently
+$C_6\ge\max(F,V)$, without an equality assertion.
+
+Proof. Install the following three read and three halt rows:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+1))$ | $S$ | $P$ |
+| $S$ | $\operatorname{Read}(2j)$ | $U$ | $Q$ |
+| $U$ | $\operatorname{Read}(2(j+3))$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+In phase zero its root edge $\{j+1,j+2\}$ avoids target $j$.
+After zero, edge $\{j,j+1\}$ introduces that target and is adjacent
+to the first edge. On $00$ the last pair $\{j+3,j+4\}$ is disjoint
+from their triple. In phase one every call is a paid separator. The
+terminal masses are
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $01$ | $h_0(1-\sigma)$ | $\eta/2$ | $a\eta/2$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $t\eta$ | $a^3\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+tc)/2$ | $a/2$ | $3$ |
+
+For $1$, root and target are independent. On $01$, the larger
+three-spin completion in order $j,j+1,j+2$ is
+$(1-\sigma,\sigma,\sigma)$, with weight $a^2b=a\eta$;
+its complement has weight $ab^2$. Their sum is $\eta$, proving
+both the label and the phase-weighted masses. On $001$ the first
+triple is constant, of probability $t$, independently of the last
+one edge, of probability $2\eta$. Correctness requires its constant
+spin to be $\sigma$, of probability $a^3$. On $000$ the output
+succeeds precisely in phase one with its majority target, of mass $a/2$.
+
+The source masses normalize: since $\eta+c/2=1/2$,
+
+$$
+\eta+\frac\eta2+t\eta+\frac{1+tc}{2}
+=\frac{3\eta}{2}+\frac{1+t}{2}=1.
+\tag{6.2}
+$$
+
+Their correct sum is $V$. Every formal input halts, with exact costs
+
+$$
+\mathbb P(N=1)=\eta,\quad
+\mathbb P(N=2)=\frac\eta2,\quad
+\mathbb P(N=3)=1-\frac{3\eta}{2},\quad
+\mathbb E N=3-\frac{5\eta}{2}.
+\tag{6.3}
+$$
+
+The maximum is three and the error is $1-V$. The five-row table is
+also admissible at six rows, proving the stated maximum lower bound.
+All computations use the actual targets of (1.2). $\square$
+

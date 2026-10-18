@@ -1,0 +1,34 @@
+## 263. A special opposite axis is impossible
+
+Suppose Q belongs to S. Every occurrence of the actual global label Q
+is axial, because transverse labels belong to H. Start with rho, whose
+Q axis has fixed transverse pair {Z,C}. Across either Q-incident face,
+the matching face has labels {Q,Z,C}. At its receiver Q must again be
+axial; therefore that receiver's fixed transverse pair is {Z,C}.
+
+Propagate this fact along the actual Q normal circle. Every original
+Q interval is reached, because this circle is connected. Consequently
+every actual owner containing Q has transverse pair {Z,C}, even if an
+owner supplies two Q intervals or is revisited by the traversal. Every
+such owner is genuine: it contains Z, which has no flat occurrence.
+This argument neither assumes distinct neighbors nor replaces the
+normal circle by a graph on owner names.
+
+Let n be the number of distinct actual owners containing Q. In each
+owner select one of its Q slots. Apply (261.1) with r=q>m to its selected
+axial angle and its two original transverse Z angles. Summing over these
+n distinct owners yields a strict expense greater than n*pi. The chosen
+Q angles sum to at most the full Q budget 2*pi. The chosen transverse Z
+slots are distinct original slots across the selected owners and sum
+to at most the full genuine Z budget 2*pi. Hence n*pi<4*pi and n<=3.
+
+Each selected owner has at most two Q slots, since Q can only occupy its
+two axes. Rho has exactly one, since its other axis is M and Q is special.
+All original Q slots belong to these n owners by the propagation above.
+Thus degree(Q)<=1+2*(n-1)<=5, contrary to minimum degree six.
+
+The special case is impossible. Together with Section 262 and q>m, the
+only remaining opposite-axis label is Q=U. The theorem preserves all
+original multiplicities and the external low-only region. It supplies
+no exclusion of rho=(M,Z,C,U,Z,C), which remains the next open family.
+

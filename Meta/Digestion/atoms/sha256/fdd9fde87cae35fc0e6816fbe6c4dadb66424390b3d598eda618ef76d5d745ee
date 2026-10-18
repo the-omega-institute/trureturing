@@ -1,0 +1,46 @@
+**Definition 30.1 (actually enacted family).** Fix $s\in[0,1]$ before
+receiving the specimen. The following finite instrument and its controlled
+decoders are additional supplied operations. A native realization must
+actually enact these maps and retain the stated classical record; the
+definition does not infer them from a Kraus representation. The only
+input-dependent quantum system accessible after this acquisition is its
+declared joint fibre, including every retained ancillary or entangled
+share. All other dilation systems are permanently inaccessible. There is
+no specimen callback, helper specimen, retry, later returned environment
+or quantum bypass. A passive reference is not accessible to execution.
+
+The actual classical acquisition label is $\alpha=(r,j)$, with
+$r\in\{+1,-1\}$ and $j\in\{L,T,S,f_1,f_2,\perp\}$.
+The binary phase record is the component $r$; $j$ is also counted as
+classical information. Let $V_T,V_S:\mathbb C^2\to\mathbb C^3$ be the
+isometries with columns $(|1\rangle,|0\rangle)$ and
+$(|2\rangle,|0\rangle)$ respectively. On qutrit inputs the encoder
+Kraus matrices and quantum fibre dimensions are
+
+$$
+\begin{array}{c|c|c}
+j&C_{r,j}&d_{r,j}\\ \hline
+L&(D+rsT)/\sqrt2&3\\
+T&\sqrt{(1-s^2)/2}\,V_T^\dagger T&2\\
+S&V_S^\dagger S/\sqrt2&2\\
+f_k&\sqrt{m_k/2}\,\langle k|\quad(k=1,2)&1.
+\end{array}
+\tag{JR.5}
+$$
+
+Each encoder branch is $\mathcal E_{r,j}(A)=C_{r,j}AC_{r,j}^\dagger$.
+The $L$ decoder embeds its entire fibre into the live output by $E$.
+The $T,S$ decoders embed by $EV_T,EV_S$. Each scalar $f_k$ decoder
+sends $z$ to the WHOLE failure measure
+$z\,w_\ell g(t)dt\,P_f$, separately for all five labels. It is TP since
+$\sum_\ell w_\ell=\int_0^1g(t)dt=1$.
+
+For the five-mode encoder replace every displayed Kraus matrix by
+$C_{r,j}E^\dagger$. Add the scalar branch
+$\mathcal E_{r,\perp}(A)=\operatorname{tr}((I_5-P)A)/2$, whose decoder
+sends $z$ to $z\,g(t)dt\,P_f$ only at original label $2$.
+This branch has several Kraus rows when $\dim V^\perp=2$, but its
+retained quantum fibre is one-dimensional; the discarded multiplicity
+index is not an accessible port. Zero $T$ branches at $s=1$ may be
+removed before receiving any input. No output is conditioned upon $r$.
+

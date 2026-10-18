@@ -1,0 +1,191 @@
+**Theorem 208.9 (Three-block stock and restricted minima).** Suppose
+$E=0$ and the first two positive late classes are at actual addresses
+$a<b$, with totals $\gamma_a=\mu$, $\gamma_b=\eta>0$.
+All remaining positive late classes lie in $J\subseteq\{b+1,\ldots,L\}$
+and have totals $g_j$ in arbitrary order. Let $d\ge0$ satisfy
+
+$$
+\mu\ge\eta+d,\qquad \eta\ge2d,\qquad
+u=\mu-d,\quad v=\eta-d,\quad A=2u-v,\qquad
+r=\frac{Av}{A+v},\qquad 0\le g_j\le r.
+\tag{208.31}
+$$
+
+Other late totals are zero; zero $g_j$ may also be retained in $J$.
+Among all $A_w=0$/early-pair scores with these correct totals and
+$E=0$, allowing both $S,T$ and all joint placements to vary, the
+least stock $B=S+T$ permitting $\Delta_O\le d$ or permitting
+$\Delta_N\le d$ is in both cases
+
+$$
+B^\star=3u+v=3\mu+\eta-4d.
+\tag{208.32}
+$$
+
+At $B=B^\star$ the minimum of each excess is exactly $d$.
+For every $B\ge B^\star$ there is one score with that stock and
+these correct totals, hence the prescribed $Q$, with
+$\Delta_N=\Delta_O=d$. Consequently each actual input of this
+profile with $\Delta_O\le d$ has a same-$Q$ representative of
+$N$ cost $d$. It is a unit certificate when $d\le1$.
+No claim that $d$ is the minimum excess at $B>B^\star$ is made.
+
+**Proof.** The disjoint-loss bound (202.35), from the original
+stopped tables, applies to every competitor of excess $\epsilon$:
+
+$$
+S\ge2(\mu-\epsilon)_++(\eta-\epsilon)_+,\qquad
+T\ge(\mu-\epsilon)_+.
+\tag{208.33}
+$$
+
+For completeness, the first two losses are
+$\{w_1=1,w_a=0\}$ and $\{w_2=1,w_a=0\}$, each forced by
+$(h,a;0,a,0)$ to have mass at least $\mu-\epsilon$.
+They are disjoint on early pair support, also with early $00$.
+The third loss, forced by $(a,b;0,b,0)$, is
+$\{w_a=1,w_b=0\}$ and is disjoint from the first two.
+The table $(1,2;1,2,a)$ gives the terminal bound.
+Thus (208.33) reuses the existing lower mechanism on one measure.
+For $\epsilon\le d$, it gives
+$B\ge3\mu+\eta-4\epsilon\ge B^\star$.
+
+Here is a joint construction attaining the bound. Set every inactive
+late bit to one. On the active late bits use three finite measures:
+
+| Component | Mass | $(x_a,x_b)$ | Later bits $j\in J$ |
+| --- | --- | --- | --- |
+| I | $v$ | $00$ | all one |
+| II | $A$ | $01$ | product with zero probabilities $g_j/A$ |
+| III | $v$ | $10$ | product with zero probabilities $g_j/v$ |
+
+Their sum is $\nu$, of total $2u+v$. The hypotheses imply
+$u\ge v+d$, $v\ge d$, $v>0$, $A\ge\mu$ and
+$r<\min(A,v)$, so every component is nonnegative.
+For each atom $x$, put pair mass $\nu(x)/2$ at each of $01x,10x$.
+Put correct mass $\mu$ at $w(\{a\})$ and $g_j$ at
+$w(\{j\})$ for $j\in J$.
+
+For class $b$, use length measure on $q\in[0,\eta)$.
+Bits before $b$ are one, bit $b$ is zero, and a later active bit
+$j$ is one exactly when $q<2v-g_j$; inactive bits are one.
+Assign each resulting word the length of its parameter set.
+The finitely many thresholds partition this interval, supplying
+nonnegative correct coefficients of total $\eta$ on $\Omega_b$.
+Coincident words have their coefficients added. Put $T=u$.
+This defines one full score of stock $3u+v$.
+The product measures and interval lengths specify proof weights;
+they require no source law or acquisition randomness.
+
+The $(a,b)$ pair masses are $(v,A,v,0)$. For $j\in J$,
+
+$$
+\nu(x_j=0)=2g_j,\qquad
+\nu(x_a=0,x_j=0)=\nu(x_b=0,x_j=0)=g_j.
+\tag{208.34}
+$$
+
+Write $c=1/A+1/v=1/r$. For $i<j$ in $J$ the actual pair
+masses, in $00,01,10,11$ order, are
+
+$$
+\begin{aligned}
+p_{00}&=cg_ig_j,&p_{01}&=2g_i-p_{00},\\
+p_{10}&=2g_j-p_{00},&
+p_{11}&=2u+v-2g_i-2g_j+p_{00}.
+\end{aligned}
+\tag{208.35}
+$$
+
+Since $cg_i,cg_j\le1$, $p_{01}\ge g_i$ and $p_{10}\ge g_j$.
+Component I lies wholly in $11$, so $p_{11}\ge v$.
+These are marginals of the same $\nu$.
+
+Label zero collects each cell's entire pair mass and also $T$ in
+the all-positive cell. Early labels collect subsets of that baseline,
+because $E=0$. It remains to bound every late correct label.
+The head pair $(1,2)$ has maxima
+$(0,(2u+v)/2,(2u+v)/2,\mu)$ and excess $d$.
+For an early/$a$ pair, the $10$ baseline is $u$ and the largest
+correct reward there is $\mu=u+d$. Its $11$ baseline
+$u+v/2$ covers $\eta$ and every $g_j$, since
+$u\ge v+d$. For an early/$b$ pair, cell $10$ has baseline
+$v$ and reward $\eta=v+d$; the $11$ baseline
+$2u-v/2$ covers $\mu$. For an early/$j$ pair, the $10$
+baseline $g_j$ covers both class $j$ and class $b$'s mass
+$(d-v+g_j)_+\le g_j$. Its $11$ baseline
+$2u+v/2-g_j\ge\mu$ covers all labels.
+In each of these schedules the two early-zero cells contain no
+late correct mass. Therefore the early-pair types cost at most $d$.
+
+For $(a,b)$ the complete four maxima are
+
+$$
+(v,A,v+d,u),
+\tag{208.36}
+$$
+
+because $A\ge\mu$ and all remaining totals are at most $v\le u$.
+The stopped maxima are $(2u,v+d,u)$, attaining excess $d$.
+For $(a,j)$ the pair baselines are
+$(g_j,2u-g_j,g_j,v-g_j)$. Class $a$ earns $\mu$ in $01$,
+covered by $2u-g_j\ge A\ge\mu$. Class $b$ earns
+$(d-v+g_j)_+\le g_j$ in $10$ and at most $\eta$ in $11$,
+whose baseline including $T$ is $u+v-g_j\ge\eta$.
+Class $j$ is covered in $10$; all other sole-zero classes lie
+in $11$ and have total at most $r<v$.
+
+For $(b,j)$ the pair baselines are
+$(g_j,2v-g_j,g_j,A-g_j)$. Class $b$ contributes
+$(d-v+g_j)_+\le g_j$ in $00$ and
+$\min(\eta,2v-g_j)$ in $01$, both covered. Class $j$ is
+covered in $10$, while class $a$ and every other correct label
+are covered in $11$ by $u+A-g_j\ge\mu$. Thus these two
+pair types have no excess.
+
+For $i<j$ in $J$, class $i$ is covered by $p_{01}\ge g_i$,
+and class $j$ by $p_{10}\ge g_j$. Class $b$'s off-diagonal
+rewards are at most $(g_i-g_j)_+$ and $(g_j-g_i)_+$,
+respectively, so are covered too, without an ordering assumption
+on $g_i,g_j$. In $11$, the baseline is
+$u+p_{11}\ge u+v\ge\mu$, covering every label, including
+$a$ and $b$ when neither is queried. The only possible uncovered
+reward is class $b$'s $00$ mass
+
+$$
+h_{ij}=(d-v+\min(g_i,g_j))_+\le d.
+\tag{208.37}
+$$
+
+The excess of this complete table is therefore at most
+$(h_{ij}-p_{00})_+\le d$. Its other three cells have no positive
+excess to add. This checks every earlier, intermediate and future
+label on the same carrier.
+
+Inactive coordinates are one on all positive-score rows, so a
+schedule involving them supplies only singleton or constant
+information. Empty schedules, repetitions and reversals are covered
+by the information identities in 207.2; repetitions still count as
+actual requests. Consequently $\Delta_N\le d$. The stopped
+$(a,b;0,b,0)$ table attains $d$, proving both equalities.
+
+For $B>B^\star$, add $B-B^\star$ at $T$. Each fixed table's
+reward increases by at most this increment and its anchor by
+exactly the increment, so no excess increases. The same stopped
+table uses zero in $11$ and retains excess $d$.
+At $B=B^\star$, a competitor with $\epsilon<d$ would violate
+(208.33), proving the claimed minimum of each excess. This also
+proves the minimum-stock statement for both catalogs and the
+same-$Q$ comparison for any original input in the declared class.
+All comparisons use (207.9) with the single charge $\theta=0$.
+
+The construction includes $d=0$, $\eta=2d$, $\mu=\eta+d$,
+$g_j=0,r$, empty $J$, ties, and arbitrary gaps between active
+addresses. The case $\eta=0$ belongs to the earlier single-class
+result and is not included in the denominators of (208.31).
+For empty $J$, this is the attained two-class case of 204.3.
+The new assertion here is its stated bounded-later-class extension
+and restricted stock minimum; it does not optimize over arbitrary
+full-score representatives or signed residual certificates.
+$\square$
+

@@ -1,0 +1,89 @@
+**Theorem 5.2 (terminating necessary-and-sufficient full-row decision).**
+For every nonempty cycle-covered fiber, a uniformly bounded-read legal
+serial recovery service exists if and only if the following finitely
+many Presburger sentences are all true:
+
+$$
+\exists h\ \forall\mathbf n\ \forall\mathbf m\quad
+\left[
+ \operatorname{Adm}_\eta(\mathbf n)\land
+ \operatorname{Adm}_\eta(\mathbf m)\land
+ \bigwedge_{y\in Y_\eta}
+ \bigl(n_y=m_y\ \lor\ (n_y\ge2h\land m_y\ge2h)\bigr)
+ \ \Longrightarrow\
+ \operatorname{Same}_{\eta\eta}(\mathbf n,\mathbf m)
+\right].
+\tag{CAR.16}
+$$
+
+The criterion is decidable with effective positive and negative outcomes.
+A positive outcome yields an entry-static source-total service, with
+finite paid upper budgets and no new equality operation. A negative
+outcome yields, for every requested original depth $d$, two actual finite
+sources in the same entire $D$, agreeing at all $|p|\le d$ and having
+different complete $Q$ rows. In particular a negative outcome excludes
+every legal adaptive serial service with a uniform finite raw bound.
+
+Proof. Sentences (CAR.16) belong to the arithmetic of Definition 4.2;
+$h$ is quantified inside that decidable theory, not searched until a
+negative timeout. If a sentence is true, extract a witnessing $h_\eta$.
+If $S_\eta$ is empty its sentence is vacuous and $h_\eta=0$ suffices.
+
+Let $b_{\rm sel}$ be a strict-depth prefix bound determining the chart,
+and put
+
+$$
+b=\max\bigl(\{b_{\rm sel}\}\cup
+ \{A_\eta+h_\eta:\eta\text{ a surviving chart}\}\bigr).
+\tag{CAR.17}
+$$
+
+If two sources in $D$ agree below depth $b$, they have the same chart.
+The second direction of (CAR.14) and (CAR.15) make their coordinate
+pairs satisfy the antecedent of (CAR.16). Their complete rows are equal.
+Thus (CAR.17) is a sufficient *original* prefix bound, including the
+observable separation of the chart union.
+
+Conversely, suppose an original prefix of strict depth $b$ determines
+the full row on $D$. In any chart take $h=b$. The first direction of
+(CAR.14), together with (CAR.15), makes the antecedent of (CAR.16) imply
+agreement of the two original prefixes, so it implies equal rows.
+Therefore each sentence is true. This proves both original-prefix
+directions without a semantic chart oracle.
+
+The operational equivalence between original-prefix determination and
+bounded static or serial existence is [ARH, (2.3)][ARH]. Its domain
+hypotheses are the common complete entry, finite sources, physical
+locality, four replies and source-totality of Assumption 1.1, not a
+literal-only feasibility premise. For an explicit positive service,
+recover every original reply of length less than $b$ using [SLH,
+Theorem 2.2][SLH] at the actual entry epoch $N$. Each original question
+needs at most two actual current reads of length at most
+$b-1+\lceil N/2\rceil$ when $b>0$. Hence one available upper bound is
+
+$$
+K_0=2(2^b-1),\qquad a=0,\qquad
+L_0=K_0\max(0,b-1+\lceil N/2\rceil).
+\tag{CAR.18}
+$$
+
+When $b=0$ there are no questions and $K_0=L_0=0$.
+For each possible original-prefix reply vector, use Lemma 4.1 and
+Definition 4.2 to decide whether some source in the entire chart union
+has that vector. For a nonempty vector extract one finite coordinate
+witness, expand it and calculate its whole $Q$ row. Formula (CAR.17)
+makes the row independent of that witness. Install these finite outputs;
+unreachable vectors may receive any output. The actual decoder replies
+select the correct output and the service halts. The witnesses are used
+in constructing a common table, not supplied as the actual source.
+Only the actual current decoder reads are new receipts.
+
+If a sentence (CAR.16) is false, select that chart. For any given $d$ set
+$h=d+1$. Its negation supplies finite natural tuples satisfying the whole
+antecedent but different full rows. This existential formula is decidable
+and true, so its finite witness extraction terminates. Expand the tuples
+by (CAR.12). The first implication of (CAR.14) proves agreement at every
+$|p|\le d$; (CAR.13) and the failed row equality put both sources in the
+same full $D$ with unequal target rows. No infinite-tree realization is
+used. ARH (2.3) excludes a uniform-read serial service. $\square$
+

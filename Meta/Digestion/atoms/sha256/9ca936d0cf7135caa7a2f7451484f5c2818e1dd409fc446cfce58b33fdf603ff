@@ -1,0 +1,20 @@
+**定义 144.3（五模式码与完整字段）。** 令 $\gamma=\langle\beta,\alpha\rangle$。五模式的一个符号码为
+
+$$
+\begin{aligned}
+E_{[2]}&=\alpha,& E_{[3]}&=\beta,& E_{[5]}&=\gamma,\\
+E_{[25]}&=\langle\gamma,\alpha\rangle,&
+E_{\mathrm{null}}&=\langle\alpha,\alpha\rangle.
+\end{aligned}
+$$
+
+这五棵树互异：前两棵是不同叶；后三棵的根分别具有左右子树 $(\beta,\alpha)$、$(\gamma,\alpha)$、$(\alpha,\alpha)$，自由树的根分解唯一，且 $\beta,\gamma,\alpha$ 互异。这里只编码模式字段。若事件还含动作、读数、量具或来源标记，可例如用固定括号格式
+
+$$
+E(a,y,\kappa)=\langle C_a(a),\langle C_y(y),C_\kappa(\kappa)\rangle\rangle,
+$$
+
+其中各字段码在其声明域上单射并可解码；$C_y$ 内部再保留模式及读数的其余字段。逐根解码即得完整三元组，故此格式单射。把整个 $E(a,y,\kappa)$ 换成单独的 $E_{[w]}$，一般就丢失其他字段。
+
+模式 $\mathrm{null}$ 表示已经读到的零占位窗口。它的事件码仍是非空树，组成为 $(2,0)^T$，叶数为二；占位读出为零不使这个事件码成为零树。未读没有该次返回，$\mathrm{End}$ 是表示合同中的结束标记，$\mathrm{Stop}$ 是策略停止选择。若后两者实际作为事件记录，须有各自完整码；若没有发生这样的事件，不凭空追加码。四者的区分继承[《FIB 关系延拓几何》，版本2bf48d5375954170bae475578dc4d93ce77f8384，定义2.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/2bf48d5375954170bae475578dc4d93ce77f8384/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。
+

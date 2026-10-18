@@ -1,0 +1,10 @@
+### 66.1 Central census theorem
+
+At \(b=0\), write
+
+\[
+ M=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix},
+ \qquad A=J_3+(\omega-1)I_3,\qquad
+ \omega=\frac{-1+i\sqrt3}{2}.
+\]
+

@@ -1,0 +1,10 @@
+**Corollary 54.5 (an original finite attainer).** Substituting the three
+columns of (JR.140), with reports $(-,+,-)$, into Definition 53.3 gives
+an eleven-label instrument attaining (JR.144). Its fibre dimensions are
+$(2,2,2,3,3,1,1,1,1,1,1)$. The matching upper bound covers the full
+original class in Convention 53.1. These labels are a construction count,
+not a lower bound on arbitrary multi-Kraus acquisition labels.
+
+**Proof.** Equations (JR.145) and (JR.150) match; the objective signs and
+reports are aligned by Lemma 53.2. Apply (JR.134)–(JR.139). $\square$
+

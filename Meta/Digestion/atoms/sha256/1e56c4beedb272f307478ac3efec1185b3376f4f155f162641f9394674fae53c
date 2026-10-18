@@ -1,0 +1,138 @@
+**Proposition 20.1 (common realization of the appended constructions).**
+Under the source, minimax, sharp joint cost, unaveraged real-face,
+full-class rigidity and capacity hypotheses of Assumption 1.2, every
+finite law constructed in §§13–17 has a common original realization
+with the claimed feasible or optimal height at its own request.
+All original twelve-history, complete-output, chronological and
+resource requirements of §2 persist.
+
+Proof. For (GC.62)–(GC.64), the two pure residual representations
+and the unchanged saturated law give exactly $I_3$ and $M$.
+For (GC.65), orthogonality and finite vector representation preserve
+the whole pure Gram and contrast and the identical saturated law.
+For (GC.71)–(GC.73), the intensity moments give $M$ and the
+positive diagonal residual gives $I_3$. For (GC.66), both Grams
+and contrast are preserved by the explicit merge formulas.
+For the endpoint eliminations of §16 and fixed-fraction laws of
+§17, all eight common moments are fixed and the pointwise capacity
+bounds hold on the unchanged original atoms; mixtures retain the
+same conditions. These are exactly Proposition 12.2's equivalence
+and hence Proposition 10.1's same-joint-data premises. Zero
+weights are omitted before any encoder inverse. Rank two holds
+on every occupied original ellipse ray, including axes. Therefore
+the low acquisition effects are the actual
+$K_i^\dagger K_i+p_ib_in_in_i^T$, and the sum of these effects
+and the single coherent high effect is $I_5$ at the stipulated
+source root. All coefficient weights sum to one without interpreting
+them as acquired probabilities.
+
+The complete live Gram cancels every cross Kraus coefficient, not
+just diagonal input effects. Consequently the forgotten-label live
+map is exactly (GC.53) on every complex $M_5$ input. The same
+complete failure covariance gives each of the five CP Borel maps
+there, separately for weights $(0,1/4,1/2,1/4,0)$, including both
+zero components. Tensoring the finite live Kraus matrices with an
+arbitrary passive reference and taking the failure partial trace
+gives exactly (GC.54), preserving conditional reference operators
+and live off-diagonal coherences. The complete stopped-cq HALF
+errors (GC.55) therefore hold simultaneously for all twelve signed
+histories $y=5,16,27$. The inherited minimax statement makes the
+$5$ and $27$ errors $E_*$ and the $16$ error strictly smaller;
+it does not make all twelve errors equal.
+
+The sole weak high fibre has counted joint dimension five,
+including its coherent complement. Its hidden terminal Kraus
+indices are discarded, not readable labels. Its worst-history
+probability is the inherited sharp $\mathsf C(s)$; the full cost
+counts specimen, controller, memory, accessible environment and
+entangled shares together. No marginal or sign average substitutes
+for that sharp joint-cost premise. Low reports give
+$\mathsf V=s_0K/\sqrt\alpha\ge s$; equality is used in §§16–17
+only where multiplier optimality proved activity. Each law has its
+own attaining instrument, fixed before the sole unknown input,
+common to all histories; this is not one instrument for all requests.
+
+Proposition 10.1 uses the same
+$g(a)=2/(1+a)^2$, $G_{\rm time}(a)=2a/(1+a)$ and actual failure
+operator $F_i$ to define
+$$
+Z_i(a)=\sqrt{I-G_{\rm time}(a)F_i},\qquad
+R_i(a)=g(a)F_i[I-G_{\rm time}(a)F_i]^{-1}.
+$$
+Its pulled-back cumulative jump effect plus survivor effect is
+$I$ at every cut. Its integrated operator norm on each ENTIRE
+joint fibre is $\log(1+b_i/\mathfrak c(h_i))\le A$, and terminal
+survivor effect is at least $e^{-A}I>0$. Terminal survivor processing
+is TP/isometric, there is no terminal absorption, FIRST is absolute
+$6+a$, and failed carriers receive no later positive-carrier action.
+Neither average activity nor the integral of a maximum across labels
+replaces this per-fibre bound. The witness $g$ is not the ideal
+density $f_y$ and does not restrict admitted competitor time laws.
+
+Necessity still concerns full complex CP instruments and all hidden
+Kraus multiplicities with full-output TP decoders, in the finite,
+convergent countable and only the stipulated measurable
+finite-dimensional-fibre/Kraus/integrable-effect/live-Choi extension
+of Convention 2.3. The finite convex representations introduce no
+additional continuous physical implementation theorem. No helper,
+copy, history oracle, reset, retry, postselection, acceptance or
+survival division, quantum bypass or uncounted accessible share
+has entered these constructions. Optimality is claimed only for
+the globally supported multiplier laws in §§16–17; the obstruction
+laws in §§13–15 are feasible examples. $\square$
+
+**Open problem 20.2 (unchanged original finite plane and sharp count).**
+The maximum minimum total alphabet remains
+$M_{\max}\in\{8,9,10\}$. No actual nine-low necessity example,
+universal eight-low or universal seven-low theorem follows without
+the missing relations of §§18–19. Sharp strong optimal counts remain
+open beyond Theorem 9.1's existence upper bound, and are different
+from earlier strong feasibility counts.
+
+The original target is still an evaluated finite-$(s,A)$ roof for
+ALL budgets, every feasible requested contrast, every common oriented
+failure allocation and all live-height decompositions, including
+those below the maximum contrast at a fixed allocation. It needs
+selected roots, weights, actual contact ranges, universal necessity
+and a finite common original attainer at every point. A coefficient
+state, fixed decomposition, optimal marginal, maximum-contrast facet,
+implicit SDP/KKT/QE prescription or limiting support theorem does
+not supply that complete roof.
+
+The conditional connected interval at $t=1000$,
+$\lambda\in[1/4,23/5]$, retains exactly its supplied source and
+signed/root/whole-circle hypotheses. The connection below $1/4$
+from first activation through the later pure-contact seam, the
+optimizing events above $23/5$, transverse budget coverage and maximal
+ranges remain open. No additional transverse strip is included.
+Global ordering and connected coverage of all branches, occupied
+and unused-root signs, multiplicities, collisions, zero-weight,
+rank, capacity and count transitions, and all endpoint, threshold,
+budget and degenerate-orientation gluing remain required.
+
+Remaining evaluated $K(s)$ source parameters, physical orientations
+and coefficient gluing, limiting root isolation, multiplicities and
+sign intervals, next terms, critical five-label/static-contact
+interpolation and uniform joint-limit rates remain within the
+original JS/WE/TC/SC supplier boundaries of §11. Limiting
+three-line structure does not force a finite-activity optimal support
+restriction. None of the new joint-data obstructions, multiplier
+endpoints or conditional affine implications discharges source
+existence/isolation/dictionary/rank/root TP, the complete stopped-cq
+minimax, sharp worst-history joint cost, the separately supplied
+unaveraged real equality face, or full-class double rigidity.
+
+**Open problem 20.3 (physical correspondence and native realization).**
+The coefficient-space PPT correspondence supplies no physical
+transfer from same-named PPT, MC, zero-leakage or LOSR conditions.
+The needed source-preserving operations, common capacity pairing,
+resource inequalities and recorded absolute height must each be
+proved for the original acquisition. Native access and calibration,
+coherent jointly counted storage and accessible shares, acquisition
+duration, entire-fibre actuation, absolute FIRST alignment,
+archive/source/epoch/controller/permissions and quantum/native-count
+relations remain separate unresolved bridges. The finite CP/TP
+constructors do not grant native control, calibration or clock
+permission. The full original mathematical and physical target of
+§11 is unchanged.
+

@@ -1,0 +1,14 @@
+**Proposition 7.1 (the new excluded singular branches fail the credited quadratic test).** If an identically singular history fails the conclusion (5.1)–(5.2), the exclusions of Theorem 5.1 give a real slope and a positive source shape with $j=0$ in (7.1).
+
+**Proof.** The proof of Theorem 5.1 gives either rank at most two at a real slope $a$, or an unsafe nonzero $X\in\ker T_a$ at a rank-three slope. In the first case the source/slope derivative $(V,t)\mapsto T_aV+tCS$ has rank at most three, at any source, so its determinant is zero.
+
+In the second case write $X=(\begin{smallmatrix}a_0&b_0\\c_0&e_0\end{smallmatrix})$. On a positive shape,
+
+$$
+\mathfrak b(E(x,y),X)=a_0y+e_0x-b_0-c_0xy.
+$$
+
+Because $X$ is unsafe, $a_0,e_0,-b_0,-c_0$ contain both strict signs. The limits at $(\varepsilon,\varepsilon)$, $(T,T)/T^2$, $(T,T^{-2})/T$, and $(T^{-2},T)/T$ isolate respectively $-b_0,-c_0,e_0,a_0$. Thus the expression has both signs on positive shapes. A straight positive path between two such shapes has a zero. At that shape the nonzero $X$ is tangent to the rank-one source cone and $T_aX=0$, so the source/slope derivative has a nonzero kernel vector $(X,0)$. Equation (7.1) gives $j(a;x,y)=0$. This argument also explains directly how the same-slope exclusion meets the credited critical-point test; it does not use an invalid general claim about derivatives of injective smooth maps. ∎
+
+For the surviving common-safe-kernel pencils, R2 and (7.2) still apply. For regular pencils, R1, all singular-slope tests, and (7.2) still apply. Passing these necessary conditions leaves possible distant different-slope collisions unresolved.
+

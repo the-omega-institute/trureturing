@@ -1,0 +1,16 @@
+**Definition 6.3 (a four-hash native support).** Let $m\ge4$ and let
+$H:[m]\times[k]\to\{0,1,2,3\}$ have $k=2^h$ columns and the
+following property: every four distinct rows have a column displaying
+all four symbols. This is the standard perfect four-hash, or
+four-separated, property of [GR, §1]. Define
+
+$$
+z_s=T_h(u_{H(s,1)},\ldots,u_{H(s,k)})\in S_{h+3},
+\qquad P_H=\{z_s:s\in[m]\},\qquad d=h+3.
+\tag{RCE.25}
+$$
+
+Perfect hashing implies distinct rows, by extending any two rows
+to four. Thus the $z_s$ are distinct. No hash-rate theorem or
+probabilistic construction is assumed.
+

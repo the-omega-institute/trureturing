@@ -1,0 +1,31 @@
+**定理 160.4（实际折线拼接的面积律与摘要结合性）。** 设 $P$ 从零到 $\mathbf q$，$Q$ 从零到 $\mathbf r$，其面积为 $A,B$。先走 $P$，再走平移了 $\mathbf q$ 的 $Q$，记为 $P\diamond Q$。其摘要为
+
+$$
+(\mathbf q,A)\star(\mathbf r,B)
+=\left(\mathbf q+\mathbf r,
+A+B+\frac12\det(\mathbf q,\mathbf r)\right).
+$$
+
+$\star$ 结合，单位为 $(0,0)$。这些等式对原树的配对读出成立，但不授权原生来源免费重括号。
+
+证明（160.4）。写 $Q$ 顶点为 $\mathbf r_0=0,\ldots,\mathbf r_n=\mathbf r$。平移后每一段满足
+
+$$
+\begin{aligned}
+\det(\mathbf q+\mathbf r_{j-1},\mathbf q+\mathbf r_j)
+&=\det(\mathbf r_{j-1},\mathbf r_j)
++\det(\mathbf q,\mathbf r_j-\mathbf r_{j-1}).
+\end{aligned}
+$$
+
+第二项求和望远镜成 $\det(\mathbf q,\mathbf r)$；加上 $P$ 的面积得拼接律。三个端点 $\mathbf q,\mathbf r,\mathbf s$ 的两种摘要括号都给端点 $\mathbf q+\mathbf r+\mathbf s$，面积的差只涉及
+
+$$
+\det(\mathbf q,\mathbf r)+\det(\mathbf q+\mathbf r,\mathbf s)
+=\det(\mathbf r,\mathbf s)+\det(\mathbf q,\mathbf r+\mathbf s),
+$$
+
+由双线性逐项相等。零端点零面积的摘要代入即为单位。沿树叶序有 $G(\langle s,t\rangle)=G(s)\star G(t)$，于是不同括号可有同一个摘要；树的括号、构造和来源仍不同。$\square$
+
+这条群律是经典 Heisenberg 形式。来源为 J. E. Nelson and R. F. Picken，[*Quantum Holonomies and the Heisenberg Group*，arXiv:1808.08812v1 (2018)](https://arxiv.org/abs/1808.08812)，[v1正文](https://arxiv.org/pdf/1808.08812v1)§3式(13)及§4。其指数坐标 $(a,b,c)$ 对应这里的 $(u,v,A)$，不是 $(u,v,D)$。§4把 $c$ 解释为路径与其弦之间的有向面积，并把群乘法解释为拼接。论文的量子讨论另有 $T^2$ 闭路的 $\mathbb R^2$ 覆盖折线、量子 $SL(2,\mathbb R)$ holonomy和常连接背景；本卷只复用经典群律和面积对应，不用那些条件推出 FIB 原生仪器或本卷指定的 $Q_8$ 提升。
+

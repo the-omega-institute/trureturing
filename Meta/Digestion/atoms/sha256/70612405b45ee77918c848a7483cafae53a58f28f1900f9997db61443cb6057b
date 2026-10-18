@@ -1,0 +1,42 @@
+### 477.1 实际素数层共享收益坐标，价格切线带有两个不同修正
+
+对素数 $p$ 和正层号 $j$，定义实际插入收益与价格
+
+$$
+\beta(p,j)=\log\left(1+\frac1{p+p^2+\cdots+p^j}\right),\qquad
+\theta(p,j)=\frac{\beta(p,j)}{\log p}.
+$$
+
+对于 $n=\prod_p p^{a_p}\ge1$，全部指数层的质量与收益分别为
+
+$$
+E(n)=\sum_p\sum_{j=1}^{a_p}\log p=\log n,\qquad
+W(n)=\sum_p\sum_{j=1}^{a_p}\beta(p,j)=\log\frac{\sigma(n)}n.
+$$
+
+这些已有关系由素因数分解与逐素数层的望远镜恒等式给出；求和只有有限支撑。
+
+沿用 §85 的压力 $M(\lambda)=\max_{n\ge1}(W(n)-\lambda E(n))$，其中 $\lambda>0$。
+对 $u,x>1$，定义 $h(u)=\gamma+\log\log u$、$\lambda_x=1/(x\log x)$，并记
+
+$$
+\begin{aligned}
+\Delta(x)&=h(x)-\lambda_xx-M(\lambda_x),\\
+d_x(n)&=M(\lambda_x)-\bigl(W(n)-\lambda_xE(n)\bigr),\\
+B_h(E,x)&=h(x)+\lambda_x(E-x)-h(E).
+\end{aligned}
+$$
+
+对于 $E(n)>1$，原余量恒等式在同一坐标下写为
+
+$$
+h(E(n))-W(n)=\Delta(x)+d_x(n)-B_h(E(n),x),\qquad d_x(n),B_h(E(n),x)\ge0.
+$$
+
+**证明。** 代入上述定义后，压力、价格项与 $h(x)$ 相消，得到等式。
+最大值的定义给出 $d_x(n)\ge0$；由
+$h'(x)=\lambda_x$ 与 $h''(x)=-(1+\log x)/(x^2(\log x)^2)<0$，凹函数的切线不等式给出
+$B_h(E(n),x)\ge0$。取 $x=E(n)=\log n$ 时，$B_h(E(n),x)=0$。
+$d_x(n)=0$ 则要求 $n$ 在同一价格 $\lambda_x$ 下达到压力的最大值。
+这复用原余量的精确三项修正及 §87 的压力定义。$\square$
+

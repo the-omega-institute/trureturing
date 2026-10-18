@@ -1,0 +1,44 @@
+**Definition 10.1 (full same-run recurrence).** Evaluate the exact expanded
+$G_\circ$ from its actual entrance, never an old-G run plus an independently
+optimized increment. Let $N_{o,p}$ count actual opcode/purpose pairs,
+$A$ all constructed nonmeter cells and $b_{\rm ctl}$ all constructed
+finite bits, active/inactive. Refine entering purposes by initialization,
+each arrow, each decoder, each Publish/check, cleanup and original return;
+a helper inherits its purpose unless its explicit CTL changes it.
+Use ARC Definition 10.1's complete-successor recurrence for each leaf:
+
+$$
+\begin{aligned}
+N_{o,p}'&=N_{o,p}+[(o,p)=(o_i,p_i)],\\
+A'&=A+a_i,& b_{\rm ctl}'&=b_{\rm ctl}+c_i,\\
+C_\tau'&=C_\tau+[o_i=\mathrm{IN}_\tau],\\
+\mathrm{tick}'&=\mathrm{tick}+1,&\mathrm{fee}'&=\mathrm{fee}+2,\\
+\mathrm{material}'&=\mathrm{material}+8a_i+c_i+8.
+\end{aligned}
+$$
+
+Here $a_i=1$ for a core nonmeter EX/boundary cell, else zero; $c_i=1$
+for a newly constructed finite bit, else zero. Sequence evaluates the
+next cost at the preceding complete successor. Tests use their real
+RD/CTL branches and heads; while uses the real updated bank/parity.
+The following contributor table resolves every nonprimitive term.
+
+| Contributor | Actual expanded leaves included |
+| --- | --- |
+| Original prefix | Original boot/private preparation/validation/acquisition, parked table/state/packet, all their writes/loans/channels. |
+| New installation | Twenty added boundary constructors, all owner/token/control bits and activation CTL; both $4e+2$ bootstraps; actual Delta capture ingress/Base/descriptor/seal. |
+| Initial word entry | Empty $r_\circ$ bank/sentinels, fixed earlier descriptions, every source/prior/seed/28/29 import/export, saved-head and manifest-prefix work, invocation and first Ready. |
+| Any assignment/test | Full RCA Base, dry/real emission of all fields, seps/F/seal, LastBank/Field/LastScratch, descriptor count/write and parity/purpose CTLs; tests have their actual Field/RD. |
+| Source and target entry | All gate/history/source IN/EX/WR/moves/tests, preallocation, CaptureCAP, parser/origin/row checks, Boundary, occurrence recognizer, $5z+s$ construction, Issue/Call/Prefix and each native Image serializer. |
+| Geometry | Every work-stack Push/Pop, Half/Take, path Cat, Insert/Find, mask/token emission/parse, layout inverse and complete re-encoding comparison. |
+| Memory | Basic selected-span/descriptor/head/frontier scans, unary cancellation, pending-bit cases, typed reservoir merge, receipt count, RunN, role/span fold, sorting/deduplication and exact seven-list emission/reselection. |
+| Chronology | Every Step lookup, marked-cell scan/Replace, finite effect/alias/guard, constructor-map/endpoint lookup, patch field construction/comparison, receipt/event/tally update and countdown test. |
+| Every publication | Measured sender export, full mailbox/receiver initialized allocations/delimiters, all descriptors and three staged records, endpoint/length positioning, two tested copies, completion records, native TOKs and mandatory print. |
+| Every callback/return | Candidate clear, positioned F import, exact wrapper parse, independent decoder/re-encode/binding check, firstS copy/final Equal, legacy Image reconstruction/check, ACK/availability/invocation TOKs, cycle/fault append and Ready. |
+| Original final suffix | All original loans, table/packet work, journal/dependency/snapshot, verifier/prior/replay, receipt delivery, consumer binding/target copy/OUT, final ACK and halt. |
+
+These are recurrence leaves through §§2–8 and the explicitly cited RCA/ARC
+expansions; there is no unit-price SelectMemory, decoder, compiler, graph
+walk or abstract evaluator. All old banks, temporary words, staged metadata,
+raw/inactive code, descriptors and copies stay in the retained counts.
+

@@ -1,0 +1,59 @@
+**Lemma 11.3 (guarded automaton for all simultaneous block values).**
+There is a finite bottom-up automaton on $c/f$ shapes with finitely many
+Presburger transition guards in $\mathbf z$ whose accepted nonleaf shapes
+are exactly those supporting the blocks of Definition 11.2 with their
+prescribed root states. Both directions use one rank field per block,
+shared at every use of that block.
+
+Proof. States consist of a leaf/nonleaf flag, a vector in $Q^V$, and a
+subset of $D$. The $c$ transition to $(\mathsf{leaf},\sigma,M)$ has guard
+
+$$
+\exists\mathbf r\ P_{\sigma,M}(\mathbf r,\mathbf z).
+\tag{NCE.27}
+$$
+
+At an $f$ node combine state vectors coordinatewise by $\delta$, take
+the union of the two masks, and mark the result nonleaf. If at least
+one child is nonleaf, this transition has guard true. If both are
+leaves with annotations $(\sigma,M),(\sigma',M')$, its guard is
+
+$$
+\exists\mathbf r,\mathbf r'\quad
+P_{\sigma,M}(\mathbf r,\mathbf z)\land
+P_{\sigma',M'}(\mathbf r',\mathbf z)\land
+\bigwedge_{v\in V}(r_v-r'_v\ne1).
+\tag{NCE.28}
+$$
+
+Accept precisely nonleaf roots with vector $(s_v)_{v\in V}$ and mask
+$D$. All of these states, transitions and formulas are constructed
+before assigning the numerical parameters.
+
+Given actual blocks, label each shape leaf by its simultaneous rank
+tuple, native-state vector and exact mismatch mask. Bottom-up native
+evaluation supplies the internal state vectors. Mask union records
+precisely the negatives witnessed somewhere below. Normality supplies
+(NCE.28). This is an accepting run.
+
+Conversely fix an accepting run at one $\mathbf z$. For each primitive
+cherry choose the two simultaneous rank tuples witnessing its particular
+(NCE.28). For each leaf not in such a cherry choose a tuple witnessing
+its (NCE.27). These choices are compatible: a leaf belongs to at most
+one primitive cherry. Choosing a cherry witness can change the witness
+for its child transition, but preserves that child's entire state vector
+and mask. There is no other constraint between different shape positions:
+all equations are pointwise, negatives require only the accumulated mask,
+and normality compares ranks only at primitive cherries. Thus the chosen
+ranks define every $U_v$ on the same $K$. All its pointwise equations hold;
+every bit in $D$ has a genuine mismatch witness; and every block is normal.
+Induction up the run gives its prescribed native root state. This proves
+exactness without replacing ranks by constants or equating values that
+merely share a finite state. $\square$
+
+The joint guard (NCE.28) is essential. Testing two leaf transitions for
+separate existence would not establish that their witnesses can also
+satisfy every block's sibling normality. Requiring all mismatches at one
+leaf would instead lose valuations whose negatives are witnessed at
+different leaves. Mask union preserves those valuations.
+

@@ -1,0 +1,45 @@
+**定理 17.4.2（乘法预算的锐利性）。** 令
+
+$$
+\mu_+=\delta_{+1},
+\qquad
+\mu_-=\delta_{-1}.
+$$
+
+对二元链 $K_{\lambda_1},\ldots,K_{\lambda_n}$，有
+
+$$
+\boxed{
+\operatorname{TV}(\mu_+K_{\lambda_1}\cdots K_{\lambda_n},
+\mu_-K_{\lambda_1}\cdots K_{\lambda_n})
+=
+\prod_{i=1}^n\lambda_i.
+}
+$$
+
+**证明。**
+
+若输入符号的期望为 $m$，经过 $K_{\lambda_i}$ 后，输出符号的期望为 $\lambda_i m$。因此从 $\mu_+$ 和 $\mu_-$ 出发，末端期望分别为
+
+$$
++\prod_i\lambda_i
+\quad\text{和}\quad
+-\prod_i\lambda_i.
+$$
+
+二元分布由期望唯一决定，两个末端分布的总变差等于期望差的一半，即
+
+$$
+\frac12\left|
+\prod_i\lambda_i-\left(-\prod_i\lambda_i\right)
+\right|
+=
+\prod_i\lambda_i.
+$$
+
+证毕。
+
+所以定理 17.3.2 的乘法上界不能统一改进为更小的函数：每个接口都可以在同一二元方向上达到它。
+
+<a id="section-17-5"></a>
+

@@ -1,0 +1,97 @@
+**Proposition 95.1 (Separate resource statements and unchanged consumer).**
+The adaptive attainers in Theorems 92.1 and 94.1 satisfy $K\le2$ and
+$M\le4$ everywhere. The restricted attainers in Theorem 92.1 have
+$K\le2$, $M\le4$ at their optimal two-request error, and $K\le3$,
+$M\le4$ at the smaller separating caps. The restricted two-request
+attainer (94.5) has $M\le3$; its three-request prefix attainer also
+has $M\le3$. The same bounds hold for the corresponding padded
+nonadaptive rules.
+
+For the unequal adaptive kernel $V$, the sourcewise means are
+
+$$
+\mathsf E_VK_{V,x}=
+\begin{cases}5/4,&q_1(x)=0,\\15/8,&q_1(x)=1.
+\end{cases}
+\tag{95.1}
+$$
+
+Its uniform mean $15/8$ equals the supplied unrestricted mean optimum
+$D$ at cap $1/8$ for (94.1). For the ordered rule $W$ of (94.5),
+
+$$
+\mathsf E_WK_{W,x}=1+\frac{17}{20}q_1(x)+\frac3{20}q_2(x),
+\tag{95.2}
+$$
+
+while its fully acquired nonadaptive padding has $K=2$ everywhere.
+Thus even the law-preserving containment need not preserve sourcewise
+mean requests. All attainers hand off finitely everywhere, but these
+statements impose no transition-time, physical-time or effective
+real-probability sampling bound.
+
+Every attainer here has TV distance one from every unchanged original
+nonatomic target $\mu_x$ of Source-Correlated Laws, Theorem 67.5, and
+the unchanged consumer returns unknown on its handed tape.
+
+**Proof.** The hard-count and address bounds follow by inspecting the
+stated finite request sequences and trees. In (94.3) the first tree
+always uses one request. The next two, with total weight $5/8$, use
+one request at $q_1=0$ and two at $q_1=1$. The last two always use
+two. This gives (95.1). Both first-answer values occur at actual sources,
+so the supremum is $15/8$. At cap $1/8$, (79.1) gives leading residuals
+$7/8,5/8,3/8,1/8$ and zero tail residuals, hence
+$D=(2-1/8)=15/8$. This comparison uses the established mean formula;
+it does not turn a mean into a general hard-count criterion.
+
+In (94.5), every selected sequence has two entries and its first request
+is always made. Its second is made on a positive first reply. The total
+weight of sequences starting at index 1 is $17/20$, and the weight
+starting at index 2 is $3/20$, proving (95.2). The padded version
+requests both entries regardless of their replies. In particular the
+sourcewise change in mean is visible even though the laws are identical.
+For (94.1) at cap $1/8$, the supplied optimal maximum-address value
+is $h_{1/8}=3$: the residual sums after indices 2 and 3 are respectively
+$1/2$ and $1/8$. Thus the adaptive two-request rule's use of index 4
+does not identify its count with the separately optimal address budget.
+The restricted lower bound imposed no address ceiling at all.
+
+Every displayed output is one of the original points
+$\theta_0,\ldots,\theta_4$ in $B_1$. Their finite Borel support has
+output probability one and probability zero under each original
+nonatomic $\mu_x$. The event definition of TV therefore gives distance
+one. The original consumer returns unknown on $B_1$ by (73.1).
+Consequently all errors and capability gaps in Sections 90--94 concern
+only the selected marked laws (73.4); none supplies a cap below one or
+the positive-proposal row for those original nonatomic targets.
+$\square$
+
+**Mathematical citation 95.2 (Suppliers and unresolved scope).** Actual
+finite-pattern realization is supplied by Boundaries, Theorem 35.2;
+finite whole-execution transport by Source-Correlated Laws, Lemma 45.3.
+The full-carrier TV projection and actual-tail identity are (83.8)--(83.9).
+The complete finite criterion remains Theorems 83.3 and 84.1; the
+late-mark bound is Theorem 85.1, the mean bound is Theorem 79.2, and
+the subset plateau kernel is the construction of Theorem 87.1.
+The finite tree and TV ingredients retain the mature-source credits in
+83.4 and 84.4. TV convexity used above follows directly by applying the
+event definition to a mixture on each fixed source. These ingredients
+are suppliers to the source-specific deductions, with no
+literature-priority or kernel-verification assertion.
+
+The strict gaps disprove a universal replacement of arbitrary adaptive
+rules by either $\mathcal N$ or $\mathcal O$ at the same hard request
+count and exact uniform selected-law TV cap. They do not establish a
+general equality between $\mathcal N$ and $\mathcal O$, identify the
+optima of their means, or classify other reduced adaptive families.
+The five-event obstruction alone supplies no complete restricted domain.
+The near-full-depth bridge in Proposition 93.1 establishes the minimal
+active dimension; it is not a general analytic hard-count formula.
+For arbitrary monotone amplitudes and arbitrary budgets, a general
+analytic classification of the original $\kappa_\varepsilon$ remains
+unresolved. The exact finite criterion of Sections 83--84 retains that
+full scope, including all multiple-zero words. Zero-error and unit-cap
+boundaries remain Proposition 89.1. The real weights and finite
+constructions assert no finite-precision representation, efficient
+optimization, or general execution-time estimate.
+

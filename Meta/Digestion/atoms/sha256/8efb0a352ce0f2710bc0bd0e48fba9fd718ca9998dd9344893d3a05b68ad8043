@@ -1,0 +1,10 @@
+**定义 19.2.4（门模型）。** 取一个与 $X$ 独立的分布 $q\in\Delta(\mathcal Y)$，以及接受核
+
+$$
+ a:\mathcal X\times\mathcal Y\longrightarrow[0,1].
+$$
+
+先生成 $Y\sim q$，再令 $S\mid(X=x,Y=y)\sim\operatorname{Bernoulli}(a(x,y))$，仍以同一个读出方程定义 $O$。该模型没有 $X\to Y$ 的直接因果边；$X$ 只进入选择门 $S$。
+
+<a id="claim-19-2-5"></a>
+

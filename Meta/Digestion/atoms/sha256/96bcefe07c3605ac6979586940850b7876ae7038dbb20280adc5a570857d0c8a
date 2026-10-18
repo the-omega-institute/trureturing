@@ -1,0 +1,26 @@
+## 436. Two high transverse labels and two low axes
+
+Consider a genuine frame (r,p,q,o,p,q) with
+
+    p,q>=s>2, 1<r,o<=s-1.
+
+Let S=beta_p+beta_q and K=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q).
+The exact paired response is S=2*atan(K*sqrt(L/J)), where
+
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+The scalar bounds imply
+
+    L>=4*s^2-(s-2)^2=3*s^2+4*s-4>3*s^2,
+    J<=s^2,
+    K^2>=1-1/s^2>3/4.
+
+For K, apply sqrt(x^2-1)>=x*sqrt(1-1/s^2) separately at x=p,q.
+Thus K^2*L/J>9/4>1. Since atan is increasing on positive reals,
+S>pi/2. The four original high transverse slots therefore obey
+
+    2*beta_p+2*beta_q>pi.                          (436.1)
+
+No condition on the ordering of p and q is needed, including p=q.
+

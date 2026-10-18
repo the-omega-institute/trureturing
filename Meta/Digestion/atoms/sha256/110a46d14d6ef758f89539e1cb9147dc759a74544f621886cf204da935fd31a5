@@ -1,0 +1,83 @@
+**Actual replies (NARC Definition 5.3).** Absence is $\bot$ and
+branch is $\mathsf b$. A constructor Read reports the label or
+branch at the end of an existing address, and absence if a nonempty
+suffix remains at a leaf. Every finite relative word has one of the
+following supplied response functions on nonnegative integer ages,
+as in (NARC.5.7):
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t\ (t\ge2)&n<t&n=t&n=t+1&n>t+1\\
+S_t\ (t\ge2)&n<t&\text{never}&n=t&n>t.
+\end{array}
+$$
+
+The $S_t$ reply is obtained from the actual $P_t$ reply by
+$\bot\mapsto\bot$, $\alpha\mapsto\beta$ and
+$\beta,\mathsf b\mapsto\mathsf b$. There is no native $P_1$.
+The literal representatives and the paid hidden-slot prefixes are
+those specified in Definition 1.1 below.
+
+**Finite certificates (NARC Definition 10.1 and Theorem 10.2).**
+An indexed state $((n_i,v_i))_{i\in I}$ has finite index set $I$
+and integer ages $n_i\ge0$. Let $I_{A,r}$ retain exactly every
+index with actual reply $r$ to $A$, keeping its age and target.
+Use the inherited menu and predicate (NARC.10.1)--(NARC.10.2):
+
+$$
+\begin{aligned}
+\mathcal M_q&=\{E,P_2,\ldots,P_{3q+1}\},\\
+D_0(I)&\ \Longleftrightarrow\ \text{the target is constant on }I,\\
+D_{j+1}(I)&\ \Longleftrightarrow\
+ \text{the target is constant on }I\quad\text{or}\quad
+ \exists A\in\mathcal M_q\ \forall r\in\{\bot,\alpha,\beta,\mathsf b\},
+ \ D_j(I_{A,r}).
+\end{aligned}
+$$
+
+Empty states are vacuous. A constant-target state halts; the other
+alternative supplies an actual request with its adaptive reply
+subtrees. This is the inherited depth-at-most-$j$ target-separation
+predicate, with actual reply partitions and all indices retained.
+Put $Z=q+1$. The full reference states of (NARC.10.3) and complete
+boundary states of (NARC.10.4) are
+
+$$
+\begin{aligned}
+S_R(\gamma)&=\bigl((Z+a-b,b)\bigr)_{(a,b)\in C_\gamma},\\
+S_L(\gamma)&=\bigl((q+Z-a+b,a)\bigr)_{(a,b)\in C_\gamma},\\
+S_0(z)&=\bigl((z+a-b,b)\bigr)_
+ {\substack{(a,b)\in C_{e(0,z)}\\b\le z}},\qquad 0\le z<q.
+\end{aligned}
+$$
+
+Both reference states are whole fibers at acquired clock $Z$; their
+ages are at least two. Each $S_0(z)$ is the entire right-visible
+fiber at $(e(0,z),\mathcal R^R_z)$ for $\lambda=0$, retaining its
+positive-age alternatives as well as its age-zero origin.
+NARC Theorem 10.2 identifies both-cut service at every positive lag with
+$D_k$ on all full reference states, and both-cut service at every
+nonnegative lag with those tests plus all complete boundary tests.
+Its finite menu bounds certificate queries, not runtime addresses
+at unbounded lags. The collision obstruction in NARC Theorem 9.2
+supplies injectivity of $d$ on a readable class.
+
+For an arbitrary integer $s$, the inherited algebraic partition
+(NARC.10.5) is
+
+$$
+\widehat P_s(n)=
+\begin{cases}
+\bot,&n<s,\\
+\alpha,&n=s,\\
+\beta,&n=s+1,\\
+\mathsf b,&n\ge s+2.
+\end{cases}
+$$
+
+It is a partition to be simulated with actual native requests,
+not an additional query. All parameter substitutions below use
+these same source states, targets and histories.
+

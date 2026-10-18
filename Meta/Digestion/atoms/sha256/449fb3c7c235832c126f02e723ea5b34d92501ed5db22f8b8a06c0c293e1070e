@@ -1,0 +1,36 @@
+**Proposition 20.2 (common preparation and unchanged original past).**
+Fix once an auxiliary height $z\in(0,c)$ distinct from $a$. Starting
+from the same positive preparation at $a$, use a unit fixed-height
+phase leg of increment $2\pi m$, followed by the four-unit rectangle
+at $z$ with phase height
+
+$$
+B_{\beta,m}
+ =\frac{2c(\pi m-\beta)-2\pi ma}{z-a}.
+\tag{PR.78}
+$$
+
+Append the selected programme (PR.75), then on survival the prescribed
+one-unit horizontal leg $a\to l$. This is an actual common-source
+construction for every real $\beta$ and signed $m$.
+
+Proof. The first five units are Proposition 2.2 with $k=a$ and auxiliary
+$z$. The signed weights (PR.2) give the real residual (PR.5)
+coordinate by coordinate, so every state in (PR.61) is reached from the
+same preparation. All its phase variation
+$2\pi|m|+2|B_{\beta,m}|$ is finite, without a uniform bound over the
+family. The new legs have matching heights and zero relative phase.
+At each actual join of duration $T$, the composition supplier gives
+$\chi(T+s)=\chi(T)+\chi_{\rm tail}(s)-\chi_{\rm tail}(0)$,
+leaves the entire earlier prefix pointwise unchanged, and adds the
+weighted integrals and real winding. Thus no old lift is passed to the
+observer. Every selected control is positive and piecewise affine and
+satisfies both original regularities.
+
+If these first five units also use the canonical instrument, their actual
+live mass is
+$s_*(a,z)s_*(z,a)>0$, independent of $\beta,m$.
+All preceding failures keep their original event and absorbing $f$.
+Every yield measured from preparation is multiplied by this live mass;
+no failure is retried to manufacture the stated initial cut. $\square$
+

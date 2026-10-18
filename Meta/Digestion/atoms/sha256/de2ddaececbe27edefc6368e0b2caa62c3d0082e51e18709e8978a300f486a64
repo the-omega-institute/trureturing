@@ -1,0 +1,15 @@
+**Proposition 10.3 (private no-op omission can disclose a source bit).**
+Value-dependent omission of structural assignments cannot replace the
+fixed charging rule in Theorem 8.3 without a separate noninterference
+proof.
+
+Proof. In LJA Definition 3.2 at $H=1$, the first enumerated two-bit packet
+is $z=00$. Its first comparison has target bit $e_{z,0}=1$ and computes
+$\neg x_0$. On the installed alpha packet 01 this is 1; on beta 10 it is
+0. Its fresh destination was zero-initialized. If assignment is omitted
+exactly when unchanged, the beta case omits that private gate write and
+the alpha case does not. Their public work/charge traces then differ
+before literal reply commitment despite common public boot and request.
+The fixed assignment list avoids this disclosure. The conclusion concerns
+that proposed omission rule, not every possible optimized representation. ∎
+

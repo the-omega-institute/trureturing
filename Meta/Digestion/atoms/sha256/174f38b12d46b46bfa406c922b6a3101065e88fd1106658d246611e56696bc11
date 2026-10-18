@@ -1,0 +1,12 @@
+**Definition 7.2 (received-reference importer).** At the fixed callback,
+use the still-latest receiver placement record on 69 to obtain its actual
+base by native unary copies and Seek(73), before any word assignment.
+At its first bit, run the native binary field importer on 73 until its
+already constructed F delimiter, then Reverse. Its word assignments touch
+64–68 and preserve head 73. It is not bounded by length scratch 67 while
+those assignments are rebuilding that same scratch. Parse the received
+result tuple and require exact kind and source/version/cover binding.
+Its immutable payload and current read authority follow from the actual
+channel completion. After this importer, descriptor/staging recency is
+not assumed to remain what it was before bank work.
+

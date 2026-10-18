@@ -1,0 +1,32 @@
+**Proposition 6.1 (Recovering the original straight guards).** On the
+actual image $\mathscr S_\varepsilon$ define
+
+$$
+\kappa(z_1,z_2)=\frac H{\nu_2}\log\|z_2\|.
+$$
+
+Then $\kappa(E_\varepsilon(k,\alpha,\beta))=k$. The exact probability
+guard for command $s$ is
+
+$$
+\mathscr G_s=\{z\in\mathscr S_\varepsilon:0<\kappa(z)+s<H\},
+$$
+
+and the exact phase guard is all of $\mathscr S_\varepsilon$. The
+updates in Proposition 5.4 preserve the actual image on these guards.
+
+Proof. The second radius is $e^{\nu_2 k/H}>0$, and $\nu_2\ne0$,
+so substitution proves the height identity. The inverse image of
+$\mathscr G_s$ is precisely $\operatorname{dom}P_s$ of Proposition
+1.2, including the strict inequalities and the empty-domain cases.
+Every ray in a fiber has that same height, so every fiber agrees on
+lawfulness. Phase commands are lawful at every source point. On a lawful
+command, exact intertwining identifies the image point after the update
+with the encoding of its lawful endpoint; hence it lies in
+$\mathscr S_\varepsilon$.
+
+Height recovery is a mathematical function of an already stored radius
+on the actual image. Neither a fifth coordinate nor an external height
+selector has been added. No guard behavior is required of off-image
+vectors. $\square$
+

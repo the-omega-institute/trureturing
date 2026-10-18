@@ -1,0 +1,14 @@
+**Proposition 6.2 (An allowed repeated-root quotient).** Take $H=2$, $K=\{1,2\}$, $p_1=3/4$ and $p_2=1/4$, with arbitrary phases. The nonzero Jordan blocks of $\mathcal E_\theta$ are $J_1(1)$ and $J_2(-1/2)$; its zero blocks are two copies each of $J_1(0)$ and $J_2(0)$.
+
+Proof. The probabilities are strictly positive and sum to one. Hand multiplication gives
+
+$$
+\begin{aligned}
+(z-1)(z+\tfrac12)^2
+&=(z-1)(z^2+z+\tfrac14)\\
+&=z^3-\tfrac34 z-\tfrac14=f(z).
+\end{aligned}
+$$
+
+Thus $-1/2$ has multiplicity two and $1$ has multiplicity one. Lemma 4.4 makes the double root one chain of length two, rather than two length-one chains. Lemma 4.2 gives both zero blocks of each required size. The construction is valid for every phase; no numerical approximation or matrix enumeration enters the conclusion. $\square$
+

@@ -1,0 +1,21 @@
+**Definition 2.2 (fixed complete channel and exact binary effects).** For every complex $A\in M_5$, set $A_V=E^\dagger AE$, $g(t)=2/(1+t)^2$. The fixed channel is
+
+$$
+\begin{aligned}
+\widehat\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\widehat\Phi_{*,j}^f(A)(dt)
+ &=g(t)\left[w_j\operatorname{tr}(MA_V)
+       +\mathbf1_{j=2}\operatorname{tr}(Q_5A)\right]dt\,P_f .
+\end{aligned}
+\tag{PG.9}
+$$
+
+It kills supported/complement cross operators, has no complement live output and no extra sector. The density integrates to one and has no endpoint atom or singular part. Its ideal comparison still uses $f_y$, not $g$. The inherited complete error is $\mathcal E_*$. For public $s\in[0,1]$, require both complete five-mode binary effects
+
+$$
+F_r(s)=\frac{I_5+rs\kappa EX_{01}E^\dagger}{2},\qquad r=\pm1.
+\tag{PG.10}
+$$
+
+This is stronger than prescribing one contrast coordinate.
+

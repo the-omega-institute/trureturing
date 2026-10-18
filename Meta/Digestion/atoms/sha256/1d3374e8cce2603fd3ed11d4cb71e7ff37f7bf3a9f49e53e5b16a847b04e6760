@@ -1,0 +1,73 @@
+**Convention 2.1 (QMB results used).** The QMB results are used in the
+following forms.
+
+| Supplier | Exact use here |
+| --- | --- |
+| QMB Theorem 2.1 | $e(T)=\sup_{t\ge0}\max_{J\subseteq\mathsf S}\|Q_J(t)-\widehat T^\dagger(Q_J(t))\|_{\rm op}$. |
+| QMB Theorem 3.1 | A fixed finite-flag port has error $(5-q)/7$, including all complex inputs and histories. |
+| QMB Theorem 4.1 | Two rotation planes, the dark line, weighted lengths and the complete weighted observation spectrum. |
+| QMB Theorem 5.1 | The legal class is exactly the channels with rank-at-most-$q$ Kraus decompositions, equivalently the TP slice of the Schmidt-number-$q$ Choi body. It is compact and has a representation with at most $625$ flags. |
+| QMB Theorem 5.1 and Convention 5.2 | $b_q:=7(5-q)/68\le\varepsilon_q\le u_q:=(5-q)/7$, with an attained minimum. Exact values for $q<5$ are unresolved. |
+
+The first-read identity uses the actual instrument: after a first rank-one
+outcome $s$, the conditional quantum state is $\Pi_s$ in both comparisons.
+The common suffix is consequently a probability kernel depending on $s$ and
+the retained controls. It cannot increase TV. A single wait, a full read and
+Stop give the reverse inequality. This explains why the supplier covers every
+finite adaptive depth and source-independent randomized policy, not just
+single-read protocols.
+
+For the supplied resource correspondence, write
+$\widehat T(X)=\sum_i C_iXC_i^\dagger$. Rank at most $q$ is equivalent to
+factorization through a $q$-block with a whole-block CPTP decoder, as realized
+explicitly in Theorem 5.2 below. For the Choi convention use output first:
+
+$$
+\begin{gathered}
+\Omega=5^{-1/2}\sum_j e_j^{\rm out}\otimes e_j^{\rm in},\qquad
+w(C)=\sum_{i,j}C_{ij}e_i^{\rm out}\otimes e_j^{\rm in},\\
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger)
+=\frac15\sum_i w(C_i)w(C_i)^\dagger,\qquad
+\operatorname{Tr}_{\rm out}\chi_T=I_5/5.
+\end{gathered}
+\tag{2.1}
+$$
+
+The Schmidt rank of $w(C)$ is the complex matrix rank of $C$. Moreover,
+
+$$
+\operatorname{tr}(Q\widehat T(\rho))
+=5\operatorname{tr}(\chi_T(Q\otimes\rho^T)),\qquad
+\widehat T^\dagger(Q)
+=5\bigl[\operatorname{Tr}_{\rm out}((Q\otimes I)\chi_T)\bigr]^T.
+\tag{2.2}
+$$
+
+These identities are a representation of the system objective, not an added
+entangled-input performance test. The marginal condition is essential; an
+arbitrary low-Schmidt-number density matrix is not necessarily a channel.
+
+The preparation and operation conventions are those of
+[AURIC §§61, 63, 65, 73, 79](https://github.com/the-omega-institute/trureturing/blob/bcf8bc4317eb78b19f2d0f5076318bf3dc5a3324/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md):
+independent complex preparation, this $K$, actual instruments, the passive
+frame, histories, and whole-block flag decoding. The exact fifteen-dimensional
+effect span in AURIC §65 is not an equality of approximate measurement norms.
+The native
+[GraftAffineClosure.step, quantity and run](https://github.com/the-omega-institute/trureturing/blob/9e834a13e0760767641dd65bbdcc92521589baf3/D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean)
+describe composition pairs and chronological graft/step words. They do not
+derive Assumption 1.1.
+
+The channel convention in
+[QuantumChannel](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
+is a completely positive matrix map with trace preservation;
+[finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
+gives the channel associated to a finite family with
+$\sum_iC_i^\dagger C_i=I$.
+[finite_kraus_instrument_born_marginal](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean)
+identifies branch trace and Born weight.
+[unitary_kraus_mixing_invariance](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/QuantumChannels/UnitaryKrausMixingInvariance.lean)
+preserves a sandwich sum under column-orthogonal mixing. These citations
+concern complete positivity, trace preservation, branch probabilities and
+Kraus-sum invariance. In particular, arbitrary Kraus mixing need not preserve
+individual Kraus ranks.
+

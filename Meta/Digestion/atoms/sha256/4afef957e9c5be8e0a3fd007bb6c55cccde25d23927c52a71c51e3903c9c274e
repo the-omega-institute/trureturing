@@ -1,0 +1,38 @@
+## 384. Every genuine owner then spends more than pi on H
+
+Put P={M,Z,U} and H={M,Z,U,V}. An expense is the sum of the owner's
+original slots with labels in the specified set; two transverse
+occurrences are always counted separately.
+
+We use Theorems 341.2 and 348.2 from the preceding continuation
+and the implications of Sections 356–380 above, with exactly
+the hypotheses retained here. The role classification is exhaustive:
+
+1. Every genuine owner containing at least two P labels has P expense
+   greater than pi (Section 376). This covers all placements of those
+   labels, including three-H/one-low placements. Its H expense is at
+   least its P expense and is therefore greater than pi.
+
+2. A genuine owner with exactly one P label uses that label and all
+   three labels V,C,D, because its frame has four distinct labels.
+   If its fixed pair is PC or PD, its two P slots cost more than pi
+   (Section 377), so its H expense again exceeds pi.
+
+3. Its fixed pair cannot be CD: the two distinct axes would belong
+   to {M,V,Z,U}, with shifted product at least
+   (m-1)*(v-1)>=(c+d)^2. Its strict genuine L test would fail.
+   The unique owner of that pair is the flat sigma.
+
+4. If its pair is VC or VD, its axes are P and the other low label.
+   Section 383 excludes both possibilities under (382.2).
+
+5. The only remaining pair is PV, with axes C,D. Section 380 gives
+
+       H expense = 2*beta_P+2*beta_V
+                 > 4*arctan(2) > 4*pi/3 > pi.
+
+There is no zero-P owner, since only three labels lie outside P.
+The cases cover actual labels, not numerical cosh values, so equal
+lengths at distinct labels do not merge classes or lose an owner.
+They do not infer that any particular receiving owner exists.
+

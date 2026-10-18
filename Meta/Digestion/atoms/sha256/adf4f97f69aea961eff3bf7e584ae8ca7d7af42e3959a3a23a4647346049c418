@@ -1,0 +1,6 @@
+### 68.4 Attribution and boundaries
+
+The cap w_t≤3/k and physical weighted-basis characterization are the channel results of §66. The entropy minimization under a probability cap is the standard concavity/majorization principle, proved directly here. The real-frame equality analysis extends §67 from equal three-row blocks to a possible final lower-dimensional block. Hadamard matrices and the Sylvester recursion are classical; the MUB and orthogonal-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . No novelty claim is made for these established ingredients.
+
+The entropy is that of the shared classical variable in an exact finite LOSR decomposition. Local private randomness is absorbed into the arbitrary local channels. The theorem supplies an exact physical resource optimum for the stated families and a general equality criterion, with all coherent inputs and passive references retained. It is not a classification of arbitrary channels or an unrestricted positive-error diamond formula.
+

@@ -1,0 +1,24 @@
+**Convention 4.3 (separate resources).** The following coordinates remain
+separate from (ER.11) and (ER.13): complete work-tree storage; construction
+from the acquired table; reference storage; actual update execution;
+literal and reply buffers; submitted-address construction; installed common
+code and arithmetic; decoding workspace and output; and the services of
+Assumptions 1.3 and 2.1. Source-specific initial code and an optimal-strategy
+oracle are not supplied.
+
+For an eager literal representation with $A$ alpha and $B$ beta leaves,
+the tree has $2(A+B)-1$ nodes. A $G$ commit adds an alpha leaf and a pair
+node. A substitution processes the old syntax, changes each old alpha to
+beta, and replaces every old beta by a pair of leaves, increasing node
+count by $2B$. Retaining old and new copies during a transaction requires
+its actual additional space. These are representation costs, not optimal
+time or workspace bounds.
+
+If the current work tree is instead hidden behind a literal port,
+Theorem 3.1 needs an additional current-version acquisition. For example,
+the existing reached-node traversal queries each of its $2\ell-1$ nodes
+for $\ell$ leaves and reconstructs the syntax, charging the sum of the
+actual submitted address lengths. Replies from an older version do not
+answer current-version queries. No numerical tariff for authentication,
+isolation or access follows from these syntax counts.
+

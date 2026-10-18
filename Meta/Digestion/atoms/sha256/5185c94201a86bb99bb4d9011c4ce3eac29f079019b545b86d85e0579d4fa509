@@ -1,0 +1,20 @@
+**Convention 6.3 (the overlap retained by the language).** Independent
+arrow components in §3 need not occupy disjoint blocks. One original
+block can contain ports assigned to several different seeds, and one
+seed can occur in several different original blocks. The full
+$\Phi_i$ is a joint function of all those seeds. Its value can be
+zero because their proposed factors do not fit one actual canonical
+tree. Seed combinations in different blocks must agree on every
+shared seed.
+
+Thus the identity in (RRN.18) is a sum of products with shared
+arguments; it is not a product of sums over stars. The arbitrary
+correlated weight in (RRN.20) requires its full joint scope as well.
+No seed is copied into an independent variable, and no potential is
+counted at every incidence. CBN's constructor representation and its
+owned potentials remain available, but their finite-domain or binary
+constraint properties give no all-size pressure bound by themselves.
+The fixed native incidence families of [GCB, Theorem 1.2][GCB]
+already demonstrate why full block potentials remain relevant after
+reply identifications.
+

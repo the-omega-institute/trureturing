@@ -1,0 +1,48 @@
+### 81.2. A pointwise centroid-support inequality for contractions
+
+Let A_0:C^2->E be a contraction, let H:C^2->C^d be a contraction, and let Z=diag(1,-1). Identify E tensor C^d with coefficient matrices E-by-d, preserving the Hilbert--Schmidt inner product. Set
+
+    C=A_0 H^T/sqrt(2),
+    D=A_0 Z H^T/sqrt(2).
+
+For any fixed matrix S of the same size, define the complex linear subspace
+
+    L_S={S X : X is d-by-d and Tr X=0},
+
+and let Q_S be its Hilbert--Schmidt orthogonal projection. Its dimension is at most d^2-1. Then
+
+    ||(I-Q_S)D||_F^2
+       <= 1+||S||_F^2-2 Re Tr(S^* C).                  (3)
+
+The assertion is universal in S. S is not assumed normalized, maximally entangled, or of a prescribed rank.
+
+First suppose H=U is an isometry, U^*U=I_2. Define
+
+    N=conjugate(U) Z U^T.
+
+Since U^T conjugate(U)=I_2, one has D=C N. The matrix N is Hermitian and traceless, and ||N||op=1; its nonzero eigenvalues are 1 and -1. Thus S N belongs to L_S. Orthogonal projection and multiplication by a contraction give
+
+    ||(I-Q_S)D||_F^2
+       <= ||D-S N||_F^2
+        = ||(C-S)N||_F^2
+       <= ||C-S||_F^2
+       <= 1+||S||_F^2-2 Re Tr(S^* C).                  (4)
+
+The last inequality uses ||C||_F^2=Tr(A_0^*A_0)/2<=1.
+
+For a general contraction H, take a thin singular value decomposition
+
+    H=L diag(s_1,s_2)V^*,  0<=s_1,s_2<=1,
+    L^*L=I_2,  V^*V=I_2.
+
+Zero singular vectors can be completed to an orthonormal pair because d>=2. For epsilon=(epsilon_1,epsilon_2) in {+1,-1}^2 set
+
+    U_epsilon=L diag(epsilon_1,epsilon_2)V^*,
+    p_epsilon=((1+epsilon_1 s_1)(1+epsilon_2 s_2))/4.
+
+Every U_epsilon is an isometry, the p_epsilon are nonnegative and sum to one, and H=sum_epsilon p_epsilon U_epsilon. Both C and D depend linearly on H. For fixed A_0 and S, the function
+
+    H -> ||(I-Q_S)D||_F^2+2 Re Tr(S^* C)
+
+is convex: its first term is a squared norm of a linear map and its second term is real-linear. Averaging (4) over this explicit isometric decomposition proves (3). This convexity step is applied to the support-loss expression, not to a claim that polar normalization decreases channel error.
+

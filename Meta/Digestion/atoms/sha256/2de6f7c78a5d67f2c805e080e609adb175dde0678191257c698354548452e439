@@ -1,0 +1,37 @@
+**Lemma 3.2 (rectangles of actual preparation transcripts).** Restrict
+any preparer satisfying Assumption 1.3 to the sources of Definition
+3.1. At every attained transcript prefix its remaining tuples form a
+nonempty product $\prod_a B_a$, with $B_a\subseteq U$. At a
+terminal prefix, every $B_a$ is locally admissible.
+
+Proof. Initially every $B_a=U$. A literal outside the coordinate
+cones has a fixed reply on the family. A literal $Raw$ tests only
+$r_{u_a}(w)$, so conditioning on its reply replaces only $B_a$ by
+one nonempty reply cell. The next query is fixed by the shared
+transcript and common program. Induction proves the product assertion
+under arbitrary interleaving, off-target queries, repeats, internal
+work and source-dependent stopping.
+
+At a terminal transcript, the export is identical on this whole
+product: the program has common initial inputs and has received
+identical replies. Fix $a$ and $q\in\{\varepsilon,L,R\}$.
+The global target $Raq$ has length at most $D$ and is permitted.
+Homomorphic substitution on the scaffold gives
+
+$$
+r_{\rho^kt(\mathbf u)}(Raq)=r_{\rho^ku_a}(q)
+\quad(k\ge0).
+\tag{NPH.9}
+$$
+
+The late reader therefore must determine $\Gamma_q(u_a)$ on the
+whole terminal product, by Convention 2.1. Its chosen late word is
+fixed by the shared export and this target. If it enters cone $a$,
+its single reply is one local literal on $B_a$. If it enters another
+cone or is constant on the scaffold family, fix all other
+coordinates: the reply is then independent of $u_a$, forcing
+$\Gamma_q$ to be constant on $B_a$. Choosing zero Reads also
+forces constancy. This proves admissibility for every local target.
+No rectangularity is asserted for an export fiber, which can be an
+arbitrary union of terminal transcript cells. $\square$
+

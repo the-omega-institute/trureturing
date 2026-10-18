@@ -1,0 +1,6 @@
+#### 定理 A：Fibonacci 状态计数
+
+```math
+|\Sigma_n|=\operatorname{Fib}_{n+2}.
+```
+

@@ -1,0 +1,21 @@
+**Theorem 15.2 (source/generic threshold relation and necessary growth).** Let $b(n)$ be the least integer cutoff at least 1 separating all binary words of length at most $n$ under (SC.24). Let $r_\mu(L)$ be the least cutoff at least 1 separating the actual histories of length at most $L$ when the already acquired tuple $(R,w,Q^+,Z,A,B)$ is also supplied. For every $L\ge8$,
+
+$$
+b\!\left(\left\lfloor\frac{L-6}{2}\right\rfloor\right)
+\le r_\mu(L)\le b(L)\le q(L).
+\tag{SC.36}
+$$
+
+Neither the full legal future nor its semantic law lowers $r_\mu(L)$ for zero error on all positive compatible histories. In particular, for $L\ge10$,
+
+$$
+\lfloor\log_2(L-6)\rfloor\le r_\mu(L),
+\tag{SC.37}
+$$
+
+and every integer schedule sufficient on every bounded actual domain must tend to infinity with $L$. The least-order growth and sharp source threshold remain open here; (SC.37) is an explicit obstruction, not an optimal generic lower bound.
+
+Proof. The complete cutoff suffices, so both minima exist; Theorem 15.1 gives $b(L)\le q(L)$. Restricting the generic inverse to actual words gives $r_\mu(L)\le b(L)$. For $n=\lfloor(L-6)/2\rfloor$, all $\iota(u)$ with $|u|\le n$ lie in the actual length-$L$ domain. If two such input words have equal $G_k$, they have equal counts because $k\ge1$; their images therefore have equal supplied tuples and, by Theorem 13.1, equal $G_k$. Any cutoff sufficient on the source separates them and hence separates the entire generic length-$n$ domain. This proves the lower transfer in (SC.36).
+
+For any collision of the supplied tuple and $G_k$ on the larger actual domain, the same raw-count likelihood calculation as Theorem 9.2 gives the same actual posterior and future row at the common $p_4$ phase, irrespective of which common seed/marker tuple it has. Every complete future is positive for both; a realized future or its common law cannot repair their collision. Conversely an injective past tuple needs no future. This proves the threshold statement with future supplied. For (SC.37), put $s=\lfloor\log_2(L-6)\rfloor\ge2$ and $k=s-1$ in Theorem 14.1: its length $2^s+6$ is at most $L$, so an order-$k$ decoder fails and the minimum is at least $s$. This also proves divergence, while (SC.33) identifies a regime in which growing order still leaves linear residual. No claim of cutoff independence from the prior is needed for these inequalities. $\square$
+

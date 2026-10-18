@@ -1,0 +1,52 @@
+### 462.1 原对象与完整积分供应
+
+复用 §450 的完整端点、质量、矩和对数积分供应：
+
+$$
+B(0)=\tfrac12,\quad B(v)>0\ (v>0),\quad
+\int_0^\infty B(v)\,dv=k,\quad
+\int_0^\infty vB(v)\,dv=1,
+$$
+
+$$
+\int_0^\infty |\log v|B(v)\,dv<\infty,\qquad
+A=-\int_0^\infty\log v\,B(v)\,dv.
+\tag{EFA.2}
+$$
+
+其零点连续性和导数绑定保持 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 保持 PrimePrefixOriginalA；
+上述全部矩保持 PrimePrefixCurvatureMoments。
+也复用 §450 的同一正轴 Euler 表示
+
+$$
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,\quad
+0<E_1(v)\le e^{-v}/v,\quad
+\Phi(v)=Cv e^{E_1(v)},\quad
+\Phi'(v)=\Phi(v)\frac{1-e^{-v}}v,
+$$
+
+$$
+B(v)=\Phi(v)e^{-v}\frac{v-1+e^{-v}}{v^2}
+=C e^{E_1(v)}e^{-v}
+ \left(1-\frac{1-e^{-v}}v\right)\qquad(v>0).
+\tag{EFA.3}
+$$
+
+这些是原函数已经证明的性质，不是对未知 B 的替代假设。
+
+经典完整积分
+
+$$
+\int_0^\infty e^{-v}\,dv=1,\quad
+\int_0^\infty ve^{-v}\,dv=1,\quad
+\int_0^\infty \log v\,e^{-v}\,dv=-\gamma
+\tag{EFA.4}
+$$
+
+沿用 Gamma 的已有供应。末项绝对收敛：近端由 $\int_0^1|\log v|dv=1$ 支付，远端由 $\log v\le v$ 和指数衰减支付。
+原 OriginalA 的归一化复用 Mertens.Gamma 中的完整积分恒等式
+$\int\log v\,e^{-v}=\Gamma'(1)$，该供应保持 PrimeNumberTheoremAnd 端口来源。
+Gamma 积分的导数定理及 $\gamma=-\Gamma'(1)$ 复用 Mathlib 的
+Complex.hasDerivAt_GammaIntegral 和 Real.eulerMascheroniConstant_eq_neg_deriv。
+

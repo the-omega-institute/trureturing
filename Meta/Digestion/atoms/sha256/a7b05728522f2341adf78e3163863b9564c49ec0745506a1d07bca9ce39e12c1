@@ -1,0 +1,92 @@
+**Theorem 318.2 (Complete 128-charge lower bound).**
+Its invariants are
+
+$$
+\begin{gathered}
+\beta=(0,16,88,104,104,96,88,88,88),\quad K=1024,\\
+\sum P=264,\quad T=88,\quad
+W=B_N=B_O=368,\quad\Delta_N=\Delta_O=0.
+\end{gathered}
+\tag{318.1}
+$$
+
+For every $L\ge9$, every ordered $3\le j_1<\cdots<j_7\le L$,
+every real finite profile and the same complete feasible allocation
+in either class of any finite mass,
+
+$$
+2b_2+11b_{j_1}+13b_{j_2}+13b_{j_3}+12b_{j_4}
+ +11b_{j_5}+11b_{j_6}+11b_{j_7}\le2+128e.
+\tag{318.2}
+$$
+
+For every entire original sequence and every original competitor
+in either class,
+
+$$
+128e_a(A)\ge2a_2+11a_{j_1}+13a_{j_2}+13a_{j_3}+12a_{j_4}
+ +11a_{j_5}+11a_{j_6}+11a_{j_7}-2.
+\tag{318.3}
+$$
+
+**Proof.** Class summation gives $\beta$ and the total 1024.
+The anchor earns $264+88+16=368$. All 36 complete cell maxima
+(315.8), maximizing over every label $0,\ldots,9$, are:
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(16,112,136,104)$ |
+| 13 | $(72,56,104,136)$ |
+| 14 | $(72,56,104,136)$ |
+| 15 | $(88,40,104,136)$ |
+| 16 | $(112,16,96,144)$ |
+| 17 | $(104,24,88,136)$ |
+| 18 | $(64,64,128,96)$ |
+| 19 | $(124,4,136,88)$ |
+| 23 | $(72,64,104,128)$ |
+| 24 | $(72,64,104,128)$ |
+| 25 | $(88,48,104,128)$ |
+| 26 | $(96,40,96,120)$ |
+| 27 | $(88,56,112,104)$ |
+| 28 | $(120,16,88,144)$ |
+| 29 | $(136,4,124,92)$ |
+| 34 | $(72,88,104,104)$ |
+| 35 | $(88,72,104,104)$ |
+| 36 | $(112,48,96,112)$ |
+| 37 | $(120,40,88,120)$ |
+| 38 | $(120,40,88,120)$ |
+| 39 | $(156,4,104,88)$ |
+| 45 | $(88,72,104,104)$ |
+| 46 | $(112,48,96,112)$ |
+| 47 | $(120,40,88,120)$ |
+| 48 | $(120,40,88,120)$ |
+| 49 | $(160,6,100,92)$ |
+| 56 | $(112,64,96,96)$ |
+| 57 | $(120,56,88,104)$ |
+| 58 | $(120,56,88,104)$ |
+| 59 | $(176,4,96,92)$ |
+| 67 | $(120,72,88,88)$ |
+| 68 | $(120,72,88,88)$ |
+| 69 | $(188,4,88,88)$ |
+| 78 | $(120,72,88,88)$ |
+| 79 | $(188,4,88,88)$ |
+| 89 | $(188,4,88,88)$ |
+
+Each quadruple sums to at most 368. These finite additions and
+maxima, together with the anchor, prove complete support and both
+zero excesses by 315.3. That argument covers every horizon, ordered
+gap embedding, shorter or repeated schedule, reversal, outside query
+and outside label. The same allocation pairing gives
+
+$$
+Y_{128}h=8\bigl[2b_2-2+11b_{j_1}+13b_{j_2}+13b_{j_3}
+ +12b_{j_4}+11b_{j_5}+11b_{j_6}+11b_{j_7}-128e\bigr]\le0,
+$$
+
+proving (318.2) with no normalization, order or hull hypothesis.
+The exact closed-cap and prefix transport in 315.3 proves (318.3)
+against every original arbitrary-address, full-carrier competitor.
+In particular a smaller cap activating more tail coordinates is
+still covered. At error one the weighted amplitude sum is at most
+$84<130$, so that endpoint is immediate. $\square$
+

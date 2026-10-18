@@ -1,0 +1,72 @@
+**Proposition 6.1 (analytic averaging with the correct cost direction).**
+From every original competitor one obtains necessary arrays of the form
+
+$$
+\begin{aligned}
+H_r&=\frac12\begin{pmatrix}
+P&r t-iR&0\\r t+iR&Q&0\\0&0&0
+\end{pmatrix},\\
+L_r&=\frac12\begin{pmatrix}
+1-P&r(s-t)+iR&0\\r(s-t)-iR&1-Q&0\\0&0&1
+\end{pmatrix},\\
+W&=AP+BQ-2\gamma R\leq
+        \operatorname{tr}(G_{\rm acq}E\rho E^\dagger).
+\end{aligned}
+\tag{QO.31}
+$$
+
+Here $H_r\succeq0$, $L_r\in\mathcal C_2$ and $N_r=M/2$.
+With
+
+$$
+x=\sqrt{PQ-R^2}\geq0,\qquad
+g=(1-P)(1-Q)-R^2=1-P-Q+x^2\geq0,
+\tag{QO.32}
+$$
+
+the universal record necessity is $s\leq x+\sqrt g$.
+These are operations on necessary arrays, not a physical normal form.
+
+Proof. First average under $J_S=\operatorname{diag}(1,1,-1)$ in
+coefficient coordinates, induced on specimen coordinates by
+$\operatorname{diag}(-1,-1,1)$. It fixes $D,T$, changes the sign of
+$S$, and kills DS and TS entries. It preserves $C$, binary effects,
+the full singular locus, positivity and failure inequalities.
+
+Then average the arrays with
+
+$$
+(H_r,L_r)\longmapsto
+(J_T\overline{H_{-r}}J_T,J_T\overline{L_{-r}}J_T),
+\qquad J_T=\operatorname{diag}(1,-1,1).
+\tag{QO.33}
+$$
+
+On specimen coordinates $U_T=\operatorname{diag}(1,-1,1)$ gives
+$\Theta(J_T\bar ZJ_T)=U_T\overline{\Theta(Z)}U_T$.
+Record reversal compensates $U_TX_{01}U_T=-X_{01}$, and the new
+plus failure effect is $U_T\overline{(M-N)}U_T$, still between zero
+and $M$. The real polynomial defining $\mathcal Z$ is preserved, as
+is the selected objective because $C=J_T\bar C J_T$. The two
+involutions commute. Conjugating an array here is an algebraic device;
+no conjugation channel on an unknown specimen is invoked.
+
+The total record diagonals now agree between reports, hence are $1/2$
+by their sum $I$. For each total record $Z_r$, the vanishing first
+failure row and (QO.19) give
+$\operatorname{Re}(Z_r)_{DT}=r s/2$ and
+$\chi\operatorname{Im}(Z_r)_{DT}=0$. Lemma 4.1 makes the imaginary
+entry zero. Thus $Z_r=(I+r sX_c)/2$ and $N_r=M/2$ after averaging.
+The high SS diagonal is separated and nonnegative. Move it to
+the low S-axis plane atom in each report. This preserves $Z_r$ and
+all constraints and decreases the objective by $C_S$ times its
+total mass. Together with Proposition 3.3 this proves the cost
+inequality in (QO.31). It does not remove acquired-to-failure loss
+from the original accounting.
+
+The two averages give precisely the DT entries in (QO.31).
+Positive two-by-two determinants imply $|t|\leq x$ and
+$|s-t|\leq\sqrt g$. Since $s\geq0$, their triangle inequality yields
+$s\leq x+\sqrt g$. This uses only necessary conditions and holds
+for every original competitor. $\square$
+

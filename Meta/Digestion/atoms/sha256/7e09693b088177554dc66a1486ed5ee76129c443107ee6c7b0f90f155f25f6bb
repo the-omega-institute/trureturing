@@ -1,0 +1,57 @@
+**Theorem 25.3 (the rank-five detector reads exactly five leaves).**
+For $m=4$, Assumption 25.1's reusable first-position Lüders detector
+on $\mathcal K_5$ suffices for the entire sector read, using the
+conditional splits
+
+$$
+13\longrightarrow5\mid8,\qquad
+8\longrightarrow4\mid4,\qquad
+4\longrightarrow2\mid2.
+\tag{GC.101}
+$$
+
+The complete path record has exactly five possible leaves: the single
+high prefix and the four low three-bit prefixes. No random seed or
+readable hidden Kraus label is added.
+
+Proof. On $\mathcal K_5$, $n_1$ has rank $F_5=5$ and complement
+rank eight. On a known $r$-dimensional sector $S$, suppose a prescribed
+split has dimensions $a,r-a$. A rank-five projector whose restriction
+to $S$ is the first split projector and which commutes with $P_S$
+exists exactly when
+
+$$
+a\le5,\qquad r-a\le8.
+\tag{GC.102}
+$$
+
+Necessity is the rank bound for the projector and its complement.
+For sufficiency, add $5-a$ orthogonal padding directions in $S^\perp$;
+this is possible iff $5-a\le13-r$, the second inequality. Any two
+rank-five projectors on $\mathcal K_5$ are unitarily conjugate.
+Multiply a conjugating unitary by a scalar to make its determinant one,
+without changing its projector conjugation. Native Theorem 64.1 gives
+it and its inverse exactly. Conjugating the detector before the read
+and undoing that conjugation afterward therefore realizes the padded
+Lüders projector. The post-state assertion uses the stipulated Lüders
+instrument; equality of effects alone would not suffice.
+
+Apply this with $(r,a)=(13,5),(8,4),(4,2)$, using the last split
+in each four-sector. All inequalities hold. The initial read isolates
+$H$ from the sum of the four low sectors. Its low result splits that
+sum into two pairs, and the final conditional read separates each pair.
+At a child node the padded projection commutes with its known parent
+sector and restricts to the prescribed child. Thus the product of path
+Kraus projectors is exactly the final sector projector, not a finer
+measurement within it. The two outcomes at every node sum to identity
+on its parent; all trajectories are retained and no acceptance division
+occurs. With outcome one selecting the root high sector, the complete
+codes can be chosen as $1,000,001,010,011$. They are in bijection
+with $H,L_1,L_2,L_3,L_4$. The high path has one read and a low path
+three; no reset is used, and each is a complete branch.
+
+Every conjugating word and detector projection remains within the legal
+chain. For Theorem 22.1 each leaf has strictly positive probability on
+each original history, so these are five actual outputs, not five
+formal possible labels padded by zeros. $\square$
+

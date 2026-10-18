@@ -1,0 +1,10 @@
+**Definition 32.2 (two different installed-state minima).** For
+$2\le k\le n-1$, retain $H_{\min}(A,k;r)$ of Corollary 27.3,
+with no restriction on the finite uniform execution budgets. Let
+$H_{\mathrm{exec}}(A,k;r)$ be the least installed cardinality
+among preparers that simultaneously satisfy
+$p\le n+1$ and $\ell\le3+W_A$. Both minima exist as integers
+because Theorem 26.1 supplies such a finite table. They concern
+all of Convention 23.2's competitors, including repeated queries,
+shared states and cyclic union graphs with sourcewise termination.
+

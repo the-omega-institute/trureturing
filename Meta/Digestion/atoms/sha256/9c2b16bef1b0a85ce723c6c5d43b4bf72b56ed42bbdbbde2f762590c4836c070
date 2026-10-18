@@ -1,0 +1,189 @@
+**Corollary 11.6 (conditional exact native installed-control consumer).**
+Under precisely (2), equivalently (SI.5), and its original source and
+service assumptions, at the fixed native caps nine queries and
+$W+3$ letters the critical preparation minimum is
+
+$$
+H_{\min}^{\,9,W+3}=24+r.
+\tag{71}
+$$
+
+The original eight-state whole-row reader remains separately priced.
+This statement is a consumer of the supplied correspondence, not an
+independently authenticated original-source or service bridge.
+
+**Proof, lower bound.**
+The supplied projection of any complete original native preparer is
+a complete correct Boolean graph at both caps $8,W$, with at most
+$H_P-4-r$ running states. Corollary 11.5 gives
+$H_P-4-r\ge20$, so $H_P\ge24+r$.
+This is the only Boolean-to-native lower transfer used.
+
+**Proof, credited full-fiber attaining lift.**
+Apply the supplied constructive direction of (SI.5) to exactly
+(70). Each coordinate-$i$ row queries the fixed original literal
+$a_i=LLL L^{s_i}R$, costing $c_i=s_i+4$ letters. Its four
+separately installed successors in the order alpha, beta, branch,
+absent are
+
+$$
+(\delta_0,\delta_0,\delta_1,\delta_0),
+\tag{72}
+$$
+
+with the two Boolean terminals replaced by the two original-entry
+latches $\widehat e_0,\widehat e_1$. Add the unchanged original
+profile front:
+
+| Profile state | Fixed literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_0$ | $RLR$ | $\widehat e_1$ | $q_{0,0}$ | $T_0$ | $\widehat e_0$ |
+| $T_0$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Start at $D_0$ and install all $r$ further mandated distinct
+latches, including unused ones. There are twenty selected running
+states, two profile states and $2+r$ latches, hence $24+r$
+preparation states. Boolean terminals are replaced, not charged a
+second time.
+
+The full-fiber meaning is that of the supplied lift. The domain
+remains every finite nonempty ordered alpha/beta tree in
+
+$$
+\mathcal U_*=\{u:R_{\{L,R\}^3}(\rho u)=R_*\},
+$$
+
+of unbounded size, depth and interior shape. The original
+homomorphism satisfies $\rho(\alpha)=\beta$,
+$\rho(\beta)=\langle\beta,\alpha\rangle$ and acts homomorphically
+on pairs. The current row retains exactly the equality classes
+$\{LLL,LRL\}=a$, $\{LLR\}=b_1$, $\{LRR\}=b_2$,
+$\{RLL,RRL\}=c$, $\{RLR\}=b_3$, $\{RRR\}=b_4$,
+with different classes disequal.
+
+All eleven original profiles and the literal pointwise code (SI.2)
+remain fixed: zero on $\Pi_1\cup\Pi_2$, one on
+$\Pi_3\cup\Pi_4$, selected threshold four on $Z_{b_3}$,
+and zero on the other zero profiles. Preparation produces the
+original $\widehat e_\sigma$, and code-only handoff enters
+literally the original complete $e_\sigma$ on that same source.
+All original finite addresses and all four replies keep their
+meaning and permission.
+
+For every $Z_{b_3}$ source, its allowed arbitrary branch image
+determines one fixed Boolean indicator vector. By the supplied
+all-address occurrence identity, the entire selected run is (70)
+on that vector, including alpha, beta and absent using their
+separate zero edges. It is correct and costs at most eight queries
+and $W$ letters. The profile front adds one paid call and three
+letters on this route. The other ten profiles terminate through
+the two displayed profile rows within two calls and six letters,
+also within the fixed native caps. This reuses the supplier on
+every allowed noncomb image and absent selected node; it is not a
+cube-only upper. The supplied cube realizes $11100000$ by an
+actual original source, so the two native maxima are attained
+together on one source.
+
+The independent original reader retains three running states and
+five whole-row halts, hence eight separately priced states, with
+at most two fresh calls and six fresh letters. It returns the
+entire predecessor row: ordered exterior, every reached occurrence,
+canonical equality partition, repetitions, disequalities and
+strict-prefix guards. It is not included in the preparation count.
+
+Source binding, the fixed register, acquired same-version row,
+authentication, permission, same-source export, access isolation,
+code-only handoff, lawful complete entry and stationary continuity
+remain the separate supplied and priced services. All installed
+running, output, latch and unused states, and every actual constant,
+repeated and post-certificate invocation, retain their original
+charges. The lift adds no free source copy, record, selector,
+history, counter, clock, phase, computed address or work register.
+These are conditional installed-control statements; no acquisition,
+physical time, memory, permission or realization theorem is inferred.
+$\square$
+
+**Attribution and current boundary 11.7.**
+The new numerical conclusion (69) explicitly replaces the unresolved
+critical interval (54) and the twelve-state residual question in
+Section 10.7. Those preceding necessary statements and lower bounds
+remain valid, but the critical minimum at the two fixed original
+caps is now exactly twenty, and its supplied conditional native
+consumer is exactly $24+r$. The former native interval
+$23+r\le H_{\min}^{\,9,W+3}\le24+r$ is correspondingly resolved
+only through (SI.5) and its original assumptions.
+
+The actual-history obstructions L1 and L2 and the symbolic equality
+partition used in Theorem 11.4 are the additional deductions supplied
+by the critical-twenty mathematics projection. R1–R4 are the earlier
+Section 10 results, retained with their complete proofs and credits.
+Theorems 4.1 and 9.1 own the earlier eighteen and nineteen lower
+bounds; Lemmas 7.2–7.3 and Section 8 own the sharing classification,
+axis fork and endpoint estimates; Corollary 9.2 owns the two equality
+cut lists. Proposition 5.1 and the credited full-domain grid own
+the unchanged attaining upper.
+
+The support-incidence source [SI][SI19] owns the original graph model,
+the actual-history and support interfaces, local singleton diagonal
+argument, same-graph incidence and pool identities, localization,
+short-gap compensation and right-cut separation. Its exact count
+relaxation, classical all-history both-conflict capacity, star and
+cyclic sufficient classes and complete above-grid inclusion families
+remain credited at their separate scopes. None is imposed as a
+necessary subclass or rebranded as this critical equality exclusion.
+The nested PCA, PE and WTF results retain their stated conditional
+interfaces. In particular (SI.5) owns the native correspondence;
+this section supplies no independent authentication of its complete
+original-source or operational service bridge.
+
+The proof partitions the simultaneous integer constraints of one
+alleged installed graph. Endpoint saturation consumes actual hosts
+only once; the two-cell limit separates axis and non-axis uses.
+Every successor implication is an actual live extension at its fixed
+installed successor. The singleton arguments use full support
+families, and do not replace multiple histories by representatives.
+A certified visit to a state live elsewhere does not make that state
+new or free. No normalization to an ordered, read-once, acyclic,
+both-conflict, star or cyclic graph has been used.
+
+For the original all-size range $\min(k,n-k+1)\ge4$, the unrestricted
+alternatives remain unresolved: prove $m\ge G=k(n-k+1)$ for every
+complete correct original graph at both same-run caps $n,W$, or
+construct one complete correct strict-subgrid graph satisfying both
+caps on every input. Equivalently, the general collective obligation
+remains
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B),
+\tag{73}
+$$
+
+where $\mathcal L_*$ consists of consecutive common-support gaps
+of span at least five whose endpoint is greater than
+$\max(k,n-k+1)$, and $\mathcal A_*$ is its complement among
+consecutive gaps. Separate compensation in every long pool is stronger
+than this collective target. The critical case has been settled;
+no all-size collective theorem, general strict-subgrid construction,
+unrestricted representative injection or normalization follows.
+The unrestricted-budget minimum and fixed-specification attainment
+questions remain separate.
+
+No external unrestricted lower-bound theorem or new literature
+authentication is used. The source comparisons keep their hypotheses:
+Bryant's ordered graphs require increasing variable indices;
+Wegener's BP1 normalization uses realizability of every graph path;
+acyclic semantic read-once suppliers have their own repetition
+conditions; weak one-way conflicts differ from every ordered
+off-diagonal intersection in the classical Bollobás supplier.
+None provides a normalization of this arbitrary paid graph.
+These are ordinary symbolic conditional proofs, with no Lean or
+kernel verification, executed mathematics or exhaustive search,
+empirical learning, general neural-network, physical-resource,
+worldwide-priority or programme-completion claim. Installed control,
+table and address representation, retained export alphabet,
+workspace, acquisition, elapsed time and physical memory remain
+distinct quantities. No quantum, calibration, stochastic timing,
+analytic, conditional joint-interior/saturation or expanded-storage
+contract supplies an additional numerical or operational transfer.
+

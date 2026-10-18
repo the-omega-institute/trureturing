@@ -1,0 +1,42 @@
+## 398. An exact comparison-angle sum
+
+Define alpha0,beta0 in (0,pi) by
+
+    cot(alpha0)=Nh/(h*X), cot(beta0)=Np/(p*X).
+
+Equations (397.3) identify alpha as the angle-distortion of alpha0 with
+u=h, and beta_p as that of beta0 with u=p. More explicitly, their
+positively oriented vectors are respectively proportional to
+
+    (cos(alpha0),sqrt(1-h^(-2))*sin(alpha0)),
+    (cos(beta0),sqrt(1-p^(-2))*sin(beta0)).
+
+Thus, by (396.1) and h,p>=m,
+
+    E/2=alpha+beta_p>alpha0+beta0-2/m^2.                     (398.1)
+
+Put T0=alpha0+beta0. Its range is (0,pi): initially it is in (0,2*pi),
+and
+
+    cot(alpha0)+cot(beta0)
+      =[2*(q^2+k^2)+2*q*k*(p/h+h/p)]/X>0.
+
+Since both individual sines are positive, this gives sin(T0)>0 and
+hence the asserted range.
+
+Three exact polynomial identities now give a simple cosine formula:
+
+    Np^2+p^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Nh^2+h^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Np*Nh-p*h*L*J
+      =-2*(h*k+p*q)*(h*q+k*p)*(h^2+p^2-q^2-k^2).
+
+All factors in the first two right-hand sides are positive. Therefore
+
+    cos(T0)=-(h^2+p^2-q^2-k^2)/(2*(h*p+k*q)).                (398.2)
+
+The proof uses comparison angles defined by (397.3), not an assumption
+that an actual Euclidean tetrahedron or quotient exists.
+

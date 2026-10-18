@@ -1,0 +1,19 @@
+### 95.5. Singular fibres give complex star directions
+
+Suppose U_f has rank one. Choose a nonzero vector n supported on fibre f with Un=0. Both coordinates of n are nonzero, since each of the two columns of U_f is nonzero. If v∈ker U has v_f=0 and z∈C, define
+
+\[
+ S_f(z,v)=z n v^*+\overline z\,v n^*.
+                                                                    \tag{25}
+\]
+
+This full eight-coordinate matrix is Hermitian, has zero entire original fibre blocks, and annihilates U*. It therefore belongs to 𝓥 and is supported only on edges incident to f. Its value in (23) is
+
+\[
+ q(S_f(z,v))=-2\operatorname{Re}[z^2A_f(v)],\qquad
+ A_f(v)=\sum_{i\in f,\,j\notin f}c_{ij}n_i^2\overline{v_j}^{2}.
+                                                                    \tag{26}
+\]
+
+Since every complex z is allowed, nonnegativity forces A_f(v)=0. Every star (25) thus has zero polarization with every member of 𝓥 by (24).
+

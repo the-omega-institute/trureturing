@@ -1,0 +1,33 @@
+### 5.1 原始四顶点面商的参数对应
+
+在同一个有限原始面配对 $p$ 上取 $I=\operatorname{Fin}4$ 和截断参数 $\delta=1/4$，所以 cap 上界为 $1-\delta=3/4$。
+
+$$
+S=\left\{z:I\to\mathbb R:
+0\le z_i\le\frac34\ (i\in I),\quad\sum_i z_i=1\right\},
+\qquad n(t,f)=(p.\mathrm{facePair}(t,f)).1.
+$$
+
+令 $m_{t,f}=p.\mathrm{faceMap}(t,f)$ 为实际三边槽排列。记槽 $j$ 的对顶点为 $\nu_f(j)$，即它是面 $f$ 内不属于该槽所对应边的唯一顶点：
+
+$$
+\nu_0=(1,2,3),\quad\nu_1=(3,2,0),\quad
+\nu_2=(3,1,0),\quad\nu_3=(2,1,0).
+$$
+
+当 $p(t,f)=(u,g)$ 时，$\sigma_{t,f}$ 由
+
+$$
+\sigma_{t,f}(f)=g,\qquad
+\sigma_{t,f}(\nu_f(j))=\nu_g(m_{t,f}(j))
+\quad(j\in\operatorname{Fin}3)
+$$
+
+确定。令 $F_f(f)=\mathrm{none}$，$F_f(\nu_f(j))=\mathrm{some}(j)$。当 $p(t,f)=(u,g)$ 时，
+
+$$
+\sigma_{t,f}=F_g^{-1}\circ\operatorname{optionCongr}(m_{t,f})\circ F_f.
+$$
+
+$F_f$ 正是 $\operatorname{optionCongr}(\chi_f)\circ\operatorname{finSuccEquiv}'(f)$，其中 $\chi_0=1$，$\chi_f=(0\ 2)$ 当 $f\ne0$。这是实际 frame 复合；三边槽排列不直接作用于递增面顶点表。坐标界和坐标和在排列下保持，故上述 $S$ 满足命题 5.1 的不变性。所得 $R$ 正是原始零面识别的完整等价闭包。
+

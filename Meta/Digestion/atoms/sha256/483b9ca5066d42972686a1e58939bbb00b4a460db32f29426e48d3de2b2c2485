@@ -1,0 +1,50 @@
+**Lemma 7.2 (Predictable price of ticks).** For the source law of Definition 2.2, every legal read/stop rule satisfies
+
+$$
+\mathbb E_{i,q}Q_T\le B(1-q)\mathbb E_{i,q}T.
+\tag{7.10}
+$$
+
+Proof. Retain the actual-history hazard argument of the continuation's Lemma 25.3 and the uniform companion's Lemma 6.2. After a tick has been read and exactly $b\ge1$ subsequent zeros have been read, the next-one probability is
+
+$$
+\frac{f_i(b)}{S_i(b)}
+=\frac{F_i(b)q^b}{\sum_{k\ge b}F_i(k)q^k}
+\le\frac{Bb^9q^b}{\sum_{k\ge b}b^9q^k}
+=B(1-q).
+\tag{7.11}
+$$
+
+At $b=0$ the probability is zero because $K\ge1$. Previous complete gaps are independent of the current gap, so conditioning on the entire preceding bit history gives the same bound.
+
+Before any tick has been read, $b$ zeros say $\tau\ge b$. Under its actual stationary law the next-one probability is
+
+$$
+\frac{S_i(b)}{\sum_{v\ge b}S_i(v)}.
+\tag{7.12}
+$$
+
+For integers $k\ge1$ and $r\ge0$, (2.3) gives
+
+$$
+F_i(k+r)\ge(k+r)^9\ge k^9\ge B^{-1}F_i(k).
+\tag{7.13}
+$$
+
+Shift every tail term by $r$ to obtain $S_i(b+r)\ge B^{-1}q^rS_i(b)$ for $b,r\ge0$. For $b=0$ the shifted terms start at $r+1$ and are contained in the tail defining $S_i(r)$, which suffices for this inequality. Summing over $r$ bounds the denominator of (7.12) below by $B^{-1}S_i(b)/(1-q)$. Thus (7.12) also is at most $B(1-q)$. This handles the stationary first wait with its own distribution.
+
+For payment alone, expose an independent supply of all observer coins on the analytical probability space. Let $\mathcal F_t$ contain those coins and the prefix $X_0,\ldots,X_{t-1}$. Independence leaves the next-bit source hazards unchanged, while the event $\{T>t\}$ that read $t+1$ is undertaken is $\mathcal F_t$-measurable. Tonelli and conditional expectation now give
+
+$$
+\begin{aligned}
+\mathbb E_iQ_T
+&=\sum_{t\ge0}\mathbb E_i\left[
+\mathbf1_{\{T>t\}}\mathbb E_i(X_t\mid\mathcal F_t)\right]\\
+&\le B(1-q)\sum_{t\ge0}\mathsf P_i(T>t)
+=B(1-q)\mathbb E_iT.
+\end{aligned}
+\tag{7.14}
+$$
+
+This enlarged filtration is used for predictable payment, not to replace the ordinary live-chain filtration in (7.7) or to give a coin tape to the observer. The sum charges exactly the reads undertaken, including the terminal read. It charges no unread closing tick and no full mean gap in place of an interrupted gap. $\square$
+

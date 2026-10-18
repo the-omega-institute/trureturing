@@ -1,0 +1,18 @@
+#### 12.2.1 固定块供应与真实全族
+
+直接使用[固定续篇的引理 57.2、定理 57.3、引理 57.9 及定理 57.10](https://github.com/the-omega-institute/trureturing/blob/e250367fe75d20167ec364111f0fc02e1c6d7bbb/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#57-uniform-paid-acquisition-of-actual-image-certificates-at-exact-composition)，以及本卷 §2、定理 3.2、3.4、5.2、10.2。块的四值表、替换单射与高度，完整两色终端及同组成前沿唯一性，同色三、四叶基底和混色四叶三阶段均作为原供应消费。
+
+为使库存整数 $t$ 与块索引分开，写 $Z=X_s=\rho^s\alpha$，其中 $s=d$ 或 $d+1$，故 $s\ge3$。对 $m\ge1$，$\mathcal F_m(Z)$ 是所有 $m$ 叶完整有序宏形状逐叶放入同一个真实块 $Z$ 的族。它也是全部 $m$ 叶同色 $\alpha$ 宏树的 $\rho^s$ 像。原 $\rho^s$ 单射保证不同宏形状给出不同实际树。$m\ge2$ 时每个成员根为分支；$\mathcal F_2(Z)=\{(Z,Z)\}$，$\mathcal F_3(Z)$ 是两种不同形状，$\mathcal F_4(Z)$ 是原五种形状。这里不定义零叶空树。
+
+本节只需引理 57.2 的下述块表后果。若 $r_Z(v)=\alpha$，则 $v\ne\varepsilon$、$w(v)=s$ 且末字母为 $R$，其中 $w(v)=\#L(v)+2\#R(v)$。写 $v=ev'$，有
+
+$$
+\begin{array}{c|c|c}
+e&w(v')&r_Z(v')\\\hline
+L&s-1&\beta\\
+R&s-2&\mathsf{br}
+\end{array}
+$$
+
+故删除首字母后必为真实非 $\alpha$ 端点；此处的 $\beta$ 与分支仍是不同回复。
+

@@ -1,0 +1,33 @@
+**Definition 2.3 (conditioning and legal continuation).** The experiment
+starts with each actual history conditioned on reaching its old live cut
+at the common time six. The sole specimen there is the normalized state
+(CG.7). The different masses (CG.8) describe that earlier execution; they
+are not silently used as new mixture weights or acceptance probabilities.
+No new acquisition acceptance event is conditioned upon.
+
+The public requested relative command is $k_x(t)=x+dt$,
+$\chi(6+t)=\chi(6)$, $0\leq t\leq1$. In the original relative-command
+convention, increments $A(t),C(t)$ starting at zero have height domain
+$(\ell_b-\min A,u_b-\max A)$ when $J_b=(\ell_b,u_b)$.
+Thus this ramp has domain
+
+$$
+(0,c-d)=\left(0,\frac{58}{256}\right).
+\tag{CG.10}
+$$
+
+All three catalogue heights belong to it, and their terminal heights are
+$11/256,22/256,33/256$. Permissions are common and the request is promised
+legal on this catalogue. Naming a partial request supplies no detector of
+an unknown domain violation. Known denial or mismatch has its visible
+unexecuted rejection and controller update. Literal composition preserves
+the old real phase lift; it does not read or reset it. Zero duration permits
+only the matching zero-displacement identity, not an instantaneous nonzero
+leg. These are the permissions of [AC, Definition 2.4][AC].
+
+For this finite seven-unit experiment the original populations stay at
+least $5/256$ from zero; the height speed is at most $27/256$, phase
+speed at most $8\pi$, and phase variation at most $16\pi$.
+These follow from the table, $B\in\{0,-4\pi,8\pi,4\pi\}$ and the
+ramp speed $6/256$. No wall limit or infinite winding is used.
+

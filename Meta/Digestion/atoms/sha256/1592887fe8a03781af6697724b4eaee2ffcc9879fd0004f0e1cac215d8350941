@@ -1,0 +1,9 @@
+## 206. Pairwise moments, exact chain minima and dense early-credit certificates
+
+The objects here are full event scores. The five groups concern moment
+support reduction, exact chain optimization, balanced dense scores,
+clipping, and stock exchange. Their sufficient regions can overlap.
+All supports maximize over every terminal label, including labels at
+unqueried or earlier addresses. A score coefficient is a proof weight;
+it is not an acquisition probability or a probability law on sources.
+

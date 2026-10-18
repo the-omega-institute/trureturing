@@ -1,0 +1,2 @@
+**定义 29.1（允许二元关系的商合同）。** 给实双线性 $B:V\times V\to V$ 与线性盲核 $N$，投影 $\pi:V\to V/N$ 若要支持同一二元关系，必须有双线性 $\overline B$ 使 $\pi B=\overline B(\pi,\pi)$。作为判定中间步骤，这等价于 $B(N,V)\subseteq N$、$B(V,N)\subseteq N$：必要性以 $n$ 与零代表同一零类，充分性以双线性展开两次换代表。子空间 $E$ 满足 $B(E,E)\subseteq E$ 并不保证 $N=E^\perp$ 满足这两个理想条件。
+

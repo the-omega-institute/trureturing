@@ -1,0 +1,60 @@
+**Definition 3.1 (endpoint inventory and signed description).** Put
+$\eta_j(\phi)=\ell(h)+j t\mathfrak c(h)f(h)$ for $j=0,1$ and
+$d_j(\phi)=d(\phi,j)$. Define the **complete** sheet inventory
+
+$$
+Z=\{(\phi,j):\phi\in\mathbb R/(2\pi\mathbb Z),\ j=0,1,
+                                                    \ d_j(\phi)=0\}.
+\tag{FC.6}
+$$
+
+Coincident signed-branch descriptions of one sheet point are
+deduplicated; the two sheets themselves are distinct. To state the
+reused finite inventory explicitly, let
+
+$$
+\begin{gathered}
+P_y=y_0+y_1u+y_2v+y_3u^2+y_4uv,\quad
+Q_y=y_5+y_6u^2+y_7uv,\\
+D_c=h_0^2\delta+(b^2/\alpha)u^2+(d^2/\beta)v^2>0,\\
+N_c=h_1^2h_2^2\delta+(a^2h_2^2/\alpha)u^2
+                     +(c_{\rm src}^2h_1^2/\beta)v^2>0,\\
+F_{0,\epsilon,\sigma}=P_y-\epsilon\lambda u-\sigma\ell,\\
+F_{1,\epsilon,\sigma}=D_c(P_y-\epsilon\lambda u-\sigma\ell)
+                               +N_c(Q_y-\sigma t f),\quad
+\epsilon,\sigma\in\{\pm1\}.
+\end{gathered}
+\tag{FC.7}
+$$
+
+Thus $\mathfrak c=N_c/D_c$ and all eight functions in (FC.7) are
+nonnegative on the full directed circle. The inventory is their union
+of circle zeros, on the indicated sheets. This is the RC Theorem
+69.1 interface after changing its multiplier conjugate to $|z|$ to
+the present multiplier conjugate to $|u|$:
+$\lambda=\lambda_{\rm RC}/\sqrt\alpha$. Its failure quadratic
+is represented here by $Q_y=t\widehat n_h^TZ\widehat n_h$,
+modulo the circle identity, when using RC's symmetric-matrix dual.
+
+The reused bound is $|Z|\le24$. Its hypotheses can be checked directly
+at (FC.5): the four pure tests have degree at most two and the four
+saturated tests degree at most four. If one were identically zero,
+flipping $\epsilon$ would leave $2\epsilon\lambda u$, multiplied
+by $D_c$ on the saturated sheet; this changes sign. Thus none is
+identically zero. A nonnegative nonzero degree-$d$ trigonometric
+polynomial has at most $d$ distinct circle zeros because each has
+even multiplicity in its degree-$2d$ homogeneous half-angle form.
+Summing $4\cdot2+4\cdot4$ gives 24, before deduplication. This
+recalls a supplier proof, not a new contact or physical-label bound.
+
+For half-angle coordinates $u=(V_h^2-U_h^2)/(U_h^2+V_h^2)$,
+$v=2U_hV_h/(U_h^2+V_h^2)$, clear powers two and four of
+$U_h^2+V_h^2$. The homogeneous degrees are four and eight.
+The missing affine-chart point $V_h=0$, namely $(-1,0)$, is
+included. Positive denominators add no roots; repeated roots consume
+multiplicity and do not enlarge the distinct-root bound. All weak
+height signs and zero-height contacts are retained. RC Proposition
+70.2 excludes $u=0$ for $\lambda>0$, but no axis is discarded
+by an assumed genericity rule. No nonidentity assertion at
+$\lambda=0$ is needed here.
+

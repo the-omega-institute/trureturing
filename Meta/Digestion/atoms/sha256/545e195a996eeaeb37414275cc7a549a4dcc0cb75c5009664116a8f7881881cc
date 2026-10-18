@@ -1,0 +1,39 @@
+### 定义 20.1（相容有限层系统）
+
+一个相容有限层系统包括连续仿射满射
+
+\[
+\rho_j:\mathsf C_{j+1}^R\longrightarrow\mathsf C_j^R.
+\]
+
+其概率分量记为
+
+\[
+q_j:\Pi_{j+1}^\delta\longrightarrow\Pi_j^\delta.
+\]
+
+若存在顶点映射 \(\pi_j:V_{j+1}\to V_j\) 和条件权重 \(a_j(w\mid v)\)，满足
+
+\[
+a_j(w\mid v)\ge0,
+\qquad
+\sum_{\pi_j(w)=v}a_j(w\mid v)=1,
+\]
+
+\[
+\mu_{j+1}(w)
+=
+\mu_j(\pi_j(w))a_j(w\mid\pi_j(w)),
+\]
+
+则概率推前写成
+
+\[
+(q_jp)_v
+=
+\sum_{\pi_j(w)=v}
+a_j(w\mid v)p_w.
+\]
+
+这保证每个粗层节点仍然携带一个单独归一化的五态概率律。它没有把 \((\Delta(\Sigma))^{V_j}\) 偷换成一个全局单纯形。
+

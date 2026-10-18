@@ -1,0 +1,60 @@
+## 3. One eight-moment system and its complete Jacobian
+
+Use $u=\cos\phi$, $v=\sin\phi$, $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$. For $\eta=0,1$ define
+
+$$
+\Gamma_\eta=(1,u,v,u^2,uv,\eta c,\eta cu^2,\eta cuv),\quad H_\eta=\ell+\eta tc f,\quad
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0).
+\tag{4}
+$$
+
+Seven contacts have the following order; it also fixes the order of every array in the appendices.
+
+| $i$ | $\eta_i$ | height sign $\epsilon_i$ | report sign $\sigma_i$ | base $\psi_i$ |
+| --- | --- | --- | --- | --- |
+| 0 | 0 | +1 | +1 | $0$ |
+| 1 | 0 | +1 | −1 | $\pi$ |
+| 2 | 0 | −1 | −1 | $\pi$ |
+| 3 | 1 | +1 | +1 | $0$ |
+| 4 | 1 | −1 | +1 | $3\pi/2$ |
+| 5 | 0 | +1 | +1 | $0$ |
+| 6 | 1 | −1 | −1 | $\pi$ |
+
+Set $\phi_i=\psi_i+2\arctan x_i$. The unknown order is **exactly** $X=(x_0,\ldots,x_6,p_0,\ldots,p_6,Y_0,\ldots,Y_7)$. The residual order is eight moments, followed by the interleaved pairs $(P_0,P'_0),\ldots,(P_6,P'_6)$.
+
+Here are all cleared expressions. For an indeterminate $x$, put $r=1+x^2$ and choose $(U,V_c)=(1-x^2,2x)$ at base $0$, $(-1+x^2,-2x)$ at base $\pi$, and $(2x,-1+x^2)$ at base $3\pi/2$. Write $Z=U/\sqrt\alpha$, $W_c=V_c/\sqrt\beta$ and
+
+$$
+\begin{aligned}
+D_c&=\delta h_0^2r^2+b^2Z^2+d^2W_c^2,&N_c&=\delta h_1^2h_2^2r^2+a^2h_2^2Z^2+c_{\rm src}^2h_1^2W_c^2,\\
+L_c&=(r,Z,W_c)G(r,Z,W_c)^T,&F_c&=-\frac{11}{64}(dW_c/h_2)^2-2\Delta_{12}dbZW_c/(h_1h_2).
+\end{aligned}
+$$
+
+The following tuple defines respectively the moment numerator $g_\eta$, positive denominator $d_\eta$, height numerator $h_\eta$ and report numerator $w_\eta$:
+
+$$
+\begin{aligned}
+(g_0,d_0,h_0^{\rm num},w_0)&=((r^2,rU,rV_c,U^2,UV_c,0,0,0),r^2,L_c,rU),\\
+(g_1,d_1,h_1^{\rm num},w_1)&=((D_cr^2,D_crU,D_crV_c,D_cU^2,D_cUV_c,N_cr^2,N_cU^2,N_cUV_c),D_cr^2,D_cL_c+tN_cF_c,D_crU).
+\end{aligned}
+$$
+
+Both $D_c,N_c$ are strictly positive. For each contact use its chart and sheet, and put $P_i(x)=Y\cdot g_{\eta_i}(x)-\epsilon_i h_{\eta_i}^{\rm num}(x)-\lambda\sigma_i w_{\eta_i}(x)$. The entire square system is
+
+$$
+F_a=\sum_{i=0}^6p_i\frac{g_{\eta_i,a}(x_i)}{d_{\eta_i}(x_i)}-B_a(t)\quad(0\le a<8),\qquad
+F_{8+2i}=P_i(x_i),\quad F_{9+2i}=P_i'(x_i).
+\tag{5}
+$$
+
+Primes always differentiate the displayed polynomial in its own $x$ chart. For all $0\le a<8$, the moment Jacobian entries are
+
+$$
+J_{a,x_i}=p_i\frac{g'_{i,a}d_i-g_{i,a}d_i'}{d_i^2},\quad J_{a,p_i}=g_{i,a}/d_i,\quad J_{a,Y_b}=0.
+$$
+
+The value and stationary rows have $J_{8+2i,x_j}=\mathbf1_{i=j}P_i'$, $J_{9+2i,x_j}=\mathbf1_{i=j}P_i''$, all their weight entries zero, and dual entries $J_{8+2i,Y_b}=g_{i,b}$, $J_{9+2i,Y_b}=g'_{i,b}$. These formulas specify every entry of $J=F_X$; interval $P_i'$ is **not** replaced by zero when enclosing $J$.
+
+The only nonzero moment entries of $F_t$ are $(F_t)_5=\mu/t^2$, $(F_t)_6=\alpha V/t^2$. On a saturated contact $(F_t)_{8+2i}=-\epsilon_iN_cF_c$ and $(F_t)_{9+2i}=-\epsilon_i(N_cF_c)'$; they vanish on a pure contact. All moment entries of $F_\lambda$ vanish, and its contact pair is $(-\sigma_iw_i,-\sigma_iw_i')$. These are exact partial derivatives at fixed $X$ and source.
+

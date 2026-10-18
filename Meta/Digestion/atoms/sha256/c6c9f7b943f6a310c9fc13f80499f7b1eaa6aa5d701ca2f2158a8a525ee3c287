@@ -1,0 +1,68 @@
+**Proposition 10.4 (Limits of the implicit scalar parameters).** With
+$0<\tau<1$ and the root/contact parameters defined in §7,
+
+$$
+\begin{array}{c|cccc}
+&T_\tau&\lambda_{T_\tau}&x_\tau&e_2^{\rm aff}(Z)\\ \hline
+\tau\downarrow0&1/16&0&1/2&1/2\\
+\tau\uparrow1&1&-\infty&1&2/3
+\end{array}
+$$
+
+These are parameter limits, not assertions adding support-degenerate
+source states.
+
+**Proof of Proposition 10.4.** As $\tau\uparrow1$, the bounds
+
+$$
+\tau<T_\tau<\frac{(1+\tau)^2}{4},\qquad
+0<T_\tau-\tau<\frac{(1-\tau)^2}{4}
+$$
+
+give $T_\tau\to1$ and $T_\tau-\tau\to0$. Thus
+$\lambda_{T_\tau}=\frac12\log((T_\tau-\tau)/T_\tau)\to-\infty$.
+The interval $(1+\tau)/2<x_\tau<1$ gives $x_\tau\to1$.
+Solving the parameter relation gives
+
+$$
+Z=\frac{2\tau}{1+2\tau},\qquad
+H=\frac1{2(1+2\tau)}.
+$$
+
+The capacity formula therefore tends to $2/3$, the value already
+attained at the transition by the separate zero-readout witnesses.
+A finite limiting exponential parameter is not required there.
+
+As $\tau\downarrow0$, fix any $T>0$. For sufficiently small $\tau$,
+$T>\tau$, and $v_T,f_T$ converge uniformly on $[0,1]$ to
+$\sqrt T$. For $v_T$ this follows by rationalizing its difference
+from $\sqrt T$; for $f_T$ it follows from $\lambda_T\to0$ and
+$0\le x\le1$. Consequently
+
+$$
+\Phi_\tau(T)\longrightarrow
+\max_{[0,1]}s-2\sqrt T=\frac12-2\sqrt T.
+$$
+
+Choose any fixed $0<T_-<1/16<T_+$. The limiting signs are positive
+at $T_-$ and negative at $T_+$, so the strictly decreasing root
+characterization puts $T_-<T_\tau<T_+$ for sufficiently small
+$\tau$. Letting the two brackets approach $1/16$ gives
+$T_\tau\to1/16$. The logarithm defining $\lambda_{T_\tau}$
+then tends to zero, and $4H\sqrt{T_\tau}\to1/2$.
+
+At these root parameters, $g_{T_\tau}$ converges uniformly to
+$s-1/2$. This limit has its unique maximum zero at $1/2$.
+On the compact complement of any neighborhood of $1/2$ its
+maximum is strictly negative. Uniform convergence and
+$\max g_{T_\tau}=0$ force $x_\tau$ into that neighborhood
+eventually, proving $x_\tau\to1/2$.
+
+All compactness here concerns explicit scalar functions on a
+fixed interval. It imposes no compactness on competing latent
+images. The limits $k\to0,H$ used in the scalar problem do not
+add those points to $\mathcal M$. Similarly $Z=0$ loses the
+positive middle reference, and $Z=1$ leaves no open height
+interval; neither is included by this parameter calculation.
+$\square$
+

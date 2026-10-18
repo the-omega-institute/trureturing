@@ -1,0 +1,53 @@
+**Theorem 8.2 (Attained positive bridge minimum).** For the actual bridge define
+
+$$
+\delta_*:=\delta_{2,6}^{1,1}(r_*),\qquad
+\delta_0:=\frac{6^{-24}}{48}\Delta_6^2.
+\tag{8.3}
+$$
+
+Then the minimum defining $\delta_*$ is attained and
+
+$$
+0<\delta_0\le\delta_*\le6.
+\tag{8.4}
+$$
+
+Proof. Lemma 8.1 supplies a competitor, and the compactness and continuity following (2.7) give attainment. Every squared site-posterior difference is at most one, so this competitor gives the upper bound six.
+
+For the quantitative lower bound, specialize the ratio argument of [Guarded, Lemma 8.1 and Theorem 8.2], retaining the constants. Let $\nu,r$ be band-compatible on $K=K_6^{1,1}$ and set $t_w=r_w/\nu_w$, $\alpha=6^{-6}$. Both probabilities have all compatible masses at least $\alpha$. On an insertion edge $u\to w$, the exact contribution to (2.2) is
+
+$$
+\frac{(\nu_u\nu_w)^2(t_u-t_w)^2}
+{(\nu_u+\nu_w)(r_u+r_w)^2}
+\ge\alpha^4(t_u-t_w)^2.
+\tag{8.5}
+$$
+
+The denominator factors are at most one, since each pair consists of distinct words in a probability space. Connect words attaining the extreme $t$ values by deleting ones and reinserting them through $0^6$. Remove repetitions to get a simple path of at most twelve edges. Cauchy–Schwarz on this path gives
+
+$$
+(\max_wt_w-\min_wt_w)^2
+\le\frac{12}{\alpha^4}\mathcal D_K(\nu\Vert r).
+\tag{8.6}
+$$
+
+Since $\sum_w\nu_wt_w=1$, one lies between those extremes, and
+$\|\nu-r\|_1=\sum_w\nu_w|1-t_w|\le\max t-\min t$.
+Therefore
+
+$$
+\mathcal D_K(\nu\Vert r)\ge\frac{6^{-24}}{12}\|\nu-r\|_1^2.
+\tag{8.7}
+$$
+
+Now take $\nu=r_*$ and any $r\in\mathscr F_{2,6}^{1,1}$. Its matching three-by-three minor has determinant zero because ordinary rank is at most nonnegative rank. Subtract the two determinant permutation formulas. Telescoping each difference of three-factor products, with entries in $[0,1]$, bounds it by the sum of the entry differences used in that product. Each selected entry occurs in two permutations. Distinct entries correspond to distinct six-bit words, and forbidden entries are zero for both laws. Hence
+
+$$
+\Delta_6\le2\sum_{\text{selected entries}}|r_*-r|
+\le2\|r_*-r\|_1.
+\tag{8.8}
+$$
+
+Combine (8.7) and (8.8), then minimize over $r$, to obtain the lower bound in (8.4). Strict positivity follows from (7.8). The determinant is a sufficient obstruction; vanishing determinants alone would not characterize nonnegative rank. $\square$
+

@@ -1,0 +1,6 @@
+**约定 65.6（供应与证明范围）。** （JM.202）–（JM.203）的唯一射线及历史纤维复用本卷36–39章，二元括号的内在深度仍由49–50章承担；本章不把这些结论作为新增正规形或容量结果。过程几何 §37.3 的（PG.3714）–（PG.3720）供应真实入口、指数及同源更新合同；运输与记忆 §22.1 的（RA.2207）供应互斥实际像解析，§45.6 保留无有效族呈示时的语义边界。有效分辨率 §2.1.1 的首个枚举见证搜索及其“不能自动求数值最小成员”的限定，是65.2采用发现秩的既有计算背景。
+
+源码 [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) 的 `Source/substitution` 对应这里的自由两叶树及 $\rho$；[AtomicPrefixParser](../../../D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.lean) 的 `code/parse/decode/result` 提供完整有限字码的语法接口；[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `readout/leaves/nodes` 约定完整实际地址与四值回复。它们不直接提供65.2的入口枚举标签或65.5的不可计算允许集。`SourceTreeEncoding` 的 `noncomputable section` 和一般 `NormalFormFunction.nf` 的 `Classical.choose` 都不作为可执行解码证据。本章定理65.2–65.5由所列完整普通证明承担，没有新增 Lean 核验。
+
+经典不可判定背景归 A. M. Turing，*On Computable Numbers, with an Application to the Entscheidungsproblem*，§8，印刷页246–248，[原文扫描](https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf)：该节给无一般有限判定过程的对角机制，页248明确排除判断任意机器是否曾打印指定符号的通用机器。这里的停机编号约定、梳射线载体、（JM.211）及一／二符号恢复分离由65.5的普通推导给出；不把树接口的具体结论归给原论文，也不另认领经典停机不可判定性。有效搜索和不可判定机制为 `literature-attested` 的经典背景，本章在该原树、实际入口与前向记录合同上的连接为 `repo-derived`，不主张全球新颖性。
+

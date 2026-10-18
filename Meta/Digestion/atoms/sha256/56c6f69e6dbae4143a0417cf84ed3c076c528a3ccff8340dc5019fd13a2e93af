@@ -1,0 +1,57 @@
+**Definition 7.1 (finite arithmetic reply trees).** Put
+
+$$
+M=\max(N,5),\qquad U=M-N.
+\tag{CAR.24}
+$$
+
+A skeleton of read depth at most $k$ is a finite four-reply tree whose
+vertices are reads or absorbing halts. A read vertex has an epoch
+$j_v\in[N,M]$, nondecreasing along each path, and a descriptor $\delta_v$
+of Definition 6.1. All its numeric descriptor parameters are selected
+before universal source quantification. Chart identity and rank tuples
+are not controller inputs. Before each read the controller performs the
+actual nonnegative difference from its preceding epoch.
+
+For a halt $t$, let $k_t$ count preceding reads, $j_t$ be the last read
+epoch or $N$ at a root halt, and $L_t$ the sum of descriptor lengths.
+Its actual path cost is
+
+$$
+(k_t,j_t-N,L_t).
+\tag{CAR.25}
+$$
+
+Let $\operatorname{Path}_{\eta,t}(\mathbf n;\boldsymbol\delta)$ be the
+conjunction of the appropriate reply predicates (CAR.20) along that
+path. The exact correctness condition is
+
+$$
+\bigwedge_{\eta,\theta,t}\ \forall\mathbf n\ \forall\mathbf m\quad
+\left[
+\begin{array}{l}
+\operatorname{Adm}_\eta(\mathbf n)\land
+\operatorname{Adm}_\theta(\mathbf m)\land
+\operatorname{Path}_{\eta,t}(\mathbf n;\boldsymbol\delta)\land
+\operatorname{Path}_{\theta,t}(\mathbf m;\boldsymbol\delta)
+\end{array}
+\Longrightarrow
+\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)
+\right].
+\tag{CAR.26}
+$$
+
+A leaf is reachable exactly when
+
+$$
+\operatorname{Reach}_t(\boldsymbol\delta)\iff
+\bigvee_\eta\exists\mathbf n\,
+ (\operatorname{Adm}_\eta(\mathbf n)\land
+  \operatorname{Path}_{\eta,t}(\mathbf n;\boldsymbol\delta)).
+\tag{CAR.27}
+$$
+
+Thus distinct charts may terminate together if their full rows coincide.
+The target is not refined to chart identity, a prefix vector or an atomic
+coordinate tuple.
+

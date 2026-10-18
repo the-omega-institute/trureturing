@@ -1,0 +1,37 @@
+**Application 26.4 (Definition 1.1 and Theorem 5.2: the entire row).**
+Given $j\ge0$ and finite prefix-free $Q$, the following finite calculation
+returns the entire row, including all concrete exterior trees.
+
+If $Q=\{\varepsilon\}$, its reached list is $(\varepsilon)$, its exterior
+is $\square_1$, and its partition is $\{\{1\}\}$. Otherwise its reached
+list is the lexicographic ordering of
+
+$$
+J_j=\{q\in Q:j\ge g(q)\}.
+\tag{CS.26.12}
+$$
+
+Number this list $q_1,\ldots,q_m$. Starting at the root of the finite
+$u_j$, perform first-hit cutting: at $q_i$ return $\square_i$ without
+descending; at any other reached leaf return its concrete label; at any
+other reached pair return the ordered pair of the two recursive results.
+Denote the resulting concrete context by $E_j^Q$. The full partition is
+
+$$
+i\sim_j k\quad\Longleftrightarrow\quad h(q_i)=h(q_k).
+\tag{CS.26.13}
+$$
+
+Thus the actual row is the tuple $(J_j,E_j^Q,\pi_j)$, with the reached
+list made explicit in addition to the usual context/partition notation.
+For $Q=\varnothing$ this is
+$(\varnothing,u_j,\varnothing)$.
+
+Calculation. The recursion is exactly Definition 1.1's whole-context
+cutting on the known finite $u_j$; it leaves no unknown exterior variable.
+Equation (CS.26.7) at epoch zero gives the reached list and the whole
+value $T_{j+2-h(q_i)}$ at each reached nonroot hole. The supplied index
+injectivity in Definition 4.1 gives (CS.26.13), as in Theorem 5.2's
+whole-row calculation. A root cut is the sole cut by prefix freeness;
+an empty cut removes no node.
+

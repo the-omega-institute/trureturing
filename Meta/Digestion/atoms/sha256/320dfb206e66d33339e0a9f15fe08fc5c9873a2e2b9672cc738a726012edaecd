@@ -1,0 +1,85 @@
+**Proposition 8.3 (Inherited zero-dimension and transition formulas).**
+Under the literal contract,
+
+$$
+e_0^{\mathrm{aff}}(Z)=
+\begin{cases}
+1-Z/2,&0<Z<2/3,\\
+e_*,&2/3\le Z<1.
+\end{cases}
+\tag{8.13}
+$$
+
+The zero decoder attains these infima. The same formula holds for
+the zero-dimensional prescribed-path contract without guard recovery.
+For $Z\ge2/3$ and every $n\ge0$, the literal and prescribed-path
+capacities equal $e_*$, with tolerance set $[e_*,\infty)$.
+
+For either guard-recoverable contract the zero-dimensional class is
+empty, its capacity is $+\infty$, and it has no finite tolerance.
+For $n\ge1$ these classes are nonempty; when $Z\ge2/3$, their
+capacities equal $e_*$ and their tolerance sets are $[e_*,\infty)$.
+
+**Proof 8.3.** These are the boundary results of [F], §11.5. The
+short calculation also identifies their scope. A zero-dimensional
+decoder is a constant $c$. At any fixed height, adding $\pi$ to
+both phases sends $y$ to $-y$, and
+
+$$
+\frac{\|c-y\|_2^2+\|c+y\|_2^2}{2}
+=\|c\|_2^2+\|y\|_2^2.
+$$
+
+Hence zero is optimal among constants. Its squared error is
+
+$$
+\sup_{0<k<H}f(k),\qquad
+f(k)=16k(H-k)+4Zk.
+\tag{8.14}
+$$
+
+The vertex is $k=H/2+Z/8$. When $Z<4H$ it is interior, giving
+
+$$
+\sup f=\frac{(4H+Z)^2}{4},\qquad
+e_0^{\mathrm{aff}}(Z)=\frac{4H+Z}{2}=1-\frac Z2,
+$$
+
+$$
+\bigl(e_0^{\mathrm{aff}}(Z)\bigr)^2-4ZH
+=\frac{(4H-Z)^2}{4}>0.
+\tag{8.15}
+$$
+
+When $Z\ge4H$,
+
+$$
+f(k)=4ZH+4(H-k)(4k-Z)<4ZH
+\quad(0<k<H),
+\tag{8.16}
+$$
+
+with supremum $4ZH$ as interior heights approach $H$. At
+$Z=4H$ the difference is exactly $-16(H-k)^2$. No lawful state
+need realize the supremum. The singleton encoder satisfies every
+literal straight or prescribed-path affine identity. The floor from
+Lemma 5.4 proves the claimed capacities for all $n$ in this regime.
+
+For guard recovery take two heights $k_1<k_2$ and set
+$s=H-(k_1+k_2)/2$. Then
+$0<k_1+s<H$ but $k_2+s>H$. Their singleton encodings cannot
+decide this guard, proving the zero-dimensional emptiness. This
+already uses a straight command, so it holds for the path restriction
+as well. For $n\ge1$ the height encoder $E(k,\alpha,\beta)=k$
+with zero decoder has exact affine updates
+$K'=K+s$, $K'=K$ for phase commands, and
+$K'=K+\Delta_k$ for paths. It recovers the full straight and
+all-times path guards. Its squared error is (8.14), which is finite
+for all $Z$ and equals the floor when $Z\ge2/3$. $\square$
+
+Thus below the transition the literal dimension-zero tolerance set is
+$[1-Z/2,\infty)$, while the dimension-zero guard-recoverable
+tolerance set is empty. Theorem 7.2 still applies at $n=0$, using
+the homogeneous rank $N=1$; (8.13) supplies the stronger exact
+dimension-zero result.
+

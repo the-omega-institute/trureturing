@@ -1,0 +1,70 @@
+**Lemma 3.1 (strict capacity tangent).** On $[0,U]$ the tangent to
+$F_c$ at $r$ is a global supporting line, with equality only at $r$.
+Consequently every measure satisfying (JS.10)'s failure constraints has
+
+$$
+\int F_c(z^2)d\nu\ge C_{\rm end},
+\quad\text{with equality exactly when }z^2=r\quad\nu\text{-a.e.}
+\tag{JS.15}
+$$
+
+All such equality directions have $k(z,w)<0$. A covariance-admissible
+equality measure exists.
+
+Proof. The supplied JR.52 bounds imply $J=adh_2-bch_1>0$: the lower
+product $65\cdot98\cdot809=5153330$ exceeds the upper product
+$147\cdot16\cdot707=1662864$, with the common denominator $10^9$.
+These are symbolic uses of inherited enclosures. Writing
+$D_c=D_0+D_1x$ and $N_c=N_0+N_1x$ gives
+
+$$
+\begin{gathered}
+D_0=\delta h_0^2+d^2/\beta>0,\quad
+N_0=\delta h_1^2h_2^2+c^2h_1^2/\beta>0,\\
+D_1=-bJ/(ch_1)<0,\qquad N_1=(ah_2/d)J>0.
+\end{gathered}
+\tag{JS.16}
+$$
+
+For $\rho=1/c_*=D_c/N_c$, its first derivative is strictly negative
+and its second strictly positive, since
+
+$$
+\rho'=\frac{D_1N_0-D_0N_1}{(N_0+N_1x)^2},\qquad
+\rho''=\frac{-2N_1(D_1N_0-D_0N_1)}{(N_0+N_1x)^3}.
+\tag{JS.17}
+$$
+
+On $0<x<1$, $H'<0$, $H''>0$, so
+$F_c''=H''\rho+2H'\rho'+H\rho''>0$. Continuity at zero extends
+strict convexity to $[0,1]$. Thus the tangent at $r$ lies strictly
+below every other point of this interval, including zero. Its slope
+is negative and its value at $1$ is strictly below $F_c(1)=0$.
+For $x>1$ it decreases further, whereas $F_c(x)\ge0$. This proves
+the strict support assertion through both axes. Integrating it with
+mass $\mu$ and first moment $V=\mu r$ proves (JS.15).
+
+Let $\nu_0$ assign mass $\mu/2$ to each of
+$(\sqrt r,\sqrt{W/\mu})$ and $(\sqrt r,-\sqrt{W/\mu})$.
+Its covariance is $M$, since the off-diagonal cancels and the two
+diagonal integrals are $m_1,m_2$. Its cost is $C_{\rm end}$.
+For any equality direction, writing $\epsilon=\operatorname{sign}(zw)$,
+
+$$
+n=(0,\eta\sqrt{m_1/\mu},-\sigma\sqrt{m_2/\mu})^T,\qquad
+k=-\frac{d_f+2\epsilon z_f}{\mu}<0.
+\tag{JS.18}
+$$
+
+For the strict sign use the inherited $m_1>496/1000$, $m_2<345/1000$:
+
+$$
+\frac{d_f}{2|z_f|}
+=\frac{\sqrt{59}+\sqrt{37}}{16}\sqrt{\frac{m_1}{m_2}}
+>\frac{27}{32}\sqrt{\frac{496}{345}}>1.
+\tag{JS.19}
+$$
+
+The last squared comparison is $361584>353280$; the preceding one
+uses $\sqrt{59}>15/2$ and $\sqrt{37}>6$. $\square$
+

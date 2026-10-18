@@ -1,0 +1,87 @@
+## 11. Result map, published dependencies and remaining boundaries
+
+The source-specific results can be located as follows. Every entry is
+under the arbitrary fixed preparation and original ten-output Euclidean
+contract of §§1–2.
+
+| Result | Declarations | Mathematical role |
+|---|---|---|
+| Actual source, signed commands and fixed preparation rotations | 1.1–1.5 | Full $(0,H)\times\mathbb T^2$ domain, finite reachability and Gram $4I_2\oplus I_2$ |
+| Bounded affine observables and worst-$\beta$ projection | 3.1–3.5 | Inherited erasure with offsets; hidden unbounded coordinates remain allowed |
+| Actual-hull useful-readout split | 4.2 | Rank at most one gives $R_0$; rank two gives bounded affine coordinates |
+| Character pair, center, commutant and modulus | 5.1–5.3 | Abstract characters first; ordinary exponential modulus derived from boundedness and lawful triples |
+| Discontinuous phase boundary | 5.4 | Exact updates do not force continuity of the unit phase |
+| Every-competitor radial domination | 6.1–6.4 | Finite character averages and original-metric comparison; all radial witnesses are legal |
+| Endpoint-log corridor and unique scalar root | 7.1–7.4 | Normalization $16H^2$, maximal endpoint-allowed exponential and global feasibility |
+| Unique interior contact and radial amplitude | 7.5–7.6 | Tangency system, exact $e_2^{\rm aff}$, strict floor/baseline inequalities and escaping-parameter coverage |
+| Attaining actual annulus | 8.1–8.2 | Exact image, fibers, height recovery, initialization, all real commands and interior error attainment |
+| Simultaneous paths | 9.1–9.2 | Mixed native term, all-times guards, every truncation and finite concatenation; matching class inclusions |
+| Small budgets and transition | 10.1–10.3 | Exact $e_0^{\rm aff},e_1^{\rm aff},e_2^{\rm aff}$, included tolerance endpoints and the empty guarded zero-dimensional class |
+| Scalar limits | 10.4 | Limits within the positive-support family, without endpoint source extension |
+
+The published suppliers and the extent of reuse are distinct from that
+result map:
+
+| Source | Supplied mathematics | Use in this volume |
+|---|---|---|
+| [F, §§1–3] | Native probability and phase law, arbitrary preparation, actual-ray reachability, original outputs and simultaneous-path formula | Reconstructed in §§1 and 9; these are the unchanged source interfaces |
+| [F, Proposition 7.13] | Necessary full-open error floor | Prior floor credit; §3 derives the needed bound through the sharper bounded-observable interface |
+| [F, §10] | Finite affine factors and the distinction between arbitrary factors and bounded common-phase behavior | Scope boundary: arbitrary factor coordinates cannot all be declared $\beta$-independent; its field-automorphism constructions are not premises here |
+| [O, §§3–4] | Bounded affine observable erasure and exact worst-$\beta$ decomposition | Reused with full proofs in §3, for precisely bounded affine observables |
+| [O, §§6, 8 and 11] | All-finite nonattainment below the transition, equality above it, dimension-zero baseline, a positive gap at every fixed dimension and the dimension limit | Prior results and context, not discoveries claimed here; the exact two-dimensional endpoint is established directly by §§4–8 |
+| [O, §9 and §11.7] | Direct simultaneous-path integration and full all-times guard interface | Reconstructed in §9 and applied to the annulus and height witnesses |
+
+Relative to those manuscripts, the substantive addition is the exhaustive
+useful-readout reduction at budget two, its exact radial-exponential
+minimax, the unique scalar root and radial profile, and the matching
+annulus with the same optimum in all four contracts. The rank argument
+also determines the one-coordinate baseline below the transition. The
+floor, bounded-observable erasure, dimension-zero baseline, transition and
+existence of a fixed-dimension positive gap already have the credited
+suppliers above. The exact formula does not depend on treating their
+nonattainment or gap results as a substitute for the new minimax proof.
+
+The general ingredients used here are finite-dimensional affine
+homogenization and linear algebra, characters of abstract abelian groups,
+divisibility, finite geometric sums, the bounded additive-function
+argument, orthogonal projection, elementary convexity and concavity, and
+one-variable calculus. The needed forms are proved directly. No
+topological classification of discontinuous characters or external
+translation-space theorem is a premise. No worldwide-priority or
+exhaustive-literature claim is made.
+
+The following boundaries are part of the conclusions:
+
+- The source is the actual current-ray domain with $0<Z<1$ and
+  $0<k<H$. Retained lifts, arbitrary history encoders, vanished
+  support, a reduced command menu or a finite-horizon replacement
+  specify different problems. Every executed history in the
+  assertions is individually finite.
+- Stored dimension, actual affine-hull dimension and useful-readout
+  rank have separate roles. The radial reduction concerns optimal
+  error; it neither classifies every finite affine factor nor proves
+  that all unbounded hidden coordinates lose $\beta$. The radial
+  uniqueness theorem does not classify all optimizing realizations.
+- All updates and initialization are exact over real coordinates.
+  No common matrix across varying models, coefficient bound,
+  precision bound, regularity of arbitrary encoders, or compactness
+  of their latent images is assumed. The exact height guard of the
+  annulus is a mathematical function on its actual image.
+- The witness is noninjective and its decoded $02$ pair is zero,
+  although every actual native ray has positive $02$ radius. Thus
+  decoded vectors need not be native physical outputs. Requiring
+  physical outputs or injection would remove this witness and
+  would require a separate upper-bound analysis.
+- General positive fixed dimensions beyond the solved budgets
+  $0,1,2$ below the transition retain unresolved exact capacities
+  and attainment questions. The prior all-finite and dimension-limit
+  results do not settle them, and the two-dimensional formula gives
+  no general sharp dimension rate or efficient algorithm.
+- The original finite-hidden-$N$ attainment alternative remains
+  unresolved. No bridge identifying its objective or admissible
+  realizations with this affine-readout problem is supplied.
+- Exact-real persistence does not give finite-bit storage, noisy
+  robustness, conditioning, measurement acquisition, physical
+  implementation, training, or empirical machine-learning claims.
+  These handwritten proofs are not kernel-verified declarations.
+

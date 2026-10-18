@@ -1,0 +1,36 @@
+**Theorem 2.4 (The explicit QJM response violation).** Let $v$ be the
+positive unit eigenvector of $C_Q$ and set $x=u_+^Tv>0$,
+$q_b=76/195$. For the B seed at angle zero, its unsigned $N$ response
+in (2.22), without its outer orbit weight $195/119$, is
+
+$$
+C_{\mathrm B}=q_bx^2\left[
+\frac{3n}{8}u_+u_+^T+\frac n8v_+v_+^T+
+\frac{1-n}{4}R_-\right],\qquad C_{\mathrm B}d=0.
+\tag{2.24}
+$$
+
+Its top eigenspace is exactly $\mathbb Ru_+$, and
+
+$$
+\operatorname{tr}[(u_+u_+^T-a_{\mathrm B,0}a_{\mathrm B,0}^T)
+C_{\mathrm B}]=\frac{19}{130}gnx^2>0.
+\tag{2.25}
+$$
+
+Thus the QJM channel fails the fixed-encoder preparation-response
+condition, rather than merely lacking an optimality proof.
+
+Proof. Since $v\in L$, its squared overlap with the rotated B
+measurement seed is $q_bx^2\cos^2\alpha$. The rotated $N$ effect
+has no dark component. Its plus contributions integrate with moments
+$3/8,1/8$; the independently averaged minus plane contributes
+$(1-n)/4$. Odd and mixed-plane terms vanish. Reflection leaves these
+diagonal terms unchanged, proving (2.24).
+Because $n>1/2$, $3n>2(1-n)$, and the plus top coefficient is
+strictly larger than every other coefficient. The old B seed is
+$\sqrt g\,d+\sqrt{1-g}\,u_+$, so its response loses fraction $g$
+of the top score. Since $q_b(3/8)=19/130$, this proves (2.25).
+The strict event gaps in (2.14) supply the hypotheses of Theorem 2.3;
+Theorem 2.2 supplies a finite exact descent. $\square$
+

@@ -1,0 +1,36 @@
+**Proposition 4.3 (exact actual attainment and coverage).** One has
+
+$$
+\Omega_b=\{\eta_b(u):u\in\mathcal U_*\}.
+\tag{FCS.18}
+$$
+
+In particular the nonempty cells $\mathcal U_\eta$ partition exactly
+the original actual domain. Every retained tuple has an explicitly
+constructed finite current filling and its actual inverse origin.
+
+Proof. Under any assignment of branch images to live names, $J$ is
+exact for image membership of the evaluated free term. Literal and name
+cases follow from (FCS.6). At a pair, becoming $E$ requires both children
+literally beta and alpha: neither a name, filled by a branch, nor a pair
+can become a leaf. The other image alternative is exactly a pair of
+images. Induction proves exactness of (FCS.15), also at $\mathscr S(A)$.
+
+An actual source has a unique inclusive prefix decomposition with stops
+at its early leaves. Every live frontier branch is an image, by
+Proposition 1.4's subtree fact. Its assignment therefore passes $J$.
+Identical free class terms would evaluate equally and violate an actual
+whole-class disequality. Thus every actual profile passes (FCS.16).
+
+Conversely take a retained tuple and apply Lemma 4.2 to all of (FCS.14)
+at once. The six resulting values $x_d$ are pairwise different, and
+exactness of $J$ puts $\mathscr S(x)$ in $\mathcal I$. The bijection
+(FCS.7) gives the finite actual origin $\delta(\mathscr S(x))$ with
+exactly the original complete current row. Its prefix is exactly the
+retained tuple: the fixed constructors remain, all live values are
+branches, and no value is filled below a recorded leaf. Repeated
+partners share the same class term throughout. Thus every retained cell
+is actual, and none is omitted. This is PCA Theorem 11.2 and TCR
+Proposition 5.3 at the precise parameters above, with the filling details
+exposed. $\square$
+

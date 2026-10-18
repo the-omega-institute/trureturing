@@ -1,0 +1,4 @@
+**Proposition 8.3 (value regularity).** The local value in strength is continuous and $C^1$ across the event and analytic on each side, with the derivative stated in Theorem 1.4.
+
+Proof. On each positive-weight physical side, differentiate the matching identity $2V-H_{\rm high}=Y\cdot B-\lambda k$. Differentiated moments and stationary contact equalities give $Y'\cdot B=k$. Thus $2V'=-\lambda k'$. The strictly positive $k'$ permits inversion to strength, yielding $V_s=-\lambda\sqrt\alpha/(2s_0)$. Both analytic branches have the identical event law and dual vector. Their value and first strength derivative have the same limit. This proves the asserted $C^1$ gluing. No assertion about matching second derivatives at the event is needed or made. $\square$
+

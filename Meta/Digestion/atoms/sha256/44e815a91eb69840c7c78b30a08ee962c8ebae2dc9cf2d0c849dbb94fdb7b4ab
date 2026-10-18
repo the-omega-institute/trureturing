@@ -1,0 +1,90 @@
+**Convention 5.1 (credited safe-gap surplus).** Put
+$e_*=\max(K,L)$ and $d_*=\min(K,L)$, and retain the original partition
+
+$$
+\mathcal L_*=\{I=(a,b)\in\mathcal I:b-a\ge5,\ b>e_*\},
+\qquad \mathcal A_*=\mathcal I\setminus\mathcal L_*.
+\tag{TS.17}
+$$
+
+The safe-gap facts used here are [SI, Lemma 10.2, Theorem 10.4,
+Corollary 10.5 and Proposition 10.9][SI], with the strict short units of
+[SB, Section 4 and Theorem 5.6][SB]:
+
+- A gap ending at $b\le e_*$ has $D_I=0$, at any span.
+- Spans at most four satisfy $E_I-D_I\ge0$.
+- Each span-two or span-three gap satisfies $E_I-D_I\ge1$.
+- A terminal span-four gap $(n-4,n)$ satisfies $E_I-D_I\ge2$.
+
+For clarity, their local mechanisms do not assume a realizable arbitrary
+syntactic path. At the last internal layer a host with label $i$ has support
+$T_b\setminus\{i\}$, excluding sharing by nested/equal-support exclusion.
+If a shared pair had
+$\min(g-h,z-w)\le n-b$, put
+$M=\max(h+z,g+w)$ and $t=b-1-M$. The capacities
+$A_1=K-1-g$, $A_0=L-1-z$ satisfy
+
+$$
+A_1+A_0-t=n-b-\min(g-h,z-w)\ge0.
+$$
+
+A common reply word of $t$ letters, with at most $A_1$ ones and $A_0$
+zeros, therefore gives two actual live extensions to the exclusive last
+layer: every common state queries fresh coordinates for both histories.
+This contradiction proves both gaps at least $\max(2,n-b+1)$.
+When $b\le e_*$, that bound is at least $d_*$, exceeding one of the
+two count-range diameters, so sharing is impossible.
+
+At span two the two possible internal supports demand opposite missing
+labels, so $D_I=0$, while ambiguity gives $E_I\ge1$.
+At span three, last-layer and cross-layer sharing are excluded; all sharing
+is between the single possible pair of first-layer cells with opposite
+singleton live-reply sets. If there are $s$ shared states, $D_I=s$.
+The two ambiguous layers give
+$E_I\ge\max(2,2s-1)$ and hence $E_I-s\ge1$.
+At span four the credited fixed-successor classification is the six-pair
+relation with its appropriate first two layers, and an exclusive last
+layer. With three ambiguous layers it gives $E_I\ge3$ and
+$E_I\ge2s-5$. A strict deficit would force $s=4,E_I=3$ and all
+six incident cells. The pendant-edge degree equations are (TS.15);
+the same singleton-support contradiction excludes that case. This is
+nonnegative span-four compensation, not Lemma 3.1's strict extension.
+At terminal span four only one extreme pair survives (TS.3).
+Then $D_I=s$, and its three ambiguous layers give
+
+$$
+E_I-D_I\ge2+\max(1,2s-2)-s\ge2.
+$$
+
+No attainment of that terminal bound is part of these credited facts.
+
+Let $\mathcal S$ be the set of span-two/three gaps, put
+$b_{\rm short}=|\mathcal S|$, and let
+$\tau=\mathbf1_{\{(n-4,n)\in\mathcal I\}}$. Define exactly the safe
+remainder of [SB, Theorem 5.6][SB]:
+
+$$
+\begin{aligned}
+\Xi={}&\sum_{I\in\mathcal S}(E_I-D_I-1)\\
+&+\begin{cases}
+ E_{(n-4,n)}-D_{(n-4,n)}-2,&\tau=1,\\
+ 0,&\tau=0,
+ \end{cases}\\
+&+\sum_{I\in\mathcal A_*\setminus(\mathcal S\cup\{(n-4,n)\})}
+ (E_I-D_I),\\
+R={}&\nu+E_{\rm reg}+b_{\rm short}+2\tau+\Xi.
+\end{aligned}
+\tag{TS.18}
+$$
+
+Each term of $\Xi$ is nonnegative. Empty span-one interiors contribute
+zero. The local facts above and (TS.9) give the exact original identity
+
+$$
+m-G=R-\sum_{I\in\mathcal L_*}(D_I-E_I).
+\tag{TS.19}
+$$
+
+It is essential that $R$ and the deficits are evaluated on the same graph;
+they are not independently optimized block quantities.
+

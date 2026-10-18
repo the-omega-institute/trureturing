@@ -1,0 +1,19 @@
+**Theorem 61.1 (repo-derived joint local isolation).**
+The point \((0,[V/\sqrt6])\) is locally isolated in the space of pairs
+\((b,[B])\) for which \(|b|<1\) and \(B\) is an actual common-flat
+orthonormal basis for \(H_0(b)\). Brackets identify independent column
+phases and column permutations only.
+
+More explicitly, after matching the six columns and normalizing their
+first entries, there is a neighborhood of \((0,V)\) in which the only
+unit-entry matrix \(Z\) satisfying
+
+\[
+ Z^*Z=6I_6,\qquad |(M(b)Z)_{rk}|^2=6\quad(0\le r,k\le5)
+\tag{61.4}
+\]
+
+is \(b=0, Z=V\). This excludes distinct nearby solutions, not only
+smooth continuations of the displayed basis. It makes no classification
+claim about other central completions or other points of the branch.
+

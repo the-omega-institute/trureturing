@@ -1,0 +1,112 @@
+**Theorem 4.1 (at most one common terminal coordinate).** Two distinct
+worlds of $\mathcal F^{\ne0}_7(H)$ on the entire ancestor (1.3),
+with common $d$, common $U$, common $V$, and nonzero sixth gains,
+can agree in at most one of $A,B,C,D$.
+
+Proof. By (2.5), $h=V-U$ is common and nonzero: $f(6)=T_0h$ and
+$T_0>0$. Equality of $U=d+hs$ then gives a common $s$. Thus
+$y=s-x>0$ in both worlds. Define
+
+$$
+K_0=1+xy,\quad K_1=1+xy+x,\quad
+K_2=1+xy+y,\quad K_3=2+xy+x+y.
+\tag{4.1}
+$$
+
+All $K_j$ are positive, and terminal coordinates are respectively
+$d+tK_0,d+tK_1,d+tK_2,d+tK_3$, with $t\ne0$.
+
+At fixed $s$, differentiation in $x$ gives
+$K_0'=y-x$, $K_1'=y-x+1$, $K_2'=y-x-1$ and $K_3'=y-x$.
+The complete five strict numerator identities are
+
+$$
+\begin{aligned}
+K_1'K_0-K_1K_0'&=1+x^2,\\
+K_2'K_0-K_2K_0'&=-(1+y^2),\\
+K_2'K_1-K_2K_1'&=-(2+x^2+y^2+s),\\
+K_3'K_1-K_3K_1'&=-\bigl(1+(y+1)^2\bigr),\\
+K_3'K_2-K_3K_2'&=1+(x+1)^2.
+\end{aligned}
+\tag{4.2}
+$$
+
+For full algebraic verification, put $w=y-x$. The first numerator
+is $K_0-xw=1+x^2$; the second is
+$-K_0-yw=-(1+y^2)$. Since $K_2=K_1+w$ and $w'=-2$, the third
+is $-2K_1-w(w+1)=-(2+x^2+y^2+x+y)$. Since
+$K_3=K_1+y+1$, the fourth is
+$-K_1-(y+1)(w+1)=-[1+(y+1)^2]$. Since
+$K_3=K_2+x+1$, the fifth is
+$K_2-(x+1)(w-1)=1+(x+1)^2$.
+The quotient rule therefore yields
+
+$$
+\begin{aligned}
+(K_1/K_0)'&=(1+x^2)/K_0^2>0,\\
+(K_2/K_0)'&=-(1+y^2)/K_0^2<0,\\
+(K_2/K_1)'&=-(2+x^2+y^2+s)/K_1^2<0,\\
+(K_3/K_1)'&=-[1+(y+1)^2]/K_1^2<0,\\
+(K_3/K_2)'&=[1+(x+1)^2]/K_2^2>0.
+\end{aligned}
+\tag{4.3}
+$$
+
+Every denominator is positive; also $s=x+y>0$. The entire legal
+fixed-$s$ domain
+
+$$
+I_s=\{x:1/3<x<1/2,\ x<s\}
+\tag{4.4}
+$$
+
+is an interval, possibly empty. Each ratio in (4.3) is strictly
+monotone on this interval. If two worlds share a pair of terminal
+coordinates other than $\{A,D\}$, divide their offsets from the
+common drift. Those offsets are nonzero because $t\ne0$ and
+$K_j>0$. One of the five ratios (4.3) is equal in both worlds,
+forcing equal $x$. Common $s$ then forces equal $y$. One equal
+terminal coordinate forces equal $t$. In particular the sources
+and drift are the same. The first four positive trace factors of
+the ancestor determine equal gain polynomials, as in Lemma 2.3.
+The worlds coincide, contrary to the hypothesis.
+
+It remains to exclude precisely $\{A,D\}$. Since
+$D-A=t(s+1)$ and $s+1>0$, equality of $A,D$ gives common $t$.
+Equality of $A=d+t(p+1)$ gives common $p$. Two real pairs with the
+same sum and product are either individually equal or exchanged:
+they are the two roots, including multiplicity, of
+$Z^2-sZ+p$. Individual equality gives the same world as above.
+In the distinct case
+
+$$
+x_2=y_1,\quad y_2=x_1,\quad \Delta=x_1-x_2\ne0.
+\tag{4.5}
+$$
+
+The two worlds then have equal $T_2=s-2p$, $T_4=s-p$ and
+$T_5=p+1$. Their common drift and actual readings at clocks
+$2,4,5$ in (2.3) force equal $F$ samples at those clocks, since
+all three traces are positive. Their common sixth predictions
+gave equal $F(6)=h$, and their common $A,D$ gave equal $F(7)=t$.
+Thus $F_1-F_2$ has the five distinct zeros $2,4,5,6,7$.
+Its degree is at most three, so it vanishes identically.
+In particular both late ancestor equations, with the same
+$\widehat Y,\widehat z$, are used in this step.
+
+Call the common polynomial $F$. From (2.2) and common $s,p$,
+
+$$
+T_{1,0}-T_{2,0}=2\Delta,\qquad
+T_{1,1}-T_{2,1}=-\Delta.
+\tag{4.6}
+$$
+
+Subtracting the clock-zero and clock-one equations of the same
+ancestor gives $2\Delta F(0)=0$ and $-\Delta F(1)=0$.
+Thus $F(0)=F(1)=0$. Clock zero then gives $d=0$, while clock
+one gives $d=24$, a contradiction. The contradiction uses no
+division by a sampled gain and is valid for every degree drop or
+root multiplicity. This excludes the last possible coordinate
+pair and proves the theorem. ∎
+

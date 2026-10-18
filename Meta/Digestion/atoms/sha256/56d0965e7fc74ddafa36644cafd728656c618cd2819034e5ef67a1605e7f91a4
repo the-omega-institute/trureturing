@@ -1,0 +1,80 @@
+**Definition 1.2 (the unchanged source dictionary).** Use the positive
+source amplitudes $h_0,h_1,h_2,a,b,c_{\rm src},d$ and $m_1,m_2>0$ of
+Assumption 1.1. In qutrit coordinates define
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad
+S=c_{\rm src}e_0e_2^T+de_2e_0^T,\quad
+M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\quad
+\theta=\frac{ab}{h_0h_1},\quad\omega=\frac{c_{\rm src}d}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\\
+s_0=\sqrt\delta,\quad\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad
+\alpha+\beta=1,\qquad
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\\
+(K_0,K_1,K_2)=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\quad
+H_0=(1-\delta)N_{00}>0.
+\end{gathered}
+\tag{IC.1}
+$$
+
+The TP identity applies at the stipulated root. On the directed circle
+$x=(u,v)^T$, $u^2+v^2=1$, put
+
+$$
+\begin{gathered}
+h=(1,u/\sqrt\alpha,v/\sqrt\beta)^T,\qquad
+K_h=s_0D+(u/\sqrt\alpha)T+(v/\sqrt\beta)S,\\
+n_h=(0,dv/(h_2\sqrt\beta),-bu/(h_1\sqrt\alpha))^T,\quad
+\ell(h)=h^TGh=x^TE_\ell x+l_u u+l_v v,\\
+E_\ell=\begin{pmatrix}
+\delta N_{00}+N_{11}/\alpha&N_{12}/\sqrt{\alpha\beta}\\
+N_{12}/\sqrt{\alpha\beta}&\delta N_{00}+N_{22}/\beta
+\end{pmatrix},\quad
+l_u=2\sqrt{\delta/\alpha}N_{01},\quad
+l_v=2\sqrt{\delta/\beta}N_{02},\\
+f(h)=n_h^T\Delta n_h=x^T\mathsf F x=2euv-d_*v^2,\qquad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\\
+e=-\frac{bd\Delta_{12}}{h_1h_2\sqrt{\alpha\beta}}>0,\qquad
+d_* =\frac{11d^2}{64\beta h_2^2}>0,\qquad
+\Delta_{12}=\frac{\sqrt{37}-\sqrt{59}}{16}.
+\end{gathered}
+\tag{IC.2}
+$$
+
+The exact physical capacity is
+
+$$
+\begin{gathered}
+\mathfrak c(x)=\frac{N_c(x)}{D_c(x)},\quad
+D_c(x)=D_u u^2+D_v v^2,\quad N_c(x)=N_u u^2+N_v v^2,\\
+D_u=h_0^2\delta+b^2/\alpha,\quad
+D_v=h_0^2\delta+d^2/\beta,\\
+N_u=h_1^2h_2^2\delta+a^2h_2^2/\alpha,\quad
+N_v=h_1^2h_2^2\delta+c_{\rm src}^2h_1^2/\beta.
+\end{gathered}
+\tag{IC.3}
+$$
+
+All four axial coefficients are positive. Define
+
+$$
+\begin{gathered}
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad
+U=\alpha V>0,\quad V_2=\beta W>0,\quad\mu=U+V_2,\\
+u_F=V/\mu,\quad v_F=W/\mu,\quad
+\mathfrak c_f=\mathfrak c(\sqrt{\alpha u_F},\sqrt{\beta v_F}),\quad
+\nu=\mu/\mathfrak c_f,\quad t_0=W/\mathfrak c_f.
+\end{gathered}
+\tag{IC.4}
+$$
+
+The angular point in (IC.4) corresponds to the source-ellipse point
+$(1,\sqrt{u_F},\sqrt{v_F})$ in FC (FC.2). In particular
+$V_2$ differs from $V$, $d_*$ differs from the amplitude $d$, and
+$\mathfrak c$ differs from $c_{\rm src}$.
+

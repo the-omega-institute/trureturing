@@ -1,0 +1,19 @@
+## 422. The remaining strict middle-V order
+
+Sections 382-385 exclude v<=min(c,d) under the full source hypotheses
+of Section 413. Theorem 418.1 excludes v>=max(c,d). Therefore the only
+remaining numerical orders are
+
+    d<v<c or c<v<d.
+
+All equality cases are already excluded, including c=d and v equal
+to either low companion. This is a comparison of numerical coshes;
+the actual labels remain distinct even when their values coincide.
+The source tau distinguishes C and D and is never symmetrized here.
+
+**Theorem 422.1.** Under all hypotheses of Section 413, neither strict
+middle order is possible. The proof uses both compensation bounds:
+the unconditional four-theta estimate (407.2), and the conditional
+three-theta estimate (407.1) only after proving the relevant axial
+angles are at most pi/3.
+

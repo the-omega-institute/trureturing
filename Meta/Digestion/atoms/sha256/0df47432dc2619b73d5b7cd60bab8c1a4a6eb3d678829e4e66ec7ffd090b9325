@@ -1,0 +1,43 @@
+**Proposition 72.3 (a separated straight skeleton in every $s\ge3$).**
+The half source tree admits a straight unit-edge embedding in
+$\mathbb R^3$ such that every source vertex has height in $(1/4,3/4)$,
+every ground endpoint has height zero, all ground endpoints are distinct,
+and segments meet only at their prescribed common endpoints. Incident
+rays have a positive minimum angle and nonincident compact segments and
+vertices have positive clearance. Reflection in the height-zero plane
+produces a connected embedded double with $3n+1$ vertices, $4n$ unit
+edges and no self-loops. The same assertion holds in $\mathbb R^s$ by
+using a fixed three-dimensional linear subspace.
+
+**Proof.** Place the root at height $1/2$. Install inherited tree edges
+successively. Choose each unit direction in the open band with vertical
+component of absolute value less than $1/(8(n+1))$. All source vertices
+then have heights in $(3/8,5/8)$. The directions for a new segment from
+$p$ which meet an already installed segment not incident to $p$ form a
+set of spherical area zero: they are radial projections from $p$ of a
+line segment, hence at most one-dimensional. Passing through an existing
+vertex, coinciding with a previous incident ray, and placing a coincident
+endpoint likewise exclude sets of area zero. Finitely many such exclusions
+cannot exhaust the band. Induction gives the embedded source tree.
+
+For a ground stub from a leaf $p$, its possible unit-distance endpoints
+on the plane form a circle with radius $\sqrt{1-p_3^2}$. The union of the
+corresponding segments is a right circular cone truncated at the plane.
+A fixed straight segment intersects this cone in at most two points unless
+its supporting line lies on the cone. A line contained in this cone is a
+generator, which excludes only one azimuth. An incident segment at $p$
+also excludes at most its own generator. Thus finitely many existing
+segments exclude finitely many azimuths. Excluding previously chosen
+ground endpoints and repeated rays leaves a choice for each of the two
+distinct stubs. Every stub is strictly above the plane except at its
+ground endpoint. This also proves separation from the reflected open
+half. Finiteness now gives the asserted clearance and angle margins.
+
+A full binary source has $n-1$ seams and $n+1$ ground stubs. The double
+has two copies of the $n$ source vertices, one vertex at each of the
+$n+1$ grounds, and two copies of all $2n$ cables. Reflection introduces
+ordinary cycles but no edge from a vertex to itself. No cycle-length
+placement equation is required, because the second half is the reflection
+of the first. All three-dimensional distances remain the same in the
+higher-dimensional embedding. $\square$
+

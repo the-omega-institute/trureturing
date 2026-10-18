@@ -1,0 +1,36 @@
+**定理 16.2（Exact full mixed-tail protected-spectrum law）。** For every parameter, support, and label choice in Definition 15.1, under both original literal alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f)=C_{\rm pre}(f)=LQ+1.}
+\tag{16.6}
+$$
+
+Construction 16.1 attains this cost on the entire joint actual INITIAL prior, including the initial rejection record, sparse protected supports, noncoprime phases, arbitrary label coincidences, a full $d=Q,a=0$ staircase, partial staircases, and equality $J+Lr=m$.
+
+Proof. Lemma 15.2 supplies the all-action lower bound, so it remains to prove the stream, its seams, and its immutable leaf labels.
+
+During its first $d$ all-one blocks, precisely the INITIAL tail band $t$ first rejects at index $t-1$, for $1\le t\le d$. Its leaf returns $R_t$, regardless of its preceding values. If $a>0$, precisely the remaining INITIAL tails $H\le s<k-dm$ first reject in (16.2), and their leaf returns $R_\star$. Every low INITIAL tail $s<H$ survives: its tail after the $d$ full-one blocks is at most $k-a-1$, so the $a$ subsequent leading ones, when present, reach at most $k-1$, after which zero clears it. The rest of (16.2) consists of zeros. These are labels of the INITIAL bands; the label $L_\bot$ is returned only from the separate free initial rejection reading.
+
+Let
+
+$$
+B=d+\mathbf1_{\{a>0\}}
+\tag{16.7}
+$$
+
+be the number of prefix blocks that complete this band separation. No successful source is decoded as a low source before these $B$ blocks have been paid. This prevents any unrejected band from borrowing a low label, even when band labels coincide with endpoint or protected labels. After these blocks every remaining source has INITIAL tail $s<H$ and its target depends only on $j$.
+
+Write $\Delta_t$ for its observed successful endpoint difference at block $t$. The root has $\Delta_0=1$ exactly at $j=0,m$. If $d\ge2$, on this root-positive archive block one has $\Delta_1=0$ at $j=0$ and $\Delta_1=1$ at $j=m$, by the all-one support $\{m,2m\}$. If $d=1,a>0$, the same separation holds because (16.2) has support $\{m,m+a\}$. Thus, outside the endpoint-retaining case, the two endpoint sources can return their exact labels $D,E$ once all $B$ band-separating blocks have completed. They have stopped before any main query, since $B\le Q$. The main compensation at $0$ in (16.4) therefore affects no continuing low source on that completed endpoint archive.
+
+Every other positive difference in these prefix blocks, on a root-zero archive, is supported at a multiple of $m$ or at $dm+a$ when $a>0$. None of those phases is protected. Their surviving low sources have label $A$, and can return it after block $B-1$. All protected sources have entirely zero prefix differences. Consequently, in the regular case, the continuing zero-prefix archive consists of all protected sources and some actual default-$A$ sources; the endpoints have already stopped.
+
+In the endpoint-retaining case the only prefix block is the root, and the root-positive archive still contains $j=0,m$. The pulse (16.3) misses those endpoints and all of $S$. Any successful root-zero source with pulse difference one has label $A$ and stops there. In particular, every actual root-zero source at $Qm$ has stopped before the extra parity charge at that vertex in (16.5). At the first main block, (16.5) has response one at $0$ and zero at $m$, which is outside $W_Q$. On their root-positive archive this separates $D$ and $E$ exactly. Those sources now stop, so later compensation at $0$ is harmless on the same acquired archive. No observation from the default-$A$ pulse archive is used to decode an endpoint source or a protected source.
+
+For every continuing root-zero source in either case, the main response at index $\ell Q$ equals $c_\ell(\eta(j))$ when $j\in S$, and zero otherwise. In (16.4), the only charged vertex outside $S$ is an already completed endpoint. In (16.5), the additional charged default vertex has already been screened by the paid pulse. Non-main zero blocks have zero successful difference, and the special pulse misses $S$. Thus after the $L$ main responses the decoder returns the label assigned to that code. The all-zero code returns $A$, both for protected occurrences of $A$ and for every continuing default source. Injectivity separates different protected labels, while repeated occurrences or coincidences with other leaf labels are allowed. These deductions use the chronological archive of the same original source throughout.
+
+It remains to check literal legality at every seam. The all-one prefix has already been checked directly against each INITIAL tail. If $a>0$, its partial block ends at tail zero. If $a=0,d<Q$, the next block starts zero and clears every survivor; in the endpoint-retaining case it is either a zero wait or, at $Q=2$, the pulse (16.3), which also starts zero. The pulse ends at tail one. If $a=0,d=Q$, survivors can still have tail $k-1$ immediately before the first main query. Its left vertex is $Qm$, which is outside $S$ and different from $0$, and (16.4) prescribes zero there; hence its inverse starts zero and safely clears every survivor.
+
+Every regular main word starts zero. For $1\le\ell\le L$ its first vertex $T-\ell r$ is at most $Qm$, above the low protected interval, different from $0$, and not in the upper protected interval. Thus it is uncharged in (16.4). After that first zero a length-$m$ block has no run reaching $k>2m$. In the endpoint-retaining first query its left vertex may be charged by (16.5), but the incoming tail is one and any leading run has length at most $m$; $1+m<k$ makes the seam strictly legal. The other main words start zero. Successive main indices are separated by $Q-1\ge1$ paid zero blocks. Any such wait clears the preceding tail, and any post-zero internal run is shorter than $k$. No additional rejection occurs after the INITIAL bands have been separated.
+
+All issued words have length $m<k$, so all are internally legal and belong to both original alphabets. The seam argument checks their actual concatenation, not just their internal words. Neither sparse actual phase supports nor nonactual compensation possibilities are assumed: the supports above are explicit full-path supports, and any prescribed nonactual pulse charge simply supplies no source. All equality and extreme staircase cases satisfy the same inequalities. The construction never discards a paid zero block or the paid screening pulse. Its last main word is block index $LQ$, giving fee $LQ+1$. The same literal stream works on both values using their own differences, and initial $\bot$ stops freely with $L_\bot$. Hence $C_{\rm pre}\le LQ+1$, which with Lemma 15.2 proves (16.6). ∎
+

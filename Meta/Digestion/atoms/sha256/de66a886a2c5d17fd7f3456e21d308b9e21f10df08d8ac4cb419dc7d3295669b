@@ -1,0 +1,46 @@
+**Proposition 57.1.** On the actual positive-imaginary real branch
+(54.1)–(54.2), for every \(-1<a<1\), there is no normalized vector
+\(\xi\) such that \(\xi,H_a\xi\) are flat and
+\(\xi,\mathcal S\xi,\mathcal S^2\xi\) are orthonormal.
+Equivalently, the common unbiased vectors for the original column-basis
+pair \((I,G_a)\) contain no orthogonal triple consisting of one
+synchronous cyclic orbit.
+
+This statement concerns that orbit type. It does not assert an
+exclusion for arbitrary triples selected from different orbits, or for
+a general fourth mutually unbiased basis in dimension six.
+
+**Proof.** Retain the exact input, phases, and polynomial definitions
+of (55.24)–(55.27). The actual-input necessity argument in
+(55.4)–(55.26) applies throughout
+\[
+(1+h^2)(1+b^2)=4,\qquad h>1,\quad |b|<1,\quad a=hb.
+\tag{57.1}
+\]
+In particular, the already proved denominator exclusions and the
+exclusion of the balanced centroid justify that reduction on the
+whole open branch. The actual channel exchange (55.21)–(55.22)
+changes \(b\) to \(-b\), inverts the nonzero centroid squared modulus,
+and permits the strict normalization \(0<|\zeta|^2<1\). Therefore
+\(\zeta=s+it\) has \(s,t\in[-1,1]\). The two proper charts (55.27),
+with their respective row degrees \((2,1,2,1)\), cover every finite
+real \(\tau\) using \(v\in[-1,1]\).
+
+Proposition 56.1 already excludes \(|b|\le1/2\), including its
+endpoints. The reflection (56.3) maps the remaining negative half to
+the positive half in both proper charts. It is consequently enough to
+exclude a common zero of the four necessary rows on
+\[
+1/2\le b<1,\qquad s,t,v\in[-1,1],\qquad
+h=\sqrt{(3-b^2)/(1+b^2)}.                                  \tag{57.2}
+\]
+We prove the stronger polynomial assertion that on the closed cube
+\(1/2\le b\le1\), the only common-zero stratum is
+\[
+b=h=1,\qquad s=-1/5,\qquad t=-2/5,                         \tag{57.3}
+\]
+with arbitrary chart coordinate \(v\). This stratum is retained in
+the relaxed polynomial system; it lies at \(m=0\), and outside the
+strict domain (57.2). No division by a linear-row coefficient or by a
+new centroid expression is used below.
+

@@ -1,0 +1,30 @@
+**Definition 2.1 (finite trees, update and literal values).** Let
+$\mathcal T$ be the finite nonempty ordered full binary trees generated
+by leaves $\alpha,\beta$ and pairing $\langle x,y\rangle$. Leaves have
+height zero, and
+
+$$
+\operatorname{height}(\langle x,y\rangle)
+ =1+\max(\operatorname{height}(x),\operatorname{height}(y)).
+$$
+
+The one-register update is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{FM.1}
+$$
+
+A literal is a finite word over $\{L,R\}$; $\varepsilon$ is the empty
+word. The reached addresses of $u$ form $\operatorname{Pos}(u)$.
+At a reached $q$, $\operatorname{val}(q,u)$ is $\alpha$, $\beta$ or
+$\mathsf{br}$ according to its constructor. If a leaf at a strict
+prefix blocks navigation, its value is $\mathsf{abs}$. The root is
+always reached. The notation $u|_a$ is used only at a reached address.
+An actual $\operatorname{Read}(q)$ submits the entire materialized
+literal and obtains its value at that event. Computing the same value
+from retained data creates no Read event. These are the native objects
+of [DEV, Definitions 1.1–1.4].
+

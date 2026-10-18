@@ -1,0 +1,72 @@
+### 20.1 有限层数据
+
+对每个 \(j\in\mathbb N\)，给定有限顶点集 \(V_j\)、有限边集 \(E_j\)、顶点概率测度 \(\mu_j\) 和正边测度 \(\nu_j\)。定义
+
+\[
+\Pi_j^\delta
+=
+\left\{
+p=(p_v)_{v\in V_j}:
+p_v\in\Delta(\Sigma),\ 
+p_{v,s}\ge\delta
+\right\},
+\qquad
+0<\delta\le\frac15.
+\]
+
+这里 \(\delta\) 只用于保证 Fisher 曲率有限。若允许概率落在边界，应把 Fisher 泛函取为扩展值 \(+\infty\)，并另行证明下半连续性。
+
+令
+
+\[
+\mathcal H_j=\mathbb R^{V_j},
+\qquad
+\mathcal E_j=\mathbb R^{E_j},
+\]
+
+并使用加权内积
+
+\[
+\langle f,g\rangle_{\mu_j}
+=
+\sum_{v\in V_j}\mu_j(v)f_vg_v,
+\qquad
+\langle \eta,\zeta\rangle_{\nu_j}
+=
+\sum_{e\in E_j}\nu_j(e)\eta_e\zeta_e.
+\]
+
+令 \(B_j:\mathcal E_j\to\mathcal H_j\) 为已有的边界算子，令
+
+\[
+G_j=B_j^*:\mathcal H_j\to\mathcal E_j.
+\]
+
+定义图 Dirichlet 二次型
+
+\[
+\mathcal Q_j(f)
+=
+\|G_jf\|_{\nu_j}^{\,2}
+=
+\langle f,B_jB_j^*f\rangle_{\mu_j}.
+\]
+
+这一步只使用有限图的边界矩阵和加权线性代数。
+
+对每个 \(j\)，令 \(\mathsf C_j^R\) 是当前理论中有限载体的一个非空紧凸截面。例如可以取
+
+\[
+\mathsf C_j^R
+=
+\mathsf P_j^\delta
+\times
+\mathsf D_j^R
+\times
+\mathsf N_j^R
+\times
+\mathsf Z_j^R,
+\]
+
+其中 \(\mathsf P_j^\delta\subseteq\Pi_j^\delta\)，其余三个因子是现有图场、隐藏切向量和边流空间中的闭有界凸集。有限维性保证这些截面紧。这里 \(R\) 是数学截断参数，不被解释成物理半径或能量。
+

@@ -1,0 +1,25 @@
+# Recursive relational observation: typed residual resource boundaries
+
+This volume isolates a boundary that remembers both future behavior and the
+resources charged by a continuation.  The object is a typed partial process on
+one actual common source.  A boundary is therefore a quotient of an actual
+reachable image, with legal actions, failures, selectors, archives, clocks,
+and resource responses included in its declared observation contract.
+
+The construction combines [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md),
+especially §§19--21 and §§26--27, with [Transport--Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md),
+§§2.1, 2.17--2.20 and 3--4.  [Serial Joint Resource Frontier](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md),
+§§1, 5, 7 and 8 supplies the distinction between uniform, Pareto and weighted
+resource objectives.  [Uniform Descriptor Boundary](RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_DESCRIPTOR_BOUNDARY.md),
+§§4--7 supplies source-independent descriptor and factorization conditions.
+The typed residual and ordered-path boundary is related to [Typed Residual
+Cocycle Reconstruction](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md),
+§§1--6, and the four-view conditions use [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md),
+§§27--34.  The symbols $\alpha,\beta$ below are read through
+[Fibonacci Atomic Relation Generation](FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+§§2--5 and §21.
+
+The definitions and proofs here are ordinary mathematics at the stated
+interfaces.  They add no Lean declaration or kernel verification, and they do
+not assert a physical realization or a universal Fibonacci law.
+

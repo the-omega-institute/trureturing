@@ -1,0 +1,14 @@
+## 56. Complete trace-error landscape for mixed sources with c >= 1-r
+
+This extends §55 by resolving its remaining corner regime.
+
+Let rho=r|00><00|+q|11><11|+c(|00><11|+|11><00|), with r>=1/2, q=1-r>0 and q<=c<=sqrt(rq). Define D=sqrt(c^2+q^2). For target tau=rho(P,w), after independent local output phase and population sorting assume P>=1/2, w>=0 and w^2<=P(1-P). LOSR is finite convex mixtures of product qubit CPTP maps. The norm below is the unhalved trace norm, with no support restriction on candidate outputs.
+
+The exact error is:
+
+1. If P<=r: delta=2 max(0,w-c), by the population-interval theorem §51.
+2. If P>=r and t=[q(1-P)+cw]/D^2<=1: delta=2 max(0,[qw-c(1-P)]/D), by the edge theorem §55.
+3. If P>=r and t>=1: delta=2 sqrt((P-r)^2+(w-c)^2).
+
+On overlaps the formulas agree. For t=1, the edge projection equals rho, and its norm difference is the third formula. At P=r, t>=1 is equivalent to w>=c, agreeing with regime1. The product source q=0 is outside these parameters and is already handled by §53.
+

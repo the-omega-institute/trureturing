@@ -1,0 +1,39 @@
+**Theorem 68.6 (The unchanged nonatomic positive-row endpoint lies in the supplied range).** Take exactly the original carrier, consumer and targets of Theorem 67.5, with its fixed $h\in(0,1)$ and allowed profile. Use its already declared $B_n$ as the supplier blocks, let $\tau_n$ be Lebesgue probability on the original copy $B_n=(0,1)$, take $S_n=[0,1]$, $T_n(s)=s$, and $\omega_n(b)=b$. Specify all this data from (67.16)--(67.18), before selecting any preparation. It satisfies Definition 68.3. The resulting fixed range consists of arbitrary probability mixtures of the $B_n$ block laws whose normalized conditional densities extend to nonnegative $1$-Lipschitz functions of integral one on $[0,1]$. Its stable fibers are all nonempty at the unchanged original cap $h=R_\mu$, and (68.18) supplies a lawful attainer in this range, on the unchanged original sources and consumer. This is a range certificate for the published input, not a new example of an attained positive row.
+
+**Proof.** Likelihood measurability is not inferred just from diffuseness. The published identities (67.23)--(67.24) put each original $B_n$ and every Borel subset of it in $\mathcal G$ modulo $\sigma$-null sets. On $B_n$ the original mixture has Lebesgue density
+
+$$
+w_n(s)=(1-h)\sum_{i:\,n(x_i)=n}2^{-i}k_{t(x_i)}(s).
+\tag{68.20}
+$$
+
+Occupation of every $D_n$ is already Theorem 67.5. The bounds $e^{-1/2}\le k_t(s)\le e^{1/2}$ for $0\le t\le1/2$ therefore make $w_n$ finite and strictly positive, bounded above and below by positive multiples of the weight sum on that block. Thus $\tau_n\ll\sigma$ with density $\mathbf1_{B_n}/w_n(s)$, likelihood measurable modulo null sets. The rank extension is likelihood measurable by the same published recovery of $s$. Its pushforward is Lebesgue probability on $[0,1]$, with endpoints of mass zero and full support. All blocks remain the original tape blocks; none is a new observation of the source.
+
+The original exponential conditional densities in (67.17) have continuous extensions to $[0,1]$. Since $Z_t\ge1$,
+
+$$
+0\le\frac{d}{ds}k_t(s)=t\frac{e^{ts}}{Z_t}
+\le\tfrac12 e^{1/2}<1\qquad(0\le t\le1/2).
+\tag{68.21}
+$$
+
+They are normalized and belong to the specified $\mathcal A_n$. Consequently the already published laws $\nu_y=k_{t(y)}(s)\tau_{n(y)}$ all belong to $\mathcal R$. The parameter estimates (67.19)--(67.20) make $q\mapsto\nu_q$ TV-continuous: its block is constant after the first $n(q)$ actual answers, and its remaining parameter variation tends to zero in a shrinking actual prefix. This checks the interface for this same family, without supplying the parameter to the preparation. Equal signatures have the same $n,t,\Omega$ in this input, so the selection is well-defined on $Q$, while every original label retains its prescribed target.
+
+The unchanged targets are $\mu_y=(1-h)\nu_y+h\pi_{\Omega(y)}$. Their two components are disjoint, and hence
+
+$$
+\operatorname{TV}(\nu_y,\mu_y)=h=R_\mu\qquad(y\in X),
+\tag{68.22}
+$$
+
+where the equality to the original sharp value is the published Theorem 67.5. Thus this continuous selection belongs to every initial fiber (68.17) at cap $h$, and the survival argument puts it in every stable fiber. Theorem 68.5 now proves the desired original-tape correspondence for the supplied range. The original target row remains exactly $(h_y,e_y,d_y,z_y)=(h,0,0,1-h)$ under the original consumer, for every label and the same profile; the selected laws on the $B_n$ yield unknown under that consumer. No row condition on prepared laws has been inserted.
+
+The supplier is genuinely infinite-dimensional even within a single diffuse block, in addition to its disjoint-block noncompactness. For $j\ge1$ the functions
+
+$$
+u_j(s)=1+\frac{\cos(2\pi j s)}{2\pi j}
+\tag{68.23}
+$$
+
+are positive, have integral one, and have derivative of absolute value at most one. Thus $1$ and every $u_j$ belong to $\mathcal A_n$. The differences $u_j-1$ are linearly independent: multiplying any finite vanishing linear combination by each $\cos(2\pi k s)$ and integrating isolates its coefficient by cosine orthogonality. Multiplication by the strictly positive block density preserves that independence on the original tapes. This range is therefore not merely a finite-dimensional class on each block. Its separated laws $\tau_n$ also verify failure of TV total boundedness directly. Corollary 67.6 excludes every Section 64 certificate at this same cap, and the paragraph following Corollary 67.6 excludes a dominating original anchor of Section 66. The present certificate instead uses the regular original conditional densities and finite-center tail estimate (68.10). $\square$
+

@@ -1,0 +1,19 @@
+**Definition 2.1 (mode cuts and native records).** For each authentic
+predecessor $P$ and $\mu\in\{0,1\}$, take the existing gate1 route and
+separate HistoryMode input $\mu$. Let $h(P,\mu)$ be its cut immediately
+after that actual IN6 and before EX70. Put
+
+$$
+\mathcal H_{\mathrm{mode}}
+=\{h(P,\mu):P\text{ is an authentic predecessor},\ \mu\in\{0,1\}\}.
+$$
+
+A native row record here is a mathematical projection of that actual
+row and successor: physical active-code regime, actual row/PC and routine
+phase with bank-parity variant, actual post-row latch4 and latch6, and any
+actual OUT release. These are not PC numerals stored inside a simulated
+bank state. TMC PR57.03 supplies the public native PC/routine meaning;
+ARC Definition 2.2 identifies public helper latch4 and ingress latch6.
+This notation does not install an experiment or add any coordinate to
+$Q$. Its original-response projection is a separate condition in §5.
+

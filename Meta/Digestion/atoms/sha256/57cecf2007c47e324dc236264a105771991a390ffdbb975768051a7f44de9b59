@@ -1,0 +1,18 @@
+**Corollary 2.4 (boundary factorization).** Let $q:X\to B$ be a proposed
+boundary.  It is dynamically sufficient for $\mathcal U$ exactly when
+there are induced legal domains, response maps and successors on
+$q(X)$ such that
+
+$$
+\operatorname{Trace}(x,u)=\overline{\operatorname{Trace}}(q(x),u)
+\quad\text{for all }x\in X,u\in\mathcal U.
+\tag{2.3}
+$$
+
+The coarsest such boundary is obtained by the quotient map
+$x\mapsto[x]_{\equiv_{\mathcal U}^{\rm res}}$.  If $q:X\to B$ is any
+other sufficient boundary, then its kernel is contained in the profile
+kernel and the profile map factors through $q$; equivalently, the quotient
+map is a coarsening of every other exact representation.  A finer
+representation need not factor through the coarsest one.
+

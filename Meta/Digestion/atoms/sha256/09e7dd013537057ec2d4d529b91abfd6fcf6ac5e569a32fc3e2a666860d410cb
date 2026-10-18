@@ -1,0 +1,10 @@
+## 171. No-flat theorem for at most four reservoir labels
+
+A common positive generalized zero-curvature length field in the exact
+four-reservoir paired framework cannot have a flat tetrahedron. This
+closes the three remaining H-only return cases, using all original edge
+budgets and actual face transport. No prescribed packet, two-copy seed,
+extra H-witness assumption, girth restriction, or distinct-axis premise
+has been added. The existing result for at most three reservoir labels
+then gives the same no-flat conclusion for at most four.
+

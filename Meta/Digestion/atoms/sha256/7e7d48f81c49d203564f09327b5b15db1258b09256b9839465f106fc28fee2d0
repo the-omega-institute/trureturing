@@ -1,0 +1,15 @@
+**定理 14.4（Every overlapping but unequal lower-label pair has exact six-row memory）。** Under Convention 13.1, if $r=3$, then
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=N+6.}
+\tag{14.5}
+$$
+
+Proof. Lemma 10.1 makes the first queries distinct. Lemma 14.1 excludes a shared root with at most five rows. With distinct roots, write the two lower-label sets as $U_w=\{L,A_w\}$ and $U_i=\{L,A_i\}$, where the three labels are distinct. On the mixed $O$ path the final $F$ cannot be $b_i$: both its scalar Halts are in $U_w$, whereas the mandatory first support of $b_i$ has the actual exclusive label $A_i$. Nor can it be a root or $b_w$. At four rows there is no $F$. At five it is the additional row.
+
+The intermediate $X$ cannot be $F$, a self-edge of $b_w$, or a root. A root-zero edge would identify $F$ with a first query; a root-positive edge would send an original $C$ source to $F$ at index one. Thus $X=b_i$, with $V(b_i,e)=F$. GLOBAL repeats the same zero-leading $B$ at index two. Since $q_1$ is nonconstant on $O$, a mandatory early $b_i$ source also enters $F$ at index two, forcing its word to be $B$ at both later positions.
+
+The exclusive label $A_i$ can be returned only by the other scalar edge of $b_i$. Roots have their mandatory emitting zero edge and fresh-$C$ positive edge; $b_w$'s other scalar child contains an actual $U_w$ source on $O$; $F$ returns only $U_w$; and no active successful source rejects. Hence $V(b_i,1-e)=H_{A_i}$. Its early $e$ child is exactly the whole $L$ class. An actual $L$ source on $O$ enters $F$ early with unchanged raw bit $e$, so $F$'s raw-$e$ Halt is $L$.
+
+Every early $L$ source then forces $q_2^B=0$ on that whole class. Every later $U_w$ source from the complementary whole $A_i$ class also forces $q_2^B=0$, since charge one at $b_i$ would return the exclusive wrong label $A_i$. Thus $q_2^B=0$ on all $J$. Lemma 13.4 gives $q_3^B=0$ on $O$, contradicting final separation of the two labels on the original mixed $O$ fibre. All four-/five-row competitors are excluded. The unchanged six-row certificate of Theorem 6.1 supplies the matching attainment for every one of these targets: its six installed words and complete scalar updates are (10.4), its initialization and all bottom updates are those of §5, its exact supports are (5.5), (6.5), (6.7) and the Halt images (5.6), and its ranks are $4,3,2,1,0$. Equal literal Halt labels alone are merged, giving exactly $N+6$ complete states. ∎
+

@@ -1,0 +1,86 @@
+**Definition 98.1 (Auxiliary finite vectors and catalog).** On
+$\{0,1\}^4$ let $\eta^a_b$ be the two-point target at the first zero
+$n\le4$, with amplitude $a_n$, and let $\eta^a_{1111}=\delta_{\theta_0}$.
+In this section alone auxiliary amplitudes may be zero. They describe
+finite target vectors for convex construction; no original positive tail
+is replaced by any of them. The notation $[i;T_0,T_1]$ and leaf label
+$j$ has the actual-prime and original-tape meaning of (92.7).
+
+A catalog point $(u,v,w,z;t)$ has a kernel whose finite error is at most
+$t$ at every word. The common points are
+
+$$
+\begin{array}{c|ccccc}
+\text{kernel}&u&v&w&z&t\\\hline
+U_0&0&0&0&0&0\\
+U_1&1&0&0&0&0\\
+U_2&1&1&0&0&0\\
+B_0&1&1&1&0&1/4\\
+B_1&1&1&1&1/4&1/4\\
+P&1&1&1&1&2/5
+\end{array}
+\tag{98.1}
+$$
+
+Here $U_0=0$, $U_1=[1;1,0]$ and
+$U_2=[1;1,[2;2,0]]$ are the exact ordered prefix rules.
+Both $B_0$ and $B_1$ use the supplied $P_{3,2}$ kernel of Theorem 87.1;
+$P$ uses the supplied $P_{4,2}$. Their point names distinguish target
+vectors, not different implementations. The adaptive additional points
+are
+
+$$
+\begin{array}{c|ccccc}
+C&1&3/4&3/4&3/4&1/4\\
+A_5&1&4/5&4/5&2/5&1/5\\
+A_7&6/7&6/7&6/7&6/7&2/7\\
+A_9&8/9&8/9&8/9&4/9&2/9
+\end{array}
+\tag{98.2}
+$$
+
+The kernel $C$ is exactly (92.7), with its existing complete-cube
+calculation (92.8). The ordered additional points are
+
+$$
+\begin{array}{c|ccccc}
+O_{5,\mathrm{lo}}&3/5&3/5&3/5&3/5&1/5\\
+O_{5,\mathrm{hi}}&4/5&3/5&3/5&3/5&1/5\\
+O_{6,\mathrm{lo}}&2/3&2/3&2/3&1/3&1/6\\
+O_{6,\mathrm{hi}}&5/6&2/3&2/3&1/3&1/6
+\end{array}
+\tag{98.3}
+$$
+
+The two $O_5$ points use the same kernel and the two $O_6$ points use
+the same kernel. The five additional kernels are the following finite
+lists. An entry $(m,T)$ in the denominator-$d$ list gives tree $T$
+probability $m/d$.
+
+$$
+\begin{aligned}
+A_5\ (d=5):\quad&
+ (2,[1;1,[2;2,0]]),\ (1,[1;1,[3;3,0]]),\\
+& (1,[1;1,[2;2,3]]),\ (1,[3;[2;2,3],[4;4,0]]);\\[2pt]
+A_7\ (d=7):\quad&
+ (1,[1;1,[2;2,0]]),\ (2,[1;1,[2;2,4]]),\\
+& (1,[2;[1;0,2],[3;3,0]]),\\
+& (2,[3;[1;1,3],[4;4,0]]),\
+ (1,[3;[2;2,3],[1;1,0]]);\\[2pt]
+A_9\ (d=9):\quad&
+ (1,[1;[3;0,1],[2;2,0]]),\ (2,[1;1,[2;2,0]]),\\
+& (2,[1;1,[2;2,3]]),\ (1,[2;[1;1,2],[3;3,0]]),\\
+& (2,[3;[1;1,3],[4;4,0]]),\
+ (1,[3;[2;2,3],[1;1,0]]);\\[2pt]
+O_5\ (d=5):\quad&
+ (1,[1;1,[2;2,0]]),\ (1,[1;1,[2;2,4]]),\\
+& (1,[1;1,[3;3,0]]),\ (1,[2;0,[3;3,0]]),\\
+& (1,[3;0,[4;4,0]]);\\[2pt]
+O_6\ (d=6):\quad&
+ (2,[1;1,[2;2,0]]),\ (1,[1;1,[2;2,3]]),\\
+& (1,[1;1,[3;3,0]]),\ (1,[2;0,[3;3,0]]),\\
+& (1,[3;0,[4;4,0]]).
+\end{aligned}
+\tag{98.4}
+$$
+

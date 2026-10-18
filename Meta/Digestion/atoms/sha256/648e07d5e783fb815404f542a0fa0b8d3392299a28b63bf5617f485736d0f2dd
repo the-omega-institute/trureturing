@@ -1,0 +1,20 @@
+**命题 20.4.2（交换缺口的精确距离）。** 对任意指定 $\pi,q,x,K$，定义
+
+$$
+\Gamma_{q,z,x}(K)
+=\operatorname{TV}\left(D_{\mathrm{select}\to\mathrm{do}}^{q,z,x},
+D_{\mathrm{do}\to\mathrm{select}}^{z,x}\right).
+$$
+
+则 $\Gamma_{q,z,x}(K)=0$ 当且仅当推论 20.3.2 的每个输出坐标等式成立；当 $K$ 是恒等读出时，
+
+$$
+\Gamma_{q,z,x}(K)=\operatorname{TV}(\pi_{q,z},\pi_{x,z}).
+$$
+
+这给出一个接口依赖的后选择箭头强度，而不是把“有无箭头”压成单一图形标签。
+
+**证明。** 总变差定义给出第一句；恒等读出只是把潜变量分布原样输出。证毕。
+
+<a id="section-20-5"></a>
+

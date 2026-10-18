@@ -1,0 +1,23 @@
+### 474.1 从完整商族到同一个实际奇数和
+
+沿用 $H=H_1$、$H_o=G_1$。本地已验收的结果为
+
+$$
+\begin{aligned}
+&\exists C_2>0,\ N_2\in\mathbb N,\quad
+  \forall N\ge N_2,\quad |H(N)|\le \frac{C_2}{(\log N)^2},\\
+&\exists A>0,\ D_0\in\mathbb N,\quad
+  \forall N\ge D_0,\quad |H_o(N)|\le \frac{A}{(\log N)^2}.
+\end{aligned}
+$$
+
+两者不含 RH 或调用者提供的抵消假设。第一步消费普通 Mertens 四阶对数供应，
+保留有限双曲线恒等式的全部商截断与有符号取整误差。第二步消费实际二倍递归，
+保留所有 $\lfloor N/2^a\rfloor$ 和有限余项；选取约一半的二进制深度，
+用全 $N$ 的 $|H_o(N)|\le4$ 支付不超过 $8/\sqrt N$ 的余项。
+本地验收的是上述二阶率；§473 所列更强三阶率仍只是纸面候选。
+
+因此同一个 $A,D_0$ 可以先于全部 Robin 参数 $x$ 和截断 $D$ 选定。
+原配对宿主直接消费这条供应，已通过本地严格编译，去掉了完整 clipped 极限的
+调用者衰减前提，同时保留旧三条结论和新合成的六条结论；其 canonical 交付仍待完成。
+

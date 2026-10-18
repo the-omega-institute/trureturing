@@ -1,0 +1,89 @@
+### 72.2 Product-monomial normalization for positive parameters
+
+For \(0<b\le1\), define \(0<\alpha,\beta<\pi/4\) by
+
+\[
+ C=\cos\alpha=\sqrt{\frac{1+h/\sqrt3}{2}},\qquad
+ S=\sin\alpha=\sqrt{\frac{1-h/\sqrt3}{2}},\qquad
+ \cos\beta=p,\quad\sin\beta=q.
+ \tag{72.4}
+\]
+
+Then
+
+\[
+ CS=\frac{b}{\sqrt3c},\qquad
+ \cos2\alpha=\frac h{\sqrt3},\qquad
+ \cos2\beta=\frac b{\sqrt3},\qquad
+ \boxed{\cot2\alpha\cot2\beta=\frac12}.
+ \tag{72.5}
+\]
+
+For the last equality, square the positive quantities and use
+\((3-h^2)(3-b^2)=4h^2b^2\). In particular \(\alpha+\beta>\pi/4\),
+since
+\(\cos(2\alpha+2\beta)=\sin2\alpha\sin2\beta(1/2-1)<0\).
+
+Write
+
+\[
+ A=\begin{pmatrix}a&d\\e&f\end{pmatrix}
+ =\frac1{\sqrt2}
+   \begin{pmatrix}p+zq&q-zp\\p-zq&q+zp\end{pmatrix},
+\]
+
+and put
+
+\[
+ \xi=\frac{p+zq}{\sqrt2C},\qquad
+ \delta=\frac{c(1+ih)}2,\qquad
+ D=\operatorname{diag}(1,\delta),\qquad
+ R_\alpha=\begin{pmatrix}C&S\\S&-C\end{pmatrix}.
+ \tag{72.6}
+\]
+
+Both \(\xi\) and \(\delta\) have modulus one. The following identities
+specify the phases without an implicit choice of square root:
+
+\[
+ |a|^2=C^2,\quad |d|^2=|e|^2=S^2,\qquad
+ a\bar d=\frac{b\omega^2}{\sqrt3c}=CS\omega^2,\qquad
+ e\bar a=\frac{b(1+ih)}{2\sqrt3}=CS\delta.
+ \tag{72.7}
+\]
+
+They follow by expanding the entries above and using
+\(p^2-q^2=b/\sqrt3\), \(pq=hc/(2\sqrt3)\), and
+\(h^2=(3-b^2)/(1+b^2)\). Thus
+\(a=\xi C\), \(d=\xi\omega S\), and \(e=\xi\delta S\).
+Unitarity of \(A\), with \(S>0\), gives
+\(f=-\xi\delta\omega C\). Consequently
+
+\[
+ A=\xi D R_\alpha\operatorname{diag}(1,\omega).
+ \tag{72.8}
+\]
+
+Define
+
+\[
+ \mathcal H(\alpha,\beta)
+ =(R_\alpha\otimes I_3)\operatorname{diag}(V_0,\omega W_0)
+  (R_\beta\otimes I_3).
+ \tag{72.9}
+\]
+
+Substitution in (72.3) proves
+
+\[
+ \boxed{H_0(b)=\xi(D\otimes I_3)\mathcal H(\alpha,\beta)
+                 (\operatorname{diag}(1,\bar z)\otimes I_3).}
+ \tag{72.10}
+\]
+
+The scalar and both outer factors are unitary monomial matrices. Hence
+\(\mathcal H\) is a genuine complex Hadamard matrix, and (72.10) is a
+permitted equivalence of the fixed-pair problem. In particular it is stronger
+than merely expressing the two matrices as equivalent under arbitrary local
+unitaries, which would not suffice for that purpose.
+

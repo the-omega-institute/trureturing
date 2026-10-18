@@ -1,0 +1,45 @@
+### 86.4. Exact sum of squares on the calibrated comparison subspace
+
+Consider a calibrated comparison tuple near the base, without assuming balance or (8). Put C_f=A_f B_f^T/sqrt(2), D_f=C_f N_f and S=mean C_f. Let Q be the orthogonal projection in matrix Hilbert space onto
+
+    L_S={SX:Tr X=0}.
+
+Near the base S has full column rank, so dim_C L_S=3. Let D_col have the vectorized D_f as columns. At the base QD_col has rank three, because its columns are S N_f and the N_f span Pauli space. Therefore there is a smooth unit vector v spanning ker(QD_col), fixed by requiring <s,v> to be positive real. Set
+
+    W=D_col v,
+    E_f=Q D_f-S N_f,
+    R_c=(I-Q)D_col,
+    P_w=diag(ss^*,vv^*)                                  (13)
+
+in plus/minus coordinates. In particular S^*W is a scalar matrix, since W is orthogonal to L_S.
+
+Since each N_f is unitary, C_f^*C_f=I_2/2 and S is the mean,
+
+    a=4-4||S||_F^2=sum_f||C_f-S||_F^2
+       =sum_f||D_f-SN_f||_F^2
+       =sum_f||E_f||_F^2+||R_c||_F^2.
+
+Moreover D_col v=R_c v. The plus uniform Rayleigh value of T-K is a and the minus value at v is 1-||D_col v||^2. Hence the exact identity is
+
+    4(F-1/4)
+      =sum_f||E_f||_F^2+||R_c(I-vv^*)||_F^2
+         +[Lambda_2(T-K)-Tr(P_w(T-K))].                   (14)
+
+No plus/minus cross block has been removed. Its effect appears in the final variational gap.
+
+Write P_* for the true top-two spectral projection. In a fixed small neighborhood there are constants 0<gamma<=Gamma such that
+
+    (gamma/2)||P_*-P_w||_F^2
+      <=Lambda_2(T-K)-Tr(P_w(T-K))
+      <=(Gamma/2)||P_*-P_w||_F^2.                         (15)
+
+Indeed diagonalize T-K and use the separation of its second and third eigenvalues for the lower bound and its spectral diameter for the upper bound; the exchanged projection weight is 2-Tr(P_*P_w)=||P_*-P_w||_F^2/2.
+
+At the base all three nonnegative terms in (14) vanish. Therefore a calibrated tangent is in the kernel of the Hessian of F precisely when
+
+    E_f'=0 for every f,
+    [R_c(I-vv^*)]'=0,
+    P_*'=P_w'.                                           (16)
+
+This equivalence uses both bounds in (15) and smoothness. Hessians are regarded as real quadratic forms.
+

@@ -1,0 +1,19 @@
+**定义与等价矩表示。** 在逆尺度坐标 $a>0$ 上定义有限有符号测度
+
+$$
+\nu_N=\sum_{m=1}^N\mu(m)\delta_{1/m}-M_N\delta_{1/(N+1)}.
+$$
+
+由点质量的定义，直接得到
+
+$$
+\int d\nu_N=0,\qquad
+\int a\,d\nu_N=h_N,\qquad
+\int a\log a\,d\nu_N=-\ell_N,
+\qquad C_N(t)=\int\eta(ta)\,d\nu_N(a).
+$$
+
+缩放后的平滑核为 $-ta\log(ta)+ta$，其积分正是
+$-t(\log t-1)h_N+t\ell_N$。因此平滑修正处于 $t$ 与 $t\log t$ 的线性包络中。
+总质量为零不使两个加权矩为零；两个 $N+1$ 锚定修正均保留在上式中。
+

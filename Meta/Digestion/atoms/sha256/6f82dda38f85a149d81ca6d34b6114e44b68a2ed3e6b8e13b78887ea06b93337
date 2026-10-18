@@ -1,0 +1,217 @@
+**Theorem 26.3 (Full character support with a full-density collision, and exact horizon four).** Let $H=4$, $K=\{1,2,3,4\}$ and fix any known $p_1,p_2,p_3,p_4>0$ of sum one. Define
+
+$$
+\begin{aligned}
+\phi_1&=\theta_1-2\theta_2+\theta_3,&z_1&=(1,-2,1,0),\\
+\phi_2&=\theta_1-\theta_2-\theta_3+\theta_4,&z_2&=(1,-1,-1,1),\\
+\mathsf A&=p_2\sqrt{p_1p_3}>0,&\mathsf B&=\sqrt{p_1p_2p_3p_4}>0.
+\end{aligned}
+\tag{26.15}
+$$
+
+The vectors $z_1,z_2$ form an integral basis of $L_K$. Both characters occur with nonzero coefficients in the full $T_3$, whose only phase-dependent entries are the coherence below and its conjugate:
+
+$$
+C_3=\langle010|T_3|001\rangle
+=p_1p_2+\mathsf A e^{i\phi_1}+\mathsf B e^{i\phi_2}.
+\tag{26.16}
+$$
+
+Nevertheless, for every such positive $p$, there are two distinct affine, averaged-channel and labeled-instrument orbits with identical full $T_3$. The least complete post-tick horizon is exactly four. At that horizon the additional coherence
+
+$$
+C_4=\langle0100|T_4|0001\rangle
+=p_1p_3+\mathsf B e^{i\phi_2}
+\tag{26.17}
+$$
+
+together with $C_3$ separates all these orbits. Four fixed quadrature settings, chosen uniformly and retained, give one twelve-label terminal law realizing the separation with strictly positive probabilities. The full densities and the inversion below apply to every fixed positive $p$. No individual formal monomial of (26.16) is assumed to be separately measurable. Actual heralding gives a sufficient total bound of nine uses per separating trial.
+
+**Proof.** First solve the integer equations of (25.4). For every $z\in L_K$,
+
+$$
+z=(z_3+2z_4,-2z_3-3z_4,z_3,z_4)
+=(z_3+z_4)z_1+z_4z_2.
+\tag{26.18}
+$$
+
+The expression is integral and unique, so it is the full integer basis. For $\theta,\theta'$, write $\Delta_k=\theta'_k-\theta_k\in\mathbb T$. Equality of their two characters gives
+
+$$
+\Delta_3=2\Delta_2-\Delta_1,\qquad
+\Delta_4=\Delta_2+\Delta_3-\Delta_1=3\Delta_2-2\Delta_1.
+$$
+
+With $\lambda=2\Delta_1-\Delta_2$ and $\nu=\Delta_2-\Delta_1$, this is exactly $\Delta_k=\lambda+\nu k$ for all four labels. Conversely those affine differences annihilate both relations.
+
+Here $x=c_4e_0+c_3e_1+c_2e_2+c_1e_3$ in the five-dimensional memory. Apply (25.14) to all length-three words. The only nonzero amplitudes are
+
+$$
+K_{000}x=c_4e_3+c_3e_4,\qquad
+K_{001}x=c_2x,\qquad K_{010}x=c_1Sx.
+\tag{26.19}
+$$
+
+A word starting with a tick vanishes because $Jx=0$, and two ticks require at least four positions because the smallest supported completed block has length two. In the terminal tail sum (25.15), with completed labels $1,2$ and tails $1,0$, the possible pairs are $(2,1),(3,2),(4,3)$. Thus
+
+$$
+\langle x,Sx\rangle
+=\overline c_1c_2+\overline c_2c_3+\overline c_3c_4,
+\qquad C_3=\overline c_2c_1\langle x,Sx\rangle.
+$$
+
+The entire density, including its zero entries, is
+
+$$
+\begin{aligned}
+T_3={}&(p_3+p_4)|000\rangle\langle000|
++p_2|001\rangle\langle001|+p_1|010\rangle\langle010|\\
+&+C_3|010\rangle\langle001|
++\overline C_3|001\rangle\langle010|,\\
+C_3={}&p_1p_2+\mathsf A e^{i\phi_1}+\mathsf B e^{i\phi_2}.
+\end{aligned}
+\tag{26.20}
+$$
+
+Its nonconstant Fourier support is exactly $\{z_1,z_2,-z_1,-z_2\}$, which generates the full lattice (26.18). Those Fourier terms are aggregated in one actually observed complex coefficient.
+
+For a collision at every positive $p$, choose any $0<t<\min(\mathsf A,\mathsf B)$ and the principal real arcsine values
+
+$$
+\alpha=\arcsin(t/\mathsf A)\in(0,\pi/2),\qquad
+\beta=-\arcsin(t/\mathsf B)\in(-\pi/2,0).
+$$
+
+Take the two fixed devices with actual phase vectors
+
+$$
+\theta^+=(0,0,\alpha,\alpha+\beta),\qquad
+\theta^-=(0,0,-\alpha,-\alpha-\beta).
+\tag{26.21}
+$$
+
+Their character angles are $(\alpha,\beta)$ and $(-\alpha,-\beta)$. The imaginary parts $\mathsf A\sin\alpha+\mathsf B\sin\beta=t-t$ cancel, and both have
+
+$$
+C_3=p_1p_2+\sqrt{\mathsf A^2-t^2}+\sqrt{\mathsf B^2-t^2}.
+\tag{26.22}
+$$
+
+Their first characters differ since $0<\alpha<\pi/2$, so they are different affine orbits; (26.20) proves equality of their full densities. This is a pair of coherent devices at the same fixed $p$, not a mixture of devices or a change in their probabilities.
+
+To map this conclusion to the actual channel classification, apply (24.7)–(24.9) with $H=4$, memory $\mathbb C^5$, the single rank-four shift, rank-one reset $`x e_4^*`$, $\|x\|=1$ and $c_4\ne0$. The first four columns again make the Kraus operators independent. The pencil determinant is $u^4v c_4$; its two singular lines have distinct ranks four and one. The published exact Choi and shift-normalizer argument therefore identifies precisely the affine phase orbits, with its converse implementing the differences on both labeled branches. Every hypothesis is satisfied for the present positive $p$. Thus the devices (26.21) also have different averaged-channel and labeled-instrument orbits.
+
+For the uniform probabilities $p_k=1/4$, $\mathsf A=\mathsf B=1/16$. The phase vectors $(0,0,0,\pi/2)$ and $(0,0,\pi/2,\pi/2)$ have character pairs $(1,i)$ and $(i,1)$, respectively. Both give $C_3=(2+i)/16$ and hence the same full $T_3$. This character-swap instance is distinct from (26.21), which supplies collisions without equality of $\mathsf A,\mathsf B$.
+
+For horizon four, exhaust (25.14) in the same way. A single tick can occur at positions two, three or four; two ticks can only occupy positions two and four. The complete nonzero amplitude list and diagonal weights are
+
+$$
+\begin{array}{c|c|c}
+w&K_wx&\|K_wx\|^2\\ \hline
+0000&c_4e_4&p_4\\
+0001&c_3x&p_3\\
+0010&c_2Sx&p_2\\
+0100&c_1S^2x&p_1(1-p_1)\\
+0101&c_1^2x&p_1^2
+\end{array}
+\tag{26.23}
+$$
+
+The weights sum to one. Count zero and count two are singleton blocks. In count one, use the ordered words $(0001,0010,0100)$. Its entire block is
+
+$$
+\begin{pmatrix}
+p_3&\overline D&\overline C_4\\
+D&p_2&\overline C_3\\
+C_4&C_3&p_1(1-p_1)
+\end{pmatrix},
+\qquad
+D=p_2p_3+\mathsf A e^{-i\phi_1}
++p_3\sqrt{p_2p_4}\,e^{i(\phi_2-\phi_1)}.
+\tag{26.24}
+$$
+
+Together with $p_4|0000\rangle\langle0000|$ and $p_1^2|0101\rangle\langle0101|$, and zero on every other word or between different counts, this specifies the whole $T_4$.
+
+For its new separating entry, the completed labels are $1,3$, the tails are $2,0$, and the only pairs in (25.15) are $(3,1),(4,2)$. Hence
+
+$$
+\begin{aligned}
+\langle x,S^2x\rangle&=\overline c_1c_3+\overline c_2c_4,\\
+C_4&=\overline c_3c_1\langle x,S^2x\rangle
+=p_1p_3+\mathsf B e^{i\phi_2}.
+\end{aligned}
+\tag{26.25}
+$$
+
+The other two oriented entries in (26.24) are $D=\overline c_3c_2\langle x,Sx\rangle$ and
+
+$$
+\langle0100|T_4|0010\rangle
+=\overline c_2c_1\langle Sx,S^2x\rangle=C_3.
+\tag{26.26}
+$$
+
+The last equality uses $`S^*S=I-e_4e_4^*`$ and $x_4=0$, which give $\langle Sx,S^2x\rangle=\langle x,Sx\rangle$. Expanding the three tail terms gives exactly $D$ in (26.24). Thus neither an omitted tail term nor another entry of the whole density is needed to justify the separation.
+
+The published terminal marginal identity (25.18) also gives $\operatorname{Tr}_4T_4=T_3$. It is a terminal prefix observable without an earlier measurement. The actual inversion is
+
+$$
+\boxed{
+e^{i\phi_2}=\frac{C_4-p_1p_3}{\mathsf B},\qquad
+e^{i\phi_1}=\frac{C_3-C_4-p_1p_2+p_1p_3}{\mathsf A}.}
+\tag{26.27}
+$$
+
+Both denominators are fixed known positive numbers. Equality of $T_4$ gives equality of these two characters, hence the affine difference proved from (26.18) and the actual channel and instrument equivalences mapped above. Conversely an affine difference leaves all summands of (25.15) unchanged by (25.16), so it leaves the full $T_4$ unchanged. Equation (25.18) extends completeness to every longer horizon. In the uniform example the two values of $C_4$ are $(1+i)/16$ and $1/8$, explicitly separating the same-$T_3$ pair.
+
+At shorter horizons the whole states are
+
+$$
+T_0=1,\qquad T_1=|0\rangle\langle0|,\qquad
+T_2=(1-p_1)|00\rangle\langle00|+p_1|01\rangle\langle01|.
+\tag{26.28}
+$$
+
+For every positive $p$, (26.21) agrees on the full $T_3$ and on all its shorter marginals by (25.18). It therefore agrees on every allowed terminal law at $n\le3$. For any adaptive classical transcript in Definition 26.1, the chosen length and terminal measurement at its next step have the same conditional probability kernel for these two devices. Induction gives the same complete finite transcript law. Thus all shorter horizons fail in that class, while (26.27) proves completeness at four.
+
+For one explicit twelve-label law on four flags, set
+
+$$
+\begin{aligned}
+F_3&=|001\rangle\langle010|\otimes I_2,&
+F_4&=|0001\rangle\langle0100|,\\
+X_j&=F_j+F_j^*,&Y_j&=(F_j-F_j^*)/i\quad(j=3,4),\\
+M_3&=p_1+p_2,&M_4&=p_3+p_1(1-p_1).
+\end{aligned}
+\tag{26.29}
+$$
+
+Here $I_2$ acts on the fourth flag. Each observable is measured only at time four, commutes with $Q_4$, and has spectral outcomes $+1,-1,0$. The prefix marginal gives $\operatorname{Tr}(T_4F_3)=C_3$, while $\operatorname{Tr}(T_4F_4)=C_4$. The squared quadratures are the respective two-word projections, with the identity on the suffix for $j=3$; their expectations are $M_j$. Choose $X_3,Y_3,X_4,Y_4$ independently of the device with probability $1/4$, and retain the setting. The joint probabilities are
+
+$$
+\begin{aligned}
+\Pr(X_j,\cdot)&=\tfrac14\left(M_j/2+\operatorname{Re}C_j,
+M_j/2-\operatorname{Re}C_j,1-M_j\right),\\
+\Pr(Y_j,\cdot)&=\tfrac14\left(M_j/2+\operatorname{Im}C_j,
+M_j/2-\operatorname{Im}C_j,1-M_j\right),\qquad j=3,4.
+\end{aligned}
+\tag{26.30}
+$$
+
+The twelve effects are one quarter of these four sets of spectral projections and sum to $I$. The signed differences recover the two complex coefficients and then (26.27). The terminal effects observe the sums $C_3,C_4$; no fictitious operation resolving separate monomials of (26.16) is used.
+
+Nilpotence and $c_4\ne0$ make $x,Sx$ nonzero and nonproportional, and likewise $x,S^2x$. Since $\|Sx\|=1$ and $\|S^2x\|^2=1-p_1$, strict Cauchy–Schwarz gives
+
+$$
+|C_3|<\sqrt{p_1p_2}\le M_3/2,\qquad
+|C_4|<\sqrt{p_3p_1(1-p_1)}\le M_4/2.
+\tag{26.31}
+$$
+
+Moreover $0<M_3<1$ and $0<M_4<1$, the latter also following from $1-M_4=p_4+p_2+p_1^2>0$. All twelve probabilities in (26.30) are therefore strictly positive for every phase. Their injective exact-law map on the orbit quotient does not imply zero-error phase inference or perfect discrimination from finitely many records of this readout.
+
+The obstruction here is actual coefficient aggregation with the entire relation lattice already in the Fourier support at time three. It is distinct from Proposition 25.4, where the chosen endpoint-anchored character list generates a proper index-five sublattice. In the present case the integral basis (26.18) is present, but (26.21) belongs to a nontrivial fiber of its observed coefficient sum. The new coefficient at time four separates that fiber by (26.27).
+
+Finally, apply the actual herald bound (25.27) with $H=4$ and its reset (23.3). At most five monitored uses prepare $`xx^*`$ almost surely from any initial density; four further coherent uses suffice, for a total of nine. Separately counted sufficient resources are memory dimension five, four stored flags of joint dimension sixteen, a reusable two-level herald detector, a seven-state wait/capture/termination controller, a four-valued setting register, a three-level outcome pointer and a twelve-valued retained terminal record per trial or processing of those data. Retaining the auxiliary herald time adds a five-valued record. For the spectral projectors in (26.29), the already proved pointer construction (25.28) preserves every count sector. These use and dimension bounds are sufficient logical resources for the specified window measurements; they impose no uncounted end-memory readout or intermediate intervention and assert no optimized physical costs. $\square$
+

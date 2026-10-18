@@ -1,0 +1,27 @@
+**Convention 10.1 (literature attribution).** The finite sum-product,
+equality elimination, bijection propagation, two-phase influence,
+graph-partition and probabilistic graph ingredients are mature methods.
+Their use here is within the explicit native bridges above, classified
+as `repo-derived`. The cited primary statements below are
+`literature-attested` intermediates or comparisons, not new native
+results and not proofs of the unresolved optimized gap.
+
+| Primary source | Exact hypothesis, use and limit |
+| --- | --- |
+| Forney, *Codes on Graphs: Fundamentals*, §2.2, [version 2][Forney] | Equality identifies repeated occurrences of one variable. Theorem 3.2 retains one actual owner and one lift; no linear/group duality theorem is imported. |
+| Barvinok–Soberón, *Computing the partition function for graph homomorphisms*, §§1.3–1.6 and Lemma 1.5, [version 3][BS] | The per-input approximation uses entries within $0.34/\Delta$ of one. Theorem 1.6 supplies zero-freeness at $0.35/\Delta$; the algorithm uses radius $35/34$. Lemma 1.5's logarithmic Taylor error is at most $|E|/((m+1)r^m(r-1))$ under its zero-free disk premise $r>1$. The hard NEQ cycle has entries zero and one, outside the near-one hypothesis. §§4–6 disprove only the specified raw local-field or all-one-path premises, not the published theorem. |
+| Borgs–Chayes–Kahn–Lovász, *Left and right convergence of graphs with bounded degree*, Theorem 3.1 and §3.2, [version 1][BCKL] | The graph sequence is left-convergent with maximum degree $\Delta$; a fixed weighted target has $0\le\beta_{ij}\le1$ and $c(\overline H)=\max_i\sum_j(\alpha_j/\alpha_H)(1-\beta_{ij})<1/(2\Delta)$. Mayer tails in Lemma 3.11 use the surrounding stronger hypothesis $c(\overline H)<1/(\Delta K)$, with $K=(b+e^b)/\ln(1+be^{-b})$ and exponential rate $-\ln(\Delta Kc(\overline H))$. For the NEQ cycle, normalized leaf weights give $c=\max(a,b)/(a+b)\ge1/2$, whereas degree two requires $c<1/4$. No high-temperature premise for arbitrary native joint potentials is supplied. |
+| Anari–Liu–Oveis Gharan, *Spectral Independence in High-Dimensional Expanders and Applications to the Hardcore Model*, Definitions 1.1–1.2 and Theorem 1.3, [version 3][ALO] | The signed influence matrix and its conditional versions control the stated Glauber gap. The balanced two-phase eigenvalue $n-1$ is a known example. Theorem 4.2 proves its exact positive-leaf-law native realization, so a uniform raw spectral premise fails here. |
+| Shao–Shi, *Coupling Independence Implies Zero-Freeness*, Definition 2.2 and Theorem 3.1, [version 1][SS] | Couplings use Hamming distance on the common free set after alternative pinnings. The Potts theorem assumes an induced-subgraph-closed maximum-degree-$\Delta$ graph class, $q\ge\Delta+1$, coupling independence at zero and finite uniform constants on each $[\delta,1]$. Our degree-two, two-color hard witness violates the color condition and has exact coupling distance $n-1$. This is a failed direct transfer, not a counterexample to that theorem. |
+| Shao–Shi, Theorem 5.6, [same primary source][SS] | Its finite family of symmetric Boolean signatures is log-concave with interval support and $f(0)>0$. Hard NEQ has signature $[0,1,0]$ and fails $f(0)>0$; parity-flipped equality $[1,0,1]$ fails interval support and log-concavity. Its independent-activity polytubes therefore do not directly cover the raw native family. |
+| Patel–Regts, *Deterministic polynomial-time approximation algorithms for partition functions and graph polynomials*, Theorems 1.4–1.5 and 6.1, [version 3][PR] | Bounded-degree per-input graph approximation assumes entries within $0.34/\Delta$ of one; the edge-coloring result assumes signatures within $0.35/(\Delta+1)$ of one. Efficient coefficient enumeration still needs its zero-free hypotheses. A small positive floor is not a nearconstant-factor theorem, nor does per-input evaluation cap all sizes and topologies. |
+| Hatami–Lovász–Szegedy, *Limits of locally-globally convergent graph sequences*, Theorems 3.2 and 10.5, [version 2][HLS] | A bounded-degree local-global convergent sequence has a graphing limit. The local-to-local-global conclusion assumes a growing hyperfinite sequence. Theorem 8.2 concerns fixed marked neighborhoods, without an added globally chosen coloring; it does not contradict local-global representation or provide an effective graphing modulus. |
+
+Positive softening has entries $\eta$ and $a+\eta$ or $b+\eta$
+in §6; their ratios diverge as $\eta\downarrow0$. Positivity alone
+does not verify the near-one or high-temperature assumptions above.
+None of these cited statements supplies a terminating all-size native
+extremum program for arbitrary hard constraints and full joint weights.
+This is a checked hypothesis boundary, not a claim that no different
+literature route exists or that these deductions have worldwide priority.
+

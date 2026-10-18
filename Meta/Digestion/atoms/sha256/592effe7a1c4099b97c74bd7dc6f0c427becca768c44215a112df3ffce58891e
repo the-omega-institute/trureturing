@@ -1,0 +1,46 @@
+**Definition 1.2 (installed-state and execution conventions).** A native
+preparer is the stationary finite table of WTF Definition 1.4, correct
+on every source of $\mathcal U_*$. Every running state has one fixed
+absolute word and four fixed successors. It has one source-independent
+running start. Its counted current state is its whole changing
+configuration. Every installed running state, both original entry
+latches and all $r$ further mandated distinct latches count, including
+unreachable states. Every actual visit costs one query and its word
+length, including constants, roots, absence and post-certificate repeats.
+
+Write $H_P$ for its total installed count. Define the selected classes
+using [WTF, Supplier 2.1][WTF]:
+
+$$
+E_i=\{p w_i v:p\in\{LLL,LRL\},\
+                    v\in\{\varepsilon,L,R\}\}.
+\tag{CP.5}
+$$
+
+These classes are disjoint. Let $M_i$ count all installed running
+states whose words belong to $E_i$, and set
+$M(Q)=\sum_{i\in Q}M_i$, $M=M([n])$.
+Different states with the same word are counted separately.
+Throughout, the native execution caps are uniform over the full fiber:
+
+$$
+q_P(u)\le n+1,\qquad \ell_P(u)\le W+3
+\qquad(u\in\mathcal U_*).
+\tag{CP.6}
+$$
+
+The Boolean comparison is exactly [WTF, Definition 3.1][WTF]. It has
+$m$ installed running states, two distinct output terminals, one
+input-independent running start, and one fixed coordinate and two
+fixed successors per running state. All installed running states count.
+Each visit to label $i$ costs one query and $c_i$ letters. Every input
+$\theta\in\{0,1\}^n$ must terminate with output
+$\mathbf1_{\{|\theta|\ge k\}}$, at uniform simultaneous caps
+$t\le n$, $J\le W$. Write $m_i$ for its installed multiplicity of
+label $i$ and $m(Q)=\sum_{i\in Q}m_i$.
+
+Both models permit arbitrary variable order, state sharing, repeated
+queries and cycles in the union graph. Only actual fixed-input runs
+must terminate. There is no extra clock, counter, archive, workspace,
+computed-address port or uncounted control coordinate.
+

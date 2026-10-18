@@ -1,0 +1,25 @@
+**Convention 1.4 (Bias notation).** Throughout let
+
+$$
+\begin{gathered}
+a=\max(p,1-p),\qquad b=\min(p,1-p),\qquad
+\eta=ab,\qquad c=a^2+b^2=1-2\eta,\\
+\sigma=\begin{cases}1&p>1/2,\\0&p<1/2,\end{cases}\qquad
+z=1-\eta,\qquad w=1-\frac{3\eta}{2},\qquad
+v=\frac{1+c^2}{2}.
+\end{gathered}
+\tag{1.6}
+$$
+
+Thus $\sigma$ is the majority spin, $a+b=1$,
+$0<b<1/2<a<1$, $0<\eta<1/4$, and $1/2<c<1$.
+Useful strict identities are
+
+$$
+a-c=b(a-b)>0,\qquad c-b=a(a-b)>0.
+\tag{1.7}
+$$
+
+The letter $v$ in (1.6) is a mass; $v_0,v_1$ in (1.3) are spin
+indices.
+

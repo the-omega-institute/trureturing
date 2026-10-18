@@ -1,0 +1,34 @@
+**定理 20.2（无需额外端口的显式恢复器）。** 计算
+
+$$
+\widetilde w=y_2\times y_1,\qquad
+\widehat x_3=\operatorname{sgn}(y_0\cdot\widetilde w)\widetilde w,
+\quad\operatorname{sgn}(0)=0.
+$$
+
+对每个允许实际来源和误差三元组，
+
+$$
+|\widehat x_3-x_3|\le\frac4c(H^2+2H+\delta)\delta.
+$$
+
+特别在 $\delta\le1$ 时，$C_{\rm err}=4(H^2+2H+1)/c$ 是充分线性系数。恢复器本身不读取公共参数、组成、树码、校准或附加符号，也不作归一化、除法或源更新。
+
+证明。展开带误差叉积给
+
+$$
+|\widetilde w-w|\le b_\delta:=(2H+\delta)\delta.
+$$
+
+若 $w=0$，或计算符号与实际非零符号相同，目标误差至多 $b_\delta$。若符号错误或计算符号为零，目标误差至多 $2|w|+b_\delta$。令 $u_0=|x_0|$。若 $u_0<2\delta$，推论16.3给此误差至多 $4H^2\delta+b_\delta$，不超过所述界。若 $u_0\ge2\delta>0$，两标量异号或计算值为零，故
+
+$$
+\begin{aligned}
+cu_0|w|&\le|x_0\cdot w-y_0\cdot\widetilde w|\\
+&\le\delta|w|+(u_0+\delta)b_\delta
+\le H^2u_0\delta+\tfrac32u_0b_\delta.
+\end{aligned}
+$$
+
+因此误差至多 $2H^2\delta/c+(3/c+1)b_\delta\le(4/c)(H^2\delta+b_\delta)$，恰为所述界。$c<1$ 保证上述常数比较。$\delta=0$ 时定理5.1给准确结果，含全部零分支。错误符号的幅度由实际来源约束控制，而非由仪器免费供应符号裕量。
+

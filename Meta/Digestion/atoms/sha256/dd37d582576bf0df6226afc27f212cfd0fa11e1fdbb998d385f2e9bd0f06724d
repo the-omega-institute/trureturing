@@ -1,0 +1,23 @@
+**推论 6.3（共同 b、d 承诺的整族及前一层消费者）。** Any known subset
+$K\subseteq\mathcal C$ with either $\omega\ne0$ or
+$\omega=0,\kappa\ne0$ has one at-most-eight-total-reading decoder,
+without a cardinality bound. In particular it cannot have
+$L_3(K,H_4(Y))$.
+
+More generally, let $K$ be a known subset at the entire preceding
+$H_3=(0,M,1,M,23/7,J,331/35)$. Suppose each reachable actual
+fourth-$M$ response $Y$ has supplied known constants
+$m_Y,j_Y,b_Y,d_Y$ placing its entire retained fiber in a class
+(6.4) satisfying one of those two conditions. Then one policy
+recovers all of $K$ within eight total readings.
+
+Proof. Restriction of Theorem 6.2's single whole-class inverse recovers
+the first known set. For the preceding history execute fourth $M$
+and read $Y$. Apply the arm rule or zero-stratum $JJJ$ rule to that
+whole retained set with its supplied constants. The fourth reading
+is already acquired and is not repeated. The budgets are respectively
+$5+2\le8$ or $5+3=8$ from $H_4$, and $4+1+3=8$ from $H_3$.
+The constants are assumptions on each entire actual candidate fiber;
+their existence or acquisition from unrestricted observations is
+not a consequence of the policy. ∎
+

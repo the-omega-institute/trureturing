@@ -1,0 +1,21 @@
+**Definition 64.1 (A fixed target-specified density space).** Retain the original inputs of Definition 59.1 and the actual signature space $Q$ of (50.2). As an additional supplier hypothesis, specify from these fixed targets and their measurable structure one finite-dimensional real linear subspace
+
+$$
+E\subseteq L^1(\sigma|_{\mathcal G};\mathbb R),
+\qquad
+P_E=\left\{g\in E:g\ge0\ \sigma\text{-almost everywhere},\ \int g\,d\sigma=1\right\}\ne\varnothing.
+\tag{64.1}
+$$
+
+The specification of $E$ is fixed before choosing the preparation; it is not an unknown prepared family. It need not contain any or all of the target densities. Identify $g\in P_E$ with its law $g\sigma$ on the entire original $\mathcal F$, and give $P_E$ the event-TV metric $d_E(g,k)=\frac12\|g-k\|_1$.
+
+For $\eta\in[0,1]$ the initial fibers are
+
+$$
+K_{0,E}^{\eta}(q)=\bigcap_{y\in X:\,[y]=q}
+ \left\{g\in P_E:\operatorname{TV}(g\sigma,\mu_y)\le\eta\right\}.
+\tag{64.2}
+$$
+
+Use exactly the distance refinement and countable-ordinal intersections (54.4)--(54.5), with range $P_E$, metric $d_E$ and neighborhoods $U_m(q)$. Write $K_{\infty,E}^{\eta}$ for the stabilized fibers. Every original label occurs in (64.2); even if two labels have identical complete prime observations, neither of their possibly different targets is dropped.
+

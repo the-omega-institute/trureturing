@@ -1,0 +1,30 @@
+## 485. 同一二倍素数区间给出有有限起点的平方根储备
+
+§87.4 的实际正子储备与 §393.4 的 Fibonacci 混合素子和都能消费二倍区间的素数计数。这里继续使用同一个完整正整数压力与参考值，记
+
+$$
+R(x)=F(x)-M(\lambda_x),\qquad \lambda_x=\frac1{x\log x}.
+$$
+
+§87.4 已给出实际子储备比较
+
+$$
+R(x)\ge B(x)=\sum_{\substack{p\text{ 素数}\\\sqrt{2x}\le p\le x-1}}
+\left(\frac1p-\log(1+1/p)\right)\ge0.
+$$
+
+其中参考和实际指数在该素数区间都恰为一，每项都是同一实际储备中的一项。§209.1 在 $a=1,z=1/p$ 时给
+
+$$
+\frac1p-\log(1+1/p)\ge\frac1{2p(p+1)}.
+$$
+
+此外直接复用 §393 式（393.13）的经典文献输入：Rosser–Schoenfeld，*Approximate formulas for some functions of prime numbers*，Corollary 3，式（3.8），印刷页 69，有
+
+$$
+\pi(2y)-\pi(y)>\frac{3y}{5\log y}
+\qquad\left(y\ge\frac{41}{2}\right).
+$$
+
+这条计数没有 RH 前提，适用于实数端点。它的来源见 [原文定位](../../../Library/Arith/rosser1962approximate.md)；此处不重新证明该素数分布定理。
+

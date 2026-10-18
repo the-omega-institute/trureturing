@@ -1,0 +1,108 @@
+**Theorem 208.8 (Dominance region for attained fixed-total minima).**
+In $\mathcal A(c_1,c_2,\gamma,S,t)$, define the data (208.21)
+independently of the early pair split. Then
+
+$$
+B_*\le\min_{\mathcal A}B_O\le\min_{\mathcal A}B_N
+ \le\max(B_*,S+U_2).
+\tag{208.24}
+$$
+
+The split
+$p_1^*=\min\{S,\max(0,Z/2-c_1)\}$, $p_2^*=S-p_1^*$ in
+(208.22) attains the displayed upper bound. If
+
+$$
+B_*\ge S+U_2,
+\tag{208.25}
+$$
+
+both minima in (208.24) equal $B_*$, and both minimum excesses
+equal $B_*-W$. Condition (208.25) holds in particular if
+$E\ge S$, $\max(c_1,c_2)\ge S$, or $\gamma_3\ge S$.
+For any actual input $y$ with these totals, the constructed score
+also satisfies
+
+$$
+\Delta_N(V)=\Delta_O(V)
+ \le\max\{\delta,U_2-E-t\}.
+\tag{208.26}
+$$
+
+Thus $U_2\le E+t+\delta$ suffices for a same-$Q$ comparison at
+excess at most $\delta$; and $\delta\le1$ with
+$U_2\le E+t+1$ suffices for $(V,0)$ in (207.9).
+
+**Proof.** For any early split, separate the three selected weights
+according to whether zero, one or two are early:
+
+$$
+q_3=\max\{M_3,\max(r_1,r_2)+M_2,Z+M_1\}.
+\tag{208.27}
+$$
+
+The interval for $r_1$ is $[c_1,c_1+S]$, with $r_2=Z-r_1$.
+Clamping $Z/2$ to that interval gives the stated split, minimizing
+$\max(r_1,r_2)$ at $h$. The three-label lower table in 208.7
+therefore supplies $B_*$ for every competitor, including its
+arbitrary early $00$ rows and suffix correlations; the optimized
+relocated score gives the upper bound. The finite coefficient
+simplex for $\mathcal A$ is compact, and supports are continuous,
+so both minima exist. This proves (208.24) and attainment under
+(208.25).
+
+This input lower bound is exactly the one already supplied by
+[206.7](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VIII.md).
+To match its notation, let $H_k$ be the sum of the $k$ largest
+late totals and put
+
+$$
+q=\max(\mu,H_2-t),\qquad
+c_0=\min(Z/2,S+\min(c_1,c_2)).
+\tag{208.28}
+$$
+
+Then $h=Z-c_0$,
+$M_1=\max(\mu,t)$, $M_2=\max(H_2,\mu+t)$, and
+$M_3=\max(H_3,H_2+t)$. Substitution gives
+
+$$
+B_*-W
+ =\max\{0,\mu-t,H_2-Z,H_3-W,q-c_0\}=d_0
+\tag{208.29}
+$$
+
+of (206.21). Padding at short lengths contributes only dominated
+terms, not fictitious queried labels. The lower bound is reused;
+the relocated score has cost $\max(d_0,U_2-E-t)$, whereas
+206.7's particular balanced chain has $\max(d_0,q-E)$.
+Since $U_2\le M_2$ and $M_2-t=q$, the former is no larger.
+This compares two constructions, not all signed or convex
+consequences of the earlier one.
+
+If $E\ge S$ or $\max(c_1,c_2)\ge S$, then $h\ge S$ and
+$B_*\ge h+M_2\ge S+U_2$. If $\gamma_3\ge S$, its entry and
+the two entries defining $U_2$ give $M_3\ge S+U_2$.
+At $L=3$ the padded zero causes no change to this inequality.
+Finally $B_*\le B_O(y)=W+\delta$, so subtracting $W=E+S+t$
+from the constructed maximum proves (208.26). There is one maximum
+of two costs, not their sum.
+
+In particular any unit-$O$ input with $Q(y)\notin E_N$ would have
+to satisfy
+
+$$
+U_2>E+t+1,\qquad E<S,\qquad\gamma_3<S,\qquad
+c_1+p_1<S,\quad c_2+p_2<S
+\tag{208.30}
+$$
+
+for its actual early split. Indeed if some actual $r_a\ge S$,
+then $q_3\ge r_a+U_2\ge S+U_2$, and (208.22) at that split
+has support $q_3\le B_O(y)$, giving a certificate. The other
+conditions follow from the preceding sufficient cases.
+These exclusions are necessary, not sufficient for nonmembership.
+Outside (208.25), (208.24) and (208.26) are the asserted bounds;
+no global fixed-total minimum equal to their upper endpoint is
+implied. $\square$
+

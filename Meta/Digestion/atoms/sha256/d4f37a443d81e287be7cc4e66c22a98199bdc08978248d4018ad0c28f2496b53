@@ -1,0 +1,83 @@
+**Theorem 3.1 (conditional-kernel cap).** Fix any actual network, with
+arbitrary nonnegative block weights, repeated seeds, guards and
+compatibility zeros. At block $i$ use any local outer relation covering
+all its positive global assignments, with actual incoming owner groups.
+For each $A\subseteq[k_i]$ let
+$Q_{i,A}(a\mid b_A)>0$ be a normalized conditional probability on the
+whole owned tuple, for every value of its full context. If $C_i>0$ and
+
+$$
+\Phi_i(s)\le C_i
+       \prod_{A\subseteq[k_i]}
+          Q_{i,A}(O_i(s)\mid B_{i,A}(s))^{\gamma_{k_i}(A)}
+\tag{COK.14}
+$$
+
+on that local relation, then
+
+$$
+Z(\mathcal N;\boldsymbol w)\le\prod_i C_i.
+\tag{COK.15}
+$$
+
+The assertion holds also for the mass of any retained subrelation of
+actual solutions. In particular, for every $d$ and every nonnegative
+uniform $w$,
+
+$$
+\beta_d(w)\le\Omega_d(w).
+\tag{COK.16}
+$$
+
+Proof. Zero mass is immediate. Otherwise let $P$ be the Gibbs law on
+the positive actual seed assignments being summed:
+
+$$
+P(s)=Z^{-1}\prod_i\Phi_i(s),\qquad
+\log_2 Z=H_P(s)+\sum_i\mathbb E_P\log_2\Phi_i.
+\tag{COK.17}
+$$
+
+The same definition with a restricted sum handles a retained actual
+subrelation. Under this one law the tuples $O_i$ partition $s$.
+For a permutation $\pi$ of the actual blocks let $O_{<i,\pi}$ be all
+owner tuples preceding $i$. Let $A_i(\pi)$ be the incoming groups
+whose owners precede $i$. Their actual tuple $B_{i,A_i(\pi)}$ is a
+subtuple of $O_{<i,\pi}$. The entropy chain rule and conditioning give
+
+$$
+H_P(s)=\sum_iH_P(O_i\mid O_{<i,\pi})
+ \le\sum_iH_P(O_i\mid B_{i,A_i(\pi)}).
+\tag{COK.18}
+$$
+
+Averaging uniformly over all permutations gives the coefficients
+(COK.12), since the relative order of each block and its distinct
+incoming owners is uniform. Thus
+
+$$
+H_P(s)\le\sum_i\sum_A\gamma_{k_i}(A)H_P(O_i\mid B_{i,A}).
+\tag{COK.19}
+$$
+
+Take expectations of the logarithm of (COK.14). For each kernel,
+conditional relative entropy gives
+
+$$
+H_P(O_i\mid B_{i,A})+
+    \mathbb E_P\log_2Q_{i,A}(O_i\mid B_{i,A})\le0.
+\tag{COK.20}
+$$
+
+Substitute these inequalities into (COK.17) and (COK.19).
+Every original $\log\Phi_i$ appears once, yielding (COK.15).
+There is no independence, acyclicity, bounded degree or positivity
+assumption on the original potentials.
+
+For uniform $w$, Proposition 2.4 supplies the outer relations. The
+local minimax theorem 4.1 supplies kernels with
+$C_i\le\Omega_d(w)+\varepsilon$ for all the finitely many types, for
+each $\varepsilon>0$. Apply (COK.15) to every size and let
+$\varepsilon$ decrease to zero. The exact RRN correspondence
+(COK.9) yields (COK.16). Identically zero $w$ is immediate. $\square$
+

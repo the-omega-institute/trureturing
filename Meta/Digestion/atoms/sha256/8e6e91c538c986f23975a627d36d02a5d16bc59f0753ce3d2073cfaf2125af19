@@ -1,0 +1,21 @@
+## 7. Counterexamples and count-sensitive consequences
+
+**Mathematical citation 7.1 (the two distinct sampling collisions).**
+[DEV, Example 11.5 and Theorem 11.4]'s actual sources
+
+$$
+t_\beta=\langle\alpha,\beta\rangle,\qquad
+t_{\mathrm{pair}}=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+$$
+
+have the same score three on $Q=\{RLR^\infty\}$. At $P=\{R\}$
+their initial replies are beta and branch, with both sources in
+$\mathcal F_1$; the missing cylinder is $[RR]$. At $P=\{RL\}$
+they give absent and alpha, with both in $\mathcal F_2$; the ray hits
+$[RLR]$ but misses the parent-right cylinder $[RR]$. Citation 4.2
+keeps their codes distinct in both tasks. Placing these local sources
+in a common actual branch context preserves the corresponding
+prefixed initial distinctions whenever the resulting sources satisfy
+the height bound: the path to the hole is the same reached branch path
+in both. This is the context mechanism of [DEV, (AAR.48)–(AAR.49)].
+

@@ -1,0 +1,24 @@
+**定义 61.2（A literal spine with numerical side prices）。** Start at an actual recorded-zero archive $(b,S,\sigma,\lambda)$ of Definition 27.1. Choose a finite sequence of whole words $B_b,\ldots,B_{L-1}$, $L\ge b$. Set $S_b=S$, $\sigma_b=\sigma$. At every issued index $t$, require $S_t$ nonempty and $\lambda|_{S_t}$ nonconstant. Let $\alpha(B)$ be the leading run, taking value $m$ for the all-one word, and $\rho(B)$ its terminal run. Require
+
+$$
+\begin{aligned}
+&\sigma_t+\alpha(B_t)<k,\qquad
+A_t=S_t\cap E_t(B_t),\qquad S_{t+1}=S_t\setminus E_t(B_t),\\
+&\sigma_{t+1}=\begin{cases}
+\rho(B_t),&B_t\text{ contains zero},\\
+\sigma_t+m,&B_t=1^m.
+\end{cases}
+\end{aligned}
+\tag{61.3}
+$$
+
+Require $\lambda|_{S_L}$ constant, with empty support allowed. The absolute price of this certificate is
+
+$$
+\Pi=\max\left(\{L\}\cup
+\{t+1+K(A_t,\lambda|_{A_t};t+1):b\le t<L,\ A_t\ne\varnothing\}\right).
+\tag{61.4}
+$$
+
+An empty sequence at a homogeneous or empty support has $\Pi=b$. The certificate contains one chronological zero-difference path. Every side price is the finite predicate (61.1), with its own actual offset; it contains no adaptive subtree or continuation oracle.
+

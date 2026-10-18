@@ -1,0 +1,39 @@
+**Lemma 10.3 (weight independence and positive reduced Hessian).**
+The five weight columns $\Gamma_{\eta_i}(\phi_i)$ are independent.
+For
+
+$$
+D_x=\operatorname{diag}(0,0,0,0,0,p_0\gamma_0,\ldots,p_4\gamma_4),
+\tag{AC.51}
+$$
+
+its restriction to the two-dimensional space $\ker J$ is positive
+definite. Consequently
+
+$$
+\begin{pmatrix}-D_x&-J^T\\J&0\end{pmatrix}
+\tag{AC.52}
+$$
+
+is nonsingular, as is the eighteen-equation system of eight moments,
+five contact values and five contact derivatives in legal local charts.
+
+Proof. A linear dependence among weight columns first vanishes on the
+three failure coordinates. The two saturated rank-one physical effects
+are independent, so both their coefficients are zero. Three distinct
+pure vectors $h_i$ are independent: otherwise three distinct points
+of a nondegenerate ellipse would lie on one affine line. Their rank-one
+matrices are then independent by congruence with their invertible
+column matrix. This removes the remaining three coefficients.
+
+If a vector in $\ker J$ has zero $D_x$ quadratic form, positivity of
+$p_i\gamma_i$ makes all its angle coordinates zero. The independent
+weight columns then make its weight coordinates zero. To prove AC.52,
+apply it to $(\dot x,\dot d)$ in its kernel and multiply its first
+row by $\dot x^T$. This gives $\dot x^TD_x\dot x=0$, hence
+$\dot x=0$, and then $J^T\dot d=0$ gives $\dot d=0$ by Lemma 10.2.
+The actual contact-derivative stationarity rows differ by the positive
+$p_i$ row scalings. Changing regular angular charts and clearing
+positive denominators at a root are invertible row/column operations.
+Thus the asserted eighteen-equation Jacobian is nonsingular. $\square$
+

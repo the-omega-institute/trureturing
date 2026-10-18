@@ -1,0 +1,82 @@
+**Proposition 4.1 (Joint populations, full marginal and cone membership).**
+Let $\Lambda$ have preparation/output row index and measurement/input
+column index, both ordered $(0,+,-)$. Its exact value for (3.4) is
+
+$$
+\Lambda=\begin{pmatrix}
+121/271&242/813&0\\
+150/271&710628/774247&2352/2857\\
+0&6724/8571&3362/2857
+\end{pmatrix}.
+\tag{4.1}
+$$
+
+In QRC coordinates, with $\tau=(1,\sqrt2,\sqrt2)^T$,
+
+$$
+M_{ij}=\frac{\Lambda_{ij}}{\sqrt{d_id_j}},\qquad
+\eta=\left(\frac{110}{271},0,
+\frac{\Lambda_{++}}4,\frac{\Lambda_{--}}4,
+\frac{1148}{2857},\frac{1148}{2857}\right),
+\tag{4.2}
+$$
+
+in order $(+,-,2+,2-,\Delta,\Sigma)$. These exact coordinates belong
+to the actual independent real-product atom cone and satisfy the full
+TP marginal $M^T\tau=\tau$. The channel is nonunital and not
+self-adjoint.
+
+Proof. The four sector-population vectors are
+
+$$
+\begin{aligned}
+p_{a\mathrm A}&=(0,1176/2857,1681/2857)^T,&
+p_{b\mathrm A}&=(0,2/5,3/5)^T,\\
+p_{a\mathrm B}&=(121/271,150/271,0)^T,&
+p_{b\mathrm B}&=(3/5,2/5,0)^T.
+\end{aligned}
+\tag{4.3}
+$$
+
+Then $\Lambda=(10/3)p_{a\mathrm A}p_{b\mathrm A}^T
++(5/3)p_{a\mathrm B}p_{b\mathrm B}^T$, giving (4.1).
+Its three column sums are exactly $(1,2,2)$, so (4.2) gives
+$M^T\tau=\tau$. In particular, the normalized Choi matrix is
+
+$$
+\chi_S=\frac15\sum_fc_f(a_fa_f^T)\otimes(b_fb_f^T),\qquad
+\operatorname{Tr}_{\rm out}\chi_S=I_5/5.
+\tag{4.4}
+$$
+
+To specify the cone membership fully, use QRC's orthonormal invariant
+matrices $H_i=R_i/\sqrt{d_i}$ and its six orthonormal pairs
+$(F_{\nu1},F_{\nu2})$. Define
+$h_i(a)=a^TR_ia/\sqrt{d_i}$,
+$z_\nu(a)=(a^TF_{\nu1}a,a^TF_{\nu2}a)^T$, and
+$k(a,b)=(h(a)h(b)^T,(z_\nu(a)^Tz_\nu(b)/2)_\nu)$.
+The point here is exactly
+
+$$
+(M,\eta)=\frac{10}{3}k(a_{\mathrm A}(0,0),b_{\mathrm A}(0,0))
++\frac53 k(a_{\mathrm B}(0),b_{\mathrm B}(0)).
+\tag{4.5}
+$$
+
+The symmetries proved in Lemma 3.3 identify its orbit coordinates with
+these QRC generators. Their trivial block is (4.1) divided by
+$\sqrt{d_id_j}$. The planar traceless coefficient is
+$\Lambda_{jj}/4$. The dark/plus coefficient is
+$(5/3)(55\sqrt6/271)(\sqrt6/5)=110/271$; the mixed-plane coefficients
+are both $(10/3)(574\sqrt6/2857)(\sqrt6/5)/2=1148/2857$.
+The dark/minus coefficient vanishes. This proves all of (4.2) and
+(4.5), using actual product atoms rather than PPT feasibility.
+
+The dark coefficient of $S(I)$ is the first row sum of $\Lambda$,
+$605/813\ne1$. Also
+$M_{0+}=242/(813\sqrt2)\ne150/(271\sqrt2)=M_{+0}$.
+Thus $S(I)\ne I$ and $S\ne S^\dagger$.
+TP concerns column sums; unitality would concern row sums.
+Independent decoder factors are essential to the specification of this
+channel. No restriction on other competitors follows. $\square$
+

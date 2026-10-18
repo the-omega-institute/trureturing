@@ -1,0 +1,18 @@
+**Definition 5.1 (inward coordinates and Lagrangian).** In the localized six-atom coordinates let $r_i=\xi_i$ when $\eta_i=0$ and $r_i=1-\xi_i$ when $\eta_i=1$. For the minimization of $F=-J$ use
+$$
+\mathscr L
+=Y\cdot(\mathcal M-B)-J+\lambda(\kappa-K)-\nu\cdot r.
+$$
+At the event, write
+$$
+H_i^{\rm occ}=H_{\eta_i}(u_i,v_i),\qquad
+H_i^{\rm opp}=H_{1-\eta_i}(u_i,v_i),\qquad
+\epsilon_i=\operatorname{sgn}H_i^{\rm occ}.
+$$
+The occupied height is nonzero by [OE, Proposition 7.1]. Let
+$$
+R_i=Y_e\cdot\Gamma_{1-\eta_i}(u_i,v_i)
+-|H_i^{\rm opp}|-\lambda_e|u_i|
+$$
+be the dual gap on the endpoint opposite to the occupied endpoint of ray $i$.
+

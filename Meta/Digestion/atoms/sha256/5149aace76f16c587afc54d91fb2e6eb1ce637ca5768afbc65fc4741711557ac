@@ -1,0 +1,34 @@
+**Lemma 4.1 (Adjacent zero edges).** For two distinct adjacent active
+edges $e,f$ and any third active edge $g$, the maximal full-law state
+mass on
+
+$$
+e=0,\qquad f=0,\qquad g=1
+\tag{4.1}
+$$
+
+is at most $a^3\eta$, for every target position.
+
+Proof. The first two zero edges force their three spins to be constant,
+with weights $a^3,b^3$ and total $t_*=a^3+b^3\le a^2$.
+If $g$ repeats either edge, its one label is impossible. If $g$ is
+vertex-disjoint from that triple, the full-law maximal masses are
+
+| Target position | Maximal state mass |
+| --- | --- |
+| In the zero triple | $a^3\eta$ |
+| In the one edge $g$ | $t_*\eta/2$ |
+| Outside both | $at_*\eta$ |
+
+These products include both assignments of the nontarget component.
+Since $t_*\le a^2$ and $a\ge1/2$, all three are at most
+$a^3\eta$.
+
+The remaining possibility is that $g$ extends the zero triple. Its one
+label gives weights $a^3b,ab^3$ on the four-spin component. An internal
+target, including the new vertex, gives full-law mass
+$a^3b/2=a^2\eta/2$. An exterior target gives
+$a(a^3b+ab^3)/2=ac\eta/2\le a^2\eta/2$. Finally
+$a^2\eta/2\le a^3\eta$. A single line edge has no further incidence
+with this connected triple. $\square$
+

@@ -1,0 +1,106 @@
+**Proposition 4.1 (The $p=3/5$ XOR certificate).** In the state order $(a_0,a_1,b_0,b_1)$, let
+
+$$
+\lambda=(1/5,3/10,1/5,3/10),\qquad
+M_0=\begin{pmatrix}
+0&0&2/5&0\\0&0&0&3/5\\1&0&0&0\\0&1&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&0&3/5\\0&0&2/5&0\\0&0&0&0\\0&0&0&0
+\end{pmatrix}.
+\tag{4.1}
+$$
+
+This is one member of the previously studied four-state XOR family, with its complementary-spin tail mechanism reused in the fixed-state tail setting [Fixed-state tails][XOR]. The producer itself and its tail mechanism are not new constructions here. For its actual law $P$, $q=X_0$ almost surely, and the moments and gains at radius one are exactly
+
+$$
+\begin{aligned}
+\mathbb E q^2&=6/25,\\
+\mathbb E u_L^2=\mathbb E u_R^2=\mathbb E p_L(1)^2=\mathbb E p_R(1)^2&=3/25,\\
+\mathbb E u_{L,1}^2=\mathbb E u_{R,1}^2&=36/475,\\
+e_L(1)=e_R(1)=J_L(\infty)=J_R(\infty)&=3/25,\\
+d_L(1)=d_R(1)=J_L(1)=J_R(1)&=21/475,\\
+s_L(1)=s_R(1)&=36/475>0.
+\end{aligned}
+\tag{4.2}
+$$
+
+With $H_b(t)=-t\log t-(1-t)\log(1-t)$,
+
+$$
+h=\tfrac12H_b(3/5),\qquad h_1=\tfrac{19}{25}H_b(6/19),\qquad
+b_L(1)=b_R(1)=h>a_1=h_1-h,
+\tag{4.3}
+$$
+
+and
+
+$$
+e_L(1),e_R(1)>a_1/2,\qquad \chi_L(1),\chi_R(1)<\sigma_2.
+\tag{4.4}
+$$
+
+These failed comparisons occur with both forcing neighbors retained and with the full opposite half-line. Nevertheless this fixed law has a finite actual tail. More precisely, for $\beta=2\sqrt6/5<1$,
+
+$$
+\tau_P(R)\le\frac{\beta^{\lfloor R/2\rfloor+1}}{2(1-\beta)}\longrightarrow0.
+\tag{4.5}
+$$
+
+Proof. The rows of $M_0+M_1$ sum to one. Its incoming masses at $b_0,b_1$ are $(1/5)(2/5)+(3/10)(2/5)=1/5$ and $(1/5)(3/5)+(3/10)(3/5)=3/10$; the incoming $a$ masses equal the corresponding $b$ masses. Hence $\lambda A=\lambda$. Every one ends at a $b$ state, whose one row is zero, so $M_1^2=0$. Thus (4.1) is in the original $\Theta_4$. It is irreducible of period two, with positive stationary state masses. Some legal cylinders still have zero mass: $1001$ cannot place both ones on the same active parity. This does not remove that word from the objective.
+
+To describe this same stationary joint law, take independent two-sided spins $S_k\sim\operatorname{Ber}(p)$, $p=3/5$, and an independent uniform phase $Z\in\{0,1\}$. Set
+
+$$
+X_{2k+Z}=S_k\mathbin\oplus S_{k+1},\qquad X_{2k+Z+1}=0.
+\tag{4.6}
+$$
+
+At an active coordinate the state moves $a_{S_k}\to b_{S_{k+1}}$ with the indicated emitted parity; at a separator it moves $b_{S_{k+1}}\to a_{S_{k+1}}$ emitting zero. The state masses are precisely $\lambda$. Uniform phase and shift invariance of the independent spins give stationarity on the original bit clock, not on a substituted active-only clock.
+
+Each complete visible half-line contains infinitely many active ones almost surely: disjoint spin pairs provide independent trials with positive one probability. It therefore identifies the active parity. Its adjacent spin parities determine the half-line spins up to complementation. The two candidates have limiting one frequencies $3/5$ and $2/5$; the strong law selects the actual candidate. At an active center the full past determines $S_0$ and the full future determines $S_1$, so the exterior determines $X_0=S_0\oplus S_1$. At a separator the center is already zero. This proves $q=X_0$.
+
+At an active center, $X_{-1}=X_1=0$ are certain separators. Adding $X_{-1}$ to the complete future supplies no information about the independent $S_0$, so $p_L(1)=u_R$; directly, $p_R(1)=u_L$. At a separator, $u_L,u_R,p_L(1),p_R(1)$ vanish. The one-half-line predictor at an active center is $p$ or $1-p$ according as its known adjacent spin is zero or one. Thus
+
+$$
+\mathbb E q^2=\tfrac12\,2p(1-p)=6/25,\qquad
+\mathbb E u_L^2=\mathbb E u_R^2
+=\tfrac12\bigl((1-p)p^2+p(1-p)^2\bigr)=3/25.
+\tag{4.7}
+$$
+
+Legality and stationarity give $P(X_{-1}=0)=P(X_1=0)=19/25$, and
+
+$$
+P(X_0=1\mid X_{-1}=0)=P(X_0=1\mid X_1=0)=6/19.
+$$
+
+On a neighbor-one fiber the predictor is zero. Therefore both radius-one predictive second moments are $(19/25)(6/19)^2=36/475$. Substitution in the projection identities of Theorem 2.1 proves every value in (4.2).
+
+The complete past predicts a Bernoulli parity only on the active half of the coordinates, giving $h=H_b(p)/2$. The single-neighbor predictor gives the stated $h_1$. Since the whole-exterior entropy is zero and $p_L(1)=u_R$, $p_R(1)=u_L$, both erased-center entropy gaps are $h$.
+
+Concavity yields $H_b(3/5)\ge(4/5)\log2$, whereas $H_b(6/19)\le\log2$. Hence $2h-h_1\ge(1/25)\log2>0$, proving $b_A(1)>a_1$. For the squared-loss comparison, Jensen's inequality gives
+
+$$
+H_b(3/5)\ge-\log\bigl((3/5)^2+(2/5)^2\bigr)=\log(25/13)\ge12/19.
+$$
+
+The last inequality follows from $\log t\ge2(t-1)/(t+1)$ for $t\ge1$. Also $\log2<7/10$, since the first four terms of the exponential series at $7/10$ sum to $12013/6000>2$. Thus
+
+$$
+a_1<\frac{133}{250}-\frac6{19}=\frac{1027}{4750}<\frac6{25}=2e_A(1).
+\tag{4.8}
+$$
+
+This proves the first comparison in (4.4). The cut identity $b_A(1)=a_1+\sigma_2-\chi_A(1)$ proves the second.
+
+For completeness, use the existing complementary-block tail mechanism on this same law. At an active center a radius-$r$ retained side contains $m=\lfloor r/2\rfloor$ adjacent active parities. The complete opposite half-line fixes the opposite endpoint spin. Therefore
+
+$$
+e_L(r)=e_R(r)=\tfrac12v_m,\qquad
+v_m=\mathbb E\operatorname{Var}(S_0\mid S_{-m}\oplus S_{-m+1},\ldots,S_{-1}\oplus S_0).
+\tag{4.9}
+$$
+
+The conditioning list is empty at $m=0$. The reversed spin block has the same law, giving the right equality only for this explicit example. Each parity block has two complementary spin completions of masses $a,b$. Its contribution to $v_m$ is $ab/(a+b)\le\sqrt{ab}/2$. Here $ab=[p(1-p)]^{m+1}$, and the $2^m$ complementary pairs give the reused bound $v_m\le[2\sqrt{p(1-p)}]^{m+1}/4=\beta^{m+1}/4$. These are deterministic expected variances, not random stability constants. Each $m$ corresponds to two bit radii, so summing (4.9) from $R$, with a possible extra term when $R$ is odd, proves (4.5). Since $24<25$, $\beta<1$; in particular $\tau_P(0)\le\beta/[2(1-\beta)]<\infty$. The example refutes the per-radius bridge, not fixed-law summability. $\square$
+

@@ -1,0 +1,48 @@
+**Theorem 5.1 (the exact $M_1(D)$ alphabet with a smaller sufficient scan).**
+There is one deterministic effective construction from public $D$ of a
+correct original preparation and reader with complete attained alphabet
+exactly $M_1(D)$. For every $D\ge2$ and every $t\in\mathcal F_D$,
+its preparation satisfies
+
+$$
+T_{\rm prep}(t)\le2^{D-1},\qquad
+L_{\rm prep}(t)\le D2^{D-1},\qquad
+H_{\rm prep}(t)\le D.
+\tag{PPF.21}
+$$
+
+Every source-bearing late query has length at most $D$. At $D=1$
+the constant-name zero-preparation construction in Theorem 4.2 already
+attains $M_1(1)=1$.
+
+Proof. Use the credited FMR/CBN exact minimum admissible cover of
+$S_D$, with public ordering, per-target witnesses and reply-to-factor
+tables. Generate it by finite enumeration from $D$. This common
+installation depends on no unknown actual source and precedes use of
+its selected name. Its size and generation cost are separate resources.
+
+Replace the credited full scan of every word $Rq$, $q\in W_D$,
+by $\operatorname{Acquire}(R,D-1)$. Lemma 4.1 acquires the same
+entire actual reply table on $W_D$, hence the same
+$\pi_D(v)\in S_D$, with the three charges (PPF.21). Compute its
+first-containing-cover-member index and export only that complete name.
+
+After the request, use the installed witness for that member and target:
+a constant uses zero Reads, and a boundary witness $a\in W_D$ uses
+the one actual word $Ra$. Canonicalization preserves that reply and
+the requested full factor on the entire assigned original fiber.
+Equation (PPF.8) gives every authentic subsequent count. Thus only
+the acquisition algorithm has been replaced; no member, donor,
+decoder, original target or correlated fiber has been independently
+projected or restricted.
+
+A minimum cover has no redundant member. Each member has an element
+covered by none of the others, since otherwise it could be deleted.
+Every member therefore receives some point under first-membership
+naming, in any public ordering. Each canonical point is attained by
+an actual original source. Thus the complete exported alphabet has
+exactly the cover minimum $M_1(D)$, not merely an upper bound on it.
+The construction is effective uniformly in $D$, since all the finite
+enumerations, acquisitions and table computations terminate.
+$\square$
+

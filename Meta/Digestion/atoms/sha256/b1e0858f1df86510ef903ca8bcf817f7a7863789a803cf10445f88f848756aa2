@@ -1,0 +1,24 @@
+**Corollary 9.2 (native meaning of the alternative).** Under the
+unchanged hypotheses of Definition 1.3, the all-position equality in
+Theorem 9.1 is equivalent to
+
+$$
+H_{\mathrm{exec}}(A,k;r)=G+4+r
+\quad\text{for every original }A\text{ and every }r\ge0.
+$$
+
+If a particular correct subgrid Boolean table has no obstruction,
+Theorems 7.3 and 8.1 provide some bounded original $A'$ and its
+full-fiber native lift at count $m+4+r$ and caps $n+1,W'+3$.
+They provide no feasibility assertion at a different specified $A$.
+
+Proof. Use (TC.1) separately at each parameter set. The projection
+preserves actual selected subsequences and both cap inequalities;
+the lift installs literal addresses for that parameter set, all four
+successors, the two paid profile states, the original two latches and
+$r$ extra latches. At fixed $A'$ its stationary source, prescribed
+$\sigma_{A',k}$ and complete reader entries are unchanged. Changing
+from $A$ to $A'$ changes the mathematical parameter instance and
+the installed native literals; it is not a runtime source operation or
+a permitted code reselection inside the fixed-$A$ task. $\square$
+

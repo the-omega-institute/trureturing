@@ -1,0 +1,13 @@
+**Proposition 197.1.** If u<=m, the complete Z circle contains an actual owner
+eta, distinct from tau and rho, with frame
+
+ eta=(M,Z,U,Q,Z,U).
+
+Its axial M angle theta and transverse Z angle gamma satisfy
+ theta+2*gamma<pi,
+and consequently u>T2. In all cases,
+
+ u>min(m,T2)>T.
+
+These are necessary conditions, not five-reservoir exclusion.
+

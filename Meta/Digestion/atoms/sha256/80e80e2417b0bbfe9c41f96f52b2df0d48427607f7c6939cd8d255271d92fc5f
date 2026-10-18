@@ -1,0 +1,30 @@
+**Definition 1.2 (actual histories and host excess).** A history is an
+actual finite run prefix ending immediately before a query. Let $S$ be its
+exposed coordinate set, with its particular exposed assignment, $h$ ones
+and $z$ zeros. It is live when both outputs have completions, equivalently
+when
+
+$$
+p=(h,z)\in V=\{0,\ldots,K-1\}\times\{0,\ldots,L-1\}.
+$$
+
+Let $F_p$ be the set of installed states hosting such histories,
+$\mathcal S_p$ their support family, $b_p=|F_p|$, and
+$a_p=|\mathcal S_p|$. Write
+
+$$
+\begin{aligned}
+Q_{\rm live}&=\bigcup_{p\in V}F_p,&
+\nu&=|Q\setminus Q_{\rm live}|,\\
+d(q)&=|\{p\in V:q\in F_p\}|,&
+D&=\sum_{q\in Q_{\rm live}}(d(q)-1),\\
+E&=\sum_{p\in V}(b_p-1).
+\end{aligned}
+\tag{TS.2}
+$$
+
+The number $\nu$ includes unused and exclusively certified states. A state
+live somewhere remains in $Q_{\rm live}$ even when another input visits
+it after certification. Supports, counts and histories are proof indices,
+not extra configuration supplied to the graph.
+

@@ -1,0 +1,32 @@
+### Theorem 4.1. Exact mixed-state fiber
+
+Among all four-qubit density matrices, with the pair matrices expressed in the fixed computational bases,
+
+$$\boxed{\{\sigma:\sigma_{XY}=R\text{ for every }X<Y\}=\{t|H_+\rangle\langle H_+|+(1-t)|H_-\rangle\langle H_-|:0\le t\le1\}.} \tag{4.1}$$
+
+In particular its only pure states are the two endpoints.
+
+Proof. Let J=(1/2)sum_X sigma_X be total spin and L=J^2. Then
+
+$$L=3I_{16}+\frac12\sum_{X<Y}\boldsymbol\sigma_X\cdot\boldsymbol\sigma_Y\ge0.$$
+
+For R, the expectation of sigma_X dot sigma_Y is -1. Any sigma in the left side of (4.1) therefore has Tr(sigma L)=0. Positivity forces its support into ker L.
+
+An explicit real orthonormal basis of this two-dimensional kernel is
+
+$$e_0=\frac1{\sqrt3}\left[|0011\rangle+|1100\rangle-\frac12(|0101\rangle+|0110\rangle+|1001\rangle+|1010\rangle)\right],$$
+
+$$e_1=\frac12(|0101\rangle-|0110\rangle-|1001\rangle+|1010\rangle).$$
+
+For an elementary dimension check, J_z=0 restricts to the six weight-two strings. J_+=0 imposes the four equations sum_{j!=i} x_{ij}=0. They have rank four and force opposite-edge coefficients equal and their three values to sum to zero. Hence the kernel has dimension two, spanned by e_0,e_1. Conversely J_z=J_+=0 implies J_-=0 by the spin commutator, so these are exactly the zero-total-spin vectors.
+
+On this basis, the swap operators are
+
+$$P_{AB}=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad P_{AC}=\begin{pmatrix}-1/2&-\sqrt3/2\\-\sqrt3/2&1/2\end{pmatrix}.$$
+
+Both swaps have expectation zero in R. If the density matrix on this kernel is [[a,c],[conjugate(c),1-a]], the two expectations force a=1/2 and Re(c)=0. Positivity then requires |Im(c)|<=1/2. Since
+
+$$H_\pm=(e_0\pm i e_1)/\sqrt2,$$
+
+these are precisely the convex combinations in (4.1). Conversely every such combination has all six marginals equal to R, by linearity of partial trace. QED.
+

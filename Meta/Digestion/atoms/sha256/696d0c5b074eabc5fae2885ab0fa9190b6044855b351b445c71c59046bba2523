@@ -1,0 +1,83 @@
+**Proposition 6.2 (both source directions and exact full rows).** The
+entire acquired fibre is
+
+$$
+\begin{aligned}
+D=\{W(T_{n+2},T_{m+2},z):;& n,m\ge0,\ n\ne m,\\
+ &z\ne T_{n+2},\ z\ne T_{m+2},\ z\ne T_m,\\
+ &z\ne T_{n+1},\ z\ne T_{m+1}\}.
+\end{aligned}
+\tag{PAC.18}
+$$
+
+Take $Q=\{LL,LR,RLL,RLR,RRL,RRR\}$. All its addresses are reached,
+with full exterior
+
+$$
+C_Q=\langle\langle h_1,h_2\rangle,
+       \langle\langle h_3,h_4\rangle,\langle h_5,h_6\rangle\rangle\rangle
+\tag{PAC.19}
+$$
+
+and actual hole tuple $(T_{n+1},T_n,T_{m+1},T_m,z,z)$.
+Let $r_0$ be the complete label with partition
+$\{\{1\},\{2,5,6\},\{3\},\{4\}\}$, and $r_1$ the complete label
+with partition $\{\{1\},\{2\},\{3\},\{4\},\{5,6\}\}$.
+Their exact entire strata are
+
+$$
+\begin{aligned}
+D_{r_0}&=\{U_0(n,m):n,m\ge0,\ n-m\notin\{-1,0,1,2\}\},\\
+U_0(n,m)&=W(T_{n+2},T_{m+2},T_n),\\
+D_{r_1}&=\{U_1(n,m,z):n,m\ge0,\ n-m\notin\{-1,0,1\},\\
+ &\hspace{35mm}z\ne T_{n+i},\ z\ne T_{m+i}\ (i=0,1,2)\},\\
+U_1(n,m,z)&=W(T_{n+2},T_{m+2},z).
+\end{aligned}
+\tag{PAC.20}
+$$
+
+The difference notation abbreviates finite affine equalities and their
+negations over natural $n,m$. Both labels retain (PAC.19) and the whole
+reached set. The anchor is residual-free; the companion carrier before its
+negatives is the entire $\mathcal T$, with the same $z$ repeated in both
+output positions and compared against both rank coordinates.
+
+Proof. An arbitrary source giving the old row has precisely the form
+$W(a,b,z)$, with its actual $a,b,z$, and $a,b,z$ pairwise distinct.
+Write the branched $a$ as $\langle l,t\rangle$. The first positive
+record says exactly $\rho l=\langle l,t\rangle$. This is the existing
+native feedback atomicity application of [ARH, Theorem 4.2][ARH]; here is
+the parameter correspondence. By the native mass identities of [URR,
+Definition 2.1][URR], $\gamma(l)>0$ would make the right side's mass
+strictly exceed $\gamma(l)=\gamma(\rho l)$. Thus $l=T_k$; the equality
+forces $a=T_{k+1}$, so it is branched only for $k\ge1$. Its actual children
+are $T_k,T_{k-1}$ by the recurrence, hence $a=T_{n+2}$ for $n=k-1$.
+The second record identically gives $b=T_{m+2}$. No new feedback
+classification is being asserted.
+
+At epoch zero $RLR$ now has whole value $T_m$, giving $z\ne T_m$.
+The old distinct classes give $n\ne m$, $z\ne T_{n+2}$ and
+$z\ne T_{m+2}$. The last two negatives say
+$\rho z\ne T_{n+2}$ and $\rho z\ne T_{m+2}$. Since
+$T_{n+2}=\rho T_{n+1}$ and $\rho$ is injective, these are exactly the
+last two inequalities in (PAC.18). All endpoints are reached: the outer
+branches persist, and the recorded child addresses are in the branched
+$a,b$. This proves the arbitrary-source direction. Conversely every
+finite tuple of (PAC.18) has that old exterior and partition, the two
+branch literals, both actual-epoch positive records and all three negative
+records with both guards. This gives the other direction on the whole
+source fibre.
+
+The tuple at $Q$ follows by the atomic recurrence. In $r_0$, the complete
+partition forces $z=T_n$. Distinctness of the other four atomic classes
+excludes $n-m\in\{-1,0,1\}$. The old distinctness additionally excludes
+$T_n=T_{m+2}$, namely $n-m=2$. All other inequalities in (PAC.18) are
+then either automatic or among these exclusions. This gives the first
+stratum in both directions. In $r_1$, the four atomic classes are distinct
+exactly under $n-m\notin\{-1,0,1\}$. Their inequalities with $z$,
+together with (PAC.18), give precisely the six displayed comparisons with
+indices $i=0,1,2$. The copied pair of $z$ holes remains one entire class.
+Conversely these tests fill (PAC.19) with exactly the required complete
+partition and preserve the old row and every retained record. These are
+the two exact stratum correspondences. $\square$
+

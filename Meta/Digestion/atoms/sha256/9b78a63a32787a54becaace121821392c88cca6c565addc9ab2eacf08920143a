@@ -1,0 +1,6 @@
+### 67.4 Attribution and scope
+
+The Bloch-sphere parametrization, orthogonal projectors, and tensor products of orthogonal matrices are standard. The MUB/traceless-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and the Pauli construction to Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . Hadamard recursion and its tensor closure are classical. The balanced-frame reduction here uses the actual physical saturation theorem of §66 to certify resource minima, and the displayed real matrix supplies an explicit attainer beyond its Hadamard-order hypothesis. No priority claim is made for the underlying block-matrix identities.
+
+These statements concern exact finite physical implementation of the specified uniform multi-fibre channel family. They retain full coherent-input and arbitrary-reference equality. They give neither a general positive-error diamond formula nor arbitrary-channel or full-RT recovery.
+

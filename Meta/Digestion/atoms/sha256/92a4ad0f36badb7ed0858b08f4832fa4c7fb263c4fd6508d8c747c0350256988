@@ -1,0 +1,58 @@
+**Definition 5.1 (native owned-seed network).** Fix $d,n\ge1$ and
+the same public port set $V$. Choose a finite seed index set $J$.
+Each $c\in J$ has a domain $T_c\subseteq\mathcal A$, possibly empty,
+and a distinct designated owner port $o_c\in V$. Every port
+$v=(i,q)$ has exactly one of the following prescriptions:
+
+1. A constant $z_v=\zeta_v\in G_q$.
+2. An assignment to one seed $c$, with a table
+   $B_v:T_c\to G_q$ and value $z_v=B_v(s_c)$.
+
+The owner $o_c$ is assigned to its own seed $c$ and satisfies
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{RRN.16}
+$$
+
+It follows in particular that a nonempty owner domain is contained
+in the attained reply set of its owner. Distinct owners imply
+$|J|\le n(2^d-1)$. Multiple occurrences of a seed use the same
+variable. Let $\mathcal S=\prod_{c\in J}T_c$, and let $z_v(s)$
+be the prescribed value for $s\in\mathcal S$. Define
+
+$$
+\begin{aligned}
+\mathcal X_i(s)
+ &=\{u\in S_d:\Gamma_q(u)=z_{(i,q)}(s)
+                                      \text{ for all }q\in W_d\},\\
+\mathcal S_{\rm real}
+ &=\{s\in\mathcal S:\mathcal X_i(s)\ne\varnothing
+                                      \text{ for every }i\}.
+\end{aligned}
+\tag{RRN.17}
+$$
+
+Lemma 2.4 makes every $\mathcal X_i(s)$ empty or a singleton.
+Only $s\in\mathcal S_{\rm real}$ reconstruct an actual tuple
+$x(s)\in S_d^n$. This condition is part of the language; seed
+assignments are not assumed to be freely or jointly realizable.
+
+For nonnegative whole-block weights $w_i:S_d\to[0,\infty)$ put
+
+$$
+\Phi_i(s)=\sum_{u\in S_d}w_i(u)
+       \prod_{q\in W_d}
+          \mathbf1_{\{\Gamma_q(u)=z_{(i,q)}(s)\}},\qquad
+Z(\mathcal N;w_1,\ldots,w_n)
+   =\sum_{s\in\mathcal S}\prod_{i=1}^n\Phi_i(s).
+\tag{RRN.18}
+$$
+
+Each $\Phi_i$ is zero or the weight of its one reconstructed actual
+block. Its scope contains at most $2^d-1$ distinct seeds, regardless
+of how often a seed occurs within that block. Each original $w_i$
+is owned once, by $\Phi_i$, even when its arguments meet many stars.
+These potentials are specifically (RRN.18); arbitrary hypergraph
+potentials are not substituted without a native realization proof.
+

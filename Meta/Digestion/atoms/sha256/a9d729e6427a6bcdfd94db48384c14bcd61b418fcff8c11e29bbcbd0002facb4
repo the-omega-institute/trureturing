@@ -1,0 +1,41 @@
+**Example 303.2 (Earlier unqueried labels remain legal).**
+At the actual source $(r,g)=(19,436)$, $F_{19}=4181$,
+$419\le436\le836$ and $N=1822917$. The first four prime replies
+are $0100$. The legal rule $N(3,4;1,0,0,0)$ makes its two actual
+requests at 3 and 4 and outputs the earlier **unqueried** label 1.
+The endpoint stopped rule $O(3,4;0,0,0)$ outputs zero there. Changed
+mass is one, and the $\ell^1$ counting defect is two (TV one).
+This is an obstruction to that repair being free, not a separator
+between the original acquisition classes. No result here deletes this
+word, label or counted pair of requests.
+
+**Literature scope 303.3.**
+The integer supporting scores, their finite comparisons and the coupled
+head theorem above are repository-derived ordinary mathematics. Their
+proofs are the complete row data and arguments given here, together
+with the specifically cited earlier source, score and transport results.
+No exhaustive novelty or priority claim is made.
+
+David Blackwell, *Comparison of Experiments*, Second Berkeley Symposium
+(1951), pp. 93–102,
+[sections 2–3 and Theorem 2](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+defines an experiment as finitely many probability measures on a Borel
+space, bounded vector-valued actions and attainable whole loss vectors
+under decision procedures and their convex closure. Its comparison and
+supporting-hyperplane argument concern that entire attainable vector.
+This is the literature-attested comparison framework. It does not
+provide a reverse hard-two increasing-stopping construction or the
+specific row coefficients in 298.
+
+Jędrzej Kaniewski, Troy Lee and Ronald de Wolf, *Query complexity in
+expectation*, [arXiv:1411.7280v1](https://arxiv.org/pdf/1411.7280v1),
+Definitions 6 and 8 and both directions of Theorem 9, characterize
+nonnegative scalar expectation by nonnegative literal degree. Their
+randomized cost is maximum supported root-to-leaf depth. In the converse,
+coefficients of total mass $M$ are sampled with probabilities
+$\alpha/M$ and the scalar output is multiplied by $M$. This gives
+the stated scalar expectation; it does not give a normalized joint
+probability-vector output law, equal counterfactual schedule-cell masses,
+or an increasing first-queried-zero stopped rule. None of those missing
+conditions is imported into (300.2) from that characterization.
+

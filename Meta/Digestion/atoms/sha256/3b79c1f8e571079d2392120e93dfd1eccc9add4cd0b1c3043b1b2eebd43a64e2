@@ -1,0 +1,24 @@
+**Assumption 2.3 (endowed finite local evaluation).** Keep the distinguished
+root and seven reciprocal endpoint types
+$\mathsf P,\mathsf L,\mathsf R,\mathsf O_0,\mathsf O_1,
+\mathsf H_0,\mathsf H_1$ of SSA/UAS. An empty endpoint has no partner.
+The L/R child layer is a finite rooted ordered tree. Local unary
+intermediate vertices are allowed. A known reached endpoint admits a
+partner/vacancy probe; no incoming-edge search is available.
+
+Endow a finite private mechanism which, in a single fine transition,
+performs the explicitly bounded guard and matching probe lists of
+Definition 4.1, evaluates the finite prefix table, and performs at most
+one attachment of Definition 2.4. Its temporary evaluation space is
+bounded by those fixed lists and the at-most-25-vertex local pattern.
+It is discarded between transitions. There is no retained cursor,
+phase register, unbounded work tape, graph scanner or free allocator
+beside the actual carrier.
+
+Bounded matching, finite evaluation and this temporary space remain
+ideal mechanism assumptions. Their internal probe/evaluation instants
+are not additional operational cuts of this model. Every probe is
+nevertheless charged. A model exposing those instants, or individual
+initialization assignments, requires further states and a further
+refinement theorem. The construction does not claim that last descent.
+

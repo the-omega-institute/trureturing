@@ -1,0 +1,29 @@
+**Lemma 60.2.** On \(0\le x\le1\),
+\(D(x)\ge157464\), \(-T(x)\ge3306744\), and
+\(G(x)\succeq157464I_{30}\).
+
+**Proof.** In the Bernstein basis
+\(\binom njx^j(1-x)^{n-j}\), the degree-nine coefficients of
+\(D/3306744\), in increasing order of \(j\), are
+
+\[
+ \left(\frac1{21},\frac{50}{567},\frac{4051}{27216},
+ \frac{89515}{381024},\frac{21635}{61236},\frac{165247}{321489},
+ \frac{67265}{91854},\frac{121699}{118098},
+ \frac{254800}{177147},\frac{39200}{19683}\right).
+\]
+
+The degree-ten coefficients of \(-T/3306744\) are
+
+\[
+ \left(1,\frac{481}{280},\frac{64063}{22680},\frac{50411}{11340},
+ \frac{3200957}{476280},\frac{33686543}{3429216},
+ \frac{59929859}{4286520},\frac{35809987}{1837080},
+ \frac{55250306}{2066715},\frac{4979375}{137781},
+ \frac{19917500}{413343}\right).
+\]
+
+The first list has minimum \(1/21\), the second minimum 1.
+The Bernstein basis is nonnegative and sums to one on this interval.
+The two scalar bounds and the matrix bound follow. \(\square\)
+

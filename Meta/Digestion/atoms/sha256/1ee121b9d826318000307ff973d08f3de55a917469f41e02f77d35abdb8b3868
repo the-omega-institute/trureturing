@@ -1,0 +1,8 @@
+**定理 23.4（全部无限未来仍有精确最坏恢复界）。** 即使允许估计器使用全部上述未来序列，最小最坏误差为
+
+$$
+\boxed{R_n^*=\min(L,\varepsilon|\lambda|^{-n}).}
+$$
+
+**证明。** 首次读数除以 $\lambda^n$ 并裁剪到初值区间，误差至多 $\varepsilon|\lambda|^{-n}$；输出零则至多 $L$，择优给上界。令 $\delta=\min(L,\varepsilon|\lambda|^{-n})$。两个初值 $\pm\delta$ 各配 $e_k=\mp\lambda^{n+k}\delta$，其模不超过 $\varepsilon$，使全部读数均为零。任意估计器在至少一端误差不小于 $\delta$，给下界。$\square$
+

@@ -1,0 +1,18 @@
+**Assumption 32.1 (same source, same law and separate face entry).** Retain
+Assumption 23.1, all nine source rows of GC Definition 6.1, and the
+complete original comparison class of Assumption 1.1. In §§32–35, fix a
+finite $t\ge t_0$, a feasible request $r$, and one common law $\pi$ with
+$\int_X\Gamma\,d\pi=B(t)$ and $K(\pi)\ge r$. All quantities are those
+of (FC.1)–(FC.3), (FC.55)–(FC.58) and (FC.81)–(FC.83). In particular,
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$, $b_x=t\mathfrak c(h)\xi$,
+$k=|u|$ and $g_t=|\ell+b_xf|$ use the same law. The source enclosures
+bound expressions at the stipulated root; they do not supply existence,
+isolation, Jacobian, ranks, root TP, minimax, sharp JOINT cost,
+unaveraged equality, full-complex rigidity, capacity or the constructor.
+
+Only the contact and inertia conclusions in §34 additionally assume
+Assumption 28.1: a supplied finite, entire-cylinder feasible, jointly
+attained dual with $\lambda>0$, and its complete inventory and groups.
+No finite-dual existence or boundary attainment is inferred. Write
+$\ell_-(x)=\max\{-\ell(x),0\}$, where $x=(u,v)^T\in S^1$.
+

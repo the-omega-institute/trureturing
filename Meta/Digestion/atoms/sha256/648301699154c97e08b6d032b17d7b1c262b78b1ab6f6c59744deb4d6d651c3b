@@ -1,0 +1,15 @@
+**Theorem 5.3 (one-origin and joint two-origin bounds).** Every element of $\mathcal J(A,T)$ has one actual finite origin with a DAG certificate of at most $300(s+2)$ nodes, including its six class roots, current root and source root. More strongly, any two original actual origins admit simultaneous replacements preserving their respective full joint elements and the entire cross-origin whole-value equality matrix, with a joint DAG of at most $1200(s+2)$ nodes. If the original origins are distinct, the replacements are distinct, including when their two joint elements coincide.
+
+Proof. Use Lemmas 4.3–5.2 with $r=1$ or $2$ and $K=6r$. Each new six-value tuple has the same types and whole-class disequalities as its original tuple, hence belongs to the same one of the eleven profiles. Form $\mathscr S(x')$ with the repeated partners. Proposition 1.4 gives an image and its finite actual origin $u'=\delta(\mathscr S(x'))$ in the full original domain. Proposition 2.3 gives the same complete target, including every surviving occurrence, partition relation, first-member name and guard. For every installed index project its role's preserved full vector to that index. Equation (POC.2) and the fixed occurrence prefix give its original actual reply. Restore the constant branch components for shorter words. Thus one actual source realizes the entire preparer vector, serving vector and target together.
+
+Each current exterior uses at most seven new pair nodes, adding $7r$. Image membership is parsed bottom-up by (POC.3). Memoized inversion adds at most one pair node per visited current node; beta maps to the already available alpha and $E$ to beta. Doubling the current DAG bound, with harmless slack, yields
+
+$$
+8K^2V+4K+14r+6.
+\tag{POC.16}
+$$
+
+For $r=1$ this is $288V+44\le300(V+1)\le300(s+2)$. For $r=2$ it is $1152V+82\le1200(V+1)\le1200(s+2)$. The shared basis also proves these inequalities at $V=0$.
+
+Finally different original origins have different six-value tuples: the tuple determines its current tree and its unique inverse. At least one corresponding coordinate pair is therefore unequal. Lemma 5.2 keeps that cross-origin inequality, so the new tuples, current trees and inverse origins remain different. This works even when all installed replies and the whole target agree at the two points. The statement supplies small representatives of behaviors; it imposes no height cutoff or source-size restriction on $\mathcal U_*$. $\square$
+

@@ -1,0 +1,15 @@
+**Definition 1.2 (the two actual-average risks).** Let $\mathcal F_{\rm coh}$ be the original finite complete observer class of [PC, Definition 1.4][PC], restricted by both conditions in its Definition 1.5 on their whole original legal domain: per-configuration generation by the same letter update, and actual-history marginalized update compatibility. Initialization precedes the first paid Read and is independent of the realized source. No fixed finite size budget is imposed. Let $\mathcal F_{\rm det}\subset\mathcal F_{\rm coh}$ be its deterministic-retention subclass. With the original conditional configuration distribution $\rho_h$ and normalized full-law decoder $D_z$, define
+
+$$
+\begin{aligned}
+\overline D_h^O&=\sum_z\rho_h(z)D_z,\\
+e_{\rm law}^O(h)&=\operatorname{TV}(\overline D_h^O,T_h^\mu),\\
+e_{\rm conf}^O(h)&=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\\
+\mathcal A_j^\mu(O)&=\sum_{h\in\mathcal H_3}p_\mu(h)e_j^O(h),
+\qquad j\in\{\mathrm{law},\mathrm{conf}\}.
+\end{aligned}
+\tag{1.5}
+$$
+
+TV is half the $\ell^1$ distance. Observer randomness remains in these two different orders; $\rho_h$ is not a runtime decoder input. Convexity gives $e_{\rm law}\le e_{\rm conf}$ and $\mathcal A_{\rm law}\le\mathcal A_{\rm conf}$. Fix $\mu$ first, choose one initialized observer, average under that same actual source, and then take the infimum over observers. This is neither a per-history observer choice nor an average over priors.
+

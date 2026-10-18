@@ -1,0 +1,35 @@
+**Theorem 3.4 (unbounded complete inter-capture distinctions).** Consider
+any deterministic initially source-blind effective protocol correct for
+exact two-capture lag recovery on all native sources under Definition
+1.1, with both cuts $\{L,R\}$. It may retain arbitrary data, use arbitrary
+finite source-independent immutable code/literals, and make the second
+producer depend causally on the first state. Let $S_a$ be its entire
+accessible state after a quiescent first call on $U_a$, including all
+earlier outputs. Then the $S_a$ are pairwise distinct. On $0\le a\le A_0$
+there are at least $A_0+1$ retained values, requiring at least
+$\lceil\log_2(A_0+1)\rceil$ bits of fixed-width capacity. RA$\ell$
+attains exactly this alphabet by keeping the constant row and $k=a+1$.
+
+Moreover the first call on each $U_a$ must submit some word of length
+at least $1+\lfloor a/2\rfloor$. This bounds both its peak materialized
+operand and its total delivered letters, but not its universal mutable
+workspace.
+
+Proof. If $S_a=S_{a'}$ for $a\ne a'$, choose $B=\max(a,a')$ and,
+after the first Returns, apply $B-a$ and $B-a'$ genuine updates to the
+respective same registers. Both second invocations now have actual source
+$U_B$ and the same accessible state. With a paused writer their entire
+second computation, Reads and outputs coincide, but the required lags
+are different. Each alternative is a lawful pure history; no source is
+reset. This contradiction includes any causally chosen later encoder.
+The alphabet count follows, and (CAB.5) gives the attaining values.
+
+The minimum leaf depth of $T_a$ is $\lfloor a/2\rfloor$, from its displayed
+recurrence, as in [NLC, Lemma 3.1][NLC]. Thus every address shorter than
+$1+\lfloor a/2\rfloor$ replies branch on both $U_a$ and $U_{a+1}$.
+If all queries on the former were shorter, their deterministic first
+computations would coincide through termination and give equal states,
+contrary to the first part. A paid immutable word could supply the
+necessary long operand with small mutable selection state; hence operand
+length alone proves no universal mutable-space minimum. $\square$
+

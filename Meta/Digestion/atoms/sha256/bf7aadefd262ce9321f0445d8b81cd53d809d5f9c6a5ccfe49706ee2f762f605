@@ -1,0 +1,28 @@
+**引理 5.1（零、错号和极小锚的稳健误差）。** 若 $\mathsf s\in\mathcal U$、$|y_i-x_i|\le\delta$、$0<\delta\le1$，置
+
+$$
+\widehat w=y_2\times y_1,\qquad
+Z(y)=\operatorname{sgn}(y_0\cdot\widehat w)\widehat w.
+$$
+
+则 $|Z(y)-x_3|\le9\sqrt\delta$。
+
+证明。双线性给 $|\widehat w-w|\le(2+\delta)\delta\le3\delta$。若 $w=0$ 或真实非零符号与报告符号相同，误差至多此量。若非零尾的报告符号错误或为零，则两个三重积异号或报告为零，由引理 3.3，
+
+$$
+\begin{aligned}
+q_2^2&\le|x_0\cdot w|
+\le|x_0\cdot w-y_0\cdot\widehat w|\\
+&\le\delta|w|+(q_0+\delta)|\widehat w-w|
+\le(3+3\delta+\delta^2)\delta\le7\delta.
+\end{aligned}
+$$
+
+故 $|w|=q_1q_2\le\sqrt{7\delta}$，即
+
+$$
+|Z-x_3|\le3\delta+2\sqrt{7\delta}\le9\sqrt\delta.
+$$
+
+以上未要求报告正交或误差独立；真实三重积可以任意小。此为 PCR 第 51 节稳健锚界的单位实例。
+

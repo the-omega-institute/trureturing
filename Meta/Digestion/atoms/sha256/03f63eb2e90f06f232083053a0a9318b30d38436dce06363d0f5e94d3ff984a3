@@ -1,0 +1,18 @@
+**Definition 5.1 (evaluation of residual expressions).** For a finite
+ordinary source term $A$ over variables $V$, define $A^\#$ on valuations
+$\mathbf X:V\to\mathcal N$ by interpreting $\alpha,\beta$ as $[0],[1]$,
+native pairing as $J$, and each variable by its assigned code. Interpret
+$\rho^a(A)$ by $\tau_a(A^\#(\mathbf X))$. Ground trees are interpreted
+by $B$ of that tree. In particular a syntactic native pair is never
+translated as an unconditional ambient $F$.
+
+Use exactly the finite guarded cells of [ARH, Definition 3.1 and
+Proposition 3.2][ARH]. A cell $\eta$ has source term
+$W_\eta=C[(t_{[i]})_i]$, shared frontier variables $V_\eta$, all old
+class constraints $\Delta_\eta=\{t_b\ne t_c:b<c\}$, literal conditions,
+and all signed whole-subtree residual relations with their endpoint
+guards. Define $\Omega_\eta^\#$ to contain all normal valuations satisfying
+every one of these conditions after the above translation. Concrete
+false endpoint guards reject a valuation for either sign. Empty cells
+are permitted; the finite cell construction does not decide emptiness.
+

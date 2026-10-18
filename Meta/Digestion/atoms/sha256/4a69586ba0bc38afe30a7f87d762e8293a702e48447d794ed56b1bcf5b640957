@@ -1,0 +1,18 @@
+**Theorem 3.2 (Exact support under every auxiliary law).** Every
+protocol of Definition 1.2 satisfies, for every real $\lambda$,
+
+$$
+C-\lambda q\le B(\lambda),\qquad
+L\ge(1-\lambda)q-B(\lambda).
+\tag{3.3}
+$$
+
+For every $\lambda$ and either original endpoint there is a
+deterministic admissible policy attaining $B(\lambda)$ under every
+specified unchanged auxiliary law. Its returning paths use at most
+two actual paid calls. Its calls, rejection and outputs use only
+acquired replies and the public $p,j$.
+
+The proof is divided into Lemmas 3.3–3.6 below. In particular the two
+subtree maxima in (3.2) are simultaneously attainable by one policy.
+

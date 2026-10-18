@@ -1,0 +1,54 @@
+**Definition 5.1 (the certificate chart).** In this section $x$ means the
+six-coordinate chart variable, not the scalar original height:
+
+$$
+x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z).
+\tag{ZG.17}
+$$
+
+The chart coordinates $\beta_1,\beta_2$ are unrelated to the original
+history phase $\beta$. With the fixed matrices of (ZG.9), define
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,
+&v_{27}&=(\beta_1,\beta_2,1)^T,
+&R_y&=\frac{v_yv_y^T}{v_y^Tv_y},\\
+A_5&=\lambda R_5,
+&A_{27}&=(1-\lambda)R_{27},
+&\zeta&=(z,\lambda p_{51},\lambda p_{52}),\\
+Z_d&=\operatorname{diag}\zeta,
+&N&=A_5\odot\rho_5+A_{27}\odot\rho_{27},
+&S_0&=Z_d-N.
+\end{aligned}
+\tag{ZG.18}
+$$
+
+For $i<j$ set
+
+$$
+S_{ij}=\begin{pmatrix}
+\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{ii}p_{yj}&-N_{ij}\\
+-N_{ij}&\zeta_i-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{yi}
+\end{pmatrix}.
+\tag{ZG.19}
+$$
+
+Finally put
+
+$$
+\begin{aligned}
+F(x)&=\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                    -\operatorname{tr}Z_d+\frac6{11}\lambda,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}),\\
+\Psi(x,\eta)&=\bigl(\nabla_x(F+\eta\cdot g),g\bigr),
+\qquad \eta=(\eta_0,\eta_1,\eta_2).
+\end{aligned}
+\tag{ZG.20}
+$$
+
+These reproduce CG.111–CG.114 as algebraic definitions. Their only chart
+denominators are $1+\alpha_1^2+\alpha_2^2$ and
+$1+\beta_1^2+\beta_2^2$, so the rational functions and all derivatives are
+defined on the entire real chart.
+

@@ -1,0 +1,17 @@
+**Definition 5.1 (fixed indices and common suffix arrangement).** Set
+
+$$
+q_T=|Q_T|,\qquad
+b=\max\bigl(\{0\}\cup\{|a_T(q)|-3:q\in Q_T,\ |a_T(q)|\ge3\}\bigr).
+\tag{BPS.12}
+$$
+
+For an arbitrary preparer literal assignment, successful or otherwise, give every installed Read in either apparatus whose word has length at least three a separate index $i$. This includes duplicate words and unused states. Write the word uniquely as $p_iw_i$ with $|p_i|=3$. Its state identity, phase, occurrence $p_i$ and class role $d_i=[p_i]$ remain fixed data. Let $m$ be the number of indices and $k=|Q_P|$. Then
+
+$$
+m\le q_T+k\le q_T+N\quad\text{when }|K_P|\le N.
+\tag{BPS.13}
+$$
+
+Form one finite prefix trie of all suffixes $w_i$ together, across all class roles. A node carries every index ending at that position. Either child is an explicit trie subtree or the symbol $\#$ when no suffix enters it. A relative empty suffix marks the root. Each index occurs exactly once, even when many indices share a position. The role data are not used to merge indices.
+

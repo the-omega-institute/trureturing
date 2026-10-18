@@ -1,0 +1,27 @@
+**例 7.2（A lawful shared-root competitor with delayed endpoint labels）。** Retain $m=3,k=4,J,H,O$ but take $\lambda_0=\mathbf1_{\{2\}}$ and $\lambda_1=\mathbf1_{\{4\}}$. Keep fresh $R,C$ and arbitrary $L_\bot$ in the full target (3.2). This is another admissible three-class target with GLOBAL fee three. The following complete controller shares its initial root; it is an attainment, not a minimum claim:
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a$ | $111$ | $d_0$ | $d_1$ | $H_R$ |
+| $d_0$ | $011$ | $p_{00}$ | $H_0$ | $H_R$ |
+| $d_1$ | $011$ | $p_{10}$ | $p_{11}$ | $H_R$ |
+| $p_{00}$ | $011$ | $H_C$ | $H_1$ | $H_R$ |
+| $p_{10}$ | $011$ | $H_0$ | $H_1$ | $H_R$ |
+| $p_{11}$ | $011$ | $H_0$ | $H_C$ | $H_R$ |
+
+Initialize $c(0)=c(1)=a$ and $c(\bot)=H_{L_\bot}$; install all actual Halt labels and their self-updates. The common stream is $111\mid011\mid011$. Its suffix full supports are $\{1,4\}$ and $\{2,4\}$. Each $011$ starts zero and ends with tail two, so both seams are safe. To specify full supports without retaining an external archive, put $L=1^3$, $B=011$, and
+
+$$
+\begin{aligned}
+\Gamma_a&=\{(f(q),q):q\in Q\setminus\{\bot\}\},\\
+\Gamma_{d_y}&=\{(f(q),\delta_Lq):q\ne\bot,\ \delta_Lq\ne\bot,
+\ o(\delta_Lq)=y\},\\
+\Gamma_{p_{00}}&=\{(z,\delta_Bq):(z,q)\in\Gamma_{d_0},\ o(\delta_Bq)=0\},\\
+\Gamma_{p_{10}}&=\{(z,\delta_Bq):(z,q)\in\Gamma_{d_1},\ o(\delta_Bq)=0\},\\
+\Gamma_{p_{11}}&=\{(z,\delta_Bq):(z,q)\in\Gamma_{d_1},\ o(\delta_Bq)=1\}.
+\end{aligned}
+\tag{7.4}
+$$
+
+The immutable targets in the three last supports are respectively $\{C,1\}$, $\{0,1\}$ and $\{C,0\}$. Their current scalars are respectively $0,0,1$ and all current tails are two. The displayed final support $\{2,4\}$ gives exactly their installed outputs. Exact Halt images (5.6), and ranks $3,2,1,0$, give the complete all-source closure and termination certificate. There are six word rows and $N$ Halt rows. This lawful competitor shows why adaptive root separation and immediate $C$ stopping are not GLOBAL normal forms. Its larger count is not used to assert that a minimum shares its root.
+

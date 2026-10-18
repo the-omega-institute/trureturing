@@ -1,0 +1,26 @@
+**Open problem 18.2 (the unchanged unrestricted consumer).** The
+missing obligation remains Definition 11.1: an effective sound
+cap for every complete native template with optimizer-cofinal
+accepted endpoints at the original $\sigma_d$, or a uniform
+effective native length-error bound. Sections 12–17 neither solve
+nor disprove it. No new original rate endpoint is asserted here.
+
+The parity grammar is now evaluated, but it does not cover arbitrary
+owned-seed incidences, guards, compatibility zeros or arbitrary joint
+block weights. Its exact syndrome relation gives no reduction of
+those general weights to parity. In particular the restricted cap
+of Theorem 13.3 cannot be inserted into (GDB.12); Proposition 13.4
+is an explicit counterexample to that substitution.
+
+Theorem 16.2 changes a specific proposed completion mechanism:
+compatibility-phase contraction, pairwise dependence information
+and a size-independent number of actual owner pins cannot alone
+establish the universal small-defect premise (GDB.72). One must
+retain further global information, such as the syndrome/rank
+in this family, or prove a different structure theorem covering
+the pressure-relevant networks. No such near-extremizer theorem
+or all-competitor completion is established here. General exact
+$M_1(D)$, sharp original rate, effective all-size approximation
+and the full mutual-recovery programme are not concluded by this
+restricted advance.
+

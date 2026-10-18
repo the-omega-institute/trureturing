@@ -1,0 +1,47 @@
+**Definition 4.1 (Common roots and actual second addresses).** Use
+root parity zero. For $\rho=I$ choose $t=2j$; for $\rho=D$
+choose $t=2(j+4)$. For either root put
+
+$$
+f=2(j+8),\qquad g=t+2,\qquad
+o=2(j+8)+1,\qquad i=1.
+\tag{4.1}
+$$
+
+In phase zero, $f$ is vertex-disjoint from the root edge and avoids
+$S_j$; $g$ is its right adjacent edge. In phase one, $o$ avoids
+the target $S_0$, while $i$ reads its incident edge
+$S_0\oplus S_1$. For a type-$D$ root, address $2j$ reads a
+target-touching edge disjoint from the root. These assertions hold
+for both $j=0$ and $j=1$ using the actual indices in (1.2).
+
+After a first reply one, use the following second actual call and
+acceptance rule. Every accepted leaf outputs $h_0(\sigma)$,
+except the specified $10$ leaf.
+
+| Required $r$ | Second address | Accepted second replies | Output exception |
+| --- | --- | --- | --- |
+| $0$ | $t$ | None | None |
+| $2\eta^2$ | $f$ | $1$ | None |
+| $\eta/2$ | $g$ | $1$ | None |
+| $\eta c$ | $f$ for $I$; $2j$ for $D$ | $0$ | None |
+| $\eta$ | $g$ | $0,1$ | For type $I$, $10$ outputs $h_0(1-\sigma)$ |
+
+After a first reply zero, use this second actual call and rule:
+
+| Required $s$ | Second address | Accepted second replies | Accepted output |
+| --- | --- | --- | --- |
+| $0$ | $t$ | None | None |
+| $\eta/2$ | $g$ | $1$ | $h_0(\sigma)$ |
+| $\eta c$ | $f$ | $1$ | $h_0(\sigma)$ |
+| $\eta$ | $o$ | $1$ | $h_1(\sigma)$ |
+| $c$ | $i$ | $0$ | $h_1(\sigma)$ |
+| $v$ | $f$ | $0$ | $h_1(\sigma)$ |
+| $w$ | $g$ | $0$ | $h_1(\sigma)$ |
+| $z$ | $f$ | $0,1$ | $00$: $h_1(\sigma)$; $01$: $h_0(\sigma)$ |
+
+Every rejected leaf continues internally forever after its second
+call, with no further reads. Choose finite internal waits for all
+calls and accepted returns. Thus every path makes exactly two actual
+paid calls, including paths rejected by a repeated call.
+

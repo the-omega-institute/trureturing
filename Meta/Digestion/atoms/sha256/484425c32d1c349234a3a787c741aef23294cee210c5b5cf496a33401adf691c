@@ -1,0 +1,27 @@
+**Lemma 2.2 (Kernel projections and their partial transposes).** For
+$j=+,-$, define
+
+$$
+K_j=\frac{I_j+F_j-E_j}{2},\qquad
+K_{\rm ker}=K_++K_-,\qquad Q=I_++I_-.
+\tag{2.6}
+$$
+
+Then $K_{\rm ker}$ is the orthogonal projection onto the direct sum of
+the two same-plane symmetric traceless tensor subspaces, complexified,
+and
+
+$$
+K_{\rm ker}+K_{\rm ker}^\Gamma=Q,\qquad 0\preceq Q\preceq I_{25}.
+\tag{2.7}
+$$
+
+Proof. In a real orthonormal basis of the two-dimensional sector,
+$(I_j+F_j)/2$ projects onto symmetric tensors.
+$\|\eta_j\|^2=2$, so $E_j/2$ projects onto its trace direction.
+Their difference is the symmetric traceless projection, of dimension
+two. The sectors are orthogonal. Partial transpose gives
+$K_j^\Gamma=(I_j+E_j-F_j)/2$, proving (2.7). Finally $I_+,I_-$ are
+orthogonal sector projections, so their sum is itself a projection.
+This proof is on the whole complexified tensor space. $\square$
+

@@ -1,0 +1,53 @@
+**Definition 4.1 (common source coordinates and total extensions).** Fix
+$d,n\ge1$. For $I=[n]\times W_d$ use the ambient product
+$X=\mathcal A^I$. The actual-coordinate map is
+
+$$
+c(x)_{(i,a)}=r_{x_i}(a),\qquad c:S_d^n\longrightarrow H_d^n.
+                                                               \tag{SCE.12}
+$$
+
+Here $H_d$ consists of arrays with nonabsent root and parent-child
+pairs in
+
+$$
+\{(\mathsf{branch},\alpha),(\mathsf{branch},\beta),
+(\mathsf{branch},\mathsf{branch}),
+(\alpha,\mathsf{absent}),(\beta,\mathsf{absent}),
+(\mathsf{absent},\mathsf{absent})\}.
+$$
+
+[CBN, Theorem 2.2][CBN] proves that $c$ is a bijection. Thus no
+independent choice is assigned to repeated coordinates. Fix any
+nonempty $B\subseteq S_d^n$ and the one promise $\mathcal D=c(B)$;
+the full actual promise $H_d^n$ is the case $B=S_d^n$.
+Define $f_{\rm full}$ on this promise as the vector of all
+$\Gamma_q(x_i)$ and $f_J$ as its $[n]\times J_d$ projection.
+Their ambient output products are respectively
+
+$$
+Y=\prod_{i\in[n]}\prod_{q\in W_d}G_q,\qquad
+Y_J=\prod_{i\in[n]}\prod_{q\in J_d}G_q.
+$$
+
+Let $\pi:Y\to Y_J$ be projection.
+Define $L:Y_J\to Y$ by keeping the selected coordinates and setting
+each omitted coordinate $(i,q)$ equal to $\Psi(y_{i,qL})$.
+Theorem 2.2 implies $\Psi(G_{qL})\subseteq G_q$, so this is total.
+Then
+
+$$
+\pi L=\mathrm{id}_{Y_J},\qquad
+f_{\rm full}=Lf_J,\qquad f_J=\pi f_{\rm full}.                \tag{SCE.13}
+$$
+
+In particular $L$ is injective even on unrealizable output tuples,
+and $L\pi:Y\to Y$ is idempotent and fixes the promised task.
+
+For a total extension $H:X\to Y$ or $H:X\to Y_J$ and any coordinate
+cut $A\subseteq I$, its response at an assignment $a\in\mathcal A^A$
+is the function $b\mapsto H(a\sqcup b)$ on
+$\mathcal A^{I\setminus A}$. Its capacity $\kappa_A(H)$ counts
+distinct such functions, on the whole ambient product. Complementary
+assignments are not separately assumed consistent or realizable.
+

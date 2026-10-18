@@ -1,0 +1,59 @@
+**Proposition 76.2 (relative bound at the native threshold).** Uniformly
+for $0<\tau\le1$ and every complex $\psi\in\mathcal Q$,
+
+$$
+0\le V_\tau[\psi]-V_1[\psi]
+ =\int D_\tau|\psi|^2dY
+ \le C\tau^{-3/2}T[\psi].
+\tag{76.7}
+$$
+
+Proof. Fix once a small radius $\delta_0>0$ as in Proposition 71.1,
+using there only its spectral and kinetic assertions, which depend
+on $S$ and not on the cutoff. Write
+$\psi=J_{\delta_0}f+r$ with exact norm and kinetic splitting.
+There is a fixed $b_0>0$ such that
+
+$$
+T[r]\ge b_0\|r\|_2^2,\qquad
+K[f]\le CT[J_{\delta_0}f],\qquad
+\sup_{|\eta|\le\delta_0}\|v_\eta\|_{L^\infty(I)}\le C.
+\tag{76.8}
+$$
+
+The gap follows from G (26.6) on frequencies outside the ball and
+the excited height gap inside it. The eigenfunction bound follows
+from L (36.7), including its boundary quotient estimate.
+Cauchy--Schwarz in the actual three real Fourier variables gives
+
+$$
+\begin{aligned}
+\|J_{\delta_0}f\|_\infty
+ &\le C\int_{|\eta|\le\delta_0}|\widehat f(\eta)|d\eta\\
+ &\le C\left(\int_{|\eta|\le\delta_0}|\eta|^{-2}d\eta\right)^{1/2}
+          \left(\int|\eta|^2|\widehat f(\eta)|^2d\eta\right)^{1/2}
+ \le C\sqrt{T[J_{\delta_0}f]}.
+\end{aligned}
+\tag{76.9}
+$$
+
+The integral of $|\eta|^{-2}$ is finite in dimension three, and
+$M>0$ compares its last quadratic integral with $K[f]$.
+Thus (76.5) bounds the $D_\tau$ form on $J_{\delta_0}f$ by
+$CT[J_{\delta_0}f]$. On the remainder, (76.3) and its fixed gap give
+
+$$
+\int D_\tau|r|^2dY
+ \le C\tau^{-3/2}(T[r]+\lambda\|r\|_2^2)
+ \le C\tau^{-3/2}T[r].
+\tag{76.10}
+$$
+
+Finally $|J_{\delta_0}f+r|^2\le2|J_{\delta_0}f|^2+2|r|^2$,
+$\tau^{-3/2}\ge1$, and exact kinetic splitting prove (76.7).
+The low-frequency bound was applied only to the extracted band.
+The arbitrary native vector and its remainder were never assumed
+to have all phase derivatives. This removes the additive
+$\lambda\|\psi\|_2^2$ in (76.3), which by itself would be too large
+for the quadratic weak-binding limit. $\square$
+

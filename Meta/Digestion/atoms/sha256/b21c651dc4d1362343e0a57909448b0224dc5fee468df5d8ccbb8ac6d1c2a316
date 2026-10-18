@@ -1,0 +1,19 @@
+**Attribution and remaining boundary 9.4.** [This critical companion, Theorem 4.1][CE19] owns the earlier eighteen lower bound. Its Lemma 3.2 and Proposition 5.1 own the reused endpoint-six observation and explicit twenty-state upper. [SI, Theorems 2.2, 4.1, 5.2, 9.3–9.4 and 10.4, and Lemma 10.2][SI19] own the actual live-incidence, local diagonal, localization, short-gap and right-cut interfaces. Their nested PCA, PE and WTF suppliers remain exactly at the conditional interfaces of Section 2; (SI.5) owns the native correspondence. These earlier statements and the weaker intervals in Sections 4–6 remain valid.
+
+The additional deductions are the critical sharing classification and four-axis forced fork, the fixed-zero-successor/singleton-segment contradiction in Lemma 8.1, the complete endpoint-one and terminal estimates without an assumed upper bound on $m$, and their exhaustive same-graph consequence (34) with equality conditions (35)–(36). They are ordinary symbolic deductions at the supplied interfaces. No kernel verification, external unrestricted lower-bound supplier, exhaustive search or worldwide priority is asserted. The count relaxation, both-conflict capacity, star and cyclic sufficient classes and above-grid inclusions of SI retain their separate scope and are not premises imposing a new class here.
+
+The exact critical minimum is still either nineteen or twenty. No complete correct nineteen-state construction satisfying all original obligations is supplied, and no unrestricted twenty-state lower bound is proved. A nineteen-state construction must satisfy (35)–(36), actual support and successor compatibility, all-input correctness and termination, and both same-run caps; those necessary conditions alone are not a construction.
+
+For general $\min(k,n-k+1)\ge4$, the original alternatives remain unresolved: prove $m\ge G=k(n-k+1)$ for every complete correct original graph at both caps, equivalently the same-graph collective inequality
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B),
+\tag{39}
+$$
+
+where $\mathcal L_*=\{(a,b):b-a\ge5,\ b>\max(k,n-k+1)\}$ and $\mathcal A_*$ is its complement among consecutive gaps; or construct one complete correct strict-subgrid graph satisfying both caps on every input. Neither general alternative follows from (34). Separate compensation in every late pool is stronger than (39). The unrestricted-budget minimum, fixed-specification attainment and the complete original native bridge retain their separate unresolved meanings. No quantum, calibration, stochastic timing, analytic or expanded-storage contract supplies an additional numerical or operational transfer here.
+
+[SI19]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SUPPORT_INCIDENCE_AND_COUNT_RELAXATION.md
+[CE19]: RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_EIGHT_INPUT_LOWER_BOUND.md
+

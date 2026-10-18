@@ -1,0 +1,12 @@
+**Lemma 3.2 (Projection and strict equality).** For the distributions just specified,
+
+$$
+\mathbb E_p\sum_{i=1}^m(W_i-r_i(W_{-i}))^2
+=\Phi_K(p)+\mathcal D_K(p\Vert r),\qquad \mathcal D_K(p\Vert r)\ge0.
+\tag{3.2}
+$$
+
+If both $p$ and $r$ are positive on $K$, equality $\mathcal D_K(p\Vert r)=0$ holds exactly when $p=r$.
+
+Proof. Condition on $W_{-i}$ and expand the square around $p_i$. The cross term vanishes. The conditional variance, multiplied by that fiber's mass, is $h(p_u,p_v)$ for a free pair and zero for a forced singleton. Summing proves (3.2). Under positivity, zero discrepancy makes the two posteriors equal on every edge, hence $r_v/r_u=p_v/p_u$. Connectivity gives a constant ratio $r_w/p_w$ over $K$, and normalization makes it one. The singleton case has only one probability distribution. This establishes the equality case on the hard no11 domain itself. $\square$
+

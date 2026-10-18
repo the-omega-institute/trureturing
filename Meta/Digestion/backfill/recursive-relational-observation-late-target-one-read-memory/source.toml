@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-late-target-one-read-memory"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_ONE_READ_MEMORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

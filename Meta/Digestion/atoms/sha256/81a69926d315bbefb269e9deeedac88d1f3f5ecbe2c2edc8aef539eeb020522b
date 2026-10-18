@@ -1,0 +1,27 @@
+**Proposition 8.2 (resource and replacement correspondence).** The code in
+Theorem 8.1 is deliberately nonoptimal. Its sole optimized resource is
+the complete attained alphabet (NDR.33). Its public graph search, source
+enumeration, table installation, local membership computation, temporary
+descriptions, final predictor and access services are finite separate
+resources. The preparation bound (NDR.34) is a sufficient actual bound,
+not an acquisition optimum. A predictor factor can be represented with
+at most $\lceil\log_2(2D+1)\rceil+1$ bits, separately from the retained
+name and authentic count representation.
+
+If this common fiber is repaired using names whose restrictions at the
+same $N$ original depth-five block occurrences are $b$-component
+admissible, then those names must cover $B_G$. Therefore Corollary 7.3
+applies, even when their restricted fibers include other tuples. This is
+a consequence about repair at that interface, not a lower bound on how
+many names an arbitrary optimal full-family encoder must devote to this
+particular family.
+
+**Proof.** The acquisition and reader construction gives the stated
+resources. The factor bound follows from $0\le b\le2D$ and $c\in\{0,1\}$.
+All finite enumerations are effective from public parameters; their
+potentially enormous time and table sizes are not asserted free.
+Restricting any proposed repair to the actual scaffold identifies its
+cover members in $S_5^N$ without changing the code values. The specified
+component condition is exactly Definition 5.1 there, so it is the cover
+class in Corollary 7.3. $\square$
+

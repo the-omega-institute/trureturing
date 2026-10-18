@@ -1,0 +1,10 @@
+## 3. Exact rectangular admissibility and arbitrary whole-block weights
+
+Use the full same-tuple admissibility of [RCE, Definition 1.3][RCE]. A nonempty $B\subseteq S_d^n$ is admissible if, for every coordinate $i$ and target $q\in W_d$, $\Gamma_q(x_i)$ is constant on $B$, or some donor $j$, boundary word $a\in W_d$ and total decoder $\delta:\mathcal A\to\Gamma_q(S_d)$ satisfy
+
+$$
+\Gamma_q(x_i)=\delta(r_{x_j}(a))\qquad(x\in B).
+$$
+
+Every equation holds on the same tuples. Donors may be reused, may equal $i$, and may form arbitrary cycles. Every finite donor word is allowed equivalently by the every-word simulation. A complete template chooses one equation for every target; its full simultaneous solution set contains every relation with those witnesses. Consequently nonnegative mass maxima over admissible relations and complete templates agree, as credited in [RCE, Definition 1.3][RCE]. For $B\subseteq R^n$, write $I_i(B)$ for its left row-index projection at coordinate $i$ and $J_i(B)$ for its right row-index projection.
+

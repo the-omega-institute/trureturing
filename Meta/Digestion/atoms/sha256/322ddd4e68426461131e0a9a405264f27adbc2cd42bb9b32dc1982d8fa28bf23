@@ -1,0 +1,136 @@
+**Lemma 40.2 (positive decomposition, tightness and lower limit).**
+One has $\xi_\kappa\to e(c)$ and $v_\kappa\to u_c$ in $H^2(I)$.
+The height gap above $\xi_\kappa$ is bounded below by a fixed
+$\gamma_*>0$ for small $a$. The rescaled centered form is exactly
+
+$$
+\begin{aligned}
+\mathcal R_\kappa[F]
+ &:={\mathfrak a_\kappa[f]-\xi_\kappa\|f\|_2^2\over h}\\
+ &=\frac1h\int
+       \langle F(\cdot,y),(H_\kappa^{\rm ht}-\xi_\kappa)
+                                  F(\cdot,y)\rangle\,dy\\
+ &\quad+\int b_\kappa(k)^2|\partial_yF|^2\,dk\,dy
+       +\int V_\kappa(k,y)|F|^2\,dk\,dy,\\
+V_\kappa(k,y)
+ &=\frac g h[U_\kappa(k,0)-U_\kappa(k,\ell y)]\ge0.
+\end{aligned}
+\tag{40.3}
+$$
+
+The first integral is interpreted as a height quadratic form.
+As $\kappa\to0$, every sequence with bounded norms and bounded
+$\mathcal R_\kappa$ has an $L^2(I\times\mathbb R)$ strongly
+convergent subsequence, after zero extension as in (40.2). Every limit
+is $u_c(k)z(y)$, where $z\in H^1(\mathbb R)$ and
+$yz\in L^2(\mathbb R)$. Along each such convergent subsequence,
+
+$$
+\liminf_{\kappa\to0}\mathcal R_\kappa[F_\kappa]
+ \ge\mathcal R_\sigma[z]
+ :=\mathcal B_\sigma\int_{\mathbb R}|z'|^2dy
+       +\mathcal C_\sigma\int_{\mathbb R}y^2|z|^2dy.
+\tag{40.4}
+$$
+
+Conversely, for every $z\in C_c^\infty(\mathbb R)$,
+$F_\kappa(k,y)=v_\kappa(k)z(y)$ belongs to the rescaled block domain
+for small $a$, has norm $\|z\|_2$, and its form converges to
+$\mathcal R_\sigma[z]$.
+
+Proof. By (39.2), $U_\kappa(k,0)\to(c/g)\phi(k)$ uniformly.
+Bounded-multiplier min-max gives convergence of the first two height
+eigenvalues to those of $H_c$. The latter has a simple positive ground
+and a strictly positive first gap. The scalar Dirichlet equation,
+normalization and bounded multipliers bound $v_\kappa$ in $H^2$.
+Every convergent subsequence has the positive normalized ground $u_c$
+as its only possible limit. The equation then gives convergence in
+$H^2$ as well, and the first two eigenvalue limits give $\gamma_*$.
+These are the same fixed-domain scalar arguments as in (32.4).
+
+Subtract the height ground energy at $D=0$ from (40.1). All three
+terms so obtained are nonnegative by (39.1) and the height spectral
+theorem. Since $a^2/\ell^2=h$, the coordinate change (40.2) gives
+exactly (40.3), initially on the core and then on its completion.
+No cross term or field error enters this identity.
+
+Let
+
+$$
+z_\kappa(y)=\int_I v_\kappa(k)F_\kappa(k,y)\,dk,
+\qquad
+R_\kappa(k,y)=F_\kappa(k,y)-v_\kappa(k)z_\kappa(y).
+\tag{40.5}
+$$
+
+The height gap and the kinetic term in (40.3) imply
+
+$$
+\|R_\kappa\|_2^2\le C h/\gamma_*\longrightarrow0,
+\qquad
+\|\partial_yF_\kappa\|_2+\|z_\kappa'\|_2\le C.
+\tag{40.6}
+$$
+
+The derivative estimates apply inside the chart with its periodic
+ends; they are not assertions about derivatives of the zero extension
+at its seam. The norms of $z_\kappa$ are bounded as well.
+
+Here is a tightness argument that retains the absorbing height faces,
+where $\phi$ vanishes. Fix any interval $J\Subset I$ of positive
+length. Positivity and convergence of $v_\kappa$ imply
+$\int_Jv_\kappa^2\,dk\ge\alpha_J>0$. Equation (39.4) gives, on $J$,
+
+$$
+V_\kappa(k,y)\ge g\eta_J\min\{y^2,h^{-1}\}.
+\tag{40.7}
+$$
+
+For $R\ge1$ and $hR^2\le1$, boundedness of (40.3) therefore gives
+$\int_{J\times\{|y|>R\}}|F_\kappa|^2\le C/R^2$.
+The pointwise inequality $|A+B|^2\ge|A|^2/2-|B|^2$, applied to
+(40.5), gives
+
+$$
+\frac{\alpha_J}{2}\int_{|y|>R}|z_\kappa|^2dy
+ \le\int_{J\times\{|y|>R\}}|F_\kappa|^2+\|R_\kappa\|_2^2.
+\tag{40.8}
+$$
+
+It follows that
+
+$$
+\int_{|y|>R}\int_I|F_\kappa|^2\,dk\,dy
+ \le C/R^2+Ch\qquad(hR^2\le1).
+\tag{40.9}
+$$
+
+Thus no mass can disappear either to the growing hidden chart or
+into the height faces. In particular tightness did not require a
+positive lower bound for $\phi$ on all of $I$.
+
+On every fixed bounded $y$ interval the one-dimensional compact
+embedding for $z_\kappa$, (40.6), and $v_\kappa\to u_c$ give a
+subsequence with $F_\kappa\to u_cz$ strongly in $L^2$ there.
+A diagonal selection and (40.9) give strong convergence globally.
+They also preserve the full norm of each convergent sequence.
+On bounded intervals the weak derivative limit is $u_cz'$, and
+$b_\kappa\to b_0$ uniformly. Weak lower semicontinuity gives the
+kinetic contribution $\mathfrak b(c)\int|z'|^2$ in (40.4).
+By (39.3), $V_\kappa\to C_\sigma(k)y^2$ uniformly on each such
+interval. Strong local $L^2$ convergence gives its potential
+contribution
+$\int_I C_\sigma u_c^2\,dk\int y^2|z|^2dy$.
+The height term can be dropped because it is nonnegative.
+Increasing the bounded intervals to $\mathbb R$ proves (40.4),
+including $yz\in L^2$; its coefficient is exactly $\mathcal C_\sigma$
+in (38.2).
+
+For the converse sequence the height term vanishes identically.
+Its compact hidden support avoids the seam for small $a$; scalar
+height approximation places it in the exact completed domain.
+Uniform coefficient convergence and (39.3) give convergence of
+both remaining terms. Polarization gives the same convergence of
+cross forms for every fixed finite collection of such trials.
+$\square$
+

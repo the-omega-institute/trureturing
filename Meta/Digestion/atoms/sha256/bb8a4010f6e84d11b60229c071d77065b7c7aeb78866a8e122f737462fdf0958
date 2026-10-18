@@ -1,0 +1,15 @@
+**引理 14.2（Both diagonal pairs exclude shared first queries at five rows）。** Assume $r=2$ and both diagonal pairs occur. No correct deadline-four controller with at most five word rows can share its mandatory first-query row, whether its initial roots are shared or distinct.
+
+Proof. In the shared query $b$, each raw scalar child contains both lower labels on $O$: each diagonal phase supplies both initial values, hence one source to each raw child. The two children therefore both emit an index-two intermediate and an index-three final separator. The row $b$ has both scalar edges emitting and cannot be final. An intermediate cannot be $b$, because its fixed edge would repeat at the unchanged $O$ scalar and the last $b$ has no scalar Halt. A root's zero edge also leaves a last query with no scalar Halt. A distinct root's positive edge, if used to reach a final separator at the last index, sends a mandatory original phase-$m$ $C$ source to that same separator at index one; its zero-leading first suffix succeeds and returns a lower label. A shared root has only the two mandatory query edges. Thus roots cannot supply the required intermediates either.
+
+With distinct roots the rows are exactly the two roots, $b$, one intermediate $X$ and one final separator $F$. Both $O$ raw children use $X$; its two scalar edges must enter $F$. With a shared root there are three other rows. If both children use one intermediate, its two emitting scalar edges leave only lower-label final separators, so no successful $C$ output is available anywhere. If they use distinct intermediates, only one final separator remains. In both remaining cases every initial value at every $O$ phase reaches the same final raw decoder $G$, with complementary scalar inputs:
+
+$$
+\Lambda(j)=
+\bigl(G(q_1(j)\oplus q_3(j)),G(1\oplus q_1(j)\oplus q_3(j))\bigr)
+\quad(j\in O).
+\tag{14.2}
+$$
+
+The index-two charge on $O$ is zero. Since $G$ has two different scalar Halt labels, (14.2) has only two possible pairs and no diagonal pair. This contradicts the three original classes on $O$. The argument retains all shared-row occurrences and delayed endpoint outputs. ∎
+

@@ -1,0 +1,18 @@
+**Proposition 3.4 (crossing updates and an incoherent complete row).**
+Theorem 3.3 does not imply whole-traversal stationarity. Omitting its
+validation can yield a complete row that occurred at no in-call version.
+
+**Proof.** Start at $\langle\alpha,\alpha\rangle$, Read root as branch,
+apply one writer update, Read $L$ and $R$ as beta, and validate $L$
+as beta. The accepted tree is $\langle\beta,\beta\rangle$.
+Traversal crossed an update before the first leaf, although the
+first-leaf-to-validation interval was stationary.
+
+Instead Read root and $L$ before the update, then $R$ after it.
+The replies branch, alpha, beta assemble $\langle\alpha,\beta\rangle$.
+For $P=\{L,R\}$ its hidden partition has two classes, whereas both
+actual versions have a single class. Every individual reply is true,
+but the assembled complete row is wrong at every actual version.
+Another root branch Read would not detect this; the required reread
+of $L$ does. $\square$
+

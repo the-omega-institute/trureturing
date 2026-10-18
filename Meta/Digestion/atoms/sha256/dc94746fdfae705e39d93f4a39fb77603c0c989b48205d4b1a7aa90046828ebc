@@ -1,0 +1,54 @@
+**Theorem 4.3 (An active splitting event at every stationary optimum).**
+Every stationary legal complex scalar port $S$ attaining the original
+$\varepsilon_1$ satisfies
+
+$$
+\max_{J\in\mathcal J_{\rm split}}\|H_J(S)\|_{\rm op}
+=\varepsilon_1.
+\tag{4.11}
+$$
+
+In QRC's selected real reflected class, an optimum has at least one
+of the following pairs of active events:
+
+$$
+(\{2\},\{5\}),\quad(\{N,2\},\{N,5\}),\quad
+(\{2,3\},\{3,5\}),\quad(\{2,25\},\{5,25\}).
+\tag{4.12}
+$$
+
+Proof. The credited bounds give
+$1/2<L_*\le\varepsilon_1\le\lambda_Q<b_*$.
+Suppose instead
+$m=\max_{\mathcal J_{\rm split}}\|H_J(S)\|<\varepsilon_1$.
+Concatenating scaled finite rank-one Kraus families makes
+$S_t=(1-t)S+t\mathcal B$ a legal scalar port; it is stationary.
+For every keep event its norm is at most
+$(1-t)\varepsilon_1+t/2<\varepsilon_1$.
+For every split event it is at most
+$(1-t)m+tb_*<\varepsilon_1$ whenever
+
+$$
+0<t<\frac{\varepsilon_1-m}{b_*-m}.
+\tag{4.13}
+$$
+
+The denominator is positive and this interval lies in $(0,1)$.
+All fifteen constraints refer to this same channel, contradicting
+optimality through (1.8). This proves (4.11) without reality or
+reflection assumptions on the stationary optimum.
+
+Let $W$ exchange modes $2,5$. It equals $P-R_0$, acts by $-1$ on
+the dark line and by $1$ on the bright space. In QRC's complete
+commutant coordinates it fixes the three invariant $H_i$, acts as
+$-I$ on each dark/bright plane, and as $I$ on each bright/bright
+plane. Thus every selected channel, including arbitrary nonsymmetric
+population matrix $M$, commutes with $\operatorname{Ad}_W$.
+Its adjoint does too, and
+$H_{WJ}(S)=WH_J(S)W^T$. Each splitting event therefore has the
+equally active partner in (4.12).
+QPC supplies stationary optimizers for the entire original class;
+QRC supplies selected representatives at the same value. The statement
+does not assert zero-wait activity for every nonstationary optimizer
+or determine which pair and signed eigenspaces are active. $\square$
+

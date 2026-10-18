@@ -1,0 +1,51 @@
+**Definition 6.2 (same-input comparison and remaining acquisition gap).**
+Theorem 3.1 compares two representations of the same unknown input and the
+same actual joint records, controller and supplied continuation. It does not
+compare different unlabelled unknown programmes while giving their
+parameters to a decoder. Theorem 4.2 likewise requires one common code for
+all unknown states; the construction of source witnesses does not hand
+their $\beta,m$ to that code. Neither theorem is an unknown-source
+identification algorithm.
+
+The complete labelled instrument is therefore a smaller conditional
+representation of the specimen's lawful continuation. It is not an acquired
+internal observer. In particular, it does not construct the joint record and
+calibration services required by
+[Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md),
+§§2.9–2.12 and 2.18: the same coherent source, actual common port, aligned
+times and records, known nonzero amplitudes, known nonzero record overlap
+and actual acquired readings. An unknown overlap cannot be divided out.
+Nor does it supply the actual compatible archive, domains, routes,
+permission fields and closed update/selection service required by
+[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md),
+§34, and
+[Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md),
+§§1–3.
+
+Keeping those fields unchanged in an exact isometry proves preservation
+when they are actually supplied; it does not establish their acquisition,
+availability or finite cost. If a guard or selector depends on an omitted
+source field, the complete observer interface has not been closed.
+[Original-Control Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md),
+§§7–9 and 11, supplies conditional record certificates with its own rate,
+calibration and precision assumptions. It supplies neither the full
+waveform nor free same-history copies or a probability-law oracle. Those
+assumptions are not replaced by (QC.5).
+
+These results preserve actual existing phase and winding records. They do
+not infer from the reduced specimen the exact real phase lift, the ordered
+past waveform or an unrecorded intermediate read. Complete CP-instrument
+equality is an operational correspondence, a single acquired trajectory is
+one event record, and access to a full probability law is a separate
+statistical resource. None provides either of the others without a bridge.
+
+All bounds here are exact. Each finite original path has its own positive
+compact support margin; no common margin, common speed, finite effective
+waveform description or accumulated approximation guarantee over the full
+original class is assumed. Outside the double wall, the paired coefficient
+equalities used in (QC.17) are not supplied, so no dimension-three theorem
+for every `ValidBase` is asserted. The stationary native $\alpha/\beta$
+task, the separate fixed-Hamiltonian fifteen-event quantum minimax problem
+and complete space/time/boundary/memory mutual recovery retain their
+unresolved source and operation bridges.
+

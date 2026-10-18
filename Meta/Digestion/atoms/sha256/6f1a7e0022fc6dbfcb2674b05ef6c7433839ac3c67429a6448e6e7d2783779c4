@@ -1,0 +1,30 @@
+### 70.4 Scope and an ambient upper boundary
+
+At \(b_*\), (70.5)–(70.8) prove the full original common-flat equations and the
+mutual unbiasedness of the two normalized rays. Applying \(H_0(b_*)\) to
+both rays preserves their overlap and gives the corresponding output rays
+unbiased to the fixed pair \((I_6,H_0(b_*))\). This does not produce complete
+bases containing them with the required pairwise relations.
+
+In particular the universal no-unbiased-ray-pair property of §68 cannot extend
+to the entire branch. One can also give a simple upper boundary for that
+property in the ambient Frobenius metric. The family identity from §69 gives
+
+\[
+ \|H_0(b)-H_\star\|_F^2
+ ={b^2h^2+(h-\sqrt3)^2+b^2\over2}.
+\]
+
+For \(|b|<1\), \(1<h\le\sqrt3\) and
+\(|h-\sqrt3|\le(3/2)b^2\), since \(h+\sqrt3>8/3\). Hence this squared
+distance is at most \(2b^2+(9/8)b^4\). The joint box has
+\(b_*<211/2000\), and direct rational comparison gives
+
+\[
+ 2(211/2000)^2+(9/8)(211/2000)^4<9/400.
+\]
+
+Thus the open ambient ball of radius \(3/20\) already contains a Hadamard
+matrix admitting the unbiased ray pair (70.2). This is an upper bound on a
+possible universal pair-gap radius, not on a no-quartet radius.
+

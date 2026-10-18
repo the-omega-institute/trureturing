@@ -1,0 +1,72 @@
+**Theorem 211.2 (Exact donor and competing-maximum criterion).**
+Let $V$ be any full score, $1\le n<i<j\le L$, and choose four words
+$w_{ab}\in\Omega_n$, $a,b\in\{0,1\}$, differing only at $i,j$,
+where their bits are $a,b$. On the full schedule $(i,j)$ let
+$r_{ab}$ be the total reward of label $n$ in cell $ab$, let $M_{ab}$
+be the maximum reward of all other labels there, and let
+$c_{ab}=C_{w_{ab}}$. The cell data include every row of $V$.
+Assume
+
+$$
+r_{00}\ge M_{00},\qquad r_{01}\le M_{01},\quad
+r_{10}\le M_{10},\quad r_{11}\le M_{11},
+$$
+
+and define the complete available slack
+
+$$
+\tau=\min\{c_{00},c_{11},r_{00}-M_{00},
+                         M_{01}-r_{01},M_{10}-r_{10}\}\ge0.
+\tag{211.5}
+$$
+
+For $0\le u\le\tau$, subtract $u$ from $C_{w_{00}},C_{w_{11}}$
+and add $u$ to $C_{w_{01}},C_{w_{10}}$, obtaining $V_u$.
+It is nonnegative and preserves the entire $A,P,T$, $Q,W$, every
+correct-class total, and every correct unary marginal
+$\sum_{w\in\Omega_k,w_r=1}C_w$ for all $k,r$.
+Every $O$ schedule support is unchanged. Every $N$ schedule except
+$(i,j)$ has all individual cell-label rewards unchanged. Put
+
+$$
+D_{ij}=B_N^{(i,j)}(V)-W_V,\qquad
+D_{\rm rest}=\max_{s\ne(i,j)}(B_N^s(V)-W_V).
+$$
+
+This local $D_{ij}$ denotes excess, not the input-measure mass in
+211.1. Then
+
+$$
+\Delta_N(V_u)=\max\{D_{\rm rest},D_{ij}-u\},\qquad
+\Delta_O(V_u)=\Delta_O(V).
+\tag{211.6}
+$$
+
+Thus, for $0\le d\le1$, the conditions
+$D_{\rm rest}\le d$ and $D_{ij}\le d+\tau$ supply the exact-$Q$
+certificate $(V_u,0)$ with $u=(D_{ij}-d)_+$.
+
+**Proof.** The two donor bounds ensure nonnegativity, including
+$u=\tau$. The signed square $(-1,+1,+1,-1)$ has zero total and
+zero projection onto each single coordinate. Its projection onto any
+pair other than $\{i,j\}$ is zero: one varying coordinate is summed
+out and its opposite signs cancel. All four rows have the same first
+zero, so the changed correct reward always has label $n$.
+This proves all stated invariant totals, unary data and other
+cell-label rewards, even if $n$ is early and contributes to $W$.
+
+At the exceptional $N$ pair, the four label-$n$ rewards become
+$r_{00}-u,r_{01}+u,r_{10}+u,r_{11}-u$.
+By (211.5), the first still attains its cell maximum, while the
+other three do not exceed their unchanged competing maxima.
+Exactly the first cell maximum falls by $u$.
+In $O$, the merged first-cell label-$n$ reward is
+$r_{00}+r_{01}$, unchanged; every competing reward there is unchanged.
+The $10,11$ maxima stay fixed by the same inequalities. Hence its
+whole support is unchanged, as are all other stopped supports.
+Maximization gives (211.6). The proposed $u$ lies in $[0,\tau]$
+and bounds every $N$ schedule by $W+d$. Its residual is zero, so
+(211.4) holds. Ties, absent donors and $\tau=0$ are included.
+No statement supplies jointly compatible slack for several switches.
+$\square$
+

@@ -1,0 +1,20 @@
+**Convention 26.4 (the credited all-count decoder).** With
+$s(r)=\#L(r)+2\#R(r)$, the factor (GDB.3) is
+
+$$
+\Gamma_p(B)=(0,0),\qquad
+\Gamma_p(j,e)=
+\begin{cases}
+(2-e,1-e),&j=n,\\
+(s(r)+2-e,\mathbf1_{r\text{ ends in }R}),&p=p_jr,\ j<n.
+\end{cases}
+\tag{GDB.107}
+$$
+
+[AAR, Proposition 13.3][AAR] and (GDB.4) supply, for every actual
+$t$ and every $k\ge0$,
+$r_{\rho^kt}(p)=\operatorname{Pred}(\Gamma_p(\partial_p(t)),k)$.
+They are the temporal supplier, not a new substitution theorem here.
+Different descriptors can have equal factors on words with left steps;
+no assertion below identifies them in general.
+

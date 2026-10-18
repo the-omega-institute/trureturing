@@ -1,0 +1,2 @@
+**Source and proof status.** The content is repo-derived ordinary mathematical theory, with its reused sources and proof limits stated in §96.5. It is reference input; Lean declarations and proofs remain the mathematical truth source of the repository. This volume supplies no new Lean/kernel verification or physical validation.
+

@@ -1,0 +1,48 @@
+**Proposition 2.2 (Complete parameterization and admissibility).** The class
+$\mathcal K$ consists exactly of
+
+$$
+K(\rho,\tau)=\begin{pmatrix}
+1-\rho&\rho-3/20&3/20\\
+\frac{14}{3}(\rho-3/20)&1-\frac{14}{3}(\rho-3/20)-\tau&\tau\\
+7/10&\tau&3/10-\tau
+\end{pmatrix},
+\tag{2.2}
+$$
+
+where
+
+$$
+\frac3{20}\le\rho\le\frac{51}{140},\qquad
+0\le\tau\le\min\left\{\frac3{10},\,
+1-\frac{14}{3}(\rho-3/20)\right\}.
+\tag{2.3}
+$$
+
+Every $\theta_K$ belongs to the original $\Theta_5$, and
+$P_K([1])=3/13$.
+
+Proof. The first row sum gives $K_{12}=\rho-3/20$ and $K_{11}=1-\rho$.
+Detailed balance forces $K_{21}=(14/3)K_{12}$, $K_{31}=7/10$, and
+$K_{32}=K_{23}=\tau$. The remaining row sums give (2.2).
+Nonnegativity gives precisely (2.3); conversely these inequalities make
+every entry nonnegative, every row sum one, and every detailed balance
+identity valid. In particular $\pi K=\pi$.
+
+For $A=M_0(K)+M_1$, direct block multiplication gives
+
+$$
+A\mathbf1=\mathbf1,\qquad M_1^2=0,\qquad
+\lambda M_0(K)=\frac{(\pi K,0)}{1+b},\qquad
+\lambda M_1=\frac{(0,\pi J)}{1+b}.
+$$
+
+Thus $\lambda A=\lambda$ and $\lambda\mathbf1=1$. The joint-law construction
+in [Universal, Proposition 4.2][U] applies, including all legal endpoints
+and seams. Its one-bit mass is $\lambda M_1\mathbf1=b/(1+b)=3/13$.
+
+The boundary $\rho=3/20,\tau=0$ is included: states $2,2'$ form a closed
+period-two class, each with stationary mass $3/26$, while $1,3,3'$ form
+another closed class. No mixing or ergodicity assumption is needed for this
+stationary law or for the risk bound below. $\square$
+

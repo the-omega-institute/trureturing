@@ -1,0 +1,68 @@
+### 13.2 四大力学的共同生成元结构
+
+对同一个状态变量 \(x\)，考虑四类候选生成元：
+
+\[
+\dot x
+=
+\underbrace{J(x)\nabla E(x)}_{\text{Hamiltonian / reversible}}
++
+\underbrace{M(x)\nabla S(x)}_{\text{thermodynamic / dissipative}}
++
+\underbrace{\mathcal L_{\mathrm{readout}}(x)}_{\text{quantum measurement / coarse-graining}}
++
+\underbrace{\mathcal L_{\mathrm{field}}(x)}_{\text{electromagnetic or gauge boundary}}.
+\]
+
+其中：
+
+- \(J^\mathsf T=-J\) 是辛或 Hamiltonian 结构；
+- \(M\succeq0\) 是 Onsager mobility；
+- \(\mathcal L_{\mathrm{readout}}\) 的连续量子部分必须是迹湮灭的状态保持生成元；在线性情形，它是算子空间上的生成元，而其演化半群才须完全正、保持迹（CPTP）；CPTP 通道本身用于离散状态更新；
+- \(\mathcal L_{\mathrm{field}}\) 负责局部连接、端口和 gauge phase；
+- 离散 prime/Fibonacci seam 可作为 \(\mathcal L_{\mathrm{field}}\) 的算术 phase sector，但当前仍是模型接口。
+
+对量子密度态，四项的量子分量都须保持指定载体：导数保持 Hermitian 且迹为零，每项的连续演化保持正性和迹一；线性量子项须生成 CPTP 半群。若限定为 §13.1 的 apex/底面块对角载体，还须保持该块结构。各项之和的流存在并保持同一载体也是此方程的模型条件，不能仅由 \(J^\mathsf T=-J\) 或 \(M\succeq0\) 推出。
+
+在有限维 \(\mathcal H\) 上，给定复线性 CPTP 通道 \(\Phi:\mathcal B(\mathcal H)\to\mathcal B(\mathcal H)\) 和常数 \(\lambda\ge0\)，可把连续读出生成元取为
+
+\[
+\mathcal L_{\mathrm{readout}}=\lambda(\Phi-\operatorname{id}),
+\qquad
+e^{t\mathcal L_{\mathrm{readout}}}
+=e^{-\lambda t}\sum_{n=0}^{\infty}\frac{(\lambda t)^n}{n!}\Phi^n
+\quad(t\ge0).
+\]
+
+右侧在有限维算子范数中收敛，是权重和为一的 CPTP 通道混合，形成 CPTP 半群；若 \(\Phi\) 保持所选块载体，其混合半群也保持该载体。对任意密度态，\(\operatorname{Tr}\mathcal L_{\mathrm{readout}}(\rho)=\lambda(\operatorname{Tr}\Phi(\rho)-\operatorname{Tr}\rho)=0\)。离散读出则写为 \(\rho^+=\Phi(\rho^-)\)，不把 \(\Phi(\rho)\) 直接加到导数中。此构造只给已指定通道的连续/离散接口，不供应整个非线性模型的物理实现；§13.4 的实际酉/pinching 步及其熵公式仍按离散合同使用。
+
+对于量子态，标准可逆部分是
+
+\[
+\dot\rho=-i[H,\rho].
+\]
+
+耗散部分应写成 Lindblad/GKSL 形式：
+
+\[
+\mathcal D(\rho)
+=
+\sum_\ell
+\left(
+L_\ell\rho L_\ell^\dagger
+-\frac12\{L_\ell^\dagger L_\ell,\rho\}
+\right).
+\]
+
+因此量子版本的候选方程是
+
+\[
+\dot\rho
+=
+-i[H,\rho]
++
+\mathcal D(\rho)
++
+\mathcal L_{\mathrm{capture}}(\rho).
+\]
+

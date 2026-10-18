@@ -1,0 +1,32 @@
+**Definition 1.1 (Arithmetic source, full carrier and selected targets).**
+Let $F_0=0$, $F_1=1$, $F_{k+2}=F_{k+1}+F_k$, and let $p_i$ be
+the increasing primes. Retain the actual countable source
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\quad q_i(x)=[p_i\mid N(x)],\quad
+n(x)=\min\{i:q_i(x)=0\}.
+$$
+
+Replies are static. The full carrier is the Borel disjoint union
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each block a
+copy of $(0,1)$. The unchanged consumer makes no prime requests,
+returns unknown on $B_j$, and proposes $j$ on $P_j$. The actual
+distinct marks and selected accuracy targets are
+
+$$
+\theta_j=(B_1,1/(j+2))\quad(j\ge0),\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a).
+$$
+
+There is no block indexed zero. The original nonatomic targets remain
+a different family. Explicitly, for $0<h_0<1$, put
+$t_x=\sum_i3^{-i}q_i(x)$, $Z_t=\int_0^1e^{tz}\,dz$, let $\nu_x$
+have density $e^{t_xz}/Z_{t_x}$ on $B_{n(x)}$, let $\pi_j$ be
+uniform on $P_j$, and let $\Omega(x)$ count distinct prime divisors of
+$N(x)$. Then $\mu_x^{\rm orig}=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$.
+Accuracy below always means accuracy against $\lambda_x^a$.
+

@@ -1,0 +1,24 @@
+**定义 44.1（Numerical common-cut horizons）。** For the full table (41.2), define
+
+$$
+ J=\max\bigl(\{j:1\le j<p,\ \Lambda_j\ne\Lambda_0\}\cup\{0\}\bigr).
+\tag{44.1}
+$$
+
+For every eligible $a=2q+r$ define its numerical horizon
+
+$$
+ E(a)=
+\begin{cases}
+ J,&a=0,\\
+ q+1+\Psi(q+1),&r=1,\\
+ p,&a=2\text{ and }\Lambda_0\ne\Lambda_1,\\
+ \displaystyle\max\left(\{q+1\}\cup
+       \{j:q+2\le j<p-1,\ \Lambda_j\ne\Lambda_{j+1}\}\right),
+       &r=0,\ a>0,\text{ otherwise}.
+\end{cases}
+\tag{44.2}
+$$
+
+Empty boundary sets give $q+1$ in the last line. Using $q+1\le j<p-1$ instead of $q+2\le j<p-1$ in that line gives the same horizon: its only extra possible entry is $q+1$, already the mandatory parent lower bound. This equivalence does not change which cuts are eligible. At cut zero, (41.5) is a phase-only target, and [S10, Theorem 4.1 and Corollary 4.2] with $g=2,u=m/g=1$ already supplies the exact phase-only scan fee $J$. Theorem 29.2 applies it to the full value join. That supplied specialization is not a new fee law here.
+

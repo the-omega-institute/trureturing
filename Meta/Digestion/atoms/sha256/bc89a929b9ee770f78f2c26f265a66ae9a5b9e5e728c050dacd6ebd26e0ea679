@@ -1,0 +1,28 @@
+**Lemma 2.1 (one-erasure obstruction).** If deletion of some noninitial endpoint $j\in\{1,2,3,4\}$ leaves a matrix span of dimension at most three, there are distinct positive rank-one sources with identical five observations at the common slope $k=-1/j$ and common drift zero. Uniform five-read recovery therefore requires four independent survivors after every noninitial deletion.
+
+**Proof.** The survivors include $I$. Choose $A,B$ such that $I,A,B$ span them, repeating $I$ if necessary. There is a nonzero trace-zero annihilator
+$$
+X=\begin{pmatrix}a&b\\c&-a\end{pmatrix}
+$$
+of $A,B$: these impose only two homogeneous equations on three variables. For $A=(\begin{smallmatrix}u&v\\w&x\end{smallmatrix})$ the equation is
+$$
+(u-x)a+wb+vc=0.
+$$
+If $a\ne0$ or $bc<0$, the coefficients $a,-b,-c,-a$ contain both strict signs. Otherwise $a=0$, $bc\ge0$, and changing the sign of $X$ makes $b,c\ge0$, not both zero. Nonnegativity forces the appropriate off-diagonal entry of each selected matrix to vanish. A triangular nonnegative integral unimodular matrix has diagonal entries one, since their nonnegative integral product is one. Hence $\operatorname{diag}(1,-1)$ also annihilates $I,A,B$ and all survivors. Replace $X$ by it. We have obtained a nonzero annihilator $X=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$ with both strict signs among $a,-b,-c,e$.
+
+For $x,y>0$, put
+$$
+E(x,y)=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+h(x,y)=exy+a-cx-by.
+$$
+This polynomial takes both signs. Its values at $(t,t)$ tend to $a$ as $t\downarrow0$; its values at $(T,T)/T^2$ tend to $e$; and its values at $(T,T^{-2})/T$ and $(T^{-2},T)/T$ tend to $-c,-b$ as $T\to\infty$. Each strictly signed coefficient therefore gives a finite positive point of that sign. Join two such points by a positive straight segment. Let $m>0$ be a lower bound on all entries of $E$ along this compact segment, let $h_-<0<h_+$ be its endpoint values, and put $\Delta=\det X$. Choose a finite
+$$
+\rho>\max\left\{\frac{\max_{a,b}|X_{ab}|}{m},
+\frac{|\Delta|}{\min(-h_-,h_+)}\right\}.
+$$
+The intermediate value theorem gives a segment point with $h=-\Delta/\rho$. At that point $S_0=\rho E$ and $S_1=S_0+X$ are strictly positive and
+$$
+\det S_0=0,\qquad \det S_1=\rho h+\Delta=0.
+$$
+They are distinct positive rank-one sources. Their survivor traces agree. At the missing index the common gain is zero, and all five observations therefore agree with drift zero. Proposition 1.2 realizes both sources on exactly the prescribed words, with positive unread states and a fixed row in each run. ∎
+

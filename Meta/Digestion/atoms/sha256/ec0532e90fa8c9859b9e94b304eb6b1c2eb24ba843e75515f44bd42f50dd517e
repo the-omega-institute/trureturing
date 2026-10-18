@@ -1,0 +1,76 @@
+**Lemma 4.1 (finite guarded arithmetic interpretation).** The following
+objects are effectively expressible in first-order Presburger arithmetic
+on the index coordinates:
+
+1. each entire $S_\eta$;
+2. existence, whole-subtree equality or disequality, and any of the four
+   replies at arbitrary *fixed* finite epoch/address pairs;
+3. equality of the complete rows
+   $R_Q(\Theta_\eta(\mathbf n))$ and
+   $R_Q(\Theta_\theta(\mathbf m))$, for any two charts;
+4. equality of one such row with a supplied concrete finite row.
+
+The interpretations use all natural-number indices without a rank bound.
+Their predicates for a negative signed record include both endpoint guards.
+
+Proof. Distribute all fixed powers in $F_\eta$. Its leaves become atomic
+expressions $T_{n_y+c}$ or $T_c$, with nonnegative constant offsets. At
+an additional epoch $a$ add $a$ to those indices. Ground parts are finite
+pair templates over $T_0,T_1$; they need no unknown structure.
+
+For a fixed address, follow the finite pair skeleton. At an atomic
+expression $T_t$, split into the disjoint cases $t=0$, $t=1$ and $t\ge2$.
+Only in the last case replace its children by $T_{t-1},T_{t-2}$ and consume
+an edge. The first two cases block any further edge and yield absence.
+Thus navigation is a finite case tree of depth bounded by the given
+address length. Each case is guarded by linear equalities or inequalities,
+and every reached expression has a nonnegative affine index. Negative
+constants in intermediate affine notation are moved to the other side
+of an inequality; there is no truncated-subtraction interpretation.
+This gives exact existence, replies and reached finite templates.
+
+Equality between any two such templates also has a finite arithmetic
+interpretation. Normalize bottom-up using (CAR.6). At each pair of
+primitive expressions $[r],[s]$, split into $r=s+1$ and $r\ne s+1$.
+The former produces $[s+2]$, and the latter retains $F([r],[s])$.
+Pairs with a nonprimitive child retain $F$. On each resulting arithmetic
+case there is one fixed normal code shape with affine primitive ranks.
+Two normal codes are equal precisely when these shapes agree and all
+corresponding primitive ranks agree. ABC mutual recovery proves that
+this is actual finite-tree equality, including equality between a
+constructor expression and a decorated variable. Negate the resulting
+whole equality formula for disequality; do not negate or omit its
+independently required endpoint guards.
+
+There are finitely many source terms and records. Conjoining the exact
+old class inequalities, all substituted core conditions and all original
+records gives item 1. Repeated classes use the same coordinates and
+repeated records remain conjuncts, proving that this is a joint formula.
+
+For the target, perform the same finite navigation along every original
+$q\in Q$, at epoch zero. Each case fixes the reached subset and its
+canonical address numbering. Expand atomic nodes only along the finite
+requested paths. Replace each reached $Q$ subtree by a distinct numbered
+hole marker and retain its whole-subtree expression separately. The
+remaining exterior is a finite template of atomic expressions, concrete
+pairs and those markers. Unvisited atomic pieces remain symbolic and
+are not truncated.
+
+Extend normal coding by treating hole markers as new, distinct leaves
+that are never primitive ranks. A pair containing a marker cannot collapse
+to an atomic block. The same inverse proof as ABC Theorem 2.2, with markers
+fixed, shows that normalization by (CAR.6) is injective on the expanded
+marked trees. Equality of the two exteriors is therefore the same finite
+shape-and-rank comparison. Require equal reached address sets, equal
+marked exteriors, and, for every pair of reached holes, equivalence of
+the two whole-subtree equality predicates. These conditions are exactly
+full-row equality. They preserve the entire partition, not just named
+positive comparisons. Taking one side concrete gives item 4.
+
+All case splits concern a fixed finite collection of expressions and
+addresses. They do not split an unbounded unknown code or quantify over
+ambient normal-code shapes. Empty $Q$ retains the entire source exterior;
+$Q=\{\varepsilon\}$ gives a single-hole constant row. Blocked original
+addresses never become target holes because navigation here is at epoch
+zero. This proves all four items. $\square$
+

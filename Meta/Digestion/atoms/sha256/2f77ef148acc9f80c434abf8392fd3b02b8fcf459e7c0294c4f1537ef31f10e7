@@ -1,0 +1,60 @@
+**定理 5.2（Exact adaptive memory on the full complete-target class）。** For every Definition 3.1 target,
+
+$$
+\boxed{K_{\min}^{\rm ad}(2;f)=N+4.}
+\tag{5.3}
+$$
+
+Proof of attainment. For each value $v$, choose its label $Z_v$ on $H$, or either of its two labels if $H$ is empty, and name the other $X_v$. Set
+
+$$
+A_v=\{j\in J:\lambda_v(j)=X_v\},\qquad
+B_v=\mathcal B_1(\widehat A_v^{\,0}).
+\tag{5.4}
+$$
+
+The class $A_v$ misses $H$, lies in $W_1$, and omits the leading vertex $m$. The donor zero also omits that vertex. Thus the supplied inverse makes $B_v$ begin zero and have charge $\mathbf1_{A_v}$ on the actual archive. It clears every incoming tail, including $k-1$, and succeeds throughout because $m<k$.
+
+Take four word rows $a_0,a_1,b_0,b_1$, and all $N$ Halt rows. Initialize $c(v)=a_v$ and $c(\bot)=H_{L_\bot}$. The complete word-row table is
+
+| Row | Installed word | Endpoint $v$ | Endpoint $1-v$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_v$ | $1^m$ | $b_v$ | $H_C$ | $H_R$ |
+| $b_v$ | $B_v$ | $H_{Z_v}$ | $H_{X_v}$ | $H_R$ |
+
+Use the immutable-target/current-record supports
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\{(f(v,-j,s),(v,-j,s)):j\in P,\ 0\le s<k\},\\
+\Gamma_{b_v}&=\{(\lambda_v(j),(v,-j+m,m+s)):j\in J,\ 0\le s<h\}.
+\end{aligned}
+\tag{5.5}
+$$
+
+For a Halt row, take precisely its initial-bottom pair, when applicable, together with all its incoming actual word images:
+
+$$
+\Gamma_{H_y}=
+\bigl(\{(L_\bot,\bot)\}\text{ if }y=L_\bot,\ \varnothing\text{ otherwise}\bigr)
+\ \cup\!
+\bigcup_{\substack{x\text{ word row},\ e\in\{0,1,\bot\}\\V(x,e)=H_y}}
+\{(z,\delta_{u(x)}q):(z,q)\in\Gamma_x,
+\ o(\delta_{u(x)}q)=e\}.
+\tag{5.6}
+$$
+
+Here $o(q)$ is the original endpoint readout. Give the root, query and Halt supports ranks $2,1,0$. The root sends exactly high tails to $R$, low endpoint phases to $C$, and the low $J$ rectangle to $b_v$. Formula (5.4) sends the latter to its correct binary labels. All actions are original total word updates, all source pairs are covered, all successors lie in the displayed supports, and every word step strictly lowers rank. Every Halt support has its installed immutable label. These are exactly the conditions of [FC, Theorem 27.2], applied as an ordinary paper certificate.
+
+Proof of the arbitrary-controller lower bound at fee two. Each initial value fibre must emit, and Theorem 3.2's first-zero loss forces its first word to be $1^m$. If the two initial rows were one row, its scalar endpoint $y$ would contain fresh $C$ and both labels of $\lambda_y$. Choose the actual maximal surviving INITIAL tail $h-1$ at an endpoint phase and at differently labelled $J$ phases. Their current tail is $k-1$. A second word beginning one irreversibly merges unequal labels in bottom; a word beginning zero succeeds on all these sources and has only two scalar responses. Neither can finish three labels in the one remaining block. Hence $a_0\ne a_1$ in every fee-two controller, regardless of delayed homogeneous stopping.
+
+Its two root-zero successors must emit and begin zero, by the same maximal-tail merger argument on the nonconstant binary tables. They are distinct from the all-one root rows. If both were one row $b$, its last word would have one charge function $q(j)$ and two installed final outputs $G(0),G(1)$. Correctness would require
+
+$$
+\lambda_0(j)=G(q(j)),\qquad
+\lambda_1(j)=G(1\oplus q(j)).
+\tag{5.7}
+$$
+
+The ordered join would have at most two classes, contrary to (3.1). Thus four distinct word rows are compulsory, as are the $N$ distinct output rows. This exhausts arbitrary words, rejection, early or delayed stops and all possible reuse within the two-block deadline. ∎
+

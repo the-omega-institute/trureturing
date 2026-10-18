@@ -1,0 +1,83 @@
+**Theorem 3.2 (pointwise all-competitor cone acquisition).** Let $D\ge2$,
+let $A$ be any correct pair under Assumption 1.3, and fix any actual
+$t=\langle\alpha,v\rangle\in\mathcal F_D$. For every actually present
+$a$ in $v$ with $|a|\le D-2$, the preparation execution on this same
+$t$ submits at least one word in $\mathcal C(a)$. Consequently, for
+every prefix-free set $B$ of such addresses,
+
+$$
+T_A(t)\ge|B|,\qquad
+L_A(t)\ge\sum_{a\in B}(1+|a|),
+\qquad
+H_A(t)\ge\max_{a\in B}(1+|a|)\quad(B\ne\varnothing).
+\tag{PPF.13}
+$$
+
+There is no upper bound on retained names, tables, work or late query
+length in this statement. The later Read may be anywhere in the
+original source.
+
+Proof. Fix $a$ and suppose that the actual preparation execution never
+submits a word in its cone. Replace only the subtree at that actual
+occurrence by each of
+
+$$
+u_0=\alpha,\quad u_1=\beta,\quad
+u_2=\langle\alpha,\alpha\rangle,\quad
+u_3=\langle\beta,\alpha\rangle,\quad
+u_4=\langle\langle\alpha,\alpha\rangle,\alpha\rangle.
+\tag{PPF.14}
+$$
+
+Call the resulting sources $t_0,\ldots,t_4$. All five replacement
+heights are at most two. Their insertion depth in $v$ is $|a|$, so
+$|a|+2\le D$ keeps every new source in the same $\mathcal F_D$.
+Every other subtree and every strict ancestor constructor is unchanged.
+Each literal outside $\mathcal C(a)$ therefore has exactly the same
+reply on the original source and all five replacements.
+
+Induct on the deterministic preparation execution. Its common initial
+state agrees on the six inputs. At each step, equality of the state
+forces the same local action, query or halt; every query along the
+original execution lies outside the cone and has equal replies. Thus
+the whole preparation execution, termination and complete exported
+value agree on $t_0,\ldots,t_4$. This uses actual charged observation
+as the only source-dependent action.
+
+Now use the single fixed public request $p=RaL$. Its length is
+$|a|+2\le D$, so it is an original permitted request on every one
+of those five sources. Homomorphic transport at the present occurrence
+$Ra$ gives the five respective target factors
+
+$$
+\Gamma_L(u_0)=(3,0),\quad
+\Gamma_L(u_1)=(2,0),\quad
+\Gamma_L(u_2)=(2,1),\quad
+\Gamma_L(u_3)=(1,0),\quad
+\Gamma_L(u_4)=(0,0).
+\tag{PPF.15}
+$$
+
+These values follow directly from the credited formula (PPF.7); the
+last target ends at an original branch. They are five distinct
+trajectories by Convention 2.1.
+
+The five sources have identical $E,D,p$. A zero-Read reader produces
+one predictor. Otherwise it submits the same single arbitrary finite
+word on all five. Its reply has at most four values, so two sources
+give the same reply and final predictor. The same predictor cannot
+give their distinct full trajectories at every subsequently supplied
+$k$. No count was available when the query was selected. Both branches
+contradict simultaneous correctness, proving that the cone was entered.
+
+The word $p$ is fixed throughout this five-source comparison.
+Universal correctness for every public request licenses that comparison;
+no execution obtains a request selected from its hidden source. Likewise
+the replacements compare five possible stationary inputs, without
+modifying a source during an execution.
+
+For prefix-free $B$ the literal cones are disjoint. A submission enters
+at most one of them, and a submission entering $\mathcal C(a)$ has
+length at least $1+|a|$. Summing these charges and taking their maximum
+proves (PPF.13). $\square$
+

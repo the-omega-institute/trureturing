@@ -1,0 +1,26 @@
+**Definition 1.1 (finite native sources).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle s,t\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{PAC.1}
+$$
+
+All sources are nonempty finite ordered free binary trees. There is no
+common size or rank bound. The operation $\rho$ has the interpreted laws
+(PAC.1); it is not an additional free constructor. An original address is
+a finite word over $\{L,R\}$, including the root $\varepsilon$. Its reply
+is $\alpha$, $\beta$, $\mathsf{branch}$ or $\mathsf{absent}$. Put
+
+$$
+u\equiv_hv\quad\Longleftrightarrow\quad
+\forall |p|\le h\quad r_u(p)=r_v(p).
+\tag{PAC.2}
+$$
+
+Depth is inclusive, and strict descendants of a leaf are absent.
+

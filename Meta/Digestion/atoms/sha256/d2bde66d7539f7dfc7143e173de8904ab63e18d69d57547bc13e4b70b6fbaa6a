@@ -1,0 +1,28 @@
+### FIB 支持转移的边界
+
+禁邻支持的转移矩阵
+
+\[
+A_{\rm Fib}=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\]
+
+是实对称矩阵，谱为
+
+\[
+\left\{\varphi,-\varphi^{-1}\right\}.
+\]
+
+这证明 Fibonacci 支持场拥有有限真实谱，但它没有提供素数 Euler 因子、Archimedean Gamma 因子或 zeta 行列式。一般带权转移矩阵只有在存在正权 \(d_i\) 使
+
+\[
+d_i^2T_{ij}=d_j^2T_{ji}
+\]
+
+时才能通过正对角共轭变成自伴矩阵；复杂振荡权不自动满足该条件。
+
+---
+

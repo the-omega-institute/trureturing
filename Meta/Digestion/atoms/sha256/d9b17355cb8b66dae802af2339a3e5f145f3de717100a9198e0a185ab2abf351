@@ -1,0 +1,100 @@
+**定理 459.2（精确允许误差—负质量关系）。** 对上述同一个 $h_0$，
+任意 $0<h<h_0$ 的真实三点数据均满足
+$$
+\inf_{\substack{\sigma\text{ finite signed on }[0,\infty)\\
+                       E_h(\sigma)\le\varepsilon}}
+N_-(\sigma)
+=
+\begin{cases}
+n_\varepsilon,&0\le\varepsilon\le K_h,\\
+0,&\varepsilon\ge K_h.
+\end{cases}
+\tag{SNC.8}
+$$
+当 $0\le\varepsilon\le K_h$ 时，此最小值由唯一测度达到：
+$$
+t_+=-\frac2h\log r_\varepsilon>0,
+\qquad t_-=t_++\frac{2\log2}h>t_+,
+$$
+$$
+\boxed{\quad\sigma_\varepsilon
+=W_\varepsilon\delta_{t_+}-n_\varepsilon\delta_{t_-}.\quad}
+\tag{SNC.9}
+$$
+在 $\varepsilon=K_h$ 时，负原子系数精确为零，式（SNC.9）是单正原子。
+
+**证明：全体 signed 测度的下界。** 暂记 $r=r_\varepsilon$，
+令 $y=e^{-ht/2}\in(0,1]$。真正的三核非负见证为
+$$
+q_r(t)=e^{-2ht}-2r e^{-3ht/2}+r^2e^{-ht}
+      =y^2(y-r)^2\ge0.
+\tag{SNC.10}
+$$
+对 $0<r<1$，有限闭区间的微分检查给
+$$
+\sup_{t\ge0}q_r(t)
+=\max\{r^4/16,(1-r)^2\}.
+\tag{SNC.11}
+$$
+具体地，$y^2(y-r)^2$ 的导数为
+$2y(y-r)(2y-r)$；只需比较 $y=0,r/2,r,1$。
+$r>r_*$ 恰好保证 $r^2/4>1-r$，故同一域内
+$$
+0\le q_r(t)\le M_r:=r^4/16,
+$$
+且最大值只在 $y=r/2$ 达到，零值在有限谱率上只在 $y=r$ 达到。
+$y=0$ 对应无穷谱率，不是实轴上的另一个原子。
+
+（SNC.5）给
+$$
+Ur^2-3Vr+2Z=0,
+\qquad Z-2rV+r^2U=-\frac{n_\varepsilon r^4}{16}
+ =-M_r n_\varepsilon.
+\tag{SNC.12}
+$$
+若 $E_h(\sigma)\le\varepsilon$，三个线性系数的真实符号给
+$$
+\begin{aligned}
+\int q_r\,d\sigma
+&=L_\sigma(2h)-2rL_\sigma(3h/2)+r^2L_\sigma(h)\\
+&\le(z+\varepsilon)-2r(v-\varepsilon)+r^2(u+\varepsilon)\\
+&=-M_r n_\varepsilon.
+\end{aligned}
+\tag{SNC.13}
+$$
+这里误差盒上的精确最大点是 $(U,V,Z)=(u+\varepsilon,v-\varepsilon,z+\varepsilon)$，
+并未把三个误差的同号当成额外假设。
+另一方面，真实 Jordan 分解和（SNC.11）给
+$$
+\int q_r\,d\sigma
+=\int q_r\,d\sigma^+-\int q_r\,d\sigma^-
+\ge-M_rN_-(\sigma).
+\tag{SNC.14}
+$$
+因此 $N_-(\sigma)\ge n_\varepsilon$。
+
+**证明：真正达到与唯一性。** 两个位置不同，$W_\varepsilon>0$、
+$n_\varepsilon\ge0$，所以（SNC.9）本身就是其 Jordan 分解。
+正原子的 $y$ 值为 $r$，负原子的值为 $r/2$。于是
+$$
+\begin{aligned}
+L_{\sigma_\varepsilon}(h)&=r^2(W_\varepsilon-n_\varepsilon/4)=U,\\
+L_{\sigma_\varepsilon}(3h/2)&=r^3(W_\varepsilon-n_\varepsilon/8)=V,\\
+L_{\sigma_\varepsilon}(2h)&=r^4(W_\varepsilon-n_\varepsilon/16)=Z.
+\end{aligned}
+\tag{SNC.15}
+$$
+第一、二行直接由定义得到；第三行由（SNC.12）的二次方程得到。
+所以其三点最大误差恰好为 $\varepsilon$，负质量恰好为 $n_\varepsilon$。
+
+若任一候选达到此最小值，（SNC.13）–（SNC.14）的全部不等式必须等号。
+非负积分的零值迫使 $\sigma^+$ 支撑在 $q_r=0$，
+$\int(M_r-q_r)d\sigma^-=0$ 迫使 $\sigma^-$ 支撑在 $q_r=M_r$。
+上述真实有限谱率零点与唯一最大点分别是 $t_+$、$t_-$。
+三个误差系数严格不为零，误差盒的等号还迫使真实节点值为 $U,V,Z$，
+从而两个原子质量由（SNC.15）唯一确定。
+此论证也适用于 $n_\varepsilon=0$：Jordan 负部质量零给正测度，
+其正部仍只在 $t_+$，质量唯一。
+对于 $\varepsilon>K_h$，$\sigma_{K_h}$ 已有误差 $K_h$、负质量零；
+成本非负给（SNC.8）的余下范围。证毕。
+

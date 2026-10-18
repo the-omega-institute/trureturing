@@ -1,0 +1,56 @@
+## 6. Existing finite consumer and unresolved quantifiers
+
+The actual allowance (3.3) is an independent input to [Multiword, Theorem 3.1][MW], whose statistic, response theorem and finite detectability result are reused. For the same fixed row-unifilar candidate $P$, take $C=[1,L]$, $f_C=f(X_C)$, $F=\max_{B_L}|f|$, and require
+
+$$
+\mathbb E_P[f_C\mid\sigma(X_j:j\notin C)]=0.
+$$
+
+Write $q_i=\mathbb E_P[X_i\mid\sigma(X_j:j\ne i)]$, $\ell_i=(X_i-q_i)^2$ and $S_P(f)=\sum_i\mathbb E_P[f_C\ell_i]$. The allowance and [Multiword, Lemma 2.1][MW] give absolute convergence; [Conditional Response, Theorem 3.1][P8] gives $S_P(f)=0$ under attainment. The existing sufficient matrix condition for nullity is $\sum_{w\in B_L}f(w)M_w=0$ for this same presentation. With $I_R=[1-R,L+R]$ and
+
+$$
+q_{k,i}(P)=\mathbb E_P[X_i\mid X_{i-k:i-1},X_{i+1:i+k}],\qquad
+U_{R,k}=\sum_{i\in I_R}\mathbb E_P[f_C(X_i-q_{k,i}(P))^2],
+$$
+
+same-law attainment implies the existing necessary bound
+
+$$
+|U_{R,k}|\le F\eta_\theta(R)
++2(L+2R)F\sqrt{\frac{c_\star}{k+1}}.
+\tag{6.1}
+$$
+
+A strict violation with the supplied ceiling $\bar c=3-2\sqrt2$ replacing $c_\star$ certifies nonattainment of that same law. The finite statistic uses its actual marginal on $[1-R-k,L+R+k]$, with overlapping windows, legal seams, forced and zero-total fibers. The only supplied new input is the independently proved $\eta_\theta$; the finite-certificate proof is owned by [Multiword][MW].
+
+If a candidate also has a nonzero complete response and a vanishing allowance, that existing theorem gives some finite violation. Synchronization and matrix-nullity alone give no nonzero response or productive sign. A pointwise allowance also does not supply [Multiword, Theorem 2.2][MW]'s separate common-tail and posterior-control hypotheses for a parameter family.
+
+The existing four-state XOR tail obstruction forbids a fixed-$N$ uniform upgrade even within row-unifilar presentations. Its parameters $p_K=1/2+1/[16(K+1)]$, $K\ge1$, have
+
+$$
+e_L(r)+e_R(r)\ge2/9\quad(0\le r\le2K+1),\qquad
+\tau_{P_K}(R)\ge\tfrac29(2K+2-R)\quad(R\le2K+1).
+\tag{6.2}
+$$
+
+Each individual family member has a finite actual tail, including zero defects at its fair boundary, yet $\sup_{\theta\in\Theta_4}\tau_{P_\theta}(R)=\infty$ for every fixed $R$. This is the prior finite-hidden-tail obstruction, reused as a quantifier boundary rather than proved anew here. It neither supplies a fixed-law divergent actual tail nor refutes [Conditional Response, §2][P8]'s already proved attained-law budget $\tau_P(0)\le c_\star$.
+
+**Open Problem 6.1 (Original arbitrary-finite completion).** Put
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad
+D_r(P)=\mathbb E_P(X_0-q_{r,0}(P))^2.
+$$
+
+Still decide whether some exact finite producer attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2][U], the latter remains equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{6.3}
+$$
+
+No such all-$N$ separation pairs or finite attainer are supplied. All original zero, reducible, periodic, noncontractive, seam and null cases remain in this target.
+
+For general nonunifilar producers, Lemma 2.2 still screens future output, but the successor-mixture equalities do not supply Proposition 3.2's marked quotient. Endpoint masses after a word sum over hidden paths, so the deterministic coalescing identity (3.5) is unavailable. Current-class uncertainty can remain even when remote-exterior influence is small; identifying that entire class is only a sufficient route to the actual defect. Neither general per-law summability nor a fixed-law divergent actual tail is established here. Independently, productive same-law directions or other strict certificates covering the remaining hypothetical attainers remain missing.
+

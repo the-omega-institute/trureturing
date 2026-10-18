@@ -1,0 +1,21 @@
+**Corollary 3.3 (closed source formula and strict improvement).** The
+constant is the evaluated expression
+
+$$
+\boxed{C_{\rm end}=\frac{(\sqrt\mu-\sqrt V)^2}{2}
+\frac{\mu\delta h_0^2+b^2V+d^2W}
+{\mu\delta h_1^2h_2^2+a^2h_2^2V+c^2h_1^2W}.}
+\tag{WE.28}
+$$
+
+It is a positive rational/radical expression in the conditional source
+coefficients, not a restated limiting infimum. It strictly improves the
+FA.25 leading lower coefficient $d_{\rm mom}/\mathfrak c_{\max}$.
+
+Proof. Substitute $r=V/\mu$ and $w_2(r)=W/\mu$ into (WE.8).
+By (WE.21), $c_*$ is strictly increasing. Hence
+$c_*(r)<c_*(U)=h_2^2ah_1/(h_0b)=\mathfrak c_{\max}$, where the last
+equality uses FA73's two axial capacities and monotonicity. Since
+$d_{\rm mom}=(\sqrt\mu-\sqrt V)^2/2>0$, (WE.28) gives the strict
+comparison. $\square$
+

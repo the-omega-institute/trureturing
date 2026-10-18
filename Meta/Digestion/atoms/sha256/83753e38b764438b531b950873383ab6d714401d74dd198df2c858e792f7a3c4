@@ -1,0 +1,8 @@
+**Assumption 3.1 (structural primitive basis).** Endow the finite charged
+atomic-patch basis of SSA Assumption 3.1 and CSA Assumption 3.1. Reciprocal
+P,L,R,$O_0,O_1,H_0,H_1$ slots, bounded walks, finite pattern tests, initialized
+new vertices and one joint commitment have their stated charges. Internal
+slot-assignment fragments are not additional observable native cuts.
+This assumption supplies sole incidence storage; ordinary native bytes or
+a printed path word alone do not supply it.
+

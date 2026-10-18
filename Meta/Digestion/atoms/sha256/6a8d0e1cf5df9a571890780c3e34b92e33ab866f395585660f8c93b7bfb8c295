@@ -1,0 +1,70 @@
+**Lemma 14.1 (fresh material on both completed journal entries).** Let $C$
+be any completed producer journal invocation of Definition 13.2. Let
+$w_1,w_2,w_3$ be the three finite field values in its retained packet and
+$k_i=|w_i|$. Then
+
+$$
+\Delta A_{55}(C)\ \ge\ \sum_{i=1}^3(2k_i+3)\ \ge\ 9,
+\qquad \Delta\mu(C)=0.
+$$
+
+For an actor invocation, if $\ell$ is the actual query block's bit-payload
+length, its route49 mailbox alone contributes a further $\ell+2$ cells,
+disjoint from those parser work words. These inequalities are lower
+bounds, not complete allocation or service-cost formulae.
+
+Proof. CAP Definition 4.6 installs the query parser before the row/prefix
+service. Definition 6.2a specifies the packet's three bounded fields and
+that the producer parses them by ReadFrame. Its producer-local variant
+uses its own retained packet and already owned payload in this same
+service; the omitted operations are the actor packet/channel and loan,
+not the producer's parser. Its frozen return kind changes the final
+return edge. CAP §7's journal bill makes the same distinction between
+the actor channel/loan and the producer-local owned-packet helper.
+
+Expand ReadFrame by CAP Definition 6.1. For a field with $k$ bits,
+ReadUnary copies the length $U(k)$, including its terminating zero, to
+a fresh work word, then Finish appends sep. This constructs $k+2$
+cells. ReadFrame then New's its output, appends its $k$ payload bits,
+and Finish appends another sep, constructing $k+1$ further cells. Even
+when $k=0$, the length zero and the two separators are constructed.
+CAP Definition 3.1 defines New as Tail and Append as EX; WR; MR.
+New does not clear, rewind for overwrite, or reclaim an earlier word.
+Reuse of a word *role* therefore appends a new physical interval. Its
+successive EX occurrences remain distinct even when later fields reuse
+the same finite roles. Summing gives $\sum_i(2k_i+3)$ actual original
+allocations on1–12.
+
+For the actor route, the pool is back at the producer before parsing;
+its work-word authority is therefore current, not inferred from the
+packet. Before that return, Definition 6.2a requires sending the query
+on actor-to-producer route49. CAP Definition 6.3 measures its actual
+mailbox Base, constructs its $\ell$ payload cells and sep, then appends
+a zero-status cell before copying. Thus port49 alone gains $\ell+2$
+cells. Its descriptor, receiver allocation and the later response route
+add further material. Retaining the sender packet does not turn this
+channel into a reuse of an old mailbox interval.
+
+For the producer-local route, the producer already owns1–12 and its
+packet/payload, so the same parser work is legal without an actor loan.
+The proof does not charge it an actor channel or idle return. A selected
+prefix that invokes CAP Definition 6.3's full snapshot routine adds
+its actual count/end/index construction on21 and dependency delivery.
+That routine constructs counts, none ends and a sealed index even for
+an empty prefix. This is additional material, not a premise needed for
+the parser lower bound.
+
+No result-dependent shortcut precedes these three field parses. The
+closed-end index scans occur afterward. A valid zero/out-of-range query
+returns `no-row` only at their checked closed end. CAP §7 also requires
+its response construction, channel where applicable, and return. A
+repeated hit still parses its packet. A previously acquired origin may
+omit a redundant payload/dependency channel, as CAP's origin scan and
+§7 allow; it omits neither this parser nor the actor's query route49.
+An already retained producer-local packet likewise omits its new
+construction/transport, while ReadFrame still constructs new length and
+output words. Thus all the cases included in Definition 13.2 retain
+the displayed lower bound. CAP Definition 6.2a expressly creates no
+source, NativeLocal, Halt or maintenance event and changes none of
+$q,g,e,j,m$. This proves the event equation. ∎
+

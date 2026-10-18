@@ -1,0 +1,75 @@
+**Theorem 10.2 (literal observable separation after positive acquisition).** All parameters in $\mathfrak A$ have exactly the same positive finite visible-word support. For any distinct $\vartheta,\varphi\in\mathfrak A$ and any respective positive finite histories $h,t$, including empty histories when queried,
+
+$$
+\lim_{H\to\infty}
+\operatorname{TV}(F_{\vartheta,h}^H,F_{\varphi,t}^H)=1,
+\qquad d(F_{\vartheta,h},F_{\varphi,t})=1.
+\tag{10.2}
+$$
+
+This includes $p=q$, $r=p+q$, and families entirely on the equality stratum.
+
+**Proof (10.2).** A visible word has positive mass exactly when it admits a compatible hidden path with positive initial mass and positive edges. All five initial masses are positive. The zeros of the displayed matrix are parameter independent, and every other entry is strictly positive throughout $\mathfrak A$. Thus the path-existence criterion is independent of the parameter. In particular $[0]$ always has mass $1/5$ and posterior $e_0$.
+
+The columns as well as rows sum to one, preserving $\pi$. The positive-edge graph has the bidirectional cycle $0\leftrightarrow1\leftrightarrow2\leftrightarrow3\leftrightarrow0$ and leaf edge $0\leftrightarrow4$, with a positive self-loop at every state. Its directed diameter is at most three. Every ordered state pair therefore has a positive path of length exactly three, padding shorter paths by self-loops. Put
+
+$$
+\eta_\vartheta=\min(p,q,r,1-p-q-r),\qquad
+\beta_\vartheta=5\eta_\vartheta^3,\qquad
+\rho_\vartheta=1-\beta_\vartheta.
+$$
+
+Every positive edge is at least $\eta_\vartheta$, including the diagonal entries $1-p-q$ and $1-r$. Since $p+q+r+(1-p-q-r)=1$, one has $0<\eta_\vartheta\le1/4$, hence $0<\beta_\vartheta<1$. If $J$ has every row equal to $\pi$, then
+
+$$
+P_\vartheta^3=\beta_\vartheta J+\rho_\vartheta R
+$$
+
+for a stochastic $R$ preserving $\pi$. Iteration, followed by any remaining zero, one or two steps, gives
+
+$$
+\sup_i\operatorname{TV}(P_\vartheta^k(i,\cdot),\pi)
+\le\rho_\vartheta^{\lfloor k/3\rfloor}.
+\tag{10.3}
+$$
+
+This is the standard minorization argument of Levin–Peres–Wilmer, [*Markov Chains and Mixing Times*, second edition, Theorem 4.9 and its proof, pp.52–53](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf), applied here with the explicit three-step minorization.
+
+The stationary probabilities of the three visible pair words $01,03,0B$ are
+
+$$
+v_\vartheta=
+\bigl(\mathbb P_\vartheta(01),\mathbb P_\vartheta(03),
+\mathbb P_\vartheta(0B)\bigr)=\tfrac15(p,q,r).
+\tag{10.4}
+$$
+
+The last identity uses $P_\vartheta(0,2)=0$ and $P_\vartheta(0,4)=r$. These observable coordinates identify the whole declared triple. The stationary one-symbol law $(1/5,1/5,2/5,1/5)$ in order $(0,1,B,3)$ contains no such distinction.
+
+Here is a finite-event concentration argument for the required conditional laws. For one of those pair words $w$, let $I_j$ be its indicator at positions $j,j+1$ of the stationary source, with mean $u_\vartheta(w)$. Conditional on $X_{j+1}$, the expectation of $I_{j+k}$, $k\ge1$, has the form $P_\vartheta^{k-1}g(X_{j+1})$ for $0\le g\le1$ and $\pi g=u_\vartheta(w)$. Equation (10.3) bounds its difference from that mean by $\rho_\vartheta^{\lfloor(k-1)/3\rfloor}$. The Markov property and $0\le I_j\le1$ therefore give the same bound on $|\operatorname{Cov}(I_j,I_{j+k})|$. No independence of overlapping pairs is used. For the empirical frequency in an $H$-symbol word, $H\ge2$,
+
+$$
+\widehat u_H(w)=\frac1{H-1}\sum_{j=0}^{H-2} I_j,\qquad
+\operatorname{Var}(\widehat u_H(w))
+\le\frac{A_\vartheta}{H-1},\qquad
+A_\vartheta=1+\frac6{\beta_\vartheta},
+\tag{10.5}
+$$
+
+because $\sum_{k\ge1}\rho_\vartheta^{\lfloor(k-1)/3\rfloor}=3/\beta_\vartheta$. Stationarity gives the same bound for a future segment beginning at any fixed time. For the vector $\widehat v_H$ of the three pair frequencies, Chebyshev's inequality and a union bound give
+
+$$
+F_{\vartheta,h}^H
+\{\|\widehat v_H-v_\vartheta\|_\infty\ge d_0\}
+\le
+\frac{3A_\vartheta}
+ {M_\vartheta(h)(H-1)d_0^2}
+\longrightarrow0
+\quad(d_0>0).
+\tag{10.6}
+$$
+
+Indeed the conditional probability of any future deviation is at most its unconditional stationary probability divided by $M_\vartheta(h)>0$. This division does not assume independence from the acquired cylinder. An arbitrarily rare positive history enlarges the required horizon without removing that history; at empty history its mass is one.
+
+For distinct parameters choose $d_0>0$ with $2d_0<\|v_\vartheta-v_\varphi\|_\infty$. The finite-word event $\{\|\widehat v_H-v_\vartheta\|_\infty<d_0\}$ has probability tending to one under $F_{\vartheta,h}^H$ and zero under $F_{\varphi,t}^H$. Finite TV is at least this event gap and at most one, proving (10.2). Coherent prefix marginalization also makes the distances nondecreasing in $H$. Only finite future tests are used; neither an infinite acquired history nor an infinite all-$B$ conditioning event is introduced. $\square$
+

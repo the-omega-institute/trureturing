@@ -1,0 +1,41 @@
+### Weighted-depth consequence at the natural growing modulus
+
+Set \(m_j=2\cdot3^{j+1}\) and
+\(S_j=\sum_{p\mid B_j}h_pb_{p,j}\), as above. TBN.3 gives the exact
+factorization \(B_j=\prod_{p\mid B_j}p^{h_p}\) and
+\(p=1+m_jb_{p,j}\). Since
+\[
+ (1+m_jb)^{h}\equiv1+m_jhb\pmod {m_j^2},
+\]
+multiplication over the finite support gives
+\[
+ B_j\equiv1+m_jS_j\pmod {m_j^2}.
+\]
+Comparing with \(B_j=1+m_ju_j\) and cancelling \(m_j\) yields the
+growing-modulus congruence
+\[
+ \boxed{S_j\equiv u_j\pmod {m_j}}
+ \quad\text{and hence}\quad
+ \boxed{S_j\equiv u_j\pmod {3^{\,j+1}}}
+ \qquad(j\ge1).
+ \tag{L3.6}
+\]
+The direct bases \(S_1=1\) and \(S_2=107\) agree exactly. M27 and M81 are
+fixed-modulus corollaries of (L3.6).
+
+The modulus \(3^{j+1}\) is the uniform order supplied by the first-order
+factorization argument. A higher S-only modulus would require control of
+the second-order coefficient
+\[
+ T_j=\sum_p\binom{h_p}{2}b_{p,j}^2+
+     \sum_{p<q}h_ph_qb_{p,j}b_{q,j},
+\]
+because \(u_j=S_j+m_jT_j+O(m_j^2)\). No 3-divisibility of \(T_j\) follows
+from TBN.3 or the existing parity/ternary balances, so (L3.6) is the
+maximal uniform conclusion from the current depth-factorization inputs.
+Higher-order corrected identities can be obtained by retaining further
+coefficients of \prod_p(1+b_{p,j}z)^{h_p}, but they are different
+weighted statistics. The algebraic premises alone cannot force a higher
+S-only modulus: the formal one-factor pattern \((1+m_j)^2\) has
+\(u_j-S_j=m_j\) exactly.
+

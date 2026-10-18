@@ -1,0 +1,56 @@
+**Theorem 8.1 (the central anchor couples the actual axes).** Every
+chosen complete nineteen-label cover $\mathcal C$ of Definition 1.2,
+under either $\lambda=0$ or $\lambda=1$, satisfies
+
+$$
+\begin{aligned}
+\Gamma_a&\ge\max\left\{\eta_a,6+\frac{\eta_a}{3}\right\},&
+\Gamma_b&\ge\max\left\{\eta_b,6+\frac{\eta_b}{3}\right\},\\
+\eta_a+\eta_b&\ge3,&G(\mathcal C)&\ge13.
+\end{aligned}
+\tag{NAGC.8.1}
+$$
+
+This quantifies over all twenty permitted macro orders, every initial
+point and anchor, and every positive integer outer length admitted by
+Definition 1.2; it selects no gate pair, endpoint rule or smaller path
+family.
+
+**Proof.** Apply Lemma 7.2 first with $S_t=S_t^a$, $n_i=N_i$,
+$\Gamma=\Gamma_a$, $\eta=\eta_a$, and then with $S_t=S_t^b$,
+$n_i=M_i$, $\Gamma=\Gamma_b$, $\eta=\eta_b$. Definition 7.1
+and the inherited incidence congruences verify all its hypotheses.
+Both applications concern the same actual cover $\mathcal C$.
+
+Consider its actual central class $C_9$ and anchor $(9,9)$. This
+vertex belongs to a path with nineteen vertices, so it is incident
+to at least one edge, including when it is an endpoint. Every edge
+is pure. An incident $B$ edge gives at least two vertices of $C_9$
+on $a=9$; an incident $A$ edge gives at least two on $b=9$.
+By [NARC, Theorem 14.3, part 3][NARC], a nonempty class-line
+intersection has size $1+3j$, and hence the indicated intersection
+has at least four points. The other classes meeting that same line
+each occupy at least one of its nineteen points. Disjointness gives
+
+$$
+N_9\le16\quad\hbox{or}\quad M_9\le16.
+\tag{NAGC.8.2}
+$$
+
+Since both deficits are nonnegative, this proves
+$\eta_a+\eta_b\ge3$. Finally the reused identity (NAGC.7.2)
+and the two one-axis bounds give
+
+$$
+G(\mathcal C)=\Gamma_a+\Gamma_b
+\ge12+\frac{\eta_a+\eta_b}{3}\ge13.
+\tag{NAGC.8.3}
+$$
+
+The central-line argument did not combine separately attainable
+projection data: its two incidences and its anchor all belong to
+$\mathcal C$. The proof uses the common saturated geometry of both
+lag families. A nonnegative-lag cover already satisfies its additional
+native first-step condition; no symmetry of that condition or removal
+of its zero-lag states is used. $\square$
+

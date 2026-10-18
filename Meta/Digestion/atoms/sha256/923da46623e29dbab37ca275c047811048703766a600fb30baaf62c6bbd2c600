@@ -1,0 +1,20 @@
+**Convention 26.1 (source and evidence scope).** Retain the entire
+experiment of Definition 3.1, (CG.20) and Convention 21.1. In particular,
+the inputs are the twelve actual normalized reached-cut specimens
+$U_{e,n}\rho_yU_{e,n}^\dagger$, with $y=5,16,27$ and all four
+$U_{e,n}=\operatorname{diag}(e,n,1)$. There is one history-independent
+common channel, with the original five-mode completion and fixed common
+metadata, acting on the entire complex algebra. The ideal failure output
+is still the five separate measures $w_\ell f_y(t)dt\,P_f$ with
+$w=(0,1/4,1/2,1/4,0)$, $f_y(t)=6y/(y+6t)^2$ and exact $t\in[0,1]$.
+The error $E$ is HALF the full cq trace norm, maximized over the twelve
+histories, including singular measures, wrong support, aborts and every
+additional zero-ideal sector. It is not acceptance-normalized.
+
+The starred data, $E_*$ and $J_*$ are precisely the credited ordinary
+computer-assisted data of §§13–17, and $W_3,\delta_*$ are (CG.184).
+The results below are ordinary mathematical deductions from those data.
+They neither replace their certificate nor claim a new Lean verification.
+The finite test (CG.155) and sign average are analytic lower-test devices;
+neither is a supplied native operation or a preparation prior.
+

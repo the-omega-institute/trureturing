@@ -1,0 +1,24 @@
+**定义 73.2（Missed vertices and sufficient seam conditions）。** For $n\ge3$ put
+
+$$
+d=\lceil\log_2 n\rceil\ge2,\qquad z=m+1,
+\qquad e_r=m+1-2r,\qquad s_r=e_r+1=m+2-2r
+\quad(1\le r\le d).
+\tag{73.4}
+$$
+
+Here $d\le(m+1)/2$. Indeed, $n\le m+1=2q$, $q\ge2$, and the elementary induction $2^q\ge2q$ gives $\lceil\log_2(m+1)\rceil\le q$. Thus $e_r\ge0$ and $s_r\ge1$. The actual window at index $a+r$, in the rotated coordinates, starts at $s_r$, wraps if necessary, and misses exactly $e_r$, since $m\equiv-2\pmod T$. It contains the excluded child vertex $z$. Its last vertex is $e_r-1\pmod T$. In particular, for $r\ge2$, the last vertex of the preceding window is exactly its own first vertex $s_r$.
+
+Let $\mathcal Y=\lambda[A]$. For each label $L\in\mathcal Y$ define a finite list $\mathcal L_L\subseteq\{0,1\}^d$ by the following clauses on $y=(y_1,\ldots,y_d)$:
+
+$$
+\begin{aligned}
+y_r&=0&&\text{whenever }L=\lambda(e_r),\quad 1\le r\le d,\\
+y_1&=0&&\text{whenever }L=\lambda(m),\\
+y_{r-1}y_r&=0&&\text{whenever }L=\lambda(s_r),\quad 2\le r\le d.
+\end{aligned}
+\tag{73.5}
+$$
+
+Repeated labels collect all their clauses. The first line makes unavailable coordinates zero; the second makes the first literal word start zero. The third will make the two literal bits adjacent to each later block boundary not both one. These are sufficient physical seam conditions, not necessary conditions for every optimal stream.
+

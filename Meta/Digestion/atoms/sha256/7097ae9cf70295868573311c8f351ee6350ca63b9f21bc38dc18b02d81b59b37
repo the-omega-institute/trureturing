@@ -1,0 +1,20 @@
+**Definition 7.1 (credited type profile).** For a symbol-count vector
+$\nu$ of length $n$, let $T_\nu\subseteq S_d^n$ be its type class
+and let
+
+$$
+a_n(\nu)=\max_{B\text{ admissible}}|B\cap T_\nu|.
+$$
+
+Use the continuous concave function $\alpha_d$ of [NPC, Theorem
+4.3][NPC], characterized for rational $p$ and $rp$ integral by
+
+$$
+\alpha_d(p)=\sup_{k\ge1}(kr)^{-1}\log_2a_{kr}(krp),\qquad
+0\le\alpha_d(p)\le H(p).
+\tag{OCB.49}
+$$
+
+NPC supplies $\sigma_d=\max_p[H(p)-\alpha_d(p)]$. This profile and
+its convergence are credited; no effective length modulus is assumed.
+

@@ -1,0 +1,66 @@
+**定理 461.5（统一二阶成本）。** 以下估计都一致于
+$a\in[0,a_{\max}]$；涉及 epsilon 的估计还一致于
+$0\le\varepsilon\le K_{a,h}$：
+$$
+\frac{\Delta_a}{h^2}
+\longrightarrow\frac{c(2c-3a)}{72},\qquad
+\frac{K_{a,h}}{h^2}
+\longrightarrow k(a):=\frac{c(2c-3a)}{144(c-2a)},
+\tag{MU.12}
+$$
+$$
+\frac{n_a}{h^2}
+=\frac{4c(2c-3a)}{9(c-2a)}
+ -64\frac{\varepsilon}{h^2}+o(1).
+\tag{MU.13}
+$$
+特别地，对精确拟合有
+$$
+\frac{n_{a,0}}{h^2}\longrightarrow
+\frac{4c(2c-3a)}{9(c-2a)}.
+$$
+同一域内还有
+$$
+r_a=1-\frac{c}{6(c-2a)}h+O(h^2),\qquad
+t_{+,a}=\frac{c}{3(c-2a)}+O(h),
+\quad W_a=c/2-a+O(h).
+\tag{MU.14}
+$$
+
+**证明。** 原 Taylor 估计为
+$$
+cB(s)=c/2-cs/6-cs^2/12+o(s^2).
+$$
+三个固定倍数节点给
+$$
+\Delta/h^2\to c^2/36,\qquad
+(u+z-2v)/h^2\to-c/24.
+$$
+乘以紧区间内有界 a，MU.1 给 MU.12 第一项一致成立。
+由于 $S_a\to2(c-2a)$ 且分母一致远离零，第二项也一致成立。
+此外有准确乘子身份
+$$
+n_a=\frac{32\Delta_{a,\varepsilon}}
+           {r_a^3(D_a+V_a)}
+ =\frac{32S_a}{r_a^3(D_a+V_a)}(K_{a,h}-\varepsilon).
+\tag{MU.15}
+$$
+其证明是 $n_a=4(D_a-V_a)/r_a^3$，再用
+$(D_a-V_a)(D_a+V_a)=8\Delta_{a,\varepsilon}$。
+$r_a\to1,S_a\to4p_a,D_a+V_a\to2p_a$ 一致且分母正，
+故 MU.15 的乘子一致趋于 64。
+$K_{a,h}/h^2$ 和 $\varepsilon/h^2$ 一致有界，得到 MU.13。
+该乘子身份在容差右端点也完全合法，不除以可能为零的 $K_{a,h}-\varepsilon$。
+
+对于 MU.14，二阶有界 Taylor 余项和 epsilon 的共同 $O(h^2)$ 域给
+$$
+U_a=p_a-ch/6+O(h^2),\qquad
+V_a=p_a-ch/4+O(h^2)
+$$
+一致成立。准确关系
+$D_a-V_a=8\Delta_{a,\varepsilon}/(D_a+V_a)=O(h^2)$
+及一致正分母给
+$r_a=V_a/U_a-(D_a-V_a)/(2U_a)$ 的所列展开。
+取对数后得到严格正位置的展开；MU.15 给 $n_a=O(h^2)$，
+再代入 W 的定义得到其展开。证毕。
+

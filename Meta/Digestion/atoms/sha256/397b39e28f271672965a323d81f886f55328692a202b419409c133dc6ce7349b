@@ -1,0 +1,14 @@
+### 63.2. Complete positivity and a direct dilation
+
+The only nonzero block of the input-first Choi matrix, indexed by |i,0> for leaves and |h,1>, is
+
+    [[I_m,z],[z*,1]].
+
+Its positivity is equivalent to 1−Σ_i|z_i|²≥0 by the Schur complement of I_m. Trace preservation follows directly from the specified matrix units.
+
+Equivalently, choose an environment with orthonormal e_0,e_1,...,e_m and set
+
+    a=Σ_i conj(z_i)e_i+sqrt(1−||z||₂²)e_0.
+
+The map |i>→|0>e_i, |h>→|1>a is an isometry. Its channel has exactly the stated action, since <a,e_i>=z_i with the inner product conjugate-linear in its first argument. This is a logical-channel dilation; it does not yet give a physical local implementation on the MC code.
+

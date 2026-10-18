@@ -1,0 +1,21 @@
+**Definition 3.1 (one input and common apparatus).** Along with the normalized
+old-cut specimen there is a fixed common metadata/blanks state
+$\tau_{\rm meta}$. It contains the no-failure flag, aligned cut clock,
+source/preparation/epoch identity, fixed reference calibration, common
+permissions and controller state. It contains no readable unknown history,
+old waveform, generator word, height programme, parity helper, environment
+port, source callback or additional specimen. No source-dependent installed
+processor is furnished.
+
+The comparison allows arbitrary independent ancillary spaces, private
+randomness, computation, finite adaptive instruments and retained classical
+or quantum records, with a fixed common output interpretation. Branches stay
+unnormalized and every acquisition abort, denial and unexecuted rejection is
+included. Absorbing $\tau_{\rm meta}$ and independent apparatus gives one
+history-independent CPTP map on the entire complex input algebra. A map on
+the original five-mode algebra restricts along $\iota$ to a CPTP map on
+$M_3(\mathbb C)$; all arguments below hold for that entire algebra, including
+non-Hermitian matrix units and arbitrary passive reference amplification.
+They are not fits to twelve separate density matrices. Enlarging to all
+common CPTP maps confers no additional legal quantum read or native control.
+

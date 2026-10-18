@@ -1,0 +1,19 @@
+**Theorem 2.1 (seven-feature quantitative separation).** Every compatible
+Borel pair of Definition 1.2 satisfying the five local boxes (1.6) obeys
+
+$$
+L_\Pi+C(\eta+\sqrt V)\ \ge\ \rho_p+\frac{\delta_3}{2}.
+\tag{2.1}
+$$
+
+In fact the proof gives the same assertion with $C$ replaced by
+$500000000000$. The stated $10^{16}$ requires no restriction to a
+small-error neighborhood. The result concerns one pair and its own two
+flows; no separately chosen minimizers are combined.
+
+The proof occupies §§3–5. Its new source-specific step is propagation of
+the seven edge errors through (1.6), clipping, the stationary four-rate
+envelope and the configuration risk. The zero-variance exclusion, scalar
+envelope, endpoint gap, matrix evaluation and installation interface are
+supplied results and are not additional contributions here.
+

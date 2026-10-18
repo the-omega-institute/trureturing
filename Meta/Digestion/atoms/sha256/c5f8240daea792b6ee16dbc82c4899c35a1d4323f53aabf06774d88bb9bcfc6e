@@ -1,0 +1,72 @@
+**Theorem 23.1 (conditional correction for every original code).**
+Fix $1\le d\le D$, put $n=2^{D-d}$, and let $\mu$ be any
+probability on the entire $S_d$. Restrict any jointly correct
+original preparation and reader of Definition 1.2 to the fixed
+perfect scaffold of $n$ actually present canonical blocks in the
+right subtree. Let $B_e$ be its nonempty unchanged complete-name
+fibers on this slice; they partition $S_d^n$.
+
+For each positive-mass $B_e$, choose complete native witnesses
+and the exact RRN lift of this retained relation. Let $P_e$ be
+its own Gibbs law for $\prod_i\mu(x_i)$. Suppose blockwise
+conditional caps $C_{e,i}>0$ and positive normalized kernels
+satisfy (COK.14) on relations covering that retained positive
+support. If the chosen actual witness has at most one incoming
+outside owner at every block, compute $T_e,L_e$ as in
+Definition 20.1 and put $\delta_e=T_e/4+L_e$. Otherwise put
+$\delta_e=0$. Then
+
+$$
+\mu^{\otimes n}(B_e)
+ \le\left(\prod_iC_{e,i}\right)2^{-\delta_e},
+\qquad
+1\le\sum_{e:\,\mu^n(B_e)>0}
+       \left(\prod_iC_{e,i}\right)2^{-\delta_e}.
+\tag{COK.115}
+$$
+
+There is no assumption that every original fiber has a
+one-incoming-owner witness. The correction is conditional on
+its chosen actual witness and is zero in the unrestricted
+remaining cases.
+
+Proof. The credited [NPC, Theorem 7.1][COKNpcJoint] restricts
+the original procedure without changing a name or its fiber.
+For a fixed name and public request its zero-Read choice or
+arbitrary original-root query is fixed before reply and count.
+On the actual scaffold that query is constant or enters one
+actual donor block. The credited all-word canonical simulation
+turns its suffix into a function of one actual boundary reply
+in that same donor or a constant. Correctness for every
+authentic count forces the complete target factor to be a
+function of that reply. This supplies complete witnesses for
+every target, with arbitrary off-target donors and all original
+correlations retained. It does not require independent child
+codes, nor does it move donors to the target block.
+
+RRN gives the exact one-lift actual relation of $B_e$ inside
+those witnesses. For its positive mass use its own common Gibbs
+law $P_e$. The retained-relation version of (COK.22) gives
+
+$$
+\log_2\mu^n(B_e)
+ \le\sum_i\log_2C_{e,i}-\Delta(P_e).
+$$
+
+Theorem 20.3 bounds this last loss below by $\delta_e$ in the
+stated class; otherwise its original nonnegativity suffices.
+Exponentiating proves the first assertion. Zero-mass fibers
+contribute nothing, and summing the positive masses gives one,
+proving the second. All actual shared variables, guards, support
+zeros and whole weights are those of this one common law.
+$\square$
+
+The theorem quantifies over every original competitor. It is a
+conditional mass refinement, not a uniform numerical cap: the
+Gibbs corrections and unrestricted other fibers have not been
+bounded by a finite optimizer-cofinal certificate. In particular
+the product of reciprocal-unit marginals used in $T_e$ is not
+claimed to satisfy the native support. Small $T_e/n$ controls
+normalized relative entropy only; it supplies no support-valid
+completion or size-independent total-variation estimate.
+

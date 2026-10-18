@@ -1,0 +1,30 @@
+**Definition 70.1 (fixed interaction and admissible states).** Let L denote
+[Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md)
+and G denote [Native two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md).
+Retain exactly L Definition 35.1 and G Definition 25.1. Fix one admissible
+signed $\kappa\ne0$, the pole $(k_0,0)$, and numbers $a>0$ and $\tau>0$.
+Every limit below varies only $g>0$. Write $M=M_\kappa$, $\phi_0=\phi(k_0)$,
+$d(q)=\sqrt{q^{\mathsf T}M^{-1}q}$ and $S=B_\kappa-\lambda\ge0$.
+The Hilbert space is the complex space $\mathcal H=L^2(I\times\mathbb R^3,dk\,dq)$.
+Its entire native form domain $\mathcal Q=D(S^{1/2})$ is L (48.2), with
+both actual height Dirichlet faces and every real phase frequency.
+Set
+
+$$
+F(t;k,q)=e^{\lambda t}g_\kappa^I(t;k_0,k;q),\qquad
+W_\tau(k,q)=\int_\tau^\infty F(t;k,q)\,dt,
+\qquad T[\psi]=\|S^{1/2}\psi\|_2^2,
+\tag{70.1}
+$$
+
+$$
+V_\tau[\psi]=\int W_\tau|\psi|^2\,dk\,dq,\qquad
+\mathfrak e_g[\psi]=aT[\psi]-gV_\tau[\psi],\qquad
+E_\tau(g)=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}\mathfrak e_g[\psi].
+\tag{70.2}
+$$
+
+Thus the changed interaction is a positive-time-regularized threshold
+field. It is neither the original killed Green nor the unregularized
+point field. Its heat clock is that of $B_\kappa$, independently of $a$.
+

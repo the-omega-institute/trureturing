@@ -1,0 +1,83 @@
+**Theorem 271.2 (Exact six-charge identity).**
+Every deterministic $N$ table satisfies $g_D\ge0$. For every
+full feasible allocation in Definition 271.1,
+
+$$
+(c_m-2)e-E_b
+=s_++\sum_{j\in J}s_j+\eta
+ +R_{\rm pair}+X_{\rm cross}+G_{\rm seed}.
+\tag{271.3}
+$$
+
+All six summands on the right are nonnegative. No normalization or
+change of allocation is required.
+
+**Proof.**
+The stated moments are the consumed subset-measure calculation.
+Explicitly, for $m=2q-1$, its mass is $2m/q=4-2/q$,
+a zero marginal is 2, and for $q\ge2$ a directed zero/one
+cell has mass $2(q-1)/(2q-2)=1$.
+For $m=2q$, total mass is $2+2q/(q+1)$, a zero marginal
+is $1+1=2$, and a directed zero/one cell has mass
+$q/(2q-1)+(q-1)/(2q-1)=1$.
+The other cells follow by subtraction. When $m=1$ no pair
+moment is used. In particular $c_m\ge2$, and $c_m\ge3$
+whenever two distinct late bits exist.
+
+To prove $a_D\ge t_D$, keep the actual output of every table.
+If no late bit is queried, the table is constant on the early-11
+suffix fibre. Each possible unqueried late-label contribution cancels
+between the positive and sole-zero terms, so $t_D=0$.
+
+If the two distinct queries are early 1 and late $j$, let $f_0,f_1$
+be its labels on the early-11 fibre at replies $0,1$ to $j$.
+The unqueried late-label terms cancel, leaving
+$t_D=[f_0=j]-[f_1=j]$.
+The early-10 fibre uses these same labels, and its $\nu$-weighted
+late-output mass is
+$2[f_0\in J]+(c_m-2)[f_1\in J]$.
+Half of it is at least $t_D$, and the other fibre is nonnegative.
+For early 2 and late $j$, use the early-01 fibre instead.
+
+If there is only one late query and neither early bit is queried,
+both early fibres coincide. Their half-sum is
+$2[f_0\in J]+(c_m-2)[f_1\in J]\ge t_D$.
+For two late queries $i<j$, the common four-cell function $f$
+gives
+
+$$
+\begin{aligned}
+t_D&=[f_{01}=i]+[f_{10}=j]-[f_{11}\in\{i,j\}],\\
+a_D&=[f_{00}\in J]+[f_{01}\in J]+[f_{10}\in J]
+                 +(c_m-3)[f_{11}\in J]\ge t_D.
+\end{aligned}
+\tag{271.4}
+$$
+
+All coefficients are nonnegative in this case. Empty, early singleton
+and repeated-query information partitions have already been covered;
+reversal only permutes static cells. Repetitions and ignored replies
+remain actual counted requests. This proves $g_D\ge0$ for every
+full table, including arbitrary earlier and unqueried output labels.
+
+Multiply by the same $\lambda_D$ and sum. Equal mass and the
+independent pair rows imply
+
+$$
+\begin{aligned}
+\mathcal T+G_{\rm seed}
+ &=\tfrac12\int(\mu_{01z}(J)+\mu_{10z}(J))\,d\nu,\\
+\mu_{01z}(J)&=e-r_1(z)-\chi_1(z),\\
+\mu_{10z}(J)&=e-r_2(z)-\chi_2(z).
+\end{aligned}
+$$
+
+Thus $\mathcal T+G_{\rm seed}+R_{\rm pair}+X_{\rm cross}=c_me$.
+Consume the same-allocation trace identity (266.2), also displayed
+in (268.4), to substitute
+$\mathcal T=E_b+2e+s_++\sum_js_j+\eta$.
+This yields (271.3), with $M$ canceled exactly.
+All row slacks and all remaining charges are nonnegative at this
+same realization, including zero masses and every closed equality.
+$\square$
+

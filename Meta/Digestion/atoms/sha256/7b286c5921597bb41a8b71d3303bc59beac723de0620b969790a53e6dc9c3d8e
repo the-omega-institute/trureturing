@@ -1,0 +1,57 @@
+**Theorem 4.2 (uniform reduction preserving the identical original).**
+For every row-valid proposed $b$, every $u\in\mathcal T$ and every
+$n\ge0$,
+
+$$
+H_b(u,n)\longleftrightarrow H_b(u,\kappa(n)),\qquad
+E_b(u,n)\longleftrightarrow E_b(u,\kappa(n)).
+\tag{NRF.12}
+$$
+
+In particular, equality to each fixed selected boundary has a computable
+sourcewise eventually periodic law, uniform over all original sources.
+
+Proof. The assertion for $H_b$ follows directly from [NUE, Theorem 2.2][NUE]:
+its threshold is $b_{\rm row}$, and $T\ge b_{\rm row}$. Below $T$
+there is no change. If selection validity fails, $E_b$ is always false.
+Assume it holds.
+
+Structural induction on any fixed finite $x$ gives
+
+$$
+q_A(\rho^k x)=\operatorname{eval}_{a_k,b_k,\delta}(x).
+\tag{NRF.13}
+$$
+
+Indeed the two leaves give (NRF.9), and pairing is preserved by $\rho$.
+Consequently equal orbit pairs give equal states for every finite $x$,
+not merely for the two atomic orbits.
+
+If $C$ has a concrete leaf at depth $d$, the supplied branch saturation
+[NSF, Lemma 9.2][NSF] makes its row impossible for every $u$ and all
+$n\ge2(d+1)$. Both tail predicates are false. This includes every
+no-hole row and every empty-cut output.
+
+Otherwise all leaves of $C$ are holes, and $P$ is its complete finite
+leaf frontier. At epoch $B_0\ge2D$, all strict prefixes of its holes
+are branches for every $u$. All holes exist, including those not
+present at invocation. Set $w=\rho^{B_0}u$ solely within this proof.
+The reached-position transport of [NativeDepthPatterns,
+`original_present_transport`][DEPTH] gives
+
+$$
+(\rho^{B_0+k}u)|_p=\rho^k(w|_p)\qquad(p\in P,k\ge0).
+\tag{NRF.14}
+$$
+
+For $n\ge T$, both $n-B_0$ and $\kappa(n)-B_0$ are at least $\mu$
+and are congruent modulo $\lambda$. Equations (NRF.9), (NRF.13) and
+(NRF.14) give the same state at every hole at these two epochs.
+Evaluation of the fixed exterior gives the same state at all its
+nodes, hence the same $\chi_A$. The entire row equality is already
+preserved by NUE; equivalently injectivity preserves and reflects all
+hole equalities and disequalities in (NRF.14). Theorem 2.2 now gives
+the selected equivalence. No transport was used backwards through a
+position's birth. The auxiliary $w$ has not replaced invocation $u$.
+$\square$
+

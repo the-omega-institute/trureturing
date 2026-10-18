@@ -1,0 +1,23 @@
+**Lemma 2.2 (live freshness and saturation).** Every query at a live
+history is fresh. Its prefix has exactly $|S|$ queries and charge $C_S$.
+It has negative and positive saturated completions of weights $k-1,k$,
+each exposing all $n$ coordinates exactly once and halting immediately
+after the last query.
+
+Proof. Certification is monotone under consistent observations, so every
+prefix of a live history is live. From a live history with $d=|S|$ and
+residual need $Q=k-h$, answer the first $Q-1$ new exposures one and all
+remaining new exposures zero. Before the last unread exposure both outputs
+remain possible. Repeats retain old values. Correctness forbids a terminal,
+and termination forbids revisiting a state; finiteness therefore forces all
+$n$ distinct exposures. If a query at any live prefix were a repeat, this
+consistent completion would require more than $n$ paid queries, a
+contradiction. Hence all live queries and their live prefixes are fresh.
+The resulting negative completion uses exactly $n$ queries and $W$ letters;
+the query cap forbids any further running visit. Dually give zero to the
+first $n-d-Q$ new exposures and one to the rest. It stays live until the
+last exposure and gives the positive weight-$k$ completion with the same
+exact charges. This restates the saturation argument exposed in [WTF,
+Convention 6.1][WTF] and [Third, Lemma 5.2][Third]. It prohibits certified
+work only on these saturated completions. $\square$
+

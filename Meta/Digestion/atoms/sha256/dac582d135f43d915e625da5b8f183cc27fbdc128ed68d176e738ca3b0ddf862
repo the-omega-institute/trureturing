@@ -1,0 +1,42 @@
+**Corollary 8.1 (Minimum radius and all four attaining triples).** Among all lawful total-cap-three representatives of the full law of $V_j$, its exact minimum radius is seven, at each single allowed $p$, either $j$, and every unchanged independent seed space. At radius seven, the first, second-on-zero and third-on-two-zero address triple is, at almost every seed, exactly one of
+
+$$
+\begin{aligned}
+&(j+3,\ j+7,\ j+5),\qquad (j+7,\ j+3,\ j+5),\\
+&(j-7,\ j-3,\ j-5),\qquad (j-3,\ j-7,\ j-5).
+\end{aligned}
+\tag{8.1}
+$$
+
+Each triple with the forced stopping actions is a lawful attainer. Every measurable same-seed choice among the four gives the same full law without an additional randomizer.
+
+Proof. At a good seed of any competitor, Theorem 7.2 gives path vertices $[L,L+3]\cap\mathbb Z$ with $q$ outside. If $L\ge q+1$, its right end edge has left endpoint $L+2\ge q+3$, hence actual address at least
+
+$$
+2(q+3)+\psi=j+7.
+\tag{8.2}
+$$
+
+If $L+3\le q-1$, its left end edge has left endpoint $L\le q-4$, hence address at most
+
+$$
+2(q-4)+\psi=j-7.
+\tag{8.3}
+$$
+
+In phase $A$ all three zero-branch calls are actually executed surely. Thus the forced extreme call is reached on a section of source mass at least $1/2$ at every good seed; it is not an unreachable formal-node obstruction. Integration over good seeds excludes any smaller radius, even if the radius were interpreted almost surely. Proposition 7.1 is already a radius-seven realization, proving equality.
+
+At radius seven a parity-$\psi$ edge left endpoint satisfies
+
+$$
+|2e+\psi-j|\le7
+\quad\Longleftrightarrow\quad q-4\le e\le q+3.
+\tag{8.4}
+$$
+
+A detached right-hand three-edge path in this interval must have left endpoints $q+1,q+2,q+3$: its first is at least $q+1$ and its last at most $q+3$. A detached left-hand path must have endpoints $q-4,q-3,q-2$, since its last vertex is at most $q-1$. The two end orders and the forced middle last give exactly (8.1). The converse part of Theorem 7.2 proves each attains the full law.
+
+More generally, a measurable integer choice $L(u)$ with $L(u)\ge q+1$ or $L(u)\le q-4$, together with a measurable binary choice of end order, selects lawful detached-path trees. Their source vectors are all $w$, so Lemma 2.2 gives the same full law. At the minimum radius the choice reduces to four measurable cells; neither prescribed cell measures nor splitting seed atoms is needed. Null seed or inconsistent-record modifications must still satisfy the cap and any asserted radius. $\square$
+
+The number seven is already the inherited universal lower $2k+1$ at $k=3$. The new conclusion is the necessary and sufficient classification of this particular law and its attaining triples; it adds no universal lower bound above seven. The witness and its displayed radius-seven realization are supplier-owned.
+

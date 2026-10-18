@@ -1,0 +1,68 @@
+### 定理 28.4（CPTP 组合子结构）
+
+有限维 Hilbert 空间和 CPTP 映射构成一个带张量积的对称幺半范畴：
+
+\[
+\mathbf{QFin}.
+\]
+
+具体地：
+
+\[
+\operatorname{id}_H\in\operatorname{CPTP}(H,H),
+\]
+
+若 \(\mathcal E\in\operatorname{CPTP}(H_A,H_B)\) 且
+
+\[
+\mathcal F\in\operatorname{CPTP}(H_B,H_C),
+\]
+
+则
+
+\[
+\mathcal F\circ\mathcal E
+\in\operatorname{CPTP}(H_A,H_C).
+\]
+
+若 \(\mathcal E_1,\mathcal E_2\) 是 CPTP，则
+
+\[
+\mathcal E_1\otimes\mathcal E_2
+\]
+
+也是 CPTP。
+
+#### 证明
+
+恒等映射显然完全正且保迹。复合的完全正性由
+
+\[
+(\mathcal F\circ\mathcal E)\otimes\operatorname{id}
+=
+(\mathcal F\otimes\operatorname{id})
+\circ
+(\mathcal E\otimes\operatorname{id})
+\]
+
+得到，保迹性由迹的逐次保持得到。张量积的 Kraus 算子为
+
+\[
+K_i\otimes L_j,
+\]
+
+并且
+
+\[
+\sum_{i,j}
+(K_i\otimes L_j)^\ast(K_i\otimes L_j)
+=
+\left(\sum_iK_i^\ast K_i\right)
+\otimes
+\left(\sum_jL_j^\ast L_j\right)
+=
+I\otimes I.
+\]
+
+结合有限维张量积的结合律、单位对象 \(\mathbb C\) 和交换对称子，得到对称幺半范畴结构。证毕。
+

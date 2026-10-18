@@ -1,0 +1,37 @@
+**Theorem 11.1 (evaluated right onset).** Fix any admitted $\tau,\xi$
+and their genuinely nonreal state (QO.23). There exist finite
+$C_{\rm rem},\epsilon_0>0$, depending on this fixed input and the
+conditional source, such that
+
+$$
+F+K_{\rm onset}\epsilon^2-C_{\rm rem}\epsilon^3
+\leq E_{s_*+\epsilon}(\rho)
+\leq F+K_{\rm onset}\epsilon^2+C_{\rm rem}\epsilon^3
+\quad(0<\epsilon<\epsilon_0).
+\tag{QO.56}
+$$
+
+In particular the right onset exponent is two, and its coefficient is
+the explicit positive number (QO.38). The lower remainder is uniform
+over the entire original finite complex class.
+
+Proof. Along the path, $m=\beta$, $\eta=0$,
+$x_\epsilon=t_x\epsilon+O(\epsilon^2)$ and
+$u_\epsilon=v_\theta\epsilon+O(\epsilon^2)$.
+The cost identity and its remainder give
+
+$$
+W_\epsilon-F=
+(a_{\rm curv}t_x^2+c_{\rm curv}v_\theta^2)\epsilon^2+O(\epsilon^3).
+\tag{QO.57}
+$$
+
+Substitution of (QO.44) evaluates the bracket as
+$(1/a_{\rm curv}+b_{\rm rec}^2/c_{\rm curv})/D_{\rm onset}^2
+=K_{\rm onset}$. Theorem 10.2 is a normalized actual upper for
+every sufficiently small positive $\epsilon$. Theorem 8.1 gives
+the full-class lower with one cubic constant. Take the smaller of
+the two radii and the larger finite constant. Neither an attained
+original infimum nor an exact later optimizer has been presumed.
+$\square$
+

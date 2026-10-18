@@ -1,0 +1,51 @@
+**Definition 1.2 (complete acquired fiber).** An attained acquired input is
+
+$$
+I=(P,R,H_0,H_{\rm rel},Q,N).
+\tag{FNS.2}
+$$
+
+Here $P$ and $Q$ are the original finite prefix-free cuts, $R$ is the complete
+old row (concrete exterior, reached set and full equality partition), $H_0$
+contains all literal records, and $H_{\rm rel}$ contains every whole-subtree
+equality or disequality record together with its actual epoch. For a finite
+original source $u$, let
+
+$$
+D=\{u:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{FNS.3}
+$$
+
+A signed record $(e,p,f,q,\bowtie)$ is interpreted as
+
+$$
+p\in\operatorname{Pos}(\rho^e u),\quad
+q\in\operatorname{Pos}(\rho^f u),\quad
+(\rho^e u)|_p\ \bowtie\ (\rho^f u)|_q,
+\tag{FNS.4}
+$$
+
+with both endpoint guards required for either sign. Repetitions, old
+off-task constraints, cross-class inequalities and all recorded epochs remain
+in (FNS.3); absence is never silently changed into a disequality.
+
+For a complete attained row $r$, put
+
+$$
+D_r=\{u\in D:R_Q(u)=r\}.
+\tag{FNS.5}
+$$
+
+If $B$ is a finite set of at least two distinct attained complete rows, define
+
+$$
+J_B(h)\Longleftrightarrow
+\exists (u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\;(u_r\equiv_h u_s).
+\tag{FNS.6}
+$$
+
+The tuple in (FNS.6) consists of alternative originals, one satisfying each
+whole row. It is not one source carrying contradictory labels and it is not a
+collection of unrelated pairwise witnesses.
+

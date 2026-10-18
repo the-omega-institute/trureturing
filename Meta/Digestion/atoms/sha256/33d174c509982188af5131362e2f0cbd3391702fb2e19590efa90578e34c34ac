@@ -1,0 +1,51 @@
+**Theorem 4.1 (singleton supports force one live coordinate order).**
+Suppose $a_p=1$ for every $p\in V$. There are sets
+
+$$
+\varnothing=T_0\subsetneq T_1\subsetneq\cdots
+\subsetneq T_{n-1}\subsetneq T_n=[n],\qquad |T_d|=d,
+\tag{SI.13}
+$$
+
+such that $\mathcal S_{h,z}=\{T_{h+z}\}$. If
+$T_{d+1}\setminus T_d=\{x_{d+1}\}$, every live query at depth
+$d$ tests $x_{d+1}$. The $x_1,\ldots,x_n$ form a permutation of
+$[n]$. Different cells have disjoint live-host sets, and hence
+
+$$
+m\ge\sum_{p\in V}b_p\ge G.
+\tag{SI.14}
+$$
+
+If instead the hypothesis is stated as $b_p=1$ for every cell, it
+implies all these conclusions. Its unique hosts $q_p$ are distinct,
+and every live edge from $q_p$ is the edge to the unique host of
+the corresponding child cell.
+
+Proof. Consider consecutive cells $(h,z)$ and $(h+1,z-1)$ on one
+depth diagonal, where $z\ge1$. Their common parent $(h,z-1)$ is
+live. Take one actual history at that parent. Its zero and one
+children are live and, by (SI.8), have the same support. Since the
+two child cells each have a singleton support family, their supports
+are equal. The admissible hit counts on a diagonal form an integer
+interval, so this comparison connects the entire diagonal. Denote
+its common support by $T_d$. This argument also shows that whenever
+all cells of a particular diagonal have singleton support families,
+that diagonal has a common support; no singleton premise is needed
+on its parents.
+
+For $d<n-1$, any cell at depth $d$ has at least one live child.
+At any of its actual histories, (SI.8) yields
+$T_{d+1}=T_d\cup\{i(q)\}$. Sizes and freshness give strict
+containment and determine $i(q)=x_{d+1}$ uniquely. At depth $n-1$
+there is one cell, $(K-1,L-1)$. Its support omits just one coordinate,
+so freshness determines the final query as well. This proves
+(SI.13) and the common live order.
+
+At one depth, different cells have equal supports and unequal hits,
+so PCA Theorem 35.1 excludes a common host. At different depths
+their supports are properly nested, so PE Lemma 4.1 excludes a common
+host. Their host sets are disjoint, proving (SI.14). Finally
+$b_p=1$ implies $a_p=1$ by Theorem 2.2, and the fixed-successor law
+identifies each live child with its unique host. $\square$
+

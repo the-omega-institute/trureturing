@@ -1,0 +1,14 @@
+#### 定理 B：FIB 单项式基
+
+```math
+\{x_A:A\in\Sigma_n\}
+```
+
+构成
+
+```math
+\mathbb R^{\Sigma_n}
+```
+
+的基。
+

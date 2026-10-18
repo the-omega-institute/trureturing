@@ -1,0 +1,19 @@
+## Purpose
+
+This note records a literature update without rewriting the historical
+CFMP results. Soichiro Uemura, “Local combinatorial criteria for geometric
+hyper-ideal triangulations via combinatorial Ricci flow,” arXiv:2609.34108v1
+(28 September 2026), proves a valence-dependent invariant-box criterion.
+The relevant primary statements are Theorem 4.2 (the classical parameter
+C=2) and Theorem 5.5 / Corollary 5.9 (the parameterized boxes).
+
+Uemura's C=2 criterion uses
+
+  gamma_n = 6/(2+cos(2*pi/n)) - 1,
+  b_n = 2 for 6 <= n <= 9,
+  b_n = 1 + 8*(1-cos(2*pi/n))/(1+cos(2*pi/n)) for n >= 10,
+
+with canonical box [gamma_v, b_v] on an edge of valence v. Only edges of
+valence 6--9 require an angle-sum check; valence at least 10 is controlled
+by the invariant-box argument.
+

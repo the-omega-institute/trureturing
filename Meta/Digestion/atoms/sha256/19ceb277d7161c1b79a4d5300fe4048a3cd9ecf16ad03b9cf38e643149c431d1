@@ -1,0 +1,47 @@
+**Lemma 41.2 (terminal weighting, bounded prefixes and height error).**
+Both exact laws on $[0,\tau]$ can be written
+
+$$
+\mathbb E_{g,\tau}A=
+\frac{\mathbb E_k^Q[A g(K_\tau)]}{d_\tau},\qquad
+d_\tau=Q_\tau g(k),\quad G=\pi(g),\quad
+g=1\ \hbox{or}\ g=\phi^{-1}.
+\tag{41.7}
+$$
+
+For $g=1$ this is Q and $G=1$; for $g=\phi^{-1}$ it is terminal
+survival to exactly $\tau$ and $G=J$. For all sufficiently large
+$\tau$, uniformly over every initial $k\in I$,
+
+$$
+|d_\tau/G-1|\le C_R e^{-\gamma\tau},\quad d_\tau\ge G/2,
+\qquad
+\left.\frac{d\mathbb P_{g,\tau}}{d\mathbb Q}\right|_{\mathcal F_r}
+=\frac{Q_{\tau-r}g(K_r)}{d_\tau}\le2(1+C_R)\quad(r\le\tau-1).
+\tag{41.8}
+$$
+
+If $\eta_{\tau,g}$ is the terminal-height law and
+$\nu_g=g\pi/G$, then
+
+$$
+\eta_{\tau,g}(dy)=\frac{R_\tau(k,y)g(y)\pi(dy)}{d_\tau},\qquad
+\|\eta_{\tau,g}-\nu_g\|_{\rm var}\le C e^{-\gamma\tau}.
+\tag{41.9}
+$$
+
+In particular the two normalized targets are $\nu_1=\phi^2dy$ and
+$\nu_{\phi^{-1}}=\phi(y)dy/J$.
+
+Proof. The terminal case of (41.5) gives (41.7). The unbounded
+function $\phi^{-1}$ is $\pi$-integrable since its integral is $J$.
+Integrating (41.3) against $g$ proves the first assertions of (41.8).
+Conditional expectation of $g(K_\tau)$ at $r$ gives the prefix
+density, also in the full phase/height filtration by the height
+Markov property and independence of the phase driver. Apply (41.3)
+at $\tau-r\ge1$ to bound it. At $r=\tau$ this density need not be
+bounded. Finally the relative density of $\eta_{\tau,g}$ with respect
+to $\nu_g$ is $G R_\tau(k,y)/d_\tau$. Its difference from one is
+uniformly $O(e^{-\gamma\tau})$, proving (41.9) by integration.
+$\square$
+

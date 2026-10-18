@@ -1,0 +1,31 @@
+**定理 39.1（同一共享锚使全部词项商成为身份商）。** 在定义 38.1 的同一 $\mathcal D,K,R$ 中，另外声明一个固定共享外部常数 $d=(a_0,b_0)\in W$，$b_0\ne0$，即 $d\notin E$（不要求它垂直 $E$）。它在所有实验中保持不变，可像内部常数一样重复出现；它不是按输入改变的来源副本。允许含该锚的所有有限词项，并继续对每个 $i\notin R$ 作单次出现限制。则无论哪些源可以复用，两个实际元组的全部响应相同当且仅当它们逐分量相同。至多 $3m$ 个合法探针
+
+$$
+X_i,\qquad d\times X_i,\qquad d\times(c_0\times X_i)
+\quad(1\leq i\leq m)
+\tag{39.1}
+$$
+
+已经分离全部实际元组；每个探针中的 $X_i$ 仅出现一次。无锚类 $\Sigma_R^{-1}(\Sigma_R(\boldsymbol x))\cap\mathcal D$ 在此被切为单点；细化严格当且仅当 $\Sigma_R|_{\mathcal D}$ 不单射。
+
+证明。把共享锚的坐标 $a_0,b_0$ 当作已知常数。对 $Q_{0i}=\bar b_0b_i$，式 (38.1) 直接给
+
+$$
+\begin{aligned}
+P_E(d\times x_i)-a_0\times a_i
+ &=\operatorname{Im}Q_{0i},\\
+P_E\bigl(d\times(c_0\times x_i)\bigr)-a_0\times(c_0\times a_i)
+ &=\operatorname{Im}(c_0\overline{Q_{0i}}).
+\end{aligned}
+\tag{39.2}
+$$
+
+第二个读出扣除已知平面项后，与 $c_0$ 的内积除以 $|c_0|^2$ 给 $\operatorname{Re}Q_{0i}$，从而
+
+$$
+b_i=(\bar b_0)^{-1}Q_{0i}.
+\tag{39.3}
+$$
+
+这只除以两个已知非零常数，所有未知分量为零也成立；$X_i$ 另给 $a_i$。若任一 $a_i$、$\operatorname{Im}Q_{0i}$ 或 $\operatorname{Re}Q_{0i}$ 不同，式 (39.1) 的相应探针便分离；若元组相同，固定常数下每个词项响应当然相同。因此必要性与充分性都在同一实际域、同一锚和同一源出现权限下成立。$m=0$ 仍只有空元组。也可从前章共同单位作用理解这一变化：固定非零 $b_0$ 使 $ub_0=b_0$ 强制 $u=1$，但这只作解释，完整分离由上面的合法探针承担。证毕。
+

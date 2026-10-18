@@ -1,0 +1,34 @@
+**Definition 1.2 (complete tail space).** For probability measures on a common measurable space, $\operatorname{TV}(P,Q)=\sup_E|P(E)-Q(E)|$; on a countable carrier this is half the $\ell^1$ distance. Put $a_r=r(1-r)$ and
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,\qquad j\ge0.
+$$
+
+At p, the finite raw futures are these words; at a suspended cut they are $\beta$ and $\alpha w_{j,b}$. Each phase also retains its unique infinite noncompletion word. The fixed-parameter laws are
+
+$$
+P_{p,r}(w_{j,0})=r a_r^j,\qquad
+P_{p,r}(w_{j,1})=(1-r)^2a_r^j,
+$$
+
+$$
+P_{\beta,r}(\beta)=1-r,\qquad
+P_{\beta,r}(\alpha w_{j,0})=r^2a_r^j,\qquad
+P_{\beta,r}(\alpha w_{j,1})=r(1-r)^2a_r^j.
+\tag{1.1}
+$$
+
+Their infinite-word masses are zero. The original transcript map $I_c$ retains every future Read and produces its original records, control, permissions, completion and Stop events. Its inverse reads back the letters. It is a measurable bijection onto the legal transcript space and preserves TV [FLOW, Definition 2.4]. A suspended cut does not charge its already acquired $\beta$ as a future Read.
+
+At an actual finite history $h$, the target is
+
+$$
+T_h^\mu=(I_c)_*\sum_k\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+{\sum_t\mu(t)r_t^{A(h)}(1-r_t)^{B(h)}}.
+\tag{1.2}
+$$
+
+The counts include every paid seed rejection, payload and partial parse. The posterior is an analysis coordinate, never a runtime input.
+

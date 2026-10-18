@@ -1,0 +1,42 @@
+**Lemma 9.1 (Strict-convexity contradiction).** The sequence $v_n$ cannot be eventually equal to its limit $L$ under the hypothetical attainment assumptions.
+
+**Proof.** If $v_n=L$ for every $n\ge2$, then $V(2)=V(3)=0$ and (6.3) give
+
+$$
+2L=W(2)=2c,\qquad 2L=W(3)=3c.
+\tag{9.1}
+$$
+
+Thus $c=L=0$, contradicting $L\ge1/8$.
+
+Otherwise let $K\ge2$ be the last index with $v_K\ne L$. For $n>2K$, all terms of (6.4) have value $c=\psi(2L)$ except for the two disjoint ends with one index in $\{2,\ldots,K\}$. Therefore
+
+$$
+V(n)=(n-3)c+2\sum_{j=2}^K\bigl[\psi(v_j+L)-c\bigr].
+\tag{9.2}
+$$
+
+Since $v_n=L$ and $W(n)=cn$, the constant
+
+$$
+E_0:=2L-3c+2\sum_{j=2}^K\bigl[\psi(v_j+L)-c\bigr]
+\tag{9.3}
+$$
+
+must be zero. At $n=2K$, the two end lists overlap precisely at $j=K$. Counting that one term exactly instead of as two separate end corrections gives
+
+$$
+W(2K)=2Kc+E_0+
+\psi(2v_K)-2\psi(v_K+L)+\psi(2L).
+\tag{9.4}
+$$
+
+The function $\psi$ is strictly convex on positive numbers, since
+
+$$
+\psi''(t)=\frac1{2t^{3/2}}>0.
+\tag{9.5}
+$$
+
+Its arguments $2v_K,2L$ are positive and distinct, and their midpoint is $v_K+L$. Thus the last three terms of (9.4) have strictly positive sum. This contradicts $E_0=0$ and $W(2K)=2Kc$. The count is valid also for $K=2$, when the overlap is the only interior free site at length four; the empty sums at lengths two and three were already retained in (9.1). $\square$
+

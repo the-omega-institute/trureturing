@@ -1,0 +1,4 @@
+**Corollary 7.3 (task-relative semantic whitebox constraint).** Suppose a finite predictive model is assigned the source, legal operations, COMPLETE resource class and exact own-generation semantics of Section 2. If both original complete-tail configuration excesses vanish, its observable configuration semantics cannot use only the two source-endpoint probabilities at suspension. More quantitatively, its same-history expected interior tent mass must satisfy (1.6); in particular some reachable suspended configurations have emissions in $(a,b)$.
+
+**Proof.** Apply Theorem 1.3 to this assignment. The statistical objects are per-configuration decoded laws and the original acquired flow; they are not an identification of the internal implementation. Internal labels, network architecture and a FIB five-window classification are not hypotheses or conclusions of the theorem. $\square$
+

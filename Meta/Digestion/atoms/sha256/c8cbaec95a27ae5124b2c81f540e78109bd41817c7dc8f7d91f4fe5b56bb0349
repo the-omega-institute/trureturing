@@ -1,0 +1,34 @@
+### 13.4 QCA/Dirac 载体的条件接口
+
+QCA/Dirac 模型中的局部有限维 Hilbert 空间、酉局部更新、Lieb–Robinson 型有限传播和 SU(2)/Bloch 内部结构，可作为本框架的 reversible/quantum carrier 候选；若另行指定生成 Hamiltonian 及其连续时间演化，记为：
+
+\[
+U_{\mathrm{QCA}}^t
+=
+e^{-itH_{\mathrm{QCA}}}.
+\]
+
+Fibonacci 或黄金 transfer 可以作为离散的 SL\(_2\) sector，量子 phase 则由 Hilbert space 中的 unitary representation 携带。金字塔的 \(\eta\) 流和 radial capture 与该可逆 carrier 的关系是拟议的 coarse-graining/mean-field 接口：只有指定具体 carrier、观测映射，并构造相应通道或推导明确的测量后 mean-field limit，才能将它们识别为该 carrier 的不可逆 effective dynamics。§13.3 所述的精确非线性质量作用流实现仍待完成。
+
+这提出了一个仍需上述桥接的候选分层结构：
+
+\[
+\text{QCA/Dirac unitary carrier}
+\longrightarrow
+\text{measurement and marginal quotient}
+\longrightarrow
+\text{pyramid }(r,\alpha,\beta,\eta)
+\longrightarrow
+\text{KL/Onsager dissipation}.
+\]
+
+[EntropyProductionCoherenceDeletionIdentity](../../../Blueprint/D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.md) 的熵产身份式要求有限维密度态、实际给定的酉 \(U\)，以及每步关系 \(\rho_{k+1}=\operatorname{pinch}(U\rho_kU^\dagger)\)；它本身不提供上述非线性流的通道或极限推导。Boundary Calculus §§13.4–13.6 的相干递归还要求共同输出载体、跨历史相位和满足 \(\sum_aK_{a|h}^\dagger K_{a|h}=I\) 的算子，并保留以后可能重接的实际环境、控制和记忆。重复使用同一环境与每步使用新环境是不同的更新，不能仅由经典边际或通道名称确定这条桥接。
+
+候选运动学关系
+
+\[
+v_{\mathrm{ext}}^2+v_{\mathrm{int}}^2=c^2
+\]
+
+可以继续作为 QCA 内部几何的模型级约束，但不能直接把 \(r\) 识别成 proper time，也不能把 Fisher metric 识别成 Minkowski metric。当前 \(r\) 是概率层级或底部质量坐标，proper time 需要额外定义的时钟和因果结构。
+

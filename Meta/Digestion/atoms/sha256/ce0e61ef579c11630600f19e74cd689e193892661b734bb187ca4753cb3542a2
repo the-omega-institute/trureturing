@@ -1,0 +1,43 @@
+**Convention 12.3 (credit and the remaining observation/control bridge).**
+The fixed-filter construction and its rational certificate are credited
+supplied ordinary mathematical results; their complete proof is retained
+above. Their mathematical provenance is repo-derived, using mature
+channel and trace-norm tools; no literature priority is claimed. The
+all-amplification meaning of complete positivity and the finite-matrix
+extension framework are literature-attested in Heinosaari, Jivulescu,
+Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/abs/1205.0641v3), §2.1 and §6.1,
+[J. Math. Phys. 53, 102208](https://doi.org/10.1063/1.4755845).
+Those finite-output results do not supply this continuous-time upper
+bound; (CG.90)–(CG.92) prove legality of the actual measure-valued output
+directly. The weighted pure-block norm is reused from Lemma 5.1, and the
+original history/target laws and $L_{\rm full}$ retain their credit
+in §§1–7. Theorem 8.4 supplies existential attainment, Theorem 9.3 supplies
+the strict lower comparison, and Proposition 10.1 and Theorem 10.2 supply
+the distinct scalar-live feasible channel and its exact error. These
+are ordinary uncompiled mathematical proofs, with no Lean-verified claim.
+
+The processor receives one normalized reached-old-live-cut specimen.
+Fixed common metadata may be carried along unchanged in every sector;
+tensoring identical fixed metadata preserves the norm calculation. No
+history label, callback, helper specimen, old-cut mass as a weight, or
+free retry enters (CG.88). The emitted live block and failure records
+are the joint canonical output of the same instrument. Modes and times
+remain separate, every branch is unnormalized, and first failure is
+absorbing. Sign covariance is used only to evaluate this particular
+map's twelve errors. It neither reduces the class of all allowed maps
+to fixed filters nor asserts that every sign-covariant map is Schur.
+No physical complex-conjugation operation is used.
+
+The map is a feasible abstract common CPTP simulator in Definition 3.1's
+comparison class. Implementing it with the original calibrated control
+menu still requires an actuator/interface bridge; the source-indexed
+operators $K_x$ in (CG.14) do not provide that common implementation.
+Open problems 7.3 and 11.2 still require the exact $E_*$, an identified
+optimal common channel and a matching lower certificate over the whole
+class. Existence of some minimizing channel is already settled by
+Theorem 8.4. The fixed-filter bound sharpens the feasible side of that
+problem; it gives neither optimality of $\Phi_{\mathrm{ff}}$ nor a
+further class-wide reduction or dual certificate. It does not close the
+continuing AURIC FIB ATOM research goal.
+

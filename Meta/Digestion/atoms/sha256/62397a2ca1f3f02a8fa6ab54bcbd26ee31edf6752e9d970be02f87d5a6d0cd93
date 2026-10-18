@@ -1,0 +1,19 @@
+**Convention 2.2 (declaration and narrative suppliers).** The following
+source statements, including their private proof helpers, have the indicated
+scope. No new compilation claim is attached to their use here.
+
+| Lean source and owning Scribe | Exact use and limitation |
+| --- | --- |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean`; matching `Blueprint/.../NativeSerialMachine.scribe.cs` | `Op`, `nativeStep`, `Replay`, `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`: source-blind control and supplied-reply replay. The arbitrary old trace argument in the last declaration authenticates no imported trace. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean`; matching Scribe | `sourceControl`, `productionTrace`, `native_source_producer`, private `traverse`, `production_reads`, `stationary`: acquisition uses actual replies; subtree parameters are proof parameters. Stop needs the explicitly supplied surrounding return/handoff. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean`; matching Scribe | `OriginalCodeRealization`, `evalOriginalActionFromCode`, `original_code_service_simulation`, private evaluator soundness/completeness and boundary helpers: effective realization has actual supplied-code hypotheses. No PR57 opcode cost or flat consumer table follows from an abstract local step. |
+| `D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean`; matching Scribe | `response`, `behavior`, `typed_finite_view_kernel`: legality, labels, terminal readout and separately specified paths. It supplies no concrete natural view or physical read permission. |
+| `D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean`; matching Scribe | `predictive_memory_minimal_quotient` needs both readout and update factorization. A historical reconstruction key is not by itself that quotient. |
+
+Replay, seed acquisition, ABT shape inversion, generic kernel arguments and
+record copying are reused. The additional results below concern completion
+anchors, acquiring a cut interval without an externally supplied primitive
+bound, immutable target selection, and the paid native realization and
+versioned closure of repeated historical service under the explicitly
+added admission permission.
+

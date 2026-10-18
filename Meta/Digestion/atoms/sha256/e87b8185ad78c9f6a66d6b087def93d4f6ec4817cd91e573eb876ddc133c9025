@@ -1,0 +1,10 @@
+#### 33.4　干预设计的商判据
+
+令 $\mathcal M_0$ 为一组候选模型，固定一个被动观测等价类
+
+$$
+\mathcal F_o=\{M\in\mathcal M_0:\mathsf O(M)=o\}.
+$$
+
+<a id="claim-33-4-1"></a>
+

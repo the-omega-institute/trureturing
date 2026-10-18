@@ -1,0 +1,16 @@
+**命题 178.11（遗忘与后验重采样只恢复边缘通道）。** 对任意 $N$，$\operatorname{Tr}_B\Phi_{B,N}=\Phi_{T,N}$。存在一个仅用末端输出的 CPTP 后处理 $\mathcal R_N$，使 $\mathcal R_N\Phi_{T,N}=\Phi_{B,N}$；它按实际源权重的后验重新生成标签，不恢复某次运行已经取得而后来丢弃的 $B$ 或 $h$。
+
+证明（178.11）。在第一通道中 $\sigma_\beta$ 于密度共轭相消，对同端点求和得 $T_N(j)$，故得到遗忘等式。对 $j\in\mathcal J_N$，令 $\beta_j(\beta)=\Pi_N(\beta)/T_N(j)$，其中 $\beta=(j,w)$。这是正的归一化后验，且与未知内部输入及参考无关。对任意末端矩阵 $X$ 取对角内部块 $X_{jj}=\langle j|X|j\rangle$，定义
+
+$$
+\mathcal R_N(X)=
+\sum_{j\in\mathcal J_N}\ \sum_{\beta=(j,w)}
+\beta_j(\beta)|\beta\rangle\langle\beta|_B
+\otimes|j\rangle\langle j|_{\mathcal C}\otimes X_{jj}.
+\tag{178.15}
+$$
+
+在可达端点直接和上这是 CPTP。要在全部 $M_{10}$ 上定义，对不可达 $j$ 的块追加 $|\beta_0\rangle\langle\beta_0|\otimes|0\rangle\langle0|\otimes X_{jj}$，其中 $\beta_0=(0,0)$ 始终可达。这些补项在 $\Phi_{T,N}$ 的像上为零。每个分量都有明确矩形 Kraus 算子，概率和一，输入端点非对角块被删除，故整个扩展 CPTP。代入末端通道，$T_N(j)\beta_j(\beta)=\Pi_N(\beta)$，且 $U_\beta A U_\beta^\dagger=G_jAG_j^\dagger$，得到通道等式，对全部参考同样成立。
+
+这项等式比较从同一未知输入产生的边缘输出，不比较附有实际过去标签的联合律。后验生成需要额外随机制备或纯环境及输出载体；其存在不供给那个操作。两个接口关于未知逻辑输入可以彼此后处理，而纯环境成本仍不同，因为输出经典随机关系及所迹环境也不同。$\square$
+

@@ -1,0 +1,74 @@
+**Corollary 206.18 (Coupled clipping, retained early totals and one charge).**
+Choose parameters
+
+$$
+0\le d\le1,\qquad2d\le u\le\mu,\qquad
+S\ge2u,\qquad t\ge u-d,
+\qquad c=\max\{0,2(u-d)-S/2\}\le E.
+\tag{206.46}
+$$
+
+Set $c_1=\min(\gamma_1,c)$, $c_2=c-c_1$ and
+
+$$
+\eta_j=\min(\gamma_j,u),\qquad r_j=\gamma_j-\eta_j,\qquad
+R_k=\sum_{j=3}^kr_j,\qquad E_{\rm lost}=E-c.
+$$
+
+Applying 206.17 to the early totals $c_a$, the late totals $\eta_j$
+and the original $S,t$ gives one score $V$ with $\Delta_N(V)\le d$.
+Its exact nonnegative residual charge is
+
+$$
+\Theta=\max\left\{0,\max_{3\le k\le L}
+              \frac{3R_k-(k-2)E_{\rm lost}}{k+1}\right\}.
+\tag{206.47}
+$$
+
+If $d+\Theta\le1$, it certifies $Q(y)\in E_N$.
+In particular, any unit-$O$ input with
+
+$$
+\mu\ge2,\qquad S\ge\max\{2\mu,4(\mu-1)-2E\}
+\tag{206.48}
+$$
+
+has the exact-$Q$ certificate of 206.17 with $d=1$.
+
+**Proof.** Since $S\ge2u$, the definition of $c$ gives
+$0\le c\le u-2d$ and $S\ge4(u-d)-2c$. Because $u\le\mu$,
+the retained late maximum is $u$ (also if $u=0$). The other stock
+hypotheses are precisely (206.46). Each retained early total is at
+most the corresponding original total. As $S,t$ are unchanged,
+$W-W'=E_{\rm lost}$ and $K_y-K_V=R_L+E_{\rm lost}$.
+The four residual readings are
+
+$$
+-E_{\rm lost},\quad-(\gamma_2-c_2),\quad
+\frac{R_k-(k-2)E_{\rm lost}}{k-1},\quad
+\frac{3R_k-(k-2)E_{\rm lost}}{k+1}.
+\tag{206.49}
+$$
+
+Here, with the nonnegative $R_k,E_{\rm lost}$ just proved, the last
+reading minus the preceding one is
+
+$$
+\frac{2(k-2)(R_k+E_{\rm lost})}{(k-1)(k+1)}\ge0.
+\tag{206.50}
+$$
+
+Only this sign argument permits suppression of the $u$ column.
+The first two readings are nonpositive, so adjoining zero yields
+exactly (206.47). Now apply (206.11) once to the assembled score
+and this single residual. At $u=0$ one has $d=c=0$, all retained
+late totals vanish, and the construction retains the original $S,t$
+rows without division. All equality cases are included.
+
+Finally, the original stopped table $(1,2;1,2,j_*)$ always gives
+$\delta\ge\mu-t$. For $\delta\le1$, this forces $t\ge\mu-1$,
+so (206.48) implies (206.43) at $d=1$. This statement allows arbitrary
+early imbalance and arbitrary ordering or growing support of the
+late profile. It does not require raw subscore subtraction preserving
+the input's stopped excess. $\square$
+

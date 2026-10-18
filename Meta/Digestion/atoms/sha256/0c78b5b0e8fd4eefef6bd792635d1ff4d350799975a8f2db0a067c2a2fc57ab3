@@ -1,0 +1,23 @@
+**Definition 2.2 (original numerical objectives).** For a source-independent finite observer with actual configuration row $\rho_h$ and complete decoders $D_z$, retain
+
+$$
+e_{\rm law}(h)=\operatorname{TV}\!\left(\sum_z\rho_h(z)D_z,T_h^\mu\right),\qquad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+$$
+
+Let $\ell(h)$ count original paid actual Reads. With the convention that an empty error supremum is zero, define
+
+$$
+\begin{aligned}
+R_{s,H}^{j}(M,\mu)&=\sup_{h\in\mathcal H_s,\ \ell(h)\le H}e_j(h),\\
+\Phi_H^{j_p,j_\beta}(M,\mu)&=
+\max\{R_{p,H}^{j_p}-\rho_p,R_{\beta,H}^{j_\beta}-\rho_\beta\},\\
+\rho_p&=1116529/22781250,\qquad \rho_\beta=239/6750.
+\end{aligned}
+\tag{2.3}
+$$
+
+Here $(j_p,j_\beta)$ runs separately over $(\mathrm{law},\mathrm{law})$, $(\mathrm{law},\mathrm{conf})$, $(\mathrm{conf},\mathrm{law})$, $(\mathrm{conf},\mathrm{conf})$. The symbol $\Phi_\infty$ means PH20.1's original unrestricted finite-history objective. Both $\Phi_H$ and $\Phi_\infty$ use the full future law; $H$ restricts acquired history, not future-tail length. Pending and delivered have exact deterministic residuals and add zero error.
+
+For every fixed observer/prior and positive $\epsilon$, $\Phi_H\uparrow\Phi_\infty$, and some finite individual $H$ has gap at most $\epsilon$. Indeed every finite actual history belongs to some cap, so each uncapped risk is the increasing limit of the capped suprema; maximum of the two limits commutes with this increasing limit. This is an existence statement, not an algorithm or a family-uniform modulus.
+

@@ -1,0 +1,12 @@
+**Definition 5.1 (complete cut and row height).** A finite prefix-free
+address set $A$ is complete when every infinite $L/R$ path has a prefix
+in $A$. This is decidable from its finite trie: every node before a cut
+leaf must have both children in the trie. The empty cut is incomplete;
+$\{\varepsilon\}$ is complete. Let $\operatorname{ht}(C)$ be the ordinary
+finite height of a context with holes treated as leaves.
+
+For an incomplete $A$ one can compute an address $r$ incomparable with
+every member of $A$. For $A=\varnothing$ take $r=\varepsilon$; otherwise
+follow a missing branch of its finite trie and extend past the maximum
+cut depth. Thus no cut removes or enters any part of the cone at $r$.
+

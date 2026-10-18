@@ -1,0 +1,32 @@
+**Proposition 9.6 (the attaining code has the original continuation).**
+Under the conditional calibrated coding and canonical-actuation services,
+the slot construction implements the actual tails (QC.49), with their
+correct common one-unit clock and no new failure. It can retain the
+recovered $j$, received $b$ and every actual matched archive/reference
+field for subsequent finite lawful use. Those retained output records
+carry their additional memory cost.
+
+An additional history-correlated archive is preserved here by identity as
+a spectator, without assisting this code. If it is accessible across the
+retention cut, it enlarges the retained boundary and Definition 9.2's
+factorization must be checked again before applying the lower bound.
+
+Proof. Read the slot nondisturbingly, decode its qutrit, and drive the
+prescribed relative phase tail using the actually recovered command and
+the later bit. The weight (QC.2) at $k=1/8$ is
+$(1/4,-1/4,0)$ in the active basis; integration gives exactly (QC.49).
+The canonical hazard is zero, so this entire tail has no executed-failure
+branch. Its input was the live branch of the actual source certificate;
+earlier failures are retained with $f$ and are never restarted.
+The source composition theorem preserves the actual prefix, matches
+height and adds the translated relative tail without reading the old lift.
+Equation (QC.52) gives complete quantum equality on the decoded joint
+input. Keep the actual command, bit and updates; Theorem 3.1 and
+Instrument Boundaries Theorem 14.1 then give every separately permitted
+finite canonical continuation on these matched joint inputs. Known
+permission denial or a request outside this declared menu is an
+unexecuted rejection, not a fabricated tail failure. A subsequent legal
+canonical failure has its original exact first time/mode and absorbing
+successor. This constructs no hidden-height or hidden-past guard.
+$\square$
+

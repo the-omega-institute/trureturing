@@ -1,0 +1,30 @@
+**Lemma 39.2 (endpoint estimates with integrable tests).** There are fixed constants $C,\delta_0>0$ such that, for $0<v\le1$, the zero-extended original kernel satisfies
+
+$$
+\left|K_d(v;Y_s\eta,Y_s\xi)-K_d(v;o,o)\right|
+\le Cv^{-7/2}\min\left\{1,\frac{s}{\sqrt v}
+                  (\mathfrak d(\eta)+\mathfrak d(\xi))\right\}.
+\tag{39.2}
+$$
+
+For the input-height-zero relative coefficient kernel $k_j$ in J (30.3), $0\le j\le4$, the corresponding bound is
+
+$$
+|k_j(t;\eta^{-1}\xi)-k_j(t;0)|
+\le Ct^{(j-7)/2}\min\left\{1,
+          \frac{\mathfrak d(\eta)+\mathfrak d(\xi)}{\sqrt t}\right\}.
+\tag{39.3}
+$$
+
+The tests $p^2$ and $|g_0|\otimes|g_0|$ have finite first homogeneous moments.
+
+Proof. Put $u=\sqrt v$. The exact chart relations are
+$\Xi_s=\Xi_u\delta_{s/u}$ and
+$\mathscr L_u\delta_{s/u}=\delta_{s/u}\mathscr L_s$; hence
+$Y_s=Y_u\delta_{s/u}$. On a fixed sufficiently small compact set of rescaled endpoints, the local heat theorem just cited bounds the first endpoint derivatives of
+$j_0u^7K_d(u^2;Y_u\eta',Y_u\xi')$ uniformly as $u\downarrow0$. Its $C^\infty$ conclusion includes these $C^1$ bounds. The smooth determinant-one shear and the bounded clock factor preserve them. For $u$ bounded away from zero, positive-time interior regularity gives the same bound on a smaller fixed compact set.
+
+A homogeneous gauge equivalent to $\mathfrak d$ has coordinates of weights $(1,1,2,3)$. On a small gauge ball, ordinary coordinate displacement is bounded by a constant times gauge displacement. The mean value inequality therefore proves (39.2) when both scaled endpoints are in that ball. If either is outside it, the minimum in (39.2) is bounded below by a fixed positive constant. P Proposition 76.1's global both-endpoint bound then proves the assertion there. This also covers an endpoint outside the native domain, where its kernel is zero: such an endpoint cannot lie in the fixed interior ball. Local Dirichlet heat localization requires a common interior neighborhood, not identical whole-space and killed operator domains.
+
+At time one the relative $n=0$ kernels have the global supremum bound of J Lemma 30.2 and bounded derivatives near the identity. The latter follow from the same smooth local coefficients, or directly from the finite Gaussian bridge coefficients. Scaling (33.8), followed by the group quasi-triangle inequality, gives (39.3). Input-height terms of degrees $n\ge1$ are not included in this bounded relative kernel and will be estimated separately. Finally (24.4) gives $p^2,|g_0|\le CR^{-10}$. Homogeneous volume has degree seven, so their first homogeneous moments, and consequently the first moments of the product test, are finite. $\square$
+

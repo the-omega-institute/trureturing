@@ -1,0 +1,84 @@
+**Theorem 4.3 (continuous native constant-composition capacity).** There
+is a unique continuous function $\alpha_d$ on the probability simplex
+$\Delta(S)$ such that, for every rational $p$ and every integer $r\ge1$
+with $rp$ integral,
+
+$$
+\alpha_d(p)=\lim_{k\to\infty}f_{kr}(p)
+            =\sup_{k\ge1}f_{kr}(p).
+\tag{NPC.12}
+$$
+
+It is concave, satisfies $0\le\alpha_d(p)\le H(p)$ and
+
+$$
+|\alpha_d(p)-\alpha_d(q)|
+\le\omega_s(\operatorname{TV}(p,q)).
+\tag{NPC.13}
+$$
+
+Moreover
+
+$$
+u_n:=\max_{\nu:\,\sum_x\nu_x=n}
+\left|f_n(\nu/n)-\alpha_d(\nu/n)\right|\longrightarrow0.
+\tag{NPC.14}
+$$
+
+Proof. Lemma 3.1 gives
+$a_{n+m}(\nu+\eta)\ge a_n(\nu)a_m(\eta)$.
+For fixed rational $p$, the logarithms along lengths $kr$ are
+nonnegative superadditive and bounded by $krH(p)$: each word in
+$T_{krp}$ has iid $p$-probability $2^{-krH(p)}$, so the type size is
+at most $2^{krH(p)}$. For a fixed integer $j$, write $k=\ell j+t$,
+$0\le t<j$. Superadditivity and nonnegativity show that the liminf
+of the normalized logarithms is at least the value at $jr$.
+The limsup is at most their supremum. Taking the supremum over $j$
+proves (NPC.12). Two permitted denominators have a common-multiple
+subsequence, proving denominator independence.
+
+For rational $p,q$, apply Theorem 4.2 at common-multiple lengths and
+take limits. This gives (NPC.13). Since its right-hand side tends to
+zero with total variation, it gives a unique continuous extension from
+the dense rational simplex. Continuity of entropy preserves
+$0\le\alpha_d\le H$ and (NPC.13) on the boundary as well.
+
+For rational $p,q$ and rational $0<\theta<1$, choose lengths in the
+ratio $\theta:(1-\theta)$ with integral constituent types. Products of
+their attaining type sets have type $\theta p+(1-\theta)q$.
+Letting both lengths tend through common multiples proves concavity
+for these parameters; continuity supplies all real parameters.
+
+Repeating any finite attaining type set shows
+$f_n(\nu/n)\le\alpha_d(\nu/n)$. For the reverse asymptotic inequality,
+take any sequence of lengths tending to infinity and types $\nu_n$
+with $\nu_n/n\to p$. Fix a rational $r$ close to $p$ and $\epsilon>0$.
+By (NPC.12) there is a fixed length $L$, with $Lr$ integral, and an
+admissible type set with logarithmic size at least
+$L(\alpha_d(r)-\epsilon)$. At length $n$, concatenate
+$\lfloor n/L\rfloor$ copies and fill the fewer than $L$ remaining
+coordinates by fixed symbols. Its type $\widetilde\nu_n/n$ tends to
+$r$ and its logarithmic size per coordinate has liminf at least
+$\alpha_d(r)-\epsilon$. Transfer that type to $\nu_n$ by (NPC.11).
+It follows that
+
+$$
+\liminf_n f_n(\nu_n/n)
+\ge\alpha_d(r)-\epsilon-\omega_s(\operatorname{TV}(r,p)).
+$$
+
+Let rational $r\to p$ and $\epsilon\downarrow0$. The opposite bound
+already proved and continuity give $f_n(\nu_n/n)\to\alpha_d(p)$.
+If (NPC.14) failed, compactness would give a subsequence of offending
+empirical distributions converging to some $p$, contradicting this
+sequential conclusion. The proof supplies convergence without a
+specified computable rate for $u_n$. $\square$
+
+The type-limit, concatenation and continuity methods have primary
+analogues in [Vrana, Propositions 3.3–3.4][V]. There the function is a
+graph spectral point, normalized, cohomomorphism-monotone, additive
+under disjoint union and multiplicative under strong product. Those
+graph hypotheses are not premises here: Lemma 3.1 and Theorem 4.2
+provide the actual native section and transfer relations. No concavity
+of $H-\alpha_d$ is assumed or needed.
+

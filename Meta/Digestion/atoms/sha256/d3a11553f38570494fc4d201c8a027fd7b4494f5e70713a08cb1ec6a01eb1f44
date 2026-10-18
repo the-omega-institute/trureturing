@@ -1,0 +1,97 @@
+**Theorem 5.2 (nonzero residual and quantitative orthogonal energy).** Define on $r\ne0$
+
+$$
+Z=-2rY^2\mathcal G+2t_\infty X\mathcal G.
+\tag{5.4}
+$$
+
+This smooth odd function is nonzero on the positive-height half-space. Choose a nonnegative even-under-$\sigma$ compact smooth cutoff $\chi_0$, supported where $|r|\ge c_0>0$, such that
+
+$$
+L_\varphi:=\int\chi_0 Z^2>0,\qquad
+\varphi:=\chi_0Z,\qquad
+u_R(\xi)=R^{-4}\varphi(\delta_{1/R}\xi),\qquad
+e_R:=\ell(u_R)/a-h_0(U_h,u_R).
+\tag{5.5}
+$$
+
+Then $\varphi$ is a nonzero real odd compact smooth test with $b[\varphi]>0$, and
+
+$$
+R^3e_R\longrightarrow c_\infty L_\varphi>0,\qquad
+R^3h_0[u_R]\longrightarrow b[\varphi]>0.
+\tag{5.6}
+$$
+
+For some finite $R_0\ge1$, every finite $R\ge R_0$ gives
+
+$$
+\boxed{\displaystyle
+\delta_h=h_0[\Psi-U_h]
+\ge\frac{e_R^2}{h_0[u_R]}
+\ge\frac{c_\infty^2L_\varphi^2}{4b[\varphi]R^3}>0.}
+\tag{5.7}
+$$
+
+Thus $\Psi\notin\mathcal H_h$. The onset $R_0$ is proved finite but is not numerically evaluated.
+
+Proof. The identical heat is invariant under $\sigma$, so $\mathcal G$ is even, $X\mathcal G$ odd and $Y^2\mathcal G$ even. Hence $Z$ is odd. If it vanished on $r>0$, harmonicity would give
+
+$$
+r\partial_r^2\mathcal G+t_\infty\partial_r\mathcal G=0.
+\tag{5.8}
+$$
+
+Fix any nonzero phase triple $\mathbf z$. The function $g(r)=\mathcal G(r,\mathbf z)$ is positive, bounded as $r\downarrow0$ because $(0,\mathbf z)$ avoids the source, and tends to zero as $r\to\infty$ by the height bound. For any real $t$, the solutions of $rg''+tg'=0$ are $A+B r^{1-t}$ when $t\ne1$ and $A+B\log r$ when $t=1$. For $t<1$, decay at infinity forces $B=A=0$; for $t=1$ logarithmic growth and then decay do the same; for $t>1$, decay forces $A=0$ and boundedness at zero forces $B=0$. Taking $t=t_\infty$ contradicts positivity. Therefore $Z$ is nonzero somewhere with positive height. Choose a nonnegative bump near such a point and add its $\sigma$-reflection to obtain $\chi_0$. It has $L_\varphi>0$. If $b[\varphi]=0$, then $X\varphi=Y\varphi=0$; their brackets force all coordinate derivatives to vanish. A compactly supported constant is zero, contradicting the construction. Thus $b[\varphi]>0$.
+
+The tests $u_R$ belong to the same real odd canonical core. Haar and horizontal scaling give exactly
+
+$$
+R^3h_0[u_R]
+=b[\varphi]-\gamma R^2\int V(\delta_R\xi)\varphi(\xi)^2d\xi.
+\tag{5.9}
+$$
+
+On this fixed support $V(\delta_R\xi)=O(R^{-5})$, since $|r|\ge c_0$. Consequently the correction tends to zero. The odd gap and $V\ge0$ also give $0<h_0[u_R]\le R^{-3}b[\varphi]$.
+
+Scaling the exact response functional retains its entire $V_1$ term:
+
+$$
+R^3\ell(u_R)/a
+=2\int r(Yp_R)(Y\varphi)
+ +\gamma R\int V_1(\delta_R\xi)p_R\varphi.
+\tag{5.10}
+$$
+
+The second term tends to zero: the height bound makes $V_1(\delta_R\xi)=O(R^{-4})$ uniformly on the support and $p_R$ is uniformly bounded there. The local representative and derivatives in Lemma 5.1 give, independently,
+
+$$
+R^3h_0(U_h,u_R)
+=b(U_R,\varphi)-\gamma R^2\int V(\delta_R\xi)U_R\varphi.
+\tag{5.11}
+$$
+
+Its potential term is $O(R^{-3})$, and its derivative pairing tends by (5.2) to $c_\infty t_\infty b(r\mathcal G,\varphi)$. These pairings use only the proved local representative of $U_h$, with compact tests, and not a global $L^2$ response.
+
+The support avoids the source. Compact integration by parts, $Yr=0$, and $\mathcal E\mathcal G=0$ there give
+
+$$
+b(r\mathcal G,\varphi)=-2\int X\mathcal G\,\varphi,\qquad
+\int r(Y\mathcal G)(Y\varphi)=-\int rY^2\mathcal G\,\varphi.
+\tag{5.12}
+$$
+
+Equations (3.1), (5.10)–(5.12) imply
+
+$$
+\lim R^3e_R
+=c_\infty\left\{2\int r(Y\mathcal G)(Y\varphi)
+-t_\infty b(r\mathcal G,\varphi)\right\}
+=c_\infty\int Z\varphi=c_\infty L_\varphi.
+\tag{5.13}
+$$
+
+There is no boundary at phase infinity in this step because $\varphi$ is compact. Every source and coefficient tail discarded in (5.10)–(5.11) has an explicit bound.
+
+Finally the genuine Riesz equation in the homogeneous Hilbert space gives $h_0(\Psi-U_h,u_R)=e_R$. Cauchy–Schwarz gives the first inequality in (5.7). By (5.13), $e_R\ge c_\infty L_\varphi/(2R^3)$ for every sufficiently large $R$. Combining this with the upper bound after (5.9) proves the quantitative inequality. In fact $R^3e_R^2/h_0[u_R]\to c_\infty^2L_\varphi^2/b[\varphi]$. This proves nonmembership in the entire closed height space by a nonzero witness, independently of the earlier affine nonmembership theorem. Each $u_R$ is a canonical response test; it is not an actual native eigenstate or a claimed native preparation. $\square$
+

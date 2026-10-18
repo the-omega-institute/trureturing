@@ -1,0 +1,126 @@
+**Theorem 6.1 (all-optimizer, all-dual strict slack).** Fix
+$t>t_0$, $0\le\tau<\tau_{\max}(t)$, an arbitrary original global
+optimizer, and any attained optimal common dual $(Y,Z,\lambda)$.
+For every measurable maximizing-sign choice
+$\epsilon(\ell+bf)=|\ell+bf|$, $\epsilon\in\{\pm1\}$, define
+
+$$
+a(h,b)=h^TYh-\epsilon\ell(h)-\lambda|z|\ge0,
+\qquad \mathscr D=\int a\,dp.
+\tag{AC.31}
+$$
+
+Then $\mathscr D>0$. Almost everywhere on $\{a>0\}$,
+
+$$
+b=tc(h),\qquad
+\widehat n_h^T(Z-\epsilon\Delta_f)\widehat n_h
+ =-a/(tc(h))<0.
+\tag{AC.32}
+$$
+
+Thus a positive coefficient-measure set of supported-nonzero low labels
+is saturated and has strict pure-sheet slack of that same height sign.
+For a finite alphabet this includes a positive-weight actual label;
+no positive singleton is asserted for a nonatomic record.
+
+Proof. Integrating AC.18 and using primal-dual equality makes its
+nonnegative gap vanish almost everywhere and gives
+$\lambda(k-\tau)=0$. With
+$q_\epsilon=\widehat n^T(Z-\epsilon\Delta_f)\widehat n$ this says
+
+$$
+a+bq_\epsilon=0,
+\quad a\ge0,\quad a+tc(h)q_\epsilon\ge0.
+\tag{AC.33}
+$$
+
+For $b=0$, $a=0$. For $0<b<tc(h)$ the zero gap is a strict convex
+combination of the two nonnegative signed endpoint gaps, so both
+vanish and $a=0$. Hence $a>0$ forces AC.32.
+
+Suppose $\mathscr D=0$. Then $a=0$ almost everywhere. On $b>0$,
+$q_\epsilon=0$, so the pure and saturated sheets have a common
+contact of the same height sign, and
+$\epsilon\ell=|\ell|$. Their signed smooth inequalities imply
+
+$$
+(Z-\epsilon\Delta_f)\widehat n_h=0.
+\tag{AC.34}
+$$
+
+Here is the differential justification including cusps. Parameterize
+$z=\cos\phi/\sqrt\alpha$, $w=\sin\phi/\sqrt\beta$ and choose
+either maximizing report sign $r$ with $rz=|z|$. Both smooth
+functions with $\lambda rz$ in place of $\lambda|z|$ are globally
+nonnegative and vanish at the common contact. Their derivatives vanish.
+Subtracting gives $q_\epsilon'=0$ because $q_\epsilon=0$ already.
+The vectors $\widehat n,\widehat n'$ are independent everywhere:
+with $A=d_{\rm src}/(h_2\sqrt\beta)$ and
+$B=b_{\rm src}/(h_1\sqrt\alpha)$ their determinant is $AB>0$.
+The two scalar equalities force AC.34. This uses no division by $z$
+and no derivative of an absolute-value cusp. At $z=0$ both report
+signs are available; if $\lambda>0$ their derivative conditions
+would themselves exclude pure contact. Zero heights allow either
+maximizing $\epsilon$ throughout this argument.
+
+Group the physical failure effects by that chosen sign:
+
+$$
+M_\epsilon=\int_{b>0,\,\text{sign}=\epsilon}
+ b\widehat n\widehat n^Tdp,\qquad M_++M_-=M_2.
+\tag{AC.35}
+$$
+
+If $M_-=0$, all failure-carrying actual height differences are
+nonnegative. Summing them gives
+$0\le\int_{b>0}\ell\,dp-d_f$, contradicting Lemma 5.3.
+If $M_+=0$, their pure contacts all have $\ell\le0$ and yet
+carry AC.13, contradicting Theorem 5.2. Thus both groups are nonzero.
+
+If either has rank two, AC.34 forces $Z=\epsilon\Delta_f$.
+The opposite kernel matrix is then $2\epsilon\Delta_f$, invertible
+since $\det\Delta_f=-\Delta_{12}^2<0$, and cannot carry the other
+nonzero group. Both groups must therefore have rank one.
+
+Whiten them physically:
+$P_\epsilon=M_2^{-1/2}M_\epsilon M_2^{-1/2}$.
+Two positive rank-one matrices summing to $I_2$ are complementary
+orthogonal projections $e_\epsilon e_\epsilon^T$.
+For $\widetilde Z=M_2^{1/2}ZM_2^{1/2}$, AC.34 becomes
+
+$$
+\widetilde Ze_+=\Xi e_+,\qquad
+\widetilde Ze_-=-\Xi e_-.
+\tag{AC.36}
+$$
+
+Symmetry of $\widetilde Z$ gives $e_+^T\Xi e_-=0$.
+Thus these are the two spectral directions of $\Xi$, leaving exactly
+$\widetilde Z=|\Xi|$ or $\widetilde Z=-|\Xi|$.
+In the reverse assignment the plus group has total failure height
+$\lambda_-$. Its nonnegative actual height forces its integrated live
+height to be at least $-\lambda_->d_f>J_{\rm b}$, impossible.
+
+In the forward assignment each failure and pure height has its chosen
+sign. Hence
+
+$$
+\int|\ell+bf|dp=\int|\ell|dp+L_f.
+\tag{AC.37}
+$$
+
+Pure contact and contrast complementarity give
+$\int|\ell|dp=\operatorname{tr}Y-\lambda\tau$.
+The pure certificate upper-bounds every static live decomposition,
+while this very live Gram is statically feasible. The equality is
+therefore $j(\tau)$, not merely the value of a selected allocation.
+AC.37 would attain the static value in AC.19, contradicting its strict
+finite-activity gap. All rank/sign cases are exhausted, and
+$\mathscr D>0$ follows. $\square$
+
+The theorem does not require every failure label to saturate. A label
+in AC.32 may still contact the pure sheet at the opposite height sign;
+that possibility is not excluded. No maximum-contrast completion or
+fixed residual Gram rank entered the proof.
+

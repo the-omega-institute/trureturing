@@ -1,0 +1,47 @@
+**构造 83.5（A uniformly inhabited different-value family at minimal odd width）。** For every integer $d\ge2$, put
+
+$$
+h=2d,\qquad N=2^{2d},\qquad m=N-1,\qquad k=N,\qquad T=N+1.
+\tag{83.27}
+$$
+
+Use the ordered $d$-bit set $I=\mathbb F_2^d$. Choose distinct labels $A_i$ and $D_\ell$ with disjoint alphabets, and fresh common distinct $R,C$. Concatenate $(i,\ell)$ as an $h$-bit word, with coordinate zero the first row coordinate. Exclude the pairs whose concatenated words are $0$ and $a=\varepsilon_{h-1}$, and write
+
+$$
+\mathcal P=\mathbb F_2^h\setminus\{0,a\},\qquad
+\nu=\varepsilon_0,\qquad w=\varepsilon_0\oplus\varepsilon_{h-1}.
+\tag{83.28}
+$$
+
+Both $\nu,w$ belong to $\mathcal P$. Let $\sigma$ be the fixed-point-free cyclic permutation of $\{1,\ldots,h-2\}$ given by
+
+$$
+\sigma(t)=t+1\ (1\le t<h-2),\qquad \sigma(h-2)=1.
+\tag{83.29}
+$$
+
+Prescribe the phase-pair code table $G:A\to\mathcal P$ by
+
+$$
+\begin{aligned}
+G(0)&=\nu,&G(1)&=w,&G(2)&=w,&G(e_{h-1})&=\nu,\\
+G(e_t)&=\varepsilon_{\sigma(t)}&&&&(1\le t\le h-2).
+\end{aligned}
+\tag{83.30}
+$$
+
+Assign all remaining members of $\mathcal P$ once each to the remaining phases in increasing binary/phase order. For $G(j)=(i,\ell)$ set
+
+$$
+\lambda_0(j)=A_i,\qquad\lambda_1(j)=D_\ell,
+\tag{83.31}
+$$
+
+and use the entire target and history pullback (83.3), with arbitrary independent $L_\bot$.
+
+证明（inhabitation, parity and a specified common code）。 All prescribed phase positions in (83.30) are distinct. The least missed phase is $N-2h+2\ge10$, so none conflicts with $0,1,2$. The units $\varepsilon_{\sigma(t)}$ exhaust $\varepsilon_1,\ldots,\varepsilon_{h-2}$, hence are distinct and different from $0,a,\nu,w$. There are $h+2$ prescribed positions using $h$ different pairs: $\nu,w$ each twice and the $h-2$ units once. The number of remaining positions is $N-h-2$, equal to the number of unused pairs in $\mathcal P$. The ordered bijection is therefore well defined.
+
+The table has exactly $N-2$ joined classes, exactly two with positive even multiplicity, namely the pairs of $\nu,w$, each with two phases. Every other class has one. Each component has all $r=2^d$ labels: the excluded pairs are $(0,0)$ and $(0,(0^{d-1},1))$ in row/column coordinates. Row zero retains $r-2>0$ pairs and every other row retains $r$; each of those two columns retains $r-1>0$ pairs and all other columns retain $r$. Thus the component tables are genuinely different, with exactly $2^d$ labels per fibre. This is one jointly inhabited phase table, rather than two separately realized marginals. Formula (83.16) realizes every required value, phase and INITIAL tail together. The width is odd and actual gcd is $\gcd(N-1,N+1)=1$.
+
+Assign to each joined class its concatenated pair code, and put $c(\widehat C)=0$. The image is exactly $\mathbb F_2^h\setminus\{a\}$, with $c(U)=\nu$, $c(V)=w$ and $\nu\oplus w=a$. Both root phases have coordinate zero one, and outside has coordinate zero zero. For $t\le h-2$, the missed phase has code $\varepsilon_{\sigma(t)}$, whose coordinate $t$ is zero because $\sigma(t)\ne t$. The last missed phase has code $\nu$, whose last coordinate is zero. Every clause of (83.7) therefore holds for this explicit code. The words (83.19) with this table are a fully specified common stream for every $d$, with strict seams supplied by (83.20)–(83.21). No code search is needed for this family. ∎
+

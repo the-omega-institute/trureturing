@@ -1,0 +1,8 @@
+## 10. Finite path-family composition and shared triplet modes
+
+Section 9 treats one finite list of measurements as one response map. A
+recursive source normally supplies several declared paths, and those paths
+can probe the same hidden mode. The correct capacity is therefore computed
+after taking their joint Gram operator, rather than by adding the ranks of the
+individual path maps.
+

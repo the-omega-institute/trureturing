@@ -1,0 +1,31 @@
+**Proposition 4.9 (task-local squares need not glue the full carrier).**
+There is a flat atlas whose every orbit meets every chart, with compatible
+initial observations, equality stable chart cores and complete residual
+squares on all declared task-local crossing domains, but whose chosen
+chart actions do not have a well-defined legal domain on $Y$.
+
+**Proof.** Let $Q_0=\{x_0,z_0\}$ and $Q_1=\{x_1,z_1\}$, with the total
+copy transport $e$ and its inverse. Both charts are actual copies of the
+same two-point source. Include also the copy transport $r$
+restricted to $\{x_0\}$ and its inverse as residual atlas routes. Initial
+observations distinguish $x_i$ from $z_i$ and agree between copies, so the
+stable core in each chart is equality. Choose $a_0$ to be total identity
+and $a_1$ to be identity only on $\{x_1\}$, illegal at $z_1$. Use the same
+complete-response type and identity dictionaries in both charts: legal
+inputs report success, illegal inputs report rejection, and all other
+task fields are constant.
+
+For $e$ declare $C_{e,a_0}=\{x_0\}$ and residual $e/a_0=r$; for its
+inverse use $\{x_1\}$ and $r^{-1}$. For $r,r^{-1}$ use their entire
+singleton domains and the same residual routes. On every declared crossing
+the actions are legal identities, their complete responses agree, and the
+residual route joins their successors. Repeated actions stay at $x_i$, so
+the same squares hold for all finite task-local continuations. Every actual
+transport preserves the letter $x$ or $z$, and a closed word returns to its
+input. Thus the atlas is flat, its chart maps are injective, and its two
+orbits $[x_0,x_1]$ and $[z_0,z_1]$ each meet both charts. Nevertheless
+$[z_0]=[z_1]$ is legal when represented by $z_0$ and illegal when
+represented by $z_1$. Its decoded responses also disagree. The missing
+comparison is precisely the point $z_0\in U_e\setminus C_{e,a_0}$.
+$\square$
+

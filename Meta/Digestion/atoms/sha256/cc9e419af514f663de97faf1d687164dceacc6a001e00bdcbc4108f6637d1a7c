@@ -1,0 +1,19 @@
+**Lemma 3.1 (Complement-pair variance).** In the spin representation let
+
+$$
+v_m(p)=\mathbb E_p\operatorname{Var}(S_0\mid Y_{-m},\ldots,Y_{-1}),\qquad m\ge0,
+\quad \beta(p)=2\sqrt{p(1-p)}.
+$$
+
+Then $v_0(p)=p(1-p)$, each $v_m$ is continuous on $[0,1]$ and symmetric about $1/2$, and
+
+$$
+0\le v_m(p)\le\tfrac14\beta(p)^{m+1},\qquad
+v_m(1/2)=1/4,\qquad v_m(0)=v_m(1)=0.
+\tag{3.1}
+$$
+
+Proof. A record of $m$ consecutive XORs determines its $m+1$ spins up to simultaneous complementation. An unordered complementary pair $(s,\bar s)$ with masses $a,b$ is exactly one parity atom. Its endpoint spin takes the two opposite values, so its weighted conditional variance is $ab/(a+b)=h(a,b)$, with value zero when $a+b=0$. Thus $v_m$ is the sum of $h(a,b)$ over the $2^m$ pairs. This finite identity is continuous through all zero-mass cases and invariant under $p\leftrightarrow1-p$.
+
+For each pair, $ab=[p(1-p)]^{m+1}$ and $h(a,b)\le\sqrt{ab}/2$. Summing gives (3.1). At fairness each spin word has mass $2^{-(m+1)}$, so each pair contributes $2^{-(m+2)}$ and the sum is $1/4$. At endpoints the spin is deterministic. $\square$
+

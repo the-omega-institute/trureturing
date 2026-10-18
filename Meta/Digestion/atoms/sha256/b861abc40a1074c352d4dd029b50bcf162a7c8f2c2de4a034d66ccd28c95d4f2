@@ -1,0 +1,15 @@
+**Theorem 8.4 (A supplied finite table with exact dyadic rows).** The
+84-configuration table in [C, Proposition 8.1], with
+$r=c=1$, $q=1/2$, $J=2$, $\theta=1/4$, $\delta=1/2$ and its
+specified threshold $H=14$, is exactly representable with $B=2$ and
+the same complete configurations. Its separate risks below $1/10$
+and its finite paid means are the assertions of that proposition.
+
+Proof. Its zero probabilities are $1/2$, $1/4$ and their complements,
+and its tick probabilities are zero, $1/2$ or one. They all belong
+to $2^{-2}\mathbb Z$. Thus its installed rows are unchanged and so
+are its laws, configurations, risks and paid means. This use of the
+supplied finite instance does not place $s=\log2$ in the endpoint
+neighborhood, and the conservative sufficient $B_0$ is not a necessity
+claim for it. $\square$
+

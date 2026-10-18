@@ -1,0 +1,45 @@
+**Proposition 23.1 (a broad sufficient family and the synchronous inclusion).**
+The family $\mathcal E_{\rm CE}$ includes every input passing the supplied
+synchronous residual test on the uniform cover. More generally, in either
+cover suppose the mandatory equalities contain finitely many definitions
+
+$$
+\rho^{a_i}(x_i)=T_i,\qquad L_{a_i}(T_i)=V_i,
+\tag{CE.23.1}
+$$
+
+whose selected-variable dependency graph $x_i\to x_j$ for occurrences of
+$x_j$ in $V_i$ is acyclic. Suppose substituting these definitions in
+dependency order makes every remaining domain and target comparison
+synchronous residual, or proves the domain empty. If every chart has
+this property, the input belongs to $\mathcal E_{\rm CE}$.
+
+This admits arbitrary finite constructor templates and copying, for
+example
+
+$$
+x=\langle\rho(y),\rho^2(z)\rangle,
+\qquad
+\rho^2(w)=\langle\rho^3(y),\rho^4(z)\rangle,
+\tag{CE.23.2}
+$$
+
+followed by any jointly retained Boolean combination of supported
+residual comparisons. The second equation reconstructs
+$w=\langle\rho(y),\rho^2(z)\rangle$. The remaining domain is not required
+to be a product, and residual fixed-power cycles are allowed.
+
+Proof. The empty elimination schedule on the unchanged uniform cover
+witnesses the first inclusion; our reduction includes its constructor,
+ground and common-power rules. For the second claim, process definitions
+whose selected dependencies have already been eliminated. Acyclicity
+ensures that the right side of the resulting definition contains no
+occurrence of its selected variable. Every such step is permitted by
+Definition 20.2 and has the exact interpretation (CE.20.1). The resulting
+successful finite schedule appears in the exhaustive finite search.
+All charts, including infeasible charts not yet proved empty, are subject
+to the stated requirement. This is a syntactic sufficient inclusion,
+not a claim that every acyclic interpreted system can be normalized.
+The next examples prove that the first inclusion is strict at the
+specified synchronous-frontier interface. $\square$
+

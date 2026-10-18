@@ -1,0 +1,26 @@
+**Proposition 1.1 (actual positive realization and representation fibre).** Every effective target in this domain has a single-source, fixed-instrument realization. For a fixed effective target its original relation/gain representations are exactly
+
+$$
+R=S/t,\qquad \alpha=t>0,\qquad\beta=\kappa t,
+\qquad D\text{ unchanged}.
+$$
+
+A positive factorization of a fixed relation has exactly the internal freedom $c\mapsto\lambda c,\ell\mapsto\ell/\lambda$ for $\lambda>0$.
+
+Proof. For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})\in\mathcal R_+$ take
+
+$$
+\alpha=1,\quad\beta=\kappa,\quad R=S,\qquad
+c=\begin{pmatrix}p\\r\end{pmatrix},\quad
+\ell=(1,q/p).
+$$
+
+Then $c\ell=S$ because $rq/p=s$, and
+$\ell A c=\operatorname{tr}(Ac\ell)=\operatorname{tr}(AS)$.
+Both atomic operations preserve strict positivity of the column:
+$M(c_1,c_2)^{\mathsf T}=(c_2,c_1+c_2)^{\mathsf T}$ and
+$J(c_1,c_2)^{\mathsf T}=(c_2,c_1)^{\mathsf T}$. The row stays fixed throughout the history.
+
+The identities $S=\alpha R$ and $\kappa=\beta/\alpha$ force the displayed representation with $t=\alpha$. Conversely substitution gives
+$(t+\kappa ti)\operatorname{tr}(AS/t)=(1+\kappa i)\operatorname{tr}(AS)$ at every position. For the internal factorization, equality $c\ell=c'\ell'$ and positivity of the first columns imply $c'=(\ell_1/\ell'_1)c$; substituting determines both entries of $\ell'$. The converse rescaling preserves the product. On an injective history these are the full remaining representation freedoms. A collision between different effective triples is an additional ambiguity, not this scale fibre. ∎
+

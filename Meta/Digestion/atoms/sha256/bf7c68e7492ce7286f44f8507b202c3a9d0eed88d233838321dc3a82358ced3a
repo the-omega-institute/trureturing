@@ -1,0 +1,33 @@
+**Lemma 2.2 (the quantifier order on unchanged attained fibers).** For
+an effective finite encoder acquired under Assumption 1.3, let
+$C_z=\{t\in\mathcal F_D:E(t)=z\}$, for each attained $z$.
+A correct one-Read reader exists exactly when, for every $z$ and every
+$p\in\mathcal P_D$, either $G_p$ is constant on $C_z$, or there is
+one word $w=w(z,D,p)$ such that
+
+$$
+\forall t,u\in C_z,\quad
+r_t(w)=r_u(w)\ \Longrightarrow\ G_p(t)=G_p(u).
+\tag{LTR.6}
+$$
+
+Proof. Before its only Read the reader's inputs are identical throughout
+$C_z$, so its decision to stop or its submitted word is fixed there.
+Equal replies give identical final predictors, hence identical entire
+trajectories and, by Convention 2.1, identical factors. With zero Reads
+the factor must be constant. Conversely each attained reply cell has
+one factor by (LTR.6). The common finite table assigns that factor to
+the reply and uses (LTR.4). Values on unattained replies are immaterial.
+The family, code alphabet and target set are finite, and the factors
+are effective, so these choices have a finite installed realization.
+Installation is separate from paid acquisition. $\square$
+
+This is an interface criterion, not an exact structural solution for
+$M_1$. It requires one acquired partition that works for every target.
+It does not permit changing $E$ after $p$, assigning different words
+to different pairs in a fiber, or replacing its sources by completions
+that change the fiber. On the full family, words longer than $D+1$
+are constant absent and can be removed without changing any fiber.
+No reduction to target prefixes follows. Section 7 gives an attained
+counterexample to that stronger reduction.
+

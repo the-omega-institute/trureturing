@@ -1,0 +1,28 @@
+### 61.1. Fixed-code model and a saturated-path constraint
+
+For d≥2 let L=C^d and X=Y=C^d, with fixed MC encoding V|i>=|ii> and J(T)=VTV*. Physical maps are finite LOSR mixtures Φ=Σ_b w_b A_b⊗B_b of local CPTP maps. One map Φ must act on all logical inputs, including all reference extensions. Suppose Φ∘J has output supported on the MC code for every logical input. Define p_i as the probability of the physical output |ii> on logical input |i><i|, and define λ_ij as the coefficient of |ii><jj| in Φ(J(|i><j|)). Other output matrix-unit coefficients are not assumed absent in this general constraint.
+
+Let i_0,...,i_m be a path of distinct labels with 0<p_i0≤p_i1≤...≤p_im. If for each adjacent pair
+
+    λ_(i_(r−1),i_r)=p_(i_(r−1)) exp(iθ_r),
+
+then a necessary condition for one common physical implementation is
+
+    λ_(i_0,i_m)=p_i0 exp(i(θ_1+...+θ_m)).
+
+This is a dimension-independent compatibility condition on saturated retained coherences. It is stronger than checking each adjacent pair's magnitude separately.
+
+Proof. Apply §54's full-support normal form to J(I/d). Every positive-weight product branch has one deterministic label map f_b and a code action
+
+    |ii><jj| -> C_b,ij |f_b(i)f_b(i)><f_b(j)f_b(j)|,
+
+where C_b is a positive-semidefinite unit-diagonal correlation matrix, the entrywise product of the two local Gram matrices. This positivity also follows directly by using tensor products of their Gram vectors. Let E_i be the event f_b(i)=i under branch weights w_b. Then P(E_i)=p_i and
+
+    λ_ij=E[1_(E_i∩E_j) C_b,ij].
+
+For p_i≤p_j, equality λ_ij=p_i exp(iθ) in the bounds
+
+    |λ_ij|≤E[1_(E_i∩E_j)|C_b,ij|]≤P(E_i∩E_j)≤p_i
+
+forces E_i⊆E_j up to zero-weight branches and C_b,ij=exp(iθ) on E_i. This follows equally by integrating the nonnegative quantity 1−Re(exp(−iθ)C_b,ij) over E_i after the event inclusion has been established. Along the path, E_i0 is contained in every E_ir. On this event all adjacent Gram inner products have unit modulus and the prescribed phase. Equality in Cauchy–Schwarz for unit Gram vectors makes successive vectors proportional, so their endpoint inner product is exp(iΣ_r θ_r). Thus C_b,i0im has that value on E_i0. Since E_i0⊆E_im, the displayed formula for λ gives the conclusion. The unit-Gram-vector step is the usual equality case of Cauchy–Schwarz, not a new correlation-matrix theorem. The use of a single branch space for the entire path is essential.
+

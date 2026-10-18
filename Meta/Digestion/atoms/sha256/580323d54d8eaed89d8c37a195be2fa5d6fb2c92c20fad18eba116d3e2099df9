@@ -1,0 +1,32 @@
+**Theorem 7.1 (whole-source bounded recovery without a size promise).**
+For arbitrary nonempty (NPL.3), finiteness of the entire original source
+fiber $D$ is decidable. A finite answer enumerates exactly all sources;
+an infinite answer supplies pairwise distinct sources in $D$.
+For $Q=\varnothing$, the following are equivalent:
+
+$$
+|D|<\infty
+\quad\Longleftrightarrow\quad
+\text{uniform-finite-read whole-source serial recovery}
+\quad\Longleftrightarrow\quad
+\text{uniformly bounded static }(q,a,\ell)\text{ recovery}.
+\tag{NPL.16}
+$$
+
+Proof. Apply Proposition 4.3 to the whole retained predicate with output
+$u$ itself, or Theorem 5.3 with the empty cut. Its mask and full row are
+exactly $u$. Thus its returned finite list is the entire source set,
+not one representative for a row class. The infinite family also lies
+in the entire original fiber. For $Q=\varnothing$ the exterior is the
+source, so Theorem 6.2 gives the two operational directions. Necessity
+also follows directly from Lemma 6.1. $\square$
+
+The classification computes a source-size bound only **after proving and
+enumerating** finiteness from the original input. No extra bound is asked
+of the producer or assumed while deciding finiteness. Infinite fibers
+still admit sourcewise finite full traversal of the current tree and
+computational recovery of the original through the image inverse of
+$\rho^N$; this does not give a uniform read bound. The inverse is applied
+to a paid, fully acquired finite description, never to the unknown register
+through an extra source port.
+

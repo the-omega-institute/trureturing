@@ -1,0 +1,115 @@
+### 96.2. Complete generic coefficient algebras at both fields
+
+Use the source \(h_0,h_1,h_2\), its fixed 180-row border minor and vertical
+minor of §88.2. The complete source construction of §§92–94
+is applied afresh at each field. The residues are
+
+~~~text
+                   Q10 / mod137   Q14 / mod149
+source minor             62            130
+vertical minor          102            103
+projector resultant      67            116
+generic basis minor      88             11
+w=k+t power basis        82             57
+~~~
+
+For the projector restriction, take its first ten columns. The invertible
+row set is \(0,\ldots,9\) over \(K_{10}\) and
+\(0,\ldots,8,10\) over \(K_{14}\); these define the basis minors 88 and 11.
+The restricted multiplication matrices and constant vector are obtained
+by the inverse of those submatrices. Thus every entry in the table has
+a fixed rational reconstruction from the earlier source definitions.
+
+The source rational identities specialize through these units and give
+the complete 30-dimensional source algebra. The generic decic projector
+has dimension ten; the other five components are uniformly nonreal on
+the puncture. The vertical minor excludes \(x=0\). No original F8-zero
+case is discarded in placing a physical point in the source algebra.
+
+Let \(f_W\) be the characteristic polynomial of \(w=k+t\) in the
+projected summand. Obtain \(k(w),t(w)\) from its power columns and form
+\[
+ \mathcal A_j=K_j[w,X]/(f_W(w),
+ (1+k(w)^2)X^2-t(w)X-R),\quad R=3-b^2.
+\tag{96.3}
+\]
+It has dimension twenty. Put \(x=X,y=kX,G=x+iy\). The original global
+line and combined-pivot reconstruction is
+\[
+ \tau=-(\mu_Y+\mu_D)/(a_Y+a_D),\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma,
+\]
+where \(\operatorname{Re}E_n/6=Au+D_0v+C_0\) and
+\(\sigma=A^2+D_0^2\). Construct the original scaled \(C,D,Y_c,q,e\)
+as in §87. Physical input coefficients are \(G/\kappa,C/\kappa,D/\kappa\),
+with \(|\kappa|^2=R\).
+
+The full multiplication norms, and the final basis determinant, are:
+
+~~~text
+name                  Q10 / mod137   Q14 / mod149
+aY+aD                       26            138
+sigma                       65             58
+beta                        53            147
+barbeta                     21             49
+Yc*barYc                     1             46
+barC*D                      17             31
+C*barD                      93              4
+1+k^2                       28             20
+f_W'                        30            140
+radial discriminant        100            144
+y                           27             57
+C                           18             59
+barC                       107             21
+D                            4            115
+barD                        28             43
+Yc                          12             63
+barYc                       80            145
+q                           74             61
+e                           41            127
+bare                        48            148
+F8                          69             49
+G                           90            111
+barG                        82             13
+Delta                      119            102
+delta                      100              7
+y-power basis              100             28
+~~~
+
+Here the radial discriminant is \(t^2+4R(1+k^2)\),
+\(\Delta=D\bar D-C\bar C\), and
+\(\delta=q^2[3-4(e+\bar e)]+6q-1\).
+All entries are nonzero. Thus (96.3) is reduced, y is primitive, and the
+original reconstruction and exact normalized Theta identities specialize
+in the full twenty-dimensional algebra. This follows by first forming
+the finite free source/radial algebra over the local ring at \((Q_j)\),
+then inverting the listed units. Characteristic-zero rational identities
+valid over the generic fraction field persist in this torsion-free
+localization. Direct finite-algebra substitution also verifies the original complex and
+norm equations at both good maps.
+
+Universal original necessity puts every strict selected-channel generic
+ray in (96.3) before F8 is tested. Its nonzero norm therefore excludes all
+F8-zero possibilities noncircularly at these fields. All strict filters,
+all six root orders and both optional Theta choices remain retained.
+
+The radial involution is
+\(\iota(X)=t/(1+k^2)-X\), so \(\iota(G)=-R/\bar G\).
+For the ordinary all-six-order overlap norm N of §79, the onto map
+\(\rho(a\otimes c)=a\iota(c)\) gives \(\rho(N)=0\) in characteristic
+zero by the normalized Theta identity and faithful cubic splitting.
+Its kernel has dimension \(400-20=380\). The leading principal
+380-by-380 minors, in basis \(y^r\otimes y^s\) indexed by \(20r+s\),
+are respectively 65 modulo 137 and 26 modulo 149. Hence
+\[
+ N(\mathcal A_j\otimes\mathcal A_j)=\ker\rho.
+\tag{96.4}
+\]
+Every generic orthogonal edge belongs to the synchronous S3–Theta union
+of either endpoint. The exact uniform within-union graph is bipartite,
+so there is no all-generic noncanonical orthogonal triple at these fields.
+The full generic set is Theta-stable, by the original reconstruction and
+unit \(\Delta\). This also permits moving a relative Theta onto an
+aligned endpoint in the mixed-pair argument below.
+

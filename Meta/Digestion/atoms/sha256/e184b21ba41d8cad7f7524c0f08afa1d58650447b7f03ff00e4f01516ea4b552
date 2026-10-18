@@ -1,0 +1,9 @@
+**定义 19.1（带边身份的三维连接网络）。** 有限无向多重图每条边有独立标签，允许平行边；选每条边一个方向 $e:v\to w$。每个节点带定向 $\mathbb R^3$ 及叉积，指定 $U_e\in SO(3)$，反向边满足 $U_{\bar e}=U_e^{-1}$，权重 $c_e>0$。令
+
+$$
+E_U(x)=\frac12\sum_{e}c_e\|x_w-U_ex_v\|^2
+=\frac12x^{\mathsf T}L_Ux.
+$$
+
+和中每条无向边只出现一次，$L_U$ 为实对称半正定连接 Laplacian。带正交边运输的块 Laplacian 背景归于 [Singer–Wu 文献注](../../../Library/Geometry/singerwu2011vectordiffusion.md)；本章取定向三维且保叉积的运输，是第六章合同的网络实现。裸 FIB 路径没有自动提供 $U_e$ 或 $c_e$。
+

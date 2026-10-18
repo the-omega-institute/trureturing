@@ -1,0 +1,71 @@
+**Definition 3.2 (the twelve targets).** Write $y=256x_{\rm old}$ and set
+
+$$
+\begin{aligned}
+p_y&=\left(\frac y{128},\frac{64-y}{128},\frac12\right),
+&a_y&=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,
+&\rho_y&=a_ya_y^T,\\
+d_y&=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},
+                           \frac y{2(y+6)}\right),
+&\xi_y&=(\sqrt{d_{y0}},\sqrt{d_{y1}},\sqrt{d_{y2}})^T,
+&B_y&=\xi_y\xi_y^T,\\
+s_y&=\frac y{y+6},
+&f_y(t)&=\frac{6y}{(y+6t)^2},
+&w&=(0,1/4,1/2,1/4,0).
+\end{aligned}
+\tag{ZG.9}
+$$
+
+The formulas for $a_z,p_z$ also apply at the three successor heights
+$z=y+6$. All roots mean positive real roots. Thus $\operatorname{tr}\rho_y=1$,
+$\xi_y=\sqrt{s_y}a_{y+6}$ and $\operatorname{tr}B_y=s_y$.
+Put $U=U_{e,n}=\operatorname{diag}(e,n,1)$, where
+$e=(-1)^{\beta/\pi}$ and $n=e(-1)^m$. The four original pairs
+$(\beta,m)=(0,0),(0,1),(\pi,0),(\pi,1)$ give
+$(e,n)=(1,1),(1,-1),(-1,-1),(-1,1)$ respectively. The actual input in these
+coordinates is $U\rho_yU^\dagger$.
+
+The full ideal output $\Omega_{y,U}$ has the coherent live block
+$UB_yU^\dagger$ and, for EACH separately labelled original failure sector
+$\ell=0,1,2,3,4$, the entire measure
+
+$$
+(\Omega_{y,U})_\ell(dt)=w_\ell f_y(t)\,dt\,P_f,
+\qquad 0\leq t\leq1,\qquad P_f=|f\rangle\langle f|.
+\tag{ZG.10}
+$$
+
+Index $4$ retains the name mode $13$, including its zero ideal measure.
+The two minus-mode labels $1$ and $3$ remain distinct. Time is the exact
+measurable elapsed time $t$, equivalently the absolute time $6+t$; no binning
+or finite-bit representation is assumed. The live and failure traces are
+$s_y$ and $\int_0^1 f_y(t)dt=1-s_y$, so the complete target is normalized.
+It has zero mass in extra, abort and rejection sectors. The first executed
+failure is absorbing: no later retry, reset, reversal, replacement or
+positive-carrier operation follows it. Old archives and declared controller
+updates stay in their respective branches.
+
+For clarity, the calibrated source law underlying this target, with
+$\nu=d$, $x=x_{\rm old}$ and $S_x(t)=x/(x+\nu t)$, has terminal live operator
+and failure densities on $V$
+
+$$
+\begin{aligned}
+K_x&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c-x-d)}{(x+d)(c-x)}},\sqrt{\frac{x}{x+d}}\right),\\
+\mathcal I_{x,2}(dt)(A)
+ &=f_x(t)|f\rangle\langle2|A|2\rangle\langle f|\,dt,
+&f_x(t)&=\frac{\nu x}{(x+\nu t)^2},\\
+\mathcal I_{x,\ell}(dt)(A)
+ &=\frac{cf_x(t)}{2(c-x)}|f\rangle\langle-|A|-\rangle\langle f|\,dt
+ &&(\ell=1,3),\\
+\mathcal I_{x,0}&=\mathcal I_{x,4}=0.
+\end{aligned}
+\tag{ZG.11}
+$$
+
+These are the credited calibrated, source-indexed instruments of CG4;
+their total effect is $I_V$. Applied to (ZG.8), they give (ZG.9)–(ZG.10).
+Their dependence on $x$ does not make $x$ readable or install $K_x$ in a
+common processor.
+

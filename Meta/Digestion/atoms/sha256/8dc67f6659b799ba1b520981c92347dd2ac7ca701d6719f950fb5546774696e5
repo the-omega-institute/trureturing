@@ -1,0 +1,62 @@
+### 104.11. Full rational root and compact quadratic identities
+
+Lemmas 104.5–104.8 imply that every actual point belongs to the rational box
+\[
+\mathcal B_*=
+[10^{-12},(12499/25000)^2]\times[56/131,31/32]
+\times[1/32,425/42]
+\tag{104.68}
+\]
+in the ordered coordinates \((D,p,a_0)\), and to the full auxiliary interval
+\[
+\mathcal I_r=[-19999999999/20000000000,
+19999999999/20000000000].
+\tag{104.69}
+\]
+For (104.68), use \(d<12499/25000\), \(c_*>(56/131)^2\),
+\(15/16<(31/32)^2\), and \(a_0=\kappa(m+1)/m>1/32\).
+The second endpoint inequality in Lemma 104.5 says \(p(a_0-M)<2\). Since
+\(2<M<457/84\), it gives
+\(a_0<M+2/p<457/84+131/28=425/42\).
+For (104.69), if \(b=1-1/(2\cdot10^{10})\), then
+\(b^2>1-10^{-10}>r^2\).
+These are bounding boxes; closedness of the actual local-minimum set is not used.
+
+The following intermediate cuts also retain every actual value:
+\[
+\begin{aligned}
+2&\le M\le457/84,&1/40&\le p(M+a_0)-2\le30,\\
+0&\le x\le27/2,&10^{-27}&\le\Delta\le10000,\\
+1/21&\le R\le625/4,&1/42000000&\le\overline j\le3125/8.
+\end{aligned}
+\tag{104.70}
+\]
+The denominator lower bound is (104.57); its upper bound is loose even with \(a_0<20\), \(M<457/84\), \(p<1\). The bound for \(x=g+p\) follows from (104.42), and
+\(\Delta<\eta\zeta<625/4<10000\). The last two pairs follow from
+\(1/4<|z|^2<625/4\), (104.53), and \(1<m<21/4\).
+
+For fixed \((D,p,a_0)\), both polynomials in (104.60) are quadratic in \(r\). Put
+\[
+V_0=xM-pDa_0,\quad Z_0=-xa_0+pM,\quad
+c_N=M-2p,\quad d_N=D(M+2p),\quad e_N=Da_0.
+\]
+Their compact coefficients, with no division by a leading term, are
+\[
+\begin{aligned}
+n_2={}&c_N+d_N+2e_N,\\
+n_1={}&4[p(M+Da_0)-2]x-2p[2Dp(M+a_0)+4D-1],\\
+n_0={}&4(M-2p)x^2-8Da_0px+4Dp^2(M+2p)-M,\\
+a_2={}&(1-D)[2+p(a_0+M)],\\
+a_1={}&-4(M+Da_0)x+2(M+a_0)p[D(3-p^2)+p^2]
++4D(p^2+1)-4p^2,\\
+a_0'={}&4x[Da_0+p^2(M+a_0)]-4Mp(D+p^2)-4Da_0p^3
++8Dp^4-16Dp^2-8p^4.
+\end{aligned}
+\tag{104.71}
+\]
+Thus \(N=n_2r^2+n_1r+n_0\) and \(P=a_2r^2+a_1r+a_0'\).
+To check (104.71), substitute \(V=V_0-r\), \(Z=Z_0-r\) into (104.60), expand by powers of \(r\), and use
+\(M^2-Da_0^2=4\) and
+\([p(M+a_0)-2]x=p^2(M+Da_0)\).
+This is a polynomial identity after multiplication by the nonzero denominator in (104.57). The auxiliary scalar name \(a_0'\) distinguishes the constant coefficient from the invariant coordinate \(a_0\).
+

@@ -1,0 +1,162 @@
+**Theorem 7.3 (attained alphabet and all-lag native reply certificate).**
+For every $1\le q\le6$, Definition 7.1 attains exactly the $q$ labels
+$0,\ldots,q-1$. Definitions 7.1--7.2 satisfy Assumption 5.1 for both
+visible regions and every $\ell\ge0$. The same encoder and query
+schedule work for every $\ell\ge1$ with that convention's exact
+fiber. Every actual queried reply determines a unique lag, even when
+it leaves more than one possible original pair. Every nonconstant
+fiber uses one legal literal call, and every constant fiber uses zero.
+
+**Proof, the finite class identities.** Every entry of the upper-left
+$q$ block is less than $q$: the new border of sizes two and three uses
+only labels up to one and two, and the new borders of sizes four,
+five and six use only labels up to three, four and five. The diagonal
+entries are $M_{t,t}=t$ for $0\le t\le5$. Hence all and only the
+declared labels are attained. Assumption 5.1's acquired clock
+computations give a causal evaluation of this finite table.
+
+For clarity, all six full-square classes are displayed here in
+increasing $d=a-b$ order:
+
+| Code | Ordered original pairs | Ordered differences |
+| --- | --- | --- |
+| $0$ | $(2,5),(2,4),(2,3),(0,0),(1,0),(2,0)$ | $-3,-2,-1,0,1,2$ |
+| $1$ | $(0,4),(0,3),(0,1),(1,1),(2,1),(5,1)$ | $-4,-3,-1,0,1,4$ |
+| $2$ | $(0,2),(1,2),(2,2),(3,2),(3,1),(3,0)$ | $-2,-1,0,1,2,3$ |
+| $3$ | $(1,5),(1,4),(1,3),(3,3),(4,3)$ | $-4,-3,-2,0,1$ |
+| $4$ | $(3,4),(4,4),(5,4),(4,2),(4,1),(4,0)$ | $-1,0,1,2,3,4$ |
+| $5$ | $(0,5),(3,5),(4,5),(5,5),(5,3),(5,2),(5,0)$ | $-5,-2,-1,0,2,3,5$ |
+
+In particular $d$ is injective within each class. Define the signed
+threshold offsets
+
+$$
+(r_0,\ldots,r_5)=(-2,-3,2,-3,2,2),\qquad
+(s_0,\ldots,s_5)=(0,0,-1,0,0,-2).
+\tag{NARC.7.2}
+$$
+
+For each class the following table gives the common $b$ value on
+the four difference cells $d<r_\gamma$, $d=r_\gamma$,
+$d=r_\gamma+1$, $d>r_\gamma+1$:
+
+| Code | $d<r_\gamma$ | $d=r_\gamma$ | $d=r_\gamma+1$ | $d>r_\gamma+1$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $5$ | $4$ | $3$ | $0$ |
+| $1$ | $4$ | $3$ | $\varnothing$ | $1$ |
+| $2$ | $2$ | $1$ | $0$ | $\varnothing$ |
+| $3$ | $5$ | $4$ | $3$ | $3$ |
+| $4$ | $4$ | $2$ | $1$ | $0$ |
+| $5$ | $5$ | $3$ | $2$ | $0$ |
+
+The corresponding common $a$ values on the reversed difference cells
+are
+
+| Code | $d>s_\gamma+1$ | $d=s_\gamma+1$ | $d=s_\gamma$ | $d<s_\gamma$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $2$ | $1$ | $0$ | $2$ |
+| $1$ | $5$ | $2$ | $1$ | $0$ |
+| $2$ | $3$ | $2$ | $1$ | $0$ |
+| $3$ | $\varnothing$ | $4$ | $3$ | $1$ |
+| $4$ | $4$ | $5$ | $4$ | $3$ |
+| $5$ | $5$ | $4$ | $3$ | $0$ |
+
+Here $\varnothing$ denotes an empty candidate cell. These identities
+follow directly from the displayed ordered pairs: each tail has the
+stated common coordinate, and each present middle difference occurs
+once. They certify the entire 36-point square; the tables specify
+origin values, rather than identifying every original pair.
+
+**Proof, regular right-visible inputs.** Since $n_R=z+d$, the
+experiment $P_{z+r_\gamma}$ has exactly the four $b$ cells of the
+first table in actual reply order $\bot,\alpha,\beta,\mathsf b$.
+For code zero it is legal when $z\ge4$; for codes one and three
+when $z\ge5$; and for codes two, four and five at every $z\ge0$.
+These are the regular cases of Definition 7.2. Restricting to
+$b\le z$ preserves coordinate constancy in each cell. Thus the
+certificate handles all regular right-visible fibers without an
+upper bound on $z$.
+
+**Proof, every exceptional right-visible input.** It suffices first
+to take $q=6$ and $\lambda=0$. In code zero the only $b$ values are
+$0,3,4,5$, the last three occurring at $a=2$. For $z\le2$, every
+nonempty fiber has $b=0$ and halts. At $z=3$, the pair $(2,3)$ has
+hidden age two, whereas $(0,0),(1,0),(2,0)$ have ages three, four,
+five. The legal $P_2$ returns $\alpha$ for $b=3$, and $\beta$ or
+$\mathsf b$ for $b=0$. In particular replacing the unavailable
+$P_1$ by $E$ would not work at this entry; Definition 7.2 uses $P_2$.
+
+In code one, the $b=3,4$ pairs have $a=0$, and every other pair
+has $b=1$. For $z\le2$ a nonempty fiber has only $b=1$ and halts.
+At $z=3$, $E$ returns $\alpha$ on $(0,3)$ and $\mathsf b$ on
+the $b=1$ pairs, whose ages are two, three, four, seven. At $z=4$,
+$E$ returns $\alpha$ on $(0,4)$, $\beta$ on $(0,3)$, and
+$\mathsf b$ on every $b=1$ pair. Thus each reply again determines
+one origin. In code three the exceptional $b=4,5$ pairs have $a=1$,
+and all other pairs have $b=3$. For $z\le3$ any nonempty fiber
+has only $b=3$. At $z=4$, $E$ returns $\beta$ on $(1,4)$,
+and $\mathsf b$ on the $b=3$ pairs, whose ages are two, four, five.
+The complete exceptional reply assignment is therefore
+
+| Code and clock | Relative experiment | $\bot$ origin | $\alpha$ origin | $\beta$ origin | $\mathsf b$ origin |
+| --- | --- | --- | --- | --- | --- |
+| $0,z=3$ | $P_2$ | $\varnothing$ | $3$ | $0$ | $0$ |
+| $1,z=3$ | $E$ | $\varnothing$ | $3$ | $\varnothing$ | $1$ |
+| $1,z=4$ | $E$ | $\varnothing$ | $4$ | $3$ | $1$ |
+| $3,z=4$ | $E$ | $\varnothing$ | $\varnothing$ | $4$ | $3$ |
+
+Together with the constant-fiber halts and the regular cases, this
+exhausts every $z\ge0$ for all six right-visible classes, including
+hidden ages zero and one. Every $E$ listed is one paid physical $L$
+request.
+
+**Proof, every left-visible input.** Put
+$t=q+z-s_\gamma-1$, precisely the left-column schedule of
+Definition 7.2. The hidden age $n_L=q+z-d$ obeys
+
+$$
+\begin{aligned}
+n_L<t&\Longleftrightarrow d>s_\gamma+1,\\
+n_L=t&\Longleftrightarrow d=s_\gamma+1,\\
+n_L=t+1&\Longleftrightarrow d=s_\gamma,\\
+n_L>t+1&\Longleftrightarrow d<s_\gamma.
+\end{aligned}
+\tag{NARC.7.3}
+$$
+
+Thus the second certificate table is in actual reply order
+$\bot,\alpha,\beta,\mathsf b$, with a common $a$ in every
+occupied cell. For $q\ge3$, all $s_\gamma\le0$ make $t\ge2$.
+For $q=2$ only codes zero and one occur. A nonconstant $a$ fiber
+must include $a=1$, and consequently has $z\ge1$, giving
+$t=q+z-1\ge2$. For $q=1$ every fiber is constant. This proves
+availability at every queried left-visible input; no $P_1$ or small
+clock exception is omitted.
+
+**Proof, prefix restrictions, positive lags and causal output.** For
+each smaller $q$, its class is exactly the intersection of the displayed
+six-square class with $[0,q-1]^2$. Right-hidden ages $z+d$ and the
+right schedule do not change; deleting pairs cannot put different
+origins into one reply cell. On the left, both hidden ages and regular
+thresholds shift by $q-6$, so (NARC.7.3) continues to give the same
+reply cells. The preceding legality argument covers even $q=1,2$.
+Restricting either fiber further to visible origin at most $z-1$
+gives exactly the strictly positive-lag fiber. It only deletes
+candidates, so the same queries still have constant origins on their
+actual reply cells. If a deletion makes the target constant, the
+initial zero-call rule applies instead. In particular both conventions
+retain all their singleton and other constant-target fibers.
+
+The actual original belongs to the exact fiber by Theorem 5.2. Its
+reply leaves that candidate in the filtering step. Every remaining
+candidate has the same visible origin by the regular or exceptional
+certificate, so $z-v$ is a unique correct lag. A cell marked empty
+cannot be an actual reply on a promised queried input. The selected
+address uses only code, $q$, region and the acquired $z$; it never
+uses the actual hidden age or lag. The threshold computations are
+finite predictions on public candidate pairs. They are not reads
+of candidate sources. Clock parsing on a finite acquired tree,
+enumeration of at most $q^2$ pairs and materialization of one finite
+word all terminate. There is at most one chronological native call,
+and no original row or unexported origin is accessed. $\square$
+

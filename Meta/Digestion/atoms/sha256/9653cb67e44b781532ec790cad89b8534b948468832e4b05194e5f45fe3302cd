@@ -1,0 +1,73 @@
+**Corollary 7.4 (Complete endpoint-law symmetry can have positive native
+error).** Let $\nu=q_*\mu$ be the law on $\mathscr S$ under Definition 7.1.
+Its proper linear symmetry group equals the proper symmetry group of its
+support, and both are
+
+$$
+\{Q\in SO(3):Q_*\nu=\nu\}
+ =\{Q\in SO(3):Q\mathscr S=\mathscr S\}
+ =\{A\oplus[\det A]:A\in O(2)\}.
+\tag{7.14}
+$$
+
+Those with $\det A=1$ are native and have zero best error; those with
+$\det A=-1$ have best same-history error $4\lambda>0$. In particular,
+the proper comparison rotation
+
+$$
+Q_*=\operatorname{diag}(1,-1,-1)=Q_x(\pi)
+\tag{7.15}
+$$
+
+preserves the complete endpoint law and support, both before and after
+decoding by $c+Dq$, but satisfies
+
+$$
+\min_{u\in\mathcal L_p}\mathcal E_p(u,Q_*)=4\lambda>0.
+\tag{7.16}
+$$
+
+Every fixed lawful loop has the same single-endpoint output law as this
+comparison target. Its common-history paired response nevertheless differs
+from that of $Q_*$.
+
+**Proof.** The law $\nu$ has support exactly $\mathscr S$, because uniform
+angle gives positive measure to every nonempty circle arc and each parity
+has positive mass. A linear orthogonal map is a homeomorphism, so preserving
+$\nu$ implies preserving its support. Conversely suppose $Q\mathscr S=
+\mathscr S$ and write its third row as $(v_1,v_2,z)$. For a fixed parity
+$\varepsilon$, the third coordinate of $Qq(\beta,\varepsilon)$ is
+
+$$
+\sqrt2(v_1\cos\beta+v_2\sin\beta)+z\varepsilon\in\{-1,1\}
+\qquad(\beta\in\mathbb T).
+$$
+
+It is a continuous function on a connected circle with values in a
+two-point set, so it is constant. Its values at $0,\pi$ and at
+$\pi/2,3\pi/2$ force $v_1=v_2=0$. The third row has unit norm, giving
+$z=\pm1$; orthogonality then yields $Q=A\oplus[z]$ with $A\in O(2)$.
+The determinant-one condition gives $z=\det A$.
+Every such $A$ preserves uniform measure on the planar circle, and
+multiplication of parity by $\det A$ preserves balanced parity and its
+independence from the angle. Thus these matrices preserve the entire law,
+proving (7.14).
+
+When $\det A=1$, $A$ is a planar rotation and the target lies in
+$\mathcal N$. When $\det A=-1$, its planar reflection is not a native
+planar rotation. Applying Theorem 7.3 with $z=1$ or $z=-1$ proves the
+respective zero and $4\lambda$ errors. In (7.15) the action is explicitly
+$(\beta,\varepsilon)\mapsto(-\beta,-\varepsilon)$, so it preserves
+$\nu$ and $\mathscr S$. Pushing forward by $q\mapsto c+Dq$ proves
+equality of the complete ten-output laws and supports as well.
+
+Each native $R_\theta\oplus[\sigma]$ also preserves $\nu$, by angle
+translation and parity multiplication. Hence its single-endpoint law agrees
+with the target's. But $T(u)\ne Q_*$ for every lawful loop: the planar
+block of $T(u)$ has determinant $1$, whereas the planar block of $Q_*$
+has determinant $-1$. The recovery identity (7.4) therefore gives
+$C_u\ne C_{Q_*}$. This proves the paired-response distinction for the
+same source and the same history; (7.16) quantifies it in the stipulated
+metric. Independent re-preparation would instead give $6\lambda$ by
+(7.6). $\square$
+

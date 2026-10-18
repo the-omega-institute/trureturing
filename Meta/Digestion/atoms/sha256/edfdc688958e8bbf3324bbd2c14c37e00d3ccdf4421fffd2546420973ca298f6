@@ -1,0 +1,20 @@
+**Corollary 9.4 (nonvanishing return amplitude in a vanishing-excess family).** Under Theorem 9.3's hypotheses, if $e(M)<11g/61$, then
+
+$$
+\mathcal V(M)>
+\left(\frac{11g-61e(M)}{19}\right)^2.
+\tag{9.23}
+$$
+
+For any sequence of lawful finite COMPLETE observers for one fixed such prior, with both original configuration excesses tending to zero,
+
+$$
+\liminf_n\mathcal V(M_n)\ge
+\left(\frac{11\eta}{7600000}\right)^2>0.
+\tag{9.24}
+$$
+
+A finite exact common conf/conf attainer, if one exists, must satisfy the strict inequality $\mathcal V(M)>(11\eta/7600000)^2$. The carriers of the sequence may grow; every member separately obeys the full finite contract.
+
+Proof. Multiply (9.18) by $11$ and isolate its strictly positive square-root term to obtain (9.23). Apply it to a tail of the sequence and pass to the lower limit. The exact-attainer statement is (9.23) with $e(M)=0$. $\square$
+

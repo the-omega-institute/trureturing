@@ -1,0 +1,22 @@
+**Convention 6.1 (credited forest class).** [GDB, Definition 20.3][GDB]
+uses finite rational mixtures of proper selected vertex subsets $F_j$,
+with weights $\lambda_j>0$ summing to one. Its positive tables
+$\psi_{jv}$ on the original stars satisfy the global identity
+
+$$
+\prod_j\left(\prod_{v\in F_j}\psi_{jv}(s_{\operatorname{st}(v)})
+        \right)^{\lambda_j}=W(s)
+\quad\text{for every common }s.
+\tag{WBF.28}
+$$
+
+It reports $U=\sum_j\lambda_j\log_2 Z_j$, where
+$Z_j=\sum_{s\in\mathbb F_2^E}\prod_{v\in F_j}\psi_{jv}$
+retains every original variable, including free variables. In its
+forest subclass each $G[F_j]$ is a forest, allowing exact tree
+sum-product evaluation of $Z_j$. The full partition sums and selected
+submodels in this class are different objects from the single
+product-reference norms of Definition 2.1. Both permit global
+compensation; neither comparison may replace that condition by
+separate per-vertex identities.
+

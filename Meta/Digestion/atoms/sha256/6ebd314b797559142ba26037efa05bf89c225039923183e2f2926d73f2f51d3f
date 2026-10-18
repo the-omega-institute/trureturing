@@ -1,0 +1,111 @@
+**Theorem 3.1.** Uniform recovery of the entire constant-drift target requires
+
+$$
+\begin{aligned}
+\Delta_x&=\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf x]=0,\\
+\Delta_y&=\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf y]=0,\\
+\Delta_{px}&=\det[\mathbf1,\mathbf t,\mathbf x,\mathbf d,\mathbf t\mathbf x]=0,\\
+\Delta_{yp}&=\det[\mathbf1,\mathbf t,\mathbf d,\mathbf y,\mathbf t\mathbf y]=0.
+\end{aligned}
+\tag{3.2}
+$$
+
+The first two are credited prior conditions. More precisely, suppose that deleting any noninitial endpoint leaves four independent matrices. If any determinant in (3.2) is nonzero, the original five readings have a finite collision between distinct actual targets with both slopes arbitrarily close to zero and all sampled gains strictly positive. There is no additional independence assumption on $\mathbf1,\mathbf t,\mathbf x,\mathbf y$.
+
+**Proof.** Assume the survivor-span hypothesis for the stronger assertion. The endpoints span the four-dimensional matrix space, so $\mathcal L$ is injective. With $K_0=E_{22}$, (3.1) gives $\mathcal L K_0=\mathbf1$, and hence
+
+$$
+\ker\mathsf B=\mathbb RK_0,\qquad\operatorname{rank}\mathsf B=3,
+\qquad \mathsf C K_0=\mathbf e=(1,2,3,4)^{\mathsf T}.
+\tag{3.3}
+$$
+
+The pencil $\mathsf T_k$ is regular. At $k=-1/j$, $\mathsf T_kX=0$ says $(1-i/j)\operatorname{tr}(A_iX)$ is constant. Its value at $j$ is zero. All other gains are nonzero, so the four independent survivors force $X=0$. Thus $\mathsf T_{-1/j}$ is invertible. Its determinant is a nonzero polynomial in $k$, and $\mathsf T_a$ is invertible for every sufficiently small nonzero $a$.
+
+Choose a nonzero left null covector $w$ of $\mathsf B$. The functional $h=w\mathsf C$ is nonzero, since otherwise every $\mathsf T_k$ would have range in $\ker w$, contradicting regularity. At a positive rank-one $S$, its determinant tangent space is
+
+$$
+V_S=\{V:\mathfrak b(S,V)=0\}.
+$$
+
+It has dimension three, and $\mathfrak b(S,K_0)=p>0$. Therefore $\mathsf B$ maps $V_S$ isomorphically onto its range. The quotient derivative at slope zero,
+
+$$
+(V,\lambda)\longmapsto\mathsf BV+\lambda\mathsf CS,
+$$
+
+is invertible precisely when $h(S)\ne0$. Such a source exists: if $h(E(u,v))=h_puv+h_qu+h_rv+h_s$ vanished for every $u,v>0$, the polynomial root bound first in $u$, then in $v$, would force all coefficients to vanish.
+
+Introduce four-vectors
+
+$$
+\mathbf a=\mathsf BE_{12},\quad\mathbf b=\mathsf BE_{21},\quad
+\mathbf c=\mathsf BE_{11},\qquad
+\mathbf A=\mathsf CE_{12},\quad\mathbf B'=\mathsf CE_{21},\quad
+\mathbf C'=\mathsf CE_{11}.
+$$
+
+They are the tails at indices $1,\ldots,4$ of $\mathbf x,\mathbf y,\mathbf d,\mathbf t\mathbf x,\mathbf t\mathbf y,\mathbf t+\mathbf t\mathbf d$, respectively. In particular, $(\mathbf C\prime)_i=i(A_i)_{11}=i(1+d_i)$ on these tail indices. The vectors $\mathbf a,\mathbf b,\mathbf c$ are independent by (3.3). In chart (2.3),
+
+$$
+\mathsf T_k(\sigma E(u,v))=\sigma F(u,v,k),
+$$
+
+$$
+F=k\mathbf e+u(\mathbf a+k\mathbf A)
++v(\mathbf b+k\mathbf B')+uv(\mathbf c+k\mathbf C').
+\tag{3.4}
+$$
+
+Its derivative determinant in coordinates $(\sigma,u,v,k)$ is $\sigma^3j(u,v,k)$, where $j=\det[F,F_u,F_v,F_k]$. The chart inverse is $\sigma=s,u=q/s,v=r/s$, so the preceding interior nonsingularity gives $j(\bar u,\bar v,0)\ne0$ for some $\bar u,\bar v>0$.
+
+The exact polynomial boundary identities are
+
+$$
+j(u,0,k)=ku\det[\mathbf e,\mathbf a,
+\mathbf b+k\mathbf B'+u(\mathbf c+k\mathbf C'),\mathbf A],
+\tag{3.5}
+$$
+
+$$
+j(0,v,k)=kv\det[\mathbf e,
+\mathbf a+k\mathbf A+v(\mathbf c+k\mathbf C'),\mathbf b,\mathbf B'].
+\tag{3.6}
+$$
+
+For (3.5), subtract $uF_u$ from the first column, leaving $k\mathbf e$, and use $F_k=\mathbf e+u\mathbf A$. The second column's $k\mathbf A$ term then vanishes against the last. Subtracting $vF_v$ and using $F_k=\mathbf e+v\mathbf B'$ proves (3.6). These are auxiliary boundary evaluations; no boundary source is used as an actual run.
+
+The coefficients of $k$ at zero in (3.5) and (3.6) are
+
+$$
+u_x(u)=u\{\det[\mathbf e,\mathbf a,\mathbf b,\mathbf A]
++u\det[\mathbf e,\mathbf a,\mathbf c,\mathbf A]\},
+$$
+
+$$
+u_y(v)=v\{\det[\mathbf e,\mathbf a,\mathbf b,\mathbf B']
++v\det[\mathbf e,\mathbf c,\mathbf b,\mathbf B']\}.
+\tag{3.7}
+$$
+
+All nonconstant five-vectors in (3.2) have coordinate zero at index zero. Expansion in that row identifies the four determinants in (3.7) with $\Delta_x,\Delta_{px},\Delta_y,\Delta_{yp}$, respectively.
+
+If $\Delta_x$ or $\Delta_{px}$ is nonzero, choose $u_*>0$ for which $u_*(\Delta_x+u_*\Delta_{px})\ne0$. Such a point exists because this polynomial is not identically zero. Then $j(u_*,0,k)$ has a simple zero at $k=0$ and opposite strict signs for sufficiently small positive and negative $k$. Choose the sign of an arbitrarily small nonzero $a$ so that its boundary sign is opposite to $j(\bar u,\bar v,0)$. Also require $\mathsf T_a$ invertible, $|a|<1/16$, and preservation of the interior sign at $a$. Regularity and continuity allow all of these choices. Finally choose $v_*>0$ sufficiently small to preserve the boundary sign at $(u_*,v_*,a)$. This gives two actual positive sources with opposite $j$ signs at the same invertible slope. If $\Delta_y$ or $\Delta_{yp}$ is nonzero, (3.6) gives the same argument with the roles of $u,v$ exchanged.
+
+For $\mathsf H=\mathsf T_a^{-1}\mathsf C$, factoring $\mathsf T_a$ from the derivative columns gives the exact identity
+
+$$
+j(u,v,a)=-\det(\mathsf T_a)\mathfrak b(E(u,v),\mathsf H E(u,v)).
+\tag{3.8}
+$$
+
+Indeed the factored columns are $E,E_u,E_v,\mathsf HE$ and, in entry order $(p,q,r,s)$,
+
+$$
+\det[E,E_u,E_v,X]=-\mathfrak b(E,X).
+$$
+
+This follows by subtracting $uE_u+vE_v$ from the first column and expanding; the resulting expression is $-X_{11}+vX_{12}+uX_{21}-uvX_{22}$. Consequently the two interior sources give opposite transfer-form signs. Lemma 2.2 produces a finite collision with whole constant drifts and positive rank-one sources at slopes $a,a+\epsilon$. Both slopes can be made arbitrarily close to zero: choose $a$ first as above, then $\epsilon$ below any further positive bound. Its positive-gain estimate applies. Equation (2.4) verifies every original reading, and (1.2) realizes the fixed-row histories.
+
+This proves the stronger assertion. A uniformly recovering history must satisfy the survivor-span hypothesis by Lemma 2.1, and hence all four equalities. ∎
+

@@ -1,0 +1,12 @@
+**Corollary 4.2 (The design criterion and its scope).**
+For the law (4.1) at cap $e=5\tau+d$, its exact cap criterion is
+
+$$
+22W\le3072d,\qquad159x+106y\ge3072(u-d),\qquad
+53x+106y\ge3072(v-d),
+\tag{4.6}
+$$
+
+together with $x,y\ge0$, $W=x+y\le24\tau$. This characterizes the
+displayed construction only. It is not full-catalog necessity.
+

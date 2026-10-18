@@ -1,0 +1,38 @@
+(p_0,p_5,p_3,p_2,p_{25})
+\]
+交换 \(2\) 与 \(5\)。则固定集满足 \(p_2=p_5\)，并且
+\[
+\Delta^4_{\mathrm{mir}}
+=
+\Delta^4\cap\operatorname{Fix}(\tau)
+=
+\operatorname{conv}
+\left\{
+e_0,\ e_3,\ e_{25},\ \frac{e_2+e_5}{2}
+\right\}
+\cong\Delta^3.
+\tag{64.12}
+\]
+
+所以这里出现两个不同的三维对象：
+
+1. \(\mathcal P\) 是三维观察空间中的方金字塔，是 \(\Delta^4\) 的投影像；
+2. \(\Delta^4_{\mathrm{mir}}\) 是四维概率空间中的三维四面体，是镜像固定切片。
+
+二者都来自同一个五态场，却不能直接相互命名。前者表示可见事件的几何外形，后者表示镜像对称成立时的概率状态。上一节的 RH 候选法向
+\[
+\eta(p)=\frac12\log\frac{p_2}{p_5}
+\]
+垂直于这个四面体切片；当前投影的隐藏坐标 \(\kappa\) 则沿着另一条镜像偶方向。它们都是“4 维到 3 维”的降维，却承担不同信息：
+
+\[
+\begin{array}{c|c|c}
+\text{分解} & \text{被删除或固定的方向} & \text{含义}\\ \hline
+\Delta^4\to\mathcal P^3 & \kappa\text{ 纤维} & \text{联合事件的观察缺失}\\
+\Delta^4\to\Delta^3_{\mathrm{mir}} & \eta\text{ 奇法向} & 2\leftrightarrow5\text{ 镜像缺陷}
+\end{array}
+\tag{64.13}
+\]
+
+RH 桥接若要把两者连接起来，必须构造一个自伴或正定的耦合，把 \(\kappa\) 与 \(\eta\) 的两个账本联系起来。仅仅因为二者都有 \(4\to3\) 形式，不能把它们当作同一个坐标。
+

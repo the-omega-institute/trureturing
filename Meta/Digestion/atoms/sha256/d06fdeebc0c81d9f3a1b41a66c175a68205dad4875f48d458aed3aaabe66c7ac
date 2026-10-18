@@ -1,0 +1,23 @@
+**Definition 3.1 (unresolved positions).** Fix $D\ge2$ and an attained
+$e\in S_{D-1}$. In lexicographic order let
+
+$$
+A_e=\{a\in\{L,R\}^{D-1}:r_e(\operatorname{parent}(a))
+=\mathsf{branch}\},\qquad f=|A_e|,
+\tag{CCF.8}
+$$
+
+and put
+
+$$
+U=\{\alpha,\beta,
+\langle\alpha,\alpha\rangle,\langle\alpha,\beta\rangle,
+\langle\beta,\alpha\rangle,\langle\beta,\beta\rangle\}.
+\tag{CCF.9}
+$$
+
+Every $Ra$, $a\in A_e$, is an actually present original-root address
+of length $D$. For a source with boundary $e$, write $x_a=v|_a$.
+These are mathematical coordinates of actual sources, not free acquired
+inputs or instructions to graft an executing register.
+

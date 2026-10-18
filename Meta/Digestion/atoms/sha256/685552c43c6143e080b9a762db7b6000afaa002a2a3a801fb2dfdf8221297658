@@ -1,0 +1,11 @@
+**Definition 3.3 (recovery domain).** A passive target of invocation,
+validation or Return is recoverable at an attainable boundary exactly
+when it is constant on the corresponding coordinates of $\mathscr R_b$.
+This is the existing fiber-constancy criterion
+[TargetRecoveryCriterion, `target_recovery_criterion`][REC], restricted
+to the attained image when necessary. It is not a decision theorem for
+arbitrary targets. Legal continuations must also preserve their actual
+permissions and operands; constancy of a value does not grant a port.
+The relation (NRF.8) describes possible histories through their stated
+coordinates, not the discarded event-by-event transcript.
+

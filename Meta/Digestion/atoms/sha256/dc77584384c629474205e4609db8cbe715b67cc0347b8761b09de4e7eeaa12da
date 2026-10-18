@@ -1,0 +1,50 @@
+**Theorem 8.1 (exactly $k+2$ further reads).** Fix the entire prefix of Definition 3.1: $B$ reads at $I$ and then the $k+1$ reads at $U,\ldots,U^{k+1}$ on the same recorded-reading clock. For every predetermined legal continuation with at most $k+1$ further reads, two original-model realizations have identical full data but different complete normalized targets. The smallest uniform further-read bound over predetermined legal continuations of this prefix is therefore exactly $k+2$, and the corresponding total-read optimum is
+
+$$
+T+k+2=B+2k+3=\max(k,d)+2k+4.
+$$
+
+Proof. Consider an arbitrary continuation with $m\le k+1$ reads. Let its predetermined finite word multipliers be $W_0,\ldots,W_{m-1}$, each possibly $I$. Its cumulative matrices and exact read indices are
+
+$$
+C_h=W_h\cdots W_0U^{k+1},\qquad i=T+h
+\qquad(0\le h<m).
+$$
+
+Each $C_h$ is a legal cumulative word matrix by Lemma 1.2. No bound on the word lengths or additional condition on the endpoints is imposed.
+
+First suppose $m\le k$. Set $x=2$, $u_-=2/3$, $u_+=4/3$, and use sources $R_-=R_x(u_-)$ and $R_+=R_x(u_+)$. In both runs choose the same polynomials
+
+$$
+G(t)=\prod_{h=0}^{m-1}(t-(T+h)),\qquad D(t)=0.
+$$
+
+For $m=0$ the product is one. In every case $G$ is monic, nonzero, and of degree $m\le k$; $D=0$ satisfies every $d\ge0$. The sources have equal signals $x$ at every baseline read and $x+\ell$ at the calibration read at $U^\ell$. Multiplication by the same $G$ at the same prefix indices gives identical complete prefix data. At each continuation read $T+h$, the gain is zero, so both observed values are zero independently of $C_h$. This constructs a collision for every such shorter continuation, including no continuation.
+
+Now suppose $m=k+1$. Apply Lemma 7.1 to the actual last cumulative matrix $C=C_k$, obtaining $x,u_-,u_+$ and sources $R_-,R_+$. Use in both runs
+
+$$
+G(t)=\prod_{h=0}^{k-1}(t-(T+h)),\qquad D(t)=0.
+$$
+
+For $k=0$ this is the constant one; otherwise it is a monic degree-$k$ polynomial. The first $k$ continuation readings vanish for both sources. At the last index,
+
+$$
+G(T+k)=\prod_{h=0}^{k-1}(k-h)>0,
+$$
+
+including the empty product one. Their last unweighted signals are equal by Lemma 7.1, so multiplying by this same nonzero gain yields equal last readings. The entire prefix agrees for the same reason as before: the sources have common trace $x$ and lower-left entry one and thus common signals at all its cumulative matrices. All observations occur at the original consecutive indices with no change of clock, source, gain, or drift.
+
+In either case the actual original sources are the displayed $R_-,R_+$, each with its explicit positive column and fixed positive row, and the single chosen $G,D$ are used throughout its run. Lemma 1.2 supplies positive read and unread states for every prescribed atom. Their complete targets are
+
+$$
+\left(R_-/x,xG,0\right),\qquad
+\left(R_+/x,xG,0\right).
+$$
+
+The normalized lower-right entries $u_-/x$ and $u_+/x$ differ. If $R_+=\lambda R_-$ for $\lambda>0$, taking traces would give $x=\lambda x$, hence $\lambda=1$, contradicting their different lower-right entries. Thus the collision is a genuine normalized-target distinction, not the positive-scale fibre. It occurs between actual common-source realizations, not separately fitted sample relations.
+
+The words are predetermined, so the two runs also have the same operation history. Any output based on the identical data and history is the same for both and cannot equal both targets. If a predetermined finite word list permits data-dependent early stopping, the collision for its full list also gives identical histories up to each earlier stopping decision. Both runs therefore stop together with the same output; early stopping does not remove this obstruction.
+
+This proves failure of every continuation with at most $k+1$ further reads. The terminal family of Definition 3.1 succeeds uniformly with $k+2$ further reads by Theorem 4.1. The lower and upper bounds match, proving the stated exact optimum for this prefix. Root counting supplies the upper survivor count; the arbitrary-endpoint positive-source collision supplies the separate necessity argument. ∎
+

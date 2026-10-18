@@ -1,0 +1,27 @@
+**定义 13.1（同步具名Read控制合同）。** 装置状态是 $(v,x)\in V\times\mathbb Z/m\mathbb Z$。原边身份保持整个 $E$，包括平行边、自环、零与非单位乘子。非停止命令的域、实际更新及响应为
+
+$$
+\begin{array}{c|c|c|c}
+\text{命令}&\text{实际域}&\text{装置更新}&\text{实际响应}\\ \hline
+\operatorname{Read}_v&\{v\}\times\mathbb Z/m\mathbb Z&(v,x)&\operatorname{Val}_v(x\bmod d_v)\\
+e\in E&\{\operatorname{src}(e)\}\times\mathbb Z/m\mathbb Z&
+(\operatorname{dst}(e),a_ex+c_e)&\operatorname{Ack}(e)
+\end{array}
+\tag{13.1}
+$$
+
+响应使用表中不相交的标记；Ack是真实所发原边的身份，不是相位信息。完整控制器是有限集合 $K$、共同初态 $k_0$、指令及响应更新函数
+
+$$
+u:K\longrightarrow\{\operatorname{Read}_v:v\in V\}\sqcup E
+       \sqcup\{\operatorname{Halt}(z):0\le z<D_s\},
+\qquad \delta:K\times O\longrightarrow K.
+\tag{13.2}
+$$
+
+$k_0$与隐藏 $t$ 无关；初始装置为 $(s,t)$，$t$ 遍历整个 $\mathbb Z/m\mathbb Z$。一次非停止事件在地址 $k$ 发出 $u(k)$，取得该命令的实际响应 $o$ 后进入 $\delta(k,o)$。发行与等待使用同一地址 $k$；等待期间没有其它指令或可查询的运行阶段。事件是同步的，只有响应交付后才进行下一次选择。所有命令、等待及字面输出地址均在 $K$ 内；没有免费的程序计数器、当前顶点输入、时钟、阶段、历史档案或最后的输出计算。若另加异步忙闲位或独立等待地址，它们也须计入完整状态，不能沿用本同步合同的计数。
+
+使用主合同 $\mathsf M$：先付根 $\operatorname{Read}_s$，每条原边后付到达顶点的Read，取得到达响应后才继续或停止。即使允许在这些位置重复付费Read，以下下界仍成立。原边与Read各计一个事件，Halt计零；预算 $B$ 是每份实际初始来源的总事件数上界。命令在整个候选支持上须共同合法，控制器只按已经付费返回的响应更新。初始根响应并不免费；重置、复制来源、旧版本查询、完整边界查询、补充数字和未走路径的响应均不在字母表内。
+
+固定词控制器要求存在同一有限非Halt命令词 $w=a_1\cdots a_L$，使每个实际 $t$ 都恰好执行它；存储响应可以改变最后的字面 $\operatorname{Halt}(t\bmod D_s)$，不能改变非Halt词或停止位置。每个词位的地址仍由 $K,\delta$ 提供。自适应控制器可依真实响应改变词和停止位置，但须在全部来源上合法、正确并在预算内停止。两类最小 $|K|$ 记为 $K_{\rm fixed}(B),K_{\rm ad}(B)$；不可行记 $+\infty$。
+

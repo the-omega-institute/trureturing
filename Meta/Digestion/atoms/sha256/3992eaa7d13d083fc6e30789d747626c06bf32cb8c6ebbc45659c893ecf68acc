@@ -1,0 +1,44 @@
+### 100.1. Original hypotheses and supported data
+
+Retain the original four two-coordinate fibres, local channels
+\(\mathbb C^8\to\mathbb C^4\), fixed correlated encoding, arbitrary reference and
+unhalved diamond error. Let \((G,H)\) be a local minimum on the full calibrated
+domain \(\{G\succeq0:G_{ff}=I_2\}^2\), of ranks \((7,6)\), with
+\(0<t=F(G,H)<1/4\). Let \(a\) span \(\ker G\), with support \(S\) of occupancy
+\((2,1,1,0)\), labeled \(\{1,2,3,4\}\), where \(F=\{1,2\}\) is a whole original
+fibre and 3,4 lie in two other original fibres.
+
+Choose the common pair furnished by §99 and extend it by zero outside \(S\). Its supported density is positive definite, \(L_S=T_S-G_S\odot H_S\)
+has inertia \((2,2)\), and the unique principal witness and its density complement
+have ranks two and two. Fix this same pair and any full optimal dual
+\(Z\succeq0,\ Z-2L\succeq0,\ Z_{ff}\preceq tI_2\), with \(Z\rho=2LW\).
+Write \(p_j=(\rho_S)_{jj}>0\), and let \(\alpha>0\) be its common-stress scale, so that \(W_{ij}=-\alpha a_i\overline{a_j}/(2\overline{H_{ij}})\) across original fibres. Put \(N=Z-L\) and
+\[
+K=N_S/t\succ0,\qquad D=L_S/t,\qquad J=K^{-1}D.
+\]
+Then
+\[
+DK^{-1}D=K,\quad J^2=I,\quad
+K_{FF}=I_2,\quad K_{33}=K_{44}=1,\quad D_{ff}=0. \tag{1}
+\]
+For the actual original missing partner \(o\) of singleton \(j\), write
+\(\ell=L_{oS}\). Full complementarity gives
+\[
+N_{oS}=\ell J,\quad N_{oo}\le t,\quad \ell e_j=\ell Je_j=0. \tag{2}
+\]
+The second zero is equivalent to \((\ell W_S)_j=0\), since
+\(Je_j=2W_Se_j/p_j-e_j\), with \(p_j>0\).
+
+For \(j=3\), express the singleton \(H\)-records in the whole-fibre orthonormal
+basis as \(\psi=(x,y)^T,\phi=(z,w)^T\), and put \(\Delta=xw-yz\ne0\).
+As in §99, the actual partner row and full \(G\)-kernel imply
+\[
+r=(-a_1/y,\ a_2/x,\ a_4/\Delta)^T,\quad
+b=\tfrac12\sum_i r_i,\quad
+\widetilde r=(r_1,r_2,0,r_3)^T,\quad
+\ell\widetilde r=b. \tag{3}
+\]
+Original nonzero cross entries and singleton independence justify every division.
+All of \(K,D,r,b\) are fixed principal data. No replacement outside row is
+presumed physically realizable.
+

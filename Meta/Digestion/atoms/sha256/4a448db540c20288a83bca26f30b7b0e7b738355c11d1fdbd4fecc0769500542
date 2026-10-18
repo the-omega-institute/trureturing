@@ -1,0 +1,23 @@
+**Convention 1.4 (First-read and stationary event identities).** QMB
+Theorem 2.1 gives, for every original CPTP channel,
+
+$$
+e(T)=\sup_{t\ge0}\max_{J\subseteq\mathsf S}
+\|Q_J(t)-\widehat T^\dagger(Q_J(t))\|_{\rm op}.
+\tag{1.8}
+$$
+
+If a frame channel $S$ commutes with every $\operatorname{Ad}_{O(t)}$,
+its adjoint does too, and
+
+$$
+Q_J(t)-S^\dagger(Q_J(t))
+=O(t)^T[\Pi_J-S^\dagger(\Pi_J)]O(t).
+\tag{1.9}
+$$
+
+TP gives $S^\dagger(I)=I$, so complementary residuals are negatives.
+Thus the stationary error is exactly the maximum of the five singleton
+and ten pair norms. This consequence does not assume $S(I)=I$ or
+$S=S^\dagger$.
+

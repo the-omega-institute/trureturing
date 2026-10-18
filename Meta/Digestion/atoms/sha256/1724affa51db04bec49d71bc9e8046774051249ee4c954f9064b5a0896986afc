@@ -1,0 +1,79 @@
+## 19. Global pencil geometry on the fixed-polar-sign prefix class
+
+The results below describe the entire actual fibre over every proposed five-read vector for every prefix in the class $\mathscr G$ of Section 18 and every legal final word. They also give a finite positive-gain collision for the exact history of Proposition 17.1. The negative erased-gain transfer form in that proposition remains valid and coexists with this collision at other slopes. The exact Section 17 history is consequently excluded as a recovering candidate. Section 23 states the current residual; Sections 14–18 retain their prior conditional statements and proofs.
+
+Retain the matrices $M,J,U,L$ of Definition 1.1. Fix legal cumulative endpoints
+$$
+A_0=I,\qquad A_{i+1}=W_iA_i\quad(0\le i\le3),
+$$
+where each $W_i$ is a predetermined finite $M/J$ word, including the empty word. The final multiplier is arbitrary subject to that contract. The actual model is
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,\qquad k\in\mathbb R,
+$$
+$$
+z_i=(1+ik)\operatorname{tr}(A_iS)+\delta\quad(i=0,1,2,3,4),
+\qquad D(\tau)=\delta\quad(\tau\in\mathbb R).
+\tag{19.1}
+$$
+The target is the whole $(S,k,D)$. A read after an empty word still advances the reading index. Unread atoms do not advance it. All zero and negative gains remain admissible.
+
+For clarity, every positive determinant-zero matrix here is an actual source, with the complete realization
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,
+\qquad f=\binom p r,\qquad \ell=(1,q/p).
+\tag{19.2}
+$$
+Indeed $s=qr/p$ gives $f\ell=S$, and for $A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$,
+$$
+\ell Af=ap+br+cq+es=\operatorname{tr}(AS).
+$$
+The column is positive throughout every recorded and unread atom because
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0).
+$$
+The row $\ell$ is fixed for that entire run. A different candidate run may have its own fixed positive row. The only gain/relation representations of a fixed effective target are $R=S/b$, $\alpha=b>0$, $\beta=bk$, with $D$ unchanged: these follow necessarily from $S=\alpha R$, $k=\beta/\alpha$, and substitution proves sufficiency. For a fixed relation, equality of first columns in two positive factorizations forces $f'=\mu f$, $\mu>0$, and equality of second columns then forces $\ell'=\ell/\mu$. These freedoms do not identify different effective targets.
+
+On auxiliary full real matrices define
+$$
+\mathsf B X=\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^4,
+\qquad
+\mathsf C X=\bigl(i\operatorname{tr}(A_iX)\bigr)_{i=1}^4,
+\qquad \mathsf T_k=\mathsf B+k\mathsf C.
+\tag{19.3}
+$$
+For arbitrary proposed data $z=(z_0,\ldots,z_4)\in\mathbb R^5$ put
+$$
+y=(z_i-z_0)_{i=1}^4.
+$$
+Subtracting the initial equation of (19.1), and then restoring it, proves both directions of
+$$
+(S,k,D)\text{ realizes }z
+\quad\Longleftrightarrow\quad
+\mathsf T_kS=y,\quad
+S>0\text{ entrywise},\quad\det S=0,\quad
+D(\tau)=z_0-\operatorname{tr}S\text{ for every }\tau.
+\tag{19.4}
+$$
+Strict positivity makes such a determinant-zero matrix nonzero rank one. In particular two runs collide exactly when
+$$
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1,
+\qquad \delta_1-\delta_0=\operatorname{tr}(S_0-S_1).
+\tag{19.5}
+$$
+There is one entire drift per run, rather than independently adjustable offsets at different indices.
+
+Use the determinant polar
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+For $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and $Y=(\begin{smallmatrix}P&Q\\R&T\end{smallmatrix})$, direct expansion gives
+$$
+\mathfrak b(X,Y)=sP+pT-rQ-qR,
+\qquad
+\det(X+uY)=\det X+u\mathfrak b(X,Y)+u^2\det Y.
+\tag{19.6}
+$$
+In particular the polar is symmetric bilinear. Auxiliary linear inverses used below are proof devices, never additional acquisitions.
+

@@ -1,0 +1,50 @@
+**Theorem 5.4 (Exact event maximum and root isolation).** The number
+$\theta$ is the unique positive root of $p_N$, and
+
+$$
+\frac{52427}{100000}<\theta<\frac{13107}{25000},\qquad
+\max_{1\le|J|\le2}\|H_J\|_{\rm op}=\theta.
+\tag{5.7}
+$$
+
+Only the singleton $N$ reaches this maximum.
+
+Proof. The $L$ block of $H_N$, obtained from (5.2), is exactly $C_N$.
+One has $a_0>0$, $c_0<0$, and $b_0>0$. Thus
+$a_0c_0-b_0^2<0$, giving exactly one positive eigenvalue and one
+negative eigenvalue in $C_N$. The positive one is (5.6).
+The $V$ block is a compression of $-\mathcal A(\Pi_N)$ and is
+nonpositive, since $\mathcal A=S^\dagger$ is positive.
+
+For an exact root sign certificate, reduce $p_N(z)$ in $\mathbb Q(r)$
+and use the same interval (5.3). The appropriate affine endpoint values
+give
+
+$$
+\begin{aligned}
+p_N(52427/100000)
+&<\frac{-8876548390036701}{6016704406880000000000}
+<-\frac1{1000000},\\
+p_N(13107/25000)
+&>\frac{54591695728667293}{11281320762900000000000}
+>\frac1{250000}.
+\end{aligned}
+\tag{5.8}
+$$
+
+These substitutions use only (5.6), $r^2=17$, and rational arithmetic.
+There is only one positive root, so the signs prove its isolation.
+Lemma 5.2 bounds all negative eigenvalues of $H_N$ in magnitude by
+$1/2$, which is below $\theta$. Its positive eigenvalue is therefore
+its norm. The other fourteen events have norms below either $1/2$ or
+$26213/50000$, and
+
+$$
+\frac12<\frac{26213}{50000}
+<\frac{52427}{100000}<\theta.
+\tag{5.9}
+$$
+
+This proves the event maximum. No self-adjointness of the channel or
+trace-zero property of $H_N$ was assumed. $\square$
+

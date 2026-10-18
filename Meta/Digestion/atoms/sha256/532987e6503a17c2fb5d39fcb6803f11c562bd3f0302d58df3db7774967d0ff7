@@ -1,0 +1,39 @@
+**Convention 8.2 (bounded exact readings).** In-memory exact enumeration
+gives the following readings; no experiment program or data is retained.
+
+| Depth | Canonical states | Selected targets | Omitted-coordinate identity checks | Pairs of an essential target and a distinct target that fail unary determination |
+| --- | ---: | ---: | ---: | ---: |
+| $1$ | $3$ | $1$ | $0$ | $0$ |
+| $2$ | $11$ | $2$ | $11$ | $4$ |
+| $3$ | $123$ | $5$ | $246$ | $30$ |
+| $4$ | $15131$ | $11$ | $60524$ | $154$ |
+
+For each enumerated state the selected factor vector also distinguishes
+that canonical state. Enumerating all $1446$ actual right subtrees of
+height at most three gives the canonical fiber sizes $5,18,18,82$.
+The procedures in Theorem 6.2 reconstruct $\pi_3(v)$ on all of them,
+with worst fresh costs $(2,4),(3,8),(3,8),(4,12)$ in
+(Reads, letters) order. All $10122$ comparisons of the seven full
+factors with those of the reconstructed canonical source agree.
+These checks cover only the stated finite domains. Universal
+minimality, all-template equivalence, simultaneous common extensions,
+arbitrary-word lower bounds and asymptotic claims rest on the ordinary
+proofs above, not finite extrapolation. No Lean build, ingestion or
+all-programme completion is asserted.
+
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[D3]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[COK]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[OCC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+[GDB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[FTE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTEB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[MLM]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[MLMB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[KK]: https://arxiv.org/html/1105.0240v2
+[QWS]: https://arxiv.org/html/2609.18024v1
+

@@ -1,0 +1,8 @@
+**引理 10.2（finite alphabet at the endpoint）。** A uniform finite complete-state alphabet cannot serve all sizes of the neutral-free plateau at $E=1/2$, or either neutral-containing plateau even at $N=1$. Consequently
+$M_{\rm num}(N,1/2)\to\infty$ in the neutral-free domain. The construction above gives
+$M_{\rm num}(N,1/2)=O(\log\log(N+2))$ for fixed parameters. A matching endpoint rate is open.
+
+**证明。** For each unit direction $u$, rotate an actual contracting family whose first phase converges to $u$ at each fixed future index; use Lemma 6.2 for the neutral-free case and Proposition 10.1 for the fixed-size cases. From a finite alphabet one installed ready configuration recurs infinitely often in each such source sequence. Color $u$ by that configuration, choosing one recurrent color.
+
+If $u,v$ have the same color, its deterministic outputs in that phase must be within $1/2$ of both unit limits at every fixed index. Fix one particular contracting source assigned that color and let the phase index tend to infinity. Its true outputs tend to zero, so the emitted vectors have a bounded subsequence with a limit within $1/2$ of $0,u,v$. A ball of radius $1/2$ containing zero and a unit $u$ has the unique center $u/2$; it contains a second unit $v$ only when $v=u$. Finitely many colors cannot cover the sphere. This uses a finite alphabet, not an invalid recurrence inference for countably many variable-length words. A bounded peak across all $N$ would give just such a finite alphabet. The upper uses $K=1$ in the proved finite construction.
+

@@ -1,0 +1,12 @@
+**Definition 395.2 (The precise shared-product class).** Choose arbitrary $h\in[0,1]$ and $p=(p_3,\ldots,p_L)\in[0,1]^m$. Let $f_j(0)=1-p_j$, $f_j(1)=p_j$, and let $\pi_p(x)=\prod_{j=3}^L f_j(x_j)$. The fixed-total common-product completion $z=z_{p,h}$ has
+
+$$
+\begin{aligned}
+P_{00x}&=(1-h)\pi_p(x),&P_{01x}&=h\pi_p(x),&P_{10x}&=\pi_p(x),\\
+C_{1^{n-1}0v}&=\prod_{j=n+1}^L f_j(v_j)\quad(3\le n\le L),&&&T&=1.
+\end{aligned}
+\tag{395.5}
+$$
+
+The empty product is one. Every $A$ and every other coefficient is zero. These scores retain each total in (395.4), hence $W_z=3$ and $Q(z)=q$. The free bias $h$ distributes the first class between early prefixes $00,01$; $h=1$ retains the input's $01/10$ split. Both early union classes have the same late product marginal, and every late correct class uses its suffix biases from that very same $p$. Independence only within separately chosen class-dependent laws is a different condition. All closed-cube endpoints and every zero coefficient in (395.5) are included.
+

@@ -1,0 +1,50 @@
+### 79.3. Reconstructible six-order norm
+
+Write \(E=\bar e\). The normalized upper roots \(Z_j=x_j/t\) satisfy
+\[
+f_Z(Z)=Z^3-3Z^2+3EZ-E/q,\quad
+\mathcal B(Z)=(Z^2-3Z+3E)/E=\bar Z,\quad
+\mathcal L(Z)=G+C(Z-1)+D(\mathcal B(Z)-1).
+\tag{79.7}
+\]
+The cubic discriminant is \(27E^2\delta/q^2\), a unit.
+Here is a finite coefficient construction of the product of all six
+relative ordinary overlaps, divided by \((3tt')^6\).
+Write ordered triples as \(1+a\omega^j+b\omega^{-j}\) and
+\(1+c\omega^j+d\omega^{-j}\), and put
+\[
+\begin{aligned}
+P&=ab=1-E,&S&=a^3+b^3=2-3E+E/q,\\
+Q&=cd=1-E',&T&=c^3+d^3=2-3E'+E'/q',\\
+H&=\bar C/E,&K&=\bar D-H,&F&=C'-D'/E',&J&=D'/E',\\
+A_0&=1/E+HF/R,&B_0&=-1/E+KF/R,&C_0&=HJ/R,&D_0&=KJ/R,\\
+m&=1+\bar GG'/R,\\
+L_0&=A_0a^2c+B_0bc+C_0a^2d^2+D_0bd^2,\\
+L_1&=A_0b^2d+B_0ad+C_0b^2c^2+D_0ac^2.
+\end{aligned}                                                    \tag{79.8}
+\]
+Expand
+\[
+\mathcal F=(m^3+L_0^3+L_1^3-3mL_0L_1)
+ (m^3+L_0^3+L_1^3-3mL_0L_1)_{c\leftrightarrow d}.
+\tag{79.9}
+\]
+It is separately symmetric in \(a,b\) and \(c,d\). In every monomial the
+exponent difference within each pair is divisible by three. The following
+explicit rule eliminates these four indeterminates without any root choices.
+Group monomials into their orbits under the two exchanges. For one pair,
+replace the orbit sum of \(a^rb^s\) by \(P^r\) if \(r=s\), and otherwise by
+\(P^{\min(r,s)}U_{|r-s|/3}\), where
+\(U_0=2,U_1=S,U_n=SU_{n-1}-P^3U_{n-2}\). Use the same rule with \(Q,T\)
+for the second pair. Multiply the two orbit sums and their common original
+coefficient. This gives an integer polynomial
+\(\mathcal N(A_0,B_0,C_0,D_0,m,P,S,Q,T)\), with 508 nonzero terms.
+Equation (79.9) is its exact pullback identity and specifies every coefficient.
+
+Evaluate these nine arguments in \(\mathcal A\otimes\mathcal A\), with
+primes denoting the second factor, and call the resulting element \(N\).
+The three cyclic overlaps divided by \(3tt'\) are
+\(m+\omega^kL_0+\omega^{-k}L_1\); their product is the first factor in
+(79.9). Exchanging \(c,d\) gives the other three orders. Therefore an
+orthogonal generic pair always annihilates \(N\).
+

@@ -1,0 +1,22 @@
+**Theorem 1.1 (the entire closed strip).** Under the separate hypotheses in §2, for every
+
+$$
+(t,\lambda)\in\mathcal P=[99999/100,100001/100]\times[91/20,23/5],\qquad A=\log(1+t),
+$$
+
+there is a unique merged optimizing endpoint law specified in §§3–6. It has four positive pure low weights, three positive saturated low weights, and one required high outcome. The minimum original actual acquisition alphabet is exactly seven low plus one high, hence **eight total outputs**. At each chosen parameter there is one common instrument acting on all twelve histories. The instrument may depend on the parameter.
+
+The law and its value are analytic in the interior and extend continuously to the closed strip. The map $(t,\lambda)\mapsto(A,s(t,\lambda))$ is injective, has a nonzero interior Jacobian, and covers the whole closed region between its two edge curves. In particular it covers every point of the exact original closed rectangle
+
+$$
+\mathcal R=[1249633/10^7,624827/5000000]\times[\log(100099/100),\log(100101/100)],
+$$
+
+The strength endpoints are exactly $0.1249633$ and $0.1249654$. Throughout the strip the exact value is the root expression in (8), and
+
+$$
+0.09958337<\mathcal T_{\log(1+t)}(s(t,\lambda))<0.09965764.
+$$
+
+There is no optimizing support, occupied-sign, collision, failure-line, moment-rank or regularity event inside this strip. This does not inventory positive-level stationary points unrelated to the optimum.
+

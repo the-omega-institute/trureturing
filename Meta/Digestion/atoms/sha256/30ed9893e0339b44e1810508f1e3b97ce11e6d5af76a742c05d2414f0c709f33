@@ -1,0 +1,43 @@
+**Theorem 184.1 (Probability equivalence at the clipped common budget).**
+For fixed $M\ge1$, the criterion of Theorem 183.2 at $b$ is
+equivalent to the existence of one probability mixture on $E_L$
+with the same graph restriction, whose event vector dominates
+$d(x)$ for
+
+$$
+x=\alpha+\frac{b-\alpha}{M}.
+\tag{184.1}
+$$
+
+More generally its forward allocation supplies the entire closed
+segment $\alpha+t(b-\alpha)$, $0\le t\le1/M$.
+For $b\in H_L$ with finite $s=\rho_N(b)$, choosing
+$M=\max\{1,s\}$ therefore places the largest $N$-feasible radial
+point in this stopped class, provided this single restricted
+allocation exists.
+
+**Proof.** Reuse the padding identity of Proposition 179.2 and the
+radial correspondence of Theorems 166.2--167.2. Explicitly, assign
+probability $\lambda_D/M$ to each endpoint and additional probability
+$1-\tau/M$ to $R$. The weights are nonnegative and sum to one,
+including $\tau=M$. Combine an existing $R$ coordinate with its
+padding once. The resulting event vector is
+
+$$
+z_R+\frac{\sum_D\lambda_D(z_D-z_R)}{M}
+\ge z_R+\frac{d(b)-z_R}{M}=d(x).
+\tag{184.2}
+$$
+
+Its suffix $Q$ is the old $Q$ divided by $M$, so it retains (183.3).
+For the reverse direction, if $p=\sum_D\pi_DD$ is such a
+probability mixture, set $\lambda_D=M\pi_D$ and $\tau=M$.
+Then $f=R+M(p-R)$ dominates $d(b)$, and its suffix $Q$ is
+multiplied by $M$. Theorem 183.2 supplies the separate certificates.
+At any $t\in[0,1/M]$, use endpoint weights $t\lambda_D$ and
+$R$ padding $1-t\tau$. This proves the segment statement.
+Theorem 167.2 gives its largest $N$-feasible parameter
+as $1/M$. At $t=0$ the profile is the auxiliary $\alpha$, not a
+positive original vanishing sequence. Positive original profiles and
+their whole tails have the realization in Section 189. $\square$
+

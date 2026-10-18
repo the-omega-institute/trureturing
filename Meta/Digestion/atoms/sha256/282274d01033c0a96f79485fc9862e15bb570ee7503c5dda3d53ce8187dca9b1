@@ -1,0 +1,94 @@
+**定理 203.4（一参数乘积族的完整支持）。** 若晚期正确质量非零，令
+$z=\max\{j\ge3:\gamma_j>0\}$、$I_z=\{3,\ldots,z-1\}$，并令
+$\eta=\max(\{\gamma_i:i\in I_z\}\cup\{0\})$。
+$\mu$ 仍是全部晚期总量的最大值，此处尚不要求 $\gamma_z=\mu$。
+以 $m_{-i}$、$m_{-ij}$ 表示全部晚期总量排除所列指标后的最大值，空集取零。
+
+固定一个参数
+
+$$
+u>0,\qquad\eta\le u,\qquad2u\le W,\qquad\tau=W-2u.
+\tag{203.20}
+$$
+
+在 $I_z$ 的子集上定义一个乘积测度
+
+$$
+\nu_u(Z)=2u\prod_{i\in Z}\frac{\gamma_i}{u}
+                  \prod_{i\in I_z\setminus Z}\left(1-\frac{\gamma_i}{u}\right).
+\tag{203.21}
+$$
+
+其质量为 $2u$。构造评分 $V_u$：在 $w(\{j,z\})$ 放正确质量
+$\gamma_j$，$3\le j\le z$；其中 $j=z$ 的字是 $w(\{z\})$。
+对 $a=1,2$ 和每个 $Z\subseteq I_z$，在
+$w(\{a,z\}\cup Z)$ 放 pair 质量 $\nu_u(Z)/2$，并置 $T_{V_u}=\tau$。
+其余行包括早期正确行和基行均为零。于是
+
+$$
+V_u\cdot\mathbf r=W,\qquad K_{V_u}=K_y,\qquad
+F_{Q(y)-Q(V_u)}(b)=-\gamma_1(1-b_1)-\gamma_2(1-b_2)\le0.
+\tag{203.22}
+$$
+
+这个完整乘积族的精确 $N$ 超额为
+
+$$
+\begin{aligned}
+D_{\gamma,W}(u)=\max\biggl\{&0,\ \mu-\tau,\ \mu-u,\\
+ &\max_{i\in I_z}(m_{-i}-u+\gamma_i-\tau)_+,\\
+ &\max_{i\in I_z}(m_{-i}-2u+2\gamma_i)_+,\\
+ &\max_{i<j,\ i,j\in I_z}\biggl[
+ \gamma_i(2\gamma_j/u-1)_+
+ +\gamma_j(2\gamma_i/u-1)_+\\
+ &\hspace{42mm}
+ +(m_{-ij}-2u(1-\gamma_i/u)(1-\gamma_j/u)-\tau)_+
+ \biggr]\biggr\}.
+\end{aligned}
+\tag{203.23}
+$$
+
+即 $\Delta_N(V_u)=D_{\gamma,W}(u)$。若存在同一个满足 (203.20) 的 $u$
+使 $D_{\gamma,W}(u)\le\delta$，则得到
+$Q(y)\in D_N(\delta)+P_H$；若再有 $\delta\le1$，即得 $(V_u,0)$ 证书。
+公式的精确性只属于所列乘积族。
+
+**证明。** (203.20) 保证 (203.21) 的所有因子非负。类总量为 $\gamma$，
+pair 与正字总量为 $W$，所以 (203.22) 直接由商定义得出。
+用 (203.3) 逐胞比较：零标签收集 pair 质量和所在胞的 $\tau$，早期标签
+不超过该 pair 质量，晚期标签只有自身正确质量。下面给出所有非平凡日程的
+超额；每行均已对全部标签最大化，$a\in\{1,2\}$。
+
+| 日程 | 完整 $N$ 超额 |
+| --- | --- |
+| $(1,2)$ | $(\mu-\tau)_+$ |
+| $(a,z)$ | $(\mu-u)_+$ |
+| $(a,i)$，$i\in I_z$ | $(m_{-i}-u+\gamma_i-\tau)_+$ |
+| $(i,z)$，$i\in I_z$ | $(m_{-i}-2u+2\gamma_i)_+$ |
+| $(i,j)$，$i<j$ 均在 $I_z$ | (203.23) 方括号内三个正部之和 |
+
+在 $(a,i)$ 上，早期零分支的 pair 总量为 $u$；另一个零胞的 pair 质量和
+正确 $i$ 质量都为 $\gamma_i$；$11$ 胞的基准为 $u-\gamma_i+\tau$，
+正确最大值为 $m_{-i}$。在 $(i,z)$ 上，$00$ 胞的 pair 质量为
+$2\gamma_i$，足够覆盖 $\gamma_i$；$10$ 胞比较
+$2u-2\gamma_i$ 和 $m_{-i}$；$11$ 仅有 $\tau$。
+
+内部双询 $(i,j)$ 的 pair 质量依次为
+
+$$
+\frac{2\gamma_i\gamma_j}{u},\quad
+2\gamma_i(1-\gamma_j/u),\quad
+2\gamma_j(1-\gamma_i/u),\quad
+2u(1-\gamma_i/u)(1-\gamma_j/u).
+\tag{203.24}
+$$
+
+$00$ 没有正确质量；$01,10$ 分别只有 $\gamma_i,\gamma_j$；$11$ 中
+正确最大值为 $m_{-ij}$，并另有 $\tau$。这正给出三个同时出现的正部之和，
+不能分别优化三个参数 $u$。
+
+零总量内部地址在支持上固定为一，$z$ 后的地址也固定为一。含它们的表退化为
+单询或常数信息；这些以及空表、重复、反序表都被上述双询比较涵盖。故所列
+最大值是完整目录支持，不是选定几个表的下界。即使某乘积因子为零、内部集合
+为空或不同字重合，质量求和和胞公式仍成立。$\square$
+

@@ -1,0 +1,31 @@
+**Definition 384.2 (Collapsed allocations and simultaneous stock).** Put $w^*=1^{L-1}0$, $w^+=1^L$, and $c_s^*=c_s(w^*)$. For $\mathcal C=N,O$, let $K_{\mathcal C}=K_{\mathcal C}(b_{<L},e,M)$ be the complete mass-$M$ allocations $k$ on all $L$ addresses with output labels $0,\ldots,L-1$ which satisfy every row of (384.2) at every word with $n(w)<L$, and
+
+$$
+k_{w^*}(0)\ge M-e,\qquad k_{w^+}(0)\ge M-e.
+\tag{384.3}
+$$
+
+No cell, mass or output law in this set is fixed in advance. In particular both last-bit endpoints occur among its earlier-word constraints. For one such whole allocation put
+
+$$
+\begin{aligned}
+a_s&=k_{s,c_s^*}(0),& I_s(w)&=\mathbf1_{c_s(w)=c_s^*},\\
+s_w(k)&=\min\{k_w(0)-d_A(w),\ k_w(0)+k_w(n(w))-d_P(w)\}
+&& (n(w)<L),\\
+s_+(k)&=k_{w^+}(0)-(M-e).
+\end{aligned}
+$$
+
+Let $\operatorname{cap}(k)$ be the maximum of $\sum_s x_s$ subject to
+
+$$
+0\le x_s\le a_s,\qquad
+\sum_s I_s(w)x_s\le s_w(k)\quad(n(w)<L),\qquad
+\sum_s I_s(w^+)x_s\le s_+(k).
+\tag{384.4}
+$$
+
+Define $\nu_{\mathcal C}=\max_{k\in K_{\mathcal C}}\operatorname{cap}(k)$, with $\nu_{\mathcal C}=-\infty$ when $K_{\mathcal C}$ is empty. Every loss in (384.4) uses the same $k$ and the same stock vector $x$.
+
+The distinguished cells are the empty cell, an old singleton's $1$ cell, an old pair's $11$ cell, singleton $L$'s $0$ cell, and pair $(i,L)$'s $10$ cell. Their indicators $I_s$ agree in the two catalogs. Schedules omitting $L$ may therefore fund label $L$ in their positive cells; no query-$L$ restriction is imposed.
+

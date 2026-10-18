@@ -1,0 +1,36 @@
+### 定义 37.1（有限可逆图与 Markov 生成元）
+
+令 \(V\) 是有限集合，令 \(\mu_x>0\) 且 \(\sum_{x\in V}\mu_x=1\)。令 \(c_{xy}=c_{yx}\ge0\)，\(c_{xx}=0\)，并假设由 \(c_{xy}>0\) 生成的无向图连通。定义
+
+\[
+(Lf)(x)
+=
+\frac1{\mu_x}
+\sum_{y\in V}c_{xy}\bigl(f(y)-f(x)\bigr).
+\]
+
+在
+
+\[
+\langle f,g\rangle_\mu
+=
+\sum_{x\in V}\mu_x f(x)g(x)
+\]
+
+上，\(L\) 是自伴且非正。记 \(A=-L\)。定义 Dirichlet 双线性型
+
+\[
+\mathcal E(f,g)
+=
+-\langle f,Lg\rangle_\mu
+=
+\frac12\sum_{x,y\in V}
+c_{xy}\bigl(f(x)-f(y)\bigr)\bigl(g(x)-g(y)\bigr).
+\]
+
+于是 \(\mathcal E(f)=\mathcal E(f,f)\ge0\)，且连通性给出
+
+\[
+\ker A=\operatorname{span}\{\mathbf 1\}.
+\]
+

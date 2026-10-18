@@ -1,0 +1,28 @@
+**Definition 1.1 (Source, preparation and controls).** Fix $0<Z<1$,
+$r=1-Z$ and $H=r/2$. In mode order $(0,1,2,3,13)$ put
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H,
+\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+Fix one arbitrary preparation height $k_0\in(0,H)$ and arbitrary
+preparation phases $\theta^{\rm in}$. All producing histories start
+from that preparation. The negative-phase convention and native law are
+
+$$
+\psi_j=\sqrt{p_j}\,e^{-i\theta_j},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_j=\frac{d_j}{p_j(k)I(k)}\dot\chi,
+\qquad
+I(k)=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+A history is piecewise $C^1$ or absolutely continuous on a finite
+compact time interval, stays strictly inside $0<k<H$ at every time,
+and has finite phase variation. Its initial real relation lift agrees
+with $d^{\mathsf T}\theta^{\rm in}$. A query may occur at any finite
+prefix; no closing loop or winding restriction is imposed. The state
+queried is the actual ray, rather than a history or a retained real lift.
+Write $\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+

@@ -1,0 +1,20 @@
+### 35.6. 固定词失败、不同父与尚缺的统一策略桥梁
+
+**fixed word consequences.**
+
+JMJMJJM fails as an entire-quadratic decoder: A supplies two different legal complete worlds sharing all eight actual readings of that word. JMJMJJJ also fails: B supplies such a pair for that word. A deterministic rule stopping earlier along either colliding record returns the same output for two possible complete targets, so an earlier stop cannot repair that fixed word. These examples embed in the cubic class as lower-degree worlds but give no adaptive cubic lower bound.
+
+**smallest local repairs.**
+
+For the already-acquired A history, take final J and use its complete inverse above. For the already-acquired B history, take final M and use its complete inverse above. These repairs require exactly one selected last read and are justified for the full local fibers. A fixed replacement of the inherited affine word's last action cannot serve both families.
+
+**remaining uniform bridge.**
+
+A uniform repair after the entire five-action parent JMJMJ requires a description or other adequate proof for every possible compatible parent history and ALL constant, affine, genuine-quadratic, zero-sample, singular and potentially infinite branches. Its selected sixth action must work for EVERY actual sixth response: each resulting whole slice must either already be a singleton or admit ONE last action injective on that entire slice. An earlier choice between sixth J and M must depend only on the already-acquired parent record. This proof treats two actual sixth-J response slices and does not cover the other slices of either parent, much less all parents. It cannot choose a favorable future response.
+
+**different histories.**
+
+The A and B worlds share different five-action parent records, even allowing their respective nonzero response scales. Their union is not a compatible same-parent witness and cannot establish L2 by assembling their action-specific properties. Each local whole fiber actually has a separating last action. Pairwise separability in other larger fibers would also need an action that works on the entire slice, not merely a separately chosen action for each pair.
+
+A 的末 J 与 B 的末 M 各在其整个实际切片上单射；其局部父是 L0 而不是 L1。第 34 节的实际六 M 子片与本节六 J 子片不同；本节的 A、B 也属于不同五动作父记录。因此不能把任意这些局部对象拼成同一个父的 L2，亦不能把“每对各有某个分离动作”替代“一个动作在整个切片单射”。
+

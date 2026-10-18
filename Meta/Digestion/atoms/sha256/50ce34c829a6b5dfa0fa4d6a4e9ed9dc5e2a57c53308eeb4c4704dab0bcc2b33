@@ -1,0 +1,26 @@
+**Proposition 8.3 (paid full-family realization at depth five).** In the
+right subtree put the four actual blocks $(x,y,z,A)$ at scaffold
+addresses $LL,LR,RL,RR$, where $(x,y,z)\in B_6$. These six canonical
+states form one attained code fiber on the full $\mathcal F_5$, with
+every other canonical state separately named. The complete attained
+alphabet is $|S_5|-5=228947158$.
+
+**Proof.** The trees are in $S_5$ and are distinct. Scan all $Rq$,
+$q\in W_5$, using 31 charged preparation Reads, maximum length five
+and 129 letters on every source. Compute $\pi_5(v)$ and its fixed-width
+name. The actual special fiber is the inverse image of these six
+states under $\pi_5$, not a restriction to exact terminal labels.
+All other acquired distinctions are removed by the paid isolation.
+
+After the request, a special-fiber target above the scaffold is
+constant. Inside one of its first three blocks, implement Proposition
+8.2's chosen witness by prefixing its donor literal with $R$ and that
+donor block's public address. These words have length at most four.
+The fourth block is constant $A$ and all its target factors are public.
+Other names determine a canonical state and need no Read. All choices
+precede the authentic count and the factor law answers every later
+count without Reads. Every name is attained by an actual canonical
+source. Common tables, membership computation, padded control and
+buffers, post-request workspace, predictor size, authentication,
+isolation and physical time remain separate resources. $\square$
+

@@ -1,0 +1,83 @@
+**Theorem 8.1 (N3, every sufficiently small positive noise).** There exists $\bar\eta>0$ such that for every $0<\eta<\bar\eta$ there is $t_\eta\in(1/2,1)$ satisfying
+
+$$
+D_5(t_\eta,\eta)=(1-\eta)t_\eta=c>0,\qquad
+R_5(t_\eta,\eta)>1-s,\qquad e_5(t_\eta,\eta)=0.
+\tag{8.1}
+$$
+
+At each such point the existing fixed-diagonal processor has strictly positive error
+
+$$
+[c-sD_5]_+=c(1-s)>0.
+\tag{8.2}
+$$
+
+These points exhibit exactness where the fixed-diagonal processor has positive error. This is an explicit consequence of the exact threshold, without a continuous selection of $t_\eta$ or a minimal-copy assertion.
+
+Proof. First reconstruct the two credited zero-noise endpoint values by ordinary algebra. At $(t,\eta)=(1/2,0)$, the probabilities of $a_+,a_-$ and all remaining outcomes grouped together are
+
+$$
+a=3/10,\qquad b=1/10,\qquad d=3/5.
+$$
+
+Let $S_j$ be the signed-count sum of $j$ independent steps with these probabilities for $+1,-1,0$. Reversing all signs in a path shows
+
+$$
+b\Pr(S_j=1)=a\Pr(S_j=-1).
+$$
+
+Indeed, each path ending at $1$ has one more positive step than negative steps, so its probability is $a/b$ times that of its reversed path ending at $-1$. A new step changes the conditional expected sign by $a-b$ at $S_j=0$, by $-b$ at $S_j=1$, by $a$ at $S_j=-1$, and by zero otherwise. The latter two probabilities cancel by the displayed identity. Hence
+
+$$
+\mathbb E\operatorname{sgn}(S_{j+1})-\mathbb E\operatorname{sgn}(S_j)
+ =(a-b)\Pr(S_j=0).
+\tag{8.3}
+$$
+
+Writing $p=ab$, the constant coefficients of $(d+az+bz^{-1})^j$ for $j=0,1,2,3,4$ are, respectively,
+
+$$
+1,\quad d,\quad d^2+2p,\quad d^3+6pd,\quad d^4+12pd^2+6p^2.
+$$
+
+These formulas follow by choosing equal numbers of $az$ and $bz^{-1}$ in the ordinary multinomial expansion. Summing (8.3) from $j=0$ through $4$, using $\operatorname{sgn}(S_0)=0$ and (2.3), gives
+
+$$
+\begin{aligned}
+D_5(1/2,0)
+ &=(a-b)(1+d+d^2+d^3+d^4+2p+6pd+12pd^2+6p^2)\\
+ &=\frac15\,\frac{13043}{5000}=\frac{13043}{25000}.
+\end{aligned}
+\tag{8.4}
+$$
+
+For clarity, the numerator $13043$ in the common denominator $5000$ is the sum $5000+3000+1800+1080+648+300+540+648+27$ from those nine terms. This verifies analytically the endpoint supplied in the original volume. Proposition 7.4 supplies, and proves, the other credited value
+
+$$
+D_5(1,0)=1-(3/5)^5.
+\tag{8.5}
+$$
+
+Now set $F(t,\eta)=D_5(t,\eta)-(1-\eta)t$. Formula (2.2) is a finite sum of absolute values of polynomials in $w,u$, with $w$ affine in $\eta$ and $u=(1-\eta)t/5$. Thus $F$ is continuous on the entire closed parameter square, including all zero probabilities. Equations (8.4)–(8.5) give
+
+$$
+F(1/2,0)=543/25000>0,\qquad F(1,0)=-(3/5)^5<0.
+$$
+
+Continuity at these two fixed endpoints gives one $\epsilon>0$ such that $F(1/2,\eta)>0$ and $F(1,\eta)<0$ for $0\le\eta<\epsilon$. Take
+
+$$
+\bar\eta=\min\{\epsilon,1/(4\cdot5^4),1/2\}>0.
+$$
+
+For each $0<\eta<\bar\eta$, the intermediate value theorem in $t$ supplies some $t_\eta\in(1/2,1)$ with $F(t_\eta,\eta)=0$. Then $D_5=c=(1-\eta)t_\eta>0$.
+
+Uniformly in $t$, Proposition 5.1 gives $R_5\ge\nu^5\ge5^{-5}$. Meanwhile $\eta<1/(4\cdot5^4)$ implies $1-s=4\eta/5<5^{-5}$. Therefore $R_5>1-s$ at every selected root. Theorem 7.1 proves $e_5=[c-D_5]_+=0$. More explicitly, the actual processor has $K=r=Q=1$ and
+
+$$
+q_C=1-\frac{1-s}{R_5}\in(0,1),
+$$
+
+so exactness is achieved by the lawful simultaneous four-source construction, not just an abstract vanishing lower bound. Because $\eta,c>0$, the old processor's exact error is $c(1-s)>0$, proving (8.2). Its test $D_5\ge c/s$ fails since $D_5=c>0$ and $s<1$. The uniform $R_5$ bound avoids any root-continuity assumption. QED.
+

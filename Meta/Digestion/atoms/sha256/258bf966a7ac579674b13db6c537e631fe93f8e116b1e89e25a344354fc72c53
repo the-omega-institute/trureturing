@@ -1,0 +1,91 @@
+**Theorem 37.1 (The shared-root canonical quotient action).**
+For $k\ge3$, a monomial $X^p$ with $p$ interior has nonzero class in
+$C_{k,b}$ precisely when
+
+$$
+1\le\delta_a(p)\le k-2\quad\text{for at least one }a.
+\tag{37.1}
+$$
+
+The action of any semigroup monomial on this basis is
+
+$$
+X^s[X^p]=
+\begin{cases}
+[X^{p+s}],&\delta_a(p)+\delta_a(s)\le k-2
+                         \text{ for at least one }a,\\
+0,&\delta_a(p)+\delta_a(s)\ge k-1\text{ for every }a.
+\end{cases}
+\tag{37.2}
+$$
+
+For arbitrary polynomials, extended linearly, its full annihilator is
+
+$$
+\operatorname{Ann}_{R_{k,b}}C_{k,b}
+=\operatorname{span}_{\mathbb C}
+ \{X^s:s\in\mathcal S_{k,b},\ \delta_a(s)\ge k-2\text{ for every }a\}.
+\tag{37.3}
+$$
+
+For $k=2$ one instead has $\omega_{R_{2,b}}=X^\nu R_{2,b}$,
+$C_{2,b}=0$ and $\operatorname{Ann}_{R_{2,b}}C_{2,b}=R_{2,b}$.
+
+Proof. Subtract $\nu=(3;\mathbf1_V)$ from an interior $p=(m,c)$.
+The degree is nonnegative since $m\ge3$, the coordinates are
+nonnegative, and an edge sum becomes at most $m-3$, as required
+at the new degree. The only remaining conditions are the cycle
+inequalities, whose deficits become
+
+$$
+\delta_a(p-\nu)=\delta_a(p)-(k-1),
+\tag{37.4}
+$$
+
+because $\delta_a(\nu)=3k-(2k+1)=k-1$ on each cycle.
+Thus $p-\nu$ is a global semigroup point if and only if every
+$\delta_a(p)\ge k-1$. The image $X^\nu R_{k,b}$ is a monomial
+ideal, so the complementary exponents are a quotient basis. Since
+interior deficits are positive integers, this is exactly (37.1).
+For $k=2$ every interior already satisfies all thresholds in (37.4),
+proving its separate zero-quotient assertion.
+
+Each $\delta_a$ is additive on the actual common-root exponent:
+the degree and the root occupancy are each added once in that cycle's
+formula. Adding $s\in\mathcal S_{k,b}$ preserves the strict
+coordinate and edge inequalities. Applying (37.1) to $p+s$ gives
+(37.2). It is an algebra action, since exponent addition is associative
+and the removed monomials form an ideal. Equivalently, once every
+deficit has reached $k-1$, adding nonnegative deficits can never make
+a class survive again. This is the global counterpart of the local
+slack/deficit action in (31.7), retaining a vector of cycle deficits.
+
+If all deficits of $s$ are at least $k-2$, then adding $s$ to any
+interior $p$ gives every deficit at least $k-1$, so $X^s$ annihilates
+the module. For the converse there is a single common witness
+
+$$
+p_*=(2k-1;(k-1)\mathbf1_V),\qquad
+\delta_a(p_*)=1\quad\text{for every }a.
+\tag{37.5}
+$$
+
+Its coordinates are positive and each edge has sum $2k-2$, one
+below its degree. The displayed deficits prove interior membership.
+For $k\ge3$ it survives (37.1). If some $\delta_a(s)<k-2$,
+then $\delta_a(p_*+s)\le k-2$, so $X^s[X^{p_*}]\ne0$.
+This proves the monomial criterion.
+
+To obtain the entire polynomial annihilator, combine equal exponents
+in $f=\sum_s\lambda_sX^s$, with distinct $s$ and nonzero coefficients.
+Multiplication by $[X^{p_*}]$ kills exactly the terms satisfying all
+thresholds in (37.3). Every other term survives by the same witness.
+Translation in the torsion-free exponent lattice is injective:
+$p_*+s=p_*+s'$ implies $s=s'$. Hence these surviving exponents are
+distinct members of the quotient monomial basis and cannot cancel.
+Therefore $f[X^{p_*}]=0$ forces every term of $f$ into the displayed
+threshold set. Conversely such a polynomial annihilates every class
+by the first direction. This proves (37.3) for polynomials, including
+all linear combinations, and makes clear that the threshold must hold
+on every cycle, not just one. $\square$
+

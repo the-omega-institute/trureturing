@@ -1,0 +1,39 @@
+**Lemma 3.3 (finite-coordinate graph lemma for the recognized map).** Consider
+a functional system with at most one definition per state, obtained after
+fixing a scalar mode $A$ and finite complement $\mathbf c$. Normalize fixed
+powers through explicit pairs and grounds. Build the finite root-link graph:
+an edge $i\to j$ of weight $a\ge0$ records $Y_i=\rho^aY_j$. Every remaining
+recursive occurrence is required to lie below an explicit ordered pair.
+
+Under these guard conditions one can compute a set $F_A$ and mixed native
+templates $f_i^A(\mathbf c)$ such that every completed solution has the same
+value $f_i^A(\mathbf c)$ on each forced finite coordinate $i\in F_A$. Every
+other canonical coordinate is assigned an infinite-prefix representative;
+its finite prefixes are computable. A malformed graph or an unguarded
+residual occurrence is outside this lemma, not a negative answer.
+
+**Proof.** Collapse each strongly connected component of the root-link graph.
+A cycle with positive total $\rho$-weight cannot contain a finite tree: each
+iteration raises the minimum finite-leaf depth, while a finite tree has a
+last leaf. It therefore has only the all-branch completion. A zero-weight
+cycle is a free state; assign it the all-branch representative. This is a
+choice for the completed positive equations only. Its finite signed witnesses
+still require the fixed-profile support test and SLP lifting; no negative
+condition is asserted on that all-branch representative.
+
+For acyclic root links, substitute along the unique finite path, accumulating
+the weight. What remains is a finite system in which every recursive
+occurrence is below a pair. Simultaneous unfolding gains one original-prefix
+level at each such pair. The finite-prefix contraction argument of [FJC,
+Theorems 3.1 and 5.1][FJC] therefore gives one completion for each free
+state. Reverse topological evaluation identifies exactly the coordinates
+whose values are finite mixed templates in $\mathbf c$; these are $F_A$ and
+$f_i^A(\mathbf c)$. A cycle containing a pair cannot be finite: native
+leaf count does not decrease under $\rho$, and an occurrence below a pair has a nonempty sibling.
+Each cycle edge would strictly decrease finite leaf count, which is impossible.
+
+The graph is finite, so the SCC decomposition, path substitution and finite
+template evaluation terminate. The result classifies the finite barriers that
+must be fixed before prefix lifting; it does not enumerate arbitrary finite
+residual trees. $\square$
+

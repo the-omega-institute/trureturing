@@ -1,0 +1,83 @@
+**Theorem 207.8 (Retained credit on actual active coordinates).** Let
+$J=\{j\ge3:\gamma_j>0\}$, $m=|J|\ge2$, and
+$c_m=4-2/\lceil(m+1)/2\rceil$. Suppose
+
+$$
+d,h\ge0,\quad h\le\min(\gamma_1,\gamma_2),\quad
+\mu\ge2d+h,\quad a=\mu-d-h,
+\qquad
+t\ge\mu-d,
+\qquad S\ge\max\{c_ma,2\mu,3\mu-2d-4h\}.
+\tag{207.19}
+$$
+
+There is a score with the same $\gamma,S,t,Q,W$ and $\Delta_N\le d$.
+At $t=\mu-d$, both excesses equal $d$, also the attained fixed-total
+minima. Actual gaps in $J$ and arbitrary ordering of the positive
+profile are allowed.
+
+**Proof.** On subsets of the actual set $J$ use
+$\nu=\mathcal L_m(a)+(S-c_ma)\delta_\varnothing$; inactive bits
+are one. Put $P=\nu(Z)/2$ and $C=h\nu(Z)/S$ at each
+$w(\{b\}\cup Z)$, $b=1,2$. Here $\mu>0$ since $J$ is active, and
+$S\ge2\mu>0$. For each $j\in J$ put $C=\min(\gamma_j,a)$ at
+$w(\{j\})$ and $C=(\gamma_j-a)_+$ at
+$w(\{n\in J:n\ge j\})$. Set $T=t$. The core has early mass $2h$
+and anchor $S+t+2h$. The same measure has unary masses $2a$ and pair
+cells $(a,a,a,S-3a)$.
+
+Put $u=(\mu-2a)_+$. The hypotheses imply
+
+$$
+a\ge d,\quad u\le h,\quad h\le t,\quad h\le S/2,
+\quad S\ge3a+u+d-h,
+\quad(d-S+3a)_+\le h-u.
+\tag{207.20}
+$$
+
+For the fifth inequality its right side is
+$\max(3\mu-2d-4h,2\mu-2h)$, bounded by the stock assumptions.
+Also $S\ge c_ma\ge3a$.
+
+The head pair has excess $(\mu-t)_+\le d$. On an early/active pair,
+the early-zero cells together have maximum $S/2+h$. The $10$ cell
+compares the other early label's reward $a+2ah/S$ with late rewards
+at most $\mu$. The $11$ zero reward $S/2-a+t$ dominates all late
+labels because $S/2\ge\mu$ and $t\ge a$, and dominates the other
+early label because its extra correct reward is at most $h\le t$.
+Subtracting the whole anchor gives at most
+
+$$
+\max(a+2ah/S,\mu)-a-h
+ =\max\{-h(1-2a/S),d\}=d.
+\tag{207.21}
+$$
+
+For active $i<j$, early labels earn the fraction $1/2+h/S\le1$ of
+the pair mass in each cell. Threshold correct words bound late rewards
+in $00,01,10,11$ by $\mu-a,a,\mu,\mu$. An earlier class has its
+absorbing part in $00$ and its singleton part in $11$; an intermediate
+class has only $10/11$ contributions. These statements include all
+earlier unqueried labels. The total excess is therefore at most
+
+$$
+\begin{aligned}
+(\mu-2a)_++(\mu-a)+(\mu-t-S+3a)_+-2h
+ &\le u+d-h+(d-S+3a)_+\\
+ &\le d.
+\end{aligned}
+\tag{207.22}
+$$
+
+This subtracts the early $2h$ once from one complete table. Inactive
+coordinates are constant one on the core; queries there reduce to
+singleton information. Catalog completion covers all schedules.
+Add the original early correct measures scaled to totals
+$\gamma_b-h$ (omit a zero-total measure). Their arbitrary suffixes
+cause no increase in excess. The resulting totals are exactly the
+prescribed ones. At $t=\mu-d$ the stopped head table collecting a
+largest late class forces $\mu-t=d$ for every fixed-total competitor.
+It matches the constructed upper bound. All zero and equality cases
+allowed by (207.19) are included; this theorem assumes $m\ge2$.
+$\square$
+

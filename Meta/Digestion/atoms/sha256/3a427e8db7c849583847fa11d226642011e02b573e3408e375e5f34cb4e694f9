@@ -1,0 +1,52 @@
+**Theorem 12.1 (supported call optima and the remaining two-read range).**
+Let $K_{\min}(q,\lambda)$ be the minimum worst fresh-call count over
+all exactly-$q$-label encoders and controllers in Assumption 9.1.
+Under either lag convention,
+
+$$
+K_{\min}(q,\lambda)=
+\begin{cases}
+0,&q=1,\\
+1,&2\le q\le6,\\
+2,&7\le q\le17.
+\end{cases}
+\tag{NARC.12.1}
+$$
+
+Retaining the fixed coordinate $e(a,b)=b$ instead has exact worst
+call count $K_+(q)$ of [AOF, Theorem 8.3][AOF], and supports two
+calls exactly for $q\le10$. Every exactly-$q$-label encoder requires
+more than two calls for $q\ge20$. Two-read feasibility for $q=18$
+and for $q=19$ remains unresolved separately for $\lambda=0$ and
+$\lambda=1$; neither a construction nor an exclusion for those
+four cases follows from these results.
+
+**Proof.** The zero and one optima in (NARC.12.1), including the
+one-read impossibility for every $q\ge7$, are exactly the published
+Theorem 7.5. Theorem 11.6 supplies the upper bound two through
+seventeen; that published impossibility makes it sharp for
+$7\le q\le17$. It does not assert that the particular master
+encoder attains the one-call optimum at every smaller $q$.
+
+For the fixed-$b$ comparison, right visibility determines the lag
+from $z-b$ with no new call. On a left-visible fiber the compatible
+$a$ values form a consecutive interval of at most $q$ integers,
+and hidden ages $q+b+z-a$ form a positive consecutive interval
+of the same size. Identifying its hidden age is equivalent to
+recovering the required lag $z-a$, since $q,b,z$ are known.
+The supplied positive interval theorem therefore gives worst price
+at most $K_+(q)$. At $z=q$, every $a\in[0,q-1]$ survives under
+either convention; its own lag $q-a\ge1$ realizes the same whole
+left-visible row and fixed code $b$. The hidden-age interval is
+$[q+b+1,2q+b]$, of length $q$. The all-address correspondence
+of Theorem 5.2 makes the same supplier's lower bound applicable.
+Thus this fixed encoder has exact price $K_+(q)$, and its
+two-read capacity is $3\cdot2^2-2=10$. The relational code
+improves that encoder-qualified range without contradicting it.
+
+Finally, Theorem 9.2 at $k=2$ requires $q\le19$. This excludes
+$q\ge20$ under both conventions. It is only necessary: even at
+$k=1$ its allowance $q\le7$ is weaker than the supplied true
+boundary $q\le6$. Neither it nor the sufficient construction
+settles the four stated eighteen/nineteen cases. $\square$
+

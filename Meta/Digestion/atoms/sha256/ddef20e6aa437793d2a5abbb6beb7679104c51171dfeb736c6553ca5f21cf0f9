@@ -1,0 +1,25 @@
+**定义 4.2（成本帐篷与证书）。** 对 $0<t<1$ 令
+
+$$
+\psi(u,t)=\min((1-t)u,t(1-u)),\qquad
+b_{i,n}(t)=\mathbb E_J\psi(p_n(i),t),\qquad
+\delta_{i,n}(t)=b_{i,n}(t)-b_{i,\infty}(t).
+$$
+
+在同一产生器上取两条成本行
+
+$$
+r_{i,t}=(1-t)\pi_i e_i,\qquad
+v_{i,t}=t(\pi-\pi_i e_i),
+$$
+
+其中 $e_i$ 是第 $i$ 个 Dirac 行。定义
+
+$$
+c_{i,n}(t)=\sum_{w\in\Sigma^n}c(r_{i,t}B_w,v_{i,t}B_w),
+\qquad
+g_{i,n}(t)=b_{i,n}(t)-c_{i,n}(t).
+$$
+
+成本行是实际联合律的一对加权子测度，未改变产生器或观察字段。零前缀质量不需定义条件行，其对应质量项为零。
+

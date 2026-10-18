@@ -1,0 +1,139 @@
+**Theorem 34.2 (The common-copy defect is a smooth positive index).**
+For every $k\ge3$ and $m\ge0$, (34.2) is elliptic Fredholm,
+its weak kernel vectors are smooth, and
+
+$$
+\ker D_{k,m}^+\simeq(\mathcal C_k)_m,\qquad
+\ker D_{k,m}^-=0,\qquad
+\operatorname{ind}D_{k,m}^+=C_k(m).
+\tag{34.3}
+$$
+
+The first isomorphism uses harmonic representatives and the
+$A_k$-basis $e_j$; it is an isomorphism of vector spaces in the
+stated degree, not a recovery of the full $R_k$-action. If
+$h=c_1(\mathcal O_{X_k}(1))$ and $\int_{X_k}h^{2k}=1$, the same
+number is
+
+$$
+\begin{aligned}
+\operatorname{ind}D_{k,m}^+
+&=\int_{\mathbb {CP}^{2k}}
+\left(\sum_{j=2}^{k-1}e^{(m-2j-1)h}\right)
+\left(\frac{h}{1-e^{-h}}\right)^{2k+1}\\
+&=\sum_{j=2}^{k-1}\binom{m+2k-2j-1}{2k}\\
+&=E_k(m-3)-E_k(m-(2k-1)).
+\end{aligned}
+\tag{34.4}
+$$
+
+Proof. The projective-space cohomology input is [Stacks Lemma
+30.8.1, tag 01XT][PC25], in the context of [section 30.8, tag
+01XS][PC34]. For $r\ge1$, it identifies $H^0(\mathbb P^r,\mathcal
+O(d))$ with degree-$d$ homogeneous polynomials when $d\ge0$.
+There is no intermediate cohomology. For $-r\le d\le-1$ all
+cohomology vanishes; the negative top cohomology starts only at
+$d\le-r-1$, since its basis consists of Laurent monomials with
+all $r+1$ exponents strictly negative.
+
+Here $r=2k$ and the smallest twist in (34.1) is
+
+$$
+d_{\min}=m-(2k-1)\ge-(2k-1)>-(2k+1).
+\tag{34.5}
+$$
+
+Thus every summand has zero higher cohomology. A summand with
+negative twist lies in the acyclic range, so it contributes zero
+even to $H^0$. This is precisely the convention that negative
+homogeneous polynomial degrees are zero; no negative-copy space
+is introduced. Algebraic and analytic cohomology agree by the
+Serre GAGA comparison [§12, Théorème 1][GA25], and the analytic
+Dolbeault resolution therefore gives
+
+$$
+\begin{aligned}
+H^0(X_k,\mathcal E_{k,m})
+&=\bigoplus_{j=2}^{k-1}(A_k)_{m-2j-1}e_j
+\simeq(\mathcal C_k)_m,\\
+H^q(X_k,\mathcal E_{k,m})&=0\quad(q>0).
+\end{aligned}
+\tag{34.6}
+$$
+
+For the analytic bridge, the principal symbol of $D_{k,m}$ is the
+Dolbeault Clifford symbol tensored with the identity on
+$\mathcal E_{k,m}$. Wedge multiplication by the $(0,1)$ part of a
+nonzero real cotangent vector and its adjoint contraction have
+anticommutator equal to its squared norm times the identity.
+With the differential symbol's factor of $\sqrt{-1}$, the symbol
+of $D_{k,m}$ is consequently invertible off the zero section and
+exchanges the two parities. Thus $D_{k,m}^+$ is elliptic.
+
+On the compact smooth base the elliptic estimate
+$\|u\|_{H^1}\le C(\|D_{k,m}^+u\|_{L^2}+\|u\|_{L^2})$,
+the corresponding estimate for the formal adjoint, and Rellich
+compactness give closed range and finite-dimensional kernel and
+cokernel for (34.2). The cokernel is the orthogonal complement
+of the range in $L^2$, hence consists of distributional solutions
+of the formal adjoint equation $D_{k,m}^-v=0$.
+Elliptic regularity makes both such solutions and the weak positive
+kernel smooth. The closed differential operator on $L^2$ has
+Sobolev domain $H^1$. This argument identifies its formal-adjoint
+kernel with the cokernel; it does not equate the bounded Hilbert
+adjoint of the map $H^1\to L^2$ with that differential expression
+between the same two Hilbert spaces.
+
+For a smooth form $u$, integration by parts gives
+
+$$
+\langle D_{k,m}^2u,u\rangle
+=2\left(\|\bar\partial_{\mathcal E}u\|^2
++\|\bar\partial_{\mathcal E}^{\dagger}u\|^2\right).
+\tag{34.7}
+$$
+
+The Hodge decomposition for this elliptic complex identifies its
+harmonic forms in degree $q$ with $H^q(X_k,\mathcal E_{k,m})$.
+All these groups vanish except degree zero by (34.6), so the
+negative kernel is zero and the positive kernel is exactly the
+stated polynomial-space sum. These are the classical Dolbeault,
+Hodge and elliptic Fredholm inputs described in Freed, *The
+Atiyah–Singer Index Theorem*, [§§3.1–3.2][FR34], applied to this
+specific bundle and Sobolev domain. They prove (34.3), including
+the kernel assertion stronger than an index equality alone.
+
+The classical Hirzebruch–Riemann–Roch formula, equivalently the
+Dolbeault case of Atiyah–Singer, gives
+$\chi(X_k,\mathcal E)=\int_{X_k}\operatorname{ch}(\mathcal E)
+\operatorname{Td}(TX_k)$; see [Freed, Theorem 2.7 and §4][FR34].
+Additivity for the line bundles gives the sum of exponentials in
+(34.4). The Euler sequence
+$0\to\mathcal O\to\mathcal O(1)^{\oplus(2k+1)}\to TX_k\to0$
+gives the displayed Todd factor. These are classical index inputs
+to the count in (32.2), not assertions about a singular toric base.
+
+One may also evaluate the coefficient directly, keeping negative
+twists in their proper range. For an integer $d$ and $r=2k$, use
+formal residues and the change of variable $u=1-e^{-h}$, whose
+linear term is $h$:
+
+$$
+\begin{aligned}
+[h^r]\ e^{dh}\left(\frac{h}{1-e^{-h}}\right)^{r+1}
+&=\operatorname{Res}_{h=0}\frac{e^{dh}}{(1-e^{-h})^{r+1}}\,dh\\
+&=\operatorname{Res}_{u=0}\frac{(1-u)^{-d-1}}{u^{r+1}}\,du\\
+&=[u^r](1-u)^{-d-1}=\binom{d+r}{r}.
+\end{aligned}
+\tag{34.8}
+$$
+
+For $d\ge0$ this is the polynomial-space dimension. For
+$-r\le d\le-1$, the middle series is a polynomial of degree at
+most $r-1$, and its $u^r$ coefficient is zero. Thus (34.8) agrees
+with every vanishing term in (34.6). Setting $d=m-2j-1$ and
+summing proves the first two equalities in (34.4); Theorem 32.2
+gives the final one. For $k=3$ this is precisely the single
+$\mathcal O(m-5)$ face carrier of chapter 30, now with its
+vanishing argument also valid at $m=0,1,2$. $\square$
+

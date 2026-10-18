@@ -1,0 +1,48 @@
+**Theorem 224.2 (Complete normalized $O$ face).** Under the same parameters,
+the whole normalized full-row feasible stopped face consists exactly of
+common probability laws $\pi$ on three-element subsets of
+
+$$
+\{1,\ldots,k,\infty\}
+$$
+
+such that every one of the $k+1$ labels has inclusion probability $s$.
+For a triple $i<j<r$, query $i,j$ in increasing preselected order,
+output $i$ or $j$ at its first queried zero, and output $r$ on exhaustion;
+$\infty$ means label zero and is never queried. Zero triple weights are
+allowed. These conditions are necessary on all words and sufficient for
+all independent base, correct, pair and positive rows.
+
+**Proof.** Theorem 224.1 forces every positive-mass stopped table to have
+form $O(i,j;i,j,r)$, $i<j$, with $r=0$ or $r\notin\{i,j\}$.
+For any first-zero-$n$ word, its correct-$n$ indicator is no greater
+than its indicator at the sole-zero-$n$ word. If $n$ is queried it
+is reached correctly, because all selected earlier bits are one. If it
+is unqueried, the only possible correct output is the exhaustion guess
+$n$, and adding later zeros can remove, but cannot create, that output.
+
+Suppose a positive-mass table guesses a numerical $r<j$. Take a word
+with first zero $r$ and also bit $j$ zero, all other bits one.
+Since $r$ is unqueried, the table now emits $j$, losing its correct-$r$
+contribution. No other forced-form table gains relative to sole-zero
+$r$, where the aggregate correct mass is already exactly $s$.
+Consequently the full correct row at that multiple-zero word fails.
+There are finitely many tables, so every such earlier-guess table has
+weight zero. Thus every numerical guess satisfies $i<j<r$.
+
+The remaining tables correspond bijectively to the triples stated in
+the theorem. On every first-zero-$n$ word, their output is $n$ exactly
+when the triple contains $n$: if selected for querying, all selected
+predecessors answer one; if the last selected label, both queries are
+earlier; if absent from the triple, it is never emitted. At $w^+$ output
+zero is equivalent to inclusion of $\infty$. The tight sole-zero and
+positive rows therefore force all inclusion marginals to equal $s$.
+
+Conversely choose any one law on triples with these marginals.
+For every zero word its correct mass is $s$, its pair mass is at least
+$s=1-e$, and its base mass is nonnegative, hence at least the literal
+base demand $-e$. Its positive base mass is $s$. This checks every row,
+including arbitrary multiple zeros; it proves sufficiency for the entire
+face, rather than for one chosen symmetric law. The marginal sum is
+$3$, consistent with $(k+1)s=3$ and one common total mass one. $\square$
+

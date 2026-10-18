@@ -1,0 +1,64 @@
+### 定理 38.3（量子曲率控制谱隙和衰减）
+
+若 \(QCD(K)\) 且 \(K>0\)，则：
+
+1. \(-\mathcal L\) 在 \(I^\perp\) 上的每个非零特征值 \(\lambda\) 满足 \(\lambda\ge K\)；
+2. 对所有 \(A\)，
+   \[
+   \mathcal E_\sigma(T_tA)
+   \le
+   e^{-2Kt}\mathcal E_\sigma(A);
+   \]
+3. 记
+   \[
+   A_0=A-\langle I,A\rangle_\sigma I,
+   \]
+   则
+   \[
+   \|T_tA_0\|_\sigma
+   \le
+   e^{-Kt}\|A_0\|_\sigma.
+   \]
+
+#### 证明
+
+由于 detailed balance，\(-\mathcal L\) 是有限维 GNS Hilbert 空间上的自伴非负算子。若 \(-\mathcal L A=\lambda A\)，且 \(A\perp_\sigma I\)，则
+
+\[
+\|\mathcal L A\|_\sigma^2
+=
+\lambda^2\|A\|_\sigma^2,
+\qquad
+\mathcal E_\sigma(A)
+=
+\lambda\|A\|_\sigma^2.
+\]
+
+\(QCD(K)\) 给出 \(\lambda^2\ge K\lambda\)，所以 \(\lambda\ge K\)。这证明第一项。
+
+令 \(A_t=T_tA\)。由自伴性，
+
+\[
+\frac d{dt}\mathcal E_\sigma(A_t)
+=
+2\langle\mathcal L A_t,-\mathcal L A_t\rangle_\sigma
+=
+-2\|\mathcal L A_t\|_\sigma^2
+\le
+-2K\mathcal E_\sigma(A_t).
+\]
+
+Gronwall 不等式给出第二项。
+
+第一项的谱结论还给出 \(-\mathcal L\ge K I\) 在 \(I^\perp\) 上。于是
+
+\[
+\frac d{dt}\|T_tA_0\|_\sigma^2
+=
+-2\mathcal E_\sigma(T_tA_0)
+\le
+-2K\|T_tA_0\|_\sigma^2.
+\]
+
+再次应用 Gronwall 得到第三项。证毕。
+

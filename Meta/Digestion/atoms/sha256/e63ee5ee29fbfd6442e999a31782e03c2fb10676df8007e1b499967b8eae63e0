@@ -1,0 +1,23 @@
+**Proposition 108.1.** For the actual Fibonacci and Lucas sequences, put B_243=L_243^2+3. Its complete prime support, in order, is
+
+ p0=1459,
+ p1=58321,
+ p2=67234945243909760461,
+ p3=64642456533364216165903625998192510598323380531684784427098565775883411861.
+
+The four primes are distinct and B_243=p0 p1 p2 p3. Thus the complete decomposition B_243=D C^2 has D=B_243 and C=1. Their residues modulo 24 are (19,1,13,13), D=19 modulo 120, and each p satisfies p>5, p=1 modulo 3, and (5/p)=1. Each has exact Fibonacci rank rho(p)=1458, golden-matrix order tau_p=1458, and squared-golden-unit order 729.
+
+In the notation of sections 95 and 105, the actual zero-row-sum Legendre matrix is
+
+ A=[[1,0,1,0],[0,0,1,1],[1,1,1,1],[0,1,1,0]],
+ ker A=ker A^T=<1111>.
+
+Consequently r=0, U4=U0=U24={0}, and the existing local Selmer parametrization has full dimension 3 and pure dimension 1 at this block.
+
+**Proof.** The integer Lucas recurrence gives
+
+ L_243=608130213374088941214747405817720942127490792974404,
+ B_243=369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219.
+
+Direct multiplication gives B_243=p0 p1 p2 p3, and the same recurrence gives L_729=L_243 B_243. The prime certificates in section 108.2 establish that the four distinct entries are all the prime factors. The complete product then proves every valuation is one. The residue and order calculations in section 108.3 prove the remaining assertions. ∎
+

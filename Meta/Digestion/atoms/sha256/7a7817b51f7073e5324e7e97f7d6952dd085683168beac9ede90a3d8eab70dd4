@@ -1,0 +1,9 @@
+**Convention 7.4 (counting boundary).** Equations (7.3)--(7.4) count exact
+states at a fixed, known cut. They are not installation complexity, an
+algorithmic storage bound, a cumulative multi-cut state count or a physical
+cost. Delete probes are executable recut permissions in the enlarged
+contract. Mathematical reversibility of the prefix maps alone does not
+supply those permissions. The same maps considered only as coordinate
+changes must satisfy (1.2), which fails for the coarse forward boundary
+when a delete domain is unsaturated.
+

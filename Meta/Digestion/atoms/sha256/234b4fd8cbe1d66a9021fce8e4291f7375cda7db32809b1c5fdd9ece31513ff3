@@ -1,0 +1,47 @@
+**Theorem 5.3 (joint calibration acquisition and complementary recovery).**
+Definition 5.2 is safe for all finite sources and terminates under
+unknown finite total interference and observer progress, with at most
+$b$ failed attempts. Suppose its first handoff is $(A,\delta)$ at $v_0$,
+and a later ordinary RA call at cut $\{L\}$ returns only its complete
+row $B$ at $v_1$ on the authentic common history. The decoder with
+exactly $A,\delta,B$ and these public cuts computes
+
+$$
+n=j_R(B)-j_L(A)-\delta.
+\tag{CAB.14}
+$$
+
+This is the genuine update count between $v_0$ and $v_1$. It also
+effectively recovers the entire first captured source $U_{v_0}$ and
+every finite intermediate source $\rho^iU_{v_0}$ for $0\le i\le n$.
+
+Proof. Matching the saved left leaf brackets every row Read, comparison,
+local scan and hidden-clock Read in one stationary interval. Hence
+the accepted candidate is the exact complete row and (CAB.13)'s
+calibration at $v_0$. A blocked root leaf needs no hidden query. For
+a candidate pair the root was reached as branch, so its right base
+persists even in a failed attempt. Definition 4.1 and RA are finite
+under the final-source bound. INVALID or failed validation is impossible
+without an update after the saved guard. Those intervals are disjoint,
+so the same finite-interference argument gives at most $b$ failures.
+
+The exposed coordinates both advance by one. Thus
+$j_R(B)=j_R(U_{v_0})+n$ and (CAB.14) follows. In particular the
+beta-to-pair birth satisfies $j_L=j_R=2$ after the update; no child
+is falsely assumed present before its birth. The equation holds for
+zero lag and negative calibration as well.
+
+If $A$ is a blocking root leaf, it already gives the whole first
+source. Otherwise write it as $\langle x,H_R\rangle$. Because an
+original pair stays paired, $B=\langle H_L,\rho^n y\rangle$ for
+$U_{v_0}=\langle x,y\rangle$. Apply [IDC, Reuse 2.2][IDC]'s effective
+inverse-image parser $n$ times to the actual retained right tree.
+The one-step image grammar is the disjoint union
+$\beta$, $\langle\beta,\alpha\rangle$, and pairs of image trees;
+their inverse values are respectively alpha, beta and pairs of
+inverses. Disjointness makes the inverse unique. Authenticity assures
+that these $n$ inverse operations succeed and recover $y$. Pair it
+with the retained $x$ and iterate (CAB.1) locally for the requested
+finite sequence. These are computations on retained descriptions,
+not inverse actions or fresh queries on the source. $\square$
+

@@ -1,0 +1,16 @@
+**The least prime divisor.** Suppose $k$ is composite and $p=P^-(k)$. Thus $p\ge5$. Set $t=Nk/p$. The Lucas-polynomial divisibility of §86 gives $B_N\mid B_t$, and $k\ge p^2$ gives $t\ge Np$. Since $N\ge81$, one has $t-1>40p$. The Binet estimate and the universal quotient bound of §87 therefore give
+
+$$L_t>2^{(t-1)/2}>2^{20p},\qquad Q_p(L_t)\text{ is not a square},$$
+
+where $Q_p(X)=(V_p(X)^2+3)/(X^2+3)$. Yet
+
+$$B_{Nk}=B_tQ_p(L_t),\qquad \gcd(B_t,Q_p(L_t))\mid p.$$
+
+If $p\nmid B_t$, the two factors are coprime. Every prime of $D$ divides $B_t$, so the repeated-kernel equation would force $Q_p(L_t)$ to be a square. Consequently $p\mid B_t$. The prime $5$ never divides $B_t$, since $-3$ is not a square modulo $5$, so $p>5$.
+
+The Pell identity $5F_t^2=B_t+1$ makes $5$ a square modulo $p$. Choose $\varphi=(1+\sqrt5)/2$ in $\mathbb F_p$ and put $a=\varphi^2$. Then $a^t$ has order $3$. With $h=\operatorname{ord}(a)$,
+
+$$\frac{h}{\gcd(h,t)}=3,\qquad h\mid p-1,\qquad v_3(h)=j+1.$$
+
+Every prime divisor of $h$ other than $3$ divides $t/3^j=k/p$. Every prime divisor of $k/p$ is at least $p$, whereas $h\le p-1$. Thus $h=3^{j+1}=3N$. It follows that $a^N$ is a nontrivial cube root of unity, whence $p\mid B_N$. Since $p-1$ is even and $3N$ is odd, $6N\mid p-1$ and $p\ge6N+1$.
+

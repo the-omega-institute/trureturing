@@ -1,0 +1,18 @@
+**Lemma 2.3 (Reused Bernoulli KL projection).** Let $Z$ be binary, let $\mathcal A\subseteq\mathcal B$ be sigma-fields under one probability law, and set $p=\mathbb E[Z\mid\mathcal A]$, $t=\mathbb E[Z\mid\mathcal B]$. If $\mathcal B=\sigma(\mathcal A,L)$ for a finite variable $L$, then
+
+$$
+2\mathbb E(t-p)^2
+\le\mathbb E D\bigl(\operatorname{Ber}(t)\Vert\operatorname{Ber}(p)\bigr)
+=I(Z;L\mid\mathcal A).
+\tag{2.3}
+$$
+
+Proof. The equality is the standard conditional-relative-entropy formula [Information][CT]. The inequality is the Bernoulli specialization of the relative-entropy/total-variation inequality [Pinsker][PI]. To fix its natural-log constant, for $0<p<1$ the function
+
+$$
+D\bigl(\operatorname{Ber}(t)\Vert\operatorname{Ber}(p)\bigr)
+=t\log(t/p)+(1-t)\log((1-t)/(1-p))
+$$
+
+has value and first derivative zero at $t=p$, and second derivative $1/[t(1-t)]\ge4$ for $0<t<1$. Integration and continuity at $t=0,1$ give $D\ge2(t-p)^2$. On $\{p=0\}$, the tower property and $t\ge0$ give $t=0$ almost surely; on $\{p=1\}$ they give $t=1$. Those fibers contribute zero with $D(\operatorname{Ber}(p)\Vert\operatorname{Ber}(p))=0$. Null fibers contribute nothing. This is a mature projection inequality, not an additional entropy-rate hypothesis. $\square$
+

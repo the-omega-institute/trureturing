@@ -1,0 +1,75 @@
+### 73.3 Six patterns and all simultaneous transports
+
+Write \(\gamma_j=\omega^{a_j}\), \(\delta_k=\omega^{c_k}\).
+The first column and then the first row of (73.7) show that these are
+cube roots, with \(a_j\in\{1,2\}\) and \(c_0=0\). The ratio exponent
+matrix therefore satisfies, modulo three,
+
+\[
+ A_{jk}=a_j+c_k+jk\in\{1,2\}.
+ \tag{73.8}
+\]
+
+The complete list is as follows; each three-digit string denotes one row.
+
+| \(a\) | \((c_0,c_1,c_2)\) | Rows of \(A\) | \(\epsilon\) | \(d\) |
+|---|---|---|---:|---:|
+| \((1,1,2)\) | \((0,0,1)\) | 112 / 121 / 211 | 1 | 2 |
+| \((1,2,1)\) | \((0,1,0)\) | 121 / 211 / 112 | 1 | 1 |
+| \((1,2,2)\) | \((0,1,1)\) | 122 / 212 / 221 | -1 | 0 |
+| \((2,1,1)\) | \((0,2,2)\) | 211 / 112 / 121 | 1 | 0 |
+| \((2,1,2)\) | \((0,0,2)\) | 221 / 122 / 212 | -1 | 2 |
+| \((2,2,1)\) | \((0,2,0)\) | 212 / 221 / 122 | -1 | 1 |
+
+This is an exhaustive \(2^3\cdot3^2\) check of (73.8). An elementary
+structural verification is also available. Any two rows agree once and
+differ twice, and so do any two columns. A uniform row would force the other
+two rows to differ from it twice and from each other twice, leaving two
+columns differing in only one position. Thus no row is uniform. Nonuniform
+binary rows of different weights cannot differ in exactly two positions;
+hence all rows have the same weight. Their exceptional entries occupy a
+permutation of the columns. Substitution in (73.8) gives exactly the table,
+equivalently
+
+\[
+ A_{jk}=\begin{cases}-\epsilon,&k=-\epsilon j+d,\\
+ \epsilon,&k\ne-\epsilon j+d,\end{cases}
+ \qquad\epsilon\in\{1,-1\},\quad d\in\{0,1,2\}.
+ \tag{73.9}
+\]
+
+Define \(\sigma(k)=-\epsilon k+d\) modulo three and let
+\(\Pi_\sigma\) have column \(k\) equal to \(e_{\sigma(k)}\).
+Put
+
+\[
+ \ell_j=\epsilon\mathbf1_{j=0}-jd,\quad
+ r_0=0,\quad r_1=r_2=-\epsilon,\qquad
+ L=\operatorname{diag}(\omega^{\ell_j}),\quad
+ R=\operatorname{diag}(\omega^{r_k}).
+ \tag{73.10}
+\]
+
+For every row of the table, direct exponent arithmetic proves
+
+\[
+ LF\Pi_\sigma R=V_\epsilon
+ :=\frac{J_3+(\omega^\epsilon-1)I_3}{\sqrt3},\qquad
+ LW\Pi_\sigma R=W_\epsilon:=\omega^\epsilon V_{-\epsilon}.
+ \tag{73.11}
+\]
+
+Indeed the first block has exponents
+\(\ell_j+j\sigma(k)+r_k=\epsilon\mathbf1_{j=k}\).
+After the column permutation, the ratio exponents are \(-\epsilon\)
+on the diagonal and \(\epsilon\) off it. Adding them gives the second
+block's exponents, zero on its diagonal and \(\epsilon\) off it.
+This verifies the actual matrices and every phase factor.
+
+The factors \(I_2\otimes L\) and \(I_2\otimes(\Pi_\sigma R)\)
+commute with the qubit reflections, so (73.11) acts simultaneously on the
+controlled pair. For \(\epsilon=1\) the result is exactly
+\((V_0,\omega W_0)\) from §72; for \(\epsilon=-1\) it is its complex
+conjugate. Conjugating the latter whole matrix gives the former because
+both qubit reflections are real.
+

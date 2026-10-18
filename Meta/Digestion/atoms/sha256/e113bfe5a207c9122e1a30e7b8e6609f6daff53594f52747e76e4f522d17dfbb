@@ -1,0 +1,14 @@
+**Definition 4.1 (phase-sensitive minimum).**
+For a finite tree $u$, with leaf-address set $F(u)$ and label bits
+$e(\alpha)=0$, $e(\beta)=1$, put
+
+$$
+m(u)=\min_{p\in F(u)}(2|p|+e(u|_p)).
+\tag{SCC.14}
+$$
+
+The recurrence and orbit law supplied by [AAR, Definition 3.1 and
+Lemma 3.2][AAR] are
+$m(\langle u,v\rangle)=2+\min(m(u),m(v))$ and
+$m(\rho^n u)=m(u)+n$. In particular $m(T_n)=n$.
+

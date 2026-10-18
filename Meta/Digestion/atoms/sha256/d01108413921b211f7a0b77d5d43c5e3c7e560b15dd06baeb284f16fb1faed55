@@ -1,0 +1,38 @@
+**Proposition 8.1 (conditional energy is not the Haar marginal).** For a
+normalized $f\in\mathcal F$, put $m_f$ as in (5.2) and, on its positive
+fibers, define
+
+$$
+\rho_f(\beta\mid k,\alpha)=\frac{|f(k,\alpha,\beta)|^2}{m_f(k,\alpha)},
+\qquad
+\mathcal E_{o,f}(k,\alpha)=\int_{\mathbb T}
+ \Gamma_o(k,\alpha,\beta)\rho_f(\beta\mid k,\alpha)d\beta.
+\tag{8.1}
+$$
+
+Set the integrand $m_f\mathcal E_{o,f}$ to zero on zero-marginal fibers.
+The same-field potential is
+
+$$
+V_o[f]=\int_D m_f\mathcal E_{o,f}\,d\nu.
+\tag{8.2}
+$$
+
+For $f=Jv$, the conditional density is $1/(2\pi)$ on positive fibers,
+so $\mathcal E_{o,f}=W_o$. On the unrestricted form domain, the full base
+amplitude and probability summaries, their free futures described in
+Proposition 5.3 and the single kinetic scalar do not determine (8.2).
+In particular the obstruction is not removed by storing both the linear
+and quadratic base summaries.
+
+Proof. The disintegration identity (8.2) is the same elementary conditional
+expectation identity already used in [C, Corollary 82.6]. Tonelli and (3.7)
+justify it here on the actual finite-circle form domain. On $Jv$ the
+conditional density is exactly uniform by (2.1), giving (3.4). For the
+unrestricted assertion, use the two normalized members (5.1) of that very
+domain. Their summaries and free futures agree by (5.3) and Proposition
+5.3, while (5.4) gives unequal values of (8.2). Thus the extra missing
+quantity is a relation between the conditional state density and the fixed
+point field. Merely integrating the field against unweighted angular
+measure, as in (3.2), does not supply it. $\square$
+

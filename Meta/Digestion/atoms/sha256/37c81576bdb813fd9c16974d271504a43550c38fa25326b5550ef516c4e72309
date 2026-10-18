@@ -1,0 +1,31 @@
+**Definition 7.1 (Normalized error and endpoint exponential).** Throughout
+this section assume $0<Z<2/3$, and put
+
+$$
+\tau=\frac{Z}{4H}\in(0,1),\qquad
+x=\frac{k}{H},\qquad
+s(x)=\sqrt{x(1-x)},\qquad
+T_0=\frac{(1+\tau)^2}{4}.
+$$
+
+For $c\ge0$, $\lambda\in\mathbb R$, define
+
+$$
+\mathcal J(c,\lambda)=
+\max_{0\le x\le1}\{(ce^{\lambda x}-s(x))^2+\tau x\}.
+$$
+
+For $T>\tau$ define
+
+$$
+v_T(x)=\sqrt{T-\tau x},\qquad
+\lambda_T=\frac12\log\frac{T-\tau}{T},\qquad
+f_T(x)=\sqrt T\,e^{\lambda_Tx}
+       =T^{(1-x)/2}(T-\tau)^{x/2},
+$$
+
+$$
+g_T(x)=s(x)-v_T(x)-f_T(x),\qquad
+\Phi_\tau(T)=\max_{0\le x\le1}g_T(x).
+$$
+

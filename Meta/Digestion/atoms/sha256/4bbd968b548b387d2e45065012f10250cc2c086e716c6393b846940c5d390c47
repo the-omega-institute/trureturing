@@ -1,0 +1,9 @@
+**Definition 33.1 (coefficient rows).** On the fixed seed of Definition 31.1 define
+
+$$
+\mathcal N_mg_0=\sum_{k+j=m}\mathcal V_k(G_jg_0),\qquad 0\le m\le4.
+\tag{33.1}
+$$
+
+Each summand is a pointwise product. This notation gives rows on this input, not bounded coefficient operators on arbitrary $L^2$. On another specified input the same notation is used only if the corresponding return integrals and products exist in the required norms. In particular $\mathcal N_0g_0$ agrees with Definition 29.1's bounded reconstruction adjoint. These rows are not a new scalar coefficient.
+

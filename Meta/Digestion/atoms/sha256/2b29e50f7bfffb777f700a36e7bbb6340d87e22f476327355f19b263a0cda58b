@@ -1,0 +1,32 @@
+**Lemma 3.2 (Same-budget normal form and initial variation).** An observer has a common row $\eta$ and stochastic zero and one matrices $A,C$ on at most $M$ configurations, with two distinct absorbing labels $d_0,d_1$. Every other state commits to a next paid read. This preserves $(T,D)$. Put
+
+$$
+B_k=A^kC,\qquad
+U_i=\sum_{k\ge1}f_i(k)B_k,\qquad
+\nu_i=\sum_{b\ge0}\frac{S_i(b)}{\mu_i}\eta A^bC.
+\tag{3.2}
+$$
+
+The kernels and rows are stochastic and fix the labels. Uniformly over all retuned designs,
+
+$$
+\|\nu_1-\nu_0\|_{\rm TV}\le r_{\rm init}(s):=
+c\frac{R_{d-r+1}(s)+R_{d-r}(s)}{R_{d+1}(s)+R_d(s)}
+\le C_{\rm init}s^r
+\tag{3.3}
+$$
+
+on a source-only neighborhood.
+
+Proof. Compose initialization with its read/stop choice; after each read compose the bit update with its ensuing read/stop choice. Send stopping mass to its actual label and merge terminal configurations with that same label. Read-ready configurations and retained control already belong to the counted set, so composition adds no persistent state. Marginalizing independent update coins supplies stochastic rows, without a retained random tape. Make both labels fixed on unused future bits. Before absorption this reproduces the actions and afterwards changes neither cost nor label.
+
+The unnormalized first-wait weights are $G_i(b)=\sum_{k\ge\max(1,b)}F_i(k)e^{-sk}$, with totals $\mathcal W_i=\sum(k+1)F_i(k)e^{-sk}$. Here $G_1\ge G_0$ and
+
+$$
+\mathcal W_1-\mathcal W_0=c(R_{d-r+1}+R_{d-r}),\qquad
+\mathcal W_0=R_{d+1}+R_d.
+\tag{3.4}
+$$
+
+Normalizing the positive addition makes $G_1/\mathcal W_1$ a mixture of $G_0/\mathcal W_0$ and the normalized addition. Thus their variation is at most $(\mathcal W_1-\mathcal W_0)/\mathcal W_1$, bounded by (3.3). Passing both through the common stochastic map $b\mapsto\eta A^bC$ contracts variation: each output event has conditional value in $[0,1]$. Lemma 2.3 bounds the ratio in (3.3) by $C_{\rm init}s^r$, independently of that map. The independent future gaps give $U_i$. $\square$
+

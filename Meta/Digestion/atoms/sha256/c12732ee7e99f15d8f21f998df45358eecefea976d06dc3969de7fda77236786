@@ -1,0 +1,39 @@
+**Proposition 2.2 (exact application of proposed-row filling).** For
+every valid $I$, every $t\in\mathcal T$ and every chronological
+$\mathbf n$,
+
+$$
+(t,\mathbf n)\in\mathscr H_I
+\quad\Longleftrightarrow\quad
+\exists\mathbf x\in\prod_i\mathcal T^{\mathcal B_i}
+                     \ \Psi_I(\mathbf n,t,\mathbf x).
+\tag{NCE.5}
+$$
+
+When this holds, the class valuation is unique for this $t,\mathbf n$.
+Thus this stage preserves every original source, before any witness
+replacement takes place.
+
+Proof. Apply [NUE, Proposition 1.3][NUE] to $u=\rho^{n_i}t$ for each
+$i$. Its filling equivalence retains the entire exterior, the concrete
+strict-prefix blockers, and every different-class inequality. Its
+inverse reads the subtree at a representative hole of each class.
+These inverses give the unique $\mathbf x$ on the right of (NCE.5).
+Every declared link is then exactly its comparison in $L_I$.
+
+Conversely, filling the validated $C_i$ cannot change a displayed
+exterior node or blocker. Prefix-freeness ensures that filling one
+hole cannot conceal a different requested cut. Shared class variables
+and $\Delta_i$ give precisely the full partition. The equation
+$\rho^{n_i}t=W_i$ therefore identifies this row with the actual iterate
+of the same $t$ used in all other equations. Both endpoints of every
+link are reached in these filled rows, so its sign is a comparison of
+their actual values. This proves the converse and uniqueness.
+
+The filling supplier is grounded in [NativeCutFibers][CUT],
+`rowFiberEquiv`, whose `LegalValues` are injective on the entire set
+of appearing classes; see [its Scribe][CUT-S]. No product of separate
+record-source fibers is substituted for (NCE.4). A later-born address
+is handled by its entire iterate equation, without backward transport
+through an originally absent subtree. $\square$
+

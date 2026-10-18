@@ -1,0 +1,24 @@
+**Definition 255.1 (Midpoint daughters and signed sensitivity).**
+Replace each pair $N(i,j;u,v,s,t)$ by the equal mixture of
+$O(i,j;u,s,t)$ and $O(i,j;v,s,t)$, keeping constants and
+singletons. Denote the resulting one law by $p^{\mathrm{mid}}$.
+For a full score define
+
+$$
+\begin{gathered}
+d_{ij}^y(r)=\sum_{w:w_i=w_j=0}g_y(w,r)
+                 -\sum_{w:w_i=0,w_j=1}g_y(w,r),\\
+\Xi_y=\frac12\max_{i<j}\operatorname{osc}_{r\in J_L}d_{ij}^y(r),
+\qquad\operatorname{osc} f=\max f-\min f,\\
+\Gamma_y=\sum_{w\ne w^+}\operatorname{osc}_{r\in J_L}g_y(w,r)
+ =\sum_{w\ne w^+}\bigl(P_w+\max(A_w,C_w)\bigr)\\
+ =K_y-T-\sum_{w\ne w^+}\min(A_w,C_w).
+\end{gathered}
+\tag{255.1}
+$$
+
+Because $L\ge3$, a zero word has a label outside $\{0,n\}$,
+so its minimum reward is zero and this formula for $\Gamma_y$
+is exact. Oscillation is subadditive, whence
+$0\le\Xi_y\le\Gamma_y/2$.
+

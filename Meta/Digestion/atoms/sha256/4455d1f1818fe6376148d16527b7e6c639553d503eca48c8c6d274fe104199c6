@@ -1,0 +1,43 @@
+## 十一、与“生命是逆衰变”的更严格连接
+
+最新项目中加入的可维护性不动点，可以把“生命对抗衰变”从物理断言改写成控制性质。
+
+设：
+
+- 状态集合为 $\Omega$；
+- 动作集合为 $\mathcal A$；
+- 安全集合为 $K\subseteq\Omega$；
+- 观测为 $o(s)$；
+- belief $B\subseteq K$。
+
+定义：
+
+~~~math
+\delta_a(B)=\{\delta(s,a):s\in B\},
+~~~
+
+~~~math
+B_{a,y}=\delta_a(B)\cap o^{-1}(y).
+~~~
+
+定义算子：
+
+~~~math
+\mathcal F(S)
+=
+\left\{
+B\subseteq K:
+\exists a,\ 
+\delta_a(B)\subseteq K,
+\quad
+B_{a,y}\in S
+\text{ 对所有非空后继成立}
+\right\}.
+~~~
+
+定义最大不动点：
+
+~~~math
+V^\ast=\nu S.\mathcal F(S).
+~~~
+

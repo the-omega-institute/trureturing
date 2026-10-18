@@ -1,0 +1,43 @@
+**Lemma 8.1 (Original-law biased XOR hidden-endpoint recovery).** Give $A=\{a_0,a_1,b_0,b_1\}$ and $\{0,1\}$ their discrete sigma-algebras, and give $\Omega=A^{\mathbb Z}\times\{0,1\}^{\mathbb Z}$ its product sigma-algebra. Let $H_i$ and $X_i$ be its actual hidden and visible coordinate projections. Use exactly the row $\lambda_p$ and the two matrices $M_0(p),M_1(p)$ of (2.1), in their displayed state order, including every structural zero.
+
+For every real $p$ with $0<p<1$ and $p\ne1/2$, there exist total measurable maps
+
+$$
+D^-_p,D^+_p:\{0,1\}^{\mathbb N}\longrightarrow A
+$$
+
+such that the following holds for every probability measure $J$ on $\Omega$. Assume that $J$ satisfies the complete joint-cylinder law (1.3) with these coefficients: for every $\ell\in\mathbb Z$, $n\in\mathbb N_0$, hidden assignment $h:\{0,\ldots,n\}\to A$ and bit assignment $x:\{0,\ldots,n-1\}\to\{0,1\}$, the joint event specifying $H_{\ell+i}=h_i$ for $0\le i\le n$ and $X_{\ell+i}=x_i$ for $0\le i<n$ has mass given by (1.3) with $a=\ell$ and $b=\ell+n-1$. At $n=0$ this means the hidden singleton mass $\lambda_p(h_0)$, with empty product one. These nonnegative real masses are interpreted by their canonical inclusion in $[0,+\infty]$ when $J$ is extended-nonnegative-real-valued. Thus every origin, every interval length and every ordered seam is included. Then, simultaneously,
+
+$$
+J\left(\left\{\omega:
+H_0(\omega)=D^-_p\bigl((X_{-n-1}(\omega))_{n\ge0}\bigr)
+\ \text{and}\;
+H_1(\omega)=D^+_p\bigl((X_{n+1}(\omega))_{n\ge0}\bigr)
+\right\}\right)=1.
+$$
+
+The maps may depend on $p$ and are chosen before $J$. Neither joint measurability in $p$ nor a decoder independent of $p$ is asserted.
+
+Proof. First identify the actual law, rather than assume a hidden-spin representation for $J$. Proposition 2.1 constructs independent Bernoulli$(p)$ spins and an independent uniform phase, with hidden and visible coordinates (2.2). Its induced measure on $\Omega$ satisfies the required cylinders: an initial $a_s$ or $b_s$ has mass $\pi_s/2$; every active transition chooses the next spin with mass $\pi_t$ and the required XOR; every separator transition copies the spin and emits zero. Incompatible transitions have mass zero. Multiplying these factors gives (1.3) for every interval and origin, including intervals starting or ending at either phase and the hidden singleton case. This checks the joint hidden-visible law, not just its visible marginal.
+
+The complete interval cylinders determine a probability measure on $\Omega$. Indeed any cylinder restricting finitely many hidden and visible coordinates is a finite disjoint union of complete cylinders on a containing interval, with its final hidden coordinate included. Such finite-coordinate cylinders form a generating pi-system for the product sigma-algebra. Uniqueness of probability measures on that system shows that every $J$ in the statement equals the induced measure just constructed. It is therefore sufficient to construct measurable decoders under that realization and then transfer their measurable equality event by equality of the actual joint measures.
+
+Here is a total construction on binary half-lines. For a half-line $z=(z_n)_{n\ge0}$, let $\varphi(z)$ be the parity of $n+1$ at its first one; set $\varphi(z)=0$ if it has no one. This parity is the parity of the original coordinate on either side, since $-n-1$ and $n+1$ have the same parity. The first-one rule is measurable, being specified by countably many finite-coordinate events. Under the realization, Lemma 2.2 says that this rule equals the active phase on each complete half-line almost surely.
+
+Set $d=2$ if $\varphi(z)=0$ and $d=1$ if $\varphi(z)=1$, and extract $y_j=z_{d+2j-1}$ for $j\ge0$. This only selects active coordinates in the original half-line; it does not change the law or the clock. Form a candidate spin sequence by $t_0=0$ and $t_{j+1}=t_j\mathbin\oplus y_j$. Define $c_p(z)=1$ when the averages of $t_0,\ldots,t_{m-1}$ converge to $1-p$ as $m\to\infty$, and define $c_p(z)=0$ otherwise. The latter case includes convergence to $p$ and all exceptional records. Each $t_j$ is a measurable function of finitely many coordinates after the measurable phase choice; convergence to the specified real number is a countable measurable condition. Thus $c_p$ is a total measurable bit-valued map. Finally put
+
+$$
+\begin{aligned}
+D^-_p(z)&=\begin{cases}a_{c_p(z)}&\varphi(z)=0,\\b_{c_p(z)}&\varphi(z)=1,\end{cases}\\
+D^+_p(z)&=\begin{cases}b_{c_p(z)}&\varphi(z)=0,\\a_{c_p(z)}&\varphi(z)=1.\end{cases}
+\end{aligned}
+$$
+
+These maps are measurable on the entire half-line space, including records incompatible with either phase.
+
+To check the endpoint indices, if the actual phase is zero, the negative active list is $Y_{-1},Y_{-2},\ldots$ and the positive active list is $Y_1,Y_2,\ldots$. Their adjacent spins start respectively at $S_0$ and $S_1$, and the required states are $H_0=a_{S_0}$ and $H_1=b_{S_1}$. If the actual phase is one, the lists are $Y_{-1},Y_{-2},\ldots$ and $Y_0,Y_1,\ldots$; both start at $S_0$, and the required states are $H_0=b_{S_0}$ and $H_1=a_{S_0}$. For either direction the recurrence for $t$ gives the actual adjacent spin sequence when its endpoint spin is zero, and its complement when that endpoint spin is one. The strong law for each one-sided iid spin sequence gives limiting frequency $p$ for the actual sequence and $1-p$ for its complement. Because $p\ne1/2$, the rule $c_p$ selects the endpoint spin in all four cases. The finitely many phase and directional almost-sure events can be intersected, proving both state equalities simultaneously. Equality of joint laws established above transfers this single measurable event to every admissible $J$.
+
+This is the endpoint-recovery step used in Theorem 3.2: Lemma 3.1's complement-pair variance tending to zero supplies its conditional-projection formulation, while Lemma 2.2 supplies the phase. The strong-law selection is also the mechanism in [Conditional gain deficit, Proposition 4.1](FIB_LEGAL_EDGE_LOAD_CONDITIONAL_GAIN_DEFICIT_AND_UNWEIGHTED_BRIDGE_OBSTRUCTION.md) at $p=3/5$; the two distinct limiting frequencies apply on both biased parameter ranges here. The assertion is a `repo-derived` explicit original-domain measurable formulation of that recovery relation, with the classical strong law and measure-uniqueness argument retaining their usual attribution and no literature-priority claim.
+
+The hypotheses are satisfiable by Proposition 2.1. No decoder, spin-image law, independence of the observed half-lines, tail summability, finite-record sufficiency or extra positivity is assumed. The period-two law requires no mixing or aperiodicity premise. The fair parameter and endpoints are excluded. This auxiliary asserts only the displayed endpoint relation; it does not assert a law-existence theorem, posterior, moment, entropy or tail conclusion, or the other conclusions of Theorem 3.2 or the cited Proposition 4.1. $\square$
+

@@ -1,0 +1,65 @@
+**定理 24.4（全部根型、严格模界与广义模式）。**
+令
+
+$$
+\mathscr D=\alpha^2-4(\alpha-\beta),\qquad
+\lambda_\pm=\frac{-\alpha\pm\sqrt{\mathscr D}}2.
+\tag{24.9}
+$$
+
+两根的模均严格小于一。若 $\mathscr D\ne0$，则
+
+$$
+\begin{aligned}
+C_\ell&=A_+\lambda_+^\ell+A_-\lambda_-^\ell,\\
+A_+&=\frac{C_1-\lambda_-C_0}{\lambda_+-\lambda_-},\qquad
+A_- =\frac{\lambda_+C_0-C_1}{\lambda_+-\lambda_-}.
+\end{aligned}
+\tag{24.10}
+$$
+
+若某根为零，零次幂在 $\ell=0$ 取一，其余取零；这恰发生于
+$\alpha=\beta$，式子按 (24.8) 塌缩。
+若 $\mathscr D=0$，则 $\lambda=-\alpha/2\ne0$，并有
+
+$$
+C_\ell=(A+B\ell)\lambda^\ell,\qquad
+A=C_0,\quad B=C_1/\lambda-C_0\ne0.
+\tag{24.11}
+$$
+
+证明。先给严格模界。由于 $0<\alpha,\beta<1$，
+所有状态都可经至多两步到达 $00$，再经至多两步到达任意目标状态；
+用 $00$ 的正概率自环补足步数，得到 $K^4$ 的每项都严格正。
+因此 $K$ 不可约且非周期。
+对任意复特征向量 $z\ne0$，随机矩阵的最大模范数不增给 $|\lambda|\le1$。
+若 $|\lambda|=1$，取 $|z_i|$ 最大的分量，对
+
+$$
+\lambda^4 z_i=\sum_j(K^4)_{ij}z_j
+$$
+
+使用三角不等式。左侧已经等于最大模，右侧是所有分量的严格正权平均，
+所以各 $z_j$ 必须具有相同最大模和同一复辐角，亦即 $z$ 为非零常向量。
+再由 $Kz=z=\lambda z$ 得 $\lambda=1$。
+但二次因子在一处的值是 $1+2\alpha-\beta>0$，
+所以其两根不是一，模严格小于一。
+
+常系数递推的每个根提供几何解；根不同时，这两解线性无关，
+解 $C_0=A_++A_-$、$C_1=A_+\lambda_++A_-\lambda_-$
+得到 (24.10)。二阶递推由前两项唯一决定全序列，故该式对所有延迟成立。
+并且
+
+$$
+C_0C_2-C_1^2=A_+A_-(\lambda_+-\lambda_-)^2.
+$$
+
+若 $\Delta\ne0$，两系数都不能为零。
+当 $\mathscr D=0$，代入递推可直接检查 $\lambda^\ell$ 与
+$\ell\lambda^\ell$ 是两个解，且前两项线性无关；解初值便得 (24.11)。
+重根条件给 $\beta=\alpha-\alpha^2/4<\alpha$，
+所以由 (18.8) 知 $\Delta<0$。
+此时 (24.11) 的 Hankel 行列式为 $-B^2\lambda^2=t\Delta<0$，
+故 $B\ne0$。重根不能被遗漏，也不能把它当作两个不同指数模式。
+所有模式均趋零；重根中附加的线性因子仍由 $|\lambda|<1$ 控制。证毕。
+

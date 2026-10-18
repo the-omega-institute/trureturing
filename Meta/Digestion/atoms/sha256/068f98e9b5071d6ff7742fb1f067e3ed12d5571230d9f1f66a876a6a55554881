@@ -1,0 +1,27 @@
+## Theorem (M27)
+
+Define
+\[
+ u_j=\frac{B_j-1}{2r_j},\qquad
+ b_{p,j}=\frac{p-1}{2r_j}\quad(p\mid B_j).
+\]
+These are integers. Then
+\[
+ \boxed{u_j\equiv(-1)^{j+1}\pmod{27}\quad(j\ge1).}
+ \tag{M27.1}
+\]
+For every \(j\ge2\), the actual depth vector in \(B_j\) satisfies
+\[
+ \boxed{\sum_{p\mid B_j} h_p\,b_{p,j}
+       \equiv(-1)^{j+1}\pmod{27}.}
+ \tag{M27.2}
+\]
+For \(j=1\), (M27.2) also holds by the direct identity \(B_1=19\).
+
+In particular, the old mod-3 balance
+\(\sum h_p(p-1)/r_j\equiv(-1)^j\pmod3\) is only the first
+reduction of (M27.2). Since \(b_{p,j}\) is integral, (M27.2) forces at
+least one factor with \(3\nmid h_p b_{p,j}\), but the new content is the
+full mod-27 weighted congruence. It neither produces a WSS prime nor
+excludes one.
+

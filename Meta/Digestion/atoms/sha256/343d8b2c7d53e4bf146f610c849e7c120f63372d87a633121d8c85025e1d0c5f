@@ -1,0 +1,75 @@
+### Theorem 11.1 (mixed positive diagonal generators are excluded)
+
+If the normalized common safe generator $K$ is diagonal, then it is $E_{22}$ or $E_{11}$.
+
+**Proof.** Suppose instead that $K=\operatorname{diag}(a,e)$ with $a,e>0$ and $a+e=1$. Every recorded endpoint is nonnegative integral and unimodular. For
+
+$$
+A=\begin{pmatrix}u&v\\w&t\end{pmatrix},
+\qquad au+et=1,
+$$
+
+if $u,t\ge1$, positivity of $a,e$ forces $u=t=1$. Then $1-vw=\pm1$ gives $vw=0$ or $2$. Thus these endpoints are $I$, upper or lower shears, or the two positive matrices
+
+$$
+P_0=\begin{pmatrix}1&1\\2&1\end{pmatrix},\qquad
+Q_0=\begin{pmatrix}1&2\\1&1\end{pmatrix}.
+$$
+
+If $u=0$, unimodularity forces $v=w=1$ and $t=1/e$ to be an integer $m\ge2$, giving
+
+$$
+Z_m=\begin{pmatrix}0&1\\1&m\end{pmatrix}.
+$$
+
+If $t=0$, the analogous endpoint is $JZ_\ell J$ for the integer $\ell=1/a\ge2$. Both diagonal entries cannot be zero because $au+et=1$. This exhausts all endpoints; if a displayed reciprocal is not an integer, its case simply does not occur.
+
+The following order restrictions concern existing left multipliers, not inverse acquisitions. A nontrivial upper shear $U^h$ and lower shear $L^g$, with $h,g\ge1$ and $L=MJ$, cannot coexist in one chain: $L^g(U^h)^{-1}$ has upper-right entry $-h$, and $U^h(L^g)^{-1}$ has lower-left entry $-g$. Every actual multiplier is nonnegative. A positive endpoint remains positive under every later nonnegative invertible multiplier, because each multiplier row is nonzero. Moreover
+
+$$
+Q_0P_0^{-1}=\begin{pmatrix}3&-1\\1&0\end{pmatrix},\qquad
+P_0Q_0^{-1}=\begin{pmatrix}0&1\\-1&3\end{pmatrix},
+$$
+
+so $P_0$ and $Q_0$ cannot both occur. Neither can coexist with $Z_m$: it cannot precede the zero of $Z_m$, whereas
+
+$$
+P_0Z_m^{-1}=\begin{pmatrix}1-m&1\\1-2m&2\end{pmatrix},\qquad
+Q_0Z_m^{-1}=\begin{pmatrix}2-m&1\\1-m&1\end{pmatrix}
+$$
+
+have negative entries for every $m\ge2$. Conjugation by $J$ gives the same exclusion for $JZ_\ell J$ and exchanges $P_0,Q_0$. Consequently a chain containing a positive endpoint lies in the span of $I$, one shear direction, and that one positive endpoint, of dimension at most three. Repetition adds no dimension.
+
+If $Z_m$ occurs, no nontrivial lower shear can precede it, since $Z_m(L^g)^{-1}$ has upper-left entry $-g$. None can follow it: its second column is positive and stays positive, whereas a lower shear has zero upper-right entry. The mirrored zero-diagonal endpoint cannot coexist with $Z_m$ either. Its positive first column prevents it from preceding the zero in the first column of $Z_m$; the positive second column of $Z_m$ prevents the opposite order. Positive endpoints were already excluded. Thus every endpoint in a chain containing $Z_m$ lies in $\{I,U^h,Z_m\}$, a space of dimension at most three. Its mirror has the same property. If there is no positive or zero-diagonal endpoint, only one shear direction can occur, giving span at most two.
+
+In all cases $\operatorname{rank}\mathcal L\le3$. The nonzero constant image $\mathcal L(K)=\mathbf1$ is killed by $\Lambda$, so $\operatorname{rank}B\le2$, contrary to (11.1). A diagonal safe matrix has nonnegative diagonal entries summing to one. Removing the case in which both are positive leaves exactly $E_{22}$ and $E_{11}$. ∎
+
+The exclusion also has a complete actual-source collision interpretation. For any legal history in the mixed diagonal hyperplane, the span calculation gives $\dim\ker B\ge2$. Choose two independent kernel vectors $X_0,X_1$. If either is outside the safe-cone union, retain it as $X$. Otherwise orient both safe and take their nonzero combination $\Phi(X_1)X_0-\Phi(X_0)X_1$; it has $\Phi=0$ and is therefore unsafe. This supplies an unsafe $X\ne0$ in $\ker B$.
+
+For completeness the full positive-secant construction is as follows. Write $X=(\begin{smallmatrix}a_0&b_0\\c_0&e_0\end{smallmatrix})$ and $\delta=\det X$. The coefficients $a_0,-b_0,-c_0,e_0$ contain both strict signs, so
+
+$$
+F(x,y)=e_0xy+a_0-c_0x-b_0y
+$$
+
+takes both signs on the positive quadrant. The limits at $(\epsilon,\epsilon)$, $(T,T)/T^2$, $(T,T^{-2})/T$, and $(T^{-2},T)/T$ isolate respectively $a_0,e_0,-c_0,-b_0$. Choose opposite-sign positive points and their straight segment. Every entry of $E_0(x,y)=(\begin{smallmatrix}xy&x\\y&1\end{smallmatrix})$ on that compact segment has a positive lower bound $m_0$. With endpoint values $F_-<0<F_+$, choose
+
+$$
+\tau>\max\left\{\frac{\max|X_{ab}|}{m_0},
+\frac{|\delta|}{\min(-F_-,F_+)}\right\}.
+$$
+
+Both divisors are positive. Continuity supplies a segment point with $F=-\delta/\tau$, including when $\delta=0$. Then
+
+$$
+S_0=\tau E_0(x,y),\qquad S_1=S_0+X
+$$
+
+are distinct strictly positive matrices of rank one: the second determinant is $\tau F+\delta=0$, and its entries are positive by the strict bound on $\tau$. Since $BX=0$ and the second-difference quotient has exactly affine evaluation as its kernel, the one entire affine polynomial
+
+$$
+H(t)=\operatorname{tr}X+t\bigl(\operatorname{tr}(A_1X)-\operatorname{tr}X\bigr)
+$$
+
+satisfies $H(i)=\operatorname{tr}(A_iX)$ at all six nodes. Give both runs slope zero, with $D_0=0$ and $D_1=-H$. Their observation difference at every actual index is $\operatorname{tr}(A_iX)-H(i)=0$. For each endpoint set $\alpha_b=1$, $\beta_b=0$, $R_b=S_b$, $c_b=(p_b,r_b)^{\mathsf T}$ and $\ell_b=(1,q_b/p_b)$. Positivity and $p_bs_b=q_br_b$ give $c_b\ell_b=S_b$ and $\ell_bA_ic_b=\operatorname{tr}(A_iS_b)$. Each actual atom preserves positive columns with this fixed positive row. This supplies positive read and unread states on the original prescribed words, one whole affine drift per run, and a target distinction beyond the scale fibre. Thus the rank exclusion is supported by an actual collision, rather than by dimension alone.
+

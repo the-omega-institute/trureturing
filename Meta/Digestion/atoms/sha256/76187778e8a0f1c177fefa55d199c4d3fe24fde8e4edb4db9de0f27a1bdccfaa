@@ -1,0 +1,71 @@
+**Theorem 3.3 (positive different-slope collision family).** Choose arbitrary
+
+$$
+r>0,\qquad Z,Z'>2,\qquad Z\ne Z',\qquad
+V>\max(Z,Z')+3,\qquad \zeta,\eta\in\mathbb R.
+$$
+
+Define
+
+$$
+x=Z-2,\quad y=\frac{V-Z-3}{Z-1},\qquad
+x'=Z'-2,\quad y'=\frac{V-Z'-3}{Z'-1},
+$$
+
+$$
+S=r\begin{pmatrix}x&xy\\1&y\end{pmatrix},\quad
+S'=r\begin{pmatrix}x'&x'y'\\1&y'\end{pmatrix},\quad
+\kappa=\frac{Z'}{V-1},\quad \kappa'=\frac{Z}{V-1}.
+$$
+
+Writing $a=\operatorname{tr}S$ and $a'=\operatorname{tr}S'$, let
+
+$$
+D(t)=\zeta-a+[\eta-\kappa(a+r)]t,\qquad
+D'(t)=\zeta-a'+[\eta-\kappa'(a'+r)]t.
+$$
+
+These are two distinct effective targets with the same six observations on the actual path. Both slopes, and all their recorded gains, are strictly positive.
+
+**Proof.** All denominators are positive. The inequality on $V$ gives $y,y'>0$, and $Z,Z'>2$ gives $x,x'>0$. Thus both sources are strictly positive and have determinant zero. Their actual factorizations are
+
+$$
+c=(rx,r)^{\mathsf T},\quad \ell=(1,y),\qquad
+c'=(rx',r)^{\mathsf T},\quad \ell'=(1,y').
+$$
+
+Take $\alpha=\alpha'=1$, $\beta=\kappa$, and $\beta'=\kappa'$. The two displayed drifts are allowed affine polynomials. Since $V-1>0$ and $Z,Z'>0$, both slopes are positive, hence $1+\kappa i$ and $1+\kappa'i$ are positive for every recorded $i\ge0$.
+
+Substitution into the prefix equations gives, in both runs,
+
+$$
+z_0=\zeta,\qquad z_1=\zeta+r+\eta,\qquad
+z_2=\zeta+r+2\eta.
+$$
+
+For the first source, $Y=rZ$ and
+
+$$
+\frac{L-a}{r}=(Z-1)y+Z+3=V,
+\qquad L=a+rV.
+$$
+
+The terminal polynomial coefficients in (3.1) are therefore
+
+$$
+\mathsf A=\frac{rZZ'}{V-1},\qquad
+\mathsf B=rZ+\kappa L+\eta-\kappa(a+r)
+=\eta+r(Z+Z'),\qquad
+\mathsf C=\zeta+rV.
+$$
+
+For the primed source, exchanging $Z$ and $Z'$ gives the same three coefficients. Thus at each actual terminal index $i=3,4,5$ the common observation is
+
+$$
+z_i=\frac{rZZ'}{V-1}i^2+[\eta+r(Z+Z')]i+\zeta+rV.
+$$
+
+This verifies all six equations explicitly. Lemma 1.2 supplies the positive intermediate column states under the same chronological seventeen-atom list, with its own one fixed row in each run. Each run uses one source and its one fixed gain and drift throughout.
+
+Finally $p=r(Z-2)$ differs from $p'=r(Z'-2)$, and $\kappa\ne\kappa'$. The effective targets are distinct, so the collision is not a representation scale from Lemma 1.3. Theorem 3.2 proves injectivity within every prescribed-slope slice, whereas these targets lie on different slices. The collision is a failure of this particular six-read $d=1$ history; it supplies no all-history lower bound and excludes no other six-read history. ∎
+

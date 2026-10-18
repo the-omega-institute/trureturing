@@ -1,0 +1,34 @@
+**定理 5.1（任意漂移、变第五响应的条件整族恢复）。** Fix $D_0,\lambda,Y$
+as in (1.3). Let $K\subseteq\mathcal F(H_J(Y))$ be known, of arbitrary
+cardinality and with arbitrary drifts. Suppose that every entire actual
+fifth-$M$ response fiber
+
+$$
+K_z=K\cap\mathcal F(H_{JM}(Y,z))
+$$
+
+contains at most two distinct complete targets. Then one deterministic
+strategy recovers every member of $K$ within three further readings,
+hence within eight total readings.
+
+The same total budget holds for a known $K\subseteq\mathcal F(H_J^-)$
+if every entire actual fourth-$J$, fifth-$M$ response fiber has at most
+two targets.
+
+Proof. At $H_J(Y)$ execute fifth $M$ and read its actual $z$. A singleton
+returns its complete target. For a pair, Theorem 4.1 guarantees a
+separating suffix of length at most two. Choose the first word in the
+fixed order $MM,MJ,JM,JJ$ whose sixth or seventh reading differs on
+that whole retained pair. Execute its sixth atom and read; if it
+separates, stop, otherwise execute and read its seventh atom. Return
+the unique retained target matching the actual readings. The word
+exists because equality of both sixth readings and all four terminal
+readings would be precisely two-target $L_2$.
+
+This defines one policy for every reachable $z$ of the same known
+$K$, including infinitely many possible response values. Empty fibers
+are unreachable. At $H_J^-$ first execute fourth $J$ and read $Y$,
+then use the stated rule on that actual retained set. Each atom is
+immediately read and the last possible clock is seven. The budgets
+are $5+1+2=8$ and $4+1+1+2=8$. No drift promise is required. ∎
+

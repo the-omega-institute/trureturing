@@ -1,0 +1,23 @@
+**Theorem 5.4 (locally maintained sufficient code with optimal new range).** Under Assumption 5.1 and Definition 5.3, after the actual new response the optimal code can be updated without another full-source preparation or any additional source read. When the new boundary is anchored, compute $m'=m(R,h')$ from its complete retained history and set
+
+$$
+E'=\begin{cases}E,&E\le m',\\1,&E>m'.\end{cases}
+\tag{LRD.17}
+$$
+
+The refined boundary $(R,h',E')$ satisfies the normal-form invariant and has exactly the optimal complete code range $\{1,\ldots,m'\}$ conditional on $R,h'$. If both boundaries are unanchored, retain $E'=E$ and its complete countable range. This covers a countable-to-finite transition. For two anchored boundaries, $m'\le m(R,h)$. These conclusions concern the specified normal-form encoder and monotone cutoffs, not arbitrary optimal encoders or unproved shrinking cutoffs.
+
+**Proof.** First a ground old chart cannot become a new unresolved-star chart. In a ground old chart each old residual equals some $T_j$ with $j\le A_\eta$. Every reached native subtree of $T_j$ is $T_\ell$ with $\ell\le j$: this follows by descent using the atomic recurrence, with its two leaf bases. Refinement either exposes concrete syntax of that tree or puts one of these reached atomic subtrees at a new frontier. By (LRD.16) its index is still within the new exact atomic list. Thus the actual new chart is ground. This also handles zero old variables and early leaves. It is the reason for retaining the specified cell-dependent monotone cutoff.
+
+On a new unresolved-star chart, an anchored old boundary therefore also had an unresolved star. Its retained code is $\nu(u)+1$ by the invariant. The new interval theorem gives
+
+$$
+1\le\nu(u)+1\le c_{\eta',\theta'}+1\le m',
+$$
+
+so (LRD.17) leaves this necessary code unchanged. If the old boundary was unanchored, the countable code already equals $\nu(u)+1$, and the same argument applies. On a new ground chart the depth is independently known from the chart, and any value in $\{1,\ldots,m'\}$ suffices; (LRD.17) always produces one. Hence the invariant and the bounded native decoding service persist without another acquisition.
+
+If $m'>1$, some new unresolved-star chart attains $m'$ and realizes every root value $0,\ldots,m'-1$ with its actual source. Each such source retains $E'=\nu+1$ by the preceding argument, so the entire range $1,\ldots,m'$ is attained. If $m'=1$, every updated code is $1$. The lower bound of Theorem 4.4 proves optimality of these exact ranges. If the new boundary is unanchored, its target spectrum is still all naturals and the unchanged countable code realizes every positive integer.
+
+For finite monotonicity restrict the old encoder and old bounded service to the new actual subfiber. The old history prefix and old boundary are recoverable from $R,h'$; common installed data records its prefix endpoint. This restriction has no more than $m(R,h)$ complete values and the same old call bound, so the arbitrary-code lower bound at the new boundary gives $m'\le m(R,h)$. The local update itself uses only $E$ and the effectively recomputed $m'$, not an undisclosed actual chart or source tree. Repeated finite continuation follows by induction. The growing original history remains retained and charged; reducing this extra field does not prove that total observer memory decreases. $\square$
+

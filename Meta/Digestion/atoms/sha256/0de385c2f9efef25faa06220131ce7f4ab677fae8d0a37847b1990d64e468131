@@ -1,0 +1,11 @@
+**命题 17.3（Removing the protected guard changes the exact law）。** The extension of (16.6) to Definition 17.1 obtained by omitting only the guard $J+Lr\le m$ is false for every $Q\ge2$.
+
+Proof. Represent (17.2) in the remaining notation of Definition 15.1 using $d=1,a=0$, $S=\{1,3,4\}$, $J=4$, and
+
+$$
+\eta(1)=B,\qquad\eta(3)=C,\qquad\eta(4)=A.
+\tag{17.7}
+$$
+
+Then $M=3$, $L=2$, $A\in\eta[S]$, and every other requirement of (15.1)–(15.5) holds; only $J+Lr=8>5$ fails. The proposed extension would give $2Q+1$, whereas Theorem 17.2 gives $Q+2<2Q+1$. The missing calendar premise has a precise effect: phase $3$ is the right endpoint of $W_Q$ and the left endpoint of $W_{Q+1}$, so it can be queried again one paid block later. In the guarded proof all protected phases miss every non-main window through the required horizon. That statement is false here. The completed endpoint at phase $5$ supplies the compatible even last charge without contaminating the same continuing $C/A$ archive. This conclusion concerns only the family (17.2); it gives no exact formula for an arbitrary unguarded phase table. ∎
+

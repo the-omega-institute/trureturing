@@ -1,0 +1,8 @@
+**Theorem 4.2 (N2: constant or cubic).** Under Lemma 4.1's hypotheses its primitive kernel vector has degree zero or three. If it has degree three, $\ker T_a$ contains an unsafe nonzero matrix at some real slope $a$, and (2.5)–(2.7) give an actual same-slope collision.
+
+**Proof.** If $\deg K\le2$, Theorem 3.1 puts every coefficient of $K$ in $\ker B\cap\ker C$. Because $B=T_0$ has rank three, $\ker B$ is a line. All coefficients are therefore multiples of one fixed nonzero vector $K_*$. Write $K(k)=f(k)K_*$. Choosing a nonzero constant entry of $K_*$ shows that a nonconstant $f$ would be a common nonconstant divisor of all entries. Primitivity forces $f$ to be constant. Hence this case has degree zero, and the only other possible degree is three.
+
+In the cubic case let $K_3\ne0$ be its leading coefficient. If $K_3\notin\mathcal U$, closedness of $\mathcal U$ and $K(k)/k^3\to K_3$ as $k\to+\infty$ imply $K(a)/a^3\notin\mathcal U$ for some sufficiently large positive real $a$. Since $\mathcal U$ is closed under every real scalar multiple, $K(a)$ is unsafe.
+
+If $K_3\in\mathcal U$, reverse the sign of $K$ if necessary so that $K_3$ is safe. Then $\Phi(K_3)>0$, so $\Phi(K(k))$ is a real cubic with opposite limits at the two ends of the real line. It has a real root $a$. Primitivity gives $K(a)\ne0$, whereas $\Phi(K(a))=0$. Equation (2.4) makes that vector unsafe. The two cases exhaust all possible leading coefficients. In either case $T_aK(a)=0$, so the explicit positive-source and single-drift bridge in Section 2 supplies the claimed actual collision. Individual entries of $K$ may vanish; the argument requires only that they do not all vanish together. ∎
+

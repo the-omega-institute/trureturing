@@ -1,0 +1,22 @@
+**Theorem 20.1 (charged count-only realization).** At an acquired cut of length $n=A+B$, the exact realization can store its rank in $\lceil\log_2G_\kappa(A,B)\rceil$ data bits, with another $O(\log(n+2))$ bits for selected counts and representation/occupancy metadata. The original finite fields, installed program/model and original source storage are separate. On a completed history put $N=A_3+B_3$ and
+
+$$
+H=1+\lceil\log_2(F_v+1)\rceil+\lceil\log_2(N+2)\rceil.
+\tag{SC.49}
+$$
+
+A count-only implementation of (SC.46), including its persistent rank/count mechanism and temporary arithmetic, has $O(H)$ peak added bits through acquisition and a conservative $O((N+1)^3H^2)$ bit-work bound, hence $O((N+1)^5)$ in the worst case. Chronological materialization of its inverse uses an additional $N$ raw-letter positions and the same-order inverse arithmetic bound. These are sufficient bounds, not exact peak-workspace or total-resource minima.
+
+Proof. Binary counts and register-width/occupancy descriptors need logarithmic length metadata. A rank buffer may use the width computed from the current $G_\kappa(A,B)$; its descriptor is a function of the declared tag/count boundary, not another history-bearing code. Computing that width adds at most one such count query per transaction, and the coefficient itself need not remain stored. A zero-rank singleton fiber needs no rank data bit; a variable-width numerical representation still declares its occupancy, and no integer register is treated as constant-size storage. There are only a fixed number of relevant incoming edges. Each queried predecessor coefficient is a block of the current dictionary, so it is at most its current size and by (SC.48) at most $F_v$.
+
+Compute (SC.43) on demand with a fixed number of integer buffers. It has at most $n+1$ summands. For a binomial $\binom mk$, replace $k$ by $\min(k,m-k)$ and compute successively
+
+$$
+b_0=1,\qquad b_i=b_{i-1}(m-k+i)/i\quad(1\le i\le k).
+\tag{SC.50}
+$$
+
+Each division is exact and the sequence is nondecreasing, ending at $\binom mk$. A feasible summand's two binomials are positive and each is at most the complete queried sum. Their product and every partial sum are also bounded by it. An intermediate numerator in (SC.50) is at most that bound times $n+3$, so all buffers have $O(H)$ bits, including multiplication/division scratch and loop indices. For an infeasible query return zero without constructing a binomial. Evaluating a sum costs $O((n+1)^2)$ such arithmetic steps; schoolbook integer multiplication and division give the deliberately coarse $O((n+1)^2H^2)$ bit bound. Summing over $N$ transactions proves the stated bound. Since $G\le2^n$, $H=O(N+1)$ proves the worst-case envelope. No cardinality cache or literal past is retained between transactions.
+
+Inverse interval selection makes the same bounded queries, with decreasing acquired length, and works on charged scratch copies while leaving the held bank intact. It produces raw letters backwards; filling a paid $N$-letter buffer from its end gives chronological output. Materializing occurrence-labelled relations also pays for those labels and incidences. Output copies, receiver copies and transmission are additional resources. All original seed/retry/return Reads, marker/local writes, routing, allocation, installation and Stop remain paid. This bound ends at the selected latch: arbitrarily many fourth-segment returns, a separate live count bank and their original storage/work are not bounded by $N$. $\square$
+

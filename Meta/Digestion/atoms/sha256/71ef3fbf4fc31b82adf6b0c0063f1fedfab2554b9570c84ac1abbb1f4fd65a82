@@ -1,0 +1,36 @@
+**Definition 2.2 (physical cylinder and moments).** For $\phi\in\mathbb T=
+\mathbb R/(2\pi\mathbb Z)$ and $0\le\xi\le1$, define
+
+$$
+\begin{gathered}
+u=\cos\phi,\quad v=\sin\phi,\quad z=u/\sqrt\alpha,\quad
+w=v/\sqrt\beta,\quad h=(1,z,w)^T,\quad K_h=s_0D+zT+wS,\\
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad
+\ell(h)=h^TGh,\quad f(h)=n_h^T\Delta n_h,\\
+c(h)=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+
+                         c_{\rm src}^2h_1^2w^2}
+                  {h_0^2\delta+b^2z^2+d^2w^2}>0,\\
+b_x=t c(h)\xi,\quad H_\xi(\phi)=\ell(h)+t c(h)\xi f(h),\quad
+ g_\xi(\phi)=|H_\xi(\phi)|,\quad k(\phi,\xi)=|u|,\\
+\Gamma_\xi(\phi)=(1,u,v,u^2,uv,\xi c,\xi c u^2,\xi c uv),\quad
+B=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0),\quad
+r=\sqrt\alpha\,s/s_0.
+\end{gathered}
+\tag{QS.7}
+$$
+
+The denominator and numerator of $c$ are strictly positive on the whole
+circle, including $z=0$ and $w=0$. The fractional space is
+$X=\mathbb T\times[0,1]$; its endpoint sheets are $\xi=\eta\in\{0,1\}$.
+A common law is a coefficient probability law $\pi$ on $X$ satisfying
+
+$$
+\int\Gamma\,d\pi=B,\qquad \bar k:=\int k\,d\pi\ge r,\qquad
+J(\pi)=\int g\,d\pi.
+\tag{QS.8}
+$$
+
+The scalar roof is $R_t(r)=\sup J(\pi)$ over these laws. For finite laws
+$\pi=\sum_jp_j\delta_{(\phi_j,\xi_j)}$, positive $p_j$ count supported
+atoms; they are coefficient weights, not acquisition probabilities.
+

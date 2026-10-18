@@ -1,0 +1,19 @@
+**Proposition 1.2 (actual realization and exact representation fibres).** Every source in (1.1) is realized by
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,\qquad
+f_+=\binom p r,\qquad \ell_+=(1,q/p).
+\tag{1.2}
+$$
+The row is unchanged throughout its run, and every recorded and unread column on any legal history is positive. For a fixed effective target, its original gain/relation representations are exactly
+$$
+R=S/u,\qquad \alpha=u>0,\qquad \beta=uk,\qquad D\text{ unchanged}.
+\tag{1.3}
+$$
+For fixed $R$, its positive factorizations differ exactly by $f_+'=\mu f_+$ and $\ell_+'=\ell_+/\mu$, with $\mu>0$.
+
+**Proof.** The identity $s=qr/p$ gives $f_+\ell_+=S$. If $A=(\begin{smallmatrix}h&t\\g&e\end{smallmatrix})$, then
+$$
+\ell_+Af_+=hp+tr+gq+es=\operatorname{tr}(AS).
+$$
+The identities $M(x,y)^{\mathsf T}=(y,x+y)^{\mathsf T}$ and $J(x,y)^{\mathsf T}=(y,x)^{\mathsf T}$ preserve strict positivity for $x,y>0$, proving the assertion through every unread atom. Necessity of (1.3) follows from $S=\alpha R$ and $k=\beta/\alpha$; substitution proves sufficiency. If $R=f\ell=f'\ell'$ with positive factors, equality of the first columns gives $f'=\mu f$ for a positive scalar, and equality of the other column gives $\ell'=\ell/\mu$. These are representation freedoms, not identifications of different effective targets. Different candidate runs may have different fixed positive rows. ∎
+

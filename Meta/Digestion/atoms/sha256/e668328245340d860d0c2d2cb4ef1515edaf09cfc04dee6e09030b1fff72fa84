@@ -1,0 +1,22 @@
+**Corollary 3.2 (private-size and intersection bounds).** For a shared
+pair oriented as in (CL.3), set
+$r=g-h$, $s=z-w$, $S=S_p(q)$, $T=S_{p'}(q)$ and $\ell=n-b$.
+Then
+
+$$
+\begin{aligned}
+|S\cup T|&\le g+z-\ell,& |T\setminus S|&\le r-\ell,\\
+|S\setminus T|&\le s-\ell,& |S\cap T|&\ge h+w+\ell,\\
+r,s&\ge\max(2,\ell+1).
+\end{aligned}
+\tag{CL.14}
+$$
+
+Proof. Apply (CL.13) with $H=g,Z=z$. Subtract $|S|=h+z$ or
+$|T|=g+w$ from its union bound for the two private-size bounds.
+Inclusion-exclusion gives the intersection bound. The support exclusions
+make $S,T$ incomparable, so both private sets are nonempty and
+$r,s\ge\ell+1$; combine this with (CL.3). Inclusion-exclusion is the
+standard finite-set identity. The application here retains the union
+restriction for every larger hosted subcollection as well. $\square$
+

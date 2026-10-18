@@ -1,0 +1,19 @@
+**Definition 2.1 (Canonical preparations and two measurement subspaces).**
+Let
+
+$$
+\begin{gathered}
+\Delta_2=\{p=(p_0,p_+,p_-):p_i\ge0,\ \sum_ip_i=1\},\\
+a(p)=\sqrt{p_0}\,d+\sqrt{p_+}\,u_++\sqrt{p_-}\,u_-,\\
+V_{\rm rad}=\operatorname{span}_{\mathbb R}(d,u_+,u_-),\qquad
+V_{\rm tan}=\operatorname{span}_{\mathbb R}(v_+,v_-),\\
+g_* =G(\pi,\pi)\mathsf J.
+\end{gathered}
+\tag{2.1}
+$$
+
+The same formula for $a(p)$ is used on the nonnegative orthant when
+homogeneity is useful. These subspaces are coordinates in the original
+five-dimensional vector space, not tensor factors or physical ports.
+Radial measurement coordinates may have any real signs.
+

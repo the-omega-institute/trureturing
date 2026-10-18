@@ -1,0 +1,133 @@
+**Theorem 29.7 (A common balanced obstruction for both orientations and all short-pair mixtures).** Suppose $p_1p_3=p_2p_4$, equivalently $\eta=1$. For every design in Definition 29.6, every sufficiently small $\varepsilon>0$, $0<v\le1$ and $0<\delta\le\delta_0<1/4$, uniform risk requires
+
+$$
+N\ge c_{p,\delta_0}v^{-2}\varepsilon^{-4},
+\tag{29.29}
+$$
+
+with a constant and cutoff independent of the weights and their dependence on $(v,\varepsilon,\delta)$. This remains true if single windows of lengths at most three are included in the mixture.
+
+Consequently, at balance, maximum coherent pair sum six is the minimum permitting a uniform quadratic $\varepsilon^{-2}$ pair rate in this fixed iid, at-most-two-window, largest-window-at-most-three design class. The $(3,3)$ upper bound attains that sum. This is not a claim about minimum weight-averaged charge, unrestricted longer windows, adaptive quantum controls, or total coherent cost over all trials.
+
+**Proof.** The complete two orientations must be compared with the same ordered $\pi$, not just with the same local marginals. Let $a_0=00,a_1=01$ and use the three words of Theorem 29.2. In the order
+
+$$
+a_0u_0\mid(a_0u_1^{\rm w},a_0u_2^{\rm w},a_1u_0)
+\mid(a_1u_1^{\rm w},a_1u_2^{\rm w}),
+$$
+
+the whole $(2,3)$ state is
+
+$$
+\rho_{23}=sh\ \oplus\
+\begin{pmatrix}
+sp_2&s\overline C&Z\\sC&sp_1&R\\\overline Z&\overline R&p_1h
+\end{pmatrix}\ \oplus\ p_1G,
+\qquad Z=\mu Dq,\quad R=\mu D|q|^2.
+\tag{29.30}
+$$
+
+For $(3,2)$, use order
+
+$$
+u_0a_0\mid(u_1^{\rm w}a_0,u_2^{\rm w}a_0,u_0a_1)
+\mid(u_1^{\rm w}a_1,u_2^{\rm w}a_1).
+$$
+
+The complete state is
+
+$$
+\rho_{32}=sh\ \oplus\
+\begin{pmatrix}
+sp_2&s\overline C&\overline{\widetilde Z}\\
+sC&sp_1&\overline R\\\widetilde Z&R&p_1h
+\end{pmatrix}\ \oplus\ p_1G,
+\qquad\widetilde Z=\mu D\overline q.
+\tag{29.31}
+$$
+
+Every omitted word and cross-count entry is zero. These formulas follow from the local Gram matrices (29.12) and the transfer signs in the proof of Theorem 29.2. In particular, the bottom-row transfer of (29.31) is $-1$ in window one, giving $\mu d_1\overline d_2$, not $\overline\mu d_1\overline d_2$. Exchanging the **physical angle variables** would replace $\mu$ by $\overline\mu$. Merely choosing the ordered class $(3,2)$ does not exchange them. Equivalently, swapping tensor factors relates $\rho_{32}(\theta,\mu)$ to $\rho_{23}(\theta,\overline\mu)$, rather than to $\rho_{23}(\theta,\mu)$.
+
+For small $t>0$, let $\alpha=\arcsin((B/A)\sin t)$ and select the two points
+
+$$
+\phi_2^+=\pi+t,\quad\phi_2^-=\pi-t,\qquad
+\phi_1^+=\alpha,\quad\phi_1^-=-\alpha,\qquad
+\mu_+=v,\quad\mu_-=-ve^{-it}.
+\tag{29.32}
+$$
+
+Their $C$'s agree: the imaginary terms are $A\sin\alpha-B\sin t=0$ and its negative. Their real terms also agree. At each point use (29.16), with $(r,\gamma)=(v,0)$ and $(v,\pi-t)$ respectively, and use that point's law for **all** ordered classes. Thus the nuisance construction is simultaneous and consists of actual atomic angle laws, including $v=1$. No design-dependent noise distribution is used.
+
+Put $z_t=e^{-it}$, $q_+=1-z_t$, $q_-=1-z_t^{-1}$ and $r_t=|1-z_t|^2$. Then
+
+$$
+q_-=-q_+/z_t,\qquad
+\mu_+q_+=\mu_-q_-,\qquad
+\begin{aligned}
+R_+-R_-&=vD r_t(1+z_t),\\
+\widetilde Z_+-\widetilde Z_-&=vD(q_-+z_tq_+)=vD r_t(1+z_t).
+\end{aligned}
+\tag{29.33}
+$$
+
+The last equality is the exact Laurent-polynomial identity $q_-+z_tq_+=|1-z_t|^2(1+z_t)$ for $|z_t|=1$. Let $H_t=vD r_t(1+z_t)$. Since $r_t=4\sin^2(t/2)\le t^2$, $|H_t|\le2vDt^2$. Formula (29.30) differs only in $R$ and its adjoint; (29.31) differs only in $\widetilde Z,R$ and their adjoints. Consequently their **whole-state** differences are exactly
+
+$$
+\|\rho_{23}^+-\rho_{23}^-\|_2=\sqrt2|H_t|,\qquad
+\|\rho_{32}^+-\rho_{32}^-\|_2=2|H_t|.
+\tag{29.34}
+$$
+
+In particular, including both orientations exposes another $O_p(vt^2)$ entry, not an $O_p(vt)$ entry. This is the shared-nuisance step required for a mixture lower bound.
+
+For every shorter pair the law is an actual prefix marginal of one of these two complete states:
+
+$$
+\rho_{ab}=\operatorname{Tr}_{\rm omitted\ terminal\ flags}\rho_{23}
+\quad(a\le2,b\le3),\qquad
+\rho_{ab}=\operatorname{Tr}_{\rm omitted\ terminal\ flags}\rho_{32}
+\quad(a\le3,b\le2).
+\tag{29.35}
+$$
+
+Indeed isometric continuation followed by tracing its new flags and memory leaves the earlier flag density $\Omega_a$ or $\Omega_b$. Partial trace also intertwines each count rotation with its prefix rotation and intertwines the common-angle total twirl with the remaining total twirl. These statements hold before averaging $\pi$ and therefore preserve its ordered common law. The two ranges in (29.35) exhaust $\mathcal I_5$. This is a lawful marginal map, not a substitution of a different preparation or terminal memory readout. At most three flags are discarded. For a partial trace over a $d$-dimensional system, Hilbert–Schmidt Cauchy–Schwarz on its diagonal blocks gives $\|\operatorname{Tr}_E M\|_2\le\sqrt d\|M\|_2$. Thus (29.34) implies, simultaneously,
+
+$$
+\|\rho_{ab}^+-\rho_{ab}^-\|_2\le16Dv t^2
+\qquad((a,b)\in\mathcal I_5).
+\tag{29.36}
+$$
+
+The numerical factor is a common sufficient bound, not an optimized coefficient. One-window densities $T_1,T_2$ are phase independent and $T_3$ depends only on the common $C$, so their differences are zero.
+
+Every component has a common fixed actual support and eigenvalues at least $\lambda_p$ from (29.8). For lengths one, two and three its local bounds are $1,\ell_2,\ell_3$, and $\ell_3\le\ell_2\le1$, so every local product of at most two such windows is at least $\ell_3^2I$. Averaging and twirling preserve this inequality. Applying (29.24) to (29.36) gives
+
+$$
+F_r(\rho_{ab}^+,\rho_{ab}^-)
+\ge1-K_pv^2t^4,\qquad K_p=32D^2/\lambda_p.
+\tag{29.37}
+$$
+
+For the retained-label direct sums, square roots and trace norm are blockwise, hence exactly
+
+$$
+F_r(\sigma_w^+,\sigma_w^-)
+=\sum_{a,b}w_{ab}F_r(\rho_{ab}^+,\rho_{ab}^-)
+\ge1-K_pv^2t^4.
+\tag{29.38}
+$$
+
+This step does not assume a positive minimum weight or a weight-independent spectral gap for the whole direct sum. Zero or arbitrarily small weights cause no difficulty. Fidelity tensorization and the same Bernoulli and trace conversion give
+
+$$
+T((\sigma_w^+)^{\otimes N},(\sigma_w^-)^{\otimes N})
+\le\sqrt{2NK_p}\,v t^2
+\quad\text{when }NK_pv^2t^4\le1.
+\tag{29.39}
+$$
+
+The character separation is at least $2\sin t$. Set $t=3\varepsilon$, with the same small cutoff ensuring $\alpha$ is defined and separation exceeds $2\varepsilon$. For $N\le(8K_p)^{-1}v^{-2}t^{-4}$ the trace distance is at most $1/2$, so the Helstrom testing error is at least $1/4>\delta_0$. Nearest-character decoding contradicts the proposed uniform estimator, proving (29.29) uniformly over every design. Adding identical one-window components preserves (29.38).
+
+Finally, a per-pair coherent sum at most five under the length-three cap is exhausted by these classes, while (29.17) provides a quadratic protocol at sum six. Their distinct exponents as $\varepsilon\downarrow0$ give the asserted minimum for that cap. Largest window two cannot identify the full target at any rate in this design class: $T_1,T_2$ are fixed, and the only variable entry of $\rho_{22}$ is $\mu|d_2|^2$ and its adjoint. In the gauge $\theta_1=\theta_2=0$, $d_2=e^{i\phi_1}\sqrt{p_1}(\sqrt{p_1p_3}+\sqrt{p_2p_4}e^{i\phi_2})$, so $|d_2|^2$ is independent of $\phi_1$. Holding $\phi_2,\pi$ fixed and varying $\phi_1$ gives identical complete states in every length-at-most-two class. Thus largest window three and coherent pair sum six are separate necessary coordinates for the stated balanced quadratic task. $\square$
+

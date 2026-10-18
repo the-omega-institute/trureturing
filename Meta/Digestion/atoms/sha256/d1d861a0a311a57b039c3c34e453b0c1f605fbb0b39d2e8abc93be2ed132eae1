@@ -1,0 +1,36 @@
+**Lemma 4.2 (Whole-block CPTP legality and exact TP).** The maps (4.5) are a
+legal fixed scalar port. The full output-first Choi marginal is $I/5$.
+
+**Proof.** Every $a_f,b_f$ is unit and every $c_f$ is positive. The exact
+circle second moments give
+
+$$
+\sum_fc_fb_fb_f^T
+=W_BtR_0+\frac{W_As+W_B(1-t)}2R_+
++\frac{W_A(1-s)}2R_-.
+\tag{4.6}
+$$
+
+The three independent identities are
+
+$$
+W_Bt=1,\qquad W_A(1-s)=2,\qquad
+W_As+W_B(1-t)=2.
+\tag{4.7}
+$$
+
+The right side of (4.6) is $I$. Hence $\sum_fB_f^\dagger B_f=I$:
+the flagged encoder is CP and TP. Each decoder has the unit column
+$Da_f$ as Kraus matrix and is CP and TP on all of $M_1$.
+Each composite $C_f$ has rank one. In passive coordinates,
+
+$$
+\chi_{\rm J}=\frac15\sum_fc_f
+(a_fa_f^T)\otimes(b_fb_f^T),\qquad
+\operatorname{Tr}_{\rm out}\chi_{\rm J}=I/5.
+\tag{4.8}
+$$
+
+This constructs an actual finite port, with its flags consumed during
+decoding, rather than a point in a separability relaxation. $\square$
+

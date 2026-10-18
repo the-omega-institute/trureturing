@@ -1,0 +1,17 @@
+**Assumption 1.3 (precisely inherited mathematical interfaces).** The
+native full temporal factors, their separation of canonical blocks,
+the complete owned-seed/template representation with total guards and
+unique actual lifts, and the full-family canonical preparation service
+are those stated in OCC §§1.2–1.4, 2.1, 4.1–4.2 and 7.1–7.2.
+The relevant source is
+`docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md`
+at revision `ce2fe4a685b5a195b8b0a380616daf0151f576cb`.
+The explicit factors and gadget prescriptions needed below are restated
+in §2, and their consequences for the entire native laws are proved
+there and in §3. The nested suppliers cited by OCC for reconstruction,
+lifting, temporal factors, canonicalization and paid preparation are
+inherited premises; their underlying sources are not independently
+verified here. In particular the testing laws below concern the exact
+canonical scaffold support, rather than arbitrary noncanonical members
+of a canonicalization inverse fiber.
+

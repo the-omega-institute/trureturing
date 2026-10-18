@@ -1,0 +1,23 @@
+**Proposition 7.1 (Necessary conditions for a surviving bad optimum).** If
+$0<\tau<1$ and even one global minimizer is bad, then
+
+$$
+T_4(\tau)>\tau+\frac{(1-\tau)^6}{65536\pi^2},
+$$
+
+every legal multiple $d=np<1$ obeys (2.2), and (2.3) holds for $d<1-\tau$.
+Moreover $T_4(\tau)<1$, so (3.1)--(3.2) apply, and necessarily
+$\tau<1-\varepsilon_0$.
+
+**Proof.** The zero profile has
+
+$$
+J_\tau(0)=\max_{0\le x\le1}\bigl(x(1-x)+\tau x\bigr)
+=\frac{(1+\tau)^2}{4}<1,
+$$
+
+so $T_4<1$. Apply Theorem 4.1 and Lemmas 2.2 and 3.1 to a bad minimizer.
+The window theorem excludes bad minimizers for
+$\tau\ge1-\varepsilon_0$, proving the final necessary restriction. This
+does not assert existence below the window. $\square$
+

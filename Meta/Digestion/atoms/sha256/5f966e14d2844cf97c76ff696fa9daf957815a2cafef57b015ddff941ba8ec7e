@@ -1,0 +1,57 @@
+### 104.6. Coherent-input and actual-partner bounds
+
+Let
+\[
+c_*=(\sqrt{33}-5)/4,\qquad
+h_2=|h|^2=d^2+(1-d^2)p^2.
+\]
+The original product bounds on coordinates \(2,3,4\) are
+\[
+|K_{23}|,|K_{24}|\le B,\qquad |K_{34}|\le h_2.
+\]
+For \(0<\theta\le1\), use the legitimate original block density with masses
+\(1-\theta,\theta/2,\theta/2\) on these coordinates, zero elsewhere. If \(v\) consists of the square roots of those masses, then \(2vv^*-I\) is a Hermitian contraction. The compressed coefficient has zero trace, and the complete-norm formula gives
+\[
+\begin{aligned}
+t&\ge\|\sqrt\rho L\sqrt\rho\|_1
+\ge4\sum_{i<j}\rho_i\rho_j\Re L_{ij}\\
+&\ge2d\theta+(\tfrac12-h_2-2d)\theta^2.
+\end{aligned}
+\tag{104.38}
+\]
+This is the original transpose-consistent block-density consumer of §91. It uses one allowed coherent input, not a change to the actual common pair.
+
+Taking \(\theta=1\) for \(d\le1/4\), and \(\theta=1/(4d)\) otherwise, proves
+\[
+h_2>\begin{cases}
+1/4,&0<d\le1/4,\\
+4d^2-2d+1/2,&1/4\le d<1/2.
+\end{cases}
+\tag{104.39}
+\]
+For \(d\le1/4\), this gives \(p^2>1/5>c_*\). For the other range, put
+\(d_*=(7-\sqrt{33})/4=1/(3+c_*)\). Then
+\[
+\frac{3d^2-2d+1/2}{1-d^2}
+=c_*+\frac{(3+c_*)(d-d_*)^2}{1-d^2}\ge c_*.
+\tag{104.40}
+\]
+Thus \(p^2>c_*\). The rational lower bound \(p>56/131\) follows from
+\(33\cdot17161^2-98349^2=45971592>0\). If \(m\ge21/4\), the inequalities \(B>1/4\), \(A<3/4\) imply
+\[
+Bm-A/m>m/4-3/(4m)\ge131/112.
+\]
+Together with \(p>56/131\) this contradicts \(p(Bm-A/m)<d<1/2\). Hence \(1<m<21/4\).
+
+Let \(o\) be the actual original partner of singleton coordinate 3. Its full unit \(H\) record is orthogonal to \(h_3\). Projection in the full record space gives
+\[
+|H_{o4}|^2\le1-|H_{34}|^2=1-h_2.
+\]
+The record \(h_o\) may have arbitrary complex components outside the supported two-dimensional span. Since \(|G_{o4}|\le1\) and \(|1/2-G_{o4}H_{o4}|<1/4\), one has \(|G_{o4}H_{o4}|>1/4\), whence \(h_2<15/16\). As \(1-h_2=4ABq^2\), the resulting strict bounds are
+\[
+c_*<p^2<15/16,\qquad |q|>1/4,\qquad
+1<m<21/4,\qquad1/4<h_2<15/16.
+\tag{104.41}
+\]
+They use the actual full-space partner and its full norm, without selecting an outside completion.
+

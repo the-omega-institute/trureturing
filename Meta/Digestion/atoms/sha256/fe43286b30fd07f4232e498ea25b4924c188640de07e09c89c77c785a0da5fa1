@@ -1,0 +1,67 @@
+**Theorem 66.7 (ingress, service, calibration and comparison-clock errors).** The following explicit certificates extend (66.8) to a supplied finite implementation. They are premises on the actual commission, not conclusions about a native apparatus. Every ideal and actual map acts on the whole declared retained space, including all leakage modes, reference and auxiliaries; actual maps are linear isometries, or contractions without conditioning or postselection. Their source version and all original guards/responses are authentic. A wrong source, lost row or omitted retained mode is not a small calibration error.
+
+Let actual ingress differ from $W_{D_0}^{\rm joint}$ by operator norm at most $\epsilon_{\rm in}$, with additional supplied initial component of norm at most $\eta$. For every service/locking/hold/transfer block $k$, let its actual full map differ from its ideal identity or $\mathsf T$ by operator norm at most $h_k$. A supplied full-space certificate of this kind includes phase/reference faults and any nonidentity auxiliary evolution. At idle interval $i$, let the actual evolution differ by full-space operator norm at most $e_i$ from the evolution of the declared producer with comparison interval $\widehat\theta_i\ge0$, commissioned approximants $\widehat a_i>0,\widehat g_i>0,\widehat\nu_i\ge0$, and its actual approximate atomic pair multiplier. There is no assumed bounded-generator operator-norm clock estimate on arbitrary continuum modes.
+
+Use common finite upper bounds $\bar a,\bar g,\bar\nu$ for the exact and approximate commissioned parameters. Supply
+
+$$
+\begin{gathered}
+|\widehat a_i-a|\le d_{a,i},\quad
+|\widehat g_i-g|\le d_{g,i},\quad
+|\widehat\nu_i-\nu|\le d_{\nu,i},\\
+\max_{\{p,q\}\subset D_i}|\widehat G_i(p,q)-G^\diamond_{D_i}(p,q)|
+\le\kappa_i,\qquad
+|\widehat\theta_i-\theta_i|\le t_i.
+\end{gathered}
+$$
+
+The maximum over an empty pair set is defined as zero. The complete pair certificate covers every actual pair of the selected common or killed law. Suppose any additional bounded multiplier discrepancy, for example a certified implementation departure from the unchanged common one-body field, has full norm at most $v_i$. Define
+
+$$
+\begin{aligned}
+\bar M&=2\bar g+\bar\nu/\lambda,
+&\bar C&=12\bar a+\bar M,\\
+\bar R&=18\bar a+256\bar C+16(\bar C+\bar M),
+& C&=12a+2g+\nu/\lambda,\\
+b_i&=12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda
+                 +\bar\nu\kappa_i+v_i,
+&\Delta_\tau&=\sum_i t_i.
+\end{aligned}
+$$
+
+Then at every completed commissioned checkpoint the actual retained vector $\widehat F_h$ satisfies
+
+$$
+\begin{aligned}
+\|\widehat F_h-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le\eta+\Bigl[\epsilon_{\rm in}+\sum_k h_k+\sum_i e_i
+  +(T+\Delta_\tau)\bar R\sqrt\delta
+  +2q\omega+\sum_i\widehat\theta_i b_i
+  +C\Delta_\tau\Bigr]\|f\|.                       \tag{66.9}
+\end{aligned}
+$$
+
+The bound allows jointly correlated, history-dependent certified errors; no independence assumption is used. It covers all target vectors, not just known prepared inputs. Actual acquisition/preparation of an unknown correlated $f$ remains a supplied ingress right, never an inference from that quantifier.
+
+Proof. Apply Theorem64.7 to the exact source pair law with the approximant parameters, at interval $\widehat\theta_i$. Its preparation $W_D$ is unchanged because Theorem64.6 makes it independent of $a,g,\nu$ and pair choice. Its residual is at most $\bar R\sqrt\delta$. Replacing the exact source pair coefficient by $\widehat G_i$ changes the full producer only by a bounded atomic multiplier, of norm at most $\bar\nu\kappa_i$ for $N=2$ and zero for $N=1$. The further multiplier change has norm at most $v_i$. Bounded-perturbation unitary Duhamel gives their contribution $\widehat\theta_i(\bar\nu\kappa_i+v_i)$ on every retained vector. This step applies to unbounded kinetic generators because their difference here is bounded.
+
+On the finite target, $\|K_{D,N}\|\le6N$, $0\le\phi\le1$ and $G^\diamond_D(p,q)\le1/\lambda$. Its coefficient difference is at most $12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda$ in the joint sectors. Unitary Duhamel on that bounded target gives the corresponding $\widehat\theta_i$ contribution. Its exact generator norm is at most $C$, so the remaining target clock difference is at most $Ct_i$. Combining these steps yields a one-interval bound on input $W_D f_i$ of
+
+$$
+[\widehat\theta_i\bar R\sqrt\delta
+ +\widehat\theta_i b_i+Ct_i]\|f_i\|.
+$$
+
+This avoids assigning a finite global clock-Lipschitz constant to the unbounded continuum generator. Arbitrary previously accumulated continuum discrepancy is simply propagated by the actual contraction. For a service block, its difference on the ideal comparison vector $W_Df_i$ is at most $h_k\|f\|$, in addition to (66.6) if it is an enlargement. For an idle block its extra discrepancy is $e_i\|f\|$. Telescope as in Theorem66.6; $\sum_i\widehat\theta_i\le T+\Delta_\tau$. The actual maps propagate the ingress component and ingress error without amplification. Direct sums and identity tensors retain the same bounds and all correlations. This proves (66.9). $\square$
+
+At fixed $T,m$ the total bound tends to zero when the single density and all displayed supplied error budgets tend to zero, with bounded parameter envelopes. If an ingress, hold or calibration budget is fixed positive, (66.9) retains it and does not promise vanishing total error. For a desired unit-input tolerance $\varepsilon$, if all terms other than the density terms total at most $\varepsilon/2$, one sufficient single choice is
+
+$$
+0<\delta\le\min\left\{1,
+ \left(\frac{\varepsilon}{2[(T+\Delta_\tau)\bar R+288m]}\right)^2\right\}, \tag{66.10}
+$$
+
+when the denominator is positive; if it is zero, no density restriction beyond $\delta\le1$ is needed. This is a finite mathematical accuracy allocation. The actual supply and price of each certified ingress, multiplier, evolution and hold are independent obligations. A paid service/compilation hold has positive apparatus duration and retention cost. Freezing the comparison clock during it is its stated premise, not zero physical time; any departure must satisfy the indicated clock/hold certificates.
+
+Every original request, source-service routine, record write/copy, refusal, acquisition and Stop remains executed and charged as in §§60,62. Forgetting the additional continuum state and certificates returns that actual original history, rather than synthesizing replies from a Green calculation. The uniform bounds do not depend on an observer acquiring $D$, a beta mask or a coefficient, or having source-specific initialization. Public scheduling must use only the original supplied public data and actually acquired prefix. If new apparatus telemetry, fee labels, preparation data or readout reveals private source influence, source-independent observation needs its own contract, such as the fixed-public-schedule and private-enable boundary of Theorem60.3; the form theorem does not certify that implementation. An already commissioned terminal contraction $C_0$ can be compared mathematically through $C_0(W_{D_h}^{\rm joint})^*$, whose norm is at most one. Its error is bounded by (66.9). An already commissioned effect transports through $W_{D_h}^{\rm joint}F(W_{D_h}^{\rm joint})^*$; for unit normalized inputs its probability error is at most twice the full-state error. These are comparison maps, not new native ports or physical acquisition procedures, and no evolved component is silently discarded.
+

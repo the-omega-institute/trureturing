@@ -1,0 +1,11 @@
+**Proposition 77.2 (nonempty shrinking persistence families).** Every
+power family $\tau(g)=g^p$ with $0<p<2/3$ satisfies Theorem 77.1.
+More generally, $\tau(g)=g^{2/3}L(g)$ does so whenever
+$L(g)>0$, $L(g)\to\infty$ and $g^{2/3}L(g)\to0$.
+For example $L(g)=(\log(1/g))^r$ with any $r>0$ is allowed.
+
+Proof. The respective values of $\chi$ are
+$g^{1-3p/2}$ and $L(g)^{-3/2}$, which tend to zero under the
+stated hypotheses; each cutoff stays positive and tends to zero.
+$\square$
+

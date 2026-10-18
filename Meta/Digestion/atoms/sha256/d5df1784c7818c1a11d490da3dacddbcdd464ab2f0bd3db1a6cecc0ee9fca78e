@@ -1,0 +1,83 @@
+## 378. A zero-cost lower certificate with literal affine mass
+
+Define the full score \(Y\) by the following nonzero rows; the type \((P,C,T)\) has the meaning of [XXIII 368.4]. Every unlisted row, including every \(A\)-row and the positive row unless listed, has weight zero.
+
+$$
+\begin{array}{c|c|r@{\qquad}c|c|r}
+P&00110000&26&P&01001000&22\\
+P&01001010&4&P&01001100&7\\
+P&01001101&4&P&01010100&35\\
+P&01011000&30&P&01100000&12\\
+P&01100010&40&P&01100100&13\\
+P&01110000&4&P&10001010&6\\
+P&10001100&19&P&10010000&14\\
+P&10010010&40&P&10010100&13\\
+P&10011001&10&P&10100000&2\\
+P&10100100&35&C&10110000&25\\
+P&10101000&40&&&\\
+C&10110010&1&C&11000000&62\\
+P&11000100&6&P&11000110&22\\
+P&11001010&12&C&11010010&40\\
+C&11011100&26&C&11100000&128\\
+C&11100100&2&C&11101011&10\\
+C&11101100&28&C&11110000&138\\
+C&11110100&20&C&11111000&140\\
+C&11111001&10&C&11111100&150\\
+C&11111101&8&C&11111110&150\\
+T&11111111&128&&&
+\end{array}
+$$
+
+Direct accumulation of the rows gives
+
+$$
+ C_0=544,\qquad
+ \beta=(0,26,128,168,158,150,158,150),qquad K=1482,
+$$
+
+and hence \(W_Y=C_0+\beta _1+\beta _2=570\). For completeness, the cell-maximization rule is
+
+$$
+ H_{S,c}=\max_{0\le z\le8}
+       \sum_{w:\,\operatorname{cell}_S(w)=c}f_Y(w,z).
+$$
+
+Summing these maxima over the cells gives 544 for the empty schedule and every singleton. For pairs, the complete list of sums is
+
+$$
+\begin{array}{c|rrrrrrrrrrrrrr}
+S&12&13&14&15&16&17&18&23&24&25&26&27&28&34\\ \hline
+N&570&570&570&570&570&563&544&570&570&570&570&570&544&570\\
+O&570&570&570&570&570&563&544&570&570&570&570&569&544&570
+\end{array}
+$$
+
+$$
+\begin{array}{c|rrrrrrrrrrrrrr}
+S&35&36&37&38&45&46&47&48&56&57&58&67&68&78\\ \hline
+N&570&570&570&544&570&570&570&550&570&570&554&570&544&570\\
+O&570&570&570&544&570&570&570&544&570&570&554&570&544&570
+\end{array}
+$$
+
+These numbers are obtained by the displayed finite sums, with all nine labels retained in each maximum. Thus \(B_N(Y)=B_O(Y)=570=W_Y\), so \(\Delta_N(Y)=\Delta_O(Y)=0\). The value \(570\) is attained, for example, by schedule \(12\) in both catalogs.
+
+Let p be any complete allocation of mass M satisfying the literal affine rows at \((b,e)\). The common-mass bound of [XXIII 368.3–368.4] and \(\Delta_C(Y)=0\) give, for \(C=N,O\),
+
+$$
+ Y\cdot(z(p)-Mr)\le M\Delta_C(Y)=0.
+$$
+
+Since \(Y\cdot(d(b,e)-r)=F_{Q(Y)}(b,e)\), this is the literal, unnormalised implication
+
+$$
+ 26b_2+128b_3+168b_4+158b_5+150b_6+158b_7+150b_8
+       \le 26+1482e. \tag{378.1}
+$$
+
+The ((M-1)570) term has cancelled against \(Y\cdot Mr\); no division by M and no change of profile has been made. At \(b=b(h)\), the left side is \(3075/8\), so (378.1) gives
+
+$$
+ e\ge {3075/8-26\over1482}={2867\over11856}=c. \tag{378.2}
+$$
+

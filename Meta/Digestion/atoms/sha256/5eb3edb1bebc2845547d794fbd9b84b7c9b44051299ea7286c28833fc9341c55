@@ -1,0 +1,36 @@
+**Theorem 2.2 (all-cut acquisition with no extra Reads).** For every source,
+cut and legal returning history, RA$\ell$ returns exactly
+$(R_P(U_v),\ell(U_v))$ at its designated validation event $v$. It adds
+zero Reads and zero delivered address letters to the same RA run,
+including failed attempts. Under unknown finite interference and observer
+progress it terminates with at most $b$ failures and $b+1$ attempts.
+For every chronological authentic family of these captures, the decoder
+
+$$
+\operatorname{Dec}\bigl((P_i,R_i,k_i)_i\bigr)_{ij}=k_j-k_i
+=n_j-n_i
+\tag{CAB.6}
+$$
+
+recovers all relative update counts from the declared retained inputs.
+
+Proof. Structural induction gives $\ell(\rho u)=\ell(u)+1$: alpha
+goes from zero to one, beta goes from one to
+$1+\ell(\beta)=2$, and an original pair reduces to its left child's
+identity. Iteration gives advancement by the exact update count. In
+the notation of [NAR, Proposition 12.8][NAR], its canonical density
+formula also gives $\varphi^{\ell(u)}=W(u)f_u(L^\infty)$: the terminal
+word on that ray is $L^d$ and has weight $d$. This applies the same
+boundary-density mechanism to the other extreme ray; clock arithmetic
+itself is not a new acquisition result.
+
+Every branch on the acquired guard path persists. When RA first observes
+the leaf at $L^d$, it is therefore the current leftmost leaf. The equal
+validation reply certifies no update from that observation through the
+whole row computation and validation. The candidate is the complete row
+of $U_v$ and $d+e=\ell(U_v)$. Saved finite data still encode that value
+if updates occur during encoding, clearing or before Return. The Reads,
+attempt boundaries and failure charges are those of RA. Its finite
+attempt proof and finite added arithmetic give termination. Substitution
+of $\ell(U_{v_i})=\ell(t)+n_i$ proves (CAB.6). $\square$
+

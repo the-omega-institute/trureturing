@@ -1,0 +1,62 @@
+**Proposition 11.1 (actual acquisition and exactly counted names).**
+For every $D=3+h$, $h\ge0$, put $n=2^h$, and let $Q_D\subseteq S_D$
+be the scaffold image of $P_B^n$ from (NCE.68) at the fixed perfect
+height-$h$ frontier. There is a jointly correct preparation and reader
+on the entire original $\mathcal F_D$ with exactly
+
+$$
+|E[\mathcal F_D]|=|S_D|-100^n+1
+\tag{NCE.78}
+$$
+
+attained complete names. Its one merged canonical fiber is precisely
+$Q_D$; all other canonical states have singleton names. On every
+original source it uses at most
+
+$$
+2^D-1\text{ preparation Reads},\qquad
+\max|\text{preparation literal}|=D,\qquad
+\text{preparation letters}=(D-1)2^D+1.
+\tag{NCE.79}
+$$
+
+Every late target uses zero Reads or one actual original-root Read
+of length at most $D$, chosen before every supplied count. This is
+a nonoptimal full-family realization of an equality fiber for the
+chosen law; it is not an attaining construction for $M_1(D)$.
+
+Proof. Scaffold parsing is injective and respects the defining
+recursion of $S_D$, so $Q_D$ has exactly $100^n$ states. Install a
+finite public table that assigns one name to $Q_D$ and a separate
+name to every other member of $S_D$. Before receiving any request,
+actually submit every literal $Rq$, $q\in W_D$, on the stationary
+source, including absent words. These paid replies compute the
+canonical state $\pi_D(v)$ of FMR Lemma 2.2. The table then computes
+its complete fixed-width name. FMR's canonicalization fixes $S_D$,
+so every stated name is attained on an actual source, proving
+(NCE.78). The fixed scan has $\sum_{\ell=0}^{D-1}2^\ell=2^D-1$
+words and $\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1$
+letters, proving (NCE.79). All other accessible acquired dependence
+is isolated under Assumption 1.2 after selecting the name.
+
+At a singleton name the canonical state determines every requested
+factor, so the late reader uses zero Reads. At the merged name,
+write the request $p=Rq$. If $|q|<h$, its endpoint is in the fixed
+scaffold and is branch. Otherwise there is a unique decomposition
+$q=a_i r$, where $r\in W_3$. If $r=\varepsilon$, its endpoint is
+also branch, since every member of $P_B$ is branch. These cases
+have constant trajectories. For nonempty $r$, the local decoder in
+Theorem 9.2 obtains $\Gamma_r$ from the actual literal at $r$ in
+that block. Implement it by the one original-root word $Ra_i r=p$.
+The length is at most $D$. This is one fresh Read of the same actual
+stationary source; no artificial wrapper or subtree is an input.
+
+On the full inverse image $\pi_D^{-1}(Q_D)$, canonicalization
+preserves the selected boundary reply and requested temporal factor.
+The same reader therefore serves all original variable shapes
+assigned the merged name, including initially absent targets.
+(NCE.6) then answers every subsequently supplied authentic $k$.
+The fixed scaffold and finite decoder tables are public installed
+data. There is no acquired frontier selector, shape tag or joint
+weight table supplied as free advice. $\square$
+

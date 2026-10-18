@@ -1,0 +1,65 @@
+**Theorem 304.3 (Collective residuals of the same full allocation).**
+For any real finite profile $(b,e)$ and any one complete feasible
+$N$ allocation of any finite mass $M$, put
+
+$$
+s=1+40e-b_2-4b_{j_1}-5b_{j_2}-5b_{j_3}-5b_{j_4}-4b_{j_5}.
+\tag{304.4}
+$$
+
+Then, for every $c\ge0$ as in 304.1,
+
+$$
+\sum_{k\in I}c_k(b_k-e)\le s+
+ M\max\{0,c_{[1]}+c_{[2]}-1,c_{[1]}+c_{[2]}+c_{[3]}-17\}.
+\tag{304.5}
+$$
+
+Consequently
+
+$$
+s\ge\max\left\{\max_{k\in I}(b_k-e)_+,\
+                    \frac12\sum_{k\in I}(b_k-e)_+\right\}.
+\tag{304.6}
+$$
+
+The same conclusions hold for a complete $O$ allocation. For every
+entire sequence (297.1), every original rule in either class meeting
+any positive closed cap $e$, and every ordered skeleton, they hold
+with $b=a$ for every finite disjoint $I$. In particular
+
+$$
+s\ge\max\left\{(a_{j_5+1}-e)_+,\
+                 \frac12\sum_{k>j_5}(a_k-e)_+\right\}.
+\tag{304.7}
+$$
+
+No summability of $a$ is required.
+
+**Proof.** Equation (297.5) applied to this same given $\lambda$ and
+the single score $Y_c$ gives $F_{QY_c}\le M\Delta_N(Y_c)$.
+The old quotient contributes $-s$ and each added correct row
+contributes $c_k(b_k-e)$, proving (304.5). Taking $c=0$ gives
+$s\ge0$. A unit weight at one chosen coordinate gives each individual
+positive-residual bound. Giving weight $1/2$ exactly to the coordinates
+with $b_k>e$ gives the half-sum bound. Both choices have zero excess
+by 304.2. This clips only the chosen score coefficients, never any
+original demand. These are simultaneous necessary inequalities about
+the same profile and allocation, not an assertion that different
+extrema have a common attainer. Counted completion gives the $O$ case.
+
+For an original rule at $0<e\le1$, apply the exact closed-cap
+transport and prefix operations of 297.3 at
+$K=\max(S\cup I)$. A longer active representative is restricted by
+fixing higher replies to zero and projecting higher labels to zero;
+a shorter representative is extended by ignored inputs. At an added
+first zero its exact error is $\max\{1-p_+(0),a_n\}\le e$.
+Thus all three rows, including negative singleton demands and the
+independent union row, hold for one full representative. Apply
+(304.6) to it. When $e\ge1$ the residuals vanish, and
+$s\ge1+40-24=17$. Finally $a_k\to0$ makes the set
+$\{k:a_k>e\}$ finite. Choose its members beyond $j_5$ as $I$;
+monotonicity identifies the largest residual there with
+$(a_{j_5+1}-e)_+$. This proves (304.7) for every actual positive
+tail, including its closed ties. $\square$
+

@@ -1,0 +1,12 @@
+**引理 56.5（All other pre-zero positive children are singletons）。** On the chronological zero-difference path of $q$ successful all-one blocks from the root, the phase supports are
+
+$$
+U_0=P,\qquad U_q=P\setminus\{0,2,4,\ldots,2q\}
+\quad(1\le q\le p-1).
+\tag{56.6}
+$$
+
+The positive successful root child is $\{0,2\}$. At an all-one block of index $t$ with $1\le t\le p-2$, its positive child on this path is exactly $\{2t+2\}$, with INITIAL tails $[0,h_{t+1})$, and additional fee $\eta_v(2t+2,t+1)$. Its zero child is $U_{t+1}$. Rejection is the entire rectangle $U_t\times[h_t-2,h_t)$, with the single bottom endpoint.
+
+**证明。** The charge of $11$ is $\{2t,2t+2\}$. At the root both vertices remain. A zero root response removes zero and two. Subsequently $2t$ was removed by the preceding zero response, whereas $2t+2$ has not appeared; no wrap occurs at the stated indices. Induction gives (56.6) and each singleton child. The rejection and surviving tail ranges follow by adding two ones to $s+2t$. Lemma 56.2 applies to the actually acquired singleton rectangle, with its own paid depth and original $v$. All these rectangles consist of jointly actual histories from (1.3). ∎
+

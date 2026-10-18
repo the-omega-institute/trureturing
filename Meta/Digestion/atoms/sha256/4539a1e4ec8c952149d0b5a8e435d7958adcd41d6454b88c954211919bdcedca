@@ -1,0 +1,9 @@
+**定义 10.1（来源容量价格）。** 对任意正整数 $n$，令 $\tau(n)=|\operatorname{Div}(n)|$，并明确选取
+
+$$
+\mathcal E(n)=\frac{\tau(n)}{n^{3/10}},\qquad
+\log\mathcal E(n)=\log\tau(n)-\frac3{10}\log n.
+$$
+
+这是完整交换子配置的容量与数值规模之间的成本模型，价格 $3/10$ 不由五模式语法推出。[Ramanujan《Highly composite numbers》§§32–34、Table 1](../../../Library/ArithSums/ramanujan1915highlycomposite.md) 已给出优高度合成数的这个目标族、素数方向阈值和 $5040$ 的经典记录。它区别于 [Alaoglu–Erdős 的丰约数权重背景](../../../Library/Arith/alaoglu1944highly.md) 中的 $\sigma(n)/n^{1+\epsilon}$，也区别于原卷 §76 的 $\epsilon=1/25$ 权重目标。
+

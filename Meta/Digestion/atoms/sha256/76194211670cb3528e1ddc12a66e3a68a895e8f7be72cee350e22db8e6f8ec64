@@ -1,0 +1,110 @@
+**Theorem 8.3 (uniform quartic excess and the exact maximal interval).**
+For the normalized selected state define
+
+$$
+\begin{aligned}
+\delta_S&=\min\{(B_T+\lambda\alpha c_\xi)(1+q/p),C_S+\lambda\beta\}>0,\\
+b_v&=k_\xi/t>0,\qquad B_{\rm bd}=1+\alpha+\beta+2\sqrt\alpha,\\
+K_0&=\frac{2(1+B_{\rm bd}/b_v)}{\sqrt{\delta_S}}
+       +\frac{1+B_{\rm bd}/b_v}{\delta_S}+\frac1{\lambda b_v}>0.
+\end{aligned}
+\tag{NP.54}
+$$
+
+For every $0\leq s\leq1$, both original acquired and supported-live
+high costs satisfy, including their infima,
+
+$$
+E_s(\rho)\ \geq\ E_s^L(\rho)\ \geq\
+F+\frac{((s-s_*)_+)^4}{144K_0^2}.
+\tag{NP.55}
+$$
+
+Consequently $E_s(\rho)=F$ and $E_s^L(\rho)=F$ hold exactly on
+$[0,s_*]$. This is the largest initial plateau, including its endpoint.
+
+Proof. The diagonal and off-diagonal split of $B_\xi$ shows
+$\|B_\xi\|_{\rm op}\leq B_{\rm bd}$; the off-diagonal norm is only
+$\sqrt\alpha\sigma_\xi$, so the displayed bound is conservative.
+Let $d=a_{\rm acq}-F\geq0$. The live excess is at most $d$.
+Set $v=h/\sqrt t$, $P=vv^\dagger$, $Q=I-P$,
+$\epsilon=\operatorname{tr}(QH)$ and $a_H=v^\dagger Hv$.
+The spectral gap of $\mathcal S$ on $Q$ and the certificate give
+
+$$
+\epsilon\leq d/\delta_S,\quad
+0\leq\operatorname{tr}(B_\xi H)-k_\xi\leq d/\lambda,\quad
+0\leq a_H\leq1.
+\tag{NP.56}
+$$
+
+The positive $P/Q$ block of $H$ has
+$\|QHv\|^2\leq a_H\epsilon$, obtained by summing its positive
+$2\times2$ minor inequalities in an orthonormal $Q$ basis. The trace
+norm of its two off-diagonal blocks is $2\|QHv\|$, while $QHQ$ has
+trace norm $\epsilon$. Thus, writing $E_H=H-a_HP$,
+
+$$
+\|E_H\|_1\leq2\sqrt\epsilon+\epsilon,\qquad
+|a_H-t|\leq\frac{d/\lambda+B_{\rm bd}(2\sqrt\epsilon+\epsilon)}{b_v}.
+\tag{NP.57}
+$$
+
+The second bound follows from
+$(a_H-t)b_v=\operatorname{tr}(B_\xi H)-k_\xi-
+\operatorname{tr}(B_\xi E_H)$ and trace/operator norm duality.
+Combining the two bounds gives
+
+$$
+\|H-H_*\|_1\leq
+2(1+B_{\rm bd}/b_v)\sqrt{d/\delta_S}
+ +\left[\frac{1+B_{\rm bd}/b_v}{\delta_S}
+                     +\frac1{\lambda b_v}\right]d
+\leq K_0\sqrt d.
+\tag{NP.58}
+$$
+
+The last step uses $0\leq d\leq1$: actual acquired mass on a normalized
+input is at most one and $F>0$. The same argument works with
+$d=\operatorname{tr}(CH)-F$, because
+$0\preceq\Theta(H)\preceq\Theta(I)=I-M\preceq I$ also bounds the
+live cost by one.
+
+Apply Lemma 8.1 separately to the $DT$ blocks of
+$0\preceq H_+\preceq H$ and $0\preceq L_+\preceq I-H$.
+The total real off-diagonal entries of $H$ and $I-H$ cancel. Hence
+(NP.19) implies
+
+$$
+\begin{aligned}
+s&\leq\sqrt{f(H)}+\sqrt{g(H)},\\
+f(H)&=H_{DD}H_{TT}-(\operatorname{Im}H_{DT})^2,\\
+g(H)&=(1-H_{DD})(1-H_{TT})-(\operatorname{Im}H_{DT})^2.
+\end{aligned}
+\tag{NP.59}
+$$
+
+Both radicands are nonnegative. Let $z=\|H-H_*\|_1$.
+Every entry change is at most $z$. For any positive contraction $H$,
+its diagonals lie in $[0,1]$ and $|H_{DT}|\leq1/2$. Indeed positivity
+of $H$ and $I-H$ bounds its square by
+$\min(H_{DD}H_{TT},(1-H_{DD})(1-H_{TT}))\leq1/4$; if the diagonal
+sum is at most one use the first product and otherwise the second.
+The same bounds hold for $H_*$. Each diagonal product in (NP.59)
+changes by at most $2z$, and each squared imaginary entry by at most
+$z$. Since $f(H_*)=pq-r_0^2=0$ and $g(H_*)=s_*^2$, it follows that
+
+$$
+s\leq\sqrt{3z}+\sqrt{s_*^2+3z}
+ \leq s_*+2\sqrt{3z}
+ \leq s_*+2\sqrt{3K_0}\,d^{1/4}.
+\tag{NP.60}
+$$
+
+Rearrange the positive part and raise to the fourth power to obtain
+(NP.55). This uniform positive excess rules out limiting equality for
+every $s>s_*$. Combined with Theorem 7.1 it proves exact maximality,
+without a nonattainment shortcut. Constants in (NP.54) are attached to
+the NORMALIZED selected state; unnormalized scaling is stated in §11.
+$\square$
+

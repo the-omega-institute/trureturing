@@ -1,0 +1,14 @@
+**Definition 39.1 (fixed frame and quantitative scales).** Fix precisely one datum satisfying Definition 32.1, including its analytic window and $C_{\rm resp}=C_4=0$, and assume additionally $\mathfrak m_d=0$. Retain all notation of (32.3)–(32.8), (33.1), (24.24) and (24.40). In particular $G_s=\sum_{i=0}^4s^ig_i$, $N_0=VG_0$, $N_s=F_sH_s$, $L_s=H_sF_s$, and $L_su_s=\ell_su_s$, with the normalization in (24.3). Write
+
+$$
+\omega=1+|r|,\qquad R(\xi)=1+\mathfrak d(\xi),\qquad
+\mathfrak d(\xi)=d_E(0,\xi),\qquad q=\frac{41}{8}.
+\tag{39.1}
+$$
+
+First fix a safe radius $\ell>0$ so that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$. The constants in the following estimates may depend on this fixed datum and radius. Set $L=\ell/s$, $T=s^{-2}$. The symbols $\delta$ and $\epsilon$ below are time integration split points; the estimates are uniform in their indicated ranges. They do not change the datum, either original face, a spectral probe, or a competitor domain.
+
+The source is exactly (32.2), with all three jointly realized rational components. Measures, the unit raw source, the factors $j_0s^7$ and the field-only $j_0^{-1}$ are (32.4); all real frequencies and the complete complex domains are those of Definition 32.1. The $B$ heat clock and its $\lambda$ shift are independent of $a$. A spectral constant denoted $H>0$ below is distinct from the fixed probability parameter in $d$, and is always fixed separately before $s\downarrow0$.
+
+The quantitative statements in §§39–44 are `repo-derived` consequences for this original-source conditional problem. The compact endpoint regularity used below is the `literature-attested` scope of Colin de Verdière–Hillairet–Trélat, [Theorem A and Corollary 1.1, pp. 901–904](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), with the hypotheses identified in Definition 38.1. The global integrations will be proved using the original P76, L41 and finite-bridge estimates, separately from that local regularity.
+

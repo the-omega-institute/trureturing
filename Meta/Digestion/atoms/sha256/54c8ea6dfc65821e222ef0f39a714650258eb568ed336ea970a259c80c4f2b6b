@@ -1,0 +1,12 @@
+## Exact PSL2(71) certificate
+
+Over F71 define
+X=[[2,7],[23,10]], Y=[[0,70],[1,30]], Z=[[47,66],[35,25]],
+with U=XY=[[7,66],[10,64]], V=YZ=[[36,46],[32,35]], T=XYZ=[[12,53],[12,59]].
+All determinants are 1 and direct multiplication gives
+X^4=Y^9=Z^3=-I and U^2=V^2=T^2=-I in SL2(F71). Thus their projective classes define rho:W+ -> PSL2(F71). The projective orders are 4,9,3,2,2,2. In PSL2(F71), [V][X][V]=[X]^-1 and [U][Z][U]=[Z]^-1; at the SL2 representative level these equalities may carry the central sign. Since V != X^2 projectively, the finite parabolic images are D8, S3, and C9.
+
+The word P=X Z Y^-3=[[56,49],[31,17]] has determinant 1, trace 2, and is not I. Its projective class is a nontrivial unipotent of order 71, fixing one point and acting as a single 71-cycle on the remaining points. A point stabilizer in PSL2(F71) has order 71(71-1)/2=2485. Since 4 does not divide 2485, X fixes no point, so X moves the fixed point of P into its 71-cycle. Hence rho(W+) is transitive on P1(F71), which has 72 points.
+
+Let B_infty be the stabilizer of infinity and Gamma=rho^-1(B_infty). Then [W+:Gamma]=72.
+

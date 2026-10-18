@@ -1,0 +1,5 @@
+source_id = "fib-native-two-dimensional-affine-minimax"
+path = "docs/develop/theory/FIB_NATIVE_TWO_DIMENSIONAL_AFFINE_MINIMAX.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

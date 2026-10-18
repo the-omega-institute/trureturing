@@ -1,0 +1,46 @@
+## 376. Every owner with at least two P labels costs more than pi
+
+There are three exhaustive role classes.
+
+1. Both axes lie in P and both transverse labels lie in L. Pair CD is
+   impossible for a genuine owner, since sigma is the unique CD-pair
+   owner. Pair VC or VD is covered by the M/Z, Z/U or M/U expense
+   implication. These two axial slots alone cost more than pi.
+
+2. A P label p is transverse and a different P label r is axial,
+   while the other transverse value q is in L. Then p,r>=m and
+   1<q<=m-2. At least one of p,r is strictly greater than m. In the
+   response
+
+       beta_p=atan(A*t)+atan(B*t), t=cot(theta_r/2),
+       A,B=[sqrt(p^2-1)+/-sqrt(q^2-1)]/(p+q)
+                               *sqrt((r-1)/(r+1)),
+
+   A,B>0 and
+
+       A+B=2*sqrt(p^2-1)/(p+q)*sqrt((r-1)/(r+1))>1.
+
+   The comparison value p=r=m,q=m-2 is exactly one; the expression
+   increases strictly in p,r and decreases in q. If A*B*t^2>=1,
+   beta_p>=pi/2>atan(t). Otherwise its tangent is
+   (A+B)*t/(1-A*B*t^2)>t. Thus theta_r+2*beta_p>pi.
+   Additional P slots only add nonnegative expense.
+
+3. Both transverse labels p,q lie in P. If an axis r also lies in P,
+   put K=[sqrt(p^2-1)+sqrt(q^2-1)]/(p+q) and
+   lambda=K*sqrt((r-1)/(r+1))>(m-1)/m>1/2. The transverse sum is
+   S=2*atan(lambda*cot(theta_r/2)). For t>0 and lambda>1/2,
+   2*atan(lambda*t)>atan(t): if lambda^2*t^2>=1 this is immediate;
+   otherwise compare tangents using 2*lambda>1. Therefore
+   theta_r+2*S>pi. If neither axis is in P, their values r,o are at
+   most m-2. The strict genuine tests then give
+
+       L>(2*m)^2-(m-3)^2, J<=(m-1)^2,
+       L/J>3, K^2>1-1/m^2.
+
+   Hence K^2*L/J>1, S=2*atan(K*sqrt(L/J))>pi/2, and the four
+   transverse P slots cost 2*S>pi.
+
+All cases use original slots and distinct actual owners. Thus the number
+of genuine owners containing at least two P labels is at most four.
+

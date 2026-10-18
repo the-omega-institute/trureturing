@@ -1,0 +1,122 @@
+**Proposition 72.5 (reference correspondence and exact Euclidean assembly).**
+The construction72.4 and a perturbation of the skeleton give domains
+$\Omega_\varepsilon\subset\mathbb R^s$ with the following properties.
+Every physical edge is a straight circular cylinder of length exactly one
+and cross-sectional measure $\varepsilon^{s-1}$. Its two full plates
+match its two chambers. The chambers have precisely the volumes
+
+$$
+ |Q_v^\varepsilon|=m_v\varepsilon^{s-1},\qquad
+ Q_v^\varepsilon=b_v^\varepsilon+rK_v(t).
+ \tag{72.5}
+$$
+
+Their open interiors are pairwise disjoint, and every chamber-cylinder
+closure intersection is exactly the prescribed plate. There are no other
+intersections. Each chamber has smooth noncontact boundary and flat
+contact plates meeting it at the fixed interior angle $\pi-\alpha<\pi$.
+The assembled exterior is Lipschitz, allowing its dihedral rims.
+The double is invariant under the reflection
+$\mathcal R(x_1,x_2,x_3,x_4,\ldots)=(x_1,x_2,-x_3,x_4,\ldots)$.
+The plane $x_3=0$ meets only ground chambers, in equatorial disks, and
+meets their exterior orthogonally. The open upper half is connected and
+Lipschitz.
+
+For every vertex there is a fixed reference ball $Q_v^0$, of volume
+$m_v$ and containing zero, and a volume-preserving homeomorphism
+$\mathcal T_v^\varepsilon:Q_v^0\longrightarrow K_v(t)$ such that
+
+$$
+ Q_v^\varepsilon
+ =\varepsilon^{(s-1)/s}\mathcal T_v^\varepsilon(Q_v^0)
+       +b_v^\varepsilon.
+ \tag{72.6}
+$$
+
+Thus the reference volume in equation(1) of the cited paper is exactly
+$m_v$, rather than merely comparable with it.
+
+**Proof.** Radial integration gives
+$|K_v(t)|=s^{-1}\int F_{v,t}^s=m_v$, since the correction in(72.4)
+restores precisely $kqt^s/s$. The untruncated tip's meridian is the line
+$z=c_v-y\tan\alpha$. Its truncation at $z=c_v-qt$ has radius
+$qt/\tan\alpha=\rho t$ and interior angle $\pi-\alpha$.
+Compensation takes place away from this entire conical neighbourhood.
+
+In physical coordinates each plate is at distance
+
+$$
+ h_v(\varepsilon)=rc_v-q\varepsilon
+ \tag{72.7}
+$$
+
+from its chamber centre. Give every required centre pair $v,w$ the
+distance $L_{vw}=1+h_v+h_w$. Keep the root position and the previously
+chosen direction of each inherited edge, and place source centres
+recursively using these distances. For a ground neighbour $g$ of leaf
+$p$, keep its originally chosen horizontal unit azimuth $a_g$ and set
+
+$$
+ b_g^\varepsilon
+  =(b_p^\varepsilon)_{\rm hor}
+   +\sqrt{L_{pg}^2-(b_p^\varepsilon)_3^2}\,a_g,
+ \qquad (b_g^\varepsilon)_3=0.
+ \tag{72.8}
+$$
+
+The square root is positive for small $\varepsilon$. All centres and
+incident directions converge to those in72.3. Orient each port along its
+actual centre line. The disk centres are on that line and the distance
+between their planes is $L_{vw}-h_v-h_w=1$, with no length error.
+The physical plate radius is $r\rho t=\rho\varepsilon$.
+
+Nonincident compact pieces retain their positive separation after this
+small perturbation and attachment of bodies of diameter $O(r)$.
+Near a common centre the disjoint angular caps separate incident
+attachments. In the conical collar, truncation confines the retained
+chamber to the inward half-space of the plate, while the cylinder interior
+lies in the outward half-space; locally their closures meet exactly at the plate.
+Away from this collar, the finite angular separation and
+$\varepsilon/r=t\to0$ separate the cylinder from all other chamber
+parts and incident cylinders. These observations cover both local
+incident pairs and all nonincident pairs. Reflecting completes the
+double. Explicitly take
+$\Omega_\varepsilon=\operatorname{int}(\bigcup_e\overline{Q_e^\varepsilon}
+\cup\bigcup_v\overline{Q_v^\varepsilon})$, with both reflected halves
+and each ground chamber included once. At an interior point of a matching
+plate the union contains a neighbourhood, so these attachments make an
+open connected domain. Near the grounding plane the ground chamber is
+spherical and no other piece reaches the plane, proving the cut geometry.
+The flat/conical rims have fixed nonzero angles, so their neighbourhoods
+are Lipschitz. No assertion of global $H^2$ regularity follows.
+
+For completeness, volume equality can be strengthened to the
+volume-preserving reference homeomorphism in(72.6). Let the reference
+ball have radius $R_0$, so $|\mathbb S^{s-1}|R_0^s=sm_v$.
+Transport the positive continuous spherical density $R_0^s\,d\omega$
+to $F_{v,t}^s\,d\omega$ by a homeomorphism $h$ of the sphere. One
+explicit construction uses successive marginal and conditional
+cumulative distributions in latitude coordinates. Each interior
+conditional density is positive, so its cumulative distribution has a
+continuous strictly increasing inverse. Induction on sphere dimension
+constructs the transport; at either pole the latitude fibre collapses
+to a point, giving continuity there for both map and inverse. The
+one-dimensional starting case is the increasing cumulative map on a
+circle with a fixed cut. The construction gives the measure identity
+$F_{v,t}(h(\omega))^s\,d(h(\omega))=R_0^s\,d\omega$.
+Now set
+
+$$
+ \mathcal T_v^\varepsilon(\lambda\omega)
+   =\lambda\frac{F_{v,t}(h(\omega))}{R_0}h(\omega),
+ \qquad 0\le\lambda<R_0.
+ \tag{72.9}
+$$
+
+This is a homeomorphism, including at zero. Radial integration and the
+spherical measure identity show that it preserves Lebesgue measure on
+every measurable set, not only total volume. Equivalently its polar
+Jacobian is one wherever differentiated. This verifies(72.6). These
+transport maps are not used to assert uniform higher derivative bounds.
+$\square$
+

@@ -1,0 +1,38 @@
+**命题 40.2（奇数指数下的步幅校准及模二例外）。** 若 $\Lambda\subseteq\mathbb Z^2$ 满秩且指数为奇数，则
+
+$$
+S\Lambda=\Lambda\quad\Longleftrightarrow\quad M\Lambda=\Lambda.
+$$
+
+因此对奇素数指数，$\mathsf R,S$ 的共同格仍只有 $\Lambda_5$。但在素数二处，还存在唯一的 $\mathsf R,S$ 共同格
+
+$$
+\Lambda_2=\{(U,V):U+V=0\pmod2\},
+$$
+
+它不被 $M$ 保持。故全部素数指数下，$\mathsf R,S$ 的共同格为 $\Lambda_2,\Lambda_5$，而 $\mathsf R,M$ 的共同格只有 $\Lambda_5$。
+
+证明。直接计算 $M^2=M+I$，再乘 $M$ 得 $M^3=M+M^2=I+2M$。若 $M\Lambda=\Lambda$，其三次幂也保持，给正向。反向，设 $S\Lambda=\Lambda$。任取 $v\in\Lambda$，则
+
+$$
+2Mv=Sv-v\in\Lambda.
+$$
+
+记 $n=[\mathbb Z^2:\Lambda]$，它是奇数。有限商群中的每个类都被 $n$ 消去，且存在整数 $a,b$ 使 $2a+nb=1$。在该商中令 $z=[Mv]$，上式给 $2z=0$，于是
+
+$$
+z=(2a+nb)z=a(2z)+b(nz)=0.
+$$
+
+所以 $Mv\in\Lambda$，即 $M\Lambda\subseteq\Lambda$；用 $M$ 的整数可逆性及命题 38.2 得相等。这是在奇数阶商中约去二，不是在整数格中未经依据地除以二。于是添加相同的 $\mathsf R$ 保持条件后，可对奇素数应用定理 38.3。
+
+模二有 $S=I$，所以它保持全部模二直线。旋转模二交换两个坐标，唯一的不变直线是 $\mathbb F_2(1,1)$：两条坐标轴互换，第三条固定。其整数原像就是 $\Lambda_2$，故共同格唯一。向量 $(1,1)$ 属于 $\Lambda_2$，但
+
+$$
+M(1,1)=(1,2),\qquad 1+2=1\pmod2,
+$$
+
+所以 $M\Lambda_2$ 不包含于 $\Lambda_2$。这给出指数奇偶条件不能删除的具体反例，并完成 $\mathsf R,S$ 的素数指数分类。证毕。
+
+这项校准只比较线性差量操作的格保持性。实际状态的接缝更新、守卫与平移仍须按定义 40.1 保留；即使相容格相同，也不把 $S$ 与 $M$ 认作同一个状态更新。
+

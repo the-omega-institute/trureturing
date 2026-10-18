@@ -1,0 +1,61 @@
+**Theorem 169.2 (An attained small cap and uniform exclusion at a larger
+closed cap).** If the data of Definition 169.1 exist, set
+
+$$
+x=\alpha+\frac{b-\alpha}{M},\quad e_x=\frac{e_b}{M},\quad
+\gamma=\frac{y\cdot h(b)}M-\Delta_O(y)>0,\quad W=\sum_jy_j,
+$$
+
+and
+
+$$
+\eta=\frac12\min\{\gamma/W,a_L(x)-e_x\}>0.
+\tag{169.2}
+$$
+
+There is one original $N_2$ rule of error at most $e_x$ on every allowed
+positive nonincreasing vanishing tail with $a_{L+1}\le e_x$.
+Every original full-carrier arbitrary-address $O_2$ competitor on the
+same entire sequence has error strictly greater than $e_x+\eta$.
+Writing $E_C(2;a)=\inf_{A\in\mathcal C_2}e_a(A)$, the precise conclusion is
+
+$$
+E_N(2;a)\le e_x<e_x+\eta\le E_O(2;a).
+\tag{169.3}
+$$
+
+The final infimum inequality is non-strict at the larger cap.
+
+**Proof.** Give $D$ probability $\lambda_D/M$ and give $R$ the remaining
+probability $1-s/M$. These weights are nonnegative and sum to one.
+Their joint event vector is
+
+$$
+r+\frac{A_N\lambda}{M}\ge r+\frac{h(b)}M=d(x).
+$$
+
+Thus one full probability allocation satisfies every cap row.
+Its score at the demand vector is
+$y\cdot d(x)=B_O(y)+\gamma$; every full $O$ probability allocation has
+score at most $B_O(y)$. This is exclusion of the entire class, not merely
+failure to preserve one $N$ law. Strictness implies $y\ne0$, hence $W>0$.
+The radial normal form gives positive cap and
+$a_L(x)-e_x=(b_L-e_b)/M>0$.
+
+Realize the $N$ allocation on the actual original primes using one seed
+and its whole table. All active words satisfy the three rows.
+For an actual first absence $n>L$, the already supplied tail identity is
+$\max\{1-p_{1^L}(0),a_n\}\le e_x$. Every allowed tail is therefore
+retained; for example $a_{L+j}=e_x/j$, $j\ge1$, is one allowed choice.
+Sourcewise handoff is finite, with at most two actual requests.
+
+At the larger cap $e_x+\eta<a_L(x)\le1$, the active length remains
+exactly $L$ on that same entire sequence. Every demand decreases by
+$\eta$, and its scored gap is
+$\gamma-W\eta\ge\gamma/2>0$. The necessary $O$ direction of Theorem
+110.2 excludes all original $O$ rules at that larger closed cap, including
+arbitrary addresses and arbitrary original tapes. Thus each such rule
+has error $>e_x+\eta$, while the infimum of their errors is only known
+to be $\ge e_x+\eta$. This proves (169.3); strict individual inequalities
+do not warrant a strict inequality for their infimum. $\square$
+

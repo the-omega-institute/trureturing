@@ -1,0 +1,47 @@
+**引理 7.2（原方程的同一世界含义）。** 满足上述全部原方程和过滤的元组若存在，就按式 (7.9) 返回同一 $K_d(m)$ 的三个不同完整世界，并具有式 (7.10) 的两个实际分区。
+
+证明。由首一除法，模 $p$ 有
+
+$$
+t^3=s_3-s_2t+s_1t^2,\qquad
+t^4=s_1s_3+(s_3-s_1s_2)t+(s_1^2-s_2)t^2.
+\tag{7.11}
+$$
+
+故式 (7.2) 的 $b,c$ 正是 $QZ,28tH$ 的余式。已知 $c_0\ne0$ 且 $w=b_0/c_0$，前两方程令 $b-wc$ 三分量全零，即 $p\mid F_{d,w}$；三个秩余式方程令 $p\mid R$，不倒置 $R$ 的首项。另一方面，式 (7.7) 给
+
+$$
+\begin{aligned}
+\alpha+\beta+\gamma&=s_1,\\
+\alpha\beta+\alpha\gamma+\beta\gamma
+&=-s_1^2-2s_1(\lambda+\kappa)-\lambda^2-\lambda\kappa-\kappa^2,\\
+\alpha\beta\gamma&=-(s_1+\lambda)(s_1+\kappa)(s_1+\lambda+\kappa).
+\end{aligned}
+\tag{7.12}
+$$
+
+让后二式等于 $s_2,s_3$，乘已知非零 $u_2^2v_2^2$，恰得 $\mathcal J_2=\mathcal J_3=0$。所以 $p=(t-\gamma)(t-\beta)(t-\alpha)$，三个根由过滤两两不同且大于一。每根均有 $R=F=0$ 及全部严格源过滤，约定 2.2 的反向证明返回式 (2.8) 的整个合法源与式 (2.4) 的整个增益，实现同一个 $0,24,48,C,X,m$。不同根的 $b=t-1$ 不同，且 $E\ne0$ 使其 $g_t(2)=E/t$ 不同，故源与整个增益分别两两不同。
+
+在三个不同根上的评价使 $\mathbb R[t]/(p)$ 与 $\mathbb R^3$ 同构：次数至多二的多项式在三点全零即为零，且维数相同。故乘 $\mathrm{Den}$ 的行列式为
+
+$$
+\delta=\prod_i\mathrm{Den}(t_i),\qquad
+U(t_i)=\delta[r_M(t_i)-d],\quad W(t_i)=\delta[r_J(t_i)-d].
+\tag{7.13}
+$$
+
+后二式由伴随恒等式在非零物理分母域评价得出。二次差恒等式与 $\gamma+\beta=-\lambda,\gamma+\alpha=-\kappa$ 给
+
+$$
+\begin{aligned}
+U(\gamma)&=U(\beta),&
+U(\alpha)-U(\gamma)&=u_2(\alpha-\gamma)(\alpha-\beta)\ne0,\\
+W(\gamma)&=W(\alpha),&
+W(\beta)-W(\gamma)&=v_2(\beta-\gamma)(\beta-\alpha)\ne0.
+\end{aligned}
+$$
+
+除同一 $\delta\ne0$ 并加同一 $d$，正是式 (7.10)。两条边均属于同一实际三元组。两个第六实际子集各含两个不同目标，其两个最终动作都读 $d$，所以各有 $L_1$，父族有 $L_2$；各层基数分句排除停止。两条不同配对边无共边，任一二元子族至少被一个第六动作分开。
+
+反向的原对应仍使用第 1 节的准确接口：全根三目标 $L_2$ 必有共同漂移、正则性与两个不同 $2+1$ 分区。每顶点在某条第六碰撞边上；若其 $g(6)=0$，正迹及共同漂移迫使边伙伴也根六，违反同 $(m,d)$ 的根六根七单射。因此原 $K_6\ne0$ 过滤在此必要，不扩张到整个纤维。正则双射、上述余式和配对恒等式随即恢复原七方程及全部过滤。此说明保留原双向对应的全部条件。∎
+

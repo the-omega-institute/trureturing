@@ -1,0 +1,21 @@
+**Convention 1.3 (Growth dependencies).** The harmonic duality and growth identities used here are the owned results [Growth], Theorems 3.2 and 5.2:
+
+$$
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n}
+=\inf_{n\ge1}\frac{\kappa_n}{n},\qquad
+c_\star n\le\kappa_n\le c_\star(n+1).
+\tag{1.1}
+$$
+
+For $r>1$, use exactly its hard-core parameterization
+
+$$
+\lambda=r(r-1),\qquad
+g(r)=\frac{r-1}{(r^2-r+1)(2r-1)},\qquad
+p(r)=4r^3-9r^2+6r-2.
+\tag{1.2}
+$$
+
+The number $r_\star$ is the unique root of $p$ in $(1,\infty)$, and $g(r_\star)=\max_{r>1}g(r)$ by [Growth], Theorem 7.3. Only these exact identities and the exact root characterization are used.
+

@@ -1,0 +1,30 @@
+**推论 4.1（唯一分配与全顶点等负载）。** 在 $\Gamma_n$ 上，令 $\mathcal A(\Gamma_n)$ 为满足 $a_{c\leftarrow b}\in[0,1]$、$a_{c\leftarrow b}+a_{b\leftarrow c}=1$ 的全部原边分配，并令
+
+$$
+L_b(a)=\sum_{c\sim b}a_{c\leftarrow b}^2,\qquad
+\kappa_n=\min_{a\in\mathcal A(\Gamma_n)}\max_bL_b(a).
+$$
+
+该最小化问题也有唯一解，且在全部原边和全部原顶点上分别满足
+
+$$
+a_{c\leftarrow b}=\frac{\pi^{(n)}_c}{\pi^{(n)}_b+\pi^{(n)}_c},
+\qquad L_b(a)=\kappa_n=\Phi_n(\pi^{(n)}).
+\tag{4.1}
+$$
+
+在每条合法插入边 $y=x+e_i$ 上还有
+
+$$
+\frac{4-d_i}{8}\le a_{y\leftarrow x}\le\frac12,
+\qquad
+\frac12\le a_{x\leftarrow y}\le\frac{4+d_i}{8}.
+\tag{4.2}
+$$
+
+**证明。** 有限分配集紧，最小点存在。[增长常数卷][Growth] 定理 3.2 的鞍点等号适用于任意最小分配和定理 3.1 的最大测度。因后者在每个原坐标严格为正，鞍点份额公式在每条边都适用，且每个顶点负载都必须等于 $\kappa_n$。这唯一地指定全部分配份额。它也与（3.8）–（3.10）给出的分配一致。
+
+若 $r=\pi^{(n)}_y/\pi^{(n)}_x$，则 $a_{y\leftarrow x}=r/(1+r)$，而（3.1）给出 $q_i\le r\le1$。由于 $r/(1+r)$ 递增，且 $q_i/(1+q_i)=(4-d_i)/8$，得到第一组界；取互补份额得到第二组。特别地，全部原份额都在 $[1/4,3/4]$ 内；端点插入的范围分别为 $[3/8,1/2]$ 与 $[1/2,5/8]$，$n=1$ 时两份额都是 $1/2$。
+
+这是定理 3.1 经既有有限调和对偶得到的原模型接口后果；它不引入新的 minimax 原理。
+

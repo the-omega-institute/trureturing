@@ -1,0 +1,38 @@
+**Proposition 8.4 (materialization, and its exact information premise).**
+Suppose $X[0:\min(d,H)]$ is the actually arrived prefix and all subsequent
+arrivals are $R$, with $d\le H+J$. Construction 8.3 terminates using
+$H$ further writable letter cells and a constant number of
+$O(\log(H+J+2))$-bit slots. At its seal the entire materialized operand
+equals the arrived word and is determined by receiver information
+alone. Its mutable data do not include a length-$J$ tail.
+
+Proof. The prefix-copy invariant is
+$Y[-m:-m+i]=X[0:i]$ after $i$ copies; reading, seeking and the separate
+write cuts preserve the already copied part. All $n$ other cells are
+present and equal $R$ before and after every online step. Thus (8.4)
+equals $X[0:m]R^n$. The stipulated received-prefix premise and (8.3)
+identify this word with all $d$ arrivals. Each loop has its finite
+bound in counted slots. The final verification and head homing finish
+before the source instruction is enabled on a lawful run. ∎
+
+This proposition uses the source-specific support theorem: past
+position $H$, there is only one allowed letter. A received $R$ still
+changes the receiver's represented length, and that length determines
+how many **physical** tail cells belong to its operand. Removing an
+arrival changes that boundary; changing an early letter changes a
+writable cell and its copied operand letter. An unexpected late $L$
+is retained as a pending letter and rejected before sealing. Thus this
+is not a passive transmission followed by unrelated ROM row selection.
+No complete-word dictionary is searched at commitment. The reusable
+right tail is a fixed part of the receiver's material, selected only
+through the number of letters it actually received.
+
+If an additional interface required every operand cell to be writable,
+this construction would not meet that additional requirement. Definition
+1.3 requires actual arrivals, paid decoding and whole materialization;
+it does not require writability of each materialized letter. Here the
+entire word is simultaneously present, and its immutable cells are
+billed as physical storage. Streaming $R^n$ into an uncounted output
+tape, passing $n$ to the source, or calling a fixed $P$-cell writable
+tail “logarithmic space” would not establish Proposition 8.4.
+

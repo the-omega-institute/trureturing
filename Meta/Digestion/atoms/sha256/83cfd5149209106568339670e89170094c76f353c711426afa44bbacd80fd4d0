@@ -1,0 +1,52 @@
+**定义 21.1（安装的源特定轨道公式）。** 对已编号的 $m$ 行表，以 $w=(w_1,\ldots,w_j)\in\mathcal A^j$ 定义 $e_t(w)=\operatorname{foldl}(\bar\delta,0,w_1\cdots w_t)$。用定义11.1的同一链 $X=(X_0,\ldots,X_M)$，置
+
+$$
+\begin{aligned}
+\operatorname{OPath}_w(X)&=
+\bigwedge_{t<j}\begin{cases}
+\operatorname{Reply}_{w_{t+1}}(X_M,q_{e_t(w)}),&a(e_t(w))=\operatorname{Query}(q_{e_t(w)}),\\
+\top,&a(e_t(w))\text{ 停止},
+\end{cases}\\
+\operatorname{Truth}_e(X)&=
+\bigwedge_{(q,z)\in c(e)}\operatorname{Reply}_z(X_M,q),\\
+\operatorname{Target}_v(X)&=
+\bigwedge_{i=1}^{a}\operatorname{Reply}_{v_i}(X_{n_i},p_i).
+\end{aligned}
+\tag{SLH.21.1}
+$$
+
+$\operatorname{OPath}$ 中只读当前真实来源谓词，尚未假定缓存真。停止后的 $w_t$ 是公式的虚拟填充符号，不是实际查询事件；有效吸收令它们不改变行。每个 $\operatorname{OPath}$ 都保持单一来源链，不能把不同查询或不同纪元的边缘实现拼起来。
+
+若 $e$ 为查询行，定义
+
+$$
+\operatorname{Guard}_e(X)=\operatorname{Truth}_e(X)\land
+\bigwedge_{z\in\mathcal A}
+\left(\operatorname{Reply}_z(X_M,q_e)\Longrightarrow
+ c(\delta(e,z))=\operatorname{update}(c(e),q_e,z)\right).
+\tag{SLH.21.2}
+$$
+
+停止行只取 $\operatorname{Guard}_e=\operatorname{Truth}_e$。列表等式逐条展开：长度先相等，位置上地址及原始回复分别相等。更新中的命中条件为 $\bigvee_{(q,z')\in c(e)}q_e=q$；命中保持原列表，未命中在末尾追加恰一条 $(q_e,z)$。因此命中仍走实际转移，没有删事件、改时序或推断补写。
+
+令 $\operatorname{HaltTarget}_e(X)$ 在查询行为假，在 $a(e)=\operatorname{Halt}(v)$ 时为 $\operatorname{Target}_v(X)$。定义
+
+$$
+\begin{aligned}
+\operatorname{Cert}_m(X):={}&
+\bigwedge_{0\le j<m}\ \bigwedge_{w\in\mathcal A^j}
+ \left(\operatorname{OPath}_w(X)\Longrightarrow
+ \operatorname{Guard}_{e_j(w)}(X)\right)\\
+&\land\bigwedge_{w\in\mathcal A^{m-1}}
+ \left(\operatorname{OPath}_w(X)\Longrightarrow
+ \operatorname{HaltTarget}_{e_{m-1}(w)}(X)\right),\\
+\Phi^{\rm raw}_{M,F}(\mathcal O):={}&
+[c(0)=[]]\land\operatorname{NodupAll}(c)\land
+\forall X_0,\ldots,X_M\,
+ \left(\operatorname{Chain}_M(X)\Longrightarrow\operatorname{Cert}_m(X)\right).
+\end{aligned}
+\tag{SLH.21.3}
+$$
+
+$\operatorname{NodupAll}$ 对所有行的每对不同列表位置要求地址不等，未要求其回复为同源真值。有限回复词、行与列表均直接展开，没有 `Legal`、`Run`、`Admissible`、未知答案纤维或语义分区 oracle 原子。地址可为闭字面项，也可为自由一阶变量；来源集合量词仍遍历任意有限支持。$m=1$ 时末项检查空词对应的初始停止动作。
+

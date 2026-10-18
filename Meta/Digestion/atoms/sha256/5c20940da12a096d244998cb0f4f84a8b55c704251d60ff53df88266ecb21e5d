@@ -1,0 +1,66 @@
+**Theorem 261.7 (Original full-carrier conversion and cross-cap bound).**
+For the original source and resources of Proposition 251.4, every
+original hard-two nonstopped acquisition admits one stopped acquisition
+whose output law dominates two thirds of its law on every Borel
+event at every source and has uniform all-source TV distance at most
+$1/3$. The full original directed radius is
+
+$$
+\sup_{A\in\mathcal N_2}\inf_{B\in\mathcal O_2}\sup_{x\in X}
+ \operatorname{TV}(\mathcal L(A(x)),\mathcal L(B(x)))=\frac13,
+$$
+
+with no restriction on competitor addresses or output tapes.
+At a positive closed cap $0<e\le1$, if the original $N$ class is
+feasible for the separately selected marked targets, choose its finite
+representative at the old horizon as in Theorem 110.2. For any complete decomposition of
+that representative with changed mass $\mu$, the same converted
+original law is feasible at
+
+$$
+\widehat e=\min\left\{e+\frac\mu3,\frac{1+2e}{3}\right\}.
+\tag{261.10}
+$$
+
+**Proof.** On a common conull seed event all original executions
+terminate and respect the actual-request bound, for every source:
+the source set is countable. Each seed fixes the nonstopped schedule.
+For any fixed finite schedule, every consistent reply pattern has
+an actual source witness by Theorem 35.2. Thus all its counterfactual
+terminal tapes are well-defined on that conull event, even though
+addresses can depend on the seed and be unbounded. Sort distinct
+static addresses; a repeated-address or empty/singleton schedule
+needs no conversion. Apply (261.1) with tapes in place of labels.
+The cell proof (261.3) applies to every Borel event without a finite
+output-support restriction. One uniform seed can encode the old
+selector and a three-way daughter choice before replies. Each
+counterfactual execution used to define an output is finite on the
+common event; the resulting operational rule has zero advice and
+sourcewise almost-sure finite handoff. Repeated or ignored original
+requests remain charged. No runtime or mean-request relaxation is
+used. This proves the full-carrier upper bound. The arbitrary-address
+lower certificate in Theorem 262.3, with the single table there,
+proves sharpness.
+
+For the finite representative, the distance bound gives the first
+cap in (261.10) on every row. Minorization gives, for example,
+$q_w(0)\ge(2/3)(1-a_n-e)$,
+$q_w(n)\ge(2/3)(a_n-e)$, and
+$q_w(\{0,n\})\ge(2/3)(1-e)$.
+Subtracting the demands at $(1+2e)/3$ leaves respectively
+$a_n/3$, $(1-a_n)/3$, and zero. This remains valid for negative
+old singleton demands. The positive base row is identical to the
+pair computation. Equivalently each word law has the form
+$q_w=(2/3)p_w+(1/3)r_w$ for a probability law $r_w$;
+the family $r_w$ need not itself be an acquisition.
+Both bounds use the same $q$.
+
+For actual tails $n>L$, the old representative has
+$a_n\le e$ and $1-p_+(0)\le e$. The converted tail error is
+$\max\{1-q_+(0),a_n\}$. Distance bounds its first entry by
+$e+\mu/3$, and minorization bounds it by $(1+2e)/3$.
+The second entry is at most $e$, hence at most either bound when
+$0\le e\le1$. Caps above one are trivial. This proves (261.10)
+on the full original domain. The positive law can change; retention
+of the old tail cap is not asserted for this conversion. $\square$
+

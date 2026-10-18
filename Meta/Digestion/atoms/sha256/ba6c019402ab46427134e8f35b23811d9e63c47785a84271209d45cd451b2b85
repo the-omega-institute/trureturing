@@ -1,0 +1,31 @@
+**Corollary 12.2 (Subtransition parameter bounds in original units).**
+For every $0<Z<2/3$, write $\tau=Z/(4H)$. Then
+
+$$
+\sqrt{4ZH+\Gamma(4,Z)}
+\le4H\sqrt{T_4(\tau)}
+\le4H\sqrt{T_2(\tau)-\mu(\tau)}
+<e_2(Z)=e_3(Z)<1-Z/2.
+\tag{12.1}
+$$
+
+Equivalently the normalized values obey
+
+$$
+\tau+\frac{\Gamma(4,Z)}{16H^2}
+\le T_4(\tau)\le T_2(\tau)-\mu(\tau)<T_2(\tau)
+<\frac{(1+\tau)^2}{4}.
+$$
+
+Here $\Gamma$ and $\mu$ are exactly Definitions 2.6 and 2.4,
+with their original supplier quantifiers and no new evaluated
+constants. The strict improvements are parameterwise.
+
+Proof. Theorem 2.7 with $n=4$ bounds every literal competitor
+below by the first expression. Theorem 2.5 supplies the matching
+strict upper certificate in the strongest class. Theorem 10.3
+identifies the common infimum, and Theorem 2.3 supplies the
+remaining comparisons. The same normalization gives the second
+display. All square roots have positive radicands by the cited
+results. $\square$
+

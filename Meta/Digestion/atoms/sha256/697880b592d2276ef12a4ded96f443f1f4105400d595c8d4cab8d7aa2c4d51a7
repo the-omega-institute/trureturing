@@ -1,0 +1,44 @@
+**Theorem 9.1 (exact joint boundary mass).** Let $\mu$ be any
+probability on $S_2$ with positive masses on both leaves and on at
+least one branch $b$. Other masses may be zero. In the public menu
+choose $h$ to be a lighter leaf and $u$ to have minimum mass in
+$\{A,B,b\}$, breaking ties arbitrarily. Put
+
+$$
+H=\mu(h),\quad F=\mu(f),\quad U=\mu(u),\quad
+V=\mu(v),\quad W=\mu(w),\qquad
+R=\frac{F(V+W)}{HU}.
+\tag{SCP.31}
+$$
+
+Then $H,F,U,V,W>0$ and $R\ge2$. With the original product
+counting law on the $2N$ blocks, each whole-block weight used once,
+
+$$
+\begin{aligned}
+Z_N:=Z_{\mathcal N_N}(\mu)&=(HU)^N,\\
+\mu^{\otimes2N}(B_N)&=[F(V+W)]^N=Z_NR^N,\\
+Z_{\mathcal N_N^0}(\mu)&=Z_N(1+R^N).
+\end{aligned}
+\tag{SCP.32}
+$$
+
+Under the actual unpinned Gibbs law $P_N^0$ this gives
+
+$$
+P_N^0(s_N=h)=\frac1{1+R^N},\qquad
+-\log_2P_N^0(s_N=h)=\log_2(1+R^N).
+\tag{SCP.33}
+$$
+
+Proof. Multiply the $2N$ block weights on $x^h$. On $B_N$,
+sum the independently enumerated choices $t_i\in\{v,w\}$ in
+the explicit set (SCP.30), giving $F^N(V+W)^N$. This enumeration
+is a property of this displayed set, not an independence assumption
+on general native fibers or on the common Gibbs law. The two sectors
+are disjoint, and the event $s_N=h$ is exactly the first sector.
+Finally $F\ge H$ and $V,W\ge U$, proving $R\ge2$. The choice of
+an index selects one of 54 already specified public families. No
+comparison of real weights is an operation supplied to an observer.
+$\square$
+

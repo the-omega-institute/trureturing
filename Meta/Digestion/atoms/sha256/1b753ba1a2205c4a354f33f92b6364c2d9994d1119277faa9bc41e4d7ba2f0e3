@@ -1,0 +1,49 @@
+**Definition 8.1 (Words, operation edges and occupancy coordinates).** Use
+$B_n$ and $\Gamma_n$ from Definition 1.1. Put
+$D_n=|B_n|=F_{n+2}$, where $F_0=0$, $F_1=1$ and
+$F_{k+2}=F_{k+1}+F_k$. An operation edge changes exactly one bit while
+remaining in $B_n$. Write $E_n=|E(\Gamma_n)|$ and orient each site-$i$ edge
+$e=(u,v)$ by $u_i=0$, $v_i=1$. In the three-bit window the labels are
+
+$$
+0=000,\qquad 1=100,\qquad 2=010,\qquad 3=001,\qquad 13=101.
+\tag{8.1}
+$$
+
+These labels denote occupied positions, not integer values of binary words.
+The exact correspondence to [Boundary Calculus][BC8] is
+
+$$
+(0,1,2,3,13)_{\rm here}\longleftrightarrow
+(0,2,3,5,25)_{\rm BC}.
+\tag{8.2}
+$$
+
+Thus the middle mass $p_2$ here is its $p_3$, and the joint mass $p_{13}$
+here is its $p_{25}$. The latter is the scalar called $\kappa$ in that
+source's probability fiber. It is distinct from the graph maximum
+$\kappa_n$ in Definition 1.1.
+
+The Fibonacci vertex and edge counts are supplied by [Word Recovery,
+Theorem 2.1(C), equation (2.4), and §3.1][WR8] and by [Mollard,
+Propositions 1.1–1.2][Mol8]. The map is their no-consecutive-ones string
+set to $B_n$, their dimension to $n$, and their Fibonacci cube to
+$\Gamma_n$, with no periodic first-to-last condition. In this notation,
+
+$$
+E_n=\sum_{u\in B_n}\sum_{i=1}^n u_i
+=\sum_{i=1}^n F_iF_{n-i+1}
+=\frac{nF_{n+1}+2(n+1)F_n}{5}.
+\tag{8.3}
+$$
+
+The deletion interpretation explains the first equality: every one of a
+legal word can be deleted, and every edge has exactly one endpoint with
+that extra one. The site-$i$ factorization in Mollard's Remark 1.3 counts
+left words ending in zero and right words beginning in zero, yielding the
+second equality. These classical counts retain their supplier ownership;
+no word-discrimination error bound from Word Recovery is needed here.
+Its operational discrimination model has $n=3N$; only its elementary
+counting calculation is reused, while Mollard supplies (8.3) for every
+$n\ge1$.
+

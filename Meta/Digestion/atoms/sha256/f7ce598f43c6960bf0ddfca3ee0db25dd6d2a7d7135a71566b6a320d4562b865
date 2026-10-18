@@ -1,0 +1,14 @@
+**Corollary 361.3 (A stable strict subclass gap).** Let $0\le\delta<17/1024$. Suppose $a'$ is an entire positive nonincreasing vanishing sequence with
+
+$$
+\max_{1\le i\le7}|a'_i-b_i|\le\delta,
+\qquad a'_8\le15/64+\delta.
+\tag{361.3}
+$$
+
+Its original fixed-partition error infimum is at least $137/512-\delta$, whereas the inherited unrestricted $O$ law has error at most $15/64+\delta$. The difference of these infima is at least $17/512-2\delta>0$.
+
+*Proof.* In every score of Proposition 360.3, $\sum_n|\beta_n|\le K$, since each unit row weight contributes at most one to that sum. Replacing $b$ by its perturbed prefix changes $\beta\cdot b/K$ by at most $\delta$. The same 32 scores, and the partition-preserving original necessity argument, therefore retain the lower $137/512-\delta$. For $n\le7$, the selected targets at amplitudes $a'_n$ and $b_n$ differ in TV by exactly $|a'_n-b_n|$. The triangle inequality bounds the inherited law's error by $15/64+\delta$ there. For $n>7$ its positive law gives exact error $\max\{15/64,a'_n\}\le15/64+\delta$. Subtract the lower bound for the subclass infimum and the upper bound for the unrestricted infimum in the appropriate directions to obtain the stated difference. $\square$
+
+Mixing partitions by the seed removes the restriction in Definition 360.1: every individual stopped table belongs to some root/leaf partition, and their mixtures form the full stopped class. The inherited $15/64$ law is already a concrete counterexample to an all-$O$ interpretation of the $137/512$ lower. The compulsory-chain result concerns the coefficients of finite seven-coordinate stopped laws, not the graphical appearance of one chosen table representation of an arbitrary original rule.
+

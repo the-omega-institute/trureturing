@@ -1,0 +1,15 @@
+**定义 125.1（同一联合实现的有限三类数据）。** 固定非空有限实际合法历史集 $H$、非零有限维目标载体 $\mathcal K$，以及同一个记录空间 $\mathcal E$。给与未知目标输入无关的权重 $p_h\ge0$、$\sum_hp_h=1$，给具体且相位已定的目标酉 $U_h$，并给 $\mathcal E$ 中的单位记录 $e_h$。历史寄存器具有正交基 $|h\rangle$，记录矩阵为
+
+$$
+\Gamma_{hk}=\langle e_k|e_h\rangle.
+$$
+
+所有标签、酉和记录属于同一份联合模型。定义线性映射
+
+$$
+V:\mathcal K\longrightarrow\mathbb C^H\otimes\mathcal K\otimes\mathcal E,
+\qquad V\psi=\sum_h\sqrt{p_h}|h\rangle\otimes U_h\psi\otimes e_h.
+$$
+
+若实际历史由一般输入依赖的仪器产生，其 $p(h)$ 与分支作用应采用前卷第73、110章的 Kraus 合同；不能以状态依赖的 $\sqrt{p_h(\psi)}$ 代入本定义并冒称同一个线性等距。
+

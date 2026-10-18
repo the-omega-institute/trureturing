@@ -1,0 +1,42 @@
+**Theorem 4.1 (whole-circle two-sheet dual certificate).** At either selected root, for every $\phi\in\mathbb R$ and $\eta\in\{0,1\}$,
+
+$$
+\mathbf d^T\Gamma_\eta(\phi)\ge |H_\eta(\phi;1000)|+\lambda|\cos\phi|.
+$$
+
+The equality set consists exactly of the seven sheet contacts in Definition 3.1. Their height and report signs are $\epsilon_i$ and $\sigma_i$, their angular curvatures are positive, and no two circle directions coincide. The three saturated physical failure lines at indices $3,4,6$ are pairwise distinct.
+
+Proof. On $u\ge0$ use the base-$0$ chart $x\in[-1,1]$; on $u\le0$ use the base-$\pi$ chart with the same closed interval. These two arcs cover the circle, including both $u=0$ axes and the point missed by a single unbounded half-angle chart. For the eight lexicographically ordered cases $(\eta,\epsilon,\sigma)$, with $\epsilon,\sigma\in\{-1,+1\}$, the report sign chooses its corresponding hemisphere. Clear the positive denominators from $\mathbf d^T\Gamma_\eta-\epsilon H_\eta-\lambda\sigma u$. The contact equations justify exactly the following factorizations:
+
+| Case | Exact double factors removed | Quotient degree |
+| --- | --- | --- |
+| $(0,-1,-1)$ | $(x-x_2)^2$ | 2 |
+| $(0,-1,+1)$ | none | 4 |
+| $(0,+1,-1)$ | $(x-x_1)^2$ | 2 |
+| $(0,+1,+1)$ | $(x-x_0)^2(x-x_5)^2$ | 0 |
+| $(1,-1,-1)$ | $(x-x_6)^2$ | 6 |
+| $(1,-1,+1)$ | $(x-(x_4-1)/(x_4+1))^2$ | 6 |
+| $(1,+1,-1)$ | none | 8 |
+| $(1,+1,+1)$ | $(x-x_3)^2$ | 6 |
+
+The converted root for contact 4 follows from $\tan(3\pi/4+\arctan x_4)=(x_4-1)/(x_4+1)$. At a zero the derivative of the positive denominator contributes zero, so stationarity is invariant under this chart change. Pairwise root separation permits successive exact divisions. If $P(x)=\sum_{j=0}^na_jx^j$ has an exact root $\xi$, the synthetic quotient has $q_{n-1}=a_n$, $q_j=a_{j+1}+\xi q_{j+1}$; its remainder is $P(\xi)=0$ by the equations, not by rounding. Applying this twice at each listed contact yields the exact quotient, enclosed coefficientwise by §14.
+
+For a quotient $Q(x)=\sum_{j=0}^nq_jx^j$, substitute $x=2y-1$ and write
+
+$$
+c_j=2^j\sum_{k=j}^n(-1)^{k-j}\binom{k}{j}q_k,\qquad
+b_i=\sum_{j=0}^i\frac{\binom{i}{j}}{\binom{n}{j}}c_j.
+$$
+
+Then $Q(2y-1)=\sum_{i=0}^nb_i\binom ni y^i(1-y)^{n-i}$. The Bernstein functions are nonnegative on $[0,1]$ and sum to one. Midpoint subdivision uses $b_i^{(0)}=b_i$ and $b_i^{(r+1)}=(b_i^{(r)}+b_{i+1}^{(r)})/2$; the left controls are $(b_0^{(r)})_{r=0}^n$ and the right controls are $(b_{n-r}^{(r)})_{r=0}^n$. These exact formulas also propagate interval enclosures.
+
+Section 14 gives every quotient coefficient interval, every covering leaf $(d,j)$, and every control interval on $[j/2^d,(j+1)/2^d]$. For each root the leaf counts are $(5,5,5,1,4,3,6,1)$, and their displayed rational endpoints form disjoint covers of $[0,1]$ with adjacent endpoints equal. Every lower control is strictly greater than $238/10^6$. Consequently every exact quotient is strictly positive on its entire closed arc. The only zeros of the cleared gaps are the factored double contacts. No numerical mesh or finite number of sampled angles is used to infer positivity. On the opposite hemisphere the other report sign reduces the right side by $2\lambda|u|$; it is weaker. At the two axes the strict quotient bounds give positive gaps, so they introduce no additional equality directions. Taking both height signs proves the absolute-value inequality everywhere.
+
+The signed heights $\epsilon_iH_i$ exceed $0.00326$ and the angular second derivatives exceed $0.418$, as enclosed in §13. The angular curvature equals
+
+$$
+\frac{P_i''(x_i)}{D_{{\rm num},i}(x_i)}\frac{(1+x_i^2)^2}{4},
+$$
+
+because the value and first derivative vanish. Section 16 gives strictly positive signed report coordinates, pairwise squared circle distances exceeding $0.01644$ at the seam and $0.01657$ at the point, and nonzero pairwise saturated wedges $u_iv_j-u_jv_i$. The physical failure map $(u,v)\mapsto(dw/h_2,-bz/h_1)$ is an invertible linear map from the circle plane. Thus a nonzero circle wedge implies distinct physical failure projection lines, even after identifying opposite vectors. These strict comparisons establish precisely the geometric properties claimed. $\square$
+

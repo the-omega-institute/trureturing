@@ -1,0 +1,19 @@
+**定理 41.2（Universal exact complete-controller minimum）。** Under Definition 41.1, separately for either original alphabet,
+
+$$
+\boxed{M_{\mathrm{fee}\le1}(f)=L+n-\epsilon.}
+\tag{41.9}
+$$
+
+Every successful complete controller with this fee bound needs at least $L$ persistent literal Halt states and at least $n-\epsilon$ running states. One total controller simultaneously attains both bounds. Equivalently:
+
+| Support case | Necessary running states | Exact total states |
+| --- | --- | --- |
+| $H_0=H_1=\varnothing$ | $0$ | $L$ |
+| Exactly one support is nonempty | $1$ | $L+1$ |
+| Both supports are nonempty and unequal | $2$ | $L+2$ |
+| Equal nonempty supports and $A_0=B_1$, $B_0=A_1$ | $1$ | $L+1$ |
+| Equal nonempty supports without both crossed equalities | $2$ | $L+2$ |
+
+Proof. The lower bound ranges over every controller (41.6), not just one chosen identification tree. The source and literal identities in the next subsection are the supplied Section 27 and INITIAL target-cost interfaces specialized to (41.1). Their explicit forms fix the actual-source and absolute-response premises of the argument.
+

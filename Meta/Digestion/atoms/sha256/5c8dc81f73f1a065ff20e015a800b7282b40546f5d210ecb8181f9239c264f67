@@ -1,0 +1,28 @@
+**推论 25.4.1（三点 cut 多面体）。** 三元矩阵可由二元公共种子实现，当且仅当
+
+$$
+\boxed{
+x+y\ge z,
+\qquad
+x+z\ge y,
+\qquad
+y+z\ge x,
+\qquad
+x+y+z\le2.
+}
+$$
+
+**证明。** 四个不等式正好是四个 cut 向量的重 barycentric 权重非负：
+
+$$
+\lambda_1=\frac{x+y-z}{2},
+\quad
+\lambda_2=\frac{x+z-y}{2},
+\quad
+\lambda_3=\frac{y+z-x}{2},
+\quad
+\lambda_0=1-\frac{x+y+z}{2}.
+$$
+
+它们和为一，代回四个 cut 向量即可。证毕。
+

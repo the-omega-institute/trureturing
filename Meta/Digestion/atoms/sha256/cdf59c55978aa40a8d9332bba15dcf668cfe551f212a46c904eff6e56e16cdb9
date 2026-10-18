@@ -1,0 +1,26 @@
+**Convention 10.3 (attribution).** The joint donor-order inequality,
+its finite-LP and projection consequences, the fixed-scaffold weighted
+identity, the example profiles and the stated certificate boundaries
+are repository-derived ordinary deductions. The finite entropy-cover
+and Gibbs steps are the mature intermediates cited in §3. The
+single-residual cycle theorem and its restricted all-length covers
+are in [SRP]; the native graph-cover and Bethe counterexamples are in
+[GCB]. All countable-length cap claims retain arbitrary complete
+templates, common realization and one owned whole-block potential.
+Finite LP computability, semantic minimizing weights from [NPC], and
+soundness of $V_{\mathrm{rec}}$ leave the uniform effective tail and
+cofinality open. Sharp $\lambda$, general $M_1(D)$ and the full
+mutual-recovery programme retain their unchanged goals.
+
+[NPC]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NCE]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[NCM]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NDR]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[ERC]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[FRM]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+

@@ -1,0 +1,58 @@
+## 9. 九、传递矩阵与隐藏相关的关系
+
+三态 pair-state 传递矩阵为
+
+$$
+T=
+\begin{pmatrix}
+p_0&0&p_3\\
+p_1&0&p_{13}\\
+0&p_2&0
+\end{pmatrix}.
+$$
+
+它的行列式为
+
+$$
+\det T=
+p_2(p_1p_3-p_0p_{13}).
+$$
+
+因此
+
+$$
+\boxed{
+\det T=-Z\Delta.
+}
+$$
+
+于是，当 $Z>0$ 时：
+
+$$
+\det T=0
+\quad\Longleftrightarrow\quad
+\Delta=0.
+$$
+
+这说明条件独立截面不仅是最大熵截面，而且是传递矩阵发生秩坍缩的截面。
+
+这里有一个值得强调的结构：
+
+- $\kappa$ 是纤维坐标；
+- $\Delta$ 是纤维坐标经过非线性变换后的相关量；
+- $\det T$ 是相关量再经过 $Z$ 缩放后的传播可逆性量。
+
+因此
+
+$$
+\kappa
+\longrightarrow
+\Delta
+\longrightarrow
+\det T
+$$
+
+是一条从“填充关系”到“相关结构”再到“传播结构”的映射链。
+
+---
+

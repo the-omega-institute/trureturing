@@ -1,0 +1,21 @@
+**定义 2.2（Entire original invisible skew fiber）。** Set
+
+$$
+\begin{aligned}
+\mathcal X&=\{X\in M_5(\mathbb R):X^T=-X,\ I_5+iX\succeq0\},\\
+C(X)&=\frac{I_5+iX}{5},\qquad
+\Gamma(X)=JC(X)J^\dagger,\\
+\mathfrak I&=\{\Gamma(X):X\in\mathcal X\}.
+\end{aligned}
+\tag{2.2}
+$$
+
+This is the C-108 fiber with $X=5A$ in its notation
+$C=I_5/5+iA$. The skew condition makes the diagonal of $X$ zero. Thus
+$C(X)$ is positive semidefinite with diagonal $1/5$ and trace one, and
+$\Gamma(X)$ is also a density operator. There is no additional sign,
+sparsity, purity, rank, source-independence or operation hypothesis in
+$\mathcal X$. The description as an invisible fiber for an actual menu is
+conditional on the inherited C-108 interface; the matrix class (2.2) itself
+is defined without that operational assumption.
+

@@ -1,0 +1,29 @@
+### 定义 25.1（无相邻支持场）
+
+令
+
+\[
+\mathcal W_n
+=
+\left\{
+w=(w_1,\ldots,w_n)\in\{0,1\}^n:
+w_iw_{i+1}=0
+\right\}.
+\]
+
+其中 \(w_i=1\) 表示第 \(i\) 个原子模式被激活。定义反向读取
+
+\[
+\mathsf r_n(w_1,\ldots,w_n)
+=
+(w_n,\ldots,w_1).
+\]
+
+由于无相邻条件在反向下保持，\(\mathsf r_n\) 是 \(\mathcal W_n\) 上的 involution：
+
+\[
+\mathsf r_n^2=\mathrm{id}.
+\]
+
+这就是局部场的离散镜像。它只反转读取方向，不改变合法性。
+

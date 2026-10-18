@@ -1,0 +1,17 @@
+**Theorem 8.2 (a nonempty open region in the original finite plane).** There is an open neighborhood $\mathcal U$ of $(s_8,\log1001)$ in the original $(s,A)$ plane on which every optimum has at least seven supported low/eight total labels and three distinct saturated physical failure lines. The exact minima are seven low/eight total. The global optimal value and the merged endpoint law are analytic on $\mathcal U$.
+
+Proof. The nonsingular point system gives an analytic $Y_7(t,\lambda)$ near $(1000,23/5)$. Its seven weights are strictly positive at the seed. The exact additional point tangent certificate in §15 gives
+
+$$
+\|I-R_{7,8}J_{7,8}\|_\infty<6.132\cdot10^{-9},\qquad
+0.0003694<\partial_\lambda\tau<0.0003697.
+$$
+
+For the map $\Psi(t,\lambda)=(A=\log(1+t),s=s_0\tau(t,\lambda))$,
+
+$$
+\det D\Psi=\frac{s_0\tau_\lambda}{1+t}>0
+$$
+
+at the seed. The analytic inverse-function theorem maps a sufficiently small neighborhood diffeomorphically onto an open neighborhood in the original finite plane; exchanging coordinate order to $(s,A)$ only changes the determinant sign. After shrinking, all seven weights, the independent minor, disjoint sheet zero sets, nonzero report/height signs, curvature, wedge separation and complete-arc quotient positivity remain strict. Thus the universal original-class inequality and common constructor persist, and Theorem 6.1 gives the exact counts and unique merged law throughout. Composing the analytic root, law and value with the analytic inverse gives the asserted analyticity in $(s,A)$. No connection of this neighborhood to the seam neighborhood, nor a quantitative width, follows. $\square$
+

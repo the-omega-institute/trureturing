@@ -1,0 +1,98 @@
+**定理 84.3（High-capacity phase-wise bridge to the exact GLOBAL fee）。** In Definition 84.1 suppose
+
+$$
+h\ge5,\qquad N=2^h,\qquad |\Lambda[\mathbb Z/T\mathbb Z]|=N-1.
+\tag{84.10}
+$$
+
+Let $\mathsf P_h$ mean that there is a phase assignment $Z:\mathbb Z/T\mathbb Z\to\mathbb F_2^h$, with coordinates numbered $0,\ldots,h-1$, satisfying
+
+$$
+\begin{aligned}
+\Lambda(j)\ne\Lambda(j')&\ \Longrightarrow\ Z(j)\ne Z(j'),\\
+\bigoplus_{j\in\mathbb Z/T\mathbb Z}Z(j)&=0,\\
+Z_t(j)&=0&&j\in M_t,\quad0\le t<h,\\
+Z_0(0)&=1,\qquad Z_0(1)=0,\qquad Z_0(2)=1.
+\end{aligned}
+\tag{84.11}
+$$
+
+There is no requirement that $Z$ be constant on a joined class. Then, under both original alphabets,
+
+$$
+\boxed{C_{\rm pre}(f)=C_{\rm pre}(F)=h\quad\Longleftrightarrow\quad\mathsf P_h.}
+\tag{84.12}
+$$
+
+Every assignment in (84.11), through (84.5), supplies one actual $h$-block attaining stream. In particular no additional seam test is needed in this domain. The exact worst emitted-bit fee when (84.11) holds is $mh$. When it fails, the theorem concludes only $C_{\rm pre}\ge h+1$, possibly infinite, and supplies no general higher-price formula. It makes no arbitrary-placement selection claim.
+
+证明（actual sources, compulsory root and all-action capacity）。 Every record in (84.2) has the credited joint witness, now instantiated with the actual new $m,T$:
+
+$$
+\begin{aligned}
+\ell&\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,
+\qquad \ell\ge s+2,\\
+\eta&=\bigoplus_{i=\ell-s}^{\ell-1}\gamma_i,\qquad
+w(v,j,s)=(v\oplus\eta)0^{\ell-s-1}1^s.
+\end{aligned}
+\tag{84.13}
+$$
+
+Actual gcd one gives arbitrarily large such $\ell$. The separating zero and compensating first bit simultaneously realize value $v$, phase $-j$ and tail $s<k$. The history is legal and divides into complete internally legal blocks under both alphabets. Its unobserved length is not a controller input. Two all-one complete source blocks, $1^{2m}$, separately realize initial bottom because $m<k<2m$.
+
+Fix either free INITIAL value and any phase. The actual tails $m-1$ and $m$ have unequal INITIAL labels, low versus fresh $R$, so free stopping is impossible. A root with at most one leading one reaches its first zero on both records, since $m+1<k$; their values and phases agree there and the zero merges their tails. No later archive can recover their unequal labels. A root with at least three leading ones, including $1^m$, rejects both by the third one, leaving identical absorbing complete endpoints. Thus every correct root, regardless of its later horizon, has exactly two leading ones and prefix $110$. This is an application of the supplied first-zero and rejection-loss interfaces, not a new generic cut theorem.
+
+Every such root rejects exactly the two high tails $m,m+1$. Every low tail survives its two leading ones because $s+2\le m+1<k$, reaches the zero, and completes safely. At each phase that merger preserves its INITIAL component label. All low sources then have the same actual terminal tail of this root. Within each acquired scalar-output archive, every later literal word either succeeds on all candidates or rejects all: safety depends only on their common actual tail and the issued word. On success it gives at most two scalar endpoints and again a common tail on each child, using the true transfer $\sigma+m$ for an all-one word. On common rejection all later outputs remain bottom; it cannot finish an archive with unequal labels. Endpoint stopping requires a homogeneous archive. Induction on the remaining fee therefore bounds the number of low labels resolvable with total worst fee $H$ by $2^H$. This includes all words, all-one actions, zero waits, padding, repair, attempted rejection and early stopping.
+
+For the GLOBAL lower bound use the exact preset value-join law [IC, Definition 29.1 and Theorem 29.2]. Its target on this same phase/tail space has low table $\Lambda$, high label $(R,R)$ and independent bottom. The law uses value-complement symmetry of the same acquired endpoints; it issues no copied experiment and borrows no other source's outputs. On a fixed scalar fibre the joined target has $N-1=2^h-1$ actual low labels. The preceding all-action bound gives
+
+$$
+2^h-1\le2^H,\qquad H\ge h.
+\tag{84.14}
+$$
+
+This is a joined-target lower bound transferred to the original target only for preset control. It does not identify its component adaptive optimum. The explicit pullback (84.2), deterministic record evolution and actual surjectivity (84.13) give equal record/history prices.
+
+证明（the physical implication beyond row algebra）。 Suppose (84.11) holds. Put $q_t(j)=Z_t(j)$ and use its literal inverse
+
+$$
+B_{t,i}=\bigoplus_{b=0}^i Z_t(tm+b\bmod T),\qquad
+0\le t<h,\quad0\le i<m.
+\tag{84.15}
+$$
+
+The XOR and omission clauses make every row even and available on its actual path. The root bits are $1,1,0$, so this stream has precisely the previously proved high rejection and low preservation. Every block is internally legal.
+
+The separation clause requires at least $N-1$ different phase vectors in the $N$-element cube. Therefore at most one cube vector is absent. For every consecutive coordinate pair $t-1,t$, the cube has $2^{h-2}$ vectors with both coordinates one. At least $2^{h-2}-1$ of these occur in the actual phase table, and different vectors have different actual phases. Consequently
+
+$$
+\left|\{j:Z_{t-1}(j)=Z_t(j)=1\}\right|
+\ge2^{h-2}-1\ge7>3
+\quad(1\le t<h).
+\tag{84.16}
+$$
+
+Inductively let a low source have completed the preceding words successfully, and retain its true current tail. If the next word rejected, Lemma 84.2 would bound precisely these two complete arithmetic rows by three, contradicting (84.16). Thus every next word succeeds on every low source. In particular each actual seam is strict. This argument does not replace an all-one outgoing tail by a literal run. Moreover every row here has at least $2^{h-1}-1$ charged phases, while an all-one word has only two; the selected words all contain zero. Their actual seam inequalities can consequently also be written
+
+$$
+\rho(B_{t-1})+\alpha(B_t)<m+2=k.
+\tag{84.17}
+$$
+
+The automatic implication (84.16) is specific to the original consecutive paths and rejecting-tail mechanics; even, available rows alone would not prove it. No wait, clearing, padding or repair block is added.
+
+Initial bottom returns $L_\bot$ freely. High sources stop at the completed root endpoint with $R$; tail $m+1$ was absorbed on the first bit and tail $m$ on the second, but both emit and pay the entire root. Let every low source emit the same $h$ words. Its own endpoints $v_0,\ldots,v_h$ give
+
+$$
+(v_1\oplus v_0,\ldots,v_h\oplus v_{h-1})=Z(j).
+\tag{84.18}
+$$
+
+By (84.11), this vector determines a unique joined label even if one label has several vectors. Return its component selected by the remembered free INITIAL value $v_0$. The same literal stream serves both values and all INITIAL tails. No INITIAL phase is observed. The displayed rule stops all low sources at the final complete endpoint without cleanup; all these records are actual and pay exactly $h$ blocks. Together with (84.14), this proves sufficiency and the exact emitted-bit fee.
+
+证明（necessity with arbitrary endpoint stops and phase-wise splitting）。 Suppose a correct preset controller has worst fee $h$. Apply the supplied join law to its same stream; this permits a joined decoder with fee at most $h$. Stop every joined-homogeneous archive immediately. The root is still forced to have prefix $110$, and every low source has a common tail after it.
+
+At a later slot, a common rejecting word would absorb every running low source. Correctness would force each of its current archive fibres to be homogeneous already, so all could stop before that slot. Such a word is unnecessary. After removing unnecessary final actions, the joined lower bound (84.14) forces some low source to reach slot $h-1$; every word through that slot succeeds on continuing sources. Because their tail trajectory depends on the words and not the phase or value, those same words also succeed if, solely for the mathematical row calculation, earlier stopped low phases are continued along the fixed stream. This fills a length-$h$ arithmetic vector $Z(j)$ on every low phase. No stopped source is observed or charged in the actual stopping rule.
+
+Two unequal joined labels cannot have equal full vectors: they would have equal acquired scalar prefixes on a fixed free-value fibre, and at the earlier stopping time the same stopping/decoding decision would return unequal labels. Every full row has even charge and vanishes on its actual two omissions by (84.4). The root prefix supplies $Z_0(0),Z_0(1),Z_0(2)=1,0,1$. Thus all clauses of (84.11) hold. Unlike a saturated-label argument, this reasoning does not force one vector per class; it preserves all phase-wise splits that the actual stream produces. It covers paid waits at their chronological slots and early endpoint stops. This proves necessity. ∎
+

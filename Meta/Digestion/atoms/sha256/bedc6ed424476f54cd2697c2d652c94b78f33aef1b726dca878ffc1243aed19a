@@ -1,0 +1,46 @@
+**Lemma 4.1 (finite boundary acquisition at a possibly absent address).**
+For every actual stationary tree $t$, every public original-root word
+$a$ and every integer $h\ge0$, there is one deterministic source-blind
+procedure acquiring the entire table
+
+$$
+B_h(t,a)=\bigl(r_t(aw)\bigr)_{|w|\le h}
+\tag{PPF.17}
+$$
+
+using only actual literal Reads, with
+
+$$
+T\le2^h,\qquad H\le|a|+h,\qquad L\le(|a|+h)2^h.
+\tag{PPF.18}
+$$
+
+Presence of $a$ is not a premise. The procedure neither navigates to a
+subtree nor receives an acquired array as input. This is a particular
+full-prefix acquisition method of AAR §16; the statement records the
+explicit implementation and charges needed here.
+
+Proof. Define $\operatorname{Acquire}(a,h)$ recursively. At $h=0$,
+Read the full word $a$ and return its one reply. At $h>0$, first
+run $\operatorname{Acquire}(aL,h-1)$.
+
+If its root reply $r_t(aL)$ is absent, $a$ cannot be a branch:
+a branch has two present children. Read $a$. Its reply is alpha,
+beta or absent, and every strict descendant of $a$ is absent. This
+determines (PPF.17), including its entire right part, without a
+right-side acquisition.
+
+If $r_t(aL)$ is nonabsent, $a$ is necessarily a present branch.
+Run $\operatorname{Acquire}(aR,h-1)$ and combine both acquired
+child tables with the inferred branch reply at $a$. This determines
+exactly (PPF.17). The inference uses the actual reply already paid
+for; it is not a navigation action.
+
+Induction on $h$ proves termination and correctness in both cases,
+including an absent $a$. The first case uses at most
+$2^{h-1}+1\le2^h$ Reads, and the second at most
+$2\cdot2^{h-1}=2^h$. Every recursive submitted word has length at
+most $|a|+h$; the extra parent word has length $|a|$. This proves
+the peak-length bound, and multiplying that bound by the number of
+submissions proves the letter bound. $\square$
+

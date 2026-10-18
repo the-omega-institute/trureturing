@@ -1,0 +1,34 @@
+**Proposition 107.1 (Sorting and stopping cannot preserve optimal
+exact-cap feasibility in general).** There is no implication
+$\mathcal N_k$ feasible at $(a,\varepsilon)$ implies
+$\mathcal O_k$ feasible at the same $(a,\varepsilon)$ for every
+finite $k$, every sequence (73.3) and every exact cap. This failure
+holds under the original source, tape, seed and hard-request contract,
+even if the replacement may change the entire output-law family and
+its distribution of preselected schedules.
+
+**Proof.** Take $k=3$, the base sequence and
+$\varepsilon=\varepsilon_0$. Theorems 103.2 and 104.1 give a feasible
+$\mathcal N_3$ rule and exclude every $\mathcal O_3$ rule.
+The exclusion does not condition on its schedule distribution and
+does not require preservation of the $N$ laws. It therefore refutes
+the feasibility implication itself. At this cap, a stopped schedule
+needs four requests whereas preselected acquisition needs three.
+For (106.1) the same argument holds at $s\varepsilon_0$.
+The actual first absence, the first queried zero, and the first zero
+in a seed-specific completion remain distinct notions.
+
+Mathematically, stopping coarsens the acquired reply cells of each
+schedule: an observed zero identifies all its later selected suffixes.
+The table in Theorem 103.2 uses those suffixes in a joint law common
+to all sources. For instance schedule $1,2,3$ assigns different
+$0/1$ masses on $000,001,010,011$, even though all four stopped
+transcripts end at query $1$. Sourcewise TV controls the mixed law
+at a fixed actual source; it does not control a mixture obtained by
+choosing a different comparison source through the schedule part
+of the seed. The event inequality (104.1) shows that even arbitrary
+redistribution among all stopped schedules cannot repair this family
+at the same hard-three cap. The active-four equality (96.2) remains
+valid within its stated regime and entails no universal normalization.
+$\square$
+

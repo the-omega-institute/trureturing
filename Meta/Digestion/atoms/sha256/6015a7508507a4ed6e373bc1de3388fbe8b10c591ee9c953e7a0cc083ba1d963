@@ -1,0 +1,21 @@
+**命题 7.2（校准结合读出的全树替换桥）。** 对每棵自由有序树，$Q(\rho t)=RQ(t)$；$R_V\in SO(3)$ 且恰为三阶。这个有限读出对 $\rho$、固定侧有序嫁接和 $Q$ 的函数读数构成充分任务边界，但不恢复全部树或原生数量。
+
+证明。整数矩阵为 [递归全息边界几何](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) §7 已有旋转；其三列正交单位，行列式一，依次轮换 $e_1,e_2,-e_3$，故 $R_V^3=I$ 而 $R_V\ne I$。标量固定，旋转保持 $g,C$，所以从定义 6.1 直接得
+
+$$
+R(x\odot y)=Rx\odot Ry.
+$$
+
+两叶满足 $Q(\rho\alpha)=b=Ra$ 与 $Q(\rho\beta)=ba=c=Rb$。若对子树 $s,t$ 成立，则
+
+$$
+Q(\rho\langle s,t\rangle)
+=RQ(s)\odot RQ(t)=R Q(\langle s,t\rangle).
+$$
+
+这是完整树的结构归纳，消费三周期原料而非只核对一条递推链。
+
+固定侧来源 $s$ 的左嫁接 $t\mapsto\langle s,t\rangle$ 在读出层为 $x\mapsto Q(s)\odot x$；右嫁接为 $x\mapsto x\odot Q(s)$，替换为 $x\mapsto Rx$。若 $Q(s)$ 实际已供应，任意这些动作的有限词都由当前 $x=Q(t)$ 递归决定，最后施指定函数即可。侧来源取得和动作执行不是代数充分性所赠的资源。
+
+所有树值落在 $Q_8=\{\pm1,\pm\mathbf i,\pm\mathbf j,\pm\mathbf k\}$；叶在其中且它对乘法封闭。结合律合并不同括号，如 $\langle\langle\alpha,\alpha\rangle,\beta\rangle$ 与 $\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 都给 $-b$。$\langle\alpha,\alpha\rangle$ 与 $\langle\beta,\beta\rangle$ 都给 $-1$，原生数量却为 $4,6$，故数量不是 $Q$ 的函数。$Q(\rho^3t)=Q(t)$ 也不使树相等：$\rho^3\alpha=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 有三叶，$\alpha$ 有一叶。有限读出仍须保留来源地址和额外任务所需记录。∎
+

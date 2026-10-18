@@ -1,0 +1,16 @@
+### 4. ResponseContrast
+
+定义
+
+$$
+J_{\mathscr L}=
+\mathscr L_{13}-\mathscr L_1-\mathscr L_3+\mathscr L_0
+$$
+
+并证明
+
+$$
+\overline{\mathscr L}=
+C(X,Y,Z)+J_{\mathscr L}\kappa.
+$$
+

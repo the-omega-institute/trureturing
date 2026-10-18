@@ -1,0 +1,72 @@
+**Theorem 3.1 (legal locating strategy and uniform fallback).** There
+is one encoder $A_*$, admissible on all of $\mathcal F_D$, such that
+
+$$
+T_{A_*}=C+1\text{ on the support of }P_0,
+\qquad
+T_{A_*}\le C+1+h_n\text{ on }\mathcal F_D,
+\quad h_n=\lceil\log_2(n+1)\rceil.
+\tag{NCO.19}
+$$
+
+Proof. Actually Read the $C$ public cell-root words at $RL$ followed
+by their skeleton slots, in a fixed order. If any reply is absent, use
+the fallback below. Otherwise interpret alpha, beta and branch as
+$0,1,2$, assemble $z$, compute $j_*=\iota^{-1}(H(z))$, and actually
+Read $R^{j_*}$. Return $(j_*,e)$ only if this Read is a labelled leaf.
+If it is branch or absent, use the fallback.
+
+The locating relation alone is never accepted as evidence. On an
+arbitrary tree in $\mathcal F_D$, a labelled reply at $R^{j_*}$ proves
+that all its strict ancestors are branches and that this is precisely
+the first leaf on the target path. Thus every direct return acquires
+the genuine descriptor, even if the tree has a different bank shape,
+invalid cell descendants, or no relation to either core law.
+
+The fallback is [AAR, Theorem 13.4][AAR]. Search the ordered leaf
+positions $[1,n]$ at the lower middle index $i$. A Read of $R^i$ is
+a hit if labelled, keeps the earlier positions if absent, and keeps
+the later positions if branch. Exhaustion of the leaf candidates can
+leave only the branch descriptor $B$. Each nonterminal comparison
+leaves at most half the previous leaf candidates, so at most
+$h_n$ actual calls suffice. This is a new search on the same stationary
+tree; any repeated call from the locating phase still counts. It
+terminates correctly on every source of the full family.
+
+For clarity the passive decoder for this all-right target has the
+following explicit form. At descriptor $B$ it always returns branch.
+At $(j,e)$ put $x=k+e-2(n-j)$, as an integer, and return
+
+$$
+\begin{cases}
+\bot,&x<0,\\
+\alpha,&x=0,\\
+\beta,&x=1,\\
+\mathsf b,&x\ge2.
+\end{cases}
+\tag{NCO.20}
+$$
+
+This is AAR13.3 specialized to the right ray. In the native source
+algebra, an originally present leaf at $R^j$ transports to
+$\rho^{k+e}\alpha$ at that same address, by
+[`original_present_transport`][NDP]. The existing
+[`right_clock_iterate` and `right_clock_readout`][DOR], with
+$s=n-j$ and initial clock $e$, give exactly (NCO.20).
+An initially present branch persists under the homomorphism.
+Transport is used only at an originally present address; it never
+turns an initial absent node into an alpha leaf.
+
+One complete handoff includes the acquired descriptor together with
+the whole remaining accessible acquisition state. The decoder uses
+its descriptor component. Alternatively, separately charged clearing
+can leave only a fixed encoding of that descriptor. Neither convention
+discards accessible source dependence from the accounting. No further
+source Read is needed for any supplied authentic $k$.
+
+On $P_0$, the actual bank gives $H(z)=\iota(j)$ and the validation
+Read hits the genuine leaf. There are exactly $C+1$ calls. On any
+source there are at most $C$ cell calls, one candidate call and $h_n$
+fallback calls. This proves (NCO.19) and full-family correctness.
+$\square$
+

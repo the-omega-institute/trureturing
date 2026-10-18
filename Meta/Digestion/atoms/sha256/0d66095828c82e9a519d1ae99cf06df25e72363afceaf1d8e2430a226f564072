@@ -1,0 +1,30 @@
+## 1. Scope, notation and supplier correspondence
+
+The first proof unit studies probability transport, phase loops and the metric
+completion of a fixed-mean quotient. The second determines the exact phase
+holonomy group and the information about history retained by specified
+measurements. Both use the same five-mode source. Statements about paths always
+specify whether the coordinates are real lifts, periodic angles or pure rays.
+
+The following abbreviations refer to existing ordinary mathematical suppliers.
+They identify results being consumed, including their hypotheses; they do not
+assert that a renamed application is an additional general theorem.
+
+| Abbreviation | Source and supplied result | Correspondence used here |
+| --- | --- | --- |
+| SP | [Symplectic predictive completion](SYMPLECTIC_PREDICTIVE_COMPLETION.md), §§35.1, 35.3–35.7 | The same five modes, affine fiber, primitive phase quotient and negative phase convention; the metric here is exactly SP's metric. |
+| HR | [Hidden relations, statistics, phase and seams](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md), C-2.2, C-4.6, C-13.2–C-14.3 | The normalized affine kernel and phase quotient; old phase equals minus the phase here, old relation angle equals $-\chi$, and this metric is twice the old metric. |
+| IE | [Information escape, dynamics and thermodynamic action](AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md), Definition 14.1 and Theorem 14.2, including its global-coordinate proof | Old modes $(0,2,3,5,25)$ map to $(0,1,2,3,13)$; $\nu=d$, $S=I$, $\theta_{\mathrm h}=\tau$, and the base order $(X,Z,Y)$ is permuted to $(X,Y,Z)$. |
+| HRM | HR, C-18.4, especially its weighted least-norm formula and orthogonal-residual argument | Its positive diagonal weight is $P$, relation matrix is $D$, information matrix is $G$, and relation velocity is $d\Phi$; the formula is applied pointwise as the reference probability changes. |
+
+These are complete source correspondences for the claims they supply. In
+particular, IE supplies all of the flat Fisher transport assertion in §2.2,
+including global existence and uniqueness, rather than just its infinitesimal
+orthogonality identity. The variable-reference rectangle in §2.9 uses HRM's
+minimizer but requires its own finite-path calculation.
+
+Throughout, $\mathbf1$ is the all-ones column, inner products and transposes are
+real unless complex amplitudes are displayed, and $\mathbb T=\mathbb R/2\pi\mathbb Z$.
+All logarithms are natural. The symbol $b$ for a metric coefficient in §§2.10–2.14
+is distinct from the visible base point $b_{\mathrm{vis}}=(X,Y,Z)$.
+

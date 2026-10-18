@@ -1,0 +1,13 @@
+### 4.2 The zero-winding double-wall source
+
+Restrict the double-wall source to loops with $m=0$. Then $\varepsilon=1$
+for every reachable endpoint, so the four bottom-edge pairs are fixed constants
+and the only varying character is $\beta$. After absorbing those constants
+into $c_b^0$, the same ten-coordinate readout factors as
+
+$$
+y(h)=c_b^0+D_b^0q_b^0(h),\qquad
+q_b^0=(\sqrt2\cos\beta,\sqrt2\sin\beta).
+\tag{4.13}
+$$
+

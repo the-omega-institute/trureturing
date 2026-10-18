@@ -1,0 +1,103 @@
+**Convention 9.3 (faithful lower and upper interface).** Write
+$\mathsf N(H,p,\ell)$ for uniform full-fiber feasibility under Assumption
+9.1, and $\mathsf B(m,t,J)$ for Boolean threshold feasibility with the
+same original costs. The reused exact interface
+[SB, Theorem 1.4][SB], equivalently SI (SI.5) and TC (TC.1), is
+
+$$
+\mathsf N(H,p,\ell)\ \Longleftrightarrow\
+\mathsf B(H-4-r,p-1,\ell-3).
+\tag{TS.35}
+$$
+
+Its lower direction is a cube projection only; its upper direction is
+correct on the full unbounded fiber. The proof below records the offsets
+needed by the new consumer, without a graph-normalization claim.
+
+For the lower witness, put $G_0=\langle\beta,\beta\rangle$,
+$C_0=G_0$, $C_{v+1}=\langle C_v,\beta\rangle$, and take comb depth
+at least $s_n$. At each prefix-free word $w_i$, replace its beta by
+$G_0$ precisely for bit one. The resulting $B_\theta$ is a branch image.
+Choose four pairwise distinct fixed branch images outside the finite family
+of all $B_\theta$, use them at $c,b_1,b_2,b_4$, use $B_\theta$
+at both $a$ occurrences and beta at $b_3$, and take the image inverse
+after filling the exterior. This is an actual finite origin in $Z_{b_3}$
+for every vector, with all original repetitions, disequalities and guards.
+The occurrence identity is
+$r_{\rho u}(pv)=r_{x_{[p]}}(v)$. On this cube the only nonconstant words
+are the pairwise disjoint classes
+
+$$
+E_i=\{p w_i v:p\in\{LLL,LRL\},\
+                    v\in\{\varepsilon,L,R\}\}.
+\tag{TS.36}
+$$
+
+At the roots, bit zero/one gives beta/branch; at their children it gives
+absent/beta. Proper prefixes are branch and deeper extensions absent
+in both cases. Every selected word has length at least $c_i=s_i+4$.
+
+For each negative cube input, changing $c$ to beta and $b_3$ to alpha
+gives an actual $\Pi_3$ source of opposite code, with unchanged selected
+replies. For each positive cube input, changing only $b_3$ to a fresh
+branch image gives an actual $Z_*$ source of opposite code and the same
+selected replies. All differences begin at depth three. Correctness
+therefore forces at least one nonselected query of length at least three
+on that very cube run. This is a same-input mandatory charge.
+
+Independently, start with a $Z_c$ source whose other classes are distinct
+branch images. Changing just $b_3$ to alpha gives the opposite-code
+$\Pi_3$ profile and forces an installed word in the cone
+$RLR\{L,R\}^*$. Changing instead just $b_4$ to alpha gives $\Pi_4$
+and forces an installed word in $RRR\{L,R\}^*$. The cones are disjoint
+and outside every $E_i$. If $M$ counts all installed selected running
+states, including unused ones, these two installed states and the $2+r$
+latches give $M\le H-4-r$.
+
+Retain each selected state reached on some cube input as a Boolean state
+of its coordinate class. Follow its two bit-dependent native edges and
+suppress intervening cube-constant chains. Each realized chain is finite
+by actual termination; the initial chain reaches a selected state because
+threshold is nonconstant. Complete unrealized selected edges arbitrarily
+by terminals. For each vector, induction follows exactly its own actual
+selected-state subsequence, so no completed impossible edge becomes actual.
+The result is a complete correct terminating Boolean graph, without state
+copying, and with simultaneous same-input inequalities
+
+$$
+m\le M\le H-4-r,\qquad
+t_B(\theta)+1\le q_P(u_\theta),\qquad
+J_B(\theta)+3\le \ell_P(u_\theta).
+\tag{TS.37}
+$$
+
+Every selected visit, including repeats, is retained and charged at least
+its $c_i$. The other offsets are paid on that same source run.
+
+Conversely, lift every installed Boolean coordinate-$i$ state to the
+shortest literal $a_i$. Branch follows its one successor; alpha, beta and
+absent each have a separately installed zero successor. Replace the Boolean
+terminals by the original latches, and add exactly these two profile rows:
+
+| Profile state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | Boolean start | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Start at $D$ and install all $r$ further mandated latches even unused.
+On every $Z_{b_3}$ source, its arbitrary branch image defines one static
+Boolean indicator vector. The occurrence identity identifies the whole
+selected run, including repeated or certified visits, with that Boolean
+run. This works for noncomb shapes and absent selected addresses.
+At $D$, alpha is $\Pi_3$, beta is $Z_{b_3}$, and in the branch
+case only alpha at $T$ gives the remaining code-one profile $\Pi_4$.
+All other routes require zero. Thus the lift is correct on the full fiber
+with exactly $m+4+r$ preparation states, at most $1+t$ calls and
+$3+J$ letters on selected routes, and at most two calls/six letters
+otherwise. Every correct threshold graph has an actual input exposing all
+coordinates by the saturation adversary, so feasible Boolean bounds satisfy
+$t\ge n,J\ge W$; the short profile routes fit those shifted bounds.
+Negative bounds are infeasible by definition and (TS.37).
+This proves the uniform interface (TS.35), not pointwise normalization of
+an arbitrary native computation.
+

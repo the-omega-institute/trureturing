@@ -1,0 +1,18 @@
+**Definition 2.2 (credited same-heat auxiliary fundamental solution).** N §§4–5 already establish, for the identical canonical heat,
+
+$$
+\begin{gathered}
+\mathcal G(\xi)=\int_0^\infty k_t(\xi)dt>0\quad(\xi\ne0),\qquad
+\mathcal E\mathcal G=\delta_0,\qquad
+\mathcal G(\delta_R\xi)=R^{-5}\mathcal G(\xi),\\
+\mathcal G\text{ is smooth off }0,\qquad
+\mathcal G(\xi)\le C d(0,\xi)^{-5},\qquad
+\mathcal G(r,\mathbf z)\le C|r|^{-5}\quad(r\ne0),\\
+f:=Vp\in L^1\cap L^2,\qquad m:=\int f\in(0,\infty),\qquad
+p(\xi)=\gamma\int\mathcal G(\eta^{-1}\xi)f(\eta)d\eta\quad\text{a.e.}
+\end{gathered}
+\tag{2.4}
+$$
+
+N also proves $R^5p\circ\delta_R\to\gamma m\mathcal G$ distributionally with uniformly bounded compact local mass. These facts are reused rather than reproved. Their integral representation follows from positive finite-time reconstruction, Tonelli and its $L^2$ limit; the source is exactly $Vp$. The small-time distributional boundary in $\mathcal E\mathcal G=\delta_0$ is the heat initial condition, and the large-time boundary vanishes by $t^{-7/2}$. The kernel is auxiliary and supplies no replacement potential or cutoff-free native interaction. The next theorem adds global decay and strong first-derivative convergence to the distributional result.
+

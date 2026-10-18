@@ -1,0 +1,17 @@
+**Definition 3.3 (the prescribed structure-dependent bit).** For
+$u\in\mathcal U_*$ let $h(u)=j$ if $x_{b_j}=\alpha$, and let $h(u)=0$
+if none of these four values is $\alpha$. The complete partition makes
+the four right-class values different, so this definition is unambiguous.
+Prescribe
+
+$$
+\sigma(u)=0\quad\Longleftrightarrow\quad
+ h(u)\in\{1,2\} \lor\
+ \bigl(h(u)=3\ \land\ x_{b_2}=E\bigr)\ \lor\
+ \bigl(h(u)=0\ \land\ x_{b_2}\notin\{\beta,E\}\bigr),
+\tag{NRE.12}
+$$
+
+and set $\sigma(u)=1$ in every remaining case. This is a specified
+function of the actual acquired data on the entire original domain.
+

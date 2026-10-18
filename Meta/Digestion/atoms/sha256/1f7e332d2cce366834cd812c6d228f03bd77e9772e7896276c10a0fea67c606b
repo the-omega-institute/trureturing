@@ -1,0 +1,28 @@
+**Theorem 6.1 (Exact finite reset posterior).** For $n\ge5$, $3\le i\le n-2$, and every supported full complement in $E_i=\{X_{i-2}=X_{i+2}=1\}$,
+
+$$
+p_{n,i}=\frac{k^2}{k^2+k_2},\qquad
+\mu_n(E_i)=\frac{k^2+k_2}{Z}>0.
+\tag{6.1}
+$$
+
+Consequently
+
+$$
+V_2(\mu_n;n)=0\qquad\text{for every }n\ge1.
+\tag{6.2}
+$$
+
+Proof. The two completions of a supported complement in $E_i$ have the form $\ell\,10x01\,t'$ with $x=0,1$. Here $\ell,t'$ are words, not the scalar parameters used earlier. The common-matrix probability is
+
+$$
+(\lambda M_\ell v)\,[eM_0M_xM_0v]\,(eM_{t'}\mathbf1).
+\tag{6.3}
+$$
+
+The outer factors are positive by the legal-word formulas, and independent of $x$. At an endpoint anchor an outer word is empty, with factor $\lambda v=1/Z$ or $e\mathbf1=1$ respectively. For $x=0$ the middle factor is $f(4)=k_2$. For $x=1$ it is $(eM_0v)^2=f(2)^2=k^2$. Their ratio gives the posterior in (6.1), independently of the entire remaining finite complement.
+
+Marginalize the exterior: the anchor event consists of the five-bit words $10001$ and $10101$. Formula (4.8) gives their probabilities $k_2/Z$ and $k^2/Z$. This proves the event mass in (6.1). Equivalently the same rank-one cancellation persists when finite collars are enlarged to the infinite exterior, as in Theorem 5.1. Thus every conditional variance in (2.8) is exactly zero, with positive event weight. Their sum is zero for $n\ge5$; the definition covers $n<5$. $\square$
+
+This is actual screening by a renewal reset. It does not infer that all probability cut matrices have rank two. The next bridge distinguishes those assertions.
+

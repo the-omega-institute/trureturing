@@ -1,0 +1,8 @@
+**Proposition 9.1 (degenerate and infinite cases).** The following statements use the same target and admission domain as the main theorems.
+
+1. If there are no reached old holes, $D=\{C\}$ and the Pareto basis is $\{(0,0,0)\}$. If $R_Q$ is constant on $D$, the same basis holds. Conversely, any correct zero-read service forces that constancy, even if it performs updates.
+2. $Q=\{\varepsilon\}$ gives a constant single-root-hole row. $Q=\varnothing$ requires the complete original tree, with its actual GB classification; it does not mean an empty task.
+3. If GB fails, every correct service has infinite worst raw and address costs, while there is a correct static pointwise terminating service with budget vector $(\infty,0,\infty)$. No finite Pareto vector exists. A finite output image alone does not imply GB.
+
+Proof. The zero-hole claim follows from SLH Theorem 59.4. For constant output, a common source witness supplies that known value and a root halt has zero cost. For the converse, without a new source reply all choices and the final output are fixed by the common entry; updates give no additional information. The interpretation of the two $Q$ cases is the original row definition. Corollary 3.3 and the static traversal in Theorem 7.1 give the third assertion. SLH Example 75.2 supplies a source-faithful finite-output obstruction: the whole fiber $\{\langle z,z\rangle:z\in\mathcal T\}$, recut at $LL,LR,RL,RR$, has four complete rows but arbitrarily deep legal sources with identical finite original prefixes and different new partitions. Its old repeated class is retained, and GB fails. $\square$
+

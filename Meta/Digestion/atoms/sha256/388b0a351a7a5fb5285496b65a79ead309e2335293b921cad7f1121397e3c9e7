@@ -1,0 +1,51 @@
+#### 471.3 对固定 x 支付全部端点、变差与原整数截止
+
+令 $G(n)=\sum_{1\le d\le n,\ d\text{ odd}}\mu(d)/d$ 为实际奇数调和 Möbius 前缀。假定某个算术估计已给出 $A\ge0$、$p>1$ 和整数 $D>x$，使
+
+$$
+|G(n)|\le A/(\log n)^p\qquad(n\ge D).
+\tag{FD.10}
+$$
+
+这是本命题的显式算术前提；有限全截止界 $|G(n)|\le4$ 不推出它。令 $q=\log R$，直接代换 $u=\log t$ 并作完整分部积分，得到
+
+$$
+I(R):=\int_R^\infty
+\frac{\tfrac12\log(\log t/\ell)+21/(2\ell)}{t(\log t)^p}dt
+=q^{1-p}\left[\frac{\log(q/\ell)}{2(p-1)}
++\frac1{2(p-1)^2}+\frac{21}{2\ell(p-1)}\right].
+\tag{FD.11}
+$$
+
+该公式对 $R\ge x$ 成立；无穷端点 $u^{1-p}\log u\to0$ 由 $p>1$ 支付。对每个整数 $n\ge D$，FD.9 在完整 $[n,n+1]$ 上成立。令其连续非负主控函数为 $m(t)$，对 $b_x\pm\int m$ 应用导数符号与中值定理，得到 $|b_x(n+1)-b_x(n)|\le\int_n^{n+1}m(t)dt$。这一步不要求另行假定 $b'_x$ 连续。
+
+又 $\log t\le2\log n$ 对 $n\le t\le n+1$、$n\ge D>e$ 成立，因此
+
+$$
+\sum_{n>D}|G(n)|\,|b_x(n+1)-b_x(n)|\le A2^p I(D+1)<\infty.
+\tag{FD.12}
+$$
+
+由 FD.4–FD.6，固定 $x$ 时 $b_x(s)=O_x(\log s\log\log s)$，所以 FD.10 支付完整终端 $b_x(M)G(M)\to0$。对每个自然截止 $M>D$，原有限 Abel 恒等式为
+
+$$
+\sum_{\substack{D<n\le M\\n\text{ odd}}}\mu(n)[P_x(n)-P_x(2n)]
+=b_x(M)G(M)-b_x(D+1)G(D)
+-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]G(n).
+\tag{FD.13}
+$$
+
+这里偶数系数为零，$G$ 仍保留所有整数截止；$M=D+1$ 时内部和为空。FD.12 和终端极限证明原自然截止极限 $T_D(x)$ 存在，且
+
+$$
+T_D(x)=-b_x(D+1)G(D)-\sum_{n>D}[b_x(n+1)-b_x(n)]G(n),
+$$
+$$
+|T_D(x)|\le|b_x(D+1)|\,|G(D)|+A2^p I(D+1).
+\tag{FD.14}
+$$
+
+第二个级数绝对收敛；原 Möbius 原子序列只证明按自然截止收敛，没有声称无条件或绝对可和。原 signed anchor $-b_x(D+1)G(D)$ 和整个无限尾均被保留。
+
+这一充分对数幂门槛是 $p>1$。此前粗主控 $(1+\log s)^2/s$ 会要求 $p>3$；FD.9 改变了所需算术供应的强度，但没有构造 FD.10，也没有证明 $p>1$ 是必要条件。
+

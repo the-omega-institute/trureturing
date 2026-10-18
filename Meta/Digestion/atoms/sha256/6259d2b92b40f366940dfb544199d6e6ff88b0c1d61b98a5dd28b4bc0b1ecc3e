@@ -1,0 +1,44 @@
+**定理 42.2（Objective-level incidence law and finite horizon）。** For every arbitrary full INITIAL target in (41.1), under both original alphabets,
+
+$$
+ C_{\rm pre}(f)=\min(\mathcal A\cup\mathcal Z),\qquad
+ \min\varnothing=+\infty.
+\tag{42.3}
+$$
+
+Every admitted depth gives one fixed literal stream with archive-dependent stopping and no greater actual fee. Every finite controller supplies an admitted depth no greater than its worst fee. In particular every finite preset fee is at most $p$. Theorem 44.2 will evaluate this certificate's minimum by a closed expression; the certificate is the stopping-and-seam bridge used in that evaluation.
+
+**证明。** A depth in $\mathcal A$ is realized by $(11)^d$. A newly rejected source at block $t$ lies in precisely the rectangle in the first line of (41.6), with its own preceding archive $\beta$. Return that rectangle's joined label. At the last successful endpoint return the label of the rectangle in the second line. Earlier homogeneous archives can stop earlier, and bottom stops freely. This is the supplied all-one decoding argument, with every issued block paid.
+
+For a matrix in $\mathcal Z$, issue $q$ words $11$, then its prescribed parent, then the literal inverses (41.3) of its later rows. Before and at the parent, (41.5) decodes every partial rejection using its preceding archive. All remaining sources have $s<k-a$ and label $\Lambda_i$. If $p\ge3$ and a later raw word would reject their common tail, Theorem 41.3 identifies every phase strictly before that word; all still-live archives stop there. If no such danger occurs before depth $d$, (42.2) decodes the successful archive at $d$. At $p=2$ apply Theorem 41.3's suffix normalization first; it preserves (42.2), and every resulting seam is safe. Initial values are handled simultaneously by Theorem 29.2, remembering the actual free value to return the appropriate component. A zero row costs one if it is reached. No hypothetical row is treated as an acquired observation.
+
+We next give a uniform finite construction for every eligible cut, to justify the fixed horizon in Definition 42.1 independently of any controller's original bound. All following powers count whole words, and a zero exponent means no word. At $q=0$, use $(01)^{p-1}$ if $r=0$ and $(10)^{p-1}$ if $r=1$. Their actual rows select respectively phases $1,\ldots,p-1$ and $0,\ldots,p-2$. Each selected phase has a distinct unit column and the one omitted phase has the zero column. Thus all phases are identified by depth $p-1$.
+
+For $q=1,r=0$, use
+
+$$
+ 11\mid(01)^{p-1}.
+\tag{42.4}
+$$
+
+The first row groups phases $0,1$. Later right-endpoint pulses select phases $2,\ldots,p-1$ and finally phase zero at the wrapped index $p-1$. Their full columns identify every phase by depth $p$, also when $p=2$ and the wrapped pulse is the parent itself. For $q=1,r=1$, necessarily $p\ge3$, use $11\mid(10)^{p-2}$. The parent selects phase one and splits the initial endpoint pair; subsequent left-endpoint pulses select $2,\ldots,p-2$. Phase $p-1$ is the unique zero column. All phases are identified by depth $p-1$.
+
+For $2\le q\le p-2$, use
+
+$$
+ (11)^q\mid(r0)\mid(10)^{p-q-2},
+\tag{42.5}
+$$
+
+where $r0$ denotes the actual word $00$ or $10$. The $q\ge2$ initial edge rows already distinguish $0,\ldots,q$ individually from each other and from the untouched suffix $q+1,\ldots,p-1$. Their columns are the distinct path columns of the form (41.7) on that shorter path; the untouched suffix has zero columns. Later left-endpoint pulses select $q+1,\ldots,p-2$, leaving only $p-1$ with the zero column. Total depth is $p-1$. If $q=p-1$, necessarily $r=0$. For $p\ge3$ the initial $p-1$ edge rows already identify all phases, and their surviving INITIAL tail range is just $s=0$. The eligible earlier rejection rectangles and these singleton survivor fibres show $p-1\in\mathcal A$, so the parent is not issued. The remaining $p=2,q=1,r=0$ case is (42.4).
+
+Each first-zero word above has exactly its specified leading threshold. Higher INITIAL tails reject precisely in the eligible earlier or parent rectangles; lower tails reach its clearing zero. After it, $01$ or $10$ has at most one leading one, at most one trailing one, and seams at most two. All these seams are strict for $k\ge3$; the seam from the parent is also safe. Before the zero, an actually surviving tail has $s+a<k$ by definition. Thus the constructions are lawful on every actually running source, with no free wait or repair. They produce a member of $\mathcal A\cup\mathcal Z$ of depth at most $p$ for every eligible cut.
+
+For necessity, let a correct preset controller have worst fee $H$, and apply the exact value-join decoder. Stop each joined-homogeneous archive as soon as it becomes homogeneous. If no running source reaches a zero, its execution uses only all-one blocks. A block crossing the $k$th emitted one rejects every still-successful candidate and gives no distinction within any previous archive; correctness requires each such archive to have one label already. Omit that block and stop before it. The maximal remaining depth $d$ is at most $\min(H,p-1)$, and the exact all-one rejection and survivor archives imply (41.6), also for raw subsets of archives stopped earlier. Thus $d\in\mathcal A$. The same normalization applies if the first written zero lies at or after the $k$th one.
+
+Otherwise the actual first-zero block occurs after $a=2q+r<k$ ones and is reached by a running source. Theorem 24.2's necessity argument applied at this actual location proves (41.5), including subsets of earlier stopped leaves. Its literal parent is exactly (42.1). To extract columns, take actual INITIAL tail-zero, value-zero representatives at every phase, using Convention 41.1. They all could traverse the prefix through this zero successfully, though already stopped representatives are used only for the mathematical definition of a whole-phase row. After the parent their raw tails are common. Keep their literal successful rows until any first prospective common rejection. Such rejection cannot distinguish still-running candidates within one preceding archive: they would all become $\bot$ and stay there. Correctness forces that archive to be label-homogeneous before the rejecting block. Stop it there, remove the common rejecting suffix, and extend the entire remaining matrix by common zero rows if necessary. This is a proof-only extension on every phase; it neither pads individual stopped columns differently nor supplies a new acquired reading.
+
+Two different $\Lambda$ labels cannot have equal full columns in this normalized matrix. Their two actual representatives would then have the same free reading and the same successful endpoint archive up to the earlier stopping time. A deterministic decoder would stop both there with the same label, a contradiction. This replay includes representatives stopped before the parent and those stopped later. Hence (42.2) holds. If $H\le p$, it gives a certificate at depth $H$; if $H>p$, the eligible-cut construction already proved gives a member of $\mathcal A\cup\mathcal Z$ with depth at most $p<H$.
+
+Every finite controller therefore gives a candidate with no greater fee, and every candidate gives a controller with no greater fee. The least candidate equals the exact integer optimum; if there is no candidate, a finite controller would contradict necessity. This proves (42.3), zero and infinity included. ∎
+

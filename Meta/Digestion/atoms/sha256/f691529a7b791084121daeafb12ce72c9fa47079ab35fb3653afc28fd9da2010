@@ -1,0 +1,17 @@
+**定义 69.1（The acquired root-zero archive and its INITIAL rows）。** Retain the matched original reader (1.1)–(1.2), complete jointly attainable histories (1.3), immutable INITIAL record target $f:Q\to Y$, free initial scalar or independent absorbing bottom, endpoint-only observations, actual complete-block fee, and both original alphabets. Assume
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m.
+\tag{69.1}
+$$
+
+Thus $P=\mathbb Z/T\mathbb Z$ and $1\le h\le m-2$. Fix one remembered free INITIAL value $v$, actually issue root $1^m$, and condition on successful difference zero. Put $J=P\setminus\{0,m\}$. The INITIAL candidates and their current records are exactly
+
+$$
+(v,-j,s),\quad j\in J,\ 0\le s<h;
+\qquad(v,-j+m,m+s).
+\tag{69.2}
+$$
+
+They share their own complete free-value/root archive. Require $f(v,-j,s)=\lambda(j)$ on these INITIAL rows, with $|\lambda[J]|\le2$, and impose no condition on $f$ elsewhere. This constancy concerns original tails; the current tails in (69.2) need not be common. Let $D_{\rm ad}$ and $D_{\rm child\text{-}pre}$ be the minimum additional worst-branch fees from this archive, the latter requiring one literal suffix for this archive alone, with stopping from its own endpoints. The emitted root costs one separately. Every wait, padding or rejecting complete block is paid; no reset, copy, hidden initial clock, intermediate reading or borrowed sibling observation is allowed. Effective selection requires a finite label partition or decidable label equality; the statements for arbitrary $Y$ are semantic.
+

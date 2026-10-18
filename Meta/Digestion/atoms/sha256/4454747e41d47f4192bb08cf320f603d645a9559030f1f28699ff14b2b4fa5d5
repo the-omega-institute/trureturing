@@ -1,0 +1,14 @@
+**Definition 28.2 (Paid pair score and deadline).** Read consecutive actual source bits until the first observed one, and thereafter close every gap and partition consecutive gaps into disjoint pairs. For complete pair $(k,l)=(K_{2j-1},K_{2j})$, set
+
+$$
+t_j=k+l,\qquad
+\ell_j=\frac{F_1(k)F_1(l)A_0(t_j)}{F_0(k)F_0(l)A_1(t_j)}
+       =\frac{c_{1,t_j}(k)}{c_{0,t_j}(k)},\qquad
+U^{-1}\le\ell_j\le U=(1+\delta_9)^2<2.
+\tag{28.2}
+$$
+
+The quantities $A_i,c_{i,t}$ and these bounds are exactly the suppliers (22.2)–(22.3). Let $c_j=\lceil\log_2(j+1)\rceil$, $p_0=0$, and $p_j=b+2c_j+7$ for $j\ge1$. Store the positive dyadic score $G_0=1$. At an active pair update round $G_{j-1}\ell_j$ to the nearest multiple of $2^{-p_j}$, with an exact half-way tie rounded upward, obtaining $G_j$. Emit label one if $G_j\ge2^b$ and label zero if $G_j\le2^{-b}$; otherwise continue.
+
+The capped rule permits at most $W$ reads. On the $W$-th read, if a pair closes, finish its internal arithmetic and give the ordinary threshold decision priority. If no ordinary decision results, emit default zero. A first tick, a zero, or the closing tick of a first gap at the deadline goes to that default after its ordinary bookkeeping. No arithmetic step reads the source. Both terminal labels are internally emitted and absorbing. Write $N,L_\infty$ for the uncapped pair stopping index and paid count, and $L_\varepsilon$ for the capped paid count. All initial zeros, all intervening zeros and ones, and a final incomplete gap or pair are paid. No complete pair is discarded; if a deadline leaves an unscored partial pair, all of its reads remain in $L_\varepsilon$.
+

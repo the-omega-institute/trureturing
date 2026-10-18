@@ -1,0 +1,8 @@
+**推论 8.3（原始正交制备的较小校准记录）。** 若原 $a,b$ 非零且正交，取初始标架 $(a/\sqrt A,b/\sqrt B,K/\sqrt{AB})$ 的循环 $R_p$、$\lambda=\sqrt{B/A},\mu=\sqrt A$，则
+
+$$
+(\nu,u)\longmapsto(M\nu,\lambda^m\mu^nR_pu).
+$$
+
+证明。叶对满足 $F(p)=(\lambda R_pa,\mu R_pb)$，同一结构齐次归纳即得。单位正交情形就是复用的单位标签／组成闭合。这项特例仍收费校准，不能改成全制备结论。
+

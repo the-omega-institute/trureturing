@@ -1,0 +1,26 @@
+##### 推论 1.2.4： 目标响应因子化
+
+目标 $C$ 在 $\mathcal Q$ 下可识别，当且仅当存在唯一映射
+
+$$
+\overline C:\operatorname{im}(\mathcal R_{\mathcal Q})\to Z
+$$
+
+使
+
+$$
+C=\overline C\circ\mathcal R_{\mathcal Q},
+\qquad
+\mathcal R_{\mathcal Q}(M)=(R_M(q))_{q\in\mathcal Q}.
+$$
+
+**证明。**
+
+若因子化存在，响应相同必给出目标相同。反过来，在响应像上定义 $\overline C(\mathcal R_{\mathcal Q}(M))=C(M)$。定理 1.2.3 保证定义与代表元无关；像上的满射性给出唯一性。证毕。
+
+这个判据是充分边界的资源化版本：它只问查询是否切开目标所需的纤维，不要求查询恢复实现的全部细节。
+
+---
+
+<a id="section-1-3"></a>
+

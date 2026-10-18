@@ -1,0 +1,34 @@
+**Convention 1.1 (scope and provenance).** This volume concerns exactly the
+normalized live-cut experiment of [Acquired Continuation Limits][AC],
+§§2–4 and Corollary 6.2. The fixed parameters are
+
+$$
+c=\frac14,\qquad Z=\frac12,\qquad
+ a=\frac1{16},\qquad h=\frac{11}{256},\qquad
+ d=\frac3{128}=\frac6{256},\qquad L=1.
+\tag{CG.1}
+$$
+
+The twelve prescribed histories have
+
+$$
+\mathcal H=\left\{(x,\beta,m):
+ x\in\left\{\frac5{256},\frac{16}{256},\frac{27}{256}\right\},\quad
+ \beta\in\{0,\pi\},\quad m\in\{0,1\}\right\}.
+\tag{CG.2}
+$$
+
+Their actual preparation, original-control realization, reached-cut
+meaning and canonical continuation laws are credited premises from [AC].
+The additional deduction is the coherence-retaining endpoint comparison
+in §§5–6. Its ordinary proof is given in full. Trace-norm identities,
+channel affinity, convexity and CPTP contractivity are standard tools;
+they are proved below to fix the normalization and output conventions.
+Mathematical provenance is `repo-derived`; no literature priority claim
+is made. The source's nested control and instrument suppliers enter through
+its stated premises, rather than through a separate certification here.
+
+The resulting lower bound applies to one common CPTP processor on the sole
+specimen and fixed common inputs, with all outcomes counted. It determines
+neither the exact complete-output minimax value nor an attaining simulator.
+

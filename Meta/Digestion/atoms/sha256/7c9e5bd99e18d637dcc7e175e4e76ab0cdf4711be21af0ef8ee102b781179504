@@ -1,0 +1,69 @@
+### 90.2. Projection, all discarded factors and both special differences
+
+The exact resultant factorization is
+\[
+ \operatorname{Res}_{\theta}(\Phi,\Psi)
+ =-162b^6(b^2-3)^4d^4(2b-d)(d^2+4)^2V_0^2Q_4Q_5.      \tag{90.4}
+\]
+For \(z_b=b^2\), write \(Q_4=\sum_{j=0}^4a_jd^j\), where
+\[
+\begin{aligned}
+ a_0&=64(z_b+3)^2,&a_1&=64b(z_b^2+8z_b+15),\\
+ a_2&=384z_b^2+576z_b-192,&
+ a_3&=-8b(z_b^3-21z_b^2-9z_b+29),\\
+ a_4&=(1-z_b)^2(z_b^2+22z_b+25).
+\end{aligned}
+\]
+With \(\eta=-8(z_b+3)(1-z_b)(z_b+5)\), a Gram matrix in
+\((1,d,d^2)\) is
+\[
+ M_4=\begin{pmatrix}
+ a_0&a_1/2&\eta\\a_1/2&a_2-2\eta&a_3/2\\\eta&a_3/2&a_4
+ \end{pmatrix}.
+\]
+Its leading minors in coordinate order \((1,d^2,d)\) are
+\[
+ 64(z_b+3)^2,\quad768z_b(1-z_b)^2(z_b+3)^2,\quad
+ -4096z_b(1-z_b)^4(z_b+3)^2(z_b^2-2z_b-5),             \tag{90.5}
+\]
+all positive on \(0<z_b<1\). Thus \(Q_4\), \(d^2+4\), and \(V_0\)
+have no real zeros on the domain.
+
+Here are the ascending \(d\)-coefficients of the remaining literal
+quintic \(Q_5\). They fix the normalization in (90.4).
+
+```text
+q0: -8192*b^3*(b^2 - 3)*(b^2 + 3)*(2*b^4 + 9*b^2 - 27)
+q1: 512*b^2*(9*b^12 + 86*b^10 + 215*b^8 - 564*b^6 - 4401*b^4 + 7614*b^2 + 2673)
+q2: 32*b*(9*b^14 - 329*b^12 - 3335*b^10 + 8559*b^8 + 72195*b^6 - 100179*b^4 - 95877*b^2 - 8019)
+q3: -16*(27*b^16 - 416*b^14 - 3906*b^12 + 10260*b^10 + 60296*b^8 - 77256*b^6 - 173718*b^4 - 21996*b^2 - 2187)
+q4: 2*b*(9*b^16 - 1024*b^14 - 6256*b^12 + 19608*b^10 + 108898*b^8 - 101552*b^6 - 586392*b^4 - 56040*b^2 - 16227)
+q5: (9*b^8 + 28*b^6 - 170*b^4 - 612*b^2 + 2025)*(2*b^10 + 33*b^8 + 90*b^6 + 4*b^2 - 1)
+```
+
+At \(d=0\), remove the common factor \(\theta(\theta+1)\) from
+\(\Phi,\Psi\). The resultant of the remaining cofactors, in this order,
+is
+\[
+ r_0=4718592b^4(b^2-3)^3(b^2+3)(2b^4+9b^2-27),
+\]
+which is nonzero on the puncture. The only common \(\theta\) values
+are therefore 0 or \(-1\), both incompatible with \(K_a>0\).
+
+At \(d=2b\), remove \(\theta+b^2\). With the explicit reverse order
+\(\operatorname{Res}_{\theta}(\Psi/(\theta+b^2),
+\Phi/(\theta+b^2))\), the cofactor resultant is
+\[
+\begin{aligned}
+ r_2={}&12582912b^{11}(b^2-3)^3(b^2+1)(b^2+4)^2
+          (b^6+11b^4+4b^2+12)\\
+ &\cdot(9b^{14}+181b^{12}+140b^{10}-4254b^8+1537b^6
+               +30305b^4-58758b^2+24696).             \tag{90.6}
+\end{aligned}
+\]
+It is nonzero at \(b=1/2\). Every zero of \(r_2\) is retained in the
+guard. Away from those zeros, the only common \(\theta=-b^2\) gives
+\(K_a=0\), again impossible. No assertion that \(r_2\) has no punctured
+roots is used. Thus every physical finite aligned ray off this guard
+has \(Q_5(b,d)=0\).
+

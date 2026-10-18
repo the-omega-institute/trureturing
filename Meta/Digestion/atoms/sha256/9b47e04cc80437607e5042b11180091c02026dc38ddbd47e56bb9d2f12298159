@@ -1,0 +1,54 @@
+**定理 459.5（全实谱率的必要加权抵消预算）。** 若上述三个节点的
+最大误差不超过 $\varepsilon$，则
+$$
+\int q_\tau\,d\sigma^-
+\ge d_G-(1+\cosh(\delta\tau))\varepsilon.
+\tag{SNC.24}
+$$
+若进一步有 $\operatorname{supp}\sigma^-\subset[\tau-T,\tau+T]$，
+$T>0$，则
+$$
+\boxed{\quad
+\int e^{-mt}\,d\sigma^-
+\ge\frac{[d_G-(1+\cosh(\delta\tau))\varepsilon]_+}
+           {\cosh(\delta T)-1}.\quad}
+\tag{SNC.25}
+$$
+对于精确拟合 $\varepsilon=0$，（SNC.25）是准确最小值，并且唯一达到测度为
+$$
+n=\frac{d_G}{\cosh(\delta T)-1},\qquad
+\sigma=(v+n)e^{m\tau}\delta_\tau
+-\frac n2e^{m(\tau-T)}\delta_{\tau-T}
+-\frac n2e^{m(\tau+T)}\delta_{\tau+T}.
+\tag{SNC.26}
+$$
+此 sharp 构造属于全实谱率类；若额外要求非负率，还须 $T\le\tau$。
+
+**证明。** 目标数据代入（SNC.23）得
+$\frac12e^{-\delta\tau}u+\frac12e^{\delta\tau}z-v
+=\sqrt{uz}-v=-d_G$。真实误差盒给
+$\int q_\tau d\sigma\le-d_G+(1+\cosh(\delta\tau))\varepsilon$。
+又有 $\int q_\tau d\sigma=\int q_\tau d\sigma^+-\int q_\tau d\sigma^-$，
+正部积分非负，即得（SNC.24）。在指定负谱支持上，
+$q_\tau(t)\le e^{-mt}(\cosh(\delta T)-1)$，给（SNC.25）。
+
+（SNC.26）三个原子不同，负部的中点加权质量为 $n$。
+中点净值为 $v$，两端净值分别为
+$e^{\delta\tau}[v-n(\cosh(\delta T)-1)]=u$
+与 $e^{-\delta\tau}[v-n(\cosh(\delta T)-1)]=z$。
+因此它精确拟合且达到下界。达到下界迫使正部支撑在 $t=\tau$，
+负部支撑在 $t=\tau\pm T$；两个经倾斜的端点相等又迫使负部的
+中点加权质量各为 $n/2$，故唯一性成立。证毕。
+
+在 $a=h,b=2h$ 上，既有 $K_h/h^2\to c/72$ 与（SNC.1）给
+$$
+d_G/h^2=\frac{\Delta/h^2}{v+\sqrt{uz}}\longrightarrow c/36,
+\qquad\tau\longrightarrow1/3.
+$$
+因此固定 $T>0$ 的精确最小中点加权负质量满足
+$$
+\frac{d_G}{\cosh(hT/2)-1}\longrightarrow\frac{2c}{9T^2}.
+\tag{SNC.27}
+$$
+即使允许误差 $o(h^2)$，（SNC.25）也保留相同必要下极限。
+

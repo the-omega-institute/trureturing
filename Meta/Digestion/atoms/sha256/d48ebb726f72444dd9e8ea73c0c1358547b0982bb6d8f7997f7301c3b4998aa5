@@ -1,0 +1,6 @@
+## 3. What bounded affine observables can retain
+
+This section uses only the exact affine update identities and finite
+dimension. Boundedness will be imposed on particular observables, not on
+the encoder.
+

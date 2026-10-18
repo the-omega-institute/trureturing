@@ -1,0 +1,29 @@
+**Proposition 6.2 (scalar continuation with genuine reference changes).**
+At each capture independently run Construction 4.1 or Theorem 4.4
+and export the certified scalar $z_i=m(U_{v_i})$. Under authentic
+same-root pure continuation, the passive decoder with precisely
+these scalars, their order, and any declared complete rows returns,
+for $i\le j$,
+
+$$
+k_{ij}=z_j-z_i.
+\tag{AAR.21}
+$$
+
+The selected minimizing leaves may lie in different incomparable
+cylinders. If the acquired descriptors are retained as well, the
+same identity reads
+
+$$
+k_{ij}=J^c_{a_j}(U_{v_j})-J^c_{a_i}(U_{v_i})
+       +\#_L(a_j)-\#_L(a_i).
+\tag{AAR.22}
+$$
+
+Proof. Use (AAR.9) on the genuine history. At a certified leaf,
+$2|a|+e=J^c_a+\#_L(a)$. Substitution gives the second formula.
+The crucial premise is actual global minimum certification at
+both captures; the correction from address letters does not make
+an arbitrary chosen short leaf a common normalization. All search
+and failed-attempt costs remain those of §5. $\square$
+

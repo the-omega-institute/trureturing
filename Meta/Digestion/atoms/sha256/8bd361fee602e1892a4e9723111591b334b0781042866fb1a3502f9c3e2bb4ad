@@ -1,0 +1,53 @@
+**Lemma 11.2 (source, stream and finite-query correspondence).** A coherent normalized finite-word profile on $\mathcal A$ has a unique probability extension to $\mathcal A^{\mathbb N}$ with its coordinate sigma-field. For two such extensions $P,Q$,
+
+$$
+\sup_{E\text{ measurable}}|P(E)-Q(E)|
+=\sup_{H\ge0}\operatorname{TV}(P^H,Q^H).
+\tag{11.2}
+$$
+
+For every positive acquired history $h$, the extension of $F_{\vartheta,h}$ is the actual conditional future law, since
+
+$$
+F_{\vartheta,h}^H(w)
+=\frac{M_\vartheta(hw)}{M_\vartheta(h)}.
+\tag{11.3}
+$$
+
+At empty history its first symbol is $Y_0$; at a nonempty history of length $n$ it is $Y_n$. If $h$ is queried, $hv$ is an actual positive extension and $Q_{z_\vartheta(h)}^{|v|}(v)>0$, then conditioning the decoded stream law on $v$ gives precisely the extension of $Q_{z_\vartheta(hv)}$.
+
+There are measurable events $T_\vartheta$ on future streams, invariant under adding or deleting a finite prefix, such that
+
+$$
+F_{\vartheta,h}(T_\vartheta)=1
+\quad\text{for every positive finite }h,
+\qquad
+T_\vartheta\cap T_\varphi=\varnothing
+\quad(\vartheta\ne\varphi).
+\tag{11.4}
+$$
+
+Here $T_\vartheta$ is the event that the empirical adjacent-pair frequencies for $01,03,0B$ converge to $v_\vartheta=(p,q,r)/5$. These are events of the visible source, including $p=q$ and $r=p+q$.
+
+**Proof (11.2).** Embed the finite alphabet as four distinct real numbers. Normalization and final-symbol consistency give the hypotheses of the usual probability extension theorem. The resulting measure is supported on $\mathcal A^{\mathbb N}$, and cylinder probabilities determine it uniquely. For completeness, finite-coordinate events form an algebra generating the coordinate sigma-field. For any finite measure $\mu$, every measurable event $E$ can be approximated by an event $B$ in this algebra with $\mu(E\mathbin{\triangle}B)$ arbitrarily small. The approximable class is closed under complements and countable unions: truncate the union by finite-measure continuity, then approximate its finitely many members. It therefore contains the generated sigma-field. Apply this to $\mu=P+Q$. Every such $B$ depends on some finite common horizon, and
+
+$$
+|P(E)-Q(E)|
+\le |P(B)-Q(B)|+(P+Q)(E\mathbin{\triangle}B).
+$$
+
+Let the last term tend to zero. The reverse inequality follows because every finite-coordinate event is measurable. The finite half-$\ell^1$ TV equals the maximum event gap, proving (11.2). In particular a strict stream-event gap greater than $\epsilon$ already has a witness at a finite horizon.
+
+Equation (11.3) is the actual chronological cylinder quotient of Definition 1.2 and the native `all_history_conditional_identity`. It uses the first filter at $Y_0$ and subsequent advance/filter steps. Iterate (11.1) along $v$: each intermediate acquired prefix is positive and queried, giving
+
+$$
+Q_{z_\vartheta(h)}^{|v|+H}(vw)
+=Q_{z_\vartheta(h)}^{|v|}(v)\,
+ Q_{z_\vartheta(hv)}^H(w).
+\tag{11.5}
+$$
+
+Division is used only when the displayed prefix mass is positive. Equality on all tail cylinders and uniqueness of extension give the asserted conditional stream law.
+
+For (11.4), reuse the common positive support of Theorem 10.2 and the finite-edge-chain ergodic argument following Theorem 10.5. The allowed-edge chain $(i,j)\mapsto(j,k)$ is finite irreducible with stationary mass $P_\vartheta(i,j)/5$. Its observable pairs $01,03,0B$ select respectively the edges $0\to1,0\to3,0\to4$; $P_\vartheta(0,2)=0$ excludes another $0B$ contribution. The occupation limits thus give $(p,q,r)/5$ almost surely. At a positive recording boundary the actual posterior supplies an initial distribution for the same future transition, and the same ergodic statement applies. Finite deletion changes only finitely many pair counts and not their limiting averages. The limit vector is injective on the declared triples, so the events are disjoint. This uses the almost-sure ergodic statement, rather than inferring almost-sure convergence from (10.6) alone. All statements concern extensions of the specified finite laws; no infinite acquired record is supplied to the observer. $\square$
+

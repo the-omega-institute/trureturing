@@ -1,0 +1,4 @@
+**Theorem 103.1.** No such local minimum exists.
+
+The proof uses delivered §§95 and 97 for the rank-two supported quotient, §96 for the unrestricted one-party principal best response and equality of full and principal norms, §99 for uniqueness of all principal normers, their strict density positivity, the common cross stress and invertible cross block, and §§101–102 for the already-excluded real-gauge and unbiased endpoints. It does not use a rank-preserving average, a principal joint local minimum, or any symmetry of outside records.
+

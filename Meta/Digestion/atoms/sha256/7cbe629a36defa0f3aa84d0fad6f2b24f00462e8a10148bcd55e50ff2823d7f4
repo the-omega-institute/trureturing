@@ -1,0 +1,24 @@
+**假设 1.3（保留的原族比较）。** 记 \(h_q=\log q\)，并置
+\[
+ J_{\rm prime}(X)=\sum_q h_q\mathcal W_X(q)-\mathcal D_X,
+ \qquad H_{\rm ref}(X)=\sum_{q,k\ge2}h_q\mathcal W_X(q^k),
+ \qquad\mathcal I_X=J_{\rm prime}(X)+H_{\rm ref}(X).
+\tag{EL.0.4}
+\]
+引用原族已有的参考层估计 \(H_{\rm ref}/M_X=1/4+o(1)\) 和
+离散来源比较：对每个固定 \(\eta>0\)，越过一个共同起点后，
+\[
+ \mathcal I_X\le-(c_Q-\eta)M_X-\mathcal C_X+\varepsilon_X,
+ \quad c_Q=\frac{\sqrt2-1}{4},\quad\mathcal C_X\ge0,
+ \quad\varepsilon_X/M_X=o(1).
+\tag{EL.0.5}
+\]
+固定原族全部来源常数后，这里的两个 \(o(1)\) 对全部合格原见证在
+\(\ell_X\to\infty\) 时一致；每个固定 \(\eta\) 的共同起点允许依赖
+\(\eta\) 与这些固定常数。
+这里的原离散 \(\mathcal C_X\) 与实数插值比较的成本分别保留，
+不作同一性假设。共同起点包含原来全部解析和来源前提，且不指定数值。
+原参考估计与比较分别见
+[既有原族比较和参考层证明](../../../Library/ArithSums/nicolas2025comparison.md#integrated-weights-of-the-original-selected-family)；
+以下不重新证明这两个输入。
+

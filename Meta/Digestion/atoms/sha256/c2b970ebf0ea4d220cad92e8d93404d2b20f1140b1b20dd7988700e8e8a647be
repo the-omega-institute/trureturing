@@ -1,0 +1,70 @@
+**Definition 207.1 (Original source and resources).** Retain the source
+and transport of [110.1–110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source):
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad F_0=0,\ F_1=1,\ F_{r+2}=F_{r+1}+F_r,\\
+q_i(x)&=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{207.1}
+$$
+
+where $p_1<p_2<\cdots$ are the primes. Replies are static. Every finite
+Boolean word, including every multiple-zero word, has an actual source
+witness by Boundaries, Theorem 35.2. The full tape carrier is the Borel
+disjoint union $\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+each block a copy of $(0,1)$, with distinct measurable marks
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$. The consumer and its original
+nonatomic targets remain those of Acquisition Resources, Definition 73.1.
+For every sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_j\longrightarrow0,
+\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},
+\tag{207.2}
+$$
+
+the marked laws are separately selected; they do not replace the original
+consumer targets. No condition on a score profile below restricts this
+class of amplitude sequences.
+
+$\mathcal N_2,\mathcal O_2$ have exactly the resource meaning of
+Acquisition Resources, Definition 90.1: zero advice, one common
+source-independent seed, actual sourcewise almost-sure finite handoff,
+arbitrary addresses, and outputs anywhere in the full carrier. The hard
+bound is at most two actual requests, including repetitions and ignored
+replies. $N$ preselects its whole schedule and obtains its replies; $O$
+preselects an increasing schedule and stops at its first queried zero or
+at exhaustion. The second address is not chosen adaptively. Error is
+the supremum of TV over all actual sources and all Borel events. There
+is no source distribution, extra observation, address bound, runtime
+bound, mean-request relaxation or additional seed.
+
+For $0<\varepsilon\le1$, let
+$L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$. Every low word with
+first zero $n$ has the independent finite demands
+
+$$
+p_w(0)\ge1-a_n-\varepsilon,\qquad
+p_w(n)\ge a_n-\varepsilon,\qquad
+p_w(0)+p_w(n)\ge1-\varepsilon,
+\qquad p_{1^{L_a}}(0)\ge1-\varepsilon.
+\tag{207.3}
+$$
+
+The pair row is not deduced from the singleton rows. Negative singleton
+demands and rows with zero score remain. Theorem 109.1 characterizes
+the normalized stopped kernels by its coefficient condition $c\ge H$;
+Theorem 110.2 transports feasibility at the exact closed cap. Neither
+failure to reproduce one $N$ law nor a score example proves that no
+other stopped law meets that cap.
+Here $\mathscr N_{L_a}$ is the convex hull of complete finite $N$
+tables, $\mathscr C_{L_a}$ is the stopped-kernel class of 109.1, and
+$\mathcal F_N(a,\varepsilon)$ is the subset of $\mathscr N_{L_a}$
+satisfying every row of (207.3).
+

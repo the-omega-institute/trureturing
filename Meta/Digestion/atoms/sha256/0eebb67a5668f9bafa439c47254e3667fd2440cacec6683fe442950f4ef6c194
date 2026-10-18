@@ -1,0 +1,57 @@
+**Corollary 14.3 (the automatic seam on this strip).** For each fixed
+$t$ in AC.80, the exact strip family satisfies all hypotheses of
+Theorem 12.1. Its critical contrast is
+
+$$
+s_c(t)=s_0\sum_{i=0}^4p_i(t)|z_i(t)|
+\in(0.12421255682840184212039978060973179,
+      0.12422087673167824424030274149411269).
+\tag{AC.85}
+$$
+
+Every requested $0\le s\le3/25$ is on its initial platform, with
+
+$$
+\mathcal T_{\log(1+t)}(s)
+=\frac12\left[H_0+d_0+\alpha d_3+
+ \frac\mu t d_5+\frac{\alpha V}t d_6\right].
+\tag{AC.86}
+$$
+
+At $s_c(t)$ it has the quadratic loss AC.61 with the exact positive
+matrix expression AC.60; the minimum supported-low/total actual counts
+remain five/six across the first seam.
+
+Proof. The actual rational strip radii in Definition 14.1 imply the
+strict pure-chart bounds
+
+$$
+\begin{aligned}
+0.0239916&<x_0<0.0240052,\\
+-0.2953648&<x_1<-0.2953265,\\
+0.1276351&<x_2<0.1276467.
+\end{aligned}
+\tag{AC.87}
+$$
+
+Every one is strictly inside its corresponding interval AC.54.
+This containment is for the whole strip box, not just the three
+comparison centres. Proposition 14.2 supplies the other parts of
+$\mathrm M$: full covariance, all zeros, positive weights, signs,
+and angular curvature. Theorem 12.1 now proves automatic rank eight,
+positive reduced Hessian, nonzero response and the first seam at
+each $t$. Its identification of the top aggregate law makes AC.85
+the platform endpoint, not simply a lower bound on available contrast.
+AC.85 and $3/25=0.12$ give slack on the stated rectangle; evaluating
+the common dual there gives AC.86. The same original instrument from
+§13 attains every listed interface. $\square$
+
+The qualitative strip application in this section gives neither a numerical
+enclosure for $\chi$ nor a specified positive width of the active
+neighborhood; §§19–23 supply quantitative response bounds and an explicit
+right interval on the same strip. It does
+not locate later zero-weight, collision, extra-zero, height-sign or
+curvature seams, or extend the threshold curve outside the strip.
+Analytic dependence on the strip and a pointwise local seam are not
+a global finite-parameter atlas.
+

@@ -1,0 +1,23 @@
+**Theorem 12.4 (exact arbitrary-budget finite task, conditional on the
+certificate).** For every installed preparation alphabet and common
+start, and every $p,\ell$, the finite paid word task of Definition
+12.3 is feasible within those budgets if and only if original native
+preparation is feasible within the identical state/call/literal upper
+budgets for the prescribed code and fixed reader entry.
+
+Proof. Theorem 10.3 gives necessity with the same installed states.
+The new table's reply at every word of $B_b$ depends only on $\eta$,
+so its entire path, latch and prices are those of Definition 12.3.
+For sufficiency, install the finite task's words and four successors
+literally. Theorem 11.2 places every actual original in one retained
+profile and attains every retained profile by actual originals.
+Induction gives exactly its finite task path, literal entry and
+charges. The untouched reader returns the whole target by Assumption
+10.1. Shared states and cycles are retained rather than replaced by a
+decision tree. $\square$
+
+This theorem is a deduction from the actual-image filling and paid
+state-local recoding above. Its finite formulation alone is not the
+attainment argument, and does not establish validity of an arbitrary
+program's proposed certificate.
+

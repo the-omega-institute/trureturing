@@ -1,0 +1,51 @@
+**Theorem 4.1 (strict terminal unit in every original graph).** For every
+parameter choice and graph of Assumption 1.1, if $I_5=(n-5,n)$ is a
+consecutive common-support gap, then
+
+$$
+E_{I_5}-D_{I_5}\ge1,\qquad
+|Q_{I_5}|\ge |V_{I_5}|+1.
+\tag{TS.16}
+$$
+
+No all-history conflict condition is required. No attainment or sharpness
+of the lower margin one is asserted.
+
+Proof. Since $K,L\ge4$ and $n=K+L-1$, the four internal diagonals
+have the following complete cell lists:
+
+| Depth | Cells |
+| --- | --- |
+| $n-4$ | $A,C,Y,Z$ of (TS.12) |
+| $n-3$ | $U,M=(K-2,L-2),V'$ |
+| $n-2$ | $(K-2,L-1),(K-1,L-2)$ |
+| $n-1$ | $(K-1,L-1)$ |
+
+A cell with $h\ge K-2$ and $z\ge L-2$ is exclusive relative to
+every different cell of $V$ under (TS.3). A larger hit count would need
+to be at least $K$; a smaller hit count would need a zero count at least
+$L$. Equal hits at a different cell are also excluded. This accounts for
+$M$ and both last diagonals.
+
+On the first diagonal the two-gap rule allows only $AZ,CZ,AY$;
+on the second, only $UV'$. To check the cross pairs explicitly, write
+a first-diagonal cell as
+$(K-4+i,L-1-i)$, $0\le i\le3$, and a second-diagonal cell as
+$(K-3+j,L-1-j)$, $0\le j\le2$. From the first to the second
+the hit increase and zero decrease are $(1+j-i,j-i)$.
+Both are at least two only for $(i,j)=(0,2)$.
+In the reverse orientation they are $(i-j-1,i-j)$, which are both
+at least two only for $(i,j)=(3,0)$. These pairs are $AV'$ and $ZU$.
+Thus (TS.13) exhausts all sharing in this pool.
+
+Consecutivity makes all four internal diagonals genuinely ambiguous.
+Lemma 3.1 applies with the last two as its additional exclusive diagonals,
+giving $E_{I_5}-D_{I_5}\ge1$. Restricted double counting (TS.9)
+gives the second inequality. The argument concerns the one original
+installed graph, with no alteration to its certified continuations or
+cost vector. $\square$
+
+In particular $|V_{I_5}|=4+3+2+1=10$, so its live pool has at least
+eleven states. This cardinality bound does not assert that a graph with
+exactly eleven states in that pool exists.
+

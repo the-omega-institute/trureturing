@@ -1,0 +1,9 @@
+**Theorem 4.2 (Exact universal two-read law radius).** For every fixed $0<p<1$, $p\ne1/2$, either actual endpoint $j\in\{0,1\}$, and every given independent probability seed space with unchanged law $\nu$,
+
+$$
+\rho_{\mathrm{law}}(2;p,j,\nu)=5.
+\tag{4.8}
+$$
+
+Proof. Theorem 3.2 supplies radius five for every lawful cap-two input with the full original interface. Proposition 4.1 supplies one such input for which every lawful full-law representative needs at least five. The upper and lower bounds have the same quantifiers, so they give (4.8). The lower is inherited; the new universal upper makes it matching. $\square$
+

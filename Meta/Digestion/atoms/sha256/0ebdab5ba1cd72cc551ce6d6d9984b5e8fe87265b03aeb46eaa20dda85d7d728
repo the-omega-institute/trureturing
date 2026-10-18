@@ -1,0 +1,23 @@
+### 定义 28.2（量子信道）
+
+有限维量子信道是线性映射
+
+\[
+\mathcal E:\mathsf L(H_A)\longrightarrow\mathsf L(H_B)
+\]
+
+满足：
+
+1. 完全正性：对每个有限维 \(K\)，
+   \[
+   \mathcal E\otimes\operatorname{id}_K
+   \]
+   把正半定算子送到正半定算子；
+
+2. 保迹性：
+   \[
+   \operatorname{tr}\mathcal E(X)=\operatorname{tr}X.
+   \]
+
+记所有这样的映射为 \(\operatorname{CPTP}(H_A,H_B)\)。
+

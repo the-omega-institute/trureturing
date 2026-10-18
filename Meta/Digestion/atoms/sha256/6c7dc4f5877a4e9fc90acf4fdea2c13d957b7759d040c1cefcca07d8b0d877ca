@@ -1,0 +1,12 @@
+**Definition 5.1 (relative prefix completeness).** A finite menu $S$
+is prefix-closed when every prefix of every member, including
+$\varepsilon$ and the member itself, belongs to $S$. The empty menu
+is prefix-closed. This condition applies after deleting the initial
+$R$: it does not require the original root address to belong to $P$.
+Write
+
+$$
+I_S(v)=\bigl(\operatorname{val}(q,v)\bigr)_{q\in S}.
+\tag{FM.20}
+$$
+

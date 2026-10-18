@@ -1,0 +1,25 @@
+**Proposition 11.3 (closed pieces and the scope of live padding).**
+Theorem 11.2 keeps an early leaf exactly and never fills below it. A
+fully exposed $E=\langle\beta,\alpha\rangle$ is a closed ground piece,
+not a live branch that may be made leafless. A branch observed only
+at the frontier may be replaced by a deep branch image because its
+children are outside that profile. In particular this replacement
+does not preserve an arbitrary code whose certificate observes those
+children; that certificate requires the larger profile in (PCA.24).
+
+For $b=0$, a branch class is one live name, while an alpha or beta
+class is a ground. For zero classes there is just the concrete exterior
+and the empty tuple; nonemptiness of the fiber makes it an image and
+provides its unique inverse. The empty cut and blocked-cut cases are
+included. A root cut is treated as its one class at absolute address
+$\varepsilon$.
+
+Proof. These statements follow from the unique prefix decomposition
+and the literal image test in Definition 11.1. A recorded alpha right
+child and beta left child retain $E$ literally in (PCA.26); neither
+can be changed by assigning a live name. An absent reply is justified
+by an actual earlier leaf and persists under every assignment. Only
+nodes with branch reply at the last observed level receive live names.
+The zero-class statement follows from (PCA.29) with no variables.
+$\square$
+

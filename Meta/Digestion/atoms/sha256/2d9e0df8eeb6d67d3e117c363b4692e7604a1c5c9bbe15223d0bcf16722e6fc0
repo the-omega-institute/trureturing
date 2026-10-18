@@ -1,0 +1,28 @@
+**Definition 1.1 (the original experiment).** Let $e_0,e_1,e_2,e_3,e_{13}$ be the standard basis of $\mathbb C^5$ and put
+
+$$
+E=\left((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2\right),\qquad P=EE^*.
+$$
+
+There is one normalized unknown specimen at the already reached old live cut. Its twelve possible states are $E\rho_{y,e,n}E^*$, where
+
+$$
+p_y=(y/128,(64-y)/128,1/2),\quad a_y=(\sqrt{p_{yi}})_{i=0}^2,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^*,
+$$
+
+$y\in\{5,16,27\}$ and $e,n\in\{\pm1\}$. Relative continuation time is $a\in[0,1]$, with absolute first-event clock $6+a$. Write $P_f=|f\rangle\langle f|$. The ideal complete stopped output has live block $EU_{e,n}\xi_y\xi_y^TU_{e,n}^*E^*$, where
+
+$$
+\xi_y=\left(\sqrt{y/128},\sqrt{y(58-y)/(128(y+6))},\sqrt{y/(2(y+6))}\right)^T,
+$$
+
+and the five separate Borel failure measures have densities $w_\ell f_y(a)P_f$ in original label order $(0,1,2,3,13)$, where
+
+$$
+w=(0,1/4,1/2,1/4,0),\qquad f_y(a)=\frac{6y}{(y+6a)^2}.
+$$
+
+The error is the maximum over all twelve histories of HALF the full stopped classical-quantum trace norm. It includes live coherences, every failure component, singular-time, wrong-support, abort and zero-target components. No source prior, conditioning on survival, acceptance division, postselection, copies, retries, history access or auxiliary specimen is supplied. Denote its original common-CPTP minimax value by $E_*$. These definitions agree with [CG, Definitions 4.2 and 13.1][CG].
+

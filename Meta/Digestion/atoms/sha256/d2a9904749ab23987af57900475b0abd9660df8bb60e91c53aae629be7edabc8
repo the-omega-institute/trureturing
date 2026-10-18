@@ -1,0 +1,42 @@
+**Lemma 6.1 (Joint increment law and drift).** Let $Y_n=C_L(K_n)$ be the category of potential complete gap $n$. With independent fresh closing coins let $J_n$ have values $m_{Y_n}$ and $m_{Y_n}+1$ with the probabilities of (5.2), and put $V_n=\delta J_n$. Under source $i$ the pairs $(Y_n,J_n)$ are iid, independent of $\tau$, with law
+
+$$
+\mathsf P_i(Y_n=z,J_n=m_z)=a_i(z)(1-t_z),\qquad
+\mathsf P_i(Y_n=z,J_n=m_z+1)=a_i(z)t_z.
+\tag{6.1}
+$$
+
+They agree with the actual controller through its terminating gap. The centered error $\varepsilon_n=V_n-\ell_{Y_n}$ satisfies
+
+$$
+\mathbb E_i(\varepsilon_n\mid Y_n)=0,\quad |\varepsilon_n|\le\delta,\quad |V_n|\le C_0+\delta.
+\tag{6.2}
+$$
+
+Writing $D_i=D(a_i\|a_{1-i})$, where $D(p\|q)=\sum_zp(z)\log(p(z)/q(z))$, one has
+
+$$
+\mathbb E_0V_n=-D_0,\qquad \mathbb E_1V_n=D_1,\qquad D_i\ge2u>0.
+\tag{6.3}
+$$
+
+Proof. After the first actual tick the category is zero. After $K_n$ actual zeros it is exactly $K_n$ if $K_n\le L$ and $\star$ otherwise. Its closing one therefore uses category $C_L(K_n)$, obtained from that same paid gap. Independent iid gaps and fresh independent coins give (6.1). Equivalently use an independent uniform coin at each potential closing row and choose the upper value precisely when it lies below $t_{Y_n}$. This supplies a probability-space continuation after stopping, not operational access to additional gaps.
+
+Conditional on $Y_n=z$, the error has values $-\delta t_z$ and $\delta(1-t_z)$. Hence
+
+$$
+\mathbb E_i(V_n\mid Y_n=z)=\delta(m_z+t_z)=\ell_z,\qquad
+\mathbb E_i(\varepsilon_n^2\mid Y_n=z)=\delta^2t_z(1-t_z)\le\delta^2/4.
+\tag{6.4}
+$$
+
+This proves (6.2) and the mean identities in (6.3). All logs and sums are finite. To prove the drift lower bound, apply $\log x\le x-1$ to $x=\sqrt{b(z)/p(z)}$, where $p=a_i$, $b=a_{1-i}$:
+
+$$
+D(p\|b)=-2\sum_zp(z)\log\sqrt{b(z)/p(z)}
+\ge2\sum_z\bigl(p(z)-\sqrt{p(z)b(z)}\bigr)=2(1-A)=2u.
+\tag{6.5}
+$$
+
+No category is assumed independent of its own duration or rounding error. Unbiased rounding preserves both signed divergences exactly; it need not preserve the unrounded likelihood itself. $\square$
+

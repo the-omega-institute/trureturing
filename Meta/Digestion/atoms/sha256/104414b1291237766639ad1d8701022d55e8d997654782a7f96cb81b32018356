@@ -1,0 +1,10 @@
+**A2 entire strict source chart.**
+
+**derivation.**
+
+Let q=r/b. Strict r,b give q>0. Rank one yields c=r(1-r)/b=q(1-qb), and r=qb. Thus strict sources are exactly q>0, b>0, qb<1 with these r,c. Conversely those conditions make r,1-r,b,c positive, give trace one and bc=r(1-r), hence determinant zero and rank exactly one. q and b are uniquely recovered from P, so the chart is a bijection. Also j=q+(1-q^2)b, whence o-q\*e=j-r/2-q=b\*(1-q^2-q/2).
+
+**exception.**
+
+Define eta(q)=1-q^2-q/2. Its two zeros are (-1+sqrt(17))/4 and (-1-sqrt(17))/4. Exactly one is positive: alpha=(sqrt(17)-1)/4. Since 3<sqrt(17)<5, 1/2<alpha<1, and alpha^2+alpha/2=1. In particular 1-alpha>0. All positive ratios except alpha are nonexceptional. The chart covers both sides of r=1/2, both possible diagonal branches of other charts, symmetric and asymmetric sources, and unbounded positive off-diagonals.
+

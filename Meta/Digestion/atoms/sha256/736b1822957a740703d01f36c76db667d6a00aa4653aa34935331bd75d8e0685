@@ -1,0 +1,117 @@
+**Proposition 49.2 (normalization, full output, every history and
+contrast).** Definition 49.1 is a single finite actual instrument,
+with full TP decoders, preserving (JR.56) on every complex input,
+every passive reference and every separately labelled Borel time set.
+For every one of the twelve actual original histories its low law is
+
+$$
+\begin{aligned}
+p(j\mid y,e,n)={}&x_j^2A_y+z_j^2B_y+w_j^2C_y
+ +2x_jz_j\kappa enq_y\\
+ &+2x_jw_j\kappa_{02}e q_{02,y}
+ +2z_jw_jacnq_{12,y}.
+\end{aligned}
+\tag{JR.79}
+$$
+
+The high probabilities are $(1-\delta)A_y/2$ each; all four spectral
+failure probabilities are exactly (JR.55), and complement probabilities
+are zero. Its cost and supported binary effect are
+
+$$
+\begin{aligned}
+\mathsf W&=(1-\delta)A_{27}=\mathsf C(s_{\rm int}),\\
+F_+(\tau)&=\frac{I_3}{2}+\frac12[
+ \delta D^\dagger D+T^\dagger T+S^\dagger S-2K_0^\dagger K_0],\\
+\mathsf V(F(\tau))&=2s_0\sqrt{\tau Y_\tau}.
+\end{aligned}
+\tag{JR.80}
+$$
+
+Here $K_0=K(c_\tau)$, not the original coefficient-basis matrix $D$.
+On five modes the plus effect is
+$EF_+(\tau)E^\dagger+(I_5-P)/2$.
+
+Proof. From (JR.77) the total live coefficient Gram is
+$L_0+\operatorname{diag}(1-\delta,0,0)=I_3$. The supported live
+effect is therefore $D^\dagger D+T^\dagger T+S^\dagger S=I_3-M$.
+The spectral rows add $M$, and the complement adds $I_5-P$ on five
+modes, so the total encoder effect is $I_5$. Each positive encoder
+effect is bounded by that sum, making every encoder TNI. The live
+decoders are TP on their entire declared fibres because $EV_j$ and
+$E$ are isometries. The scalar decoders are TP because
+$\sum_\ell w_\ell=1$ and $\int_0^1 2/(1+t)^2dt=1$.
+Their normalization does not condition on survival or on an acquired
+branch. All branch masses are unnormalized linear functions of the
+input and become probabilities only on normalized specimens.
+
+For every complex $A\in M_5$, image reconstruction gives the sum of
+live products $E\Lambda_*(E^\dagger AE)E^\dagger$.
+The failure rows sum to $M$ and the complement rows sum to $I_5-P$.
+Thus each original failure measure is exactly
+
+$$
+g(t)\left[w_\ell\operatorname{tr}(ME^\dagger AE)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]dt\,P_f.
+\tag{JR.81}
+$$
+
+There are no cross-support outputs, singular additions or extra-sector
+maps. The original two side labels remain distinct and the two
+zero-weight labels remain zero. For a joint operator $X$ with passive
+reference, each encoder and live isometry is tensored with $I_R$.
+The two reference operators multiplying $P_f$ in (JR.81) are precisely
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$ and
+$\operatorname{Tr}_5[((I_5-P)\otimes I_R)X]$, as in Proposition
+44.2. Integrating their common density over any Borel set proves the
+full labelled-time reference identity, including its conditional
+reference operators. Finite Kraus identities give the same assertion
+at every passive-reference amplification. No time sampling or
+unconditional-reference substitution is used in this implication.
+Hence every original HALF full-cq error is unchanged and $E=E_*$,
+conditional on the inherited CG certificate. The ideal comparison
+still uses $f_y(t)=6y/(y+6t)^2$, never $g$ in its place.
+
+Expanding the low encoder norms gives (JR.79) for each actual
+$(y,e,n)$, and encoder normalization makes the complete actual law
+sum to one. Only the two high fibres have dimension at least three,
+so their total acquired probability on each history is
+$(1-\delta)A_y$, independent of its two signs. Its maximum is the
+stated original sharp cost at height $27$. This is a worst-history
+statement about the common instrument, not an individual-input or
+sign-averaged replacement objective.
+
+The high and scalar labels are fair for $F$. On low branches the
+positive reports have total coefficient Gram $L_0-c_\tau c_\tau^T$.
+Their plus effect is therefore (JR.80). In particular
+$(F_+(\tau))_{01}=\kappa s_0\sqrt{\tau Y_\tau}$ and
+$(F_+(\tau))_{02}=\kappa_{02}s_0\sqrt{\tau Z_\tau}>0$.
+The latter shows explicitly why this is not CA's prescribed full
+binary effect. Since
+$(\tau Y_\tau)'=Y_\tau+\chi\tau>0$, the contrast starts at
+$s_{\rm int}$ and increases strictly. This proves the remaining
+claims of Theorem 48.3 for the original constraint
+$\mathsf V(F)\geq s_{\rm int}$.
+
+For exact contrast, set $\beta=s_{\rm int}/\mathsf V(F(\tau_1))$
+and refine each actual label by the input-independent kernel
+
+$$
+k(r'\mid\alpha)=\frac{1+r'r(\alpha)\beta}{2},\qquad
+r'=\pm1,\quad 0<\beta<1,
+\qquad R'=(\alpha,r'),\quad F'=r'.
+\tag{JR.82}
+$$
+
+Multiply each encoder CP map by this classical probability and keep its
+full decoder and fibre. This gives at most twenty-two actual labels,
+the same full output and cost, and $\mathsf V(F')=s_{\rm int}$.
+For every retained $\alpha$, summing absolute differences over $r'$
+gives
+$\sum_{r'}k(r'\mid\alpha)|p_{27}(\alpha)-p_5(\alpha)|
+=|p_{27}(\alpha)-p_5(\alpha)|$, so actual TV is exactly unchanged.
+All old labels are retained. Including the decoder-generated failure
+label and time likewise preserves this TV, since its conditional
+scalar law is common to the two heights on each such branch.
+$\square$
+

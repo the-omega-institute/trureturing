@@ -1,0 +1,57 @@
+**Theorem 2.1 (the complete reachable predictive family).** For every nonempty actual history, its current posterior is either one of the five point masses $e_i$, or
+
+$$
+\mu_k=x_ke_2+(1-x_k)e_4,\qquad
+x_k=\frac{a^k}{a^k+b^k},\quad k\ge0.
+$$
+
+The latter occurs precisely on the initial history $B^{k+1}$, of probability $(a^k+b^k)/5>0$. All five point masses occur. Every distinct posterior in this list has a distinct complete future profile. The empty profile is an additional distinct class. Consequently the exact quotient has six post-read classes and seven initialized classes when $r=p+q$, and countably infinitely many in both conventions otherwise. This conclusion includes $p=q$.
+
+**Proof (2.1).** A singleton symbol $j\in\{0,1,3\}$ identifies $X_t=j$. From a known state, a subsequent $B$ identifies the next state by
+
+$$
+0\mapsto4,\qquad1\mapsto2,\qquad3\mapsto2,
+\qquad2\mapsto2,\qquad4\mapsto4.
+$$
+
+Another singleton again identifies its state. Induction therefore keeps the current posterior pure after the first singleton. The histories $0,1,3,1B,0B$ exhibit all five pure cases. Their probabilities are respectively $1/5,1/5,1/5,p/5,r/5$.
+
+Without a singleton the history is $B^{k+1}$. The only compatible hidden paths stay at $2$ or stay at $4$: there is no transition between these states within $\chi^{-1}(B)$. Their masses are $a^k/5$ and $b^k/5$. Positive conditioning gives the stated posterior. This covers every actual history, without adding hypothetical beliefs to the domain. Markov conditioning and the products of Definition 1.2 give $F_h=F_{\mu(h)}$ at all horizons.
+
+In visible order $(0,1,3,B)$ the one-step rows are
+
+$$
+\begin{aligned}
+v_0&=(c,p,q,r),&v_1&=(q,a,0,p),\\
+v_2&=(0,q,p,a),&v_3&=(p,0,a,q),\\
+v_4&=(r,0,0,b),&v_x&=((1-x)r,xq,xp,xa+(1-x)b).
+\end{aligned}
+$$
+
+The rows $v_x$ are injective in $x$ because $r>0$. Equality with $v_1$ would force $x=0$ through its $3$ coordinate and then contradict its positive $1$ coordinate. Equality with $v_3$ is excluded symmetrically. Equality with $v_0$ would require $xq=p$ and $xp=q$, hence $p=q$ and $x=1$; its $0$ coordinate would then be zero rather than $c>0$. The three singleton rows are pairwise different by their positive and zero singleton coordinates. This separates the whole displayed family, including its endpoints, already at horizon one.
+
+Here is also a quantitative separation of the empty law, to be used again below. For $D=\operatorname{TV}(F_*^1,M_x^1)$, the two events $\{1,3\}$ and $\{0\}$ give
+
+$$
+D\ge|2/5-xs|,\qquad D\ge|1/5-(1-x)r|.
+$$
+
+Multiplying the first difference by $r$ and the second by $s$, and applying the triangle inequality, yields
+
+$$
+D\ge\frac{(2/5)r+(1/5)s-sr}{s+r}.
+$$
+
+Put $z=s/(s+r)$. Since $s+r<1$, the right side is strictly greater than or equal to
+
+$$
+\frac25-\frac z5-z(1-z)
+=\left(z-\frac35\right)^2+\frac1{25}.
+$$
+
+Thus $d(F_*,M_x)\ge1/25$ for every $x$.
+
+For a pure start $i$, the first future symbol $B$ can enter only one of $2,4$. Consider two finite-horizon events: the first symbol is $B$ and the first subsequent non-$B$ is respectively $0$ or in $\{1,3\}$. Under $F_*$ their probabilities tend respectively to $1/5$ and $1/5$, by stationarity and the equal initial masses of $2,4$. Under $F_i$ one of these categories is impossible. Hence $d(F_*,F_i)\ge1/5$. This uses finite events and their limits, not conditioning on an infinite all-$B$ history.
+
+Finally $x_k/(1-x_k)=(a/b)^k$. If $a=b$, every $x_k=1/2$; otherwise this sequence is injective and never reaches an endpoint. The reused factorization principle requires distinct exact retained words for distinct profiles. Conversely these profiles themselves provide a sufficient encoding. This establishes the counts. $\square$
+

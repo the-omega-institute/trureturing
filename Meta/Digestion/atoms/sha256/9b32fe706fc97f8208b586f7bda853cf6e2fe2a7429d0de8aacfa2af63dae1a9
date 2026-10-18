@@ -1,0 +1,4 @@
+# Recorded-clock collapse and a common safe kernel at the affine endpoint
+
+At the candidate minimum of $d+5$ exact reads, the recorded clock couples the kernels at different affine slopes. A polynomial kernel vector of degree at most two has only common-kernel coefficients. An identically singular pencil of rank three at every real slope consequently has a constant or cubic primitive kernel generator. The cubic case has an unsafe real-slope kernel and an actual positive-source collision. Thus every identically singular pencil still eligible for uniform recovery has a single common safe kernel, whose recorded signal is a polynomial of degree at most $d-1$. This is an all-history necessary restriction; the sharp uniform read count remains unresolved.
+

@@ -1,0 +1,18 @@
+#### 58.4.2 The central parameter
+
+For \(a=b=0\), \(h=\sqrt3\), write \(g=\epsilon i\).
+The linear equation in §58.3 becomes
+\(c=\bar d+i(\sqrt3-2\epsilon)\).
+The equation \(E_c=0\) is, after a nonzero scalar factor,
+
+\[
+ \bar d^2+d^2-(1+\epsilon\sqrt3)|d|^2
+                 +i(\epsilon-\sqrt3)(d+\bar d)=0.
+\]
+
+Its imaginary part forces \(\operatorname{Re}d=0\), and its real
+part then forces \((3+\epsilon\sqrt3)(\operatorname{Im}d)^2=0\).
+Thus \(d=0\), but the first original equation (58.6) divided by \(t\)
+is then \(-9+5\epsilon\sqrt3=0\), impossible.
+This finishes the three-distinct-phase case, without assuming \(a\ne0\).
+

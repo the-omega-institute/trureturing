@@ -1,0 +1,38 @@
+**Theorem 8.4 (the same first separator under every allowed cross-fill).**
+For $j=2,\ldots,M$, the two fixed histories at $V_j$ represent
+
+$$
+L_j=(k-j-2,n-k),\qquad H_j=(k-1,n-k-j-1).
+\tag{8.3}
+$$
+
+All $2(M-1)$ cells are distinct. Their private sets are exactly $X,Y$,
+common old set $I_j$, and common unread set $U_j$. Every allowed
+cross-fill has first separator exactly the fixed retained $J$. Thus for
+every joint choice $(\omega_j)_{j=2}^M\in\prod_{j=2}^M\{0,1\}^{U_j}$,
+all $M-1$ first separators are this one state.
+
+Proof. Subtract the displayed hit counts from $n-j-2$ to get (8.3).
+The low hits vary below $k-1$, and the high zeros vary below $n-k$,
+so the cells are pairwise distinct. Lemma 2.3's parameters specialize to
+
+$$
+a=b=2,\quad u=j,\quad Q=j+2,\quad V'=1,\quad
+\xi=\eta=1,\quad\Delta=\delta_I=j+1,\quad\lambda=1.
+$$
+
+The band (2.5) is all weights $0,\ldots,j$. Cross-fill $(x,x')=(1,0)$
+and $(y,y')=(0,1)$ on both inputs and choose any $U_j$ assignment of
+weight $w$. The two totals are $k-j-1+w\le k-1$ and $k+w\ge k$.
+They extend their own fixed histories, agree outside $I_j$, and have
+actual cube origins. Both suffixes read the same $U_j$ replies. A mixed
+assignment reaches $J$ directly; all zeros pass through common $x=1$
+at $B_X$, and all ones through common $y=0$ at $B_Y$, before reaching
+$J$. No differing old coordinate is queried earlier on that suffix. At
+$J$, and specifically at its coordinate $t$, the replies are zero and
+one. This is a fully paid old-coordinate requery on both runs. In the
+native lift the literal is $a_t$, giving beta and branch. The argument
+holds separately for every $j$ and every allowed assignment; the product
+statement requires no single input common to different collisions. It
+retains the exact quantifiers of [WTF, Theorem 11.4][WTF]. $\square$
+

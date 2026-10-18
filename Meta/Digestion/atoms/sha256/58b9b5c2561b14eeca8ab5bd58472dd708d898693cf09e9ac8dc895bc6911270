@@ -1,0 +1,14 @@
+**Proposition 14.3 (the additional premises for sharpness).** If a certified
+executable decoder identifies $E_0,E_1$ up to null sets and calibrated
+parity-specific endpoint gates are permitted, the bound (PR.52) is
+simultaneously attainable for all parameters.
+
+Proof. On $E_g$, compute the parity from the actual latch $y\oplus g$
+and use its unitary. On $O$, use the unassisted attaining filter. Complete
+its failure with (PR.39). Integrating gives equality. $\square$
+
+Without that decoder, support exclusivity is a necessary resource relation,
+not an acquired certificate. Theorem 14.2 addresses classical calibration
+assistance exactly as specified. It is not an upper bound with uncounted
+quantum calibration assistance or an always-readable source convention.
+

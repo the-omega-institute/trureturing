@@ -1,0 +1,17 @@
+**假设 9.2（已有前缀表达及经典渐近供应）。** [ZECKENDORF 原卷][ZECK] 后续第七节“这些联系怎样回到 RH”，式 (7.1)–(7.4)，已用
+
+$$
+\mathcal C(n)=-\sum_{p\le P}\log(1-p^{-(a_p+1)})
+$$
+
+表示共同前缀损失，其中未使用素数的 $a_p=0$。本节只将其按是否出现拆成 $D_{\mathrm{miss}}+D_{\mathrm{cap}}$，并接到前述几何读出。
+
+经典 Mertens 乘积渐近式与 Gronwall 极限上确界使用 [Choie 等 v2，§4，式 (10)、定理 9(1)][Choie]：
+
+$$
+\mathcal M(y)\sim e^\gamma\log y\quad(y\to\infty),\qquad
+\limsup_{n\to\infty}\frac{Z(n)}{\log\log n}=e^\gamma.
+$$
+
+Mertens 来源另见既有 [Diamond–Pintz 注释][MertensNote] 式 (1.1) 与 [Lichtman v3 注释][LichtmanNote] 定理 1.1、式 (1.2)；Gronwall 的归属另见既有 [Gronwall 注释][GronwallNote]。这里只消费这些精确经典陈述。
+

@@ -1,0 +1,32 @@
+**Definition 6.3 (paid descriptor import with stable heads).** The native
+channel stages sender, mailbox and receiver descriptors as the latest
+three immutable port-37 fields, in that order, as RCA Definition 13.2
+requires. No bank assignment/staging occurs inside its protected allocation,
+copy, completion-record and printing segment. Immediately after ACK,
+before any further staging, find the third-last of those fields by the
+fixed backwards-F scan and import it into a word register by native
+RD/bit-test/literal-cons assignment/MR and Reverse. Compiler helpers
+touch 32–36 only, so head 37 survives each assignment. The record is
+the sender's original placement descriptor, not a descriptor of its stage.
+Verify its O/39, initialized/sealed flag and recorded kind before registry
+commitment, comparing kind with the preserved published-result register
+rather than expecting a new native descriptor field. No extra channel
+payload or receiver token is needed for this
+owner-local metadata read.
+
+On a later Convert, find the completed entry by finite word scans. Serialize
+its exact descriptor into a new binary staging field on 37 using the
+Base/dry-count/real-copy/full-descriptor/F/seal schema. Native unary-field
+copy and Seek use that actual measured base to position 39. Copy its
+payload length to distinct scratch and verify the closed block's delimiter.
+Then import the selected binary payload through its own F, with the same
+RD/finite-bit-test/literal-cons/MR/Reverse loop. No word assignment touches
+39, and it is not extended during this scan. Exact measured length and
+wrapper/kind/binding checks precede use. The current reader is O with its
+actual archive token; no represented old token is consulted as authority.
+
+The source record's native position remains stable even while bank helpers
+extend 36 or scratch. Staging its descriptor precedes the scan, and none
+of those intervening helpers extends 37. This is a closed retained block,
+not a live end scanner or an arbitrary external pointer.
+

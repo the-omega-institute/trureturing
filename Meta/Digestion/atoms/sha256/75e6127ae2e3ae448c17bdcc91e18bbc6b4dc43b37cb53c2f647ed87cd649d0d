@@ -1,0 +1,20 @@
+**供应推导 4.2（三种“二”的区分）。** 标准 Bloch 公式沿用[《二阶关系完成》第66.2条](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)及其 IBM Quantum 引文。它作为第5–6节标架和第9节已知探针的计算工具：
+
+$$
+\sigma_i\sigma_j=\delta_{ij}I+i\sum_k\varepsilon_{ijk}\sigma_k,
+\quad \operatorname{tr}\sigma_i=0,
+\quad \operatorname{tr}(\sigma_i\sigma_j)=2\delta_{ij}.
+$$
+
+展开并取迹，得
+
+$$
+\operatorname{tr}(P_nP_m)=\frac{1+n\cdot m}{2}.
+$$
+
+若 $P_nP_m=0$，该迹为零，故 $n\cdot m=-1$，单位向量于是满足 $m=-n$；反向 $P_nP_{-n}=(I-(n\cdot\sigma)^2)/4=0$。所以一个二结果锐测量 $\{P_n,P_{-n}\}$ 只有一根 Bloch 轴，两个 Hilbert 正交结果是其两端。
+
+另有 $\operatorname{tr}(\sigma_x\sigma_y)=0$，但 $\sigma_x\sigma_y=-\sigma_y\sigma_x$。这两个算符正交的探针是不同设置，不是同一设置的两个结果。两个独立实变化分量又是第5节的切向参数，不能与前两种“二”混同。
+
+逻辑也允许三结果：在 $\mathbb C^3$ 中，三个正交基投影非零、两两乘积零且和为单位。二结果是当前指定接口的性质，不是全部观察的结果数定理。
+

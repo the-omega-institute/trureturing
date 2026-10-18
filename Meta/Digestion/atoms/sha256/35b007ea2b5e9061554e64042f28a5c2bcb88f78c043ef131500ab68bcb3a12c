@@ -1,0 +1,21 @@
+**Definition 2.2 (owner tuples and retained relation).** Let $O_i$
+be the full tuple of all seeds owned by $i$, with domain $\Omega_i$.
+An empty tuple has its single empty value. Thus
+$\mathcal S=\prod_i\Omega_i$ is exactly the original seed product,
+with each seed appearing once. Let $I_i$ be the set of distinct outside
+owners with seeds prescribed at block $i$, and write $k_i=|I_i|$.
+For $j\in I_i$, $B_{i,j}$ is the tuple of all locally prescribed
+seeds owned by that same $j$. For $A\subseteq I_i$ put
+$B_{i,A}=(B_{i,j})_{j\in A}$; it is a projection of $(O_j)_{j\in A}$.
+Let $R\subseteq\mathcal S$ be any retained positive-weight subrelation
+of actual solutions, and set
+
+$$
+Z_R=\sum_{s\in R}\prod_i\Phi_i(s).
+\tag{OOA.9}
+$$
+
+No rectangularity or independence of $R$, its seeds or its Gibbs law
+is assumed. Empty domains or $R=\varnothing$ give zero mass and are
+handled before logarithms.
+

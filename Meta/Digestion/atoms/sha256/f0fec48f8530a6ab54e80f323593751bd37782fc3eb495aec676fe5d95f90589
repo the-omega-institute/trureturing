@@ -1,0 +1,37 @@
+**Definition 1.1 (the two tree domains).** Use the ambient term algebra
+and native domain of [ABC, Definition 2.1][ABC]:
+
+$$
+\begin{aligned}
+\mathcal K&::=[j]\ (j\in\mathbb N)\mid F(\mathcal K,\mathcal K),\\
+[j]&\in\mathcal N,\\
+F(X,Y)\in\mathcal N
+&\ \Longleftrightarrow\ X,Y\in\mathcal N\ \land\
+ \neg\exists j\in\mathbb N\ (X=[j+1]\land Y=[j]).
+\end{aligned}
+\tag{TPO.1}
+$$
+
+Thus normality forbids one oriented primitive-sibling relation at every
+internal occurrence. Ambient pairing is the free constructor $F$.
+Native pairing on normal codes is ABC's smart constructor $J$, which
+collapses $F([j+1],[j])$ to $[j+2]$.
+
+The original sources and forward action remain
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad\rho\beta=\langle\beta,\alpha\rangle,
+\quad\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{TPO.2}
+$$
+
+Write $T_j=\rho^j\alpha$. The supplied maps are
+$E([j])=T_j$, $E(F(X,Y))=\langle E(X),E(Y)\rangle$ and
+$B:\mathcal T\to\mathcal N$. By [ABC, Theorems 2.2–2.3][ABC],
+$B$ and $E|_{\mathcal N}$ are inverse bijections, and
+$B(\rho^m u)=\tau_mB(u)$, where $\tau_m$ adds $m$ to every primitive
+rank. These are supplied structural correspondences on all finite
+sources, with no bound on their size or depth.
+

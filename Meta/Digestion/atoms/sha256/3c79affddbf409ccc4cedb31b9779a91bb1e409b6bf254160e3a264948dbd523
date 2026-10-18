@@ -1,0 +1,37 @@
+**命题 A-22.3（三条真正被消费的同源桥）。** 本卷的合成包含下列完整任务，而非把经典结论重新命名：
+
+
+<table><tbody><tr><td>
+
+```math
+\Omega_L\longrightarrow(\mathcal{\text{ℬ}},s,C)\longrightarrow(s,C\bmod\mathfrak{\text{𝔪}})
+\longrightarrow D_L\longrightarrow\text{合法单位闭合}\longrightarrow\Phi_{\mathcal{\text{ℋ}},\mathfrak{\text{𝔪}}},
+```
+
+</td></tr></tbody></table>
+
+
+<table><tbody><tr><td>
+
+```math
+I0^j\longrightarrow V_j\longrightarrow\text{迹、秩、差异纤维}
+\longrightarrow\epsilon\text{ 在余数纤维上的因子化}\longrightarrow\Pr(\text{素}),
+```
+
+</td></tr></tbody></table>
+
+
+<table><tbody><tr><td>
+
+```math
+\text{已取得初次 }Q\longrightarrow D_7\longrightarrow\kappa
+\longrightarrow\text{同一奇数档案后的原生守卫条件律}.
+```
+
+</td></tr></tbody></table>
+
+
+它们分别严格区分计数与来源次序、模式区分与指定事件、旧摘要与实际允许未来。
+
+证明。第一链各映射由十六、十七节定义并证明，命题 A-16.5 同边界异筛响应是严格见证。第二链由命题 A-1.4 的实际运输、六至十一节的窗口约束及命题 A-13.3 的实际纤维判据给出，两个模读口例分别证明事件损失和事件保存。第三链由同层互素、秩八和 $`t=-2`$ 校准零层因子角色，再由命题 A-14.4 完整逆式及守卫表落实；两份同旧读数律在实际允许未来上异响应。全部步骤保持规定来源、接缝、目标及成本条件，只有供给中的动作可执行；三条链均不恢复任意全树、不保证原模型自动量子化、不证明 Hardy–Littlewood 渐近。证毕。
+

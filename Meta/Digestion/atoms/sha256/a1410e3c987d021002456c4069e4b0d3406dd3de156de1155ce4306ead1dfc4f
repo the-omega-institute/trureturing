@@ -1,0 +1,21 @@
+**约定 7.1（既有结果与新增的受约束纤维推导）。** The mathematical
+dependencies and scopes are as follows.
+
+| Source | Reused result and exact application |
+| --- | --- |
+| [II](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), Definitions 51.1, 56.1, 69.1–69.2; Theorem 70.1; Lemma 71.1; Theorem 72.1 | Complete targets, actual-fiber recursion and the $MMJM$ response chart; the curve and collision-midpoint mechanism is reused in Theorem 6.2. The new application strengthens common-$b,d_6$ matching to an injective arm on the whole known class, including disjoint pairs. Its zero layer is exactly the non-diagonal root-six application already in II. No duplicate general curve theorem is asserted. |
+| [III](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md), Theorem 4.1 and Proposition 7.1 | Its known-factor $g=(1+T^2)(a+bT)$ inverse and its fixed-word full-cubic collision retain their own scopes. Neither is an inverse for the arbitrary gains in (1.3) or an unrestricted adaptive lower bound. |
+| [IV](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), Theorems 2.1, 3.1, 9.2–9.3 | The $JMMM$ and $MJMJ$ losing families have their own literal histories. Their complementary parents are distinct. The sixteen-slot local and 256-slot original-root systems impose simultaneous common-ancestor equations; neither has a feasibility verdict supplied here. |
+| [V](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md), Definition 5.1; Theorems 5.2, 7.1; Definition 7.3 | The exact $JMMJ$ history, baseline-drift root-seven inverse, and terminal reconstruction are reused. Lemma 2.1 and Theorem 4.1 add exclusion of both arbitrary-drift sixth-gain strata on the actual fifth-$M$ child. Lemma 3.2 supplies the specific full rational sign certificate for the nonzero stratum. Theorem 5.1 removes the baseline-drift restriction from the small-child consumer while preserving its size hypothesis. |
+| [VI](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md), Theorems 3.1–3.3, 5.1, 6.1–6.2 | Exactly three targets at the specified $MMJM$ parent already have the common-fifth bridge and an eight-reading policy, so a losing family there needs at least four targets. Its separate all-drift pair exclusion is for the literal $MJMMJ$ child, not (1.3). Neither theorem identifies these different histories. |
+| [FIB Linear Gain-Ray Capacity and Hermite Readouts](FIB_LINEAR_GAIN_RAY_CAPACITY_AND_HERMITE_READOUTS.md), Theorems 3.3, 5.3, 7.1 and Section 8 | The fixed-acquisition gain-only threshold is $2d+3$; the countable-palette obstruction concerns fixed linear gain-ray outputs. At degree three this gives nine for that mechanism, not an unrestricted nonlinear complete-target lower bound. The gain-and-drift output and root-aware complete-target construction are separate tasks. |
+| Yanjun Li, Kiryung Lee, Yoram Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1) | `literature-attested`: identification requires every compatible solution to belong to the specified transformation orbit, with a factor-orbit and conditional-fiber decomposition. Here trace one removes positive scaling only; drift remains a separate coordinate. No sample threshold or feedback acquisition result is imported. |
+| Petra van den Bos, Frits Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [Theorem 6.1 and Example 7](https://arxiv.org/html/1907.11034v2) | `literature-attested`: the whole-set adaptive distinguishing construction assumes a suspension automaton with mutually incompatible distinct states and injective splits. Example 7 shows failure of that equivalence when compatibility is allowed. These premises do not supply the policies here; their actual-fiber and whole-class hypotheses are proved or explicitly assumed above. |
+
+The new constrained-history exclusions in Sections 2–4 and their
+conditional consumers, and the whole-class application in Section 6,
+are `repo-derived`. Interpolation, rank-one reconstruction, linear
+trace coordinates, sign variation and Bernstein convex combinations
+are established tools used inside these deductions. No external
+priority or literature-completeness assertion is made.
+

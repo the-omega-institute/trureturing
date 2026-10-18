@@ -1,0 +1,19 @@
+**Supplied interface 4.2 (Actual stationary initial row).** Define
+
+$$
+R_r(q)=\sum_{k\ge1}k^rq^k,\qquad
+r_H(q)=\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}.
+\tag{4.4}
+$$
+
+For the actual $\nu_i$ in (3.2), lower-source Lemma 6.1 and uniform-source Lemma 5.1 give
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q)\le\frac{2\delta}{\mu_0(q)},
+\qquad
+\|u-v\|_{\rm TV}=\frac12\sum_x|u(x)-v(x)|.
+\tag{4.5}
+$$
+
+The supplier compares the first-wait weights $g_i(b)=\sum_{k\ge\max(1,b)}F_i(k)q^k$, whose normalizers are $Z_i\mu_i$. Its excess normalizer is bounded by $\delta(R_9+R_8)$, with $Z_0\mu_0=R_{10}+R_9$. The common map $b\mapsto\eta A^bC$ then contracts variation. This uses the actual stationary first wait and common initialization, including initial stopping, even for arbitrary retuning. It does not import the machine-dependent $O(s^2)$ initial estimate of fixed-observer-source Lemma 24.2.
+

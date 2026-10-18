@@ -1,0 +1,99 @@
+**Proposition 9.1 (separate local constancy does not recover the joint row).**
+Let the old source row have pattern
+
+$$
+u=\langle\langle x,\langle x,z\rangle\rangle,
+               \langle y,\langle y,w\rangle\rangle\rangle,
+\tag{CAR.38}
+$$
+
+at old cut
+
+$$
+P=\{LL,LRL,LRR,RL,RRL,RRR\}.
+$$
+
+Its complete old partition repeats $x$ at the first two indicated left
+positions, repeats $y$ at its two right positions, and makes the four
+classes $x,z,y,w$ pairwise different. Acquire the two positive relations
+and the cross-sector negative relation
+
+$$
+(1,LL,0,LR,=),\qquad
+(1,RL,0,RR,=),\qquad
+(0,LL,0,RLLR,\ne).
+\tag{CAR.39}
+$$
+
+Also acquire the literal branch replies at epoch zero at $LRRR$ and
+$RRRR$. The entire resulting fiber is exactly
+
+$$
+\begin{gathered}
+ u_{m,n}=\langle V_m,V_n\rangle,
+ \qquad V_j=\langle T_{j+1},\langle T_{j+1},T_j\rangle\rangle,\\
+ m,n\ge4,\qquad |m-n|\ge2,\qquad n\ne m+3.
+\end{gathered}
+\tag{CAR.40}
+$$
+
+This is cycle-covered, has two unbounded jointly constrained coordinates,
+and has no required acquired whole-root/proper-descendant certificate.
+For the original target
+
+$$
+Q=\{LL,LRL,LRR,RLLL,RLLR,RLR,RR\},
+\tag{CAR.41}
+$$
+
+the entire output image is finite, each sector separately has a constant
+local row, but the joint full row has no uniform finite-read recovery
+service at any allowed entry epoch.
+
+Proof. The positive records have reached endpoints and say precisely
+$\rho(x)=\langle x,z\rangle$ and
+$\rho(y)=\langle y,w\rangle$. Their scalar solutions are reused from
+ARH Application 26.1, giving $x=T_{m+1},z=T_m$ and
+$y=T_{n+1},w=T_n$ for unique $m,n\ge0$. In the cycle graph there are
+strict self-edges at $x,y$ and outgoing edges to $z,w$, so it covers all
+four coordinates. No additional skeleton promise has been made.
+
+The two literal branch records inspect the right children of $T_m,T_n$.
+By the atomic guard, branch there is exactly $m,n\ge4$. The four old
+classes are pairwise different exactly when the two adjacent-index sets
+$\{m,m+1\}$ and $\{n,n+1\}$ are disjoint, namely $|m-n|\ge2$.
+The last record in (CAR.39) compares $T_{m+1}$ with $T_{n-2}$ at reached
+endpoints, and hence is exactly $n\ne m+3$. This proves both inclusions
+in (CAR.40), including the full old partition and all three records.
+The extra negative record is a genuine coupling of the two local sectors.
+ARH Proposition 2.1 supplies the paid finite sourcewise acquisition of
+these records under the complete-state condition.
+
+Every address in (CAR.41) is reached. Its ordered hole values are
+
+$$
+T_{m+1},\ T_{m+1},\ T_m,\
+T_{n-1},\ T_{n-2},\ T_{n-1},\ T_{n+2}.
+\tag{CAR.42}
+$$
+
+The last identity uses $\langle T_{n+1},T_n\rangle=T_{n+2}$.
+The marked exterior consists only of the fixed pair structure above
+these seven holes. Within the left three holes the first two are equal
+and the third is different. Within the right four holes the first and
+third are equal and the other two indices are distinct. Thus each local
+row is constant, while the joint row additionally requires cross-sector
+equalities. There are only finitely many partitions of seven holes,
+so its image is finite.
+
+For arbitrary $d$, choose $m\ge\max(4,2(d+1))$. Both
+$u_{m,m+2}$ and $u_{m,m+4}$ lie in (CAR.40). Their left sectors agree.
+The corresponding atomic indices in their right sectors are at least
+$2(d+1)$, so (CAR.15) and template prefix preservation give agreement
+of the two whole original trees at every $|p|\le d$.
+In the first source, the first and fourth holes in (CAR.42) are equal;
+in the second they are not. Their full rows differ. These are finite
+same-fiber witnesses for every requested depth, so ARH (2.3) rules out
+bounded raw recovery at every allowed $N$. This also proves the final
+assertion of Proposition 5.3. $\square$
+

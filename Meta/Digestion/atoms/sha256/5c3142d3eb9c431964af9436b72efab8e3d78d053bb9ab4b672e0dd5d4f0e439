@@ -1,0 +1,34 @@
+**Example 207.7 (A full family with cost one).** For every $L\ge6$,
+let $\gamma_1+\gamma_2=2$, $\gamma_a\ge0$, and $\gamma_j=5$ for
+all late $j$. Put $S=9,t=4$. In 207.5 choose $s=4,d=1,c_a=\gamma_a$
+and $c=2$, so
+$v=2,q=2/3$ and $\rho_a=(4-\gamma_a)/6$. Explicitly,
+$\nu(x)=9\prod f(x_j)$ with $f(0)=2/3,f(1)=1/3$, pair rows
+$\rho_a\nu$ on the two early lifts, early $C=\gamma_a$ at $e_a$,
+late $C=2$ at each singleton and $C=3$ at each absorbing suffix,
+and $T=4$. Here $W=15$, $K=5(L-2)+15$.
+
+The empty support is $13$; a single early $a$ has support
+$13+\gamma_a$, and each single late address has support $13$.
+The complete pair maxima are
+
+| Schedule | $N$ maxima in order $00,01,10,11$ |
+| --- | --- |
+| $(1,2)$ | $(0,6-\gamma_1/2,6-\gamma_2/2,5)$ |
+| early/late $(a,j)$ | $(4,2-\gamma_a/2,5,5+\gamma_a/2)$ |
+| late/late | $(4,2,5,5)$ |
+
+These follow from (207.14)–(207.17); in each first branch a common
+label attains both constituent maxima, so merging to $O$ loses nothing.
+Every pair support is $16$ and both excesses are one.
+
+For precise comparison, 203.2 at this projection has unary masses $6$,
+directed masses $2$, hence $\kappa=3$, $\pi=1$. In the entire
+full-profile product family of 203.4, $5\le u\le15/2$ and two
+cost terms are $2u-10$ and $15-2u$; their sum is five, so its cost
+is at least $5/2$. The fair unit threshold of 203.6 is $20>15$.
+The displayed stock-exchange test of 206.17 requires
+$S\ge\max(10,16-4)=12>9$. Zero score fails at $u_3$, with reading
+$(5-2)/2=3/2$. These compare the named tests and specified product
+family, not all of their residual or mixture consequences.
+

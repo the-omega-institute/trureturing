@@ -1,0 +1,37 @@
+**Proposition 19.3 (uniform Euclidean bounds on the entire prescribed branch boxes).** The following rational selections are valid. The columns $P,Q,R,K_1,K_2$ bound respectively $F_\lambda,F_{XX},F_{X\lambda},D_Xk,D_X^2k$ in the norms of Definition 11.1.
+
+| Input | Six branch | Seven branch |
+| --- | --- | --- |
+| Dimension $n_b$ | $21$ | $22$ |
+| $\max r_b/\min r_b$ | $10000$ | $10000$ |
+| $\|R_{{\rm pre},b}\|_\infty$ upper | $180427.008196$ | $20074.3549344$ |
+| Selected inherited $q_b$ | $0.000172$ | $0.01$ |
+| $N_b$ | $37896189865.9$ | $4460967763.2$ |
+| $P_b$ | $2.05021657197$ | $2.05140973139$ |
+| $Q_b$ | $3047.45994554$ | $3047.66871219$ |
+| $R_b$ | $1.3729251606$ | $1.38551774339$ |
+| $K_{1b}$ | $2.22683824561$ | $2.37112622335$ |
+| $K_{2b}$ | $3.12608472396$ | $3.46246784408$ |
+| $U_b$ upper | $77695396477.6$ | $9151272680.85$ |
+| $W_b$ upper | $6.9714662338\cdot10^{35}$ | $1.13857025534\cdot10^{33}$ |
+| $T_b$ upper | $1.55243276375\cdot10^{36}$ | $2.69969378957\cdot10^{33}$ |
+
+Proof. Appendix 14's exact integer matrices divided by $2^{151}$ give the two preconditioner row sums. For a radius-scaled defect, Proposition 17.2 in the scaled infinity norm, followed by the two norm conversions, gives the sufficient bound
+
+$$
+\|F_{b,X}^{-1}\|_2\le
+\frac{n_b\,10000\,\|R_{{\rm pre},b}\|_\infty}{1-q_b}\le N_b.
+$$
+
+Thus the scaled defect is never treated as an unscaled Euclidean contraction. The table's $N_b$ inequalities are exact rational comparisons with this expression. Differentiate the full row formulas of Definition 19.1 on the full boxes, not just their root tubes. In a moment row the only nonzero second partials are $p_i\Gamma_i''$ and both orders of $\Gamma_i'$ in the $(p_i,x_i)$ pair. In a value row they are $P_i''$ and both $(x_i,Y_j)$ orders of $\Gamma_{{\rm num},i,j}'$; in a derivative row they are $P_i'''$ and both orders of $\Gamma_{{\rm num},i,j}''$. The same derivative-row formula applies to six's unused $x_4$. Parameter mixed derivatives are $-\sigma_iW_{{\rm num},i}'$ in a value row and $-\sigma_iW_{{\rm num},i}''$ in a derivative row. This exhausts the entries; $F_{\lambda\lambda}=0$ exactly. For $k$ the nonzero second entries are $p_i\sigma_i u_i''$ and both orders of $\sigma_i u_i'$ in the mixed weight/angle pair.
+
+The interval jets of Definition 17.1 and full Frobenius sums of these entries give exactly the selected $P,Q,R,K_1,K_2$ bounds. All weight intervals, signed seven $p_4$, all $Y$ intervals and the whole multiplier interval participate. In succession the displayed selections satisfy
+
+$$
+U_b\ge N_bP_b,\qquad
+W_b\ge N_b(Q_bU_b^2+2R_bU_b),\qquad
+T_b\ge\max(1,K_{2b}U_b^2+K_{1b}W_b).
+$$
+
+Using these upward rational majorants instead of equality in Definition 11.2 preserves every bound in Theorem 11.3 and conservatively reduces its allowed inverse intervals. Subsequent constants use these displayed selections. This harmless outward selection does not alter either original system. The chart conversion for $C_{\rm br}$ remains $|d\phi/dx|\le2$. $\square$
+

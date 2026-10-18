@@ -1,0 +1,151 @@
+**Theorem 4.1 (Intrinsic tilt rigidity).** Fix any finite $N\ge1$ and
+$\theta$ in the entire domain (1.2). Assume (2.1) and the supplied
+cocycle interface 2.2 for its same actual $P$. Then $\mathsf{RP}(P)$
+holds if and only if there is a Borel, shift-invariant, saturated
+$P$-conull set $\Omega_0\subseteq\Omega$ such that
+
+$$
+\Delta_P(x,z)=0
+\quad\text{whenever }x,z\in\Omega_0
+\text{ agree outside a finite set}.
+\tag{4.1}
+$$
+
+In this case $\pi_C^t(\cdot;y)=p_C(\cdot;y)$ for every real $t$ on
+almost every exterior of each interval. The theorem requires neither
+$\mathsf Z(P)$ nor attainment; it does not assert that either supplies
+$\mathsf{RP}(P)$.
+
+**Proof.** Suppose first that (3.4) holds. Use the saturation procedure
+in §2 to obtain a common good $\Omega_1\subseteq\Omega$ on which
+all intervalwise preservation conclusions hold after every legal
+replacement. The measurability observation after (3.4) justifies this
+use of conull events despite the real $t$ parameter.
+
+Fix $C,y$. Let $a_1,\ldots,a_m$ be the distinct values of $d_C(w;y)$
+among compatible words, and define vectors
+
+$$
+v_j(w)=p_C(w;y)\mathbf1_{\{d_C(w;y)=a_j\}}.
+$$
+
+They have disjoint, nonempty positive supports, so are linearly
+independent. The unnormalized curve is
+
+$$
+u(t)=Z_C(t;y)\pi_C^t(\cdot;y)
+=\sum_{j=1}^m e^{ta_j}v_j.
+\tag{4.2}
+$$
+
+Under (3.4), $u(t)$ lies in the closed finite-dimensional subspace
+$V_C$ near zero. Its derivatives there also lie in $V_C$; in particular
+$u^{(k)}(0)=\sum_j a_j^kv_j\in V_C$ for $0\le k<m$.
+The Vandermonde matrix $(a_j^k)_{0\le k<m,1\le j\le m}$ is invertible
+because the $a_j$ are distinct. Consequently every $v_j\in V_C$, and
+
+$$
+m\le r_C\le N^2.
+\tag{4.3}
+$$
+
+The classical exponential-curve argument has supplied a cardinality
+bound. It supplies no bound on the magnitude of a score value.
+
+For $x\in\Omega_1$ and $C_n=[-n,n]$, $n\ge1$, set
+
+$$
+\mathcal A_n(x)=\{\Delta_P(z,x):z\in\mathsf X, z_{C_n^c}=x_{C_n^c}\}.
+\tag{4.4}
+$$
+
+Every such completion belongs to $\Omega_1$ by saturation and has
+positive conditional mass on this good exterior by (2.2).
+Additivity expresses its value as
+$d_{C_n}(z_{C_n};x_{C_n^c})-d_{C_n}(x_{C_n};x_{C_n^c})$.
+Thus $0\in\mathcal A_n(x)$, $|\mathcal A_n(x)|\le N^2$, and
+$\mathcal A_n(x)\subseteq\mathcal A_{n+1}(x)$.
+Their union has at most $N^2$ elements: any larger finite selection
+would already occur in one $\mathcal A_n(x)$.
+Every finite modification is contained in some $C_n$, so the cocycle
+has finitely many values on the entire modification class of $x$.
+
+Write $[x]_{\rm fin}$ for that class. The elementary finite-range
+potential construction now gives
+
+$$
+F(x)=\max_{z\in[x]_{\rm fin}}\Delta_P(x,z),\qquad x\in\Omega_1.
+\tag{4.5}
+$$
+
+It is finite and nonnegative, since $z=x$ is allowed. Finite legal
+modifications are enumerated by intervals and their finitely many
+replacement words. Hence (4.5) is a supremum of countably many
+measurable functions $\Delta_P(x,R_{C,w}x)$, and is measurable.
+For $x,z$ in one class, additivity and equality of their classes give
+
+$$
+F(x)=\Delta_P(x,z)+F(z),\qquad
+\Delta_P(x,z)=F(x)-F(z).
+\tag{4.6}
+$$
+
+The shift maps $[x]_{\rm fin}$ bijectively to $[Tx]_{\rm fin}$;
+shift invariance of $\Delta_P$ therefore gives $F(Tx)=F(x)$.
+No integrability of $F$ is used.
+
+Now use exactly [Universal, Theorem 5.1][U]'s actual component theorem
+for (1.3). After merging identical visible laws it gives
+
+$$
+P=\sum_{j=1}^J\omega_jR_j,\qquad \omega_j>0,\quad
+\sum_j\omega_j=1,
+\tag{4.7}
+$$
+
+with finitely many distinct stationary ergodic visible laws of the
+same joint process. Its labels are determined by all past finite-word
+frequencies. More explicitly, on a conull set these limits satisfy
+
+$$
+\nu_w(x)=\lim_{n\to\infty}\frac1n
+\sum_{k=|w|}^{n}\mathbf1_{[w]_0}(T^{-k}x)
+=R_j([w]_0)\quad\text{on component }j.
+\tag{4.8}
+$$
+
+Distinct laws differ on some finite cylinder, so this collection labels
+them. A finite coordinate modification changes only finitely many
+summands for each fixed $w$, and therefore preserves every limit in
+(4.8), hence the label. This uses actual visible labels, not an
+unobserved class assignment from a different representation.
+Periodic hidden classes are included in the supplier's ergodicity
+statement under the one-step shift; mixing is not required.
+
+Because $F$ is finite, measurable and shift invariant, ergodicity makes
+it a finite constant $c_j$ almost surely under $R_j$.
+For example apply ergodicity to the bounded invariant function
+$F/(1+F)$, which takes values strictly below one.
+Positive weights in (4.7) make these constancy statements valid on
+a $P$-conull set. Intersect that set, the frequency-label set, and
+their preimages under all legal replacements and shifts. Nonsingularity
+from interface 2.2 gives a saturated shift-invariant conull
+$\Omega_0\subseteq\Omega_1$.
+If $x,z\in\Omega_0$ differ finitely, their common label $j$ yields
+$F(x)=c_j=F(z)$. Equation (4.6) proves (4.1).
+
+Conversely assume (4.1). Finite disintegration and the strictly positive
+compatible masses (2.2) imply that almost every exterior has all its
+compatible completions, including $0^L$, in $\Omega_0$.
+Every compatible $d_C(w;y)$ is then zero. Thus (3.1) gives
+$Z_C(t;y)=1$ and $\pi_C^t(\cdot;y)=p_C(\cdot;y)\in V_C$ for all real
+$t$. Incompatible coordinates remain zero; null exterior records
+are irrelevant. The kernels retain (3.3), so the converse introduces
+no new compatibility or global-law premise. $\square$
+
+The conclusion is a statement on a saturated conull relation, not on
+every topological configuration or prescribed null exterior.
+Version independence follows from interface 2.2; presentation
+independence uses the original-law definition of $V_C$.
+Theorem 4.1 does not prove that a finite producer cannot satisfy (4.1).
+

@@ -1,0 +1,67 @@
+**Proposition 7.2 (PP/PT/TP/TT, with necessity and sufficiency).**
+Subject to every condition (7.1)–(7.7), the triple has $L_2$
+if and only if, after relabeling worlds, one of these systems holds:
+
+| Pattern | Sixth conditions | Terminal conditions |
+| --- | --- | --- |
+| PP | $U_1=U_2\ne U_3$; $V_1=V_3\ne V_2$ | $A_1=A_2$, $B_1=B_2$, $C_1=C_3$, $D_1=D_3$ |
+| PT | $U_1=U_2\ne U_3$; $V_1=V_2=V_3$ | $A_1=A_2$, $B_1=B_2$, $\Delta(C)=\Delta(D)=0$ |
+| TP | $U_1=U_2=U_3$; $V_1=V_2\ne V_3$ | $C_1=C_2$, $D_1=D_2$, $\Delta(A)=\Delta(B)=0$ |
+| TT | $U_1=U_2=U_3$; $V_1=V_2=V_3$ | $\Delta(A)=\Delta(B)=\Delta(C)=\Delta(D)=0$ |
+
+The two actions are not interchanged: $A,B$ always belong to a
+sixth-$J$ child and $C,D$ to a sixth-$M$ child.
+
+Proof of necessity. A sixth child witnessing $L_1$ has size two
+or three. Size two is the unique proper colliding pair and must
+agree in both branch terminal columns. Size three is precisely
+a shared-three sixth response, and each of the branch's two
+terminal columns must be noninjective on that whole triple.
+If both sixth children are proper, their pairs differ by Lemma
+2.3. These are exactly the four listed alternatives after
+relabeling, and none changes the fixed ancestor.
+
+Proof of sufficiency and the raw witnesses. In PP, sixth $J$
+and the raw response $D_0+\lambda U_1$ retain exactly
+$\{W_1,W_2\}$. Last $J$ and response $D_0+\lambda A_1$
+retain that pair; last $M$ and response $D_0+\lambda B_1$
+also retain it. Thus this actual sixth child has $L_1$.
+Sixth $M$ and raw $D_0+\lambda V_1$ retain exactly
+$\{W_1,W_3\}$, whose last-$J$ and last-$M$ witnesses are
+$D_0+\lambda C_1$ and $D_0+\lambda D_1$. This proves both
+action conjuncts of $L_2$ on the same triple.
+
+In PT the $J$ child and its last responses are exactly that
+proper-pair construction. Sixth $M$ with the common raw response
+$D_0+\lambda V_1$ retains the whole triple. A pair supplied by
+$\Delta(C)=0$ supplies a last-$J$ raw response retaining at
+least two members, and a pair supplied by $\Delta(D)=0$
+supplies a last-$M$ raw response retaining at least two.
+The pairs may differ, and both witnesses make the whole-three
+child satisfy $L_1$.
+
+In TP, sixth $J$ with the common raw response
+$D_0+\lambda U_1$ retains the whole triple. The collisions in
+$A$ and $B$ supply its two last-action witnesses, with raw values
+$D_0+\lambda A_i$ and $D_0+\lambda B_j$ for members of the
+respective colliding pairs. Sixth $M$ and raw
+$D_0+\lambda V_1$ retain exactly $\{W_1,W_2\}$, which survives
+last $J$ at raw $D_0+\lambda C_1$ and last $M$ at raw
+$D_0+\lambda D_1$.
+
+In TT, either sixth action's common raw response retains all
+three. For each branch, its two specified zero collision products
+supply the two last-action raw response witnesses. These four
+terminal pairs need not agree. Again both sixth children have
+$L_1$, so the same triple has $L_2$.
+
+For completeness, every real raw response defines its actual
+retained child by intersection with the extended history. Children
+of size zero or one fail the requisite cardinality clause. A
+two-world child can satisfy $L_1$ only by retaining that same
+pair under both last actions. A three-world child permits different
+last-action pairs, exactly as the collision products express.
+The bijection $w\mapsto D_0+\lambda w$ preserves all these
+quantifiers even for $\lambda<0$. Predictions or witnesses for
+unchosen actions are never acquired as extra observations. ∎
+

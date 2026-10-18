@@ -1,0 +1,36 @@
+**Corollary 4.4 (exact continuous timestamp joint-TV obstruction).** For
+every fixed finite $D$ in Definition 4.1 and every common decoder returning
+a real time $\widehat\tau$,
+
+$$
+\Pr(\widehat\tau=\tau\mid\mathsf F)=0,\qquad
+\operatorname{TV}\bigl(
+ \mathcal L(\tau,\tau\mid\mathsf F),
+ \mathcal L(\tau,\widehat\tau\mid\mathsf F)\bigr)=1.
+\tag{EM.15}
+$$
+
+If the actual success/failure flag is retained, the unconditional complete
+joint archive error is at least
+$\tfrac12\max(0,1-D/M)$ for $M$-bin event recovery, and at least
+$1/2$ for exact continuous-time event recovery.
+
+**Proof.** Bin any real decoded output using the same $M$ bins, assigning
+outside values an extra incorrect symbol. Exact equality of times implies
+equality of their bin labels. Thus its conditional probability is at most
+$D/M$ for every positive integer $M$, and must be zero. The diagonal
+$\{(t,t):t\in(0,1]\}$ is Borel. It has mass one under the ideal
+coupling and zero under the decoded coupling, proving total variation
+one. With the actual flag retained, the two flag blocks are disjoint;
+their half-$L^1$ contributions are nonnegative, and the failure block has
+weight $\Pr(\mathsf F)=1/2$. Projecting any larger archive onto these
+coordinates cannot increase error, proving both unconditional bounds.
+$\square$
+
+This does not prohibit arbitrary observers or approximate timestamp
+retention in a different metric. It rules out fixed finite all-accessible
+memory for this exact same-event consumer. Merely encoding a real number
+as a continuously varying finite-dimensional state does not recover that
+number from one specimen. Conversely an actually retained exact event
+archive lies outside (EM.9), and is not dismissed by the bound.
+

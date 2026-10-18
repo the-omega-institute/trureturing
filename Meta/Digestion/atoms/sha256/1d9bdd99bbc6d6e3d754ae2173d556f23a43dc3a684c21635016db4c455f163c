@@ -1,0 +1,22 @@
+**Proposition 7.10 (Native noncommutation and its quotient).**
+Whenever its probability legs are lawful, the chronological word
+$P_s,Q_t,P_{-s},Q_{-t}$ fixes $k,\alpha$ and changes $\beta$ by
+$-st/r$. This generally changes the actual ray, although its
+encoded action under $E_*$ is the identity.
+
+**Proof.** The two phase increments in $\alpha$ cancel. Those in
+$\beta$ sum to
+
+$$
+\left(\frac12-\frac{k+s}{r}\right)t
+ -\left(\frac12-\frac kr\right)t=-\frac{st}{r}.
+$$
+
+The positive $02$ radius makes this observable unless $st/r$ is
+a multiple of $2\pi$. It is not a common-phase gauge of the ray.
+The encoded binomial mixing commutes with the common planar
+rotation of all blocks, and $E_*$ forgets precisely the changed
+circle. Hence the commutator becomes the identity after encoding.
+This is an exact action on an allowed quotient, not commutation
+of the native controls. $\square$
+

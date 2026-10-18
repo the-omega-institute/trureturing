@@ -1,0 +1,35 @@
+**Proposition 174.1 (Sufficient residual recognition).** Let an original
+sequence have active length $L>m\ge2$ at a positive cap $\varepsilon$.
+Set $g_i=a_i-\varepsilon$ for $m<i\le L$, and define $W,E$ by
+(173.4). If $W<1$ and $\varepsilon>E$, put
+
+$$
+A_i=\frac{a_i-W}{1-W}\quad(i\le m),\qquad
+e_0=\frac{\varepsilon-E}{1-W}.
+\tag{174.1}
+$$
+
+These numbers satisfy $1\ge A_1\ge\cdots\ge A_m\ge e_0>0$.
+If there is a finite stopped core satisfying all rows (172.1), the
+original sequence has an $O_2$ attainer, and its same-seed $N_2$
+completion, of exact uniform error $\varepsilon$. At the separate
+$W=1$ endpoint, $\varepsilon=E$ and $a_i=1$ for $i\le m$ suffice
+for the direct core-free construction. Neither criterion asserts that
+$N$ feasibility is preserved by residual subtraction.
+
+**Proof.** Order and $A_1\le1$ follow by subtracting the same $W$ and
+dividing by $1-W>0$. Using $W-E=g_{m+1}$ gives
+
+$$
+A_m-e_0=\frac{a_m-\varepsilon-g_{m+1}}{1-W}
+        =\frac{a_m-a_{m+1}}{1-W}\ge0.
+$$
+
+Thus positivity and every non-strict core inequality hold, without a
+strict original join. Substitution into (173.1) reconstructs the
+given head, cap and late amplitudes exactly; its actual tail is already
+permitted. Apply Theorem 173.1. If $W=1$, the stated direct endpoint
+reconstructs the same data with no core contribution and no division
+by $1-W$. Failure of these sufficient conditions has no implication
+of original $N$ or $O$ infeasibility. $\square$
+

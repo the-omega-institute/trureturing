@@ -1,0 +1,31 @@
+**Proposition 2.2 (credited actual-source realization, with its explicit map).**
+Choose $a_0,q\in(0,c)$, $q\ne a_0$, before choosing $x,\beta,m$. A unit
+fixed-height phase leg of increment $2\pi m$ at $a_0$, the four unit rectangle
+legs with relative vertices
+
+$$
+(a_0,0),\ (q,0),\ (q,B_{\beta,m}),\ (a_0,B_{\beta,m}),\ (a_0,0),
+\qquad
+B_{\beta,m}=\frac{r(\pi m-\beta)-2\pi m a_0}{q-a_0},
+\tag{CP.5}
+$$
+
+and a unit zero-phase arrival $a_0\to x$ realize (CP.4) from the common
+preparation, conditional on the actual live branch. Every earlier canonical
+failure retains its first time, mode and absorbing successor. These histories
+are the supplied witnesses of [Quantum Carrier Minimum][QCM], Proposition 7.2,
+and [Acquired Continuation Limits][AC], Proposition 3.1.
+
+Proof. On the double wall,
+$w(q)-w(a_0)=-(q-a_0)(1,1,0,1,1)/r$. Consequently
+$2\pi m w(a_0)+B_{\beta,m}(w(q)-w(a_0))$ is exactly the displayed real
+residual. The arrival has zero phase velocity. All height legs remain in the
+compact interval between $a_0,q,x$, strictly inside $(0,c)$; all pieces join
+continuously. The phase variation is $2\pi|m|+2|B_{\beta,m}|$, finite for each
+history. The rectangle declaration supplies its lawful transport, and the
+signed phase-leg application in its owning Scribe supplies all integer sectors.
+`concatenate_original` keeps the literal prefix and translates the real tail.
+The finite positive height band gives finite canonical charge and positive
+live probability. No extra specimen, retry or observed waveform is involved.
+$\square$
+

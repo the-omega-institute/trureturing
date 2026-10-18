@@ -1,0 +1,26 @@
+**Corollary 11.5 (arbitrary-span pool compensation).** For any
+consecutive common-support gap $B=(a,b)$, the exact mass identities are
+
+$$
+\sum_{q\in Q_B}\lambda(q)=|V_B|,\qquad
+\sum_{q\in Q_B}(1-\lambda(q))=E_B-D_B.
+\tag{SI.66}
+$$
+
+If every $q\in Q_B$ is a both-conflict state, then, regardless of
+the span and of every other gap,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge|V_B|.
+\tag{SI.67}
+$$
+
+Proof. Theorem 9.3 says that all live occurrences of each $q\in Q_B$
+belong to $V_B$, and that every history in a cell of $V_B$ ends in
+$Q_B$. Sum the cell mass one in (SI.64), using these actual indices,
+to obtain the first identity. Equation (SI.33) then gives the second.
+Under the stated condition every term $1-\lambda(q)$ is nonnegative
+by Theorem 11.4, proving (SI.67). Empty interiors give zero on both
+sides. No independently acquired block entry, restriction operation,
+or allocation of a paid separator is used. $\square$
+

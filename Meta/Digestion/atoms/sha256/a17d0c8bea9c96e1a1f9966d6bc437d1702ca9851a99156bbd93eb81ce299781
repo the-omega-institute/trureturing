@@ -1,0 +1,124 @@
+**Theorem 5.3 (an actual owner-only obstruction, including full support).**
+Reuse the [NCM, Proposition 6.1][NCM] and [SRP, §3][SRP] motif:
+
+$$
+\begin{aligned}
+A&=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,
+\quad Q=\langle C,A\rangle,\\
+(u_0,u_1,u_2,u_3,u_4)
+&=(C,J,\langle C,C\rangle,\langle J,J\rangle,\langle A,Q\rangle),
+\qquad P=\{u_0,\ldots,u_4\}\subset S_3.
+\end{aligned}
+\tag{OCB.39}
+$$
+
+For every nonnegative whole-block $w$ supported on $P$,
+
+$$
+\mathcal U_3(w)=\sum_{s=0}^4w(u_s),\qquad
+\beta_3(w)=\sum_{s=0}^4w(u_s)-\min_{s<4}w(u_s).
+\tag{OCB.40}
+$$
+
+The pressure equality is the credited SRP theorem. The new class boundary
+is that every $V_{\rm own}$ cap at the uniform law $\mu_0$ on $P$
+is at least one, although $\beta_3(\mu_0)=4/5$. For the strictly
+positive probability on the entire actual $S_3$,
+
+$$
+\mu_+=\frac{99}{100}\mu_0+\frac1{100}\operatorname{Unif}(S_3),
+\tag{OCB.41}
+$$
+
+one has
+
+$$
+\beta_3(\mu_+)\le\frac{81}{100},\qquad
+V_{\rm own}\text{ acceptance implies }
+C\ge\frac{6091}{6150}>\frac{99}{100}.
+\tag{OCB.42}
+$$
+
+These conclusions include every product grouping, scaffold step and
+stability step of Definition 5.1.
+
+Proof. The owner reply triples $(r_L,r_R,r_{RL})$ on the five states
+are respectively
+
+$$
+(\alpha,\alpha,\mathsf{absent}),\quad
+(\beta,\alpha,\mathsf{absent}),\quad
+(\mathsf{branch},\mathsf{branch},\alpha),\quad
+(\mathsf{branch},\mathsf{branch},\beta),\quad
+(\alpha,\mathsf{branch},\mathsf{branch}).
+\tag{OCB.43}
+$$
+
+They are distinct, and all three paired targets $L,R,RL$ are
+self-decodable on $P$. Every target range has size at most four.
+Thus $P\in\mathscr R_3$ and $\mathcal U_3(w)\ge w(P)$; the
+total weight gives equality. SRP Theorems 1.2 and 3.2 give the other
+equality of (OCB.40) for every native length, retaining all competitors.
+
+Here is the actual native local fragment exhibiting the loss. In both
+blocks of the credited paired fiber
+$B_* =\{(u_s,u_{\tau(s)}):0\le s\le4\}$, where $\tau$ interchanges
+$1,4$, put owners at $L,R,RL$. Use root constant $(0,0)$ and these
+attained reply-to-factor tables:
+
+| Target | Seed queried | Attained reply-to-factor values |
+| --- | --- | --- |
+| $L$ | own $L$ | $\alpha\mapsto(2,1),\ \beta\mapsto(1,0),\ \mathsf{branch}\mapsto(0,0)$ |
+| $R$ | own $R$ | $\alpha\mapsto(2,1),\ \mathsf{branch}\mapsto(0,0)$ |
+| $RL$ | own $RL$ | $\mathsf{absent}\mapsto(3,0),\ \alpha\mapsto(2,1),\ \beta\mapsto(1,0),\ \mathsf{branch}\mapsto(0,0)$ |
+| $LR$ | own $L$ | $\alpha\mapsto(4,1),\ \beta\mapsto(3,1),\ \mathsf{branch}\mapsto(2,1)$ |
+| $RR$ | own $R$ | $\alpha\mapsto(4,1),\ \mathsf{branch}\mapsto(2,1)$ |
+| $LL$ | other block's $RL$ | $\mathsf{absent}\mapsto(3,0),\ \alpha\mapsto(2,1),\ \beta\mapsto(1,0),\ \mathsf{branch}\mapsto(2,0)$ |
+
+Owner domains are exactly their replies in (OCB.43); unused entries
+have the RRN guards or arbitrary allowed extensions. These are the
+NCM native witnesses, now grouped by their actual owners. For each
+of the five owned triples there exists an incoming $RL$ reply giving
+local weight $w(u_s)$. Since the owner replies distinguish them,
+$L_\eta(w)=w(P)$. Hence no probability on that entire joint owner
+tuple can dominate the local potential with a smaller constant.
+The two blocks must nevertheless use the same actual incoming owner
+values, rather than their independently selected local maximizers.
+With uniform motif weights the positive two-block rows of these tables
+are exactly $B_*$ and have mass $5/25=1/5$; the local owner envelope
+is one in each block. The full potential and compatibility zeros are
+retained in this calculation.
+
+At $D=4$, merge the five canonical trees
+$\langle u_s,u_{\tau(s)}\rangle\in S_4$, naming all other canonical
+states separately. Theorem 3.4 gives a full-family code with exactly
+$15131-5+1=15127$ attained names, $15$ preparation Reads, maximum
+length four, and $49$ submitted letters. A request $RbLL$ uses the
+actual other-block word $R\bar bRL$, with $\bar L=R,\bar R=L$;
+other targets use the table above or a constant. This is a canonical
+full-family realization, distinct from NCM Proposition 6.2's larger
+source-distinguishing code, and is deliberately nonoptimal.
+
+Now $|S_3|=123$ and probability stability from NPC Theorem 6.1 gives
+$\beta_3(\mu_+)\le4/5+1/100$. But
+$\mathcal U_3(\mu_+)\ge\mu_+(P)=99/100+5/12300=6091/6150$.
+Theorem 5.2 propagates this floor through every stated rule. Each full
+alphabet coordinate has mass at least $1/12300$, proving the claimed
+positive-support boundary.
+
+The existing support-complete JTC joint leaf already certifies the
+unperturbed cap $4/5$. Indeed among all thirty-one nonempty subsets
+of $P$, a set omitting a core state has no hard target and mass at
+most $4/5$. On the four core states the hard $LL$ vector has four
+singleton cells, with squared norm $4/25$. On all of $P$ it has
+cells $\{0,4\},\{1\},\{2\},\{3\}$, with squared norm $7/25$.
+Both are at most $16/25$. The other six targets have their NCM
+own-coordinate witnesses. Hence every support in the joint test
+passes, and stability also gives the full-support cap $81/100$.
+The obstruction is to owner-only incoming maximization and its specified
+closure rules; it does not obstruct full joint methods. In particular it
+does not refute optimizer-cofinality after changing $\mu$, general
+multi-owner joint relations, lawful recuts or global recoloring.
+$\square$
+

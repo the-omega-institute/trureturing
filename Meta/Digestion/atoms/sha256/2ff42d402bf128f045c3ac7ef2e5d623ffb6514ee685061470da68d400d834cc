@@ -1,0 +1,76 @@
+### 3.4 一个共同接收器同时达到首项
+
+固定一个只依赖公开图的最小化分配 $a^{\mathrm{opt}}$。以输出标签为行、真实标签为列，定义实矩阵
+
+$$
+D_{cb}=\begin{cases}
+a^{\mathrm{opt}}_{c\leftarrow b},&c\sim b,\\
+0,&\text{其余情形},
+\end{cases}
+\qquad K=D-\frac A2.
+$$
+
+分配恒等式使 $D+D^T=A$，故 $K^T=-K$。
+
+准备 $|+\rangle^{\otimes n}$ 并恰好连续调用 $q$ 次，令 $\Phi$ 的列为 $\phi_b=U_{s(b)}^q|+\rangle^{\otimes n}$。复用 [Recovery][Recovery] §3.4：$q>0$ 时
+
+$$
+G=\Phi^\dagger\Phi,\qquad G_{bc}=x^{h(b,c)},\qquad G>0.
+\tag{3.7}
+$$
+
+对角项为一，包括 $x=0$ 时。正定性来自每个位点的两个候选向量线性无关，其完整张量积族成基，合法子族也线性无关。$\Phi G^{-1/2}$ 是 [Eldar–Forney][EF] 定理 3 的成熟 SRM 正交列构造。将其旋转为末端测量列矩阵
+
+$$
+H=\Phi G^{-1/2}\exp(-xK).
+\tag{3.8}
+$$
+
+$\exp(-xK)$ 是实正交矩阵，所以 $H^\dagger H=I$。测量这些列的一维正交投影，将正交补并入任一固定合法标签。所有候选态都在 $H$ 的列空间，故该补全不改变其决策概率。
+
+精确决策振幅矩阵为
+
+$$
+H^\dagger\Phi=\exp(xK)\sqrt G.
+\tag{3.9}
+$$
+
+因此这个共同接收器的精确可达最坏错误是
+
+$$
+\max_b\left\{1-
+\left|[\exp(xK)\sqrt G]_{bb}\right|^2\right\}.
+\tag{3.10}
+$$
+
+式（3.10）是指定接收器分数，不是精确有限参数 minimax 最优值。
+
+固定 $n$ 时，距离一的项给出
+
+$$
+G=I+xA+O_n(x^2).
+$$
+
+邻近 $I$ 的收敛矩阵平方根级数及矩阵指数给出
+
+$$
+\begin{aligned}
+\sqrt G&=I+\frac x2A+O_n(x^2),\\
+\exp(xK)&=I+xK+O_n(x^2),\\
+H^\dagger\Phi&=I+xD+O_n(x^2).
+\end{aligned}
+\tag{3.11}
+$$
+
+这些余项可只依赖 $n$：$K$ 的绝对行和、列和至多为 $n/2$，且 $\|G-I\|_{\mathrm{op}}\le(1+x)^n-1$。固定标签数有限，近 $x=0$ 时上述级数的范数余项可统一界定。
+
+每列的总测量概率为一，故将列 $b$ 的非对角振幅平方求和即为来源 $b$ 的错误。式（3.11）给出
+
+$$
+\eta_b=x^2L_b(a^{\mathrm{opt}})+O_n(x^3),\qquad
+\max_b\eta_b=\kappa_nx^2+O_n(x^3).
+\tag{3.12}
+$$
+
+于是 $\delta_n\le\kappa_nx^2+O_n(x^3)$。与式（3.6）的下界合并，证明全原协议类的 (B)。无需输入参考，也没有独立二元接收器的相容性假定。
+

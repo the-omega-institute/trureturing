@@ -1,0 +1,16 @@
+**Definition 6.1 (an opaque coded register).** A coded presentation of
+Assumption 1.2 has hidden original parameter $X\in B[D]$ and current
+register state $Y=\tau_NX$. It has exactly the same accessible controller
+state and the same ports as the native presentation. The semantic effect
+of an actual update is $Y\mapsto\tau_1Y$. An actual request of the literal
+word $p$ returns $\lambda(\nu_p(Y))$. Halt is absorbing. The controller
+cannot inspect $X,Y$, their constructor structure, primitive ranks,
+$\mu$, $Z$, or the cell valuation. It has no additional operation for
+$J$, $E$, $B$, navigation or code equality on the unknown register.
+
+These are semantic descriptions of the existing ports. In a physical
+realization an update is still $\mathsf{ApplyRho}$ on the same register,
+and a read is still $\mathsf{Read}(p)$ at the same original root. Local
+computations may use acquired finite data and hypothetical candidates,
+under the same restrictions as the native controller.
+

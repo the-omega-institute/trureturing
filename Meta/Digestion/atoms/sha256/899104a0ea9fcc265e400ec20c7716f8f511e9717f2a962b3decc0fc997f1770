@@ -1,0 +1,27 @@
+**Proposition 3.3 (receiver distinguishability versus flat capacity).**
+Let $\mathcal P$ be a set of completed payloads possible at a specified
+receiver cut in one installation. Suppose the committed literal is a
+function of the receiver configuration alone, with fixed common decoder
+data and no sender-row side information. Then different members of
+$\mathcal P$ require different receiver configurations. In particular
+receiver capacity is at least $|\mathcal P|$. This does not imply $P$
+mutable bits from the occurrence of one word of length $P$.
+
+Proof. If two different words had the same receiver configuration,
+its decoded literal would have two values. For a counterexample to the
+bit inference, a receiver for $\{R^0,\ldots,R^P\}$ can accumulate the
+number of received $R$s in $\lceil\log_2(P+1)\rceil$ bits. It must also
+count its receipt/termination control and any subsequent rendering
+head; eventual flat materialization is an additional allocation under
+an interface demanding literal cells. The configuration-progress
+argument of Theorem 2.2 still applies during autonomous rendering.
+This example is a representation distinction, not a complete compressed
+solution of the all-shape parity problem.
+
+If a receiver can receive all $2^P$ words of length $P$ with the same
+other retained data, the distinguishability argument instead forces
+at least $P$ bits in it. That premise has not been deduced from (2.1).
+A receiver with $P$ individually mutable materialized cells has that
+capacity by its chosen allocation, even if only one such word is ever
+used. Neither statement identifies a sharp total-memory minimum. ∎
+

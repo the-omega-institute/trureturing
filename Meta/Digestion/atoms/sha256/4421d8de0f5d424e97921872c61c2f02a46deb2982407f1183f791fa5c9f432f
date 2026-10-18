@@ -1,0 +1,6 @@
+**定义 4.2（整条服务成功）。** 将合法词按低位到高位分成 $W_j(b)=(b_{3j-2},b_{3j-1},b_{3j})$，$1\le j\le N$。每窗属于 $\Sigma=\{000,100,010,101,001\}$，分别对应 $\mathrm{null},2,3,2\ 5,5$；接缝仍满足 $b_{3j}b_{3j+1}=0$。这是 [FIB 白盒卷](https://github.com/the-omega-institute/trureturing/blob/aeb45cd336fe958eabf799ee4580bbad1e364077/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md) 定义 2.1 的字典及 SIC 时间取得卷定义 1.5 的完整合法域。
+
+安装输出为闭合确定性服务：每个合法索引请求 $j$ 返回对应窗口；安装和每个合法回复均有限终止。安装后保留取得数据，不再访问源或源相关建议。安装可随机化，安装后的服务确定。整条成功要求每一条有限合法查询历史上的回复都正确，包括重复索引和依回复自适应选择的索引。
+
+指针版本另保留初值为 $1$ 的 $a\in\{1,\ldots,N+1\}$。索引读不改 $a$；$\mathrm{Next}$ 恰在 $a\le N$ 时合法，返回 $W_a(b)$ 并把 $a$ 加一。此接口没有 $\mathrm{End}$；末尾 null 照常占用三位。
+

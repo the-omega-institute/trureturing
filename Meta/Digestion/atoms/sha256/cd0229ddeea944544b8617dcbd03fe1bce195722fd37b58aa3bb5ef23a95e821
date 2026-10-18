@@ -1,0 +1,95 @@
+**Theorem 5.1 (universal certificate and its unique equality aggregate).**
+For every admitted state set
+
+$$
+B_\xi=\begin{pmatrix}
+c_\xi&i\sqrt\alpha\,\sigma_\xi&0\\
+-i\sqrt\alpha\,\sigma_\xi&-\alpha c_\xi&0\\0&0&-\beta
+\end{pmatrix},\qquad \mathcal S=C-\lambda B_\xi.
+\tag{NP.34}
+$$
+
+Every $L\in\mathcal C_2$ has $\operatorname{tr}(B_\xi L)\leq0$.
+The matrix $\mathcal S$ is PSD of rank two with kernel $\mathbb C h$.
+For EVERY original finite competitor on the normalized input $E\rho E^\dagger$,
+put $a_{\rm acq}=\operatorname{tr}(G_{\rm acq}E\rho E^\dagger)$. Then
+
+$$
+\begin{aligned}
+a_{\rm acq}-F
+={}&\operatorname{tr}\left[(G_{\rm acq}-E\Theta(H)E^\dagger)
+                                               E\rho E^\dagger\right]\\
+ &+\lambda\,[\operatorname{tr}(B_\xi H)-k_\xi]
+   +\operatorname{tr}(\mathcal S H)\ \geq\ 0.
+\end{aligned}
+\tag{NP.35}
+$$
+
+All THREE displayed terms are nonnegative. The same lower bound holds
+for supported-live high cost. Equality in that live bound forces exactly
+$H=H_*$. Furthermore
+
+$$
+F=\operatorname{tr}(CH_*)=Ap+B_Tq-2\gamma r_0>0,
+\qquad
+kA-F=\lambda\beta(1-c_\xi)+
+             k(B_T+\lambda\alpha c_\xi)q/p>0.
+\tag{NP.36}
+$$
+
+Proof. For a quadratic-null $z=(u,v,w)$ define real numbers
+$x=|u|^2-\alpha|v|^2$ and
+$y=2\sqrt\alpha\operatorname{Im}(u\overline v)$. Expansion gives
+
+$$
+x^2+y^2=|u^2-\alpha v^2|^2=\beta^2|w|^4.
+\tag{NP.37}
+$$
+
+The off-diagonal sign in (NP.34) gives
+$z^\dagger B_\xi z=c_\xi x+\sigma_\xi y-\beta|w|^2\leq0$
+by Cauchy–Schwarz. On the ENTIRE plane $u=0$ the same pairing is
+$-\alpha c_\xi|v|^2-\beta|w|^2\leq0$. Positive finite sums prove the
+full-cone inequality. Since $I-H=L_++L_-$, it gives
+$\operatorname{tr}(B_\xi H)\geq\operatorname{tr}B_\xi=k_\xi$.
+Neither a real cone nor only the quadratic component was substituted.
+
+Let $b_*=B_T+\lambda\alpha c_\xi>0$. The formulas for $\lambda,\gamma$
+are exactly the two identities
+
+$$
+A-\lambda c_\xi=b_*q/p,\qquad
+\gamma-\lambda\sqrt\alpha\,\sigma_\xi=b_*\sqrt{q/p}.
+\tag{NP.38}
+$$
+
+Thus the $DT$ block of $\mathcal S$ is
+$b_*\left(\begin{smallmatrix}q/p&i\sqrt{q/p}\\-i\sqrt{q/p}&1\end{smallmatrix}\right)$,
+a positive rank-one outer product whose kernel is
+$(\sqrt p,i\sqrt q)^T$. Its other eigenvalue is $b_*(1+q/p)$, and
+the $SS$ entry is $C_S+\lambda\beta>0$. This proves its PSD rank and
+kernel. The sole nonzero eigenvalue of $H_*$ is $t<1$, so
+$0\preceq H_*\preceq I$. Also
+
+$$
+h^\dagger B_\xi h=c_\xi(p-\alpha q)
+ -2\sqrt\alpha\,\sigma_\xi r_0
+ =c_\xi(1-\alpha)-\beta(c_\xi^2+\sigma_\xi^2)=k_\xi.
+\tag{NP.39}
+$$
+
+Consequently $\operatorname{tr}(CH_*)=\lambda k_\xi=F>0$, and direct
+trace evaluation gives its expression in (NP.36). Subtracting this
+identity from the cost and using Proposition 3.3 proves (NP.35).
+
+If the last two terms vanish, positivity implies
+$\|\mathcal S^{1/2}H^{1/2}\|_F^2=0$, hence
+$\operatorname{ran}H\subseteq\mathbb C h$. Write $H=aH_*$ with $a\geq0$.
+Its $B_\xi$ trace is $a k_\xi$; equality and $k_\xi>0$ give $a=1$.
+Acquired equality also makes the SELECTED expectation of the first
+slack term zero; no whole-operator vanishing is inferred from that one
+expectation. Finally insert $H_0=k|D\rangle\langle D|$ into the same
+last-two-term identity. Its $B_\xi$ excess is $\beta(1-c_\xi)$ and
+$\mathcal S_{DD}=b_*q/p$, giving the saving formula. Both summands are
+strictly positive. $\square$
+

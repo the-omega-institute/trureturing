@@ -1,0 +1,23 @@
+**定义 3.2（每个槽的全部核心过滤）。** 要求
+
+$$
+t>1,\qquad d\notin\{0,24,48,z,Y\},\qquad IH Q_5 K_6\ne0,
+\tag{3.8}
+$$
+
+并置
+
+$$
+j=140VD/I,\quad n=70AD/H,\quad r=n-j,\quad b=t-1,\quad c=j-b.
+\tag{3.9}
+$$
+
+继续要求
+
+$$
+0<r<1,\qquad c>0,\qquad(t-1)c=r(1-r),\qquad \mathsf P(d,t)\ne d.
+\tag{3.10}
+$$
+
+整个 $g$ 只取式 (3.1)。最后一项也由 $Q_5\ne0$ 及正第五迹推出，但显式保留。
+

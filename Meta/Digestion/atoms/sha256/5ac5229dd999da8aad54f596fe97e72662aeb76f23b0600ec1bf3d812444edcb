@@ -1,0 +1,27 @@
+**Theorem 7.2 (reversible image denotation, with a concrete consumer).**
+An authentic native HistoricalImage actually received in Theorem 7.1
+has a reversible unary structural denotation of its selected old cut.
+The native ClientImage consumer square commutes with this denotation.
+No paid materialization of $S,B,T$ or $M_J$ as new output lists follows.
+
+Proof. Parse the supplied 74-port physical-state/event/binding codec
+of ARC Definition 7.3 and RCA Definition 12.4. Encode its actual old
+raw record by $\Gamma_U$ and its event word by the fixed initialized
+patch rules, retaining the actual binding. Direct raw decoding and
+native event erasure return exactly those native fields; reserializing
+with the same codec returns the identical received bytes. Conversely
+encoding those decoded fields gives the same structural denotation.
+The consumer already checks those actual native bytes, source/version/
+cut fields and binding; decoding before that check leaves its arguments
+unchanged. Thus it is a present consumer of an actually acquired image
+with this mathematical denotation, not a promise of an unused interface.
+
+The old endpoint excludes later serialization/publication and consumer
+work. Its target's code/partial-version tag is not the later service
+version. Neither the finite inverse nor the existing checker executes
+a graph traversal that prints support, boundary, adjacency, memory or
+occurrence lists. Such output would need a separately initialized native
+converter, owned code/scratch/metadata, current receiver consumer and
+all its additional cuts/prices. No fixed-$H$ or other-apparatus converter
+is identified with this missing 74-role interface. ∎
+

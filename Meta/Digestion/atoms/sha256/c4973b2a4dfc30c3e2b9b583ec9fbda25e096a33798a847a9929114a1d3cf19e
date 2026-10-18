@@ -1,0 +1,65 @@
+**定理 53.4（精确Read轴的完整有限上界）。** 在 $\delta=0$、$0<\eta\le1/100$ 下，定义53.3取 $\rho=\eta$，存在全定义的报告解码器 $E^4\to W$，使（53.11）的三更新四实际Read控制器逐合法联合历史满足
+
+$$
+\mathcal E_\pi(0,\eta)\le L_0+25\eta.
+\tag{53.14}
+$$
+
+证明。$y_0=a$，$y_3=\mu w$，$\mu\in[m,1]$。内层给 $|y_3|\le7$，外层给 $|y_3|\ge25mh$。两层严格分离，因为 $K\ge1-\eta^2$、$m\ge1-2\eta$，且
+
+$$
+25mh=m(7K+24\eta)
+\ge7+10\eta-55\eta^2+14\eta^3>7.
+\tag{53.15}
+$$
+
+最后的不等式由 $0<\eta\le1/100$ 得到。故以公共 $T_0=(7+25mh)/2$ 定义
+$\widehat R=7$ 当 $|y_3|\le T_0$，否则 $\widehat R=25$，合法报告总有 $\widehat R=R$，无需半径标签。
+
+以下定义用于全部四报告空间。令 $r=|y_3|$，$n=y_3/r$ 当 $r>0$、$n=0$ 当 $r=0$，并置
+
+$$
+\begin{aligned}
+\ell_-&=\min\{R,r\},\qquad \ell_+=\min\{R,\ell_-/m\},\\
+A&=\sqrt{R^2-\ell_+^2},\qquad B=\sqrt{R^2-\ell_-^2},\\
+\widehat s&=(A+B)/2-R\eta,\qquad
+\widehat w=((\ell_-+\ell_+)/2)n,\\
+\widehat x&=\left(y_0,(\widehat s+\widehat w)q^{-1}\right),\qquad R=\widehat R.
+\end{aligned}
+\tag{53.16}
+$$
+
+$0\le\ell_-\le\ell_+\le R$、$m>0$，根号与输出在所有报告上有定义，零报告不除零。输出不必在来源中。$y_1,y_2$ 仍保留为实际记录。
+
+对合法报告 $r=\mu|w|\le R$，正增益保证 $w$ 与 $y_3$ 同方向，且
+$|w|\in[\ell_-,\ell_+]$。由球面身份，$A\le|s|\le B$。若 $s\ge0$，$s\in[A,B]$；若 $s<0$，（53.13）给 $|s|\le R\eta$，又 $A\le|s|$，所以 $s\ge A-2R\eta$。两种符号均给
+
+$$
+|\widehat s-s|\le(B-A)/2+R\eta,\qquad
+|\widehat w-w|\le(\ell_+-\ell_-)/2.
+\tag{53.17}
+$$
+
+径向端点的两种情况 $r\le mR$ 与 $r\ge mR$ 分别给
+
+$$
+\ell_+-\ell_-\le R(1-m),\qquad
+(B-A)^2\le B^2-A^2=\ell_+^2-\ell_-^2\le R^2(1-m^2).
+\tag{53.18}
+$$
+
+第一情况中端点为 $r,r/m$，第二情况中端点为 $r,R$；两界的最大值均在 $r=mR$，故不需要任何增益分布假设。将（53.17）按实部、虚部正交相加，再在二维误差向量上应用三角不等式，得到
+
+$$
+\begin{aligned}
+|\widehat b-b|
+&\le\sqrt{\bigl((B-A)/2+R\eta\bigr)^2+
+                 \bigl((\ell_+-\ell_-)/2\bigr)^2}\\
+&\le\frac R2\sqrt{(1-m^2)+(1-m)^2}+R\eta\\
+&=R\sqrt{\zeta/2}+R\eta\le L_0+25\eta.
+\end{aligned}
+\tag{53.19}
+$$
+
+右乘 $q^{-1}$ 等距，初始可见槽误差为零，所以这是完整INITIAL欧氏误差。结论逐合法历史成立，包含任意无界 $a$、任意相关的两个增益；未取得隐藏增益数值。证毕。
+

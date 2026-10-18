@@ -1,0 +1,16 @@
+**Definition 31.1 (Finite CP growth data).** Let $D\ge1$ be an
+integer and let
+
+$$
+\Phi:M_D(\mathbb C)\longrightarrow M_D(\mathbb C),
+\qquad
+\Phi(X)=\sum_{\ell=1}^{s}A_\ell X A_\ell^*,
+\tag{31.1}
+$$
+
+be a completely positive map with a finite Kraus family.  Write
+$R=\rho(\Phi)$ for the spectral radius of the complex-linear
+superoperator acting on $M_D(\mathbb C)$, and assume $R>0$.  A norm
+on this finite-dimensional superoperator space is fixed once and for
+all; no uniformity over maps, Kraus families or norms is intended.
+

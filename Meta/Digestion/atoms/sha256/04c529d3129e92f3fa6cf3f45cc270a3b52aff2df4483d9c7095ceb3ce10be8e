@@ -1,0 +1,138 @@
+**Theorem 3.2 (source-dependent complete stopped-episode bound).** For
+every $M\ge1$ and every prior of Assumption 1.1,
+
+$$
+\begin{aligned}
+\operatorname{TV}(\mathsf P^+_{0,M,\mu},
+                         \overline{\mathsf P}^+_{M,\mu})
+&\le\frac1M\sum_k\mu(k)
+       \frac{(1-r_k)r_k(1-r_k)}{[1-r_k(1-r_k)]^2}\\
+&\le\frac{100}{361M}=:\varepsilon_M.
+\end{aligned}
+\tag{3.2}
+$$
+
+The bound also holds after conditioning on any positive original
+pre-latch finite history $h$, with $\mu$ in the first line replaced by
+its actual posterior $\nu_h$ and the whole remaining episode observed.
+There is no bound on the length of $h$ in this assertion. The same
+universal bound holds for the original $O$ and for every statistic or
+adaptive prefix permitted by Definition 3.1. Indeed the unaugmented
+original transcript has identical laws under all hypotheses.
+
+**Proof.** Conditional on $K=k$, the original source is an independent
+letter stream, and native scheduling uses only the original control and
+the next raw letter [NATIVE-DRIVE, `nextOperation`, `nativeDrive`].
+Couple that entire stream identically under all hypotheses. This is a
+proof coupling, not an evaluator observation or reset. It couples every
+seed rejection, partial pair, accepted seed, early payload return,
+record write and latch exactly, together with every paid Read.
+The private labels do not alter this schedule.
+
+Seed acceptance occurs almost surely: each successive pair accepts
+with probability $2r_k(1-r_k)\ge4/9$. Each of the four payload stages
+completes almost surely, since a return has probability
+$r_k(1-r_k)\le6/25$. Thus the full stopped transcript is finite almost
+surely at every depth and under every countable mixture. Infinite
+noncompletion paths remain in the space with mass zero. The latch is
+at an almost surely finite stopping time for the same stream. Conditional
+on $K$, its future letters have the same independent law: partition by
+its finite prefixes and apply the product-law factorization. This is
+also the source-tail content of [NATIVE-JOINT,
+`ordered_history_factorization`].
+
+Let $L$ be the total number of actual p-beta updates in the fourth
+segment. A completed raw fourth word $w_{j,0}$ has $L=j$; a word
+$w_{j,1}$ has $L=j+1$. Equivalently, for $\ell\ge1$,
+
+$$
+\Pr(L\ge\ell\mid K=k)
+ =(1-r_k)[r_k(1-r_k)]^{\ell-1}.
+\tag{3.3}
+$$
+
+The first beta costs one source Read. Each further such beta requires
+the preceding suspended-alpha return and another p-beta, both paid.
+This gives (3.3) without conditioning on a future completion.
+
+Conditional on any fixed complete finite original source transcript,
+the p label initially sampled at the latch and each p label after an A
+return are independent uniform points of $X$. They are independent of
+that source transcript. This statement concerns the ordered path, not
+just its one-cut marginals: every row of $A$ equals $\pi$, independently
+of the preceding suspended label. In particular the p inputs
+$I_1,\ldots,I_L$ of the B updates are independent uniform labels.
+There can additionally be a final p label followed by completing alpha;
+it is uniform and does not consult any sign. All these labels may be
+revealed in $O^+$.
+
+For fixed source and p labels, under hypothesis $\xi$ the probabilities
+of the successive suspended labels $J_1,\ldots,J_L\in\{-1,+1\}$ multiply
+as
+
+$$
+\Pr_\xi(J_1=j_1,\ldots,J_L=j_L\mid O,I)
+ =2^{-L}\prod_{q=1}^L
+    \left(1+\frac12j_qs_{I_q\bmod4}\xi_{\lfloor I_q/4\rfloor}\right).
+\tag{3.4}
+$$
+
+Here $O$ consists only of the fixed original source/control transcript;
+no synthetic emission probability enters (3.4). Under the null the
+conditional probability is $2^{-L}$.
+
+Let $C$ be the event that two of these B inputs lie in the same
+four-label block. Off $C$, every sign in the product (3.4) occurs just
+once, so its average over the independent uniform *hypothesis* signs is
+exactly one. Therefore the null and mixture measures agree on every
+measurable subset of $C^c$. The source and p-label marginals are common,
+so both assign the same probability to $C$ as well. Their TV is at most
+that common probability. This argument can alternatively be realized
+as equality coupling up to the first repeated B-input block.
+
+Each pair of B inputs shares its block with probability $1/M$.
+Conditioning first on the entire source transcript gives
+
+$$
+\Pr(C\mid O)\le\frac{\binom L2}{M},\qquad
+\operatorname{TV}(\mathsf P^+_0,\overline{\mathsf P}^+)
+ \le\frac{\mathbb E_\mu\binom L2}{M}.
+\tag{3.5}
+$$
+
+This conditioning retains the dependence between the length of the
+fourth segment and the once-drawn source depth. By (3.3) and nonnegative
+summation, with $t_k=r_k(1-r_k)$,
+
+$$
+\mathbb E\left[\binom L2\mid K=k\right]
+ =\sum_{\ell\ge2}(\ell-1)(1-r_k)t_k^{\ell-1}
+ =\frac{(1-r_k)t_k}{(1-t_k)^2}
+ \le\frac{(2/3)(6/25)}{(19/25)^2}=\frac{100}{361}.
+\tag{3.6}
+$$
+
+Countable summation against $\mu$ proves (3.2). This is a full stopped
+path bound, not a deterministic-length independent-edge surrogate.
+No rare pre-latch histories were removed: their laws were coupled
+identically before the calculation of $L$.
+
+More explicitly, for any positive original pre-latch history $h$, the
+source factorization gives posterior $\nu_h$ and, conditional on the
+same $K$, independent unread letters. Private signs have not yet been
+consulted. The remaining seed and early-payload stages reach the latch
+almost surely, including from a partial seed pair or suspended early
+phase. Repeat the preceding coupling from this cut with $\nu_h$.
+This proves the conditional assertion for every such $h$, including
+histories with arbitrarily many paid rejections. It does not claim a
+uniform conditional bound after a long label-revealing fourth history
+has already exposed repeated blocks.
+
+Finally, measurable postprocessing contracts TV; the erasure map in
+Definition 3.1 gives the stated observation direction. The unaugmented
+$O$ depends only on the common source and original control, so its laws
+are exactly equal. An evaluator choosing when to report or cease
+observing cannot manufacture a longer episode or an additional Read.
+The resulting record is a function of $O^+$ and its independent
+randomness, so (3.2) still applies. $\square$
+

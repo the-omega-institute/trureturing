@@ -1,0 +1,8 @@
+### 定义 58.1（有限残差语法与统一分离元）
+
+令 \(\operatorname{MixedExpr}(\mathrm{Fin}\ m)\) 由有限 native ground、带 decoration 的共享 residual 名称及有序 pair 生成。令 weight 为 ground/pair 的 native constructor mass，decoration 为最大 residual exponent。对给定 \(m,M,d\)，令
+\[
+\operatorname{separator}(m,M,d):\mathrm{Fin}\ m\to\mathrm{Source}
+\]
+为按 native substitution iterates 构造的有限 tuple。
+

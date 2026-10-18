@@ -1,0 +1,21 @@
+## 463. 原曲率的正 Volterra 递归与收敛到原 A 的严格下界
+
+保持同一个原函数、原实际曲率和完整两段常数：
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\qquad B(v)=\Phi''(v),\qquad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{RVF.1}
+$$
+
+本节构造原 B 的正积分递归。每个有限递归层都给出一个严格下界，
+这些下界严格递增到同一个原 A；整个无穷尾有显式误差界。
+下文未注明区间的积分一律是完整正轴上的 Lebesgue 积分
+$\int_0^\infty$。零点没有原子，对数只在正轴上使用。
+

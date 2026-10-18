@@ -1,0 +1,26 @@
+**引理 7.4.1（两个不变性）。**
+
+$$
+A\mathcal R\subseteq\mathcal R,
+\qquad
+A\mathcal N\subseteq\mathcal N.
+$$
+
+**证明。**
+
+第一式对生成元逐项成立：
+
+$$
+A(A^k\operatorname{im}B)=A^{k+1}\operatorname{im}B\subseteq\mathcal R.
+$$
+
+若 $z\in\mathcal N$，则对任意 $k\ge0$，
+
+$$
+CA^k(Az)=CA^{k+1}z=0,
+$$
+
+故 $Az\in\mathcal N$。证毕。
+
+<a id="claim-7-4-2"></a>
+

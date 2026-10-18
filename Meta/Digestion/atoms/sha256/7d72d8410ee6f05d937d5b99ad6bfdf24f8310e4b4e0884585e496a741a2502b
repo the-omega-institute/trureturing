@@ -1,0 +1,43 @@
+## 3. A signed change specific to the stopped source
+
+Write δ_p=2ρ_p and δ_β=2ρ_β. Define the complete-word events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad E_\beta =\{\beta ,\alpha \beta \beta \}.
+$$
+
+They are the positive-difference events of endpoint 1 against endpoint 2. Indeed, for p marker-1 words the endpoint-2/endpoint-1 ratio is (81/100)(27/25)^j, crossing one between j=2 and j=3. For suspended αw_{j,1} the ratio is (243/250)(27/25)^j, crossing between j=0 and j=1. The marker-0 ratios exceed one throughout. Consequently
+
+$$
+\delta _p=412/729-7299/15625=1116529/11390625,
+$$
+
+$$
+\delta _\beta =22/27-93/125=239/3375.
+$$
+
+For r∈I, their probabilities are
+
+$$
+\varphi _p(r)=(1-r)^2(1+a_r+a_r^2),\qquad \varphi _\beta (r)=1-r+r(1-r)^2.
+$$
+
+Use the scaled parameter z=15r−5∈[0,1]. The normalized event scores are
+
+$$
+\begin{aligned}
+T(z)&=\frac{412/729-\varphi _p((5+z)/15)}{\delta _p}\\
+&=\frac{1125000z-1875z^2-6625z^3+30z^5-z^6}{1116529}.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+S(z)&=\frac{22/27-\varphi _\beta ((5+z)/15)}{\delta _\beta }\\
+&=\frac{225z+15z^2-z^3}{239}.
+\end{aligned}
+\tag{3.1}
+$$
+
+Both run from zero to one. For example the numerator derivative of T is at least 1101369 on [0,1], and S′(z)≥225/239.
+

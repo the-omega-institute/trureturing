@@ -1,0 +1,153 @@
+**Proposition 86.1 (one common instrument for every stated attainer).**
+Every finite family in Theorems 78.3, 79.1, 82.1, 82.3, 83.1 and
+84.1, Proposition 82.5, and the recovery families of Theorems 81.2–81.3
+is realized as follows. For each nonzero low live product $K$ and its
+attached effect $N$, choose
+$J:\mathbb C^2\to\operatorname{ran}K^\dagger$ isometric and use
+exactly FA.11's matrices $C,B,F$ on its entire qubit fibre. They have
+$BC=K$, $C^\dagger FC=N$, $B^\dagger B+F=I_2$ and $F\prec I$.
+Use FA.13's no-jump path and separately labelled current-survivor jumps,
+and terminal isometry $B(I-F)^{-1/2}$ on survivors only. Each label's
+minimum activity is FA.9. Pure labels have $N=F=0$ and zero activity.
+Generate all declared labels before the acquisition cut; permanently
+discard every other input-bearing dilation system before that cut.
+
+In the weak regime add $\sqrt{1-\delta}D$ as a whole three-dimensional
+high branch, with fair binary report. In the strong regime instead add
+
+$$
+H_\sigma=\frac{\sqrt{1-u^\dagger}D+
+                 \sigma\sqrt{1-v^\dagger}T}{\sqrt2},
+\qquad \sigma=\pm1,
+\tag{FA.79}
+$$
+
+reporting $\sigma$ on these and on the four corresponding low rays.
+Use their entire three-dimensional fibres with live isometry $E$ and
+rate zero. Fix isometries
+$W:\mathbb C^2\to V^\perp$ and $J_0:\mathbb C^2\to\mathbb C^3$;
+add encoder $W^\dagger$ into an entire counted qubit and live decoder
+$EJ_0$, with rate zero and a fair report. No supported-nonzero branch
+is omitted; a zero coefficient or zero measure atom is omitted before
+forming any inverse.
+
+These prescriptions simultaneously give one full complex CPTP
+instrument, all original individual errors, contrast inequality, sharp
+joint cost and the actual FIRST clock, rather than separate optima for
+these requirements.
+
+**Proof.** The weak families were shown to have total low live
+Gram $L_0$ and total failure effect $M$. The strong family uses
+$\operatorname{diag}(u^\dagger,v^\dagger,1)$ and the same $M$;
+FA.79 supplies exactly its complementary high Gram. Hence the total
+supported live Gram is $I_3$ in both cases. Each local factorization
+satisfies the hypotheses of Proposition 70.1; its positive encoder
+effect is $K^\dagger K+N$. Summing and using the source-root TP
+identity gives total encoder effect $I_5$ after precomposition by
+$E^\dagger$ and addition of $W^\dagger$. Each branch is CP/TNI
+because its positive effect is bounded by this sum. The dimension is
+the entire subsequently accessible joint fibre; the qubit complement
+is coherent and counted even though all twelve specimens have zero
+probability in it. This is the JR original-class completion of Theorem
+75.1, explicitly different from the fixed certain-failure CA.10.
+
+For clarity, the actual output on every complex $X\in M_5$, forgetting
+acquisition labels, is exactly
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^\dagger XE)+
+                      J_0W^\dagger XWJ_0^\dagger]E^\dagger,\\
+\Phi^f_\ell(\mathcal B)(X)&=
+ w_\ell\left(\int_{\mathcal B}\frac{2\,dt}{(1+t)^2}\right)
+ \operatorname{tr}(EME^\dagger X)P_f,\qquad
+ \ell\in\{0,1,2,3,13\}.
+\tag{FA.80}
+\end{aligned}
+$$
+
+These are the existing FA.34 identities applied to each new moment
+family. Their validity on all complex matrices follows from the live
+coefficient Gram identity and the positive failure functionals; no
+real-state or twelve-state fit is substituted. At a passive reference,
+tensor every live Kraus with $I_R$ and replace the failure trace by
+
+$$
+P_f\otimes\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]
+$$
+
+with the same scalar Borel coefficient. This is the conditional
+reference operator, not an unconditional reference marginal. The
+density identity proves every Borel set, separately for all five labels.
+The maps at $0$ and $13$ vanish separately; $1,2,3$ retain their
+individual weights $1/4,1/2,1/4$. There are no singular, abort,
+wrong-support or uncounted extra sectors in these attainers. Necessities
+continue to quantify over every admitted competitor time CP law;
+the common choice $g(t)=2/(1+t)^2$ is only this explicit attainer.
+
+On an original specimen the complementary term is zero. Thus the
+complete output is the credited CG simulator, not the ideal target.
+Writing $\rho_y=a_ya_y^T$ and the ideal live matrix as
+$B_y^{\rm ideal}=\xi_y\xi_y^T$ with
+
+$$
+(\xi_{yi}^2)_i=
+ \left(\frac y{128},\frac{y(58-y)}{128(y+6)},\frac y{2(y+6)}\right),
+$$
+
+the individual error is exactly
+
+$$
+e_y=\frac12\left[\|\Lambda_*(\rho_y)-B_y^{\rm ideal}\|_1
+ +\sum_\ell w_\ell\int_0^1
+ |\operatorname{tr}(M\rho_y)g(t)-6y/(y+6t)^2|dt\right].
+\tag{FA.81}
+$$
+
+Covariance gives this value for each of the four sign pairs at the same
+height. CG.143 supplies $e_5=e_{27}=E_*$ and
+$e_{16}<71/484<37/250<E_*$. Thus all twelve individual values are
+preserved; they are not all equal to $E_*$. Height TV loss and
+$\gamma_f$ are not additions to this original HALF error.
+
+Let $\mathsf a_y=\operatorname{tr}(D^\dagger D\rho_y)$ and
+$\mathsf b_y=\operatorname{tr}(T^\dagger T\rho_y)$.
+Only the high branches have joint dimension at least three, and their
+supported effect is
+$(1-u_s)D^\dagger D+(1-v_s)T^\dagger T$.
+Their acquisition probability at every history of height $y$ is
+$(1-u_s)\mathsf a_y+(1-v_s)\mathsf b_y$, maximized at $y=27$.
+It is exactly the original sharp $\mathsf C(s)$ by JR34–40.
+For the weak families $(u_s,v_s)=(\delta,1)$; for the strong families
+it is the explicit dagger pair. This counts acquisition even when its
+carrier later fails, without expected dimension or uncounted coherent
+shares. The complementary qubit has zero original-history probability
+but is still included in its whole fibre's rate norm.
+
+Failure effects kill coordinate zero. The weak sign reports therefore
+give contrast $s_0\sum p_j|z_j|\ge s$, and the strong high/low
+reports give
+$\sqrt{u^\dagger v^\dagger}+
+ \sqrt{(1-u^\dagger)(1-v^\dagger)}=s^\dagger$.
+No other binary-effect coordinate is fixed. Optional report coins have
+common input-independent probabilities and may retain their parent
+labels; they need not be used to satisfy a smaller contrast inequality.
+The TV in FA.37 or the strong allocation is computed from the same
+actual acquisition effects, with live and attached failure contributions
+combined inside each label before taking the absolute value.
+
+FA.13 is a chronological first-event instrument. Its current-survivor
+jump pulls back to $w_\ell g(t)\operatorname{tr}(F\,\cdot)P_f$;
+its survivor effect is positive throughout and at the endpoint. The
+first executed failure is at absolute time $6+t$. Only survivors
+receive terminal isometry; failed carriers receive no later
+positive-carrier action and there is no forced deadline absorption.
+All choices are fixed before the unknown input, with no postselection,
+acceptance division, history oracle, helper, copy, retry or reset.
+The uniform resource is exactly the maximum over generated labels of
+$\int_0^1\|R_\alpha(t)\|dt$ on each entire joint fibre.
+It is not an expectation, instantaneous maximum, integral of a
+cross-label maximum or selected-input average. This verifies the common
+correspondence for every stated attainer and every finite recovery
+family. $\square$
+

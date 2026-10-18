@@ -1,0 +1,32 @@
+**Corollary 4.2 (conditional recovery and its converse).** Suppose the
+rows really were acquired from one finite original and one chronological
+pure-$\rho$ history with the stated cut semantics. Then its actual
+relative epoch tuple belongs to $E$ and its original belongs to $U$.
+A singleton $E$ therefore recovers its exact update counts; a singleton
+$U$ recovers its exact original tree value. Conversely, if two realizations
+have different values of one of these targets, no deterministic function
+of only the same supplied records can identify that target correctly
+on both realizations.
+
+The same original-source uniqueness criterion decides uniqueness of
+the pair consisting of its canonical boundary measure and scale, and
+of its complete primitive-root/depth coordinates. These are original
+source values, not an independently acquired current scale or epoch.
+
+Proof. The acquisition hypothesis places the actual history in
+$\mathscr H$. Singleton fibers give the stated identifications;
+two different target values at the same input defeat any one-valued
+decoder on that input. Nonemptiness is checked first, so uniqueness
+is never inferred vacuously from an impossible record tuple.
+
+The supplied full-tree primitive-root/depth representation is injective
+and reconstructs its source; see [IntrinsicSubstitutionCoordinates,
+`intrinsic_coordinates`][INTR] and [ABC, Section 2][ABC]. The supplied
+boundary representation $t\mapsto(\nu_t,W(t))$ is injective with
+effective reconstruction on its attained image, by [Boundary IV,
+Theorem 113.5][BOUNDARY]. Consequently either complete coordinate pair
+is constant on $U$ exactly when $U$ is a singleton. When this holds,
+compute the pair from the recovered finite $t_*$. Boundary measure
+alone is a different target: it forgets substitution phase, and scale
+or epoch evidence is not supplied for free. $\square$
+

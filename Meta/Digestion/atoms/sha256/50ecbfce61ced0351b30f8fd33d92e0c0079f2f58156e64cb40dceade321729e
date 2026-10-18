@@ -1,0 +1,13 @@
+**Theorem 57.5 (pointwise favouritism does not make a uniform static optimum).** Any one uniform policy pays exactly $A$ on at most one positive tree. Conversely for every separately chosen $V_0\in\mathcal P$ there is a uniform policy correct on all of $\mathcal T_C$ whose actual cost on $V_0$ is $A$. At feasible depth,
+
+$$
+D_h=A\quad\Longleftrightarrow\quad p=1
+\quad\Longleftrightarrow\quad
+n=1\ \text{or}\ (n=2\text{ and }ab=0).
+\tag{57.12}
+$$
+
+Proof. A cost-$A$ accepting run has paid set exactly $\mathcal A(V)$ and therefore every chronological reply is $\alpha$, even if it repeats requests. A source-independent deterministic selector has only one such all-alpha trajectory and return. Two positives attaining $A$ would have the same actual trajectory, the same paid alpha frontier and hence the same tree. This excludes a policy attaining the static optimum on two different positives.
+
+To favour $V_0$, request its public alpha template first, with no acquired record at initialization. On a mismatch continue a finite correct union-frontier scan, using and retaining the replies actually obtained; on completion accept. Every candidate, including $V_0$, still has its addresses paid when requested. Theorem57.3 makes both branches correct against all negatives. On $V_0$ exactly its $A$ addresses are requested. This is a separately parameterized policy, not a controller secretly initialized with the actual source. The cardinality formula (57.6), $\operatorname{Cat}_0=\operatorname{Cat}_1=1$ and $\operatorname{Cat}_{n-1}>1$ for $n\ge3$ give (57.12). □
+

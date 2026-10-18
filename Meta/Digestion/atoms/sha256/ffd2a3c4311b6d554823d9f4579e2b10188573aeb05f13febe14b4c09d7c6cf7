@@ -1,0 +1,38 @@
+## 17. Suppliers, mature attribution and remaining acquisition obligations
+
+All repository suppliers for §§13–17 are inspected at the immutable public
+snapshot `1f58736f50945c7cfeca93ce160eb9b46a3a7e7e`. The claims here have
+ordinary proofs and no new Lean/kernel certification.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean` and its owning Scribe, `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize` | Strict positive original source and actual rectangle paths. The all-signed-sector Scribe application supplies the winding leg and its real lift; the rectangle declaration alone is not credited with that entire application. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean` and its owning Scribe, `OriginalControl`, `FiniteC1Control`, `concatenate_original` | Both regularities, finite and zero durations, unchanged original prefix, matching height, translated real phase and additive transport. No port, actuator or old lift read is inferred. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5, 14, 17, 21–23; [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§1, 3, 6–10 | Actual full original orbit, complete stopped CP instrument, horizontal density formulas, common-preparation multi-height witnesses, matched joint continuation, known-anchor generated labels and received-command capacity remain credited. The exact total guard is an added consumer specification; a partial-action domain alone is not a height detector. |
+| [FIB Atom Whitebox SIC Time Acquisition](FIB_ATOM_WHITEBOX_SIC_TIME_ACQUISITION.md), §2.4 and Citation 3.1 | Mature adaptive query-angle accumulation, outcome-retaining dilation and common-isometry invariance are reused in (RA.20)–(RA.21). Its tensor-sign device, archived scores, query count and legal-word service do not supply an original producer port or its price. |
+| This volume §§1–12; [Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md); [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md), §§2–3, 7–8 | Existing point-query obstructions, area/winding certificates, complete-instrument error data and the extra joint sampler kernel keep their own promises. A height bit acquires none of their unknown waveform samples, derivative/loss densities or full marked laws. |
+| [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§2, 4–6; [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), §§3, 9, 12–16; [Reanchoring Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md), §§2, 7–8 | Same-event memory, supplied-helper and live/failure-calibration results, and uncertain-height reanchoring remain distinct contracts. The present port is extra height-dependent access, not an acquired parity helper, unchanged return on failure, marginal event resampling or an unaugmented reanchoring construction. |
+| [Probability/Phase Transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §9.1; [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18 | Actual relative-command domains are used for (RA.25). Same-source coherent common-port interference, aligned acquired readings and known nonzero amplitudes/record overlap remain unsupplied. The additional phase query has a different interface from those intensity readings. |
+| [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Actual joint source/epoch image, complete rejections/failures, archives, references, permissions and selection/update routes must coexist. A binary calibrated guard does not establish individual sufficiency of the four views. |
+
+**Literature statement 17.1 (mature mechanism and precise transfer).**
+Positivity of effects, actual-source spanning, unitary discrimination,
+Stinespring dilation and projective-angle geometry are mature mathematics.
+The source-specific synthesis here is `repo-derived`: the response
+correspondence (RA.17), original-orbit reduction despite the old
+height-dependent specimen, explicitly paid extra-port interface, joint
+preservation (RA.23) and complete legal-versus-illegal original consumer.
+The query-angle principle is reused, not presented as a new general
+discrimination theorem. No worldwide priority claim is made.
+
+| Primary text | Verified scope and use |
+| --- | --- |
+| A. Acín, [*Statistical distinguishability between unitary operations*, quant-ph/0102064v1](https://arxiv.org/html/quant-ph/0102064v1), Eqs. (18)–(21) | The relative-spectrum convex-hull criterion and multiple-use orthogonalization concern supplied unitary calls and prepared probes. This is mature discrimination context, not construction of our source-bound port. |
+| R. Duan, Y. Feng and M. Ying, [*Entanglement Is Not Necessary for Perfect Discrimination between Unitary Operations*, quant-ph/0601150v2](https://arxiv.org/html/quant-ph/0601150v2), Theorem 1 and the numerical-range criterion preceding it | Known candidate unitaries, actual uses and common known intervening controls permit exact discrimination at the shortest-arc threshold. The continuous spectral-action specialization is justified in (RA.20)–(RA.22); neither a source setting nor a query route is obtained from that theorem. |
+| S. Manna, S. Suresh, A. Das Bhowmik and D. Saha, [*Global vs. Local Discrimination of Locally Implementable Multipartite Unitaries*, 2509.10430v1](https://arxiv.org/html/2509.10430v1), probing protocols and Theorem 1 | Its local/global and adaptive/restricted comparisons presuppose supplied candidate operations, chosen probes and allowed measurements. Its bipartite-qubit equality of adaptive/restricted local discrimination supplies no producer coupling, acquisition law or resource transfer for this original source. |
+
+These bounded primary comparisons supply method attribution and check the
+access premises; none of the inspected texts constructs the missing joint
+original-source port. This is not an exhaustive literature search, an
+impossibility statement or evidence of worldwide originality.
+

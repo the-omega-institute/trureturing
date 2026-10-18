@@ -1,0 +1,28 @@
+**定理 55.3（Exact additional side prices）。** At the positive child of an actual safe action at a recorded-zero archive, the minimum additional adaptive fee is the following expression. It also applies to the successful positive child of a first-zero parent $00,01$ or $10$ whenever that parent has retained one well-defined INITIAL label per surviving phase:
+
+$$
+\delta(A,B)=
+\begin{cases}
+0,&\lambda|_A\text{ is constant},\\
+p,&\lambda|_A\text{ is nonconstant and }B=10,\\
+1,&\lambda|_A\text{ is nonconstant and }B\in\{01,11\}.
+\end{cases}
+\tag{55.3}
+$$
+
+Empty children have price zero and are not executed. Every nonconstant price is attained by one fixed literal continuation on that child's own archive, so it is also the minimum preset *continuation* fee there. For $11$ the recorded-zero and common-label hypotheses include Lemma 55.2; an unrelated abstract pair with arbitrary high tail is not covered.
+
+**证明。** A constant child stops at the parent endpoint and returns its common INITIAL label. Otherwise it contains exactly the two phases of its row, which have the same current value after the positive response.
+
+Write $t$ for the parent action's actual chronological index and $u=2t\pmod T$. For $10$ these phases are $u,u+1$, and the child's tail is zero. Their distinct coefficient positions modulo $T$ are $u-1$ and $u+1$; position $u$ is common. The latter distinct position was the zero second bit of the parent. After that parent, both phases have coefficient zero at every absolute bit position from $2t+2$ through $2t+T-2$. Their first possible new separation is at $2t+T-1=2t+2p$, the first bit of block $t+p$. Until that bit they have equal outputs and equal tails under any common actions; an adaptive controller must choose the same actions on both. Common rejection is irreversible and cannot complete unequal labels. Neither source can stop sooner. Hence at least $p$ further complete blocks are necessary, including all waits. Issue
+
+$$
+\underbrace{00\mid\cdots\mid00}_{p-1\text{ paid blocks}}\mid10
+\quad\text{at indices }b+1,\ldots,b+p.
+\tag{55.4}
+$$
+
+The last word has charge $\{u-1,u\}$ and marks exactly phase $u$ within this child. All preceding words keep tail zero; the final isolated one and its clearing zero are safe. Its actual endpoint returns the respective label. The fee is exactly $p$.
+
+For $01$, the phases are $u+1,u+2$, at tail one. The next literal $10$ has charge $\{u+2,u+3\}$ and separates exactly the right member of this pair. Its leading one joins a run of two, strictly below $k$. For $11$, Lemma 55.2 gives phases $u,u+2$ at tail two; the same next $10$ marks only $u+2$ and joins a run of three, strictly below every $k\ge4$. The second bit clears the tail in both cases and is part of the paid block. Unequal labels cannot stop at their common parent archive, so one block is also a lower bound. Both continuations decode their own new endpoint difference. No final cleanup is required after a successful stop. ∎
+

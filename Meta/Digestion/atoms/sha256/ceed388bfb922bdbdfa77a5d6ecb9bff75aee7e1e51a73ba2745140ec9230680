@@ -1,0 +1,31 @@
+**Question 62.1 (Intrinsic exhaustion beyond atomic likelihood information).** Retain the unresolved general problem of Question 58.1 for the original targets, carrier, consumer and occupied cylinders. Theorem 59.2 permits its candidate laws to be sought in the target-defined complete separable range $P_{\mathcal G}$ without losing any lawful cap. Theorem 60.2 gives an intrinsic cap criterion only under the additional atomic input condition (60.1). Find a target-defined construction or obstruction that settles general lawful cap feasibility and endpoint attainment when that condition fails.
+
+The precise remaining obligation can be displayed in this range. A candidate cap selection on the actual signatures has laws $\lambda_q=g_q\sigma$, with nonnegative $\mathcal G$-measurable densities of integral one, and must satisfy
+
+$$
+\operatorname{TV}(g_{[y]}\sigma,\mu_y)\le\eta\qquad(y\in X).
+\tag{62.1}
+$$
+
+For each $q$ its greatest cylinder common-submeasure mass is
+
+$$
+\int\inf_{q'\in U_m(q)}g_{q'}\,d\sigma.
+\tag{62.2}
+$$
+
+By Theorem 46.4, exact acquisition of that selected family requires these masses to increase to one at every actual $q$. Equivalently, after one common null-set removal,
+
+$$
+g_q(\theta)=\sup_m\inf_{q'\in U_m(q)}g_{q'}(\theta)
+\qquad\text{for every }q\in Q
+\text{ and almost every }\theta.
+\tag{62.3}
+$$
+
+Indeed the increasing infima are bounded by $g_q$, and monotone convergence identifies their limiting integral; equality of that integral with one makes the nonnegative deficit zero. Countability of $Q$ permits the single exceptional-set removal. At each remaining tape, (62.3) is lower semicontinuity of $q\mapsto g_q(\theta)$ in the actual prefix topology. This is the existing exhaustion obligation in densities, not a target-intrinsic solution obtained by renaming candidate prepared laws.
+
+The complete separable range supplies the metric stabilization and clopen continuous-selection hypotheses used in Section 54, but those metric steps do not force (62.3). This failure persists within the reduced range itself. To see it, reuse the fixed positive-row family of Theorem 57.1 and its unique continuous cap-$r$ optimum $\kappa$. The contraction (59.8) makes $\Pi\kappa$ another continuous cap-$r$ family for exactly those same targets. Uniqueness gives $\Pi\kappa_y=\kappa_y$ at every source, so this optimum already belongs to $P_{\mathcal G}$. Its anchor-cylinder common-submeasure mass remains the published $\beta<1$ in (57.8), and no lawful cap-$r$ preparation exists. Hence separability and continuous compatibility still leave a genuine exhaustion gap, even for the existing standard Borel example; no additional example family is needed.
+
+The general prescribed positive-proposal/profile and arbitrary-consumer endpoint classifications likewise remain unresolved beyond the all-source correct-mass obstruction of Section 61 and the explicitly restricted criteria above. The results preserve the original event-TV convention, sharp quantifier order and every actual source. Their common seeds and tables establish measurable law existence with sourcewise almost-sure finite execution; they imply no finite-description or effective sampler, finite seed support, common finite horizon, physical realization or kernel guarantee. The substantive deductions are the lossless target-density reduction with its operational bridge and the local correct-mass depletion bound. Countable refinement, finite-index attainment, common-submeasure acquisition and the endpoint examples are reused results, and the measure-theoretic ingredients are classical. No literature-priority assertion is made.
+

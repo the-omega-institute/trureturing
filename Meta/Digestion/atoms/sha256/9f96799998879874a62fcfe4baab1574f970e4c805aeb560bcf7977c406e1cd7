@@ -1,0 +1,52 @@
+## 9. 九、KBonacci 环路中的模障碍
+
+把 Fibonacci 禁止相邻 $1$ 推广为禁止连续 $K$ 个 $1$。
+
+设周期长度为 $L$，局部圆窗条件为
+
+$$
+\sum_{j=i}^{i+K-1}x_j\le K-1.
+$$
+
+该局部条件允许均匀软点
+
+$$
+x_i=\frac{K-1}{K}.
+$$
+
+但任意合法硬周期词中，每个连续块最多有 $K-1$ 个 $1$，所以每个周期块至少需要一个 $0$。因此零的数量至少为
+
+$$
+\left\lceil\frac LK\right\rceil.
+$$
+
+硬周期词的总占用最多为
+
+$$
+L-\left\lceil\frac LK\right\rceil=
+\left\lfloor\frac{L(K-1)}K\right\rfloor.
+$$
+
+而均匀软点的占用为
+
+$$
+\frac{L(K-1)}K.
+$$
+
+因此定义环路缺口
+
+$$
+\eta_{K,L}=
+\frac{L(K-1)}K
+-
+\left\lfloor\frac{L(K-1)}K\right\rfloor.
+$$
+
+则：
+
+$$
+\eta_{K,L}>0
+\quad\Longleftrightarrow\quad
+K\nmid L.
+$$
+

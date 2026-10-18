@@ -1,0 +1,49 @@
+**定义 2.1（固定联合零点的引用身份）。** 本卷的 DEV28 专指《FIB 实际 JMJM 的承诺纤维与联合例外几何》定义 28.1–28.2、式 (28.8)–(28.11) 的同一个构造。其十二坐标顺序、尺度及固定源坐标为
+
+$$
+x=(b_1,D_1,r_2,b_2,D_2,r_3,b_3,D_3,r_4,b_4,D_4,Z),
+\quad r_1=3/10,\quad d_i=100D_i,\quad z=100Z.
+\tag{2.1}
+$$
+
+在每槽用 $c_i=r_i(1-r_i)/b_i,j_i=b_i+c_i$ 及四个原节点值
+
+$$
+q_i=\left(-d_i,\frac{24-d_i}{j_i},\frac{48-d_i}{1+b_i},
+                    \frac{z-d_i}{r_i+j_i}\right)
+\tag{2.2}
+$$
+
+定义唯一整个三次及以下 $g_i$。写 $g_{ik}=g_i(k)$，该构造的函数是
+
+$$
+\begin{aligned}
+Y_i&=d_i+(1+2b_i)g_{i4},&p_i&=d_i+(2r_i+j_i)g_{i5},\\
+u_i&=d_i+(1+2b_i)g_{i6},&m_i&=d_i+(1+3b_i)g_{i6},\\
+A_i^J&=d_i+(2r_i+j_i)g_{i7},&B_i^J&=d_i+(1+r_i+c_i+3b_i)g_{i7},\\
+A_i^M&=d_i+(3r_i+j_i)g_{i7},&B_i^M&=d_i+(1+2r_i+c_i+4b_i)g_{i7}.
+\end{aligned}
+\tag{2.3}
+$$
+
+其固定联合映射恰为
+
+$$
+F(x)=\frac1{100}\bigl(
+Y_2-Y_1,p_2-p_1,u_2-u_1,A_2^J-A_1^J,B_2^J-B_1^J,
+Y_4-Y_3,p_4-p_3,m_4-m_3,A_4^M-A_3^M,B_4^M-B_3^M,
+Y_3-Y_1,p_3-p_1\bigr)^{\mathsf T}.
+\tag{2.4}
+$$
+
+$x_0$ 严格采用所引式 (28.8) 的有理十二坐标中心，$C$ 严格采用式 (28.9a)–(28.9d) 的固定十二阶预条件矩阵，$X=\{x:\|x-x_0\|_\infty\le10^{-12}\}$。不另选中心、矩阵、盒内点或零点。精确定义仍是
+
+$$
+x^{(0)}=x_0,\qquad x^{(k+1)}=x^{(k)}-CF(x^{(k)}),\qquad
+x_\star=\lim_{k\to\infty}x^{(k)},\quad
+z_\star=100Z_\star,\quad Y_\star=Y_1(x_\star),\quad p_\star=p_1(x_\star).
+\tag{2.5}
+$$
+
+这些迭代只是未经执行的符号定义。所有带星量同时在这个同一 $x_\star$ 取值。尤其 $x_0$ 只承担有理中心的定义，不以它替代 $x_\star$；$p_\star$ 是第五个 $J$ 的实际响应。
+

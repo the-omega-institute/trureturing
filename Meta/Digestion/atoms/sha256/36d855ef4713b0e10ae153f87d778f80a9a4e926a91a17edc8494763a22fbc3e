@@ -1,0 +1,77 @@
+### 87.1. Statement and original-channel consumer
+
+Let (A₀,B₀) be any section-82 original quarter-error pair, with B₀ of Kraus rank two. Use its allowed simultaneous fibrewise bit swaps and fixed environment isometries to put it in marker form. Write
+
+\[
+ N_f=\overline {B_f}ZB_f^T
+     =\sum_{a=1}^3 n_a\chi_a(f)\sigma_a,
+ \qquad u_a=n_a^2,\quad \sum_a u_a=1,\quad u_a\ge2/7.       \tag{1}
+\]
+
+Here Z=diag(1,−1), the σ_a are the standard Pauli matrices, n_a>0, and the four characters are
+
+\[
+ \chi_0=(1,1,1,1),\quad \chi_1=(1,1,-1,-1),\quad
+ \chi_2=(1,-1,1,-1),\quad\chi_3=(1,-1,-1,1).              \tag{2}
+\]
+
+Each u_a lies in [2/7,3/7]. The coefficient matrices at the base can be chosen as
+
+\[
+ C_f=A_fB_f^T/\sqrt2={1\over4}
+       \begin{bmatrix}\sqrt7 I_2\\N_f\end{bmatrix}.       \tag{3}
+\]
+
+Extra A-environment coordinates are zero. All record Grams are forward Grams. For arbitrary original channels, retain their correct-output contractions and set K=G⊙H. With the target T having diagonal blocks I₂ and off-diagonal blocks J₂/2, let
+
+\[
+ F(A,B)={1\over4}\Lambda_2(T-K).
+ \quad
+ \delta(A,B)\ge {\operatorname{Tr}(T-K)_+\over4}\ge F(A,B). \tag{4}
+\]
+
+The first inequality includes the entire lost trace. Indeed the normalized maximally entangled logical/reference input has correct joint reference/output compression Kᵀ/8 on the orthonormal support {|f,i〉_R⊗|ff〉_out}; pinching gives
+(‖K−T‖₁+8−Tr K)/8=Tr(T−K)₊/4. Thus no leakage calibration or physical channel transfer is being assumed.
+
+A flat new-environment derivative has correct records r_fi=L_i b_fi and no wrong-output records, by section 85. An environment gauge removes the common L₀. Its remaining records are
+
+\[
+ r_{f0}=0,\qquad r_{f1}=D b_{f1},\qquad D=L_1-L_0.
+ \quad E=\overline{D^*D}=r_0I_2+\sum_{a=1}^3r_a\sigma_a. \tag{5}
+\]
+
+The coefficients r_a are real. The conjugation in E fixes the convention relative to N_f in (1).
+
+**Coefficient theorem.** Fix the records (5), denoting their full original-output Stinespring operator by R. Let U(s) be any smooth old rank-two comparison unitary, and V_A(s) any smooth original A-isometry, both based at the equality tuple. Consider the physical probability path
+
+\[
+ V_B(s)=U(s)\sqrt{I-sR^*R}\ \oplus\ \sqrt{s}\,R,
+ \qquad s\ge0.                                          \tag{6}
+\]
+
+The coefficient q in F=1/4+s²q+o(s²) depends only on the first old comparison tangent. Its minimum over all such tangents, including arbitrary finite A-environments, original output leakage, and phase gauges, is
+
+\[
+ q_{\min}(D)=\sum_{a=1}^3c(u_a)r_a^2,
+ \qquad c(u)={(1-u)(7u-1)^2\over256u^2}.                 \tag{7}
+\]
+
+The minimum is attained by a calibrated comparison tangent in A-environment dimension four. In particular
+
+\[
+ {35\over1024}|r|^2\le q_{\min}(D)\le {7\over144}|r|^2,
+ \qquad q_{\min}(D)\ge {35\over2048}
+       \|E-\tfrac12\operatorname{Tr}(E)I_2\|_F^2.        \tag{8}
+\]
+
+Both coefficient bounds are sharp over the classified disphenoids. If D has one row, then |r|²=‖D‖_F⁴/4, so q_min≥35‖D‖_F⁴/4096. A zero scalar component is not being assumed in (7).
+
+**Amplitude-path consequence.** Suppose both original channels admit C² Stinespring paths V_A(t),V_B(t) in fixed finite environments through the equality pair. Split B into its base two-dimensional environment and its orthogonal complement. If the first new-environment derivative is flat, use (5) to define D. Then
+
+\[
+ \liminf_{t\downarrow0}{\delta(A(t),B(t))-1/4\over t^4}
+       \ \ge\ \sum_{a=1}^3c(u_a)r_a^2.                  \tag{9}
+\]
+
+If that derivative is not flat, the liminf is +∞. It is also +∞ whenever the first old comparison tangent has a nonzero component normal to the section-86 minimum manifold. Equation (9) will be proved separately in section 87.7; it is not inferred merely from substituting s=t² into (6).
+

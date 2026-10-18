@@ -1,0 +1,31 @@
+**Lemma 15.2 (complete branch coverage removes the need to calibrate).**
+Let $P$ be complete. If authentic protected branch replies certify every
+vertex of $I$ as a branch at invocation, a paid later validated tree
+suffices to recover $R_P(u)$ without identifying $u$ or the update count.
+
+**Proof.** A branch reply at $a$ certifies every prefix of $a$ as a branch.
+Under the stated coverage every $p\in P$ is originally present. The
+invocation exterior is exactly the fixed public trie with address-marked
+holes at all of $P$, with no exposed concrete leaf. Homomorphism preserves
+that exterior and transports every hidden subtree by the same iterate.
+For the actual validation tree $T=\rho^n u$, native injectivity gives
+
+$$
+u|_p=u|_q\quad\Longleftrightarrow\quad T|_p=T|_q
+\qquad(p,q\in P).
+\tag{CNA.26}
+$$
+
+This reflects disequality as well as equality. Constructing $R_P(T)$
+therefore constructs $R_P(u)$. Use the same paid acquisition and progress
+suppliers as in Lemma 15.1. For $P=\{\varepsilon\}$ the row is constant
+and the zero-Read Return of Proposition 4.3 avoids acquisition entirely.
+$\square$
+
+These two continuations retain different information. A leaf record plus
+a later acquired tree identifies the origin itself. A branch-coverage
+record can leave many origins possible while making the requested row
+identical on them. Neither continuation discards the hidden partition.
+A read of a leaf inside a hidden hole would also satisfy Lemma 15.1;
+the optimum proved below does not assume such queries are prohibited.
+

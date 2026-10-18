@@ -1,0 +1,20 @@
+**Theorem 4.2 (nonempty strict exclusion beyond two simpler certificates).** The region in which $C\ne0$, $\tau$ is nonreal and $f(\tau,\bar\tau)>\sqrt a$ nevertheless contains actual encoders with $\delta_N>1-\sqrt a$ by Theorem 3.1.
+
+**Proof.** At $\beta=1/2$, $\vartheta=\pi/8$, (R.19) is $(1+1/\sqrt2)/2>1/\sqrt2$. For every $0<w<w_c(1/2)$, (R.17) has $C\ne0$, rank $S=1$, rank $J_p=5$ and the asserted strict bound.
+
+An exact witness independent of this radical endpoint takes
+
+$$
+\beta=9/25,\quad\sqrt a=4/5,\quad
+\cos\vartheta=12/13,\quad\sin\vartheta=5/13,
+\quad\sqrt{1-w}=12/13,\quad\sqrt w=5/13.
+$$
+
+Then $w=25/169$, $f(\tau,\bar\tau)=137/169>4/5$, $C\ne0$ and $\tau$ is nonreal, with ranks $\operatorname{rank}S=1$ and $\operatorname{rank}J_p=5$. Moreover
+
+$$
+2e_\beta(w)=\frac{2592}{9971+1950\sqrt2}>\frac15=1-\sqrt a,
+$$
+
+because $2989>1950\sqrt2$, as $2989^2-2\cdot1950^2=1329121>0$. These are actual channels and exact inequalities, not feasibility of an unrelated block relaxation. $\square$
+

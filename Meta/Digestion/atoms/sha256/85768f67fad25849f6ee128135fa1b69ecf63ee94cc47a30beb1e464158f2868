@@ -1,0 +1,36 @@
+## 1. The task and its mathematical suppliers
+
+For the exact initial family $\mathcal F_D$ defined below and a fixed
+public finite menu, the initial selected-reply vector and a supplied
+update count determine every future selected reply exactly when the
+menu, after removal of its initial $R$, contains every prefix of each
+of its members. The empty menu is allowed. The necessity
+has concrete height-bounded source witnesses for every missing proper
+prefix; sufficiency gives a finite decoder. Section 5 states and proves
+this criterion in full.
+
+[DEV], *Adaptive acquired references and the retention frontier*,
+revision `142f723c`, supplies the finite-menu solution in §§12.1–12.10:
+spatial response statistics, the sharp horizon, constructor overlap,
+pruned codes, exact counts, bounded common representatives, minimum
+retained alphabets and paid conditional capture. Those results are
+credited premises here. Their proofs are not additional contributions
+of this companion. The initial-vector criterion and its witnesses are
+from [PRIOR, Theorem 7.2]; they are not stated in [DEV]. The symbolic
+bit bounds and the useful task boundaries are retained below with
+proofs or precise supplier statements.
+
+The distinction between the supplier's tasks matters. [DEV, §10]
+optimizes fresh native acquisition of an **unknown** lag after bounded
+retention on a phase-minimum family. Its §11 supplies the count and
+optimizes the number of fixed public ray coordinates. Its §12 supplies
+the count and optimizes arbitrary complete retained information for the
+finite initial family used here. These are different interfaces and
+different resource objectives.
+
+This is ordinary handwritten, `repo-derived` mathematics. Generic
+same-input/different-output separation is background. The uncovered
+content is relative to [DEV], with the inherited proof credited to
+[PRIOR]; external originality is unverified. The source identities and
+statement correspondence are fixed in §10.
+

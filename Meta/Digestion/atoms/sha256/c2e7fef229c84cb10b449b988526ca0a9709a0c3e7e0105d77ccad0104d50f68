@@ -1,0 +1,87 @@
+**Theorem 61.1 (trace necessity and excluded leading eigenvalues).** At half beta, every feasible system (S.59) with positive support $3\leq k\leq9$ obeys
+
+$$
+3s+2t>3T,\qquad t>t_*(s):=\frac32(T-s),\qquad
+\frac{31}{50}<s<T.
+\tag{S.78}
+$$
+
+Proof. As used in Theorem 60.1, $H_a(M)^2\leq\operatorname{Tr}M$. The phase basis tests in (S.59) therefore give $\operatorname{Tr}(\omega Z_iZ_i^\dagger)<d$ for $i=0,1$; the same inequality for $i=2$ is $q_2<d$. For $E_Z$ of Theorem 59.2 and its rank-five complement $\widehat P=I-E_Z=\overline P$, it follows that
+
+$$
+\operatorname{Tr}((I_3\otimes\omega)E_Z)<3d,\qquad
+\operatorname{Tr}((I_3\otimes\omega)\widehat P)>3-3d=3T.
+$$
+
+The eigenvalues of $I_3\otimes\omega$ repeat each center eigenvalue three times. The diagonal entries of a rank-five projection lie in $[0,1]$ and sum to five, so the weighted allocation argument of (S.22) bounds its trace by its five largest eigenvalues, $3s+2t$. This proves the first two inequalities of (S.78), with the same projection in all three tests.
+
+If $s\leq1/2$, ordering implies $3s+2t\leq5s\leq5/2<3T$. To justify the strict last comparison, $h>7/10$ follows from $1/2>49/100$, and hence $3T>51/20>5/2$. This excludes that entire branch without using Theorem 60.1 there.
+
+Consider next $1/2\leq s\leq31/50$. This closed interval is contained in $[1/2,T)$ because $T>17/20$, so $\Delta>0$ and $t_*(s)>0$. Clear the positive denominator in (S.75):
+
+$$
+\begin{aligned}
+2s(2s+h)(2t+h)(f(s,t)-d)
+&=N(s,t),\\
+N(s,t)&=2s(2s+h)(2t+h)(t-d)
+-\Delta\,[4st+h(s+t)].
+\end{aligned}
+\tag{S.79}
+$$
+
+Substitution of $t=t_*(s)=3(1+h-2s)/4$ and reduction by $h^2=1/2$ yields every coefficient of the quartic
+
+$$
+\begin{aligned}
+N_*(s):=N(s,t_*(s))
+={}&\frac3{16}+\frac{3h}{8}
++\left(\frac52+\frac{17h}{8}\right)s
++\left(-\frac{53}{4}-3h\right)s^2\\
+&+(24-11h)s^3-6s^4.
+\end{aligned}
+\tag{S.80}
+$$
+
+For an exact sign on the entire interval, put $s=1/2+3u/25$, $0\leq u\leq1$. The power coefficients $a_i$ in $N_*(1/2+3u/25)=\sum_{i=0}^4a_iu^i$ are
+
+$$
+\begin{aligned}
+a_0&=\frac34-\frac{11h}{16},&
+a_1&=\frac{51}{100}-\frac{219h}{200},&
+a_2&=\frac{99}{500}-\frac{351h}{1250},\\
+a_3&=\frac{324-297h}{15625},&
+a_4&=-\frac{486}{390625}.
+\end{aligned}
+$$
+
+Using $u^i=\sum_{j=i}^4[\binom ji/\binom4i]\binom4j u^j(1-u)^{4-j}$ gives the consumed degree-four Bernstein representation
+
+$$
+N_*(1/2+3u/25)=\sum_{j=0}^4b_j\binom4j u^j(1-u)^{4-j},\qquad
+b_j=\sum_{i=0}^j a_i\frac{\binom ji}{\binom4i}.
+\tag{S.81}
+$$
+
+The identity for $u^i$ follows by $\binom4j\binom ji=\binom4i\binom{4-i}{j-i}$ and the binomial theorem. The complete coefficient list and strictly positive lower bounds are
+
+| $j$ | $b_j$ | strict rational lower bound |
+| --- | --- | --- |
+| $0$ | $3/4-11h/16$ | $1319/5000$ |
+| $1$ | $351/400-769h/800$ | $24713/125000$ |
+| $2$ | $519/500-6409h/5000$ | $102743/781250$ |
+| $3$ | $309171/250000-826951h/500000$ | $1309463/19531250$ |
+| $4$ | $2308581/1562500-520577h/250000$ | $381533/78125000$ |
+
+For these bounds use
+
+$$
+0<h<\frac{442}{625},\qquad 2\cdot442^2-625^2=103>0.
+\tag{S.82}
+$$
+
+Both compared numbers are positive; the integer comparison proves $(442/625)^2>1/2=h^2$. Every coefficient of $h$ in the table is negative, so substituting this strict upper bound gives exactly the displayed lower bounds. Each Bernstein weight is nonnegative on $[0,1]$ and their sum is one. All five coefficients are strictly positive, proving $N_*(s)>0$ on $[1/2,31/50]$, including both endpoints.
+
+Since the denominator of (S.79) is positive at $t_*(s)>0$, this proves $f(s,t_*(s))>d$. The trace necessity gives $t>t_*(s)$ and (S.76) gives $f(s,t)>f(s,t_*(s))>d$, contradicting (S.75). This argument does not require $t_*(s)$ itself to be an admissible ordered eigenvalue.
+
+Finally $s<1$ on positive support. The exact factorization $\Delta=4(s-d)(T-s)$ implies $\Delta\leq0$ for $s\geq T$, contradicting (S.74). Thus $s=T$ is excluded as well, leaving exactly the asserted open leading-eigenvalue interval as a necessary condition. $\square$
+

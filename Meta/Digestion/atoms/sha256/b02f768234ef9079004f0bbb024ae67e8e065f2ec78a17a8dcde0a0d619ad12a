@@ -1,0 +1,45 @@
+**定义 1.2（固定同父及全部第五 M 末端）。** 以下固定
+
+$$
+36<z<37,\qquad33<Y<34,\qquad
+H_4=(0,J,24,M,48,J,z,M,Y),\qquad H_5=(H_4,M,p).
+\tag{1.3}
+$$
+
+$p$ 为实际第五 $M$ 响应。$\mathcal F(H)$ 表示实现完整字面历史 $H$ 的合法世界。记
+
+$$
+j=b+c,\quad t=1+b>1,\quad u=2t-1>1,\quad n=r+j.
+$$
+
+对任意矩阵 $A$，逐项取迹给
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r+A_{21}b+A_{12}c.
+\tag{1.4}
+$$
+
+按式 (1.2) 左乘得到全部祖先：
+
+| 原时钟 | 实际矩阵 | 迹 | 已取得方程 |
+| --- | --- | --- | --- |
+| $0$ | $I$ | $1$ | $d+g(0)=0$ |
+| $1$ | $J$ | $j$ | $d+g(1)j=24$ |
+| $2$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $t$ | $d+g(2)t=48$ |
+| $3$ | $JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $n$ | $d+g(3)n=z$ |
+| $4$ | $MJMJ=\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ | $d+g(4)u=Y$ |
+| $5$ | $Q=M^2JMJ=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u$ | $d+g(5)(n+u)=p$ |
+
+从这个 $Q$ 出发的全部续行是：
+
+| 第六、第七后缀 | 时钟 | 实际矩阵 | 迹 |
+| --- | --- | --- | --- |
+| $J$ | $6$ | $JQ=\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $2n+t-j=1+2r+2b+c$ |
+| $M$ | $6$ | $MQ=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $n+2u=2+r+5b+c$ |
+| $JJ$ | $7$ | $Q=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u=1+r+3b+c$ |
+| $JM$ | $7$ | $MJQ=\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $2+5b+c$ |
+| $MJ$ | $7$ | $JMQ=\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $1+4r+3b+2c$ |
+| $MM$ | $7$ | $M^2Q=\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $3+2r+8b+2c$ |
+
+每个矩阵都由上一行相应实际前缀左乘得到，再用式 (1.4) 取迹；$b,c$ 的系数不能互换。这些矩阵非负、可逆且无零行，与严格正源相乘后严格正，故全部迹严格正。每一行都使用该世界的同一个 $g,d,P$。
+

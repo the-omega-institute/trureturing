@@ -1,0 +1,69 @@
+## 4. A signed derivative and a global midpoint proof
+
+At fixed $u$, the derivative of $F_u$ in the order $(t,v,k)$ is
+
+$$
+DF_u=
+\begin{pmatrix}
+1+k&1+k&t+v+u\\
+2(1+4k)&1+4k&4(2t+v)\\
+3(1+5k)&1+5k&5(3t+v)
+\end{pmatrix}.
+$$
+
+Put $g_j=1+jk$. Expansion along the last column yields
+
+$$
+\begin{aligned}
+\mathcal J:=\det DF_u
+&=-(t+v+u)g_4g_5+8(2t+v)g_1g_5-5(3t+v)g_1g_4\\
+&=(2v-u)+(12t+14v-9u)k-20uk^2.
+\end{aligned}
+\tag{4.1}
+$$
+
+Substitution from (3.1) gives the decisive identity
+
+$$
+-\mathcal J
+=p(60k^2-7k+5)+q(60k^2+13k+1)+r(20k^2-3k+1).
+\tag{4.2}
+$$
+
+Every bracket is strictly positive at every real $k$:
+
+$$
+\begin{aligned}
+60k^2-7k+5&=60(k-7/120)^2+1151/240,\\
+60k^2+13k+1&=60(k+13/120)^2+71/240,\\
+20k^2-3k+1&=20(k-3/40)^2+71/80.
+\end{aligned}
+$$
+
+Thus $\mathcal J<0$ on the entire positive source domain for every real slope.
+
+For completeness, the following exact identity supplies global injectivity. Write $y=(t,v)^{\mathsf T}$. At fixed $u$, (3.6) has the form
+
+$$
+F_u(y,k)=Ay+kBy+ku e_1
+$$
+
+for fixed real matrices $A,B$ and $e_1=(1,0,0)^{\mathsf T}$. For two points set $\bar y=(y_0+y_1)/2$, $\bar k=(k_0+k_1)/2$. Expansion gives
+
+$$
+k_0y_0-k_1y_1=\bar k(y_0-y_1)+\bar y(k_0-k_1),
+$$
+
+and therefore
+
+$$
+F_u(y_0,k_0)-F_u(y_1,k_1)
+=DF_u(\bar y,\bar k)
+\begin{pmatrix}t_0-t_1\\v_0-v_1\\k_0-k_1\end{pmatrix}.
+\tag{4.3}
+$$
+
+If both endpoints have positive $p,q,r$, (3.2) makes the midpoint's $p,q,r$ their positive arithmetic means. Hence the derivative in (4.3) is invertible by (4.2). Equal values force $t_0=t_1$, $v_0=v_1$, $k_0=k_1$.
+
+Two actual targets giving identical six data first have the same $\zeta,\eta,u,W,Y,Z$ by (3.5). Equation (4.3) then makes their $t,v,k$ identical; (3.2), $s=qr/p$, and (3.7) make their entire targets identical. The midpoint source uses $s=qr/p$ at its own coordinates, so it remains in the declared source family. This establishes global recovery in Theorem 2.1.
+

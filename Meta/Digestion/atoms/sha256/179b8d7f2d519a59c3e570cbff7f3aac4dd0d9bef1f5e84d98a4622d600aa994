@@ -1,0 +1,41 @@
+**Proposition 90.11 (resources of this producer on all the test sources).**
+Let $t=|\{p\in L_h:\omega(p)=1\}|$. For precisely the run (90.12),
+
+$$
+\begin{aligned}
+\ell(\nu_{h,\omega})&=26m+t+2,\\
+\#\mathsf{Read}(E)&=52m+2t+3,\\
+\#\text{leaf replies}(E)&=26m+t+2,\\
+\#\mathsf{Local}(E)&=52m+2t+2,\\
+|E|&=104m+4t+5,\\
+\operatorname{ht}(\nu_{h,\omega})&=h+7,
+\qquad \max\#\text{stack frames}=h+7.
+\end{aligned}
+\tag{90.20}
+$$
+
+There are no absent replies or updates. The terminal acquired tree has
+$52m+2t+3$ node occurrences. These are counts for the declared symbolic
+tree, trace and frame-list representations, not machine-byte or physical
+space lower bounds for arbitrary algorithms.
+
+Proof. The six $Q$ subtrees contribute respectively
+$m,8m,m+t,1,16m,1$ leaves. In $\rho X$ each original alpha supplies one
+leaf and each beta two. Each of the $8m$ alpha leaves of $Y$ supplies two
+leaves in $\rho^2Y$. This proves the first and third formulas. A full
+binary tree with $L$ leaves has $L-1$ branches and $2L-1$ nodes;
+(90.12) reads each node once and adds two locals per branch, proving all
+trace counts. Stop itself is not counted in $|E|$.
+
+The depths of $X,Y,\rho X,\alpha,\rho^2Y,\beta$ beneath their hole
+addresses give global heights $h+2,h+5,\le h+4,3,h+7,3$.
+In particular $\rho^2\alpha=\langle\beta,\alpha\rangle$ makes the
+fifth height exactly $h+7$. In sourceControl, visiting a child adds one
+frame for its parent; switching left to right replaces that frame;
+combining removes it. Induction along the traversal makes stack length
+at a visit equal the address depth. Every intervening delivery has the
+frames for its ancestors. The maximum is therefore exactly the maximum
+leaf depth $h+7$. The stopped control carries the complete acquired tree
+by the producer contract. All statements are sourcewise and apply to
+every labelling. $\square$
+

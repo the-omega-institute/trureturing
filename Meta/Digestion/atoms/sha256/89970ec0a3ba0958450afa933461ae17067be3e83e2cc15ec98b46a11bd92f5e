@@ -1,0 +1,70 @@
+**Theorem 285.1 (Weighted slices and the adjacent-path equality cone).**
+Fix $m\ge4$, $k=\lceil m/2\rceil$, $p=k/m$, and
+
+$$
+t_1=0,\qquad t_{j+1}=\frac{k t_j+1}{m-k-1}.
+\tag{285.1}
+$$
+The denominator is positive. For $|Z|=k$ and $|T|=k+1$, put
+
+$$
+u_Z^*=\frac{1+k\sum_{j\notin Z}t_j}{\binom mk},\qquad
+v_T^*=\frac{k\sum_{j\in T}t_j}{\binom mk},\qquad
+U=\sum_{|Z|=k}u_Z^*=1+\frac{k(m-k)}m\sum_jt_j.
+\tag{285.2}
+$$
+Then $\sum v_T^*=U-1$.
+For every nonnegative unary/forward-edge function
+
+$$
+f(Z)=\sum_ja_j[j\in Z]+\sum_{i<j}d_{ij}[i\notin Z,j\in Z],
+\qquad a_j,d_{ij}\ge0,
+\tag{285.3}
+$$
+define
+$\mathcal L(f)=\sum u_Z^* f(Z)-\sum v_T^* f(T)-p f([m])$.
+Its exact value is
+
+$$
+\mathcal L(f)=-\frac{k(m-k)}m\sum_jt_ja_j
+-\frac{k(m-k)}{m(m-1)}
+ \sum_{i<j}\bigl((m-k-1)t_j-k t_i-1\bigr)d_{ij}\le0.
+\tag{285.4}
+$$
+Equality holds exactly when $a_j=0$ for $j>1$ and $d_{ij}=0$
+for $j>i+1$. Thus the equality cone consists of the first unary
+and adjacent directed-path edges, with arbitrary nonnegative weights.
+If also $f(Z)\le e$ on every subset, then
+
+$$
+\sum_{|Z|=k}u_Z^*(e-f(Z))\ge(1-p)e,
+\quad
+\frac1{\binom mk}\sum_{|Z|=k}(e-f(Z))
+ \ge\frac{(1-p)e}{1+k\sum_{j=k+1}^m t_j}.
+\tag{285.5}
+$$
+
+**Proof.** For $j\notin Z$,
+
+$$
+f(Z\cup\{j\})-f(Z)=a_j+\sum_{i<j,i\notin Z}d_{ij}
+                         -\sum_{\ell>j,\ell\in Z}d_{j\ell}.
+$$
+Uniform $k$-set averaging of the sum of these increments weighted by
+$t_j$ has unary coefficient $(m-k)t_j/m$ and edge coefficient
+$(m-k)((m-k-1)t_j-k t_i)/(m(m-1))$.
+The unweighted average of $f$ has unary coefficient $k/m$ and edge
+coefficient $k(m-k)/(m(m-1))$. Subtract $p f([m])$ and $k$ times
+the increment average. Grouping each $(k+1)$-set gives its coefficient
+$v_T^*$, proving (285.4) and the totals in (285.2).
+The sequence $t_j$ increases strictly, with $t_j>0$ exactly for $j>1$.
+By (285.1), $(m-k-1)t_{i+1}-k t_i=1$; for $j>i+1$ the
+left side is strictly larger. This gives the exact equality condition
+using nonnegative primitive coefficients, not merely nonnegative
+function values. Finally write $f=e-(e-f)$ in $\mathcal L(f)\le0$.
+Its coefficient total is $1-p$, and every other deficit is nonnegative,
+giving the first part of (285.5). Since $t$ increases,
+$u_Z^*\le(1+k\sum_{j=k+1}^m t_j)/\binom mk$; apply this bound
+to the nonnegative deficits for the second part. It is an average
+bound, not a claim that every individual deficit has that size. $\square$
+

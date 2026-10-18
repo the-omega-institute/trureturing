@@ -1,0 +1,70 @@
+**Theorem 46.1 (mass and fixed-probe orders).** There are positive fixed-data constants such that, eventually,
+
+$$
+\|u_s\|_1\asymp_d s^{-2},\qquad
+\|y_s\|_1\asymp_d s^3,\qquad \|y_s\|_2\le Cs^5.
+\tag{46.1}
+$$
+
+Fix any finite $M\ge M_{0,d}$ from Theorem 35.1, separately from $s$, and put
+
+$$
+h=Ms^8,\qquad b=h/s^2=Ms^6,\qquad
+R=R_s(h),\quad L=L^h,\quad D=H_s-H^h.
+\tag{46.2}
+$$
+
+For this fixed $M$, with a small-$s$ threshold allowed to depend on $M$,
+
+$$
+\begin{aligned}
+c_ds^8&\le\langle x_s,Ly_s\rangle\le C_ds^8,\\
+c_ds^{10}&\le\langle y_s,Ry_s\rangle\le C_ds^{10}.
+\end{aligned}
+\tag{46.3}
+$$
+
+The quantities are nonnegative. Constants may be enlarged for the fixed datum; no $M(s)$ or joint source-to-face limit is asserted.
+
+Proof. Integrating the positive equation for $u_s$ and using the raw killed mass gives
+
+$$
+\|u_s\|_1\le\ell_s^{-1}\int_0^T
+ e^{\lambda s^2t}\|x_s\|_1dt\le CT=Cs^{-2}.
+\tag{46.4}
+$$
+
+This is valid by Tonelli even before finiteness is known. For a matching lower bound, choose a microscopic compact set $A$ with $\int_A Vp>0$. Equation (35.5) gives $\int_Ax_s\ge c>0$. Choose a physical compact set $K$ with positive volume, contained in the height interior, and an interval $[t_0,t_1]\Subset(0,1)$. Strict positivity and continuity of the original native heat, uniformly for input $Y_s\eta\to o$ with $\eta\in A$, give
+
+$$
+u_s(Y_s^{-1}Y)\ge c s^5\quad(Y\in K),
+\qquad |Y_s^{-1}K|=|K|/(j_0s^7).
+\tag{46.5}
+$$
+
+Indeed the kernel of the restricted time interval in $H_s$ is $j_0s^5\int_{t_0}^{t_1}K_d(t;Y_s\eta,Y)dt$, and $H_sx_s=\ell_su_s$. Integrating (46.5) proves the lower $s^{-2}$ mass. Since $W_1$ is bounded and strictly positive on $K$, multiplication by $J_s=s^5W_1\circ Y_s$ gives both $L^1$ bounds for $y_s$; its $L^2$ bound follows from $\|u_s\|_2=1$.
+
+The bounded late kernel (35.9) now gives
+
+$$
+\langle x_s,Ly_s\rangle\le Cs^5\|x_s\|_1\|y_s\|_1\le Cs^8,
+\qquad
+\langle y_s,Ly_s\rangle\le Cs^{11}.
+\tag{46.6}
+$$
+
+Also $y_s\le Cs^5(1+\rho)^{-5}$ by (45.5). The integral of $d_E(\eta,\xi)^{-5}(1+\rho(\eta))^{-5}$ is bounded by $C(1+\rho(\xi))^{-3}$. To see this, use (45.7): its first region costs $CR^{-5}R^2$, its second $CR^{-5}R^2$, and its third outside a ball of radius $2R$ costs $C\int_R^\infty r^{6-10}dr=CR^{-3}$; the remaining annulus has the same bound. Therefore
+
+$$
+H_sy_s\le Cs^5(1+\rho)^{-3},\qquad
+\langle y_s,H_sy_s\rangle\le
+ Cs^{10}\int(1+\rho)^{-8}d\xi\le Cs^{10}.
+\tag{46.7}
+$$
+
+As $0\le H^h\le H_s$ at the positive-kernel level, (46.6)–(46.7) prove the self upper bound.
+
+For the cross lower bound use $x_s$ on $A$ and $y_s$ on $Y_s^{-1}K$. In the physical late time integral restrict to a fixed interval inside $(1,\infty)$. Its positive kernel is bounded below on these compact endpoint sets, and $e^{-bt}\to1$ at fixed $M$. The kernel scaling supplies $cs^5$, while their respective input masses are at least $c$ and $cs^3$. This gives $cs^8$.
+
+For the self lower bound choose a fixed microscopic compact set where $\int u_s\ge c$. Such a set follows from $u_s\to p$ in $L^2$ and positivity. On it $W_1(Y_s\xi)\ge c$, hence $\int y_s\ge cs^5$. The original microscopic heat on a fixed positive time interval converges locally to the positive canonical heat, by the inherited local heat convergence and the smooth exact fields. Its integral is bounded below on a fixed compact product; $e^{-ht}\to1$. Restricting both self inputs to that product gives $cs^{10}$. These lower bounds concern the actual moving $u_s$, not a replacement trial vector. $\square$
+

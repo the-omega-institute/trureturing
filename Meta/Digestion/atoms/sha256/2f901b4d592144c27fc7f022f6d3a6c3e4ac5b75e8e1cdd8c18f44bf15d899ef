@@ -1,0 +1,24 @@
+**Definition 2.1 (physical correspondence).** All original CAP 0–63
+ownership, origins and meanings are unchanged. In particular:
+
+| Ports or resource | Actual use and admission |
+| --- | --- |
+| 0–12, 13, 16, 17 | Producer directory/work, retained ingress, original private arena and CAP descriptors; conversion obtains none of their live tokens. |
+| 24/25/26/27 | Original table/state/acquired seed/waiting packet; 24/25/27 remain parked until 00. Initial owned import of 26 restores its head. |
+| 28/29 | Acquired actor archive and ten-field CAP descriptors, imported only at the actual closed acquired boundaries, with head restoration. |
+| 32–39, 40–47 | Occupied original verifier and consumer, including their actual descriptor grammars and terminal duties. |
+| 48/49/50/51 | Original producer→actor, actor→producer, producer→verifier and verifier→consumer routes. |
+| 64/65 | Alternating complete immutable word banks, both owned by $A$. |
+| 66/67/68 | Native Base/ordinal scratch, length scratch and zero-based RCA descriptors. |
+| 69/70 | Actual code capture/initial-prefix/staging, and retained outer/history ingress. |
+| 71/72/73 | Immutable history archive/sender, history mailbox, history receiver. |
+| History invocation slots | ARC's distinct outer-client and handler/client phase slots; every transfer is an actual TOK. |
+| Mailbox availability/read slots | ARC's separate live availability and receiver-read resources; they are not identified with invocation or printed old tokens. |
+
+CAP 17/29/33 descriptors are ten sep-delimited fields, seal, one-based
+creation ordinals. RCA 68 descriptors have unary owner/port/base/length,
+flags 10, zero-based ordinal, F and seal. Their equal numerals are not equal
+origins. No compiler bank occupies verifier 33. Producer 1–12 transfer only
+by the original twelve TOKs and final CTL when the original client resumes.
+No added converter runs in a partial loan.
+

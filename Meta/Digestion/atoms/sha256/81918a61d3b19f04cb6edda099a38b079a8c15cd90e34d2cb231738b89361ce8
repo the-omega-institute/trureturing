@@ -1,0 +1,37 @@
+**Lemma 336.1 (repo-derived).** Under (333.1)–(333.5),
+S(rho)+S(eta)>pi and v<d.
+
+**Proof.**
+
+For any lambda>1, direct expansion gives
+
+    Lr-lambda*Jr
+      =(1+lambda)*Q+2*(1-lambda)*T
+       -[(1+lambda)*c+(lambda-1)]*r
+       -(lambda-1)*c-(lambda+1).                (336.1)
+
+Use 2*T<=Q, r<=H<Q/(m-1), and lambda=4. Then
+
+    Lr-4*Jr
+      >[2-(5*c+3)/(m-1)]*Q-3*c-5
+      >5*Q/(m-1)-3*c-5
+      >5*(m+c+1)-3*c-5=5*m+2*c>0.              (336.2)
+
+The second line uses 5*c+3<2*m-7 from (335.4). Thus
+
+    x^2>96/25,
+    y^2>(24/25)*(4/5)=96/125,                  (336.3)
+
+where the y estimate uses (334.5), m>9 and (335.3). Hence xy>1, because
+9216/3125>1. On the positive arctangent branch, (334.2) gives
+
+    S(rho)+S(eta)>pi.                           (336.4)
+
+If v>=d, (334.3) would make
+2*beta_V(rho)+2*beta_V(eta)>=S(rho)+S(eta)>pi,
+contradicting the actual four-slot V budget in (333.4). Therefore
+
+    v<d.                                        (336.5)
+
+No individual-angle assertion such as beta_V(eta)>pi/4 was used. QED.
+

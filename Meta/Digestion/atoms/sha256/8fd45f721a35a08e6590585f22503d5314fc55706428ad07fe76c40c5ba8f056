@@ -1,0 +1,12 @@
+**定义2.7（两种风险次序）。** 给实际历史后的配置行 $\rho_h$ 和解码 $D_z$，定义
+
+$$
+Q_h=\sum_z\rho_h(z)D_z,\quad
+e_{\rm law}(h)=\operatorname{TV}(Q_h,T_h^\mu),\quad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\qquad
+R_j(\mathcal H_s)=\sup_{h\in\mathcal H_s}e_j(h).
+\tag{2.4}
+$$
+
+四风险按 $(p\text{-law},p\text{-conf},\beta\text{-law},\beta\text{-conf})$ 排列；实际历史平均是另一量词。
+

@@ -1,0 +1,73 @@
+### 73.2 Original flatness and the forced phase angle
+
+For one entry pair \(v=v_{jk},w=w_{jk}\), the corresponding four entries
+of (73.1), writing \(c_\alpha=\cos\alpha\) and \(s_\alpha=\sin\alpha\), are
+
+\[
+ c_\alpha c_\beta v+s_\alpha s_\beta w,\quad
+ c_\alpha s_\beta v-s_\alpha c_\beta w,\quad
+ s_\alpha c_\beta v-c_\alpha s_\beta w,\quad
+ s_\alpha s_\beta v+c_\alpha c_\beta w.
+ \tag{73.3}
+\]
+
+Their four squared moduli equal \(1/6\). Summing in pairs gives
+
+\[
+ |v|^2+|w|^2=2/3,\qquad
+ \cos2\alpha(|v|^2-|w|^2)=\cos2\beta(|v|^2-|w|^2)=0.
+ \tag{73.4}
+\]
+
+At least one cosine is nonzero, so every \(|v|=|w|=1/\sqrt3\).
+Thus \(V,W\) are indeed Hadamard. Substitution in the first squared
+modulus in (73.3) yields
+
+\[
+ \cos2\alpha\cos2\beta+
+ 3\operatorname{Re}(v\bar w)\sin2\alpha\sin2\beta=0.
+ \tag{73.5}
+\]
+
+For \(r=w/v\) this says \(\operatorname{Re}r=-\tau\), where
+\(\tau=\cot2\alpha\cot2\beta\ge0\). Since \(|r|=1\), one has
+\(\tau\le1\). Put \(\theta=\arccos(-\tau)\in[\pi/2,\pi]\).
+Every ratio \(r\) lies in \(\{e^{i\theta},e^{-i\theta}\}\).
+
+Use indices \(j,k\in\{0,1,2\}\) and \(F_{jk}=\omega^{jk}/\sqrt3\).
+For a three-dimensional Hadamard with unit-entry rescaling \(a_{jk}\),
+the factors
+
+\[
+ L_0=\operatorname{diag}(\bar a_{j0}),\qquad
+ R_0=\operatorname{diag}(a_{00}\bar a_{0k})
+ \tag{73.6}
+\]
+
+dephase its first row and column to \(1/\sqrt3\). The other two entries
+of its second row are \(\omega/\sqrt3,\omega^2/\sqrt3\) in one order:
+three unit phases with sum zero form an equilateral triangle. Orthogonality
+fixes the third row. Thus its dephased form is \(F\) or \(\bar F\),
+without permutations. Apply the same factors (73.6) to both controlled blocks;
+this is a permitted monomial operation on (73.1). If necessary conjugate the
+whole matrix so that the first block is \(F\).
+
+The opposite-orientation hypothesis now gives
+
+\[
+ W=\operatorname{diag}(\gamma_0,\gamma_1,\gamma_2)
+       \bar F\operatorname{diag}(\delta_0,\delta_1,\delta_2),
+ \qquad\delta_0=1,\qquad
+ r_{jk}=\gamma_j\delta_k\omega^{jk}.
+ \tag{73.7}
+\]
+
+The phases \(\gamma_j=r_{j0}\) take only two possible values, so two
+are equal. For those distinct rows \(j,l\),
+\(r_{j1}/r_{l1}=\omega^{j-l}\) is a nontrivial cube root. On the other
+hand this ratio must be \(e^{2i\theta}\) or \(e^{-2i\theta}\).
+The only possibility with \(\theta\in[\pi/2,\pi]\) is
+\(\theta=2\pi/3\). This proves (73.2) and
+\(r_{jk}\in\{\omega,\omega^2\}\). It also excludes zero cotangent
+product, forcing both angles below \(\pi/4\).
+

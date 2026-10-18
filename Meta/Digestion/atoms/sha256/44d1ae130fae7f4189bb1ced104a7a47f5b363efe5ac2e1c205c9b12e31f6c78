@@ -1,0 +1,40 @@
+## 2. 字面矩阵与复用的末端重建
+
+置
+
+$$
+\begin{aligned}
+L=MJ&=\begin{pmatrix}1&0\\1&1\end{pmatrix},&
+N=JL&=\begin{pmatrix}1&1\\1&0\end{pmatrix},\\
+U=MN&=\begin{pmatrix}1&0\\2&1\end{pmatrix}=2L-I,&
+V=JU&=\begin{pmatrix}2&1\\1&0\end{pmatrix},\\
+S=MV&=\begin{pmatrix}1&0\\3&1\end{pmatrix}=3L-2I,&
+Q=MU&=\begin{pmatrix}2&1\\3&1\end{pmatrix}=N+U.
+\end{aligned}
+\tag{2.1}
+$$
+
+故 $H_{5J}$ 的累积矩阵为 $I,J,L,N,U,V$，$H_{5M}$ 的为 $I,J,L,N,U,Q$。第六动作在前者给出 $S,U$，在后者给出
+
+$$
+MQ=\begin{pmatrix}3&1\\5&2\end{pmatrix}=N+2U,\qquad
+JQ=\begin{pmatrix}3&1\\2&1\end{pmatrix}.
+\tag{2.2}
+$$
+
+记 $j=b+e$、$\tau=1+b$、$n=a+j$、$u=1+2b=2\tau-1$，则
+
+| 矩阵 | $I$ | $J$ | $L$ | $N$ | $U$ | $V$ | $S$ | $Q$ | $MQ$ | $JQ$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 与 $P$ 的迹 | $1$ | $j$ | $\tau$ | $n$ | $u$ | $2a+j$ | $1+3b$ | $n+u$ | $n+2u$ | $1+2a+2b+e$ |
+
+这些迹都严格正。一般恒等式
+
+$$
+\operatorname{tr}\left(\begin{pmatrix}p&q\\r&s\end{pmatrix}P\right)
+=s+(p-s)a+rb+qe
+\tag{2.3}
+$$
+
+直接核对全表，特别不使用源对称性。重复的矩阵 $U$ 不合并原时钟四与六的增益样本。
+

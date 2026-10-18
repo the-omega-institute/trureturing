@@ -1,0 +1,17 @@
+**Condition $\mathsf A$ ([OWN, (9.2)]).** For some $i,\eta\in\mathbb F_2$ and even $E\subseteq W_1$ with $m\notin E$,
+
+$$
+q(j)=b_i(j)\oplus\eta\quad(j\in J),\qquad
+q(j-m)=1\oplus b_0(j)\oplus b_1(j)\quad(j\in M_i).
+\tag{2.3}
+$$
+
+Equivalently, a whole $\lambda_i$ class $A$ misses $H$ and satisfies
+
+$$
+M_i\cap(A+m)=\{j\in M_i:\lambda_i(j)=\lambda_{1-i}(j)\}.
+\tag{2.4}
+$$
+
+Its even completion uses the excluded donor zero. That donor cannot affect the shifted tests, since $j-m\ne0$ on $J$.
+

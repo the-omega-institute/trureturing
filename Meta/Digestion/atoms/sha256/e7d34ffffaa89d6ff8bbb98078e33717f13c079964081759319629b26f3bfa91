@@ -1,0 +1,28 @@
+**Definition 1.2 (unchanged original literal and prediction interface).**
+One actual $t\in\mathcal F_D$ remains stationary. A literal Read submits
+an arbitrary finite original-root word $a$ over $L,R$, including the empty
+word. Its reply $r_t(a)$ is $\alpha$ or $\beta$ at that leaf,
+$\mathsf{branch}$ at a pair, and $\mathsf{absent}$ once traversal passes a
+leaf. Every such word is legal; prefixes need not have been queried.
+
+Preparation is deterministic, effective, source-blind and independent of a
+later target, with common initialization and installed data depending only
+on public inputs. It terminates on every source and exports a finite
+complete acquired name as in Assumption 1.3. Source information enters
+only through charged literal Reads.
+After export, the target can be any $R$-starting word $p$ of length at most
+$D$. The late reader chooses at most one arbitrary fresh original-root
+literal before seeing its reply or any later count. Its final predictor must
+return
+
+$$
+r_{\rho^k(t)}(p)
+\quad\text{for every }t\in\mathcal F_D,\ p\text{ as above},\ k\ge0,
+\tag{ER.3}
+$$
+
+without another Read, for every subsequently supplied authentic $k$.
+The iterates in (ER.3) are prediction targets. Supplying $k$ executes no
+substitution. Variable shapes, arbitrary correlated competitors and all the
+stated targets remain in this task.
+

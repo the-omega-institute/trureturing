@@ -1,0 +1,51 @@
+**Definition 3.1 (Measurement and preparation factors).** Let
+$\alpha_k=2\pi k/3$ and $\beta_k=2\pi k/5$, and use the disjoint flag set
+
+$$
+F=\{(\mathrm A,k,l):0\le k,l<3\}
+\sqcup\{(\mathrm B,k):0\le k<5\}.
+\tag{3.1}
+$$
+
+The measurement vectors and weights are exactly the QFA encoder:
+
+$$
+\begin{aligned}
+b_{\mathrm A,k,l}
+&=\frac{\sqrt2\,w_+(\alpha_k)+\sqrt3\,w_-(\alpha_l)}{\sqrt5},
+&c_{\mathrm A,k,l}&=\frac{10}{27},\\
+b_{\mathrm B,k}
+&=\frac{\sqrt3\,d+\sqrt2\,w_+(\beta_k)}{\sqrt5},
+&c_{\mathrm B,k}&=\frac13.
+\end{aligned}
+\tag{3.2}
+$$
+
+Use independent preparation vectors
+
+$$
+\begin{aligned}
+a_{\mathrm A,k,l}
+&=\frac{14\sqrt6\,w_+(\alpha_k)+41w_-(\alpha_l)}{\sqrt{2857}},\\
+a_{\mathrm B,k}
+&=\frac{11d+5\sqrt6\,w_+(\beta_k)}{\sqrt{271}}.
+\end{aligned}
+\tag{3.3}
+$$
+
+Define the frame channel and original channel by
+
+$$
+S(X)=\sum_{f\in F}c_fa_fa_f^T\operatorname{tr}(b_fb_f^TX),
+\qquad T_\theta(X)=DS(D^\dagger XD)D^\dagger.
+\tag{3.4}
+$$
+
+These are fixed exact algebraic data. In particular, the three-point
+circle values are $(1,0),(-1/2,\sqrt3/2),(-1/2,-\sqrt3/2)$.
+The five-point values follow from
+$\cos(2\pi/5)=(\sqrt5-1)/4$,
+$\cos(4\pi/5)=-(\sqrt5+1)/4$,
+$\sin(2\pi/5)=\sqrt{10+2\sqrt5}/4$ and
+$\sin(4\pi/5)=\sqrt{10-2\sqrt5}/4$, with reflected signs.
+

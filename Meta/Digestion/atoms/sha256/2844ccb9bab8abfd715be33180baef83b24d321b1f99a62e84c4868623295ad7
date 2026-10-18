@@ -1,0 +1,11 @@
+**Proposition 38.3 (a pointwise marginal fidelity one versus reference loss).** At the center $\omega=\operatorname{diag}(a,\beta)$ and input $q_{1/2}$,
+
+$$
+ f(\Gamma(q_{1/2}^T),\omega)=1,\qquad
+ \Phi(q_{1/2},\omega)=\frac{1+\sqrt{a^2+\beta^2}}2<1
+ \quad(\beta>0).
+\tag{R.183}
+$$
+
+The first equality is equality of the two diagonal marginal states. The second is the reference-bearing value from (R.177), and the strict inequality is $\sqrt{a^2+\beta^2}<a+\beta=1$. It is a pointwise interface gap, not a claim that marginal tomography is informationally incomplete.
+

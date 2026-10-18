@@ -1,0 +1,31 @@
+**Theorem 4.4 (A negative atom for a certificate matching the QJM port).**
+No globally product-positive certificate of Definition 4.1 can have
+value $\lambda_Q$. More explicitly, complementarity at the QJM point
+would force $A_N^+=vv^T$, all other event multipliers zero, and
+
+$$
+b_{\mathrm B,0}^TB_y(u_+)b_{\mathrm B,0}
+=-\frac{19}{130}gn(u_+^Tv)^2<0,
+\tag{4.14}
+$$
+
+where $v$ is the positive unit eigenvector of $C_Q$.
+
+Proof. If a globally valid certificate had value $\lambda_Q$, QJM's
+slack identity at $S_Q$ would have zero total nonnegative slack.
+All other signed event inequalities are strict by (2.14), while
+the positive $N$ inequality has a one-dimensional kernel. The unit
+trace normalization (4.2) therefore forces the asserted event
+multipliers. The positive-weight B generator in QJM equation (4.4)
+must also have zero atom slack:
+$b_{\mathrm B,0}^TB_y(a_{\mathrm B,0})b_{\mathrm B,0}=0$.
+For a fixed $b$ and unit preparations, the TP term $b^TY_yb$ is
+unchanged. Changing the B preparation to $u_+$ increases its event
+payoff by exactly (2.25). Subtracting those equal TP terms in (4.4)
+proves (4.14), contradicting positivity on the full independent-product
+domain. Independently, the legal port of Theorem 2.2 has smaller error,
+so no universal lower at $\lambda_Q$ can hold.
+This excludes matching that specific sufficient point. QJM makes no
+optimality assertion, and none of its stated bounds is refuted.
+$\square$
+

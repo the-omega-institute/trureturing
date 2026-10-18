@@ -1,0 +1,56 @@
+**定理 C-106.2（该人口纤维唯一的 PPT 态与可分离态）。** 对每个 $\Gamma\in\mathfrak D$，
+
+$$
+\Gamma^{\mathsf T_2}\succeq0
+\quad\Longleftrightarrow\quad\Gamma=S
+\quad\Longleftrightarrow\quad\Gamma\text{ 可分离}.
+\tag{C106.3}
+$$
+
+因此同样的等价关系适用于包含原 $Q$ 约束的 $\mathfrak F$。
+
+证明。设 $\mathcal E=\operatorname{span}\{e_s:s\in B\}$。
+正半定复矩阵满足 $|\Gamma_{xy}|^2\le\Gamma_{xx}\Gamma_{yy}$；这是其二阶主子式的非负性。
+若 $x=|s,u\rangle$ 且 $u\ne f(s)$，人口合同给 $\Gamma_{xx}=0$，所以整行和整列均为零。
+从而不存在连接 $\mathcal E$ 与其正交补的隐蔽矩阵元，并且
+
+$$
+\Gamma=\sum_{s,a\in B}c_{sa}|e_s\rangle\langle e_a|,\qquad
+C=(c_{sa})\succeq0,\quad c_{ss}=1/5,\quad c_{as}=\overline{c_{sa}}.
+\tag{C106.4}
+$$
+
+这里保留全部复相位。局部置换将 $e_s$ 送到 $|s,s\rangle$，故这是已知的
+maximally correlated 结构；其定义见 Hiroshima–Hayashi，
+[quant-ph/0405107v2](https://arxiv.org/abs/quant-ph/0405107v2)，式 (1)。
+按 C-105.11 的第二份转置约定，
+
+$$
+\Gamma^{\mathsf T_2}
+=\sum_{s,a}c_{sa}|s,f(a)\rangle\langle a,f(s)|.
+\tag{C106.5}
+$$
+
+对每个无序对 $s\ne a$，子空间
+$\operatorname{span}\{|s,f(a)\rangle,|a,f(s)\rangle\}$ 上的块为
+
+$$
+\begin{pmatrix}0&c_{sa}\\\overline{c_{sa}}&0\end{pmatrix},
+\qquad\text{特征值 }+|c_{sa}|,-|c_{sa}|.
+\tag{C106.6}
+$$
+
+这十个二维块与五个 $e_s$ 上的单点块互相正交，合计维数 $20+5=25$。
+故 PPT 当且仅当全部非对角 $c_{sa}$ 为零，当且仅当 $\Gamma=S$。
+这个块谱是 Rains，*A semidefinite program for distillable entanglement*，
+[quant-ph/0008047v2](https://arxiv.org/abs/quant-ph/0008047v2)，§6 Lemma 6.3 的证明、
+式 (6.20)–(6.21) 的直接应用；这里的额外关系是实际联合人口强制进入该结构。
+$S=(1/5)\sum_s P_s\otimes P_{f(s)}$ 是产品态的凸组合。
+反向的“可分离推出 PPT”是 Peres，
+[quant-ph/9604005v2](https://arxiv.org/abs/quant-ph/9604005v2)，式 (3)–(6) 的必要条件。
+因此三者等价，且 C-105.4 给 $q(S)=1/5$。证毕。
+
+式 (C106.3) 使用完整人口纤维的结构，没有使用一般 $5\times5$ 系统的 PPT 充分性。
+其所需零概率是总体概率的精确零；有限次试验中某些格子计数为零，不能直接满足
+(C106.2)，也不能据此推出精确支撑压缩。
+

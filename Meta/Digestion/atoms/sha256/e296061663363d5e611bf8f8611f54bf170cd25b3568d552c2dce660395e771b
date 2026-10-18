@@ -1,0 +1,6 @@
+## 11. Source-level finite-rank certificate
+
+Sections 9–10 leave the rotation interface explicit. A separate finite
+certificate can connect a predictive-dimension claim to actual FIB sources
+without asserting that the native source already carries that interface.
+

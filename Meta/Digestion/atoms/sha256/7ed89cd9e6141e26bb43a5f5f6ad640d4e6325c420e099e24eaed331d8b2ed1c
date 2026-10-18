@@ -1,0 +1,25 @@
+**Definition 12.1 (one actual source embedding).** Fix public
+$m\ge3$, enumerate its $n$ vertices publicly, and put
+
+$$
+H_0=\lceil\log_2 n\rceil,\qquad K_0=2^{H_0},\qquad D=H_0+3.
+\tag{OCC.37}
+$$
+
+In a perfect ordered scaffold of height $H_0$ place $x_v(s)$ at its
+first $n$ frontier words $a_v$, each of length $H_0$. Pad every
+other frontier position by alpha. Denote the resulting right subtree
+by $u_s$ and the original source by $t_s=\langle\alpha,u_s\rangle$.
+The map $s\mapsto u_s$ is injective, belongs to $S_D$, and has
+height $H_0+2\le D$. Write $\widehat R_m=\{u_s:s\in R_m\}$
+and $\widehat R_h=\{u_s:s\in R_h\}$.
+
+Every finite original-root literal on this canonical slice is either
+constant or returns exactly one edge bit as alpha or beta. Indeed the
+outer root, left cone, scaffold, padding, and each block's three
+internal nodes have fixed replies. The only varying positions are
+the terminal graph slots, all at original-root length $D$; beyond
+these leaves the reply is absent. Querying an edge at its other
+endpoint still returns that same bit. No literal returns a parity,
+component, subtree, or collection of terminal values.
+

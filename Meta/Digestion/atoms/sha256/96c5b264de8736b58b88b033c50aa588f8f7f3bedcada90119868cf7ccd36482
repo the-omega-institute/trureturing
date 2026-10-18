@@ -1,0 +1,49 @@
+**定理 9.2（整条均值序列的精确信息）。** 对任意两份合法律 $`p,p'`$，
+
+<table><tbody><tr><td>
+
+```math
+(m_n(p))_{n\ge0}=(m_n(p'))_{n\ge0}
+\iff (U(p),V(p))=(U(p'),V(p')).
+```
+
+</td></tr></tbody></table>
+
+其中
+
+```math
+m_0=2U+3V,\qquad m_1=3U+5V,
+```
+
+<table><tbody><tr><td>
+
+```math
+U=5m_0-3m_1,\qquad V=-3m_0+2m_1,
+```
+
+</td></tr></tbody></table>
+
+```math
+m_{n+2}=m_{n+1}+m_n.
+```
+
+证明。两初值的矩阵为
+
+```math
+\begin{pmatrix}m_0\\m_1\end{pmatrix}
+=\begin{pmatrix}2&3\\3&5\end{pmatrix}
+\begin{pmatrix}U\\V\end{pmatrix},\qquad
+\begin{pmatrix}2&3\\3&5\end{pmatrix}^{-1}
+=\begin{pmatrix}5&-3\\-3&2\end{pmatrix}.
+```
+
+行列式一，故序列相等蕴涵两个组成均值相等；反向直接由定义。$`M^2=M+I_2`$ 给递推，因此后续均值没有新独立参数。也可写
+
+```math
+m_n=\mathrm{Fib}_{n+3}U+\mathrm{Fib}_{n+4}V.
+```
+
+∎
+
+这是双曲卷定理 7.3 在整数替换时钟上的同源结论。它的两参数纤维正是定理 6.4；任意多次读取这类均值都不能分开两条不可见方向。采样更多与读取更丰富的关系不同：增加同一均值的精度，不产生 $`S,T`$。
+

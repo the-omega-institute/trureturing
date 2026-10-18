@@ -1,0 +1,28 @@
+**Proposition 13.4 (missing continuation information and local selection).**
+Component geometry alone does not determine the prescribed next command
+of an assignment invocation. Also this stencil cannot start from both
+canonical entrances with one fixed root-relative destination walk unless
+a selection or scratch convention is added.
+
+Proof. For old bit $0$, the first-move component is identical for targets
+$0$ and $1$, but their next commands move $f$ from $t.0$ to $t.1$,
+or $t$ from $r.1$ to $r.0$. Their successor frontiers are respectively
+$\{110,111\}$ and $\{000,001\}$. The target is continuation information.
+Even with target fixed to $0$, the $0\to0$ first-move component equals
+the $1\to0$ second-move component: $r.1=t$, $t.0=f$. The next commands
+move $f$ respectively to $t.1$ and to $r.0$. Thus phase omission also
+loses continuation information.
+
+The common reached positions of $g_0,g_1$ are exactly
+$\varepsilon,0,1$. Both root child slots are occupied. At either other
+common position, each child slot is occupied in one entrance and vacant
+in the other. No destination child slot reached by the same fixed walk
+is vacant in both. The bounded private selection in Definition 13.1 is
+therefore a real requirement of this stencil.
+
+These are component pairs, not equal-full-state pairs in the acquired
+original runtime, whose actual latch, controller and retained backing may
+distinguish them. They identify a required row/operand/phase binding,
+without proving that a new log is necessary, that all finite atomic
+control is forbidden, or that no full refinement exists. ∎
+

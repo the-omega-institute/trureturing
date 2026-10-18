@@ -1,0 +1,26 @@
+**Theorem 4.1 (effective original-source uniqueness).** After deciding
+$E\ne\varnothing$, it is decidable whether the original finite tree
+value is the same in every realizing history, even when their epoch
+tuples differ. If it is the same, its value is effectively recoverable.
+Otherwise two distinct finite originals with realizing chronological
+tuples can be returned.
+
+Proof. By (NUE.10), the set of possible originals is exactly
+
+$$
+U=\bigcup_{\mathbf c\in K}F_{\mathbf c}.
+\tag{NUE.14}
+$$
+
+Obtain one witness $t_*$ from an accepted representative. For every
+$\mathbf c\in K$, use NSF Theorem 5.2 on its entire fixed-epoch
+predicate together with the native disequality $t\ne t_*$. Here
+$t_*$ is a supplied finite ground term, so every query remains within
+the original supplier's language. If one succeeds, its returned
+$t'$ and that representative form a second history, with
+$t'\ne t_*$. If all fail, every element of every $F_{\mathbf c}$
+equals $t_*$, so $U=\{t_*\}$. This adds at most $|K|$ total
+fixed-epoch queries after one witness is available. It neither invokes
+a new variable-power decision nor enumerates a bounded tree universe.
+$\square$
+

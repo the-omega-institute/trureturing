@@ -1,0 +1,84 @@
+**Proposition 13.1 (an intermediate attainer need not preserve mixed
+unitarity).** For $d=3,r=2$, take partition sizes $2,1$ in (JG.61), and
+let the slot be $\operatorname{Ad}_U$, where $U$ swaps basis vectors
+$1,2$ and fixes $3$. Then both the permutation-averaged code circuit
+without phase averaging and $\mathcal S_2$ have population columns
+
+$$
+\begin{pmatrix}1/2\\1/3\\1/6\end{pmatrix},\qquad
+\begin{pmatrix}1/3\\1/2\\1/6\end{pmatrix},\qquad
+\begin{pmatrix}0\\0\\1\end{pmatrix}.
+\tag{JG.78}
+$$
+
+Their outputs on $I_3$ are $\operatorname{diag}(5/6,5/6,4/3)$, so the
+output channels are nonunital and cannot be mixed unitary, although
+the input slot is unitary. Phase averaging preserves this population
+counterexample, but changes the full output channel.
+
+Proof. There are three equally likely choices of singleton. For input
+$P_1$, if the singleton is $3$, the erroneous population at $2$ remains
+at $2$; if it is $1$, recovery returns it to $1$; if it is $2$, recovery
+distributes it equally over $1,3$. This gives the first column in
+(JG.78). Interchanging $1,2$ gives the second. The fixed input $P_3$
+is always recovered as $P_3$. Diagonal phases cannot change these
+population columns. Their sum gives the stated nonunitality, whereas
+any convex mixture of unitary conjugations preserves $I_3$.
+
+For the unaveraged circuit, $E_{12}$ becomes $E_{21}$ precisely when
+$1,2$ are in the same group, which occurs with probability $1/3$;
+otherwise the code and complement Kraus terms kill it. Thus that
+output is $E_{21}/3$. For the phase-averaged circuit it is zero by
+(JG.65). The population defect survives, not equality of the whole
+two channels. A future application requiring mixed-unitary preservation
+needs a further construction and proof; it is not a hypothesis or
+conclusion of Theorem 10.1. $\square$
+
+The construction and sharp constants in §§9–11 are `repo-derived`
+applications of the actual slot factorization, perfect-discrimination
+capacity and the existing $\Theta$ recovery. Finite Kraus circuits,
+rank-one Choi support, phase twirling, Schur positivity and trace-norm
+pinching are mature ingredients, not new generic mechanisms. The
+calibration in Proposition 12.1 is an application of Mayer–Knill's
+known theorem, with the supplied source vectors and support mapping.
+
+The relevant comparison with Puchała, Korzekwa, Salazar, Horodecki and
+Życzkowski, *Dephasing superchannels*, [arXiv:2107.06585v2][DS], is
+bounded to Definition 3 / (24), Proposition 1 / (26), and Proposition 2 /
+(40)–(51). Their defining condition preserves EVERY basis transition
+probability of EVERY slot channel:
+
+$$
+\langle a|\Xi(\Phi)(P_i)|a\rangle
+       =\langle a|\Phi(P_i)|a\rangle\quad(\Phi,a,i).
+\tag{JG.79}
+$$
+
+Proposition 1 identifies that class with Choi Schur multiplication by
+a positive unit-diagonal correlation matrix with identical diagonal
+$d\times d$ blocks. Proposition 2 supplies controlled unitary
+pre/postprocessing with a $d^2$-dimensional ancillary system. That
+realization is an upper bound for their class, not an exact memory
+frontier for (JG.52).
+
+Indeed, for $r>1$, $K$ has zero correct population, while
+$\mathcal S_r(K)$ has correct population $(r-1)/(d-1)>0$ by (JG.66).
+Hence this attainer does not satisfy (JG.79). Conversely,
+$\Phi\mapsto\Delta\Phi\Delta$ satisfies (JG.79) but sends
+$\operatorname{id}$ to $\Delta$, so it does not satisfy (JG.52).
+The two hypothesis classes can intersect: $\mathcal S_1$ preserves
+all transitions by (JG.65) and fixes every Schur channel. Thus different
+hypotheses do not imply disjoint classes. The cited propositions are
+not an exact hit for (JG.60); this comparison asserts neither exhaustive
+non-overlap with that paper nor worldwide priority.
+
+For $r=1$, the actual CP pre-instrument and conditional full CPTP
+postprocessing in (JG.51) have the mature classically correlated
+supermap form in Rosset–Buscemi–Liang, *A resource theory of quantum
+memories and their faithful verification with minimal assumptions*,
+[arXiv:1710.04710v2][RBL], §II, (2). Their free classical records and
+randomness are consistent with the actual finite flags here, and do
+not grant free quantum bypass. That source is not cited as proving the
+capped-memory constants (JG.60) or (JG.72). None of these ordinary
+applications constitutes a new Lean declaration or kernel result.
+

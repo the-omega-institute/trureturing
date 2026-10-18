@@ -1,0 +1,226 @@
+**定义 79.1（归一化源和容量）。** 令 $a_y=(\sqrt{y/128},\sqrt{(64-y)/128},1/\sqrt2)^T$，$U_{e,n}=\operatorname{diag}(e,n,1)$。原 supported 输入是
+
+$$
+\rho^{(3)}_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\qquad
+\rho^{(5)}_{y,e,n}=E\rho^{(3)}_{y,e,n}E^\dagger,
+$$
+
+其中 $E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2):\mathbb C^3\to\mathbb C^5$ 是原等距嵌入。以下 $\rho$ 和 $\Delta$ 未标维数时使用 supported qutrit 坐标。保留
+
+$$
+D=\operatorname{diag}(h_0,h_1,h_2),\qquad
+T=a|0\rangle\langle1|+b|1\rangle\langle0|,
+$$
+
+$$
+S=c|0\rangle\langle2|+d|2\rangle\langle0|,\qquad
+M=\operatorname{diag}(0,m_1,m_2),
+$$
+
+以及根处恒等式
+
+$$
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3.
+$$
+
+定义
+
+$$
+\theta=\frac{ab}{h_0h_1},\quad
+\omega=\frac{cd}{h_0h_2},\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,
+$$
+
+$$
+\alpha=\frac{\theta}{\delta},\quad
+\beta=\frac{\omega}{\delta},\quad
+L=\operatorname{diag}(s_0,1,1),\quad L_0=L^2,
+$$
+
+$$
+Q=\operatorname{diag}(1,-\alpha,-\beta),\qquad
+C=\frac{e_0e_1^T+e_1e_0^T}{2}.
+$$
+
+在约定 78.1 的源根处， $\alpha>\beta>0$ 、 $\alpha+\beta=1$。令
+
+$$
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\qquad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),
+\quad (K_0,K_1,K_2)=(D,T,S),
+$$
+
+$$
+G=LNL=
+\begin{pmatrix}
+g_0&\mathsf x&\mathsf y\\
+\mathsf x&g_1&\mathsf z\\
+\mathsf y&\mathsf z&g_2
+\end{pmatrix},
+\qquad
+H_0=(1-\delta)N_{00}.
+\tag{RC.107}
+$$
+
+这里 $\mathsf x,\mathsf y>0$ 、 $\mathsf z<0$。对完整 null 椭圆
+
+$$
+\mathscr C=\{h=(1,z,w)^T:\alpha z^2+\beta w^2=1\}
+$$
+
+定义
+
+$$
+\ell(h)=h^TGh,\qquad K_h=s_0D+zT+wS,
+$$
+
+$$
+n_h=\left(0,\frac{dw}{h_2},-\frac{bz}{h_1}\right)^T,
+$$
+
+$$
+\operatorname{cap}(h)=
+\frac{h_1^2h_2^2s_0^2+a^2h_2^2z^2+c^2h_1^2w^2}
+{h_0^2s_0^2+b^2z^2+d^2w^2}>0.
+\tag{RC.108}
+$$
+
+FA69–72 给出的 supported 非零原实际 low label 数据为
+
+$$
+\sqrt{p_j}K_{h_j},\qquad
+N_j=p_j b_j n_{h_j}n_{h_j}^T,
+$$
+
+$$
+p_j>0,\qquad 0\le b_j\le b_A\operatorname{cap}(h_j),
+$$
+
+$$
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jN_j=M,\qquad
+\sum_jp_j|z_j|\ge\tau:=s/s_0.
+\tag{RC.109}
+$$
+
+这些 $p_j$ 是 coefficient weights，不是 acquisition 概率。对五模密度 $\rho^{(5)}$，实际 acquisition 概率是
+
+$$
+\operatorname{tr}\!\left[
+E\bigl(p_jK_{h_j}^{\dagger}K_{h_j}+N_j\bigr)E^\dagger
+\,\rho^{(5)}
+\right].
+$$
+
+### 79.2 两个物理谱效应
+
+在原坐标 $(1,2)$  上令
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),
+$$
+
+$$
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+=
+\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+$$
+
+$$
+d_f=\frac{11m_1}{64},\qquad
+z_f=\frac{\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})}{16}<0,
+\qquad
+L_f=\sqrt{d_f^2+4z_f^2}.
+$$
+
+取
+
+$$
+\lambda_\epsilon=\frac{-d_f+\epsilon L_f}{2},\qquad \epsilon=\pm1,
+$$
+
+$$
+t_f=\frac{-2z_f}{d_f+L_f},\qquad
+e_-=\frac{(1,t_f)^T}{\sqrt{1+t_f^2}},\qquad
+e_+=\frac{(t_f,-1)^T}{\sqrt{1+t_f^2}},
+$$
+
+$$
+B_\epsilon^{\rm sp}
+=M_2^{1/2}e_\epsilon e_\epsilon^TM_2^{1/2},
+\tag{RC.110}
+$$
+
+并在坐标零上补零。于是
+
+$$
+B_+^{\rm sp}+B_-^{\rm sp}=M,\qquad
+\operatorname{tr}(\Delta B_\epsilon^{\rm sp})=\lambda_\epsilon.
+$$
+
+定义
+
+$$
+V_f=\frac{m_2h_1^2}{b^2},\qquad
+W_f=\frac{m_1h_2^2}{d^2},
+$$
+
+$$
+\chi_\epsilon
+=\alpha V_f(e_\epsilon)_2^2+\beta W_f(e_\epsilon)_1^2.
+$$
+
+选定 $z>0$  的基准取向：
+
+$$
+z_\epsilon=
+\frac{\sqrt{V_f}|(e_\epsilon)_2|}{\sqrt{\chi_\epsilon}}>0,
+$$
+
+$$
+w_\epsilon=
+-\frac{\operatorname{sgn}((e_\epsilon)_2)\sqrt{W_f}(e_\epsilon)_1}
+{\sqrt{\chi_\epsilon}},
+$$
+
+$$
+h_{\epsilon,o}=(1,o z_\epsilon,o w_\epsilon)^T,\qquad o=\pm1.
+\tag{RC.111}
+$$
+
+因此 $w_+>0>w_-$，并且
+
+$$
+B_\epsilon^{\rm sp}
+=\chi_\epsilon n_{h_{\epsilon,o}}n_{h_{\epsilon,o}}^T.
+$$
+
+最后置
+
+$$
+\nu_\epsilon=
+\frac{\chi_\epsilon}{\operatorname{cap}(h_{\epsilon,+})}>0.
+\tag{RC.112}
+$$
+
+承载整个 $B_\epsilon^{\rm sp}$  的预算饱和 live mass 正是
+
+$$
+p_\epsilon=\eta_A\nu_\epsilon.
+\tag{RC.113}
+$$
+
+其最小整个 fibre 活动量为
+
+$$
+\log\!\left(1+\frac{\nu_\epsilon}{p_\epsilon}\right)=A.
+$$
+
+所有白化均发生在物理 failure support 上；特别是下面使用
+
+$$
+q_\epsilon(h)=
+\left|e_\epsilon^TM_2^{-1/2}(n_h)_{\{1,2\}}\right|^2.
+\tag{RC.114}
+$$
+

@@ -1,0 +1,71 @@
+**Theorem 3.2 (fibres and exact recovery at a passive cut).**
+If $h$ is all zero, with $z=|Z(h)|$, then
+
+$$
+\mathcal C(h)=\{b\}\ \sqcup\
+ \{(n,J):n\ge1,\ |J|=t,\ Z(h)\subseteq J\}.
+\tag{3.2}
+$$
+
+For $z\le t$ its compatible target values are exactly
+$\{0,1,2,\ldots\}$; for $z>t$ its sole source is $b$.
+If $h$ contains a positive reply, all its positive replies at a
+compatible source must equal one integer $n\ge1$, and then
+
+$$
+\mathcal C(h)=\{(n,J):Z(h)\subseteq J\subseteq A\setminus P(h),\ |J|=t\}.
+\tag{3.3}
+$$
+
+With $z=|Z(h)|$, $p=|P(h)|$ and disjoint $Z(h),P(h)$, this fibre has
+$\binom{N-z-p}{t-z}$ elements, and is nonempty exactly when
+$z\le t$ and $p\le N-t$. Inconsistent repeated replies, distinct
+positive reply values, negative replies or noninteger positive replies
+have empty fibre.
+
+At a nonempty fibre, exact target recovery means assigning a value
+correct for every compatible source; exact future-response recovery
+means assigning the correct function $a\mapsto f_x(a)$ for every
+compatible source. The latter also determines every future passive
+query response under any acquired-history policy and fresh tape.
+An all-zero record admits either recovery precisely when $z>t$.
+A positive record always recovers the target $n$, but recovers the whole
+future-response function precisely when
+
+$$
+z=t\quad\hbox{or}\quad p=N-t.
+\tag{3.4}
+$$
+
+**Proof.** A zero reply at an address is equivalent to membership in
+$J$ at a high source, and a positive reply equals $n$ and is equivalent
+to nonmembership. The baseline supplies only zeros. These facts give
+(3.2) and (3.3), including their consistency conditions. In (3.3),
+choose the remaining $t-z$ zero addresses from the $N-z-p$ unread
+addresses; this proves the count and the nonemptiness criterion.
+
+The map $x\mapsto f_x$ is injective. Its all-zero function is unique to
+$b$, because $t<N$. Any other function reveals $n$ at a positive
+address and reveals $J$ as its zero set. Thus future-response recovery
+holds exactly for singleton fibres. Equation (3.2) has one source
+exactly when $z>t$; otherwise even $n$ is unrestricted. For (3.3),
+write $u=N-z-p$ and $v=t-z$. A nonempty choice family of $v$-subsets
+of a $u$-set is a singleton exactly when $v=0$ or $v=u$. If
+$0<v<u$, swap one chosen and one unchosen unread address to obtain
+two different compatible sources with different next replies at those
+addresses. This gives (3.4). The response function, combined with the
+specified policy and tape, determines future records and stopping by
+successive evaluation; it does not reveal unretained earlier history.
+$\square$
+
+The record-fibre test is an application of
+[Boundary Dynamics, Theorem 2.1 and Corollary 2.2](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md):
+a proposed boundary must preserve the outputs and legal successors
+required by the selected future experiments. It does not promote an
+uncertain candidate set to the actual response function. Likewise
+[Process Geometry, Proposition 43.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+qualifies §39.2: mutual recovery of supplied views and task sufficiency
+give a common kernel contained in the task kernel; identifying that
+kernel with the task kernel additionally requires nonredundancy.
+No additional general quotient criterion is needed here.
+

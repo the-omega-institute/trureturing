@@ -1,0 +1,98 @@
+**Theorem 144.3 (Exact whole polytope).** $P$ is the convex hull of precisely
+the following 36 rational vertices in exact lexicographic order. Its 22
+listed inequalities define exactly 18 distinct facets.
+
+**Proof.** Begin with the seven vertices in Definition 143.2. Inductively
+apply Lemma 144.1 using the complete trace, retaining all permitted old
+vertices and all edge-plane intersections. The ranks for every possible
+positive-negative pair are specified above; none of the rank-below-five
+pairs is an edge. The table's kept indices and new intersections are
+obtained by rational slack and (144.1), so exact deduplication yields the
+listed counts at each of the fifteen steps. The final list is below,
+and every vertex has rank-six active normals. Thus it is an exhaustive
+vertex enumeration, not a parameter scan. Boundedness gives the
+convex-hull statement: a nonvertex in its minimal face lies on a chord
+whose endpoints are in faces of smaller dimension; induction decomposes
+it into vertices.
+
+A tight face of an inequality is the convex hull of its listed tight
+vertices. The affine dimensions in the second table are calculated from
+those exact vertices. Rows 0,6,16,18 have dimensions 4,2,4,4 respectively;
+all other 18 rows have dimension five and distinct hyperplanes. Each facet
+of a full-dimensional halfspace intersection is carried by a defining
+hyperplane, so there are no unlisted facets. $\square$
+
+<!-- mathematical-data: vertices36 -->
+
+| Vertex index $v$ | $(a_1,a_2,a_3,a_4,a_5,e)$ | Active halfspaces |
+| --- | --- | --- |
+| 0 | (0,0,0,0,0,0) | [1,2,3,4,5,6,8,13,16,17] |
+| 1 | (7/13,7/13,7/13,7/13,7/13,3/13) | [1,2,3,4,11,13,14] |
+| 2 | (10/17,10/17,10/17,9/17,9/17,4/17) | [1,2,4,9,11,13,14,15] |
+| 3 | (10/17,10/17,10/17,10/17,8/17,4/17) | [1,2,3,9,11,13] |
+| 4 | (3/5,3/5,3/5,3/5,1/5,1/5) | [1,2,3,5,12,13,18,20] |
+| 5 | (3/5,3/5,3/5,3/5,4/7,9/35) | [1,2,3,9,11,14] |
+| 6 | (8/13,8/13,8/13,8/13,5/13,3/13) | [1,2,3,9,12,13] |
+| 7 | (28/45,28/45,28/45,7/15,7/15,2/9) | [1,2,4,13,15,21] |
+| 8 | (9/14,9/14,9/14,9/14,9/14,2/7) | [1,2,3,4,9,14] |
+| 9 | (20/31,20/31,20/31,11/31,11/31,6/31) | [1,2,4,13,19,21] |
+| 10 | (11/17,11/17,11/17,5/17,5/17,3/17) | [1,2,4,13,17,19] |
+| 11 | (2/3,2/3,2/3,1/3,1/6,1/6) | [1,2,5,13,16,17,18,19,20] |
+| 12 | (2/3,2/3,2/3,5/9,1/3,2/9) | [1,2,9,10,12,13,15,19,20,21] |
+| 13 | (19/28,19/28,19/28,19/28,5/14,1/4) | [1,2,3,9,10,12,20] |
+| 14 | (20/29,20/29,20/29,17/29,17/29,8/29) | [1,2,4,9,10,15,21] |
+| 15 | (22/31,22/31,22/31,22/31,22/31,10/31) | [1,2,3,4,9,10] |
+| 16 | (13/17,10/17,10/17,9/17,9/17,4/17) | [2,4,7,9,11,13,14,15] |
+| 17 | (13/17,10/17,10/17,10/17,8/17,4/17) | [2,3,7,9,11,13] |
+| 18 | (10/13,7/13,7/13,7/13,7/13,3/13) | [2,3,4,7,11,13,14] |
+| 19 | (10/13,8/13,8/13,8/13,5/13,3/13) | [2,3,7,9,12,13] |
+| 20 | (27/35,3/5,3/5,3/5,4/7,9/35) | [2,3,7,9,11,14] |
+| 21 | (7/9,28/45,28/45,7/15,7/15,2/9) | [2,4,7,13,15,21] |
+| 22 | (7/9,2/3,2/3,5/9,1/3,2/9) | [2,7,9,10,12,13,15,19,20,21] |
+| 23 | (11/14,9/14,9/14,9/14,9/14,2/7) | [2,3,4,7,9,14] |
+| 24 | (11/14,19/28,19/28,19/28,5/14,1/4) | [2,3,7,9,10,12,20] |
+| 25 | (23/29,20/29,20/29,17/29,17/29,8/29) | [2,4,7,9,10,15,21] |
+| 26 | (4/5,3/5,3/5,3/5,1/5,1/5) | [2,3,5,7,12,13,18,20] |
+| 27 | (25/31,20/31,20/31,11/31,11/31,6/31) | [2,4,7,13,19,21] |
+| 28 | (25/31,22/31,22/31,22/31,22/31,10/31) | [2,3,4,7,9,10] |
+| 29 | (14/17,11/17,11/17,5/17,5/17,3/17) | [2,4,7,13,17,19] |
+| 30 | (5/6,2/3,2/3,1/3,1/6,1/6) | [2,5,7,13,16,17,18,19,20] |
+| 31 | (1,0,0,0,0,0) | [0,2,3,4,5,6,7,8,13,16,17] |
+| 32 | (1,1,0,0,0,0) | [0,1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] |
+| 33 | (1,1,1,1/4,1/4,1/4) | [0,1,2,4,5,7,8,10,16,17,18,19,20,21] |
+| 34 | (1,1,1,1,2/5,2/5) | [0,1,2,3,5,7,8,10,18,20] |
+| 35 | (1,1,1,1,1,1/2) | [0,1,2,3,4,7,8,10] |
+
+<!-- mathematical-data: facets22 -->
+
+| Row | Tight vertices | Affine dimension |
+| --- | --- | --- |
+| 0 | [31,32,33,34,35] | 4 |
+| 1 | [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,32,33,34,35] | 5 |
+| 2 | [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35] | 5 |
+| 3 | [0,1,3,4,5,6,8,13,15,17,18,19,20,23,24,26,28,31,32,34,35] | 5 |
+| 4 | [0,1,2,7,8,9,10,14,15,16,18,21,23,25,27,28,29,31,32,33,35] | 5 |
+| 5 | [0,4,11,26,30,31,32,33,34] | 5 |
+| 6 | [0,31,32] | 2 |
+| 7 | [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35] | 5 |
+| 8 | [0,31,32,33,34,35] | 5 |
+| 9 | [2,3,5,6,8,12,13,14,15,16,17,19,20,22,23,24,25,28,32] | 5 |
+| 10 | [12,13,14,15,22,24,25,28,32,33,34,35] | 5 |
+| 11 | [1,2,3,5,16,17,18,20,32] | 5 |
+| 12 | [4,6,12,13,19,22,24,26,32] | 5 |
+| 13 | [0,1,2,3,4,6,7,9,10,11,12,16,17,18,19,21,22,26,27,29,30,31,32] | 5 |
+| 14 | [1,2,5,8,16,18,20,23,32] | 5 |
+| 15 | [2,7,12,14,16,21,22,25,32] | 5 |
+| 16 | [0,11,30,31,32,33] | 4 |
+| 17 | [0,10,11,29,30,31,32,33] | 5 |
+| 18 | [4,11,26,30,32,33,34] | 4 |
+| 19 | [9,10,11,12,22,27,29,30,32,33] | 5 |
+| 20 | [4,11,12,13,22,24,26,30,32,33,34] | 5 |
+| 21 | [7,9,12,14,21,22,25,27,32,33] | 5 |
+
+All 22 inequalities are retained in the description. In particular $R1$
+and $R3$ remain valid necessary rows even though they are not facets of
+this six-dimensional polytope. Rows $R2,R4,R5,R6$ each carry a
+five-dimensional face. Counting these faces does not assert a new scalar
+result or external literary priority.
+

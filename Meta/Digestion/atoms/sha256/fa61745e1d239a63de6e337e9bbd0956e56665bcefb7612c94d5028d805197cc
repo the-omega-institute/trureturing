@@ -1,0 +1,35 @@
+**Corollary 9.6 (contact masses and separation of the two thresholds).**
+For a height optimizer at $\tau_\dagger<\tau<1$, its actual low-label
+coefficient mass is supported on exactly the four RC contact lines,
+possibly subdivided into further actual labels. The total normalized
+coefficient Grams on them are, respectively,
+
+$$
+w_+q_+q_+^T,\quad w_-q_-q_-^T,\quad B_a,\quad C_a.
+\tag{RH.89e}
+$$
+
+At contact there are exactly three positive ray masses, and the fourth
+exposed line has zero mass. At the endpoint there are the four corner
+masses $1/4$. These masses are coefficient moments, not acquisition
+probabilities. The two actual-label minima compare as follows:
+
+| Original required contrast | Inequality-feasible minimum | Height-optimal minimum |
+| --- | --- | --- |
+| $0\leq s\leq s_\dagger$ | $3$ | $3$ |
+| $s_\dagger<s\leq s_0\tau_3$ | $3$ | $4$ |
+| $s_0\tau_3<s\leq s_0$ | $4$ | $4$ |
+
+Proof. The equality tuple in RH.89d is unique after contact, so its
+positive summands lie in the stated supports. In the $A_a$ plane the
+two null-line projectors are independent, and RH.67d uniquely fixes
+their masses; $B_a,C_a$ are rank one. This argument also holds almost
+everywhere for the stated integral class. At contact, unique aggregate
+rank one eliminates $q_+$ completely; at the endpoint Proposition
+10.1 fixes the four corner weights. The strict ordering
+$\bar\tau<\tau_\dagger<\tau_3<1$ follows from Propositions 7.1 and
+Theorem 6.1. The table is then exactly Theorems 8.3 and 9.5.
+It does not assert common-decoder coarsening permission, native
+execution, a minimum total alphabet or uniqueness of full instruments.
+$\square$
+

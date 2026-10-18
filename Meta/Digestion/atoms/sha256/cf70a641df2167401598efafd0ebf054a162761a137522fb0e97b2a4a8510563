@@ -1,0 +1,22 @@
+### 89.1. The local theorem and the original-channel witness
+
+Let (A₀,B₀) be any original [section-82 quarter-error pair](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family) of CPTP maps C⁸→C⁴, with B₀ of Kraus rank two. Then there is a neighborhood U of (A₀,B₀) in the finite-dimensional space of channels such that
+
+\[
+ \delta(A,B)\ge\frac14\qquad ((A,B)\in U).                 \tag{1}
+\]
+
+Here δ is the original unhalved arbitrary-reference diamond error from the fixed four-fibre RT target. Neither perturbed party has a Kraus-rank restriction. The roles of A and B may be exchanged. This proves an unrestricted local minimum at these particular equality pairs, not a global minimum or a classification of all possible remote quarter-error pairs.
+
+Use forward Grams of the correct-output records of the full original Stinespring isometries. Set K=G⊙H and let T have diagonal blocks I₂ and all off-diagonal blocks J₂/2. Define
+
+\[
+ f(A,B)=\frac14\Lambda_2(T-K),\qquad
+ \delta(A,B)\ge\frac14\operatorname{Tr}(T-K)_+\ge f(A,B).
+                                                               \tag{2}
+\]
+
+The first inequality follows from the normalized maximally entangled logical/reference input. Its correct joint reference/output compression is Kᵀ/8 on {|f,i〉_R⊗|ff〉_out}. Pinching retains the complementary positive trace 1−Tr K/8 and gives (‖K−T‖₁+8−Tr K)/8=Tr(T−K)₊/4. Thus wrong outputs and their cross-sector coherences have not been silently calibrated away.
+
+At the base, the top two eigenvalues of T−K are 1/2,1/2 and the other six are at most zero, including boundary disphenoids. Hence f is real-analytic in a fixed neighborhood. It is enough to prove that f≥1/4 there on physical Stinespring isometries in fixed sufficiently large environments.
+

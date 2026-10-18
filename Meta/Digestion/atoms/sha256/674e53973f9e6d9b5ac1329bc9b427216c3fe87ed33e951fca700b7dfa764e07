@@ -1,0 +1,98 @@
+**Theorem 100.1 (simultaneous original realization).** Under Assumption 93.1,
+the following one instrument attains the strip value, five-low/six-total
+minimum, error and resource conditions for the sole unknown reached-cut
+specimen, with no additional input or later carrier action.
+
+**Proof.** For each selected atom put K_i=sqrt(p_i)(s0 D+z_iT+w_iS) and N_i=p_i eta_i tc(h_i)n_in_i^T. Reuse FA70 and Theorem 87.3's row-space constructor: choose J_i:C²->ran K_i^* isometric and define
+
+$$
+Q_i=J_i^*(K_i^*K_i+N_i)J_i,\quad
+C_i=Q_i^{1/2}J_i^*E^*,\quad B_i=K_iJ_iQ_i^{-1/2},\quad
+F_i=Q_i^{-1/2}J_i^*N_iJ_iQ_i^{-1/2}.
+$$
+
+Then B_i^*B_i+F_i=I2, B_iC_i=K_iE^*, and the supported acquisition effect is E(K_i^*K_i+N_i)E^*. In particular later failure is included in acquired probabilities. The entire fibre has dimension two. For the chosen attainer take g(u)=2/(1+u)^2, Gtime(u)=2u/(1+u), survivor Z_i(u)=sqrt(I-Gtime F_i) and positive first-event rate R_i(u)=g(u)F_i[I-Gtime F_i]^(-1). For the separately labelled components $\ell\in\{0,1,2,3,13\}$, current-survivor failure maps are
+
+$$
+Y\mapsto w_\ell g(u)\operatorname{tr}
+(F_i Z_i(u)^{-1}Y Z_i(u)^{-1})P_f.
+$$
+
+Terminal processing on survivors only is the isometry EB_i(I-F_i)^(-1/2). The composite live matrix is EB_i. Its prescribed effect is B_i^*B_i=I-F_i, not an arbitrary map inferred from endpoint coercivity. Pure rows have zero rate; saturated rows have exact activity log(1+t), with nonzero failure eigenvalue t/(1+t). At t=1000 the minimum terminal live eigenvalue is exactly 1/1001. All survivors remain positive and there is no forced deadline failure.
+
+Fix Wperp:C²->Pperp and J0:C²->C³ isometric. A single completely counted dimension-five high fibre has encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}DE^*\\W_\perp^*\end{pmatrix},
+$$
+
+zero rate, and two hidden terminal Kraus matrices E[I3 0] and EJ0[0 I2]. Its binary report is deterministically plus. Low reports are deterministically sign(z_i). These are functions of actually generated labels; discarded Kraus indices are never read. The complement is coherent and charged within the same high fibre on complementary inputs. It has zero probability on all twelve original specimens, but its full encoder is nonzero. This is the allowed JR completion and differs explicitly from fixed CA10.
+
+Source-root TP and the exact two moment identities prove total encoder effect I5. For EVERY complex X in M5, this same instrument has
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^*XE)+J_0W_\perp^*XW_\perp J_0^*]E^*,\\
+\Phi^f_\ell(\mathcal B)(X)&=w_\ell\int_{\mathcal B}g(u)du\;
+\operatorname{tr}(EME^*X)P_f,
+\quad\ell\in\{0,1,2,3,13\}.
+\end{aligned}
+$$
+
+The five original weights are separately (0,1/4,1/2,1/4,0). On an arbitrary passive reference the exact failure map is
+
+$$
+w_\ell\int_{\mathcal B}g(u)du\;P_f\otimes
+\operatorname{Tr}_5[(EME^*\otimes I_R)X],
+$$
+
+and live maps tensor their displayed Kraus conjugations with I_R. This is the conditional reference operator, not an unconditional reference marginal. Both zero labels remain separately zero for EVERY Borel set, the three positive components remain separate, and no additional sector is generated.
+
+On each of the twelve histories these are exactly the supplied original simulator outputs, compared against their entire original coherent ideal blocks and ideal density f_y(u)=6y/(y+6u)^2. Thus, conditionally on the original minimax/error identification,
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*\quad(e,n=\pm1).
+$$
+
+Only the single high fibre has dimension >=3. Its acquired probability on history y is (1-delta)A_y; its maximum is (1-delta)A27=C(s), the sharp JOINTLY acquired worst-history cost. Every subsequently accessible share is included in the declared fibres; there is no hidden accessible quantum system. The original reported contrast is s0 sum p_i |z_i|. FIRST occurs at absolute 6+u in the chronological FA70 process; only not-yet-failed carriers receive later processing, with no positive-carrier action after absorption. Necessity covers every admitted original time law; the choice of g is only this sufficiency witness. These are mathematical maps under the original control contract; native actuation and permissions remain additional premises.
+
+Indeed $N_i\preceq tK_i^*K_i$ on the rank-two row space, so
+$F_i\preceq t(I-F_i)$ and $I-F_i\succeq I/(1+t)$. For saturated
+rank-one $N_i$, the extremal ratio is $t$, giving the exact nonzero
+failure eigenvalue $t/(1+t)$; pure rows have $F_i=0$. Thus the entire-fibre
+rate integral, not an average or postselected rate, is exactly $A$ on the
+two saturated rows and zero on the three pure and high rows.
+The high terminal Kraus effects sum to $I_5$ on that high fibre, and
+$[EB_i(I-F_i)^{-1/2}]^*[EB_i(I-F_i)^{-1/2}]=I_2$ on each low fibre.
+The latter is the terminal TP operation; its cumulative no-event map is
+$\operatorname{Ad}_{EB_i}$.
+
+On supported inputs, expanding $\sum_i K_i(\cdot)K_i^*$ with the Gram
+identity gives $\delta D(\cdot)D^*+T(\cdot)T^*+S(\cdot)S^*$;
+the high row adds $(1-\delta)D(\cdot)D^*$. The failure covariance
+identity gives the trace-and-prepare functional in every Borel component.
+Together with source-root $D^*D+T^*T+S^*S+M=I_3$, this proves total
+encoder effect $P+P^\perp=I_5$. Tensoring each Kraus conjugation with
+$I_R$ and summing its exact effects proves the conditional partial-trace
+formula for every passive reference, including complex entangled inputs.
+No real-state or single-Kraus restriction has entered the universal comparison.
+
+The twelve ideal live blocks are the coherent $U_{e,n}B_yU_{e,n}^*$ of
+(CG.111), with the original densities $6y/(y+6u)^2$. The comparison norm is
+HALF the entire stopped-cq norm, including singular time, wrong-support,
+abort and zero-target sectors. Error equality for heights 5 and 27 and
+strict inequality for height 16 are inherited at the source root, for all
+four sign pairs; they are not inferred from rounded source expressions.
+Writing $\kappa=h_0a+h_1b$, the actual reported contrast is
+$2|\operatorname{Re}(E^*F_+E)_{01}|/\kappa=s_0\sum_i p_i|z_i|$.
+Every acquired probability uses the full encoder effect, hence includes
+future failure. With $A_y=\operatorname{tr}(D^*D\rho_{y,e,n})$, the
+only dimension-at-least-three outcome has probability $(1-\delta)A_y$
+and worst history 27, equal to the inherited sharp weak $\mathsf C(s)$.
+All subsequently accessible shares are part of the declared joint fibres;
+no discarded Kraus index is a readable report or control. FIRST is the first
+jump on the original absolute clock $6+u$, followed by no positive-carrier
+action on failed branches; positive terminal survivors forbid forced
+deadline absorption. Necessity in §98 permits every admitted original
+time law; $g$ specifies only this attainer. $\square$
+

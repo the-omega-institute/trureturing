@@ -1,0 +1,22 @@
+**Lemma 2.3 (exact finite branch reduction).** The native problem has
+a solution if and only if one flattened branch has a solution by normal
+codes and natural scalars. Native solutions extend to such a branch by
+evaluating every subexpression. Conversely expansion of a branch's
+variable codes gives a native solution of the original Boolean formula.
+
+Proof. The maps $B,E$ identify equality in the native algebra with
+equality of normal codes. They also identify its constants, pairing and
+fixed iterates with (NSF.8). For a normal pair of arguments the two cases
+of (NSF.7) are exhaustive and exclusive. A noncollapse branch's normal
+output excludes exactly the collapse pattern. Induction through the
+finite expression graph therefore proves its definitions, with the same
+value at every repeated name. Propositional disjunctive normal form
+preserves truth, including complements. Both source directions follow.
+$\square$
+
+Flattening is not a replacement of $\rho$ by a free unary constructor.
+For example $\rho x=\langle x,\alpha\rangle$ has the native witness
+$x=\beta$. In its collapse branch all three involved codes are
+primitive. Treating the outer symbols of the unnormalized native
+expression as free constructors would discard that witness.
+

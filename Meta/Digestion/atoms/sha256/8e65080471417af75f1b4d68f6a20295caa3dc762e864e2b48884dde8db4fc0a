@@ -1,0 +1,14 @@
+**Construction 4.1 (one informative branch, canonical continuation).** Fix the following dyadic constants, with $g$ distinct from the prior floor $b$ and the emission symbol $d$ here distinct from the fixed structural parameter $d=1$ in §1:
+
+$$
+u=\frac18,\quad d=\frac1{16},\quad v=\frac1{32},\quad
+ a=(1-u)v=\frac7{256},\quad
+ g=(1-u)(1-v)=\frac{217}{256},\quad
+ \lambda=(u-d)(1-v)=\frac{31}{512}.
+\tag{4.1}
+$$
+
+Before the third latch, every complete retained label synthesizes $\alpha$ with probability $1/2$. Synthesis submits the letter to the same original update and the same private checker/automaton update as actual retention. At the first fourth-segment $p$ cut the declared $\alpha$ probability is $q=d$ for a valid accepting label and $q=u$ otherwise. On a fourth-segment $p$ Read, its actual/synthetic update discards the private automaton/checker label. The $\alpha$ successor is the required original pending-Stop configuration for mark 0. The $\beta$ successor is one canonical $\beta$ label with the *same original held record*. At every $\beta$ cut, declared $\alpha$ probability is $v$; its $\alpha$ successor is the canonical $p$ label with declared probability $u$, and its $\beta$ successor is the original pending Stop for mark 1. All further returns use these canonical labels. Pending synthesizes its unique original Stop and delivery; delivered synthesizes the empty residual.
+
+The private label disposal is a source-independent finite letter transition. It is not a reset of the source, an extra menu action or an interruption of the original phase. Both legal letters have strictly positive prediction probability at every active configuration, including invalid ones. Actual letters always retain their original $r_K$ probabilities, independent of $q,u,v$.
+

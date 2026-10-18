@@ -1,0 +1,17 @@
+#### 证明
+
+利用 \(f=Pf\)、\(P=P^\ast=P^2\) 和 \(S_t=S_t^\ast\)，
+\[
+\begin{aligned}
+\langle f,T_{2t}f-T_t^2f\rangle_\pi
+&=\langle f,PS_t(I-P)S_tf\rangle_\pi\\
+&=\langle S_tf,(I-P)S_tf\rangle_\pi\\
+&=\|(I-P)S_tf\|_\pi^2.
+\end{aligned}
+\]
+有限维矩阵指数给出 \(S_tf=f+tLf+o(t)\)，而 \((I-P)f=0\)，故
+\[
+(I-P)S_tf=t(I-P)Lf+o(t).
+\]
+除以 \(t^2\) 取极限即得。证毕。
+

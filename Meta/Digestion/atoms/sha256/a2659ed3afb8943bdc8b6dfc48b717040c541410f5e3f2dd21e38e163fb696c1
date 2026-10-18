@@ -1,0 +1,10 @@
+**Proposition 3.2 (Exact unhalved diamond norm).** If two maps in (3.2) have coefficient differences $\delta_a,\delta_b$, then
+
+$$
+\|T_\eta(v_a,v_b)-T_\eta(v'_a,v'_b)\|_\diamond
+ =\max\{|\delta_a|,|\delta_b|\}.
+\tag{3.3}
+$$
+
+Proof. Their difference vanishes on diagonal entries and between the sectors $\operatorname{span}\{e_0,e_4\}$, $\operatorname{span}\{e_1,e_3\}$, $\operatorname{span}\{e_2\}$. Pinching into these sectors is an average of unitary conjugations and contracts trace norm, also with an arbitrary finite reference. The norm of the pinched operator is the sum of the norms of its blocks. On either two-dimensional sector, off-diagonal extraction is $Z\mapsto(Z-UZU^\dagger)/2$, where $U=\operatorname{diag}(1,-1)$; it contracts trace norm for every complex operator. Multiplying the upper and lower off-diagonals by $i,-i$ is conjugation by $\operatorname{diag}(i,1)$. Thus the sum of the two output-block norms is at most $\max(|\delta_a|,|\delta_b|)$ times the input norm. This proves the stabilized upper bound for arbitrary reference operators, in particular for all reference/data states. A balanced pure state $(e_j+e_k)/\sqrt2$ on a maximizing pair gives a Hermitian off-diagonal output with eigenvalues $\pm|\delta|/2$ and trace norm $|\delta|$. It attains the bound without a reference. QED.
+

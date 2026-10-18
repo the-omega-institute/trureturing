@@ -1,0 +1,63 @@
+**Definition 74.1 (fixed data, unchanged target and full comparisons).** Fix
+an arbitrary authentic finite nonempty $D$, commissioned $a>0$, one
+$0<\delta\le1$, one integer $s\ge3$, and precisely the physical geometry,
+grounding and fixed reference volumes of Definition72.1. All these data are
+fixed as $\varepsilon\downarrow0$. Put $\beta=a/\delta$ and fix $M\ge0$.
+Write $\Omega=\Omega_\varepsilon^+$,
+$\mathcal P_\varepsilon=L^2_{\rm sym}(\Omega^2)$, and
+$\mathcal Q_{\rm mix,\varepsilon}$ for the symmetric $H^1(\Omega^2)$
+domain with the two grounded zero traces specified in (73.5). Its kinetic
+form is
+
+$$
+q_{0,\varepsilon}[U]=\beta\int_{\Omega^2}
+ (|\nabla_xU|^2+|\nabla_yU|^2).
+\tag{74.1}
+$$
+
+Use exactly $E$ of Theorem73.3 and $J_{\varepsilon,2}$ of
+(73.3)/(73.6). For each of the three original operators separately put
+
+$$
+\begin{aligned}
+ C&\in\{A_{\delta,D,2},\mathcal T^{\rm c}_{\delta,D,2},
+                         \mathcal T^{\rm k}_{\delta,D,2}\},\\
+ K_{\varepsilon,C}
+   &=J_{\varepsilon,2}E(C-i)^{-1}E^*J_{\varepsilon,2}^*.
+\end{aligned}
+\tag{74.2}
+$$
+
+Thus the target is the actual $\mathcal K_{D,2}^{\rm hc}$ of
+Definition64.5: all distinct atomic pairs, both orders of mixed slices,
+all different-cable rectangles and both triangles of every same-cable
+square, with norm weights $1,\delta,\delta^2$, unchanged kinetic
+coefficients, all port and ground matching, zero same-cable collision
+traces and the shared-port zero atomic collision endpoint conditions.
+There is no rectangle-corner point-trace assumption. Both pair laws
+retain their entire original source functions and the same one-body field:
+
+$$
+ U^\diamond_{D,2}(x,y)=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q),
+ \qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\tag{74.3}
+$$
+
+Here $\phi(p)=2^{-|p|}$ and $\phi_A$ is zero on open cables; the pair
+term is zero off distinct atomic pairs. In particular, on the original
+five-port witness $(o,L,R,LL,LR)$ all ten entries remain
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}
+$$
+
+This table records Definition64.1's witness; for general $D$ the complete
+original laws, rather than a selected table or a fitted coefficient,
+are the comparators. The physical multipliers introduced next are
+additional model hypotheses and do not supply (74.3) or a native force.
+

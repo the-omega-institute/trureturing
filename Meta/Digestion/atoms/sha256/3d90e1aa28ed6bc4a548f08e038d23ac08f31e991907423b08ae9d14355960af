@@ -1,0 +1,8 @@
+## Scope and theorem
+
+The six-sector Coxeter construction for the pure three-cycle degree-(8,9) packet uses
+W=<a,b,c,d | a²=b²=c²=d²=1, (ab)^4=(bc)^9=(cd)^3=1, [a,c]=[a,d]=[b,d]=1>.
+Let W+ be its determinant/orientation-preserving subgroup. The previous normal-quotient obstruction (PR #12096) does not apply to arbitrary finite-index subgroups. This note gives an explicit torsion-free nonnormal subgroup Gamma < W+ of index 72, so the six-sector quotient has exactly 24 target tetrahedra.
+
+This proves existence of an N=24 member of the six-sector [4,9,3] Coxeter-sector family. It makes no claim about arbitrary pseudo-simplicial pairings outside that family, and no minimality claim beyond the known divisibility 24 | N.
+

@@ -1,0 +1,90 @@
+**Theorem 3.1 (Stationary entropy-to-actual-erasure comparison).** For every stationary binary law $P$ and every integer $r\ge0$,
+
+$$
+e_L(r)\le\frac12\sum_{k\ge r}a_k,\qquad
+e_R(r)\le\frac12\sum_{k\ge r}a_k.
+\tag{3.1}
+$$
+
+An infinite right side is allowed. Neither comparison assumes attainment, a finite hidden presentation, full support, irreducibility, mixing, unifilarity or recoverability of a hidden state.
+
+Proof. Fix integers $s\ge r$ and $m\ge0$, and use the actual finite blocks
+
+$$
+W=X_{-r:-1},\qquad L_s=X_{-s:-r-1},\qquad V_m=X_{1:m}.
+$$
+
+Define, under the same $P$,
+
+$$
+q_{s,m}=\mathbb E_P[X_0\mid W,L_s,V_m],\qquad
+p_{r,m}=\mathbb E_P[X_0\mid W,V_m].
+$$
+
+Lemma 2.3 gives
+
+$$
+2\mathbb E_P(q_{s,m}-p_{r,m})^2
+\le I_P(X_0;L_s\mid W,V_m).
+\tag{3.2}
+$$
+
+The entropy chain rule lifts this center information to the whole finite future block:
+
+$$
+\begin{aligned}
+I_P(X_{0:m};L_s\mid W)
+&=I_P(V_m;L_s\mid W)+I_P(X_0;L_s\mid W,V_m),\\
+I_P(X_0;L_s\mid W,V_m)
+&\le I_P(X_{0:m};L_s\mid W).
+\end{aligned}
+\tag{3.3}
+$$
+
+The nonnegative term in the first line is retained before taking the inequality. This step does not assert that arbitrary enlargement of a conditioning field increases conditional mutual information.
+
+Enlarge only the remote-past variable, keeping the target $X_{0:m}$ and conditioning block $W$ fixed. Write $\mathcal L_\infty=\sigma(X_j:j\le-r-1)$. Since conditional entropy decreases under this enlargement,
+
+$$
+I_P(X_{0:m};L_s\mid W)
+\le I_P(X_{0:m};\mathcal L_\infty\mid W).
+\tag{3.4}
+$$
+
+The latter quantity has the exact chain-rule expansion
+
+$$
+\begin{aligned}
+I_P(X_{0:m};\mathcal L_\infty\mid W)
+&=H_P(X_{0:m}\mid W)-H_P(X_{0:m}\mid X_j:j\le-1)\\
+&=\sum_{j=0}^{m}
+\left[H_P(X_j\mid X_{-r:j-1})
+-H_P(X_j\mid X_i:i\le j-1)\right]\\
+&=\sum_{j=0}^{m}(h_{r+j}-h)
+=\sum_{j=0}^{m}a_{r+j}.
+\end{aligned}
+\tag{3.5}
+$$
+
+For the first entropy in each summand, the already revealed coordinates form one contiguous past block of length $r+j$. For the second, the whole remote past and the revealed block form the entire past before $j$. Stationarity therefore supplies exactly $h_{r+j}$ and $h$. The entropy limits are legitimate because the target block is finite.
+
+For fixed $m$, let $s\to\infty$. Bounded conditional projections converge in $L^2(P)$ to
+
+$$
+q_{\infty,m}=\mathbb E_P[X_0\mid X_j:j\le-1,\ X_{1:m}],
+$$
+
+whereas $p_{r,m}$ does not depend on $s$. Equations (3.2)–(3.5) and norm continuity give
+
+$$
+2\mathbb E_P(q_{\infty,m}-p_{r,m})^2
+\le\sum_{j=0}^{m}a_{r+j}.
+\tag{3.6}
+$$
+
+Now let $m\to\infty$. These two increasing projection families converge in $L^2(P)$ to exactly $q$ and $p_{L,r}$ in (1.1), respectively. Their difference converges in $L^2(P)$, so its squared norm converges. The nonnegative right sides increase to $\sum_{k\ge r}a_k$. This proves the left comparison while retaining the entire future.
+
+Apply the same argument to the stationary visible process $Y_i=X_{-i}$. Its full exterior is $\mathcal E_0$, its left-truncated field is $\mathcal G_R(r)$, and its entropy gaps equal $a_k$ by Lemma 2.2. This proves the right comparison while retaining the entire past. No reversed hidden-model theorem is used.
+
+The proof includes $r=0$ with $W$ empty, $s=r$ with $L_s$ empty, and $m=0$ with $V_m$ empty. The endpoint argument in Lemma 2.3 and bounded projection limits handle structural zeros and null fibers without divisions. $\square$
+

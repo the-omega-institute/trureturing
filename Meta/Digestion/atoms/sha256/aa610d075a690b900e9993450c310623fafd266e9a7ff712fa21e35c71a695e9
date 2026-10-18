@@ -1,0 +1,41 @@
+**Definition 2.3 (completed common-output presentation).** Let
+$\widehat{\mathcal T}$ be the space of finite or infinite ordered full
+binary trees with $\alpha/\beta$ leaves. It has the same four replies.
+The tree $\Omega$ has a branch at every address. Extend $\rho$ by its
+actual leaf replacements and pair law, so $\rho\Omega=\Omega$.
+
+For every choice $\mathbf c=(c_r)_{r\in B}$ of one chart per row,
+use independent coordinate names for different charts and form
+
+$$
+\mathscr E_{\mathbf c}(\mathbf z):\quad
+\Theta_{r,c_r}(\mathbf z_r)
+ =\Theta_{s,c_s}(\mathbf z_s)\quad(r,s\in B).
+\tag{FJC.9}
+$$
+
+Negatives are not imposed on completion points. Supply a finite lawful
+completed-equation derivation to either a clash, or a finite system
+
+$$
+\mathscr G:\quad X_i=E_i(\mathbf X)\qquad(i\in A),
+\tag{FJC.10}
+$$
+
+with at most one definition for each state. States outside $A$ are free.
+The right sides have grammar (FJC.6), with states replacing coordinates.
+Every original coordinate is a specified state of $\mathscr G$;
+identifications are permitted. A coordinate projection $\pi$ and the
+retained definitions establish exactly
+
+$$
+\{\mathbf z\in\widehat{\mathcal T}^{\sum m_{r,c_r}}:
+                  \mathscr E_{\mathbf c}(\mathbf z)\}
+ =\pi\{\mathbf X\in\widehat{\mathcal T}^{s}:\mathscr G(\mathbf X)\}.
+\tag{FJC.11}
+$$
+
+A clash certificate proves the left side empty. The projection preserves
+the designated original coordinates; its reverse extension need not be
+unique. Auxiliary states have no physical meaning.
+

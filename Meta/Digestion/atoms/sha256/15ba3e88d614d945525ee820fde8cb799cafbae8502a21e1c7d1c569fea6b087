@@ -1,0 +1,30 @@
+**Lemma 6.7 (unbounded actual finite different-row pairs).** The function
+$c$ is unbounded on $W$. Specifically, let
+
+$$
+y_0=\beta,\quad y_{n+1}=F(y_n),\quad
+u_n^0=U(y_n,y_n),\quad u_n^1=U(y_{n+1},y_n).
+\tag{NIC.35}
+$$
+
+Then both sources are finite members of the entire acquired $D^*$,
+with exact rows $r_0,r_1$, and
+
+$$
+\delta(u_n^0,u_n^1)=n+1,\qquad
+c(\operatorname{conv}(u_n^0,u_n^1))=n+2.
+\tag{NIC.36}
+$$
+
+Proof. These are the actual finite sources of [NLC, (NLC.28)][NLC].
+The first has $x=y_n$ and the second $x=F(y_n)$, so Lemma 6.5 gives
+their exact labels and every retained acquired constraint with both
+guards. The finite right combs $y_n,y_{n+1}$ agree at all depths less
+than $n$ and first differ at $R^n$, where the first has $\beta$ and
+the second a branch. Their first discrepancy depth is $n$. The two
+$U$ sources differ only in their left subtrees and share their entire
+right subtree. Prefixing the first discrepancy by $L$ gives depth
+$n+1$ and no earlier discrepancy. This proves (NIC.36), which grows
+without bound. The finite labels are never replaced by the equality
+partition of an infinite limiting comb. $\square$
+

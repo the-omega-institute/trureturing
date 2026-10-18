@@ -1,0 +1,20 @@
+**例 3.3（Two symbolic consumers, including noncoprime fees）。** Let $q\ge1$ and use binary legal labels $0,1$, fresh $R,C$ and arbitrary $L_\bot$ in (3.2).
+
+First take $m=4q$, $k=7q-1$, so the actual gcd is $q$. On $J=\{q,2q,3q,5q,6q\}$ set $\lambda_0=\mathbf1_{\{q,6q\}}$ and $\lambda_1=\mathbf1_{\{5q\}}$. The join has three labels, is $(0,0)$ on $H=\{2q,3q\}$, and has one label on $O=\{6q\}$. An attaining GLOBAL stream is
+
+$$
+1^{4q}\ \mid\ 0^{2q}1^{2q}\ \mid\ 0^{3q}1^q.
+\tag{3.4}
+$$
+
+The first suffix row has even support $\{q,6q\}$ and ends with tail $2q$. Its one child stops with join $(1,0)$, including phase $a=q$. The next row has support $\{4q,5q\}$ and begins zero, so its actual seam safely clears that tail and selects $(0,1)$; $4q=m$ is the excluded donor. Theorem 3.2 gives full adaptive fee two and GLOBAL fee three. The nonzero terminal tail is part of the attaining word, not removed by an extra block.
+
+Next take $m=6q$, $k=11q-1$, again with actual gcd $q$. Set $\lambda_0=\mathbf1_{\{9q\}}$ and $\lambda_1=\mathbf1_{\{10q\}}$ on $J$. The join is $(0,0)$ on $H=\{2q,3q,4q,5q\}$, while $O=\{8q,9q,10q\}$ contains all three joined labels. An attaining GLOBAL stream is
+
+$$
+1^{6q}\ \mid\ 0^{3q}1^{2q}0^q\ \mid\ 0^{6q}\ \mid\ 0^{3q}1^q0^{2q}.
+\tag{3.5}
+$$
+
+Its first suffix row has support $\{9q,0\}$ and stops join $(1,0)$. The complete zero wait is paid. The last row, at absolute issued index three, has support $\{10q,0\}$ and stops $(0,1)$ versus $(0,0)$. Both suffix seams are strict. Theorem 3.2 gives adaptive fee two and GLOBAL fee four for every $q$, including all noncoprime $q\ge2$. These are consumers of the structural law, not separate mathematical novelty claims.
+

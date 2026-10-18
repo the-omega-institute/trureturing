@@ -1,0 +1,69 @@
+**Proposition 25.4 (whole-fibre and decoder completion conditions).**
+The preceding construction realizes the original acquisition resource
+only if the ENTIRE future-accessible quantum fibre, after recording a
+leaf and routing, is the stated $\mathbb C^2$ or $\mathbb C^5$.
+A retained input-bearing chain, controller, detector environment or
+correlated share must be counted jointly. A same-effect
+measure-and-prepare detector need not implement this acquisition.
+
+Proof. The branch column identity requires the coherent map $C_j$,
+not only the effect $C_j^\dagger C_j$. Measuring a basis within a
+sector and preparing a fixed state can have that same sector effect
+while deleting its off-diagonal matrix units, so it fails (GC.99).
+The Lüders tree preserves them. The supplied routing must identify each
+sector with the declared output carrier and make every other quantum
+output either independent conditional on the record or permanently
+inaccessible before the cut. If another input-bearing share remains
+accessible, its joint algebra is larger than (GC.90), violating the
+claimed cost interface even if the displayed carrier marginal has rank
+two. No rank-of-populated-history argument exempts it.
+
+For the high decoder the two prescribed matrices in native coordinates
+are explicitly
+
+$$
+A_0=\mathcal VE[I_3\ 0],\qquad
+A_1=\mathcal VEJ_0[0\ I_2],\qquad
+A_0^\dagger A_0+A_1^\dagger A_1=I_5.
+\tag{GC.103}
+$$
+
+Consequently $x\mapsto A_0x\otimes|0\rangle+A_1x\otimes|1\rangle$
+is an isometry. Discarding its two-component environment yields the
+specified high TP decoder; its index is not another acquisition label.
+Retaining an accessible returning environment changes that interface.
+The low full-domain TP decoders, all reference/Borel identities and
+whole-fibre activity bounds are exactly those of Proposition 10.1.
+Their causal monitor is direct reuse of JRH Theorem 66.1 and
+(JRH.54)–(JRH.56); no additional monitor construction is needed here.
+Scheduling and causal coupling are precisely the extra assumptions,
+not consequences of the column completion. $\square$
+
+Finite column dilations and measurement trees are established methods.
+Andersson–Oi, [*Binary search trees for generalized measurement*,
+§§II–IV](https://arxiv.org/html/0712.2665v1), explicitly supplies an
+initialized probe, joint unitary, nondestructive output and adaptive
+probe read/reset. The present application proves its own no-reset,
+fixed-rank legal-chain tree (GC.101) for the GC columns. Lloyd–Viola,
+[*Control of open quantum system dynamics*, Eqs. 3–7](https://arxiv.org/html/quant-ph/0008101v1),
+also requires an independent initialized apparatus, controlled coupling,
+read and feedback; its continuous-time enactment is a scaled approximate
+construction. Oreshkov–Brun,
+[*Weak measurements are universal*](https://arxiv.org/html/quant-ph/0503017v4),
+uses an adjustable two-outcome family depending on the current walk
+coordinate. None of these interfaces is supplied by a literal terminal
+bit, nor do they certify the prescribed FIRST clock or activity.
+These methods are credited applications, without a literature-priority
+claim for their general principles.
+
+Theorems 25.2–25.3 concern the weak high completion of dimension five.
+The original
+root existence/isolation, ranks and root TP, complete minimax, separate
+unaveraged face, sharp JOINT cost and full-class rigidity/capacity remain
+Assumption 1.2's conditional supplies. Extra apparatus permissions are
+not authorized by this application. The all-budget/all-contrast roof,
+sharp optimal actual counts, coefficients and orientations, global
+ordering, connected coverage, all gluing and joint limits in §§11,20
+remain unchanged; the finite witness and conditional apparatus do not
+complete that original mathematical or native programme.
+

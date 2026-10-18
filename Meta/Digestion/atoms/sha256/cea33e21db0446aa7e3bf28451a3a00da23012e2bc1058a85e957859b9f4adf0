@@ -1,0 +1,20 @@
+### 29. 网络干扰的暴露商：结构局部性与设计支持的两道因果门
+
+单点 treatment 的记法会把一个网络 assignment profile 压得过早。若节点 $v$ 的潜在结果还依赖邻居 treatment，那么“$v$ 的处理值”不是它的完整因果输入；反过来，即使结构上确实只依赖某个 exposure，统计上没有覆盖该 exposure 的 assignment，也不能从数据估计它的响应。
+
+本章把两件事分开：
+
+$$
+\boxed{
+\text{结构响应是否通过 exposure 商因子化}
+\quad\longrightarrow\quad
+\text{设计是否覆盖目标商上的必要纤维}.
+}
+$$
+
+这里需要区分：**无观察到 spillover** 可能来自真实的结构不变性，也可能只是未采到相应的 assignment；两者在数学上不是同一句话。
+
+本章固定有限节点、有限 assignment、有限结果集。潜在结果可以是确定函数，也可以是条件概率核。
+
+<a id="section-29-1"></a>
+

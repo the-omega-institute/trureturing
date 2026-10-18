@@ -1,0 +1,30 @@
+**Theorem 2.3 (finite response-phase bound).** Under Assumptions 1.4–1.5,
+for every valid common descriptor tuple, every $u\in D$ and every
+$J\ge N$, the integer interval $[N,J]$ has at most $qr+1$ maximal nonempty
+intervals on which $V_u$ is constant. The same bound applies to the
+entire half-line starting at $N$. When $r=0$ there is one empty response
+vector and one phase. An initial halt has the one-epoch interval $[N,N]$.
+
+Proof 2.3. Exactness gives the same literal at every epoch on this same
+source. By (UDB.6), every coordinate of $V_u(j)$ is nondecreasing in rank.
+The potential
+
+$$
+B_u(j)=\sum_{e\in E_R}\operatorname{rk}(V_u(j)(e))
+\tag{UDB.8}
+$$
+
+is nondecreasing, lies in $[0,qr]$ and increases by at least one whenever
+the vector changes. There can therefore be at most $qr$ change epochs.
+Their cuts yield at most $qr+1$ nonempty constant intervals. The proof
+also works on the half-line: an infinite list of changes would force
+the bounded integer potential to exceed $qr$. An empty sum is zero and
+$\mathcal C^{\varnothing}$ has its unique empty vector. Duplicate
+addresses and simultaneous changes only reduce the count. $\square$
+
+This bounds **phase count**. It bounds neither phase duration, instruction
+count, number of updates or reads, word length, output size nor installation
+cost. A pure-read loop can perform infinitely many instructions at one
+epoch; a phase can contain an arbitrarily long update-containing loop.
+Monotonicity is not itself a termination theorem.
+

@@ -1,0 +1,45 @@
+**定理 2.4（尖锐小噪声边界）。** 分别取 $\mathcal S=\mathcal P_1,\mathcal P_2,\mathcal U$。对于 $0<\delta<1$，令
+
+$$
+g(\delta)=
+\begin{cases}
+\dfrac1{2\sqrt{1-\delta^2}},&0<\delta\le1/\sqrt2,\\
+\delta,&1/\sqrt2\le\delta<1.
+\end{cases}
+$$
+
+两式在分界相等。在上述三个类的每一个上，
+
+$$
+g(\delta)\le R_\delta(\mathcal S)\le1\quad(0<\delta<1),
+\qquad R_0(\mathcal S)=0,\qquad
+R_\delta(\mathcal S)=1\quad(\delta\ge1).
+$$
+
+若 $0<\delta\le1/4096$，再置
+
+$$
+f_\delta=\frac1{2\sqrt{1-\delta^2}},\qquad
+B_\delta=\left\lfloor\frac1{64\delta}\right\rfloor,\qquad
+U_\delta=\sqrt{f_\delta^2+\frac{3\delta^2}{B_\delta-1}}+2^{-B_\delta}.
+$$
+
+则 $B_\delta\ge64$，并有
+
+$$
+f_\delta\le R_\delta(\mathcal S)\le U_\delta
+\le f_\delta+385\delta^3
+\le\frac12+\frac{\delta^2}{4}+386\delta^3.
+$$
+
+因此
+
+$$
+R_\delta(\mathcal S)=\frac12+\frac{\delta^2}{4}+O(\delta^3),
+\qquad
+\lim_{\delta\downarrow0,\ \delta>0}
+\frac{R_\delta(\mathcal S)-1/2}{\delta^2}=\frac14.
+$$
+
+上界在整个 $\mathcal U$ 上统一，故在它的每个实际子类上也有效；任意子类不自动继承下界。下界将在两个原平台内分别构造。证明见第 3–6 章。
+

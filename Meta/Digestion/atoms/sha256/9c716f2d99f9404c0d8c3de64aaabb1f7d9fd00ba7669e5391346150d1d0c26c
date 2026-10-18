@@ -1,0 +1,67 @@
+**Definition 16.1 (one declared joint prediction task).** Retain the
+source-blind stationary acquisition contract of Definition 13.1, replacing
+its singleton $p$ by an arbitrary public finite $P\subseteq A_D$. Thus
+$D\ge1$, every $p\in P$ is nonempty, starts with $R$ and has $|p|\le D$,
+and the unknown actual source is
+
+$$
+ t=\langle\alpha,v\rangle\in\mathcal F_D,
+ \qquad \operatorname{height}(v)\le D.
+\tag{AAR.85}
+$$
+
+The empty menu, nested targets and prefix-free targets are all allowed.
+The same deterministic program and source-blind initialization are used
+on every source. The only source operation during acquisition is an
+actual four-reply Read at any finite original-root word. There is no
+update, free navigation, subtree oracle, age oracle or source identifier.
+The source is promised stationary throughout this phase. Every submitted
+Read counts, including absent, repeated, constant and off-menu calls.
+
+The encoder terminates on every actual source and exports its complete
+accessible source dependence $E(t)$ before the authentic count $k$ is
+supplied. A passive decoder, with no new Read, must satisfy
+
+$$
+ \mathsf D(E(t),D,P,k)=
+ \bigl(\operatorname{readout}(p,\rho^k t)\bigr)_{p\in P}
+ \quad(t\in\mathcal F_D, k\ge0).
+\tag{AAR.86}
+$$
+
+The complete-state convention includes operands, buffers, control,
+selectors, histories, lengths and allocation distinctions. The target
+is exactly this vector for every supplied count, rather than full-source
+identity or later undeclared menus. Define
+
+$$
+ \mathcal C_D(P)=\min_{\mathsf A}\max_{t\in\mathcal F_D}
+       T_{\mathsf A}(t),\qquad
+ S=R^{-1}P,\qquad K=\operatorname{Pref}(S).
+\tag{AAR.87}
+$$
+
+The minimum ranges over all such native encoders and their passive
+decoders. Put $\operatorname{Pref}(\varnothing)=\varnothing$; otherwise
+include the empty suffix $\varepsilon$ and every prefix of every word
+in $S$. The root of nonempty $K$ represents the original address $R$,
+which is known present but whose constructor and label are unknown.
+Its greatest suffix depth is at most $D-1$.
+
+Write
+
+$$
+ B_K(t)=\bigl(\operatorname{readout}(Rq,t)\bigr)_{q\in K}
+       =\bigl(\operatorname{readout}(q,v)\bigr)_{q\in K}.
+\tag{AAR.88}
+$$
+
+This is a mathematical boundary table, not an initially supplied
+observation. It retains every relevant branch, labelled stopping leaf
+and absent position. Theorem 12.3 gives its factor to $\Sigma_P$, and
+Theorem 12.6 gives the existing minimum retained code $e_S(v)$ and its
+alphabet $n(S)$. Neither alphabet size nor terminal-record range is the
+Read objective (AAR.87). Local computation, transient and retained
+memory, operand lengths, installation, clearing, authentication and
+validation of the stationarity promise are separate resources.
+

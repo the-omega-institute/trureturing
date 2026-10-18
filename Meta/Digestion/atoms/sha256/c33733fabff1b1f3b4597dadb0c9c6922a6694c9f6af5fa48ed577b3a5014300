@@ -1,0 +1,15 @@
+**Definition 4.1 (Actual gap category and affinity).** For a permitted pair set $\mathcal Z_L=\{1,\ldots,L,\star\}$ and define $C_L(k)=k$ for $1\le k\le L$, $C_L(k)=\star$ for $k>L$. Its laws under the sources are
+
+$$
+a_i(k)=f_i(k)\quad(1\le k\le L),\qquad a_i(\star)=\sum_{k>L}f_i(k).
+\tag{4.1}
+$$
+
+These laws are normalized, and every mass is strictly positive. Write
+
+$$
+A=\sum_{z\in\mathcal Z_L}\sqrt{a_0(z)a_1(z)},\qquad
+u=1-A,\qquad \ell_z=\log\frac{a_1(z)}{a_0(z)},\qquad H_L=\sum_{k=1}^L\frac1k.
+\tag{4.2}
+$$
+

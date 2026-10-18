@@ -1,0 +1,38 @@
+**Theorem 4.3 (the static single-residual class has a strict gap).** Every
+finite nonnegative decomposition accepted by $V_{\mathrm{SR}}$ at depth two
+has $C\ge5/7$ when $\mu$ is a probability. This is sharp for the class. Since
+the credited value is
+$\sigma_2=\log_2(25/17)$, every such endpoint obeys
+
+$$
+-\log_2C\le\log_2(7/5)
+<\log_2(25/17)-1/100.
+\tag{SRP.6}
+$$
+
+**Proof.** If a component support omits one root leaf, it is locally
+admissible and $R=W$, so $7R=7W\ge5W$. Otherwise at most three branch
+states lie in one row or column, hence $c_{\max}\ge T/3$. From (SRP.5),
+
+$$
+2R\ge a+b+2T,
+\qquad 3R\ge3a+3b+T.
+$$
+Twice the first inequality plus the second gives
+$7R\ge5(a+b+T)=5W$. Summing over a decomposition with
+$\sum_\ell W_\ell=1$ and using (SRP.3) yields
+$1\le(7/5)C$. Sharpness is attained by the support
+$\{A,B,\langle A,A\rangle,\langle A,B\rangle,\langle A,C\rangle\}$ with
+weights $(2,2,1,1,1)/7$, for which $R=5/7$. Finally
+$125^{100}>2\,119^{100}$, so $\log_2(125/119)>1/100$, and
+$\log_2(25/17)-\log_2(7/5)=\log_2(125/119)$. $\square$
+
+The obstruction is exact for the defined static-support, one-residual-target
+and finite-superposition mechanism. It does not exclude multiple residual
+targets, projection-dependent target selection, the joint certificate of
+[JTC, §2], global recoloring, lawful finer cuts, or a different effective
+proof system. In particular it is not a universal impossibility theorem.
+Failure of the required endpoint coverage at $d=2$ also does not prove
+that this class's endpoints over increasing depths fail to approach
+$\lambda$; that is a different approximation question.
+

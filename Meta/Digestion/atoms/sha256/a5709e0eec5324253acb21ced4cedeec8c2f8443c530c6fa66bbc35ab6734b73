@@ -1,0 +1,26 @@
+## 244. Setup for the axial-C role with Q not U
+
+Suppose rho=(C,M,Z,Q,M,Z), with Q not U. A special Q is impossible by
+the fixed-pair exclusion for {M,Z}. Thus Q is one of M,Z,C,D. Tau and
+rho have no U, so the two other core owners eta and xi must both contain
+U by the two-owner occurrence property.
+
+After removing the two face occurrences paired to tau, rho's remaining
+two faces have multiset labels {Q,M,Z}. This description remains valid
+when Q=C and the two axial labels coincide. They cannot pair to each
+other: every Z-incident face of tau and rho would then be paired within
+those two owners. Tau has one Z slot and rho at most three, so a nonempty
+closed Z subset would have at most four slots. They cannot pair to an
+unused tau face, which has labels {D,M,C} and contains no Z.
+
+If the two faces meet eta and xi separately, each target owner has a
+face not containing U and also contains U. Consequently U is the other
+axis and is unique in each target. Their transverse pairs contain M or
+Z, so every incident U face is marked. All U slots in K, at most two,
+would close internally, contradiction. Thus both remaining rho faces
+meet the same owner, say eta.
+
+Eta contains U but has a face {Q,M,Z}, not containing U, so it has
+exactly one U axis. All its U faces are marked. They cannot pair to
+each other (degree U one), or to tau or rho (no U), so both meet xi.
+

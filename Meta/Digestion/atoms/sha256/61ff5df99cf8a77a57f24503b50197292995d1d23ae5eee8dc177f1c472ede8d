@@ -1,0 +1,100 @@
+**Theorem 3.1 (sign change forces an actual collision).** Suppose $\mathcal T_{\kappa_0}$ is invertible. If $Q_{\mathcal H}$ takes both a strictly negative and a strictly positive value on $\mathcal R_+$, then for every sufficiently small $\varepsilon>0$ there are two distinct actual effective targets with slopes $\kappa_0$ and $\kappa_0+\varepsilon$ giving the same entire $n=d+5$ observations on the prescribed history.
+
+Consequently a uniformly recovering history must satisfy, at every slope where $\mathcal T_\kappa$ is invertible, either
+
+$$
+Q_{\mathcal T_\kappa^{-1}\mathcal C}(S)\ge0
+\quad\hbox{for every }S\in\mathcal R_+,
+$$
+
+or the reversed inequality for every such $S$. The choice of sign may depend on $\kappa$. This is a necessary condition only.
+
+Proof. Choose $S_-,S_+\in\mathcal R_+$ with opposite strict signs of $Q_{\mathcal H}$. Every member of $\mathcal R_+$ has unique coordinates
+
+$$
+S=r\begin{pmatrix}x&xy\\1&y\end{pmatrix},\qquad r,x,y>0.
+$$
+
+Interpolate each of these three coordinates linearly between the two endpoints. This gives a continuous path $S(\theta)$, $0\le\theta\le1$, lying entirely in $\mathcal R_+$. Compactness supplies a common positive lower bound $b$ for its four entries. Let
+
+$$
+K=1+\max_{\theta,a,b'}|\mathcal H(S(\theta))_{ab'}|,
+\qquad
+\eta=\min\bigl(-Q_{\mathcal H}(S_-),Q_{\mathcal H}(S_+)\bigr)>0,
+$$
+
+after ordering the endpoints so that $S_-$ has the negative sign. These quantities are finite, and $|\det(\mathcal H(S(\theta)))|\le2K^2$. For every
+
+$$
+0<\varepsilon<\min\left(\frac b{2K},\frac\eta{4K^2}\right)
+$$
+
+the entries of $S(\theta)+\varepsilon\mathcal H(S(\theta))$ exceed $b/2$. The continuous function
+
+$$
+Q_{\mathcal H}(S(\theta))
+ +\varepsilon\det\bigl(\mathcal H(S(\theta))\bigr)
+$$
+
+still has opposite strict endpoint signs. The intermediate value theorem gives an interior $\theta_\varepsilon$ where it vanishes. Set
+
+$$
+S_1=S(\theta_\varepsilon),\qquad
+S_0=S_1+\varepsilon\mathcal H(S_1).
+$$
+
+The determinant identity makes $\det S_0=0$; positivity makes its rank exactly one. Thus both sources belong to $\mathcal R_+$.
+
+The transfer identity is
+
+$$
+\mathcal T_{\kappa_0}(S_0)
+=\mathcal T_{\kappa_0}(S_1)+\varepsilon\mathcal C(S_1)
+=\mathcal T_{\kappa_0+\varepsilon}(S_1).
+$$
+
+Hence the vector
+
+$$
+u_i=(1+\kappa_0 i)\operatorname{tr}(A_iS_0)
+ -(1+(\kappa_0+\varepsilon)i)\operatorname{tr}(A_iS_1)
+$$
+
+lies in $\ker\Lambda$. Lemma 2.1 gives one entire polynomial $P\in\mathcal P_d$ with $P(i)=u_i$ at every recorded position. Explicitly it is
+
+$$
+P(t)=\sum_{h=0}^{d}u_h
+\prod_{\substack{0\le b'\le d\\b'\ne h}}
+\frac{t-b'}{h-b'}.
+$$
+
+The denominators are nonzero node differences; for $d=0$ the product is one. Membership in $\ker\Lambda$ ensures agreement at all the remaining nodes as well. Choose $D_0=0$ and $D_1=P$. For every actual recorded index,
+
+$$
+(1+\kappa_0 i)\operatorname{tr}(A_iS_0)+D_0(i)
+=(1+(\kappa_0+\varepsilon)i)\operatorname{tr}(A_iS_1)+D_1(i).
+$$
+
+This also checks a position at which either gain is zero; no division by a gain has occurred.
+
+For $a=0,1$, set $R_a=S_a$, $\alpha_a=1$, $\beta_a=\kappa_0+a\varepsilon$, and use
+
+$$
+c_a=(p_a,r_a)^{\mathsf T},\qquad\ell_a=(1,q_a/p_a).
+$$
+
+These factors are positive and their product is $S_a$, since $r_aq_a/p_a=s_a$. Expansion gives $\ell_a A_i c_a=\operatorname{tr}(A_iS_a)$. At every intermediate atom,
+
+$$
+M(c_1,c_2)^{\mathsf T}=(c_2,c_1+c_2)^{\mathsf T},\qquad
+J(c_1,c_2)^{\mathsf T}=(c_2,c_1)^{\mathsf T},
+$$
+
+so each complete prescribed history has positive read and unread states with its one unchanged row. The displayed $D_a$ is used throughout its run. The targets are distinct because their slopes differ, even if an exceptional transfer gives $S_0=S_1$.
+
+A uniformly recovering history cannot admit these collisions. Absence of both strict signs is exactly the alternative that all values are nonnegative or all are nonpositive, including the identically zero case. This proves the necessary condition. ∎
+
+Invertibility also means that the prescribed-slope matrix/drift kernel at $\kappa_0$ is zero: applying $\Lambda$ to a compensated signal gives $\mathcal T_{\kappa_0}(T)=0$, hence $T=0$, and then the polynomial vanishes. Theorem 3.1 therefore detects a different-slope obstruction even at such an individually injective slice. The prescribed-slope criterion in Theorem 3.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md) concerns a different question.
+
+No conclusion is asserted at a slope with singular $\mathcal T_\kappa$. At an invertible slope, a zero or one-sided $Q$ does not establish recovery: the argument only supplies a collision from opposite strict signs. It does not exclude other collisions, either nearby or between distant slopes.
+

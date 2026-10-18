@@ -1,0 +1,34 @@
+**Proposition 5.1 (a lawful interior example with noncollapsed laws and both update directions).** There is an original-domain rational finite observer with constant suspended emission strictly inside $(a,b)$, distinct p and suspended complete laws, positive complete-return motion, positive absolute alpha-edge change and positive alpha-edge decrease. Neither acquired interface is a complete redraw, and one p decoder is outside the entire constant-parameter stopped-p mixture family on $[a,b]$.
+
+Proof. On each original record fibre install the product realization of Definition 2.2 with two labels, fair rows and
+
+$$
+u_0=a,\qquad u_1=b,\qquad
+v_0=v_1=s_*=\frac{3679}{10000},\qquad
+B=I,\qquad A=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{5.1}
+$$
+
+Both acquired flows preserve the fair rows. The latch row is sampled source-independently after the third record write and latch in that same original update. Earlier synthetic letters are fair; all original controls, records, permissions, completion and Stop are retained. This is the full original-domain construction supplied by [PAID, Lemma 2.1.1]. No comparison depth, posterior or analysis chain is a runtime port.
+
+The p laws differ on immediate alpha by $b-a$. The suspended laws differ on alpha-alpha by $s_*(b-a)$ because their alpha successors have p emissions $b,a$, respectively. Both successor-law dispersions and phase diameters are positive. Each acquired kernel is a deterministic bijection with different rows, rather than a row-independent redraw. An actual return swaps the p labels, so its expected complete-law motion is at least $b-a>0$. On the suspended alpha edge the expected decrease is $(s_*-a)/2>0$ and the expected absolute change is $(b-a)/2>0$. Its suspended interior tent mass is $\min(s_*-a,b-s_*)>0$.
+
+For the p law starting at label 1 put $q_j=Q_1(w_{j,0})$. Exact generation from (5.1) gives
+
+$$
+q_1=(1-b)s_*a,\quad
+q_2=(1-b)(1-a)s_*^2b,\quad
+q_3=(1-b)^2(1-a)s_*^3a.
+$$
+
+Consequently
+
+$$
+q_2^2-q_1q_3
+=(1-b)^2(1-a)s_*^4\bigl((1-a)b^2-(1-b)a^2\bigr)>0.
+$$
+
+The bracket equals $1/25>0$. For a Borel stopped-p mixture, these coordinates would be $q_j=\int r[r(1-r)]^j\,d\kappa(r)$, and Cauchy gives $q_2^2\le q_1q_3$. Thus this particular decoder is not such a mixture. This elementary moment check only locates the example; it is not the separator proof. ∎
+
+The example is not near-optimal: Theorem 1.5 applies to it. Its purpose is to separate the newly excluded class from the no-interior-emission class of INTERIOR, the zero-return-motion class of MOTION, the alpha-conserving class of ALPHA, the nondecreasing-alpha class of DIRECTION, the complete-redraw classes of PAID and the native-mixture classes. Positive values of those supplied necessary statistics do not discharge the joint constraint (3.2).
+

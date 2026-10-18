@@ -1,0 +1,29 @@
+### Clearing the exact denominators
+
+Set \(k=c+1\). Multiplication by the positive number \(4muz\) gives
+
+\[
+4muz\left(\frac14-\frac{J_\rho}{4mz}
+                   -\frac{J_\eta}{4uz}\right)=P,
+\]
+
+where
+
+\[
+P=(m-k)u^2+(z^2-3mz+m^2-k)u+mz^2-m(m+1)(b+1).
+\]
+
+Let
+
+\[
+P_0(u)=(m-k)u^2+(z^2-3mz+m^2-k)u+mz^2-m(m+1)(m-1).
+\]
+
+Then
+
+\[
+P=P_0(u)+m(m+1)(m-b-2)>P_0(u).
+\]
+
+It suffices to prove \(P_0(u)>0\).
+

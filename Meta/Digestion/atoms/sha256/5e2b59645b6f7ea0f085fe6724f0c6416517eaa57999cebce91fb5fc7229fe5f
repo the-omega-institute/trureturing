@@ -1,0 +1,46 @@
+**Definition 2.2 (Credited frontier and converse scope).** Put
+
+$$
+\begin{aligned}
+b&=1-2\alpha,\\
+L_M&=\max\left\{1,
+\left\lceil\left(\frac{2c(M-2)}b\right)^{1/r}\right\rceil\right\},\\
+\Psi(s,M)&=\frac{s^{-p}}{1+\log\min\{L_M,1/s\}}
+\qquad(0<s<1,\ M\ge2).
+\end{aligned}
+\tag{2.3}
+$$
+
+The inherited lower theorem, [S, Theorem 11.2] at $d=2r-1$, equivalently
+[C, Definition 2.2 and the lower of Theorem 6.1], supplies $s_->0$ and
+$C_->0$, depending only on the fixed triple, such that
+
+$$
+\forall\,0<s<s_-\quad\forall\,M\ge2\quad
+\forall\,\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall\,i\in\{0,1\}:\qquad
+\mathbb E_i^{\mathcal A}T\ge C_-\Psi(s,M).
+\tag{2.4}
+$$
+
+Budgets here and below are finite integers. This is an attributed
+ordinary result. Its neighborhood precedes every budget and design.
+It includes arbitrary stochastic retuning, initial randomization,
+arbitrarily small positive edges and partial-gap stopping, retaining
+both risks, both almost-sure stops and both finite means. Its normalized
+clipped-law entropy, finite-configuration hitting comparison and actual
+tick-price interfaces are developed in [S, Sections 3–7]. Subclass
+inclusion in (1.7) retains all these lower quantifiers.
+
+The ceiling in (2.3) also gives the useful inherited comparison
+
+$$
+L_M\le C_LM^{1/r},\qquad
+C_L=1+(2c/b)^{1/r}\ge1.
+\tag{2.5}
+$$
+
+The unrestricted all-sufficient-budget upper and the eventual criterion
+are already [C, Theorems 6.1–7.1]. The task of the following construction
+is their attainment with the fixed probability alphabet $\{0,1\}$.
+

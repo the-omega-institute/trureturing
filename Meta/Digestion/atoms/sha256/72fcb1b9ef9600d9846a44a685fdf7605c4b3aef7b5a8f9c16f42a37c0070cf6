@@ -1,0 +1,40 @@
+**Theorem 6.3 (independent call and literal lower bounds).** Every finite
+accurate common-start preparer for $\sigma_C$ on the entire
+$\mathcal U_*$ satisfies, on the single source $u_0$,
+
+$$
+q_P(u_0)\ge n+1,\qquad
+\ell_P(u_0)\ge3+\sum_{i=1}^{n}(3+|w_i|)=\Lambda(C).
+\tag{PCA.19}
+$$
+
+Consequently every uniform upper budget has $p\ge n+1$ and
+$\ell_P\ge\Lambda(C)$, whatever larger finite state or other
+preparation budgets are allowed.
+
+Proof. Compare the terminating run on $u_0$ with the run on each
+$u_i$. Their required latches differ. If no query along the $u_0$
+path had different replies on that pair, induction from the common
+start would give the same entire path and the same latch on $u_i$.
+Hence for each $i$ some query on the $u_0$ path belongs to
+$\mathcal C_i$, by Lemma 6.2. Disjointness forces at least $n$
+different visits, with total literal contribution at least
+$\sum_i(3+|w_i|)$.
+
+One additional visit is forced on this same path. Starting from
+$x^{(0)}$, keep $x_a=B_0$ and $x_{b_j}=D_j$ for $j=1,2,4$, but
+replace $x_c$ by beta and $x_{b_3}$ by alpha. The resulting six values
+are distinct. They meet NBP Proposition 9.3's positive alternative
+$3$, so they give an actual finite origin $u_+$ in $\Pi_3$. Its full
+target is $R_3$ and its prescribed code is one. The currents of $u_0$
+and $u_+$ differ only in the $c$ and $b_3$ class values. Equal replies
+all along the $u_0$ path would again force the same latch. Some query
+on that path must therefore enter a $c$ occurrence or the $b_3$
+occurrence. Every such word has length at least three and lies outside
+all the $\mathcal C_i$. It is an additional counted visit.
+
+Adding these contributions proves both inequalities on one actual
+execution. No worst costs from different sources have been added.
+The argument uses neither a tree-shaped controller nor a restriction
+of the upper-domain fiber. $\square$
+

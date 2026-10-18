@@ -1,0 +1,30 @@
+## 432. The exact angle-sign criterion
+
+Put
+
+    D_r=r^2+p^2+a^2+2*r*p*a-1,
+    D_b=b^2+p^2+a^2+2*b*p*a-1,
+    N=a*(r+b)+p*(r*b+a^2-p^2+1).
+
+For the genuine angles,
+
+    cos(beta_p)=N/sqrt(D_r*D_b),
+    sin(beta_p)=sqrt((p^2-1)*L*J)/sqrt(D_r*D_b),
+    cot(theta_r/2)=sqrt((r+1)*L/((r-1)*J)).
+
+The sine identity follows from the exact polynomial identity
+
+    D_r*D_b-N^2=(p^2-1)*L*J.                         (432.1)
+
+If N<=0, then beta_p>=pi/2, and theta_r>0 proves (431.2).
+Suppose N>0. Then beta_p is in (0,pi/2), while theta_r/2 is in
+(0,pi/2). The target (431.2) is equivalent to
+
+    beta_p>pi/2-theta_r/2,
+    tan(beta_p)>cot(theta_r/2).
+
+All factors used in this comparison are positive. Squaring and
+cancelling L>0 shows that it suffices, and is equivalent, to
+
+    Delta=(p^2-1)*(r-1)*J^2-(r+1)*N^2>0.           (432.2)
+

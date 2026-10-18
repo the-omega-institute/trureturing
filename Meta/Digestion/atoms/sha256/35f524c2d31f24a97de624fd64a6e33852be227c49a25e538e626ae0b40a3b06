@@ -1,0 +1,24 @@
+**Theorem 5.1 (the unique physical crossing).** The six- and seven-contact branches share one exact event law and dual vector at $\lambda_S$. The six law is physical and dual feasible through that event; the seven law is physical above it. Every cell joins to the adjacent physical cells across the full interval.
+
+Proof. The event record of §14 gives a contraction in the common radius-$10^{-15}$ box, with $q<1.47\cdot10^{-10}$ and inclusion $<.002296$. The latter weaker bound suffices regardless of a sharper enclosing evaluation. Its $\lambda$ coordinate is in Theorem 2.1's interval. Embed its angles, six old weights and dual into the six stationary system, and into the seven-contact system by adjoining $p_6=0$. Both embedded boxes lie strictly in their branch tubes on $[4.525,4.55]$. The recorded containment margins are positive (respectively $>6.0278\cdot10^{-10}$ and $>1.4300\cdot10^{-9}$). Uniqueness identifies both roots with this SAME exact event, not just overlapping decimal estimates.
+
+For an exact branch derivative, $JX'=-F_\lambda$. Let $v$ be its recorded rational approximate tangent and $E_R=I-RJ$. If $\|E_R\|_r=q_*<1$, the Neumann series gives
+
+$$
+|X'_i-v_i|\le r_i\frac{\max_j|[R(Jv+F_\lambda)]_j|/r_j}{1-q_*}.
+$$
+
+The band tangent records enclose this formula uniformly over each entire cell. Because $P_6'(x_6)=0$, the moving-angle contribution to the unused gap derivative vanishes. With $\sigma_6=-1$ its derivative is
+
+$$
+\frac d{d\lambda}P_6(x_6)=\Gamma^{\rm num}_6\cdot Y'+W^{\rm num}_6.
+$$
+
+On all of $[4.5,4.55]$ this is strictly between $-.004047$ and $-.003796$. On the signed seven-contact extension over $[4.5,4.6]$, the new-weight derivative is strictly between $.001658$ and $.001739$. The common event therefore is the only zero of both quantities. The unused six gap is positive below the event and negative above; the seven weight is negative below and positive above. Negative weights are excluded from the physical construction. The positive quotient in Theorem 4.3 handles the six unused whole arc up to the event.
+
+The point boxes of §15 at $4.525$, $4.55$, $4.575$ have their own root inclusions and lie in BOTH neighboring seven-contact tubes. Their smallest containment margin exceeds $1.3879\cdot10^{-9}$. Existence in these common boxes and contraction uniqueness identify the roots on both sides. The same argument joins the auxiliary signed segment, which is used only to propagate the unique crossing sign.
+
+For the six-contact physical cells, including the join at $4.5$, no unproved numerical continuation is needed. Each cell supplies a globally matching law and dual by §§4 and 7. At a common boundary, equality in either dual forces every other optimal law onto its finite strict zero set. Independent moment columns fix the merged weights. Thus the neighboring laws coincide with consistently identified noncolliding contacts. If their duals differed, the difference would annihilate all occupied moment values and angular derivatives. Setting all primal variations to zero would then give a nonzero pure-dual kernel vector of the physical contact Jacobian, contrary to Theorem 4.2. Hence their duals coincide too. Outside the event band an unused positive-gap stationary coordinate may be reselected; it is not part of the physical law and need not glue.
+
+The exact cell partition is $203$ contiguous cells covering $[1/4,9/2]$, two six cells covering $[9/2,91/20]$ and four seven cells covering $[9/2,23/5]$. The event and join identifications therefore connect the full physical interval. Strict old weights, zero-set strictness, signed margins, separated angles, distinct saturated lines, full column ranks and regular Jacobians rule out every other optimizing support, sign, collision, rank and regularity event. This does not inventory positive-level stationary roots irrelevant to the optimal zero set. $\square$
+

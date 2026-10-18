@@ -1,0 +1,61 @@
+**Theorem 225.1 (Arbitrary-background convex-mask obstruction).** For every
+$L\ge3$ and every full $z\ge0$ with $\Delta_O(z)\le1$, there exists
+$t>0$ such that $y=z+tY_0$ is still unit-$O$, has the unrestricted
+certificate $(0,0)$, and satisfies $J_{Q(y)}(V)>1$ for every
+$V\in\mathcal K_L(y)$. Here, for $\tau=1^{L-2}$,
+
+$$
+Y_0:\quad A_{00\tau}=1,\quad C_{01\tau}=C_{10\tau}=1,\quad T=1.
+$$
+
+It suffices to choose
+
+$$
+t>1+W_z,\qquad t\ge2\max\{0,\sigma_H(Q(z))\}.
+$$
+
+**Proof.** The full head schedule separates four unit rewards, so
+$B_N(Y_0)=4$, attained by $D_*=N(1,2;0,1,2,0)$.
+The stopped head merges the first two atoms of different labels and has
+support three. Every later bit is constantly one on this support;
+other effective schedules are empty or singleton and have support at
+most two. Thus $W_{Y_0}=3$, $\Delta_N(Y_0)=1$,
+$\Delta_O(Y_0)=0$ and $Q(Y_0)=(0,1,0,\ldots;4)$.
+
+The two hull capacity inequalities, together with monotonicity, imply
+
+$$
+2b_2-4e=b_2+b_3-4e\le1.
+$$
+
+Indeed the upper capacity and $b_1\ge b_2$ give
+$b_2+b_3+\sum_{j\ge4}b_j-(L+1)e\le1$, and
+$\sum_{j\ge4}b_j\ge(L-3)e$.
+Consequently
+
+$$
+F_{Q(Y_0)}=b_2-1-4e\le-\frac12-2e\le-\frac12,
+$$
+
+with equality at $u_3$. Subadditivity of the full stopped support and
+linearity of the anchor give $\Delta_O(y)\le\Delta_O(z)\le1$.
+At every hull point,
+$F_{Q(y)}\le\sigma_H(Q(z))-t/2\le0$, proving the unrestricted
+certificate $(V,\theta)=(0,0)$.
+
+Every interior mask fixes $Y_0$. For any convex mask weights of total
+one, write the resulting score as $V=V_z+tY_0$, with $V_z\ge0$.
+The interior anchor identity gives $W_{V_z}=W_z$. The one full table
+$D_*$ earns at least $4t$ on this same combined score, since its reward
+on $V_z$ is nonnegative. Therefore
+
+$$
+\Delta_N(V)\ge4t-(W_z+3t)=t-W_z>1.
+$$
+
+The residual charge is nonnegative, so every such $V$ fails the joint
+unit bound. The proof uses no assumption about the support, signs of
+net coordinates, or mixture representation of the arbitrary background
+$z$. It uses the actual combined support rather than a sum of separately
+maximized component costs. $\square$
+

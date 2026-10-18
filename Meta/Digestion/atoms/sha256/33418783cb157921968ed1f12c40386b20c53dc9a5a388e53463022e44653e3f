@@ -1,0 +1,36 @@
+## 10. 十、未来仪器的可见性判据
+
+设隐藏参数化为
+
+$$
+T(\theta)=T_0+\sum_j\theta_jH_j.
+$$
+
+给定初始行向量 $\lambda$ 和输出列向量 $O$，长度为 $\ell$ 的未来读出为
+
+$$
+f_\ell(\theta)=\lambda T(\theta)^\ell O.
+$$
+
+精确未来等价定义为
+
+$$
+\theta\sim_{\mathrm{future}}\theta'
+\quad\Longleftrightarrow\quad
+\lambda T(\theta)^\ell O=
+\lambda T(\theta')^\ell O
+\quad
+\forall \ell\ge0.
+$$
+
+沿着隐藏方向 $H$ 的一阶变化为
+
+$$
+D_Hf_\ell=
+\lambda
+\left(
+\sum_{r=0}^{\ell-1}
+T^rHT^{\ell-1-r}
+\right)O.
+$$
+

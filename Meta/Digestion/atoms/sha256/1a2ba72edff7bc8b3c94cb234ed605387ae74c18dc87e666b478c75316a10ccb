@@ -1,0 +1,28 @@
+**Definition 11.2 (The complete law $K$).**
+Let $R=O(1,2;1,2,0)$ and let $P^0$ be precisely the complete
+sixteen-table law in 3.1, including $O(1,4;0,4,0)$.
+Set
+
+$$
+s=\frac{u}{217},\qquad W=3072s,\qquad \varepsilon=36s,\qquad
+L=(1-24\tau)R+(24\tau-W)P^0+WQ_8.
+\tag{11.2}
+$$
+
+In the $P^0$ component replace mass $\varepsilon$ of
+$D_0=O(6,7;0,7,0)$ by the same mass of
+$D_8=O(6,7;0,7,8)$, keeping the whole schedule and its other
+two cell labels. The resulting law is
+
+$$
+K=L+\varepsilon(D_8-D_0).
+\tag{11.3}
+$$
+
+Equation (11.3) denotes a transfer of existing stock.
+Explicitly, each count-$k$ row of 3.1 receives mass
+$k(\tau-128s)$, each count-$k$ row of 11.1 receives mass $ks$,
+and $R$ receives $1-24\tau$. Subtract $36s$ from the indicated
+$P^0$ donor and add it to $D_8$. Coincident complete-table
+weights add. These instructions specify every final weight.
+

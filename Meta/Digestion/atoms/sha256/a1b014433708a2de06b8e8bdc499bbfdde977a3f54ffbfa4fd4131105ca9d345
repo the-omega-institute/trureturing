@@ -1,0 +1,28 @@
+**Lemma 4.1 (all fifty boxes).** The data in Appendix B have precisely the parameter rectangles
+
+$$
+\mathcal P_j=[99999/100,100001/100]\times[91/20+j/1000,91/20+(j+1)/1000],\quad 0\le j<50.
+$$
+
+For every fixed parameter in each rectangle the residual (5) has a unique zero in the displayed box $\mathcal X_j=C_j+[-r_j,r_j]$. Its Jacobian is invertible there. The weighted bounds used for contraction satisfy $q<0.0215$ and $\iota<0.490$. Appendix C additionally records the independent bounds $q<0.021354$ and $\iota<0.489708$.
+
+Proof. The appendices use exact rational strings and integer endpoint pairs. At grid denominator $D$ a pair $[a,b]$ means $[a/D,b/D]$. Addition and subtraction use endpoint algebra; multiplication takes the minimum/maximum of four products and rounds outward. Division reverses reciprocal endpoints only if zero is excluded. Squaring uses lower endpoint zero when the interval contains zero. For nonnegative endpoints square roots are bounded using integer square roots and exact squaring. The source radius and all parameter endpoints are rational. Appendix B's $D=2^{190}$; the independent calculation and Appendix C use $D=2^{210}$. Decimal `display` fields are orientation only, never interval endpoints.
+
+Let $t_c,\lambda_c$ be parameter midpoints and let $R$ be the displayed fixed rational matrix. With weighted maximum norm $\|v\|_r=\max_i|v_i|/r_i$, form $E=I-R[J]_{\mathcal X,\mathcal P}$ and $q_i=\sum_j\sup|E_{ij}|r_j/r_i$. At the fixed centre all parameter dependence is affine except $-B_*/t$ in the two moment rows. Its exact Taylor remainder is
+
+$$
+-\frac{B_*}{t}+\frac{B_*}{t_c}-\frac{B_*}{t_c^2}(t-t_c)
+=-\frac{B_*(t-t_c)^2}{t_c^2t}.
+$$
+
+Consequently an enclosure of $RF(C;t_c,\lambda_c)$, the two preconditioned partial derivatives at the centre, their parameter halfwidths, and that explicit remainder give $e_i\ge\sup_{\mathcal P}|(RF(C;t,\lambda))_i|$. Set
+
+$$
+q=\max_iq_i,\qquad\iota=\max_i(e_i/r_i+q_i).
+\tag{6}
+$$
+
+All exact per-cell independent fractions are in Appendix C. Direct outward evaluation of (1)–(5) in the written polynomial order gives the Appendix D bounds $q<0.021454$ and $\iota<0.489657$, already sufficient for (6). For every cell its Appendix D inclusion is strictly smaller than the corresponding Appendix C inclusion. Thus the latter fractions are also valid image factors. No improvement of $q$ is needed to use those factors. Thus $T(X)=X-RF(X;t,\lambda)$ is a contraction and maps the closed box strictly into itself, for **every** parameter section. Its fixed point exists and is unique. Since $\|I-RJ\|_r<1$, $RJ$ is invertible; square $R$ and $J$ are then invertible. The fixed point really has $F=0$. The analytic implicit-function theorem applies at each section. This proves parameter-uniform existence, not a mesh extrapolation.
+
+The fixed point also obeys $|X_i-C_i|\le\iota r_i$. For refinement use each cell's own exact independent `inclusion` fraction, and round each endpoint of $C\pm\iota r$ outward to the $2^{-210}$ grid. Rebuild all polynomial coefficients from the original nine source-coordinate intervals and (1)–(5) on this contracted image. Use the **same** eight arc charts, factor lists and leaves, without asserting new contact equations off the root. Appendix C's refined constants refer to precisely this rule; Appendix D gives a separate direct-polynomial evaluation on those same images. This image inclusion follows from $X=T(X)$; it is not an extra fixed-point assumption. ∎
+

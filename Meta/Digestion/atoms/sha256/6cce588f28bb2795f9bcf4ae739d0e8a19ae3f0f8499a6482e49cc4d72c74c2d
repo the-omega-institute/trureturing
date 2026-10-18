@@ -1,0 +1,43 @@
+### 102.2. Delivered inputs and the canonical gauge
+
+The proof uses precisely these delivered inputs:
+
+1. Sections 95 and 97 give \(\operatorname{rank}H_S=\operatorname{rank}R=2\), where
+   \[
+   R\succeq0,\quad R_{ii}=1,\quad
+   G_S=H_S\odot\overline R,\quad
+   R\operatorname{diag}(\overline a)H_S=0.
+   \tag{2}
+   \]
+2. Lemma 96.1 gives equality of the complete principal norm and the original full norm, and says that \(G_S\) is a global one-party principal minimizer for fixed \(H_S\). Any principal competitor is allowed, without a rank constraint; its full-domain comparison uses orthogonal completion of the missing original coordinates.
+3. Section 99 gives uniqueness of every principal norming pair, including competitors with singular densities. For its original common pair and the same \(\alpha>0\),
+   \[
+   W_{ij}=-\frac{\alpha a_i\overline{a_j}}
+                    {2\overline{H_{ij}}}
+   \quad(i,j\text{ in distinct original fibres}),
+   \tag{3}
+   \]
+   and, writing \(C=W_{F,\{3,4\}}\) and \(E=(T-G\odot H)_{F,\{3,4\}}\),
+   \[
+   EC^*=\frac t2\rho_F\succ0.
+   \tag{4}
+   \]
+4. The original matrix-unit test gives \(t\ge|1/2-G_{ij}H_{ij}|\) across distinct original fibres.
+
+No uniqueness of all unrestricted eight-coordinate normers is used. No joint principal local minimum is assumed.
+
+Reciprocal diagonal unitary changes of the original eight-coordinate Grams preserve their Hadamard product, fibre constraints, ranks, full objective and local minimality. By (1), such a change puts the supported \(H\)-records in the form
+\[
+h_1=e_1,\quad h_2=e_2,\quad
+h_3=\frac{(1,1)}{\sqrt2},\quad
+h_4=\frac{(\overline u,u)}{\sqrt2},
+\quad u=c+is,\quad c^2+s^2=1.
+\tag{5}
+\]
+The singleton record phase can be chosen so that \(c=H_{34}\ge0\). If \(c=0\), the matrix-unit test at 34 gives \(t\ge1/2\). If \(s=0\), the singleton records are collinear. The actual original partner of 3 is orthogonal to \(h_3\), hence also to \(h_4\); its cross-fibre matrix-unit test with 4 again gives \(t\ge1/2\). Therefore
+\[
+0<c<1,\qquad s\ne0.
+\tag{6}
+\]
+These cases exhaust the endpoints. The sign of \(s\) remains arbitrary throughout.
+

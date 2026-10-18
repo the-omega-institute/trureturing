@@ -1,0 +1,10 @@
+**定义 6.1（整个参数域上的极值）。** 在定义 4.1 的整个 $\Theta_N$ 上置
+
+$$
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad r\ge1.
+\tag{6.1}
+$$
+
+这里不先加可见全支撑条件；零质量参数也参与。
+

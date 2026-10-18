@@ -1,0 +1,33 @@
+**定义 9.1（循环等待的边发射表示）。** 隐藏状态为
+
+$$
+\{W_j,Z_j:j\in\mathbb Z/m\mathbb Z\}.
+$$
+
+其中 $W_j$ 为等待状态，$Z_j$ 为强制零状态。仅有以下非零矩阵条目：
+
+$$
+M_0(W_j,W_j)=1-p_j,\qquad
+M_1(W_j,Z_j)=p_j,\qquad
+M_0(Z_j,W_{j+1})=1.
+\tag{9.1}
+$$
+
+一切相位指标均模 $m$。记
+
+$$
+Z_{\mathbf p}=m+\sum_{j\in\mathbb Z/m\mathbb Z}\frac1{p_j},\qquad
+\lambda(W_j)=\frac1{Z_{\mathbf p}p_j},\qquad
+\lambda(Z_j)=\frac1{Z_{\mathbf p}}.
+\tag{9.2}
+$$
+
+$H_i$ 仍表示发射 $X_i$ 之前的状态，发射边为 $H_i\to H_{i+1}$。这是定义 2.1 及 [Universal 卷][U] 定义 4.1 的参数对应
+
+$$
+N=2m,\qquad \theta_{\mathbf p}=(\lambda,M_0,M_1),
+\tag{9.3}
+$$
+
+不对整个 $\Theta_{2m}$ 附加任何新的约束或作任何覆盖断言。
+

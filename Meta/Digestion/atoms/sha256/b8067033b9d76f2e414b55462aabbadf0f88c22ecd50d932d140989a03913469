@@ -1,0 +1,14 @@
+### 既有来源与概念归属
+
+以下文献仅支持列明的成熟概念；仓内理论卷同样是参考输入，不能代替本卷的形式证明或物理实现桥。本文不声称这些概念原创。
+
+| 来源 | 支持范围与使用边界 |
+| --- | --- |
+| Jiang、Lim、Yao、Ye，[Statistical ranking and combinatorial Hodge theory](https://doi.org/10.1007/s10107-010-0419-x) | 图上梯度/势与循环残差的成熟背景；其线性 Hodge 结构不是任意交换群的内积结构。Q2 的交换群结论按显式路径条件解释。 |
+| Rota，[On the foundations of combinatorial theory I. Theory of Möbius Functions](https://doi.org/10.1007/BF00531932) | 有限偏序的 Möbius 反演；五态分解是给定潜在索引偏序上的实例，不是新发明的通用分解原理。 |
+| Dijkstra，[A note on two problems in connexion with graphs](https://doi.org/10.1007/BF01386390) | 非负图路径与最短路径的经典背景；不提供从三均值到物理三维空间的结论。 |
+| Kalman，[On the general theory of control systems](https://doi.org/10.1016/S1474-6670(17)70094-8) | 线性系统观察与可观测性的成熟背景；本卷的线性响应属于状态—观察配对，不是量子或辛共轭认证。 |
+| [FIB 金字塔基础公式与关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) | 共同来源、潜在占位、五函数基及概率反解的既有参考；不能把输出数值误作位置指示。 |
+| [乘法缺陷、输出递归闭包与最小未来商](AURIC_FIB_ATOM_SEAM_BILINEAR_CURVATURE_AND_OUTPUT_FUTURE_QUOTIENT.md) | 沿用非退化可行纤维、共同核、线性观察空间非乘法闭合及逐输出读口条件。 |
+| [静态隐藏纤维、输出分辨未来商与可维护性](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md) | 沿用合法 instrument、非空 belief、资源与安全策略条件；预测可识别性不等于物理或生物可维护性。 |
+

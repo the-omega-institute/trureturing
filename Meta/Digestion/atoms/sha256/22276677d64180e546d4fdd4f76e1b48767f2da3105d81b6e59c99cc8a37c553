@@ -1,0 +1,104 @@
+**Theorem 343.1 (Coefficient positivity on a common star partition).**
+Partition $[L]$ into roots $R$ and leaves $D$. Give each leaf $j$
+one parent $\pi(j)\in R$ with $\pi(j)<j$.
+Suppose $p(w)=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$
+is a probability-vector kernel on the full cube, and every nonzero
+whole-vector $Q_{ij}$ is an edge $i=\pi(j)\to j$.
+No $N$ realization of $p$ is assumed. Put
+
+$$
+\rho_i(w)=w_i\ (i\in R),\qquad
+\rho_j(w)=w_{\pi(j)}w_j\ (j\in D),\qquad q=p\circ\rho.
+\tag{343.1}
+$$
+
+For $i\in R$, define
+
+$$
+A_{ij}=Q_{ij}+\ell_j\quad(\pi(j)=i),\qquad
+V_i=\sum_{\pi(j)=i}(-A_{ij})_+,\quad
+h_i=(V_i-\ell_i)_+,\quad H=\sum_{i\in R}h_i.
+\tag{343.2}
+$$
+
+Then $q$ is a stopped kernel. More explicitly,
+
+$$
+q(w)=c+\sum_{i\in R}\ell_iw_i
+            +\sum_{j\in D}A_{\pi(j),j}w_{\pi(j)}w_j,
+\qquad \min_w q_w(z)=c(z)-H(z).
+\tag{343.3}
+$$
+
+For any real profile parameters $(b,e)$, if $p$ satisfies all base,
+correct, independent union and positive rows, so does $q$ at the
+same parameters. There is a common-seed stopped realization using
+at most $L+1$ positive-mass schedule types.
+
+Proof. Each parent is a root, so substitution gives
+$\rho_i\rho_j=w_i^2w_j=w_iw_j$ on the cube; the leaf-linear
+term supplies the additional $\ell_j$ in $A_{ij}$.
+This proves the polynomial identity in (343.3).
+For a fixed label, the contribution of root $i$ and its leaves is
+$w_i(\ell_i+\sum_{\pi(j)=i}A_{ij}w_j)$.
+Its exact minimum is
+$\min(0,\ell_i-\sum(-A_{ij})_+)=-h_i$.
+Different stars use disjoint coordinates, so these scalar minima
+can be attained simultaneously for that label. This proves the
+minimum formula. It does not require one minimizing word for
+all labels. Positivity of $p\circ\rho$ implies $c\ge H$.
+Each coefficient of $p$ has zero signed label sum; hence so do
+$\ell_i,A_{ij}$. Therefore
+$m(h_i)\ge m(V_i-\ell_i)=m(V_i)$ and
+$\sum_i m(h_i)=m(H)\le m(c)=1$.
+The stopped criterion 109.1 applied to the displayed coefficients
+now gives one complete stopped allocation, including zero masses.
+Its construction has one pair per leaf, at most one singleton per
+root, and an empty schedule: at most $|D|+|R|+1=L+1$ types.
+
+If $w$ has first zero $n$, every coordinate before $n$ is one.
+A leaf $n$ has an earlier parent, also one, so $\rho_n=0$;
+a root $n$ is unchanged. Earlier coordinates remain one.
+Thus $\rho$ preserves the first zero and fixes $1^L$.
+Every demand at $w$ equals the corresponding demand at $\rho(w)$.
+Consequently $q_w(0)$, $q_w(n)$ and $q_w(0)+q_w(n)$ inherit
+the three separate inequalities from that one word of $p$;
+the positive row is inherited as well. This argument is valid for
+negative singleton demands and every multiple-zero word, and uses
+no observed reset in an actual acquisition. $\square$
+
+The outward-star acquisition principle and same-cap repair already
+belong to [XV 258.3–258.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md#258-signed-event-transfer-actual-slack-and-universal-common-input-maps).
+Their common map sets a leaf to one after its root is zero;
+(343.1) instead sets the leaf to zero, and absorbs its linear term
+explicitly. The additional scope here is the aggregated whole-vector
+positivity calculation (343.3), which does not assume $N$ membership.
+There is no new star/fork principle or original amplitude region.
+
+For completeness, the $N$-only consequence can already be recovered
+from the old result after regrouping one complete allocation.
+Aggregate all schedules with the same pair. If its aggregate $Q_{ij}$
+is zero, that pair kernel is a nonnegative affine function on its
+two-coordinate cube. Its per-label minimum is its constant minus
+the two negative linear parts; positivity gives the coordinate
+criterion, and their total mass is at most the pair mass.
+The scaled construction of 109.1 has zero outgoing pair vectors
+when $Q=0$, so replaces this kernel by constants and singletons.
+Now absorb every leaf singleton into its parent pair, letting that
+pair ignore the parent for this added component. All four cells of
+that component have the same singleton schedule mass, so the full
+law and global mass are unchanged. Remaining positive pair schedules
+are outward stars and no leaf has a singleton. Theorem 258.3 then
+applies to their entire tables, and 258.4 gives the same cap.
+Thus a chain or two incoming edges in the aggregated nonzero-$Q$
+graph is necessary for a genuine $N$-only profile obstruction;
+it is not sufficient. This is a consequence with the preceding
+attribution, rather than a further claimed novelty.
+
+Example 342.1 has edges $1\to2,1\to3$ and satisfies the
+probability premise of 343.1 while failing $N$ membership.
+Its reset law has
+$q_0=t(1-w_1w_3)$, $q_1=1-q_0$.
+This exhibits the scope beyond assumed $N$ realizability without
+supplying a new amplitude region.
+

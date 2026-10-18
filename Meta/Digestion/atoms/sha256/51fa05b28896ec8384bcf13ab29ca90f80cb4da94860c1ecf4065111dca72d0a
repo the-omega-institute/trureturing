@@ -1,0 +1,51 @@
+**Proposition 5.5 (the precise stable interface consequence).** Fix a
+declared class $\mathcal E$ of original finite experiment trees, with
+their original lawful input domains and acquired-response branching.
+Let $Q_{\mathcal E}$ be the restriction of the unchanged original
+$Q$ to those trees. Suppose an explicitly initialized fine system
+satisfies Theorem 5.2's local premises for every original row and
+actual finite protocol used in those trees, and admits no other
+stable-to-stable fragment. Interpret each original action by its
+complete fragment and project its completed successor by $\pi$ to
+the actual original record. Let $\widehat Q_{\mathcal E}$ be the
+partial response map defined by that completion interpretation,
+including the unchanged original empty terminal readout. Then at
+stable cuts
+
+$$
+\widehat Q_{\mathcal E}(x)=Q_{\mathcal E}(\pi(x)),
+\qquad
+\widehat Q_{\mathcal E}(x)=\widehat Q_{\mathcal E}(y)
+\ \Longleftrightarrow\
+Q_{\mathcal E}(\pi(x))=Q_{\mathcal E}(\pi(y)).
+$$
+
+This is an equality of completion-defined response maps for the
+declared experiments; it is not an all-cut original-task equality.
+
+Proof. A disabled original action has no admission, so both partial
+responses have the same original failure/domain status. An enabled
+one has the same actual original label, wire occurrence and complete
+projected successor by Theorem 5.2. Contracting a completed fragment
+gives that same admitted original action by hypothesis. Induction
+over finite experiment trees gives both directions, including their
+adaptive choices from original acquired responses. At the empty
+experiment retain only the actual original type/output; at halt
+neither interpretation admits a further action. The two response
+maps are therefore equal pointwise, and their equality kernels agree
+on this completion interpretation. In particular the forward
+implication follows by replacing each completion response by its
+equal original response; the reverse implication follows by the
+same pointwise equalities in the other direction. Taking
+$\mathcal E$ to be all original experiments requires all their
+row/protocol premises, not only the exhibited local cases. ∎
+
+The quantified all-row hypothesis of Proposition 5.5 is not established
+by this volume. Nor is its mathematical completion interpretation a
+currently actor-callable driver. A new paid driver which itself uses
+original rows has extra original receipts and complete-successor
+material, which must be reconciled rather than projected away as
+free work. The proposition does not transport original primitive
+Supply/Advance to each exposed fine step; Propositions 2.1–2.3 show
+why that stronger assertion fails for predecessor-only transport.
+

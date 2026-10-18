@@ -1,0 +1,136 @@
+**Theorem 46.1 (uniform failure of the real tilted-plane threshold route).** In (R.221) take $\varepsilon=1/100$ and
+
+$$
+\begin{aligned}
+t_0&=(\sqrt2\varepsilon,0,0,\sqrt2\varepsilon,
+                \sqrt{1-8\varepsilon^2})^T,\\
+t_1&=(0,\sqrt2\varepsilon,-\sqrt2\varepsilon,0,0)^T.
+\end{aligned}
+\tag{R.235}
+$$
+
+For every real $\theta$, define $\psi_\theta=\cos\theta|0\rangle+\sin\theta|1\rangle$ and $\mathcal L_\theta=\operatorname{span}\{\psi_\theta,|2\rangle\}$. This single actual encoder satisfies
+
+$$
+p(\rho)\geq\left(\sqrt T+\frac9{4000}\right)^2>T
+\quad\text{for every density supported on any }\mathcal L_\theta.
+\tag{R.236}
+$$
+
+The densities in this statement may be complex, mixed, off diagonal or singular. For this encoder, every threshold witness from (R.231) must have rank three.
+
+**Proof.** The two third-column squared norms in (R.235) are $1-4\varepsilon^2$ and $4\varepsilon^2$; their inner product is zero. They satisfy both TP cross conditions of (R.221). Thus these columns define an actual real channel of the required phase spectrum and actual Kraus rank two, with no relaxation of the encoder constraints.
+
+Let $Z=\operatorname{diag}(1,-1)$, $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and $n_\theta=Z\cos\theta+X\sin\theta$. Direct contraction of the same Kraus columns gives $\Gamma(|0\rangle\langle2|)=\varepsilon Z$, $\Gamma(|1\rangle\langle2|)=\varepsilon X$, and $\Gamma(|2\rangle\langle2|)=\sigma=\operatorname{diag}(1-4\varepsilon^2,4\varepsilon^2)$. The input-first Choi matrix restricted to $(\psi_\theta,|2\rangle)$ is therefore
+
+$$
+J_\theta=\begin{pmatrix}c^2I_2&\varepsilon n_\theta\\
+                         \varepsilon n_\theta&\sigma\end{pmatrix}
+=F_\theta F_\theta^T,\qquad
+F_\theta=\begin{pmatrix}
+cI_2&0\\
+\sqrt2\varepsilon n_\theta&
+\operatorname{diag}(\sqrt{1-6\varepsilon^2},\sqrt2\varepsilon)
+\end{pmatrix}.
+\tag{R.237}
+$$
+
+This factorization follows from $n_\theta^2=I_2$ and holds for every real angle.
+
+First let the actual plane input be real and positive definite,
+
+$$
+\rho=\begin{pmatrix}x&z\\z&y\end{pmatrix},\quad x+y=1,\quad D=xy-z^2>0.
+$$
+
+Introduce
+
+$$
+\begin{aligned}
+\kappa&=1-c,&P&=1-2\kappa D,&\ell&=\sqrt{x^2+z^2},\\
+S&=\|\rho\operatorname{diag}(c,1)\|_1,
+&S^2&=(cx+y)^2+\kappa^2z^2,
+&P&=S^2+c^2\ell^2,\\
+\omega&=\operatorname{diag}(q,\mu),
+&q&=S^2/P,&\mu&=c^2\ell^2/P.
+\end{aligned}
+\tag{R.238}
+$$
+
+These formulas make $\omega$ an actual environment density. By the fixed-input part of (R.223) and the filtered-Choi formula (R.27), applied to $J_\theta$, one has
+
+$$
+\sqrt{p(\rho)}\geq\|(\rho\otimes\sqrt\omega)F_\theta\|_1.
+$$
+
+Here the reference variable of (R.27) is $\rho^T=\rho$ in this real plane basis. Choosing a center for this fixed-input lower bound does not choose a different actual encoder or assert an input-dependent center in (R.223)'s worst-input equality.
+
+The following explicit orthogonal trace witness evaluates this norm from below. Put $k=1-\sqrt{1-6\varepsilon^2}$, and define
+
+$$
+U_0=\frac1S\begin{pmatrix}cx+y&\kappa z\\-\kappa z&cx+y\end{pmatrix},
+\qquad U_1=\frac1\ell\begin{pmatrix}x&-z\\z&x\end{pmatrix},
+\qquad\mathcal W=\operatorname{diag}(U_0,U_1).
+\tag{R.239}
+$$
+
+Permute both rows and columns of $(\rho\otimes\sqrt\omega)F_\theta$ from order $(0,1,2,3)$ to $(0,2,1,3)$, and denote the resulting matrix by $M$. The correct real trace pairing is $\operatorname{Tr}(\mathcal W^T M)$. Its two diagonal environment blocks are
+
+$$
+\begin{aligned}
+M_{00}&=\sqrt q\begin{pmatrix}
+cx+\sqrt2\varepsilon z\cos\theta&(1-k)z\\
+cz+\sqrt2\varepsilon y\cos\theta&(1-k)y
+\end{pmatrix},\\
+M_{11}&=\sqrt\mu\begin{pmatrix}
+cx-\sqrt2\varepsilon z\cos\theta&\sqrt2\varepsilon z\\
+cz-\sqrt2\varepsilon y\cos\theta&\sqrt2\varepsilon y
+\end{pmatrix}.
+\end{aligned}
+\tag{R.240}
+$$
+
+All sine terms lie in the off-diagonal environment blocks and contribute zero to this pairing. The zero-$\varepsilon$, zero-$k$ terms give $\sqrt q S+c\sqrt\mu\ell=\sqrt P$. The cosine terms sum to
+
+$$
+\sqrt2\varepsilon z\cos\theta
+\left(\frac{c\sqrt q}{S}-\frac{\sqrt\mu}{\ell}\right)=0,
+$$
+
+because both coefficients are $c/\sqrt P$. The second residual direction contributes $\sqrt2\varepsilon\sqrt\mu D/\ell=\varepsilon D/\sqrt P$. The loss from the first residual is $-k(y-\kappa D)/\sqrt P$, since $\kappa z^2+(cx+y)y=y-\kappa D$. As $\mathcal W$ is orthogonal, Schatten duality now gives the angle-independent bound
+
+$$
+\sqrt{p(\rho)}\geq\|M\|_1
+\geq\operatorname{Tr}(\mathcal W^TM)
+=\sqrt P+\frac{(\varepsilon+\kappa k)D-ky}{\sqrt P}
+=:L_*.
+\tag{R.241}
+$$
+
+For a uniform strict margin put $r=\sqrt{1-4D}\in[0,1]$. Then $P=T+\kappa r^2/2$ and $y\leq(1+r)/2$. Using $\sqrt{PT}\leq(P+T)/2$ yields
+
+$$
+\sqrt P(L_*-\sqrt T)\geq
+\frac{\varepsilon-(2-\kappa)k+
+(\kappa-\varepsilon-\kappa k)r^2-2kr}{4}.
+\tag{R.242}
+$$
+
+At $\varepsilon=1/100$, $1/4<\kappa<1/3$, $0<k<1/3000$ and $B:=\kappa-\varepsilon-\kappa k>1/5$. Completing the square gives $Br^2-2kr\geq-k^2/B>-5k^2$. Thus the numerator in (R.242) is strictly greater than
+
+$$
+\varepsilon-2k-5k^2>
+\frac1{100}-\frac2{3000}-\frac5{3000^2}
+=\frac{16799}{1800000}>\frac9{1000}.
+$$
+
+Since $P\leq1$, this proves $L_*-\sqrt T>9/4000$ for positive definite real inputs. Continuity of $p$ extends the uniform non-strict bound (R.236) to every singular real plane input. This includes $\ell=0$, where (R.239) is interpreted only through the limiting inequality, not through division by zero. For a complex density on the same real plane, original-frame conjugation invariance and convexity give
+
+$$
+p(\rho)\geq p\left(\frac{\rho+\bar\rho}{2}\right).
+$$
+
+The average stays in $\mathcal L_\theta$, so the real bound proves (R.236) for all the claimed complex inputs as well.
+
+Finally consider a real block-diagonal density (R.231) of rank at most two. If its $|2\rangle$ weight is positive, its $\mathcal C$ block has rank at most one, so its support is contained in some $\mathcal L_\theta$. Equation (R.236) excludes it as a threshold witness. If that weight is zero, the input is wholly in $\mathcal C$. The two normalized Kraus restrictions there are isometries with orthogonal output ranges, so exact syndrome recovery gives $p(\rho)=1$. Hence no rank-at-most-two density in (R.231) reaches $T$ for this encoder. Theorem 45.1 supplies a threshold witness in that family, which must therefore have rank three. $\square$
+

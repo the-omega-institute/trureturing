@@ -1,0 +1,10 @@
+**Corollary 57.5a (an explicit static/uniform separation).** At $d=3$, $(a,b)=(1,1)$, let $X=X_3=((\beta,\alpha),\beta)$ and $Y=X_4=(X,(\beta,\alpha))$. The two positives $V=(X,Y)$ and $W=(Y,X)$ have exact composition $(A,B)=(3,5)$, with
+
+$$
+\mathcal A(V)=\{LLR,RLLR,RRR\},\qquad
+\mathcal A(W)=\{LLLR,LRR,RLR\}.
+\tag{57.12a}
+$$
+
+Each unique static minimum is three, but no uniform policy attains three on both. At every $h\ge4$ the query $LLR$ replies alpha on $V$ and beta on $W$; subsequent actual alpha completion pays respectively three and four. Thus $D_h=4$, against all complete $(3,5)$ competitors, whose possible native heights extend to seven. This witness preserves the distinction between $\forall V\,\exists Q$ and $\exists\pi\,\forall V$ rather than inferring one from the other. The lower bound is Theorem57.5 and the upper procedure is the literal two-leaf diagnostic in Theorem57.10. □
+

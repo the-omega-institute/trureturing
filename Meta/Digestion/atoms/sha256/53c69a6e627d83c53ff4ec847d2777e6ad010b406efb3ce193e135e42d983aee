@@ -1,0 +1,12 @@
+**假设 A-15.7（所引全局猜想的准确范围）。** Hardy–Littlewood 对固定互异、可容许整数偏移三元组预测，$`T\to\infty`$ 时
+
+
+```math
+\#\{1\le N\le T:N+h\text{ 全素}\}
+\sim\mathfrak{\text{𝔖}}(\mathcal{\text{ℋ}})\frac{T}{(\log T)^3},\qquad
+\mathfrak{\text{𝔖}}(\mathcal{\text{ℋ}})=\prod_p\frac{1-\nu_p/p}{(1-1/p)^3}.
+```
+
+
+来源为 [A-L5，Conjecture 2]。对固定偏移，充分大 $`p`$ 有 $`\nu_p=3`$，局部因子为 $`1+O(p^{-2})`$；有限小素数因子正，故乘积收敛到正数。这个乘积的良定义由上述估计及 $`\sum p^{-2}\lt \infty`$ 得到，全局渐近仍是所引猜想，不是本节有限筛证明的定理。
+

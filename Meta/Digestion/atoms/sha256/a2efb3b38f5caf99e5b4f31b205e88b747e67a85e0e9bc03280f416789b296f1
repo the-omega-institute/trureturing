@@ -1,0 +1,26 @@
+**Definition 2.1 (Source law).** For $i\in\{0,1\}$ define, for $s>0$,
+
+$$
+\begin{aligned}
+Z_i(s)&=\sum_{k\ge1}F_i(k)e^{-sk},
+&f_i(k)&=\frac{F_i(k)e^{-sk}}{Z_i(s)}\quad(k\ge1),
+&f_i(0)&=0,\\
+S_i(b)&=\sum_{k\ge b}f_i(k)\quad(b\ge0),
+&\mu_i&=\sum_{k\ge1}(k+1)f_i(k),
+&\beta_i&=\frac{\sum_{k\ge1}k(k+1)f_i(k)}{2\mu_i}.
+\end{aligned}
+$$
+
+Draw an initial residual wait $\tau$ with
+$\mathsf P_i(\tau=b)=S_i(b)/\mu_i$ for $b\ge0$. Independently draw iid positive
+integer gaps $K_1,K_2,\ldots$ with law $f_i$, and set
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{m=1}^n(K_m+1),\qquad
+X_t=\mathbf 1_{\{t=\tau_n\text{ for some }n\ge0\}}.
+$$
+
+Thus $K_m$ zeros are followed by one closing bit, and every other actual bit is zero.
+The first wait is stationary residual waiting time, not an iid draw from $f_i$.
+

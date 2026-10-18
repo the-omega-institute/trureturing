@@ -1,0 +1,4 @@
+**约定 5.3（逻辑供应的精确范围）。** WS2S 的一阶变量取无限二叉地址树的节点，二阶变量只取有限节点集合。这里有限的是每棵被编码原树、每个版本链和公式，不是这些量词所遍历树的统一大小。这个语义见 [Klarlund–Møller, *MONA Version 1.4 User Manual*, §§7.1–7.2, pp.39–40](https://www.brics.dk/mona/mona14.pdf)。其普通 bottom-up tree automata 足以判定该逻辑并提取反例；不要求把本题原来源全集变成一个固定有限输入集。
+
+[Comon 等, *Tree Automata Techniques and Applications*, 2008 作者版，HAL 固定版本 v1](https://inria.hal.science/hal-03367725v1/document) 的 Lemma 3.3.4 将可定义的有限集合元组编码成正规树语言，Theorem 3.3.8 给 WSkS 可判定性，Corollary 1.2.3 给非空有限树自动机的高度至多状态数见证。后者可在存在地址用 singleton 标记编码之后给有限地址见证界；它不直接给实际未知原树的深度界。这些是 literature-attested 的通用供应。定义4.1、定理4.2和定理5.2负责本题实际原来源、完整输出及真实操作与该逻辑之间的对应；文献不替代这些对应。判定有效不蕴含实用复杂度。
+

@@ -1,0 +1,38 @@
+**Definition 181.1 (The remaining universal comparison).** For every
+original sequence of Definition 172.1 and every positive closed cap,
+let $L=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. The universal
+obligation remains
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_L\ne\varnothing.
+\tag{181.1}
+$$
+
+Equivalently, on the remaining radial directions it asks for the
+full-catalog exchange
+$\rho_O(b)\le\max\{1,\rho_N(b)\}$ of Theorem 167.2.
+The entire five- and six-active comparisons are owned respectively by
+[Theorem 148.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_II.md#148-the-entire-original-five-active-closed-cap-comparison)
+and [Theorem 161.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_III.md#161-every-original-six-active-profile-and-every-actual-tail).
+Theorems 109.1 and 110.2 own coefficient membership and exact
+closed-cap transport. The exact-law obstruction of Theorem 112.2
+does not exclude a different stopped law in the same cap slice.
+
+For arbitrary lengths, (181.1), sufficiency of $E_L$, and (179.5)
+remain unproved. The residual extension proves explicit families in
+the intersection and a sufficient recognition criterion; it does not
+prove that an arbitrary cap-feasible $N$ kernel yields a feasible
+auxiliary core after subtraction. The nested allocation cuts are
+necessary conditions on one common finite stopped representation,
+and their masses are not intrinsic unprojected original seed modes.
+The suffix criterion retains both coupled minima and the same
+probability budget, rather than replacing all suffixes by a chain or
+assigning row budgets independently. A negative answer to the
+universal obligation would require an original common-seed $N_2$
+attainer and a uniform lower certificate against every full-carrier,
+arbitrary-address original $O_2$ competitor, with all actual tails
+retained, as specified by Section 169. The restricted-method
+obstructions here provide no such certificate.
+

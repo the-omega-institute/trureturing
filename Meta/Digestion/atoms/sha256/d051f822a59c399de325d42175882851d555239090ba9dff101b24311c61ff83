@@ -1,0 +1,27 @@
+**Definition 6.1 (the four-gadget restriction and its box cover).**
+Let a fixed public ordered full binary scaffold have $n\ge1$ leaf
+addresses $a_1,\ldots,a_n$, each of length at most $D-2$, where
+$D\ge2$. Fill them independently with
+
+$$
+h_0=\alpha,\quad h_1=\beta,\quad
+h_2=\langle\alpha,\alpha\rangle,\quad
+h_3=\langle\beta,\alpha\rangle.
+\tag{LTR.18}
+$$
+
+Pair this right subtree with the outer alpha. The resulting restricted
+family $\mathcal X_{n,D}\subseteq\mathcal F_D$ is in bijection with
+$[4]^n$, where $[4]=\{0,1,2,3\}$. It has the same late target set
+$\mathcal P_D$ and the same literal port and handoff as before.
+For a vector $c\in[4]^n$ define the maximal proper box
+
+$$
+\mathcal B_c=\prod_{i=1}^n([4]\setminus\{c_i\}),
+\qquad
+C_n=\min\{m:[4]^n=\bigcup_{j=1}^m\mathcal B_{c^{(j)}}\}.
+\tag{LTR.19}
+$$
+
+The restricted minimum is not substituted for $M_1(D)$.
+

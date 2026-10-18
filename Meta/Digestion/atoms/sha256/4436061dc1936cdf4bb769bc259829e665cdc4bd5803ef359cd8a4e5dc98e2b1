@@ -1,0 +1,28 @@
+**定义 69.2（原生价格、类代表与一个已知预算）。** 对正确比较者 $A$，记 $n_A(u)$ 为从切点开始实际发生的新当前读数，定义
+
+$$
+c(A)=\sup_{u\in\mathcal U_R(H)}n_A(u)\in\mathbb N\cup\{+\infty\},
+\qquad
+\mathsf P(R,H,N,F)=\inf_{A\text{ 正确}}c(A).
+\tag{SLH.69.2}
+$$
+
+这里的上确界是整个原来源纤维上的最坏调用数，不是先验平均或某个有限来源样本的最坏值。重复实际读取仍逐次付费。
+
+令 $B=\{1,\ldots,m\}/\pi$，以规范类序号排序。每个 $b\in B$ 选择该类最小孔序号的原地址 $a_b$；这只选择一个已保留的位置，不选择未知子树值。对每个任务 $q_i$，若存在孔前缀，唯一写成 $q_i=p_j s_i$，令 $b_i=[j]$；否则把它称为孔外任务。令
+
+$$
+\begin{aligned}
+S_{\rm cl}
+  &=\bigcup_{i:\ q_i=p_j s_i}
+       \{(b_i,t):t\in S_{N-m_i,s_i}\},\\
+S_{\rm nat}&=\{a_b t:(b,t)\in S_{\rm cl}\},\qquad
+K=|S_{\rm cl}|=|S_{\rm nat}|\le2a,\\
+d_0&=\max\bigl(\{0\}\cup\{|q|:q\in S_{\rm nat}\}\bigr),\qquad
+h_0=\max\bigl(\{0\}\cup\{|a_b|:b\in B\}\bigr).
+\end{aligned}
+\tag{SLH.69.3}
+$$
+
+$S_{k,s}$ 和解码器直接取定义2.1、定理2.2；不同代表孔的地址前缀无关，故中间的基数等式成立。孔外目标使用定义60.1的 $\chi_C(m_i,q_i)$。这些都是由实际供应的有限输入计算的对象。
+

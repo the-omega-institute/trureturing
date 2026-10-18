@@ -1,0 +1,26 @@
+**Definition 2.6 (The inherited fixed-dimension lower certificate).**
+For $n\ge0$, let $N=n+1$. For $m\ge0$ and
+$u\in\mathbb R^{2m+1}$ set
+
+$$
+\mathcal H_m(u)=(u_{p+q+1})_{0\le p,q\le m},\qquad
+d_{N,m}=\min_{\operatorname{rank}\mathcal H_m(u)\le N}
+\max_{1\le j\le2m+1}\frac{|u_j-\sqrt j|}{\sqrt j}.
+$$
+
+For $0<Z<2/3$ put
+
+$$
+\rho_0=\sqrt{Z/(4H)}=\sqrt\tau,\qquad
+\eta_O=(1-\rho_0)/4,\qquad \rho_O=(1+\rho_0)/2,
+$$
+
+$$
+M_O=\min\{m\ge0:d_{N,m}\ge\rho_O\},
+$$
+
+$$
+\Gamma(n,Z)=\frac{16H^2}{2M_O+1}(2\eta_O-\eta_O^2)
+\bigl((\rho_0+\eta_O)^2-\rho_0^2\bigr).
+$$
+

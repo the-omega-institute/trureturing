@@ -1,0 +1,89 @@
+**Theorem 8.1 (a common design for each fixed pair of design constants).**
+Choose any public constants $x_+,x_-\in I_R$ before receiving the
+unknown input. For each record put
+
+$$
+\eta_r=\eta(x_r),\qquad t_r=1/2-\eta_r,\qquad
+\ell_{r,\epsilon}=\frac{t_r+\epsilon\eta_rx_r/\sqrt R}{2}.
+\tag{RE.53}
+$$
+
+There is a finite factorization of the same complete channel and
+ceiling binary law whose high effect is
+
+$$
+G_{x_+,x_-}=\sum_{r=\pm1}\eta_r
+(K_r-x_rS)^\dagger(K_r-x_rS).
+\tag{RE.54}
+$$
+
+Its five-mode effect is $EG_{x_+,x_-}E^\dagger$ and its acquired high
+mass equals its supported live high mass on every positive input.
+
+Proof. The weights in (RE.53) are nonnegative. To see endpoint feasibility
+explicitly, write $z=|x_r|\leq1/\sqrt R$. Then
+
+$$
+t_r=\frac{1-x_r^2}{2(R-x_r^2)}>0,\qquad
+t_r-\frac{\eta_r|x_r|}{\sqrt R}
+=\frac{(1-\sqrt R z)(1+z/\sqrt R)}{2(R-z^2)}\geq0.
+\tag{RE.55}
+$$
+
+For each $r$ supply the high encoder
+$\sqrt{\eta_r}(K_r-x_rS)$ into a three-dimensional fibre and two low
+encoders
+
+$$
+\sqrt{\ell_{r,\epsilon}}\,
+(U_{r,\epsilon}^{(1)})^\dagger(K_r+\epsilon\sqrt R S)
+\quad\text{into two-dimensional fibres}.
+\tag{RE.56}
+$$
+
+Their actual acquired labels are $(r,H)$ and $(r,R_\epsilon)$.
+Omit any zero-weight low branch; this includes one of the two at either
+endpoint $|x_r|=1/\sqrt R$. Decode high by $E$ and low by
+$EU_{r,\epsilon}^{(1)}$, each as an isometric full TP decoder.
+Retain the scalar rows $\sqrt{m_k/2}\langle k|$, with the whole
+five-sector failure decoder of Definition 5.1. For five modes compose
+these rows and matrices with $E^\dagger$, and keep the two scalar
+complement branches (RE.28) and their label-$2$ decoder.
+There is no residual $T$ branch at the ceiling.
+
+In coefficient coordinates $(K_r,S)$ the low matrix is
+
+$$
+\sum_\epsilon\ell_{r,\epsilon}
+\begin{pmatrix}1&\epsilon\sqrt R\\\epsilon\sqrt R&R\end{pmatrix}
+=\begin{pmatrix}t_r&\eta_rx_r\\\eta_rx_r&Rt_r\end{pmatrix}.
+\tag{RE.57}
+$$
+
+The high matrix is
+$\eta_r\left(\begin{smallmatrix}1&-x_r\\-x_r&x_r^2\end{smallmatrix}\right)$.
+Their sum is $I_2/2$, because
+$t_r+\eta_r=1/2$ and $Rt_r+\eta_rx_r^2=1/2$.
+Thus their binary live maps are exactly (RE.34), on all complex matrices.
+The scalar failure maps are exactly half of (RE.10) for each record,
+not merely a chosen split with the correct integral.
+
+The effects consequently sum at fixed $r$ to
+$(I_3+r\kappa X_{01})/2$ and in total to $I_3$; the complement branches
+complete this to $I_5$. Every encoder is CP/TNI, every live decoder is
+TP on its whole fibre, and the scalar decoders are TP by
+$\sum w=\int g=1$. The reference, cross-support and Borel-time proofs
+are the same Kraus-product identities as in Theorem 5.2: each range
+compression followed by its isometry is the displayed original matrix,
+scalar branches retain their conditional reference operators, and
+$CE^\dagger$ and the $Q$ trace kill cross-support units. This proves
+(RE.14)–(RE.16) and the full complex/reference identities without an
+input restriction. No extra sector is introduced.
+
+Equation (RE.50) makes every high matrix invertible. Each nonzero low
+matrix has rank two by Lemma 4.2 and (RE.26). Other fibres are scalar;
+there are no retained uncounted systems. All high branches are decoded
+wholly live, so summing their encoder effects gives exactly (RE.54)
+and proves acquired-live equality. These facts also cover the zero
+compression and arbitrary complementary five-mode input. $\square$
+

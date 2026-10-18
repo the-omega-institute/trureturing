@@ -1,0 +1,75 @@
+### 94.2. Complete source algebra before taking its reduced quotient
+
+Use the original primitive \(h_0,h_1,h_2\), degree-19 monomial order,
+30 basis monomials and 180 selected rows of §88.2. In particular
+the basis consists of total degree at most six and \((e_t,e_k)=(1,6),(0,7)\).
+The nonbasis matrix \(M\) and original vertical minor have residues
+\[
+ \det M=67,\qquad \det V_*=101\pmod{113}.
+\]
+The latter excludes \(x=0\) in the physical mean \(G=x+iy\).
+Form the exact border multiplication matrices \(K,T\) from
+\(-M^{-1}C\), where \(C\) is the selected basis-column block.
+
+Over \(\mathbb Q(i)(b)\) these are the actual quotient matrices by §88.
+Commutation, all three source identities, and the cyclic constant-vector
+identities are therefore rational identities whose denominators divide
+powers of \(\det M\) and fixed scalar contents. They specialize in \(K_Q\).
+Together with the same border upper bound, they identify
+\[
+ K_Q[k,t]/(h_0,h_1,h_2)
+\]
+with a free algebra of dimension 30. This argument does not invert \(F_k\)
+or discard nilpotents.
+
+Let \(P_{\rm other}=\prod_{j=1}^5P_j\), with the five other §88 components.
+The exact residue
+\(\operatorname{Res}_k(F,P_{\rm other})=17\)
+makes the generic projector
+\[
+ E=e(K),\qquad
+ e=P_{\rm other}(P_{\rm other}^{-1}\bmod F)\bmod(FP_{\rm other})
+\]
+regular. Its transported identities \(E^2=E,\operatorname{tr}E=10\)
+give a ten-dimensional image in characteristic zero. Set
+\(J=E_{[:,0:10]}\), \(J_0=J_{[0:10,:]}\); then
+\(\det J_0=9\bmod113\). Restrict \(K,T\) and the constant vector using
+\(J_0^{-1}\), exactly as for any invariant direct summand.
+The five other homogeneous components have no real projective points
+on the puncture by the uniform positivity proof.
+
+The ten power columns of the restricted \(K\) on the constant vector have
+determinant \(2\bmod113\). Hence \(k\) itself is primitive in this full
+ten-dimensional source algebra. Its characteristic polynomial is
+\[
+ f(k)=F(b,k)/\operatorname{lc}_kF.
+\]
+The leading coefficient has residue 93. The polynomial expression
+\(t=t(k)\) of degree at most nine is obtained from those same power columns;
+it is not the singular formula \(T/F_k\).
+
+Now \(f\) has zero discriminant in \(K_Q\). Its first subresultant
+with \(f'\) has nonzero linear coefficient: at the good map the
+subresultant sequence degrees are \(10,9,\ldots,1\), with final polynomial
+\[
+ -51k-55.
+\]
+The zeroth subresultant is zero by the exact discriminant factor.
+Thus \(\gcd(f,f')\) is exactly the monic linear polynomial \(g\) obtained
+by normalizing the first subresultant. Put \(f_{\rm red}=f/g\).
+It is squarefree of degree nine, and \(g\mid f_{\rm red}\).
+The good residues are
+\[
+\begin{split}
+g&=k-10,\\
+f_{\rm red}&=k^9+3k^8+56k^7-14k^6+38k^5-31k^4
++48k^3-51k^2+45k+26,\\
+\operatorname{disc}(f_{\rm red})&=31.
+\end{split}
+\]
+The full source component \(K_Q[k]/(f)\) has exactly one double factor.
+Its quotient by \((f_{\rm red})\) is the reduced nine-dimensional algebra,
+and the quotient kernel is square-zero because \(f\mid f_{\rm red}^2\).
+Every field-valued physical source point factors through this quotient.
+No physical point is removed by deleting nilpotents.
+

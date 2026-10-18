@@ -1,0 +1,17 @@
+**假设 9.1（固定数学供应的具体范围）。** 下列完整提交定位各供应的定义与普通证明。引用范围各自保留原条件；本卷的双状态、任意标签终窗和尖锐费用由前面证明承担。
+
+| 固定供应 | 使用的数学接口与条件 |
+| --- | --- |
+| [S1：不可逆目标取得](https://github.com/the-omega-institute/trureturing/blob/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) | 第1–2节固定原 INITIAL 目标、完整块收费；命题2.2–2.3给因式分解及字母表等价；引理4.2–4.3、定理5.2给活全一前奏与首零合并条件。 |
+| [S2：最小模值观察器](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md) | 第13节与定理14.1供应原权重、模二相邻系数和精确周期 $k+1$；其自主状态数不是追加块费用。 |
+| [S3：自校准边界](https://github.com/the-omega-institute/trureturing/blob/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) | 引理15.1的同词值／相位／尾来源及独立可达拒绝；来源存在不暴露其长度。 |
+| [S4：窄查询窗口费用](https://github.com/the-omega-institute/trureturing/blob/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md) | 第1–3节的实际逐位转移、字面路径接口、根首零与共同尾限制。$g\ge2$ 的查询族不移植为本文 $g=1$ 最优费用。 |
+| [S5：临界宽度费用](https://github.com/the-omega-institute/trureturing/blob/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md) | 定理2.2的循环路径反演；定理5.1的 $m=k$ 费用保持自己的临界条件。 |
+| [S6：目标取得费用](https://github.com/the-omega-institute/trureturing/blob/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md) | 定理3.1的宽块精确律仅在其宽查询空间条件下使用，不决定本卷窄块费用。 |
+| [S7：互素相位费用](https://github.com/the-omega-institute/trureturing/blob/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md) | 定理3.1的全单位宽相位表，定理4.1的宽二二标签，定理5.1的首窗二标签，定理6.1的非零单点均为复用范围，不另作新增族。 |
+| [S8：关系观察恢复几何](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) | 定义8.1–8.3、定理8.5、命题8.6供应实际来源自适应树及硬预算；命题8.10保留收费常值位移动作。通用递推不替代彩色退休下界。 |
+| [S9：关系续接几何](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | 定义3.2–3.3、4.1的动态充分纤维语言；表述变化不能赠送查询或合法接缝。 |
+| [S10：实际取得几何](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) | 命题4.1、5.3的实际尾像与匹配合法像；源编码最短字和未知 INITIAL 标签最坏分支属于不同目标。 |
+| [S11：实际饱和声明](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.lean) | 声明 `kbonacci_actual_saturation` 在 $k,a\ge2$ 下使用原阶禁串、单探针商和精确长度实际像；不从其饱和阈值推出未知 INITIAL 标签的块费或来源长度。 |
+| [S12：首遍截止与回绕费用](https://github.com/the-omega-institute/trureturing/blob/6fc2bde244ddcb01a0ac285461dee12494dde19c/docs/develop/theory/KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md) | 定理3.1的全部二标签截止、定理5.1的回绕供体、定理5.3的条件单点终步、定理6.1的上半宽二标签及第7节的付费首零续接均保留原范围。任意标签的实际退休色条件不由二标签原始计数替代。 |
+

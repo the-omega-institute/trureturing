@@ -1,0 +1,55 @@
+**Theorem 79.1 (all-pair mean-spinor rigidity).** At \(b=1/2\), every
+orthogonal pair of noncanonical common-flat input rays has orthogonal
+nonzero channel-mean spinors. There are no generic–aligned orthogonal
+pairs. In particular, there is no orthogonal triple of noncanonical rays.
+
+Theorem 78.1 partitions the noncanonical set into the full thirty-six-ray
+generic set and eighteen-ray aligned set. Both contain their optional
+\(\Theta\) images. The following calculations retain all relative root
+orders. Synchronous covariance is used to compress certificates, not to
+restrict candidate pairs. The aligned–aligned implication is Theorem 77.1.
+
+Rename the real quotient variable of §78 as \(\eta\), and set
+\[
+\mathcal A=\mathbb Q(i)[\eta]/(f_{1,20}(\eta)),\qquad
+(x,u,v)=(P_x,P_u,P_v)/f_{1,20}'(\eta).
+\tag{79.1}
+\]
+Use \(G=x+i\eta,Z=u+iv\) and the expressions of (78.2),(78.4),(78.6).
+A bar fixes \(\eta\) and rational coefficients and sends \(i\) to \(-i\).
+All original undivided quotient equations hold in this algebra. It is
+reduced. Put
+\[
+\Delta=D\bar D-C\bar C,\qquad
+\delta=q^2[3-4(e+\bar e)]+6q-1.
+\]
+The following multiplication norms modulo 97, with \(i\mapsto22\), are
+nonzero. They fix all inverse and separability hypotheses below.
+
+| Element | Norm | Element | Norm |
+|---|---:|---|---:|
+| \(f'/\operatorname{lc}(f)\) |87| \(G\) |92|
+| \(\bar G\) |82| \(\beta\) |89|
+| \(\bar\beta\) |80| \(C\) |25|
+| \(\bar C\) |64| \(D\) |80|
+| \(\bar D\) |46| \(Y_c\) |39|
+| \(\bar Y_c\) |55| \(q\) |62|
+| \(q-1\) |92| \(e\) |12|
+| \(\bar e\) |3| \(\delta\) |53|
+| \(\Delta\) |75| \(qG\bar G/R\) |62|
+| \(qG\bar G/R-1\) |92| | |
+
+These residues are reconstructible by multiplication matrices in the basis
+\(1,\eta,\ldots,\eta^{19}\), using the printed coefficient lists of §78.A.
+The full degree and all scalar denominators have good reduction. Every
+inverse used to construct an element is checked first in the same quotient.
+Thus a nonzero norm proves a unit in characteristic zero; it is not a
+modular-only assertion about the physical solution set.
+
+For a physical quotient point the original channel-mean spinor is
+proportional to \((1,G/\kappa)\). Its pairing with a second point vanishes
+exactly when
+\[
+M=1+\bar GG'/R=0.                                       \tag{79.2}
+\]
+

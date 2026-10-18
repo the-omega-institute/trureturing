@@ -1,0 +1,56 @@
+**Theorem 3.3 (positive exact-one-in-three formulas have unique native
+lifts).** Let a formula have $v$ Boolean variables and $m$ ordered
+clauses, each containing three distinct variables with no negations.
+For $N=v+4m\ge1$ there is a complete depth-two native template on
+exactly $N$ original blocks whose actual solutions are in bijection
+with satisfying assignments. Every satisfying assignment has exactly
+one native lift. Variable sharing across arbitrarily many clauses is
+allowed. Every original block weight remains once in the corresponding
+weighted sum. In particular, for the uniform probability on all eleven
+states of $S_2$, its mass is
+
+$$
+\frac{\#\{\text{satisfying assignments}\}}{11^{v+4m}}.
+\tag{OCB.20}
+$$
+
+Proof. Give each variable a leaf-owner block, with its three factors
+prescribed from its own root leaf seed. Give each clause a selector-owner
+block with states $A,B,C_0$ and all factors prescribed by its root seed;
+interpret selector value $k\in\{0,1,2\}$ as its true position.
+For each of its three occurrences of variable $x_l$, add one connector
+block with factors
+
+$$
+\Gamma_\varepsilon(x_l),\qquad
+\Gamma_L\bigl(B\text{ if }c_j=k\text{, else }A\bigr),\qquad
+\Gamma_R(x_l).
+\tag{OCB.21}
+$$
+
+The connector root is prescribed from the actual variable-owner reply;
+it creates no new seed or observation. Every connector factor is a
+constant or a function of one actual owner-root reply and lies in the
+appropriate attained range. Theorem 2.2, or the leaf calculation in
+Theorem 3.2, says precisely that this connector exists if and only if
+$x_l=B$ exactly at its clause's selected position. Thus any native
+solution gives a satisfying Boolean assignment. Conversely a satisfying
+assignment determines one selector in every clause and every connector
+leaf uniquely; these choices satisfy all factors. There are $v$ variable,
+$m$ selector and $3m$ connector blocks, proving the exact exponent.
+No variable occurrence is an independent copy of its owner. The same
+bijection proves the weighted assertion and (OCB.20).
+
+If $m=0$, the $v$ unconstrained leaf owners give all $2^v$ assignments.
+The degenerate $v=m=0$ has the single empty assignment and empty product
+mass one; its actual-source realization can use one fixed padding block.
+An unsatisfiable formula gives an empty native solution set.
+
+The locally identifiable support $\{A,B,C_0\}$ itself is admissible:
+its root reply identifies its state, so its full Cartesian powers are
+admissible. A probability supported there therefore has $\beta_2=1$.
+Consequently this exact finite representation and the obstruction in
+Theorem 3.2 imply no unrestricted pressure-hardness, optimized-capacity
+or noncomputability conclusion. The credited full depth-two pressure
+optimization remains [NCM, Theorem 4.1][NCM]. $\square$
+

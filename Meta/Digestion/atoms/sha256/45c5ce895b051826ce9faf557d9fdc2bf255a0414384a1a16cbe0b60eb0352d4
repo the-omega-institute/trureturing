@@ -1,0 +1,19 @@
+**Proposition 9.1 (activation is indispensable to current identification).**
+At an authorized old Ready, the source/variable-input/ordinal triple alone
+does not identify the enlarged runtime after one further row. A memory
+consisting only of already published historical packages also fails the
+$Q_+$ kernel at the first activation boundary.
+
+Proof. From that Ready take its ordinary continuation Advance or Install.
+Reservation/entry work precedes the first old frame IN. Both alternatives
+are non-IN occurrences with one receipt and no variable
+input or source change. Their resulting triples therefore agree. Their
+mode/PC and enabled subsequent work differ: one begins original ingress,
+the other the fresh bootstrap. Thus a replay selector omitting the
+activation choice is insufficient. Before and immediately after Install
+there is still no published historical package, while Install is enabled
+only before. Hence the package-directory-only view merges task-distinct
+cuts. The actual phase frontier and unchanged complete old frames in
+Lemma 5.3 distinguish these cuts without a premature manifest. This
+does not refute RCA's eventual acquired-service theorem. ∎
+

@@ -1,0 +1,27 @@
+## 228. The core has at least three actual owners
+
+Suppose k=2, with K={tau,rho}, where rho contains Z and U. The two faces
+incident to tau's axial Z slot have labels {Z,M,C}. Each such face has
+two distinct P labels, so its paired face belongs to an owner in K.
+These two faces cannot pair to each other: Z occurs only once in tau,
+and pairing both incident ends of its normal edge interval together
+would make that interval the complete Z normal circle, of degree one.
+This contradicts the actual complete link and degree assumption.
+Consequently both faces pair to faces of rho.
+
+In particular rho contains M,Z,C and U, four distinct labels. Every
+face of a paired frame consists of the two distinct transverse labels
+and one axis label. A rho face with labels {M,Z,C} therefore forces
+its transverse pair to be a two-element subset of {M,Z,C}, and one
+axis to be the third label. Because rho also contains U, its other
+axis must be U. U occurs exactly once in rho.
+
+Both faces incident to this U axis contain two distinct P labels:
+each pair subset of {M,Z,C} contains M or Z, in addition to U.
+Their partners must therefore belong to K. They cannot belong to tau,
+which has no U slot. They must be paired to one another in rho.
+The unique U normal interval consequently forms its entire edge circle,
+forcing degree(U)=1. This is again a contradiction. Thus 3<=k<=4.
+The argument retains repeated owners elsewhere and does not assume
+that different faces have different neighboring owners.
+

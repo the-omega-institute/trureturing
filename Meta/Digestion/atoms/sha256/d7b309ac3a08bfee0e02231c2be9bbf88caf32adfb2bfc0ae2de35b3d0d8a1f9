@@ -1,0 +1,79 @@
+## 119. Varying labels on the same source set and a finite obstruction
+
+**Theorem C-119.1 (Per-use label variation has zero uniform rate).**
+Define a separate task on exactly $U_4$: for each $n$, any sequence
+$(X_1,\ldots,X_n)\in U_4^n$ is permitted and the channel is
+$\Phi_{t,\eta,X_1}\otimes\cdots\otimes\Phi_{t,\eta,X_n}$, with fresh independent
+environments conditional on that sequence. Neither party receives the sequence.
+One common encoder and one common decoder must satisfy (C116.4) with the
+supremum now over $U_4^n$. All other complex CPTP block/reference/resource
+contracts stay exactly the same. For every $n$, every logical dimension $k$,
+and every such pair of CPTP maps,
+
+$$
+\sup_{(X_1,\ldots,X_n)\in U_4^n}
+\left\|(\mathrm{id}_{R}\otimes\mathcal D
+ [\bigotimes_{r=1}^n\Phi_{t,\eta,X_r}]\mathcal E)(\beta_k)
+ -\beta_k\right\|_1
+\ge2(1-1/k).
+\tag{C119.1}
+$$
+
+This holds for all $0\le t,\eta\le1$. In particular its uniformly reliable
+capacity is zero, and even logical dimension two has an error floor of one.
+
+Proof. Averaging the four actual single-use maps cancels their opposite
+imaginary coherences, giving on the whole complex algebra
+
+$$
+\overline\Phi(Y)=\frac14\sum_{X\in U_4}\Phi_{t,\eta,X}(Y)
+ =(1-\eta)\sum_jY_{jj}E_{jj}+\eta\operatorname{tr}(Y)I_5/5.
+\tag{C119.2}
+$$
+
+It is a measure-and-prepare channel, hence entanglement breaking.
+The uniform independent average over the $4^n$ permitted sequences is exactly
+$\overline\Phi^{\otimes n}$. This is entanglement breaking even on an arbitrary
+complex input entangled across all uses and with $R$: it measures a full basis
+string and prepares a product output conditioned on that string. Applying an
+arbitrary CPTP encoder first cannot prevent this reference/output separability;
+applying the local decoder afterwards preserves it. Denote the resulting
+separable $R\mid L$ state by $\bar\omega$.
+
+For normalized product vectors $u,v\in\mathbb C^k$,
+$|\langle\beta_k|u\otimes v\rangle|^2
+ =|\sum_a u_av_a|^2/k\le1/k$ by Cauchy–Schwarz.
+Convexity gives $\langle\beta_k|\bar\omega|\beta_k\rangle\le1/k$ for every
+separable mixed state. The two-outcome test $\{\beta_k,I-\beta_k\}$ gives
+$\|\bar\omega-\beta_k\|_1\ge2(1-1/k)$.
+Linearity of the tensor channel and of the fixed encoder/decoder makes
+$\bar\omega$ the arithmetic mean of the actual sequence outputs. The norm of
+a mean is at most the largest norm, proving (C119.1). This is a finite
+reference-error obstruction for the entire code class, not a product-code or
+real-state converse. If errors tend to zero, $k_n\ge2$ cannot occur infinitely
+often, so the rate is zero. QED.
+
+**Proposition C-119.2 (Fixed-label and per-use averages differ).**
+The common fixed-label task in C-116.2 cannot be replaced by the convexified
+single-use family. At $\eta=0$, $t>0$, already at two uses
+
+$$
+\begin{aligned}
+\frac14\sum_{X\in U_4}\Phi_{t,0,X}^{\otimes2}(E_{04}\otimes E_{04})
+ &=-\frac{t^2}{2}E_{04}\otimes E_{04},\\
+\overline\Phi^{\otimes2}(E_{04}\otimes E_{04})&=0.
+\end{aligned}
+\tag{C119.3}
+$$
+
+Proof. The two $a$ labels multiply $E_{04}$ by $\pm it$; the two $b$ labels
+annihilate it. Squaring before averaging gives $(-t^2-t^2)/4$.
+Averaging before tensoring instead gives zero. The block-fixed mixture at zero
+noise is itself a Schur channel on dimension 25. The displayed nonzero
+coherence produces a negative eigenvalue in its maximally correlated Choi
+partial transpose, so this block mixture is not entanglement breaking.
+Thus even its entanglement-breaking status differs from that of the per-use
+average. The first task keeps the same unknown label, the second permits every
+sequence. Opposite-label cancellation is a valid converse for the second;
+convexifying the first would contradict (C117.5). QED.
+

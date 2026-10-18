@@ -1,0 +1,10 @@
+**约定 32.1（复用与数学证据的范围）。** 本节的实际对象仍是 Atomic2–3 的非空有序树、原 $\rho$ 及固定叶对的结构解释：本卷定义1.1–1.2直接给该对应；GenealogicalFiberTransport 的 `Source=FreeMagma Bool` 中 true／false 分别对应 $\alpha,\beta$。本卷定理3.1的运输只作解释换参，不执行换制备。Boundary7.2的固定单位标签通过同一有序节点归纳接入本卷定理4.3；Process44.2的组成／单位方向共同像提供真正的双接及根反序来源见证，不由线性张成或边缘计数推定联合实现。
+
+实际恢复前提恰为本卷定理5.1及引理16.2／推论16.3：$x_3=\operatorname{sgn}(x_0\cdot(x_2\times x_1))(x_2\times x_1)$，非零尾有 $q_2\le q_0q_1$ 和归一化三重积绝对值至少 $c$；零标签尾按原描述子及正交运输归零。第25节的 $G=\varphi^2\gamma$、三线判据、紧截止覆盖和阈值达到／未达到与第18–19节逐项相同。正向旋转保持叉积及全部供应约束的证明复用定理17.2；旋转、根反序、正交化与缩放都只准备竞争来源，不成为未知源菜单。第30节只把推论20.3的候选纤维比较接到完整序列，通用最坏恢复方法不计作新的数学发现。
+
+经典叉积基础仍引用 Darpö，*Vector product algebras*，[arXiv:0810.5464v1](https://arxiv.org/pdf/0810.5464v1)，Lemma2及证明；特征不为2、交替双线性积、非退化对称型、循环配对与范数恒等式在原定向正定实三维成立。正输入幂公式可对应 Peter J. Larcombe、Ovidiu D. Bagdasar，*On a Result of Bunder Involving Horadam Sequences: A Proof and Generalization*，*Fibonacci Quarterly* 51(2), 174–176，[原文](https://www.fq.math.ca/Papers1/51-2/LarcombeBagdasarHoradam.pdf)，式(2.2)–(2.3)：取其幂参数 $p=q=1$、$z_n=q_{n+1}$，只在两个初值正的分支使用；该文不承担本卷的实际组成、零／符号分支、平台或端口结论。
+
+[Computational Behavior15](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md)及 [RankOneInfiniteHorizonRisk](../../../D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.lean) 的严格稳定标量族说明没有共同谱隙时的已知外推机制；其来源为 $a^n$，不能代替第27节的共同实际树／制备桥。[FiniteHorizonPredictionPseudometric](../../../D5/S3/ObserverMemory/PredictionPseudometrics/FiniteHorizonPredictionPseudometric.lean) 的有限距离接口可取状态 $\mathcal T\times\mathcal P$、更新 $(t,p)\mapsto(\rho t,p)$、观察 $E_p(t)$、$T=2$，再限制比较的初态到 $\mathcal D$，其域无需更新不变；单独的有界无限距离结论要求整个输出载体的全局距离界，原 $\mathbb R^3$ 及增长行不满足。[NoUniformInfiniteFutureRadius](../../../D5/S3/Observer/SymbolicStability/NoUniformInfiniteFutureRadius.lean) 使用无理圆周旋转与 floor 字母读数，来源和观察均不同。读取这些原文不构成本卷新增 Lean 编译证据。
+
+RH_OFFLINE 的增订一·10中复 Fibonacci rapidity，及 Atomic416 的固定算术观察阈值／绝对商块渐近，都没有这里的叶制备和三向量取得假设，不用同名递推或对数尺度充当几何前提。Boundary43 的半径制备／读误差及 Process44 的外部 affine 仪器也保持其独立来源和权限合同。本卷第24–31节是上述准确接口下的普通数学综合推导（`repo-derived`），未主张全球原创性、文献穷尽或新的内核核验。
+

@@ -1,0 +1,14 @@
+**Proposition 4.4 (parallel-edge obstruction to an incomplete loop test).**
+Let $Q_0=Q_1=\{0,1\}$. Give two named, total transports $e,d:0\to1$,
+with $H_e$ identity and $H_d$ swap, and their true inverses. Let $\Gamma$
+contain only immediate inverse cancellations. Every selected loop acts
+identically, but there is no faithful endpoint-only frame and no embedding
+atlas as in Theorem 4.1.
+
+**Proof.** An edge followed by its own inverse is identity. However
+$ed^{-1}$ swaps the two points in $Q_0$. The two routes $e,d$ assign different
+endpoint coordinates to the same input. If both charts injected into $W$
+compatibly, identity transport would give $f_0(0)=f_1(0)$ while swap transport
+would give $f_0(0)=f_1(1)$, contradicting injectivity of $f_1$. Thus the
+selected cancellations do not generate the required comparisons. $\square$
+

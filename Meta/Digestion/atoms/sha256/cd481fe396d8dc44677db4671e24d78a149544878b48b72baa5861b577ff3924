@@ -1,0 +1,21 @@
+**定义 19.2.3（箭头模型）。** 在外部给定 $X=x$ 后，令
+
+$$
+Y\sim K_x,
+\qquad
+S\sim\operatorname{Bernoulli}(\lambda_x),
+$$
+
+并令 $S$ 与 $Y$ 在给定 $x$ 时条件独立，最后令
+
+$$
+O=\begin{cases}
+Y,&S=1,\\
+\bot,&S=0.
+\end{cases}
+$$
+
+这是一个把 $X$ 直接送入 $Y$ 的模型。
+
+<a id="claim-19-2-4"></a>
+

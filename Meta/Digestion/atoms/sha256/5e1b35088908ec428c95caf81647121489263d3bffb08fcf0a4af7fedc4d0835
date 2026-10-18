@@ -1,0 +1,14 @@
+**Lemma 8.3 (the other long endpoints).** Every consecutive long gap ending at six is compensated, and so is the consecutive gap $(3,8)$.
+
+**Proof.** For a gap ending at six, Lemma 3.2 already gives $D_B\le2<E_B$. Its argument uses the right-cut gap three, the two unique lower axis hosts $Z_3,Z_4$, and the four internal noncommon depths; it has no hypothesis $m\le17$ and is reused unchanged.
+
+For $(3,8)$ the internal depths are four through seven and the only candidate axis endpoint is $Z_4$. Equations (20)–(21) give
+
+$$
+D_B\le3+\min(\ell,r),\qquad
+E_B\ge\ell+r+e_6+e_7\ge\ell+r+2,\qquad E_B\ge4.
+\tag{33}
+$$
+
+If $\ell+r>0$, then $D_B-E_B\le1-\max(\ell,r)\le0$. If $\ell=r=0$, then $D_B\le3<4\le E_B$. Thus the terminal gap is compensated without an assumed upper bound on $m$. $\square$
+

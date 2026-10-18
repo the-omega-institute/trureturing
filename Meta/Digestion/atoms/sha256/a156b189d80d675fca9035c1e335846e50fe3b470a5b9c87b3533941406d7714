@@ -1,0 +1,46 @@
+**Theorem 4.1 (strict multiplicative factor two).** For every fixed finite independent-hole context $C$ with $k\ge1$,
+
+$$
+\inf_{A\in\mathcal A_C}\ \sup_{T\in\mathcal U_C}
+       \frac{d_A(T)}{\operatorname{cert}_C(T)}
+=
+\inf_{A\in\mathcal A_C}\ \sup_{T\in\mathcal U_C}
+       \frac{n_A(T)}{\operatorname{cert}_C(T)}
+=2.
+\tag{NDR.7}
+$$
+
+These equalities also hold when the infima are restricted to effective policies. In particular they hold on the unchanged all-tree family $\mathcal T$ with a source-independent empty initial history. Equivalently, for every deterministic exact source-total $A$ and every real $c<2$, some finite completion satisfies $d_A(T)>cM_C(T)$ and therefore $n_A(T)>cM_C(T)$.
+
+**Proof.** The reused certificate equality (NDR.4) identifies the denominators as $M=M_C(T)\ge k>0$. For any $c<2$, choose $B\ge1$ large enough that
+
+$$
+2-\frac{k}{B+k}>c.
+$$
+
+Apply Theorem 3.1. In Alternative I,
+
+$$
+\frac{d_A(T)}M\ge2-\frac{k}{B+k}>c.
+$$
+
+In Alternative II, $M\ge k$ and hence
+
+$$
+\frac{d_A(T)}M\ge3-\frac{k}M\ge2>c.
+$$
+
+Thus every eligible policy has supremum at least two, for distinct requests and actual calls alike. This includes each effective policy.
+
+For the matching upper bound, the common effective traversal of Definition 2.2 gives
+
+$$
+\frac{d_{A_{\rm tr}}(T)}M
+=\frac{n_{A_{\rm tr}}(T)}M
+=2-\frac{k}M<2.
+$$
+
+Completions with arbitrarily many leaves exist: enlarge one hole to a finite comb of increasing leaf count and fill the other holes with $\alpha$. Their $M$ is unbounded, so the traversal's supremum is exactly two. It belongs to both policy classes in the statement. This proves all equalities. $\square$
+
+The benchmark comparison is strictly multiplicative: (NDR.7) concerns $d/M$ and $n/M$ with no additive allowance. Daniel D. Sleator and Robert E. Tarjan, *Amortized Efficiency of List Update and Paging Rules*, Communications of the ACM 28 (1985), 202–208, [DOI](https://doi.org/10.1145/2786.2793), [author PDF](https://www.cs.cmu.edu/~sleator/papers/amortized-efficiency.pdf), pp. 202 and 205, supplies the `literature-attested` mature comparison between common online behavior and an informed benchmark. Its request-sequence, list and paging models, amortization and constants are not instantiated here. In particular, (NDR.7) does not assert a lower bound excluding $d_A(T)\le cM_C(T)+b$ for a fixed additive $b$. The early-closing alternative of Theorem 3.1 need not give witnesses of arbitrarily large size.
+

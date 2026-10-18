@@ -1,0 +1,16 @@
+**Theorem 3.3 (equal old alphabet sizes can leave unequal supplements).**
+For $D=H=1$ and $G=\{(0,1)\}$, the two old encodings
+$B_1(a)=a_0$ and $B_2(a)=(a_0+a_1)\bmod2$ both have two labels,
+but their conditional fibers have different calibration counts.
+Those of $B_1$ have counts $(2,2)$; those of $B_2$ have counts
+$(1,2)$. A third two-label code $B_3(a)=\mathbf1_{a=(0,0)}$
+has counts $(3,1)$ on its fibers zero and one. Thus neither the
+supplement on a particular fiber nor the worst-case supplemental
+alphabet is determined by the old alphabet cardinality alone.
+
+Proof. The possible edge differences are $-1,0,1$. On $a_0=0$ they
+are $0,1$ and on $a_0=1$ they are $-1,0$. On even parity both
+sources have difference zero; on odd parity the differences are
+$-1,1$. The nonsingleton $B_3$ fiber contains $(0,1),(1,0),(1,1)$,
+whose differences are $1,-1,0$. Apply (SCC.12). $\square$
+

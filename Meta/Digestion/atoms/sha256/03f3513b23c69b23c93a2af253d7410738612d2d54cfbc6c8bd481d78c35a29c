@@ -1,0 +1,63 @@
+### 定理 54.3（有限图 Dirichlet 数据的 metric-measure/Mosco 子列极限）
+
+设 \(\mathfrak D_j\) 满足：
+
+1. 统一 covering-number 界、总质量 \(m_j(X_j)=1\) 和直径上界；
+2. 存在共同紧宿主空间 \(Z\) 和等距嵌入 \(\iota_j:X_j\hookrightarrow Z\)，使得 \(\iota_j(X_j)\) 的 Hausdorff 子列收敛到 \(X\subset Z\)，且
+   \[
+   (\iota_j)_\#m_j\rightharpoonup m;
+   \]
+3. 存在共同 \(L^2\) 识别，使扩展二次型 \(\overline{\mathcal E}_j\) 满足
+   \[
+   u_j\rightharpoonup u
+   \Longrightarrow
+   \mathcal E(u)\le\liminf_j\overline{\mathcal E}_j(u_j),
+   \tag{54.6}
+   \]
+   且每个 \(u\in D(\mathcal E)\) 有恢复序列 \(u_j\to u\) 强收敛并满足
+   \[
+   \limsup_j\overline{\mathcal E}_j(u_j)\le\mathcal E(u);
+   \tag{54.7}
+   \]
+4. 有限能量子水平集在共同识别下相对紧。
+
+则存在子列
+
+\[
+(X_j,d_j,m_j)\to(X,d,m)
+\]
+
+以 measured Gromov-Hausdorff 意义收敛，且 \(\mathcal E\) 是 \(L^2(X,m)\) 上闭、Markov、对称的 Dirichlet 形式。其非负自伴生成元 \(A\) 和热半群 \(P_t=e^{-tA}\) 满足
+
+\[
+(I+\alpha A_j)^{-1}\to(I+\alpha A)^{-1},
+\qquad
+P_t^{(j)}\to P_t
+\]
+
+在共同 \(L^2\) 识别下的强算子收敛。
+
+若另外满足 \(\ell_j\to0\) 和统一 Poincaré 条件 (54.5)，则极限形式强局部。
+
+#### 证明账本
+
+统一 covering-number 界和质量界给出 metric-measure 子列紧性。共同宿主中的弱测度收敛给出极限测度。条件 (54.6) 和 (54.7) 是 Mosco 下极限与恢复序列，故给出闭极限二次型。闭对称 Markov 二次型对应唯一的自伴非负生成元和收缩热半群，Mosco 收敛给出 resolvent 与半群的强收敛。若支集距离大于 \(\varepsilon\)，则 \(\ell_j<\varepsilon\) 时所有跨支集边消失，有限层互能为零；利用恢复序列和下极限即得极限互能为零，故形式强局部。证毕。
+
+因此必须按下列顺序记账：
+
+\[
+\boxed{
+\text{metric-measure 紧性}
+\Rightarrow
+\text{空间子列极限};
+\quad
+\text{Mosco}
+\Rightarrow
+\text{形式/半群极限};
+\quad
+\text{vanishing jumps}
+\Rightarrow
+\text{强局部性}.
+}
+\]
+

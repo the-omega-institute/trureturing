@@ -1,0 +1,75 @@
+**Proposition 86.1 (scope of the microscopic classification).** The
+threshold $\chi_c$ is a finite strictly positive threshold for the
+limiting microscopic operator (81.3). For each actual pair
+$g,\tau>0$ the native operator still has essential spectrum
+$[0,\infty)$ and an attained negative bottom, as in Propositions
+70.2 and 75.2. In particular tangent nonnegativity below threshold
+is compatible with native binding at a smaller energy scale.
+
+For $\chi_n\to\chi_0>\chi_c$, (85.2) implies
+$E_{\tau_n}(g_n)\to-\infty$ and
+$E_{\tau_n}(g_n)/g_n^2\to-\infty$.
+For $\chi_0\le\chi_c$, it gives only
+$E_{\tau_n}(g_n)=o(\tau_n^{-1})$ at the microscopic leading order.
+This zero leading coefficient does not identify a finer Coulomb
+$g_n^2$ law or an actual native critical-profile selection.
+The exact critical tangent zero-mode taxonomy is left undecided.
+
+The raw-coordinate transport remains exactly (80.1), with its
+absolute Jacobian $|\kappa|$ and signed tensor
+$J_\kappa M J_\kappa^{\mathsf T}$. All statements fix $\kappa\ne0$
+and the real cover; none is uniform as $\kappa\to0$, a theorem on
+the actual zero leaf or a torus, a cutoff-free realization, or a
+selection of physical three-dimensional space or physical $SO(3)$.
+
+Proof. The native spectral statements are reused at each positive
+cutoff, with their exact unaltered native hypotheses. If the limit
+in (85.2) is strictly negative, division by $\tau_n\to0$ proves the
+first divergence. Since
+$\tau_ng_n^2=\chi_n^2\tau_n^4\to0$, division by $g_n^2$ proves the
+second. If the limit is zero, the displayed little-oh statement
+is precisely what division by $\tau_n$ says, and it supplies no
+coefficient on the much smaller $g_n^2$ scale. The subcritical
+local-mass conclusion is exactly at the scales of $\Xi_s$, not an
+identification of a different profile scale. At criticality the
+available weak-limit statement is precisely (85.10).
+
+The source correspondence is fixed by (81.5)--(81.7): the limiting
+unit-Lebesgue kernel has mass one, the potential has source mass
+$1/j_0$, and the unitary wavefunction uses $(j_0s^7)^{1/2}$.
+The two native source charges also remain distinct. Explicitly,
+
+$$
+\begin{aligned}
+\int_{\Omega_s}s^7\rho_{s^2}(\Xi_s\xi)d\xi
+ &=j_0^{-1}e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)\to j_0^{-1},\\
+\int_{\Omega_s}\phi(k_0+\varepsilon sr)
+                       s^7\rho_{s^2}(\Xi_s\xi)d\xi
+ &=j_0^{-1}\phi(k_0).
+\end{aligned}
+\tag{86.1}
+$$
+
+Thus no ground-height transform or surviving-charge normalization
+has been inserted. Formula (80.1) transports these same conventions
+back to the original coordinates without changing the heat clock.
+
+The other named spectral limits have different premise maps.
+[Critical cutoff, Definition 31.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md)
+retains the actual circles, fixes $g$ and takes $\kappa\to0$ with
+large cutoff times. Its scalar operator and limits cannot replace
+(81.1)--(81.3), which fix $\kappa$, unwrap the phases and take
+$\tau\downarrow0$ with $g\tau^{-3/2}$ fixed.
+[Four-dimensional spectral reduction, Definition 1.5 and §3](FIB_NATIVE_FOUR_DIMENSIONAL_SPECTRAL_REDUCTION_AND_ATTAINMENT.md)
+concerns affine storage/decoder and minimax contracts; its spectral
+family is not the horizontal differential operator in (81.2).
+The heat blow-up reused here is the local result of
+Colin de Verdière--Hillairet--Trélat with the precise density and
+localization correspondence in (81.8). Coulhon--Sikora supplies
+the off-diagonal implication only after the explicit diagonal
+and Davies--Gaffney verifications in Lemmas 82.1--82.2.
+The infinite-time integration, varying-domain compactness,
+full-domain variational passage and threshold characterization
+are the deductions above from these premises. They make no
+literature-wide novelty claim. $\square$
+

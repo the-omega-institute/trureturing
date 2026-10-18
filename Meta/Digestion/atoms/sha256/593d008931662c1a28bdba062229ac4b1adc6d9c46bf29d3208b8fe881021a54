@@ -1,0 +1,6 @@
+#### 17.4.1 Hilbert–Pólya 只是谱目标
+
+Berry 和 Keating 的 [The Riemann zeros and eigenvalue asymptotics](https://epubs.siam.org/doi/10.1137/S0036144598347497) 提出零点虚部的计数函数与某个未知 Hermitian operator 的半经典能级计数具有相似性。这是谱启发和渐近证据，论文没有构造满足零点完整谱的自伴算子。
+
+Connes 的 [Trace formula in noncommutative geometry and the zeros of the Riemann zeta function](https://arxiv.org/abs/math/9811068) 给出临界零点的谱解释和显式公式的 trace-formula 解释。任何统一场与 RH 谱的对应至少依赖一个 trace identity 或等价的正规化行列式关系。
+

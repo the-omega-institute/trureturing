@@ -1,0 +1,67 @@
+**Theorem 4.2 (whole-family bounded-budget decision).** For every logical
+graph input and every $q,d\in\mathbb N$, it is decidable whether a service
+in Definition 1.3 has $\sup_U q_A\le q$ and $\sup_U d_A\le d$.
+Both answers terminate. A positive answer yields an effective actual
+service. Physical words range over all finite words; no length cutoff
+or uniform halt-time premise is imposed.
+
+Proof. Decide empty-domain status and the gate of Definition 3.1. On an
+empty fiber return the vacuous immediate halt. On a nonempty negative
+gate return no, by its universal serial exclusion. On a positive gate
+construct $\mathscr R$ and its predicates by Proposition 3.2.
+
+There are finitely many skeleton shapes of read depth at most $q$, epoch
+annotations, root/left/right annotations and leaf labels. For each decide
+
+$$
+\exists(z_v)_v\ \forall Y\quad
+ \left[\mathsf{Adm}(Y)\Longrightarrow
+   \bigwedge_t\bigl(
+    \mathsf{Path}_t(Y;\mathbf z)\Longrightarrow
+    \mathsf{Row}_{r_t}(Y)\bigr)\right].
+\tag{GRS.15}
+$$
+
+Only nonroot address forms have a suffix variable. All such variables
+are outside the source quantifier. The logical formulas of Lemma 2.2
+and Proposition 3.2 make this a WS2S sentence; hence it has a terminating
+decision independent of any depth bound on its words. The universal
+finite sets encode every entire finite source in $U$. Existentially
+choosing a different address for each $Y$ would be a different, invalid
+formula for this operational problem.
+
+If the sentence is true, extract its finite suffix tuple. One effective
+method is to enumerate tuples of finite words and decide the remaining
+fixed-tuple sentence until a successful tuple is found. This enumeration
+is performed only after the existence decision returned true. Install
+the resulting finite table. Before each reached read perform the actual
+nonnegative epoch difference and submit its full physical word. At a
+leaf output its stored entire row and halt. Proposition 2.1 and Lemma
+2.2 inductively identify each actual reply with the formula for that
+same $Y$. Thus its reached leaf satisfies (GRS.15) and outputs its whole
+original row. Its actual cost is (GRS.14), within the requested budgets.
+There is no chart selection, free current-source description or hidden
+comparison during execution.
+
+Conversely take ANY permitted comparator meeting the two uniform bounds.
+At a reachable reply prefix, common initial state and the acquired
+replies determine its ensuing local work, updates and next physical read
+or halt. The segment is finite: at least one admitted source reaches it
+and the comparator is total on that source. There are at most
+$1+4+\cdots+4^q$ reachable reply prefixes. Unroll these fixed segments.
+Keep every early halt, and replace every unreachable child by immediate
+halt. Delete updates after the final read on any terminating branch;
+they reveal no information and the same output can be computed earlier.
+This decreases update cost and leaves reads and lengths unchanged.
+
+The result is a finite skeleton with its actual finite words and
+nondecreasing epoch numerals. Each word has exactly the factorization
+in Proposition 2.1. Every reached output is in $\mathscr R$ by correctness;
+an unreachable halt may receive any member of this nonempty set. The
+skeleton therefore belongs to the finite enumeration and satisfies
+(GRS.15). This is an existence argument covering arbitrary source-total
+code, not an algorithm extracting its reachable control graph. It
+requires no a priori bound on the code's local work, address lengths,
+source size or time to halt. Both operational directions are proved.
+$\square$
+

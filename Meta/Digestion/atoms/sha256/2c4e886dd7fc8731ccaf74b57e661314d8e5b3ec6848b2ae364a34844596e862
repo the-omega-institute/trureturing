@@ -1,0 +1,102 @@
+## 11. Mathematical sources and transfer conditions
+
+**Mathematical citation 11.1 (reused native results).** The following
+suppliers retain their original hypotheses and conclusions. The
+selector-specific additions are (NRF.6)–(NRF.7), their actual producer
+composition (NRF.8), the automaton extension of the same-source epoch
+law (NRF.12), and the finite original-source presentation and its
+consumers (NRF.22)–(NRF.40). These are repository-derived ordinary
+mathematical constructions; no worldwide priority assertion is made.
+
+| Source | Mathematical scope used here |
+| --- | --- |
+| [NUE, Definition 1.2, Proposition 1.3, Theorem 2.2][NUE] | Proposed-row validation, exact filling, and same-original stabilization of equality to each fixed complete row. It does not include regular selection. |
+| [NSF, Theorem 5.2 and Lemma 9.2][NSF] | Existing fixed-numeral signed feasibility; deep-prefix saturation, reached transport and injectivity. Arbitrary regular guards are not silently added to that feasibility interface. |
+| [NCE, Theorems 4.2 and 5.1, Proposition 5.2][NCE] | Existential unknown-epoch support with simultaneous witnesses; witness replacement is distinct from the all-source decoder (NRF.23). |
+| [NativeCutFibers][CUT] and [its Scribe][CUT-S] | `LegalValues`, `legal_values_row`, `rowFiberEquiv`, and their private inverse and distinctness helpers retain actual shared fillers and all different-class inequalities. |
+| [ActualCutPartitionDecoder][ROW] and [its Scribe][ROW-S] | `literalRecord` and `canonicalRow_record_iff` identify the full addressed exterior and complete partition with canonical row information. |
+| [NativeDepthPatterns][DEPTH] and [its Scribe][DEPTH-S] | `original_present_transport` and exact original-prefix decompositions apply to actually present positions; they do not transport absent positions backwards through birth. |
+| [CWS, Theorems 3.3–3.4 and §4][CWS]; [CNA, §§2–5, 7][CNA] | Paid native acquisition, validation safety, finite-interference liveness and endpoint limitations. The empty-cut instance acquires a whole tree. |
+| [CAB, Definition 1.3][CAB] | Complete accessibility handoff and separate validation/Return events, without physical-erasure or free-clock claims. |
+| [ARH, Lemma 11.2][ARH] | The unique ground image parser and injectivity; only that ground inverse is needed in (NRF.17)–(NRF.21). No general synchronous source-constructor relation is assumed. |
+| [SLH, Theorem 61.1 and Proposition 61.2][SLH] | Full residual domains distinguished from capped distinct-representative witnesses; a feasibility witness is not the actual unknown source. |
+| [TargetRecoveryCriterion][REC] | Constancy on actual observation fibers, with the inhabited-domain or attained-image qualification. |
+
+**Mathematical citation 11.2 (tree automata, sharing and morphic iteration).**
+The automata and matching ingredients are literature-attested; their
+native combination above is not attributed to a general closure or
+ultimate-periodicity theorem.
+
+Joost Engelfriet, *Tree Automata and Tree Grammars*, DAIMI FN-10
+(1975), author-uploaded [arXiv:1510.02036][ENG], Theorem 3.8 gives
+determinization, Theorem 3.32 Boolean closure, and Theorem 3.65
+closure under linear tree homomorphisms. Here the ranked signature
+is exactly $\alpha:0,\beta:0,\langle-,-\rangle:2$.
+Each $\rho^r$ replaces the leaves by fixed finite ground trees
+and sends the binary constructor to itself with each child used
+once. Thus its image of a regular language is effectively regular.
+For example the finite grammar
+
+$$
+S\longrightarrow\rho^r\alpha\mid\rho^r\beta\mid\langle S,S\rangle
+\tag{NRF.43}
+$$
+
+denotes exactly $\rho^r[\mathcal T]$, with independent child
+derivations. Expanding its two finite ground right sides and
+applying determinization provides an alternative whole-root image
+recognizer. It would test the complete filled root, not individual
+born holes. The original-source construction above instead uses
+the explicit inverse-image state calculation (NRF.19), and so
+does not need an image automaton in its representation. Repeating
+a class variable in $C$ is a different, nonlinear operation;
+linear-image closure cannot remove its equality constraints.
+
+Luis Barguñó, Carles Creus, Guillem Godoy, Florent Jacquemard and
+Camille Vacher, *Decidable Classes of Tree Automata Mixing Local
+and Global Constraints Modulo Flat Theories*, LMCS 9(2:1) (2013),
+[arXiv:1302.6960v2][BCGJV], Definition 3.2, Example 3.3, Theorem
+5.22 and Corollaries 5.23–5.24 describe the relevant distinction
+between ordinary regular languages and global subtree constraints,
+and decidability of emptiness for their stated classes. The finite
+ranked trees and empty equational theory here meet that ambient
+setting. In a fixed-context translation, each designated hole root
+can receive a marker used nowhere inside fillers; constraints between
+those markers then compare exactly the intended whole subtrees.
+Their universal disequality constraint is not the negation of their
+universal equality constraint. The present proof instead explicitly
+compares every finite pair and uses disjoint deterministic-state
+capacities in (NRF.29). It imports neither general constrained-language
+complementation nor universality to justify Theorem 7.1.
+
+Fabien Durand, *Decidability of the HD0L ultimate periodicity problem*,
+[arXiv:1111.3268v3][DUR], §1.1 and Theorem 1, treats a supplied word
+seed and two supplied morphisms, asking about an ultimately periodic
+infinite-word limit. Prefix serialization of native trees intertwines
+$\rho$ with the word morphism $a\mapsto b$, $b\mapsto pba$,
+$p\mapsto p$, where $p$ marks a binary pair. That correspondence
+does not make the HD0L theorem a sourcewise periodicity law for
+unknown finite trees and selected boundaries. The proof of Theorem
+4.2 uses the explicit finite $Q^2$ orbit, actual reached positions,
+injectivity and the supplied fixed-row theorem; its quantifiers and
+endpoint claims are established there directly.
+
+[NUE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_UNKNOWN_EPOCH_GLUING.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[CNA]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md
+[CWS]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_WORKSPACE.md
+[CAB]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_ACQUIRED_CLOCK_BRIDGES.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[CUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[CUT-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.scribe.cs
+[ROW]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[ROW-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.scribe.cs
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[DEPTH-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs
+[REC]: ../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean
+[ENG]: https://arxiv.org/pdf/1510.02036
+[BCGJV]: https://arxiv.org/pdf/1302.6960v2
+[DUR]: https://arxiv.org/pdf/1111.3268v3
+

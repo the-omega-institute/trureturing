@@ -1,0 +1,84 @@
+**Proposition 9.4 (Endpoint, signature and excursion information).**
+For the commands of Definition 9.1 the following distinctions hold.
+On the double wall, $(A,B,K,m,M)$ determines the entire lawful partial
+endpoint operation on real lifts; on rays $K$ may be reduced as in
+(9.13). The pair $(A,B)$ alone does not determine that operation even
+when the lawful domains agree. The complete ordered signature
+without $m,M$ does not determine the lawful domain, even though it
+determines endpoint effects at every starting state at which both
+compared commands are lawful. These latter two assertions concerning
+complete signatures hold in all four mean regimes.
+
+Proof. The first statement is exactly (9.4) and (9.11). To separate
+endpoint increments from order, compare the two paths
+
+$$
+(0,0)\to(s,0)\to(s,t),\qquad
+(0,0)\to(0,t)\to(s,t),\qquad 0<s<r/2.
+\tag{9.15}
+$$
+
+Both have $(A,B)=(s,t)$, $m=0$, $M=s$, and the same nonempty lawful
+domain $(0,r/2-s)$. Their $K$ values are $st$ and zero, respectively.
+Their real endpoint phase difference is $-st/r$ in each of $u,v$.
+Choose $st\notin2\pi r\mathbb Z$ for distinct rays and hence distinct
+original coherence outputs, by Theorem 8.4. The signs agree with the
+positive-$s$, positive-$t$ rectangle in (8.25).
+
+For the complete-signature statement, define $S_{i_1\cdots i_n}$ to
+be the integral of $dc_{i_1}(t_1)\cdots dc_{i_n}(t_n)$ over
+$t_1<\cdots<t_n$, where $(c_a,c_b)=(a,b)$. This is the usual
+bounded-variation signature, with the earlier-later convention of
+Theorem 9.3; only the admitted absolutely continuous paths are used.
+Suppose two such commands have equal complete signatures and are both
+lawful at $k$. Their $A,B$ agree at degree one. Repeated integration
+of $da$ gives
+
+$$
+\int a^n\,db=n!S_{\underbrace{a\cdots a}_{n}b},
+\qquad n\ge0.
+\tag{9.16}
+$$
+
+Indeed the iterated integral of $n$ copies of $da$ up to time $t$ is
+$a(t)^n/n!$, by induction using the derivative of $a^n$.
+Thus both paths give the same integral of every polynomial in $a$
+against $db$. Their combined $a$ ranges lie in one compact interval
+inside $J_b-k$. Each function $x\mapsto w_s(k+x)$ is continuous there.
+Polynomial uniform approximation, followed by the estimate
+
+$$
+\left|\int(f-P)(a)\,db\right|
+ \le \|f-P\|_\infty\operatorname{Var}(b),
+\tag{9.17}
+$$
+
+proves equality of their $H_\gamma(k)$, component by component.
+This supplies the source-specific endpoint implication directly from
+the signature coordinates; it does not require a path reconstruction
+or a convergence assertion about a Taylor series for $w$.
+
+To see the missing domain information, take the constant command and
+the command with $b\equiv0$ and probability excursion
+$0\to s\to0$, where $0<s<W_b$. Every signature word containing
+$b$ vanishes. Every remaining nonempty word has value $A^n/n!=0$.
+Both commands therefore have the identity complete signature and the
+identity endpoint formula. But their domains are respectively
+$J_b$ and $(\ell_b,u_b-s)$. Choose a starting height in
+$(u_b-s,u_b)$ to distinguish lawfulness, and one in
+$(\ell_b,u_b-s)$ to see that the excursion is an actual lawful history
+on a nonempty source domain. Their extrema distinguish the two domains
+exactly. This is a direct instance of the tree-like cancellation in
+Hambly and Lyons,
+[*Uniqueness for the signature of a path of bounded variation and the reduced path group*](https://arxiv.org/abs/math/0507536);
+that supplier does not preserve an external positivity guard under
+removal of a retraced excursion.
+
+Together with (9.4), equality of complete signatures and equality of
+$m,M$ therefore imply equality of lawful partial endpoint operations
+in every regime. Neither assertion reconstructs a parametrized history.
+Away from the double wall, the failure of signed area to specify even
+the real zero-winding phase endpoint is already exactly Theorem 3.5,
+with the explicit generic ray witness in Proposition 3.6; those results
+are retained with their original fixed starting height. $\square$
+

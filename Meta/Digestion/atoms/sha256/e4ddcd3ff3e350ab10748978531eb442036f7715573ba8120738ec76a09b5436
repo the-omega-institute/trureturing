@@ -1,0 +1,18 @@
+### 97.2. Existing source and Selmer membership
+
+**Proof.**
+
+Theorem 95.1 supplies
+
+ Sel_2(E_D/Q) = F_2 x ker A^T x ker A
+
+in its specified pair coordinates (X,X+5D). Write delta_i=[-1/q_i], t_i=[2/q_i], and let v indicate the primes in d. The cut gives Av=0. Since all those primes are 1 modulo4, diag(delta)v=0 and delta^T v=0. Reciprocity therefore gives A^T v=0. Moreover t^T v=epsilon. Substitution in Theorem 95.1 gives exactly
+
+ lambda=(5^epsilon d,1)=(l,1), mu=(1,d).
+
+The factor5 in lambda for epsilon=1 is essential. Using (d,1) in that case would violate the local2 relation determining x0.
+
+Both kernels have basis 1,v. As in section 96, the full Selmer basis consists of the actual golden class S=(-15,5), the two rational torsion classes (-5D,1),(-3,5D), and lambda,mu. In the coordinates (free bit,x,y) they are (1,0,0),(0,1,0),(1,0,1),(0,v,0),(0,0,v). Thus the pure Selmer quotient has dimension three with basis S,lambda,mu.
+
+The pairing input is Shukla–Stoll, arXiv:2302.01640v1, section 3.2 equations(3.9)–(3.10), Theorem 5.6 and the introduction on printed page2. It is the tangent-form Hilbert product, with multiplicative convention (-1)^(2 times the additive value). The rational Kummer image lies in its radical, without any assumption on finiteness of Sha. The translation x=X-10D/3 gives their short model with roots -10D/3,-25D/3,35D/3 and preserves every Kummer coordinate and root difference. Section96 already establishes this normalization and the prime1mod24 subcase. See the [primary paper](https://arxiv.org/pdf/2302.01640).
+

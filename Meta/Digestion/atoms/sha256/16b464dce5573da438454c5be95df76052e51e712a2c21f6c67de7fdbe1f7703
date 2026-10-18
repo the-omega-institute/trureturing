@@ -1,0 +1,94 @@
+**Theorem 70.2 (all-input joint lower bound).** For all commissioned $a,g>0$,
+put
+
+$$
+R=4000(a+g),\qquad
+C=\max\left\{\frac{9R^2}{a},R\right\}.
+\tag{70.4}
+$$
+
+For every $n\ge0$, $0<\delta\le1$, $\Omega\ge1$, either separate prescription,
+every $\mathfrak h\in\mathscr H_n$ and every full form input $y$,
+
+$$
+\boldsymbol q_{\mathfrak h,n}[y]
+\ge\mathfrak F_{\mathfrak h,n}[y]
+       -\bigl(2g+C M(n,\delta)\bigr)\|y\|^2.
+\tag{70.5}
+$$
+
+Consequently $e_{\mathfrak h}^{\diamond}(n,\delta)$ and
+$e^{\diamond}(n,\delta)$ are at least $-2g-C M(n,\delta)$.
+The constant has no dependence on history, source, cap, bank or auxiliary size,
+$\Omega$ or field moments.
+
+**Proof.** Reuse the exact full-domain expansion in Theorem68.3 and the bounded
+cross form in Lemma68.2; no history term is changed. Its residual coefficient
+$r$ from (68.4) obeys a bound uniform in density. Indeed
+
+$$
+\beta_1\le2\sqrt\delta,\qquad
+\beta_2\le16\sqrt\delta,\qquad
+0\le s_N\le\beta_N^2/2.
+\tag{70.6}
+$$
+
+For the second inequality use
+$\sqrt{3\delta+9\delta^2/4}\le(5/2)\sqrt\delta$ and
+$9\sqrt2\,\delta\le(27/2)\sqrt\delta$.
+Inserting these in the supplier's residual formula gives
+
+$$
+r_1\le(21a+11g/2)\sqrt\delta,\qquad
+r_2\le(3282a+576g)\sqrt\delta,
+\qquad r\le R\sqrt\delta.
+\tag{70.7}
+$$
+
+Here $\delta\le\sqrt\delta$ has been used only in an estimate, not in a
+change to any kinetic coefficient.
+
+Write $u=\|b\|$ and $v=(\sum_{j<n}\|z_j\|^2)^{1/2}$. The active diagonal
+is bounded below by $-2g\|b\|^2+\mathfrak f_{D_n}[b]$.
+Apply Theorem69.2 to every actual reserve. Since each $B_{j,n}$ is a contraction,
+(68.3), Cauchy–Schwarz and (70.7) bound the entire cross sum below by
+$-2R\sqrt{n\delta}\,uv$. Thus
+
+$$
+\boldsymbol q_{\mathfrak h,n}[y]
+\ge\mathfrak F_{\mathfrak h,n}[y]-2g\|y\|^2
+ +h v^2-2tuv,
+\qquad h=\frac a{9\delta},\quad t=R\sqrt{n\delta}.
+\tag{70.8}
+$$
+
+The field cross term vanishes within each old branch by the full tensor-space
+orthogonality of Lemma68.2. Its diagonal in (70.8) is still (70.2), including
+arbitrary reference/field/auxiliary correlations. No equality between
+$h_{D_j}$ and $h_{D_{j+1}}$ or moment estimate is involved.
+
+For completeness, the elementary two-variable minimization here has loss
+
+$$
+L_-(n,\delta)
+=\frac{\sqrt{h^2+4t^2}-h}{2},\qquad
+hv^2-2tuv\ge-L_-(u^2+v^2).
+\tag{70.9}
+$$
+
+This follows by diagonalizing the real matrix with entries
+$\left(\begin{smallmatrix}0&-t\\-t&h\end{smallmatrix}\right)$.
+The identity $L_-(h+L_-)=t^2$ gives
+
+$$
+L_-\le\min\left\{\frac{t^2}{h},t\right\}
+=\min\left\{\frac{9R^2}{a}n\delta^2,
+                 R\sqrt{n\delta}\right\}
+\le C M(n,\delta).
+\tag{70.10}
+$$
+
+The scalar calculation is only an estimate on the already existing form;
+$h$ is not an installed reserve stiffness or energy shift. Combining
+(70.8)–(70.10) proves the result, with $t=L_-=0$ when $n=0$. $\square$
+

@@ -1,0 +1,20 @@
+**Definition 8.1 (range-separation leaf).** Retain every old rule of
+$V_{\mathrm{rec}}$ and allow the following additional leaf. Its
+finite data are $P\subseteq S_d$, an integer
+$1\le r\le\min\{4,|P|\}$, and native tables satisfying:
+
+1. $\mu$ vanishes off $P$, and every boundary experiment has at
+   most $r$ replies on $P$, including the constant experiment.
+2. Every $(r+1)$-element $Q\subseteq P$ has a supplied target $q$
+   with $|g_q(Q)|>r$.
+3. For every $r$-element $Q\subseteq P$ and every target there is
+   a supplied constant or own-coordinate experiment and decoder
+   valid on all of $Q$.
+4. $C$ is at least $L_r(\mu)$, the sum of the $r$ largest weights
+   on $P$.
+
+The verifier checks all indicated subsets and equations, the full
+native tables, rational probabilities and the rational cap comparison.
+As in the old grammar it rejects malformed or incomplete data.
+Write $V_{\mathrm{rec+range}}$ for the extended finite-node grammar.
+

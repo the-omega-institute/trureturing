@@ -1,0 +1,18 @@
+**Corollary 8.2 (causal acquired bridges for every menu).** For any public
+menu, including cuts with $S_i=\varnothing$, acquire $k_0=\ell(U_{v_0})$
+and keep it as paid intermediate state. At each other component's
+first capture acquire $k_{r_C}$ by Theorem 2.2 and emit
+$\eta_C=k_{r_C}-k_0$. All captures retain their complete row. After
+the last selected representative erase the baseline and local stamps.
+The final decoder needs exactly the public menu, rows and
+$(\eta_C)_{C\ne C_*}$, in public order, to recover every $n_i$.
+
+Proof. Put $\eta_{C_*}=0$. By actual acquisition and common history,
+$\eta_C=n_{r_C}$. Add the supplied within-component differences.
+A representative is known before its call because the entire menu
+is public. Each subtraction occurs only after both acquired values
+exist; no future record is used earlier. The baseline occupies its
+actual binary size until its last use, and accumulators and rows are
+also retained and charged. This establishes an attained causal
+interface, not a new graph-integration theorem. $\square$
+

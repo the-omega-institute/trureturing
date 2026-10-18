@@ -1,0 +1,37 @@
+### Corollary 48.6 (Current closure versus future closure)
+
+Let \(G(p)=Ap+c\) be an affine generator and let \(O_{\mathrm{FIB}}(p)=(X,Y,Z)\). Exact current closure on every visible FIB fiber is equivalent to
+
+\[
+O_{\mathrm{FIB}}Ad=0.
+\]
+
+Future closure is stronger. It requires
+
+\[
+O_{\mathrm{FIB}}A^kd=0
+\qquad
+\forall k\ge0,
+\]
+
+or, in a finite-dimensional realization, only \(k=0,\ldots,n-1\).
+
+Therefore a seam can be invisible to the instantaneous visible derivative while remaining visible at a later time. This is the precise finite statement of dynamic information escape:
+
+\[
+\text{current quotient}
+\neq
+\text{minimal predictive quotient}.
+\]
+
+The result relates the FIB hidden coordinate to predictive sufficiency through the observability family
+
+\[
+\{OA_wd:w\in\mathcal A^\ast\},
+\]
+
+together with its finite-dimensional Cayley–Hamilton reduction.
+
+
+---
+

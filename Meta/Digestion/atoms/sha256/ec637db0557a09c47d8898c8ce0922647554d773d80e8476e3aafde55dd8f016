@@ -1,0 +1,70 @@
+**Definition 7.3 (remaining original and learning obligations).** The
+original decision requires either a compatible pair on the same
+unrestricted $\mathfrak C$ with both full boxes, both means and both
+depth-3 budgets, or a strict positive-gap proof excluding all such pairs.
+Theorem 2.1 only excludes insufficient seven-feature variation relative
+to the finite-risk and mean tolerances. Positive $V$ is permitted; the
+theorem neither constructs the required joint pair nor bounds $V$ above
+on the full zero face. Finite-table attainment additionally needs the
+supplied finite-marginal and represented-sampling bridges; it is not
+obtained from a Borel analysis path.
+
+A task-relative separation witness exhibits realizations with the same
+allowed observation and different target answers or legal continuations.
+The strict proof-content escape predicate in `CLAUDE.md` §3.2 is distinct
+and has two legal forms. Its bind-only classification inlines local aliases,
+newly added helpers, tactic expansions and definitional equalities, stopping
+at existing frozen or pinned upstream declarations. Instantiation, premise
+substitution, logical projection or recombination, and normalization alone
+do not supply new proof content. First, a new independent intermediate
+proposition may witness escape only if (i) its declaration lies in the
+theorem's elaborated transitive constant-dependency closure; (ii) it cannot
+be obtained directly from existing frozen or pinned upstream premises by
+instantiation, projection or normalization; (iii) it is neither definitionally
+equivalent to, an alias of, nor a restatement of the conclusion; and (iv)
+after ζ/β/ι reduction and removal of dead terms and components discarded by
+projection, it remains used on the conclusion's live proof path. If bind-only
+operations on the existing premises can reach the conclusion without it,
+it is not a witness; inserting an unrelated proposition in the dependency
+closure does not change the proof classification. Second, the public
+conclusion itself may be the witness when a non-bind-only calculation,
+construction or estimate chain produces it directly on the live proof path
+and the conclusion is unavailable by binding and normalization of existing
+frozen or pinned upstream premises. No auxiliary intermediate proposition
+may be manufactured for this second form. Neither strict form
+can be replaced by a task-relative separation witness. Here the mathematical
+increment is the
+quantitative perturbation argument, not the naming of a feature vector
+or the generic existence of a separating observation.
+
+As a model diagnostic, (2.1) can reject an authenticated supplied-table
+claim that combines the five local boxes, small mean error, small seven
+conditional variances and an incompatible finite risk. It does not
+identify an unknown installation from observations. Lawful acquisition
+of its program, configuration features and common edge rows remains a
+separate task. Statistical certification would require a specified
+sampling law, access to those same configurations and edges, accuracy
+and confidence margins, and charged acquisition; the once-sampled
+common-$K$ histories do not themselves provide iid descriptor access.
+No reset or replay service is granted. WHITEBOX51's iid complete-record
+model and WHITEBOX74–77's same-checkpoint operations cannot be imported
+without their hypotheses. Training attainment further needs a learner,
+loss and optimization statement; generalization needs a data-generating
+model and an out-of-sample guarantee. None is asserted by this finite
+diagnostic. There is no empirical ML gain, universal five-class neural
+theory, all-code whitebox impossibility, or resource improvement obtained
+by changing the original contract.
+
+[SEVEN]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_WORD_BRANCHING_NECESSITY.md
+[REV]: RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md
+[PAIR]: RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[PAID]: RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+[NATIVE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_TAIL_ATOMS_AND_BOREL_RECURRENCE.md
+[WHITEBOX]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[INSTALLED]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeInstalledFullLaw.lean
+[COUNTERFACTUAL]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionCounterfactualEscape.lean
+[CW]: https://arxiv.org/html/2502.17803v3
+[BSCA]: https://arxiv.org/html/1407.2952v2
+[LV]: https://arxiv.org/html/1404.0999v3
+

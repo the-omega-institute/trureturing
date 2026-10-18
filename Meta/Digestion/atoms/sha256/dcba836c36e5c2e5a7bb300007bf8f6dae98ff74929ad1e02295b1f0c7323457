@@ -1,0 +1,68 @@
+**Theorem 6.2 (Averaged divergence and the fixed-block paid coefficient).** For each fixed $m\ge2$ and either true label $i$,
+
+$$
+\overline D_{i,m}(e^{-s})
+=\frac{a^2m(m-1)}{648(10m-2)}s^2+O_{H,m}(s^3).
+$$
+
+For every $q\in(0,1)$ one has $0<\overline D_{i,m}(q)<\infty$. Define the mean conditional information per paid post-tick read by
+
+$$
+I^{\mathrm{paid}}_{i,m}(q)
+=\frac{\overline D_{i,m}(q)}{m\mu_i(q)}.
+$$
+
+Then
+
+$$
+I^{\mathrm{paid}}_{i,m}(e^{-s})=c_ms^3+O_{H,m}(s^4),\qquad
+c_m=\frac{a^2(m-1)}{12960(5m-1)}.
+$$
+
+Proof. Corollary 3.2 and Theorem 5.1, with constants extended over the finite initial range, give
+
+$$
+C_{i,m}(n)d_{i,m}(n)
+=b_m\frac{a^2v_m}{2}n^{10m-3}+O_{H,m}(n^{10m-4}).
+$$
+
+Lemma 6.1 sums the leading term against $e^{-sn}$ as
+
+$$
+b_m\frac{a^2v_m}{2}(10m-3)!s^{-(10m-2)}
++O_{H,m}(s^{-(10m-3)}),
+$$
+
+and bounds the entire absolute remainder sum by the same lower order. Moreover
+
+$$
+Z_i(e^{-s})^m=(9!)^m s^{-10m}(1+O_{H,m}(s))
+$$
+
+by Proposition 1.3 and fixed $m$. Dividing proves
+
+$$
+\begin{aligned}
+\overline D_{i,m}(e^{-s})
+&=\frac{a^2v_m}{2}\frac{(10m-3)!}{(10m-1)!}s^2+O_{H,m}(s^3)\\
+&=\frac{a^2m(m-1)}{648(10m-2)}s^2+O_{H,m}(s^3).
+\end{aligned}
+$$
+
+Any fixed finite range of totals separately contributes $O_{H,m}(s^{10m})$ after normalization, so even its zero-divergence cases are covered. This is averaging over each label's own actual total distribution, not a chosen total or free conditional sample.
+
+At every fixed $q$, every legal total has positive probability. Theorem 5.1 supplies positive divergence for sufficiently large totals and nonnegativity elsewhere, which proves positive averaged drift. The log-factor bound $|\log(G_1/G_0)|\le\log\mathcal R_m$ bounds each divergence and proves finiteness. Finally the block duration is $T+m$ with mean $m\mu_i(q)$, by Theorem 2.2. Since
+
+$$
+\frac1{m\mu_i(e^{-s})}=\frac{s}{10m}(1+O_H(s)),
+$$
+
+division gives
+
+$$
+\frac{a^2(m-1)}{6480(10m-2)}s^3+O_{H,m}(s^4)
+=\frac{a^2(m-1)}{12960(5m-1)}s^3+O_{H,m}(s^4).
+$$
+
+The finite-record stationary initial wait is still paid; it is separately included in Theorem 7.2. The rate definition does not discard it from any finite record. $\square$
+

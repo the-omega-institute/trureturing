@@ -1,0 +1,115 @@
+**定义 3.1（完整正源图与归一增益）。**
+
+对每个源令
+
+$$
+\eta=(QP)_{22}=3b+1-a>0,\qquad R=P/\eta,\qquad H=\eta g.
+$$
+
+$QR$ 严格正、秩一且右下元为一，唯一写成
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix}.
+$$
+
+因为 $Q^{-1}=(\begin{smallmatrix}-1&1\\3&-2\end{smallmatrix})$，恰有
+
+$$
+R=\begin{pmatrix}(1-x)y&1-x\\(3x-2)y&3x-2\end{pmatrix}
+=\binom{1-x}{3x-2}(y,1),\qquad \frac23<x<1,\ y>0.
+\tag{3.1}
+$$
+
+反向这些严格不等式使 $R$ 正秩一；$s=\operatorname{tr}R>0$ 给 $P=R/s,g=sH$。这个坐标覆盖全部合法非对称源，且
+
+$$
+g(i)\operatorname{tr}(A_iP)=H(i)\operatorname{tr}(A_iR).
+\tag{3.2}
+$$
+
+第六两个迹为 $x+y+1,x+y$。共同响应差给
+
+$$
+H_1(6)=H_2(6)=k=r_M-r_J\ne0,\qquad
+x_i+y_i+1=h>5/3.
+\tag{3.3}
+$$
+
+定义 $y=h-1-x$ 和
+
+$$
+t=\operatorname{tr}(UR)=(1-x)y+x=x^2-(h-1)x+h-1.
+\tag{3.4}
+$$
+
+在零至五时钟的同源迹行恰为
+
+$$
+(s,j_R,\ell,n,t,q_R)
+=(t+2x-2,\ h-3t+x,\ t+x-1,\ h-2t,\ t,\ h-t).
+\tag{3.5}
+$$
+
+例如 $\ell=s+R_{12}$、$q_R=1+xy=h-t$，其余由式 (2.1) 同样得到。每项严格正，特别 $0<t<h/2$；第六迹为 $h,h-1$。
+
+置
+
+$$
+A=C-d,\quad B=X-d,\quad c=\frac A{h-2t},\quad r=\frac Bt.
+$$
+
+正分母允许 $A,B$ 为零。四个不同节点 $3,4,6,7$ 的增益值为 $c,r,k,0$，所以唯一整个归一增益为
+
+$$
+\begin{gathered}
+H(T)=(7-T)\bigl[k+U_g(T-6)+V_g(T-6)^2\bigr],\\
+U_g=\frac{5k-3r+c}{6},\qquad V_g=\frac{2k-2r+c}{12}.
+\end{gathered}
+\tag{3.6}
+$$
+
+直接代入四节点验证，因而不假定精确三次。它的零至七完整采样行是
+
+$$
+\left(14k-21r+14c,\ 6k-10r+\frac{15c}{2},\
+\frac{5k}{3}-\frac{10r}{3}+\frac{10c}{3},\ c,r,\
+\frac{2k}{3}+\frac{2r}{3}-\frac c6,\ k,0\right).
+\tag{3.7}
+$$
+
+两世界 $x$ 不同：相同 $x,h$ 给相同源，共同 $d$ 与前四样本使整个增益相同。它们的 $t$ 也不同：否则四节点插值使整个 $H$ 相同，初读的迹差 $2(x_1-x_2)$ 强迫 $H(0)=0,d=0$；第一读的迹差 $x_1-x_2$ 又强迫 $H(1)=0,d=24$，矛盾。这里未预设早期样本非零。
+
+令
+
+$$
+\begin{gathered}
+u=t_1+t_2,\quad v=t_1t_2>0,\\
+D=(h-2t_1)(h-2t_2)=h^2-2hu+4v>0,\\
+E=(h-t_1)(h-t_2)=h^2-hu+v>0,\qquad w=m-d.
+\end{gathered}
+\tag{3.8}
+$$
+
+由第五同世界方程，
+
+$$
+6w=(h-t)\left(4k+\frac{4B}{t}-\frac A{h-2t}\right).
+\tag{3.9}
+$$
+
+两个值相减得
+
+$$
+0=-(t_1-t_2)\left(4k+\frac{4Bh}{v}+\frac{Ah}{D}\right).
+$$
+
+只消去已证非零的根差，得到
+
+$$
+k=-h\left(\frac Bv+\frac A{4D}\right),\qquad
+w=-\frac E3\left(\frac{2B}{v}+\frac AD\right).
+\tag{3.10}
+$$
+
+第二式由代回式 (3.9) 分开 $A,B$ 两部分得到：分别是 $-AE/(3D)$ 和 $-2BE/(3v)$。没有除以 $A,B,w$ 或第五样本。
+

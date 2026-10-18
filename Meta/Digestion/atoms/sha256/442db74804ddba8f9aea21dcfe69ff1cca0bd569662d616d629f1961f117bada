@@ -1,0 +1,27 @@
+## 285. Strict angles and the common positive length input
+
+The original volume's Theorem 42.2 applies under exactly the manifold,
+boundary and minimum-degree hypotheses above. Starting from normalized
+angles a_o=2/d(P(o)), it transports vertex deficits across the actual
+link surfaces while preserving every original edge sum. For a boundary
+link S_nu the total deficit is -2*chi(S_nu)>0. The theorem gives strictly
+positive angles, strict local vertex sums below pi, and every original
+edge sum equal to 2*pi. No assumption that the initial unmodified angle
+assignment already has strict vertex sums is used.
+
+Restore the ideal vertices to the original finite face pairing. Its
+faces are all paired, giving the closed triangulated pseudo-manifold
+used by the hyperideal variational theorem; deleting the ideal vertices
+and truncating recovers N. The positive angle structure satisfies the
+hyperideal definition in Luo–Yang, *Volume and rigidity of hyperbolic
+polyhedral 3-manifolds*, arXiv:1404.5365v2, Definition 6.1.
+Their Theorem 6.3 and Theorem 1.4 supply a volume maximizer and a common
+positive global generalized length vector producing its angles. Every
+original edge still has angle sum 2*pi. Each tetrahedron is genuine or
+has two opposite pi angles and four zero angles. These are the reused
+inputs recorded in the original volume's Corollary 43.1; the present
+corollary does not claim this existence theorem as new.
+
+The source is https://arxiv.org/html/1404.5365v2; the relevant statements
+are Theorem 1.4, Definition 6.1, and Theorem 6.3(a),(c).
+

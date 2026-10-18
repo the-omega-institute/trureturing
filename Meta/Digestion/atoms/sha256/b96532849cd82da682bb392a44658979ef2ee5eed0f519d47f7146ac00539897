@@ -1,0 +1,37 @@
+### 定理21（一个实际混合终端读数的整纤维逆式与目标边界）
+
+在假设18下，已知 $X,Y,Z$ 且校准的 $t\ge0$ 满足 $J(t)\ne0$ 时，
+
+~~~math
+\kappa=\frac{\operatorname{Re}\!\left(\overline{J(t)}[C_\kappa(t)-B(t)]\right)}{|J(t)|^2}
+=\frac{\mathbb E[M_{\arg J(t)}]-\operatorname{Re}(e^{-i\arg J(t)}B(t))}{|J(t)|}.
+~~~
+
+这是整个闭可行区间上的逆式，随后定义17逐项恢复全部五个质量。任取可行 $\kappa_0$，也可用 $C_\kappa-C_{\kappa_0}=(\kappa-\kappa_0)J$ 作为概率来源之间的比较。若复响应误差至多 $\varepsilon$，上述线性逆式的误差至多 $\varepsilon/|J(t)|$；若对齐二值的正输出概率误差至多 $\varepsilon$，则相应误差至多 $2\varepsilon/|J(t)|$。这里固定精确占据及校准，有限样本如何达到给定概率误差另需取得合同。
+
+**证明。** 在定理19的 $C_\kappa-B=\kappa J$ 两边乘 $\overline J$ 取实部，或直接令 $\theta=\arg J$，即得斜率 $|J|$。复误差的实投影不超过其模；概率与期望相差因子二。这是本卷第五节定理二及 Q1–Q4 的既有纤维逆式在假设18所供事件上的具体应用。
+
+准确描述这一恢复的范围，可对任一实际实验族定义 $\mu\sim_{\mathscr E}\nu$ 为每个 $e\in\mathscr E$ 的结果律均相等。若 $\mathscr E\subseteq\mathscr E'$，增加等式条件给出 $\sim_{\mathscr E'}\subseteq\sim_{\mathscr E}$。定理20的两个单时钟终端族之并把整条纤维合为一类；加入一个同源混合等待及其对齐测量，逆式使本纤维上的类成为单点。这一新增操作不是旧边缘律的后处理；合法菜单及实际可行增量的所有者为 [输出仪器卷 Q1–Q4、Q7–Q8](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)。单点纤维则无需任何新增读数。
+
+本逆式也不是未知频谱恢复。为限定两者的关系，在此消费 [Kunis 等，arXiv:1506.00450v1，§2、定理3.1](../../../Library/Fourier/kunis2015multivariateprony.md) 的有限节点插值方法：若另把来源类改为至多 $r\ge1$ 个未知实频率，仍供应同源等待及假设18的探针，并要求 $b/a\notin\mathbb Q$，则相位对 $\omega\mapsto(z,w)=(e^{-i\omega a},e^{-i\omega b})$ 单射。因为相同相位对给 $(\omega-\omega')a=2\pi k$、$(\omega-\omega')b=2\pi l$，非零差会使 $b/a=l/k$。相反，对约分有理比 $p/q$，频率差 $2\pi q/a$ 给完全相同的相位对，所以无界实频率上全局单射需要无理比；这比定理20的已知模式纤维目标更强。
+
+这里所需的三角形取样界由如下普通分离步骤给出，不冒称是该文矩形取样定理的逐字结论。两份至多 $r$ 点测度的相位对并集有 $q\le2r$ 个不同点 $\zeta_j=(z_j,w_j)$。对每个 $k\ne j$ 选一个能区分两点的坐标函数 $u_{jk}\in\{z,w\}$，置
+
+~~~math
+P_j(z,w)=\prod_{k\ne j}
+\frac{u_{jk}(z,w)-u_{jk}(\zeta_k)}{u_{jk}(\zeta_j)-u_{jk}(\zeta_k)}.
+~~~
+
+分母非零，$P_j(\zeta_k)=\delta_{jk}$，总次数 $q-1\le2r-1$。故若两测度的同源混合矩
+
+~~~math
+c_{mn}=C(ma+nb)=\sum_j p_j z_j^m w_j^n,
+\qquad m,n\in\mathbb Z_{\ge0},\quad m+n\le2r-1
+~~~
+
+相同，则积分每个 $P_j$ 得各点质量相同，再由相位对单射得频率测度相同。取样数量为 $\sum_{d=0}^{2r-1}(d+1)=r(2r+1)$，含已知的 $c_{00}=1$，只为充分数量，不声称最少。没有预给 $r$ 时，全部混合矩也通过任意两份有限测度的有限并集给唯一性。
+
+这段插值用于界定本纤维应用的外推范围：它仅是另一个目标的精确唯一性，不能替代这里的一次对齐期望，也不提供无界频率的统一有限精度反演。该文定义3.6、定理3.7另有节点分离和系数比条件；多原子支撑合并、权重趋零及校准误差仍需额外限制。即使完整频率测度可知，若 $\Omega _2$ 与其他模式频率相撞，频率测度也不分辨相撞的模式标签；本定理依靠另已知的 $X,Y,Z$ 仍可由非零 $J$ 恢复 $p_\kappa$。
+
+最后，正单位变换 $t'=ct,\ a'=ca,\ b'=cb,\ \omega'=\omega/c$（$c>0$）保持每个相位和时长比，属于 [事件采样卷定理11.5](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的已知单位运输在此处的应用。它不供应漂移、时钟噪声、空间运输或相位控制模型，也不把局部校准提升为绝对物理时间。证毕。
+

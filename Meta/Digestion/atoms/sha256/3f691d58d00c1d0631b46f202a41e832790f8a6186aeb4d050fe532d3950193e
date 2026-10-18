@@ -1,0 +1,23 @@
+**Corollary 10.5 (Three-column formula for the dual).** For the uniform
+even top chain of Theorem 10.3, writing $W_j$ for the $j$th column,
+one has
+
+$$
+\begin{aligned}
+W_0&=\frac{4d_{T_0}-2d_{T_1}}{3\,2^k},\\
+W_j&=\frac{-2d_{T_{j-1}}+5d_{T_j}-2d_{T_{j+1}}}{3\,2^k},
+ &&1\le j\le k-1,\\
+W_k&=\frac{4d_{T_k}-2d_{T_{k-1}}}{3\,2^k}.
+\end{aligned}
+\tag{10.20}
+$$
+
+Proof. At the uniform law $P^{-1}=d_nI$. Therefore (10.14) and (10.10)
+give $W=DB/(3\,2^k)$, whose columns are (10.20). For $k=1$ both
+endpoint formulas apply and the interior range is empty. $\square$
+
+The score matrix has no zero overlap entry, but inversion combines only
+neighboring relation columns. These two statements concern different
+matrices. The sparse formula in relation labels neither makes $h(I)$
+a function of one path position nor supplies a sparse physical operation.
+

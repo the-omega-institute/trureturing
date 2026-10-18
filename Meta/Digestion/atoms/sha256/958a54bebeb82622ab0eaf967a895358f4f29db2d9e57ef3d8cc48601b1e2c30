@@ -1,0 +1,44 @@
+**Theorem 147.1 (Entire closed $Q$ projection and continuous section).**
+For every $x\in Q$, the following are equivalent: complete five-bit $N$
+closed-cap feasibility; $x\in P$; complete five-bit $O$ closed-cap feasibility.
+A stopped allocation on all of $P$ can be chosen continuously and piecewise
+affinely, with $p_{11111}(0)=1-e$ throughout.
+
+**Proof.** A feasible full $N$ kernel satisfies every cut by Theorem 142.2,
+so its parameter point in $Q$ lies in $P$. By Theorem 144.3, for every
+$x\in P$ choose $\lambda_v\ge0$ with $\sum_v\lambda_v=1$ and
+$x=\sum_{v=0}^{35}\lambda_v x_v$. Set
+
+$$
+T_{S,c,r}(x)=\sum_{v=0}^{35}\lambda_v(x)T^v_{S,c,r},\qquad
+w_S(x)=\sum_{v=0}^{35}\lambda_v(x)w^v_S.
+\tag{147.1}
+$$
+
+The same weights are used for every schedule, cell, label, word and row.
+Terminal nonnegativity, all common-mass equations and global normalization
+are affine. The word-law formula is linear, and each target event is
+affine in its fixed first-zero amplitude. Thus each TV row and the
+all-positive base equality survives this one common convex mixture.
+Consequently the mixture is a feasible $O$ allocation. Completion gives
+$O\subseteq N$, proving the three-way equivalence at every closed endpoint.
+No separately optimized event or coordinate is substituted for a joint law.
+
+To choose the weights continuously, impose the index order on the 36
+vertices and use its pulling triangulation. For each face $F$, select its
+smallest vertex and cone it over the recursively triangulated facets of
+$F$ not containing it. Every ray in $F$ from that vertex meets such a
+facet; facets containing the vertex are covered as boundary faces.
+Induction on dimension proves coverage with simplex interiors disjoint.
+On any shared face the recursively imposed vertex order is the same,
+so its induced triangulations agree. This gives a conforming finite
+triangulation using the existing vertices.
+
+On each simplex use its unique affine barycentric coordinates and assign
+zero to the other vertices. On an intersection face, off-face coordinates
+vanish and the remaining barycentric coordinates agree by uniqueness.
+They therefore define 36 global continuous, piecewise affine nonnegative
+weights summing to one and reproducing $x$. Formula (147.1) then gives the
+asserted continuous section. At boundary points and zero weights the same
+formulas apply without a division. $\square$
+

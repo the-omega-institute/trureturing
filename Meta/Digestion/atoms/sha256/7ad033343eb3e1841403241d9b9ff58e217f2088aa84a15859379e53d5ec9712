@@ -1,0 +1,37 @@
+**Convention 3.1 (Premises and attribution).** The project premises of
+Theorem 2.1 are exactly Hypothesis 1.3 and the cited coordinate-fiber
+identity from the two published suppliers. Their ordinary mathematical
+proofs are the assumed source inputs. The stationary law, the all-law
+risk identity and ceiling, and the posterior interval $[1/4,1/2]$ belong
+to [Stationary]; the pointwise finite-visible-order contradiction belongs
+to [Finite Memory]. The component posterior transfer (2.7)–(2.8), the
+exact component-density consequence (2.9)–(2.11), and their simultaneous
+use with the insertion and finite-length certificates constitute the
+`repo-derived` conclusion here.
+
+The needed `literature-attested` probability facts are those of Robert
+M. Gray, *Probability, Random Processes, and Ergodic Properties*, the
+author-hosted text bearing the version date January 2, 2010:
+Theorem 8.5.1, printed pp. 185–186, supplies the measurable invariant
+ergodic decomposition and its conditional-probability interpretation;
+Lemma 8.6.2, printed p. 187, supplies past measurability for a two-sided
+stationary process with standard alphabet. Its Markov-process setting
+does not add a Markov hypothesis to that lemma. The standard-space
+criterion used above is Gray, Theorem 3.3.2; the defining conditional
+expectation identities are Gray, §5.9, equations (5.27)–(5.28).
+The new transfer to the entire punctured exterior is proved in §2.2
+rather than imported as a learning or finite-memory conclusion.
+
+The theorem establishes existence and the specified quantitative
+certificates. It does not identify a unique component, assert mixing,
+specify a Gibbs interaction or an effective construction, exclude finite
+hidden-state producers, determine a numerical value of $c_\star$, or
+give a gap uniform over laws of a fixed visible order. Those assertions
+are not consequences claimed here. The attribution is to the checked
+facts and to this deduction from them, with no worldwide priority claim
+or assertion of a learning or physical benefit.
+
+[Stationary]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[Finite Memory]: https://github.com/the-omega-institute/trureturing/blob/db23810980530aea4b6fc2a056615460c8cbecb9/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[Gray]: https://www-ee.stanford.edu/~gray/arp.pdf
+

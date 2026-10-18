@@ -1,0 +1,129 @@
+**Theorem 3.1 (the labelled stopped carrier).** For every base (QC.1),
+calibrated preparation (QC.4), prescribed original control in Definition 1.2
+and interval $[s,t]$, (QC.9)–(QC.11) form a complete countably additive
+instrument. Equations (QC.6) give an exact correspondence with the original
+five-live-mode instrument plus its absorbing state on
+$V\oplus\mathbb Cf$. This correspondence holds for each success operation
+and each of the five failure CP measures separately, with every actual joint
+archive/reference/metadata register in Definition 1.3 retained.
+
+It preserves legality, complete finite event traces, their joint terminal
+states, clocks, selectors and updates under every finite policy in that
+contract. Thus the live quantum algebra can be represented by $M_3$ with
+a classical absorbing sector, or by its four-dimensional Hilbert embedding.
+The result changes the specimen representation and supplies none of the
+conditional services or missing acquisitions in Definition 1.3.
+
+Proof. Every actual live transported vector belongs to $V$: its amplitudes
+in modes $0,4$ have the common varying modulus $\sqrt{k}$ and common
+increment $H_+$, with the fixed phases already in $U_+$; modes $1,3$ have
+the corresponding common increment $H_-$ and modulus $\sqrt{c-k}$.
+This argument also applies at open nonloop prefixes, where a real relation
+phase need not be an integer multiple of $2\pi$. Thus $V$ is the same
+fixed support at every live cut, not a subspace chosen using the hidden phase.
+
+The maps in (QC.6) are CPTP. Compression to a subspace is CP, and the
+complementary trace-and-prepare term is CP. Their trace contributions sum
+to $\operatorname{tr}\rho$. The decoder is isometric and trace preserving.
+For every operator $X$ supported on $P$,
+
+$$
+\mathcal D\mathcal E(X)=X,
+\qquad \mathcal E\mathcal D=\operatorname{id}_{M_4}.
+\tag{QC.13}
+$$
+
+These operator identities imply exact joint-state recovery after tensoring
+with $\operatorname{id}_R$, including off-diagonal correlations with $R$.
+They do not assume that the specimen and its archive are independent.
+
+Strict positivity on this one compact path gives a positive minimum for
+$k,c-k,Z$, so all logarithmic derivatives and all $\gamma$ in (QC.8) are
+integrable. If $k'\geq0$, then $\lambda=k'/k$; if $k'\leq0$, then
+$\lambda=-k'/(c-k)$. Both cases show $\gamma_+,\gamma_-,\gamma_2\geq0$.
+For $\alpha\in\{+,-,2\}$ the absolutely continuous function
+$q_\alpha(\tau)=|a_\alpha(\tau,s)|^2$ satisfies
+
+$$
+q_\alpha(s)=1,
+\qquad q'_\alpha=-\gamma_\alpha q_\alpha\quad\hbox{a.e.}
+\tag{QC.14}
+$$
+
+Consequently each diagonal entry of $\widehat A^\dagger\widehat A$ is
+at most one. Integrating (QC.14) and summing both half-strength labels of
+each paired mode gives
+
+$$
+\begin{aligned}
+\sum_{i=0}^4\int_s^t L_i(\tau;s)^\dagger L_i(\tau;s)\,d\tau
+ &=\operatorname{diag}(1-|a_+|^2,1-|a_-|^2,1-|a_2|^2,0),\\
+\widehat A_{t,s}^\dagger\widehat A_{t,s}
+ +\sum_{i=0}^4\int_s^t L_i^\dagger L_i\,d\tau&=I_4.
+\end{aligned}
+\tag{QC.15}
+$$
+
+The integrable positive CP densities give countable additivity; (QC.15)
+proves completeness without normalizing any separate failure branch.
+At zero duration the integral is zero and $\widehat A=I_4$.
+
+For exact operation matching, let the original jump density be the supplied
+
+$$
+J_i(\tau;s)=\sqrt{\gamma_i(\tau)}\,|f\rangle\langle i|K_{\tau,s},
+\tag{QC.16}
+$$
+
+extended by zero on $f$. Here $\gamma_0=\gamma_4=\gamma_+$ and
+$\gamma_1=\gamma_3=\gamma_-$. Directly on the four basis columns of $W$,
+
+$$
+A_{t,s}W=W\widehat A_{t,s},
+\qquad J_i(\tau;s)W=WL_i(\tau;s)
+\quad(i=0,\ldots,4)\quad\hbox{a.e.}
+\tag{QC.17}
+$$
+
+For example, $\langle0|U_+\rangle=e^{-i\theta_0}/\sqrt2$ gives exactly
+the first density in (QC.10), including its fixed phase. The other paired
+columns have the same factor; the middle column has factor one. All other
+columns of that jump are zero. The finite-interval operators satisfy the
+same identity with the supplier's
+$B_{t,s,i}=\sqrt{1-|K_{t,s,ii}|^2}|f\rangle\langle i|$
+and (QC.12). Integrating (QC.17) proves, for every Borel $B$, every $i$
+and every supported input $X$,
+
+$$
+\mathcal I_i(B)(X)
+   =\mathcal D\widehat{\mathcal I}_i(B)\mathcal E(X).
+\tag{QC.18}
+$$
+
+The same formula holds for the no-new-failure operation. This is equality
+of CP operations on the entire supported matrix algebra, not only equality
+of marginal outcome probabilities on the endpoint family. It remains true
+with $\operatorname{id}_R$ on an arbitrary actual joint reference; the
+finite specimen matrix expansion proves this also for normal trace-class
+joint states. Classical state-valued measures are transported eventwise.
+
+The coefficients obey
+$a_\alpha(u,t)a_\alpha(t,s)=a_\alpha(u,s)$ by splitting the charge and
+phase integrals. For a failure time $\tau>t$ the jump after survival to $t$
+therefore equals the jump for the whole interval. A failure at $\tau\leq t$
+has successor $f$, which is subsequently fixed. Splitting each labelled
+failure integral at $t$ proves chronological consistency of the complete
+instrument, including the retained first time and mode. When separate
+controls are joined, `concatenate_original` supplies exactly the original
+prefix, translated tail and phase integrals used in these identities.
+
+Finally, at a policy cut the actual event and every retained field have the
+same joint state under (QC.13) and (QC.18). An operation on the retained
+registers commutes with $W$ on the specimen. The same selection rule and
+external input therefore choose the same supplied next programme, or the
+same permission rejection. Its clock and resource fields are the same
+actual fields, not reconstructed values. Induction over a finite policy
+proves joint trace and successor correspondence. Failed branches stay
+absorbing. Decoding gives every terminal quantum read of the original
+specimen with its actual reference. This proves the theorem. $\square$
+

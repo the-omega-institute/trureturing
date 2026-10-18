@@ -1,0 +1,51 @@
+**Theorem 6.1 (a total initialized generator for every feasible cutoff).** If $D=\delta_K$ is geometrically feasible, there is an observer of Definition 1.3 with exactly $7+K$ configurations satisfying the original uniform guarantee. Consequently
+
+$$
+\boxed{
+6+\min(N_1,J+1)\le N_{\mathrm{gen}}(\epsilon)
+\le\min(6+N_1,\,7+K_{\mathrm{geo}})
+\le\min(6+N_1,\,7+K_{\mathrm{tail}}).
+}
+$$
+
+The fixed-holding construction realizes the $7+K_{\mathrm{tail}}$ option with minority exit weight $\beta=\alpha_{\mathrm{tail}}\delta_{K_{\mathrm{tail}}}$; choosing the smaller of it and the $6+N_1$ source-exact construction realizes the displayed upper bound.
+
+**Proof (6.1).** Choose feasible $t,\beta$. Use the labels
+
+$$
+I,\quad R_0,\ldots,R_4,\quad A_0,\ldots,A_{K-1},\quad T.
+$$
+
+Every singleton $j\in\{0,1,3\}$ sends every label to $R_j$. On $B$ define
+
+$$
+\begin{aligned}
+I&\mapsto A_0, &A_k&\mapsto A_{k+1}\quad(k<K-1),
+&A_{K-1}&\mapsto T,&T&\mapsto T,\\
+R_0&\mapsto R_4,&R_1,R_3&\mapsto R_2,
+&R_2&\mapsto R_2,&R_4&\mapsto R_4.
+\end{aligned}
+$$
+
+Emit $(1/5,1/5,1/5,2/5)$ at $I$, the true source row $v_i$ at $R_i$, the row $(1-\delta_k)v_d+\delta_kv_f$ at $A_k$, and the normalized row of Definition 5.1 at $T$. These are all the emission and update data. Since feasibility forces $K\ge J\ge1$, the displayed indices exist. The update is total on all four symbols, even where a row has a zero forecast. Iterating it and these rows defines every decoded word law on the listed set.
+
+The actual-history invariant is: empty occupies $I$; $B^{k+1}$ occupies $A_k$ for $k<K$ and $T$ for $k\ge K$; any history containing a singleton occupies its exactly inferred $R_i$. Proposition 2.1 and the update prove this by induction. Pure labels generate exact source laws. At a saturated startup label, $\delta_k\le\delta_K$ and Theorem 5.5 gives error at most $\epsilon$.
+
+At $A_k$, $k<K$, the generated and true laws agree until a singleton or $m=K-k$ more $B$ symbols. A singleton gives the same exact continuation. The common prefix $B^m$ has probability
+
+$$
+S_k=\frac{u^K+v^K}{u^k+v^k}\le1.
+$$
+
+After that prefix the true residual is $G_{\delta_K}$ and the generated residual is $Q_{t,\beta}$. For $H\le m$ the error is zero; for $H>m$ the finite-word error is exactly $S_k$ times their horizon-$(H-m)$ error, because every other prefix branch agrees. Its supremum is at most $S_k\epsilon\le\epsilon$. At initialization, the singleton first-read branches are exact. Its first $B$, of probability $2/5$, enters $A_0$, so the empty profile error is at most $(2/5)\epsilon$. This verifies every actual history and every horizon.
+
+Every listed label is actually used: $I$ at empty, $A_k$ at $B^{k+1}$, $T$ at $B^{K+1}$, and the pure labels at $0,1,3,1B,0B$. Generated paths stay in that same finite set. Thus the count $1+5+K+1=7+K$ includes all initialization, actual and generated resources. Singleton overwrites change the retained observer label after a passive read; they do not reset the source. A source-legal minority exit assigned zero probability by another row still has a defined update.
+
+For the reused upper $6+N_1$, omit $T$, take $K=N_1$ and send the last transient on $B$ to $R_d$. At $A_k$ the sole discrepant prefix has probability $S_k$ and residual distance $\delta_K$, so its profile error is
+
+$$
+S_k\delta_K=\frac{u^K}{u^k+v^k}\le\delta_K\le\epsilon.
+$$
+
+Later actual startup histories have error $\delta_j\le\epsilon$. Pure histories are exact, and the empty error is $u^K/5\le\epsilon$. This is precisely the published exact-emission truncation, with its total actual-input update and full-horizon scope. The lower bound is Theorem 4.3. $\square$
+

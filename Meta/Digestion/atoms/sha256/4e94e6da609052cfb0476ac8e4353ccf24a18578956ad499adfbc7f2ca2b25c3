@@ -1,0 +1,67 @@
+**Theorem 324.1 (A conserved terminal-cell transfer).**
+Retain the original source, full Borel carrier, consumer and resource
+classes of 315.1. For every real triple satisfying
+
+$$
+0<\tau\le\frac1{24},\qquad 0\le t\le\tau,\qquad
+0\le\delta\le\min\left\{\tau-t,\frac{53t}{128}\right\},
+\tag{324.1}
+$$
+
+prescribe
+
+$$
+\begin{aligned}
+a_1=a_2&=1-11\tau,&
+(a_3,\ldots,a_7)&=(13,10,9,8,6)\tau,\\
+a_8&=5\tau+t+\delta,&a_9&=5\tau+t-\delta,&
+E&=5\tau+\frac{11t}{64}.
+\end{aligned}
+\tag{324.2}
+$$
+
+Append **any entire positive nonincreasing vanishing actual tail** with
+$a_{10}\le E$. For the separately selected marked targets
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
++a_{n(x)}\delta_{\theta_{n(x)}}$, both original hard-two minima are
+attained and equal $E$:
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+=\min_{A\in\mathcal O_2}e_a(A)=E.
+\tag{324.3}
+$$
+
+For this fixed entire sequence, every positive **closed** cap $c$ is
+feasible in either class exactly when $c\ge E$. The constructed
+stopped rule and its own $N$ completion use the identical source and
+one source-independent seed, have identical output laws, and make at
+most two actual requests. Arbitrary original competitors retain their
+arbitrary addresses, repeated requests and full-carrier outputs.
+
+At $t>0$ the actual active length at $E$ is nine. At $t=0$ necessarily
+$\delta=0$, the active length is seven and the result is the reused
+seven-active case. The range (324.1) is sufficient; no maximality of
+the allowable transfer is asserted. The new amplitude coverage is
+only $\delta>0$; the equal-tail theorem 321.1 is reused.
+
+**Domain verification.** The head gap is $1-24\tau\ge0$, and the
+five middle amplitudes are ordered. The remaining relevant gaps are
+
+$$
+a_7-a_8=\tau-t-\delta\ge0,\qquad
+a_8-a_9=2\delta\ge0,\qquad
+a_9-E=\frac{53t}{64}-\delta\ge\frac{53t}{128}.
+\tag{324.4}
+$$
+
+Thus the sequence is positive, ordered and bounded by one, including
+all head or tail ties. Also
+$0<E\le331/1536<1$. If $t>0$, (324.4) and $a_{10}\le E$
+give exactly nine active coordinates; if $t=0$, $a_8=a_9=E$
+and $a_7=6\tau>E$. These arguments include $\tau=1/24$,
+$t=\tau$ (where $\delta=0$), the order boundary
+$\delta=\tau-t$, and exhaustion of the donor at
+$\delta=53t/128$. The algebraic zero-scale point is not an
+original positive-sequence assertion.
+

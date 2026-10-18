@@ -1,0 +1,53 @@
+## 1. Complete domain and actual-law interfaces
+
+Retain the full open-path domain and objective of [Stationary, §§1–2][S]:
+
+$$
+B_n=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\},\qquad
+h(s,v)=\begin{cases}sv/(s+v)&s+v>0,\\0&s=v=0,\end{cases}
+$$
+
+$$
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\quad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\quad c_\star=\lim_n\kappa_n/n.
+$$
+
+Every legal Hamming-one edge is present, with endpoint insertion convention $w_0=w_{n+1}=0$ and no first-to-last constraint. All-zero words, endpoint ones, every legal seam, structural zeros and zero-mass vertices remain. Put $X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}$, $(Tx)_i=x_{i+1}$ and $\mathcal E_i=\sigma(X_j:j\ne i)$.
+
+For one normalized two-sided stationary law $P$ on $X$, choose $[0,1]$ Borel versions
+
+$$
+q_i(P)=\mathbb E_P[X_i\mid\mathcal E_i],\quad \ell_i(P)=(X_i-q_i(P))^2,\quad
+q_{r,i}(P)=\mathbb E_P[X_i\mid X_{i-r},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+r}].
+$$
+
+The radius-zero field is trivial. [Stationary, equations (2.1)–(2.6)][S] gives
+
+$$
+d(P)=\lim_n\Phi_n(P_n)/n=\mathbb E_P\ell_0(P)=\inf_rD_r(P)\le c_\star,
+\qquad D_r(P)=\mathbb E_P(X_0-q_{r,0}(P))^2.
+\tag{1.1}
+$$
+
+All clocks below are the original emitted-bit integer coordinates. Neighbor-one fibers force the center, posterior and loss to zero. Zero-total finite fibers contribute zero and require no division; posterior versions there do not affect an integral.
+
+For every finite $N$, retain [Universal, Definition 4.1][U]'s entire exact-real domain
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,\ M_0,M_1\ge0,
+\ A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.2}
+$$
+
+Here $\lambda$ is an $N$-dimensional row, $M_0,M_1$ are $N\times N$, and $M_w=M_{w_1}\cdots M_{w_n}$. Structural zeros, zero stationary masses, reducibility, periodicity and noncontractive boundaries are allowed. [Universal, Proposition 4.2][U] supplies one coherent stationary joint law with interval masses $\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1})$ and visible cylinders $P_\theta([w])=\lambda M_w\mathbf1$. Empty word products are identities; seams use ordered joint products. Entrywise $M_1^2=0$ is not required of every unpruned presentation.
+
+Fix $C=[1,L]$, $\mathcal H_C=\sigma(X_j:j\notin C)$, $f_C=f(X_C)$ and $F=\max_{B_L}|f|$. Conditional nullity means $\mathbb E_P[f_C\mid\mathcal H_C]=0$ under this actual $P$. The matrix condition $\sum_{w\in B_L}f(w)M_w=0$ is sufficient by [Conditional Response, §3][R], before attainment. Under same-law attainment only, that supplier's Theorem 3.1 and equation (2.2) give
+
+$$
+S_P(f):=\sum_{i\in\mathbb Z}\mathbb E_P[f_C\ell_i(P)]=0,\qquad
+0\le D_r(P)-c_\star\le c_\star/(r+1),\qquad c_\star\le\bar c:=3-2\sqrt2<1/4.
+\tag{1.3}
+$$
+
+The ceiling is unconditional; the zero-response and projection-budget statements require attainment.
+

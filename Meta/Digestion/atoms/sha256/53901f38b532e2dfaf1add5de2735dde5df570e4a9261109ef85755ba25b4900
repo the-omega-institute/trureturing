@@ -1,0 +1,37 @@
+**Convention 10.1 (source notation and hypotheses).** Repository citations
+refer to revision `22f02d429d40d97f7c83a81d0481826ebadeb511`.
+In [GenealogicalFiberTransport][D5G], the source is the free ordered magma
+on Boolean leaves, with `true` for alpha and `false` for beta, and
+`substitution` is the lifted map sending these to beta and
+pair(beta,alpha). In [ActualTreeReadoutAcquisition][D5A], addresses are
+finite Boolean lists: false means $L$, true means $R$, and
+`Reply`/`readout` give all four replies at every finite literal.
+Its recognition problem is a different endpoint.
+In [NativeDepthPatterns][D5N], `original_present_transport` assumes
+`subtree a u = some t`; the fixed actual occurrences in §8 meet precisely
+that presence hypothesis. `original_prefix_locality` assumes agreement
+of original replies through the requested word length and concludes
+all-count reply agreement. Neither hypothesis supplies a subtree input
+or a free navigation operation.
+
+The theorem `target_family_minimal_quotient` in
+[TargetFamilyMinimalQuotient][D5T] assumes passive factorization of every
+target through one readout and gives its joint-kernel quotient. That
+zero-later-Read endpoint does not characterize which single native reply
+can repair a fiber. The theorem
+`compact_observation_factorization` in [CompactObservationFactorization][D5C]
+assumes a nonempty compact topological source, finite discrete observation
+levels, continuous surjective compatible observation maps whose fibers
+form a topological basis, and a continuous finite readout. Its action
+conclusion also assumes finitely many continuous actions and a bounded
+word window. It supplies finite-level existence, not effective native
+acquisition, one-probe memory rate or a lower convergence modulus.
+
+AAR §§12, 13 and 16 already supply the exact all-count factors, fixed-menu
+passive codes and native acquisition results. [NBP, Assumption 14.1 and
+Theorem 14.4][NBP] supply a different paid common-start two-phase
+predecessor interface with a stationary register and a code-only access
+cut. Its full-row and terminal-latch hypotheses are not imported as a new
+late-target theorem. Neither source physically derives isolation or
+authentication.
+

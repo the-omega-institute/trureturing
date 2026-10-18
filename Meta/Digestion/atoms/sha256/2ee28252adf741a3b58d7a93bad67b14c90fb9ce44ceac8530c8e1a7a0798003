@@ -1,0 +1,68 @@
+**Theorem 23.3 (actual normalized comparison and exact feasible realization).** For $q>0$ put $r=\sqrt q$ and form, from every term of the original list,
+
+$$
+K_\alpha^\sharp=
+\left(x_\alpha,Jx_\alpha,\frac{(TP_A)_\alpha}{r}\right),\qquad
+N^\sharp(X)=\sum_\alpha K_\alpha^\sharp X(K_\alpha^\sharp)^T.
+\tag{R.106}
+$$
+
+This is an actual real-Kraus CPTP encoder in the same phase class, with
+
+$$
+\begin{gathered}
+B^\sharp=B,\qquad C_{\rm out}^\sharp=C_{\rm out}/r,\qquad
+D^\sharp=C_{\rm out}^TB^+C_{\rm out}/q,\\
+q^\sharp=1,\qquad D_\perp^\sharp=0.
+\end{gathered}
+\tag{R.107}
+$$
+
+It admits at most $k=\operatorname{rank}B\leq4$ real Kraus matrices for the entire channel on all complex inputs. This bound belongs to $N^\sharp$. At $q=1$ the original and comparison channels coincide; no such identity or original rank bound is asserted when $q<1$.
+
+The normalized comparison domain has the following exact constructive description. For fixed $\beta,J,h,Q$ as above, a real pair $(B,C_{\rm out})$ is feasible if and only if
+
+$$
+\begin{gathered}
+B=B^T\succeq0,\qquad Bh=0,\qquad B+JBJ^T=Q,\\
+\operatorname{ran}C_{\rm out}\subseteq\operatorname{ran}B,\qquad
+\operatorname{Tr}C_{\rm out}=\operatorname{Tr}(JC_{\rm out})=0,\\
+\operatorname{Tr}(C_{\rm out}^TB^+C_{\rm out})=1.
+\end{gathered}
+\tag{R.108}
+$$
+
+Here feasibility means realization by one actual channel of the form (R.106) with $q=1$, rather than separate positivity conditions on unrelated blocks. In the reverse direction, choose a real full-column-rank factor with $k$ columns and set
+
+$$
+AA^T=B,\qquad T=C_{\rm out}^TB^+A,\qquad
+K_\alpha=(A_\alpha,JA_\alpha,T_\alpha).
+\tag{R.109}
+$$
+
+These matrices supply the required common realization.
+
+**Proof.** The first two columns of (R.106) retain their original summed norms one and their skew inner product zero. The third summed squared norm is $\|TP_A\|_F^2/r^2=1$. Since $AP_A=A$ and $(JA)P_A=JA$, the two summed cross inner products with $TP_A$ equal those with $T$ and hence vanish. Division by $r$ preserves their zero values. This proves every TP entry; the actual Kraus sum proves CP on the complex matrix algebra. Its first two columns are unchanged, so both actual phase outputs and their spectra are unchanged. Multiplying the blocks proves (R.107).
+
+All three rows of column maps $A,JA,TP_A/r$ vanish on $\ker P_A$. Choose a real $n\times k$ matrix $W$ with orthonormal columns spanning $\operatorname{ran}P_A$, so $WW^T=P_A$. Define $\widehat K_j=\sum_\alpha W_{\alpha j}K_\alpha^\sharp$. Expanding their Kraus sum replaces the index contraction $I_n$ by $WW^T=P_A$; the omitted index directions have all three output columns zero. Thus $\sum_j\widehat K_jX\widehat K_j^T=N^\sharp(X)$ for every complex $X$. Tensoring this identity with any finite reference preserves it. This proves the comparison rank bound without truncating an original channel. When $q=1$, (R.101) gives $T=TP_A$ and $r=1$, proving the endpoint identity.
+
+Necessity of (R.108) follows from (R.100)–(R.101). For sufficiency, spectral factorization gives the real factor $A$ in (R.109). Its columns lie in $h^\perp$ by $Bh=0$. The range condition gives $BB^+C_{\rm out}=C_{\rm out}$, hence
+
+$$
+AT^T=BB^+C_{\rm out}=C_{\rm out},\qquad
+TT^T=C_{\rm out}^TB^+BB^+C_{\rm out}
+     =C_{\rm out}^TB^+C_{\rm out}.
+$$
+
+Trace of the phase identity gives $\operatorname{Tr}B=1$, because $J$ is an isometry on $h^\perp$. The two first-column norms, their skew inner product, the two cross traces in (R.108), and the final trace one in (R.108) now give precisely $\sum_\alpha K_\alpha^TK_\alpha=I_3$. In particular the normalization is an actual TP condition, not an independent assignment of a third block. The joint Gram matrix is
+
+$$
+\begin{pmatrix}
+B&C_{\rm out}\\ C_{\rm out}^T&C_{\rm out}^TB^+C_{\rm out}
+\end{pmatrix}
+=\begin{pmatrix}A\\T\end{pmatrix}
+ \begin{pmatrix}A\\T\end{pmatrix}^{T}\succeq0,
+$$
+
+of rank $k$, also for singular $B$. Since $JQ=JB-BJ^T$ on the active space, direct expansion gives $N(\chi_\pm)=(Q\pm iJQ)/2$. In the frame (R.7) these are the orthogonal-support states with nonzero spectra $(a,\beta)$, including $a=\beta=1/2$. This proves membership in the actual original real phase class. The full-column-rank factor gives $P_A=I_k$ and hence $q=1$, as required. The support, phase, $Bh=0$, trace and normalization conditions in (R.108) are all used; omitting them does not license this realization. $\square$
+

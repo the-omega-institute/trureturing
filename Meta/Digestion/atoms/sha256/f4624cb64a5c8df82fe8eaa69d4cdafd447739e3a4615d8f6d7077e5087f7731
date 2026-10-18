@@ -1,0 +1,79 @@
+**Theorem 84.3 (Complete nonnegative obstructions to hard-count feasibility).**
+For $0<\varepsilon\le1$ and $k\in\mathbb N_0$,
+
+$$
+\kappa_\varepsilon\le k
+\quad\Longleftrightarrow\quad
+\sum_{r\in\mathcal R}\alpha_rd_r\le V_k(\varnothing)
+\quad\text{for every }\alpha\in[0,\infty)^{\mathcal R}.
+\tag{84.6}
+$$
+
+If hard-$k$ feasibility fails, one finite nonnegative vector $\alpha$
+satisfies the strict reverse inequality. Its value on the right is evaluated
+by (84.4)--(84.5), and it obstructs every original arbitrary-address,
+full-carrier hard-$k$ competitor.
+
+**Proof.** For a tree $T$, let its row vector be
+$v_T(r)=\mathbf1_{\{T(b_r)\in H_r\}}$. Its weighted row value is
+
+$$
+\alpha\cdot v_T=\sum_{b\in Q}c_{b,T(b)}.
+\tag{84.7}
+$$
+
+On inputs consistent with $\tau$, a depth-zero tree must select a single
+leaf label, whose optimum value is (84.4). A deeper tree either selects
+such a leaf or requests an unassigned coordinate $i$. Its inputs then
+split into the disjoint zero and one extensions of $\tau$, and either
+child has remaining depth $d-1$. The two optimal child trees can be
+chosen independently and attached to that root. Induction on $d$ proves
+
+$$
+V_k(\varnothing)=\max_{T\in\mathcal T_{L,k}}\alpha\cdot v_T.
+\tag{84.8}
+$$
+
+Both children receive depth $d-1$. The recurrence bounds the number of
+requests on a path, rather than the sum of the numbers of nodes in the
+children, a prefix depth, or the greatest coordinate queried.
+
+Let $C=\operatorname{conv}\{v_T:T\in\mathcal T_{L,k}\}$ and
+$U=C-\mathbb R_+^{\mathcal R}$. A mixture satisfying all rows exists
+exactly when $d=(d_r)_r\in U$. The convex hull $C$ is compact and $U$
+is closed: if $v_m-z_m\to u$ with $v_m\in C$ and $z_m\ge0$, a
+subsequence has $v_m\to v\in C$, and then $z_m\to v-u\ge0$.
+If $d\in U$, every nonnegative $\alpha$ has
+$\alpha\cdot d\le\max_T\alpha\cdot v_T$, proving the forward
+implication using (84.8).
+
+If $d\notin U$, choose a nearest point $u\in U$. It exists since a
+minimizing sequence for distance to $d$ can be restricted to a closed
+bounded ball in a finite-dimensional space, and $U$ is closed. Set
+$\alpha=d-u\ne0$. For every $z\in U$, the segment from $u$ to $z$
+is in $U$. Minimality of $u$ applied to
+$\|d-u-t(z-u)\|^2$ for $t\downarrow0$ gives
+
+$$
+\alpha\cdot(z-u)\le0.
+\tag{84.9}
+$$
+
+Since $u-te_r\in U$ for every $t\ge0$, (84.9) implies
+$\alpha_r\ge0$ for every row. For such a vector subtraction of a
+nonnegative vector cannot increase the scalar product, so
+$\sup_{z\in U}\alpha\cdot z=\max_{v\in C}\alpha\cdot v$.
+Equation (84.9) says this supremum is $\alpha\cdot u$, and hence
+
+$$
+\alpha\cdot d
+=\alpha\cdot u+\|\alpha\|^2
+>\max_T\alpha\cdot v_T
+=V_k(\varnothing).
+\tag{84.10}
+$$
+
+This gives the strict obstruction and proves the reverse implication of
+(84.6), including equality cases in every row. Theorem 83.3 transfers
+this exact finite alternative to the original class. $\square$
+

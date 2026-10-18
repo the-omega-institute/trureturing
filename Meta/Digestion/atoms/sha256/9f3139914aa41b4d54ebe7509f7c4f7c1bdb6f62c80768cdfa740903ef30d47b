@@ -1,0 +1,118 @@
+**Theorem 321.1 (Every real parameter and every permitted actual tail).**
+For every real
+
+$$
+0<\tau\le1/24,\quad0\le t\le\tau,\quad
+a_1=a_2=1-11\tau,\quad(a_3,\ldots,a_7)=(13,10,9,8,6)\tau,
+\quad a_8=a_9=5\tau+t,
+\tag{321.1}
+$$
+
+put $E_*=5\tau+11t/64$ and append any positive nonincreasing
+vanishing actual tail with $a_{10}\le E_*$. Then both original
+marked-target hard-two optima are attained and equal $E_*$:
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+ =\min_{A\in\mathcal O_2}e_a(A)=E_*.
+\tag{321.2}
+$$
+
+For this fixed entire sequence, every positive closed cap $c$ is
+feasible in either class if and only if $c\ge E_*$. At $t>0$
+the actual active length at $E_*$ is nine; at $t=0$ it is seven.
+The endpoints $t=\tau$, $\tau=1/24$, zero mixture weights and
+$a_{10}=E_*$ are included.
+
+**Proof.** Order holds: $1-11\tau\ge13\tau$, the five late
+amplitudes are decreasing, $6\tau\ge5\tau+t$, and
+$0<E_*\le5\tau+t$. In particular (321.1) with every specified
+tail is an original entire sequence (315.2).
+
+Define the following one whole-law mixture on nine coordinates:
+
+$$
+p=(1-24\tau)R+24(\tau-t)P^0+24tP^\star.
+\tag{321.3}
+$$
+
+The three branch weights are nonnegative and sum to one. The auxiliary
+finite $R$ has target amplitudes $\alpha=(1,1,0,\ldots,0)$ and
+cap zero. The other endpoint target profiles and caps are (319.2)
+and (320.1). Their same affine combination has first two amplitudes
+$1-24\tau+13\tau=1-11\tau$, next five amplitudes
+$(13,10,9,8,6)\tau$, final two amplitudes
+$5(\tau-t)+6t=5\tau+t$, and cap
+
+$$
+24(\tau-t)\frac5{24}+24t\frac{331}{1536}
+ =5\tau+\frac{11t}{64}=E_*.
+\tag{321.4}
+$$
+
+For each fixed word and each of its independent events, both its
+probability and its demand are affine in law, amplitudes and cap.
+The zero-word and positive-word endpoint inequalities of 319.2 and
+320.2 therefore prove every full row for (321.3), for all real
+parameters in the stated closed domain. This is an affine proof
+of the continuum, not interpolation from sampled parameters.
+The same calculation at the positive word gives $p_+(0)=1-E_*$.
+
+Here is its original source and seed realization. Partition one
+source-independent $U\in[0,1)$ into the three branch intervals in
+(321.3), omitting zero intervals. Subdivide the selected branch into
+its schedule intervals. For a mixed $P^\star$ row use its same
+rescaled coordinate for all the quantile partitions of (320.2).
+Thus before replies the one seed fixes the whole schedule and all
+counterfactual labels. Execute only that chosen increasing schedule
+on the same actual source, stop at its first queried zero or
+exhaustion, and hand off its indicated actual $\theta_j$ to the
+unchanged consumer. Half-open intervals specify all endpoints.
+Every seed and source terminates finitely, measurably, with zero
+advice and at most two actual requests.
+
+The $N$ completion uses the identical source and seed, obtains the
+entire preselected schedule and reconstructs the same stopped output.
+Its ignored second reply counts as an actual request. It has identical
+output laws. No arbitrary initially supplied $N$ law is being preserved.
+The explicitly stopped normalized law also satisfies the reused exact
+criterion 109.1 at its actual active horizon; no degree-only or scalar
+expectation surrogate is used.
+
+No mark above nine is emitted. For every actual $n>9$, (315.7)
+therefore gives exact error
+
+$$
+\max\{1-p_+(0),a_n\}=\max\{E_*,a_n\}=E_*.
+\tag{321.5}
+$$
+
+This includes $a_{10}=E_*$ and every later positive vanishing tail.
+Every finite positive prefix and later first absence has an actual
+witness by 315.3. If $t>0$, $a_8-E_*=a_9-E_*=53t/64>0$,
+so the active length is nine. If $t=0$, bits eight and nine have
+amplitude equal to the cap; the $P^\star$ branch is absent, the
+law ignores them, and (315.7) gives error $5\tau$ on these
+classes too. Since $a_7=6\tau>5\tau$, the active length is seven.
+The algebraic $\tau=0$ degeneration is $R$ and is not an original
+positive-sequence assertion.
+
+For a lower bound against every original competitor, substitute
+the consecutive seven late addresses into (318.3). The contributions
+are
+
+$$
+2a_2-2=-22\tau,\quad
+11a_3+13a_4+13a_5+12a_6+11a_7=552\tau,\quad
+11(a_8+a_9)=110\tau+22t.
+$$
+
+Hence $128e_a(A)\ge640\tau+22t=128E_*$ for every original
+arbitrary-address, full-carrier $N$ or $O$ competitor. The bound
+continues to apply to a smaller cap that activates more tail
+coordinates, by 315.3. The one constructed law has error $E_*$
+by the upper rows and actual tails. It and its completion attain
+both minima. The same law meets every larger closed cap; the lower
+bound excludes every smaller one. This proves (321.2) and the full
+closed-cap equivalence. $\square$
+

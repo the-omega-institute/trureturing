@@ -1,0 +1,22 @@
+**Theorem 76.1 (complete pair reduction).** At fixed \(0<|b|<1\), failure
+of (76.1) is equivalent to nonemptiness of the finite list of systems
+(76.5)–(76.10), with the full single-ray conditions of §75. The respective
+numbers of free real quotient coordinates are at most eight, six, and
+four. Polynomial auxiliary variables retain every square-root identity
+and its strict sign, including \(s^2=K,s>0\) in the aligned chart;
+the pole parameter retains its defining polynomial and isolating interval.
+These auxiliary variables are not additional free coordinates. Every
+nonzero denominator and discriminant condition from §75 remains required.
+
+**Proof.** Theorem 75.1 covers every noncanonical ray. The three pair types
+exhaust the possible chart pairings. The evaluation-algebra arguments
+prove necessity and sufficiency of each determinant zero condition for
+some allowed relative order. Equations (76.2), (76.6), (76.8), and (76.10)
+compute the actual mean targets. Taking their finite union therefore
+preserves both directions, including the exceptional pole strata. ∎
+
+If all these systems were empty, three mutually orthogonal noncanonical
+rays would give three nonzero mutually orthogonal vectors in
+\(\mathbb C^2\), which is impossible. This remains a conditional consumer;
+the reduction itself neither proves (76.1) nor excludes arbitrary triples.
+

@@ -1,0 +1,75 @@
+**Theorem 5.1 (short-block slack on one complete graph).** Every graph at
+both original Boolean caps satisfies
+
+$$
+m-G\ge\nu+E_{\rm reg}+b_{\rm short}
+ +\sum_{\substack{B\text{ maximal}\ |B|\ge3}}(E_B-D_B).
+\tag{5.1}
+$$
+
+If there are no three consecutive ambiguous depths, then
+
+$$
+m\ge G+\nu+E_{\rm reg}+b_{\rm short}.
+\tag{5.2}
+$$
+
+The minimum in this class is exactly $G$, attained by the fixed-order
+grid. If $m<G$, the combined long-block deficit satisfies the sharper
+necessary inequality
+
+$$
+\sum_{|B|\ge3}(D_B-E_B)
+>\nu+E_{\rm reg}+\sum_{|B|\le2}(E_B-D_B)
+\ge\nu+E_{\rm reg}+b_{\rm short}.
+\tag{5.3}
+$$
+
+In particular some long block has
+
+$$
+D_B\ge E_B+1\ge |B|+1\ge4.
+\tag{5.4}
+$$
+
+For this fixed graph, $m\ge G$ is equivalent to
+
+$$
+\sum_{|B|\ge3}(D_B-E_B)
+\le\nu+E_{\rm reg}+\sum_{|B|\le2}(E_B-D_B).
+\tag{5.5}
+$$
+
+Proof. Substitute Corollary 4.3 in the exact identity (3.3). Every
+ambiguous depth contributes at least one to its block's $E_B$ because
+some $a_p\ge2$ and $b_p\ge a_p$. This proves (5.1)--(5.4), including
+integer strictness. Rearranging (3.3) gives (5.5). These are simultaneous
+incidence statements on the same installed graph.
+
+For the upper, install states $(h,z)\in V$, label each by coordinate
+$h+z+1$, advance its counts on the reply, and terminate at zero after
+$L$ zeros or at one after $K$ ones. Every path reads a prefix of the fixed
+order, computes threshold, and pays at most $n,W$. A path with $K-1$
+ones and $L-1$ zeros before its last query attains both caps on the same
+input. Every cell is realized, has one support and one host, and there
+are $G$ states. This is the existing grid upper exposed in [SI, Corollary
+9.5][SI] and [CP][CP]. It has $\nu=E_{\rm reg}=b_{\rm short}=0$,
+so it attains the minimum.
+
+The conditional minimum and the exact residual comparison (5.5) already
+belong to [SI, Corollary 9.5 and Proposition 9.6][SI]. The new information
+in (5.1)--(5.3) is the explicit short-block unit of slack. A positive local
+long deficit is necessary, not sufficient, for a saving: it must outweigh
+all other terms. Four duplicate incidence units need not represent four
+different states. A separator live elsewhere is in $Q_{\rm live}$ and
+cannot automatically be charged to $\nu$. Proving $D_B\le E_B$ for each
+long block would suffice, but is stronger than (5.5). The results below
+prove compensation for some of those long blocks; compensation for every
+remaining late gap of span at least five stays unproved.
+$\square$
+
+Theorem 5.1 remains valid, but its length-three-or-more block sum is a
+coarser partition than the current frontier. The following deductions of
+[SI, Section 10][SI] resolve every three-depth ambiguity block and every
+early-ending interval, without restricting other intervals of the graph.
+

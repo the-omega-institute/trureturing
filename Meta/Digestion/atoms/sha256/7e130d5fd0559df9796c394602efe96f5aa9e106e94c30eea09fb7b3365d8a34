@@ -1,0 +1,35 @@
+**Definition 3.2 (weighted closure).** Regard an edge
+$X_v=\tau_dX_w$ as an integer offset constraint. Compute connected
+components with integer potentials, maintaining
+
+$$
+X_v=\tau_{p_v}S_C\quad(v\in C).
+\tag{PDC.8}
+$$
+
+Choose an existing name $r_C$ as representative, with $p_{r_C}=0$;
+thus $S_C=X_{r_C}$. Merge components when adding a new edge, or check
+its offset against the existing difference. Reject a nonzero-offset
+cycle.
+
+Primitive flags propagate across a component. A ground condition
+$X_v=[a]$ makes $S_C=[a-p_v]$; multiple ground conditions must agree.
+Whenever two retained definitions
+
+$$
+X_v=F(X_l,X_r),\qquad X_w=F(X_{l'},X_{r'})
+$$
+
+have parent names in one component, put $d=p_v-p_w$ and add
+
+$$
+X_l=\tau_dX_{l'},\qquad X_r=\tau_dX_{r'}.
+\tag{PDC.9}
+$$
+
+Continue until every connected pair of parent definitions has been
+inspected. Reject a component carrying both a primitive flag and an
+$F$ definition. Finally form the directed graph from each defined
+component to the components of both its children, and reject a directed
+cycle.
+

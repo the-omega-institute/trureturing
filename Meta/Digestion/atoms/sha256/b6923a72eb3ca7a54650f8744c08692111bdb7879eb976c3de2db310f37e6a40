@@ -1,0 +1,22 @@
+**Definition 1.3 (raw record and finite slot catalog).** Let $W(h)$ contain
+the 74 actual finite tape words in port order, with all eight tracks,
+including boundary, head, seal, reserved and meter tracks; every constructed
+finite control location, active and inactive code stores, PC, mode, cursor,
+phase, latches and tokens; and the fixed source/port binding. A cell's
+physical identity is its port and creation-chain position, as in ARC
+Definition 6.2. Encoded origin references are their actual tape material.
+An interpretation such as an event list or current tree is not an extra
+physical store. Absolute construction-event provenance is carried by the
+actual execution relation; it is not inferred from an unnamed tree shape.
+
+Enumerate the possible finite physical locations once by physical identity:
+primitive fields, original boot/control version, capture $L$, expanded $G$,
+and their actual fixed bootstrap/phase/token/cursor fields, in that order
+and then their owning field/bit order. Reused locations are listed once;
+retained distinct versions are distinct. Let the catalog have size $q\ge1$.
+Its entries have values absent, 0 or 1. A dynamic table on 24, a captured
+description, simulated code, natural, bank field or descriptor is ordinary
+tape data, not an extra finite location. The catalog and all fixed native
+store lengths depend on this initially chosen finite apparatus, never on
+future $J$, a later word length or an elapsed ordinal.
+

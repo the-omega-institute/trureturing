@@ -1,0 +1,28 @@
+**Theorem 4.3 (exact ten-state unrestricted minimum in the mixed case).**
+If $\sigma[\Pi_j]=\{0,1\}$ for each $j$, the least installed state
+count of any correct terminating representative-root reader is exactly
+ten. A ten-state reader uses at most four calls on every origin.
+
+Proof. Theorem 4.2 excludes every budget at most nine without imposing a
+call limit. For the upper, install five Reads $D_0,D_1,Q_2,Q_3,Q_4$ and
+the same five complete-output Halts $H_0,\ldots,H_4$. Use the two different
+entries $\iota(0)=D_0$, $\iota(1)=D_1$. The entire Read table is
+
+| Read | Fixed actual literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D_0$ | $LLR$ | $H_1$ | $Q_2$ | $Q_2$ | $Q_2$ |
+| $D_1$ | $LLR$ | $H_1$ | $Q_2$ | $Q_2$ | $Q_2$ |
+| $Q_2$ | $LRR$ | $H_2$ | $Q_3$ | $Q_3$ | $Q_3$ |
+| $Q_3$ | $RLR$ | $H_3$ | $Q_4$ | $Q_4$ | $Q_4$ |
+| $Q_4$ | $RRR$ | $H_4$ | $H_0$ | $H_0$ | $H_0$ |
+
+The distinct first Reads faithfully hold the two bits at entry and have
+identical successors; their duplication is charged. Each entry tests
+all four possible positive indices, returns their complete row on alpha,
+and returns the complete $R_0$ if all are non-alpha. Supplier 2.4 proves
+correctness on the whole fiber, for every zero placement and branch
+filling. Every call is paid, and the code has no separate surviving copy.
+All ten states count. This gives the matching upper and hence the exact
+minimum. It makes no assertion of ten-state sufficiency at three calls.
+$\square$
+

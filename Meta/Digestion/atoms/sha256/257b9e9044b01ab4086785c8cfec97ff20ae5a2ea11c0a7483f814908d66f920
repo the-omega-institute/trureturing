@@ -1,0 +1,84 @@
+**Theorem 68.4 (A complete non-totally-bounded supplier with local order control).** Under Definition 68.3, $\mathcal R$ is a closed, complete, separable, convex range in event-TV. Its real linear span and its affine dimension are infinite, and it is not TV totally bounded. Nevertheless $P_{\mathcal R}$ satisfies (68.2). More precisely, fix a center $g=\sum_n a_n r_n u_n(T_n)$, a finite set $F\subseteq\mathbb N$, and positive radii $b_n$ for $n\in F$. Put
+
+$$
+\beta_n(b)=\inf_{s\in S_n}\rho_n\{t:d_n(s,t)<b\}>0.
+\tag{68.9}
+$$
+
+Then the deficit of every countable family in its $L^1$ ball obeys
+
+$$
+D_{P_{\mathcal R}}(g,\epsilon)
+\le\sum_{n\notin F}a_n+
+       \sum_{n\in F}\left(\frac{\epsilon}{\beta_n(b_n)}
+                          +2\omega_n(b_n)\right).
+\tag{68.10}
+$$
+
+In particular every continuous selection into this fixed infinite-dimensional range has the original-tape exhaustion and acquisition conclusion of Theorem 68.2.
+
+**Proof.** First (68.9) uses both hypotheses in (68.6). Compactness gives a finite cover of $S_n$ by open balls of radius $b/2$. Each has positive $\rho_n$ mass. If its center is within $b/2$ of $s$, that entire ball is contained in the radius-$b$ ball about $s$. The minimum of the finitely many positive masses is a lower bound in (68.9).
+
+For nonnegative $u\in\mathcal A_n$, normalization and its common modulus give
+
+$$
+u(s)\le1+\omega_n(\operatorname{diam}S_n)\qquad(s\in S_n).
+\tag{68.11}
+$$
+
+Indeed integrate $u(s)\le u(t)+\omega_n(\operatorname{diam}S_n)$ in $t$. Thus $\mathcal A_n$ is uniformly bounded and equicontinuous, and is closed in the uniform norm: each defining inequality, nonnegativity and normalization pass to a uniform limit. The classical Arzelà--Ascoli theorem makes it compact. The precise hypotheses are a compact metric domain, a common modulus giving equicontinuity, pointwise relatively compact real values, and a closed class in the uniform topology. They are the compact-domain specialization of [pinned Mathlib, Ascoli, ArzelaAscoli.compactSpace_of_isClosedEmbedding](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/UniformSpace/Ascoli.lean). Compact metric classes are separable. Full support of $\rho_n$ makes continuous functions equal $\rho_n$-almost everywhere equal everywhere, so their $L^1(\rho_n)$ classes have unique continuous representatives.
+
+There is a useful direct norm estimate inside each block, including variable block masses. If $v=a u$ and $w=c z$, where $a,c\in[0,1]$ and $u,z\in\mathcal A_n$, then both $v$ and $w$ have modulus bounded by $\omega_n$. Averaging over the radius-$b$ ball about $s$ gives
+
+$$
+\begin{aligned}
+|v(s)-w(s)|
+&\le \frac{1}{\rho_n(B(s,b))}
+       \int_{B(s,b)}|v(t)-w(t)|\,d\rho_n(t)+2\omega_n(b)\\
+&\le\frac{\|v-w\|_{L^1(\rho_n)}}{\beta_n(b)}+2\omega_n(b).
+\end{aligned}
+\tag{68.12}
+$$
+
+This holds simultaneously at every $s$, for every such pair. In particular $L^1$ convergence in the fixed weighted class forces uniform convergence, by first choosing $b$ small and then the $L^1$ tolerance small.
+
+Disjoint support and the pushforward identity give the exact global norm formula
+
+$$
+\left\|\sum_n a_n r_nu_n(T_n)-
+             \sum_n c_n r_nz_n(T_n)\right\|_{L^1(\sigma)}
+=\sum_n\|a_nu_n-c_nz_n\|_{L^1(\rho_n)}.
+\tag{68.13}
+$$
+
+No cancellation between blocks occurs. To prove closedness, let $g_j\in P_{\mathcal R}$ converge in $L^1(\sigma)$ to $g$. Nonnegativity, integral one and vanishing off $B=\bigcup_nB_n$ pass to the limit. Let $a_n=\int_{B_n}g\,d\sigma$; the corresponding masses $a_{j,n}$ converge to $a_n$, and $\sum_na_n=1$. For any $a_n>0$, eventually $a_{j,n}>0$. The normalized block restrictions are $L^1$ Cauchy, since, for positive $a_{j,n},a_{k,n}$,
+
+$$
+\|u_{j,n}-u_{k,n}\|_{L^1(\rho_n)}
+\le\frac{\|a_{j,n}u_{j,n}-a_{k,n}u_{k,n}\|_{L^1(\rho_n)}
+                  +|a_{j,n}-a_{k,n}|}{a_{j,n}}.
+\tag{68.14}
+$$
+
+Compactness of $\mathcal A_n$ gives a uniformly convergent subsequence with limit $u_n\in\mathcal A_n$. Its original-tape block measures converge in variation to both $a_nu_n(T_n)\tau_n$ and $g\sigma|_{B_n}$, which must be equal. If $a_n=0$, the limit block is zero and choose $u_n=1$. Countable additivity over $B$ now gives $g\sigma=\sum_na_nu_n(T_n)\tau_n$. Thus $P_{\mathcal R}$ is closed in the complete space $L^1(\sigma)$, and $\mathcal R$ is complete in TV. It is closed even among all original-tape probabilities: a TV limit of laws absolutely continuous with respect to $\sigma$ still vanishes on every $\sigma$-null event, and the density distance is half the $L^1$ distance. It is also a subspace of the separable metric range $P_{\mathcal G}$ from Theorem 59.2. Alternatively, finite mixtures with rational weights and functions from countable dense subsets of each $\mathcal A_n$ form a dense subset by (68.13) and truncation of the summable block masses.
+
+Convexity follows by combining block weights and, on every block of positive resulting mass, taking the corresponding normalized convex combination of its two conditional densities. The classes $\mathcal A_n$ are convex. The laws $\tau_n$, obtained with weight one on their block and density $1$, belong to $\mathcal R$. They are linearly independent and $\operatorname{TV}(\tau_n,\tau_j)=1$ for $n\ne j$. The differences $\tau_n-\tau_1$, $n\ge2$, are linearly independent as well. These facts prove the claimed infinite dimensions and failure of total boundedness.
+
+It remains to prove the order assertion, which is stronger than these metric properties. Let $H\in\mathscr H_{P_{\mathcal R}}(g,\epsilon)$ be any countable family. Write each $k\in H$ in the form (68.8), with block weights $c_n(k)$ and conditional representatives $z_n(k)$. Equation (68.13) bounds each individual block distance by $\epsilon$. For $n\in F$ set $e_n=\epsilon/\beta_n(b_n)+2\omega_n(b_n)$. Equation (68.12) gives simultaneously for every $k\in H$ and $s\in S_n$
+
+$$
+c_n(k)z_n(k)(s)\ge\bigl(a_nu_n(s)-e_n\bigr)_+.
+\tag{68.15}
+$$
+
+Transfer this inequality to the original tapes and multiply by $r_n$. After removal of a single null set for the countable family, its common density is bounded below on $B_n$ by $r_n(a_nu_n(T_n)-e_n)_+$. Integration and (68.6) give
+
+$$
+\int\inf_{k\in H}k\,d\sigma
+\ge\sum_{n\in F}\int(a_nu_n-e_n)_+\,d\rho_n
+\ge\sum_{n\in F}a_n-\sum_{n\in F}e_n.
+\tag{68.16}
+$$
+
+The lower bound is independent of the particular countable family. Taking the supremum of its mass deficit proves (68.10). Given $\delta>0$, first choose a finite nonempty $F$ with $\sum_{n\notin F}a_n<\delta/3$, then choose each $b_n$ with $2\sum_{n\in F}\omega_n(b_n)<\delta/3$, and finally choose $\epsilon$ with $\epsilon\sum_{n\in F}1/\beta_n(b_n)<\delta/3$. This proves (68.2) at the fixed center. No regularity constant uniform in $n$ and no common tail estimate over all centers is used. The estimate supplies the missing simultaneous lower bound for all neighbors, rather than separate pointwise bounds with different exceptional sets. $\square$
+

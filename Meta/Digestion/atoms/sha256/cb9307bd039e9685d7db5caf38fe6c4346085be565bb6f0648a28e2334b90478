@@ -1,0 +1,66 @@
+**Proposition 13.4 (Strict extension beyond constant-population realizations).**
+Every port of Definition 9.1 has $\operatorname{rank}L=1$.
+The converse is false even for one explicit legal five-flag complex
+scalar port. Hence Theorem 13.2 excludes a strictly larger class
+than the common-preparation-population class, while retaining all
+its possible other coherences.
+
+Proof. In (9.1), use $\sum_fM_f=I_5$ and the common decoder
+population $p$ to obtain
+
+$$
+L_{ij}=\frac15\sum_fp_i\operatorname{tr}(M_fR_j)
+      =p_i n_j/5.
+\tag{13.14}
+$$
+
+For strictness let $(f_0,\ldots,f_4)=(d,u_+,v_+,u_-,v_-)$,
+$\zeta=e^{2\pi i/5}$, and define the orthonormal Fourier basis
+
+$$
+b_k=\frac1{\sqrt5}\sum_{m=0}^4\zeta^{km}f_m,
+\qquad 0\le k<5.
+\tag{13.15}
+$$
+
+Use encoder rows and decoder columns
+
+$$
+B_k=b_k^\dagger D^\dagger,\qquad A_k=Df_k,
+\qquad
+\operatorname{Enc}(X)=(B_kXB_k^\dagger)_k,
+\qquad \operatorname{Dec}_k(y)=A_kyA_k^\dagger.
+\tag{13.16}
+$$
+
+The roots-of-unity sum proves $b_k^\dagger b_l=\delta_{kl}$,
+so $\sum_kB_k^\dagger B_k=I_5$; also $A_k^\dagger A_k=1$.
+Matrix sandwiches prove CP at every reference extension, these
+identities prove TP on the entire encoder domain and each whole
+scalar decoder block, and every composite $A_kB_k$ has rank one.
+All five flags and complex coefficients are fixed before input or
+policy; decoding consumes the flag. Thus this is an original legal
+port, without adding a Fourier unitary to the future menu.
+
+Every $b_k$ has measurement sector populations $q=(1,2,2)/5$.
+The average preparation populations of the five $f_k$ are also
+$q$, so the resulting joint table is $L=qq^T$ of rank one.
+Nevertheless on input $Db_kb_k^\dagger D^\dagger$ the output
+is the pure state $Df_kf_k^TD^\dagger$.
+
+Suppose another finite realization of this same channel satisfied
+Definition 9.1, allowing arbitrary mixed complex decoders and
+higher-rank effects. Its nonnegative branch coefficients on that
+input sum to one. In a positive sum equaling a rank-one state,
+every nonzero summand is supported in that state's one-dimensional
+range: testing any orthogonal vector gives a sum of nonnegative
+quadratic forms equal to zero. Hence every decoder used with a
+positive coefficient on this input must equal $f_kf_k^T$ in the
+passive frame. At least one is used for each $k$. A common decoder
+population would consequently have to equal the populations of all
+five $f_k$, including the dark vertex and each bright vertex.
+That is impossible. This covers mixed states and effects without
+assuming a rank-one refinement preserving their common populations.
+The theorem gives $e(T)\ge B_{\rm pop}$ for this example; no
+exact error or improved sufficient endpoint is claimed. $\square$
+

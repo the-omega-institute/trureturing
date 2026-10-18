@@ -1,0 +1,44 @@
+**Proposition 7.3 (the four separate comparison-task kernels).** On
+$\Omega_2$, individually for $V=S,B,T,M$,
+
+$$
+V(h)=V(h')\quad\Longleftrightarrow\quad h\sim_{Q_2^+}h'.
+\tag{PVC.8}
+$$
+
+Proof. Every cut in this continuing domain has a lawful next occurrence:
+at a variable IN use a witnessing canonical completion bit, at a fixed
+IN its prescribed bit, otherwise its prescribed row, using ordinary
+Advance at an old Ready if Install is not selected. Equal one-step
+complete-successor response maps give an equal successful successor.
+Its raw state determines the selected memory and extracted data, and
+Theorem 4.4 determines the entire successor prefix. Removing its last
+occurrence gives $h=h'$. Conversely equal histories have equal domains,
+labels, outputs, successors and resource coordinates along every finite
+lawful experiment by determinism.
+
+For S, equality gives equal raw fields by the switch/component decoder,
+then equal selected M, equal extracted data and equal histories. Hence
+it implies task equivalence. Task equivalence gives equal histories by
+the preceding argument, and therefore equal support. These prove both
+inclusions for S separately.
+
+For B, prefix closure gives equal supports and the same raw/extraction
+argument gives equal histories and task equivalence. Conversely task
+equivalence gives equal histories and their same terminal antichain.
+These prove both inclusions for B separately.
+
+For T, checked erasure of each patch record gives its actual native
+occurrence, including supplied bits and creation roles. Equal ordered
+words therefore give equal histories and task equivalence. Conversely
+task equivalence gives identical histories, so their fixed compilation
+and ordered template occurrences are identical. These prove both T
+inclusions separately.
+
+For M, Lemma 4.3 and Theorem 4.4 give equality of actual histories from
+equal memory structures, hence task equivalence. Conversely task
+equivalence gives identical histories and exactly their same selected
+backing, frontier and rights. These prove both M inclusions separately.
+No intersection argument supplies a missing inclusion. The proof depends
+on the complete-successor readout and continuing domain. ∎
+

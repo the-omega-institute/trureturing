@@ -1,0 +1,23 @@
+**定义 70.1（重复旧类、存活外部与正元组投影）。** 取约定1.1的全部有限非空自由有序满二叉树、约定1.3的同寄存器串行操作，以及定义59.1–59.2实际取得的有限公共切址行 $R=(C,\pi)$。旧孔地址为 $p_i$，旧类集为 $B$，有限实际混合字面证据为 $H$，且 $D=\mathcal U_R(H)\ne\varnothing$。各类语言始终为定义60.1的 $L_c(H)$，全部不同旧类仍须取不同原树。选择保留上下文中的一个已知地址 $q$，使 $F=C|_q$ 至少含两个旧孔出现；同一个旧类允许出现多次。令 $A\subseteq B$ 为 $F$ 内出现的不同旧类，$m_a\ge1$ 为类 $a$ 的内部出现次数，$c_F\ge0$ 为 $F$ 的具体叶数。$F[\mathbf v]$ 表示把类 $a$ 的全部内部出现同时填成 $v_a$。
+
+令 $B_{\rm out}$ 为在 $q$ 外至少有一次旧孔出现的类，故 $B\setminus A=B_{\rm out}\setminus A$，但 $A\cap B_{\rm out}$ 可以非空。新公共切址为
+
+$$
+Q=\bigl(P\setminus\{p\in P:q\preceq p\}\bigr)\cup\{q\}.
+\tag{SLH.70.1}
+$$
+
+删除的是 $q$ 下的全部公共旧切址，包含在原树上缺席者。对每个 $b\in B_{\rm out}\setminus A$ 定义
+
+$$
+E_b=\left\{\mathbf v\in\mathcal T^A:
+\begin{array}{l}
+\exists (z_c)_{c\in B},\quad z_c\in L_c(H)\ (c\in B),\\
+z_c\ne z_d\ (c\ne d),\quad z_a=v_a\ (a\in A),\\
+z_b=F[\mathbf v]
+\end{array}\right\}.
+\tag{SLH.70.2}
+$$
+
+这个投影要求同一份完整旧类赋值；内部各边缘非空、复合值属于 $L_b(H)$，或每两个条件共同可行，均不替代其存在量词。由定理60.2，每份见证恰填充成 $D$ 中的实际原来源；反向每个实际相等 $u|_q=u|_{p_b}$ 都给一份这样的见证，其中 $p_b$ 为类 $b$ 的任一外部原孔。
+

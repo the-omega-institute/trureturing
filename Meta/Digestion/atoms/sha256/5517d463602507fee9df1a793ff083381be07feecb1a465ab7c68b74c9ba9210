@@ -1,0 +1,32 @@
+**定义 52.2（Chronological literal graph and its two run exclusions）。** For an eligible cut $a=2q+r$ and an integer $q+1\le d\le k$, choose one sequence of actual two-bit words $B_0,\ldots,B_{d-1}$. Require
+
+$$
+B_t=11\ (t<q),\qquad
+B_q\in\begin{cases}\{00,01\},&r=0,\\\{10\},&r=1.\end{cases}
+\tag{52.3}
+$$
+
+At chronological index $t$ put $u_t=2t\pmod T$. The word's actual successful charge, from (1.4), gives the following graph row:
+
+$$
+\begin{array}{c|c}
+B_t&\text{edge at index }t\\ \hline
+00&\varnothing\\
+10&\{u_t,u_t+1\}\\
+01&\{u_t+1,u_t+2\}\\
+11&\{u_t,u_t+2\}.
+\end{array}
+\tag{52.4}
+$$
+
+Let $G$ be the multigraph on all $P$ with one separately time-indexed edge for every nonempty row. Parallel edges retain their distinct chronological coordinates. An empty row retains its block index and its fee when reached. Require $\Lambda$ to be constant on the entire isolated-vertex set, and on the two vertices of each component of size two. Components of size at least three impose no further label condition.
+
+Finally require the contiguous block suffix $B_q,\ldots,B_{d-1}$ to contain neither
+
+$$
+(11)^p,\qquad 01\mid(11)^{p-1}\mid10.
+\tag{52.5}
+$$
+
+The parent $01$, if selected, is included as a possible start of the second pattern. The intentional INITIAL rejection threshold before its first zero is governed by eligibility, not by (52.5). Let $\mathcal Z$ be the set of depths $d$ admitted by these conditions over all eligible cuts and all their allowed parents. No phase column is padded separately after a stopping time; $G$ always comes from one whole written stream.
+

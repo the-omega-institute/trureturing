@@ -1,0 +1,11 @@
+**假设 9.1（实际月光首层，而非任意高维张量）。** 直接采用 [Monster 局部完成](MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md) §4.1 的 MC.7–MC.11：实际月光 VOA 的正定实首层代数 $\mathcal B$ 具有交换而一般不结合的乘法、正定不变度量 $g$ 和单位 $e=\omega/2$，$g(e,e)=3$。令
+
+$$
+W=e^\perp,\quad \dim W=196883,\qquad
+T^\natural(u,v,w)=g(u\cdot v,w).
+$$
+
+$T^\natural$ 对称，实际构造及识别使其保度量全代数自同构群为 Monster。已有 [Griess/VOA 来源注](../../../Library/VertexAlgebra/griess1981monsterlocalcompletion.md) 供应构造，非本卷重做系数或 VOA。
+
+Höhn–Seysen 的 [v1 直接来源注](../../../Library/VertexAlgebra/hohnseysen2025monsterautomorphisms.md) 供应精确条款：§2.3 Theorem 2.16 的限制 $\operatorname{Aut}(V^\natural)\to\operatorname{Aut}(V_2^\natural)$ 是同构，且其代数自同构定义包含保持不变双线性形式；§5 Theorem 5.7 将这两个实际对象的完整自同构群识别为 Monster。本卷在 MC.7–MC.11 已指定且 Monster 保持的正定实形式内使用这一识别，不从维数或任意三槽张量猜群。
+

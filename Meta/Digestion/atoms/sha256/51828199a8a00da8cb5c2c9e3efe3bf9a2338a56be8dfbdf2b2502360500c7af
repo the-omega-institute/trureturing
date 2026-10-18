@@ -1,0 +1,4 @@
+**来源与范围。** 先检索并复用 §§395、424、425、427、452、453；固定 \(P=2\) 配对及临界逆范数早已覆盖，未将它们包装成新结论。新承重是（BC.12）–（BC.21）的真实面板截止边界、共同主项及严格符号翻转。解析 \(\gamma_1\) 上界与前段正性估计沿用 §453 已付清的 Laurent 约定、梯形绝对误差和有理对数界。Dirichlet 卷积 Banach 代数沿用 Library/ArithSums/glocknerlucht2011weightedinversion.md 的 Glöckner–Lucht arXiv:1112.0749v2 归属；PNT 沿用 §453 的 Johnston–Yang v2。没有新 RH 判据或全局原创性声明。
+
+本节为解析推导；复用本卷 §§452–453，原有符号临界估计仍未解决。
+

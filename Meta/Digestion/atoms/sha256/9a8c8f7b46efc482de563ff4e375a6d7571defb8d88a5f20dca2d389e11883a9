@@ -1,0 +1,48 @@
+**Theorem 8.4 (Cross-cut occupation coefficients classify entropy equality).**
+For every legal configuration $S$,
+
+$$
+\chi(S)=\prod_{I\subseteq S}\eta_\chi(I),
+\qquad
+\mathfrak h_\chi(\ell,r)
+=\prod_{\substack{I\subseteq\ell\cup r\\
+I\cap[1,k]\ne\varnothing\\I\cap[k+1,n]\ne\varnothing}}
+\eta_\chi(I).
+\tag{8.6}
+$$
+
+Consequently entropy equals the reference value if and only
+if every legal marked set meeting both sides has
+$\eta_\chi(I)=1$.
+
+Proof. Expand the first product using (8.5). The exponent
+of a fixed $\chi(T)$ is
+
+$$
+\sum_{T\subseteq I\subseteq S}(-1)^{|I|-|T|}
+=(1-1)^{|S\setminus T|}.
+\tag{8.7}
+$$
+
+It is one for $T=S$ and zero otherwise, proving
+reconstruction. Substitution into (8.2) cancels the global,
+left-only and right-only coefficients, leaving precisely
+the crossing product in (8.6).
+
+If all crossing coefficients are one, every rectangle is
+one. Conversely suppose all rectangles are one. Induct on
+the size of a legal crossing set $I$, evaluating its
+rectangle with all unmarked sites empty. Every proper
+crossing coefficient has already been shown to be one,
+so (8.6) forces $\eta_\chi(I)=1$. Theorem 8.2 proves
+the entropy criterion. $\square$
+
+There is no occupation coefficient for an illegal marked
+set. In particular the adjacent boundary pair does not
+create a phase coordinate. For a real phase polynomial
+$f(S)=\sum_I\theta_I\mathbf1_{\{I\subseteq S\}}$
+and $\chi=e^{if}$, the coefficients in (8.5) are
+$e^{i\theta_I}$ for its legal marked sets. This specifies
+phase coordinates modulo $2\pi$, without requiring a
+choice of logarithm for arbitrary $\chi$.
+

@@ -1,0 +1,51 @@
+**Proposition 20.1 (full coordinate-box derivative and LICQ bounds).** On the entire prescribed box $\mathcal X$ of Definition 12.1, selected rational bounds are
+
+$$
+M_{Hx}=738.534183019,\qquad
+L_Q=4896.33417097,\qquad L_J=106981.054612.
+$$
+
+For the complete $18\times15$ matrix $Q_e$, in row order $(p_O,\phi_O,r_O)$ and column order $(Y_0,\ldots,Y_7,\lambda,\nu_O)$,
+
+$$
+\sigma_{\min}(Q_e)\ge\sigma:=\frac{3125}{11338247023}
+>2.75615797897\cdot10^{-7}.
+$$
+
+Proof. Since $0<p_i^e<1$, the bounding box gives $|p_i|\le2$. With $r_i\in[-1,1]$, either endpoint orientation gives $\xi_i\in[-1,2]$. Form $\mathcal M,\mathcal J,\mathcal K$ as in Definition 12.1 and differentiate their signed extensions on this whole box. For each height use the Frobenius majorant of its $(\phi_i,r_i)$ gradient. For the two Lipschitz constants use
+
+$$
+L_Q^2\ \ge\sum_{j=0}^7\operatorname{maj}(D_x^2\mathcal M_j)^2+
+                    \operatorname{maj}(D_x^2\mathcal K)^2,
+\qquad
+L_J\ge\operatorname{maj}(D_x^2\mathcal J).
+$$
+
+The inward-coordinate columns $-E_r^T$ are constant. A summand $p_i f(\phi_i,r_i)$ contributes $p_i f_{\phi\phi}$, $p_i f_{\phi r}$ in both orders, $f_\phi$ in both weight/angle orders and $f_r$ in both weight/inward orders; $f_{rr}=0$. These entries, the jets in §17 and $|p_i|\le2$, $\xi_i\in[-1,2]$ give the three selected bounds. No differentiability of the actual absolute height outside the small chart ball is claimed.
+
+Every entry of the full event matrix has the explicit block form
+
+$$
+Q_e=\begin{pmatrix}
+ (\Gamma_i)_{{i\in O}}&(-\sigma_i u_i)_{{i\in O}}&0\\
+ (p_i\partial_\phi\Gamma_i)_{{i\in O}}&(p_i\sigma_i v_i)_{{i\in O}}&0\\
+ (p_i(1-2\eta_i)\partial_\xi\Gamma_i)_{{i\in O}}&0&-I_6
+\end{pmatrix},
+$$
+
+where each left block is written as six rows with eight moment columns. Select the rows
+
+$$
+S_Q=(0,1,2,3,4,5,6,7,10,12,13,14,15,16,17)
+$$
+
+without discarding any of the $15$ columns. For $C_Q=S_QQ_e$, the rational $R_Q$ witness gives
+
+$$
+q_{R_Q}\le6.70862769012\cdot10^{-15},\qquad
+r_{R_Q}\le241882.603157,\qquad
+\|C_Q^{-1}\|_2\le3628239.04736=\frac{11338247023}{3125}.
+$$
+
+For every $v\in\mathbb R^{15}$, $\|Q_ev\|_2\ge\|C_Qv\|_2\ge\sigma\|v\|_2$. This proves the claimed full-matrix bound. The same lower bound holds for every column subfamily by extending its coefficient vector by zeros in all other columns. In particular it covers all moment columns plus any active subset of the contrast and six inward constraints, not merely the fully active face. $\square$
+

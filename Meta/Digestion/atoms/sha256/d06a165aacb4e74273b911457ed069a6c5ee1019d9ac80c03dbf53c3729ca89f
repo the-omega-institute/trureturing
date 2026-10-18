@@ -1,0 +1,4 @@
+**数学引文 31.1（精确位而非近似根）。** Emil Jeřábek，[*Root finding with threshold circuits*][JBIT]，*Theoretical Computer Science* 462 (2012), 59–69，DOI `10.1016/j.tcs.2012.09.001`，§2将 uniform $\mathrm{TC}^0$ 定义为 DLOGTIME-uniform、多项式规模、常数深度的多数/否定电路。门用多项式有界的整数编号；给定二进制长度与两个门号，固定确定性机器在对数时间中判定门型和输入关联。Definition4.2要求实际的 $t$ 位二进制展开，即 $\lfloor2^t\operatorname{Re}\alpha\rfloor$，而非距离小于 $2^{-t}$ 的任意近似。Theorem4.5先近似根，再用根分离处理整数边界，判定最后一位的取整方向；Corollary4.6明确给出：每个固定实代数常数的第 $k$ 个二进制位，在输入 $k$ 为一元表示时属于 uniform $\mathrm{TC}^0$。
+
+Hesse–Allender–Barrington，[*Uniform Constant-Depth Threshold Circuits for Division and Iterated Multiplication*][HABBIT]，*Journal of Computer and System Sciences* 65 (2002), 695–716，§2和Corollary6.3给其整数除法/连乘供应。它不是运行时的任意宽除法原语，也不独立给本源概率位。这里只应用 Jeřábek 的精确位结论，再把电路移到定义30.2的普通串行位机。输入表示与这项移植的空间、时间均由下面的证明承担。
+

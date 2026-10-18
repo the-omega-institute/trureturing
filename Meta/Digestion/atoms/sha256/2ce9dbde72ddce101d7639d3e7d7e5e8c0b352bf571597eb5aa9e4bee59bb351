@@ -1,0 +1,14 @@
+**Example 7.3 (a sufficient depth boundary does not contain the brackets).**
+The two primitive trees
+
+$$
+a=(\alpha,(\alpha,\alpha)),\qquad
+b=((\alpha,\alpha),(\alpha,\alpha))
+$$
+
+both have $d=c=4$, $\nu=0$ and $e=0$. Their complete right-spine maps
+agree, and after any common lag their $d$, $\nu$ and right-spine maps
+still agree. They have different leaf counts and different left
+subtrees. Hence the calibrated boundary does not reconstruct arbitrary
+spatial interfaces, even after unlimited reads in its own subinterface.
+

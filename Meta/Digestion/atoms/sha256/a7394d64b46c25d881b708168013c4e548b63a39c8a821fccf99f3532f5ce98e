@@ -1,0 +1,26 @@
+### 84.1. Original correct-output Grams and the factorization hypothesis
+
+Let k>=4 be an integer, let F_(k,2) be the uniform qubit-fibre target with the fixed input/output MC encodings, and let A,B:C^(2k)->C^k be original CPTP maps. Let delta be their unhalved arbitrary-reference diamond error from that target. For Stinespring isometries of the original maps, form the correct-output records
+
+    a_fi=(<f|_out tensor I)V_A|f,i>,
+    b_fi=(<f|_out tensor I)V_B|f,i>.
+
+Let G,H be their forward Grams, indexed by (f,i), and put K=G entrywise-multiplied by H. Their diagonal two-by-two blocks satisfy
+
+    G_ff<=I_2,   H_ff<=I_2.
+
+The target coefficient matrix T has diagonal blocks I_2 and off-diagonal blocks J_2/2.
+
+Say that G has a qubit-core Schur factorization when
+
+    G=Q entrywise-multiplied by M,
+    Q>=0,  rank Q=2,  Q_ff=I_2,
+    M>=0,  M_(fi,fi)<=1.                            (1)
+
+A rank-two PSD matrix with Q_ff=I_2 is exactly the Gram of four, or generally k, orthonormal qubit bases u_f0,u_f1 in one common C^2. Factor M as a marker Gram. Thus (1) is equivalently a factorization of the correct-output record Gram by product vectors
+
+    a_fi ~ u_fi tensor m_fi,
+    <u_f0,u_f1>=0, ||u_fi||=1, ||m_fi||<=1.          (2)
+
+The symbol ~ means equality of all inner products, or an isometric identification of the correct-output record spans. Markers may depend on both f and i, and may be subnormalized. Neither their dimension nor the original A environment dimension is bounded. The factorization does imply that this party's two correct-output columns within a fibre are orthogonal; it is not asserted for arbitrary correct-output blocks.
+

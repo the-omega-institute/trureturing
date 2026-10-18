@@ -1,0 +1,29 @@
+**Proposition 26.4 (Exact homological accounting for the four-mode-position
+application).** Over $\mathbb C$, the degree $m$ strand of (26.2) yields
+
+$$
+N_4(m)=\binom{m+7}{7}-5\binom{m+5}{7}
++5\binom{m+4}{7}-\binom{m+2}{7}.
+\tag{26.6}
+$$
+
+It equals (25.12), and its series is (25.13).
+The degree-by-degree accounting for $m=2,3,4,5$ is
+
+| $m$ | Candidates $S_m$ | Relation sources $5S_{m-2}$ | First syzygies $5S_{m-3}$ | Last source $S_{m-5}$ | Quotient |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 2 | 36 | 5 | 0 | 0 | 31 |
+| 3 | 120 | 40 | 5 | 0 | 85 |
+| 4 | 330 | 180 | 40 | 0 | 190 |
+| 5 | 792 | 600 | 180 | 1 | 371 |
+
+Proof. Exactness gives the alternating dimension formula. The ordinary
+Hilbert series of $S(-a)$ is $t^a/(1-t)^8$, so (26.2) gives (25.13).
+Its reduced form is the series already obtained from the independent
+occupancy sum. Each weight has dimension one by the integral chain
+normal form in Theorem 26.2, which is why summing sectors counts this
+quotient. The table substitutes the dimensions of eight-variable
+homogeneous polynomials and uses zero for negative degrees.
+This supplies the homological justification that the numerator alone
+in §25.5 did not supply. $\square$
+

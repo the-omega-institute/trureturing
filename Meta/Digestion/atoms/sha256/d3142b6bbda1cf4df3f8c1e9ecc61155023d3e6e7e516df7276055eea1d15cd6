@@ -1,0 +1,4 @@
+## 80. Closed rounded arithmetic and the entire-tail proof
+
+The closed evaluator uses only finite integer and rational arithmetic, the gamma grammar, and the represented fields. Rational signs and equality are decided by finite integer comparison. It has no real logarithm, square-root, arbitrary-real sign or equality oracle, and no name, source or later-preparation access. Only the paid acquisition procedures use a same-history archive before closure. The finite arithmetic and bit-cost conventions also reuse §§73.5,74.1.
+

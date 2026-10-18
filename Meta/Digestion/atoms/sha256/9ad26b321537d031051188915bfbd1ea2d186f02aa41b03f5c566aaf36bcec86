@@ -1,0 +1,92 @@
+**Lemma 3.2 (quantitative envelope slack).** Set
+
+$$
+\begin{gathered}
+G=\frac9{25},\quad T=\frac{16}{729},\quad q=\frac{1944}{390625},\quad
+d_0=\frac{2341664383}{41527474875}>\frac1{20},\\
+U(Y)=\min\{T/(y_1y_2),q/(y_1y_2y_3)\},\qquad Y=(y_0,y_1,y_2,y_3),\\
+H(c,Y)=c(1+y_1+y_1y_2)-\kappa\frac{c(1+y_0)}{c+y_0}-\zeta,\\
+F(Y)=H(U(Y),Y),\quad \psi(t)=F(t,t,t,t),\quad
+c'=\min\{c_0,U(Y)\},\quad d=U(Y)-c',\\
+S=\eta+40000\epsilon.
+\end{gathered}
+\tag{3.10}
+$$
+
+Then $c',U(Y)\in[G,4/9]$, $d\ge0$, and
+
+$$
+\mathbb E[-\psi(y_0)]+\frac12\mathbb E(y_1-y_0)^2+d_0\mathbb E d\le S.
+\tag{3.11}
+$$
+
+Proof. On $[\ell,L]^4$, $G\le U\le4/9$, as supplied in
+[REV, (16.22)]. The p boxes at indices 2 and 3 and (3.4) give
+
+$$
+\mathbb E(c_0-U)_+
+ \le70(\ell^{-2}+\ell^{-3})\epsilon\le8000\epsilon.
+\tag{3.12}
+$$
+
+Indeed the positive part of $c_0$ minus the minimum of the two caps is
+at most the sum of the positive excesses over the individual caps.
+Multiply each by its positive product denominator and use
+$h_2(0)\le T$, $h_3(0)\le q$.
+
+Let $\mathcal D=\int Q(E_p)d\nu_p-\kappa\int W(E_\beta)d\nu_\beta-\zeta$.
+The second inequality of (3.4) gives
+
+$$
+\mathbb E|Q_0(E_p)-c_0(1+y_1+y_1y_2)|\le140\epsilon.
+\tag{3.13}
+$$
+
+The identity $c(1+x)/(c+x)=1-v+vc$ holds for $x=vc/(1-v)$.
+On $G\le c\le4/9$, $9/50\le x\le3/10$, its derivative in $x$ has
+absolute value at most $4$. Together with (3.3) and (3.8) this gives
+
+$$
+\mathbb E\left|W_0(E_\beta)-\frac{c_0(1+y_0)}{c_0+y_0}\right|
+ \le81\epsilon.
+\tag{3.14}
+$$
+
+Thus $|\mathcal D-\mathbb E H(c_0,Y)|\le400\epsilon$, using
+$\kappa<2$. On the entire segment between $c'$ and $U$, and also between
+$c'$ and $c_0$, direct differentiation gives
+
+$$
+d_0\le \partial_cH(c,Y)
+ =1+y_1+y_1y_2-\kappa\frac{y_0(1+y_0)}{(c+y_0)^2},
+\qquad |\partial_cH(c,Y)|\le4.
+\tag{3.15}
+$$
+
+The lower bound follows by replacing its positive terms by
+$1+\ell+\ell^2$, its numerator by $\kappa L(1+L)$, and its denominator
+by $(G+\ell)^2$. This is exactly $d_0$. The upper bound follows from
+the same ranges. Therefore
+
+$$
+\mathcal D\le\mathbb EF(Y)-d_0\mathbb Ed+32400\epsilon.
+\tag{3.16}
+$$
+
+Here $F(Y)-y_0y_1$ is precisely the supplied algebraic function
+[REV, (16.21)–(16.25)]. Its coordinate-clipped extension is bounded
+continuous and supermodular. All $y_t$ have the same marginal by
+stationarity, so the bounded right-continuous comonotonic comparison
+[CW, Definition 3(iii), Proposition 6] gives
+
+$$
+\mathbb EF(Y)\le\mathbb E\psi(y_0)
+ -\tfrac12\mathbb E(y_1-y_0)^2.
+\tag{3.17}
+$$
+
+Only the algebraic cube and equal-marginal hypotheses are needed here;
+the deterministic-successor premise of REV Theorem 16.2 is not invoked.
+Finally $\mathcal D\ge-\eta$ by (1.8). Combining this with (3.16)–(3.17)
+and $32400\le40000$ proves (3.11). $\square$
+

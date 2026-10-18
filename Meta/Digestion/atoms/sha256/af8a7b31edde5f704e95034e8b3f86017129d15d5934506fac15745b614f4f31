@@ -1,0 +1,18 @@
+**推论 33.4（整个声明类的失败排除）。** 对所有初读及任意有限或无限的完整 V67 子族，既无原根 L7，也无原根 L6。前者对应八读协议；后者仅使用已证明单射的六动作前缀。
+
+**failure recursion.**
+
+L0(K,H) means |K|>=2 in different complete triples. L(s+1) also requires that guard and, for EACH E in {J,M}, some actual scalar a whose FULL slice K intersect F(H,E,a) has Ls at the extended history. Same-history inclusion preserves the guard; inductively preserve each witness a and inclusion of its child slice. This proves monotonicity for any cardinality while retaining both actions and all stops. It does not supply a failing pair inside an arbitrary nonterminal set.
+
+**no L7 proof.**
+
+If an entirely V67 K at initial a0 had L7, follow first J,M,J,M using their recursively supplied responses in full nested slices. These give depths L6,L5,L4,L3. Compute Psi at this actual clock-4 history and choose the policy's fifth action; its guaranteed witness gives L2. Next J and its witness give L1, and the last J and its witness give L0. Only at this terminal L0 choose two different complete targets. They share the entire lawful policy record, contradicting injectivity. Every response is selected within the current complete slice and every stop guard and both-action duty is retained. Seven finite response choices work equally for infinite K; no forced late history is assumed.
+
+**scoped no L6.**
+
+The stronger no-L6 conclusion is also justified here, because injectivity of the entire six-action policy prefix was actually proved. Starting from L6 and following those six actual history-dependent actions gives terminal L0 after clock 6; its two different targets contradict that prefix injectivity. This does not concern unrestricted L6 and claims no optimality.
+
+**mixed boundary.**
+
+These consumers require all whole gains to lie in the one external V67. They neither remove V67 members from mixed failure families nor invert the unknown union of promised classes. They imply neither a general known-plane theorem nor gain span at least three.
+

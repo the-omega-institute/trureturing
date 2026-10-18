@@ -1,0 +1,26 @@
+**Lemma 16.2 (compactness and attained complete-law value).** The spaces $\mathcal K_p,\mathcal K_\beta$ are nonempty compact convex spaces in full TV and contain the individual complete laws of every regular stationary table. The feasible set $\mathcal F$ is nonempty, compact and convex in the weak topology of the two edge probability measures. Its objective is continuous and convex, has nonnegative value, and attains the minimum (16.6). No compactness in TV of the edge probability measures is asserted.
+
+Proof. Normalization, nonnegativity, the emission intervals and each tail bound in (16.2) are closed convex conditions in the countable $\ell^1$ probability simplex. That simplex is complete in TV. Collapse $T_{s,L}$ onto one fixed finite outcome at level $L$, keeping every earlier complete outcome. The resulting laws lie in a finite-dimensional simplex, and the full TV displacement is at most $\lambda^L$ at p and $(2/5)\lambda^L$ at suspension. These bounds tend uniformly to zero. Finite-dimensional total boundedness therefore gives total boundedness of each $\mathcal K_s$. Closedness and completeness give compactness. The tails decrease to the infinite atom; continuity from above gives zero mass there without conditioning on completion.
+
+For a finite regular table the p return matrix is
+$\operatorname{diag}(1-u)B\operatorname{diag}(v)A\le\lambda BA$ entrywise. Thus survival of $L$ returns from each label is at most $\lambda^L$. A suspended law first returns with probability at most $2/5$. These are exactly (16.2), with the infinite outcomes retained. The endpoint native laws in (1.2) are examples, since $a_r\le6/25<\lambda$ and $r\le2/5$.
+
+Borel probability measures on a compact metric space form a compact space for weak convergence; this is the compact-space case of Prokhorov's theorem [BILL16, §5]. Hence $\operatorname{Prob}(\mathcal K)^2$ is compact. Each integrand in (16.5) is bounded continuous: individual atom coordinates and $u,v$ are continuous in full TV. Marginal agreement can be expressed by integrals of all continuous functions of each coordinate, so it too is a closed affine condition. The intersection is compact and convex. For nonemptiness take
+
+$$
+\gamma=\zeta=\tfrac12\delta_{(P_{p,r_1},P_{\beta,r_1})}
+                    +\tfrac12\delta_{(P_{p,r_2},P_{\beta,r_2})}.
+\tag{16.7}
+$$
+
+Both source-law generator identities hold at each of its points, so this is equality-feasible. It is not asserted to meet the interior risk bounds.
+
+For a fixed $r$, the configuration loss is an integral of a continuous function, and is continuous in the weak marginal. The supplied parameter estimate (2.4) gives, uniformly in a candidate law,
+
+$$
+|\operatorname{TV}(D,P_{s,r})-\operatorname{TV}(D,P_{s,t})|
+\le L_s|r-t|.
+$$
+
+Given weak convergence of marginals, a finite parameter net in compact $R_\mu$ reduces uniform convergence of the losses to convergence at finitely many parameters, with a uniformly vanishing net error. Consequently their suprema are continuous. Each fixed-parameter loss is affine in its marginal, so its supremum, and then the maximum of the two suprema, is convex. Continuity also shows that the supremum over the actual supported parameters equals that over $R_\mu$, including for a countable prior. In each phase the two endpoint losses have sum at least $\operatorname{TV}(P_{s,r_1},P_{s,r_2})=2\rho_s$; their maximum is at least $\rho_s$. Thus $\Phi_\mu\ge0$. Compactness and continuity now prove attainment. ∎
+

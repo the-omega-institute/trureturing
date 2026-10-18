@@ -1,0 +1,18 @@
+## 279. Original regressions and the remaining unrestricted comparison
+
+**Mathematical application 279.1 (An actual earlier unqueried label).**
+At the source $(r,g)=(19,436)$, the recurrence gives $F_{19}=4181$,
+the admissible window is $419\le g\le836$, and
+$N=1+4181\cdot436=1822917$. The number is odd, divisible by
+three, congruent to two modulo five and five modulo seven.
+Thus its first four replies are $0100$.
+The legal $N(3,4;1,0,0,0)$ emits label 1, earlier than and
+unqueried by its schedule. Its endpoint repair
+$O(3,4;0,0,0)$ emits 0 there. The pure-table changed mass is
+one. Its old counting defect is two: the sole-zero correct count
+is zero, the positive base count is one, and the deficit from
+three is $3-1=2$.
+The half-gap in (274.2) and coefficient-two equality in (275.4)
+include this same column. Their sharpness remains columnwise;
+the column is not asserted to be a full feasible strict separator.
+

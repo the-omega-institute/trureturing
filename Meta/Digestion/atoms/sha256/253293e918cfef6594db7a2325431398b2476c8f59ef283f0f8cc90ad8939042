@@ -1,0 +1,57 @@
+**Theorem 216.7 (Gap-sensitive signed detector).**
+For $L\ge m\ge4$, let $r=m-3$, $I=\{4,\ldots,m-1\}$ and
+$S_r=3r+1$. Every full score, with arbitrary signed quotient, satisfies
+
+$$
+S_r\Delta_O\ge
+-2r(\beta_1+\beta_2)+3r\beta_3+\sum_{j\in I}\beta_j
+ +(2r+1)\beta_m-rK,
+\qquad \Delta_N\ge\Delta_O.
+\tag{216.14}
+$$
+
+**Proof.** Give weight one to $(1,2;1,2,m)$, weight r to each of
+$(1,3;1,3,0),(2,3;0,3,0)$, weight one to each
+$(3,j;0,j,m)$ for $j\in I$, and weight one to $(3,m;0,m,0)$.
+The total is $S_r$. The minimum base/correct/pair counts are
+
+| First zero | Base | Correct | Pair |
+| --- | --- | --- | --- |
+| 1 | r | $r+1$ | $2r+1$ |
+| 2 | $2r$ | 1 | $2r+1$ |
+| 3 | r | $2r$ | $3r$ |
+| $j\in I$ | $2r$ | 1 | $2r+1$ |
+| m | $2r$ | $r+1$ | $3r+1$ |
+| $j>m$ | $2r+1$ | 0 | $2r+1$ |
+
+The positive base count is $2r+1$. For first zero 1, either $w_3=0$
+and the suffix bundle gives zero, or $w_3=1$ and the weight-r $(2,3)$
+table does. For first zero 2 the weight-r zero output plus either the
+suffix bundle or $(1,3)$ gives $2r$. The remaining cases follow from
+their first-zero bits, and each gap class has its own correct table.
+Thus the bounds hold for all multiple-zero patterns.
+
+Normalize this single bundle by $S_r$. Its rows dominate the affine
+demands with
+
+$$
+e=r/S_r,\quad b_1=b_2=(r+1)/S_r,\quad b_3=3r/S_r,
+\quad b_j=1/S_r\ (j\in I),\quad b_m=(2r+1)/S_r,
+\quad b_j=0\ (j>m).
+$$
+
+In particular the negative base demand at 3 and negative correct demands
+in the gap are retained. Pair and positive rows hold independently.
+Multiply by the full A/C/P/T score and subtract its own W. Expansion
+of $S_rF_Q$ is (216.14). This affine test is not asserted to be in H
+or to have an original amplitude realization. $\square$
+
+For unsigned beta supported at 3,m this gives
+$\Delta_O\ge r(B_0-B)/(3r+1)$ on $g\le h\le2rg$.
+Below $B_0$ it is a positive lower bound, not a complete positive-cost
+formula. Its signed numerator divided by r minus (216.12)'s numerator
+is $-\beta_1+r^{-1}\sum_{j\in I}\beta_j$.
+Neither signed cut dominates the other on all quotients. Bundle III
+of 216.3 instead uses $-(3+1/r)(\beta_1+\beta_2)$ when expanded;
+that is a third signed scope with the same unsigned face.
+

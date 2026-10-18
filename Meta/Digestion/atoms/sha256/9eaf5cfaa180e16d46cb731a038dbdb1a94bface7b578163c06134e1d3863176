@@ -1,0 +1,12 @@
+### 106.6. Trivial rational torsion, without factorization
+
+The primes 5 and 7 are primes of good reduction of the displayed integral model. Since M=1 modulo 5, direct counting on y^2=x^3-9x+9 over F_5 gives 9 points: the right-side values at x=0,1,2,3,4 are 4,1,4,4,2, giving 8 affine points and the identity.
+
+At 7, M is a nonsquare. All nonsquare M give isomorphic quadratic twists over F_7, so choose M=3. The right-side values at x=0,...,6 are 5,2,5,6,4,5,1; this gives 6 affine points and the identity, hence 7 points.
+
+At good reduction p, prime-to-p rational torsion injects into the reduced group by [Milne, Elliptic Curves, II, Corollary 4.2](https://www.jmilne.org/math/Books/EC2.pdf). Every primary torsion component other than the 5- and 7-primary components has order dividing both 9 and 7, so is trivial. The 5-primary component injects at 7 and is trivial; the 7-primary component injects at 5 and is trivial. Therefore
+
+ F_M(Q)_tors={O}.
+
+The affine point P_N is consequently non-torsion, and rank F_M(Q)>=1 for every actual consecutive pair N=3^j, 3N, j>=1. ∎
+

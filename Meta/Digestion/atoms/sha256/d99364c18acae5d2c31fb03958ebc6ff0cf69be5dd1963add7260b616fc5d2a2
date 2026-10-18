@@ -1,0 +1,112 @@
+**Theorem 4.1 (Two-label three-read bound).** Every installed table
+with $q_3=1$ and at most two distinct halt labels, with any number of
+read rows, has correct mass at most
+
+$$
+F:=\frac a2+a\eta(1+c+c^2)=a\left(1-\frac{c^3}{2}\right).
+\tag{4.1}
+$$
+
+This includes same-phase labels, opposite-phase labels, majority and
+minority spin choices, every address configuration and every allowed
+initialization.
+
+Proof. By Lemma 3.1 fix an eligible deterministic start. One distinct
+label is covered by Lemma 3.3. Suppose there are two distinct labels.
+
+First suppose both are in one phase $\gamma$. In the other phase
+correctness is zero. Conditional on $\gamma$, return within three
+calls still has probability one. On a positive terminal cylinder with
+$n\le3$ calls the target component has at most $n+1\le4$ vertices.
+Lemma 3.3 bounds its two target-spin odds by $R^4$. Whichever spin is
+output, its error mass on that conditional cylinder is at least
+$b^4/(a^4+b^4)$ times the cylinder mass. All nontarget components
+are common factors in this comparison. Summing the disjoint terminal
+cylinders conditional on $\gamma$ and restoring its phase prior gives
+
+$$
+\text{correct mass}\le
+\frac12\left(1-\frac{b^4}{a^4+b^4}\right)
+\le H:=\frac{1-b^4}{2},
+\tag{4.2}
+$$
+
+because $a^4+b^4\le1$. This conditional calculation supplies an upper
+bound for the original rule, without granting it a phase observation.
+
+Now suppose the labels are $h_0(s_0)$ and $h_1(s_1)$. Write
+$x_\phi=\mathbb P(S=s_\phi)\in\{a,b\}$. Follow the actual table
+with all replies specified to be zero. Every finite all-zero cylinder
+has positive mass in each phase, by the constant-component products of
+Lemma 3.3. Hence this zero branch must halt after some $\ell\le3$
+calls. Otherwise, after three zero replies its current row would still
+read, excluding that positive cylinder from $E_3$.
+
+Let $C$ be this terminal zero cylinder, let $n_\phi$ count its calls
+at parity $\phi$ including repetitions, and put
+
+$$
+w_\phi=J_p(C,H_j=h_\phi(s_\phi)),\qquad
+n_0+n_1=\ell\le3.
+\tag{4.3}
+$$
+
+In phase $\phi$, let $k_\phi\le n_\phi$ be its number of distinct
+active edges and let $r$ of them belong to its target component. A
+majority target in this component contributes $a^{r+1}$; a minority
+target contributes $b^{r+1}$. The other components of lengths $L$
+contribute $t_{L+1}\ge c^L$. Using $a>c>b$ gives
+
+$$
+\begin{array}{ll}
+s_\phi=\sigma:
+&w_\phi\ge \tfrac12 a\,c^{k_\phi}
+\ge \tfrac12 ac^3,\\
+s_\phi=1-\sigma:
+&w_\phi\ge \tfrac12 b^{k_\phi+1}
+\ge \tfrac12 b^4.
+\end{array}
+\tag{4.4}
+$$
+
+The formulas include empty edge sets, singleton targets and disconnected
+edges. The phase factor is $1/2$, and repetitions are still paid.
+
+Outside $C$, a path has a first one at a call on this zero branch.
+Its parity identifies the actual phase. In phase $\phi$, correctness
+outside $C$ is bounded by the entire event with its one available
+phase-$\phi$ label outside $C$, of mass $x_\phi/2-w_\phi$.
+On $C$ the actual table outputs a single label, with correct mass at
+most $\max(w_0,w_1)$. Therefore
+
+$$
+\text{correct mass}\le
+\frac{x_0+x_1}{2}-\min(w_0,w_1).
+\tag{4.5}
+$$
+
+No independently chosen continuations are combined in this inequality.
+For two majority labels, (4.4)--(4.5) give $a-ac^3/2=F$.
+For mixed labels they give at most $H$, since $ac^3>b^4$.
+For two minority labels they give at most $b-b^4/2<H$.
+
+It remains to compare (4.2) and the mixed-label bound with $F$ over
+the entire bias range. The identity $c-b=ad$ yields
+
+$$
+\begin{aligned}
+2(F-H)
+&=d-ac^3+b^4\\
+&=d\bigl[1-c^3-\eta(c^2+cb+b^2)\bigr]\\
+&=d\eta\bigl[2(1+c+c^2)-(c^2+cb+b^2)\bigr]>0.
+\end{aligned}
+\tag{4.6}
+$$
+
+Indeed $ac^3-b^4=dc^3+b(c^3-b^3)
+=d[c^3+\eta(c^2+cb+b^2)]$, and $1-c=2\eta$ gives the last
+line. Since $b<c<1$, its bracket is at least
+$2+2c-c^2>0$. This proves every label case. Finally average using
+Lemma 3.1. Null paths, unused rows, early halts and cycles have not been
+removed from the competitor class. $\square$
+

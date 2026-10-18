@@ -1,0 +1,48 @@
+**Proposition 12.4 (finite literal words with unbounded peaks).** The
+decoder obtained from the certificates of Theorem 11.5 and translation
+in Theorem 10.2 has finite materialized words at every promised input.
+Writing $h=z$ for right visibility and $h=q+z$ for left visibility,
+its submitted words satisfy
+
+$$
+|w|\le1+\left\lceil\frac{h+14}{2}\right\rceil.
+\tag{NARC.12.3}
+$$
+
+For each fixed $2\le q\le17$, this specified decoder's worst
+submitted length is unbounded over legal lags under either convention.
+The call theorem supplies no uniform address cap, fixed finite Moore
+realization or physical-resource bound.
+
+**Proof.** All reference offsets in Theorem 11.5 are at most fourteen.
+Its sole reference replacement uses threshold two at $h=12$, so
+its offset is minus ten and satisfies the same bound. Translation
+adds $z-Z$ to a reference threshold, giving at most the actual
+$h+14$. A shifted threshold one uses actual $P_2$ instead; this
+also satisfies the bound. Shifted threshold zero and the four
+boundary replacements use $E$, with word length one; negative
+shifted thresholds are skipped. The remaining boundary thresholds
+are exactly the legal schedule thresholds and satisfy the same
+offset bound. Formula (NARC.5.8) gives (NARC.12.3), and each
+finite acquired clock produces a finite integer threshold and word.
+
+For unboundedness use label one and left visibility at arbitrarily
+large $z$, where its complete fiber is the full class. If $q<16$,
+that class is its maximum-one base, with targets one at $u=-1,0$
+and zero at $u=1$. Its first offset-ten partition is constant and
+is pruned; its needed lower reference experiment translates to
+$P_{h-1}$, whose length diverges with $z$. If $q\ge16$, class
+one also contains the star extras at maximum fifteen. Its first
+offset-ten experiment is nonconstant on the full class and
+translates to $P_{h+10}$, again with divergent length. In both
+cases sufficiently large $z$ makes every full-class alternative's
+lag legal under either convention. These are lengths of actual
+submitted words, not just hypothetical thresholds.
+
+The decoder has input-dependent integer calculations and public
+finite trees with separately constructed literal addresses and outputs.
+A bound on tree depth alone does not bound those objects, their
+production or physical service. The resource restrictions needed for
+the fixed installed Moore statements of §4 are additional premises
+and are absent from Assumption 9.1. $\square$
+

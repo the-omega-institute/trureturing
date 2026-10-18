@@ -1,0 +1,20 @@
+#### 衰变
+
+衰变是某个状态闭包在变化算子下失去稳定：
+
+```math
+U_{\mathrm{decay}}\mathcal M
+\not\subseteq
+\mathcal M.
+```
+
+这里 $\mathcal M$ 是原有物质模式的状态集合。
+
+所以衰变不是“时间把物质推走”，而是：
+
+```math
+\boxed{
+\text{原有变化闭包不再保持自身}.
+}
+```
+

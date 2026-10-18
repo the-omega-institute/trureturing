@@ -1,0 +1,21 @@
+**Definition 7.1 (immutable mathematical suppliers).** The source
+correspondence used above is the following.
+
+| Supplier | Consumed statement and exact matching |
+| --- | --- |
+| [CAR §§1, 3--4][CAR] | The nonempty acquired cycle-covered fiber (NRF.2), all signed endpoint guards, the entire-source bijection (NRF.7), and complete original-row equality. No marginal, sampled or representative-per-output source domain is used. |
+| [CAR §6][CAR] | Descriptor validity, exact literal length, one global word realization, and the all-chart, all-epoch reply equivalence (NRF.9). Source ranks, epochs and descriptor parameters remain natural arithmetic variables at the stated places. |
+| [CAR Definition 11.1 and Theorem 11.2][CAR] | The complete native state contract and the installed-word-dependent stopping bound (NRF.18). The latter is used after literal extraction or for a supplied table, not as a search bound on unknown installations. |
+| [CAR Theorem 12.1 and Corollary 12.2][CAR] | Bounded shared-instruction/shared-halt synthesis and unchanged-table action bounds from a finite read or update cap. Proposition 3.3 uses its correspondence with explicit additional linear path prices. |
+| [CAR Theorem 12.4][CAR] | The fixed-literal-table membership test in Proposition 4.2 is its candidate check, including comparison against the actual installed whole row. Its bounded installation enumeration is not used to restrict the frontier. |
+| [CAR Corollary 13.6][CAR] | A prescribed-state obstruction to transferring the unrestricted-control resource normalization. No zero-update replacement is assumed here. |
+| [NPS Theorems 3.2 and 4.2][NPS] | Exact unbounded halting support and prescribed-$K$ decision/extraction on this identical acquired task. These settle the all-infinite box, detect the empty class, and supply a first finite literal comparator for weighted minimization. |
+| [NPS Theorem 5.2 and §6][NPS] | Successful installations at a fixed five-state graph can have arbitrarily long actual runs. Its unbounded feasibility sentence does not price a product of symbolic word length and symbolic visit count. |
+| [JRF (2.4)][JRF] | Eventual branch replies for every finite source and fixed literal address, including root and originally absent paths. This identity is restricted to actual visited words in Theorem 2.1. |
+| [JRF Theorem 3.1 and Lemma 3.2][JRF] | These normalize unrestricted-control services using simulated control and caching. Their resource inequalities do not imply preservation of complete state cardinality; neither transformation is used here. |
+| [NSF Theorems 4.3, 6.1, 7.3 and 8.1--8.2][NSF] | Existential native constraints with fixed numeral powers and fixed physical words, fixed-prefix decisions, and finite physical boxes on arbitrary signed fibers. Its $K$ in Theorem 7.3 bounds reads, not complete states. These are overlap boundaries, not a substitute for the uniform descriptor or unrestricted prescribed-state suppliers. |
+| [NSF Theorems 9.3 and 10.3, Proposition 10.4][NSF] | Effective recovery criteria for a forward-closed whole fiber or supplied observable invariant charts. A supplied finite prefix selector provides actual observations, but these criteria do not prescribe the complete native state cardinality or supply arbitrary-word synthesis on an arbitrary signed fiber. |
+| [Ginsburg--Spanier, Theorem 1.2][GS] | Decision of first-order Presburger sentences over nonnegative integers after the explicit native correspondence. No multiplication of two unbounded quantified variables is passed to this decision. |
+
+Seymour Ginsburg and Edwin H. Spanier, *Semigroups, Presburger
+Formulas, and Languages*, Pacific Journal of Mathematics

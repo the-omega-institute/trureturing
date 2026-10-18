@@ -1,0 +1,56 @@
+**Corollary 8.1.** If three pairwise distinct fixed legal worlds on
+the same actual history (1.1) satisfy
+
+$$
+L_2(\{W_1,W_2,W_3\},H),
+$$
+
+they use at least two distinct one-dimensional polynomial subspaces
+and at least two distinct sources. Each of the three worlds has at
+least four nonzero ancestor gain samples.
+
+**Proof.** If all gains had one shape, the triple would be a subset
+of one $K_h$, contradicting Theorem 4.1 and Section 6. If all sources
+were equal, it would be a subset of one $K_{P_*}$, contradicting
+Theorem 5.1 and Section 6. The sample assertion is Theorem 3.1 applied
+separately to each fixed world. Proportionality of $f$ is equivalent
+to proportionality of $g$ under the same nonzero $\lambda$. ∎
+
+These are necessary diversity conditions. They do not require three
+pairwise different sources or shapes, and they do not decide whether
+a triple exists.
+
+The precise remaining question is whether there exist
+$D_0,Y,z\in\mathbb R$, $\lambda\ne0$ and three pairwise distinct
+fixed complete legal worlds, all satisfying every equation (1.3)
+on the same literal (1.1), for which $L_2$ holds. Uniform
+impossibility across these data is also unproved here. In the
+remaining class the sources and gain shapes may vary; each world
+may have zero, one or two ancestor roots, independent future-zero
+patterns and arbitrary real drift. Different sixth actions may
+retain different collision pairs. Even a sixth response shared by
+all three can leave different terminal actions colliding on different
+pairs. Neither a collection of compatible marginal pairs nor
+pairwise separating suffixes supplies or excludes the required joint
+three-world realization.
+
+The deductions here extend the supplied JMMJM whole-class proposals
+into complete conditioned decoders. They are repository deductions
+using established polynomial root counting, elementary matrix
+coordinates, the rank-one terminal mechanism, Lagrange interpolation
+and affine functions on a line. The supplied VII text supplies the
+model, exact ancestor and credited terminal mechanism. Its references
+to II–VI and external literature remain credited interfaces with
+their stated scopes; no unseen proof is imported. No external
+priority or literature-completeness claim is made.
+
+The original full-domain alternative remains whether the deterministic
+complete-target problem at degree three requires at least nine total
+readings, or admits a lawful decoder with at most eight total readings
+on every legal world from the original root. No result here settles
+either alternative, proves a global nonlinear lower bound or
+completes the continuing research goal. There is no general neural
+network, empirical, kernel-verification, complexity or stability
+claim. Existence of the conditioned exact inverses entails no
+efficiency or robustness guarantee.
+

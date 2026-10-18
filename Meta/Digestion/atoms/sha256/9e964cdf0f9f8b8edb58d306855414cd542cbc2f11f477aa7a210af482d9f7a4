@@ -1,0 +1,22 @@
+**Definition 1.1 (Complete no11 words and open-path objective).** For $n\ge1$ let
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},\qquad
+\mathsf X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+\tag{1.1}
+$$
+
+The graph $\Gamma_n$ has all vertices of $B_n$ and all legal Hamming-one edges. Endpoint insertion uses $w_0=w_{n+1}=0$ as an open-boundary convention; the endpoints are not joined and no additional random bits are observed. On the entire probability simplex put
+
+$$
+\begin{aligned}
+h(s,t)&=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\\
+\Phi_n(\mu)&=\sum_{\{u,v\}\in E(\Gamma_n)}h(\mu_u,\mu_v),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n}.
+\end{aligned}
+\tag{1.2}
+$$
+
+The existence of this last limit is part of Premise 2.1. Zero masses remove no vertices or edges. All-zero words, legal endpoint ones, forced singleton fibers and forbidden seams retain their original meanings.
+

@@ -1,0 +1,42 @@
+**Theorem 6.2 (Coulomb endpoint).** Put $\Delta=R-r_C$ and
+
+$$
+K_{\rm edge}=8C_0r_C^2
+ =\frac{Q^2r_C^2}{\pi a^2J\varrho}>0.
+$$
+
+For the comparison functions, as $\Delta\downarrow0$,
+
+$$
+\begin{aligned}
+N(R)&=K_{\rm edge}\Delta^{-2}+O(1),\\
+m_\mu(R)&=\frac{\Delta^2}{K_{\rm edge}}+O(\Delta^4),\\
+m_M(R)&=1-\frac{\Delta^2}{K_{\rm edge}}+O(\Delta^4),\\
+\alpha(R)&=\frac{\Delta}{\sqrt{K_{\rm edge}}}+O(\Delta^3).
+\end{aligned}
+$$
+
+In particular the microscopic mass coefficient is $\pi a^2J\varrho/(Q^2r_C^2)$ and the core amplitude coefficient is $\sqrt{\pi a^2J\varrho}/(Qr_C)$. If applied to actual finite branches, these describe their scalar values only after the credited native limit at each fixed $R>r_C$. They give no uniform estimate through the native threshold, no joint endpoint/native rate, and no interchange of limits or actual occurrence theorem.
+
+Proof. Let $\delta=1-\eta$ and $h=\Delta/r_C=\eta^{-2}-1$. Separating the first trigamma term gives
+
+$$
+G(\eta)=\frac{2\eta^3}{\delta^2}+\eta+2\eta^2
+ +2\eta^3\sum_{n=1}^\infty(n+\delta)^{-2}.
+$$
+
+The remaining series is uniformly bounded by $Z_2$. The exact algebraic identity
+
+$$
+\frac{2\eta^3}{(1-\eta)^2}
+ =\frac8{h^2}+\frac{2\eta^3}{(1+\eta)^2}
+$$
+
+shows $G=8h^{-2}+O(1)$, including the cancellation of any term of order $h^{-1}$. Multiplying by $C_0$ proves the norm estimate and its complete coefficient. Consequently
+
+$$
+1+N=K_{\rm edge}\Delta^{-2}\{1+O(\Delta^2)\}.
+$$
+
+Taking its reciprocal and inverse square root gives the stated orders and coefficients. Complementarity gives the macroscopic mass. The hypotheses of the actual reconstruction are separated from this scalar calculation: constants in that reconstruction can depend on the fixed gap $R-r_C$, so this calculation supplies none of the joint native conclusions excluded in the theorem. $\square$
+

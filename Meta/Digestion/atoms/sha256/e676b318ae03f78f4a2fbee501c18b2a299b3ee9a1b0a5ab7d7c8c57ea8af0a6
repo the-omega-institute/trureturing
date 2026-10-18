@@ -1,0 +1,58 @@
+**Theorem 3.1 (B1: source curvature).** At the conditional source,
+
+$$
+V/W<1/4,\qquad2<\kappa_f<17/8,\qquad\ell>0,
+$$
+
+and $J'''(p)<0$ for $0<p\le p_1=W/(V+W)$, where $p_1>4/5$.
+
+Proof. JR.52 and FA74 give $m_2<345/1000$, $m_1>496/1000$, $d<99/1000$, $h_1<707/1000$, $b>145/1000$, $h_2>809/1000$. Therefore
+
+$$
+4V/W<\frac{4\cdot345\cdot99^2\cdot707^2}{496\cdot145^2\cdot809^2}<1,
+$$
+
+where the integer comparison is $6760647667620<6825189660400$. Rationalization gives
+
+$$
+\kappa_f=\frac{\sqrt{59}+\sqrt{37}}8\sqrt{m_1/m_2}.
+$$
+
+The lower bound follows from Proposition 2.1. Using $\sqrt{59}<77/10$, $\sqrt{37}<61/10$, $m_1<497/1000$, $m_2>344/1000$ gives
+
+$$
+\kappa_f^2<(69/5)^2\frac{497}{64\cdot344}<289/64,
+$$
+
+because $4761\cdot497=2366217<2485400=25\cdot344\cdot289$. The inherited $V/W>1/5$ is FA74's $v^\dagger>1/5$ in this dictionary. Together with $\alpha/\beta>7$ it proves $\ell>0$.
+
+Define
+
+$$
+\begin{gathered}
+T_{\rm base}(p)=(\sqrt{Vp}-\sqrt{A(p)})^2=b_*+(V+\ell)p-2\sqrt V\sqrt{pA(p)},\\
+R_c(p)=\frac{D_0A(p)+D_1Vp}{N_0A(p)+N_1Vp}>0,\qquad J=T_{\rm base}R_c/2.
+\end{gathered}
+$$
+
+For $\overline N=N_0A+N_1Vp$, $\overline N'=N_0\ell+N_1V>0$ and
+
+$$
+R_c'=Vb_*A_{\det}/\overline N^2<0,\qquad R_c''>0,\qquad R_c'''<0.
+$$
+
+Direct differentiation yields
+
+$$
+T_{\rm base}''=\frac{\sqrt V b_*^2}{2(pA)^{3/2}}>0,\qquad
+T_{\rm base}'''=-\frac{3\sqrt V b_*^2(b_*+2\ell p)}{4(pA)^{5/2}}<0.
+$$
+
+Since $V-\ell=\beta(V+W)>0$, the difference $\sqrt{Vp}-\sqrt A$ is increasing: its derivative is positive exactly when $VA>\ell^2p$, and $VA-\ell^2p=Vb_*+\ell(V-\ell)p>0$. Its zero is $b_* /(V-\ell)=p_1$. Thus $T_{\rm base}'\le0$ up to $p_1$, while $T_{\rm base}\ge0$. The product rule gives
+
+$$
+2J'''=R_cT_{\rm base}'''+3R_c'T_{\rm base}''+3R_c''T_{\rm base}'+R_c'''T_{\rm base}<0.
+$$
+
+All terms are nonpositive and the first two strictly negative. Finally $V/W<1/4$ gives $p_1>4/5$. $\square$
+

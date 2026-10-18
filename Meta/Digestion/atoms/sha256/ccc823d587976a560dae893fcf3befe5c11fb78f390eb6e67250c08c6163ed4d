@@ -1,0 +1,4 @@
+## 3. A constructive polynomial compiler with one second-quadrature address
+
+For a data location q, let W_(q->q_*) be an ordered product of adjacent SWAPs moving that data state to q_*, at cost at most 21|q-q_*|. Other data states move coherently; they are not measured, copied into product states, or discarded. Applying the inverse route restores their original locations.
+

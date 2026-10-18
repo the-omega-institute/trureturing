@@ -1,0 +1,21 @@
+### 479.2. 素数幂公式的全部端点
+
+定义
+
+$$
+P_0(x)=\sum_{1\le n\le x}\frac{\Lambda(n)}{n\log n}
+=\sum_{\substack{p\ {\rm prime},\ k\ge1\\p^k\le x}}\frac1{kp^k},
+\qquad x>1.
+$$
+
+第一式的 $n=1$ 项约定为零，与 $\Lambda(1)=0$ 一致。
+第二式是完整有限素数幂重排，包含 $p^k=x$ 的边界项；
+指数范围可取 $1\le k\le\lfloor\log x/\log2\rfloor$。
+
+取实际 Euler 常数 $\gamma$，定义
+
+$$
+\Phi(x)=\gamma+\log\log x-P_0(x)
+ +\frac{\psi(x)-x}{x\log x}.
+$$
+

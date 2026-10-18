@@ -1,0 +1,14 @@
+**Definition 2.2 (target literal).** In PR57's actual symbol and track
+order let
+
+$$
+c_R=\operatorname{enc}_{\rm sym}(R)\,00000
+       =(b_1,\ldots,b_8).
+$$
+
+The final five zero tracks are the three head/append/read marks, seal
+mark and reserved bit. Thus this is the new unmarked right marker,
+not the old marked cell's byte. These eight constants depend only on
+the supplier encoding. They contain no private source value, $J$,
+capacity-dependent advice or acquired runtime operand.
+

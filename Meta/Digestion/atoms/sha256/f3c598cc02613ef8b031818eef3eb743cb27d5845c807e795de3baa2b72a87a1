@@ -1,0 +1,18 @@
+**Definition 12.1 (the prescribed pointwise export).** Use disjoint
+names $\star$ and $[u]$ for $u\in S_D\setminus G_{m,h}$.
+On every actual $t=\langle\alpha,v\rangle\in\mathcal F_D$ set
+
+$$
+E^\circ(t)=
+\begin{cases}
+\star,&\pi_D(v)\in G_{m,h},\\
+[\pi_D(v)],&\pi_D(v)\notin G_{m,h}.
+\end{cases}
+\tag{LTR.35}
+$$
+
+A name $[u]$ fixes one canonical state, not necessarily one actual
+source. Its full inverse image may contain different terminal labels
+and shapes hidden below the queried boundary. They have the same
+requested factors by canonicalization.
+

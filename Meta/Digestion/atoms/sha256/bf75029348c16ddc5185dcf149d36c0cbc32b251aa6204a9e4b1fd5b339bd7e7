@@ -1,0 +1,58 @@
+**证明 3.1。** Fix either free value $v$. All records considered have actual joint histories by Convention 1.2.
+
+First compare every possible root action. The controller cannot stop freely: low-tail sources at phases $0$ and $m$ have distinct labels $D,E$ and the same free value. At least one of those labels, denoted $L$, differs from $R$. At that endpoint phase choose the two initial tails $H-1$ and $H$. Their INITIAL labels are $L$ and $R$. If a proposed root contains a first zero after $a<m$ ones, both sources survive to that zero, since
+
+$$
+H+a\le k-m+(m-1)=k-1<k.
+\tag{3.3}
+$$
+
+They have the same value and phase throughout that prefix, so the zero merges their current records. The rest of the block and every future continuation give them the same archive. No correct leaf can recover their different INITIAL labels. Hence every root containing a zero is excluded, regardless of the remaining bits or adaptive continuation. The only possible root is $1^m$. This argument needs no freshness condition on $R$ or $A$.
+
+The forced root rejects exactly the high tails, all labelled $R$. All lower tails survive. By (2.3), its successful positive-difference archive contains exactly the INITIAL phases $0,m$ with all $0\le s<H$; their current value is $v\oplus1$ and their current tail is $s+m$. This archive retains both labels $D,E$.
+
+Take specifically its two actual sources
+
+$$
+q_D=(v,0,H-1),\qquad q_E=(v,-m,H-1).
+\tag{3.4}
+$$
+
+After the root they share the same endpoint output and the same current tail $k-1$. A correct controller cannot stop at their common archive. If its second block began with one, both would reject at that first bit and thereafter have the same absorbing output forever. Their labels are different, so the second block must begin with zero. This is a restriction on every correct adaptive controller on the positive archive, not an extra observation or a chosen normal form.
+
+Now suppose a correct controller had worst fee $d<N$. With $d=0$ or $d=1$ the preceding common archive already gives a contradiction. For $2\le d<N$, we have
+
+$$
+dm\le (N-1)m<T,
+\qquad dm-1\le T-2.
+\tag{3.5}
+$$
+
+In the absolute positions $0,\ldots,T-2$, the source $q_D$ has nonzero coefficients only at position $0$; the source $q_E$ has them only at $m-1,m$. Their forced root has given each exactly one contribution. Position $m$, the next possible distinguishing position, is suppressed by the forced first zero of the second block. At every later position up to $dm-1$ both coefficients are zero. The clearing zero also makes their current tails equal, and any common later bits keep those tails equal. Thus every subsequent successful endpoint output is the same on the two sources; any rejection is common and absorbing as well.
+
+Inductively, at every available endpoint the controller has the same acquired archive on $q_D,q_E$, chooses the same next block or stopping decision, and cannot return their two different INITIAL labels. This excludes all adaptive actions and all early stopping within fee $d$. It proves $C_{\rm ad}(f)\ge N$, and the preset class is a subclass, so $C_{\rm pre}(f)\ge C_{\rm ad}(f)\ge N$. The obstruction is the paid arrival at absolute position $T-1$, not merely the number of endpoint labels.
+
+It remains to prove that (3.2) is an actual legal protocol and decodes the full original prior. Since $(N-1)m<T\le Nm$, its pulse offset satisfies $0\le z<m$. The root succeeds exactly when $s+m<k$, a strict seam condition. For these surviving low tails, the current tail can be as large as $k-1$.
+
+If $N\ge3$, the next block is an emitted $0^m$. Its first zero clears every surviving tail safely; the remaining zero waits are safe, and the current tail before the last block is zero. The final word contains only one one, hence is safe even when $z=0$, since $1<k$.
+
+If $N=2$, there is no intervening block. Here
+
+$$
+z=T-1-m=k-m=H\ge1.
+\tag{3.6}
+$$
+
+The last block therefore begins with at least one zero and clears even the largest surviving tail before its isolated one. It is safe. All complete words in (3.2) are internally legal, and this reasoning checks every cross-block seam. No extra final clearing block is needed because decoding ends at that endpoint.
+
+The root output $\bot$ returns $R$ at fee one. On a successful root, write $b_0=y_1\oplus y_0$. When $b_0=0$, the initial phase lies in $P\setminus\{0,m\}$, so return $A$ immediately at fee one. When $b_0=1$, the acquired archive has only phases $0,m$; continue along (3.2). All zero waits have difference zero and remain charged. The final pulse is at absolute position
+
+$$
+(N-1)m+z=T-1.
+\tag{3.7}
+$$
+
+Its full-phase support is $\{T-1,0\}$. Since $m<k=T-1$, it gives final endpoint difference one on phase $0$ and zero on phase $m$. Return $D$ and $E$, respectively, using the actual difference $y_N\oplus y_{N-1}$. When $g=1$, the other charged phase $T-1$ was excluded on this same root-positive archive. When $g>1$, it is not an actual endpoint phase because $g\nmid T-1$. In either case the literal pulse, rather than an abstract singleton mask, performs the required query.
+
+Every returned label is the original label in (2.1). Equalities among $A,R,L_{\bot},D,E$ do not alter any of these implications. An initially rejected source returns $L_{\bot}$ before any action. Both free values use the same stream and the same successive-difference decoder. Every actual low-tail endpoint source continues for exactly $N$ blocks, while all other legal sources stop after the root. Such endpoint sources exist by (1.4)–(1.5), so the displayed stream's worst fee is exactly $N$. This yields $C_{\rm pre}(f)\le N$ and completes both equalities. ∎
+

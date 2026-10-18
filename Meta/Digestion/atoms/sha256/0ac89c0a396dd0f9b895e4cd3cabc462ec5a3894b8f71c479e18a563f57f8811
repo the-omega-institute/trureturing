@@ -1,0 +1,43 @@
+**Proposition 5.3 (which free futures agree for this same pair).** Put
+$(S_sf)(k,\alpha,\beta)=f(k,\alpha,\beta-s)$. Then $f_-=S_\pi f_+$.
+For every $t\ge0$ the pair has identical projected free amplitudes
+$J^*H_tf_\pm$ and identical densities
+$m_{H_tf_\pm}$. Their full free norms also agree, so these equalities
+remain true after normalizing the two nonzero free amplitudes to norm
+one. Separately, if $\rho_\pm=|f_\pm|^2$ are used as initial probability
+densities for the killed Markov process, their projected subprobability
+laws at all times and all finite collections of base observation times
+are identical. They also have identical free Schrödinger projected
+amplitudes and base probability summaries under $e^{-itL}$.
+
+Proof. These translations are comparison maps on the analytic cylinder,
+not additional native actuators or amplitude-preparation operations. The
+phase translation preserves the free form, its domain and the measure, so
+it commutes with every spectral function of $L$. Also
+$J^*S_s=J^*$ and $m_{S_sf}=m_f$. This proves the amplitude assertions,
+their norm equality and the Schrödinger assertions. The operators $H_t$
+are injective by spectral calculus, so normalization is defined at each
+finite $t$ for these nonzero vectors.
+
+For probability transport, (2.5), symmetry and Fubini imply
+
+$$
+\int_{\mathbb T}(H_t\rho)(k,\alpha,\beta)d\beta
+ = e^{-t\overline L}\left(\int_{\mathbb T}\rho\,d\beta\right)(k,\alpha)
+\tag{5.7}
+$$
+
+for integrable densities. Apply it to the equal initial marginals (5.3).
+The projected process is the killed base Markov process of Theorem 2.1;
+hence its initial marginal also determines all its finite-time joint laws,
+including survival. The same holds for finite interleavings with prescribed
+deterministic commands confined to $I$, using the cylinder guard in
+Definition 1.3 and recording refusals. Their domains and base updates factor
+through the same base. A command leaving this cylinder is not inserted into
+its killed semigroup without a separately specified continuation.
+
+The density $H_t|f|^2$ in (5.7) is not in general $|H_tf|^2$.
+The proposition establishes the two separate equalities for this translated
+pair; it does not identify the two evolution rules. No interacting-future
+equality is asserted. $\square$
+

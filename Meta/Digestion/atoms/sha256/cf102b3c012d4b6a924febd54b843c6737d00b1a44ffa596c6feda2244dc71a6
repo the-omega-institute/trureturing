@@ -1,0 +1,40 @@
+**Convention 67.3 (source coefficients).** Use JR.2, .21, .23, .49 and
+JR45's $N$:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a|0\rangle\langle1|+b|1\rangle\langle0|,\quad
+S=c|0\rangle\langle2|+d|2\rangle\langle0|,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad
+v_0=\omega/(1-\theta),\quad u_s=\theta v_s+\omega,\\
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad
+N=\begin{pmatrix}\Delta A&\xi&\eta\\\xi&\Delta B&\zeta\\
+\eta&\zeta&\Delta C\end{pmatrix},\quad
+\ell(\mathbf c)=\mathbf c^TN\mathbf c,\quad K(\mathbf c)=xD+zT+wS.
+\end{gathered}
+$$
+
+All seven amplitudes and $m_1,m_2,\theta,\omega$ are positive;
+$0<\delta<1$. The symbols $a,b,c,d$ are source amplitudes, not
+history coordinates. $v_s$ and $\mathfrak f$ mean JR.30–.31;
+$\Delta A,\Delta B,\Delta C,\xi,\eta,\zeta,d_f,z_f,L_f$ mean JR.49.
+In particular $\zeta<0$, $\Delta A,\Delta B,\Delta C,\xi,\eta>0$.
+JR42 fixes, for every sharp-cost error optimizer, supported live map
+$\Lambda_*=D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$,
+failure effect $M$, other effect zero, high failure zero on supported
+inputs, and low/high coefficient Grams
+$\operatorname{diag}(u_s,v_s,1)$ and
+$\operatorname{diag}(1-u_s,1-v_s,0)$. Every nonzero low Kraus product,
+with one common phase removed, consequently has
+
+$$
+x,z,w\in\mathbb R,\qquad x\ne0,\qquad x^2=\theta z^2+\omega w^2.
+\tag{FA.1}
+$$
+
+These are consequences of complex equality, not restrictions placed on
+competitors. They fix neither a full five-mode completion nor each
+labelled time CP measure.
+

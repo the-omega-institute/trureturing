@@ -1,0 +1,13 @@
+**Definition 6.1 (lag support and identifying components).** For
+$a,b<m$ put
+
+$$
+D_{ab}(I)=\{n_b-n_a:\mathbf n\in E_I\}\subseteq\mathbb Z.
+\tag{NCE.15}
+$$
+
+For $a\le b$ this lies in $\mathbb N$. On a nonempty $E_I$, say
+$a\sim_I b$ when $D_{ab}(I)$ is a singleton, and denote its value
+by $d_{ab}$. This is identification from the entire retained input,
+including the exteriors, complete partitions and all signed links.
+

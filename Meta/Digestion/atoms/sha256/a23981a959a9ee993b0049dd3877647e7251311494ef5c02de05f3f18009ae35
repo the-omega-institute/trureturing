@@ -1,0 +1,49 @@
+**Definition 7.1 (Exact versus noisy extraction obligations).** The
+alternative in §§2–5 keeps the original $\varepsilon_1$, all fifteen
+events, every complex competitor via the proved no-worse replacement,
+and the full TP marginal. Its extraction premise is an exact feasible
+extension and its conclusion is a decomposition of the positively
+repaired channel. Bose/PPT feasibility alone supplies neither a product
+decomposition of the unperturbed point nor finite-level equality with
+the exact QRC cone. The only precision implication asserted at level
+52 is conditional on (5.10). Exact primal data, exact dual matrices and
+their same-problem feasibility remain to be supplied before that
+implication becomes a new endpoint.
+
+For an exact original optimum, the QJM Convention 6.3 alternative
+still requires global $B_y(a)\succeq0$ for every real preparation
+vector $a$, with all event multipliers and all three TP multipliers
+on the same channel, and a legal attaining port. At equality, active
+event eigenspaces and every positive-weight atom kernel must match.
+A finite extension dual can give a necessary lower through (2.4);
+it does not prove an unrelated proposed global $B_y$ positive or
+identify its zero support. An unperturbed extraction instead requires
+an independent valid separability/extraction premise. No such premise
+for the outer optimizer is supplied here. The old-port obstruction
+(6.1) prevents treating positive noise as a boundary-preserving
+replacement for either obligation.
+
+The genuine Bose-support and half-PPT conditions of NOP, the summed
+TP marginal, and the joint walk covariance are distinct mathematical
+conditions. In particular they do not impose independent fixed-point
+equations or normalizations on each product factor. Low-dimensional
+PPT sufficiency, an objective involving a joint reference, or a
+different measurement norm cannot replace these conditions. The QPC
+§9 counterexamples to full orthogonal menu invariance, real rank-one
+decomposition of an unchanged real Choi matrix, and characterwise
+rank-preserving Kraus decomposition remain applicable. The argument
+uses separate-transpose invariance of the whole selected state and
+the proved replacement, not one of those stronger shortcuts.
+
+Finite algebraic coefficients, finitely many scalar flags, and
+whole-block CPTP decoding are the resources described by the port
+construction. Coefficient synthesis, finite-precision robustness,
+preparation acquisition, clocks, storage duration and transport are
+separate resources without bounds here. The extension tensors and
+quadrature identities grant no additional future action. The exact
+original value, a matching global certificate and optimal port,
+the $q=2,3,4$ values, the native preparation bridge, native cofinality
+and memory rates, and the broader mutual-recovery relations among
+space, time, boundary and memory remain unresolved by this conditional
+alternative.
+

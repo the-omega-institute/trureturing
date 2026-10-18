@@ -1,0 +1,53 @@
+**Lemma 4.1 (Components, orientation and exhaustive last moves).**
+In phase $\phi$, a literal address $2\ell+\phi$ queries the
+edge $\{\ell,\ell+1\}$ of the integer spin line; the other parity
+queries a separator. Distinct active edges form finite disjoint paths.
+A consistent labelled component has exactly two complementary spin
+assignments, with their actual Bernoulli product weights. Independent
+components multiply. Adjoin the actual target vertex as a singleton
+when it has not been queried. Every phase-specific full-law mass has
+the factor $1/2$.
+
+If the target component has complementary weights $U\ge V>0$ and
+another component has weights $A\ge B>0$, a joining edge has
+summed best target-spin mass
+
+$$
+\begin{aligned}
+\max(UA,VB)+\max(UB,VA)
+&=UA+\max(UB,VA)\\
+&=\max\bigl(U(A+B),A(U+V)\bigr).
+\end{aligned}
+\tag{4.1}
+$$
+
+All other components supply common multiplicative factors.
+
+Proof. Successive XOR labels determine the next spin from the
+preceding spin. Choosing the first spin gives exactly the two
+complementary completions. The original iid law gives their products
+and independence between vertex-disjoint components. Separators must
+reply zero, repeats impose their old constraint, and inconsistent
+labels have zero mass. For a join the two possible relative
+orientations give product pairs $(UA,VB)$ and $(UB,VA)$, in either
+reply order. Since $UA\ge VB$, taking their two maxima proves
+(4.1). Attachment orientation only exchanges the two reply cases.
+
+A new active line edge can repeat an old edge, extend a component
+by a fresh vertex, join two components, or be disjoint from them.
+There is no unused chord inside a connected path, and an edge cannot
+join three components. A newly reached target singleton counts as
+an existing component for a join. This includes every target
+incidence, either orientation, and all signs and distances of integer
+addresses. A separator and a repeat add no information. A query
+disjoint from the target component only partitions independent
+common factors; summing its replies restores those factors.
+
+A fresh vertex has weights $a,b$. If $U/V\ge R$, (4.1) yields
+$U$, so a fresh extension gives no summed improvement. If $U=V$,
+it yields $2aU$. These statements also hold with the untouched
+component factors restored. If a join cannot exist in a particular
+line placement, allowing it for a scalar comparison only enlarges an
+upper bound; later forcing requires an actual existing edge.
+$\square$
+

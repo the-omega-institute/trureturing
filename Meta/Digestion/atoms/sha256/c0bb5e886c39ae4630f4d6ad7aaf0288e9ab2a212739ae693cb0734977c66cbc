@@ -1,0 +1,43 @@
+**Theorem 5.1 (local admissibility inside $P$).** For every
+$A\subseteq P$, with all seven $W_3$ targets and all finite native
+experimental words, $A$ is locally admissible if and only if
+$F\nsubseteq A$.
+
+Proof. Denote the four $LL$ values by
+
+$$
+a=(3,0),\qquad b=(2,0),\qquad c_*=(2,1),\qquad d=(1,0).
+\tag{CIT.23}
+$$
+
+On $F$, this target has the four different values $a,b,c_*,d$.
+The numbers of replies on $F$ at the seven boundary experiments,
+in their displayed order, are $1,3,2,3,2,3,2$. No experiment with
+at most three reply classes can determine a four-valued target.
+Lemma 4.3 excludes any additional distinguishing power from longer
+words. Thus $LL$ is missing on $F$. Any decoder on a set containing
+$F$ would restrict to such a decoder on $F$, so every such set is
+locally inadmissible.
+
+For the converse put $D_s=P\setminus\{u_s\}$, $0\le s\le3$.
+Their exact $LL$ decoders are
+
+| Set | Experiment | Decoder on all attained replies |
+| --- | --- | --- |
+| $D_0$ | $RL$ | $\mathsf{absent}\mapsto b$, $\alpha\mapsto c_*$, $\beta\mapsto d$, $\mathsf{branch}\mapsto a$ |
+| $D_1$ | $RL$ | $\mathsf{absent}\mapsto a$, $\alpha\mapsto c_*$, $\beta\mapsto d$, $\mathsf{branch}\mapsto a$ |
+| $D_2$ | $L$ | $\alpha\mapsto a$, $\beta\mapsto b$, $\mathsf{branch}\mapsto d$ |
+| $D_3$ | $L$ | $\alpha\mapsto a$, $\beta\mapsto b$, $\mathsf{branch}\mapsto c_*$ |
+
+For $D_0$, the four replies correspond to $u_1,u_2,u_3,u_4$.
+For $D_1$, the absent and branch classes are $u_0$ and $u_4$,
+both with value $a$, while alpha and beta select $u_2,u_3$.
+For $D_2$, the $L$-branch class consists only of $u_3$; for
+$D_3$ it consists only of $u_2$. In either case the alpha class
+$\{u_0,u_4\}$ has value $a$ and the beta class $\{u_1\}$
+has value $b$. Hence all these decoders are valid. The remaining
+six targets have the witnesses of Lemma 4.4 on each $D_s$.
+Any $A$ omitting a member $u_s$ of $F$ lies in $D_s$, so all
+its required decoders restrict from this set. This includes the empty
+subset vacuously and proves the equivalence. $\square$
+

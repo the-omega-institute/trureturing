@@ -1,0 +1,34 @@
+**Theorem 16.6 (linear original-risk/actual-return-variation necessity).** For every original finite COMPLETE observer and every one fixed prior of Definition 16.1,
+
+$$
+\boxed{\frac{14274671}{121}e(M)
+       +\frac{22500090}{11}\mathcal V(M)
+       \ge\frac{11\eta}{1404}.}
+\tag{16.15}
+$$
+
+There is no uniform lower prior-mass floor, mixing assumption, bound on the finite carrier size or extra controller input. Original emissions may be zero or one, and original decoded laws may have noncompletion mass.
+
+Proof. Start with the original source-independent initialization before the first paid seed Read. Use the common extraction of [PAID97, Lemma 14.1] on $S$, as in Citation 2.1 and (9.19). Its positive paid rejection histories approach each supported pure depth while their actual configuration rows approach one common $\lambda$. For fixed $j$, appending $j$ actual returns approaches $\lambda(BA)^j$; appending one further beta gives the corresponding suspended row. The initialized rejection-chain limits and the full suffix include the original control, writes and latch. They are not a substituted stationary initialization of the original observer.
+
+For the bounded statistic $f_x=\sum_{y,x'}B_{xy}A_{yx'}|u_x-u_{x'}|$, every p-history approximant has $\rho_hf\le\mathcal V(M)$. Finite-row continuity gives $\lambda(BA)^jf\le\mathcal V(M)$. The same Cesaro rows and the same convergent subsequence that supply both phase configuration losses therefore supply $\pi f\le\mathcal V(M)$, as in (9.19). No separate choice of stationary row is made for a loss, a depth or this statistic.
+
+For a chosen supported depth $k$, the supplier's paid-history likelihood ratios have summable domination $C_*\mu(i)/\mu(k)$ over competing depths $i$. Dominated convergence supplies pure-target exposure even for a countable prior with arbitrarily tiny positive weights and no uniform separation of its parameters. The limiting actual row is independent of the chosen depth, so the same subsequence retains all supported-depth bounds simultaneously. Original transient configurations and all positive histories still belong to the original suprema, although stationary support can omit some of their labels.
+
+Delete only zero-row labels by the support-closed flow rule. Apply the common-row form of [CLIP97, Theorem 3.1] to the extracted table. It retains $B,A,\pi,\tau$, clips both emissions to $[a,b]$, and regenerates complete own laws. Its simultaneous configuration slacks satisfy
+
+$$
+\widehat\epsilon_p\le\frac{41\varepsilon_p+20\varepsilon_\beta}{11},\qquad
+\widehat\epsilon_\beta\le\frac{12\varepsilon_p+41\varepsilon_\beta}{11},\qquad
+\widehat\epsilon\le\frac{61}{11}e(M).
+$$
+
+These bounds cover original zero/unit emissions and possible noncompletion by full-path coupling with the regular comparison; they do not remove original actual edges. Scalar clipping is 1-Lipschitz, so on those unchanged edges
+
+$$
+\widehat V_\pi\le\pi f\le\mathcal V(M).
+\tag{16.16}
+$$
+
+Apply Theorem 16.5 to this single clipped table. Substitute the two upper bounds in its nonnegative coefficients. Since $234011\cdot61=14274671$, (16.15) follows. The target TV is taken separately for each configuration throughout extraction, clipping, repair and recovery. No marginalized-law bound is used in place of a configuration bound. $\square$
+

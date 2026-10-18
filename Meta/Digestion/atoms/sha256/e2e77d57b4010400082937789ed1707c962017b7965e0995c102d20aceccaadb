@@ -1,0 +1,41 @@
+**Definition 363.4 (All independent cap rows).** For $w\ne1^L$ write
+$n(w)=\min\{i:w_i=0\}$. The canonical event vector $z(p)$ consists of
+
+$$
+z_{A,w}(p)=p_w(0),\qquad z_{C,w}(p)=p_w(n(w)),\qquad
+z_{P,w}(p)=p_w(0)+p_w(n(w)),\qquad z_T(p)=p_{1^L}(0).
+\tag{363.5}
+$$
+
+At a prefix $b=(a_1,\ldots,a_L)$ and cap $e$, its literal demands are
+
+$$
+\begin{aligned}
+p_w(0)&\ge1-b_{n(w)}-e,&
+p_w(n(w))&\ge b_{n(w)}-e,&
+p_w(0)+p_w(n(w))&\ge1-e,\\
+p_{1^L}(0)&\ge1-e.
+\end{aligned}
+\tag{363.6}
+$$
+
+The three zero-word rows remain separate, even if a singleton demand is negative. All words and all labels remain present when a score gives some rows weight zero. At $L=7$ there are $128$ words, eight labels and $3\cdot127+1=382$ rows.
+
+Indeed, for $\eta_w=(1-b_n)e_0+b_ne_n$,
+
+$$
+\operatorname{TV}(p_w,\eta_w)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{363.7}
+$$
+
+The mass outside $\{0,n\}$ is the sum of the first two displayed deficits and is nonnegative; summing positive deficits gives precisely this maximum. At the finite positive word the target is $e_0$. If an original first absence is $n>L$ and $p$ uses only $J_L$, the exact tail formula is
+
+$$
+\operatorname{TV}(p_{1^L},\lambda_x^a)
+                         =\max\{1-p_{1^L}(0),a_n\}.
+\tag{363.8}
+$$
+
+The finite positive word is an endpoint condition, not an infinite all-positive source. These are the rows and tail identity used in 110.1–110.2.
+

@@ -1,0 +1,33 @@
+**Theorem 5.2 (matching deterministic upper order).** On the same two-speed
+class, let $n=N+1$, $t_j=jT/n$, and use the $N$ interior samples and known
+endpoints. Then
+
+$$
+\widehat A=\sum_{j=0}^{n-1}k(t_j)(\chi(t_{j+1})-\chi(t_j)),\qquad
+|A-\widehat A|\leq\frac{v_kv_\chi T^2}{2n}.
+\tag{5.4}
+$$
+
+The decoder with $\widehat h=-(\widehat A/r)b_0$ has complete-response
+error at most
+
+$$
+\frac{\sqrt{k_0Z}\,v_kv_\chi T^2}{rn},
+\tag{5.5}
+$$
+
+uniformly after every common exact prescribed future sequence. For fixed
+positive parameters satisfying (5.1), the deterministic point-query
+minimax order is $\Theta(1/(N+1))$; constants are not asserted sharp.
+
+Proof. The error on one cell of length $\ell=T/n$ is
+$\int_{t_j}^{t_{j+1}}(k(t)-k(t_j))\chi'(t)\,dt$. Its absolute value is at
+most $v_kv_\chi\ell^2/2$. Summing proves (5.4). Only the $02$ pair varies
+when winding is zero. Use
+$|\exp(ix)-\exp(iy)|\leq|x-y|$ and $a_{02}=2\sqrt{k_0Z}$ to get (5.5).
+The common exact future action is an isometry on each edge pair. Finally
+$\sin x\geq2x/\pi$ on $[0,\pi/2]$ makes (5.3) a positive constant times
+$1/n$. This is classical quadrature and indistinguishability reasoning
+applied to these actual histories; it is not a new quadrature principle.
+$\square$
+

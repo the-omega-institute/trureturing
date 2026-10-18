@@ -1,0 +1,25 @@
+### 93.2. An attainer and all boundary reductions
+
+**Proof of Theorem 93.1.** Set
+
+\[
+ x=\frac{1+u}{4},\qquad y=\frac{1-x}{\sqrt3},\qquad
+ z=x+iy,\qquad
+ G_* =\begin{pmatrix}
+ 1&z&\overline z\\
+ \overline z&1&z\\
+ z&\overline z&1
+ \end{pmatrix}.                                             \tag{2}
+\]
+
+Since 2<u<3, one has 0<x<1. The circulant eigenvalues are 1+2x, 2(1−x), and zero. Thus G_* is a rank-two correlation Gram, and direct substitution gives
+
+\[
+ E(G_*)=\frac{64x^4-64x^3+24x^2-40x+25}{12}
+        =\frac{21-9u}{16}<\frac3{16}.                       \tag{3}
+\]
+
+The domain of Theorem 93.1 is compact. Hence a global minimizer exists, and every global minimizer has value below 3/16 by (3). Fix any such minimizer. None of its cross entries is zero: a zero alone contributes 1/4. None has modulus one: the reverse triangle inequality again gives a contribution at least 1/4. Its rank is exactly two, because rank one would force every cross entry to have modulus one. Every coordinate of a nonzero kernel vector is nonzero, since a kernel vector with a zero coordinate would make a 2×2 principal unit-diagonal block singular and force its cross entry to have modulus one.
+
+In the real affine space of Hermitian unit-diagonal matrices, the determinant-zero set is a smooth hypersurface near this minimizer. Indeed the adjugate is a positive nonzero multiple of the kernel outer product. Each complex cross-coordinate derivative pair is therefore nonzero; in particular the real determinant gradient is nonzero. The two positive eigenvalues remain positive nearby, and on this hypersurface the third is zero. Thus the entire nearby hypersurface is feasible. Ordinary real Lagrange multipliers apply without discarding any boundary case.
+

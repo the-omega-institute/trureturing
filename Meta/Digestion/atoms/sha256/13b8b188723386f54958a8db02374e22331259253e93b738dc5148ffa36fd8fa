@@ -1,0 +1,39 @@
+**Definition 2.1 (graph construction).** Start with GCA §§2–6's entire
+graph: separate mode receiver, both general binders, unchanged legacy
+arm, five-field history items, acquired source entry/exit metadata and
+all failure paths. Replace only ClientImage's successful tail by CYCLE
+Definition 8.3's fixed five-stage suffix, as specified in §7. Replace
+CYCLE's basic input decoder and strict-Zero binding test by §§4 and 5
+below. There is no new selector or source command, no hook inside
+$F^A$, and no hook in the final00 original consumer suffix.
+
+Use CYCLE Definition 2.2's finite word language and acyclic helpers.
+Internal naturals are $1^n$ and emitted numerals are $U(n)=1^n0$.
+Tuples use its list-of-Frames grammar with exact arity and exhaustion.
+The helper dependency order is: word primitives and parsers; unary
+layout/mask/contour routines; literal Step and patch formatting; the
+bounded extraction/replay of §4 and construction-role fold; binding
+tests; single-body decoders and direct arrows; the unrolled current
+channel stages. Step interprets a single native row and never invokes a
+semantic Call, decoder or replay. No new opcode acts on a whole word.
+
+Hygienically expand static calls with fresh temporaries; number registers
+by first textual occurrence after expansion. Let $r_{\mathrm{gc}}$ be
+that exact finite count, including GCA's mode/general-locator words and
+all decoder/arrow temporaries. Number rows by the inherited textual
+order, then the helper order above, false before true, symbol/port order,
+with bank parity as the same finite product. New stage tags and invocation
+slots are finite slots. Loops have static successors; unbounded values,
+work stacks, countdowns and row descriptions are bank words. Include
+a persistent `receivedBindings` list among the service fields. Initialize
+it empty on this flight's acquired request, and append only the checked
+binding record at each actual callback as specified in §7.
+
+Every assignment uses ARC §2's actual two-pass emission of all
+$r_{\mathrm{gc}}$ fields, Base/length scans, separators/F/seal,
+descriptor construction and parity CTL. Tests use actual Field/RD work.
+Native 66/67 imports are first staged on69; no bank rebuild imports its
+own moving scratch. An importer positioned on69,70 or73 keeps that head
+while rebuilding64–68. The new graph is determined by this finite
+syntactic construction, not by a postulated efficient interpreter.
+

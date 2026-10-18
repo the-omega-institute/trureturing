@@ -1,0 +1,112 @@
+**定理 C-112.2（所有复三稀疏分解的定量泄漏关系）。** 对每个非零 PSD
+$D\in M_5(\mathbb C)$，若 $k(D)\le3$，则
+
+$$
+p_2(D)\le\frac43p_0(D)+21\bigl(p_3(D)+p_4(D)\bigr),
+\qquad \operatorname{tr}(\mathsf W D)\ge0.
+\tag{C112.2}
+$$
+
+对 $127/129<t\le1$，有
+
+$$
+\operatorname{tr}(\mathsf W C_t^{\rm F})=-\delta_t<0.
+\tag{C112.3}
+$$
+
+因而任一迹一 PSD 系数矩阵 $D$ 若满足
+$\|D-C_t^{\rm F}\|_1<r_t$，就有 $k(D)\ge4$。
+等价地，$C_t^{\rm F}$ 到迹一三稀疏复 Gram 锥截面的迹范数距离至少为 $r_t$。
+若同时 $D\in\mathcal I$，则 $k(D)=4$。
+特别在 $t=99/100$，
+
+$$
+\delta_{99/100}=\frac{71}{1500},\qquad
+r_{99/100}=\frac{71}{16500}>0.
+\tag{C112.4}
+$$
+
+证明。先固定任意原坐标支撑至多三的复向量
+$z=\sum_{m=0}^4 c_m u_m$。至少有两个不同零坐标 $r,s$。
+令 $x=\omega^r,y=\omega^s$，则 $x\ne y$ 且二者模为一。
+多项式 $p(v)=\sum_{m=0}^4c_mv^m$ 满足 $p(x)=p(y)=0$，故有
+$p(v)=(v-x)(v-y)(a+bv+dv^2)$。比较系数得
+
+$$
+c_0=xy\bigl(c_2+(x+y)c_3+(x^2+xy+y^2)c_4\bigr).
+\tag{C112.5}
+$$
+
+这一恒等式允许最高系数、商多项式或整个向量为零。
+置 $a_{rs}=x+y,b_{rs}=x^2+xy+y^2$，并令
+$h=x\overline y+y\overline x$。不同五次根之比给
+$h^2+h-1=0$，即 $h=(-1\pm\sqrt5)/2$。
+于是
+
+$$
+\begin{aligned}
+|a_{rs}|^2&=2+h,& |b_{rs}|^2&=(1+h)^2=2+h,\\
+|a_{rs}|^2+|b_{rs}|^2&=3\pm\sqrt5
+\le3+\sqrt5<\frac{21}{4}.
+\end{aligned}
+\tag{C112.6}
+$$
+
+最后的严格比较由 $5<81/16$ 和正平方根给出。
+从 (C112.5)、复 Cauchy–Schwarz 及
+$2ab\le a^2/3+3b^2$（$a,b\ge0$），得到
+
+$$
+\begin{aligned}
+|c_2|^2
+&\le\left(|c_0|+|a_{rs}c_3+b_{rs}c_4|\right)^2\\
+&\le\frac43|c_0|^2+4|a_{rs}c_3+b_{rs}c_4|^2\\
+&\le\frac43|c_0|^2+
+ 4(|a_{rs}|^2+|b_{rs}|^2)(|c_3|^2+|c_4|^2)\\
+&\le\frac43|c_0|^2+21(|c_3|^2+|c_4|^2).
+\end{aligned}
+\tag{C112.7}
+$$
+
+所以每个这样的 $z$ 都满足 $z^\dagger\mathsf W z\ge0$。
+对任意有限复分解 $D=\sum_a z_a z_a^\dagger$ 逐项相加，就得到 (C112.2)。
+没有预定项数、共同支撑、实振幅、等模或相位限制；非负权重可以吸入 $z_a$。
+这是针对五次根位置的定量关系，已不要求每个 $z_a$ 落在
+$\operatorname{span}(u_0,u_1,u_2)$；非零的 $c_3,c_4$ 被显式计入。
+
+由 C-111.1 的谱投影，
+$p_0(C_t^{\rm F})=1/5$，$p_2(C_t^{\rm F})=(1+t)/5$，
+$p_3(C_t^{\rm F})=p_4(C_t^{\rm F})=(1-t)/5$，直接得 (C112.3)。
+$\mathsf W$ 在 $u_0,\ldots,u_4$ 上的特征值为
+$4/3,0,-1,21,21$，故
+
+$$
+\|\mathsf W-10I_5\|_{\rm op}=11.
+\tag{C112.8}
+$$
+
+对迹相同的 Hermitian $D,C_t^{\rm F}$，有限维迹范数对偶给
+
+$$
+\begin{aligned}
+\operatorname{tr}(\mathsf W D)
+&=-\delta_t+
+ \operatorname{tr}\bigl((\mathsf W-10I_5)(D-C_t^{\rm F})\bigr)\\
+&\le-\delta_t+11\|D-C_t^{\rm F}\|_1.
+\end{aligned}
+\tag{C112.9}
+$$
+
+该对偶不等式可直接由 Hermitian 差矩阵的正交谱分解得到：每个单位向量的
+$\mathsf W-10I_5$ 期望绝对值至多十一，再以差矩阵特征值的绝对值求和。
+半径 $r_t=\delta_t/11$ 内的负配对与 (C112.2) 矛盾。
+当 $D\in\mathcal I$ 时 C-111.2 给 $k(D)\le4$，遂取等。
+(C112.4) 为分数代入。此处消费一般局部 PSD／稀疏 Gram 对偶的方向，见
+Johnston–Moein–Pereira–Plosker，
+[*Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix*,
+arXiv:2205.05110v2](https://arxiv.org/html/2205.05110v2)，§2.1–§2.2，
+以及 Ringbauer 等，
+[*Certification and Quantification of Multilevel Quantum Coherence*,
+arXiv:1707.05282v3](https://arxiv.org/html/1707.05282v3)，§I.4、§A.5、§A.8。
+本条所需的五次根消元、全复泄漏界和具体负配对已在上面直接证明。证毕。
+

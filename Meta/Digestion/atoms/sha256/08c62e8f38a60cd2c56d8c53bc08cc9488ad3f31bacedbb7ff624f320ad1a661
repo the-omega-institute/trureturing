@@ -1,0 +1,144 @@
+## 327. Original realization, actual tails and matching lower bound
+
+**Proof of Theorem 324.1.** The original objects are explicitly those
+in 315.1: $X=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil
+\le g\le\lfloor F_r/5\rfloor\}$,
+$N=1+F_rg$, $q_i=[p_i\mid N]$ and the finite first absence
+$n(x)$. The carrier remains
+$\Theta=\bigsqcup B_j\sqcup\bigsqcup P_j$, with interval
+blocks and their full Borel sigma algebra; the actual distinct marks
+are $\theta_j=(B_1,1/(j+2))$. The same consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. Its original nonatomic
+targets $(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with the density and
+parameters of 315.1, remain unchanged. There is no probability law
+on the source, supplied value of $N$, source label, first absence
+or extra observation. The error in (324.3) is only against the
+separately selected marked targets (315.2).
+
+Every word used in 326 is an actual finite reply pattern. To recall
+the elementary justification in 315.3, the invertible Fibonacci
+matrix $Q$ modulo each prime $p$ has scalar $k$th power precisely
+when $p\mid F_k$. Its class in the finite projective linear group
+has an order $z(p)\ge3$, giving $p\mid F_k$ iff $z(p)\mid k$.
+For finitely specified primes of product $D$, choose a prime $r$
+larger than all these ranks with $F_r\ge10(D+2)$. No rank
+divides $r$, so $F_r$ is invertible modulo $D$. CRT prescribes
+$g=-F_r^{-1}$ at a desired one and $g=0$ at a desired zero.
+The actual integer window for $g$ has length at least $D$ and
+contains this residue. This realizes every multiple-zero word and
+positive prefix. Applying it to the first $n$ bits with only the
+last bit zero realizes each later actual first absence as well.
+Finite prime support makes first absence finite for every source;
+the finite positive word is not an infinite all-positive source.
+
+Partition one source-independent uniform $U\in[0,1)$ into the
+schedule intervals of 325, omitting zero weights. Within a mixed
+interval use its same rescaled coordinate for all the quantiles in
+(325.4). Before replies, this fixes the branch, the whole increasing
+schedule and every counterfactual terminal label. Execute only the
+selected schedule on the same actual source, stop at its first
+**queried** zero or exhaustion, and hand its indicated actual mark
+to the unchanged consumer. All interval choices are measurable;
+half-open endpoints fix a rule at every seed. Handoff is finite
+for every source and seed, zero advice is used, and there are at
+most two actual calls. The second address was fixed before replies.
+
+The $N$ completion uses this identical $U$ and source, acquires
+the whole preselected schedule and reconstructs the same stopped
+output. Its ignored second call still counts. Thus these two
+constructed rules have identical laws, without any claim of
+preserving an arbitrary initially given $N$ law. The reused normalized
+criterion 109.1 applies to the explicitly stopped law: for its
+unique expansion
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$, it has
+
+$$
+c_0\ge H(p):=\sum_i\left(\sum_{j>i}(-Q_{ij})_+-\ell_i\right)_+
+\quad\text{coordinatewise}.
+\tag{327.1}
+$$
+
+Normalization makes the scalar schedule budget redundant as in
+108.4. Degree two alone or scalar expectation representability
+does not replace this stopped membership condition. At $t=0$ use
+the law on its seven actual active inputs; it ignores 8 and 9.
+
+For $n(x)\le9$, the full-row proof 326 gives the selected-target
+cap. For every actual $n(x)>9$, no emitted mark is $\theta_{n(x)}$
+and the low word is $1^9$. The exact full-carrier identity is
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^9p^\delta_+(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p^\delta_+(0),a_n\}=\max\{E,a_n\}=E.
+\tag{327.2}
+$$
+
+It includes $a_{10}=E$, every later tie, and every permitted
+positive monotone vanishing tail; no summability is required. At
+$t=0$, the same identity beyond 7 also covers classes 8 and 9.
+Thus both constructed rules have uniform error exactly $E$.
+
+For necessity reuse the **complete-$N$** lower score 318.2–318.3:
+for every real finite profile, every ordered late embedding, and
+the same complete feasible allocation of any finite mass,
+
+$$
+2b_2+11b_{j_1}+13b_{j_2}+13b_{j_3}+12b_{j_4}
++11b_{j_5}+11b_{j_6}+11b_{j_7}\le2+128e.
+\tag{327.3}
+$$
+
+Its explicit 46 rows have
+$\beta=(0,16,88,104,104,96,88,88,88)$, $K=1024$ and
+$W=368$, with $B_N=B_O=W$. The support proof maximizes over
+all ten labels in every cell of all 36 pairs, retains the full
+catalog, coarsens empty/singleton/repeated schedules, and permutes
+cells for reversals. Outside the embedded coordinates, scored bits
+are one and outside labels earn zero, so it covers all horizons
+and ordered embeddings. For this one score $Y$ and this same
+allocation, $Yh\le YG_N\lambda\le M\Delta_N(Y)=0$; there
+is no division by $M$ or substitution of separately optimized
+margins. These are reused lower-bound results, not another family.
+
+The original necessary direction uses the exact closed-cap transport
+110.2 recalled in 315.3. Countability gives one common probability-one
+seed event of finite execution and at most two calls. Finite actual
+witnesses for low words with fixed high replies, whole-schedule address
+truncation, and finite handoff cutoffs give approximating representatives
+in the same class. Compactness of that class's finite catalog simplex
+then gives one representative at the exact closed cap. This argument
+retains arbitrary original addresses, repetitions and all Borel outputs.
+For the required prefix nine, restrict a longer representative by
+fixing higher replies to zero, projecting higher labels to zero and
+contracting constant observations; extend a shorter one by ignored
+inputs. Projection contracts every TV row, including the independent
+union row. In the extension, each added first zero has amplitude at
+most the proposed cap and exact error
+$\max\{1-p_+(0),a_n\}$ at most that cap. These are proof
+representations, not uncounted actual observations. No original
+competitor's complete law or coupling is asserted to survive.
+
+Consequently (327.3) applies to every original competitor at any
+proposed positive cap below one, including a cap smaller than $E$
+which activates more actual tail coordinates. Substitute
+$j_1,\ldots,j_7=3,\ldots,9$. Its contributions are
+
+$$
+\begin{aligned}
+2a_2-2&=-22\tau,\\
+11a_3+13a_4+13a_5+12a_6+11a_7&=552\tau,\\
+11(a_8+a_9)&=110\tau+22t.
+\end{aligned}
+\tag{327.4}
+$$
+
+The sum is $640\tau+22t=128E$. The transfer cancels because
+the last two coefficients are equal. Hence every such cap satisfies
+$128c\ge128E$. If a competitor had error less than $E$, choose
+a positive cap between its error and $E$ to contradict this bound;
+this also excludes zero error. Both explicit rules attain $E$.
+Every larger closed cap admits those same rules, including $c=1$
+and $c>1$. Every smaller positive cap is excluded, proving all
+of (324.3) and the claimed closed-cap equivalence. $\square$
+

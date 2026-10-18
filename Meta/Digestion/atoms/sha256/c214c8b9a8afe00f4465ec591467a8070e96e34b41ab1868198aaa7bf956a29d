@@ -1,0 +1,18 @@
+**Lemma 7.2 (source-only retention is insufficient for this extension).**
+If service frames are omitted from replay input, equality of the seed,
+consumed original source frames and actual ordinal is insufficient for
+full-state recovery on the extended domain.
+
+Proof. At one common ready state, start a tag-110 Select payload of
+declared length four. Choose the valid equal-length payloads
+$1U(0)U(1)=1010$ and $1U(1)U(0)=1100$.
+They share the same tag, length, allocation schedule and first payload
+bit. At the IN of their second payload bit they consume different bits.
+Both partial frames are extendible to the displayed canonical payloads;
+unknown cover numbers may later fail without making their syntax illegal.
+Immediately after that IN their raw input latches differ, while the seed,
+consumed original source input and actual primitive count agree. The
+primitive reader's schedule through that IN is value independent. Full
+states therefore differ. Even a well-typed later `CutIndexReject` cannot
+erase the earlier acquired bit. ∎
+

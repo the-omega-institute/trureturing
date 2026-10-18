@@ -1,0 +1,84 @@
+**Theorem 17.1 (all original competitors, all depths).** For
+every $D\ge3$ and every jointly correct original preparation
+and reader of Assumption 1.2, with its complete attained
+export $E$,
+
+$$
+\boxed{\displaystyle
+|E[\mathcal F_D]|\ge
+\left\lceil R_{\rm a}^{\,2^{D-3}}\right\rceil.}
+\tag{NCE.101}
+$$
+
+Consequently
+
+$$
+\boxed{\displaystyle
+M_1(D)\ge\left\lceil
+\left(\frac{7792603}{3038031}\right)^{2^{D-3}}\right\rceil,
+\quad \sigma_3\ge\log_2\frac{7792603}{3038031},
+\quad \lambda\ge\frac18\log_2\frac{7792603}{3038031}.}
+\tag{NCE.102}
+$$
+
+Proof. This is [NPC, Theorem 7.1][NPCa], equivalently the
+actual-scaffold argument of Theorem 10.1, applied to the new
+cap; its unchanged quantifiers can be spelled out directly.
+Put $h=D-3$ and $n=2^h$. Fix a perfect ordered scaffold of
+height $h$ in the actual right subtree. At its frontier
+words $a_1,\ldots,a_n$, each of length $h$, insert every
+tuple $x\in S_3^n$ of actual trees. It gives a distinct
+actual $t_x=\langle A,v_x\rangle\in\mathcal F_D$.
+All these frontier occurrences are present. For every $i$
+and $q\in W_3$ the source-independent request
+$p=Ra_iq$ is permitted, with $|p|\le D$, and its full
+trajectory has factor $\Gamma_q(x_i)$ by homomorphic
+transport at that present occurrence.
+
+Restrict the arbitrary original complete code to this one
+mandatory slice, without replacing any of its names or
+fibers. At a fixed attained name and request, the choice
+of zero Reads or of one entire word is fixed before its
+reply and before every authentic count. Every finite
+original-root word has one of these forms: it stays in the
+fixed wrapper, ends strictly above the scaffold frontier,
+or enters one uniquely fixed frontier block. The first
+two give constants. In the third case its suffix may
+be any finite word. On an actual $S_3$ block a suffix
+of length at most two is a boundary experiment; a
+length-three reply is alpha exactly when its length-two
+parent is branch, and absent otherwise; every longer
+reply is absent. Thus it is a function of one boundary
+reply in that same actual donor block or is constant.
+The donor need not be the target block.
+
+Equal selected boundary replies on this unchanged code
+fiber yield equal actual replies and the same final
+predictor. Correctness for every subsequently supplied
+authentic $k$ gives equal complete target trajectories,
+hence equal $\Gamma_q$ by Convention 1.3. Zero-Read
+and constant-reply branches make the target constant.
+This proves joint admissibility of every nonempty
+restricted fiber for every target simultaneously. All
+its cross-block correlations, off-target donor choices
+and cycles have been retained.
+
+Give the entire slice the analytical product law
+$\mu_{\rm a}^{\otimes n}$. Each restricted fiber has
+mass at most $(C_{\rm a}/W_{\rm a})^n=R_{\rm a}^{-n}$
+by Theorem 16.1, and the fibers partition total mass one.
+Their number is therefore at least $\lceil R_{\rm a}^n\rceil$,
+and the full attained original alphabet is at least that
+large. No competitor has received free preparation data
+or been restricted to independently chosen child codes.
+
+At every integer length the same mass witness gives
+$Z_3(n)\ge R_{\rm a}^n$ and
+$K_3(n)\ge\lceil R_{\rm a}^n\rceil$. The credited
+FMR limits give the $\sigma_3$ assertion. Divide the
+original finite logarithmic bound by $2^D=8n$ and use
+the original rate limit for $\lambda$. The product law
+is a counting witness, not a source prior, acquired advice
+or independence imposed inside any competitor fiber.
+$\square$
+

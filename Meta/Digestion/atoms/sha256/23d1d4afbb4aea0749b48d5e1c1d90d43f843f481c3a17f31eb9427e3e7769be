@@ -1,0 +1,104 @@
+**Theorem 7.2 (joint normalization and the whole complete channel).**
+Definition 7.1 is a finite design in the original class. Its two
+binary-conditioned live maps, on every complex supported $A$, are
+
+$$
+\Lambda_r^0(A)=\frac12\left[
+ DAD^\dagger+TAT^\dagger+SAS^\dagger
+ +rs(DAT^\dagger+TAD^\dagger)\right].
+\tag{IR.44}
+$$
+
+Its conditioned failure measures are exactly half of (IR.10), including
+the complement term. Consequently it has (IR.13), and its forgotten
+channel is exactly (IR.10) on the full complex five-mode algebra, every
+passive reference and every original labelled Borel time set.
+
+Proof. All weak weights are nonnegative since $s/\sqrt\ell\leq1$.
+Their nonzero matrices lie on the quadratic cone because
+$\ell-\alpha-\beta=0$; Lemma 4.2 gives rank exactly two.
+The weak $A_r$ is invertible. In the strong regime the determinant of
+$A_r$ is nonzero: its coefficient expression has
+$u^2-\alpha v^2=k/2>0$ and $u=\sqrt{p_s/2}>0$.
+For each strong $B$, the relation
+$1-p_s=\alpha(1-q_s)+\beta>0$ makes its determinant zero with
+nonzero $D$ coefficient. Its rank is exactly two. Thus every stated
+range compression and every dimension assignment is justified.
+
+For weak $B$ write its nonnegative squared scalar prefactor as
+$\omega_{r,\epsilon}=(1+r\epsilon s/\sqrt\ell)/8$.
+Summing over both $\epsilon,\zeta$ gives coefficient entries
+
+$$
+DD=\ell/2,\quad TT=SS=1/2,\quad DT=TD=rs/2,
+\quad DS=SD=TS=ST=0.
+\tag{IR.45}
+$$
+
+For example $\sum_{\epsilon,\zeta}\omega_{r,\epsilon}=1/2$,
+$\sum\omega_{r,\epsilon}\sqrt\ell\epsilon=rs/2$, and the terms
+odd in $\zeta$ vanish. Adding $A_r$ supplies $k/2$ to $DD$, leaving
+$DD=1/2$. This is exactly coefficient matrix $Z_r^0(s)$.
+For strong $B$, summing its two signs cancels both $S$ cross terms.
+Its diagonal coefficients plus those of $A_r$ are again all $1/2$;
+its $DT$ entry is
+$r[\sqrt{p_sq_s}+\sqrt{(1-p_s)(1-q_s)}]/2=rs/2$ by (IR.40).
+Thus (IR.44) holds in both regimes. At $s=\sqrt\ell$, the weak
+nonzero weights have $\epsilon=r$ and prefactor $1/2$, exactly the
+two strong matrices; the other weak branches have zero weight.
+
+Range compression followed by decoding multiplies to $EB$ by
+$U_BU_B^\dagger B=B$. It also preserves the encoder effect:
+$B^\dagger U_BU_B^\dagger B=B^\dagger B$. High branches similarly
+have effect $A_r^\dagger A_r$. The supported live effect at fixed
+record is therefore
+$\Theta(Z_r^0)=(I-M+rs\kappa X_{01})/2$, since
+$D^\dagger T+T^\dagger D=\kappa X_{01}$.
+The scalar rows have effect $M/2$. Consequently the exact joint effect
+identities are
+
+$$
+\sum_{\xi:r(\xi)=r}C_\xi^\dagger C_\xi
+ =\frac{I_3+rs\kappa X_{01}}2,
+\qquad \sum_\xi C_\xi^\dagger C_\xi=I_3
+\tag{IR.46}
+$$
+
+on the supported input. The live decoders are TP on their complete
+fibres because their isometries satisfy $U^\dagger U=I$. The scalar
+failure decoders are TP by (IR.26), including the complement decoder
+using only existing label $2$. On five modes the two complement effects
+are $Q_5/2$ each, completing (IR.46) to (IR.13) and $I_5$.
+Each branch is CP and its positive effect is at most $I_5$, hence TNI.
+This proves joint encoder normalization, rather than assuming each
+encoder branch TP.
+
+The scalar rows give precisely
+$w_\ell g(t)dt\,\operatorname{tr}(MA)/2$ on supported inputs and
+$\mathbf1_{\ell=2}g(t)dt\,\operatorname{tr}(Q_5A)/2$ on the
+complement. Summing (IR.44) over $r$ cancels the cross terms and gives
+the fixed live map; the two scalar halves give the fixed failure map.
+Compression by $E^\dagger$ and the $Q_5$ trace both kill cross-support
+operators. No complementary live or extra-sector map is present.
+
+These computations use arbitrary complex $A$: they never replace
+$A_{ij}$ by $A_{ji}$ or discard its imaginary entries. On any joint
+complex operator $X$ with passive reference $R$, replace every encoder
+matrix and isometry by its tensor product with $I_R$. The same sum of
+conjugations proves the live identity. A scalar row $C$ leaves the
+actual reference operator $(C\otimes I_R)X(C^\dagger\otimes I_R)$.
+Their failure sum is
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]/2$;
+the complement branch gives
+$\operatorname{Tr}_5[(Q_5\otimes I_R)X]/2$.
+For each label and each Borel $B\subseteq[0,1]$, the decoder multiplies
+these operators by $\int_B g(t)dt$ and the stated $w_\ell P_f$ or
+label-$2$ $P_f$. This proves equality of CP measures, including all
+conditional reference states. The law has no endpoint atoms or singular
+additions; the two zero-weight original labels have actual zero maps.
+Every additional sector has zero map. Common metadata can be carried
+identically in each branch. Thus the entire complex/reference/labelled-
+time completion is (IR.10), and its canonical twelve-history error is
+the credited (IR.11). Exposing a finer internal label would define a
+different task, for which this error is not asserted. $\square$
+

@@ -1,0 +1,16 @@
+**Convention 1.1 (scope).** All comparisons use the common-channel,
+normalized reached-cut experiment of [Complete Continuation Gap][CG],
+Definitions 2.3, 3.1, 3.2 and 4.2. The finite comparison test is CG.155;
+its contraction is a necessary test of the original complete output.
+The zero-transfer results of [Explicit Zero-Transfer Loss][ZG] and the
+quantitative results CG26–28 are inherited results. The additional
+application here characterizes their simultaneous live restriction by
+finite coefficient inequalities, and distinguishes it from requirements
+on a particular complete output and on an actual acquisition cut.
+
+The full complex algebra, all twelve histories, unnormalized branch masses
+and all exact-time output sectors are retained. The original unrestricted
+common-CPTP benchmark is already supplied by CG16. The joint restricted
+optimum and the original native acquisition/control problem remain distinct
+questions.
+

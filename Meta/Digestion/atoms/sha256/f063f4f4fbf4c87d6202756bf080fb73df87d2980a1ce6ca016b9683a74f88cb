@@ -1,0 +1,30 @@
+**Lemma 4.1 (shape separation with nonleaf markers).** For a finite list
+of shape terms over $c,f,w_1,\ldots,w_m$, one can effectively choose
+pairwise distinct ground shapes $G_1,\ldots,G_m$, all nonleaf and all
+having the same number $M$ of leaves, so that substitution
+$w_j\mapsto G_j$ preserves every syntactic inequality in that list.
+
+Proof. Choose $M\ge2$ larger than every listed term's leaf count
+(counting variable occurrences as leaves), and large enough to have
+at least $m$ distinct full ordered binary shapes with $M$ leaves.
+This is effective. For example, for $M\ge3$ there are at least $M-1$
+shapes, obtained by taking a root whose left and right combs have
+$i$ and $M-i$ leaves, $1\le i<M$. Increase $M$ to satisfy both bounds
+and enumerate that finite family.
+
+To compare unequal terms, cancel matching root constructors until the
+first disagreement. Different variables receive distinct markers.
+A variable has substituted leaf count $M$, while $c$ has one.
+A compound subterm containing no variable has fewer than $M$ leaves.
+A compound with at least one variable has more than $M$ leaves: it
+either has two variable occurrences, or one and at least one other
+leaf. Thus a variable cannot become equal to such a compound. A
+constant/compound disagreement remains a constructor disagreement.
+These exhaustive cases prove simultaneous separation. $\square$
+
+The equal-mass separation principle is standard and is also used by
+[NativeGroundSeparation][D5-GROUND]. That module marks native Boolean
+leaves. The argument here specifies the required one-constant *shape*
+markers and their nonleaf boundary condition; it is not an application
+of a Boolean-leaf marker after silently erasing its distinguishing labels.
+

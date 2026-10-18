@@ -1,0 +1,19 @@
+**Assumption 2.5 (current component evaluation and permission).** During
+this isolated component, only its specified transitions execute. Each
+one rechecks the presently installed call-site control, actual source
+writer/availability fields, actual old source head/right marker and
+unchanged original meter eligibility. The original active version and
+immutable code binding remain those of the eligible entrance.
+The original core executor may inspect exactly this bounded original
+guard/meter footprint and the pending source construction, under the
+producer's current construction authority. Its ability to continue
+through the partial shapes below is a stated scoped interface premise.
+
+No historical permission byte confers this right. Loss of a current
+required token, the wrong PC or version, a wrong original head, or a
+failed shape test enables no constructor transition. The sequential
+component is not a protocol implementing admission, token retention,
+concurrent exclusion, dispatch to a parent continuation or return.
+It grants no source read to actor $A$. Its mathematical observations
+across owners are not actor-accessible inputs.
+

@@ -1,0 +1,47 @@
+**Proposition 5.2 (distinct subset sums do not exclude mixed sharing).**
+For every $m\ge1$, Theorem 5.1 applies to the following new original
+input:
+
+$$
+\begin{gathered}
+c_i=5\,3^{i-1},\qquad s_i=c_i-4\quad(1\le i\le2m+5),\\
+t=1,\quad x=2,\quad y=3,\quad x^\prime=4,\quad y^\prime=5,\\
+I=\{1\}\cup\{6,\ldots,m+5\},\qquad
+U=\{m+6,\ldots,2m+5\}.
+\end{gathered}                                      \tag{PE.21}
+$$
+
+All subset sums of these original costs are different, yet the whole
+native table has the live sharing (PE.18), with
+
+$$
+C_X=150\ne450=C_Y.                                  \tag{PE.22}
+$$
+
+Proof. The sets in (PE.21) form the required partition with
+$|I|=m+1$ and $|U|=m$. The original positions are strictly increasing
+positive integers. The relevant costs are
+
+$$
+d=5,\quad c_x=15,\quad c_y=45,\quad
+c_{x^\prime}=135,\quad c_{y^\prime}=405.
+$$
+
+Thus $5\le135,405$, $15+5\le45+405$, and
+$45+5\le15+135$, verifying every condition in (PE.16). Theorem 5.1
+therefore supplies all four-reply tables, the whole unbounded upper
+domain, the unchanged original entries and reader, the exact whole-state
+count and the attained caps. The displayed private sums are $15+135$
+and $45+405$.
+
+For subset-sum uniqueness, take the largest index $j$ at which two
+subsets differ. Its term $5\,3^{j-1}$ exceeds the sum
+$5(3^{j-1}-1)/2$ of all lower terms. Hence the difference cannot be
+canceled by lower indices. This elementary positional argument is used
+only to check an input property of the native construction, not as a new
+standalone subset-sum theorem. Both polarity defects are present at its
+common state. Consequently even uniqueness of every subset sum does not
+justify dropping those hypotheses from Theorem 3.1 or replacing the
+disjunction in Theorem 4.2 by an unconditional balance requirement.
+$\square$
+

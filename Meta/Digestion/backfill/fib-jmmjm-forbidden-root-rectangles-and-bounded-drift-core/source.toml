@@ -1,0 +1,5 @@
+source_id = "fib-jmmjm-forbidden-root-rectangles-and-bounded-drift-core"
+path = "docs/develop/theory/FIB_JMMJM_FORBIDDEN_ROOT_RECTANGLES_AND_BOUNDED_DRIFT_CORE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

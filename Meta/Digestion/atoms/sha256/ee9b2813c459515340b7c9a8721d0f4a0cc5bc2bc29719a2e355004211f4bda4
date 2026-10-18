@@ -1,0 +1,53 @@
+**Theorem 5.1 (exact first-window binary classification).** Let $m\ge2$, $T=k+1\ge2m+1$ and $\gcd(m,T)=1$. Fix distinct $A,B$ and any $H\subseteq\{1,\ldots,m\}$. Give INITIAL index $j$ label $B$ exactly when $j\in H$, and label $A$ otherwise, at every INITIAL tail in a specified free value fiber. Then
+
+$$
+C_v(H)=
+\begin{cases}
+0,&H=\varnothing,\\
+1,&|H|>0\text{ is even},\\
+2,&|H|\text{ is odd and }(m\notin H\text{ or }H=\{m\}),\\
+3,&|H|\text{ is odd},\ m\in H,\ |H|\ge3.
+\end{cases}
+\tag{5.1}
+$$
+
+**Proof: literal upper bounds.** For an even set $E\subseteq\{1,\ldots,m\}$, write the root-zero representative supplied by consecutive-edge inversion as
+
+$$
+R(E)_i=\bigoplus_{j=0}^{i}\mathbf1_E(j),\qquad 0\le i<m,
+\qquad L=1\,0^{m-1}.
+\tag{5.2}
+$$
+
+Here $0\notin E$. Reading the two endpoints of every selected literal edge shows that the root mask is exactly $E$: at $1\le j<m$ its coefficient is $R(E)_{j-1}\oplus R(E)_j$, at $m$ it is $R(E)_{m-1}=\mathbf1_E(m)$, and at zero it is zero. This applies the supplied path inversion to an actual word; no abstract span is substituted for a block. Every representative starts zero and is internally legal since $m<k$.
+
+For nonempty even $H$, emit $R(H)$ and return $B$ on difference one, $A$ on zero. For odd $H$ with $m\notin H$, emit $R(H\cup\{m\})$. Difference zero returns $A$. Its positive child consists of $H\cup\{m\}$, where $H$ has label $B$ and $m$ has label $A$. Emit the whole block $L$ next. Its edge at absolute position $m$ has mask $\{m,m+1\}$, restricting to $\{m\}$ in this child. Return $A$ on one and $B$ on zero.
+
+For $H=\{m\}$, emit $0^{m-1}1$. Its positive child is $\{m-1,m\}$, and its zero child is all $A$. On the positive child emit $L$; return $B$ on one and $A$ on zero. In both two-block constructions the root terminal run is at most $m-1$, so the single leading one of $L$ joins a run of length at most $m<k$. Its remaining $m-1$ zeros are actually emitted.
+
+For the remaining odd case let $K=H\setminus\{m\}$. This is a nonempty even set. First emit $R(K)$; difference one returns $B$. The representative ends zero, because $m\notin K$. On difference zero emit the whole $1^m$. From actual tail zero this is legal and has mask $\{m,2m\}$. Difference zero returns $A$, since the only remaining $B$ index is $m$. Its positive child is exactly $\{m,2m\}$, labelled $B,A$ respectively. Emit $L$ in block three, whose mask is $\{2m,2m+1\pmod T\}$. On this child it selects only $2m$, including the endpoint case $T=2m+1$, when the other endpoint is zero. Return $A$ on one and $B$ on zero.
+
+The second block leaves tail $m$; the third leading one joins exactly $m+1$ ones. The hypotheses give
+
+$$
+m+1<2m\le k
+$$
+
+because $m\ge2$, so this seam is safe. If $T=2m+1$, the wrap at the third edge has no effect on its stated positive child. The full words in this proof all have length $m$; no subsequent tail clearing is required after a stop.
+
+**Proof: all-adaptive lower bounds.** Root zero is necessary by §2. A root $m$-bit word starting zero has mask supported on $\{1,\ldots,m\}$, excludes zero, and has even cardinality: it is the XOR of the actual edges at positions $1,\ldots,m-1$ along that path. A nonconstant binary target can stop after it only if its mask equals $H$, since index zero remains in the $A$ child. Thus every odd $H$ needs at least two blocks; a nonempty target needs at least one. Together with the upper bounds this settles the first three cases of (5.1).
+
+For the last case, consider any proposed successful tree of depth at most two. Its root starts zero; denote its mask by $E$. This is any allowable root mask, not one chosen by the upper-bound protocol. Restrict attention to the actual tail-zero histories $W(v,j,0)$. After the root, all these sources have its common literal terminal tail. Throughout block two, every interior index $1\le j<m$ is silent: its first activity $j-1,j$ was in block one and its next activity is at $T+j-1\ge2m+1$. Index zero is also silent, because its next activity $T-1\ge2m$ lies after block two's last position $2m-1$. Within either root child these silent sources have a common current value and tail. Every second block therefore gives them the same endpoint output or the same absorbing rejection.
+
+Every $B$ interior belongs to $K=H\setminus\{m\}$ and must lie in $E$: otherwise it remains indistinguishable from the $A$ source at index zero on the zero child. Since $K$ is nonempty, the positive child contains a $B$ interior. No $A$ interior can belong to $E$, since it would share that positive child's silent second-block archive with the $B$ interior. Hence
+
+$$
+E\cap\{1,\ldots,m-1\}=K.
+$$
+
+The root mask has even size and $K$ is even, so $m\notin E$, forcing $E=K$. In particular the zero child contains index zero and the entire next window $\{m,m+1,\ldots,2m\}$; its only $B$ index is $m$.
+
+Every literal second-block mask is supported on that next window and has even cardinality. Its edges run from absolute position $m$ through $2m-1$, and $2m<T$, so there is no wrap or accessible earlier filler. Index zero is outside the mask and receives difference zero if the block succeeds. Therefore every surviving $A$ candidate must also receive difference zero, while $m$ must receive one: the required mask on the fully present next window is the odd singleton $\{m\}$. The complementary orientation fails because it would put some $A$ candidates on the same endpoint as $m$, while zero fixes the other orientation. An even literal mask cannot realize this singleton. If the second block rejects, the common actual tail makes rejection uniform and again cannot finish. This contradiction excludes every depth-two adaptive tree, including every action in the larger alphabet. The three-block construction attains the lower bound. $\square$
+
+At $T=7,m=3,H=\{1,2,3\}$ the exact cost is three. The literal protocol is $010$: difference one returns $B$; otherwise emit $111$: difference zero returns $A$; otherwise emit $100$, returning $A$ on one and $B$ on zero. On its longest branch the terminal seam joins four ones, below $k=6$. This is a nonwrapping witness for the last case, with every leaf accounted for.
+

@@ -1,0 +1,26 @@
+**Lemma 5.5 (mandatory queried classes).**
+A correct binary-code table must query at least one right class in
+each of $\{b_1,b_2\}$ and $\{b_3,b_4\}$. If exactly two different
+right classes are queried, a partner must also be queried.
+
+Proof. If neither right class in one pair is queried, hold its partner
+at beta and every queried class value fixed. There are actual fillings
+with no alpha, alpha at the first omitted right class, and alpha at the
+second omitted right class. Choose all required branch values distinctly
+and fill every unused slot with fresh values. Supplier 2.4 places these
+origins in $Z_g$ and the two positive fibers. Their entire installed
+vectors coincide, but their three complete targets differ. On one vector
+at most two entry states can produce at most two different correct rows,
+which is impossible.
+
+For the second assertion, the two queried right classes must be one
+from each pair. If neither partner is queried, fix branch images at
+those two right classes. An all-branch zero filling and positive
+fillings at the two omitted right classes retain exactly those queried
+values. The forced changes to the partners are unqueried. Fill their
+remaining coordinates distinctly to obtain actual origins, again with
+one installed vector and three different targets. Exterior-only Reads
+have their common branch reply and cannot change either contradiction.
+This proves both assertions for every depth or absence behavior of the
+queried suffixes. $\square$
+

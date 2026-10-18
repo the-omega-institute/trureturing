@@ -1,0 +1,24 @@
+**Lemma 3.1 (arbitrarily large separating shape markers).** Fix the finite
+list of shape terms in a branch. There is an effective integer $M_0$
+such that for every $M\ge M_0$ there are pairwise distinct nonleaf
+shapes $G_1(M),\ldots,G_m(M)$, each with $M$ leaves, whose substitution
+for the $w_j$ preserves every syntactic inequality in that list.
+
+Proof. Take $M_0\ge3$ larger than each listed term's leaf count, counting
+variable occurrences as leaves, and with $M_0-1\ge m$. For every
+$M\ge M_0$ there are at least $M-1$ different full ordered binary
+shapes with $M$ leaves: choose the root's left and right combs to have
+$i$ and $M-i$ leaves, for $1\le i<M$. Choose $m$ of them by a fixed
+finite enumeration. They are nonleaf and distinct.
+
+Cancel common constructors in two different terms to the first
+disagreement, as in NSF Lemma 4.1. Different variables have distinct
+markers. A variable's marker has $M$ leaves; a constant has one; a
+variable-free compound from the given terms has fewer than $M$; and a
+compound containing a variable has more than $M$. The last assertion
+follows because it has at least one additional leaf occurrence besides
+that variable, whether that occurrence is constant or another variable.
+A constant/constructor disagreement also persists. These cases are
+exhaustive. The argument holds for **every** such $M$, which is the
+extra parameter needed for an infinite output family. $\square$
+

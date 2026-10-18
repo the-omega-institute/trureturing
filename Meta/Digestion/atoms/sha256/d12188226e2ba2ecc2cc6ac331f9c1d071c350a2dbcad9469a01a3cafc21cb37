@@ -1,0 +1,15 @@
+**Lemma 2.1 (Semantic trees with exact paid depths).** Every lawful total-cap-$k$ rule admits a measurable seed-dependent representation by finite binary read trees of height at most $k$. Read nodes carry integer addresses. Terminals carry one of the four return states or $\bot$, and their depths are the exact paid counts, also at $\bot$. Normalization preserves $Z$ and every actual read sequence; every formal binary branch can be capped too.
+
+Proof. Replace numerical finite internal delays by fixed finite delays, keeping the distinction between a finite next event and indefinite internal continuation. At every formal record of length $k$, replace a further read request by internal nonreturn without making that call. Keep a return or existing internal nonreturn there. On an actual path already satisfying $N\le k$, no actual call or return is suppressed. A finite number of finite waits is finite, so $O,D,N$ are unchanged. Inconsistent formal branches are now capped as well.
+
+At fixed $u$, unfold the resulting semantic rule. A read has two ordered children indexed by its reply. A return or internal nonreturn is a terminal. No read occurs at depth $k$, so the tree has at most $2^k-1$ read nodes for $k\ge1$ and none for $k=0$. Repeated addresses remain separate paid nodes; no terminal depth is padded.
+
+The space $\mathcal T_k$ of these integer-labelled trees is countable and is given the discrete sigma-algebra: there are finitely many shapes and terminal-label patterns, with a finite integer tuple for each shape. To prove $u\mapsto T(u)$ measurable, construct the finitely many possible node positions in order of depth. Their preceding records have countable range. For any measurable action condition $F(u,r)$ and countably valued preceding record $r(u)$, evaluation has event
+
+$$
+\bigcup_r\bigl(\{u:r(u)=r\}\cap\{u:F(u,r)\}\bigr).
+\tag{2.1}
+$$
+
+This is measurable. Induction gives the whole tree map, using a dummy label at absent positions. Finite-event versus indefinite-continuation type is measurably specified by the contract. For permitted completion versions choose versions together over the countably many records; null changes leave the product-measure identities below unchanged. This is a semantic representation, without a procedure for deciding divergence of arbitrary code. It is the inherited interface of Original Theorems 12.2–12.3. $\square$
+

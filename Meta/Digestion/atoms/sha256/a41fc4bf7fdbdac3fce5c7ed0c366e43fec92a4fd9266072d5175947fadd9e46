@@ -1,0 +1,29 @@
+**Proposition 7.1 (four prefixes with the same source and clock).** In
+Definition 5.1 take $d=3$, $r=2$ and the latch cut. The four actual prefixes
+are LL, LR, RL, RR. Their common payload-loop ordinal is $n_0+7$, and the
+complete explicit setup gives $n_0=n_-+498+40q$, where $q$ is the common
+actual request ordinal. Their written/latch data and eventual request
+fields under the common L continuation are:
+
+| Acquired prefix | Written payload prefix | Occupied input latch | Actual later submitted address | Literal reply on $t_*$ |
+| --- | --- | --- | --- | --- |
+| LL | L | L | LLL | absent |
+| LR | L | R | LRL | absent |
+| RL | R | L | RLL | absent |
+| RR | R | R | RRL | absent |
+
+All have source support $\{\varepsilon,L,R\}$, frontier $\{L,R\}$, epoch
+2, no new committed source event, and $P=\varepsilon$. The conditional
+supplement width is exactly 2 bits.
+
+Proof. Substitute $d=3,r=2$ into AIF.1–2 and Theorem 3.3. The first input
+letter has been written and the second is pending. AIF.9 gives the four
+distinct length-three addresses. Each descends past a leaf. The request
+rows and both task-kernel directions are those of Theorem 5.2. ∎
+
+For this seed the acquisition makes one TagRead, and the two warm-ups
+make two Rho calls. Hence Definition 3.2's source-request counter is
+actually $q=3$: the setup costs 618 primitives, $n_0=n_-+618$, and the
+four displayed latch cuts are at $n_-+625$. Setup plus the whole
+three-bit payload loop costs 634 primitives after $n_-$.
+

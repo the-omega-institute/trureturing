@@ -1,0 +1,37 @@
+**Definition 4.1 (one-run counters and ordered stencil).** At a native
+cut let $C$ count all constructed tape cells, including original and
+added boundaries, the meter, all old banks/code/copies/dead material;
+let $c$ count present finite locations among $q$, and let $\ell$ count
+actual installed head links. At row $i$ use the following lists, evaluated
+on its actual pre-row state, with no independently optimized fragment.
+
+The ordered cell-role list $\mathcal D_i$ contains core operands and
+neighbors, every actual finite-effect marker role in written order, then
+the old meter append cell. Repeated identities remain repeated inspections.
+The append-site list $\mathcal A_i$ is core then receipt. The old-graph
+head-slot probe list $\mathcal J_{i,\mathrm{old}}$ is in port/lane order;
+each word includes its final slot probe. New endpoint initialization is
+an assignment, not an old-graph probe. The fresh finite-socket list is
+$\mathcal Z_i$. Its route ends at the actual absent socket. Let $d_r$
+be the root-to-finite-component length and $\pi_x$ the corresponding
+specified root route. The probe prescription is
+
+$$
+\begin{aligned}
+p_i={}&d_r+6q+3c_{i-1}-4
+ +\sum_{x\in\mathcal D_i}(|\pi_x|+68)\\
+ &+\sum_{z\in\mathcal A_i}(|\pi_z|+2)
+ +\sum_{w\in\mathcal J_{i,\mathrm{old}}}|w|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2).
+\end{aligned}
+$$
+
+Let $e_i$ count actual core-plus-receipt cell births, $s_i$ fresh finite
+bits, $t_i$ distinct designated existing native-bit targets after alias
+combination, $r_i$ head retargets and $a_i$ first activations. Include
+PC/token/control targets in $t_i$ but not the freshly constructed bit.
+Prescribed no-op targets remain charged. The actual finite-effect list
+determines $t_i,\mathcal D_i$; an old fixed-three-cell estimate is not
+used for arbitrary raw CTLs. These lists instantiate SSA/CSA's stencil
+method at 74 roles; their literal 64-role constants are not transferred.
+

@@ -1,0 +1,35 @@
+### 74.3 A normalized singular input density gives the factor two
+
+For each n_f>0 set q_f=x_f/n_f and p_f=n_f/s. Define the input-first density operator
+
+    ρ=Σ_(f:n_f>0) p_f |q_f><q_f|.
+
+It has trace one; zero components are omitted. It is generally singular. Let A=√ρ⊗I_out and use the inverse square root only on the support of ρ. Since x lies in range A, the vector
+
+    y=(ρ^(-1/2) on its support ⊗I_out)x
+
+is well defined and satisfies Ay=x. Orthogonality of the output labels and of the input fibres gives
+
+    ||y||²=Σ_(f:n_f>0) n_f²/p_f=s².
+
+Write z=y/s, a unit vector. Let Δ=C−T and Y=A J(Δ) A. This is an actual output difference on a normalized input with reference. Explicitly, in the fixed input basis take
+
+    |ψ_ρ>=Σ_x (√ρ|x>)_R⊗|x>_in.
+
+Its squared norm is Trρ=1 and
+
+    (id_R⊗Δ)(|ψ_ρ><ψ_ρ|)
+       =(√ρ⊗I_out)J(Δ)(√ρ⊗I_out)=Y.                    (4)
+
+The input marginal is ρ^T in this convention; no replacement of ρ by an unmentioned transpose is needed. Both terms in (4) are normalized output states. Thus Y is Hermitian with trace zero and ||Y||₁≤||Δ||diamond. The kernel property gives
+
+    <z,Yz>=−<x,J(T)x>/s²<0.
+
+For a Hermitian trace-zero operator, the trace norm is twice the trace of its negative part. Its negative part has trace at least −<z,Yz> for any unit z with negative expectation. Therefore
+
+    ||C−T||diamond ≥2<x,J(T)x>/s²
+      ≥2Σ_f n_f²/(Σ_f n_f)²
+      ≥2/k.                                             (5)
+
+The last step is Cauchy–Schwarz. Equations (3)–(5) prove (1) without calibration, twirling, diagonal repair, or restrictions on where the competitor's Choi support lies.
+

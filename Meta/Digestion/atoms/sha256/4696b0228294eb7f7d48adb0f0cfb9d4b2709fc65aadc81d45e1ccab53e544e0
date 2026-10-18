@@ -1,0 +1,30 @@
+## 354. Shared source realization, horizon and tail
+
+The five tests all consume the same operational interface. Given a certificate at a positive cap $e$, choose
+$L=\max(\{i:a_i>e\}\cup\{0\})$. Every actual source with $n\le L$ receives the complete finite table for its full word, including all three independent rows. If $n>L$, the table sees $1^L$ and emits no tail mark; the exact error is
+
+$$
+\operatorname{TV}(p_{1^L},(1-a_n)e_0+a_ne_n)
+ =\max\{1-p_{1^L}(0),a_n\}\le e.
+\tag{354.1}
+$$
+
+Thus every positive nonincreasing vanishing tail, closed tie $a_{L+1}=e$, and zero coefficient remains in scope, with no summability assumption. The finite positive word is a table endpoint, not an infinite all-positive source. The case $L=0$ is the empty-output rule. The case $e=0$ is separate: the strictly positive marked family has no hard-two exact $N$ attainer by the earlier endpoint result 73.3.
+
+For a mass-one certificate, partition one uniform seed into complete schedule masses and refine all terminal label intervals together. This produces one deterministic complete table before any reply and a finite measurable handoff on every finite construction. A pair uses its increasing addresses; $N$ pays both, while $O$ stops at the first queried zero. Repeats and ignored replies are charged. These are source operations, whereas the word maps in W, F, T, P and C are only proof transformations.
+
+Whenever the relevant test supplies a mass-$M$ affine certificate (F, T, P and C do so; W is stated above as a normalized bridge), (348.4) is retained literally. The same allocation, not separately optimized rows, gives for every full nonnegative score at $L\ge3$
+
+$$
+F_{QY}(b,e)\le M\Delta_O(Y).
+\tag{354.2}
+$$
+
+This is a conditional primal consumer for the displayed certificate. It is not the original requirement that, for every unit-$O$ score $y$, one unrestricted $V\ge0$ and one common $\theta\in[0,1]$ satisfy
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Qy-QV)\le\theta.
+\tag{354.3}
+$$
+

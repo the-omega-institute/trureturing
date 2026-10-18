@@ -1,0 +1,44 @@
+**Convention 13.1 (mathematical credit).** The source-specific increment
+here is the evaluated quadratic onset (QO.56), its exact coefficient,
+full original finite-class cubic lower, actual matching instrument,
+and necessary-array direction. The admitted nonreal family, tilted
+plateau value, maximality, fourteen/twelve-label plateau attainers,
+quartic later lower, affine later upper and strict scalar-trace gap
+are credited to NP. They are not counted again as the onset increment.
+The additional conclusion is supported by the ordinary derivations
+in §§6–11, with the conditional antecedents specified in §§1–5.
+
+| Supplied source | Content retained at its stated scope |
+| --- | --- |
+| CG §§1–28 | Calibrated histories, targets, source isolation and coefficient enclosures, original minimax benchmark and chosen full completion; averaged-live rigidity, restricted Schur obstruction, actual acquisition model, Schmidt bottleneck and stability/individual transfer penalties. Its generic and private-library antecedents remain conditional. |
+| JR §§29–33 | Explicit acquired winding records, full complex/reference/time realization, actual family mass law, fixed-channel phase compatibility and parity ceilings. Its initial family cost is not a universal envelope. |
+| JR §§34–40 | Broader all-error-optimizer sharp diagonal/common-attainer, original four-sign averages and worst-history laws, inverse budget, actual H/L construction and laws; finite, countable and stipulated integral scopes as stated there. Sign averaging fixes averaged live Choi and total failure effect, not an optimizer's full forgotten channel. |
+| RE §§6–10 | Endpoint envelopes and actual separate attainers, paired resource effects, Pareto and nonattainment distinctions; its earlier interior family is an upper. |
+| IR and integrated companion | Binary-live freedom, coherent perturbations, nonleast effects and lack of a simultaneous pointwise optimum; full complex compact coefficient reduction and finite realization/attainment. Integrated diagonal attribution belongs to JR. |
+| CA §§3–9 | Plane-plus-quadratic cone, plane slack with Takagi criterion, six low atoms and generic twenty-four-branch exact reduction, trace-zero real face, scalar-trace obstruction/separator, sharp-mean singleton and exceptional-segment classification. |
+| RG §§3–9 | Real positive-definite Gram spectral law, two lifts, positive sufficient record caps, fourteen-label realization, rational source ratios, original pure Grams and selected-coordinate Pareto vectors. Its sufficient caps are not all maximal, and its real evaluation does not cover the present genuinely nonreal family. |
+| NP §§4–11 | Physical admitted family and source sign, full-cone tilted certificate, attained maximal plateau, actual closed-endpoint instruments, quantitative later bracket and same-strength trace-relaxation gap; strict original-twelve domination. |
+
+The parameter dictionary is exact:
+JR $(\theta,\omega,\delta)=(\alpha,\beta,\ell)$,
+its $k$ is the present $k$, and
+$(p_s,q_s)=(1-\beta-\alpha v_s,1-v_s)$.
+Weak strengths have $(p_s,q_s)=(k,0)$.
+Later $p_s-\alpha q_s=k$ and
+$s=\sqrt{p_sq_s}+\sqrt{(1-p_s)(1-q_s)}$,
+ending at $p_s=q_s=k/(1-\alpha)$.
+Its costs are $p_sA_y+q_sB_y$ with worst height $27$.
+Its diagonal selected-input law is $p_sA+q_sB$.
+The four-sign mean identity
+$\frac14\sum_{e,n}\rho_{y,e,n}=\operatorname{diag}p_y$
+is a deterministic linear identity, not a prior.
+
+IR, CA, RG and NP use the same compression, source coefficients and
+coefficient order $(D,T,S)$ as (QO.8),(QO.16).
+CA's budget matrix and RG's real spectral budget are $B_0$.
+NP's $R_\xi,B_T,k_\xi$ are the present $Z_0,B,k_{\rm tilt}$;
+NP's $R$ is $R_{\theta_0}$. Its source matrix $H^{\rm src}$ is
+not the coefficient high aggregate $H$. Neither CA's plane-slack
+criterion nor RG's real spectral formula is replaced by the local
+slice lemma; the latter proves exactly its stated block domain.
+

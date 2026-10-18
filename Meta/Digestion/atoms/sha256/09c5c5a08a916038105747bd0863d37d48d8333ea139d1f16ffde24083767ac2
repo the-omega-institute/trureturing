@@ -1,0 +1,47 @@
+**Theorem 14.2 (orthogonal input contraction using the shared output direction).** For every parameter in (R.55),
+
+$$
+\delta_N\geq1-\mu(N)\geq1-\sqrt a,\qquad
+\mu(N)=\sqrt{aw\cos^2\theta+\beta(1-w)}.
+\tag{R.57}
+$$
+
+The bound holds against every complex CPTP recovery with arbitrary finite references.
+
+**Proof.** Take the orthogonal actual inputs $\psi_\pm=(|0\rangle\pm|2\rangle)/\sqrt2$. Their projector difference is $|0\rangle\langle2|+|2\rangle\langle0|$. Direct application of the actual Kraus matrices gives
+
+$$
+N(P_{\psi_+}-P_{\psi_-})
+=u(|e_0\rangle\langle e_4|+|e_4\rangle\langle e_0|)
++v(|e_2\rangle\langle e_0|+|e_0\rangle\langle e_2|),
+$$
+
+where $u=\sqrt{aw}\cos\theta$ and $v=\sqrt{\beta(1-w)}$. On the ordered subspace $(e_4,e_0,e_2)$ the matrix is
+
+$$
+\begin{pmatrix}0&u&0\\u&0&v\\0&v&0\end{pmatrix},
+\qquad\operatorname{spec}=\{\sqrt{u^2+v^2},0,-\sqrt{u^2+v^2}\}.
+\tag{R.58}
+$$
+
+The two additional output eigenvalues are zero. Its half trace norm is thus $\mu(N)$. For any one recovery, write $\varepsilon_R=\|RN-\mathrm{id}_3\|_\diamond$. The triangle inequality and CPTP trace-norm contraction give
+
+$$
+2=\|P_{\psi_+}-P_{\psi_-}\|_1
+\leq2\varepsilon_R+\|RN(P_{\psi_+}-P_{\psi_-})\|_1
+\leq2\varepsilon_R+2\mu(N).
+$$
+
+Infimizing $R$ proves the first bound. The second follows from $a\geq\beta$, since
+
+$$
+a-\mu(N)^2=(a-\beta)(1-w)+aw\sin^2\theta\geq0.
+\tag{R.59}
+$$
+
+These product inputs are valid tests in the full-reference diamond supremum; they do not restrict that supremum or the recovery domain. The useful information in (R.58) is that the two third-column coherences meet at the same actual output direction $e_0$, giving a square root of a sum of squares.
+
+This direction information is not encoded by $w$ and $f(\tau,\bar\tau)$ alone. With the same $\beta,w,\theta$, the earlier family (R.17) has those same scalars, but its $K_0$ third column is the unit vector $\sqrt{1-w}\,e_2+\sqrt w\,e_4$ and its $K_1$ third column is zero. For this particular pair its half output distance is therefore $\sqrt a\cos\theta$, rather than (R.57). This comparison concerns a witness contraction, not the exact recovery optimum of either family.
+
+Physical matrices remain $K_\alpha^{\rm ph}=DK_\alpha L^\dagger$, and recovery transport is exactly (P.16) of the [phase-gain volume](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#4-an-actual-upper-family-and-its-individual-optimum). The corresponding physical test pair is $L\psi_\pm$, while physical $\theta_\pm$ retain the passive sign swap (P.2). These identities preserve the full complex recovery optimization and add no free physical $D$ gate or native encoder/decoder supply. $\square$
+

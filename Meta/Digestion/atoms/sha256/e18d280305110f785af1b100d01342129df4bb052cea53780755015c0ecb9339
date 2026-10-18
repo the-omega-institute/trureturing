@@ -1,0 +1,182 @@
+**定理 441.1（真实前缀的最终唯一交点）。** 存在 \(z_0\)，使每个素数
+\(z\ge z_0\) 的 \(H_z\) 恰有一个正零点 \(r_z\)，且
+
+\[
+H_z(v)>0\quad(0<v<r_z),\qquad
+H_z(v)<0\quad(v>r_z).
+\tag{PX.4}
+\]
+
+相应的 \(J_z\) 恰有一个正零点 \(\sigma_z\)，并且
+
+\[
+J_z(\sigma)<0\quad(0<\sigma<\sigma_z),\qquad
+J_z(\sigma)>0\quad(\sigma>\sigma_z).
+\tag{PX.5}
+\]
+
+若 \(u_*\) 是方程 \(u\zeta(1+u)=C\) 的唯一正解，则
+\(r_z/L\to u_*\)。这里所有极限均沿实际素数 \(z\to\infty\) 取得。
+
+**证明：时钟运输与整个近区。** 置 \(\theta=\log z/L\)。Bertrand 定理给
+\(p\le2z\)，所以 \(\theta\to1\) 且
+\(0\le1-\theta\le\log2/L\)。令
+\(r(v)=(1-e^{-v})/v\)，连续补成 \(r(0)=1\)。对 \(v>0\)，
+
+\[
+0\le r(v)-\theta r(\theta v)
+=\frac{e^{-\theta v}-e^{-v}}v\le1-\theta.
+\]
+
+将（SC.4）的原时钟斜率乘 \(\theta\)，再积分，得到某个固定 \(B>0\)
+对全部 \(v\ge0\) 满足
+
+\[
+\left|\frac{F_z'(v)}{F_z(v)}-r(v)\right|\le\frac BL,
+\qquad
+|\log F_z(v)-\log\Phi(v)|\le\frac{Bv}L,
+\qquad \Phi(v)\le e(1+v).
+\tag{PX.6}
+\]
+
+可以取 \(B=D+\log2\)，其中 \(D\) 为（SC.3）的固定预算。特别地
+\(s_z\to1\)。定义 \(g(v)=\log(\Phi(v)r(v))\)，并补成 \(g(0)=0\)。
+由原始轮廓微分恒等式，
+
+\[
+(\Phi r)'=\Phi(r^2-j),\qquad
+r(v)^2-j(v)=\frac{e^{-v}(v-1+e^{-v})}{v^2}>0.
+\]
+
+零端展开给 \(g'(0+)=1/2\)，故 \(g\) 在正轴严格增加，且对任意固定
+\(V>0\)，连续补成后的 \(g(v)/v\) 在 \([0,V]\) 有严格正的最小值
+\(m\)。取 \(\varepsilon>0\) 使 \(B\varepsilon<g(V)\)。当
+\(L>B/m\) 且 \(\varepsilon L\ge V\) 时，（PX.6）给
+
+\[
+\log R_z(v)\ge g(v)-Bv/L>0\qquad(0<v\le\varepsilon L).
+\tag{PX.7}
+\]
+
+其中 \(0<v\le V\) 用 \(g(v)\ge mv\)，\(V\le v\le\varepsilon L\)
+用 \(g(v)\ge g(V)\)。这支付了整个随 \(L\) 扩张的近区，包括任意小的
+正 \(v\)，并非只支付固定 \(v\) 的点态极限。
+
+**证明：宏观比率的严格斜率。** 对 \(u>0\)，置 \(Q(u)=u\zeta(1+u)\)。
+先在本证明内部使用经典 Gamma 与 zeta 积分表示
+
+\[
+Q(u)=\int_0^\infty\psi(t)\rho_u(t)\,dt,
+\qquad
+\psi(t)=\frac{t}{1-e^{-t}},\qquad
+\rho_u(t)=\frac{t^{u-1}e^{-t}}{\Gamma(u)}.
+\tag{PX.8}
+\]
+
+\(\rho_u\) 的总质量为一，一阶矩为 \(u\)。由指数函数的基本不等式，
+\(1\le\psi(t)\le1+t\) 且 \(\psi(t)\ge t\)，故
+
+\[
+1\le Q(u)\le1+u,\qquad Q(u)\ge u.
+\tag{PX.9}
+\]
+
+更强的斜率支付可只用一个积分。令 \(\chi(t)=\psi(t)-t/2\)。对 \(t>0\)，
+
+\[
+\chi'(t)=\frac{e^{-t}(\sinh t-t)}{(1-e^{-t})^2}>0.
+\]
+
+若 \(0<a<b\)，密度比
+\(\rho_b(t)/\rho_a(t)=[\Gamma(a)/\Gamma(b)]t^{b-a}\) 严格增加，从零
+趋于无穷，故恰在一个 \(t_0>0\) 等于一。总质量相同允许扣去常数
+\(\chi(t_0)\)，得到
+
+\[
+\begin{aligned}
+Q(b)-Q(a)-\frac{b-a}{2}
+&=\int_0^\infty[\chi(t)-\chi(t_0)]
+ [\rho_b(t)-\rho_a(t)]\,dt>0.
+\end{aligned}
+\tag{PX.10}
+\]
+
+积分绝对收敛，因为 \(0\le\chi(t)\le1+t/2\)，而两个密度的质量与
+一阶矩均有限。被积函数对 \(t\ne t_0\) 严格为正；取一个避开
+\(t_0\) 的正长度紧区间即可支付严格正性。由 \(\zeta\) 在实轴
+\(s>1\) 的经典可微性，（PX.10）给 \(Q'(u)\ge1/2\)。这里没有从严格
+割线不等式直接推出严格导数不等式。结合（PX.9），\(Q\) 连续严格增加，
+零端极限为一，远端趋于无穷，故 \(u_*\) 存在且唯一。
+
+准确的宏观对象是
+
+\[
+\mathcal R_z(u):=R_z(Lu)
+=\frac{C_z}L\,\frac{E_z(1+u)(1-p^{-u})}{u}.
+\tag{PX.11}
+\]
+
+经典第三 Mertens 定理与 \(\theta\to1\) 给 \(C_z/L\to C\)。在每个
+固定 \([\varepsilon,M]\subset(0,\infty)\)，Euler 乘积及其一阶导数
+一致趋于 \(1/\zeta(1+u)\) 及相应导数：对数导数的素数尾由收敛级数
+\(\sum_{n\ge2}\log n/n^{1+\varepsilon}\) 控制，未求导的尾同样绝对收敛。
+另外 \(p^{-u}\to0\) 一致成立，且
+\(|(p^{-u})'|\le Lp^{-\varepsilon}\to0\)。因此
+
+\[
+\mathcal R_z\longrightarrow \mathcal R:=C/Q
+\quad\text{在每个固定 }[\varepsilon,M]\text{ 上一致连同一阶导数收敛}.
+\]
+
+由（PX.9）–（PX.10），在整段区间上都有统一严格界
+
+\[
+\mathcal R'(u)=-\frac{CQ'(u)}{Q(u)^2}
+\le-\frac{C}{2(1+M)^2}<0.
+\tag{PX.12}
+\]
+
+因此充分大 \(z\) 的 \(\mathcal R_z\) 在整段 \([\varepsilon,M]\)
+严格递减，不必再将宏观区间切为根邻域与其余符号区。
+
+**证明：完整远尾与分子唯一性。** 对 \(v\ge0\)，有限 Euler 乘积给
+\(1\le F_z(v)\le C_z\)。选固定 \(M>C\)，并增大 \(z_0\) 使
+\(C_z/L<M\)，则
+
+\[
+R_z(v)<C_z/v<1\qquad(v\ge ML).
+\tag{PX.13}
+\]
+
+在边界第二个不等式仍严格成立。缩小上述 \(\varepsilon\) 使
+\(\varepsilon<u_*\)，增大 \(M\) 使 \(M>u_*\)。由（PX.7）、
+（PX.12）和（PX.13），\(R_z\) 从近区的严格大于一，经过整段宏观
+严格递减，进入整个远尾的严格小于一。连续性给唯一交点。因
+\(H_z(v)=v(R_z(v)-1)\)，得到（PX.4）。宏观一致收敛及
+\(\mathcal R(u_*)=1\) 的严格交点还给 \(r_z/L\to u_*\)。
+
+**证明：完整积分的唯一阻尼。** 每个固定前缀有
+\(H_z(0)=H_z'(0)=0\)、\(H_z''(0)=2s_z-1\)；局部二阶界支付零端，
+有限乘积上界与正阻尼支付整个远尾，故 \(J_z(\sigma)\) 绝对收敛并在
+\(\sigma>0\) 连续。更具体地，有限支持给全部 \(v\ge0\) 上
+\(0\le k_z(v):=F_z'(v)/F_z(v)\le s_z\)、
+\(0\le T_z(v):=-k_z'(v)\le2s_z\)，因此
+\(|H_z''(v)|\le C_z(s_z^2+4s_z+1)\)。两次积分给一个固定前缀的
+全轴二阶预算。它同样支付（PX.2）两侧的字面补偿积分。替换
+\(t=\sigma v\) 并用该二阶全轴界作主导函数给
+\(\sigma J_z(\sigma)\to s_z-1/2>0\) 当 \(\sigma\to\infty\)。另一方面，
+将 \(-v\) 的尾保留为 \(-\int_1^\infty e^{-\sigma v}\,dv/v\)，其余两项
+在 \(\sigma\downarrow0\) 有有限极限，所以 \(J_z(\sigma)\to-\infty\)。
+最后对 \(\sigma_2>\sigma_1>0\)，全部积分均已支付且
+
+\[
+J_z(\sigma_2)-e^{-(\sigma_2-\sigma_1)r_z}J_z(\sigma_1)
+=\int_0^\infty e^{-\sigma_1v}
+ [e^{-(\sigma_2-\sigma_1)v}-e^{-(\sigma_2-\sigma_1)r_z}]
+ \frac{H_z(v)}{v^2}\,dv>0.
+\]
+
+两侧区间的括号与 \(H_z\) 同号，正长度区间支付严格性。于是
+\(e^{\sigma r_z}J_z(\sigma)\) 严格递增；与两端符号及连续性合并，得到
+（PX.5）。证毕。
+

@@ -1,0 +1,57 @@
+**Definition 2.1 (parameters and the public coset locator).** Fix $r\ge1$
+and put
+
+$$
+\begin{aligned}
+m&=\min\{s\ge1:3^s\ge8r\},& a&=rm,& M&=8r,\\
+C&=Mm=8a,& N&=3^{7a},& n&=N+1,\\
+D&=n,& p&=R^n,& \ell&=\lceil\log_2 C\rceil.
+\end{aligned}
+\tag{NCO.7}
+$$
+
+In particular $m\ge2$ and $a\ge2$. Take a field $F$ of cardinality
+$Q=3^m$, a public ordered $\mathbb F_3$ basis, and distinct public
+points $\xi_1,\ldots,\xi_M\in F$. There are enough points since
+$Q\ge M$. All choices are finite and effective.
+
+For completeness, the standard finite-field existence argument can
+be expressed without a choice of an infinite table. In a splitting
+field over $\mathbb F_3$, the roots of $X^{3^m}-X$ are distinct, since
+its derivative is $-1$. They are closed under addition, multiplication,
+negation and nonzero inversion by the Frobenius identities. They form
+a field of exactly $3^m$ elements, hence have $\mathbb F_3$ dimension
+$m$. An effective presentation may be found by enumerating addition
+and multiplication tables on $3^m$ labelled elements and testing the
+finite field axioms and characteristic three; existence makes that
+search terminate. A basis is then found by finite linear algebra.
+This establishes effectivity, without asserting affordable installation.
+
+For $z\in F^M$, let $I_z$ be the unique polynomial of degree less than
+$r$ satisfying $I_z(\xi_i)=z_i$ for $i\le r$, and define
+
+$$
+H(z)=\bigl(z_i-I_z(\xi_i)\bigr)_{i=r+1}^{M}\in F^{M-r}.
+\tag{NCO.8}
+$$
+
+The map $H$ is linear and onto: put the first $r$ entries of $z$ equal
+to zero and prescribe its remaining entries. Its kernel consists of
+the degree-less-than-$r$ evaluation vectors, and each fiber has $Q^r$
+elements. Since
+
+$$
+|F^{M-r}|=3^{m(8r-r)}=3^{7a}=N,
+\tag{NCO.9}
+$$
+
+fix a public bijection $\iota:\{2,\ldots,n\}\to F^{M-r}$. For example,
+expand $j-2$ in $7a$ ternary digits and group them according to the
+chosen basis.
+
+This interpolation and masking mechanism is classical, as in
+[Shamir, §2][SHA] and [Christiani–Pagh, §2.1, Lemma 1][CP], which
+credits Joffe and Carter–Wegman. Its coset interpretation is also the
+method of [Ozarow–Wyner, §2][OW]. The native geometry and prices below
+are additional obligations; a field element is not a native reply.
+

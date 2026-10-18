@@ -1,0 +1,15 @@
+**Corollary 5.2 (Strict supplier scope for the exact witness).** The law in §4 satisfies Theorem 3.3, has nonzero actual defects and summable actual tail, and lies outside every supported positive-rectangle-word route in every stationary finite presentation, including all positive-weight component routes. It has no finite stationary Condition K presentation.
+
+Proof. Proposition 4.2 and Theorem 4.4 give full legal support and $q=X_0$; its output is ergodic as a factor of the finite irreducible stationary marked chain. Theorem 5.1 applies.
+
+For the deterministic-state observation convention of [Shuval–Tal][ST], let $K_{\rm hid}$ be the stationary hidden transition and $f$ its observation. The arrival-observation matrices
+
+$$
+M_x=K_{\rm hid}\operatorname{diag}(\mathbf1_{\{f=x\}})
+\tag{5.1}
+$$
+
+give exactly the same stationary output cylinders: $\lambda K_{\rm hid}=\lambda$ identifies the usual state-observation formula. This changes no emitted-bit time scale. Condition K requires an irreducible aperiodic hidden chain and a nonzero subrectangular observation product; subrectangular support is exactly a positive rectangle after deleting zero rows and columns. In that positive stationary presentation, a nonzero product has positive occurrence probability and would contradict Theorem 5.1. The same contradiction excludes any positive-weight component supplying the finite rectangular-word hypothesis. $\square$
+
+Failure of a displayed presentation alone is insufficient for this conclusion; Theorem 5.1 is the law-level step. No absence of rank-one limits in a scaled closure, or failure of every other filtering condition, is inferred.
+

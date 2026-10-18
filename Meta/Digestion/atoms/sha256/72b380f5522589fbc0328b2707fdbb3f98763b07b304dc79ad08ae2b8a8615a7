@@ -1,0 +1,91 @@
+**Theorem 81.3 (supplied spectral boundary and unbounded-product extension).**
+With the compatible $\mathbf c_\epsilon,b_\epsilon$ of Proposition
+80.2 put
+
+$$
+\zeta_{\rm sp}=\sum_{\epsilon=\pm}
+ \frac{b_\epsilon(|z_\epsilon|-1)^2}
+      {2\mathfrak c(\mathbf c_\epsilon)}.
+\tag{FA.59}
+$$
+
+This is the evaluated $C_{\rm sat}$ of JS.38. To give its explicit
+radical correspondence without conflating radial and spectral scalars,
+put $\upsilon_{\rm sp}=t_f=-2z_f/(d_f+L_f)$ and
+
+$$
+\begin{gathered}
+a_+=\frac{\alpha V_f+\beta W_f\upsilon_{\rm sp}^2}
+              {1+\upsilon_{\rm sp}^2},\qquad
+a_-=\frac{\alpha V_f\upsilon_{\rm sp}^2+\beta W_f}
+              {1+\upsilon_{\rm sp}^2},\\
+x_+=\frac{V_f}{\alpha V_f+\beta W_f\upsilon_{\rm sp}^2},\qquad
+x_-=\frac{V_f\upsilon_{\rm sp}^2}
+              {\alpha V_f\upsilon_{\rm sp}^2+\beta W_f},\\
+\zeta_{\rm sp}=a_+\frac{(\sqrt{x_+}-1)^2}{2c_*(x_+)}
+             +a_-\frac{(\sqrt{x_-}-1)^2}{2c_*(x_-)}.
+\end{gathered}
+$$
+
+JS Theorem 8.2 supplies $\kappa_0<\zeta_{\rm sp}<\infty$ and
+$F_{\rm lim}(\zeta)=L_f$ if and only if
+$\zeta\ge\zeta_{\rm sp}$. Every failure measure attaining $L_f$
+has exactly cost $\zeta_{\rm sp}$; its total physical effects are
+$B_\pm^{\rm sp}$, up to proportional splitting and simultaneous
+reversal of $z,w$. JS Corollary 8.3 includes genuine common finite
+recovery along every prescribed sequence with limiting product
+$\zeta=\zeta_{\rm sp}$, not just products strictly above it.
+
+JS Theorem 9.2 also supplies continuity, concavity and strict increase
+of $F_{\rm lim}$ on $[\kappa_0,\zeta_{\rm sp}]$, with endpoint
+values $d_f,L_f$ and the attained limiting chord bound
+
+$$
+F_{\rm lim}(\zeta)\ge d_f+(L_f-d_f)
+ \frac{\zeta-\kappa_0}{\zeta_{\rm sp}-\kappa_0}.
+$$
+
+Consequently the limiting height is strictly between
+$\mathcal T(s_0)-\gamma_f$ and $\mathcal T(s_0)$ in the strict
+middle interval, and equals the latter at and above the spectral
+threshold. Qualitative strict transition and this lower chord do not
+evaluate the middle scalar interpolation, contacts or rates.
+
+There is in addition the following unbounded-product conclusion:
+for $q_n\to0$ through positive values and $t_nq_n\to\infty$,
+the original classes are eventually feasible and
+$\mathcal T_{\log(1+t_n)}(s_0(1-q_n))\to\mathcal T(s_0)$.
+This is an optimal-value assertion and is not asserted by JS's
+finite-$\lambda$ theorem.
+
+**Correspondence and proof of the additional scope.** For a spectral
+unit vector $e=(e_1,e_2)$ set
+$a_e=\alpha V_fe_2^2+\beta W_fe_1^2$ and use JS.42's
+$z_e=-\sqrt{V_f}e_2/\sqrt{a_e}$,
+$w_e=\sqrt{W_f}e_1/\sqrt{a_e}$. Then
+$n(\mathbf c_e)=M_2^{1/2}e/\sqrt{a_e}$, so
+$b_\epsilon=a_e$, $z_e^2=x_\epsilon$ and
+$\mathfrak c(\mathbf c_e)=c_*(x_\epsilon)$.
+This proves that FA.59 is precisely JS.38 on the same physical
+whitening and full covariance domain. Applying JS.39–.45 with
+$F_{\rm lim}=d_f+2\Phi$ supplies the stated spectral equality
+cases, saturation recovery and qualitative transition; those proofs
+are reused, not repeated here.
+
+For the unbounded-product extension, fix this two-atom spectral
+failure measure. Apply JS.23–.27's exact finite repair for all
+sufficiently large $t_n$. Its finite cost is the fixed
+$\zeta_{\rm sp}$ and its contrast deficit obeys
+$t_ne_{t_n}=\zeta_{\rm sp}+O(t_n^{-1})$.
+Since $t_nq_n\to\infty$, eventually $e_{t_n}\le q_n$.
+The same finite whole-fibre family is therefore admissible and its
+height tends to $\mathcal T(s_0)$ by JS.28 / §86. For the reverse
+bound, FA.57 forces every competing coefficient law toward the four
+corners; the zero cross moments fix their masses to $1/4$.
+The live absolute sum tends to $j(1)$, and the whitened spectral
+bound gives failure absolute sum at most $L_f$ for every competitor.
+The triangle bound on the actual label sum in FA.37 therefore gives
+upper limit at most $(H_0+j(1)+L_f)/2=\mathcal T(s_0)$.
+This uses no uniform fixed-strength transfer, evaluates no rate and
+asserts no universal equality for nonoptimal instruments. $\square$
+

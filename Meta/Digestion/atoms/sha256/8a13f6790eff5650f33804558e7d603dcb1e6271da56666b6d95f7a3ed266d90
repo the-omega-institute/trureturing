@@ -1,0 +1,21 @@
+**The normalized real logarithm.** On $y_0^2=z(z+1)(z-3)$, with differential $dz/(2y_0)$, define
+
+$$u_0(B)=\int_0^{1/\sqrt B}\frac{dv}{\sqrt{1-2v^2-3v^4}},\qquad
+\omega_0=K_{\rm ell}(1/2),$$
+
+where $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The substitution $v=1/\sqrt z$ in the integral from $B$ to infinity gives $u_0$. The ordered roots $3,0,-1$ have real-period parameter $1/4$, so the full real period is $2K_{\rm ell}(1/2)/\sqrt4=\omega_0$.
+
+The short coordinates satisfy
+
+$$x=45Bz-30B,\qquad y=135\sqrt5\,B^{3/2}y_0.$$
+
+Thus its invariant differential is $1/\sqrt{45B}$ times the normalized differential, and its real period is
+
+$$\omega=\frac{\omega_0}{\sqrt{45B}}.$$
+
+Put $\alpha=u_0(B)/\omega_0$. The sign of the actual point or multiplier can be absorbed into the integer $m$, so for some integers $m,b$,
+
+$$|\Lambda|=\omega|m\alpha+b|,\qquad 1\le|m|<M. \tag{94.3}$$
+
+The intervals below also establish $0<u_0<\omega_0/2$. Any principal-period shift would in any event be absorbed into $b$.
+

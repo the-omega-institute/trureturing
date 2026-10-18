@@ -1,0 +1,36 @@
+**Assumption 1.1 (The original preparation and future menu).** Let
+$\mathcal H=\mathbb C^5$ with ordered orthonormal basis
+$\mathsf S=(N,2,3,5,25)$, and put $\Pi_s=e_se_s^\dagger$. Every complex
+density matrix on $\mathcal H$ is an allowed input. Fix
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\quad t\ge0.
+\tag{1.1}
+$$
+
+These are precisely the hypotheses of
+[QMB, Assumption 1.1](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+The label $N$ denotes a unit vector. Quantum preparation is an independent
+hypothesis: the native composition maps
+[GraftAffineClosure.step, quantity and run](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean),
+with $\operatorname{step}(x,y)=(y,x+y)$ and
+$\operatorname{quantity}(x,y)=2x+3y$, do not supply this preparation.
+
+An actual future protocol uses only nonnegative waits $U(t)$, the complete
+five-outcome rank-one Lüders instrument
+$\mathcal J_s(X)=\Pi_sX\Pi_s$, and Stop. Each protocol has finite adaptive
+depth; all finite depths are included. The retained history includes
+outcomes, chosen controls and stops. Initial controls and random control
+resources are independent of the input, and both comparisons use the same
+policy. Grouping recorded outcomes is classical postprocessing of a full
+read. It does not replace that instrument by a coarse-block Lüders
+instrument. There are no independent mode phases, arbitrary future
+unitaries, source copies, resets, external quantum side information,
+probability oracle or readable hidden Kraus record.
+

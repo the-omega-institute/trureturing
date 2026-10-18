@@ -1,0 +1,18 @@
+**定理 66.2（有理制备及准确常数）。** 行5选正有理数
+
+$$\max(0,\tfrac12\log d_0)<c_*<\log L/\varphi^2.$$
+
+沿同样的 $T_k,m,n,d$ 取 $u_k=1+c_*/d,\mu_k=u_k^{-1}$ 和 $p_k=(u_k^ne_1,u_k^{-m}e_2)$。全部足够晚成员合法，有理制备和准确记录 $(e_1,\mu_ke_2,-\mu_ke_3)$，$x_j=\mu_k^{F_j}U_j$。其行列式为 $u_k^{2d}$，一般随 $k$ 变化。置 $\widetilde g_k=1-\mu_k^2$、$g_k=1-q_1^2q_2^2=1-\mu_k^4$，则
+
+$$N_k\widetilde g_k\longrightarrow2c_*\varphi^3,\qquad N_kg_k\longrightarrow4c_*\varphi^3.$$
+
+前者是乘积幅度 $q_1q_2$ 距1的间隙；后者是平方乘积间隙。单个平方范数间隙 $1-q_2^2$ 在本族恰等于前者，一般来源没有这种相等。
+
+证明。以 $u_k$ 为底，原树齐次求值的时刻 $h$ 指数为 $nF_{k+h-1}-mF_{k+h}$，初两值为 $0,-1$，遵守同一递推，故恰为 $-F_h$。这证明准确首读及全部未来，不只给三个边缘值。两叶长分别趋 $e^{c_*\varphi^2}<L,e^{-c_*\varphi}<1$，$\Delta\to e^{2c_*}>d_0$，三读为 $1,\mu_k,\mu_k$，故最终合法。$N_k/d\to\varphi^3$ 和 $d(1-(1+c_*/d)^{-r})\to r c_*$，取 $r=2,4$ 得两常数。
+
+该族准确的全尾阈值为
+
+$$J_k(E)=\min\{j\ge3:F_j\ge\log(1/E)/\log u_k\}\qquad(0<E<1).$$
+
+因为 $F_j$ 在此范围单调，这是所有以后时刻的截止；若 $j=3$ 已足够即取3。$F_j=\Theta(\varphi^j)$、$\log u_k\sim c_*/d$ 给固定 $c_*,E$ 的 $J_k(E)=\log_\varphi N_k+O_{c_*,E}(1)$；阈值充分大时更一般为 $\log_\varphi(\log(1/E)/\log u_k)+O(1)$。这些式子表述数学来源，不是免费发给观察者的树／计数／制备口。
+

@@ -1,0 +1,38 @@
+**Example 219.4 (A full input gap with a same-quotient repair).**
+Take $L=7$ and the consecutive seven-position skeleton, with
+$(a,b,c)=(1,2,3)$. Then $(g,h,k)=(7,8,9)$,
+$B_0=31$, $s=19/2$, $t=6$.
+Choose $(\xi_1,\xi_2,\xi_4,\xi_6)=(1/2,1/2,6,6)$,
+$D=J_0=13$, $E=1$, $B=18$.
+The construction has
+
+$$
+Q(V)=((-1/2,-1/2,7,-6,8,-6,9),55),\quad
+T=0,\quad Z=31,\quad W=30,\quad
+(\Delta_N(V),\Delta_O(V))=(1,1).
+\tag{219.13}
+$$
+
+Move all correct mass 7 at $1101010$ to $1100010$, leaving every
+other coefficient unchanged, and call the result $Y$.
+Its first-zero class, $Q$, $W$ and $T$ stay fixed.
+Only pairs involving position 4 change. Their margins, defined as
+zero reward minus the largest pivot-correct reward, are:
+
+| Pair | N margins in $00,01,10,11$ | O margins in $0,10,11$ |
+| --- | --- | --- |
+| $(1,4)$ | $(7/6,25/3,1/6,16/3)$ | $(19/2,1/6,16/3)$ |
+| $(2,4)$ | $(7/6,25/3,1/6,16/3)$ | $(19/2,1/6,16/3)$ |
+| $(3,4)$ | $(-14/3,35/3,6,2)$ | $(7,6,2)$ |
+| $(4,5)$ | $(-1,7/3,1,14/3)$ | $(4/3,1,14/3)$ |
+| $(4,6)$ | $(3,-5/3,4,3)$ | $(4/3,4,3)$ |
+| $(4,7)$ | $(-4/3,8/3,3,4)$ | $(4/3,3,4)$ |
+
+Other numerical labels remain dominated by zero. The O margins are
+nonnegative and the largest total N cell excess is $14/3$.
+Short schedules are coarser than these pairs. Therefore
+$B_O(Y)=31$, $B_N(Y)=107/3$ and the costs are $(17/3,1)$.
+Returning that one correct mass gives the affordable certificate $(V,0)$.
+This is a full-score input gap with a repair, rather than an original
+acquisition separation.
+

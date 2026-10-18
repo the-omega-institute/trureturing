@@ -1,0 +1,13 @@
+**Definition 1.3 (analytical weights).** Fix any function
+$w:S\to[0,\infty)$. For $P\subseteq S$ and $B\subseteq S^n$ put
+
+$$
+w(P)=\sum_{z\in P}w(z),\qquad
+\Omega(B)=\sum_{x\in B}\prod_{i=1}^n w(x_i).
+\tag{CIT.3}
+$$
+
+These product weights are a device for summation. They impose no
+probabilistic law, independence, product form or admissibility condition
+on a competitor $B$. All products indexed by an empty set equal one.
+

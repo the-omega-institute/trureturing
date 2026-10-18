@@ -1,0 +1,81 @@
+**Theorem 11.3 (Zero-record mass forced by a return budget).** For an
+integer $k\ge1$ put
+
+$$
+E_k=\{\tau<\infty,N\le k\},\qquad
+\rho_k=\mathbb P_p(E_k),\qquad Z_k=E_k\cap Z,\qquad
+\beta_k=\frac{c^{\lfloor k/2\rfloor}+c^{\lceil k/2\rceil}}2.
+\tag{11.9}
+$$
+
+For every protocol of Definition 9.1, without any restriction on reads
+outside $E_k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(Z_k)&\ge(\rho_k+\beta_k-1)_+,\\
+\mathbb P_p(A\ne H_j,E_k)
+&\ge e_k\rho_k+(z_k-e_k)(\rho_k+\beta_k-1)_+,
+\end{aligned}
+\tag{11.10}
+$$
+
+where $x_+=\max(x,0)$. In particular, almost-sure finite return within $k$
+actual calls has unconditional error at least
+
+$$
+e_k+(z_k-e_k)\beta_k>e_k.
+\tag{11.11}
+$$
+
+Proof. For a fixed seed $u$, follow the next-event rules with every reply
+specified to be zero, stopping this construction at the $k$th call, a
+finite return, or indefinite internal continuation, whichever comes first.
+Let $\ell\le k$ be the number of calls collected and let $B(u)$ be the
+source cylinder requiring zero at these $\ell$ addresses. At the $k$th
+call impose no condition on subsequent actions. The construction is an
+analysis of one branch of the rule; it gives the protocol no extra source
+access. Let $n_0(u),n_1(u)$ be its actual call counts by parity, so that
+$n_0(u)+n_1(u)=\ell$. By (11.3),
+
+$$
+J_p(B(u))\ge\tfrac12(c^{n_0(u)}+c^{n_1(u)})\ge\beta_k.
+\tag{11.12}
+$$
+
+For the last inequality, adding missing units to reach total $k$ can only
+decrease the sum. At a fixed total, transferring a unit from a count at
+least two larger than the other count decreases the sum, since $0<c<1$.
+Thus the integer minimum occurs at the two balanced counts in (11.9).
+Repetitions and separator calls are included throughout this argument.
+
+The subset $B$ of the source/seed product with sections $B(u)$ is
+measurable: only finitely many next-event choices, each measurable, and
+countably many finite address lists are involved. Integrating (11.12)
+gives $\mathbb P_p(B)\ge\beta_k$. On $B$, the actual protocol follows the
+specified zero branch for all the collected calls. If $\ell<k$, that
+branch has already returned or continues internally forever; in the latter
+case it cannot lie in $E_k$. If $\ell=k$, a return with at most $k$ calls
+has no additional replies. Consequently
+
+$$
+B\cap E_k\subseteq Z_k,\qquad
+\mathbb P_p(Z_k)\ge\mathbb P_p(B)+\rho_k-1
+\ge\beta_k+\rho_k-1.
+$$
+
+Nonnegativity proves the first bound in (11.10). Restrict the recordwise
+sum in Theorem 11.2 to $E_k$. The two coefficient sequences are
+nonincreasing, including their index-zero terms, and therefore
+
+$$
+\mathbb P_p(A\ne H_j,E_k)
+\ge z_k\mathbb P_p(Z_k)+e_k\mathbb P_p(E_k\setminus Z_k)
+=e_k\rho_k+(z_k-e_k)\mathbb P_p(Z_k).
+$$
+
+Since $z_k-e_k>0$, the first bound yields the second. With $\rho_k=1$ it
+gives (11.11), whose strict inequality uses $\beta_k>0$. Paths outside
+$E_k$ can make any finite or infinite number of reads, or diverge
+internally; no bound on them entered the construction. $\square$
+

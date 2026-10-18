@@ -1,0 +1,75 @@
+**Theorem 205.5 (Retained early credit).** For every $L\ge4$ and every
+full nonnegative score $V$, define
+
+$$
+E_V=\sum_{n(w)\le2}C_w,\qquad B_V=\beta_3(V)+\beta_4(V),\qquad
+k_V=K_V-\sum_{n\ge5}\beta_n(V).
+$$
+
+Then, without any restriction on $A,P,T$ or later classes,
+
+$$
+4\Delta_N(V)\ge3B_V-k_V-3E_V.
+\tag{205.14}
+$$
+
+If $f_y=F_{Q(y)}(v_4)$ and $\theta\ge0$ bounds the one signed residual,
+then
+
+$$
+4\Delta_N(V)+\frac52\theta+3E_V
+ \ge\frac12B_V+\frac52f_y.
+\tag{205.15}
+$$
+
+In a unit certificate $B_V\le8+6E_V-5f_y$. For an input (205.3), write
+$B_y=\gamma_3+\gamma_4$ and
+$\mathcal J_y(V)=\Delta_N(V)+\max\{0,\sigma_H(Q(y)-Q(V))\}$.
+Then $f_y=(3B_y-2W)/5$ and
+
+$$
+B_V=B_y\quad\Longrightarrow\quad
+\mathcal J_y(V)\ge\max\left\{0,\frac{2B_y-W-3E_V}{4}\right\}.
+\tag{205.16}
+$$
+
+Thus early-free representatives retaining $B_y$ require $W\ge2B_y-4$
+for budget one. Neither restriction is part of the definition of $E_N$.
+
+**Proof.** Use these four complete $N$ tables, with labels in
+$00,01,10,11$ order:
+
+$$
+D_0=(1,2;0,0,0,4),\quad D_1=(1,3;0,0,3,0),\quad
+D_2=(2,3;2,0,3,0),\quad D_3=(3,4;0,0,4,0).
+\tag{205.17}
+$$
+
+Compare the coefficient of each independent row in
+$\sum_{i=0}^3(z_{D_i}-r)$ with its coefficient in $3B_V-k_V-3E_V$:
+
+| First-zero class or row | Four-table coefficients $(A,C,P)$ | Right-side coefficients $(A,C,P)$ |
+| --- | --- | --- |
+| 1 or 2 | at least $(0,-4,-1)$ | $(-1,-4,-1)$ |
+| 3 | $(-3,2,-1)$ | $(-4,2,-1)$ |
+| 4 | $(-2,2,0)$ | $(-4,2,-1)$ |
+| $n\ge5$ | $(-1,0,-1)$ | $(-2,0,-1)$ |
+| positive row $T$ | $-1$ | $-1$ |
+
+For the early pair coefficient, if bit 3 is zero, $D_0,D_3$ and the
+relevant early table output zero or the actual early first-zero label;
+if bit 3 is one, $D_0,D_1,D_2$ output zero. Thus at least three pair
+rewards occur for every suffix. Early base coefficients are nonnegative;
+early correct coefficients are at least $-4$. The remaining rows follow
+directly from (205.17), independent of all later bits. Each left
+coefficient dominates the right coefficient. Multiply by the nonnegative
+row weights and bound each table excess by $\Delta_N(V)$, proving
+(205.14).
+
+At $v_4$, the later entries and $e$ equal $2/5$, hence
+$F_{Q(V)}(v_4)=B_V-(2/5)k_V$. The residual inequality gives
+$k_V\le(5/2)(\theta-f_y+B_V)$; substitution proves (205.15).
+Since $4\Delta+(5/2)\theta\le4(\Delta+\theta)$, budget one gives
+its consequence. For $B_V=B_y$, the right side of (205.15) is
+$2B_y-W$, giving (205.16) with the same residual allowance. $\square$
+

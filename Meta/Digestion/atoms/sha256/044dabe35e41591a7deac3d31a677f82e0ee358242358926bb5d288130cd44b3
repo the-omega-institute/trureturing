@@ -1,0 +1,40 @@
+**definition 1.2 (BOTH-REAL LOCC and unhalved error).**
+Alice holds the complex five-dimensional data $D$ and $A_1,A_2,A_3$;
+Bob holds $B_1,B_2,B_3$ and the output with the fixed identification above.
+An admissible processor $\mathcal P$ is label independent and is a
+finite-round two-way LOCC channel whose every local Kraus matrix is real
+in the original bases. Arbitrary finite real local ancillary states,
+exact known real local controls, local measurements, discard/reset,
+shared classical randomness and classical messages are allowed.
+There is no common bound on round count or finite ancillary dimension
+across competitors. Local mixed ancillary states are real density
+matrices. They do not include additional shared entanglement.
+
+Each processor must be complex linear, CP and TP on the entire joint
+complex algebra, including off-promise programs and arbitrary correlations
+among data and programs. Only its evaluated channel
+
+$$
+N_X(Y)=\mathcal P(Y\otimes\rho_X^{\otimes3})
+$$
+
+uses the promised independent batch. Every finite complex reference $R$
+is untouched. Write
+
+$$
+E_3(t,\eta)=\inf_{\mathcal P}\max_{X\in U_4}
+                         \|N_X-\Phi_X\|_\diamond.
+\tag{1.3}
+$$
+
+The diamond norm is unhalved: it is the stabilized trace norm on all
+complex inputs, equivalently the stabilized reference-state distance
+for a difference of channels. The class in (1.3) allows data-first
+interaction, adaptive quantum memory and arbitrary two-way histories.
+It has no program-first, classical-record, first-hit, Schur-channel or
+fixed-round restriction. No quantum wire, extra entangled state,
+supplied imbit, sign label, physical conjugation or transpose, hidden
+joint measurement across the cut, or postselection is allowed.
+The original batch, local access, exact real calibration and classical
+communication are mathematical premises of this optimization.
+

@@ -1,0 +1,55 @@
+**定理 91.7（One whole-target stream and exact emitted fees）。** For (91.8), under either original alphabet,
+
+$$
+\boxed{C_{\rm ad}(f)=C_{\rm pre}(f)=C_{\rm ad}(F)=C_{\rm pre}(F)=d+1,}
+\qquad
+\boxed{\text{minimum worst emitted bits}=(d+1)(2^d+1)}.
+\tag{91.9}
+$$
+
+证明（joint actual histories and the paid parent）。 For every $v,j,0\le s<k$, the credited single-history witness [IC, (1.3)] chooses $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, $\ell\ge s+2$, and
+
+$$
+\eta=\bigoplus_{i=\ell-s}^{\ell-1}\gamma_i,\qquad
+w(v,j,s)=(v\oplus\eta)0^{\ell-s-1}1^s,\qquad
+\gamma_i=\mathbf1_{\{0,T-1\}}(i\bmod T).
+\tag{91.10}
+$$
+
+Actual gcd one supplies arbitrarily large compatible lengths. This single legal complete-block history simultaneously realizes INITIAL value, phase and tail. Its separating zero and compensating first bit establish those claims under the original weights. The independent history $1^{2m}$ realizes bottom, with both constituent blocks internally legal. No unobserved history length is supplied to the controller.
+
+Stop initial bottom freely with $L_\bot$. Otherwise issue the one root
+
+$$
+P=111(01)^{(m-3)/2}.
+\tag{91.11}
+$$
+
+It has exactly $m$ bits, prefix $1110$, tail one and full charge $\mathbf1_A$. Every $s<m$ survives its three leading ones because $s+3\le k-1$, reaches its first zero and safely completes; each same-phase low-tail merger preserves (91.8). All high tails $m,m+1,m+2$ reject, respectively on the third, second and first bit. They remain absorbed through the rest of the whole paid root and return common $R$ only at its completed endpoint. Successful root difference zero consists exactly of the five low phases outside $A$, all labelled $C$, and stops there. The positive child is exactly $A$ with common scalar and true tail one, at offset one, with every phase actually represented by (91.10).
+
+证明（the fixed suffix exists at exactly $d$ slots）。 At suffix index $r=1,\ldots,d$ the actual omitted triple is
+
+$$
+M_r=\{m+1-4r,m+2-4r,m+3-4r\}.
+\tag{91.12}
+$$
+
+There is no wrap in these representatives: $N+2-4d\ge2$ for $d\ge4$, by induction from equality at four. The triples are disjoint and have at most three phases in $A$. Give each phase $j\in A$ the list of $d$-vectors whose coordinate $r$ is zero when $j\in M_r$. Each phase has at most one such restriction. These lists are the full $N$-cube or a coordinate-zero half cube of size $N/2$, and each restricted type has at most three indexed phases.
+
+All finite Hall inequalities hold. A subfamily containing a full list has union size $N$. A nonempty subfamily of size at most $N/2$ has a sufficient union from any member. A larger subfamily with no full list has at most $3d$ members and contains two different restricted types; their union has size $3N/4\ge3d$ for $d\ge4$. The last inequality holds at four and is preserved on incrementing $d$. The empty inequality is immediate. Apply the credited finite indexed-list Hall theorem [H] to obtain a bijection $c:A\to\mathbb F_2^d$ respecting every actual omission. This matching and cube algebra are reused; they are not additional fee mechanisms.
+
+Fix one such $c$ before execution. Apply Lemma 91.2 with $a=0$, the actual zero-containing parent (91.11), and rows $r_i(j)=c_i(j)$. Define each literal $B_i$ by its component orientation (91.4); thus every bit of the single stream
+
+$$
+P\mid B_1\mid\cdots\mid B_d
+\tag{91.13}
+$$
+
+is prescribed before any output. This is one stream for both free values and every source of this fixed target. The first suffix's second bit is zero, its inherited tail is one, and the exterior-edge zero band proves every actual cross-block seam strict, including any all-one transfer. No density premise or paid repair is used. Each continuing source's own endpoints give $(v_2\oplus v_1,\ldots,v_{d+1}\oplus v_d)=c(j)$. At that completed endpoint return $L_j$ using the inverse bijection and Stop. The initial value is only the remembered baseline; no phase is read. All positive sources pay $d+1$ whole blocks; the other root branches pay one and initial bottom pays zero. No separately feasible value or child stream is being combined. This proves the whole-target GLOBAL upper bound and actual attainment of its worst fee.
+
+证明（every original action and Stop in the lower bound）。 Fix either free value and any phase. The actual INITIAL tails $m-1,m$ have unequal low/high labels. Free stopping is impossible. A root with fewer than three leading ones reaches its first zero on both records, since $m+2<k$, and merges their whole current records and future archives. A root with more than three leading ones, including $1^m$, rejects both by the fourth bit, since $(m-1)+4=k$; their unobserved rejection times supply no endpoint distinction. Both losses are irreversible. Hence every correct root, at any horizon, has exactly three leading ones and prefix $1110$.
+
+Every such root safely clears all low tails with their INITIAL labels preserved and leaves one common actual terminal tail. These low sources carry all $N$ different $L_j$ and fresh $C$, or $N+1$ actual labels. The root has at most two successful scalar children. On every later low archive, [S10, Lemma 3.2] applies to every original literal action: uniform rejection cannot resolve unequal labels, and success has at most two scalar children with a common actual tail. This uses the true all-one transfer and counts every wait, padding, repair and attempted rejection. Induction including the first paid root and all homogeneous endpoint stops gives $N+1\le2^H$ for any whole worst fee $H$. Thus $H\ge d+1$, on either free-value fibre separately. Preset controllers inherit this all-adaptive-action lower bound.
+
+Together with (91.13), this proves both optimal block fees. Deterministic record evolution, the specified pullback and joint actual surjectivity (91.10) give the equal history fees. Every issued action emits exactly $m=N+1$ bits, including the entire absorbed root, so the same lower bound and attainment give the exact bit minimum in (91.9). ∎
+

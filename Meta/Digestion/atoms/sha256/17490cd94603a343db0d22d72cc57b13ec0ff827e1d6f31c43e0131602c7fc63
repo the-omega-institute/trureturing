@@ -1,0 +1,14 @@
+**Definition 5.1 (one balanced positive rational block law).** For any
+$d\ge2$ let $s_d=|S_d|$ and $L_d=s_d+9$. Give the full $S_d$
+the raw weights
+
+$$
+w(A)=5,\qquad w(B)=3,\qquad w(C_0)=4,\qquad
+w(u)=1\quad(u\notin\{A,B,C_0\}),\qquad \mu_d=w/L_d.
+\tag{OCC.18}
+$$
+
+This is a strictly positive rational probability on the entire canonical
+alphabet, with $L_2=20$. Positivity of these whole-block weights does
+not remove native compatibility zeros.
+

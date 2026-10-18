@@ -1,0 +1,75 @@
+### 87.3. The global line and fixed-power polynomial construction
+
+Set \(\tau=-D_0u+Av\). Lemma 87.1 gives the exact global line bijection
+\[
+ u=\frac{-AC_0-D_0\tau}{\sigma},\qquad
+ v=\frac{-D_0C_0+A\tau}{\sigma}.                      \tag{87.10}
+\]
+It includes \(A=0\), and loses no original strict point. Define
+\[
+ Q_g=\sigma^2 I(u(\tau),v(\tau)),\quad
+ Y_g=\sigma^4\mathcal Y(u(\tau),v(\tau)),\quad
+ D_g=\sigma^3\mathcal D(u(\tau),v(\tau)).             \tag{87.11}
+\]
+These are polynomials, of respective \(\tau\)-degrees at most 2,4,3.
+They vanish at every original ray. Degree drops are retained throughout.
+
+For reconstructing their small remainders without any stored coefficient
+file, first perform the following formal old-line substitutions:
+\[
+ Q(v)=A^2I((-D_0v-C_0)/A,v),\quad
+ Y(v)=A^4\mathcal Y((-D_0v-C_0)/A,v),\quad
+ D_*(v)=A^3\mathcal D((-D_0v-C_0)/A,v).                \tag{87.12}
+\]
+They mean expanded polynomial numerators, not divisions at individual
+points. Write \(Q=q_2v^2+q_1v+q_0\) and define the exact quotient
+\(F_8=q_2/(-8B)\). For a degree-\(m\) polynomial \(p\), use the
+fixed pseudo-remainder obtained by dividing \(q_2^{m-1}p\) by \(Q\).
+The following exact divisions define affine polynomials and three mean
+polynomials:
+\[
+\begin{aligned}
+ L_Y=a_Yv+b_Y&=\frac{72\operatorname{prem}(Y,Q)}{RB^3d^2A^3F_8^2},\\
+ L_D=a_Dv+b_D&=\frac{12\operatorname{prem}(D_*,Q)}{B^2d^2A^2F_8},\\
+ F_{16}&=\frac{a_Yb_D-b_Ya_D}{dAF_8},\\
+ C_Y&=\frac{q_0a_Y^2-q_1a_Yb_Y+q_2b_Y^2}{A^2d^2F_8},\\
+ C_D&=\frac{q_0a_D^2-q_1a_Db_D+q_2b_D^2}{A^2d^2F_8}.
+\end{aligned}                                                    \tag{87.13}
+\]
+All quotients in (87.13) are polynomial identities in
+\(\mathbb Q[b,x,y,v]\); no zero stratum is discarded. The mean degrees
+of \(F_8,F_{16},C_Y,C_D\) are 8,16,20,20. The pseudo-divisions require
+exactly three and two steps, respectively, before any specialization.
+Equations (87.2),(87.5),(87.12),(87.13) specify every coefficient by finite
+exact arithmetic. They are also a direct reconstruction certificate for
+the polynomial divisions asserted here.
+
+Define further exact polynomial quotients
+\[
+\begin{aligned}
+ \mu_Y&=(\sigma b_Y-D_0C_0a_Y)/A,&
+ \mu_D&=(\sigma b_D-D_0C_0a_D)/A,\\
+ q_{1g}&=(\sigma q_1-2D_0C_0q_2)/A,&
+ q_{0g}&=(\sigma^2q_0-\sigma D_0C_0q_1+D_0^2C_0^2q_2)/A^2.
+\end{aligned}                                                    \tag{87.14}
+\]
+Thus \(Q_g=q_2\tau^2+q_{1g}\tau+q_{0g}\). Put
+\(L_{gY}=a_Y\tau+\mu_Y\), \(L_{gD}=a_D\tau+\mu_D\).
+Affine substitution in (87.13) yields the polynomial identities
+\[
+\begin{aligned}
+ \operatorname{prem}(Y_g,Q_g)&=RB^3d^2F_8^2\sigma^3L_{gY}/72,\\
+ \operatorname{prem}(D_g,Q_g)&=B^2d^2F_8\sigma^2L_{gD}/12,\\
+ a_Y\mu_D-\mu_Ya_D&=\sigma dF_8F_{16},\\
+ q_{0g}a_j^2-q_{1g}a_j\mu_j+q_2\mu_j^2
+                 &=\sigma^2d^2F_8C_j\quad(j=Y,D).
+\end{aligned}                                                    \tag{87.15}
+\]
+The fixed pseudo-division powers here are \(q_2^3,q_2^2\). To verify the
+extension through \(A=0\), first transform over the fraction field using
+\(v=(A\tau-D_0C_0)/\sigma\). A degree-\(m\) remainder scales by
+\(\sigma^m/A^m\), while \(a v+b=A(a\tau+\mu)/\sigma\).
+The factors cancel exactly to (87.15). Both sides are polynomials by
+(87.14), so these are identities also at \(A=0\). No density of physical
+solution branches is assumed.
+

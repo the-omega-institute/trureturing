@@ -1,0 +1,33 @@
+**定理 73.6（Exact full-positive-window price, every repeated-label table）。** For every actual archive of Definition 73.1, under either original control alphabet,
+
+$$
+\boxed{D_{\rm ad}=D_{\rm child\text{-}pre}=
+\begin{cases}
+0,&n=1,\\
+2,&n=2\text{ and }\mathsf E,\\
+1,&n=2\text{ and not }\mathsf E,\\
+\lceil\log_2 n\rceil,&n\ge3,
+\end{cases}}
+\tag{73.15}
+$$
+
+Here the exact supplied exception is
+
+$$
+H=\{u+m,u+2m\}\pmod T=\{u+m,u+m-2\}\pmod T,
+\qquad
+\mathsf E:\quad
+\lambda=L\text{ on }H,\quad
+\lambda=M\text{ on }A\setminus H,
+\quad L\ne M.
+\tag{73.16}
+$$
+
+These are additional child fees. The $n\ge3$ attaining suffix is one actual stream (73.11), shared by all its continuing response children. The constant and binary clauses, including the paid two-block exception, are exactly credited overlap with [IC, Theorem 65.2].
+
+**证明。** For $n\ge3$, Lemmas 73.3 and 73.5 give a legal fixed suffix with fee $d$. Its charge on each original surviving phase is its label's code, including zero at unavailable vertices, and injection makes the final decoder correct for arbitrary repetitions of labels. Thus $D_{\rm ad}\le D_{\rm child\text{-}pre}\le d$.
+
+For the lower bound apply [S10, Lemma 3.2] to this actual common-value, common-tail child. Every literal action either succeeds on all its candidates or rejects all. At any subsequent successful output child, value and tail are again common. A nonconstant node cannot use uniform rejection to acquire a label, at its endpoint or at any later depth, because bottom is absorbing. Successful blocks have at most two endpoint outcomes. Therefore every correct adaptive continuation of worst additional fee $h$, including arbitrary waits, padding, repairs and endpoint stops, has at most $2^h$ distinct-label leaves. There are $n$ labels on actual sources sharing the starting archive, so $n\le2^h$ and $h\ge d$. This is an all-literal-action lower bound, not a restriction to (73.11). It also lower-bounds fixed suffixes. Both inequalities give equality.
+
+For $n=1$ the common label is already determined and the child stops at zero additional fee. For $n=2$, the next window misses only $u+m-1$ in $A$; the one-coordinate condition of [IC, (65.2)] is automatically satisfied because this missed support is a singleton. Theorem 65.2 gives price one except precisely (73.16), whose unique separating one-block inverse is $1^m$ and rejects from actual tail one. In that exception its actual paid suffix is $0^m\mid110^{m-2}$, of price two. These clauses are supplied mathematics and are not claimed as new content. ∎
+

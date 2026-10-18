@@ -1,0 +1,18 @@
+**Definition 2.2 (original full-history consumer).** A randomized observer has a source-independent actual row $\rho_h=\eta P_h$ over complete ready configurations, and an executable full residual decoder $D_z$ for each configuration. Define
+
+$$
+e_{\rm law}(h)=\operatorname{TV}\!\left(\sum_z\rho_h(z)D_z,T_h^\mu\right),\qquad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+$$
+
+Let $\mathcal H_p,\mathcal H_\beta$ be all original positive finite histories after the third latch at their respective fourth-segment phases, retaining every seed, record and finite rejection/return word. For $H\ge7$, put
+
+$$
+\Phi_H^{j_p,j_\beta}=
+\max\left\{\sup_{h\in\mathcal H_p,\ell(h)\le H}e_{j_p}(h)-\rho_p,
+\sup_{h\in\mathcal H_\beta,\ell(h)\le H}e_{j_\beta}(h)-\rho_\beta\right\},
+\tag{2.3}
+$$
+
+where $\rho_p=1116529/22781250$, $\rho_\beta=239/6750$ and $(j_p,j_\beta)$ independently ranges over the four law/conf choices. The uncapped version is $\Phi_\infty$. Every error still uses the full unbounded future transcript. $H$ limits only acquired history. Pending/delivered errors are zero. The representation is nonlinear normalized sequential generation; matrix coordinates do not supply linear-response memory bounds or finite bits from real-coordinate count.
+

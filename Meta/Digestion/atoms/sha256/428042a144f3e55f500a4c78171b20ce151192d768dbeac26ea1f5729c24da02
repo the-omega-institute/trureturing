@@ -1,0 +1,18 @@
+**Corollary 7.4 (the precise completeness mechanism excluded).** At fixed
+native depth five there is no uniform assertion that every admissible
+fiber on $N$ original blocks can be covered by $2^{o(N)}$ admissible
+replacements whose donor components have size bounded independently of
+$N$. The same obstruction holds if that size bound is $b_N\le N/2$.
+The worst-case per-fiber normalized logarithmic cost for this mechanism
+is at least $\tfrac18\log_2(5/4)$ bits per original block.
+
+**Proof.** Apply Corollary 7.3 along $N=8\cdot2^j$. For a fixed cutoff
+$b$, eventually $N\ge2b$, and the logarithm of the required number divided
+by $N$ is at least the stated positive constant. A cutoff
+$b=b(\epsilon)$ chosen before $N$ cannot make this uniform loss vanish
+as $\epsilon\to0$: arbitrarily large such $N$ remain. $\square$
+
+Corollary 7.4 excludes uniform subexponential per-fiber repair at the fixed
+original-block interface. Noncomputability or impossibility of effective
+approximation of the native rate does not follow from that obstruction.
+

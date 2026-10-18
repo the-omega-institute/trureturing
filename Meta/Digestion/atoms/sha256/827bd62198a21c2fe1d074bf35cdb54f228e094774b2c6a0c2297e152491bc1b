@@ -1,0 +1,67 @@
+**引理 90.1（frame、乘子与非零分母）。** (RC.115) 的同一 frame 可写成
+
+$$
+\begin{gathered}
+f_0=(k,-1,-r)^T/\sqrt d,\qquad f_1=(l,1,-u)^T/\sqrt e,\\
+f_2=f_0\mathbin\times f_1
+=(u+r,ku-rl,k+l)^T/\sqrt{de},\qquad F=(f_0,f_1,f_2),\\
+H=F^TGF,\qquad q=F^TQF,\qquad c=F^TCF,\qquad
+\psi=H_{00}=P/d,\qquad h_{\rm fr}=2l/e.
+\end{gathered}
+\tag{RC.178}
+$$
+
+这里 $f_2$ 的 coordinate-zero 为正，与原 $f_2$ 选向相同。$F\in SO(3)$，$q_{ii}=0$，且
+
+$$
+\begin{gathered}
+q_{01}=\frac{1+\alpha-(1+\beta)ru}{\sqrt{de}}>0,\quad
+q_{12}=\frac{J}{l\sqrt d}>0,\quad
+2q_{01}q_{02}q_{12}=\alpha\beta>0,\\
+\xi:=c_{01}-q_{01}c_{12}/q_{12}
+=-\frac{u\Theta l\sqrt d}{2e^{3/2}J}<0.
+\end{gathered}
+\tag{RC.179}
+$$
+
+因而 $q_{02}>0$，(RC.130) 的分母 $\xi/q_{01}\ne0$。原乘子为
+
+$$
+\lambda=\frac{H_{02}/q_{02}-H_{01}/q_{01}}
+{c_{01}/q_{01}-c_{12}/q_{12}}
+=2\psi'/h_{\rm fr}',\qquad
+\lambda(r_\star)=0,\quad \lambda(r)>0\ (r>r_\star).
+\tag{RC.180}
+$$
+
+证明。把 (RC.178) 代入，$kl+ru=1$ 给出正交、范数和两列 null；第三列 null 由 $\operatorname{tr}Q=0$ 得到。直接相乘给出 $q_{01},q_{12}$ 和
+
+$$
+c_{01}q_{12}-q_{01}c_{12}=-\frac{u\Theta}{2e^{3/2}}.
+$$
+
+$q_{01}$ 的分子大于 $1+7/8-(9/8)(21/200)>0$。$q$ 零对角的行列式是 $2q_{01}q_{02}q_{12}$，同时等于 $\det Q=\alpha\beta$，故三个除数非零且符号如上。
+
+沿未平方正交式求导得
+
+$$
+u'=-\frac{\beta r l/k+u}{r+\beta uk/l}<0,\qquad
+\left(\frac{2l}{e}\right)'_{u}=-\frac{2u\Theta}{le^2}<0.
+\tag{RC.181}
+$$
+
+所以 $h_{\rm fr}'>0$，在两个闭端点也成立。再置 $p=r^2/d$，$p'=2r(1+\alpha)/d^2>0$，并写
+
+$$
+p_0=\frac{\alpha+(\beta-\alpha)p}{1+\alpha},\qquad
+p_1=\frac{1-(1+\beta)p}{1+\alpha}.
+$$
+
+于是 $\psi$ 为线性项减去 $2\mathsf x\sqrt{p_0p_1}+2\mathsf y\sqrt{p_0p}+2|\mathsf z|\sqrt{p_1p}$。对正仿射 $v,w$，
+
+$$
+(\sqrt{vw})''=-\frac{(v'w-vw')^2}{4(vw)^{3/2}}.
+$$
+
+已有 $\mathsf x>0$ 且 $p_0'p_1-p_0p_1'=\beta/(1+\alpha)\ne0$，故 $\psi$ 对 $p$ 严格凸。所选 $r_\star$ 是其极小点，故 $\psi'(r_\star)=0$，右侧 $\psi'>0$。这与 $h_{\rm fr}'>0$ 一起证明 (RC.180) 的符号，而不预设探测器符号。$\square$
+

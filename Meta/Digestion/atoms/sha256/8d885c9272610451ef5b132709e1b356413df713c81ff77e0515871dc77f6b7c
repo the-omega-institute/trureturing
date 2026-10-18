@@ -1,0 +1,47 @@
+### 84.2. Exact dimension-free obstruction, including both-sided leakage
+
+**Qubit-core transfer theorem.** If either G or H has (1), then
+
+    delta >= (k-3)/k.                               (3)
+
+In particular the original four-fibre error is at least 1/4, regardless of both actual local Kraus ranks, the other party's correct-output nonorthogonality, or either party's wrong-output components.
+
+Proof. Suppose G=Q entrywise-multiplied by M, and define
+
+    H'=M entrywise-multiplied by H.
+
+Schur positivity gives H'>=0. Its diagonal fibre block is a contraction Gram, because
+
+    H'_ff=M_ff entrywise-multiplied by H_ff
+          <=M_ff entrywise-multiplied by I_2
+           =diag(M_(f0,f0),M_(f1,f1)) <=I_2.         (4)
+
+The first inequality follows by applying Schur positivity to M_ff and I_2-H_ff. Thus H' is the joint Gram of k arbitrary two-column contractions in a common finite environment. Algebraically its columns can be taken as m_fi tensor b_fi. All cross-fibre inner products are preserved, not fitted separately.
+
+By associativity,
+
+    K=Q entrywise-multiplied by H'.                 (5)
+
+The section-81 contraction/support lemma applies directly to (5): one Gram consists of orthonormal qubit frames and the other has contraction diagonal blocks. Its full-matrix projection witness gives
+
+    Tr(T-K)_+ >= k-3.                               (6)
+
+For the original physical maps, the normalized input
+
+    |Omega>=(1/sqrt(2k))sum_(f,i)|f,i>_R tensor |f,i>_logical
+
+has correct-output compression K^T/(2k) on the orthonormal support
+
+    {|f,i>_R tensor |ff>_out}.
+
+The target compression is T/(2k), and the complementary actual block is positive with trace 1-Tr K/(2k). The valid original-output pinching inequality is therefore
+
+    delta >= [||K-T||_1+2k-Tr K]/(2k)
+          = Tr(T-K)_+/k.                            (7)
+
+Combining (6) and (7) proves (3).
+
+This proof transfers markers only in the algebraic Gram factorization used by the support lemma. It does not assume that arbitrary transferred contraction blocks assemble into a new output-dimension-k CPTP map with the same cross-fibre action. No such physical completion is needed: K in (5)--(7) is exactly the unchanged correct-output Gram of the original product, and the discarded trace is the original physical output deficit. The transpose is only the forward-Gram convention and does not affect trace norm. The parties can be interchanged.
+
+Consequently joint deformations of qubit bases and arbitrary fibre-dependent markers cannot beat quarter error whenever at least one party retains (1). Such deformations need not preserve low local Kraus ranks. They need not retain the balanced axes or the fixed-marker assumption of the equality family.
+

@@ -1,0 +1,12 @@
+**Definition 2.3 (Reference floor and baseline).** Write
+
+$$
+e_*=2\sqrt{ZH},\qquad
+R_0^2=\sup_{0<k<H}\{4A(k)^2+B(k)^2\}.
+$$
+
+The notation $e_*$ denotes the inherited all-finite floor, and must not
+be confused with the dimension-zero capacity $e_0^{\rm aff}$. The
+arguments below prove the needed floor and evaluate $R_0$ in the original
+metric.
+

@@ -1,0 +1,30 @@
+**Definition 30.1 (finite path coefficients).** Use the ordered Engel convolution of (2.6),
+$(f*k)(\xi)=\int f(\eta)k(\eta^{-1}\xi)d\eta$.
+For $\eta=(A,\mathbf z_\eta)$ and $\xi=(B,\mathbf z_\xi)$ let $H=A+W$ be the height bridge from $A$ to $B$ in time $t$, with $W$ starting at zero. Set
+
+$$
+\begin{aligned}
+M_\vartheta[H]&=\int_0^t(1+\nu\vartheta H_u)^{-2}
+                    u(H_u)u(H_u)^{\mathsf T}\,du,\\
+\mathsf q_j(t;\eta,\xi)
+ &=h_t(B-A)\mathbb E_{A,B}^t\left[
+ \left.\frac1{j!}\partial_\vartheta^j
+ \{e^{\lambda\vartheta^2t}\gamma_{M_\vartheta[H]}
+                       (\mathbf z_\xi-\mathbf z_\eta)\}\right|_{\vartheta=0}\right],\\
+(\mathsf Q_j(t)g)(\xi)&=\int\mathsf q_j(t;\eta,\xi)g(\eta)d\eta,
+ \qquad 0\le j\le4.
+\end{aligned}
+\tag{30.1}
+$$
+
+The functions $u,h_t,\gamma_M$ are exactly (3.1). Differentiation is finite on each path in its neighborhood of zero; (30.1) defines coefficients, not a globally pole-free family for nonzero $\vartheta$. On finite safe paths it is the Taylor coefficient of the original sheared, shifted Gaussian. In particular $\mathsf Q_0(t)=P_t$. At the source endpoint zero the coefficients, in order, are
+
+$$
+p_0,\quad \nu p_1,\quad \nu^2p_2+\lambda tp_0,\quad
+\nu^3p_3+\nu\lambda tp_1,\quad
+\nu^4p_4+\nu^2\lambda tp_2+\tfrac12\lambda^2t^2p_0.
+\tag{30.2}
+$$
+
+Thus their field integrals on $[1,\infty)$ divided by $j_0$ are exactly $\mathcal V_j$ of (23.1), with $\mathcal V_0=V$. Return coefficients have no additional $j_0^{-1}$.
+

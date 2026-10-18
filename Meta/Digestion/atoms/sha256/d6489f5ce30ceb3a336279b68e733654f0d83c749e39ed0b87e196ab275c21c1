@@ -1,0 +1,16 @@
+**命题 44.3（实际正纪元之外地址障碍）。** 对每个有限 $Q$ 及每个共同指定的 $N\ge1$，存在两棵有限原来源，在认证纪元 $N$ 的 $Q$ 代码、边界和规范记录相同，却在 $D_Q$ 外的某个新地址有不同当前回复。
+
+证明。取 $d=\max(\{0\}\cup\{|q|:q\in Q\})$，构造深度 $d+1$ 的完整二叉骨架，所有末叶为 $\alpha$；选一个深度 $d+1$ 的末叶地址 $p$。第一个原来源保留 $p:\alpha$，第二个只将它换成 $\beta$。所有 $q\in Q$ 都位于永久分支骨架中，故所有当前码均为 $\mathsf C$，边界都是前缀分支，规范程序每个不同任务只读一次，记录相同。$L_Q$ 为空。由定理37.1对左射线 $L^N$ 的有限窗口，或直接由叶扇区出生式，
+
+$$
+r_{\rho^N\alpha}(L^N)=\mathsf{absent},\qquad
+r_{\rho^N\beta}(L^N)=\beta.
+\tag{SLH.44.3}
+$$
+
+因为对应出生偏移分别为 $N+1$ 与 $N$。新地址 $pL^N$ 不在 $P_Q$，在两条同纪元实际运行上给这两个不同值。这是每个有限 $Q$ 和每个正 $N$ 的原来源对，没有以一个固定有限样本替代量词。空菜单也适用。
+
+一个更小的混合原形例在 $N=1$：取 $u=\langle\alpha,\alpha\rangle$、$v=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$、$Q=(\varepsilon,L)$。当前树分别为 $\langle\beta,\beta\rangle$ 和 $\langle\beta,\langle\beta,\beta\rangle\rangle$，共同任务代码为 $(\mathsf C,\mathsf B)$，规范记录也相同。新地址 $R$ 不在 $P_Q\cup L\{L,R\}^{*}$，回复分别为 $\beta$ 和分支。$\square$
+
+命题44.3是缺少额外来源约束时的成对障碍，不断言每个在 $D_Q$ 外的地址都不可能由更强历史推定。额外历史仍按其真实过滤结果使用。
+

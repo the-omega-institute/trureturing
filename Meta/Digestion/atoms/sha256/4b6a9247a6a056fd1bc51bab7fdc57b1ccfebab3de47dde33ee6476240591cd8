@@ -1,0 +1,166 @@
+**Theorem 3.1 (one-sided necessary private charges).** Let $n\ge6$ and
+$3\le k\le n-2$. Under Definitions 1.1–2.1 and Assumptions 1.3–1.4,
+suppose two actual live cube histories reach one common installed
+selected state. Suppose their supports $S,T$ are incomparable and their
+hit counts satisfy $h<g$. Use $X,Y,I,U,a,b,u$ as in Definition 2.1.
+Then the following implications hold, with no AND/OR residual premise:
+
+1. If every old bit in $X$ on the $S$ history is zero, then
+   $a\le b$ and $C_X\le C_Y$.
+2. If every old bit in $Y$ on the $T$ history is one, then
+   $b\le a$ and $C_Y\le C_X$.
+3. If both conditions hold, then $a=b$ and $C_X=C_Y$.
+
+Proof. First, every complete cube run, of any weight, requires an
+invocation outside $\bigcup_iE_i$ of length at least three. The
+all-weight comparison of PCA Lemma 38.2 extends without using the
+number five: for a negative vector, keep $x_a=B_\theta$ and the other
+three right branch values, and replace $x_c$ by beta and $x_{b_3}$ by
+alpha. NBP Proposition 9.3 gives an actual $\Pi_3$ source with the
+opposite prescribed bit. For a positive vector, replace only the beta
+at $b_3$ by a fresh branch image, avoiding the other class values. This
+is an actual $Z_*$ source of prescribed bit zero. In either comparison
+all selected replies agree, every different-class disequality is
+retained, and the exterior before depth three is identical. A run with
+no distinguishing invocation would give the opposite-code source its
+same entry latch. Thus the required extra invocation is on that very
+cube run and has length at least three. No costs from different sources
+are added.
+
+We also need profile timing for any completion kept live until its last
+fresh coordinate, rather than only the two particular completions chosen
+in the saturation supplier. Such a run has $n$ distinct selected root
+calls, paying $W$, and the preceding comparison forces one further call
+of length at least three. The two caps force exactly these calls and
+charges. If the further call were after the last selected call, the
+preceding path would be selected-only. Keep its entire $x_a=B_\theta$
+fixed and choose the three actual origins of PCA (PCA.85): one in $Z_c$
+and one in each of $\Pi_3,\Pi_4$, with $x_c=\beta$ and fresh distinct
+branch values at the other right classes except for the indicated alpha.
+They follow that same selected-only path. Their prescribed bits are
+$0,1,1$. Only one call and at most three letters remain. A word shorter
+than three gives a common exterior branch; a length-three class root
+other than $b_3,b_4$ is common to all three; either of those two roots
+separates only its own positive origin. No such final call distinguishes
+the zero origin from both positive origins. Thus the further call must
+precede the last selected call. Its history is then live, so it is
+$RLR$ by the live-prefix supplier, and the last selected call goes
+directly to its latch. This proves the timing assertion for the two
+adaptively constrained completions below as well.
+
+Put
+
+$$
+q=k-h,\qquad v=k-g,\qquad \Delta=g-h=q-v>0.
+$$
+
+Liveness says $1\le q\le b+u$ and $1\le v\le a+u$.
+The two integer intervals
+
+$$
+J_S=[\max(0,q-b),\min(u,q-1)],\qquad
+J_T=[\max(0,v-a),\min(u,v-1)]
+$$
+
+are nonempty: $a,b>0$ and the preceding liveness bounds put their
+lower endpoints below their upper endpoints. Their upper endpoints
+are ordered with that of $J_T$ no greater. By (PE.5) they are disjoint,
+so the upper endpoint of $J_T$ is strictly below the lower endpoint of
+$J_S$. That lower endpoint is therefore positive and equals $q-b$.
+The upper endpoint of $J_T$ is strictly below $u$, so it equals $v-1$.
+Consequently
+
+$$
+q\ge b+1,\qquad v\le u,\qquad \Delta\ge b.           \tag{PE.6}
+$$
+
+These are deduced restrictions, not additional premises. In particular
+there is enough common unread space for both completions used below.
+
+For part 1, start at the $T$ history. Set every fresh $X$ bit to zero.
+On successive first exposures in $U$, assign one to the first $v-1$
+and zero to the rest. This is an adaptive proof of existence of one
+completion, not a runtime choice facility. Since $v\le u$, these
+assignments keep this history live until all $a+u$ unread coordinates
+have been exposed. Indeed, until the first $v-1$ exposures in $U$ are
+finished, there are at most $a\le a+u-v$ zeros and fewer than $v$
+ones. Afterwards there are exactly $v-1$ ones in total, and a negative
+certificate requires all $a+u-v+1$ zeros. The last necessary exposure
+is therefore the last unread coordinate. The case $v=1$ is simply
+all-zero unread replies.
+
+The live freshness supplier excludes any query of old $T$, any selected
+child or any second profile query during this suffix. It also forces
+progress: a live latch is incorrect, and a repeated stationary state
+would give nontermination on an actual completion. The resulting actual
+$T$ source has weight $g+v-1=k-1$ and its run reads exactly $X\cup U$
+once after the shared state. Its unique profile call is before its last
+selected call. The caps leave no later invocation.
+
+Now complete the $S$ history by giving $U$ these same assigned values
+and giving $Y$ any values. Replay that entire $T$ suffix from the
+common state. Its $X$ replies match the old zeros of the $S$ history;
+its $U$ replies match by construction; its possible $RLR$ reply is the
+cube-constant beta. It never queries $I$ or $Y$. Induction through the
+fixed successors gives the identical suffix and terminal latch on this
+actual $S$ source. Different old assignments on $I$ are immaterial.
+In fact its weight is at most
+$h+(v-1)+b=k-\Delta-1+b\le k-1$, by (PE.6).
+
+Every prefix of a live history is live, so the selected prefix on $S$
+has queried $S$ once at shortest roots. The full replayed run therefore
+has selected invocation count and letter charge
+
+$$
+|S|+a+u=n+a-b,\qquad
+C_S+C_X+C_U=W+C_X-C_Y.                              \tag{PE.7}
+$$
+
+The all-weight comparison at the beginning of the proof supplies at
+least one further invocation and at least three further letters on
+this same run. Applying both caps (PE.1) gives
+
+$$
+n+a-b+1\le n+1,\qquad
+W+C_X-C_Y+3\le W+3.
+$$
+
+This proves $a\le b$ and $C_X\le C_Y$. Any repeat in (PE.7) is paid,
+even when the $S$ source has already become certified. If the two
+histories place their profile call differently, the replay must still
+satisfy its own full-source charge; no identification of profile visits
+or cancellation of their costs was made.
+
+For part 2, start instead at the $S$ history and set every fresh $Y$
+bit to one. On successive first exposures in $U$, put zero at the first
+
+$$
+z=b+u-q
+$$
+
+and one at the rest. Liveness and (PE.6) give $0\le z\le u-1$.
+Until those $z$ zero exposures have occurred the number of ones is at
+most $b<q$, and there are too few zeros to certify a negative answer.
+Afterwards every remaining fresh bit is one. Reaching $q$ ones then
+requires every unread coordinate. Thus the history remains live up to
+its last selected call, its total weight is $h+q=k$, and its complete
+suffix queries exactly $Y\cup U$ once at shortest roots, with the
+unique profile call already paid before its final selected call.
+
+Replay it on a completion of $T$ with the same $U$ values. Every $Y$
+reply agrees with its old one; neither $I$ nor $X$ is queried in this
+suffix. The complete actual $T$ run follows the same terminal latch.
+Its weight is at least $g+(u-z)=k+\Delta-b\ge k$, so the replay also
+has the required positive bit. Its selected count and charge are
+
+$$
+|T|+b+u=n+b-a,\qquad
+C_T+C_Y+C_U=W+C_Y-C_X.
+$$
+
+Its own mandatory nonselected invocation contributes at least one call
+and three letters. The two caps give $b\le a$ and $C_Y\le C_X$.
+This proves part 2, and combining the two implications proves part 3.
+No statement of this proof excludes paid discrimination after a history
+has become constant. $\square$
+

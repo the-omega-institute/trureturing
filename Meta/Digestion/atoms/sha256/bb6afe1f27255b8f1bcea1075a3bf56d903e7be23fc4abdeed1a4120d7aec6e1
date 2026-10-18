@@ -1,0 +1,35 @@
+**Definition 19.1 (eleven complete words and immutable instructions).**
+Install the following running rows. Columns after the address give
+successors in the reply order $\bot,\alpha,\beta,\mathsf b$.
+
+| Running state | Complete mutable word | Complete original-root address | Length | $\bot$ | $\alpha$ | $\beta$ | $\mathsf b$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $R$ | `000000` | `LLRRRRRRRRRRRRR` | $15$ | $A$ | $H_5$ | $H_4$ | $B$ |
+| $A$ | `001000` | `LRRRRRRRR` | $9$ | $H_{15}$ | $H_{1L}$ | $H_{1L}$ | $H_0$ |
+| $B$ | `100000` | `LRRRRRRRRRRRRRRR` | $16$ | $H_3$ | $H_2$ | $H_{1U}$ | $H_0$ |
+
+These are the fully materialized original-root representatives
+$Lw_{27}=LLR^{13}$, $Lw_{16}=LR^8$, $Lw_{30}=LR^{15}$ of
+Definition 5.3. The actual submitted objects are the displayed
+literal strings; powers and query indices are mathematical notation.
+Install the following complete-output halt rows, with no Read or
+response transition at a halt.
+
+| Halt state | Complete mutable word | Installed complete lag output | Exact hidden-age support |
+| --- | --- | --- | --- |
+| $H_0$ | `101000` | $17$ | $\{18,32\}$ |
+| $H_5$ | `010000` | $12$ | $\{27\}$ |
+| $H_4$ | `000100` | $13$ | $\{28\}$ |
+| $H_{15}$ | `001010` | $2$ | $\{2,3,4,5,6,7\}$ |
+| $H_{1L}$ | `001001` | $16$ | $\{16,17\}$ |
+| $H_3$ | `100100` | $14$ | $\{29\}$ |
+| $H_2$ | `100010` | $15$ | $\{30\}$ |
+| $H_{1U}$ | `100001` | $16$ | $\{31\}$ |
+
+The common initial word is `000000`. State names are proof labels.
+The $H_j$ instruction already contains the complete number $17-j$;
+no subtraction or target lookup is performed after entry. The two
+states bearing subscript one have the same numeric output and
+different complete control words. Only these eleven words have
+installed instruction rows.
+

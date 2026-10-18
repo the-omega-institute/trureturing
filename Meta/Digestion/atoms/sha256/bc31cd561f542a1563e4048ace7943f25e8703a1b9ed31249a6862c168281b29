@@ -1,0 +1,30 @@
+**Assumption 1.1 (the original source).** Fix any finite or countable
+probability prior $\mu$ on positive integers with $\mu(1),\mu(2)>0$.
+The original source parameters are $(m,d,\ell,n)=(2,1,2,4)$.
+Before the first paid Read, draw one $K\sim\mu$. Conditional on this same
+$K=k$, all seed and payload Reads are independent, with alpha probability
+$r_k=F_{k+1}/F_{k+3}$, where $F_0=0,F_1=1$. In particular
+
+$$
+a=\frac13\le r_k\le\frac25=b,\qquad
+r_k(1-r_k)\le\frac6{25}.
+\tag{1.1}
+$$
+
+Use the entire original finite control $C_0$, writer and event blocks of
+[PAIR, §2; PAID, Definitions 1.1–1.3; NATIVE-STATE;
+NATIVE-EVENTS]. Equal seed pairs are rejected with both Reads paid;
+alpha-beta accepts seed 0 and beta-alpha accepts seed 1. At payload p,
+alpha completes marker 0 and beta suspends. At suspension, alpha returns
+to p and beta completes marker 1. The first three completions advance
+segments. The third completion writes its complete record before its
+latch. Fourth completion enters the matching pendingStop; its sole
+matching Stop enters deliveredStop. Neither terminal admits Read.
+
+All seeds, marker words, original bare and held $B,Q^+,Z$ records,
+selectors, parser, write/latch flags, permissions and delivery events
+are retained. Every positive finite rejection history, partial parse and
+finite return remains legal. The kernel named $B$ below is unrelated to
+the held record also named $B$. All originally supported depths remain
+supported targets; no target restriction is imposed by the constructions.
+

@@ -1,0 +1,27 @@
+**Lemma 45.2 (one-sided global distance comparison and early heat).** For every pair of endpoints in the complete $\Omega_s$, and $0<t\le T$,
+
+$$
+\begin{gathered}
+d_E(\eta,\xi)\le C s^{-1}d_{\rm nat}(Y_s\eta,Y_s\xi),\\
+0\le q_s(t;\eta,\xi)\le Ct^{-7/2}
+ \exp[-c d_E(\eta,\xi)^2/t],\\
+0\le F_s(\xi)\le C(1+\rho(\xi))^{-5},\qquad
+0\le H_s(\eta,\xi)\le C d_E(\eta,\xi)^{-5}\quad(\eta\ne\xi).
+\end{gathered}
+\tag{45.3}
+$$
+
+Here $d_{\rm nat}$ is the control distance of the original two fields with paths inside the original height interval. The same kernel upper bounds hold after zero extension.
+
+Proof. By the exact rational shear (2.3), or P (97.2), the microscopic fields are $X$ and $a_s(r)Y$, where $a_s(r)=(1+\nu sr)^{-1}$. On the entire actual height interval,
+
+$$
+1+\nu sr=\frac{k-\alpha_\kappa}{k_0-\alpha_\kappa},
+\qquad 0<c\le1+\nu sr\le C<\infty.
+\tag{45.4}
+$$
+
+A path with controls $(v,w)$ for $X,a_sY$ has controls $(v,a_sw)$ for $X,Y$ and ambient Engel length at most a fixed multiple of its microscopic native length. The original controls scale by $s$, by the exact chart and form identity. Taking infima over native paths proves the first inequality. The ambient infimum may use more paths, so no reverse comparison or removal of either face is required.
+
+P Lemma 82.2 supplies the original all-endpoint bound $p_t^B\le Ct^{-7/2}\exp(-c d_{\rm nat}^2/t)$. Its Coulhon–Sikora Theorem 4.1 hypotheses are checked there: the nonnegative selfadjoint killed $B$, continuous kernel, all-time diagonal bound and native Davies–Gaffney estimate. Using $q_s=j_0s^7e^{\lambda s^2t}p_{s^2t}^B\circ(Y_s,Y_s)$ and $e^{\lambda s^2t}\le e^\lambda$ for $t\le T$ proves the second line. The polynomial factor in that Gaussian theorem is absorbed by reducing its exponential constant. Integrating from $1$ to $T$ gives the field bound; integrating from $0$ to $T$ gives the off-diagonal return bound. The substitution $v=d_E(\eta,\xi)^2/t$ gives the power $-5$. All comparisons keep the killed kernel itself. $\square$
+

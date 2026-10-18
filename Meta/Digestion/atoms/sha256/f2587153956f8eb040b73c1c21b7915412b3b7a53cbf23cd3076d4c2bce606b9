@@ -1,0 +1,40 @@
+**Definition 6.2 (The unmatched certificate problem).** The current
+credited quantitative frontier remains
+
+$$
+\frac{129931}{250000}\le\varepsilon_1\le\lambda_Q,\qquad
+\frac{52417656}{10^8}<\lambda_Q<\frac{52417658}{10^8},
+\tag{6.1}
+$$
+
+where $\lambda_Q$ and its attaining fourteen-flag channel are
+specified by QJM Definitions 3.1 and 5.3 and Theorem 6.1. The
+earlier [QEC](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md)
+and [QWS](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_WITNESS_SLACK_AND_INDEPENDENT_DECODING.md)
+endpoints remain credited weaker bounds. No endpoint is improved
+by (2.2), (3.5), or (4.7).
+
+The remaining exact-value obligation is to obtain normalized positive
+event multipliers for the same fifteen events and three TP multipliers
+whose actual coefficients satisfy (3.5), prove that specific cubic
+nonnegative on every interior population, and find a common feasible
+finite port with the complementary event eigenspaces and atom kernels
+in (5.3) at the same value. One must solve the joint TP equations
+and all fifteen primal event inequalities for that port. Cubic
+zeros without their kernel vectors and weights do not supply a port;
+a legal port without the global inequality does not supply a lower.
+No such matching tuple is specified here. In particular neither
+automatic cubic positivity nor optimizer membership in the exhibited
+two-orbit family is a consequence of these results.
+
+The original $q=2,3,4$ optima, native all-size cofinality and memory
+rates, preparation from the native $\alpha/\beta$ relations, and
+mutual recovery among space, time, boundary and memory remain
+separate unresolved mathematical obligations. The finite scalar
+flags and exact design coefficients in (2.9) and (4.10) describe
+mathematical channels. Coefficient acquisition and synthesis,
+finite-precision robustness, physical state preparation, clocks,
+transport and storage duration require additional resource bounds.
+No such bound follows from the passive coordinate changes, finite
+quadrature or zero-wait performance attainment.
+

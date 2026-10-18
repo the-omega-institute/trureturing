@@ -1,0 +1,69 @@
+**Proposition 330.1 (The narrower wedge is the same family).**
+Let $0<\tau\le1/24$ and $u/2\le v\le u\le\tau$ with
+$u,v\ge0$. Put
+
+$$
+t=\frac{u+v}{2},\qquad \delta=\frac{u-v}{2};\qquad
+u=t+\delta,\quad v=t-\delta.
+\tag{330.1}
+$$
+
+Then $0\le t\le\tau$, $0\le\delta\le\tau-t$, and
+$\delta\le t/3\le53t/128$. For $t>0$ the last bound is
+strict. Thus its amplitudes $a_8=5\tau+u$, $a_9=5\tau+v$
+and cap $5\tau+11(u+v)/128$ are already within 324.1.
+Its direct-extraction formulas become exactly
+
+$$
+W=\frac{521u+9v}{192},\qquad
+E_{\rm res}=\frac{691u+51v}{384},\qquad
+Y_2\text{ numerator}=\frac{1177u+153v}{192}.
+\tag{330.2}
+$$
+
+**Proof.** The first bounds follow from $u=t+\delta\le\tau$
+and $v\le u$. The condition $v\ge u/2$ is
+$t-\delta\ge(t+\delta)/2$, or $3\delta\le t$.
+Since $1/3<53/128$, this implies (324.1), including the zero
+branch. Substitute the inverse identities into (324.2) and (329.2),
+(329.6) to obtain the displayed expressions. This is an exact
+identification of parameterized profiles, not a second attained
+family, endpoint or method obstruction. An alternative supplier
+denoted $P^\dagger$ on that wedge provides no separate coverage
+credit here and is not needed for this proof. $\square$
+
+The mathematical increment is one conserved-cell transfer, counted
+once together with its stated regional consumer and specified-method
+adjunct. The equal-tail family, $P^0$, $P^\star$, the complete-$N$
+lower score, the seven-active branch, earlier completed cones and the
+original source/seed/closed-cap transport are reused at their existing
+scopes.
+Neither the sufficient transfer range nor a bounded overlap comparison
+is a maximality or literature-priority assertion.
+
+The primary framework remains exactly 323.2. Blackwell's finite-family
+attainable loss vectors and supporting-hyperplane comparison concern
+one whole randomized procedure. Kaniewski, Lee and de Wolf's
+Definitions 6 and 8 and Theorem 9 concern nonnegative real scalar
+leaf outputs and maximum supported path cost; their coefficient
+normalization and scalar output rescaling do not supply normalized
+probability vectors, equal cell masses or an increasing stop.
+Here (325.2)–(325.4), 326 and 327 separately prove those conditions.
+
+All constructed output laws are finite atomic laws on actual marks.
+Their finite support has mass one for the output and zero for every
+unchanged original nonatomic target, hence TV one against that target.
+No accuracy against those original targets or change of consumer is
+inferred from selected marked-target accuracy.
+
+The unrestricted question 323.3 retains its full original quantifiers,
+signed residual, one unrestricted $V$ and one common $\theta$ budget,
+including nonzero zero-cost $V$ at $\theta=1$. The new law is
+feasible in both classes, and the positive reading in 329.6 excludes
+only one extracted core. Neither yields the required same-profile
+$N$-only strict separator or a certificate for every unit-$O$ input.
+There is no exact-law preservation requirement on a replacement $O$
+law, no new fixed-anchor or output-label restriction, and no claim
+about other amplitude regions, arbitrary gapped primal attainment or
+maximal unequal-tail allowance.
+

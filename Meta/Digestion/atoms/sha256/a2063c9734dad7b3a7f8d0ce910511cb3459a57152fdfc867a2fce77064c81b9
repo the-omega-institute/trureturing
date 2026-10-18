@@ -1,0 +1,36 @@
+**References 14.5 (mathematical attribution and fixed capacity).** The
+common-shape rank automaton, its exact assembly and the source-class
+application are `repo-derived` ordinary proofs. No new Lean verification
+or worldwide-originality claim is made. Comon–Delor, *Equational Formulas
+with Membership Constraints*, Information and Computation 112(2), 167–216,
+DOI [10.1006/inco.1994.1056][NCE-CD-DOI], author manuscript Lemma 1
+(pp. 7–8), Theorem 4 and Corollary 2 (p. 33) [NCE-CD], is
+`literature-attested` only for the ordinary admissible $c/f$ shape problem
+after the proved native elimination. No arbitrary homomorphism extension,
+HOM image-language comparison or TABG flat-theory enlargement is assumed.
+Ginsburg–Spanier Theorems 1.2–1.3 [GS] supply the final Presburger decision
+and semilinear conversion. The pinned mathlib interface
+`presburger.definable_iff_isSemilinearSet` in
+`Mathlib/ModelTheory/Arithmetic/Presburger/Definability.lean` has that
+arithmetic scope, not the new native elimination.
+
+The capacity quantifiers are $\forall h\ge1$ supplied as a numeral,
+$\exists$ a constructed $L_h$ automaton and formulas $E_h^\pm$.
+Automaton size and formula syntax may depend on $h$. This is different
+from one finite formula with fixed automata and free numeric capacity
+$h$. [ABT, Sections 24–26][NCE-ABT] gives the attained original-response
+boundary for that uniform language. Neither result turns semantic
+source replacement into actual acquired or callable memory.
+
+[NCE-SFP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOURCE_FIBER_PARAMETRIZATION.md
+[NCE-NRF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REGULAR_FRONTIER_SELECTION.md
+[NCE-NASF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md
+[NCE-ABT]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[NCE-CORE]: ../../../D5/S0/Rewriting/NativeUnificationCore.lean
+[NCE-GROUND]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.lean
+[NCE-GROUND-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.scribe.cs
+[NCE-RECUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[NCE-PLAN]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan.lean
+[NCE-CD]: https://lsv.ens-paris-saclay.fr/~comon/ftp.articles/membership.ps
+[NCE-CD-DOI]: https://doi.org/10.1006/inco.1994.1056
+

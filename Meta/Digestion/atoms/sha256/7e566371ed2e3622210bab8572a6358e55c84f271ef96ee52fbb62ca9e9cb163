@@ -1,0 +1,16 @@
+**Proposition 21.3 (whole-row fidelity).** For finite assignments satisfying
+the domain, $\operatorname{Bad}_\eta(v,w)$ holds if and only if
+$R_Q(F_\eta[v])\ne R_Q(F_\eta[w])$.
+
+Proof. Equation (CE.19.4) remains true after exact substitution. The
+reached original addresses, order and numbered holes are fixed in the
+chart. Equality of its two concrete exteriors is exactly equality of
+all parameters visible in $\bar E_\eta$, by item 3 of Lemma 19.2.
+Parameters under removed holes impose no exterior requirement. The two
+complete partitions agree exactly when every unordered pair of reached
+holes has the same equality status; (CE.20.4) computes each status exactly.
+Negating these two necessary and sufficient agreements gives (CE.21.2).
+This covers the entire concrete exterior even when it can be very large.
+A common parameter canceled from a hole equality is not made relevant
+again merely because it occurs in the compared terms. $\square$
+

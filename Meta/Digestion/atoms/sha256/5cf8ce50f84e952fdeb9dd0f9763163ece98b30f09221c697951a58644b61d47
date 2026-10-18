@@ -1,0 +1,44 @@
+**Theorem 7.3 (constructive actual-image atlas).** On the four actual view
+images there are finite mathematical recovery maps in all twelve directed
+cases. They are pairwise inverse, satisfy the triangle identities, and
+transport every lawful primitive with its complete original successor.
+
+Proof. The following directed cycle supplies explicit algorithms:
+
+$$
+S\ \xrightarrow{\text{maximal paths}}\ B
+\ \xrightarrow{\text{prefix closure, cell decoding}}\ M_{\mathrm{ret}}
+\ \xrightarrow{\mathcal E,\ \text{AIF replay, row compiler}}\ T
+\ \xrightarrow{\text{finite patch execution}}\ S.
+\tag{SSA.11}
+$$
+
+The second arrow first recovers $W$, then selects exactly the retained
+materials in Definition 7.1 using their actual decoded phase/descriptors.
+The third arrow computes $K$ by the finite extraction and uses the existing
+actual-image replay, then the explicit compiler. The fourth starts at the
+fixed structural entrance and executes the given finite event word. Each
+algorithm is finite on its actual image: its traversals concern finite
+trees, tapes or words; replay stops at its supplied finite ordinal. No
+future input or alternate source witness is selected.
+
+Compose zero to three consecutive arrows to obtain each directed recovery.
+For example $B\to S$ can directly use prefix closure; $S\to T$ can use
+cell decoding, extraction and replay; $T\to M_{\mathrm{ret}}$ executes
+the patches then selects retained material; $M_{\mathrm{ret}}\to B$
+replays and takes the resulting terminal antichain. Each such composite
+sends the view of $h$ to the corresponding other view of exactly that same
+$h$. Theorem 7.2 guarantees that a different representative with the same
+starting view is not chosen. Consequently reverse composites return the
+starting view, and any two paths between the same images agree. This
+proves the inverse and triangle identities, not merely their existence.
+
+At an admissible IN, extraction changes $(u,I,n)$ to $(u,Ic,n+1)$;
+at a non-IN it changes it to $(u,I,n+1)$. AIF Corollary 4.5 and SSA.9
+show that decoding, taking the original successor, and re-encoding commute
+with these maps. The same is true of any specified finite semantic/audit
+fragment by composition. All successor payloads and failure types are
+the original ones. The resulting maps are mathematical transformations
+of complete descriptions. They are not assertions of equal fees, equal
+elapsed physical duration, or an installed view-acquisition service. ∎
+

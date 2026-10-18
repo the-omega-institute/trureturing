@@ -1,0 +1,33 @@
+**Definition 27.1 (Positions, replicas and the normal semigroup).**
+For $n\ge2$ positions, set
+
+$$
+\begin{aligned}
+B_n&=\{I\subseteq[n]:I\text{ contains no adjacent pair}\},\\
+P_n&=\{x\in\mathbb R^n:x_i\ge0,\ x_i+x_{i+1}\le1\ (1\le i<n)\},\\
+\mathcal S_n&=\{(m,c)\in\mathbb Z_{\ge0}^{n+1}:
+ c_i+c_{i+1}\le m\ (1\le i<n)\},\\
+R_n&=\mathbb C[\mathcal S_n].
+\end{aligned}
+\tag{27.1}
+$$
+
+The real cone is $C_n=\{(m,c):m\ge0,\ c\in mP_n\}$.
+Every variable $z_I$ in
+$S_n=\mathbb C[z_I:I\in B_n]$ has multidegree
+$a_I=(1,\mathbf1_I)$ and maps to the corresponding semigroup monomial.
+The ordinary degree is its first coordinate. The number of variables is
+$D_n=|B_n|=F_{n+2}$, where $F_0=0,F_1=1$.
+This presentation is the general Hibi history supplier of Correlation
+chapter 26 with its $K=\mathbb C$; $n$ is the number of positions and
+$m$ the number of replicas. Neither is a time-step count.
+
+The literature input for the following application is the path case of
+Jiang–Yang–Zhong, [*Transfer Matrices and Ehrhart Theory for Path and
+Cyclic Block Polytopes*, Theorem 1.6, Remark 1.7 and §3][PA27].
+Its block parameter is $a=1$, its block count is our $n$, and its
+dilation variable is our $m$. Its codegree, interior translation,
+reciprocity and palindromy are used as existing path-polytope results,
+not claimed as new standalone theorems. The following verification fixes
+the exact lattice and shift required by the resolution and index.
+

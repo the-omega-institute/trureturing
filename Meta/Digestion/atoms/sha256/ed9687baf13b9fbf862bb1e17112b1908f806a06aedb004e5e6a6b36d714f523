@@ -1,0 +1,84 @@
+**Definition 1.4 (All fifteen invariant coefficients).** For orthogonal
+unit vectors let $F(a,b)=(ab^T+ba^T)/\sqrt2$. Use exactly QRC
+Definition 4.1:
+
+$$
+H_i=R_i/\sqrt{n_i},\qquad
+\tau=(1,\sqrt2,\sqrt2)^T,\qquad I=\sum_i\tau_iH_i,
+\tag{1.5}
+$$
+
+and the following six ordered orthonormal matrix pairs:
+
+$$
+\begin{aligned}
++ &: F(d,u_+),\quad F(d,v_+),\\
+- &: F(d,u_-),\quad F(d,v_-),\\
+2+ &: (u_+u_+^T-v_+v_+^T)/\sqrt2,\quad F(u_+,v_+),\\
+2- &: (u_-u_-^T-v_-v_-^T)/\sqrt2,\quad F(u_-,v_-),\\
+\Delta &: [F(u_+,u_-)+F(v_+,v_-)]/\sqrt2,\quad
+          [F(v_+,u_-)-F(u_+,v_-)]/\sqrt2,\\
+\Sigma &: [F(u_+,u_-)-F(v_+,v_-)]/\sqrt2,\quad
+          [F(v_+,u_-)+F(u_+,v_-)]/\sqrt2.
+\end{aligned}
+\tag{1.6}
+$$
+
+Denote the pair by $(F_{\nu1},F_{\nu2})$ and its label set by
+$\mathcal N=\{+,-,2+,2-,\Delta,\Sigma\}$. Define, also for
+unnormalized real vectors,
+
+$$
+\begin{gathered}
+h_i(a)=a^TH_ia,\qquad
+z_\nu(a)=(a^TF_{\nu1}a,a^TF_{\nu2}a)^T,\\
+k(a,b)=\left(h(a)h(b)^T,
+       \left(\tfrac12z_\nu(a)^Tz_\nu(b)\right)_{\nu\in\mathcal N}\right),\\
+\mathcal K=\operatorname{cone}\{k(a,b):a,b\in\mathbb R^5,
+                                  \ \|a\|=\|b\|=1\},\\
+P_\nu(E)=\sum_{j=1}^2\operatorname{tr}(F_{\nu j}E)F_{\nu j}.
+\end{gathered}
+\tag{1.7}
+$$
+
+Cone means finite nonnegative sums. In particular the preparation
+factor $a$ and measurement factor $b$ are independent. The homogeneous
+extension satisfies $k(sa,tb)=s^2t^2k(a,b)$ for real $s,t$.
+For $x=(M,\eta)$ define the complex-linear map, first on real
+symmetric matrices,
+
+$$
+S_x(E)=\sum_{i,j}M_{ij}\operatorname{tr}(H_jE)H_i
+             +\sum_{\nu\in\mathcal N}\eta_\nu P_\nu(E),
+\tag{1.8}
+$$
+
+and extend after replacing a complex matrix $X$ by $(X+X^T)/2$.
+Its unnormalized output-first Choi matrix is
+
+$$
+Z(x)=\sum_{i,j}M_{ij}H_i\otimes H_j
+ +\sum_\nu\eta_\nu(F_{\nu1}\otimes F_{\nu1}
+                         +F_{\nu2}\otimes F_{\nu2}).
+\tag{1.9}
+$$
+
+QRC Theorems 4.2 and 5.2 identify the real stationary reflected
+measure-and-prepare channels with
+
+$$
+\mathcal F=\{(M,\eta)\in\mathcal K:M^T\tau=\tau\},\qquad
+\operatorname{Tr}_{\rm out}(Z(x)/5)=I_5/5.
+\tag{1.10}
+$$
+
+The correspondence is injective on all fifteen coefficients and
+determines the action on every complex input. The three TP equations
+are independent. Neither $M=M^T$ nor $M\tau=\tau$ is imposed.
+Their imposition would add self-adjointness or unitality, respectively.
+The general rank-one-Kraus, separable-Choi and measure-and-prepare
+correspondence is the credited ingredient of
+[Horodecki–Shor–Ruskai, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031v2),
+whose CPTP version separately requires the measurement normalization.
+Here that normalization is the full marginal (1.10).
+

@@ -1,0 +1,32 @@
+**Definition 7.1 (actual acquisition promise).** Use the exact source (3.4),
+an original based loop, $\operatorname{Lip}(k)\leq L$ and
+$\operatorname{TV}(\chi)\leq V$. Every signed winding compatible with
+these promises is included. A separate acquisition service must provide
+the following for the same executed history:
+
+1. Ordered actual sample times $0=s_0<\cdots<s_n=T$, with simultaneous
+   height and phase samples at each time. For nominal grid $t_j=jT/n$,
+   a calibrated clock certifies $|s_j-t_j|\leq\varepsilon_t$ and the endpoint
+   samples really are the initial and terminal events. Hence every actual
+   cell is at most $h_*=T/n+2\varepsilon_t$ long.
+2. Samples $\widehat k_j$ and $\widehat x_j$ of
+   $k(s_j)$ and $x(s_j)=\chi(s_j)-\chi_0$, with simultaneous deterministic
+   bounds $|\widehat k_j-k(s_j)|\leq d_k$ and
+   $|\widehat x_j-x(s_j)|\leq d_c$. Height samples are clipped to the known
+   band $[1/10,1/5]$. They can also be quantized there with the quantization
+   error included in $d_k$. Real phase-lift samples, not circle samples,
+   are required. Centering at $\chi_0$ does not discard a winding.
+3. Source/preparation identity, units, initial lift/reference alignment,
+   clock and sensor calibration, justification of $L,V$, permission fields,
+   timestamps, ordered samples and all acquisition events belong to the
+   actual record. The service must justify nondisturbance, or justify that
+   the measured actual control and its lift still obey (1.1).
+
+This promise includes access to the unwrapped phase and is stronger than
+finite-shot quantum readout. Neither this service nor its calibration,
+clock, phase reference, record copying or storage is supplied by the
+transport or composition declarations. A statistical implementation may
+instead certify these inequalities on one declared joint event of
+probability at least $1-\alpha$; all conclusions then hold on that event.
+Separate marginal confidence claims cannot replace the joint event.
+

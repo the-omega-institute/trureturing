@@ -1,0 +1,33 @@
+**Proposition 8.1 (Scalar boundary values do not add source states).**
+For a fixed $0<\tau<1$, the scalar profiles satisfy
+
+$$
+\begin{array}{c|cc}
+&x=0&x=1\\\hline
+f(x)&\sqrt T&\sqrt{T-\tau}\\
+v(x)&\sqrt T&\sqrt{T-\tau}\\
+g(x)&-2\sqrt T&-2\sqrt{T-\tau}\\
+F_0(x)&T&T
+\end{array}
+$$
+
+and $g'(x)\to+\infty$ at $0$ and $g'(x)\to-\infty$ at $1$.
+For the perturbed radius the endpoint limits are
+
+$$
+R_\varepsilon(0)=\sqrt T(1-\varepsilon\eta),\qquad
+R_\varepsilon(1)=\sqrt{T-\tau}
+\bigl[(1+\varepsilon a)e^{\varepsilon b}-\varepsilon e^{-1}\bigr].
+$$
+
+Its scalar squared-error limits at both ends obey
+$F_\varepsilon\le T-\mu$.
+
+Proof. These values follow by substituting into the explicit scalar
+formulas; the derivative limits are those proved in Lemma 3.4.
+Theorem 4.6 includes both endpoints and yields the final bounds.
+They are limits of errors along interior heights. The actual image
+in Proposition 5.2 has strict radius inequalities and excludes those
+boundary circles. No encoder value, command identity or new phase
+identification on $k=0,H$ is asserted. $\square$
+

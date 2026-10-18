@@ -1,0 +1,63 @@
+**Proposition 18.1 (a bounded exact instance).** Take $G=K_5$ with
+vertices modulo five and orientation $i\to i+1,i+2$. The $1024$
+edge assignments give $64$ zero-syndrome assignments, each feasible
+syndrome has $64$ preimages, and each pair of distinct seeds has
+all four values equally often on the zero-syndrome fiber.
+On that fiber $H(s)=6$, each local envelope is $5/3$ and
+$\Delta=7/3$. Its positive-law raw partition and normalized mass
+are respectively
+
+$$
+63675988992,\qquad
+\frac{63675988992}{90876845839099}.
+\tag{GDB.83}
+$$
+
+In the full-family realization of Theorem 17.1, $H_0=3,D=6$,
+$|S_6|=52416803445748571$, and there are exactly
+$52416803445747548$ complete attained names. The preparation
+uses $63$ Reads, maximum length six and $321$ submitted letters.
+
+Proof. The incidence rank is four, giving the $2^{10-4}=64$
+preimages and the entropy six. $K_5$ has no nonstar cut of
+size at most four, so (GDB.65) gives the local envelopes and
+$5(5/3)-6=7/3$. Equations (GDB.60) and (GDB.79)–(GDB.80)
+give the other values, with the recursion (GDB.5) for $|S_6|$.
+These counts also admit direct bounded enumeration of the
+$2^{10}$ actual assignments and exact integer arithmetic.
+$\square$
+
+The finite readings check the native lift, the signed heterogeneous
+identity, the hard-star marginals, the exact positive mass and its
+quarter-cap comparison. They do not measure convergence. The
+arbitrarily large graph and adaptive assertions rest on §§15–16's
+proofs and the stated primary graph-existence theorem. This text
+is ordinary mathematical reference input and supplies no new
+Lean certification.
+
+**Open problem 18.2 (the unchanged unrestricted consumer).** The
+missing obligation remains Definition 11.1: an effective sound
+cap for every complete native template with optimizer-cofinal
+accepted endpoints at the original $\sigma_d$, or a uniform
+effective native length-error bound. Sections 12–17 neither solve
+nor disprove it. No new original rate endpoint is asserted here.
+
+The parity grammar is now evaluated, but it does not cover arbitrary
+owned-seed incidences, guards, compatibility zeros or arbitrary joint
+block weights. Its exact syndrome relation gives no reduction of
+those general weights to parity. In particular the restricted cap
+of Theorem 13.3 cannot be inserted into (GDB.12); Proposition 13.4
+is an explicit counterexample to that substitution.
+
+Theorem 16.2 changes a specific proposed completion mechanism:
+compatibility-phase contraction, pairwise dependence information
+and a size-independent number of actual owner pins cannot alone
+establish the universal small-defect premise (GDB.72). One must
+retain further global information, such as the syndrome/rank
+in this family, or prove a different structure theorem covering
+the pressure-relevant networks. No such near-extremizer theorem
+or all-competitor completion is established here. General exact
+$M_1(D)$, sharp original rate, effective all-size approximation
+and the full mutual-recovery programme are not concluded by this
+restricted advance.
+

@@ -1,0 +1,54 @@
+## 298. Saturation and the original axial runs
+
+Suppose U has no genuine occurrence. Then every original U slot is
+flat and its complete edge equation gives exactly two pi slots.
+Every transverse U slot has angle pi by Section297 above. Every axial
+zero U slot belongs to an owner selecting a transverse reservoir P.
+
+For a fixed unordered reservoir pair {P,Q}, there is at most one such
+actual zero owner: only the strictly larger pair value can be selected,
+and one owner already contributes two pi slots to that selected global
+label. This uses the full selected-label equation, not an assumption
+that different visits around U correspond to different owners.
+
+Furthermore no axial-zero owner can have two U axes. If it did, its
+transverse-selected value p and companion q would satisfy
+
+    p-q >= sqrt((u+1)^2)=u+1.
+
+Since q>1 and u>m-2, this gives p>u+2>m. But P is a pi-selected
+reservoir, contradicting the definition of M. Therefore each actual
+zero owner supplies at most one original axial U occurrence.
+
+First suppose every U occurrence is axial. By the original-slot
+transport in Section131, its fixed reservoir pair is constant around
+the connected U circle. There is at most one zero owner, supplying at
+most one U occurrence. Together with the exactly two pi slots, this
+gives degree(U)<=3, contrary to minimum degree six.
+
+Otherwise U has a transverse occurrence. Its flat owner selects U,U,
+and its two transverse U slots exhaust the two pi slots in the complete
+U equation. These are the only transverse occurrences of U. Every
+other U occurrence is axial and zero.
+
+Remove these two distinct original transverse intervals from the U
+normal circle. The remaining original intervals form at most two
+consecutive axial runs, possibly empty. The two removed intervals may
+belong to the same tetrahedron, as indeed they do; they remain two
+separate intervals in the actual normal link. The complementary
+reservoir pair is constant along each run by Section131. The preceding
+fixed-pair argument allows at most one zero owner in each run, and the
+no-two-U-axes argument allows at most one U occurrence of that owner.
+Thus each run has at most one original interval, giving
+
+    degree(U)<=2+1+1=4.
+
+This again contradicts minimum degree six. Repeated visits, parallel
+face pairings and self-gluings change which endpoints are paired, but
+not the count of original intervals in these complete runs. Therefore
+U must have a genuine occurrence.
+
+A flat transverse U owner would already contribute 2*pi to U and
+leave no positive genuine contribution. Hence no such owner remains.
+This proves the theorem. QED.
+

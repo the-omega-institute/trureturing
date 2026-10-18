@@ -1,0 +1,31 @@
+**Definition 6.3 (a paid fixed-copy variant).** Add a prescribed ingress
+operation after a complete $\ell$-bit payload is sealed and before its
+source dispatch: copy that owned payload to a mailbox and then to a
+receiver destination. This is an explicit ingress-record publication,
+not a claim that the adapter's semantic journal already contains partial
+requests. The same source and its prior journals are retained.
+
+The sender is immutable and readable by its authorized owner. Allocate
+and initialize the full mailbox and destination and construct their
+descriptors. Supply a real $U(\ell)$ counter and actual positioning.
+For each stage use this finite six-row loop:
+
+| State | Primitive and successor |
+| --- | --- |
+| copy-test | RD(counter,test); if 0 go to copy-seal, else copy-read |
+| copy-read | RD(source,data); go to copy-write |
+| copy-write | WR(destination,data); go to copy-move-source |
+| copy-move-source | MR(source); go to copy-move-destination |
+| copy-move-destination | MR(destination); go to copy-move-counter |
+| copy-move-counter | MR(counter); go to copy-test |
+| copy-seal | CTL seal; go to handoff |
+| handoff | TOK handoff/acknowledgement; return |
+
+The first stage's source/destination are sender/mailbox; the second's are
+mailbox/receiver. Its data and counter-test latches are distinct. Reposition
+the same actual counter, and both relevant data heads, between stages by
+paid Home/Seek. Payload intervals have a following constructed cell for
+their last MR. The mailbox becomes readable at its seal and handoff; the
+client destination remains unavailable until its own final seal. No rule
+makes all sender, mailbox and destination simultaneously unavailable.
+

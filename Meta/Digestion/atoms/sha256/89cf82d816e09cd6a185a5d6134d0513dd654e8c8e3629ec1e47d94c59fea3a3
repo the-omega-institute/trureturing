@@ -1,0 +1,17 @@
+**Definition 10.1 (finite-table specialization).** Fix a supplied total
+$k$-bit Table from [TwoBankInstalledWord][CWS-TBI]. Its controls are
+$z\subseteq\operatorname{Fin}(k)$, its instructions are fixed literal
+Reads, genuine observer Updates or fixed Boolean halts, and its
+successor is $\delta(z,r)$. Read flags are the four raw replies;
+the sole Update flag is the acknowledgement $\star$. Halt has no
+typed response. This table is fixed independently of the source.
+
+Use its actual Word, installed, ready and physical constructions.
+Write $\operatorname{ready}(d,z)$ for bank A active in phase 000 when
+$d=0$, and bank B active in phase 010 when $d=1$; the inactive bank and
+all five flags are zero. At each native observer event execute the
+instruction of installed on the current $U$ and follow its response
+row. The independent writer can apply $\rho$ between any such events.
+It changes no installed word. Root Reads are genuine operations with
+their actual current-source responses, not silent local instructions.
+

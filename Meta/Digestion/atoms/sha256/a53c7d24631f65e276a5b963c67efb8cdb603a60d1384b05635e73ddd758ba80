@@ -1,0 +1,18 @@
+## 8. Four representations and their transport kernels
+
+Let the same actual contract image $X_{\mathsf C}$ carry four declared maps
+
+$$
+q_{\rm sp}:X_{\mathsf C}\to Y_{\rm sp},\quad
+q_{\rm tm}:X_{\mathsf C}\to Y_{\rm tm},\quad
+q_{\rm bd}:X_{\mathsf C}\to Y_{\rm bd},\quad
+q_{\rm mem}:X_{\mathsf C}\to Y_{\rm mem}.
+\tag{8.1}
+$$
+
+The spatial map records a declared support or adjacency, the temporal map
+records a clock/grade under its contract, the boundary map records a residual
+class or response table, and the memory map records the state actually
+available to the selector.  None is allowed to be an independently sampled
+copy of another.
+

@@ -1,0 +1,33 @@
+**Theorem 4.1 (inclusive offset and one unbounded quantity).** For
+the entire $I,B$ of Definition 1.2 and every $h\in\mathbb N$,
+
+$$
+J_B(h)
+\iff
+\exists\mathbf u\quad
+\mathsf{tick}^{h+1}\operatorname{Payload}_{\mathcal V}(\mathbf u)
+                         \in\mathcal W_{I,B}.
+$$
+
+Moreover, writing $\#_{\mathsf{tick}}(t)$ for tick occurrences,
+
+$$
+\forall h\ J_B(h)
+\iff
+\forall M\in\mathbb N\ \exists t\in\mathcal W_{I,B}
+                       \quad\#_{\mathsf{tick}}(t)\ge M.
+$$
+
+If every accepted tree has at most $M$ ticks for a supplied natural
+$M$, then $\neg J_B(M)$. No such input-uniform bound is asserted.
+
+Proof. The first equivalence is Theorem 3.4 with $n=h+1$ and
+Definition 1.1. For the second, all-depth witnesses supply arbitrarily
+large $h+1$ tick counts. Conversely a count at least $h+1$ supplies
+one tuple whose original replies agree at every address through $h$.
+This tuple witnesses $J_B(h)$. A witness for $J_B(M)$ would yield an
+accepted tree with $M+1$ ticks, contradicting the supplied bound.
+Counts measure one simultaneous tuple and the same depth for all
+its coordinates. No marginal size, longest branch or leaf count is
+used. The tuple can change with $h$. $\square$
+

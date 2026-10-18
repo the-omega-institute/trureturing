@@ -1,0 +1,15 @@
+**定理 46.2（精确泄漏恒等式）。** 对任意自伴酉对合 $C$ 和正交投影 $P$，
+
+$$
+P-(PCP)^2=PC(I-P)CP
+=((I-P)CP)^\dagger((I-P)CP)\ge0.
+$$
+
+在 $\operatorname{Ran}P$ 上 $T^2=I$ 当且仅当 $C$ 保持该子空间。五模式中
+
+$$
+T^2=|3\rangle\langle3|+|25\rangle\langle25|.
+$$
+
+证明（46.2）。由 $PC^2P=P$，在两个 $C$ 间插入 $P+(I-P)$，第一项为 $PCPCP=(PCP)^2$，第二项如式。伴随式使用 $C=C^\dagger$、$P=P^\dagger$。残差为零当且仅当 $(I-P)CP=0$，即 $C\operatorname{Ran}P\subseteq\operatorname{Ran}P$；对合使该包含实际为等号。五模式由第 42.2 条只交换 $3,25$，其余三基被送到零向量，再平方得所列投影。$\square$
+

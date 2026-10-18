@@ -1,0 +1,68 @@
+**Lemma 13.3 (Nonzero beta fibers propagate and give a lawful quotient).**
+Suppose $d=3$ and $\operatorname{rank}L=2$, and put
+$N=\ker L$, a real line. If the encoder is not $\beta$-independent,
+then every nonempty-domain update preserves $N$ in its linear part.
+The affine quotient $\mathbb R^3/N$, identified with $\mathbb R^2$
+by $a$, is consequently a lawful budget-two encoder with no greater
+readout error. This is a literal-class quotient; guard recovery is
+not a conclusion.
+
+**Proof of Lemma 13.3.** The $\beta$-independence of $a$ implies
+that every difference between encodings at the same $(k,\alpha)$
+belongs to $N$. Failure of $\beta$-independence of $E$ gives an
+actual nonzero difference
+
+$$
+v=E(k_*,\alpha_*,\beta_1)-E(k_*,\alpha_*,\beta_2)\in N.
+$$
+
+Write the hull probability update as $z\mapsto A_sz+b_s$.
+For every $l\in(0,H)$, both original states admit the leg
+$P_{l-k_*}$. Their transported difference is
+
+$$
+v_l=A_{l-k_*}v
+=E(l,\alpha_*,\beta_1)-E(l,\alpha_*,\beta_2)\in N.
+$$
+
+The reverse leg is lawful at both transported states, and gives
+
+$$
+A_{k_*-l}v_l=v.
+$$
+
+Thus $v_l\ne0$ and spans $N$ at every interior height. This is an
+identity on actual pairs of states, not an ambient inverse assertion.
+Offsets cancel in differences but are retained in the affine maps.
+
+For a fixed $s$ with $|s|<H$, the interval
+
+$$
+I_s=(\max\{0,-s\},\ \min\{H,H-s\})
+$$
+
+is nonempty. Choose $l\in I_s$ and use the nonzero pair just
+constructed there. Its images under $P_s$ have the same height and
+$\alpha$, so their useful readouts agree. Hence
+$LA_s v_l=0$, and, since $v_l$ spans $N$, one has
+$A_sN\subseteq N$. For a phase update
+$z\mapsto C_tz+d_t$, the same pair at any interior $l$ has images
+with the same height and $\alpha+t/2$. Thus $LC_tv_l=0$ and
+$C_tN\subseteq N$ for every real $t$. The nonzero fiber has been
+placed inside each command's own domain before it is used.
+
+An affine map whose linear part preserves $N$ induces a fixed affine
+map on the quotient: changing a representative by an element of $N$
+changes its image by an element of $N$. Since $L$ is surjective,
+$[z]\mapsto a_0+Lz$ is an affine isomorphism of that quotient with
+$\mathbb R^2$. The encoder $a(k,\alpha)$ therefore has exact affine
+updates for all nonempty original command domains. For $|s|\ge H$
+the probability domain is empty and any affine quotient update may be
+assigned. This supplies maps for every real command, with offsets.
+The decoder $D(a,0)$ has no greater error by Proposition 12.2, so
+Theorem 6.4 gives a radial comparison.
+
+A quotient encoder may identify rays of different heights. None of
+this reasoning says its fibers determine a probability guard. Its
+only role is to supply the literal-class lower bound. $\square$
+

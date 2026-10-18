@@ -1,0 +1,53 @@
+#### 证明
+
+完全类似于单步情形：
+
+```math
+C_\Gamma^{(n)}(p_\kappa)
+=
+C_{\Gamma,0}^{(n)}
++
+\kappa\operatorname{Curv}_{\Gamma}^{(n)}.
+```
+
+因此：
+
+- 四角差为零时，整条 $\kappa$-纤维具有相同历史律；
+- 四角差非零时，存在某个历史事件 $B$，其概率随 $\kappa$ 线性变化。
+
+证毕。
+
+---
+
+定义：
+
+```math
+\ell_{\mathrm{clock}}
+=
+\min
+\left\{
+n:
+\operatorname{Curv}_{\Gamma}^{(n)}\neq0
+\right\}.
+```
+
+这个 $\ell_{\mathrm{clock}}$ 是局部时钟第一次能够看到隐藏 seam 所需的因果深度。
+
+所以：
+
+```math
+\boxed{
+\text{时间的形状可以由隐藏关系的历史分辨阶定义。}
+}
+```
+
+这不是全局时间，也不是一条统一坐标轴，而是：
+
+```math
+\boxed{
+\text{局部历史需要展开到多深，才能区分两个因果分支。}
+}
+```
+
+---
+

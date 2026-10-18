@@ -1,0 +1,31 @@
+**定义 38.1（全门与最坏纠缠 Bures 误差）。** 记 (28.2) 的完整循环为
+$V_{\mathrm{cyc}}$：$0\mapsto4\mapsto2\mapsto0$，固定 $1,3$。
+全门实现要求对全部 $M_5$ 输入实现 $\operatorname{Ad}_{V_{\mathrm{cyc}}}$。
+探针初态 $\sigma_B$ 固定且与任意系统输入乘积，实际实现为
+
+$$
+\Lambda(X)=\operatorname{Tr}_B[W(X\otimes\sigma_B)W^\dagger],\qquad
+W^\dagger(N+N_B)W=N+N_B.
+\tag{38.1}
+$$
+
+加法含相应的恒等张量因子；无界自伴探针取自伴算子的守恒等式。
+对任意 $\rho_S$ 的纯化 $|\psi_\rho\rangle$，令
+
+$$
+\begin{aligned}
+\mathcal E&=\operatorname{Ad}_{V_{\mathrm{cyc}}^\dagger}\circ\Lambda,\\
+f_e(\rho,\mathcal E)
+ &=\sqrt{\langle\psi_\rho|
+   (\mathcal E\otimes\operatorname{id}_R)(P_{\psi_\rho})
+   |\psi_\rho\rangle},\\
+\varepsilon_I(\Lambda,V_{\mathrm{cyc}})
+ &=\max_{\rho_S}\sqrt{2[1-f_e(\rho,\mathcal E)]}.
+\end{aligned}
+\tag{38.2}
+$$
+
+这里 $f_e$ 是根纠缠保真度；先开根再代入 Bures 距离。
+它既不是 overlap 的平方，也不是 diamond 误差。
+此接口取自 [arXiv:1906.04076v2，式 (4)–(8)][QI-TSS]。
+

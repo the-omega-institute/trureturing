@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-endpoint-floor-history-localization"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ENDPOINT_FLOOR_HISTORY_LOCALIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

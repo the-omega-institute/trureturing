@@ -1,0 +1,41 @@
+**Proposition 245.4 (Two explicit unequal cores).** The following
+prefixes have attained optimum in both original classes at the printed
+cap, for every permitted entire actual tail bounded by that cap:
+
+$$
+\begin{aligned}
+a^{(A)}&=(11/12,9/10,9/10,9/10,179/200,89/100,177/200,22/25),
+&e_A&=79/135,\\
+a^{(B)}&=(23/24,19/20,19/20,91/96,227/240,151/160,113/120,451/480),
+&e_B&=2701/4320.
+\end{aligned}
+\tag{245.8}
+$$
+
+Proof. For A, $q=1/60$, $R=7/108$, $H=11/12$, and the degrees are
+$(25/108,25/108,25/108,25/108,1223/5400,299/1350,91/600,23/100)$.
+One common numerical triple measure is
+
+| Triple | Mass |
+| --- | ---: |
+| $123$ | $25/108$ |
+| $458$ | $119/900$ |
+| $467$ | $67/675$ |
+| $568$ | $377/5400$ |
+| $678$ | $151/5400$ |
+| $567$ | $11/450$ |
+
+Its total is $79/135$ and its eight inclusion degrees are exactly the
+listed values. They belong to $[0,e_A]$, $R\ge q$, and each floor
+in (244.2) holds by substitution. Equations (244.6)–(244.7) now give
+all terminal vectors and their whole-table probabilities.
+For B, $q=1/120$, $R=863/4320$, $H=23/24$, and the degree numerators
+over 4320 are $(1223,1223,1223,1214,1205,1196,324,495)$.
+They sum to 8103, each lies between zero and 2701, and all floors
+hold. The interval construction in Theorem 244.2 supplies a finite
+triple measure and therefore the complete law, without an optimizer
+existence assumption. The theorem proves both claims.
+Neither A nor B is required to lie on the line (245.6).
+The tails $a_{8+j}=e_A2^{1-j}$ and $a_{8+j}=e_B2^{1-j}$,
+respectively, give concrete entire sequences with a closed first tie. ∎
+

@@ -1,0 +1,32 @@
+**Theorem 6.1 (Exact original-menu error and zero-wait attainment).**
+The fixed fourteen-flag port (3.4) has $e(T_\lambda)=\lambda$ for
+the full complex-input and actual finite-history suprema. Define
+
+$$
+v_0=b_0e_N+(D_0\lambda-a_0)e_{25},\qquad
+v=\frac{v_0}{\sqrt{b_0^2+(D_0\lambda-a_0)^2}},\qquad
+\rho_\lambda=Dvv^TD^\dagger.
+\tag{6.1}
+$$
+
+This pure input, actual wait zero, one complete five-outcome read and
+Stop attain the error.
+
+Proof. Lemma 3.3 makes the channel stationary on all complex matrices.
+Apply the credited identities (1.8)–(1.9), with the actual adjoint
+$\mathcal A$ from (4.6). TP permits complementation, so Theorem 5.4
+gives an upper $\lambda$ for every complex density input and every
+actual finite protocol, including adaptive protocols and permitted
+source-independent random controls.
+
+The denominator in (6.1) is nonzero since $b_0>0$. The first row of
+$C_Nv_0=\lambda v_0$ holds directly, and its second row is
+$(D_0\lambda-a_0)(D_0\lambda-c_0)=b_0^2$, the equation
+$p(\lambda)=0$. Thus $H_Nv=\lambda v$. At actual wait zero the
+mode-$N$ probability difference for $\rho_\lambda$ and its port
+replacement is $v^TH_Nv=\lambda$. The full-read TV is at least
+this event difference and at most the proved upper, so is exactly
+$\lambda$. The event groups an actual complete read; it does not
+require another instrument, a closure angle or a limiting wait.
+$\square$
+

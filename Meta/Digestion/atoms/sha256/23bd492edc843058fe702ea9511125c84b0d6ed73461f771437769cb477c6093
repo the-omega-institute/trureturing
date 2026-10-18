@@ -1,0 +1,4 @@
+**Proposition 90.1 (exact global certificate limitations; repo-derived).** There are original CPTP channels A,B:C⁸→C⁴, both calibrated on the four fixed fibres and both of Kraus rank three, for which the forward record Grams G,H satisfy Λ₂(T−G⊙H)=(1+√7)/4<1 and ‖G⊙H−T‖₁=(1+√7)/2<2, while the original unhalved arbitrary-reference diamond error is δ(A,B)=(1+2√2)/7>1/2. Here T has diagonal blocks I₂ and off-diagonal blocks J₂/2, and Λ₂ denotes the sum of the two largest eigenvalues. Thus these two proposed unrestricted global Gram inequalities cannot furnish a universal quarter diamond lower bound.
+
+This proposition concerns the limitations of these specific certificates. It does not give a product with diamond error below 1/4. The [local quarter-minimum theorem](#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) has its stated neighborhood hypothesis, and the unrestricted global quarter-optimum problem remains open.
+

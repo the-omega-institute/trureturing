@@ -1,0 +1,40 @@
+**Definition 2.1 (side ranges on the child universe).** Put
+
+$$
+\gamma(A)=(2,1),\qquad\gamma(B)=(1,0),\qquad\gamma(C)=(0,0).
+$$
+
+The side table supplied by FMR Theorem 5.1 is
+
+$$
+\begin{array}{c|cc}
+u&\Gamma_L(u)&\Gamma_R(u)\\\hline
+A&(3,0)&(4,1)\\
+B&(2,0)&(3,1)\\
+g_{xy}&\gamma(x)&\gamma(y).
+\end{array}
+\tag{D3.12}
+$$
+
+Each column has five distinct values. For $U\subseteq S$, write
+
+$$
+\ell(U)=|U\cap\{A,B\}|,\qquad
+J_L(U)=\{x:\exists y,\ g_{xy}\in U\},\qquad
+J_R(U)=\{y:\exists x,\ g_{xy}\in U\},
+\qquad d_s(U)=|\Gamma_s[U]|.
+$$
+
+The same table gives the identities and counting bound
+
+$$
+d_s(U)=\ell(U)+|J_s(U)|,\qquad
+|U\cap\mathcal G|\le |J_L(U)|\,|J_R(U)|.
+\tag{D3.13}
+$$
+
+These are set projections, without any admissibility assertion about
+them. The count in (D3.13) is the unweighted form of the child-range
+calculation in
+[NCE, Lemma 3.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md).
+

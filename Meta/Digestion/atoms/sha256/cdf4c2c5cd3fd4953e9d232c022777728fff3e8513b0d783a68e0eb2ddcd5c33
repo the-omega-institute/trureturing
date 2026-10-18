@@ -1,0 +1,53 @@
+**Theorem 2.2 (actual support incidence and fixed successors).** For
+every graph in Definition 1.2 and every $p=(h,z)\in V$, the following
+properties hold.
+
+1. $F_p$ and $\mathcal S_p$ are nonempty. Each support in
+   $\mathcal S_p$ has size $h+z$, and every witnessing history has
+   exactly $h+z$ preceding queries.
+2. At fixed $p$ and $q$, there is at most one $S$ with
+   $(p,S,q)\in\mathcal R$. Consequently $b_p\ge a_p\ge1$.
+3. If $(p,S,q)\in\mathcal R$, then $i(q)\notin S$. For
+   $\varepsilon\in\{0,1\}$ put
+   $p_\varepsilon=(h+\varepsilon,z+1-\varepsilon)$. Whenever
+   $p_\varepsilon\in V$,
+
+$$
+(p_\varepsilon,S\cup\{i(q)\},\delta(q,\varepsilon))\in\mathcal R.
+\tag{SI.8}
+$$
+
+   In particular both live children of one history have the same
+   exposed support, and their hosts are the actual fixed successors
+   of that history's state.
+4. Every positive-depth live occurrence has an actual live predecessor.
+   The cells on either axis have one support and one host:
+   $a_{0,z}=b_{0,z}=a_{h,0}=b_{h,0}=1$.
+
+Proof. Every completion of an exposed assignment follows the same
+history, by deterministic induction. Freshness at live histories follows
+from the cited saturation theorem applied to the full-fiber lift.
+All earlier prefixes of a live history are live: their hit and zero
+counts cannot exceed the current live counts. Thus each preceding
+query was fresh, proving the depth assertion and the predecessor claim.
+
+Every $p=(h,z)$ is realized by answering the first $h$ fresh queries
+one and the next $z$ fresh queries zero. All prefixes stay live. A live
+prefix cannot halt, and its next coordinate is fresh. The simultaneous
+cube supplier realizes every completion, so these are actual histories.
+This is also the Boolean form of the witness construction in
+[PE, Theorem 4.2][PE].
+
+Two different supports at fixed $p,q$ would have equal hits at a
+common state, contrary to PE Lemma 4.1. The resulting map from $F_p$
+onto $\mathcal S_p$ proves $b_p\ge a_p$. Freshness gives
+$i(q)\notin S$. Either value of this unread bit can be completed to
+an actual input following the old history. When its new counts are
+live, its successor cannot be a terminal. This proves (SI.8) with
+the installed successor, rather than a separately chosen host.
+
+Finally, a live history with no ones follows the unique deterministic
+all-zero reply prefix from the fixed start, and has exactly $z$
+queries. There is therefore just one support and host at $(0,z)$.
+The all-one prefix proves the other axis assertion. $\square$
+

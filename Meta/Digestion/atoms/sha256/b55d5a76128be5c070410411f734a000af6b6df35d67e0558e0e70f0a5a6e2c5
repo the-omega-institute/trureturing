@@ -1,0 +1,24 @@
+**命题 22.4（An odd outside count can still require a preset surcharge）。** At $Q=2,m=3,r=2$, put $\lambda(4)=B$, $\lambda(6)=\lambda(7)=S$, and $A$ at the other outside phases, with $A,B,S$ pairwise distinct and $D\ne E$. Choose arbitrary $R,L_\bot$. Then
+
+$$
+C_{\rm ad}(f)=3,\qquad C_{\rm pre}(f)=4.
+\tag{22.8}
+$$
+
+Proof. The following proof uses the actual complete target, independently of any assertion about this layout. The adaptive controller in Proposition 22.2 still works with these labels: root-zero word $011$ creates $\{4,6\}$ with labels $B,S$, repaired at index two by $100$; its zero child $\{1,2,5,7\}$ has labels $A,S$, separated by $010$. The endpoint archive uses $000\mid010$. All source and seam arguments are the same literal arguments already given, so the adaptive fee is at most three and (20.1) makes it exact.
+
+For preset impossibility at three, the first post-root word $0ab$ must select four and not five, since their labels are $B,A$ and both retire there against frozen baseline two. Hence $a=b=1$ and six is also selected. Its different label $S$ forces a next-row charge one at six. Phase seven stays on the zero archive and carries $S\ne A$, forcing its final charge one; phase one's label $A$ forces its final charge zero. The endpoint sibling forces final charge one at zero. Again the last window would have charges $1,1,1,0$, impossible for an even literal path. The argument is independent of whether an already constant child stops early, and every cheaper fee was excluded by the endpoint lower bound.
+
+One attaining common stream is
+
+$$
+111\mid000\mid100\mid001.
+\tag{22.9}
+$$
+
+Its post-root supports are $\varnothing$, $\{6,7\}$, $\{3,4\}$. The third block identifies both $S$ phases on the root-zero archive; the last separates $B$ at four from its remaining baseline phases, and separates endpoint three from endpoint zero on the root-positive archive. The paid zero block clears every low INITIAL tail; the later pulses have strict seams and no extra cleanup. This proves the exact preset fee four.
+
+There are three nonbaseline outside phases here, an odd number. This does not contradict Theorem 21.2: phase six is an adjacent-window boundary and that theorem requires its label to be $A$. Removing that hypothesis changes the simultaneous boundary-repair equations, even though the slot labels themselves are simple. ∎
+
+The distinctness of $B,S$ is necessary for the separation in (22.8). If instead $B=S\ne A$, the common stream $111\mid011\mid010$ costs exactly three. Its post-root supports are $\{4,6\}$ and $\{7,0\}$: the first positive outside child has the single label $S$ and stops, the last word separates $S$ at seven from the remaining baseline phases, and that same word separates zero from three on the endpoint sibling. The first post-root bit clears every INITIAL low tail, and (20.4) proves safety. Bound (20.1) proves optimality. Thus an unqualified preset-four assertion for this layout would fail under that label coincidence.
+

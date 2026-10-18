@@ -1,0 +1,59 @@
+### 四、第三定理：遮挡相当于增加第二个投影
+
+原来的可见投影为
+
+```math
+P(p)=(X,Y,Z).
+```
+
+它的隐藏核由 $`d`$ 生成：
+
+```math
+\ker P=\operatorname{span}\{d\}.
+```
+
+现在加入遮挡后的联合读出：
+
+```math
+Q(p)=(X,Y,W),
+\qquad W=Z+\kappa.
+```
+
+定义另一个方向
+
+```math
+e=(2,-1,-1,-1,1).
+```
+
+检查：
+
+```math
+\Delta X=-1+1=0,
+```
+
+```math
+\Delta Y=-1+1=0,
+```
+
+```math
+\Delta W=\Delta Z+\Delta\kappa=-1+1=0.
+```
+
+所以
+
+```math
+\ker Q=\operatorname{span}\{e\}.
+```
+
+但是
+
+```math
+Q(d)=(0,0,1)\ne0.
+```
+
+因此两个投影的隐藏方向不同：
+
+```math
+\ker P\cap\ker Q=\{0\}.
+```
+

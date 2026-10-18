@@ -1,0 +1,32 @@
+**Proposition 4.5 (local work and source hardware are not free).** There is a
+finite bit implementation of the same RA program. One deliberately loose
+bound on its local cell/bit work per attempt, including clearing, is
+
+$$
+O\left(\left[(T_j+1)(H+1)+N(K+H+1)+(M+1)^2(F+H+1)+F\right]
+          [1+\log_2(F+K+H+2)]^2\right).
+\tag{CWS.9}
+$$
+
+Proof. Materializing each operand, editing paths and emitting hole addresses
+cost at most $O(H+1)$ operations per relevant visit. Exterior membership scans
+cost $O(K+H+1)$ per processed position, including holes; there are at most
+$N$ such positions. Each of at most $M^2$ pair preparations scans a finite
+exterior of length at most $F$ and copies at most two length-$H$ bases.
+The matrix and cleanup use at most $O(F)$ writes. Binary index updates,
+comparisons and bounded arithmetic have polynomial bit cost in their
+logarithmic widths; the displayed square is a sufficient elementary bound.
+The sums over attempts and final cleanup give the call's local work; the
+program need not maintain the sum. $\square$
+
+At physical time $t$, total system storage is the observer account above
+plus the actual source-register storage, source-port engine state and writer
+workspace. Their internal layout is not specified by the atomic Read/rho
+contract and is not assigned zero cost. A literal source encoding alone
+occupies $\Theta(|\operatorname{Pos}(U_t)|)$ finite-alphabet cells; a different
+source encoding needs its own realization argument. The complete address
+payload is already counted once on the observer/source boundary. Copies made
+inside a particular port implementation must be added, not hidden under
+atomicity. The small-workspace theorem concerns acquisition storage, not the
+entire physical machine including its source.
+

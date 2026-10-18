@@ -1,0 +1,24 @@
+**Definition 6.1 (Three actual paid calls).** Ignore $u$, leaving its
+law unchanged. First call the original address $2j$, then call
+$2(j+2)$ regardless of the first reply. Denote these replies by $x,y$.
+Make the third actual call and return according to this table, where
+$z$ is the third reply:
+
+| First replies $x,y$ | Third actual integer address | Output for $z=0$ | Output for $z=1$ |
+| --- | --- | --- | --- |
+| $0,0$ | $2(j+4)$ | $h_1(\sigma)$ | $h_0(\sigma)$ |
+| $0,1$ | $2j$ | $h_0(\sigma)$ | $h_0(\sigma)$ |
+| $1,0$ | $2(j+1)$ | $h_0(1-\sigma)$ | $h_0(\sigma)$ |
+| $1,1$ | $2(j-1)$ | $h_0(\sigma)$ | $h_0(1-\sigma)$ |
+
+Choose zero internal delays. Every call is made and charged, including
+the deliberate repeat on prefix $01$. When $j=0$, prefix $11$ uses
+the legal negative address $-2$. The rule is a total measurable finite
+table, including its output on the inconsistent reply triple $011$.
+It has exactly $N=3$ and finite return on every path.
+
+All its addresses are even. In phase zero they are the displayed active
+edges $Y_\ell$. In phase one all are actual separator calls, and only
+triple $000$ is reached. These are properties of the paid observations
+under (1.1); the policy acquires no phase observation before its calls.
+

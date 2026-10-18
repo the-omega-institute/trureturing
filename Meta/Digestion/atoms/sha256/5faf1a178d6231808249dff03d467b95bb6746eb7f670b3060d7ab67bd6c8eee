@@ -1,0 +1,21 @@
+**定理 6.1（一个实际支臂留下的精确等价）。** 固定一个允许的 $\kappa$，令
+
+$$
+H_{4,\kappa}=H_4(105\kappa,144\kappa-96/5).
+$$
+
+对任意已知 $\mathcal A_\kappa\subseteq K\subseteq\mathcal F(H_{4,\kappa})$，有
+
+$$
+L_3(K,H_{4,\kappa})\Longleftrightarrow
+\exists m\in\mathbb R:\
+L_2\bigl(K\cap\mathcal F(H_{4,\kappa},M,m),(H_{4,\kappa},M,m)\bigr).
+\tag{6.1}
+$$
+
+整个不受限 $H_{4,\kappa}$ 纤维上，任何要在原时钟七前成功的三次进一步读数解码器都必须选择第五 $M$。
+
+证明。第五 $J$ 的实际响应 $105\kappa$ 子集含同一个 $\mathcal A_\kappa$，由定理 4.1 有 $L_2$。因此这个动作的失败分句已经成立。式 (6.1) 正向是第五 $M$ 分句，逆向由右式与现成第五 $J$ 分句、包含单调性得到；配对也提供停止所需的基数。若选第五 $J$，则只剩两读而有一个实际 $L_2$ 子集，不能成功；停止也不能区分配对，故成功解码器必须选 $M$。这约束已到达这个历史的策略，不强迫更早策略到达它。∎
+
+特别，若找到固定 $B\subseteq\mathcal F(H_{4,\kappa},M,m)$ 有 $L_2$，则 $\mathcal A_\kappa\cup B$ 在完全相同的 $H_{4,\kappa}$ 有 $L_3$。$B$ 不需与 $\mathcal A_\kappa$ 共享增益、漂移、源因子、第五 $J$ 响应或基数。这是既有同父粘合的具体应用；尚未提供这样的 $B$。
+

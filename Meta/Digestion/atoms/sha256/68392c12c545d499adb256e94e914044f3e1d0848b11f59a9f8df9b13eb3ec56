@@ -1,0 +1,22 @@
+**Definition 2.2 (the two resultant branches).** Put $X=a$, $Y=b$, and use
+$Z$ for the first relation variable. For positive integers $k_i,m_i,n_i$,
+define
+
+$$
+P=Z^{n_1}-X^{k_1}Y^{m_1},
+$$
+
+and define the two second-relation polynomials
+
+$$
+Q=(Z+1)^{n_2}-(X+1)^{k_2}(Y+1)^{m_2},
+$$
+
+$$
+R=(Z+1)^{n_2}(Y+1)^{m_2}-(X+1)^{k_2}.
+$$
+
+Write $F_{\boldsymbol e}=\operatorname{Res}_Z(P,Q)$ and
+$G_{\boldsymbol e}=\operatorname{Res}_Z(P,R)$, where
+$\boldsymbol e=(k_1,m_1,n_1,k_2,m_2,n_2)$.
+

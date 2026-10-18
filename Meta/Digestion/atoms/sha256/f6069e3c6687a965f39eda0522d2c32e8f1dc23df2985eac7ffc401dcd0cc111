@@ -1,0 +1,41 @@
+## 2. 二、控制的最小维数等于隐藏环流维数
+
+当前项目出现“exact common cyclic control minimum”这一方向。它可以先在有限维 AURIC 纤维上形式化。
+
+设基础边界已经固定，隐藏空间为
+
+$$
+K=\operatorname{span}\{h_1,\dots,h_g\}.
+$$
+
+任意局部律可以写成：
+
+$$
+p=p_\star+\sum_{j=1}^g \kappa_jh_j.
+$$
+
+这里
+
+$$
+\kappa=(\kappa_1,\dots,\kappa_g)
+$$
+
+是隐藏环流坐标。
+
+假设有 $m$ 个标量控制或读出：
+
+$$
+R_i(p)=\ell_i(p),
+\qquad i=1,\dots,m.
+$$
+
+它们在隐藏空间上的作用由矩阵
+
+$$
+M_{ij}=\ell_i(h_j)
+$$
+
+给出。
+
+---
+

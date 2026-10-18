@@ -1,0 +1,66 @@
+**Theorem 2.1 (exact positive-secant characterization).** A nonzero real matrix $\Delta$ is a difference $S_1-S_0$ of two distinct members of $\mathcal R_+$ if and only if
+
+$$
+\Delta\notin\mathcal C\cup(-\mathcal C).
+$$
+
+The sufficiency proof constructs positive endpoints for every such matrix, including singular matrices and matrices with nonzero trace.
+
+Proof. Suppose first that $0\ne\Delta\in\mathcal C$. If $S_1=S_0+\Delta$ and both endpoints are strictly positive, the product of the diagonal entries weakly increases while the product of the off-diagonal entries weakly decreases. At least one comparison is strict: a nonzero entry of $\Delta$ changes a positive factor strictly in the indicated direction. The two endpoints therefore cannot both satisfy equality of these products. Exchanging the endpoints excludes $-\mathcal C$ as well.
+
+For sufficiency write $\Delta=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$ and $\delta=\det\Delta$. Being outside both cones says that the coefficients $a,-b,-c,e$ include a strictly positive and a strictly negative number. Put
+
+$$
+L(x,y)=exy+a-cx-by\qquad(x,y>0).
+$$
+
+Each nonzero coefficient can determine the sign at a positive point, as follows:
+
+$$
+\begin{aligned}
+L(\varepsilon,\varepsilon)&\longrightarrow a,\\
+L(T,T)/T^2&\longrightarrow e,\\
+L(T,T^{-2})/T&\longrightarrow-c,\\
+L(T^{-2},T)/T&\longrightarrow-b.
+\end{aligned}
+$$
+
+The first limit is as $\varepsilon\downarrow0$ and the other three as $T\to\infty$. Hence there are positive points $(x_-,y_-)$ and $(x_+,y_+)$ with $L_-<0<L_+$, where $L_\pm=L(x_\pm,y_\pm)$.
+
+On their straight segment let
+
+$$
+x_\theta=(1-\theta)x_-+\theta x_+,\qquad
+y_\theta=(1-\theta)y_-+\theta y_+,\qquad 0\le\theta\le1.
+$$
+
+Set $x_* =\min(x_-,x_+)$, $y_* =\min(y_-,y_+)$ and
+$m_* =\min(1,x_*,y_*,x_*y_*)>0$. Every entry of
+
+$$
+B_\theta=\begin{pmatrix}x_\theta y_\theta&x_\theta\\y_\theta&1\end{pmatrix}
+$$
+
+is at least $m_*$. Choose $t>0$ strictly larger than both
+
+$$
+\frac{\max(|a|,|b|,|c|,|e|)}{m_*},\qquad
+\frac{|\delta|}{\min(-L_-,L_+)}.
+$$
+
+Then $-\delta/t$ lies strictly between $L_-$ and $L_+$, also when $\delta=0$. Continuity on the segment supplies $\theta$ with $L(x_\theta,y_\theta)=-\delta/t$. Define
+
+$$
+S_0=tB_\theta,
+\qquad S_1=tB_\theta+\Delta.
+$$
+
+The first endpoint is the positive outer product
+$t(x_\theta,1)^{\mathsf T}(y_\theta,1)$. Its entries exceed the absolute values of the entries of $\Delta$, so the second endpoint is also strictly positive. Expanding its determinant gives
+
+$$
+\det S_1=t(ex_\theta y_\theta+a-cx_\theta-by_\theta)+\delta=0.
+$$
+
+Both endpoints are nonzero and have rank one. Their difference is the prescribed nonzero $\Delta$. Proposition 1.1 supplies actual positive source factorizations for both. ∎
+

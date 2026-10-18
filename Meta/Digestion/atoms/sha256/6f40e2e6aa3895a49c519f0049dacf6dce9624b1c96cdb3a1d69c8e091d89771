@@ -1,0 +1,85 @@
+**定义 12.1（根六承诺与逐时钟的 J 延续）。** Retain the complete
+worlds, original clocks and deterministic policies of Definition 1.1.
+For arbitrary $D_0,Y\in\mathbb R$ and $\lambda\ne0$, write the
+literal parent of Definition 1.2 as
+
+$$
+H_p=H_J(Y)
+=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5,J,Y).
+\tag{12.1}
+$$
+
+Put $f=g/\lambda$, $d=(\delta-D_0)/\lambda$ and
+$y=(Y-D_0)/\lambda$, as in (1.4). The entire promised class is
+
+$$
+\mathcal C_6(H_p)=\{(P,g,\delta)\in\mathcal F(H_p):f(6)=0\}.
+\tag{12.2}
+$$
+
+A known subset $K\subseteq\mathcal C_6(H_p)$ may have any
+cardinality and may contain different drifts. Membership in (12.2)
+is an input premise; it is not an observation obtained from $H_p$.
+In particular neither $d=0$ nor $f(7)\ne0$ is imposed.
+
+Use the source coordinates
+
+$$
+\begin{gathered}
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix},\qquad
+\ell=1+u>1,\qquad k=\frac{u+v}{\ell}>0,\\
+u=\ell-1,\qquad v=(k-1)\ell+1>0,\qquad
+0<r<1,\qquad uv=r(1-r).
+\end{gathered}
+\tag{12.3}
+$$
+
+These conditions are equivalent to strict entrywise positivity,
+rank one and trace one; no equality between $u$ and $v$ is required.
+The matrices $L,C,Q$ are those of (1.5). After the actual fifth $J$
+and sixth $J$, the cumulative matrices and their trace factors are
+
+$$
+\begin{array}{c|c|c}
+\text{clock}&A_i&\operatorname{tr}(A_iP)\\ \hline
+0&I&1\\
+1&J&k\ell\\
+2&L&\ell\\
+3&J+L&(k+1)\ell\\
+4&C&1+r+k\ell\\
+5&J+L&(k+1)\ell\\
+6&C&1+r+k\ell\\
+7\text{ after }J&J+L&(k+1)\ell\\
+7\text{ after }M&Q&(k+2)\ell-r.
+\end{array}
+\tag{12.4}
+$$
+
+Indeed $JC=J+L$ and $J(J+L)=C$. In particular $Q$ here is the
+seventh-$M$ state of the word $JMMJJJM$; no fifth-$M$ response is
+part of this continuation. Every displayed trace is positive.
+Write $x=(z_5-D_0)/\lambda$ and $w=(z_6-D_0)/\lambda$ for the
+normalized readings actually acquired at clocks five and six.
+For arbitrary worlds on this history,
+
+$$
+x=d+f(5)(k+1)\ell,\qquad
+w=d+f(6)(1+r+k\ell).
+\tag{12.5}
+$$
+
+On (12.2) the actual sixth reading is therefore $z_6=\delta$ and
+$w=d$. For each $x,d\in\mathbb R$, let
+
+$$
+\mathcal C_{x,d}
+=\mathcal C_6(H_p)\cap
+\mathcal F(H_p,J,D_0+\lambda x,J,D_0+\lambda d).
+\tag{12.6}
+$$
+
+This definition retains all five parent readings and both subsequent
+actual readings on the same worlds. Its second subscript is both an
+acquired normalized response and, within this promised class, the
+normalized target drift.
+

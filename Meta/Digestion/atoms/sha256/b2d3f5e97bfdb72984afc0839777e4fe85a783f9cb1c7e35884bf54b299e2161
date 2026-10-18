@@ -1,0 +1,29 @@
+**Proposition 12.1 (one common vector and strict original domination).**
+The single matching instrument has on every original history the
+actual acquired cost
+
+$$
+P_\epsilon A_y+Q_\epsilon B_y,\qquad
+A_y=\sum_i h_i^2p_{yi},\qquad
+B_y=b^2p_{y0}+a^2p_{y1}.
+\tag{QO.60}
+$$
+
+For all sufficiently small positive $\epsilon$ this vector is strictly
+dominated in every original coordinate by the credited JR common weak
+vector $(kA_y)_{y,e,n}$ at the same strength and complete channel.
+
+Proof. The high aggregate in (QO.51) has imaginary DT entry
+$-iR_\epsilon$ and zero SS entry. The original inputs are real
+symmetric and their coefficient Grams are real, so that imaginary
+entry contributes zero to every trace pairing. This gives (QO.60)
+for all signs without averaging or introducing a prior.
+At the endpoint $p>k$, $q>0$, $s_*<\sqrt\ell$.
+Continuity gives $P_\epsilon>k$, $Q_\epsilon>0$ and
+$s_*+\epsilon<\sqrt\ell$ on a smaller interval.
+All $A_y,B_y$ are positive. JR supplies one common instrument with
+every coordinate $kA_y$ on that same weak-strength interval. Hence
+each strict domination compares two simultaneous vectors.
+The selected nonreal optimum supplies no new original-twelve Pareto
+point, sharp sign-mean law or worst-history law. $\square$
+

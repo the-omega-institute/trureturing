@@ -1,0 +1,35 @@
+**Convention 2.3 (canonicalization, covers and rates).** On $S_d$, every
+length-$d$ word returns alpha exactly when its length-$(d-1)$ parent
+is branch, and absent otherwise; longer words are absent. [FMR, Lemma
+2.2 and Lemma 6.2][FMR] therefore reduce every finite block experiment
+to one boundary reply in that same block or to a constant. Its
+Theorems 2.3–2.5 identify the full-task optimum with the paid canonical
+cover optimum, preserving the complete attained alphabet.
+
+Let $K_d(n)$ be the least number of members of $\mathcal B_n$ covering
+$S^n$, and $K_d(0)=1$. [FMR, Theorems 3.3 and 6.3–6.4][FMR] give
+
+$$
+\begin{aligned}
+\sigma_d&=\lim_{n\to\infty}\frac{\log_2K_d(n)}n
+          =\inf_{n\ge1}\frac{\log_2K_d(n)}n,\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+         =\sup_{d\ge1}2^{-d}\sigma_d,\\
+0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,\qquad 0\le\phi\le1,
+\end{aligned}
+\tag{NPC.8}
+$$
+
+where $U_0=1$, $U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h$. Also
+$K_d(2^h)\le M_1(d+h)$ and
+$M_1(D+1)\le M_1(D)^2+1$; the shifted endpoints
+$2^{-D}\log_2(M_1(D)+1)$ decrease to $\lambda$.
+
+All logarithms below are base two, with $0\log_2 0=0$. For a probability
+$p$ on $S$, write $H(p)=-\sum_xp_x\log_2p_x$ and
+$\operatorname{TV}(p,q)=\frac12\sum_x|p_x-q_x|$. Write $h_2$ for
+binary entropy, $\omega_s(t)=h_2(t)+t\log_2s$, and use the monotone
+majorant $\overline\omega_s(t)=h_2(\min\{t,1/2\})+t\log_2s$
+when an upper bound on $t$ is substituted.
+

@@ -1,0 +1,33 @@
+**Proposition 9.3 (A full-TP face example with positive weights).** Take
+
+$$
+\begin{gathered}
+H=\tfrac12R_0+R_++R_-,\qquad q=(1,4,4)/9,\qquad
+w=9/2,\qquad b_h=(d+2u_++2u_-)/3,\\
+x_0=\tfrac92k(a_*,b_h)+\tfrac12k(u_+,d).
+\end{gathered}
+\tag{9.13}
+$$
+
+Then $x_0\in\mathcal E_H$ has the full TP marginal and a fixed
+legal $50$-flag scalar realization. Its actual wait-zero full-read
+test on $\Pi_N$ has TV exactly $43/68$.
+
+Proof. The two positive seed weights in (9.13) contribute input
+population vectors $(1/2,2,2)$ and $(1/2,0,0)$. Their sum is
+$(1,2,2)$, proving every equation in (8.11) and hence the whole
+matrix marginal. Both seeds are zero atoms by Theorem 8.2, so
+$\operatorname{tr}(W_HZ(x_0))=0$. Formula (8.12) with these two
+seeds gives $25$ fixed flags per seed, with per-flag coefficients
+$9/50$ and $1/50$, respectively. It proves CP at every reference
+dimension, encoder TP, whole-scalar-block decoder TP and rank-one
+nonzero composite Kraus matrices. It is a finite port for the
+original source and consumes all flags before the actual protocol.
+
+Here $t_+=t_-=2$. Equations (9.2) and (9.7) give exactly
+$s_N(x_0)=25/68$, so the test in (9.8) has TV $43/68$.
+This demonstrates both a nonempty full-TP zero face and sharpness
+of this particular survival bound across the filter family.
+It does not evaluate $e(T_{x_0})$ or supply a competitive upper
+bound for $\varepsilon_1$. $\square$
+

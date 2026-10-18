@@ -1,0 +1,38 @@
+**Definition 2.1 (translation chains and the task selector).** For
+$a\in\mathcal A$ put
+
+$$
+t(a)=\min_{j\in I}a_j,\qquad
+v(a)=a-t(a)\mathbf1,\qquad h(v)=\max_j v_j.
+\tag{NTL.5}
+$$
+
+Every normalized profile has $\min_jv_j=0$. Its full translation chain
+in the original cube is
+$\{v+t\mathbf1:0\le t\le H-h(v)\}$, of length $q-h(v)$.
+For $b\in\{0,1\}^m$ define
+
+$$
+v(b)_j=\begin{cases}b_j,&j<m,\\0,&j\ge m,\end{cases}
+\qquad t_b=K-f(b),\qquad a(b)=v(b)+t_b\mathbf1.
+\tag{NTL.6}
+$$
+
+Call exactly these normalized profiles $v(b)$ designated. Define one
+encoder on the *whole* cube by least nonnegative residues:
+
+$$
+e_f(a)=
+\begin{cases}
+(t(a)-t_b)\bmod q,&v(a)=v(b),\\
+t(a)+1,&v(a)\text{ is not designated}.
+\end{cases}
+\tag{NTL.7}
+$$
+
+The public recognition of a designated profile means its first $m$
+coordinates are bits and all remaining coordinates, including the
+reference, are zero. This specifies $b$ uniquely. The definition uses
+the fixed function $f$, not a later cut, lag or information about an
+unacquired source.
+

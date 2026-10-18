@@ -1,0 +1,26 @@
+**Definition 312.1 (The seven-coordinate score $Z_{43}$).**
+Use exactly these 18 independent nonzero rows. All $A$ coefficients
+and all other score coefficients vanish. The $P$ and $C$ rows at
+1111000 are distinct events and are not merged.
+
+| Row | Word | Weight |
+| --- | --- | ---: |
+| P | 0100100 | 1 |
+| P | 0101000 | 2 |
+| P | 0101010 | 1 |
+| P | 0101100 | 1 |
+| P | 0110000 | 2 |
+| P | 0110010 | 1 |
+| P | 0110100 | 1 |
+| P | 1000010 | 2 |
+| P | 1000100 | 2 |
+| P | 1001001 | 1 |
+| P | 1010001 | 1 |
+| P | 1111000 | 1 |
+| C | 1100000 | 5 |
+| C | 1110000 | 5 |
+| C | 1111000 | 4 |
+| C | 1111100 | 5 |
+| C | 1111110 | 4 |
+| T | 1111111 | 4 |
+

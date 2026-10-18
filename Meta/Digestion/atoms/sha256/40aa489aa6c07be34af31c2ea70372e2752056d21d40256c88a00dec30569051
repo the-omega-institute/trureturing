@@ -1,0 +1,26 @@
+## Proof
+
+The face opposite `c` is an HHH face. Each face opposite `p_i` is an LLH
+face: its two low edges meet at the unique vertex `c`. A face pairing
+preserves the global low/high class of each edge, so it sends HHH faces to
+HHH faces and LLH faces to LLH faces. On an LLH face, the intersection of the
+two low edges is unique; therefore the face map sends center to center. HHH
+faces contain no center and cannot identify a center with a peripheral
+vertex. Thus center and peripheral ideal vertices form disjoint link
+components.
+
+Fix a center-link component `S_i`. Each tetrahedron whose center lies in
+`S_i` contributes one truncation triangle, giving `F=N_i`. Its three LLH
+faces contribute the three sides incident to that center triangle. Every LLH
+face is paired once with another LLH face, so `E=3*N_i/2`.
+
+A vertex of `S_i` is an end of a quotient low edge at the center. A degree
+8 low quotient edge has eight local occurrences, all with the same center
+end because LLH face maps preserve center. Hence every low quotient edge
+represented in `S_i` contributes exactly one link vertex. There are three low
+occurrences per tetrahedron, so `V=3*N_i/8`.
+
+The valid orientable triangulation has closed orientable ideal-vertex links,
+so `chi(S_i)=2-2g_i`. The cell count gives `chi=-N_i/8`, hence
+`N_i=16(g_i-1)`. This proves the divisibility and genus formulas.
+

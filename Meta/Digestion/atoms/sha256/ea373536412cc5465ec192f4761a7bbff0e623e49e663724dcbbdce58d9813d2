@@ -1,0 +1,39 @@
+**Proposition 13.3 (a permitted error-free read has a different live
+successor).** On the same supplied helper, grant instead the helper-only
+three-outcome POVM
+
+$$
+E_+=\frac19\begin{pmatrix}4&-2\\-2&1\end{pmatrix},\qquad
+E_-=\frac19\begin{pmatrix}1&-2\\-2&4\end{pmatrix},\qquad
+E_?=\frac19\begin{pmatrix}4&4\\4&4\end{pmatrix}.
+\tag{PR.47}
+$$
+
+Again retain only the helper outcome as accessible assistance, and keep
+the specimen unchanged. All three effects are positive and sum to identity.
+Their actual laws in order $(+,-,?)$ are
+
+$$
+q_+=(1/5,0,4/5),\qquad q_-=(0,1/5,4/5).
+\tag{PR.48}
+$$
+
+Thus (PR.44) gives $1/5+(4/5)S_L$. This attains the credited coherent
+helper values in Proposition 13.2 for the displayed outbound and excursion
+programmes. The helper is consumed; no unchanged-helper-on-success or
+on-failure contract is inferred.
+
+Proof. The first two matrices are outer products of $(2,-1)$ and
+$(1,-2)$ divided by nine; the third is four times the outer product of
+$(1,1)$ divided by nine. Their sum is $I_2$. Direct quadratic forms on
+(PR.45) give (PR.48). Each conclusive label selects its calibrated
+parity unitary. On $?$, both parities remain possible and the unassisted
+checkpoint filters are used. Corollary 13.1 now proves the value with
+complete subsequent failure. $\square$
+
+The outcome $?$ is live under this **additional helper-read permission**.
+It is neither a canonical specimen failure nor permission to retry a
+failed specimen. The mechanism is mature unambiguous discrimination of
+an already supplied pair. Neither this POVM nor the basis read constructs
+or acquires that initial pair from the original unknown specimen.
+

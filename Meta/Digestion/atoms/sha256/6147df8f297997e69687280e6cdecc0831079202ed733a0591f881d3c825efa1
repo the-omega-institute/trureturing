@@ -1,0 +1,33 @@
+**定义 88.1（The full original INITIAL target and the two placements）。** Retain [IC, Definitions 1.1–1.3 and Interface 1.4], with precisely
+
+$$
+k=16,\qquad m=14,\qquad T=k+1=17,\qquad g=\gcd(14,17)=1.
+\tag{88.1}
+$$
+
+The integer weights are $G_i=2^i$ for $0\le i<16$ and $G_i=\sum_{a=1}^{16}G_{i-a}$ thereafter. The matched original scalar is $V_{16}(w)\bmod2$, with coefficient cycle $\gamma_i=\mathbf1_{\{0,16\}}(i\bmod17)$ [S2, Theorem 14.1]. The prior is all finite actual complete-fourteen-bit histories, with legal records $(v,\theta,s)$ and independently absorbing $\bot$. Both $v\in\mathbb F_2$ and every $\theta\in\mathbb Z/17\mathbb Z$, $0\le s<16$, are jointly actual. Put $j=-\theta_{\rm INITIAL}\pmod{17}$.
+
+Take arbitrary tables $\lambda_0,\lambda_1:\mathbb Z/17\mathbb Z\to Y$ and a label $R\notin\lambda_0[\mathbb Z/17\mathbb Z]\cup\lambda_1[\mathbb Z/17\mathbb Z]$. Define the entire target and its immutable history pullback by
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+\lambda_v(j),&0\le s<14,\\
+R,&s\in\{14,15\},
+\end{cases}\\
+f(\bot)&=L_\bot,\qquad F(w)=f(q_{\rm INITIAL}(w)),\\
+\Lambda(j)&=(\lambda_0(j),\lambda_1(j)).
+\end{aligned}
+\tag{88.2}
+$$
+
+The independent $L_\bot$ is arbitrary, including coincidences with other labels. Require the equality classes of the ordered table $\Lambda$ to consist of two disjoint two-element sets $D_1,D_2$ and thirteen singletons. Thus $|\Lambda[\mathbb Z/17\mathbb Z]|=15$. No condition identifies the two component partitions or fixes their separate class counts. Write
+
+$$
+P=\{0,2\},\qquad N=\{1,15,16\}.
+\tag{88.3}
+$$
+
+These are the forced-positive and forced-negative root-charge sets; the actual phase domain is the entire seventeen-phase cycle. Observations are the free INITIAL scalar or bottom, followed only by the source's own completed issued-block endpoints. Each issued word emits and pays all fourteen bits, including a suffix after absorption and every wait, padding or repair. Both original alphabets are retained: all fourteen-bit words and those internally avoiding $1^{16}$. Since $14<16$, their word sets coincide, while cross-block rejection is still enforced. ONE GLOBAL uses prefixes of one fixed literal stream for this target on both free values and all sources, with endpoint-dependent stopping and decoding. There is no reset, copy, hidden INITIAL clock, intermediate reading or borrowed sibling archive.
+

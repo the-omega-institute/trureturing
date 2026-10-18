@@ -1,0 +1,15 @@
+## 2. Exterior projection and conditional response stability
+
+For any stationary legal $P$, define its actual one-sided predictors and defects, without an attainment hypothesis:
+
+$$
+p^L_r=\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,X_2,\ldots],\quad
+p^R_r=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_r],
+$$
+
+$$
+e_L(r)=\mathbb E_P(q_0-p^L_r)^2,\quad e_R(r)=\mathbb E_P(q_0-p^R_r)^2,\quad
+\tau_P(R)=\sum_{r\ge R}(e_L(r)+e_R(r)).
+\tag{2.1}
+$$
+

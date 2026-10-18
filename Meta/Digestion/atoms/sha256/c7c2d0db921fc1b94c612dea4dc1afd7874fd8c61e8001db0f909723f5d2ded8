@@ -1,0 +1,19 @@
+**Proposition 260.1 (A legal earlier unqueried output is changed and paid).**
+For the actual source $(r,g)=(19,436)$,
+$F_{19}=4181$ and $N=1+4181\cdot436=1822917$.
+Its first four prime replies are $0100$.
+The legal table $N(3,4;1,0,0,0)$ emits the earlier unqueried
+label one there. Its endpoint repair emits zero there, has changed
+mass one as a pure table, and has counting defect two.
+
+**Proof.** The permitted window is $419\le g\le836$ and 19
+is prime. The displayed integer is odd, divisible by three and
+divisible by neither five nor seven. At this word, queried bits
+three and four are $00$, whose old label is one and repaired
+label is the old $01$ label zero. Its sole-zero correct count is
+zero, positive base count one, so $d_D=3-1=2$.
+The same calculations include this table in every applicable
+full-catalog bound; none removes its earlier label or treats
+the change as free. This pure table is not offered as a strict
+active-horizon cap-feasible separator. $\square$
+

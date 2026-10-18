@@ -1,0 +1,275 @@
+**Theorem 10.2 (uniform native Green control and collective compactness).**
+For the family (10.1)--(10.5), the actual restricted killed free operator is
+the form operator $\mathscr L_\kappa$ of $\mathcal E_\kappa$.
+Let $p_\kappa^B$ and
+$G_\kappa(q)=\int_0^\infty p_\kappa^B(t,q_0,q)dt$ be its heat and
+unit-source Green densities, where $q_0=(k_0,0,0)$.
+There are finite constants $A>0$, $B_0\ge0$, independent of
+$\kappa\in K$, such that
+
+$$
+\int_B G_\kappa|z|^2d\nu
+ \le A\mathcal E_\kappa[z]+B_0\|z\|_2^2
+ \qquad(z\in\mathcal F_\kappa^B).
+\tag{10.6}
+$$
+
+The union of the sets
+$\{z\in\mathcal F_\kappa^B:\|z\|_2^2+\mathcal E_\kappa[z]\le M\}$,
+$\kappa\in K$, is relatively compact in $L^2(B)$ for every finite $M$.
+As $\kappa\to0$ through either sign, the free forms Mosco-converge to
+$\mathcal E_0$, and $G_\kappa\to G_0$ locally uniformly off $q_0$
+and in $L^1(B)$. The constants are not asserted uniform as
+$\varepsilon\downarrow0$ or as the fixed height data move.
+
+Proof. Hidden $D$ translations commute with the two original fields,
+preserve measure, and preserve the compact smooth height core. Their Haar
+average $\Pi$ decreases $T_\kappa$ by Jensen's inequality and gives
+orthogonal free form components. The averaged-core and variational
+resolvent proof of Theorem 2.1 therefore applies with $D$ as the hidden
+circle. It gives exactly
+
+$$
+\begin{gathered}
+\mathcal F_\kappa^{\rm full}\cap\operatorname{Ran}J
+   =J\mathcal F_\kappa^B,\qquad T_\kappa[Jz]=\mathcal E_\kappa[z],\\
+D(L_\kappa)\cap\operatorname{Ran}J=J D(\mathscr L_\kappa),\qquad
+L_\kappa J=J\mathscr L_\kappa,\qquad
+e^{-tL_\kappa}J=J e^{-t\mathscr L_\kappa}.
+\end{gathered}
+\tag{10.7}
+$$
+
+These reused projection facts require no full attractive stability.
+They also give the $q$-only free transition laws and the same height
+survival event, by iteration against bounded base observables. Equivalently
+its killed diffusion is
+
+$$
+dK_t=\sqrt2\varepsilon\,dB_t^1,\qquad
+d\theta_t=\sqrt2A_\kappa(K_t)\,dB_t^2,\qquad
+dv_t=\sqrt2B_\kappa(K_t)\,dB_t^2,
+$$
+
+with two independent real Brownian motions, phases reduced modulo
+$2\pi$, and killing at $\inf\{t:K_t\notin I\}$.
+The coefficients have no vertical derivatives and $R_\kappa k=0$, so
+there is no Itô correction. This is the original analytic clock; these
+sample paths are not asserted to be finite-variation native commands.
+
+For a concrete completed-domain description, expand in the normalized
+angular basis $(2\pi)^{-1}e^{i(m\theta+nv)}$ and write $z_{mn}(k)$
+for its coefficients. Then
+
+$$
+\begin{aligned}
+V_{\kappa,mn}(k)&=(mA_\kappa+nB_\kappa)^2
+ =b_\kappa(k)^2\left(m-\frac{(m+n)k}{s_\kappa}\right)^2,\\
+\mathcal F_\kappa^B
+ &=\left\{z:\ z_{mn}\in H^1_0(I),\
+ \sum_{m,n}\int_I(\varepsilon^2|z_{mn}'|^2+
+                 V_{\kappa,mn}|z_{mn}|^2)dk<\infty\right\},\\
+D(\mathscr L_\kappa)
+ &=\left\{z:\ z_{mn}\in H^2(I)\cap H^1_0(I),\
+ \sum_{m,n}\|(-\varepsilon^2\partial_k^2+
+                       V_{\kappa,mn})z_{mn}\|_2^2<\infty\right\}.
+\end{aligned}
+\tag{10.8}
+$$
+
+Membership in $L^2(B)$ is implicit. Parseval, finite-mode truncation and
+one-dimensional core approximation prove these identities. On the smooth
+core the expression is
+$\mathscr L_\kappa=-\varepsilon^2\partial_k^2-R_\kappa^2$;
+(10.8), or equivalently form representation, specifies its actual domain.
+No equality of the domains for different parameters is used.
+
+Here is a uniform compactness bound. Put $M=|m|+|n|$, $N=m+n$, and
+$b_- =\inf_{K\times I'}b_\kappa>0$.
+For $|N|\ge M/4$, zero extension from $I$ and the elementary oscillator
+inequality on the real line give
+
+$$
+\int_I(\varepsilon^2|f'|^2+
+ b_-^2(m-Nk/s_\kappa)^2|f|^2)dk
+ \ge\frac{\varepsilon b_-|N|}{s_\kappa}\|f\|_2^2.
+\tag{10.9}
+$$
+
+Indeed expand the nonnegative square
+$\|\varepsilon f'+a(k-t)f\|_2^2$ with
+$a=b_-|N|/s_\kappa$, $t=ms_\kappa/N$; integration by parts gives
+(10.9), also when $t$ lies outside $I$.
+If $|N|<M/4$, then $|m|>3M/8$ and $0<k/s_\kappa<1$, so
+$|m-Nk/s_\kappa|>M/8$. Thus in both cases the fiber energy is at least
+$cM\|f\|_2^2-C\|f\|_2^2$, with common constants.
+High angular modes have a uniformly small $L^2$ tail on every bounded
+energy set. Each finite collection of modes is bounded in $H^1_0(I)$,
+which is compact in $L^2(I)$. This proves collective compactness.
+The height Poincaré bound also gives the common gap
+$\lambda_0=\varepsilon^2\pi^2/(u-l)^2$.
+
+For free Mosco lower semicontinuity, take a weakly convergent sequence of
+bounded free energy. Each finite collection of Fourier modes has weak
+$H^1_0$ compactness, its coefficients converge smoothly, and its energy is
+lower semicontinuous. Taking the supremum over finite mode sets gives
+membership in $\mathcal F_0^B$ and the full lower bound. Recovery follows
+by first approximating in the $\mathcal E_0$ norm with a fixed smooth
+finite-mode core function and then taking a diagonal sequence. This proves
+the free limit without imposing a common completed domain.
+
+It remains to establish the uniform singular estimate; compactness of the
+parameter interval alone would not give (10.6). Use the unimodular base
+angles $\alpha=\theta-v$, $\beta=\theta$. Then
+
+$$
+R_\kappa=b_\kappa(k)
+ \left(\partial_\alpha+(1-k/s_\kappa)\partial_\beta\right),\qquad
+\det\begin{pmatrix}A_\kappa&B_\kappa\\A_\kappa'&B_\kappa'\end{pmatrix}
+ =-b_\kappa^2/s_\kappa.
+\tag{10.10}
+$$
+
+The determinant is uniformly separated from zero. In a real local chart
+at $q_0$, set $b_o=b_\kappa(k_0)$, $c_o=1-k_0/s_\kappa$ and
+
+$$
+\begin{gathered}
+x=k-k_0,\quad y=\alpha,\quad
+z=-s_\kappa(\beta-c_oy),\qquad
+\xi=x/\varepsilon,\quad\eta=y/b_o,\quad\zeta=z/(\varepsilon b_o),\\
+\varepsilon P=U:=\partial_\xi,\qquad
+R_\kappa=\frac{b_\kappa(k)}{b_o}
+ V,\quad V:=\partial_\eta+\xi\partial_\zeta,\qquad
+ d\nu=m_\kappa\,d\xi\,d\eta\,d\zeta,\quad
+ m_\kappa=\frac{\varepsilon^2b_o^2}{s_\kappa}.
+\end{gathered}
+\tag{10.11}
+$$
+
+These are exact identities, not only tangent limits. On one common
+coordinate neighborhood the chart Jacobians, their inverses and all
+coefficient derivatives have uniform bounds; $m_\kappa$ and
+$b_\kappa/b_o$ have positive upper and lower bounds. The Heisenberg gauge
+
+$$
+N(\xi,\eta,\zeta)
+ =\left((\xi^2+\eta^2)^2+(2\zeta-\xi\eta)^2\right)^{1/4}
+\tag{10.12}
+$$
+
+is comparable to the horizontal distance there, with common constants.
+Write $N_\kappa(q)$ for its pullback. The same construction centered at
+any point of a compact larger cylinder gives uniform local ball volumes
+comparable to $r^4$ for sufficiently small $r$.
+
+For completeness, the precise heat estimate used to integrate the
+singularity is
+
+$$
+p_\kappa^B(t,q_0,q)
+ \le C t^{-2}\exp(-cN_\kappa(q)^2/t),\quad 0<t<t_0,
+\tag{10.13}
+$$
+
+on a smaller common source chart, together with a uniform integrable
+small-time bound away from that chart. These are the local upper Gaussian
+estimates of Jerison--Sánchez-Calle [J, Theorem 2, p.849], with the
+parameter bounds checked as follows. Extend the vertical pair
+$(A_\kappa,B_\kappa)$ from $I'$ to a common height circle, keeping its
+length positive and its argument derivative of one sign. To construct the
+extension, lift its argument on $I'$; its derivative is
+$-b_\kappa^2/(s_\kappa(A_\kappa^2+B_\kappa^2))<0$.
+Continue that derivative negatively on the complementary arc, with integral
+making one full turn, and continue the positive length smoothly. The arc
+can be chosen long enough and the construction depends smoothly on
+$\kappa$. On the compact three-torus the two fields
+$\varepsilon\partial_k$ and
+$A_\kappa\partial_\theta+B_\kappa\partial_v$ are divergence free and
+uniformly bracket-generating of step two.
+
+Apply [J]'s upper-bound proof on a finite common chart cover. On the
+native cylinder its lifting coordinates can be chosen by (10.11); on the
+complementary arc the uniformly nonzero argument derivative supplies
+smooth contact coordinates with the same bounds. Their Taylor remainders
+of weighted order zero, cutoff derivatives and inverse frame determinants
+are uniformly bounded. The homogeneous model is the same pair $U,V$.
+Consequently the convolution-parametrix bounds in [J, §4, pp.848--850]
+have common constants and a common finite iteration order. More
+explicitly, on the native charts the principal model heat-kernel error is
+$((b_\kappa/b_o)^2-1)V^2p_t^H$ times the chart density factor.
+Since $b_\kappa(k)/b_o-1=O(|\xi|)$ uniformly, the homogeneous Gaussian
+bounds for $V^2p_t^H$ give an error bounded by
+$Ct^{-5/2}e^{-cN^2/t}$, whose spatial $L^1$ norm is at most
+$Ct^{-1/2}$. Each time convolution therefore gains a factor of order
+$t^{1/2}$; the beta-integral constants in any fixed number of iterations
+are common. Cutoff errors lie off the local diagonal and have uniform
+flat small-time bounds. This verifies directly the uniform error class
+used in [J]'s finite parametrix construction. The
+uniform off-diagonal Gevrey bound in its Proposition 3 follows from the
+same integration-by-parts argument with these bounded coefficients and
+the uniform local subelliptic estimate [H, Theorem B.1]. The maximum
+principle and finite-cover step in [J, Theorem 2] therefore give common
+$C,c,t_0$. This tracks the constants in that proof, rather than taking a
+supremum of unexamined fixed-operator constants. The volume denominator
+there is comparable to $t^2$ by (10.11)--(10.12). Restriction to $B$ kills
+earlier, so domain domination transfers the bound from the compact
+extension. Short paths near $q_0$ remain in the chosen chart, giving
+(10.13); outside it the distance from $q_0$ has a uniform positive lower
+bound. This extension is used only for estimates and changes neither
+height killing nor the native operator.
+
+At time one the same extension bounds all killed heat diagonals uniformly.
+The gap $\lambda_0$ and the semigroup identity then give
+$p_\kappa^B(t,q_0,q)\le C e^{-\lambda_0(t-1)}$ for $t\ge1$,
+uniformly on $B$. Integration of (10.13), using
+$\int_0^1t^{-2}e^{-cr^2/t}dt\le C'r^{-2}$, proves
+
+$$
+G_\kappa(q)\le C N_\kappa(q)^{-2}+C'
+\tag{10.14}
+$$
+
+on the source chart and a uniform bound on its exterior, including near
+the killed height faces. The Green field is positive and finite off
+$q_0$; at $q_0$ the contact diagonal asymptotic $ct^{-2}$ from [H,
+Theorem B] makes its time integral infinite.
+
+The unweighted Heisenberg Hardy inequality [R, Corollary 3.2], with
+$p=2$, $\alpha=1$, homogeneous dimension four, gives
+$\int N^{-2}|f|^2\le C_H\int(|Uf|^2+|Vf|^2)$.
+Its required strict condition is $1<4/2$.
+Use (10.11), a fixed smooth source cutoff, and horizontal localization.
+The constant density factor $m_\kappa$ appears on both sides and cancels;
+the positive lower bound on $b_\kappa/b_o$ controls the group energy by
+$\mathcal E_\kappa$. The bounded remainder and cutoff derivatives
+contribute only $B_0\|z\|_2^2$. This proves (10.6) on the smooth core.
+Applying it to differences of core approximants proves weighted $L^2$
+convergence, identifies the same almost-everywhere function, and extends
+(10.6) to exactly $\mathcal F_\kappa^B$.
+
+Finally, free Mosco convergence gives strong free resolvent and heat
+convergence. Uniform interior hypoelliptic smoothing upgrades the kernels
+to local smooth convergence for positive times, as in [H, Theorem 3.5];
+the common semigroup bound is one, the density is fixed, the drift and
+potential are zero, and (10.10) verifies its uniform strong Hörmander
+hypothesis. The Gaussian off-diagonal and exponential large-time bounds
+justify integrating on compact sets away from $q_0$. The source-chart
+mass in $\{N_\kappa<r\}$ is at most $Cr^2$, by (10.14) and volume
+$r^4$. The charts and inverses are uniformly bounded, so the mass of a
+common Euclidean neighborhood of $q_0$ tends uniformly to zero with its
+radius. Away from it the Green fields are uniformly bounded, including
+the boundary collars. Dominated convergence proves the $L^1$ assertion.
+The corresponding height marginal, obtained by testing the free evolution
+on functions of height alone, is exactly
+
+$$
+\int_{\mathbb T^2}G_\kappa(k,\theta,v)d\theta\,dv
+ =\varepsilon^{-2}G_I(k_0,k),\qquad
+G_I(a,k)=\frac{(\min(a,k)-l)(u-\max(a,k))}{u-l}.
+\tag{10.15}
+$$
+
+It supplies the same finite total Green mass for every parameter.
+$\square$
+

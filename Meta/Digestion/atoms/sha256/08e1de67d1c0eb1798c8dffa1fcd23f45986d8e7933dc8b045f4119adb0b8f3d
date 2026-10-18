@@ -1,0 +1,12 @@
+## 6. A rigorous boundary for Renyi continuation
+
+The von Neumann maximizing state does not remain the maximizing candidate throughout 1<alpha<2. Define
+
+$$R_\alpha(\rho)=\frac{\log_2\operatorname{Tr}(\rho^\alpha)}{1-\alpha},\qquad \overline R_\alpha(\psi)=\frac13\sum_c R_\alpha(\rho_c).$$
+
+For H_+,
+
+$$r(\alpha)=\overline R_\alpha(H_+)=\frac{\log_2(2^{-\alpha}+3\,6^{-\alpha})}{1-\alpha}.$$
+
+For the cluster state (|0000>+|0011>+|1100>-|1111>)/2, the three spectra are (1/2,1/2,0,0) and two copies of (1/4,1/4,1/4,1/4), so its average Renyi entropy is 5/3 at every positive order. This candidate and its cut entropies are established in [GW10].
+

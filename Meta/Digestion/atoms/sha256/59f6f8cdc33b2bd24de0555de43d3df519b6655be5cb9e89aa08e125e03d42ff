@@ -1,0 +1,173 @@
+**Theorem 17.2 (Three-sector orbit comparison).**
+For the purity deficit and cut-local diagonal orbit distance
+of §§11 and 14,
+
+$$
+C_{\rm cut}\,\delta_{\rm local}(\chi)
+\le\Delta_2(\chi)\le2\delta_{\rm local}(\chi),
+\qquad
+C_{\rm cut}=\frac12\max\{\alpha,\min(\beta,\zeta)\}.
+\tag{17.3}
+$$
+
+If $s_-$ is the smaller positive reference Schmidt
+probability, then
+
+$$
+s_-=rac{1-\sqrt{1-4\beta\zeta}}2,
+\qquad C_{\rm cut}\ge\frac{s_-}{2}.
+\tag{17.4}
+$$
+
+Consequently the entropy excess is at least
+$C_{\rm cut}\delta_{\rm local}$. No optimality of the
+constant is asserted.
+
+Proof. Sorting the full rectangle identity (11.5) by its
+boundary-bit types gives exactly
+
+$$
+\Delta_2=
+\frac{\alpha^2}{2}T_{00}
++\frac{\beta^2}{2}T_{01}
++\frac{\zeta^2}{2}T_{10}
++\alpha\zeta T_L+\alpha\beta T_R.
+\tag{17.5}
+$$
+
+Mixed row types have two orientations, as do mixed column
+types. A rectangle mixing both row and column types would
+contain a forbidden $11$ corner and is absent. The four
+amplitude product in each remaining sector equals the
+product of its conditional sampling weights and the
+corresponding sector masses. This proves (17.5) without
+compressing $\chi$ to sector constants.
+
+Theorem 14.2 already gives
+$\Delta_2\ge\alpha\delta_{\rm local}/2$.
+For a second construction sample independently
+
+$$
+u\sim\mu_0,\quad s\sim\mu_1,\quad
+v\sim\nu_0,\quad t\sim\nu_1,
+\qquad
+c=\frac{\chi(u,v)}{\chi(u,t)\chi(s,v)}.
+\tag{17.6}
+$$
+
+Define phases on all actual half-chain words by
+
+$$
+a(\ell)=
+\begin{cases}
+\chi(\ell,t),&\ell\in L_0,\\
+\chi(\ell,v)/(c\chi(s,v)),&\ell\in L_1,
+\end{cases}
+\qquad
+b(r)=
+\begin{cases}
+c\chi(s,r),&r\in R_0,\\
+\chi(u,r)/\chi(u,t),&r\in R_1.
+\end{cases}
+\tag{17.7}
+$$
+
+The $01$ and $10$ residuals are their same-sector
+rectangle phases. Their mean squared errors are
+$\beta T_{01}$ and $\zeta T_{10}$. On $00$ the residual
+factorizes as
+
+$$
+\frac{\chi(\ell,r)}{a(\ell)b(r)}
+=
+\frac{\chi(\ell,r)\chi(u,t)}
+{\chi(\ell,t)\chi(u,r)}
+\frac{\chi(u,r)\chi(s,v)}
+{\chi(u,v)\chi(s,r)}.
+\tag{17.8}
+$$
+
+These two factors are a $T_R$ rectangle and a $T_L$
+rectangle. They share sampled corners; independence of
+these factors is neither used nor asserted. For unit
+$q,q'$ the triangle inequality gives
+
+$$
+|1-qq'|^2\le2|1-q|^2+2|1-q'|^2.
+\tag{17.9}
+$$
+
+Each candidate gauge has error at least the orbit infimum.
+Average (17.7) over its finite anchor family to obtain
+
+$$
+\delta_{\rm local}
+\le\beta T_{01}+\zeta T_{10}
++2\alpha(T_L+T_R).
+\tag{17.10}
+$$
+
+Multiplying this right side by
+$\min(\beta,\zeta)/2$ and comparing each nonnegative
+term with (17.5) proves the second lower coefficient.
+Combining the two constructions proves the lower bound
+in (17.3).
+
+For the upper bound let $B_{\ell r}=\sqrt{p(\ell,r)}$
+and, for any candidate gauge, let
+$A_{\ell r}=B_{\ell r}\chi(\ell,r)/(a(\ell)b(r))$.
+Both matrices vanish on forbidden pairs. Use the established
+Schatten norm, as defined by Watrous,
+[*The Theory of Quantum Information*, §1.1.3,
+equations (1.165)–(1.167) and (1.173)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf).
+The function $F(M)=\|M\|_4^4=\operatorname{Tr}(MM^*)^2$
+is convex: norm convexity followed by convexity and
+monotonicity of the fourth power proves this. Its real
+directional derivative at $B$ gives
+
+$$
+F(B)-F(A)\le4\operatorname{Re}
+\langle BB^*B,B-A\rangle.
+\tag{17.11}
+$$
+
+The positive reference is the local isometric image of
+$B_0=\left(\begin{smallmatrix}\sqrt\alpha&\sqrt\beta\\
+\sqrt\zeta&0\end{smallmatrix}\right)$.
+On its three legal sectors direct multiplication gives
+
+$$
+\frac{(BB^*B)_{\ell r}}{B_{\ell r}}=
+\begin{cases}
+1,&00,\\
+\alpha+\beta,&01,\\
+\alpha+\zeta,&10.
+\end{cases}
+\tag{17.12}
+$$
+
+Every coefficient lies in $[0,1]$, and
+$|1-e|^2=2(1-\operatorname{Re}e)$ for a unit phase $e$.
+Thus (17.11) is at most twice this candidate gauge's
+weighted squared error. Its left side is $\Delta_2$,
+because row and column phase multiplication preserves
+purity. Take the infimum over all candidate gauges to get
+the upper bound in (17.3).
+
+Finally $s_-(1-s_-)=\beta\zeta$ and $s_-\le1/2$.
+For either $b=\beta$ or $b=\zeta$, the other mass is
+at most $1-b$, so $s_-(1-s_-)\le b(1-b)$.
+If $b<s_-$, both factors in
+$(s_--b)(1-s_--b)$ are positive, contradicting that
+inequality. Hence $\min(\beta,\zeta)\ge s_-$,
+proving (17.4). Apply Theorem 11.2 for the entropy
+consequence. $\square$
+
+The coefficient uses the realized law rather than a full
+vacuum probability. If the adjacent activities are bounded,
+Theorem 14.3 already supplies a size-independent lower
+bound. Alternatively a nondegenerate reference Schmidt
+probability controls it through (17.4). This is distance
+to diagonal row/column phases, not to the orbit under all
+local unitaries.
+

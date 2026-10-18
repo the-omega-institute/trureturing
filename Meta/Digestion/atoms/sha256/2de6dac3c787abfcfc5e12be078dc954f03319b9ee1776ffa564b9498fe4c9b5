@@ -1,0 +1,46 @@
+**Theorem 3.11 (Cost in phase variation).** Let a loop of Definition 3.1 have
+all four bottom masses at least $\varepsilon>0$ throughout the path, and put
+$V_\chi=\int_0^T|\dot\chi|\,dt$. Its real residual obeys
+
+$$
+|h_1-h_3|\le\frac{|X-Y|r}{16\varepsilon^2}V_\chi,
+\qquad
+|h_0-h_{13}|\le\frac{|X+Y-r|r}{16\varepsilon^2}V_\chi.
+$$
+
+For a fixed nonzero corresponding real target difference and nonzero gap,
+these give inverse-gap lower bounds on the necessary phase variation.
+
+Proof. Pointwise reciprocal subtraction yields
+
+$$
+w_1-w_3=\frac{X-Y}{Ip_1p_3},\qquad
+w_0-w_{13}=\frac{X+Y-r}{Ip_0p_{13}}.
+$$
+
+Cauchy–Schwarz applied to the four positive bottom masses of total $r$ gives
+
+$$
+I r=\left(\sum_{s\in B}\frac1{p_s}\right)
+     \left(\sum_{s\in B}p_s\right)\ge16.
+$$
+
+Each denominator product is at least $\varepsilon^2$. Integrate the
+pointwise bounds against $|d\chi|$ and apply the triangle inequality. For
+example, if $\Delta=h_1-h_3\ne0$ and $X\ne Y$, then
+
+$$
+V_\chi\ge\frac{16\varepsilon^2|\Delta|}{r|X-Y|}.
+$$
+
+The second bound is identical with its stated pair and gap. On the exact wall
+the difference is forced to zero, in agreement with Theorem 3.2. $\square$
+
+For a phase-class target $\phi_1-\phi_3$, one must use an actual chosen lift
+or the invariant distance
+$\operatorname{dist}(\phi_1-\phi_3,2\pi\mathbb Z)$ in a lower bound: every
+real realization has magnitude at least that distance. An arbitrary wrapped
+coordinate is not a lower bound on all realizations. The fixed positive
+$\varepsilon$ is essential to the estimate, and phase variation here carries
+no calibrated energy or elapsed-time claim.
+

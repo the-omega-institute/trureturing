@@ -1,0 +1,46 @@
+**Theorem 3.2 (same-program asymmetric acquisition bounds).** On a
+quiescent capture of $\rho^n u_h$, the all-source program RA$\ell$ has,
+with $D=\max(1,n)$,
+
+$$
+T=3D+3,\qquad A=\frac{3D^2+5D}{2},\qquad Q=D,
+\qquad k=n+1.
+\tag{CAB.9}
+$$
+
+Its row candidate has exactly ten cells and its auxiliary-plus-operand
+storage is $O(D+1)$ bits, independent of $h$. In particular, at $n=0$
+the actual costs are six Reads, four letters and peak length one,
+although $|\operatorname{Pos}(u_h)|=2^{h+1}+1$.
+
+For a call on this ray with $b$ updates and final exponent $n_f$, every
+attempt, successful or failed, has the same upper bounds with
+$D=\max(1,n_f)$, and the call has at most $b+1$ attempts. Every candidate
+still has ten cells; no bound depending only on $h$ is substituted for
+the actual temporal exponent.
+
+Proof. The native recurrence is
+$T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$.
+Thus its leftmost leaf depth is $\max(n-1,0)$, and the global guard
+depth of $\rho^n u_h$ is $D$. The exterior body reads only the root.
+The comparison of the two holes starts at their roots and follows only
+left suffixes. At each level before the left leaf, both replies are
+branches; at that leaf the right reply is still branch, since its
+leftmost depth is greater by $h$. This proves actual disequality and
+ends the comparison before any sibling is visited. There are exactly
+$D$ compared relative positions.
+
+The guard search reads depths $0,\ldots,D$, validation reads depth $D$,
+and the comparison reads two words at each depth $1,\ldots,D$.
+Adding the root exterior Read gives (CAB.9), including the two replies
+at the final mismatch. The stamp advances from $\ell(u_h)=1$.
+
+Under interference a right comparison reply occurs no earlier than its
+left partner. Its subtree has at least the partner's current left depth
+plus $h$. A left branch is therefore followed by a right branch, and
+a left leaf by a right branch. No moving comparison enters a sibling.
+The guard and comparison depths are bounded by the final left depth,
+so the same sums bound every attempt. The cut always hides the two
+children, making the row size constant even on failed attempts.
+All path lengths and indices are $O(D+1)$. $\square$
+

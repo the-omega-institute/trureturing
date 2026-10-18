@@ -1,0 +1,19 @@
+## 253. A special exit axis cannot supply a complete special circle
+
+If Q is special, {Q,U,B} cannot meet an axial-U/{C,D} owner. Both exits
+must therefore meet the same single-high transverse-U owner, since
+there is at most one. Its transverse pair is {U,B} and an axis is Q.
+If its other axis is different from Q, its two Q faces pair to xi's
+two Q faces, closing two original Q slots. If the other axis is also Q,
+its remaining two {Q,U,B} faces can meet neither an axial-U/{C,D} owner
+nor a second transverse-U owner. Xi has no unused faces. They must
+self-pair, closing all three Q slots of xi and that owner. In both
+cases minimum degree six fails. Thus Q is C or D.
+
+For Q=B, the repeated-low face {B,U,B} cannot match an axial-U/{C,D}
+owner, whose three labels are distinct. Both exits must reach the
+single available transverse-U owner. For Q distinct from B, the face
+is {C,D,U}, and axial-U/{C,D} exits remain possible. These alternatives
+retain the external low-only region, arbitrary repeated owners and
+self-pairings; no further exclusion is claimed.
+

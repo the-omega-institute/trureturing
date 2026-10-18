@@ -1,0 +1,43 @@
+**Definition 2.1 (Literal affine contract).** For an integer $n\ge0$, a
+model of dimension at most $n$ chooses $m\in\{0,\ldots,n\}$, an arbitrary
+function $E:\mathcal M\to\mathbb R^m$, a fixed affine decoder
+$\mathcal D(z)=q_0+Lz\in\mathbb R^{10}$, and affine ambient maps
+
+$$
+\mathcal U_s(z)=L_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t\qquad(s,t\in\mathbb R)
+$$
+
+satisfying
+
+$$
+E(P_s\xi)=\mathcal U_s(E(\xi))\quad(\xi\in\operatorname{dom}P_s),
+\qquad
+E(Q_t\xi)=\mathcal V_t(E(\xi))\quad(\xi\in\mathcal M).
+$$
+
+The coefficients may depend on the fixed source, preparation, chosen
+model and prescribed command, but not on the current ray or its history.
+Both decoder and update offsets are permitted. No regularity,
+measurability, boundedness, injectivity or computability of $E$ is
+assumed; no parameter regularity, ambient invertibility or ambient group
+law is assumed either. All commands are assigned ambient maps, including
+commands with empty source domains. Decoded outputs need not be native
+physical outputs. Initialization and the update identities use exact real
+values. Height, history and real phase lifts are not extra source inputs.
+
+For a model write
+
+$$
+\operatorname{err}(E,\mathcal D)
+=\sup_{\xi\in\mathcal M}\|\mathcal D(E(\xi))-y(\xi)\|_2.
+$$
+
+The literal class is denoted $\mathfrak F_{\le n,\mathsf L}$, and
+
+$$
+e_{n,\mathsf L}^{\rm aff}(Z)
+=\inf_{(E,\mathcal D,\ldots)\in\mathfrak F_{\le n,\mathsf L}}
+\operatorname{err}(E,\mathcal D).
+$$
+

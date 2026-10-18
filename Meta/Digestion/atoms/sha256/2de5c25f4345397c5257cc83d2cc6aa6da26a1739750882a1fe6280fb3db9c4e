@@ -1,0 +1,51 @@
+**命题 C-102.2（底面联合质量的 Fréchet 区间）。** 定义
+
+$$
+r_{12}=\operatorname{tr}\bigl((P_{\mathrm b}\otimes P_{\mathrm b})\Gamma\bigr).
+$$
+
+则
+
+$$
+\boxed{
+\max(0,2r-1)\le r_{12}\le r.
+}
+\tag{C102.3}
+$$
+
+若来源是乘积来源 $\Gamma=\rho\otimes\rho$，则
+
+$$
+r_{12}=r^2.
+\tag{C102.4}
+$$
+
+对任意底面内的二份效果 $0\le Q\le P_{\mathrm b}\otimes P_{\mathrm b}$，其事件概率
+
+$$
+q_Q(\Gamma)=\operatorname{tr}(Q\Gamma)
+$$
+
+满足
+
+$$
+0\le q_Q(\Gamma)\le r_{12}\le r,\qquad
+q_Q(\Gamma)-q_Q(\rho\otimes\rho)=\operatorname{tr}(Q\Delta).
+\tag{C102.5}
+$$
+
+**证明。** 由 $0\le P_{\mathrm b}\le I$，有
+$0\le P_{\mathrm b}\otimes P_{\mathrm b}\le P_{\mathrm b}\otimes I$。
+取 $\Gamma$ 的迹并使用第一边缘为 $\rho$，得 $r_{12}\le r$。
+同样，正算子
+
+$$
+(I-P_{\mathrm b})\otimes(I-P_{\mathrm b})\ge0
+$$
+
+给出 $1-2r+r_{12}\ge0$，从而 $r_{12}\ge2r-1$；再与
+$r_{12}\ge0$ 合并即得 (C102.3)。乘积情形直接因迹的乘法性得到 (C102.4)。
+对 $Q$ 使用 $0\le Q\le P_{\mathrm b}\otimes P_{\mathrm b}$ 即得第一项不等式，第二项是 $\Delta$ 的定义展开。式 (C102.1)–(C102.2) 由偏迹的定义和迹的循环性得到。证毕。
+
+这个命题把“相同单份状态”与“相同配对来源”分开：固定 $\rho$ 只固定 $r$，不固定 $r_{12}$，更不固定 $q_Q$。乘积零假设把 $r_{12}$ 压到 $r^2$；历史条件下的共同来源可以把它推向区间的另一端。因而单份边缘、单份纯度或单份相位读数都不能替代 C-98.1 所需的联合来源条件。
+

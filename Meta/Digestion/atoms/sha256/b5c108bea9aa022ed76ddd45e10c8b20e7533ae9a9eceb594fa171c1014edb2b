@@ -1,0 +1,26 @@
+**命题 15.6（单位来源的实际五模式体相及文献对应）。**
+
+完整合法位词取单位权，固定非零非负且使 partition 为正的因子化端权，在观察窗到左右两端距离都趋∞时，对归一化法则应用 B 的两特征值 φ,-φ⁻¹：正特征投影系数由端权与正向量的内积给出，均严格正；其余项相对按 φ⁻² 的距离幂衰减。两侧正投影相乘并除以 partition 得体相马尔可夫律，任一侧距离保持有限时不宣称此极限。
+
+$$
+v=(\phi,1)^T,\quad P_{ij}=B_{ij}v_j/(\phi v_i)
+=\begin{pmatrix}\phi^{-1}&\phi^{-2}\\1&0\end{pmatrix},\quad
+\pi=\left(\frac{\phi^2}{\phi^2+1},\frac1{\phi^2+1}\right).
+$$
+
+置 η=φ⁻²，逐条乘 π_i P_{ij}P_{jk}，以印刷低、中、高排列得到
+
+$$
+p_\infty=\frac1{1+\eta}\big((1-\eta)^2,\eta(1-\eta),\eta,\eta(1-\eta),\eta^2\big).
+$$
+
+于是 O=T≈0.2763932、L=R≈0.1708204、J≈0.1055728。这是明确有限单位法则的双侧体相极限，既非局部五态 1/5，也非所有合法来源必选的物理法则。一般 Perron–Markov 构造复用 Parry 的成熟结果；本模型的极限由上面的两特征值推导。
+
+
+与此体相相关的已发表构造为 P. Gohlke、A. Mitchell、D. Rust、T. Samuel，*Measure Theoretic Entropy of Random Substitution Subshifts*，Annales Henri Poincaré 24，277–323，DOI [10.1007/s00023-022-01212-x](https://doi.org/10.1007/s00023-022-01212-x)，Example 5.5。它给原生合法位词另一种来源逼近，条件及限制如下。
+
+
+该例的字母表为 {a,b}、禁词为 bb，以 b↔占位 1、a↔空位 0 对应 golden-mean 合法位词。文中的 τ=(1+√5)/2（这里的黄金比，非本篇矩阵收缩系数）满足 τ²=τ+1；随机替换 a→aa/aba 的概率分别为 τ⁻¹、τ⁻²，b→b。这个替换不 primitive，不能直接套用该文的 primitive 结果。对 ε∈(0,1)，保持 a 的替换及概率不变，把 b 改为 b→b/abb，概率 1−ε、ε，得到 primitive 的 θ_ε，且有 unique realisation paths 与 disjoint set condition；μ_ε 是相应的 frequency measure。由于 abb 含 bb，不能把每个 ε>0 的近似来源直接说成原 golden-mean 位词法则。
+
+Example 5.5 对 ε→0 的弱极限 μ 使用 shift invariance、support 为 golden-mean X、Perron 数据 R_{a,ε}/(λ_ε−1)→τ²/(τ²+1)，再由熵的上半连续性及该文 Theorem 3.5 得 h(μ)≥logτ=h_top(X)。该 shift 的最大熵测度唯一，因而该弱极限为 Parry measure。紧随该例的段落保留其限制：某个 primitive 随机替换的 frequency measure 是否能直接等于 golden-mean Parry measure，文中仍列为 open。这里 λ_ε 是该随机替换的 Perron 特征值，不是 命题 15.8 的活动参数 λ。该例只支持上述随机替换逼近/弱极限联系；本篇一般活动权 hard-core 协方差、开放链压力或 Fisher 公式仍由 命题 15.8–9 的普通证明拥有，不能归给 Example 5.5。
+

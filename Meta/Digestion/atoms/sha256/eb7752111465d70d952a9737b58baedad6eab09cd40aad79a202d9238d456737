@@ -1,0 +1,19 @@
+**Definition 2.3 (Exact marginal multiplier and decomposable witness).** Set
+
+$$
+\begin{gathered}
+(\ell_0,\ell_+,\ell_-)=\frac1{10000}(4025,4974,5021),\qquad
+Y=\ell_0R_0+\ell_+R_++\ell_-R_-,\\
+u_{0+}=-\frac{12204}{100000},\quad
+u_{0-}=-\frac{5359}{100000},\quad
+u_{+-}=-\frac{13938}{100000},\\
+t_0=0,\quad t_+=2\kappa_+-\ell_+,\quad t_-=2\kappa_--\ell_-,\\
+P=I_5\otimes Y-\mathcal W
++\sum_jt_j(F_j-E_j)+\sum_{j<k}u_{jk}(F_{jk}-E_{jk}).
+\end{gathered}
+\tag{2.9}
+$$
+
+Here $u_{jk}$ are scalar coefficients, distinct from the plane vectors
+$u_\pm$ of (1.4).
+

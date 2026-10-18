@@ -1,0 +1,143 @@
+**Theorem 35.3 (uniform bounded recovery, decided in both directions).**
+For a covered input, emptiness of its entire original fiber is decidable.
+On a nonempty input satisfying Assumption 1.3, the following are equivalent:
+
+1. A source-total permitted serial service has a uniform finite new-read
+   budget for the entire original $R_Q$.
+2. Such a static service exists at the authentic $N$.
+3. Some finite original prefix determines the entire row on $U$.
+4. The following single Presburger sentence is true:
+
+$$
+\exists K\in\mathbb N\ \forall k,l\in\mathbb N^{\mathcal B},\quad
+\bigl[\mathsf{Adm}(k)\land\mathsf{Adm}(l)\land
+       \mathsf{Clip}_K(k,l)\bigr]
+\Longrightarrow\mathsf{Same}_Q(k,l).
+\tag{LAC.35.3}
+$$
+
+There is a terminating yes/no decision of these conditions. A positive
+answer supplies $K$, the sufficient original depth $A+K$, and an actual
+static service with at most $|\mathcal B|K$ new reads. A negative answer
+supplies, for every requested original depth $h$, two finite members of
+the original $U$ agreeing through that depth and having unequal complete
+$R_Q$ rows.
+
+Proof. Theorem 34.1 makes $\exists k\,\mathsf{Adm}(k)$ a sentence of
+Presburger arithmetic over nonnegative integers. Its truth is decidable
+by the classical result stated in Ginsburg–Spanier,
+[*Semigroups, Presburger Formulas, and Languages*, Theorem 1.2,
+printed p. 287][LAC-GS]. The same decision applies to (LAC.35.3), including
+its existential cutoff and both universal tuples. Their Theorem 1.3,
+printed p. 288, also gives effective semilinear descriptions of these
+definable sets; no independent semilinearity assumption on the acquired
+input is used. These arithmetic results are suppliers, not new decision
+theorems about arithmetic.
+
+Conditions 1–3 are the existing operational correspondence (ARH.2.3).
+Its domain hypotheses are exactly the common complete state, finite
+literal alphabet, source-total deterministic control and original-address
+locality in Assumption 1.3. A uniform read bound gives finitely many
+reachable reply prefixes; every intervening computation/update segment
+at a reachable prefix is fixed and finite. Thus its finitely many read
+addresses have a finite maximum length. Equal original prefixes through
+that length force the same replies at every actual later epoch, then
+the same updates and output. No rank, hidden timing information or
+uniform local-computation hypothesis enters this implication. The
+supplier's reverse direction uses paid historical decoding on the same
+entry register. It applies to the entire $U$ because membership of a
+given concrete finite candidate is decidable with every retained guard.
+
+If condition 3 holds at $h$, the first line of (LAC.35.2) and exact
+target correspondence give condition 4 with $K=2h+2$. Conversely a
+witness $K$ to condition 4 and the second line of (LAC.35.2) give condition
+3 at depth $A+K$. This proves the four-way equivalence.
+
+After deciding (LAC.35.3) positively, test successive concrete $K$ using
+the same arithmetic decision until one passes. The initial positive
+decision proves that this extraction terminates. This is not an
+algorithm that searches depths forever on negative inputs: those inputs
+have already received the terminating negative decision of the quantified
+sentence. Finite natural-tuple witnesses of a satisfiable arithmetic
+predicate can likewise be found by enumeration in increasing total sum,
+testing each tuple. A prior positive satisfiability decision proves
+termination of that extraction.
+
+Here is a direct service for the extracted cutoff. For each class $b$
+and each $r<K$ to be tested, put
+
+$$
+t_r=\left\lfloor\frac{N+r}{2}\right\rfloor,
+\qquad p_{b,r}=a_bR^{t_r}.
+\tag{LAC.35.4}
+$$
+
+At the actual epoch $N$, original-address transport gives the subtree
+$T_{N+k_b}$ at $a_b$. The supplied right-spine rule (ARH.6.1), also used
+in [AOF, §§2–3][LAC-AOF], says that the actual reply at $p_{b,r}$ is
+$\alpha$ exactly when $N+k_b=2t_r$, and $\beta$ exactly when
+$N+k_b=2t_r+1$. Accept only $\alpha$ when $N+r$ is even and only
+$\beta$ when it is odd. Thus the test accepts exactly $k_b=r$.
+When $t_r=0$ it is a read at the existing $a_b$ itself, with the same
+leaf-reply rule; in particular the boundary $N=1,r=0$ uses $\beta$.
+Neither absence nor branch is accepted. Every request is an actual
+original-root address, with its full prefix $a_b$.
+
+For each $b$, stop its tests after the first acceptance. If all $r<K$
+fail, record only $k_b\ge K$. These at most $|\mathcal B|K$ actual
+queries determine the joint clipped tuple $c$. They reveal no exact
+rank in its tail case and use no new update. For each possible
+$c\in\{0,\ldots,K\}^{\mathcal B}$ consider the entire conditioned set
+
+$$
+S_c=\{k:\mathsf{Adm}(k)\land\operatorname{clip}_K(k)=c\}.
+\tag{LAC.35.5}
+$$
+
+Decide its emptiness. For every nonempty $S_c$, extract a member $v_c$,
+construct the finite native $U_{v_c}$, and compute its complete original
+$R_Q$. Condition 4 proves that this one row is correct for every source
+in $S_c$. There are finitely many $c$, so this finite table can be
+computed from common input before any new observation. At runtime the
+actual clipped tuple selects its row and the service halts. An actual
+branch has the real source's tuple in $S_c$ and therefore is never an
+empty table entry. Impossible reply branches may halt with any fixed
+output; they are not claimed to be admitted runs.
+
+This use of a finite table follows the proved whole-row constancy on
+each full $S_c$. It does not decide the problem on a finite rank grid,
+assume independent coordinate feasibility, or replace actual reads by
+witness access. The witness is only a locally computed finite tree whose
+row has been proved common; it need not be the actual source. New raw
+receipts are precisely the actual epoch-$N$ address/reply events in
+(LAC.35.4), not the inferred rank inequalities or synthetic past events.
+
+If (LAC.35.3) is false, for every $K$ its negation gives a satisfiable
+predicate
+
+$$
+\mathsf{Adm}(k)\land\mathsf{Adm}(l)\land\mathsf{Clip}_K(k,l)
+       \land\neg\mathsf{Same}_Q(k,l).
+\tag{LAC.35.6}
+$$
+
+For a requested $h$ use $K=2h+2$, extract such a pair and expand its
+two finite fillings. Theorem 34.1 places both in the entire original
+$U$ with all old inequalities and both endpoints of every signed record
+intact. Proposition 35.2 gives equal original replies through $h$;
+(LAC.34.3) gives different complete rows. These are admitted original
+finite sources, never ambient nonnormal descriptions or infinite limits.
+They exclude every uniformly bounded permitted serial service by
+(ARH.2.3). The witnesses may depend on $h$.
+
+All finite symbolic constructions, arithmetic decisions, conditional
+witness extractions and finite-tree output computations terminate on
+their stated domains. The service has zero new updates and a finite
+actual address list; its submitted lengths are exactly
+$|a_b|+\lfloor(N+r)/2\rfloor$ for the tests it makes. These are sufficient
+bounds, not minimum prices. Acquisition, comparisons before the complete
+cut, authentic entry, installation, local computation, address formation,
+storage, retained receipts, output and physical time remain separately
+charged. Output and absorbing halt do not themselves erase accessible
+records or create a new free entry. $\square$
+

@@ -1,0 +1,123 @@
+**命题 467.2（实际 $R_n$ 的完整分类恒等式）。** 固定任意自然数 $n$，令 $I$ 为非空有限集合。对每个 $i\in I$，设 $f_i$ 是正轴上严格正的可测函数，并且对全部 $v>0$ 有准确分解
+
+$$
+\sum_{i\in I}f_i(v)=R_n(v).
+$$
+
+不另设各块的矩假设。置
+
+$$
+\begin{gathered}
+r_i=\int_0^\infty f_i(v)\,dv,\qquad
+m_i=\int_0^\infty vf_i(v)\,dv,\qquad
+\mu_i=m_i/r_i,\\
+p_i=f_i/r_i,\qquad q_i=vf_i/m_i,\\
+a_i=r_i/r_n,\qquad b_i=m_i/m_n,
+\qquad F(r,m)=-r\log(m/r).
+\end{gathered}
+$$
+
+则各 $r_i,m_i$ 严格正，各 $f_i$、$vf_i$ 和 $|\log v|f_i$ 在完整正轴可积，且
+
+$$
+\sum_{i\in I}r_i=r_n,\qquad \sum_{i\in I}m_i=m_n.
+$$
+
+因此 $p_i,q_i$ 都是概率密度，$a,b$ 都是严格正的有限概率向量。全部相对熵均有限，同一原完整误差有准确分类
+
+$$
+\boxed{
+A-L_n
+=\sum_{i\in I}r_iD(p_i\Vert q_i)
+  +r_nD(a\Vert b).
+}
+\tag{RSK.8}
+$$
+
+离散项恰为这些实际块的预算合并缺口：
+
+$$
+\begin{aligned}
+H_I
+&:=\sum_{i\in I}F(r_i,m_i)-F(r_n,m_n)\\
+&=r_nD(a\Vert b)
+=\sum_{i\in I}r_i h(\mu_i/\mu_n)\ge0.
+\end{aligned}
+\tag{RSK.7}
+$$
+
+此项等于零当且仅当各块均值全部等于 $\mu_n$。这些身份涵盖单一类别，且不依赖有限合并的顺序。
+
+**证明。** 每个 $v>0$ 都有 $0<f_i(v)\le R_n(v)$。因而三个非负被积函数分别受已知可积函数支配：
+
+$$
+0<f_i\le R_n,\qquad
+0<vf_i\le vR_n,\qquad
+0\le |\log v|f_i\le |\log v|R_n.
+$$
+
+可测性和支配可积性给三份完整积分存在；其中前两者在整个正轴严格正，所以 $r_i,m_i>0$。又
+$|\log(v)f_i(v)|=|\log v|f_i(v)$，故有符号对数矩也绝对可积，包含零附近和无穷远两端。有限积分可加性给准确质量和一阶矩预算。各概率密度与有限向量的归一化随之成立。
+
+以下有限相对熵链式公式是经典先例，亦有 §467.4 所引 Mathlib 的一般测度版本；在这里把它用于上述实际 $R_n$ 分解。逐项展开
+
+$$
+\log(a_i/b_i)=\log(r_i/m_i)-\log(r_n/m_n),
+$$
+
+乘 $r_i$ 后求有限和，得到 RSK.7 的第一个身份。又
+
+$$
+\sum_{i\in I}r_i(\mu_i/\mu_n-1)
+=m_n/\mu_n-r_n=0.
+$$
+
+这给 RSK.7 的 $h$ 身份及非负性；$r_i>0$ 与 $h(x)=0\iff x=1$ 给等号条件。
+
+各块的对数比完整可积，因为
+
+$$
+\int_0^\infty p_i(v)
+  \left|\log\frac{p_i(v)}{q_i(v)}\right|dv
+\le |\log\mu_i|
+  +\frac1{r_i}\int_0^\infty|\log v|f_i(v)\,dv<\infty.
+$$
+
+令 $J(g)=-\int_0^\infty\log(v)g(v)dv$。对数比的逐点公式给
+
+$$
+r_iD(p_i\Vert q_i)=J(f_i)-F(r_i,m_i),\qquad
+r_nD(p_n\Vert q_n)=J(R_n)-F(r_n,m_n).
+$$
+
+由 $J(R_n)=\sum_iJ(f_i)$ 及 RSK.7，得到经典链式公式在这些实际密度上的身份
+
+$$
+r_nD(p_n\Vert q_n)
+=\sum_{i\in I}r_iD(p_i\Vert q_i)+r_nD(a\Vert b).
+$$
+
+最后代入命题 467.1 的 $r_nD(p_n\Vert q_n)=A-L_n$ 就是 RSK.8。
+
+也可核对两个联合概率密度
+
+$$
+P(i,v)=\frac{f_i(v)}{r_n}=a_ip_i(v),\qquad
+Q(i,v)=\frac{vf_i(v)}{m_n}=b_iq_i(v).
+$$
+
+给定类别 $i$，对数比拆为 $\log(a_i/b_i)+\log(p_i/q_i)$。给定同一 $v>0$，则
+
+$$
+P(i\mid v)=\frac{f_i(v)}{R_n(v)}=Q(i\mid v),
+\tag{RSK.9}
+$$
+
+因为共同因子 $v$ 在归一化中消去。故给定 $v$ 后的类别相对熵为零，联合分布的相对熵恰等于总残差密度的相对熵。
+
+对任意二叉合并树，把每次合并的
+$F(\text{左预算})+F(\text{右预算})-F(\text{合预算})$
+相加。每个内部节点的 $F$ 在自身合并中出现一次负号、在父节点合并中出现一次正号，准确相消；最后只剩 RSK.7 的 $H_I$。若只有一个类别，$f_i=R_n$，于是 $H_I=0$，RSK.8 退回 RSK.4。证毕。
+
+这里的分类是同一实际残差的全正轴严格正解析块。对不相交单元的零密度分类，须另定义零密度处的对数比；它不包含于本命题的严格正假设。
+

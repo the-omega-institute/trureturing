@@ -1,0 +1,53 @@
+**Theorem 11.1 (exact finite boundary).** Fix $P$ and $N\ge1$.
+There is an exact deterministic realization on all edges
+$\mathcal C^-_{P,N}\to\mathcal C_{P,N}$ with exactly $N$
+supplemental values. Thus the least supplemental alphabet for this
+chart is $N$ for both exact contracts of Definition 10.1. Its
+fixed-width binary encoding requires and attains
+$\lceil\log_2N\rceil$ logical bits, in addition to $O^+$ and the fixed
+mathematical parameters $P,N$.
+
+Proof. Use $Z_N=\{0,\ldots,N-1\}$ and set
+$z(s_{N,m,k})=m$ throughout that branch. This assignment is well-defined:
+the histories on different branches contain different supplied payloads,
+and different cut indices have different receipt tallies. More strongly,
+
+$$
+\eta_N(s_{N,m,k})=\bigl(O^+(s_{N,m,k}),m\bigr)
+$$
+
+is injective on the entire chart. Equality of its second coordinates
+gives the same $m$. Equality of its full meters then gives
+$n_{P,N}+k=n_{P,N}+k'$, hence $k=k'$. With $P,N,m$ fixed, actual
+deterministic execution after the specified finite input has exactly
+one such cut. This deals with later-cut collisions; initial-fibre
+injectivity alone would not suffice.
+
+Let $A_N=\eta_N(\mathcal C_{P,N})$ and
+$A^-_N=\eta_N(\mathcal C^-_{P,N})$. Injectivity makes the following
+actual descended update a function:
+
+$$
+T_N\bigl(\eta_N(s_{N,m,k})\bigr)
+   =\eta_N(s_{N,m,k+1}),\qquad k<D_{P,N}.
+$$
+
+Equivalently, on this realized domain $m$ selects the branch. Writing
+$\operatorname{receipts}(o)$ for the meter's receipt count already
+present in $o=O^+(s)$ identifies
+$k=\operatorname{receipts}(o)-n_{P,N}$. The equation supplies one and only one
+successor there, preserving its complete projected native record.
+Induction gives exactly the required singleton response set at every
+permitted horizon. Treating this graph as a nondeterministic graph
+therefore also attains its exact contract. Theorem 10.2's fixed-$N$
+lower bound proves sharpness; counting binary words gives the stated
+width, including width zero for $N=1$.
+
+The domain of $T_N$ is $A^-_N$, not all pairs $(o,m)$. In particular,
+no update or original `none` is assigned at a last chart cut: its
+actual next edge belongs to the forward import outside the selected
+chart. No extension to that import, parsing, binding, another request,
+or all $N$ follows from this construction. The mathematical function
+uses actual finite histories to define its graph; it installs no table,
+advice, extractor, runtime history access or new row engine. ∎
+

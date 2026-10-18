@@ -1,0 +1,27 @@
+## 365. M/U axes with transverse V/D: hypotheses and conclusion
+
+Consider a finite face-paired tetrahedral quotient with exactly six actual
+edge labels M,V,C,D,Z,U. Each original owner has one fixed vertex-induced
+paired frame, in edge order (12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),
+
+where all four displayed labels are distinct. Face maps preserve actual
+labels. Every actual edge has a connected circular normal link. Original
+edge occurrences, including repeated visits, are distinct intervals and
+angle slots. Loops, repeated role vectors and distinct-face self-gluings
+are allowed. Shared positive cosh lengths are m,v,c,d,z,u. All original
+angles are nonnegative and sum to 2*pi at every actual edge.
+
+The unique flat owner is sigma=(M,C,D,V,C,D), with angles pi at M,V
+and zero at its transverse C,D slots. Every other owner is genuine, and
+there is a genuine tau=(Z,M,C,D,M,C). Assume
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    z<u+m+1.                                            (365.1)
+
+The last inequality is an explicit one-sided upper gap. The complete-star maximum-gap theorem in Sections 318–321 supplies
+it under the original hypotheses recalled in Section 356. No degree bound is otherwise needed for this implication.
+

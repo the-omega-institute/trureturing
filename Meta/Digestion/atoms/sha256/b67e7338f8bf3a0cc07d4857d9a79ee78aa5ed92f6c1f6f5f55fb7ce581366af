@@ -1,0 +1,12 @@
+**Corollary 4.2 (joint feasibility away from the critical boundary).**
+For $q_n\downarrow0$, if $\limsup q_n(e^{A_n}-1)<C_{\rm end}$,
+the classes are eventually empty. If
+$\liminf q_n(e^{A_n}-1)>C_{\rm end}$, they are eventually nonempty.
+At the critical product, (WE.31) is a uniform bounded additive strip
+for $t_{\min}$, not an evaluation of its additive correction.
+
+Proof. The first assertion is (WE.22). For the second, (WE.30) gives
+$q_nt_{\rm rec}(q_n)=C_{\rm end}+O(q_n)$; the strict limiting margin
+puts this recovery below the proposed budgets eventually. At $q=0$
+no finite budget is feasible, as already supplied by FA71. $\square$
+

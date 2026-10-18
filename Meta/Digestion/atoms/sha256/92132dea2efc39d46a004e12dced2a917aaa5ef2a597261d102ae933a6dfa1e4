@@ -1,0 +1,21 @@
+# FIB three paid reads: exact almost-sure-return endpoint risk
+
+For the original stationary biased XOR source, the attained minimum
+four-state endpoint classification error with almost-sure finite return
+and at most three actual paid reads is
+
+$$
+\varepsilon_3=1-\frac a2-3a^2\eta-2\eta^3,
+\qquad a=\max(p,1-p),\quad b=\min(p,1-p),\quad\eta=ab.
+$$
+
+The ordinary probability proof below bounds every original measurable
+adaptive arbitrary-integer-address protocol and gives one deterministic
+policy attaining equality on the same source. Its two first-reply
+subtree bounds are attained simultaneously. The model and acquisition
+contract, zero-record results and exact one-read optimum are inherited
+from [Original][Original] and [Risk][Risk]. The exact two-read optimum
+belongs to [Two Read][TwoRead]. The additional result here is the exact
+$q_3=1$ optimum, including its universal comparisons and fully paid
+attainer.
+

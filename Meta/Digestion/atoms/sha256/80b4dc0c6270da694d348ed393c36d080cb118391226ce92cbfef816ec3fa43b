@@ -1,0 +1,4 @@
+## 18. Whole-product certificates and finite rational verification
+
+The existence of some finite positive-gap certificate is already supplied by §10. The following form instead tests inequalities on the complete-law product, without first fixing a label count. Its use of convex separation and polynomial approximation is mature machinery; the source-specific content is its compatibility with both actual edges and the value bridge of Theorem 16.3.
+

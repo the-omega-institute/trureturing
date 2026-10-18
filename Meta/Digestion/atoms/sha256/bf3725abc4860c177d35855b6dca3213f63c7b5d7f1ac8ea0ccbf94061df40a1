@@ -1,0 +1,114 @@
+**Theorem 2.1 (late-contact classification).** For every boxed compatible
+pair, every integer $n\ge4$ and each $r\in\{a,b\}$, the following are
+equivalent:
+
+$$
+\begin{gathered}
+d_n:=\int Q(w_{n,1})\,d\nu_p(Q)=c_rz_r^n;\\[2pt]
+\nu_p=\delta_{P_{p,r}},\qquad \nu_\beta=\delta_{P_{\beta,r}},\qquad
+\Gamma_B=\delta_{(P_{p,r},P_{\beta,r})},\qquad
+\Gamma_A=\delta_{(P_{\beta,r},P_{p,r})}.
+\end{gathered}
+\tag{2.1}
+$$
+
+No recurrence, finite support, reversibility or deterministic-successor
+hypothesis is imposed. The classification concerns the original flows.
+
+**Proof.** Disintegration is available on the compact metric descriptor
+spaces. The common marginals give $\nu_pB=\nu_\beta$ and
+$\nu_\beta A=\nu_p$. Thus $B,A$ act on bounded measurable functions
+modulo their respective marginal null sets: for example, if
+$f=0$ $\nu_p$-almost surely, then
+$\int A|f|\,d\nu_\beta=\int|f|\,d\nu_p=0$.
+Consequently all the following iterations are independent of conditional
+versions and representatives. Countability of the complete carriers
+makes (1.7) simultaneous on all coordinates outside one null set per
+phase. No choice at a null input enters the argument.
+
+On p functions define the Markov return operator $P$ and positive
+weighted return operator $L$ by
+
+$$
+Pf=B(Af),\qquad Lf=(1-u)B(vAf),\qquad
+g=(1-u)B(1-v).
+\tag{2.2}
+$$
+
+The original unweighted balances and regular emissions give
+
+$$
+\nu_pP=\nu_p,\qquad \frac15Pf\le Lf\le\frac4{15}Pf\quad(f\ge0),
+\qquad c_b\le g\le c_a.
+\tag{2.3}
+$$
+
+Here the kernel weights $(1-u)v$ lie in $[1/5,4/15]$.
+Evaluating the B recursion at $\beta\beta$ gives $q_0=g$, where
+$q_j(Q)=Q(w_{j,1})$. Evaluating it at $\beta\alpha w_{j,1}$ and then using
+the A equation gives $q_{j+1}=Lq_j$. Similarly, with
+$p_j(Q)=Q(w_{j,0})$, one has
+
+$$
+q_j=L^jg,\qquad p_j=L^ju\qquad(j\ge0).
+\tag{2.4}
+$$
+
+These are the supplied complete-word recursions [NATIVE, (2.3)--(2.5)][NATIVE].
+They are conditional barycentric identities; no sampled successor is
+replaced by its barycentre inside a nonlinear expression.
+
+The ratio of native marker-one coordinates is
+
+$$
+\frac{c_bz_b^j}{c_az_a^j}
+=\frac{81}{100}\left(\frac{27}{25}\right)^j.
+\tag{2.5}
+$$
+
+It is below one at $j=2$, above one at $j=3$, and strictly increasing.
+Thus $c_az_a^j\le q_j\le c_bz_b^j$ almost surely for every $j\ge3$.
+If $d_n=c_rz_r^n$, a nonnegative endpoint difference has integral zero,
+so $q_n=c_rz_r^n$ almost surely.
+
+Put $c=c_r,z=z_r$. For $r=b$, the upper bounds at $n-1$ and $n+1$ give
+
+$$
+c z^n=q_n=Lq_{n-1}\le c z^{n-1}L\mathbf1,
+\qquad c z^n L\mathbf1=Lq_n=q_{n+1}\le c z^{n+1}.
+\tag{2.6}
+$$
+
+Hence $L\mathbf1=z\mathbf1$. For $r=a$ both inequalities reverse,
+and the same equality follows. All three indices are in the fixed-order
+region because $n\ge4$. Iteration in the null-set quotient gives
+$L^n\mathbf1=z^n\mathbf1$.
+
+For $r=a$ set $f=c_a-g$; for $r=b$ set $f=g-c_b$. In either case
+$f\ge0$ by (2.3), and (2.4) gives $L^nf=0$. Positivity and (2.3)
+imply $L^kf\ge5^{-k}P^kf$ for all $k$: the induction step applies
+$L$ to the previous inequality and then uses $L(P^kf)\ge P^{k+1}f/5$.
+Invariance of the same unweighted marginal now yields
+
+$$
+0=\int L^nf\,d\nu_p\ge5^{-n}\int P^nf\,d\nu_p
+ =5^{-n}\int f\,d\nu_p\ge0.
+\tag{2.7}
+$$
+
+Therefore $g=c_r$ almost surely. Both factors of
+$g=(1-u)B(1-v)$ lie in $[1-b,1-a]$, whose lower endpoint is positive.
+Equality with either extremal square forces both factors to that
+endpoint. Thus $u=r$ almost surely and $B(v=r)=1$ almost surely.
+The identity $\nu_pB=\nu_\beta$ gives $v=r$ $\nu_\beta$-almost surely.
+It follows that $L=z_rP$, so (2.4) gives
+$p_j=rz_r^j$ and $q_j=c_rz_r^j$ for every $j$. Their simultaneous
+coordinate equalities and the zero infinite mass prove
+$Q=P_{p,r}$ almost surely. The A equation then proves
+$W=P_{\beta,r}$ almost surely, again on the entire carrier.
+A probability measure whose two marginals are specified Dirac masses
+is their Dirac pair, proving both flow identities in (2.1).
+Conversely the native laws satisfy (1.7), have tails $z_r^j$ and
+$rz_r^j$, and satisfy all boxes. Their Dirac flows are compatible and
+have the stated mean. $\square$
+

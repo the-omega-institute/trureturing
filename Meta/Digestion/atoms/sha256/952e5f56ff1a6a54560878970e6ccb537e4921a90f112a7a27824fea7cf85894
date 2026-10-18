@@ -1,0 +1,25 @@
+**定理 149.2（固定长度全档案的精确状态下界）。** 在假设149.1下，
+
+$$
+N_n=|G_0^{(n)}|=F_{3n+2},\qquad
+|\mathcal S_n|\ge N_n.
+$$
+
+若同一固定长度二进制载体用 $B_n^{\rm bits}$ 位表示全部保存状态，则
+
+$$
+B_n^{\rm bits}\ge\left\lceil\log_2F_{3n+2}\right\rceil.
+$$
+
+$n=0$ 时 $N_0=1$，下界为零位。
+
+证明（149.2）。精确计数直接复用钉版《FIB 关系延拓几何》定理2.3，不重建已有 Fibonacci 计数定理。其接口是
+
+$$
+\begin{pmatrix}a_{n+1}\\b_{n+1}\end{pmatrix}
+=A\begin{pmatrix}a_n\\b_n\end{pmatrix},\qquad
+ a_0=b_0=1,\qquad a_n=F_{3n+2},\quad b_n=F_{3n+1};
+$$
+
+引用式中 $a_n,b_n$ 分别是两个接缝的词数，载体位数则记为 $B_n^{\rm bits}$。计数初值含空词，递推允许末窗口为零，恰与恢复域一致。若 $s_n(h)=s_n(h')$，使用同一 $D_n$ 得 $h=h'$，所以 $s_n$ 单射，实际像至少有 $N_n$ 个状态。这也是定理141.2在只有一个粗读出纤维时的全历史容量实例。固定 $B_n^{\rm bits}$ 位至多给 $2^{B_n^{\rm bits}}$ 个区别，故 $2^{B_n^{\rm bits}}\ge N_n$，取对数和整数上整即得。零层只有空词，确可由一个状态表示。$\square$
+

@@ -1,0 +1,51 @@
+## 5. The fixed-base response Gram and the triplet obstruction
+
+The metric statement below fixes the endpoint averaging law. Give the
+reachable compact group its normalized Haar measure, and in the double-wall
+case give the two parity components equal mass. This is an averaging
+convention for the ideal endpoint task; it is not a claim that a laboratory
+preparation samples loops with this law.
+
+For each surviving circle character $\xi$, use the normalized quadratures
+
+$$
+q_\xi=(\sqrt2\cos\xi,\sqrt2\sin\xi),
+\tag{5.1}
+$$
+
+so that $\mathbb E[q_\xi q_\xi^{\mathsf T}]=I_2$, and use
+$\mathbb E[\varepsilon^2]=1$ with $\mathbb E[\varepsilon]=0$ for balanced
+parity. No whitening of the ten outputs is performed. These are normalized
+latent coordinates for the stated Haar convention; the output covariance
+remains coordinate-dependent through the decoder.
+
+For a fixed initial phase $\delta$, an edge pair is
+
+$$
+a_e(\cos(\delta+\xi),\sin(\delta+\xi))
+ =\frac{a_e}{\sqrt2}R_\delta q_\xi.
+\tag{5.2}
+$$
+
+Let $D_b$ and $c_b$ be the response factorization in (4.7), and define
+
+$$
+\bar y=\mathbb E[y],\qquad
+C_{\mathrm{out}}=\mathbb E[(y-\bar y)(y-\bar y)^{\mathsf T}].
+\tag{5.3}
+$$
+
+Then
+
+$$
+C_{\mathrm{out}}=D_bD_b^{\mathsf T}\quad\text{and}\quad
+G_{\mathrm{lat}}=D_b^{\mathsf T}D_b.
+\tag{5.4}
+$$
+
+The first is the actual $10\times10$ output covariance. Its repeated-edge
+cross blocks are generally nonzero, and in generic position its nullity is
+four. The second is the latent decoder pullback Gram. The two matrices have
+exactly the same nonzero eigenvalues, including multiplicities, but they are
+not the same object.
+

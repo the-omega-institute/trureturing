@@ -1,0 +1,64 @@
+**Proposition 16.1 (finite rank, marginal and resource readings).**
+Binary elimination for the following finite tori gives:
+
+| $m$ | $n$ | Edge seeds | Incidence rank | Cycle dimension | Face rank | Sector dimension |
+| --- | --- | --- | --- | --- | --- | --- |
+| $3$ | $9$ | $18$ | $8$ | $10$ | $8$ | $8$ |
+| $4$ | $16$ | $32$ | $15$ | $17$ | $15$ | $15$ |
+| $7$ | $49$ | $98$ | $48$ | $50$ | $48$ | $48$ |
+| $8$ | $64$ | $128$ | $63$ | $65$ | $63$ | $63$ |
+| $9$ | $81$ | $162$ | $80$ | $82$ | $80$ | $80$ |
+
+At $m=3$, exact enumeration of the $2^{18}$ edge assignments
+retains $1024$ zero-syndrome rows. Each of the four $\chi$ sectors
+has $256$ rows. In each sector every edge has $128$ values of each
+bit, and every full vertex star has all eight even rows exactly
+$32$ times. Every face flip changes precisely three actual owners.
+These checks concern the rank and local-law claims, not a claim of
+four $G_3$ components at $m=3$, where $2r<m$ fails.
+
+There is also a bounded exact check of the native correspondence.
+For all $16$ assignments of four leaf bits, the seven prescribed
+factors reconstruct exactly their one perfect tree among all $123$
+states of $S_3$. At $m=3$, the scaffold has $H_0=4,D=7$.
+Across its $1024$ positive rows and all $127$ original requests,
+the actual-owner reader agrees with the requested full factor in all
+$130048$ comparisons. Inspecting every original-root word of length
+at most eight gives $511$ literals per row; exactly $36$ words vary
+across the rows, all of length seven with alpha/beta replies. This is
+a finite check of the literal classification, not a finite-length
+substitute for its arbitrary-word proof.
+
+The first main-threshold example, $m=7$, has
+
+$$
+\begin{aligned}
+n&=49,& |R_m|&=2^{50}=1125899906842624,\\
+|R_h|&=2^{48}=281474976710656,&
+\Delta(P)&=95/3,&\Delta(P_h)&=101/3.
+\end{aligned}
+\tag{OCC.48}
+$$
+
+Here $H_0=6,D=9$. The descriptor needs exactly $14$ Reads and
+$126$ letters on the named slice. The full-family scan makes $511$
+Reads and submits $4097$ letters. At $m=8$ the corresponding
+descriptor cost is $16$ Reads and $144$ letters with the same
+$D=9$ and full scan. At $m=9$, $D=10$, these costs are $18$
+Reads and $180$ letters, while the full scan has $1023$ Reads
+and $9217$ letters.
+
+Proof. The rank columns follow either directly by finite binary
+elimination or from the two rank proofs in Theorem 11.1. The
+$m=3$ counts are the cardinalities and affine-projection fiber counts
+of Theorems 11.1 and 13.1; enumerating finite binary vectors gives
+the same integers. For the decoder check, enumerate $S_3$ by (OCC.3),
+evaluate its seven factors by (OCC.4), and compare with (OCC.32).
+Enumerate the $1024$ retained edge vectors, construct their actual
+scaffolds, and compare each factor with the case distinction and
+selected literal (OCC.46). Direct tree traversal gives the stated
+bounded reply array. Substitute $m=7,8,9$ into (OCC.37)–(OCC.45)
+for the resource readings. The infinite families and all-execution
+lower bounds rest on their proofs, not extrapolation from these
+finite checks. $\square$
+

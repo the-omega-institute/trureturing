@@ -1,0 +1,5 @@
+**Theorem.** There are at most two actual flat tetrahedron owners.
+This is a bound on the whole original flat set, not just one face
+component. It does not bound the number of genuine owners, remove
+external low-only regions, or prove six-reservoir flat exclusion.
+

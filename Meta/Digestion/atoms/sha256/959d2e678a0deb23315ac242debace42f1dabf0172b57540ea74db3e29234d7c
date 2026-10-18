@@ -1,0 +1,64 @@
+### 77.3. A characteristic-zero rank certificate for all pairs
+
+The pair exclusion does not rely on a modular point count. Work over
+\(\mathbb K=\mathbb Q(i)\). Reduce \(\tau,A(D,\tau),C_a(D,\tau)\) and
+\(K(D)=D^2+4\tau(D)\) modulo the monic normalization of \(f\), writing
+the reduced Cramer solutions as \(a(D),c(D)\). Define
+\[
+ \mathcal A=\mathbb K[D,E,s,t]/
+  (f(D),f(E),s^2-K(D),t^2-K(E)).                              \tag{77.9}
+\]
+This algebra has dimension 100. Its ordered basis is
+\(s^\epsilon t^\eta D^jE^k\), with \(\epsilon,\eta\in\{0,1\}\),
+\(0\leq j,k<5\), indexed by \(50\epsilon+25\eta+5j+k\).
+The monic triangular relations prove freeness; simplicity or reality of
+roots is not needed for this dimension statement.
+
+In this algebra put
+\[
+\begin{gathered}
+ z(D,s)=\frac{2+i(s+D)}{2-i(s+D)},\qquad
+ r(D,s)=\frac{2+i(s-D)}{2-i(s-D)},\\
+ G=\frac{st(a(D)-ic(D))(a(E)+ic(E))}{11/4},\\
+ O_m=2+\bar z(D,s)z(E,t)+G[2+\bar r(D,s)r(E,t)],\\
+ O_d=1+\bar z(D,s)+z(E,t)+G[1+\bar r(D,s)+r(E,t)].             \tag{77.10}
+\end{gathered}
+\]
+Bars here replace \(i\) by \(-i\) while fixing the four algebra variables.
+At real reconstructed points these are ordinary conjugates, and
+\(O_m,O_d\) are exactly the original overlaps for matched and different
+unique-coordinate positions. The denominator \(11/4=|\kappa|^2\)
+accounts for the actual input normalization of the lower phase.
+
+All inverses in (77.9)–(77.10) exist and are integral at the split prime
+\(73\), with \(i\mapsto27\). The rational constants in \(f,\tau,11/4\)
+are units there. With \(f\) monic, the resultants modulo 73 for the
+remaining one-variable denominators are
+\[
+\begin{array}{c|ccccc}
+ d&K&J&F_0&(2-iD)^2+K&(2+iD)^2+K\\ \hline
+ \operatorname{Res}_D(f,d)&20&34&16&55&37.
+\end{array}                                                   \tag{77.11}
+\]
+Here \(J=D-2\tau+6\), \(F_0=D^2+(\tau+1)^2\). Nonzero resultants give
+inverses in the characteristic-zero algebra over the local coefficient
+ring, so reduction of the multiplication matrices is legitimate.
+
+Let \(M_m,M_d\) be multiplication by \(O_m,O_d\) in the ordered basis
+of (77.9), and use the same principal index set
+\[
+ I=\{0,\ldots,69\}\cup\{75,\ldots,94\}.
+\]
+The complete finite certificate is
+\[
+ \det M_m[I,I]\equiv16,\qquad
+ \det M_d[I,I]\equiv64\pmod{73}.                             \tag{77.12}
+\]
+To reconstruct these matrices, multiply each basis monomial by (77.10),
+reduce powers of \(s,t\) with their quadratic relations, and reduce
+powers of \(D,E\) with the monic quintic. Inverses use the one-variable
+Euclidean algorithm justified by (77.11). Thus (77.3)–(77.12), together
+with the two printed original rows (75.26), determine every matrix entry
+and every denominator; the certificate has no numerical-search or
+unpublished-data premise. Each characteristic-zero rank is at least 90.
+

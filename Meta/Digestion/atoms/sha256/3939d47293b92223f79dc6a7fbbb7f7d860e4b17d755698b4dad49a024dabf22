@@ -1,0 +1,30 @@
+**Corollary 8.2 (finite certificates have the original memory consumer).**
+If $V_{\rm swap}(d,L,\mu,C_0,\pi)$ accepts, then every rational
+$\widehat C>0$ satisfying
+
+$$
+\widehat C^{L+1}\ge4^{m_d}C_0^{L+1}
+\tag{OOA.34}
+$$
+
+is an unrestricted all-template cap. In particular, against every
+original competitor and for every $D\ge d$,
+
+$$
+\beta_d(\mu)\le\widehat C,\qquad
+M_1(D)\ge\left\lceil\widehat C^{-2^{D-d}}\right\rceil,
+\qquad \lambda\ge-2^{-d}\log_2\widehat C.
+\tag{OOA.35}
+$$
+
+Proof. Theorem 6.3 gives $\beta_{d,L}(\mu)\le C_0$. The credited
+[SIR, Theorem 4.1][SIR] preserves actual owner sections and every
+once-owned weight, giving
+$\beta_d(\mu)\le4^{m_d/(L+1)}\beta_{d,L}(\mu)$.
+Equation (OOA.34) bounds this factor by $\widehat C$.
+[NPC, Theorem 7.1][NPC], or the uniform version of Theorem 8.1,
+then supplies the memory and rate implications. Both directions of
+the RRN correspondence preserve original block count; the SIR factor
+is explicitly paid in this analytical transfer. These are uses of
+credited transport, with the new finite rule as input. $\square$
+

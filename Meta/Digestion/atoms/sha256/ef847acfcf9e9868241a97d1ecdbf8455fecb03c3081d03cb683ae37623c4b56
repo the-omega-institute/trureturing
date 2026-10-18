@@ -1,0 +1,33 @@
+**Lemma 7.2 (finite simple amplifier with a strict fixed slack).** From a simple automaton $A_0$ one can effectively construct a simple automaton $A$ with
+
+$$
+\begin{array}{ll}
+\forall w:p_{A_0}(w)\le1/2&\Longrightarrow V_A\le1/2,\\
+\exists w:p_{A_0}(w)>1/2&\Longrightarrow V_A=1.
+\end{array}
+\tag{7.1}
+$$
+
+No assertion of attainment of $V_A=1$ is made.
+
+**Proof.** Extend the input alphabet by delimiters $\tau,\#$, disjoint from the old alphabet. Maintain a finite $A_0$ simulation label, a finite round flag in “no trial yet/all accepted/all rejected/mixed”, and a syntax flag recording whether the latest operation completed a trial. There are accepting and rejecting absorbing sinks; only the accepting sink is final. A trial is an old-alphabet word, possibly empty, followed by $\tau$. At $\tau$ inspect the accepting predicate of the currently sampled $A_0$ label, update the round flag by that Boolean result, and set that private simulation label to $q_0$ for the next trial. This is a deterministic finite automaton transition, not a source or PH operation. A $\#$ is legal only immediately after at least one completed trial. On $\#$ an all-accepted round enters the accepting sink, an all-rejected round the rejecting sink, and a mixed round returns to the initial unresolved mode with round flag cleared. Old letters simulate $A_0$ and clear the “just completed” syntax flag. A malformed $\#$ sends all remaining unresolved mass to the rejecting sink; already accepted mass stays accepted. Unfinished trials or rounds contribute no new acceptance. This is an explicit finite-state description; every transition is deterministic or a single fair split inherited from $A_0$, so it remains simple.
+
+For one syntactically completed round with trial words $w_1,\ldots,w_n$, let $p_i=p_{A_0}(w_i)$. The fresh independent finite-state simulations give, relative to its incoming unresolved mass,
+
+$$
+G=\prod_{i=1}^np_i,\qquad D=\prod_{i=1}^n(1-p_i),
+\tag{7.2}
+$$
+
+as the absorbing acceptance and rejection probabilities; all mixed outcomes remain unresolved. If every old word has $p_i\le1/2$, then $G\le D$. At each completed round the newly accepting mass is at most the newly rejecting mass. Summing these increments over any finite input gives total accepting mass at most total rejecting mass, and hence at most $1/2$. Malformed input only adds rejection, and unfinished input adds neither acceptance nor an exception to the inequality. This handles all finite inputs, not just repeated well-formed words.
+
+If some old word has $p>1/2$, use $n$ copies of that trial per round, and $m$ identical completed rounds. Here $G=p^n$, $D=(1-p)^n$ and unresolved survival per round is $1-G-D$. Its finite-word acceptance is exactly
+
+$$
+\frac{p^n}{p^n+(1-p)^n}
+\left[1-\left(1-p^n-(1-p)^n\right)^m\right].
+\tag{7.3}
+$$
+
+For $p=1$ this is 1 after one round. For $1/2<p<1$, choose a finite $n$ making the first factor as close to 1 as required, since $((1-p)/p)^n\to0$. For that fixed $n$, $G+D>0$ and the second factor tends to 1 as $m\to\infty$. Thus arbitrarily close values below 1 occur on finite words, and $V_A=1$. No unbounded integer $n$ or $m$ is stored in the automaton; their repetition is part of the finite input word. The finite construction is computable and proves (7.1) using only the strict-cutpoint primary premise and this elementary argument. ∎
+

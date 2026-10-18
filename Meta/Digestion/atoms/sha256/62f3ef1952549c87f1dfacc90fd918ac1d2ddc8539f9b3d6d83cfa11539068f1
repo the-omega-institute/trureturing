@@ -1,0 +1,23 @@
+**Definition 5.1 (finite certificates and their missing region).**
+For finite $A\subseteq\mathbb N^3$, write
+
+$$
+\uparrow A=\{x\in\mathbb N^3:\exists v\in A,\ v\le x\}.
+\tag{NRF.20}
+$$
+
+For each $v\in A$ choose a coordinate $f(v)$ with
+$v_{f(v)}>0$. If a member has all coordinates zero, no such
+choice exists. For each resulting function $f$, define a mixed
+upper box by
+
+$$
+B_i^f=
+\min\{v_i-1:v\in A,\ f(v)=i\},\qquad
+\min\varnothing=\infty.
+\tag{NRF.21}
+$$
+
+For $A=\varnothing$ there is one empty function and its box is
+$(\infty,\infty,\infty)$.
+

@@ -1,0 +1,48 @@
+**Definition 1.2 (source quantities).** Use source amplitudes
+$h_0,h_1,h_2,a,b,c_{\rm src},d>0$, with $m_1,m_2>0$, and set
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad
+S=c_{\rm src}e_0e_2^T+de_2e_0^T,\quad
+M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\quad
+\theta=\frac{ab}{h_0h_1},\quad
+\omega=\frac{c_{\rm src}d}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\\
+s_0=\sqrt\delta,\qquad \alpha=\theta/\delta,\qquad
+\beta=\omega/\delta,\qquad \alpha+\beta=1.
+\end{gathered}
+\tag{FC.1}
+$$
+
+The vectors $e_i$ in (FC.1) are qutrit coordinate vectors. The source
+is one consistent root; a rectangular enclosure of its coordinates
+does not assert TP at other points. Let
+$\Delta=\rho_{27,+,+}-\rho_{5,+,+}$ in the original supported input
+coordinates of GC. Put $K_0=D,K_1=T,K_2=S$,
+$N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$,
+$L=\operatorname{diag}(s_0,1,1)$, $G=LNL$ and
+$H_0=(1-\delta)N_{00}>0$. For $h=(1,z,w)$ on
+$\alpha z^2+\beta w^2=1$ define
+
+$$
+\begin{gathered}
+K_h=s_0D+zT+wS,\quad n_h=(0,dw/h_2,-bz/h_1)^T,\\
+\ell(h)=h^TGh,\quad f(h)=n_h^T\Delta n_h,\\
+\mathfrak c(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+     {h_0^2\delta+b^2z^2+d^2w^2}>0,\\
+V=\frac{m_2h_1^2}{b^2},\quad W=\frac{m_1h_2^2}{d^2},\quad
+\mu=\alpha V+\beta W,\quad u_F=V/\mu,\quad v_F=W/\mu,\\
+\mathfrak c_f=\mathfrak c(1,\sqrt{u_F},\sqrt{v_F}),\quad
+\nu=\mu/\mathfrak c_f,\quad t_0=W/\mathfrak c_f.
+\end{gathered}
+\tag{FC.2}
+$$
+
+In particular $\alpha,\beta>0$ and $t_0>0$. These are GC's physical
+quantities, including its failure pairing; no freely fitted payoff or
+failure allocation is substituted.
+

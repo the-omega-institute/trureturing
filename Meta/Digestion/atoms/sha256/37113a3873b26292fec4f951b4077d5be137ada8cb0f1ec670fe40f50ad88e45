@@ -1,0 +1,32 @@
+**Lemma 28.1 (independent subtrees within this full cylinder).** Fix a
+listed pattern $t$ and two incomparable reached positions $s,r$ in $y$,
+both of length less than $d$. Let $t_s,t_r$ be the subpatterns rooted at
+those positions. The possible pairs $(y|_s,y|_r)$, as $y$ ranges over
+$\mathcal C(t)$, are exactly
+
+$$
+\mathcal C(t_s)\times\mathcal C(t_r).
+\tag{ARH.28.1}
+$$
+
+Every such pair has an effective finite completion to $\mathcal C(t)$.
+Moreover two pairs $(z,w),(z',w')$ with $z\equiv_j z'$ and
+$w\equiv_j w'$ admit completions $y,y'$ satisfying $y\equiv_j y'$.
+
+Proof. A subtree of a filling necessarily fills its subpattern. In the
+other direction remove the two disjoint subpatterns from $t$, leaving a
+context with two distinguished placeholders. Fill its other frontier
+variables by $\alpha$, and insert $z,w$ at the placeholders. Since
+$s,r$ are incomparable, their frontier variable sets are disjoint, and
+this operation gives precisely the specified subtrees and a filling of
+$t$. It is finite and effective. Apply the same context and the same
+other fillings to $z',w'$. Any original address either stays in the fixed
+context or enters one placeholder and uses a suffix no longer than the
+whole address. Agreement at relative lengths less than $j$ therefore
+gives $y\equiv_j y'$, including absence below a leaf. $\square$
+
+This product statement is confined to disjoint original subtrees of the
+single linear pattern. The old pair $(\rho(y),y)$ remains coupled
+throughout. In particular (ARH.28.1) is not a product approximation of
+that acquired graph.
+

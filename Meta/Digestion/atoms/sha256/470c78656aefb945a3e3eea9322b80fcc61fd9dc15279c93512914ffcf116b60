@@ -1,0 +1,33 @@
+##### 定理 1.14.3： 查询晶格的交与严格切分
+
+对任意有限查询族 $\Gamma,\Delta$，有
+
+$$
+\boxed{
+\Pi_{\Gamma\cup\Delta}
+=\Pi_\Gamma\cap\Pi_\Delta.
+}
+$$
+
+并且
+
+$$
+\Pi_{\Gamma\cup\{q\}}\subsetneq\Pi_\Gamma
+$$
+
+当且仅当存在 $\theta,\theta'\in\Theta$，使
+
+$$
+(\theta,\theta')\in\Pi_\Gamma,
+\qquad
+P_\theta(q)\ne P_{\theta'}(q).
+$$
+
+**证明。**
+
+联合画像相等，当且仅当它在 $\Gamma$ 坐标上相等且在 $\Delta$ 坐标上相等，这给出第一式。
+
+加入 $q$ 后仍然属于 $\Pi_\Gamma$，所以只可能细化。严格性等价于存在旧纤维内的一对实现被新坐标分开，这正是第二式中的见证。证毕。
+
+<a id="claim-1-14-4"></a>
+

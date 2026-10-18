@@ -1,0 +1,2 @@
+**定义 4.1（重复 source-only 的封口域）。** 固定任意实际共同 Ready 前缀 $P$，它之前可以已有增长和历史调用；从 $P$ 以后只允许 `01`、一个规范七标签源帧、完整 InnerReturn/CaptureCAP、再到 Ready 的有限重复，不插入 `1`。$\mathcal D_P^{\rm seal}$ 选其中当前调用三个 wire 块及描述符均已封口、next row 是未改原始非 IN 行且尚未到最后 changed idle CTL 的 running 切口。不同滚动 entry 可以比较，但共同的 $P$ 固定；不把不同 $P$ 的定理直接取并。
+

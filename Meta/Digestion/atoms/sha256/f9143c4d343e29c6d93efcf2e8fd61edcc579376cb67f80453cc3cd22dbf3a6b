@@ -1,0 +1,15 @@
+**Convention 3.3 (literature boundary).** Madiman--Tetali, *Information
+Inequalities for Joint Distributions, with Interpretations and Applications*,
+Proposition II, uses one common finite-entropy joint law for fractional entropy covering; that
+is the only outside entropy principle used in the proof of Theorem 2.2. It
+does not give a native all-length tail modulus. The monotone convex/concave
+normalizations in Jakhar--Kurri--Chillara--Prabhakaran likewise supply no
+native cofinality theorem. Finite-language counting results such as
+Dyer--Richerby concern arbitrarily large instances and do not furnish a
+uniform cutoff for the native templates. These hypotheses are why
+$V_{\mathrm{joint}}$ is recorded as soundness only.
+
+[MT]: https://arxiv.org/html/0901.0044v2
+[JKCP]: https://arxiv.org/html/2601.15723v1
+[DR]: https://arxiv.org/html/1003.3879v4
+

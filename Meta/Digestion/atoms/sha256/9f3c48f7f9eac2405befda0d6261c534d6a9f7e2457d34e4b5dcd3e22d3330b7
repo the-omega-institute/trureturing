@@ -1,0 +1,33 @@
+### 定义 21.1（删除投影）
+
+令
+
+\[
+\Sigma_n
+=
+\{I\subseteq[n]:
+i\in I\Longrightarrow i+1\notin I\}.
+\]
+
+定义
+
+\[
+\delta_n:\Sigma_{n+1}\longrightarrow\Sigma_n,
+\qquad
+\delta_n(I)=I\cap[n].
+\]
+
+对概率律定义线性推前
+
+\[
+D_n:\Delta(\Sigma_{n+1})\longrightarrow\Delta(\Sigma_n),
+\]
+
+\[
+(D_np)(J)
+=
+\sum_{\substack{I\in\Sigma_{n+1}\\\delta_n(I)=J}}p(I).
+\]
+
+对有符号质量和切向量使用同一个线性映射 \(D_n\)。
+

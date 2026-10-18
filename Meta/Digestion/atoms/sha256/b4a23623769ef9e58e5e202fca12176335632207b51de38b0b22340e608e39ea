@@ -1,0 +1,102 @@
+**Theorem 15.3 (exact original returned-cut characterization).** For every finite admissible $\Xi$ in Hypotheses 15.1 and every such $c$,
+
+$$
+\boxed{\quad n_j^{\rm abs}(\Xi;c)=\kappa_j(\Xi),\qquad
+ N^{\rm abs}(\Xi;c)=\sum_{j=1}^{N_\beta}\kappa_j(\Xi).\quad}
+\tag{15.6}
+$$
+
+One original initialized observer simultaneously attains all these minima on every original control/record fiber. The lower bound applies to every finite COMPLETE/p refinement and every nonstationary actual-history row. For represented observers the same expression is always a lower bound. Equality in that domain follows when minimizing factors give permitted finite exact services for the constructed latch row, kernels and emissions, with canonical returned workspace. In particular rational minimizing factors and rational primitive probabilities suffice. Rational input or effective real approximation alone is not asserted to give rational or finitely samplable minimizing factors.
+
+**Proof of necessity at an original history.** Choose any positive p history $h$ whose next beta reaches the original fiber $c$. Use the actual complete-state row $\rho_h(x)$ and returned complete-state kernels $B_{xy},A_{yz}$. Source-independent initialization and updates imply that, conditional on the acquired word $h$, all private state and future private randomness are independent of the single $K$ and its next letters. The source probability of beta-alpha is
+
+$$
+s_h=\sum_k\nu_h(k)r_k(1-r_k)>0,
+$$
+
+with exactly the paid-history posterior of (1.2). It is common to all private paths and cancels on conditioning. Therefore
+
+$$
+\Pr(X=x,Y=y,Z=z\mid h,\beta\alpha)
+ =\rho_h(x)B_{xy}A_{yz}.
+\tag{15.7}
+$$
+
+This reuses the original-history identity (13.9), not a stationary row. Fix $j$ and retain only middle configurations $y$ of law $W_j$ with positive arrival probability at this history. Define
+
+$$
+U^j_{iy}=\sum_{x:Q_x=Q_i}\rho_h(x)B_{xy},\qquad
+f_{y,k}=\sum_{z:Q_z=Q_k}A_{yz}.
+\tag{15.8}
+$$
+
+Every positive successor of a retained $y$ is reachable at the positive history $h\beta\alpha$. The exact third marginal forces its law to be in the prescribed p list. Hence $f_y$ is a probability row. Its full same-update cylinder equation, divided by $v(W_j)\ge1/3$, is
+
+$$
+\sum_k f_{y,k}Q_k=\mathcal R_A(W_j),
+\tag{15.9}
+$$
+
+including infinity. Thus $f_y\in\mathcal F_j$. Pushing (15.7) to the three descriptors gives
+
+$$
+t_{ijk}=\sum_{y:W_y=W_j}U^j_{iy}f_{y,k}.
+\tag{15.10}
+$$
+
+All retained columns have positive total mass. Consequently (15.10) is an admissible factorization in (15.5) with no more than $|Y_j(M,c)|$ columns, proving $|Y_j(M,c)|\ge\kappa_j$.
+
+The row $\rho_h$ can change arbitrarily with history. Its only use was in nonnegative incoming coefficients. The outgoing row in (15.8) depends solely on the complete middle configuration; any information that could change it is already counted in that configuration. Refining p descriptors into multiple complete states is absorbed by the two sums in (15.8). The argument holds at each single history, hence also for the union of reachable cuts. Summing over distinct middle laws proves the lower bound for the total count.
+
+**Proof of simultaneous algebraic attainment.** For each $j$ select minimizing factors $U^j,V^j$ in (15.5), and put $r_j=\kappa_j$. Use p labels $i$ and suspended labels $(j,\ell)$, $1\le\ell\le r_j$, with
+
+$$
+B_{i,(j,\ell)}=\frac{U^j_{i\ell}}{\pi_i},\qquad
+A_{(j,\ell),k}=V^j_{\ell k},\qquad
+\widehat\tau_{j\ell}=\sum_i U^j_{i\ell}>0,
+$$
+
+$$
+u_i=Q_i(\alpha),\qquad v_{j\ell}=1-W_j(\beta).
+\tag{15.11}
+$$
+
+Because $\sum_{j,\ell}U^j_{i\ell}=\sum_jb_{ij}=\pi_i$, $B$ is stochastic. Every row of $A$ is stochastic by (15.4). Direct summation, using the entire prescribed tensor, gives
+
+$$
+\pi B=\widehat\tau,\qquad
+\widehat\tau A=\pi,\qquad
+\sum_\ell\pi_iB_{i,(j,\ell)}A_{(j,\ell),k}=t_{ijk}.
+\tag{15.12}
+$$
+
+The first two are both stationary unweighted balances, not just normalization of each conditional row. Moreover,
+
+$$
+\sum_{j,\ell}B_{i,(j,\ell)}W_j
+ =\sum_j\frac{b_{ij}}{\pi_i}W_j=\mathcal R_B(Q_i),
+\qquad
+\sum_kA_{(j,\ell),k}Q_k=\mathcal R_A(W_j).
+\tag{15.13}
+$$
+
+The second equality is precisely the generator constraint. Thus the candidate laws solve the complete same-update recursions, including all finite and infinite atoms. This is the own-law step supplied by Theorem 12.2 and [PAIRED, (11.19)](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md), with a smaller choice of middle labels.
+
+For completeness its hypotheses can be checked directly. With the emissions in $[1/3,2/5]$ and
+
+$$
+L=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),
+$$
+
+we have $L\mathbf1\le(4/15)\mathbf1$ and $u+g=\mathbf1-L\mathbf1$. The generated finite-word masses are $L^nu,L^ng$, and
+
+$$
+\sum_{n<N}L^n(u+g)=\mathbf1-L^N\mathbf1.
+\tag{15.14}
+$$
+
+This proves normalization, p tails at most $(4/15)^N$ and suspended tails at most $(2/5)(4/15)^N$. Infinite outcomes stay in the carriers with zero mass. Two normalized solutions of (15.13)'s recursions have maximal TV discrepancies $z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$, forcing equality. Hence these are exactly the laws generated by the installed table, rather than assigned predictions unrelated to its transitions. No irreducibility or mixing is needed.
+
+The original installation and exact count are established next; they apply to this single simultaneous table. ∎
+

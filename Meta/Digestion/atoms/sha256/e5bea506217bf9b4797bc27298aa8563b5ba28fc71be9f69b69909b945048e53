@@ -1,0 +1,8 @@
+**Convention 40.0 (The common-copy separator setting).**
+The graphs, occupancy arrays and attainable histograms are those of
+[§39 of the preceding volume](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS_CONTINUATION.md).
+All shared vertices retain their identities across branches, and every
+ordinary degree counts one common set of rows.
+
+## 40. The missing joint coordinate and the cost of inconsistent separator laws
+

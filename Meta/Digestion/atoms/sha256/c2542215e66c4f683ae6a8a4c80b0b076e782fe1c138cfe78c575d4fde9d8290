@@ -1,0 +1,26 @@
+**Proposition 263.4 (Strict improvement of sensitivity without new
+certificate coverage).** At $L=3$, let the only nonzero scores be
+
+| word | $A$ | $C$ | $P$ |
+|---|---:|---:|---:|
+| $001$ | 3 | 4 | 0 |
+| $010$ | 3 | 4 | 1 |
+| $011$ | 4 | 3 | 4 |
+
+Then $T=0$, $B_N=B_O=17$, $W=16$,
+$\omega_y=5$, $\Xi_y=9/2$, $\Omega_y=13/3$, and
+$\Gamma_{\rm all}=17$.
+
+**Proof.** The reward vectors on labels $0,1,2,3$ are
+$(3,4,0,0)$, $(4,5,0,0)$, $(8,7,0,0)$.
+Their separate maxima sum to 17, attained simultaneously by
+$O(2,3;1,1,0)$. The anchor has score $4+5+7=16$.
+For pairs $(1,2),(1,3),(2,3)$, the $H^{00}$ oscillations are
+$4,5,0$, the $d$ oscillations are $9,7,4$, and the maximal
+numerators in (263.3) are $9,7,13$. These follow by adding the
+three displayed reward vectors in their indicated cells, including
+all four labels. They give every asserted value.
+Here $\Delta_N(y)=1$, so $V=y,\theta=0$ already pays the input.
+Strict sensitivity improvement does not itself enlarge the set of
+certified inputs. $\square$
+

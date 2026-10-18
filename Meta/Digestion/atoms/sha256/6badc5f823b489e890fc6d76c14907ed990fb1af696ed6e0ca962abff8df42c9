@@ -1,0 +1,25 @@
+**Definition 78.1 (raw privileged scaling at the fixed pole).** Write
+$c_j=c_\kappa^{(j)}(k_0)$ for $j=0,1,2$ and
+$j_0=\varepsilon^4|\det(c_0,c_1,c_2)|>0$.
+For $s>0$ and $\xi=(r,y,z,w)\in\mathbb R^4$ define
+
+$$
+\Xi_s(\xi)=\left(k_0+\varepsilon s r,
+                 s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w\right).
+\tag{78.1}
+$$
+
+Its absolute raw Jacobian is exactly $j_0s^7$.
+Fix a nonzero $f\in C_c^\infty(\mathbb R^4\setminus\{0\})$,
+normalized by $\int|f|^2d\xi=1$, and let $K$ be its compact support.
+For all sufficiently small $s$ put
+
+$$
+\psi_s(\Xi_s(\xi))=j_0^{-1/2}s^{-7/2}f(\xi),
+\tag{78.2}
+$$
+
+with zero extension outside the image of its compact support.
+The support lies in an interior height chart for small $s$ and all
+three phase coordinates are real.
+

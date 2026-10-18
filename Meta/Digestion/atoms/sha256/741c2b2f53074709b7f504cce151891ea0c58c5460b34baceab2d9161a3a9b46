@@ -1,0 +1,23 @@
+### 62.3. From the output inequality to an unrestricted diamond certificate
+
+Let Ψ=Φ∘J and Ψ_*=J∘E_(p,q), and set δ=||Ψ−Ψ_*||_diamond. Each basis input is a normalized density operator. Its output difference is Hermitian and trace zero, with trace norm at most δ. For any effect 0≤F≤I, its expectation difference is therefore at most δ/2 in absolute value. Since the target output has no leakage,
+
+    ℓ_i≤δ/2,    |p_i−p_i^*|≤δ/2.
+
+For off-diagonal input |i><j|, the input trace norm is one. By the definition of the diamond norm, ||(Ψ−Ψ_*)(|i><j|)||_1≤δ; taking the indicated matrix element gives
+
+    |λ_ij−λ_ij^*|≤δ.
+
+There is no use here of an unnormalized Choi entry as a diamond witness. These are direct norm consequences on normalized states or trace-norm-one matrix units. They remain valid when the definition optimizes over arbitrary references.
+
+For the target, p_1^*=p,p_2^*=q, λ12^*=p,λ23^*=q,λ13^*=0, so W(Ψ_*)=p. The total coefficient error in W is at most (2+2+1)δ+(1+2)δ/2=13δ/2. Combining this with (1) gives
+
+    p ≤ W(Φ)+13δ/2 ≤ 10sqrt(δ)+(19/2)δ.
+
+Writing x=sqrt(δ) and solving the increasing quadratic on x≥0 gives
+
+    x ≥ (sqrt(100+38p)−10)/19
+      = 2p/(10+sqrt(100+38p)),
+
+which proves the lower bound. The basis-state trace-zero argument explains all factors of two.
+

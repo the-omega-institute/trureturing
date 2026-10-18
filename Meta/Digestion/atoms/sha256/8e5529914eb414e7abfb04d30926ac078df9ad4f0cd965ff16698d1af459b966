@@ -1,0 +1,61 @@
+**定义 24.11（关系矩、整数直方图及无储库合同）。** 给整数 $n\ge1$，令
+
+$$
+\Gamma_n=\{I\subseteq[n]:\text{不存在 }j\text{ 使 }j,j+1\in I\}.
+$$
+
+它是包含空集的向下闭合集族。对概率律 $(p_I)_{I\in\Gamma_n}$，定义
+
+$$
+\mu_S=\sum_{I\in\Gamma_n,\ I\supseteq S}p_I,\qquad \mu_\varnothing=1.
+$$
+
+非法 $S$ 的矩恒为零。两个相同长度的合法标签列表具有整数直方图差 $c=(c_I)_{I\in\Gamma_n}$；约定正系数为输出增加，负系数为输入减少。固定整数 $r\ge0$，保持直到 $r$ 阶指
+
+$$
+\sum_{I\in\Gamma_n,\ I\supseteq S}c_I=0
+\quad\text{对所有 }S\subseteq[n],\ |S|\le r.
+$$
+
+其中 $S=\varnothing$ 就是质量条件。定义取消共同副本后的体积
+
+$$
+m(c)=\sum_I(c_I)_+=\sum_I(-c_I)_+
+=\frac12\|c\|_1,\qquad (a)_+=\max(a,0).
+$$
+
+系数允许任意整数，所以同一合法标签可在列表中重复；排列变化和共同旁观副本均不增加 $m(c)$。
+
+严格算子合同是在 $m$ 个可区分系统的空间 $(\mathbb C^{\Gamma_n})^{\otimes m}$ 上，使用关系投影与总荷
+
+$$
+N_S=\sum_{I\supseteq S}|I\rangle\langle I|,\qquad
+Q_S^{(m)}=\sum_{j=1}^mN_S^{(j)}.
+$$
+
+没有外部储库、额外标签或另一个未计入的自由度抵偿荷。所讨论的 Hamiltonian 或幺正算子须与每个指定 $Q_S^{(m)}$ 交换。因此其每个非零有序矩阵元连接的两个列表具有相同的这些总荷；证明是定理 24.3 的矩阵元交换子式，将 $a_I$ 换成 $\mathbf1_{S\subseteq I}$。这才把整数直方图条件接到全输入的严格加和守恒；仅有某个输入的总期望相等不足以调用它，也不在此把它推广为任意 CPTP 期望保持通道的分类。
+
+数学引文与相位对应。[辛完成定义 35.12、命题 35.13](SYMPLECTIC_PREDICTIVE_COMPLETION.md#3513-长路径关系矩与共轭差分相位)使用同一 $\Gamma_n$、同一矩 $\mu_S$ 及负相位 $\psi_I=\sqrt{p_I}e^{-i\theta_I}$，供应
+
+$$
+p_I=\sum_{T\in\Gamma_n,\ T\supseteq I}(-1)^{|T|-|I|}\mu_T,
+\qquad
+D_T(I)=(-1)^{|T|-|I|}\mathbf1_{I\subseteq T},
+$$
+
+$$
+\Phi_T=\sum_{I\subseteq T}(-1)^{|T|-|I|}\theta_I,
+\qquad
+\theta_I=\sum_{T\subseteq I}\Phi_T\pmod{2\pi}.
+$$
+
+这里 $D_T$ 是第 $T$ 个矩坐标的反演列；正逆整数三角矩阵均对角为一，所以相位变换在完整周期环面互逆。以射影直线面积 $2\pi$ 和 $\iota_{X_H}\Omega=dH$ 为同一尺度，直接代入得到
+
+$$
+\lambda=\sum_Ip_I\,d\theta_I=\sum_T\mu_T\,d\Phi_T,
+\qquad
+\Omega=\sum_{\varnothing\ne T\in\Gamma_n}d\Phi_T\wedge d\mu_T.
+$$
+
+共同相位只对应 $\Phi_\varnothing$，其矩 $\mu_\varnothing=1$ 已归一化。在全正概率图上，固定合法低阶矩后，仍须除去相应的非空低阶相位平移，才得到高阶 $(\mu_T,\Phi_T)$ 的辛配对。该引用不把整个 $\Gamma_n$ 当成 Boolean 格；它使用的是每个合法 $T$ 的全体子集构成的 Boolean 区间。
+

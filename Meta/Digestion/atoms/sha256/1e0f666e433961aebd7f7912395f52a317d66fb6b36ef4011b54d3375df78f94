@@ -1,0 +1,16 @@
+**Corollary 4.3 (unassisted two-height contrast, using credited rigidity).**
+If all auxiliary inputs at a fixed $y$ are identical across phase and
+parity, every record shared by two distinct candidate heights has zero
+exact success on the full unknown phase/parity family.
+
+Proof. Fold those fixed auxiliaries into the success map. Instrument
+Boundaries Theorem 4.1 forces each successful component at height $x_j$
+to be $\lambda_jD_{x_j,l_y}$, where
+$D_{x_j,l_y}e=e$ and
+$D_{x_j,l_y}U_+=\sqrt{l_y/x_j}\,U_+$. The common $e$ forces the
+same $\lambda$ at both heights. If it were nonzero, their $U_+$ images
+would give $\sqrt{l_y/x_a}=\sqrt{l_y/x_b}$, impossible for distinct
+strict heights. All success amplitudes vanish. This is an application of
+the credited known-height rigidity, rather than a new no-imprinting result.
+$\square$
+

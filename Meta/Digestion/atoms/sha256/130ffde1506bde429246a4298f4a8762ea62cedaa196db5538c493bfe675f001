@@ -1,0 +1,15 @@
+**Condition $\mathsf B$ ([OWN, (9.3)–(9.4)]).** There are distinct literal labels $L,L'$, bits $e,\delta$, and even full supports $E\subseteq W_1$, $F\subseteq W_2$, with $m\notin E$, such that
+
+$$
+\Lambda[J]=\{(L,L),(L',L),(L,L')\},\qquad
+\mu(j)=\mathbf1_{\{\Lambda(j)\ne(L,L)\}},
+$$
+$$
+\lambda_{e\oplus\mathbf1_E(j)}(j)=L\quad(j\in J),\qquad
+\mathbf1_F(j)=\mu(j)\oplus\delta\quad(j\in J),
+\qquad \tau(\mathcal B_1(E))+\alpha(\mathcal B_2(F))<k.
+\tag{2.5}
+$$
+
+Safe all-one final words are included.
+

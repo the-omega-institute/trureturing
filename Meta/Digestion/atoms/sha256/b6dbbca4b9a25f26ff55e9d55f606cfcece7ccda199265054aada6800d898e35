@@ -1,0 +1,63 @@
+**定义 47.1（另行供应的执行与可访问记录合同）。** 保持定义45.1、46.1的
+$W=E\oplus\mathbb H$、$E=\operatorname{Im}\mathbb H$、$C=P_E$、单位锚 $d=e_4$，
+以及同一个未标记来源
+
+$$
+\mathcal D_2(1,7,25,4/5)
+=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{47.1}
+$$
+
+$a$ 仍独立、任意、无界，球帽只限制初始 $b$；每个来源的初始半径固定，运行中
+不更换来源。目标始终为同一个 INITIAL $x=(a,b)$。来源制备、公共参数与共同标架、
+纯虚命令的方向及固定锚精确供应。本节另行供应两个误差上界
+$\delta\ge0$、$0\le\eta<1$，规定每次命令 $c\in E$、$|c|\le1$ 调用的仍是原
+纯内部操作，但其数值执行参数为 $\gamma c$，其中
+
+$$
+\begin{aligned}
+I_\eta&=[1-\eta,1],\qquad \gamma\in I_\eta,\\
+A_{\gamma c}(a',b')&=(\gamma(c\times a'),\gamma b'c),\\
+A_d(a',b')&=(\operatorname{Im}b',-a'),\\
+\operatorname{Read}(z)&=Cz+e,\qquad |e|\le\delta.
+\end{aligned}
+\tag{47.2}
+$$
+
+锚仍精确执行，Read不改变当前状态。每次内部调用所供应的区间证书都只断言
+$\gamma\in I_\eta$；该公共区间不随隐藏来源变化，不额外供应缩窄区间或已实现
+增益的数值。所有满足这些逐次界的来源／增益／Read误差联合历史都允许；增益和
+误差可联合对抗、相关且依赖历史，不要求独立、重复或恒定增益，不要求重复Read
+降低误差。$\delta=0$ 专指精确Read。
+
+可访问记录 $M^{\rm cmd}$ 保留全部实际Read报告、按实际顺序排列的命令、调用的
+操作种类、上述已供应区间证书及Stop信息。已实现的数值 $\gamma$ 和执行参数
+$\gamma c$ 是潜在执行迹，不属于可访问记录。即使命令方向精确，命令也不冒充
+已实现参数。此定义是一份新的条件执行／记录合同，§§40、45–46原有精确动作
+记录及其结论仍按各自假设解释。
+
+控制器确定、因果、共同源无关初始化，只从实际已见的有限可访问前缀决定下一
+事件。每条合法有限或可数记录均须给出一个 $W$ 值初态估计，估计不必在来源中。
+自然数索引的历史没有无限前缀以后的事件；可数记录的估计函数不是极限Read。
+仍只有一个被覆盖的当前寄存器，不供应标签、复位、副本、混合控制、独立重抽样、
+反事实端口、额外动作或后继状态目标。预算 $N$ 是至多 $N$ 次原菜单破坏性更新，
+包括锚调用，不另限制Read次数。记这份合同的控制器类为
+$\mathcal P_N^{\rm cmd}$，无预设有限更新上限的同一类为 $\mathcal P_\infty^{\rm cmd}$，并置
+
+$$
+\begin{aligned}
+\mathcal E_\pi(\delta,\eta)
+ &=\sup_{x\in\mathcal D_2}\sup_{\text{全部合法联合执行／读误差历史}}
+       |\widehat x_\pi(M^{\rm cmd})-x|,\\
+R_N^{\rm cmd}(\delta,\eta)
+ &=\inf_{\pi\in\mathcal P_N^{\rm cmd}}\mathcal E_\pi(\delta,\eta),\\
+R_\infty^{\rm cmd}(\delta,\eta)
+ &=\inf_{\pi\in\mathcal P_\infty^{\rm cmd}}\mathcal E_\pi(\delta,\eta),\\
+\zeta&=2\eta-\eta^2=1-(1-\eta)^2,\qquad D=\delta+25\zeta.
+\end{aligned}
+\tag{47.3}
+$$
+
+定量小参数域为 $0<D\le1$。在此域 $\delta\le1$，且
+$\zeta\ge\eta$ 给 $\eta\le1/25$。下确界记号不假设最优控制器存在。
+

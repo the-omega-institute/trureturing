@@ -1,0 +1,27 @@
+**Definition 2.1 (fixed code and fixed reader).** Let
+$c(u)=\kappa(A(u))$ have a finite nonempty attained alphabet
+$C=c[\mathcal U]$. Fix the original reader
+$\mathcal K=Q\sqcup Z$, its fixed-address four-successor running table,
+and its fixed whole-row halt outputs. Fix its original initialization
+
+$$
+\iota:C\longrightarrow\mathcal K,\qquad
+s(u)=\iota(c(u)),\qquad S=\iota[C].
+\tag{PCA.3}
+$$
+
+The prescribed code is recoverable from the complete initial reader
+state on its attained range: a fixed inverse on $S$ recovers $c$.
+Equivalently $\iota$ is injective on $C$. This inverse expresses entry
+recoverability; it is not an additional running readout or output port.
+The reader starts at precisely $s(u)$ and returns the entire $F(u)$ on
+every $u\in\mathcal U$. If such a correct reader is not supplied, a
+code-generation criterion alone does not establish two-phase recovery.
+
+The reader table and $\iota$ are held fixed throughout. A preparer must
+generate the literal entry $s(u)$, thereby generating the same original
+code $c(u)$. It may not substitute another encoding with the same target
+information. If the prescribed code is already a reader-state code,
+$\iota$ is the identity. No code copy or archive is accessible after
+entry; all installed running states and whole-row halt states count.
+

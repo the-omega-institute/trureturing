@@ -1,0 +1,43 @@
+**Definition 7.1 (source and schedule domain).** Fix $D,c$ as in §6,
+and a public nonempty finite set $\Sigma$ of permutations of $U_c$.
+Put $R=|\Sigma|$. The sweep interface permits an external selector to
+choose the next address subject to its public prefix rule. Its actual
+histories are exactly
+
+$$
+H_{c,\Sigma}^{\rm pref}=
+\{(\theta,\tau):\theta\in\{\alpha,\beta\}^{U_c},\quad
+\tau\text{ is a prefix of some }\sigma\in\Sigma\}.
+\tag{CCF.22}
+$$
+
+Every pair in this set is permitted: a selector can supply the indicated
+prefix on that same stationary $t_\theta$. This is a declared execution
+service, not multiple possible runs of one fixed deterministic original
+preparer. A fixed public sweep is the special case $R=1$. If an actual
+interface restricts orders to a source-dependent proper subfamily, the
+product domain (CCF.22) and the frontier below do not apply without a new
+analysis.
+
+For a prefix $\tau=(u_1,\ldots,u_j)$, define
+
+$$
+\begin{aligned}
+d_{\theta,\tau}&=\{u_i\mapsto\theta(u_i):1\le i\le j\},\\
+T_{\theta,\tau}&=
+[(\mathsf{Read},u_i,\mathsf{ok},\theta(u_i))]_{i=1}^j,\\
+\operatorname{Perm}_\Sigma(\tau)&=
+\{u:\tau u\text{ is a prefix of some }\sigma\in\Sigma\}.
+\end{aligned}
+\tag{CCF.23}
+$$
+
+A full joint state consists of the source/epoch/type binding, the same
+hidden stationary $t_\theta$, its acquired $c$, the work table
+$d_{\theta,\tau}$, the retained actual prefix/archive
+$\tau,T_{\theta,\tau}$, and permission
+$\operatorname{Perm}_\Sigma(\tau)$. The source binding authenticates
+continuity; it is not an extra source-value identifier available for free
+decoding. The joint state set is the image of (CCF.22) under this one map,
+not a product of separately chosen field sets.
+

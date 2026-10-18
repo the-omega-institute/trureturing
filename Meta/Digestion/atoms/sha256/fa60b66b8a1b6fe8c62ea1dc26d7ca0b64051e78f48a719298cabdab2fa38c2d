@@ -1,0 +1,37 @@
+**Theorem 5.7 (closed finite cycle on genuine views).** On the realized
+$\Omega_2$ images the four algorithms terminate and produce respectively
+$B(h),M(h),T(h),S(h)$ from the indicated single source view. Their exact
+canonical body encodings are inverses around the cycle. Every ordered
+distinct pair has its finite one-, two- or three-arrow conversion; all
+twelve preserve the same historical cut and binding.
+
+Proof. In a finite full ordered tree, nodes with no child are precisely
+maximal paths. Every node extends a terminal by descending in the finite
+tree; every prefix of a terminal is a node. These are SSA Theorem 4.4's
+support/boundary algorithms, now executed as list scans. Consequently
+Definition 5.2 gives exactly $B$, and Definition 5.3's prefix closure
+gives exactly $S$ before decoding. Distinct absent/0/1 shapes and fork
+sides recover all raw fields without requiring packet validity. The
+selected scan emits precisely the independently specified $M$.
+
+Lemma 4.3 extracts its actual reservoirs, activation and ordinal, including
+the unique pending bit. Theorem 4.4 reproduces its actual native prefix
+row by row with its actual control versions, registry and all raw work.
+The literal compiler therefore gives precisely its actual $T$. Conversely,
+induction on Definition 5.5's checked patches gives the same incidence
+endpoint: every old assignment uses its actual pre-patch role and every
+new occurrence its actual constructor/template role. Its final tree
+traversal gives exactly $S$.
+
+The finite-word loop measures in Definitions 2.1 and 5.1–5.5 establish
+termination. No helper scans a list while appending to that same scan
+source. Bounded replay has exactly $k$ iterations, each finite. All
+authentic views pass Definition 5.6 by the same equalities. A view
+request's decoding has no additional input-dependent branch reading a
+hidden endpoint, by the stated helper arguments and induction on word
+instructions. Composing any cycle path yields the view of this same
+$h$. Traversing the rest of the cycle yields the original view, which
+proves both inverse and route-agreement equations. These are the reused
+SSA/CSA mathematical maps with the new finite word/native implementation,
+not a new general inverse theorem. ∎
+

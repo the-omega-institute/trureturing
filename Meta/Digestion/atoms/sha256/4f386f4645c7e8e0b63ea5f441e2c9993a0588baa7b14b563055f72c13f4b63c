@@ -1,0 +1,35 @@
+**Definition 11.2 (offline and online peaks).** Manufacture the fixed
+graph, native image, code, header and $R$ lane before an online run.
+A sufficient total simultaneous manufacturing/installation allocation,
+including an input image, output image, compiler, two native-key scratch
+words and the allocated online apparatus, is
+
+$$
+B_{\rm manufacture}\le8(Z+|J_r|)+L.
+\tag{11.3}
+$$
+
+The writer is the sequential row enumerator of Theorem 4.7, followed
+by writing $J$ fixed $R$ letters; its input/output/key storage and
+bounded slots fit this allowance. Its work is at most $C(Z)$ for this
+expanded-image convention. If compiling from binary $h,T$ also
+enumerates the native table, its finite table-construction time is
+an additional offline cost; (11.3) permits enumeration with the fixed
+field rules and bounded native keys, without retaining all source trees.
+One may bound that enumeration by a further polynomial in $Z$ using
+bitwise field tests and the explicit SLHC response rules. It is not
+a polynomial in the binary input length claim.
+
+After manufacture the readonly regions are permanently protected.
+The online initializer parses those regions with its listed heads,
+zeros only the $b$ writable bits, installs the common graph/macro row,
+and sets the pre phase. Its initialization path makes no source call
+and enters no Halt. It needs no writable image copy and never converts
+readonly cells into writable cells. Its peak writable allocation is
+already $b$, simultaneously with all of (10.2). Thus online startup
+is included in (10.4); the manufacturer's temporary writable output
+image is separately included in (11.3). Counting all manufacturing
+workspace as well as online workspace in one lifetime maximum gives
+that larger bound, not (10.4). This distinction is also necessary for
+the expanded immutable table of the macro supplier itself.
+

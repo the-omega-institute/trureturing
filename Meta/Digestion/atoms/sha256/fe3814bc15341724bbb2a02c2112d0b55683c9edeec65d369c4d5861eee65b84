@@ -1,0 +1,201 @@
+**Proposition 10.1 (full-fibre simultaneous realization).** Every finite
+weak fractional-capacity family in (GC.9), and every finite strong
+family used in Theorem 9.1, has one common original instrument
+attaining its actual height, contrast, sharp worst-history jointly
+acquired cost, complete output errors and activity bound. Its low
+labels are exactly the occupied family atoms; it has one high label
+in the weak case and the two high labels in the strong construction.
+All five Borel failure components and arbitrary passive-reference
+conditional operators have the original meanings.
+
+Proof. Omit zero coefficient weights. For an occupied low label use
+its actual $K_j$ and $N_j^{\,f}$. For a strong piece with coefficient
+mass $p_j$ on ray $(\sigma,\upsilon)$ these mean explicitly
+$K_j=\sqrt{p_j}K_{\sigma,\upsilon}$ and
+$N_j^{\,f}=p_jb_jn_{\sigma,\upsilon}n_{\sigma,\upsilon}^T$,
+with $b_j=0$ for its pure piece and $b_j=t\mathfrak c_f$ for its
+saturated piece. Choose an isometry
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$. Set
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j^{\,f})J_j\succ0,\qquad
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\\
+B_j=K_jJ_jQ_j^{-1/2},\qquad
+F_j=Q_j^{-1/2}J_j^\dagger N_j^{\,f}J_jQ_j^{-1/2}.
+\end{gathered}
+\tag{GC.44}
+$$
+For the weak ray, $\ker K_h$ is spanned by
+$(s_0,-bz/h_1,-dw/h_2)^T$ and is orthogonal to $n_h$.
+Rank is two, including at the axes; the strong case follows by its
+homogeneous rescaling. Thus the inverses in (GC.44) are on the
+entire two-dimensional fibre, and
+$$
+B_jC_j=K_jE^\dagger,\quad
+C_j^\dagger F_jC_j=EN_j^{\,f}E^\dagger,\quad
+B_j^\dagger B_j+F_j=I_2,\quad I_2-F_j\succ0.
+\tag{GC.45}
+$$
+FA's physical capacity identity gives the sole nonzero failure
+eigenvalue and its odds:
+$$
+\lambda_j=\frac{b_j}{\mathfrak c(h_j)+b_j},\qquad
+\frac{\lambda_j}{1-\lambda_j}=\frac{b_j}{\mathfrak c(h_j)}.
+\tag{GC.46}
+$$
+For strong rays use $\mathfrak c_f$. Pure atoms have $F_j=0$.
+
+Use the single common relative-time law
+$$
+g(a)=\frac2{(1+a)^2},\qquad G_{\rm time}(a)=\frac{2a}{1+a},\qquad
+Z_j(a)=\sqrt{I_2-G_{\rm time}(a)F_j},\qquad
+R_j(a)=g(a)F_j[I_2-G_{\rm time}(a)F_j]^{-1}.
+\tag{GC.47}
+$$
+The not-yet-failed propagator from $a$ to $b$ is
+$\operatorname{Ad}_{Z_j(b)Z_j(a)^{-1}}$.
+On its current survivor matrix $Y$, the jump into the original
+component $\ell$ has density
+$$
+Y\longmapsto w_\ell g(a)\,
+ \operatorname{tr}\!\left(F_jZ_j(a)^{-1}YZ_j(a)^{-1}\right)P_f.
+\tag{GC.48}
+$$
+This positive functional is CP. Summing the five jumps gives the
+instantaneous survivor loss effect $R_j(a)$.
+Pulled back to the initial decoder input, the jump density is
+$w_\ell g(a)\operatorname{tr}(F_jY)P_f$.
+At every cut its integrated effect plus the survivor effect is
+$$
+G_{\rm time}(a)F_j+Z_j(a)^\dagger Z_j(a)=I_2.
+\tag{GC.49}
+$$
+Only terminal survivors receive
+$EB_j(I_2-F_j)^{-1/2}$, an isometry by (GC.45).
+The cumulative live map is $\operatorname{Ad}_{EB_j}$.
+There is no terminal failure atom. Since all functions of $F_j$
+commute and the largest eigenvalue controls the norm,
+$$
+\int_0^1\|R_j(a)\|\,da
+ =-\log(1-\lambda_j)
+ =\log(1+b_j/\mathfrak c(h_j))\le A,\qquad
+I_2-F_j\succeq e^{-A}I_2.
+\tag{GC.50}
+$$
+This bound holds on the entire qubit, not only on history-populated
+vectors. Saturated atoms have activity $A$ and pure atoms activity
+zero. The density $g$ is a sufficiency witness and is different from
+the ideal $f_y$; all admitted original time laws remained in the
+necessity arguments.
+
+Choose isometries
+$W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$.
+For weak families the single high encoder is
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\W_\perp^\dagger\end{pmatrix}
+:\mathbb C^5\longrightarrow\mathbb C^3\oplus\mathbb C^2.
+\tag{GC.51}
+$$
+Its entire five-dimensional joint fibre is counted, even though its
+supported original-history part has rank three. Its rate is zero
+and report is plus. Its terminal decoder has hidden Kraus matrices
+$E[I_3\ 0]$ and $EJ_0[0\ I_2]$; their effects sum to $I_5$.
+The hidden index is not a readable acquisition label. This is JR's
+free coherent completion, not a certain-failure complement fixed in
+a different completion class.
+
+For the strong family use $H_\sigma$ from (GC.38).
+The plus encoder is the stack of $H_+E^\dagger$ and
+$W_\perp^\dagger$ into dimension five, with those same two hidden
+terminal Kraus matrices. The minus encoder is $H_-E^\dagger$ into
+dimension three with decoder $E$. Both have zero rate and report
+$\sigma$. The two high actual labels, hidden Kraus multiplicity and
+fibre dimensions remain different notions.
+
+In the weak case the low live Gram is
+$\operatorname{diag}(\delta,1,1)$ and the high part supplies
+$(1-\delta)D^\dagger D$. In the strong case the low and high Grams
+are $\operatorname{diag}(u_d,v_d,1)$ and
+$\operatorname{diag}(1-u_d,1-v_d,0)$.
+Their sum gives the same complete live map. Since
+$\sum_jN_j^{\,f}=M$, root TP and the complement imply
+$$
+\sum_jC_j^\dagger C_j+\sum_{\rm high}C_H^\dagger C_H=I_5.
+\tag{GC.52}
+$$
+Every acquisition is CP/TNI and their sum TP. For every complex
+$X\in M_5$, the forgotten-label outputs are exactly
+$$
+\begin{aligned}
+\Phi^L(X)
+ &=E\left[\Lambda_*(E^\dagger XE)
+       +J_0W_\perp^\dagger XW_\perp J_0^\dagger\right]E^\dagger,\\
+\Lambda_*(Y)&=DYD^\dagger+TYT^\dagger+SYS^\dagger,\\
+\Phi^f_\ell(\mathcal B)(X)
+ &=w_\ell\left(\int_{\mathcal B}g(a)\,da\right)
+               \operatorname{tr}(EME^\dagger X)P_f.
+\end{aligned}
+\tag{GC.53}
+$$
+The full live Gram gives the first identity on all complex matrices,
+not just diagonal effects or the twelve test states. The pullback
+of (GC.48) and $\sum N_j^{\,f}=M$ give the second on every Borel
+subset, including the two zero components separately.
+
+With any passive reference $R$, tensor every live Kraus matrix with
+$I_R$. The failure conditional operator for a joint input $X$ is
+$$
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes
+ \operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{GC.54}
+$$
+This retains conditional reference operators and all live coherences.
+No wrong-support, abort, singular-time or extra uncounted sector is
+introduced.
+
+For each original history the complement has zero probability. The
+complete stopped-cq error, with $\rho_y=a_ya_y^T$, is
+$$
+e_y=\frac12\left[
+ \|\Lambda_*(\rho_y)-\xi_y\xi_y^T\|_1+
+ \sum_\ell w_\ell\int_0^1
+ \left|\operatorname{tr}(M\rho_y)g(a)-\frac{6y}{(y+6a)^2}\right|da
+ \right].
+\tag{GC.55}
+$$
+Covariance gives the same value for all four sign pairs. The inherited
+CG certificate gives $e_5=e_{27}=E_*$ and
+$e_{16}<71/484<37/250<E_*$. Thus all twelve required errors are
+preserved; they are not all equal.
+
+For a weak label choose the deterministic report
+$\operatorname{sgn}z_j$, with either fixed sign at zero.
+Failure effects have zero $01$ entry, and the high report has no
+relevant interference term. The complete live moments yield zero
+total $z$ moment, so
+$\mathsf V=s_0\sum_jp_j|z_j|\ge s$.
+The actual label mass includes failure:
+its signed height difference is $p_j(\ell+b_jf)$.
+The high difference is $H_0>0$, proving (GC.9) directly for the
+constructed actual record. No extra readable coin is introduced.
+
+Only the high fibre has joint dimension at least three in the weak
+construction. At height $y$ its probability is
+$(1-\delta)A_y$, where $A_y=\sum_i h_i^2p_{yi}$.
+Its maximum is at $27$ and equals the inherited sharp weak
+$\mathsf C(s)$. In the strong construction the sum of high effects
+is $(1-u_d)D^\dagger D+(1-v_d)T^\dagger T$ on the support, giving
+the inherited sharp worst-history joint cost. Reports $\sigma$ on
+the strong low and high rays give exactly
+$\sqrt{u_dv_d}+\sqrt{(1-u_d)(1-v_d)}=s^\dagger$.
+
+All operations are fixed before the sole unknown input. Equations
+(GC.48)–(GC.49) give chronological FIRST time $6+a$; only survivors
+receive the terminal isometry. Failed carriers receive no later
+positive-carrier action. The instrument has finite positive survivors,
+full-output TP at every cut, the entire-fibre activity bound, and
+the exact actual label counts claimed. It supplies a mathematical
+CP/TP realization, not native access, calibration, actuation or clock
+permission. $\square$
+

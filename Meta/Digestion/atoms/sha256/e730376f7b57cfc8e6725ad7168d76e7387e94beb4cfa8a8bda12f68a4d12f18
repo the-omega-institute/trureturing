@@ -1,0 +1,23 @@
+**Theorem 3.2 (Exact finite dual residual).** For every original
+$\theta\in\Theta_N$ and every $L,R,r$ as above,
+
+$$
+a_{L,R,r}(P)=
+\min_{z\in\operatorname{range}(E_{\theta,L}^{\mathsf T})}
+\|v_{L,R,r}-z\|_1.
+\tag{3.1}
+$$
+
+Proof. Write $K=\mathcal K_L(P)$ and $v=v_{L,R,r}$. For $z\in K^\perp$
+and $f\in K$ with $\|f\|_\infty\le1$,
+$|f\cdot v|=|f\cdot(v-z)|\le\|v-z\|_1$. This proves one direction.
+The functional $f\mapsto f\cdot v$ on $K$, endowed with the inherited
+infinity norm, has norm $a_{L,R,r}$. Finite-dimensional Hahn–Banach extends
+it to $\mathbb R^{B_L}$ with the same norm. Represent the extension by a
+vector $b$; infinity/one norm duality gives $\|b\|_1=a_{L,R,r}$.
+Then $v-b\in K^\perp$, giving the reverse inequality and a minimizing
+representative. The kernel unit ball is compact, so its maximum is
+attained. Use (2.3) to identify the annihilator. These are classical norm
+and annihilator tools; the substitution is the actual loss/context pair.
+$\square$
+

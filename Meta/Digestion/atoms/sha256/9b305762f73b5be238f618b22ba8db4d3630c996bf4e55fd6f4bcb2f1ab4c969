@@ -1,0 +1,10 @@
+**定义 21.1（完整 $\mathcal C_{57,z}$ 类）。** 在同一个 $z\in I$ 的实际父历史上，令
+
+$$
+\mathcal C_{57,z}=\{W\in\mathcal F(H_4(z)):g_W(5)=g_W(7)=0\},\qquad
+\mathcal C_{57,z}(p)=\mathcal C_{57,z}\cap\mathcal F(H_4(z),M,p).
+\tag{21.1}
+$$
+
+这是完整合法世界的类，不固定源、漂移、最高次项或其余样本。它包含 $\mathcal E_z$，但后面的连续族只证明在所给变化父点上存在类外于 $\mathcal E_z$ 的成员，不断言每个固定父点都严格扩大。
+

@@ -1,0 +1,39 @@
+**Corollary 5.2 (scope of the obstruction).** Theorem 4.1 resolves the fixed
+family of [PAIR, Open problem 16.5]. Its
+specific obstruction consists of the four rational laws, their identical
+seven-feature values, their two exact retained residual vectors and the
+simultaneous loss bounds. Proposition 5.1 supplies the relation that the
+fixed tests fail to distinguish. The six-cell pair of [PAIR, Section 17]
+has nonzero B moments and is not the representing pair (3.1).
+
+**Proof.** The compatible-law compactness, source correspondence and regeneration
+of [PAIR, Sections 11 and 20] and [PAID, Sections 16--18][PAID] keep their
+full common-marginal and entire-descriptor hypotheses. Their criterion
+for the original value $j_c$ cannot be applied to (3.1), by (5.1)--(5.4).
+In particular, Theorem 4.1 implies neither $j_c=0$ nor $j_c>0$, and does
+not exclude the larger certificate families of [PAID, Section 18]. The
+positive-certificate implication [PAIR, Proposition 16.4] remains a
+conditional implication; the present theorem rules out its fixed
+155-coefficient premise. Definition 2.1 supplies four individually specified complete laws with
+finite rational descriptions and geometric tails. It does not supply a
+single compatible pair or a finite stationary same-update table.
+Consequently it supplies no original-source installation, represented
+sampler for such a table, observation acquisition, training attainment
+or generalization assertion. $\square$
+
+The finite-dimensional convex-order theorem of Leskelä and Vihola,
+[Theorem 1.2(i)][LV], concerns random vectors with finite first moments
+and all convex test functions; its parameterized version, Theorem 1.3(i),
+concerns probability kernels with finite first moments at every parameter.
+The bounded projected vectors here satisfy those integrability conditions,
+but equality of the seven prescribed features supplies neither the full
+convex-order tests nor the prescribed entire marginals required in
+[PAIR, Theorem 20.2]. These classical results provide no assertion that
+(3.1) is a compatible full flow. The construction and contradiction above
+are direct deductions for the specified source and coefficient family;
+no new coupling-existence or general moment-duality theorem is asserted.
+
+[PAIR]: https://github.com/the-omega-institute/trureturing/blob/f9c2c807f401b5ddd0556da6842a0849648feef4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[PAID]: https://github.com/the-omega-institute/trureturing/blob/f9c2c807f401b5ddd0556da6842a0849648feef4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+[LV]: https://arxiv.org/html/1404.0999v3
+

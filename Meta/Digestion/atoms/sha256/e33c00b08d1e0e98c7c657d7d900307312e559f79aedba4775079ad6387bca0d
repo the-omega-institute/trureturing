@@ -1,0 +1,53 @@
+### 217.10 Comparison sources and finite verification scope
+
+The finite decision comparison uses Blackwell's *Comparison of Experiments*,
+sections 2–5: words are states, transcript cells are observations, and numerical
+labels are actions. A common stochastic postprocessing kernel is the relevant
+joint object. That framework does not itself preserve increasing stopping or
+the hard two-request resource. Bernoulli compatibility in
+[Embrechts–Hofert–Wang, Theorem 2.2](https://arxiv.org/abs/1606.08212v1)
+identifies second moments with the convex hull of Boolean outer products;
+when $S>0$, A's $\nu/S$ is one such joint law. The explicit carrier proof
+still supplies its protection mass, not independent pair optima.
+[Zaev, Problem 1.3 and Theorem 2.1](https://arxiv.org/abs/1404.4962v1)
+concern one coupling with prescribed marginals and additional linear
+constraints under their stated admissibility conditions. Their duality does
+not establish nonemptiness of our stock cone. The finite Farkas tools in
+[Kaibel](https://arxiv.org/abs/1001.2161v1) are already part of the owning
+199.3–199.4 alternative; they do not supply a new measure here.
+
+[Bertschinger–Rauh, Example 18](https://arxiv.org/abs/1401.3146v1)
+gives a boundary to separate attainability: its nonnegative representing
+matrix has row sums 2,2,2,0 and fails to be stochastic despite zonotope
+containment. It is a method boundary, not an embedded original separator.
+[Kaniewski–Lee–de Wolf, Definition 8 and Theorem 9](https://arxiv.org/abs/1411.7280v1)
+characterize scalar nonnegative expectation query complexity by nonnegative
+literal degree; that scalar representation does not provide our normalized
+probability-vector kernel, common schedule masses or stopped catalog.
+[Chen, Theorem 3, Definition 7 and Corollary 3](https://arxiv.org/abs/2502.06530v1)
+require binary decomposability for their finite-action extension. No such
+decomposition preserving this acquisition budget is established.
+The ordered-measure min-closure hypotheses of
+[Yang–Yang, Theorem 1](https://arxiv.org/abs/2603.11448v1), and the
+past-conditional measurability condition with prescribed marginals of
+[Backhoff et al., Definition 2.1](https://arxiv.org/abs/1606.04062v1),
+also lack a proved hard-two acquisition correspondence here. These references
+locate usable structures and limits; none supplies the unresolved universal
+implication or a worldwide-priority conclusion.
+
+The independent rational program `check_printed.py` and its result data
+`results.json` belong to the private experiment directory
+`/Users/auricstudio/trureturing-experiments/repair217`.
+Its score reconstructions read the printed word/mass tables, example
+coefficients and relocation maps, then maximize over all output labels and
+all empty, singleton and pair cells. Parameter checks include signed class
+ownership, complete positive support, ranked share bounds, stock branches,
+zero coefficients, terminal exhaustion, unequal and nonadjacent examples.
+Probability checks keep the base, correct, independent pair and positive
+rows, multiple-zero words, repeated and ignored request accounting, the
+normalized common laws and exact tail endpoints. Arithmetic checks evaluate
+actual CRT representatives in the Fibonacci windows. Finite exact evaluations
+can corroborate or refute transcription and examples; the all-real-parameter,
+all-address and all-sequence assertions depend on the ordinary proofs and the
+owning suppliers, not extrapolation from these checks.
+

@@ -1,0 +1,18 @@
+**Definition 1.3 (coverage and missing obligation).** UAS Assumption 1.2
+admits bounded atomic patches. UAS Definition 2.2(3) creates a complete
+unary tape-cell extension in one such patch; Theorem 2.4 matches whole
+native rows, including control and receipts, under that premise.
+UAS Definition 8.3 expressly leaves a new phase-sensitive proof below
+the patch basis. SSA §13 supplies a restricted five-occurrence setter,
+with continuing authorization, control, constructors and receipts still
+outside its conclusion.
+
+The interface supplied here replaces precisely the cell-extension
+data suboperation by 24 one-vertex attachments and gives its partial
+states, guards, inverse and full local bill. Its immediate actual
+consumer is the new unmarked right-marker cell in source-16 EX during
+strict Reserve's Zero loop. It does not perform the rest of EX.
+The same template can serve a new meter right-marker cell, but the
+source-specific history argument below cannot be transferred to that
+meter construction without a new pending-receipt proof.
+

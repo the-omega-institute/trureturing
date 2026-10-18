@@ -1,0 +1,18 @@
+## 4. A global finite-readout inverse for fixed acquired kernels
+
+For data arrays $F\in[0,M_f]^X$ and $J\in[h_-,h_+]^Y$, define on the regular emission cube
+$\mathcal C=[3/5,2/3]^X\times[a,b]^Y$ the feedback map
+
+$$
+\Psi^U_{F,J}(U,v)=
+\frac{F}{BJ+BVA[\operatorname{diag}(U)B(v+J-1)]},
+$$
+
+$$
+\Psi^v_{F,J}(U,v)=
+\frac{1-J}{1-A[\operatorname{diag}(U)B(1-v)]}.
+\tag{4.1}
+$$
+
+For every input in this cube, $v+J-1\ge a+h_--1=29/375>0$. Thus the first denominator is at least $h_-$, and the second at least $5/9$. The map need not itself preserve the cube. Let $\Pi$ be coordinatewise projection onto the two intervals defining $\mathcal C$.
+

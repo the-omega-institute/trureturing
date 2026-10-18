@@ -1,0 +1,76 @@
+**Definition 1.4 (one channel, states and complete error).** The available
+metadata/blanks are a fixed common state: no-failure flag, aligned cut
+clock, source/preparation/epoch identity, reference calibration, permissions
+and controller state. They contain no acquired history, height or sign,
+old waveform, generator word, callback, source programme, environment
+input port, helper specimen or source-dependent installed processor.
+Arbitrary independent ancillary spaces, randomness, computation, finite
+adaptive instruments and retained records are allowed. Absorbing these
+common inputs gives one history-independent CPTP map $\Phi$ on the whole
+complex algebra. Every branch, including abort and rejection, is counted.
+No success division, copy, retry or free entanglement bypass is introduced.
+
+Set
+
+$$
+\begin{aligned}
+p_y&=(y/128,(64-y)/128,1/2),&
+a_y&=(\sqrt{p_{yi}})_i,&\rho_y&=a_ya_y^\dagger,\\
+d_y&=\left(y/128,\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),&
+\xi_y&=(\sqrt{d_{yi}})_i,&B_y&=\xi_y\xi_y^\dagger,\\
+s_y&=y/(y+6),& f_y(t)&=6y/(y+6t)^2,&
+w&=(0,1/4,1/2,1/4,0).
+\end{aligned}
+\tag{JG.5}
+$$
+
+Here $U=\operatorname{diag}(e,n,1)$, $e=(-1)^{\beta/\pi}$,
+$n=e(-1)^m$. The four original phase/parity choices give all four sign
+pairs. The actual input is $U\rho_yU^\dagger$; its target $\Omega_{y,U}$
+has live block $UB_yU^\dagger=s_yU\rho_{y+6}U^\dagger$ and, in EACH
+original stopped sector $\ell=0,1,2,3,4$, the entire measure
+$w_\ell f_y(t)dt\,P_f$, $P_f=|f\rangle\langle f|$.
+Labels $1$ and $3$ remain separate, and mode $13$ keeps its zero ideal
+measure. Time is exact elapsed $t\in[0,1]$, equivalently absolute $6+t$.
+Since $\int f_y=1-s_y$, the full target has trace one.
+
+For clarity, the credited calibrated law giving these targets has
+
+$$
+\begin{aligned}
+K_x&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c-x-d)}{(x+d)(c-x)}},\sqrt{\frac{x}{x+d}}\right),\\
+\mathcal I_{x,2}(dt)(A)&=\frac{dx}{(x+dt)^2}
+ |f\rangle\langle2|A|2\rangle\langle f|\,dt,\\
+\mathcal I_{x,\ell}(dt)(A)&=\frac{c}{2(c-x)}\frac{dx}{(x+dt)^2}
+ |f\rangle\langle-|A|-\rangle\langle f|\,dt\quad(\ell=1,3),\\
+\mathcal I_{x,0}&=\mathcal I_{x,4}=0.
+\end{aligned}
+\tag{JG.6}
+$$
+
+Their total effect is $I_V$. These are source-indexed target instruments;
+they do not install the unknown $x$ in a common processor.
+
+For normalized complete outputs, use half their complete cq trace norm,
+and put
+
+$$
+E(\Phi)=\max_{y\in\{5,16,27\},\ e,n\in\{\pm1\}}
+ \frac12\|\Omega_{y,U}-\Phi(U\rho_yU^\dagger)\|_{1,\mathrm{cq}},
+\qquad E_\star=\inf_{\Phi\ \mathrm{common\ CPTP}}E(\Phi).
+\tag{JG.7}
+$$
+
+The norm sums the coherent live trace norm and every labelled stopped
+measure norm, plus every other sector norm. For arbitrary simulated
+measures take densities with respect to a common dominating scalar
+measure and integrate their trace norms. Atoms, singular-continuous
+mass, wrong support, exceptional outcomes, abort and rejection are all
+included, even with zero ideal weight. No time bins or finite-bit clock
+are assumed. A fixed output interpretation may forget extra fields but
+cannot delete an acquisition outcome or renormalize it. First executed
+failure is absorbing, with no later positive-carrier operation, retry,
+reversal, reset or replacement; old archives and controller updates remain
+in their branches. All twelve actual targets stay in (JG.7).
+

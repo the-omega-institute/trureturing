@@ -1,0 +1,101 @@
+**Theorem 6.1 (Positive depolarization worsens the QJM port).** Let
+$T_Q$ be exactly the legal fourteen-flag channel in QJM Definition
+3.1 and Theorem 6.1, and $\lambda=\lambda_Q=e(T_Q)$. For every
+$0<p\le1$,
+
+$$
+e((1-p)T_Q+p\Delta)
+>\lambda+\frac{1071}{4040}p>\lambda.
+\tag{6.1}
+$$
+
+This concerns the original input set and actual wait-zero full mode
+read, without a larger observation menu.
+
+Proof. The active block of the adjoint residual
+$\Pi_N-\widehat T_Q^\dagger(\Pi_N)$ on $L=(N,25)$ is the
+credited QJM matrix
+
+$$
+\begin{gathered}
+C_N=\frac1{D_0}\begin{pmatrix}a_0&b_0\\b_0&c_0\end{pmatrix},
+\quad D_0=64468731767080,\\
+a_0=32710322397343+193561738103\sqrt{17},\\
+b_0=1674636624370+414723353026\sqrt{17},\\
+c_0=-6400945486418-13799938410\sqrt{17}.
+\end{gathered}
+\tag{6.2}
+$$
+
+Its positive eigenvalue is $\lambda$. Use exactly the QJM attaining
+input vector
+
+$$
+v=\frac{b_0e_N+(D_0\lambda-a_0)e_{25}}
+{\sqrt{b_0^2+(D_0\lambda-a_0)^2}}.
+$$
+
+The denominator is nonzero because $b_0>0$. Its eigenvector equation
+follows from $\det(\lambda I-C_N)=0$; its second row gives
+
+$$
+\frac{v_{25}}{v_N}=\frac{b_0}{D_0\lambda-c_0}.
+\tag{6.3}
+$$
+
+Direct integer comparisons using $4<\sqrt{17}<5$ give
+
+$$
+0<\frac{b_0}{D_0}<\frac3{50},\qquad
+\frac{c_0}{D_0}<-\frac1{10}.
+\tag{6.4}
+$$
+
+For example the upper-bound comparison margins at the appropriate
+endpoints are respectively
+
+$$
+\frac3{50}-\frac{1674636624370+5(414723353026)}{D_0}
+=\frac{4407004284}{2370173962025}>0,
+\tag{6.5}
+$$
+
+and
+
+$$
+-\frac1{10}-\frac{-6400945486418-4(13799938410)}{D_0}
+=\frac{927206335}{6446873176708}>0.
+\tag{6.6}
+$$
+
+The credited root interval (5.9) implies
+$1/2<\lambda<21/40$. Therefore
+$0<v_{25}/v_N<1/10$, and $v_N^2>100/101$.
+For the physical input $Dvv^TD^\dagger$, wait zero, a complete
+five-outcome read and Stop, the singleton-$N$ probability difference
+under $T_Q$ is exactly $v^TC_Nv=\lambda$. Under $\Delta$ it is
+$v_N^2-1/5$. The same event after the repaired channel has difference
+
+$$
+(1-p)\lambda+p(v_N^2-1/5)
+=\lambda+p(v_N^2-1/5-\lambda),
+\tag{6.7}
+$$
+
+whose bracket satisfies
+
+$$
+v_N^2-\frac15-\lambda
+>\frac{100}{101}-\frac15-\frac{21}{40}
+=\frac{1071}{4040}>0.
+\tag{6.8}
+$$
+
+Full-read TV is at least this positive event difference, and this
+protocol belongs to the original menu. Taking the original suprema
+proves (6.1). At $p=0$ the error is $\lambda$ by the credited
+all-fifteen-event certificate; the strict conclusion is for $p>0$.
+Thus positive repair is not an error-preserving extraction of this
+actual boundary port. The proof does not exclude repairing a different
+relaxed channel with enough better residuals. $\square$
+

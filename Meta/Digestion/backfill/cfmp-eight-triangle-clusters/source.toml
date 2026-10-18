@@ -1,0 +1,5 @@
+source_id = "cfmp-eight-triangle-clusters"
+path = "docs/develop/theory/CFMP_EIGHT_TRIANGLE_CLUSTERS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

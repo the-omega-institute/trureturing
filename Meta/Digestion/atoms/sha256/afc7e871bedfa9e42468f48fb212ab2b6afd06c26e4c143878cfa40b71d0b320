@@ -1,0 +1,52 @@
+**Theorem 25.5 (Smooth quadric realization and its limits).**
+For real $\varepsilon\ne0$, set
+
+$$
+f_\varepsilon=f+\varepsilon z_2^2,\qquad
+Q_\varepsilon=\{f_\varepsilon=0\}\subset\mathbb {CP}^{4},\qquad
+L=\mathcal O(1)|_{Q_\varepsilon}.
+$$
+
+This is a smooth compact complex threefold. Its twisted Dolbeault index
+for $L^m$, $m\ge0$, is also $N_m$. It uses the canonical complex
+$\operatorname{Spin}^c$ structure and does not assume an ordinary spin
+structure. This realization preserves the count, not the full original
+three-weight symmetry or the original probability/phase control model.
+
+Proof. The five gradient coordinates are
+$(-z_{13},z_3,2\varepsilon z_2,z_1,-z_0)$, which cannot vanish at a
+projective point. The normal bundle is $\mathcal O(2)|_{Q_\varepsilon}$.
+The tangent-normal sequence and the Euler sequence give, through degree
+three,
+
+$$
+c(TQ_\varepsilon)=\frac{(1+h)^5}{1+2h}
+=1+3h+4h^2+2h^3,
+$$
+
+$$
+\operatorname{Td}(TQ_\varepsilon)
+=1+\frac32h+\frac{13}{12}h^2+\frac12h^3,
+\qquad \int_{Q_\varepsilon}h^3=2.
+$$
+
+The classical complex index formula therefore yields
+
+$$
+\int_{Q_\varepsilon}e^{mh}\operatorname{Td}(TQ_\varepsilon)
+=2\left(\frac{m^3}{6}+\frac{3m^2}{4}
++\frac{13m}{12}+\frac12\right)=N_m.
+$$
+
+Equivalently, the hypersurface sequence
+$0\to\mathcal O(m-2)\to\mathcal O(m)\to\mathcal O_{Q_\varepsilon}(m)\to0$
+and the same projective cohomology and GAGA inputs show vanishing of its
+higher cohomology and give its $H^0$ dimension. The real dimension is six.
+The lattice normalization gives
+$\operatorname{Vol}(P)=\int_0^1(1-z)^2\,dz=1/3$, matching the leading
+coefficient $2/3!$ of this degree-two threefold.
+But $z_2^2$ has character $c^2$, not $ab$, so the full torus of (25.7)
+does not preserve the smoothing; only a subgroup satisfying $c^2=ab$
+can preserve the equation with its fixed coefficient. Neither smoothness
+nor equality of the index supplies a control realization. $\square$
+

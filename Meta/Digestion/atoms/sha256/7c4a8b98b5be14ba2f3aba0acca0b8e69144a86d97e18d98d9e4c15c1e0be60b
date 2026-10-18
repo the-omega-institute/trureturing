@@ -1,0 +1,78 @@
+### 13.3 当前金字塔对应哪一部分
+
+在底部四格均为正的内部，\(\kappa\) 质量作用流是对角概率 sector 上的确定性 mean-field dissipative closure：
+
+\[
+\dot\kappa
+=
+-\gamma L(a,b)\,\partial_\kappa D.
+\]
+
+它不是
+
+\[
+\dot\rho=-i[H,\rho]
+\]
+
+的直接结果，也不是一个线性 CPTP 通道的完整表达。要把它升级为量子动力学，需要构造一个量子 detailed-balance channel，使其在指定测量基下诱导出相应的 classical transition law，或明确声明它是测量后的 mean-field limit。
+
+对有限维 Hermitian Hamiltonian \(H\)、逆温度 \(\beta_{\rm th}>0\) 和实际匹配的 Gibbs 参考态
+
+\[
+\rho_{\beta_{\rm th}}=\frac{e^{-\beta_{\rm th}H}}{\mathcal Z_{\beta_{\rm th}}},\qquad
+\mathcal Z_{\beta_{\rm th}}=\operatorname{Tr}e^{-\beta_{\rm th}H},\qquad
+F(\rho)=\operatorname{Tr}(H\rho)-\beta_{\rm th}^{-1}S(\rho),
+\]
+
+[Gibbs/free-energy 身份式](../../../Blueprint/D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.md) 给出
+
+\[
+D(\rho\Vert\rho_{\beta_{\rm th}})
+=\beta_{\rm th}\bigl(F(\rho)-F(\rho_{\beta_{\rm th}})\bigr).
+\]
+
+这里 \(\beta_{\rm th}\) 与底部边际 \(\beta=Y/r\) 是不同参数。要识别 §9 的 \(D_{\rm h}\)，先固定五个正交扇区投影 \(P_i\)，满足 \(\sum_iP_i=I\)，及读出
+
+\[
+\mathcal C(\rho)=(\operatorname{Tr}P_i\rho)_i=p,\qquad
+\mathcal P(\rho)=\sum_iP_i\rho P_i.
+\]
+
+在 §13.1 的五维载体上，\(P_i\) 是计算基的五个一维投影。对 \(r>0\)，令 \(q\) 为归一化底面条件律，\(\alpha=X/r,\beta=Y/r\)，则 [Foundational Formulas §9.3](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) 的参考是
+
+\[
+q_*=\bigl((1-\alpha)(1-\beta),\alpha(1-\beta),(1-\alpha)\beta,\alpha\beta\bigr),
+\]
+
+\[
+p_*=(rq_{*,00},rq_{*,10},1-r,rq_{*,01},rq_{*,11}),\qquad
+D(p\Vert p_*)=rD(q\Vert q_*)=rI(q)=D_{\rm h}.
+\]
+
+要以模型定义的 \(D_{\rm h}\) 作为该粗读出的相对熵，须指定参考态满足 \(\mathcal C(\rho_{\rm ref})=p_*\)。它要求参考的 apex/底面权重同为 \(1-r,r\)，底面参考同为当前边际的乘积律，不能由块对角性决定。
+
+对同一扇区分解下的块对角态
+
+\[
+\rho=\bigoplus_i p_i\rho_i,\qquad
+\rho_{\rm ref}=\bigoplus_i s_i\tau_i,
+\]
+
+在支撑包含 \(\operatorname{supp}\rho\subseteq\operatorname{supp}\rho_{\rm ref}\) 时，按块展开对数得到
+
+\[
+D(\rho\Vert\rho_{\rm ref})
+=D(p\Vert s)+\sum_{i:p_i>0}p_iD(\rho_i\Vert\tau_i).
+\]
+
+因此 \(s=p_*\) 后，完整量子相对熵等于 \(D_{\rm h}\) 还要求每个正权扇区内 \(\rho_i=\tau_i\)；块对角性不会使后一个求和自动为零。五个一维扇区的对角嵌入 \(\rho=\operatorname{diag}(p),\rho_{\rm ref}=\operatorname{diag}(p_*)\) 满足这一条件。若 \(\rho\) 还有跨扇区相干且参考块对角，同一 pinching 分解在支撑包含下还给
+
+\[
+D(\rho\Vert\rho_{\rm ref})
+=D(\mathcal P\rho\Vert\rho_{\rm ref})+D(\rho\Vert\mathcal P\rho).
+\]
+
+这些附加项不能由经典五态读出恢复，也不能将扇区内相关与跨扇区相干混作一个已消失的量。
+
+若进一步要求参考态是 Gibbs 态，必须验证上述扇区权重、条件态与 \(H,\beta_{\rm th},\mathcal Z_{\beta_{\rm th}}\) 的匹配。对五个一维扇区且所有 \(p_{*,i}>0\)，模型上可取 \(E_i=-\beta_{\rm th}^{-1}\ln p_{*,i}+c\)，于是 \(\mathcal Z_{\beta_{\rm th}}=e^{-\beta_{\rm th}c}\)；这只是为指定 \(p_*\) 匹配的参考，不是任意给定物理能量的结论。高维扇区即使能量在扇区内常数，其 Gibbs 权重也为 \(d_i e^{-\beta_{\rm th}E_i}/\mathcal Z_{\beta_{\rm th}}\)，条件态为 \(I_{d_i}/d_i\)，仍须逐项匹配。若 \(p_*\) 有零分量，应在其活动支撑上定义参考，或明确给出极限；有限能量、有限正温的完整五维 Gibbs 态不能有零权重。\(r=0\) 时两份经典律均为 \(\delta_3\)，\(D_{\rm h}=0\)，不定义底面 \(q\)。
+

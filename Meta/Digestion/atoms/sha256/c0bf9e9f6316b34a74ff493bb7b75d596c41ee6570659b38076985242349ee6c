@@ -1,0 +1,30 @@
+**Definition 2.2 (finite decorations).** At fixed $d$, enumerate all
+the following finite one-block data up to a fixed canonical relabeling
+of seeds and groups.
+
+1. At most $m_d$ distinct seeds with nonempty domains
+   $T_c\subseteq\mathcal A$, each occurring at least once locally.
+2. A subset $O$ owned at distinct local ports, with their actual
+   full-factor tables satisfying (COK.7).
+3. A partition of the remaining seeds into nonempty groups
+   $B_1,\ldots,B_k$ of common external owner. For each group record
+   distinct owner ports in one outside block and the full owner
+   tables satisfying (COK.7).
+4. At every local port, a constant in $G_q$ or a full table from
+   one declared seed into $G_q$, with an owned port assigned to
+   its respective seed.
+
+All domains, ports and table ranges are finite. Bounds on their numbers
+make this a finite effectively enumerable list, denoted $\mathcal E_d$.
+Canonical labeling only avoids duplicates; it does not identify
+different occurrences of a seed or different owner blocks. There is
+no bound on the number of blocks in the networks to be tested.
+
+One explicit encoding orders $\mathcal A$ as alpha, beta, branch,
+absent, orders $W_d$ by length and then lexicographically with $L<R$,
+and orders factors $(b,c)$ lexicographically. Seed and group labels
+are consecutive integers. Encode domains by their ordered subsets
+and tables by ordered value lists, and retain the lexicographically
+least encoding over the finitely many seed and group relabelings.
+The resulting sorted list fixes the type indices used below.
+

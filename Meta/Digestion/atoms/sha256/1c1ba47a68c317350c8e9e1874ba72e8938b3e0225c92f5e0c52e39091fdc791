@@ -1,0 +1,21 @@
+**Corollary 91.1 (exact rational subfamily).** The lower of Corollary 90.3, and hence the leading numerical-word law, persists when preparations and rotations are restricted to finite exact rational presentations.
+
+**Proof.** Choose a positive rational $c$ with $\log\sqrt{d_0}<c<\log L/\varphi^2$. On the same Family A trees put $b_k=1+c/m$ and prepare
+
+$$
+(b_k^{m+n}e_1,b_k^{-n}e_2).
+$$
+
+Orthogonal homogeneity and $Q=-1$ give $q_0=q_2=b_k^{-1}$, $q_1=1$, the same signed phases, and rate $\lambda_k=\log(1+c/m)$. Also $\Delta=b_k^{2m}\to e^{2c}>d_0$ and $\|a\|\to e^{c\varphi^2}<L$, so all sufficiently late members are legal. The inequalities $c/(m+c)\leq\lambda_k\leq c/m$ give consecutive six-step rate ratios at least $13/2$ once $m\geq c$, hence at least six. Enlarge $k_0$ also for rates at most one.
+
+The rational quaternion matrix of [supplier Definition 76.6](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) sends nonzero rational quadruples to rational proper rotations. Its continuous, surjective map from nonzero real quaternions to $SO(3)$ and density of rational quadruples make those rotations dense; their designated columns are dense in $S^2$. For each level a finite union of the closed $A_i(w)$ that contains every rational-source direction consequently covers the whole sphere. Repeat Lemma 90.2 with ratio six and $d\geq4$: the first four levels contribute at most four, $R\geq6^4>400$, and
+
+$$
+8\sum_{d\geq4}6^{-d/2}
+=\frac{8/36}{1-1/\sqrt6}<1.
+$$
+
+Thus $K_N\leq5|W|$ and the same additive lower follows. The all-source upper below includes this subfamily. $\square$
+
+This corollary restricts the source, not its production price. With fixed rational $c$, the unrotated preparation numerators and denominators can have $O(N\log(N+2))$ bits; any selected rational rotation adds its actual widths. No uniform presentation bound for all rational rotations, free rational instrument, or optimal production cost follows. Exact rational acquisition is the distinct paid contract of [supplier §§64,72–73,76.4,84](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md).
+

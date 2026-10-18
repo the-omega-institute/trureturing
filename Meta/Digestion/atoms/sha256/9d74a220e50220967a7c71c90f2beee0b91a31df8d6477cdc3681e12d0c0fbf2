@@ -1,0 +1,38 @@
+**Theorem 6.3 (terminal output distinctions must survive terminal merging).**
+There is a two-source finite relational task and a successful finite table
+whose terminal histories have the same epoch and phase vector but distinct
+correct complete rows. In their source-free boundaries $b$, identifying
+their halt controls as one generic halt and deleting the retained row
+makes correct decoding impossible.
+
+Proof 6.3. Take $D=\{u_0,u_1\}$ and rows $Y_0\ne Y_1$. At its single
+port, $u_0$ replies $c_0$ at epoch zero and $c_1$ at all epochs $j\ge1$;
+$u_1$ replies $c_1$ at all epochs. This is implemented by a finite plant
+with a one-step persistent reached flag. The chart is $n\in\{0,1\}$,
+Same is $n=m$, and the exact $c_1$ formula is $n=1\lor j\ge1$. The one
+descriptor, reached transport and monotonicity are as in the preceding
+examples.
+
+The initial read sends reply $c_i$ to update state $a_i$, and $a_i$ sends
+its one update to halt $h_i$ with installed row $Y_i$. At both terminal
+histories $j=1$ and $v=(c_1)$. The histories have respective pairs
+$(h_i,\mathsf{Done}(Y_i))$. Replacing these pairs by a single unlabelled
+terminal symbol gives equal projected boundaries. Any decoder on that
+projection has one output there, and cannot equal both distinct required
+rows. $\square$
+
+Deleting $A$ alone while retaining the distinct complete halt states is
+safe, since $A$ is recoverable from $h$. Retaining $A$ allows the halt
+controls to be merged only when all remaining successor and legality
+requirements also descend. Deleting **both** forms of output distinction
+is safe exactly when the complete target row is constant on each merged
+terminal fiber. Equal masks or equality of only one row field do not
+establish that condition. Likewise, the pending/complete tag can be
+deleted only if another retained field still determines whether output
+has completed. These are conditions on information retained by the
+projection, not assertions that every listed field is separately minimal.
+If exact source coordinates are instead available to a decoder, it can
+compute $R(\Theta(\lambda))$ independently. The terminal counterexample
+concerns the source-free retained interface; it does not install that
+source-coordinate port in the controller.
+

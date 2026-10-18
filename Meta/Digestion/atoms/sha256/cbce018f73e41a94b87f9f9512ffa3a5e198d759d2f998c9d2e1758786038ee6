@@ -1,0 +1,22 @@
+## 187. Consequences for the remaining geometry
+
+Every reservoir is now witnessed. No flat owner can select a transverse
+pair, because it would supply two pi angles to its witnessed label.
+Thus all flat owners select the axes. In particular any flat axial U
+occurrence has angle pi. Section 185 already excluded every flat transverse
+zero U occurrence, and transverse pi would contradict its genuine witness.
+So the only flat U occurrences are axial pi occurrences. Its positive
+genuine contribution gives p_U<=1, proving the stated genuine budgets.
+
+The same classification makes every Z occurrence genuine. An axial flat
+Z occurrence would be pi, contrary to p_Z=0. A transverse flat Z owner
+would have selected H axes of value at most m<z and special axes with
+shifted values below z+a; their shifted product would be strictly below
+(z+a)^2. Hence no such owner exists.
+
+The proof preserves actual slot multiplicities, arbitrary special edges,
+repeated axes and distinct-face self-gluings. It does not assert that U
+is at most Z, that U is pi-selected, or that a return has only the old
+four-reservoir roles. Those remain substantive five-label alternatives.
+
+

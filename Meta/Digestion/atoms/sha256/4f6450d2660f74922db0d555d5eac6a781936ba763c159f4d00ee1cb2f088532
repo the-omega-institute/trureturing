@@ -1,0 +1,18 @@
+**Definition 52.1 (joint polynomial and retained core).** Choose one real $\chi\in C_c^\infty(\mathcal C)$ equal to one near $o$, supported in a sufficiently small fixed interior source neighborhood. Pull smooth functions back by $\Phi$ and Taylor expand at zero. For a multi-index $\alpha$ put $|\alpha|_E=\alpha_1+\alpha_2+2\alpha_3+3\alpha_4$. Let $\mathcal T_3 f$ contain exactly the Taylor monomials with $|\alpha|_E\le3$. For $\Lambda$, retain exactly the two-endpoint monomials with $|\alpha|_E+|\gamma|_E\le3$. Set
+
+$$
+\begin{aligned}
+P_\chi(Y)&=\chi(Y)\mathcal T_3f(Y),\\
+\Pi_\chi(A,Y)&=\chi(A)\chi(Y)\mathcal T_3\Lambda(A,Y),\\
+R_\chi(Y)&=f(Y)-P_\chi(Y),&
+\mathcal R_\chi(A,Y)&=\Lambda(A,Y)-\Pi_\chi(A,Y),\\
+I_\chi&=\int_{\mathcal C}R_\chi(Y)G(o,Y)^2dY,\\
+\delta_{\chi,s}&=s^5\int P_\chi(Y_s\xi)u_s(\xi)^2d\xi,\\
+Q_{\chi,s}&=j_0s^5\iint\Pi_\chi(Y_s\eta,Y_s\xi)x_s(\eta)x_s(\xi)d\eta d\xi,\\
+\mathcal C_{\chi,s}&=\ell_s+\frac{\ell_s\delta_{\chi,s}+Q_{\chi,s}}{n_s}.
+\end{aligned}
+\tag{52.1}
+$$
+
+The two endpoint degrees are summed before truncation. In particular this is not a separate degree-three truncation at each endpoint. These signed retained scalars do not change any native operator or multiplier.
+

@@ -1,0 +1,20 @@
+### Lemma 9.3. Rounding a complex unitary triplet block
+
+For any normalized phi with its AB and CD marginals exactly R, Lemma 8.2 without the zero-spin assumption gives, after a global phase,
+
+$$Z_\phi=\operatorname{diag}(i/\sqrt2,W/\sqrt6),\qquad W\in U(3),\qquad q(\phi)=-\frac12+\frac16\sum_{j,k}W_{jk}^2.$$
+
+Write W=X+iY with X,Y real. Unitarity implies ||X||_F^2+||Y||_F^2=3, so
+
+$$\|Y\|_F^2=-3\operatorname{Re}q(\phi)\le3|q(\phi)|.$$
+
+All singular values t_j of X lie in [0,1]. A real orthogonal polar factor O exists even if X is singular, and
+
+$$\|X-O\|_F^2=\sum_j(1-t_j)^2\le\sum_j(1-t_j^2)=\|Y\|_F^2.$$
+
+It follows that ||W-O||_F^2<=6|q(phi)|. Replacing W by O creates a state eta in M by Lemma 8.3, and
+
+$$\|\phi-\eta\|_2^2\le|q(\phi)|. \tag{9.4}$$
+
+This estimate covers both orientations of O and every U(3) block. No nonsingularity of Re W is assumed.
+

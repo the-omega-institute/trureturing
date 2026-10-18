@@ -1,0 +1,25 @@
+## Finite Poincaré–Miranda from Brouwer
+
+For a finite index type `E`, let `clamp_e(t) = max a_e (min b_e t)`.  If
+
+```
+x_e = a_e  ⇒  K_e(x) > 0,       x_e = b_e  ⇒  K_e(x) < 0,                 (†)
+```
+
+then the map
+
+```
+G_e(x) = clamp_e (x_e + K_e(x))
+```
+
+is a continuous self-map of `Ω`.  Brouwer on a finite product of intervals
+(obtained from the merged simplex Brouwer theorem by the product-of-simplices
+transport) gives a fixed point `x*`.  At a lower face, (†) makes
+`clamp_e(a_e + K_e(x*)) > a_e`, contradicting `G_e(x*) = a_e`; the upper-face
+case is identical.  Thus every coordinate of `x*` is interior, where the
+clamp is inactive, and `G_e(x*) = x*_e` implies `K_e(x*) = 0` for every `e`.
+
+This is the finite Poincaré–Miranda lemma in exactly the orientation needed
+here.  The product transport is the only fixed-point API not already supplied
+by PR #13070; no geometric input is hidden in this step.
+

@@ -1,0 +1,6 @@
+**Theorem 379.1.** For every admissible entire profile in §375, the original classes \(\mathcal N_2\) and \(\mathcal O_2\) both have optimum selected-law error \(c=2867/11856\). The same twenty-schedule allocation in §376 attains the value in both classes.
+
+*Proof.* Section 377 gives a mass-one complete (N) table and a mass-one stopped (O) table satisfying every finite cap row at \(e=c\), with the same positive endpoint law. The common-seed realization and the finite-pattern source witnesses turn these tables into original hard-two acquisitions. For (N), both requests are acquired even when the first reply is zero; for (O), the increasing pair stops at its first queried zero. The output labels are the actual \(\theta_j\), and the handoff is sourcewise measurable and almost surely finite. The tail identity handles every \(n>8\), including the closed tie \(a_9=c\) and every later tie.
+
+Conversely, any original (N_2) or (O_2) acquisition with error \(e\) induces its complete finite eight-coordinate table. The source witnesses for every Boolean word force the rows used in (378.1), while the full original rule retains the one common seed and one schedule mass. Applying (378.2) gives \(e\ge c\). The upper and lower bounds coincide. This proves the theorem. \(\square\)
+

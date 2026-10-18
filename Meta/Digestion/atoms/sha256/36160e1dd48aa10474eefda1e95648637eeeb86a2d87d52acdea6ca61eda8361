@@ -1,0 +1,34 @@
+**Definition 2.3 (relative commands and total status accounting).** A
+public relative command $(a(t),b(t))$, starting at zero, means
+$k(t)=x+a(t)$ and $\chi(t)=\chi_*+b(t)$. Its mathematical domain is
+$(\ell_b-\min a,u_b-\max a)$, as in [Probability/Phase Transport][PP]
+§9.1. A nonempty domain is a partial-action fact, not an unknown-height
+detector. All lower tests here have common present permissions and are
+promised legal at every tested height.
+
+The canonical mathematical over-menu consists of permitted prescribed
+original controls at the same base and matching current height, and finite
+chronological compositions of them. Each separately supplied waveform and
+processor keeps its actual permission, calibration and recording contract.
+Finite feedback may choose a next supplied member using only actual
+records and the declared controller/external inputs. Describing this
+over-menu does not supply a missing source-bound execution service.
+
+A positive horizontal request of displacement $d>0$ and duration $L>0$
+has $(a,b)=(dt/L,0)$ and domain $(0,c-d)$. A phase request has
+$(a,b)=(0,\alpha t/L)$, $L>0$, and domain $(0,c)$ for every finite
+real $\alpha$. Neither requires the controller to know $x,\beta,m$
+or the old real lift. At a matching join the real tail is
+$\chi(T+u)=\chi(T)+\chi_{\rm tail}(u)-\chi_{\rm tail}(0)$.
+Zero duration allows the matching identity, not an instantaneous nonzero leg.
+
+Known permission denial or known interface/domain mismatch has its declared
+visible unexecuted rejection, with the unchanged specimen and actual
+controller update. A mathematically undefined request has no executed
+successor asserted here. No detector for an unflagged promise violation is
+constructed. On first executed failure retain its exact time, original mode,
+old joint archive and absorbing specimen $f$. Only the declared stopped
+continuation remains; no reset, reversal, post-failure retry, replacement
+specimen or hidden environment/Kraus-index read is supplied. Feedback uses
+only actually retained records and common declared external inputs.
+

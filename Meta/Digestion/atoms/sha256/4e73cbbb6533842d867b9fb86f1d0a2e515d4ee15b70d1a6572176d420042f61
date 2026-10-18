@@ -1,0 +1,69 @@
+**Theorem 23.1 (classical-assisted lower-dimensional acquisition gap).**
+There is a task-dependent constant $\epsilon_2>0$ such that every common
+full-output processor whose compressed live Choi matrix belongs to
+$\mathfrak S_2$ satisfies
+
+$$
+E(\Phi)\geq E_*+\epsilon_2.
+\tag{CG.190}
+$$
+
+In particular this holds for every actual factorization of Definition
+21.2 or Convention 21.3 with $d_\alpha\leq2$, allowing all its classical
+records, independent blanks, arbitrary common decoders and all outcomes.
+It also holds for the closure of this class in reduced Choi/effect
+triples. The gap is existential; neither a numerical additive error gap
+nor the restricted optimum is asserted.
+
+Proof. The standard bottleneck mechanism in Sekatski §II.A is especially
+simple for the actual live submap. Choose encoder Kraus matrices
+$C_{\alpha u}:\mathbb C^3\to\mathbb C^{d_\alpha}$ and live-decoder
+Kraus matrices $D_{\alpha v}:\mathbb C^{d_\alpha}\to\mathbb C^3$.
+Their products give
+
+$$
+\Lambda(A)=\sum_{\alpha,u,v}
+ L_{\alpha vu}A L_{\alpha vu}^\dagger,
+\qquad L_{\alpha vu}=D_{\alpha v}C_{\alpha u},
+\qquad \operatorname{rank}L_{\alpha vu}\leq d_\alpha.
+\tag{CG.191}
+$$
+
+This uses the same joint implementation, not separately attained output
+laws. The live-decoder budget is $\sum_vD_{\alpha v}^\dagger
+D_{\alpha v}\preceq I_{d_\alpha}$; equality need not hold. Thus
+the product-rank argument gives $J_\Lambda\in\mathfrak S_2$ without
+treating a live branch as TP or dividing by a branch probability.
+
+For compactness, normalized rank-at-most-two vectors form a compact
+set, and their rank-one projectors do also. Their convex hull in the
+finite-dimensional Hermitian matrix space is compact. Consequently
+$\mathfrak S_2\cap\{J:\operatorname{tr}J\leq3\}$ is compact, including
+$J=0$. This is the homogeneous form of Terhal–Horodecki's compact
+Schmidt-number sets. Positive countable sums and the integrals specified
+in (CG.183) stay in that cone by closedness and integrability.
+
+Let $\mathcal K$ be ALL finite-output triples in (CG.155) and put
+
+$$
+\mathcal K_2=\{(J,G_f,G_o)\in\mathcal K:J\in\mathfrak S_2\},
+\qquad \mu_2=\min_{\mathcal K_2}E_c.
+\tag{CG.192}
+$$
+
+The budget $\operatorname{Tr}_{\rm out}J+G_f^T+G_o^T=I_3$ gives
+$\operatorname{tr}J+\operatorname{tr}G_f+\operatorname{tr}G_o=3$.
+Positivity makes $\mathcal K_2$ compact; it is nonempty, for example
+at $J=0,G_f=I_3,G_o=0$. The maximum of twelve continuous finite-output
+errors is continuous, so $\mu_2$ exists. Convention 17.1 gives
+$\mu_2\geq E_*$. Equality would supply an optimizer in $\mathcal K_2$,
+contradicting Theorem 22.1. Hence $\epsilon_2=\mu_2-E_*>0$.
+
+The reduction $\mathcal C\Phi$ retains the live map and contracts the
+complete norm. Therefore
+$E(\Phi)\geq E_c(\mathcal C\Phi)\geq\mu_2$. Any convergent sequence
+of reduced triples with Schmidt number at most two has a limit in
+$\mathcal K_2$, proving exactly the stated closure result. Neither
+compactness of the complete output space nor a lift of an arbitrary
+finite triple to an optimal exact-time law is needed. $\square$
+

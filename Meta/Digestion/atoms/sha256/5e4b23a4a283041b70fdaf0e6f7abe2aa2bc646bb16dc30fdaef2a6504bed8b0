@@ -1,0 +1,11 @@
+**Definition 5.1 (bounded original-block donor components).** For a
+nonempty jointly admissible $H\subseteq S_d^N$, choose one valid witness
+for every coordinate-target pair, using a constant witness whenever that
+target is constant on $H$. Form an undirected graph on the original
+$N$ coordinates: a selected nonconstant target in $i$ with a donor
+$j\ne i$ adds the edge $\{i,j\}$. Self donors add no edge.
+Call $H$ *$b$-component admissible* if some such witness system has every
+connected component of size at most $b$. Each replacement set may choose
+its own witnesses, decoders and component partition. Correlations between
+components are permitted in $H$.
+

@@ -1,0 +1,35 @@
+**引理 3.4（签名基线的整个 J4 常数纤维及实际 MMJ 逆）。** 对每个实数 $\beta$，整个历史
+
+$$
+H_\beta=(0,J,\beta,J,0,J,\beta,J,0)
+\tag{3.6}
+$$
+
+的合法纤维恰为 $g(T)=k\ne0$、$\delta=-k$、$k(\sigma-1)=\beta$。若允许线性零块，同一等价允许 $k=0$。取得 (3.6) 后执行实际 $M,M,J$，其读数为 $y_5,y_6,y_7$，则
+
+$$
+k=y_6-y_5,\qquad
+\sigma=1+\beta/k,\qquad\tau=y_6/k,\qquad\eta=y_7/k
+\tag{3.7}
+$$
+
+及 (3.2) 恢复完整目标。
+
+**证明。** 写 $g=k+p$、$p(0)=0$。偶数零读数给 $p(2)=p(4)=0$，故 $p=\lambda T(T-2)(T-4)$。奇数两读相等给
+
+$$
+0=\sigma(p(1)-p(3))=6\sigma\lambda.
+\tag{3.8}
+$$
+
+因 $\sigma>0$，$\lambda=0$。反向常数增益直接实现全部 (3.6)，零块也成立。每个 $\beta$ 均可达：$\beta\ne0$ 时取 $P=\left(\begin{smallmatrix}1/2&1\\1/4&1/2\end{smallmatrix}\right)$、$k=4\beta$；$\beta=0$ 时取所有元素为 $1/2$ 的来源、$k=1$。
+
+$J^4$ 的实际累计矩阵为 $I$；续行累计矩阵依次为 $M$、$M^2=I+M$、$JM^2=\left(\begin{smallmatrix}1&2\\1&1\end{smallmatrix}\right)$。其读数依次是
+
+$$
+y_5=k(\tau-1),\qquad y_6=k\tau,\qquad y_7=k\eta.
+\tag{3.9}
+$$
+
+因此差为原非零 $k$，(3.7) 所有除法合法，并由 (3.2) 恢复原来源、常数增益及漂移。零初读以外加回命题 1.2 的 $a_0$。这是既有整个纤维逆，不作为新 J5 结果。∎
+

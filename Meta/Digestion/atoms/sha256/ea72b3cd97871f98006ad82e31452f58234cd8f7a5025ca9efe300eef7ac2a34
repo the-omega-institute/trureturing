@@ -1,0 +1,38 @@
+**命题 C-112.4（整个块、有限旗和每个复输入上的实际因子实现）。** 对
+$127/129<t<1$，(C112.12) 给四维块、十旗的 $T_{C_t^{\rm F}}$ 精确实现，
+(C112.13) 给二维块、五旗的 $T_{C_t^{\rm E}}$ 精确实现。
+其最小量子块维数分别恰为四和二；二者的最小无约束 Kraus 数均为五。
+显示旗数是达到方案的计数，不断言其最小性。
+
+证明。对相应的有限 Gram 因子 $v_a$，置
+$K_a=\sqrt5\operatorname{diag}v_a$。对每个原坐标 $j$，
+$\sum_a|v_a(j)|^2=C_{jj}=1/5$，于是
+
+$$
+\sum_aK_a^\dagger K_a=I_5,\qquad
+\sum_aK_aXK_a^\dagger=(5C)\circ X
+\quad(\forall X\in M_5(\mathbb C)).
+\tag{C112.14}
+$$
+
+取 $q=4$ 或 $q=2$，为每个因子固定坐标等距嵌入
+$V_a:\mathbb C^q\to\mathbb C^5$，其像包含 $\operatorname{supp}v_a$；
+小支撑用不同原坐标补齐至 $q$。定义 $B_a=V_a^\dagger K_a$，并取
+
+$$
+\operatorname{Enc}(X)=(B_aXB_a^\dagger)_a,\qquad
+\operatorname{Dec}((Y_a)_a)=\sum_aV_aY_aV_a^\dagger.
+\tag{C112.15}
+$$
+
+$V_a^\dagger V_a=I_q$ 使每个分支解码在整个 $M_q(\mathbb C)$ 上保迹。
+$V_aV_a^\dagger K_a=K_a$ 和 (C112.14) 使总编码保迹；矩形夹乘在任意参考放大下
+保持正性，故编码与解码完全正。复合逐矩阵元等于 (C112.14)，所有量子路径经过
+$q$ 块，旗为有限经典直和，没有量子旁路。这是每个固定 $C$ 各选一组固定编码与解码，
+再对每个复输入成立，不是一组未知 $C$ 的共同可编程实现。
+C-109.3 的逆向量词允许竞争者任意有限旗数、每旗任意有限 Kraus 数、整个块 CPTP
+解码，所以 C-112.3 的下界也排除这些全部竞争者。
+规范归一化 Choi 态的非零谱为 $C$ 的谱，故其秩为五；
+标准 Choi/Kraus 秩定理给无约束最少 Kraus 数五。
+因子、经典旗、量子块与无约束 Kraus 秩分别计数。证毕。
+

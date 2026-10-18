@@ -1,0 +1,50 @@
+**Proposition 10.4 (bounded exact readings).** Finite in-memory rational
+arithmetic and square-free radical reduction give the following readings
+for Definition 7.1, with no retained experiment program or data file.
+
+| Finite case | Exact reading |
+| --- | --- |
+| $n=4$: all $24$ permutations and $16$ binary assignments | Every $q_\pi$ sums to one. The edge $(0,1)$ is eligible in $12$ orders; its full paired-law affinity is $3/\sqrt{10}$ then and $1$ otherwise. Native mass is $41/648$. |
+| $n=5$: all $120$ permutations and $32$ assignments | Every $q_\pi$ sums to one. The edge is eligible in $60$ orders with the same affinities. Native mass is $61/1944$. The all-size packed-cycle bound is asserted only when $4\mid n$. |
+| $n=8$: all $40320$ permutations | For edges $(0,1),(4,5)$, the four eligibility patterns each occur exactly $10080$ times. Their full neighborhoods are disjoint. |
+| $n=8$: every $157$th lexicographic permutation, $257$ orders, all $256$ assignments each | With both eligible endpoint swaps performed, the exact full affinity is $1$, $3/\sqrt{10}$ or $9/10$ according as zero, one or two pairs are eligible. The counts of these three cases are $69,128,60$. Both order laws normalize in every case. |
+| Local reconstruction at $d=3,4$ | On $123$ and $15131$ actual canonical states respectively, each of the four binary joint inputs reconstructs exactly its prescribed actual pair. |
+| Paid witness $d=3,n=4,D=5$ | $31$ preparation Reads, maximum length $5$, $129$ letters, and exactly $228947148=|S_5|-16+1$ attained names. Its one late query has length $4$. |
+| The same $16$ merged sources and all $31$ requests, authentic counts $0$ through $12$ | All $6448$ actual iterated-source readouts equal (OOA.5) on the installed factors. |
+| Rational square-root bounds, cap and scan lengths | Both inequalities in (OOA.32) and both comparisons for $c'=211/400$ hold exactly. The scan-letter identity holds at every checked $D=1,\ldots,10$. |
+
+Proof of the finite formulas. For the cycle mass, multiply the unchanged
+joint weights on every binary assignment; the sums agree with (OOA.27).
+Each order law is the product (OOA.28) with its earlier-owner test.
+Taking square roots of rational paired products and collecting equal
+square-free radicals gives the stated affinities exactly. The eligibility
+counts enumerate restrictions to the specified four-label neighborhoods.
+Local reconstruction compares every prescribed factor against the full
+canonical factor tables. Substitution uses the actual ordered magma
+operation (OOA.1) and the complete four-reply Read at each tested count.
+The name count uses $|S_4|=15131$, $|S_5|=2+15131^2=228947163$;
+the preparation sums are those proved in Theorem 8.3. These bounded
+readings test concrete identities and operational correspondence. The
+unbounded quantifiers rest on the preceding proofs, not on empirical
+convergence, an executed complete decoration enumeration or an
+independent review. $\square$
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COK]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[GDB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[SIR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[OCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[RCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[Nielsen]: https://arxiv.org/html/2207.03745v1
+[DP]: https://arxiv.org/html/1612.03164v1
+[GLSS]: https://arxiv.org/html/1205.1478v1
+[NWO]: https://github.com/the-omega-institute/trureturing/blob/29f45c0bee5e8d45e4993ef7824b43d2c52235eb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[FCS]: FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
+[Depth]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+

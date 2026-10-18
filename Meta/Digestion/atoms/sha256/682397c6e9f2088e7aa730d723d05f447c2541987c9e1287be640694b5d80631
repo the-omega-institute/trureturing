@@ -1,0 +1,34 @@
+**Definition 4.1 (Integrable conditional loss contrast).** Under (2.1),
+use the cocycle just constructed and set, for $f\in\mathcal K_C(P)$,
+
+$$
+\begin{aligned}
+T_{C,f}(y)
+&=\sum_{w:\,y\in K_C(w)}p_C(w;y)f(w)\Delta_P(wy,0^Ly)\\
+&=\mathbb E_P[f(X_C)\Delta_P(X,Z_CX)\mid\mathcal H_C](y).
+\end{aligned}
+\tag{4.1}
+$$
+
+These versions agree almost surely. Indeed $P(\Omega)=1$ and finite
+disintegration imply that for almost every $y$ every positive conditional
+completion belongs to $\Omega$; (3.1) makes this every compatible
+completion, including zero. Define the expression to be zero on the
+remaining exterior null set. Equation (3.2) gives
+
+$$
+\|T_{C,f}\|_{L^1(\mu_C)}\le
+\|f\|_\infty\bigl[L+2(1+2^{L/2})A_P\bigr].
+\tag{4.2}
+$$
+
+Pointwise on this conull exterior set, any other compatible reference
+completion gives the same contrast: cocycle additivity changes each
+$\Delta_P(wy,0^Ly)$ by one common number, whose coefficient sum is
+$\sum_w p_C(w;y)f(w)=0$. This reference invariance uses intrinsic nullity.
+
+The supplied response norm, when $\tau_P(0)<\infty$, is
+$\gamma_L(P)=\max\{|S_P(f_{[1,L]})|:f\in\mathcal K_{[1,L]}(P),
+\ \|f\|_\infty\le1\}$. Its finiteness and attainment follow from
+[Intrinsic, Proposition 4.1][I]; (2.1) supplies its tail hypothesis here.
+

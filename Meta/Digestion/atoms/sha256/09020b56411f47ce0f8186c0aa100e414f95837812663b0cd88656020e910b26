@@ -1,0 +1,12 @@
+## 5. Sources
+
+The source conjecture and modular-inverse convention are those of Graham
+and O'Bryant, DOI 10.4064/aa118-3-4, printed pages 283 and 302;
+the [author journal PDF](https://mathweb.ucsd.edu/~ronspubs/05_02_fraenkel_tiling.pdf)
+and [original author version](https://arxiv.org/abs/math/0407306v2)
+give the same Conjecture 5.2. The elementary sine periodicity, positivity,
+cotangent doubling identity, and geometric sum are intermediate tools.
+The counterfamily and its application to the literal set conclusion are
+the derivation of §3. Marcus's A003558 comment supplies the tent-map
+interpretation used for the comparison in §4.
+

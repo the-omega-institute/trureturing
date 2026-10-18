@@ -1,0 +1,53 @@
+**定理 17.1（十六源的全秩相容判据）。** 写 $L=[A\ e]$，其中 $A$ 有两列，$e$ 是常数列。源护栏 (16.2)–(16.3) 始终保留。
+
+若 $\operatorname{rank}A=2$，置
+
+$$
+G=A^TA=\begin{pmatrix}g_{11}&g_{12}\\g_{12}&g_{22}\end{pmatrix},\quad
+w=A^Te=\binom{w_1}{w_2},\quad
+\Delta=g_{11}g_{22}-g_{12}^2>0,
+$$
+
+$$
+\Phi=\Delta e^Te-g_{22}w_1^2+2g_{12}w_1w_2-g_{11}w_2^2.
+\tag{17.1}
+$$
+
+则存在合法父点和第五响应的充分必要条件是 $\Phi=0$ 且
+
+$$
+z=\frac{g_{12}w_2-g_{22}w_1}{\Delta}\in I.
+\tag{17.2}
+$$
+
+响应唯一，且 $p_M=(g_{12}w_1-g_{11}w_2)/\Delta$。有精确恒等式
+
+$$
+\Phi=\det(L^TL)=
+\sum_{1\le i<j<k\le18}\det(L_{[i,j,k]})^2
+=\Delta\|A(z,p_M)^T+e\|_2^2\ge0.
+\tag{17.3}
+$$
+
+若 $\operatorname{rank}A=1$，任选 $A$ 的一个非零列 $a$，置
+
+$$
+\Psi=\|a\|_2^2\|e\|_2^2-(a^Te)^2,\quad
+\alpha=\frac{a^TA_{:1}}{\|a\|_2^2},\quad
+\beta=\frac{a^TA_{:2}}{\|a\|_2^2},\quad
+\gamma=-\frac{a^Te}{\|a\|_2^2}.
+\tag{17.4}
+$$
+
+相容性恰为 $\Psi=0$，然后全部响应恰由
+$\alpha z+\beta p_M=\gamma$ 给出。若 $\beta\ne0$，可任选 $z\in I$ 并取
+$p_M=(\gamma-\alpha z)/\beta$。若 $\beta=0$，则 $\alpha\ne0$，必须检验 $z=\gamma/\alpha\in I$，而 $p_M$ 自由。
+
+若 $\operatorname{rank}A=0$，相容性恰为 $e=0$；此时任选 $z\in I,p_M\in\mathbb R$。这三种情形穷尽全部源支，包含 $A$ 的任一列恒零。
+
+证明。秩二时令 $\theta=-G^{-1}w$。正规方程给 $A^T(A\theta+e)=0$，展开平方得到
+$\Delta\|A\theta+e\|_2^2=\Phi$。所以 $\Phi=0$ 当且仅当全部十八残差为零；解的唯一性来自 $A$ 的列独立，逆矩阵给式 (17.2) 及 $p_M$。块行列式给第一恒等式，Cauchy–Binet 给其 $\binom{18}{3}=816$ 个平方子式展开。这些标准恒等式在这里承担具体十八行的相容检验。
+
+秩一时两个系数列分别为 $\alpha a,\beta a$。正交分解
+$e=((a^Te)/\|a\|^2)a+e_\perp$ 给 $\Psi=\|a\|^2\|e_\perp\|^2$。所以相容恰是 $e_\perp=0$，余下一条标量方程正是所述直线。至少一个系数非零，其与 $I\times\mathbb R$ 的交集逐分支如上。秩零时原等式就是 $e=0$。在各支最后代入命题 16.2，所得是同一实际父点与实际第五响应，而非分别拟合的父点。∎
+

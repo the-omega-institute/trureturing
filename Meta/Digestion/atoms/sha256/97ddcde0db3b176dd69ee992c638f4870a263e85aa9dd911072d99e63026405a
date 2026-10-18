@@ -1,0 +1,20 @@
+## 415. A five-P-slot owner must exist
+
+Suppose f=0. The bound a+f>=3 and (414.3) force a=3. By (414.2),
+
+    X<pi/3.
+
+Each cheap axial angle is positive and bounded by their sum X.
+Therefore every one of these three owners satisfies theta_P0<pi/3,
+and the conditional three-theta inequality (407.1) applies to all three.
+Summing it, using (414.1), gives
+
+    6*pi=2*pi*a < 3*X+Y < pi+5*pi=6*pi,
+
+a contradiction. Hence f>=1. Since f<=k<=2,
+
+    f in {1,2}, and k in {1,2}.                    (415.1)
+
+The proof does not apply the three-theta charge to any owner whose
+axial angle has not been proved small.
+

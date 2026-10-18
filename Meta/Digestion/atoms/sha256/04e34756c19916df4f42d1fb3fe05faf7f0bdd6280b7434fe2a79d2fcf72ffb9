@@ -1,0 +1,14 @@
+**定义 2.3（完整误差球风险）。** 对任意声明的实际源类 $\mathcal S$ 和 $\delta\ge0$，报告 $y=(y_0,y_1,y_2)$ 遍历全部 $(\mathbb R^3)^3$。定义
+
+$$
+\begin{aligned}
+\mathcal A_\delta(y)&=\{\mathsf s\in\mathcal S:
+\max_{0\le i\le2}|y_i-x_i(\mathsf s)|\le\delta\},\\
+R_\delta(\mathcal S)&=\inf_D\ \sup_{\mathsf s\in\mathcal S}
+\ \sup_{y:\mathsf s\in\mathcal A_\delta(y)}
+\ \sup_{j\ge3}|D(y,j)-x_j(\mathsf s)|.
+\end{aligned}
+$$
+
+$D:(\mathbb R^3)^3\times\{3,4,\ldots\}\to\mathbb R^3$ 遍历所有集合函数，输出不必是一条实际轨道。$j$ 是外供的数学查询。没有概率、误差独立性或报告属于实际像的条件；三个误差可以任意相关。空纤维上的输出任意定义，不改变风险。
+

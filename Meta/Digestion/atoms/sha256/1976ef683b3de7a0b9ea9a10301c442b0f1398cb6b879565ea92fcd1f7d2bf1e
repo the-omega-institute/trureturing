@@ -1,0 +1,12 @@
+**Theorem 10.1 (a Pareto point in twelve resource coordinates).** Form
+the twelve-vector of acquired high probabilities, one coordinate for
+each original normalized specimen. The vector with value $g_y$ at
+each of the four signs at height $y$ is Pareto optimal among all
+ceiling factorizations: no allowed factorization weakly reduces every
+coordinate and strictly reduces even one.
+
+Proof. Every coordinate belongs to exactly one original beta-pair.
+If both members are at most $g_y$ and one is strictly smaller, their
+sum is below $2g_y$, contradicting (RE.63). The statement compares
+coordinates and does not choose a scalar resource objective. $\square$
+

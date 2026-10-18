@@ -1,0 +1,49 @@
+**Proposition 6.2 (strict separation on a common actual graph).** On
+$K_5$ and for every $A>B>0$, the optimum of the credited forest
+class in Convention 6.1 is strictly larger than the logarithm of
+Theorem 4.2's optimum. More precisely, with
+
+$$
+f(t)=t\log_2\frac{A^{1/t}+B^{1/t}}2\quad(t>0),
+\tag{WBF.29}
+$$
+
+these optima are respectively
+
+$$
+U_{\rm forest}=10+5f(2/5),\qquad
+\log_2\min F=10+5f(1/2)<U_{\rm forest}.
+\tag{WBF.30}
+$$
+
+Proof. [GDB, Theorem 21.2][GDB] already evaluates the optimum
+over all globally compensating tables at fixed mixture data as
+$2n+\sum_v f(\rho_v)$, where
+$\rho_v=\sum_{j:v\in F_j}\lambda_j$. Feasibility for $A>B$
+requires $\rho_v>0$. On $K_5$ an induced forest has at most
+two vertices, so $\sum_v\rho_v\le2$.
+
+For completeness, if
+$q_t=A^{1/t}/(A^{1/t}+B^{1/t})$, differentiation gives
+
+$$
+f'(t)=h_2(q_t)-1<0,\qquad
+f''(t)=\frac{\operatorname{Var}_{(q_t,1-q_t)}
+                     (\ln A,\ln B)}{t^3\ln2}>0.
+\tag{WBF.31}
+$$
+
+Here $h_2$ is binary base-two entropy; $A>B$ makes $q_t\ne1/2$.
+Convexity and decrease imply
+$\sum_v f(\rho_v)\ge5f((\sum_v\rho_v)/5)\ge5f(2/5)$.
+Mix all ten two-vertex subsets equally to attain
+$\rho_v=2/5$; the credited power tables of GDB Theorem 21.2
+attain their table optimum. This proves the forest equality.
+
+On the other hand, elementary rearrangement of
+$\tfrac52\log_2[8(A^2+B^2)]$ gives $10+5f(1/2)$.
+Strict decrease and $2/5<1/2$ give the strict comparison.
+$K_5$ has connected vertex deletions and the required Euler
+orientation, so both optima concern the same actual native instance.
+$\square$
+

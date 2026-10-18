@@ -1,0 +1,16 @@
+## 5. The credited polynomial-prefix optimum and its scope
+
+In the broader model of [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md), Definition 1.1, the gain $G\not\equiv0$ has degree at most known $k\ge0$, the strictly positive rank-one source is $R$, and $\deg D\le d$. Its complete target is $(R_0,H,D)$, with $R_0=R/\operatorname{tr}R$ and $H=(\operatorname{tr}R)G$. Definition 3.1 fixes the prefix with
+
+$$
+B=\max(k,d)+1,\qquad T=B+k+1:
+$$
+
+$B$ reads at $I$, followed by the $k+1$ reads at $U,\ldots,U^{k+1}$. It has $T$ reads and ends at cumulative matrix $U^{k+1}$ at recorded index $T-1$.
+
+The polynomial companion's Theorem 8.1 and Corollary 8.2 establish that exactly $k+2$ further predetermined reads are necessary and sufficient in the worst case over that declared model, after this entire specified prefix. The corresponding total is $\max(k,d)+2k+4$. This is a continuation optimum for this prefix; it is neither a lower bound for other prefixes nor a necessity statement for every individual gain polynomial or prescribed root pattern. Its Theorem 6.1 gives the separate complete positive-scale fibre $R=tR_0$, $G=H/t$, $t>0$, with $D$ fixed, and agreement along common future histories.
+
+For $k=1$, this prefix has $B=\max(1,d)+1$ reads at $I$, then reads at $U,U^2$. The positive-intercept affine restriction is the one mapped in Section 4. [Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md), Theorem 4.1, supplies the obstruction to at most two further reads directly within this restriction, with an allowed gain of initial value one. Combined with the cited polynomial upper construction at $k=1$, it gives exactly three further reads for this affine prefix as well. The unrestricted polynomial lower bound alone is not used to infer a lower bound on a smaller positive-intercept domain.
+
+This baseline/shear prefix differs from Theorem 2.1's initial $I,U,U$ prefix. Its continuation optimum therefore leaves the different six-read construction and the all-history alternatives of Section 4 intact. Likewise, Theorem 3.3's collision concerns its particular six-read history and does not exclude other histories.
+

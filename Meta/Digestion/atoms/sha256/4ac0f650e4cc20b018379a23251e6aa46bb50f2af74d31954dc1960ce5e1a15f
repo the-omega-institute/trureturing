@@ -1,0 +1,49 @@
+**Theorem 11.3 (necessity from every original finite implementation).**
+For every original design there is a point of $\mathcal K_s$ for
+which, as a five-mode operator inequality,
+
+$$
+G_H^{\rm acq}(\mathfrak F)\succeq
+ E\Theta(H_++H_-)E^\dagger=G_H^L(\mathfrak F).
+\tag{IR.71}
+$$
+
+In particular every original pointwise resource cost is at least
+$\mathsf E_s(E^\dagger\sigma E)$, and every original twelve-vector
+is weakly dominated by the corresponding coefficient cost vector.
+
+Proof. Refine a finite acquired label by its binary postprocessing coin
+if required. Its fibre dimension is unchanged, and it is still an
+actually enacted finite instrument. Choose finite Kraus matrices of its
+encoders and of their supported live-decoder compressions. Each product
+is a positive Choi summand of the fixed whole live Choi matrix.
+Domination forces its output support and input support into $V$.
+Thus its full five-mode live product has the form $EK(z)E^\dagger$
+for a unique complex coefficient vector $z$, with the evident output
+embedding; in supported coordinates it is $K(z)$.
+
+For each binary record sum $zz^\dagger$ over products through actual
+high fibres to obtain $H_r\succeq0$, and through low fibres to obtain
+$L_r$. A product through a low fibre has rank at most two. Lemma 4.2
+therefore puts its coefficient vector on precisely the singular locus
+in (IR.68), including the plane as well as the quadratic cone. Hence
+$L_r\in\mathcal C_2$. Summing the actual live products gives the
+fixed live Choi matrix. The injectivity of $\mathcal V$ makes its
+coefficient identity exactly the sum $I_3$ in (IR.69).
+
+The total plus record effect minus its supported live effect is its
+actual supported failure effect. Summing the entire original failure
+register gives $0\preceq N\preceq M$ as in Theorem 5.2. This remains
+true for whatever time or label splitting the actual design uses;
+it does not enforce the chosen half-density split. Consequently the
+four matrices are feasible. The full high live input effect is the
+embedded coefficient effect in (IR.71). Full TP of each actual decoder
+and live TNI prove (IR.71) before any input evaluation, on all five
+modes. In particular it includes possible high acquired mass that later
+fails, and any acquired effect involving the complementary input.
+Taking a trace against any positive $\sigma$, with cross-support
+coherence allowed, proves the bound. Taking the twelve original
+expectations gives the asserted coordinatewise domination. No
+restriction to real, covariant, pure or isometric original operations
+has entered this necessity proof. $\square$
+

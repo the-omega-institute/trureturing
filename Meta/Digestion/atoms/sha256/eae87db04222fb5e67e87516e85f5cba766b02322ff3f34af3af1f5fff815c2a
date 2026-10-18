@@ -1,0 +1,22 @@
+**Theorem 72.1 (actual-channel perturbation estimate).** Put $P_2=|2\rangle\langle2|$, $P_{\mathcal C}=I_3-P_2$, $Z_0=P_{\mathcal C}-P_2$ and $Q_0=N_0(P_2)=t_1t_1^T+t_2t_2^T$. For every allowed $\epsilon,Q$,
+
+$$
+\begin{aligned}
+\mathcal D_{d_\epsilon}(X)
+&=P_{\mathcal C}XP_{\mathcal C}+P_2XP_2
++d_\epsilon(P_{\mathcal C}XP_2+P_2XP_{\mathcal C})\\
+&=\frac{1+d_\epsilon}{2}X+\frac{1-d_\epsilon}{2}Z_0XZ_0,\\
+N_{\epsilon,Q}(X)&=N_0\mathcal D_{d_\epsilon}(X)
++\epsilon\langle2|X|2\rangle(Q-Q_0),\\
+\|N_{\epsilon,Q}-N_0\|_\diamond
+&\leq1-\sqrt{1-\epsilon}+\epsilon\|Q-Q_0\|_1
+\leq\eta_\epsilon:=1-\sqrt{1-\epsilon}+2\epsilon
+\leq\frac83\epsilon\leq\frac1{48}.
+\end{aligned}
+\tag{S.140}
+$$
+
+Proof. The channel identity follows on all four input blocks: the code block is unchanged, the two cross blocks acquire $d_\epsilon$, and the third diagonal output becomes $d_\epsilon^2Q_0+\epsilon Q$. It therefore holds on every complex input and after tensoring with any reference.
+
+The dephasing mixture gives $\|\mathcal D_{d_\epsilon}-\mathrm{id}\|_\diamond\leq1-d_\epsilon$. A balanced superposition of one code vector and $|2\rangle$ has its two cross entries reduced by $d_\epsilon$, and the resulting difference has eigenvalues $\pm(1-d_\epsilon)/2$. This attains $1-d_\epsilon$. For any fixed $A\in M_5$, the map $X\mapsto\langle2|X|2\rangle A$ has diamond norm $\|A\|_1$: after any finite reference it is the reference compression of $X$ tensored with $A$. Compression has induced trace norm at most one, tensor-product trace norms multiply, and $P_2$ attains equality. Apply this with $A=Q-Q_0$. Since $Q,Q_0$ are densities, their trace distance is at most two. CPTP postprocessing by $N_0$ is contractive. Finally $d_\epsilon\geq1/2$, so $1-d_\epsilon=\epsilon/(1+d_\epsilon)\leq2\epsilon/3$. These prove every bound in (S.140), uniformly in the entire real-density continuum. $\square$
+

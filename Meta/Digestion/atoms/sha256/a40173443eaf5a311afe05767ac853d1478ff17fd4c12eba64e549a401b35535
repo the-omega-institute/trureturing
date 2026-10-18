@@ -1,0 +1,87 @@
+**引理 89.1（同源物理方向的有理界）。** 对 (RC.110)–(RC.112) 的物理谱承载方向，定义
+
+$$
+R_f=\sqrt{W_f/V_f}
+=\frac{b_{\rm src}h_2}{d_{\rm src}h_1}\sqrt{m_1/m_2},\quad
+c_+=R_ft_f=\frac{w_+}{z_+},\quad
+q_f=t_f/R_f=-\frac{z_-}{w_-}.
+\tag{RC.169}
+$$
+
+则
+
+$$
+1.98<R_f<2.08,\quad .39<t_f<.42,\quad
+0<c_+<.8736<1,\quad 3/16<q_f<7/33,
+\tag{RC.170}
+$$
+
+特别是 $.18<q_f<.22$。两个 $z_\epsilon$、容量和 $\nu_\epsilon$ 都严格正，两个物理谱值非零、异号且不同。
+
+证明。保留实际物理白化，而非以未白化特征向量代替 effect：
+
+$$
+\begin{gathered}
+\Xi=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\quad
+ d_f=11m_1/64,\quad
+ z_f=\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})/16<0,\\
+L_f=\sqrt{d_f^2+4z_f^2},\quad
+ t_f=\frac{-2z_f}{d_f+L_f},\quad
+ e_-=(1,t_f)^T/\sqrt{1+t_f^2},\quad
+ e_+=(t_f,-1)^T/\sqrt{1+t_f^2},\\
+B_\epsilon^{\rm sp}=M_2^{1/2}e_\epsilon e_\epsilon^TM_2^{1/2},\quad
+M_2=\operatorname{diag}(m_1,m_2).
+\end{gathered}
+\tag{RC.171}
+$$
+
+将 (RC.168) 代入 $R_f^2$，上下界分别由
+
+$$
+\left(\frac{145\cdot809}{100\cdot707}\right)^2\frac{496}{345}
+>\left(\frac{99}{50}\right)^2,\qquad
+\left(\frac{147\cdot810}{98\cdot706}\right)^2\frac{497}{344}
+<\left(\frac{52}{25}\right)^2
+$$
+
+这两个纯有理比较给出。平方比较还给出 $6.08<\sqrt{37}<6.09$、$7.68<\sqrt{59}<7.69$，故 $1.59<\sqrt{59}-\sqrt{37}<1.61$。因此
+
+$$
+a_f:=|z_f|/d_f=\frac4{11}\sqrt{m_2/m_1}(\sqrt{59}-\sqrt{37})
+\quad\hbox{满足}\quad .47<a_f<.50.
+$$
+
+这里 $a_f$ 仅是本节的谱比率。$t_f\in(0,1)$ 满足 $a_f=t_f/(1-t_f^2)$，右侧严格递增；而
+
+$$
+\frac{.39}{1-.39^2}<.47,\qquad
+\frac{.42}{1-.42^2}>.50.
+$$
+
+这给出 $t_f$ 的界。相乘、相除得 $c_+<2.08(.42)=.8736$ 及
+$q_f>.39/2.08=3/16$、$q_f<.42/1.98=7/33$；端点比例等式不会消除输入不等式的严格性。
+
+显式地，原正 $z$ 取向正是
+
+$$
+\begin{gathered}
+z_+=(\alpha+\beta c_+^2)^{-1/2},\quad w_+=c_+z_+,\\
+z_-=(\alpha+\beta/q_f^2)^{-1/2},\quad w_-=-z_-/q_f,\quad
+h_{\epsilon,o}=(1,oz_\epsilon,ow_\epsilon)^T,\\
+\chi_\epsilon=\alpha V_f(e_\epsilon)_2^2+\beta W_f(e_\epsilon)_1^2,\quad
+\nu_\epsilon=\chi_\epsilon/\operatorname{cap}(h_{\epsilon,+}).
+\end{gathered}
+\tag{RC.172}
+$$
+
+容量仍是同一个严格正函数
+
+$$
+\operatorname{cap}(1,z,w)=
+\frac{h_1^2h_2^2s_0^2+a_{\rm src}^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+{h_0^2s_0^2+b_{\rm src}^2z^2+d_{\rm src}^2w^2}.
+\tag{RC.173}
+$$
+
+源振幅、$s_0,m_1,m_2$ 正，故所有谱归一化、$\chi_\epsilon$、容量和 $\nu_\epsilon$ 都正。$\det\Xi=-z_f^2<0$ 给出两个非零异号谱值；$L_f>0$ 给出其分离。两谱方向均不在轴上。$\square$
+

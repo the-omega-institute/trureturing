@@ -1,0 +1,35 @@
+**Definition 28.1 (Actual noisy pair and risk).** Fix $H=4$, a known normalized probability vector positive on either $K=\{1,2,3,4\}$ or $K=\{1,2,4\}$, with the histories and total-count blocks of Definition 27.1. An actual trial prepares two windows of the same internal realization with a separately performed summed herald before each. The identity extension of the averaged replacement channel in Theorem 27.2 supplies their actual product after preparation records are ignored; individual herald records may correlate with retained flags. The two windows receive angles $(\beta _1,\beta _2)$ with law $\pi$, independently of the flags, settings, herald data and internal phases, and fresh draws are iid between trials. Put
+
+$$
+\mu=\mathbb E_\pi e^{i(\beta _2-\beta _1)},\qquad |\mu|\le1 .
+$$
+
+The exact-law comparisons allow $\mu=0$. The statistical subfamily has a known promise $0<v\le|\mu|\le1$. The angles are nuisance variables; two parameter points in a comparison may have different laws $\pi$. The terminal datum is the common total-count twirl of the actually prepared product, and the estimator sees only the retained setting and terminal outcome. Preparation and noise-controller records are averaged over: every allowed readout acts as the identity on them. They remain charged resources and provide no side information or record-adaptive preparation. For full support the loss is
+
+$$
+d_{\rm ch}((u_1,u_2),(\widehat u_1,\widehat u_2))=
+\max\{|u_1-\widehat u_1|,|u_2-\widehat u_2|\},
+$$
+
+where $u_j=e^{i\phi_j}$; for sparse support it is $|e^{i\phi}-e^{i\widehat\phi}|$. The promise $v$, iid preparation and the stated independence of $\pi$ are hypotheses of the family, not records supplied to the estimator.
+
+For a row $(w,z)$ and column $(w',z')$, write
+
+$$
+\Delta m_1=|w|_1-|w'|_1,\qquad\Delta m_2=|z|_1-|z'|_1 .
+$$
+
+The total twirl retains the entry only when $\Delta m_1+\Delta m_2=0$.
+
+More explicitly, with $n=3$ for full support and $n=4$ for sparse support,
+
+$$
+\mathsf Q_\pi=\mathcal D_{\rm total}\!\left(
+\int U_2(\beta_1)\Omega_2U_2(\beta_1)^*
+\otimes U_n(\beta_2)\Omega_nU_n(\beta_2)^*\,d\pi
+\right),\qquad U_n(\beta)|w\rangle=e^{i\beta|w|_1}|w\rangle .
+$$
+
+Here $\mathcal D_{\rm total}$ projects onto the sum-of-window-count sectors; $\rho_0=\Omega_2\otimes\Omega_n$ below.
+
+

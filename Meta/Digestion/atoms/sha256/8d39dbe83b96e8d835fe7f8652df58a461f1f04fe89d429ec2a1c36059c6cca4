@@ -1,0 +1,41 @@
+### 14.1 Fixed source, teachers, record, and action classes
+
+Let
+\[
+W=(\mathrm{zero},\mathrm{low},\mathrm{middle},\mathrm{ends},\mathrm{high})
+ \cong(\varnothing,\{1\},\{2\},\{1,3\},\{3\}).
+\]
+For \(0<s\leq 1/5\), put
+\[
+p_s(\mathrm{zero})=p_s(\mathrm{middle})=(1-3s)/2,\qquad
+p_s(\mathrm{low})=p_s(\mathrm{ends})=p_s(\mathrm{high})=s,
+\quad \mu_s=p_s^{\otimes4}=\operatorname{extremal}(s)^{\otimes4}.
+\]
+The four coordinates are independent complete windows; this is not a seam-conditioned concatenation. Write \(L_j\) and \(H_j\) for the first and last endpoint bits of \(w_j\). Thus
+\[
+(\mathrm{zero},\mathrm{low},\mathrm{middle},\mathrm{ends},\mathrm{high})
+\mapsto(0,0),(1,0),(0,0),(1,1),(0,1).
+\]
+With the original priority retained, define
+\[
+ A(w)=\begin{cases}1&H_0L_1=1,\\2&H_0L_1=0,\ H_1L_2=1,\\0&\text{otherwise},\end{cases}
+\quad
+ B(w)=\begin{cases}1&H_0L_2=1,\\2&H_0L_2=0,\ H_2L_3=1,\\0&\text{otherwise}.\end{cases}
+\]
+Here \(A\) is the \((0,1,2)\) teacher and \(B\) is the \((0,2,3)\) teacher. The available record is the deterministic postprocessing
+\[
+Q(w)=(A(w),B(w))\in\{0,1,2\}^2.
+\]
+The complete input is already available; forming \(Q\) is postprocessing of that input. A full-word action is a deterministic \(f:W^4\to\{0,1,2\}\); a quotient action is a deterministic \(g:\{0,1,2\}^2\to\{0,1,2\}\), consumed as \(g\circ Q\). Both risks use the same \(\mu_s\):
+\[
+R_A(f)=\mu_s[f\ne A],\quad R_B(f)=\mu_s[f\ne B],\quad
+V_{\rm full}=\min_f\max(R_A(f),R_B(f)),\quad
+V_Q=\min_g\max(R_A(g\circ Q),R_B(g\circ Q)).
+\]
+
+The full-word supplier `SharpRisk.sharp_risk_full`, with \(n=4,q=1,r=2,v=3\) (so \(m=q.\mathrm{val}=1\)), and the common majority/exterior-capacity construction `CommonSelector.uniform_mass_balanced` give, under exactly these independent-window and priority hypotheses (scientific sources in §14.6),
+\[
+V_{\rm full}(s)=T(1,s)=8s^2-18s^3+4s^4,\qquad 0<s\leq1/5.
+\]
+The supplier provides one deterministic full-word classifier with both individual risks equal to this threshold.
+

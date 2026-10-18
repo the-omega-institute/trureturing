@@ -1,0 +1,44 @@
+**Lemma 26.1 (separate entry and output neighbors).** More generally,
+let complete configurations be vertices of a simple graph $G$, with
+self updates also permitted. Give them fixed query/internal/halt rows,
+source-independent internal successors, and fixed complete halt outputs.
+A query has a fixed response-to-successor map and discards the reply
+at that update. On a stationary source $s$, its fixed experiment has
+one fixed actual reply $r_q(s)$; no row reads an additional phase.
+Require every nonself response or internal update to be an edge of $G$.
+Suppose a query vertex $q$ occurs as the last Read on a collection
+$\mathcal S$ of actual terminating runs requiring $m\ge1$ distinct
+complete outputs. Suppose also that there is a genuine immediate
+actual arrival $p\to q$, with $p\ne q$. Then $q$ has $m$ distinct
+nonquery immediate response-successor neighbors and a further distinct
+incoming neighbor $p$. In particular,
+
+$$
+\deg_G(q)\ge m+1.
+\tag{NARC.26.1}
+$$
+
+The arrival may be on any actual run of this same fixed-row controller;
+it need not be the source chosen to witness one of the $m$ outputs.
+Other uses of $q$ need not be last Reads. Under stationary actual
+first-halt termination, every noninitial visit supplies a nonself
+predecessor, by Lemma 25.3.
+
+**Proof.** Choose one visit from $\mathcal S$ for each distinct
+required output, and let $v_j$ be its immediate post-reply word.
+Each $v_j$ is nonquery: otherwise that run would execute another
+Read. In particular $v_j\ne q$, so $v_j$ is a neighbor of $q$.
+From $v_j$ the chosen run follows only fixed internal rows to a
+fixed-output halt. If $v_j=v_l$, those internal paths and final
+constants coincide, contradicting the two different required outputs.
+Hence the $m$ response successors are distinct.
+
+The actual predecessor $p$ is a further neighbor, since its transition
+is nonself. It cannot be a halt. If it is query, it differs from every
+nonquery $v_j$. If it is internal, its fixed next word is $q$.
+Selecting $v_j=p$ after the last Read would therefore execute
+$q\to p\to q$ on that chosen source and issue another Read.
+This again contradicts lastness, irrespective of which actual source
+witnessed the incoming edge. Thus $p$ is distinct from every $v_j$.
+These are $m+1$ distinct neighbors. $\square$
+

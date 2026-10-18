@@ -1,0 +1,22 @@
+**例 3.2（A symbolic infinite family with full fee four）。** For every $m\ge6$ put $k=2m-2$, $h=m-2$, $T=2m-1$, and $r=m-3$. The actual gcd is one. Choose distinct $A,B$ and any common upper label $M$, which may equal $A$, $B$ or neither. On the root-zero rows put
+
+$$
+F(j,s)=\begin{cases}
+M,&1\le s<h,\\
+B,&s=0,\ j=2m-2,\\
+A,&s=0,\ j\in J\setminus\{2m-2\}.
+\end{cases}
+\tag{3.3}
+$$
+
+The cut $r$ is eligible and unique. Here $a=1$, $H=\{2,\ldots,m-1\}$, $O=\{m+2,\ldots,2m-2\}$, $O\cap I_r=\{m+2,\ldots,2m-4\}$, and $K_r=\{2m-3\}$. All of $H$ and $K_r$ have label $A$, so $\mathsf A_1$ fails. The set $O$ contains both labels; the nonempty fixed-zero set $O\cap I_r$ and the fixed-one turn $K_r$ both have label $A$, so $\mathsf A_2$ fails too. Therefore $D=3$, and the full consumer (3.1) has both fees four.
+
+One explicit attaining GLOBAL stream is
+
+$$
+1^m\ \mid\ 1^{m-3}0^3\ \mid\ 0^m\ \mid\ 0^{m-3}1\,0^2.
+\tag{3.4}
+$$
+
+Its second word rejects exactly the original tails $1\le s<h$ into $M$ and leaves the lower tail-zero sources at actual tail zero. Its third word is a paid, uninformative calendar wait. At issued index three the final isolated one has physical support $\{2m-2,0\}$; excluded phase zero supplies compensation on this root-zero archive. It distinguishes exactly the label-$B$ lower source. Root-reject and root-positive sources already stopped with $R,C$. Theorem 2.1's adaptive lower bound excludes all cheaper roots and suffixes through the root-forcing consumer proof. Thus the fee-four claim survives upper-label coincidences. This family is a consumption of the cut law, not a separate novelty claim.
+

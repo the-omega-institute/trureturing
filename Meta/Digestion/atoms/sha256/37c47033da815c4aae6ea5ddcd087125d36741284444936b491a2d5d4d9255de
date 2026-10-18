@@ -1,0 +1,34 @@
+**定义 C-105.2（承诺的连续混态族）。** 定义
+
+$$
+\begin{aligned}
+S&=\frac15\sum_{s\in B}|e_s\rangle\langle e_s|,\\
+|\Psi\rangle&=\frac12(e_0+e_{13}+e_1-e_3),\\
+T&=\frac45|\Psi\rangle\langle\Psi|+\frac15|e_2\rangle\langle e_2|,\\
+\Gamma_t&=(1-t)S+tT,\qquad t\in[0,1]\subset\mathbb R.
+\end{aligned}
+\tag{C105.3}
+$$
+
+承诺族包括固定的实际基、固定的置换、所列实系数及相位，只有 $t$ 可以变化。
+它不假定 $\Gamma_t=\rho\otimes\rho$，也不把相同边缘当作轮内独立。
+记四维空间
+
+$$
+V=\operatorname{span}\{e_0,e_{13},e_1,e_3\},\qquad
+P_V=\sum_{s\ne2}|e_s\rangle\langle e_s|,
+\qquad K=T-S=\frac45|\Psi\rangle\langle\Psi|-\frac15P_V.
+\tag{C105.4}
+$$
+
+$\Gamma_t=S+tK$。在 $V$ 的有序基 $(e_0,e_{13},e_1,e_3)$ 中，令
+$v=(1,1,1,-1)^{\mathsf T}$，则
+
+$$
+\left.\Gamma_t\right|_V=\frac15\bigl((1-t)I_4+t vv^\dagger\bigr),
+\qquad \langle e_2|\Gamma_t|e_2\rangle=\frac15;
+\tag{C105.5}
+$$
+
+$V$ 与 $e_2$ 之间以及这五维支撑之外的矩阵元全为零。
+

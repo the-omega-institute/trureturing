@@ -1,0 +1,26 @@
+**Definition 5.3 (physical entry and exit predicates).** Let
+$\mathcal E$ be the finite set of actual version/PC/row-effect pairs for
+the outer acquired-choice01 dispatch CTL whose successor is the first
+header-Base/setup label of $F^A$. Let $\mathcal X$ be the finite set for
+$F^A$'s final source-idle CTL, after row ACK and source-token TOK, whose
+successor is InnerReturn. These are the separately numbered inlined
+sites of ARC Definitions 4.1 and 5.2, with their two parity alternatives
+in $G_{\rm sel}$. They are not a test for any equal numeral occurring
+inside a word or a nested simulation. Resolve their numeric pairs from
+Definition 2.3's actual captured SourceEntrySet/SourceExitSet slots,
+validate them there, and retain the two finite lists as bank data.
+Comparisons traverse those actual lists with Equal. The graph contains
+fixed slot indices and symbolic control edges, not a literal embedding
+of its own generated numeric labels. Neither list contains an absolute
+tally or an endpoint table for future covers.
+
+An entry event for item $j$ has its represented physical pre-row control
+in $\mathcal E$, its exact installed successor, and completed-cycle
+annotation $j$. An exit event has its physical control in $\mathcal X$,
+its InnerReturn successor, and the same annotation $j$. If the entry
+event is $X_q\to X_{q+1}$ define $e=q+1$; if the exit is
+$X_v\to X_{v+1}$ define $f=v+1$. Thus $[e,f]$ includes every cut of
+the actual $F^A$ call from its first header prelude through its final
+idle CTL, but not the earlier gate or later normalization/CaptureCAP.
+Those surrounding cuts are still covered by AcquisitionOffset.
+

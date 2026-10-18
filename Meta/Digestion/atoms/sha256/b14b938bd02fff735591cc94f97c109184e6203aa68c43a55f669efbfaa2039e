@@ -1,0 +1,17 @@
+**Lemma 2.3 (finite menu and stationary termination).** A fixed finite
+preparer has the finite installed observing menu
+$M=\{a(v):v\in V\}$. Sources agreeing on every word of $M$ have
+identical state paths from $b_0$. If preparation terminates on every
+source, each run has at most $|V|$ invocations and literal cost at most
+$\sum_{v\in V}|a(v)|$.
+
+Proof. Equal current states query the same installed word. Equal menu
+replies therefore give equal successors, inductively through the entire
+path and its latch. For the bounds, reuse [NBP, Proposition 12.5][NBP]:
+on a fixed stationary source, revisiting a running state repeats the
+same deterministic suffix forever. A terminating run visits each such
+state at most once. Summing its nonnegative literal lengths gives the
+second bound. This does not declare the union of paths over different
+sources acyclic. Shared successors, cycles in that union, unused states
+and repeated literal words at different states remain allowed. $\square$
+

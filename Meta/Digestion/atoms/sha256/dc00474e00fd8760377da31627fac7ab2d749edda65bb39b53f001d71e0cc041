@@ -1,0 +1,27 @@
+**定理 145.2（同组成的偶步推进与逐树交换）。** 在定义137.1的组成 $c$ 下，对每个 $t\in\mathcal T$ 有
+
+$$
+c(\widehat\rho t)=(I+M)c(t)=M^2c(t),\qquad
+\rho(\widehat\rho t)=\widehat\rho(\rho t),
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+因此 $c(S_n)=M^{2n}(1,0)^T$。但 $\widehat\rho$ 与 $\rho^2$ 并非相同的树操作。
+
+证明（145.2）。组成加法和既有 $c\rho=Mc$ 给 $c(\langle t,\rho t\rangle)=c(t)+Mc(t)$；既有 $M^2=M+I$ 给第一式。替换保持配对，故
+
+$$
+\rho\langle t,\rho t\rangle
+=\langle\rho t,\rho^2t\rangle
+=\widehat\rho(\rho t).
+$$
+
+这是真正的逐树等式，而不只是组成相等。对 $S_n$ 归纳即得偶次幂。另一方面
+
+$$
+\widehat\rho\alpha=\langle\alpha,\beta\rangle,
+\qquad \rho^2\alpha=\langle\beta,\alpha\rangle;
+$$
+
+它们组成均为 $(1,1)^T$，但左右顺序不同，自由树中不相等。$\square$
+

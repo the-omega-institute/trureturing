@@ -1,0 +1,134 @@
+**Theorem 218.2 (Two preceding debts and arbitrary unequal positives).**
+Let $1\le r<s<L$, $d_r,d_s\ge0$ and $\gamma_n\ge0$ for $s<n\le L$.
+Prescribe $\beta_r=-d_r$, $\beta_s=-d_s$, $\beta_n=\gamma_n$ for $n>s$,
+and all other beta zero. Put
+
+$$
+D=d_r+d_s,\quad d_{\max}=\max(d_r,d_s),\quad
+G=\sum_{n>s}\gamma_n,\quad K_0=D+G,\quad
+W_0=d_r\mathbf1_{r\ge3}+d_s\mathbf1_{s\ge3}.
+$$
+
+Let $\mu\ge\eta\ge\zeta$ be the three largest late totals, padded with
+zeros if necessary, and set
+
+$$
+\Phi=\max\{D+\mu,\ d_{\max}+\mu+\eta,\ \mu+\eta+\zeta\},
+\qquad\psi=\Phi-W_0.
+\tag{218.6}
+$$
+
+Over all nonnegative full scores of quotient $(\beta,K_0)$,
+
+$$
+\min\Delta_N=\min\Delta_O=\psi.
+\tag{218.7}
+$$
+
+One score attains both. Competitors have arbitrary suffix placements,
+cancellations, pair and terminal coefficients, labels and schedules;
+their zero absolute stock forces the reduction below.
+The optimizing scope permits two positive debts and at least three
+arbitrarily unequal later positives, with arbitrary gaps and positions.
+The statement includes zero debts, missing positives, ties and all axes.
+
+**Proof.** Equation (218.2) forces $P=T=0$ and every
+$\min(A_n,C_n)=0$. Thus every competitor has A totals $d_r,d_s$
+in classes r,s and C totals $\gamma_n$ after s, with no other
+coefficients. Its W is $W_0$; its suffix placements remain unrestricted.
+
+Constant zero collects D. When a positive class exists,
+$(r,s;0,0,n)$ with a maximizing n collects $D+\mu$ on all words
+of the two debt classes and that positive class. For the two largest
+positive classes, order their indices $i<j$ and use $(a,i;0,i,j)$
+for the guard $a\in\{r,s\}$ of largest debt. This collects
+$d_{\max}+\mu+\eta$ independently of suffixes.
+For three positive classes, order the three largest indices $i<j<k$
+and use $(i,j;i,j,k)$. With fewer positives, the padded branch is
+dominated by preceding bounds; no fictitious address is queried.
+These are alternative whole-table tests, proving $B_O\ge\Phi$.
+
+For $a=r,s$, let $v_a$ be the length-s word whose only zero is a.
+Use the same two-atom late-suffix probability measure for both classes:
+
+$$
+A_{v_a0^{L-s}}=d_a/2,\qquad A_{v_a1^{L-s}}=d_a/2,\qquad
+C_{1^{n-1}0^{L-n+1}}=\gamma_n\ (n>s),\qquad P=T=0.
+\tag{218.8}
+$$
+
+These are score weights, not acquisition probabilities. Their Q and W
+are as required. Low addresses other than r,s are constantly one on the
+support. At pair r,s, the nonzero maxima in 01,10,11 are $d_r,d_s,\mu$.
+
+For guard a and $j>s$, let b be the other guard and put
+$x=\max_{s<n\le j}\gamma_n$, $z=\max_{n>j}\gamma_n$,
+with empty maxima zero. The a-zero cells contribute $d_a$ together;
+the other cells have zero rewards $d_b/2$ and correct maxima x,z.
+The exact full support is
+$d_a+\max(d_b/2,x)+\max(d_b/2,z)$.
+Both base choices give D. One gives at most
+$d_a+d_b/2+\mu\le D+\mu$; neither gives at most
+$d_a+\mu+\eta\le d_{\max}+\mu+\eta$.
+The maxima belong to disjoint positive-index blocks.
+
+For $s<i<j$, put $x=\max_{s<n\le i}\gamma_n$,
+$y_0=\max_{i<n\le j}\gamma_n$, $z=\max_{n>j}\gamma_n$.
+Cell 01 is empty, while zero masses in 00 and 11 are D/2 each.
+The support is $\max(D/2,x)+y_0+\max(D/2,z)$.
+Its both-base choice is at most $D+\mu$; one base choice is at most
+$D/2+\mu+\eta\le d_{\max}+\mu+\eta$; the no-base choice is at most
+$\mu+\eta+\zeta$. Every earlier or unqueried label is included.
+
+A pair with an inactive low coordinate has singleton information on this
+support. Empty and singleton information refine to distinct-pair
+information; reversals permute cells and repetitions remain singleton
+partitions. Thus the displayed types exhaust the full N support and give
+$B_N\le\Phi$. Containment of O in N and the lower bound give
+$B_N=B_O=\Phi$. Subtract $W_0$, including all zero and equality endpoints.
+$\square$
+
+For every actual full y of this quotient with $\Delta_O(y)\le1$,
+the unrestricted minimum forces $\psi\le1$, so (218.8) with $\theta=0$
+gives (218.4). The input need not itself have N cost $\psi$.
+For the same beta and any $K\ge K_0$, the same score gives residual
+$(0;K-K_0)$, reading $-(K-K_0)e\le0$ and support zero.
+It is a certificate if $\psi\le1$ is separately established.
+Unit-O feasibility at the larger K does not itself imply this bound.
+This consequence reuses signed residual arithmetic.
+
+At $L=7,r=1,s=2$, take debts $1/6,1/6$, late totals
+$\gamma_3=\gamma_4=\gamma_5=1/3$ and all other late totals zero.
+The complete input is
+
+$$
+A_{0111100}=A_{1011100}=1/6,\qquad
+C_{1101101}=C_{1110110}=C_{1111011}=1/3,
+\tag{218.9}
+$$
+
+with all other coefficients zero. Here $K_0=4/3,W_0=0$.
+N table $(6,7;0,3,4,5)$ collects $4/3$.
+An O table uses at most three labels; each of $0,3,4,5$ has total
+reward $1/3$. Hence $B_O\le1$, attained by $(3,4;3,4,5)$.
+The costs are $(4/3,1)$ in N,O order. Its repair has A mass $1/12$
+at $0100000,0111111,1000000,1011111$ and C mass $1/3$ at
+$1100000,1110000,1111000$. Both repair costs are one.
+The middle branch is necessary: debts $3/5,1/5$ and late totals
+$1/2,2/5,1/10$ give $\Phi=3/2$, above the other branches $13/10$ and one.
+A repaired input support gap is not a separator.
+
+Pairing all demands of an original cap-feasible finite comparison with
+(218.8) gives the necessary inequality
+
+$$
+\sum_{n>s}\gamma_na_n-d_ra_r-d_sa_s
+ \le\Phi-D+(D+G)\varepsilon.
+\tag{218.10}
+$$
+
+The demand reward is
+$D-d_ra_r-d_sa_s+\sum\gamma_na_n-(D+G)\varepsilon$ and support is $\Phi$.
+The owning horizon maps in §218.7 apply before this pairing if the score
+length differs from the active length. This is a necessary condition only.
+

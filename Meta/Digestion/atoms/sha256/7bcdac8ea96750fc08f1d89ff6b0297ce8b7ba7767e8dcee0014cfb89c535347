@@ -1,0 +1,20 @@
+**Assumption 1.3 (common actual producer and service).** Retain exactly
+[ARH, Assumption 1.3 and Proposition 2.1][ARH]. One public source-total
+paid acquisition procedure obtains the old row, literals and signed
+whole-subtree comparisons on the same register, then reaches the
+certified epoch $N$, at least every record epoch. Conditional on the
+stipulated complete access cut, its entire accessible retained state has
+exactly fiber $D$. Every $u\in D$ produces that same state, and every
+source producing that state belongs to $D$.
+
+All accessible source-dependent caches, lengths, addresses, traversal
+counts, control, permissions, timing and handles are included in that
+premise. The cut is an access assumption, not a physical-erasure theorem.
+The original source and root persist. Subsequent operations are paid
+four-valued $\mathsf{Read}(p)$ and legal serial forward
+$\mathsf{ApplyRho}$. No source-selection, equality, original-version,
+reset, reroot, clone or clock port is supplied. Local computation uses
+common data and acquired replies. Acquisition, literal words, updates,
+local work, memory, retention, preparation and installation have separate
+charges. A sourcewise finite acquisition need not have a uniform bound.
+

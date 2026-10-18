@@ -1,0 +1,12 @@
+**定义 65.1（固定复线性支持与读效果）。** 在 $\mathcal K_3$ 的基序 $000,100,010,001,101$ 中，固定
+
+$$
+E_N=\left(\frac{|000\rangle+|101\rangle}{\sqrt2},
+          \frac{|100\rangle+|001\rangle}{\sqrt2},|010\rangle\right),
+\qquad n_1=\operatorname{diag}(0,1,0,0,1).
+\tag{IX.7}
+$$
+
+$E_N^\dagger E_N=I_3$，读扇区秩二，其正交补秩三。此 $E_N$ 与 [GC §21 的五基字典](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md#21-the-fixed-complex-linear-five-mode-dictionary) 对应。GC 的同一源根满足 (GC.6)，从而其
+$M=\operatorname{diag}(0,m_1,m_2)$ 满足 $0\preceq M\prec I_3$、$\operatorname{rank}M=2$。严格上界来自 $D^\dagger D\succ0$ 和根 TP，源根条件本身仍是 GC Assumption 1.2 的未验证供应。
+

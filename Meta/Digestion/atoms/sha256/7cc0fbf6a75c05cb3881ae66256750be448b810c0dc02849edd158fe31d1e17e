@@ -1,0 +1,24 @@
+**Definition 8.1 (full marked profile and per-template pressure).** Use
+the bipartite incidence graph with one vertex for each seed and one for
+each original block, joined when a block has a port assigned to that seed.
+Its marks contain each domain, every owner designation and actual owner
+port, every prescribed port/table, all constants, all repeated occurrences
+within a block, and the entire block-weight table. Distinct occurrences
+of the same seed within one block are in the same edge mark. Global
+unique names are forgotten, but all local labels and references are
+preserved under consistent block/seed renaming.
+
+For $R\ge0$, let $p_R(\mathcal N)$ be the distribution of the rooted
+radius-$R$ induced marked ball at a uniformly chosen original block.
+One may also include the corresponding seed-rooted distribution and the
+exact numbers of blocks and seeds. These strengthenings are included in
+the theorem below. Write
+
+$$
+\mathcal P(\mathcal N)=\frac1n\log_2Z(\mathcal N;\mu_d,\ldots,\mu_d).
+\tag{GDB.36}
+$$
+
+This is the pressure of an individual finite network, not the all-network
+supremum $\log_2\beta_d(\mu_d)$.
+

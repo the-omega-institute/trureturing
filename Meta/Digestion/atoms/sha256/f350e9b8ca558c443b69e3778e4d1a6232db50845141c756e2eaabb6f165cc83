@@ -1,0 +1,80 @@
+**Definition 183.1 (Fixed deletion geometry and separate compensation).**
+Fix $C\subseteq\{2,\ldots,L\}$ and a two-coloring $\chi$ of
+$\{2,\ldots,L\}\setminus C$. For one allocation
+$\lambda_D\ge0$ on $E_L$, put $\tau=\sum_D\lambda_D$ and
+
+$$
+f_u=(1-\tau)R_u+\sum_{D\in E_L}\lambda_DD_u.
+\tag{183.1}
+$$
+
+This is an affine vector of total coordinate sum one. It is not
+assumed nonnegative when $\tau>1$. Reuse the affine suffix forms of
+Proposition 179.2: in first-zero class $n$, with $v_j=u_j$ for $j>n$,
+
+$$
+\begin{aligned}
+f_u(0)&=C_n+\sum_{j>n}\beta_{nj}v_j
+                      +\sum_{n<j<k\le L}Q_{jk}v_jv_k,\\
+f_u(n)&=\gamma_n+\sum_{j>n}\kappa_{nj}(1-v_j),
+\qquad Q_{jk},\kappa_{nj}\ge0.
+\end{aligned}
+\tag{183.2}
+$$
+
+The $Q_{jk}$ for $2\le j<k\le L$ come from this same allocation.
+Impose the fixed graph constraint
+
+$$
+Q_{jk}=0\quad\text{if }j,k\notin C\text{ and }\chi(j)=\chi(k).
+\tag{183.3}
+$$
+
+For each $n$, the base and pair energies have triples $(K,c,d)$
+given by
+
+$$
+\begin{array}{c|c|c|c}
+\text{row}&K&c_j\ (j>n)&d\\\hline
+\text{base}&C_n&\beta_{nj}&1-b_n-e\\
+\text{pair}&C_n+\gamma_n+\sum_{j>n}\kappa_{nj}
+              &\beta_{nj}-\kappa_{nj}&1-e
+\end{array}
+\tag{183.4}
+$$
+
+They share $Q$, but their constants and unary coefficients differ.
+Let $A_n=C\cap\{n+1,\ldots,L\}$ and
+$V_n=\{n+1,\ldots,L\}\setminus C$. For each assignment
+$\eta\in\{0,1\}^{A_n}$ and each row separately, set
+
+$$
+\begin{aligned}
+K^\eta&=K+\sum_{j\in A_n}c_j\eta_j
+                  +\sum_{\substack{j<k\\j,k\in A_n}}Q_{jk}\eta_j\eta_k,\\
+c_i^\eta&=c_i+\sum_{j\in A_n}Q_{ij}\eta_j\quad(i\in V_n).
+\end{aligned}
+\tag{183.5}
+$$
+
+In incidence sums $Q_{ij}=Q_{ji}$ and $Q_{ii}=0$. Take separate
+variables $t_{ij}^{n,\mathrm{row},\eta}$ and
+$\ell_i^{n,\mathrm{row},\eta}$ for every conditioned energy.
+Suppressing these superscripts within one system, its compensation
+inequalities are
+
+$$
+\begin{aligned}
+0&\le t_{ij}\le Q_{ij} &&(i<j,\ i,j\in V_n),\\
+\ell_i&\ge0,\qquad
+c_i^\eta+\sum_{j\in V_n\setminus\{i\}}t_{ij}+\ell_i\ge0
+                                      &&(i\in V_n),\\
+K^\eta-\sum_{\substack{i<j\\i,j\in V_n}}t_{ij}
+             -\sum_{i\in V_n}\ell_i&\ge d.
+\end{aligned}
+\tag{183.6}
+$$
+
+Zero edges force $t_{ij}=0$. For an empty $V_n$, the system is
+exactly $K^\eta\ge d$.
+

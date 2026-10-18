@@ -1,0 +1,55 @@
+#### 27.1　静态干预接口
+
+令
+
+$$
+n=k+1\ge2,
+\qquad
+X_i\in\{-1,0,+1\},
+\qquad
+U_i\stackrel{\mathrm{iid}}{\sim}\operatorname{Unif}\{-1,0,+1\}.
+$$
+
+每次实验重新抽取一组根变量，结构方程为
+
+$$
+X_i:=U_i,
+\qquad 1\le i\le n.
+$$
+
+接口只读取终端二值结果 $Y$。给定内部状态 $x=(x_1,\ldots,x_n)$，令
+
+$$
+q(x)=\prod_{i=1}^n x_i.
+$$
+
+固定 $0<\varepsilon\le1/2$，定义两个模型的终端通道为
+
+$$
+\Pr_{+}(Y=1\mid x)=\frac12+\varepsilon q(x),
+\qquad
+\Pr_{-}(Y=1\mid x)=\frac12-\varepsilon q(x).
+$$
+
+这两个概率始终落在 $[0,1]$。例如在 $\varepsilon=1/4$ 时，可取独立均匀的 $W\in\{1,2,3,4\}$，令
+
+$$
+Y=1
+\iff
+W\le 2\pm q(x),
+$$
+
+从而得到一个完全有限的随机仪器实现。
+
+允许的查询是完美的同时干预
+
+$$
+\operatorname{do}(X_S=a_S),
+\qquad
+S\subseteq[n],quad a_S\in\{-1,0,+1\}^{S},
+$$
+
+它把 $S$ 中的结构方程替换为常值，其他坐标仍由独立根变量决定。一次查询的完整响应是 $Y$ 的 Bernoulli 分布；不同查询之间重新准备根变量。这里没有动作序列、持续状态或观察反馈。
+
+<a id="section-27-2"></a>
+

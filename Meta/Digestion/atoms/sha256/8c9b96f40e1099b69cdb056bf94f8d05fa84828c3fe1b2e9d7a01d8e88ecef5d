@@ -1,0 +1,26 @@
+**Supplied interface 4.1 (Positive-forest hitting comparison).** Lower-source Theorem 5.1, proved there from the positive directed forests in Section 4 and the marked and complementary forest sums in Section 5, has this form. Let $P,Q$ be stochastic on the same $\mathcal S$ with the two common absorbing labels, and suppose $\gamma\ge1$ satisfies
+
+$$
+\gamma^{-1}P(x,y)\le Q(x,y)\le\gamma P(x,y)
+\quad(x,y\in\mathcal S).
+\tag{4.1}
+$$
+
+They have the same positive-edge support. Let $\mathcal Z$ be its vertices with no positive directed path to $d_1$, and let
+
+$$
+V=\mathcal S\setminus(\mathcal Z\cup\{d_1\}),\qquad
+n=|V|\le |\mathcal S|-2\le M-2.
+\tag{4.2}
+$$
+
+For the actual probabilities $h_P,h_Q$ of ever hitting $d_1$, including time zero,
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),\qquad
+|h_P(x)-h_Q(x)|\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.3}
+$$
+
+Here $d_0\in\mathcal Z$ supplies the second excluded boundary label in (4.2). The hitting functions are zero on $\mathcal Z$ and one at $d_1$. Closed non-target classes are included in $\mathcal Z$; making their rows identities analytically preserves the hitting values. The forest proof uses $n$ edges per forest, and the common positive marked and complementary sums give (4.3). It requires no global absorption, irreducibility, aperiodicity, spectral gap or lower bound on positive exits. Zero edges, self-loops, hitting values zero and one and an empty interior $n=0$ are included. We use this supplied theorem, rather than the coarser elimination exponent of uniform-source Lemma 4.1.
+

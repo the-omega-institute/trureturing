@@ -1,0 +1,21 @@
+### 定义 55.1（可观测子空间与压缩半群）
+
+令 \(S\) 为有限状态集，令 \(\pi\) 为满支撑平稳分布，令 \(L\) 为满足
+\[
+\langle f,Lg\rangle_\pi=\langle Lf,g\rangle_\pi,\qquad
+\sum_x\pi(x)Lg(x)=0
+\]
+的可逆 Markov 生成元。给定读出 \(q:S\to Y\)，定义
+\[
+\mathcal H_q=\{f:S\to\mathbb R:f=\bar f\circ q\},
+\]
+令 \(P:L^2(\pi)\to\mathcal H_q\) 为条件期望正交投影，\(S_t=e^{tL}\)，并令
+\[
+T_t=P S_t\big|_{\mathcal H_q}.
+\]
+称 \(q\) 强 lumpable，当且仅当
+\[
+L\mathcal H_q\subseteq\mathcal H_q,
+\]
+等价于 \((I-P)LP=0\)。
+

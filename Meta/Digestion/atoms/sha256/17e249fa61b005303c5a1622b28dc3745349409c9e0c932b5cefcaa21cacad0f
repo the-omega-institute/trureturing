@@ -1,0 +1,31 @@
+**Convention 5.3 (exact exclusions and a concrete bypass).** This
+theorem concerns the raw hard models with full-support block laws;
+positive block laws do not remove compatibility zeros. It is not a
+mixing claim after adding a fixed positive floor to every $\Phi_i$.
+It does not reject every zero-free path, complex domain, polynomial
+approximation, direct mass inequality, or handling of exceptional
+low-mass templates. Exact phase contraction handles these particular
+cycles, although Corollary 3.3 shows its incidence cost.
+
+The relation $\{\alpha,\beta\}\subseteq S_d$ is itself locally
+admissible, so $\beta_d(\mu)\ge a+b$. The alternating family is
+not asserted to attain pressure. Its use is to disprove a mandatory
+universal premise. In particular [RCE, §§14–15 at the separate pin][RCEnew]
+supplies, for arbitrary nonnegative full weights on $S_2$,
+
+$$
+\beta_2(w)=J_2(w)=\max\{W-a,W-b,a+b+t\},
+\quad W=\sum_{u\in S_2}w(u),\quad
+t=\max_{g\in S_2\setminus\{\alpha,\beta\}}w(g).
+\tag{GDB.23}
+$$
+
+Its original recursive-plus-range grammar accepts exactly the rational
+caps at least this value, and has optimized cap $17/25$. At its
+full-support attaining law $(8,8,1,\ldots,1)/25$, the raw premises
+of Theorem 5.2 still fail. Thus that theorem does not refute the existing
+grammar, its support or stability rules, or its optimizer-cofinality at
+other depths. RCE's universal two-reply locality theorem concerns the
+entire declared one-block support and one own-coordinate experiment;
+it does not supply two calls or a global pressure cutoff.
+

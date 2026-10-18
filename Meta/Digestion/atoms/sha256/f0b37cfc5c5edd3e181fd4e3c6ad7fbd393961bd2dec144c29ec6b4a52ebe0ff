@@ -1,0 +1,29 @@
+**Lemma 2.1 (Actual exterior projection).** For an actual conditional-null $f_C$, let $p_i$ condition on all coordinates in the exterior half-line containing $i$, except $i$: use $j\le0$ on the left and $j\ge L+1$ on the right. Then
+
+$$
+\mathbb E_P[f_C\ell_i(P)]=-\mathbb E_P[f_C(q_i(P)-p_i)^2]\quad(i\notin C).
+\tag{2.2}
+$$
+
+Consequently the response omitted outside $I_R=[1-R,L+R]$ has absolute sum at most $F\tau_P(R)$. If $\tau_P(R)$ is finite for some $R$, the entire response is absolutely convergent.
+
+Proof. The loss $(X_i-p_i)^2$ is $\mathcal H_C$-measurable, so its product with $f_C$ has expectation zero. Both $f_C$ and $q_i-p_i$ are $\mathcal E_i$-measurable. Expanding the square and conditioning on $\mathcal E_i$ eliminates the cross term. This proves (2.2), which is [Conditional Response, equation (3.5)][R]'s projection identity without its attained-law budget. Stationarity identifies the squared defects at $i=-r,L+1+r$ with $e_R(r),e_L(r)$. The omitted offsets are exactly $r\ge R$; the remaining sites are finite. $\square$
+
+The loss in this lemma always uses $P$'s own posterior. In particular, the actual locally reweighted law $P^{(z)}=(1+zf_C)P$, $|z|F\le1/2$, is normalized by nullity, equivalent to $P$, and has the same $\mathcal H_C$ marginal. Conditional Bayes gives $q_i(P^{(z)})=q_i(P)$ outside $C$. Inside $C$, on a free fiber with legal completion values $f_0,f_1$, it gives
+
+$$
+q_i(P^{(z)})-q_i(P)
+=\frac{zq_i(P)(1-q_i(P))(f_1-f_0)}{1+z((1-q_i(P))f_0+q_i(P)f_1)}.
+\tag{2.3}
+$$
+
+Forced fibers remain zero. The denominator is at least $1/2$ on positive fibers; null exceptions are preserved by equivalence. Conditional squared-loss projection therefore gives, whenever Lemma 2.1 ensures absolute convergence,
+
+$$
+\sum_i\bigl(\mathbb E_{P^{(z)}}(X_i-q_i(P^{(z)}))^2-d(P)\bigr)
+=zS_P(f)-\sum_{i\in C}\mathbb E_{P^{(z)}}(q_i(P^{(z)})-q_i(P))^2.
+\tag{2.4}
+$$
+
+This is the actual-law reweighting identity of [Conditional Response, equation (3.6)][R]. It follows by projecting under $P^{(z)}$ and then using its density to integrate the fixed loss from $P$. A reweighted law need not be stationary; no stationary risk identity is applied to it.
+

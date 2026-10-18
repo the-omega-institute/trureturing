@@ -1,0 +1,38 @@
+**Corollary 11.6 (attained minimum number of rays).** Define the finite
+set of required words and its prefix-maximal members by
+
+$$
+\begin{aligned}
+ B(P)&=\{pR:p\in P\}\cup\{aR:aL\in P\},\\
+ B_{\max}(P)&=\{b\in B(P):\nexists c\in B(P)
+                                      \text{ with }b\prec c\}.
+\end{aligned}
+\tag{AAR.50}
+$$
+
+Among all fixed public eventually-right sampling sets that solve
+Theorem 11.4, the exact minimum cardinality is $|B_{\max}(P)|$.
+It is attained by $Q=\{bR^\infty:b\in B_{\max}(P)\}$.
+For the full depth menu $P=A_D$, this minimum is $2^{D-1}$.
+For an empty menu it is zero.
+
+Proof. Two binary cylinders either are disjoint or one contains the
+other. Distinct prefix-maximal words in (AAR.50) are incomparable,
+so one ray cannot hit two of their cylinders. Theorem 11.4 therefore
+requires at least their number. Every required word is a prefix of
+some prefix-maximal member, by finiteness. One ray through each of
+those members hits every required cylinder, proving attainment.
+For $P=A_D$, every required word begins with $R$, ends with $R$ and
+has length at most $D+1$. Every one of length at most $D$ has its
+strict extension $bR$ in $B(P)$. The maximal words are consequently
+exactly the length-$(D+1)$ words beginning and ending with $R$,
+of which there are $2^{D-1}$. The empty case is vacuous. $\square$
+
+This optimum counts distinct retained ray coordinates under the fixed
+sampling interface. It is not a lower bound on the number of arbitrary
+encoded registers, retained bits, native queries, installed literal
+bytes or peak workspace. Shared prefixes can save acquisition queries;
+coordinates can be encoded jointly; a single ray can have several
+finite descriptors. None of those changes the cylinder count proved
+here.
+

@@ -1,0 +1,17 @@
+**Proposition 6.1 (invertible residual map and every erasure span).** The linear map $V$ on the full matrix space is invertible. Every noninitial erasure of the $B+4$-read history leaves four-dimensional matrix span.
+
+Proof. Given $v=V(S)$, direct substitution yields
+
+$$
+r=v_1,\qquad s=v_2-v_3+v_1,\qquad
+q=3v_3-2v_2-6v_1,\qquad p=v_4-v_3-3v_1.
+$$
+
+For example, the expression for $s$ cancels the $q$ terms and leaves $s$; the expression for $q$ leaves $q$; the last leaves $p$. These equations recover every entry and also verify $V$ applied to the recovered matrix equals $v$. Thus the four trace functionals of $C_k-I$ are independent, and the five matrices $I,U,F,G,H$ have rank four. Entrywise,
+
+$$
+I-2U+F-2G+H=0.
+$$
+
+This is their unique dependence up to scale, and every coefficient is nonzero. A dependence on four would extend to a dependence on five with a zero coefficient, contradicting uniqueness. Hence any four of them are independent. Deleting a tail read leaves $I$ and three other tail matrices. Deleting a noninitial initial repeat, when one exists, leaves an $I$ and all four tail matrices. Both surviving lists have rank four. ∎
+

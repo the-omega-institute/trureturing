@@ -1,0 +1,26 @@
+### 10.4 Native full renderer and ordered-row correspondence
+
+The native source modules provide a direct renderer and joint-law correspondence for the original experiment. In [NFR], `OriginalEvent`, `eventBlock`, and `eventBlocks` encode acquired, rejected, accepted, completed, written, latched, moved, held, and stopped events. `fullTranscript` records each legal operation prefix together with the current finite fields and its ordered event blocks. The theorem `full_event_reconstruction` recovers the finite fields and the original-view projection from these blocks. The write-before-latch record is therefore retained in the native transcript.
+
+For a legal next operation, `full_delete_block` removes exactly that operation's event block and agrees with the transcript from the raw tail after the operation's read cost. The tail domain `ValidTail` contains both every legal finite completion word and the single noncompletion outcome. `fullRenderer` maps this domain to full transcripts, `full_renderer_all_paths` identifies every native stream with its stopped word or noncompletion tail, and `full_renderer_readback` recovers the raw tail. The resulting `full_renderer_tv` equality preserves event-supremum total variation, including the noncompletion outcome. These statements establish renderer and risk transport for the native source; they do not construct arbitrary $Q,W$, endpoint boxes, or acquired descriptor flows.
+
+In [NJL], an observer is a finite carrier $Z$ with a projection to the native finite fields, an initial PMF, and one update PMF for every legal operation. Its `row` is the ordered product of those updates along an acquired operation list. The `privateKernel` uses only the row at the actual `cutHistory`, and
+
+$$
+\operatorname{actualLaw}(M,\mu,n)
+=\operatorname{jointLaw}(\mu)\otimes_M\operatorname{privateKernel}(M,n).
+$$
+
+`ordered_history_factorization` factors a positive history, a fixed depth, a raw tail event, and a private state into the product of the prior mass, likelihood, ordered row mass, and same-depth raw-tail law. `conditional_history_product` and `sameK_private_tail` preserve the full ordered private row together with the posterior source law; they do not select a configuration in advance. `actual_row_refines` keeps the native fields, row update law, and prefix reconstruction at every legal cut.
+
+The definitions `rawTarget`, `fullTarget`, `fullRisk`, and `rawRisk`, together with `native_history_risk_transport`, then give the exact correspondence
+
+$$
+\operatorname{fullTarget}
+=\operatorname{rawTarget}\mathbin{\mathrm{map}}\,\operatorname{fullRenderer},
+\qquad
+\operatorname{fullRisk}=\operatorname{rawRisk},
+$$
+
+under the stated lawful-tail hypotheses. The equality is obtained before the full history supremum and after configuration-before-TV averaging. It is the native renderer/joint-law bridge relevant to Definition 2.1 and Theorem 6.2.
+

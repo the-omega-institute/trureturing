@@ -1,0 +1,14 @@
+**Proposition 9.3 (blocked and ground rows).** A truthful blocked
+bare row can have no selected producer history, and a valid empty-cut
+row can be excluded solely by its concrete leaf states.
+
+Proof. Take $P=\{LL\}$ and $C=\alpha$ with no holes. This is a
+row-valid bare row, realized by $u=\alpha,n=0$, since the root leaf
+blocks the requested address. It is never a selected output because
+selected cuts contain only present positions. For $P=\varnothing$
+and the same $C$, selection validity holds, but the selector accepting
+$\alpha$ selects the root instead. These are different reasons for
+rejection. The finite syntax validation handles the first, and
+(NRF.6) at the concrete root handles the second. Every ground row
+has the empty residual tuple, not an omitted case. $\square$
+

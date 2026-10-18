@@ -1,0 +1,35 @@
+### 定理 3.2（线性盲性与二阶恢复）
+
+有
+
+\[
+\mathbb E[W]=2X+3Z+5Y,
+\]
+
+而
+
+\[
+W^2=4x+9z+25y+20xy.
+\]
+
+因此
+
+\[
+\mathbb E[W^2]=4X+9Z+25Y+20\kappa,
+\]
+
+从而
+
+\[
+\kappa=
+\frac{
+\operatorname{Var}(W)
++(2X+3Z+5Y)^2
+-4X-9Z-25Y
+}{20}.
+\]
+
+证明：使用幂等关系 \(x^2=x,y^2=y,z^2=z\) 和排斥关系 \(xz=yz=0\) 展开 \(W^2\)。然后使用 \(\operatorname{Var}(W)=\mathbb E[W^2]-(\mathbb E[W])^2\) 解出 \(\kappa\)。证毕。
+
+---
+

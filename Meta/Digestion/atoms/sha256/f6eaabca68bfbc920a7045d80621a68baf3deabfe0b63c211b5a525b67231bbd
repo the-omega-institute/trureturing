@@ -1,0 +1,98 @@
+**Theorem 37.2 (complete sharp original record/resource frontier).**
+For EVERY optimal original common processor and compatible actual
+factorization and binary record, $0\leq\mathsf V(F)\leq1$.
+Every value in this interval is feasible. For a required $s\in[0,1]$,
+every such implementation with $\mathsf V(F)\geq s$ satisfies
+
+$$
+\begin{aligned}
+\overline p_{H,y}&\geq P_y(s)
+ :=A_y(1-\omega-\theta v_s)+B_y(1-v_s),\\
+\mathsf W&\geq\mathsf C(s)=P_{27}(s).
+\end{aligned}
+\tag{JR.32}
+$$
+
+A single common finite factorization for each prescribed $s$, supplied
+in §38, attains the three averaged bounds and the worst-history bound
+SIMULTANEOUSLY, has contrast exactly $s$, and forgets to the PARTICULAR
+complete channel $\widehat\Phi_*$. Thus the infimum in (JR.20) is a
+minimum, also when the comparison permits the countable and specified
+integral factorizations. Requirements $s>1$ are infeasible.
+
+All endpoints and the constant-cost interval are
+
+$$
+\begin{aligned}
+P_y(s)&=(1-\delta)A_y &&(0\leq s\leq s_0),\\
+P_y(1)&=\frac{k}{1-\theta}(A_y+B_y),
+&v_1&=v_0.
+\end{aligned}
+\tag{JR.33}
+$$
+
+The functions $P_y$ are continuous, constant precisely on $[0,s_0]$,
+and strictly increasing on $[s_0,1]$. In particular zero required
+contrast does not permit zero dimension-three mass. These per-height
+necessary bounds are FOUR-SIGN averages. They are not individual-input
+Loewner inequalities for an unaveraged implementation.
+
+Proof. For well-definedness, set $u(v)=\theta v+\omega$.
+On $[v_0,1]$, $0<u(v)\leq v$, with equality only at $v_0$.
+Write
+$\mathfrak f(v)=\cos(\arcsin\sqrt v-\arcsin\sqrt{u(v)})$.
+The angle difference is zero at $v_0$ and increases strictly to
+$\arccos\sqrt\delta$ at $1$. Indeed its derivative in the interior
+is positive because
+$u(v)>\theta v$ and $1-u(v)>\theta(1-v)$ imply
+$\sqrt{u(v)(1-u(v))}>\theta\sqrt{v(1-v)}$.
+Thus $\mathfrak f$ decreases continuously and strictly from $1$ to
+$s_0$. This proves existence, uniqueness and the stated inverse
+continuity and monotonicity. To verify (JR.31), the equality
+$\mathfrak f(v)=s$ with $u\leq v$ gives
+
+$$
+\sqrt u=s\sqrt v-\sqrt{1-s^2}\sqrt{1-v},\qquad
+(2s^2-1-\theta)v+1-s^2-\omega
+ =2s\sqrt{1-s^2}\sqrt{v(1-v)}.
+$$
+
+Squaring the second equality gives a quadratic with positive leading
+coefficient $(1+\theta)^2-4\theta s^2\geq(1-\theta)^2$.
+The larger root is (JR.31); its inner discriminant simplifies to
+$\theta(1-s^2)+\omega k$. It is the desired root: at $s_0$ it
+is $1$, it continues without a double root for $s_0<s<1$, and
+the unique solution just proved in $[v_0,1]$ cannot switch roots
+there. At $s=1$ both roots equal $v_0$. This also verifies both
+endpoint substitutions without an extraneous squared-equation branch.
+
+Now take $u,v,w$ from Theorem 36.1. They satisfy
+$u\leq\theta v+\omega w\leq\theta v+\omega$.
+For $s\leq s_0$, the bounds $u\leq\delta$, $v,w\leq1$ immediately
+give $\overline p_{H,y}\geq(1-\delta)A_y$.
+For $s>s_0$, necessarily $v\leq v_s$. Otherwise
+$v>v_s\geq v_0$, so $u\leq\theta v+\omega<v$. For fixed $v$,
+$\sqrt{uv}+\sqrt{(1-u)(1-v)}$ increases on $0\leq u\leq v$.
+Consequently (JR.27) would imply
+
+$$
+s\leq\mathsf V(F)\leq\sqrt{uv}+\sqrt{(1-u)(1-v)}
+ \leq\mathfrak f(v)<\mathfrak f(v_s)=s,
+$$
+
+a contradiction. Hence $u\leq\theta v_s+\omega$, $v\leq v_s$,
+$w\leq1$. Substitution in (JR.27), whose weights are positive, proves
+the first line of (JR.32). It uses one joint constraint on cost and
+record, not independently optimized endpoints.
+
+The original maximum is at least each four-sign average. In the
+displayed bound, $1-\omega-\theta v_s\geq k>0$ and $1-v_s\geq0$.
+Since $A_y,B_y$ strictly increase, $P_5(s)<P_{16}(s)<P_{27}(s)$.
+Thus $\mathsf W\geq P_{27}(s)$; no averaging over heights is used.
+The construction in Theorem 38.2 supplies the reverse inequality with
+one channel and record, proving the equality defining $\mathsf C$.
+The contrast ceiling is already (JR.27); that same construction gives
+every value. Finally $P_y$ is affine decreasing in $v_s$ with strictly
+positive coefficient $\theta A_y+B_y$. This proves the remaining
+monotonicity and endpoint claims. $\square$
+

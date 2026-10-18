@@ -1,0 +1,58 @@
+**Proposition 11.2 (the six-pair classification does not follow at larger
+terminal spans).** At terminal span six and $K,L\ge5$, the first
+internal diagonal can contain
+
+$$
+(K-5,L-1),\qquad(K-3,L-3),\qquad(K-1,L-5).
+\tag{TS.40}
+$$
+
+Each pair meets both count gaps of (TS.3). Therefore that rule alone does
+not exclude a three-cell hosted set, and cannot justify the two-incidence
+multigraph reduction used in Lemma 3.1 at this larger span.
+
+Proof. All three cells have depth $K+L-6=n-5$. Their successive hit
+increases and zero decreases are both two; the extreme pair has both
+four. Thus none is removed by (TS.3). This asserts only eligibility under
+that necessary rule, not their joint realizability in a correct graph.
+A nonterminal span-five gap ending at $n-1$ can likewise include this
+earlier layer, so the terminal span-five classification cannot be transported
+there just by changing the endpoint. For $n\ge8$ the larger count rectangle
+also has additional eligible pairs: at $n=8,k=4$, $(0,4),(2,2)$ already
+meets the two-gap rule, as recorded in TC Section 9. $\square$
+
+Common live successors propagate paired occurrences only while both
+remain live. At a boundary, one reply may certify one occurrence while its
+same literal successor remains live for another. That state cannot be
+erased, replaced globally by a terminal, or charged as a new installed
+state for each use. There is no derived universal separator-capacity
+premise. The complete above-grid construction in [SB, Section 8][SB]
+forces one retained live-elsewhere separator under every allowed cross-fill
+for arbitrarily many fixed cell-disjoint collisions, and can place every
+allowed pack for a fixed collision inside a chosen representative image.
+It refutes exactly the two stated universal fixed-representative charging
+shortcuts. Favorable representative choice and collective compensation
+remain unrefuted; the retained separator is not automatically counted by
+$\nu$.
+
+Likewise [SI, Sections 6--7][SI] gives the sharp $2n-2$ count relaxation,
+discarding actual supports and certified-output correctness. Its complete
+six-coordinate table is budget-feasible but returns one on $000011$ at
+threshold three. It is not an original counterexample. SI11's one-way
+cross-count pair and mass overload are necessary for a positive-deficit late
+pool, not sufficient for a strict saving; other underloaded states, safe
+surplus, cut excess and never-live states can compensate. Proposition 7.2
+is a direct original-model example of such compensated overload.
+
+[TC, Sections 6--9][TC] supplies an additional equivalent cost-certificate
+form of the unresolved all-position target. For each fixed correct
+$n$-query table it reduces existence of original feasible costs to a
+positive ordered-gap cone, with a sparse actual-full-length-run obstruction
+in the opposite case, using finite rational Farkas duality. Cramer's rule
+and Hadamard's inequality give its bounded-position witness. The universal
+implication from a state shortage $m<G$ to that obstruction remains
+unproved. This volume neither changes a fixed position instance nor
+discharges that quantifier. The seven-coordinate result and the qualified
+classes do not settle larger rectangles; TC's stated
+$17\le m_{\rm exec}\le20$ at $n=8,k=4$ remains a bounded comparison.
+

@@ -1,0 +1,58 @@
+**Theorem 69.1 (polynomials, nonidentity and contact bound).** For any
+certificate in Theorem 68.1 and $\epsilon,r\in\{\pm1\}$ put
+
+$$
+\begin{aligned}
+P^0_{\epsilon r}(h)&=h^T(Y-\epsilon G)h-\lambda rz,\\
+P^1_{\epsilon r}(h)&=\mathcal D(h)P^0_{\epsilon r}(h)
++t\mathcal N(h)\widehat n_h^T(Z-\epsilon\Delta_f)\widehat n_h.
+\end{aligned}
+\tag{RC.70}
+$$
+
+The two dual inequalities are equivalent to nonnegativity of all eight
+polynomials on the full circle. None is identically zero. Their
+trigonometric degrees are at most two and four respectively, and their
+homogeneous half-angle degrees are at most four and eight. Each pure
+polynomial has at most two distinct circle zeros; each saturated
+polynomial has at most four. Thus every endpoint contact is in a set
+of at most 24 sheet contacts, with coincidences counted only once when
+appropriate.
+
+**Proof.** Taking the maximum over $\epsilon$ and $r$ gives the two
+absolute values. Multiplication by the strictly positive $\mathcal D$
+introduces no sign changes or spurious zeros. All factors in (RC.70)
+are quadratic or linear in the circle coordinates, which gives the
+stated degrees. At $w=0$ the failure height is zero. The source box gives
+
+$$
+0<a_z:=g_0+g_1/\alpha
+<b_z:=2x_G/\sqrt\alpha.
+\tag{RC.71}
+$$
+
+For example $\alpha>7/8$ and the coarse rational bounds obtained from
+(RC.4)–(RC.5) give
+$a_z<(1270+(8/7)2923)10^{-6}<4740\,10^{-6}<b_z$.
+Both sheet heights consequently take positive and negative values at
+these two axis points. If $\lambda>0$ and one polynomial vanished
+identically, changing $r$ would add $2\lambda rz$ times either $1$
+or $\mathcal D$. This cannot be nonnegative on the whole circle.
+If $\lambda=0$, identity of one polynomial would force its sheet
+height to have the fixed sign $\epsilon$ everywhere, contradicting
+the two axis points. Nonidentity follows.
+
+Set $\tan(\phi/2)=U/V$ and clear $(U^2+V^2)^2$ or
+$(U^2+V^2)^4$. The resulting nonzero nonnegative real binary forms
+have degrees four or eight. Every real projective zero has even
+multiplicity, so there are at most two or four distinct zeros.
+$V=0$ includes the missing point of the affine half-angle chart;
+axis contacts are retained. Summing the four bounds on each sheet gives
+24. $\square$
+
+The count concerns the support candidates of a particular certificate.
+It is neither an actual-label bound nor an improvement of the inherited
+nine-supported-nonzero-low-label existence bound. Fejér–Riesz factorization can certify
+an already selected nonnegative polynomial, including its zeros; it
+does not select $Y,Z,\lambda$, contacts or common positive weights.
+

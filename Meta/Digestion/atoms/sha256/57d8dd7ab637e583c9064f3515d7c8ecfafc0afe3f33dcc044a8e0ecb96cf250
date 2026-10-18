@@ -1,0 +1,96 @@
+**Theorem 14.2 (uniform same-strength optimum and two-sided local loss).** Under Assumption 1.2, the fixed OE/QS correspondences of Definition 9.1 and the finite inputs of §§10–13, for
+$$
+s_e-\varepsilon<s<s_e
+$$
+every maximizing fractional law in $\mathcal Q_6$, with all eight original moments and $K\ge a_s s$, consists of the six old endpoint atoms and equals the inverse six branch at its own target $\kappa=a_s s$, up to permutation. Its contrast is active. In the original full-complex multi-Kraus acquisition class,
+$$
+\begin{gathered}
+\mathcal T_A^{(\le6\ {\rm supported\ nonzero\ low})}(s)
+ =\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)=V_6(s),\qquad
+\mathcal T_A^{\rm full}(s)=V_7(s),\quad A=\log1001,\\
+c_-(s-s_e)^2
+\le\mathcal T_A^{\rm full}(s)-\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)
+\le c_+(s-s_e)^2 .
+\end{gathered}
+$$
+The inverse multipliers used to evaluate $V_6$ and $V_7$ are generally different. Each is evaluated at the same requested strength.
+
+Proof. Put $d=k_e-\kappa=a_s(s_e-s)$. Then $0<d<d_*$. The gate $d<k_e/2$ keeps $\kappa>0$; $d<d_{\rm branch}$ puts both inverse multipliers in their specified supplier intervals and boxes. The next gates give the old-cell occupancy, the $R_x$ coordinate ball, the positive active multipliers and both placements in the $R_f$ uniqueness ball. The last gate gives its self-mapping. Theorems 12.2, 12.3 and 13.2 consequently identify every global maximizing six-law with the same-strength endpoint six branch. This is the quantitative version of the qualitative conclusion of §5, using no additional localization premise.
+
+For the original upper bound, every admitted instrument with at most six supported nonzero low actual labels has, before height optimization, the same fractional law in $\mathcal Q_6$ by the retained full-class reduction. Its actual height, original eight moments, capacities and contrast inequality are unchanged. This includes arbitrary complex multi-Kraus labels, arbitrary admitted competing time laws and redundant actual representations. It does not expose hidden Kraus indices or split an existing fractional acquisition into two endpoints. The law bound therefore gives actual HALF-TV at most $V_6(s)$ for every such instrument.
+
+For the reverse inequality apply the finite common-law constructor, in the general finite-law form of QS Proposition 4.1, FA Theorem 87.3 and RC Proposition 75.1, using OE §9's identical formulas. The continued six law has six positive weights, all eight moments and $b_{{\rm label},i}\in\{0,1000c_{h_i}\}$. These are precisely the constructor's premises, regardless of the unused dual gap's sign. At each low label form
+$$
+\begin{gathered}
+K_i=\sqrt{p_i}L_{h_i},\quad
+N_i=p_i b_{{\rm label},i}n_{h_i}n_{h_i}^T,\quad
+J_i:\mathbb C^2\longrightarrow\operatorname{ran}K_i^*,\\
+Q_i=J_i^*(K_i^*K_i+N_i)J_i\succ0,\quad
+C_i=Q_i^{1/2}J_i^*E^*,\quad
+B_i=K_iJ_iQ_i^{-1/2},\quad
+F_i=Q_i^{-1/2}J_i^*N_iJ_iQ_i^{-1/2}.
+\end{gathered}
+$$
+Here $J_i$ is an isometry; it is unrelated to the low-height objective $J$ or the left inverse $J_{\rm left}$. Rank-two capacity gives
+$B_i^*B_i+F_i=I_2$, $I_2-F_i\succeq I_2/1001$, and whole-fibre activity
+$\log(1+b_{{\rm label},i}/c_{h_i})\in\{0,\log1001\}$. Use the common density
+$g(a)=2/(1+a)^2$ and cumulative function $G_{\rm time}(a)=2a/(1+a)$ with
+$$
+Z_i(a)=\sqrt{I_2-G_{\rm time}(a)F_i},\qquad
+R_i(a)=g(a)F_i[I_2-G_{\rm time}(a)F_i]^{-1}.
+$$
+The survivor and jump effects sum to the identity at every cut; only terminal survivors receive the isometry $EB_i(I_2-F_i)^{-1/2}$. Low deterministic reports $\sigma_i$ give exactly $K/a_s=s$. The sufficient choice $g$ is distinct from the ideal density $f_y(a)=6y/(y+6a)^2$, and puts no density restriction on competitors in the upper bound.
+
+For the original five-mode isometry
+$E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2)$ put $P=EE^*$.
+Choose isometries $W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The one high encoder and its two hidden terminal decoder matrices are
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}DE^*\\ W_\perp^*\end{pmatrix},
+\qquad E[I_3\ 0],\quad EJ_0[0\ I_2].
+$$
+This dimension-five acquired fibre has report $+$ and rate zero; its terminal Kraus indices are discarded. Their effects sum to the identity on that entire fibre. All six low encoders and this one high encoder have total effect $I_5$ by the root TP identity and the full same-law moments. The full complex live map is
+$$
+\Phi^L(X)=E[\Lambda_*(E^*XE)+
+               J_0W_\perp^*XW_\perp J_0^*]E^*,\qquad
+\Lambda_*(Y)=DYD^*+TYT^*+SYS^*.
+$$
+For every Borel set $\mathcal B\subseteq[0,1]$, every complex $X\in M_5$, and each separate original failure label $\ell\in\{0,1,2,3,13\}$, the forgotten-acquisition failure map is
+$$
+\Phi^f_\ell(\mathcal B)(X)
+ =w_\ell\left(\int_{\mathcal B}g(a)\,da\right)
+                          \operatorname{tr}(EME^*X)P_f .
+$$
+With any passive reference the conditional operator is
+$$
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes
+       \operatorname{Tr}_5[(EME^*\otimes I_R)X].
+$$
+The reference is not replaced by its unconditional marginal. These identities include the zero components $\ell=0,13$ and retain live coherences. The original minimax premise gives the eight $y=5,27$ errors equal to $E_*$ and the four $y=16$ errors strictly smaller. The one high acquisition is positive on the original histories, with probability
+$(1-\delta)\sum_jh_j^2p_{yj}$, maximal at $y=27$; its worst-history value is the original sharp JOINT cost $\mathsf C(s)$. All later-accessible input-bearing shares are included in the counted entire fibres. FIRST is absolute $6+a$, survivor controls and terminal processing are TP, no failed carrier receives later positive-carrier action, and no terminal forced absorption is added. Thus the same original instrument attains $V_6(s)$ with six low labels and one counted high label, proving the first original optimum equality conditionally.
+
+Every instrument with at most seven TOTAL generated actual labels has at least one compulsory positive high label and hence at most six supported nonzero low labels. Any supported-zero labels still consume total count and supply no supported moment, contrast or height. The constructor includes its supported-zero complementary input subspace in its single high label. It has seven TOTAL labels, so supplies the matching lower bound and the second equality. This is equality of optima by a sandwich, not equality of full feasible classes. The original unrestricted optimum $V_7(s)$ is supplied on this left interval by OE's full-circle dual and the common constructor.
+
+For the quantitative loss, put $\mathcal D(\kappa)=V_7(\kappa)-V_6(\kappa)$, with $V_b=(H_{\rm high}+J_b)/2$. The common event embeddings give
+$\mathcal D(k_e)=\mathcal D'(k_e)=0$, and Proposition 3.1 yields
+$$
+\mathcal D''(\kappa)=\frac12
+ \left(\frac1{k_{6,\lambda}(\lambda_6(\kappa))}
+           -\frac1{k_{7,\lambda}(\lambda_7(\kappa))}\right).
+$$
+The same-target inverse bounds, evaluated on the two respective multiplier intervals, imply
+$$
+\frac12\left(\frac1{u_6}-\frac1{l_7}\right)
+\le\mathcal D''(\kappa)
+\le\frac12\left(\frac1{l_6}-\frac1{u_7}\right).
+$$
+For $\kappa<k_e$ the positive integration kernel gives
+$$
+\mathcal D(\kappa)=\int_\kappa^{k_e}(t-\kappa)\mathcal D''(t)\,dt,
+\qquad \int_\kappa^{k_e}(t-\kappa)\,dt=(\kappa-k_e)^2/2 .
+$$
+Thus the two coefficients in $\kappa$ are exactly
+$(1/u_6-1/l_7)/4$ and $(1/l_6-1/u_7)/4$.
+The first factor $1/2$ is the actual HALF-TV normalization, and the second is from twice integration. Substituting
+$\kappa-k_e=a_s(s-s_e)$ gives exactly $c_-,c_+$, including their factor $\alpha/(4s_0^2)$. No little-$o$ remainder, common-multiplier replacement, or qualitative continuity radius is needed. $\square$
+

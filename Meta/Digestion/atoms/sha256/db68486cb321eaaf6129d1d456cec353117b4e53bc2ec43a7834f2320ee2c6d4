@@ -1,0 +1,27 @@
+**Definition 10.1 (Five-site probe sufficiency).** In (9.4), take
+
+$$
+\lambda=(100,1,100,1,100),\qquad
+\omega=\left(\frac{368}{2565},\frac{5101}{17955},\frac{289}{1995},
+\frac{5101}{17955},\frac{368}{2565}\right).
+\tag{10.1}
+$$
+
+With site one the least significant bit, the complete legal word
+list is $0,1,2,4,5,8,9,10,16,17,18,20,21$. The product-activity
+partition function is $Z=1030504$. Let
+$L_c(s)=\sum_{i=1}^5c_is_i$ for real $c$. The probe sufficiency
+assertion is the implication
+
+$$
+\left[\forall c\in\mathbb R^5,\quad
+\mathcal E_\omega(L_c,L_c)\ge\frac1{10}\operatorname{Var}_p(L_c)\right]
+\Longrightarrow
+\left[\forall f:B_5\to\mathbb R,\quad
+\mathcal E_\omega(f,f)\ge\frac1{10}\operatorname{Var}_p(f)\right].
+\tag{10.2}
+$$
+
+This is a question about the sufficiency of a restricted probe family.
+The earlier chapters do not assert (10.2).
+

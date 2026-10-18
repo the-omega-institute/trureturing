@@ -1,0 +1,52 @@
+### 90.1. Original aligned chart and a uniform Cramer pivot
+
+An aligned ray means that both channels have at most two distinct values
+and share a repeated pair; a constant channel is allowed. Use the original
+finite chart of §75, with the repeated positions chosen as 1,2:
+\[
+ w=(1,1,z;g,g,gr),\quad z=(1+iu)/(1-iu),\quad
+ r=(1+iv)/(1-iv),\quad d=u-v,\quad \theta=uv,\quad s=u+v.
+\]
+Put \(K_a=d^2+4\theta=s^2\), \(F_a=d^2+(\theta+1)^2\),
+\(J_a=bd-\theta+3\), and write \(\kappa g=s(a+ic)\).
+Every nonconstant finite aligned ray has \(K_a>0\); the constant and
+\(s=0\) cases are already classified in §75. Its exact original equations
+are \(P_0=P_1=P_2=0\), \(K_a(a^2+c^2)=R\), where
+\[
+\begin{aligned}
+ P_0={}&K_a[da-(\theta+1)c]+bd(1-\theta)-d^2-2\theta(\theta+1),\\
+ P_1={}&[bd^2-d\theta(b^2+1)+d(b^2-3)+b(\theta^2-2\theta-3)]a\\
+ &+[-b^2d^2-4bd+\theta^2-2b^2(\theta+1)+4\theta+3]c
+ +(b^2-3)(\theta+1-bd),\\
+ P_2={}&[5bd^2+2d\theta(b^2+2)-2db^2+3b(\theta+1)^2]a\\
+ &+[-3d^2-2bd(\theta+1)-(2b^2+7)\theta^2-10\theta+2b^2-3]c
+ +2(b^2-3)(\theta+1+bd).
+\end{aligned}                                                    \tag{90.1}
+\]
+The first two coefficient rows have determinant \(-K_abJ_aF_a\).
+The factors \(b,K_a,F_a\) are nonzero on the physical chart:
+\(F_a=0\) would give \(d=0,\theta=-1\), contradicting \(K_a>0\).
+At \(J_a=0\), the two normalized Cramer numerators are
+\[
+ 6(b^2-3)(bd+4)V_0,\qquad6d(b^2-3)V_0,
+ \quad V_0=(1+b^2)d^2+8bd+16
+ =(1+b^2)\left(d+\frac{4b}{1+b^2}\right)^2+\frac{16}{1+b^2}>0.
+                                                               \tag{90.2}
+\]
+Consistency would force both \(d=0\) and \(bd+4=0\), a contradiction.
+Thus the first-two-row Cramer solutions \(a=A_a(b,d,\theta)\),
+\(c=C_a(b,d,\theta)\) cover every real finite nonconstant aligned ray,
+uniformly throughout the puncture.
+
+Define the literal integer polynomials
+\[
+ \Phi=\frac{bK_aJ_a}{2}P_2(A_a,C_a),\qquad
+ \Psi=\frac{b^2K_aJ_a^2F_a}{2}
+                 [K_a(A_a^2+C_a^2)-R].                         \tag{90.3}
+\]
+The cancellations are exact. These formulas define all coefficients from
+(90.1), without a rational-function fitting step. The polynomials have
+33 and 77 terms, and total \((d,\theta)\)-degrees four and six.
+On the physical chart the original system is exactly \(\Phi=\Psi=0\)
+with the Cramer values and the retained norm condition.
+

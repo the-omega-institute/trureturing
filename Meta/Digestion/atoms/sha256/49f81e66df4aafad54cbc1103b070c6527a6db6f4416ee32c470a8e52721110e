@@ -1,0 +1,25 @@
+**Lemma 5.2 (Entropy charged by actual live occupation).** Let $P,Q$ be finite stochastic kernels with common positive support and distinct fixed label rows $d_0,d_1$, starting from the same row $\nu$. Fix $0\le D_*<\infty$ and suppose every live row has $D(P(x,\cdot)\|Q(x,\cdot))\le D_*$. Suppose the actual $P$ chain first reaches a label at a time $N$ with $\mathbb E_PN<\infty$, and write $D\in\{0,1\}$ for that label's index. If $h$ is $Q$-harmonic, valued in $[0,1]$, and has $h(d_0)=0,h(d_1)=1$, then
+
+$$
+\left|\mathbb E_P D-\nu h\right|
+\le\sqrt{D_*\mathbb E_PN/2}.
+\tag{5.7}
+$$
+
+No termination property of $Q$ is a hypothesis.
+
+Proof. For a finite $m$, let $\mathcal P_m,\mathcal R_m$ be the path laws through time $m$ of $P,Q$ from $\nu$. Their initial likelihood factors cancel. Expanding the finite products of Markov transition probabilities gives the entropy chain rule
+
+$$
+D(\mathcal P_m\|\mathcal R_m)
+=\sum_{j=0}^{m-1}\mathbb E_P D(P(Y_j,\cdot)\|Q(Y_j,\cdot))
+\le D_*\mathbb E_P(N\wedge m).
+\tag{5.8}
+$$
+
+Only actual live rows contribute; absorbed rows have zero entropy.
+
+Here is the needed Pinsker bound with its constant. For finite laws $p,q$, choose $E=\{x:p(x)\ge q(x)\}$. Then $p(E)-q(E)=\|p-q\|_{\rm TV}$. Log-sum onto $E,E^c$ bounds full entropy below by binary entropy. At fixed $v\in(0,1)$, the latter as a function of $u$ has value and first derivative zero at $u=v$, and second derivative $1/[u(1-u)]\ge4$. Integrating twice gives $D_{\rm Bern}(u\|v)\ge2(u-v)^2$. Endpoint cases follow by limits or absolute continuity. Thus $\|p-q\|_{\rm TV}\le\sqrt{D(p\|q)/2}$. Any $[0,1]$-valued function has expectation difference at most this variation, by splitting the positive and negative signed masses.
+
+Apply this to $h(Y_m)$ on the path space. Harmonicity gives $\mathbb E_{\mathcal R_m}h(Y_m)=\nu h$ at every finite horizon. Under $P$, actual stopping and frozen labels give $h(Y_m)\to D$ almost surely. Bounded convergence, (5.8) and $\mathbb E_P(N\wedge m)\le\mathbb E_PN$ prove (5.7). No likelihood at an auxiliary stop and no auxiliary expected stopping time were used. $\square$
+

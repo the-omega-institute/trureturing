@@ -1,0 +1,77 @@
+**Corollary 21.1 (credited rigidity on the acquired shared support).**
+After any acquisition in Definition 17.1, allow a common finite endpoint
+CP acceptance protocol using the specimen, actual live seed and
+source-independent ancillary inputs. It may adapt using its own actually
+retained records. There is no new accessible history-bearing assistance.
+For every $\beta,m$, each accepted specimen must be exactly
+$\psi_{l,\beta,m}$, with all success auxiliaries retained. Then its
+unconditional success probability, measured from the initial live cut, is
+at most
+
+$$
+s_*(a,l)\,Q_\varepsilon,\qquad
+Q_\varepsilon=\sum_u\nu(u)q_\varepsilon(u),\qquad
+s_*(a,l)=\min\left\{1,\frac al,\frac{c-a}{c-l}\right\}.
+\tag{PR.80}
+$$
+
+The canonical monotone horizontal tail attains this simultaneously for
+both parities and every phase, with its actual exact-time/five-mode
+failure law. On the balanced frontier $Q_0=Q_1=P$, so the sharp
+value is $s_*(a,l)P$ for each parity. No improvement in conditional
+exact-tail success over $s_*(a,l)$ follows from its smaller $R_*$.
+
+Proof. Every seed has positive live likelihood for both parities.
+For fixed seed, correctness of the total accepted positive output
+therefore forces its specimen marginal into the target ray for both
+parities and every phase; a positive summand cannot hide an incorrect
+output behind another seed. The effective endpoint success map selected
+at this seed has no other history-bearing input.
+
+Apply the credited Instrument Boundaries Theorem 4.1, or equivalently
+Theorem 12.2 with classical equal-support assistance. For completeness,
+the mechanism is that projecting a successful dilation onto any auxiliary
+component gives a linear specimen map. The wedge with
+$\sqrt Z e_2+e^{-i\beta}
+(\sqrt{2l}U_++(-1)^m\sqrt{2(c-l)}U_-)$
+has degree at most two in $e^{-i\beta}$. Its coefficients vanish.
+The common nonzero reference direction $e_2$ fixes the same scalar for
+both parities. Adding and subtracting the two bottom directions therefore
+forces each component to be $\alpha_jD$, where
+$D=\operatorname{diag}(\sqrt{l/a},\sqrt{(c-l)/(c-a)},1)$
+on $(U_+,U_-,e_2)$. Completeness implies
+$\sum_j|\alpha_j|^2D^\dagger D\leq I$, hence its accepted
+probability is at most $\|D\|^{-2}=s_*(a,l)$.
+Finite internal adaptivity induces a single such CP acceptance map;
+its actual suboutcomes and auxiliaries are included in these components.
+
+Multiply this bound by each actual $\nu(u)q_\varepsilon(u)$ and sum.
+Old dead branches contribute zero because their successor is absorbing.
+The canonical monotone tail has live operator $\sqrt{s_*}D$ on the
+active family and the complete canonical failure kernels, proving
+attainment with the same joint reference/archive preserved on success.
+Its failed branches keep their new exact event; acquisition failures
+keep the earlier event and never execute the tail. $\square$
+
+The shared-support/no-improvement principle is the credited result of
+§§12–14, now instantiated by an acquired live record with unequal
+likelihoods. The added frontier does not rename that rigidity result as
+new mathematics. Even without one common finite $C$, every individual
+finite original return path has $q_\varepsilon(u)>0$; thus the same
+no-exclusive-live-record argument and (PR.80) hold for this finite-seed
+class. The quantitative error floor uses the common charge bound.
+
+The permitted original menu after a live return is still the existing
+prescribed relative-control menu at the actual matching height, with
+both regularities, arbitrary finite durations including a matching
+zero-duration identity, real increments and all permitted signed sectors.
+For a relative height increment $a_\gamma(t)$ its domain remains
+$D_\gamma=(\ell_b-\min a_\gamma,u_b-\max a_\gamma)$, as in the
+probability-phase source §9.1. Known illegality or denied permission
+gives an unexecuted visible rejection and retains the unchanged specimen
+and request context; it is not a fabricated canonical failure. No detector
+for an unflagged promise violation or unknown current height is supplied.
+After an executed failure only the declared stopped continuation is
+available. Updates retain the actual seed, request, outcome and archive,
+never an inferred old lift as if it had been observed.
+

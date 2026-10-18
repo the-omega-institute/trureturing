@@ -1,0 +1,40 @@
+**Definition 2.2 (complete common data).** For finite $t=e^A-1\ge t_0$
+define
+
+$$
+\begin{gathered}
+X=\{(u,v,\xi):u^2+v^2=1,\ 0\le\xi\le1\},\qquad
+b_x=t\xi\mathfrak c(u,v),\\
+\Gamma(x)=(1,u,v,u^2,uv,\xi\mathfrak c,
+                    \xi\mathfrak c u^2,\xi\mathfrak c uv)^T,\\
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0)^T,\qquad k(x)=|u|,\\
+K(\pi)=\int_X k\,d\pi,\qquad
+J_t(\pi)=\int_X|\ell+b_xf|\,d\pi,\qquad
+\int_X\Gamma\,d\pi=B(t).
+\end{gathered}
+\tag{PC.6}
+$$
+
+Antipodes are distinct. The measure $\pi$ is the common coefficient
+probability law. Its positive atom masses are not acquisition
+probabilities. The original request is $K\ge r$, with
+$s=s_0r/\sqrt\alpha$ and the feasible interval of GC Definition 12.1.
+Write
+
+$$
+\begin{aligned}
+R_t(r)&=\max\{J_t(\pi):\int\Gamma\,d\pi=B(t),\ K(\pi)\ge r\},\\
+C_t(\lambda)&=\max\{J_t(\pi)+\lambda K(\pi):
+                                      \int\Gamma\,d\pi=B(t)\}.
+\end{aligned}
+\tag{PC.7}
+$$
+
+GC Proposition 12.2 identifies these complete moments with the live
+Gram $\int hh^T d\pi=I_3$ and failure covariance
+$\int b_xn_hn_h^T d\pi=M$. The actual supported acquisition effect
+of a label is $pK_h^\dagger K_h+pb_xn_hn_h^T$. Its absolute signed
+height is taken after combining its live and failure contributions.
+The original actual height and optimum are
+$(H_0+J_t)/2$ and $(H_0+R_t(r))/2$.
+

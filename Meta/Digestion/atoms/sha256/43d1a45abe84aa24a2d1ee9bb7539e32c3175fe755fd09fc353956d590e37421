@@ -1,0 +1,47 @@
+**Proposition 206.6 (Pair moments cannot be replaced by single moments).**
+At $L=4$, the correct measure $C_{0v}=1/8$ on all eight suffixes has
+the same degree-two moments as
+
+$$
+C_{0000}=C_{0011}=C_{0101}=C_{0110}=1/4.
+$$
+
+All other rows, including $T$, are zero. These measures give identical
+cell-label rewards but different third moments. In contrast, consider
+the following two full scores, all unspecified rows being zero:
+
+$$
+\begin{aligned}
+&C_{1101}=C_{1110}=1,\qquad T=1,\qquad A=0,\\
+\text{I: }&P_{0100}=P_{1000}=P_{0101}=P_{1001}=P_{0110}=P_{1010}=1/8,\\
+\text{II: }&P_{0100}=P_{1000}=1/4,\qquad P_{0111}=P_{1011}=1/8.
+\end{aligned}
+\tag{206.19}
+$$
+
+Their separate class/event totals and single-bit moments agree, but
+
+$$
+\begin{array}{c|cc|cc}
+ &B_N&B_O&\Delta_N&\Delta_O\\ \hline
+\mathrm I&13/4&3&3/2&5/4\\
+\mathrm {II}&15/4&13/4&2&3/2
+\end{array}
+\tag{206.20}
+$$
+
+**Proof.** In the first example both suffix measures have total one,
+each coordinate moment $1/2$ and each pair moment $1/4$. Their cubic
+moments are $1/8$ and zero. Proposition 206.5's cell argument applies.
+For (206.19), $S=3/4$, $W=7/4$, and both late zero marginals are
+$m_3=m_4=1/2$. The directed pair mass
+$\nu(w_3=1,w_4=0)$ is $1/4$ in I and zero in II. For $(3,4)$ the
+$N$ maxima are $(1/4,1,1,1)$ and $(1/2,1,1,5/4)$; labels
+$(0,3,4,0)$ attain them. The stopped maxima are $(1,1,1)$ and
+$(1,1,5/4)$. In both scores an empty schedule or early single has
+support $7/4$, a late single has $9/4$, $(1,2)$ has $7/4$, and any
+early/late pair has $5/2$ in either catalog. These exhaust the
+schedules and establish (206.20). The unequal pair moment therefore
+changes complete support despite equality of all one-bit data.
+No optimality of the cubic upper bound follows. $\square$
+

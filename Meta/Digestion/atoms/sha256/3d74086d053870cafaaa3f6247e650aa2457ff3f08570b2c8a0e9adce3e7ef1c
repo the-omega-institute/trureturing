@@ -1,0 +1,11 @@
+## 132. Maximal selected H labels cannot be saturated
+
+Let F be the full nonempty flat set. There is at least one H label with a
+flat pi occurrence. A transverse selection is already such a label. An
+axial flat with both selected labels in S is impossible: applying (S) to
+both axes in that block makes their shifted product strictly smaller than
+(a+b)^2, contradicting (A).
+
+Choose M among ALL H labels with a flat pi occurrence so that
+m=x_M is maximal. Equal numerical values on different labels are allowed.
+

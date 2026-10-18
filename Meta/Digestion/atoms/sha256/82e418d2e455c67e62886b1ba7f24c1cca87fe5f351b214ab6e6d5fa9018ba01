@@ -1,0 +1,30 @@
+**Proposition 4.3 (fixed navigation and finite tags).** Theorem 4.1 extends
+effectively to the finite-observation syntax of NSF Lemma 5.1 whenever
+the designated output on each of its finitely many original prefix
+cases is a tuple of native expressions, optionally paired with a fixed
+finite tag. All fixed guards, signed tests and Boolean complements
+remain in the domain.
+
+Proof. NSF's compiler decomposes the source tuple into actual original
+prefix patterns beyond all finitely supplied navigation positions.
+Repeated occurrences use the same frontier variables. On each case,
+reached subtrees and the output expressions are native expressions in
+those variables; guards and literal replies are computed exactly. Apply
+Theorem 4.1 to that case's full formula and designated expressions.
+Fill its returned frontier assignments into its original patterns.
+
+Every produced tuple reconstructs an original source tuple satisfying
+all case conditions. Conversely every original tuple determines its
+actual prefix case and frontier assignment, so its output is covered.
+A finite union of finite images is finite, and a single infinite case
+supplies an infinite image because its native outputs are already
+distinct at one fixed tag. Deduplicate the finite tagged outputs and
+retain their original witnesses. All case lists are finite. No variable
+physical word or variable navigation depth has been introduced. $\square$
+
+The singleton-or-infinite test is the additional uniform inference here.
+NSF's one-witness bound alone would not justify it: even $x=x$ has a
+small witness and an infinite full output image. The proof explicitly
+uses which coordinates remain fixed on every actual solution and the
+two original-solution pumping constructions.
+

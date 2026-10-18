@@ -1,0 +1,52 @@
+**Definition 15.1 (evaluated live coefficient, including zero corners).**
+For $a=(\sigma,\eta)\in\{\pm1\}^2$ put
+
+$$
+h_a=(1,\sigma,\eta)^T,\quad L_a=|h_a^TGh_a|,\quad
+v_a=(0,\sigma,-(\alpha/\beta)\eta)^T,\quad e_a=2h_a^TGv_a.
+\tag{JS.70}
+$$
+
+Let $B(z,w)=B_0^{\rm cor}+B_z z+B_w w+B_{zw}zw$ interpolate the
+four $L_a$ by four-sign Fourier inversion, and set
+
+$$
+b_a'=\sigma B_z-(\alpha/\beta)\eta B_w
+ +(1-\alpha/\beta)\sigma\eta B_{zw}.
+\tag{JS.71}
+$$
+
+If $h_a^TGh_a\ne0$ let both endpoints $a_a^-,a_a^+$ equal
+$\operatorname{sign}(h_a^TGh_a)e_a-b_a'$. Otherwise let
+$a_a^-=-|e_a|-b_a'$ and $a_a^+=|e_a|-b_a'$. Define
+
+$$
+M(c)=\frac14\sum_a\max\{(a_a^--c)^2,(a_a^+-c)^2\},\qquad
+\Gamma=\sqrt{2M(c_*)},\qquad \mathsf a=\Gamma/2.
+\tag{JS.72}
+$$
+
+Here $c_*$ is evaluated finitely as follows. Sort the distinct midpoints
+$(a_a^-+a_a^+)/2$. On each of the resulting at-most-five intervals,
+choose at each corner an endpoint farthest from $c$ on that interval.
+Clamp the average of these four endpoints to the interval closure,
+and compare $M$ at the resulting candidates. The minimum candidate
+is $c_*$. Unbounded extreme intervals cause no difficulty, and ties
+are included. Each summand is a quadratic $c^2$ plus a convex
+piecewise affine function, so $M$ is strongly convex and $c_*$ is
+unique. No optimization remains in this finite definition.
+
+When all corner heights are nonzero this reduces to
+
+$$
+\Gamma^2=\tfrac12\sum_a(a_a-\bar a)^2,\qquad
+\bar a=\tfrac14\sum_a a_a.
+\tag{JS.73}
+$$
+
+The coefficient $\mathsf a$, rather than $\Gamma$, uses JR55's
+HALF-TV convention. The static endpoint square-root mechanism and
+its coefficient are credited there; the perturbation statement below
+is the additional assertion. The zero-corner formula covers the
+degenerate conditional extension without dividing by $\Gamma$.
+

@@ -1,0 +1,15 @@
+**Theorem 6.2 (the exact static count and its scope).** Under $a\ne b$ and $0<2\epsilon<\kappa$, the exact static closed-word minimum is
+
+$$
+4+C(T_\theta,2\epsilon)\quad\text{after reads},\qquad
+5+C(T_\theta,2\epsilon)\quad\text{including empty history}.
+$$
+
+Equivalently these counts are $3+C(S_\theta,2\epsilon)$ and $4+C(S_\theta,2\epsilon)$. In particular the initialized count is at most $5+\lceil1/(4\epsilon)\rceil$, independent of the holding ratio. This is a one-shot encoding theorem and provides no autonomous update for those code words.
+
+**Proof (6.2).** The laws $F_0,F_1,F_3,F_f$ need four separate post-read labels and cannot share with the laws indexed by $T_\theta$. The singleton separation is Theorem 3.3, and $F_f$ has distance $1-z\ge1/2$ from $G_z$ on $0\le z\le1/2$. The empty law needs a fifth separate label.
+
+If a decoder label serves scalar values $A\subseteq T_\theta$, the triangle inequality and Theorem 3.1 imply $|x-z|\le2\epsilon$ for every $x,z\in A$. Thus $[\inf A,\sup A]$ is a closed interval of length at most $2\epsilon$. The nonempty fibers of any finite encoder give an interval cover, establishing necessity even for decoders outside the mixture family. Conversely take a cover, intersect its nonempty intervals with $[0,1/2]$, and decode each at its midpoint by $G_z$. Assign every scalar to one interval containing it. The exact metric gives error at most $\epsilon$. Decode the isolated laws exactly. This attains the count.
+
+Since $2\epsilon<\kappa\le1/25$, the isolated value $1$ cannot share a covering interval with $T_\theta\subseteq[0,1/2]$. Hence $C(S_\theta,2\epsilon)=1+C(T_\theta,2\epsilon)$, proving the equivalent expressions. Covering the entire interval $[0,1/2]$ by $\lceil1/(4\epsilon)\rceil$ equal closed pieces proves the parameter-independent upper bound. No update congruence for this cover has been assumed or deduced. $\square$
+

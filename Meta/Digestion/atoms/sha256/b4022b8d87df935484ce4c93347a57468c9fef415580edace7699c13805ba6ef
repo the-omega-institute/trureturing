@@ -1,0 +1,9 @@
+**Corollary 3.3 (a necessary coverage hole for shortage in this geometry).**
+Retain (IC.13), (IC.14), the actual-live order rule, both original caps,
+and $\mathcal A\ne\varnothing$. If $m<G$, then $\mathcal A$ has
+two consecutive elements with difference at least $b+2$.
+
+Proof. Otherwise (IC.16) holds and Theorem 3.2 contradicts $m<G$.
+This is a necessary condition within the stated geometry. An interval
+hole is not a construction of a correct strict-subgrid graph. $\square$
+

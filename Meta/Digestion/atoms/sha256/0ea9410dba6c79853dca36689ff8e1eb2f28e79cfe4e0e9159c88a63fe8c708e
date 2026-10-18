@@ -1,0 +1,33 @@
+**Definition 9.2 (unassisted endpoint factorization).** Fix a finite
+algebra $\mathcal B=\bigoplus_\alpha M_{d_\alpha}$. A common joint
+CPTP encoder receives the classical command and the specimen. Equivalently
+it has CPTP restrictions
+$\mathcal E_j:M_3\to\mathcal B$, without a product data/program
+output requirement. All information usable after retention factors through
+$\mathcal B$. No pre-supplied history-correlated helper or accessible
+archive is an extra input to $\mathcal E_j$; no surviving command dial,
+specimen bypass, source-dependent timing, returned environment or receiver
+entanglement share escapes the count. Input-independent ancillas are
+absorbed into the maps. An inaccessible reference may remain untouched.
+
+Two fixed CPTP decoders $\mathcal D_0,\mathcal D_1:\mathcal B\to M_3$,
+independent of $j,\beta,m$, must satisfy
+
+$$
+\begin{aligned}
+\mathcal D_0\mathcal E_j(\rho_{\beta,m})&=\rho_{\beta,m},\\
+\mathcal D_1\mathcal E_j(\rho_{\beta,m})&=U_j\rho_{\beta,m}U_j^\dagger,
+\qquad
+\rho_{\beta,m}=|\psi_{1/8,\beta,m}\rangle
+                    \langle\psi_{1/8,\beta,m}|.
+\end{aligned}
+\tag{QC.50}
+$$
+
+There is no postselection, abort or permitted failure on these legal
+deterministic tails. The task does not require reporting $j$.
+This factorization is a different hypothesis from Definition 7.4, which
+permits arbitrary already supplied history assistance and counts it jointly.
+An assisted input lacking the form $\mathcal E_j(\rho_{\beta,m})$
+does not satisfy Definition 9.2.
+

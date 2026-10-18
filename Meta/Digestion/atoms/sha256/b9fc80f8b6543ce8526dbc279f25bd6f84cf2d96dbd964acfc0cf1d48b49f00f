@@ -1,0 +1,18 @@
+**Lemma 9.2 (common deep prefixes and persistent reached subtrees).**
+For every $h$ and every $u$, all replies of $\rho^n u$ at depth at
+most $h$ are branch if $n\ge2(h+1)$. Once an original position is
+reached, its subtree under later updates is the iterate of that same
+subtree. Its whole-subtree equality with another reached position is
+preserved and reflected by those updates. The trees
+$\rho^n u$ are pairwise distinct as $n$ varies.
+
+Proof. The common-prefix assertion is the branch-saturation property
+used in [CAR][CAR] and [JRF, (2.4)][JRF]: each two updates increases
+the minimum leaf depth by at least one, since both $\rho^2\alpha$
+and $\rho^2\beta$ have branch roots. Induction gives the asserted
+uniform bound. Pair preservation gives the reached-subtree identity
+by induction on the original address. Injectivity of $\rho$ gives
+both directions of each equality. Finally in ABC coordinates the
+least primitive rank of $B(\rho^n u)$ is that of $B(u)$ plus $n$,
+so these trees are distinct. $\square$
+

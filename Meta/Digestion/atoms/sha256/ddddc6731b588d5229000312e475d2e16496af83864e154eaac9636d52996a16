@@ -1,0 +1,26 @@
+**定理 30.2（逃逸层与完整向量补充的共同分解）。** 对固定目标 $F$，有
+
+$$
+R_{h+1}=\ker o\cap\bigcap_a(T_a\times T_a)^{-1}R_h,
+\qquad R_{h+1}\subseteq R_h,
+$$
+
+$$
+\mathcal E(q_0;F)=\mathcal E(q_\infty;F)\ \dot\cup\
+\bigcup_{h\geq0}\left(\mathcal E(q_h;F)\setminus\mathcal E(q_{h+1};F)\right).
+$$
+
+各层互斥，分别记录首次在深度 $h+1$ 被区分的实际来源对；永久项仅对全部已声明实验盲。完整实线性模型中，若当前读出为 $Cx$、下一目标为 $CAx$，新增线性记录的最少独立标量数为
+
+$$
+\Delta=\operatorname{rank}\begin{pmatrix}C\\CA\end{pmatrix}-\operatorname{rank}C.
+$$
+
+FIB 向量模型有 $\Delta=3$，恰增加一份向量记忆；当前、延迟与永久类别由行为目标决定，不能由局部轴数命名。
+
+证明。非空词按第一字母拆分，所有长度至多 $h+1$ 的响应相等，恰为当前相等且每个一步后长度至多 $h$ 的响应相等，给递推。若某对属于当前逃逸且不属于永久项，它有最小被区分深度；恰属于相应差集。递减性使各差层互斥，给可数不交分解。新增操作可能分开永久项，改变了实验族而非推翻旧实验下的结论。含失败的总化防止删除不成功分支制造假充分性。
+
+线性补充式是 [观察者相对时空 §20.3](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) 的行空间补充原理在一步目标上的应用。充分性要求 $\ker(C,L)\subseteq\ker(CA)$；有限维对偶给 $\operatorname{row}(CA)\subseteq\operatorname{row}(C,L)$，故额外秩至少 $\Delta$。从 $CA$ 行空间中选模掉 $C$ 行空间后的基作 $L$ 达到。代入 $C=(I_3,0),CA=(0,I_3)$ 得三；定理 17.2 还给全未来补充 $3(\dim M_\infty-\dim M_0)$，不限一份。
+
+随机预测的经典对应是 [Shalizi–Crutchfield 文献注](../../../Library/Dynamics/shalizi2001computational.md) 中依条件未来分布划分的 causal states，适用于指定平稳过程及几乎处处历史，不与本章逐来源、受控、确定响应商等同。元组是潜在行为语义，实际取得全部元组须另给复制、重置、查询和资源权限；有限响应数据也不保证已取得永久项的完整证书。证毕。
+

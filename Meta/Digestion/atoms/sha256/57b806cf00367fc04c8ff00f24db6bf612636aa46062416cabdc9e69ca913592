@@ -1,0 +1,34 @@
+**Theorem 12.2 (identical local laws at every copy).** For rational
+$p_i\in\Delta(R_i)$, matching is also equivalent to the existence
+of a finite group-permutation cover and a probability law on its
+actual solutions such that every copy of $i$ has local marginal
+exactly $p_i$. If $m$ is a common denominator, a cover with $m!$
+sheets suffices. The law can have at most $m$ outcomes.
+
+Proof. Use the lists and permutations in Theorem 12.1. Compose
+permutations right to left. Index the sheets by
+$g\in\operatorname{Sym}([m])$ and wire the edge $e=(j,i)$ from
+$(i,g)$ to $(j,\sigma_e g)$. This is a bijection of the sheet set.
+For a uniformly chosen $h\in\operatorname{Sym}([m])$, prescribe
+at $(i,g)$ the local configuration
+
+$$
+a_{i,(gh)(1)}.
+\tag{COK.63}
+$$
+
+The owner at the other endpoint has configuration
+$a_{j,(\sigma_egh)(1)}$. The matching equation from the original
+lists holds at $k=(gh)(1)$, so every group agrees and every outcome
+is an actual solution. For fixed $g$, $(gh)(1)$ is uniform on
+$[m]$, giving exactly $p_i$. The outcome depends only on $h(1)$,
+so there are at most $m$ outcomes. Conversely equal copy marginals
+on an actual cover must give the same distribution at both ends of
+every shared group, which is precisely (COK.61). $\square$
+
+This construction provides prescribed local marginals on another
+network. It supplies no law on the unlifted base. Its global entropy
+is at most $\log_2m$; it need not be a Gibbs law or have the large
+solution multiplicity established by averaging in §13. Those two
+completion mechanisms must be distinguished when using COK.22.
+

@@ -1,0 +1,24 @@
+**推论 6.3（保留完整内部参数范围的锐阶容量）。** 固定实数 $0<\delta\le1/2$。对所有整数 $u,v\ge1$，令 $n=\min(u,v)$，并取整数
+
+$$
+\delta uv\le K\le(1-\delta)uv.
+$$
+
+则无额外大规模阈值地有
+
+$$
+(\delta n/140)^6\le|\mathcal M_{u,v,K}|\le4(uv)^3.
+\tag{JM.16}
+$$
+
+若另有 $\max(u,v)\le Rn$、$R\ge1$，则
+
+$$
+\frac{\delta^6(uv)^3}{140^6R^3}
+\le|\mathcal M_{u,v,K}|\le4(uv)^3,
+$$
+
+等价地，上界可写成 $4R^3n^6$。因此固定面积比例裕量和有界纵横比下的尺度为 $\Theta((uv)^3)$，常数依 $\delta,R$ 而不依具体纤维。
+
+证明。选最大二次幂 $q\le1+\delta n/70$，于是 $h=70(q-1)\le\delta n$。有 $hv\le\delta uv\le K$、$hu\le\delta uv\le uv-K$，故（JM.13）成立。定理6.2给 $q^6$ 点，而最大性给 $q>\delta n/140$，包括 $q=1$ 的情形。一般 $0\le Q\le u^2v,0\le T\le uv^2$，所以（JM.1）的注入坐标关系给 $|\mathcal M|\le(u^2v+1)(uv^2+1)\le4(uv)^3$。纵横比条件给 $n^2\ge uv/R$ 及 $uv\le Rn^2$，分别产生两种比较式。所有界对所列整数纤维成立，不依赖有限样本。$\square$
+

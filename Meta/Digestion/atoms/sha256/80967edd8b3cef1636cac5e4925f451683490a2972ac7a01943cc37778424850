@@ -1,0 +1,79 @@
+**Theorem 7.2 (Full-family risks, pointwise finite stopping and exact paid identity).** The rule in Definition 7.1 satisfies
+
+$$
+\sup_{q\in(0,1)}\mathsf P_{0,q}(\text{label }1)\le\alpha/2,
+\qquad
+\sup_{q'\in(0,1)}\mathsf P_{1,q'}(\text{label }0)\le\alpha/2.
+$$
+
+For each fixed true $i,q$ it stops almost surely, and, writing $\ell_m=m\log(1+\delta)$,
+
+$$
+\mathbb E_{i,q}J\le
+\frac{\log b+\ell_m}{\overline D_{i,m}(q)}<\infty.
+$$
+
+Its actual read count $L_m$ has the pathwise and mean identities
+
+$$
+\begin{aligned}
+L_m&=1+\tau+\sum_{j=1}^{J}(T_j+m),\\
+\mathbb E_{i,q}L_m&=1+\beta_i(q)+m\mu_i(q)\mathbb E_{i,q}J<\infty.
+\end{aligned}
+$$
+
+For every fixed $H,m,\alpha$,
+
+$$
+\mathbb E_{i,e^{-s}}L_m=O_{H,m,\alpha}(s^{-3})
+\quad(s\downarrow0).
+$$
+
+Proof. Use only the completed-block filtration
+
+$$
+\mathcal F_j=\sigma(\tau,K_1,\ldots,K_{jm}).
+$$
+
+Proposition 1.3 supplies independence of successive blocks and of the initial wait. Under any null nuisance, condition first on $T_j=n$: the $G_0$ expectation of $R_j=G_1/G_0$ is $\sum_{k\in\Omega_{m,n}}G_1(k)=1$. Averaging over that null's own total law preserves one, so $M_j$ is a mean-one nonnegative martingale under every $\mathsf P_{0,q}$. Under every $\mathsf P_{1,q'}$, the reciprocal factor has $G_1$ expectation one, making $M_j^{-1}$ such a martingale. No relation between $q$ and $q'$ is used.
+
+For a finite horizon $N$, bounded stopping gives $\mathbb E_{0,q}M_{J\wedge N}=1$. On $\{J\le N,\text{label }1\}$ the value is at least $b$, and it is nonnegative elsewhere, so that event has probability at most $b^{-1}$. Increase $N$ to infinity. Apply the identical argument to the reciprocal under label one for an erroneous lower crossing. These are the displayed risk bounds, obtained before assuming integrability or termination of $J$.
+
+Under true label $i$ put $Y_j=\log R_j$ and $Z_j=(2i-1)Y_j$. The oriented variables $Z_j$ are iid with mean $\overline D_{i,m}(q)>0$, by Theorem 6.2. Theorem 2.2 gives
+
+$$
+\mathcal R_m^{-1}\le R_j\le\mathcal R_m,\qquad |Z_j|\le\ell_m.
+$$
+
+Before exit the unsigned accumulated log score lies strictly between $-\log b$ and $\log b$; at exit its last increment has magnitude at most $\ell_m$. Consequently, for every finite $N$,
+
+$$
+\left|\sum_{j=1}^{J\wedge N}Z_j\right|\le\log b+\ell_m.
+$$
+
+Since $\{J\ge j\}\in\mathcal F_{j-1}$ and the next block is independent of that sigma-field, finite summation gives
+
+$$
+\mathbb E_{i,q}\sum_{j=1}^{J\wedge N}Z_j
+=\overline D_{i,m}(q)\sum_{j=1}^N\mathsf P_{i,q}(J\ge j)
+=\overline D_{i,m}(q)\mathbb E_{i,q}(J\wedge N)
+\le\log b+\ell_m.
+$$
+
+Monotone convergence proves the claimed bound on $\mathbb EJ$; it also proves $J<\infty$ almost surely. Every gap and the initial wait are finite almost surely, so the same holds for the actual stopping read.
+
+Set $B_j=T_j+m$. The pathwise read identity counts the initial tick once, every initial zero, and all $m$ closing ticks per block. Predictable inclusion, now with nonnegative durations, and Tonelli yield
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}\sum_{j=1}^{J}B_j
+&=\sum_{j\ge1}\mathbb E_{i,q}[\mathbf1_{\{J\ge j\}}B_j]\\
+&=\sum_{j\ge1}\mathsf P_{i,q}(J\ge j)\,m\mu_i(q)
+=m\mu_i(q)\mathbb E_{i,q}J.
+\end{aligned}
+$$
+
+This argument does not require a block's duration to be independent of that same block's score or decision. Adding $1+\mathbb E\tau$ proves the mean identity. At fixed $m\ge2$, the coefficient in Theorem 6.2 is positive, so $\overline D_{i,m}(e^{-s})$ is bounded below by a positive constant times $s^2$ for small $s$. Proposition 1.3 bounds $\mu_i$ and $\beta_i$ by constants times $s^{-1}$. The bound on $\mathbb EJ$ and the exact identity then give the stated $O(s^{-3})$ paid-read order. $\square$
+
+The proof reuses the completed-pair martingale and predictable-cost mechanism of the supplier's Theorem 22.3, with $m$ gaps per block. It proves the needed block constants explicitly: $\mathcal R_m=(1+\delta)^m$ and $\ell_m=m\log(1+\delta)$ are finite for fixed $m$. The pair-specific inequality $(1+\delta)^2<2$ is not an arbitrary-$m$ inequality. In particular no pair-specific logarithm-approximation or workspace bound is transferred through it. Nor is $M_j$ the full likelihood ratio of the visible history for any fixed pair of opposing nuisance parameters. Holding it constant through a partially read block is not asserted to give a martingale in the finer bit filtration. Its decisions nevertheless are lawful bit-history stopping decisions because each is taken at an observed closing tick.
+

@@ -1,0 +1,38 @@
+**Definition 6.1 (coefficient maps and the retained optimization).** In
+unnormalized output-input vectorization put
+$\mathcal V=(|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle)$.
+Its columns are independent and orthogonal, but not normalized. For a
+Hermitian coefficient matrix $Z$ define
+
+$$
+\Lambda_Z(A)=\sum_{i,j}Z_{ij}K_iAK_j^\dagger,\qquad
+\Theta(Z)=\sum_{i,j}Z_{ij}K_j^\dagger K_i,\qquad (K_D,K_T,K_S)=(D,T,S).
+\tag{CA.26}
+$$
+
+Then $J_{\Lambda_Z}=\mathcal VZ\mathcal V^\dagger$ and the actual input
+effect is $\Theta(Z)$; $\operatorname{Tr}_{\rm out}J_{\Lambda_Z}=
+\Theta(Z)^T$. In particular $\Theta(I)=I-M$, and $\Theta$ preserves
+positive order. Let $\mathcal K_s$ consist of
+
+$$
+\begin{gathered}
+H_+,H_-\succeq0,\qquad L_+,L_-\in\mathcal C_2,\qquad
+H_++H_-+L_++L_-=I_3,\\
+0\preceq N:=\frac{I_3+s\kappa X_{01}}2-\Theta(H_++L_+)\preceq M.
+\end{gathered}
+\tag{CA.27}
+$$
+
+The original resource quantity remains
+
+$$
+\mathsf E_s(\rho)=\min_{\mathcal K_s}
+ \operatorname{tr}(\Theta(H_++H_-)\rho),\qquad \rho\succeq0.
+\tag{CA.28}
+$$
+
+This is IR's retained exact finite problem, distinct from the error
+$\mathcal E_*$. In (CA.27) each low membership can now be expressed by
+Theorem 4.3. The plane slack is still a variable.
+

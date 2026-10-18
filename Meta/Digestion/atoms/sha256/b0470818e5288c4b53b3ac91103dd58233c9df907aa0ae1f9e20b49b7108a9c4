@@ -1,0 +1,19 @@
+**Lemma 4.2 (a concrete local complement and its decoder).** Define
+
+$$
+b(\alpha)=\alpha,\qquad b(\beta)=\beta,\qquad
+b(\langle u,v\rangle)=v\quad(u,v\in\{\alpha,\beta\}).
+\tag{CCF.13}
+$$
+
+Given $b(x_a)$, one actual Read at $RaL$ recovers $x_a$ completely.
+Without this bit, two actual Reads suffice.
+
+Proof. If the first reply at $RaL$ is absent, $x_a$ is a leaf and
+equals the supplied $b(x_a)$. Otherwise the reply is its left leaf
+$u$, and $x_a=\langle u,b(x_a)\rangle$. When no bit is retained,
+first Read $RaL$. On absent, Read $Ra$ to get the leaf label;
+on a nonabsent reply, Read $RaR$ to get the right leaf. Each branch
+uses exactly two calls and determines $x_a$. Presence of $Ra$ follows
+from $e$, so an absent parent cannot occur. $\square$
+

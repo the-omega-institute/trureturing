@@ -1,0 +1,15 @@
+**Proposition 5.3 (acquired information and retained distinctions).**
+If the complete initial shape of $v$ is public, independent of its
+unknown leaf labels, a constant retained code suffices: query the
+known blocking leaf of the declared target, or its known branch
+endpoint, and use (LTR.3). The full-family lower therefore uses
+unknown shapes together with labels; it is not a count of leaf labels.
+
+Proof. The public shape supplies the first leaf position on every
+target path, or certifies that its endpoint is a branch. One native
+Read of that leaf supplies its label; a branch target may use zero
+Reads. All-count decoding is Convention 2.1. In the full-family
+preparation of Theorem 3.4, many labels are actually acquired and
+then isolated. Its small retained alphabet does not make those
+earlier observations uncharged. $\square$
+

@@ -1,0 +1,41 @@
+## 6. Arbitrary finite observers, countable priors and original histories
+
+**Proof of Theorem 1.1.** Reuse the common paid-history extraction [MIXSEP, Lemma 2.1; PAID, Lemma 14.1], retaining both configuration-risk bounds. It gives one held-record fibre, the observer's original B,A and copied complete laws, and rows $\pi B=\tau,\tau A=\pi$, with simultaneous pure-target configuration losses bounded by the original phase risks for every supported depth.
+
+The source/history mechanism of this supplied extraction is explicit. Use $S=\beta\alpha\mid\beta\beta\alpha\alpha$, accepting seed 1 and writing markers 100 before the third latch. At the seed-pair boundary, finite-chain powers of the two equal-pair update matrices converge along multiples of their recurrent periods. With rejection counts approaching proportions r and 1-r for a chosen supported r, the acquired row tends to the same row independently of r. Competing-depth likelihood ratios are $\exp[-2n\operatorname{KL}(\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_i))+O(1)]$. The rounding error and fixed-suffix likelihood ratio are uniformly bounded on $[1/3,2/5]$. The distinct Fibonacci parameters and summable prior give dominated convergence of the entire other-depth posterior mass, including countable priors. Appending each fixed finite return preserves it. A Cesaro limit of the returned rows is stationary and retains all supported loss bounds on that same row. Positive stationary coordinates occur after finite positive original histories. These are analysis limits, not installed posterior registers or new source runs.
+
+The same finite-row limits also retain any bounded linear statistic. Apply this observation to
+
+$$
+f_B(x)=\sum_yB_{xy}\sum_zA_{yz}(v_y-u_z)_+.
+$$
+
+At each positive actual p history on the fibre, its positive suspended successor has row $\rho_hB$. Hence $\rho_hf_B=\mathcal D_{h\beta}(M)\le\mathcal D(M)$. This bound survives each finite-row limit, Cesaro average and its limit, giving $J_+^0=\pi f_B\le\mathcal D(M)$. Both flows and the statistic use actual unweighted letters, including original kernels with zero synthetic probabilities.
+
+Delete zero-row labels; nonnegative flow identities forbid transitions into them from positive labels. Clip both emission vectors to $[1/3,2/5]$ and regenerate their own complete laws, retaining the two kernels and rows. The supplied risk-controlled clipping [CLIP, Theorem 3.1] gives
+
+$$
+\widehat\varepsilon_p\le(41\varepsilon_p+20\varepsilon_\beta)/11,
+\qquad
+\widehat\varepsilon_\beta\le(12\varepsilon_p+41\varepsilon_\beta)/11.
+\tag{6.1}
+$$
+
+Its full-law coupling includes original positive noncompletion mass and zero or unit emissions; no original regularity is assumed. The common interval projection is monotone and 1-Lipschitz, so pointwise
+
+$$
+([v]_{[1/3,2/5]}-[u]_{[1/3,2/5]})_+\le(v-u)_+.
+$$
+
+Thus $\widehat J_+\le J_+^0\le\mathcal D(M)$. Install the resulting finite stationary comparison by the original product realization. Countable target convexity supplies its all-history risk bounds. No hard defect or resource budget is preserved.
+
+Proposition 5.1 applied to this one table yields $\widehat G_+>\kappa$. With $e=\max(\varepsilon_p,\varepsilon_\beta)$,
+
+$$
+\widehat G_+\le
+\left(\frac{61}{11d_p}+\frac{53}{11d_\beta}\right)e+K\mathcal D(M)
+\le240e+30\mathcal D(M).
+$$
+
+The displayed coefficient of e is $33253004250/266850431<240$. This proves (1.3). The endpoint lower bounds give nonnegative excesses. Exact and liminf consequences follow, including when finite shapes or installed priors vary while retaining the hypotheses. ∎
+

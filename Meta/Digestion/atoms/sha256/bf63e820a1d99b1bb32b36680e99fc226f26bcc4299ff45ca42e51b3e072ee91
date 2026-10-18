@@ -1,0 +1,40 @@
+**定义 41.1（实际仿射来源与运输正规量）。** 保持定义 37.1、40.1 的
+$W=E\oplus F$、$C=P_E$、$d=e_4$ 与原菜单 $\Gamma_d$。把
+$F=\mathbb H$ 写成实部与虚部的正交和，给定单位四元数
+
+$$
+n=r+v,\qquad r\in\mathbb R,\quad v\in\operatorname{Im}\mathbb H,
+\quad r^2+|v|^2=1,
+$$
+
+以及任意 $\rho\in\mathbb R$，声明实际来源为
+
+$$
+\mathcal D_{n,\rho}
+ =\{(a,b)\in E\oplus\mathbb H:\ \langle b,n\rangle=\rho\}.
+\tag{41.1}
+$$
+
+这里 $a$ 与满足该仿射方程的 $b$ 独立，后者没有有界性或额外方向限制；
+$\rho n$ 给出该来源的一个点。若首次 $A_d$ 前执行非零内部控制
+$c_1,\ldots,c_k\in E$，令 $p=c_1\cdots c_k$，并把
+$\widehat p=p/|p|$（$p\ne0$）。记
+
+$$
+ n_p=n\widehat p=\alpha_p+\beta_p,
+ \qquad \alpha_p=\operatorname{Re}(n\widehat p),
+ \quad \beta_p=\operatorname{Im}(n\widehat p).
+\tag{41.2}
+$$
+
+首次锚读出的隐藏部分是 $w=\operatorname{Im}(b\widehat p)$（实际读数为
+$|p|w$）。右乘 $\widehat p$ 保持内积，故若 $b\widehat p=s+w$，则
+
+$$
+\alpha_p s+\langle w,\beta_p\rangle=\rho.
+\tag{41.3}
+$$
+
+这把 $\alpha_p$ 称为该历史的**法向增益**；$p=0$ 时规定增益为零。它是
+来源准备与原菜单的联合量，不是原生 FIB 的内禀量。
+

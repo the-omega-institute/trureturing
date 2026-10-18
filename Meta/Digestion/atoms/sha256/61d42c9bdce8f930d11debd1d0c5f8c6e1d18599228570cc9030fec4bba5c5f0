@@ -1,0 +1,61 @@
+### 8.6. The recorded menu supplies the five-mode history readout
+
+**Mathematical application 8.8 (A readout correspondence for phase histories).**
+Use the five-mode source $(0,1,2,3,13)$, the fixed
+positive base law and common initial phases of
+[Probability, Phase Transport and Holonomy][PTH8],
+Theorem 3.12. Its ideal coherence menu consists of
+the five legal edges
+$0\!-\!1,0\!-\!2,0\!-\!3,1\!-\!13,3\!-\!13$.
+These are exactly the legal-toggle edges of $B_3$.
+With any regular reference calibration and positive
+coverage in both families of Definition 8.1, the
+recorded probability-law menu realizes the same
+endpoint-history equivalence relation as that ideal
+menu. The compact holonomy summary supplied there
+is therefore also the exact summary for these
+recorded probabilities.
+
+Indeed the endpoint occupation law is the same
+fixed law for every history. For an oriented edge,
+divide by its known setting probability and use
+(8.6). The two ideal Hermitian expectations in
+that source are recovered as
+
+$$
+\begin{aligned}
+\langle A_{st}\rangle
+&=2\operatorname{Re}\rho_{st}
+=\frac{q_{R,+}-q_{R,-}-(c^2-d^2)(p_s-p_t)}{2cd},\\
+\langle B_{st}\rangle
+&=-2\operatorname{Im}\rho_{st}=q_{Y,+}-q_{Y,-}.
+\end{aligned}
+\tag{8.19}
+$$
+
+Conversely, the fixed diagonals and these ideal
+expectations determine both pair probabilities
+by their sums $p_s+p_t$ and differences (8.6).
+Every blocked probability is already fixed.
+Thus equality of the recorded laws is equivalent
+in both directions to equality of the ideal menu.
+The source's Theorem 3.12 then supplies equality
+of the realized compact residual class. Its
+continuous controls, reachability and symmetry
+regimes remain premises of that application.
+
+This uses Theorem 8.2's measurement correspondence
+and the existing history quotient; it is not an
+additional phase-propagation or controllability
+theorem. Recovering that endpoint class does not
+recover the path, and equality of exact laws does
+not imply perfect discrimination from finitely
+many preparations. The extra real-axis control
+remains a supplied resource. The mode occupation
+$p_{13}=\kappa$ is a diagonal probability, while
+the history information used here is in complex
+edge coherences; these are different entries of
+the same state, with different readout roles.
+
+[PTH8]: https://github.com/the-omega-institute/trureturing/blob/9fb5243e1b84656137d2604a8db80f06c0ae8d59/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+

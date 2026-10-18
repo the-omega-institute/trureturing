@@ -1,0 +1,44 @@
+## 126. Operation-control supplier and its exactness boundary
+
+**Correspondence C-125.3 (Independent controls are an added service).**
+The operation-control result in `AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md`,
+§§19 and 21–22 of pinned source snapshot `2c22f027c10d658fbf32942a70f717537c61b2d0`,
+uses the single five-dimensional carrier $\mathcal H_F$ of Definition 43.1.
+Assumption 45.1 supplies three independently adjustable gates on that carrier
+in addition to the passive coordinate matrix $D$; the second contract also
+supplies an independently adjustable $e^{i\phi E_{00}}$. After restriction to
+that five-dimensional space, Proposition 45 gives
+
+$$
+\operatorname{Lie}_{\mathbb R}(A_1,A_2,A_3)=\mathfrak{so}(5),\qquad
+\operatorname{Lie}_{\mathbb R}(A_1,A_2,A_3,iE_{00})=\mathfrak u(5).
+$$
+
+In the original coordinates the closures are $D\,SO(5)\,D^\dagger$ and $U(5)$,
+respectively, on that single carrier. They do not supply control on
+$\mathbb C^5\otimes\mathbb C^5$. The six-outcome PVM in (C121.4) acts on this
+$25$-dimensional carrier, with projections onto the five matching vectors in
+(C121.4), including the entangled pairs, and the rank-$20$ complementary
+projection $Q$. The mathematical isometry $J$ supplies neither
+encoded joint operations nor a readout separating $JJ^\dagger$ from $Q$.
+For $\eta>0$, that complement has probability $20\eta/25$ and cannot be discarded.
+No approximation to this joint PVM is supplied by Proposition 45.
+
+This is a control correspondence, not a source correspondence: $D$ remains
+passive, and the independent gates are new permissions. The source result also
+records that nonnegative parameters can realize each individual inverse because
+the displayed generators have periodic spectra; this does not make a fixed-sum
+control parameter invertible.
+
+Within its single-carrier contract, the proposition proves approximation:
+every target and every positive tolerance has a finite product. It does not
+provide an exact finite pulse sequence for an arbitrary target, a uniform pulse
+count, total time or energy, or an exact calibrated amplitude. Any use as an
+approximate control supplier requires its tolerance to be included in the
+relevant diamond-error budget; no joint-PVM approximation or corresponding error
+bound is supplied by this result. It does not by itself supply the states $\rho_{t,\eta}(X)$,
+the exact phase reference, the exact response maps in (C121.10), or the finite
+physical resource bundle in (C124.4). The exact controls and joint measurement
+in C-121–C-124 therefore remain explicit services unless stronger contracts
+separately supply those operations, readout and exact calibration.
+

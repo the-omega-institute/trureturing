@@ -1,0 +1,53 @@
+**Theorem 8.3 (exact binomial Bayes risk and likelihood decision).** If
+$t\le1$, the optimal error is $1/2$ for every $n$. If $t\ge2$,
+put
+
+$$
+c=2^{1-t},\qquad b=1-\epsilon+\epsilon c,\qquad
+ a=\frac bc=\epsilon+(1-\epsilon)2^{t-1}.
+$$
+
+Then the exact equal-prior error under per-source budget $k$ is
+
+$$
+R_{n,k}=\frac12\sum_{s=0}^n\binom ns
+ \min\bigl\{c^s(1-c)^{n-s},\ b^s(1-b)^{n-s}\bigr\}.
+$$
+
+Acquire the phases, let $C_i$ indicate that source $i$'s $t$
+phases are all equal, and set $S=\sum_i C_i$. An optimal rule
+accepts $Q$ when $a^S\epsilon^{n-S}\ge1$, with arbitrary
+choice on a tie, and accepts $P$ otherwise.
+
+Proof. For $t\le1$ the two one-source phase laws are identical,
+so their conditional products are identical. Theorem 8.2 transfers
+this to every allowed global transcript, giving no information and
+risk $1/2$.
+
+For $t\ge2$, Proposition 6.2 makes each $C_i$ Bernoulli$(c)$
+under $P$ and Bernoulli$(b)$ under $Q$. They are independent
+conditional on the common hypothesis. Taking the product of its
+one-source reverse kernels reconstructs all phase vectors from the
+indicator vector using the same kernel under both hypotheses. Thus
+that indicator vector is sufficient for the product experiment.
+An indicator vector with $s$ ones has respective probabilities
+$c^s(1-c)^{n-s}$ and $b^s(1-b)^{n-s}$. Both are positive,
+since $0<c<b<1$. Its likelihood ratio is
+
+$$
+\left(\frac bc\right)^s
+\left(\frac{1-b}{1-c}\right)^{n-s}
+     =a^s\epsilon^{n-s},
+$$
+
+because $1-b=\epsilon(1-c)$. Lemma 6.1 proves the stated decision.
+For a fixed count $s$ every indicator vector has the same probability
+under either law. Conditional on the count it is therefore uniform
+under both, giving a common reverse kernel from $S$. Hence the
+count itself is sufficient. There are $\binom ns$ vectors with
+that count; grouping their pointwise minimum-error contributions from
+Lemma 6.1 gives exactly the displayed sum. Theorem 8.2 supplies the
+full adaptive converse and actual attainment. The sum is a symbolic
+finite Bayes identity. If $n=0$ is admitted,
+there is no data and the risk is $1/2$. $\square$
+

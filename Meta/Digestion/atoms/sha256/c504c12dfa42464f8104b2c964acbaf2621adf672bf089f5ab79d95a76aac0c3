@@ -1,0 +1,20 @@
+**Theorem 4.2 (equivalence at the joint endpoint and at zero excess).** For each allowed finite or countable prior:
+
+1. A common conf/conf endpoint model exists in $\mathfrak M_\mu$ if and only if one exists in $\mathfrak E_\mu$. This equivalence also preserves a specified defect bound $\Delta_4\le D$ at exact attainment.
+2. The two joint infima satisfy
+
+$$
+J(\mathfrak M_\mu)\le J(\mathfrak E_\mu)
+\le\frac{61}{11}J(\mathfrak M_\mu).
+\tag{4.2}
+$$
+
+Thus zero excess infimum and strictly positive joint gap are each equivalent between these two classes.
+3. If a full-class sequence has both excesses tending to zero and $\limsup\Delta_4\le D$, a regular periodic sequence has the same properties. A hard per-model bound $\Delta_4\le D$ along the approximating sequence is not asserted.
+
+**Proof.** At exact attainment, (3.7) vanishes. Clipping changes no positive-row emission, hence no positive-row complete law or defect. The supplied comparison and (3.5) prove the forward part of assertion 1; the reverse part is class inclusion. Zero-row labels can be deleted because (2.1) prevents positive actual flow into them.
+
+For assertion 2, class inclusion gives the first inequality. Given any full-class model with maximal excess $e$, Theorem 3.1 gives a regular periodic model with maximal excess at most $61e/11$. Take the infimum; no optimizer is presumed. For assertion 3 eventually $e<1/6$, and (3.5) adds a quantity tending to zero. ∎
+
+The theorem distinguishes exact attainment from an unattained zero infimum. It gives no value for either infimum. The rational five-coordinate closure of [FLOW, Theorem 6.1] can be composed with rational clipping to approach the same zero-excess regime using paid rational tables, with vanishing additional defect. It does not give a rational exact endpoint model or preservation of a closed defect boundary at every approximation.
+

@@ -1,0 +1,17 @@
+## 5. The exact six-word cofactor direction
+
+Write $u=\operatorname{tr}B$, $d=\det B$, $r=\operatorname{tr}R$, $e=\det R$, $h=\operatorname{tr}(BR)$. Define three-component columns and alternating coefficients by
+
+$$
+\begin{aligned}
+v_0&=(u^4-3u^2d+d^2,\ 0,\ -ud(u^2-2d))^{\mathsf T},\\
+v_2&=(2uh-dr,\ ud,\ -d(ur+h))^{\mathsf T},\\
+v_3&=(r^2-2e,\ ur,\ r(h-ur))^{\mathsf T},\qquad v_4=(e,h,-ue)^{\mathsf T},\\
+k_0&=-450\det(v_2,v_3,v_4),\quad k_2=450\det(v_0,v_3,v_4),\\
+k_3&=-450\det(v_0,v_2,v_4),\quad k_4=450\det(v_0,v_2,v_3).
+\end{aligned}
+\tag{5.1}
+$$
+
+On the entire $B_6$, put $f_s(000000)=k_0$, $f_s(000100)=f_s(001000)=k_2$, $f_s(001010)=f_s(010100)=k_3$, $f_s(010010)=k_4$, and zero on every other legal six-word. Coefficients zero do not remove words or edges.
+

@@ -1,0 +1,28 @@
+### 86.1. Statement and conventions
+
+Let (A_0,B_0) be any original quarter-error pair with B_0 of Kraus rank two. Write J_B for the unnormalized Choi matrix of B, so J_B is positive semidefinite and Tr J_B=8. List its eigenvalues in nonincreasing order and define
+
+    epsilon_2(B)=sum_(j=3)^32 lambda_j(J_B).                 (1)
+
+There exist a neighborhood U of (A_0,B_0) in the finite-dimensional space of original channels and a finite constant C such that
+
+    delta(A,B) >= 1/4-C epsilon_2(B)^2
+    for every (A,B) in U.                                  (2)
+
+Here delta is the unhalved arbitrary-reference diamond error of the original product from the fixed RT target. The roles of the parties can be exchanged. Since delta is nonnegative, the right side may also be replaced by its maximum with zero.
+
+A Stinespring version is useful. Fix any finite environment dimension d>=4 for A and an old environment of dimension two for B. Embed the equality isometries in these environments. For any nearby isometries V_A and
+
+    V_B=W direct-sum R,
+    W:C^8 -> C^4 tensor C^2,
+
+there is a local constant C_d such that
+
+    delta(A,B) >= 1/4-C_d ||R||_F^4.                        (3)
+
+The constant can be chosen independently of the finite dimension of the new environment containing R. Equation (2) follows by taking d=32 and making a canonical Choi spectral split.
+
+Consequently, along any path converging to the equality pair and possessing a Stinespring split with ||R(t)||_F=O(t), one has delta(t)>=1/4-O(t^4). The other party need only converge to A_0. In particular the O(t^3) possible improvement left by section 85 is excluded, including its flat-curvature directions. If new Kraus probability rather than amplitude is the parameter, (2) instead gives a quadratic bound in that tail probability.
+
+All inner products below are conjugate-linear in the first argument. Gram matrices are forward Grams. Correct-output blocks are denoted A_f and B_f, with two columns indexed by the fixed input bit. The only bit changes used at the base are the simultaneous fibrewise swaps allowed in section 82.
+

@@ -1,0 +1,33 @@
+**Theorem 3.4 (T3: equal infima and the exact guarded endpoint criterion).**
+For every fixed preparation and $0<Z<1$,
+
+$$
+e_{4,\mathsf L}^{\rm aff}
+=e_{4,\mathsf G}^{\rm aff}
+=e_{4,\mathsf P}^{\rm aff}
+=e_{4,\mathsf{GP}}^{\rm aff}
+=4H\sqrt{T_4(\tau)}.
+$$
+
+When $0<Z<2/3$, attainment in $\mathsf G$ is equivalent to attainment
+in $\mathsf{GP}$, and occurs if and only if at least one global
+minimizer in $\mathcal E_2$ has one of these minimal order-two forms:
+
+1. A confluent profile $(c_0+c_1x)e^{\lambda x}$ with $c_1\ne0$.
+2. A distinct pair with at least one $\operatorname{Re}\lambda_j\ne0$.
+3. A purely imaginary distinct pair $\lambda_j=i\omega_j$ with
+   $|\omega_1-\omega_2|\le2\pi$.
+
+The excluded spectrum for an individual minimal realization is a
+purely imaginary distinct pair of separation greater than $2\pi$.
+Finding one excluded global minimizer does not exclude another global
+minimizer satisfying the criterion.
+
+For $2/3\le Z<1$, all four infima equal $\sqrt{2Z(1-Z)}$ and are
+attained by the height/zero-decoder model. Below the transition the
+literal and prescribed-path tolerance sets are
+$[4H\sqrt{T_4(\tau)},\infty)$. Both guarded tolerance sets contain
+every strictly larger tolerance and include the endpoint exactly under
+the existential criterion above. The criterion itself does not decide
+guarded attainment at any unspecified subtransition parameter.
+

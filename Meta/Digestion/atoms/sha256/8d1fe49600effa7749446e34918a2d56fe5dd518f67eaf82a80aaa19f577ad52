@@ -1,0 +1,36 @@
+**Theorem 5.1 (the full-family interval and its precise scale).** For
+every $D\ge2$, with $N=2^{D-2}$,
+
+$$
+\boxed{\ \left\lceil(7/5)^N\right\rceil
+          \le M_1(D)\le2^N\ },\qquad
+\left\lceil N\log_2(7/5)\right\rceil\le B_1(D)\le N.
+\tag{LTR.16}
+$$
+
+In particular
+
+$$
+\frac{\log_2(7/5)}4\,2^D\le\log_2 M_1(D)\le\frac14\,2^D,
+\qquad B_1(D)=\Theta(2^D).
+\tag{LTR.17}
+$$
+
+The lower coefficient in (LTR.17) is approximately $0.1213567068$.
+Also $M_1(1)=1$ and $M_1(2)=2$.
+
+Proof. Theorems 3.4 and 4.4 give the alphabet interval. Taking
+logarithms and rounding gives the bit bounds. For $D=1$, the only
+late target is $R$. Export one constant code with zero preparation
+Reads, zero submitted letters and zero maximum preparation length.
+One later Read at $R$ returns alpha, beta or branch and determines
+its entire trajectory by (LTR.4). A nonempty family needs at least
+one attained code, so $M_1(1)=1$. At $D=2$ (LTR.16) gives both
+$\lceil7/5\rceil=2$ and the upper value $2$. $\square$
+
+The logarithmic estimates match the order of retained bits. They do
+not give multiplicatively matching alphabet asymptotics: the two
+unrounded displayed alphabet endpoints have ratio $(10/7)^N$.
+The notation $M_1(D)=2^{\Theta(2^D)}$ expresses exponential order
+only, not an exact alphabet rate or an optimum recursion.
+

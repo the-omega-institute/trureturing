@@ -1,0 +1,34 @@
+**Definition 35.1 (The shared-root occupancy algebra).**
+Fix integers $k\ge2$ and $b\ge1$. Let $G_{k,b}$ consist of $b$
+labelled copies of $C_{2k+1}$ meeting precisely at one vertex $o$.
+On cycle $a$ use positions $0,1,\ldots,2k$, with position $0=o$;
+write its other vertices as $(a,i)$, $1\le i\le2k$.
+All these nonroot vertices are distinct, and the only edges are the
+cyclic edges in these $b$ copies. Thus $|V(G_{k,b})|=2kb+1$.
+Let $\mathcal B_{k,b}$ be the independent subsets of this graph,
+including the empty subset. A common array of $m$ rows consists of
+$m$ members of $\mathcal B_{k,b}$ on a single row set $[m]$.
+Its occupancy observation is $(m,c)$, with $c_v$ the number of rows
+containing $v$ and $t=c_o$ the root occupancy.
+
+For a vector $p=(m,c)$, let $p_a=(m,c^{(a)})$ be its restriction to
+cycle $a$, retaining the root and degree. Put
+
+$$
+\begin{aligned}
+\mathcal S_{k,b}=\{(m,c)\in\mathbb Z_{\ge0}^{2kb+2}:&\quad
+ c_u+c_v\le m\text{ for every edge }\{u,v\},\\
+ &\quad t+\sum_{i=1}^{2k}c_{a,i}\le km\text{ for every }a\},\\
+\delta_a(m,c)&=km-t-\sum_{i=1}^{2k}c_{a,i},\\
+R_{k,b}&=\mathbb C[\mathcal S_{k,b}].
+\end{aligned}
+\tag{35.1}
+$$
+
+The root occurs once in each cycle inequality; it is one coordinate
+of the global vector. Write $X^p$ for a semigroup monomial and
+$X^pX^s=X^{p+s}$. The ordinary degree is $m$, and the boundary
+bigrading is $(m,t)$. The single-cycle ring $R_k$ of Definition 31.1
+is used also for $k=2$, with the same inequalities. This is an
+occupancy algebra, without a specified order of the rows.
+

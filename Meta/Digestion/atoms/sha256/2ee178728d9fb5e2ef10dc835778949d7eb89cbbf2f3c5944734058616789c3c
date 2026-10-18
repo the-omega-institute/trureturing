@@ -1,0 +1,18 @@
+**Corollary 8.2 (exact full-risk upper-minus-lower transfer).** For any original PH37 observer of feasible budget $B\ge1$ on one fixed finite or countable prior $\mu$, a certified rational $0<a_{\rm src}\le\min\{\mu(1),\mu(2)\}$, and a supplied mathematical upper promise $\Phi_\infty^{j_p,j_\beta}\le t_*+\tau$ with rational $\tau\ge0$, define $\gamma_B=2^{-2^{4B+13}}$. A total computable cap for that original full-risk gap follows from PH42/45/46 at rational precision $\epsilon>0$ whenever
+
+$$
+\epsilon>\tau-\gamma_B.
+\tag{8.1}
+$$
+
+In particular every $\epsilon\ge\tau$ is covered. Nonempty promised classes necessarily have $\tau>\gamma_B$; the exact-optimum digital promise $\tau=0$ is empty at every finite COMPLETE budget.
+
+**Proof.** PH42.1 supplies $\Psi^{\rm end}>t_*+\gamma_B$ and $\Phi_\infty\ge\Psi^{\rm end}$. Choose a rational $\delta$ strictly between $\max\{0,\tau-\epsilon\}$ and $\gamma_B$, possible exactly under (8.1), and set $\xi=(\gamma_B-\delta)/2$. PH46.2 with PH45.2's explicit integer cap $H(B,a_{\rm src},\xi)$ gives $\Phi_H>t_*+\delta$ for each original order choice. Therefore the exact original numerical gap satisfies
+
+$$
+0\le\Phi_\infty-\Phi_H<\tau-\delta<\epsilon.
+\tag{8.2}
+$$
+
+This is a full-history/full-future result: the independent upper promise closes the gap from the acquired endpoint lower witness. It does not reverse $\Psi^{\rm end}\le\Phi_\infty$. Nonemptiness follows from $t_*+\gamma_B<\Phi_\infty\le t_*+\tau$; PH42 also excludes exact optimum. The displayed $(\gamma_B,\xi,H)$ are mathematical certificate objects, whose computation and storage have external costs and are not acquired runtime registers. For the family of Theorem 7.3, Proposition 9.1 gives $\Psi^{\rm end}=e$, so PH42 gives $\gamma_B<e-t_*<\zeta/4$. Hence $\tau-\gamma_B>3\tau/4$, whereas $\epsilon_0=\Delta/8\le\zeta/64\le\tau/64$. Its fixed fine accuracy lies strictly outside this coarse window. No contradiction exists between (8.2) and the obstruction. $\square$
+

@@ -1,0 +1,65 @@
+### 23.2 复四角缺陷、熵补全与零能条件
+
+另供归一化复振幅及其射线
+
+$$
+\psi_s=\sqrt{p_s}\,e^{-i\theta_s},\qquad
+\sum_s p_s=1,\qquad [\psi]\in\mathbb{CP}^4,
+$$
+
+定义
+
+$$
+\mathfrak d(\psi)=\psi_1\psi_3-\psi_0\psi_{13},\qquad
+h([\psi])=|\mathfrak d(\psi)|^2.
+$$
+
+对任意非零齐次代表 $z$，同一函数应写成
+
+$$
+h([z])=\frac{|z_1z_3-z_0z_{13}|^2}{(\sum_s|z_s|^2)^2}.
+$$
+
+因此不依赖代表的模长及整体相位。固定占位均值 $(X,Y,Z)$，设 $r=1-Z$，概率纤维仍由原有仿射反演给出
+
+$$
+p=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\quad \kappa_- =\max(0,X+Y-r),\quad
+\kappa_+=\min(X,Y).
+$$
+
+在四底角正时置
+
+$$
+b(\kappa)=(X-\kappa)(Y-\kappa),\qquad
+\delta_c(\kappa)=\kappa(r-X-Y+\kappa),
+\qquad \chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi}.
+$$
+
+[《隐藏关系》](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) C-12.2 的振幅按 $c_s^{\rm old}=\psi_s$ 逐项相同，其相位记号满足 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$；条件底面矩阵中的因子 $1/\sqrt r$ 使 $h=r^2|\det\mathcal A|^2$。直接消费该四角展开，得到
+
+$$
+\begin{aligned}
+h&=b+\delta_c-2\sqrt{b\delta_c}\cos\chi\\
+&=(\sqrt b-\sqrt{\delta_c})^2
++2\sqrt{b\delta_c}(1-\cos\chi),\\
+b-\delta_c&=XY-r\kappa.
+\end{aligned}
+$$
+
+故在 $r>0$ 且四底角正的域内，$h=0$ 恰为
+
+$$
+\kappa=\kappa_*:=\frac{XY}{r},\qquad \chi=0\pmod{2\pi}.
+$$
+
+概率部分的最大熵结论已有《隐藏关系》C-4.6：以自然对数写 $\mathcal S=-\sum_s p_s\log p_s$，固定均值纤维上的
+
+$$
+\mathcal S'=-\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\mathcal S''=-I(\kappa),\qquad
+I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}>0
+$$
+
+给唯一内部熵极大点 $\kappa_*$。本章仅将这一点用于复缺陷的概率平衡；熵没有相位参数，所以不决定 $\chi$。有零振幅时用齐次多项式 $\mathfrak d=0$ 判定，不定义 $\arg0$ 或把内部相位坐标延伸成边界坐标。
+

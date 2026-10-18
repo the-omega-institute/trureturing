@@ -1,0 +1,42 @@
+**Lemma 2.1 (distinct live successors).** For every
+$P\in\mathcal T_{n,k}$, a state reached by an actual live history
+has two different successors. Weighted feasibility is not needed for
+this lemma.
+
+Proof. First consider any finite deterministic computation, with some
+coordinates fixed externally, that computes threshold $a$ on $N$
+free Boolean coordinates, where $1\le a\le N$, and terminates
+correctly on every free assignment. It has an actual input requiring
+at least $N$ free-coordinate queries. To prove this, answer successive
+first exposures of free coordinates by one until $a-1$ ones have
+been given, and by zero thereafter. Keep repeat answers consistent
+and answer fixed coordinates by their fixed values. Before the $N$th
+distinct free exposure, at most $a-1$ free ones and at most $N-a$
+free zeros have been exposed. Both outputs still have completions.
+Thus the computation cannot terminate correctly. It cannot revisit
+a running state either: the replies on that repeated segment are fixed,
+so every consistent completion would loop. Finitely many states and
+total termination therefore force the $N$th distinct free exposure.
+Completing the resulting partial assignment gives the required actual
+input. Queries to fixed coordinates or repeats only add to its count.
+
+Now take the stipulated live history of $P$. Let its exposed support
+be $S$, let $d=|S|$, let $\ell$ be its number of queries, and let
+$h$ be its ones. Put $R=[n]\setminus S$, $N=|R|$ and $a=k-h$.
+Liveness gives $1\le a\le N$, and $\ell\ge d$.
+Suppose its current state $q$ has
+$\delta(q,0)=\delta(q,1)=r$. Freeze the assignment on $S$ in the
+proof. Every assignment on $R$ follows the fixed old history and,
+after the query at $q$, reaches $r$, independently of that query's
+reply. Starting at $r$ therefore computes threshold $a$ on all $N$
+free coordinates, using at most
+
+$$
+n-\ell-1\le n-d-1=N-1
+$$
+
+further queries on every assignment. This contradicts the preceding
+query lower bound. The proof restriction supplies no running operation,
+free bypass, external memory or new entry to the original table.
+$\square$
+

@@ -1,0 +1,50 @@
+### 91.1. The original table and the owned scalar
+
+For a nonempty finite ordered native tree $t$, retain every actual occurrence, its
+left/right address and its $\alpha/\beta$ leaf label. For $h\geq0$, define the
+inclusive four-reply table
+
+$$
+p_h(t)(a)=
+\begin{cases}
+\alpha,\ \beta,&a\text{ is an actual leaf occurrence},\\
+\mathsf{branch},&a\text{ is an actual pair occurrence},\\
+\mathsf{absent},&a\text{ is not an occurrence},
+\end{cases}
+\qquad |a|\leq h .
+\tag{91.1}
+$$
+
+The root, early terminals and all absent strict extensions are part of this table. Let
+$L_t$ be the closed finite $N$ combinatorial Laplacian of §52.1–§52.7: every
+parent–child seam has unit conductance, counting measure is used, and the root has no
+outgoing killing seam. Put
+
+$$
+P_t=I-L_t/3,\qquad
+G_\lambda(t)=\langle\delta_r,(L_t+\lambda I)^{-1}\delta_r\rangle,\qquad
+q_\lambda=\frac3{3+\lambda}\quad(\lambda>0).
+\tag{91.2}
+$$
+
+The native source and the immutable $\mathrm{INITIAL}$ are the same object in
+$p_h(t)$ and $G_\lambda(t)$; a later current register is not substituted for either.
+The native substitution $\rho$ is unchanged; $P_t$ is only the declared comparison
+law on the retained actual occurrences.
+Because $L_t=3(I-P_t)$,
+
+$$
+G_\lambda(t)=\frac1{3+\lambda}
+ \sum_{n\geq0}q_\lambda^n\mu_n(t),\qquad
+\mu_n(t):=\langle\delta_r,P_t^n\delta_r\rangle .
+\tag{91.3}
+$$
+
+For $n\leq2h+2$, define $\mu_n(p)$ to be $\mu_n(t)$ for any finite native
+tree with $p_h(t)=p$, and set
+
+$$
+S_h(p)=\frac1{3+\lambda}\sum_{n=0}^{2h+2}q_\lambda^n\mu_n(p).
+\tag{91.4}
+$$
+

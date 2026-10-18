@@ -1,0 +1,44 @@
+### 3.6 既有 Bayes 夹逼的统一推论与零端点
+
+[Recovery][Recovery] §§3.2–3.3 的纯化与正交结果迹估计给出 $2e_nx\le2\sqrt{2e_nE_0}+nE_0$，其中 $E_0=\sum_b\eta_b$。其结果即式（1.3）的 $\ell_n$；对每个源无关种子该下界相同，平均后仍成立。故它优化的是整个原协议类。
+
+对 $y=nx\ge0$，$\sqrt{1+y}\le1+y/2$，故 $(1+\sqrt{1+y})^2=2+y+2\sqrt{1+y}\le4+2y$，所以
+
+$$
+\ell_n(x)\ge\frac{C_nx^2}{1+y/2}
+\ge C_nx^2\left(1-\frac y2\right)
+\ge C_nx^2-\frac18n^2x^3.
+\tag{3.14}
+$$
+
+为使用既有 SRM 上界，置 $\rho=(1+x)^n-1$、$\zeta=(1+x^2)^n-1-nx^2$。式（3.4）的计数给出
+
+$$
+0\le\rho\le\frac y{1-y}\le\frac13,
+\qquad 0\le\zeta\le n^2x^4.
+$$
+
+因而式（1.3）的适用条件成立，而且
+
+$$
+\frac4{(1+\sqrt{1-\rho})^2}
+\le\frac1{1-\rho}
+\le\frac{1-y}{1-2y}
+\le1+2y.
+$$
+
+最后一步使用 $y\le1/4$。分母 $(1+\sqrt{1-\rho})^2\ge1$，故
+
+$$
+\begin{aligned}
+u_n(x)&\le C_nx^2(1+2y)+n^2x^4\\
+&\le C_nx^2+\left(\frac12+x\right)n^2x^3
+\le C_nx^2+\frac34n^2x^3.
+\end{aligned}
+\tag{3.15}
+$$
+
+这里仅用 $C_n\le n/4$ 与 $x\le1/4$。式（3.14）–（3.15）是 [Recovery][Recovery] 定理 2.1(A),(B) 有限公式的直接推论，不依赖固定词长的高阶最优准备展开。它们证明式（2.2）；将其与式（2.1）的两侧界相减，证明式（2.3）。
+
+若 $x=0$，则 $q=L$、$G=I$、$S=Q=I$。上述两个共同接收器精确辨识全部标签，两种最优错误都为零，所有不含除以 $x$ 的界仍成立。定理 2.1 得证。
+

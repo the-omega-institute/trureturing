@@ -1,0 +1,29 @@
+**定义 2.1（递减峰高与整数尺度）。** 固定
+$0<\eta<1/2$、$b>0$、$c_0=\sqrt2-1$、$\delta=1/10$，置
+
+$$
+n_j=2^{2^j},\qquad a_j=\log n_j=2^j\log2,
+\qquad
+\chi(v)=
+\begin{cases}
+(1-v^2)^3,& |v|\le1,\\
+0,& |v|>1.
+\end{cases}
+\tag{2.1}
+$$
+
+取整数 $j_0$ 使 $(1-\delta)a_{j_0}>e$，对 $x>1$ 定义
+
+$$
+h(x)=b\sum_{j\ge j_0}a_j^{-\eta}
+\chi\!\left(\frac{x-a_j}{\delta a_j}\right),
+\qquad U(x)=\gamma+f(x)+h(x).
+\tag{2.2}
+$$
+
+这一构造复用光滑峰函数与凹函数支撑线的方法。
+[主卷 §§261–262](FIBONACCI_ATOMIC_RELATION_GENERATION.md#261-精确-fibonacci-采样的相位盲区与单调脉冲模型)
+已有人工单调源、强 PNT 相容误差与尾项失控的构造；
+这里的承重命题是整数全局自价格优化、右尾优化、删除比较、端点与正核心
+在同一个来源族上的联合实现，记为 `repo-derived`。
+

@@ -1,0 +1,53 @@
+**Theorem 65.1 (a uniform spectral region).** For every $0<\beta\leq1/2$ and $3\leq k\leq9$, the strict system (S.59) is infeasible at every ordered positive trace-one center with
+
+$$
+s\geq2t,\qquad s+t\leq\frac{49}{50}.
+\tag{S.102}
+$$
+
+Proof. Take fixed weights
+
+$$
+X=\operatorname{diag}\left(\frac65,\frac35,\ldots,\frac35\right),\qquad c=\frac53.
+\tag{S.103}
+$$
+
+In this ordering cone the five largest eigenvalues of $K_c$ are
+
+$$
+\frac{5s}{3},\quad\frac{5s}{6},\quad\frac{5s}{6},\quad
+\frac{5t}{3},\quad\frac{5t}{3},\qquad
+S_5(K_c)=\frac{10}{3}(s+t).
+\tag{S.104}
+$$
+
+Indeed the leading center coordinate contributes $5s/3$ once and $5s/6$ twice; every other coordinate contributes $5\lambda_j/3$ three times. Ordering $\lambda_j\leq t$ and $s\geq2t$ proves the list, including $s=2t$, repeated center eigenvalues and all tail ties. Therefore
+
+$$
+\begin{aligned}
+J_c(X)&=\frac{10}{3}(s+t)+\frac{12}{5}-\frac65\beta-\frac53T_a\\
+&=\frac{10}{3}(s+t)+\frac{11}{30}+\frac65u^2-\frac56u,\qquad
+u:=\sqrt{1-\beta}\in\left[\frac1{\sqrt2},1\right).
+\end{aligned}
+\tag{S.105}
+$$
+
+Both sides in $v_a\geq(7+3u)/10$ are positive, and their squared difference is
+
+$$
+\frac{1+u}{2}-\left(\frac{7+3u}{10}\right)^2
+=\frac{(1-u)(9u+1)}{100}\geq0.
+\tag{S.106}
+$$
+
+Substitution into (S.105) gives the factorized lower margin
+
+$$
+4v_a-J_c(X)\geq
+\frac{10}{3}\left(\frac{49}{50}-s-t\right)
++\frac{(1-u)(36u-25)}{30}>0.
+\tag{S.107}
+$$
+
+The first term is nonnegative by (S.102). The second is strictly positive because $u<1$ and $u\geq1/\sqrt2>25/36$; the latter positive-root comparison follows from $1/2>625/1296$. This includes $\beta=1/2$ and both spectral boundaries in (S.102). Necessity (S.91) yields the contradiction for the entire allowed beta interval. $\square$
+

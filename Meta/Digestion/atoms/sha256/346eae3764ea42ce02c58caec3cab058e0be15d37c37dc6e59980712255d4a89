@@ -1,0 +1,5 @@
+## Verification
+
+The companion verifier verify_cycle9_psl71.py is deterministic and standard-library-only. It checks all matrix identities, projective orders, exact transitivity, finite subgroup orders, and cycle structures X=4^18, Y=9^8, Z=3^24, and XY=YZ=XYZ=2^36, and every nonidentity element in each of the D8, S3, and C9 images is fixed-point-free on P1(F71). It uses no random search, floating point, or normal-quotient assumption.
+
+

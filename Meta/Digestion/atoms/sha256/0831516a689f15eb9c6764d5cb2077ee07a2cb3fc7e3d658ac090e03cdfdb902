@@ -1,0 +1,60 @@
+**Definition 1.1 (actual source, current row and complete target).** Use the
+finite nonempty ordered algebra
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+At every finite address in $\{L,R\}^*$, including the empty word, the
+actual reply is alpha, beta, branch or absent. Descent beyond a leaf is
+absent. Keep the cut $P=\{L,R\}^3$ and the complete current row $R_*$
+whose six equality classes are
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4.
+$$
+
+Every two different classes assert disequality. The domain and target are
+
+$$
+\mathcal U_*:=\{u\in\mathcal T:R_P(\rho u)=R_*\},
+\qquad F(u):=R_P(u).
+$$
+
+Here a complete row retains the ordered exterior, occurrence holes, their
+entire equality partition and every exterior strict-prefix blocking guard;
+class names are recomputed from first occurrences after restriction.
+There is no size, depth or interior-shape promise on $u$ or $\rho u$.
+
+Use [NBP, Definitions 1.1–1.2 and 9.1, Proposition 9.3][NBP] for this
+source and its five complete target rows $R_0,\ldots,R_4$. Their actual
+inverse supplier is [Transport–Memory Completion, Proposition 22.2,
+(RA.2207)][TMC]: the disjoint image cases are beta, $E$, and a pair of
+images. The inverse sends these respectively to alpha, beta and the pair
+of inverse children. The cases are disjoint because alpha is not an
+image. In particular the inverse is injective, preserving both equality
+and disequality of retained hidden values.
+
+For a filling by six pairwise different values $x_d$, the actual current
+tree has the two displayed occurrences of each repeated class. Such a
+filling is an image precisely when all six values are images, or exactly
+one $x_{b_j}$ is alpha, its repeated left partner is beta, and every other
+class value is an image. These are the exhaustive alternatives of NBP
+Proposition 9.3, not merely formal root assignments.
+
+Use the full profiles of [NBP, Proposition 15.2][NBP]. On $\Pi_j$ the
+right class $b_j$ is alpha, its partner is beta and all other roots are
+branches. On $Z_d$ only class $d$ is beta and all other roots are
+branches; on $Z_*$ all roots are branches. These eleven profiles exhaust
+$\mathcal U_*$. Their targets are $R_j$ on $\Pi_j$ and $R_0=R_*$ on
+the zero profiles. For $j>0$, $R_j$ replaces the sibling holes at
+$q_jL,q_jR$ by a concrete beta at $q_j$, where
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$, and canonically restricts the old
+partition. The other occurrence of the repeated partner remains an old
+hole. All retained disequalities and all blocking guards remain in the
+answer.
+

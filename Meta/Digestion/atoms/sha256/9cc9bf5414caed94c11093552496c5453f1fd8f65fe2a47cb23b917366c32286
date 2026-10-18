@@ -1,0 +1,28 @@
+## 14. Equality suppliers and the remaining existence questions
+
+**Mathematical attribution 14.1 (consumed premises and joint deductions).**
+Theorems 13.1 and 13.2 use the following supplier correspondence.
+All class parameters refer to a single chosen complete cover at each
+application.
+
+| Supplier | Exact specialization | Role in the deductions |
+| --- | --- | --- |
+| Assumption 1.1, Definition 1.2 and [NARC, Definition 14.1 and Theorem 14.2][NARC] | $q=19$; all $C_t\in\mathcal P_t^+$ for the geometric theorem; the original $C_t\in\mathcal P_t^0$ for the nonnegative theorem | Complete disjoint whole-square coverage with every anchor, macro order and legal outer length, under the inherited acquired-label and same-original native service contract. |
+| Theorem 8.1 and Proposition 8.3 | $G(\mathcal C)=13$ on that whole family | The existing thirteen-gap lower bound, the two axis-budget alternatives, equality in both residue charge chains, nineteen singleton center-line intersections and the other central line's unique four-point triple. |
+| Lemma 7.2 and (NAGC.7.6)--(NAGC.7.11) | First $S_t=S_t^a$, then $S_t=S_t^b$, for those same nineteen classes | The residue variables and inequalities whose equality yields local saturation, no cancellation and the three-omission class budgets in Lemma 10.2. |
+| [NARC, Theorem 13.3][NARC] | The actual increasing-$d$ path and its increasing first-coordinate list $x_{t,0},\ldots,x_{t,9}$; the reversed image paths under $R$ and $T$ | Whole pure triples, monotonicity, nine changes per axis, and unit second, fifth and eighth coordinate changes. These determine the anchor rank restriction and the terminal triples in Lemma 12.1. The converse certifies the positive-lag readability of each transformed class in Theorem 13.1. |
+| [NARC, Theorem 14.3, part 1][NARC] | The belt at every actual point; the corner classes with labels $0,1,2,18$ | Exact center-point ownership, the vertical arms excluding initial coordinates zero through two, the original $C_0$ corner, and the horizontal $C_1$ arm containing the final collision point. |
+| [NARC, Theorem 14.3, part 3][NARC] and (NAGC.7.3) | The actual rows $b=0,3,6,9$ and center line $a=9$ | Sizes $1+3j$ of nonempty intersections, $M_0\ge4$ and $M_0\equiv1\pmod3$, combined with $M_0\le5$ to exhaust the four boundary owners and the two terminal allocations. |
+| (NAGC.7.2) and (NAGC.4.1) | The original or explicitly transformed class with its actual coordinate spans and edge lengths | Conversion of the two projection gaps to $g_t$, preservation of $G$ under the geometric symmetries, and unit lengths when $g_t=0$. |
+| [NARC, Theorem 13.4][NARC] | Only the original $C_0\in\mathcal P_0^0$, after Theorem 13.1 gives $g_0=0$ | The saturated nonnegative-lag first-step exclusion at $(0,9)\to(0,8)$. |
+| Theorem 2.2 | The same original nonnegative cover, $q=19$ and $G(\mathcal C)\ge14$ | The exact span identity giving the necessary total $356$. |
+
+The repo-derived content is the equality refinement of the residue
+charge, its exact center and boundary ownership consequences, the
+two-allocation collision in one common cover, and the resulting
+extreme-class rigidity and fourteen-gap necessity. The inherited
+thirteen-gap theorem, native normal form, corner geometry, incidence
+law and zero-lag criterion remain the direct premises. No numerical
+conclusion from external tiling literature is invoked, and no worldwide
+priority or absence-of-publication claim is assigned to these deductions.
+

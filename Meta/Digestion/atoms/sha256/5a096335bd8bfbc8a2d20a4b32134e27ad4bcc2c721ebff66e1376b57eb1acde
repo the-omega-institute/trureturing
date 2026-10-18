@@ -1,0 +1,14 @@
+**Convention 5.3 (failures and unexecuted actions).** All finite
+literal Reads here are legal and have one of the four replies.
+In particular, $\mathsf{absent}$ has a completed event and a
+successor. There are no executed hardware-failure, revocation or crash
+labels in the stated interface. An unexecuted prohibited action has
+no event or successor; it cannot be represented as
+$\operatorname{some}(\mathsf{failure},s')$. An extension with
+such executed failures must declare their full labels, joint
+successors and recording behavior. The lower bound persists by
+restriction if that extension preserves these original runs and adds
+no accessible source/history information. The replay upper bound
+does not reconstruct external failure or scheduling choices merely
+from the tree.
+

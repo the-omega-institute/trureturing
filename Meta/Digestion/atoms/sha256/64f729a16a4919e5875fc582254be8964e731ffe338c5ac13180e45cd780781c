@@ -1,0 +1,19 @@
+**定义 29.1.1（网络 assignment）。** 令 $V$ 为有限节点集。每个节点的处理字母表为有限集 $\mathcal A_v$，全网 assignment 空间为
+
+$$
+\mathcal A=\prod_{u\in V}\mathcal A_u.
+$$
+
+对目标节点 $v$，其潜在结果核写作
+
+$$
+K_v(y\mid a),
+\qquad
+a\in\mathcal A,
+\quad y\in\mathcal Y_v,
+$$
+
+其中 $\mathcal Y_v$ 是有限结果集。确定性响应 $f_v:\mathcal A\to\mathcal Y_v$ 是点质量核的特殊情形。
+
+<a id="claim-29-1-2"></a>
+

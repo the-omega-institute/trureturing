@@ -1,0 +1,43 @@
+## 446. Binding the two source ranges without a hidden strictness premise
+
+First suppose v<=m-2. If m=1+c+d, then the source-flat product gives
+
+    (c+d)*(v-1)>=(c+d)^2,
+    v>=1+c+d=m,
+
+contradicting v<=m-2. Hence m>1+c+d.
+
+The genuine source tau has two original transverse M slots and sigma
+already contributes pi at M. Therefore 2*beta_M(tau)<=pi. Its cosine
+has positive denominator and numerator
+
+    N(z)=c*(z+d)+m*(z*d+c^2-m^2+1).
+
+This affine function has derivative c+m*d>0. At z0=1+m+c,
+
+    N(z0)=[c+m*(1+m+c)]*(1+c+d-m)<0.
+
+The source angle budget gives N(z)>=0, forcing z>1+m+c. This is the
+strict clause of the original escape theorem in Section 134. The
+remaining conditions of Section 413 follow from Section 444, the
+published reductions, and (445.1). Thus Theorem 430.1 excludes the
+entire low-sixth subcase. No receiver inventory is inserted here.
+
+Now suppose m-2<v<=m. Section 435 gives
+
+    c+d<v, v>2,
+    all four M,V,Z,U values >=v,
+    every distinct high-pair shifted product >=(c+d)^2.
+
+These are exactly the scalar conditions of Theorem 443.1 with s=v.
+The unique flat and the complete original angle sums are supplied by
+the same reduction. That direct theorem therefore excludes this
+remaining near-maximal range, without using the strict-source
+upgrades or either maximum gap in this second branch.
+
+The equality m=1+c+d forces v=m by the source product and v<=m;
+it is consequently included in this second branch. This necessary
+equality implication is not an assertion that the boundary is
+realizable. Equal numerical coshes and the endpoint v=m-2 are all
+covered by the displayed disjoint split.
+

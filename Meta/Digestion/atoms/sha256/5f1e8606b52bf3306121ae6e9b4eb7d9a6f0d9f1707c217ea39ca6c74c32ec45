@@ -1,0 +1,11 @@
+**Definition 358.1 (Admissible aggregate).** An edge $i<j$ contributes $-B$ to $g_{ij}$, where $m(B)=0$ and $B(z)\ge0$ for $0\le z\le i$. For any increasing odd list
+$I=(i_1<\cdots<i_{2h+1})$, $h\ge1$, put $b_t=(-1)^{t+1}$. An odd-list contribution is
+
+$$
+g_{i_si_t}\mathrel{+}=b_sb_tV\quad(s<t),
+\qquad m(V)=0,\qquad V(z)\ge0\quad(0\le z<i_{2h+1}).
+\tag{358.1}
+$$
+
+Take any finite sum of these contributions. Lists may overlap; the funding conditions (357.6) apply to their aggregate. Length three is exactly the edge/triangle criterion T of [XX 351.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XX.md#351-t-one-g-triangle-certificates-with-both-budgets): a triangle contributes $+V$ at $ik$ and $-V$ at $ij,jk$. No assumption is made on later label coordinates beyond their total sum.
+

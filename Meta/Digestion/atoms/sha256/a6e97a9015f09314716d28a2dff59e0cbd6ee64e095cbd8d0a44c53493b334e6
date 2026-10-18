@@ -1,0 +1,51 @@
+**定义 8.1（未饱和整数系统）。**
+
+以 $\rho$ 为形式变量，除式 (5.1) 的 $Z,K,N$ 外，定义
+
+$$
+\begin{aligned}
+H_{\rm num}&=-20(2+3\rho)Z,\\
+B_{\rm num}&=-5(2+3\rho)(3\rho-4)(7\rho-4),\\
+A_{\rm num}&=2(4-3\rho)(2\rho+1),\\
+U_{\rm num}&=Z[(H_{\rm num}-3N-2B_{\rm num})K+ZN],\\
+V_{\rm num}&=Z^2[B_{\rm num}^2+(3N-H_{\rm num})B_{\rm num}+N^2],\\
+W_{\rm num}&=H_{\rm num}^2K^2-2H_{\rm num}U_{\rm num}+4V_{\rm num}.
+\end{aligned}
+\tag{8.1}
+$$
+
+$B_{\rm num}$ 是多项式名，区别于 $B=X-d$。这些定义明确指定全部整数系数，不需要完全展开。式 (5.4)–(5.5) 等价于
+
+$$
+\begin{gathered}
+h=H_{\rm num}/N,\quad\beta=B_{\rm num}/N,\quad
+\lambda=A_{\rm num}/Z,\quad z=Z/K,\\
+u=U_{\rm num}/(NK^2),\quad
+v=V_{\rm num}/(N^2K^2),\quad
+D=W_{\rm num}/(N^2K^2).
+\end{gathered}
+\tag{8.2}
+$$
+
+下表三行对应原时钟 $j=0,1,2$；全部因子如下：
+
+| $j$ | $a_j$ | $b_j$ | $L_j$ | $M_j$ | $c_j$ | $q_j$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $0$ | $2A_{\rm num}-Z$ | $2B_{\rm num}$ | $H_{\rm num}(3\rho-4)$ | $6+8\rho$ | $42$ | $0$ |
+| $1$ | $A_{\rm num}-4Z$ | $H_{\rm num}+B_{\rm num}+N$ | $6H_{\rm num}(\rho-1)$ | $10+15\rho$ | $12$ | $24$ |
+| $2$ | $A_{\rm num}$ | $B_{\rm num}$ | $H_{\rm num}(7\rho-4)$ | $8+16\rho$ | $5$ | $48$ |
+
+定义全部整数多项式
+
+$$
+\begin{aligned}
+T_j&=ZK^2L_jb_j-M_j[a_jV_{\rm num}+Zb_jU_{\rm num}],\\
+P&=42T_0-24T_1+5T_2,\\
+F_j&=1464[c_jT_j-12ZV_{\rm num}]\\
+&\quad+12[39264-655q_j]Z[V_{\rm num}-\rho W_{\rm num}].
+\end{aligned}
+\tag{8.3}
+$$
+
+有限和、乘积与上表就是精确系数定义，未列幂次的系数由这些有限多项式唯一给出，不隐含结果式、外部系数表或数值计算。
+

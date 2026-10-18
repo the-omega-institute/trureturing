@@ -1,0 +1,18 @@
+**Corollary 5.2 (edge cases).** If $k=l$, then $p_C=p_R=1$ for every
+$\mu$. If $k\ne l$, then $p_C=p_R=1$ if and only if $\mu=0$.
+At $\mu=1$ both formulas reduce to the credited unassisted value
+
+$$
+s_*(k,l)=\min\left\{1,\frac{k}{l},\frac{c-k}{c-l}\right\}.
+\tag{PR.17}
+$$
+
+Proof. Equality of heights gives $u=v$ and zero maximum in (PR.14).
+For unequal heights its first nonzero term is positive whenever $\mu>0$.
+For $\mu=0$ the orthogonal helper can control the credited parity-specific
+unitaries, retaining that helper. At $\mu=1$, the inequalities
+$|x|\leq p$ and $|1-x|\leq1-p$ force $x=p$ by equality in the triangle
+inequality. The remaining condition is $|u-vp|\leq1-p$, or
+$p\leq(1-u)/(1-v)$ and $p\leq(1+u)/(1+v)$, together with $p\leq1$.
+These are (PR.17). $\square$
+

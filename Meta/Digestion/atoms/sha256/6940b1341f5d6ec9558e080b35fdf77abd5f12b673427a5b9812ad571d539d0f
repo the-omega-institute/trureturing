@@ -1,0 +1,11 @@
+**Proposition 2.2 (the missing cross-scope relation).** With inverse images restricted to $\Omega=\{abc,bac,acb\}$,
+
+$$
+q^{-1}(ac,bc)=\{abc,bac\},
+\qquad q^{-1}(ac,cb)=\{acb\}.
+$$
+
+Agreement on the shared event does not determine whether $a$ or $b$ occurred first.
+
+Proof. The first record is always $ac$. For $abc$ and $bac$ the second record is $bc$, while for $acb$ it is $cb$. In the first case the local relations are only $a\prec c$ and $b\prec c$; both orders between $a,b$ are actual accepted possibilities by Proposition 1.3. In the second case the records give $a\prec c\prec b$. $\square$
+

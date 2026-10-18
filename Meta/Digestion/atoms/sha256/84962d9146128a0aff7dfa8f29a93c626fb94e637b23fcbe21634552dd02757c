@@ -1,0 +1,27 @@
+**定义 20.4（允许效果、偏置与配对效果）。** 在 $V^{\otimes n}$ 上取
+
+$$
+N^{(n)}=\sum_{\ell=1}^n N_\ell,\qquad
+\mathcal E_n=\{E:0\preceq E\preceq I,\ [E,N^{(n)}]=0\},
+$$
+
+$$
+b_n(s,t)=\sup_{E\in\mathcal E_n}
+  |\operatorname{Tr}[E(\Omega_{s,n}-\Omega_{t,n})]|.
+\tag{20.6}
+$$
+
+菜单是全部总数守恒效果；没有用仅总宇称守恒的更大菜单替代它。
+效果仅规定结果概率，不规定测后态或 Kraus 仪器。
+对字符串 $I=(i_1,\ldots,i_n)$ 记 $Q(I)=\sum_\ell q_{i_\ell}$。
+对不同且满足 $Q(I)=Q(J)$ 的字符串，定义
+
+$$
+|v_\phi^{I,J}\rangle=\frac{|I\rangle+e^{i\phi}|J\rangle}{\sqrt2},
+\qquad
+E_\phi^{I,J}=|v_\phi^{I,J}\rangle\langle v_\phi^{I,J}|.
+\tag{20.7}
+$$
+
+$b_n$ 是这份输入合同的二元统计量，不指定为原恢复问题的 $\beta$。
+

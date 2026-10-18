@@ -1,0 +1,77 @@
+**Proposition 64.8 (source discriminators and the retained mathematical boundary).**
+The finite form account is source qualified. Its one-coordinate lift gives exactly
+$L_D$, so §55's hidden vector and §60's mirrored-source operator distinction
+remain full-vector target identities. Its slice form is the literal symmetric
+$K_{D,2}$, including the six-move sign and trace discriminator (62.34); no
+fermionic or determinantal replacement is made. Either full pair multiplier is
+$V_N$ on the same atomic data. A shared inverse-distance replacement is therefore
+still subject to (64.5), independently of the vanishing cable-density error.
+
+The unrestricted symmetric generator fails on the same adjacent input:
+\[
+(I-P_{D,2})d\Gamma(h_D)e_{\{o,L\}}
+=-\sqrt2a(e_{o,o}+e_{L,L}),\qquad\text{norm }2a.
+\]
+Those positive-mass output states are absent in the producer domain of Definition64.5,
+and the admitted $W_2e_{\{o,L\}}$ has zero collision traces at preparation and
+throughout its actual evolution by Lemma64.5a. In particular for the actual H3
+source, $a=g=1$, $\nu=0$, $\delta=10^{-8}$, $T=10^{-2}$, the elementary bounds
+$\beta_2<1/5000$, $s_2\le\beta_2^2/2$ give
+\[
+Tr_2<\frac1{100}
+ \left(\frac{18}{10^8}+\frac{14}{5000^2}+\frac{16}{5000}\right)
+<\frac1{30000}.
+\]
+For input norm 100 this bound is multiplied by 100. This tests the identical
+finite-clock source counterexample against the repaired construction, in its
+whole retained norm. The bound rests on the analytic operator proof, not a
+finite cable-mode simulation. Atomic double occupation is exactly zero, rather
+than a discarded component of this error budget.
+
+For an already commissioned target contraction $C$, its mathematical transport
+is $CW_N^*$ on the whole producer space. Its norm is at most one and
+\[
+\|CW_N^*e^{-i\tau\mathcal T}W_Nf-Ce^{-i\tau H}f\|
+\le |\tau|r_N\|f\|,
+\]
+by $W_N^*W_N=I$ and (64.12). An already commissioned target effect
+$0\le F\le I$ transports to $W_NFW_N^*$; for unit inputs its probability
+error is at most $2|\tau|r_N$. Thus the hidden-vector, mirrored-source and
+relative-phase target tests of §§55,58,60 and the literal-statistics test of §62
+can be checked on their supplied known inputs during an actual installed idle
+interval. The full-state theorem still accounts for all components outside the
+calibrated range. These target maps neither add an original numerical Read nor
+supply physical measurement, acquisition, or a transfer between cable spaces.
+
+The common pair field is the supplied static restriction of $L^{-1}$.
+Both installed amplitude targets use $L_D$ and the same common $\phi$.
+No common exterior amplitude-memory target is inferred from the common static
+pair table. A separately commissioned common exterior dynamic response would
+need its full retained exterior state and further calibration.
+
+The mathematical producer must supply the forms, all atomic and cable masses,
+the correlated harmonic preparations $W_Nf$, and the full retained evolution.
+Preparing $W_2f$ is not obtained by tensoring independently prepared $W_1$ modes.
+The variational construction proves an admissible state and its correspondence;
+it is not a finite-price native preparation algorithm or acquisition of unknown
+coefficients. The domain conditions and atomic interaction are conditional
+realization choices within this contract, with no claim that native or physical
+rights implement them. Replacing grounded stubs at a renewal changes these
+continuum domains: (64.12) is a uniform theorem on each installed idle interval,
+not an unproved full-state switch between cable spaces. A physical switching,
+renewal transfer or nonidentity hold needs its own supplied law and error/price.
+
+Unpaid obligations remain: an operation- and metric-preserving displacement map,
+isotropy and a physical three-dimensional local realization; field-mediated force
+and its actual implementation; switching, renewal, acquisition and unknown-state
+ingress; same-reference preparation and calibrated physical time; finite precision,
+all auxiliary modes/masses, storage, retention, production, maintenance and total
+price. The original $\mathcal D_2$ independent arbitrary unbounded $a$ including
+zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent
+errors, source-independent initialization and actual INITIAL/Read/refusal/Stop
+remain unchanged. The conditional $\Pi$ and paid promised-family acquisition
+retain all their existing hypotheses and rights. No source copy, reset,
+independent resampling, exact limit Read or new native geometric/quantum control
+is inferred. Nothing here selects spatial dimension three, supplies a physical
+realization, validates a kernel or completes the broader goal.
+

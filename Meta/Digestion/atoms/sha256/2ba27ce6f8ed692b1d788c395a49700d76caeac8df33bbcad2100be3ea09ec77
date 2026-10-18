@@ -1,0 +1,13 @@
+## 6. Actual posterior continuity and an independent vanishing tail
+
+At zero, $B(0)=\left(\begin{smallmatrix}7/10&0\\2/3&0\end{smallmatrix}\right)$ and $C_0(0)=\left(\begin{smallmatrix}0&1\\0&1\end{smallmatrix}\right)$. After $00$ the hidden row is supported on free $1$, after $10$ on free $2$; their next-one probabilities are $3/10,1/3$, and after one zero is forced. The event mass is $p/Z=9/38$; stationarity and no11 give pair masses $(10/19,9/38,9/38)$. Hence $P_0$ is precisely [TwoStep, Definition 2.1 and Proposition 2.2][T]'s law $Q$.
+
+Specify on all legal exterior records the local Borel function $g_i=0$ on forced fibers and, on free fibers, $g_i=A_0,B_0,D_0$ according as $X_{i-2}+X_{i+2}=0,1,2$, where
+
+$$
+A_0=200/543,\qquad B_0=100/247,\qquad D_0=50/113.
+\tag{6.1}
+$$
+
+[TwoStep, Proposition 2.4][T]'s full-word odds $200/343,100/147,100/147,50/63$ survive every farther exterior completion. Increasing-field projection identifies $g_i=q_i(Q)$, with no transported reference-only null exceptions.
+

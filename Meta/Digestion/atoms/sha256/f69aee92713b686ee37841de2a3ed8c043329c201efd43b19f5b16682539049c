@@ -1,0 +1,22 @@
+### Lemma 8.2. The exact one-plus-three block
+
+Put s=(|01>-|10>)/sqrt(2), and use the following orthonormal basis separately on AB and CD:
+
+$$q_0=i s,\qquad q_x=(\sigma_x\otimes I)s,\qquad q_y=(\sigma_y\otimes I)s,\qquad q_z=(\sigma_z\otimes I)s.$$
+
+The Pauli convention is sigma_y=[[0,-i],[i,0]]. If Q has these four columns, direct evaluation gives
+
+$$Q^\dagger Q=I_4,\qquad (\sigma_y\otimes\sigma_y)\overline Q=Q,\qquad Q^T(\sigma_y\otimes\sigma_y)Q=I_4. \tag{8.1}$$
+
+Suppose a normalized four-qubit state has rho_X=I_2/2 for all four parties, spectrum(rho_AB)=lambda_*, and q(psi)=0. Purity of the global state gives the same spectrum for rho_CD. Apply Lemma 8.1 independently on AB and CD to make their distinguished eigenvectors q_0. Both marginals are then the fixed R from Section 4.
+
+Write the resulting amplitude matrix as F=QZQ^T. The left reduced matrix is ZZ^dagger and the right one is Z^T conjugate(Z). Since both equal the real diagonal matrix D=diag(1/2,1/6,1/6,1/6), we also have Z^dagger Z=D. Associativity gives DZ=ZD. The distinct eigenvalue 1/2 therefore removes every cross entry between index zero and the other three indices:
+
+$$Z=\begin{pmatrix}z&0\\0&T\end{pmatrix},\qquad |z|^2=1/2,\qquad TT^\dagger=T^\dagger T=I_3/6. \tag{8.2}$$
+
+Choose the overall phase so z=i/sqrt(2). By (8.1), q(psi)=sum_{j,k}Z_{jk}^2. Its vanishing gives sum_{j,k}T_{jk}^2=1/2, while (8.2) gives sum_{j,k}|T_{jk}|^2=1/2. Taking the real part of their difference yields
+
+$$2\sum_{j,k}(\operatorname{Im}T_{jk})^2=0.$$
+
+Every entry of T is real. Consequently T=O/sqrt(6) for a real orthogonal matrix O in O(3).
+

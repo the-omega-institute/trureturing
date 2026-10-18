@@ -1,0 +1,63 @@
+**Theorem 5.2 (inferred caps for an unrestricted weighted threshold).**
+For $\lambda\ge0$ rational and rational $T$, it is decidable whether any
+legal whole-domain service has $W_\lambda\le T$, with no prescribed
+read, update or word-length cap. If $\lambda_q+\lambda_\ell>0$, a true
+answer gives a finite physical controller; a false answer gives a finite
+original-source sample rejecting every comparator at that threshold.
+The same statement remains effective with an optional finite upper bound
+on reads, on updates, or on both.
+
+When $\lambda_q=\lambda_\ell=0$ and no read bound is imposed, the answer
+is true exactly when $T\ge0$. Its supplied static source-total consumer
+need not have a finite reply tree on an infinite domain. An optional
+nonnegative update bound does not alter this conclusion.
+
+Proof. Negative $T$ is excluded by any one source, as above. Suppose
+$T\ge0$. For positive observation weight, apply the cap and cleanup of
+Convention 2.3, preserving every same-source nonnegative weighted
+inequality. All actual updates are then bounded by $U$. If an update cap
+$A_0$ is supplied, use $A_* =\min(U,A_0)$; otherwise use $A_*=U$.
+If $\lambda_a>0$, one may further intersect with
+$\lfloor T/\lambda_a\rfloor$, although this is unnecessary for termination.
+
+If $\lambda_q>0$, set
+
+$$
+K_* =\lfloor T/\lambda_q\rfloor .
+\tag{NFO.14}
+$$
+
+If $\lambda_q=0$ and $\lambda_\ell>0$, set instead
+
+$$
+L_* =\lfloor T/\lambda_\ell\rfloor,\qquad K_*=L_*+s_N.
+\tag{NFO.15}
+$$
+
+Equation (NFO.7) justifies this latter read cap without dividing by a
+zero weight. Intersect $K_*$ with any supplied read cap. Any comparator
+satisfying the requested threshold and optional caps has a normalized
+competitor within $(K_*,A_*)$, with no increased same-source cost.
+Theorem 5.1 therefore decides the original question. Conversely its
+positive controller satisfies every original constraint. For a negative
+sample, exactly the same normalization works on any comparator correct
+only on that sample, so the sample excludes all original uncapped
+competitors there as well. This supplies both comparison directions.
+
+If both observation weights vanish and a finite read bound is imposed,
+apply capping and Theorem 5.1 with that bound and $A_*$. This includes
+all-zero weights with a prescribed finite read budget: that budget
+remains a real recovery constraint.
+
+Finally suppose both observation weights vanish and no read bound is
+imposed. Reuse JRF Theorem 7.1's static whole-source traversal, whose
+physical decoder is valid on every native finite source. At epoch $N$
+decode the original root using actual paid reads, recurse into original
+children only after a decoded branch, and stop at original leaves.
+Every actual original tree is finite. The service recovers it, computes
+$R_Q(u)$, and genuinely halts, with $a(u)=0$ on every source. This gives
+weighted value zero and meets any nonnegative update cap. Its sourcewise
+read and length costs are finite, but their suprema need not be finite.
+No lower value is possible. The empty observation-weight case therefore
+has the stated separate, effective answer. $\square$
+

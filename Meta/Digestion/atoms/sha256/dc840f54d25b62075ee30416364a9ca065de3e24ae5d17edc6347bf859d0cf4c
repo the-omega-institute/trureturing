@@ -1,0 +1,41 @@
+**Definition 273.1 (The complete finite experiment).**
+Fix $L\ge3$, $B_L=\{0,1\}^L$, $J_L=\{0,\ldots,L\}$,
+$J=\{3,\ldots,L\}$ and $m=L-2$.
+Write $+=1^L$, $\Omega_n=\{w:\min\{i:w_i=0\}=n\}$,
+$v^i$ for the sole-zero word at $i$, and $v^{ij}$ for the word
+whose zeros are exactly $i<j$.
+Every word and every output label in $J_L$ is retained.
+In particular a terminal label may be earlier than, or absent from,
+the queried addresses.
+
+The complete $N$ catalog consists of constants, singletons and
+preselected distinct-pair tables
+$N(i,j;u,v,s,t)$, $i<j$, whose outputs on $00,01,10,11$ are
+$u,v,s,t$. The complete $O$ catalog consists of constants,
+singletons and $O(i,j;v,s,t)$ on stopped cells $0,10,11$.
+An $N$ table obtains its entire preselected schedule. An $O$ table
+uses an increasing preselected schedule and stops at its first
+queried zero or exhaustion. Its second address is not chosen from
+the first reply. Reversal of static queries permutes cells, and
+repetition gives singleton information; these identities do not
+discount any repeated or ignored actual request from the bound two.
+
+At every $w\in\Omega_n$ the three independent demand rows are
+$\{0\},\{n\},\{0,n\}$ with demands $1-b_n-e,b_n-e,1-e$.
+At $+$ there is the demand $1-e$ on $\{0\}$. Denote the whole
+vector by $d(b,e)$ and the complete incidence vector of a table by
+$z_D$. Negative singleton demands and zero-score rows remain.
+For a probability vector $p_w$, these rows express exactly
+
+$$
+\operatorname{TV}(p_w,(1-b_n)e_0+b_ne_n)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{273.1}
+$$
+
+Here $e_r$ denotes a point mass at label $r$.
+The third row is the independent union event, not a sum of
+approximate singleton bounds. Formula (273.1) follows by splitting
+the positive and negative parts of the signed difference on
+$\{0,n\}$ and its complement.
+

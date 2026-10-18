@@ -1,0 +1,43 @@
+### 101.2. Equality and an explicitly conditional rank conclusion
+
+Suppose \(\delta=1/4\) under the same hypotheses. The boundary cases already
+have the stronger bound, so all coordinates and \(\Delta\) are positive.
+The partner argument gives the non-strict versions of (6).
+Their positive right sides still force \(D_0>0\), and then
+\(A\ge A_0\), \(B\ge B_0\). Equation (9) gives the non-strict version of (10).
+Thus equality is necessary throughout (15).
+Since \(b,d>0\), each entry of \(K\) must vanish.
+The first certificate in (14), together with (13), forces \(z=3\), \(X=1/3\).
+Consequently
+\[
+(c,s)=(\sqrt3/2,1/2),\qquad(p,q)=(1/2,\sqrt3/2),\qquad
+A=cb+pd,\qquad B=sb+qd. \tag{16}
+\]
+
+For a further conclusion, assume explicitly a PSD correlation matrix \(R_0\)
+satisfying
+\[
+G_S=H_S\odot\overline{R_0},\qquad
+R_0\operatorname{diag}(\overline a)H_S=0. \tag{17}
+\]
+These are the quotient relations in the common-stress application,
+but they were not hypotheses of Theorem 101.1.
+Factor \(R_0\) as the Gram of unit records \(r_i\).
+The full-fibre basis in \(H_S\) and (17) give
+\[
+A r_1=cb r_3+pd r_4,\qquad B r_2=sb r_3+qd r_4. \tag{18}
+\]
+To see this without any invertibility assumption on \(R_0\), the two
+columns of \(\operatorname{diag}(\overline a)H_S\) indexed by \(F\)
+belong to \(\ker R_0\), hence to the kernel of a Gram factor of \(R_0\).
+At (16), equality in the unit-vector triangle inequality in (18)
+forces \(r_3=r_4\); all coefficients are positive.
+The same equations then give \(r_1=r_2=r_3=r_4\).
+Therefore
+\[
+R_0=J_4,\qquad G_S=H_S,\qquad \operatorname{rank}G_S=2. \tag{19}
+\]
+In particular, if (17) and \(\operatorname{rank}G_S=3\) are imposed,
+then \(\delta>1/4\) in this explicit phase-aligned class.
+No uniform positive gap or quantitative neighbourhood radius follows.
+

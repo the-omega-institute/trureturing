@@ -1,0 +1,36 @@
+**引理 15.2（All-action staircase and paid protected-calendar lower bound）。** For every target (15.5), every correct controller on either free-value fibre has root $1^m$. Along the archive containing all protected low-tail sources, its first $d$ blocks are $1^m$. If $a>0$, its next block has first zero exactly after $a$ leading ones; if $a=0$, its next block starts zero. In particular,
+
+$$
+C_{\rm ad}(f)\ge LQ+1.
+\tag{15.6}
+$$
+
+These conclusions allow early stopping on homogeneous other archives and all label coincidences in Definition 15.1.
+
+Proof. Fix a free value. After $t<d$ blocks $1^m$, each protected phase has successful difference zero at every preceding endpoint, since the all-one charge support of block $b$ is $\{bm,(b+1)m\}$ for $0\le b<t$, and neither protected interval meets these vertices. All its low-tail sources remain present: $H-1+tm<k$. Their labels include the $M\ge2$ labels of $\eta[S]$, so this common archive cannot stop.
+
+Choose a protected phase $j$ with $\eta(j)\ne R_{t+1}$. This is possible even if $R_{t+1}$ is a protected label. Compare the actual INITIAL tails
+
+$$
+s_{\rm low}=H-1,\qquad s_{\rm band}=k-(t+1)m
+\tag{15.7}
+$$
+
+at this same phase and value. The second lies in band $t+1$, both survive the preceding $t$ all-one blocks, and both have the same acquired archive. Their current tails are $H-1+tm$ and $k-m$. If the next action has a first zero after $b<m$ leading ones, both reach that zero successfully, since $k-m+b\le k-1$. At the zero their entire current records merge. Their distinct INITIAL labels cannot be recovered by any subsequent action. Thus the next block must be $1^m$. This proves the assertion by induction, including its root case, and excludes every competing root or earlier zero on the protected archive without assuming fresh band labels.
+
+When $a>0$, choose a protected phase with $\eta(j)\ne R_\star$ and compare INITIAL tails $H-1$ and $H$. After the $d$ compulsory blocks their current tails are $k-a-1$ and $k-a$. A first zero after $b<a$ ones merges both alive. If $b>a$, or if there is no zero, both reject before the next observed endpoint: their rejection times within that block are unobserved. Only $b=a$ can be correct. When $a=0$, take the protected low sources at INITIAL tail $H-1$. After the $d$ blocks all have tail $k-1$ and at least two different labels; a first bit one would send them to one rejection archive, so the next block starts zero.
+
+For the cost lower bound, select one protected phase for each distinct label and, at each such phase, the actual source at INITIAL tail $H-1$. The selected sources have a common current tail before the first zero. After that zero the tail remains common within each acquired archive under every literal continuation. A rejecting action at a nonconstant selected archive destroys all its remaining labels together and cannot be correct. Successful observations supply at most two children. This remains true under adaptive actions; no observations from different branches are combined.
+
+The actual calendar up to index $LQ$ follows from $Qm=T-r$:
+
+$$
+\begin{aligned}
+W_{\ell Q}&=[-\ell r,m-\ell r]\pmod T,&&1\le\ell\le L,\\
+W_{eQ+b}&=[bm-er,(b+1)m-er],&&0\le e<L,\quad 1\le b<Q.
+\end{aligned}
+\tag{15.8}
+$$
+
+Every main window $W_{\ell Q}$ contains all of $S$: its lower segment reaches at least $J$, and its upper segment starts at $T-\ell r\le Qm$. Every displayed non-main window misses $S$. Indeed, its left endpoint is at least $m-(L-1)r\ge J+r>J$, while its right endpoint is at most $Qm<T$; there is no wrap. The compulsory root also has zero response on $S$. Thus only indices $Q,2Q,\ldots$ can distinguish the selected protected labels. By total fee $LQ$, at most $L-1$ such indices have been emitted. At most $2^{L-1}<M$ distinct-label leaves are available, even with adaptive stopping and any paid waits. This proves (15.6). The induction and capacity argument apply separately on both actual free-value fibres. ∎
+

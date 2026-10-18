@@ -1,0 +1,73 @@
+**Proposition 11.6 (a fixed representative image with no external pack
+candidate).** There is one lawful live-cell representative system $f$
+on $B_M$ choosing both cells $L_j,H_j$ at $V_j$ for all $j\ge2$,
+with the following two properties.
+
+First, for $\omega_j$ having its sole one at $u_M$, the packs are
+exactly $\{V_j,Z_M,J\}$, and all these packs lie in $\operatorname{im}f$.
+Second, for the one fixed collision $L_2,H_2$, every allowed completion
+has its entire pack in that same image. More precisely:
+
+| $(u_{M-1},u_M)$ | Exact pack |
+| --- | --- |
+| $(0,0)$ | $\{V_2,B_X,J\}$ |
+| $(0,1)$ | $\{V_2,Z_M,J\}$ |
+| $(1,0)$ | $\{V_2,O_M,J\}$ |
+| $(1,1)$ | $\{V_2,B_Y,J\}$ |
+
+Consequently, writing $P_2(\omega)$ for these packs,
+
+$$
+\bigcup_{\omega\in\{0,1\}^{U_2}}
+       \bigl(P_2(\omega)\setminus\operatorname{im}f\bigr)
+=\varnothing.
+\tag{WTF.43}
+$$
+
+Proof. The following five distinct live cells have the indicated
+actual representative histories, in addition to all (WTF.40):
+
+| State | Live cell | History reaching it |
+| --- | --- | --- |
+| $Z_M$ | $(k-1,n-k-2)$ | high $j=2$ prefix, then $u_{M-1}=0$ |
+| $O_M$ | $(k-3,n-k)$ | low $j=2$ prefix, then $u_{M-1}=1$ |
+| $B_X$ | $(k-1,n-k-1)$ | high $j=2$ prefix, then $U_2=(0,0)$ |
+| $B_Y$ | $(k-2,n-k)$ | low $j=2$ prefix, then $U_2=(1,1)$ |
+| $J$ | $(k-1,n-k)$ | untouched zero-routing prefix defining $J$ |
+
+For the first and third rows start with high cell
+$H_2=(k-1,n-k-3)$ and add respectively one or two fresh zeros.
+For the second and fourth start with low cell
+$L_2=(k-4,n-k)$ and add respectively one or two fresh ones.
+The fifth prefix was specified in Definition 11.2. Every resulting
+cell is live and is realized by actual cube completions. The first,
+third and fifth have $k-1$ hits and zero counts $n-k-2,n-k-1,n-k$;
+the other two have $k-3,k-2$ hits and $n-k$ zeros. They are pairwise
+distinct. They also avoid (WTF.40): its low hits are at most $k-4$,
+and its high zero counts are at most $n-k-3$.
+
+Choose these five representatives and the displayed $2(M-1)$
+collision histories simultaneously. For every other cell use the
+history constructed in Proposition 11.5. The distinct cell assignments
+are consistent and give one lawful full system $f$, as also permitted
+by the general representative construction in PE Theorem 4.2.
+
+For a one-hot-at-$u_M$ completion with $j\ge2$, $V_j$ first reads
+a zero and completes the negative certificate, because the low
+prefix already has $n-k$ zeros. The zero scan reaches $Z_M$ without
+an intervening one. There $u_M=1$ completes the high history's
+positive certificate, since it started with $k-1$ hits. The next
+state is $J$. This proves the first claimed pack and its containment.
+
+For $j=2$, an initial zero at $V_2$ completes the negative certificate;
+an initial one completes the positive certificate. If $U_2=00$,
+the first new positive hit is $x=1$ at $B_X$. If $U_2=01$, it is
+$u_M=1$ at $Z_M$. If $U_2=10$, the first new negative zero is
+$u_M=0$ at $O_M$. If $U_2=11$, it is $y=0$ at $B_Y$.
+Theorem 11.4 supplies the same first separator $J$ in all four cases.
+These identify the exact first-exposure packs, not just subsets of
+longer paths. Their states all belong to the chosen image, proving
+(WTF.43). Containment for every full pack at every $j$ is not
+asserted; the all-completion assertion of Theorem 11.4 concerns only
+the first separator. $\square$
+

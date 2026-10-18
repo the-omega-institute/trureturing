@@ -1,0 +1,43 @@
+**Lemma 104.8.** The actual quantities satisfy
+\[
+\frac1{8000000}<j<\frac{3125}8,
+\qquad\Delta>10^{-27}.
+\tag{104.53}
+\]
+
+**Proof.** There are exactly five undirected target edges on \(S\). Every supported kernel entry has modulus less than \(25/2\), and each supported cross-fibre \(|H_{ij}|>1/2\). Hence (104.19) gives \(|W_{ij}|<625\alpha/4\). Summing the ten ordered edges in \(t=2\operatorname{Tr}(LW)\) and using \(|L_{ij}|\le t\) yields
+\(t<3125\alpha t\), so \(\alpha>1/3125\).
+Also \(|W_{34}|=\alpha|z|^2/(2|h|)\). The inequalities
+\(0\preceq W_{JJ}\preceq\pi I_2\), tested on the two equal-modulus vectors aligning the off-diagonal entry, imply \(|W_{34}|\le\pi/2\). Thus
+\[
+\pi\ge\alpha|z|^2/|h|>\alpha/4,
+\qquad1/3125<\alpha<2,\qquad\pi>1/12500.
+\tag{104.54}
+\]
+Here \(\pi<1/2\) follows from the positive whole-fibre density. Since
+\(t\ge1/2-B=d/2>1/2000000\) and \(\pi=\alpha j/t\), the two bounds for \(j\) follow.
+
+In the real rotated coordinates of (104.26), the exact cross shapes are
+\[
+C_1=-\frac{|z|}{\sqrt2}\begin{pmatrix}1&0\\mp&-mq\end{pmatrix},
+\qquad E=\frac{F_0}{\sqrt2q|z|},
+\qquad |\det E|=\frac{m\Delta}{2|q||z|^2}.
+\tag{104.55}
+\]
+One has \(|\det C_1|=m|q||z|^2/2>1/32\) and
+\(\|C_1\|_F^2=|z|^2(1+m^2)/2<285625/128<48^2\). Therefore
+\(\sigma_{\min}(C_1)>1/1536\) and
+\(\sigma_{\min}(C)>1/4800000\), where \(C=\alpha C_1\).
+By (104.9), with \(Y=tY_0\),
+\[
+C=\frac\pi{2t}E(I-Y^2),\quad0\prec I-Y^2\preceq I,
+\quad CC^*\preceq(\pi/(2t))^2EE^*.
+\]
+It follows that
+\(\sigma_{\min}(E)>4t\sigma_{\min}(C)>1/2400000000000\).
+Finally \(2|q||z|^2/m>1/42\), so (104.55) yields
+\[
+\Delta>\frac1{42(2400000000000)^2}>10^{-27}.
+\]
+Every inequality concerns this same original common pair. \(\square\)
+

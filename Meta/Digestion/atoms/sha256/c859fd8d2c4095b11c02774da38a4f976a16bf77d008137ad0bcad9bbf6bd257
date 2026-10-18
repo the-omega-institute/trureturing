@@ -1,0 +1,38 @@
+**Definition 71.2 (Intrinsic deficit and address resources).** Enumerate the
+actual labels without repetitions as $x_1,x_2,\ldots$. For a nonempty occupied
+prefix cylinder $C$, use the selected family's own tape mixture and define
+
+$$
+\begin{aligned}
+\tau_\lambda&=\sum_{j\ge1}2^{-j}\lambda_{x_j},
+&f_x&=\frac{d\lambda_x}{d\tau_\lambda},\\
+\ell_C&=\left(\inf_{x\in C}f_x\right)\tau_\lambda,
+&a_C&=\ell_C(\Theta),\\
+r_x(m)&=1-a_{C_m(x)},
+&\Omega_\lambda(m)&=\sup_{x\in X}r_x(m).
+\end{aligned}
+\tag{71.2}
+$$
+
+Nonnegative measurable density versions are understood. The Radon--Nikodym
+and countable-infimum argument in Theorem 46.4 makes $\ell_C$ the greatest
+measure dominated by every $\lambda_y$, $y\in C$. It is independent of the
+enumeration and versions. The mixture is on tapes, not on sources. In
+particular it is not the original targets' mixture, and no absolute continuity
+with respect to that other mixture is assumed.
+
+At finite handoff, let $K_{A,x}$ count all prime requests, including
+repetitions, and let $I_{A,x,j}$ be the index of the $j$th requested prime. Put
+
+$$
+M_{A,x}=\max\{I_{A,x,j}:1\le j\le K_{A,x}\},
+\qquad \max\varnothing=0.
+\tag{71.3}
+$$
+
+On every branch with no finite handoff put $K_{A,x}=M_{A,x}=\infty$, including
+a branch that eventually ceases making requests. Thus $M$ is the maximum
+requested prime **index**, and $K$ is the number of requests. These are
+distinct random variables. Their finite sublevel events are measurable unions
+of finite-handoff record events.
+

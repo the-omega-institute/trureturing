@@ -1,0 +1,44 @@
+## 2. Terminal repetition with seventeen literal atoms
+
+**Theorem 2.1.** For every integer $d\ge1$, let
+
+$$
+Q=\begin{pmatrix}6&1\\5&1\end{pmatrix},\qquad
+T=\begin{pmatrix}11&2\\6&1\end{pmatrix},\qquad
+B=\begin{pmatrix}17&3\\6&1\end{pmatrix}.
+$$
+
+The $d+5$ actual recorded endpoints
+
+$$
+A_0=I,\qquad A_1=L^2,\qquad A_2=Q,\qquad A_3=T,\qquad
+A_i=B\quad(4\le i\le d+4)
+\tag{2.1}
+$$
+
+globally recover (1.1) for every allowed source, every real $k$, and every whole polynomial $D$ of degree at most $d$. They admit the literal seventeen-atom implementation below and the finite whole-image inverse in Section 5.
+
+The successive nonempty left multipliers are
+
+$$
+L^2,\qquad UL^3,\qquad UJ,\qquad U.
+\tag{2.2}
+$$
+
+Their chronological atom blocks are
+
+$$
+(J,M,J,M),\qquad
+(J,M,J,M,J,M,M,J),\qquad
+(J,M,J),\qquad(M,J).
+$$
+
+Their lengths are $4,8,3,2$, totaling seventeen. The final $d$ transitions are empty words. Direct multiplication, using $U^j=(\begin{smallmatrix}1&j\\0&1\end{smallmatrix})$ and $L^j=(\begin{smallmatrix}1&0\\j&1\end{smallmatrix})$, gives
+
+$$
+Q=UL^5=(UL^3)L^2,\qquad
+JQ=\begin{pmatrix}5&1\\6&1\end{pmatrix},\qquad T=UJQ,\qquad B=UT.
+$$
+
+These are exactly the displayed endpoints on one forward history. There are no interior reads within the words. The first four readings occur at indices $0,1,2,3$ and the final $d+1$ readings at $4,\ldots,d+4$. Equations (1.2)–(1.4) realize this execution with one positive source and an unchanged row. The remaining proof of the theorem occupies Sections 3–5.
+

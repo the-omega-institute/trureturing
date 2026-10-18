@@ -1,0 +1,10 @@
+**命题 10.1（neutral-containing and neutral-free distinctions）。** In row 5 with $d_0\le1$, the single $\beta$ leaf at
+$(e_1/r,re_2)$, $1/L<r<1$, has $\Delta=1$, original reads
+$(re_2,-e_3,re_1)$ and $q_j=r^{F_{j-1}}$. The neutral member $r=1$ is legal. In row 3 the single $\alpha$ leaf at
+$(\lambda e_1,\lambda e_2)$, $d_0^{1/4}\le\lambda<1$, has
+$\Delta=\lambda^4$ and $q_j=\lambda^{F_{j+1}}$, with legal neutral limit $\lambda=1$. Thus for each fixed $0<E\le1/2$ there is no source-size-only finite autonomous peak cap on either neutral-containing plateau, already at $N=1$.
+
+Every individual contracting member still has a finite source-aware word at every fixed positive tolerance, with an arbitrarily large recorded scale. A true neutral member has an approximate finite three-periodic word and a three-valued internal phase. Paid archive acquisition in §7 terminates on $D>0$; $D=0$ requires a separately truthful neutral promise or an exact finite rational instrument. No finite prefix of arbitrary fine names decides true neutrality. At $d_0>1$ neutrality is excluded by Lemma 2.2, not by an approximate equality test.
+
+**证明。** Direct evaluation and the recurrence give both displayed actual families. Their rates can approach zero at fixed tree size. Lemma 6.1 gives arbitrarily long distinct-state prefixes when $E<1/2$. The endpoint requires the independent argument below. On a neutral promise, store approximations to $(x_3,x_1,x_2)$; directions repeat exactly, so a counted phase suffices. With fine reports at, for example, $b=4K+96$, Lemma 7.3 and coordinate rounding give the same finite periodic approximation without normalizing or deciding neutrality. That promise and precision production remain extra paid inputs.
+

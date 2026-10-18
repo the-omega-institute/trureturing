@@ -1,0 +1,4 @@
+**Corollary 5.2 (five-read restriction).** A uniformly recovering five-read path must have five distinct cumulative matrices. Deleting any noninitial read must leave four linearly independent matrices.
+
+Proof. The second assertion is the contrapositive of Theorem 5.1. If a five-read list has at most three distinct matrices, every surviving span has dimension at most three. If it has at most four distinct matrices and total span at most three, the same conclusion holds. In the remaining case it has exactly four distinct matrices and total rank four. At least three of the four matrices occur only once, and at least two of these single occurrences are noninitial. Deleting one such noninitial occurrence leaves at most three distinct matrices. Theorem 5.1 again gives a collision. This distinctness assertion is specific to five reads. ∎
+

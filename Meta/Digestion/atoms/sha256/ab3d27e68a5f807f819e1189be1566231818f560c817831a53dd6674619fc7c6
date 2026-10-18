@@ -1,0 +1,28 @@
+**Definition 1.1 (Native data and histories).** Let $0<Z<1$ and set
+
+$$
+r=1-Z,\qquad H=r/2,\qquad
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H.
+$$
+
+The mode order is $(0,1,2,3,13)$ and the probability tangent is
+$d=(1,-1,0,-1,1)^{\mathsf T}$. Fix any preparation height
+$k_0\in(0,H)$ and any preparation phases $\theta_j^{\rm in}$.
+With the negative phase convention, the native equations are
+
+$$
+\psi_j=\sqrt{p_j}\,e^{-i\theta_j},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_j=\frac{d_j}{p_j(k)I(k)}\dot\chi,\qquad
+I(k)=\frac2k+\frac2{H-k}.
+$$
+
+Histories are piecewise $C^1$ or absolutely continuous native paths on
+finite compact time intervals, with interior height throughout and finite
+phase variation. The initial real relation phase is consistent with
+$d^{\mathsf T}\theta^{\rm in}$. Real lifts may be used to integrate a
+history. The state queried at a finite prefix is its current ray, without
+its producing history or a retained lift. There is no loop, winding,
+command-size or common finite-horizon restriction. Write
+$\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+

@@ -1,0 +1,33 @@
+**Definition 12.4 (one full-support law on the unchanged alphabet).**
+Give raw weight $63$ to each of the eight even-parity perfect
+height-two four-leaf trees, and raw weight $1$ to every other member
+of $S_3$. Set
+
+$$
+w(x)=
+\begin{cases}
+63,&x\text{ is one of those eight even trees},\\
+1,&\text{otherwise},
+\end{cases}
+\qquad
+\mu(x)=\frac{w(x)}{619}.
+\tag{GDB.53}
+$$
+
+Indeed $8\cdot63+(123-8)=619$. Thus $\mu$ is strictly positive on
+all $123$ states, including every variable shape. On the graph family,
+each whole-block potential has value
+$A=63/619$ or $B=1/619$ according to its incident parity. The
+restriction to perfect graph solutions is imposed by the native
+template, not by deleting states from the source family or setting
+their probabilities to zero.
+
+The adjacent temporal tests (GDB.10) are all tautologies in this
+family: a branch parent and a present branch or leaf child have
+the common summary $\star$. No test between distinct seeds is a
+total bijection. Consequently the selected compatibility-phase
+contraction of Definition 3.1 leaves these edge seeds unmerged.
+After pinning edge replies the remaining tests are still tautologies.
+The parity interaction is in the full joint weight, not in a
+discarded compatibility test.
+

@@ -1,0 +1,26 @@
+**Corollary 5.4 (phase-sensitive transition correspondence).** On
+$\mathcal H_C$, the four actual-image encodings carry the same
+constructor partial edges, fine labels and mathematical readouts.
+Every comparison is with the current guard. Both forward transition
+and inverse observation directions commute.
+
+Proof. Each decoder recovers the identical $h,j$ and fine graph,
+including original finite guards, source and meter links, and local
+vacancy. For $j<24$ under the stated continuing permission it
+selects the same unique attachment and successor $(h,j+1)$.
+For $j=24$ no attachment is enabled and the append postcondition is
+the same. Re-observing either successor gives its own actual image
+by Theorem 5.3. Thus for a view $V$,
+
+$$
+\operatorname{next}_V(E_V(h,j))
+ =(\operatorname{label}_{j+1},E_V(h,j+1))
+$$
+
+on exactly its executing domain; decoding the right side recovers
+the actual successor. At completion each image has the same
+component readout. Composing any two decoders/encoders gives inverse
+and triangle equations on their actual images. This is a concrete
+instance proof, not an invocation of an abstract commuting-square
+criterion as an implementation. ∎
+

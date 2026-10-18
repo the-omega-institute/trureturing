@@ -1,0 +1,43 @@
+**definition 10.1 (Attribution and scope of the supplied mathematics).**
+The original source, target and reference convention are reused from
+[Compound communication and calibration](AURIC_FIB_ATOM_HIDDEN_RELATIONS_COMPOUND_COMMUNICATION_AND_CALIBRATION.md),
+C-116 and C-121. That volume already supplies the real joint
+relative-sign instrument and joint value in C-129–C-133, and the
+two-copy BOTH-REAL spatial value
+
+$$
+E_2=\frac{c(45-12\eta)}{125},\qquad
+e_2^{\rm joint}=\frac{c(45-16\eta)}{125},\qquad
+E_2-e_2^{\rm joint}=\frac{4c\eta}{125}
+$$
+
+in C-134–C-138. Those results are prior inputs. In particular their
+two-copy excess is distinct from (9.1). The finite six-vector
+certificate and Bell table are credited to C-135 and C-137 and
+are used as intermediate interfaces, with the necessary identities
+spelled out in Sections 3 and 4. The joint value is cited there from
+*FIB noisy source programming minimax*; only the visible statement
+and the three-copy specialization explained in Section 9 are
+consumed here. No additional assertion from an unseen nested supplier
+is needed for the spatial bracket.
+
+The Kraus/Choi criterion, Hermitian trace-norm contraction, trace
+duality and diamond stabilization are standard finite-dimensional
+channel tools, not new general theorems of this volume. The necessary
+local-transpose Choi condition is the one attributed by C-138.2 to
+Wu et al., *Communications Physics* 7, 171, Methods, Eqs. (37)–(39),
+[DOI 10.1038/s42005-024-01649-y](https://doi.org/10.1038/s42005-024-01649-y).
+Its sufficiency for LOCC is not assumed. The real-operation and
+supplied-imbit framework is credited in C-133.2 to Wu et al. (2021)
+and Wu et al. (2024), arXiv:2301.04782v1, Appendix A, (22)–(23).
+A supplied imbit is a different premise from the actual mixed
+programs here. These bibliographic attributions retain the visible
+supplier's scope; no independent authentication of the primary
+articles or nested literature is asserted.
+
+The additional three-copy bracket, retained cubic converse,
+distributed majority gate, thinning and population selection, and
+their stated consequences are repo-derived ordinary finite-dimensional
+mathematics. They are not a claim of worldwide priority or a new
+generic norm, Choi, teleportation or resource-theory theorem.
+

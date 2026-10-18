@@ -1,0 +1,18 @@
+**Definition 4.1 (complete endpoint polytope).** Enumerate the entire
+inventory $Z$ as $x_1,\ldots,x_N$, where $N\le24$. Set
+
+$$
+\begin{gathered}
+A=[\Gamma(x_1)\ \cdots\ \Gamma(x_N)],\quad
+\kappa=(k(x_1),\ldots,k(x_N))^T,\\
+\mathcal P=\{w\in\mathbb R^N:w\ge0,\ Aw=B\},\quad
+\gamma(w)=\#\{G\in\mathscr G:\textstyle\sum_{i\in G}w_i>0\}.
+\end{gathered}
+\tag{FC.10}
+$$
+
+There is no full-row-rank assumption. An endpoint contact not used by
+a particular optimizer remains a column of $A$. An unused coordinate
+may be forced to zero on the entire polytope without being removed
+from the complete inventory.
+

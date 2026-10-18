@@ -1,0 +1,25 @@
+**Theorem 7.3 (original-real reduction and its phase antiunitary).** In the stipulated original real Kraus frame an optimum in (R.32) may be chosen with $\rho,Y$ real symmetric. In the actual real environment frame an optimal center in (R.27) may likewise be real symmetric. This makes neither $\tau=\Gamma(\chi_+)$ nor the phase-coordinate input entrywise real.
+
+**Proof.** Real $K_\alpha$ give $D_{\bar\rho}=\overline{D_\rho}$. Full conjugation takes a feasible pair $(\rho,Y)$ in (R.32) to $(\bar\rho,\bar Y)$ with the same real objective. Averaging the two preserves the affine matrix inequality and yields real symmetric variables. All complex recoveries were already optimized in the primal; no realness restriction on their Choi matrices is inserted.
+
+For the complement, $\Gamma(\bar X)=\overline{\Gamma(X)}$. At each input, root fidelity against $\mathcal C_\omega$ is concave in $\omega$. Its infimum over inputs is also concave: at every fixed input the concavity lower bound is at least the corresponding combination of the two infima. Let this worst-input function be $h(\omega)$. Conjugation invariance of fidelity and the input domain gives $h(\bar\omega)=h(\omega)$, hence $h((\omega+\bar\omega)/2)\geq h(\omega)$. The average is a real symmetric density in that actual environment frame.
+
+An original real density $\rho_0$ becomes $\rho_p=H^\dagger\rho_0H$, which satisfies
+
+$$
+\rho_p=P\bar\rho_pP,\qquad q_p=\rho_p^T=P\bar q_pP.
+\tag{R.33}
+$$
+
+Thus the correct phase-coordinate averaging is $(\rho_p+P\bar\rho_pP)/2$, not entrywise real part. For example the original real ket $(|1\rangle+|2\rangle)/\sqrt2$ has phase ket $(-i/2,i/2,1/\sqrt2)$, whose projector has imaginary third-column entries.
+
+Full SDP covariance also follows directly. Use $K_\alpha^p=K_\alpha H$, $L_j^p=H^\dagger L_j$ and $\rho_p=H^\dagger\rho_0H$. Then
+
+$$
+D^p=(I_5\otimes H^T)D^0,\qquad
+X^p=(I_5\otimes H^T)X^0(I_5\otimes\bar H).
+\tag{R.34}
+$$
+
+The top block transforms by this unitary, its $Y\otimes I_3$ part is unchanged, and the recovery marginal remains $I_5$. This proves covariance without replacing the phase antiunitary by naive conjugation. $\square$
+

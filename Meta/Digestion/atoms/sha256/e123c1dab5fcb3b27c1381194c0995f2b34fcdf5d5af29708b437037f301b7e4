@@ -1,0 +1,46 @@
+## 10. Source correspondence, credited results and open boundaries
+
+The following source labels refer to the corresponding repository theory
+texts. Their statements are reference-input mathematics; no Lean status
+is inferred from their presence. The source equations and lower-bound
+premises used in this volume have their explicit proofs above.
+
+- **[F]** *Native FIB continuation: exact affine obstruction and
+  compact-band approximation*. Sections 1–3 give the native source,
+  arbitrary preparation, original outputs and path law. Section 4
+  gives the all-finite obstruction for exact affine readout with
+  probability continuation; §7 gives the positive-band approximation
+  threshold. In §10, Lemmas 10.3–10.4, Proposition 10.5 and Theorem
+  10.6 give the affine-hull, common-circle and rational-erasure
+  mechanism. Proposition 10.18 includes the full open interval.
+  Corollary 10.16 already excludes exact deterministic full-output
+  decoding, with no affine-readout restriction. Proposition 10.11
+  already retains $(k,\alpha)$ in three real affine coordinates
+  and supplies its prescribed-path action and guards.
+- **[A]** *Native FIB on the full open domain: affine approximation
+  and finite attainment*, including §11, *Fixed-dimension uniform
+  gaps and finite Hankel certificates*. Theorem 2.2 gives the
+  all-finite affine-readout tolerance intervals; Theorem 3.3 concerns
+  bounded affine observables, and §§4–6 give its residual and
+  nonattainment proof. Theorem 11.1 strengthens nonattainment to a
+  positive model-uniform gap at every fixed dimension below $Z=2/3$.
+  Section 11.5 supplies the exact constant-prediction radius, the
+  literal zero-dimensional witness, the guard exclusion in dimension
+  zero, and the high-$Z$ height witness. Sections 9 and 11.7 supply
+  the prescribed-path comparison. These stronger fixed-dimension
+  results, as well as the original nonattainment result, concern
+  fixed affine readout.
+- **[O]** *AURIC FIB-ATOM: observation graphs, purity certification
+  and stable future response — continuation*. Proposition 10.4 and
+  Theorems 10.5–10.6 give the calibrated double-wall response and
+  exact base-only future quotient with lawfulness, topology, smooth
+  section and path action. Mathematical input 10.8 distinguishes
+  nonlinear current-state continuation from the shared-affine-
+  readout all-future obstruction. Chapter 11 addresses different
+  observation menus and pure versus arbitrary-PSD comparison classes.
+
+The native conventions in these texts are attributed there to *AURIC
+FIB-ATOM: Probability, Phase Transport and Holonomy*. That is source
+context; no unquoted theorem from that parent is needed for the proofs
+in this volume.
+

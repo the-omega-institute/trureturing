@@ -1,0 +1,37 @@
+## 9. 供应、有限资源与任务相对白盒后果
+
+FRS §§27–33 的原有限完整词事件、同一从零历史和强制 Stop 提供准确的消费者接口。本卷的 $w_{j,b}$ 事件是该原未来转录的事件，不是新取得动作。FRS 已有的有限秩、Vandermonde 和奇异值下界不计作新内容；这里另以精确同更新生成得到观察者自己的 H，再用正性把它接到实际 C 的常返类。这一正实现桥不由真实来源的有限线性响应维数自动供应。
+
+已供应共同切面／周期候选的相等对频率集中、共同矩阵极限与平稳分析路线被明确复用，并在§3局部证明。其预算区域等价、任意核周期支配、有理保持和完整前沿正规形未作为本卷前提或成果。新增部分是§4的同更新混合证书、§5的常返纯参数关系及§6–7的源特定风险结算。
+
+项目检索范围是封存基线下的停止源、相位生成、配置风险、同更新、正实现和概率自动机声明。已读到的 [PH]、[PRICE]、[FOUR]、[SWITCH]、FRS 和一般响应几何供应没有给出(8.1)这一关系。这个检索范围内未找到直接支配定理，不表示世界范围不存在供应。
+
+外部原始论文 [Survey] 的有限状态、来源独立随机性和时间不变规则是适用背景，其长期检验及累计预测损失不等于逐正有限停止历史的完整条件 TV。[SVA, Theorem7.1] 给最小加权自动机的平方词误差截断，不保持原付费过滤、随机归一化或同更新义务。[EQ, Proposition1] 的有限维加权自动机短见证是等价检验工具，不把来源混合、原停止词和实际随机保持自动联系起来。本卷的有限递推也不将任意符号实现当成正概率实现。
+
+Benvenuti–Farina 的正实现教程 [PR] 和 Heller 的有限 Markov 来源论文 [HM] 已检索到 DOI 元数据；本次未取得其可核对正文，故不引用其中任何定理为前提。公开网页返回 HTTP200 并不自动表示取得论文正文。有限矩阵谱、Cayley–Hamilton、Vandermonde、有限链常返分解、TV 三角等号、凸性与支配收敛均作为成熟工具在证明内消费，不另冠新名称。
+
+有限时域因果修复使用 feedback event-mass defect，仍没有当前条件 TV、完整无限停止尾与有限 COMPLETE 实现的桥。Fibonacci 等距窗口要求同一个范数保持算子；H 的生存质量核和可能删除边的 C/H 关系不满足该假设。KBonacci 与 AKMP 使用不同的来源动作、词域和费用。没有源／操作／度量／资源对应时，本卷不搬运它们的风险、稳定性或取得结论。
+
+以固定任务 $W_j=1-R_j$ 为白盒质量。定理6.1说明：若希望共同获得最佳 p 配置质量和最佳悬置配置质量，只把每份内部解释写成“真实来源的若干深度混合”并不充分；有限保持和同更新还要求一种脱离该混合族的合法预测语义。定理7.1给该表示子类的质量上界 $W_{\rm conf}(\mathcal H_p)\le1-\rho_p-c_{\rm mix}$。这是任务和资源合同内的数学后果，不是实际训练网络必须采用某种模块的定理。
+
+FIB 五窗 $\{000,100,010,101,001\}$ 是无相邻占位的输入语法。其任务纤维与操作闭合区别在本卷落实为原 $I_c$、实际 C、合成 H 及同一个完整事件接口；没有把五个输入类对应为当前观察者的五态、五个神经元或五种学习机制。语义响应与内部实现保持分开，纯参数类也不识别低层实现的唯一语义。
+
+本卷的变换和谱分解都在证明中，不增加运行时能力。原实际付费 Read、种子、记录写入、第三锁存、第四段及 Stop 路径完全不变。混合测度、平稳行、特征列、模型矩阵和有限事件概率不是免费输入。公开实矩阵只是数学常数，未取得有效表示的精确实概率不能被当作物理 oracle。
+
+定理覆盖实数数学核，因而也覆盖有理有限表示子类；没有声称任意实数模型的精确根判定、全局最优搜索或物理采样可有效完成。引理4.2是数学必要充分证书，不是新增概率查询端口。对有理规则，常数、候选寄存器、随机位位置、固定程序、工作区和输出控制均计费；采用公平位拒绝采样时不保存拒绝次数或随机带。合成完整转录可以逐字流送，接收者保存输出的存储另计。来源取得、保持、模型／表、数值精度、输出、合成工作区、随机位、时间、能量和物理存储是不同账户；输出长度、随机位和时间不因此获得统一有限最坏界。
+
+所有结论为普通数学。所显示的有理算术只核对常数及完整词的质量差，有限枚举和数值优化不承担任意核证明。没有 Lean kernel 核验、物理实现、实际训练网络定理、世界范围优先权、统计或模型先验独立性，以及持续到2027研究目标完成的主张。
+
+[ST]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[PH]: https://github.com/the-omega-institute/trureturing/blob/6004bfffc63af86a0d9780a092da7c6c34c79e34/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[PRICE]: https://github.com/the-omega-institute/trureturing/blob/7db69da19a9e3f5be1ba2df57c38eb2facb9ac66/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_APPROXIMATE_COHERENCE_PRICE.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[FOUR]: https://github.com/the-omega-institute/trureturing/blob/b041140a98877d0430d8b4b98ad2a5df5c084211/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+[SWITCH]: https://github.com/the-omega-institute/trureturing/blob/b041140a98877d0430d8b4b98ad2a5df5c084211/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONFIGURATION_LAW_SWITCH_ATTAINMENT.md
+[FRS]: https://github.com/the-omega-institute/trureturing/blob/ae9736d26babdfd2fd298a962530b3e51acbe9cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[Survey]: https://arxiv.org/html/2312.15225v1
+[SVA]: https://arxiv.org/html/1711.05994v2
+[EQ]: https://arxiv.org/html/1112.4644v2
+[PR]: https://doi.org/10.1109/TAC.2004.826715
+[HM]: https://doi.org/10.1214/aoms/1177700000
+

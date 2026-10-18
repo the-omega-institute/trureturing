@@ -1,0 +1,64 @@
+**定理 220.9（Exact common-$K$ reconstruction）。**
+Retain one tuple $(u_i,z,r_j,d_i,K)$ with the stated nonnegative
+first-zero-supported measures and $0\le d_i\le s_i$.
+Its prefix quotient is $\beta_i=-d_i$, and its tail quotient is
+$\beta_j=|r_j|-z(\Omega_j)$. Define
+
+$$
+\begin{aligned}
+ K_{\rm lo}&=S+z(1^m)+\sum_{v\ne1^m}\max(z(v),r_{n(v)}(v)),\\
+ K_{\rm hi}&=2S-D+z(1^m)+\sum_{v\ne1^m}(z(v)+r_{n(v)}(v)).
+\end{aligned}\tag{220.6}
+$$
+
+Here $n(v)$ is its full tail label. A canonical score in $\mathcal D_k$
+realizes these retained data if and only if
+$K_{\rm lo}\le K\le K_{\rm hi}$. The entire score is reconstructed
+using one scalar $t=(K-K_{\rm lo})/(K_{\rm hi}-K_{\rm lo})$ if the
+interval has positive width, and $t=0$ otherwise. For $s_i>0$ set
+
+$$
+\begin{aligned}
+ C_i(v)&=t(s_i-d_i)u_i(v)/s_i,\\
+ A_i(v)&=C_i(v)+d_i u_i(v)/s_i,\\
+ P_i(v)&=u_i(v)-A_i(v).
+\end{aligned}\tag{220.7}
+$$
+
+If $s_i=0$, $d_i=0$ and all three coefficients are zero.
+At a tail zero word set
+
+$$
+ P(v)=(1-t)\min(z(v),r_{n(v)}(v)),\quad
+ A(v)=z(v)-P(v),\quad C(v)=r_{n(v)}(v)-P(v),
+ \qquad T=z(1^m).\tag{220.8}
+$$
+
+Applied after pooling an input in $\mathcal D_k$, this construction
+defines a generally nonlinear idempotent map $J_k$ preserving $Q,W$.
+Every fixed support of $J_ky$ equals that of $\rho_ky$ and is at
+most its original value.
+
+**证明。** For a donor, $u=A+P$ and $|A|-|C|=d$.
+Its total coefficient cost is $s+|C|$, with
+$0\le|C|\le s-d$: pooled inactivity gives $|C+P|\le s$.
+At a tail word the same $P$ contributes to $z=A+P$ and $r=C+P$,
+so $0\le P\le\min(z,r)$. Its cost $z+r-P$ ranges from
+$\max(z,r)$ to $z+r$. The terminal cost is $z(1^m)$.
+Summing gives exactly (220.6), with $P$ paid once.
+
+Conversely (220.7)–(220.8) are nonnegative and preserve all retained
+measures and quotient entries. Their cost is
+$K_{\rm lo}+t(K_{\rm hi}-K_{\rm lo})=K$.
+For a donor the new $h_i=(1-d_i/s_i)u_i\le u_i$ pointwise,
+so D1–D2 hold. Zero donors and zero interval width have the stated
+unique formulas; both endpoints use the same scalar on all words.
+All-ones donor suffixes and multiple-zero words remain included.
+
+For an actual input the interval is feasible by necessity. On the
+pooled input and reconstructed score prefix labels are inactive and
+all zero and tail measures coincide. Each fixed support therefore
+coincides. Also $W=S+Z-E$ is unchanged. Reextracting the tuple gives
+the same $K$ and the same $t$, proving $J_k^2=J_k$.
+$\square$
+

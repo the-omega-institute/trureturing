@@ -1,0 +1,80 @@
+**Theorem 6.2 (strict simultaneous pattern obstructions).** Suppose
+$L_2(K,H)$ for such a triple. Then the following list exhausts its
+possible collision patterns.
+
+1. If a column is constant, it can only be $C$. The proper columns
+   $A,B,D$ must use three different pairs. This configuration
+   satisfies one of the alternatives (5.1), and every sixth root
+   on the entire same-ancestor common-drift slice is simple.
+2. If no column is constant and the pair multiplicities are
+   $(2,2,0)$, the only possible assignment is $AC\mid BD$:
+   one pair shares $A,C$, a different pair shares $B,D$, and the
+   remaining pair has no collision. This configuration has the
+   same restrictions (5.1) and entire-slice simplicity.
+3. If no column is constant and the multiplicities are $(2,1,1)$,
+   the unique repeated pair can occupy only $AC$, $BC$, $BD$ or
+   $CD$. An $AC$ repeat has all restrictions (5.1) and the same
+   entire-slice simplicity. No additional collision-specific
+   restriction is asserted here for repeats $BC$, $BD$ or $CD$.
+
+For every configuration containing an $AC$ pair, alternative I also
+forces the cubic root intervals and normalized signs of Theorem 5.1
+for every member of the slice. If
+$d\notin(0,24)\cup(24,48)$, or if the triple contains a repeated
+sixth root, only case 3 with repeated subset $BC$, $BD$ or $CD$
+can survive. All these are necessary conditions, not realizations.
+
+**Proof.** G, Theorem 4.1 applies on exactly (1.7), so each distinct
+pair has at most two terminal-coordinate collisions. There are three
+pairs. If $n$ of the four noninjective columns are constant, the
+number of incidences is $3n+(4-n)=4+2n\le6$, hence $n\le1$.
+If $n=1$, each pair has already used one incidence in the constant
+column and can use only one more. The other three columns must use
+the three different pairs. If $n=0$, the three counts are at most
+two and sum to four; their only types, up to pair ordering, are
+$(2,2,0)$ and $(2,1,1)$. This is the baseline count of G,
+Theorem 6.1, with its full three-world hypothesis retained.
+
+A constant $A$ and a collision in $B$ would give a distinct $AB$
+pair, contrary to Theorem 4.1 here. A constant $B$ and a collision
+in $A$ give the same contradiction. A constant $D$ and a collision
+in $A$ give a forbidden $AD$ pair. These arguments exclude each
+whole configuration regardless of the choices of proper pairs.
+Thus only constant $C$ survives. Its $A$ pair is an $AC$ pair;
+Theorem 5.1 applies on the common slice and proves every restriction
+in case 1, including simplicity for all three members.
+
+For type $(2,2,0)$ the two repeated pairs occupy disjoint two-element
+coordinate subsets partitioning the four columns. All possibilities
+are $AB\mid CD$, $AC\mid BD$, $AD\mid BC$.
+The first contains forbidden $AB$, and the third forbidden $AD$.
+Only $AC\mid BD$ remains. Its $AC$ pair gives precisely the
+whole-slice restrictions asserted in case 2.
+
+For type $(2,1,1)$ the six possible two-coordinate subsets for its
+repeated pair are $AB,AC,AD,BC,BD,CD$. Theorem 4.1 excludes
+$AB,AD$; the four listed subsets remain. If that subset is $AC$,
+Theorem 5.1 again applies to the full common slice. This proves
+case 3 and exhausts the no-constant possibilities without permuting
+the literal terminal coordinates.
+
+All patterns except $(2,1,1)$ with repeated subset $BC,BD,CD$
+contain an $AC$ pair. Such a pair requires the two strict drift
+alternatives and excludes any repeated-sixth-root member of the
+entire same slice by Theorem 5.1. This proves the final exclusion,
+even if the repeated-root world would have been the member outside
+the $AC$ pair. ∎
+
+The common normalized terminal sign is also necessary. Indeed each
+terminal offset from $d$ has the sign of $f_i(7)$ because its trace
+factor is positive. If signs on three worlds were mixed, only the
+unique same-sign pair could collide in any column. All four collision
+products would then force that pair to share $AB$, contradicting
+Theorem 4.1. Thus all three signs agree, as in G, Theorem 6.1.
+If a repeated-sixth member is present, G, Theorem 2.1 makes this
+common sign positive, and gives at most one such member, exactly
+double and exactly cubic, with its stated strict root/drift ranges.
+A negative normalized terminal sign therefore forces all three sixth
+roots simple. Original terminal signs are obtained by multiplying
+by the one common nonzero $\lambda$.
+

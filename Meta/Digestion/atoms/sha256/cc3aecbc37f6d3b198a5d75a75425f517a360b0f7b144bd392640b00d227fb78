@@ -1,0 +1,55 @@
+### 10.3 Four edges, a known reference and the exact scope of minimality
+
+**Mathematical input 10.3 (The supplied four-edge reference reconstruction).**
+Transport Theorem 8.4 already proves the following exact reconstruction.
+Its middle probability is this $Z$, its $h_i$ are the current phase
+increments, and its edge order is exactly Definition 10.1. Its use here
+connects the general graph calculation to the calibrated five-mode source;
+it is not an additional reconstruction theorem.
+Assume $Z>0$ and use the gauge $\psi_2=\sqrt Z$. From
+
+$$
+E^*=\{02,01,03,1\!\text{--}\!13\}
+$$
+
+one recovers
+
+$$
+\psi_0=\frac{\overline{C_{02}}}{\sqrt Z},\quad
+\psi_1=\frac{C_{01}}{\overline{\psi_0}},\quad
+\psi_3=\frac{C_{03}}{\overline{\psi_0}},\quad
+\psi_{13}=\frac{C_{1,13}}{\overline{\psi_1}}.
+\tag{10.5}
+$$
+
+The fifth native edge is redundant:
+
+$$
+C_{3,13}=C_{1,13}\,\frac{\overline{C_{03}}}{\overline{C_{01}}}.
+\tag{10.6}
+$$
+
+On an open phase domain away from the walls where the four relative phases
+can be independently realized, four instantaneous edges are minimal for a
+known positive reference: fewer edges disconnect the graph and leave an
+independent component phase. The assertion of four-edge minimality is not
+made on a wall where the phase domain itself has lower dimension.
+
+Proof. The first formula fixes the reference-to-$0$ edge and the remaining
+three formulas propagate along a spanning tree. Equation (10.6) is direct
+substitution. A graph with fewer than four edges on five vertices is
+disconnected; a phase rotation of one component leaves all measured edges
+unchanged. Off the walls, the supplier's phase-domain result in §8.2
+realizes the independent edge phases needed by this lower-bound argument.
+The proof concerns pure rays with a calibrated reference, not arbitrary
+mixed-state tomography or a complete family of representable functors.
+$\square$
+
+The four complex edge values are eight real numbers from which the ten
+native real outputs are recovered nonlinearly. Off the walls the current
+source has one height and four independent relative phase circles; the
+affine capacity of all ten outputs is ten by Transport Theorem 8.6.
+These statements are compatible because an affine decoder and a nonlinear
+reconstruction impose different conditions. The double-wall restriction
+below has intrinsic dimension three and current affine capacity four.
+

@@ -1,0 +1,41 @@
+**Lemma 6.3 (Matched-character radial domination).** In the remaining
+case some $C\ge0$ and finite real $\gamma$ satisfy
+
+$$
+\operatorname{err}(E,q)^2\ge
+\sup_{0<k<H}\left\{4(Ce^{\gamma k}-A(k))^2+4Zk\right\}.
+$$
+
+**Proof of Lemma 6.3.** Conjugate the chosen character basis if
+necessary so that $\chi=\xi$. At a fixed height the useful error
+vector is
+
+$$
+c+(p_+f(k)-A(k))e^{i\alpha}
+ +p_-\overline{f(k)}e^{-i\alpha}.
+$$
+
+Write its nonconstant part as $h(\alpha)$. Since
+$h(\alpha+\pi)=-h(\alpha)$, the mean of the squared errors
+at these opposite phases is $|c|^2+|h(\alpha)|^2$.
+Their worst error is therefore at least $|h(\alpha)|$.
+For any complex $z,w$,
+
+$$
+\sup_\alpha|ze^{i\alpha}+we^{-i\alpha}|=|z|+|w|:
+$$
+
+the triangle inequality gives the upper bound, and choosing $2\alpha$
+to align the two nonzero terms gives equality; zero terms are immediate.
+It follows that the worst useful error at this height is at least
+
+$$
+|p_+f(k)-A(k)|+|p_-|\,|f(k)|
+\ge\bigl||p_+|\,|f(k)|-A(k)\bigr|.
+$$
+
+By Lemma 5.3 the last expression is $|Ce^{\gamma k}-A(k)|$
+with $C=|p_+|e^{-\gamma H/2}\ge0$. The case $p_+=0$ gives
+$C=0$. Add the unavoidable $4Zk$ term using Proposition 3.5
+and take the supremum. $\square$
+

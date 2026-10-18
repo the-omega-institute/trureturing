@@ -1,0 +1,22 @@
+**Corollary 62.2 (individual centers beyond the spread criterion).** For each $k\in\{3,4,5,6,7,8,9\}$, the center spectrum
+
+$$
+\left(\frac7{10},\frac{29}{100},
+\underbrace{\frac1{100(k-2)},\ldots,\frac1{100(k-2)}}_{k-2\text{ entries}}\right)
+\tag{S.86}
+$$
+
+is excluded by Theorem 62.1, but does not meet the existing sufficient criterion (S.28).
+
+Proof. The entries are strictly positive, ordered and sum to $7/10+29/100+1/100=1$. Their tail mass is $1/100$, so they lie in the rectangle (S.83). Their spread is
+
+$$
+2s+2t+\lambda_3=\frac{198}{100}+\frac1{100(k-2)}>1+h=2T,
+$$
+
+because $h<71/100<98/100$, where $h<71/100$ follows by squaring positive numbers, $1/2<5041/10000$. Thus (S.28) does not exclude these centers. Similarly $(3/5,39/100,1/100)$ is excluded by Theorem 61.1 and has spread $199/100>1+h$.
+
+Within ordered positive spectra, the region $699/1000<s<701/1000$, $0<\epsilon<1/100$ is relatively open by continuity of these strict inequalities. It is nonempty in every stated rank: distribute $\epsilon$ equally among the $k-2$ tail entries. Then $t=1-s-\epsilon>289/1000$ exceeds each tail entry, so strict positivity and ordering hold for every $k=3,\ldots,9$. The rectangle exclusions therefore include positive tails in every stated rank.
+
+By Theorem 57.2, infeasibility of (S.59) implies (S.15) at each excluded center, for every allowed actual $V$ and common contraction $U$ at that center. These are individual center examples consumed by that necessary-system exclusion, not actual encoder constructions or a statement about the location of any optimizer. $\square$
+

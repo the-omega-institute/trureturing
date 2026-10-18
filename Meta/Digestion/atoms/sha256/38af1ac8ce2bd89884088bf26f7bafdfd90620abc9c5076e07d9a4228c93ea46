@@ -1,0 +1,43 @@
+## 6. 六、离散 5040 纤维中的作用量
+
+在整数指数空间中，固定 $(u,v,w)$ 后：
+
+$$
+a_2=u-\kappa,
+\qquad
+a_3=v,
+\qquad
+a_5=w-\kappa,
+\qquad
+a_7=\kappa.
+$$
+
+对应乘法数为：
+
+$$
+n(\kappa)=
+2^{u-\kappa}
+3^v
+5^{w-\kappa}
+7^\kappa.
+$$
+
+整理得：
+
+$$
+n(\kappa)=
+2^u3^v5^w
+\left(\frac7{10}\right)^\kappa.
+$$
+
+因此：
+
+$$
+\log n(\kappa)=
+u\log2+v\log3+w\log5
++
+\kappa\log\frac7{10}.
+$$
+
+---
+

@@ -1,0 +1,24 @@
+**Definition 1.2 (Majority notation).** Set
+
+$$
+a=\max(p,1-p),\quad b=\min(p,1-p),\quad
+\eta=ab,\quad c=a^2+b^2=1-2\eta,
+\qquad
+\sigma=\begin{cases}1&p>1/2,\\0&p<1/2.\end{cases}
+\tag{1.4}
+$$
+
+Thus $S_\ell=\sigma$ has probability $a$, and
+
+$$
+\begin{gathered}
+a+b=1,\quad 0<b<1/2<a<1,\quad 0<\eta<1/4,\quad 1/2<c<a<1,\\
+a-c=b(a-b)>0,\qquad 2a^2-c=a^2-b^2>0.
+\end{gathered}
+\tag{1.5}
+$$
+
+For example $c>1/2$ follows from $a\ne b$, and the displayed
+identity for $a-c$ proves $c<a$. These strict inequalities will keep
+all parameter comparisons on the entire stipulated range.
+

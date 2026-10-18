@@ -1,0 +1,52 @@
+**定理 C-108.3（原人口纤维上的双向全菜单等价与十维盲核）。** 对每个
+$\Gamma=JCJ^\dagger\in\mathfrak D$，下列条件等价：
+
+$$
+\begin{aligned}
+& P_\Gamma^\pi=P_S^\pi\quad\text{对每个 }\pi\in\mathcal M_{\rm loc};\\
+& \operatorname{Re}C=I_5/5;\\
+& C=I_5/5+iA,\qquad A\in M_5(\mathbb R),\quad A^T=-A,
+                    \quad I_5/5+iA\succeq0.
+\end{aligned}
+\tag{C108.5}
+$$
+
+在 C-107 的二十维零对角 Hermitian 方向空间 $V$ 上，此实际菜单的秩与核维数
+分别恰为 $10,10$，核为
+
+$$
+\mathcal N_{\rm loc}=i\operatorname{Skew}_5(\mathbb R).
+\tag{C108.6}
+$$
+
+所有满足 (C108.5) 的态都还属于原 $Q$ 纤维 $\mathfrak F$。
+在已知 $Q$ 的十九维 $V_Q$ 上，菜单的秩为九、核仍为十维。
+
+证明。引理 C-108.2 说明整个菜单在匹配支撑内的效果恰张成实对称矩阵。
+所以全部历史律相同，当且仅当 $C-I_5/5$ 与每个实对称矩阵的迹配对为零。
+必要性也可直接用 (C108.4) 的无序对代表：对应差读数为
+$2\eta_s\eta_a\operatorname{Re}c_{sa}$。
+所有 $\eta_s$ 非零，故全部十个实部必须消失；对角已由人口给定。
+反之，Hermitian 的 $C-I_5/5$ 若实部为零，恰能唯一写成 $iA$、$A$ 实反对称。
+对任意实对称 $H$，
+
+$$
+\operatorname{tr}(AH)=\operatorname{tr}((AH)^T)
+=\operatorname{tr}(H^TA^T)=-\operatorname{tr}(HA)
+=-\operatorname{tr}(AH)=0.
+\tag{C108.7}
+$$
+
+最后的零使用特征为零。故每个确定分支的差读数为零，非负和与积分仍为零，
+给全体随机自适应历史的充分性。正性没有被丢弃：它保留为 (C108.5) 的明确条件。
+这是 Heinosaari–Mazzarella–Wolf，
+[arXiv:1109.5478v1](https://arxiv.org/html/1109.5478v1)，Proposition 2
+的观察差空间判据在该匹配支撑上的应用。
+
+零对角 Hermitian 矩阵的十个无序对各有一个实部和一个虚部。
+菜单恰保留十个实部，十个虚部组成 (C108.6)；小范数的这些方向都可由正性内部
+$I_5/5$ 实现，所以这不是包含非法扰动的虚假维数。
+$J^\dagger QJ$ 是 C-107.3 已给的实对称矩阵，故 (C108.7) 使
+$q(\Gamma)=q(S)=1/5$。原 $\ell_Q$ 在十维实部空间上非零，
+已知它只消掉一个可见实方向，给 $V_Q$ 上的秩九与核十。证毕。
+

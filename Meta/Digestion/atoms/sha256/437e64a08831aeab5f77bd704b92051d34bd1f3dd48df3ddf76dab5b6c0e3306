@@ -1,0 +1,107 @@
+**Theorem 285.3 (All-column zero cost of the explicit score).**
+For every $m\ge4$, $V_m$ is nonnegative and
+
+$$
+QV_m=(1_J;K_C),\quad K_C=m+c+1-\varepsilon_C,\quad
+W_{V_m}=B_N(V_m)=B_O(V_m)=c+1-\varepsilon_C.
+\tag{285.8}
+$$
+Every one complete feasible $N$ allocation of arbitrary finite mass,
+for any real $b$ and $e\ge0$, satisfies
+
+$$
+\delta_b:=(c-2)e-E_b\ge\varepsilon_C e,
+\qquad\sum_{j\in J}b_j\le K_Ce.
+\tag{285.9}
+$$
+Every full input with $Qy=(t1_J;K)$, $t\ge0$, $K\ge tK_C$,
+has the single exact-$Q$ zero-cost representative
+$tV_m+(K-tK_C)T_+$ and $\theta=0$.
+
+**Proof.** The only subtracted union coefficients are on the $k$-layer,
+where $u_Z^*/\nu(Z)\le\zeta\le\Lambda$; the changes on the next
+layer and full suffix are positive. The sole-zero correct coefficients
+become $1-U/\Lambda\ge0$ except at the last late address, where
+the coefficient stays one. The removed mass is added at $u^i$ in the
+same first-zero class. $T$ stays one. Thus $V_m\ge0$.
+The vector $\mathcal D$ preserves both $\beta$ and $K$;
+$\mathcal B$ has $\beta=0$ and total coefficient $1-p$.
+Each of its union rows has anchor value one. This proves the claimed
+quotient and anchor.
+
+Here is the full column argument. For a table $D$, set
+$H_D=c+1-Yz_D$. Use $g_D,x_D,\eta_D$ of 275.1 and 278.2,
+with $g_D=\sum_i g_i(D)$ as defined explicitly in 286.1 below.
+Partitioning early labels, late labels and zero gives
+
+$$
+H_D=g_D+x_D+\eta_D\ge0.
+\tag{285.10}
+$$
+For clarity the nonnegative $g_D$ contributions are: no late query,
+$g_D=a_D$; late singleton at $j$ with outputs $u,v$,
+$2[u\in J]-[u=j]+(c-2)[v\in J]+[v=j]$; mixed pair $(h,j;u,v,s,t)$,
+
+$$
+[u\in J]+\tfrac{c-2}2[v\in J]+[s\in J]-[s=j]
+       +\tfrac{c-2}2[t\in J]+[t=j];
+$$
+and late pair $(i,j;u,v,s,t)$,
+
+$$
+[u\in J]+[v\in J]-[v=i]+[s\in J]-[s=j]
+       +(c-3)[t\in J]+[t\in\{i,j\}].
+$$
+The opposite-head coefficients in $x_D$ are $1/2$ in the first three
+late-pair cells and $(c-3)/2$ in the last; mixed-pair coefficients
+are one or $(c-2)/2$ and no-late early-fibre coefficients are $c/2$.
+Together with $\eta_D$ these grouped expressions show that $H_D=0$
+or $H_D\ge a$. Their exact zero face is
+
+| Schedule | Zero-$H$ outputs |
+| --- | --- |
+| empty | $0$ |
+| early singleton $h$ | zero output in $\{0,h\}$, positive output $0$ |
+| late singleton | both outputs $0$ |
+| $(1,2)$ | $00$ arbitrary; $01\in\{0,1\}$; $10\in\{0,2\}$; $11\in\{0\}\cup J$ |
+| $(1,j)$ | $00,01\in\{0,1\}$; $10\in\{0,2,j\}$; $11=0$ |
+| $(2,j)$ | $00,01\in\{0,2\}$; $10\in\{0,1,j\}$; $11=0$ |
+| late $(i,j)$ | $00=11=0$; $01\in\{0,i\}$; $10\in\{0,j\}$ |
+
+In particular the head-pair $00$ cell is empty on the score support
+and has unrestricted output. The list follows by zeroing each grouped
+nonnegative contribution, retaining every otherwise legal label.
+
+Set $d_D=\mathcal D(z_D-\mathbf r)$.
+On the zero face $d_D=1$ precisely at a late pair whose $01$ output
+is its first address, and otherwise $d_D=0$: at that address $v^i$
+uses $01$ whereas $u^i$ uses $00$; in all other cases their correct
+indicators agree. Without a zero-face assumption $d_D\ge-(m-1)$.
+For $h=1,2$, define $F_h(Z)=1-[D(\text{early}_h,Z)\in\{0,h\}]$,
+where $\text{early}_1=01$, $\text{early}_2=10$, and put
+$L_D=(\mathcal L(F_1)+\mathcal L(F_2))/2$.
+Always $L_D\le U$, since $F_h$ takes values zero or one.
+If $H_D=d_D=0$, the face list makes each $F_h$ a nonnegative
+ordered cut (285.3): a mixed $10=j$ contributes its unary, and a
+late $10=j$ contributes its forward edge. Hence $L_D\le0$ by
+285.1. If $H_D=0,d_D=1$, use $L_D\le U$.
+If $H_D>0$, then
+$U d_D+(mU/a)H_D\ge-U(m-1)+mU=U\ge L_D$.
+All columns therefore obey
+
+$$
+L_D\le U d_D+\Lambda H_D.
+$$
+The signed union vector satisfies
+$\mathcal B(z_D-\mathbf r)=-L_D$, because its total coefficient
+is $1-p$. Consequently
+
+$$
+V_m(z_D-\mathbf r)=-H_D+L_D/\Lambda-Ud_D/\Lambda\le0.
+$$
+$R$ gives equality, proving (285.8) on the complete catalog.
+Equation (280.2) proves (285.9); positive-row padding proves the last
+assertion, with all input cancellations and placements unrestricted.
+No suballocation feasibility or separate optimum enters this proof.
+$\square$
+

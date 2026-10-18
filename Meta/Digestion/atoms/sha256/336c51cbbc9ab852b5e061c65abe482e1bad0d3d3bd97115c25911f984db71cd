@@ -1,0 +1,2 @@
+**边界 4.3（Conditions cannot be dropped）。** The only required label inequality is $D\ne E$. If it is removed and $D=E=A=L$ while $R\ne L$, then $1^m$ alone distinguishes the high tails from every low tail, giving exact fee one. If all labels coincide, the fee is zero. These examples rule out extending (3.1) to coincident endpoint labels. Likewise $m=k$ would give $H=0$ and no low-tail sources at all, so the legal target would be constant $R$ and free. The proper-narrow hypothesis is part of the theorem's domain.
+

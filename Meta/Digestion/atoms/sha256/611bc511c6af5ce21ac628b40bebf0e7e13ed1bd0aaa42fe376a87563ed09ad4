@@ -1,0 +1,8 @@
+**Definition 2.3 (stackless next address).** `after(x)` removes trailing `R`
+letters. If nothing remains, it returns a distinguished `DONE`. Otherwise
+it replaces the last `L` by `R`. The empty address and `DONE` are different.
+After finishing a subtree at $x$, this is the next pending right subtree in
+a left-first preorder traversal. Descending through a branch appends `L`.
+These two operations use the address itself as continuation information;
+they store neither ancestor records nor sibling subtrees.
+

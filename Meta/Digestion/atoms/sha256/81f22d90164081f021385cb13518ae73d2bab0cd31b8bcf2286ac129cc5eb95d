@@ -1,0 +1,31 @@
+**定义 64.2（所有计算的有限展开）。** 只针对本节已声明的有限公式给出统一字面展开规则。常量叶生成 CONST，变量叶生成 COPY，各写一个新暂存单元；$j$ 元原语先按显示顺序执行所有操作数子表，再执行该原语至新单元。不共享子表达式、不短路；每个有限折叠及 $Q,2Q,E$ 轮逐项展开。LE、NE、MIN 按定义 59.1 展开，蕴含为 NOT／OR，有限集合成员资格为 EQ／OR，分情况为按守卫优先级嵌套 SEL。每次同时赋值先从旧值求全部候选，再逐字段 COPY 提交。未改变字段也复制旧值，失败掩码也求两候选。
+
+所需表达式表完整包括：范围及 $2Q$ 轮 Euclid；LOAD 的 $d,r$ 和阈值 (59.4)；第 60 节守卫、首败选择、计数和状态表；SAMPLE 零门及转子候选；STOP 封存；第 61 节全 $E$ 槽身份／出现／计数／零／首命中折叠；四回执子句与提案；逐字段 USE 核对及两种输出；规范十二字请求、四十字行、回执、守卫帧与确认块构造及填零；各接收者 COPY 与成功时持久提交；档案槽选择；第 62 节局部阶段、游标、命中、提案、句柄和停止规则。每个所有者在其真实访问域计算，P 无 V 私有数据的直接 COPY。
+
+档案对每个 $i=1,\ldots,E$ 和每个四十字段实际赋值
+
+$$
+\mathrm{SEL}(\mathrm{EQ}(i,\mathrm{event}),\mathrm{new\_field},\mathrm{old\_slot\_field}).
+\tag{64.1}
+$$
+
+actor 档案同样在回复交付后保存真实行。V 只取得其规定复制。准备的清单接收字段及控制初始化、接收候选至暂存、回执和输出持久化各有明确 COPY；这些赋值属于表而不是免费传递的后处理。
+
+守卫的精确展开如下：状态是 EQ(status,字面码)，描述符为三字段 EQ 的 AND，状态集合为这些 EQ 的 OR，格式与范围比较字面界。设操作 $a$ 的旧尝试计数为 $j_a$，增加位为额度检查前各守卫的 AND，再 AND 操作相等及 $j_a<\mathrm{quota}_a$；新计数为 $j_a$ 加该位，后续失败不撤销。ABORT 没有这一计数。接受位为全部相关条件的 AND，首败为各条件否定按优先级嵌套 SEL，末端为 ACCEPT。每个变化字段为接受操作位选择候选／旧值；status 按成功 LOAD、STOP、USE、ABORT 选状态，再在全局达 $E$ 且非成功 USE／ABORT 时选 EXHAUSTED。拒绝载荷以接受位掩成零，先前持久回执另以接受 VERIFY 位选择更新。因而完整部分后继由有限原语定义，不以成功为原子。
+
+V 的折叠也显式给出。令 $\mu_i$ 表示第 $i$ 行为成功 SAMPLE；它必须满足 load_ref$<i<$stop_ref。各选中行的 provenance 位为第 61.1 节各 EQ、presence 与位成员测试的 AND，累计 AND 蕴含 $\mu_i\Rightarrow\mathrm{provenance}_i$。从 $c=0,z=1,\mathrm{prior\_zero}=1,\mathrm{last}=0$ 开始，右边使用旧值：
+
+$$
+\begin{aligned}
+c'&=c+\mu_i,\\
+z'&=z\land\mathrm{SEL}(\mu_i,\mathrm{EQ}(\mathrm{bit}_i,0),1),\\
+\mathrm{prior\_zero}'&=\mathrm{SEL}(\mu_i,z,\mathrm{prior\_zero}),\\
+\mathrm{last}'&=\mathrm{SEL}(\mu_i,\mathrm{bit}_i,\mathrm{last}).
+\end{aligned}
+\tag{64.2}
+$$
+
+最终 $f$ 为 $1\le n,c=n,\mathrm{prior\_zero},\mathrm{last}=1,n\le B,2n-1\le D$ 的 AND，全零为 $c=n$ AND $z$；$n=0$ 时 $2n-1$ 候选可回绕但其子句已由 $n\ge1$ 排除。LOAD／STOP 成功出现、事件号及引用、顺序与描述符是全槽 EQ／OR 折叠；空槽用四十个 EQ 零的 AND，由 prefix_end 掩码选取。四子句和提案再选 kind／value，守卫失败选全零候选。USE 在真实帧、回执和本地请求上逐字段 EQ／AND，再选相应输出与确认块。不存在“验证来源真值”这一未展开原子。
+
+控制表以本地 stage、ACCEPT、已交付游标／门位／句柄的 EQ／LT／SEL 选择 LOAD、SAMPLE、STOP、VERIFY、USE、HALT。采样条件为 NOT(hit) AND cursor$<B$；EXACT 提案为 SEL(hit,$2\mathrm{cursor}-1$,0)，CUT 提案为 hit。每个十二字段赋值计 CONST／COPY，阶段、游标、标志和句柄提交计 COPY，实际权限交接另计。拒绝进入有限 HALT 表；成功 USE 已关闭，不再发请求。
+

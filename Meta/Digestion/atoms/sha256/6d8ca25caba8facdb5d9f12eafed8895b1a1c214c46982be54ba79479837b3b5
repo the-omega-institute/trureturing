@@ -1,0 +1,43 @@
+**命题 C-106.3（联合人口解除 $R_+$ 的族承诺及等号处的复相干反例）。** 对任意
+$\Gamma\in\mathfrak D$，令 $c=c_{0,13}$，则
+
+$$
+p_R(\Gamma)=1/5+\operatorname{Re}c,\qquad
+p_R(\Gamma)\ne1/5\ \Longrightarrow\ \Gamma\text{ 非 PPT 且纠缠}.
+\tag{C106.7}
+$$
+
+该蕴含不需要 C-105.2 的 $\Gamma_t$ 承诺，亦不需要 $q=1/5$。
+即使另有原 $Q$ 约束，$p_R=1/5$ 仍不能认证可分离。
+
+证明。$R_+$ 的两个对角项各贡献 $1/10$，两个交叉项合计贡献
+$\operatorname{Re}c$。若响应不等于 $1/5$，则 $c\ne0$，由 (C106.6) 得非 PPT。
+为验证等号处的不完备性，取任意实数 $0<|\eta|\le1/5$，定义
+
+$$
+\widetilde\Gamma_\eta
+=S+i\eta\bigl(|e_0\rangle\langle e_{13}|
+              -|e_{13}\rangle\langle e_0|\bigr).
+\tag{C106.8}
+$$
+
+其 $e_0,e_{13}$ 块是 $\begin{pmatrix}1/5&i\eta\\-i\eta&1/5\end{pmatrix}$，
+特征值 $1/5\pm|\eta|$；其余三个匹配向量各有特征值 $1/5$，其余二十维为零。
+所以这是迹一正半定复密度算子，全部人口满足 (C106.2)。
+$\operatorname{Re}(i\eta)=0$ 给 $p_R(\widetilde\Gamma_\eta)=1/5$。
+$\Omega$ 在这些向量上的系数均为实数；特别其 $e_0,e_{13}$ 系数同为 $1/2$，
+故反对称的纯虚交叉项对 $Q$ 的贡献为
+$(i\eta-i\eta)/4=0$。因此
+
+$$
+q(\widetilde\Gamma_\eta)=1/5,\qquad
+\widetilde\Gamma_\eta\in\mathfrak F,\qquad
+\operatorname{spec}\left(
+\left.\widetilde\Gamma_\eta^{\mathsf T_2}\right|_{
+\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+\right)=\{+|\eta|,-|\eta|\}.
+\tag{C106.9}
+$$
+
+它与 $S$ 在全部原菜单和新增 $R_+$ 上均不可区分，却仍纠缠。证毕。
+

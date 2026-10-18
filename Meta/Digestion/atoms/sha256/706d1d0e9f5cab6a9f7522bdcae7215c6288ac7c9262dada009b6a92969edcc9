@@ -1,0 +1,70 @@
+**Theorem 37.1 (positive heat finite part, exact energy and critical orbit).** Fix one datum satisfying Definition 32.1 and suppose additionally $\mathfrak m_d>0$. Define
+
+$$
+H_*:=\frac{\mathscr A\mathfrak m_d}{\beta_*}
+     =\frac{C_*+j_0A_p^2}{C_*^2}\mathfrak m_d>0.
+\tag{37.1}
+$$
+
+Then the actual infimum on the original entire complex form domain obeys
+
+$$
+\epsilon_c(s)=-aH_*s^5+o_d(s^5),\qquad
+E_s=-aH_*s^3+o_d(s^3),\qquad
+r_s\sim aH_*s^{-3}\longrightarrow\infty.
+\tag{37.2}
+$$
+
+For every prescribed $s_n\downarrow0$ and every actual normalized complex choice $\psi_{s_n}\in D(S)$,
+
+$$
+\operatorname{dist}_{L^2(\mathbb R^4)}
+       (\mathcal U_{s_n}\psi_{s_n},\mathbb Tp)\longrightarrow0.
+\tag{37.3}
+$$
+
+Proof. For clarity, the positive-shift threshold test applies on this arbitrary fixed original domain, not just on a translated family. For every $h>0$ and every $f\in(\mathcal T_s\mathcal U_s)\mathcal Q$,
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+ =a\|(C_s+h)^{1/2}f\|_2^2-\chi_c\|U_s^{1/2}f\|_2^2.
+\tag{37.4}
+$$
+
+The map $(C_s+h)^{1/2}$ takes this whole complex form domain onto $L^2(\Omega_s)$. The squared norm of $U_s^{1/2}(C_s+h)^{-1/2}$ equals $k_d(h)$. Thus nonnegativity of (37.4) for all complex $f$ is equivalent to $k_d(h)\le C_*$ and, by the actual variational definition, to $\epsilon_c(s)\ge-ah$. Negation gives
+
+$$
+k_d(h)>C_*\quad\Longleftrightarrow\quad\epsilon_c(s)<-ah.
+\tag{37.5}
+$$
+
+This is the bounded complex-form factorization underlying J (56.3). The inverse-square-root product and the Birman–Schwinger operators used for the norm comparison are bounded at each fixed positive shift; no zero-energy inverse is invoked.
+
+Choose separately fixed $0<H_-<H_*<H_+$. Theorem 36.1 gives $k_d(H_-s^5)>C_*$ and $k_d(H_+s^5)<C_*$ for sufficiently small $s$, depending on these choices. Therefore
+
+$$
+-aH_+s^5\le\epsilon_c(s)<-aH_-s^5.
+\tag{37.6}
+$$
+
+First take the scalar liminf and limsup in $s$. Only afterward let the fixed bracketing constants approach $H_*$. This proves the first formula of (37.2), and (32.5) gives the other two. The full actual infimum, not the value of any chosen trial, has been squeezed.
+
+Now P Theorem 105.1 applies to each prescribed sequence and each actual normalized complex ground-state choice, since $r_s\to\infty$. It gives exactly (37.3) with the original $\mathcal U_s$. To make the transport explicit, if $f_s=\mathcal T_s\mathcal U_s\psi_s$, then
+
+$$
+\psi_s=(\mathcal U_s)^{-1}\mathcal T_s^{-1}f_s,\qquad
+\psi_s(Y)=(j_0s^7)^{-1/2}f_s(\mathscr L_s^{-1}\Xi_s^{-1}Y)
+\quad(Y\in I\times\mathbb R^3).
+\tag{37.7}
+$$
+
+In the phase coordinates of (2.2), the literal inverse is
+
+$$
+L_s^{-1}=\begin{pmatrix}1&-\nu s&2\nu^2s^2\\0&1&-2\nu s\\0&0&1\end{pmatrix},
+\qquad \mathscr L_s^{-1}(r,z)=(r,L_s^{-1}z).
+\tag{37.7a}
+$$
+
+The determinant-one maps $\mathcal T_s$ tend strongly to the identity. An auxiliary early vector was used only in spectral tests; no parity, reality or chosen phase is imposed on $f_s$ or $\psi_s$. $\square$
+

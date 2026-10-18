@@ -1,0 +1,32 @@
+## 9. Boundary fields that cannot be silently dropped
+
+The following fields belong to the boundary whenever they can change a
+declared continuation.  Their absence is a change of task, not a harmless
+compression.
+
+1. **Fresh namespace.** An operation name includes a namespace, type,
+   version and token.  Fresh allocation requires the token to be outside the
+   actual archive (or to satisfy the declared alpha-equivalence rule);
+   reusing a spelling from another source is not a common action.  Allocator
+   state and owner/equality data enter the actual boundary whenever later
+   legality can inspect them.
+2. **Failure and illegal outcomes.** A legal failure with a successor, an
+   illegal attempt, and normal success retain separate statuses and reasons.
+   Their successor domains must descend through the same kernel.
+3. **Selector.** If an internal controller chooses the next action, its
+   accessible selector state and tie-breaking rule are part of the response.
+   A passive future quotient cannot be used as a closed-loop controller
+   without this factorization.
+4. **Ordered archive.** A sequence of receipts, records or names is not
+   interchangeable with a multiset or max summary.  If the task can ask for
+   order, the archive is part of $\Phi_{\mathcal U}$.
+5. **Clock and calibration.** Absolute epoch, duration, waiting label and
+   calibration/reference data enter the response when they affect legality,
+   selector choices or resource prices.  A positive additive grade is still
+   only a grade unless its transport and units are declared.
+6. **Permission and reference.** Access rights, phase references and source
+   selectors are configuration fields whenever they alter the legal menu.
+7. **Resource units and meter contract.** Read count, update count, literal
+   length, allocation, memory retention and clock cost use declared units and
+   either the fresh-suffix or inherited-meter composition law.
+

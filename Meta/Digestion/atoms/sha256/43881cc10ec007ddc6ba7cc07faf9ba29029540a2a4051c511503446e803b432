@@ -1,0 +1,14 @@
+### 105.6. A four-prime all-nonresidue criterion
+
+**Corollary 105.5.** Suppose the full actual kernel is D=p0 p1 p2 p3 with p0=19 modulo 24, p1,p2,p3=1 modulo 24, and every mutual Legendre symbol between distinct support primes equal to -1. If
+
+ product_(p|p1p2) (-5p0p3/p)_4 = -1,
+ product_(p|p1p3) (-5p0p2/p)_4 = -1,
+ product_(p|p2p3) (-5p0p1/p)_4 = -1,                 (105.8)
+
+then rank E_D(Q)=1 and there is no stipulated original-kernel repetition.
+
+**Proof.** Reciprocity is symmetric here because exactly one prime is 3 modulo 4. The matrix A is the four-by-four all-one matrix: every off-diagonal bit is one and each row-sum-zero diagonal is also one. It has rank one, so r=2. Its kernel is the even-weight subspace. U24 consists of the vectors with coordinate zero at p0 and even weight on the other three coordinates; it has dimension two. Its three nonzero cuts are exactly p1p2,p1p3,p2p3. Every quartic argument in (105.8) is a quadratic residue, since each is the product of -5 and two mutual nonresidues. Equations (105.8) make q anisotropic. Corollary 105.4 proves the result. ∎
+
+This stratum has A nonzero and nullity three, so it is outside both the maximal-nullity hypotheses of sections 100 and 104 and the nullity-two hypothesis of section 96. No individual symbol (p_i/p_j)_4 is used: those individual arguments are nonresidues and such symbols would be undefined in the convention here. The result is conditional on a complete actual ternary block, not on four generic primes satisfying the displayed congruences and characters.
+

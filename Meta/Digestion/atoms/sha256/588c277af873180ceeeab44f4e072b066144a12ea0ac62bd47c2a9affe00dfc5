@@ -1,0 +1,29 @@
+**Definition 4.1 (local owner domination).** In an arbitrary RRN network,
+let $O_i$ contain all seeds whose owner port is in original block $i$,
+and let $I_i$ contain the other seeds appearing in its factor prescriptions.
+The $O_i$ partition all seeds; incoming seed sets can overlap arbitrarily.
+Write the actual local potential as $\Phi_i(a,b)$, where $a$ is the
+entire owned tuple and $b$ is the incoming tuple. No factorization within
+either tuple is required. A local fragment $\eta$ consists of these
+one-block tables, domains and designated actual owner ports, allowing
+completion by additional actual donor blocks. For nonempty domains put
+
+$$
+M_\eta(a)=\max_b\Phi_\eta(a,b),\qquad
+L_\eta(w)=\sum_a M_\eta(a).
+\tag{OCB.25}
+$$
+
+An empty owner set has one empty tuple. A network with any empty seed
+domain has zero mass and is treated directly, without a probability on
+an empty domain. Owner-only proportional domination means a joint
+probability $\pi_\eta$ on the whole owned tuple with
+
+$$
+\Phi_\eta(a,b)\le K\pi_\eta(a)\quad\text{for every }a,b.
+\tag{OCB.26}
+$$
+
+This relaxation maximizes incoming values separately at different blocks;
+it does not assert that those maximizing choices are jointly realizable.
+

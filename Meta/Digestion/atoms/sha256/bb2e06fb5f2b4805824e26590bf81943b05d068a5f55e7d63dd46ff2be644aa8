@@ -1,0 +1,33 @@
+**Definition 10.1 (Domain, complete catalogs and credited premises).**
+Retain exactly the original objects of 1.1–1.4. In particular,
+
+$$
+0<\tau\le1/24,\qquad 0\le v\le u\le\tau,\qquad
+a_8=5\tau+u,\qquad a_9=5\tau+v,
+\tag{10.1}
+$$
+
+and every actual continuation satisfies
+$a_{10}\ge a_{11}\ge\cdots>0$, $a_{10}\le5\tau$, and $a_n\to0$.
+At $v=0$ the actual ninth amplitude is $5\tau>0$.
+For $C=N,O$, let $\nu_C(\tau,u)$ be the minimum of the complete
+eight-bit objective (8.1), with nine replaced by eight and labels
+$0,\ldots,8$, in that class's own normalized complete catalog.
+All three independent events and the positive row are included.
+The $N$ catalog retains four independent cell outputs, arbitrary labels,
+constants, singletons, reversals and repetitions. Constructing one
+stopped law imposes no restriction on these competitors.
+
+The construction $K$ below, its conditional union slack and its
+217 denominator are credited to the supplied complete
+whole-counterexample-proposal.json; the supplied
+whole-independent-ordinary-check.json supplies an independent ordinary
+verification. Their assertions are fallible mathematical inputs.
+The complete allocation and the proofs of the new conclusions are
+given here. The sixteen-table $P^0$, $P^\star$, their endpoint
+polynomials and full-word bounds, and the transfer $Q$ retain the
+credits of 3.1–3.4 and XVIII 319–320, 324–327.
+The full-score lower bounds, arithmetic realization and original
+closed-cap correspondence retain the credits of 1.3, 2.2 and 7.
+The supplied complete XVIII includes 324–330.
+

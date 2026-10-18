@@ -1,0 +1,84 @@
+**定理 C-115.2（包括闭单纯形与相关复块输入的容量目标）。** 对全部定义 C-115.1 的参数，
+记 $\Delta_5=\{p\in[0,1]^5:\sum_jp_j=1\}$、$D_p=\operatorname{diag}p$，则
+
+$$
+\begin{aligned}
+F_{t,X}(p)&=H_2(p)-S_2\bigl(\sqrt{D_p}(I_5+tX)\sqrt{D_p}\bigr),\\
+Q_t(X)&=\max_{p\in\Delta_5}F_{t,X}(p).
+\end{aligned}
+\tag{C115.4}
+$$
+
+最大值实际达到；$F_{t,X}$ 对 $p$ 凹，并对 $(t,X,p)$ 联合连续。
+对任意 $n\ge1$ 和任意 $M_{5^n}(\mathbb C)$ 密度矩阵 $\sigma$，
+以同一个 Stinespring 延拓定义互补通道 $\Phi^c$，有
+
+$$
+I_c(\sigma,\Phi_{t,X}^{\otimes n})
+:=S_2(\Phi_{t,X}^{\otimes n}(\sigma))
+ -S_2((\Phi^c_{t,X})^{\otimes n}(\sigma))
+\le n\max_{p\in\Delta_5}F_{t,X}(p).
+\tag{C115.5}
+$$
+
+右端由一用最大人口的 $n$ 重乘积达到。
+这些断言包括 $p_j=0$、$t=0,1$ 和 $I_5+tX$ 奇异的情形。
+
+证明。以下编码定理和可降解单字母化是所消费的成熟成分：
+Devetak–Shor，[*The capacity of a quantum channel for simultaneous transmission of classical and quantum information*,
+quant-ph/0311131v3](https://arxiv.org/html/quant-ph/0311131v3)，§1 的 Scenario Ib 纠缠传输合同、
+§2 的等价性及容量定理、
+Appendix B 式 (18) 和紧随其后的 generalized dephasing 论证。
+其有限维、固定无记忆、无辅助纠缠传输容量适用于 (C115.2)–(C115.3)；
+对纯目标的保真度趋一与该迹范数趋零等价。
+下面在实际来源上构造延拓并核对任意块输入，容量的操作可达性与反向界则消费该编码定理，
+不把一个熵公式定义成容量来代替编码结论。
+
+置 $A=I_5+tX$，在 $\mathbb C^5$ 环境中取 $|v_j\rangle=\sqrt{\overline A}\,e_j$。
+有 $\langle v_k|v_j\rangle=\overline A_{kj}=A_{jk}$、$\|v_j\|=1$，故
+
+$$
+Ue_j=e_j\otimes v_j,\qquad
+\Phi(Y)=\operatorname{tr}_E UYU^\dagger=A\circ Y,\qquad
+\Phi^c(Y)=\sum_jY_{jj}|v_j\rangle\langle v_j|.
+\tag{C115.6}
+$$
+
+该延拓不用 $A^{-1}$，在降秩端点仍为等距。
+$\mathcal L(Z)=\sum_jZ_{jj}|v_j\rangle\langle v_j|$ 是 CPTP 测量后制备映射，
+且 $\mathcal L\Phi=\Phi^c$，因为 $\Phi$ 保持原基对角。
+所以这是所引文献的 generalized dephasing／degradable 通道，且降解在所有复输入上成立。
+
+对任意单次复密度输入 $\sigma$，以全部 $2^5$ 个原基对角符号酉平均得到
+$\Delta(\sigma)=D_p$，$p_j=\sigma_{jj}$。
+$\Phi$ 与这些酉夹乘协变；$\Phi^c$ 的输出不变。
+熵的酉不变性及凹性给 $I_c(\sigma,\Phi)\le I_c(D_p,\Phi)$。
+环境输出是 $E_p=\sqrt{\overline A}D_p\sqrt{\overline A}$，
+其非零谱等于 $\sqrt{D_p}\,\overline A\sqrt{D_p}$ 的非零谱，
+也等于 $\sqrt{D_p}A\sqrt{D_p}$ 的谱；最后一步用逐项共轭保持实 Hermitian 谱。
+两矩阵都补足全部零本征值，得 (C115.4) 的目标。
+
+对任意相关复 $\sigma$，记输出为 $B_1\cdots B_n$ 和 $E_1\cdots E_n$。
+由逐点降解有 $E_1\cdots E_n=\mathcal L^{\otimes n}(B_1\cdots B_n)$。
+令 $T(B^n)=\sum_kS_2(B_k)-S_2(B^n)$，环境同理。
+它等于态对其边缘乘积的相对熵；联合支持包含在边缘支持的乘积中，故这里相对熵有限。
+相对熵在 CPTP 映射下的数据处理给 $T(E^n)\le T(B^n)$，于是
+
+$$
+I_c(\sigma,\Phi^{\otimes n})
+=\sum_k I_c(\sigma_k,\Phi)-T(B^n)+T(E^n)
+\le\sum_kF_{t,X}(\operatorname{diag}\sigma_k)
+\le n\max_pF_{t,X}(p).
+\tag{C115.7}
+$$
+
+这不假定块输入独立；最大人口的乘积及熵可加性给反向达到。
+结合成熟编码定理即得操作容量，特别没有从有限数值最优化推出渐近可达率。
+
+最后，$\omega_{\mathsf{P}E}(p)=\sum_jp_j|j\rangle\langle j|_{\mathsf{P}}\otimes|v_j\rangle\langle v_j|$
+满足 $F_{t,X}(p)=S_2(\mathsf{P}|E)_{\omega(p)}$。
+量子条件熵的凹性给 $F$ 的凹性；它是强次可加性的标准推论。
+有限维矩阵平方根与谱熵在 PSD 闭域连续，$-x\log_2 x$ 在零处连续，
+故 $F$ 联合连续，紧集 $\Delta_5$ 上实际取最大。
+人口零时只删掉零权重项，绝不使用 $D_p^{-1}$；奇异端点仍保留完整核。证毕。
+

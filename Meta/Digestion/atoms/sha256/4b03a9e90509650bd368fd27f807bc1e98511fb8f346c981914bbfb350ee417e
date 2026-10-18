@@ -1,0 +1,36 @@
+**Definition 12.1 (acyclic word macros).** The following finite list is a
+precise word-program specification convention. Inputs and outputs are word
+registers; temporaries are fresh per static call site. A loop over a word
+copies it to a temporary and removes its first bit each iteration. A
+natural loop uses the word $1^m$, not a semantic integer. These macros
+are expanded in this order; none calls itself or a later macro.
+
+| Macro | Word instructions after finite expansion |
+| --- | --- |
+| Reverse($x$) | $t:=x,y:=\epsilon$; while $t$ nonempty, test its first bit, cons that bit to $y$, and tail $t$. |
+| Cat($x,y$) | Reverse $x$ into $t$; copy $y$ to $z$; consume $t$, consing each first bit to $z$. |
+| Length($x$) | Copy $x$ to $t$, clear $n$; consume $t$, consing 1 to $n$. |
+| Equal($x,y$) | Copy both; while both nonempty compare first bits by finite tests and tail both; differing bits or one empty returns false, joint empty returns true. |
+| Frame($x$) | Length $x$ gives $n$; Cat($n,0$) gives $U(|x|)$; Cat that word with $x$. |
+| Take($n,s$) | Copy $1^n$ to counter, clear reverse result; consume one source bit per counter bit, cons it to result, tail source and counter; Reverse result. Empty source before counter exhaustion returns typed parse failure. |
+| ReadUnary($s$) | Clear a counter; consume one leading source 1 per cons 1 to that counter; require and remove its 0; return the natural word $1^m$ and suffix. Missing 0 is parse failure. |
+| ReadFrame($s$) | ReadUnary gives the length counter and suffix; Take that many bits; return the word and remaining source. |
+| ReadList($s$) | The list grammar is $0$ or $1\operatorname{Frame}(w)s'$. Inspect and remove its first bit; on 1 use ReadFrame for its item and retain the suffix as the remaining list. |
+| Fold or Map | Copy the finite encoded list to a cursor; use ReadList until its terminal 0. Cons each framed result to a reverse item list; Reverse the item order by another ReadList traversal and Cat. |
+| Nth($s,n$) | Traverse ReadList, tailing the actual unary index once per skipped item; return the item when the index is empty, or typed missing at list end. |
+| Replace($s,n,w$) | Traverse the whole list; at the selected index emit $w$, otherwise its old item; emit the terminal 0. Return missing if no selected item existed. |
+| AppendItem($s,w$) | Traverse the list and emit all its items, then $w$, then terminal 0. |
+
+The phrase "emit an item" means Cat of literal 1 and Frame(item) to the
+accumulated output; thus it uses only earlier macros. Reverse item order
+can also be effected by prepending each complete framed item to an
+accumulator. It is not bit reversal of the framed concatenation. A fixed
+arity tuple is a list of exactly that many fields. Nth and Replace implement
+all tuple projections and updates. Finite tuple indices are literal words;
+variable indices are acquired or computed unary words. Every wire $U(m)$
+field is decoded with ReadUnary before use as the internal natural $1^m$;
+every emitted numeric field appends its 0 explicitly. In particular Prefix
+does not count its wire target's terminal 0 as another simulated primitive. List cardinality is
+a Fold consing one 1 per item. No host integer operation occurs in these
+macros. Their loop variants are the unconsumed finite word, list or index.
+

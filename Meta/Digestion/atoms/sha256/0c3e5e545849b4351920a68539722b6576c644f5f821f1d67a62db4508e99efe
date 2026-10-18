@@ -1,0 +1,23 @@
+**References 9.1 (formal interfaces and exact applicability).** Public and
+private source interfaces at the [repository baseline][BASE] distinguish
+the existing formal supply from this ordinary increment.
+
+| Source | Exact supplied premise and retained limit |
+| --- | --- |
+| [CompactLocalRealization][D5-COMPACT], `compact_local_realization` | A compact parameter space and closed record fibers, with every finite subfamily realized, imply simultaneous realization. The physical space and its closed native constraints must first be supplied as in Proposition 3.3. |
+| [CompactSignatureRealization][D5-SIGNATURE], `finite_compatibility_global_realization` | Continuous readouts to Hausdorff coordinate spaces on a compact state space. It is an intersection supplier, not a native physical-word or paid synthesis theorem. |
+| [NativeDepthPatterns][D5-DEPTH], `original_prefix_locality`, `depthEquiv`, private `fill_decompose` and `decompose_fill` | Original-prefix locality and exact original frontier reconstruction; the locality hypothesis is agreement at all addresses of length at most the queried physical length. It supplies Definition 6.2's conversion. |
+| [NativeCutFibers][D5-CUT], `rowFiberEquiv`, private `recover_fill` and `fill_injective` | Actual full old-row fibers with repeated classes and every cross-class disequality, not a relaxation to independent marginal sources. |
+| [NativeHistoryCells][D5-HISTORY], `cell_feasibility_exact`, `historyCellEquiv`, private `syntax_iff_ground` and `feasible_history` | Literal-history feasibility and exact full class cells. The history sort is a list of epoch/address/reply records, not arbitrary signed whole-subtree comparisons. NSF supplies those comparisons here. |
+| [NativeSymbolicRecutting][D5-RECUT], `symbolic_recut_exact`, private `termAt_fill` and `exterior_commute` | The original reached order, concrete exterior and full partition after filling. It does not replace the full target by root labels. |
+| [Pinned mathlib FreeMagma][FREE] | Free constructors, decidable tree equality and the universal lift; the native source correspondence is $\alpha=\mathtt{of\ true}$, $\beta=\mathtt{of\ false}$, pairing $\mathtt{mul}$. |
+| [Pinned mathlib compactness][COMPACT] and [one-point compactification][ONEPOINT] | `CompactSpace.iInter_nonempty`, compactness of `OnePoint X`, and cofinite convergence from a discrete space. They supply standard topology, with no native source or cost correspondence. |
+
+The additional native physical inference is
+the implication from finite-source solvability to whole-source physical
+solvability using finite support at each actual epoch, output comparison
+by pairs, and elimination of the only added address limit. The negative
+certificate verifier preserves all arbitrary-word competitors; the
+positive verifier preserves all original sources. Neither direction is
+supplied by an abstract compact-realization statement alone.
+

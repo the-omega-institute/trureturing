@@ -1,0 +1,31 @@
+**Definition 3.1 (One stationary marked law).** Fix $L\ge2$ and a probability vector $\mu$ on $B_L$. Set
+
+$$
+r=L+3,\qquad T=(L+2)^2,\qquad m=2T.
+\tag{3.1}
+$$
+
+For each $j\in\mathbb Z$, sample $L$ mutually independent payloads $W_{j,1},\ldots,W_{j,L}$ of law $\mu$, independently also across $j$. Its cell is
+
+$$
+C_j=1\,0^r\,
+(1\,0\,W_{j,1}\,0)
+(1\,0\,W_{j,2}\,0)\cdots
+(1\,0\,W_{j,L}\,0).
+\tag{3.2}
+$$
+
+Parentheses denote concatenation units. The length is $1+r+L(L+3)=T$. Concatenate these cells in both directions with cell $j$ starting at $jT$, obtaining $Y$. Independently choose $A$ uniformly in $\{0,\ldots,T-1\}$ and set $X_t=Y_{t+A}$. Call its law $S$.
+
+Its cylinders also have an entirely finite formula. For an offset $a$ and length $q\ge1$, let $I(a,q)$ be the finite set of payload indices $(j,\ell)$ whose positions meet the observed interval $[1+a,q+a]$ of $Y$. Let $V_{a,q}$ extract that interval from the fixed cell bits and the assigned payload words. Then, for $b\in B_q$,
+
+$$
+S_q(b)=\frac1T\sum_{a=0}^{T-1}
+\sum_{(w_\alpha)\in B_L^{I(a,q)}}
+\left(\prod_{\alpha\in I(a,q)}\mu(w_\alpha)\right)
+\mathbf1\{V_{a,q}((w_\alpha))=b\}.
+\tag{3.3}
+$$
+
+An empty assignment has product one. The formulas for $S_m$ and $S_{m+1}$ in §4 are precisely these finite sums, from this same payload law and offset.
+

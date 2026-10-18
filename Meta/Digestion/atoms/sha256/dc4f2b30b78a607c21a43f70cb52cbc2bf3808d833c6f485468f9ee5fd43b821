@@ -1,0 +1,12 @@
+### 101.7. Nonempty abstract excluded family and density
+
+The field F is the splitting field of T^4-16T²+19. Its degree is 8. Indeed gamma is not a square in Q(sqrt5), since its norm 19 is not a rational square. It also cannot become a square after adjoining sqrt19: that would make either gamma or gamma/19 a square in Q(sqrt5), whose norms19 and 1/19 are again nonsquares. Hence [F:E]=2 and [E:Q]=4.
+
+The Galois group is dihedral of order 8. Explicitly, the automorphism changing sqrt5 to-sqrt5 and fixing sqrt19 sends sqrt gamma to sqrt19/sqrt gamma; the automorphism fixing sqrt5 and sqrt gamma while negating sqrt19 is another involution. Their product has order 4. Their commutator is the nontrivial central element z of Gal(F/E). Thus E is the maximal abelian subfield of F.
+
+Let A=Q(zeta_120). Every abelian subfield of F lies in E. Of the three quadratic subfields of E, Q(sqrt19) and Q(sqrt95) ramify at 19, whereas A is unramified there. The remaining Q(sqrt5) lies in A. Therefore F intersect A=Q(sqrt5), and [FA:Q]=8*32/2=128.
+
+The cyclotomic automorphism tau_19:zeta_120 maps to zeta_120^19 fixes sqrt5, since (5/19)=1. The pair (z,tau_19) therefore defines an element of Gal(FA/Q). It is central: z is central in Gal(F/Q) and the cyclotomic group is abelian. Its conjugacy class is a singleton. By Chebotarev, the unramified rational primes having this Frobenius have natural density 1/128. A primary textbook statement is Milne, Algebraic Number Theory, Theorem 8.31: https://www.jmilne.org/math/CourseNotes/ANT.pdf . These are precisely the primes in the displayed excluded family: the cyclotomic component gives Q=19 modulo 120, while z fixes E and is nontrivial on sqrt gamma, giving (19/Q)=1 and chi(Q)=-1.
+
+The identity element over E paired with the same cyclotomic automorphism also gives density 1/128 for chi=+1. Thus the new sign distinguishes two nonempty abstract families satisfying the same listed rational congruence and quadratic splitting conditions. This does not establish independence from every earlier higher-order test, nor the existence of any prime with the exact golden clock. In particular Chebotarev is used solely to certify nonemptiness of the excluded candidate family, never to manufacture actual original support. ∎
+

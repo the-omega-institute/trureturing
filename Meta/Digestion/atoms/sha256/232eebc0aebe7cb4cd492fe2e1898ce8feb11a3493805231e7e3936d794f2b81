@@ -1,0 +1,13 @@
+**定义 32.1（固定律上的局部与联合损失）。** 设 $Z,A,B$ 为同一有限概率律下的随机变量，令 $A'=f(A)$、$B'=g(B)$，并置
+
+$$
+J_Z(A,B)=I(Z;A,B)-I(Z;A)-I(Z;B),
+$$
+
+$$
+L_A=I(Z;A\mid A'),\qquad L_B=I(Z;B\mid B'),\qquad
+L_{AB}=I(Z;A,B\mid A',B').
+$$
+
+$J_Z$ 只是指定的有符号差值，不要求非负，也不取作唯一的协同信息定义。条件互信息非负与熵缺陷采用 [ConditionalMutualInformation 的两个定理](../../../D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)：非负性要求有限律非负且总和为一，熵缺陷等式要求逐项非负。其熵由自然对数定义，此处除以 $\ln2$ 转成比特；重排条件变量与目标后才应用该接口。经典链式法则采用 [ConditionalEntropy 的 entropy_chain_rule](../../../D5/S3/Entropy/ConditionalEntropy.lean)。量子条件互信息的对应非负性可参见 Capel–Lucia–Pérez-García, [Quantum Conditional Relative Entropy and Quasi-Factorization of the Relative Entropy，第 2.3 节](https://arxiv.org/pdf/1804.09525v2)；该量子接口不代替本节的共同经典律。
+

@@ -1,0 +1,90 @@
+### 35.1. 整个声明类、实际重访与共同偶数逆
+
+**world.**
+
+W=(P,g,d), P=[[r,b],[c,1-r]], 0<r<1, b>0, c>0, bc=r(1-r), one whole nonzero real polynomial g with degree at most two, and an arbitrary real constant d. The target is the entire triple, including all gain coefficients and drift. The source need not be symmetric; positive off-diagonal entries have no imposed upper bound.
+
+**acquisition.**
+
+J=[[0,1],[1,0]], M=[[0,1],[1,1]], Q0=I, Qi=Ei Q(i-1), yi=d+g(i) tr(Qi P). The actual prefix is the six actions J,M,J,M,J,J. Seven readings, including the initial reading, occur at original clocks 0 through 6. Exactly one selected last action and its immediate reading occur at clock 7, for eight TOTAL readings. Every intermediate response is acquired and retained. There is one trajectory, with no reset, copy, skip, empty action, renumbering or additional port.
+
+**history scope.**
+
+Each theorem begins with its entire already-acquired seven-read history. Its conclusion is about the full compatible quadratic-class fiber of that history, not merely a preselected pair and not the entire fiber of the earlier five-action parent. Unchosen action responses below are functions of the same previously fixed worlds, not additional observations.
+
+**general identity.**
+
+For A=[[a,e],[f,h]], tr(AP)=h+(a-h)r+f b+e c. This follows directly from (AP)11=a r+e c and (AP)22=f b+h(1-r). Write j=b+c.
+
+**prefix.**
+
+clock: 0 ; matrix: [[1,0],[0,1]] ; trace: 1
+
+clock: 1 ; action: J ; matrix: [[0,1],[1,0]] ; trace: j
+
+clock: 2 ; action: M ; matrix: [[1,0],[1,1]] ; trace: 1+b
+
+clock: 3 ; action: J ; matrix: [[1,1],[1,0]] ; trace: j+r
+
+clock: 4 ; action: M ; matrix: [[1,0],[2,1]] ; trace: 1+2b
+
+clock: 5 ; action: J ; matrix: [[2,1],[1,0]] ; trace: j+2r
+
+clock: 6 ; action: J ; matrix: [[1,0],[2,1]] ; trace: 1+2b
+
+**left multiplication check.**
+
+Starting from I, the successive products are J, MJ, JMJ, MJMJ, JMJMJ, JJMJMJ. Multiplying J by [[1,0],[1,1]] gives [[1,1],[1,0]]; M times this gives [[1,0],[2,1]]; J times that gives [[2,1],[1,0]]; J times that gives [[1,0],[2,1]]. Thus the sixth product really revisits Q4 at original clock 6. It uses g(6), not g(4).
+
+**mutually exclusive last products.**
+
+clock: 7 ; selected action: J ; matrix: J Q6=[[2,1],[1,0]] ; trace: j+2r
+
+clock: 7 ; selected action: M ; matrix: M Q6=[[2,1],[3,1]] ; trace: 1+r+3b+c=1+j+r+2b
+
+**positivity.**
+
+Both J and M are nonnegative with determinant -1. Every attained product, including I, is nonnegative and invertible, hence has no zero row. Pairing each such row with either strictly positive column of P gives a positive entry of QP. In particular all displayed traces are positive. This does not impose a sign on g, and the rank-one source itself is never inverted.
+
+**all response equations.**
+
+y0=d+g(0)
+
+y1=d+j g(1)
+
+y2=d+(1+b)g(2)
+
+y3=d+(j+r)g(3)
+
+y4=d+(1+2b)g(4)
+
+y5=d+(j+2r)g(5)
+
+y6=d+(1+2b)g(6)
+
+For the single selected last J, y7=d+(j+2r)g(7). For the single selected last M, y7=d+(1+j+r+2b)g(7).
+
+**bijection.**
+
+Fix arbitrary a0 in R and kappa in R excluding zero. The map (P,g,d) -> (P,G,delta) with G=g/kappa and delta=(d-a0)/kappa has inverse (P,G,delta) -> (P,kappa G,a0+kappa delta). Substitution gives yi=a0+kappa zi if and only if zi=delta+G(i) tr(Qi P), at every original clock and for every attained product. Both directions preserve strict source legality, degree at most two, the whole gain being nonzero, target distinctions, all actual history constraints and stops. This is onto the ENTIRE declared class and works for either scale sign; it is not a normalization only of the displayed examples.
+
+**initial constraint.**
+
+For normalized z0=0 write the arbitrary whole gain as G(t)=lambda+mu t+nu t^2. The initial equation is 0=delta+lambda, so delta=-lambda. The coefficients lambda, mu and nu are otherwise initially arbitrary; zero coefficients, constant and affine gains are retained.
+
+**derivation.**
+
+z2=-lambda+(1+b)(lambda+2mu+4nu)=b lambda+(2+2b)mu+(4+4b)nu
+
+z4=-lambda+(1+2b)(lambda+4mu+16nu)=2b lambda+(4+8b)mu+(16+32b)nu
+
+z6=-lambda+(1+2b)(lambda+6mu+36nu)=2b lambda+(6+12b)mu+(36+72b)nu
+
+**elimination.**
+
+Define C=(z4-2z2)/4 and D=z6-z4. Direct subtraction gives D=2(1+2b)(mu+10nu) and C=b mu+(2+6b)nu. Because b>0, 1+2b>0; set L=D/[2(1+2b)]. Then mu+10nu=L and C=bL+(2-4b)nu. At b=1/2 the necessary condition is C=L/2, before dividing by 1-2b. If b differs from 1/2, nu=(C-bL)/(2-4b), mu=L-10nu, lambda=[z2-(2+2b)mu-(4+4b)nu]/b. Conversely these forced coefficients solve the three even equations, since the operations are reversible on that branch. No gain sample or degree coefficient has been inverted.
+
+**source bound.**
+
+Every legal source satisfies bc=r(1-r)=1/4-(r-1/2)^2<=1/4. Equality at r=1/2 remains legal. This bound follows from the actual rank-one identity and applies to every diagonal branch. It introduces no separate bound on b or c before the candidate equations are imposed.
+

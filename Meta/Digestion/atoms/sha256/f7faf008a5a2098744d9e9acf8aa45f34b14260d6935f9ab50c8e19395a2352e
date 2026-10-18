@@ -1,0 +1,30 @@
+**Comparison 7.1 (what the supplied $D/2$ bound says).** In [AC, Lemma
+3.2 and Theorem 6.1][AC], averaging both phases and both parities gives
+
+$$
+\bar\rho_x=\frac14\sum_{\beta\in\{0,\pi\},\ m\in\{0,1\}}
+ \rho_{x,\beta,m}=2xP_++2(c-x)P_-+ZP_2.
+\tag{CG.48}
+$$
+
+Hence $\bar\rho_a=(\bar\rho_{a-h}+\bar\rho_{a+h})/2$.
+Writing $\bar\Omega_x$ for the corresponding complete ideal output
+average, the supplied Corollary 6.2 computes the exact mixture defect
+
+$$
+D=\operatorname{dist}\left(\bar\Omega_a,
+          \frac{\bar\Omega_{a-h}+\bar\Omega_{a+h}}2\right)
+   =\frac1{11}.
+\tag{CG.49}
+$$
+
+The source evaluates this defect with its full live block and marked
+failure laws, not merely a survival bit. Its affinity and triangle
+argument gives $E(\Phi)\geq D/2=1/22$. This is a credited lower bound;
+it was not an exact full-output minimax result. Equation (CG.48) cancels
+the $(+,-)$ coherence by parity averaging. In contrast, (CG.24) cancels
+only the coherences involving $|2\rangle$ and retains the coherent block
+that appears in (CG.35). That endpoint calculation, together with the
+separate marked-failure contribution (CG.33), yields (CG.38)–(CG.42).
+The old mixture-defect identity remains valid.
+

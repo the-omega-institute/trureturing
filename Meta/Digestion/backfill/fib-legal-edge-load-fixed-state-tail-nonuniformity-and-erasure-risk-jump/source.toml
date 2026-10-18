@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-fixed-state-tail-nonuniformity-and-erasure-risk-jump"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

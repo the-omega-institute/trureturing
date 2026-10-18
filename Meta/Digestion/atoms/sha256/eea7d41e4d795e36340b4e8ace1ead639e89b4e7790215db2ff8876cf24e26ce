@@ -1,0 +1,31 @@
+**Definition 5.2 (retained-memory structure $M$).** Select the following
+existing material of the actual carrier, with its authentic origin,
+retention, owner and availability relations: acquisition rows and their
+backing; chronological original ingress blocks/descriptors; current and
+earlier port-38 ingress backing; actual code-capture and installation
+manifest fields as far as constructed, and the frozen manifest binding
+once complete; the actual meter chain; retained cover/package backing and
+its actual read/invocation rights. Partial fields and unsealed package or
+copy material remain raw and unavailable according to their actual stage.
+The full carrier still contains all other dead/scratch material.
+
+Include the actual frontier of these retained structures: the finite
+old/installing/installed phase classification, and the input-row kind and
+occupied input-latch bit only between a variable IN and its matching WR.
+These are functions of the existing mode/version/PC and latch fields,
+not newly stored flags. The installing class includes both bootstraps,
+capture, asset copying, manifest/import and final handoffs. All installed
+classes remain distinguished from the old dispatcher by the actual active
+version. A stale latch outside its matching interval is not a pending bit.
+For each current ingress retain its actual reader-stage label, marked
+input/length heads and existing length/cursor material delimiting the
+written extent, as well as earlier complete-block descriptors. These are
+the original AIF reader's physical frontier and RCA's append-reader
+frontier. Initialized but unwritten payload cells are not counted as
+consumed bits. After ingress completes its retained complete frame fixes
+that extent, even when later parsing or copying moves a head. There is
+no separately maintained prefix-length or history field.
+This is a selected memory observation across owners. It is not a receiver's
+currently acquired material, a full-state complement, a stored chronology
+or a free global scanner.
+

@@ -1,0 +1,18 @@
+**Definition 2.1 (the precise minimization class).** A unary target
+generator is a subset $J\subseteq W_d$ such that for every $q\in W_d$
+there are an $r\in J$ and a source-independent function
+$\theta_{q,r}:G_r\to G_q$ with
+$\Gamma_q=\theta_{q,r}\circ\Gamma_r$ on all $S_d$. Define
+
+$$
+J_1=\{\varepsilon\},\qquad
+J_d=\{q:|q|=d-1\}\cup
+     \{q:1\le|q|<d-1,\ q\text{ ends in }L\}\quad(d\ge2).
+                                                               \tag{SCE.7}
+$$
+
+This minimizes a subset of the existing target coordinates, with one
+coordinate allowed per reconstruction. It does not minimize arbitrary
+encodings of the joint vector, arbitrary relational descriptions, or
+multi-coordinate reconstruction rules.
+

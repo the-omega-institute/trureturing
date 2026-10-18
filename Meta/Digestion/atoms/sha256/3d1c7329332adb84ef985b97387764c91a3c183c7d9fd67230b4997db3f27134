@@ -1,0 +1,35 @@
+**Lemma 3.4 (complete acyclic expansion).** For each nonrejected system,
+one obtains finite expressions for every $X_v$ in independent sink
+values. A sink is a fixed integer primitive, a free integer primitive,
+or an arbitrary member of $\mathcal K_{\mathbb Z}$. These expressions
+parameterize exactly all its positive solutions before natural-rank
+and normality requirements.
+
+Proof. For a chosen definition $X_v=F(X_l,X_r)$ in component $C$, with
+child components $L,R$, (PDC.8) gives
+
+$$
+S_C=
+ F\bigl(\tau_{p_l-p_v}S_L,\tau_{p_r-p_v}S_R\bigr).
+\tag{PDC.10}
+$$
+
+Expand in a topological order of the finite acyclic graph. At a sink,
+a ground flag fixes its primitive value; a remaining primitive flag
+allows an arbitrary integer rank; otherwise allow any integer code.
+Distribute all translations through displayed $F$ nodes and compose
+them at sink occurrences. Formula (PDC.8) then gives an expression
+for every name, not only for a designated output.
+
+Every positive solution supplies its own values at the representative
+names of the sinks, and induction in that order recovers all its named
+values. Conversely any assignment of the stated sink types defines all
+components by (PDC.10), satisfies every original offset and ground
+condition, and satisfies all $F$ definitions by Lemma 3.3. The expansion
+therefore has both directions and a unique inverse on its full named
+assignment space.
+
+Different unflagged sinks may acquire equal shapes or equal values.
+There is no marker separation requirement. Any original constraint
+against such coincidence remains its whole negative in §5. $\square$
+

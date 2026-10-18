@@ -1,0 +1,60 @@
+**proposition 5.3 (Inherited unrestricted bounds, with the full
+almost-sure competitor domain).** Every protocol of Definition 2.1
+with $q_2=1$ has correct mass at most
+
+$$
+S_2=\frac a2+a\eta+a^2\eta.
+\tag{5.4}
+$$
+
+Every such protocol returning within one call almost surely has
+correct mass at most
+
+$$
+S_1=\frac a2+a\eta.
+\tag{5.5}
+$$
+
+Proof. First work at a seed for which return within two calls has
+source mass one. An initial return has correctness at most $a/2$.
+Initial indefinite internal continuation is excluded by that mass-one
+property. Otherwise the first event is a call, and both first-reply
+sections are positive. On each positive
+section the rule must either return after finite waiting or make
+its next call, and every positive two-call section must return after
+finite waiting. Any indefinite continuation or third call there
+would exclude that section from $E_2$. Thus Lemmas 5.1–5.2 apply
+directly, including early returns and arbitrary second addresses.
+Their largest zero-branch bound is $a/2+a^2\eta$, since $c<a$ and
+
+$$
+\left(\frac a2+a^2\eta\right)
+-\left(\frac{a^2}{2}+a\eta\right)
+=\frac{\eta c}{2}>0.
+\tag{5.6}
+$$
+
+Adding (5.1) gives (5.4). For a one-call rule, the zero maximum
+is $a/2$, and the one maximum is at most $a\eta$, proving (5.5).
+This reasoning bounds finite reply trees solely for their masses;
+it asserts no installed-state preservation.
+
+For the arbitrary independent seed space, Tonelli applied to
+$\mathbf1_{E_2^c}$ gives a full-measure set of seeds with the source
+property just used. Lemma 3.1 justifies their acquired-cylinder
+sections and fixed terminal outputs. Apply the uniform bound at
+each such seed and integrate the measurable original correctness
+event. There is no need for a measurable choice of maximizing leaf
+labels, a regular conditional distribution on the seed space, or
+any assumption about its atoms. Source-null branches and the
+exceptional null set of seeds contribute zero. Completed versions
+give the same statement by choosing measurable representatives and
+applying Tonelli to their product-null differences. The identical
+argument applies to $E_1$. $\square$
+
+The values (5.4) and (5.5) are the inherited results of Endpoint,
+Theorem 6.1, and Original, Theorem 11.4 / Risk, Theorem 4.1.
+Their explicit attaining tables appear in §9. The proof above
+supplies the mass estimates needed below without replacing the
+original almost-sure comparison by pathwise stopping.
+

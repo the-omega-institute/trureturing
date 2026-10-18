@@ -1,0 +1,26 @@
+**Proposition 78.9 (the relation to the unrestricted obstruction).** For every
+$0\le\delta\le1/50$, planar universality for the prescribed unequal near-unit
+contract of78.1 fails without an opposite-side hypothesis. The witness is77.2–77.3's
+$S_{15}$ at a separately fixed cap $98304$. This does not decide existence of a
+compatible unoriented planar $T_5$ with genuinely unequal near-unit stubs, and is
+consistent with the vanishing same-leaf widths in78.7.
+
+**Proof.** Unit inherited seams and every prescribed stub in
+$[1-\delta,1+\delta]\subset[49/50,51/50]$ lie in77.3's independent closed length box
+$[19/20,21/20]$. The strict band implies its positive source heights, and the
+grounding and incidence requirements agree. Thus77.3 excludes a planar $S_{15}$ for
+every such stub assignment. Its legal commission has immutable INITIAL $B_{15}$,
+where $B_0=\alpha$ and $B_{j+1}=\langle B_j,B_j\rangle$ with distinct occurrences.
+At the predeclared cap $98304$, the three whole candidates have $32768,65536,98304$
+leaves and $\rho^3B_{15}=S_{15}$. This is 77.2's symbolic admissibility, not an
+alteration of another commission.
+
+The robust proof uses tips of different-depth leaves in pendant
+$S_0=\langle\langle\beta,\alpha\rangle,\beta\rangle$ occurrences. Their actual paths
+have two stubs and three inherited seams; small bases are controlled by enclosed
+area in77.5–77.6. It does not restore a same-leaf width floor, so78.7 cannot refute
+it. Conversely its larger witness supplies no unoriented unequal-$T_5$ or lower-cap
+classification. For common lengths,77.3 applies on $I\cap[19/20,21/20]$, whereas78.4
+gives the cap-eight witness throughout $I$. The two results have these distinct
+parameter and witness scopes. $\square$
+

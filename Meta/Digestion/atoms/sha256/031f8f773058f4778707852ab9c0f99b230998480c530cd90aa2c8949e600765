@@ -1,0 +1,41 @@
+**Theorem 3.2 (exact global loss under the common Gibbs law).** Under
+the positive-mass assumptions and kernels of Theorem 3.1, define
+
+$$
+\begin{aligned}
+\Delta(P)&=\mathbb E_\pi\sum_i
+ I_P(O_i;O_{<i,\pi}\mid B_{i,A_i(\pi)}),\\
+r_i(s)&=\log_2
+ \frac{C_i\prod_AQ_{i,A}(O_i\mid B_{i,A})^{\gamma_{k_i}(A)}}{\Phi_i(s)},\\
+\mathcal D_{i,A}&=
+D_2\!\left(P(O_i\mid B_{i,A})\Vert
+                 Q_{i,A}(\,\cdot\mid B_{i,A})\mid P(B_{i,A})\right).
+\end{aligned}
+\tag{COK.21}
+$$
+
+All three types of loss are nonnegative, and exactly
+
+$$
+\log_2 Z
+=\sum_i\log_2 C_i-\Delta(P)
+ -\sum_{i,A}\gamma_{k_i}(A)\mathcal D_{i,A}
+ -\sum_i\mathbb E_Pr_i.
+\tag{COK.22}
+$$
+
+Proof. Because $B_{i,A_i(\pi)}$ is a function of $O_{<i,\pi}$,
+the difference of the two conditional entropies in (COK.18) is
+the displayed conditional mutual information. Averaging gives the
+exact loss $\Delta$. Conditional cross entropy is
+$H_P(O_i\mid B_{i,A})+\mathcal D_{i,A}$. The definition of $r_i$
+is the exact logarithmic slack in (COK.14). Substitute these three
+equalities in the Gibbs identity. Zero-probability contexts contribute
+zero to conditional relative entropy. Strict positivity of $Q$
+makes all terms finite. $\square$
+
+This identity is for the displayed sum and its own Gibbs law. It is
+not an identity for unrelated local maximizers, different probability
+laws or an arbitrary non-Gibbs law. In particular feasible local laws
+need not be marginals of one law with $\Delta=0$.
+

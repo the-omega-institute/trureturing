@@ -1,0 +1,14 @@
+**Proposition 3.4 (the two-address separation).**
+For $N=2$, $t=s=1$, choose each address with probability $1/2$, query
+it and output its reply. Every individual zero execution has high
+compatible sources of arbitrarily large target, but no high source
+matches both zero executions. The policy has worst-source error $1/2$.
+Thus unbounded target in every individually acquired zero fibre does
+not force worst-source error one.
+
+**Proof.** A zero at address $a$ is compatible with every $(n,\{a\})$.
+The two executions together query $\{1,2\}$, violating (3.5).
+For a fixed $(n,J)$, exactly one address gives zero and the other gives
+$n$, so its error probability is $1/2$. The baseline error is zero.
+Theorem 2.1 shows that this risk is optimal. $\square$
+

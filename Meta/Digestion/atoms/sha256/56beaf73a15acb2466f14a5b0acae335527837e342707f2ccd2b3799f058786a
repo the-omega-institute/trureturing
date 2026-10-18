@@ -1,0 +1,59 @@
+## 6. Sources, exact checks and recovery boundary
+
+All repository citations in this volume select the immutable public revision
+`17ef08588473220560adc4a7fb0775a5f7f238a1`.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), `ValidBase`, `probability`, `phaseWeight`, `weight_compatible`, and [Blueprint](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.md) | Strict positive source, original signed transport, middle gauge, real lifts and all signed sectors. The controls here obey that exact law; no physical actuator or sensor follows from the source. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/D5/S3/Quantum/Fibers/OriginalControlComposition.lean), `OriginalControl`, `FiniteC1Control`, `concatenate_original`, and [Blueprint](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.md) | Both regularity alternatives, matching interfaces, arbitrary finite and zero durations, unchanged prefix, translated relative tail and exact scalar-integral composition. No unknown past input is granted to the controller. |
+| [Instrument Boundaries](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5.2, especially OC.19b | Entire canonical optimal instrument, full unknown-input family, sharp filters, blind success records, survival optimum and absorbing completion are credited inputs. This volume studies stability for that completion only, not every optimal instrument or every valid base. |
+| [Record Acquisition](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2, 5–9, 11 | Chosen coordinate costs, finite point-query limitations and conditional calibrated area/winding certificates. Those endpoint-response certificates do not certify the complete law metric here. No duplicate sampling lower bound is proposed. |
+| [Transport-Memory Completion](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12/2.18; [Process Geometry](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), §§1–3 | Actual coherent source/common port, known nonzero amplitudes and record overlap, aligned acquired records, actual domains/routes, references, permissions, failure successors and selection/update inputs remain separate requirements. A whole-law inverse does not fulfill them. |
+| Dobler and Pauly, [*Approximative Tests for the Equality of Two Cumulative Incidence Functions of a Competing Risk*, arXiv:1402.2209v3](https://arxiv.org/html/1402.2209v3), §2, Eq. (2.1) and following sampling model | `literature-attested`: cause-marked cumulative incidence is survival integrated against a cause intensity; their estimators use independent observed copies and a stated censoring/truncation model. The loss balance here is derived directly from OC.19b; their copies and estimation model are not supplied for this source. |
+| Chiribella, D'Ariano and Perinotti, [*Theoretical framework for quantum networks*, arXiv:0904.4483v2](https://arxiv.org/html/0904.4483v2), Theorem 3, Definition 10/Theorem 10 and Definition 11 | `literature-attested`: causal normalization, generalized instruments and testers describe specified quantum networks and accessible operations; Definition 10 states a finite-outcome presentation and discusses extension to arbitrary outcomes. No continuous-monitor implementation, allowed tester family, waveform sensor or same-history archive is imported. The continuous-time measure and all distances here are defined explicitly by the supplier and (IS.5)–(IS.7). |
+
+Calculus for absolutely continuous functions, total-variation duality and
+trace-norm inequalities are mature ingredients. The source-specific new
+content is the conditional metric comparison in Theorems 2.2–2.3, the actual
+bounded-resource forward counterfamily in Theorem 3.2, the exact
+reference-preserving distance of Theorem 4.1, and the explicitly scoped
+sufficient stability conditions in §5. These are `repo-derived` ordinary
+deductions, not a worldwide originality claim. No compression or
+asymptotic-rate theorem from a different quantum model is used.
+
+Bounded exact in-memory rational calculations check (IS.17)–(IS.20) on
+816 interior leg points: $c\in\{1/5,2/5,1/3\}$,
+$n\in\{1,2,3,4,8,16\}$, every leg, at local fractions
+$1/8,1/3,1/2,7/8$. The checks include the original hazard, nonnegative
+five-mode loss density, actual signed loss derivative, uniform margins and
+speed bounds. Another 120 exact checks use three rational triples
+$(c,a,b)=(2/5,1/5,3/10),(2/5,1/10,1/5),(1/3,1/12,1/4)$,
+$1\leq n\leq8$ and all five initial mode inputs, verifying the scalar
+loop effect, repeated survival and disjoint-tail half-$L^1$ distance.
+Eighteen exact checks on the same $c,n$ lists verify (IS.21) and its
+positive lower bound on height variation.
+For the first triple the first two distances are $2/9$ and $2/27$.
+The all-parameter and arbitrary-reference claims rest on the ordinary
+proofs, not on these finite calculations. No experiment files are retained.
+
+The recovery delta is precise: under a certified survival floor, small
+error in the complete marked law controls the entire parameterized height;
+uniform waveform accuracy alone fails to control that law; without a
+floor, even complete quantum output distance can hide a fixed late height
+distinction. These results do not identify the full real phase history,
+construct an acquired observer boundary, replace the live quantum specimen
+by a classical label, or give finite memory for a real-time law.
+
+An actual acquisition implementation would have to justify calibrated
+time/mode and phase-sensitive readings, source/input matching, joint error
+events, preparation/reference transport, any repeated same-history trials,
+disturbance, storage and arithmetic, and every legal update/failure
+successor. None is supplied by taking the inverse of a probability law.
+Exact timestamps and whole cumulative functions are not finite-bit data.
+The native $\alpha/\beta$ late-target rate/cofinality problem, the distinct
+fixed-Hamiltonian quantum minimax problem, common-port acquisition and
+space/time/boundary/memory mutual recovery remain unresolved under their
+original contracts. No full-programme completion, physical realization or
+Lean certification is claimed.
+

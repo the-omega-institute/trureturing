@@ -1,0 +1,25 @@
+**Corollary 9.4 (a lawful upper price including transient exteriors).**
+In Theorem 9.3's positive case let $I_Q$ be the strict ancestors of
+the complete cut. The described decoder has
+
+$$
+q\le |I_Q|=|Q|-1,\qquad a=0,\qquad
+\ell\le\sum_{p\in I_Q}(|p|+\lceil N/2\rceil).
+\tag{NSF.21}
+$$
+
+For $Q=\{\varepsilon\}$ these costs are zero. These are upper bounds,
+not general optima.
+
+Proof. Each actual visited strict ancestor uses one current read.
+There is at most one visit per trie node, and early original leaves
+stop their branches. A finite full binary tree has one fewer
+internal nodes than leaves. The physical words just exhibited have
+the displayed lengths. $\square$
+
+The auxiliary mathematical iteration in the necessity and partition
+arguments is not performed by this static service and creates no
+post-entry receipts. A source in $D\setminus D_Q$ can have a different
+row from every source in $D_Q$ because its missing holes leave
+concrete leaves. The decoder expressly reconstructs that difference.
+

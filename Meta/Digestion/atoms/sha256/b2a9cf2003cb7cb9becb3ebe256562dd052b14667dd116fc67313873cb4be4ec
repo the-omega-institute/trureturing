@@ -1,0 +1,45 @@
+**Definition 12.1 (fixed complete-group equations and whole-pair exit).**
+On the contact chart, let $p_{gj}$ be the endpoint masses of group $g$,
+with an absent endpoint identically zero. Put
+$\rho_{gj}=p_{gj}/[(1+z_g^2)d_c(z_g)]$. In a pair the two
+coordinates are independent; no fixed fraction is imposed. The full
+nine-row preservation equations are equivalently
+
+$$
+\begin{aligned}
+\sum_g d_c(z_g)(1,z_g,z_g^2)
+                  (\delta\rho_{g0}+\delta\rho_{g1})&=0,\\
+\sum_g n_c(z_g)(1,z_g,z_g^2)\delta\rho_{g1}&=0,\\
+\sum_g\mathcal W(z_g)(1,\epsilon_g,\epsilon_g z_g)
+                  (\delta\rho_{g0}+\delta\rho_{g1})&=0.
+\end{aligned}
+\tag{IC.53}
+$$
+
+Indeed (IC.50) gives these rows directly, with the failure rows zero
+on the pure sheet; replacing $1+z^2$ and $1$ by $1,z^2$ is an
+invertible row operation. On contacts, preserving these equations
+preserves $J_t$ by $g=y\cdot\Gamma-\lambda k$. Opposite-height
+singletons at a common directed angle remain different groups in the
+sums. All unused coordinates remain in the complete inventory, whether
+held fixed or admitted as additional variables in another direction.
+
+For an initially occupied pair with $\rho_{g0},\rho_{g1}>0$, a
+single affine nonnegative pivot deletes the whole group exactly when
+
+$$
+\delta\rho_{g0}<0,\quad\delta\rho_{g1}<0,\quad
+\frac{\rho_{g0}}{-\delta\rho_{g0}}
+=\frac{\rho_{g1}}{-\delta\rho_{g1}}=\tau_*,
+\tag{IC.54}
+$$
+
+and every other coordinate stays nonnegative up to that pivot. This
+follows by solving both affine zero equations; either one alone leaves
+the group occupied. An initially zero coordinate must be zero at exit,
+and no ratio with its zero initial mass is taken. The height-preserving
+merge condition remains exactly $\eta_0\eta_1\ge0$ for two positive
+endpoint masses, including either weak zero; the strict opposite-sign
+loss and its physical HALF factor remain Definition 1.5. No rank or
+endpoint-deletion argument replaces these whole-group conditions.
+

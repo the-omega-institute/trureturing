@@ -1,0 +1,22 @@
+**Definition 2.2 (native helper meanings).** The following table fixes the
+native leaves used outside a word assignment. An input or length latch
+is never reused as the test latch before its matching write.
+
+| Helper | Native expansion |
+| --- | --- |
+| Home($i$), Tail($i$) | RD testing L or R; on failure ML or MR and repeat. |
+| Append($i,b$) | EX($i$); WR($i,b$); MR($i$), with $i$ initially at R. |
+| Base($i$) to 66 | Tail(66); Home($i$); MR($i$); for each non-R RD append 1 to 66 and MR($i$); at RD(R) append 0, sep, and seal to 66. |
+| UnaryCopy | RD(source); EX(destination); WR(read bit); MR(destination); MR(source), including the terminal zero, with its encoded zero successor exiting. |
+| Seek($i$) | Home($i$); MR($i$); RD of the positioned copied address; per leading 1 MR($i$), MR(address); final RD(0) exits. |
+| CountDescriptors | Home(68); MR; RD; at F append 1 to distinct scratch, then MR; at another non-R symbol MR; at R append 0, sep and seal. |
+| Native field import | Position the actual source; per payload bit RD, finite bit test, literal compiled cons, MR; at its delimiter Reverse the accumulator. |
+| Native field export | Measure destination Base, dry-count the positioned bank field on 67, reposition it, copy by RD/Append/MR, append F and seal, then count and write its descriptor. |
+
+Unless another latch is named, native public reads use latch 4. Ingress
+uses latch 6, with length tests on 5. Fixed bit choices are selected into
+literal control branches before a word helper overwrites latch 4.
+Each row preserves every unmentioned cell, head, latch and finite bit.
+Native field export is RCA Definitions 11.3 and 13.4's exact measured
+copy schema, not a constructor accepting a mathematical string.
+

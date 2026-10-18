@@ -1,0 +1,77 @@
+**Theorem 8.3 (paid attainment on the entire variable-shape family).**
+Let $h\ge1$, $n=2^h$ and $D=h+3$. In the scaffold of Proposition
+8.2 choose any public pairing of the frontier positions. The set
+of actual sources with block tuple in $B_*^{n/2}$ can be exactly
+one attained complete-code fiber of a preparation and one common
+reader on all of $\mathcal F_D$, under Assumption 8.1. Every
+other source can have a singleton code. A sufficient preparation uses
+
+$$
+2^{D+1}-1\text{ Reads},\qquad
+D+1\text{ maximum literal length},\qquad
+D\,2^{D+1}+1\text{ submitted letters}.
+\tag{CIT.41}
+$$
+
+The common-name reader needs at most one actual Read of length at
+most $D$, before the authentic count, and works for every allowed
+request and every later authentic $k\ge0$. Singleton names need
+zero later Reads.
+
+Proof. Use one source-blind preparation on every source in
+$\mathcal F_D$. It actually submits every literal $Rw$ with
+$|w|\le D$, including words with absent replies. Since the right
+subtree has height at most $D$, these replies determine every node
+and every terminal alpha/beta label. Starting at its root, a branch
+reply requires inspecting its two children, while a terminal reply
+specifies the corresponding leaf. No branch can remain at depth
+$D$. Thus the finite array determines the entire right subtree and
+hence the actual source. This is a paid acquisition of a finite
+description, not an identification oracle.
+
+There are $\sum_{j=0}^D2^j=2^{D+1}-1$ submitted words, with
+maximum length $D+1$. Their total length is
+$\sum_{j=0}^D(j+1)2^j=D2^{D+1}+1$. The latter identity follows
+by induction: its value for $D=0$ is one, and its increment from
+$D-1$ to $D$ is $(D+1)2^D$. These formulas prove (CIT.41).
+
+Using only this acquired description and public finite tables, compute
+membership in the selected set of scaffold sources. Give all sources
+in that set one common name, and each other acquired source a distinct
+name in a fixed public order. The selected set is nonempty. If its
+cardinality is $s$ and $f_D=|\mathcal F_D|$, there are
+$L=f_D-s+1$ attained names. Encode them in a common public width
+$\lceil\log_2 L\rceil$, with any unused bit strings unattained.
+Every assigned name is attained by its designated sources. Export
+exactly this complete name and invoke the separately paid service to
+isolate every other acquired distinction, including residual buffers,
+selectors, control, handles and timing. The name's fixed width and
+the complete-export condition prevent additional accessible distinctions
+from serving as a data channel. The installed public tables depend
+on $D$ and the selected relation, not on the actual unknown source.
+Their size and the local preparation computation are not asserted small.
+
+On the common name, every permitted request has the form $p=Rb$
+with $|b|\le D-1=h+2$. If $|b|<h$, it stops at a fixed
+scaffold branch and has constant factor $(0,0)$. Otherwise it has
+a unique representation $p=Ra_iq$ with $q\in W_3$. For $LL$
+at a block, use $RL$ in its paired block with decoder $\delta$.
+For the other targets use Lemma 4.4. A selected block experiment
+$a$ at donor $j$ is submitted as the full actual original-root
+literal $Ra_ja$, never as an operation on a copied subtree.
+Its length is at most $1+h+2=D$. Constant targets use zero Reads.
+The decoded factor and (CIT.20), transported from that actual block
+occurrence, give the correct reply for every subsequently supplied
+$k\ge0$. This includes requests whose block suffix initially goes
+beyond a leaf.
+
+On a singleton name, a fixed public finite table identifies the
+source that the preparation actually acquired and supplies the
+factor for each permitted target. Formula (CIT.20) then gives a
+predictor with zero further Reads. This completes one common
+deterministic reader for every variable-shape source, with all allowed
+requests, rather than merely a reader on the selected scaffold slice.
+No source evolution, reset or copy is used. All source-bearing data
+have come from the charged literals, and every hidden preparation
+description is covered by the paid isolation premise. $\square$
+

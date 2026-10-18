@@ -1,0 +1,40 @@
+**Lemma 5.1 (the credited plateau is also the exact outer plateau).**
+$V(s)=F$ exactly when $0\leq s\leq s_*$. Equality forces
+$(P,Q,R,t)=(p,q,r_0,0)$.
+
+Proof. Removing the real entry $t$ from $X$ gives
+$H=\left(\begin{smallmatrix}P&-iR\\iR&Q\end{smallmatrix}\right)$.
+The determinants of $X,Y$ imply $0\preceq H\preceq I_2$.
+The $\theta_0$ tilt implies
+$\operatorname{tr}(B_{\theta_0,DT}H)\geq k_{\rm tilt}$. Directly
+from (AS.13),
+
+$$
+C_{DT}-\lambda_0B_{\theta_0,DT}
+=d_{\rm cert}\begin{pmatrix}q/p&i\sqrt{q/p}\\
+-i\sqrt{q/p}&1\end{pmatrix}\succeq0,\qquad
+\ker(C_{DT}-\lambda_0B_{\theta_0,DT})
+=\operatorname{span}\{(\sqrt p,i\sqrt q)^T\}.
+\tag{AS.28}
+$$
+
+In particular
+$\operatorname{tr}(B_{\theta_0,DT}H_{*,DT})=k_{\rm tilt}$ and
+$\operatorname{tr}(C_{DT}H_{*,DT})=F=Ap+Bq-2\gamma r_0$.
+The exact difference is
+
+$$
+W-F=\lambda_0[\operatorname{tr}(B_{\theta_0,DT}H)-k_{\rm tilt}]
+ +\operatorname{tr}((C_{DT}-\lambda_0B_{\theta_0,DT})H)\geq0.
+\tag{AS.29}
+$$
+
+If it vanishes, positive support gives $H=aH_{*,DT}$ and the
+positive pairing $k_{\rm tilt}$ gives $a=1$. Then
+$\det X=-t^2\geq0$ forces $t=0$ and
+$\det Y=s_*^2-s^2\geq0$ forces $s\leq s_*$. Conversely the
+NP plateau construction, explicitly realized in Section 7, gives these
+arrays for every $s\leq s_*$. Attainment of the compact outer problem
+therefore gives $V(s)>F$ for every $s>s_*$. This proves strictness
+in the necessary relaxation itself. $\square$
+

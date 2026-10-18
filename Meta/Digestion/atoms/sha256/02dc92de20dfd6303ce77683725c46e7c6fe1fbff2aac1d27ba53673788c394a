@@ -1,0 +1,36 @@
+**Definition 2.3 (the finite $D_2$ expansion).** Take RCA §§11–14's
+finite routine list, with the following explicit changes.
+
+1. Initialize two extra persistent lists, `images` and `views`, to encoded
+   empty lists, after the initial bank and complete manifest import.
+   Add only the finite temporaries needed by Definitions 2.1, 3.4, 4.3,
+   5.1–5.6 and 6.1–6.4. Temporary graph/work stacks are word registers.
+2. At tag 111 discriminate the payload as Definition 6.1 specifies. Leave
+   the old unary Call arm intact. Add its post-ACK image registration and
+   the Convert arm with post-ACK view registration. No handler admits
+   further external choices after ingress.
+3. Put registry commitment after acknowledged publication and before the
+   existing common frame/token/Ready return. Completed-frame count changes
+   only on this final return. Annotate that actual final Ready, not an
+   earlier ACK or output seal, as Boundary's completed-frame stop.
+4. Keep the original source path clone, its two RD/MR rows per replaced
+   public IN, new row-version pointer and actual row-length arithmetic as
+   RCA Definition 13.3 specifies, now pointing to captured $D_2$.
+
+Expand the helpers in this dependency order: RCA word macros; the finite
+comparisons/stacks of Definition 2.1; record/description parsers and RCA
+Step; graph encoding and finite patch enumeration; basic retained-input
+scans and key extraction; bounded replay with optional patch emission;
+the remaining selected-backing fold; the four arrows; validation; request
+handler and registry operations.
+Validation calls arrows and replay, but none of those calls validation.
+The represented execution of a validation row is ordinary Step data; it
+does not create a recursive native helper call.
+
+Inline fixed helpers hygienically, index variables by first occurrence,
+order routines as just listed and native states by textual occurrence,
+false successor first, and encode by RCA's $\Delta$ and $E$ conventions.
+The resulting register count $r_2$, finite bit locations and code lengths
+are finite syntactic quantities of this expansion. There is no numerical
+bound on a register's word length and no capacity maximum in a native state.
+

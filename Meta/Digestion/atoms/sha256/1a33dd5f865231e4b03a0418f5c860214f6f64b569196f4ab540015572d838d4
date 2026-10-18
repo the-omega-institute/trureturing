@@ -1,0 +1,38 @@
+**proposition 9.2 (Real Choi coefficients do not imply real rank-one Kraus
+operators).** A legal port-one channel can have a real Choi matrix in the
+passive frame and have no rank-one Kraus representation consisting of real
+matrices.
+
+Proof. On two selected coordinate modes let
+
+$$
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+P_\pm=(I_2\pm Y)/2.
+\tag{9.3}
+$$
+
+Take these two embedded rank-one projections as Kraus matrices, together
+with the three other coordinate projections. Their squared-adjoint sum is
+$I_5$, so this is a legal rank-one Kraus channel. The two first matrices are
+complex conjugates and the other three are real. Its Choi matrix is
+therefore real, and its superoperator preserves real matrix coefficients.
+
+Let $W=Y\otimes Y$ on the selected output/input two-mode tensor block,
+and zero elsewhere. If $y_\pm$ are unit $Y$ eigenvectors, then
+$w(P_\pm)=y_\pm\otimes\overline{y_\pm}$. The eigenvalues of $Y$ on
+these factors are opposite. Consequently, for its normalized Choi state,
+
+$$
+\operatorname{tr}(W\chi_T)=-\frac25.
+\tag{9.4}
+$$
+
+In contrast a real rank-one matrix factors as $ab^T$ with real $a,b$.
+Its vectorization is $a\otimes b$, and its $W$ quadratic form is
+$(a^TYa)(b^TYb)=0$, using the corresponding two-mode restrictions.
+Every real rank-one Kraus decomposition would thus give Choi expectation
+zero, contradicting (9.4). This is the real-versus-complex product-vector
+obstruction discussed by Caves–Fuchs–Rungta, here embedded into an exact
+TP five-mode example. It does not assert that an optimizer must use complex
+Kraus matrices. $\square$
+

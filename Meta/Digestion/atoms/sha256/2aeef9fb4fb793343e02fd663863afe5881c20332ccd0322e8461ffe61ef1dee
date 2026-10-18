@@ -1,0 +1,39 @@
+## 402. The complete original-slot role table
+
+Let n_P(T) be the number of original slots of a tetrahedron T whose
+actual labels lie in P. An axial slot contributes one; a transverse
+label contributes two. Every frame has at least one P label, since Q
+has only three labels and the frame has four distinct labels.
+
+There are 360 ordered fixed words: choose four distinct labels, then
+order them in the four positions (R,A,B,O). The following is an
+exhaustive partition. Interchanging the two axes or the two transverse
+labels preserves the count and angle expense, but is not used to merge
+original owners.
+
+| P-label placement | Fixed words | n_P | Strict P-expense bound |
+|---|---:|---:|---|
+| One P axis, opposite V, transverse C,D | 12 | 1 | No genuine owner |
+| One P axis, opposite C or D, transverse V and the other low label | 24 | 1 | >0; precisely A(P0), B(P0) |
+| One transverse P label, paired with V, both axes C,D | 12 | 2 | >2*atan(2)>2*pi/3 |
+| One transverse P label, paired with C or D, the other two lows axial | 24 | 2 | >pi |
+| Two P labels, both axial, both transverse labels low | 36 | 2 | >pi |
+| Two P labels, one axial and one transverse | 144 | 3 | >pi |
+| Two P labels, both transverse, both axes low | 36 | 4 | >4*pi/3 |
+| Three P labels, both axes high and one transverse label high | 36 | 4 | >4*pi/3 |
+| Three P labels, both transverse labels high and one axis high | 36 | 5 | >4*pi/3 |
+
+The entries sum to 360. Here "high" means a label in P and "low"
+means a label in Q; numerical ties do not change the partition.
+
+For a direct combinatorial check: a frame with one P label uses all
+three low labels. Its 72 fixed words split into 36 with P axial and
+36 with P transverse, with the subdivisions shown. A frame with two
+P labels chooses its two high labels in three ways and its two low
+labels in three ways. Each of the nine four-label sets has four words
+with both P labels axial, sixteen with one axial and one transverse,
+and four with both transverse, giving 36,144,36. A frame with three
+P labels chooses its remaining low label in three ways. For each such
+set there are twelve words with the low label axial and twelve with it
+transverse, giving the final two classes of 36 words each.
+

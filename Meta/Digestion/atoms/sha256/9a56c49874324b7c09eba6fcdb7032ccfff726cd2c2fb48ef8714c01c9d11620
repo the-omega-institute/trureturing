@@ -1,0 +1,35 @@
+**Theorem 66.6 (same-clock finite histories in the full joint norm).** Fix an actual finite legal trajectory of Definition66.1. Let $m$ count its accepted whole-rho steps, and let $q\le m$ count only those with nonempty beta mask. At its idle intervals, use its actual current $D_i$ and the complete $H^\diamond_{D_i,N}$ of (62.2). The exact target history $\mathsf V^\diamond_h$ is the time-ordered composition of $e^{-i\theta_iH^\diamond_{D_i,N}}$, the accepted occurrence injections $\jmath$, and identity at the other source-service cuts. The producer history $\mathsf P^\diamond_{\delta,h}$ uses the actual full unitaries $e^{-i\theta_i\mathcal T^\diamond_{\delta,D_i,N}}$, the full-space inclusions $\mathsf T$, and the same identity cuts. No calibrated state is prepared again at a switch. For every target vector $f$ and every checkpoint of that history,
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0,N}f
+     -W_{D_h,N}\mathsf V^\diamond_h f\|
+\le\left(\sum_i\theta_i r_N+2q\omega_N\right)\|f\|. \tag{66.7}
+$$
+
+Use each checkpoint's actual prefix sums. For the joint object, set
+
+$$
+\begin{aligned}
+\mathscr H_D^{\rm joint}
+ &=\mathbb C r\oplus\mathscr H_{D,1}\oplus\mathscr H_{D,2},\\
+\mathcal K_D^{\rm joint}
+ &=\mathbb C r\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2},\\
+W_D^{\rm joint}&=I_r\oplus W_{D,1}\oplus W_{D,2},
+\end{aligned}
+$$
+
+with zero reference generator and identity reference transfer. Tensor all these maps with identity on any supplied retained auxiliary Hilbert space $\mathcal A$, including unused bank modes, $c,u,v$, clock/reference registers and all quantum retention factors. This requires their supplied fixed-factor identification and identity law across the whole commission, rather than inferring such a law from an idle interval. Newly born atomic coordinates of $\mathcal K_{D',N}$ are not taken from an unknown auxiliary register. Physically promoting a previously retained bank mode into an active atom, or coupling an auxiliary during service, requires its own complete joint transfer certificate; a second copy or reset of that mode is not supplied. For every $f\in\mathscr H_{D_0}^{\rm joint}\otimes\mathcal A$, with arbitrary unknown correlations between its sectors, reference and auxiliaries, the bound is
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0}^{\rm joint}f
+-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le (TR\sqrt\delta+2q\omega)\|f\|
+\le(TR+288m)\sqrt\delta\,\|f\|,                   \tag{66.8}
+$$
+
+where $R$ is the common constant displayed after Theorem64.7. The two prescriptions are separate full commissions, each satisfying the same bound; they are not blended or independently optimized marginals. An initial retained component $z$ of norm at most $\eta$ adds at most $\eta$ and is carried through the whole history without projection, reset, resampling or a new copy. If $z$ is a form vector, its form admissibility is retained at every ideal cut and every idle interval. Hilbert vectors without a finite-energy premise still satisfy the norm assertion.
+
+Proof. The one-interval discrepancy is exactly (64.12). Suppose the current discrepancy from $W_Df_i$ is $e$. An idle unitary preserves its norm and adds at most $\theta_i r_N\|f_i\|$; the target unitary has $\|f_i\|=\|f\|$. At an accepted enlargement the full isometry preserves the old discrepancy and (66.6) adds at most $2\omega_N\|f\|$. An identical-domain acceptance, Read or refusal adds zero. Induction gives (66.7). No inference that the actual producer state remains in the calibrated range is made: its entire previous discrepancy is propagated in its full norm. Direct-sum operator norm is the maximum of the two sector bounds, and tensoring with identity leaves the operator norm unchanged, proving the entangled-input statement. Apply the uniform residual $r_N\le R\sqrt\delta$ of Theorem64.7. Every factor in the ideal history is an isometry or a unitary, so $z$ retains its norm. Theorem66.3 and Lemma64.5a retain its form domain when supplied. $\square$
+
+For fixed finite $T,m,a,g,\nu$ and target norm, this bound decreases to zero with the single density $\delta$. No subescape, spectral-gap, localization or visible-state restriction on $f$ is imposed. In particular it includes the hidden phases and complete contrast directions of §§55,58,63, every one/two-particle basis direction, and arbitrary combinations with the same reference. It is not uniform as $T$ or the number of renewals becomes unbounded. Finite cap is a legality condition, not permission to complete an infinite refinement or make an exact limit Read.
+

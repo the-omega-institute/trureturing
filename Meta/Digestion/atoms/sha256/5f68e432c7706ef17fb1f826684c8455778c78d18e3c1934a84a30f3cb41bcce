@@ -1,0 +1,45 @@
+**Definition 11.1 (Binary cone and complete coordinate embeddings).**
+Keep exactly Assumption 1.1 and Definitions 1.2–1.5. In particular,
+all original complex competitors and all actual finite histories remain
+in the problem. Write $\Lambda_{ij}=\sqrt{n_in_j}M_{ij}$, with
+preparation/output row and measurement/input column order $(0,+,-)$.
+Define the five-dimensional cone
+
+$$
+\mathcal P=\left\{(A,B,C,D,c):
+\begin{pmatrix}A&c\\c&D\end{pmatrix}\succeq0,\quad
+\begin{pmatrix}B&c\\c&C\end{pmatrix}\succeq0\right\}.
+\tag{11.1}
+$$
+
+Equivalently, $A,B,C,D\ge0$, $c^2\le AD$ and $c^2\le BC$.
+The four linear maps $\Phi_j:\mathbb R^5\to\mathbb R^{15}$
+below specify every nonzero coordinate; all coordinates not listed
+are zero. Coordinates of $M$ are obtained from the listed $\Lambda$
+by the fixed diagonal rescaling above.
+
+$$
+\begin{array}{c|l|l}
+j&\text{population coordinates}&\text{plane coordinates}\\\hline
+r,0+&\Lambda_{00}=A,\ \Lambda_{0+}=B,\
+       \Lambda_{+0}=C,\ \Lambda_{++}=D
+ &\eta_+=c,\quad\eta_{2+}=D/4\\
+r,0-&\Lambda_{00}=A,\ \Lambda_{0-}=B,\
+       \Lambda_{-0}=C,\ \Lambda_{--}=D
+ &\eta_-=c,\quad\eta_{2-}=D/4\\
+r,+-&\Lambda_{++}=A,\ \Lambda_{+-}=B,\
+       \Lambda_{-+}=C,\ \Lambda_{--}=D
+ &\eta_{2+}=A/4,\quad\eta_{2-}=D/4,\quad
+       \eta_\Delta=\eta_\Sigma=c/2\\
+t,+-&\Lambda_{++}=A,\ \Lambda_{+-}=B,\
+       \Lambda_{-+}=C,\ \Lambda_{--}=D
+ &\eta_{2+}=-A/4,\quad\eta_{2-}=-D/4,\quad
+       \eta_\Delta=c/2,\quad\eta_\Sigma=-c/2
+\end{array}
+\tag{11.2}
+$$
+
+The letters $r,t$ mean radial and tangent measurement as in (2.1).
+The scalar $c$ can have either sign. Neither a trace normalization nor
+an individual-atom TP condition is included in $\mathcal P$.
+

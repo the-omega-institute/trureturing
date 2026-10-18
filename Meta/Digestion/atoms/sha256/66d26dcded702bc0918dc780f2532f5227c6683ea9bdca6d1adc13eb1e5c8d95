@@ -1,0 +1,23 @@
+**Theorem 6.1 (fixed hidden-source reads do not descend).** There is a
+finite linear source for which the boundary at an empty cut identifies two
+full sources but their next hidden-source read differs. Therefore the
+common-input append theorem cannot be transferred to a read of the actual
+next coordinate of a fixed hidden codeword without an additional condition.
+
+Proof. Over $\mathbb F_2$ let $H=[1\ 1]$, so $C=\{00,11\}$. At $k=d=0$
+both full sources have the same empty prefix and the same boundary
+$(s,t)=(0,())$. Define a read action on a tagged state $(x,k)$ that returns
+$x_{k+1}$ and advances the cut without changing $x$. Its first response is
+zero for $x=00$ and one for $x=11$. If instead a requested
+$\operatorname{read}_a$ is legal only when $x_{k+1}=a$, then
+$\operatorname{read}_0$ exists at one source and is absent at the other.
+Neither version is constant on the proposed boundary fiber.
+
+In Definition 1.2, $\operatorname{append}_0$ is legal from the empty prefix
+because $0$ has completion $0$. It supplies that prefix value; it does not
+report the first value of the tagged source $11$. The countermodel
+separates the two contracts even though the same $H$, source relation,
+cut and static image count are used. A fixed-source read requires its value
+and guard to be constant on the actual observed source fiber, the strict
+criterion of Process Geometry Theorem 3.2. $\square$
+

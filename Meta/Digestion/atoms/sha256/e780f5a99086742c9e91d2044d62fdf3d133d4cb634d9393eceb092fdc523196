@@ -1,0 +1,6 @@
+**Corollary 51.2 (A common finite target support).** On a countable power-set carrier, if all target laws are supported on one common finite nonempty set of actual tapes, the prescribed-family infimum is attained. This condition concerns a common set, rather than a separate finite support at each source.
+
+**Proof.** Let the common set be $S$ and fix $\theta_0\in S$. The measurable map that fixes $S$ and sends every other tape to $\theta_0$ fixes every target law and cannot increase event-TV. Applying it to a center shows that the local radii computed in the full carrier equal those computed using laws on $S$. Theorem 51.1 on $S$ supplies a lawful attainer with those radii, and its tapes are also tapes of the original consumer.
+
+In a one-transition constant-law preparation with a finite point mixture $\nu=\sum_iw_i\delta_{\theta_i}$, the seed carrier may be exactly the distinct tapes of positive weight, with their induced weights and its power-set sigma algebra. Identity handoff is measurable and has law $\nu$ on the consumer carrier. No zero-weight tape need be a possible prepared output. This realizes the finite reference law in the constant-profile example of Corollary 48.3 using its finite positive-weight seed support, without asserting that the whole consumer carrier is finite. $\square$
+

@@ -1,0 +1,159 @@
+**Theorem 22.1 (nonlocal collision with slopes zero and one).** The exact history of Proposition 17.1, with final multiplier $W=MJM$ and final endpoint $A_4=(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$, has a finite collision of distinct strictly positive rank-one sources and distinct slopes $k_0=0$, $k_1=1$. Both lists of sampled gains are strictly positive. Each run has one entire constant drift, one fixed positive row, and positive columns throughout the same prescribed words.
+
+**Proof of the exact history and its quotient.** The endpoints and successive chronological blocks are
+$$
+\begin{gathered}
+A_0=I,\qquad
+A_1=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+A_2=LM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix},\\
+A_3=ULM^2=\begin{pmatrix}3&4\\2&3\end{pmatrix},\qquad
+W=MJM=L^2J=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+A_4=WA_3=\begin{pmatrix}2&3\\7&10\end{pmatrix},
+\end{gathered}
+\tag{22.1}
+$$
+$$
+(M,M),\qquad(J,M),\qquad(M,J),\qquad(M,J,M).
+$$
+There are no reads inside those finite blocks. The readings are exactly $0,1,2,3,4$, and all blocks are fixed before either run.
+
+The quotient matrix $\mathsf B$, in entry order $(p,q,r,s)$, has rows
+$$
+(0,1,1,1),\quad(0,2,1,2),\quad
+(2,2,4,2),\quad(1,7,3,9).
+\tag{22.2}
+$$
+The first three homogeneous equations give $q=-s$, $r=0$, $p=0$. Their kernel is therefore $\mathbb RN$ with
+$$
+N=\begin{pmatrix}0&-1\\0&1\end{pmatrix},\qquad
+\mathfrak b(S,N)=p+r>0.
+$$
+The last row on $N$ is two, so $\mathsf B$ is invertible, and this is a member of $\mathscr G$.
+
+The first four endpoint matrices are independent: the triples $(a-e,b,c)$ of $A_1,A_2,A_3$ are $(-1,1,1)$, $(-2,1,2)$, $(0,4,2)$, with determinant $6+4-8=2$. Projecting a relation among the first four matrices to those triples kills $I$ and hence all three other coefficients; the coefficient of $I$ then vanishes. The relation
+$$
+3I-4A_1-6A_2+A_3+2A_4=0
+$$
+has entry sums $3-4-6+3+4=0$, $-4-6+4+6=0$, $-4-12+2+14=0$, and $3-8-18+3+20=0$. It is the unique relation up to scale because the first four are independent. All five coefficients are nonzero, so deletion of any endpoint leaves four independent survivors. This collision is not a deletion-span failure.
+
+**Proof of the finite transfer identity.** For an arbitrary full source matrix $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, define
+$$
+\mathsf H_0S=\begin{pmatrix}P&Q\\R&T\end{pmatrix},
+$$
+$$
+\begin{aligned}
+P&=\tfrac72p+4q+5r+\tfrac92s,\\
+Q&=\tfrac94p-\tfrac32q+r-\tfrac{11}4s,\\
+R&=-2q-2s,\\
+T&=-\tfrac54p+\tfrac92q+\tfrac{27}4s.
+\end{aligned}
+\tag{22.3}
+$$
+Its useful combined entry is $Q+T=p+3q+r+4s$. The four traces are
+$$
+f_1=p+q+r+2s,\quad f_2=p+2q+r+3s,
+\quad f_3=3p+2q+4r+3s,\quad f_4=2p+7q+3r+10s.
+$$
+The four rows of (22.2) applied to $\mathsf H_0S$ give
+$$
+\begin{aligned}
+Q+R+T&=p+q+r+2s=f_1,\\
+2Q+R+2T&=2p+4q+2r+6s=2f_2,\\
+2P+2Q+4R+2T&=9p+6q+12r+9s=3f_3,\\
+P+7Q+3R+9T&=8p+28q+12r+40s=4f_4.
+\end{aligned}
+\tag{22.4}
+$$
+Thus $\mathsf B\mathsf H_0=\mathsf C$ on every full matrix. Invertibility of $\mathsf B$ proves exactly $\mathsf H_0=\mathsf B^{-1}\mathsf C$, and consequently
+$$
+\mathsf B(S+\mathsf H_0S)=(\mathsf B+\mathsf C)S=\mathsf T_1S.
+\tag{22.5}
+$$
+This is a finite transfer identity, with no infinitesimal approximation or small-parameter requirement.
+
+**Proof of finite rank-one sources and strict positivity.** Let $v$ be the unique positive real root of
+$$
+2915v^2-1742v-2784=0.
+\tag{22.6}
+$$
+Define
+$$
+S_1=\begin{pmatrix}1&1/10\\v&v/10\end{pmatrix},
+\qquad
+S_0=\begin{pmatrix}
+49/10+(109/20)v&11/5+(29/40)v\\
+(4v-1)/5&-4/5+(31/40)v
+\end{pmatrix}.
+\tag{22.7}
+$$
+Substituting $p=1$, $q=1/10$, $r=v$, $s=v/10$ into (22.3) gives
+$$
+\mathsf H_0S_1=
+\begin{pmatrix}
+39/10+(109/20)v&21/10+(29/40)v\\
+-(v+1)/5&-4/5+(27/40)v
+\end{pmatrix},
+$$
+so $S_0=S_1+\mathsf H_0S_1$ exactly. The determinant of $S_1$ is zero. Expanding that of $S_0$ gives
+$$
+\det S_0=-\frac{87}{25}-\frac{871}{400}v+\frac{583}{160}v^2
+=\frac{2915v^2-1742v-2784}{800}.
+\tag{22.8}
+$$
+For the coefficient check, the constant is $(49/10)(-4/5)-(11/5)(-1/5)=-87/25$. The linear coefficient is
+$$
+\frac{1519}{400}-\frac{109}{25}-\frac{44}{25}+\frac{29}{200}
+=-\frac{871}{400},
+$$
+and the quadratic coefficient is $3379/800-29/50=583/160$.
+
+At $v_*=32/31$, the lower-right entry of $S_0$ is zero, while its two upper entries are strictly positive and its lower-left entry is positive because $v_*>1/4$. Its determinant is therefore strictly negative there. The quadratic (22.8) has positive leading coefficient and tends to positive infinity as $v$ tends to positive infinity. Continuity supplies a finite root larger than $32/31$. The polynomial (22.6) has positive leading coefficient and negative constant, and its discriminant is $1742^2+4\cdot2915\cdot2784>0$. Its two real roots have negative product, so exactly one is positive. Hence the chosen root satisfies
+$$
+v>32/31>0.
+\tag{22.9}
+$$
+This proves existence, uniqueness, finiteness, and the required strict bound for the exact root choice. Every entry of $S_1$ is positive. The two upper entries of $S_0$ are positive, its lower-left is positive by $v>1/4$, and its lower-right is positive by $v>32/31$. Equations (22.6)–(22.8) make both sources determinant zero, hence nonzero rank one. They are distinct since
+$$
+(S_0)_{21}-(S_1)_{21}=-(v+1)/5<0.
+$$
+No boundary source or limiting source is used.
+
+**Proof of one whole drift and all five original readings.** Take
+$$
+k_0=0,\qquad k_1=1,\qquad
+D_0(\tau)=0,\qquad D_1(\tau)=\Delta\quad(\tau\in\mathbb R),
+$$
+$$
+\Delta=\operatorname{tr}(S_0-S_1)=\frac{31}{10}+\frac{49}{8}v.
+\tag{22.10}
+$$
+Indeed the trace of $\mathsf H_0S_1$ is $39/10-4/5+(109/20+27/40)v=31/10+(49/8)v$. Equations (22.5) and (22.7) give $\mathsf T_0S_0=\mathsf T_1S_1$. Its four coordinates, together with the initial trace identity, are precisely the five original equalities
+$$
+\begin{aligned}
+\operatorname{tr}S_0&=\operatorname{tr}S_1+\Delta,\\
+\operatorname{tr}(A_1S_0)&=2\operatorname{tr}(A_1S_1)+\Delta,\\
+\operatorname{tr}(A_2S_0)&=3\operatorname{tr}(A_2S_1)+\Delta,\\
+\operatorname{tr}(A_3S_0)&=4\operatorname{tr}(A_3S_1)+\Delta,\\
+\operatorname{tr}(A_4S_0)&=5\operatorname{tr}(A_4S_1)+\Delta.
+\end{aligned}
+\tag{22.11}
+$$
+Thus both runs have identical complete data with the displayed whole drifts. Their sampled gains are, respectively,
+$$
+(1,1,1,1,1),\qquad(1,2,3,4,5).
+$$
+Both are strictly positive. Their sources, slopes, and drifts differ, so the targets are not merely two representations of one effective target.
+
+For explicit original common-source realizations one may take
+$$
+f_1=\binom1v,\qquad \ell_1=(1,1/10),
+$$
+$$
+f_0=\binom{49/10+(109/20)v}{(4v-1)/5},\qquad
+\ell_0=\left(1,\frac{11/5+(29/40)v}{49/10+(109/20)v}\right),
+\qquad \alpha_j=1,\quad\beta_j=k_j,\quad R_j=S_j.
+\tag{22.12}
+$$
+The determinant-zero identities give $f_j\ell_j=S_j$. Both factors are positive. Each row remains unchanged throughout its run. The $M,J$ positivity identities from Section 19 prove positive columns at every unread atom of the very same blocks in (22.1). Inverting $\mathsf B$ was only an algebraic proof device. No inverse operation, reset, copy, alternate history, additional read, or adaptive choice is acquired. ∎
+
+<a id="one-sign-barrier-coexists-with-nonlocal-collision"></a>

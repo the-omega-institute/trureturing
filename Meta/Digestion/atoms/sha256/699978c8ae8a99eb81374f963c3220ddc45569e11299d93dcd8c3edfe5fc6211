@@ -1,0 +1,75 @@
+### 58.2 Means, degeneracies, and canonical parameter
+
+Put \(X=\sum x_j\), \(Y=\sum y_j\). Orthogonality to
+\(c_0^{-\epsilon}\) is precisely \(Y=gX\), where
+\(g=g_0^\epsilon\). Thus \(|g|=1\) and
+\(\operatorname{Re}(A\bar B\bar g)=0\).
+Set
+
+\[
+ U=A+Bg,\qquad V=\bar B-\bar Ag;
+ \qquad |U|^2=|V|^2=6.                         \tag{58.1}
+\]
+
+If \(X=0\), both channel zero-mode coefficients vanish. A unit-phase
+triple with any zero Fourier coefficient is monochromatic: after
+modulation its three phases sum to zero and hence are the three cube
+roots of one common phase, in some order. The two input channel modes
+must agree, since otherwise an output channel would have exactly two
+nonzero Fourier coefficients, which is incompatible with three unit
+moduli. Therefore this case is canonical.
+
+If one input channel is constant, \(|X|=|Y|=3\) makes the other constant,
+and (58.1) makes the ray canonical. Otherwise multiply the entire input by
+one common phase to arrange
+
+\[
+ X=3t,\qquad Y=3gt,\qquad 0<t<1.              \tag{58.2}
+\]
+
+The antiunitary \(\Theta(x,y)=(-\bar y,\bar x)\) satisfies
+\(H_0\Theta=-\Theta H_0\) and exchanges the two zero-mode canonical
+rays projectively. Thus, if either channel has three distinct entries,
+it suffices to treat the case where \(x\) has three distinct entries.
+The case where both channels have exactly two distinct entries is
+retained separately below.
+
+For later algebra put
+
+\[
+ s=h^2,\quad \lambda=\frac{2h^3}{s+3},\quad
+ \rho=\lambda+w,\qquad w^2=1+\lambda^2,\qquad
+ b^2=\frac{3-s}{1+s}.                           \tag{58.3}
+\]
+
+Both real signs of \(w\) are retained. Define
+
+\[
+ D=-b(h+\rho)+i(3\rho-h),\qquad
+ N=-3-\rho h+i(b-\rho a),\qquad
+ g=\frac{\bar N}{\bar D}.                       \tag{58.4}
+\]
+
+These give exactly the two canonical phases in (58.1). Here is a direct
+check of the parameterization and its denominators. Let
+
+\[
+ L_0=3-ib-(a+ih)\bar g,\qquad
+ L_1=(3+ib)\bar g+a-ih.
+\]
+
+The two summands in \(L_1\) have squared moduli \(9+b^2\) and
+\(3-b^2\), so \(L_1\ne0\). Also
+\(\operatorname{Re}(L_0\bar L_1)=4\operatorname{Re}(A\bar B\bar g)=0\).
+Consequently \(-L_0/L_1=i\rho\) with \(\rho\) real.
+The equation \(|g|=1\) then gives
+
+\[
+ (s+3)\rho^2-4h^3\rho-(s+3)=0.
+\]
+
+Solving \(L_0+i\rho L_1=0\) gives (58.4), and substitution gives
+\(L_1=-12/D\). Conversely, (58.3)--(58.4) give a unit canonical phase.
+In particular \(D\ne0\); the norm identity (58.12) below is another
+explicit verification throughout the domain.
+

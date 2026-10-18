@@ -1,0 +1,30 @@
+**Definition 1.1 (Native source data).** Fix $0<Z<1$, and put
+
+$$
+r=1-Z,\qquad H=r/2.
+$$
+
+Use mode order $(0,1,2,3,13)$, probability vector and tangent
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H,\qquad
+d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+Fix an arbitrary preparation height $k_0\in(0,H)$ and arbitrary fixed
+phases $\theta^{\rm in}_j$. With the native negative phase convention,
+
+$$
+\psi_j=\sqrt{p_j}\,e^{-i\theta_j},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_j=\frac{d_j}{p_j(k)I(k)}\dot\chi,\qquad
+I(k)=\frac2k+\frac2{H-k}.
+$$
+
+Producing histories are piecewise $C^1$ or absolutely continuous native
+control paths on finite compact intervals, with interior height throughout
+and finite phase variation. The initial real relation lift is consistent
+with $d^{\mathsf T}\theta^{\rm in}$. Queries concern current rays at arbitrary
+finite prefixes, without a loop or winding restriction. Write
+$\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+

@@ -1,0 +1,4 @@
+**Boundary 1.3 (Null, endpoint and forcing fibers).** Zero-total finite fibers have zero weight and require no likelihood division. A coarse conditional posterior equal to zero or one forces every refined conditional posterior to equal that same endpoint almost surely on that coarse event.
+
+For a legal $P$, the full posterior $q$ is zero when either neighbor is one. For $r\ge1$, both fields in (1.1) retain both neighbors, so both defects vanish on these forcing events. At $r=0$, $\mathcal G_L(0)$ omits $X_{-1}$ and $\mathcal G_R(0)$ omits $X_1$. Only a forcing neighbor actually retained by the field forces its predictor to zero; no blanket vanishing of radius-zero defects follows from legality.
+

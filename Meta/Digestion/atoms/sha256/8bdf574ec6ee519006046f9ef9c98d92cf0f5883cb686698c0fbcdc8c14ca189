@@ -1,0 +1,33 @@
+### 60.1 Actual rays and statement
+
+Use the actual seed and input-ray convention of §58.1. Thus, with
+\(J_3\) the three-by-three all-ones matrix,
+
+\[
+ \begin{gathered}
+ |b|<1,\qquad c=\sqrt{1+b^2},\qquad d=\sqrt{3-b^2},\qquad
+ k=\sqrt{4b^4-3b^2+9},\qquad a=bd/c,\quad h=d/c,\\
+ P=\frac{a-3+i(h+b)}2,\qquad Q=\frac{-a-3+i(h-b)}2,\\
+ M=\sqrt6H_0=
+ \begin{pmatrix}J_3+PI&J_3+QI\\J_3+\bar QI&-J_3-\bar PI\end{pmatrix}.
+ \end{gathered}
+\tag{60.1}
+\]
+
+All three square roots are positive. An actual common-flat input ray
+is represented by a unit vector \(w\) such that every coordinate of
+both \(w\) and \(H_0w\) has modulus \(1/\sqrt6\). The corresponding
+common-unbiased column ray for the bases \((I,H_0)\) is \(H_0w\).
+This common unitary transport preserves orthogonality.
+
+With \(f_l(j)=\omega^{lj}\), \(\omega=e^{2\pi i/3}\), the canonical
+input rays of §58.1 have the equivalent explicit phases
+
+\[
+ g_0=\frac{-2b^3+i(b^2+3)}{ck},\qquad
+ g_1=g_2=\frac{b+i}{c},\qquad
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,\epsilon g_lf_l),
+ \quad l\in\mathbb Z_3,\quad\epsilon\in\{1,-1\}.
+\tag{60.2}
+\]
+

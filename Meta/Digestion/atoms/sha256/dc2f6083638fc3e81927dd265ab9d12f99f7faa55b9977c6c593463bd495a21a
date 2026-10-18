@@ -1,0 +1,62 @@
+**Theorem 5.1 (the depth-two native fractional value).** One has
+
+$$
+z_1=1,\qquad z_2=\frac{25}{17}.
+\tag{FMR.23}
+$$
+
+To describe the depth-two certificate, let $A=\alpha$, $B=\beta$,
+$C=\langle\alpha,\alpha\rangle$, and let
+$\mathcal G=\{g_{xy}=\langle x,y\rangle:x,y\in\{A,B,C\}\}$.
+The maximal admissible subsets of $S_2=\{\alpha,\beta\}\sqcup\mathcal G$
+are exactly
+
+$$
+H_\alpha=\{\alpha\}\cup\mathcal G,
+\qquad H_\beta=\{\beta\}\cup\mathcal G,
+\qquad T_{xy}=\{\alpha,\beta,g_{xy}\}\quad(x,y\in\{A,B,C\}).
+\tag{FMR.24}
+$$
+
+Proof. For depth one a root Read determines every root factor, so
+the entire $S_1$ is admissible and $z_1=1$. At depth two put
+$\gamma(A)=(2,1)$, $\gamma(B)=(1,0)$, $\gamma(C)=(0,0)$.
+The nonroot target factors are
+
+$$
+\begin{array}{c|cc}
+u&\Gamma_L(u)&\Gamma_R(u)\\ \hline
+\alpha&(3,0)&(4,1)\\
+\beta &(2,0)&(3,1)\\
+g_{xy}&\gamma(x)&\gamma(y).
+\end{array}
+\tag{FMR.25}
+$$
+
+Within each column the two root-leaf factors and the three possible
+child factors are distinct. On $H_\alpha$ or $H_\beta$, a child-target
+Read at that child returns absent exactly on the unique possible
+root leaf; its label is fixed by the cover member. Any other reply
+is the target's own constructor. A root target uses a root Read.
+On $T_{xy}$ a root Read distinguishes all three possible trees, so
+all targets are decodable.
+
+Conversely suppose an admissible set contains both root leaves.
+At either child target their factors differ, but every nonroot
+experiment returns absent on both. Hence that target's witness
+must be the root experiment. All branch members receive its same
+branch reply, and must therefore agree in their left target factors
+and in their right target factors. The injectivity of $\gamma$ on
+$\{A,B,C\}$ permits at most one $g_{xy}$. A set not containing both
+leaves is contained in $H_\alpha$ or $H_\beta$. This proves the
+maximal-set classification; Lemma 2.2 already covers every longer
+native experiment.
+
+Give $H_\alpha,H_\beta$ weight $8/17$ each and all nine $T_{xy}$
+weight $1/17$ each. Every leaf has coverage $(8+9)/17=1$ and
+every branch has coverage $(8+8+1)/17=1$. Total primal weight is
+$25/17$. For the dual, give each root leaf weight $8/17$ and
+each branch weight $1/17$. Each of the eleven maximal sets has
+mass one, and hence all admissible sets have mass at most one.
+The dual total is also $25/17$, proving equality. $\square$
+

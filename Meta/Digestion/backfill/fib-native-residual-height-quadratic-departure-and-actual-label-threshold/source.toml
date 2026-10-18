@@ -1,0 +1,5 @@
+source_id = "fib-native-residual-height-quadratic-departure-and-actual-label-threshold"
+path = "docs/develop/theory/FIB_NATIVE_RESIDUAL_HEIGHT_QUADRATIC_DEPARTURE_AND_ACTUAL_LABEL_THRESHOLD.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

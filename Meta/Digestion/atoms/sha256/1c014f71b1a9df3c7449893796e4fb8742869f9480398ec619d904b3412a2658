@@ -1,0 +1,55 @@
+**Definition 1.2 (The original menu, port class and error).** An actual
+future protocol uses only nonnegative waits $U(t)$, the complete five-outcome
+rank-one Lüders instrument
+$\mathcal J_s(X)=\Pi_sX\Pi_s$, and Stop. Each protocol has finite adaptive
+depth, and every finite depth is included. The full history retains outcomes,
+chosen controls and stops. Initial controls and random control resources
+are independent of the input; both compared inputs use the same policy.
+Grouping recorded outcomes is classical postprocessing of the full read,
+not a coarse-block Lüders instrument. The menu has no independent mode
+phases, arbitrary unitaries, source copies, resets, external quantum side
+information, probability oracle or accessible hidden Kraus record.
+
+For $1\le q\le5$, let $\mathfrak C_q$ consist of the composites of fixed
+CPTP maps
+
+$$
+\operatorname{Enc}:M_5(\mathbb C)\longrightarrow
+\bigoplus_{f\in F}M_q(\mathbb C),\qquad
+\operatorname{Dec}((Y_f)_f)=\sum_f\operatorname{Dec}_f(Y_f),
+\quad \operatorname{Dec}_f:M_q(\mathbb C)\longrightarrow M_5(\mathbb C),
+\tag{1.2}
+$$
+
+where $F$ is finite and every $\operatorname{Dec}_f$ is CPTP on its whole
+block. The encoder and decoders are fixed before the input and the choice
+of future protocol. All quantum information traverses the stated port,
+with no original-input retention, entangled assistance or bypass. Finite
+classical flags are free for this $q$ criterion, are used during decoding,
+and are not additionally exposed to the future policy. In particular,
+$\mathfrak C_q$ includes every legal complex CPTP design, without a
+reality, unitality, covariance or projection restriction.
+
+For the retained-history law $P_\rho^\pi$, put
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathcal H)}
+\sup_{\pi\ {\rm actual,\ finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad
+\varepsilon_q=\inf_{T\in\mathfrak C_q}e(T).
+\tag{1.3}
+$$
+
+The input is replaced once before the common future protocol. TV is half
+the $\ell^1$ distance, with its usual measure version for randomized
+controls. Complete positivity includes all reference extensions; the
+performance criterion tests only the system histories. This is the
+contract of QMB Definitions 1.2–1.3, also used in
+[QPC, Definitions 1.2–1.3](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md).
+It is measurement-relative compression with ambient dimension $D=5$ and
+compressed dimension $d=q$ in
+[Bluhm–Rauber–Wolf, Definition 4.1 and Lemmas 5.2–5.3](https://arxiv.org/html/1708.04898v4).
+Their exact observable-preservation and finite-support results do not
+identify the approximate value in (1.3).
+

@@ -1,0 +1,30 @@
+**Proposition 10.3 (No positive energy or entropy floor from maximal rank).**
+Fix $m\ge2$ and the mirror matching. With all phases
+nontrivial, its cut rank is maximal. If all activities
+are $\varepsilon>0$, that rank persists as
+$\varepsilon\downarrow0$, whereas the state tends to
+the vacuum, its entropy tends to zero and its associated
+reference-parent energy tends to zero. The activity limit
+varies that parent with the law. At fixed positive activities,
+letting every nontrivial $z_h\to1$ also keeps maximal
+rank before the limit, while energy tends to zero and
+entropy tends to the positive-reference value.
+
+Proof. Rank follows from Theorem 9.2 at every strictly
+positive parameter value. The vacuum and phase limits
+are norm limits of finite-dimensional coefficient matrices.
+Entropy is continuous. Every joint occupation probability
+tends to zero in the vacuum limit, and the factors
+$|z_h-1|^2$ tend to zero in the phase limit. Formula
+(10.1) proves both energy limits for fixed finite weights.
+$\square$
+
+The mirror rank formula, full phase-fiber entropy orbit
+and their fixed-parent energy consequences are deductions
+for this full-support model. Boolean Möbius inversion,
+unit-triangular inclusion matrices and determinant
+congruence are established intermediate ingredients,
+not new general principles. Classical occupation,
+quantum phase, matrix rank, entropy and dimensional
+physical energy retain their separate meanings.
+

@@ -1,0 +1,20 @@
+## 4. What this closes, and what it does not
+
+The theorem is an exact parameter-closure criterion, not a finite
+description of all closures. It says that a proposed limit fails precisely
+when either a finite residual coordinate is a barrier with no feasible
+completion, or the scalar point is outside the closure of the whole support
+after that barrier is fixed. It does not turn the support of unknown $f$ into
+a solver, and it does not replace the general NIC stopping alternative by
+enumeration of supplied depths.
+
+For each fixed depth, NSF's complete native query machinery checks the
+normalized piece and reconstructs the finite source. Theorem 3.1 adds the
+missing simultaneous prefix choice; URR's global section remains useful for
+one completion at every feasible scalar tuple but does not, by itself,
+match prescribed infinite-tree prefixes. The new step is (SLP.11)'s
+identity reflection through arbitrary independent nonground native prefix
+contexts; the supplied unrestricted URR separator is applied only after
+that step. Arbitrary positive residual constraints and a complete search
+for common source contacts are not eliminated by this argument.
+

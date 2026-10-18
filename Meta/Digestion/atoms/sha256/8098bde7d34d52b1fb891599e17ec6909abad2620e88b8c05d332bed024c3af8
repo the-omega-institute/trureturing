@@ -1,0 +1,73 @@
+**定义 40.1（Original experiment and complete finite controller）。** Fix the original order $k=6$ and block width $m=4$ of Definition 24.1. Its weights and matched binary coefficients are
+
+$$
+G_i=2^i\quad(0\le i<6),\qquad
+G_i=\sum_{h=1}^{6}G_{i-h}\quad(i\ge6),\qquad
+\gamma_i=G_i\bmod2=\mathbf1_{\{0,6\}}(i\bmod7).
+\tag{40.1}
+$$
+
+The coefficient equality is supplied by (15.1), equivalently (24.2), and the [minimal modular observer, Section 13, (30)–(31), and Theorem 14.1](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md). Bits are read in increasing original weight order. A live history $w=w_0\cdots w_{N-1}$ has length divisible by four, avoids six consecutive ones, and has record $(x,\theta,s)$ with $x=\sum_{i<N}w_iG_i\bmod2$, $\theta=N\bmod7$, and terminal run $s$. Rejected histories have the distinct absorbing record $\bot$. The source is the full actual joint image
+
+$$
+Q=(\mathbb F_2\times\mathbb Z/7\mathbb Z\times\{0,1,2,3,4,5\})\sqcup\{\bot\}.
+\tag{40.2}
+$$
+
+All $84$ live INITIAL triples and bottom are included, with unknown history and length. Joint realization is supplied by Lemma 15.1: choose $N\ge s+2$, $N\equiv0\pmod4$, $N\equiv\theta\pmod7$, set $e=\bigoplus_{i=N-s}^{N-1}\gamma_i$, and take
+
+$$
+w=(x\oplus e)0^{N-s-1}1^s.
+\tag{40.3}
+$$
+
+Coprimality permits arbitrarily large such $N$. The first bit has coefficient one, the zero interval separates it from the terminal run, and this same legal word attains all three coordinates. The complete-block history $11111100$ attains $\bot$. These unobserved witnesses are not controller inputs or continuation fees.
+
+Both original action alphabets are retained separately and here coincide:
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^4,
+\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^4:B\text{ internally avoids }1^6\}
+=\{0,1\}^4.
+\tag{40.4}
+$$
+
+Each action executes all four bit updates in its displayed order. On current live record $(y,\phi,t)$, zero gives $(y,\phi+1,0)$; one gives $(y\oplus\gamma_\phi,\phi+1,t+1)$ if $t<5$, and gives $\bot$ if $t=5$. Both bits preserve $\bot$. Phase arithmetic is modulo seven. Let $T_B$ be this fourfold composition and $o(y,\phi,t)=y$, $o(\bot)=\bot$, with response alphabet $O=\{0,1,\bot\}$. Only $o(T_B(q))$ is read after an action; interior values are unavailable. The original word $1111$ remains an available action and succeeds whenever its inherited tail permits it.
+
+There is one free INITIAL observation $o(q_{\rm INITIAL})$. The immutable targets and bottom labels are
+
+$$
+\begin{aligned}
+f_{\rm ph}(x,\theta,s)&=\theta,& f_{\rm ph}(\bot)&=0,\\
+f_{\rm vp}(x,\theta,s)&=(x,\theta),& f_{\rm vp}(\bot)&=(0,0).
+\end{aligned}
+\tag{40.5}
+$$
+
+Neither target is evaluated on a later record. These are the conventions of Definitions 18.1 and 24.1 and the [irreversible target-acquisition volume, Definitions 1.2 and 2.1, Convention 1.3, and Open Problem 11.2](https://github.com/the-omega-institute/trureturing/blob/3d77b305316f29834675427be4c971ad06e73b57/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md).
+
+A complete deterministic finite controller for a target with codomain $Y$ is $(K,c,u,v)$, with finite state set $K$ and total maps
+
+$$
+\begin{aligned}
+c&:O\longrightarrow K,\\
+u&:K\longrightarrow
+ \{\operatorname{Emit}(B):B\in\{0,1\}^4\}
+ \sqcup\{\operatorname{Halt}(a):a\in Y\},\\
+v&:K\times O\longrightarrow K.
+\end{aligned}
+\tag{40.6}
+$$
+
+Initialize once to $c(o(q_{\rm INITIAL}))$. At state $z$, Halt returns its literal label and persists: $v(z,o)=z$ for every $o$. Emit executes its word, reads its endpoint, and moves to $v(z,o(T_B(q)))$. All usable stages, branch selectors, saved INITIAL values, input/output archives, stopping decisions and persistent output states belong to $K$. No external counter, archive, clock, source promise, reset, copy, interior read or further free device read is supplied. The physical device record remains part of the experiment but is not a separately accessible controller register. Cycles and sharing across branches or execution depths are allowed.
+
+Each actually emitted block costs one, or four emitted bits. Clearing, waiting, padding and remaining bits after internal rejection execute and are charged. Halt costs no block. Success means finite stopping with $f(q_{\rm INITIAL})$ for every source. Define
+
+$$
+M_3(f)=\min\{|K|:(K,c,u,v)\text{ is complete and successful with worst emitted fee }\le3\}.
+\tag{40.7}
+$$
+
+Running and Halt states both count. Theorem 24.2 already supplies adaptive worst-fee minimum three and the separate one-GLOBAL-stream minimum four. The additional question here is complete memory at that adaptive fee; GLOBAL common-word constraints are not imposed.
+

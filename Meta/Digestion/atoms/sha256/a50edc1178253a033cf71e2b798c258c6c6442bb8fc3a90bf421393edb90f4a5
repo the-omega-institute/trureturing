@@ -1,0 +1,33 @@
+**定义 130.1（初始化与实际历史）。** 每轮使用一份新的边记录系统，并实际供应边仪器 $\mathcal J_{ji}(\varrho)=K_{ji}\varrho K_{ji}^\dagger$ 及其记录读取。历史输入有以下两种明确合同：一是固定已知起点 $i_0$，其内部态任意，亦可与未触动参考相关；二是实际供应配置准备或初始化记录，使起点具有声明的分布 $\pi$，并保留正交初始记录 $|i_0\rangle_{R_0}$。例如允许的块对角初始来源为
+$$
+ \varrho_{\mathrm{in}}=\sum_i\pi_i|i\rangle\langle i|\otimes\varrho_i,
+ \qquad \pi_i\ge0,\quad\sum_i\pi_i=1,
+$$
+并实际关联 $R_0$。若要从任意相干配置取得这个起点记录，须另外供应
+$J(|i\rangle\otimes\psi)=|i\rangle\otimes\psi\otimes|i\rangle_{R_0}$；读取或丢弃 $R_0$ 会影响配置相干，不能作为免费初始化。内部态 $\varrho_i$ 不被初始配置标签取代。
+
+对 $N\ge1$ 的实际边历史 $h=(i_0,\ldots,i_N)$，相乘同一仪器的 Kraus 算子得
+$$
+ K_h=K_{i_Ni_{N-1}}\cdots K_{i_1i_0}
+ =\sqrt{\prod_{t=1}^NP_{i_{t-1}i_t}}\,
+ |i_N\rangle\langle i_0|\otimes U_h,
+$$
+$$
+ p_h=\pi_{i_0}\prod_{t=1}^N P_{i_{t-1}i_t},\qquad
+ U_h=U_{i_Ni_{N-1}}\cdots U_{i_1i_0}.\tag{130.1}
+$$
+这里 $P$ 的行指标始终是来源，列指标是后继。因为
+$K_h^\dagger K_h=(\prod_tP_{i_{t-1}i_t})|i_0\rangle\langle i_0|\otimes I_2$，其迹给出 $p_h$，正概率历史的条件内部态为 $U_h\varrho_{i_0}U_h^\dagger$；加入参考时改用 $U_h\otimes I$。故路径权重和条件运输均由这些实际边分支产生。
+
+固定根时取
+$|e_h\rangle=\bigotimes_{t=1}^N|i_{t-1}\to i_t\rangle$；多起点合同则取
+$|e_h\rangle=|i_0\rangle_{R_0}\otimes\bigotimes_{t=1}^N|i_{t-1}\to i_t\rangle$。两种合同都给出 $\Gamma_{hk}=\langle e_k|e_h\rangle=\delta_{hk}$：非空的不同路径至少有一条边标签不同；多起点时初始标签也可区分。$N=0$ 时乘积为一、$U_h=I_2$；固定根域只有一条空边历史，而多起点域由实际保留的 $R_0$ 保证不同单点历史正交。没有固定根或初始记录，空边记录都相同，不能宣称此时 $\Gamma=\delta$。同一起点下不同未知内部来源亦不由历史标签自动区分。
+
+于是 $p,U,\Gamma$ 来自同一边仪器及明列的初始化，而非分别择优。经典读取记录不会自动反演为相干分支；这仍需保留相关记录系统、相位相容控制及实际联合反转权限。
+
+不同 $|j\rangle\langle i|$ 的向量化彼此 Hilbert–Schmidt 正交，故这一个完整边通道的 15 个非零 Kraus 算子线性无关，Choi 矩阵
+$$
+ J(\mathcal E)=\sum_{ij}|\operatorname{vec}K_{ji}\rangle\langle\operatorname{vec}K_{ji}|
+$$
+的 15 个非零正交方向使其秩恰为 $15$：每个向量的范数平方为 $\operatorname{tr}(K_{ji}^\dagger K_{ji})=2P_{ij}>0$，不同边的内积为零。若纯初始环境维数为 $m$，对环境基取分量最多得到 $m$ 个 Kraus 算子，故 $\operatorname{rank}J\le m$；这里 $m\ge15$，边记录实现达到。此数是一轮指定通道的最小纯环境维数，不包含多起点初始化记录、时钟或全部历史档案的累计资源。这个数只属于指定的完整边通道；不能推广为所有具有同一 $P$ 的量子实现都至少需要 $15$ 维环境。Choi 秩与最小 Kraus 数的标准事实参见 Choi 1975 及 John Watrous, *The Theory of Quantum Information*, Cambridge University Press, 2018，[第2章，定理2.22及推论2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。
+

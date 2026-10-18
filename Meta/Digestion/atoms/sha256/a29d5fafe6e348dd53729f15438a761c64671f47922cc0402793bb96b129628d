@@ -1,0 +1,36 @@
+**Definition 1.2 (source and radial cost).** Use positive amplitudes and failure entries
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad T=ae_0e_1^T+be_1e_0^T,\quad S=ce_0e_2^T+de_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\qquad D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad\kappa=h_0a+h_1b,\\
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad U=1/\alpha,\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad\mu=\alpha V+\beta W,\quad r=V/\mu.
+\end{gathered}
+$$
+
+Thus $\alpha+\beta=1$, $0<\delta<1$, and $0<r<1<U$. On $[0,U]$ define
+
+$$
+\begin{aligned}
+Y(x)&=(1-\alpha x)/\beta,& H_c(x)&=(\sqrt x-1)^2/2,\\
+D_c(x)&=D_0+D_1x=\delta h_0^2+b^2x+d^2Y(x),\\
+N_c(x)&=N_0+N_1x=\delta h_1^2h_2^2+a^2h_2^2x+c^2h_1^2Y(x),\\
+c_*(x)&=N_c(x)/D_c(x),& F_c(x)&=H_c(x)D_c(x)/N_c(x).
+\end{aligned}
+$$
+
+Both affine functions are positive through both axes. Let $\mathcal E=\{\alpha z^2+\beta w^2=1\}$ and put
+
+$$
+\begin{gathered}
+h(z,w)=(1,z,w)^T,\quad K(z,w)=s_0D+zT+wS,\\
+n(z,w)=(0,dw/h_2,-bz/h_1)^T,\quad\Delta_{\rm hist}=\rho_{27,+,+}-\rho_{5,+,+},\quad k=n^T\Delta_{\rm hist}n,\\
+\Phi(\lambda)=\max\left\{\int k_+d\nu:\nu\ge0,\ \int nn^Td\nu=M,\ \int F_c(z^2)d\nu\le\lambda\right\}.
+\end{gathered}
+\tag{TB.1}
+$$
+
+This is the whole-ellipse problem, including axes. Its measures have mass $\mu$, $z^2$ moment $V$, $w^2$ moment $W$ and $zw$ moment zero. They are failure/coefficient measures, not source priors or acquisition probabilities. JS supplies compact attainment and $\Phi(C_{\rm end})=0$, $\Phi(C_{\rm sat})=\gamma$, where $C_{\rm end}=\mu F_c(r)$.
+

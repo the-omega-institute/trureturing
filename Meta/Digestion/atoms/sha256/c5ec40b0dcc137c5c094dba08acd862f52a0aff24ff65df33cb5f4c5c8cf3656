@@ -1,0 +1,30 @@
+**Proposition 5.3 (OUT may be the unique final publication).** Suppose
+an unfused OUT row has reached a cut at which all its original native
+data, both head lanes and staged receipt are final; its next two
+reactions are one authorized captured-bit OUT with a phase relocation,
+then a marker-only Finish. Replace these by one FinishOUT releasing
+that same bit and relocating directly to the same Ready/Halt target.
+Under an explicitly supplied core atom permitting that release and
+relocation together, the completed graph, actual output, original
+receipt and authority are unchanged. There is no output-ahead-of-
+completion cut.
+
+Proof. The OUT changes no native data, and the following Finish changes
+only the controller attachment/publication status. No new row can
+run between them. Their composite therefore has exactly the same
+native projection and final controller target as the contracted
+reaction. The captured authorized bit is released once in either
+case, and no receipt is constructed or repeated by the contraction.
+Before FinishOUT neither that output nor its row is completed; after
+it both are. This proves (OR.2) and removes precisely Proposition
+2.4's intermediate cut. For raw OUT effects overwriting the original
+latch, the required atom releases the bound old permitted bit. It is
+not automatically an application of native OUT to the now-current
+latch. Its current core authority remains an explicit premise. ∎
+
+FinishOUT does not move real input acceptance to Finish. Delaying
+actual IN would require a separate paid waiting/binding protocol;
+an already supplied external bit is not a free retained register.
+Alternatively one may retain the pending OUT term in (OR.1) with an
+explicit consumer contract. Fusion is sufficient, not necessary.
+

@@ -1,0 +1,24 @@
+#### FMR.3 Inert primes are impossible
+
+For (p>5), (p) is unramified in (K). If (p) were inert, Frobenius
+sends (phi) to (arphi=1-phi), hence
+(phi^{p+1}=N_{K/mathbb Q}(phi)=-1) in the residue field. Therefore
+[
+v^{(p+1)/2}=phi^{p+1}=-1
+]
+and the order of (v) is even. This contradicts its odd order (ell).
+Thus every extracted (mathfrak p) lies over a split rational prime (p),
+with residue degree one. Since (v) has order (ell) in
+(mathbb F_p^	imes), (ellmid p-1). Moreover (-1
+otinlangle vangle)
+because (ell) is odd, so (operatorname{ord}_p(-v)=2ell). The Binet
+identity (phi/arphi=-v) identifies this order with the Fibonacci
+rank:
+[
+ho(p)=2ell,qquad pequiv1pmod{2ell}.
+]
+If the same rational (p) arose from two different indices, its reduction
+would give two different orders for (v); conjugation only replaces (v) by
+(v^{-1}), preserving order. Hence the contracted rational witnesses are
+distinct.
+

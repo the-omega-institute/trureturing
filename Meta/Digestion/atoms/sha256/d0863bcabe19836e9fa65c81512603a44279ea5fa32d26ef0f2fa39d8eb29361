@@ -1,0 +1,22 @@
+**Proposition 4.4 (the second exact fiber and the same four rows).** The entire
+successful fiber of (SJM.20)–(SJM.22) is
+
+$$
+D_4=\{V(y,z):y,z\in\mathcal T\}.
+\tag{SJM.24}
+$$
+
+Its four complete rows are the same $r_0,r_1,r_2,r_3$ in (SJM.19), with
+$\rho y,Fy$ replaced by $Fy,F^2y$ in the hole values and the same equality
+partition names.
+
+*Proof.* The literals force the outer skeleton and the two left $\beta$ leaves.
+At epoch one the subtree at $RL$ is $\rho y$, so the first equality forces the
+right child of $Fy$ to be $\rho y$. At epoch one the subtree at $RRL$ is
+$\rho(Fy)$, so the second equality forces the right child of $F^2y$ to be
+$\rho(Fy)$. Thus the source is (SJM.23). Conversely (SJM.23) satisfies every
+literal, equality and reach guard. The clock gives offsets $0,3,6$ for
+$y,Fy,F^2y$, so all three negative records hold. The target partition analysis is
+identical, and $z=F^iy$ for $i=0,1,2,3$ attains all four rows because the
+offsets $0,3,6,9$ are distinct. $\square$
+

@@ -1,0 +1,46 @@
+**Lemma 3.1 (Character basis without regularity).** The space $W$ has
+a basis of common translation eigenfunctions. Every nonzero common
+eigenfunction is a nonzero constant times an abstract unitary character
+of $\mathbb T^2$; that character need not be continuous or measurable.
+
+**Proof.** First consider one invertible isometry $A$ on a finite
+complex normed space. An eigenvector gives $|\lambda|=1$ for its
+eigenvalue. A nontrivial Jordan block would supply vectors $u\ne0,v$
+with $Au=\lambda u$ and $Av=\lambda v+u$. Induction gives
+
+$$
+A^jv=\lambda^jv+j\lambda^{j-1}u,
+$$
+
+whose norm is at least $j\|u\|-\|v\|$, contradicting
+$\|A^jv\|=\|v\|$. Hence every such isometry is diagonalizable.
+Here the usual finite complex generalized-eigenspace decomposition is
+pure linear algebra; no function regularity is involved.
+
+A commuting family of these maps has a common eigenbasis even if the
+family is infinite. If every member is scalar, any basis works. Otherwise
+split into the eigenspaces of a nonscalar member. All other members and
+their inverses preserve these spaces by commutation, and restrict to
+isometries. Each eigenspace has smaller dimension; induction gives a
+common eigenbasis in each. Their union proves the assertion. In dimension
+zero there is nothing to prove.
+
+For a nonzero common eigenfunction $f$, write
+$\tau_vf=\lambda(v)f$. All eigenvalues have modulus one, and the
+actual translation law implies
+
+$$
+\lambda(v+w)=\lambda(v)\lambda(w),\qquad \lambda(0)=1.
+$$
+
+Evaluating at zero gives $f(v)=\lambda(v)f(0)$. If $f(0)=0$ then
+$f$ vanishes at every point, a contradiction. Thus $f$ is the claimed
+constant multiple of a character. In particular,
+
+$$
+\lambda(\alpha,\beta)=\lambda_1(\alpha)\lambda_2(\beta),
+$$
+
+where the two factors are its restrictions to the two circle subgroups.
+No topological classification of characters has been used. $\square$
+

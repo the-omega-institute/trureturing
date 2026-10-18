@@ -1,0 +1,115 @@
+**Definition 11.1 (Credited results and common hypotheses).** Write $G$ for [Growing state budgets in the renewal paid-mean tradeoff](FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md), and $C$ for [Real renewal instruments and detector rank: finite observer memory](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md). The forest comparison, strengthened finite-parameter converse, simultaneous endpoint bound and configuration-growth implication used below are the existing results of $G$, Sections 4–5 and Theorems 8.1, 9.1 and 10.1. They are not additional discoveries of this append. The further consequence concerns complete fixed-width binary memory and its comparison with the supplied band controller of $C$, Sections 28–30.
+
+The correspondence is literal. Definitions 2.1–2.2 of $G$ use the same $F_0(k)=k^9$, $F_1(k)=H_c(k)$, rational-center polynomial (2.1), positive constant $\delta$ and $B=1+\delta$ as Sections 2–3 here. Its integer envelope is precisely (2.3), its first wait is (2.5), its subsequent zero counts are (2.6), and its moment premise is (2.8). Its Definition 3.1 is $\mathfrak A_M(q,\alpha)$ here, with the same source-independent initialization, the same machine under both labels at the same known common $q$, and arbitrary retuning at each $q$. In particular all persistent control, register, label and retained-randomness configurations count toward $M$; the actual consecutive-read cost is $T$, including the stationary initial interval and the terminal partial interval. Both selected risks, both almost-sure stops and both separate finite paid means in (3.1) remain required. There is no extra age, clock, archive, reset, skipped bit, source copy, parameter, probability or sample query. The normal form of $G$, Lemma 3.2, has exactly the $\eta,A,C,U_i,\nu_i$ of (3.2). Neither a fixed observer across parameters nor a lower bound on its positive transition probabilities is required.
+
+For the finite-chain input, take any row-stochastic $P,Q$ on the same set $\mathcal S$, $|\mathcal S|\le M$, with the distinct common absorbing labels $d_0,d_1$ and the entrywise comparison (4.1) for a finite $\gamma\ge1$. These are exactly $G$, Definition 4.1; reducible chains with additional closed classes are permitted. In the common positive support put
+
+$$
+\mathcal Z=\{x:\text{no directed path from }x\text{ to }d_1\},
+\qquad \partial=\mathcal Z\cup\{d_1\},
+\qquad V=\mathcal S\setminus\partial,
+\qquad n=|V|\le M-2.
+\tag{11.1}
+$$
+
+Here paths may have length zero, so $d_1\notin\mathcal Z$, whereas $d_0\in\mathcal Z$. The common boundary is the whole zero-target set together with the target. The row replacement on $\mathcal Z$ in that definition preserves the actual hitting probabilities and entrywise comparison without adding a state. This is not a single-root tree calculation on the original reducible chain.
+
+Apply $G$, Definition 4.2 and Lemma 4.3, with its target $t=d_1$, interior $V$, and boundary $\partial$. Its forests have roots exactly $\partial$, one outgoing non-self edge at each vertex of $V$, and no interior cycle. With the supplier's notation for denominator, target-marked numerator and complementary numerator, for $R=P,Q$ and $x\in V$ the supplied identities are
+
+$$
+\mathcal D_R=\mathcal A_R(x)+\mathcal C_R(x)>0,
+\qquad
+\det(I-R_{VV})=\mathcal D_R,
+\qquad
+h_R(x)=\frac{\mathcal A_R(x)}{\mathcal D_R}.
+\tag{11.2}
+$$
+
+All sums are nonnegative sums of monomials of the same degree $n$. The supplier's positive distance-decreasing forest proves $\mathcal D_R>0$ and uniqueness of this finite Dirichlet problem; first-step conditioning identifies its solution with the actual hitting function. Its proof does not assert uniqueness of unconstrained harmonic functions on the original chain. Common support gives the same forest families for $P,Q$, so $G$, Theorem 5.1, applies directly and gives
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),
+\qquad
+|h_Q(x)-h_P(x)|\le\frac{\gamma^n-1}{\gamma^n+1}
+\quad(x\in\mathcal S).
+\tag{11.3}
+$$
+
+The boundary values are zero on $\mathcal Z$ and one at $d_1$. Thus zero hitting probabilities are handled without dividing by them. A zero complementary sum makes both hitting values one. If $n=0$, the empty forest has weight one and every state is boundary; if $\gamma=1$, the additive bound is zero. Zero edges contribute zero in both kernels. Self-loops are accounted for by the supplier's row identity $1-R(u,u)=\sum_{v\ne u}R(u,v)$, rather than omitted from the stochastic experiment. Additional closed classes lie in $\mathcal Z$. Arbitrarily small positive exits can make forest sums small but do not affect their termwise comparison. These are precisely the degeneracies covered in $G$, Lemma 4.3 and Theorem 5.1; no global absorption assumption or uniform exit threshold is added here.
+
+To identify the renewal application, fix the actual machine and one selected $q$. For target $i$ put $j=1-i$, and retain $\pi_i,\mathcal J_i^L,\mathcal V_i^L,\gamma_L$ from (5.5). The supplier's $J_i^L,V_i^L$ are these $\mathcal J_i^L,\mathcal V_i^L$. Its comparison is exactly
+
+$$
+W_i=\pi_j\mathcal J_j^L+(1-\pi_j)\mathcal V_i^L,
+\qquad
+\gamma_L=1+\frac\delta{L+1}.
+\tag{11.4}
+$$
+
+By $G$, Lemma 6.2, equivalently Lemma 5.2 here, $W_i$ has the entire support of $U_j$, fixes both labels, and differs from $U_i$ by row variation at most $\pi_i+\pi_j$. Consequently (11.3) applies to $P=U_j,Q=W_i$ on the same complete state set. The opponent's short component in (11.4) is retained; a tail-only replacement is not an admissible substitute. The initial-row term is precisely $r_H(q)$ of (5.1), by $G$, Lemma 6.1 and Lemma 5.1 here, including source-independent immediate stopping and the stationary first row $\nu_i$.
+
+For completeness, the stopped identity supplied by $G$, Lemma 7.1, is the identity (6.6) with this $W_i$ and its actual hitting function $h$:
+
+$$
+\mathbb E_i h(Y_{N\wedge m})-\nu_i h
+=\mathbb E_i\sum_{r=0}^{(N\wedge m)-1}[(U_i-W_i)h](Y_r).
+\tag{11.5}
+$$
+
+The target's finite mean gives $\mathbb E_iN<\infty$, which justifies the supplier's bounded-convergence and dominated-convergence limits. The opponent's actual termination gives $p_j=\nu_jh_j$. No termination from arbitrary abstract states of $W_i$ or $U_j$ is needed. The same supplier gives $N\le Q_T\le T$, and $G$, Lemma 7.2, is exactly the predictable actual-tick payment (6.9), including the separate pre-first-tick hazard. Its independent proof coins are used for payment, not as an accessible tape or as the filtration for the live-chain identity (11.5).
+
+It follows by direct application of $G$, Theorem 8.1, that for every finite $M\ge2$, every interior $q$, every finite integer $L\ge1$, every $\mathcal A\in\mathfrak A_M(q,\alpha)$ and each $i$ separately,
+
+$$
+\begin{aligned}
+b&\le r_H(q)+\chi^*_{M,L}
++B(1-q)[\pi_0(q,L)+\pi_1(q,L)]\mathbb E_{i,q}^{\mathcal A}T,\\
+b&=1-2\alpha>0,
+\qquad
+\chi^*_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\end{aligned}
+\tag{11.6}
+$$
+
+This also permits replacing the coarse loss in (7.1) by $\gamma_L^{2(M-2)}-1$: for $v=\gamma_L^{M-2}\ge1$, $(v-1)/(v+1)\le v^2-1$, including $v=1$. Either loss therefore gives the corresponding positive-part inequality (7.2), whose denominator is positive since $0<\pi_i<1$. Applying (11.4) for the other target changes only the analytical $W_i$, not the actual machine. The conclusion bounds each paid mean, rather than their sum.
+
+The common endpoint is the one in $G$, Theorem 9.1. Choose a source-only $s_H>0$ so that both inequalities (7.6) hold, and define
+
+$$
+\begin{aligned}
+s_*&=\min\left\{s_H,1,\frac{5b}{8\delta}\right\},
+&L_M&=\max\left\{1,\left\lceil\frac{2\delta(M-2)}b\right\rceil\right\},\\
+S_L&=\sum_{k=1}^Lk^9,
+&c_0&=\frac{b\,9!}{8B^2}.
+\end{aligned}
+\tag{11.7}
+$$
+
+The supplier's moment premise is the same (2.8), so its selection of $s_H$ is source-only. Its explicit estimates (9.6)–(9.10) read here as
+
+$$
+\chi^*_{M,L_M}\le b/4,
+\qquad r_H(e^{-s})\le b/4,
+\qquad \pi_0(e^{-s},L)+\pi_1(e^{-s},L)
+\le\frac{4BS_L}{9!}s^{10},
+\qquad L_M\le1+\frac{2\delta(M-2)}b.
+\tag{11.8}
+$$
+
+The short-mass estimate holds for every finite $L\ge1$ on the same $0<s<s_*$, even when its right side exceeds one. There is no fixed-$L$ asymptotic or restriction on $sL_M$. With $1-e^{-s}\le s$, the exact conclusion of that theorem is
+
+$$
+\begin{gathered}
+\forall M\in\mathbb Z,\ M\ge2\quad
+\forall s\in(0,s_*)\quad
+\forall\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall i\in\{0,1\}:\\
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge\frac{c_0}{S_{L_M}}s^{-11}
+\ge\frac{c_0s^{-11}}{[1+(2\delta/b)(M-2)]^{10}}.
+\end{gathered}
+\tag{11.9}
+$$
+
+In particular (11.9) implies the weaker denominator $[1+(16\delta/b)(M-2)]^{10}$. The same $s_*$ serves every finite varying $M=M(s)$ and every retuned observer. This simultaneous result and all its constants are credited to $G$, not obtained by exchanging a fixed-$M$ limit with an observer-dependent limit.
+

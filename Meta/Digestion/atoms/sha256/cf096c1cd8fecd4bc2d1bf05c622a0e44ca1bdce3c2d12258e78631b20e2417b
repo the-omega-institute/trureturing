@@ -1,0 +1,10 @@
+**Lemma 4.2 (ordinary queries).** At every other reachable fourth-segment query the report is $(I_c)_*P_{s,r_1}$. For every installed PH prior and every such actual history,
+
+$$
+e_{\rm law}(h)=e_{\rm conf}(h)\le
+\begin{cases}1/7,&s=p,\\4/35,&s=\beta.\end{cases}
+\tag{4.3}
+$$
+
+**Proof.** The matcher is dead and cannot revive. Reuse ACP4's full-stopped-word first-disagreement coupling, with the reference process at $r_1$. The expected future Read counts solve $L_p=1+(1-r_1)(1+r_1L_p)$, $L_\beta=1+r_1L_p$, giving $15/7$ and $12/7$. Before a first disagreement the reference process has the same parser and events as the comparison. A per-letter mismatch is at most $|r-r_1|\le1/15$. Summing active-step mismatch probabilities bounds full-transcript TV by $1/7$ and $4/35$. Convexity gives the same bounds for the actual posterior mixture. This is a mathematical coupling of laws, not a source copy or an experiment. Deterministic actual holding makes law and conf identical at each query. Pending and delivered residuals are exact. $\square$
+

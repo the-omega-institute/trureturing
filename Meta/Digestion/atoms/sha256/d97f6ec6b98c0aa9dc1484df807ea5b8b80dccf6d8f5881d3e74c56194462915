@@ -1,0 +1,53 @@
+**Theorem 268.4 (The same-allocation dimension-independent bound).**
+For every full $N$ allocation, before imposing feasibility,
+$|\mathcal T|\le4\rho_1+8\rho_2$.
+Under (268.1), the exact identity from Theorem 266.2 gives
+
+$$
+\begin{aligned}
+\mathcal T
+&=E_b+2e+s_++\sum_{n=3}^Ls_n+\mu_+(1)+\mu_+(2)\\
+&\le\min\{(L-2)(2\rho_1+\rho_2),\,4\rho_1+8\rho_2\}.
+\end{aligned}
+\tag{268.4}
+$$
+
+For $(b,e)\in H_L$ and $e>0$ this implies
+$2\rho_1+\rho_2\ge(E_b+2e)/8$ and
+$\max(\rho_1,\rho_2)\ge(E_b+2e)/12\ge e/6$.
+If $L\ge11$, the second upper bound in (268.4) is strictly smaller
+than the first on every such feasible allocation.
+
+**Proof.**
+Every deterministic two-request table has coordinatewise multilinear
+degree at most two. Mixing with the same $\lambda$ preserves that
+degree. Write suffix zero-indicators as $x=(x_3,\ldots,x_L)$ and
+$f_{ab}(x)=\mu_{(a,b,1-x_3,\ldots,1-x_L)}$.
+The difference $h_x=f_{01}(x)-f_{00}(x)$ is affine, has total mass
+zero, and has TV norm at most $\rho_1$. The mixed prefix difference
+$f_{11}-f_{10}-f_{01}+f_{00}$ is constant in $x$: a nonconstant
+suffix term in it would have degree at least three.
+Subtracting at $x=0$, and taking the designated trace on labels
+$3,\ldots,L$, gives
+$\mathcal T=\tau(f_{10})+\tau(h)$.
+The diameter of $f_{10}$ is at most $\rho_2$. Lemmas 268.2–268.3
+bound the two terms by $8\rho_2$ and $4\rho_1$.
+
+For the identity, consume Theorem 266.2 at this same allocation:
+$\sum_{n\ge3}\mu_{v^n}(n)=\sum_{n\ge3}(b_n-e)+\sum s_n$ and
+$\sum_{n\ge3}\mu_+(n)=M-\mu_+(0)-\mu_+(1)-\mu_+(2)$.
+Substitution cancels $M$ and gives the first line of (268.4).
+The length-dependent bound is the existing bound of that proposition.
+Nonnegative slacks and $E_b\ge0$ make $\mathcal T\ge2e>0$.
+Thus $\rho_1+\rho_2>0$, and the difference between the old and new
+upper bounds is
+$(2L-8)\rho_1+(L-10)\rho_2>0$ when $L\ge11$.
+Finally $4\rho_1+8\rho_2\le8(2\rho_1+\rho_2)$ and
+$4\rho_1+8\rho_2\le12\max(\rho_1,\rho_2)$.
+At mass one the same calculation reads
+$\sum_{n\ge3}(a_n-e)\le e+4\rho_1+8\rho_2$.
+The diameter floor is proportional to the actual cap and gives
+no positive absolute floor as $e\downarrow0$.
+These are necessary relations on the actual allocation; they do not
+supply a score $V$ or a signed-residual payment. $\square$
+

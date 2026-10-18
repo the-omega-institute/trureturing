@@ -1,0 +1,110 @@
+## 20. Three-dimensional result map, sources, and surviving boundaries
+
+All results in the following map retain the arbitrary fixed
+preparation, full actual current-ray domain, original signed command
+menu, affine offsets, and ten-output Euclidean metric.
+
+| Result | Declarations | Role in the three-dimensional conclusion |
+|---|---|---|
+| At-most-three budget and inherited interface | 12.1–12.2 | Keeps the original contract; reuses bounded-observable erasure and the exact two-dimensional radial minimax |
+| Actual-hull restriction and useful-rank split | 13.1–13.2 | Includes degenerate hulls and derives bounded useful coordinates only when justified |
+| Nonzero beta-fiber propagation and quotient | 13.3–13.4 | Places a nonzero kernel direction in every nonempty partial domain before descending the update; quotient is only literal |
+| Full phase representation and useful module | 14.1–14.2 | Derives the circle action on the actual homogeneous hull and distinguishes its fixed covector from a fixed vector |
+| Unmatched character exclusion | 14.3 | Finite geometric averages cover discontinuous abstract characters without integration |
+| Complete primary blocks and finite phase projectors | 15.1–15.2 | Counts the whole native blocks, including possible Jordan multiplicity, and leaves lawful hidden residual blocks |
+| Hidden positive character and additive shear | 15.3–15.4 | Actual full-hull examples showing that hidden phase-triviality and a common affine center are not required |
+| Orbitwise projector and nonvanishing multiplier | 16.1–16.2 | Uses only lawful actual phase orbits, not a partial-domain spanning assumption or an ambient group law |
+| Useful native amplitude and its modulus | 16.3 | Bounds only observable coefficients and derives exponential modulus from reciprocal local multipliers |
+| Original-metric radial domination and plateau | 17.1–17.2 | Every budget-three competitor is dominated by an actual budget-two radial model |
+| Exact scalar value, parameter map, and attainment | 18.1–18.2 | Applies the existing root/contact/transition results with their original normalization and tolerance endpoints |
+| Recoverable guards and all prescribed paths | 19.1 | Uses proper subclass lower bounds and actual matching annular/height witnesses, with every truncation and finite concatenation |
+
+The published suppliers retain their precise roles. [F], *Native FIB
+continuation: exact affine obstruction and compact-band approximation*,
+supplies the native source conventions and original-output/path
+interfaces reconstructed in §§1 and 9. [O], *Native FIB on the full
+open domain: affine approximation and finite attainment*, supplies
+bounded affine observable erasure and the worst-$\beta$ reduction,
+as reused in §3 and Proposition 12.2. Its all-finite floor,
+nonattainment, fixed-dimension gap, and dimension-limit results
+remain prior results, not substitutes for the dimension-three
+argument. Sections 4–10 of this volume supply the exact budget-two
+minimax, endpoint-log corridor, unique root and radial amplitude,
+attaining annulus, transition, and exact path witnesses used in
+§§18–19. Their proofs are reused rather than claimed as new
+three-dimensional scalar results.
+
+The additional mathematical synthesis is the actual-hull rank
+alternative with nonzero-fiber transport into each partial domain,
+the invariant-covector count of complete conjugate primary blocks,
+and the finite phase projector acting on each individual lawful
+orbit. Together these give a nonvanishing native coefficient,
+its local multiplier law, and an ordinary exponential modulus
+without bounding arbitrary hidden coordinates. Opposite-phase
+comparison then handles a height-dependent residual and yields
+the exact plateau in the original metric. The hidden examples
+specify why stronger statements about centers and phase-trivial
+hidden state are unavailable under this contract.
+
+The general ingredients are finite-dimensional affine
+homogenization, invariant flags and primary decompositions,
+polynomial spectral projectors from Bezout identities,
+characters of abstract abelian groups, divisibility, finite
+geometric averages, and the bounded additive-function argument.
+The needed forms are proved here or reused from the preceding
+sections. No topological character classification or external
+regularity theorem is a premise. This is a statement of content
+relative to the specified sources, with no worldwide-priority
+claim.
+
+The remaining boundaries are part of the result:
+
+- The source has $0<Z<1$ and $0<k<H$. All phase points are actual
+  current rays from the arbitrary fixed preparation. No endpoint
+  ray, vanished support, stored real lift, producing-history
+  encoder, reduced command menu, or finite-horizon replacement
+  is included. Each executed history is individually finite.
+- Stored dimension, actual affine-hull dimension, and useful-readout
+  rank are distinct. Homogeneous dimension at most four is used
+  only after actual-hull restriction. An invariant covector is
+  not a normalized fixed vector. Hidden positive characters and
+  unipotent blocks remain lawful, as the examples demonstrate.
+- The boundedness arguments concern the decoder, its useful
+  phase translates, and the native coefficients they expose.
+  They impose no measurability, continuity, injectivity, or
+  latent bound on arbitrary encoders. The native modulus is
+  regular only because the useful coefficient supplies local
+  upper and reciprocal bounds; its unit phase remains unrestricted.
+- Every probability inference is made on a nonempty lawful
+  partial domain, or on a lawful reversible leg or triple.
+  Empty-domain maps are unconstrained. Global phase identities
+  hold on the actual homogeneous hull because the phase maps
+  have full domain. No ambient probability group law or
+  off-image inverse is assumed.
+- The radial comparison is an error domination, not a guard
+  theorem for intermediate quotients or a classification of all
+  affine factors or optimizers. The matching annular and height
+  witnesses separately establish the full guard and path claims.
+  General radial choices need not recover height; only the
+  specified attaining witnesses are used for the stronger classes.
+- The exact small budgets established here are $0,1,2,3$.
+  Below $Z=2/3$, this result supplies no exact capacity or
+  attainment classification for general budgets $n\ge4$, no
+  general parity law, and no dimension-four theorem. The earlier
+  all-finite and fixed-dimension results do not remove those
+  remaining questions or give a general sharp dimension rate.
+- The original finite-hidden-$N$ attainment alternative remains
+  unresolved. No identification of its objective and admissible
+  realizations with this affine-readout problem is supplied, and
+  no broader research-completion conclusion follows.
+- Initialization and continuation are exact over real coordinates.
+  The permitted witnesses are noninjective and have decoded
+  vectors outside the native physical output image. Imposing
+  injection or physical readouts would require a different
+  upper-bound analysis. No finite-bit, conditioning, noise,
+  acquisition, physical-implementation, training, or empirical
+  machine-learning claim is made.
+- These proofs are handwritten source mathematics. They are not
+  Lean declarations, kernel verification, or a certification of
+  unrelated statements in the cited manuscripts.
+

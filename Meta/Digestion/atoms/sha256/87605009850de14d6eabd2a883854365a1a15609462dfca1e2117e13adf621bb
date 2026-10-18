@@ -1,0 +1,28 @@
+**定义 23.2.1（公共种子与动作）。** 取有限隐藏空间 $\mathcal U$、种子空间 $\mathcal S$、动作空间 $\mathcal A$ 和读出空间 $\mathcal Y$。种子 $S$ 的分布为 $\gamma(s)$，先由控制器抽取。给定种子和历史，动作 $A$ 由
+
+$$
+\kappa(a\mid s,h)
+$$
+
+产生；读出在机制 $j\in\{0,1\}$ 与隐藏值 $u$ 下由
+
+$$
+K^j(y\mid a,u,h)
+$$
+
+产生。公共随机化的条件是 $\gamma$ 与 $\kappa$ 不依赖 $j$ 或 $u$。
+
+公开接口输出 $(S,A,Y)$；隐藏接口只输出 $Y$。固定历史时，完整与隐藏接口的条件核分别为
+
+$$
+P_j(s,a,y\mid u,h)
+=\gamma(s)\kappa(a\mid s,h)K^j(y\mid a,u,h),
+$$
+
+$$
+M_j(y\mid u,h)
+=\sum_{s,a}\gamma(s)\kappa(a\mid s,h)K^j(y\mid a,u,h).
+$$
+
+<a id="section-23-3"></a>
+

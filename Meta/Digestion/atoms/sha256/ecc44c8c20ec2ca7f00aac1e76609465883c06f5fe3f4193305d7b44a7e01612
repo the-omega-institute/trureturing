@@ -1,0 +1,9 @@
+**Proposition 6.2 (a compatible but nonactual thread).** On $X=\mathbb N$,
+let $R_n$ be equality modulo $2^n$. There is a coherent thread with no actual
+natural representative.
+
+**Proof.** Choose residues $r_n=2^n-1$ modulo $2^n$, including the unique
+residue at $n=0$. Each reduces to the previous one. If $m\in\mathbb N$
+represented them all, then for $2^n>m+1$ its residue would be $m$, which is
+strictly smaller than $2^n-1$, a contradiction. $\square$
+

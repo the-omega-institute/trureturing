@@ -1,0 +1,40 @@
+**Theorem 64.4 (the defect survives a consistent one/two-occupation operator law).**
+Let $h_D=aL_D-gM_{\phi|D}$ and let $P_{D,2}$ be the hard-core symmetric projection
+inside the two-fold symmetric tensor of $\ell^2(D)$. For one common calibration
+$\widehat G$ on all ten pairs, define
+\[
+\widehat H_{D,1}=B,\qquad
+\widehat H_{D,2}=P_{D,2}\,d\Gamma(B)\,P_{D,2}
+-\nu\sum_{\{p,q\}}\widehat G(p,q)n_pn_q,
+\]
+where $B$ is any Hermitian one-body law and $\nu\ge0$ is the same coefficient used
+in the source operator. For either $\diamond\in\{\mathrm c,\mathrm k\}$, put
+\[
+H^\diamond_{D,1}=h_D,\qquad
+H^\diamond_{D,2}=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}}G_D^\diamond(p,q)n_pn_q .
+\]
+The compression keeps the diagonal $\sum_{p\in S}d_p$ and hence every inherited
+collision and exterior-killing contribution of (62.2). With
+\[
+E_1=\|B-h_D\|,\qquad E_2^\diamond=
+\|\widehat H_{D,2}-H^\diamond_{D,2}\|,
+\]
+one has
+\[
+E_2^\diamond+2E_1\ \ge\
+\nu\max_{\{p,q\}\subset D}|\widehat G(p,q)-G_D^\diamond(p,q)|
+\ \ge\ \nu\delta_\diamond .                              \tag{64.5}
+\]
+Consequently a same-$L_D$ installation has $E_1=0$ and $E_2^\diamond\ge\nu\delta_\diamond$
+for both pair prescriptions. At $N=1$ the pair multiplier vanishes, so the two
+prescriptions have exactly the same one-occupation operator $h_D$.
+
+Proof. On a pair basis vector $e_{\{p,q\}}$, the diagonal pair difference is
+$-\nu(\widehat G(p,q)-G_D^\diamond(p,q))$. The norm of the hard-core compression of
+$d\Gamma(B-h_D)$ is at most $2E_1$. Taking the largest diagonal entry and applying the
+triangle inequality gives the first inequality. The second is Theorem64.3. This argument
+uses the full ten-pair diagonal and the same $B,\widehat G$ in both sectors; fitting a
+different one-body or pair calibration in the two sectors would not be the stated
+operator law. $\square$
+

@@ -1,0 +1,193 @@
+**Theorem 8.1 (all equality vectors, with the full common class retained).**
+Fix $s\in[0,1]$. Consider every finite common instrument of Definition
+2.3 whose acquired high cost attains the sharp original four-sign mean
+at any one of the three original heights. In weak and threshold strengths
+its original twelve-vector is the single vector
+$(g_y(s))_{y,e,n}$. Its supported acquired high effect is $G_0(s)$.
+In strong strengths set
+
+$$
+t=\sqrt{pq}>0,\qquad v=\sqrt{(1-p)(1-q)}>0,\qquad
+\omega=ph_0^2+qb^2\in(0,1),\qquad
+D_*(s)=\omega v-(1-\omega)t.
+\tag{CA.45}
+$$
+
+If $D_*(s)\ne0$, the equality twelve-vector is again that singleton.
+Its supported acquired high effect is again $G_0(s)$.
+If $D_*(s)=0$, put
+
+$$
+\gamma=\frac{t}{v}=\frac{\omega}{1-\omega}>0,\qquad
+Y=\operatorname{diag}\bigl(p-\gamma(1-p),\ q-\gamma(1-q),\ -\gamma\bigr),
+\qquad \Delta=\Theta(Y)=\operatorname{diag}(0,\delta_1,\delta_2),
+\tag{CA.46}
+$$
+
+where, writing $Y_D=p-\gamma(1-p)$ and
+$Y_T=q-\gamma(1-q)$,
+
+$$
+\delta_1=h_1^2Y_D+a^2Y_T,\qquad
+\delta_2=h_2^2Y_D-\gamma c^2,
+\qquad
+\theta_{\max}=\min\left\{\frac12,\frac1{2\gamma},
+ \frac{m_1}{2|\delta_1|},\frac{m_2}{2|\delta_2|}\right\}>0.
+\tag{CA.47}
+$$
+
+A fraction with $\delta_i=0$ in this minimum means $+\infty$; it
+imposes no constraint. The complete equality resource effects on $V$
+and original twelve-vectors are exactly
+
+$$
+G_\theta=G_0(s)+2\theta t\kappa X_{01},\qquad
+\left(g_y(s)+4\theta t\kappa\,en\,
+ \frac{\sqrt{y(64-y)}}{128}\right)_{y,e,n},
+\qquad -\theta_{\max}\leq\theta\leq\theta_{\max}.
+\tag{CA.48}
+$$
+
+Every exceptional-segment vector has an actual instrument in the original
+class with at most twelve branches and dimensions at most three. Every
+singleton also has an actual attainer within the twenty-four-branch bound.
+Equality at
+one original mean therefore implies equality at all three means. This
+classifies the resource vectors of every such original equality design;
+it does not assert uniqueness of their full instruments or conditioned
+channels.
+
+Proof of necessity. By Lemma 7.2 the actual high aggregate $H$ has
+diagonal $(p,q,0)$ and there is no supported acquired-to-live high slack.
+In the weak range $q=0$. A zero diagonal entry of a positive matrix kills
+its entire row and column, by its two-by-two principal minors. Apply this
+to $H_+$ and $H_-$: only the $DD$ entry survives, with total $k$.
+Its supported resource effect is therefore $kD^\dagger D=G_0(s)$.
+This includes both $s=0$ and the threshold.
+
+In the strong range the same positivity argument kills the $S$ rows of
+both high matrices. The aggregate low coefficient $L=I-H$ satisfies
+
+$$
+\operatorname{tr}(B_0L)=1-p-\alpha(1-q)-\beta=0,
+\qquad B_0=\operatorname{diag}(1,-\alpha,-\beta).
+\tag{CA.49}
+$$
+
+Each low record matrix belongs to $\mathcal C_2$ and has nonpositive
+$B_0$ trace. Their sum has trace zero, so each has trace zero separately.
+The exact exposed-face statement of Theorem 5.1 makes each $L_r$ real.
+Consequently $H=I-L$ is real and its only possible off-diagonal entry is
+$H_{DT}=h\in\mathbb R$.
+
+Write the $DT$ block diagonals of $H_+$ as $(A,C)$ and its off-diagonal
+entry as $z$. Those of $H_-$ are $(p-A,q-C)$ and $h-z$.
+Positivity, the triangle inequality and Cauchy--Schwarz give
+
+$$
+2\operatorname{Re}z-h
+ \leq |z|+|h-z|
+ \leq\sqrt{AC}+\sqrt{(p-A)(q-C)}
+ \leq\sqrt{pq}=t.
+\tag{CA.50}
+$$
+
+For the low matrices write their plus $DT$ diagonal pair as $(A_L,C_L)$
+and its off-diagonal entry as $w_L\in\mathbb R$. Their aggregate $DT$
+entry is $-h$, so the full low chain is
+
+$$
+2w_L+h\leq |w_L|+|-h-w_L|
+ \leq\sqrt{A_LC_L}
+ +\sqrt{(1-p-A_L)(1-q-C_L)}\leq v.
+\tag{CA.50a}
+$$
+
+The real $01$ binary effect, together with the zero
+coordinate-$0$ failure effect, says
+$\operatorname{Re}(H_++L_+)_{DT}=s/2$. Thus the two left sides in
+these high and low bounds sum to $s=t+v$. Both bounds, and every
+inequality within them, are equalities.
+
+Equality in the high Cauchy--Schwarz inequality gives
+$A/p=C/q=\tau\in[0,1]$. Equality in the preceding inequalities fixes
+$z=\tau t$ and $h-z=-(1-\tau)t$, both real. Hence, with
+$a_\pm=(\sqrt p,\ \pm\sqrt q,\ 0)^T$,
+
+$$
+H_+=\tau a_+a_+^T,\qquad
+H_-=(1-\tau)a_-a_-^T.
+\tag{CA.51}
+$$
+
+Equality in (CA.50a) gives
+$A_L/(1-p)=C_L/(1-q)=\lambda\in[0,1]$,
+$w_L=\lambda v$ and $-h-w_L=-(1-\lambda)v$.
+Thus the low $DT$ blocks are
+$\lambda b_+b_+^T$ and $(1-\lambda)b_-b_-^T$, where
+$b_\pm=(\sqrt{1-p},\ \pm\sqrt{1-q})^T$.
+Their separate trace-zero conditions (CA.49) give
+$SS$ entries $\lambda$ and $1-\lambda$, because
+$1-p-\alpha(1-q)=\beta>0$. In a positive block matrix, a vector in
+the kernel of a principal block has zero coupling to the other block:
+otherwise its quadratic form on that vector plus an arbitrarily small
+multiple of the other vector would have a negative linear term.
+Their $S$ coupling columns must therefore be $\xi b_+$ and
+$\zeta b_-$, with $\xi,\zeta$ real. This also holds for a zero-weight
+block, when positivity kills both its rows. The aggregate $DS$ and $TS$
+entries vanish, giving $\xi+\zeta=\xi-\zeta=0$. Consequently
+
+$$
+L_+=\lambda B_+,\qquad L_-=(1-\lambda)B_-,\qquad
+B_\pm=\begin{pmatrix}
+1-p&\pm v&0\\ \pm v&1-q&0\\0&0&1
+\end{pmatrix}.
+\tag{CA.52}
+$$
+
+These arguments include $\tau$ or $\lambda$ equal to zero or one.
+No strictly positive branch weight has been assumed.
+
+Set $\epsilon=\tau-1/2$ and $\eta=\lambda-1/2$.
+The aggregate coefficient sum and the coordinate-$0$ binary effect give,
+respectively,
+
+$$
+\epsilon t+\eta v=0,\qquad
+\epsilon\omega+\eta(1-\omega)=0.
+\tag{CA.53}
+$$
+
+Here $\omega=ph_0^2+qb^2>0$, and
+$1-\omega=(1-p)h_0^2+(1-q)b^2+d^2>0$ by normalization.
+If $D_*\ne0$, this system has only $\epsilon=\eta=0$.
+Equations (CA.51) then give aggregate $H=\operatorname{diag}(p,q,0)$
+and resource effect $G_0(s)$.
+
+If $D_*=0$, all solutions are
+$\tau=1/2+\theta$, $\lambda=1/2-\gamma\theta$.
+The coefficient matrices (CA.51)--(CA.52) are positive exactly when
+$|\theta|\leq1/2$ and $|\gamma\theta|\leq1/2$.
+Their plus total is $Z_+^0+\theta Y$: its $DT$ entry stays $s/2$,
+and all other off-diagonal entries vanish. Its failure remainder is
+therefore
+
+$$
+N_+=\frac M2-\theta\Delta,\qquad
+N_-=\frac M2+\theta\Delta.
+\tag{CA.54}
+$$
+
+The coordinate-$0$ entry of $\Delta$ is
+$\omega-\gamma(1-\omega)=0$. The inequalities
+$0\preceq N_+\preceq M$ are exactly
+$|\theta\delta_i|\leq m_i/2$ for $i=1,2$.
+They give precisely the remaining bounds in (CA.47), including the
+zero-$\delta_i$ cases. All $m_i$ are strictly positive, so the interval
+has positive length. Finally the high aggregate has $DT$ entry
+$2\theta t$; applying $\Theta$ gives the first formula (CA.48).
+The original pure states have real $01$ coherence
+$en\sqrt{y(64-y)}/128$, proving its second formula.
+Sufficiency, including endpoint attainment by genuine instruments, is
+proved next. $\square$
+

@@ -1,0 +1,20 @@
+**Convention 5.4 (constant preparation and retained costs).** The
+just-in-time construction in Definition 5.1 consumes one fresh seed and
+$j$ known-constant substitution operations per graft made at level $j$.
+For a word this is at most $m$ fresh seeds and $mr$ such preparation
+updates, in addition to its $m+r$ work commits. This is a sufficient
+recipe, not a preparation optimum. If $F_0=0,F_1=1$ and
+$F_{i+2}=F_{i+1}+F_i$, the leaf counts of $T_j$ obey
+$(A_{j+1},B_{j+1})=(B_j,A_j+B_j)$ from $(1,0)$, so $T_j$ has
+$F_{j+1}$ leaves and $2F_{j+1}-1$ literal nodes. Those constant
+carriers, their delivery, workspace and consumption are charged as well.
+
+Rank updates need only current actual commits, not an oracle for the
+future word. They do require the added authenticated commit-to-record
+relation. If preparation identities, exact times or preparation event
+order are also recovery targets, Definition 5.1's rank is no longer a
+complete archive. If such fields survive as accessible data, their
+distinctions are counted even when they are not targets. The terminal
+alphabet equality in Theorem 5.2 presupposes their stipulated isolation;
+its lower bound holds without that isolation.
+

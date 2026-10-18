@@ -1,0 +1,58 @@
+**Proposition 24.1 (four actual blocks and two relative matchings).**
+At $d=2$, $|S_2|=11$ and $b=13$. For $m=2$, both $h$ equal
+to the identity and $h$ equal to the transposition have sixteen
+actual solutions in $S_2^4$, precisely (COK.105). Their masses
+and single-block Gibbs marginals, in the order
+$\alpha\alpha,\alpha\beta,\beta\alpha,\beta\beta$, are
+
+$$
+\begin{array}{c|c|c}
+h&Z_h&\text{local actual Gibbs probabilities}\\ \hline
+\mathrm{id}&100/28561&(2/5,1/10,1/10,2/5)\\
+(12)&82/28561&(14/41,13/82,13/82,14/41).
+\end{array}
+\tag{COK.119}
+$$
+
+Each nevertheless has the separate compatible full-support law
+(COK.110) with the prescribed marginal $p$. At $D=4$ the paid
+full-family code of Proposition 23.2 has exactly $15116$
+attained names, fifteen preparation Reads, maximum address
+four and forty-nine submitted letters.
+
+Proof. The $16$ binary assignments lift uniquely by Proposition
+21.2. The full-factor equations can also be tested directly on
+all $11^4=14641$ actual tuples: impose the branch roots and
+the four guarded left/other-owner right equations in (COK.104),
+with excluded replies sent to alpha. Their satisfying tuples
+are exactly those sixteen, for each matching. This checks
+actual native equations rather than an unconstrained graph
+surrogate.
+
+For the masses, reuse the credited matrix
+$M=\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$,
+whose eigenvalues are $3,1$. On a length-$\ell$ cycle of $h$
+the alternating actual blocks give the cyclic product of $2\ell$
+such matrices, hence the exact identity
+
+$$
+Z_h=b^{-2m}\prod_{\ell\text{ cycle length of }h}(9^\ell+1).
+\tag{COK.120}
+$$
+
+This is OOA's existing binary transfer calculation on the
+explicitly proved actual solution set, not a new matrix method.
+For the identity the two length-one cycles give $10^2/13^4$;
+for the transposition one length-two cycle gives $82/13^4$.
+On each reciprocal pair the Gibbs law is proportional to
+$M_{ab}^2$, giving the first marginal. On the four-cycle it
+is proportional to $M_{ab}(M^3)_{ba}$; the diagonal and
+off-diagonal entries of $M^3$ are $14,13$, giving the second.
+Thus compatible completion and Gibbs completion already differ
+on these four actual blocks.
+
+Finally $|S_3|=2+11^2=123$ and
+$|S_4|=2+123^2=15131$. Equation (COK.116) subtracts sixteen
+and adds one. Equation (COK.117) gives $2^4-1=15$ and
+$3\cdot2^4+1=49$. $\square$
+

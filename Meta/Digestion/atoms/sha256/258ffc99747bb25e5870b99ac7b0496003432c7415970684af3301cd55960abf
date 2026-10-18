@@ -1,0 +1,13 @@
+**Definition 3.2 (Stationarity).** Put
+$\operatorname{Ad}_V(X)=VXV^\dagger$ and $\mathcal L_A(X)=AX-XA$.
+A channel $S$ is walk-stationary when
+
+$$
+S\mathcal L_A=\mathcal L_AS.
+\tag{3.2}
+$$
+
+Equivalently it commutes with every $\operatorname{Ad}_{O(t)}$: differentiate
+at zero in one direction and exponentiate the linear operator $\mathcal L_A$
+in the other. This is a condition on the stored-channel design.
+

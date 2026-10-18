@@ -1,0 +1,50 @@
+**Proposition 3.2 (paired failures of four apparent shortcuts).** Each
+of the following weakenings loses a specified obligation of Definition
+3.1, even on small ordered trees or finite literal frames.
+
+(a) A sender declared to have one state emits $R$ whenever requested,
+while an external head scans $R^n\#$ and stops it at the marker.
+Compare the realizations with markers after $n$ and after $n+1$ letters.
+Their declared sender states are identical, but their termination and
+payload lengths differ. The omitted tape-head position or scheduler
+position distinguishes their futures. Alternatively let that sender
+feed an append-only receiver whose stored length is omitted from the
+configuration. Identical declared configurations then have different
+receiver lengths and different committed addresses. Immutable copies
+of the two strings do not eliminate these mutable positions.
+
+(b) Take the two $h=2,T=0$ sources
+$\langle\alpha,\alpha\rangle$ and
+$\langle\beta,\alpha\rangle$, and the committed address $LL$.
+Both whole-address replies are absent. Feedback at the premature
+prefix $L$ instead gives $\alpha$ and $\beta$. With equal initialization,
+request and no earlier acquired reply, no prefix-causal simulator can
+produce that distinction. Calling this feedback a transport
+acknowledgement does not make it source-independent.
+
+(c) On those same two sources, a nominal $\operatorname{Read}(LL)$
+replaced at commitment by $\operatorname{Read}(R)$ returns $\alpha$
+on both, instead of absent. Even if a downstream policy ignores this
+reply and happens to output the same target, its raw trace and actual
+address have changed. In a second realization emit $L$, then commit a
+fresh row lookup of $R$: the accumulated payload is $L$, and on
+$\langle\beta,\alpha\rangle$ its required reply is $\beta$ whereas the
+lookup returns $\alpha$. Decorative output does not implement payload
+fidelity. Receiver sufficiency requires a decoding from received
+content, not merely a causal correlation with the sender's row name.
+
+(d) On $\langle\alpha,\alpha\rangle$, insert an unreported Update
+inside a nominal Read$(L)$ frame. Its answer becomes $\beta$ instead
+of $\alpha$, and its successor is
+$\langle\beta,\beta\rangle$ instead of the unchanged source. The
+same failure occurs at a later committed address whose raw reply
+happens not to change: the genuine source successor is still wrong.
+
+Proof. In (a), equal complete deterministic configurations cannot have
+the two described remaining times to first commitment; the differing
+position must therefore be counted or the autonomous premise is false.
+In (b)–(d), evaluate Definition 1.1 on the displayed trees. The resulting
+pairs violate respectively precommit observational equivalence, exact
+committed-address/reply preservation and source-successor preservation.
+All source examples use the original ports. ∎
+

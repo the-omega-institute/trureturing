@@ -1,0 +1,17 @@
+**约定 13.1（Unchanged sources and literal translations）。** Keep exactly Definitions 3.1 and 5.1, and assume $|\Lambda[O]|=3$. All original INITIAL records, both values and alphabets, every original tail, the actual subgroup $P$, fresh $R,C$ and arbitrary bottom-label equalities remain in force. For $r=2$ write $U_Y=\{A,B\}$, with $A\ne B$ literal labels. A diagonal pair means $(A,A)$ or $(B,B)$, using literal label equality. Three occupied corners contain either one or both diagonal pairs; because $\Lambda[O]=\Lambda[J]$, the same alternatives hold on $O$.
+
+For an even full physical support $E\subseteq W_1$ with $m\notin E$, let $B_E=\mathcal B_1(E)$ and put
+
+$$
+q_1(j)=\mathbf1_E(j),\qquad
+q_2^B(j)=\mathbf1_E(j-m),\qquad
+q_3^B(j)=\mathbf1_E(j-2m).
+\tag{13.1}
+$$
+
+These are the charges of the **same literal word** at indices one, two and three. Values outside the full support are zero. In particular $B_E$ begins zero. For another even full support $F\subseteq W_2$, write $D_F=\mathcal B_2(F)$ and $q_2^D=\mathbf1_F$. Retain the actual leading run $\alpha$, terminal run $\tau$, and safe tail update $\Phi$ of [S15, Definition 1.1]. Full even supports include every nonactual vertex; no parity condition is imposed just on their restrictions to $P$.
+
+Define $\mathsf R$ to mean that (11.2) holds for some $v,w,B,G,z$ exactly as in Theorem 11.1. The following two further conditions concern only physical charges and literal phase labels.
+
+For either component $i$, let $M_i$ be its unique whole label class on which the other component $w=1-i$ is nonconstant. This is a property of the three occupied corners, independent of a selected word. The other component has a constant literal label $z$ on $J\setminus M_i$.
+

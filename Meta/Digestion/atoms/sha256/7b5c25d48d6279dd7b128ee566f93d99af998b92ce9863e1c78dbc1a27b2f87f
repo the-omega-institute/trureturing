@@ -1,0 +1,40 @@
+**Assumption 3.1 (acquisition, export, entry and stationary service).**
+Keep NBP Assumptions 9.2 and 10.6 and Definition 15.1, NRE Assumption
+3.1, and NRN Assumption 3.1. Exactly one genuine authenticated update
+binds the actual origin $u$ to the same current register $t_u=\rho u$.
+The cut, root and version are fixed; there is no reset, rotation, source
+replacement, arbitrary edit or subsequent update. Authentication and
+version binding convey no additional origin distinction within the fiber.
+The complete current row is lawfully acquired on this stationary version.
+
+Before the complete access cut the producer genuinely possesses
+same-source, same-version finite data $A(u)$: either the lossless current
+tree or $R_*$ and one acquired finite subtree value for each of the six
+classes. Equality comparisons concern these acquired finite terms.
+A lawful code is a specified terminating finite computation on these
+data with complete value in $\{0,1\}$. Internal structure dependence
+is permitted. The producer computes and actually exports that original
+complete bit with the row before access to the acquired material is lost.
+
+A supplied lawful common entry exposes exactly this complete bit,
+$P,R_*$ and common source-independent controls, with these inputs
+recoverable at entry. No further source-dependent origin identifier,
+predecessor, alpha marker, acquired value, trace, cache, old output,
+archive, pointer, allocation, control field, acquisition order or count,
+length, meter, timing or update packet is accessible. A field determined
+by the declared payload adds no distinction; any other field changes
+the contract. Inaccessible material need not be physically erased.
+
+The current register remains stationary throughout fresh reading.
+Its only source port is the four-reply literal port of Definition 2.1.
+There is no unknown-subtree equality, image, provenance, generation,
+inverse or extra subtree port. Every invocation counts, including
+repeats, absences, leaf continuations and addresses previously used in
+acquisition. Acquisition, finite local acquired-term computation,
+authentication, version binding, installation, actual export, complete
+isolation, faithful lawful entry and authentic continuing native service
+are supplied and separately priced. An absorbing producer stop grants
+no resume operation; later reader entry is a separately supplied
+invocation. A representation of a row or code supplies none of these
+services.
+

@@ -1,0 +1,38 @@
+### 77.2. A two-dimensional contraction inequality
+
+Write Z=diag(1,−1), and for a 2×2 matrix X let X₀=X−(TrX)I₂/2. For arbitrary complex contractions A,B of size two,
+
+    |Tr(ABᵀ)|≤1+(1/2)||(AZBᵀ)₀||²_F.                 (3)
+
+Here the transpose is the ordinary transpose, and the Frobenius norm is the Hilbert–Schmidt norm.
+
+First prove that every 2×2 contraction R, with eigenvalues λ₁,λ₂, and every traceless Hermitian unitary N satisfy
+
+    |Tr(NR)|≤1+|λ₁−λ₂|²/4.                            (4)
+
+Put R into unitary Schur form [[λ₁,r],[0,λ₂]], transforming N by the same unitary similarity. In this basis N=[[a,b],[conj(b),−a]] with a real and a²+|b|²=1. Thus
+
+    |Tr(NR)|=|a(λ₁−λ₂)+conj(b)r|
+      ≤sqrt(|λ₁−λ₂|²+|r|²).
+
+Positivity of I−R*R, specifically its determinant, gives
+
+    |r|²≤(1−|λ₁|²)(1−|λ₂|²).                          (5)
+
+For the scalar step set m=(λ₁+λ₂)/2, v=(λ₁−λ₂)/2, M=|m|², V=|v|² and h=Re(m conj(v)). Both eigenvalues have modulus at most one, hence M+V≤1. Direct expansion gives
+
+    (1+V)²−[4V+(1−|λ₁|²)(1−|λ₂|²)]
+       =M(2−2V−M)+4h²≥0.                              (6)
+
+Indeed 2−2V−M≥0 follows from M+V≤1. Equations (5)–(6) prove (4), including repeated eigenvalues and singular contractions.
+
+Now set R=ZBᵀA and T=AZBᵀ. Transposition preserves operator norm, so R is a contraction. The square matrices R and T have the same characteristic polynomial: their traces and determinants agree by cyclicity and multiplicativity. Also Tr(ZR)=Tr(ABᵀ). Applying (4) with N=Z gives
+
+    |Tr(ABᵀ)|≤1+|λ₁−λ₂|²/4.
+
+A Schur form of T has diagonal entries λ₁,λ₂, so
+
+    ||T₀||²_F≥|λ₁−λ₂|²/2.
+
+This proves (3). No simultaneous normality, invertibility, equality of A and conjugate(B), or common singular vectors is assumed.
+

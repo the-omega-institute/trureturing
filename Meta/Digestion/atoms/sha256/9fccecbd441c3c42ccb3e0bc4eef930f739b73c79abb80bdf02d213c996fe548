@@ -1,0 +1,29 @@
+## 续篇：从隐藏坐标到环流控制、热力学作用量与全局闭合
+
+这一轮可以把 AURIC FIB ATOM 金字塔再提升一层：
+
+$$
+\boxed{
+\text{隐藏关系}
+\longrightarrow
+\text{环流荷}
+\longrightarrow
+\text{控制自由度}
+\longrightarrow
+\text{热力学作用量}
+\longrightarrow
+\text{全局 holonomy}.
+}
+$$
+
+当前 trureturing 的公开工作线已经出现了几个与这一结构直接对应的方向：
+
+- AURIC FIB 金字塔与 escape dynamics、thermodynamic action 的连接；
+- acquired circulation 与 generated boundary laws 的关系；
+- exact common cyclic control minimum；
+- verified FIB escape-audit applications。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+这些仍然是开放研究方向，不能直接视为已经合并并由 Lean 完成的定理。下面把其中能够从 AURIC 五态结构严格推出的部分形式化出来。
+
+---
+

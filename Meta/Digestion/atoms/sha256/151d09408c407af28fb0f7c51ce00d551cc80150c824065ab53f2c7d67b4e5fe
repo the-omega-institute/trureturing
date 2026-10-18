@@ -1,0 +1,29 @@
+# Native nonlinear readout capacity and minimal real dimension
+
+This volume is reference input. Its proofs are ordinary handwritten
+mathematics, unverified by Lean. They do not carry kernel-verified status.
+
+Keep the actual full-open native current-ray source, all real probability
+and phase commands, exact state-independent finite affine updates, and the
+original ten-output Euclidean error. Allow the readout to be one arbitrary
+fixed deterministic function of the current encoding. Then two real
+coordinates attain the unavoidable error
+
+$$
+e_*=2\sqrt{ZH}=\sqrt{2Z(1-Z)},\qquad H=(1-Z)/2,
+$$
+
+for every $0<Z<1$. A single real coordinate has exactly the same minimax
+error as a constant prediction. Below $Z=2/3$ this error is strictly
+larger than $e_*$, making two the sharp minimum dimension at the floor.
+At and above that transition, a constant factor attains the floor under
+literal domain identities, while recovering command lawfulness requires
+one coordinate. The complete dimension and tolerance tables are in §9.
+
+The common-turn collision and the retained quotient $(k,\alpha)$ are
+prior results. The increment here is the sharp minimax and minimum real
+dimension classification after changing only the readout class. Sections
+1 and 3 reconstruct the source and the prior collision mechanism needed
+for the lower proofs. Section 10 gives the precise correspondence to the
+factor, full-open affine-readout, and observation/purity sources.
+

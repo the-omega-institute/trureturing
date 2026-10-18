@@ -1,0 +1,32 @@
+**严格和临界的有限历史上界。** 选择达到 $g_N$ 的单位控制，所以 $\lambda=1$；保留初读 $y_0$、各内部更新后的实际读以及首锚读 $y_1$，然后停止。估计 $\widehat a=y_0$。严格情形把 $y_1$ 欧氏径向截到闭球 $|w|\le RH_N$，其中 $H_N=\sqrt{1-m_N^2}$，记为 $\widetilde w$，再令 $\widehat b=f(\widetilde w)$。对闭球的径向投影不增加到任何球内点的距离：球外 $y=tu$、$t>L$、$|w|\le L$ 时
+
+$$
+ |y-w|^2-|Lu-w|^2
+ =(t-L)(t+L-2\langle u,w\rangle)\ge0.
+\tag{42.16}
+$$
+
+故 $|\widetilde w-w|\le\delta$，由尖锐逆界得 $|\widehat b-b|\le\delta/m_N$，与 $|\widehat a-a|\le\delta$ 合并为 (42.11) 的上界。估计值可不在帽内，但在 $W$，符合 (42.10)。如果特意使用 $\lambda<1$ 的已知非零前缀，则须先除以 $\lambda$，此构造的界变为 $\delta\sqrt{1+(\lambda m)^{-2}}$，不能把收缩噪声当成免费增益。
+
+临界时 $m_N=0$，把 $y_1$ 径向截到闭球 $|w|\le R$，仍用 (42.14)。对球内任意 $u,w$，令 $s_u=\sqrt{R^2-|u|^2}$，则
+
+$$
+ |s_u-s_w|^2\le|s_u^2-s_w^2|
+ =\bigl||w|^2-|u|^2\bigr|
+ \le2R|u-w|.
+\tag{42.17}
+$$
+
+从而 $|f(u)-f(w)|^2\le|u-w|^2+2R|u-w|$。投影误差至多 $\delta$，加上可见初态的 $\delta^2$，得 (42.12) 的中间上界。其最后不等式只用该区间内 $\delta\le R/2$。没有平均误差或独立性步骤。
+
+在临界方向 $\alpha=\kappa$，有 $\nu=\tau$。取 $\tau>0$ 时的 $t$，$\tau=0$ 时任取 $t\perp\ell$。令
+
+$$
+ b_0=Rt,\qquad b_h=h\ell+\sqrt{R^2-h^2}\,t,
+ \quad 0<h\le R\kappa,
+ \qquad e=R-\sqrt{R^2-h^2}.
+\tag{42.18}
+$$
+
+这两个点均在帽内：$b_0$ 的法向读为 $R\tau$，而 $\kappa h\ge\tau e$，因为 $e=h^2/(R+\sqrt{R^2-h^2})\le h^2/R\le\kappa h$。其投影距离是 $e$，隐藏初态距离平方为 $h^2+e^2=2Re$。令 $h\downarrow0$ 即得精确的平方根退化；任意指数 $\zeta>1/2$ 的逆比为 $\sqrt{2R}\,e^{1/2-\zeta}\to\infty$。式 (42.17) 在投影实际像上给 $1/2$ 阶上界：$|u-w|\le2R$ 时 $|f(u)-f(w)|\le2\sqrt{R|u-w|}$。这证明第3项所述精确但非Lipschitz的逆。
+

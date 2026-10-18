@@ -1,0 +1,31 @@
+### 命题 442.1（变化秩的固定因子逃逸）
+
+对每个固定正整数 $d$，都有
+
+$$
+\boxed{
+\gcd(d,F_{r_k})=1
+\qquad(k\ge k_0(d)).
+}
+\tag{442.1}
+$$
+
+因而，对每个固定素数 $p$，最终有 $p\nmid F_{r_k}$。等价地，若 $z(p)$ 是
+$p$ 的 Fibonacci 入口秩，则
+
+$$
+z(p)\nmid r_k
+$$
+
+对充分大的 $k$ 成立。
+
+**证明。** 固定 $d$，取 $k\ge k_0(d)$。由 $N_k\in\mathcal C_k$，有 $d\mid N_k$。若
+$h=\gcd(d,F_{r_k})>1$，则 $h\mid d$ 给出 $h\mid N_k$；另一方面
+
+$$
+N_k=1+F_{r_k}g_k\equiv1\pmod h,
+$$
+
+矛盾。因此 $h=1$，得到（442.1）。取 $d=p$ 即得素数版本。最后使用 Fibonacci
+入口秩的定义与强整除律：$p\mid F_{r_k}$ 当且仅当 $z(p)\mid r_k$。证毕。
+

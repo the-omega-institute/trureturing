@@ -1,0 +1,24 @@
+**Lemma 280.3 (A necessary score on an arbitrary finite prefix).**
+A zero-cost score supported on a finite prefix gives its necessary
+inequality for an original positive monotone vanishing sequence even
+when some scored addresses are inactive at the proposed positive cap.
+
+**Proof.** This consumes the restriction and extension argument of
+[Theorem 202.13](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md).
+Let $K_0$ contain the score support, and let $L_a$ be the actual active
+length. By 110.2 obtain one full finite representative at that cap.
+If $L_a\ge K_0$, restrict higher replies to zero and project labels above
+$K_0$ to zero. A zero in the prefix keeps its target; the positive prefix
+has a base target after this projection. TV contracts. For each table,
+substitute the fixed high replies and contract constant observations.
+The remaining function is a legal complete low-prefix table with at most
+two informative coordinates. This algebraic restriction grants no free
+actual high request. If $L_a<K_0$, ignore added inputs. At each added
+first zero $n$ the law is the old positive law, so its exact error is
+$\max\{1-p_+(0),a_n\}\le e$, since $a_n\le e$; the new positive row
+is unchanged. This also covers $L_a=0$, multiple zeros, negative correct
+demands and ties. Pair the score against this one full probability
+configuration. For $e\ge1$, the weighted inequalities used below follow
+directly from $a_j\le1$. The same conclusions for original $O$ rules
+follow by counted same-seed completion to $N$. $\square$
+

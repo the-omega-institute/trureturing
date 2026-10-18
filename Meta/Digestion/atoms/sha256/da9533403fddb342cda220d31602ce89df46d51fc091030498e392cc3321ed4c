@@ -1,0 +1,6 @@
+## 11. 同一影子允许多个不相邻锚点
+
+取下层 necklace $U=[x,y,A]$。其 $x$ 对应外部影子子 coset 是 $e_x=(x,[0,y,A])$；令 $J_+=(x,y)$、$J_-=(\operatorname{last}A,x)$，$C_+,C_-$ 分别在这两个间隙插零，$g=(0,y,A,x)$、$\delta=bcb$。已知八圈 $O_g=(abcb)^2$ 的八个实际顶点依次对应 $g=+x(C_+)$、$ga=-0(C_+)$、$gab=+0(C_+)$、$gabc=-0(C_-)$、$ga\delta=+0(C_-)$、$g\delta=-x(C_-)$、$gbc=+x(C_-)$、$gb=-x(C_+)$。
+
+若 $e_x\in X$，完整零层与外部 $E$ 切换后的因子包含 $O_g$ 的两条 $a$ 和两条 $c$ 边，其四条 $b$ 边缺失。把 $O_g$ 切换称为锚点 $(U,x)$ 的 router：它删除 $+x(C_+)\leftrightarrow-0(C_+)$、$-x(C_-)\leftrightarrow+0(C_-)$ 的 $a$ 边，以及 $-x(C_+)\leftrightarrow+x(C_-)$、$+0(C_+)\leftrightarrow-0(C_-)$ 的 $c$ 边；加入 $C_\pm$ 中各自的 $+x\leftrightarrow-x$ 与 $+0\leftrightarrow-0$ 四条 $b$ 边。后两条是两个宏路径的直接反转捷径。八个元组与所有边均由前述坐标逐项给出，未用圈数推断合法性。
+

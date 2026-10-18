@@ -1,0 +1,39 @@
+**Theorem 15.2 (a complete native cover domain at eighteen labels).**
+For $q=18$, define $\mathcal A_t^\lambda$ to contain every nonempty
+$d$-injective subset $C\subseteq[0,17]^2$ containing $(t,t)$ for
+which $D_2$ of Definition 10.1 holds on both full-reference states
+(NARC.10.3), and, when $\lambda=0$, on every state
+
+$$
+\bigl((z+a-b,b)\bigr)_{(a,b)\in C,\ b\le z}
+\quad\text{with }(0,z)\in C,quad 0\le z\le17.
+\tag{NARC.15.5}
+$$
+
+An eighteen-label two-read encoder exists exactly when one can choose
+one member of each $\mathcal A_t^\lambda$, pairwise disjoint and
+covering all $324$ points. Every such cover has (NARC.15.1)--(NARC.15.2).
+This domain includes the two nine-run cases, the fused case, saturated
+classes, and all permitted higher defects. It imposes neither a common
+class size nor a common macro word or symmetry.
+
+**Proof.** A lawful encoder has $d$ injective by Theorem 9.2. Its
+eighteen diagonal points force exactly one diagonal point in each
+class, so the classes can be indexed by $t$. Theorem 10.2 with
+$k=2$ gives precisely the two reference tests and the complete
+zero-containing fibers (NARC.15.5). Thus each class belongs to the
+corresponding family. Conversely an exact cover defines the public
+table and genuinely acquired exported label just as in Theorem 14.2.
+The selected certificates and Theorem 10.2 supply all legal lags.
+Each family member has only one diagonal point by $d$ injectivity,
+so all eighteen labels are attained. The defect identities follow
+from Theorems 13.2 and 15.1.
+
+This is an exact finite predicate, not a geometric classification of
+the nine-run target: its $D_2$ test retains the actual $E/P$ menu
+and every indexed reply cell. In particular, satisfying the ten-run
+coordinate conditions alone is not substituted for the second test.
+For zero-containing smaller classes, the tests in (NARC.15.5) are
+entire fibers, and (NARC.13.4) is not used as their replacement.
+$\square$
+

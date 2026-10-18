@@ -1,0 +1,87 @@
+**Theorem 71.3 (Simultaneous minimum maximum-index tails).** Suppose
+
+$$
+a_{C_m(x)}\uparrow1\qquad\text{for every }x\in X.
+\tag{71.4}
+$$
+
+For every $A\in\mathcal A(\lambda)$, every actual $x$ and every
+$m\in\mathbb N_0$,
+
+$$
+\mathsf P_A\{M_{A,x}>m\}\ge r_x(m).
+\tag{71.5}
+$$
+
+There is one $A^+\in\mathcal A(\lambda)$ attaining equality simultaneously
+for all $x,m$. Consequently the following are attained minima, with the same
+minimizer at every source and depth:
+
+$$
+\begin{aligned}
+\min_{A\in\mathcal A(\lambda)}\mathsf P_A\{M_{A,x}>m\}&=r_x(m),\\
+\min_{A\in\mathcal A(\lambda)}\sup_x
+             \mathsf P_A\{M_{A,x}>m\}&=\Omega_\lambda(m).
+\end{aligned}
+\tag{71.6}
+$$
+
+Conversely, $\mathcal A(\lambda)\ne\varnothing$ implies (71.4).
+
+**Proof.** Fix $A,x,m$ and the whole measurable seed event
+
+$$
+E_{x,m}=\{\text{finite handoff at }x\text{ with every requested index }\le m\}.
+$$
+
+For each $y\in C_m(x)$ and every seed in this event, induction over the finite
+execution gives the same requests, answers, internal transitions and handed
+tape at $y$ as at $x$. Indeed the next action is determined by the common
+seed and preceding answers, and every answer used in this execution agrees
+at $x,y$. Thus, for every measurable tape event $B$,
+
+$$
+\rho_{x,m}(B)=\mathsf P_A(E_{x,m}\cap\{\phi_x\in B\})
+\le\lambda_y(B)\qquad(y\in C_m(x)).
+\tag{71.7}
+$$
+
+Here $\phi_x$ is the finite-handoff output map; the restriction only uses its
+termination domain. Greatestness of $\ell_{C_m(x)}$ gives
+$\mathsf P_A(E_{x,m})\le a_{C_m(x)}$. By the nonhandoff convention,
+$E_{x,m}=\{M_{A,x}\le m\}$, proving (71.5). The argument transports a whole
+seed event to each fixed comparison source and requires no measurable tape
+equality diagonal.
+
+For attainment use the positive-increment prefix acquisition of Theorem 46.4,
+with the tail identity (70.6) in
+[Source-Correlated Laws, Section 70](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#70-intrinsic-uniform-calibration-and-the-exact-cap-versus-query-tail-frontier).
+It queries $p_1,p_2,\ldots$ in order until handoff. Its accumulated output
+submeasure through depth $m$ at $x$ is $\ell_{C_m(x)}$, and its handoff depth
+$L_x$ satisfies
+
+$$
+K_{A^+,x}=M_{A^+,x}=L_x,\qquad
+\mathsf P_{A^+}\{L_x>m\}=r_x(m).
+\tag{71.8}
+$$
+
+Condition (71.4) gives sourcewise almost-sure finite handoff. These are the
+already supplied construction and its exact law, so they yield simultaneous
+attainment in (71.5)--(71.6). If any exact acquisition exists, its $M_{A,x}$
+is finite almost surely at every $x$. Taking $m\to\infty$ in (71.5) gives
+$r_x(m)\to0$, proving necessity. Without (71.4) there is no nonempty
+acquisition class to which an attained minimum could refer. $\square$
+
+The lower-envelope/range-partition precedent used by the cited construction
+is Gallo, Lerasle and Takahashi,
+[*Markov approximation of chains of infinite order in the $\bar d$-metric*,
+Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2). That lemma concerns
+countable-alphabet chain kernels; its stationary-chain and coalescence
+conclusions are not assumptions or conclusions of Theorem 71.3. A related
+simultaneous agreement optimum for two laws on Polish path spaces is
+Völlering, [*On maximal agreement couplings*, Lemma 1.1 and Theorem
+1.2](https://arxiv.org/html/1608.01511). Theorem 71.3 uses finite-execution
+transport and the existing source-prefix construction, rather than an
+identification with those two-process couplings.
+

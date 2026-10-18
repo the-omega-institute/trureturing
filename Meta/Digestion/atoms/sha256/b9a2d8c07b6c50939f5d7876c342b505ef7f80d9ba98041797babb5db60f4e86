@@ -1,0 +1,8 @@
+**Places above a prime p|D.** Such a prime is greater than five, different from 19, and splits in K0. The two beta valuations are 0 and 1+2v_p(C). Indeed their sum is the valuation of its rational norm and their simultaneous positivity is excluded by the trace. At the unit prime both beta and gamma are units, so the Hilbert factor is 1. At the other prime, gamma is a unit and the odd-local formula is its residue-field quadratic character raised to the odd beta valuation. The residue field is F_p, so the factor is (8+3s/p) for the root s corresponding to that prime. It equals chi(p): the residues at the two roots are nonzero and their product is 19, whose character is +1 by the hypothesis. Thus the root selected by the actual beta valuation makes no difference. The possibility p|C changes only the even part of the valuation.
+
+These are all places. The global product formula therefore gives exactly
+
+1 = product_(p|D) chi(p).
+
+This proof explains directly the distinction between full support and odd-depth support. The general product hypothesis on (19/p) is used to identify the locally selected character with the root-independent character in the statement; it is not silently imposed at even-depth primes. This proves the same product assertion directly by Hilbert reciprocity. ∎
+

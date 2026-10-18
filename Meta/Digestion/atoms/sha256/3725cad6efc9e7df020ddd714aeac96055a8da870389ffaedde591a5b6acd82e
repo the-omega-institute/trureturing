@@ -1,0 +1,89 @@
+**Theorem 7.1 (one table and one faithful map for the full code class).**
+From the pair certified in Theorem 6.3, a finite table-only construction
+specifies one representative-root reader $T^{\mathrm{root}}$ with
+exactly nine installed states and one fixed injective entry map
+$\iota^{\mathrm{root}}:\{0,1\}\to\mathcal K^{\mathrm{root}}$ such
+that
+
+$$
+\forall\sigma\in\mathcal C(T)\ \forall u\in\mathcal U_*,\quad
+T^{\mathrm{root}}\text{ from }
+\iota^{\mathrm{root}}(\sigma(u))
+\text{ returns the entire }F(u)\text{ within four paid calls}.
+\tag{TCR.23}
+$$
+
+The table and map are chosen once, before selecting any particular
+compatible code. The original value $\sigma(u)$ is preserved
+pointwise on every original actual source.
+
+Proof. Use the four-test construction of NRN Theorem 4.2's sufficiency
+direction, now with the common certified pair. To specify all constants,
+let $(i_1,i_2,i_3,i_4)$ be $j$ followed by the remaining indices in
+increasing order. The exact installed words at the four Reads are
+
+| Certified $j$ | $(i_1,i_2,i_3,i_4)$ | Literals at $(Q_1,Q_2,Q_3,Q_4)$ |
+| --- | --- | --- |
+| $1$ | $(1,2,3,4)$ | $(LLR,LRR,RLR,RRR)$ |
+| $2$ | $(2,1,3,4)$ | $(LRR,LLR,RLR,RRR)$ |
+| $3$ | $(3,1,2,4)$ | $(RLR,LLR,LRR,RRR)$ |
+| $4$ | $(4,1,2,3)$ | $(RRR,LLR,LRR,RLR)$ |
+
+Install four separate Reads $Q_1,Q_2,Q_3,Q_4$ and five separate
+Halts $H_0,\ldots,H_4$. The complete Read table is
+
+| Read | Literal | On alpha | On beta | On branch | On absent |
+| --- | --- | --- | --- | --- | --- |
+| $Q_1$ | $p_{b_{i_1}}$ | $H_{i_1}$ | $Q_2$ | $Q_2$ | $Q_2$ |
+| $Q_2$ | $p_{b_{i_2}}$ | $H_{i_2}$ | $Q_3$ | $Q_3$ | $Q_3$ |
+| $Q_3$ | $p_{b_{i_3}}$ | $H_{i_3}$ | $Q_4$ | $Q_4$ | $Q_4$ |
+| $Q_4$ | $p_{b_{i_4}}$ | $H_{i_4}$ | $H_0$ | $H_0$ | $H_0$ |
+
+The five fixed Halt entries are
+
+| Halt | Fixed entire row, with all stored data of Definition 2.3 |
+| --- | --- |
+| $H_0$ | $R_0=(C_0,\pi_0)$, eight holes, name vector $(0,1,0,3,4,5,4,7)$, no absent cut |
+| $H_1$ | $R_1=(C_1,\pi_1)$, name vector $(0,1,2,3,2,5)$, beta guard at $LL$ |
+| $H_2$ | $R_2=(C_2,\pi_2)$, name vector $(0,1,2,3,2,5)$, beta guard at $LR$ |
+| $H_3$ | $R_3=(C_3,\pi_3)$, name vector $(0,1,0,3,4,5)$, beta guard at $RL$ |
+| $H_4$ | $R_4=(C_4,\pi_4)$, name vector $(0,1,0,3,4,5)$, beta guard at $RR$ |
+
+These entries literally contain the full exteriors (TCR.6), partitions
+(TCR.7), ordered holes, all different-class disequalities and all
+blocked-cut data of Definition 2.3. The notation supplies no later
+source-dependent decoder. Set once
+
+$$
+\iota^{\mathrm{root}}(z)=Q_1,
+\qquad\iota^{\mathrm{root}}(1-z)=Q_2.
+\tag{TCR.24}
+$$
+
+The two states are distinct; inverse labeling recovers the complete
+bit at entry. There is no separate surviving bit register.
+
+Fix any $\sigma\in\mathcal C(T)$ and any original actual $u$.
+Each tested root is reached and is alpha exactly at its positive
+index, if there is one, by Supplier 2.4. Entry $z$ tests all four
+possible indices. Entry $1-z$ skips only $j$; (TCR.12) and
+compatibility exclude this entry on every source of $\Pi_j$.
+Thus every positive source reaches its own whole-row Halt from
+its prescribed entry. On every $Z_d$ and $Z_*$ all right roots
+are non-alpha, including a possible beta at a right class, and
+both entries reach $H_0$. This covers every zero beta placement
+and every allowed finite branch shape on the full domain. The
+surviving repeated partner hole and all guards are already stored
+in the chosen fixed output.
+
+There are at most four actual invocations from $Q_1$ and at most
+three from $Q_2$. All four successor constants at each Read are
+installed, including absence, although these representatives are
+reached. Every visit is a paid native call. All four Reads and all
+five Halts count even if a particular code does not reach every
+one. The ordering, entry map, addresses and transitions are static
+output data, with no runtime address calculation, free control
+step, phase, table selection or decoding state. Since the same
+pair works for all compatible codes, the same installed table
+and fixed map establish the quantifiers in (TCR.23). $\square$
+

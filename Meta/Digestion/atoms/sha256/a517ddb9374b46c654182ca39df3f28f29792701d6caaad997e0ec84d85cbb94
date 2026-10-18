@@ -1,0 +1,73 @@
+### 推论 22.9（Fibonacci 图上的三种维数）
+
+对 Fibonacci cube \(\Gamma_n\)，令
+
+\[
+K_n=\ker B_n,\qquad
+S_n=\ker(A_n|_{T_n}),\qquad
+C_n=\ker(A_nB_n).
+\]
+
+则：
+
+\[
+\dim K_n=c_n
+=
+\sum_{k\ge2}(k-1)N_{n,k},
+\]
+
+\[
+\dim S_n=h_n
+=
+\sum_{k\ge2}N_{n,k},
+\]
+
+\[
+\dim C_n=c_n+h_n
+=
+\sum_{k\ge2}kN_{n,k}.
+\]
+
+因此：
+
+\[
+\boxed{
+\begin{aligned}
+\text{纯循环维数} &=\sum_{k\ge2}(k-1)N_{n,k},\\
+\text{静态 seam 维数} &=\sum_{k\ge2}N_{n,k},\\
+\text{零一步可见边链维数} &=\sum_{k\ge2}kN_{n,k}.
+\end{aligned}
+}
+\]
+
+当 \(n\ge5\) 时，
+
+\[
+\dim K_n-\dim S_n
+=
+\sum_{k\ge3}(k-2)N_{n,k}>0.
+\]
+
+所以从 \(n=5\) 开始，动态循环自由度严格多于静态 seam 自由度。即使静态观察核维数固定，边链仍然有额外循环活动无法由边界读出恢复。
+
+#### 证明
+
+前两项是既有 Fibonacci 计数公式。由定理 22.2，
+
+\[
+\dim C_n=\dim K_n+\dim S_n.
+\]
+
+将两项有限和相加，得到
+
+\[
+\dim C_n
+=
+\sum_{k\ge2}
+\bigl((k-1)+1\bigr)N_{n,k}
+=
+\sum_{k\ge2}kN_{n,k}.
+\]
+
+差值式和严格不等式由 \(N_{n,3}>0\) 在 \(n\ge5\) 时成立得到。证毕。
+

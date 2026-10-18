@@ -1,0 +1,60 @@
+### 93.6. Excluding the sextic branch by a rational Sturm certificate
+
+If λ²+2λ+4q−2=0, substitution in g gives
+
+\[
+ \begin{aligned}
+ q&=-\frac{\lambda^2+2\lambda-2}{4},\qquad
+ B=\frac{2-\lambda^2}{2},\\
+ g&=\frac{(\lambda+2)H(\lambda)}{16},\qquad
+ H(\lambda)=\lambda^6+\lambda^5-5\lambda^4+4\lambda+4.
+ \end{aligned}                                                 \tag{14}
+\]
+
+At λ=−2, equations (11) and (14) give q=1/2 but r=−1/2, impossible. For the remaining roots of H, the exact identity
+
+\[
+ r-X^2-\frac{2\lambda^3+7\lambda^2-4\lambda-6}{16}
+   =-\frac{(\lambda+1)H(\lambda)}{8(\lambda^2-2)^2}           \tag{15}
+\]
+
+has nonzero denominator because B≠0. Thus Y² is the displayed cubic divided by 16 at any remaining candidate.
+
+For completeness, the entire real-root isolation uses the following polynomials:
+
+\[
+ \begin{aligned}
+ H_0&=\lambda^6+\lambda^5-5\lambda^4+4\lambda+4,\\
+ H_1&=6\lambda^5+5\lambda^4-20\lambda^3+4,\\
+ H_2&=13\lambda^4-4\lambda^3-24\lambda-28,\\
+ H_3&=21\lambda^3-13\lambda^2-30\lambda-22,\\
+ H_4&=-55\lambda^2+12\lambda+62,\\
+ H_5&=7\lambda+27,\qquad H_6=1.
+ \end{aligned}                                                 \tag{16}
+\]
+
+Here H₁=H₀′, and polynomial division gives −rem(H_(j−2),H_(j−1))=κ_j H_j, with the strictly positive rational factors
+
+\[
+ (\kappa_2,\kappa_3,\kappa_4,\kappa_5,\kappa_6)
+ =\left(\frac5{36},\frac{144}{169},\frac{169}{441},
+                     \frac{3528}{3025},\frac{39325}{49}\right).
+                                                                    \tag{17}
+\]
+
+Thus this is a positively rescaled Sturm chain. Its exact signs and variation counts are
+
+\[
+ \begin{array}{c|rrrrrrr|c}
+ \lambda&H_0&H_1&H_2&H_3&H_4&H_5&H_6&\text{variations}\\ \hline
+ -\infty&+&-&+&-&-&-&+&4\\
+ -3&+&-&+&-&-&+&+&4\\
+ -14/5&-&-&+&-&-&+&+&3\\
+ -7/10&-&+&-&-&+&+&+&3\\
+ -69/100&+&+&-&-&+&+&+&2\\
+ +\infty&+&+&+&+&-&+&+&2
+ \end{array}.                                                   \tag{18}
+\]
+
+No finite endpoint has a zero sign. Sturm's theorem therefore gives exactly one real root in (−3,−14/5), exactly one in (−7/10,−69/100), and none elsewhere. The first interval makes λ²+2λ−2 positive: it decreases there and equals 6/25 at the right endpoint. Hence q<0. On the second interval, 2λ³+7λ²−4λ−6 is strictly decreasing and equals −57/125 at the left endpoint. Hence Y²<0. Both roots are unphysical, so the first factor in (13) supplies no minimizer.
+

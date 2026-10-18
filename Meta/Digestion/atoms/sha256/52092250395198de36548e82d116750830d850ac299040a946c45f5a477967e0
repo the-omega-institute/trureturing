@@ -1,0 +1,23 @@
+**定义 2.1（字面树和固定制备）。** $\mathcal T$ 是由叶 $\alpha,\beta$ 和有序二元节点 $\langle u,v\rangle$ 自由生成的非空有限树集；不作结合、交换或其它语法识别，不限制树大小。固定定向 Euclidean 空间 $\mathbb R^3$。一个实际源 $\mathsf s=(t,p)$ 给定一棵树和一个制备 $p=(a,b)$。解释为
+
+$$
+E_p(\alpha)=a,\qquad E_p(\beta)=b,\qquad
+E_p(\langle u,v\rangle)=E_p(u)\times E_p(v).
+$$
+
+所有同标签叶使用同一个向量。原替换为
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+置 $x_j(\mathsf s)=E_p(\rho^jt)$、$q_j=|x_j|$。每次执行始终使用这个 $p$，取得菜单恰为
+
+$$
+\operatorname{Read}(x_0),\ \rho,\ \operatorname{Read}(x_1),\
+\rho,\ \operatorname{Read}(x_2),\ \operatorname{Stop}.
+$$
+
+比较世界可有不同的合法制备，但每个世界的三读和未来必须由它自己的一棵树、一个固定制备共同实现。证明中旋转、缩放或选树是在构造比较世界，不是观察者的动作。
+

@@ -1,0 +1,4 @@
+# Affine-gain erasure, positive secants, and drift-kernel collisions
+
+The common-source affine model admits both erased-signal collisions and collisions with strictly positive gains. Positive rank-one secants give an exact criterion at each prescribed slope; its gain-zero specialization tests polynomial agreement of surviving signals. These results restrict candidate fixed histories while leaving the sharp uniform reading count unresolved.
+

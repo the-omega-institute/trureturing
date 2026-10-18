@@ -1,0 +1,11 @@
+**定理 44.3（Sharp finite preset ceiling, credited endpoint attainment）。** In (41.1),
+
+$$
+ C_{\rm pre}(f)<\infty\quad\Longrightarrow\quad
+ C_{\rm pre}(f)\le p=\frac{k+1}{2},\qquad
+ \sup\{C_{\rm pre}(f):C_{\rm pre}(f)<\infty\}=p.
+\tag{44.6}
+$$
+
+**证明。** Theorem 42.2 already supplies the uniform bound. In the closed envelope, all-one depths and $J$ are at most $p-1$. Odd cuts have $q\le p-2$; when their suffix fee is positive, (43.3) and the one-block case give $\Psi(q+1)\le p-q-2$, and when it is zero their horizon is simply $q+1\le p-1$. Thus every odd horizon is at most $p-1$. Nonexceptional even horizons are at most $p-1$ unless $q=p-1$; for that final cut at $p\ge3$, the all-one option $p-1$ replaces the unissued parent as proved above. The endpoint exception has horizon $p$, including the $p=2$ final even cut. For sharpness use the already supplied complete endpoint-threshold target of Definition 2.1 at $m=2,k=2p-1$. Theorem 2.2, equivalently [S20, Theorem 3.1], gives $C_{\rm ad}=C_{\rm pre}=\lceil(k+1)/2\rceil=p$. This supplied family certifies sharpness; its restricted exact law is not redelivered as new mathematics. ∎
+

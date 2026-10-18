@@ -1,0 +1,37 @@
+**Definition 7.1 (scope relative to the earlier interfaces).** Theorems
+3.2--4.3 provide a finite ambient construction on displayed slots with all
+parallel descriptors and all leaf-label inequalities. This is an
+existential selector preserving forced finite original coordinates.
+It does not prove a partition or parameterization of every completed
+solution by finite integer tuples. In particular an unconstrained original
+completion variable still has all of $\widehat{\mathcal T}$ as its solution
+set; the selector merely chooses $\Omega$ for it.
+
+Relative to [NIS, Definition 9.4 and Proposition 10.4][NIS], the raw-code
+branching avoids unbounded reduced-root splitting, Theorem 3.2 supplies a
+fixed obligation universe and scheduling argument, Theorem 4.2 supplies
+arithmetic elimination for the selected graph, and Theorem 4.3 supplies the
+finite-coordinate preservation needed for the signed bridge. Theorem 6.1
+then provides the full common-output and total-stopping implications on the
+complete NIC-covered class. It does not assert equivalence with every
+reduced-code graph valuation, or supply a particular machine-readable
+negative-certificate format mentioned in NIS10.4. Its negative output is a
+finite failed $H$ decided by the existing finite-source theory.
+
+[FNS, Theorem 5.2][FNS] already identifies all-depth original witnesses
+with existence of a common completed map and an entire cofinal finite-profile
+support. Its Corollary 2.6 supplies the arithmetic compiler for a supplied
+finite template. The new step is synthesis of a sufficient template profile
+and common map without being given either. [SLP, Lemma 2.1 and Theorem 3.1][SLP]
+already supply independent live-prefix lifting and its exact closure
+criterion; they are used after contact saturation, at exactly the finite
+coordinates fixed by Theorem 4.3. [URR, Theorem 3.1 and Corollary 3.2][URR]
+supply one simultaneous finite negative separator and entire scalar support,
+not a replacement of the whole image by that section. The finite solver,
+finite positive covers, signed lifting, and cofinal-support compiler remain
+credited suppliers.
+
+These statements are ordinary mathematical deductions from the displayed
+native laws and the stated supplier interfaces. They make no claim of
+current kernel verification or literature priority.
+

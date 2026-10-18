@@ -1,0 +1,44 @@
+**Convention 1.3 (credited exact temporal factor).** Use the factor
+$\Gamma_q(u)=(b,c)$ of [AAR, Definition 12.2, Theorem 12.3 and
+Proposition 13.3][AAR]. Put $s(r)=\#L(r)+2\#R(r)$ and
+$e(\alpha)=0,e(\beta)=1$. At an original branch endpoint the factor is
+$(0,0)$. Otherwise let the first original leaf on the path have address
+$a$, label $\ell$, and $q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{NDR.3}
+$$
+
+Its supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{NDR.4}
+$$
+
+On attained factors $c=1$ implies $b\ge2$. For every $k$ this equals
+$r_{\rho^ku}(q)$. The trajectory recovers $b$ as its first branch count
+and $c$ by whether an alpha stage occurs. Equality of factors is therefore
+exactly equality of complete trajectories. This includes initially absent
+targets; it does not identify their different blocking-leaf descriptors.
+For a permitted original request, $b\le2D$.
+
+The supplier's temporal calculation uses $T_k=\rho^k\alpha$,
+$T_0=\alpha,T_1=\beta,T_{k+2}=\langle T_{k+1},T_k\rangle$.
+Traversal subtracts one for $L$ and two for $R$, with each edge allowed only
+when its preceding index is at least two. Thus a nonempty $R$-ending
+suffix has an alpha stage and an $L$-ending suffix does not. Transport is
+applied at its actually present original blocking leaf. This is why
+(NDR.3) handles absence without transporting a nonexistent subtree.
+

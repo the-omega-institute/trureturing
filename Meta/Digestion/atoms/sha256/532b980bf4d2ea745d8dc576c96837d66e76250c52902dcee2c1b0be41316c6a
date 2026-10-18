@@ -1,0 +1,158 @@
+**Lemma 8.2 (complete rational implications for nonsingularity).** Under the source box and margins of Section 2, set
+
+$$
+r_T=\frac{ah_1}{bh_0},\qquad r_S=\frac{ch_2}{dh_0}.
+\tag{RG.58}
+$$
+
+Then $1/4<r_T<2/5$, $1/10<r_S<1/6$. The only positive height at which the three columns $Da_y,Ta_y,Sa_y$ can be dependent is
+
+$$
+y_{\rm crit}=\frac{64(r_T+r_S)}{1+r_T},\qquad 16<y_{\rm crit}<27.
+\tag{RG.59}
+$$
+
+Consequently all twelve original Grams are real positive definite.
+
+Proof. The following positive rational comparisons give the entire implication chain, with the inherited source enclosures kept as premises. Write $r_5=1+\alpha_1^2+\alpha_2^2$ and $r_{27}=1+\beta_1^2+\beta_2^2$, only in this source-bound argument. The box implies
+
+$$
+\begin{gathered}
+479/1000<\lambda_{\rm src}<480/1000,\quad
+1412/1000<\alpha_1<1413/1000,\quad
+1185/1000<\alpha_2<1186/1000,\\
+413/1000<\beta_1<414/1000,\quad
+809/1000<\beta_2<810/1000,\quad \eta_1>19/100,\\
+439/100<r_5<441/100,\qquad 182/100<r_{27}<183/100,\\
+223/100<\sqrt5<224/100,\quad519/100<\sqrt{27}<520/100,\quad
+17<\sqrt{295}<18,\quad31<\sqrt{999}<32.
+\end{gathered}
+\tag{RG.60}
+$$
+
+The two $r$ bounds follow by squaring the positive chart bounds and adding one; each radical bound follows by positive square comparison. Lower numerator and upper denominator in the source formulas give
+
+$$
+\begin{aligned}
+(A_5^{\rm src})_{00}&>
+ \frac{(479/1000)(1412/1000)^2}{441/100}>21/100,\\
+(A_{27}^{\rm src})_{00}&>
+ \frac{(520/1000)(413/1000)^2}{183/100}>4/100.
+\end{aligned}
+\tag{RG.61}
+$$
+
+For their $01$ entries the explicit rational endpoints are
+
+$$
+\begin{aligned}
+180/1000&<\frac{(479/1000)(1412/1000)(1185/1000)}{441/100}
+ <(A_5^{\rm src})_{01}\\
+&<\frac{(480/1000)(1413/1000)(1186/1000)}{439/100}<185/1000,\\
+94/1000&<\frac{(520/1000)(413/1000)(809/1000)}{183/100}
+ <(A_{27}^{\rm src})_{01}\\
+&<\frac{(521/1000)(414/1000)(810/1000)}{182/100}<97/1000.
+\end{aligned}
+\tag{RG.62}
+$$
+
+All products and denominators are positive, so every comparison has its indicated direction. The exact formula for $N^{\rm src}_{01}$ therefore yields
+
+$$
+\begin{aligned}
+45/1000&<\frac{180\cdot17+94\cdot31}{128000}
+ <N^{\rm src}_{01}\\
+&=\frac{(A_5^{\rm src})_{01}\sqrt{295}+(A_{27}^{\rm src})_{01}\sqrt{999}}{128}\\
+&<\frac{185\cdot18+97\cdot32}{128000}<51/1000.
+\end{aligned}
+\tag{RG.63}
+$$
+
+The $02$ source entry has one negative term; retain its sign rather than bounding it as a sum of positive terms. Write $N^{\rm src}_{02}=P_{\rm pos}-P_{\rm neg}$ with
+
+$$
+P_{\rm neg}=\frac{\lambda_{\rm src}\alpha_1\sqrt5}{16r_5},\qquad
+P_{\rm pos}=\frac{(1-\lambda_{\rm src})\beta_1\sqrt{27}}{16r_{27}}.
+\tag{RG.64}
+$$
+
+Its full rational endpoint comparisons are
+
+$$
+\begin{aligned}
+21/1000&<\frac{(479/1000)(1412/1000)(223/100)}{16(441/100)}
+ <P_{\rm neg}\\
+&<\frac{(480/1000)(1413/1000)(224/100)}{16(439/100)}<22/1000,\\
+38/1000&<\frac{(520/1000)(413/1000)(519/100)}{16(183/100)}
+ <P_{\rm pos}\\
+&<\frac{(521/1000)(414/1000)(520/100)}{16(182/100)}<39/1000.
+\end{aligned}
+\tag{RG.65}
+$$
+
+Subtracting these intervals gives $16/1000<N^{\rm src}_{02}<18/1000$. All the coarse endpoint comparisons (RG.61)–(RG.65) are rational inequalities obtained by multiplying positive integer denominators. They require no new numerical reading of the algebraic root.
+
+The two source pivots have inherited lower bound $1/10$. For their upper bounds, (RG.6) and (RG.61) give
+
+$$
+\begin{aligned}
+(S_{02}^{\rm src})_{00}
+ &=\lambda_{\rm src}/2-[(A_5^{\rm src})_{00}+(A_{27}^{\rm src})_{00}]/2\\
+ &<24/100-(21/100+4/100)/2<3/25,\\
+(S_{01}^{\rm src})_{00}
+ &<\frac{(48/100-21/100)59-(4/100)37}{128}<3/25.
+\end{aligned}
+\tag{RG.66}
+$$
+
+The second formula uses $p_{51}=59/128$ and $p_{27,1}=37/128$. The positive rank-one adjugate identities imply
+
+$$
+\frac ab=\frac{N^{\rm src}_{01}}{(S_{01}^{\rm src})_{00}},\qquad
+\frac cd=\frac{N^{\rm src}_{02}}{(S_{02}^{\rm src})_{00}},\qquad
+b^2=\eta_1(S_{01}^{\rm src})_{00}>19/1000.
+\tag{RG.67}
+$$
+
+For example $ab=\eta_1N^{\rm src}_{01}$ and $b^2=\eta_1(S_{01}^{\rm src})_{00}$ give the first ratio; the second follows in the same way from $cd$ and $d^2$. This also exhibits the positive sign of $d$, conditional on the factorization premises.
+
+The bounds on the $H^{\rm src}$ diagonals give, by positive square comparisons,
+
+$$
+\begin{gathered}
+(7/10)^2<498/970<(h_1/h_0)^2<500/968<(3/4)^2,\\
+(4/5)^2<655/970<(h_2/h_0)^2<656/968<(5/6)^2.
+\end{gathered}
+\tag{RG.68}
+$$
+
+Combining the established numerator, pivot and ratio bounds gives
+
+$$
+\begin{aligned}
+r_T&>\frac{(7/10)(45/1000)}{3/25}=21/80>1/4,&
+r_T&<\frac{(3/4)(51/1000)}{1/10}<2/5,\\
+r_S&>\frac{(4/5)(16/1000)}{3/25}>1/10,&
+r_S&<\frac{(5/6)(18/1000)}{1/10}<1/6.
+\end{aligned}
+\tag{RG.69}
+$$
+
+For $a_y=(u_y,v_y,w_y)^T$ expand the determinant of its three specimen columns:
+
+$$
+\det[Da_y,Ta_y,Sa_y]=h_0bd\,u_y
+ [u_y^2-r_Tv_y^2-r_Sw_y^2].
+\tag{RG.70}
+$$
+
+Here $u_y>0$. Inserting $u_y^2=y/128$, $v_y^2=(64-y)/128$ and $w_y^2=1/2$ gives the sole zero height in (RG.59). The two required comparisons are exactly
+
+$$
+48r_T+64r_S>48/4+64/10>16,\qquad
+37r_T+64r_S<37(2/5)+64/6<27.
+\tag{RG.71}
+$$
+
+They are respectively equivalent to $y_{\rm crit}>16$ and $y_{\rm crit}<27$ after multiplication by $1+r_T>0$. Thus none of $5,16,27$ is singular. The three vectors are independent, so their Gram is strictly positive definite. Lemma 8.1 transports this conclusion to all four signs at each height, proving all twelve cases. $\square$
+

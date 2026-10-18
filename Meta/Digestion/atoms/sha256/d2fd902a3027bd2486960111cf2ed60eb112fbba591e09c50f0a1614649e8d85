@@ -1,0 +1,60 @@
+**Proposition 206.22 (Exact overlap with the earlier aggregate threshold).**
+For $m\ge4$ active late coordinates, put
+
+$$
+b_m=4-\frac2{\lceil(m+1)/2\rceil}.
+$$
+
+The sufficient region of [Theorem
+205.10](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md)
+is, for $\mu\ge2d$ and $d\ge0$,
+
+$$
+W\ge\max\{(b_m+1)(\mu-d),4\mu-3d\}.
+\tag{206.56}
+$$
+
+The examples and automatic regions above have the following exact
+relations to it and to one another. The balanced and completion
+examples with $\mu>2,W=3\mu-1$ fail its second threshold at every
+$d\le1$. The stock example $\mu=4,W=13$ meets it at equality
+for $m=4,5$ and fails for $m\ge6$. The stock example
+$\mu=4,W=14$ fails for $m\ge12$. The clipping example
+$\mu=c>4,W=4c-3$, $m\ge4$, fails its first threshold.
+These are comparisons with (206.56), not with every consequence of
+old closure or residual theorems.
+
+**Proof.** Both terms in (206.56) decrease with $d$. For these
+examples $\mu>2$, so $d=1$ minimizes them among $0\le d\le1$.
+At that endpoint $3\mu-1<4\mu-3$ exactly when $\mu>2$.
+For $\mu=4$, write $r=\lceil(m+1)/2\rceil$; the terms are
+$15-6/r$ and $13$. They both fit $W=13$ when $r=3$ and the first
+exceeds it when $r\ge4$. It exceeds $W=14$ when $r\ge7$,
+which includes every $m\ge12$.
+For the clipping example, the second term is exactly $W=4c-3$;
+the first minus $W$ is
+
+$$
+(b_m-3)c-(b_m-2)>0.
+$$
+
+Indeed $b_m\ge10/3$ and $c>4$; at $b_m=10/3$ this is
+$(c-4)/3>0$, and it increases with $b_m$.
+The strict domain $c>4$ and the equality cases at $m=4,5$ are
+therefore essential to these precise comparisons.
+
+Within the present results, (206.32) implies (206.40) because
+$2(\mu-2)\ge\mu-2$ for $\mu>2$. Thus the balanced automatic
+region is contained in the clipping region. Its exact support,
+signed residual, asymmetric optimum and retained-profile construction
+are additional structural information. Corollary 206.12 is exactly
+206.10 at $c_1=c_2=(\mu-2d)_+$ and $W'=3\mu-d$.
+The stock example in 206.19 is also covered by (206.40), and the
+clipping example in 206.16 also meets the stock hypotheses at
+equality. The distinct stock family 206.20 fails every clipping
+parameter by its $u_3$ inequality. The chain unit region already has
+(206.26)'s zero-score certificate. Common fair or chain representatives
+can themselves belong to the earlier common-Markov class 198.2.
+None of these facts identifies five disjoint new cap regions.
+$\square$
+

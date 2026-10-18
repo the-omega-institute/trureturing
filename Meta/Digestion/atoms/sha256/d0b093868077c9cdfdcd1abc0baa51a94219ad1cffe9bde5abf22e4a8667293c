@@ -1,0 +1,19 @@
+**命题 12.2（十二节接口的共同等价图）。** 使用假设 1.2、2.2、6.2、9.2 的既有供应，对任意 $n>5040$，以下五个命题等价：
+
+$$
+\begin{aligned}
+&\sum_{W\in\mathscr L_n}\sqrt{|W|/|V_n|}
+ <e^\gamma\log\log n;\\
+&\operatorname{Vol}_{\omega(n)}(\mathcal Q_n)
+ <e^\gamma\log\log n;\\
+&\frac1{(2\pi)^{\omega(n)}}\int |A_n(\boldsymbol\theta)|^2
+ \,d\boldsymbol\theta<e^\gamma\log\log n;\\
+&\log R(n)<0;\\
+&\mathfrak G(n)>0.
+\end{aligned}
+$$
+
+对四块固定母体，还可将前三项的左侧替换为正确完整域的 $\sum_f\Omega_f$，或命题 6.5 的正交纤维振幅平均。对全体 $n>5040$ 取全称量词后，上述等价命题与 RH 的桥梁仅来自供应的经典 Robin 定理。
+
+证明。命题 1.3、2.3 给出第一项左侧为 $Z(n)$；命题 3.2 给出第二项左侧也是 $Z(n)$；命题 5.2 给出第三项相同。正分母使 $Z(n)<e^\gamma\log\log n$ 等价于 $R(n)<1$，对数严格单调使它等价于第四项。命题 9.3 给出 $\mathfrak G(n)=-\log R(n)$，所以等价于第五项。四块母体的替换使用假设 6.2 的正确权重与命题 6.5 的正交平均，不能把未经认证的有序语法来源数或同相来源振幅代入。每个点的等价可逐点施加全称量词；假设 2.2 将所得算术全称命题与 RH 相连。该等价图未证明任何一个全称命题成立。证毕。
+

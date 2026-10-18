@@ -1,0 +1,42 @@
+### 82.11. Exact full-reference error of the entire balanced marker family
+
+The two parties' qubit overlaps cancel their phases. At the real marker overlap 3/4, the plus/minus forward-Gram blocks are
+
+    Cgram=(7/8)J_4+(1/8)R,
+    M=(1/8)J_4+(7/8)R,
+    X=0.                                            (31)
+
+This identity holds also on the diagonal, because R_ff=1. Subtracting the target diag(J_4,I_4) leaves
+
+    D_+=(R-J_4)/8,
+    D_-=(J_4+7R)/8-I_4.                              (32)
+
+The physical output uses the transpose of a forward Gram; the kernels in (32) are real symmetric, so their transposes coincide with them. The logical difference map is the sum of the Schur multiplier with kernel D_+ acting on the input's plus block and the Schur multiplier with kernel D_- acting on its minus block. Cross blocks are killed. For any normalized positive input with any reference, those two input principal blocks are positive and have traces summing to one. The triangle inequality therefore bounds the output error by the larger of the two Schur-multiplier diamond norms. Choosing an input entirely in one bit sector attains either sector norm, so the full norm is exactly their maximum. The fixed output MC isometry preserves it.
+
+For any Hermitian Klein-circulant four-by-four kernel D with eigenvalues lambda_chi in its real character basis,
+
+    D=(1/4)sum_chi lambda_chi h_chi h_chi^*,
+    Schur_D=(1/4)sum_chi lambda_chi Ad_diag(h_chi).
+
+Each h_chi has entries in {+1,-1}. The triangle inequality gives an arbitrary-reference upper bound sum|lambda_chi|/4. On the normalized uniform pure input, the output is D/4 and has exactly that trace norm. Hence
+
+    ||Schur_D||diamond=||D||_1/4.                    (33)
+
+Equations (30)--(32) give the eigenvalues
+
+    D_+: -1/2, x^2/2, y^2/2, z^2/2;
+    D_-: -1/2, (7/2)x^2-1, (7/2)y^2-1, (7/2)z^2-1.
+
+Thus every balanced-marker member has exact error
+
+    delta=max{1/4,
+       [1/2+|(7/2)x^2-1|+|(7/2)y^2-1|
+                    +|(7/2)z^2-1|]/4}.             (34)
+
+The last three D_- eigenvalues sum to 1/2, so (34) equals 1/4 if and only if
+
+    x^2>=2/7,  y^2>=2/7,  z^2>=2/7,
+    x^2+y^2+z^2=1.                                  (35)
+
+This is a nontrivial continuum. The regular tetrahedron is x^2=y^2=z^2=1/3, but, for example, x^2=3/10,y^2=13/40,z^2=3/8 also satisfies (35). Its nonzero Bloch-Gram eigenvalues are 6/5,13/10,3/2.
+

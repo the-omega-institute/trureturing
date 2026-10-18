@@ -1,0 +1,31 @@
+**Definition 1.2 (complete acquired input).** Fix
+$I=(P,R,H_0,H_{\rm rel},Q,N)$. The old row $R$ is an attained whole
+$P$-row. Literal records $(a,p,c)$ impose $r_{\rho^a u}(p)=c$.
+A signed record $e=(a,p,b,q,\bowtie)$, with $\bowtie\in\{=,\ne\}$,
+imposes
+
+$$
+\operatorname{Rel}_e(u)\iff
+p\in\operatorname{Pos}(\rho^a u)\ \land\
+q\in\operatorname{Pos}(\rho^b u)\ \land\
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q.
+\tag{TOS.2}
+$$
+
+Both signs require both endpoints. All lists retain repetitions and
+constrain the same original. The entire source fiber and a full-row
+stratum are
+
+$$
+\begin{aligned}
+D&=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\
+                 \bigwedge_{e\in H_{\rm rel}}\operatorname{Rel}_e(u)\},\\
+D_r&=\{u\in D:R_Q(u)=r\}.
+\end{aligned}
+\tag{TOS.3}
+$$
+
+The old concrete exterior, old absent positions, all old class comparisons
+and off-task constraints remain in $D$. A target label specifies the
+whole exterior, reached set and partition, not selected equality bits.
+

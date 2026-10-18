@@ -1,0 +1,34 @@
+## 370. Sharper low-label bounds and two tangent bounds
+
+By flatness and (369.5),
+
+    F(c,d):=(c+d)^2-(m-1)*(d-1)<0.
+
+The identity
+
+    F=[c+d-(m-1)/2]^2+(m-1)*[c+1-(m-1)/4]
+
+gives c<(m-5)/4 and m>9. Now Q<2*d^2 and Q>m*(m-1)
+imply d>2*m/3. We claim
+
+    c<3*m/20-1, m>40/3.                                 (370.1)
+
+If c>=3*m/20-1, monotonicity of F in c and in d on d>=2*m/3
+would give
+
+    F(c,d)>F(3*m/20-1,2*m/3)=m*(m+120)/3600>0,
+
+a contradiction. This proves (370.1).
+
+Take lambda=5 in (369.3). Its Q coefficient is positive under (370.1).
+After Q>m*(m-1) and c<3*m/20-1, the right side is greater than
+
+    m*(2*m+5)/10>0.
+
+Thus Lr>5*Jr. From m>40/3 and (369.2),
+
+    x^2>5*(35/36)=175/36>(11/5)^2,
+    y^2>(35/36)*(37/43)=1295/1548>(10/11)^2.             (370.2)
+
+In particular x>11/5 and y>10/11.
+

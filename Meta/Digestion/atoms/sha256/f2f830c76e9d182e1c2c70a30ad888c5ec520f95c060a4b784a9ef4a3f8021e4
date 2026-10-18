@@ -1,0 +1,26 @@
+**Theorem 4.2 (exact fixed-scaffold pressure identity).** For every $n\ge1$,
+
+$$
+A_n^{(d+h)}(w^{\uparrow})=A_{kn}^{(d)}(w),
+\qquad
+\beta_{d+h}(w^{\uparrow})=\beta_d(w)^k.
+\tag{JTC.11}
+$$
+
+**Proof.** Restrict a positive-mass coarse relation to the image of $T_h$.
+Every target above the frontier has a fixed branch value. Every other target is
+one fine-block target, with its literal prefixed by the fixed frontier address.
+Conversely, regroup any admissible relation on $kn$ fine blocks into $n$
+coarse blocks. A fine donor literal is prefixed by its public module address;
+if it stops above the frontier its value is a constant. These translations
+preserve every chosen donor, decoder and cycle, and preserve each product
+weight exactly once. They are inverse on tuples, so both maxima in (JTC.11)
+are equal. Finally admissible products give
+$A_{km}^{(d)}(w)\ge A_m^{(d)}(w)^k$; hence restricting the pressure supremum to
+multiples of $k$ changes nothing. $\square$
+
+This is an identity for one fixed present scaffold and the displayed product
+potential. It is not an arbitrary reblocking theorem: a source-dependent cut
+descriptor, variable-shape tag or new pairing would itself be part of the
+retained code and would need a separate acquisition cost.
+

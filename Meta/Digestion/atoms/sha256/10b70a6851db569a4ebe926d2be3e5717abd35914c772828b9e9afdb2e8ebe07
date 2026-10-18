@@ -1,0 +1,47 @@
+**Definition 38.1 (supplied encoder and full TP decoders).** Fix
+$s\in[0,1]$, $v=v_s$ and $u=\theta v+\omega$ before the specimen
+arrives. For $\sigma,\tau\in\{+1,-1\}$ define qutrit live matrices
+
+$$
+H_\sigma=\frac{\sqrt{1-u}D+\sigma\sqrt{1-v}T}{\sqrt2},\qquad
+L_{\sigma,\tau}=\frac{\sqrt uD+\sigma\sqrt vT+\tau S}{2}.
+\tag{JR.34}
+$$
+
+For each $L_{\sigma,\tau}$ choose once a fixed isometry
+$V_{\sigma,\tau}:\mathbb C^2\to\mathbb C^3$ onto its image.
+Its columns can be fixed by Gram–Schmidt on the first two independent
+columns in their lexicographic order. This rule uses known matrices,
+not the received state. The acquisition has the following branches:
+
+| Acquired branch | Encoder Kraus matrix | Joint fibre | Full-output decoder |
+| --- | --- | --- | --- |
+| $(H,\sigma)$ | $H_\sigma$ | $3$ | $X\mapsto EXE^\dagger$ in live |
+| $(L,\sigma,\tau)$ | $V_{\sigma,\tau}^\dagger L_{\sigma,\tau}$ | $2$ | $X\mapsto EV_{\sigma,\tau}XV_{\sigma,\tau}^\dagger E^\dagger$ in live |
+| $(f,j,\sigma)$, $j=1,2$ | $\sqrt{m_j/2}\langle j|$ | $1$ | $z\mapsto z w_\ell g(t)dt\,P_f$ in EACH original label $\ell$ |
+
+For five-mode inputs multiply each encoder matrix on the right by
+$E^\dagger$. Add branches $(\perp,\sigma)$ with scalar encoder
+$A\mapsto\operatorname{tr}((I_5-P)A)/2$, decoded to
+$z g(t)dt\,P_f$ only at original label $2$. Their two orthogonal
+complementary Kraus rows are a discarded multiplicity, not extra
+accessible quantum systems. The live and scalar decoders have no
+other output sectors. Every displayed decoder is TP on its WHOLE fibre.
+
+On a live branch retain $\sigma$ as a generated classical label, and
+on failure branches $\sigma$ is the fair coin already in their rows.
+For the designated binary record, use the fixed classical kernel
+
+$$
+\Pr(r\mid\sigma)=\frac{1+r\sigma\eta_s}{2},\qquad
+\eta_s=\begin{cases}s/s_0,&0\leq s\leq s_0,\\1,&s_0<s\leq1.
+\end{cases}
+\tag{JR.35}
+$$
+
+Absorb its coin into the actual acquisition label. All labels needed
+for decoding are retained classically, including $\sigma,\tau$ when
+present. Only the declared fibre is quantum. These are additional
+actually supplied operations, rather than permission inferred from
+a change of channel representation.
+

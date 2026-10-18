@@ -1,0 +1,25 @@
+**Definition 12.1 (domain, interface and readout).** Keep the source, fixed finite or countable prior $\mu$, acquired filtration and third latch of Definition 6.1. Every statement in §§12–17 concerns the same $\mathcal H_3(\mu)$, including both actual seeds, all eight marker triples, every finite paid seed retry and every finite return placement, unless a slice is explicitly named. The parameters remain $m=2,d=1,\ell=2,n=4$; the symbol $k$ below denotes a readout cutoff, not the hidden depth $K$. All original Read/Stop permissions remain those of Future Response Sufficiency §9. In particular no reset, source copy, address query, prior resampling, clock, test oracle or post-Stop Read is supplied.
+
+For a raw word $h=h_1\cdots h_N$ and a fixed-letter pattern $v=v_1\cdots v_j$, define
+
+$$
+c_v(h)=\#\{1\le i_1<\cdots<i_j\le N:h_{i_1}\cdots h_{i_j}=v\},\qquad
+c_{\varepsilon}(h)=1,\qquad
+G_k(h)=(c_v(h):|v|\le k),\quad
+G_{\infty}(h)=(c_v(h):v\in\{\alpha,\beta\}^{*}).
+\tag{SC.24}
+$$
+
+Every binary pattern is included, not only chosen moments or the degree-$k$ part. Positions are distinct and strictly increasing, but need not be contiguous. These are multiplicity-bearing scattered-subword counts: neither contiguous-factor counts, presence-only subword data, parser-context labels nor relations on individually indexed occurrences. Degree counts aggregated tuples of raw letters; it is not a lower bound on relational arity. Definition 7.3 already gives a sufficient binary precedence relation with paid occurrence identities and growing storage.
+
+Use the existing Magnus polynomial in the free associative integer algebra:
+
+$$
+\mathcal P(h)=\prod_{i=1}^{N}(1+x_{h_i}),\qquad
+[x_v]\mathcal P(h)=c_v(h),\qquad
+\mathcal P(hh')=\mathcal P(h)\mathcal P(h').
+\tag{SC.25}
+$$
+
+The product/coefficient identification is the reused `magnusPolynomial_coeff_scatteredCount` of [MagnusWordCoefficients](../../../D5/S1/Words/Complexity/PositivePairs/Coefficients/MagnusWordCoefficients.lean); concatenation follows in the same source order. The coefficients are exact integers. For a finite $h$, degrees above $N$ vanish, although there is no uniform degree or finite configuration bound over the actual domain.
+

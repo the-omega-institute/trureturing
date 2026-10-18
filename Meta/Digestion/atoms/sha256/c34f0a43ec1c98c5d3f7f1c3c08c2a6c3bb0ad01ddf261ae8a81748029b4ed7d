@@ -1,0 +1,28 @@
+**定理 146.2（实际档案接口中的目标创新）。** 在定义146.1中，$V_n\subseteq V_{n+1}$。固定同一个目标函数 $f:\Omega\to\mathbb R$，令 $\Delta_n=P_{n+1}-P_n$，则
+
+$$
+\Delta_n^*=\Delta_n,\qquad \Delta_n^2=\Delta_n,\qquad
+\Delta_i\Delta_j=0\quad(i\ne j),
+$$
+
+$$
+P_{n+1}f=P_nf+\Delta_nf,\qquad
+\|P_{n+1}f\|_\mu^2=\|P_nf\|_\mu^2+\|\Delta_nf\|_\mu^2.
+$$
+
+固定目标的累计可见能量增益满足
+
+$$
+\mathcal I_n(f):=\|P_nf\|_\mu^2-\|P_0f\|_\mu^2
+=\sum_{k=0}^{n-1}\|\Delta_kf\|_\mu^2,
+\qquad \mathcal I_0(f)=0,
+$$
+
+$$
+\|f\|_\mu^2=\|P_nf\|_\mu^2+\|f-P_nf\|_\mu^2.
+$$
+
+因此 $\mathcal I_{n+1}(f)>\mathcal I_n(f)$ 当且仅当 $\Delta_nf\ne0$。新事件被保留不要求这个固定目标严格增益。
+
+证明（146.2）。完整事件档案经 $d_n$ 回到旧档案，故 $b\circ R_n=(b\circ d_n)\circ R_{n+1}$，得到所需的子空间包含接口。随后直接应用上述档案塔§121.4–121.6：对应 $q_n=R_n$、$\pi_n=d_n$、$\Pi_n=P_n$、权为归一的 $\mu$；若不归一，全部范数平方只乘同一正总权，等式和零点不变。该既有结果给嵌套投影、互相正交的差投影及含最终余项的完整分解，即全部所列等式。严格正权下范数平方为零恰是函数逐点为零，所以一步严格性恰由本目标的非零创新判定。$\square$
+

@@ -1,0 +1,4 @@
+## 13. 原仿射来源上的完整控制记忆：未读后缀与严格自适应分离
+
+**约定（13节的来源与编号）。** 11.x仍指[原卷](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md#11-非可逆模相位运输的最小分辨率与精确记忆)，12.x、13.x指本续卷。来源、原具名边与原初目标使用定义11.1、12.1；目标始终是初始 $t\bmod D_s$。定理12.2的成功分支提取保留事件数，不自动保留完整控制状态数。有限控制器的指令、候选支持与下降秩复用 FIB Relational Fiber Calculus [定义26.1–26.2](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#定义-261有限观察控制器)、[定理27.2–27.3](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md#定理-272有限控制器的恢复终止证书)；以下未读后缀计算及原仿射族尖锐界是 repo-derived 普通数学推导。
+

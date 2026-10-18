@@ -1,0 +1,119 @@
+## 13. Global stability of the source and entire drift
+
+**Theorem 13.1.** Fix $0<\rho<1/3$. Let $\mathcal C_\rho$ be all actual six-read targets with
+
+$$
+p\ge\rho u,\qquad u=3p+3q+r,
+$$
+
+and otherwise unrestricted positive source coordinates, real slopes, and affine drift coefficients. Define
+
+$$
+\begin{aligned}
+C_x&=108C_0+12,&C_b&=9(6+15C_x),\\
+L_\rho&=\frac1{3\rho^2}+\frac4{3\rho},\\
+C_{SD}(\rho)&=\max\{1+(1+L_\rho)C_x,\ 2+(8+L_\rho)C_b\}.
+\end{aligned}
+$$
+
+For every pair in this class,
+
+$$
+\max\{\|\Delta S\|_{\max},\|\Delta D\|_{\mathrm{coef}}\}
+\le C_{SD}(\rho)e.
+\tag{13.1}
+$$
+
+There is no lower or upper scale bound, slope bound, or drift-coefficient bound in this assertion. It bounds $S,D$, without asserting a bound on $\Delta k$ yet.
+
+**Proof.** First allow $u_0,u_1$ to differ. The full bilinear midpoint expansion of (3.6) is
+
+$$
+\Delta F=DF_{\bar u}(\bar t,\bar v,\bar k)
+(\Delta t,\Delta v,\Delta k)^{\mathsf T}
++\bar k\Delta u\,e_1.
+$$
+
+The midpoint of $x=(p,q,r)$ is positive and has invariant $\bar u$, by the linear coordinate change. With $d_u=|\Delta u|$, (12.3) gives
+
+$$
+\max(|\Delta t|,|\Delta v|)
+\le\frac{C_0(e_F+|\bar k|d_u)}{1+|\bar k|}
+\le C_0(e_F+d_u).
+$$
+
+Equation (3.2) implies
+
+$$
+\|\Delta x\|_\infty\le9\max(|\Delta t|,|\Delta v|)+2d_u
+\le C_xe.
+\tag{13.2}
+$$
+
+This step needs no shape restriction. Next put $b_x=kx$, an actual common-gain multiple at each endpoint. Direct substitution gives
+
+$$
+(W,Y,Z)^{\mathsf T}=Ax+Bb_x,
+$$
+
+$$
+A=\begin{pmatrix}3&1&1\\7&1&2\\11&1&3\end{pmatrix},\qquad
+B=\begin{pmatrix}6&4&2\\28&4&8\\55&5&15\end{pmatrix},
+$$
+
+$$
+B^{-1}=\frac1{40}\begin{pmatrix}20&-50&24\\20&-20&8\\-80&190&-88\end{pmatrix}.
+$$
+
+Multiplication gives the identity matrix; $\det B=40$. The maximum absolute row sums of $A$ and $B^{-1}$ are $15$ and $179/20<9$. Hence
+
+$$
+\|\Delta b_x\|_\infty
+\le9(e_F+15\|\Delta x\|_\infty)\le C_be.
+\tag{13.3}
+$$
+
+This linear estimate does not introduce independent lifted sources: $b_x=kx$ is retained exactly.
+
+On the convex positive cone $p\ge\rho(3p+3q+r)$, put $f(x)=qr/p$. Its derivative satisfies
+
+$$
+|\partial_pf|\le\frac1{3\rho^2},\qquad
+|\partial_qf|\le\frac1\rho,\qquad
+|\partial_rf|\le\frac1{3\rho}.
+$$
+
+Integrating along a segment in that cone gives
+
+$$
+|\Delta f(x)|\le L_\rho\|\Delta x\|_\infty.
+\tag{13.4}
+$$
+
+Extend $f$ to the negative of this cone and to zero by the same rational formula off zero and $f(0)=0$. In either common-sign cone the same derivative bounds apply. Continuity at zero follows from $|f(b)|\le|b_q|/\rho$. For opposite-sign endpoints, $f$ has the corresponding signs, and
+
+$$
+|f(b_0)-f(b_1)|\le\frac{|b_{0q}|+|b_{1q}|}{\rho}
+=\frac{|\Delta b_q|}{\rho}\le L_\rho\|\Delta b\|_\infty.
+$$
+
+Thus (13.4) holds on this entire two-cone domain including zero. Every $b_x=kx$ lies there, and $f(b_x)=ks$ for positive, negative, or zero $k$.
+
+Finally the entire original drift has coefficients
+
+$$
+\delta_0=\zeta-p-f(x),\qquad
+\delta_1=\eta-[4(b_x)_p+3(b_x)_q+(b_x)_r+f(b_x)].
+$$
+
+The second equality uses $k(a+u)=4kp+3kq+kr+ks$. Equations (11.1), (13.2)–(13.4) give
+
+$$
+\begin{aligned}
+|\Delta\delta_0|&\le[1+(1+L_\rho)C_x]e,\\
+|\Delta\delta_1|&\le[2+(8+L_\rho)C_b]e.
+\end{aligned}
+$$
+
+Also $\|\Delta S\|_{\max}\le(1+L_\rho)C_xe$. These prove (13.1), with no division by a sampled gain. ∎
+

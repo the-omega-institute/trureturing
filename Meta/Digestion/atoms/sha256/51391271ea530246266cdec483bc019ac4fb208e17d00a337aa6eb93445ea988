@@ -1,0 +1,56 @@
+### A positive Bernstein certificate
+
+Put
+
+\[
+h=m-k-1>0,\qquad v=z-m-k>0,\qquad
+\theta=\frac{u-m}{z-1}\in(0,1).
+\]
+
+For the quadratic polynomial \(P_0\), define
+
+\[
+C=P_0(m),\qquad
+B=2P_0(m)+(z-1)P_0'(m),\qquad
+E=P_0(m+z-1).
+\]
+
+The exact quadratic identity is
+
+\[
+P_0(u)=C(1-\theta)^2+B\theta(1-\theta)+E\theta^2.
+\]
+
+All three coefficients admit manifestly positive expressions:
+
+\[
+C=m\bigl[2k^2-k+1+(4k+m)v+2v^2\bigr],
+\]
+
+\[
+\begin{aligned}
+B={}&v^3+(3k+4m-1)v^2
+ +(3k^2+6km-3k+2m^2+m)v\\
+ &+h^3+(k+2)h^2+(k^2+3)h
+ +2k^2(k-1)+2k+2,
+\end{aligned}
+\]
+
+and
+
+\[
+\begin{aligned}
+E={}&v^3+(2k+3m-1)v^2
+ +(k^2+2km-k+3m^2-m)v\\
+ &+2h^3+(5k+3)h^2+(3k^2+5k+2)h+(k+1)^2.
+\end{aligned}
+\]
+
+Here \(k>2\), \(m=k+1+h>3\), and \(h,v>0\). Every displayed
+coefficient is positive: for example, the coefficient of \(v\) in
+\(B\) is \(3k(k-1)+6km+2m^2+m\), and that in \(E\) is
+\(k(k-1)+2km+m(3m-1)\). Therefore \(C,B,E>0\).
+As \(0<\theta<1\), the Bernstein identity yields \(P_0(u)>0\),
+so \(P>0\). Division by \(4muz>0\) proves the claimed strict bound.
+
+

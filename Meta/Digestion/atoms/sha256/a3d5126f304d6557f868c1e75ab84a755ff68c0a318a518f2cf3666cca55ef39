@@ -1,0 +1,72 @@
+**构造 84.4（A specified compatible placement for every $d\ge3$）。** Set
+
+$$
+d\ge3,\quad h=2d,\quad r=2^d,\quad N=r^2=2^{2d},\quad
+m=N-2,\quad k=N,\quad T=N+1.
+\tag{84.19}
+$$
+
+Since $N=4^d\equiv1\pmod3$, $3\nmid m$ and the actual gcd is one. Let $\varepsilon_i$ be the coordinate-$i$ unit of $\mathbb F_2^h$, numbered $0,\ldots,h-1$, and define
+
+$$
+a=\varepsilon_{h-1},\qquad
+\nu=\varepsilon_{h-2},\qquad
+\omega=\varepsilon_{h-2}\oplus\varepsilon_{h-1},\qquad
+\Omega=\mathbb F_2^h\setminus\{a,\omega\}.
+\tag{84.20}
+$$
+
+Split every vector $z\in\Omega$ into its first and last $d$ coordinates, denoted $(i(z),\ell(z))\in I\times I$, where $I=\mathbb F_2^d$. Take disjoint label sets $\{A_i:i\in I\}$ and $\{D_\ell:\ell\in I\}$, with distinct labels within each set. Choose distinct common fresh $C,R$ outside both sets, and independent $L_\bot$.
+
+Let $\sigma$ cycle the suffix coordinates $1,\ldots,h-1$ in that order. For $1\le t<h$ put
+
+$$
+b_t=\varepsilon_{\sigma(t)}\oplus
+    \varepsilon_{\sigma^2(t)}\oplus
+    \varepsilon_{\sigma^3(t)},\qquad
+e_t=N-1-3t,\qquad f_t=N-3t.
+\tag{84.21}
+$$
+
+Define a phase-vector table $Z$ by the following prescriptions:
+
+$$
+\begin{aligned}
+Z(0)&=\varepsilon_0,&Z(1)=Z(3)&=\nu,
+&Z(2)&=\varepsilon_0\oplus\varepsilon_1,\\
+Z(e_t)&=b_t,&Z(f_t)&=\varepsilon_0\oplus b_t
+&&1\le t<h,\\
+Z(N-1)&=\omega,&Z(N)&=\omega.
+\end{aligned}
+\tag{84.22}
+$$
+
+Assign all unused members of $\Omega$ once each, in increasing binary order, to the unassigned phases of $A=\{0,\ldots,N-2\}$ in increasing order. Coordinate zero is the first binary digit. On $A$ set
+
+$$
+\lambda_0(j)=A_{i(Z(j))},\qquad
+\lambda_1(j)=D_{\ell(Z(j))};
+\qquad
+\lambda_0(N-1)=\lambda_1(N-1)
+=\lambda_0(N)=\lambda_1(N)=C.
+\tag{84.23}
+$$
+
+Use the entire INITIAL target and history pullback (84.2), not just its low restriction. Thus $R$ labels INITIAL tails $m,m+1$, the low tables are independent of $s<m$, and initial bottom retains its separate label.
+
+证明（well-defined placement and genuinely different component tables）。 The least missed phase is
+
+$$
+e_{h-1}=N-3h+2\ge48
+\quad(h=2d\ge6).
+\tag{84.24}
+$$
+
+The pairs $\{e_t,f_t\}$ are disjoint adjacent pairs, separated by one phase between consecutive pairs, lie in $A$, and avoid $0,1,2,3$. They also avoid the two outside phases. The suffix cycle has length $h-1\ge5$. Its next three coordinates are distinct and exclude $t$, so $(b_t)_t=0$. Their three-element consecutive cyclic supports have different starting points, so all $b_t$ are distinct. Each $b_t$ has root coordinate zero and weight three; each $\varepsilon_0\oplus b_t$ has root coordinate one and suffix weight three. These $2(h-1)$ vectors are distinct and avoid $a,\nu,\omega,\varepsilon_0,\varepsilon_0\oplus\varepsilon_1$.
+
+Consequently the prescribed phases in $A$ number $2h+2$ and use $2h+1$ different members of $\Omega$, with exactly the duplicate $\nu$. The remaining number of phases is $N-2h-3$, equal to the number of unused members of the $(N-2)$-element set $\Omega$. The ordered bijection is well-defined. Every vector of $\Omega$ occurs once on $A$, except $\nu$ occurs twice. Outside, $\omega$ occurs twice and is represented by the fresh semantic label $(C,C)$, not by its binary row/column indices.
+
+The full joined low image therefore has exactly $N-1$ classes. Precisely two have positive even multiplicity: the class coded by $\nu$ and the outside class $(C,C)$, both of size two. Every other class has multiplicity one. These count actual low phases on the full cycle, not INITIAL tails or separate component multiplicities.
+
+The two excluded pairs represented by $a$ and $\omega$ have row index zero and distinct column indices. Row zero retains $r-2>0$ pairs and every other row retains $r$; the two affected columns retain $r-1>0$ pairs and every other column retains $r$. Thus each component table uses all $r$ of its own row or column labels on $A$, and adds the shared fresh low label $C$ outside. Each full low image has exactly $2^d+1$ labels. The components differ at every phase of $A$ because their row and column label sets are disjoint. This is one common, jointly inhabited table, not independently chosen component optima. Formula (84.13) realizes every value, phase and INITIAL tail for its actual new width and period. ∎
+

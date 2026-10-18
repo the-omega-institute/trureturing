@@ -1,0 +1,94 @@
+**Theorem 69.3 (Uniform density stability and shared-modulus $L^1$ closure).**
+Let $g$ and $h$ be two families of Definition 69.1. If $\delta\ge0$ satisfies
+
+$$
+|g_q(\theta)-h_q(\theta)|\le\delta
+\quad\text{for every }q\in Q\text{ and }\sigma\text{-almost every }\theta,
+\tag{69.8}
+$$
+
+then for every $m$
+
+$$
+\boxed{
+\Omega_h(m)\le\Omega_g(m)+\delta.
+}
+\tag{69.9}
+$$
+
+In particular, let $g^{(r)}$, $r\in\mathbb N_0$, and $g$ be families of
+Definition 69.1. Suppose
+
+$$
+\sup_{q\in Q}\|g^{(r)}_q-g_q\|_\infty\longrightarrow0,
+\tag{69.10}
+$$
+
+and one nonincreasing sequence $\varpi:\mathbb N_0\to[0,1]$, tending to zero,
+bounds every stage:
+
+$$
+\Omega_{g^{(r)}}(m)\le\varpi(m)
+\qquad(r,m\ge0).
+\tag{69.11}
+$$
+
+Then $\Omega_g(m)\le\varpi(m)$ for every $m$. The same conclusion holds under
+the weaker convergence hypothesis
+$\|g^{(r)}_q-g_q\|_1\to0$ for every fixed $q\in Q$, with (69.11) retained;
+no uniformity in $q$ is required for this $L^1$ closure.
+Under the original-source and handoff hypotheses of Theorem 69.2, this gives its
+common tail bound, and a summable $\varpi$ gives the common expected-depth bound
+$\sup_x\mathbb E[N_x]\le\sum_m\varpi(m)$.
+
+**Proof.** For (69.8), take the union of the exceptional null sets over the
+countable $Q$. On its complement all coordinate inequalities hold together,
+so for every $q,m$
+
+$$
+\inf_{q'\in U_m(q)}h_{q'}(\theta)
+\ge\inf_{q'\in U_m(q)}g_{q'}(\theta)-\delta.
+\tag{69.12}
+$$
+
+Integrating and using $\sigma(\Theta)=1$ gives
+$a_m^h(q)\ge a_m^g(q)-\delta$. Taking the supremum of the deficits proves
+(69.9). For (69.10), apply it with
+$\delta_r=\sup_q\|g^{(r)}_q-g_q\|_\infty$ for all sufficiently large $r$,
+when this supremum is finite, and let $r\to\infty$ in (69.11).
+The essential-supremum bounds hold simultaneously outside the union of their
+null sets over the countable pairs $(r,q)$.
+
+For coordinatewise $L^1$ convergence fix $q,m$, and exhaust $U_m(q)$ by
+increasing finite nonempty sets $F_k$ containing $q$; if the neighborhood is
+finite, keep $F_k=U_m(q)$ after its last element. Put
+
+$$
+b_k^{(r)}=\min_{q'\in F_k}g^{(r)}_{q'},\qquad
+b_k=\min_{q'\in F_k}g_{q'}.
+$$
+
+The elementary finite-minimum inequality gives
+
+$$
+\|b_k^{(r)}-b_k\|_1
+\le\sum_{q'\in F_k}\|g^{(r)}_{q'}-g_{q'}\|_1\longrightarrow0
+\qquad\text{for each fixed }k.
+$$
+
+Since $b_k^{(r)}\ge\underline g_m^{(r)}(q)$, (69.11) implies
+$\int b_k^{(r)}\,d\sigma\ge1-\varpi(m)$ for every $r$. Taking $r\to\infty$
+first yields $\int b_k\,d\sigma\ge1-\varpi(m)$. Then
+$b_k\downarrow\underline g_m(q)$ and $0\le b_k\le g_q$, with $g_q$ integrable.
+Dominated convergence gives $a_m^g(q)\ge1-\varpi(m)$. Taking the supremum of
+the deficits over $q$ proves $\Omega_g(m)\le\varpi(m)$. Representatives of all
+$g^{(r)}_q$ and $g_q$ can be changed only on one null union over $(r,q)$, so
+every finite and countable infimum in this proof has the same integral for all
+such choices. Finally apply Theorem 69.2 with its stated source hypotheses.
+$\square$
+
+A shared modulus thus survives coordinatewise $L^1$ convergence. Uniform
+$L^\infty$ control also supplies the perturbation estimate (69.9) without a
+shared modulus; $L^1$ or TV convergence alone supplies no corresponding
+uniform order-calibration guarantee.
+

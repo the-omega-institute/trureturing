@@ -1,0 +1,14 @@
+**定义 5.3（原始八读与九读问题的保留量词）。** Let
+$n_{\mathrm{det}}(3,0)$ be the least uniform total reading budget
+for recovering every legal complete target under Definition 1.1
+from its original root. The full alternative is a lawful decoder
+with at most eight total readings on all legal worlds versus the
+lower bound $n_{\mathrm{det}}(3,0)\ge9$. Eight total readings use
+the initial clock and clocks one through seven. Both initial actions,
+all subsequent actual histories, arbitrary deterministic policies
+and early stops are included. A solution or impossibility proof for
+the triple system at this one ancestor would still require its
+appropriate joint bridge to those earlier histories or a full-domain
+decoder. Neither such a bridge nor an unrestricted decoder or lower
+bound is asserted by Theorems 2.1–4.1.
+

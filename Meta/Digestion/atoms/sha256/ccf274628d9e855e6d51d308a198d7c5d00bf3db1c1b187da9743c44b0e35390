@@ -1,0 +1,130 @@
+**Proposition 6.1 (All-event feasibility of the nonseparable example).**
+For the actual channel $T_{1/2}$ in (4.4),
+
+$$
+\frac35<e(T_{1/2})<\frac23.
+\tag{6.1}
+$$
+
+The upper holds for all complex density inputs and all actual finite
+adaptive histories. It is a bound on a PPT channel, not a scalar-port
+upper bound for $\varepsilon_1$.
+
+Proof. The following exact adjoint formula specifies every event
+of this one channel. For real symmetric $E$ let
+$r_i(E)=\operatorname{tr}(R_iE)$ and write
+
+$$
+\begin{aligned}
+\mathcal A_\xi^0(E)={}&\sum_{i,j}e_{ij}(\xi)r_i(E)R_j\\
+ &+\sum_{j=+,-}\left[R_jER_j-\tfrac12r_j(E)R_j\right]\\
+ &+2\sum_{i<j}(R_iER_j+R_jER_i),\\
+\mathcal A_\xi(E)={}&C_\xi\mathcal A_\xi^0(E)C_\xi,
+\qquad H_J=\Pi_J-\mathcal A_{1/2}(\Pi_J).
+\end{aligned}
+\tag{6.2}
+$$
+
+The first line has output population $r_i$ multiplying input sector
+$R_j$, as required for an adjoint. Formula (1.5) gives the plane
+and cross terms directly; input congruence gives the last line.
+All formulas extend after taking the transpose-symmetric part.
+In particular $\mathcal A_\xi(I)=I$ by the same column sums.
+
+Here is a finite rational certificate for all fifteen strict bounds
+$-\frac23I\prec H_J\prec\frac23I$. Use the fixed block order
+$L=(N,25)$ and $V=(2,3,5)$. The spectral projections in (1.4)
+have no cross blocks and are
+
+$$
+\begin{aligned}
+R_+|_L&=\begin{pmatrix}(r+1)/(2r)&2/r\\2/r&(r-1)/(2r)\end{pmatrix},\\
+R_+|_V&=\begin{pmatrix}
+(r+3)/(4r)&1/r&(r+3)/(4r)\\
+1/r&(r-3)/(2r)&1/r\\
+(r+3)/(4r)&1/r&(r+3)/(4r)
+\end{pmatrix},\\
+R_0|_L&=0,\quad
+R_0|_V=\tfrac12\begin{pmatrix}1&0&-1\\0&0&0\\-1&0&1\end{pmatrix},
+\qquad R_-=I-R_0-R_+.
+\end{aligned}
+\tag{6.3}
+$$
+
+Let $N_*=10^{18}$. Each positive root in the first row lies
+strictly between $k/N_*$ and $(k+1)/N_*$ with the corresponding
+integer in the second row:
+
+$$
+\begin{array}{c|rrrr}
+\text{root}&\sqrt{17}&1/\sqrt6&\sqrt{2/13}&1/\sqrt5\\\hline
+k&4123105625617660549&408248290463863016&
+392232270276368063&447213595499957939
+\end{array}.
+\tag{6.4}
+$$
+
+Integer squaring proves these brackets. Substitute them into (6.3),
+$C_{1/2}=R_0/\sqrt6+\sqrt{2/13}R_++R_-/\sqrt5$, and (6.2).
+Use rational interval addition, multiplication by the minimum and
+maximum of the four endpoint products, and reciprocal
+$[a,b]^{-1}=[1/b,1/a]$ for a positive interval. Evaluate each
+leading determinant by its permutation expansion. For every
+singleton and every pair $J$, and each of the two signs, the
+resulting rational lower endpoints are at least the corresponding
+entry below:
+
+| Matrix | $\Delta_1(L)$ | $\Delta_2(L)$ | $\Delta_1(V)$ | $\Delta_2(V)$ | $\Delta_3(V)$ |
+| --- | --- | --- | --- | --- | --- |
+| $(2/3)I\pm H_J$ | $59789/10^6$ | $13675/10^6$ | $53637/10^6$ | $16426/10^6$ | $10202/10^6$ |
+
+The inputs to these $15\cdot2\cdot5=150$ finite rational
+inequalities are completely specified by (6.2)–(6.4), the five
+singletons and all ten unordered pairs of $\mathsf S$; both signs
+use the same channel. Each tabulated bound is positive. Sylvester's
+criterion on the two real symmetric blocks proves all thirty
+strict LMIs. This is an exact finite determinant certificate, not
+a sample over preparations, times or protocols.
+
+For the lower in (6.1), take input $\Pi_3$, actual wait zero,
+a complete read and Stop. Its mode-$3$ survival under $T_{1/2}$ is
+
+$$
+\operatorname{tr}(\Pi_3T_{1/2}(\Pi_3))
+ =\frac{69}{340}+\frac{27}{260\sqrt{17}}
+  +\frac2{17}\left(\frac{53}{130}+4\sqrt{\frac2{65}}\right)
+ <\frac{6559}{17680}<\frac25.
+\tag{6.5}
+$$
+
+The formula follows from (6.2) and
+$\|R_+e_3\|^2=(1-3/r)/2$,
+$\|R_-e_3\|^2=(1+3/r)/2$, and $R_0e_3=0$.
+The strict estimate uses $\sqrt{17}>4$ and
+$\sqrt{2/65}<1/5$. Hence this legitimate complete-read experiment
+has TV $1-\operatorname{tr}(\Pi_3T_{1/2}(\Pi_3))>3/5$.
+
+Finally the first-read identity explains the full quantifiers in
+the upper. Before its first read a deterministic policy either stops
+without an input-dependent record or accumulates a nonnegative wait.
+After first outcome $s$, the two unnormalized states are
+$p_s\Pi_s$ and $p'_s\Pi_s$. Their common finite suffix is a
+probability kernel $L_s$ of total mass one, even when one of those
+probabilities vanishes. Retaining the first result gives TV
+$\frac12\sum_s|p_s-p'_s|$ for the complete histories.
+Source-independent random controls preserve the upper under their
+common mixing law. Stationarity gives
+
+$$
+Q_J(t)-S^\dagger(Q_J(t))=O(t)^TH_JO(t),
+\quad Q_J(t)=O(t)^T\Pi_JO(t),
+\tag{6.6}
+$$
+
+and TP gives opposite residuals for complementary events. Thus the
+fifteen-event maximum is the full error, by (1.10), proving the
+upper in (6.1). A maximizing residual eigenvector, transported by
+$D$, attains that maximum with actual wait zero, a complete read
+and Stop. This applies to this CPTP channel independently of its
+failure to have a scalar port. $\square$
+

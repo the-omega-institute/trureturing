@@ -1,0 +1,60 @@
+**Theorem 43.2 (analytic diagonal feasibility over the whole positive-weight continuum).** For every $0<\beta\leq1/2$ and $0<u\leq a$, let $s=\sqrt a$ and define
+
+$$
+ \begin{aligned}
+ Y&=y_0|e_0\rangle\langle e_0|
+ +y_2|e_2\rangle\langle e_2|
+ +y_4|e_4\rangle\langle e_4|,\\
+ y_0&=\frac{a+s}{4},\qquad
+ y_2=\frac{\beta+su}{4},\qquad
+ y_4=\frac{(1-u)(1+s)}4.
+ \end{aligned}
+\tag{R.215}
+$$
+
+This $Y$ is feasible in (R.214) on the entire output space, and
+
+$$
+ \operatorname{Tr}Y=T_\beta-\frac u4,\qquad
+ g_{N_{\beta,u}}^2\leq T_\beta-\frac u4,\qquad
+ \delta_{N_{\beta,u}}\geq1-\sqrt a+\frac u2.
+\tag{R.216}
+$$
+
+**Proof.** All three $y$ entries are strictly positive: $a>0$, $\beta>0$, and $1-u\geq\beta>0$. The columns (R.213) vanish on the zero-output support of $Y$, namely $\operatorname{span}(e_1,e_3)\otimes\mathbb C^3$. Their nonzero coordinate supports
+
+$$
+ \mathcal S_0=\operatorname{span}\{|e_0,0\rangle,|e_4,2\rangle\},\qquad
+ \mathcal S_1=\operatorname{span}\{|e_2,0\rangle,|e_0,2\rangle\}
+$$
+
+are disjoint and orthogonal. Since $Y\otimes I_3$ is diagonal, the slack in (R.214) splits into two rank-one subtraction blocks on these spaces and nonnegative diagonal entries on the remaining coordinates. For a positive definite diagonal $B$, the condition $B-dd^\dagger\succeq0$ is equivalent, by congruence with $B^{-1/2}$, to $\|B^{-1/2}d\|^2\leq1$. Thus the two necessary and sufficient nontrivial tests here are
+
+$$
+ \frac{a}{4y_0}+\frac{1-u}{4y_4}=1,
+ \qquad
+ \frac{\beta}{4y_2}+\frac{u}{4y_0}\leq1.
+\tag{R.217}
+$$
+
+The first sum is $s/(1+s)+1/(1+s)=1$. In the second, substitute $4y_2=\beta+su$ and $4y_0=a+s=s(1+s)$. Since $u>0$ and all denominators are positive, the inequality is equivalent to
+
+$$
+ \frac{\beta}{\beta+su}+\frac{u}{s(1+s)}\leq1
+ \quad\Longleftrightarrow\quad
+ \beta+su\leq a(1+s).
+\tag{R.218}
+$$
+
+The last inequality follows by adding $\beta\leq a$ and $su\leq sa$. It includes the endpoints $u=a$ and $\beta=1/2$. Therefore both blocks are PSD, and every remaining coordinate has nonnegative diagonal slack, including the zero entries of $Y$. This proves feasibility without a recovery restriction or an optimization solver.
+
+Finally,
+
+$$
+ \operatorname{Tr}Y
+ =\frac{a+s+\beta+su+(1-u)(1+s)}4
+ =\frac{1+s}{2}-\frac u4.
+$$
+
+For every arbitrary complex CPTP recovery, (R.214) bounds its fidelity at this one witness input. Its minimum over all purifications is no greater, so $g_N^2\leq\operatorname{Tr}Y$. Applying the already established full-reference unhalved norm inequality (R.35) gives $\delta_N\geq2(1-g_N^2)\geq1-s+u/2$. The argument uses a single rank-two input as a lower witness inside the full diamond supremum; it does not restrict that supremum or reduce the entire input optimization to diagonal states. $\square$
+

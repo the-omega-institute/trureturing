@@ -1,0 +1,72 @@
+## 8. Conditional interpretation for each specified Schur channel
+
+The matrix classification above needs no operational assumptions. Its inherited
+interpretation, when used, fixes the same matrix in
+$T_C(Y)=(5C)\circ Y$ and the same original state $JCJ^\dagger$.
+
+From a normalized sparse list $C=\sum_\ell z_\ell z_\ell^\dagger$ of maximal
+support $q$, set $K_\ell=\sqrt5\,\operatorname{diag}z_\ell$.
+The diagonal $C_{ii}=1/5$ gives
+$\sum_\ell K_\ell^\dagger K_\ell=I_5$ and
+$\sum_\ell K_\ell YK_\ell^\dagger=(5C)\circ Y$ on every complex matrix.
+For each nonzero slot choose a fixed coordinate isometry
+$V_\ell:\mathbb C^q\to\mathbb C^5$ containing its support, filling smaller
+supports to $q$ coordinates. Put $B_\ell=V_\ell^\dagger K_\ell$ and use
+
+$$
+\operatorname{Enc}(Y)=(B_\ell YB_\ell^\dagger)_\ell,\qquad
+\operatorname{Dec}_\ell(Z)=V_\ell ZV_\ell^\dagger.
+\tag{8.1}
+$$
+
+The finite classical flag set is fixed for this $C$. Each decoder is CPTP on
+the entire $M_q$ block because $V_\ell^\dagger V_\ell=I_q$, and the encoder
+is trace preserving since
+$\sum_\ell B_\ell^\dagger B_\ell=I_5$.
+Sandwiching is completely positive under every reference amplification.
+All quantum paths pass through the block, and the composite equals the
+specified $T_C$ on all complex inputs.
+
+For completeness, a competing finite fixed-flag entire-block scheme yields
+a finite Kraus family $K_{fab}=R_{fb}B_{fa}$ of rank at most $q$, with
+completeness following from decoder and encoder trace preservation.
+Since $T_C(E_{ii})=E_{ii}$, for $r\ne i$ its nonnegative Kraus squares sum
+to zero:
+$\sum_{fab}|K_{fab}(r,i)|^2=0$. Each of these same low-rank Kraus matrices
+is diagonal. Its rank equals the number of nonzero diagonal entries, giving
+a support-at-most-$q$ Gram decomposition of $5C$, and hence of $C$.
+There is no Kraus mixing followed by an unsupported rank assertion.
+
+Similarly, in any finite pure-state decomposition of $JCJ^\dagger$,
+positivity against the orthogonal complement of $\operatorname{ran}J$
+forces every term to be $Jz_\ell$. Its coefficient matrix is a diagonal
+matrix followed by the matching permutation, so its Schmidt rank across
+$H^{(1)}\mid H^{(2)}$ is exactly $|\operatorname{supp}_Bz_\ell|$.
+The converse follows by applying $J$ to a Gram list. These arguments recover
+the inherited C-109 same-matrix identity
+
+$$
+q_{\rm exact}(T_C)=k(C)
+=\operatorname{SN}_{H^{(1)}\mid H^{(2)}}(JCJ^\dagger).
+\tag{8.2}
+$$
+
+This is a per-fixed-$C$ statement about an exact specified channel on all
+inputs. It is not a channel programmed by an unknown source, and not one
+set of $C$-independent flags implementing every different $T_C$.
+For a matched input $JD'J^\dagger$ its local Schur action is
+$D'\mapsto(5C)\circ D'$; in particular it keeps $JI_5J^\dagger/5$ fixed,
+rather than preparing $JCJ^\dagger$ from it.
+
+The capacity source's actual-menu and fixed-erasure conclusions retain their
+C-108/C-111 conditional scope. In particular its scalar dephasing simulation
+of the promised invisible histories is compatible with (8.2): exact
+specified-channel realization and promised-history simulation are distinct
+targets. No history-simulation lower bound follows from this volume.
+No mathematical permutation, diagonal scaling, spectral choice, witness or
+Gram list supplies a physical preparation, available phase control,
+measurement, source copy, independent re-preparation, or reference access.
+Term counts are not physical storage bounds or minimal flag counts.
+There is no empirical machine-learning/general-neural conclusion, BP
+error optimum, unconstrained port-error solution, or wider program completion.
+

@@ -1,0 +1,2 @@
+**Remark 3.7 (Simple zero).** For twists containing the identity and acting transitively, Corollaries 3.5 and 3.6 give the simple-zero statement $\Delta(\varepsilon)=\varepsilon D(\varepsilon)$, $D(0)>0$. Beyond this, Corollary 3.5 identifies $D$ as a forest polynomial, computes $D(0)$ as a tree count, and gives the exact order of vanishing $\gamma$ without any transitivity hypothesis. Stance: the simple-zero statement is repo-derived; the forest and tree-count form is suspected-novel.
+

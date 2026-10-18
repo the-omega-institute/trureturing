@@ -1,0 +1,20 @@
+**Theorem 5.1 (Full-exterior risk and intrinsic posterior jump).** The finite-cylinder-continuous curve of Proposition 2.1 has
+
+$$
+d(P_p)=\begin{cases}1/8&p=1/2,\\0&p\in[0,1]\setminus\{1/2\}.\end{cases}
+\tag{5.1}
+$$
+
+For biased interior $p$, the distribution of its own actual posterior is
+
+$$
+\operatorname{Law}_{P_p}(q_{P_p})=(1-p(1-p))\delta_0+p(1-p)\delta_1,
+\qquad
+\operatorname{Law}_{P_{1/2}}(q_{P_{1/2}})=\tfrac12\delta_0+\tfrac12\delta_{1/2}.
+\tag{5.2}
+$$
+
+The biased posterior distributions do not converge to the fair-law posterior distribution as $p\to1/2$, although $P_p\to P_{1/2}$ weakly on the original visible space.
+
+Proof. Under every biased law Theorem 3.2 gives zero actual squared loss. At fairness Proposition 3.3 gives loss $A_0/4$ for either realized bit, and $\mathbb E A_0=1/2$, giving $1/8$. Endpoints are all-zero. This proves (5.1) through (1.1). At a biased interior parameter $q=X_0$ and $P_p(X_0=1)=\tfrac12\mathbb P_p(S_0\ne S_1)=p(1-p)$, proving (5.2). The biased posterior-law limit is $\tfrac34\delta_0+\tfrac14\delta_1$; its second moment is $1/4$, whereas the fair second moment is $1/8$. These are version-independent statements under each law separately. Cylinder continuity implies weak convergence because continuous functions on the compact finite-alphabet product space are uniformly approximable by finite-coordinate functions. $\square$
+

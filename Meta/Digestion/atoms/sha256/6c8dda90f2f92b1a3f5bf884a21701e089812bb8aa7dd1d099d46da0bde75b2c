@@ -1,0 +1,129 @@
+**定理 C-106.5（C-105 连续混态族的白噪声 PPT 与可分离精确阈值）。** 对所有实数
+$t,\epsilon\in[0,1]$，定义归一化密度算子
+
+$$
+\Gamma_{t,\epsilon}=(1-\epsilon)\Gamma_t+\epsilon I_{25}/25,
+\qquad \epsilon_*(t)=\frac{5t}{1+5t}.
+\tag{C106.13}
+$$
+
+则
+
+$$
+\Gamma_{t,\epsilon}\text{ 可分离}
+\quad\Longleftrightarrow\quad\Gamma_{t,\epsilon}^{\mathsf T_2}\succeq0
+\quad\Longleftrightarrow\quad\epsilon\ge\epsilon_*(t).
+\tag{C106.14}
+$$
+
+(C106.11) 的同一人口与 $R_+$ 见证恰好检测 $\epsilon<\epsilon_*(t)$ 的全部态。
+
+证明。C-105.3 已给 $\Gamma_t$ 的密度性，白噪声凸组合仍为密度算子。
+置
+
+$$
+a=\frac{(1-\epsilon)t}{5},\qquad \delta=\frac\epsilon{25},\qquad
+h=\frac{1-\epsilon}{5};\qquad a,\delta,h\ge0.
+\tag{C106.15}
+$$
+
+匹配基人口均为 $h+\delta$，其余二十格均为 $\delta$；
+四个底面匹配向量之间的非对角元为 $\pm a$，与 $e_2$ 相接者均为零。
+因此选定块和见证读数为
+
+$$
+\begin{aligned}
+\left.\Gamma_{t,\epsilon}^{\mathsf T_2}\right|_{
+\operatorname{span}\{|0,0\rangle,|13,13\rangle\}}
+ &=\begin{pmatrix}\delta&a\\a&\delta\end{pmatrix},\\
+d_0=d_{13}&=h+\delta,\quad x=y=\delta,\\
+p_R(\Gamma_{t,\epsilon})&=h+\delta+a,\quad g=a,\quad
+\operatorname{tr}(W\Gamma_{t,\epsilon})=\delta-a.
+\end{aligned}
+\tag{C106.16}
+$$
+
+故 $\delta<a$ 时 $z_-$ 给严格负二次型，而根号见证也恰好违反。
+其余四角对的部分转置块同样有特征值 $\delta\pm a$。
+完整块谱为五个 $h+\delta$、六个 $\delta+a$、六个 $\delta-a$ 和八个 $\delta$，
+因此 PPT 当且仅当 $\delta\ge a$。因 $1+5t>0$，
+
+$$
+\delta\ge a
+\quad\Longleftrightarrow\quad\epsilon\ge5(1-\epsilon)t
+\quad\Longleftrightarrow\quad\epsilon\ge\frac{5t}{1+5t}.
+\tag{C106.17}
+$$
+
+PPT 的这一计算还不足以证明可分离；下面给出实际的可分离上证书。
+第二份的底面投影记为 $P_{\mathrm b}=I_5-P_2$。由式 (C105.7) 的偏迹计算，
+$\operatorname{Tr}_1|\Psi\rangle\langle\Psi|=P_{\mathrm b}/4$。
+消费可分离锥的秩一加约化矩阵供应，得到
+
+$$
+C_\Psi=|\Psi\rangle\langle\Psi|+I_5\otimes(P_{\mathrm b}/4)
+\quad\text{可分离},\qquad
+\operatorname{tr}C_\Psi=1+5=6,\qquad \omega_\Psi=C_\Psi/6.
+\tag{C106.18}
+$$
+
+这里的供应也可由 Vidal–Tarrach 的纯态 random robustness 精确实例得到。
+$\Psi$ 在 $\mathbb C^5\otimes\operatorname{ran}P_{\mathrm b}\cong\mathbb C^5\otimes\mathbb C^4$
+中有四个 Schmidt 系数 $1/2$。原文
+[quant-ph/9806094](https://arxiv.org/abs/quant-ph/9806094)，印刷页 15 式 (41)、
+附录 B.2 式 (B.29)–(B.33)，采用
+$(|\Psi\rangle\langle\Psi|+sI_{n_1n_2}/(n_1n_2))/(1+s)$，
+且 $s=n_1n_2a_1a_2$。
+代入 $n_1=5,n_2=4,a_1=a_2=1/2$ 得 $s=5$，所以
+$(|\Psi\rangle\langle\Psi|+I_{20}/4)/6$ 明确可分离；
+将第二份四维空间局部等距嵌入 $H$ 即得 $\omega_\Psi$。
+这是对纯态 $\Psi$ 应用该定理，不是对混态 $\Gamma_t$ 直接套用纯态公式。
+
+令两个明确的产品密度态为
+$D_2=P_2\otimes P_2=|e_2\rangle\langle e_2|$、
+$J_2=(I_5/5)\otimes P_2$。当 $\delta\ge a$ 时，有实际凸分解
+
+$$
+\boxed{\quad
+\Gamma_{t,\epsilon}
+=(1-\epsilon)(1-t)S+aD_2+24a\,\omega_\Psi+5aJ_2
+                  +25(\delta-a)\frac{I_{25}}{25}.
+\quad}
+\tag{C106.19}
+$$
+
+验证等式：$24a\omega_\Psi=4a|\Psi\rangle\langle\Psi|+aI_5\otimes P_{\mathrm b}$，
+$5aJ_2=aI_5\otimes P_2$，二者的产品背景合为 $aI_{25}$；
+再加末项成为 $\delta I_{25}$。
+余下 $aD_2+4a|\Psi\rangle\langle\Psi|=(1-\epsilon)tT$，
+因而恢复 (C106.13)。五个权重均非负，而且
+
+$$
+(1-\epsilon)(1-t)+a+24a+5a+25(\delta-a)
+=(1-\epsilon)(1-t)+5a+\epsilon=1.
+\tag{C106.20}
+$$
+
+所有分量都可分离且归一化，故这是可分离上证书，而非 PPT 充分性的推断。
+结合 Peres 必要条件和 (C106.17) 得三重等价。
+
+在边界处 $\delta=a=t/[5(1+5t)]$，末项权重为零，其余权重依次为
+
+$$
+\frac{1-t}{1+5t},\qquad\frac{t}{5(1+5t)},\qquad
+\frac{24t}{5(1+5t)},\qquad\frac{t}{1+5t},
+\tag{C106.21}
+$$
+
+仍为和一的非负数。$t=0$ 时 $\epsilon_*=0$，整条噪声线是
+$(1-\epsilon)S+\epsilon I_{25}/25$，均可分离；$\epsilon=0,t>0$ 恢复 C-105 的非 PPT 态。
+$t=1$ 时阈值为 $5/6$，边界分解为
+$D_2/30+(4/5)\omega_\Psi+J_2/6$，三项权重和为一。
+$\epsilon=1$ 时 $a=0$，(C106.19) 只剩 $I_{25}/25$。
+故全部闭区间端点均已包含。证毕。
+
+(C106.19) 使本族的 PPT 阈值与可分离阈值相同；其已知供应为纯态 robustness 与可分离锥，
+当前结论是 C-105 混态族及实际读口的对应应用，不作原创性主张。
+若只观测到 (C106.16) 中的部分读数而没有整族承诺，违反见证仍能认证纠缠，
+不违反见证却不能借用本族的可分离分解。特别加噪后不沿用无泄漏的固定阈值 $p_R>1/5$。
+

@@ -1,0 +1,171 @@
+## Inherited source contract and notation
+
+**Source convention.** NARC denotes [Native alpha recut memory
+continuation: exact fixed-reference reading](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md).
+A reference prefixed by NARC names a definition, assumption, theorem or
+section in that volume. Equation references of the form (NARC.x.y)
+likewise retain that source's numbering. The local numbered statements
+are Definition 1.1, Lemma 1.2 and Theorem 1.3; local equation tags use
+NARZ. The parameters below are the same $q,k,a,b,\lambda,z,Z$ and
+$e$ as in NARC, without a change of source offsets or indices.
+
+**Native source and causal entry (NARC Assumptions 5.1 and 9.1).**
+The sources are finite nonempty ordered trees with distinct leaf labels
+$\alpha,\beta$ and literal pairing. The homomorphic substitution and
+its iterates are
+
+$$
+\begin{aligned}
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_n&=\rho^n\alpha,&T_0&=\alpha,&T_1&=\beta,\\
+T_{n+2}&=\langle T_{n+1},T_n\rangle.&&&
+\end{aligned}
+$$
+
+Fix public integers $q\ge1$, $k\ge0$ and a public lag convention
+$\lambda\in\{0,1\}$. Every integer pair $0\le a,b<q$ is an
+allowed original $X_{a,b}=\langle T_a,T_{q+b}\rangle$; independence
+here imposes no probability distribution. The original offsets stay
+$0,q$. The complete original empty-cut row is genuinely acquired.
+The supplied clock $c(T_n)=n$ parses acquired literals, so that this
+row supplies $a=c(T_a)$ and $b=c(T_{q+b})-q$. A deterministic
+encoder exports only $e(a,b)$, with exactly $q$ attained labels,
+before the future cut and lag are known. It discards the row, the
+coordinates and every other source-bearing field. The finite encoder
+table may be public and common to every source; a source-dependent
+table selection or retained origin is not an extra channel.
+
+The same fixed original undergoes its own $\ell\ge\lambda$
+substitutions, with integer lag $\ell$, giving
+$Y(a,b,\ell)=\langle T_{a+\ell},T_{q+b+\ell}\rangle$.
+The later complete row is genuinely acquired at one of the two
+singleton cuts. Write $V=R$ for visible right slot and cut $\{L\}$,
+and $V=L$ for visible left slot and cut $\{R\}$. A complete row
+retains every exterior label and bracket, the reached hole and its
+whole singleton partition; it supplies no hidden-visible comparison.
+The decoder receives this row, $V$ and the exported label and returns
+$\ell$. Its deterministic next request or halt may depend on that
+entry, public controls and earlier actual replies. Each query is a
+fully materialized finite word in $L,R$ at the original root of this
+same stationary current tree. No update occurs during capture or
+reading. Each submission, including a repeat or the empty word, costs
+one chronological call. Local computation must terminate on every
+promised input. There is no age, subtree, epoch, old-source or
+hidden-visible comparison oracle, fixed finite Moore restriction or
+uniform address bound in this contract.
+
+**Entire indexed fibers (NARC Theorem 5.2).** For an attained label
+$\gamma$, write $C_\gamma=e^{-1}(\gamma)$ and $d(a,b)=a-b$.
+For integer normalized acquired clock $z\ge\lambda$, the entire
+rows and their exact compatible fibers in (NARC.5.3)--(NARC.5.6) are
+
+$$
+\begin{aligned}
+\mathcal R^R_z&=
+ \bigl(\langle\square_L,T_{q+z}\rangle,\{\{L\}\}\bigr),\\
+F_R(C_\gamma,z,\lambda)&=\{(a,b)\in C_\gamma:b\le z-\lambda\},&
+n_R(a,b)&=z+a-b,&\ell_R(a,b)&=z-b,\\
+\mathcal R^L_z&=
+ \bigl(\langle T_z,\square_R\rangle,\{\{R\}\}\bigr),\\
+F_L(C_\gamma,z,\lambda)&=\{(a,b)\in C_\gamma:a\le z-\lambda\},&
+n_L(a,b)&=q+z-a+b,&\ell_L(a,b)&=z-a.
+\end{aligned}
+$$
+
+The target coordinate is $b$ on right visibility and $a$ on left
+visibility. A terminal common target $v$ returns lag $z-v$.
+Every compatible index is realized by its own fixed original and its
+indicated legal continuation, with equality of the entire acquired
+row. Histories are not spliced. After an adaptive transcript the
+support contains every index producing all preceding actual replies,
+including the actual original. Equal ages or repeated target values
+do not identify indices. Root and visible-prefixed requests have
+constant replies on this whole input fiber; hidden-prefixed requests
+have exactly the relative replies on $T_{n_R}$ or $T_{n_L}$.
+Zero calls suffice exactly when the target is constant on the
+nonempty input fiber.
+
+**Actual replies (NARC Definition 5.3).** Absence is $\bot$ and
+branch is $\mathsf b$. A constructor Read reports the label or
+branch at the end of an existing address, and absence if a nonempty
+suffix remains at a leaf. Every finite relative word has one of the
+following supplied response functions on nonnegative integer ages,
+as in (NARC.5.7):
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t\ (t\ge2)&n<t&n=t&n=t+1&n>t+1\\
+S_t\ (t\ge2)&n<t&\text{never}&n=t&n>t.
+\end{array}
+$$
+
+The $S_t$ reply is obtained from the actual $P_t$ reply by
+$\bot\mapsto\bot$, $\alpha\mapsto\beta$ and
+$\beta,\mathsf b\mapsto\mathsf b$. There is no native $P_1$.
+The literal representatives and the paid hidden-slot prefixes are
+those specified in Definition 1.1 below.
+
+**Finite certificates (NARC Definition 10.1 and Theorem 10.2).**
+An indexed state $((n_i,v_i))_{i\in I}$ has finite index set $I$
+and integer ages $n_i\ge0$. Let $I_{A,r}$ retain exactly every
+index with actual reply $r$ to $A$, keeping its age and target.
+Use the inherited menu and predicate (NARC.10.1)--(NARC.10.2):
+
+$$
+\begin{aligned}
+\mathcal M_q&=\{E,P_2,\ldots,P_{3q+1}\},\\
+D_0(I)&\ \Longleftrightarrow\ \text{the target is constant on }I,\\
+D_{j+1}(I)&\ \Longleftrightarrow\
+ \text{the target is constant on }I\quad\text{or}\quad
+ \exists A\in\mathcal M_q\ \forall r\in\{\bot,\alpha,\beta,\mathsf b\},
+ \ D_j(I_{A,r}).
+\end{aligned}
+$$
+
+Empty states are vacuous. A constant-target state halts; the other
+alternative supplies an actual request with its adaptive reply
+subtrees. This is the inherited depth-at-most-$j$ target-separation
+predicate, with actual reply partitions and all indices retained.
+Put $Z=q+1$. The full reference states of (NARC.10.3) and complete
+boundary states of (NARC.10.4) are
+
+$$
+\begin{aligned}
+S_R(\gamma)&=\bigl((Z+a-b,b)\bigr)_{(a,b)\in C_\gamma},\\
+S_L(\gamma)&=\bigl((q+Z-a+b,a)\bigr)_{(a,b)\in C_\gamma},\\
+S_0(z)&=\bigl((z+a-b,b)\bigr)_
+ {\substack{(a,b)\in C_{e(0,z)}\\b\le z}},\qquad 0\le z<q.
+\end{aligned}
+$$
+
+Both reference states are whole fibers at acquired clock $Z$; their
+ages are at least two. Each $S_0(z)$ is the entire right-visible
+fiber at $(e(0,z),\mathcal R^R_z)$ for $\lambda=0$, retaining its
+positive-age alternatives as well as its age-zero origin.
+NARC Theorem 10.2 identifies both-cut service at every positive lag with
+$D_k$ on all full reference states, and both-cut service at every
+nonnegative lag with those tests plus all complete boundary tests.
+Its finite menu bounds certificate queries, not runtime addresses
+at unbounded lags. The collision obstruction in NARC Theorem 9.2
+supplies injectivity of $d$ on a readable class.
+
+For an arbitrary integer $s$, the inherited algebraic partition
+(NARC.10.5) is
+
+$$
+\widehat P_s(n)=
+\begin{cases}
+\bot,&n<s,\\
+\alpha,&n=s,\\
+\beta,&n=s+1,\\
+\mathsf b,&n\ge s+2.
+\end{cases}
+$$
+
+It is a partition to be simulated with actual native requests,
+not an additional query. All parameter substitutions below use
+these same source states, targets and histories.
+

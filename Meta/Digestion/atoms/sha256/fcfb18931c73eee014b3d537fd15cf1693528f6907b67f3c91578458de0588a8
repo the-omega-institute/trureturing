@@ -1,0 +1,16 @@
+**Definition 5.3 (arithmetic reachable-boundary predicate).** Let
+$\mathcal B_{\eta,e}(\mathbf n,J;\boldsymbol\delta)$ be the formula
+(UDB.12)–(UDB.13) with final $P_{v_{m-1}}(x_{m-1},e,d_{m-1})$ in place
+of its halt endpoint. Its meaning is finite arrival at state $e$, epoch
+$J$, before any earlier halt, or first arrival at a halt if $e$ is one.
+The proof of Theorem 3.4 applies without requiring the endpoint to halt:
+a finite actual prefix supplies cuts, and a guarded concatenation
+supplies that prefix. Thus $\mathcal B$ is effective Presburger and exact.
+For fixed $v$, put
+
+$$
+\mathcal V_{\eta,v}(\mathbf n,j;\boldsymbol\delta)
+=\bigwedge_{e\in E_R}\operatorname{Reply}_{\eta,v(e)}(\mathbf n,j,\delta_e).
+\tag{UDB.24}
+$$
+

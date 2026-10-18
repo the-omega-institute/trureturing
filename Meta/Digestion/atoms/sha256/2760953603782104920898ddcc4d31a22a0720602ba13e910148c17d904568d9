@@ -1,0 +1,18 @@
+## 27. The entire acquired graph with arbitrary retained literals and cuts
+
+The result in §§27–31 is a total decision for the graph input (ARH.8.5),
+with every finite mixed literal history retained and with an arbitrary
+finite prefix-free original target cut. There is no target-eligibility
+test. Its additional ingredient is a classification of comparisons
+between holes whose underlying positions in the graph parameter are
+nested. Comparisons at incomparable positions use the existing
+synchronous finite-prefix decision. These two uses are joined on the
+entire original source fiber, including the concrete exterior.
+
+The symbols and graph input of §§27–32 are local to those sections.
+Section 26 concerns the different old cut $P=\{L,RL,RR\}$ and record
+$(1,L,0,R,=)$ of (CS.26.1), whose fiber is its exchanged atomic orbit.
+Here the old cut is $P=\{L,R\}$ and the record is $(0,L,1,R,=)$:
+the parameter $y$ ranges over every finite tree consistent with $H_0$.
+Neither section's source promise is substituted for the other's.
+

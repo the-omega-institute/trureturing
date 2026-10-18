@@ -1,0 +1,58 @@
+## 5. The epsilon witness and the equality
+
+Proof of Theorem 1.4. Proposition 2.5 already proves density existence and $d(Q)\le c_\star$ for every permitted law.
+
+For each $L\ge2$, choose one maximizing vector $\mu_L^\star$ on all of $B_L$, whose existence is [Growth], Theorem 3.2. Let $u_L$ be the uniform probability vector on $B_L$ and set
+
+$$
+\mu_L=(1-L^{-2})\mu_L^\star+L^{-2}u_L.
+\tag{5.1}
+$$
+
+This is a normalized strictly positive payload law. Concavity and nonnegativity give
+
+$$
+\Phi_L(\mu_L)\ge(1-L^{-2})\kappa_L.
+\tag{5.2}
+$$
+
+Construct $S^{(L)}$ by Definition 3.1 with this payload law. Lemmas 3.2–3.3 give an actual visible order at most $m_L=2(L+2)^2$ and
+
+$$
+d(S^{(L)})\ge
+\frac{L(1-L^{-2})\kappa_L}{(L+2)^2}
+=:g_L.
+\tag{5.3}
+$$
+
+The owned limit $\kappa_L/L\to c_\star$ and
+
+$$
+g_L=
+\frac{\kappa_L}{L}(1-L^{-2})\frac{L^2}{(L+2)^2}
+\longrightarrow c_\star
+\tag{5.4}
+$$
+
+show that, for a given $\epsilon>0$, there exists $L\ge2$ with $g_L>c_\star-\epsilon/2$. Choose one such $L$ and fix the maximizing vector, payload law, cells, marked process and finite visible order $m=m_L$.
+
+Use Lemma 4.2 for this $S=S^{(L)}$ and the owned reference $R$. Lemma 4.3 supplies a positive $\delta$ with
+
+$$
+D_m(Q^\delta)>D_m(S)-\epsilon/2.
+\tag{5.5}
+$$
+
+For a definite selection, $\delta$ may be $2^{-j}$ for the least integer $j\ge1$ satisfying (5.5); the proved limit ensures this set is nonempty. Equations (4.2) and (2.1) are the actual normalized producer for this choice, on every original legal context and every word length.
+
+The single permitted law $Q=Q^\delta$ consequently satisfies
+
+$$
+d(Q)>d(S)-\epsilon/2\ge g_L-\epsilon/2>c_\star-\epsilon.
+\tag{5.6}
+$$
+
+All parameters are fixed independently of $n$. The auxiliary marked law is used only to establish the lower bound; the witness has full support on the original shift. The upper bound proved for every permitted law and the arbitrary $\epsilon$ prove (1.4). The all-length remainder (2.8) proves the same limits along $n=3N$.
+
+Every observation remains an open path, and every arbitrary cut retains its transitions in (2.1). The guards protect payload endpoints only in the auxiliary construction; they impose no extra word restriction on the final law. Allzero, endpoint-one and seam cylinders of that law are positive by Lemma 4.2. $\square$
+

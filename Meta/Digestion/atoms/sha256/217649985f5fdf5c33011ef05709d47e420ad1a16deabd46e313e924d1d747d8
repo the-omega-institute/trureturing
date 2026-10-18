@@ -1,0 +1,9 @@
+**Definition 2.3 (disclosure segment and matching criterion).** Let $d(h)$
+be the actual number of native rows from $h$ through the final MR of the
+LastBank sweep in Lemma 2.2, and let $R(h)$ be their ordered native row
+records. Matching means equal record sequence, including actual control
+identities and the immediate latch4/latch6 values at each row. For another
+$k\in\mathcal H_{\mathrm{mode}}$, the comparison can use its first $d(h)$
+non-IN rows whenever they exist. It is not necessary to posit a common
+bound on $d$, equal earlier Ready prefixes or equal earlier input lengths.
+

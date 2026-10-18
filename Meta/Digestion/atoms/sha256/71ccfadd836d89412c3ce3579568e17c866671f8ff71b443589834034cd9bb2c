@@ -1,0 +1,31 @@
+**推论 199.4（精确成员判据与原始截断比较）。** 对任意有符号 $q$，
+$$
+q\in E_N
+\quad\Longleftrightarrow\quad
+F_q(b)\le\max\{1,\rho_N(b)\}
+\quad\text{对所有 }b\in H_N.
+\tag{199.8}
+$$
+因而
+$$
+D_O(1)\subseteq E_N
+\quad\Longleftrightarrow\quad
+\rho_O(b)\le\max\{1,\rho_N(b)\}
+\quad\text{对所有 }b\in H_N.
+\tag{199.9}
+$$
+这里的左侧是完整的证书存在性断言，右侧是原始完整目录的 clipped comparison，
+所以 (199.9) 是等价式而不是实际包含性的证明。
+
+**证明。** 若 $q\in E_N$ 且 $b\in H_N$，取达到 $\rho_N(b)$ 的完整配置；若其质量
+小于一，则在零列 $R$ 上补足到质量一。定理 199.3 的互斥性给出
+$F_q(b)\le\max\{1,\rho_N(b)\}$。反之，若该点态界成立而 $q\notin E_N$，
+(II) 给出 $F_q(b)>M\ge1$ 且 $\rho_N(b)\le M$，从而
+$F_q(b)>\max\{1,\rho_N(b)\}$，矛盾。
+
+令 $q=Q(y)$ 并对所有 $y\ge0$、$\Delta_O(y)\le1$ 取上确界。完整目录的
+有限锥对偶（定理 166.2）给出该上确界为 $\rho_O(b)$，包括无穷值，故得到
+(199.9)。饱和约化只能在这个不受限制的线性替代完成以后使用：定理 198.1 的
+输入、输出饱和保持证书的存在性，但此处没有把饱和误作凸约束或加法，也没有由此
+声称 (199.9) 的左侧已经成立。$\square$
+

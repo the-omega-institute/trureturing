@@ -1,0 +1,29 @@
+**Convention 1.3 (Actual posteriors and supplied response).** Put
+
+$$
+\begin{aligned}
+\mathcal E_i&=\sigma(X_j:j\ne i),&q_i&=\mathbb E_P[X_i\mid\mathcal E_i],\\
+\mathcal F_{r,i}&=\sigma(X_{i-r},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+r}),
+&q_{r,i}&=\mathbb E_P[X_i\mid\mathcal F_{r,i}],\\
+\ell_i&=(X_i-q_i)^2,&D_r(P)&=\mathbb E_P[(X_0-q_{r,0})^2].
+\end{aligned}
+$$
+
+At $r=0$ the field is trivial. [Stationary, §2][S] owns
+$D_r(P)\downarrow d(P)=\mathbb E_P\ell_0=\lim_n\Phi_n(P_n)/n\le c_\star$.
+Every conditional mean is a $[0,1]$ version under its own actual law.
+Positive finite fibers use their actual conditional probabilities; null
+fibers have arbitrary versions and zero weighted contribution. A retained
+neighbor equal to one forces a finite posterior to zero. A radius-zero
+posterior is the prior mean and has no such forcing information.
+
+For $C=[1,L]$, $L\ge1$, let $\mathcal H_C=\sigma(X_j:j\notin C)$,
+$f_C=f(X_C)$ and $F=\|f\|_\infty$ for $f\in\mathbb R^{B_L}$.
+[Conditional Response, Theorem
+3.1][R] consumes the actual hypothesis $\mathbb E_P[f_C\mid\mathcal H_C]=0$.
+Under same-law attainment it proves absolute convergence and
+$S_P(f)=\sum_{i\in\mathbb Z}\mathbb E_P[f_C\ell_i]=0$.
+Its §3 matrix bridge supplies the sufficient condition
+$K_f:=\sum_{w\in B_L}f(w)M_w=0$; no necessity is supplied by that bridge.
+The exact kernel below supplies the theorem's full direction hypothesis.
+

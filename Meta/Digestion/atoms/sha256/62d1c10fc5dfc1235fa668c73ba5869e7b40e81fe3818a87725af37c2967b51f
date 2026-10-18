@@ -1,0 +1,43 @@
+**命题 15.8（活动来源的方向系数与平稳相关）。**
+
+对活动权 (w_O,w_L,w_T,w_R,w_J)=(1,a,b,c,ac)，a,b,c>0，原生高到低矩阵及其系数是
+
+$$
+K_{\rm high}=\begin{pmatrix}1+b+c&a(1+c)\\1+b&a\end{pmatrix},\quad
+\operatorname{tr}K=1+a+b+c,\quad \det K=-abc,
+\quad\tau_{\rm high}=\frac{\sqrt{(1+b)(1+c)}-\sqrt{1+b+c}}
+{\sqrt{(1+b)(1+c)}+\sqrt{1+b+c}}.
+$$
+
+它不依赖 a。反向低到高以旧守卫检查 gx=0、输出 y，矩阵 K_low=((1+b+a,c(1+a));(1+b,c))，同迹同 det，而 τ_low 将上式 c 换为 a，不依赖 c。同谱不意味同一投影收缩界。方向交换是完整来源及边界的重标识，不是原生同步前缀回复的同构。上述二阶精确推导是 Birkhoff 正锥收缩理论的成熟特例，无新颖性主张。
+
+对每个固定 λ>0，完整位词权为 λ^{#ones}，故窗权 (1,λ,λ,λ,λ²)。单个位守卫矩阵 H_λ=((1,λ);(1,0)) 满足 H_λ³=K_high，不能先把每行概率化。令
+
+$$
+D=\sqrt{1+4\lambda},\quad\Lambda=(1+D)/2,\quad
+\eta=(\Lambda-1)/\Lambda\in(0,1),\quad
+\lambda=\eta/(1-\eta)^2,
+\quad P_\eta=\begin{pmatrix}1-\eta&\eta\\1&0\end{pmatrix},\quad
+\pi=(1,\eta)/(1+\eta),\quad \mu=\eta/(1+\eta).
+$$
+
+P_η 是用 v=(Λ,1) 做 Perron 共轭 H_λ=Λ diag(v)P_η diag(v)⁻¹ 后的归一化平稳链，附相应端因子；并非把原始 K 各行独立归一化。固定合法端权的有限 Gibbs 律在双侧体相距离趋∞时得到此链。
+
+在此平稳链，中心化二值函数 X_i-μ 张成唯一非平凡特征方向，其特征值 -η。因此对每个整数 d≥0，
+
+$$
+\operatorname{Cov}(X_0,X_d)=\frac\eta{(1+\eta)^2}(-\eta)^d.
+$$
+
+三个相邻位点的均值 X=Y=Z=μ；低、高、中顺序的协方差矩阵是
+
+$$
+\frac\eta{(1+\eta)^2}
+\begin{pmatrix}1&\eta^2&-\eta\\\eta^2&1&-\eta\\-\eta&-\eta&1\end{pmatrix}.
+$$
+
+五态概率仍由 命题 15.6 的 p_∞(η) 式给出。直接相乘得 p_Op_J=p_Lp_R，即给定中位为 0 后端点条件独立（条件质量 1-μ>0）；但无条件 Cov(x,y)=η³/(1+η)²>0。三个均值相同不意味着协方差或量子响应各向同性。
+
+
+证明。将五个活动权代入定义 15.1 的守卫矩阵，直接计算迹和行列式；将两种方向的 $ad,bc$ 代入定理 15.4 证明中的系数式，得到不同的方向系数。逐项检查 $H_\lambda v=\Lambda v$ 和 $\pi P_\eta=\pi$，得到 Perron 共轭。中心化占位函数是特征值 $-\eta$ 的方向，迭代后取平稳内积即为协方差；距离二和一给矩阵的端点项和中端项。三位模式概率由同一条平稳链的 $\pi_iP_{ij}P_{jk}$ 给出，所以条件独立与无条件正关联同时成立。
+

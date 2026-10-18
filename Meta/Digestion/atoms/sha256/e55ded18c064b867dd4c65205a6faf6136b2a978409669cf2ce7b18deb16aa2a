@@ -1,0 +1,19 @@
+**命题 C-133.3（可分离与零假设因子混合的严格区别）。** 对 $n\ge2$，
+(C133.3) 的 $\Omega_*$ 虽为可分离、置换不变且有相同零假设边缘，
+却不属于 $\mathcal S_n(\mathcal F)$。$n=1$ 时它就是 $\sigma$，全部相应单输入域及前沿重合。
+
+证明。$0<c<1$，故
+$\operatorname{Tr}(P^{\otimes n}\Omega_*)=c>c^n$。
+C-132.2 已给 $\mathcal S_n(\mathcal F)$ 上的同一重叠至多 $c^n$，矛盾。
+可分离分解的每个因子允许为有资源的 $P$；零假设因子乘积混合则禁止这样的分支。
+当 $n=1$，(C133.3) 直接化为 $\sigma$，且单份边缘就是态本身。证毕。
+
+C-116.2 与 C-121.5 已在各自底面／历史任务中给出共同标签障碍；
+这里 (C133.3) 把该机制接到固定物理 $\mathcal B$、八射线源、同一实际 $F_0$ 及尖锐逆向见证，
+不是从那些任务的统计界偷换联合零假设。
+独立通过概率与全好／全坏经典关联的成熟区分亦见 Zhu–Hayashi，
+*Efficient Verification of Pure Quantum States in the Adversarial Scenario*，
+[arXiv:1909.01900v2](https://arxiv.org/html/1909.01900v2)，式 (2)–(3) 及式 (4)–(5) 前的
+“Adversarial scenario” 段，[Phys. Rev. Lett. 123, 260504](https://doi.org/10.1103/PhysRevLett.123.260504)。
+该文测试若干系统后条件认证一个未测系统；这里是对已供应全部输入的宣告检验，二者任务不同。
+

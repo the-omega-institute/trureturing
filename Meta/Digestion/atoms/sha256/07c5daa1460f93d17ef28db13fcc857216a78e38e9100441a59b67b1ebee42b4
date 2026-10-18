@@ -1,0 +1,61 @@
+### 99.3. Complete-norm complementarity and strict ranks
+
+The exact restricted norm on the original intersections \((2,1,1)\) has dual
+\[
+t=\min_{\tau,Z}
+\{\tau: Z\succeq0,\ Z\succeq2L_S,\ Z_{ff}\preceq\tau I_f\}.\tag{5}
+\]
+Indeed a multiplier \(Z\succeq0\) for \(W\preceq\rho\) requires \(Z\succeq2L_S\) when maximizing over \(W\succeq0\). Maximizing over trace-one block-diagonal \(\rho\) then gives \(\max_f\lambda_{\max}(Z_{ff})\). Both sides are strictly feasible: take \(\rho=I_4/4,W=\rho/2\), and take \(Z=\mu I_4,\tau>\mu>2\|L_S\|_{\mathrm{op}}\). The primal is compact, and dual sublevel sets are bounded because PSD matrices with bounded diagonal blocks have bounded entries. Finite-dimensional semidefinite strong duality and attainment apply.
+
+For every optimal primal pair and optimal dual \(Z\), the complementary products are
+\[
+(Z-2L_S)W_S=0,\qquad Z(\rho_S-W_S)=0,\qquad
+(tI_f-Z_{ff})(\rho_S)_{ff}=0.\tag{6}
+\]
+Their trace gaps are nonnegative and sum to zero; zero trace product of two PSD matrices gives zero matrix product. Thus
+\[
+Z\rho_S=2L_SW_S,\qquad
+t(\rho_S)_{ff}=2(L_SW_S)_{ff},\qquad
+EC^*=\tfrac t2\rho_F.\tag{7}
+\]
+
+**Theorem 99.2.** For every common normer, \(\rho_S\succ0\), \(W_S\) and \(\rho_S-W_S\) both have rank two, and \(L_S\) has inertia \((2,2)\). In (3), \(C,E\) are invertible and \(EC^*=(t/2)\rho_F\succ0\).
+
+**Proof.** PSD block matrices give
+\(\operatorname{range}C\subseteq\operatorname{range}A
+\subseteq\operatorname{range}\rho_F\).
+Invertibility of \(C\) makes \(A,\rho_F\) positive definite. Applying the same argument to \(\rho_S-W_S\), whose cross block is \(-C\), gives
+\[
+B:=\rho_F-A\succ0.\tag{8}
+\]
+The nonzero columns of \(C\) also force \(p_3,p_4>0\), so \(\rho_S\succ0\). Equation (7) makes \(E\) invertible.
+
+An invertible congruence reduces \(\begin{pmatrix}0&E\\E^*&L_{\mathcal J}\end{pmatrix}\) first to cross block \(I_2\), then removes \(L_{\mathcal J}\) by replacing its first variable \(u\) with \(u-\tfrac12L_{\mathcal J}v\). The resulting form \(2\operatorname{Re}(u^*v)\) has inertia \((2,2)\).
+
+Put \(M=\rho_S^{1/2}L_S\rho_S^{1/2}\). It is nonsingular of the same inertia. The unique maximizer of \(2\operatorname{Tr}(MX)\) over \(0\preceq X\preceq I\) is \(P_+(M)\). In an eigenbasis the strict signs force diagonal entries 1 or 0, and positivity of \(X,I-X\) then forces the corresponding off-diagonal entries. Every normer maximizes at its own fixed density, hence
+\[
+W_S=\rho_S^{1/2}P_+(M)\rho_S^{1/2},\qquad
+\operatorname{rank}W_S=\operatorname{rank}(\rho_S-W_S)=2.\tag{9}
+\]
+\(\square\)
+
+The rank-two Schur complements and fixed-density spectral formula give the additional identities
+\[
+\begin{aligned}
+D&=C^*A^{-1}C,\\
+\operatorname{diag}(p_3,p_4)-D&=C^*B^{-1}C,\\
+W_SL_S(\rho_S-W_S)&=0.
+\end{aligned}\tag{10}
+\]
+The last line follows from \(P_+(M)M(I-P_+(M))=0\); it does not assert \(W_S(\rho_S-W_S)=0\).
+
+Factoring the two rank-two PSD matrices in (10), canceling their full-rank factors, and multiplying on the left by \(A\) and right by \(B\), gives
+\[
+-AEC^*+CE^*B-CL_{\mathcal J}C^*=0.
+\]
+Equation (7) and its adjoint therefore yield
+\[
+CL_{\mathcal J}C^*=\tfrac t2(B^2-A^2).\tag{11}
+\]
+No commutativity is used: the ordered terms \(-AB\) and \(+AB\) cancel.
+

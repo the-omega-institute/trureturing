@@ -1,0 +1,32 @@
+**Theorem 7.3 (signed winding with finite arithmetic).** The original loop
+promise is essential. With exact $\pi$, if $d_c<\pi/2$, nearest-integer
+rounding of $(\widehat x_n-\widehat x_0)/(2\pi)$ gives the exact signed
+integer $m$. For a finite implementation, let $M$ be a certified integer
+upper bound for $V/6$, so $|m|\leq M$ because $\pi>3$. Let a rational
+$\widetilde\pi$ satisfy $|\widetilde\pi-\pi|\leq\varepsilon_\pi$ and put
+
+$$
+R=2d_c+2M\varepsilon_\pi<\widetilde\pi.
+\tag{7.4}
+$$
+
+Then the nearest integer to
+$(\widehat x_n-\widehat x_0)/(2\widetilde\pi)$ is exactly $m$, and this
+can be checked using rational arithmetic. All negative, zero and positive
+integers in $[-M,M]$ are treated alike.
+
+Proof. The measured endpoint difference differs from $2\pi m$ by at most
+$2d_c$, and from $2\widetilde\pi m$ by at most $R$. The centers
+$2\widetilde\pi j$ of different integer candidates are spaced
+$2\widetilde\pi$ apart. Condition (7.4) puts the measured difference
+strictly inside the true center's nearest-integer cell, excluding ties and
+other integers. The exact-$\pi$ case is the same argument with radius
+$2d_c<\pi$. $\square$
+
+If the promised integer loop is not known, these data give an interval for
+the real endpoint increment, not a proof that it is an integer multiple of
+$2\pi$. Likewise, a band or variation promise cannot supply an unwrapping
+sensor. A fixed $V$ excludes windings with $2\pi|m|>V$; the union of the
+certificates over finite $V$ retains every signed winding, without asserting
+arbitrarily large winding in one fixed resource class.
+

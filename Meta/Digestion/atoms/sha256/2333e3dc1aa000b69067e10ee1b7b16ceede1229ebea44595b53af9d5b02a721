@@ -1,0 +1,34 @@
+**Theorem 3.2 (Complete first-one table).** The possible first-one
+return masses are exactly $\mathcal R$, and their optimal correct
+masses are
+
+| $r$ | $U_I(r)$ | $U_D(r)$ |
+| --- | --- | --- |
+| $0$ | $0$ | $0$ |
+| $2\eta^2$ | $\eta^2$ | $2a\eta^2$ |
+| $\eta/2$ | $a\eta/2$ | $a\eta/2$ |
+| $\eta c$ | $\eta c/2$ | $a^2\eta$ |
+| $\eta$ | $a\eta$ | $a\eta$ |
+
+Proof. In Lemma 2.4 each subtree has at most two nonempty leaves.
+An accepted subset is empty, a single leaf, or the whole subtree.
+Repeats and separators give masses $0,\eta$; adjacency gives
+$0,\eta/2,\eta$; disjoint edges give
+$0,2\eta^2,\eta c,\eta$. This proves coverage of the mass list.
+
+Mass $2\eta^2$ requires the disjoint $11$ leaf. Its type-$I$
+maximum is $\eta^2$. For type $D$, avoiding the target gives
+$2a\eta^2>\eta^2$. Mass $\eta/2$ is an adjacent single leaf,
+with maximum $a\eta/2$ for both types. Mass $\eta c$ is the
+disjoint $10$ leaf; for type $D$, putting the target in the second
+zero edge gives $a^2\eta>a\eta c$, since $a>c$.
+
+Mass $\eta$ requires accepting the whole subtree. For type $I$,
+adjacency gives $a\eta$, exceeding the $\eta/2$ available from
+repetition, separators or disjoint edges. For type $D$, repeats,
+separators and adjacency each give $a\eta$. The disjoint sums are
+also at most that value: when the second edge contains the target,
+$a^2\eta+\eta^2=a\eta$; when it does not,
+$a\eta c+2a\eta^2=a\eta$. The zero row is immediate.
+Section 4 gives paid realizations of every chosen maximum. $\square$
+

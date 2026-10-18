@@ -1,0 +1,18 @@
+### 98.5. The q-adic unit-norm contribution
+
+By certificate normalization, alpha=a/c and beta=b/c are q-integral and beta is a unit; the norm equation also makes alpha a unit. Choose
+
+ t=1, z1=-beta, z2=alpha,
+
+and the root z3 of z3^2=beta^2-15q satisfying z3=beta modulo q. Hensel applies because beta is a unit. This point satisfies all three conics. Direct evaluation gives
+
+ L3=2rs b^2/c,
+ L2=-beta modulo q.
+
+Both are q-units. Since the second Hilbert argument qr has valuation one, its unit factor r does not enter these unit evaluations. Therefore
+
+ (L3,qr)_q=(2rs/c/q)=(2/q)(c/q)=-(c/q),
+ (L2,qr)_q=(-b/c/q)=-(b/q)(c/q).
+
+Here (rs/q)=1 and q=19 modulo 24 gives (2/q)=(-1/q)=-1. Multiplication yields exactly (b/q).
+

@@ -1,0 +1,73 @@
+**Theorem 15.2 (sharp post-acquisition curve).** For each $n\geq1$ and
+every $g,\beta,m$, Definition 15.1 has live mass $q_n=7^{-n}$ and
+probability
+
+$$
+R_n=1-7^{-n}
+\tag{PR.56}
+$$
+
+of acquiring a zero-error calibration of $g$ by its actual failure record.
+Every such calibrated specimen is already at absorbing $f$. On live
+branches $\mu_0=\mu_1=q_n\delta_{\mathrm{live}}$, so $e_0=e_1=0$.
+After this stage require the same one-unit phase-preserving height leg
+$H\to L$ on that same surviving specimen. Among all common exact
+endpoint CP acceptance protocols using the delivered archive and latch,
+the sharp unconditional success probability from the initial live cut is
+
+$$
+P_n=\frac27\,7^{-n}=\frac{2}{7^{n+1}}
+    =\frac27(1-R_n).
+\tag{PR.57}
+$$
+
+The canonical horizontal instrument attains it, with its own full failure
+time/mode law retained. This optimizes continuation after this **fixed
+acquisition stage**, not acquisition design or interventions during that
+stage.
+
+Proof. The credited monotone-leg factors are
+$s_*(H,L)=2/7$ and $s_*(L,H)=1/2$. On a whole zero-phase excursion,
+height returns to $H$ and diagonal probability ratios cancel. Hence its
+no-failure operator on **all five live modes** is $I_5/\sqrt7$.
+Waits give identity. Composition gives
+
+$$
+K_g(6n)=7^{-n/2}I_5,
+\qquad K_g(6n)^\dagger K_g(6n)
+ +\sum_i\int_0^{6n}J_{g,i}^\dagger J_{g,i}\,dt=I_5.
+\tag{PR.58}
+$$
+
+The second identity is the supplier's complete canonical normalization.
+Thus every initial joint specimen/reference state has the actual live
+output $q_n\rho$, not merely the same specimen marginal. In particular
+all original-family phases and signed sectors have live probability $q_n$.
+The live clock/no-failure trace, terminal height, public block count,
+permissions and metadata are common for both $g$. The emitted latch is
+retained separately as in (PR.50).
+
+Rates vanish on waits. Up to endpoints of zero measure, all first failures
+lie respectively in the disjoint sets
+
+$$
+A_0=\bigcup_{j=0}^{n-1}(6j,6j+2),\qquad
+A_1=\bigcup_{j=0}^{n-1}(6j+3,6j+5).
+\tag{PR.59}
+$$
+
+There are no failure atoms at the joins. The actual observed $\tau$
+therefore determines $g$ with zero error on each failed run. Keep its full
+$(\tau,i)$, rather than replacing it by this decoded bit. The calibration
+probability is the total failure mass $R_n$, and the live records give the
+identical measures stated. No dead record calibrates a surviving specimen
+in another run.
+
+Apply Theorem 14.2 at $k=H,l=L$, with $s=2/7$, $q_g=q_n$ and $e_g=0$.
+It bounds every allowed endpoint acceptance by (PR.57), including protocols
+that use the retained unknown specimen quantum mechanically. Append the
+canonical one-unit $H\to L$ instrument on a live branch to attain that
+value. It has exactly the original target on success and an absorbing
+first failure on the other branch. Old failures keep their old event and
+$f$ and never execute this new live leg. $\square$
+

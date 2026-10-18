@@ -1,0 +1,50 @@
+**Proposition 301.3 (A strict off-equality-face comparison for $C$).**
+The rational point
+
+$$
+b=(10392,10392,10392,6350,6350,6350,6207)/16838,
+\qquad e=3880/16838
+\tag{301.2}
+$$
+
+satisfies all 77 inequalities in 301.2, whereas
+$F_C=1609/8419>0$. Thus $C$ adds a relation relative to that precise
+finite comparison system. This point has no full feasible $N$ allocation
+and is neither an attainer nor a separator.
+
+**Proof.** Order and $b_2=b_3$ are immediate. One has
+$E=4609/16838$ and $b_1+E=15001/16838<1$, while
+$R=47/16838$, $F_1=-554/8419$, $F_2=0$, and
+$v_5-33R=0$. Here are exact remaining readings. The ratio pairs are
+listed as $(v_a-B_aR,-v_a-B_aR)$ in increasing $a$:
+
+$$
+\begin{gathered}
+(-1540,-1844)/8419,\quad(-1410,0)/8419,\quad
+(-740,-106)/8419,\\
+(-352,-494)/8419,\quad(-141,-3243)/16838.
+\end{gathered}
+$$
+
+The four-late readings, in lexicographic order of their subsets, are
+$(-1598,-1741,-1741,-1741,-5783)/16838$.
+For a weighted subset of size $k$, order makes its reading at most
+$\sum_{j=3}^{k+2}b_j-(k+21/5)e$; for $k=1,\ldots,5$ these maxima are
+
+$$
+-4892/8419,\quad-3657/8419,\quad-2422/8419,\quad
+-1187/8419,\quad-47/16838.
+$$
+
+The 113 prefix readings in increasing $m$ are
+$(-5787,-4552,-3317,-2082)/8419$ followed by $-1837/16838$.
+The 117 readings are
+$(-5881,-6728,-5105)/8419$ followed by $-2739/16838$.
+The 235 readings are $(-5914,-10172,-9102,0)/8419$.
+The 240 and 241 readings are $-366/8419$ and $-1396/8419$.
+All are nonpositive, exhausting the explicit families. Finally (299.2)
+gives $F_C=1609/8419$. Theorem 299.1 therefore excludes full feasibility
+at this point. The finite comparison proves no exhaustive historical
+nonderivability and no assertion about unrestricted combinations of earlier
+theorems. $\square$
+

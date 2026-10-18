@@ -1,0 +1,7 @@
+**Definition 1.3 (policies).** A rank policy $P$ is any subset of
+$\mathbb N^k$ when discussing logical quantifier exchange. An effective
+Presburger description of $P$ is additionally required when claiming an
+effective Presburger description or decision for the policy-restricted
+support. An arbitrary subset is not declared Presburger merely by calling
+it a policy. No policy supplies the unknown source's ranks to an observer.
+

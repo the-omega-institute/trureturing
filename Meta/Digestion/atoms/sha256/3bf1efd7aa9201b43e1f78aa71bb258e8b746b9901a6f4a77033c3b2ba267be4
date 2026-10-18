@@ -1,0 +1,2 @@
+**约定 9.1（保留而未完成的 carrier）。** $\mathcal R$ 仍是 UAS 定义 1.4 的全部实际物理前缀：原始 boot/private acquisition、无效 preparation、错误 bootstrap/raw table、非规范输入、未结束 unary length、frame-fault、部分 loans/copies/banks、暂时无效源和最终 halt 均不删除。本文正定理在 $\mathcal C$ 的所列原始行域上成立，不给整个 $\mathcal R$ 一个输入逆或四视图 $Q$ 等价。无效源覆盖**位于规范调用内**并不因此被删；无效初始化与离开规范前缀的 raw 输入则没有这些正定理的前提。原始合法性检查及所有实际 enabled raw branches 保留。
+

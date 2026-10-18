@@ -1,0 +1,20 @@
+## 把“射线被遮挡”写成 Auric FIB ATOM 的第二投影
+
+先把项目状态边界说清楚。当前资料已经把 Auric FIB ATOM 推进到三层：
+
+1. **静态金字塔层**：五个合法模式、三维可见投影、唯一一维隐藏纤维，以及用第二个读数闭合该纤维。
+2. **动态未来层**：不同历史是否具有同一个完整未来律，可以由 phase 与 Fibonacci 后验计数决定。
+3. **响应与遮挡层**：两个不同阶段的读出联合起来可以确定发射参数；单独一个读出通常不够。
+
+仓内对应的材料包括：
+
+- [FIB-ATOM 基础公式与金字塔关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+- [动态未来商与未来闭合记忆](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+- [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)
+
+GitHub 当前的开放工作也已经明确把 AURIC FIB 金字塔与 escape dynamics、thermodynamic action、acquired prediction fibres 和 typed bridge 联系起来；这些是正在推进的研究方向，不能直接当作已经合并并经过 Lean 验证的物理定律。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+下面把“射线逃逸、射线被遮挡、信息是否能够恢复”统一为一个数学结构。
+
+---
+

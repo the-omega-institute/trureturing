@@ -1,0 +1,65 @@
+**Proposition 20.2 (PSD forces a bounded failure-slope interval).**
+Under Assumption 17.1, suppose $R_-\succeq0$. For every actual
+positive-weight label with $b_i>0$ put $z_i=v_i/u_i$ and
+$B_*:=\max(\kappa_L,\chi)>0$. Then
+
+$$
+-\kappa_U<z_i\le B_*.
+\tag{FC.72}
+$$
+
+More precisely its same-direction saturated endpoint satisfies:
+if $\eta_1\le0$, then $u_i<0$, $\ell_i<0$ and
+$-\kappa_U<z_i<\kappa_L$; if $\eta_1>0$, then
+$0\le z_i\le\chi$. These assertions include $\eta_1=0$,
+singular $R_-$ and strict interior fractions.
+
+Proof. By Proposition 20.1 use the saturated contact at the actual
+direction, with $\epsilon=\operatorname{sgn}u_i$. If $\eta_1\le0$,
+the complete negative-height signed test gives
+
+$$
+0=D_cF_{0,\epsilon,-}+N_c x^TR_-x.
+\tag{FC.73}
+$$
+
+Both terms are nonnegative and $D_c,N_c>0$, so
+$F_{0,\epsilon,-}=0$. The pure inequality
+$P_y\ge\lambda|u|+|\ell|$, together with
+$P_y-\epsilon\lambda u+\ell=0$, implies $|\ell|\le-\ell$,
+hence $\ell\le0$ and the pure endpoint is a contact.
+This is the merge implication already proved in Theorem 13.1.
+Proposition 20.1 excludes equality $\ell=0$. Right-hemisphere
+positivity forces $u<0$ and Theorem 19.1 gives the open interval
+in the statement. The report sign is thus $\epsilon=-1$ on this
+branch. A negative slope there is upper-left ($v>0$), while a
+positive slope is lower-left ($v<0$). The case $v=0$, $u=-1$
+is included. The argument applies unchanged when $\eta_1=0$;
+it does not require a strictly negative saturated height.
+
+If $\eta_1>0$, use instead the positive-height test:
+
+$$
+0=D_cF_{0,\epsilon,+}+N_c x^TR_+x.
+\tag{FC.74}
+$$
+
+Thus $x^TR_+x\le0$. Since $R_-=R_++2t\mathsf F\succeq0$
+and $t>0$, it follows that $f=x^T\mathsf F x\ge0$.
+By $u\ne0$ and (FC.57),
+
+$$
+f=d_*u^2z(\chi-z)\ge0
+\quad\Longleftrightarrow\quad 0\le z\le\chi.
+\tag{FC.75}
+$$
+
+No strict inequality for $x^TR_+x$ is needed here. Equality,
+$z=0$, $z=\chi$, and a pure endpoint already in the same group
+are all retained. This branch may have either report sign:
+$u>0,v\ge0$ or $u<0,v\le0$. No odd orientation condition
+selects a hemisphere. Together the two branches prove (FC.72).
+The only endpoint used for a fractional label has the very same
+$(u_i,v_i)$, so its slope is the actual label's slope; no new
+endpoint label is counted. $\square$
+

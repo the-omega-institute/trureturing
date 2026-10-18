@@ -1,0 +1,101 @@
+**Theorem 10.4 (exclusion of cut list $`(0,1,7,8)`$).**
+No nineteen-state competitor in the original model has complete
+common-support cut list $`(0,1,7,8)`$.
+
+**Proof.** Suppose it did. Its long pool is $`B=(1,7)`$.
+Put $`E=E_B`$, $`D=D_B=E+1`$. Depths two through six are
+internal and noncommon. By Lemma 7.3, $`A\le4`$.
+Define $`\kappa=1`$ when $`A=4`$ and $`\kappa=0`$ when $`A\le3`$.
+The credited depth-two axis fork gives $`e_3\ge1+\kappa`$.
+The axis and non-axis bounds therefore give
+
+$$
+D\le5+\kappa+\min(\ell,r),\qquad
+E\ge5+\kappa,\qquad
+E\ge\ell+r+3+\kappa.
+\tag{45}
+$$
+
+The last estimate retains the depth-two, depth-three and depth-six
+excesses outside $`\ell+r`$. In full, the excess decomposition is
+
+$$
+E=\ell+r+e_2+e_3+e_6+e_{\mathsf M}+e_{\mathsf N}.
+\tag{46}
+$$
+
+Indeed the non-axis cells of depth four are
+$`\mathsf a,\mathsf M,\mathsf c`$, and those of depth five are
+$`\mathsf b,\mathsf N,\mathsf d`$; all axis excesses vanish.
+
+Write $`s=\min(\ell,r)`$, $`t=\max(\ell,r)`$.
+If $`s=0`$, the first two bounds in (45) contradict
+$`D=E+1`$. If $`s>0`$, combining the first and third bounds with
+$`D=E+1`$ gives
+$`s+t+4+\kappa\le5+\kappa+s`$, hence $`t\le1`$.
+Thus the branch $`t\ge2`$ is also impossible, and the only remaining
+nonnegative integral case is
+
+$$
+\ell=r=1,\quad E=5+\kappa,\quad D=6+\kappa,\quad
+A=3+\kappa,\quad N_{\rm sh}=3.
+\tag{47}
+$$
+
+Here the value of $`E`$ follows from its lower bound and
+$`E+1\le5+\kappa+s`$; the values of $`A,N_{\rm sh}`$
+follow because their separate upper bounds sum to $`D`$.
+Equation (46) and the retained positive excesses then force
+
+$$
+e_2=e_6=1,\quad e_3=1+\kappa,\qquad
+e_{\mathsf M}=e_{\mathsf N}=0.
+\tag{48}
+$$
+
+In particular $`\mathsf N`$ has just one host and one support.
+
+The three non-axis shared states consume all
+$`b_{\mathsf a}+b_{\mathsf b}=3`$ lower-endpoint hosts and all
+$`b_{\mathsf c}+b_{\mathsf d}=3`$ upper-endpoint hosts in (41).
+Every host of those four cells already shares with another of the
+four. Since no state hosts three count cells, none of these hosts can
+also share with an axis cell.
+
+We next exclude every sharing possibility for $`Z_2,O_2`$, using
+the complete partner lists in Convention 10.1.
+
+* A $`Z_2,O_2`$ host has its actual fixed zero successor shared by
+  $`Z_3,\mathsf R`$. Lemma 10.2 contradicts
+  $`e_{\mathsf N}=0`$.
+* A $`Z_2,O_3`$ host has its actual fixed zero successor shared by
+  $`Z_3,\mathsf c`$. This contradicts the exhausted
+  $`\mathsf c`$ hosts.
+* A $`Z_3,O_2`$ host has its actual fixed one successor shared by
+  $`\mathsf a,O_3`$. This contradicts the exhausted
+  $`\mathsf a`$ hosts.
+* A $`Z_4,O_2`$ host has its actual fixed one successor shared by
+  $`\mathsf b,O_3`$. This contradicts the exhausted
+  $`\mathsf b`$ hosts.
+
+Each paired child just used is live. These four cases exhaust the
+two partners of $`Z_2`$ and the three partners of $`O_2`$, with
+their common pair counted once.
+
+Only $`Z_3,Z_4,O_3`$ can consequently be axis endpoints.
+Each has one host. If $`\kappa=1`$, (47) requires four
+axis-endpoint shared states from these three axis incidences, an
+immediate contradiction. If $`\kappa=0`$, (47) requires exactly
+three. Each must then use exactly one of those three axis
+incidences, so no two of $`Z_3,Z_4,O_3`$ share with each other.
+The unique $`Z_3`$ host must participate. Its full partner list is
+$`O_2,\mathsf R,O_3,\mathsf c`$. The first was excluded,
+the third would use a second axis incidence at one shared state,
+and the fourth has no host available for axis sharing.
+Its partner must therefore be $`\mathsf R`$.
+Lemma 10.2 again contradicts (48).
+
+Both axis-count branches and all zero or positive endpoint-excess
+branches have been exhausted. This proves the theorem on the one
+original graph. $`\square`$
+

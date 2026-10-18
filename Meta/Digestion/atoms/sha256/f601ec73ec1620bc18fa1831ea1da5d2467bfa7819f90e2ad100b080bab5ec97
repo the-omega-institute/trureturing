@@ -1,0 +1,43 @@
+**Theorem 4.1 (exact binary width-two law).** Let $m=2$, $T=k+1$ odd with $T\ge5$, so $k\ge4$, $g=1$ and $m<k$. Fix distinct labels $A,B$ and a binary phase target with $\lambda(0)=A$. Write
+
+$$
+D=\{j\in\{1,\ldots,k\}:\lambda(j)=B\},\qquad J=\max(D\cup\{0\}).
+$$
+
+Then, on the full joint actual-history prior,
+
+$$
+C_v(\lambda)=
+\begin{cases}
+0,&D=\varnothing,\\
+1,&D=\{1,2\},\\
+\max\{2,\lceil J/2\rceil\},&\text{otherwise}.
+\end{cases}
+\tag{4.1}
+$$
+
+**Proof.** The empty case stops free. For $J\le2$ and a nonempty target, emit $01$. Difference zero has only $A$ labels. Difference one retains exactly $\{1,2\}$; if their labels agree, return the common label immediately. Otherwise emit the whole next block $10$. Its one is at absolute position two, with mask $\{2,3\}$, and so singles out index two within that actual pair. Return $\lambda(2)$ on difference one and $\lambda(1)$ on zero. This costs at most two, and exactly one for $D=\{1,2\}$.
+
+For $d=\lceil J/2\rceil\ge2$, scan on the continuing zero branch by emitting $01$ in block slots $t=0,\ldots,d-2$. The mask in slot $t$ is the literal pair
+
+$$
+\{2t+1,2t+2\}.
+$$
+
+A zero difference excludes that whole pair. A positive difference retains exactly that pair, since all earlier pairs were excluded on this path. If its two INITIAL labels agree, stop with that label. If they differ, emit $10$ in the next slot: its leading edge is $\{2t+2,2t+3\}$, restricting to the right member of the pair. Return the right label on one and the left label on zero, then stop. The repair branch ends by block $t+2\le d$; it never rejoins or reads the continuing scan branch.
+
+After $d-1$ zero scans, put $a=2d-1$, $b=2d$, and $z_j=\mathbf1_D(j)$. The final literal block is
+
+$$
+(z_a\oplus z_b)\,z_b.
+\tag{4.2}
+$$
+
+Its two positions are $2d-2$ and $2d-1$. The full mask assigns coefficients $z_a\oplus z_b$ to $2d-2$, $z_a$ to $a$, and $z_b$ to $b$. Index $2d-2$ has already been excluded by the preceding scan. All indices $1,\ldots,2d-2$ are absent from this actual child; every index above $b$ has label $A$ because $J\le b$. Thus the mask restricted to survivors equals $D$, and the final difference returns $B$ on one and $A$ on zero. Also $b\le k$, so no modular wrap is being hidden in this argument.
+
+The first $01$ clears all INITIAL tails. Each further scan starts zero. A scan leaves tail one, and a repair $10$ joins at most two consecutive ones. The worst final block in (4.2) is $11$, which joins that tail to a run of three. Since $k\ge4$, every such seam is legal. The full second bit of each block, including zero padding, is emitted and charged. The constructed worst fee is at most $d$.
+
+For optimality, the actual pair $0,J$ supplies $C_v\ge\lceil J/2\rceil$ by §2. A nonconstant one-block solution must start zero; the only root words are $00$ and $01$, and their masks are respectively empty and $\{1,2\}$. Because index zero lies outside the mask and has label $A$, a nonconstant binary target can finish in one block exactly when $D=\{1,2\}$. All other nonempty cases require at least two. These lower bounds hold for all adaptive continuations and coincide with the upper bounds, proving (4.1). $\square$
+
+The case $k=2,m=2$ belongs to the supplied critical-width theory [S5, Theorem 5.1]; it is outside the proper-narrow hypotheses here.
+

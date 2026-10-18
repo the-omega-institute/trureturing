@@ -1,0 +1,45 @@
+**Theorem 4.3 (three budgets and exact costs).** For every
+$(k,b,L)\in\mathbb N^3$ it is decidable whether that upper-budget
+triple belongs to $\mathcal F$. A yes answer constructs a legal
+service. For any installed finite skeleton one can compute all
+reachable paths, its exact coordinatewise worst vector and every
+rational same-source weighted worst value. Each reachable path,
+and hence each finite maximum, has an effectively obtainable
+complete-source witness in $D$.
+
+Proof. On a positive recovery instance, enumerate the finitely many
+skeletons and physical words of length at most $L$. Decide correctness
+and each exact leaf reachability using Theorem 3.4, now with fixed
+words, and require $L_t\le L$ on every reachable leaf.
+This terminates. A passing skeleton executes precisely its path
+costs and is sufficient.
+
+Conversely, a comparator meeting the triple has each submitted
+word of length at most $L$ on every actual run. Unroll it as in
+Theorem 4.2, replacing unreachable children by halts and deleting
+trailing updates. Its remaining words are in the finite enumeration,
+its total path lengths are unchanged on actual runs, and it passes.
+On a negative recovery decision every triple fails by Theorem 4.2.
+This proves both directions without claiming a variable-length
+arithmetic predicate in WS2S.
+
+For the witness claim, at fixed words choose a chart and routing
+alternative making (CRF.9) nonempty for the leaf. The suffixes are
+then fixed by the words and headers. The exact WS2S predicate
+extracts a complete finite tuple, or a prior yes decision permits
+terminating enumeration of concrete satisfying tuples. Equation
+(CRF.5) fills an actual original source, and the physical path
+identity proves that it attains exactly $(k_t,b_t,L_t)$.
+Maximize over the finitely many reachable leaves coordinate by
+coordinate, or first sum with the given weights on a leaf and
+then maximize. These are different operations. No single source
+is asserted to attain several independent coordinate maxima.
+$\square$
+
+These constructions retain raw repetitions as actual calls whenever
+the installed skeleton repeats one. A later domination argument
+can remove redundant calls, but never relabels a simulated event as
+an actual receipt. Early epochs zero and one, absent replies,
+zero-read services, ground charts, repeated old classes and
+off-task inequalities were all included in the predicates above.
+

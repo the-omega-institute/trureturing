@@ -1,0 +1,15 @@
+### 97.6. The dyadic place
+
+If epsilon=0, d=1mod8 is a square in Q_2 and the factor is one.
+
+Suppose epsilon=1. Then d=5mod8, l=5d=1mod8 and h=3e. By the chosen certificate, alpha=a/c has valuation at least3, beta=b/c is3mod4, and c is odd. The norm identity gives beta^2+e=alpha^2/l. Therefore
+
+ beta^2-3e=4beta^2-3alpha^2/l
+              =4beta^2(1-3alpha^2/(4l beta^2)).
+
+The parenthesized unit is1mod16 and has a square root s=1mod8. Choose z3=-2beta s together with t=1,z1=-beta,z2=alpha. Then z3=-2beta mod16 and all covering equations hold. At this point L3=2l b^2/c has valuation one.
+
+Modulo4 the difference between L2 and beta(3beta+1)^2/2 is zero: the replacement e=-beta^2 changes its coefficients by multiples divisible by32, and z3=-2beta modulo16 changes the evaluation by a multiple of16. Because beta=3mod4, 3beta+1 has valuation one, so L2=2mod4. Its valuation is also one. Thus v_2(L2 L3)=2.
+
+For d=5mod8, the quadratic extension Q_2(sqrt d) is unramified and (u,d)_2=(-1)^v_2(u). Equivalently this follows from the standard Q_2 Hilbert-symbol formula. The local contribution is therefore one. No dyadic sign is omitted.
+

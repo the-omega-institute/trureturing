@@ -1,0 +1,9 @@
+**既有结果 4.1（所有预算的下界与高预算取得）。** `CircleDoubleCoverLipschitzError.lower_bound` 给出所有 $L\ge0$ 的界
+
+$$
+E(s)\ge\frac2{2L+1}.
+\tag{4.2}
+$$
+
+同模块的 `sharpness` 给出当 $L\ge\tfrac12$ 时取得式（4.2）的映射。它没有声称该下界在 $0<L<\tfrac12$ 上也可取得。低预算区间的精确最小值是下面的研究目标。
+

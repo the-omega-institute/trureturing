@@ -1,0 +1,26 @@
+**引理 2.2（实际累计矩阵与迹表）。** 历史 (1.3) 的累计矩阵及全部迹因子为
+
+| 原时钟 | 累计矩阵 | $\operatorname{tr}(A_iP)$ |
+| --- | --- | --- |
+| $0$ | $I$ | $1$ |
+| $1$ | $J$ | $k\ell$ |
+| $2$ | $L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}$ | $\ell$ |
+| $3$ | $J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix}$ | $(k+1)\ell$ |
+| $4$ | $C=\begin{pmatrix}2&1\\1&1\end{pmatrix}$ | $\tau_4=1+r+k\ell$ |
+| $5$ | $Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix}$ | $\tau_5=(k+2)\ell-r$ |
+| $6$ | $MQ=C+Q=\begin{pmatrix}3&2\\4&3\end{pmatrix}$ | $\tau_6=1+2(k+1)\ell=\tau_4+\tau_5$ |
+
+**证明。** 按 (1.1) 左乘，每一行的矩阵分别为 $I,J,MJ,M^2J,JM^2J,MJM^2J,M^2JM^2J$，展开即表中矩阵。对 $A=(a_{ij})$，
+
+$$
+\operatorname{tr}(AP)=a_{11}r+a_{12}c+a_{21}(\ell-1)+a_{22}(1-r).
+$$
+
+逐行代入 (2.1) 给出各迹及 $\tau_6=\tau_4+\tau_5$。这些累计矩阵均非负且无零行，$P$ 逐项正，故各迹严格正。另有用于后文的精确矩阵恒等式
+
+$$
+A_3=J+L,\qquad Q=I+2J+2L-C.                                \tag{2.4}
+$$
+
+所有读数仍在同一条原时钟轨迹上。∎
+

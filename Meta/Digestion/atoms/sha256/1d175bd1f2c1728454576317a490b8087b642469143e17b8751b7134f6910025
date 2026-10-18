@@ -1,0 +1,34 @@
+**注记 C-114.10（所消费的成熟成分与对应范围）。** Donald 恒等式、全部密度参考上的
+系综最小化、最优系综的相对熵 minimax 原理是成熟供应：
+Schumacher–Westmoreland，[*Optimal signal ensembles*, quant-ph/9912122v1](https://arxiv.org/html/quant-ph/9912122v1)，
+式 (8)、(10)、(19)；以及
+[*Relative entropy in quantum information theory*, quant-ph/0004045v1](https://arxiv.org/html/quant-ph/0004045v1)，
+式 (5) 和最大距离性质。这里使用支持感知的扩展 Umegaki 散度，
+不以核上总化的有限 trace-log 代替无限分支。
+反对称谱配对、原生菜单纤维、稀疏性／Schmidt number／整个块字典、四层上界和距离证书，
+分别消费 C-108.3–C-108.4、C-109.3、C-111.2、C-112.2、C-113.1–C-113.3。
+
+仓内 `EntropyMaximizer.exists_unique_entropy_maximizer` 的实际命名空间是
+`QuantumLogEnergy`：它在非空闭凸正 trace-one、实际有限连续谱熵的假设下给唯一熵最大元，
+并不要求另加紧性；`CompactCommonReference.spectralEnergy_le_entropy_of_isMaxOn`
+要求实际最大元，`fullCompactCommonReference` 另要求紧性。
+本章的有限矩阵族确为紧实凸、熵有限连续；有限矩阵到相应 `TraceClass` 载体的
+保迹、正性、拓扑及谱熵对应是使用这些抽象接口时必须保留的桥。
+这里直接在原矩阵载体上确定最大元和剖面；(C114.12) 比交叉能量上界更精确，
+给出在此族上恒为 $H_\eta$。这不声称抽象存在性定理所选的其他共同参考必等于
+$\Omega_\eta$，也不把任意 `Reference` 自动当作 trace-one 密度参考。
+`SupportAwareRelativeEntropy.extendedQuantumRelativeEntropy` 及
+`LegacyRelativeEntropyBoundary.unsupported_pair_semantic_boundary`
+给出的语义区别正是 (C114.3) 保留的支持边界；
+`GibbsVariationalIdentity.entropy_uniform_identity` 是已有均匀参考恒等式，
+不是本章任意环境参考剖面的替代品。
+
+源特定综合结论是：完整原复纤维及其整个共同白噪声像的任意参考方向剖面、全部等号、
+唯一半径参考、最小最优字母表、实际二维资源平台，以及同族半幅反向参考的唯一傅里叶
+极大点、锐距离损失和认证区间内的资源正隙。不将一般谱形式、Donald 原理或术语重述
+计作新一般理论；也不主张经过全域文献排查的原创性。
+这些条件性矩阵结论不供应原生树到任意复态的制备映射、源副本、参考测量、相位控制、
+量子编码可达率或物理实现；整个通道资源合同与原生历史误差仍是不同目标。
+未由上述结论决定的包括正环境噪声下整个标量资源子域、其锐转变阈值、
+至多三维定向目标隙的精确值，以及原无约束历史误差的最优值。
+

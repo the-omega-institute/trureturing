@@ -1,0 +1,53 @@
+**Lemma 11.3 (exact all-history counting and faithful set-pair indices).**
+For every $p=(h,z)\in V$, reply words with $h$ ones and $z$ zeros
+are in bijection with $\mathscr H_p$. Consequently
+
+$$
+|\mathscr H_p|=\binom{h+z}{h},\qquad
+\sum_{H\in\mathscr H_p}\omega(H)=1,
+\qquad \sum_{q\in F_p}\lambda_p(q)=1.
+\tag{SI.64}
+$$
+
+At a fixed installed state, different actual live prefixes give different
+ordered pairs $(A_H,B_H)$. Any two such prefixes have incompatible
+exposed assignments: at least one of their two directed intersections
+in (SI.63) is nonempty. At a fixed cell and state, two distinct prefixes
+have both directed intersections nonempty.
+
+Proof. Theorem 2.2 makes each query in a live prefix fresh and its
+query depth exactly $h+z$. Starting from the fixed start, a reply word
+therefore determines at most one prefix, including its fixed states and
+coordinate choices. Conversely every initial subword of a word with
+these counts has counts bounded by $(h,z)$ and is live. Inductively
+the current state cannot be terminal, its query is fresh, and either
+requested value has an actual completion following the preceding
+prefix. The fixed successor supplies the next live state. After the
+whole word, any completion of its distinct-coordinate assignment is
+one actual input realizing this entire prefix. This proves the
+bijection and (SI.64), including the empty word and both axes. It
+counts words, not choices of completions and not distinct endpoints.
+In particular the total number of live prefixes is finite even if the
+syntactic union graph contains cycles.
+
+More generally every completion of an exposed assignment follows its
+prefix, by deterministic induction. If two distinct prefixes ending
+at $q$ had compatible assignments, choose one input completing both.
+They would be prefixes of its same actual run. Equal lengths would
+make them identical. Unequal lengths would visit $q$ twice on that
+run. From the first repeated state, the stationary fixed-input
+successors repeat forever, contradicting actual termination. Thus
+compatibility is impossible. Since compatibility means that both
+cross intersections are empty, at least one is nonempty. Equal set
+pairs in particular would be compatible and are excluded. This also
+shows that a purported duplicate index cannot be retained merely
+because a different completing input was used.
+
+Finally fix $p,q$. Theorem 2.2 gives one support $S$ for all these
+prefixes. Their one sets are distinct subsets of $S$ of the same
+cardinality $h$: equal one sets would give equal set pairs. Neither
+one set can contain the other, so each has an element outside the
+other. As their zero sets are their complements in $S$, this is exactly
+both directed intersections. No uniqueness of history at $p,q$ is
+asserted. $\square$
+

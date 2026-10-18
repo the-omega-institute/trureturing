@@ -1,0 +1,41 @@
+## 77. Actual algebra and reuse of the determinant bridge
+
+Write A=|a|^2, B=|b|^2, C=a dot b, K=b cross a, U=K cross a=Ca-Ab, V=K cross b=Ba-Cb, Delta=AB-C^2. The upper triangular cross table is
+
+$$
+\begin{aligned}
+a\times b&=-K,&a\times K&=-U,&a\times U&=AK,&a\times V&=CK,\\
+b\times K&=-V,&b\times U&=CK,&b\times V&=BK,\\
+K\times U&=-\Delta a,&K\times V&=-\Delta b,&U\times V&=-\Delta K.
+\end{aligned}
+$$
+
+Diagonal entries vanish; reversing an entry negates it. Each identity follows by expanding the coordinates or the vector triple-product identity, so no printed intermediate identity in a literature source is needed. Structural induction gives either a zero descriptor or a signed monomial A^i B^j C^l Delta^k times one of a,b,K,U,V. The complete descriptor, support, unit-label and transport proofs are retained in §§1–5,16,18–19,24–32,49–61 of this volume; the present calculation uses those actual-source statements.
+
+The interpretation transport F(a,b)=(b,b cross a) satisfies E_p(rho t)=E_F(p)(t): it holds at the two leaves and is preserved by every ordered node. This is an identity about the same execution, not an actual re-preparation. At an orthogonal pair all monomial scales are positive and the unit interpretation is in {0,+/-e1,+/-e2,+/-(e2 cross e1)} by the same node induction. Its cyclic rotation is an SO(3) matrix of order three, hence commutes with the cross product at every tree. Thus for a nonzero label with actual leaf counts m,n and r=|b|, s=sqrt(Delta), q1=r^m s^n and q2=r^n s^(m+n); its unit directions cycle with period three. A zero label has x_j=0 for j>=1, even if x0 is nonzero. If Delta=0, F^2p is zero and x_j=0 for j>=2. No positive divisions below are used on these branches.
+
+For completeness, give the actual projection calculation, rather than an ambient-triple assumption. For a nonzero label choose x0=sign*A^i B^j Delta^k Z with Z in {a,b,K,-U,V}. Give A,B,Delta degrees (2,0),(0,2),(2,2), and a,b,K,-U,V degrees (1,0),(0,1),(1,1),(2,1),(1,2). Every cross-table identity preserves total degree. For w=x2 cross x1, the positive projections of these five Z onto the correctly signed direction w/|w| are s/r,r,s,s^2/r,rs. They equal (s/r)^m_Z r^n_Z. Substitution of the total degrees and A=(Delta/B)(AB/Delta) therefore gives
+
+sign*x0 dot (w/|w|)=(AB/Delta)^i*q2/q1 >= q2/q1.
+
+Their projection/norm ratios are sqrt(Delta/(AB)),1,1,sqrt(Delta/(AB)),1. These give |x0 dot w|>=q2^2, q2<=q0 q1, and in the parameter domain |x0 dot w|>=sqrt(d0)/L^2*q0|w|. The unit-label signs and the cross table now give x3=sgn(x0 dot w)w, sgn(0)=0. Zero and dependent branches satisfy the division-free identities directly. For j>=1, q_(j+2)=q_j q_(j+1); consequently q_j=q1^F_(j-2) q2^F_(j-1), j>=3. Here F0=0,F1=1,F_(i+2)=F_i+F_(i+1), with 0^0=1.
+
+For correspondence with §67.1, the actual integer elimination is as follows. Let u=-log q1>=0, v=-log q2>=0 in a nonzero plateau and N_actual=m+n. Eliminating log r from the two actual norm equations gives
+
+$$\,Q\log s=nu-mv,\qquad Q=m^2+mn-n^2.\,$$
+
+Q is a nonzero integer: for n>0, Q=0 would make m/n a rational root of X²+X−1, and for n=0 it is m²>0. Here m+n is the actual number of leaves, r=|b|, s=√Delta, and u,v are the logarithms of the two actual reads; these are the coordinates of §67.1, not independent ambient scalar data. That section also uses the actual projection q2<=q0q1<=q1 to prove the stronger inequality
+
+$$
+-\log q_2\geq z_0\frac{|m^2+mn-n^2|}{\max(m,n)}\geq\frac{z_0}{m+n},\qquad z_0=\log\sqrt{d_0}>0.
+$$
+
+The weaker max(u,v), u+v and max-squared-deficit forms are consequences of this retained stronger determinant theorem. For the selected coordinate D=(1−q1²)+(1−q2²), put d=max(1−q1²,1−q2²). For every nonzero actual plateau source with d0>1 and m+n<=N,
+
+$$
+D\geq d\geq1-q_2^2\geq1-\exp\left(-\frac{\log d_0}{m+n}\right)
+\geq\frac{1-1/d_0}{m+n}\geq\frac{1-1/d_0}{N}.
+$$
+
+The penultimate inequality is the chord bound for the concave function 1−exp(−t log d0) on 0<=t<=1. Its constant is positive precisely at d0>1. A zero label has q1=q2=0, D=2 and d=1, so it also satisfies the bound without positive division. Consequently a unit neutral source is absent at d0>1. This is reuse of §67.1 in loss coordinates, not another determinant theorem or another source-size bridge. Projection supplies actual-history and sign control, while the integer bridge supplies decay; neither premise substitutes for the other.
+

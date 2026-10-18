@@ -1,0 +1,21 @@
+**Definition 13.3 (remaining mutual-recovery problem).**
+Theorem 10.4 settles universal invocation-row acquisition in Assumption
+10.1. The broader target of a smallest relational structure expressing
+cuts, internal relative time, boundaries and memory remains separate.
+A next question is to characterize which paid finite initial observation
+records, beyond the one protected Read, suffice to recover a deeper
+invocation cut when subsequent interference is unobserved. Such a result
+must specify how that initial record is actually obtained and protected,
+retain concrete early guards and the entire hidden partition, and charge
+its literal delivery and storage. It cannot assume an entry snapshot
+or replace the record by semantic ancestor witnesses.
+
+Sharp acquisition space, exact finite-transcript languages, stronger
+interference progress, authenticated designated origins and richer retained
+interfaces remain the distinct questions in Definition 9.3. The present
+classification supplies no minimal workspace theorem, physical duration,
+full hidden event history or completion of that broader program.
+
+[NSD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialDepth.lean
+[SPR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/SparseLiteralParityReadLowerBound.lean
+

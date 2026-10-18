@@ -1,0 +1,83 @@
+## 3. 带符号终端坐标与不涉及 A 的三种差矩阵
+
+定义
+
+$$
+X=f(7)QP=\begin{pmatrix}a&b\\c&e\end{pmatrix},\quad
+S=Q^{-1}X=f(7)P,\quad h=f/f(7),\quad
+\sigma_j=\operatorname{tr}(A_jS)=f(7)t_j.
+\tag{3.1}
+$$
+
+此处条目 $c$ 与历史向量 $\mathbf c$ 不同。合法源使 $X$ 的各条目和全部 $\sigma_j$ 都非零，并有 $f(7)$ 的共同符号，$ae=bc$。归一化式为
+
+$$
+\deg h\le3,\quad h(6)=0,\quad h(7)=1,\qquad
+h(j)\sigma_j=c_j-d\quad(0\le j\le5).
+\tag{3.2}
+$$
+
+由 $Q^{-1}$ 得到
+
+$$
+S=\begin{pmatrix}-2a+c&-2b+e\\3a-c&3b-e\end{pmatrix},\qquad
+\begin{pmatrix}\sigma_0\\\sigma_1\\\sigma_2\\\sigma_3\\\sigma_4\\\sigma_5\end{pmatrix}
+=\begin{pmatrix}
+-2&3&1&-1\\3&-2&-1&1\\-2&1&1&0\\1&-1&0&1\\-1&1&1&0\\1&0&0&1
+\end{pmatrix}\begin{pmatrix}a\\b\\c\\e\end{pmatrix}.
+\tag{3.3}
+$$
+
+六个迹依次是 $-2a+3b+c-e$、$3a-2b-c+e$、$-2a+b+c$、$a-b+e$、$-a+b+c$、$a+e$；取 (1.5) 的六个矩阵对 $S$ 的迹即验证全部 24 个系数。特别有 $\sigma_3=\sigma_1+\sigma_2$。
+
+第六次预测对两动作都是 $d$。第七次四个备选函数是
+
+$$
+\begin{array}{c|c|c}
+\text{时间顺序 }EF&FE&r_{EF}=d+\operatorname{tr}(FEX)\\\hline
+JJ&I&A=d+a+e\\
+JM&\begin{pmatrix}1&0\\1&1\end{pmatrix}&B=d+a+b+e\\
+MJ&\begin{pmatrix}1&1\\0&1\end{pmatrix}&C=d+a+c+e\\
+MM&\begin{pmatrix}1&1\\1&2\end{pmatrix}&D=d+a+b+c+2e.
+\end{array}
+\tag{3.4}
+$$
+
+这里使用 $J^2,MJ,JM,M^2$。这些是同一候选世界上的数学函数，轨迹只执行选定的一个时间顺序。
+
+若两个 $X$ 相等，则 $S$ 相等，$\operatorname{tr}S=f(7)\ne0$ 恢复同一七次增益，除以它恢复 $P$。共同 $d$ 下前四正迹恢复四个增益样本，(2.3) 恢复整个 $f$，再由 (1.3) 恢复整个原始目标。任何一个终端标量的碰撞还强制两个七次增益同号：每个终端偏移都是 $f(7)$ 乘正迹。因此碰撞对上
+
+$$
+\sigma_{1,j}\sigma_{2,j}>0\qquad(0\le j\le5).
+\tag{3.5}
+$$
+
+先记录支撑后续非零性且可用于边界的两个短证明（B 命题 5.1）。差始终取世界二减世界一。共享 $AB$ 时
+
+$$
+\Delta X=\begin{pmatrix}-\epsilon&0\\\gamma&\epsilon\end{pmatrix},\quad
+\Delta\sigma=(\epsilon+\gamma,-2\epsilon-\gamma,2\epsilon+\gamma,0,
+ \epsilon+\gamma,0).
+\tag{3.6}
+$$
+
+节点三、五有相同非零 $\sigma$，故 $h_1=h_2$ 在三、五相等，加上六、七共四节点，得共同多项式 $h$。节点一、二给出 $h(1)(-2\epsilon-\gamma)=h(2)(2\epsilon+\gamma)=0$，两样本不能同时零，否则 $d=24=48$，故 $\gamma=-2\epsilon$。若 $\epsilon\ne0$，节点零、四强制 $h(0)=h(4)=0$、$d=0$，于是
+
+$$
+h=T(T-4)(T-6)/21,\quad [h]=(0,24/21,-10/21,1/21),\quad
+(h(1),h(2),h(3))=(5/7,16/21,3/7).
+\tag{3.7}
+$$
+
+读数要求 $(\sigma_1,\sigma_2,\sigma_3)=(168/5,63,728/5)$，而迹关系要求 $\sigma_3=483/5$，相差 49。故 $\epsilon=\gamma=0$，由完整目标逆映射得到同一世界。
+
+共享 $AD$ 时
+
+$$
+\Delta X=\begin{pmatrix}-\epsilon&\beta\\-\epsilon-\beta&\epsilon\end{pmatrix},\quad
+\Delta\sigma=(2\beta,-\beta-\epsilon,\epsilon,-\beta,0,0).
+\tag{3.8}
+$$
+
+四、五的相同非零迹与六、七使 $h$ 共同。若 $\beta\ne0$，零、三强制 $d=0=312/5$；故 $\beta=0$。若 $\epsilon\ne0$，一、二强制 $d=24=48$。因此差全零。两证明仅使用正迹、共同前四读数与漂移、非零七次样本及插值，不要求源条目逐个非零，也不要求秩一。
+

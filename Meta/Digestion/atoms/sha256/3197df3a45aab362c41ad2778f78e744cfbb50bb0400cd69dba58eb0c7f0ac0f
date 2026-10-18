@@ -1,0 +1,14 @@
+### 100.3. Simultaneous normalized certificates
+
+Fix i>=1, write p=p_i and e=D/p. The triple for lambda_i is (p,1,p), with conics
+
+ H1: z2^2-p z3^2=20D t^2,
+ H2: z1^2-z3^2=15e t^2,
+ H3: z2^2-p z1^2=5D t^2.
+
+Since lambda_i is in Selmer, H3 is everywhere locally soluble. The Hasse principle for conics gives a rational point. Its t coordinate cannot vanish because p is nonsquare, so the affine norm conic alpha^2-p beta^2=5D has a rational point and is rationally parametrized by lines through that point.
+
+For each j>=1 different from i, at ell=p_j the element p is a square unit. Thus the conic has the local point beta=1, alpha=sqrt(p+5D), with both coordinates ell-units. Choose small neighborhoods of these finitely many local points on which alpha,beta remain integral units. A rational parametrization is an isomorphism on open charts; if one target lies at its exceptional parameter, first perturb it inside its local neighborhood to a point in a common chart. The finitely many excluded chart points have empty interior. Rational numbers are simultaneously dense in the finite product of the fields Q_(p_j), by the Chinese remainder theorem after clearing denominators. One rational parameter can therefore be chosen to land in every prescribed neighborhood. It can also avoid the finitely many poles of the affine parametrization. The resulting rational alpha,beta have the required unit conditions simultaneously.
+
+Write alpha=a/c,beta=b/c with a,b,c primitive integers and c>0. At any prescribed ell, affine integrality and primitiveness imply ell does not divide c; the unit condition then gives ell not dividing b (and a). This proves all the simultaneous certificate conditions. For s=1 the prescribed set is empty and any rational norm point gives a primitive certificate.
+

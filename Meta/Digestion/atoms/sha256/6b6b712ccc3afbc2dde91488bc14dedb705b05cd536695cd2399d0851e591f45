@@ -1,0 +1,37 @@
+**Definition 16.1 (retained original quantities and common-table hypotheses).** Throughout this section retain Definitions 1.1–1.3 and 9.1 in full. There is one fixed finite or countable probability prior $\mu$, with $\mu(1),\mu(2)>0$ and $\mu(k)>0$ for some $k\ge3$. Its depth $K$ is sampled once before the first paid seed Read and is shared by all seed and payload letters. Put
+
+$$
+\begin{aligned}
+a&=1/3,\qquad b=2/5,\qquad L=b-a=1/15,\\
+\rho_p&=1116529/22781250,\qquad \rho_\beta=239/6750,\\
+e(M)&=\max\{R_{{\rm conf},p}(M)-\rho_p,
+                       R_{{\rm conf},\beta}(M)-\rho_\beta\},\\
+\eta&=\frac{14219478376}{318644812890625},\qquad
+H=\frac{11\eta}{1404}.
+\end{aligned}
+\tag{16.1}
+$$
+
+Each configuration risk first takes TV of that configuration's entire decoded future against the actual posterior target, then averages over the actual conditional configuration row, then takes the supremum over all positive original histories at that phase. These are the full configuration risks of (1.4), not marginalized-law TV, terminal projection risk or an acquired-history average. Both phase obligations belong to one observer. All paid equal-pair rejections, both accepted seeds, every marker record and partial parse, the third record write before its latch, held $B,Q^+,Z$ records, permissions, every finite fourth-segment return, matching pendingStop, its unique original Stop and deliveredStop remain in the domain. Complete futures retain every Read, original event block, record and Stop, including the legal infinite outcomes. No Read is enabled in either terminal.
+
+On the designated seed-1, marker-100 fibre $S$ of (1.5), use exactly
+
+$$
+\mathcal V(M)=\sup_{h\in\mathcal H_{p,S}}
+ \sum_{x,y,x'}\rho_h(x)B_{xy}A_{yx'}|u_x-u_{x'}|.
+\tag{16.2}
+$$
+
+The supremum includes every positive paid prefix and every finite return and need not be attained. Its weights are the original actual acquired kernels, unweighted by synthetic emissions, survival probabilities or costs. Conditional on an actual history, the positive source probability of the return is independent of the private configuration and cancels as in Definition 9.1. Edges remain even when their synthetic probability is zero.
+
+For an intermediate regular table use Definition 2.2: finite, possibly rectangular carriers $X,Y$, positive probability rows $\pi,\tau$, stochastic actual kernels $B:X\to Y$, $A:Y\to X$, both flows $\pi B=\tau$, $\tau A=\pi$, emissions $u,v\in[a,b]$ and their own complete laws $Q,W$ of (2.3). Assume (2.4) simultaneously for every supported depth, with nonnegative slacks $\epsilon_p,\epsilon_\beta$, and write
+
+$$
+\epsilon=\max(\epsilon_p,\epsilon_\beta),\qquad
+J=\sum_x\pi_x(u_x-a)(b-u_x),\qquad
+V_\pi=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|.
+\tag{16.3}
+$$
+
+Here $J$ is the endpoint tent. It is distinct from any Dirichlet energy such as $\sum\pi_xB_{xy}A_{yx'}(u_x-u_{x'})^2$. Neither that energy nor a synthetic weighted-return statistic is substituted for $V_\pi$ or $\mathcal V(M)$. Original observers need not have regular emissions; clipping enters only in the proof of Theorem 16.6.
+

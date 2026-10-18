@@ -1,0 +1,77 @@
+**Proposition 206.24 (Original necessary inequality and exact transport scope).**
+Let (206.2) be any original amplitude sequence, let
+$0<\varepsilon\le1$, and suppose $L_a\ge3$ and an original
+$N_2$ or $O_2$ acquisition attains this closed cap. At $L=L_a$, for
+every balanced score of 206.10,
+
+$$
+c_1(a_1-1)+c_2(a_2-1)+\sum_{j=3}^L\eta_j a_j
+       -\left(\sum_{j=3}^L\eta_j+W'\right)\varepsilon
+ \le D,
+\tag{206.57}
+$$
+
+with the same $D$ as (206.29). No assumption
+$(a_1,\ldots,a_L;\varepsilon)\in H_L$ is required.
+This is a necessary inequality; it is not sufficient acquisition
+feasibility.
+
+**Proof.** Apply the necessity direction of 110.2 to obtain one
+normalized finite probability configuration in the appropriate full
+catalog satisfying every row of (206.3). Sum those inequalities
+against the single nonnegative score $V$. Its target reward is
+
+$$
+W'+c_1(a_1-1)+c_2(a_2-1)+\sum_{j=3}^L\eta_j a_j
+       -\left(\sum_{j=3}^L\eta_j+W'\right)\varepsilon.
+$$
+
+The same probability configuration has reward at most the complete
+support $W'+D$ by 206.10. Subtraction gives (206.57).
+All rows, including the independent pair row and negative singleton
+demands, participate in the same inequality.
+
+The transport being used is specifically 110.2. Its necessity first
+projects full tapes measurably onto the original marks
+$\theta_0,\ldots,\theta_{L_a}$, contracting TV. Countability of the
+source gives one probability-one seed event of finite handoff and
+request compliance for every actual source. Truncating the preselected
+maximum address on a common seed event and using finite-time cutoffs
+on finitely many actual word witnesses gives finite tables in the
+same class. The finite catalog simplex is compact, so limits preserve
+the exact closed-cap rows. This covers arbitrary-address/full-carrier
+competitors without claiming to preserve every competitor's full law.
+
+Conversely, only an actual nonnegative probability vector of total
+one on complete tables, satisfying all cap rows, is transported into
+a cap attainer. Partition one $U\sim\operatorname{Unif}[0,1)$ into
+intervals of those table weights, selecting the whole schedule and all
+its terminal labels before any answers. Execute its scheduled actual
+prime queries and emit its original terminal mark. $N$ obtains its
+preselected replies; $O$ stops at its first queried zero or exhaustion.
+All executed requests, including ignored or repeated ones, count.
+The handoff is finite, and no source label, $N(x)$, first absence,
+source law or extra randomness is supplied. Two class-specific
+probability vectors may use partitions of the same $U$ and their
+common refinement; they need not agree seedwise.
+
+For every actual $n>L_a$, the transported law has exactly the tail
+error supplied by 110.2:
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}\le\varepsilon.
+\tag{206.58}
+$$
+
+This includes $a_n=\varepsilon$. All actual tails stay positive,
+monotone and vanishing. The finite positive word is tail bookkeeping,
+not an infinite all-positive source. Immediate base output handles
+$L_a=0$, including $\varepsilon=1$; smaller active lengths are covered
+by the owning transport, not by the present $L\ge3$ score theorems.
+Caps above one are trivial for TV. A score certificate or a
+support-maximizing table alone is not a feasible probability vector,
+so (206.11) cannot be substituted directly for this primal hypothesis.
+$\square$
+

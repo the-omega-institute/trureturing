@@ -1,0 +1,30 @@
+## 446. 高阶库存对 Fibonacci 指数的 Wall--Sun--Sun 二择一
+
+§445 只使用了高阶库存的素因子结论 $q\mid F_m$。但在平方层上，库存给出
+$q^2\mid F_m$，所以还可以调用已有的 Fibonacci $q$-进赋值公式。这个接口
+把严格 Euler 库存的短区间约束，转成 Fibonacci 索引本身的乘法约束；它仍然是
+在附加 $U=F_m$ 假设下的条件结论。
+
+固定
+
+$$
+ B=t+t^{4/5},\qquad
+ \mathcal I_t=\{q:\ q\text{ 为素数},\ t<q^2\le B\}.
+$$
+
+当 $t\ge243$ 时，$\mathcal I_t$ 中的素数都大于 $5$。对每个这样的 $q$，
+记 $z(q)$ 为首次 Fibonacci 零指标，并记
+
+$$
+ e_q=v_q(F_{z(q)}).
+$$
+
+定义高首次深度集合
+
+$$
+ \mathcal W_t=\{q\in\mathcal I_t:e_q\ge2\},\qquad
+ P_t=\prod_{q\in\mathcal I_t\setminus\mathcal W_t}q,
+$$
+
+空积取 $1$。
+

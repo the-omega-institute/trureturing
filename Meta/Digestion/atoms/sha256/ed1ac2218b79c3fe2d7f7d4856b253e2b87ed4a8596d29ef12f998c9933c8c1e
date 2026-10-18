@@ -1,0 +1,29 @@
+**Theorem 90.1 (at most nine low labels).** Every nonempty weak finite-$A$
+class has a height maximizer with at most nine actual low labels nonzero on
+supported inputs, and Theorem 87.3 then gives a total alphabet of at most ten.
+This is an existence
+upper bound, not a minimum or a parameter classification.
+
+**Proof.** Use the attained finite family supplied by FA72 and split every atom
+into pure-live and saturated endpoints; absolute-value convexity does not lower
+height and preserves all original moment constraints. For each resulting atom
+$(h_i,p_i,b_i)$ record
+
+$$
+\Gamma_i=(1,z_i,w_i,z_i^2,z_iw_i,
+ b_i,b_iz_i^2,b_iz_iw_i,|z_i|)\in\mathbb R^9.
+\tag{FA.118}
+$$
+The first five coordinates fix the complete live Gram. The next three fix the
+failure covariance because
+$\sum p_ib_i=\mu_f$, $\sum p_ib_iz_i^2=V_f$ and
+$\sum p_ib_iz_iw_i=0$; the remaining failure second moment follows from the
+null ellipse. The last coordinate preserves available contrast. If more than
+nine weights are positive, a nonzero dependence $\sum d_i\Gamma_i=0$
+allows both small perturbation signs. Height is affine along this segment, so
+optimality forces its derivative to vanish. Continue in one sign until a weight
+is zero and iterate. The resulting family has at most nine atoms, all moments,
+contrast and height unchanged. The common constructor turns them into actual
+labels, with deterministic reports and hidden Kraus indices counted only as
+specified by the original record. $\square$
+

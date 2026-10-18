@@ -1,0 +1,29 @@
+**Proposition 2.1 (Stationary realization, including endpoints).** For $0\le p\le1$, order the states $(a_0,a_1,b_0,b_1)$ and put $\pi_0=1-p$, $\pi_1=p$,
+
+$$
+\lambda_p=\tfrac12(1-p,p,1-p,p),\qquad
+M_0(p)=\begin{pmatrix}
+0&0&1-p&0\\0&0&0&p\\1&0&0&0\\0&1&0&0
+\end{pmatrix},\qquad
+M_1(p)=\begin{pmatrix}
+0&0&0&p\\0&0&1-p&0\\0&0&0&0\\0&0&0&0
+\end{pmatrix}.
+\tag{2.1}
+$$
+
+Then $\theta_p=(\lambda_p,M_0(p),M_1(p))\in\Theta_4$. Write $J_p=J_{\theta_p}$ and $P_p=P_{\theta_p}$. For $0<p<1$ the hidden chain is irreducible of period two and all four stationary masses are positive. At $p=0,1$ its visible law is $\delta_{0^{\mathbb Z}}$. Every finite visible marginal is continuous in $p$, and $P_p=P_{1-p}$.
+
+Proof. From $a_s$, choose $b_t$ with probability $\pi_t$ and emit $s\mathbin\oplus t$; from $b_t$, move to $a_t$ deterministically and emit zero. Every row of $A=M_0+M_1$ sums to one. Incoming mass at $b_t$ is $\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and copying gives incoming mass $\pi_t/2$ at $a_t$. Thus $\lambda_pA=\lambda_p$. Every one-edge enters a $b$-state, whose $M_1$ row is zero, so $M_1^2=0$. Interior irreducibility follows from $a_s\to b_t\to a_t$ for either $t$; all transitions alternate the two state classes and a two-step return is possible, giving period two.
+
+For an explicit two-sided realization, let $\varphi\in\{0,1\}$ be uniform and independent of iid Bernoulli$(p)$ spins $(S_k)_{k\in\mathbb Z}$. On the original integer coordinates define
+
+$$
+\begin{aligned}
+H_{2k+\varphi}&=a_{S_k},& H_{2k+\varphi+1}&=b_{S_{k+1}},\\
+X_{2k+\varphi}&=Y_k:=S_k\mathbin\oplus S_{k+1},& X_{2k+\varphi+1}&=0.
+\end{aligned}
+\tag{2.2}
+$$
+
+These hidden paths have exactly the initial masses and transition/emission factors (1.3). In particular the phase mixture is one stationary integer-clock law, with no time rescaling. All emitted ones occupy its active parity; zeros separate consecutive active sites, including across every interval seam. At either endpoint all spins are constant and every emission is zero. Complementing all spins exchanges $p$ and $1-p$ without changing the visible record. Finally each cylinder $\lambda_pM_w(p)\mathbf1$ is a polynomial in $p$. Marginalizing these cylinders proves finite-marginal continuity, including zero masses and endpoint laws. $\square$
+

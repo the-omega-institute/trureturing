@@ -1,0 +1,27 @@
+## 6. Credit, new content, and exact remaining boundary
+
+The local live-incidence facts, the common-support localization and identity (4), the short-interval compensation, and the right-cut separation are credited at the interfaces stated in Section 2. SI Definition 3.1 and Theorem 3.2 supply the three specialized antichains in (6), their antichain property and size fourteen, and the individual excess inequalities used in (7). The ordered grid in Proposition 5.1 is the credited full-domain upper. The new deductions in this companion are the critical membership-weight calculation and the two resulting noncommon-depth window obstructions (Lemma 3.1), the endpoint-six count (Lemma 3.2), the complete symbolic bound for the sole surviving interval $(2,7)$ (Lemma 3.3), the endpoint-eight bound under $m\le17$ (Lemma 3.4), and the exhaustive cut argument in Theorem 4.1. They establish a one-unit improvement over the supplied unrestricted lower endpoint $17$ without imposing an additional graph class or resource.
+
+The exact critical minimum remains unresolved within
+
+$$
+18\le m_{\min}(8,4)\le20.
+$$
+
+No correct eighteen-state or nineteen-state graph is supplied, and optimality of the twenty-state grid is not proved. For general $\min(k,n-k+1)\ge4$, the unrestricted alternatives remain: prove
+
+$$
+ m\ge k(n-k+1)
+$$
+
+for every complete correct original graph at both caps, equivalently prove the supplied collective incidence inequality
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B),
+$$
+
+where $\mathcal L_* =\{(a,b):b-a\ge5, b>\max(k,n-k+1)\}$ and $\mathcal A_*$ is its complement among consecutive cut intervals; or construct a complete correct strict-subgrid graph satisfying both original caps on every input. Neither alternative is settled here. Separate compensation in every remaining long pool is stronger than this collective target. The unrestricted budget minimum and fixed-specification attainment questions retain their separate meanings.
+
+The native statement remains conditional on the supplied correspondence and service assumptions. The Boolean theorem concerns installed finite control states and does not imply native acquisition, physical memory, elapsed time, timing, or realization bounds.
+

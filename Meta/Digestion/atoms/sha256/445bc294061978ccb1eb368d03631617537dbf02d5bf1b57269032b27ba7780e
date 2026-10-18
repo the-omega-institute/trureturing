@@ -1,0 +1,15 @@
+**定义 1.1（安全与下一尾）。** 令 $\alpha(x)$ 为首零之前的一串长度，无零时取 $m$；令 $\rho(x)$ 为词尾一串长度。由于 $m<k$，内部自动合法，故
+
+$$
+\operatorname{Safe}(\sigma,x)\Longleftrightarrow \sigma+\alpha(x)<k,
+\qquad
+\Phi_x(\sigma)=
+\begin{cases}
+\rho(x),&x\text{ 含零且安全},\\
+\sigma+m,&x=1^m\text{ 且安全}.
+\end{cases}
+\tag{1.4}
+$$
+
+首位零对任何合法当前尾都安全。$\sigma\le k-m$ 保证每个含零块安全；全一块仍须严格要求 $\sigma+m<k$。特别是 $\sigma=k-m$ 时全一块拒绝，不能把内部合法性当作跨接缝安全性。
+

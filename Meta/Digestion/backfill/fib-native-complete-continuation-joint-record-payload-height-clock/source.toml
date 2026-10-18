@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-joint-record-payload-height-clock"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD_HEIGHT_CLOCK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

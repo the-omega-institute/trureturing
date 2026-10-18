@@ -1,0 +1,43 @@
+**Convention 9.4 (bounded exact verification).** In-memory exact
+calculations checked the following finite cases, without retained
+experiment files. At $d=1,n=2$, all
+$(3+2\cdot3^4)^2=27\,225$ complete templates were evaluated on
+all nine actual tuples. Original and normalized solution sets agreed
+in every case; $8\,748$ were empty. The representative-star shape,
+unique owner-reply reconstruction and the rational product-weight
+identity, including zero weights, were checked on these same cases.
+
+At $d=2,n=2$, $512$ deterministically generated complete templates
+were evaluated on all $121$ actual tuples each; $499$ were empty.
+The same set equality, reconstruction and weighted identities held.
+Separately, $196$ directly generated owned-seed networks on those
+ports checked the inverse guarded construction and the realization
+bijection. Of them $51$ had an empty seed domain and $108$ had
+a singleton domain; no-seed networks and repeated seed incidences
+were included. The scan-letter identities were checked for depths
+one through seven. These bounded checks test the stated constructions;
+the arbitrary-size conclusions rest on the proofs, and no convergence,
+physical-efficiency or Lean-certification claim follows from them.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[JTC]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5J]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[D5M]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[D5E]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[BM]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.md
+[BE]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.md
+[GRF]: https://arxiv.org/html/1412.5310v1
+[Forney]: https://arxiv.org/html/1306.6264v2
+[MR]: https://arxiv.org/html/2308.05244v2
+[Robert]: https://arxiv.org/html/2502.13750v1
+

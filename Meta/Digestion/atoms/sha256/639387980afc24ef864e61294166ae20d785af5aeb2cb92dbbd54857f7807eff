@@ -1,0 +1,33 @@
+**Definition 20.1 (promise and ambient meanings of an index).** In a
+fixed effective programming system let $\mathsf{Tot}_2$ consist of
+descriptions computing a Boolean value at every positive integer.
+For an input promised to lie in $\mathsf{Tot}_2$, use exactly (PCA.41).
+Outside that promise a computation of $a(s)$ can diverge, and the
+prescribed acquired-term computation need not be total. No conclusion
+below treats those ambient descriptions as promised inputs.
+
+A promise semidecision terminates on the designated side of the
+promise and never gives that answer on the other promised side;
+its behavior outside the promise is unrestricted. For ordinary
+arithmetical index labels we use the following explicit total syntax.
+Fix an effective numbering of finite enumerator descriptions, and let
+$W_{e,t}$ be the finite set emitted during its first $t$ transition
+steps, with $W_{e,0}=\varnothing$. Define
+
+$$
+b_e(s)=\mathbf1_{\{W_{e,s}\setminus W_{e,s-1}\ne\varnothing\}},
+\qquad \Gamma(e)=\mathsf{Sparse}(\underline e).
+\tag{PCA.44}
+$$
+
+The canonical numeral $\underline e$ occurs literally in this syntax.
+Its prescribed evaluator on $B$ is (PCA.41) with $a=b_e$: structural
+height computation followed by simulations bounded by that height.
+The admitted strings of this particular sublanguage are exactly
+$\{\mathsf{Sparse}(\underline e):e\in\mathbb N\}$, with canonical
+numerals, so membership and recovery of $e$ are decidable. There is no
+claim that arbitrary syntactically valid programs are total or that
+this sublanguage represents every total code. Each of these particular
+strings is total by its explicit bounded evaluator. All static program
+parameters are common data, not source-dependent control fields.
+

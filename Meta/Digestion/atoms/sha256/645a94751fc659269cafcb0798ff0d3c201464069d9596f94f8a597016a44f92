@@ -1,0 +1,73 @@
+**Lemma 5.2 (Square-root series and uniform tail).** Define real
+coefficients $c_j$ by
+
+$$
+c_0=1,\qquad (j+1)c_{j+1}=\left(j-\frac12\right)c_j
+\quad(j\ge0),\qquad S_m(t)=\sum_{j=0}^m c_jt^j.
+$$
+
+For $|t|<1$,
+
+$$
+\sqrt{1-t}=\sum_{j=0}^{\infty}c_jt^j.
+$$
+
+For every integer $m\ge0$ and $0\le t\le q<1$,
+
+$$
+|S_m(t)-\sqrt{1-t}|
+ \le\frac{q^{m+1}}{2(1-q)}.
+$$
+
+**Proof.** The recurrence gives $c_1=-1/2$. For $j\ge1$ its multiplier
+$(j-1/2)/(j+1)$ lies strictly between zero and one, so
+$|c_j|\le1/2$ for all $j\ge1$. On each $|t|\le\rho<1$ the series
+therefore converges absolutely and uniformly by a geometric majorant.
+For $0<\rho<1$ its derivative series also converges uniformly, because
+
+$$
+\sum_{j=1}^{\infty}j\rho^{j-1}=\frac1{(1-\rho)^2}.
+$$
+
+To justify this majorant without differentiating an infinite series, multiply
+two geometric series of nonnegative terms. The coefficient at
+$\rho^{j-1}$ counts the $j$ pairs of nonnegative integers with sum $j-1$.
+Finite triangular sums are bounded by finite square sums and every finite
+square is contained in a larger triangle. Taking their increasing limits
+gives the displayed identity from
+$\sum_{j\ge0}\rho^j=(1-\rho)^{-1}$, itself the limit of the finite
+geometric-sum identity. The coefficient bound now supplies the derivative
+majorant.
+
+Let $F$ be the series sum. Each partial sum satisfies
+$F_N(t)=1+\int_0^t F_N'(x)\,dx$. Uniform convergence of the functions
+and derivative series on every such compact interval permits passage to
+the limit in this identity. The fundamental theorem of calculus then
+justifies differentiating $F$ there. Applying the coefficient recurrence
+to the convergent series gives
+
+$$
+(1-t)F'(t)=-\frac12F(t),\qquad F(0)=1.
+$$
+
+Indeed the constant coefficient is $c_1=-c_0/2$, and the coefficient of
+$t^j$ for $j\ge1$ is $(j+1)c_{j+1}-jc_j=-c_j/2$. Hence
+
+$$
+\frac{d}{dt}\left(\frac{F(t)^2}{1-t}\right)
+ =\frac{2F(t)F'(t)(1-t)+F(t)^2}{(1-t)^2}=0.
+$$
+
+At zero this quotient is one, so $F(t)^2=1-t$ on $(-1,1)$.
+Continuity, nonvanishing and $F(0)=1$ select the positive square root.
+Finally $m+1\ge1$, so for $0\le t\le q$,
+
+$$
+|S_m(t)-F(t)|\le\frac12\sum_{j=m+1}^{\infty}q^j
+ =\frac{q^{m+1}}{2(1-q)}.
+$$
+
+The last equality is the limit of
+$q^{m+1}(1-q^N)/(1-q)$ as $N\to\infty$. This proves both the identity
+and the uniform tail on the required domain. $\square$
+

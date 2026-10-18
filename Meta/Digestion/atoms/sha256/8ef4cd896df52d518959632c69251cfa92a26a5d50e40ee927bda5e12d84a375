@@ -1,0 +1,6 @@
+### 97.8. Original-orbit consequence and scope
+
+A negative Gamma gives a nonzero entry of the alternating pairing on a pure Selmer space of dimension three. Its radical has dimension at most one. The rational Kummer image modulo torsion lies in this radical and has dimension equal to the rational Mordell–Weil rank. Hence the rank is at most one. The actual golden point is non-torsion by Theorem 85.1, so the rank is exactly one. Corollary 94.2 excludes every stipulated repetition for N>=81, without Sha finiteness or rank parity. ∎
+
+The epsilon=0 formula extends section 96 to cut sides containing an even number of primes13mod24. The epsilon=1 formula handles an odd number and requires the explicit primitive norm certificate's5-character. Cuts containing primes3mod4 on the chosen side are not included: for their indicator v one has A^T v=diag(delta)v+(delta^T v)delta, which need not vanish, so the same two classes cannot simply be reused. No nonempty realized original-support family, converse, independence from every earlier condition, or universal WSS exclusion is asserted.
+

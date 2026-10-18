@@ -1,0 +1,37 @@
+**Lemma 7.3 (Compactness with countably many atoms).** The set
+$\mathcal B_\nu$ is compact. Every one of its points is attained
+by a protocol on the original seed space. Every original protocol
+has a point in $\mathcal B_\nu$ of the same return mass and no
+larger risk.
+
+Proof. Attainment follows from Proposition 6.3 and the converse in
+Theorem 5.1. The domination assertion follows from the forward
+direction of the same two results.
+
+For compactness, take any sequence of points of $\mathcal B_\nu$
+and choose their representations in (7.2). Pass to a subsequence
+whose finite simplex vectors $t^{(m)}$ converge to a vector $t$.
+For the first atom pass to a further subsequence on which its label
+is constant, then do so for the second atom, and so on. A diagonal
+subsequence has a label $k_n$ eventually constant for each fixed
+$n$, while retaining convergence of the simplex vectors. A finite
+or empty atom list only shortens this argument.
+
+For any $N$, the first $N$ atomic summands eventually coincide
+with those of the proposed limit. In either coordinate the
+remaining difference is at most
+
+$$
+\sum_{n>N}\lambda_n,
+\tag{7.4}
+$$
+
+since each label coordinate is in $[0,1]$. This tail tends to zero.
+The finite remainder sum converges with $t^{(m)}$. Hence the
+subsequence converges to the point represented by $(k_n)_n,t$,
+which is in $\mathcal B_\nu$. This proves sequential compactness
+in the Euclidean plane and thus compactness. It also covers $d=0$.
+No continuity of a hypothetical optimizer on the infinite assignment
+space, or exchange of an infimum with a limit, has been assumed.
+$\square$
+

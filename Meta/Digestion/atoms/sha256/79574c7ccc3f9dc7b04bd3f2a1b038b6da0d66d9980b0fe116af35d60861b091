@@ -1,0 +1,41 @@
+**Remark 228.4 (Conditional transport and reused mathematics).** The
+arbitrary-address, full-carrier feasibility equivalences are those of
+110.2. Their necessity uses measurable projection fixing the low marks,
+countability of $X$ for one common conull finite-handoff/hard-count event,
+and the vanishing probability tail of the maximum address of the SAME
+whole preselected schedule. Actual finite-pattern witnesses precede seeds.
+For each finite witness family choose its finite execution cutoff; this
+is not a uniform runtime bound over $X$. The whole-execution comparison
+has error at most $\gamma_m+1/m$, where $\gamma_m$ is that schedule-tail
+probability. Class-preserving low tables lie in one finite catalog simplex;
+compactness and continuity retain every non-strict row at the exact
+closed cap. Necessity transports feasibility, not every original law.
+Sufficiency executes actual low queries and uses 228.3 on actual tails.
+
+The exact-law criterion 109.1 concerns a normalized degree-two
+probability-vector kernel $p_\xi=c+\sum_i\ell_i\xi_i+
+\sum_{i<j}Q_{ij}\xi_i\xi_j$: $c\ge H_{\rm ker}$ coordinatewise,
+with its one common schedule-mass bound. Normalization makes that bound
+follow from the vector inequality, as in 108.4. Its $Q_{ij}$ and
+$H_{\rm ker}$ are not the signed score quotient $Q(V)$ or hull $H_L$.
+Failure of exact-law realization for one kernel does not exclude a
+different feasible kernel at the same cap.
+
+| Reused result | Role in the present statements |
+| --- | --- |
+| 198.4–198.5 | Pure-correct membership, the closed hull and its complete support formula |
+| 199.3–199.4 and 207.3 | One-budget full-score alternative and weak duality |
+| 200.4–200.5 | Plateau and zero-conflict membership for the relevant examples |
+| 204.4–204.5 and 214.5 | The zero-cost and exact-$Q$ escapes in 223.2 |
+| 216.3 | The zero core and scaled ray used in 227.3 |
+| 87.1 and 176.1 | Plateau existence and complete triple realization |
+| 109.1 and 110.2 | Normalized exact-law criterion and closed-cap feasibility transport |
+
+Finite linear programming, convex support and Farkas alternatives are
+used in their classical senses. None of these reused results is a new
+amplitude family or original membership region. The distinct conic,
+convex and quantitative variants 223, 225–227 form one constructor-boundary
+subject; 224 adds the normalized full-$O$ face necessity, leaving $N00$
+unclassified. No full $N$ face, conic-mass or arbitrary full-carrier
+necessity classification follows.
+

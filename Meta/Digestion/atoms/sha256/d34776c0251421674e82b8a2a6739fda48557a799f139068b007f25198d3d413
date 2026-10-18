@@ -1,0 +1,56 @@
+**Definition 219.2 (One residual and the same feasible configuration).**
+Put $\alpha=(1,1,0,\ldots,0)$ and use the existing hull
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{n\ge3}b_n,\quad
+ b_1+\sum_{n\ge3}b_n-(L+1)e\le1\},\\
+F_{(\beta,K)}(b,e)&=\sum_n\beta_n(b_n-\alpha_n)-Ke,
+\qquad \sigma_{H_L}(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{219.4}
+$$
+
+At every $w\in\Omega_n$, the independent base, correct and pair
+demands are respectively $1-b_n-e$, $b_n-e$, $1-e$.
+At $w_+$ the base demand is $1-e$. Negative singleton demands are
+retained. Let $d$ be this complete demand vector, $z_D$ the complete
+event vector of a table, $r=z_R=d(\alpha,0)$, $h=d-r$ and
+$G_N=(z_D-r)_{D\in\mathcal D_N}$. Define
+
+$$
+H_N=\{(b,e)\in H_L:\exists\lambda\ge0,
+                   \ G_N\lambda\ge h(b,e)\}.
+\tag{219.5}
+$$
+
+The vector $\lambda$ is on whole tables and has mass $M=\sum_D\lambda_D$.
+It is a probability configuration only when appropriately normalized;
+an affine vector of mass greater than one is not executed as a law.
+For an actual full input $y\ge0$ with $\Delta_O(y)\le1$, a sufficient
+certificate is one full $V\ge0$ and one $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{219.6}
+$$
+
+Indeed, at the same $(b,e)\in H_N$ and the same full feasible $\lambda$,
+
+$$
+F_{Q(y)}(b,e)\le V\cdot h(b,e)+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max(1,M).
+\tag{219.7}
+$$
+
+Here $V\cdot h=F_{Q(V)}$ and each column pairing is at most
+$\Delta_N(V)$. All rows are paid on this same object.
+Membership in $H_L$ alone supplies no feasible $\lambda$.
+No quotient, baseline, unary, suffix, support or terminal coefficient
+must be preserved in the unrestricted search. Nonzero zero-cost $V$
+remain allowed at $\theta=1$. Equations (219.3)–(219.7) are reused
+interfaces, rather than separate mathematical increments.
+

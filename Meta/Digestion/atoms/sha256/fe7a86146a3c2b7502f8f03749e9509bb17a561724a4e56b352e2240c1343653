@@ -1,0 +1,6 @@
+## 8. Direct closure by one Schmidt cut, without the general normal-form theorem
+
+This section provides an alternative proof of the equality classification in Section 3. It uses the inherited global HS4 inequality and the equality consequences of Section 2, but does not use [GW10], Theorem 5, Kempf-Ness theory, or a classification of general four-qubit states. The quantum-coordinate tools are the standard two-qubit spin-flip and magic-basis tools [HW97], with the precise identities derived here. All statements in this section remain ordinary mathematical proofs, not new Lean declarations.
+
+Write lambda_*=(1/2,1/6,1/6,1/6). For a normalized state define the spin bilinear q(psi)=psi^T sigma_y^{tensor 4} psi, so tau_4=|q|^2. For every two by two matrix V, direct multiplication gives V^T sigma_y V=(det V)sigma_y. Consequently |q| is invariant under product local unitaries; its phase need not be invariant.
+

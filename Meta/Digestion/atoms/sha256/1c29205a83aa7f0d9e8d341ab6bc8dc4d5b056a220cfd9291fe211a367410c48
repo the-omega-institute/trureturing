@@ -1,0 +1,39 @@
+**Definition 5.1 (the credited finite envelopes).** A nonempty
+$P\subseteq S_d$ is range-feasible if $|g_q(P)|\le4$ for every $q$.
+Let $H(P)$ contain exactly the targets not determined on $P$ by
+any own boundary reply $r_a$, with constants also counted as easy.
+Write
+
+$$
+Y_P(x)=(g_q(x))_{q\in H(P)},\qquad
+b_y(P)=\sum_{\substack{x\in P\\Y_P(x)=y}}w(x),\qquad
+\kappa_w(P)=\left(\sum_y b_y(P)^2\right)^{1/2}.
+\tag{COK.27}
+$$
+
+The [JTC, Theorem 2.2][JTC] and [RCE, §§2–4][RCE] joint envelope is
+
+$$
+J_d(w)=\max_{\substack{\varnothing\ne P\subseteq\operatorname{supp}w\\
+                       P\text{ range-feasible}}}\kappa_w(P).
+\tag{COK.28}
+$$
+
+For $w=0$ its value is zero. Allowing declared zero-weight states in
+the maximum has the same value by [RCE, Lemma 2.2][RCE]; this does not
+remove those states from a structural hypothesis on a declared set.
+
+For the [OCB, Definition 4.2][OCB] owner envelope set
+
+$$
+E(P)=\{q:g_q\text{ is a function of }r_q\text{ on }P\}.
+\tag{COK.29}
+$$
+
+Its test supports are range-feasible nonempty $P$ on which
+$(r_q)_{q\in E(P)}$ separates the states. $\mathcal U_d(w)$ is the
+largest $w(P)$ over them, and is zero for $w=0$. This test family
+is hereditary, so restricting to positive support leaves the maximum
+unchanged. Neither these test supports nor range-feasible supports
+are all asserted to be native admissible fibers.
+

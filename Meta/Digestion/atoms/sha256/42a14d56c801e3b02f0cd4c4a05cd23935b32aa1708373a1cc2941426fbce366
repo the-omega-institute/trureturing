@@ -1,0 +1,234 @@
+**Theorem 212.8 (Nine-family simultaneous fixed-data minimum).**
+Let $B_*$ be the maximum of these nine families:
+
+$$
+\begin{array}{c|l|l}
+ &\text{entry}&\text{indices}\\\hline
+1&S+t&\text{none}\\
+2&S+\gamma_i&i\in I\\
+3&S/2+\gamma_i+a_i/2+t&i\in I\\
+4&S/2+\gamma_i+\gamma_j&i<j\text{ in }I\\
+5&\gamma_i+\gamma_j+t&i<j\text{ in }I\\
+6&S-a_i+\gamma_j+t&i<j\text{ in }I\\
+7&\gamma_i+\gamma_j+\gamma_k&i<j<k\text{ in }I\\
+8&S-a_i+\gamma_j+\gamma_k&i<j<k\text{ in }I\\
+9&\gamma_i+a_i+\gamma_k&i<j<k\text{ in }I.
+\end{array}
+\tag{212.31}
+$$
+
+Absent indexed families are omitted; in family 9 the intermediate
+index $j$ requires an actual address strictly between $i$ and $k$.
+Then
+
+$$
+\min_{y\in\mathcal A(\nu,\gamma,t)}B_N(y)
+ =\min_{y\in\mathcal A(\nu,\gamma,t)}B_O(y)=B_*.
+\tag{212.32}
+$$
+
+One score attains both minima simultaneously. It has balanced lifts
+$P^*_{01x}=P^*_{10x}=\nu(x)/2$, terminal mass $t$, and the existing
+threshold placement of 203.2: for each $n\in I$, send length measure
+on $[0,\gamma_n)$ to the word
+
+$$
+w^n_k(r)=1\ (k<n),\qquad w^n_n(r)=0,\qquad
+w^n_j(r)=\mathbf1_{r<a_j}\ (j>n).
+\tag{212.33}
+$$
+
+Put the length of each inverse image in its correct row and add
+coincident rows. The parameter correspondence to (203.10) is
+$a_{nj}=\nu\{x_n=0,x_j=1\}=a_j$ for $n<j$.
+This uses the same threshold constructor even when $t<\max\gamma$;
+the assertion here is its exact all-terminal fixed-data minimum.
+For every input in this class the resulting single score $V_*$ has
+
+$$
+Q(V_*)=Q(y),\qquad
+\Delta_N(V_*)=\Delta_O(V_*)=B_*-S-t\le\Delta_O(y).
+\tag{212.34}
+$$
+
+Every unit-$O$ input in the class consequently has certificate
+$(V_*,0)$.
+
+**Proof.** First take an arbitrary competitor, with its entire early
+allocation and arbitrary correct suffixes. Constant zero earns $S+t$,
+and the head table earns $S+\max(t,\max_i\gamma_i)$, supplying
+families 1 and 2. For each $i\in I$, the two legal stopped tables
+$(a,i;0,i,0)$, $a=1,2$, earn $S+t+\gamma_i-p_a$, where
+$p_a=P\{w_a=1,w_i=0\}$. Their pair-loss sets are disjoint on
+$\Omega_1\cup\Omega_2$, even in the presence of prefix $00$,
+and $p_1+p_2\le S-a_i$. The better table gives family 3.
+
+Write $P_a=\sum_{\Omega_a}P$, so $P_1+P_2=S$.
+For $i<j$, table $(a,i;a,i,j)$ collects at least
+$P_a+\gamma_i+\gamma_j$. Choosing $P_a\ge S/2$ gives family 4.
+The stopped tables $(i,j;i,j,0)$ and $(i,j;i,j,k)$ give families
+5 and 7. Their correct classes lie wholly in their respective
+stopped cells, independently of suffixes. Table $(i,j;0,j,0)$
+gives family 6 because the first cell contains pair mass $S-a_i$.
+For $i<j<k$, tables $(i,j;0,j,k)$ and $(i,j;i,0,k)$ give
+families 8 and 9, respectively: in the latter, pair cell $10$ has
+mass $a_i$. Any additional rewards are nonnegative. Thus each of
+the nine expressions is a lower bound from one complete legal table,
+and $B_O(y)\ge B_*$ throughout the fixed-data class.
+
+We bound the full support of (212.33), retaining every possible
+winning label. The head support is $S+\max(t,\max\gamma)$.
+At an early/late pair $(a,j)$ the early-zero cell maxima sum to
+$S/2$. The other two maxima are
+
+$$
+\begin{aligned}
+M_{10}&=\max\left\{(S-a_j)/2,\gamma_j,
+                         (\gamma_n-a_j)_+\ (n<j)\right\},\\
+M_{11}&=\max\left\{a_j/2+t,\gamma_n\ (n>j),
+                              \min(\gamma_n,a_j)\ (n<j)\right\}.
+\end{aligned}
+\tag{212.35}
+$$
+
+Every correct-class index here is late. If $M_{10}$ uses its pair
+baseline, $S/2+M_{10}+M_{11}$ is at most a family-1 or family-2
+entry. Otherwise let its winning class be $n\le j$, of reward
+$\gamma_n-\epsilon$, where $\epsilon=0$ for $n=j$ and
+$\epsilon=a_j$ for $n<j$. Against the final baseline the total
+is at most family 3 at $n$: for $n<j$, the correction
+$-a_j+a_j/2\le a_n/2$, and for $n=j$ it is equality.
+Against a different final correct class it is at most family 4,
+after ordering the two indices. Against the same class, the two
+complementary pieces sum to $\gamma_n$, so family 2 bounds it.
+This proves every early/late full-pair bound without independent
+allowances for its last two cells.
+
+For a late pair $i<j$, let $b=S-a_i-a_j\ge0$.
+The four full-label maxima are
+
+$$
+\begin{aligned}
+M_{00}&=\max\{b,(\gamma_i-a_j)_+,
+                (\gamma_n-\max(a_i,a_j))_+\ (n<i)\},\\
+M_{01}&=a_j,\\
+M_{10}&=\max\{a_i,\gamma_j,
+                (\gamma_n-a_j)_+\ (i<n<j)\},\\
+M_{11}&=\max\{t,\gamma_n\ (n>j),
+ \min(\gamma_n,a_i,a_j)\ (n<i),
+ \min(\gamma_n,a_j)\ (i<n<j)\}.
+\end{aligned}
+\tag{212.36}
+$$
+
+Indeed the zero-label pair projection is $(b,a_j,a_i,0)$, with
+$t$ added in $11$. Early labels earn subsets of it.
+For $n<i$, the threshold intervals give mass
+$(\gamma_n-\max(a_i,a_j))_+$ in $00$ and
+$\min(\gamma_n,a_i,a_j)$ in $11$; its off-diagonal interval
+lengths are bounded by $a_j$ in $01$ and by $a_i$ in $10$.
+For $n=i$ the only possible nonzero cells are $00,01$ with
+masses $(\gamma_i-a_j)_+,\min(\gamma_i,a_j)$.
+For $i<n<j$ they are the complementary $10,11$ entries;
+$n=j$ contributes only $\gamma_j$ in $10$ and $n>j$ only
+$\gamma_n$ in $11$. This proves (212.36) for all labels, including
+earlier unqueried ones.
+
+Choose the baseline on a tie in $00$ or $10$. When $00$ exceeds
+$b$, let its winner be $n\le i$, with reward $\gamma_n-h$,
+where $h=a_j$ if $n=i$ and $h=\max(a_i,a_j)$ if $n<i$.
+When $10$ exceeds $a_i$, let its winner be $q\in(i,j]$, with
+reward $\gamma_q-\epsilon$, where $\epsilon=0$ if $q=j$ and
+$\epsilon=a_j$ otherwise. A final winner is terminal, future
+$k>j$, earlier $k<i$, or intermediate $i<k<j$; $k=i,j$ is
+impossible there. There are four exhaustive cases.
+
+If neither cell gains, the support is $S+M_{11}$, bounded by
+families 1 and 2.
+
+If only $10$ gains, the support is
+$S-a_i+\gamma_q-\epsilon+M_{11}$.
+A terminal winner is bounded by family 6 at $(i,q)$; a future
+winner by family 8 at $(i,q,k)$.
+An earlier winner contributes at most $a_i$, giving family 2 at $q$.
+For an intermediate winner with $q<j$, its contribution is at most
+$a_j=\epsilon$, again giving family 2. If $q=j$, an intermediate
+winner $k$ instead gives family 8 at $(i,k,j)$.
+
+If only $00$ gains and $n=i$, the support is
+$\gamma_i+a_i+M_{11}$.
+For a terminal winner, $a_i\le S$ bounds this by family 3 at $i$;
+for a future winner use family 9 at $(i,j,k)$.
+Earlier or intermediate final rewards are at most $a_j$, so family 2
+bounds them. If instead $n<i$, the support is
+$\gamma_n+\min(a_i,a_j)+M_{11}$.
+Since $\min(a_i,a_j)\le S/2$, a terminal winner is bounded by
+family 3 at $n$, and a distinct correct winner by family 4.
+If the final winner is that same $n$, its $00,11$ pieces are
+parts of one measure. As $00$ gained, $\gamma_n>\max(a_i,a_j)$,
+and the support is $\gamma_n+2\min(a_i,a_j)\le\gamma_n+S$,
+bounded by family 2.
+
+If both cells gain, the support is
+
+$$
+\gamma_n+\gamma_q+M_{11}+a_j-h-\epsilon,
+\qquad a_j-h-\epsilon\le0.
+\tag{212.37}
+$$
+
+A terminal winner gives family 5 and a third distinct correct class
+gives family 7, after ordering the indices. If the final winner is
+$q$, then $q<j$; its $10,11$ pieces sum to $\gamma_q$ and
+$h\ge a_j$ leaves at most $\gamma_n+\gamma_q$.
+If the final winner is $n$, then $n<i$.
+When $q<j$, complementarity and $\epsilon=a_j$ give the same bound.
+When $q=j$, the remaining expression is
+
+$$
+\gamma_n+\gamma_j+a_j-\max(a_i,a_j)+\min(a_i,a_j)
+ \le\gamma_n+\gamma_j+S/2,
+$$
+
+since the last correction is at most $\min(a_i,a_j)\le S/2$.
+Family 4 bounds it. Thus repeated winners never receive two copies
+of the same correct mass.
+
+Every full pair is now at most $B_*$. Short $N$ rules refine into
+such pairs, so $B_N(V_*)\le B_*$. The stopped lower bound applies
+to this very score and $B_O(V_*)\le B_N(V_*)$, proving both
+attained minima. Totals give (212.34). The proof makes no divisions
+by masses, and includes $L=3$, $t=0$, zero classes, zero carrier,
+unequal tied thresholds and every closed endpoint. It asserts global
+catalog minima, not pair-by-pair equality or decrease. $\square$
+
+For a growing unequal instance, let $m=L-2\ge4$,
+$a_\varnothing=0$, $a_3=1$, $a_j=2$ for $j\ge4$,
+$\gamma_j=3$ and $t=2$. Balanced lifts with correct mass three at
+each sole-zero word give an input $Y$.
+Here $S=2m-1,W=S+2$. On a late pair the full maxima are
+$(S-a_i-a_j,3,3,3)$ and the stopped maxima are
+$(S-a_i,3,3)$; maximizing gives $S+6,S+5$.
+The head and early/late pairs have support at most $S+5$, as do
+short schedules by direct singleton marginals. Thus the costs are
+$(4,3)$. Constructor (212.33) puts mass two at each sole-zero word
+and mass one at $1^{j-1}0^{L-j+1}$ in class $j$, adding coincident
+rows at $j=L$. Formula (212.31) gives its two costs as three.
+Scaling all weights by $1/3$ gives an actual unit-$O$ input and a
+same-$Q$ certificate of cost one at every such length.
+
+For the original class 3, every suffix unary zero moment is zero.
+Its conditioned carrier has one suffix one per atom and at least
+two suffix zeros. The signed cut $1-\sum_{j>3}\mathbf1_{v_j=0}$
+has target mass three and positive-part carrier integral zero.
+Thus exact unary matching does not produce this comparison; the
+threshold attainer changes those unaries. This is a route distinction,
+not exclusion from the old signed or convex certificate set.
+At $t\ge\max\gamma$, the protected-terminal minimum is already
+203.2; the equal-pair specialization is already 209.3, including
+207.17's bounded subcase. Formula (212.31) supplies the unequal-star
+minimum for arbitrary terminal mass. Its carrier assumption excludes
+atoms with two late ones, and its input class excludes positive early
+correct mass, base rows and late pair rows. No reduction of general
+complete scores to this class is asserted.
+

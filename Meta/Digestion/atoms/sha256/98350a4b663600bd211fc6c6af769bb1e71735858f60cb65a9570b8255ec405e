@@ -1,0 +1,50 @@
+**Theorem 9.3 (actual-label obstruction strictly before the cap).** There
+exists $\eta_3>0$ with $\tau_3-\eta_3>\bar\tau$ such that every
+height-optimal original implementation at each
+$\tau\in(\tau_3-\eta_3,\tau_3]$ has at least four actual low live-bearing
+labels. Three such labels do suffice for optimal height on the credited
+closed initial interval $[0,\tau_\dagger]$. Thus loss of three-label
+optimal-height sufficiency occurs strictly before its feasibility cap.
+Theorem 9.5 strengthens this local consequence to the exact unique
+actual-label threshold and matching four-label height attainments, using
+RC's complete curve.
+
+Proof. The set $\mathcal F$ of orthonormal $Q$-null frames is compact.
+Its continuous functions
+
+$$
+\gamma(F)=\sum_i|(f_i)_0(f_i)_1|,\qquad
+V(F)=\frac{(1-\delta)\Delta A+L_f+\sum_i|f_i^TGf_i|}{2}
+\tag{RH.88}
+$$
+
+bound every actual-three-label implementation by Lemma 8.2 and the TV
+inequalities in Theorem 2.2. Conversely Section 5 realizes each frame
+with deterministic reports maximizing $\gamma(F)$, exactly three low
+live-bearing labels, and actual TV $V(F)$. Therefore the restricted
+maximum is $\max_{\gamma(F)\geq\tau}V(F)$. This compact maximum is used
+only for the following obstruction, not as a purported evaluation of
+the full residual target.
+
+For any sequence $\tau_n\uparrow\tau_3$, maximizing frames have a
+subsequence converging to a frame with $\gamma\geq\tau_3$. Theorem 9.1
+bounds its limiting value by $T_{3,\rm cap}$. The cap frame remains
+feasible below the cap, so the restricted maxima converge to that value.
+Keep the two fixed instruments in Theorem 9.2 and vary their retained
+choice weights to produce contrast $\tau$ on $[\tau(z_0),1]$. Their
+actual value $M(\tau)$ is affine and continuous, with positive gap at
+$\tau_3$. Thus $M(\tau)$ strictly exceeds the restricted maximum
+throughout a sufficiently small left neighborhood of the cap.
+The exact full-class reduction has finite optimum attainment, so no
+height optimizer there has at most three such labels. A positive
+nonatomic live-bearing record, if present, already has infinitely many.
+
+Theorem 8.3 proves the lower bound of three labels everywhere. The
+spectral frame attains optimal height on $[0,\bar\tau]$ for the
+inequality requirement, and Proposition 7.1 extends that actual
+three-label sufficiency through $\tau_\dagger$. This proves the
+claimed separation of feasibility from optimality. The real-atom
+left-neighborhood obstruction is already JR54.4; the present conclusion
+requires the actual-label bridge and the strict common realization.
+$\square$
+

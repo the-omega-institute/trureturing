@@ -1,0 +1,18 @@
+**Proposition 2.3 (the stabilized object and its scope).** Theorem 2.2
+stabilizes the predicate of equality to one supplied finite row. It
+does not assert that $n\mapsto R_P(\rho^n t)$ is eventually constant
+for every cut. It does not impose an upper bound on a feasible epoch.
+
+Proof. With $P=\varnothing$ and $t=\alpha$, the output is the full
+tree $T_n$. These are pairwise distinct by NSF Lemma 9.2. Every fixed
+finite proposed output nevertheless eventually fails, as in the first
+case of Theorem 2.2. With $P=\{\varepsilon\}$, the single-hole row
+holds at every epoch. Its threshold zero is a truth threshold, not
+a bound on actual time. $\square$
+
+The atomic-orbit index compiler [ARH, Theorem 5.2][ARH] already uses
+eventual whole-row truth after its designated relation has forced the
+source to be some $T_k$. That restricted supplier is retained. The
+quantifiers in (NUE.6) instead keep every arbitrary finite $t$ and
+preserve that very $t$ while changing its epoch.
+

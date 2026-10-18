@@ -1,0 +1,27 @@
+**Reuse 2.4 (exact advancement and the four replies).** For every
+$u\in\mathcal T$, $k,j\in\mathbb N_0$, the existing suppliers give
+
+$$
+c(\rho^k u)=c(u)+k,
+\tag{IDC.2.8}
+$$
+
+$$
+\begin{array}{c|c}
+\text{reply at }R^j&\text{equivalent condition on }c(u)\\\hline
+\mathsf{abs}&c(u)<2j\\
+\alpha&c(u)=2j\\
+\beta&c(u)=2j+1\\
+\mathsf{br}&2j+2\le c(u).
+\end{array}
+\tag{IDC.2.9}
+$$
+
+These are [CLOCK]'s `right_clock_iterate` and `right_clock_readout`, with
+the private `clock_step` as an existing proof supplier, and [TM,
+(RA.2304), (RA.2307)][TM]. Under the literal source identification,
+$\alpha=\mathtt{of\ true}$, $\beta=\mathtt{of\ false}$, pairing is
+`FreeMagma.mul`, $\rho$ is `substitution`, and $R$ is the address bit
+`true`; `rights j` is precisely $R^j$. No current clock value is delivered
+by a new port. Formula (IDC.2.9) describes what an actual raw read means.
+

@@ -1,0 +1,24 @@
+## 412. Source application and scalar scope
+
+For a six-edge residual owner A(P0) or B(P0), let r be its high P0
+cosh, v the V cosh, a its transverse C or D cosh, and b its opposite
+low axial cosh. The source bounds give r>=m, v<=m-2 and a<m-2,
+so r>=max(v,a)+2. Every such genuine owner with theta_P0<=pi/3
+therefore obeys
+
+    3*theta_P0+2*beta_V+2*beta_companion>2*pi.
+
+Every such genuine owner, with no axial-angle restriction, obeys
+
+    4*theta_P0+2*beta_V+2*beta_companion>2*pi.
+
+The companion is C for A(P0), and D for B(P0). Its identity must be
+retained in any joint budget. Only the three-theta estimate is
+conditional on the small axial angle. These supply compensating low-label charges and do
+not establish that every owner is expensive on H={M,Z,U,V}, that any
+scalar inventory is a quotient, or by themselves exclude the full six-edge flat stratum.
+
+The proof uses original slots and hence requires no simplification of
+loops, self-gluings, repeated owners, or normal-link intervals.
+
+

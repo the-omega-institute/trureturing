@@ -1,0 +1,15 @@
+**引理 7.3（robust finite orientation）。** For simultaneous reports with $e\le1/2$, set
+
+$$
+Z=\operatorname{sgn}\bigl(y_0\cdot(y_2\times y_1)\bigr)(y_2\times y_1).
+$$
+
+Then $\|Z-x_3\|\le9\sqrt e$ for all actual unit-read histories. In particular wrong or zero computed signs, actual zero, tiny vectors and off-image reports are allowed.
+
+**证明。** The cross-product difference is at most
+$q_2 e+(q_1+e)e\le3e$. Expanding the triple-product difference gives at most
+$e\|w\|+\|y_0\|3e\le7e$. If the computed sign is correct, the cross bound suffices. If it is wrong or zero, Lemma 2.1 gives
+$q_2^2\le|x_0\cdot w|\le7e$. Since $\|w\|=q_1q_2\le q_2$,
+$\|Z-x_3\|\le3e+2\sqrt{7e}\le9\sqrt e$.
+Actual zero follows by the same bound without division. Independence or source-image membership was never used.
+

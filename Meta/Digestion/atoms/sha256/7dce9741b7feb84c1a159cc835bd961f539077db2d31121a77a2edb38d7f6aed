@@ -1,0 +1,36 @@
+**Theorem 3.3 (one source for a batch of zero executions).**
+Let $(h_i)_{i\in I}$ be any nonempty collection of actual finite
+all-zero executions, with their individual fixed tapes and policies
+satisfying Definition 1.2. Write $Q_i=Q(h_i)$ and
+$U=\bigcup_{i\in I}Q_i$. There is one high source $(n,J)$ reproducing
+every one of these executions on its respective tape if and only if
+
+$$
+|U|\le t.
+\tag{3.5}
+$$
+
+If these executions terminate in finite real proposals $C_i$, one high
+source can both reproduce all of them and falsify all proposals if and
+only if $|U|\le t$ and $\sup_{i\in I}C_i<\infty$. For a finite batch,
+the second condition is automatic.
+
+**Proof.** A matching high source must have $Q_i\subseteq J$ for every
+$i$, hence $U\subseteq J$ and $|U|\le t$. Conversely extend $U$ to a
+$t$-subset $J$ of $A$. Each $n\ge1$ gives all the required zero replies;
+finite-path transfer preserves each individual execution. For falsity
+also require $n>C_i$ for all $i$. Such a positive integer exists exactly
+when the real proposals are bounded above. Necessity follows from
+$\sup_i C_i\le n$ for any witnessing integer. $\square$
+
+For a measurable tape event $E$ at $b$, literal matching on every tape
+requires (3.5) for the union of its query sets. Matching almost surely
+on $E$ instead requires one fixed $J$ with
+$\mu(E\setminus E_J)=0$. Individual existence of a compatible $J$
+on each tape proves neither statement. These are the explicit batch
+conditions behind the counting step of (2.4).
+[KBonacci, Theorem 38.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md)
+already chooses one source for an entire truncated event; its finite
+prime-cylinder supplier has a different compatibility capacity from
+(3.5).
+

@@ -1,0 +1,75 @@
+### 57.3 Exact compact complement and seed remainder
+
+Put \(e=1-b\) and use the closed root cube
+\[
+\mathcal B=[0,1/2]\times[-1,1]^3
+\quad\text{in coordinate order }(e,s,t,v).                 \tag{57.22}
+\]
+For each of the four rows and each chart, define rational polynomials
+\[
+\begin{aligned}
+U_{R,c}(e,s,t,v)&=A_{R,c}(1-e,s,t,v)
+ +(1+e)B_{R,c}(1-e,s,t,v),\\
+V_{R,c}(e,s,t,v)&=-e^4B_{R,c}(1-e,s,t,v).
+\end{aligned}                                               \tag{57.23}
+\]
+The definitions of \(A,B\) remain exactly (56.4). The same seed identity
+as in (57.15) yields
+\[
+h=2-b-e^4k(b),\qquad
+k(b)=\frac1{(1+b^2)(h(b)+2-b)}>0,                          \tag{57.24}
+\]
+so the necessary row is exactly \(U_{R,c}+k(b)V_{R,c}\).
+All denominators in (57.24) are positive on the entire closed root
+cube. Use the following fixed tensor Bernstein degrees for both
+\(U\) and \(V\), inserting zero coefficients when necessary:
+\[
+\begin{array}{c|c}
+R&(N_e,N_s,N_t,N_v)\\\hline
+I&(16,8,8,2)\\
+H&(15,6,6,1)\\
+G&(18,8,8,2)\\
+L&(14,6,6,1).
+\end{array}                                                \tag{57.25}
+\]
+Apply the rational conversion (57.20) on the root intervals (57.22)
+and its midpoint subdivision rule to each of the two polynomials.
+
+Here are explicit rational bounds for \(k\) at any leaf. Set
+\(D_0=10^{20}\), and for rational \(b_0\in[1/2,1]\), let \(j(b_0)\)
+be the unique nonnegative integer satisfying
+\[
+j(b_0)^2\le D_0^2\frac{3-b_0^2}{1+b_0^2}
+ <(j(b_0)+1)^2.                                            \tag{57.26}
+\]
+All comparisons reduce to integer comparisons with positive
+multipliers. If the leaf's first-coordinate interval is
+\([e_-,e_+]\), put \(b_-=1-e_+\), \(b_+=1-e_-\), and
+\[
+h_-=j(b_+)/D_0,\qquad h_+=(j(b_-)+1)/D_0.
+\]
+The monotonicity \(h'(b)=-4b/[h(b)(1+b^2)^2]\le0\) gives
+\(h_-\le h(b)\le h_+\) throughout the closed leaf. Consequently
+\[
+k_-:=\frac1{(1+b_+^2)(h_++2-b_-)}
+\le k(b)\le
+\frac1{(1+b_-^2)(h_-+2-b_+)}=:k_+.                         \tag{57.27}
+\]
+No monotonicity assumption on \(k\) is needed for these inequalities.
+
+Let \(u_\nu,w_\nu\) be the leaf's rational Bernstein coefficients
+of \(U_{R,c},V_{R,c}\). Define
+\[
+\ell_\nu=u_\nu+w_\nu
+ \begin{cases}k_-,&w_\nu\ge0,\\k_+,&w_\nu<0,\end{cases}
+\quad
+q_\nu=u_\nu+w_\nu
+ \begin{cases}k_+,&w_\nu\ge0,\\k_-,&w_\nu<0.\end{cases}     \tag{57.28}
+\]
+The Bernstein basis is nonnegative and sums to one; hence
+\[
+\min_\nu\ell_\nu\le U_{R,c}+k(b)V_{R,c}
+\le\max_\nu q_\nu                                         \tag{57.29}
+\]
+on that whole closed leaf.
+

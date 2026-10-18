@@ -1,0 +1,52 @@
+**Definition 2.2 (native cells, sources and core laws).** Encode one
+ternary digit by an actual tree
+
+$$
+G(0)=\alpha,\qquad G(1)=\beta,\qquad
+G(2)=\langle\alpha,\alpha\rangle.
+\tag{NCO.10}
+$$
+
+Expand $z\in F^M$ in the public basis into $C$ ternary digits. Build
+a complete binary skeleton of depth $\ell$, put these $C$ cells in
+the first $C$ bottom slots in lexicographic order, and put alpha in
+the remaining slots. Call this tree $\mathsf{Bank}(z)$. A cell-root
+Read returns respectively $\alpha,\beta,\mathsf b$. Reading one whole
+field coordinate requires $m$ such native calls. There is no tuple
+reply or additional symbol.
+
+Define
+
+$$
+\mathsf{Comb}_0(u)=u,\qquad
+\mathsf{Comb}_{h+1}(u)=\langle\alpha,\mathsf{Comb}_h(u)\rangle,
+\tag{NCO.11}
+$$
+
+and, for $2\le j\le n$, $e\in\{0,1\}$ and $z\in F^M$, set
+
+$$
+t_{j,e,z}=
+\left\langle\alpha,
+ \left\langle\mathsf{Bank}(z),\mathsf{Comb}_{j-2}(\lambda_e)
+ \right\rangle\right\rangle.
+\tag{NCO.12}
+$$
+
+Thus the bank is at $RL$, and the first leaf on the target ray is at
+$R^j$. Define two actual-source laws, zero on other trees, by
+
+$$
+P_0(t_{j,e,z})=
+\frac{\mathbf1\{H(z)=\iota(j)\}}{2NQ^r},
+\qquad
+P_1(t_{j,e,z})=\frac1{2NQ^M}.
+\tag{NCO.13}
+$$
+
+Equivalently, both first choose $j,e$ uniformly. The first chooses $z$
+uniformly on $H^{-1}(\iota(j))$; the second chooses $z$ independently
+uniformly on $F^M$. These choices prepare a single actual tree. Every
+later reply is its deterministic native reply, including replies at
+cell descendants and at words not used by the upper strategy.
+

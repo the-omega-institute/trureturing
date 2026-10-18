@@ -1,0 +1,11 @@
+**Proposition 8.2 (the local meaning of the transverse test).** Under (8.1), the derivative of
+$f(S,\kappa)=\mathcal T_\kappa S$ on the source/slope domain is nonsingular at $(S,a)$ exactly when $h(S)\ne0$.
+
+**Proof.** By (6.1) and (8.3), $K$ is not in the source tangent space $\mathsf V_S$. Thus $\mathcal T_a$ restricts injectively from this three-dimensional space onto its three-dimensional range. The derivative is
+
+$$
+(V,t)\longmapsto\mathcal T_a V+t\mathcal C S,\qquad V\in\mathsf V_S.
+$$
+
+Its first three dimensions give precisely that range. It is invertible exactly when $\mathcal C S$ lies outside the range, or equivalently when $w(\mathcal C S)\ne0$. Together with (8.1), the coefficient condition of Theorem 8.1 characterizes nonsingularity at every source on this singular slice. It asserts local derivative nonsingularity, without a global inverse. ∎
+

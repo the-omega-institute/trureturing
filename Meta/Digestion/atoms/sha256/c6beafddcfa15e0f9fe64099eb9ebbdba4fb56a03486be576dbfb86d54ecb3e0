@@ -1,0 +1,177 @@
+**Theorem 8.2 (Four generators and all three TP equations).** For every
+$H$ in (8.1), the entire selected zero face is
+
+$$
+\mathcal E_H=
+\operatorname{cone}\{k_h,k_{+0},k_{-+},k_{0-}\}.
+\tag{8.3}
+$$
+
+These four generators are linearly independent. Its full TP slice
+consists exactly of
+
+$$
+\begin{aligned}
+x_H(w)={}&wk_h+(1-wq_0)k_{+0}
+                  +(2-wq_+)k_{-+}+(2-wq_-)k_{0-},\\
+&w\ge0,\qquad wq_0\le1,\quad wq_+\le2,\quad wq_-\le2.
+\end{aligned}
+\tag{8.4}
+$$
+
+Every point in (8.4) is one legal fixed scalar port, with at most
+$100$ flags and whole-block CPTP decoders. This classifies this
+specified witness's zero face; it imposes no support restriction
+on competitors outside that face.
+
+Proof. First classify real zero products before filtering. By
+simultaneous sector rotations and an irrelevant overall sign of
+the preparation, a real unit preparation can be put in the canonical
+form $a(p)=\sqrt{p_0}d+\sqrt{p_+}u_++\sqrt{p_-}u_-$.
+These operations leave its atom coefficients unchanged when applied
+to both factors, as in QAP Theorem 2.2. For this preparation, the
+actual measurement quadratic form (4.7), in the ordered radial
+and tangent coordinates, has the exact block decomposition
+
+$$
+\Psi(a(p),b)=b_r^T\mathcal C(p)b_r
+             +(p_0+p_+)b_{t+}^2+(p_++p_-)b_{t-}^2.
+\tag{8.5}
+$$
+
+Here $b_r=(d^Tb,u_+^Tb,u_-^Tb)^T$,
+$b_{t\pm}=v_\pm^Tb$, and $\mathcal C(p)$ is exactly (4.8).
+Thus this calculation retains every tangent direction, as well
+as the full interior radial determinant.
+
+If all $p_i$ are positive, (4.9) and equality in AM–GM give
+
+$$
+\det\mathcal C(p)=0
+\quad\Longleftrightarrow\quad
+p_0^2p_+=p_+^2p_-=p_-^2p_0
+\quad\Longleftrightarrow\quad
+p_0=p_+=p_-=1/3.
+\tag{8.6}
+$$
+
+For the last equivalence, division is only by strictly positive
+populations; the three monomial equalities force their ratios to
+be one. Otherwise $\mathcal C(p)$ is positive definite: its
+diagonal and its three two-by-two principal minors listed after
+(4.8) are positive, and its determinant is positive. Both tangent
+coefficients in (8.5) are also positive. At the equal population,
+
+$$
+\mathcal C(p)=\tfrac13(3I_3-\mathbf1\mathbf1^T),\qquad
+\ker\mathcal C(p)=\mathbb R(1,1,1),
+\tag{8.7}
+$$
+
+while both tangent coefficients are $2/3$. Thus the only unit
+measurement projectors giving zero there are $bb^T=a(p)a(p)^T$.
+Undoing the simultaneous rotations gives $b=\pm a$, with each
+preparation population equal to $1/3$. Equivalently, in the
+Cauchy–Schwarz bounds preceding (4.8), equality forces all three
+sector inner products to saturate with one common sign. There is
+no independent relative-sign zero or omitted tangent zero.
+
+If exactly two populations are positive, the determinant in (4.9)
+is respectively $p_0^2p_+$, $p_+^2p_-$ or $p_-^2p_0$.
+It is strictly positive in each case, all diagonal entries and
+two-by-two minors of $\mathcal C(p)$ are positive, and the two
+tangent coefficients in (8.5) are positive. Thus there are no edge
+zero products. At a vertex, (8.5) gives exactly the following
+measurement kernels in the original five-dimensional space:
+
+$$
+\begin{array}{c|c}
+\text{preparation sector}&\text{whole measurement kernel}\\\hline
+V_0&V_-\\
+V_+&V_0\\
+V_-&V_+
+\end{array}.
+\tag{8.8}
+$$
+
+Directions within a displayed two-plane contribute the same disjoint
+sector atom: all six plane coefficients vanish and only its one
+population entry remains. These are $k_{0-},k_{+0},k_{-+}$.
+The interior zero products all give $k(a_*,a_*)$. This exhausts
+every nonzero real product; no boundary case uses division by a
+zero population.
+
+Filtering replaces the measurement vector by $H^{-1}b$. Since
+$H$ is invertible and scalar on each sector, (8.8) is unchanged.
+At an interior zero, $H^{-1}b$ is proportional to $a$; normalizing
+$b$ gives precisely $b_h$ after the same canonical rotations.
+Thus the four zero-atom coefficients are exactly those in (8.3).
+The witness is invariant under simultaneous orthogonal changes
+within each sector, and hence under the torus and reflection used
+in (1.8). Therefore
+
+$$
+\operatorname{tr}(W_HZ(k(a,b)))=\Psi_H(a,b).
+\tag{8.9}
+$$
+
+Every point of $\mathcal K$ is a finite nonnegative sum of unit
+atoms. Each summand in its witness pairing is nonnegative, so a
+zero sum uses only zero atoms. The preceding exhaustive analysis
+proves (8.3). The full-support generator has positive diagonal
+population entries; the other three have distinct disjoint sector
+entries and zero diagonal. This proves their linear independence.
+
+The full input marginal of a unit atom, with measurement population
+$q(b)$, is the supplied identity
+
+$$
+\operatorname{Tr}_{\rm out}Z(k(a,b))
+                  =\sum_i\frac{q_i(b)}{n_i}R_i.
+\tag{8.10}
+$$
+
+It is also immediate from (1.6), since each $F_{\nu a}$ is
+traceless. Write the four coefficients in (8.3) as
+$w,c_{+0},c_{-+},c_{0-}$. All three TP equations are exactly
+
+$$
+wq_0+c_{+0}=1,\qquad
+wq_++c_{-+}=2,\qquad
+wq_-+c_{0-}=2.
+\tag{8.11}
+$$
+
+Solving them, and imposing nonnegativity of every coefficient,
+gives (8.4) in both directions. Their total coefficient weight is
+$5$. Equation (8.10) proves the whole matrix marginal $I_5$
+before division by five, rather than just its trace.
+
+For explicit legality, label the four unit seed pairs in (8.1)
+by $r$ and their nonnegative coefficients in (8.4) by $c_r$;
+omit a seed with zero coefficient. All are radial. For
+$0\le k,l<5$ put $g_{kl}=G(2\pi k/5,2\pi l/5)$ and use
+
+$$
+\begin{gathered}
+B_{rkl}=\sqrt{c_r/25}\,(g_{kl}b_r)^TD^\dagger,
+\qquad R_{rkl}=Dg_{kl}a_r,\\
+\operatorname{Enc}(X)=(B_{rkl}XB_{rkl}^\dagger)_{rkl},\qquad
+\operatorname{Dec}_{rkl}(y)=R_{rkl}yR_{rkl}^\dagger.
+\end{gathered}
+\tag{8.12}
+$$
+
+The exact $25$-point radial quadrature of QAP Theorem 2.3,
+also used in (3.6), preserves the complete Choi matrix of each
+seed. Its elementary reason is Fourier support $|m|+|n|\le4$;
+the two five-point sums keep only $(m,n)=(0,0)$. Reflection is
+redundant for radial seeds. Thus (8.12) gives this same $S_{x_H(w)}$
+on every complex matrix. Equations (8.10)–(8.11) give
+$\sum_{rkl}B_{rkl}^\dagger B_{rkl}=I_5$; unit preparations give
+$R_{rkl}^\dagger R_{rkl}=1$. Rectangular sandwiches prove CP at
+every reference dimension. These identities prove encoder TP and
+each decoder's TP on its whole scalar block. Every nonzero composite
+Kraus matrix has rank one. The at-most-$100$ flags are fixed and
+consumed before the future protocol. $\square$
+

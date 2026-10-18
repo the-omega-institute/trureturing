@@ -1,0 +1,34 @@
+**Corollary 10.3 (same-table endpoint concentration).** Add exactly the simultaneous configuration-risk bounds (2.4) to the table of Definition 10.1, with the same two rows, nonnegative slacks and every supported depth, including both original endpoints. Put $\epsilon=\max(\epsilon_p,\epsilon_\beta)$ and $J=\pi[(u-a)(b-u)]$. Then
+
+$$
+\begin{aligned}
+J
+&\le50000V_\pi+\frac{1490}{3}\epsilon_p+10\chi\epsilon_\beta\\
+&\le50000V_\pi+520\epsilon,\\
+\pi\operatorname{dist}(u,\{a,b\})
+&\le1500000V_\pi+15600\epsilon.
+\end{aligned}
+\tag{10.17}
+$$
+
+For $0<d\le1/30$,
+
+$$
+\pi\{a+d\le u\le b-d\}
+\le\min\left\{1,
+\frac{50000V_\pi+520\epsilon}{d(1/15-d)}\right\}.
+\tag{10.18}
+$$
+
+Proof. Write $L=\pi Q(E_p)-\chi\tau W(E_\beta)-\zeta_0$ and let $G$ be the sum of the two weighted coordinate terms subtracted in (10.1). Identity (3.1) and (2.5) give $-L\le\epsilon_p+\chi\epsilon_\beta$. The two weights are nonnegative and bounded by $106/15$ and $365/15$; the larger bound is $73/3$. Equation (2.6) bounds the sum of the two selected upper-coordinate positive violations by $2\epsilon_p$. Thus $G\le(146/3)\epsilon_p$, even when one of its terms is negative. Rearranging (10.2) yields
+
+$$
+\frac J{10}\le5000V_\pi-L+G
+\le5000V_\pi+\frac{149}{3}\epsilon_p+\chi\epsilon_\beta.
+\tag{10.19}
+$$
+
+Since $149/3+\chi<52$, this proves the first line of (10.17), including zero slack. For $u\in[a,b]$, its nearer endpoint distance is at most $30(u-a)(b-u)$: the farther endpoint distance is at least $1/30$. This proves the second bound. On $[a+d,b-d]$ the tent is at least $d(1/15-d)$, proving (10.18). Both configuration risks and the variation have been evaluated on this one actual stationary table. Configuration TV remains inside its configuration average; a bound only on the marginalized law would not supply (2.6). No supported nonendpoint is needed for these concentration bounds, while any such depths remain in (2.4). $\square$
+
+Concentration of $u$ alone does not identify $Q_x$ with a native endpoint law. The acquired-class invariance used in Proposition 4.1 is not assumed here, so its complete-law endpoint recovery is not inferred for a varying-$u$ table.
+

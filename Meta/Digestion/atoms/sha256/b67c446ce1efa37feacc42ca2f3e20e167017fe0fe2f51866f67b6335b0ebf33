@@ -1,0 +1,25 @@
+**Proposition 8.2 (the same law has $\beta_2=1$).** For the very same
+$\mu$ of (COK.49),
+
+$$
+A_n(\mu)=1\quad(n\ge1),\qquad
+\beta_2(\mu)=\Omega_2(\mu)=J_2(\mu)=1.
+\tag{COK.53}
+$$
+
+Proof. On $U=\{u_{00},u_{01},u_{10},u_{11}\}$, the root factor is
+constant branch and each side factor is determined by that same side's
+own actual reply. Hence $U^n$ has simultaneous self-donor native
+witnesses for all targets. Its product probability is one. Saturating
+these witnesses gives a complete template still of mass one, while no
+subset of a probability space has mass above one. This proves the
+$A_n$ and $\beta$ statements. Each joint cell norm is at most its
+support mass, hence $J_2(\mu)\le1$. Apply
+$\beta_2\le\Omega_2\le J_2$ to get all the equalities. $\square$
+
+The sharp bound in Theorem 8.1 is for that particular network.
+It cannot be used as a universal cap below one for this law. An
+exhaustive conditional certificate includes the self-read local
+decorations of Proposition 8.2. Their presence precludes this false
+inference, even though the two-block conditional calculation is sharp.
+

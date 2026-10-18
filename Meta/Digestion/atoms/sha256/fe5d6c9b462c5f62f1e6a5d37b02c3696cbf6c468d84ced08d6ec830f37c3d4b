@@ -1,0 +1,67 @@
+**Theorem 9.8 (Four-corner resistance).** For any strictly positive
+five-mode law and any site budget,
+
+$$
+R_\eta(d)=
+\begin{cases}
+I_\kappa/(\eta_1+\eta_3),&\eta_1+\eta_3>0,\\
++\infty,&\eta_1=\eta_3=0.
+\end{cases}
+\tag{9.26}
+$$
+
+Thus the optimal budget puts no mass on the middle port. Every
+split between the two endpoint ports has the same optimal target
+coefficient $I_\kappa$, including either single-endpoint design.
+
+Proof. Orient the bottom edges as
+$(0\to1,0\to3,1\to13,3\to13)$ and the leaf as $0\to2$.
+The source at vertex $2$ is zero, so its sole incident flow is zero
+whenever that edge is present. Solving the four remaining
+divergence equations gives all bottom flows
+
+$$
+(j_{01},j_{03},j_{1,13},j_{3,13})
+=(t,1-t,t-1,-t),\qquad t\in\mathbb R.
+\tag{9.27}
+$$
+
+For example the divergences at $0,1,3,13$ are
+$t+(1-t)=1$, $-t+(t-1)=-1$,
+$-(1-t)-t=-1$, and $-(t-1)+t=1$.
+The site-$1$ edges carry $t,-t$; the site-$3$ edges carry
+$1-t,t-1$. Since $h(p_u,p_v)^{-1}=p_u^{-1}+p_v^{-1}$,
+their energies, when both endpoint budgets are positive, add to
+
+$$
+I_\kappa\left(\frac{t^2}{\eta_1}
+              +\frac{(1-t)^2}{\eta_3}\right).
+\tag{9.28}
+$$
+
+Completion of the square, or differentiation of this strictly
+convex quadratic, gives
+$t=\eta_1/(\eta_1+\eta_3)$ and minimum
+$I_\kappa/(\eta_1+\eta_3)$. Proposition 9.5 then gives (9.26).
+
+If $\eta_1>0,\eta_3=0$, the absent site-$3$ edges require $t=1$.
+The surviving pairs $(0,1)$ and $(3,13)$ carry $1,-1$ and
+have energy $I_\kappa/\eta_1$. Each pair has opposite total
+source; vertex $2$ has source zero whether isolated or connected
+by the middle edge. Thus component balance holds, even when
+the graph is disconnected. The case $\eta_1=0,\eta_3>0$
+uses $t=0$ and the pairs $(0,3),(1,13)$, with the same conclusion.
+This argument does not divide by a zero budget.
+
+If both endpoint budgets vanish, only $(0,2)$ can remain;
+vertices $1,3,13$ are isolated with nonzero target coefficients.
+Theorem 9.4 makes the target unestimable. Finally
+$\eta_1+\eta_3=1-\eta_2\le1$, proving the allocation claim.
+$\square$
+
+A single endpoint can therefore be sufficient for this particular
+contrast without identifying all four independent relative phases.
+The four-corner expression compares two parallel edge phases; as
+in Chapter 8, it is not a nonzero holonomy of exact vertex differences
+around a closed graph cycle.
+

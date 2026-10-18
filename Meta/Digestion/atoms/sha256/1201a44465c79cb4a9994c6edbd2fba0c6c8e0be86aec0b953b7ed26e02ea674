@@ -1,0 +1,66 @@
+**Theorem 2.3 (A legal fixed scalar port on every reference extension).**
+For each $f\in F$, put
+
+$$
+\begin{gathered}
+B_f=\sqrt{c_f}\,v_f^TD^\dagger:\mathbb C^5\longrightarrow\mathbb C,
+\qquad R_f=Dv_f:\mathbb C\longrightarrow\mathbb C^5,\\
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_{f\in F},\qquad
+\operatorname{Dec}_f(y)=R_fyR_f^\dagger
+=yDP_fD^\dagger\quad(y\in M_1).
+\end{gathered}
+\tag{2.8}
+$$
+
+These maps realize $T_*\in\mathfrak C_1$ with fourteen fixed flags.
+Each decoder is trace preserving on its entire scalar block.
+
+Proof. Lemma 2.2 gives
+
+$$
+\sum_fB_f^\dagger B_f
+=D\left(\sum_fc_fP_f\right)D^\dagger=I_5,\qquad
+R_f^\dagger R_f=1.
+\tag{2.9}
+$$
+
+Each branch of the encoder and each decoder is a rectangular matrix
+sandwich. For every reference dimension $n$, its extension is a
+sandwich by $B_f\otimes I_n$ or $R_f\otimes I_n$, which preserves positive
+semidefiniteness. Direct sums and sums preserve positivity too. Equation
+(2.9) proves trace preservation on every complex matrix, and on all
+reference extensions. In particular each decoder is CPTP for all
+$y\in M_1$, not only on a selected encoded state.
+The composite has the explicit rank-one Kraus matrices
+
+$$
+C_f=R_fB_f=\sqrt{c_f}\,DP_fD^\dagger,\qquad
+\sum_fC_f^\dagger C_f=I_5.
+\tag{2.10}
+$$
+
+This is exactly (2.4). It agrees with the CPTP convention of
+[FiniteStateChannel.QuantumChannel](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
+and the finite rectangular Kraus hypothesis in
+[finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean).
+The encoder outputs only the direct sum of scalar blocks; the decoder
+outputs only their summed state. Thus the flag is consumed in decoding,
+and no additional input-dependent record reaches the future policy.
+All fourteen branches are specified before the input or future policy,
+and no quantum path avoids the scalar block.
+
+Equivalently, this is the finite measure-and-prepare form
+
+$$
+T_*(X)=\sum_fc_f\,\operatorname{tr}(DP_fD^\dagger X)\,DP_fD^\dagger,
+\tag{2.11}
+$$
+
+with POVM effects $c_fDP_fD^\dagger$.
+The rank-one Kraus/measure-and-prepare equivalence is the known
+[Horodecki–Shor–Ruskai, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031);
+the explicit normalization here is (2.7). Its branch trace/Born pairing
+also has the convention of
+[finite_kraus_instrument_born_marginal](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean).
+$\square$
+

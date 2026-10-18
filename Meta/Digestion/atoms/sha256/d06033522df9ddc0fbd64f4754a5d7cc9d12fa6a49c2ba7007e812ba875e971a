@@ -1,0 +1,116 @@
+**Proposition 6.2 (Eight full-law correct masses).** For Definition 6.1,
+the full-law correct-state masses are
+
+$$
+\begin{array}{c|c|c}
+(x,y,z)&\text{output}&\mathbb P_p(x,y,z,A=H_j)\\ \hline
+000&h_1(\sigma)&a/2\\
+001&h_0(\sigma)&a^2c\eta\\
+010&h_0(\sigma)&a^2\eta\\
+011&h_0(\sigma)&0\\
+100&h_0(1-\sigma)&a^2\eta/2\\
+101&h_0(\sigma)&a^2\eta/2\\
+110&h_0(\sigma)&a\eta^2\\
+111&h_0(1-\sigma)&a\eta^2
+\end{array}
+\tag{6.1}
+$$
+
+The first-zero masses sum to $Z$, and the first-one masses sum to $D$,
+simultaneously for this one policy and realization, for either $j$ and
+every unchanged independent auxiliary law.
+
+Proof. On $000$ the output is a phase-one state. Success there is
+exactly $\varphi=1,S_0=\sigma$, with mass $a/2$, since in that
+phase every paid call is a separator. Phase-zero realizations on the
+same leaf are errors for this output: the phase-specific state sets
+are disjoint. The target spin is $S_0$ in phase one for both choices
+of $j$, as (1.2) requires.
+
+On $001$, the third paid one certifies phase zero. Its three edge
+constraints concern the disjoint pairs
+
+$$
+(S_j,S_{j+1}),\quad(S_{j+2},S_{j+3}),\quad
+(S_{j+4},S_{j+5}).
+\tag{6.2}
+$$
+
+For the declared output to be correct, the first pair must be both
+$\sigma$, of probability $a^2$. The second pair agrees, of
+probability $c$, and the third disagrees, of probability $2\eta$.
+Independence of these spin pairs in the same source gives
+$\tfrac12 a^2c(2\eta)=a^2c\eta$.
+
+On $010$, the second one again certifies phase zero. The first pair
+must be both $\sigma$ and the second disjoint pair must disagree.
+The third actual call repeats the first address, so it replies zero.
+The correct mass is $\tfrac12 a^2(2\eta)=a^2\eta$. Triple $011$
+contradicts this actual repeat and has mass zero, although its output
+is specified.
+
+On $100$ and $101$, the actual phase-zero edges are $Y_j,Y_{j+2}$
+and then the joining edge $Y_{j+1}$. The corresponding larger-mass
+four-spin completions are
+
+$$
+\begin{array}{c|c|c}
+(x,y,z)&(S_j,S_{j+1},S_{j+2},S_{j+3})&\text{spin weight}\\ \hline
+100&(1-\sigma,\sigma,\sigma,\sigma)&a^3b\\
+101&(\sigma,1-\sigma,\sigma,\sigma)&a^3b
+\end{array}
+\tag{6.3}
+$$
+
+Each complementary completion has weight $ab^3<a^3b$ and the
+opposite target spin. The declared output uses the actual $S_j$ of
+the displayed completion. Multiplying by the phase factor yields
+$a^3b/2=a^2\eta/2$ on each leaf.
+
+On $110$ and $111$, the third actual edge is $Y_{j-1}$. The local
+preferred completions are
+
+$$
+\begin{array}{c|c|c}
+(x,y,z)&(S_{j-1},S_j,S_{j+1})&\text{spin weight}\\ \hline
+110&(\sigma,\sigma,1-\sigma)&a^2b\\
+111&(\sigma,1-\sigma,\sigma)&a^2b
+\end{array}
+\tag{6.4}
+$$
+
+Their complements have weight $ab^2<a^2b$. The already paid edge
+$Y_{j+2}=1$ uses the separate pair $(S_{j+2},S_{j+3})$, of
+probability $2\eta$ in that same realization. The output uses the
+middle spin $S_j$ in (6.4). Each leaf therefore has correct mass
+$\tfrac12(a^2b)(2\eta)=a\eta^2$.
+
+These calculations verify both endpoint indices, not just their labels:
+in phase zero the spin is $S_j$, giving $a_{S_0}$ for $j=0$ and
+$b_{S_1}$ for $j=1$; in phase one it is $S_0$, giving $b_{S_0}$ or
+$a_{S_0}$ respectively. In particular the $j=1$ calculation does not
+replace its phase-zero target by $S_0$. When $p>1/2$, $\sigma=1$;
+when $p<1/2$, $\sigma=0$. Every product and output above uses this
+same majority convention, so both bias directions are covered.
+
+Finally the first-zero rows of (6.1) give
+
+$$
+\frac a2+a^2c\eta+a^2\eta=Z,
+\tag{6.5}
+$$
+
+and the first-one rows give
+
+$$
+\frac{a^2\eta}{2}+\frac{a^2\eta}{2}
++a\eta^2+a\eta^2=D.
+\tag{6.6}
+$$
+
+Thus one original source and policy attain both bounds with the same
+first two calls. No separately optimized incompatible sources, phases
+or first queries are combined. Ignoring $u$ makes the result independent
+of any event availability or atomlessness of its unchanged law.
+$\square$
+

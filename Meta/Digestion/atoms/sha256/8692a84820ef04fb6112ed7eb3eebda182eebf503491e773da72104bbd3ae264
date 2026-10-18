@@ -1,0 +1,29 @@
+**Corollary 17.4 (held, pre-death and cemetery comparisons).**
+For every deterministic sequence $\eta_n\to0$ in the stated range,
+the commands satisfy the quantitative full-native contract of Definition
+13.1, the held-law contract (11.7), and the cemetery-law contract.
+There is a deterministic full held tube, exact equality of censored
+lifetimes at every stage, and uniform comparison of the cemetery paths
+under their common coupling.
+
+Proof. Proposition 17.3 supplies the held tube and $\zeta_\eta=\zeta$;
+its triple estimates give uniform chronological convergence. In
+particular every interval strictly before the target death is an
+executed pre-death interval for every member of this family. For a
+concrete metric in Definition 4.1 take $d_E=\min(1,d_{\max})$ on the
+held cylinder and distance $2$ to the isolated cemetery. Before the
+common death the $d_E$ error is at most $\eta$, and at and after death
+both paths equal $\dagger$. Thus
+
+$$
+\sup_{t\le T}d_E(q_\eta^\dagger(t),q^{\lambda,\dagger}(t))\le\eta.
+\tag{17.15}
+$$
+
+The identity time homeomorphism proves the same upper bound for the
+corresponding $J_1$ comparison. Other usual product metrics give the
+same convergence. This is a consequence of exact common death; it does
+not identify general uniform held convergence with lifetime convergence,
+or contradict the unequal-death obstruction in Remark 4.3. Coupled
+almost sure convergence implies the asserted weak laws. $\square$
+

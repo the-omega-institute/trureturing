@@ -1,0 +1,18 @@
+**Definition 4.1 (authentic closed-flight backing).** A closed flight ends
+at an original ready cut $s$: acquisition has completed, a finite number
+$j\ge0$ of canonical source frames have completed all their prescribed
+services and acknowledgements, and the next frame has not begun.
+
+Its backing $B_s$ consists of the actual acquired seed, $v_0,H,\xi$,
+the acquisition origin and a sealed chronological prefix of complete
+frame material through those $j$ requests. It includes all material
+behind context references. The length and end of the backing are physical
+sealed bounds; $j$ is obtained by scanning that backing, not supplied as
+a free counter. A lossless actual complete-row prefix with its complete
+material may replace retained ingress. Arbitrary submitted bytes cannot
+create this backing type.
+
+Let $J_s$ be the chronological concatenation of those frames. Ready means
+the fixed post-acknowledgement control boundary, not merely an empty
+semantic pending-event field during unrelated unfinished work.
+

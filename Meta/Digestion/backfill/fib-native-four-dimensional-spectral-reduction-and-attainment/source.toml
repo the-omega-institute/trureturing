@@ -1,0 +1,5 @@
+source_id = "fib-native-four-dimensional-spectral-reduction-and-attainment"
+path = "docs/develop/theory/FIB_NATIVE_FOUR_DIMENSIONAL_SPECTRAL_REDUCTION_AND_ATTAINMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

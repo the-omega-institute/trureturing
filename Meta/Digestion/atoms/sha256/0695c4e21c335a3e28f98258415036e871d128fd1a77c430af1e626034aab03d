@@ -1,0 +1,200 @@
+**Theorem 244.2 (Joint capacity gives the attained original optimum).**
+Under (244.1)–(244.2),
+
+$$
+0<e_*(h)\le e_S<a_m,\qquad
+E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=e_*(h).
+\tag{244.4}
+$$
+
+Both infima are attained. One original stopped law and its counted N
+completion use the same source-independent seed and return the same
+tape at every source and seed. For every positive closed cap $c$, either
+original class is feasible exactly when $c\ge e_*(h)$. Every actual tail
+source has error exactly $e_*(h)$, including all closed tail ties.
+For $e_*(h)\le c\le e_S$, the exhibited full mass-one allocations
+witness $(h,t,t,a_4,\ldots,a_m;c)\in H_N\cap H_O$.
+
+Proof. The definitions imply
+
+$$
+\sum_{n=1}^m d_n=3e,\qquad 1-H=(m-3)q,\qquad
+ e_S-e=\frac{(m-3)q}{m+1}.
+\tag{244.5}
+$$
+
+For example, the degree sum before substitution is
+$2t+S-me-(m-1)(m-3)q-2R$; using
+$2\binom{m-1}{2}=(m-1)(m-2)$ and
+$S=(m+1)e+(m-3)q$ reduces it to $3e$.
+If $q>0$, $d_m\ge0$ and $R\ge q$ give
+$a_m\ge e+R>e+(m-3)q/(m+1)=e_S$.
+If $q=0$, $t=1$ and the amplitude floors force all $a_2,\ldots,a_m$
+to be one; then $e=e_S=(m-2)/(m+1)<a_m$.
+Thus $e<t$, $t\le H\le1$, and (244.3) is $e$ below $H$ and
+$(S+h-1)/(m+1)$ above $H$.
+
+Use the rank-three hypersimplex fact to obtain one nonnegative measure
+$x_T$ on three-subsets of $[m]$ with total $e$ and degrees $d_n$.
+Here is a complete finite construction of that mature fact. Divide the
+degrees by $e$, partition $[0,3)$ into consecutive half-open intervals
+$I_n$ of lengths $d_n/e\le1$, and, for $z\in[0,1)$, let $T(z)$ be
+the labels of the intervals containing $z,z+1,z+2$. They are distinct:
+one half-open interval of length at most one cannot contain two of
+these points. Set $x_T=e\,|\{z:T(z)=T\}|$. For each $n$, its inclusion
+measure is
+$\sum_{j=0}^2|\{z\in[0,1):z+j\in I_n\}|=|I_n|=d_n/e$.
+Hence the degrees and total are as required. The finitely many interval
+endpoint residues modulo one give finitely many constant choices of
+$T$. This defines coefficients, not an additional acquisition seed.
+
+Construct first the head-$H$ law. For each $i<j$, set
+
+$$
+\begin{aligned}
+b_{ij}&=q&& (1\le i<j\le m-1),&b_{m-1,m}&=R,\\
+c_{i,i+1}&=q&& (2\le i\le m-1),&
+w_{ij}&=b_{ij}+\sum_{k>j}x_{\{i,j,k\}},
+\end{aligned}
+\tag{244.6}
+$$
+
+with other $b,c$ zero. Using $\mathbf e_r$ for unit output mass,
+give the pair $(i,j)$ its three unnormalized stopped cell vectors
+
+$$
+\begin{aligned}
+u^0_{ij}&=c_{ij}\mathbf e_0+(w_{ij}-c_{ij})\mathbf e_i,\\
+u^{10}_{ij}&=w_{ij}\mathbf e_j,\\
+u^{11}_{ij}&=b_{ij}\mathbf e_0+
+                           \sum_{k>j}x_{\{i,j,k\}}\mathbf e_k.
+\end{aligned}
+\tag{244.7}
+$$
+
+Every vector is nonnegative, including the final transfer because
+$R\ge q$. All three vectors in a row have the same mass $w_{ij}$,
+and their schedule masses sum to
+$\binom{m-1}{2}q+R+\sum_Tx_T=1$.
+For $w_{ij}>0$ the whole deterministic output triple $(r_0,r_{10},r_{11})$
+has mass
+$u^0_{ij}(r_0)u^{10}_{ij}(r_{10})u^{11}_{ij}(r_{11})/w_{ij}^2$.
+Summation recovers every cell vector and total schedule mass.
+Zero rows are omitted. This is one full normalized law with all
+counterfactual outputs fixed together, using the realization of §§109,
+176 and 237.2.
+
+A numerical triple $i<j<k$ emits the actual first-zero label $n$ exactly
+when $n$ belongs to the triple: its selected preceding queries are
+positive, including when $n=k$ is the unqueried exhaustion guess.
+This holds with every suffix. Base-edge degrees are $(m-2)q$ through
+$m-2$, $(m-2)q+R$ at $m-1$, and $R$ at $m$. First-cell transfers
+subtract $q$ exactly at $2,\ldots,m-1$. Consequently (244.7) gives
+
+$$
+p_w(n)=a_n-e\quad(2\le n=n(w)\le m),\qquad
+p_w(1)=H-e\quad(n(w)=1).
+\tag{244.8}
+$$
+
+For an arbitrary Boolean word put $k=\sum_{i=1}^{m-1}w_i$.
+Summing base contributions in this same law gives the exact polynomial
+
+$$
+p_w(0)=q\left[m-2-\sum_{i=2}^{m-1}w_i+\binom{k}{2}\right]
+                         +R w_{m-1}w_m.
+\tag{244.9}
+$$
+
+At first zero one, its bracket is $m-2-k+\binom{k}{2}\ge m-3$,
+so $p_w(0)\ge1-H$. At first zero $n\ge2$, $w_1=1$ and
+$k\ge n-1$; the bracket is
+$m-1-k+\binom{k}{2}$ and is at least
+$m-2+\binom{n-2}{2}$. For $n=2$ the tied minima are $k=1,2$;
+for later $n$ the expression increases from $k=n-1$.
+The amplitude floors therefore give $p_w(0)\ge1-a_n$.
+Together with (244.8), these prove the base, correct and independent
+pair rows separately: in particular $p_w(0)+p_w(n)\ge1-e$.
+The literal base demand is $1-a_n-e$, even when negative.
+At $1^m$, the base is $\sum b_{ij}=1-e$. Each zero-word correct
+event has deficit $e$, so (237.2) gives exact TV $e$.
+
+For $t\le h\le H$, in every first-query-one zero cell transfer the
+fraction $(H-h)/(H-e)$ of its label-one mass to base. This fraction
+lies in $[0,1]$ since $h\ge t>e$. All correct-one mass is in these
+cells; the total transfer on every first-zero-one word is $H-h$.
+Its correct mass becomes $h-e$, its base is at least $1-h$, and its
+pair mass stays fixed. Every other word law and the positive law stay
+fixed. Thus all rows hold at $e_*(h)=e$.
+
+For $H<h\le1$, reuse §113.3 at head one and cap $e_S$.
+To specify its whole law, put $r_n=a_n-e_S$ for $n\ge2$,
+$r_{m+1}=0$. For $3\le k\le m$ give the uniform triple rule on
+$\{1,\ldots,k,\infty\}$ mass
+$v_k=(k+1)(r_k-r_{k+1})/3$. It queries the two smallest numerical
+indices, returns a queried first zero, and otherwise its third label;
+$\infty$ means zero. Telescoping gives
+
+$$
+\sum_{k=3}^m v_k=r_3+e_S=t,\qquad
+\sum_{k=3}^m v_k\frac{k-2}{k+1}=e_S.
+\tag{244.10}
+$$
+
+Put mass $1-t$ on $(1,2;1,0,0)$. Triple inclusion gives correct
+mass $a_n-e_S$ for $n\ge2$ and $1-e_S$ at head one. The second
+identity bounds outside-pair mass by $e_S$ on every word, so base
+is at least $1-a_n$ and the independent pair probability at least
+$1-e_S$. Positive base is $1-e_S$.
+These are the residual supplier's actual common masses, without an
+error constraint on individual branches.
+
+For $q>0$, mix this whole saturated law with the head-$H$ law,
+using saturated weight $\xi=(h-H)/(1-H)$. Equations (244.5) give
+
+$$
+(1-\xi)e+\xi e_S=e+\frac{h-H}{m+1}
+                         =\frac{S+h-1}{m+1}.
+\tag{244.11}
+$$
+
+All independent rows are affine in this one kernel, amplitudes and cap.
+Correct masses are $a_n-e_*(h)$ and positive base is $1-e_*(h)$.
+At $q=0$ only $h=H=1$ occurs and no division is used. This includes
+all closed heads, zero masses and equal capacities.
+
+Flatten the complete-table probabilities and the outer mixture into
+one partition of a source-independent uniform seed. Execute the selected
+increasing actual prime schedule and emit the original mark. Its counted
+N completion uses that same table and seed and returns the same tape.
+The construction has at most two actual requests and finite handoff on
+every source and seed, as in §243.2. At any actual first absence $n>m$
+the law is the positive-word law and has no output $n$. Its exact error is
+$\max\{1-p_+(0),a_n\}=\max\{e_*(h),a_n\}=e_*(h)$ by (243.3).
+Thus all positive actual tails and equality tails are retained.
+
+For the matching lower bounds, §117.2 gives, against every original
+arbitrary-address full-carrier N competitor,
+
+$$
+c\ge\frac{(m-3)t+(m-2)S-(m-3)}{(m-2)(m+1)}=e.
+\tag{244.12}
+$$
+
+At any positive feasible cap $c<a_m$, §113.2 gives
+$S-(m-2)c\le D_3(a,c)\le3c+1-h$, hence
+$c\ge(S+h-1)/(m+1)$. If an original rule had error below $e_*(h)$,
+choose an intermediate positive closed cap below $e_*(h)<a_m$.
+These two bounds contradict that cap. Additional active tail terms
+only strengthen the residual bound. Counted O completion gives the
+same lower bound for O. This proves attained optimality and every
+positive closed-cap threshold.
+
+Finally, for $e_*(h)\le c\le e_S$, order, $b_2=b_3$,
+$(m+1)c\le S$, and $h+S-(m+1)c\le1$ give hull membership.
+The same full probability allocation meets every row at $c$, and its
+completion supplies the N allocation. This proves actual feasible
+membership, not just a hull inequality. For every full $y\ge0$ the same
+allocation gives $F_{Q(y)}(b,c)\le\Delta_O(y)$, and in particular at
+most one for every unit-O score. ∎
+

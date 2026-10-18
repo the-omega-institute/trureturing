@@ -1,0 +1,42 @@
+### Theorem 3.1. Exactly two LU orbits
+
+$$\boxed{\{\psi:F(\psi)=F_*\}=\mathcal O_+\;\dot\cup\;\mathcal O_-.} \tag{3.1}$$
+
+The two orbits become one if qubit permutations are also allowed.
+
+Proof of completeness. Proposition 2.3 makes every maximizer one-uniform, so [GW10], Theorem 5 applies. Define the real Bell vectors beta_0=phi_+, beta_1=phi_-, beta_2=psi_+, beta_3=psi_-, with the usual normalized plus/minus signs, and u_j=beta_j(AB) tensor beta_j(CD). In this normal form psi=sum_j z_j u_j. Its AB Schmidt probabilities are |z_j|^2, so Proposition 2.2 gives the multiset {1/2,1/6,1/6,1/6}.
+
+The product local Pauli operations X_A X_C and Z_A Z_C permute the coordinates by (02)(13) and (01)(23), respectively, with no remaining signs on the u_j. These permutations act transitively on the four indices. Move the coefficient with squared modulus 1/2 to index 0.
+
+The spin-flip form on the Bell-product subspace is sum_j z_j^2. Therefore tau_4=0 gives
+
+$$z_0^2+z_1^2+z_2^2+z_3^2=0.$$
+
+Now |z_0^2|=1/2=sum_{j=1}^3 |z_j^2|. Equality in the complex triangle inequality forces z_1^2,z_2^2,z_3^2 to have the same phase, opposite to z_0^2. After an overall phase adjustment the vector has coefficients
+
+$$(z_0,z_1,z_2,z_3)=\frac1{\sqrt6}(i\sqrt3,\epsilon_1,\epsilon_2,\epsilon_3),\qquad \epsilon_j\in\{1,-1\}.$$
+
+X_A X_B flips signs at indices 1,3, and Z_A Z_B flips signs at indices 2,3. They remove every even-parity sign pattern among the last three coordinates. If epsilon_1 epsilon_2 epsilon_3=-1, first multiply the entire vector by -1, then remove the resulting even-parity signs. Thus there are at most two orbits, represented by
+
+$$m_\pm=\frac1{\sqrt6}(\pm i\sqrt3\,u_0+u_1+u_2+u_3).$$
+
+The explicit H_+ has Bell-product coordinates (1,-1,-1,i sqrt(3))/sqrt(6). The same displayed Pauli permutations and sign flips take it to m_+; complex conjugation gives the corresponding map for H_-. Both are maxima since conjugation preserves the marginal spectra. This proves coverage of the equality set without using a uniqueness claim from another entropy theorem.
+
+Proof that the orbits are distinct. Let d_c(psi)=det F_c(psi), where F_c is the literal 4 by 4 amplitude flattening for the three cuts, and set
+
+$$\chi(\psi)=\operatorname{Im}\left[d_0(\psi)\overline{d_1(\psi)}\right]. \tag{3.2}$$
+
+Under a product U_A tensor U_B tensor U_C tensor U_D, every d_c is multiplied by the same phase
+
+$$\eta=\left(\det U_A\det U_B\det U_C\det U_D\right)^2.$$
+
+Indeed F_{AB} transforms as (U_A tensor U_B)F_{AB}(U_C tensor U_D)^T, and the other cuts obey the corresponding formula. Therefore chi is invariant under all local unitaries and under global phase. Conjugation reverses its sign. Direct determinant evaluation gives
+
+$$d_0(H_+)=\frac{i\sqrt3}{36},\quad d_1(H_+)=\frac1{24}+\frac{i\sqrt3}{72},\quad d_2(H_+)=\frac1{24}-\frac{i\sqrt3}{72},$$
+
+$$\chi(H_+)=\frac{\sqrt3}{864},\qquad \chi(H_-)=-\frac{\sqrt3}{864}.$$
+
+These nonzero opposite invariants exclude LU equivalence. Finally, swapping C and D sends H_+ exactly to H_-. Hence including permutations identifies the two orbits. QED.
+
+The original [HS00] already exhibits H_+ and its conjugate as separate candidates. The contribution of this continuation is the exhaustive equality-set argument using the existing global certificate, together with an explicit labelled-party separator. No claim is made that the conjugate pair itself is a new discovery.
+

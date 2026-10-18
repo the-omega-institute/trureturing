@@ -1,0 +1,52 @@
+**命题 77.2（指定五模式行走的严格局部泄漏）。** 沿用第 63.1 条的附加行走，仍按 $(N,2,3,5,25)$ 排列：
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\1&0&0&0&1\\1&0&0&0&0\\1&0&0&0&1\\0&1&0&1&0
+\end{pmatrix},\qquad U(\tau)=e^{-i\tau K}.
+$$
+
+它不是原生组成矩阵 $M$。对第 76.2 条的 $P$，有 $PKP=0$，且若 $L=QKP$，则
+
+$$
+K|3\rangle=|N\rangle,\qquad
+K|25\rangle=|2\rangle+|5\rangle,\qquad
+L^\dagger L\big|_{P\mathcal H_F}=\begin{pmatrix}1&0\\0&2\end{pmatrix}.
+$$
+
+对任意复数 $a,b$、$|a|^2+|b|^2=1$ 及 $\psi=a|3\rangle+b|25\rangle$，
+
+$$
+\|QU(\tau)\psi\|^2
+=\tau^2(|a|^2+2|b|^2)+O(\tau^4).
+$$
+
+余项可在局部单位球上一致控制，每个非零局部向量均不能永久留在该块。
+
+证明（77.2）。所列两列直接给 $PKP=0$；其 $Q$ 像正交且范数平方分别为一、二，所以得到泄漏矩阵。为处理复振幅，不能仅从一阶振幅略去三次项。令 $M_2=QK^2P$，具体计算给
+
+$$
+M_2|3\rangle=|2\rangle+|5\rangle,
+\qquad M_2|25\rangle=2|N\rangle,
+\qquad
+L^\dagger M_2\big|_{P\mathcal H_F}=\begin{pmatrix}0&2\\2&0\end{pmatrix}.
+$$
+
+指数展开为 $QU(\tau)P=-i\tau L-\tau^2M_2/2+O(\tau^3)$。其范数平方的三次系数为
+
+$$
+2\operatorname{Re}\left\langle-iL\psi,-\tfrac12M_2\psi\right\rangle
+=\operatorname{Im}\langle\psi,L^\dagger M_2\psi\rangle=0,
+$$
+
+因为 $L^\dagger M_2$ Hermitian；明确地，该期望是 $2\overline a b+2\overline b a$，对复 $a,b$ 仍实。二次系数就是 $\langle\psi,L^\dagger L\psi\rangle$。三阶振幅余项与一阶主项的乘积为四阶，二阶项平方也是四阶。有限矩阵指数的尾界
+
+$$
+\left\|\sum_{n\ge m}\frac{(-i\tau K)^n}{n!}\right\|
+\le e^{|\tau|\|K\|}\frac{(|\tau|\|K\|)^m}{m!}
+$$
+
+给局部单位球上一致的余项界。归一化向量的二次系数至少为一，所以所有充分小的正 $\tau$ 都产生严格正泄漏。对非零向量归一化即可排除永久保持。$\square$
+
+一般仪器分支的单向支撑条件是 $QK_{y\mu}P=0$ 对每个实际 Kraus 算子成立；双向 reducing 才要求两个跨块角同时为零。这与钉版 [相干运输边界，假设 10.4、命题 10.5、命题 32.3](https://github.com/the-omega-institute/trureturing/blob/89a68b6d8c6725f99b5e5f32e45c8b0b1857b53d/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md)的逐分支持续性一致。合法初态语法与效果成员身份不能替代这些操作条件。
+

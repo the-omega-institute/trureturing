@@ -1,0 +1,37 @@
+**引理 87.3（All-action lower bounds on this fixed target）。** Under either original alphabet,
+
+$$
+C_{\rm ad}(f_{87})\ge3,\qquad C_{\rm pre}(f_{87})\ge5.
+\tag{87.10}
+$$
+
+Every correct first word on either nonbottom free-value fibre has prefix $110$. These conclusions include arbitrary literal words, paid waits, padding, attempted repairs, rejection and endpoint stopping. The first-zero principle, common-tail binary bound and preset value join used here are credited existing facts; their target-specific consequences are spelled out to keep the price comparison on (87.4).
+
+证明。 Fix either free value and any phase. The actual INITIAL tails $13,14$ have unequal target labels, respectively a low label and fresh $R$. They have the same free reading, so the controller cannot stop freely. Let $b$ be the leading one-run of its first word, taking $b=14$ for an all-one word. If $b\le1$, both sources reach the first zero successfully since $14+b<16$; they have the same value and phase there, and that zero merges their tails. Their entire subsequent records and acquired archives are identical. If $b\ge3$, both sources reject before any separating zero, since $13+3=16$. Their different unobserved rejection positions do not distinguish their identical completed bottom endpoints. Neither merger can be repaired at any later horizon [IC, Interface 1.4; S1, Lemmas 4.2–4.3]. Hence $b=2$, forcing prefix $110$.
+
+Every such root rejects exactly INITIAL tails $14,15$. Every tail $0\le s<14$ survives its first two ones because $s+2\le15$, reaches the zero and safely completes its remaining internally shorter runs. The first-zero merger respects each tail-independent low label. All low sources have the same actual outgoing tail $\rho(B_0)$ of this root.
+
+Within any later common endpoint archive their current scalar and tail are common. Every next literal word consequently succeeds on all those candidates or rejects all of them, independently of their phases. On success there are at most two scalar endpoint children, each again with a common current tail. On uniform rejection all future readings are bottom, so a child with unequal INITIAL labels cannot be completed; a homogeneous child can stop already. This gives at most $2^a$ distinct-label leaves with $a$ further paid words [S10, Lemma 3.2]. The reasoning uses the true all-one tail transfer $\sigma\mapsto\sigma+14$, rather than its literal trailing run, and permits every stopping rule. Zero waits and other uninformative blocks still consume one of these paid slots. A bottom output is not a useful third branch on a common-tail archive.
+
+Each free-value fibre has five distinct low labels, distributed below the root's two successful scalar outputs. If a correct adaptive controller had worst fee $H$, their capacity would be at most $2^H$. Thus $5\le2^H$ and $H\ge3$, separately for both fibres even when their roots differ.
+
+For ONE GLOBAL apply the exact preset value-join law [IC, Definition 29.1 and Theorem 29.2] to the full target (87.4). Its low table is $\Lambda_{87}$, high label is $(R,R)$ and initial bottom is independent. The law preserves one actual stream and its uniform worst fee even when the two component stopping times differ. Its decoder obtains the two value archives by complementing successful scalar endpoints of the one observed archive; bottom entries and issued words agree. This uses deterministic value symmetry, supplies no second experiment and borrows no sibling reading.
+
+Let $q_0$ be the charge row of any correct joined controller's compulsory root. Formula (87.8) forces
+
+$$
+q_0(0)=1,\qquad q_0(1)=0,\qquad q_0(2)=1,
+\qquad q_0(15)=q_0(16)=0.
+\tag{87.11}
+$$
+
+Therefore both $X$ and $Y$ in (87.5) occur in both successful root-difference archives, whatever the other eleven literal root bits are. No other joined label can occur in both, because every other joined class is singleton. For the two actual child label images $L_0,L_1$,
+
+$$
+|L_0\cup L_1|=15,\qquad L_0\cap L_1=\{X,Y\},
+\qquad |L_0|+|L_1|=17.
+\tag{87.12}
+$$
+
+With total worst fee $H$ each child has at most $H-1$ further paid words and hence at most $2^{H-1}$ distinct labels. It follows that $17\le2^H$ and $H\ge5$. This argument allows the two occurrences of one label to have different full endpoint codes; it does not impose constant codes on joined classes. Early stopping cannot combine two archives or return unequal labels from one leaf. Common rejection cannot recover a merged label, and any issued wait advances the physical calendar only at its full charged price. Thus the obstruction applies to all legal streams and all endpoint stops, not merely the attaining stream below. ∎
+

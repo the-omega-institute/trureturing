@@ -1,0 +1,137 @@
+**Theorem 15.1 (a legitimate same-point common instrument).** Evaluate
+all quantities in (CG.116) at $u_*$. Define
+
+$$
+h=\frac{He_0}{\sqrt{H_{00}}},\qquad
+b^{0j}=\frac{Q^{0j}e_0}{\sqrt{Q^{0j}_{00}}}\quad(j=1,2),\qquad
+K_0=\operatorname{diag}(h),\qquad
+K_{0j}=b^{0j}_0|0\rangle\langle j|
+                  +b^{0j}_1|j\rangle\langle0|.
+\tag{CG.134}
+$$
+
+There is one CPTP instrument on all of $M_3(\mathbb C)$ given by
+
+$$
+\begin{aligned}
+\Lambda_*(A)&=K_0AK_0^\dagger+K_{01}AK_{01}^\dagger
+                                 +K_{02}AK_{02}^\dagger,\\
+\Phi_{*,\mathrm{live}}(A)&=\Lambda_*(A),\\
+\Phi_{*,\ell}(A)(dt)&=w_\ell\operatorname{tr}(\operatorname{diag}(m)A)
+                   h_0(t)\,dt\,P_f\quad(\ell=0,1,2,3,4),\\
+h_0(t)&=\frac2{(1+t)^2}.
+\end{aligned}
+\tag{CG.135}
+$$
+
+It assigns zero mass to all additional sectors. It has a specified
+extension to the whole original five-mode complex input algebra.
+
+Proof. The pivots in (CG.117) are positive. For a positive semidefinite
+rank-one matrix $A$ with $A_{00}>0$,
+$A=(Ae_0)(Ae_0)^\dagger/A_{00}$. Corollary 13.3 therefore implies
+$H=hh^T$ and $Q^{0j}=b^{0j}(b^{0j})^T$. The live Choi matrix of
+(CG.134) is exactly
+
+$$
+J_*=H\oplus Q^{01}\oplus Q^{02}\oplus0
+\tag{CG.136}
+$$
+
+in (CG.128). In particular the live map is CP on the whole complex
+algebra. Its action for arbitrary complex $A$, without imposing
+$A_{ij}=A_{ji}$, has entries
+
+$$
+\begin{aligned}
+(\Lambda_*A)_{ii}
+ &=H_{ii}A_{ii}+\sum_{j>i}Q^{ij}_{00}A_{jj}
+                         +\sum_{j<i}Q^{ji}_{11}A_{jj},\\
+(\Lambda_*A)_{ij}
+ &=H_{ij}A_{ij}+Q^{ij}_{01}A_{ji}\quad(i<j),\\
+(\Lambda_*A)_{ji}
+ &=H_{ji}A_{ji}+Q^{ij}_{10}A_{ij}\quad(i<j).
+\end{aligned}
+\tag{CG.137}
+$$
+
+Thus $C_y$ in (CG.116) is the actual live output on $\rho_y$. The
+reverse-coherence terms are part of a Kraus map, not a physical
+transposition gate.
+
+It remains to prove trace preservation as an exact identity. At a root,
+the adjugate identity gives
+
+$$
+S_0H=S_{01}Q^{01}=S_{02}Q^{02}=0.
+\tag{CG.138}
+$$
+
+The determinant differential is
+$d\det S=\operatorname{tr}(\operatorname{adj}(S)\,dS)$. Consequently,
+when $\eta$ is held fixed at its value at the point of differentiation,
+
+$$
+d_x\mathcal L
+ =\sum_{y\in\{5,27\}}\operatorname{tr}(dA_y\,\Delta_y)
+   +\sum_i(r_i-1)d\zeta_i+\frac6{11}d\lambda.
+\tag{CG.139}
+$$
+
+To verify (CG.139) directly, use (CG.137) to expand
+
+$$
+\operatorname{tr}(S_0H)+\sum_{i<j}\operatorname{tr}(S_{ij}Q^{ij})
+ =\sum_i\zeta_i r_i
+             -\sum_{y\in\{5,27\}}\operatorname{tr}(A_y C_y).
+\tag{CG.140}
+$$
+
+This is linear in the entries of $\zeta,A_y$, holding $H,Q$ fixed.
+Its differential, combined with $dF$, proves (CG.139), including the
+factor $1000$ in $H$. In this first differential $H,Q$ are the
+adjugate coefficients at that point; differentiating them again would
+not be the determinant differential being used.
+
+The $z$ stationarity equation gives $r_0-1=0$, because only
+$\zeta_0=z$ depends on $z$ in (CG.139). The Kraus column masses are
+$\sum_aK_a^\dagger K_a=\operatorname{diag}(r_0,r_1,r_2)$ by
+(CG.134). Thus, exactly at $u_*$,
+
+$$
+\sum_{a\in\{0,01,02\}}K_a^\dagger K_a
+                      +\operatorname{diag}(m)=I_3.
+\tag{CG.141}
+$$
+
+The two strict bounds on $m$ in (CG.117) make its diagonal nonnegative.
+Each failure density in (CG.135) is CP, with Kraus densities
+$\sqrt{w_\ell m_j h_0(t)}\,|f\rangle\langle j|$ for $j=1,2$.
+Their integrals are countably additive and remain positive at every
+ancillary amplification. Since $\int_0^1h_0(t)dt=1$ by (CG.90) and
+$\sum_\ell w_\ell=1$, (CG.141) proves joint trace preservation.
+
+Let $E:\mathbb C^3\to\mathbb C^5$ have the three orthonormal columns
+in (CG.6), and put $P_V=EE^\dagger$. A concrete five-dimensional
+extension is
+
+$$
+\begin{aligned}
+\widehat\Phi_{*,\mathrm{live}}(A)
+ &=E\Lambda_*(E^\dagger AE)E^\dagger,\\
+\widehat\Phi_{*,\ell}(A)(dt)
+ &=h_0(t)\left[
+ w_\ell\operatorname{tr}(E\operatorname{diag}(m)E^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)
+ \right]dt\,P_f.
+\end{aligned}
+\tag{CG.142}
+$$
+
+Each summand is a CP compression/Kraus or trace-and-prepare map.
+Its total effect is $E I_3E^\dagger+(I_5-P_V)=I_5$ by
+(CG.141), so it is CPTP, including on non-Hermitian inputs by linearity.
+Every one of the twelve inputs lies in $V$, so the extension changes
+none of their outputs. The complementary input subspace is sent to
+original failure index $2$, not to a new history label. $\square$
+

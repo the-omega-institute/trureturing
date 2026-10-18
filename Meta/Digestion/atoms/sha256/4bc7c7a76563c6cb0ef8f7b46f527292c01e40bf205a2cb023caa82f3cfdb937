@@ -1,0 +1,38 @@
+## 136. Scope and the remaining obstruction
+
+This proof reuses the local angle formulas, flat classification, transverse
+flat inequality, and special-edge length barrier explicitly listed above.
+Its new step is the complete-star maximal-selected argument, which
+derives an unsaturated witness and then transports the remaining pi angle
+budget through an actual role-changing run to obtain a genuine escape.
+It is not the main Section 51 logarithmic certificate, the main Section 63
+flat-corner ascent, or the fixed two-reservoir budget of Section 116.
+
+The three-H corollary removes the two three-label seed blocks required by
+the existing Section 108.2 statement. This is a statement-level removal of
+that premise. The actual triangulations of Sections 109 and 114 inhabit the three-reservoir
+class and already have the earlier certificates given there. This consequence
+does not assert a new census type or an explicit example outside every earlier
+sufficient criterion.
+
+The tempting global condition |X|<=1 does not capture the main new
+phenomenon: a role change from an external axis M with pair {A,B}
+already creates a distinct external shared axis A or B. The genuinely
+stronger analytic consequence here is the additional larger escape axis
+Z, giving three external labels and a genuine block with four distinct
+H labels.
+
+The escape does NOT close unrestricted CFMP or even the entire paired
+framework. Its destination Z is explicitly NOT pi-selected. It therefore
+has no inherited remaining-half-circle budget, and cannot simply be fed
+back into the same maximal-selected argument. A proof of unrestricted
+ascent would need an additional mechanism that transfers a flat-pi
+obligation to Z, or an independent full-2*pi estimate for Z. Neither
+shared face lengths nor the present inequalities establish that mechanism.
+
+The entire full flat set is used when selecting M. Selecting a maximum
+only within one flat face-component would not justify comparisons with
+pi-selected H axes in another component. No such component-local
+substitution is made here.
+
+

@@ -1,0 +1,30 @@
+**Definition 11.3 (scoped mathematical suppliers).** The following parameter
+correspondences specify the intermediate results used in this volume.
+
+| Supplier | Exact parameter map and retained boundary |
+| --- | --- |
+| CAP §§2–8; §§12–13; Proposition 16.3 | Same $H_0,\xi,u$, source 16, $\phi_K$, historical guard, actor 24–31, acquired 28/29, original verifier/consumer. The normalized parked-client and inlined raw-caller joins follow §16's finite-entry construction; no arbitrary live-workspace return is inferred. |
+| RCA §§11–14, Lemma 15.1, §16 | Compiler 32–39 to 64–71; mailbox 48 to 72; receiver 40 to 73; both service/client payload owners to $A$, with distinct actual phase slots. Literal compiler, codecs, capture and initialized publication are intermediates. The 74-port input/effect/occurrence and callback joins are supplied in §§3–8, not assumed from RCA's fixed-$H$/unused-verifier domain. |
+| SSA Theorems 6.2, 7.2, 12.1; CSA Theorems 4.4, 6.3, 7.3, 8.3 | Finite local structural storage, actual-input retention and initialized fragment correspondence are supplied on their own stated images. They give no automatic CAP task-kernel equality or new 74-role tariff. |
+| NativeSerialMachine, `nativeStep`, `Run`, `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`; owning Scribe | One actual original register, truthful reads and source-free replay at its abstract action level. The abstract control can be unbounded; no native finite-code or price consequence is imported. |
+| NativeFullSourceProducer, `sourceControl`, `native_source_producer`, private `traverse`, `production_reads`, `stationary`; owning Scribe | The stationary acquisition is the same actual initial source and chronological truthful traversal. Proof-side subtrees are not input material or source oracles. |
+| NativeEffectiveSourceProducer, `FullSourceAcquisition`, `effective_source_producer`, `sourceDecoder`; owning Scribe | Effective abstract acquisition preserves common input/epoch/source. Its classical semantic inverse is not the installed parser; the actual packet converter is Definition 6.1. |
+| NativeSerialEffective, `OriginalCodeRealization`, evaluator soundness/completeness and `original_code_service_simulation`; owning Scribe | Actual supplied original table/code and genuine state correspondence remain premises of CAP's controller interface. `terminalObservation` is trace-valued and is not the original terminal task readout. |
+
+The intermediate persistence distinction is the version-index/backing
+relation of Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures
+Persistent*, JCSS 38(1), pp. 86–124,
+[primary text](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf).
+Here it is realized by the actually received immutable $c,p$ and owned
+backing; its pointer-structure amortized bounds are not tape prices.
+Current rights and represented old rights remain distinct in the sense
+of Watson et al., *Capsicum: Practical Capabilities for UNIX*,
+[primary text](https://www.cl.cam.ac.uk/research/security/capsicum/papers/2010usenix-security-capsicum-website.pdf);
+no operating-system callback or rights theorem constructs the native
+TOKs of §7. Input completeness is the record/replay requirement discussed
+by O'Callahan et al., *Engineering Record And Replay For Deployability*,
+[primary text](https://arxiv.org/pdf/1705.05937); its Linux mechanisms,
+counter prices and schedules are not transferred. The operative finite
+row correspondence is Proposition 6.3, with the concrete input sites and
+return labels specified here.
+

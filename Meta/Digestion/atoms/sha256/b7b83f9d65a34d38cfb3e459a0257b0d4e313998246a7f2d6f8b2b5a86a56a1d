@@ -1,0 +1,17 @@
+**Theorem 57.8 (nonrepeated finite universal upper constructions).** Let
+$\mathcal F=\bigcup_{V\in\mathcal P}\mathcal A(V)$. At feasible depth,
+
+$$
+D_h\le A+E_h\le
+\min\{A+p-1,\ |\mathcal F|\}
+=\min\left\{A+\operatorname{Cat}_{n-1}\binom na-1,
+\left|\bigcup_{V\in\mathcal P}\mathcal A(V)\right|\right\}.
+\tag{57.17}
+$$
+
+Both stated upper protocols terminate correctly on every negative, with no repeated query calls. The candidate protocol makes at most $A+p$ calls on any competitor and at most $A+p-1$ on a positive. The union protocol makes at most $|\mathcal F|$ calls on any competitor.
+
+Proof. For candidate verification maintain the set of public positives compatible with the entire actual transcript. Choose any remaining candidate by one fixed public order. Request its unqueried alpha endpoints in a fixed order until all are verified or one reply differs from $\alpha$. A mismatch is one paid non-alpha address and removes that candidate; full agreement accepts by Theorem57.3. Previously requested endpoints use their actual retained replies and are not requested again. On a positive its true candidate is never removed, so there are at most $p-1$ mismatch calls. Distinct alpha-returning addresses number at most $A$ on *every* source in $\mathcal T_C$, since its alpha count is exactly $A$. On a negative no candidate can pass; at most $p$ mismatch calls remove them all and cause rejection. This proves all call bounds and the first inequality for $E_h$.
+
+Alternatively request each member of $\mathcal F$ once and test whether any whole candidate alpha frontier has all actual replies $\alpha$. Theorem57.3 gives correctness for tall negatives as well as positives. Each positive returns $\alpha$ at exactly $A$ members of $\mathcal F$, so the diagnostic non-alpha weight is at most $|\mathcal F|-A$. One may identify its positive candidate after this scan and use Theorem57.7, or use the direct membership test. Every response is paid in either version. The public candidate/frontier computation, endpoint-word construction and finite bookkeeping are specified control tasks, with resources distinct from these call counts. □
+

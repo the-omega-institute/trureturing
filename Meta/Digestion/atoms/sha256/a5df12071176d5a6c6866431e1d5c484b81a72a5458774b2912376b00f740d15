@@ -1,0 +1,15 @@
+**Corollary 22.1 (scope of the earlier sufficient conditions).**
+Under the same-source enclosure and original-entry premises of
+Assumption 17.1, there is no jointly attained finite $\lambda>0$
+dual/common-law instance satisfying (FC.48), (FC.50), or the
+both-PSD hypotheses of Theorem 14.2. Their conditional implications,
+including Theorems 13.1–15.1, remain valid. Any original attained
+face represented by finite positive-multiplier duals must instead
+be analyzed with non-PSD $R_-$ for every such representing dual.
+
+Proof. Each listed sufficient hypothesis contains $R_-\succeq0$,
+contradicting Theorem 21.1 at this source. This is emptiness of their
+same-source jointly attained instance classes; it does not invalidate
+an implication proved under those hypotheses. Theorem 21.1 applies
+to each alternative representing dual separately. $\square$
+

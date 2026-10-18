@@ -1,0 +1,77 @@
+**Theorem 5.4 (work, retained certificates and index bits).** There are
+implementations of these same procedures, extracting a row only after
+acceptance and performing one subsequent finite certificate check,
+with logical-work bounds
+
+$$
+\begin{aligned}
+W_{\rm first}
+&=O\bigl((B+1)(N_B+A_B+H_B+1)+L+M^2N_B\bigr),\\
+W_{\rm bracket}
+&=O\bigl((B+1)(N_B+A_B+H_B^2+H_B+1)+L+M^2N_B\bigr).
+\end{aligned}
+\tag{CNA.7}
+$$
+
+Peak observer storage, including public cut input, current attempt,
+retained accepted tree and certificate, row output, blocked guards,
+partition matrix and comparison workspace, is
+
+$$
+S_B=O(N_B+A_B+L+M^2)
+\tag{CNA.8}
+$$
+
+constant-alphabet characters and bounded-index cells. Failed certificates
+are discarded. A sufficient analytical index width, up to a fixed
+additive constant, is
+
+$$
+w_B=\left\lceil\log_2\!\left(
+2+(B+1)(N_B+A_B+H_B^2+H_B+2)+L+M^2
+\right)\right\rceil .
+\tag{CNA.9}
+$$
+
+On a logarithmic-cost random-access model charging $O(w_B)$ bit work per
+indexed operation, conservative bit bounds are $O(w_BW)$ work and
+$O(w_BS_B)$ storage, for the corresponding expression $W$ in (CNA.7).
+Indices grow dynamically; (CNA.9) is not installed source-dependent
+word-size advice.
+
+**Proof.** Keep explicit words on a depth-first stack and append an
+address/reply record per Read. Tree construction, parsing and checking
+use $O(N_j+A_j+d_j+1)$ units per first-leaf attempt.
+For a bracketed attempt add $O(d_j^2+d_j+1)$ for all guard prefixes.
+Ordinary node indices and continuation frames build the acquired tree
+without repeatedly copying entire subtrees. Discarding a failed attempt
+costs at most its allocated length and is included in this sum.
+
+After acceptance, construct the public cut trie and traverse it with
+the acquired tree, retaining the exterior and a subtree index or
+concrete blocking leaf for each cut address. Work is $O(N_B+L)$;
+hole-address copies total at most $L$.
+For each pair of reached holes, directly compare their ordered finite
+subtrees. Each comparison visits at most $O(N_B)$ node records with
+a bounded-depth stack, and supplies its equality or disequality bit.
+There are at most $M^2$ pairs. Canonical class names, if wanted, follow
+by scanning the matrix in hole order. Recomputing and checking the row
+costs at most another constant multiple. This gives (CNA.7).
+
+A traversal's explicit addresses cost $O(N_B+A_B)$ storage; its tree
+and stack fit the same bound. Guard-prefix storage adds
+$O(H_B^2+H_B+1)$. A longest source path already contributes
+$H_B(H_B+1)/2$ to $A_B$, so the addition is $O(N_B+A_B)$.
+Input, exterior, guards and matrix give the other terms in (CNA.8).
+The chosen finite implementation uses only indices, lengths and optional
+cumulative Read counters bounded by a constant multiple of the quantity
+inside (CNA.9). Constant extra bits cover that multiple.
+It maintains no hidden writer count.
+
+All retained data, comparison, checking and output materialization
+are charged. Keeping earlier certificates, failed attempts or multiple
+captured trees adds their actual lengths. The source register's storage
+and global-update work are separate from observer work.
+Atomicity is the declared primitive contract, not a claim of constant
+physical time for global substitution. $\square$
+

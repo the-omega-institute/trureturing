@@ -1,0 +1,17 @@
+**Definition 3.1 (Cut gains and their signed deficit).** Define remote fields $\mathcal L_r=\sigma(X_j:j<-r)$ and $\mathcal R_r=\sigma(X_j:j>r)$, and set
+
+$$
+\begin{aligned}
+\chi_L(r)&=I_P(\mathcal L_r;\mathcal F\mid W_L(r)),&
+\chi_R(r)&=I_P(\mathcal P;\mathcal R_r\mid W_R(r)),\\
+b_L(r)&=H_P(X_0\mid G_L(r))-H_P(X_0\mid\mathcal E),&
+b_R(r)&=H_P(X_0\mid G_R(r))-H_P(X_0\mid\mathcal E),\\
+k_L(r)&=\sigma_{r+1}-\chi_L(r),&k_R(r)&=\sigma_{r+1}-\chi_R(r),\\
+K_H(R)&=\sum_{r\ge R}\bigl(k_L(r)_++k_R(r)_+\bigr),&
+\Gamma&=h-H_P(X_0\mid\mathcal E).
+\end{aligned}
+\tag{3.1}
+$$
+
+Mutual informations of half-line fields mean increasing finite-block limits. The finite cut in (2.2) bounds all the cut quantities used below; no entropy of an infinite record is subtracted from another infinite entropy.
+

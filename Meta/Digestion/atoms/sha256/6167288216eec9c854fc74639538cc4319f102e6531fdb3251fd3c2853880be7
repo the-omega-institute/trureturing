@@ -1,0 +1,53 @@
+**引理 233.2（Exact counts and capacities, uniformly in $m$）。**
+The total mass and first-zero masses of $\mu_m$ are
+
+$$
+\mu_m(\{0,1\}^m)=s,\qquad
+(p_1,p_2,p_3,p_4,\ldots,p_m)=(d,m-2,1,0,\ldots,0).
+$$
+
+Its zero marginals are $d$ for $i\le m-2$, $d+1$ for $i=m-1$,
+and $s$ for $i=m$. For $i<j<m$,
+
+$$
+\mu_m(10)=m-2,\qquad\mu_m(11)=1.
+$$
+
+For $i<j=m$, the $01,11$ masses vanish, and the $10$ mass is
+$m-1$ if $i\le m-2$, and $m-2$ if $i=m-1$. All correct-row
+densities in 233.1 satisfy $0\le\gamma_n/c_n\le1$ whenever used.
+
+证明。 There are $(m-1)+\binom{m-1}{2}-1=s$ atoms. A first zero
+at one leaves one or two ones among $m-2$ positions, with the
+excluded singleton deleted, giving
+$(m-2)+\binom{m-2}{2}-1=d$. A first zero at two requires bit one
+and allows at most one additional one after bit two: this gives
+$1+(m-3)=m-2$. A first zero at three requires the unique pair of
+ones at positions one and two. Three initial ones are impossible.
+
+For a nonterminal coordinate $i$, the singleton at $i$ and the
+$m-2$ pairs containing $i$ give one-marginal $m-1$, except at
+$i=m-1$ where the removed singleton lowers it to $m-2$.
+Subtracting from $s$ gives the stated zero marginals. For
+$i<j<m$, the unique pair $\{i,j\}$ gives $11$ mass one; the
+singleton at $i$ is not the removed singleton, and together with
+the $m-3$ pairs through $i$ excluding $j$ gives $10$ mass $m-2$.
+The terminal bit is always zero, which gives its pair statements.
+
+Since $w_n=0$ implies $n(w)\le n$,
+$c_n=\mu_m(w_n=0)-p_n$. In particular
+
+$$
+c_1=0,\quad c_2=d-m+2=b,\quad c_3=d-1,\quad
+c_n=d\ (4\le n\le m-2),\quad c_{m-1}=d+1-p_{m-1},\quad c_m=s.
+$$
+
+The displayed value $c_3=d-1$ applies for $m\ge5$; at $m=4$,
+the overlapping terminal-predecessor case is $c_3=d=2\ge\gamma_3=1$.
+Comparison with $\gamma$ proves every capacity assertion. Each
+push resets exactly the prefix before its own zero and preserves
+the terminal zero, so its first zero is $n$, its total is
+$\gamma_n$, and it is nonnegative. The single counting argument
+works for every integer $m\ge4$; no choice of a fixed $m$ or
+different measure for different labels is involved. $\square$
+

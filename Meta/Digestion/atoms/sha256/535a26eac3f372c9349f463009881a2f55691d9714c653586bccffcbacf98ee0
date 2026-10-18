@@ -1,0 +1,14 @@
+**定义 2.1（实际退役集与存在位）。** 在索引零所在的零差档案，第 $t$ 个块前令 $a=tm$、$b=(t+1)m$。存在位 $\rho\in\{0,1\}$ 表示左前沿 INITIAL 来源 $a$ 是否还在该档案上。初态 $\rho_0=1$。当前所有 $j>a$ 均尚存，过去已退休且尚存的来源均带 $A$，包括参考来源零。当前实际退休集合是
+
+$$
+R_t(\rho)=\{a+1,\ldots,b-1\}\cup
+\begin{cases}\{a\},&\rho=1,\\\varnothing,&\rho=0,\end{cases}
+\quad
+N_t(\rho)=\{j\in R_t(\rho):\lambda(j)\ne A\},
+\quad n_t=|N_t|,
+\quad \Gamma_t=\{\lambda(j):j\in N_t\}.
+\tag{2.1}
+$$
+
+根窗口的索引零不可选，因为根首位须零。定义可选退休供体集 $R_t^{\circ}=R_t\setminus\{0\}$ 当 $t=0$，其余窗口取 $R_t^{\circ}=R_t$。空整数区间为空集。
+

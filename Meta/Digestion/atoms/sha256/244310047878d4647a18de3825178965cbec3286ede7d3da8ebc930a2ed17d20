@@ -1,0 +1,85 @@
+**Lemma 12.2 (The same-law $Q_8$ core bounds and later vectors).**
+On every core first-zero fibre $n\le7$, $Q_8$ has correct
+counts
+
+$$
+(1081,1002,1002,618,490,362,106)/3072
+\tag{12.5}
+$$
+
+and outside-$\{0,n\}$ mass at most $662/3072$.
+Its later and positive vectors are exactly
+
+$$
+\begin{aligned}
+(Q_8)_8&=\frac{2344e_0+220e_3+162e_4+187e_5+159e_8}{3072},\\
+(Q_8)_+&=\frac{2446e_0+220e_3+162e_4+187e_5+57e_8}{3072}.
+\end{aligned}
+\tag{12.6}
+$$
+
+Thus its positive nonbase count is 626, leaving 36 counts below
+the core endpoint allowance 662.
+
+Proof. The reused all-word theorem XVIII 320.2 supplies (12.5)
+and the outside bound for the genuine $P^\star$. Its complete
+polynomial certificate, with $x_i=w_i$, is
+
+$$
+\begin{aligned}
+3072[1-P^\star_x(0)]
+ &=J+A x_6+B(x_7+x_8)
+       -17(x_6x_7+x_6x_8+x_7x_8+x_8x_9),\\
+A&=127-125x_3-110x_4-127x_5,\qquad
+B=17-15x_3-17x_5,\\
+J&=1139+391x_1+470x_2+523x_3+227x_4+161x_5\\
+ &\quad-463x_1x_2-391x_1x_3-110x_1x_4-27x_1x_5\\
+ &\quad-391x_2x_3-110x_2x_4-27x_2x_5
+       -148x_3x_4-132x_3x_5-117x_4x_5.
+\end{aligned}
+\tag{12.7}
+$$
+
+Each schedule contributes its nonbase first count times $(1-x_i)$,
+middle count times $x_i(1-x_j)$ and exhaustion count times $x_ix_j$.
+For fixed $x_1,\ldots,x_5$, $B\le17$ and the suffix maximum
+is $J+\max\{0,A,B\}$: take $x_9=0$; at $x_6=0$ the
+remaining maximum is $\max\{0,B,2B-17\}=\max\{0,B\}$,
+and at $x_6=1$ the remaining coefficients are nonpositive,
+giving maximum $A$.
+The credited grouped outside-count maxima, in lexicographic order
+of all free bits through five, are
+
+$$
+\begin{array}{c|l}
+n&\text{complete grouped maxima}\\ \hline
+1&185,219,302,329,583,610,662,572,655,662,662,662,662,662,631,514\\
+2&655,662,662,662,662,662,631,514\\
+3&662,642,559,532\\
+4&662,635\\
+5&649
+\end{array}
+\tag{12.8}
+$$
+
+For classes six and seven the restricted nonbase polynomials are
+$995-15(x_7+x_8)-17(x_7x_8+x_8x_9)$ and
+$760-32x_8-17x_8x_9$; subtracting their correct counts gives
+outside maxima 633 and 654. These are the supplied full-word
+endpoint bounds, with no sole-zero restriction.
+
+The 53-count transfer from nine to eight preserves every core
+$A,C,P$ event on every word. Fixing input nine to zero retains
+all eight-bit core words, and projecting label nine to zero
+preserves correct mass and can only increase base and union mass.
+This proves the claimed core bounds for the actual law $Q_8$.
+
+To derive (12.6) directly from its complete tables, the persistent
+non-tail nonbase counts are $220,162,99+88=187$.
+On first-zero eight its correct contributions are
+$15+17+17+53+57=159$; nonbase total is 728 and base is 2344.
+On the positive eight-word the four middle contributions of total
+102 disappear into base, while the $(6,7)$ exhaustion contribution
+57 remains. Thus its nonbase total is 626 and base is 2446.
+All these counts come from the same allocation. $\square$
+

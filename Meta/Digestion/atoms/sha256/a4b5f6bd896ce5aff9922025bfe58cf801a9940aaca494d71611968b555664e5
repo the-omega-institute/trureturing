@@ -1,0 +1,25 @@
+**Corollary 8.1 (the established bounds).** The following statements hold for every declared $d\ge1$.
+
+| Task or identity | Established read count |
+| --- | --- |
+| Nonzero universal scalar-linear gain identity on a mixed word | Impossible through $2d+2$ |
+| Complete-target protocol with an everywhere successful countable-palette gain output | At least $2d+3$, and at most $4d+5$ |
+| Gain-only extraction on a preassigned word, with countable fixed-matrix selection | Exactly $2d+3$ |
+| One all-input mixed-word gain map | A realization at $2d+4$ |
+
+**Proof.** The rows follow respectively from Theorems 3.1, 3.3 and 7.1, 5.3, and 6.1. $\square$
+
+At $d=3$, these give the exact fixed-acquisition gain threshold of nine reads, a ten-read mixed gain construction $JM^8$, and the bounds nine through seventeen for complete recovery equipped with this gain-output mechanism. The seventeen-read bound is an upper bound for the particular root-aware construction, with no optimality claim or comparison theorem for unrestricted protocols.
+
+A universal fixed-map identity concerns every legal world. A map may succeed only on a restricted actual branch. Lemma 2.3 connects these notions only through its explicit countable-cover hypotheses; it does not make a branch universal. Nor does a countable palette include matrices with data-dependent entries.
+
+The exact adaptive gain-only threshold is unresolved here. Lemma 3.2 excludes pure terminal words only for correct complete-target protocols; it cannot be used to forbid pure terminal words of gain-only protocols. Thus Theorem 5.3 is not an adaptive gain-only lower bound. Likewise the mixed construction does not classify mixed identities at $2d+3$ reads or prove impossibility for all selectors at that budget. A universal identity allowed by dimension counting would still require an everywhere nonzero output, including exceptional source loci, to become a full-domain algorithm.
+
+Unrestricted nonlinear complete recovery has no imposed gain-output mechanism. Theorems 3.3 and 8.1 do not settle whether the full cubic domain admits eight total reads, and do not prove the unrestricted bound $n_{\rm det}(3,0)\ge9$. The earlier bound $n_{\rm det}(3,0)\ge8$ is recorded in the supplied IV source with its original scope; no proof of that external earlier result is needed or imported here.
+
+The other open questions recorded in IV also remain open: feasibility of its exceptional-pair system (6.1)–(6.4); a simultaneous third target in the same literal joint fifth-response fiber satisfying its sparse relations and all losing-child conditions; the bridge from arbitrary three-target losing families to the common-fifth hypotheses; the unrestricted local 127-coordinate system at the specified $MMJM$ parent; and the unrestricted original-root 2046-coordinate system. The complementary $JMMJ$ and $MJMM$ subtrees at their own preceding histories, and the fifth-$M$ alternative at the specified $JMJM$ parent, are separate unresolved branches. None is identified with another parent by the present arguments. Finite-tree encodings and algebraic decidability alone supply no feasibility decision. These questions are not prerequisites for the self-contained gain identities and realization in this volume.
+
+The full coefficient space, rather than a known-factor subspace such as $g=(1+t^2)(a+bt)$, is essential in Lemmas 2.2–2.3. No conclusion here changes the validity or scope of the known-factor recovery results cited in IV. Invertible fixed changes of coefficient basis can be absorbed into the output matrix and do not change the capacity conclusions. The restriction $d\ge1$ is essential to the collinearity argument and the pure-$J$ pair; no $d=0$ assertion is made by those proofs.
+
+No statement about empirical performance, general learning models, stability, bit or time complexity, physical acquisition cost, external originality, or literature completeness follows from these exact mathematical read counts.
+

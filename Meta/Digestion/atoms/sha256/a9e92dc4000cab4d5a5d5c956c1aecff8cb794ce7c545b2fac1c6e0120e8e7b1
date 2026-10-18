@@ -1,0 +1,81 @@
+**Theorem 5.1 (Fixed-law finite approximation and detection).** Assume (1.5)–(1.6). For integers
+$R,r\ge0$ put
+
+$$
+\begin{aligned}
+I_R&=[a-R,b+R]\cap\mathbb Z,\qquad \delta_r=\sqrt{D_r(P)-d(P)},\\
+D_{C,R,r}(x)&=\sum_{i\in I_R}\bigl(\ell_{r,i}(x)-\ell_{r,i}(Z_Cx)\bigr),\\
+\varepsilon_{C,R,r}&=2(1+2^{L/2})\bigl[A_P(R)+(L+2R)\delta_r\bigr].
+\end{aligned}
+\tag{5.1}
+$$
+
+Then $\|D_C-D_{C,R,r}\|_2\le\varepsilon_{C,R,r}$. For $f\in\mathcal K_C(P)$ and a bounded
+finite-coordinate exterior $g$, set
+
+$$
+I=\int gR_{C,f}\,d\mu_C,\qquad
+W_{R,r}=\mathbb E_P[f(X_C)g(Y)D_{C,R,r}^2],\qquad
+\sigma_{R,r}=\|D_{C,R,r}\|_2.
+$$
+
+For every justified finite upper allowance $\widehat\varepsilon\ge\varepsilon_{C,R,r}$,
+
+$$
+|W_{R,r}-I|\le\|f\|_\infty\|g\|_\infty
+\widehat\varepsilon(2\sigma_{R,r}+\widehat\varepsilon).
+\tag{5.2}
+$$
+
+A strict excess of $|W_{R,r}|$ over this threshold proves $I\ne0$. If $I\ne0$ and justified allowances
+can be made arbitrarily small by choosing $R$ and then $r$, a finite strict test exists. Neither the
+approximation nor (5.2) needs first-order balance; its interpretation as the normalized tilt's
+second-order obstruction uses $T_{C,f}=0$.
+
+Proof. The omitted left and right exterior sites have exactly offsets $j\ge R$ in (2.4), including $j=0$
+when $R=0$. Equation (3.4) and Minkowski bound their sum in $L^2$ by $2(1+2^{L/2})A_P(R)$. At each
+retained site, (1.4) and the loss inequality give
+
+$$
+\|\ell_i-\ell_{r,i}\|_2\le2\delta_r,\qquad
+\|(\ell_i-\ell_{r,i})\circ Z_C\|_2\le2^{L/2}\,2\delta_r.
+\tag{5.3}
+$$
+
+The second bound uses (2.1), with the same original losses at the modified configuration. There are
+$L+2R$ retained sites; summing proves (5.1)'s error bound. By definition, $I=\mathbb E_P[fgD_C^2]$. The
+factorization of a difference of squares and Cauchy–Schwarz give
+
+$$
+|W_{R,r}-I|\le\|f\|_\infty\|g\|_\infty
+\|D_{C,R,r}-D_C\|_2\bigl(\|D_{C,R,r}\|_2+\|D_C\|_2\bigr).
+$$
+
+Use $\|D_C\|_2\le\sigma_{R,r}+\widehat\varepsilon$ to obtain (5.2). For detectability, $A_P(R)\to0$ and,
+for fixed $R$, $\delta_r\to0$. First make the tail small by choosing $R$, then the finite-window error
+small by choosing $r$. Also $\sigma_{R,r}\le\mathsf B_L+\widehat\varepsilon$. Thus if valid upper
+allowances tend to zero in that selection order, the right side of (5.2) becomes smaller than $|I|/2$.
+Then $|W_{R,r}|\ge|I|-|W_{R,r}-I|$ strictly exceeds the threshold. $\square$
+
+Both $W_{R,r}$ and $\sigma_{R,r}^2$ are finite observables determined by the single actual cylinder
+marginal covering $[a-R-r,b+R+r]$ and the coordinates of $g$. The latter is a second moment, not a
+centered variance. Every positive radius-$r$ exterior fiber $(u,v)$ uses
+
+$$
+q_{r,i}=\frac{\lambda M_uM_1M_v\mathbf1}{\lambda M_uAM_v\mathbf1}.
+\tag{5.4}
+$$
+
+Empty $u,v$ give the prior at $r=0$. Zero denominators require no division; choose zero there.
+Nonsingularity of $Z_C$ preserves their nullity even at modified evaluations. Retained forcing neighbors
+give zero numerator. All overlaps, every legal seam and every endpoint remain in this one finite
+marginal; unspecified coordinates are summed, never factorized.
+
+The analytic premise gives existence of vanishing $A_P(R)$, not an effective upper allowance. Under
+hypothetical attainment only, (1.9) permits $\delta_r\le\sqrt{\bar c/(r+1)}$; any root-tail allowance
+must still be justified for the same $P$. No finite test value or strict margin is supplied. If
+$\mathsf Z(P)$ also holds, Theorem 4.2 turns a nonzero conditional residual into an $I\ne0$ to which this
+test applies. It still does not contradict attainment: that would require an additional theorem making
+$R=0$ necessary. This is distinct from [Intrinsic, Corollary 3.4][I]'s existing first-order strict-risk
+certificate.
+

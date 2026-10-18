@@ -1,0 +1,85 @@
+**引理 74.1（两个奇异值的完整实现）。** 设
+$\alpha_1\geq\alpha_2\geq0$、$\beta_1\geq\beta_2\geq0$、$c\geq d\geq0$，
+$A=\operatorname{diag}(\alpha_1,\alpha_2)$、$B=\operatorname{diag}(\beta_1,\beta_2)$。
+存在实 $T$、$\|T\|_{\mathrm{op}}\leq1$，
+使 $X=ATB$ 的奇异值精确为 $(c,d)$，当且仅当
+
+$$
+c\leq\alpha_1\beta_1,\qquad
+d\leq\min\{\alpha_1\beta_2,\alpha_2\beta_1\},\qquad
+cd\leq\alpha_1\alpha_2\beta_1\beta_2.
+\tag{XI.6}
+$$
+
+**证明。** 必要性由前述奇异值乘积不等式的第一、第二指标及
+$|\det T|\leq1$ 得到。为证充分性，若 $c=0$，取 $T=X=0$。
+若 $c>0,d=0$，第一条保证 $\alpha_1\beta_1>0$，取
+
+$$
+T=\operatorname{diag}\left(\frac{c}{\alpha_1\beta_1},0\right),
+\qquad X=\operatorname{diag}(c,0).
+\tag{XI.7}
+$$
+
+这允许 $\alpha_2$ 或 $\beta_2$ 为零。以下 $d>0$，
+(XI.6) 强制全部 $\alpha_i,\beta_i$ 严格为正。
+令 $W=\operatorname{diag}(c,d)$、
+$h=(cd/(\alpha_1\alpha_2))^2>0$，并令 $U(\theta)$ 为
+$0\leq\theta\leq\pi/2$ 的实二维旋转。考察
+
+$$
+M(\theta)=W U(\theta)^T A^{-2}U(\theta)W,\qquad
+\det M(\theta)=h.
+\tag{XI.8}
+$$
+
+其迹为
+$c^2(\alpha_1^{-2}\cos^2\theta+\alpha_2^{-2}\sin^2\theta)
++d^2(\alpha_1^{-2}\sin^2\theta+\alpha_2^{-2}\cos^2\theta)$，
+从 $t_0=c^2/\alpha_1^2+d^2/\alpha_2^2$ 连续不减到
+$t_1=c^2/\alpha_2^2+d^2/\alpha_1^2$，因为
+$t_1-t_0=(c^2-d^2)(\alpha_2^{-2}-\alpha_1^{-2})\geq0$。
+固定正行列式时，最大特征值为 $(t+\sqrt{t^2-4h})/2$，随迹不减。
+故 $M(\theta)$ 的最大特征值连续遍历
+
+$$
+[m_{\mathrm{lo}},m_{\mathrm{hi}}]
+ =\left[\max\left\{\frac{c^2}{\alpha_1^2},\frac{d^2}{\alpha_2^2}\right\},
+               \frac{c^2}{\alpha_2^2}\right].
+\tag{XI.9}
+$$
+
+所需的两个 Gram 特征值装入 $\beta_1^2,\beta_2^2$，
+等价于选取 $\mu$ 同时满足
+$\mu\leq\beta_1^2$ 和 $h/\mu\leq\beta_2^2$。
+这要求区间 (XI.9) 与 $[h/\beta_2^2,\beta_1^2]$ 相交。
+四个交叉端点比较完整地由 (XI.6) 给出：
+$m_{\mathrm{lo}}\leq\beta_1^2$ 使用
+$c\leq\alpha_1\beta_1,d\leq\alpha_2\beta_1$；
+$h/\beta_2^2\leq m_{\mathrm{hi}}$ 使用 $d\leq\alpha_1\beta_2$；
+$h/\beta_2^2\leq\beta_1^2$ 使用乘积条件；
+$m_{\mathrm{lo}}\leq m_{\mathrm{hi}}$ 则已由排序成立。
+因此可以选一个交点 $\mu$ 及相应旋转 $U$。
+
+选实正交矩阵 $V_0$ 使
+$V_0 M V_0^T=\operatorname{diag}(\mu,h/\mu)$，并定义
+
+$$
+X=U W V_0^T,\qquad T=A^{-1}XB^{-1}.
+\tag{XI.10}
+$$
+
+则 $X$ 的奇异值仍精确为 $c,d$，且方向必须按以下等式计算：
+
+$$
+X^T A^{-2}X=V_0 M V_0^T
+ =\operatorname{diag}(\mu,h/\mu)\preceq B^2,\qquad
+T^TT\preceq I.
+\tag{XI.11}
+$$
+
+这证明实收缩的存在。使用 $V_0^T M V_0$ 代替中间式将不符合 (XI.10)。
+若迹区间退化为一点，取端点旋转即可；
+重特征值允许任取实正交特征基，闭区间端点也允许。
+加上 (XI.7)，全部零值、重根及范数恰为一的情况均已覆盖。$\square$
+

@@ -1,0 +1,48 @@
+**Proposition 8.13 (Conditional resampling and its Dirichlet form).**
+On the positive support $S$ of the same $p$, define
+
+$$
+(\mathscr L_pf)(u)
+=\sum_{\substack{v\in S\\\{u,v\}\in E(\Gamma_n)}}
+\frac{p_v}{p_u+p_v}\,[f(v)-f(u)].
+\tag{8.24}
+$$
+
+This is the generator that refreshes each position at unit rate from its
+conditional law given all other bits of the finite word. It is reversible
+with stationary law $p$ and Dirichlet form
+
+$$
+\begin{aligned}
+\mathcal E_p(f,f)
+&=-\langle f,\mathscr L_pf\rangle_p
+=\sum_{\{u,v\}\in E(\Gamma_n)}h(p_u,p_v)(f_u-f_v)^2\\
+&=\sum_{i=1}^n
+\mathbb E_p\operatorname{Var}_p(f(U)\mid\mathcal F_i),
+\qquad
+J_p[f]=\frac4n\mathcal E_p(f,f).
+\end{aligned}
+\tag{8.25}
+$$
+
+Zero-amplitude states are excluded from this chain, and zero-weight edges
+contribute zero to the sum over all legal vertices.
+
+Proof. At a positive two-completion fiber $u,v$, resampling position $i$
+from $u$ changes to $v$ with probability $p_v/(p_u+p_v)$. A one-completion
+fiber, including a fiber with only one positive mass, makes no change.
+The rates in (8.24) are nonnegative and have zero row sum. Their
+stationary flow on each oriented edge is
+
+$$
+p_u\frac{p_v}{p_u+p_v}
+=p_v\frac{p_u}{p_u+p_v}=h(p_u,p_v),
+$$
+
+which proves detailed balance. Pair the two oriented terms in
+$-\langle f,\mathscr L_pf\rangle_p$; together they give exactly
+$h(p_u,p_v)(f_u-f_v)^2$ per unordered edge. The conditional variance on
+that fiber is $p_up_v(f_u-f_v)^2/(p_u+p_v)^2$ and its event mass is
+$p_u+p_v$. Summing fibers gives the second form in (8.25). The final
+identity is (8.22). $\square$
+

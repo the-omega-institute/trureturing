@@ -1,0 +1,27 @@
+**Theorem 11.2 (Critical sandwich with budget dependence).** If $a=2r$, on one source/risk neighborhood every finite-budget compliant observer satisfies
+
+$$
+\mathbb E_iT\ge
+\frac{A_-s^{-(a+1)}}{1+\log(\min\{L_M,1/s\})}
+\ge\frac{A_-s^{-(a+1)}}{\log(e/s)},
+\tag{11.1}
+$$
+
+where $L_M$ is (7.1). There is a common q-retuned family with one fixed sufficient capacity and both means $O(s^{-(a+1)})$. For every fixed sufficient $M$, the separate and joint infima have order $s^{-(a+1)}$, with lower constants allowed to depend on that fixed $M$.
+
+Proof. The first bound is the critical line of Theorem 7.1. Since $1\le\min\{L_M,1/s\}\le1/s$, the second follows. With $\lambda=\ell_0$, Theorem 9.2 has fixed sufficient count and upper $C_Us^{-(a+1)}$, since $2r-a=0$. For fixed $M$, the first denominator is at most $1+\log L_M$, a constant, and the one upper table gives the corresponding infimum orders. These are fixed-capacity q-retuned families. $\square$
+
+**Open problem 11.3 (The critical multiscale bridge).** At equality, the leading entropy density of Section 6 is $k^{d-2r}=1/k$. Summing through the typical length $1/s$ yields a logarithm. The bound for a single geometric scale in (9.5) has $\lambda^{2r-a}=1$ and supplies no logarithmic improvement. The full-gap entropy lower calculation alone supplies no attainable upper rate.
+
+Closing the critical case requires a lawful actual-bit controller that combines enough scales on one history, counts its scale-selection state, every retained evidence coordinate, all phases and both labels, and proves both errors, both almost-sure actual stops and both finite actual paid means. It must either attain $s^{-(a+1)}/\log(e/s)$ with a declared complete budget or establish that the gain is unavailable under a specified budget. Separate per-scale optimal costs cannot be treated as simultaneously attainable or aggregated without an implementation proof. The one-scale estimate's lack of gain is also not an impossibility theorem for all controllers.
+
+A precise necessary condition already follows. If a compliant critical family with fixed $C_T$ and fixed target attained an upper $C_Ts^{-(a+1)}/\log(e/s)$, (11.1) would force
+
+$$
+1+\log(\min\{L_{M(s)},1/s\})
+\ge\frac{A_-}{C_T}\log(e/s).
+\tag{11.2}
+$$
+
+By (7.6), $1+\log L_{M(s)}\le C+\frac1r\log(1+M(s))$. Hence budgets with $\log(1+M(s))=o(\log(1/s))$ cannot attain that proposed gain. This identifies a necessary obstruction without supplying a sharp necessary power, a sufficient multiscale budget, or the full critical frontier. For $(d,r)=(1,1)$, the retained sandwich is $s^{-3}/\log(e/s)$ versus $s^{-3}$.
+

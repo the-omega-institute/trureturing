@@ -1,0 +1,22 @@
+**Theorem 78.1 (half-parameter census).** At \(b=1/2\), the actual matrix
+\(H_0(b)\) has exactly sixty projective common-flat input rays: six canonical
+rays, eighteen nonconstant aligned rays, and thirty-six rays whose two
+channels each have three distinct entries. The last set consists of all six
+synchronous orders above each of six uniquely normalized real quotient
+points. This theorem counts rays; orthogonality is treated separately below.
+
+Here a common-flat input ray has a representative \(w\) whose entries have
+modulus one and whose image under \(H_0\) also has entries of modulus one.
+Theorem 75.1 gives complete coverage on \(0<|b|<1\): canonical zero-mean
+modes, the selected three-distinct-channel chart (possibly after \(\Theta\)),
+and the aligned finite/pole charts. Theorem 77.1 supplies all eighteen
+nonconstant aligned rays at \(b=1/2\), with all its finite rank deficiencies
+and the unique-parameter pole case accounted for. We prove the complete
+selected-channel count, then show that its thirty-six rays are already
+\(\Theta\)-invariant. Thus optional channel selection does not double it.
+
+The certificate below uses rational polynomial identities, exact real-root
+isolation, and stated good-prime lifts. It uses no numerical or literature
+upper bound. The polynomial data and reconstruction rules needed here are
+printed in this section; no unpublished data file is a premise.
+

@@ -1,0 +1,7 @@
+**Definition 6.3 (two terminal classes).** Let $\mathfrak A_5$ consist
+of graphs for which $\mathcal L_*\subseteq\{I_5\}$. Let
+$\mathfrak C_5$ consist of graphs satisfying (TS.25) at every state of
+every pool in $\mathcal L_*\setminus\{I_5\}$. No conflict condition is
+placed on $I_5$ itself. These are explicit qualified classes; neither
+is asserted to contain all original competitors.
+

@@ -1,0 +1,44 @@
+**Definition 2.1 (credited exact carrier).** A complete native template
+on $n$ original blocks selects at every $(i,q)\in[n]\times W_d$ a
+constant $\Gamma_q(x_i)=z\in G_q$, or an equation
+
+$$
+\Gamma_q(x_i)=\delta_{i,q}(r_{x_j}(a)),
+\qquad a\in W_d,\quad \delta_{i,q}:\mathcal A\to G_q.
+\tag{OOA.6}
+$$
+
+All equations hold on the same tuple; donors may be self, off-target,
+shared or cyclic. Its solution set is $C_\Theta\subseteq S_d^n$.
+An admissible subrelation has such witnesses for every target.
+[NDR, Theorem 2.2][NDR] supplies containing complete templates without
+changing nonnegative mass maxima or cover optima.
+
+Use the exact [RRN, Definition 5.1 and Theorem 5.2][RRN] carrier.
+A seed $c$ has nonempty domain $T_c\subseteq\mathcal A$ and a distinct
+actual owner port $o_c=(i_c,q_c)$. Each port prescribes a constant
+factor or $B_{i,q}(s_c)$ for one seed, and at its owner
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{OOA.7}
+$$
+
+Repeated occurrences use the same variable. A seed assignment either
+reconstructs a unique actual $x_i(s)\in S_d$ at every block or fails
+actual-tree compatibility. For arbitrary nonnegative whole-block
+weights $w_i$, let $\Phi_i(s)=w_i(x_i(s))$ when block $i$ reconstructs,
+and zero otherwise. Each full $w_i$ occurs once. The credited two-way
+correspondence gives one lift per actual tuple and
+
+$$
+\sum_{x\in C_\Theta}\prod_iw_i(x_i)
+=\sum_{s\in\prod_cT_c}\prod_i\Phi_i(s).
+\tag{OOA.8}
+$$
+
+[CBN, §§2–6][CBN] supplies the actual constructor constraints and
+equality-aware once-owned weights. No pairwise factorization of $w_i$
+is assumed. Seeds in this representation are analytical variables,
+never extra acquired or exported observations.
+

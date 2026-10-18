@@ -1,0 +1,24 @@
+**Definition 13.2 (an acquired path descriptor and its predictive factor).**
+Let $p_i$ be the length-$i$ prefix of $p$, with $p_0=\varepsilon$.
+Write $\lambda_0=\alpha$, $\lambda_1=\beta$ and retain the weight $s$
+of (AAR.42). There are two kinds of path descriptor:
+
+- $B$: the address $p$ is initially branch;
+- $(j,e)$: the first leaf on the path toward $p$ is at $p_j$, with
+  actual label $\lambda_e$, where $1\le j\le n$ and $e\in\{0,1\}$.
+
+The root is known branch, so there is no candidate at index zero.
+Denote this mathematical descriptor by $\partial_p(t)$. Its existence
+is a property of $t$, not an acquisition operation. For a descriptor
+actually obtained from Reads, define
+
+$$
+ \Gamma_p(B)=(0,0),\qquad
+ \Gamma_p(j,e)=
+ \begin{cases}
+ (2-e,1-e),&j=n,\\
+ (s(r)+2-e,\mathbf1_{r\text{ ends with }R}),&p=p_jr,\ j<n.
+ \end{cases}
+\tag{AAR.76}
+$$
+

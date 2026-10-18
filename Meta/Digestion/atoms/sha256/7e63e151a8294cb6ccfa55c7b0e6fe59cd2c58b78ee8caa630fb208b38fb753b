@@ -1,0 +1,29 @@
+**推论 455.5（非零临界补偿常数）。** 对每个固定 \(\lambda>0\)，取
+
+\[
+N_\lambda(x)=\left\lceil\lambda x^{3/2}\log x\right\rceil.
+\tag{CC.20}
+\]
+
+则 \(N_\lambda(x)\ge\lceil8x\rceil\) 最终成立，并且
+
+\[
+\boxed{\sqrt x\log x\,\mathscr E_x(N_\lambda(x))
+=\frac{F(1/2)}\lambda+
+O_\lambda\!\left(\frac{1+\log\log x}{\log x}\right)
+\longrightarrow\frac{\tfrac32\log(3/2)-\tfrac12}\lambda>0.}
+\tag{CC.21}
+\]
+
+**证明。** \(m=N_\lambda+1=\lambda x^{3/2}\ell+O(1)\)，其中整数误差位于 \([1,2)\)。所以
+
+\[
+a_x=\frac12+\frac{\log\ell+\log\lambda}{\ell}
++O_\lambda\!\left(\frac1{x^{3/2}\ell^2}\right),
+\qquad
+\frac{x^{3/2}\ell}m=\frac1\lambda+
+O_\lambda\!\left(\frac1{x^{3/2}\ell}\right).
+\]
+
+于是 \(a_x\) 最终位于例如 \([1/4,3/4]\)，而 \(F'\) 在此及其固定邻域有界。将以上式代入（CC.18）即得误差与极限。正性来自（CC.7）。证毕。
+

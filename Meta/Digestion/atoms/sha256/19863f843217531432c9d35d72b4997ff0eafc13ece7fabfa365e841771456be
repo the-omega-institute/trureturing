@@ -1,0 +1,59 @@
+**Proposition 5.1 (deletion sensitivity on the enlarged entire fiber).**
+Delete only the positive equality record $(0,LL,1,LR,=)$ in (SRF.14).
+Retain the other positive record, the negative record, both literals,
+the full old row and all its six inequalities. Every remaining record
+keeps both guards; the deleted equality's endpoint-existence conditions
+also hold automatically from the old reached holes. The resulting
+entire fiber is
+
+$$
+\begin{aligned}
+ U^- =\{\langle\langle x,b\rangle,
+        \langle\rho(t),t\rangle\rangle: &\ b\in\{\alpha,\beta\},\ t\text{ branch},\ x\in\mathcal T,\\
+ &\rho^2(x)\ne\rho(t),\quad
+ x,b,\rho(t),t\text{ pairwise distinct}\}.
+\end{aligned}
+\tag{SRF.20}
+$$
+
+For every original-prefix depth $h$ this fiber contains two sources
+agreeing through $h$ and having different whole $Q$ rows. No permitted
+static or serial source-total service on $U^-$ has a uniform finite new-read
+budget, at any legal certified entry epoch.
+
+Proof. The literals still give the displayed leaf and branch conditions,
+the remaining positive record gives $z=\rho(t)$, and the negative record
+is exactly $\rho^2(x)\ne\rho(t)$. The old row gives pairwise distinctness.
+All involved old holes are originally reached and remain reached under
+$\rho$, so both endpoint guards hold. These facts also prove the reverse
+inclusion in (SRF.20), without selecting a subfiber.
+
+For the counterpairs choose $b=\alpha$ and
+$t=t_0=\langle\alpha,\alpha\rangle$. Given $h$, set $k=\max(3,h)$.
+Let $a$ be the complete binary tree of depth $k$ with all leaves $\alpha$,
+and $a'$ the same tree with one depth-$k$ leaf changed to $\beta$.
+Take $x=\langle a,a\rangle$ and $x'=\langle a,a'\rangle$. These trees
+have depth $k+1>1$, while $t_0,\rho(t_0)$ are distinct depth-one trees
+and $b$ is a leaf; all six old inequalities hold separately for each
+source. The action preserves original branches, so $\rho^2(x)$ and
+$\rho^2(x')$ have depth at least $k+1>1$ and cannot equal $\rho(t_0)$.
+Thus both sources belong to the entire $U^-$ with every retained record.
+
+The only changed leaf is at original depth $k+3>h$, so their original
+prefixes agree through $h$. Both target rows have all four cuts reached
+and the same outside
+$\langle\langle\langle\square_1,\square_2\rangle,\alpha\rangle,
+\langle\square_3,\square_4\rangle\rangle$.
+The first two target values are $a,a$ in one and $a,a'$ in the other.
+Their depths exceed those of $\rho(t_0),t_0$, so the complete partitions
+are respectively $\{\{1,2\},\{3\},\{4\}\}$ and the discrete partition.
+They are different whole rows.
+
+As $h$ is arbitrary, every determining original prefix is refuted. The
+operational implication (ARH.2.3), whose locality and finite reply-tree
+proof applies independently of presentation syntax, excludes every
+uniform finite-read serial competitor. This is a universal consequence
+for the enlarged fiber, witnessed by actual pairs for each requested
+depth, not a finite-sample inference or an undecidability assertion.
+$\square$
+

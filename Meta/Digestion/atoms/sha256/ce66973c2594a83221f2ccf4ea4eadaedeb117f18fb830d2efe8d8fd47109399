@@ -1,0 +1,26 @@
+**Definition 103.1 (Integer blocks and terminal cells).** A row with
+schedule $S=(i_1,i_2,i_3)$ and block size $w$ represents $w$ positions
+of a uniform integer seed in $\{0,\ldots,D-1\}$. Put the row blocks
+consecutively in their displayed order. A cell containing a single
+label $j$ assigns all its $w$ positions to $\theta_j$. A cell
+$(j_1:m_1,\ldots,j_h:m_h)$ assigns consecutive local seed intervals
+of integer lengths $m_1,\ldots,m_h$ to the corresponding original
+tapes, in the displayed order. Each cell's masses sum to $w$.
+The same local seed position is used for every possible transcript.
+Thus the seed fixes both the schedule and the whole deterministic
+terminal table before any answer; cells do not introduce new randomness.
+
+For a preselected row, acquire all three actual replies, even after a
+zero, and use its column in order $000,001,010,011,100,101,110,111$.
+Let $m_{S,t}(j)$ be the integer mass assigned to label $j$ in column
+$t$. If $b=(q_1(x),\ldots,q_7(x))$, its full handed-tape law is
+
+$$
+\nu_b=\sum_{j=0}^7p_b(j)\delta_{\theta_j},\qquad
+Dp_b(j)=\sum_Sm_{S,(b_{i_1},b_{i_2},b_{i_3})}(j).
+\tag{103.1}
+$$
+
+Every seed position has one output on each word. This specifies one
+executable common rule, not separate probabilities chosen per source.
+

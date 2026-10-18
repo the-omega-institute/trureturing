@@ -1,0 +1,124 @@
+**Theorem 3.1 (canonical solution and finite-coordinate rigidity).**
+Every finite system (FJC.10) has a computably presented canonical
+solution $\mathbf K$ in $\widehat{\mathcal T}$. One can compute
+
+$$
+F=\{i:K_i\in\mathcal T\}
+\tag{FJC.12}
+$$
+
+and the exact finite values $K_i$ for $i\in F$. Every completed solution
+of $\mathscr G$ has those same values on $F$. Every other canonical
+coordinate is infinite and has effectively computable prefixes.
+Free states, finite grounds, root-shift chains, zero-shift cycles,
+positive-shift cycles and pair-guarded cycles are all included.
+
+**Proof.** First establish the completion interfaces used in the
+construction. The reply functions form a closed subset of the product
+of four-element sets over countably many addresses: the root is present;
+a branch has two present children; leaves and absent nodes have absent
+descendants. The complement of each condition is witnessed at finitely
+many addresses. This closed space is compact. It is complete for the
+prefix metric $d(S,T)=2^{-\delta(S,T)}$ for distinct trees, where
+$\delta$ is their first differing depth, and $d(S,S)=0$.
+Every prefix can be filled finitely, and a finite tree is isolated by
+its prefix through maximum leaf depth.
+
+For a request in $\rho^a S$, follow its original address in $S$.
+Original pairs persist. If a first original leaf is encountered, the
+remaining reply is computed in its finite $\rho^a$-expansion. If no
+leaf is encountered, the reached reply is branch. This includes born
+positions and absent descendants. It proves prefix nonexpansion and
+continuity of $\rho^a$ on the completion, extending the finite argument
+of [ARH, Lemma 19.2][ARH] and
+[NativeDepthPatterns.original_prefix_locality][DEPTH]. Pairing adds
+one level of prefix agreement. Finite expressions are continuous and
+nonexpanding in the maximum product prefix metric.
+
+Normalize each right side by distributing fixed powers through explicit
+pairs and evaluating finite grounds. Its root is now ground, an
+explicit pair, or $\rho^aX_j$. Call the last form a root link and attach
+weight $a\ge0$. The finite directed root-link graph has outdegree at
+most one. A path reaches a free state, a ground or pair definition, or
+a root-link cycle. Following a path accumulates its fixed weights;
+all paths and cycles are found by finite graph traversal.
+
+On a root-link cycle with total weight zero, every weight is zero.
+All cycle states are equal, and their common value is unrestricted.
+Replace the cycle by one free state and retain the equality maps.
+On a cycle with total weight $a>0$, a state satisfies $Z=\rho^a Z$.
+If $Z$ had any leaf, its minimum leaf depth $\mu(Z)$ would be finite.
+Each leaf under $\rho^2$ becomes a tree with minimum leaf depth at
+least one: $\rho^2\alpha=\langle\beta,\alpha\rangle$ and
+$\rho^2\beta=\langle\langle\beta,\alpha\rangle,\beta\rangle$.
+Hence $\mu(\rho^{2ak}Z)\ge\mu(Z)+ak$ for every $k$.
+Iterating $Z=\rho^a Z$ contradicts this inequality. Thus $Z$ has no
+leaf. The only full binary tree without leaves is $\Omega$.
+Conversely $\rho^a\Omega=\Omega$, so the cycle and all root-link
+predecessors entering it have exactly that solution. This is an
+interpreted-$\rho$ argument, not unification with a free unary symbol.
+
+Substitute every root-link path ending at a ground, pair or free state,
+with its accumulated exponent. Distribute its exponent at a pair.
+Keep the pair-defined states as the remaining unknowns. Their defining
+equations now have every state occurrence below an explicit pair.
+A reference to a removed root-link state substitutes its retained
+finite expression; a reference to a positive cycle substitutes
+$\Omega$. There are finitely many substitutions. Dependencies through
+pairs are not unfolded indefinitely. Reconstruction of every removed
+state is a ground, $\Omega$, or a fixed expression in the remaining
+states and free parameters. These operations preserve both solution
+directions: a solution restricts to the normalized equations, and their
+solution reconstructs every original equation along its root-link path.
+
+Assign arbitrary completed values to the free parameters. For the
+remaining pair-defined states let $T$ be simultaneous evaluation of
+their right sides. If two assignments agree through depth $h-1$, their
+images agree through $h$; for $h=0$, the explicit pair roots agree
+without an assumption. Consequently iteration from any initial values
+stabilizes the prefix through $h$ after $h+1$ iterations. More precisely,
+any two $n$-fold iterates agree through $n-1$, and successive iterates
+have that same agreement. Completeness of the metric gives a limit.
+Continuity makes it a fixed point. Iterating the same estimate on two
+fixed points proves equality at every depth, hence uniqueness for those
+free values. This is the direct native version of guarded metric
+recursion; the general background is [Milius–Moss, §7.3][MM]. Bare
+$\rho$ was used only as a nonexpanding map.
+
+Set every free parameter to $\Omega$. This defines $\mathbf K$ and a
+finite description by grounds, $\Omega$, and pair-guarded equations,
+followed by the reconstruction expressions. Its prefixes are effective:
+compute the necessary finite number of simultaneous iterations and
+finite expression prefixes, querying $\Omega$ as all-branch.
+
+It remains to classify finite coordinates without inspecting an
+infinite output. Draw an occurrence edge from each remaining defined
+state to each state or free parameter in its right side. Mark free
+parameters and explicit $\Omega$ dependencies as infinite terminals.
+A defined state whose reachable graph is acyclic and contains no such
+terminal evaluates to a finite tree, by evaluation in reverse
+topological order. Its value depends only on supplied grounds, so is
+the same in every solution.
+
+Every other state reaches an infinite terminal or a directed cycle.
+Pairing and fixed $\rho$ powers do not delete an infinite branch, so
+an infinite terminal makes all its predecessors infinite in
+$\mathbf K$. A pair-guarded dependency cycle cannot have finite values
+on all its states: for finite native leaf count $\ell$, induction on
+(FJC.1) gives $\ell(\rho^a t)\ge\ell(t)$, and an occurrence below
+at least one pair has a nonempty sibling. Each cycle edge would give
+$\ell(X_i)>\ell(X_j)$. Following the cycle is impossible. If one cycle
+state were finite, its dependent subexpressions would all be finite,
+so the whole cycle would be finite, the same contradiction. Thus all
+cycle states and their predecessors are infinite.
+
+A reconstruction expression is finite exactly when all its occurring
+canonical states are finite and it has no $\Omega$ occurrence; its
+value is then computed finitely and is forced in every solution.
+An occurring infinite state remains infinite under powers and pairing.
+This classifies all original coordinates and proves (FJC.12).
+A canonical infinite coordinate that depends on a free state can be
+finite in another solution. The theorem claims rigidity only on $F$;
+it does not confuse canonical infinitude with forced infinitude.
+$\square$
+

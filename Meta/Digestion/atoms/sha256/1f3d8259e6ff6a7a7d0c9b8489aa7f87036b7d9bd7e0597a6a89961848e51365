@@ -1,0 +1,29 @@
+### 63.5. Exact constrained diamond projection and threshold attainer
+
+For any z,w let v=z−w. The difference E_z−E_w has only leaf–hub matrix units, with coefficients v_i. Its diamond norm is
+
+    ||E_z−E_w||_diamond=||v||₂.                            (1)
+
+If v=0 this is immediate. Otherwise let r=||v||₂ and let |a>=Σ_i conj(v_i)|i>/r in the leaf space. Define a CPTP compression C from the logical input to a qubit using the Kraus operator K=|0><a|+|1><h| and additional Kraus operators |0><b_j| for an orthonormal basis of the leaf-space complement of a. Let O(T)=(T−ZTZ)/2 be the qubit off-diagonal map. Directly on every matrix unit,
+
+    E_z−E_w=r O∘C.
+
+The diamond norm of O is1, because it is half the difference of two unitary channels and achieves trace norm1 on |+><+|. Thus the diamond norm is at most r even with arbitrary references. On the normalized input (|a>+|h>)/sqrt(2), the output difference has eigenvalues r/2 and−r/2, giving the matching lower bound. Isometric MC output encoding preserves this norm.
+
+The characterization above therefore reduces the basis-preserving physical optimum exactly to min_{||w||₁≤1}||z−w||₂. If ||z||₁≤1 choose w=z. Otherwise there is a unique τ>0 satisfying
+
+    Σ_i max(|z_i|−τ,0)=1,
+
+and an optimizer is
+
+    w_i=exp(i arg z_i) max(|z_i|−τ,0),
+    optimal error=sqrt(Σ_i min(|z_i|,τ)²).                 (2)
+
+Here zero coordinates have arbitrary phase. For completeness, phase alignment cannot increase squared Euclidean distance, so it suffices to project the nonnegative vector a_i=|z_i| onto x_i≥0,Σx_i≤1. Set y_i=max(a_i−τ,0). On active coordinates a_i−y_i=τ, and on inactive coordinates a_i≤τ. For any feasible x,
+
+    Σ_i(a_i−y_i)(x_i−y_i)≤τ(Σ_i x_i−Σ_i y_i)≤0.
+
+Expanding ||a−x||₂² around y proves optimality. Strict convexity gives uniqueness. Existence and uniqueness of τ follow continuity and strict decrease of Σ_i max(a_i−τ,0) until it reaches zero. The single-product construction above implements the resulting w, so the exact optimum is attained by an actual common channel, not just a scalar relaxation.
+
+For z_i=1/sqrt(m), the constrained optimum has w_i=1/m and error1−1/sqrt(m). This quantitative statement remains within the exact-basis-output class; unrestricted physical leakage may improve it.
+

@@ -1,0 +1,24 @@
+#### 84.4.3. Strict quarter gap and convergence
+
+For this calibrated example only, there is also an explicit physical refactorization with the same complete encoded channel:
+
+    V_At(t)|f,i>=|f> tensor u_fi(t) tensor m_i tensor r_i(t),
+    V_Bt(t)|f,i>=|f> tensor conjugate(u_fi(t)).        (17)
+
+Both maps in (17) are isometries. All product-record inner products, and thus every encoded matrix unit, coincide with (12). This is a constructed physical equivalence specific to (12), not the unneeded completion assumption excluded in section 84.2.
+
+The second channel in (17) has rank two. The section-82 equality theorem would therefore require some signs epsilon_f in {+1,-1} such that sum_f epsilon_f n_f(t)=0. At t=0 every nonconstant sign pattern has norm at least two: a one-versus-three sign pattern gives norm two, and a two-versus-two pattern gives 4/sqrt(3). The perturbation of any such signed sum has norm at most ||n_4(t)-n_4||<=2t<2. Thus none becomes zero. The two constant sign patterns are nonzero by (13). No signed balance exists, so equality at 1/4 is excluded by section 82. Therefore
+
+    delta(t)>1/4 for every 0<t<=1/100.              (18)
+
+At t=0, (12) is the attaining tetrahedral 3/4-marker pair, so delta(0)=1/4. A quantitative continuity estimate is also available. The Stinespring operator changes satisfy
+
+    ||V_A(t)-V_A(0)||op<=2t,
+    ||V_B(t)-V_B(0)||op<=4t.
+
+For B, split the change into a qubit rotation of norm at most 2t and a marker change of norm at most 2t; the unperturbed qubit columns are orthogonal. The standard pure-state trace-distance estimate followed by partial trace gives a local diamond distance at most twice the Stinespring operator distance. Tensoring channels and using the triangle inequality therefore yields
+
+    1/4<delta(t)<=1/4+12t.                          (19)
+
+In particular delta(t) converges to 1/4, although both ranks are four and every transversal norm test is already above its threshold for all t>0. The exact qubit-core factorization, not the transversal norm condition, supplies the lower certificate along this bilateral path.
+

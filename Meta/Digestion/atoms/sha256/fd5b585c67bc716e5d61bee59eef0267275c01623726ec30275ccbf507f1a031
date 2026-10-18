@@ -1,0 +1,33 @@
+## 1. The continuation task and its owning results
+
+The target is the intrinsic inverse-generation depth of a current tree after
+an unknown nonnegative forward lag. Preparation actually acquires the original
+tree. A separately supplied complete cut retains a calibration label and
+isolates the remaining preparation information. Later the consumer reads only
+the current right spine, using the original four-reply address interface.
+
+Two existing advancing coordinates are used together: the right-spine
+coordinate $c$ from [CLOCK] and [TM, §23][TM], and the intrinsic depth $\nu$ from
+[JM, §36][JM]. Their difference is the right-spine coordinate of the unique
+primitive endpoint. The content of this volume is the source-specific
+calibration obstruction: **unknown forward lags can make the entire permitted
+later observation identical while leaving different intrinsic depths**.
+That obstruction makes the retained difference necessary even for labels
+computed from the full prepared tree. Retaining that difference also gives an
+effective consumer, its sourcewise read bounds, and a sharp calibration
+alphabet on every defect-bounded domain.
+
+This task differs from both complete current-tree acquisition and the
+construction-context task of [JM, §§49–50][JM]. Complete acquisition already
+recovers the tree, its geometry and $\nu$. The pair $Q=(\nu,e)$ already supplies
+the exact construction-context quotient for depth. Neither result is claimed
+as new here. The consumer below internally obtains $Q$ under the specified
+retention and observation contract; it receives no $Q$, clock value, event
+count or tree description at its later entry.
+
+The original-address interface still permits every finite address. Restricting
+the exhibited consumer and its calibration competitors to right-spine reads
+is a task restriction, not a deletion of other legal source operations.
+Section 7 explains why its lower bound cannot be extended to readers that
+reacquire the complete tree.
+

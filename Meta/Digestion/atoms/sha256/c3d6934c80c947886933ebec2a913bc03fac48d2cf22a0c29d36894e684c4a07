@@ -1,0 +1,50 @@
+**定理 35.2（分圆平面与二阶范数的显式连接）。** 对独立实标量 $r,s$，
+
+$$
+P^3=I,\qquad
+\det(rI-sP)=r^3-s^3=(r-s)(r^2+rs+s^2).
+$$
+
+$\mathbb R^3=E_{\parallel}\oplus E_{\perp}$，$P$ 在共同方向上为恒等，在相对平面的特征多项式为 $\Phi_3$。定义
+
+$$
+L:\mathbb R^2\to E_{\perp},\quad
+L(x,y)=(x,y,-x-y),\qquad
+L=\begin{pmatrix}1&0\\0&1\\-1&-1\end{pmatrix}.
+$$
+
+则 $L$ 是到相对平面的线性同构，且
+
+$$
+PL=LC,\qquad L^TL=2G,\qquad
+\|L(x,y)\|_2^2=2Q(x,y).
+$$
+
+因此相对平面上的 $rI-sP$ 行列式正是 $r^2+rs+s^2$；两个行列式因子来自空间直和，不来自两个标量空间的相加。
+
+证明（35.2）。三次坐标循环回到原位，故 $P^3=I$。矩阵
+
+$$
+rI-sP=\begin{pmatrix}r&-s&0\\0&r&-s\\-s&0&r\end{pmatrix}
+$$
+
+的行列式展开只有对角积 $r^3$ 与三循环积 $-s^3$，给因式分解。任意向量以其坐标均值乘 $\mathbf1$ 加一个零和向量，唯一分成两个所列子空间；两者对 $P$ 不变，$P\mathbf1=\mathbf1$。
+
+$L$ 的前两坐标为输入，故单射；每个零和向量 $(x,y,z)$ 有 $z=-x-y$，故满射到平面。直接计算
+
+$$
+PL(x,y)=(y,-x-y,x)=LC(x,y),
+\qquad
+L^TL=\begin{pmatrix}2&1\\1&2\end{pmatrix}=2G.
+$$
+
+所以平面上的 $P$ 与 $C$ 共轭，特征多项式为 $t^2+t+1$，而
+
+$$
+\det(rI_2-sC)
+=\det\begin{pmatrix}r&-s\\s&r+s\end{pmatrix}
+=r^2+rs+s^2.
+$$
+
+共同线上的因子是 $r-s$，不变直和使行列式为两块行列式之积。$L$ 同时证明相位坐标中的 $Q$ 与所选三维欧氏参考的平面限制相差系数二；这是明确的表示桥，不是实际空间同一性。$\square$
+

@@ -1,0 +1,51 @@
+**Theorem 3.3 (global relative entropy and zero-loss completion).** For
+any probability $P$ on a nonempty $R$, set
+$P_*(s)=\mathbf1_R(s)H(s)/a_R$ and define the COK chain loss
+
+$$
+\Delta(P)=\mathbb E_\pi\sum_i
+ I_P(O_i;O_{<i,\pi}\mid B_{i,A_i(\pi)}).
+$$
+
+Then exactly
+
+$$
+\begin{aligned}
+\mathbb E_\pi D_2(P\Vert q_\pi)
+&=\Delta(P)+\sum_{i,A}\gamma_{k_i}(A)
+ D_2(P(O_i\mid B_{i,A})\Vert Q_{i,A}\mid P(B_{i,A}))\\
+&=D_2(P\Vert P_*)-\log_2a_R.
+\end{aligned}
+\tag{OOA.13}
+$$
+
+For the actual Gibbs law $P(s)=\mathbf1_R(s)\prod_i\Phi_i(s)/Z_R$,
+
+$$
+\log_2Z_R=\sum_i\log_2C_i+\log_2a_R
+ -D_2(P\Vert P_*)-\sum_i\mathbb E_P\log_2(1/u_i).
+\tag{OOA.14}
+$$
+
+In particular $a_R=1$ if and only if $R=\mathcal S$ and all order
+laws $q_\pi$ coincide. This is completion with zero analytical defect
+for the specified positive kernels, not completion of arbitrary locally
+feasible marginals or hard-zero native laws.
+
+Proof. Expanding the left side of (OOA.13) gives
+$-H(P)-\mathbb E_P\log_2H$. Conditional cross entropy writes
+$-\mathbb E_P\log Q_{i,A}$ as conditional entropy plus conditional
+relative entropy. The chain rule, using that $B_{i,A_i(\pi)}$ is a
+projection of $O_{<i,\pi}$, makes the remaining entropy difference
+exactly $\Delta(P)$. This is [COK, Theorem 3.2][COK]'s common-law
+loss, now expressed by global normalized laws. The definition of $P_*$
+gives the second equality. Gibbs' identity and
+$\prod_i\Phi_i=(\prod_iC_i)H\prod_iu_i$ give (OOA.14).
+
+If $a_R=1$, positivity of $H$ excludes every proper subset $R$ of
+$\mathcal S$. Equality in the summed geometric/arithmetic mean then
+forces equality pointwise in that inequality: every $q_\pi(s)$ is the
+same for each fixed $s$. The converse follows from normalization.
+All terms use the same $P$; no unrelated local maximizing laws have
+been combined. $\square$
+

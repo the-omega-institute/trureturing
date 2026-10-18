@@ -1,0 +1,18 @@
+**Corollary 14.3 (rate and continuum boundaries).** If the full spectral
+width in (RA.18) is at most $v>0$ almost everywhere, every such protocol has
+$T_c\geq\pi r/(v(y-x))$. A constant scalar drive $u=v$ attains this
+interrogation duration with the attaining protocol's endpoint preparation
+and measurement treated as instantaneous ideal operations. Nonzero
+preparation/readout overhead is an additional duration, not included in
+that equality. Under this same assistance/access contract no common finite
+action budget calibrates every height in a nonempty open interval exactly;
+nor does a common finite horizon do so at bounded spectral rate.
+
+Proof. Integrating the width bound gives $\mathcal A\leq vT_c$; use
+(RA.19). The constant drive gives equality. For an open interval and any
+finite budget, choose two distinct heights in it with gap less than
+$\pi r$ divided by that budget; the binary lower bound contradicts that
+budget. A zero budget is already excluded by any distinct pair. This
+does not rule on approximate estimation or pointwise unbounded stopping.
+$\square$
+

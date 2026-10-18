@@ -1,0 +1,19 @@
+**Definition 4.3 (support and terminal boundary).** For a finite full
+ordered tree $U$, let $\operatorname{Pos}(U)$ be its root-relative
+$\{0,1\}$ incidence paths and $\operatorname{Leaves}(U)$ the terminal
+paths. For the structural runtime corresponding to $h$, define
+
+$$
+S(h)=\operatorname{Pos}(U(W(h))),\qquad
+B(h)=\operatorname{Leaves}(U(W(h))).
+\tag{SSA.5}
+$$
+
+These are two independently specified relations of the actual storage-tree
+layer: its entire support and its terminal antichain. Neither is an event
+word, a tuple placed in a decorative tree, nor the old source-tree frontier.
+The access links are another actual relation of the carrier; they are
+derivable from either view and the fixed layout. Root-relative paths in
+SSA.5 are mathematical coordinates, not automatically maintained printed
+address strings.
+

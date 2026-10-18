@@ -1,0 +1,22 @@
+### 476.1 增长阈值必须先于全部参数选择
+
+记实际低原函数与完整高余项之和为 $G_\ell(r)=L_\ell(r)+E(r)$，
+沿用原变差预算中的实际 $\operatorname{majorant}(\ell,r)$。
+对全部 $1\le\ell\le r$，有
+
+$$
+|G_\ell(r)|\le r(\log r+7),\qquad
+|\operatorname{majorant}(\ell,r)|\le\log r+11.
+$$
+
+由 $(\log r+11)/r^{1/4}\to0$，可以选择一个与 $\ell,x$ 无关的 $R_0\ge1$，
+使对全部 $\ell\ge1$ 和 $r\ge\max(R_0,\ell)$，有
+
+$$
+|G_\ell(r)|\le r^{5/4},\qquad
+|\operatorname{majorant}(\ell,r)|\le r^{1/4}.
+$$
+
+第二式也给出旧完整 collar 合同需要的较粗 $r^{5/4}$ 预算。
+这里共享的是先选定的 $R_0$；不能分别给每个固定 $x$ 找一个阈值，再据此宣称统一估计。
+

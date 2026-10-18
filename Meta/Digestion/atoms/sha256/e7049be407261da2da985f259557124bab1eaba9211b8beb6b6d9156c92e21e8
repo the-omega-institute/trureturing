@@ -1,0 +1,123 @@
+### 74.6. The plane chart and its strictly positive consequence
+
+If \(\Delta=0\), the retained nonparallel vectors satisfy
+\[
+ v=(x,ky,0),\quad F=a+(0,0,kt),\quad
+ x^2+k^2y^2=a^2+k^2t^2=1.
+\]
+The already handled points \(v=\pm e\), \(F=-1\) allow the complete
+Cayley chart
+\[
+ x=\frac{1-k^2u^2}{1+k^2u^2},\quad y=\frac{2u}{1+k^2u^2},\qquad
+ a=\frac{1-k^2r^2}{1+k^2r^2},\quad t=\frac{2r}{1+k^2r^2},
+ \qquad u\ne0.                                         \tag{74.16}
+\]
+All denominators are positive. Set \(N=(1-3x^2)v+2xe\).
+The three retained original equations are
+\[
+ N\cdot\mathcal Q^*e\mathcal Q=0,\quad
+ N\cdot[F d_0F^*-3d_0+6(d_0\cdot v)v]=0,\quad
+ N\cdot G^*d_0G=0.                                    \tag{74.17}
+\]
+Use variable order \((r,u)\). The following coefficient table defines
+polynomials \(p_i=\sum_{j=0}^4p_{ij}(u)r^j\). Define seeds
+\(f_0=p_0/14641\), \(f_1=p_1/190333\), and \(f_2=p_2/73205\).
+
+| i | j | \(p_{ij}(u)\) |
+| --- | --- | --- |
+| 0 | 4 | \(121 \left(11 u^{2} - 4 u - 4\right) \left(11 u^{2} + 22 u - 4\right)\) |
+| 0 | 3 | \(44 \left(121 u^{4} + 726 u^{3} - 176 u^{2} - 264 u + 16\right)\) |
+| 0 | 2 | \(- 44 \left(121 u^{4} - 1386 u^{3} - 176 u^{2} + 504 u + 16\right)\) |
+| 0 | 1 | \(- 192 \left(121 u^{4} - 176 u^{2} + 16\right)\) |
+| 0 | 0 | \(- 768 u \left(11 u^{2} - 4\right)\) |
+| 1 | 4 | \(1573 \left(11 u^{2} + 4\right)^{2}\) |
+| 1 | 3 | \(484 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 1 | 2 | \(264 \left(11 u^{2} - 4\right) \left(143 u^{2} + 44 u - 52\right)\) |
+| 1 | 1 | \(- 176 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 1 | 0 | \(208 \left(11 u^{2} + 4\right)^{2}\) |
+| 2 | 4 | \(121 \left(605 u^{4} - 726 u^{3} - 880 u^{2} + 264 u + 80\right)\) |
+| 2 | 3 | \(121 \left(605 u^{4} + 462 u^{3} - 880 u^{2} - 168 u + 80\right)\) |
+| 2 | 2 | \(66 \left(121 u^{4} + 726 u^{3} - 176 u^{2} - 264 u + 16\right)\) |
+| 2 | 1 | \(44 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 2 | 0 | \(8 \left(1573 u^{4} + 726 u^{3} - 2288 u^{2} - 264 u + 208\right)\) |
+
+Writing \(D_0'=(11r^2+4)^2(11u^2+4)^3>0\), the three expressions in
+(74.17) are respectively
+\[
+ \frac{161051u}{D_0'}f_0,\qquad
+ \frac{1288408u}{D_0'}f_1,\qquad
+ -\frac{6442040u}{13D_0'}f_2.                            \tag{74.18}
+\]
+These exact identities follow from (74.15)–(74.16). Every multiplier is
+nonzero, so no solution is lost. The following finite certificate uses
+these three seeds.
+
+| j | Definition of \(z_j\) |
+| --- | --- |
+| 0 | \(\mathsf I(0)\) |
+| 1 | \(\mathsf I(1)\) |
+| 2 | \(\mathsf I(2)\) |
+| 3 | \(\mathsf R(0;)\) |
+| 4 | \(\mathsf R(1;0)\) |
+| 5 | \(\mathsf R(2;0)\) |
+| 6 | \(\mathsf R(3;)\) |
+| 7 | \(\mathsf R(4;)\) |
+| 8 | \(\mathsf R(5;4)\) |
+| 9 | \(\mathsf R(6;)\) |
+| 10 | \(\mathsf R(7;)\) |
+| 11 | \(\mathsf R(8;)\) |
+| 12 | \(\mathsf S(9,11)\) |
+| 13 | \(\mathsf R(12;11,10)\) |
+| 14 | \(\mathsf S(10,11)\) |
+| 15 | \(\mathsf R(14;11,10,13)\) |
+| 16 | \(\mathsf S(15,11)\) |
+| 17 | \(\mathsf R(16;15,11,10,13)\) |
+| 18 | \(\mathsf S(17,13)\) |
+| 19 | \(\mathsf R(18;17,15,11,10)\) |
+| 20 | \(\mathsf S(19,15)\) |
+| 21 | \(\mathsf R(20;17,19,15,11,10)\) |
+| 22 | \(\mathsf S(21,17)\) |
+| 23 | \(\mathsf R(22;17,21,19,15,11,10)\) |
+| 24 | \(\mathsf S(23,19)\) |
+| 25 | \(\mathsf R(24;17,21,23,19,15,11,10)\) |
+| 26 | \(\mathsf S(25,10)\) |
+| 27 | \(\mathsf R(26;25,17,23,19,15,11)\) |
+| 28 | \(\mathsf S(27,11)\) |
+| 29 | \(\mathsf R(28;27,25,17,23,19,15)\) |
+| 30 | \(\mathsf S(29,15)\) |
+| 31 | \(\mathsf R(30;29,27,25,17,23,19)\) |
+| 32 | \(\mathsf S(31,19)\) |
+| 33 | \(\mathsf R(32;31,29,27,25,17,23)\) |
+| 34 | \(\mathsf S(33,23)\) |
+| 35 | \(\mathsf R(34;33,31,29,27,25,17)\) |
+| 36 | \(\mathsf S(35,17)\) |
+| 37 | \(\mathsf R(36;35,33,31,29,27,25)\) |
+| 38 | \(\mathsf S(37,25)\) |
+| 39 | \(\mathsf R(38;37,35,33,31,29,27)\) |
+| 40 | \(\mathsf S(39,27)\) |
+| 41 | \(\mathsf R(40;39,37,35,33,31,29)\) |
+| 42 | \(\mathsf S(41,29)\) |
+| 43 | \(\mathsf R(42;41,39,37,35,33,31)\) |
+| 44 | \(\mathsf R(33;39,41,43)\) |
+| 45 | \(\mathsf R(39;41,43)\) |
+
+The last two rows have the particularly small values
+\[
+ z_{44}=u^6+\frac8{11}u^4+\frac{64}{121}u^2-\frac{192}{1331}
+                -\frac{144}{121}ru-\frac{12}{11}r^3u,
+\]
+\[
+ z_{45}=\frac{256}{1089}u-\frac{40}{99}u^3-\frac29u^5
+             -\frac{16}{121}r+\frac{12}{11}ru^2
+             -\frac4{33}r^3+r^3u^2.
+\]
+Consequently the following explicit combination lies in the seed ideal:
+\[
+\begin{aligned}
+ &(14641u^2-5324/3)z_{44}+15972u z_{45}\\
+ &\qquad=14641u^8+5324u^6+704u^2+256\\
+ &\qquad=(11u^2+4)^2[(11u^2-2)^2+12]>0.                 \tag{74.19}
+\end{aligned}
+\]
+This excludes the entire remaining real plane chart.
+

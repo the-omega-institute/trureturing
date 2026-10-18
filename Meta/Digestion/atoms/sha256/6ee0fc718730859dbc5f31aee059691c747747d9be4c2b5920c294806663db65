@@ -1,0 +1,14 @@
+**Definition 3.1 (response encoding and public enumeration).** Encode literal
+replies as alpha `00`, beta `01`, branch `10`, absent `11`, the binary codes
+$0,1,2,3$ used by `originalReplyCode`. This is separate from the source-token
+encoding. Enumerate all $4^N=2^{2N}$ token packets $z$ in base-four order using
+PR57.D8's increment routine. Completely parse each public candidate. For a valid
+candidate let $b(z,p)$ be the two-bit encoding of its locator result. For an
+invalid candidate put $b(z,p)=00$.
+
+The generator receives $H,p$, public descriptors and already acquired history;
+it does not receive the private packet $x$. Both $4^N$ and its loop counters are
+actually constructed unary strings, for example by repeated multiplication by
+four. Enumeration, parsing and locating are public computation on every row.
+Public invalid candidates are processed too; they are not possible actual sources.
+

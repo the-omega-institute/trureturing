@@ -1,0 +1,91 @@
+**Theorem 8.2 (actual instruments for the entire exceptional segment).**
+For every exceptional strength and every closed-interval parameter in
+(CA.48), the following construction realizes its equality vector with
+all the original five-mode, passive-reference and labelled-time
+requirements.
+
+Proof. Put $\tau=1/2+\theta$, $\lambda=1/2-\gamma\theta$.
+Use the two supported high encoder products
+
+$$
+A_+=\sqrt\tau(\sqrt pD+\sqrt qT),\qquad
+A_-=\sqrt{1-\tau}(\sqrt pD-\sqrt qT).
+\tag{CA.55}
+$$
+
+They are assigned to their indicated binary records. Every nonzero one
+has rank three: the determinant of the unweighted expression is
+$\sqrt p\,h_0h_1h_2(p-\alpha q)
+=\sqrt p\,h_0h_1h_2k>0$.
+Use its three-dimensional output as the high carrier and the full
+trace-preserving isometric live decoder $X\mapsto EXE^\dagger$.
+The low supported products at record $+$ and $-$, respectively, are
+
+$$
+C_{+,\zeta}=\sqrt{\lambda/2}
+ (\sqrt{1-p}D+\sqrt{1-q}T+\zeta S),\qquad
+C_{-,\zeta}=\sqrt{(1-\lambda)/2}
+ (\sqrt{1-p}D-\sqrt{1-q}T+\zeta S),\qquad \zeta=\pm1.
+\tag{CA.56}
+$$
+
+Each nonzero product has rank two, since
+$1-p=\alpha(1-q)+\beta$ and its $D$ coefficient is nonzero.
+Apply the fixed range compression (CA.15) to each product $C=UR$:
+encode by $R$ into a two-dimensional carrier, and use the full TP
+isometric decoder $X\mapsto EUXU^\dagger E^\dagger$.
+This gives exactly $CXC^\dagger$ on support after decoding.
+Delete every zero-weight branch; this is required also at the interval
+endpoints.
+
+The two high coefficient matrices are exactly (CA.51), and the two
+sign sums of low coefficient projectors are (CA.52).
+The $S$ couplings cancel within each record. Their aggregate coefficient
+sum is $I$, since its only candidate off-diagonal term is
+$2\theta t-2\gamma\theta v=0$. The plus $DT$ entry is
+$\tau t+\lambda v=s/2$, and its coordinate-$0$ effect is
+$\tau\omega+\lambda(1-\omega)=1/2$.
+Its remaining binary effect deficit is exactly $N_+$ in (CA.54).
+
+For each record $r$ and each $i\in\{1,2\}$ with
+$(N_r)_{ii}>0$, add a scalar encoder row
+$\sqrt{(N_r)_{ii}}\langle i|$.
+Its scalar decoder sends unit input into the complete failure measure
+$w_jg(t)\,dt\,P_f$ at each original label $j$.
+It is TP because $\sum_jw_j=1$ and
+$\int_0^1g(t)\,dt=1$. The sum of these rows' effects at record $r$ is
+$N_r$, and their forgotten failure measure is the prescribed supported
+one because
+$N_++N_-=M$. Thus the sum of supported joint effects is $I_V$, and
+the record effects are $F_r^V$.
+
+Precompose all these encoders with $E^\dagger$ on the full five-mode
+input. At each record add the scalar complement map
+$A\mapsto\operatorname{tr}(Q_5A)/2$, with the complete failure law
+$g(t)\,dt\,P_f$ at original label $2$. Its effect is $Q_5/2$.
+The total encoder effect is $I_5$, and the binary effects are exactly
+$F_r$ on every input. Every cross-support block is annihilated;
+unsupported sectors have exactly the required zero live action and
+complement failure action. All the carrier decoders just specified are
+TP on their full carrier matrix algebras, including scalar carriers.
+
+The aggregate coefficient sum $I$ proves the full complex live channel
+identity. The scalar effects and their specified decoders prove each
+separate labelled Borel-time failure identity. These are identities of
+linear completely positive maps, so tensoring them with the identity on
+any passive reference proves the required reference identities, including
+entangled, singular and subnormalized inputs. No reference is measured
+or retained as payload. The failure law is a mathematical measure in the
+instrument, subject to the native-clock boundary stated in §11.
+
+At each record there are at most one high, two low, two scalar supported
+failure, and one scalar complement branch: at most twelve in all.
+Branch deletions reduce this number. All high acquisition mass is live;
+its supported acquired effect is $G_\theta$. This proves sufficiency
+for the whole segment, with no narrowing of Definition 2.3.
+For nonexceptional strong strengths use (CA.44), and for weak strengths
+use (CA.43). In particular all singleton cases are actually attained.
+The conditioned live maps in (CA.55)--(CA.56) may vary with $\theta$;
+the original specification fixes their forgotten sum and the binary
+law, and permits precisely this freedom. $\square$
+

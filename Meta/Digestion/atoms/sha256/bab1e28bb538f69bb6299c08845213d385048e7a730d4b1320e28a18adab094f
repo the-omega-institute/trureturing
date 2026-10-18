@@ -1,0 +1,31 @@
+**Definition 1.1 (the unchanged source and temporal observation).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad \operatorname{ht}(\langle u,v\rangle)
+=1+\max\{\operatorname{ht}(u),\operatorname{ht}(v)\}.
+$$
+
+Pairing is free and ordered. Every finite word over $L,R$, including
+$\varepsilon$, is a legal original-root literal. Its reply $r_t(a)$ is
+in $\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$,
+with absent after traversal passes a leaf. The homomorphic substitution is
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For every public integer $D\ge1$ retain exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},
+\qquad W_D=\{q:|q|\le D-1\},
+\qquad \mathcal P_D=\{Rq:q\in W_D\}.
+\tag{OCB.1}
+$$
+
+One actual initial source remains stationary throughout preparation and
+late acquisition. The iterates $\rho^kt$ specify prediction targets.
+

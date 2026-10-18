@@ -1,0 +1,14 @@
+## 11. Source-relative content and remaining boundaries
+
+| Mathematical component | Provenance and exact scope |
+| --- | --- |
+| Definition 2.1 and Source interface 2.2 | Source Definition 23.1 and Theorem 23.2: full complex instrument, stationary fixed space and law, actual block representation and characteristic polynomial. |
+| Sections 3–6 | Repo-derived constructive extension: actual splitting, independent column formula, all Jordan chains, minimal polynomial, exact kernel and image filtrations and legal boundary cases. The general Sylvester and cyclic-module methods are classical tools proved in the forms used here. |
+| Source interface 7.2 | Source Proposition 23.3 and Theorem 23.4: actual stationary purity pair and interval, minimum four-dimensional homogeneous memory under the specified competitor class, and unitary nonequivalence. |
+| Theorem 7.1 and Sections 8–9 | Repo-derived consequences: full Jordan data for the actual pair, the constructed map's exact positivity boundary and stationary transport, and stronger common-source purity nonidentification. |
+| Section 10 | Source Definition 24.1 and Theorem 24.2: coherent-output access, positive $H=3$ orbit identification and classification, exact horizon, finite-copy limit and mirror obstruction. These are complementary inherited results. |
+
+The universal statements concern exact finite-dimensional channels with $p_H>0$ and $p_0=0$ as defined here. The construction divides by $p_H$ and makes no assertion for a degenerate endpoint $p_H=0$ with the old carrier held fixed. No assertion of arbitrary-$H$ minimum memory, general positive-similarity classification or branchwise intertwining by $L_{\eta,\theta}$ is supplied. Only the specific constructed map is classified for positivity.
+
+The identification conclusions distinguish an exact observational obstruction from experimental estimation. They provide neither an operational machine-learning benefit nor an ANN impossibility result. A prospective learning application would need to specify its actual generator family, measured data, access to coherent outputs if used, estimation and noise model, and the target property; this volume supplies no empirical accuracy, generalization, sample-complexity, physical-realization or finite-bit-production conclusion. Its proofs and source premises retain their ordinary handwritten status, with no claim that a source citation certifies its unopened external dependencies.
+

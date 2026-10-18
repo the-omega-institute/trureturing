@@ -1,0 +1,42 @@
+**Theorem 5.1 (regular conserved-return gap).** A regular stationary return-conserved table satisfying (2.4), with a supported nonendpoint, has
+
+$$
+\epsilon>\eta/400000.
+\tag{5.1}
+$$
+
+Proof. Let $w=\pi\{r(u)=a\}$. Event calibration and (4.1) give
+
+$$
+d_p|w-1/2|\le\epsilon_p+D.
+\tag{5.2}
+$$
+
+For every $r\in[3/8,5/13]$, the supplied original complete word $w_{3,1}$ has mass $r^3(1-r)^5\ge q_*+\eta$ [ALPHA; DIRECTION; INTERIOR]. Its derivative has sign $3-8r$, and the minimum on this interval is at $5/13$; subtraction of $q_*$ gives the stated rational $\eta$.
+
+The complete coordinate triangle identity therefore gives
+
+$$
+\frac{\operatorname{TV}(P_{p,a},P_{p,r})+
+       \operatorname{TV}(P_{p,b},P_{p,r})}{2}
+\ge\rho_p+\eta/2.
+\tag{5.3}
+$$
+
+Changing the fair weights to $(w,1-w)$ changes the left side by at most $d_p|w-1/2|$. Reverse triangle and (5.2), on the same row and same supported depth, yield
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r})
+\ge\rho_p+\eta/2-\epsilon_p-2D.
+$$
+
+Compare with (2.4) to obtain $\epsilon_p+D\ge\eta/4$. Thus $93001\epsilon\ge\eta/4$, and $372004<400000$ proves (5.1). No inaccessible endpoint posterior or finite depth grid is substituted for the original histories. $\square$
+
+**Proof of Theorem 1.5.** Apply Citation 2.1 on the designated original fibre. Every positive retained label is originally reachable, so (1.6) holds on its actual $BA$ edges. Clipping retains the kernels and preserves conservation. The regular comparison therefore satisfies Theorem 5.1, with $\widehat\epsilon\le(61/11)e(M)$ and every original supported depth in its loss bounds. Consequently
+
+$$
+e(M)>\frac{11\eta}{61\cdot400000}>\frac{\eta}{2300000}.
+$$
+
+The last comparison is $11\cdot2300000>61\cdot400000$. Taking an infimum gives the non-strict class bound. Exact attainment and the eventual statement for a vanishing sequence follow by comparison with this positive threshold. The proof uses stationary support only as a necessary test of the original full-history risks; no transient or admissible actual history is removed. $\square$
+

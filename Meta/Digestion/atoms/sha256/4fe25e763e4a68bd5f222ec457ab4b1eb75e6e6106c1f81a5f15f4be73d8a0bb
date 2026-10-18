@@ -1,0 +1,35 @@
+**Definition 5.1 (Fixed band and approximation parameters).** Fix
+$0<a<b<H$ and $\epsilon>0$. Only the continuation operations in this
+part are restricted to straight probability legs wholly contained in
+$[a,b]$. The current states remain actual native rays in
+$\mathcal M_{ab}=[a,b]\times\mathbb T^2$, with arbitrary producing
+native prefixes. Put
+
+$$
+g(k)=k(H-k),\qquad k_*=\min\{b,\max\{a,H/2\}\},
+\qquad G=g(k_*),\qquad g_{\min}=\min\{g(a),g(b)\},
+$$
+
+$$
+q_A=1-\frac{g_{\min}}G,\qquad q_B=1-\frac ab,
+\qquad q=\max\{q_A,q_B\},\qquad C=\sqrt{4G+Zb}.
+$$
+
+Completing the square gives
+$g(k)=H^2/4-(k-H/2)^2$. Thus the closest point in the band to $H/2$
+is $k_*$ and a farthest point is an endpoint. Consequently
+
+$$
+0<g_{\min}\le g(k)\le G\le H^2/4,
+\qquad 0\le q_A<1,\qquad 0<q_B\le q<1.
+$$
+
+Define the polynomials
+
+$$
+t_A(k)=1-\frac{g(k)}G\in[0,q_A],\qquad
+t_B(k)=1-\frac kb\in[0,q_B]\qquad(k\in[a,b]).
+$$
+
+Their degrees are two and one, and all denominators are positive.
+

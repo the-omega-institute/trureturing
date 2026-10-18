@@ -1,0 +1,62 @@
+**命题 24.4（同荷空间的维数与归一化对称嵌入）。** $V$ 在有序空间的两个不相交二维块
+
+$$
+\mathcal B_1=\operatorname{span}\{|0,13\rangle,|1,3\rangle\},\qquad
+\mathcal B_2=\operatorname{span}\{|13,0\rangle,|3,1\rangle\}
+$$
+
+上各为 Pauli 矩阵 $\begin{pmatrix}0&1\\1&0\end{pmatrix}$，在其余二十一维上为零。总荷 $(1,1,0)$ 的有序空间为四维；在对称子空间中它为二维。$\operatorname{Sym}^2\mathbb C^5$ 的十五个直方图基具有十四个不同总荷，除该二维块外，其余荷块均一维。
+
+证明。$A$ 从每块的第二基向量送到第一基向量，$A^\dagger$ 反向，二者消去其余基向量，得块形式。十五个无序对与总荷的完整对应为
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&00&01&02&03&0\,13\\\hline
+\text{荷}&(0,0,0)&(1,0,0)&(0,0,1)&(0,1,0)&(1,1,0)
+\end{array}
+$$
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&11&12&1\,3&1\,13&22\\\hline
+\text{荷}&(2,0,0)&(1,0,1)&(1,1,0)&(2,1,0)&(0,0,2)
+\end{array}
+$$
+
+$$
+\begin{array}{c|ccccc}
+\text{对}&23&2\,13&33&3\,13&13\,13\\\hline
+\text{荷}&(0,1,1)&(1,1,1)&(0,2,0)&(1,2,0)&(2,2,0).
+\end{array}
+$$
+
+唯一重复是 $0\,13$ 与 $1\,3$。有序空间保留各自的两个顺序，所以此荷空间维数为四；其他含不同标签的无序对在有序空间也各有两个顺序，不能把“其余一维”套在整个有序空间上。
+
+与 §23.4 的 Fock 算子比较，令 $\mathcal H_2=\operatorname{Sym}^2\mathbb C^5$ 使用该节归一化占位基，并定义等距嵌入 $J_2:\mathcal H_2\to\mathcal H\otimes\mathcal H$：
+
+$$
+J_2|2e_s\rangle=|s,s\rangle,\qquad
+J_2|e_s+e_t\rangle=\frac{|s,t\rangle+|t,s\rangle}{\sqrt2}\quad(s\ne t).
+$$
+
+其像是 $\mathsf S=+1$ 的扇区。对于该节的 $B=a_0^\dagger a_{13}^\dagger a_1a_3$，两个湮灭与两个产生的系数在唯一可动基 $|e_1+e_3\rangle$ 上均为一，因此
+
+$$
+BJ_2^\dagger\frac{|1,3\rangle+|3,1\rangle}{\sqrt2}
+=|e_0+e_{13}\rangle,
+\qquad J_2^\dagger A J_2=B|_{\mathcal H_2},
+$$
+
+$$
+J_2^\dagger VJ_2=(B+B^\dagger)|_{\mathcal H_2}.
+$$
+
+最后两式也在其余基向量上成立，因为两边均消去它们。§23 的正算子则是
+
+$$
+\widehat H_2=(n_1n_3+n_0n_{13})|_{\mathcal H_2}
+-(B+B^\dagger)|_{\mathcal H_2}.
+$$
+
+在这唯一活动二维对称块内它为 $I-\sigma_x$，不是 $\sigma_x$：既有对角项，又有相反的交换符号。反对称向量 $|s,t\rangle_-=(|s,t\rangle-|t,s\rangle)/\sqrt2$ 还满足 $A|1,3\rangle_-=|0,13\rangle_-$，所以有序 $V$ 在反对称活动块也有一次 $\sigma_x$，这部分没有包含在 $J_2$ 中。以上是明示子空间上的算子比较，不是把可区分的两个系统宣告成物理玻色子。证毕。
+

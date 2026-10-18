@@ -1,0 +1,17 @@
+## 192. Statement
+
+Retain the actual finite paired-frame quotient with complete circular edge
+links, degree at least six, common positive generalized lengths and original
+2*pi edge equations. Assume exactly five reservoir labels and a nonempty
+flat set. Choose M maximal among all pi-selected H labels and its escape
+
+ tau=(Z,M,C,D,M,C), H={M,C,D,Z,U}.
+
+Write cosh lengths m,c,d,z,u. Assume u<=m. The established escape and
+five-witness results imply
+
+ m>=1+c+d, z>=1+m+c, m>3, z>m+2, c,d<m-2,
+
+M has genuine angle budget pi, Z has budget 2*pi, all five H labels have
+genuine witnesses, and every Z occurrence is genuine.
+

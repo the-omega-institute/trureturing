@@ -1,0 +1,123 @@
+## 5. A five-hole entire-fiber consumer
+
+Put
+
+$$
+F(y)=\langle\alpha,\rho y\rangle,
+\qquad
+V(x,y,z)=\langle x,\langle y,\langle z,\langle F(y),F(z)\rangle\rangle\rangle\rangle.
+\tag{SLP.5}
+$$
+
+Use the original root cut $P=\{\varepsilon\}$ and its complete one-hole
+old row. The target cut is
+
+$$
+Q=\{L,RL,RRL,RRRL,RRRR\}.
+$$
+
+Retain the four epoch-zero branch replies at
+$\varepsilon,R,RR,RRR$, the epoch-zero $\alpha$ replies at
+$RRRLL,RRRRL$, and the positive copied records
+
+$$
+(0,RRRLR,1,RL,=),
+\qquad
+(0,RRRRR,1,RRL,=),
+\tag{SLP.6}
+$$
+
+including both endpoint guards. All occurrences concern one original
+source. The full fiber of these records alone is
+
+$$
+D_V=\{V(x,y,z):x,y,z\in\mathcal T\}.
+\tag{SLP.7}
+$$
+
+Indeed the branch literals give the four-node outer skeleton. The two
+$\alpha$ literals force branches at $RRRL,RRRR$ with left child
+$\alpha$. Write the first three whole holes as $x,y,z$. Distribution of
+$\rho$ through the outer skeleton makes the epoch-one subtrees at
+$RL,RRL$ exactly $\rho y,\rho z$. The two guarded equalities therefore
+force the last two original holes to be $F(y),F(z)$. Conversely every
+$V(x,y,z)$ has every stated literal, both reached endpoints and both
+whole-subtree equalities. The original root row supplies no further
+restriction. This proves both domain directions on the full source fiber.
+
+Let $\mathcal H$ be any supplied finite list, retaining repetitions, of
+negative records between members of $Q$ at supplied nonnegative epochs.
+Write $H(u)$ for their conjunction with both guards. The complete protected
+input fiber is
+
+$$
+D=D_V\cap\{u:H(u)\}.
+\tag{SLP.13}
+$$
+
+Every position of $Q$ remains reached under every finite iterate of
+$\rho$, because the outer branches persist. A history predicate therefore
+compares the appropriate entire transformed holes, not just their replies.
+If $W_q(x,y,z)$ is the hole value at $q\in Q$, a record
+$(a,q,b,q',\ne)$ becomes exactly
+$\rho^a W_q(x,y,z)\ne\rho^b W_{q'}(x,y,z)$; its guards hold on $D_V$.
+Fixed powers distribute through $F$ and the native pairs. No history
+predicate is discarded. The retained successful output is obtained by
+[ARH, Proposition 2.1][ARH]'s deterministic source-total paid producer for
+these public coordinates, conditional on the complete accessible-state cut.
+The same register reaches an authentic common final epoch
+
+$$
+N\ge\max\bigl(\{1\}\cup\operatorname{epochs}(\mathcal H)\bigr).
+\tag{SLP.14}
+$$
+
+The epoch-zero literals and epoch-one positive records are included in
+this bound. On a successful protected-history output the fiber is exactly
+(SLP.13), not $D_V$ alone. An impossible output is an empty mathematical
+fiber; no physical acquisition of that output is asserted.
+
+The five hole values are $x,y,z,F(y),F(z)$. Let $C_Q$ be the complete
+outer context, with its four branches and all five reached holes. The two
+prescribed complete row labels have this same entire concrete exterior,
+and partitions
+
+$$
+\begin{aligned}
+\pi_=&\ \{\{L,RL\},\{RRL\},\{RRRL\},\{RRRR\}\},\\
+\pi_F=&\ \{\{L,RRRL\},\{RL\},\{RRL\},\{RRRR\}\}.
+\end{aligned}
+\tag{SLP.15}
+$$
+
+Denote the labels by $r_=(C_Q,\pi_=)$ and $r_F=(C_Q,\pi_F)$.
+They are distinct, and their exact whole strata in $D$ are
+
+$$
+\begin{aligned}
+D_=^\circ&=\{V(y,y,z):
+ y,z,F(y),F(z)\text{ are pairwise distinct},\ H(V(y,y,z))\},\\
+D_F^\circ&=\{V(F(y),y,z):
+ F(y),y,z,F(z)\text{ are pairwise distinct},\ H(V(F(y),y,z))\}.
+\end{aligned}
+\tag{SLP.8}
+$$
+
+These descriptions retain every pairwise negative, including any redundant
+ones, and every history repetition. Their forward direction follows by
+filling $C_Q$. For the reverse direction, a source in $D$ is exactly
+$V(x,y,z)$ by (SLP.7). The specified partition forces respectively
+$x=y$ or $x=F(y)$ and all the other classes distinct, yielding exactly
+(SLP.8). No other source shape or exterior has been admitted. Each stratum
+predicate, after the displayed substitution for $x$, is a finite mixed
+negative conjunction on the entire Cartesian product of finite $y,z$.
+
+For an inhabited protected-history example, repeat any number of times
+$(0,RL,0,RRRL,\ne)$. Its predicate is $y\ne F(y)$ on both strata.
+Native leaf count satisfies $\ell(\rho t)\ge\ell(t)$ by induction on the
+finite tree, so $\ell(F(t))=1+\ell(\rho t)>\ell(t)$. With $y=T_r$ and
+$z=T_{r+1}$, the four values are distinct: the two atoms have mass zero,
+their $F$ images have mass one, and injectivity of $F$ distinguishes
+those images. Thus both strata are nonempty for this history, without
+restricting the underlying input fiber to these witnesses.
+

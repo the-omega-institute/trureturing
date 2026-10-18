@@ -1,0 +1,4 @@
+**Corollary 50.2 (conditional every-choice consumer).** If, in addition, eventual $k_d(Ms^8)>C_*$ is proved for every arbitrarily large separately fixed finite $M$, the original actual scale satisfies $r_s\to\infty$. Every sequence $s_n\downarrow0$ and every normalized complex actual ground-state choice on it then converges under the original unsheared observation $\mathcal U_{s_n}$ to the phase orbit of $p$, as in P Theorem 105.1.
+
+Proof. The exact original Birman–Schwinger correspondence at positive probe compares the actual microscopic bottom of $aC_s-\chi_cU_s$ with $-ah$. The strict inequality $k_d(h)>a/\chi_c=C_*$ gives $\epsilon_c(s)<-ah$, hence $r_s>aM$. Arbitrarily large separately fixed $M$ force $r_s\to\infty$. P Theorem 105.1 then supplies the every-choice phase-orbit convergence with the original observation. The shear used in the intermediate estimates does not replace that observation. $\square$
+

@@ -1,0 +1,26 @@
+**定义 2.1（Fixed original coordinates and matched source）。** Fix the ordered
+orthonormal mode basis
+
+$$
+B=(0,1,2,3,13),\qquad H^{(1)}=H^{(2)}=\mathbb C^5.
+$$
+
+In displayed matrices and vector coordinates, positions $1,2,3,4,5$ mean
+these labels in exactly this order. Define the permutation
+
+$$
+f(0)=13,\quad f(13)=0,\quad f(1)=3,\quad f(3)=1,\quad f(2)=2
+$$
+
+and the isometry
+
+$$
+J:\mathbb C^5\longrightarrow H^{(1)}\otimes H^{(2)},\qquad
+J|s\rangle=|s,f(s)\rangle,\qquad J^\dagger J=I_5.
+\tag{2.1}
+$$
+
+All Schmidt-number interpretations use the original split
+$H^{(1)}\mid H^{(2)}$. This is not a split between independent copies of
+the whole source.
+

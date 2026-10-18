@@ -1,0 +1,103 @@
+**定义 5.2（同一祖先上的未决三源相容义务）。** For the one common
+vector $\mathbf c(y,\zeta)=(0,24,48,312/5,y,\zeta)$, choose three
+pairwise distinct sources
+
+$$
+P_k=\begin{pmatrix}a_k&b_k\\e_k&1-a_k\end{pmatrix}\in\mathcal P,
+\qquad \mathcal C(P_k;\mathbf c(y,\zeta))=0,
+\quad k=1,2,3.
+\tag{5.2}
+$$
+
+Each source must satisfy the positivity, determinant and polynomial
+conditions in (3.9), for these same $y,\zeta$. Define, without any
+additional choices of gains or drifts,
+
+$$
+d_k=d(P_k;\mathbf c),\qquad f_k=f_{P_k;\mathbf c},\qquad
+W_k=(P_k,\lambda f_k,D_0+\lambda d_k).
+\tag{5.3}
+$$
+
+These are exactly all possible distinct three-world realizations on
+the same $H$, by Theorem 3.1. Both of the following response functions
+are evaluated in each same fixed world and at the original clocks:
+
+$$
+\begin{aligned}
+s_E(k)&=d_k+f_k(6)\operatorname{tr}(EQP_k),\\
+r_{EF}(k)&=d_k+f_k(7)\operatorname{tr}(FEQP_k),
+                    \qquad E,F\in\{J,M\}.
+\end{aligned}
+\tag{5.4}
+$$
+
+They are mathematical counterfactual functions, not jointly acquired
+observations. Only one $E$ and then one $F$ are executed, with a read
+after each. To state the unresolved obligation, retain the complete
+actual-child recursion of
+[II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md)
+and the whole-class companion, equation (1.5). For any known
+$K\subseteq\mathcal F(H')$ and nonnegative integer $r$ within the
+remaining reading horizon, it is
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{r+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+ \bigwedge_{E\in\{J,M\}}\exists v\in\mathbb R:\
+ L_r(K\cap\mathcal F(H',E,v),(H',E,v)).
+\end{aligned}
+\tag{5.5}
+$$
+
+For $K=\{W_1,W_2,W_3\}$ from (5.2)–(5.3), its $L_2$ requirement
+is exactly the following finite-index system, with real response
+values:
+
+$$
+\forall E\in\{J,M\}\ \exists v_E\in\mathbb R\
+\forall F\in\{J,M\}\ \exists\,1\le i<j\le3:
+\quad s_E(i)=s_E(j)=v_E,\qquad r_{EF}(i)=r_{EF}(j).
+\tag{5.6}
+$$
+
+Indeed, for real normalized responses $v,w$, the literal histories
+and their actual response partitions are
+
+$$
+\begin{aligned}
+H_{E,v}&=(H,E,D_0+\lambda v),\\
+K_{E,v}&=K\cap\mathcal F(H_{E,v})
+       =\{W_k:s_E(k)=v\},\\
+K_{E,v;F,w}&=K_{E,v}\cap
+       \mathcal F(H_{E,v},F,D_0+\lambda w)\\
+       &=\{W_k:s_E(k)=v,\ r_{EF}(k)=w\}.
+\end{aligned}
+\tag{5.7}
+$$
+
+On the same sixth child $K_{E,v_E}$, the last action $F$ has a
+response retaining $L_0$ exactly when two members have equal
+$r_{EF}$. This expands both recursion levels. The pair may depend
+on $E$ and $F$, but $v_E$ must be shared across the two last-action
+requirements for that fixed $E$. If the sixth response is constant
+on all three, all three remain in that child and the last actions
+may use different pairs. The cardinality clauses then hold because
+each required pair has two distinct complete targets. Normalization
+transports these response values to the raw history by
+$v\mapsto D_0+\lambda v$, bijectively for either sign of $\lambda$.
+
+The unresolved mathematical obligation is to produce one exact
+solution of (5.2) and (5.6), for one common real $y,\zeta$, or to
+prove, for every $y,\zeta\in\mathbb R$, that the system has no legal
+source triple.
+All sources, shapes, drifts, lower degrees and sampled or repeated
+roots allowed by Definition 1.1 remain in this system. In particular
+no division by $f_k(6)$, $f_k(7)$ or any ancestor gain value occurs.
+The source equation and nonvanishing denominator give exact
+elimination of gain and drift, not a solution or an obstruction for
+this joint system. Separately realized marginal pairs, independently
+chosen reading vectors or per-word separating suffixes do not meet
+(5.2)–(5.6).
+

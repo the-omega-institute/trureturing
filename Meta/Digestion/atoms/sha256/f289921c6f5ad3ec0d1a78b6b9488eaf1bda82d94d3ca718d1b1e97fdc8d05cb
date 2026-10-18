@@ -1,0 +1,4 @@
+## 4. Primitive adjugate kernels and the constant-or-cubic dichotomy
+
+A nonzero polynomial vector is **primitive** if its four entries have no common nonconstant real polynomial factor. Its degree is the largest degree of a nonzero entry.
+

@@ -1,0 +1,34 @@
+**203.15（数学来源与所校准的关系）。** 本节承重结论属于仓内推导
+（`repo-derived`）：实际 pair 测度决定的阈值把两个可能同时增加的胞接到
+同一个并集容量；乘积代表把总量界变为全部有向胞的共同容量；公平后缀代表
+把实际前三类约束转为一个精确参数阈值；条件抽取用后缀最小值控制重置前缀
+后产生的胞，并以全部带符号顶点衡量被删去的正确量。这些操作校准的是行系数
+表示与完整目录支持之间的相容性。它们不建立所有原始 $N$ 律与停止律之间的
+随机化转换，也不作原创性或完整文献搜索断言。
+
+共同马尔可夫支持等式归定理 198.2，三类收集机制归定理 198.4，精确带符号
+凸包归定理 198.5，完整证书替代和零成本吸收归定理 199.3—199.6，$v_k$
+见证归定理 200.4，层集覆盖和饱和结果归 201.2—201.4，前节的四种构造及
+一般核心残差归 202.2—202.12。这些被复用的结论没有在本节重新列为新定理。
+
+成熟数学背景（`literature-attested`）的适用边界如下。
+
+- Jędrzej Kaniewski、Troy Lee、Ronald de Wolf，
+  [*Query complexity in expectation*, Definition 8、Theorem 9](https://arxiv.org/html/1411.7280v1)，
+  研究非负标量输出的期望与非负文字多项式。其费用是正概率支持树的最坏路径
+  查询数；该标量表示不提供一个共同归一概率向量，也不提供递增首零停止转换。
+- Volker Kaibel，
+  [*Basic Polyhedral Theory*, Theorem 1(ii)、Theorems 7、8、10](https://arxiv.org/html/1001.2161v1)，
+  给出有限线性系统的替代、有限锥及多面体表示背景。其在本问题完整证书中的
+  应用由 199.3 供应；替代本身不选择普遍包含或反例中的哪一边成立。
+- Nathan Benedetto Proença、Marcel K. de Carli Silva、Cristiane M. Sato、Levent Tunçel，
+  [*A Primal-Dual Extension of the Goemans–Williamson Algorithm for the Weighted Fractional Cut-Covering Problem*, 式 (1)](https://arxiv.org/html/2311.15346v2)，
+  以及 202.14 所引 Robert Šámal 的分数割覆盖结果，讨论无向边需求与割权重。
+  无向割只汇总两种方向的分歧胞，不自动给本节首零标签、一元半容量、定向胞和
+  正字储备的共同实现；近似覆盖因子也不能替代精确闭预算。
+- Lasse Leskelä，
+  [*Stochastic relations of random variables and processes*, §2.1、Theorem 2.5](https://arxiv.org/html/0806.3562v1)，
+  在 Polish 空间上的闭关系与两个固定概率边缘之间，用关系 Hall 不等式刻画
+  支持于该关系的耦合。分别对日程取得的容量不是一个共同关系上的全部兼容
+  不等式；本节的系数测度也不是原始来源律，故没有直接借用未证的耦合桥梁。
+

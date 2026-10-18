@@ -1,0 +1,46 @@
+## 2. Common cuts and exact incidence on one graph
+
+Write $V_d=\{(h,z)\in V:h+z=d\}$. A depth $d<n$ is common-support
+when all actual live histories there have one support $T_d$.
+Equivalently every cell on that diagonal has a singleton support family.
+For the nontrivial direction, adjacent cells $(h,z)$ and $(h+1,z-1)$
+have the common live parent $(h,z-1)$. One actual history of that parent
+has two live children with the same support by (CL.6). If both child
+families are singletons, those singleton supports coincide. The admissible
+hit counts on a diagonal form an integer interval, so these adjacent
+comparisons connect the entire diagonal. This argument needs no singleton
+assumption at the parents. Depth zero is common, with $T_0=\varnothing$.
+
+Adjoin the formal endpoint $n$ with $T_n=[n]$ and list all common depths
+and that endpoint. Let $\mathcal C$ be the actual common depths and
+$\mathcal B$ the gaps between consecutive entries. For $B=(a,b)$ put
+
+$$
+\begin{aligned}
+\beta_B&=b-a,& X_B&=T_b\setminus T_a,\\
+V_B&=\{p\in V:a<h(p)+z(p)<b\},&
+Q_B&=\bigcup_{p\in V_B}F_p,\\
+E_B&=\sum_{p\in V_B}(b_p-1),&
+D_B&=\sum_{q\in Q_B}\bigl(|\{p\in V_B:q\in F_p\}|-1\bigr).
+\end{aligned}
+\tag{CL.7}
+$$
+
+An empty interior contributes empty sets and zero sums. Set
+
+$$
+\begin{aligned}
+Q_{\rm live}&=\bigcup_{p\in V}F_p,& u&=|Q\setminus Q_{\rm live}|,\\
+E&=\sum_{p\in V}(b_p-1),&
+D&=\sum_{q\in Q_{\rm live}}\bigl(|\{p\in V:q\in F_p\}|-1\bigr),\\
+E_a&=\sum_{p\in V_a}(b_p-1)\quad(a\in\mathcal C),&
+E_{\rm cut}&=\sum_{a\in\mathcal C}E_a.
+\end{aligned}
+\tag{CL.8}
+$$
+
+These distinguish support families $\mathcal S_p$, host families $F_p$,
+excess incidences $E$, duplicate cell incidences $D$, and genuinely
+never-live states $u$. A state live on one input and certified on another
+belongs to $Q_{\rm live}$ and contributes nothing to $u$.
+

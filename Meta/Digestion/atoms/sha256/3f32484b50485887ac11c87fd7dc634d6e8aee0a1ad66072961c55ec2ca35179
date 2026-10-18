@@ -1,0 +1,17 @@
+**Proposition 3.4 (Existing fixed-diagonal upper bound).** There is a simultaneous four-label processor of exact error $[c-sD_m]_+$. At zero noise the unrestricted value is consequently
+
+$$
+e_m(t,0)=[t-D_m(t,0)]_+.
+\tag{3.5}
+$$
+
+Proof. Put $r_{\rm old}=0$ if $D_m=0$, and otherwise $r_{\rm old}=\min(s,c/D_m)$. On each product-PVM outcome use $T_\eta(r_{\rm old}h_a,r_{\rm old}h_b)$. For product projections $M_z$, the instrument
+
+$$
+\Omega\longmapsto\sum_z T_\eta(r_{\rm old}h_a(z),r_{\rm old}h_b(z))
+ \left(\operatorname{tr}_{P_m}[(I_5\otimes M_z)\Omega(I_5\otimes M_z)]\right)
+\tag{3.6}
+$$
+
+is CP and is TP by completeness of the PVM and TP of every response. It is one map on the entire joint algebra. Initial batch independence and (2.3) make its induced channels $T_\eta(\sigma r_{\rm old}D_m,0)$ and $T_\eta(0,\sigma r_{\rm old}D_m)$. Formula (3.3) gives error $c-r_{\rm old}D_m=[c-sD_m]_+$. If $D_m=0$, either $m=0$ or $c=0$ by Proposition 2.1, and the same equality holds. At $\eta=0$, $s=1$, so this construction meets (3.4) and proves (3.5). QED.
+

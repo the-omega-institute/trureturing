@@ -1,0 +1,39 @@
+**Lemma 6.1 (independent horizontal failure CDFs).** For every $M\geq1$
+and distinct positive $x_1,\ldots,x_M$, the real functions
+$G_{x_j}(u)=u/(x_j+u)$ are linearly independent on every nonempty open
+interval of positive $u$. For distinct positive $u_1,\ldots,u_M$ the
+matrix
+
+$$
+C_{ij}=\frac{u_i}{x_j+u_i}
+\tag{FH.16}
+$$
+
+is invertible. If both lists are increasing, its determinant is
+
+$$
+\det C=
+\frac{(\prod_i u_i)
+ \prod_{i<j}(u_j-u_i)(x_j-x_i)}{\prod_{i,j}(x_j+u_i)}>0.
+\tag{FH.17}
+$$
+
+Proof. A relation $\sum_j a_jG_{x_j}(u)=0$ can be divided by $u>0$
+and multiplied by $P(u)=\prod_j(x_j+u)$. The resulting polynomial
+
+$$
+Q(u)=\sum_j a_j\prod_{k\ne j}(x_k+u)
+$$
+
+has degree at most $M-1$. Vanishing on an interval makes it identically
+zero. Evaluating at $-x_j$ gives
+$a_j\prod_{k\ne j}(x_k-x_j)=0$, hence every $a_j=0$.
+For a vector in the kernel of $C$, the same $Q$ has the $M$ distinct
+roots $u_i$, so the same argument proves invertibility. Formula (FH.17)
+is the classical Cauchy determinant identity, with the row factors $u_i$
+extracted. It can also be checked by bringing the determinant over the
+common denominator: its numerator alternates separately in the two lists,
+has their Vandermonde degrees, and its multiplicative constant is one by
+successive residues at $u_i=-x_j$. Only the elementary root argument is
+needed for invertibility below. $\square$
+

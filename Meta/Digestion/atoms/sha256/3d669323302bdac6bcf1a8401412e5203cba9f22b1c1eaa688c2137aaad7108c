@@ -1,0 +1,4 @@
+# CFMP 理论卷续篇：角关联群与观察动力学
+
+本篇继续同一个 CFMP 给定剖分实现目标，承接 [群字符与运输第 119–125 节](CFMP_GEOMETRIC_REALIZATION_GROUP_TRANSPORT.md)。下述是普通书面研究证明及辅助计算，书面结论不提供 Lean 内核认证。
+

@@ -1,0 +1,29 @@
+**Definition 1.1 (finite trees, update and actual replies).** The sources
+are all finite nonempty ordered terms
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{FCS.1}
+$$
+
+Native Boolean true and false name alpha and beta; the false and true
+address letters name $L$ and $R$. These conventions do not relabel the
+exported bits $0,1$. Every word in $\mathcal W=\{L,R\}^{*}$, including
+$\varepsilon$, is a legal query. The truthful reply $r_t(v)$ is the
+constructor alpha, beta or $\mathsf{branch}$ at a reached node, and
+$\mathsf{absent}$ outside the finite tree. Every nonempty continuation
+at a leaf is absent. At any existing occurrence $p$,
+
+$$
+r_t(pw)=r_{t|_p}(w)\qquad(w\in\mathcal W).
+\tag{FCS.2}
+$$
+
+Equality retains brackets, order and both leaf labels. Equal subtrees at
+different addresses remain different occurrences. These are NBP
+Definitions 1.1–1.2 and TCR Definition 2.1's original objects.
+

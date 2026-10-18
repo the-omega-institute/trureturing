@@ -1,0 +1,15 @@
+### 67.3 Scope of the local conclusion
+
+The radius \(\varepsilon\) is positive but is not evaluated numerically.
+The parameter is restricted to the actual one-parameter family of
+(60.1). No exclusion on the entire open branch or for every
+six-dimensional Hadamard pair follows from this local argument.
+
+Zero is excluded from the uniqueness theorem: the explicit
+noncanonical complete central basis in §61 remains a genuine
+exception. The proof also does not classify every noncanonical
+single-ray branch approaching a canonical ray, or exclude every
+arbitrary noncanonical orthogonal triple near such rays. Compactness
+closes the complete-basis problem by using the full canonical-basis
+germ in precisely that limiting case.
+

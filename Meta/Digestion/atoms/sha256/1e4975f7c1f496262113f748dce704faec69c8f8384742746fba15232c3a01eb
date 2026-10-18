@@ -1,0 +1,26 @@
+**Convention 12.3 (mature methods and literature boundaries).** Choi/Kraus
+vectorization, positive-sum support, product ranks, trace/operator duality,
+Cauchy–Schwarz, real spectral theory, Takagi congruence, positive-block
+compression and zero-Rayleigh decompositions are mature tools. The
+additional application is `repo-derived` relative to the supplied source
+bodies, with its full ordinary derivations above. Generic spectral or
+cone machinery is not claimed as invented here.
+
+The sources report Heinosaari–Jivulescu–Reeb–Wolf for finite CP extension,
+Terhal–Horodecki for Schmidt-number overlap bounds,
+Chruściński–Kossakowski for the Choi/Kraus correspondence, Sekatski for
+classical-assisted dimension bottlenecks, and coherence/covariance and
+instrument-postprocessing literature in their stated scopes. JG credits
+Mayer–Knill's *Quantum process fidelity bounds from sets of input states*,
+§V, Theorem 1, for its source-state rigidity, and distinguishes its
+all-Schur-fixing task from the transition-preserving dephasing-superchannel
+and classically correlated supermap literature. These are inherited
+attributions, not independent authentication of those external texts or
+of private-library compatibility. The fixed-source algebraic isolation,
+enclosures, bordered Jacobian, normalization/minimax and nested control,
+instrument and calibration premises retain their supplied conditional
+status. No literature-wide absence, novelty or priority claim follows.
+Other referenced classical acquisition/count programmes have different
+carriers, targets and paid resources; no quantum correspondence is
+supplied by a shared name or an analogous cone obstruction.
+

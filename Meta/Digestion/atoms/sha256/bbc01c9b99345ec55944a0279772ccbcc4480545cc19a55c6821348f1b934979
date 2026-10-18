@@ -1,0 +1,63 @@
+**Proposition 4.3 (conditional examples and the uniform-table boundary).**
+At $H=3,a_0=0$ the fixed complete inputs of Theorem 3.1 have the
+following simultaneous minima under Assumption 4.1:
+
+| Lag convention and entire row | Hidden interval | Running states | Halts | Worst calls | Physical peak |
+| --- | --- | --- | --- | --- | --- |
+| $\lambda_0=0$, $Y_3=(\langle\square_L,T_7\rangle,\{\{L\}\})$ | $[0,3]$ | $2$ | $4$ | $2$ | $2$ |
+| $\lambda_0=1$, $Y_4=(\langle\square_L,T_8\rangle,\{\{L\}\})$ | $[1,4]$ | $1$ | $4$ | $1$ | $2$ |
+
+Even at fixed $H$, no single finite table with fixed numeric halts
+returns every unbounded allowed lag over all genuine acquired inputs.
+Fixed conditional state count and call price do not bound the static
+literal/output representation or physical memory of this table family.
+
+**Proof.** Apply Theorem 4.2 to the exact inputs and histories of
+Theorem 3.1. In the first row the two running states read physical $L$
+and, on its branch reply, $LR$; alpha and beta at the first go to
+fixed lags zero and one, and alpha and beta at the second go to fixed
+lags two and three. Fill the other entries with the halt zero. In
+the second row one state reads $LR$, with absent, alpha, beta and
+branch leading directly to the respective complete lags $1,2,3,4$.
+These are the prefixed tables of AOF Proposition 10.3.
+
+For the uniform obstruction take the legal original $X_{0,0}$ and
+cut $\{L\}$. Its fixed code is zero, and after each permitted lag
+$\ell$ its genuine entire later row is $Y_\ell$ of (NARC.1.2), with
+right tree $T_{q+\ell}$. Correct outputs include arbitrarily large
+$\ell$, whereas one finite halt set has finite numeric image. A
+varying conditional table or external output field cannot be identified
+with that one fixed table. For $H=0$ each conditional fiber is a
+singleton but the same infinite-output obstruction persists across
+inputs. For $H\ge1$ and $z\ge H+\lambda_0$, (NARC.4.1) is the
+translated interval $[a_0+z-H,a_0+z]$ of fixed size $H+1$, with
+unbounded physical peak by (NARC.4.3). Thus the separately charged
+literal and complete numeric constants cannot be absorbed into the
+abstract state cardinality or chronological call count. $\square$
+
+**Mathematical citation 4.4 (fixed-reference correspondence).** The
+whole-row/code fiber, each actual original and its pure-$\rho$ history,
+and the all-address reduction are Theorems 1.2 and 2.1 at immutable
+[revision 1f90f2ec304615c711e1ab2cdef401881881fcc9](https://github.com/the-omega-institute/trureturing/blob/1f90f2ec304615c711e1ab2cdef401881881fcc9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md#1-a-fixed-acquired-reference-and-the-entire-two-slot-input).
+Their NAR source, acquisition, clock, causal-export and complete-cut
+premises remain unchanged; no duplicate source or acquisition theorem
+is asserted here. AOF Theorem 10.2 supplies the sharp interval state
+bound and its common native witness. NBP12 at immutable
+$\mathtt{0ec296c8f9cfd78898ea44f5faf5d1eaa49aa656}$ supplies paid
+state-local reply recoding on shared graphs. Equations (NARC.2.2) and
+(NARC.4.4) validate its method in this fixed-input task; its inverse-fiber
+state frontier and joint encoder choices supply no numerical bound
+for this fixed $E=a_0$.
+
+The repo-derived application is the exact conditional state price
+with the already exact calls and physical peak, including installed
+lag outputs and all changing state. It asserts neither a minimum
+over encoders nor a retained-alphabet minimum, an arbitrary menu or
+an all-query $D>1$ bound. Acquisition, parsing, construction and
+installation, immutable tables, complete output representation,
+summed submitted length and physical service costs remain separate
+from the three conditional coordinates. No global originality or
+programme-wide recovery theorem follows from this correspondence.
+
+[NBP-NARC-Moore]: https://github.com/the-omega-institute/trureturing/blob/0ec296c8f9cfd78898ea44f5faf5d1eaa49aa656/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#12-exact-joint-record-total-moore-state-and-call-transfer-on-every-full-fiber
+

@@ -1,0 +1,27 @@
+### 107.1. Original-channel hypotheses and sharp statement
+
+Index the original logical coordinates by \(j\in\mathbb Z/8\mathbb Z\), with fibres \(\{f,f+4\}\), \(f=0,1,2,3\). Thus \(j=f+4i\) labels the original coordinate \(|f,i\rangle\). Retain the fixed correlated encodings \(V_{\rm in}|j\rangle=|j\rangle\otimes|j\rangle\) and \(V_{\rm out}|f\rangle=|f\rangle\otimes|f\rangle\), and write \(J_{\rm in},J_{\rm out}\) for the induced channels. The target \(\mathcal F\) has coefficients \(T_{jj}=1\), \(T_{j,j+4}=0\), and \(T_{jk}=1/2\) for different fibres.
+
+For arbitrary original CPTP maps \(A,B:\mathbb C^8\to\mathbb C^4\), choose Stinespring isometries and define their correct-output records by
+\[
+ a_j=(\langle j\bmod4|\otimes I)V_A|j\rangle,
+ \qquad b_j=(\langle j\bmod4|\otimes I)V_B|j\rangle.
+ \tag{107.1}
+\]
+Their forward Grams \(G,H\), using inner products conjugate-linear in the first argument, are independent of Stinespring environment isometries. Their original fibre blocks satisfy \(0\le G_{ff},H_{ff}\le I_2\). The error is the original unhalved, arbitrary-reference diamond norm
+\[
+ \delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                       -J_{\rm out}\circ\mathcal F\|_\diamond.
+ \tag{107.2}
+\]
+
+**Theorem 107.1.** Suppose both correct-output Grams are circulant in this same original labeling:
+\(G_{j+1,k+1}=G_{jk}\) and \(H_{j+1,k+1}=H_{jk}\), with indices modulo eight. Then
+\[
+ \delta(A,B)\ge\sqrt2-1>\tfrac14.
+ \tag{107.3}
+\]
+The bound is sharp, with an attaining calibrated physical pair of local Kraus ranks \((3,3)\). The infimum is also \(\sqrt2-1\) in each calibrated simultaneous-cyclic exact-rank class \((7,4)\) and \((7,5)\) with full-support first kernel.
+
+The simultaneous-cyclic hypothesis allows complex entries and arbitrary original output leakage. It is a substantive hypothesis on both correct-output Grams, rather than a phase convention. The proof occupies §§107.2–107.6. Corollary 107.2 below weakens this to a cyclic hypothesis on just one Gram, allowing the other original channel to be arbitrary.
+

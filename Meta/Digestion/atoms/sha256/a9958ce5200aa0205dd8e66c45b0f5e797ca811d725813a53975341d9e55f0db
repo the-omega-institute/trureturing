@@ -1,0 +1,27 @@
+**Definition 1.2 (raw source, field and actual units).** Let $p_t^B$ be the killed heat kernel of $B$ relative to raw measure, with source $o=(k_0,0)$. For $\tau>0$ set
+
+$$
+\begin{aligned}
+W_\tau&=\int_\tau^\infty e^{\lambda t}p_t^B(o,\cdot)dt,&
+\rho_\tau&=e^{\lambda\tau}p_\tau^B(o,\cdot),& SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0).
+\end{aligned}
+\tag{1.5}
+$$
+
+These are distinct source charges, without survival normalization. The field uses the $B$ heat clock independently of $a$. Define
+
+$$
+\begin{aligned}
+\mathfrak e_{g,\tau}[\psi]
+ &=a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2dY,&
+E_\tau(g)&=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}\mathfrak e_{g,\tau}[\psi],\\
+\tau&=s^2,&g_s&=\chi_c s^3,& E_s&=E_{s^2}(\chi_c s^3),\\
+\epsilon_c(s)&=s^2E_s,&r_s&=-\epsilon_c(s)/s^8=-E_s/s^6.
+\end{aligned}
+\tag{1.6}
+$$
+
+P Propositions 70.2 and 75.2 supply boundedness of $W_\tau$ at each positive cutoff, operator domain exactly $D(S)$ for $aS-gW_\tau$, essential spectrum $[0,\infty)$ and an attained finite negative bottom for each positive $g,\tau$. They do not assert a uniform multiplier bound as $\tau\downarrow0$. The unscaled energy $E_s$, rescaled energy $\epsilon_c(s)$ and positive scale ratio $r_s$ are distinct quantities. None denotes quantum acquired mass or machine-learning error.
+

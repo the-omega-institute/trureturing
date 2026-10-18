@@ -1,0 +1,5 @@
+### 94.1. Statement and exact parameter field
+
+Let \(P(B)=\sum_{j=0}^{48}p_jB^j\) be the primitive integer polynomial
+in §94.6, and put \(Q(b)=P(b^2)\).
+

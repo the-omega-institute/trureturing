@@ -1,0 +1,14 @@
+**Definition 18.2 (a conditional diagonal closure).** Fix the common
+calibrated basis of $V$. Consider an implementation class with one
+specimen and independent initial apparatus, whose only live interactions
+have Kraus operators diagonal on that specimen. More generally, if $R$
+is an actually retained apparatus/record, allow live Kraus operators
+$\sum_j P_j\otimes B_{a,j}$ on $V\otimes R$. Allow operations
+$I_V\otimes B$ on $R$, choices from actually acquired classical records,
+independent randomization, finite composition, and summation over
+unobserved branch records. Failure branches are absorbing and never
+return population to a live direction. All apparatus, selection rules,
+permissions and numerical coefficients are common, rather than
+programmed by an unknown source height. No additional specimen-bearing
+interaction is included in this definition.
+

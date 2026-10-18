@@ -1,0 +1,33 @@
+**Definition 5.2 (constructor identities and local patch computation).**
+Use foundation vertex names `[0,U(i)]`, with $i$ its zero-based preorder
+index in the charged foundation, and new names `[1,U(n),U(j)]`, where $n$
+is the actual native occurrence ordinal and $j$ its template birth order.
+These are descriptions of actual constructor occurrences. Maintain, as
+derived word workspace, the map from native port/creation-chain positions
+and finite sockets to their structural role names. Initialize it by the
+fixed foundation walk. At an append, its old trailing tree-terminal name
+becomes the spine node, add the 23 cell roles and new trailing terminal
+in UAS's template order, and retain every old name. At a fresh finite bit
+add its sole terminal role. Other rows preserve names. No name is inferred
+from arbitrary graph renaming.
+
+For each represented pre-row state compute the UAS Definition 2.3 local
+case: native core/effects, bounded role walks in effect order, actual
+bytes/latches and input, alias classes, designated bit targets with final
+ordered effect values, core births before receipt, finite-bit birth,
+head-link changes and receipt. Build each requested endpoint relation
+from the component cases in Definition 3.2, its physical-position role map,
+and the marked native neighbor. A child/parent neighbor is the corresponding
+component parent/child; origin/head neighbors are the marked cell and its
+origin in that lane. Return empty for every unused endpoint. Find on these
+word tables implements every probe; no physical old graph is traversed.
+
+Repeated inspected roles remain repeated. Distinct designated targets are
+deduplicated in first-role/track order before assigning final values; even
+unchanged assignments remain. Each new vertex lists its seven initial
+slots in order P,L,R,O0,O1,H0,H1. Existing root attachments, empty slots,
+two separate meter lanes and the native guard are included. The result
+is exactly the occurrence of $\Pi_\circ$ chosen by the actual finite
+raw-pattern enumeration. This is a bounded-template computation, not a
+new general graph interpreter or an appeal to universality.
+

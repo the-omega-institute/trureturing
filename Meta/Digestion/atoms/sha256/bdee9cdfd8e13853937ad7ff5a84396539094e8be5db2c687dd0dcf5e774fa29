@@ -1,0 +1,13 @@
+**Proposition 7.4 (sound direction of the direct bound).** Every
+choice in Definition 7.3 satisfies $Z_N\le U(\Psi,\tau)$.
+
+Proof. The graph is a simple triangle-free cycle, with no isolated
+vertices and degree two at every vertex. [Sah--Sawhney--Stoner--Zhao,
+Theorem 1.12][GCBSSSZ] bounds its partition integral by the product of
+$K_{d_v,d_u}$ edge norms. The finite binary spaces, positive finite
+measures and nonnegative measurable pair functions meet its hypotheses;
+their reversed degree order is $(2,2)$. The integral equals $Z_N$ by
+(GCB.18), giving the claimed upper direction. The cited theorem and
+its allowance of unnormalized measures supply this soundness step.
+$\square$
+

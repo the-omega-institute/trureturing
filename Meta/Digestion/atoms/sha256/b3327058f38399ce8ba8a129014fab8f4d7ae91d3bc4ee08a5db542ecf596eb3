@@ -1,0 +1,20 @@
+**Corollary 4.6 (the all-original-cut retrospective relation).** Under the
+actual finite-completion condition of Lemma 4.2, the union of the intervals
+(RCA.4) covers every original lawful finite primitive cut. Its prefix
+decoder handles all of the following simultaneously on one history:
+unfinished IN latches, partial source packets, uncommitted requests,
+committed unsealed events, partial row construction and partial copies,
+including original complete successors.
+
+Proof. Choose $s\succeq h$ by Lemma 4.2 and select $k=|h|$ in its
+constructed interval. Lemma 4.5 returns precisely $h,X(h)$. At an
+IN-before-WR stop its last consumed bit is represented in $Q$, not an
+already written cell. Before commitment a complete or partial request
+remains in $D$ and busy work; after commitment the event may be in $P$.
+At source overwrite the represented raw bits and unavailable phase need
+not decode as a tree. At a copy stop the represented destination may be
+unreadable even when all payload bits have been written. These are the
+complete coordinates of AIF replay, with no physical read of the old
+unavailable object. The next prescribed original transition has AIF's
+complete actual successor, not just the same semantic source tree. ∎
+

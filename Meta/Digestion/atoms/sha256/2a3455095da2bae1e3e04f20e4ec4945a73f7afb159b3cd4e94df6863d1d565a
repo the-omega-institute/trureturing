@@ -1,0 +1,21 @@
+**Definition 2.3 (the three available action horizons).** For finite
+caps $k,d,L$ and a prescribed state bound $K$, put
+
+$$
+\begin{aligned}
+T_q(K,k)&=k+K(k+1),\\
+T_a(K,d)&=d+K(d+1),\\
+T_\ell(K,L,N)&=K\bigl(\max(0,2L+2-N)+1\bigr).
+\end{aligned}
+\tag{NRF.13}
+$$
+
+The first two are the unchanged-table bounds of [CAR, Corollary
+12.2][CAR]. A halting run with $q\le k$ has at most $k+1$
+update-only blocks, each of at most $K$ updates. A halting run
+with $a\le d$ has at most $d+1$ read-only blocks, each of at most
+$K$ reads on an unchanged register. The third is Theorem 2.1.
+Thus any one finite coordinate bounds the actions of every
+successful candidate obeying that coordinate, without a
+state-preserving normalization hypothesis.
+

@@ -1,0 +1,15 @@
+**Definition 2.1 (Separate realification).** For a positive integer $n$,
+in a fixed real frame of $\mathbb C^n$, let
+
+$$
+\mathcal R(X)=\frac{X+X^T}{2},\qquad
+\mathfrak r(T)=\mathcal R\circ T\circ\mathcal R.
+\tag{2.1}
+$$
+
+These are complex-linear maps. A real product channel is a finite map
+$S(X)=\sum_f w_f a_fa_f^T\operatorname{tr}(b_fb_f^T X)$ with
+$w_f\ge0$ and real unit vectors $a_f,b_f$. When
+$\sum_fw_fb_fb_f^T=I_n$, it is a real measure-and-prepare channel.
+The two unit vectors of an atom are independent.
+

@@ -1,0 +1,26 @@
+**定义 16.2.1（速率缩放的反馈族）。** 令
+
+$$
+A=
+\begin{pmatrix}
+1&-2&3\\
+2&-3&0\\
+-3&0&-5
+\end{pmatrix},
+\qquad
+D_d=\operatorname{diag}(d,1,1),
+\qquad d>0.
+$$
+
+对每个恒定源 $u\in\mathbb R^3$，定义系统
+
+$$
+\mathcal M_d(u):
+\qquad
+\dot x=D_d(Ax+u).
+$$
+
+速率 $d$ 乘在第一个局部方程的整个右端上，包括该方程的源项。$d$ 是动力学时钟速率，不改变方程 $Ax+u=0$ 的零点。
+
+<a id="claim-16-2-2"></a>
+

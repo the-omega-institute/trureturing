@@ -1,0 +1,61 @@
+**Proposition 72.12 (the planar separated-window logarithmic obstruction).**
+Suppose instead that $s=2$, that a connected planar chamber has scale
+$r=\sqrt\varepsilon$, and that its contact boundary contains at least
+two windows, each of length $\varepsilon$, whose mutual distances
+are at least $c r$ for a fixed $c>0$. Suppose all other contact windows
+are separated by the same margin. Define the negative mixed
+Dirichlet-to-Neumann map on the union of windows by its harmonic
+energy form, with Neumann boundary elsewhere. Whenever these form
+traces are defined on a Lipschitz chamber, its first nonzero Steklov
+magnitude obeys
+
+$$
+ |\lambda_2|\le\frac{C}{\varepsilon|\log\varepsilon|}
+ \tag{72.31}
+$$
+
+for all small $\varepsilon$. Consequently there is no positive
+$\varepsilon$-independent lower constant $c_1$ with
+$|\lambda_2|\ge c_1/\varepsilon$ for this separated-window family.
+
+**Proof.** Centre a disk at the midpoint of each of two chosen windows.
+Take an inner radius $b=C_b\varepsilon$ containing the entire window
+and an outer radius $R=c_b r$, with fixed $c_b>0$ small enough that
+these outer disks are disjoint and meet no other contact window.
+On the plane define
+
+$$
+ \eta_i(x)=
+ \begin{cases}
+ 1,&|x-x_i|\le b,\\
+ \displaystyle\frac{\log(R/|x-x_i|)}{\log(R/b)},
+                              &b<|x-x_i|<R,\\
+ 0,&|x-x_i|\ge R.
+ \end{cases}
+ \tag{72.32}
+$$
+
+Its energy on the whole annulus is $2\pi/\log(R/b)$, so restriction
+to the chamber has no larger energy. The trace of $u=\eta_1-\eta_2$
+is $+1$ and $-1$ on the two selected windows and zero on all others.
+It has zero integral on the contact union and squared contact norm
+$2\varepsilon$. Since
+$\log(R/b)=\tfrac12|\log\varepsilon|+O(1)$, the trial energy is at
+most $C/|\log\varepsilon|$. Its mixed harmonic extension minimizes
+energy among functions with that contact trace and hence has no larger
+energy. The Steklov variational principle now gives(72.31). In the
+case of two windows alone the same proof applies without the additional
+separation clause. Comparable unequal window lengths can also be
+handled by balancing the two constant trace coefficients.
+Multiplication of(72.31) by $\varepsilon$ tends to zero, contradicting
+any positive fixed lower constant $c_1$.
+
+This is the classical logarithmic-capacity cutoff calculation applied
+to the actual small-window scale. It identifies a limitation of an
+automatic $c/\varepsilon$ local gap, including an unqualified use of
+the paper's Lemma3.5 for separated planar contacts. It is neither a
+nonexistence proof for planar thin domains nor a counterexample to the
+paper's final $O(\varepsilon|\log\varepsilon|)$ convergence rate:
+that rate allows logarithmic losses, and its validity in such a planar
+family requires its own complete applicability argument. $\square$
+

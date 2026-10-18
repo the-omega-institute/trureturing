@@ -1,0 +1,35 @@
+**Theorem 15.2 (completed-original-service replacement obstruction).**
+For every $P,H,R$ of Lemma 15.1 and every actual comparison branch $B$
+from the same $P$ with $E(B)+J(B)>0$,
+
+$$
+A_{55}(B_{\rm end})>A_{55}(R).
+$$
+
+In particular its complete original physical endpoint differs from
+$R$'s, irrespective of its receipt count, source-tree value, printed
+reply, final token owner or size of retained supplementary memory.
+Every composition of whole services of Definition 13.3, including the
+empty or disabled-only composition, fails to have the same complete
+original endpoint as $H$. This holds branch by branch for every finite
+public adaptive composition, without a bound on its number of calls or
+its variable-length request recoding.
+
+Proof. Theorem 14.2 and Lemma 15.1 give
+
+$$
+A_{55}(B_{\rm end})\ge A_{55}(P)+E(B)+9J(B)
+>A_{55}(P)=A_{55}(R).
+$$
+
+All counts belong to this one actual source, initialization and starting
+cut. Additional work and allocation, including an arbitrarily growing
+supplement, cannot reverse the inequality. Eventful branches also have
+the independent discrepancy $\mu(B_{\rm end})=\mu(P)+E(B)>\mu(R)$.
+No comparison of separately optimized or differently initialized runs
+is used. If a whole-service composition has $E=J=0$, its definition
+leaves only unexecuted trials and the empty branch. Its receipt tally
+is $n(P)$, whereas $n(R)=n(P)+L_H>n(P)$. These exhaust that subclass.
+Public adaptivity only selects an actual branch to which the same
+argument applies. ∎
+

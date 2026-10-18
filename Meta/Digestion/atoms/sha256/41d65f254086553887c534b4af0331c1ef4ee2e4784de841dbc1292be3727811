@@ -1,0 +1,56 @@
+**Definition 1.3 (One common table and complete compliance).** At a
+selected known $(s,M)$, one source-blind table is used under both labels
+with the same initialization. It may depend on $(s,M,r,c,\alpha)$ and
+may retune discontinuously between different selections. During a run
+its state set and two bit-conditioned rows are fixed. Every nonterminal
+configuration undertakes exactly the next actual read. Entry into $d_i$
+internally emits $D=i$ and stops. Label rows on unused future bits fix
+the label.
+
+The budget $M$ counts all possible complete persistent configurations,
+including initialization, both labels, registers, control and working
+phases, buffers, retained seeds and retained random consequences. It
+counts unreachable and arbitrarily improbable configurations too.
+The observation is only the uninterrupted consecutive history (1.4).
+There is no external age, elapsed time, read count, gap length, program
+counter, archive, tape, true-label port, parameter response, separate
+history, source reset, skipped suffix, free gap or stopping-time decoder.
+Any retained distinction belongs to the counted state set. A formula
+for a row specifies immutable successors; it supplies no additional
+arithmetic workspace or internal action during observation.
+
+If the read prefix is $X_0,\ldots,X_{T-1}$, its paid cost is $T$.
+Every initial zero and tick, rejected suffix, holding interval and
+terminal read is paid. General competitors may stop in a partial gap,
+whose read prefix remains paid. Write $\mathfrak A_M(e^{-s},\alpha)$
+for the unrestricted stochastic class of [C, Definition 1.3] satisfying
+all six requirements
+
+$$
+\begin{gathered}
+\mathsf P_0(D=1)\le\alpha,\qquad
+\mathsf P_1(D=0)\le\alpha,\\
+\mathsf P_0(T<\infty)=1,\qquad
+\mathsf P_1(T<\infty)=1,\\
+\mathbb E_0T<\infty,\qquad \mathbb E_1T<\infty.
+\end{gathered}
+\tag{1.6}
+$$
+
+In that class fresh transition randomness is independent of the source
+and previous fresh randomness, and immutable row precision is
+unrestricted. Let $\mathfrak A_M^{\rm det}(e^{-s},\alpha)$ be the
+subclass with deterministic initialization and rows. For an integer
+$B\ge1$, let $\mathfrak A_M^{(B)}(e^{-s},\alpha)$ be the direct-table
+subclass whose probabilities, including initialization, are in
+$2^{-B}\mathbb Z$. Thus
+
+$$
+\mathfrak A_M^{\rm det}\subseteq\mathfrak A_M^{(B)}
+\subseteq\mathfrak A_M.
+\tag{1.7}
+$$
+
+Both means in every constructive assertion below refer to the very same
+selected table, independent of the true label.
+

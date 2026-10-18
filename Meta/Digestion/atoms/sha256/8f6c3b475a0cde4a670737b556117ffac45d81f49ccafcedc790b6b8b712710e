@@ -1,0 +1,17 @@
+**Definition 3.1 (original fractional atom).** An atom is $(u,v,\xi)$ with $u^2+v^2=1$ and $0\le\xi\le1$. Set
+
+$$
+\begin{gathered}
+z=u/\sqrt\alpha,\quad w=v/\sqrt\beta,\quad h=(1,z,w)^T,\quad
+L_h=s_0D+zT+wS,\quad n_h=(0,dw/h_2,-bz/h_1)^T,\\
+\ell_h=h^TGh,\quad f_h=n_h^T\Delta n_h,\quad
+c_h=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+{h_0^2\delta+b^2z^2+d^2w^2}>0,\quad b_{\rm label}=t c_h\xi,\\
+H_0=\ell_h,\qquad H_1=\ell_h+t c_h f_h,\\
+\Gamma_\xi=(1,u,v,u^2,uv,\xi c_h,\xi c_hu^2,\xi c_huv),\\
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V_f/t,0).
+\end{gathered}
+$$
+
+A single nonnegative coefficient law satisfies $\sum p\Gamma_\xi=B(t)$. Its contrast variable is $k=\sum p|u|$. The $p$ are coefficient weights, not acquired probabilities. Source amplitude $b$, label parameter $b_{\rm label}$, and relative clock $a$ are different quantities. For an existing actual atom the live matrix and failure effect are $\sqrt p L_h$ and $p b_{\rm label}n_hn_h^T$.
+

@@ -1,0 +1,27 @@
+**Definition 1.1 (Finite Hankel minimax).** Let $N\ge1$ and $m\ge0$ be
+integers. Set $L_m=2m+1$. For a real vector
+$u=(u_1,\ldots,u_{L_m})$, define
+
+$$
+H_m(u)=(u_{p+q+1})_{0\le p,q\le m},\qquad
+\mathcal R_{N,m}
+=\{u\in\mathbb R^{L_m}:\operatorname{rank}H_m(u)\le N\},
+$$
+
+$$
+J_m(u)=\max_{1\le j\le L_m}\frac{|u_j-\sqrt j|}{\sqrt j},
+\qquad
+d_{N,m}=\min_{u\in\mathcal R_{N,m}}J_m(u).
+\tag{1.1}
+$$
+
+The minimum exists by Lemma 1.2. The admissible objects are all real
+vectors satisfying this one finite rank condition. There is no
+extendibility, recurrence, realization, regularity, or positivity
+assumption in the definition. In particular, no individual member of
+$\mathcal R_{N,m}$ is asserted to extend to an infinite sequence of rank
+at most $N$, or to arise from a native model.
+
+The integer $m$ is the Hankel index: the matrix has $m+1$ rows and
+columns, while the prefix has $2m+1$ scalar entries.
+

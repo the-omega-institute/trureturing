@@ -1,0 +1,41 @@
+**Definition 1.2 (unchanged common-law coordinates).** Use the source
+dictionary FC.55–FC.58 and FC.81–FC.82. For $x=(u,v)\in S^1$ put
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$ and abbreviate
+$c(x)=\mathfrak c(h)$, $\ell(x)=\ell(h)$ and $f(x)=f(h)$.
+The source amplitude $c_{\rm src}$ is distinct from $c(x)$. In particular
+
+$$
+\begin{gathered}
+\alpha+\beta=1,\qquad
+f(x)=x^T\mathsf F x=2euv-d_*v^2,\qquad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\qquad
+\chi=2e/d_*,\\
+\ell(x)=A_\ell u^2-2a_\ell uv+B_\ell v^2+l_u u+l_v v,\qquad
+c(x)=N_c(x)/D_c(x)>0.
+\end{gathered}
+\tag{RB.1}
+$$
+
+For finite $t\ge t_0$ the cylinder, complete moments, contrast and
+within-label absolute height are exactly FC.3 and GC.56:
+
+$$
+\begin{gathered}
+X=S^1\times[0,1],\qquad b_x=tc(x)\xi,\\
+\Gamma(x,\xi)=(1,u,v,u^2,uv,\xi c,\xi cu^2,\xi cuv)^T,\\
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0)^T,\\
+\int_X\Gamma\,d\pi=B(t),\qquad
+K(\pi)=\int_X|u|\,d\pi,\qquad
+J_t(\pi)=\int_X|\ell+tc\xi f|\,d\pi,\\
+m_u=\alpha V>0,\qquad m_v=\beta W>0,\qquad
+\Lambda_f=\operatorname{diag}(m_u,m_v),\qquad m_u+m_v=\mu.
+\end{gathered}
+\tag{RB.2}
+$$
+
+A finite law has nonnegative coefficient masses summing to one; zero
+masses are omitted. These masses are not physical acquisition or
+failure probabilities. The source failure moments imply
+$\int b_xxx^T\,d\pi=\Lambda_f$, including its zero mixed entry.
+All first and mixed live moments in (RB.2) are retained.
+

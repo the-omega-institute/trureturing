@@ -1,0 +1,49 @@
+**Theorem 5.1 (attaining all three preparation budgets).** For every
+context in Definition 4.4, one common-start preparer generates exactly
+$e_{\sigma_C}$ on every $u\in\mathcal U_*$ with
+
+$$
+H=n+4,\qquad p=n+1,\qquad \ell_P=\Lambda(C).
+\tag{PCA.15}
+$$
+
+Proof. Install two distinct latches $\widehat e_0,\widehat e_1$ and
+$n+2$ distinct running states $D,T,A_1,\ldots,A_n$. Their fixed
+literals and all four successors are as follows. Set $A_{n+1}$ to
+mean the latch $\widehat e_0$ in this table only; it is not another
+running state.
+
+| Running state | Literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR=p_{b_3}$ | $\widehat e_1$ | $A_1$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR=p_{b_4}$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $A_i$, $1\le i\le n$ | $LLLw_i$ | $A_{i+1}$ | $A_{i+1}$ | $\widehat e_1$ | $A_{i+1}$ |
+
+Start at $D$. The subscripted states are separately installed states,
+not a counter, computed address, or loop with an uncharged index.
+There is no simultaneously live code register. The terminal transition
+replaces the running state by the literal entry-code latch.
+
+On the entire fiber, an alpha reply at $b_3$ means $\Pi_3$, whose
+prescribed code is one. A beta reply means exactly $Z_{b_3}$, where the
+slot tests compute (PCA.14). The occurrence identity [NBP, (NBP.9.7)][NBP]
+gives $r_{t_u}(LLLw_i)=r_{x_a}(w_i)$ for every suffix, reached or
+absent. Thus the $A_i$ chain gives the exact prescribed code even for
+branch values not shaped like $C$.
+
+If the first reply is branch, the remaining possibility for code one
+is precisely $\Pi_4$, detected by alpha at $b_4$. All remaining positive
+and zero profiles have code zero on that branch. This uses the exhaustive
+partition of Definition 4.1; it does not restrict inputs to witness
+trees. The representative root $b_3$ is always reached, so its absent
+edge is installed but unused. The table nevertheless specifies every
+reply edge, including every slot absence.
+
+The initial call followed by all $n$ slot calls costs $n+1$ and
+$3+\sum_i(3+|w_i|)$. The other nontrivial path makes two calls of
+length three. Since $n\ge2$, every $|w_i|\ge1$, so $n+1\ge2$ and
+$\Lambda(C)\ge11>6$. The claimed uniform budgets follow. There are
+exactly $n+4$ installed preparation states. The all-beta context
+source in §6 attains both the call and literal upper bounds. The paid
+handoff then enters the unchanged supplier reader of 4.3. $\square$
+

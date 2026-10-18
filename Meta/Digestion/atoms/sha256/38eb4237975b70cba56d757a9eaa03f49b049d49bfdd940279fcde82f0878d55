@@ -1,0 +1,75 @@
+**定义 32.1（种子数据与正迹坐标）。** 本节至 §34 固定
+
+$$
+z_0=p_0=\frac{1728}{25},\qquad Y_0=\frac{9328}{125},
+\qquad H_5^0=H_{5M}(z_0,Y_0,p_0).
+\tag{32.1}
+$$
+
+在严格源域 $0<r<1,b>0$ 上置
+
+$$
+\begin{aligned}
+c&=\frac{r(1-r)}b,& J_0&=b^2+r-r^2,& N&=J_0+br,\\
+t&=1+b,&u&=1+2b,&T&=J_0tN,& V&=N+ub.
+\end{aligned}
+\tag{32.2}
+$$
+
+于是 $j=J_0/b$、$n=N/b$，且 $j,t,n,T,b$ 严格正。以下 $N,V$ 等字母仅用于本节至 §34；它们与 §25 的一元多项式分别解释。定义有理系数多项式
+
+$$
+\begin{aligned}
+a_4&=T-4btN+6J_0N-4bJ_0t,\\
+a_5&=4T-15btN+20J_0N-10bJ_0t,\\
+\beta_4&=96btN-288J_0N+4z_0bJ_0t,\\
+\beta_5&=360btN-960J_0N+10z_0bJ_0t,\\
+E&=T+ua_4,&B&=Y_0T-u\beta_4,\\
+E_5&=bT+Va_5,&B_5&=p_0bT-V\beta_5,\\
+C_6&=10T-36btN+45J_0N-20bJ_0t,\\
+D_6&=864btN-2160J_0N+20z_0bJ_0t,\\
+C_7&=20T-70btN+84J_0N-35bJ_0t,\\
+D_7&=1680btN-4032J_0N+35z_0bJ_0t.
+\end{aligned}
+\tag{32.3}
+$$
+
+以下四个商是 $\mathbb Q[r,b]$ 中的精确多项式商：
+
+$$
+\begin{aligned}
+R&=\frac{125(E_5B-EB_5)}T,&
+G_6&=\frac{C_6B+D_6E}T,\\
+G_7&=\frac{C_7B+D_7E}T,&
+G_{65}&=\frac{C_6B_5+D_6E_5}T.
+\end{aligned}
+\tag{32.4}
+$$
+
+亦即它们由将式 (32.2)–(32.3) 代入后消去公因子 $T$ 唯一确定，在 $T=0$ 的闭盒边界也作为多项式取值，不在那里作有理除法。再置
+
+$$
+\begin{aligned}
+D_0&=bE,\\
+H&=bB+(N+2ub)G_6,\\
+F&=bB+(2N+bt+2br)G_7,\\
+H_5&=bB_5+(N+2ub)G_{65},\\
+Z_4&=-HE,& Z_5&=-H_5E_5,\\
+K&=F-2H,\\
+Q_*&=(K_rD_0-K(D_0)_r)R_b
+       -(K_bD_0-K(D_0)_b)R_r.
+\end{aligned}
+\tag{32.5}
+$$
+
+下标 $r,b$ 表示偏导。$H_5$ 是多项式，不表示历史。为确定有限系数数组，所需的实际双次数为
+
+$$
+\begin{array}{c|rrrrrrrrrr}
+p&R&E&E_5&G_6&G_7&G_{65}&H&F&H_5&Q_*\\ \hline
+\deg_r p&6&4&6&4&4&6&6&6&8&15\\
+\deg_b p&7&6&7&5&5&6&7&7&8&19
+\end{array}
+\tag{32.6}
+$$
+

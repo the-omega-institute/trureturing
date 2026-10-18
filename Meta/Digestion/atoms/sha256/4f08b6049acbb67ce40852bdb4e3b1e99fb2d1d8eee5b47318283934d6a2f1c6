@@ -1,0 +1,27 @@
+**Proposition 11.4 (a finite semantic cover is not a selector).**
+Let $D$ be all original pairs, represented by a root old row and
+the literal record $(0,\varepsilon,\mathsf{branch})$, with
+$Q=\{L,R\}$. The equal-child and unequal-child subsets are two
+exact charts with invariant domains, fixed geometry, preserved and
+reflected target bits, and one constant whole row each. Nevertheless
+their union has no bounded full-row service and no finite original
+prefix selector for this cover.
+
+Proof. Use $W(x,y)=\langle x,y\rangle$ in both charts, with domains
+$x=y$ and $x\ne y$. These properties follow from injectivity of
+$\rho$. For every $h$ choose $m\ge2(h+1)$ and compare
+
+$$
+u_m=\langle T_m,T_m\rangle,\qquad
+v_m=\langle T_m,T_{m+1}\rangle .
+\tag{NSF.28}
+$$
+
+Both lie in the exact same entry fiber, agree through depth $h$,
+and have different full partitions. The two chart domains are
+disjoint. Any correct selector must therefore distinguish these
+sources, which a common finite prefix cannot do. ARH's existence
+bridge excludes bounded recovery. A finite row image, inhabited
+charts and decidable chart membership on concrete trees do not
+provide the missing observable selector. $\square$
+

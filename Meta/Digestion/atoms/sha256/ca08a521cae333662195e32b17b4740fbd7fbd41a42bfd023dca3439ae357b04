@@ -1,0 +1,29 @@
+**Lemma 67.4 (the source-uniform field-weighted lift defect).** Use $\omega=\max_N\sqrt{\beta_N^2+s_N^2}$ from Lemma66.5, so $\|W_D-J_D\|\le\omega\le144\sqrt\delta$. Write $Q_A=\sum_pm_p\otimes q_p$ and $Q_n=\sum_pn_p\otimes q_p$. Then on the field-number form domain,
+
+$$
+\|[Q_A(W_D\otimes I)-(W_D\otimes I)Q_n]\Psi\|
+\le4\omega\|B\Psi\|.
+\tag{67.11}
+$$
+
+Consequently there is a bounded field-independent operator $R_{0,D}$ with $\|R_{0,D}\|\le R\sqrt\delta$, where $R$ is exactly the common constant after Theorem64.7, such that
+
+$$
+\mathbb M_D(W_D\otimes I)-(W_D\otimes I)\mathbb M_D^{\rm d}
+=R_{0,D}\otimes I-\kappa[Q_A(W_D\otimes I)-(W_D\otimes I)Q_n].
+\tag{67.12}
+$$
+
+Proof. The atomic identity gives $Q_A(J_D\otimes I)=(J_D\otimes I)Q_n$. Subtract it and write $C_D=W_D-J_D$. Since $C_D$ commutes with $B$, (67.10) bounds $Q_A(C_D\otimes I)\Psi$ by $2\omega\|B\Psi\|$, and $(C_D\otimes I)Q_n\Psi$ by the same quantity. This proves (67.11) without summing the norms of individual port defects.
+
+For (67.12), consume Theorem64.6's operator relation $AE=JaB_N$ and its residual calculation in Theorem64.7, now with the compatible bounded potentials
+
+$$
+U_0=-g\sum_p\phi(p)m_p+\frac\nu2\sum_pG_D^\diamond(p,p)m_p,
+\qquad
+V_0=-g\sum_p\phi(p)n_p+\frac\nu2\sum_pG_D^\diamond(p,p)n_p.
+$$
+
+They satisfy $U_0J=JV_0$ and $\|U_0\|,\|V_0\|\le M=2g+\nu/\lambda$. Thus the same calculation bounds the particle residual by
+$18a\delta+2(12a+M)s_N+\beta_N(12a+2M)\le R\sqrt\delta$ in both sectors. It is zero on $r$. The free field commutes with $W$ and cancels exactly. Subtracting the remaining linear coupling gives (67.12). In particular the field's large free energy has not been replaced by a frequency estimate on a discarded mode. $\square$
+

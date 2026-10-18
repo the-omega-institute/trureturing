@@ -1,0 +1,26 @@
+**Theorem 6.1 (complete positive-scale fibre).** For compatible data, all original-model realizations are exactly
+
+$$
+R=tR_0,\qquad G=H/t,\qquad D\text{ fixed},\qquad t>0.
+$$
+
+Equivalently, in Theorem 4.1's coordinates they are $R=\rho S$, $G=K/\rho$, $\rho>0$. Two original realizations have the same specified finite data if and only if
+
+$$
+R'=\lambda R,\qquad G'=G/\lambda,\qquad D'=D
+\quad\text{for some }\lambda>0.
+$$
+
+All members give identical readings along any common future known $M/J$ history at the same recorded indices. The positive factorization of each $R$ has the additional internal freedom $c'=\mu c$, $\ell'=\ell/\mu$, $\mu>0$, and no other positive-factor freedom.
+
+Proof. Every realization has the recovered target by Theorem 4.1. Taking $t=\operatorname{tr}R>0$ in $R/\operatorname{tr}R=R_0$ and $(\operatorname{tr}R)G=H$ proves necessity of the first parameterization and fixes $D$. Conversely every $t>0$ preserves positivity, rank one, nonzero gain, and both degree bounds. For every known cumulative matrix $C$ and recorded index $n$,
+
+$$
+\frac{H(n)}t\operatorname{tr}(C\,tR_0)+D(n)
+=H(n)\operatorname{tr}(CR_0)+D(n).
+$$
+
+This proves finite-data sufficiency and future agreement. Any extension containing the finite history can have no additional normalized ambiguity, since its identical data include the finite identifying data. As $R_0=S/a$, the alternate parameter is $\rho=t/a>0$. Comparing two positive traces gives $\lambda=t'/t$, proving the equivalence for two realizations.
+
+Finally suppose $c\ell=c'\ell'$ with all vector components positive. Equality of first columns gives $c'=(\ell_1/\ell'_1)c=\mu c$ with $\mu>0$. Equality of each remaining column and a positive component of $c$ then forces $\ell'=\ell/\mu$. Conversely those changes preserve the outer product. This internal scale does not change $R$ and is separate from relation/gain rescaling. ∎
+

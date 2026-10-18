@@ -1,0 +1,13 @@
+### 2.2 Both compatibility laws on the entire legal domain
+
+Write $s_z(x)$ for the generator's active letter row. All its active rows are strictly positive. Row products and the deterministic original events give, for every legal next letter and remaining continuation,
+
+$$
+D_z(xw)=s_z(x)D_{U(z,x)}(w).
+\tag{2.4}
+$$
+
+Here $xw$ abbreviates the operation transcript, including the events determined by $\Delta$, and the right side starts with the updated original configuration after deletion of that operation prefix. Iteration gives the same factorization for every legal finite prefix. Pending Stop has probability one and the prescribed residual; delivered has no further operation. This proves per-configuration same-update generation, including seed acquisition, rejected pairs, all four payload stages, overflow and both terminal cuts.
+
+Actual retention is deterministic: $\rho_h$ is a point mass at $z(h)$ and $z(hx)=U(z(h),x)$. Consequently $\overline D_h=D_{z(h)}$, and (2.4) separately proves actual-history marginalized update compatibility on every original legal prefix with positive predictive probability. This implication uses deterministic retention; it is not asserted for arbitrary randomized competitors. The original full-tree writer and latch order are part of $\Delta$ on every branch, independently of whether that history will satisfy $E_1$.
+

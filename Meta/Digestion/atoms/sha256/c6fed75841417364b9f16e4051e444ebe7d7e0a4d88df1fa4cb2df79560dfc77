@@ -1,0 +1,39 @@
+**Proposition 19.3 (ten-state quotient and exact native schedule).**
+Identify $H_{1L},H_{1U}$ as one abstract halt $H_1$ with complete
+output $16$, fixing every other state. The quotient has exactly
+ten installed states and the following total running table:
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+R&A&H_5&H_4&B\\
+A&H_{15}&H_1&H_1&H_0\\
+B&H_3&H_2&H_1&H_0.
+\end{array}
+\tag{NARC.19.4}
+$$
+
+Its seven halt outputs are $2,12,13,14,15,16,17$ at
+$H_{15},H_5,H_4,H_3,H_2,H_1,H_0$, respectively, and it uses
+the same three literal addresses. For each original, projection
+from Definition 19.1 preserves the actual literal requests, replies,
+stationary source, complete output and first-halting Read count.
+
+**Proof.** The projection changes only two halts with the same
+output. It fixes all running rows except for their successor names.
+Induction along each row of Proposition 19.2 therefore fixes every
+requested literal and actual reply, and maps the first halt to the
+same numeric-output first halt. No additional Read or write phase
+is introduced.
+
+This is the class-one schedule already supplied in the coordinate
+reply certificates of Theorem 11.5: with its $(h,u,v)=(17,a-b,b)$,
+offsets $(10,-1,13)$ give thresholds $(27,16,30)$, singleton
+first targets $(5,4)$ and second target tuples $(15,1,1,0)$ and
+$(3,2,1,0)$. The displayed certificate checks this row directly
+on its entire acquired fiber. The writable table is an actual-path
+refinement in [FIB, Definition 47.1][FIB-RW]'s sense, with the
+split distinction counted as part of the complete halt word.
+The schedule itself is reused; no full-encoder theorem is needed
+to establish this conditional correspondence. $\square$
+

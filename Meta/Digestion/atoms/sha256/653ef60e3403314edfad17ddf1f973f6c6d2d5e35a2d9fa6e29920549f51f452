@@ -1,0 +1,136 @@
+**Theorem 9.1.** Suppose a legal five-read history satisfies $(A_i)_{22}=1$ for every recorded position. Define five-vectors
+
+$$
+\mathbf1=(1,1,1,1,1)^{\mathsf T},\quad
+\mathbf t=(0,1,2,3,4)^{\mathsf T},\quad
+\mathbf x=((A_i)_{21})_{i=0}^4,\quad
+\mathbf y=((A_i)_{12})_{i=0}^4,
+$$
+
+and coordinatewise products $\mathbf t\mathbf x=(i x_i)_i$, $\mathbf t\mathbf y=(i y_i)_i$. Uniform recovery of the complete constant-drift target requires
+
+$$
+\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf x]=0,
+\qquad
+\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf y]=0.
+\tag{9.1}
+$$
+
+More precisely, assume deletion of every noninitial endpoint leaves four independent matrices. If either determinant in (9.1) is nonzero, there are actual different-slope collisions on the original five readings with both slopes arbitrarily close to zero and every sampled gain strictly positive. The mirror theorem holds when every $(A_i)_{11}=1$.
+
+If $\mathbf1,\mathbf t,\mathbf x,\mathbf y$ are independent, (9.1) is equivalent to the six vectors $\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf x,\mathbf t\mathbf y$ spanning at most four dimensions. Without that extra independence, only the two determinant equalities are asserted.
+
+**Proof.** First assume the erasure independence in the stronger statement. Let $K_0=E_{22}$. In (8.1),
+
+$$
+\mathsf B K_0=0,\qquad\mathsf C K_0=\mathbf e=(1,2,3,4)^{\mathsf T}.
+$$
+
+The full trace map $\mathcal L$ is injective, since the endpoints span four dimensions. If $\mathsf B X=0$, then $\mathcal L X$ is constant, and $\mathcal L K_0=\mathbf1$ makes injectivity imply $X\in\mathbb R K_0$. Thus
+
+$$
+\ker\mathsf B=\mathbb R K_0,\qquad\operatorname{rank}\mathsf B=3.
+\tag{9.2}
+$$
+
+The pencil is regular. At $k=-1/j$, the equation $\mathsf T_kX=0$ says $(1-i/j)\operatorname{tr}(A_iX)$ is constant. Its value at $j$ is zero, so every value is zero. The four surviving gains are nonzero and their matrices independent, forcing $X=0$. Therefore $\mathsf T_{-1/j}$ is invertible. Its determinant is a nonzero polynomial in $k$; consequently $\mathsf T_a$ is invertible for every sufficiently small nonzero $a$.
+
+Choose a nonzero left null covector $w$ of $\mathsf B$. The functional $h=w\mathsf C$ is nonzero: otherwise all ranges of $\mathsf B,\mathsf C$, hence of every $\mathsf T_k$, would lie in the three-dimensional space $\ker w$, contradicting regularity. At a positive rank-one source $S$, its determinant tangent space is
+
+$$
+V_S=\{V:\mathfrak b(S,V)=0\}.
+$$
+
+It is three-dimensional, and $\mathfrak b(S,K_0)=p>0$. Hence $K_0$ is not tangent, and $\mathsf B$ maps $V_S$ isomorphically onto its range. The quotient derivative at slope zero, $(V,\lambda)\mapsto\mathsf B V+\lambda\mathsf C S$, is therefore invertible exactly when $h(S)\ne0$. Such an interior source exists. Indeed, if $h$ vanished on every $S=(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, the polynomial $h_puv+h_qu+h_rv+h_s$ would vanish for every $u,v>0$. Applying the polynomial root bound successively in $u,v$ forces all four coefficients to vanish, a contradiction.
+
+Use vectors
+
+$$
+\begin{aligned}
+\mathbf a&=\mathsf B E_{12},&\mathbf b&=\mathsf B E_{21},&\mathbf c&=\mathsf B E_{11},\\
+\mathbf A&=\mathsf C E_{12},&\mathbf B'&=\mathsf C E_{21},&\mathbf C'&=\mathsf C E_{11}.
+\end{aligned}
+$$
+
+Here $\mathbf a,\mathbf b,\mathbf A,\mathbf B'$ are respectively the tails at $1,\ldots,4$ of $\mathbf x,\mathbf y,\mathbf t\mathbf x,\mathbf t\mathbf y$. At the source (8.3), the quotient observation is $\sigma F(u,v,k)$, where
+
+$$
+F=k\mathbf e+u(\mathbf a+k\mathbf A)
++v(\mathbf b+k\mathbf B')+uv(\mathbf c+k\mathbf C').
+\tag{9.3}
+$$
+
+Its derivative determinant in order $(\sigma,u,v,k)$ is $\sigma^3 j(u,v,k)$, with
+
+$$
+j=\det[F,F_u,F_v,F_k].
+$$
+
+The preceding interior source gives $j(\bar u,\bar v,0)\ne0$ for some positive $\bar u,\bar v$. The source parameterization is a smooth chart with inverse $\sigma=s,u=q/s,v=r/s$, so it preserves derivative nonsingularity.
+
+Two exact auxiliary boundary identities are
+
+$$
+j(u,0,k)=ku\det[\mathbf e,\mathbf a,
+\mathbf b+k\mathbf B'+u(\mathbf c+k\mathbf C'),\mathbf A],
+\tag{9.4}
+$$
+
+$$
+j(0,v,k)=kv\det[\mathbf e,
+\mathbf a+k\mathbf A+v(\mathbf c+k\mathbf C'),\mathbf b,\mathbf B'].
+\tag{9.5}
+$$
+
+For (9.4), subtract $uF_u$ from the first determinant column, leaving $k\mathbf e$, and use $F_k=\mathbf e+u\mathbf A$; multilinearity gives the factor $ku$, and the second column's $k\mathbf A$ term vanishes against the last column. For (9.5), subtract $vF_v$, then use $F_k=\mathbf e+v\mathbf B'$. These are polynomial evaluations at an auxiliary boundary, not assertions that a zero-entry source is allowed.
+
+Put
+
+$$
+d_x=\det[\mathbf e,\mathbf a,\mathbf b,\mathbf A],\qquad
+d_y=\det[\mathbf e,\mathbf a,\mathbf b,\mathbf B'].
+$$
+
+If $d_x\ne0$, choose $u_*>0$ sufficiently small that
+
+$$
+u_*\det[\mathbf e,\mathbf a,\mathbf b+u_*\mathbf c,\mathbf A]
+$$
+
+is nonzero with the sign of $d_x$. Equation (9.4) shows that $j(u_*,0,k)$ has sign $\operatorname{sign}(kd_x)$ for all sufficiently small nonzero $k$. Choose the sign of an arbitrarily small nonzero $a$ so this is opposite to $j(\bar u,\bar v,0)$. Require also $\mathsf T_a$ invertible, $|a|<1/16$, and preservation of the interior sign at $a$. Regularity and continuity allow all these requirements. Finally take $v_*>0$ sufficiently small that $j(u_*,v_*,a)$ retains the boundary sign. These are two actual positive sources with opposite derivative signs at the same invertible slope. If $d_y\ne0$, (9.5) gives the same construction with $u,v$ exchanged.
+
+At $\sigma=1$, with $\mathsf H=\mathsf T_a^{-1}\mathsf C$, the exact identity is
+
+$$
+j(u,v,a)=-\det(\mathsf T_a)\mathfrak b(S,\mathsf H S),
+\qquad S=\begin{pmatrix}uv&u\\v&1\end{pmatrix}.
+\tag{9.6}
+$$
+
+To check it, factor $\mathsf T_a$ out of the four derivative columns in (9.3), using $\mathsf C S=\mathsf T_a\mathsf H S$. In matrix-entry order $(p,q,r,s)$, direct expansion gives
+
+$$
+\det[S,S_u,S_v,X]=-\mathfrak b(S,X).
+$$
+
+Thus opposite $j$ signs give opposite strict transfer-form signs. Lemma 8.1 constructs the actual finite collision and its whole constant drifts. Both $a$ and $\epsilon$ can be arbitrarily small; its positive-gain bounds apply.
+
+Since all of $t_0,x_0,y_0,(\mathbf t\mathbf x)_0,(\mathbf t\mathbf y)_0$ vanish, expansion in row zero gives
+
+$$
+\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf x]=d_x,\qquad
+\det[\mathbf1,\mathbf t,\mathbf x,\mathbf y,\mathbf t\mathbf y]=d_y.
+$$
+
+This proves the stronger collision statement. A recovering history must satisfy the erasure independence by Lemma 7.1, so it must satisfy (9.1).
+
+For the mirror, replace $A_i,W_i$ by $JA_iJ,JW_iJ$. A conjugated letter is again a finite word ($J J J=J$ and $J M J$ is literal), so this is a legal history with the same indices. Conjugation exchanges the diagonal entries and the off-diagonal sequences. A collision on the conjugated history transfers back by $S_b=JS'_bJ$, $c_b=Jc'_b$, $\ell_b=\ell'_bJ$, leaving slopes and drifts unchanged. These are positive fixed factors and
+
+$$
+\operatorname{tr}((JA_iJ)S'_b)=\operatorname{tr}(A_iJS'_bJ).
+$$
+
+Thus all original readings agree without adding a conjugation acquisition. Finally, if the first four displayed five-vectors are independent, each extra determinant vanishes exactly when its last column lies in their span. This proves the stated rank interpretation. ∎
+
+Here $E_{22}$ is a kernel direction of $\mathsf B$ at slope zero; it is not a common kernel of the pencil, since $\mathsf C E_{22}=\mathbf e\ne0$. The regularity proof is for constant drift and does not import an affine-drift common-kernel classification.
+

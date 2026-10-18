@@ -1,0 +1,81 @@
+**Definition 64.5 (one producer measure and its actual collision domain).**
+For every authentic nonempty finite $D$, let $X_D$ have one unit cable for each
+inherited seam and two distinct unit grounded stubs at each current leaf. The
+outer stub ends have zero trace and no atomic mass. Every actual port has atomic
+mass one; every open cable has the same mass density $0<\delta\le1$. Thus
+\[
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_{e\in\mathcal E_D}dx_e,
+\qquad \mathcal K_{D,1}=L^2(X_D,\mu_\delta).
+\tag{64.6}
+\]
+Here $\delta_p$ is a Dirac measure, distinct from the cable density $\delta$.
+Stub incidence plus actual seam incidence is exactly $d_p$, including $d_o=2$.
+Neither degrees nor source operators are recalibrated with $\delta$.
+If $d=|D|$, the full binary source has $d-1$ internal seams and $d+1$
+grounded stubs, hence $2d$ unit cables. The retained one-position measure has
+total mass $d+2d\delta$. Before exchange restriction, the two-position account
+has $d(d-1)$ atomic coordinates, $4d^2$ atom/cable slices and $4d^2$
+cable/cable cells, with norm weights $1,\delta,\delta^2$. Each of the $2d$
+same-cable cells is dissected, not removed. Thus its total measure is
+$d(d-1)+4d^2\delta+4d^2\delta^2$. These are storage measures and stratum
+counts, not physical masses, finite mode counts or a price formula; every
+interval and cell retains its entire infinite-dimensional function space.
+
+For two identical particles take the symmetric part of
+$L^2((X_D\times X_D)\setminus\Delta,\mu_\delta\otimes\mu_\delta)$, where
+$\Delta=\{(x,x):x\in X_D\}$ is the actual same-position set. In particular the
+positive-mass atomic states $(p,p)$ are absent. Keep all atom/cable and cable/cable
+strata. A same-cable square is dissected into $x<y$ and $x>y$; both collision
+traces are zero. Different-cable rectangles are retained, including cables incident
+at the same port. Write this Hilbert space as $\mathcal K_{D,2}^{\rm hc}$.
+It is a genuine two-position space on $X_D$, with exchange symmetry and no ordering
+sign. It is not a graph whose vertices are occupation labels.
+
+The form domain $\mathcal Q_{D,1}$ consists of cable $H^1$ functions with endpoint
+traces equal to the corresponding atomic port values, and zero grounded traces.
+The domain $\mathcal Q_{D,2}$ consists of symmetric, piecewise $H^1$ functions on
+all rectangles and dissected triangles, and $H^1$ functions on all atom/cable
+slices, with the following trace equalities. A rectangle's boundary at a port
+is the corresponding atom/cable slice; that slice's endpoint is the corresponding
+atomic pair value. Set the missing atomic value $(p,p)$ to zero in these endpoint
+conditions. Grounded ends give zero traces in either coordinate. Both traces on
+each same-cable diagonal are zero. These requirements also cover collision at a
+shared vertex approached along different incident cables: the incident slices end
+at the same zero atomic collision value. No pointwise trace of an arbitrary
+rectangle $H^1$ function at its corner is assumed.
+
+Let $k_{\delta,1}(F)=\sum_e\int|F'_e|^2$. For $N=2$, using ordered coordinates
+before restriction to the symmetric space, put
+\[
+\begin{split}
+k_{\delta,2}(F)={}&
+\sum_{e\in\mathcal E_D,\ q\in D}\int|\partial_xF(e,x;q)|^2dx
++\sum_{p\in D,\ e\in\mathcal E_D}\int|\partial_yF(p;e,y)|^2dy\\
+&+\delta\sum_{e,f\in\mathcal E_D}\int_{e\times f}
+ (|\partial_xF|^2+|\partial_yF|^2)dxdy .
+\end{split}                                                    \tag{64.7}
+\]
+For $e=f$ the last integral is over both triangles. The corresponding norm has
+weights $1,\delta,\delta^2$ on atomic pairs, slices and cells respectively. Formula
+(64.7) is the sum of the same one-coordinate cable derivative forms integrated
+against the other coordinate's measure. Hard-core conditions change its domain,
+not its kinetic coefficient. This conditional producer choice replaces the
+unrestricted $\operatorname{Sym}^2d\Gamma(T)$ domain; it is not a new native control.
+
+Let $A_{\delta,D,N}$ be the operator associated with $a k_{\delta,N}$ on this domain.
+Define $\phi_A$ to equal $\phi(p)$ at port $p$ and zero on open cables. Use the bounded
+real multiplication operators
+\[
+\begin{aligned}
+U^\diamond_{D,1}(x)&=-g\phi_A(x),\\
+U^\diamond_{D,2}(x,y)&=-g(\phi_A(x)+\phi_A(y))
+-\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q),\\
+\mathcal T^\diamond_{\delta,D,N}&=A_{\delta,D,N}+U^\diamond_{D,N}.
+\end{aligned}                                                    \tag{64.8}
+\]
+The pair multiplier has the same value on $(p,q)$ and $(q,p)$ and is zero on other
+strata. The one-body potential is additive even on mixed strata. All ten actual
+coefficients of Definition64.1 are used, including $G^{\rm c}(LL,LR)=3/16$.
+This explicitly declared atomic interaction is a mathematical supplier choice;
+a physical field-mediated force or its switching mechanism is not inferred.
+

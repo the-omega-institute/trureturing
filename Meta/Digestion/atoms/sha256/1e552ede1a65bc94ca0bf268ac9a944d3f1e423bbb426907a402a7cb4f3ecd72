@@ -1,0 +1,57 @@
+**Lemma 2.1 (chart with its complete inverse).** Put
+$\eta=(QP)_{22}>0$, $R=P/\eta$ and $F=\eta f$. There are unique
+coordinates $x,y$ such that
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(1-2x)y&1-2x\\(3x-1)y&3x-1\end{pmatrix},
+\qquad \frac13<x<\frac12,\quad y>0.
+\tag{2.1}
+$$
+
+Conversely each point of this strip gives a strictly positive
+rank-one $R$. With $s=x+y$, $p=xy$, its six traces are
+
+$$
+\begin{aligned}
+T_0&=s+2x-2p-1=(1-2x)y+3x-1,\\
+T_1&=1-x-s+3p, &T_2&=s-2p,\\
+T_3&=1-x+p, &T_4&=s-p, &T_5&=p+1.
+\end{aligned}
+\tag{2.2}
+$$
+
+All are positive, and the complete inverse and ancestor are
+
+$$
+P=R/T_0,\qquad f=T_0F,\qquad
+F(i)T_i+d=(0,24,48,312/5,\widehat Y,\widehat z)_i
+\quad(0\le i\le5).
+\tag{2.3}
+$$
+
+Proof. The positive rank-one matrix $QP/\eta$ has lower right entry
+one. Define its upper right and lower left entries as $x,y$; its
+zero determinant forces its upper left entry to be $xy$. Since
+
+$$
+Q^{-1}=\begin{pmatrix}-2&1\\3&-1\end{pmatrix},
+\tag{2.4}
+$$
+
+multiplication gives (2.1). Positivity of the upper and lower entries
+in its second column gives $x<1/2$ and $x>1/3$. Positivity of $QR$
+gives $y>0$. Conversely these inequalities make every displayed
+entry of $R$ positive; its columns are proportional, so it has
+rank one. Its trace $T_0=(1-2x)y+3x-1$ is positive. Normalizing that
+trace gives a positive rank-one trace-one source. Since
+$\operatorname{tr}(P/\eta)=1/\eta$, we have $T_0=1/\eta$ and
+$f=T_0F$ as asserted.
+
+Taking traces against the six explicit matrices (1.6) gives (2.2).
+For example $T_1=R_{12}+R_{21}$, $T_2=T_0+R_{12}$,
+$T_3=T_1+T_2$, $T_4=T_0+R_{11}+T_1$ and
+$T_5=\operatorname{tr}(QR)=p+1$. These expressions also prove
+positivity of every denominator used in (2.3). Substitution in
+(1.7) proves all of (2.3), including the two late readings. ∎
+

@@ -1,0 +1,33 @@
+### 80.4. An explicit full-matrix dual witness
+
+Apply the orthogonal plus/minus change of basis on each input fibre and then order all plus coordinates before all minus coordinates. The complete transformed matrices are
+
+    Khat = [ C   X ],       That = [ J_k  0 ],
+           [ X^* M ]               [ 0   I_k ],
+
+where C is the Gram matrix of c_f and X is their actual cross-Gram block with d_f. X is not assumed to vanish or deleted from the matrix under study.
+
+Let s=(1,...,1)^T/sqrt(k) and define the orthogonal projection
+
+    Phat = diag(ss^*, Pi).
+
+Its rank is r+1. The plus Rayleigh value is
+
+    s^*(C-J_k)s = k||S||_F^2-k = -a.
+
+Equation (8) gives the minus-block trace at most a-r. Hence
+
+    Tr Phat(Khat-That) <= -a+(a-r) = -r.               (9)
+
+Conjugating Phat back yields P in (1). Since Tr(K-T)=0, W=I-2P is a Hermitian contraction with
+
+    Tr W(K-T) = -2 Tr P(K-T) >= 2r.
+
+Trace-norm duality proves (1). Equivalently, the sum of the r+1 smallest eigenvalues of K-T is at most -r. For four generic Pauli directions r=1, the two smallest eigenvalues sum to at most -1. The witness remains valid in the presence of every plus/minus cross coupling, because it is a legitimate test against the full matrix.
+
+For the associated calibrated channels, the actual retained output coefficient is the transpose of the forward Gram K used here: for the normalized maximally entangled logical/reference input, the physical output difference has matrix (K-T)^T/(2k) on the orthonormal support {|f,i>_reference tensor |ff>_output}. Transposition preserves trace norm. Equivalently, the uniform logical density rho=I_(2k)/(2k) is allowed in the exact full-reference norm formula. Therefore
+
+    delta >= ||K-T||_1/(2k) >= r/k,
+
+which proves (3). At k=4, section 79's eta=3/4 tetrahedral marker has full diamond error 1/4, so the lower bound is attained in this class.
+

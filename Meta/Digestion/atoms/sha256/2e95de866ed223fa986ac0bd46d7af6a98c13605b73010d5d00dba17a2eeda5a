@@ -1,0 +1,49 @@
+**Theorem 3.1 (native finite-witness alternative).** Fix any context $C$ with $k\ge1$ independent holes, any $A\in\mathcal A_C$, and any integer $B\ge1$. There is a single finite immutable $T\in\mathcal U_C$ satisfying at least one of the following alternatives:
+
+$$
+\begin{array}{ll}
+\mathrm{I}:&M_C(T)=B+k,\qquad d_A(T)\ge2M_C(T)-k;\\[2mm]
+\mathrm{II}:&k\le M_C(T)\le B+k-1,\qquad d_A(T)\ge3M_C(T)-k.
+\end{array}
+\tag{NDR.6}
+$$
+
+The same inequalities hold with $n_A$ in place of $d_A$. In particular, for cold acquisition on all native trees, $k=1$: either $m(T)=B+1$ and $d_A(T)\ge2m(T)-1$, or $1\le m(T)\le B$ and $d_A(T)\ge3m(T)-1$.
+
+**Proof.** Construct replies while following this one policy, maintaining a finite partial completion of $C$. Its unknown terminal positions are called placeholders; they form a changing frontier inside the original holes, rather than the fixed retained-hole list. Initially their addresses are exactly the $p_i$; splitting an original hole replaces its frontier root by descendant placeholders. Every concrete leaf committed during the construction has label $\alpha$. Let $s$ be the number of branch commitments and $z$ the number of leaf commitments. The number of current placeholders is $k+s-z$.
+
+Maintain the following invariant: every earlier reply is correct for every finite filling of all current placeholders, and no previously requested address lies in the cone of a current placeholder. The cone includes its root. Initially there is no history. The placeholder cones are pairwise disjoint. A requested address $q$ has exactly one of these possibilities.
+
+If $q$ is exactly a placeholder root and $s<B$, commit that root to a branch, replace it by two child placeholders, reply $\mathsf{branch}$ and increase $s$ by one. The old cone had no queried address. The new child cones contain neither an earlier query nor the current root query, so the invariant survives.
+
+If $q$ is a strict descendant of a placeholder root $a$, commit $a$ to the leaf $\alpha$, reply $\mathsf{absent}$ and increase $z$ by one. The reply is correct for every remaining filling because the queried nonempty suffix lies below this now fixed leaf. The old cone had no earlier query, so this commitment changes no earlier reply. Record $q$ as the absent witness $w(a)$ for that final leaf.
+
+In the remaining case $q$ is outside all placeholder cones. Its reply is fixed by the partial expression. In particular, an ancestor of a placeholder is an already concrete branch, and a suffix below a concrete leaf is absent. Reply with that fixed value. No placeholder is changed. Repeated requests necessarily fall in this case and reproduce their old replies.
+
+Stop making commitments as soon as $s=B$ or no placeholder remains. In the first case fill every remaining placeholder with $\alpha$; in the second the partial completion already is concrete. Denote the resulting tree by $T$. It is finite, fills every original hole with a nonempty finite tree, and reproduces all replies already given. Thereafter answer only from this fixed $T$. Source-totality of $A$ makes the rest of its run finite and correct.
+
+It remains to show that this stopping condition is reached. A finite halt before it is reached would leave a placeholder. Fill all placeholders with $\alpha$ for one source and change the label at one such root to $\beta$ for a second source. The invariant says that both completions give the whole terminal history. Determinism makes the terminal output the same on both, contradicting exactness.
+
+An infinite run without reaching the stopping condition has at most $B-1$ branch commitments. It also has at most $k+B-1$ leaf commitments: $z\le k+s$. Thus only finitely many changes of the partial expression occur. After the last change, fill any remaining placeholders with $\alpha$ to obtain a finite tree $T_0$. The invariant verifies every previous reply on $T_0$. Every subsequent reply also agrees with $T_0$: a request in a remaining placeholder cone would cause a further commitment, contrary to the choice of the last change. The same selector on $T_0$ therefore has this entire infinite request stream, contradicting its pointwise finite termination. No uniform termination bound is used.
+
+Now count distinct addresses in the terminal run on the resulting $T$. The forest occupying the original $k$ holes has $s$ branch nodes and $M=s+k$ leaves, whether or not some leaves were filled only at the stopping condition. Each of those $s$ branches was committed by a query at its root. These are $s$ different actual branch addresses. Definition 2.1 forces all $M$ actual hidden leaf addresses to be requested as well, and these cannot coincide with branch addresses.
+
+If $s=B$, this gives $M=B+k$ and
+
+$$
+d_A(T)\ge s+M=2M-k,
+$$
+
+which is Alternative I.
+
+If the placeholders disappeared with $s<B$, every final hidden leaf was committed by a strict-descendant absent query, rather than by the final filling rule. There are $M=s+k$ such witnesses $w(a)$. They are distinct because final leaf cones are pairwise disjoint. They are absent addresses of $T$, so none is any actual leaf or branch address. Consequently the three sets of counted requests are disjoint and
+
+$$
+d_A(T)\ge s+M+M=3M-k,
+\qquad k\le M=s+k\le B+k-1.
+$$
+
+This is Alternative II, including the possibility $s=0$. Finally $n_A(T)\ge d_A(T)$ gives its version of both alternatives. The completed tree realizes the replies from the start of the run. The construction selects an input witness; it does not give an acquisition policy permission to mutate a live source. $\square$
+
+The classical distinction between a certificate and a common adaptive query procedure is `literature-attested` background from Harry Buhrman and Ronald de Wolf, *Complexity measures and decision tree complexity: a survey*, Theoretical Computer Science 288 (2002), 21–43, [DOI](https://doi.org/10.1016/S0304-3975(01)00144-X), [author manuscript](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf), §3.1 and §4.2, manuscript pp. 5 and 9. There the source is a fixed finite Boolean coordinate cube. Its certificate/sensitive-block relation does not supply the arbitrary-address invariant, static finite completion or source-total termination argument above. Theorem 3.1 is a `repo-derived` ordinary deduction on the native source family, with those mature query methods credited; Theorem 4.1 is its matching ratio consequence. This attribution makes no claim of external originality.
+

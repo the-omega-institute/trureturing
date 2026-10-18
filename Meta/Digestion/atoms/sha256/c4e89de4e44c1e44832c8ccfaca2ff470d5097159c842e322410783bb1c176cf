@@ -1,0 +1,24 @@
+**定理 2.2（原始叶锥竞争者）。** 对每个 $T\in\mathcal T$、每个 $p\in F(T)$，把该叶替换为有序二叶树 $(\alpha,\beta)$，其余节点保持原样，得到数学比较输入 $T[p\leftarrow(\alpha,\beta)]$。则
+
+$$
+\nu(T[p\leftarrow(\alpha,\beta)])=0
+\tag{NIC.5}
+$$
+
+且对每个 $q\notin\operatorname{Cone}(p)$，
+
+$$
+r(q,T[p\leftarrow(\alpha,\beta)])=r(q,T).
+\tag{NIC.6}
+$$
+
+证明。复用 [JM §36.2][JM] 的一阶像语法
+
+$$
+I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1).
+$$
+
+其必要局部条件是：每个 $\alpha$ 叶必须是一个终端 $(\beta,\alpha)$ 的右孩子；特别地，一阶像不能有左孩子为 $\alpha$ 叶的节点。这也正是 [Readout 的 alphaValid 与 source_foundation 的一阶有效性供应][Readout] 的相应局部内容。替换树在地址 $p$ 处具有左孩子为 $\alpha$ 的节点，不满足该必要条件，故不在 $I_1$。由 (NIC.1) 得 (NIC.5)。
+
+对 $q\notin\operatorname{Cone}(p)$ 分两类。若 $q$ 是 $p$ 的严格前缀，则它是原叶的严格祖先，替换前后都为分支。否则 $p,q$ 在某个位置分别进入不同孩子，此后 $q$ 所访问的子树完全未变；如果它在该子树中缺席，仍然缺席。这覆盖全部不延伸 $p$ 的字面地址，给出 (NIC.6)。当 $p=\varepsilon$ 时锥为全部 $\mathcal A$，(NIC.6) 的量词域为空，(NIC.5) 仍成立。比较输入都是合法有限原树；这里没有在实际只读来源上执行替换。$\square$
+

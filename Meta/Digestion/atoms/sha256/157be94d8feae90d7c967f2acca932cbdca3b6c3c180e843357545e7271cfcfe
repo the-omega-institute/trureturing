@@ -1,0 +1,8 @@
+**Assumption 3.2 (Expected-integrability boundary).** Condition (3.2) is an additional supplier assumption; its validity for all inherited finite primitive presentations remains unresolved. For a specified component, a deterministic expected bound $\ell_{c,n}\le C_c\alpha_c^n$, $0<\alpha_c<1$, or $\ell_{c,n}\le C_c(n+1)^{-1-\epsilon_c}$, $\epsilon_c>0$, suffices. No such bound is asserted for arbitrary components.
+
+Finite-state posterior martingale convergence gives $p_n\to p_\infty$ and $0\le\ell_n\downarrow0$, with $\ell_n\le\ln|U|$. Those facts alone do not imply summability. An almost-sure rate with an uncontrolled random constant also does not supply the required expected bound. The nonnegative slack in (3.1) makes this a sufficient, presentation-dependent condition, rather than a necessary condition for finite visible $T_Z$.
+
+Singular-output discrimination concerns the finite label problem of Theorem 2.1. Within a primitive component, output laws conditional on different initial states can overlap. In the edge-matrix setting of [DK, Lemma 2 and Proposition 11], the prefix likelihood ratio has a finite limit almost surely under its denominator law, and the zero-exponent event is the event of a positive limit. These qualitative statements do not themselves bound the expected KL settling residual by a summable sequence. They neither establish nor refute (3.2).
+
+The same cited certificate detects any nonzero complete conditional-null response when this allowance vanishes, and a justified strict finite violation excludes that law's attainment. Equation (3.5) supplies no productive direction or sign for an arbitrary producer. There is no uniform-$N$ rate, efficiently acquired constant or effective radius assertion.
+

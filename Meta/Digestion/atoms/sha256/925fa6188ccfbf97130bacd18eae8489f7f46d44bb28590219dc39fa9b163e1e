@@ -1,0 +1,16 @@
+**Proposition 38.2 (strict quantitative separation from the marginal proxy).** Define
+
+$$
+ T_\beta:=\frac{1+\sqrt a}{2}.
+$$
+For every $\beta>0$,
+
+$$
+ g_N^2\leq T_\beta^2<T_\beta<F_{\rm marg}^{\,2}.
+\tag{R.182}
+$$
+
+Indeed $0<T_\beta<1$ and
+$F_{\rm marg}^{\,2}>T_\beta$ is equivalent to
+$1-a\beta>a$, whose difference is $1-a-a\beta=\beta^2$. Both $T_\beta$ and $F_{\rm marg}^{\,2}$ tend to one as $\beta\downarrow0$, so there is no positive beta-uniform gap. Thus replacing the full-reference quantity by $F_{\rm marg}$ cannot establish the target threshold $g_N^2\leq T_\beta$ uniformly, even on this actual family. This does not rule out the original all-class statement or other uses of marginal tomography; the full linear map $\Gamma$ still determines its Choi matrix.
+

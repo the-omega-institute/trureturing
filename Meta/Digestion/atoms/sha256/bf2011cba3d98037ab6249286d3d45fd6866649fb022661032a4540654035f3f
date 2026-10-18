@@ -1,0 +1,63 @@
+**Theorem 7.2 (all-replacement expander cut bound).** For every integer
+$j\ge0$, $N=8\cdot2^j$, every integer $1\le b\le N/2$, and every nonempty $b$-component
+admissible $H\subseteq S_5^N$,
+
+$$
+\boxed{|H\cap B_G|\le5^{2N}(4/5)^{N/8}.}
+\tag{NDR.29}
+$$
+
+The quantifier includes arbitrary rewiring, correlated components,
+different partitions for different $H$, and $H$ extending outside $B_G$.
+
+**Proof.** Choose any witness system realizing the component bound for
+$H$, and let $\Pi$ be its component partition. By Lemma 5.2, each
+$A_C=\pi_C(H)$ is admissible and
+$H\subseteq R=\prod_{C\in\Pi}A_C$. This product is an analytical
+enlargement of the given set, not an assumed factorization of it.
+
+Let $F$ be the graph edges crossing between parts of $\Pi$, and set
+$c=|F|$. Each part has size at most $N/2$, so (NDR.27) gives
+
+$$
+2c=\sum_{C\in\Pi}|\partial C|
+\ge\tfrac14\sum_C|C|=N/4,
+\qquad c\ge N/8.
+\tag{NDR.30}
+$$
+
+Fix the labels of all $2N-c$ edges internal to parts. There are exactly
+$5^{2N-c}$ such choices. In each part $C$, restrict $A_C$ to the actual
+four-port scaffold, to modules in $P$, and to those fixed internal edge
+modules. Let $r_C=|\partial C|$ be its number of crossing incidences.
+The induced relation $T_C$ on its remaining $r_C$ modules is jointly
+admissible in $P^{r_C}$ by Lemma 5.3, so $|T_C|\le4^{r_C}$.
+It may be empty, in which case this internal assignment accepts nothing.
+No assumption that $A_C$ was originally confined to these scaffolds is
+used: restriction only removes its other rows and preserves its equations.
+
+For this fixed internal assignment let $Y$ be the crossing-edge label
+assignments whose full tuple belongs to $R\cap B_G$. Its projection to
+$\partial C$ maps injectively into $T_C$: on each crossing incidence the
+module state is $u_{s_e}$ or $u_{\tau(s_e)}$, both bijective functions of
+that edge label. Hence $|\pi_{\partial C}Y|\le4^{r_C}$. Every crossing
+edge has exactly two endpoints in different parts, so its variable is in
+exactly two of the sets $\partial C$. Lemma 7.1 gives $|Y|\le4^c$,
+including arbitrary correlations among the crossing labels. Empty $Y$
+also satisfies this bound.
+
+Sum over the internal choices and use injectivity from Proposition 6.3:
+
+$$
+\begin{aligned}
+|H\cap B_G|&\le|R\cap B_G|\le5^{2N-c}4^c\\
+&=5^{2N}(4/5)^c
+\le5^{2N}(4/5)^{N/8}.
+\end{aligned}
+$$
+
+The witnesses and partition used here were those of the arbitrary
+replacement $H$, not those defining $B_G$. The proof does not fix crossing
+labels, demand exact product subfibers, or require $H\subseteq B_G$.
+$\square$
+

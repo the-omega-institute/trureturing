@@ -1,0 +1,12 @@
+**Notation 1.4 (Parameters).** Throughout this volume put
+
+$$
+\begin{aligned}
+c&=(1-\eta)t,&s&=1-4\eta/5,&w&=s/5,&u&=c/5,\\
+\nu&=1-4w=w+20\eta/25,&\gamma&=s-c=(1-\eta)(1-t)+\eta/5.
+\end{aligned}
+\tag{1.4}
+$$
+
+Thus $1/5\le s\le1$, $0\le c\le s$, $0\le u\le w$, and $\nu\ge1/5$. Write $[x]_+=\max(x,0)$ and use $0^0=1$ in finite probability formulas.
+

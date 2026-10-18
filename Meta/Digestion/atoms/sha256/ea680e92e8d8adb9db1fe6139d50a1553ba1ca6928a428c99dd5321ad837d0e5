@@ -1,0 +1,54 @@
+### 81.3. The full subnormalized Gram witness
+
+For f=1,...,k, let A_f:C^2->E_A and H_f:C^2->C^d be contractions. Their columns are a_fi and h_fi. Define the actual product records and their forward Gram by
+
+    x_fi=a_fi tensor h_fi,
+    K_(fi,gj)=<x_fi,x_gj>.
+
+Let T have diagonal blocks I_2 and off-diagonal blocks J_2/2. Define
+
+    c_f=(x_f0+x_f1)/sqrt(2),
+    d_f=(x_f0-x_f1)/sqrt(2),
+    C_f=Mat(c_f)=A_f H_f^T/sqrt(2),
+    D_f=Mat(d_f)=A_f Z H_f^T/sqrt(2),
+    S=(1/k)sum_f C_f,
+    a=k-k||S||_F^2.
+
+Apply (3) to every fibre with this one common S and Q=Q_S. Summing gives
+
+    sum_f ||(I-Q)D_f||_F^2 <= a.                       (5)
+
+Let B:C^k->E_A tensor C^d have columns d_f. Choose an isometry V whose range is ker(QB), and put
+
+    r=dim ker(QB),   Pi=VV^*.
+
+In particular r>=max{0,k-d^2+1}. The identity QBV=0 and Hilbert--Schmidt projection contraction imply
+
+    Tr(Pi B^*B)=||BV||_F^2
+               =||(I-Q)BV||_F^2
+              <=||(I-Q)B||_F^2 <=a.                  (6)
+
+Apply the plus/minus change of basis to K and T, and order all plus coordinates before all minus coordinates. The complete transformed matrices are
+
+    Khat=[[Cgram,X],[X^*,M]],
+    That=diag(J_k,I_k),
+
+where M=B^*B and X is the actual plus/minus cross block. No cross coupling is discarded. With s=ones/sqrt(k),
+
+    s^*(Cgram-J_k)s=k||S||_F^2-k=-a.
+
+The orthogonal projection Phat=diag(ss^*,Pi) therefore satisfies
+
+    Tr Phat(Khat-That) <= -a+(a-r)=-r.                 (7)
+
+Conjugating back gives an explicit projection P on the full original coefficient space. The positive-part variational principle yields
+
+    Tr(T-K)_+ >= Tr P(T-K) >= r
+               >=max{0,k-d^2+1}.                     (8)
+
+This argument does not assume TrK=2k. Equivalently,
+
+    ||K-T||_1+2k-TrK >=2r.                            (9)
+
+Thus it retains the full loss deficit of subnormalized correct-output records. It proves the desired four-fibre independent-contraction lemma Tr(T-K)_+>=1 whenever d=2, even without requiring the A_f to be orthonormal frames.
+

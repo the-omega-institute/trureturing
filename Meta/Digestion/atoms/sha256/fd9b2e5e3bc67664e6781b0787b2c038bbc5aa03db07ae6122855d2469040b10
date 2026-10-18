@@ -1,0 +1,15 @@
+**Proposition 4.2 (the atom-missing predicate is not closed on the
+boxed class).** Within $\mathfrak C_{\rm box}$ the condition $m_b=0$
+is not weakly closed. This statement does not assert nonclosedness
+after an additional restriction to $\mathcal J=0$.
+
+**Proof.** In (4.2)--(4.3) let $x$ increase to $z_b$ through values
+strictly below it, and use the corresponding unit singleton flows.
+Each has $m_b=0$. Their descriptors converge in TV to
+$P_{p,b},P_{\beta,b}$, by coordinate convergence and the same uniform
+geometric tail control. Hence both flows converge weakly to the
+native b unit flows, which have $m_b=1$. Every member satisfies
+both full boxes, as proved above. No member was asserted to
+satisfy the zero-excess budgets or the midpoint means.
+$\square$
+

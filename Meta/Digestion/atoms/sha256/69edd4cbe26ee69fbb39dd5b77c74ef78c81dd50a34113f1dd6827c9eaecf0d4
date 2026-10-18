@@ -1,0 +1,75 @@
+**Theorem 8.1 (complex affine coefficient at a fixed slope).** Fix $z_0\in\mathbb C$, independent of $s$. Set $R_s=s^{-1/2}$ and
+
+$$
+f_s^{z_0}=\eta_{R_s}(1+\beta_s z_0r)p,\qquad
+Z_s^{z_0}=\mathcal T_s^{-1}f_s^{z_0}/\|f_s^{z_0}\|_2.
+\tag{8.1}
+$$
+
+For all sufficiently small original real $s>0$, these are normalized vectors in the full native complex form domain, and
+
+$$
+\begin{aligned}
+\lim_{s\downarrow0}\frac{q_s^c[Z_s^{z_0}]}{s^2}
+ &=C_{\rm aff}^{\mathbb C}(z_0)\\
+ &=\nu^2\{a|z_0|^2-2a t_0\operatorname{Re}z_0+K_{\rm base}\}
+       -\lambda D_{\rm clock}\\
+ &=\min_{t\in\mathbb R}C_{\rm aff}(t)+a\nu^2|z_0-t_0|^2,\\
+C_{\rm aff}^{\mathbb C}(z_0)-C_{\rm resp}
+ &=\nu^2\{\Delta_{\rm aff}+a|z_0-t_0|^2\}>0.
+\end{aligned}
+\tag{8.2}
+$$
+
+Proof. Since $sR_s\to0$, the height support lies strictly between both moving faces. The strip core approximation in Definition 2.2, multiplication by the smooth height factor, and unitarity give admissibility. The norm has the exact parity identity
+
+$$
+\|f_s^{z_0}\|_2^2=\int\eta_{R_s}^2p^2
+       +\beta_s^2|z_0|^2\int r^2\eta_{R_s}^2p^2\longrightarrow1.
+\tag{8.3}
+$$
+
+Here the real linear term vanishes under $\sigma$. Testing the weak critical equation with the square of a real height multiplier gives $h[g p]=a\int|g'|^2p^2$; applying this separately to the real and imaginary parts also gives this identity for a complex height multiplier. Thus
+
+$$
+\begin{aligned}
+h[f_s^{z_0}]
+ &=a\int|\eta_{R_s}'|^2p^2
+   +a\beta_s^2|z_0|^2\int|\eta_{R_s}+r\eta_{R_s}'|^2p^2\\
+ &=a\beta_s^2|z_0|^2+o(s^2).
+\end{aligned}
+\tag{8.4}
+$$
+
+The cross term is odd. The first integral is $o(s^2)$ by (2.10). The second multiplier is uniformly bounded, tends pointwise to one, and is dominated against $p^2$.
+
+On this strip $|\beta_sr|\to0$ uniformly. The exact rational difference times the squared amplitude has expansion
+
+$$
+\bigl((1+\beta_sr)^{-2}-1\bigr)|1+\beta_s z_0r|^2
+ =-2\beta_sr+(3-4\operatorname{Re}z_0)\beta_s^2r^2
+       +O_{z_0}(|\beta_sr|^3).
+\tag{8.5}
+$$
+
+Since $Y\eta_{R_s}=0$, its odd linear term integrates to zero against $\eta_{R_s}^2|Yp|^2$. The remainder integral is bounded by $C_{z_0}|\beta_s|^3R_s\int r^2|Yp|^2=o(s^2)$. The quadratic integral converges by (2.9). Consequently the rational kinetic correction is
+
+$$
+a\int\bigl((1+\beta_sr)^{-2}-1\bigr)|Yf_s^{z_0}|^2
+ =a(3-4\operatorname{Re}z_0)\beta_s^2A+o(s^2).
+\tag{8.6}
+$$
+
+The full potential expansion, with exactly the fields in (3.1), gives
+
+$$
+\int(\widetilde U_s-V)|f_s^{z_0}|^2
+ =\beta_s^2(C_2+2\operatorname{Re}z_0 B_1)
+       +\lambda s^2T+o(s^2).
+\tag{8.7}
+$$
+
+Indeed the base and quadratic-amplitude $V_1$ terms are odd; its linear-amplitude term gives $2\operatorname{Re}z_0 B_1$. For $V_2$ and $V_{\rm t}$ the linear-amplitude terms are odd, while the quadratic-amplitude corrections are $O_{z_0}(s^4)\int r^2p^2$, using boundedness of those fields. Dominated convergence handles their base integrals and the displayed $rV_1$ integral. The uniform remainder is at most $Cs^{5/2}\|f_s^{z_0}\|_2^2=o(s^2)$.
+
+Retain the original subtraction $-a\lambda s^2\|f_s^{z_0}\|_2^2$. Combining (8.4), (8.6) and (8.7), then normalizing by (8.3), gives the first formula in (8.2), since $4aA+2\chi B_1=2a t_0$. The numerator is already $O(s^2)$, so a norm tending to one suffices; no missing second-order norm term remains. Completing the complex scalar square gives the last two formulas. The estimate is for each fixed complex slope. It supplies no uniform assertion for slopes depending on $s$ and diverging as $s\downarrow0$, and restricts no actual competitor to an affine family. $\square$
+

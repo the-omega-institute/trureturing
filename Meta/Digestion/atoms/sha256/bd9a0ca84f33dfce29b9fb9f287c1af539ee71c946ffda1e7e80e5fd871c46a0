@@ -1,0 +1,80 @@
+**Proposition 7.3 (finite closed minimizer and degeneracies).** For
+$\rho\succeq0$, $\rho\ne0$, abbreviate its functionals in (RE.42)
+and put
+
+$$
+\mathscr D_r=(A_r+RC)^2-4RU_r^2\geq0.
+\tag{RE.47}
+$$
+
+The unique minimizer in each record is
+
+$$
+x_r^*(\rho)=
+\begin{cases}
+0,&U_r=0,\\
+\operatorname{sgn}(U_r)\displaystyle\min\left\{
+\frac1{\sqrt R},
+\frac{2R|U_r|}{A_r+RC+\sqrt{\mathscr D_r}}\right\},&U_r\ne0.
+\end{cases}
+\tag{RE.48}
+$$
+
+Thus an explicit value, with no remaining optimization, is
+
+$$
+B(\rho)=\sum_{r=\pm1}\eta(x_r^*)
+\bigl(A_r+C(x_r^*)^2-2U_rx_r^*\bigr).
+\tag{RE.49}
+$$
+
+Set $x_r^*(0)=0$. For a zero input every $x\in I_R$ minimizes; uniqueness
+is asserted only for nonzero positive inputs.
+
+Proof. $K_r$ is invertible, so $A_r>0$ on every nonzero positive input,
+including singular ones. Hilbert–Schmidt Cauchy–Schwarz applied to
+$K_r\rho^{1/2}$ and $S\rho^{1/2}$ gives $U_r^2\leq A_rC$.
+Consequently
+$\mathscr D_r=(A_r-RC)^2+4R(A_rC-U_r^2)\geq0$.
+The denominator in (RE.48) is positive since $A_r>0$.
+Moreover
+
+$$
+\det(K_r-xS)=h_1cd(R-x^2)>0\quad(x\in I_R),
+\tag{RE.50}
+$$
+
+so the bracket in (RE.46) is strictly positive for such inputs.
+
+Ignoring the positive constant $(R-1)/2$, differentiating the function
+$(A_r+Cx^2-2U_rx)/(R-x^2)$ gives
+
+$$
+\frac{2\bigl((A_r+RC)x-U_r(R+x^2)\bigr)}{(R-x^2)^2}.
+\tag{RE.51}
+$$
+
+When $U_r=0$ its sign is the sign of $x$, giving the unique minimum at
+zero; this covers $C=0$, which forces $U_r=0$. For $U_r>0$, the
+value at a positive $x$ is smaller than at $-x$. The numerator's
+quadratic changes sign at the smaller positive root
+
+$$
+\frac{A_r+RC-\sqrt{\mathscr D_r}}{2U_r}
+=\frac{2RU_r}{A_r+RC+\sqrt{\mathscr D_r}}.
+\tag{RE.52}
+$$
+
+Both roots are positive and have product $R$; the smaller is at most
+$\sqrt R$, the larger at least $\sqrt R$. Since
+$1/\sqrt R<\sqrt R$, the derivative is negative up to the smaller
+root in the allowed positive interval and positive thereafter if that
+root lies in the interval. Otherwise it remains negative up to the
+endpoint. This proves the clipped expression and uniqueness, including
+a root exactly at the endpoint. If $\mathscr D_r=0$, the double root
+is $\sqrt R$, strictly outside the allowed interval, and the minimum
+is again uniquely the endpoint. Negative $U_r$ follows by $x\mapsto-x$.
+All operations remain valid for singular and subnormalized inputs.
+At zero input every functional is zero and the stated convention avoids
+the indeterminate fraction. $\square$
+

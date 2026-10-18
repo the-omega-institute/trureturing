@@ -1,0 +1,72 @@
+**Theorem 29.2 (The common-copy obstruction determines the end of the
+cyclic relation complex).**
+For the mode map of Definition 29.1, $R$ is normal and Cohen–Macaulay
+of dimension eight, and $\Omega$ is its multigraded canonical module
+$\omega_R$. Its two minimal generators are $X^{\nu_3},X^{\nu_5}$.
+The quotient by the global-facet ideal has the presentation
+
+$$
+R/J\simeq\mathbb C[y_0,\ldots,y_6],\qquad \deg y_j=1,
+\tag{29.3}
+$$
+
+where $y_j$ is the mode of the maximum independent set
+$M_j=\{j+2,j+4,j+6\}$, with residues modulo seven represented in $[7]$.
+There is an exact sequence of multigraded $R$-modules
+
+$$
+0\longrightarrow R(-\nu_3)
+\xrightarrow{\ 1\mapsto X^{\nu_3}\ }\omega_R
+\longrightarrow (R/J)(-\nu_5)\longrightarrow0.
+\tag{29.4}
+$$
+
+For ordinary degree this is
+$0\to R(-3)\to\omega_R\to(R/J)(-5)\to0$.
+Consequently the interior sector count and its series are
+
+$$
+\begin{aligned}
+L^\circ(m)&=L(m-3)+\binom{m+1}{6}\quad(m\ge3),\\
+H_{\omega_R}(t)-t^3H_R(t)&=\frac{t^5}{(1-t)^7}.
+\end{aligned}
+\tag{29.5}
+$$
+
+The binomial in the first line is zero at $m=3,4$.
+The minimal multigraded resolution of this actual $S/I$ has projective
+dimension $21$ and last free module
+
+$$
+F_{21}
+=S(-(26;7\mathbf1))\oplus S(-(24;6\mathbf1)).
+\tag{29.6}
+$$
+
+In particular its last ordinary shifts are $26$ and $24$, with total
+rank two. The obstruction that distinguishes these two canonical
+generators is exactly
+
+$$
+\nu_5-\nu_3=(2;\mathbf1)\notin\mathcal S,
+\tag{29.7}
+$$
+
+the extra local-trace observation of Proposition 28.3.
+
+Proof. The canonical and face calculations used below are classical
+intermediate suppliers. In Miyazaki, [*Non-Gorenstein locus and almost
+Gorenstein property of the Ehrhart ring of the stable set polytope of a
+cycle graph*, §4][MI28], put $\ell=3$, identify the vertex function with
+$c$ and its value at $-\infty$ with $m$.
+His $\eta_1,\eta_2$ are our $\nu_3,\nu_5$; the image of
+$\varphi:R\to\omega_R(3)$ in Lemma 4.1 is our shifted injection.
+His Lemmas 4.2–4.3 identify the face algebra $R^{(0)}$ with a polynomial
+ring, and Lemma 4.4 gives $C_2=X^{\nu_5}R^{(0)}$.
+The argument immediately preceding Theorem 4.5 proves minimality of
+these canonical generators; Theorem 4.5 identifies the resulting
+almost-Gorenstein property. These are supplied facts, not a new cycle
+classification. The proof here fixes their full correspondence to
+(28.14), proves the $R$-module quotient map required in (29.4), and
+then consumes it in the relation complex and ambient index.
+

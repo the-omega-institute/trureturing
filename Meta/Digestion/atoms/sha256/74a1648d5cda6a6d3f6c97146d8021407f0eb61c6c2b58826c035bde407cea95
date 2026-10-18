@@ -1,0 +1,19 @@
+**Proposition 6.2 (Finite hidden state does not imply finite visible order).** There is a stationary legal full-support process with a finite hidden-state presentation and no finite visible Markov order.
+
+Proof. For $0<a<1$, let $R^a$ be the stationary first-order bit chain with transitions $0\to1$ of probability $a$, $0\to0$ of probability $1-a$, and $1\to0$ of probability one. Its stationary bit distribution is $(1/(1+a),a/(1+a))$, as direct multiplication verifies. Its legal cylinders are positive.
+
+Choose once, with equal probabilities, between $a=1/3$ and $b=2/3$, then use the chosen stationary chain forever. The resulting law $M=(R^a+R^b)/2$ is stationary, legal and full-support. A hidden state records the chosen parameter and the current bit, giving four states.
+
+For $q\ge1$, put $A_q=(1-a)^{q-1}/(1+a)$ and $B_q=(1-b)^{q-1}/(1+b)$. Direct conditional probability gives
+
+$$
+M(X_0=1\mid X_{-q}\cdots X_{-1}=0^q)
+=\frac{aA_q+bB_q}{A_q+B_q}
+=a+(b-a)\frac{t_q}{1+t_q},
+\quad
+t_q=\frac45\,2^{-(q-1)}.
+\tag{6.1}
+$$
+
+This quantity strictly decreases with $q$. If $M$ had visible order at most any finite $m$, the tower property would make it the same value $k(1\mid0^m)$ for every $q\ge m$, a contradiction. The example explains why Lemma 3.2 proves bounded visible phase recovery rather than relying on a cell or hidden-state count. $\square$
+

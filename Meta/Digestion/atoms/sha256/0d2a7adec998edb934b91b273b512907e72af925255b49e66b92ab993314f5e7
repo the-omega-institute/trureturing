@@ -1,0 +1,71 @@
+**Proposition 17.2 (exact acquired label-one histories).** The inverse
+class and the entire compatible histories of (NARC.17.2) are exactly
+
+$$
+\begin{aligned}
+C&=e_{16}^{-1}(1)
+ =\{(1,0),(1,1),(0,1)\}
+   \cup\{(15,j),(j,15):0\le j\le5\},\\
+\ell_{a,b}&=17-b\ge2,\qquad
+n_{a,b}=17+a-b,\\
+Y_{a,b}&=\rho^{\ell_{a,b}}X_{a,b}
+ =\langle T_{n_{a,b}},T_{33}\rangle.
+\end{aligned}
+\tag{NARC.17.3}
+$$
+
+The following table lists every history; each original is continued
+by its own indicated lag and remains the same source during its Reads.
+
+| Origin $(a,b)$ | Actual original $X_{a,b}$ | Lag $\ell_{a,b}$ | Actual current source $Y_{a,b}$ |
+| --- | --- | --- | --- |
+| $(0,15)$ | $\langle T_0,T_{31}\rangle$ | $2$ | $\langle T_2,T_{33}\rangle$ |
+| $(1,15)$ | $\langle T_1,T_{31}\rangle$ | $2$ | $\langle T_3,T_{33}\rangle$ |
+| $(2,15)$ | $\langle T_2,T_{31}\rangle$ | $2$ | $\langle T_4,T_{33}\rangle$ |
+| $(3,15)$ | $\langle T_3,T_{31}\rangle$ | $2$ | $\langle T_5,T_{33}\rangle$ |
+| $(4,15)$ | $\langle T_4,T_{31}\rangle$ | $2$ | $\langle T_6,T_{33}\rangle$ |
+| $(5,15)$ | $\langle T_5,T_{31}\rangle$ | $2$ | $\langle T_7,T_{33}\rangle$ |
+| $(0,1)$ | $\langle T_0,T_{17}\rangle$ | $16$ | $\langle T_{16},T_{33}\rangle$ |
+| $(1,1)$ | $\langle T_1,T_{17}\rangle$ | $16$ | $\langle T_{17},T_{33}\rangle$ |
+| $(1,0)$ | $\langle T_1,T_{16}\rangle$ | $17$ | $\langle T_{18},T_{33}\rangle$ |
+| $(15,5)$ | $\langle T_{15},T_{21}\rangle$ | $12$ | $\langle T_{27},T_{33}\rangle$ |
+| $(15,4)$ | $\langle T_{15},T_{20}\rangle$ | $13$ | $\langle T_{28},T_{33}\rangle$ |
+| $(15,3)$ | $\langle T_{15},T_{19}\rangle$ | $14$ | $\langle T_{29},T_{33}\rangle$ |
+| $(15,2)$ | $\langle T_{15},T_{18}\rangle$ | $15$ | $\langle T_{30},T_{33}\rangle$ |
+| $(15,1)$ | $\langle T_{15},T_{17}\rangle$ | $16$ | $\langle T_{31},T_{33}\rangle$ |
+| $(15,0)$ | $\langle T_{15},T_{16}\rangle$ | $17$ | $\langle T_{32},T_{33}\rangle$ |
+
+**Proof.** Definition 11.1 normally returns $\max(a,b)$. Its unchanged
+maximum-one base is precisely $(0,1),(1,0),(1,1)$. The only
+reassignment to label one is $(\max(a,b),\min(a,b))=(15,j)$,
+$0\le j\le5$, in both orientations. Its label-zero star at maximum
+sixteen is outside the restricted square, and all other reassignment
+labels differ from one. Hence the displayed fifteen-element set is
+the exact inverse class, without an all-label decoder premise.
+
+The supplied acquired-literal clock satisfies
+$c(\alpha)=0$, $c(\beta)=1$,
+$c(\langle s,t\rangle)=2+c(t)$ and $c(T_m)=m$.
+The genuinely acquired original row therefore computes
+$a=c(T_a)$ and $b=c(T_{16+b})-16$ before the future choice.
+The code is a finite deterministic function of that acquired row;
+the parsed coordinates do not survive its export and discard.
+
+For a member of $C$, homomorphism at lag $17-b$ gives exactly the
+listed $Y_{a,b}$. Both original-root slots are reached, and replacing
+the entire left filling leaves $\langle\square_L,T_{33}\rangle$.
+One reached hole has precisely the partition $\{\{L\}\}$,
+independently of its filling. Thus every listed history realizes the
+entire row, rather than just its clock.
+
+Conversely, a history with this entry has original in $C$ because
+its exported label is one. Its visible literal must obey
+$T_{16+b+\ell}=T_{33}$. Applying the clock gives
+$16+b+\ell=33$, so $\ell=17-b$ and $a+\ell=17+a-b$.
+There is no other lag for that original and no other compatible
+original. This is both directions of Theorem 5.2 specialized to
+$q=16,z=17$; all $b\le15$ meet its feasibility restriction under
+either lag convention. The definition of the encoder and this local
+fiber calculation require neither the full Theorem 11.6 nor any
+packing conclusion of §§13--16. $\square$
+

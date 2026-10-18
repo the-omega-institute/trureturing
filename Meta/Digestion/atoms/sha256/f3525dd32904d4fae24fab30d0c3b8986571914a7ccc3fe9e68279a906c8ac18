@@ -1,0 +1,27 @@
+**Definition 1.3 (atomic supply and the scope of the correspondence).** Put
+$T_j=\rho^j\alpha$ for $j\in\mathbb N$. The supplied atomic identities are
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{j+2}=\langle T_{j+1},T_j\rangle,\quad
+\rho^mT_j=T_{j+m}.
+\tag{ABC.1.4}
+$$
+
+Their index is injective. These facts, the guarded atomic subtree formula,
+and native injectivity of $\rho$ are used from [ARH, Definition 4.1][ARH]
+and [TRANSPORT, §§22–24][TRANSPORT]. The source identification in
+[SourceTransportCentralizer][CENTRALIZER] is
+$\alpha=\mathtt{of\ true}$, $\beta=\mathtt{of\ false}$, ordered pairing
+$=\mathtt{FreeMagma.mul}$ and $\rho=\mathtt{substitution}$; its
+$\mathtt{source\_transport\_centralizer}$ already classifies the atomic
+stability equation and excludes a positive globally surjective iterate.
+
+An arbitrary injective source encoding is also already available:
+[SourceTreeEncoding][ENCODING], $\mathtt{source\_code\_equiv}$, concerns
+finite trees with natural leaves and their tagged hereditary-finite codes.
+The correspondence below additionally identifies the native constructor,
+forward action, original-address navigation, whole-row target and acquired
+joint fibers. Its coordinates describe a possible source mathematically;
+they are not added to the accessible state in Assumption 1.2.
+

@@ -1,0 +1,16 @@
+**Corollary 4.3 (scope of the cycle obstruction).** The class in
+Definition 2.3 with fixed seed counting measures and unchanged cycle
+scopes cannot have uniformly $o(n)$ per-template logarithmic excess.
+Increasing gauge precision, taking finite minima, or taking geometric
+averages inside that class cannot remove (INB.13).
+
+Proof. Every permitted estimate is at least the second infimum in
+(INB.13); minima and geometric averages preserve that lower bound.
+Its log-ratio to the true mass is $n/2$. $\square$
+
+This is not a global-cap separation at the chosen law. The one-block
+set of all four labelled-leaf pairs is admissible by its own leaf
+queries and has mass $4/11>2\sqrt2/11$. Thus the displayed cycles
+do not maximize pressure at that law. Their paid original-source
+consumer is given in §8.
+

@@ -1,0 +1,39 @@
+**Definition 14.3 (Unchanged quantitative frontier and unresolved tuple).**
+The credited bounds remain exactly
+
+$$
+\frac{129931}{250000}\le\varepsilon_1\le e_{\rm mix},\qquad
+\frac{52417598}{10^8}<e_{\rm mix}<\frac{52417600}{10^8}.
+\tag{14.2}
+$$
+
+The lower is QJM Theorem 2.3 and the upper is QSD Theorem 5.2.
+The structural results above neither improve these endpoints nor
+supply an optimizer-support ansatz. In particular Theorem 11.3
+cannot replace $\mathcal K$ by its proper boundary subcone, and
+Theorem 12.4 cannot omit the genuine $\mathscr F\equiv0$ branch
+of Proposition 12.7. No assertion that an optimal certificate has
+a nonzero cubic or that boundary contact receives positive primal
+weight is made.
+
+The missing object remains one actual normalized all-fifteen-signed-event
+tuple with all three TP multipliers, a proof of its global product-atom
+positivity including every interior cubic population, and positive
+kernel weights reconstructing one legal port satisfying the same
+TP and complementary signed-event equations at its value. For a
+fixed nonzero-cubic tuple, (12.12)–(12.14) make its entire primal
+zero-face reconstruction finite and exact. They do not find that
+tuple or prove its slice nonempty. The population inequality is a
+necessary filter and can be slack; it is not sufficient joint
+compatibility. QSD's active-splitting requirement and the QCB
+unchanged-channel factorization conditions retain their scopes.
+QME's marginal-preserving repair is still conditional on its stated
+exact same-problem certificates.
+
+The original exact $\varepsilon_1$, a matching certificate and
+optimal legal port, the $q=2,3,4$ optima, native preparation and
+cofinality, and complete all-view recovery among space, time,
+boundary and memory remain open. These are ordinary mathematical
+proofs and explicit finite constructions, without a new Lean
+certification or a physical acquisition claim.
+

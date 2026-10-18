@@ -1,0 +1,28 @@
+**Theorem 5.2 (finite interference and disjoint failure charging).**
+Both full-tree procedures terminate on every observer-progressing history
+with finite total writer interference. Under a total budget $B$, at most
+$B$ attempts fail and at most $B+1$ attempts are made. Each failure can
+be assigned a distinct actual update strictly between its guard leaf
+Read and validation Read.
+
+**Proof.** Fix a finite bound $B$ for the actual history.
+Every visited or queued address is present in $V_B$, by persistence.
+A traversal visits distinct addresses, hence makes at most $N_B$ Reads.
+The separate guard search follows distinct left prefixes, hence has
+at most $H_B+1$ Reads. It must reach a leaf: a branch at depth $H_B$
+would force a deeper child in $V_B$. The same finite-tree bound forces
+a first leaf in the first procedure. Finite processing between Reads
+and observer progress therefore finish each attempt and its validation.
+
+A failed validation entails an update in its guard interval: zero
+updates would give the same leaf reply. Such intervals are disjoint
+and lie in successive attempts. Charge the first update in each one.
+No event is charged twice, so at most $B$ failures occur. An infinite
+succession of completed attempts would contradict that bound.
+Once accepted, the tree, row, finite check and Return preparation
+require only finite local work.
+
+If only finiteness is promised, use the actual finite update count $b$
+as the proof's bound. The observer neither receives $b$ nor recognizes
+the final writer event. $\square$
+

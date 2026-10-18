@@ -1,0 +1,73 @@
+**Theorem 25.2 (exact columns and complete acquisition).** Under these
+assumptions, an orthogonal-layout acquisition has Hilbert output space
+and dephased output algebra
+
+$$
+\begin{gathered}
+\mathcal H_\oplus=\left(\bigoplus_{j=1}^m\mathbb C^2\right)
+                          \oplus\mathbb C^5,
+\qquad \dim\mathcal H_\oplus=2m+5,\\
+\mathcal A_{\rm acq}=\left(\bigoplus_{j=1}^mM_2\right)\oplus M_5,
+\qquad \dim_{\mathbb C}\mathcal A_{\rm acq}=4m+25.
+\end{gathered}
+\tag{GC.98}
+$$
+
+For $d_n\ge2m+5$, its column isometry can be obtained by an exact
+finite native word on $\mathcal K_n$. With the sector read and the
+specified routing, the resulting acquisition branches are exactly
+$\operatorname{Ad}_{C_j}$ and $\operatorname{Ad}_{C_H}$ on ALL
+complex input matrices, including their passive-reference extensions.
+For the four-axis law, $m=4$, the orthogonal Hilbert layout has dimension
+$13=d_5$, whereas its cq algebra has complex vector dimension $41$.
+Within this layout $n=5$ is the smallest chain length, since $d_4=8$.
+This is not a universal ancilla or instrument-dimension minimum.
+
+Proof. Stack the actual columns, without replacing coefficient weights
+by acquisition probabilities:
+
+$$
+\mathcal A\psi=C_1\psi\oplus\cdots\oplus C_m\psi\oplus C_H\psi.
+\tag{GC.99}
+$$
+
+Equation (GC.52) gives $\mathcal A^\dagger\mathcal A=I_5$ on
+the full complex input, including its complementary two dimensions.
+Choose a sector embedding $J_\oplus:\mathcal H_\oplus\to\mathcal K_n$
+and the supplied input embedding $I_{\rm init}:\mathbb C^5\to\mathcal K_n$.
+Complete the five columns of $I_{\rm init}$ and $J_\oplus\mathcal A$
+to orthonormal bases. Their basis correspondence is a unitary $U_0$
+with $U_0I_{\rm init}=J_\oplus\mathcal A$. Since $2m+5>5$,
+there is an unused input column; multiplying its output column by
+$(\det U_0)^{-1}$ gives $U\in SU(d_n)$ with the same prescribed
+five columns. Native Theorem 64.1 supplies this $U$ as an ACTUAL
+finite word, without invoking an approximate matrix completion.
+
+Let $Q_j$ be the output sector projections. Then
+$Q_jUI_{\rm init}=J_jC_j$, also for $H$. The supplied sector
+Lüders read, followed by the inverse sector identification, gives the
+claimed CP map in each branch. Tensoring these exact matrix identities
+with $I_R$ proves the complete reference statement. When $d_n>2m+5$,
+complete the sector read with the orthogonal remainder. Its Kraus map
+on every initialized $M_5$ input is zero, so it generates no additional
+actual label there; it is still included in the full apparatus read.
+All occupied conditional output carriers and their full-domain TP
+decoders are the specified ones after routing, not enlarged padding
+blocks. Summing their effects gives $I_5$ exactly.
+
+For $m=4$, identify the original native specimen with $\mathcal K_3$
+by §21 and explicitly supply
+
+$$
+I_{\rm init}|x\rangle=|x00\rangle\in\mathcal K_5
+\qquad(x\in\Sigma_3).
+\tag{GC.100}
+$$
+
+All five images are legal and orthonormal. This is an initialized
+mapping, not a free operation on an unknown source. The five output
+sectors have dimensions $5,2,2,2,2$ and exhaust $\mathcal K_5$.
+The dimension statements in (GC.98) follow by adding Hilbert dimensions
+or, respectively, matrix-block dimensions. Since $d_n$ increases and
+$d_4<13=d_5$, the layout-specific minimum follows. $\square$
+

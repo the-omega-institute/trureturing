@@ -1,0 +1,23 @@
+**定义 197.1（预算截断下的 $W_N$ 存在义务）。** 采用定义 165.1 的
+
+$$
+\begin{aligned}
+Q_L=\{&(a_1,\ldots,a_L;e):
+ 1\ge a_1\ge\cdots\ge a_L\ge e\ge0,\\
+ &(L+1)e\le\sum_{i=3}^La_i,\quad
+ a_1+\sum_{i=3}^La_i-(L+1)e\le1\},\qquad
+H_L=Q_L\cap\{a_2=a_3\}.
+\end{aligned}
+$$
+
+对每个仍待比较的长度和每个 $b\in H_L$，若完整目录成本 $s=\rho_N(b)<\infty$，令 $M=\max\{1,s\}$。剩余的一个充分桥梁是存在某个配置
+
+$$
+\lambda_D\ge0\ (D\in W_N),\qquad
+A_N^W\lambda\ge h(b),\qquad
+\sum_D\lambda_D\le M.
+\tag{197.1}
+$$
+
+式 (197.1) 尚未对所有这样的 $b,L$ 得到证明。它允许选择不同的 $N$ 律，不要求表示某个给定的完整 $N$ 律，也不要求每个非最优表示都能转换。
+

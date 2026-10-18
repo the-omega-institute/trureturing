@@ -1,0 +1,171 @@
+**Theorem 8.1.** Consider any legal six-read history with
+
+$$
+A_0=I,\qquad A_1=D_{h_1},\qquad A_2=D_{h_2},\qquad
+D_h=L^h=\begin{pmatrix}1&0\\h&1\end{pmatrix},
+\qquad 0\le h_1\le h_2,
+$$
+
+$$
+A_i=\begin{pmatrix}u_i&v_i\\w_i&1\end{pmatrix},\qquad
+v_i>0\quad(i=3,4,5).
+\tag{8.1}
+$$
+
+Assume that $\mathcal T_k$ in (6.1) has rank three and kernel $\mathbb RE_{22}$ for every real $k$. Then two actual targets with strictly positive rank-one sources, different real slopes, and one whole affine drift per run have identical six observations on this very history. The mirror statement holds with $E_{11}$ and three initial upper-shear reads.
+
+This covers every $a=3$ member of the diagonal $E_{22}$ normal form satisfying its all-real-slope rank hypothesis. It permits repeated initial shears, either determinant sign at legal endpoints, any permitted pair phase or its absence, and any permitted final repetition. No additional normal-form restriction on the three tail matrices is used in the proof.
+
+**Proof.** First verify the interface with the legal stratum. If an endpoint has lower-right entry one and upper-right entry zero, nonnegative integrality and determinant $\pm1$ force it to be $D_h$ for an integer $h\ge0$. Between two such endpoints the actual multiplier is, algebraically, $D_gD_h^{-1}=L^{g-h}$; nonnegativity forces $g\ge h$. Once an endpoint has upper-right entry $v>0$, a later upper-right entry cannot be zero: it is $V_{11}v+V_{12}$ for a nonnegative invertible multiplier $V$, whose first row is nonzero. Thus the three-initial-zero-entry case has precisely (8.1), including all its allowed repetitions. Inverses in this interface merely identify an already existing multiplier.
+
+Write $x=(p,q,r)^{\mathsf T}>0$, $s=qr/p$, and $a_S=p+s$. Set
+
+$$
+f_i(x)=(u_i-1)p+w_iq+v_ir,
+$$
+
+using $f_0=0$, $f_1=h_1q$, $f_2=h_2q$ for the initial shears. Absorb the source trace into the one affine polynomial
+
+$$
+P(\tau)=D(\tau)+a_S(1+k\tau).
+$$
+
+Then the original observations are $z_i=(1+ki)f_i(x)+P(i)$. Eliminate this polynomial using
+
+$$
+z_i-z_0-i(z_1-z_0)\qquad(i=2,3,4,5).
+$$
+
+The resulting four-vector is $G(x,k)=\mathcal M(k)x$, where row $i$ is
+
+$$
+(1+ki)(u_i-1,w_i,v_i)-i(1+k)(0,h_1,0).
+\tag{8.2}
+$$
+
+In particular its first row, indexed by $i=2$, is $(0,\lambda(k),0)$, with
+
+$$
+\lambda(k)=h_2-2h_1+2k(h_2-h_1).
+\tag{8.3}
+$$
+
+The elimination map has exactly affine evaluation as its kernel: its zero vectors are $z_i=z_0+i(z_1-z_0)$. The source trace direction is $E_{22}$ and is absorbed by $P$. Hence (8.2) has the same remaining matrix kernel as the quotient in (6.1). The hypothesis gives
+
+$$
+\operatorname{rank}\mathcal M(k)=3\qquad(k\in\mathbb R).
+\tag{8.4}
+$$
+
+On the three actual tail indices define
+
+$$
+\mathbf a=(u_i-1)_{i=3}^5,\qquad
+\mathbf c=(v_i)_{i=3}^5,\qquad
+\mathsf D=\operatorname{diag}(3,4,5).
+$$
+
+The two vectors $\mathbf a,\mathbf c$ are independent. Otherwise the $p,r$ columns of (8.2) would be dependent at every slope, contrary to (8.4). All entries of $\mathbf c$ are strictly positive. The plane $V=\operatorname{span}(\mathbf a,\mathbf c)$ is not invariant under $\mathsf D$: invariance would put $\mathbf c,\mathsf D\mathbf c,\mathsf D^2\mathbf c$ in a two-dimensional plane. A relation between these three vectors, divided coordinatewise by $v_i>0$, would give a polynomial of degree at most two vanishing at the three distinct nodes $3,4,5$. Successive factorization at its roots makes it zero, so these vectors are independent, a contradiction.
+
+At the boundary $q=0$, consider the four-by-four derivative determinant of $G$ in the order $(p,q,r,k)$. Its first row is $(0,\lambda,0,0)$, so
+
+$$
+\mathcal J(k;p,0,r)=-\lambda(k)H(k;p,r),
+\tag{8.5}
+$$
+
+$$
+H(k;p,r)=\det_3\bigl[
+(\operatorname{Id}+k\mathsf D)\mathbf a,
+(\operatorname{Id}+k\mathsf D)\mathbf c,
+\mathsf D(p\mathbf a+r\mathbf c)\bigr].
+\tag{8.6}
+$$
+
+This boundary is only an auxiliary polynomial calculation. Positive actual sources will be constructed below. The function $H$ is affine in $k$ because its quadratic coefficient is
+
+$$
+\det_3[\mathsf D\mathbf a,\mathsf D\mathbf c,
+ p\mathsf D\mathbf a+r\mathsf D\mathbf c]=0.
+$$
+
+If $h_2>h_1$, the affine $\lambda$ has a simple real root $k_0$. At $k_0$, (8.4) and the zero first row make the three tail rows of $\mathcal M(k_0)$ invertible. In particular the first two columns in (8.6) are independent. The linear functional $H(k_0;p,r)$ is nonzero. To see this, suppose it were zero for every $p,r$. Both $\mathsf D\mathbf a$ and $\mathsf D\mathbf c$ would belong to the plane $W$ spanned by those first two columns. Subtracting $k_0$ times these vectors would place $\mathbf a,\mathbf c$ in $W$ too. Independence and dimension two would then give $V=W=\mathsf DV$, contradicting the preceding noninvariance. Choose $p,r>0$ with $H(k_0;p,r)\ne0$. Equation (8.5) then has a simple root at $k_0$.
+
+If $h_2=h_1=h$, the value $h=0$ is impossible: at $k=-1/3$ the first row and tail row $i=3$ of (8.2) would both vanish, giving rank at most two. Thus $h>0$ and $\lambda=-h$ is constant nonzero. The coefficient of $k$ in (8.6) is
+
+$$
+p\det_3[\mathbf a,\mathsf D\mathbf c,\mathsf D\mathbf a]
++r\det_3[\mathsf D\mathbf a,\mathbf c,\mathsf D\mathbf c].
+\tag{8.7}
+$$
+
+Its two coefficients cannot both vanish. The vectors $\mathsf D\mathbf a,\mathsf D\mathbf c$ are independent, since $\mathsf D$ is invertible. If both coefficients vanished, $\mathbf a,\mathbf c$ would lie in their plane, again giving $V=\mathsf DV$. Choose $p,r>0$ where (8.7) is nonzero. The affine $H$ has a simple real root, and so does (8.5).
+
+The choices of positive $p,r$ in both cases are explicit in the following symbolic sense. For a nonzero linear functional use $(p,r)=(1,1)$ if its value is nonzero; otherwise replace one coordinate with nonzero coefficient by $2$. The resulting value is that coefficient. Any division used to name a root of a nonconstant affine polynomial therefore has nonzero denominator.
+
+In either case choose two slopes on opposite sides of the simple boundary root, sufficiently close that (8.5) has opposite strict signs at them. At these two fixed slopes continuity preserves those signs for every sufficiently small $q>0$. Fix such a $q$. The intermediate value theorem in $k$ gives a real $b$ with
+
+$$
+\mathcal J(b;p,q,r)=0,
+\qquad x=(p,q,r)^{\mathsf T}>0.
+\tag{8.8}
+$$
+
+By (8.4), the first three columns of that derivative, namely $\mathcal M(b)$, are independent. Its last column $\mathbf b=\mathcal M'(b)x$ consequently lies in their range. There is a unique real vector $X$ such that
+
+$$
+\mathcal M(b)X=\mathcal M'(b)x.
+\tag{8.9}
+$$
+
+It can be obtained by any nonzero three-row minor of $\mathcal M(b)$; that determinant is a justified nonzero divisor, and (8.8) supplies the remaining row equation. Choose any nonzero real $\epsilon$ satisfying
+
+$$
+|\epsilon|<\min_{j=1,2,3}\frac{x_j}{2(1+|X_j|)}.
+\tag{8.10}
+$$
+
+Use the two source coordinates and slopes
+
+$$
+x_0=x+\epsilon X,\qquad k_0=b,\qquad
+x_1=x,\qquad k_1=b+\epsilon.
+$$
+
+Each coordinate of $x_0$ exceeds half the corresponding positive coordinate of $x$. Affineness of $\mathcal M$ in $k$ gives the exact finite identity
+
+$$
+\mathcal M(k_0)x_0
+=\mathcal M(b)x+\epsilon\mathcal M'(b)x
+=\mathcal M(b+\epsilon)x_1
+=\mathcal M(k_1)x_1.
+\tag{8.11}
+$$
+
+For each run $j=0,1$, write $x_j=(p_j,q_j,r_j)^{\mathsf T}$, set
+
+$$
+s_j=q_jr_j/p_j,\qquad
+S_j=\begin{pmatrix}p_j&q_j\\r_j&s_j\end{pmatrix},\qquad
+a_j=p_j+s_j,
+$$
+
+and take the one entire affine drift
+
+$$
+D_j(\tau)=-a_j(1+k_j\tau)-(1+k_j)h_1q_j\tau.
+\tag{8.12}
+$$
+
+Both sources are strictly positive of rank one, with divisor $p_j>0$. Direct substitution in the original equations gives $z_0=z_1=0$ in each run. At every actual index $i=2,3,4,5$ it gives row $i$ of $\mathcal M(k_j)x_j$. Equation (8.11) makes these four observations identical. This verifies all six original equations, including every zero or negative gain, with one whole drift per run.
+
+Finally use $\alpha_j=1$, $\beta_j=k_j$, $R_j=S_j$, and the fixed factors
+
+$$
+c_j=\binom{p_j}{r_j},\qquad \ell_j=(1,q_j/p_j).
+$$
+
+Their product is $S_j$, and (1.3)–(1.4) realize precisely the originally prescribed words with positive read and unread states. Their slopes differ by $\epsilon\ne0$, so their effective targets differ even if their sources happen to coincide. Equations (8.11)–(8.12) provide a finite actual-source collision. The derivative zero in (8.8) was used to construct that identity.
+
+For $E_{11}$, conjugate the given history by $J$, apply the preceding proof, and realize it on the original words using $S_j=JS'_jJ$, $c_j=Jc'_j$, $\ell_j=\ell'_jJ$ with unchanged $k_j,D_j$. These factors are positive and fixed in their run, and the traces agree at the original six indices. This proves the mirror statement. ∎
+

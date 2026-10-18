@@ -1,0 +1,23 @@
+**推论 25.5（Sharp finite boundary and preset-infinite family）。** For $k\ge3$, every finite adaptive or preset cost above is at most $k+1$, and that bound is attained. On both value fibres choose $A\ne B$ and set $F_v(0,s)=A$, $F_v(1,s)=B$ for $s<k-1$, and every other entry $A$. Then both fees are $k+1$.
+
+For every $k\ge3$, there is also a finite-adaptive, preset-infinite target. On both fibres put
+
+$$
+F_v(1,0)=B,\qquad F_v(k,s)=B\quad(0\le s<k-1),
+\tag{25.19}
+$$
+
+and every other entry $A$, with $A\ne B$ and arbitrary $f(\bot)$. Exactly
+
+$$
+C_{\rm ad}=\begin{cases}4,&k=3,\\k-1,&k\ge4,\end{cases}
+\qquad C_{\rm pre}=+\infty.
+\tag{25.20}
+$$
+
+Proof. The phase-only expression is at most $k$ for $k\ge3$, and the endpoint expression is at most $k+1$. Every phase-known sibling costs at most $k-1$. A nonconstant cleared suffix has $\tau\le k-2$ and costs $\tau+1+\max(2,B-\tau-1)\le k+1$; its one-bit case is smaller. Thus every finite minimum has the asserted boundary. The first example has $H_v=k+1$ and a constant $\mathcal M$ archive; $1\,0^{k-1}1$ is a common attained stream.
+
+For (25.19), $\ell_v(1)=1$, $\ell_v(k)=k-1$, and the endpoint equality at tail $k-2$ holds. Consequently $H_v=\max(2,k-1)$. Cutoff one is eligible on $\mathcal M$. Its suffix labels are $A$ at $2,\ldots,k-1$ and $B$ at $k$, so Lemma 25.2a gives total suffix cost four when $k=3$, three when $k=4$, and $k-1$ when $k\ge5$. Every $\tau\ge2$ fails (25.8) already at $z=1$, where phase $k$ has label $B$ and phase two label $A$. These are the adaptive lower bounds and actual attained sibling protocols. For a preset cut, phase one's prefix condition forces $\tau\ge k-1$, while that same $z=1$ strip excludes every $\tau\ge2$. Hence there is no common cut.
+
+At $k=2$, mixed fibres have finite adaptive fee at most three, while the phase-only fee-four exception of (25.4) remains. A whole target with one fee-four phase-only fibre and another fee-one tail-dependent fibre therefore has adaptive fee four. Its preset fee is infinite if the phase-only fibre is nonconstant: the mixed fibre forces root one, whose top-row rejection destroys the phase-only distinction. ∎
+

@@ -1,0 +1,42 @@
+**定理 3.1（Exact binary full-block fee）。** For the base target with $N=2$, for every arrangement of its two labels in $I$ and every coincidence of $A$ with those labels,
+
+$$
+C_{\rm ad}=C_{\rm pre}=Q+1+\mathbf1_{\{Q=2,\ m\text{ odd},\ A\notin\lambda[I]\}}.
+\tag{3.1}
+$$
+
+Proof of all-adaptive lower bounds. Theorem 2.1 forces every root and keeps both band labels on one actual archive through $Q$ blocks. Hence $Q$ blocks cannot finish. If $Q=2$, $m$ is odd, and $A$ is fresh, the same theorem keeps at least one actual outside source there. Block 1 began zero, so the archive has a common current tail and value, and contains three different INITIAL labels. With only one further block there are at most two successful endpoint outputs; uniform rejection cannot separate them. Therefore $Q+1$ is impossible in this case, for every action and every adaptive continuation.
+
+For ordinary attainment use the scan of Theorem 2.1. At index $Q$, $W_Q=[-1,H]$ includes all of $I$ and the absent donor 0. Assign its two band labels bits $b(y)\in\{0,1\}$, differently, and let
+
+$$
+E=\{j\in I:b(\lambda(j))=1\}\ \cup\
+\begin{cases}
+\{0\},&|\{j\in I:b(\lambda(j))=1\}|\text{ is odd},\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\tag{3.2}
+$$
+
+Emit $\mathcal B_Q(E)$. Its first bit is zero, since $-1=k$ has not been selected; its final bit is the prescribed bit at $H$, which may be one. If the exceptional scan retained $k$ but $A$ is a band label, assign $b(A)=0$. That source has zero response, the same as the correct band label $A$. Otherwise there is no retained outside source. Consequently this one endpoint decodes both band labels and any remaining $A$ correctly. The total fee is $Q+1$, with no terminal cleanup.
+
+For the remaining fresh-$A$ exception use (2.4), leaving $I\cup\{z\}$. Choose $b(\lambda(H))=1$, give the other band label bit zero, and use (3.2) at index $Q$. Then emit at index $Q+1$
+
+$$
+\mathcal B_{Q+1}(\{H,z\})=110^{m-2}.
+\tag{3.3}
+$$
+
+The two acquired differences have the following meaning: $A$ at $z$ gives $01$; band label zero gives $00$; band label one gives $10$ or $11$, with the latter code at $H$. Repeated occurrences of a label may have different codes, which is harmless; no different labels share a code. The support $\{H,z\}$ is inside $W_{Q+1}=[m-1,2m-1]$, including its left endpoint. This query does not borrow a nonexistent donor at $H$: $H$ is an actual band source and its assigned response is included in the decoder.
+
+After the first compulsory zero block all words have a zero. The main query starts zero; the last query has leading run two and terminal tail zero. Even if the main query ends with up to $m-1$ ones, the last seam has length at most $m+1<2m\le k$ for $m\ge3$. Other seams satisfy $2m-2<k$. All words have exactly $m$ bits. The scan's early leaves and the displayed codes return immutable labels on each original source. The stream is common to both free values. These preset upper bounds match the adaptive lower bounds. ∎
+
+For the sharp smallest odd boundary $Q=2,m=3,k=6$, let $\lambda(1)=B$, $\lambda(2)=C$, with $A,B,C,R$ distinct. An attaining literal stream is
+
+$$
+111\mid001\mid011\mid110.
+\tag{3.4}
+$$
+
+Its fee is four, not three. The fourth block separates the actual outside phase four from the two band labels. Coarsening $A$ to a band label removes the surcharge, exactly as (3.1) states.
+

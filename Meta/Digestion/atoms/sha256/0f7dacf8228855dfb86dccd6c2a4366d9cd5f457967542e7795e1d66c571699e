@@ -1,0 +1,41 @@
+**Definition 1.2 (entire acquired fiber and complete rows).** Use
+[ARH, Definitions 1.1–1.2][ARH]. For a finite prefix-free original cut $A$,
+$R_A(u)$ retains the entire concrete numbered-hole exterior, the ordered
+reached set $A\cap\operatorname{Pos}(u)$, and the equality partition of the
+entire reached subtrees. Absent cut addresses contribute no holes. An attained
+input $I=(P,R,H_0,H_{\rm rel},Q,N)$ has entire fiber
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{CRE.3}
+$$
+
+A literal $(e,p,c)$ imposes $r_{\rho^e u}(p)=c$. A signed record
+$(e,p,f,q,\bowtie)$, $\bowtie\in\{=,\ne\}$, imposes
+
+$$
+p\in\operatorname{Pos}(\rho^e u),\quad
+q\in\operatorname{Pos}(\rho^f u),\quad
+(\rho^e u)|_p\ \bowtie\ (\rho^f u)|_q.
+\tag{CRE.4}
+$$
+
+Both guards are required for either sign. Absence is not a negative
+certificate. Lists retain repetitions; every record in one realization
+concerns its same original source. Every old class, cross-class inequality
+and off-task condition belongs to (CRE.3).
+
+For distinct attained complete labels $r_0,r_1$ put
+
+$$
+D_i=\{u\in D:R_Q(u)=r_i\},\qquad
+J(h)\Longleftrightarrow
+\exists u_0\in D_0\ \exists u_1\in D_1\quad u_0\equiv_h u_1.
+\tag{CRE.5}
+$$
+
+The two witnesses are alternative originals producing one common retained
+input. Each satisfies one whole source contract and its own complete row;
+they are not incompatible labels assigned to one realization. Other rows
+remain in $D$.
+

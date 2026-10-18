@@ -1,0 +1,14 @@
+## 12. 完整声明的付费长度切片与精确标签数
+
+固定 $R=1$ 和第三书签标记前缀 $100$，但不限制重试类型、重试顺序或前三段返回圈数。该观察切片的每条原始历史唯一解析为
+
+$$
+h=u\,\beta\alpha\mid
+(\beta\alpha)^{j_1}\beta\beta
+(\beta\alpha)^{j_2}\alpha
+(\beta\alpha)^{j_3}\alpha,
+\qquad u\in\{\alpha\alpha,\beta\beta\}^{*},\quad j_1,j_2,j_3\ge0.
+$$
+
+竖线和段划分由实际控制确定，不是额外端口。设 $u$ 中两个拒绝类型的对数为 $u_\alpha,u_\beta$，$s=j_1+j_2+j_3$。允许全部这些历史，并仅在分析时限制 $T_3\le L$；不修改原来源或执行预算。
+

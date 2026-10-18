@@ -1,0 +1,66 @@
+**Proposition 9.1 (Inherited realization, with its paid costs).** For
+every $m\ge9$ one has $C_m=S_3$. The following is [Three Read,
+Definition 12.2][E3] with first parity zero:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2j)$ | $R_0$ | $R_1$ |
+| $R_0$ | $\operatorname{Read}(2(j+2))$ | $A_0$ | $P$ |
+| $R_1$ | $\operatorname{Read}(2(j+2))$ | $B$ | $C$ |
+| $A_0$ | $\operatorname{Read}(2(j+4))$ | $Z_H$ | $P$ |
+| $B$ | $\operatorname{Read}(2(j+1))$ | $Q$ | $P$ |
+| $C$ | $\operatorname{Read}(2(j-1))$ | $P$ | $Q$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+Proof. The inherited unrestricted theorem bounds every installed table
+by $S_3$. For completeness, the displayed actual attainer's terminal
+law and costs are
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $000$ | $h_1(\sigma)$ | $(1+c^3)/2$ | $a/2$ | $3$ |
+| $001$ | $h_0(\sigma)$ | $c^2\eta$ | $a^2c\eta$ | $3$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $a^2\eta$ | $2$ |
+| $100$ | $h_0(1-\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+| $101$ | $h_0(\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+| $110$ | $h_0(\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+| $111$ | $h_0(1-\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+
+In phase zero, $000,001$ use the three disjoint pairs beginning
+at $j,j+2,j+4$. On $01$ the target zero pair and distant one pair
+are disjoint; the target-majority weight is $a^2$. For $100,101$,
+edge $\{j+1,j+2\}$ joins the one pair $\{j,j+1\}$ to the
+zero pair $\{j+2,j+3\}$. The two heavier completions have weights
+$a^3b$, and complements $ab^3$, with target spins $1-\sigma$
+and $\sigma$ respectively. Hence each source mass is $c\eta/2$
+and each correct mass $a^2\eta/2$.
+
+On $110,111$, the local triples in order $j-1,j,j+1$ are
+$(\sigma,\sigma,1-\sigma)$ and
+$(\sigma,1-\sigma,\sigma)$ in their heavier completions. Each
+has weight $a^2b$, while the independent one pair beginning at $j+2$
+has probability $2\eta$. This proves the last two masses and labels.
+In phase one every call is a separator; its only record is $000$,
+whose correct contribution is $a/2$. Thus all entries concern one
+source with its unchanged target.
+
+The two first-reply source sums are $1-\eta$ and $\eta$; the
+correct sums are $Z$ and $D$. They give total correct mass $S_3$.
+The table has six distinct read rows and three distinct halt rows.
+Rows $R_0,R_1$ share an address literal but have different successors
+and remain separate installed states. It halts on every formal input,
+with
+
+$$
+\mathbb P(N=2)=c\eta,\qquad
+\mathbb P(N=3)=1-c\eta,\qquad
+\mathbb E N=3-c\eta.
+\tag{9.1}
+$$
+
+This inherited table attains the upper bound at every $m\ge9$.
+Its nine-row minimality is the inherited $M_3=9$ theorem, rather than
+a new conclusion of this proposition. $\square$
+

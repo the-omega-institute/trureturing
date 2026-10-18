@@ -1,0 +1,11 @@
+**命题 39.4（Adaptive fee one with infinite wide preset fee）。** At the same $k=2,m=5$, choose labels $A\ne B$ and $C\ne D$, allowing arbitrary coincidences between the two pairs. In free-value fibre zero take the phase-only target $A$ at $j=0,2$ and $B$ at $j=1$, at both tails. In fibre one take $C$ at INITIAL tail zero and $D$ at INITIAL tail one, independent of phase. Then
+
+$$
+C_{\rm ad}(f)=1,\qquad C_{\rm pre}(f)=+\infty.
+\tag{39.9}
+$$
+
+Proof. In fibre zero, word $00100$ has even mask $\{0,2\}$, starts zero and is legal, giving the required phase label in one block. In fibre one, word $10000$ rejects exactly INITIAL tail one across its first-bit seam, and its surviving tail-zero sources return $C$; its first endpoint returns $D$ on rejection. Both fibres are nonconstant, so one block is also necessary. Free INITIAL value selects these different actions adaptively, while initial bottom stops independently at zero fee.
+
+Fibre zero is nonconstant and phase-only. It permits cut zero; every positive cut has a high band containing every phase and both labels, so no positive cut is eligible. Fibre one's distinct tail labels exclude cut zero and require cut one. Thus there is no common cut for the joined target. The credited common-cut criterion, or the infinite case of Theorem 38.1, gives infinite preset fee. Cross-component label coincidences do not remove either failed constancy condition. ∎
+

@@ -1,0 +1,13 @@
+**Remark 8.2 (The large-cutoff regimes remain present).** Write $C_{\rm low}=b\,9!/(4B\delta)$. The first lower bound of (8.4) reads exactly
+
+$$
+\mathbb E_iT\ge
+\begin{cases}
+C_{\rm low}s^{-11}L_M^{-9},&sL_M\le1,\\
+C_{\rm low}s^{-12}L_M^{-10},&sL_M>1.
+\end{cases}
+\tag{8.12}
+$$
+
+It is valid for bounded, unbounded and oscillating $sL_M$, including the boundary value one. The affine-budget version has the identical two formulas with $X_M$ replacing $L_M$. Since $L_M\le X_M$, it is possible that $sL_M\le1<sX_M$; the second line of (8.4) remains a weaker valid lower bound in that case by (8.11). No assertion that these regimes coincide is used. A large-cutoff lower bound may be weak, but it remains part of the universal statement and cannot be replaced by its small-cutoff formula.
+

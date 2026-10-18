@@ -1,0 +1,37 @@
+**Proposition 4.2 (The effect map, with its orientation fixed).** For a
+real symmetric $E$, put $t_i=\operatorname{tr}(R_iE)$ and define
+
+$$
+\begin{aligned}
+\mathcal A(E)={}&\Lambda_{00}t_0R_0
++\sum_{j=+,-}\frac{\Lambda_{jj}}8(t_jR_j+2R_jER_j)\\
+&+\sum_{i\ne j}\frac{\Lambda_{ij}}{d_id_j}\,t_iR_j\\
+&+\frac{110}{271}(R_0ER_++R_+ER_0)
++\frac{1148}{2857}(R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{4.6}
+$$
+
+Then $\mathcal A=S^\dagger$. Both sides extend complex linearly after
+replacing $X$ by $(X+X^T)/2$. The formula for $S(E)$ has instead
+$t_jR_i$ in the sum over $i\ne j$; the other displayed terms agree.
+
+Proof. For one flag, the adjoint is
+$E\mapsto c_fb_fb_f^T\operatorname{tr}(a_fa_f^TE)$.
+Take the exact continuous averages (3.7). In a plane, the fourth
+moment is $(t_jR_j+2R_jER_j)/8$. Distinct planes have independent
+second moments, so diagonal output/input sectors contribute
+$\Lambda_{ij}t_iR_j/(d_id_j)$ to the adjoint. Two dark/plane cross
+terms give the coefficient $110/271$ in (4.6), and two planar cross
+terms give $1148/2857$, as computed in Proposition 4.1. These terms
+are self-adjoint as linear maps on symmetric matrices, while the
+sector-transfer block is transposed on taking the adjoint.
+Both real-product maps annihilate transpose-antisymmetric inputs,
+proving the complex-linear extension assertion.
+
+As a direct check, for $E=I$ one has $t_i=d_i$. The $R_j$
+coefficient in (4.6) is $\sum_i\Lambda_{ij}/d_j=1$; cross terms
+vanish. Hence $\mathcal A(I)=I$ exactly. In contrast the row sums in
+Proposition 4.1 show why substituting $S$ for $\mathcal A$ would be
+incorrect. $\square$
+

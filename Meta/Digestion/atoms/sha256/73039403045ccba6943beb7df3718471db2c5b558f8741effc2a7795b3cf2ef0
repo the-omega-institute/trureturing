@@ -1,0 +1,52 @@
+**定理 199.6（闭多面体的衰退锥与零成本吸收）。** 对 $t\ge0$ 及
+$C=N,O$，
+$$
+\operatorname{rec}D_C(t)=D_C(0),
+\tag{199.13}
+$$
+并且
+$$
+\operatorname{rec}E_N=D_N(0)+P_H.
+\tag{199.14}
+$$
+因此对 $q_0\in D_O(0)$，射线
+$\{s q_0:s\ge0\}$ 全部属于 $E_N$ 当且仅当存在
+$V_0\ge0$ 使 $\Delta_N(V_0)=0$ 且
+$q_0-Q(V_0)\in P_H$。若 $Q(y)$ 已由 $(V,\theta)$ 证实，且
+$Q(y_0)=q_0$ 有上述零成本提升，则对任意 $s\ge0$，同一 $\theta$ 由
+$V+sV_0$ 证实 $Q(y+s y_0)$。
+
+**证明。** 评分多面体
+$$
+Y_C(t)=\{y\ge0:a_D\!\cdot y\le t\ (D\in\mathcal D_C)\}
+$$
+非空，其衰退系统为 $Y_C(0)$。有限维多面体的线性像仍为闭多面体，且
+$\operatorname{rec}(Q(Y_C(t)))=Q(\operatorname{rec}Y_C(t))$；这是 Kaibel
+上述文献 Theorems 7、8、10 的有限锥表示的直接应用，故得 (199.13)。
+
+把 $E_N$ 写成变量 $(q,V,\theta)$ 的有限投影：$V\ge0$、
+$a_D\!\cdot V+\theta\le1$、$0\le\theta\le1$ 以及
+$F_{q-Q(V)}(v^j)\le\theta$。衰退方向的 $\theta$ 分量必须为零，且
+$V_0\ge0$、$a_D\!\cdot V_0\le0$，并满足
+$F_{q_0-Q(V_0)}(v^j)\le0$。故其 $q$ 投影正是
+$D_N(0)+P_H$；反向将任意这两个分量代入上述齐次系统即得 (199.14)。
+
+$0\in E_N$，取 $V=0,\theta=0$ 即可。对闭凸集，零点出发的整条射线在该集内当且仅当其方向属于衰退锥：必要性可由任意
+$z\in E_N$、$t\ge0$ 和
+$(1-\varepsilon)z+\varepsilon(t/\varepsilon)q_0\in E_N$，令
+$\varepsilon\downarrow0$ 并用闭性得到 $z+tq_0\in E_N$。于是射线判据由
+(199.14) 得出。
+
+最后，若 $Q(y)$ 有 $(V,\theta)$ 证书，则
+$$
+\Delta_N(V+sV_0)\le\Delta_N(V)+s\Delta_N(V_0)\le1-\theta,
+$$
+且对每个 $b\in H$，
+$$
+F_{Q(y+s y_0)-Q(V+sV_0)}(b)
+=F_{Q(y)-Q(V)}(b)+sF_{q_0-Q(V_0)}(b)\le\theta.
+\tag{199.15}
+$$
+这里用的是已建立的零成本增量；没有把任意 $O$ 评分的预算误拆成各分量预算，
+也没有由零衰退控制推出正预算结论。$\square$
+

@@ -1,0 +1,57 @@
+**Lemma 8.3 (one joint Choi–measure condition).** Let
+
+$$
+K=\coprod_{i=0}^4\bigl(\{i\}\times[0,1]\bigr)\ \sqcup\ \{\mathrm o\},
+\tag{CG.51}
+$$
+
+with the disjoint-union compact metric topology and isolated other point
+$\mathrm o$. A reduced common channel is equivalent to a pair $(J,B)$,
+where $J\geq0$ is a matrix on $V_{\rm in}\otimes V_{\rm live}$ and
+$B$ is a positive $3$ by $3$ matrix-valued finite Borel measure on $K$,
+countably additive entrywise, such that
+
+$$
+\operatorname{Tr}_{\rm live}J+B(K)=I_V.
+\tag{CG.52}
+$$
+
+In the fixed basis $(+,-,2)$, its live matrix and scalar record measure
+on an input $\rho$ are
+
+$$
+L_\rho=\operatorname{Tr}_{\rm in}[(\rho^T\otimes I_V)J],\qquad
+\mu_\rho(A)=\operatorname{tr}(\rho^T B(A))\quad(A\subseteq K\text{ Borel}).
+\tag{CG.53}
+$$
+
+Proof. Use the Choi convention
+
+$$
+J=\sum_{a,b}|a\rangle\langle b|\otimes
+                   \Phi_{\rm live}(|a\rangle\langle b|).
+\tag{CG.54}
+$$
+
+The CP Choi correspondence gives positivity of $J$ and the first formula
+in (CG.53). Each scalar record branch has a positive effect $E(A)$;
+put $B(A)=E(A)^T$. Its output is
+$\operatorname{tr}(\rho E(A))=\operatorname{tr}(\rho^T B(A))$.
+Entrywise countable additivity follows from that of the output laws and
+linearity on a finite matrix basis. Trace preservation for every $\rho$
+then gives (CG.52). In particular $\operatorname{Tr}_{\rm live}J$
+is the transpose of the live effect, so the two terms in (CG.52) use
+the same transpose convention.
+
+Conversely, a positive $J$ gives its CP live map by (CG.53).
+Each $B(A)^T$ is positive and defines a CP scalar-output map: diagonalizing
+this effect expresses its trace functional as a sum of positive rank-one
+Kraus branches. The countably additive family of these effects defines
+the scalar record instrument, with $P_f$ prepared on each stopped branch.
+Equivalently every finite Borel partition gives CP branches, also after
+tensoring an arbitrary reference identity; their countable sums have the
+specified measures. Equation (CG.52) makes the total output trace
+$\operatorname{tr}(\rho^T I_V)=\operatorname{tr}\rho$.
+This proves sufficiency for a single CPTP channel. It does not permit
+independently selecting an output for each history. $\square$
+

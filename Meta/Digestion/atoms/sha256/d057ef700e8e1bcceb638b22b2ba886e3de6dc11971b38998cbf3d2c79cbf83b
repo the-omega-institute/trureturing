@@ -1,0 +1,27 @@
+**第四 M 臂：IV 2.1 的直接应用。** 取
+
+$$
+R_1=\frac1{55}\begin{pmatrix}12&19\\36&57\end{pmatrix},\quad
+R_2=\frac1{55}\begin{pmatrix}18&28\\27&42\end{pmatrix},\quad
+R_3=\frac1{55}\begin{pmatrix}28&35\\20&25\end{pmatrix},
+\quad G(T)=T(T-5)(T-7).
+\tag{10.2}
+$$
+
+按式 (1.2) 与零漂移得到集合 $K_{IV}$。行列式分别由 $12\cdot57=19\cdot36$、$18\cdot42=28\cdot27$、$28\cdot25=35\cdot20$ 为零；迹为 $69/55,60/55,53/55>0$，左因子比 $3,3/2,5/7$ 不同，故目标合法且不同。三个 $R_i$ 的 $J,L$ 迹均为 $1,8/5$；累积矩阵 $I,J,L,J+L,J+2L$ 与样本 $0,24,30,24,12$ 给出整个共同历史
+
+$$
+(H_{JMM},M,252/5).
+$$
+
+第五、第七增益为零；第六增益为 $-6$。全部第五、第六动作表为
+
+| 第五、第六动作 | 第六矩阵 | 三个第六读数 |
+| --- | --- | --- |
+| $MM$ | $\left(\begin{smallmatrix}5&3\\8&5\end{smallmatrix}\right)$ | $(-66,-66,-66)$ |
+| $MJ$ | $\left(\begin{smallmatrix}5&3\\3&2\end{smallmatrix}\right)$ | $(-2034/55,-2034/55,-426/11)$ |
+| $JM$ | $\left(\begin{smallmatrix}2&1\\5&3\end{smallmatrix}\right)$ | $(-1956/55,-1974/55,-1956/55)$ |
+| $JJ$ | $\left(\begin{smallmatrix}2&1\\3&2\end{smallmatrix}\right)$ | $(-126/5,-126/5,-126/5)$ |
+
+第五 $M$ 后，第六 $M$ 保留全部、第六 $J$ 保留 $1,2$；第五 $J$ 后，第六 $M$ 保留 $1,3$、第六 $J$ 保留全部。每个第七动作都读零。故第四 $M$ 响应 $252/5$ 子集中 $K_{IV}$ 有 $L_3$，停止亦被保留的不同配对排除。这是 [IV，定理 2.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 的原构造。
+

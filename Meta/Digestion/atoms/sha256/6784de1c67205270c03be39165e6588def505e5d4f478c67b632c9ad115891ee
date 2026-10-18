@@ -1,0 +1,13 @@
+## 3. The exact two-dimensional profile and its complete active set
+
+Throughout §§3–7 assume $0<Z<2/3$. Define
+
+$$
+\tau=\frac Z{4H}\in(0,1),\qquad x=\frac kH,\qquad
+s(x)=\sqrt{x(1-x)},\qquad T_0=\frac{(1+\tau)^2}{4}.
+$$
+
+The function $s(x)$ is unrelated to the real displacement parameter in
+$P_s$. All closed-interval functions in this section are scalar formulas
+for limits of interior errors; the source remains $0<k<H$.
+

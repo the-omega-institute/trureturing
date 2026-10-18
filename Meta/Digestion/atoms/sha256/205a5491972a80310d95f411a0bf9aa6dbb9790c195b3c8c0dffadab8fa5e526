@@ -1,0 +1,15 @@
+**Definition 1.3 (class size and defect).** Put
+
+$$
+m_t=|C_t|,\qquad \delta_t=19-m_t.
+\tag{NAGC.1.5}
+$$
+
+The inherited bounds and defect accounting [NARC, Theorems 9.2,
+13.2 and 15.1][NARC] give $1\le m_t\le19$, $\delta_t\ge0$ and
+$\sum_t\delta_t=q(19-q)$. Thus every defect is zero at $q=19$,
+whereas their sum is eighteen at $q=18$. In the latter case the
+number of saturated classes equals
+$\sum_{\delta_t\ge2}(\delta_t-1)$. No particular allocation of
+these defects is fixed below.
+

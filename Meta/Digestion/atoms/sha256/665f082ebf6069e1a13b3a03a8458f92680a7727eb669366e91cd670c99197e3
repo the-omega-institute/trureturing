@@ -1,0 +1,74 @@
+**Definition 1.1 (The original experiment).** Retain the source, control and complete-tail prediction task of [ST, Sections 1–3; PAID, Definitions 1.1–1.3]. The parameters are $m=2,d=1,\ell=2,n=4$, with $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. One actual depth $K$ is drawn before all Reads from one fixed finite or countable probability prior $\mu$, with $\mu(1),\mu(2)>0$. Conditional on that same $K=k$, all seed and payload letters are independent, with alpha probability
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\qquad
+a:=r_1=\frac13,\qquad b:=r_2=\frac25,
+\qquad r_k\in[3/8,5/13]\quad(k\ge3).
+\tag{1.1}
+$$
+
+Both letters of every rejected equal seed pair remain paid. The parser accepts $\alpha\beta$ as seed 0 and $\beta\alpha$ as seed 1. Both accepted seeds, every marker triple and every positive finite rejection and return history remain in the domain. At payload p, alpha completes marker 0 and beta suspends; at suspension, alpha returns to p and beta completes marker 1. The third record is written before its latch. Fourth completion retains all held records and enables only the matching original Stop, with unique delivery. Pending and delivered cuts permit no Read. There is no reset, fresh depth, additional observation, future-event conditioning or added controller port.
+
+The original finite control $C_0$ includes parser, finite marker tree, bare and held records, selectors, write/latch flags, permissions, completion, pendingStop and deliveredStop. An observer has one fixed finite COMPLETE configuration set, source-independent random initialization and fixed time-homogeneous source-independent letter-update kernels. All persistent randomness, program and output indices, sampler workspace and control fields are counted. An exact posterior, probability-vector register, uncounted tape, archive, clock or source-correlated seed is unavailable.
+
+Put $\lambda_r=r(1-r)$ and
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta\qquad(j\ge0).
+$$
+
+The complete raw p carrier consists of these finite words and the legal infinite noncompletion word. The suspended carrier consists of beta, the words $\alpha w_{j,c}$ and its legal infinite noncompletion word. For a mathematical comparison parameter $r\in I:=[a,b]$, define
+
+$$
+\begin{aligned}
+P_{p,r}(w_{j,0})&=r\lambda_r^j,&
+P_{p,r}(w_{j,1})&=(1-r)^2\lambda_r^j,\\
+P_{\beta,r}(\beta)&=1-r,&
+P_{\beta,r}(\alpha w_{j,c})&=rP_{p,r}(w_{j,c}).
+\end{aligned}
+\tag{1.2}
+$$
+
+These laws have total mass one and zero noncompletion mass. The interval $I$ is only a comparison family; it introduces no actual depths or source operations.
+
+For each actual control $c$, the original renderer $I_c$ inserts all future control, record, permission, completion, Stop and delivery events into the raw Read word. Reading back the letters is its inverse. These complete-carrier bijections preserve TV and commute with deleting the next operation together with its deterministic event block. In particular, an already acquired suspended beta is not inserted into its future a second time. At a positive history $h$, let $A(h),B(h)$ count all acquired alpha and beta Reads, including rejected seed pairs and partial parses. Independence conditional on the same $K$ gives the positive-history likelihood $r_k^{A(h)}(1-r_k)^{B(h)}$. Finite-prefix conditioning leaves the unread letters independent with that same parameter, so the complete target at an active fourth cut is
+
+$$
+T_h^\mu=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+{\sum_i\mu(i)r_i^{A(h)}(1-r_i)^{B(h)}}.
+$$
+
+The denominator is positive and the sum is finite or countably summable. No future completion is conditioned on. Posterior counts and probabilities are analysis quantities, never runtime inputs.
+
+Every individual decoded law must be generated exactly by that configuration's own emissions and the same acquired-letter update kernels. In full notation, for every legal next operation and complete residual event, $D_z(oE)=q_z(o)\sum_{z'}P_o(z,z')D_{z'}(E)$ with the installed acquired kernel $P_o$ itself. At zero predicted probability this identity has zero left side, while the actual update remains installed. This obligation is independent of any marginalized conditioning defect. At a positive history $h$, let $\rho_h$ be the observer-randomness row, $D_z$ its complete decoded laws and $T_h^\mu$ the actual target. Define
+
+$$
+e_{\rm law}(h)=\operatorname{TV}\!\left(\sum_z\rho_h(z)D_z,T_h^\mu\right),\qquad
+e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\tag{1.3}
+$$
+
+The respective risks $R_{j,s}$ are suprema over all positive original histories at phase $s\in\{p,\beta\}$. They are not actual-history-average losses. Full $\mathcal H_p$ includes every finite fourth-segment return, whereas $\mathcal H_3$ contains only the first fourth p cut. The supplied separate complete-tail minima [CLIP, Definition 1.3; PAID, Definition 1.3] are
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750}.
+\tag{1.4}
+$$
+
+The supplied terminal-projection values $13/266,9/266$ are different quantities and are not substituted for (1.4). The supplied actual three-depth endpoint-tag counterexample concerns that generator's configuration risk; it proves neither a universal sharper lower bound nor a marginalized-law failure [CLIP, Citation 1.5].
+
+For a legal next operation $o$, let $q_h(o)=\sum_z\rho_h(z)q_z(o)$ and $\bar D_h=\sum_z\rho_h(z)D_z$. On a positive predicted cylinder, $\operatorname{res}_o$ conditions on that operation and deletes it together with its original deterministic event block. Define
+
+$$
+\delta(h,o)=
+\begin{cases}
+\operatorname{TV}(\operatorname{res}_o\bar D_h,\bar D_{ho}),&q_h(o)>0,\\
+0,&q_h(o)=0.
+\end{cases}
+$$
+
+The zero case defines no conditional law; the actual successor and its risk remain in the domain. The fourth-cut and all-operation defect suprema, $\Delta_4,\Delta_{\rm all}$, remain distinct. Pending Stop has deterministic residual and delivered Stop has empty supremum. An achievable tuple $(R_{{\rm law},p},R_{{\rm conf},p},R_{{\rm law},\beta},R_{{\rm conf},\beta},\Delta_4,\Delta_{\rm all})$ comes from one observer, installed source, prior and counted resource allocation. Separate attainability is not joint attainment. No defect budget or zero-defect recovery is assumed here.
+

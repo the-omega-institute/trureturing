@@ -1,0 +1,30 @@
+#### 定理 F：未来可识别性
+
+```math
+\mathcal H_n^{(1)}
+\cap
+\bigcap_{w}\ker(R_wU_w)
+=
+\{0\}
+```
+
+当且仅当完整未来记录能够消除一阶观测留下的所有隐藏差异。
+
+这六条把原来的五态金字塔提升成了一个完整层级：
+
+```math
+\text{FIB 编码}
+\longrightarrow
+\text{状态函数基}
+\longrightarrow
+\text{一阶投影}
+\longrightarrow
+\text{隐藏 seam}
+\longrightarrow
+\text{动态未来分辨}
+\longrightarrow
+\text{局部因果场}.
+```
+
+---
+

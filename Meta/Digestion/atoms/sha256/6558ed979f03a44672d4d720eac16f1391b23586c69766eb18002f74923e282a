@@ -1,0 +1,11 @@
+**Convention 1.5 (actual runs and failures).** An executed Read at $w$
+has label $(\mathsf{Read},w,\mathsf{ok},r_t(w))$, leaves $t$ unchanged,
+and changes the actual control and any declared record according to that
+same reply. Absent is a successful literal observation. Every finite
+literal is legal; no executed-failure service is assumed. An unsupported
+source update has no executed successor and creates no event. The results
+cover these Read runs and, in §§7–8, the explicitly restricted sweep runs.
+They do not assign four views to additional histories with executed
+failures, source edits, arbitrary preparation transactions or physical
+timestamps.
+

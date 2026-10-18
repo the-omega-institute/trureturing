@@ -1,0 +1,119 @@
+**定义 201.1（早期 pair 评分族与有限层集容量）。** 固定 $L\ge3$，令
+$\Omega=\{0,1\}^L\setminus\{1^L\}$，$n(w)=\min\{i:w_i=0\}$，
+$\Omega_j=\{w:n(w)=j\}$。完整标签集为 $\{0,\ldots,L\}$。每个 $w\in\Omega_j$
+保留三个独立事件 $\{0\},\{j\},\{0,j\}$，其非负评分分别为 $A_w,C_w,P_w$；
+全正字的基事件评分为 $T\ge0$。在 $b=(b_1,\ldots,b_L;e)$ 上，需求依次为
+
+$$
+1-b_j-e,\qquad b_j-e,\qquad1-e,\qquad
+ d(b)_{1^L}=1-e.
+\tag{201.1}
+$$
+
+全部 Boolean 字、多零字、可能为负的单点需求及独立 pair TV 行均保留。
+评分为零不删除原行。完整 $N$ 目录包含空表、单询表和所有 $i<j$ 的四胞
+$00,01,10,11$ 表；完整 $O$ 目录的双询胞为 $0,10,11$。每胞可选任意标签，
+包括未查询标签和较早标签。记
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0;0),&
+\mathbf r&=z_R=d(\alpha),\\
+h(b)&=d(b)-\mathbf r,&G_C&=(z_D-\mathbf r)_{D\in\mathcal D_C},&
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z_D,\\
+\Delta_C(y)&=B_C(y)-y\cdot\mathbf r,&
+\rho_C(b)&=\min\{\textstyle\sum_D\lambda_D:\lambda\ge0,\ G_C\lambda\ge h(b)\},
+&&C\in\{N,O\}.
+\end{aligned}
+\tag{201.2}
+$$
+
+不可行时 $\rho_C=\infty$；有限最小值的达到沿用定义 166.1、定理 166.2。
+$R$ 的标签按停止胞排列，在 $N$ 中其前两胞都输出 $1$。对有符号 $q=(\beta_1,\ldots,\beta_L;K)$，商及其仿射读数为
+
+$$
+\begin{aligned}
+\beta_j(y)&=\sum_{w\in\Omega_j}(C_w-A_w),&
+K_y&=\sum_{w\in\Omega}(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta_1,\ldots,\beta_L;K_y),&
+F_q(b)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad F_y=F_{Q(y)}=y\cdot h.
+\end{aligned}
+\tag{201.3}
+$$
+
+本节的评分族要求
+
+$$
+A_w=0,\qquad \operatorname{supp}P\subseteq\Omega_1\cup\Omega_2,
+\qquad C_w\ge0\ (w\in\Omega),\quad T=t\ge0.
+\tag{201.4}
+$$
+
+置
+
+$$
+\begin{aligned}
+\gamma_j&=\sum_{w\in\Omega_j}C_w,& E&=\gamma_1+\gamma_2,&
+G&=\sum_{j=3}^L\gamma_j,\\
+\mu&=\max_{3\le j\le L}\gamma_j,& S&=\sum_wP_w,&B&=S+t,
+\qquad\delta=\Delta_O(y).
+\end{aligned}
+\tag{201.5}
+$$
+
+这里 $B$ 是可重分配的评分总量，不是 $B_C$。令 $m=L-2$，定义常数
+
+$$
+c_1=2,\qquad c_2=3,\qquad
+c_k=4-\frac{2}{\lceil k/2\rceil}\quad(k\ge3).
+\tag{201.6}
+$$
+
+这些 $c_k$ 专指割覆盖系数，不是定义 200.2 的守卫成本 $c_j(y)$。
+若 $\mu>0$，取不同的正权重值
+$0=t_0<t_1<\cdots<t_r=\mu$，并令
+
+$$
+J_\ell=\{j\in\{3,\ldots,L\}:\gamma_j\ge t_\ell\},\qquad
+ d_\ell=t_\ell-t_{\ell-1},\qquad
+\Lambda(\gamma)=\sum_{\ell=1}^r d_\ell c_{|J_\ell|}.
+\tag{201.7}
+$$
+
+于是 $\gamma_j=\sum_\ell d_\ell\mathbf1_{j\in J_\ell}$。
+若 $\mu=0$，层集和为空且 $\Lambda=0$。等价地，把晚期权重按数值排序为
+$g_1\ge\cdots\ge g_m\ge g_{m+1}=0$，则
+
+$$
+\Lambda(\gamma)=\sum_{k=1}^m c_k(g_k-g_{k+1})
+ =\int_0^\mu c_{|J_s|}\,ds,\qquad J_s=\{j\ge3:\gamma_j\ge s\}.
+\tag{201.8}
+$$
+
+积分仅是有限阶梯和的记号，排序不重标原地址。以下所有评分、子集测度与割权重均不
+归一为概率核，不是来源分布，也不构成执行中的额外随机性。
+
+证书使用原闭域
+
+$$
+\begin{aligned}
+H=H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+$$
+
+沿用 $P_H=\{q:F_q\le0\text{ 在 }H\text{ 上}\}$、
+$D_C(v)=\{Q(V):V\ge0,\Delta_C(V)\le v\}$（$v\ge0$）、
+$H_N=\{b\in H:\rho_N(b)<\infty\}$，以及
+
+$$
+E_N=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\quad
+\Delta_N(V)\le1-\theta,\quad
+\sup_{b\in H}F_{q-Q(V)}(b)\le\theta\}.
+\tag{201.9}
+$$
+
+评分 $V$ 非负，商残差允许带符号。定理 198.5 的全部顶点仍参与残差检验，尤其
+$u_k=((k-1)^{-1},\ldots,(k-1)^{-1},0,\ldots,0;0)$ 的前 $k$ 项非零。
+这些零帽顶点属于辅助几何。
+

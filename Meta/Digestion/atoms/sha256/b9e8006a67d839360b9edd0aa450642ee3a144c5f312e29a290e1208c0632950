@@ -1,0 +1,22 @@
+**Convention 1.4 (failures and target designation).** Literal `absent`,
+executed source `reject`, executed archive `no-row`, and illegal-unexecuted
+busy/missing-token/unsealed-destination operations are distinct. The
+consumer additionally has distinct executed `CutIndexReject`,
+`NoPackage`, `NoCover`, `End` and malformed-service-frame outcomes. These do not become
+source replies. Input not supplied at an IN is not an emitted refusal.
+
+Four designation relations must remain separate:
+
+1. A mathematical choice of $h$ or $n$ fixes a specification, not acquired
+   input, a serialized numeral or permission.
+2. An acquired cut reference has actual finite backing, a version/source
+   binding and an invocation authority. A theorem assuming one does not
+   acquire it.
+3. A prospective request to mark the current busy boundary needs an
+   enabled target-dependent acquisition occurrence there.
+4. Retrospective retrieval can acquire references after a finite covering
+   flight. Selecting one of them still requires an actual acquired choice.
+
+The requested target in (RCA.1) is never replaced by the later covering,
+copying, publication or invocation boundary.
+

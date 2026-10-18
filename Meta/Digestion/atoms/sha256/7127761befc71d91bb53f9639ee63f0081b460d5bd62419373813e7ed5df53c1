@@ -1,0 +1,36 @@
+**Theorem 12.1 (empirical finite-cover completion).** Let
+$p_i\in\Delta(R_i)$ be rational, and let $m$ be any common
+denominator, so every $mp_i(a)$ is an integer. Then $p$ satisfies
+(COK.61) if and only if some $m$-sheet group-permutation cover has
+one actual solution whose empirical local law on the copies of
+each $i$ is exactly $p_i$. Consequently matching is equivalent to
+empirical realization on some finite such cover. The assertion
+also holds on the positive supports $R_i^+$.
+
+Proof. Choose a list $a_{i,1},\ldots,a_{i,m}$ with empirical law
+$p_i$. At $e=(j,i)$ and for each whole group value $b$, matching
+says that the sets
+
+$$
+\{k:B_{ji}(a_{i,k})=b\},\qquad
+\{\ell:\operatorname{pr}_{ji}O_j(a_{j,\ell})=b\}
+\tag{COK.62}
+$$
+
+have equal cardinality. Match them bijectively, separately for each
+$b$, to obtain $\sigma_e$. Do this for every edge. At $(i,k)$,
+assign its owned seeds $O_i(a_{i,k})$. Every incoming group then
+equals the corresponding group of $a_{i,k}$ by (COK.62), including
+all repeated occurrences of its seeds. Thus all copied local
+configurations are the selected $a_{i,k}$ and are actual compatible
+blocks. Their owner replies give a unique actual tuple by RRN.
+Membership in $R_i^+$ additionally makes its product weight positive.
+
+Conversely, in any actual cover solution, $\sigma_e$ is a bijection
+between recipient copies and owner copies. Counting each whole group
+value at both ends gives (COK.61). Its empirical counts are exactly
+those of the asserted $p_i$. This proves necessity and sufficiency,
+without requiring independent owner coordinates or an acyclic graph.
+The matchings are finite effective constructions from rational lists.
+$\square$
+

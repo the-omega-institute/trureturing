@@ -1,0 +1,39 @@
+## 12. Optional ceilings and sharpness at the cell scale
+
+The uniform alphabet theorem has a useful exact-pair ceiling. Let
+
+$$
+ u_K=1-\sum_{k\ge1}\sqrt{f_0(k)f_1(k)}
+$$
+
+be the full-gap affinity deficit. For every common kernel, Cauchy--Schwarz gives
+
+$$
+\sum_k\sqrt{f_0(k)f_1(k)}w_z(k)
+ \le\sqrt{a_0(z)a_1(z)}.
+$$
+
+Summing in $z$ yields $u_Z\le u_K$. Since
+$L(k)=f_1(k)/f_0(k)=(1+ch(k))/(1+cg)$,
+$L(k)\ge1/(1+c)$, and
+$L(k)-1=c(h(k)-g)/(1+cg)$, the centered square obeys
+$\mathbb E_0(h-g)^2\le\mathbb E_0h^2$. Consequently,
+
+$$
+ u_K\le\frac{c^2}{2}\mathbb E_0h^2
+ =\frac{c^2}{2Z_0}\sum_{k\ge1}\frac{e^{-sk}}k
+ =\frac{c^2}{2Z_0}\bigl[-\log(1-e^{-s})\bigr].
+$$
+
+For $0<s\le1$, $1-e^{-s}\ge s/e$, so
+$u_Z\le C_{\rm gap}s^{2r}\log(e/s)$ with a source-only constant. This is an upper
+ceiling, not a claim that every alphabet reaches it.
+
+The per-cell scale is also attained in a two-cell example. Take
+$w_1(k)=\mathbf1_{\{k=1\}}$ and $w_2=1-w_1$. Then
+$f_0(1)=e^{-s}/Z_0\asymp s^{2r}$ and
+$a_1(1)/a_0(1)=(1+c)/(1+cg)\to1+c$. The first cell contributes a fixed positive multiple
+of $s^{2r}$ to $u_Z$ on a smaller source-only neighborhood. Thus the $s^{2r}$ per-active-cell
+scale in Theorem 10.1 cannot generally be replaced by $o(s^{2r})$. Neither this example
+nor the ceiling supplies a sequential-memory lower bound.
+

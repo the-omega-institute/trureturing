@@ -1,0 +1,10 @@
+**命题 37.2（所选素数层的指标域与加法更正）。** 若 $P=F_q\ge5$ 为素数，则 $q\ge5$ 是奇素数；反向不成立。小 Fibonacci 素数为 $F_3=2,F_4=3$。因此 [Observer 命题 A-7.2 的证明](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#7-窗口素性掩码例外索引与合数证书) 中“$m=4$ 给二”的值应为“三”；“素数指标或指标四”的必要条件不变。
+
+证明。这里消费既有 Fibonacci 强整除性、严格增长及矩阵式，来源为 Observer 第 6–9 章和 mathlib 的 [Nat.Fib.Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Basic.lean)：`Nat.fib_gcd`、`Nat.fib_dvd`、`Nat.fib_lt_fib`。若合数 $q>4$，总能取真因子 $3\le d<q$：写 $q=ab$，$a,b\ge2$，若其中一个因子是二则另一个至少三，否则两者均至少三。于是
+
+$$
+1<F_d<F_q,\qquad F_d\mid F_q,
+$$
+
+与素性矛盾。初值逐步给 $F_0,F_1,F_2,F_3,F_4,F_5=0,1,1,2,3,5$，故 $P\ge5$ 排除全部小指标，剩下的素指标必为奇数。素指标十九却有 $F_{19}=4181=37\cdot113$，所以必要条件不充分。该更正只替换所指小指标值，不以旧误值作为后续前提。证毕。
+

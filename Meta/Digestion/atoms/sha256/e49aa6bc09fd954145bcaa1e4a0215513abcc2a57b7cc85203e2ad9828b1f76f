@@ -1,0 +1,31 @@
+**Definition 1.4 (all native joint competitors).** A nonempty
+$B\subseteq S_d^n$ is admissible if every $(i,q)\in[n]\times W_d$
+has a constant factor on $B$, or has a donor $j$, a literal $a\in W_d$
+and a total reply decoder $\delta$ such that
+
+$$
+\Gamma_q(x_i)=\delta(r_{x_j}(a))\qquad(x\in B).
+\tag{JPL.6}
+$$
+
+The donor and decoder can depend on $B,i,q$. Self donors, off-target
+queries, cycles and arbitrary correlations are all allowed. Arbitrary
+finite donor words give the same class by Convention 1.3. A complete
+template selects one such equation for every target; $C_\Theta$ is
+its full simultaneous solution set, possibly empty.
+
+For a nonnegative weight $w:S_d\to[0,\infty)$ put
+
+$$
+A_n^{(d)}(w)=\max_{B\text{ admissible in }S_d^n}
+                    \sum_{x\in B}\prod_{i=1}^n w(x_i),
+\qquad
+\beta_d(w)=\sup_{n\ge1}A_n^{(d)}(w)^{1/n},\qquad A_0^{(d)}=1.
+\tag{JPL.7}
+$$
+
+[NDR, Theorem 2.2][NDR] permits the same maxima over complete
+templates: every admissible relation is contained in a full solution set
+on the same coordinates. Nonnegative weights, including zero weights,
+are essential in this containment statement. No competitor is removed.
+

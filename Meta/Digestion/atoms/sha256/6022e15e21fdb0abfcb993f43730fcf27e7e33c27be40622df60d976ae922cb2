@@ -1,0 +1,42 @@
+**Definition 31.1 (Position totals, slack and deficit).**
+Fix $k\ge3$ and $n=2k+1$. In this chapter positions are indexed by
+$\mathbb Z/n\mathbb Z$, represented by $0,\ldots,n-1$; thus the
+one-based position $i+1$ of chapter 28 is the position $i$ here.
+A legal history is a binary word on these positions with no neighboring
+ones, including across the last-first edge. Let $\mathcal B_n$ be its
+set of occupied subsets. A common array of $m$ such histories has
+observation $(m,c)$, where $c_i$ counts the histories occupying position
+$i$. As in Definition 28.1, copies share one row set, and observations
+are counted once regardless of their number of realizations. Put
+
+$$
+\begin{aligned}
+\mathcal S_k&=\left\{(m,c)\in\mathbb Z_{\ge0}^{n+1}:
+ c_i+c_{i+1}\le m,\quad \sum_i c_i\le km\right\},\\
+Q_n&=\operatorname{conv}\{\mathbf1_I:I\in\mathcal B_n\},\qquad
+R_k=\mathbb C[\mathcal S_k],\\
+a_i(m,c)&=m-c_i-c_{i+1},\qquad
+\delta(m,c)=km-\sum_i c_i,\\
+|a|&=\sum_i a_i,\qquad
+B_i(a)=\sum_{r=0}^{k-1}a_{i+1+2r}.
+\end{aligned}
+\tag{31.1}
+$$
+
+All cyclic indices in $B_i$ are reduced modulo $n$. Write $X^s$ for
+the monomial with exponent $s=(m,c)$; its ordinary degree is $m$.
+The notation $R_k$ uses the half-length parameter, whereas the
+$R_n^{\mathrm{cyc}}$ of Definition 28.4 uses the number of positions:
+$R_k=R_{2k+1}^{\mathrm{cyc}}$. In particular $n$ does not count windows.
+
+The integer decomposition in Theorem 28.2 identifies $\mathcal S_k$
+with the actual common-copy observations, including $(0,0)$.
+The same theorem identifies $Q_n$ with the real polytope given by
+$x_i\ge0$, $x_i+x_{i+1}\le1$ and $\sum x_i\le k$.
+The real conclusion uses a separate step: scaling a rational point by
+a common denominator gives the integer decomposition, division gives
+a convex combination of legal histories, and density of rational
+points together with closedness gives every real point. Thus (31.1) uses the supplied real convex hull, and its lattice points
+in degree $m$ are exactly the observations of common arrays of $m$
+legal histories.
+

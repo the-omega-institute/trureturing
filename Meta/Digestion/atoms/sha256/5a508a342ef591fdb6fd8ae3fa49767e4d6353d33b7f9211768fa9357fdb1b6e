@@ -1,0 +1,93 @@
+**Theorem 8.1 (conditional $H^{1/3}$ upper bound).** Let $M(H)$ count
+positive triples in $[1,H]^3$ having pairwise distinct coordinates, with both
+the unshifted and shifted triples multiplicatively dependent of maximal rank.
+Assume the reduction of Shparlinski and Sleiman
+([arXiv:2609.29408v1](https://arxiv.org/html/2609.29408v1),
+Lemmas 2.1--2.2 and Sections 3.1--3.4), including its finite sign and
+permutation reduction, its
+$O((\log H)^{12})$ exponent vectors with each exponent
+$O((\log H)^2)$, and its $O(1)$ treatment of every complex linear factor in
+both branches, including vertical factors. Then the positive-lift theorem
+above implies
+
+$$
+M(H)\ll H^{1/3}(\log H)^{\kappa+20},
+$$
+
+where $\kappa$ is the absolute exponent in the source plane-curve bound.
+
+**Proof.** First, the resultants are nonzero. At $X=0$,
+$P=Z^{n_1}$, and direct specialization gives
+
+$$
+F_{\boldsymbol e}(0,Y)=\bigl(1-(Y+1)^{m_2}\bigr)^{n_1},
+\qquad
+G_{\boldsymbol e}(0,Y)=\bigl((Y+1)^{m_2}-1\bigr)^{n_1},
+$$
+
+up to the harmless global sign convention for the resultant. Both are
+nonzero polynomials.
+
+Take the squarefree part of each resultant and factor it over $\mathbb Q$:
+
+$$
+\operatorname{rad}(F_{\boldsymbol e})=\prod_i f_i,
+\qquad
+\operatorname{rad}(G_{\boldsymbol e})=\prod_j g_j,
+$$
+
+with $f_i,g_j$ distinct and irreducible over $\mathbb Q$. Repeated factors
+do not create new points and are therefore not counted repeatedly. Every
+absolute component not defined over $\mathbb Q$ is grouped with all of its
+Galois conjugates into one of these rational irreducible factors. This is the
+required grouping before applying a rational curve estimate.
+
+If $E$ bounds all six exponents, the Sylvester determinant gives
+
+$$
+\deg F_{\boldsymbol e},\deg G_{\boldsymbol e}
+\le n_2(k_1+m_1)+n_1(k_2+m_2)\le4E^2.
+$$
+
+Thus each resultant has total degree $O((\log H)^4)$. If $d_i$ are the
+degrees of the rational factors of either squarefree part, then
+
+$$
+\sum_i d_i=O((\log H)^4),
+\qquad
+\sum_i d_i^2\le\left(\sum_i d_i\right)^2=O((\log H)^8).
+$$
+
+Degree-one factors contribute $O(1)$ genuine triples by the source Sections
+3.2--3.3 argument. For completeness, vertical factors have no positive lifts:
+for $x_0>1$,
+
+$$
+G(x_0,-1)=\bigl(-(x_0+1)^{k_2}\bigr)^{n_1}\ne0.
+$$
+
+For a vertical $F$ factor at $X=\alpha>1$, specialization at $Y=-1$
+would force $Z=-1$ and hence $\alpha^{k_1}=(-1)^{n_1}$, which is impossible.
+For degree two, an absolutely irreducible rational factor is excluded by Theorem 3.1. If a rational
+quadratic is geometrically reducible, its components are lines. Rational lines
+are already in the degree-one case; a pair of distinct conjugate non-rational
+lines has only their intersection as a rational point, so contributes $O(1)$.
+
+Every remaining rational factor has degree $d\ge3$. The coefficient-uniform
+curve estimate of Binyamini, Cluckers, and Kato, as stated in
+Shparlinski--Sleiman, Lemma 2.1 (reference [6]), gives
+
+$$
+N_i(H)\ll d_i^2 H^{1/d_i}(\log H)^\kappa
+\le d_i^2 H^{1/3}(\log H)^\kappa.
+$$
+
+Summing the rational factors, both resultants, and the
+$O((\log H)^{12})$ exponent vectors gives the exponent
+$8+12=20$ in the logarithm. Finally, for fixed exponents and fixed $(a,b)$,
+the equation $P=0$ is strictly increasing in $c>0$, so it has at most one
+positive $c$. In the $R$ branch the shifted left side
+$(c+1)^{n_2}(b+1)^{m_2}$ is also strictly increasing, so no multiplicity is
+introduced by the second equation. The source transfer from curve points to
+triples in its equations (3.8)--(3.9) now yields the claim. $\square$
+

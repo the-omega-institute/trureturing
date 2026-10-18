@@ -1,0 +1,53 @@
+**定义 204.10（原始来源和一预算兼容性）。** 实际来源仍是
+
+$$
+X=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},
+\qquad N(r,g)=1+F_rg,
+$$
+
+其中 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，回答为静态的递增素数整除性。完整的不交并 Borel tape carrier、原 measurable marks、未改变的 consumer 和原 nonatomic targets 继续使用；另行选取
+
+$$
+(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_n\to0,
+$$
+
+不以任何 $\gamma$ 条件限制这些 laws；实际正尾保持正、单调并趋于零。资源仍为零 advice、每类一个 source-independent common seed、逐源几乎处处有限 handoff、所有实际来源和 Borel 事件上的统一 TV；硬限制为至多 TWO ACTUAL requests，包含重复和忽略。$N$ 在回答前预选并取得全日程，$O$ 在回答前预选递增地址并在首个 queried zero 或耗尽时停止；任意地址和完整 carrier 输出继续允许。
+
+204 节校准的是“实际表示”与“一个共同预算”的兼容性：同一份完整 pair 测度必须同时承担所有早期/晚期胞，同一个标签联合最大值必须同时支付两个正收益，一个有符号 residual 必须在同一 $H$ 上覆盖所有 hull 顶点。$\nu$、阈值区间、$\gamma$、$\kappa$、$\Theta$、尺度和 dual score 都是表示或证明量，不是 acquisition、source law 或额外随机性。用既有 110.2 的运输，把任一真正有限概率配置在回答前由一个 $U\sim\operatorname{Unif}[0,1)$ 的固定区间划分选出整张表，即可保持实际 handoff；对每个实际 $n>L$，尾误差精确为
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L}p_{1^L}(j)\delta_{\theta_j},
+(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p_{1^L}(0),a_n\},
+$$
+
+包括 $a_n$ 等于闭帽。有限正字只是尾记账，不能替代无限全正来源。
+
+本节的实质结果是仓内推导：204.2 的盒与最大 profile，204.3 的固定两坐标五项极小值，204.4 的互补残差证书与 204.5 的尖锐逐行减法障碍，204.6--204.7 的共同分裂与聚合边界，以及 204.8 的终端有符号收费。它们复用 198.5 的凸包、199.3--199.6 的射线和闭包、200.4 的见证、201.2--201.4 的共享终端容量和 202 节的残差代数；旧结果不作为新覆盖重复计数。有限精确算术只用于展示上述等式的有界实例，不扩大其量词。
+
+有关背景的边界也保持明确：Kaniewski--Lee--de Wolf 的期望查询复杂度只给非负标量树深度；Kaibel 的有限多面体替代和锥表示不提供这里的正切片包含；Samal 及其分数割覆盖工作处理无向边汇总，不能替代定向胞的共同容量；Leskelä 的闭关系耦合需要全部 Hall 型不等式。它们只说明相邻结构，不提供未证明的原始 acquisition 桥梁。
+
+仍未决的是：对每个 $L$、任意 early 正确行、任意晚 profile、任意 $T$ 且 $\Delta_O\le1$，是否总存在 $V\ge0,\theta\in[0,1]$ 使
+
+$$
+\Delta_N(V)\le1-\theta,\qquad
+\sigma_H(Q(y)-Q(V))\le\theta;
+$$
+
+以及全部适用方向上的
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\},\qquad b\in H_N,
+$$
+
+和每个原始正、单调、趋零幅度序列及正闭帽的
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\Longrightarrow
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing.
+$$
+
+本节没有给出满足 $\lambda\ge0$、$G_N\lambda\ge h(b)$、$M=\sum_D\lambda_D\ge1$ 且 $F_{Q(y)}(b)>M$ 的完整 attained-$N$ 反证，也没有给出针对所有任意地址、完整载体 $O_2$ 竞争者的统一下证书。因此上述普遍比较、全 $L$ 任意族包含和原始 acquisition 结论继续开放。
+

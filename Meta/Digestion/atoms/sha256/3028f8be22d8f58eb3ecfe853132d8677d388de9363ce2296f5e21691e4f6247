@@ -1,0 +1,35 @@
+### 73.2 Explicit rational local isometries
+
+Let I denote the 3×3 identity and define Hermitian integer matrices
+
+    A_1 = 0,
+
+    A_2 = [[ 5,       −2+14i,  8−3i ],
+           [−2−14i,  −6,     −1+4i ],
+           [ 8+3i,   −1−4i,   3    ]],
+
+    A_3 = [[−4,        12+10i, −5−3i ],
+           [12−10i,    14,      5+2i ],
+           [−5+3i,      5−2i, −11    ]],
+
+    A_4 = [[ 1,       −5−12i,  1+7i ],
+           [−5+12i,    3,      3+4i ],
+           [ 1−7i,     3−4i,  −4    ]].
+
+Set H_f=A_f/32 and U_f=(I+iH_f)(I−iH_f)^(-1). Since H_f is Hermitian, I−iH_f is invertible and U_f is unitary. All entries are Gaussian rationals. Let v_(f,0),v_(f,1) be its first two columns. Define local Stinespring isometries by
+
+    V_A|f,j>=|f>⊗v_(f,j),
+    V_B|f,j>=|f>⊗conj(v_(f,j)).
+
+Within each fibre the two records are orthonormal, while distinct output labels are orthogonal. Hence these formulas define isometries on the entire eight-dimensional local input. Trace out their three-dimensional environments to obtain A and B. For f≠g, the encoded output coefficient on |ff><gg| is
+
+    C_(fi,gj)=|<v_(f,i),v_(g,j)>|²,
+
+and within each fibre it is δ_ij. Thus this is one common physical product implementation on every coherent input, not a collection of pairwise maps.
+
+Let V be the 3×8 concatenation of the selected columns, Q=V*V, and let K be the target kernel with K_ff=I₂ and K_fg=J₂/2 for f≠g. Define the real symmetric rational matrix
+
+    D=Q⊙conj(Q)−K.
+
+Its diagonal 2×2 blocks vanish. The full encoded channel difference is the collapsed-fibre map with kernel D, followed by the output MC isometry.
+

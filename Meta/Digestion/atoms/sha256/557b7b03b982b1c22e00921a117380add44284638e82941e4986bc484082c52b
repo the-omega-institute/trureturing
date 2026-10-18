@@ -1,0 +1,14 @@
+**Lemma 3.2 (Finite-state avoidance on the actual stationary support).** Suppose that each positive-weight closed irreducible class of $A=M_0+M_1$ has at least one edge emitting one. There exist an integer $K\ge1$ and $0<\varepsilon<1$ such that
+
+$$
+P_\theta([0^j])=\lambda M_0^j\mathbf1
+\le(1-\varepsilon)^{\lfloor j/K\rfloor}\quad(j\ge0).
+\tag{3.2}
+$$
+
+The same bound holds with $\lambda$ replaced by any probability row supported on those classes. Every finite representation of a proper renewal law satisfies the hypothesis.
+
+**Proof.** A finite stationary chain has zero stationary mass on transient states and is a mixture of its closed irreducible classes, as recalled with proof in Lemma 11.1. In each positive class and from each of its states, choose a positive labeled path reaching and traversing an edge emitting one. Choose $K$ at least the largest path length and $\varepsilon$ strictly between zero and the least of their positive path probabilities, also less than one. Following the specified path ensures that a one has appeared within $K$ emitted bits; the remaining steps have total conditional probability one. Thus, with $B=M_0$, $B^K\mathbf1\le(1-\varepsilon)\mathbf1$ on these closed classes. Iterate using nonnegativity and $B\mathbf1\le\mathbf1$ to obtain (3.2). Periodicity causes no change in this argument.
+
+If a positive stationary class had no one-emitting edge, that class would give positive mass to the all-zero visible configuration. This contradicts the defining two-sided unboundedness of ones for a proper renewal law. The original matrices and their zero-mass states are not changed. $\square$
+

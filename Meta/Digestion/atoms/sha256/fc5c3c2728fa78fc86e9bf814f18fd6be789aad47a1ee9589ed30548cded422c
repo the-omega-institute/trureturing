@@ -1,0 +1,44 @@
+**Definition 8.1 (Specified-law optimization).** For a fixed unchanged
+auxiliary law $\nu$, define, at an attainable mass $q$,
+
+$$
+\mathcal L_{2,\nu}(q)
+=\inf\{L:\text{a protocol of Definition 1.2 has mass }q\}.
+\tag{8.1}
+$$
+
+Theorem 3.2 supplies its supporting inequalities; Theorem 6.1
+settles exactly when equality with the explicit face is
+attainable. The complete attainable mass set and the value
+of (8.1) above the universal envelope on each specified
+atomic space are not classified here. In particular the
+exact excess in Proposition 6.2 remains unsettled by this
+volume. Enlarging that space with a fresh uniform variable
+would change this question.
+
+Formula (3.2) and the explicit finite family determine the
+all-law curve exactly, but a simplified list of its
+bias-dependent breakpoints is not printed. The full
+$k>2$ return-mass frontier, minimum expected paid cost and
+optimal stopping questions remain outside these conclusions.
+Expected cost counts all actual calls on returning and
+nonreturning paths, including repeats and separators; it
+cannot be replaced by a mean restricted to returns.
+
+The original arbitrary-finite attainment and separation
+question for the whole-domain harmonic/Brier objective,
+Original, Open Problem 6.4, remains unresolved here. The
+endpoint classification results do not supply a bridge to
+that objective. Actual read count, internal computation,
+address size, return time, persistent state and physical
+storage are distinct resources. No bounds on the latter
+resources, native machine-learning realization, neural
+training, generalization or empirical learning conclusion
+follow from the paid-read curve. The fair and endpoint
+parameters are not covered. These results settle precisely
+the stated two-read support and equality questions.
+
+[Original]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[Risk]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+[Endpoint]: FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
+

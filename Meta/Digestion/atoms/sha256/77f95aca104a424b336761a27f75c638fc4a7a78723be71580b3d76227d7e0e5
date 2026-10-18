@@ -1,0 +1,133 @@
+**Theorem 19.1 (complete height sign geometry).** Under Assumption 17.1,
+$\ell>0$ on the entire closed right hemisphere $u\ge0$.
+There is exactly one simple zero of $\ell$ on each open upper-left
+and lower-left arc. Write them respectively as
+
+$$
+x_U=\frac{(-1,\kappa_U)}{\sqrt{1+\kappa_U^2}},\qquad
+x_L=\frac{(-1,-\kappa_L)}{\sqrt{1+\kappa_L^2}}.
+\tag{FC.62}
+$$
+
+They satisfy $0<\kappa_U<1/20$ and $0<\kappa_L<4$.
+On the left hemisphere $u<0$, with slope $z=v/u$,
+
+$$
+\ell<0\quad\Longleftrightarrow\quad
+-\kappa_U<z<\kappa_L.
+\tag{FC.63}
+$$
+
+The two endpoints of this slope interval have height zero and the
+remaining left directions have positive height. Slopes refer to
+directed points; the antipode is not identified with its original.
+
+Proof. Set $A=E_{\ell,11}$, $B=E_{\ell,22}$,
+$a_0=-E_{\ell,12}$ and $\gamma=B-A$. Proposition 18.1 gives
+
+$$
+\begin{gathered}
+B>A>0,\quad a_0>0,\quad l_u>A,\quad l_u>2a_0,\quad
+B>l_v>0,\\
+4A\gamma-l_v^2>
+4(0.00457)(0.01481-0.00463)-0.01274^2
+=0.0000237828>0.
+\end{gathered}
+\tag{FC.64}
+$$
+
+The right-hemisphere conclusion is the existing Theorem 11.1.
+Indeed its proof (FC.36) applies with these bounds:
+$\ell=A+\gamma v^2+u(l_u-2a_0v)+l_vv
+\ge A-l_v^2/(4\gamma)>0$ for $u\ge0$.
+This includes both report-axis points $(0,\pm1)$.
+
+To establish all the left boundaries rather than infer a cutoff
+from a sign sample, set $w\in[0,1]$ and define
+
+$$
+\begin{aligned}
+\phi_+(w)&=\ell(-\sqrt{1-w^2},w)
+ =A+\gamma w^2+(2a_0w-l_u)\sqrt{1-w^2}+l_vw,\\
+\phi_-(w)&=\ell(-\sqrt{1-w^2},-w)
+ =A+\gamma w^2-(2a_0w+l_u)\sqrt{1-w^2}-l_vw.
+\end{aligned}
+\tag{FC.65}
+$$
+
+For $0\le w<1$,
+
+$$
+\phi_+'(w)=2\gamma w+l_v+
+\frac{l_uw+2a_0(1-2w^2)}{\sqrt{1-w^2}}>0,
+\tag{FC.66}
+$$
+
+because $1-2w^2\ge-w$, as
+$1+w-2w^2=(1-w)(2w+1)\ge0$, and $l_u>2a_0$.
+Also $\phi_+(0)=A-l_u<0$ and $\phi_+(1)=B+l_v>0$.
+Continuity and strict increase therefore give one and only one
+upper zero, in $(0,1)$, with strictly positive derivative.
+
+For the lower arc, direct differentiation on $(0,1)$ gives
+
+$$
+\phi_-''(w)=2\gamma+
+\frac{l_u+2a_0w(3-2w^2)}{(1-w^2)^{3/2}}>0.
+\tag{FC.67}
+$$
+
+Its endpoint values are $\phi_-(0)=A-l_u<0$ and
+$\phi_-(1)=B-l_v>0$, so it has an interior zero. At any interior
+zero $w_*$, convexity gives
+$\phi_-'(w_*)\ge(\phi_-(w_*)-\phi_-(0))/w_*>0$.
+Strictly increasing derivative then prevents any later zero; two
+zeros would contradict this positive derivative at the first.
+This proves uniqueness and simplicity on the lower arc as well.
+At these interior arc points the derivative of $w$ with respect
+to the directed circle angle is nonzero, so simplicity also holds
+for angular differentiation. The common left-axis point $(-1,0)$
+has height $A-l_u<0$; neither report-axis endpoint has height zero.
+There are therefore no other circle zeros.
+
+For exact slope brackets put
+
+$$
+G_{\rm nod}(k)=(1+k^2)\ell\left(\frac{(-1,k)}{\sqrt{1+k^2}}\right)
+ =A-2E_{\ell,12}k+Bk^2+(-l_u+l_vk)\sqrt{1+k^2}.
+\tag{FC.68}
+$$
+
+This scalar $G_{\rm nod}$ is distinct from the matrix $G$.
+The short rational bounds of Proposition 18.1 give the required
+three signs:
+
+$$
+\begin{aligned}
+G_{\rm nod}(0)&<0.00463-0.00504=-0.00041<0,\\
+G_{\rm nod}(1/20)&>
+0.00457+\frac{0.00060}{20}+\frac{0.01481}{400}
++\left(-0.00508+\frac{0.01251}{20}\right)\frac{501}{500}
+=\frac{10851}{62500000}>0,\\
+G_{\rm nod}(-4)&>
+0.00457-8(0.00032)+16(0.01481)
+-(0.00508+4(0.01274))\frac{33}{8}
+=\frac{1561}{200000}>0.
+\end{aligned}
+\tag{FC.69}
+$$
+
+The square comparisons $\sqrt{401/400}<501/500$ and
+$\sqrt{17}<33/8$ justify the two radical bounds. Their multipliers
+are negative throughout the coarse intervals, so using the upper
+radical endpoints gives lower bounds in both lines. The map
+$k\mapsto k/\sqrt{1+k^2}$ has positive derivative
+$(1+k^2)^{-3/2}$ for $k>0$. The unique crossings established
+above therefore imply $\kappa_U<1/20$ and $\kappa_L<4$.
+The negative arc connects them through $(-1,0)$; substituting
+$x=(-1,-z)/\sqrt{1+z^2}$ gives exactly (FC.63). In particular
+its upper-left part has negative slopes and its lower-left part
+has positive slopes. Their right-hand antipodes have positive
+height by the right-hemisphere result, not the same height sign.
+$\square$
+

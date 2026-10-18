@@ -1,0 +1,16 @@
+### 100.7. Independence, rank bound and determinant obstruction
+
+The primary Cassels pairing is independent of its rational tangency points and local points. The preceding formulas apply to every simultaneous primitive certificate satisfying section 100.1. Hence all entries of H are invariant under allowed certificate changes. Finite-place approximation proves existence of certificates but cannot choose their resulting characters freely.
+
+In the ordered pure basis S,lambda_1,...,lambda_s,mu_1,...,mu_s the pairing is the direct sum of a zero row and column for S with
+
+ M=[[0,H],[H^T,J]],
+
+where J is the actual alternating mu-mu block. Its entries are not assumed zero and need not be evaluated for this rank test. This is a proved block form: the entire first block and all mixed entries have been computed at every place.
+
+If H is invertible, M(x,y)=0 first gives Hy=0 and hence y=0, then H^T x=0 and x=0. Thus M has rank 2s irrespective of J. More generally, if rho=rank H, choose a nonsingular rho-by-rho minor with row set I and column set K. The principal pairing submatrix on lambda_I and mu_K is [[0,H_(I,K)],[H_(I,K)^T,J_(K,K)]], which is nonsingular by the same argument. Hence rank M>=2rho. The pure radical has dimension at most 2s+1-2rho=1+2 dim ker H.
+
+The rational Kummer image modulo exact rational torsion lies in this radical, and its dimension is the rational Mordell–Weil rank. This proves the stated bound without Sha finiteness or parity. When H is invertible, the bound is 1; the actual original non-torsion point gives equality. Corollary 94.2 excludes every stipulated repetition for N>=81. ∎
+
+For s=2 the determinant is the Pfaffian condition of section 99. The present theorem treats every s>=1 with simultaneous certificate normalization and the full lambda-lambda vanishing proved uniformly. It leaves singular H open and does not infer rational points from extra Selmer classes. No actual support realizing an invertible H, universal rank-one claim, or universal WSS exclusion is asserted.
+

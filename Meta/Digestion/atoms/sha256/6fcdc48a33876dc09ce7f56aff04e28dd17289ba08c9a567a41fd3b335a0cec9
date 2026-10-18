@@ -1,0 +1,56 @@
+**Proposition 5.2 (joint row and minimum costs).** In Theorem 4.4 let
+$N=|\operatorname{Pos}(V)|$, $H=\operatorname{height}(V)$,
+$M_P=|P|$,
+
+$$
+K_P=1+\sum_{p\in P}(|p|+1),\quad
+q_P=\max(1,M_P-1),\quad
+F=N+K_P+\binom{M_P}{2}+2.
+\tag{AAR.16}
+$$
+
+There are at most $b+1$ outer attempts, and the entire call obeys
+
+$$
+\begin{aligned}
+T&\le(b+1)(B_D+q_PN+1),\\
+A&\le(b+1)(DB_D+Hq_PN+D),\qquad Q\le H.
+\end{aligned}
+\tag{AAR.17}
+$$
+
+For the exact account let $S_j$ be each scan's actual word list,
+$W_j$ its CWS body's actual word list, and $g_j$ its final guard.
+Including all failures,
+
+$$
+\begin{aligned}
+T&=\sum_j(|S_j|+|W_j|+1),\\
+A&=\sum_j\left(\sum_{p\in S_j}|p|+\sum_{p\in W_j}|p|+|g_j|\right).
+\end{aligned}
+\tag{AAR.18}
+$$
+
+The operand maximum is the maximum over those same literal lists.
+The candidate row has at most $4F$ bits; an anchor candidate has
+$O(D+1)$ bits and a scalar candidate $O(\log(D+2))$ bits. The
+dedicated operand payload has at most $4(H+1)$ bits. Auxiliary
+writable state is $O(H+1+\log(K_P+2))$ bits, excluding those payloads
+but including all heads, control and allocation extents. Immutable
+installation is $I_{\rm code}+4K_P+O(1)$ bits. Final retained row
+storage is its actual $4s$ bits, plus the chosen supplement and
+framing, not the worst-case $4F$.
+
+Proof. Every scan in any attempt is bounded by the same final $D$.
+The CWS body uses at most $q_PN$ Reads at present addresses of $V$,
+each of length at most $H$; its candidate bound is $F$. Add the
+separate final validation, of length at most $D$, and sum all outer
+attempts. Scan failures are already in $B_D$; the outer failure
+count is not a second uncharged retry allowance. Workspace follows
+by retaining a constant number of paths and binary indices and
+clearing failed candidates before retry. Apply [CWS, Proposition
+4.5]'s local-work bound to each body and add Proposition 5.1's scan
+work and finite output cleanup. This counts local work without
+identifying it with query count or assuming unit-cost integers.
+$\square$
+

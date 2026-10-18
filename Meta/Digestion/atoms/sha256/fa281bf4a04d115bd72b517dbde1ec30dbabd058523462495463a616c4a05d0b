@@ -1,0 +1,17 @@
+**Proposition 45.2 (Chronological flattening).** A lawful preparation followed by the consumer is one deterministic seed execution with the preparation transitions preceding the consumer transitions. For every source $y$ and every measurable consumer event $A\subseteq\Theta$,
+
+$$
+\mathsf P\{\text{the handed tape lies in }A\}=\widehat\mu_y(A).
+\tag{45.3}
+$$
+
+In particular the probabilities of the consumer events $H_y,F_y,R_y,D_y$ after preparation are respectively $\widehat\mu_y(H_y),\widehat\mu_y(F_y),\widehat\mu_y(R_y),\widehat\mu_y(D_y)$. Every finite composite record event is measurable, and preparation divergence contributes no mass.
+
+**Proof.** On $T_y$ the handoff is a finite transition followed by the deterministic consumer run, so the handed-tape event is exactly $T_y\cap\phi_y^{-1}(A)$. The finite composite proposal, false-proposal and nonproposal events are respectively $T_y\cap\phi_y^{-1}(H_y)$, $T_y\cap\phi_y^{-1}(F_y)$ and $T_y\cap\phi_y^{-1}(R_y)$. Literal composite divergence is
+
+$$
+(S\setminus T_y)\ \cup\ (T_y\cap\phi_y^{-1}(D_y)).
+$$
+
+The complement of $T_y$ is null. Its dummy output in (45.1) is only a measure extension; the actual execution on that complement still diverges. A finite composite record is the union, over the two finite lengths and the two finite prime menus, of the corresponding cylinder event for the seed and the finite-record event of the consumer pulled back by the measurable map $\phi_y$; this is a countable union of measurable sets. The same argument applies to each of the four terminal classes. No new random variable is introduced at the handoff, and no source is reset. $\square$
+

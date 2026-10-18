@@ -1,0 +1,54 @@
+**Definition 315.1 (Source, targets and hard resource).**
+Use the source and carrier of
+[297.1–297.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md).
+Explicitly, $F_0=0$, $F_1=1$, $F_{k+2}=F_{k+1}+F_k$, $p_i$ are the
+increasing primes, and
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\quad
+N(r,g)=1+F_rg,\quad q_i(x)=[p_i\mid N(x)],\quad
+n(x)=\min\{i:q_i(x)=0\}.
+\tag{315.1}
+$$
+
+The source is countable, replies are static, and every actual first
+absence is finite. There is no probability law on $X$ or supplied
+source label, integer $N(x)$, first absence or extra observation.
+The full carrier is the Borel disjoint union
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each block a
+copy of $(0,1)$. The unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$, without making prime requests.
+
+The original nonatomic targets remain
+$\mu_x^{\rm orig}=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$ of 297.1:
+$0<h_0<1$, $t_x=\sum_i3^{-i}q_i(x)$,
+$Z_t=\int_0^1e^{tu}\,du$, $\nu_x$ has density $e^{t_xu}/Z_{t_x}$ on
+$B_{n(x)}$, $\pi_j$ is uniform on $P_j$, and $\Omega(x)$ counts
+distinct prime divisors of $N(x)$. The separately selected accuracy
+targets in this volume are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                   +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\to0.
+\tag{315.2}
+$$
+
+For an acquisition $A$, set
+$e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a)$.
+All accuracy conclusions below concern (315.2).
+
+The original classes are exactly Definition 90.1 of
+[Acquisition Resources](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md).
+There is zero advice, one source-independent common seed, and actual
+sourcewise almost-sure finite handoff. In $\mathcal N_2$ the entire
+schedule is preselected and all its replies are acquired. In
+$\mathcal O_2$ an increasing schedule is preselected and execution
+stops at its first **queried** zero or exhaustion. The second address
+does not depend on the first reply. The hard bound is two actual
+requests, including repetitions and ignored replies. Competitors retain
+arbitrary addresses and all Borel outputs in $\Theta$; no bound on
+address, runtime or mean request count is imposed.
+

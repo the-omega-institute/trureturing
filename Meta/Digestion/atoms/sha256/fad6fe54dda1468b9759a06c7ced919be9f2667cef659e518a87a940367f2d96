@@ -1,0 +1,40 @@
+**Definition 20.1 (sound comparison reduction and factoring).** Normalize
+terms as in Definition 19.1. To reduce an equality, delete syntactic
+identities, evaluate fully ground comparisons, cancel two pairing heads,
+and reject different concrete constructor heads. A ground tree facing a
+pair is opened at its root for this cancellation. A decorated variable
+facing a ground tree is tested by the partial inverse of Lemma 19.2.
+The result is false or a bare-variable equality with the unique inverse.
+Two decorations may cancel a common power. For a bare variable occurring
+in the other side use precisely item 4 of that lemma. All these rules
+preserve truth under every finite assignment.
+
+Apply these equality rules inside a disequality by negating the **entire**
+reduced equality formula. In particular
+$\langle A,B\rangle\ne\langle D,E\rangle$ becomes
+$\neg(A=D\land B=E)$, not the conjunction of two disequalities.
+Use ordinary Boolean constant simplification. A residual equality not
+covered by a rule is retained as an unsupported atom, not declared false.
+
+For a normalized term $T$, define a partial operation $L_a(T)$:
+
+- For ground $g$, return its unique $a$-fold inverse if it exists.
+- For $\rho^b(y)$ with $b\ge a$, return $\rho^{b-a}(y)$.
+- For a non-ground pair, recursively factor both children and pair the
+  results if both succeed.
+- Otherwise report failure.
+
+Ground processing has priority over the pair rule. Structural induction,
+using the actual leaf parser, proves
+
+$$
+L_a(T)=V\quad\Longrightarrow\quad
+T[v]=\rho^a(V[v])\quad\hbox{for every finite assignment }v.
+\tag{CE.20.1}
+$$
+
+This operation terminates by descent through $T$, together with finite
+partial inversions on ground pieces. Failure has no semantic implication.
+For example a non-ground pair can specialize to $\rho(\beta)$ without
+admitting a uniform childwise inverse. No leaf-image solution is removed.
+

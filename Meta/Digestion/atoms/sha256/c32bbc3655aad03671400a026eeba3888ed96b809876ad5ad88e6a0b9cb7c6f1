@@ -1,0 +1,18 @@
+**Lemma 3.1 (The entire unordered two-edge domain).** Fix an integer target vertex $q$ and ordered queried edges $E,F$ of the integer spin line, each of the form $\{e,e+1\}$. The following table gives a new root edge $E'$ and new child edge $F'=\{f',f'+1\}$. Every old pair belongs to exactly one row. In every row the finite graph consisting of the two labelled unordered edges and the distinguished vertex $q$ is isomorphic to its displayed replacement, fixing $q$ and preserving which edge is the root and which the child.
+
+| Target/root relation | Child relation | New root $E'$ | New child left endpoint $f'$ |
+| --- | --- | --- | --- |
+| $q\in E$ | $F=E$ | $\{q,q+1\}$ | $q$ |
+| $q\in E$ | $E\cap F=\{q\}$ | $\{q,q+1\}$ | $q-1$ |
+| $q\in E$ | $E\cap F$ consists of the other endpoint of $E$ | $\{q,q+1\}$ | $q+1$ |
+| $q\in E$ | $E\cap F=\varnothing$ | $\{q,q+1\}$ | $q+2$ |
+| $q\notin E$ | $F=E$ | $\{q+1,q+2\}$ | $q+1$ |
+| $q\notin E$ | $\lvert E\cap F\rvert=1$, $q\in F$ | $\{q+1,q+2\}$ | $q$ |
+| $q\notin E$ | $\lvert E\cap F\rvert=1$, $q\notin F$ | $\{q+1,q+2\}$ | $q+2$ |
+| $q\notin E$ | $E\cap F=\varnothing$, $q\in F$ | $\{q+1,q+2\}$ | $q-1$ |
+| $q\notin E$ | $E\cap F=\varnothing$, $q\notin F$ | $\{q+1,q+2\}$ | $q-2$ |
+
+Proof. Two integer-line edges are equal, meet at exactly one vertex, or are disjoint. When $q\in E$, a meeting vertex is $q$ or the other root endpoint, and a disjoint child cannot contain $q$. These are exactly the first four cases. When $q\notin E$, an equal child excludes $q$; a meeting child either contains $q$ at its nonshared endpoint or excludes it; and a disjoint child either contains $q$ or excludes it. These are exactly the last five cases, covering every integer placement and both orientations.
+
+For an equal pair, map the two endpoints to those of $E'$, fixing $q$ if incident and keeping the isolated $q$ otherwise. For a meeting pair, map the shared vertex and the two edge-labelled outer endpoints to the corresponding displayed vertices. The first meeting case has $q$ in the middle, the next has $q$ at the root-side end; the two detached-root meeting cases put $q$ at the child-side end or isolate it. Thus the distinguished position is preserved. For disjoint pairs, map each edge's two endpoints to its displayed edge's endpoints, fixing $q$ on its incident edge when applicable and keeping it isolated otherwise. In the last row the new edges are $\{q+1,q+2\}$ and $\{q-2,q-1\}$ with isolated $q$; in the target-touching-root disjoint row they are $\{q,q+1\}$ and $\{q+2,q+3\}$. These vertex sets have precisely the required disjointness. An unqueried adjacency between distinct vertices imposes no equality on iid spins. These maps give the claimed isomorphisms. $\square$
+

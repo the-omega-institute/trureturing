@@ -1,0 +1,27 @@
+**Lemma 26.3 (credited descriptors with full-family witnesses).**
+The descriptor image on $\mathcal F_D$ consists of all $2n+1$ values
+$B$ and $(j,e)$. For every actual source, a prefix Read at $p_i$ has
+reply
+
+$$
+r_t(p_i)=
+\begin{cases}
+\mathsf{absent},&\partial_p(t)=(j,e),\ j<i,\\
+\ell_e,&\partial_p(t)=(i,e),\\
+\mathsf{branch},&\partial_p(t)=(j,e),\ j>i,\text{ or }\partial_p(t)=B.
+\end{cases}
+\tag{GDB.106}
+$$
+
+Proof. The actual witnesses are
+$C_{p_j}[\ell_e]$ and $C_p[\langle\alpha,\alpha\rangle]$.
+Because their paths start with $R$, their outer left child is alpha.
+Their right-subtree heights are respectively $j-1$ and $n$, so they
+belong to $\mathcal F_D$ even when $D=n$. Each has its indicated
+first leaf or branch endpoint. On an arbitrary source, every strict
+ancestor of its first path leaf is branch, that leaf has its actual
+label, and every strict extension of it is absent. If the endpoint is
+branch, every prefix is branch. This proves (GDB.106).
+These are [AAR, Definition 13.6 and Lemma 13.7][AAR]'s actual witnesses
+and prefix-reply law, reused on their original bounded family. $\square$
+

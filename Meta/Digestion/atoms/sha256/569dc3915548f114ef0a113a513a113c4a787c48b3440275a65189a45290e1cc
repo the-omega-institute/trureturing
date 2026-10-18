@@ -1,0 +1,6 @@
+### 108.1. Original group action and statement
+
+Let $\Gamma$ be an abelian group of order eight, written additively, and choose an element $h$ of order two. Label the original eight coordinates by $\Gamma$ so that the original fibres are precisely the pairs $\{x,x+h\}$. Retain the two original local CPTP maps, the fixed correlated encodings and the unhalved arbitrary-reference error $\delta(A,B)$ of §107.1. The target coefficient matrix has diagonal entries one, partner entries zero and entries one half between different original fibres. The correct-output forward Grams $G,H$ satisfy $0\le G_{ff},H_{ff}\le I_2$, including arbitrary original leakage.
+
+For $a\in\Gamma$, write $P_a|x\rangle=|x+a\rangle$. Translation invariance of a Gram means $`P_aGP_a^*=G`$ for every $a\in\Gamma$. The specified action on the original fibres is part of the hypothesis.
+

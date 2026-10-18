@@ -1,0 +1,50 @@
+**Theorem 8.6 (Exact pure-state ambiguity on positive support).** Suppose
+
+$$
+|\psi\rangle=\sum_{u\in B_n}\sqrt{p_u}\,e^{-i\theta_u}|u\rangle,
+\qquad \sum_up_u=1,
+\qquad S=\{u:p_u>0\}.
+\tag{8.14}
+$$
+
+Let the induced graph $\Gamma_n[S]$ have $c\ge1$ connected components.
+The diagonal and edge observations determine every relative phase within
+each component. Modulo a global phase, the remaining ambiguity is exactly
+$(S^1)^{c-1}$. In particular, this pure-state family is identifiable up
+to global phase exactly when $S$ is connected.
+
+Proof. For an edge whose two endpoints are in $S$,
+
+$$
+z_{uv}:=\frac{c_{uv}}{\sqrt{p_up_v}}
+=e^{i(\theta_v-\theta_u)},\qquad z_{vu}=\overline{z_{uv}}.
+\tag{8.15}
+$$
+
+Choose a root in each component. Multiplying the oriented $z$ factors
+along a path determines $e^{i(\theta_v-\theta_{\rm root})}$ for every
+vertex reached. Products around cycles equal one because the phase
+differences telescope, so the path choice is immaterial for the actual
+compatible pure data. Conversely, if two phase assignments have the same
+edge factors, their difference modulo $2\pi$ is constant across every
+edge, hence on each component. Each component constant can be changed
+independently without altering any measured edge; cross-component
+coherences of the pure state change but are unmeasured by this static
+menu. Removing the one common global phase leaves $c-1$ circle parameters.
+$\square$
+
+This consumes the polarization and nonzero-vertex propagation mechanism
+of [Alexeev, Bandeira, Fickus and Mixon, §2, equations (2.4)–(2.6)][ABFM8].
+Their coefficient vector maps to the occupied-mode amplitudes; their
+vertex frame vectors map to the coordinate vectors $|u\rangle$; their
+oriented graph maps to $\Gamma_n[S]$. Their relative coefficient phase
+is the conjugate of (8.15) if written in the order $\overline{\psi_u}\psi_v$;
+this convention change reverses each oriented factor and leaves path
+propagation equivalent. Their three roots-of-unity intensity combinations
+and our two quadrature differences are two polarization readouts of the
+same complex cross term. Both require nonzero endpoint amplitudes before
+normalization. Their full-spark spanning-component argument and their
+expander/noise hypotheses are not supplied by this coordinate graph and
+are not used as guarantees here. In particular their work is not an
+arbitrary mixed-state low-rank completion theorem for these observations.
+

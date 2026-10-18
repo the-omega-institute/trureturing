@@ -1,0 +1,16 @@
+**Proposition 8.4 (the simultaneous original twelve-vector).** For
+each selected instrument above, all original history costs are
+$PA_y+QB_y$, where
+$A_y=\sum_i h_i^2p_{yi}$ and $B_y=b^2p_{y0}+a^2p_{y1}$; on the
+plateau use $P=p,Q=q$ and at one use $P=Q=q_{\rm end}$.
+The high aggregate has only imaginary $DT$ cross entry; the original
+states and their Grams are real, so this entry contributes zero for
+every sign, without averaging. At $s_*$, $p>k$, $q>0$ and
+$s_*<\sqrt\ell$. Continuity preserves $P>k$, $Q>0$ and
+$s<\sqrt\ell$ in a right neighborhood. The one JR weak instrument
+has the simultaneous vector $kA_y$ there, at the same full effects
+and complete channel. It strictly dominates every original coordinate.
+This retains the NP/QO comparison and gives no new original-twelve
+Pareto point. The entire twelve-coordinate undominated frontier is
+not evaluated by selected nonreal minima. $\square$
+

@@ -1,0 +1,18 @@
+**Definition 3.2 (Preservation of the original intrinsic spaces).** Set
+
+$$
+\mathsf{RP}(P):\quad
+\forall C\ \text{for }\mu_C\text{-almost every }y\quad
+\exists\varepsilon(C,y)>0\quad
+\forall t\in(-\varepsilon(C,y),\varepsilon(C,y)):\quad
+\pi_C^t(\cdot;y)\in V_C.
+\tag{3.4}
+$$
+
+The space is the original $V_C$ from (1.4), fixed as $t$ varies.
+No uniform $\varepsilon$ is required. The entire interval of $t$ is
+required at almost every exterior of every finite block; a tangent
+condition or a condition at one block is not (3.4).
+Finite continuity makes (3.4) measurable: one can test rational $t$ in
+some rational-radius interval, using a finite basis of $\mathcal K_C$.
+

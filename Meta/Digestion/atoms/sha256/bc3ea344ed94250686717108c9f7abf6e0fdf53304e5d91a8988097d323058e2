@@ -1,0 +1,12 @@
+**Corollary 7.2 (explicit necessary law for every actual finite branch).** Under exactly the fixed-datum, analytic-antecedent, sequence and actual-choice conditions of Definition 7.1, if $r_s\to R\in(r_C,\infty)$, then every microscopic weak cluster $cp$ has
+
+$$
+|c|=\alpha(R),\qquad
+\mathfrak m_{\rm micro}=m_\mu(R)=\frac1{1+C_0G(\eta_R)},\qquad
+\mathfrak m_{\rm macro}=m_M(R)=\frac{C_0G(\eta_R)}{1+C_0G(\eta_R)}.
+$$
+
+The common phase, full reconstruction and absence of a third $L^2$ mass scale remain those of Source Corollary 20.2. Necessarily $C_{\rm resp}=0$. A supplied nonzero core modulus in $(0,1)$ fixes the only possible finite $R$ by Theorem 5.1.
+
+Proof. Substitute Theorem 4.1 into the credited complete norm identity and phase-orbit formula. Source Corollary 20.2 identifies the two actual mass fractions by first taking $s\to0$ at this fixed $R$, then exhausting microscopic compact sets for the first mass or shrinking the excluded macroscopic origin ball for the second. Their sum is one and its complete reconstruction excludes additional intermediate or exterior mass. Thus these are actual mass fractions under the antecedent, not merely norms assigned to trial functions. Since $E_s=-r_ss^6\to0$ and every such weak cluster has $c\ne0$, Source Theorem 5.1 gives $c(0-C_{\rm resp})=0$, hence $C_{\rm resp}=0$. Theorem 5.1 of this companion gives the last assertion. Neither substitution produces the supplied modulus or the branch antecedent. $\square$
+

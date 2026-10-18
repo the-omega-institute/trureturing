@@ -1,0 +1,16 @@
+**定义 25.1（Unit target and constant prefixes）。** For arbitrary $f:Q\to Y$, put
+
+$$
+F_v(j,s)=f(v,-j,s),\qquad\lambda_v(j)=F_v(j,0),
+\tag{25.1}
+$$
+
+and
+
+$$
+\ell_v(j)=\max\{h\in\{1,\ldots,k\}:F_v(j,s)=\lambda_v(j)\text{ for every }0\le s<h\}.
+\tag{25.2}
+$$
+
+Thus $1\le\ell_v(j)\le k$. This definition uses INITIAL tails even after their destructive updates. Constancy means image size at most one; an empty eligible minimum is $+\infty$.
+

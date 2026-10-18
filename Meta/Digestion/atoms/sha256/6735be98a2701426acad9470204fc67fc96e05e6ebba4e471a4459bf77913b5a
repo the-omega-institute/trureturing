@@ -1,0 +1,93 @@
+**Definition 1.2 (the exact inherited point).** The following identifies
+the conditional CG source also used by NP and QO. Coordinates
+$\mathbf x=(\lambda_{\rm src},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm src})$
+and $\eta=(\eta_0,\eta_1,\eta_2)$ are distinct from the parameters below.
+Write
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+A_5^{\rm src}&=\lambda_{\rm src}v_5v_5^T/\|v_5\|^2,&
+A_{27}^{\rm src}&=(1-\lambda_{\rm src})v_{27}v_{27}^T/\|v_{27}\|^2,\\
+\zeta&=(z_{\rm src},59\lambda_{\rm src}/128,\lambda_{\rm src}/2),&
+N^{\rm src}&=\sum_{y=5,27}A_y^{\rm src}\odot a_ya_y^T,\\
+S_0^{\rm src}&=\operatorname{diag}\zeta-N^{\rm src},&&\\
+S_{ij}^{\rm src}&=\begin{pmatrix}
+\zeta_j-\sum_y(A_y^{\rm src})_{ii}p_{yj}&-N_{ij}^{\rm src}\cr
+-N_{ij}^{\rm src}&\zeta_i-\sum_y(A_y^{\rm src})_{jj}p_{yi}
+\end{pmatrix}\quad(i<j),&&\\
+F^{\rm src}&=\sum_y\operatorname{tr}(A_y^{\rm src}B_y^{\rm tar})
+ -\sum_i\zeta_i+6\lambda_{\rm src}/11,&&\\
+g^{\rm src}&=(1000\det S_0^{\rm src},\det S_{01}^{\rm src},\det S_{02}^{\rm src}).&&
+\end{aligned}
+\tag{AS.4}
+$$
+
+The named premise is the isolated zero of
+$(\nabla_{\mathbf x}(F^{\rm src}+\eta\cdot g^{\rm src}),g^{\rm src})$
+in the radius-$10^{-24}$ product box about the following exact rationals.
+
+| Coordinate | Centre |
+| --- | --- |
+| $\lambda_{\rm src}$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z_{\rm src}$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+All expressions use this zero, not its centre. Define
+
+$$
+\begin{aligned}
+H^{\rm src}&=1000\eta_0\operatorname{adj}S_0^{\rm src},&
+Q^{01}&=\eta_1\operatorname{adj}S_{01}^{\rm src},&
+Q^{02}&=\eta_2\operatorname{adj}S_{02}^{\rm src},\\
+(h_0,h_1,h_2)^T&=H^{\rm src}e_0/\sqrt{H^{\rm src}_{00}},&
+(a,b)^T&=Q^{01}e_0/\sqrt{Q^{01}_{00}},&
+(c,d_{\rm src})^T&=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1&=1-H^{\rm src}_{11}-Q^{01}_{00},&
+m_2&=1-H^{\rm src}_{22}-Q^{02}_{00}.&&
+\end{aligned}
+\tag{AS.5}
+$$
+
+Adjugate means transposed cofactor matrix. Set
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a|0\rangle\langle1|+b|1\rangle\langle0|,\quad
+S=c|0\rangle\langle2|+d_{\rm src}|2\rangle\langle0|,\quad
+M=\operatorname{diag}(0,m_1,m_2),\quad \kappa=h_0a+h_1b,\\
+\alpha=\frac{ab}{h_0h_1},\quad
+\beta=\frac{cd_{\rm src}}{h_0h_2},\quad
+\ell=\alpha+\beta,\quad k=1-\ell,\quad \chi=h_1b-h_0a.
+\end{gathered}
+\tag{AS.6}
+$$
+
+The source supplies positive amplitudes and $m_1,m_2$, its rank-one
+factor identities, and
+
+$$
+\begin{gathered}
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\quad 0<\kappa<1/4,\\
+.968<h_0^2<.970,\quad .498<h_1^2<.500,\quad .655<h_2^2<.656,\\
+h_0h_1>.695,\quad h_0h_2>.796,\quad
+a^2+b^2+c^2+d_{\rm src}^2<.036,\\
+0<\ell<18/695<1/36,\quad \chi>0.
+\end{gathered}
+\tag{AS.7}
+$$
+
+For example $2ab+2cd_{\rm src}$ is bounded by the square sum,
+giving the stated bound for $\ell$. NP/QO's strict sign proof uses
+$a/b<.51$ from the source adjugate and $h_1/h_0>7/10$, so
+$h_0a/(h_1b)<51/70<1$. These are implications of the inherited
+source conditions. No root isolation, bordered-Jacobian check,
+interval certificate or minimax verification is performed here.
+

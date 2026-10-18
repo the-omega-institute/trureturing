@@ -1,0 +1,41 @@
+**Definition 5.3 (remaining original obligation).** The original
+decision is still $j_c=0$ versus $j_c>0$ on all of $\mathfrak C$,
+with both full boxes, both midpoint means, both supported depth-3
+configuration bounds and both full residual equations on the same
+phase marginals. Theorems 2.1 and 3.1 show that any zero pair must
+have an averaged marker-one tail which fails (3.1) at arbitrarily
+large indices. They neither construct such a pair nor exclude it.
+
+PAIR19 permits an equal-native-endpoint excision from a zero pair;
+one or both native masses can already be absent. Theorem 2.1 applies
+whether those masses vanish or not. In the b-atom-missing case it
+gives only $d_n=o(z_b^n)$, and Proposition 4.1 explains why no
+smaller uniform exponential rate follows. That proposition belongs
+to the boxed class, not the zero face. No weak-closed or compact
+atom-missing zero-domain replacement is inferred.
+
+Finite abstract atomicity, exact represented sampling and the
+entire charged COMPLETE carrier remain distinct requirements.
+If a pair is classified by Theorem 3.1, its abstract laws have at
+most two atoms, but an arbitrary real mixture weight still needs
+an allowed finite exact sampler for represented attainment.
+For the fixed positive-three-depth prior the classified pair
+cannot attain zero excess by Corollary 3.2.
+The nonatomic construction of Proposition 4.1 is an analysis pair;
+it is not itself a finite observer.
+
+The kernel $L$, the killed kernel $M$, its cemetery state and its
+path-measure comparison add no actual operation to the source.
+No clipping property is used or asserted. No hard resource or
+defect budget is preserved by an unproved bridge. There is no
+unrestricted positive gap, full-code-whitebox impossibility,
+universal ML classification, practical performance improvement
+or fixed-resource optimum in these conclusions.
+
+[PAIR]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[SEVEN]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_WORD_BRANCHING_NECESSITY.md
+[REV]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md
+[SURVIVAL]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md
+[RETURN]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md
+[PAID]: https://github.com/the-omega-institute/trureturing/blob/f022384d6e4a8b9e457f646f377ac2f0398b0c6f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+

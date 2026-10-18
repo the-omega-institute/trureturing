@@ -1,0 +1,4 @@
+**命题 28.4（空集与不可恢复边界）。** $\varnothing\in\mathscr A_{Z\mid m}$ 当且仅当 $Z|_{\Omega_m}$ 恒定，此时 $\operatorname{Min}\mathscr A_{Z\mid m}=\{\varnothing\}$。若 $\mathscr A_{Z\mid m}=\varnothing$，全部指定档案亦不足以恢复目标；特别地，$I=\varnothing$ 且目标非常值时属于此情形。
+
+**证明。** 空元组在非空 $\Omega_m$ 上恒定，其核为 $\Omega_m\times\Omega_m$，包含于目标核恰好要求目标恒定。空集充分时它包含于每个集合，因而是唯一最小充分集。反之，若全体档案充分，它本身属于充分族，故充分族为空排除这一可能。对空指标集只有空子集，结论随之成立。$\square$
+

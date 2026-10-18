@@ -1,0 +1,107 @@
+**Theorem 5.2 (normalization and full complex/reference/output identities).**
+Definition 5.1 is one finite normalized acquisition with whole-fibre TP
+decoders. Its output at the cut consists of its declared joint quantum
+fibre and its actual classical label. It forgets to the particular
+complete approximate channel $\widehat\Phi_*$ on every complex input,
+every passive reference, and every separately labelled Borel-time set.
+
+Proof. For every complex $A_V\in M_3(\mathbb C)$, the coefficient
+Gram identity and the range reconstruction in RH.27 give
+
+$$
+\begin{aligned}
+\sum_jK_jA_VK_j^\dagger
+ &=\delta DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger,\\
+\sum_jK_j^\dagger K_j
+ &=\delta D^\dagger D+T^\dagger T+S^\dagger S,\\
+C_j^\dagger C_j&=EK_j^\dagger K_jE^\dagger.
+\end{aligned}
+\tag{RH.34}
+$$
+
+Adding RH.29 makes the live coefficient Gram $I_3$. The four spectral
+row effects sum to $EME^\dagger$, because
+$\Pi_++\Pi_-=I_2$ and each report receives half the mass. The
+complementary effects sum to $I_5-P_V$. Thus
+
+$$
+\sum_{\text{all actual labels }\alpha}
+       \mathcal E_\alpha^\dagger(I)
+ =E(D^\dagger D+T^\dagger T+S^\dagger S+M)E^\dagger
+     +(I_5-P_V)=I_5.
+\tag{RH.35}
+$$
+
+Every finite encoder effect is positive and bounded by this sum, hence
+is TNI. Every live decoder is TP on its entire fibre because $EV_j$
+and $E$ are isometries. The scalar decoders are TP because
+$\sum_\ell w_\ell=1$ and
+$\int_0^1g(t)dt=[-2/(1+t)]_0^1=1$. No branch is normalized by
+survival, by its own probability, or by an acceptance event.
+
+For every complex $A\in M_5(\mathbb C)$, put $A_V=E^\dagger AE$.
+The exact forgotten maps are
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi^f_\ell(A)(B)&=G_B\left[
+ w_\ell\operatorname{tr}(EME^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)\right]P_f,\\
+G_B&=\int_B\frac{2}{(1+t)^2}\,dt,
+\qquad B\subseteq[0,1]\text{ Borel},\quad\ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{RH.36}
+$$
+
+The live identity is an identity of Kraus conjugations; the failure
+identities are identities of trace functionals, each multiplying its
+own labelled measure. They hold on all complex matrix units. All
+$P_V$–$(I_5-P_V)$ cross-support operators are killed, and every
+wrong-support or extra-sector output is zero. Both zero-weight original
+labels $0,13$ remain zero; labels $1,2,3$ remain separate. The density $g$ is
+finite on the closed time interval, with no endpoint atom or singular
+addition. The common metadata remain in their original fixed state.
+
+For an arbitrary joint operator $X$ with passive reference $R$, define
+
+$$
+\begin{aligned}
+\Theta_M(X)&=\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],\\
+\Theta_\perp(X)&=\operatorname{Tr}_5[((I_5-P_V)\otimes I_R)X].
+\end{aligned}
+\tag{RH.37}
+$$
+
+The full amplified live output is
+
+$$
+\sum_{K\in\{D,T,S\}}(EKE^\dagger\otimes I_R)X
+                              (EK^\dagger E^\dagger\otimes I_R),
+\tag{RH.38}
+$$
+
+and the amplified labelled failure output is, with output-reference
+order fixed,
+
+$$
+G_B P_f\otimes
+ [w_\ell\Theta_M(X)+\mathbf1_{\ell=2}\Theta_\perp(X)].
+\tag{RH.39}
+$$
+
+More finely, a scalar spectral row contributes its exact conditional
+reference operator
+$(C_{f,\epsilon,r}\otimes I_R)X(C_{f,\epsilon,r}^\dagger\otimes I_R)$;
+a complement branch contributes $\Theta_\perp(X)/2$.
+Their sums give RH.39. Thus no conditional reference state is replaced
+by an unconditional marginal, and no time binning is used. The identities
+hold for every passive reference amplification and every labelled Borel
+set. Tensoring the fixed metadata state completes the original output.
+
+The actual density $g$ has not replaced the ideal $f_y$ of RH.2.
+RH.36–39 identify the same complete approximate channel used in the
+inherited certificate; consequently all twelve original full-cq errors,
+including height $16$, keep their credited values and their maximum is
+$E_*$. This uses the original certificate conditionally. $\square$
+

@@ -1,0 +1,41 @@
+**Proposition 28.3 (The trace excess and its first seven-position
+obstruction).** Put
+$E_n(m)=\operatorname{Tr}(T_m^n)-L_n^{\mathrm{cyc}}(m)$ for odd $n\ge3$.
+Then
+
+$$
+\sum_{m\ge0}E_n(m)t^m
+=\frac{t^2}{(1-t^2)(1-t)^n}.
+\tag{28.13}
+$$
+
+For seven positions the count is
+
+| $m$ | $\operatorname{Tr}(T_m^7)$ | $L_7^{\mathrm{cyc}}(m)$ | $E_7(m)$ |
+| ---: | ---: | ---: | ---: |
+| 1 | 29 | 29 | 0 |
+| 2 | 289 | 288 | 1 |
+| 3 | 1640 | 1633 | 7 |
+| 4 | 6604 | 6575 | 29 |
+| 5 | 21122 | 21031 | 91 |
+
+At $m=2$ the only extra tuple is $\mathbf1=(1,\ldots,1)$.
+It cannot be the observation of two closed histories.
+
+Proof. Put $s=m-2j$ in the sum in (28.8). The generating function is
+$\sum_{j\ge1}t^{2j}\sum_{s\ge0}\binom{s+n-1}{n-1}t^s$, giving
+(28.13). To compute the trace entries without an implicit counting
+convention, set $A_0(a,b)=\mathbf1_{a=b}$ and recursively
+$A_{r+1}(a,b)=\sum_{d=0}^{m-b}A_r(a,d)$ for $0\le a,b\le m$.
+Then $A_r=T_m^r$ and the first column in the table is
+$\sum_a A_7(a,a)$. Formula (28.8) gives respectively
+$0,1,7,\binom86+1=29,\binom96+7=91$ for the excess.
+For $m=2$ the only slack composition has $j=1$ and all $a_i=0$;
+(28.12) gives $c=\mathbf1$. If two rows realized it, every position
+would be assigned to exactly one row and adjacent positions would
+have different rows. This would two-color an odd ring, which is
+impossible. Equivalently $7>3\cdot2$ violates (28.7).
+This is the integer common-copy version of the half-filled odd-cycle
+obstruction in [Pyramid Local Fillings, §9][PY28]. The transfer matrix
+has counted its stated local domain correctly. $\square$
+

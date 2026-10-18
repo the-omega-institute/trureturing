@@ -1,0 +1,16 @@
+# Acquired graph relations, exact strategy resources and whole-fiber separation
+
+This volume gives ordinary mathematical proofs for the entire graph family
+of [ARH, Definition 27.1][ARH], with every finite mixed literal history and
+every finite prefix-free original target cut. Its source size and physical
+query words are unbounded. The additional bridge is an exact interpretation
+of common physical actions on the two coupled copies, followed by exact
+whole-row terminal predicates. It discharges the resource decision
+obligation left after ARH's all-depth existence decision. The synchronous
+resource theorem is not presumed to apply outside its named family.
+
+The manuscript is pure theory, not a kernel proof or an implemented solver.
+Its definitions and ordinary proofs are reference material. Existing source
+volumes remain the suppliers of their stated results. Subsequent additions
+belong after the append anchor; no accepted source statement is revised here.
+

@@ -1,0 +1,17 @@
+**定义 49.1（指定原始端点的深度坐标）。** 沿用约定36.1的全部实际有限有序树、同一个替换 $\rho$，以及定理36.3的唯一分解
+
+$$
+t=\rho^{\nu(t)}p(t),\qquad p(t)\in\mathcal P.
+$$
+
+令 $T_n=\rho^n\alpha$，$n\in\mathbb N_0$，并置
+
+$$
+e(t)=\begin{cases}1,&p(t)=\alpha,\\0,&p(t)\ne\alpha,\end{cases}
+\qquad Q(t)=(\nu(t),e(t)).
+\tag{JM.134}
+$$
+
+因此 $e(t)=1$ 当且仅当 $t=T_{\nu(t)}$。这里 $\nu$ 不表示到叶的地址长度，$e$ 不表示当前根的叶标签；例如 $Q(\alpha)=(0,1)$、$Q(\beta)=(1,1)$。
+[原子关系生成卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)定理3.2的结构递推 $T_{j+2}=(T_{j+1},T_j)$ 继续在原树上使用，不作结合律识别。
+

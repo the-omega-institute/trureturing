@@ -1,0 +1,14 @@
+**Corollary 263.3 (Normalized support consequences).** For every
+complete normalized kernel $p$ and full $y\ge0$,
+
+$$
+yz_p-B_O(y)\le\omega(p)\Upsilon_y,\qquad
+B_N(y)\le B_O(y)+\Upsilon_y.
+\tag{263.6}
+$$
+
+**Proof.** Convert a decomposition minimizing changed mass and use
+the signed identity on every changed table. The second inequality
+follows by taking the maximum over $p\in N_L$ and $\omega(p)\le1$.
+$\square$
+

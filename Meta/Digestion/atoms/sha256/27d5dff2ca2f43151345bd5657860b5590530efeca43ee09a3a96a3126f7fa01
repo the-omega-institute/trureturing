@@ -1,0 +1,58 @@
+#### 定理 3：纤维动力学闭合定理
+
+输运 $U$ 对投影 $P$ 可闭合，当且仅当：
+
+$$
+P(p)=P(p')
+\Longrightarrow
+P(U(p))=P(U(p')).
+$$
+
+##### 证明
+
+若存在 $\overline U$ 使得：
+
+$$
+P\circ U=\overline U\circ P,
+$$
+
+则当 $P(p)=P(p')$ 时：
+
+$$
+P(U(p))
+=
+\overline U(P(p))
+=
+\overline U(P(p'))
+=
+P(U(p')).
+$$
+
+反过来，若：
+
+$$
+P(p)=P(p')
+\Longrightarrow
+P(U(p))=P(U(p')),
+$$
+
+则可以在可见商空间上定义：
+
+$$
+\overline U(P(p))
+=
+P(U(p)).
+$$
+
+由于右边不依赖于 $p$ 在同一纤维中的具体代表元，$\overline U$ 定义良好，并满足：
+
+$$
+P\circ U=\overline U\circ P.
+$$
+
+证毕。
+
+这个定理给出一个非常清晰的分类。
+
+---
+

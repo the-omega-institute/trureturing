@@ -1,0 +1,17 @@
+**Definition 1.1 (native trees and transport).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,
+\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle .
+\tag{RNL.1}
+$$
+
+A position is a word in $\{L,R\}^{*}$, and $r_t(p)$ is the four-valued
+reply $\alpha,\beta,\mathsf{branch}$ or $\mathsf{absent}$. Every tree is
+finite, but there is no common bound on size, height or rank. The old cut $P$
+and the target cut $Q$ are arbitrary finite prefix-free sets of original
+addresses; either may be empty or contain the root.
+

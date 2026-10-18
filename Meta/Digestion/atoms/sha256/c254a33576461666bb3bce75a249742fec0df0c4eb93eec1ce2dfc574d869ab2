@@ -1,0 +1,10 @@
+**Example 10.2 (capacity, absence and failed parsing).** At $H=1$, $N=1$,
+alpha and beta are the only valid packets. The gate count is $G(1)=23$.
+Root TagRead separates the leaves; TagRead($L$) returns absent on each.
+The actual first $\rho$ on alpha accepts and installs beta without increasing
+leaf count. The next $\rho$ rejects and leaves beta, because its candidate has
+two leaves. Unconditional Native ApplyRho instead installs that branch;
+Theorem 7.2 therefore cannot extend to that overcapacity run. Reject advances
+$q,j$ but not $g,e$. At $H=2$, `PAD,alpha,PAD` fails preparation while
+`alpha,PAD,PAD` succeeds; ignoring PAD-before-closure invalidates the model.
+

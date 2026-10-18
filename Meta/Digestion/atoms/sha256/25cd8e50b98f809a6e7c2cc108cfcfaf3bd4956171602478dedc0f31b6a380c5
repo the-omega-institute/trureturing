@@ -1,0 +1,51 @@
+**Definition 8.1 (The specified filtered family).** Retain exactly
+Assumption 1.1, the scalar ports and error (1.2)–(1.3), the passive
+frame (1.4), and the complete atom cone (1.8). Let $W$ be the
+particular cyclic witness in (4.1). For three strictly positive real
+numbers $h_0,h_+,h_-$, set
+
+$$
+\begin{gathered}
+H=\sum_{i\in I}h_iR_i,\qquad
+W_H=(I\otimes H^{-1})W(I\otimes H^{-1}),\\
+\Psi_H(a,b)=(a\otimes b)^TW_H(a\otimes b)
+                =\Psi(a,H^{-1}b),\qquad a,b\in\mathbb R^5,\\
+a_*=(d+u_++u_-)/\sqrt3,\qquad
+b_h=\frac{h_0d+h_+u_++h_-u_-}{\sqrt{h_0^2+h_+^2+h_-^2}},\qquad
+q_i=\frac{h_i^2}{h_0^2+h_+^2+h_-^2},\\
+k_h=k(a_*,b_h),\quad k_{+0}=k(u_+,d),\quad
+k_{-+}=k(u_-,u_+),\quad k_{0-}=k(d,u_-),\\
+\mathcal E_H=\{x\in\mathcal K:\operatorname{tr}(W_HZ(x))=0\}.
+\end{gathered}
+\tag{8.1}
+$$
+
+Thus $q_i>0$ and $\sum_iq_i=1$. Here $H$ filters only the input
+factor of a mathematical witness; it is not an added future action.
+Taking $H=I$ gives $W$. Taking $H=C_\xi$ gives precisely $W'_\xi$
+of (4.3), and (4.12) is another member of this same family. No
+output filter, nonscalar within-sector filter or changed coefficient
+in $W$ is included in (8.1).
+
+For an arbitrary original channel, use the output-first unnormalized
+Choi matrix of its passive-frame channel,
+
+$$
+\begin{gathered}
+\widehat T(X)=D^\dagger T(DXD^\dagger)D,\qquad
+\Omega=5^{-1/2}\sum_{s\in\mathsf S}e_s\otimes e_s,\\
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger),
+\qquad Z_T=5\chi_T.
+\end{gathered}
+\tag{8.2}
+$$
+
+This notation does not assume that $T$ is stationary or real.
+For a selected channel $\widehat T=S_x$, it agrees with $Z(x)$.
+The original-coordinate witness is transported by
+$D\otimes\overline D$ as in (4.9a); all trace pairings are unchanged.
+Theorem 4.2 proves global complex-product positivity of $W$.
+The real invertible input congruence proves it for every $W_H$.
+Consequently its pairing is nonnegative on every original scalar-port
+Choi matrix, including mixed complex preparations and effects.
+

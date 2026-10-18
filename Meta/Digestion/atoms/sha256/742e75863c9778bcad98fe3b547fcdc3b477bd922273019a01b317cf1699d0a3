@@ -1,0 +1,31 @@
+**Convention 12.3 (strict endpoints and equivalent descriptions).**
+The theorem fixes $\tau_i>0$ and admitted $\xi>0$. Its constants and
+radius are uniform over competitors for that input, not over varying
+inputs, $\xi\downarrow0$, $s_*\downarrow0$ or singular limits.
+The plateau includes $s=0,s_*$, and the twelve-label path has a
+valid continuous $\epsilon=0$ limit with high physical rank three.
+Below the plateau endpoint the earlier rank-many low construction
+has complete low coefficient rank three; this is the rank that
+drops at the endpoint. The matching path low blocks and physical
+low products have rank two throughout. Construction counts are not
+minimal alphabet sizes or exact-clock storage bounds.
+
+For fixed $\tau$, $\xi\downarrow0$ sends
+$p\to k$, $q,r_0,\gamma\to0$, $F\to kA$ and
+$s_*\to\sqrt\ell$. This recovers the diagonal plateau as a limit,
+not an onset theorem at $\xi=0$ or an input-uniform cubic estimate.
+No zero-discriminant, $x=s$, nonadmitted or singular-Gram branch is
+included. A global phase on a coefficient vector leaves its projector
+and CP branch unchanged.
+
+The negative-imaginary mirror uses conjugated fixed encoder matrices
+and range maps for the conjugate public state. Real $D,T,S$ and the
+real prescribed effects ensure the same complete channel and costs.
+This specifies different CP maps and is not conjugation of an unknown
+state as an operation. Negative record strength is handled by swapping
+the report names. At zero strength the binary report is fair, while
+the finer generated alphabet can still depend on the input.
+The exponent and coefficient are evaluated; a numerical radius,
+numerical cubic constant, exact positive later-interval law,
+later exact optimizer or whole-instrument uniqueness is not.
+

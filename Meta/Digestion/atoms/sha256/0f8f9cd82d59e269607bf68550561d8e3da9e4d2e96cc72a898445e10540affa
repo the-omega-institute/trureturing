@@ -1,0 +1,70 @@
+**Lemma 309.3 (Complete finite support and original closed caps).**
+Suppose a nonnegative score on $d\ge3$ coordinates has pair-cell maxima
+
+$$
+m_{ij,uv}=\max_{0\le\ell\le d}
+ \sum_{w:(w_i,w_j)=(u,v)}g_Y(w,\ell),\qquad uv=00,01,10,11,
+\tag{309.5}
+$$
+
+whose four-entry sums are at most $W=Yr$. Then
+$B_N=B_O=W$ if $R$ attains $W$. The same bound holds after embedding
+coordinates as $(1,2,j_1,\ldots,j_{d-2})$ at every ordered choice
+$3\le j_1<\cdots<j_{d-2}\le L$, by setting nonskeleton bits to
+one on the scored words and mapping labels by the embedding.
+Every original rule meeting a positive closed cap satisfies the
+resulting finite necessary relation. A linear inequality in the cap
+therefore also holds at its actual error by decreasing positive caps
+to that error.
+
+**Proof.** A fixed $N$ pair chooses a label independently in each
+cell, so its score is at most the sum in (309.5). For nonnegative
+reward vectors, the maximum of a sum is at most the sum of maxima.
+A constant, singleton or repeated schedule coarsens a distinct-pair
+partition; reversal only permutes cells. A stopped table merges the
+$00,01$ cells before choosing its first output, so is bounded as well.
+The common anchor supplies equality for both catalogs.
+
+On the embedded support every outside query has the constant answer
+one. Two arbitrary queries thus induce a displayed pair partition or
+a constant or singleton coarsening. An outside label earns zero and
+cannot improve a maximum of nonnegative rewards. This proves the
+bound for the entire catalog, rather than for a pruned set of queries
+or outputs. All unscored word rows remain in the allocation problem.
+
+The original implication reuses the exact class-feasibility transport
+110.2 and the prefix consequence 280.3, stated in 297.3. At
+$0<c\le1$, vanishing of $a$ makes the active horizon
+$L_a=\max(\{n:a_n>c\}\cup\{0\})$ finite. Transport supplies one
+normalized finite representative at the closed cap $c$ for any
+original cap-feasible competitor. Its necessity includes arbitrary
+original addresses and full-carrier outputs: countability gives a
+common probability-one execution event, and actual finite witnesses,
+truncation and compactness give finite class feasibility. It does not
+preserve every initial law or coupling. For stopped sufficiency the
+reused exact criterion 109.1 is $c_0\ge H$ coordinatewise for
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$,
+$H=\sum_i(\sum_{j>i}(-Q_{ij})_+-\ell_i)_+$;
+normalization makes its scalar schedule budget redundant.
+
+At a desired prefix $K$, restrict a longer representative by fixing
+higher replies to zero, projecting higher labels to zero and deleting
+those constant observations. On an old positive prefix this projection
+also contracts TV to the new base target. Extend a shorter representative
+by ignored inputs. At each added first-zero address $n$ its old positive
+law, supported below that address, has exact error
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+              =\max\{1-p_+(0),a_n\}\le c.
+\tag{309.6}
+$$
+
+Thus all three independent rows hold for this one representative,
+including closed ties. These are representation operations in the
+proof, not free observations by an original rule. Apply (309.4).
+For actual error zero use every positive cap and pass to zero.
+For error less than one decrease caps in $(e_a(A),1]$; when the error
+is one, the particular inequalities below follow directly from
+$a_n\le1$. Caps above one are likewise immediate. $\square$
+

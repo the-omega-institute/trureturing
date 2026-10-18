@@ -1,0 +1,41 @@
+**Lemma 2.7 (closure on the full lawful prefix class).** For every
+$H\ge1$, every valid installed source and every $h\in\mathcal R_H$, each
+physically enabled prescribed non-IN successor is in $\mathcal R_H$.
+At a prescribed IN, the physical successor $h\cdot\mathrm{IN}(b)$ is in
+$\mathcal R_H$ if and only if $b\in\operatorname{Adm}(h)$. This includes
+all incomplete canonical tags, unary lengths and tree or address payloads,
+all intervening work and all source accepts and rejects.
+
+Proof. The complete-frame language $\mathsf C$ is prefix-free: the three-bit
+tag and terminating unary length fix the payload length, so a strict extension cannot be another
+complete frame. Thus the serial protocol identifies the current frame
+prefix without choosing a future completion. Every proper prefix in
+$\mathsf P$ has a next bit still in $\mathsf P$, by taking the next bit
+of any witnessing complete frame. Every complete frame denotes one of the
+finite requests in Definition 2.4. Its service and delivery terminate,
+including when the whole modification rejects; syntax imposes no capacity
+restriction on supplied context trees.
+
+For a non-IN successor, keep a canonical completing request sequence that
+witnesses $h\in\mathcal R_H$. The prescribed internal step is the same
+next step of that run. If $h$ is at the final idle boundary of its witness,
+append, for example, the canonical ReadE frame `0000`; its reservation work
+supplies the extension. At IN, if $p(h)b\in\mathsf P$, choose any complete
+frame extending it. Keep the already completed frames, supply that
+completion and finish its prescribed finite service. No future bit affects
+the earlier deterministic steps, so this is a lawful completed run with
+the given physical successor as a prefix. Conversely, membership of that
+successor in $\mathcal R_H$ would supply a canonical current-frame
+completion extending $p(h)b$, proving $p(h)b\in\mathsf P$. This proves
+necessity and sufficiency on the entire class, not a selected subfamily.
+
+For concrete raw edges, tag prefixes `1` and `10` both extend the Right
+frame `10011011`, whose payload is the code `11` of $\alpha$. After the
+prescribed intervening work, supplying 1 yields `11` and `101`, respectively.
+Neither extends any tag in `000,001,010,011,100`. In Definition 3.2 these
+INs occur at $n_-+6$ and $n_-+10$. Each consumes the bit into its latch,
+advances control and adds a receipt while leaving the tag tape and its head
+unchanged at that occurrence. Both successors are physically executed and
+outside $\mathcal R_H$. No later malformed-frame service is needed for
+these counterexamples to closure under all raw edges. ∎
+

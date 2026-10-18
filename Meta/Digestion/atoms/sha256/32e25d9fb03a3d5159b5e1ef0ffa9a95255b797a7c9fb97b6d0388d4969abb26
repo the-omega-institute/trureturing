@@ -1,0 +1,35 @@
+**Theorem 370.2 (Literal finite-mass feasibility implies a normalized stopped lift).** Let $x=(b,e)\in H_7$. Suppose some complete $N$ allocation of finite mass $M\ge0$ satisfies every literal affine demand
+
+$$
+z(p)\ge d(x)+(M-1)r.
+\tag{370.9}
+$$
+
+Then $x\in P$, and one complete mass-one $O$ allocation satisfies all rows $z(q)\ge d(x)$. There is also a complete affine $O$ allocation of mass $M'=\max\{1,M\}$ satisfying
+
+$$
+z(q')\ge d(x)+(M'-1)r.
+\tag{370.10}
+$$
+
+The implication includes the algebraic case $M=0$; it does not assert mass $M$ for $M<1$.
+
+*Proof.* Subtract $Mr$ in (370.9). For each full nonnegative cut score, the same allocation and (368.11) give
+
+$$
+F_{Q(\widehat c_i)}(x)
+ =\widehat c_i\cdot h(x)
+ \le\widehat c_i\cdot(z(p)-Mr)
+ \le M\Delta_N(\widehat c_i)=0.
+\tag{370.11}
+$$
+
+Every cut inequality holds. Together with $x\in H_7$, (369.4) gives $x\in P$. The inherited simultaneous lift on $P$ supplies $q$ of mass one. Set $q'=q+(M'-1)R$ as an addition of complete allocations. Its mass is $M'$, it is stopped, and
+
+$$
+z(q')=z(q)+(M'-1)r\ge d(x)+(M'-1)r.
+\tag{370.12}
+$$
+
+The added anchor has zero column after subtraction of its mass times $r$. No division by $M$, profile change or independent row optimizer occurs, including when $M=0$. $\square$
+

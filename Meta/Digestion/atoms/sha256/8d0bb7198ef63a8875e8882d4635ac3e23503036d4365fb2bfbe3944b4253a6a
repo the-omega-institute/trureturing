@@ -1,0 +1,22 @@
+**Theorem 4.4 (minimum complete additional alphabet, with attained upper bound).** In the anchored case put
+
+$$
+m(R,h)=\max_{\eta,\theta\ \mathrm{retained}}|V_{\eta,\theta}|.
+\tag{LRD.13}
+$$
+
+The least finite cardinality $|\mathcal E_{R,h}|$ enabling some uniform finite-call exact service is precisely $m(R,h)$. It is effectively computable. A one-value field conveys no additional distinction, so Theorem 4.2 is the case $m=1$. Without an anchor no finite range suffices; the minimum attainable cardinality is countably infinite.
+
+**Proof.** For the finite upper construction the augmented producer computes the actual pattern, chart and target from its paid full acquisition. If that chart is ground, set $E(u)=1$. Otherwise set
+
+$$
+E(u)=\nu(u)+1.
+\tag{LRD.14}
+$$
+
+The latter is the one-based position of the target in its initial interval (LRD.9), so $1\le E(u)\le m(R,h)$. If $m>1$, a chart attaining the maximum realizes every value $0,\ldots,m-1$ by Theorem 3.3; hence this code actually has every complete value $1,\ldots,m$. If $m=1$ its range is exactly $\{1\}$. After the refined cut, the service uses the paid finite native menu of Theorem 4.2 to determine its actual chart. It returns the ground target on a ground chart and $E-1$ otherwise. This proves sufficiency with the declared actual producer and port.
+
+For the lower bound allow any acquired encoding into a range of $s<m$ complete values and any code-assisted deterministic service with bound $K$. Across the $s$ entry values and all reachable four-reply histories its query words form a finite set; let $L$ bound their lengths. Choose a chart with $m$ targets. For each target, fix its exact atomic substitutions and apply Theorem 2.2 to all its negatives, with residual ranks attaining that target and every residual leaf below depth $L$. These $m$ sources are jointly legal separately, all lie in the actual base fiber, and have the same whole-source replies through $L$. They do not require independent marginal fillings to be jointly realizable. Two sources receive the same complete encoded value by pigeonhole. Their identical replies and identical code force the same adaptive execution and output, contradicting their different target depths. This proves $s\ge m$ for arbitrary encodings, arbitrarily long finite words and adaptive services, not just for (LRD.14).
+
+Without an anchor, $s$ finite entry values and a depth-$K$ four-reply tree give finitely many terminal outputs, at most $s4^K$. Terminal reply words are prefix-free because stopping is deterministic. They cannot cover the infinite target image. A paid traversal can retain $E(u)=\nu(u)+1\in\mathbb N_{>0}$ and the later service returns $E-1$ without new reads. The complete range is all positive integers by Theorem 3.4. This proves the countable upper bound and excludes every smaller finite cardinality. Its finite binary serialization has unbounded length. $\square$
+

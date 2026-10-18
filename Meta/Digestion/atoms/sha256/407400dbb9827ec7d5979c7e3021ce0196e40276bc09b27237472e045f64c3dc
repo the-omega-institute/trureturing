@@ -1,0 +1,185 @@
+**Theorem 54.3 (exact original branch and bounded uniqueness).** The
+minimum in (JR.143) exists, with
+$t_*<t_\dagger<t_3$ and $\bar\tau<\tau_\dagger<\tau_3$.
+For every $t_*<t\leq t_\dagger$,
+
+$$
+\boxed{j(h(t))=\operatorname{tr}G-2\psi(t),\qquad
+\mathcal T(s_0h(t))=T_{\rm flat}-\psi(t).}
+\tag{JR.144}
+$$
+
+A matching original primal tuple is
+
+$$
+X_{-,-}=f_0f_0^T,\quad X_{+,+}=f_1f_1^T,\quad
+X_{-,+}=f_2f_2^T,\quad X_{+,-}=0.
+\tag{JR.145}
+$$
+
+On $t_*<t<t_\dagger$ this SDP tuple is unique. The three active original
+dual slacks have rank two and the fourth can be strictly positive
+definite. At $t_\dagger$ at least one active slack has rank one; the
+fourth can still be strictly positive definite. These are statements
+about aggregate matrices and certificates, not uniqueness of a complete
+channel, a physical realization, or a minimum physical-label count.
+
+**Proof.** Define
+
+$$
+\nu_0=0,\quad \nu_1=2(B_{01}+\lambda c_{01})/q_{01},\quad
+\nu_2=2B_{02}/q_{02},
+$$
+
+and the full symmetric matrix
+
+$$
+\widetilde Y=\begin{pmatrix}
+-B_{00}-\lambda c_{00}&-B_{01}-\lambda c_{01}&-B_{02}-\lambda c_{02}\\
+-B_{01}-\lambda c_{01}&B_{11}+\lambda c_{11}&B_{12}+\lambda c_{12}-\nu_1q_{12}\\
+-B_{02}-\lambda c_{02}&B_{12}+\lambda c_{12}-\nu_1q_{12}&B_{22}-\lambda c_{22}
+\end{pmatrix},\qquad Y=F\widetilde YF^T.
+\tag{JR.146}
+$$
+
+For $F'=F\Omega$, $\Omega^T=-\Omega$, differentiation of the three null
+equations gives
+$w=q_{01}\Omega_{01}=-q_{02}\Omega_{02}=q_{12}\Omega_{12}$.
+Differentiation of $B_{00}$ and $h=2c_{11}$ gives
+
+$$
+\psi'=-2w(B_{01}/q_{01}-B_{02}/q_{02}),\qquad
+h'=4w(c_{01}/q_{01}-c_{12}/q_{12}).
+$$
+
+As $h'>0$, $w\ne0$, and $\lambda h'=2\psi'$ is exactly
+$(\nu_1-\nu_2)q_{12}=2\lambda c_{12}$. Consequently the original slacks
+
+$$
+S_{-,-}=Y+G+\lambda C,\quad
+S_{+,+}=Y-G-\lambda C+\nu_1Q,\quad
+S_{-,+}=Y-G+\lambda C+\nu_2Q
+\tag{JR.147}
+$$
+
+annihilate respectively $f_0,f_1,f_2$. On their respective orthogonal
+complements their matrices are
+
+$$
+\begin{aligned}
+S_{-,+}|_{\langle f_0,f_1\rangle}
+&=2\begin{pmatrix}-B_{00}&\lambda k_-\\\lambda k_-&\lambda c_{11}\end{pmatrix},\\
+S_{+,+}|_{\langle f_0,f_2\rangle}
+&=2\begin{pmatrix}-B_{00}-\lambda c_{00}&\lambda k_+\\
+\lambda k_+&-\lambda c_{22}\end{pmatrix},\\
+S_{-,-}|_{\langle f_1,f_2\rangle}
+&=2\begin{pmatrix}B_{11}+\lambda c_{11}&m\\m&B_{22}\end{pmatrix}.
+\end{aligned}
+\tag{JR.148}
+$$
+
+Their determinants are $4\lambda d_-,4\lambda d_+,4d_N$.
+Moreover $c_{11}>0$, $c_{00},c_{22}<0$, and $B_{11}>0$ by (JR.133).
+Thus when $\lambda>0$ and all three discriminants are positive,
+$d_->0$ implies $B_{00}<0$, and $d_N>0$ implies $B_{22}>0$.
+Every matrix in (JR.148) is then positive definite.
+
+There is also a fourth ORIGINAL slack. Put $R=Y+G-\lambda C$.
+For any nonzero real $Q$-null $z$, if $z^TCz\geq0$, (JR.133) implies
+$z^TGz>0$, and
+
+$$
+z^TRz=z^TS_{+,+}z+2z^TGz>0.
+$$
+
+If $z^TCz<0$, then
+$z^TRz=z^TS_{-,-}z-2\lambda z^TCz>0$.
+Compactness of the unit null set yields a positive minimum $a$.
+Apply the equality S-lemma to $z^T(R-eI)z$, $0<e<a$, with constraint
+$z^TQz=0$. Specifically, Xia–Wang–Sheu,
+[S-Lemma with Equality and Its Applications, arXiv:1403.2816v3,
+Theorem 3](https://arxiv.org/pdf/1403.2816v3), under its Assumption 1,
+requires the constraint to take both signs. Here $Q$ is indefinite.
+Its only exceptional case requires zero quadratic constraint matrix
+and a nonzero linear constraint term; our matrix is the nonzero $Q$.
+The theorem therefore supplies a finite real $\nu_3$ with
+
+$$
+S_{+,-}=Y+G-\lambda C+\nu_3Q\succeq eI\succ0.
+\tag{JR.149}
+$$
+
+Only this certificate-completion mechanism is borrowed, not a value or
+contact choice. One can choose $\nu_3$ algebraically: sort the distinct
+real roots of $\det(R+\nu Q)$ and test Sylvester minors at their adjacent
+midpoints. The PD set is one nonempty open interval by convexity and is
+bounded because $Q$ is indefinite. Its endpoints are adjacent determinant
+roots; their midpoint is an admissible choice. The leading coefficient
+is $\det Q\ne0$, so there is no identically zero determinant exception.
+This is a pointwise finite choice, not a uniform strict margin at $t_*$.
+
+The primal (JR.145) is feasible with contrast $h(t)$. Since
+$\operatorname{tr}c=0$ and $h=2c_{11}$,
+
+$$
+\operatorname{tr}Y-\lambda h(t)=\operatorname{tr}G-2B_{00}.
+\tag{JR.150}
+$$
+
+This equals the primal objective, so the original primal and all four
+original dual blocks match whenever the stated signs hold.
+
+It remains to prove the whole nonempty interval, not just local signs.
+At $t_*$, $\lambda=0$, $B_{00}=\mu_*<0$, and
+$d_-=-\mu_*c_{11}>0$, $d_+=\mu_*c_{22}>0$.
+The third discriminant is the determinant of the compression of
+$H_*=G+\lambda_{\rm sp}Q$ to $f_0^\perp$, positive by Theorem 50.4.
+Its positive spectrum also follows directly from (JR.86) and
+$\lambda_{\rm sp}<.0032$: the $1,2$ principal block has positive
+entries on the diagonal and determinant $>1.35\cdot10^{-7}$.
+Constrained differentiation gives
+
+$$
+\psi''(t_*)=2f_0'(t_*)^T(H_*-\mu_*I)f_0'(t_*)>0,
+\tag{JR.151}
+$$
+
+because $f_0'\ne0$ is perpendicular to $f_0$. Thus $\lambda>0$ just
+to the right of $t_*$. Existence of a later discriminant zero is proved
+below independently of this positivity continuation. The zero set is
+closed away from the two endpoints, with no zeros in an initial
+neighborhood; minimizing it on a compact interval ending at any later
+zero proves that (JR.143) is a genuine least zero.
+
+On $(t_*,t_\dagger)$ all discriminants stay positive. If $\lambda$
+first returned to zero at $t_0\leq t_\dagger$, continuity and (JR.148)
+would leave the first two compressions PSD, equal to
+$2\operatorname{diag}(-B_{00},0)$. The third is PSD since $B_{11}>0$
+and $d_N\geq0$. At that return choose the fourth slack equal to
+$S_{-,-}$, with $\nu_3=0$. Equation (JR.150) still matches a zero-contrast-
+multiplier dual at $h(t_0)>\bar\tau$. Such a dual bounds even $j(0)$
+by $j(h(t_0))$, contradicting (JR.114). Hence $\lambda$ remains strictly
+positive, including at $t_\dagger$. The three compressions are PD before
+that endpoint and PSD at it. Each has a positive diagonal entry there,
+namely $\lambda c_{11}$, $-\lambda c_{22}$, or $B_{11}+\lambda c_{11}$.
+A vanishing determinant therefore gives rank exactly one. Since
+$h'(t_\dagger)>0$, every multiplier already displayed is finite; construct
+(JR.149) anew at the endpoint, without assuming the earlier choices of
+$\nu_3$ remain bounded. This proves (JR.144) through the endpoint.
+
+In the open interval, complementary slackness puts any optimal tuple
+in the three one-dimensional kernels of (JR.147), and forces
+$X_{+,-}=0$ by (JR.149). Thus its other blocks are $a_if_if_i^T$;
+normalization in the orthonormal frame gives $a_0=a_1=a_2=1$.
+This proves precisely the bounded uniqueness statement. Differentiating
+(JR.144) gives
+
+$$
+j'(h(t))=-\lambda(t)<0,\qquad
+\mathcal T'(s_0h(t))=-\lambda(t)/(2s_0)
+\quad(t_*<t<t_\dagger).
+\tag{JR.152}
+$$
+
+No endpoint uniqueness or true support transition is inferred. $\square$
+

@@ -1,0 +1,26 @@
+### 11.3 The Gram equality step inside native certification
+
+**Proof ingredient 11.4 (Connected saturation with a fixed target).**
+The following classical equality case is used inside Theorems 11.5 and
+11.8. Suppose a PSD candidate has all diagonals $p_i>0$ and satisfies
+$|C_{ij}|^2=p_ip_j$ on a connected graph. Factor $\rho=V^\dagger V$
+and let $e_i$ be its columns. Then $\|e_i\|^2=p_i$ and the reported
+$C_{ij}$ is the transposed Gram entry. Equality in Cauchy–Schwarz makes
+adjacent columns collinear. Along the graph, all columns are collinear;
+hence $\rho$ has rank one.
+
+If the diagonals and complex edges agree with a fixed pure target $\psi$,
+write a pure representative of the candidate as $\phi$. The ratios
+$q_i=\phi_i/\psi_i$ have modulus one and every edge gives
+$\overline q_iq_j=1$. Connectedness forces a single common phase.
+Thus the candidate projector is the target projector.
+
+[Hidden Relations C-29.3][G11] uses this same Gram equality mechanism
+for unit diagonal environmental records in a calibrated Schur channel.
+Here the normalized entries are $\rho_{ij}/\sqrt{p_ip_j}$, and the target
+phases can be removed by its known diagonal unitary. This transfers the
+equality mechanism, not that source's whole-channel identity conclusion.
+Cycle phases alone would not force the required modulus saturation.
+This paragraph is the intermediate Gram argument for the following
+certificates, not a separate general tomography theorem.
+

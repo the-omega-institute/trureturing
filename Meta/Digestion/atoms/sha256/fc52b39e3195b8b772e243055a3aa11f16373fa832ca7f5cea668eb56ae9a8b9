@@ -1,0 +1,30 @@
+**Definition 5.3 (Normalized coefficients, drift and scalar variation).** Write
+
+$$
+\begin{aligned}
+\Delta_H(k)&=H(k)-k^9,\qquad
+G=Z_1-Z_0=\sum_{k\ge1}\Delta_H(k)q^k,\qquad
+\varepsilon=\frac{G}{Z_0},\\
+R_r^L(q)&=\sum_{k=1}^Lk^rq^k,\qquad
+G_L=\sum_{k=1}^L\Delta_H(k)q^k,\\
+w_k&=f_1(k)-f_0(k)
+=\frac{[\Delta_H(k)-\varepsilon k^9]q^k}{Z_1},\\
+m_L&=\sum_{k=1}^Lw_k=\pi_1-\pi_0
+=\frac{G_L-\varepsilon R_9^L}{Z_1},\\
+\kappa_L&=\frac12\left(\sum_{k=1}^L|w_k|+|m_L|\right).
+\end{aligned}
+\tag{5.5}
+$$
+
+Here $Z_0=R_9$ and $Z_1=(1+\varepsilon)Z_0$. In particular the exact, entirely source-defined coefficient is
+
+$$
+\kappa_L=
+\frac{\displaystyle\sum_{k=1}^L
+ |\Delta_H(k)-\varepsilon k^9|q^k
+ +|G_L-\varepsilon R_9^L|}{2Z_1}.
+\tag{5.6}
+$$
+
+The normalizing subtraction $\varepsilon k^9$ and the short-total drift $m_L$ are retained. Nonnegativity of $\Delta_H(k)$ does not give nonnegativity of $w_k$ or of $m_L$.
+

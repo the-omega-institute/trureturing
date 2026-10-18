@@ -1,0 +1,13 @@
+**数学引文及限制 23.3（条件核的来源选择）。**
+[LocalFillings 定义 18.1、命题 18.4、定义 19.1、定理 20.3 与 25.1](AURIC_FIB_ATOM_PYRAMID_LOCAL_FILLINGS_SOFT_TO_RIGID_AND_ODD_CYCLE_OBSTRUCTIONS.md)
+已区分局部条件表、所选二阶平稳延拓、局部熵与整源熵率。
+其参数在这里是 $t=\rho$，
+$\alpha=(\rho-\kappa)/(1-2\rho)$、$\beta=\kappa/\rho$；
+在 $\rho=1/3$ 上，$\alpha=1-s,\beta=s$，所以其 $K$ 恰为 $K_s$。
+其全正域对应这里 $0<s<1$，端点的置换核由 (23.3) 直接定义，
+并不外借全正域的唯一性结论。
+该供应的 $\Delta=(1-\rho)\kappa-\rho^2$ 与五权四角式在 $a=p$ 时
+互为负号。其降秩及熵论证是这里具体计算的已有接口。
+从 $p$ 选择这份无限平稳 Markov 延拓，不等于证明该 $p$ 在某个有限环上
+可实现；将条件核绕圈相乘并归一化也须重新计算边缘，不能跳过闭环判据。
+

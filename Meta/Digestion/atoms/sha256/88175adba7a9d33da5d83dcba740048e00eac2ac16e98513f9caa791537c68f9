@@ -1,0 +1,8 @@
+**定义 3.1（带类型的实际过程）。** 对每个类型 $i$，给定状态集 $S_i$ 和读出 $q_i:S_i\to M_i$。具名动作 $a:i\to j$ 具有合法域、后继及标签
+
+$$
+D_a\subseteq S_i,\qquad F_a:D_a\to S_j,\qquad \ell_a:D_a\to L_a.
+$$
+
+读出包含假设 1.2 的全部仍可访问资源。
+

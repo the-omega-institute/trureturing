@@ -1,0 +1,19 @@
+**Example 10.1 (speed and resource arithmetic).** Use $r=4/5$, $Z=1/5$,
+$k_0=1/5$, $v_k=1/5$, $v_\chi=2$, $T=1$. This preparation differs from
+(3.4); it is an instance of Section 5, not its finite-precision band.
+For query gaps determined by $0,1/7,3/5,1$, the actual four-leg construction
+gives
+
+$$
+\begin{aligned}
+A_\pm&=\pm477/49000,&
+h_\pm&=\mp(477/39200)b_0,\\
+\operatorname{TV}(k)&=1/10,&
+\operatorname{TV}(\chi)&=1,\\
+\mathcal L&=11/10,&\mathcal Q&=101/50.
+\end{aligned}
+$$
+
+All heights lie strictly between $0$ and $2/5$. These fractions follow by
+summing $v_kv_\chi\ell_j^2/16$ and the leg costs in Lemma 3.1.
+

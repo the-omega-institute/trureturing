@@ -1,0 +1,132 @@
+**Theorem 25.2 (One normalized legal-support global approximant).**
+For the same fixed SNS law (22.1), let n be at least
+two and let D be a positive integer. Set
+
+$$
+e_{n,D}=\frac{(n-1)(D+2)}{2^D}.
+\tag{25.2}
+$$
+
+If $e_{n,D}<1$, there exists one normalized
+legal-support MPS $\widehat\Phi_{n,D}$ with bond
+at most 2D at every cut such that
+
+$$
+\|\Psi_n(P)-\widehat\Phi_{n,D}\|^2\le4e_{n,D}.
+\tag{25.3}
+$$
+
+The half trace-norm distance between their pure density
+matrices is at most $2\sqrt{e_{n,D}}$.
+For any $0<\epsilon<1$, one sufficient choice is
+
+$$
+D=\left\lceil2\log_2\!\left(
+\frac{8(n-1)}{\epsilon^2}\right)\right\rceil.
+\tag{25.4}
+$$
+
+It gives vector norm error and pure-state trace
+distance at most $\epsilon$, with global bond
+at most $2D=O(\log(n/\epsilon))$.
+
+Proof. The needed simultaneous truncation theorem is
+existing: [Verstraete–Cirac, *Matrix product states
+approximate ground states faithfully*,
+cond-mat/0505140v1, Lemma 1](https://arxiv.org/abs/cond-mat/0505140v1).
+For a normalized finite-chain state with ordered
+reduced eigenvalues $\mu_j^{[a]}$, it supplies one
+possibly subnormalized bond-D MPS $\Phi$ with
+
+$$
+\|\Psi-\Phi\|^2
+\le2\sum_{a=1}^{n-1}\sum_{j>D}\mu_j^{[a]},
+\qquad \|\Phi\|\le1.
+\tag{25.5}
+$$
+
+The norm assertion is also stated in its proof.
+Apply it to $\Psi_n(P)$ in the full qubit tensor
+space. Equation (23.3), with retained rank D, gives
+each tail at most $(D+2)/2^{D+1}$. Thus (25.5)
+has right side at most $e_{n,D}$.
+
+A generic truncation need not respect no11 support.
+Put $\chi=Q_n\Phi$. Lemma 25.1 bounds its bond by
+2D, while orthogonal projection and $Q_n\Psi_n=
+\Psi_n$ give
+
+$$
+\|\Psi_n-\chi\|\le\|\Psi_n-\Phi\|
+\le\sqrt{e_{n,D}}.
+\tag{25.6}
+$$
+
+If $e_{n,D}<1$, then $\|\chi\|\ge1-\sqrt{e_{n,D}}>0$.
+Normalize $\widehat\Phi_{n,D}=\chi/\|\chi\|$.
+The reverse triangle inequality gives
+
+$$
+\begin{aligned}
+\|\Psi_n-\widehat\Phi_{n,D}\|
+&\le\|\Psi_n-\chi\|+|1-\|\chi\||\\
+&\le2\|\Psi_n-\chi\|
+\le2\sqrt{e_{n,D}}.
+\end{aligned}
+\tag{25.7}
+$$
+
+Normalization does not increase bond or change support.
+For normalized pure vectors, half trace-norm distance
+is no larger than their vector norm difference, proving
+the asserted trace bound.
+
+For (25.4), D is at least six. The elementary integer
+inequality $D+2\le2^{D/2+1}$ holds for all $D\ge2$:
+it is equality at two, and the left side grows by a
+factor at most $5/4<\sqrt2$ per unit step. Therefore
+
+$$
+4e_{n,D}\le8(n-1)2^{-D/2}\le\epsilon^2<1.
+\tag{25.8}
+$$
+
+This also ensures the nonzero premise for normalization.
+Equations (25.3) and (25.8) prove the claimed accuracy.
+$\square$
+
+The theorem supplies a single globally accurate vector,
+using the sum of all cut tails. It does not select an
+independent best approximation at each cut. The extra
+factor two in bond explicitly enforces the original
+legal support, rather than assuming that unconstrained
+Schmidt truncations preserve it. The normalized state
+need not retain exact occupation probabilities,
+positive amplitudes, a stationary family across windows,
+or any specified preparation circuit. The full SNS
+positive coherent state still has unbounded exact rank
+by §22. Approximation and exact representation are
+different conclusions for this same fixed source.
+
+These results also respect the source/operation distinction
+in [Probability Phase Transport and Holonomy,
+§6.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md):
+a static isotropic Gram or a linear intertwining does
+not imply preservation of the reachable endpoint set,
+its law, or realization by native controls. Here (24.5)
+is a spectrum-preserving mathematical compression and
+(25.3) is an approximation-existence theorem; neither
+adds a native preparation operation. Similarly, the
+classical one-sided erasure/output-filter bounds and
+their explicit lumpability or root-summability premises
+in the other legal-edge volumes do not supply quantum
+Schmidt-tail bounds. The quantum tails used here come
+from the actual renewal row grouping in §23.
+
+The simultaneous truncation bound is attributed to
+Verstraete–Cirac, and the constraint projector is the
+explicit two-state no11 automaton. This application
+does not settle the original all-hidden-dimension
+harmonic-edge optimization or establish a new general
+MPS truncation theorem.
+

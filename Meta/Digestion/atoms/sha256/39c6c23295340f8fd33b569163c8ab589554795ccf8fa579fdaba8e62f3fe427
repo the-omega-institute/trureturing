@@ -1,0 +1,66 @@
+**定义 4.1（正来源参数与实际第四、第五响应）。** Put
+
+$$
+H^*=\left(0,J,24,M,48,M,\frac{312}{5},J,\frac{48}{5},
+                                                  M,-\frac{532}{5}\right).
+                                                               \tag{4.1}
+$$
+
+For $\alpha,\beta>0$ and $d\in\mathbb R$, define
+
+$$
+\begin{gathered}
+P(\alpha,\beta)=\frac1{1+\alpha\beta}
+                 \begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\\
+U=\operatorname{tr}(JP)=\frac{\alpha+\beta}{1+\alpha\beta},\qquad
+V=\operatorname{tr}(LP)=1+\frac{\beta}{1+\alpha\beta},\qquad
+A=P_{11}=\frac1{1+\alpha\beta}.
+\end{gathered}                                                   \tag{4.2}
+$$
+
+This source is strictly positive, rank one and trace one. Every such
+source has these unique positive parameters:
+$\alpha=P_{21}/P_{11}$ and $\beta=P_{12}/P_{11}$, since rank one
+gives $P_{22}=\alpha\beta P_{11}$ and trace one gives
+$P_{11}=1/(1+\alpha\beta)$. In particular $U,V,U+V$ are positive.
+
+Using the same four Lagrange polynomials as in (2.8), let
+
+$$
+G_{\alpha,\beta,d}(t)=
+-d\ell_0(t)+\frac{24-d}{U}\ell_1(t)
++\frac{48-d}{V}\ell_2(t)
++\frac{312/5-d}{U+V}\ell_3(t).
+                                                               \tag{4.3}
+$$
+
+With drift $d$, the four actual readings at clocks $0,1,2,3$ along
+$JMM$ are exactly $0,24,48,312/5$. No root promise is imposed on
+this interpolant. Define its actual fourth-$J$ and fifth-$M$
+responses by
+
+$$
+\begin{aligned}
+\mathcal Y(\alpha,\beta,d)&=d+G_{\alpha,\beta,d}(4)(1+A+U),\\
+\mathcal Z(\alpha,\beta,d)&=d+G_{\alpha,\beta,d}(5)(U+2V-A).
+\end{aligned}                                                   \tag{4.4}
+$$
+
+The trace factors are $\operatorname{tr}(CP)=1+A+U$ and
+$\operatorname{tr}(QP)=U+2V-A$. The gain samples in these actual
+response functions are explicitly
+
+$$
+\begin{aligned}
+G_{\alpha,\beta,d}(4)
+ &=d+\frac{4(24-d)}U-\frac{6(48-d)}V
+                              +\frac{4(312/5-d)}{U+V},\\
+G_{\alpha,\beta,d}(5)
+ &=4d+\frac{15(24-d)}U-\frac{20(48-d)}V
+                              +\frac{10(312/5-d)}{U+V}.
+\end{aligned}                                                   \tag{4.5}
+$$
+
+Thus (4.4) specifies rational functions of the three parameters,
+rather than unconstrained proposed response values.
+

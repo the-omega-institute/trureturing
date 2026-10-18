@@ -1,0 +1,67 @@
+**Lemma 78.2 (all-leaf separation with unequal bounded stubs).** Suppose $E_2(D;r)$
+holds and every actual stub length is at most $3/2$. For each leaf $p=(x_p,y_p)$ let
+its two actual grounding coordinates, sorted in increasing order, be $a_p<b_p$, and
+put $I_p=[a_p,b_p]$. Then these closed intervals are pairwise disjoint. This
+conclusion requires no equal-length or opposite-side condition.
+
+**Proof.** Fix a leaf $p$, abbreviate its tip coordinates by $a<b$, write
+$g_a=(a,0)$ and $g_b=(b,0)$, and set $\Delta_p=\operatorname{conv}\{g_a,p,g_b\}$ and
+$L_p=\max\{r_{p,1},r_{p,2}\}$. When the source is not a singleton, let $v$ be the
+source parent of $p$. If $v\in\Delta_p$, a convex representation would give
+
+$$
+v=\theta p+\mu g_a+\eta g_b,\qquad
+\theta+\mu+\eta=1,\qquad \theta,\mu,\eta\ge0,
+\qquad \theta=\frac{y_v}{y_p}>\frac13.
+\tag{78.3}
+$$
+
+The last strict inequality uses both $y_v>1/4$ and $y_p<3/4$. Convexity and the
+exact unit parent seam then imply
+
+$$
+1=|v-p|\le\mu|g_a-p|+\eta|g_b-p|
+ \le L_p(1-\theta)<\frac{2L_p}{3}\le1,
+\tag{78.4}
+$$
+
+which is impossible. Thus the parent is outside the closed triangle. This remains a
+strict contradiction when $L_p=3/2$.
+
+To describe the two sides of the actual stubs without imposing symmetry, for $Y\ge0$
+define
+
+$$
+\begin{aligned}
+t&=Y/y_p,\\
+A(Y)&=a+(x_p-a)t,\qquad B(Y)=b+(x_p-b)t,\\
+F(X,Y)&=\max\{A(Y)-X,\ X-B(Y)\}.
+\end{aligned}
+\tag{78.5}
+$$
+
+For $0<Y<y_p$, $A(Y)<B(Y)$; $F=0$ describes exactly the two stub sides, $F<0$ the
+triangle interior and $F>0$ its exterior. At $Y=y_p$ the only zero is $p$. For
+$Y>y_p$, $A(Y)>B(Y)$, so $F>0$ everywhere. Consequently in positive height the zero
+set is exactly the two actual stubs with their ground tips removed, and the parent
+exclusion gives $F(v)>0$. This description applies even when both tips are strictly
+on the same side of $x_p$.
+
+Delete $p$ and its parent seam from the ungrounded source tree, solely as a proof
+device. The remaining source tree is connected, contains $v$ and every other leaf,
+and has strictly positive height along all its segments. It avoids the zero set of
+$F$ by prescribed incidence. The continuous function $F$ therefore has constant sign
+along its paths, and that sign is positive because it is positive at $v$. In
+particular $F(q)>0$ for every other leaf $q$.
+
+If a tip $g=(X,0)$ of $q$ lay strictly inside $I_p$, then $F(g)=\max\{a-X,X-b\}<0$.
+The intermediate value theorem on the actual stub $[q,g]$ would force a zero of $F$
+before its ground end. That zero has positive height and is on an actual stub of
+$p$, an intersection prohibited by incidence. Equality with an endpoint of $I_p$
+violates global tip injectivity. Thus no tip of any other leaf belongs to $I_p$.
+Applying this conclusion with every leaf as $p$ excludes all overlap, including
+nesting: two overlapping closed intervals with four distinct endpoints have an
+endpoint of one strictly inside the other. For a singleton there is only one
+interval. The triangle bases and the deletion used here are mathematical proof
+devices, not installed edges or source actions. $\square$
+

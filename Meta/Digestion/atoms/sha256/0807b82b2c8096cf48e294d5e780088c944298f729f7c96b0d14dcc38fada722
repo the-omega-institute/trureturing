@@ -1,0 +1,27 @@
+**Supplied comparison 10.2 (Sufficient exponent one).** The supplied upper proposal is titled “A paid geometric-mark controller with O(s^(-1)) complete states and O(s^(-3)) mean under both exact renewal sources.” Its independent check is titled “The finite geometric-mark and lazy-walk cubic upper proposal passes this bounded independent handwritten check.” These are supplied proposal-and-check statements, not final-source approval. They describe a source-blind survival-flag realization on fully read gaps, followed by a bounded midpoint-calibrated lazy walk, at the known common $q$.
+
+For exact correspondence, their public design constants are
+
+$$
+p_i(q)=\frac{Z_i(q^2)}{Z_i(q)},\quad
+\Delta(q)=p_1(q)-p_0(q),\quad
+\ell=\log\frac{1-\alpha}{\alpha},\quad
+c=\frac{a}{9\cdot2^{10}}>0.
+\tag{10.3}
+$$
+
+They reuse fixed-observer-source Proposition 27.2 for $\Delta(e^{-s})=cs+O_H(s^2)$. With walk threshold $L^{\rm up}=\lceil2\ell/\Delta(q)\rceil$, distinct from the lower-proof cutoff $L_M$, the supplied controller lists $4L^{\rm up}+1$ complete configurations, including its first-wait state and both labels. On a source-only endpoint neighborhood, the proposal and check supply
+
+$$
+\begin{gathered}
+4L^{\rm up}+1\le(16\ell/c+5)s^{-1},\\
+\mathbb E_{i,e^{-s}}T\le
+ (176\ell/c^2+44/c+7)s^{-3}\quad(i=0,1),
+\end{gathered}
+\tag{10.4}
+$$
+
+together with both selected risks, both almost-sure stops and both finite means. Their optional design outside the positive-separation branch uses the already credited fixed finite classifier. Its source credits, additional hypotheses and exact real-probability allowance remain those of the supplied upper proposal and check. No upper final manuscript is being approved or used here.
+
+Equations (10.3)–(10.4) are comparison context, not premises of Theorems 7.1–9.1. Those lower proofs do not use a geometric mark, the upper walk, its source separation, its fallback certificate or an unrestricted cubic benchmark. The cubic target bound in Theorem 9.1 is simply a hypothesis about a proposed compliant family. The source-relative necessary exponent $8/9$ and separately supplied sufficient exponent $1$ therefore leave a gap; neither a sharp exponent nor a minimum budget follows.
+

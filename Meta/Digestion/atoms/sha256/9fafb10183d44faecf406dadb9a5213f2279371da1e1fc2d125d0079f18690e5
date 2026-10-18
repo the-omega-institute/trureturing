@@ -1,0 +1,14 @@
+### 101.4. Minimality and evaluation of the actual beta field
+
+Set E_beta=Q(sqrt5,sqrt(-D)), K_beta=Q(sqrt(-5D)), and F_beta=E_beta(sqrt beta). Corollary 5.2 gives the norm-field construction. The square cofactor C is retained throughout the following ramification check.
+
+At an odd rational prime ell different from 5, the two conjugates of beta sum to-2. Thus at any prime above ell they cannot both have positive valuation. If ell splits in Q(sqrt5), its norm valuations are precisely the valuations of D C², with one conjugate a unit. If ell does not divide D, every nonzero valuation is even, so removal of a local square leaves a unit. If ell divides D, the valuation is odd in Q(sqrt5) but becomes even after adjoining sqrt(-D); equivalently use the unit conjugate, since beta times its conjugate is -D C², a square in E_beta. At these primes 5 is already a local square by actual support, so E_beta and K_beta have the same local completion. The resulting quadratic extensions are unramified at odd residue characteristic. At inert odd primes the trace-unit condition forces both valuations to be zero. These arguments also cover primes dividing C with arbitrarily large even norm valuation.
+
+At 5, beta is a unit and -D is a square in Q_5 because D=4 modulo 5. Consequently E_beta=K_beta locally, and adjoining a square root of a unit is unramified. At 2, beta=1 modulo 4O_5 gives the integral polynomial T²-T+(1-beta)/4 with unit derivative modulo2, so its quadratic extension is unramified. The base biquadratic fields are also unramified at 2: 5 and -D are both 5 modulo 8, while -5D is 1 modulo 8. Thus the extension K_beta contained in F_beta satisfies the required minimal ramification at every finite place. This is the actual norm field, not an arbitrary twist chosen after computing the sign.
+
+The positive third argument 19 adds no infinite factor. At 19, both 5 and -D are local squares, and the residues of beta are 16 and 1 by section 101.2. Equation (47) therefore gives
+
+ R(5,-D,19)=+1.
+
+No prime of C enters this Artin evaluation; its effect was accounted for in the minimality argument.
+

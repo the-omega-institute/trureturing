@@ -1,0 +1,17 @@
+**Lemma 51.2 (global physical domination).** For interior distinct endpoints,
+
+$$
+G(A,Y)\le C d_E(\Phi^{-1}A,\Phi^{-1}Y)^{-5}.
+\tag{51.4}
+$$
+
+The kernel is continuous off the diagonal. On the whole physical output space, for $Y\ne o$,
+
+$$
+0\le w_s(Y)\le Cr(Y)^{-5},\qquad
+0\le v_s(Y)\le Cs^{-7}(1+r(Y)/s)^{-10}\le Cs^3r(Y)^{-10}.
+\tag{51.5}
+$$
+
+Proof. The rational denominator margins used in (45.4) compare the native control length with the ambient Engel length in the fixed chart (51.2). P Lemma 82.2 and the proof of Lemma 45.2 give the original killed Gaussian bound for $0<t\le1$, including the harmless bounded factor $e^{\lambda t}$. Integrating $Ct^{-7/2}\exp(-cd_E^2/t)$ gives (51.4), by $v=d_E^2/t$. Positive-time continuity and the same Gaussian small-time majorant give off-diagonal continuity: on a compact product away from the diagonal, the integral over $(0,\epsilon)$ tends uniformly to zero. Theorem 45.3 gives (51.5) directly after (51.2)–(51.3); for the first inequality use $s^{-5}(1+r/s)^{-5}\le r^{-5}$. The second uses the full input envelope of degree ten, not an unweighted error estimate. All kernels remain the original killed kernels. $\square$
+

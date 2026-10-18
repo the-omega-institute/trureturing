@@ -1,0 +1,23 @@
+**Example 11.1 (native algebra versus ambient syntax).** The formula
+
+$$
+\rho x=\langle x,\alpha\rangle
+\tag{NSF.25}
+$$
+
+is satisfiable at $x=\beta$. The formula $\rho x=\alpha$ is
+unsatisfiable, since every translated normal rank is at least one.
+Also $F([1],[0])\ne[2]$ is an ambient inequality between two codes
+whose expansions are the same native tree. The former code is
+nonnormal. These three facts respectively falsify a native
+free-constructor interpretation, an unrestricted inverse shift, and a reduction that
+forgets normality.
+
+The fixed-shape rank constraints in Theorem 4.3 retain unforced
+non-atomic solutions as well. For example
+$x=\langle\alpha,\alpha\rangle$ and
+$y=\langle\beta,\beta\rangle$ satisfy $\rho x=y$; neither is atomic,
+since their codes are $F([0],[0])$ and $F([1],[1])$. This observation
+illustrates its domain, not a new resource result for the graph family
+already covered by [GRS][GRS].
+

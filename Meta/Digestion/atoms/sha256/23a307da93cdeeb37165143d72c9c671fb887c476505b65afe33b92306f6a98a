@@ -1,0 +1,15 @@
+**Definition 3.2 (crossing by the final unit update).** Define
+
+$$
+X_v(x,y,d)\ \Longleftrightarrow\
+\bigvee_{\substack{e\in E_U\\s_U(e)=y}}
+\exists c\in\mathbb N\quad d=c+1\ \land\ P_v(x,e,c).
+\tag{UDB.10}
+$$
+
+This is exactly a finite path whose final edge is a real update and whose
+positive total update count is $d$. If its starting epoch is $a$ and
+$a+d=b$, every action starts before epoch $b$: the last unit edge remains
+to be executed before the endpoint. Thus every read along the path uses
+epochs in $[a,b)$, even if many zero-weight reads occur between updates.
+

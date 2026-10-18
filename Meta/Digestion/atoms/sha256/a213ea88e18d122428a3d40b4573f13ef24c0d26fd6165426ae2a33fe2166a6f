@@ -1,0 +1,20 @@
+**Definition 9.1 (the calculus $V_{\mathrm{rec}}$).** A certificate is a
+finite table of nodes in topological order, with each node labelled by
+a positive depth $d$, a rational probability $\mu$ on the entire $S_d$
+and a rational $C>0$. Its last label must equal the input $(d,\mu,C)$.
+Every node has exactly one of the following justifications:
+
+1. A joint-target leaf whose finite tables pass Corollary 2.3, its
+   grouped version in Corollary 2.4, or the bounded-bundle test of
+   Definition 5.1.
+2. A scaffold node referring to an earlier label $(d_0,\nu,C_0)$ and
+   an integer $h\ge0$. Check $d=d_0+h$, the exact full-table equality
+   $\mu=\nu^{\uparrow}$ of Definition 4.1, and $C\ge C_0^{2^h}$.
+3. A stability node referring to an earlier label $(d,\nu,C_0)$ at
+   the same depth. Check
+   $C\ge C_0+\frac12\sum_{x\in S_d}|\mu(x)-\nu(x)|$.
+
+All referenced indices must be strictly earlier. Malformed labels,
+nonprobabilities, incomplete tables and failed rational comparisons
+are rejected. No node assumes an unverified all-length cap.
+

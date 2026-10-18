@@ -1,0 +1,13 @@
+**来源。** 实轴 Euler 乘积、可数独立乘积、概率连续性、Borel–Cantelli、
+非负 Tonelli、指数积分和 Gamma 矩、Abel 求和及解析恒等定理为经典
+供应；Dirichlet 与 Gamma 接口参见
+[NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1) 和
+[NIST DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1)。
+Mertens 的定量供应复用 §424 引用的
+[Ng 作者稿 p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)，
+实际 Fibonacci 系数、无零乘子及对数转移复用 §§384–385、414。
+Euler 乘积的极值解释和倒数 ζ 的非完全单调性不作全局原创性断言；
+原有限阻尼的精确对数矩及带方向余量、同一实际 Fibonacci 概率读出、
+其完整 signed 对数矩比较与由 \(e_6\) 支付的正 Laplace 原子失效边界
+为本仓推导（repo-derived）。
+

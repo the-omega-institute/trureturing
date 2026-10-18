@@ -1,0 +1,15 @@
+**Lemma 63.6 (actual-domain buffers for killed coefficients and moving packets).** Set $\varrho=1-\lambda/3<1$. If an authentic domain $D$ contains the occurrence ball of radius $b$ around $p$, then, for every $q\in D$,
+
+$$
+0\le G^{\rm c}(p,q)-G_D^{\rm k}(p,q)
+\le\frac{\varrho^{b+1}}\lambda.
+\tag{63.20}
+$$
+
+For a normalized finite state whose every occupied address has such a buffer, its killed-minus-common energy is at most
+$\nu\binom N2\varrho^{b+1}/\lambda$.
+
+Proof. Consume §62.2's nonnegative path expansion $L^{-1}=\frac13\sum_{n\ge0}P^n$, with $P=I-L/3$ and $\|P\|\le\varrho$. The killed expansion keeps exactly the paths staying in $D$. A path starting at $p$ with at most $b$ steps cannot leave the contained ball; all differences therefore start at $n=b+1$. Bound each matrix entry of $P^n$ by $\|P\|^n$ and sum the geometric tail, using $3(1-\varrho)=\lambda$. Sum this same coefficient bound over the pairs in each actual occupation and then over its probability weights. $\square$
+
+Every finite packet used in Theorem63.4 can consequently be placed on actual, separately commissioned whole-rho prefixes with buffers tending to infinity, giving the same common and killed trial limits. Indeed choose a finite radius $r$ containing all its addresses and a buffer $b$, and a finite accepted index $j\ge2(r+b)$. The already proved $B_{\lfloor j/2\rfloor}\subset D_j(t)$ supplies all required buffers, uniformly in the original finite source $t$. Commission that finite prefix at a cap sufficient for its actual leaf counts. This construction retains the actual irregular domain; it is not a replacement ball or a change to a running cap. A moving address merely belonging to a frontier does not satisfy (63.20) with $b\to\infty$, so no moving-frontier killed limit follows without this buffer.
+

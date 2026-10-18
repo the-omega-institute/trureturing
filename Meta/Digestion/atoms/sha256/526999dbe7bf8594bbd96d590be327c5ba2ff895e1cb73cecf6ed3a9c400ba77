@@ -1,0 +1,39 @@
+**Lemma 7.1 (Reference sign with all endpoints).** The exact complete reference response satisfies $S_Q(f_0)>1/1200$.
+
+Proof. Put $a_0=7/10$, $h_0=1/5$. The reference identities $B(0)^2=a_0B(0)$ and $B(0)R(0)B(0)=h_0B(0)$ express $f_0$ as the sum of two pair directions: each has coefficient $-a_0h_0$ at $000000$ and $a_0^4$ at $001000$ or $000100$. Each is matrix-null and balances positive mass
+
+$$
+J=a_0h_0Q([000000])=a_0^4Q([001000])=(10/19)a_0^5h_0=16807/950000>1/60.
+$$
+
+[Two-word, Theorem 2.1][W] identifies each pair's common full exterior law and its actual posterior restrictions, so every exterior response cancels, including both seams. This application is at the reference law only.
+
+For the $000000/001000$ pair, the common left pair $(X_{-1},X_0)$ has probabilities $(49,30,21)/100$ at $00,01,10$: divide the stationary four-word products $0000,0100,1000$ by the initial $00$ mass. Given final $00$, $X_7$ has probabilities $7/10,3/10$. Using (6.1), the six zero-word-minus-one-word conditional loss differences, in coordinate order, are
+
+$$
+\begin{gathered}
+\tfrac{49}{100}(A_0^2-B_0^2)+\tfrac{21}{100}(B_0^2-D_0^2),\qquad
+\tfrac7{10}A_0^2+\tfrac3{10}B_0^2,\qquad 2A_0-1,\qquad A_0^2,\\
+\tfrac7{10}(A_0^2-B_0^2)+\tfrac3{10}(B_0^2-D_0^2),\qquad0.
+\end{gathered}
+$$
+
+At coordinates two and four the inserted one forces the second word's loss to zero; at three the difference is $A_0^2-(1-A_0)^2$. The endpoints use the common actual exterior, and at six both local loss functions coincide. The sum is
+
+$$
+H=2A_0-1+\tfrac{289}{100}A_0^2-\tfrac{38}{100}B_0^2-\tfrac{51}{100}D_0^2
+<-\frac{3015243}{10^8}<-1/40.
+\tag{7.1}
+$$
+
+Indeed $A_0<369/1000$, $B_0>404/1000$, $D_0>442/1000$ give numerator $-26200000+39350529-6202208-9963564$. The reference pair chain is reflection invariant: reversing states exchanges $01,10$, their stationary masses agree, and its only nontrivial reversed flux equality is $(10/19)(3/10)=(9/38)(2/3)$. Multiplication of these flux identities reverses every cylinder. Its posterior table is also reflection symmetric. Thus the reflected $000100$ pair has the same $H$, and $S_Q(f_0)=-2JH>1/1200$. $\square$
+
+For finite marginals, write $v_s=(b,p,bp,pq)$. Then $\|v_s-v_0\|_1=200s$, $Z_s-Z_0=200s$ and $Z_s\ge1$, so adding and subtracting $v_0/Z_s$ gives $\|\lambda_s-\lambda_0\|_1\le400s$. The stochastic marked kernel $M_x(i,j)$ has row $L^1$ changes $(200+2p)s,2bs,2s,4s$, all at most $300s$. Telescoping $n$ stochastic kernels and marginalizing hidden paths gives
+
+$$
+\|(P_s)_n-Q_n\|_1\le(400+300n)s.
+\tag{7.2}
+$$
+
+This additive estimate includes new paths absent at zero and the changing stationary row. Together with (5.2), (6.2), (6.3), it verifies all hypotheses of Theorem 2.2.
+

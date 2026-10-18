@@ -1,0 +1,16 @@
+### 63.4. Sufficiency by one product channel
+
+Let s=Σ_i|z_i|≤1. Choose phases θ_i with z_i=|z_i|exp(iθ_i), taking θ_i=0 when z_i=0. With orthonormal environment vectors e_0,e_1,...,e_m, set
+
+    a_i=b_i=e_i,
+    a_h=Σ_i sqrt(|z_i|)exp(−iθ_i)e_i+sqrt(1−s)e_0,
+    b_h=Σ_i sqrt(|z_i|)e_i+sqrt(1−s)e_0.
+
+These are unit vectors, and the two maps |i>→|0>a_i, |h>→|1>a_h and their B versions are isometries. Their product channel acts on an encoded leaf–hub unit with coefficient
+
+    <a_h,a_i><b_h,b_i>=z_i.
+
+It acts correctly on every other encoded matrix unit. Therefore equality holds as linear maps and after tensoring with every passive reference. The construction uses environments of dimension m+1, finite local Kraus families, and no shared random branch selection.
+
+For a coordinate pair {i,h}, the same construction needs only the one coefficient z_i, whose modulus is at most1 for every CPTP member. Extend the local maps arbitrarily and trace-preservingly on the other basis labels, for example by measuring the orthogonal complement and preparing |0>. For a pair of leaves, both local channels can reset to |0>. These are exact maps on the complete two-label algebra, including coherences; their full logical output is the qubit.
+

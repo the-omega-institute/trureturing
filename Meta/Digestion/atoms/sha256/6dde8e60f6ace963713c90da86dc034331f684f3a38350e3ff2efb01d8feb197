@@ -1,0 +1,20 @@
+**Corollary 17.2 (physical strength slope).** On the affine interval
+in Theorem 17.1 the physical value has slope
+$$
+\frac{\partial\mathcal T}{\partial s}
+             =-\frac{\lambda\sqrt\alpha}{2s_0}<0.
+\tag{GC.81}
+$$
+
+Proof. Equation (GC.58) adds the constant high contribution and divides
+the low height by two, while $dr/ds=\sqrt\alpha/s_0$.
+Equation (GC.77) gives $dR_t/dr=-\lambda$. Their product is
+(GC.81). The multiplier here is the one conjugate to $|u|$, rather
+than to an unscaled physical strength. $\square$
+
+Theorem 17.1 is an implication from genuine nine-low necessity.
+An arbitrary table having the ranks (GC.78), or a linear synthetic
+payoff on such a table, does not prove an optimum or necessity for
+the actual isolated-source function $g_t$. No such necessity example
+is furnished by the rank argument itself.
+

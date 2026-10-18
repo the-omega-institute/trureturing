@@ -1,0 +1,32 @@
+**Definition 22.1 (A fixed equal-parameter simple nonunifilar source).**
+For the rest of this section fix permanently
+
+$$
+M_0=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+M_1=\frac12\begin{pmatrix}0&0\\1&0\end{pmatrix},\qquad
+\lambda=(1/2,1/2),\qquad
+P(w)=\lambda M_w\mathbf1.
+\tag{22.1}
+$$
+
+This is the equal-parameter simple nonunifilar source
+(SNS). Its renewal law is an existing model: see
+[Marzen–Crutchfield, *Informational and Causal Architecture
+of Discrete-Time Renewal Processes*, arXiv:1408.6876,
+§V, Figure 7 and equation (15)](https://arxiv.org/abs/1408.6876).
+Equation (15) at the equal parameter $1/2$ gives the
+interevent zero-count probabilities below. The model and
+the general distinction between generating and predictive
+hidden states are not new here.
+
+The total transition matrix has every entry $1/2$.
+Thus it is stochastic, irreducible and aperiodic;
+$\lambda(M_0+M_1)=\lambda$ and $M_1^2=0$.
+The cylinder formula in (22.1) therefore defines one
+stationary law on the original no11 shift. All its
+parameters and hidden matrices are independent of length.
+As in (19.2), define the prescribed finite-window positive
+coherent state by
+$\Psi_n(P)=\sum_{w\in B_n}\sqrt{P(w)}|w\rangle$.
+No quantum marginal consistency is imposed on this family.
+

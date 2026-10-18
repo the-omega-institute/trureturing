@@ -1,0 +1,53 @@
+## 163. No special edge has fixed reservoir pair {Z,C}
+
+Suppose Q is special with this pair, and q=x_Q. Its incident owners all
+contain Z and are genuine. Every other axis value r satisfies
+
+    r<1+z+c.
+
+If that axis is H, r<=z. If it is special, its fixed pair is also {Z,C}
+and the source's special-edge bound gives the displayed inequality.
+
+First q>z-c-1. Otherwise in any owner (q,z,c,r,z,c) the transverse Z
+cosine numerator, increasing as a function of r, is
+
+    N(r)=c(q+r)+z(qr+c^2-z^2+1),
+    N(1+z+c)=[c+z(1+z+c)]*(1+c+q-z)<=0.
+
+Because the actual r is strictly smaller, N(r)<0. Every such owner
+would therefore supply two obtuse Z angles. A Q star of degree at least
+six has at least three distinct owners, since each supplies at most
+two Q slots. This exceeds Z's 2*pi budget. Hence indeed
+
+    q>z-c-1.                                      (162.2)
+
+Let w_j in {1,2} count the axial Q slots of owner j, with common axial
+angle theta_j if there are two. Put n=sum w_j>=6; the complete Q equation
+is sum w_j*theta_j=2*pi. Its transverse Z angle is
+
+    beta_j=f(theta_j),
+    f(theta)=atan(lambda_plus*cot(theta/2))
+               +atan(lambda_minus*cot(theta/2)),
+    lambda_plus/minus=[sqrt(z^2-1) +/- sqrt(c^2-1)]/(z+c)
+                            *sqrt((q-1)/(q+1)).
+
+Both parameters lie in (0,1). The response f is positive, decreasing
+and convex by Section 95. Equation (162.2) gives
+
+    lambda_plus*lambda_minus
+      =((z-c)/(z+c))*((q-1)/(q+1))
+       >(z-c-2)/(z+c)>1/3,                        (162.3)
+
+where the last inequality is exactly z>2c+3. Thus
+f(pi/3)>pi/2, since the two positive arctangent arguments at theta=pi/3
+have product 3*lambda_plus*lambda_minus>1.
+
+Weighted Jensen on the n actual Q slots yields
+
+    sum w_j*beta_j >= n*f(2*pi/n)
+                      >=6*f(pi/3)>3*pi.
+
+But each owner contributes exactly two Z slots, and w_j<=2. The complete
+Z budget bounds the same sum by 2*sum beta_j<=2*pi. This contradiction
+excludes every special edge of pair {Z,C}, not only a possible return axis.
+

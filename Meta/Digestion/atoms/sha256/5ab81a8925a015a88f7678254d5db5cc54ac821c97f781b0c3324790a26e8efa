@@ -1,0 +1,48 @@
+##### 证明
+
+由：
+
+```math
+D_aD_b=S_{a,b}+H_{a,b},
+```
+
+以及：
+
+```math
+p_{\kappa'}-p_\kappa
+=
+(\kappa'-\kappa)d,
+```
+
+得到：
+
+```math
+\begin{aligned}
+&R(D_aD_b p_{\kappa'})
+-
+R(D_aD_b p_\kappa)
+\\
+&=
+R\bigl(D_aD_b(p_{\kappa'}-p_\kappa)\bigr)
+\\
+&=
+(\kappa'-\kappa)R(D_aD_bd)
+\\
+&=
+(\kappa'-\kappa)
+R\bigl((S_{a,b}+H_{a,b})d\bigr)
+\\
+&=
+(\kappa'-\kappa)
+\left(
+\Sigma_{a,b}+\mathcal H_{a,b}
+\right).
+\end{aligned}
+```
+
+证毕。
+
+---
+
+这个定理给出三种可能：
+

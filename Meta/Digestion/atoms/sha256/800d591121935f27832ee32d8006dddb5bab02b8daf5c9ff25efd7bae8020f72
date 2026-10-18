@@ -1,0 +1,45 @@
+**Theorem 44.2 (native fixed-time limits and the sharp raw scale).**
+For every fixed $t>0$, every fixed original $s\in\mathbb R$,
+$b>0$, $g>0$ and model datum, through both signs, the following
+limits hold strongly on the entire space $\mathscr H_B$:
+
+$$
+\begin{aligned}
+C_{{\rm raw},\kappa}(t)&\longrightarrow S_t,&
+\frac{C_{{\rm raw},\kappa}(t)-S_t}{r_s}
+ &\longrightarrow A_s(t),\\
+\frac{\mathcal D_{{\rm raw},\kappa}(t)}{r_s}
+ &\longrightarrow D_s(t),&
+C_{{\rm unit},\kappa}(t)&\longrightarrow B_b(t),\\
+\mathcal D_{{\rm unit},\kappa}(t)&\longrightarrow V_b(t).
+\end{aligned}
+\tag{44.5}
+$$
+
+Strong convergence here means convergence on each fixed base $L^2$
+input, without a visible-mode or smoothness restriction. The scaled
+raw operator families in (44.5) are uniformly bounded. On the fixed
+unit base vector
+
+$$
+h_*(k,\theta,v)=\frac{\phi(k)}{2\pi}
+\tag{44.6}
+$$
+
+which belongs to $D(\mathcal K_c)$ for every fixed $c\ge0$ by
+(36.1), one has, for every such $t$,
+
+$$
+\langle A_s(t)h_*,h_*\rangle>0,\qquad
+\langle D_s(t)h_*,h_*\rangle>0,\qquad
+\langle V_b(t)h_*,h_*\rangle>0.
+\tag{44.7}
+$$
+
+Thus $r_s=|\kappa|\sqrt{\tau_s}$ is the first nonzero raw correction
+and equal-step defect scale on this declared test. The leading raw
+family is autonomous, but its first correction contains a nonzero
+composition defect. The unit limiting family fails the equal-step
+semigroup law at every positive time. No small-coupling hypothesis
+is imposed. The proof is given in §§45--47.
+

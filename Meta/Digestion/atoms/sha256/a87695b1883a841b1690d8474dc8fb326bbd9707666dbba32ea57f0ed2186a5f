@@ -1,0 +1,24 @@
+## 419. Every high-V cheap owner costs more than pi
+
+For a cheap owner, let r>=m be its high axis, let a0 be its C or D
+transverse companion, and let b be its opposite low axis. The source
+bounds give r>=max(v,a0)+2. Under v>=max(c,d), v>=a0.
+
+The paired-angle formula directly gives beta_V>=beta_companion.
+Indeed, with x=sqrt(L/J)>0 and
+
+    Kminus=(sqrt(v^2-1)-sqrt(a0^2-1))/(v+a0)>=0,
+
+their difference is 2*atan(Kminus*x)>=0. This includes the equality
+v=a0; it is a numerical angle comparison, not an identification of
+actual labels.
+
+Applying (407.2),
+
+    4*theta_P0+4*beta_V
+      >=4*theta_P0+2*beta_V+2*beta_companion>2*pi.
+
+For this owner P_T=theta_P0 and V_T=2*beta_V. Therefore
+
+    W_T=2*theta_P0+2*beta_V>pi.                   (419.1)
+

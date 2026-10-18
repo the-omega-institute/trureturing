@@ -1,0 +1,24 @@
+**Proposition 5.4 (Exact encoded source image).** The image of $E_m$ is
+exactly
+
+$$
+\begin{aligned}
+\mathscr S_m=\{(K,(\mathbf a_j),(\mathbf b_j)):\;&K\in[a,b],
+\quad\|\mathbf a_0\|=\|\mathbf b_0\|=1,\\
+&\mathbf a_j=K^j\mathbf a_0\quad(0\le j\le2m),\\
+&\mathbf b_j=K^j\mathbf b_0\quad(0\le j\le m)\}.
+\end{aligned}
+$$
+
+The encoder is injective on the actual current rays, including when $m=0$.
+
+**Proof.** Every encoded ray satisfies the equations. Conversely each unit
+pair is $U(\alpha)$ or $U(\beta)$ for a unique circle class. Together
+with $k=K$, the displayed equations give exactly $E_m(k,\alpha,\beta)$.
+Proposition 1.3 realizes that ray using the original controls. The coordinates
+$K,\mathbf a_0,\mathbf b_0$ also prove injectivity. For $m=0$ these
+three blocks are still present, so the argument is unchanged. All features
+are functions of the actual current ray, and Proposition 2.3 even expresses
+them as mathematical functions of its exact ideal output. No auxiliary
+hidden observer or additional source state is introduced. $\square$
+

@@ -1,0 +1,31 @@
+**Corollary 2.4 (Finite nonnegative-wait alternatives).** For every
+rational $0<\delta<1$, put
+
+$$
+h=\delta/48,\qquad n=\left\lceil153600/\delta^2\right\rceil,
+\qquad H=nh,\qquad \mathcal W_\delta=\{jh:0\le j\le n\}.
+\tag{2.9}
+$$
+
+For each original legal complex scalar port, one of the $4(n+1)$
+tests with $s\in\{N,2,3,5\}$, input $DQ_s(t)D^\dagger$ and
+$t\in\mathcal W_\delta$, followed by actual wait $t$, a complete
+mode read and Stop, has
+
+$$
+\operatorname{TV}>\frac{129931}{250000}-\delta,
+\qquad \frac{3200}{\delta}\le H\le\frac{3200}{\delta}+\frac\delta{48}.
+\tag{2.10}
+$$
+
+Proof. QEC Theorem 2.6 and QWS Corollary 2.5 supply the uniform
+forward-mean error $<800/H$ and survival derivative bound $<12$.
+Use the improved mean (2.8) in those estimates. Since
+$H\ge3200/\delta$, some positive-weight mode has failure at least
+$129931/250000-\delta/4$ in $[0,H]$. Moving to a grid point within
+$h$ loses at most $12h=\delta/4$. Its TV is at least the bound minus
+$\delta/2$, which proves the strict threshold. The ceiling gives
+the displayed time bound. Every wait is finite and nonnegative.
+These are alternative legitimate tests for a competitor, not a
+single-sample probability oracle or a clock-cost theorem. $\square$
+

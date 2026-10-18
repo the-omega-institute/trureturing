@@ -1,0 +1,56 @@
+### 90.1. Original physical channels and the complete product Gram
+
+**Proof.** Let e₀,e₁,e₂ be the standard basis of C³ and put u=(e₁+e₂)/√2. Define four local orthonormal two-frames by
+
+\[
+ \begin{array}{ll}
+ b_{10}=(e_0+e_1)/\sqrt2,&b_{11}=(e_0-e_1)/\sqrt2,\\
+ b_{20}=(e_0+iu)/\sqrt2,&b_{21}=(e_0-iu)/\sqrt2,\\
+ b_{30}=u,&b_{31}=e_0,\\
+ b_{40}=(e_0+e_2)/\sqrt2,&b_{41}=(e_0-e_2)/\sqrt2.
+ \end{array}                                               \tag{1}
+\]
+
+Set a_fi=conjugate(b_fi). On the eight-dimensional local input with fixed basis |f,i〉, define Stinespring isometries
+
+\[
+ V_A|f,i\rangle=|f\rangle\otimes a_{fi},\qquad
+ V_B|f,i\rangle=|f\rangle\otimes b_{fi}.                    \tag{2}
+\]
+
+Each within-fibre frame in (1) is orthonormal, and different fibres in (2) have orthogonal output labels. Hence V_A*V_A=V_B*V_B=I₈. Tracing the C³ environments gives original CPTP channels A,B:C⁸→C⁴. The environment records span C³. The associated three Kraus operators are linearly independent, because a linear relation between them annihilates every record; thus each physical channel has Kraus rank exactly three. Equivalently the local frame operator has eigenvalues 4,3,1.
+
+Let H be the forward Gram of the b records, G=conjugate(H), and K=G⊙H. All 2×2 diagonal blocks of G,H are I₂, and K_fi,gj=|〈b_fi,b_gj〉|². In the ordered basis (10,11,20,21,30,31,40,41), the entire product Gram is
+
+\[
+ K=\frac18
+ \begin{bmatrix}
+ 8&0&3&3&2&4&2&2\\
+ 0&8&3&3&2&4&2&2\\
+ 3&3&8&0&4&4&3&3\\
+ 3&3&0&8&4&4&3&3\\
+ 2&2&4&4&8&0&2&2\\
+ 4&4&4&4&0&8&4&4\\
+ 2&2&3&3&2&4&8&0\\
+ 2&2&3&3&2&4&0&8
+ \end{bmatrix}.                                           \tag{3}
+\]
+
+The target T has diagonal blocks I₂ and off-diagonal blocks J₂/2. Therefore its full difference from this product Gram is
+
+\[
+ L:=T-K=\frac18
+ \begin{bmatrix}
+ 0&0&1&1&2&0&2&2\\
+ 0&0&1&1&2&0&2&2\\
+ 1&1&0&0&0&0&1&1\\
+ 1&1&0&0&0&0&1&1\\
+ 2&2&0&0&0&0&2&2\\
+ 0&0&0&0&0&0&0&0\\
+ 2&2&1&1&2&0&0&0\\
+ 2&2&1&1&2&0&0&0
+ \end{bmatrix}.                                           \tag{4}
+\]
+
+No plus/minus or cross-fibre block is omitted.
+

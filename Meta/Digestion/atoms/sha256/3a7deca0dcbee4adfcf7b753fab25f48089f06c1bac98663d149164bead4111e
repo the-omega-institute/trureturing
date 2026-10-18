@@ -1,0 +1,10 @@
+**定理 11.6（三位窗的有限模八相位接口）。** 对 Zeckendorf 编码 $n=\sum_{j\ge2}\varepsilon_jF_j$，按权重指标递增、从 $j=2$ 开始读取三位窗，至多 $64$ 个状态足以维护 $n\bmod8$ 并检查接缝。
+
+**证明。** $(F_{12},F_{13})\equiv(0,1)\pmod8$，递推给模八周期十二。保存
+
+$$
+(r,\ell,b)\in\mathbb Z/8\mathbb Z\times\mathbb Z/4\mathbb Z\times\{0,1\}.
+$$
+
+其中 $\ell$ 为当前窗口位置模四，$b$ 为前窗末位。新窗 $(e_0,e_1,e_2)$ 先检查内部及 $be_0\ne1$，再加 $\sum_{i=0}^2e_iF_{2+3\ell+i}$ 到 $r$，更新 $\ell,b$。恰需至多 $8\cdot4\cdot2$ 状态。未声明这是最少状态，也不恢复完整历史或素因子。$\square$
+

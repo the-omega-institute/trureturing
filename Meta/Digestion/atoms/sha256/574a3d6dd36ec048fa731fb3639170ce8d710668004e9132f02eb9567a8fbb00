@@ -1,0 +1,2 @@
+**开放问题 10.2（实际原始行实现）。** 完整原始行的 source-correct raw decoder/checker、有限控制与一次实际初始化、当前持续权限、两个 meter 头及 alias、accepted IN/OUT 的原始时序、所有 receipt/return 和吸收 halt 仍是独立未履行义务。未提供的行引擎不作为本卷 primitive。这里在已规定 CAP/ARC 源语义上的普通证明，不补出该实现。
+

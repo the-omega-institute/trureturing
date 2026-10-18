@@ -1,0 +1,74 @@
+**Proposition 4.1 (The two-read stopping witness, inherited).** Put
+
+$$
+\psi=1-j,\qquad q=j,\qquad 2q+\psi=j+1,\qquad
+d=p(1-p),\qquad c=\pi_0^2+\pi_1^2=1-2d,
+\qquad T_3=\pi_0^3+\pi_1^3=1-3d.
+\tag{4.1}
+$$
+
+Ignore $u$, read $j+3$, return $a_1$ on one, and on zero read $j+5$, returning $a_1$ on one and $a_0$ on zero. This lawful always-returning cap-two witness has, for each $s\in\{0,1\}$, exactly the following nonzero source masses:
+
+$$
+\begin{aligned}
+J_p(H_j=b_s,O=a_1,D=1,N=1)&=\tfrac{\pi_s}{2}\,2d,\\
+J_p(H_j=b_s,O=a_1,D=1,N=2)&=\tfrac{\pi_s}{2}\,d,\\
+J_p(H_j=b_s,O=a_0,D=1,N=2)&=\tfrac{\pi_s}{2}\,T_3,\\
+J_p(H_j=a_s,O=a_0,D=1,N=2)&=\tfrac{\pi_s}{2}.
+\end{aligned}
+\tag{4.2}
+$$
+
+Each mass with $u\in G$ is its displayed value times $\nu(G)$. Every lawful full-law representative, on any unchanged given seed space and at this single fixed $p$, needs radius at least five. This is the $k=2$ instance of Stopping Theorems 3.2, 4.1, and 5.1; the following proof supplies the complete instance used here.
+
+Proof. In phase $\psi$ the actual endpoint is $b_{S_q}$ and the two active edges have left endpoints $q+1,q+2$. Their three spins are independent of $S_q$. The first one has probability $2d$. Zero followed by one means the first two spins agree and the third differs, with probability $\pi_0^2\pi_1+\pi_1^2\pi_0=d$. Both zeros force all three spins equal, with probability $T_3$. These probabilities sum to one. In the opposite phase the actual endpoint has class $a$ and both reads are separators, so the output is $a_0$ at count two. The phase weight $1/2$ and independent target mass $\pi_s$ give (4.2). The rule is finite, measurable, and capped on every formal branch. Seed independence gives the rectangle masses.
+
+Consider any full-law representative, initially allowing all lawful trees, nonreturn, public-$p$ dependence, and arbitrary measurable use of $u$. By Lemma 2.2, at almost every good seed its normalized deterministic source law is exactly (4.2). Fix such a seed. Refer to phase $\psi$ as phase $B$ and its opposite as phase $A$; these are mathematical conditionings identified by the preserved endpoint classes. Phase $A$ must return $a_0$ at count two surely. Phase $B$ has positive $a_1$ masses at counts one and two. Both phases have return probability one and no count-zero mass.
+
+The root must read. If its parity were opposite to $\psi$, phase $B$ would have root reply zero surely. Its required count-one $a_1$ mass would force that zero child's next event to be an $a_1$ return. In phase $A$ the root would instead be active, with zero probability $c>0$. The same zero child would return $a_1$ on that positive-mass phase-$A$ event, contradicting (4.2). Hence the root parity is $\psi$.
+
+Its zero child is reached surely in phase $A$, so it must make a second read. Its one child is the only possible source of the required positive phase-$B$ count-one mass; it must return $a_1$ there at count one. If the second read had parity opposite to $\psi$, phase $B$ would get second reply zero. The required positive $a_1$ mass at count two would force an $a_1$ return on that zero child. Phase $A$ has seen only its root separator, so the newly active edge has zero probability $c>0$ there. This would again produce a forbidden $a_1$ return in phase $A$. Thus the second parity is also $\psi$. Its zero child is reached surely in phase $A$ and returns $a_0$; its one child must supply the positive phase-$B$ count-two $a_1$ mass and return $a_1$. Nonreturn on any of these positive sections would violate $D=1$. This derives the stopping tree from the full law itself.
+
+Let $e_1,e_2$ be the derived continuing-branch spin-edge left endpoints, and write
+
+$$
+C_r=\{S_{e_i}=S_{e_i+1}:1\le i\le r\}\qquad(r=1,2).
+\tag{4.3}
+$$
+
+In phase $B$, $C_1$ is the event $N=2$, and $C_2$ is the event $O=a_0$. Summing (4.2) at each target value gives
+
+$$
+J_p(C_1\mid\varphi=\psi,S_q=s)=c,\qquad
+J_p(C_2\mid\varphi=\psi,S_q=s)=T_3
+\quad(s=0,1).
+\tag{4.4}
+$$
+
+Both conditionings have positive mass. Averaging over the target gives the same unconditional probabilities within phase $B$.
+
+Two integer-line edges either repeat, share one endpoint, or are vertex-disjoint. Repetition would give $J_p(C_2\mid\varphi=\psi)=c>T_3$, since $c-T_3=d>0$. Disjoint edges would give $c^2$, while
+
+$$
+T_3-c^2=d(1-4d)>0.
+\tag{4.5}
+$$
+
+The inequality is strict at every single allowed biased $p$, because $0<d<1/4$. Only two distinct edges sharing one endpoint remain. They form a consecutive two-edge path on three vertices, whose both-zero probability is exactly $T_3$.
+
+If $q$ were on that path, $C_2$ would force its other two spins to equal $S_q$, yielding conditional probability $\pi_s^2$ in (4.4). Those two probabilities differ, since $\pi_0\ne\pi_1$ and both are positive. They cannot both equal the required $T_3$. Thus $q$ is outside the path. If its vertices are $[L,L+2]\cap\mathbb Z$, either $L\ge q+1$ or $L+2\le q-1$. The first case has a queried left endpoint at least $q+2$ and hence an actual address at least
+
+$$
+2(q+2)+\psi=j+5.
+\tag{4.6}
+$$
+
+The second case has a queried left endpoint $L\le q-3$ and hence an actual address at most
+
+$$
+2(q-3)+\psi=j-5.
+\tag{4.7}
+$$
+
+These are actual positive-mass reads: in phase $A$ both zero-branch calls are executed surely; in phase $B$ the first call is sure and the second is reached with probability $c>0$. The remote call is therefore not an unreachable formal-node artifact. Integrating the good-seed sections rules out radius below five for every unchanged independent seed law. The witness itself uses radius five. No signature, acquired-record, or samplewise-preservation requirement entered the lower bound. $\square$
+

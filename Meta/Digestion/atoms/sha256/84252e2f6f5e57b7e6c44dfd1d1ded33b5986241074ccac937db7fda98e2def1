@@ -1,0 +1,58 @@
+**Definition 3.1 (regular stationary table).** For the rest of Sections 3–5, $\pi,\tau$ are finite probability rows, $B,A$ are row-stochastic kernels satisfying (2.5), and $u_x,v_y\in[a,b]$. From each row the exact complete raw laws satisfy
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+$$
+
+$$
+W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x.
+\tag{3.1}
+$$
+
+Use the original product realization: fair synthetic letters before the third latch, an independent $\pi$ sample after the third write and latch in that same update, $B$ on p-beta, $A$ on suspended-alpha and original terminal updates on completing letters. All original fibres retain their own records. Every return has synthetic survival at most $\lambda=4/15$, so the full laws normalize without conditioning on completion. Legal infinite outcomes remain and have zero mass.
+
+Put
+
+$$
+\varepsilon_s=R_{\mathrm{conf},s}-\rho_s\ge0,
+\qquad e=\max(\varepsilon_p,\varepsilon_\beta).
+$$
+
+**Mathematical citation 3.2 (endpoint box slack).** The supplied coordinate triangle identity [CLIP, equation (3.6)] gives
+
+$$
+\sum_x\pi_x\sum_w
+\operatorname{dist}\bigl(Q_x(w),[P_{p,a}(w)\wedge P_{p,b}(w),
+                                    P_{p,a}(w)\vee P_{p,b}(w)]\bigr)
+\le2\varepsilon_p.
+\tag{3.2}
+$$
+
+The suspended analogue has bound $2\varepsilon_\beta$. Include the infinite outcome in both sums. This is a consequence of the two configuration losses, not an assumption of pointwise preservation.
+
+The positive-difference events and their endpoint masses are supplied:
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+\quad
+P_{p,a}(E_p)=412/729,
+\quad P_{p,b}(E_p)=7299/15625,
+$$
+
+$$
+E_\beta=\{\beta,\alpha w_{0,1}\},
+\quad
+P_{\beta,a}(E_\beta)=22/27,
+\quad P_{\beta,b}(E_\beta)=93/125.
+$$
+
+If $C_s$ is the midpoint of these two masses, the endpoint configuration bounds imply
+
+$$
+|\pi Q(E_p)-C_p|\le\varepsilon_p,
+\qquad |\tau W(E_\beta)-C_\beta|\le\varepsilon_\beta.
+\tag{3.3}
+$$
+
+Indeed projection to the event contracts TV, and averaging before the event difference can only decrease configuration loss.
+

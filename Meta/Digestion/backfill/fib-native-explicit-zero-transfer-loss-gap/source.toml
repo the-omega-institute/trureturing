@@ -1,0 +1,5 @@
+source_id = "fib-native-explicit-zero-transfer-loss-gap"
+path = "docs/develop/theory/FIB_NATIVE_EXPLICIT_ZERO_TRANSFER_LOSS_GAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,73 @@
+**Theorem 6.3 (native replacement for the joint frontier's missing decision).**
+Under Assumption 6.1, let
+
+$$
+\mathcal F_D=\{b\in\mathbb N^3:\exists B\ \forall u\in D,\ c_B(u)\le b\}.
+\tag{NFO.18}
+$$
+
+The complete finite set $\operatorname{Min}(\mathcal F_D)$ is effectively
+computable, nonempty and attained. For each of its vectors $v$ a finite
+lawful whole-domain service has exact worst-coordinate vector $v$, and
+original sources attaining each coordinate maximum can be supplied.
+The upward closure of this returned set is exactly $\mathcal F_D$.
+This comparison includes every adaptive physical competitor, not just
+those using the supplied witness's addresses or output-discovery method.
+
+Proof. Reuse JRF Lemma 5.2 and Theorem 5.3's optimization construction,
+with the following explicit replacement of its logical suppliers.
+The static upper witness is (NFO.17), the all-source normalization is
+Convention 2.3, the unbounded-word $(k,d)$ decision is Theorem 4.2,
+and the finite $(k,d,L)$ decision and exact costs are NSF Theorems
+7.3 and 7.2. None of these requires literal-only $\mathsf{GB}$ or a
+WS2S description of the signed fiber.
+
+For completeness the finite cofinal rectangle and its stopping argument
+are as follows. Put
+
+$$
+K_\circ=\max(K_0,L_0+s_N).
+\tag{NFO.19}
+$$
+
+Given any correct comparator with finite worst vector, cap and clean it.
+Write its worst read and length costs $q',L'$. It has updates at most $U$
+and $q'\le L'+s_N$. If $q'\le K_\circ$, finite reply unrolling puts it
+in that read/update rectangle without increasing its worst vector.
+If $q'>K_\circ$, then $q'>K_0$ and
+$L'\ge q'-s_N>L_0$. The static service (NFO.17) weakly dominates its
+worst vector and also lies in the rectangle. This latter comparison is
+between worst-coordinate vectors; it is not a sourcewise replacement
+and is not used for weighted optimization.
+
+For each of the finitely many pairs
+$0\le k\le K_\circ$, $0\le d\le U$, invoke Theorem 4.2. Discard NO
+pairs immediately. For each YES pair obtain its finite witness and
+compute its exact finite worst length $L^{\rm wit}_{k,d}$ using NSF.
+Search the finite interval $0\le L\le L^{\rm wit}_{k,d}$ by the native
+finite-box decision to find its first feasible value $L_{k,d}$ and an
+attaining-within-budget tree. Form
+
+$$
+\mathcal V=\{(k,d,L_{k,d}):0\le k\le K_\circ,\ 0\le d\le U,\ \operatorname{Win}_D(k,d)\},
+\qquad \mathcal P_D=\operatorname{Min}(\mathcal V).
+\tag{NFO.20}
+$$
+
+Every member of $\mathcal V$ is feasible. The cofinal rectangle argument
+shows that every feasible finite vector dominates some member of
+$\mathcal V$, hence a member of $\mathcal P_D$. This proves equality of
+upward closures and then
+$\mathcal P_D=\operatorname{Min}(\mathcal F_D)$.
+A witness for a minimal vector cannot have any strictly smaller exact
+worst coordinate while respecting the other coordinates: its own exact
+worst vector would then be a smaller feasible vector. Thus the selected
+witness attains the vector exactly. NSF's nonempty-leaf witnesses attain
+its coordinate maxima, possibly on different original sources.
+
+There are finitely many pair decisions; each terminates by Theorem 4.2.
+Every YES has a finite witness, and only then is its bounded length
+search started. This is the effective stopping argument. Dickson's
+finiteness principle alone would not suffice. The supplied static service
+makes the returned set nonempty. $\square$
+

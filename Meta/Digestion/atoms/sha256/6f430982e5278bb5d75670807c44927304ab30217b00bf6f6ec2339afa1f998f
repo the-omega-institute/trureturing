@@ -1,0 +1,70 @@
+**Definition 7.1 (Same-history comparison on the positive triplet locus).**
+Fix any source in the complete locus of Theorem 6.1,
+
+$$
+p=(a,b,8b,b,a),\qquad a,b>0,\qquad 2a+10b=1,
+\qquad \lambda=16ab>0.
+\tag{7.1}
+$$
+
+Keep the fixed initial phases and the five doubled coherence pairs of (4.1).
+Write $D=D_b$ and $c=c_b$ for the original decoder and offset in (4.7).
+Theorems 3.3 and 3.7 identify the endpoint group with
+$\mathbb T\times\mathbb Z_2$ and its coordinate image with the set
+$\mathscr S$ in (6.13). Give this group the normalized Haar law $\mu$ of
+§5: the angle is uniform and parity is independent and balanced. The random
+variable $h$ below is an endpoint residual class with this law; it is not a
+uniformly chosen integer winding or a prescribed distribution on loop paths.
+For $h=(\beta,\varepsilon)$, the supplied identities (4.7), (4.8), (5.1)
+and (6.4) are
+
+$$
+\begin{gathered}
+q(h)=(\sqrt2\cos\beta,\sqrt2\sin\beta,\varepsilon)^{\mathsf T},
+\qquad y(h)=c+Dq(h),\\
+\mathbb E_\mu q=0,\qquad
+\mathbb E_\mu[qq^{\mathsf T}]=I_3,\qquad
+D^{\mathsf T}D=\lambda I_3.
+\end{gathered}
+\tag{7.2}
+$$
+
+Let $\mathcal L_p$ consist of all Definition 3.1 loops based at this source,
+on a finite time interval with finite phase variation, including every
+integer winding. Write $u$ also for a loop's residual increment and $m_u$
+for its integer winding. Equations (4.9)–(4.11) give
+$q(h+u)=T(u)q(h)$, where
+
+$$
+T(u)=R_{\theta(u)}\oplus[\sigma(u)],\qquad
+\theta(u)=u_\beta\pmod{2\pi},\qquad \sigma(u)=(-1)^{m_u}.
+$$
+
+The exact native image is therefore the already established group
+$\mathcal N=\{R_\theta\oplus[\sigma]:\theta\in\mathbb T,
+\ \sigma\in\{-1,1\}\}$. A comparison target is a matrix $Q\in SO(3)$.
+Define
+
+$$
+\begin{aligned}
+y_Q(h)&=c+DQq(h),\\
+\mathcal E_p(u,Q)&=
+  \mathbb E_{h\sim\mu}\|y(h+u)-y_Q(h)\|_{\mathbb R^{10}}^2,\\
+\mathcal E_p^*(Q)&=\inf_{u\in\mathcal L_p}\mathcal E_p(u,Q).
+\end{aligned}
+\tag{7.3}
+$$
+
+Here one loop $u$ is fixed for all $h$. It may be selected using the fixed
+source and $Q$, but not using the input history. Both responses in (7.3)
+use the same $h$, and the norm is the original ten-output Euclidean norm.
+The matrix $Q$ is a comparison target, not an assumed available control;
+$y_Q(h)$ need not be a reachable output. No change of coupling, whitening,
+history-dependent feedback, sampling procedure or cost is part of this
+definition. The separate rotation and physical-interpretation hypotheses of
+§9 and common-source continuation factorization of §12 of
+[FIB harmonic-edge load](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+are not supplied by (7.1)–(7.3). In particular, these definitions and the
+results below establish neither physical spatial dimension, native $SO(3)$
+control, nor a common-source map to all harmonic paths.
+

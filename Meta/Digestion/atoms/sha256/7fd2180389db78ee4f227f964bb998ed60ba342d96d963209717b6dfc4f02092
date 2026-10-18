@@ -1,0 +1,22 @@
+### Co-volume minimum
+
+Let l_e = arccosh(x_e), and let Omega be the corresponding compact length box.
+The standard co-volume identity (Luo--Yang) gives, for the global co-volume
+
+  H(l) = sum_sigma cov_sigma(l|sigma) - 2*pi*sum_e l_e,
+
+  partial H / partial l_e = -K_e.
+
+At a lower face of Omega, K_e > 0, so increasing l_e decreases H. At an upper
+face, K_e < 0, so decreasing l_e decreases H. Every boundary point therefore
+admits an inward direction of strict decrease. A minimizer of H on Omega lies
+in the interior, where all partial derivatives vanish. Thus K_e=0 for every
+global edge. The common global lengths make every paired hexagonal face
+isometric; zero cone curvature removes all interior edge singularities. This
+is the claimed nondegenerate hyperbolic realization.
+
+No Ricci-flow convergence theorem is used to assume existence. The only
+external geometric inputs are the six-variable formula, its monotonicity and
+length-domain criterion, and the co-volume gradient identity. Convexity
+is not needed for this compact interior-minimum argument.
+

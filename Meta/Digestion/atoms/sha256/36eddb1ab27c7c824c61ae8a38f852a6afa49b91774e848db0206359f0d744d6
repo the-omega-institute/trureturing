@@ -1,0 +1,19 @@
+### 92.6. Consumer and retained boundary
+
+All noncanonical rays are generic or aligned by §75, including
+constant-channel aligned cases. An all-generic triple is excluded by §92.4;
+an all-aligned triple by the uniform §§83–85 theorem; a mixed triple has
+an edge excluded by §92.5. The canonical-intersection rigidity of §60 then
+forces every complete common-flat input basis to be canonical. The exact
+input/output transport \(W=H_0^*B\) of §91 proves the fixed-pair quartet
+exclusion. None of these steps assumes a canonical intersection or cyclic
+covariance of a candidate basis.
+
+This closes the retained fibres \(L=0\). If \(H_*\) is the guard, one may remove its full \(L\)-primary factor and retain every other
+factor: let \(v\) be maximal with \(L^v\mid H_*\), and put
+\(H_{\rm new}=H_*/L^v\). At \(H_{\rm new}\ne0\), either \(L\ne0\) and
+Theorem 91.1 applies, or \(L=0\) and the present proof applies.
+No expanded computation of \(H_*\), no claim about the other fibres,
+and no limiting argument across them is used. The center and endpoints
+remain outside this basis-uniqueness statement.
+

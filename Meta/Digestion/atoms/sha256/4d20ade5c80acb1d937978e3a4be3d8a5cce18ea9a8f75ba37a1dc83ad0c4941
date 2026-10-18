@@ -1,0 +1,21 @@
+**Definition 1.4 (actual restrictions and extra retained information).**
+A public nonempty subset $A\subseteq\mathcal A$ restricts the possible
+initial sources but retains every edge and epoch allowed in (SCC.3)
+for each member. An already retained code is an arbitrary effective
+function $B:A\to\mathcal B$, acquired before those future choices.
+Its nonempty actual fibers are
+
+$$
+A_b=\{a\in A:B(a)=b\},\qquad b\in B(A).
+\tag{SCC.4}
+$$
+
+When $B$ is present, the complete entry is (SCC.3) together with $B(a)$;
+all other state is still excluded. An additional code $E$ is computed
+while the initial source is available. Its labels may be reused on
+different $B$-fibers because the decoder receives $B$.
+
+The case without $B$ means constant $B$. A purported restriction on
+sources that also forbids some future epochs is a different domain;
+Theorem 2.2 uses the full specified epoch window on each actual fiber.
+

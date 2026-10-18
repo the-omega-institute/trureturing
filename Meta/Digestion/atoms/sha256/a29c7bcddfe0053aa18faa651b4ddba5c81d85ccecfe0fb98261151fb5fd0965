@@ -1,0 +1,11 @@
+**定义 36.2（Separated phase codes with actual multiplicities）。** Let $D_g(\Lambda)$ be the least $d\ge0$ for which there are vectors $z_j\in\mathbb F_2^d$, one for every actual phase, with
+
+$$
+\Lambda(j)\ne\Lambda(j')\ \Longrightarrow\ z_j\ne z_{j'},
+\qquad
+\bigoplus_{j\in P}z_j=0\quad\text{if }g=1.
+\tag{36.5}
+$$
+
+When $g\ge2$ only separation is required. Equal-label phases may have different vectors. The multiplicity in the XOR is the number of actual phases, not the number of labels and not a count of INITIAL tails. The single-label case has $D_g=0$. This definition is an algebraic constraint; legal literal attainment is supplied separately in Theorem 38.1. The optimum is a set-theoretic quantity on the finite record set. An effective construction may take its finite label partition or a finite label table with decidable equality as input; target comparison, offline search and controller memory are separate from emitted block fee.
+

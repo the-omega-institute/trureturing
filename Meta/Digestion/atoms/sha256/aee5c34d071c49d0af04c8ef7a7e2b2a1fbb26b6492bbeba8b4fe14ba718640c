@@ -1,0 +1,34 @@
+**定义 1.3（秩一条件以外的非负源域）。** Define
+
+$$
+\begin{aligned}
+\mathcal N&=\left\{
+ P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+ 0\le a\le1,\ b,c\ge0,\ b+c>0\right\},\\
+\mathcal P&=\left\{P\in\mathcal N:
+ 0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+\end{aligned}
+\tag{1.5}
+$$
+
+Thus $\mathcal P$ is exactly the legal source set, whereas
+$\mathcal N$ requires neither rank one nor determinant zero. Put
+
+$$
+u=b+c=\operatorname{tr}(JP)>0,\qquad v=1+b\ge1.
+\tag{1.6}
+$$
+
+The trace coordinates in (1.3), also used in
+[VII, Definition 8.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), are
+
+$$
+(t_0,t_1,t_2,t_3,t_4,t_5)
+ =(1,u,v,u+v,1+a+u,u+2v-a).
+\tag{1.7}
+$$
+
+Every one is positive on $\mathcal N$: in particular
+$t_4\ge1+u>0$ and $t_5\ge u+1>0$. Boundary entries
+$a=0$, $a=1$, $b=0$ or $c=0$ are permitted whenever $u>0$.
+

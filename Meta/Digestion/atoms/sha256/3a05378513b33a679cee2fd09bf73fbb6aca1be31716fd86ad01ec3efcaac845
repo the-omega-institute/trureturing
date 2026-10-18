@@ -1,0 +1,27 @@
+**定理 C-107.5（同一原二体态的纯度完整判据）。** 对每个
+$\Gamma=JCJ^\dagger\in\mathfrak D$，包括 $\mathfrak F$ 的全部复输入，
+
+$$
+\begin{aligned}
+\operatorname{tr}\Gamma^2
+ &=\operatorname{tr}C^2
+ =\tfrac15+2\sum_{s<a}|c_{sa}|^2,\\
+\Gamma\text{ 可分离}
+ &\Longleftrightarrow\operatorname{tr}\Gamma^2=1/5,\\
+\Gamma\text{ 纠缠}
+ &\Longleftrightarrow\operatorname{tr}\Gamma^2>1/5.
+\end{aligned}
+\tag{C107.11}
+$$
+
+证明。等距嵌入和迹循环性给首个等号。
+Hermitian 性给 $\operatorname{tr}C^2=\sum_{s,a}|c_{sa}|^2$，
+五个对角各贡献 $1/25$，十个非对角无序对各贡献两次。
+余项非负且同时为零当且仅当 $C=I_5/5$。
+最后使用 C-106.2，而不是把一般混态的“纯度大”误当一般纠缠充分条件。证毕。
+
+这里测的是原来整个 $H_5^{(1)}\otimes H_5^{(2)}$ 上 $\Gamma$ 的纯度，
+不是每份 $H_5$ 的纯度，也不是 C-94 的底面条件态纯度。
+完整单副本线性数据本身能由 (C107.11) 后处理计算纯度；
+单个二次函数完成此特殊分类，不反驳 C-107.3 对固定线性输入的下界。
+

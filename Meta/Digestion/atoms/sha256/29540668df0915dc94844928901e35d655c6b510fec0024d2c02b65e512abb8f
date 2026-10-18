@@ -1,0 +1,19 @@
+**Corollary 49.3 (Uniform caps and the complete endpoint classification).** For a cap $0\le\eta\le1$, the globally attainable anchor rows under $\varepsilon\le\eta$ on arbitrary measurable carriers, already on countable power-set carriers, are
+
+$$
+\{(h,d,z)\in\mathscr S:(1-B)h\le(2-B)\eta\}.
+\tag{49.1}
+$$
+
+On finite consumer carriers they are $\{(h,d,z)\in\mathscr S:h\le2\eta\}$. In either the sourcewise finite-target-support class or the finite-anchor-target-support class, put $R=(1-B)h/(2-B)$. A row is attainable exactly when
+
+$$
+h=0\quad\text{or}\quad \eta>R\quad\text{or}\quad
+\big[\eta=R\ \text{and}\ (\text{$b$ reaches $B$ at a finite index}\ \text{or}\ (B=1\text{ and }d>0))\big].
+\tag{49.2}
+$$
+
+In particular, for $h>0$, unrestricted exact acquisition exists exactly at $B=1$; finite-consumer exact acquisition never exists; and finite-anchor or sourcewise finite-target exact acquisition exists exactly when $B=1$ and $d>0$. For $h=0$, every split $d+z=1$ is exactly acquired in every class. At $B=0$, $b\equiv0$ and all infima are the attained $h/2$. At $B<1$, the $d/z$ split does not change any infimum or support-attainment condition. At $B=1$, positive finite nonproposal mass cannot replace positive literal divergence in (49.2).
+
+**Proof.** Theorem 47.1 supplies the first two attained minima with complete all-source constructions. Theorem 48.2 gives the two support-class infima, excludes precisely their stated boundary cases, and supplies every larger cap through the normalized clipped-profile constructions (48.5). Its exact positive-divergence construction supplies the additional limit-one boundary. The zero-proposal law and the forced identity $b\equiv0$ at $B=0$ give the endpoints without a conditional ratio or division by $1-B$. These are global design statements. Exact acquisition of any one prescribed family remains governed by Theorem 46.4, or Theorem 46.3 on a countable power-set carrier; Theorem 46.6 concerns the fixed-family zero infimum and does not change its target laws. The arithmetic necessities use only actual matching sources, not occurrence of every integer target. The bounded-band bridge is needed precisely to keep the finite profile gap positive as preparation coupling improves. All conclusions are ordinary mathematical consequences under the measurable-rule contract. $\square$
+

@@ -1,0 +1,35 @@
+**Theorem 56.7 (all budgets at least three, exact infimum and nonattainment).** For every $0<\delta\le1/100$ and every integer $N\ge3$,
+
+$$
+R_N(\delta)=R_\infty(\delta)=B(\rho_*,\delta).
+\tag{56.20}
+$$
+
+No individual original policy in any of these classes attains this infimum. Every positive approximation tolerance is nevertheless realized by a finite three-update/four-Read policy with a total decoder.
+
+Proof. Theorem56.3 supplies $R_\infty(\delta)\ge B(\rho_*,\delta)$, and $\mathcal P_N\subseteq\mathcal P_\infty$ supplies the same lower bound for $R_N$.
+For an unambiguous tolerance choice, given public $\varepsilon>0$ take
+
+$$
+\rho_\varepsilon=\rho_*+
+\min\left\{\frac{\rho_+-\rho_*}{2},\frac{\varepsilon}{26}\right\}.
+\tag{56.21}
+$$
+
+It lies strictly in $(\rho_*,\rho_+]$.
+Reuse the derivative bound (54.26), valid on the unchanged interval $[\rho_-,\rho_+]$, to obtain
+
+$$
+0<\mathcal E_{\pi_{\rho_\varepsilon}}(\delta)-B(\rho_*,\delta)
+=B(\rho_\varepsilon,\delta)-B(\rho_*,\delta)
+\le13(\rho_\varepsilon-\rho_*)\le\varepsilon/2<\varepsilon.
+\tag{56.22}
+$$
+
+Definition56.4 and Theorem56.5 make this a source-independent lawful finite policy in $\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$, with its exact own risk. Taking the infimum for every positive $\varepsilon$ proves all equalities, without exchanging an update-budget limit with an infimum.
+The strict individual inequality (56.6) rules out every optimizer, including a policy with countable complete histories. Conversely (56.22) rules out a uniform positive excess shared by all policies.
+
+Equivalently the public choices
+$\rho_m=\rho_*+(\rho_+-\rho_*)/(m+1)$, $m=1,2,\ldots$, give a sequence of separate finite policies with risks decreasing to the displayed infimum. This sequence is not one execution, adds no infinite-prefix operation, and does not authorize a root-direction limit Read.
+The distinctions are exact: the global policy infimum is not attained; a report's minimax center can be attained; and each constructed $\pi_\rho$ has an attained own-policy worst loss (56.17). No claim is made that an arbitrary original policy's worst-loss supremum is attained. □
+

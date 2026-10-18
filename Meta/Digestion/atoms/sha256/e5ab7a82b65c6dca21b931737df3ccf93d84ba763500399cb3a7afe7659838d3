@@ -1,0 +1,6 @@
+**Theorem 11.1 (The strict rare-event phase).** If $a<2r$, there are a fixed sufficient integer $M_0$, one $s_0>0$ and positive constants $A_-,A_+$, all independent of budgets, such that every compliant finite-budget observer pays at least $A_-s^{-(a+1)}$ under each source. For every $M\ge M_0$, a common q-retuned family with at most $M_0$ configurations pays at most $A_+s^{-(a+1)}$ under both. Each separate infimum and the joint infimum in (10.4) therefore have order $s^{-(a+1)}$, uniformly over all $M\ge M_0$ and $0<s<s_0$.
+
+Proof. The budget-independent lower bound is Theorem 7.1, or directly (5.10) with the summable full-gap entropy of Theorem 6.1. For the upper choose $\lambda=\ell_0$ for every small $s$. Theorem 9.2 bounds its count by $K\ell_0^r$ and its two means by $C_U\ell_0^{2r-a}s^{-(a+1)}$. Take $M_0$ to be an integer at least that fixed count and choose the common neighborhood inside the lower and upper ones. The proof for the infima is the same quantified argument as Corollary 10.2. The state capacity is fixed; $\theta$ and possibly $H$ still retune with $q$. This asserts no single q-independent transition table. $\square$
+
+Thus $(d,r)=(2,2)$ has paid order $s^{-4}$ with fixed sufficient capacity. Growing the capacity cannot improve this exponent under the stated model.
+

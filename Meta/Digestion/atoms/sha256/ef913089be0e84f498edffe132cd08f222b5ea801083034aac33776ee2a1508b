@@ -1,0 +1,36 @@
+**Proposition 8.2 (finite construction and output bounds).** There
+are at most $2^C$ collapse choices per propositional branch. If
+$d$ code disequalities have identical templates, there are at most
+$\max(1,L)^d$ choices of mismatch locations. With
+$M=\max(3,L+1,s+1)$, every resulting named witness template has at
+most $ML$ primitive leaves. For a fixed accepted parameter tuple,
+the scalar extractor uses at most $D+1$ trials per free equality
+component and returns ranks at most $2K+D$, with $K$ as in Lemma 3.2.
+
+If the source code has primitive ranks $r_1,\ldots,r_\ell$, its
+expanded native tree has exactly
+
+$$
+2\sum_{j=1}^{\ell}F_{r_j+1}-1
+\tag{NCE.21}
+$$
+
+nodes, where $F_0=0,F_1=F_2=1$.
+
+Proof. Each pairing has two cases and each identical-template
+negative comparison has at most $L$ primitive or residual positions.
+Replacing each residual leaf by an $M$-leaf marker gives the stated
+template bound. Lemma 3.2 gives the rank trials and bound. The atomic
+recurrence gives $F_{r+1}$ leaves in $T_r$; expansion at the code
+leaves adds these leaf counts. A nonempty full binary tree has twice
+its leaf count minus one nodes. $\square$
+
+Explicit unifier expansion and branching may enlarge the representation;
+these bounds do not assert a polynomial construction in the original
+input size. Membership in the constructed support is finite affine
+evaluation. Global existence is a finite integer-arithmetic decision,
+not a measured solver runtime or a claimed tight complexity class.
+Semilinear conversion is optional and can enlarge the description.
+Rank bit lengths do not pay the expansion cost (NCE.21), and a
+bounded normal shape is not a bound on the native sizes of all sources.
+

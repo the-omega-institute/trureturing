@@ -1,0 +1,54 @@
+**Lemma 25.1 (retained complement estimate).** For a supported complex $u$ put $c=b(p,u)/b[p]$ and $w=u-ct_s$. There are $k>0$ and $C_\delta<\infty$ such that, for sufficiently small $s$,
+
+$$
+\widehat q_s[u]\ge k b[w]-C_\delta s^4\|u\|_2^2,
+\qquad b(p,w)=0.
+\tag{25.2}
+$$
+
+For every actual normalized complex ground state define
+
+$$
+F_s=\mathcal U_s\psi_s,\qquad f_s=\mathcal T_sF_s,\qquad
+u_s=\eta_R f_s,\qquad
+c_s=b(p,u_s)/b[p],\qquad w_s=u_s-c_st_s.
+\tag{25.3}
+$$
+
+Then, uniformly over all actual choices,
+
+$$
+b(p,w_s)=0,\qquad
+b[w_s]\le C_\delta\bigl(s^4+s^2r_s^{-1/2}\bigr).
+\tag{25.4}
+$$
+
+Proof. Let $\mathfrak q=\mathfrak q_{s,\delta}$ of (22.14). Equations (22.18), (22.20), (22.21) and their proofs give
+
+$$
+|\mathfrak q[t_s]|\le C_\delta s^4,\qquad
+|\mathfrak q(t_s,w)|\le C_\delta s^2\sqrt{b[w]}+Cs^3\|w\|_2,
+\qquad
+\mathfrak q[w]\ge(a\theta-C\delta-Cs)b[w]-Cs^2\|w\|_2^2.
+\tag{25.5}
+$$
+
+The identity $c=\mu^{-1}\int Vpu$ gives $|c|\le C\|u\|_2$. Since $u$ is supported in $|r|\le2R$, $w=-ct_s$ outside that strip. The Hilbert-valued height Poincaré argument (22.22), including its auxiliary cutoff derivative, gives
+
+$$
+\|w\|_2\le C\delta s^{-1}\sqrt{b[w]}+C_\delta s^{3/2}|c|.
+\tag{25.6}
+$$
+
+Consequently $Cs^2\|w\|_2^2\le C\delta^2b[w]+C_\delta s^5|c|^2$, and $s^3\|w\|_2\le C\delta s^2\sqrt{b[w]}+C_\delta s^{9/2}|c|$. Choose $\delta$ so $C\delta+C\delta^2$ leaves a positive part of $a\theta$, and then take $s$ small. In the polarization of $\mathfrak q[ct_s+w]$, Young's inequality absorbs the cross term into less than half this positive part, at cost $C_\delta s^4|c|^2$. Retain the rest as $kb[w]$. Equation (22.10) bounds $|\widehat q_s[u]-\mathfrak q[u]|$ by $Cs^4\|u\|_2^2$. This proves (25.2), without a global $L^2$ gap.
+
+The actual closed-form eigen-equation tested with $\eta_R^2 f_s$ gives exactly
+
+$$
+\widehat q_s[u_s]=\epsilon_c(s)\|u_s\|_2^2
+                  +a\int|\eta_R'|^2|f_s|^2.
+\tag{25.7}
+$$
+
+Height multiplication preserves the full complex closed domain by the supported-strip core closure; $Y\eta_R=0$ and the $X$ product rule gives the displayed derivative term. Native negativity, $\|u_s\|_2\le1$ and (22.24), which is unchanged by the height-preserving shear, bound the right side above by $C_\delta s^2(s^3+r_s^{-1/2})$. Apply (25.2) and absorb $s^5$ into $s^4$ to obtain (25.4). All constants are independent of the actual normalized complex choice. $\square$
+

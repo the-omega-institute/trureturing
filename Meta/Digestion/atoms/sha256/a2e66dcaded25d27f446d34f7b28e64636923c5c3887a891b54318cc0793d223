@@ -1,0 +1,92 @@
+**Theorem 305.2 (Full support and the all-mass six-late cut).**
+This score $Z_6$ has
+
+$$
+\beta=(0,4,16,20,20,20,16,16),\quad K=176,\quad
+W=B_N=B_O=68,\quad\Delta_N=\Delta_O=0.
+\tag{305.1}
+$$
+
+For every $L\ge8$, every $3\le j_1<\cdots<j_6\le L$,
+every real finite profile and one complete feasible allocation in
+either class of any finite mass,
+
+$$
+b_2+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}+4b_{j_5}+4b_{j_6}
+\le1+44e.
+\tag{305.2}
+$$
+
+Every original arbitrary-address, full-carrier competitor in either
+class satisfies the same bound with its actual amplitudes and every
+positive closed cap it meets. In particular
+
+$$
+44e_a(A)\ge
+a_2+4a_{j_1}+5a_{j_2}+5a_{j_3}+5a_{j_4}+4a_{j_5}+4a_{j_6}-1.
+\tag{305.3}
+$$
+
+**Proof.** Direct class summation gives the displayed $\beta$ and
+$K$. The union weights sum to 48, the early correct weight to four,
+and the positive weight is 16. Hence $R$ earns $48+4+16=68$.
+For completeness the following is the full pair-cell certificate.
+For each cell maximize the sum of its row rewards over all nine
+labels $0,\ldots,8$, exactly as in (298.2).
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| 12 | $(4,21,23,20)$ |
+| 13 | $(12,13,20,23)$ |
+| 14 | $(12,13,20,23)$ |
+| 15 | $(16,9,20,23)$ |
+| 16 | $(20,5,20,23)$ |
+| 17 | $(16,9,20,20)$ |
+| 18 | $(18,7,16,23)$ |
+| 23 | $(12,11,20,25)$ |
+| 24 | $(12,11,20,25)$ |
+| 25 | $(16,7,20,25)$ |
+| 26 | $(20,3,20,25)$ |
+| 27 | $(19,7,20,22)$ |
+| 28 | $(16,7,18,23)$ |
+| 34 | $(12,16,20,20)$ |
+| 35 | $(16,12,20,20)$ |
+| 36 | $(20,8,20,20)$ |
+| 37 | $(19,9,20,20)$ |
+| 38 | $(21,8,16,23)$ |
+| 45 | $(16,12,20,20)$ |
+| 46 | $(20,8,20,20)$ |
+| 47 | $(23,5,16,24)$ |
+| 48 | $(20,8,16,22)$ |
+| 56 | $(20,12,20,16)$ |
+| 57 | $(23,9,16,20)$ |
+| 58 | $(22,10,16,20)$ |
+| 67 | $(23,13,16,16)$ |
+| 68 | $(22,14,16,16)$ |
+| 78 | $(21,14,16,16)$ |
+
+Every vector sums to at most 68. Each unrestricted pair table chooses
+one output in each cell and is therefore bounded by that sum. Empty,
+singleton and repeated schedules coarsen pair information, reversal
+permutes cells, and a stopped table merges $00,01$. These operations
+cannot increase the sum of cell maxima. Since $R$ attains 68 in both
+classes, (305.1) follows for their entire catalogs.
+
+Embed the eight coordinates as $(1,2,j_1,\ldots,j_6)$ with all other
+scored bits one. A query outside the skeleton is constant on the scored
+support, and an outside label earns zero. Thus arbitrary queries give
+one of the displayed partitions or a coarsening. This proves the bound
+at every finite embedding, without removing any unscored event row.
+Pair this single nonnegative score with the same full allocation:
+$F_{QZ_6}\le M\Delta_N(Z_6)=0$. Its quotient is four times the
+left-minus-right expression in (305.2), proving that expression is
+nonpositive. The argument uses every original demand and permits every
+real profile and finite mass.
+
+For an original rule use 297.3 at prefix $j_6$, with its restriction
+or extension as needed, and apply (305.2) to its one normalized finite
+representative. At caps at least one the bound follows from
+$a_i\le1$, since the left side is at most 28. Applying the result
+at every positive cap above $e_a(A)$ and decreasing those caps to
+the error proves (305.3), also when that error is zero. $\square$
+

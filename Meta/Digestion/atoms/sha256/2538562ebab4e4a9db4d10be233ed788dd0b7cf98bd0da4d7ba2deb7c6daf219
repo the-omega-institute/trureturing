@@ -1,0 +1,20 @@
+**Convention 11.1 (exact supplier map).** The ordinary proofs above use
+the following results with their stated domains. The underlying committed
+sources are the base `d858b605f148c016c480b4dea457429351962892` and, for
+AIF, `346647b9c5e41ec76f0ea19d5796323dc813f750`. Reading an existing
+declaration is not a current compilation or new certification of its
+application.
+
+| Supplier | Actual use and excluded inference |
+| --- | --- |
+| PR57 §57, D1–D3, D5, D7, L1/L4, T1–T5 | Exact finite cell tracks, core rows, receipts, paid canonical source installation, complete public schedules, references, channels and whole actions. A physical local graph primitive and its endpoint cost are additional hypotheses here. |
+| LJA Definitions 3.2, 4.1–6.2, Theorems 3.3–3.4, 4.5, 5.3, 6.3, 7.2; Corollary 7.3 | Same-source paid literal service, raw busy state, authentic immutable acquisition rows, complete joint successors and the realized no-update producer. Its joint carrier alone did not give the new structural inverses. |
+| AIF Definitions 2.1–2.6, Lemma 2.7, Theorems 4.2/4.4, Corollary 4.5, Theorem 6.4 | Exact lawful domain, consumed input with a phase-typed pending bit, actual-image replay, closure, and the precise copy-loop bill. Theorem 2.2 adds the full-domain kernel consequence; no fixed-input fiber is substituted for it. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean`, `nativeStep`, `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`, and owning `Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs` | Certified source-iteration and finite reply-replay interfaces are credited. Their arbitrary old-trace parameter is not authenticated arrival; their abstract control may contain unbounded acquired data. The all-microcut finite-tape replay premise used here is AIF, not an enlargement of these declarations. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean`, `sourceControl`, `productionTrace`, `native_source_producer`, including private `traverse`/`stationary`, and owning Scribe | The fixed no-update producer and its exact truthful node-read order are reused in Proposition 2.1. Source/subtree parameters of its private invariant are not a hidden supply port. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.lean`, `scalarEquiv`, `productEquiv`, `faithful_constructor_representation`, private legality/uniqueness/inverse helpers, and owning Scribe | Existing legal truncated-array/tree bijections are distinct results. Their admissibility and cutoff hypotheses do not cover arbitrary runtime bytes, so they are not invoked as the storage patch theorem. |
+| `D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean`, `response`, `typed_finite_view_kernel`, and owning Scribe | Finite-path behavior/kernel reasoning retains ordinary labels and terminal readout; it does not automatically expose every successor. The complete-successor hypothesis used in Theorem 2.2 is the explicit AIF task coordinate. |
+| `D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean`, `predictive_memory_minimal_quotient`, and owning Scribe | Its readout and update factorization premises are separate. No generic quotient theorem is used to manufacture a natural carrier or a paid read port. |
+| Native Clocked Recovery and Order, Theorems 5.3/6.3; Atomic Boundary Trichotomy, Theorem 12.1 | The earlier fixed-controller atomic-source atlas and two genuine-rho image inverse retain their scopes. No new rho warm-up, shape-label reconstruction, or source-only extension of those theorems is claimed here. |
+| Spatial Records Chronology, Theorems 7.4/11.1 | Its specified parser/marker/record domain is different; no domain correspondence to this full runtime is a premise of the present proof. |
+

@@ -1,0 +1,41 @@
+**Definition 83.1 (Hard request-count optimum and the active cube).** Retain
+Definitions 71.1, 73.1 and 77.1, including the original labeled $X$, static
+prime answers, zero advice, original tapes and consumer, and one
+source-independent seed with a common deterministic rule after it is fixed.
+The amplitudes satisfy (73.3). Define the extended integer
+
+$$
+\kappa_\varepsilon=
+\inf\{k\in\mathbb N_0:\exists A\in\mathcal A_\varepsilon(a),\quad
+       \mathsf P_A\{K_{A,x}\le k\}=1\text{ for every }x\in X\},
+\qquad\inf\varnothing=\infty.
+\tag{83.1}
+$$
+
+This bounds the number of actual requests, counting repetitions, and uses
+the nonhandoff convention of Definition 71.2. It does not bound an address
+index or an expectation. For $0<\varepsilon\le1$, put
+
+$$
+L=\max(\{i\ge1:a_i>\varepsilon\}\cup\{0\}),\qquad
+Q=\{0,1\}^L,\qquad J=\{0,1,\ldots,L\}.
+\tag{83.2}
+$$
+
+The integer $L$ is finite. For $b\in Q$ having a zero, let $n_L(b)$ be
+its first zero and set
+
+$$
+\eta_b=(1-a_{n_L(b)})\delta_{\theta_0}
+                +a_{n_L(b)}\delta_{\theta_{n_L(b)}}.
+\qquad
+\eta_{1^L}=\delta_{\theta_0}.
+\tag{83.3}
+$$
+
+When $L=0$, the empty word is $1^L$ and is the only member of $Q$.
+These are finite target vectors on the original marked points. In
+particular $1^L$ is a finite answer pattern, not an additional infinite
+all-positive source. Every pattern in $Q$, including every pattern with
+several zeros, is retained.
+

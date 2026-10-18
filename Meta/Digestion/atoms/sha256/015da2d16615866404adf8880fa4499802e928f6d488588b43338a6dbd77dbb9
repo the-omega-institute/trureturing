@@ -1,0 +1,30 @@
+**Definition 11.5 (a computable full cost recurrence).** Costs are vectors
+indexed by primitive opcode and purpose; the scalar cost is their sum.
+Use the following grammar, with the actual entry heads retained in its
+state. It is both an expansion rule and a recurrence for its cost.
+
+| Schema | Cost and successor prescription |
+| --- | --- |
+| Primitive row $o$ | Unit vector at $o$, with PR57.D1's actual local successor and receipt. |
+| Sequence | Add the first cost to the second cost evaluated at the first complete successor. |
+| Testing RD or CTL | Its unit vector, then the cost of its actual encoded successor. |
+| Home or Tail | RD; on the sought marker exit, otherwise ML or MR and recurse. |
+| Append | Unit EX + unit WR + unit MR; one new data cell. |
+| Field, LastBank, LastScratch | The finite scans of Definition 11.2, from their actual heads. |
+| Copy or count segment | Unit RD; at sep exit; otherwise EX, WR, two MRs and recurse on the next source cell. |
+| Unary copy | The same five-row body, stopping only after copying and moving past its actual 0. |
+| Base | Home; MR; RD; at R Append(0), otherwise Append(1); MR; repeat. |
+| Descriptor count | Home; MR; RD; at R Append(0); at F Append(1); MR and repeat; at another symbol MR and repeat. |
+| Assignment | Steps 1–5 of Definition 11.3, with the specified dry and real emissions. |
+| Word while | Cost of its actual test, plus zero on exit or its body and the recurrence at the next bank state. |
+
+An emission has a fixed list of $r$ field choices. Each choice invokes
+the stated Field, copy/count, optional cons or tail, and sep append;
+there is no uninterpreted per-field term. Its terminal segment test is
+included. Purpose changes, flags, delimiter, descriptor seal and parity
+change are their displayed CTLs or appends. This recurrence can be
+evaluated from finite inputs while executing the specified graph; it is
+not the length of an unspecified interpreter run. Its unbounded variables
+are actual words and actual marked-head positions. Termination for a whole
+consumer is proved in §15, rather than built into this cost definition.
+

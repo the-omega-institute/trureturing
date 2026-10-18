@@ -1,0 +1,23 @@
+**Proposition 19.4 (source-dependent finite protection is always possible).**
+There is one adaptive protected procedure for every finite cut $P$
+which terminates its entry phase on every finite source and recovers
+the complete invocation row, even when $q(P)=\infty$.
+
+**Proof.** Read $\varepsilon,L,L^2,\ldots$ until an actual leaf is
+returned, retain its literal and label, Release, and apply Lemma 15.1.
+If the source's leftmost leaf has depth $h$, this costs exactly $h+1$
+protected Reads and $h(h+1)/2$ submitted letters. Every source is finite,
+so its achieved cost is finite, but $h$ is unbounded over the source
+domain and is not advice to the procedure. $\square$
+
+The costs in Proposition 19.4 describe that algorithm on a source, not
+instance-optimality or an expectation. A protected entire-tree traversal
+could instead Return its row before Release, with its own unbounded
+source-dependent Read cost. These are distinct from the finite uniform
+contract. The minimum $q$ permits protected Return, but its lower bound
+already covers that option.
+
+The accepted tree is certified at its validation Read; the decoded output
+refers to invocation and need not be the row at the separate Return.
+Termination with infinitely many post-Release updates is not asserted.
+

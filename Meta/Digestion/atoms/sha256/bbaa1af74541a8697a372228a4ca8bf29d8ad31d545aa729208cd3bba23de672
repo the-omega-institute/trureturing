@@ -1,0 +1,76 @@
+**Theorem 3.1 (explicit original-control event source).** Take
+
+$$
+c=2/5,\qquad Z=1/5,\qquad a=1/10,\qquad T=1,
+\qquad k(t)=\frac{a}{1-t/2},\qquad \chi(t)=\chi(0).
+\tag{EM.6}
+$$
+
+Use one fixed positive coherent preparation with diagonal $p(a)$ and a
+compatible initial lift. This smooth control satisfies both original
+regularity alternatives, all five probabilities are at least $1/10$,
+$|k'|\leq1/5$, and phase variation is zero. Its canonical instrument has
+
+$$
+\begin{aligned}
+S(t)&=1-t/2,\\
+(F_0,F_1,F_2,F_3,F_4)(t)
+ &=(0,ct/2,Zt/2,ct/2,0),\\
+\Pr(\mathsf F)&=1/2,\qquad
+\mathcal L(\tau\mid\mathsf F)=\operatorname{Unif}(0,1],\\
+\Pr(i=1\mid\mathsf F)&=c,\quad
+\Pr(i=2\mid\mathsf F)=Z,\quad
+\Pr(i=3\mid\mathsf F)=c.
+\end{aligned}
+\tag{EM.7}
+$$
+
+Here $\mathsf F$ is the actual performed-failure event. Conditional on
+$\mathsf F$, time and mode are independent. Modes $0,4$ never fail in
+this example, and every failure has successor $f$.
+
+**Proof.** Set $s=1-t/2$. Then $s\in[1/2,1]$,
+$k'=a/(2s^2)>0$, $a\leq k\leq2a=1/5$ and
+$\lambda=k'/k=1/(2s)$. Integrating the hazard gives $S=s$.
+The probability band and derivative bound follow at once; the rational
+formula extends smoothly across the closed interval, and the phase is
+constant. In particular the actual transported phase increment is zero.
+The original regularity and strict positivity conditions are verified
+without replacing the source by its law coordinate.
+
+Since $Sk=a$, (EM.4) gives zero loss in modes $0,4$. For mode $1$,
+
+$$
+F_1=(c-a)-S(c-k)=c(1-S)=ct/2.
+$$
+
+Mode $3$ has the same expression, and $F_2=Z(1-S)=Zt/2$.
+Their sum is $t/2$, because $2c+Z=1$. Thus
+$\Pr(\tau\in E,i\mid\mathsf F)=q_i|E|$ for Borel
+$E\subseteq(0,1]$, where $(q_0,q_1,q_2,q_3,q_4)=(0,c,Z,c,0)$
+and $|E|$ is Lebesgue measure. This proves uniformity and independence.
+
+For completeness, its terminal success operator and failure CP densities
+on arbitrary common inputs are
+
+$$
+\begin{aligned}
+K_1&=\operatorname{diag}(1,1/\sqrt3,1/\sqrt2,1/\sqrt3,1),\\
+\omega_i(t;\rho_{LR})
+ &=r_i|f\rangle\langle f|\otimes\rho_{ii}^R,\qquad
+(r_0,r_1,r_2,r_3,r_4)=(0,2/3,1/2,2/3,0).
+\end{aligned}
+\tag{EM.8}
+$$
+
+Integrating the last line and adding $K_1^\dagger K_1$ gives identity
+mode by mode. Therefore the claimed event distribution is part of the
+entire performed instrument, with its failure branches included, rather
+than a law obtained by discarding failures. $\square$
+
+The programme can be fully known to both encoder and decoder in the next
+section. No unknown-programme identification is needed to obtain the
+memory lower bound. The ideal recording service is still conditional;
+(EM.6) is a mathematical source realization, not a physical clock or
+detector construction.
+

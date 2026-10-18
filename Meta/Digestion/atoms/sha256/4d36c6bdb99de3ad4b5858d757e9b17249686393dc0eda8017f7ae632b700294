@@ -1,0 +1,77 @@
+**Theorem 7.3 (scalar-only retention forces exponential fresh acquisition).**
+Suppose the first producer, correct on all finite sources, exports
+only $z=m(U_{v_0})$ and optionally the constant complete root-cut
+row. Its entire accessible inter-call state is a fixed encoding
+of these values and common public controls. The later deterministic
+service, using arbitrary native literals and local computation,
+must obtain enough data for a passive decoder to recover exact
+lag on every authentic continuation. It need not explicitly
+reacquire $m$, choose a minimum leaf or follow any particular
+search algorithm.
+
+There is a lawful history with first source $B_d^\alpha$, one
+update between the two captures and quiescent later acquisition,
+on which that later service must query all $2^d$ length-$d$ words.
+Consequently its fresh costs satisfy (AAR.25). By contrast, an
+actually retained first leaf $(a,0)$ permits a correct all-source
+continuation service that on this same one-update history uses
+one Read of length $d$ and no global recertification.
+
+Proof. Call the displayed history $H_*$. After its first capture
+and Return, make one genuine update, so its current source is
+$B_d^\beta$. For every $q$ also consider a history $H_q$ starting
+from the fixed original source $V_{d,q}$, with zero updates
+between captures. Pause each writer during its acquisition calls.
+Each history uses only its own unchanged register and (AAR.1).
+There is no transition from one alternative source to another.
+
+All first scalars are exactly $2d$. All first root-cut rows have
+the same addressed root hole and singleton partition. The strict
+handoff condition makes the later entry states identical, even
+if the producers' now inaccessible old traces were different.
+The later source on $H_q$ differs from the later source on $H_*$
+only at exact leaf $q$. If the later run on $H_*$ omits $q$,
+the all-address identity used in Theorem 7.2 makes its full later
+trace and returned data identical on $H_q$. Any passive decoder
+therefore gets the same complete input. Its required answers,
+however, are one and zero. Thus every $q$ is mandatory. Later
+root-cut rows are again identical complete rows; adding them does
+not invalidate the proof. No history name, source label, retained
+capacity or producer output may silently distinguish these
+histories under the stated interface.
+
+For the positive contrast, actually acquire any alpha leaf $a$
+in the first $B_d^\alpha$ capture and keep its descriptor and
+bit. Construction 2.4 begins its later search with Read$(a)$.
+On $H_*$ that reply is beta, so it returns one from (AAR.6) with
+$r=\varepsilon$. On any other authentic continuation it either
+returns the correct leaf-based lag or continues below a branch;
+the baseline's all-source safety and finite-interference liveness
+apply. Acquisition, the retained literal and any representation
+of it are paid; only fresh later query count has fallen from
+at least $2^d$ to one. $\square$
+
+There is also an explicit inexpensive first acquisition for this
+positive interface. Use the supplied CNA/CWS left guard search,
+which works on every finite source without $d$ as an input. On the
+quiescent $B_d^\alpha$ it reads exactly
+$\varepsilon,L,\ldots,L^d$, acquiring $(L^d,0)$ with
+$T=d+1$, $A=d(d+1)/2$ and $Q=d$. Together with the later one-Read
+continuation, the two calls use $T=d+2$ and $A=d(d+3)/2$.
+The first search under interference is bounded by its final left
+depth, just as in the supplied guard construction. No global minimum
+certificate is requested by this local-anchor interface. Its retained
+literal, framing, search buffers and expanded operands still cost
+storage; the scalar-only interface has the different retained payload.
+
+If an earlier empty-cut row, acquired full tree, anchor output or
+location-bearing capacity survives, this is a richer interface
+and the scalar-only premise is false. A compressible anchor can
+use a shorter description than a flat literal, but the description
+must be acquired, included in retained information and expanded
+into a complete paid operand. This theorem does not establish
+an exact bit optimum over arbitrary descriptor encodings. Its
+exponential lower bound holds even when $d$ is given publicly:
+the unknown information is the source relation, not the numerical
+depth.
+

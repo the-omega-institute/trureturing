@@ -1,0 +1,71 @@
+**Proposition 12.2 (quartic data and contrast still miss a directed row).**
+For the actual positive axial coefficients of (IC.3), there are two
+three-atom saturated coefficient probability laws on the directed circle
+with identical scaled polynomial data through degree four and identical
+$K$, but different $v$ first moments. Each uses the original positive
+capacity $n_c/d_c$. They are method-level counterexamples; neither law
+is asserted to have the original target $B(t)$ or to be on an attained
+optimal face.
+
+Proof. Set $L_0=1+D_u/D_v$, $x_j=L_0+j$ for $j=1,2,3$, and
+use six distinct slopes $\zeta=\pm\sqrt{x_j}$, all with direction
+tag $+$. Let
+
+$$
+P_6(z)=\prod_{j=1}^3(z^2-x_j),\qquad
+b_\zeta=1/P_6'(\zeta),\qquad
+a_\zeta=b_\zeta(1+\zeta^2)d_c(\zeta).
+\tag{IC.55}
+$$
+
+There are three positive and three negative $a_\zeta$, since the
+derivatives at six ordered simple real roots alternate in sign. The
+de Boor leading-coefficient identity annihilates polynomials through
+degree four against $b_\zeta$. In particular
+$\sum a_\zeta=0$, so the positive and negative parts have a common
+strictly positive normalizer $M_0$. Divide each part by $M_0$ to
+obtain the two probability laws, with saturated capacity $n_c/d_c$.
+Their reweighted masses $p/[(1+z^2)d_c]$ agree on all quartics.
+
+The six polynomial rows of (IC.50) consequently agree. The $u$ and
+$K$ rows agree as well: on this positive-$u$ arc both have scaled
+value $\mathcal W(z)$, which is even, whereas
+$b_{-\zeta}=-b_\zeta$. The sole unmatched augmented row is $v$,
+whose unnormalized difference is
+
+$$
+\begin{gathered}
+\sum_\zeta b_\zeta\zeta\mathcal W(\zeta)
+=[x_1,x_2,x_3]g
+=\frac{g(x_1)-2g(x_2)+g(x_3)}2>0,\\
+g(x)=(D_u+D_vx)\sqrt{1+x},\qquad
+g''(x)=\frac{4D_v+3D_vx-D_u}{4(1+x)^{3/2}}.
+\end{gathered}
+\tag{IC.56}
+$$
+
+The first equality follows by grouping the two roots at each $x_j$:
+$P_6'(\zeta)=2\zeta\prod_{k\ne j}(x_j-x_k)$.
+The divided difference and its convexity sign are standard tools, with
+equal spacing one. At $x\ge x_1=2+D_u/D_v$ the numerator of $g''$
+is at least $10D_v+2D_u>0$. Strict convexity proves the strict
+difference for the original coefficients, without substituting
+synthetic source amplitudes. Dividing by the common $M_0$ preserves
+the inequality. These laws need not match $B(t)$, contact equality
+or $J_t$, so they refute only the proposed sufficiency of quartic
+data plus $K$ for recovering every original row, not $U_7$ or $U_8$.
+
+The full labelled test space has a related direct obstruction to a
+global scalar Chebyshev-system transfer. Its nonzero combination
+$k-u=|u|-u$ vanishes on the whole positive-$u$ directed arc and is
+positive on the negative-$u$ arc. Its nonzero combination $\chi_c$
+from (IC.46) vanishes on the entire saturated sheet and is positive
+on the pure sheet. These infinite zero sets violate the finite-zero
+property of a scalar Chebyshev system on the complete labelled domain.
+Invertible row changes, positive pointwise scaling and injective
+reparametrization preserve the obstruction. Piecewise systems or
+additional relations on a special finite contact inventory are not
+excluded. This explains the missing premise of the Dette–Melas
+interface in Definition 6.1; it is not a nonexistence theorem for all
+possible original-law compression methods. $\square$
+

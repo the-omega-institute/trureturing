@@ -1,0 +1,34 @@
+### 81.4. Plane determinant and rank-deficient cases
+
+Define the quartic
+\[
+ D=(b^2-3)^2Br^4+8b(b^2-3)^2r^3
+       -3(b^2-3)Br^2-4b(b^2-3)r-2B.
+\]
+Direct determinant expansion gives
+\[
+ \det M=9(b^2-3)B W_r^4D.                                \tag{81.9}
+\]
+A common root \(p\) gives \(D=0\). Let
+\(V=M_{0,\cdot}\times M_{1,\cdot}\). At such a root,
+\(V_1^2-V_0V_2=0\): for independent rows, \(V\) is proportional to
+\((1,p,p^2)\); for dependent rows it is zero. No rank stratum is divided
+away.
+
+Let \(L\) be the numerator in lowest terms of
+\(\operatorname{rem}_r(V_1^2-V_0V_2,D)\) over \(\mathbb Q(b)\).
+The leading coefficient \((b^2-3)^2B\) of \(D\) is nonzero, and the
+remainder denominator has only factors \(b^2-3,B\). The exact Sylvester
+resultant is, up to a nonzero rational scalar,
+\[
+ \operatorname{Res}_r(D,L)\doteq
+ (b^2-3)^{10}(b^2-2)^2(b^2+1)^8B^{41}
+                  (7b^4-12b^2+9).                       \tag{81.10}
+\]
+Here and below \(\doteq\) means equality up to a nonzero rational
+constant, so it preserves every parameter zero. A numerator normalization
+with the coefficients of the printed seeds gives the constant
+\(383808888404050968576\) in (81.10). The last factor is
+\(7(b^2-6/7)^2+27/7>0\); all other factors are nonzero on \(|b|\le1\).
+This excludes the entire plane chart, including its rank deficiencies.
+

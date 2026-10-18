@@ -1,0 +1,41 @@
+### 定理 54.10（四层桥接的必要充分结构）
+
+在共同宿主空间框架中，要得到一个非塌缩、局部、带稳定谱隙的 metric-measure Dirichlet 极限，所需的可检验结构可分为：
+
+\[
+\boxed{
+\begin{array}{ll}
+\mathrm{(G)}&\text{统一 metric-measure 紧性和非塌缩};\\
+\mathrm{(M)}&\text{共同 }L^2\text{ 识别下的 Mosco 下极限和恢复序列};\\
+\mathrm{(L)}&\text{vanishing jumps 与局部 Poincaré 控制};\\
+\mathrm{(K)}&\text{\(\Gamma\)/梯度不等式的稳定收敛}.
+\end{array}}
+\]
+
+\((G)+(M)\) 给出空间和闭 Dirichlet 形式的子列极限；\((G)+(M)+(L)\) 给出强局部形式；加入 \((K)\) 才能把有限曲率证书传到极限。若再要求有效电阻收敛，还需 Green 算子和点源的识别条件。
+
+对应的严格管线是
+
+\[
+\boxed{
+\begin{aligned}
+&\text{有限 FIB/图/量子数据}
+\xrightarrow{\mathrm{(G)}}
+\text{metric-measure 子列极限}\\
+&\xrightarrow{\mathrm{(M)}}
+\text{闭 Dirichlet 形式、resolvent、热半群}\\
+&\xrightarrow{\mathrm{(L)}}
+\text{强局部极限}\\
+&\xrightarrow{\mathrm{(K)}}
+\text{曲率梯度不等式或 RCD 型候选证书}.
+\end{aligned}}
+\]
+
+Aobo Chen 的 2024/2026 工作在 pointed Gromov-Hausdorff 收敛、统一体积增长和统一热核估计下构造极限度量测度空间上的保守强局部正则对称 Dirichlet 形式，并沿子列证明 Mosco 收敛；其假设正好显示空间收敛、体积控制、热核控制和非退化尺度必须分别记账。参见 A. Chen, *Stability of heat kernel bounds under pointed Gromov--Hausdorff convergence*, arXiv:2411.19047。
+
+Inagaki 2025 对具有 Ricci 下界、体积下界和直径上界的流形上的随机图 Laplacian 建立谱收敛，并延伸到非塌缩 Ricci 极限空间。该结果支持本节的分层原则：图谱或有限 Dirichlet 数据要取得连续几何解释，必须同时记录曲率、体积非塌缩、尺度和谱识别条件。参见 M. Inagaki, *Spectral convergence of graph Laplacians with Ricci curvature bounds and in non-collapsed Ricci limit spaces*, arXiv:2506.07427。
+
+
+
+---
+

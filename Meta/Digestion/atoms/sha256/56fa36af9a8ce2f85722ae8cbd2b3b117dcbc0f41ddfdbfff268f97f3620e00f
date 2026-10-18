@@ -1,0 +1,73 @@
+**Theorem 4.3 (three virtual outputs require five raw transcripts).**
+For every $D\ge2$, the scalar task $V_t(RL)$ on the entire
+$\mathcal F_D$ has exactly three attained output values. Among all
+correct terminating procedures of Definition 4.2, the minimum attained
+alphabet of complete raw terminal transcripts is exactly five.
+Consequently, for every such procedure its raw transcript is not a
+function of the single virtual reply alone.
+
+Proof. Write $C=\langle\alpha,\alpha\rangle$ and consider
+the following five actual right subtrees:
+
+$$
+\alpha,\quad\beta,\quad C,\quad
+\langle\beta,\alpha\rangle,\quad
+\langle C,\alpha\rangle.
+\tag{NVC.11}
+$$
+
+Their virtual replies at $RL$ are, in order,
+$\mathsf{absent},\beta,\beta,\mathsf{branch},\mathsf{branch}$.
+Every right subtree has root alpha, beta or branch. Formula (NVC.7)
+shows that these three are the only possible outputs on the entire
+family, and (NVC.11) attains each.
+
+Different output classes require different terminal transcripts,
+because the procedure has common initialization and is deterministic.
+The run on right subtree $\beta$ must query $R$: replacing it by
+$\alpha$ changes the required output and changes no other original
+literal reply. If $R$ were never queried, deterministic replay would
+give identical termination and output on this competitor. Its
+transcript therefore differs from that on right subtree $C$, whose
+$R$ reply is branch. Thus the beta-output class requires at least
+two transcripts.
+
+The run on right subtree $\langle\beta,\alpha\rangle$ must query
+$RL$: flipping only its left beta to alpha changes the virtual
+output from branch to beta and changes no other original literal.
+Its transcript therefore differs from that on right subtree
+$\langle C,\alpha\rangle$, whose $RL$ reply is branch. Thus
+the branch-output class also requires at least two transcripts. The
+absent-output class is nonempty and requires at least one. These
+disjoint classes give the lower bound five for arbitrary adaptive
+finite procedures, without a call or word-length restriction.
+
+For attainment use (NVC.7). Its only possible raw transcripts are
+
+$$
+\begin{gathered}
+[(R,\alpha)],\qquad[(R,\beta)],\\
+[(R,\mathsf{branch}),(RL,\alpha)],\qquad
+[(R,\mathsf{branch}),(RL,\beta)],\qquad
+[(R,\mathsf{branch}),(RL,\mathsf{branch})].
+\end{gathered}
+\tag{NVC.12}
+$$
+
+A branch at $R$ has a present left child, so no absent child case
+occurs. All five transcripts are attained by (NVC.11). This proves
+the exact minimum on the entire family. A three-valued output
+cannot determine a transcript with at least five attained values,
+which proves the final claim. $\square$
+
+The theorem counts the actual raw sequence, not an optimal encoding
+of its requested reply. The virtual response task intentionally merges
+some actual traces; retaining those traces refines that task.
+The five actual subtrees in (NVC.11) are the comparison witnesses of
+[PPF, Theorem 3.2][PPF]. The distinction between an output code and
+an acquired raw record, including a five-record single-child case,
+is already present in [SLH, §43][SLH]. Those witnesses and that
+distinction are credited; the use here fixes the scalar
+one-substitution output and proves its exact full-family raw range
+within the compiled-port analysis.
+

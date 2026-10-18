@@ -1,0 +1,31 @@
+**Definition 1.3 (Predictive gaps and opposite-half-line gains).** Write
+
+$$
+\begin{aligned}
+u_L&=\mathbb E_P[X_0\mid\mathcal P],&u_{L,r}&=\mathbb E_P[X_0\mid W_L(r)],\\
+u_R&=\mathbb E_P[X_0\mid\mathcal F],&u_{R,r}&=\mathbb E_P[X_0\mid W_R(r)],\\
+d_L(r)&=\mathbb E_P(u_L-u_{L,r})^2,&d_R(r)&=\mathbb E_P(u_R-u_{R,r})^2,\\
+J_L(\infty)&=\mathbb E_P(q-u_L)^2,&J_L(r)&=\mathbb E_P(p_L(r)-u_{L,r})^2,\\
+J_R(\infty)&=\mathbb E_P(q-u_R)^2,&J_R(r)&=\mathbb E_P(p_R(r)-u_{R,r})^2.
+\end{aligned}
+\tag{1.6}
+$$
+
+$J_L$ is the squared-loss gain from adding the complete future to a left predictor; $J_R$ adds the complete past to a right predictor. For $x_+=\max(x,0)$ and $x_-=\max(-x,0)$, define
+
+$$
+s_L(r)=J_L(\infty)-J_L(r),\qquad s_R(r)=J_R(\infty)-J_R(r),\qquad
+K_2(R)=\sum_{r\ge R}\bigl(s_L(r)_++s_R(r)_+\bigr).
+\tag{1.7}
+$$
+
+Entropies use nats and $0\log0=0$. Put
+
+$$
+h_r=H_P(X_0\mid W_L(r)),\qquad h=H_P(X_0\mid\mathcal P),\qquad
+a_r=h_r-h,\qquad \sigma_R=\sum_{k\ge R}a_k.
+\tag{1.8}
+$$
+
+For stationary binary $P$, $H_P(X_0\mid W_R(r))=h_r$ and $H_P(X_0\mid\mathcal F)=h$. Indeed both finite conditional entropies are $\mathsf H_{r+1}-\mathsf H_r$, where $\mathsf H_n$ is the entropy of a length-$n$ visible block and $\mathsf H_0=0$. Their decreasing limits give the half-line equality. This equates Shannon gaps, not left and right Brier predictors or their squared moments.
+

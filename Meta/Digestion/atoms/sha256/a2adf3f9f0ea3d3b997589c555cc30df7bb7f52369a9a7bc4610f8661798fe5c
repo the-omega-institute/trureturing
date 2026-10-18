@@ -1,0 +1,19 @@
+**Proposition 4.3 (what the path does and does not complete).** The
+path closes the multi-vertex construction data obligation at this
+EX site. It does not yield the original EX successor.
+
+Proof. Its endpoint has exactly the required new unmarked R cell.
+However the old marked R cell still has symbol R, whereas original
+EX must make it blank and leave the ordinary head on that same old
+cell. The original PC has not advanced, and neither the old meter R
+overwrite, new meter cell, append-mark/link transfer nor original
+ordinary/F receipt has occurred. These are concrete differing
+coordinates of the proposed endpoint and the original successor.
+They cannot be supplied by naming the last birth a commit.
+
+In particular $C_{24}(h)$ must not be fed to UAS's complete-native-row
+decoder as if the pending EX had committed. A parent adapter must
+implement these effects, its phase dispatch and actual return.
+No row-sized atomic patch is an operation of the relation in this
+volume. ∎
+

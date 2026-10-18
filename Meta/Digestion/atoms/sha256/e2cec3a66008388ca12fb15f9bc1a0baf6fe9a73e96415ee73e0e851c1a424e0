@@ -1,0 +1,15 @@
+**Definition 9.3 (native and interpretive limits).** Under $J_\kappa=\operatorname{diag}(1,1,\kappa)$ and the original real lift $D=\kappa x$, retain exactly
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),\qquad
+g_{\rm orig}=|\kappa|g.
+\tag{9.1}
+$$
+
+The transported long-time tensor is $J_\kappa M J_\kappa^{\mathsf T}$, including signed cross terms, with $M=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0$. Wavefunctions and unit raw-source kernels have different absolute-Jacobian powers. No conclusion is uniform as $\kappa\to0$, on the actual frozen zero leaf, on a wrapped cover or torus, or at zero cutoff. Canonical auxiliary kernels supply no native cutoff-free realization.
+
+Global weak, local strong, unit-orbit and global strong convergence are distinct. The positive branch retains norm one and has weak/local limit zero. The homogeneous response is used only in its energy completion, not as a native or $L^2$ state. Four canonical coordinates, homogeneous dimension seven, three real phases, a rank-three long-time tensor, retained coordinate counts and physical Euclidean space are distinct. No physical three-space or physical $SO(3)$ is selected.
+
+Analytic spectral amplitudes supply no native preparation, actuation, lawful transport realization, density acquisition, resource permission or clock bridge. The spectral $E_s$ here differs from acquired mass and from ML error. These theorems imply no full-channel acquisition result, native feasibility, efficiency, capacity or impossibility claim, autonomous reduced quantum evolution, general neural-network or empirical machine-learning result, ML implementation migration, or completion of a wider programme. They are ordinary conditional symbolic mathematics, without executed mathematics, numerical validation or Lean/kernel/frozen certification.
+

@@ -1,0 +1,49 @@
+**Theorem 2.3 (unique least unary generator).** For every $d\ge1$,
+$J_d$ is a unary generator and every unary generator contains it.
+Consequently it is the unique inclusion-minimal and unique
+minimum-cardinality unary generator. The same statement holds when
+the generator identities are required on every actual $v$ with
+$h(v)\le d$, rather than only on $S_d$. Its cardinality is
+
+$$
+|J_1|=1,\qquad |J_d|=3\,2^{d-2}-1\quad(d\ge2).                \tag{SCE.10}
+$$
+
+Proof. Theorem 2.2 reconstructs omitted targets; retained targets use
+the identity. To prove necessity, fix $q\in J_d$ and any distinct
+$r\in W_d$. We exhibit two actual canonical trees with the same
+$\Gamma_r$ and different $\Gamma_q$.
+
+First suppose $r$ is a proper prefix of $q$. Make all strict ancestors
+of $q$ branches, put alpha in every unused sibling, and vary the leaf
+at $q$ between alpha and beta. At $r$ both factors are $(0,0)$;
+at $q$ they are $(2,1)$ and $(1,0)$. If $q,r$ are incomparable,
+make branches at the strict prefixes of their union, put a fixed alpha
+leaf at $r$, and vary the leaf at $q$ in the same way. Now
+$\Gamma_r$ is the fixed alpha factor. The remaining unused siblings
+are alpha. All these path trees belong to $S_d$ because both word
+lengths are at most $d-1$.
+
+The remaining case is that $r$ strictly extends $q$. A maximum-depth
+$q$ has no such extension in $W_d$. Otherwise (SCE.7) makes $q=aL$.
+Use identical branch ancestors toward $a$ and alpha unused siblings.
+In the first tree put beta at $a$; in the second put
+$\langle\alpha,\alpha\rangle$ there. These trees belong to $S_d$.
+At $q$ the factors are $(2,0)$ and $(2,1)$. Write $r=qz$ with
+$z\ne\varepsilon$. In the first tree the residual is $Lz$ after
+beta; in the second it is $z$ after alpha. Both $r$ factors are
+
+$$
+\bigl(s(z)+2,\mathbf1_{z\text{ ends in }R}\bigr).
+$$
+
+Thus no distinct target unary-generates $q$. At $d=1$ there is only
+the root target, and the empty subset cannot generate it. Every
+generator must therefore contain each member of $J_d$. For $d\ge2$
+there are $2^{d-1}$ maximum-depth words and
+$\sum_{l=1}^{d-2}2^{l-1}=2^{d-2}-1$ shorter nonempty L-ending words.
+This proves the count and uniqueness. Theorem 2.2 supplies the generator
+identities on the whole actual family, and all necessity witnesses
+already belong to its canonical subfamily $S_d$, proving the stated
+full-family version as well. $\square$
+

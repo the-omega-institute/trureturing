@@ -1,0 +1,24 @@
+**3 推出 2。** 对 $z,z'\in Z$，取任意 $s\in B_z$，定义
+
+$$
+\overline K_a(z,z')=\sum_{t\in B_{z'}}K_a(s,t).
+$$
+
+条件 3 保证定义与 $s$ 的选择无关。非负性显然，且对固定 $z$：
+
+$$
+\sum_{z'}\overline K_a(z,z')
+=\sum_{t\in S}K_a(s,t)=1,
+$$
+
+所以它是 Markov 核。对任意 $\mu$：
+
+$$
+\begin{aligned}
+(q_*(\mu K_a))(z')
+&=\sum_{s,t:q(t)=z'}\mu(s)K_a(s,t)\\
+&=\sum_z\sum_{s\in B_z}\mu(s)\overline K_a(z,z')\\
+&=((q_*\mu)\overline K_a)(z').
+\end{aligned}
+$$
+

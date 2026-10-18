@@ -1,0 +1,66 @@
+**Theorem 9.1 (support, capacity and encoders).** For every occupied endpoint put
+
+$$
+L_i=s_0D+z_iT+w_iS,\quad K_i=\sqrt{p_i}L_i,\quad
+N_i=p_i\eta_i1000\operatorname{cap}(h_i)n_in_i^T.
+$$
+
+There is an actual dimension-two low encoder and chronological decoder with live product $K_i$, pulled-back failure effect $N_i$, whole-fibre activity $0$ on pure endpoints and $\log(1001)$ on saturated endpoints, and strictly positive terminal survival on the whole fibre.
+
+Proof. The ellipse makes $L_i$ rank two: its determinant is zero by JR.22 and its lower $2\times2$ diagonal minor is $\delta h_1h_2>0$. A right null vector is $(s_0h_1h_2,-bh_2z_i,-dh_1w_i)^T$, orthogonal to $n_i$. Thus $N_i$ is supported in $\operatorname{ran}K_i^\dagger$.
+
+The capacity can be derived on this same physical row space. For $L=s_0D+zT+wS$, solutions of $L^\dagger x=n$ have
+
+$$
+x=(x_0,A_1-B_1x_0,C_1-D_1x_0),\quad
+A_1=\frac{dw}{s_0h_1h_2},\ C_1=-\frac{bz}{s_0h_1h_2},\quad
+B_1=\frac{az}{s_0h_1},\ D_1=\frac{cw}{s_0h_2}.
+$$
+
+The remaining equation vanishes by the ellipse. Minimizing its squared norm over $x_0$ gives
+
+$$
+\rho=\frac{A_1^2+C_1^2+(A_1D_1-B_1C_1)^2}{1+B_1^2+D_1^2}
+=\frac{h_0^2\delta+b^2z^2+d^2w^2}{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+=\frac1{\operatorname{cap}(h)}.
+$$
+
+For the middle equality $A_1D_1-B_1C_1=h_0/(h_1h_2)$ follows directly from $abz^2/(h_0h_1)+cdw^2/(h_0h_2)=\delta$. Equivalently $\rho=n^T(L^\dagger L)^+n$. This is the capacity against the actual live effect, not a bare whitened projection.
+
+Choose once an isometry $J_i:\mathbb C^2\to\operatorname{ran}K_i^\dagger$ and set
+
+$$
+\begin{gathered}
+Q_i=J_i^\dagger(K_i^\dagger K_i+N_i)J_i>0,\quad
+C_i=Q_i^{1/2}J_i^\dagger E^\dagger,\\
+B_i=K_iJ_iQ_i^{-1/2},\quad
+F_i=Q_i^{-1/2}J_i^\dagger N_iJ_iQ_i^{-1/2}.
+\end{gathered}
+$$
+
+The support identity gives $B_iC_i=K_iE^\dagger$, $C_i^\dagger F_iC_i=EN_iE^\dagger$, and $B_i^\dagger B_i+F_i=I_2$. Full rank of $K_i$ on its row space gives $I_2-F_i>0$ on the entire fibre. Pure endpoints have $F_i=0$. At a saturated endpoint, $N_i$ has generalized rank-one strength $1000$ relative to $K_i^\dagger K_i$ by the capacity calculation. Its normalized failure eigenvalue is therefore $1000/1001$.
+
+For relative time $a\in[0,1]$ define
+
+$$
+g(a)=\frac2{(1+a)^2},\quad G_{\rm time}(a)=\frac{2a}{1+a},\quad
+Z_i(a)=\sqrt{I_2-G_{\rm time}(a)F_i},\quad
+R_i(a)=g(a)F_i[I_2-G_{\rm time}(a)F_i]^{-1}.
+$$
+
+All functions are on the entire fibre and $Z_i$ is invertible. The no-jump propagation from $a$ to $b$ is $\operatorname{Ad}_{Z_i(b)Z_i(a)^{-1}}$. From the CURRENT survivor $Y$, the jump into original component $\ell$ has CP density
+
+$$
+\mathcal J_{i,\ell}(a)(Y)=w_\ell g(a)\operatorname{tr}(F_iZ_i(a)^{-1}YZ_i(a)^{-1})P_f.
+$$
+
+Composing with $\operatorname{Ad}_{Z_i(a)C_i}$ cancels the inverses and gives exactly $w_\ell g(a)\operatorname{tr}(EN_iE^\dagger X)P_f$ from input $X$. Summing jump effects through each cut gives $G_{\rm time}(a)F_i$; the survivor effect is $I-G_{\rm time}(a)F_i$. Their sum is $I_2$. The same calculation from any intermediate cut proves chronological completeness on the whole fibre. The survivor Hamiltonian is zero, and the rate accounts for every loss; other controls are TP.
+
+At $a=1$ apply only to survivors the isometry $EB_i(I_2-F_i)^{-1/2}$. Its effect is identity and it gives cumulative live product $EK_iE^\dagger$. For a failure eigenvalue $f$,
+
+$$
+\int_0^1\frac{g(a)f}{1-G_{\rm time}(a)f}\,da=-\log(1-f).
+$$
+
+Thus pure activity is zero, saturated whole-fibre activity is $\log(1001)$, and terminal survivor effect is at least $I_2/1001$. There is no terminal absorption atom. The actual first event occurs at absolute $6+a$ and no positive carrier is acted on after failure. The chosen $g$ is an attaining witness law; it neither replaces the ideal $f_y$ nor restricts competitors' admitted time laws. Zero weights, in particular $p_6=0$ at the event, are omitted before any inverse. $\square$
+

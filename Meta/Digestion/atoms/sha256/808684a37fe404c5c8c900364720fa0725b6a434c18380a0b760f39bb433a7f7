@@ -1,0 +1,26 @@
+##### 定理 1.4.2： 证书集是上闭集
+
+若 $r\in\mathsf{Cert}(C)$ 且 $r\le r'$，则
+
+$$
+r'\in\mathsf{Cert}(C).
+$$
+
+**证明。**
+
+由资源单调性，$\mathcal Q_r\subseteq\mathcal Q_{r'}$，故
+
+$$
+\equiv_{\mathcal Q_{r'}}\subseteq\equiv_{\mathcal Q_r}.
+$$
+
+再由 $r\in\mathsf{Cert}(C)$ 得
+
+$$
+\equiv_{\mathcal Q_{r'}}\subseteq\ker C.
+$$
+
+证毕。
+
+<a id="claim-1-4-3"></a>
+

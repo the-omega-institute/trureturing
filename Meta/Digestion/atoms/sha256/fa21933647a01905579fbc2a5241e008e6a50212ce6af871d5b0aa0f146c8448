@@ -1,0 +1,10 @@
+**反例 Q3。** 取 $X=Y=3/4$、$Z=0$，合法区间为 $[1/2,3/4]$。若 $K_{s_0}=K_{s_{13}}=\delta_0$、$K_{s_1}=K_{s_3}=\delta_1$，则 $C_K^0=-\frac12\delta_0+\frac32\delta_1$，在 $\{0\}$ 上质量为负；但可行 $\kappa$ 的重建混合仍是概率律。可用任意可行 $\kappa_0$ 解释原仿射公式：
+
+~~~math
+C_K(p_\kappa)
+=C_K(p_{\kappa_0})
++(\kappa-\kappa_0)\operatorname{Curv}_K.
+~~~
+
+这不改变供文的差分公式或数学载荷。
+

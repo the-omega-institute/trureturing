@@ -1,0 +1,24 @@
+**Lemma 3.3 (source correspondence and exact compatibilities).** This observer is in the published $\mathfrak D_\mu(B_0)$ of PH37.1–37.2 on every PH prior with positive endpoints, from initialization to delivery. All original finite histories and records remain in the actual domain. At query cuts actual retention is deterministic, and both exact compatibilities hold separately.
+
+**Proof.** $W$ comprises eight legal rejected equal pairs. $S$ accepts seed 1, then completes markers 100 without returns. Its last $\alpha$ completes the third original write and only then latches. Thus every $h_n$ is a positive actual history, with the same original held $c_*$, in $\mathcal H_3\subset\mathcal H_p$, and
+
+$$
+A(h_n)=6n+3,\quad B(h_n)=10n+3,\quad \ell(h_n)=16n+6.
+\tag{3.3}
+$$
+
+The matcher recognizes $W^*S$ exactly: every cycle from $q_0$ consumes one complete $W$; the alternative starts the six-letter suffix, whose terminal has no nondead outgoing letters. All proper nondead prefixes occur before the original third latch. Therefore at any reachable fourth-segment query the matcher is $t_6$ exactly on $h_n$, and is dead on every other history. The first fourth-segment Read after $h_n$ consumes this special phase permanently. Both seeds, all other original tree records and all rejected and return words still execute unchanged $\delta_0$. No history is screened out by the matcher.
+
+Sampling $1/3$ succeeds per trial with probability $3/4$, so it returns almost surely with finite expected work and fixed workspace; $5/8$ uses three bits. After its one exceptional step, every synthetic path uses the ordinary $1/3$ generator. Ordinary seed acceptance per pair is $4/9$ and payload return factor is $2/9$. Consequently the complete synthetic process terminates almost surely from every reachable original cut. The noncompletion carrier is retained with zero synthetic mass, rather than discarded by conditional normalization.
+
+Let $\Delta$ be the combined deterministic update and $E(c,x)$ the complete original event block for operation $x$. Fresh sampling and the program imply, for every residual measurable event $A$,
+
+$$
+D_z((x,E(c,x))A)=q_z(x)D_{\Delta(z,x)}(A).
+\tag{3.4}
+$$
+
+Legal Stop has probability one. Finite cylinders determine the complete law; almost-sure termination and the retained zero noncompletion mass give the same equality on the full stopped carrier. This first proves per-configuration same-update generation. For the other obligation, $\rho_h$ is the point mass at the actual canonical configuration $z(h)$, and $z(hx)=\Delta(z(h),x)$. All active synthetic letter probabilities are strictly positive. Divide (3.4) by $q_z(x)$ and delete the operation and its event block: $\operatorname{res}_x\overline D_h=\overline D_{hx}$. Iterate for every finite legal continuation. Delivered has no next operation. This independently proves actual-history marginalized update compatibility, without using the actual posterior as a runtime state.
+
+All original writes and events precede the extra matcher update; third write precedes latch, and the same history's record is held through fourth completion and delivery. At each query comparison use its own $I_{C_0(h)}$, never records assembled from different histories. No actual random tag survives synthesis, no clock or history archive is added, no reset, resampling, test or post-Stop Read is available. Every internal microstate and finite output provider is charged by (3.1), even though internal execution is not a new original query cut. The effective actual kernels are $0/1$, the effective synthetic probabilities rational, and initialization source independent. Initialization and actual updates are finite deterministic services; the sampler services return almost surely at every allowed entry, including generated-only entries. The fixed-width encoding contains the installer, complete original controls, both cursors, matcher and all microstates. Its joint effective generation is $q_z(x)P_x(z,z')$ with $P_x$ the deterministic combined update. These facts verify every PH37.1–37.2 restriction, in addition to PH1.4, both PH1.5 contracts and PH21.1. The low-risk hypotheses of PH21.2, when used, are supplied separately by (5.3), not inferred from membership. $\square$
+

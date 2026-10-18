@@ -1,0 +1,22 @@
+**Corollary 5.5 (upper budgets with infinite coordinates).** Define $\overline{\mathcal F}$ as in (JRF.1.3), allowing budget coordinates in $\overline{\mathbb N}=\mathbb N\cup\{\infty\}$. If GB holds, then
+
+$$
+ \overline{\mathcal F}
+ =\{b\in\overline{\mathbb N}^{\,3}:\exists v\in\mathcal B,\ v\le b\}.
+\tag{JRF.5.6}
+$$
+
+If GB fails, then
+
+$$
+ \overline{\mathcal F}
+ =\{(\infty,d,\infty):d\in\overline{\mathbb N}\},
+\tag{JRF.5.7}
+$$
+
+whose unique minimal extended budget $(\infty,0,\infty)$ is attained by a pointwise terminating static service.
+
+Proof. If GB holds and a service meets an extended budget with a finite read coordinate, its finite reachable reply tree has only finitely many addresses and finite deterministic update segments. It thus has finite worst costs in all three coordinates, irrespective of whether those other coordinates were constrained. Theorem 5.3 supplies a basis member below its actual vector. If the length coordinate is finite instead, first apply Theorem 3.1 and Lemma 3.2. These transformations preserve every finite coordinate constraint and give a finite read bound, reducing to the preceding case. If both the read and length budgets are infinite, the static supplier (JRF.5.1) satisfies the budget for every nonnegative update bound, and some basis member lies below it. The reverse inclusion follows by executing the basis service.
+
+If GB fails, Corollary 3.3 forces both indicated infinite coordinates for every correct service. The static whole-original-tree traversal described in Theorem 7.1 has zero updates and terminates on every finite source, giving the reverse inclusion and attainment. Its construction uses the historical literal decoder and does not depend on this corollary. $\square$
+

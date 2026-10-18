@@ -1,0 +1,34 @@
+## 314. Two strict upper labels in the actual six-edge distinct-frame case
+
+Retain the original finite paired-frame quotient with complete connected
+normal circles, minimum original degree six, common positive lengths and
+all original angle equations 2*pi. Suppose there are exactly six actual
+global edge labels, no special edges, and every paired frame
+(R,A,B,O,A,B) has four distinct labels R,A,B,O. Assume a nonempty flat set.
+The public six-witness theorem through Section 308 makes every label
+genuinely witnessed and every flat axial-selected. Each label has at most
+one flat pi slot. The arbitrary upper-witness theorem excludes every
+flat transverse occurrence of a label with value greater than m-2.
+
+Choose the maximal-selected reservoir M and its usual genuine escape
+
+    tau=(Z,M,C,D,M,C),
+    m>=1+c+d>3, z>=1+m+c>m+2, p_M=1, p_Z=0.
+
+All lower-case values are coshes of original shared lengths. M has total
+genuine angle pi. Z occurs in no flat owner, so its total genuine angle
+is 2*pi. The argument below uses only the stated response formulas and
+original circles; it does not invoke the five-label exhaustion.
+
+**Theorem.** Some actual edge other than Z has value greater than m.
+Consequently, after naming it U, the entire six-edge distinct-frame
+mixed-flat configuration has the following form:
+
+    H=E={M,C,D,Z,U,V}, u>m, z>m,
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2.
+
+Sigma is the unique flat owner and the only owner of transverse pair
+{C,D}. Thus both its M and V axial runs consist of one original interval.
+This is a structural reduction, not exclusion of the remaining flat.
+

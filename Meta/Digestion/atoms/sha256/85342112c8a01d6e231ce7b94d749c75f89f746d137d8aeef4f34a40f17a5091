@@ -1,0 +1,29 @@
+# FIB two paid reads: fixed-seed frontiers and a strict support-invisible optimum
+
+For the original biased stationary XOR law, this volume determines every
+feasible return mass and the attained minimum endpoint-classification risk
+with a budget of two actual reads, for each specified independent auxiliary
+probability space. The auxiliary law is kept unchanged. Its positive-measure
+atoms may be nonpoints, and their number may be countably infinite.
+
+The classification starts with two explicit tables of deterministic
+subtree optima. Their combinations form at most eighty indexed paid
+policies. Every original protocol has a measurable selection of these
+policies with the same return mass and no greater risk. This is a
+classification of feasible masses and the lower risk frontier; it does
+not purport to list every attainable pair with higher risk.
+
+At the smallest positive deterministic mass, $q_*=2\eta^2$, the
+constant-seed optimum is attained but is strictly worse than a feasible
+competitor for every real supporting objective $C-\lambda q$. An
+atomless seed attains a strictly smaller risk at that same mass. Thus a
+complete universal support curve does not recover a fixed-law frontier.
+
+The law, finite-record interface and count-only and zero-record bounds
+belong to [Original][Original] and [Risk][Risk]. The complete universal
+two-read support curve and its four-part equality face belong to
+[Universal Support][Support]; the $q_2=1$ optimum belongs to [Slice][Slice].
+Those results retain their ownership. All arguments needed for the
+fixed-law classification and comparisons below are ordinary,
+self-contained probability proofs.
+

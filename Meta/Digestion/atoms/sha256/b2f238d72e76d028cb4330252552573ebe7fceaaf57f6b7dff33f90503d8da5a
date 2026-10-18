@@ -1,0 +1,39 @@
+**Definition 21.4 (bounded falsification criterion).** A finite test can
+compare (CNA.32) with an independent adaptive decision game on all
+realizable prunings of small public skeletons, allowing additional
+below-hole literal queries. In that game a directly observed leaf ends
+the search, while a leaf-free terminal must certify the full skeleton.
+Test the resulting executable schedule on finite labelled native trees,
+compare its decoded **complete** invocation row at several later lags,
+and run the supplied acquisition under actual finite update interleavings.
+Separately realize leaf-free transcripts by $u_B,\rho u_B$, including
+deep, absent and repeated queries, perform the one actual post-Release
+update in the first history, and check both the identical future register
+and the different invocation exteriors when coverage fails.
+
+A bounded instance takes all ordered internal skeletons with at most six
+vertices together with all complete cuts of maximum depth three. Its
+independent decision game permits literals through one level below the
+maximum cut depth. For the cuts of maximum depth three, use all labelled
+sources of height at most three and lags $0,1,2$ for decoding, and sources
+of height at most two for eight
+fixed finite capture-event patterns with at most two scheduled updates,
+also allowing one update during decoding and one before Return. For the
+merging check, use all shapes of height at most three and literal menus
+of size at most two through depth three, supplemented by repeated and
+three-query menus. Comb lengths through 32, balanced levels through four
+and (CNA.35) check the displayed geometric specializations. These are
+finite falsification bounds, not assumed source or schedule restrictions
+in any theorem.
+
+Decisive counterconditions are a smaller adaptive-game value on the tested
+interface, a budget overrun, a wrong computed lag or inverse, a lost guard,
+an incorrect true or false partition entry, or a failed claimed finite
+realization/history merge. Finite bounds do not certify arbitrary-address
+minimality, all-source entry totality or arbitrary-schedule progress.
+Those obligations are carried by Lemmas 16.1–16.4, Theorem 17.1,
+Lemma 18.1 and the cited CNA progress proof, rather than by enumeration.
+
+[NPR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean
+[NCRP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeClassRootPadding.lean
+

@@ -1,0 +1,21 @@
+**Definition 2.2 (Leaf masses and first-address types).** For a leaf
+source cylinder $D$, write
+
+$$
+W(D)=J_p(D),\qquad M(D)=\max_{h\in\mathcal A}J_p(D,H_j=h).
+\tag{2.2}
+$$
+
+An accepted leaf has correct mass at most $M(D)$, attained by a fixed
+maximizing state. A root address $t$ has active phase
+$\alpha=t\bmod2\in\{0,1\}$; put $\beta=1-\alpha$.
+In phase $\alpha$, its active edge is $e=\{\ell,\ell+1\}$
+when $t=2\ell+\alpha$. Call the root type $I$ if
+$v_\alpha\in e$ and type $D$ otherwise. The first-one source
+mass is $\eta$, and it certifies $\alpha$. The first-zero mass
+is $z=(1+c)/2$.
+
+All $W,M$ below include the prior phase factor $1/2$. Where one
+phase is certified, an entry is a joint mass in that phase, rather
+than a conditional probability on the auxiliary space.
+

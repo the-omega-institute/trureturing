@@ -1,0 +1,7 @@
+## 5. A finite-Hankel-rank growth lemma
+
+The following elementary form of the finite-rank/linear-recurrence
+principle supplies the needed obstruction. Its proof includes the
+cancellation argument, so a spectral growth assertion is not being
+assumed from a heuristic dominant term.
+

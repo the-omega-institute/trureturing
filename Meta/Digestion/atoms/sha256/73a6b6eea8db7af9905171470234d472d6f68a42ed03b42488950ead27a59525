@@ -1,0 +1,29 @@
+**Lemma 8.3 (actual native history projection).** Under items 1–2 of
+Assumption 8.2, delete only service events from any finite extended RA
+history. Retain every writer event, including those occurring inside
+routing episodes, and every designated action with its address and actual
+reply. The result is a legal RA history prefix from the same invocation
+source and cut. At each retained event its source and decoded RA state
+agree with those in the extended history. In particular the designated
+validation has the same actual response and source in both histories.
+
+Proof. Induct on the extended prefix, starting with its identical $u,P,c$.
+A service local step changes neither $U$ nor $c$. A service root Read
+also changes neither, regardless of its authentic reply, so either event
+can be deleted. A writer update changes both compared sources from the
+same $U$ to the same $\rho U$ and preserves their RA states. It is retained,
+rather than commuted past a designated event. At a designated local step
+the identical decoded state selects the same transition and successor.
+At a designated Read it selects the same entire address; equal sources
+then give the same actual constructor or absence reply, and the receipt
+rule gives the same next $c$. The same reasoning applies to Return and
+its candidate bytes. These cases exhaust the events.
+
+The original writer may place an update between any two RA actions.
+Consequently the additional placements exposed by deletion are legal:
+no lock or quiet interval is manufactured by the projection. Each finite
+extended prefix yields a finite original prefix, even if its last events
+belong to an unfinished routing episode. The induction establishes the
+correspondence from local rules; it does not assume a matched complete
+run or prescribe replies from a separately chosen source. $\square$
+

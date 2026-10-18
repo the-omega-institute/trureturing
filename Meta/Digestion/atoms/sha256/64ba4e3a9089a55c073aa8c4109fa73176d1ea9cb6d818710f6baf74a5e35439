@@ -1,0 +1,6 @@
+### 82.13. Attribution and boundary
+
+The equality proof refines section 81's original-channel centroid-support witness by retaining the first party's trace deficit and following every equality through the SVD convex decomposition. It then uses three normalized coherent inputs together with the full normalized reference test. Section 79 supplies the original attaining product; sections 82.9--82.12 identify the complete rank-two-party equality family and its exact full-reference norm. The linear algebra, Stinespring equivalence, trace-norm duality, and channel-norm background are standard; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/).
+
+No regular-tetrahedron uniqueness is asserted: the allowed disphenoids form a continuum. The minimum rank product eight is an original-channel statement, because both channels' calibration was proved from equality before the calibrated normal form was used. The classification is complete only when at least one party has local Kraus rank two. It does not classify quarter-error products whose two ranks are both at least three, or decide whether such products can beat quarter error. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
+

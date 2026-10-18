@@ -1,0 +1,20 @@
+##### 定义 1.7.1： 量子查询资源
+
+令
+
+$$
+\mathcal N:\mathcal L(\mathcal H_A\otimes\mathcal H_B)\to\mathcal L(\mathcal H_C)
+$$
+
+是通道。一个量子查询资源 $r$ 指定允许输入集合 $\mathcal I_r$ 和输出效果集合 $\mathcal E_r$。两通道或两输入实现的查询响应由
+
+$$
+(\rho,E)\longmapsto\operatorname{Tr}[\mathcal N(\rho)E]
+$$
+
+给出。
+
+若 $r\le r'$，要求 $\mathcal I_r\subseteq\mathcal I_{r'}$ 且 $\mathcal E_r\subseteq\mathcal E_{r'}$。
+
+<a id="claim-1-7-2"></a>
+

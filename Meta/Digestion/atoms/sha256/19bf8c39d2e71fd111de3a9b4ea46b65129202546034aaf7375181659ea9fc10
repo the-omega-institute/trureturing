@@ -1,0 +1,19 @@
+## 318. Complete-circle upper bound for the largest actual length
+
+In an actual finite paired quotient with four distinct labels in every
+frame, connected normal circles of degree at least six and complete
+angle equations 2*pi, let X be a label whose entire star is genuine.
+Suppose x is a largest actual cosh length. Let a1>=a2 be the two
+largest values at distinct other actual labels. Then
+
+    x < 1+a1+a2.
+
+This is a necessary actual-star bound, not a scalar existence claim.
+For the mixed-flat six-edge setting with Z,U>m and all remaining
+values at most m, it gives
+
+    abs(z-u)<m+1.
+
+The stronger one-sided Z bound derived from the source run may also
+be retained. No six-reservoir flat exclusion follows from these gaps.
+

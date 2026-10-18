@@ -1,0 +1,72 @@
+**Proposition 39.1 (height and sign correspondence in the attainer).**
+Put $q_{02,y}=\sqrt{p_{y0}p_{y2}}$, $q_{12,y}=\sqrt{p_{y1}p_{y2}}$
+and $\kappa_{02}=h_0c+h_2d>0$. Before the optional binary coin,
+the entire finite acquisition law on the original specimen is
+
+$$
+\begin{aligned}
+\Pr(H,\sigma\mid y,e,n)
+ &=\frac{P_y(s)}2
+    +\sigma\sqrt{(1-u)(1-v)}\,\kappa enq_y,\\
+\Pr(L,\sigma,\tau\mid y,e,n)
+ &=\frac14\bigl[uA_y+vB_y+C_y
+     +2\sigma\sqrt{uv}\,\kappa enq_y\\
+ &\hspace{22mm}+2\tau\sqrt u\,\kappa_{02}e q_{02,y}
+     +2\sigma\tau\sqrt v\,acn q_{12,y}\bigr],\\
+\Pr(f,j,\sigma\mid y,e,n)&=m_jp_{yj}/2,\qquad
+\Pr(\perp,\sigma\mid y,e,n)=0.
+\end{aligned}
+\tag{JR.40}
+$$
+
+After (JR.35), the designated binary law and effect are
+
+$$
+\Pr(r\mid y,e,n)=\frac12+r\kappa s\,enq_y,
+\qquad F=\frac12I+\frac{\kappa s}{2}
+                (|0\rangle\langle1|+|1\rangle\langle0|).
+\tag{JR.41}
+$$
+
+Thus $en=(-1)^m$ is the original winding parity and $x=y/256$ is
+the original height. The binary correct-parity probability is
+$1/2+\kappa s q_y$ at every sign; its worst original height is $5$.
+The high-fibre cost is largest at height $27$. Height $16$ remains
+one of the required complete-output constraints and has its own
+attained intermediate resource bound. No one of these heights is a
+probabilistic source weight.
+
+Proof. The cross effects are
+$D^\dagger T+T^\dagger D=\kappa X_{01}$,
+$D^\dagger S+S^\dagger D=\kappa_{02}X_{02}$, and
+$T^\dagger S+S^\dagger T=acX_{12}$, where
+$X_{ij}=|i\rangle\langle j|+|j\rangle\langle i|$.
+Expanding (JR.34)'s effects and applying the Born trace identity gives
+(JR.40). Sum over $\tau$ and the branch types. The unsigned masses
+sum to $1/2$ for each $\sigma$, while its signed term is
+$\sigma\kappa enq_y\mathfrak f(v)$. The independent record coin
+multiplies that term by $\eta_s$, with
+$\eta_s\mathfrak f(v)=s$ in both parameter regimes. This proves
+(JR.41) and the effect identity on the whole complex algebra.
+
+At $s=0$ the designated binary record is a fair coin and the cost is
+$(1-\delta)A_y$. Up to $s=s_0$ the SAME quantum instrument attains
+the constant minimum; only its fixed classical record kernel changes.
+At $s=s_0$ it can report $\sigma$ directly. For $s_0<s<1$ both high
+Kraus coefficients in (JR.34) are nonzero. At $s=1$, $u=v=v_0$,
+the low matrices are
+$(\sqrt{v_0}D+\sigma\sqrt{v_0}T+\tau S)/2$, and the high matrices
+are $\sqrt{1-v_0}(D+\sigma T)/\sqrt2$.
+The rank arguments in (JR.37) still apply. Binary relabelling supplies
+either sign of the contrast, so the signed normalized Fourier
+coordinate has precisely the feasible range $[-1,1]$.
+
+The extra labels in (JR.40) can depend separately on $e,n$ through the
+two other coherences; the binary marginal in (JR.41) depends only on
+$(y,m)$. No claim that the entire acquired law has only six classes
+is made for this different instrument. Since every $H_+$ is invertible,
+all twelve histories assign positive probability to that same branch;
+the full classical law does not identify the unknown history with
+certainty from one specimen. All these are unconditional laws at the
+already normalized old cut. $\square$
+

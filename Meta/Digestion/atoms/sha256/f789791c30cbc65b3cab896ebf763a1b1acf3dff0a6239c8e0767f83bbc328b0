@@ -1,0 +1,24 @@
+**Theorem 9.1 (stationary no-revisit reduction).** For the same explicit
+finite table, lawful both-attained compatibility requiring correct
+termination on each source, with no supplied call cap, is exactly
+$\mathcal C_{|Q|}(T)$. Thus all preceding criteria and constructions
+apply with $L=|Q|$.
+
+Proof. Fix one stationary actual source and an entry. At a given Read
+the fixed address has a fixed reply. Reentering that state repeats
+its identical deterministic future forever, so a terminating run
+cannot revisit a Read. It therefore uses at most $|Q|$ calls, and
+may instead begin in a Halt with zero calls. This is NBP Proposition
+12.5 and PCA Lemma 2.3's sourcewise no-revisit argument on precisely
+the present table contract. Correct termination of each selected
+entry implies the stated bound on that source; the reverse implication
+is immediate.
+
+An unchosen entry may loop or fail. Its label is simply absent from
+the good set. No promise that both entries terminate on each source
+is added. Different sources may use different successors and their
+union of paths may contain cycles; the no-revisit argument fixes one
+source. All installed unused Reads and their words still belong to
+the input. This reduction extracts no finite state space, address
+menu or table contract from arbitrary reader-program text. $\square$
+

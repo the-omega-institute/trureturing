@@ -1,0 +1,40 @@
+**Theorem 2.2 (effective mutual recovery and maximal atomic blocks).**
+$B$ and $E|_{\mathcal N}$ are mutually inverse effective maps on the
+entire indicated domains. For every $u\in\mathcal T$ and $X,Y\in\mathcal N$,
+
+$$
+E(B(u))=u,\qquad B(E(X))=X,\qquad
+E(J(X,Y))=\langle E(X),E(Y)\rangle.
+\tag{ABC.2.4}
+$$
+
+In $B(u)$ the primitive occurrences correspond exactly to the maximal
+atomic subtrees of $u$: an atomic subtree has the form $T_j$, and maximal
+means that no strictly containing subtree of $u$ is atomic. Every
+non-atomic constructor and the order of its children is retained.
+
+Proof. $J$ maps normal arguments to a normal result: its first case is
+primitive, and its second case has normal children and no forbidden root
+pattern. Its expansion identity is (ABC.1.4) in the first case and the
+definition of $E$ in the second. Structural induction on $u$ now proves
+$E(B(u))=u$.
+
+Induction on $j$, using (ABC.1.4) and (ABC.2.2), gives $B(T_j)=[j]$.
+For $X=[j]$ this proves $B(E(X))=X$. For a normal $F(X,Y)$, induction
+recovers its two children, and (ABC.2.1) excludes precisely the collapse
+case of $J$. Thus $B(E(F(X,Y)))=F(X,Y)$. These are both inverse identities;
+in particular no two normal codes expand to the same source.
+
+Consequently $u$ is atomic if and only if $B(u)$ is primitive. If $u$
+is atomic its whole root is the unique maximal atomic occurrence. If
+$u=\langle v,w\rangle$ is non-atomic, its code has a constructor at the
+root and its maximal atomic occurrences are exactly those of $v$ and $w$,
+with the corresponding physical prefixes. Induction on $u$ proves the
+occurrence assertion, including arbitrary nested and repeated subtrees.
+
+All definitions perform finite recursion on a supplied finite tree or
+code; producing $T_j$ uses finite recursion on the supplied integer $j$.
+The algorithms therefore terminate on each such input. No bound on the
+unknown input, no promised code shape, and no bound on expansion cost is
+used. $\square$
+

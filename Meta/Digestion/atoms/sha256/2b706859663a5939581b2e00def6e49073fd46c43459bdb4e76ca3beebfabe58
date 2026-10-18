@@ -1,0 +1,22 @@
+**Definition 6.3 (rejection and raw return).** Use ARC's first-detecting
+reason tags: malformed0000, descriptor0001, unavailable dependency0010,
+no occurrence0011, invalid legacy phase0100, no cover0101, no package0110,
+description0111, binding/range1000. A general rejection's raw-request field
+is the fixed pair $(\mu,w)$; a mode-zero rejection keeps its original raw
+frame field and interpretation. The retained mode tells the client which
+grammar to check. All complete general failures in §§3–5 take these
+finite paid paths.
+
+From ClientCover/ClientIssue failure first return its invocation TOK to
+the handler; their preceding ACK has already freed the mailbox. A handler
+failure already holds that slot. Publish Rejection, print, TOK to the
+ClientImage rejection branch, import/check retained reason and actual
+request, then its usual ACK/mailbox/M/invocation/Ready return. An unexpected
+ClientImage binding or codec fault uses ARC's separate finite refusal:
+append a tagged fault record on71, ACK/return this busy channel, append
+the failed cycle and return Ready. It does not set up a second busy
+mailbox or claim success. Authentic channel equality makes that branch
+unreachable on a successful request. No rejection path grants a busy
+second entry, prematurely reads an unsealed interval, or turns a raw
+unterminated supply into a completed request.
+

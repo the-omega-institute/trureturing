@@ -1,0 +1,93 @@
+**Theorem 4.2 (Localization across block lengths).** Assume (2.1). For
+every $f\in\mathcal K_C(P)$, every bounded finite-coordinate exterior
+function $g$, and every finite interval $D$ containing $C$ and the
+coordinates used by $g$, define the block direction
+
+$$
+h_D(X_D)=f(X_C)g(X_{D\setminus C}).
+$$
+
+Then $h_D\in\mathcal K_D(P)$, and its absolutely convergent response is
+
+$$
+S_P(h_D)=\mathbb E_P[g(Y)T_{C,f}(Y)].
+\tag{4.3}
+$$
+
+Consequently, if the supplied full-response norms $\gamma_L(P)$ vanish
+for every finite $L$, then $T_{C,f}=0$ $\mu_C$-almost surely for every
+finite interval $C$ and every intrinsic $f$. These balances can be imposed
+simultaneously. Conversely, if any one $T_{C,f}$ is nonzero on a set of
+positive actual exterior probability, there is a finite exterior-cylinder
+indicator $g$ for which (4.3) is nonzero. It gives an intrinsic-null
+direction on a finite enlarged block with $\gamma_{|D|}(P)>0$.
+
+Proof. The fields satisfy $\mathcal H_D\subseteq\mathcal H_C$. Since $g$
+is $\mathcal H_C$-measurable, the tower property gives
+
+$$
+\mathbb E_P[h_D\mid\mathcal H_D]
+=\mathbb E_P[g\mathbb E_P[f(X_C)\mid\mathcal H_C]\mid\mathcal H_D]=0.
+\tag{4.4}
+$$
+
+Thus [Intrinsic, Theorem 2.2][I] accepts $h_D$ in the exact collar kernel
+after translating $D$. This is true even when $g$ depends on exterior
+bits immediately adjacent to $C$ or on both sides. Values on unsupported
+finite patterns can be specified boundedly; their actual integrals are
+zero. There is no matrix-null requirement or change of presentation.
+
+For each individual $i$, the bounded function $\ell_i(Z_CX)$ depends
+only on $Y$. Hence intrinsic nullity gives
+
+$$
+\mathbb E_P[h_D\ell_i]=
+\mathbb E_P[h_D(\ell_i(X)-\ell_i(Z_CX))].
+\tag{4.5}
+$$
+
+Subtract this one reference term before doing any infinite summation.
+The total expected absolute value of the right-hand integrands is at most
+$\|f\|_\infty\|g\|_\infty\mathbb E_PV_C<\infty$. Therefore the response
+on the left converges absolutely, and summation under the integral on the
+right is justified. Its sum is
+$\mathbb E_P[g f(X_C)\Delta_P(X,Z_CX)]$, which disintegrates to (4.3).
+Neither $\sum_i\ell_i$ nor a response of a nonnull word indicator has
+been introduced. In particular, there is no subtraction of two possibly
+infinite total losses or total expectations.
+
+The inherited norm $\gamma_L$ is available: (2.1) gives $\tau_P(0)<\infty$,
+so [Intrinsic, Proposition 4.1][I] and [Multiword, Lemma 2.1][M] apply on
+every intrinsic kernel. Under all-length zero response, choose $g$ to be
+the indicator of any finite exterior cylinder. Equation (4.3) makes its
+integral against $T_{C,f}$ zero. These integrals define a finite signed
+measure $\nu_f(H)=\int_H T_{C,f}\,d\mu_C$, by (4.2). Finite cylinders,
+including the whole space, form a generating intersection-stable family;
+finite signed-measure uniqueness implies $\nu_f=0$ on the full exterior
+field. Taking its positive and negative sets proves $T_{C,f}=0$ almost
+surely. This obtains an exterior-by-exterior conclusion from tests at all
+enlarged block lengths, rather than only the original averaged response.
+
+For simultaneity, choose a finite basis of each finite-dimensional
+$\mathcal K_C(P)$. The formula (4.1) is pointwise linear in $f$ where
+defined. Intersect the conull sets for the finitely many basis vectors
+and then over the countably many intervals. Every real linear combination
+therefore has the asserted balance on its corresponding exterior fiber.
+Equivalently these can be pulled back to one conull subset of $\mathsf X$.
+
+If $\mu_C(T_{C,f}\ne0)>0$, its signed measure is nonzero. Were the integral
+on every finite cylinder zero, the same uniqueness argument would give
+the contradiction $T_{C,f}=0$ almost surely. Thus one cylinder has nonzero
+integral. Its indicator defines a bounded finite-coordinate $g$ and some
+finite $D$ as above; $D$ can be enlarged further while $h_D$ ignores the
+extra coordinates. Equation (4.3) gives a nonzero response;
+normalizing the nonzero direction $h_D$ proves $\gamma_{|D|}(P)>0$.
+No sign of this integral is presumed, and no bound on $D$ is obtained.
+$\square$
+
+For a hypothetical attainer satisfying the additional $A_P<\infty$
+hypothesis, (1.4) gives all the zero responses required by Theorem 4.2.
+Conversely zero conditional contrasts for every $C,f$ imply all-length
+zero response simply by taking $g=1$ in (4.3). This equivalence concerns
+the response route; it is not an equivalence with attainment.
+

@@ -1,0 +1,17 @@
+**Definition 56.1 (A fixed positive-row input subclass).** Fix an arbitrary allowed profile $b$ and numbers
+
+$$
+0<h\le r<1.
+\tag{56.1}
+$$
+
+Use distinct proposal tapes $p_j$ for $j\ge1$: the common consumer immediately proposes the finite integer $j$ on $p_j$, and immediately returns unknown on every other declared tape. Here $p_j$ denotes a tape, not the prime of the same index. It makes no prime queries. All carriers below contain these tapes as a measurable discrete component. The consumer's finite record and Borel real-output events are measurable, since its output on this component is an integer-valued function and its output on the complement is constant unknown. Prescribing mass $h$ at $p_{\Omega(y)}$ and the remaining mass on unknown tapes gives at every source the target row
+
+$$
+(h_y,e_y,d_y,z_y)=(h,0,0,1-h),
+\qquad e_y\le b(\Omega(y))h_y.
+\tag{56.2}
+$$
+
+The index $\Omega(y)$ is part of the fixed target-law specification, never an input to the preparation. The same applies to the color specifications used below. Prepared laws are not required to have row (56.2), as stipulated in Definition 50.1.
+

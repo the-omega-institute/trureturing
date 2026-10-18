@@ -1,0 +1,23 @@
+## 6. 六、动态记忆的最小性
+
+定义两个初始分布的预测等价关系：
+
+$$
+p\sim_{\mathcal M}q
+$$
+
+当且仅当
+
+$$
+pM_\omega 1=qM_\omega 1
+$$
+
+对所有合法输出词 $\omega$ 成立。
+
+这个关系定义了 instrument 下的完整未来商：
+
+$$
+\mathcal Q_{\mathcal M}=
+\mathcal P/\!\sim_{\mathcal M}.
+$$
+

@@ -1,0 +1,15 @@
+**开放问题9.4（精确缺陷与资源边界）。** PH 的 unrestricted-real 精确零缺陷前提 $(D_\mu)$、尖锐缺陷、固定 COMPLETE／程序／时间／输出预算、实际历史平均风险及一般 conf/conf 共同达到仍未决定。有理逼近的趋零缺陷不能替代精确零缺陷。
+
+[ST]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[PH]: https://github.com/the-omega-institute/trureturing/blob/e36230b266eb5e9e1c05ee5a99778e4854d6bf9c/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[PRICE]: https://github.com/the-omega-institute/trureturing/blob/7db69da19a9e3f5be1ba2df57c38eb2facb9ac66/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_APPROXIMATE_COHERENCE_PRICE.md
+[FOUR]: https://github.com/the-omega-institute/trureturing/blob/b041140a98877d0430d8b4b98ad2a5df5c084211/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+[SWITCH]: https://github.com/the-omega-institute/trureturing/blob/b041140a98877d0430d8b4b98ad2a5df5c084211/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONFIGURATION_LAW_SWITCH_ATTAINMENT.md
+[NATIVE]: https://github.com/the-omega-institute/trureturing/blob/85d1c54171c811c4c9e383901a709fe33fc8781d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md
+[FRS]: https://github.com/the-omega-institute/trureturing/blob/ae9736d26babdfd2fd298a962530b3e51acbe9cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[ART]: https://arxiv.org/html/1311.3066v1
+[LMC]: https://arxiv.org/html/1405.2852v1
+[SVA]: https://arxiv.org/html/1711.05994v2
+[EQ]: https://arxiv.org/html/1112.4644v2
+[SURVEY]: https://arxiv.org/html/2312.15225v1
+

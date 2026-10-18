@@ -1,0 +1,155 @@
+**Theorem 15.2 (matching error for all twelve complete outputs).** The
+single channel (CG.135) has
+
+$$
+e_5=e_{27}=F(x_*)=\delta_{27},\qquad
+e_{16}<\frac{71}{484}<\frac{37}{250}<\delta_{27},
+\tag{CG.143}
+$$
+
+where $e_y$ denotes each of its four actual-history errors at height $y$.
+In particular $E(\Phi_*)=F(x_*)$ in precisely (CG.20).
+
+Proof. First extract the exact eigenvector and equal-error identities
+from the same root; stationarity alone is not being asserted to prove
+optimality. In the two $v_5$ coordinates of (CG.139) only $A_5$ varies,
+with its nonzero scalar weight $\lambda$. Likewise the two $v_{27}$
+coordinates vary only $A_{27}$, with weight $1-\lambda>0$.
+For a real symmetric $\Delta$, $v=(a,b,\sigma)^T$, $\sigma=\pm1$,
+and $\delta=v^T\Delta v/(v^Tv)$, the chart derivatives are
+
+$$
+\frac{\partial\delta}{\partial a}
+ =\frac{2((\Delta v)_0-\delta v_0)}{v^Tv},\qquad
+\frac{\partial\delta}{\partial b}
+ =\frac{2((\Delta v)_1-\delta v_1)}{v^Tv}.
+\tag{CG.144}
+$$
+
+Here $\Delta_y$ is held fixed as the coefficient of $dA_y$ in
+(CG.139). Vanishing of these two components, and
+$v^T(\Delta v-\delta v)=0$, force the remaining component to vanish
+because $v_2=\sigma\ne0$. Hence
+
+$$
+\Delta_5v_5=\delta_5v_5,\qquad
+\Delta_{27}v_{27}=\delta_{27}v_{27}.
+\tag{CG.145}
+$$
+
+Each $B_y$ has rank one and each $C_y\succeq0$ by Theorem 15.1, so
+$\Delta_y=B_y-C_y$ has at most one positive eigenvalue: a
+two-dimensional strictly positive subspace would intersect
+$\xi_y^\perp$, where the quadratic form is nonpositive. Both endpoint
+$\delta_y$ are positive by (CG.117). Therefore
+$\operatorname{tr}(\Delta_y)_+=\delta_y$ for $y=5,27$.
+
+The $\lambda$ equation in (CG.139), with $r_0=1$ and
+$q_5=p_{51}(1-r_1)+p_{52}(1-r_2)$, gives
+
+$$
+\delta_5+\frac6{11}-q_5=\delta_{27}.
+\tag{CG.146}
+$$
+
+Complementarity (CG.138), evaluated in (CG.140), gives
+$\sum_y\operatorname{tr}(A_yC_y)=\sum_i\zeta_i r_i$.
+Substitution into the definition of $F$, using
+$\zeta_i=\lambda p_{5i}$ for $i=1,2$, yields
+
+$$
+\begin{aligned}
+F(x_*)&=\lambda\delta_5+(1-\lambda)\delta_{27}
+              +\sum_i\zeta_i(r_i-1)+\frac6{11}\lambda\\
+ &=\lambda\left(\delta_5+\frac6{11}-q_5\right)
+                         +(1-\lambda)\delta_{27}=\delta_{27}.
+\end{aligned}
+\tag{CG.147}
+$$
+
+Next compute the original half norm, including its exact-time part.
+At an unsigned input the live ideal-minus-simulated block is
+$\Delta_y$, and the five stopped differences are
+$w_\ell(f_y-q_yh_0)P_f\,dt$. Their trace sums satisfy
+
+$$
+\operatorname{tr}\Delta_y=q_y-(1-s_y),\qquad
+\int_0^1(f_y-q_yh_0)dt=1-s_y-q_y.
+\tag{CG.148}
+$$
+
+Using $\|X\|_1=2\operatorname{tr}X_+-\operatorname{tr}X$ on a
+Hermitian matrix and the corresponding signed-density identity, these
+trace terms cancel. Since $w_\ell\geq0$, $\sum w_\ell=1$, and each
+stopped state has trace one, the complete half norm is exactly
+
+$$
+e_y=\operatorname{tr}(\Delta_y)_+
+                  +\int_0^1(f_y(t)-q_yh_0(t))_+dt.
+\tag{CG.149}
+$$
+
+This equality sums the norms in the five separately named sectors;
+it does not replace their output alphabet by one pooled label. This
+channel has no mass in extra or singular sectors, so their actual
+contributions to its full norm are zero. The lower certificate allowed
+arbitrary mass there.
+
+Exact-time signs follow from the elementary rational function
+
+$$
+\frac{f_y(t)}{h_0(t)}
+ =3y\left(\frac{1+t}{y+6t}\right)^2,\qquad
+\left(\frac{f_y}{h_0}\right)'(t)
+ =\frac{6y(y-6)(1+t)}{(y+6t)^3}.
+\tag{CG.150}
+$$
+
+The denominators are positive throughout $[0,1]$. Thus
+
+$$
+\min_{[0,1]}\frac{f_5}{h_0}=\frac{60}{121},\qquad
+\max_{[0,1]}\frac{f_{27}}{h_0}=\frac{36}{121},\qquad
+\max_{[0,1]}\frac{f_{16}}{h_0}=\frac{48}{121}.
+\tag{CG.151}
+$$
+
+The strict bounds on $q_5,q_{27}$ in (CG.117) give
+$f_5-q_5h_0>0$ and $f_{27}-q_{27}h_0<0$ at every exact time.
+Consequently (CG.145)–(CG.149) give
+$e_5=\delta_5+6/11-q_5=\delta_{27}=e_{27}$.
+
+At the middle height the three positive leading minors of $T_{16}$
+in (CG.117) prove $T_{16}\succ0$. Hence every eigenvalue of
+$\Delta_{16}$ is strictly less than $1/10$. Its at-most-one-positive
+property implies $\operatorname{tr}(\Delta_{16})_+<1/10$.
+The positive part must be retained in the time estimate:
+
+$$
+\begin{aligned}
+\int_0^1(f_{16}-q_{16}h_0)_+dt
+ &=\int_0^1h_0(t)
+       \left(\frac{f_{16}(t)}{h_0(t)}-q_{16}\right)_+dt\\
+ &\leq\left(\frac{48}{121}-q_{16}\right)_+
+ \leq\frac{48}{121}-\frac7{20}.
+\end{aligned}
+\tag{CG.152}
+$$
+
+The last right-hand side is positive, and $q_{16}>7/20$.
+Together with (CG.149) this gives
+
+$$
+e_{16}<\frac1{10}+\frac{48}{121}-\frac7{20}
+ =\frac{71}{484}<\frac{37}{250}<\delta_{27}.
+\tag{CG.153}
+$$
+
+Finally $K_0$ commutes with all four $U_{e,n}$. Each of $K_{01}$ and
+$K_{02}$ transforms by a single sign character, and
+$\operatorname{diag}(m)$ is invariant. Thus (CG.135) is covariant on
+every complex input. Its four errors at each height are identical by
+unitary invariance and unchanged failure densities. This proves
+(CG.143) for all twelve actual histories, without supplying a
+history index to the map. $\square$
+

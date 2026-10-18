@@ -1,0 +1,22 @@
+**Corollary 8.1 (inherited sharpness of the four-call guarantee).**
+No universal conclusion of at most three calls within nine root
+states can replace (TCR.23), and no universal eight-state root
+conclusion can do so. These failures already occur for one lawful
+code in the premise.
+
+Proof. NRE Definition 8.2's code $\sigma^\dagger$ has the nine-state
+arbitrary-literal two-call realization of NRE Theorem 8.4. NRE
+Theorem 8.6 excludes every same-code root reader within nine states
+and three calls; NRE Theorem 8.7 attains four calls within nine.
+NRN Corollary 7.2 records exactly this inherited sharpness. Any
+eight-state terminating root reader has at least five Halts for
+the five complete outputs, hence at most three Reads. On one
+stationary source a repeated Read repeats its deterministic suffix
+forever, so a terminating run visits each Read at most once, as
+in NBP Proposition 12.5 and NRN Lemma 4.1. Such a reader would
+use at most three calls, contradicting the same NRE lower bound.
+The canonical counterexample therefore refutes both stronger
+universal conclusions. NBP Theorem 15.4's eight-state same-code
+two-call normalization retains its smaller input budget; it does
+not cover every nine-state premise here. $\square$
+

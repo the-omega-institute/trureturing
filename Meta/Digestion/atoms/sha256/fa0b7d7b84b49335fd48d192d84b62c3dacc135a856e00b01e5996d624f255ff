@@ -1,0 +1,19 @@
+**Definition 26.1 (Coefficient rings and the forgetful map).**
+Let
+
+$$
+S_{\mathbb Z}=\mathbb Z[z_0,z_1,z_2,z_3,z_4,z_{13},z_{14},z_{24}],
+\quad\deg z_I=1,\qquad
+\varphi(z_I)=t_0\prod_{i\in I}t_i.
+$$
+
+The target is $\mathbb Z[t_0,t_1,t_2,t_3,t_4]$.
+Let $f=(f_1,\ldots,f_5)^{\mathsf T}$ be (25.14) and $I=(f_1,\ldots,f_5)$.
+All five polynomials have integer coefficients. Write
+$R_{4,\mathbb Z}=\operatorname{im}\varphi$;
+for a field $K$ use $S_K$ and $R_{4,K}$ for the same presentation over $K$.
+The map remembers only the replica number and occupancy totals, not an
+ordering of replicas or a native processing history. In particular it
+forgets the ordered choices even when each individual row is a legal
+four-position word; the variable $z_I$ names that entire row.
+

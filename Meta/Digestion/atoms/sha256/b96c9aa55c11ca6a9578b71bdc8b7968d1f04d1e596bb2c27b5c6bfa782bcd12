@@ -1,0 +1,35 @@
+**Definition 2.2 (base records and optional ceiling).** At epoch zero retain
+branch literals at
+
+$$
+\varepsilon,R,R^2,R^3,R^4,q_a,q_z,q_zR,q_w,q_wR,
+\tag{CRE.8}
+$$
+
+and $\alpha$ literals at $q_zL,q_wL$. Retain the following whole signed
+records, with both endpoint guards:
+
+$$
+\begin{gathered}
+(0,q_a,1,q_aL,=),\\
+(0,q_zRL,0,q_a,=),\qquad (0,q_zRR,1,q_y,=),\\
+(0,q_wRL,1,q_a,=),\qquad (0,q_wRR,1,q_y,=),\\
+(0,q_y,0,q_a,\ne).
+\end{gathered}
+\tag{CRE.9}
+$$
+
+One may also retain $(0,q_aL^m,\mathsf{absent})$ for one supplied integer
+$m\ge2$. Write $m=\infty$ when this literal is absent; $\infty$ is notation
+for an omitted ceiling, not a finite rank. Put
+
+$$
+A_m=\{j\in\mathbb N:j\ge2,\ j\le m\text{ if }m<\infty\}.
+\tag{CRE.10}
+$$
+
+Apart from repetitions, the only further records admitted by this definition
+are the structural negatives of Definition 2.3. The final authentic $N$ is
+at least one and at least every additional recorded epoch. No acquisition
+description survives as an undeclared extra field.
+

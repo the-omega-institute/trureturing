@@ -1,0 +1,44 @@
+**Theorem 78.3 (common-length strict width necessity).** Define
+
+$$
+\lambda_*=\frac{4+2\sqrt{823}}{63},\qquad
+I=[\lambda_*,3/2].
+\tag{78.6}
+$$
+
+For every $\lambda\in I$ and every compatible planar placement $E_2^\lambda(D)$, the
+two tips at each leaf are necessarily on opposite sides, and their intervals obey
+
+$$
+\begin{aligned}
+c_p&=\sqrt{\lambda^2-y_p^2},\qquad
+I_p=[x_p-c_p,x_p+c_p],\\
+2\ell(D)\sqrt{\lambda^2-9/16}
+ &<\sum_{p\in\operatorname{Leaf}(D)}|I_p|
+ \le W<2h(D)+2\lambda,
+\end{aligned}
+\tag{78.7}
+$$
+
+where $W$ is the horizontal span of all actual ground tips. Both endpoints of $I$
+are included.
+
+**Proof.** The polynomial $P(\lambda)=63\lambda^2-8\lambda-52$ has positive root
+$\lambda_*$ and negative root $(4-2\sqrt{823})/63$. Since
+
+$$
+P(3/4)=-361/16<0,\qquad P(1)=3>0,
+\tag{78.8}
+$$
+
+we have $3/4<\lambda_*<1$. Hence $\lambda>y_p$ on $I$. An actual tip $(X,0)$ of a
+length-$\lambda$ stub solves $(X-x_p)^2+y_p^2=\lambda^2$, so the only possibilities
+are $x_p-c_p$ and $x_p+c_p$. Distinct tips force both, proving the opposite-side
+assertion. Lemma78.2 applies because $\lambda\le3/2$. The strict upper height bound
+gives $|I_p|=2c_p>2\sqrt{\lambda^2-9/16}$. A root-to-leaf source path has at most
+$h(D)$ unit seams, whence $|x_p-x_o|\le h(D)$. Because $y_p>0$, each $c_p<\lambda$.
+Every tip is therefore strictly between $x_o-h(D)-\lambda$ and $x_o+h(D)+\lambda$,
+so $W<2h(D)+2\lambda$. Pairwise disjoint intervals have total length at most their
+enclosing span. Summing the strict width floors gives (78.7), also for the
+singleton. $\square$
+

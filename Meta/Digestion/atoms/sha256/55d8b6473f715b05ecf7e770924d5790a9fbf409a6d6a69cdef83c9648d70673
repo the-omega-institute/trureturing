@@ -1,0 +1,22 @@
+### 102.2. The exact recurrence at every earlier support prime
+
+**Proof.**
+
+Let f=F_M modulo p. The odd-index identities give
+
+ B_M=5F_M^2-1,   5f^2=1,
+ F_(3n)=5F_n^3-3F_n.
+
+Thus f is nonzero and F_(3M)=-2f modulo p. The value -2f is fixed by tripling, since 5(-2f)^3-3(-2f)=(-8+6)f=-2f. Induction gives F_N=-2f modulo p for every j>h. Therefore
+
+ B_N=5F_N^2-1=3 modulo p.
+
+In particular p divides neither D nor C. The two roots of 5 modulo p are f^(-1) and -f^(-1). For beta=-1-F_N sqrt5, its residues at these roots are respectively 1 and -3. The support condition p=1 modulo 3 gives (-3/p)=1, so both residues are nonzero squares. Hensel's lemma makes beta a square in both completions of K over p.
+
+Also F_N=2 modulo 4 by the same recurrence starting at F_3=2. In the full ring O,
+
+ beta=(F_N-1)-2F_N phi=1 modulo 4O,
+ Norm(beta)=-D C^2.
+
+This is the precise original-index and dyadic input. Earlier blocks have disjoint rational prime support by B_N=3 modulo p and p>3; no primitive-divisor theorem is used.
+

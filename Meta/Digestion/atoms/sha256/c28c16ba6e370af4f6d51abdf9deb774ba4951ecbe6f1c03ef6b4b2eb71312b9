@@ -1,0 +1,68 @@
+**Theorem 2.1 (P1: strict convexity through both axes).** The function
+$\mathcal F$ is strictly convex on $[0,U]$. Every tangent at an interior
+point is strictly supporting away from that point.
+
+Proof. The supplied JR.52, JR.86 and FA Proposition 74.1 enclosures imply
+
+$$
+\beta<1/8,\quad \alpha/\beta<8,\quad \delta>39/2500,\quad
+h_0>123/125,\quad b>29/200,\quad a<33/500,\quad
+h_1>353/500,\quad d<1/10.
+\tag{SC.9}
+$$
+
+They also give $J=adh_2-bch_1>0$: the lower product
+$65\cdot98\cdot809=5153330$ exceeds the upper product
+$147\cdot16\cdot707=1662864$, with common denominator $10^9$.
+These are symbolic uses of inherited inequalities. Substitution gives
+
+$$
+\begin{gathered}
+D_0=\delta h_0^2+d^2/\beta>0,\quad
+N_0=\delta h_1^2h_2^2+c^2h_1^2/\beta>0,\\
+D_1=-bJ/(ch_1)<0,\quad N_1=(ah_2/d)J>0,\\
+\rho_c'=\frac{D_1N_0-D_0N_1}{(N_0+N_1x)^2}<0,\qquad
+\rho_c''=\frac{-2N_1(D_1N_0-D_0N_1)}{(N_0+N_1x)^3}>0.
+\end{gathered}
+\tag{SC.10}
+$$
+
+For $0<x<1$, $H'<0$ and $H''=1/(4x^{3/2})>0$, so
+$\mathcal F''=H''\rho_c+2H'\rho_c'+H\rho_c''>0$.
+For $1\le x\le U$, (SC.9) gives $U<8/7$, $\sqrt U<15/14$ and
+
+$$
+\begin{gathered}
+D_c\ge\delta h_0^2+b^2>
+(39/2500)(123/125)^2+(29/200)^2>9/250,\\
+|D_1|<d^2\alpha/\beta<2/25,\qquad
+|D_1|/D_c<20/9<9/4,\\
+0<N_1/N_c<a^2/(\delta h_1^2)<
+\frac{(33/500)^2}{(39/2500)(353/500)^2}<3/5.
+\end{gathered}
+\tag{SC.11}
+$$
+
+Hence $-\rho_c'/\rho_c<57/20$. Retaining the nonnegative term
+$H\rho_c''$ and using $2H'=1-1/\sqrt x$ yields
+
+$$
+\begin{aligned}
+\mathcal F''(x)
+&\ge\frac{\rho_c(x)}{4x^{3/2}}
+\left[1-4x(\sqrt x-1)\left(\frac{|D_1|}{D_c}+\frac{N_1}{N_c}\right)\right]\\
+&>\frac{\rho_c(x)}{4x^{3/2}}
+\left[1-\frac{16}{49}\frac{57}{20}\right]
+=\frac{17}{245}\frac{\rho_c(x)}{4x^{3/2}}>0.
+\end{aligned}
+\tag{SC.12}
+$$
+
+Continuity at both endpoints extends strict convexity to the closed
+interval. Integrating the strictly increasing interior derivative proves
+the strict tangent inequalities, also at the endpoints. There is no
+finite right derivative at $x=0$: $\mathcal F'(x)\to-\infty$ there.
+At $U$ the radial formula has a finite one-sided derivative. In
+particular this theorem does not assert differentiability of its
+circle pullback at every physical axis. $\square$
+

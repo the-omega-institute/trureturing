@@ -1,0 +1,44 @@
+**Corollary 8.3 (finite-label formulation without a stopping claim).**
+Reuse [NPL, Theorem 5.3][NPL] for the exact full-row image. If it is
+infinite, no finite prefix determines the row, since a fixed finite
+prefix has only finitely many four-reply patterns. In the finite-image
+case, for each attained row $r$ impose the complete predicate
+$u\in D\land R_Q(u)=r$ and apply Theorem 5.2. Write the resulting finite
+list as $(\mathcal C_i,\Theta_i,r_i)$, including all its branches.
+Then
+
+$$
+\exists h\ \operatorname{PrefDet}(D,Q,h)
+\ \Longleftrightarrow\
+\exists h\ \forall i,j\ (r_i\ne r_j
+       \ \Longrightarrow\ P_{ij,h}=\varnothing).
+\tag{PDC.22}
+$$
+
+Its negation is equivalent to
+
+$$
+\exists i,j\quad r_i\ne r_j\quad\land\quad
+ \forall h\ \exists a\in\mathcal C_i,\ b\in\mathcal C_j\
+                     P_{ij,h}(a,b).
+\tag{PDC.23}
+$$
+
+Proof. NSF's exact full-row compiler imposes each stratum with both
+source directions. The strata cover exactly $D$, so Proposition 8.2
+gives (PDC.22). For (PDC.23), note that $P_{ij,h+1}\subseteq P_{ij,h}$.
+If every opposite-row pair had some exclusion depth, the maximum of
+the finitely many depths would exclude all such pairs. Conversely a
+fixed pair nonempty at every depth defeats every determining prefix.
+An empty opposite-row index set makes (PDC.22) true and (PDC.23) false,
+as required. $\square$
+
+The finite quantifier argument does not construct a terminating
+classifier or an effective finite description of witnesses for all
+depths. Each fixed-depth query already belongs to [NSF, Theorem 6.1][NSF].
+A resulting finite determining $H$ already has its paid actual static
+consumer at $N$; replace $H$ by $\max(1,H)$ when a positive depth is
+required. [NFO, §§3–7][NFO] supplies its separate prescribed-budget and
+conditional resource interfaces. Enumerating depths or budgets gives
+no general negative stop.
+

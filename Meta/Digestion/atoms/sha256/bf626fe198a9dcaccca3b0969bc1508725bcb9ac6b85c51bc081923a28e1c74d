@@ -1,0 +1,51 @@
+**Theorem 2.2 (same-source one-substitution response algorithm).**
+For every $t\in\mathcal T$ and every word $w$, the following
+procedure computes $V_t(w)$ using only actual original-root Reads of
+that same stationary $t$.
+
+For $w=\varepsilon$, Read $\varepsilon$ and return $F$ of the
+reply. For $w=ub$, $b\in\{L,R\}$, first Read $u$ and use
+
+$$
+V_t(ub)=
+\begin{cases}
+\mathsf{absent},&r_t(u)\in\{\alpha,\mathsf{absent}\},\\
+J_b,&r_t(u)=\beta,\\
+F(r_t(ub)),&r_t(u)=\mathsf{branch},
+\end{cases}
+\tag{NVC.7}
+$$
+
+where the last case makes the additional Read $ub$. A nonempty
+request costs at most two calls, at most $2|w|-1$ submitted letters
+and peak word length at most $|w|$. The empty request costs one
+call and zero submitted letters. Both calls in the last case are
+charged, even if their addresses have occurred before.
+
+Proof. The root of a whole original tree is alpha, beta or branch;
+its substituted root is given by $F$, proving the empty case.
+Suppose $w=ub$. If the actual endpoint at $u$ is alpha,
+substitution leaves a beta leaf there, so its child is absent. If it
+is beta, substitution creates exactly the pair
+$\langle\beta,\alpha\rangle$ there, giving $J_b$. If it is
+branch, every ancestor on the path to $u$ and $u$ itself is an
+original branch. Homomorphic substitution preserves each of these
+occurrences, and $ub$ is present. Its new root constructor is $F$
+of its acquired original reply. Finally, if $u$ is absent, an
+original leaf occurs strictly above it. The word $ub$ is at least
+two levels below that leaf, whereas one substitution extends a leaf
+by at most one level. It remains absent. These exhaustive cases
+prove (NVC.7) on variable shapes and arbitrary absent words.
+
+The first submitted word has length $|w|-1$ and the optional
+second length $|w|$. Their sum is at most $2|w|-1$. Selection of
+the child is a lawful deterministic function of the already paid
+parent reply; no prefix navigation or acquired subtree is used.
+$\square$
+
+This implements a nonidentity response bridge. [PPF, Proposition
+7.1][PPF] proves $\mathcal F_D\cap\rho(\mathcal T)=\varnothing$.
+That image obstruction prevents an identity handoff of the actual
+register, but does not prevent the explicitly priced computation
+(NVC.7).
+

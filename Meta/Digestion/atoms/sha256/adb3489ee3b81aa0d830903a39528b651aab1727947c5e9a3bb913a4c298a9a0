@@ -1,0 +1,44 @@
+**命题 38.2（商操作与两个面积条件）。** 对整数矩阵 $A$，上式商操作良定义当且仅当 $A\Lambda\subseteq\Lambda$。若 $A\in\mathrm{GL}_2(\mathbb Z)$，此条件等价于 $A\Lambda=\Lambda$。因此本章的共同观察格恰满足
+
+$$
+\mathsf R\Lambda=\Lambda,\qquad M\Lambda=\Lambda.
+$$
+
+其素数指数情形所用的两个方向条件由
+
+$$
+\det(v,\mathsf Rv)=U^2+V^2,
+\qquad
+\det(v,Mv)=U^2+UV-V^2,
+\qquad v=(U,V)^{\mathsf T}
+$$
+
+给出。
+
+证明。若 $C-C'\in\Lambda$，则 $AC-AC'=A(C-C')\in\Lambda$，所以包含条件足以保证代表元无关。反向，对任意 $v\in\Lambda$ 有 $[v]=[0]$，良定义要求 $[Av]=[A0]=[0]$，故 $Av\in\Lambda$。
+
+当 $A$ 是整数自同构时，它把 $\mathbb Z^2/\Lambda$ 双射到 $\mathbb Z^2/A\Lambda$，所以这两个商有相同的有限大小。若 $A\Lambda\subseteq\Lambda$，指数乘法公式为
+
+$$
+[\mathbb Z^2:A\Lambda]
+=[\mathbb Z^2:\Lambda]\,[\Lambda:A\Lambda].
+$$
+
+消去相等的前两个指数，得 $[\Lambda:A\Lambda]=1$，即相等。此处 $\det\mathsf R=1$、$\det M=-1$，且逆矩阵仍为整数矩阵，所以适用。
+
+两个行列式的展开分别是
+
+$$
+\det\begin{pmatrix}U&-V\\V&U\end{pmatrix}
+=U\cdot U-(-V)\cdot V=U^2+V^2,
+$$
+
+$$
+\det\begin{pmatrix}U&V\\V&U+V\end{pmatrix}
+=U(U+V)-V^2=U^2+UV-V^2.
+$$
+
+对任一域中的非零 $v$，$\det(v,Av)=0$ 当且仅当 $Av$ 与 $v$ 线性相关，即 $A$ 保持直线 $kv$；若 $A$ 可逆，该直线上的标量非零。这就是下文把面积式用于有限域方向的依据。证毕。
+
+数学引文及二次型的适用域。商映射的良定义条件是既有的“目标在观察纤维上恒定”原则；其明确的像集因子判据见 [EffectiveImageKernelCriterion](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean) 中的 `refinement_iff_kernel_inclusion_on_effective_images`，这里取观察为 $\pi_\Lambda$、目标为 $\pi_\Lambda\circ A$。第二个面积式使用原卷定义 36.1、SecondOrder 定理 60.1 的黄金范数 $Q$。在实平面，$U^2+V^2$ 正定，而 $Q(1,0)=1$、$Q(0,1)=-1$，故 $Q$ 不定。共同的有向面积格式并不使它们成为同一个欧氏度量；模素数时的零行列式也只表示方向保持。
+

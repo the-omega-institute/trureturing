@@ -1,0 +1,154 @@
+**Theorem 9.2 (finite closure of small return flow, with both configuration risks).** Let $X,Y,\pi,\tau,B,A,u,v$ be a regular stationary table of Definition 2.2, after deleting zero-row labels. For every $t>0$ there is one regular stationary table with the same p labels and row $\pi$, a finite split suspended carrier $Y^c$, row $\tau^c$, kernels $B^c,A^c$, and emissions $u^c,v^c$, whose p emission is conserved on every positive actual return. Both acquired flow identities hold exactly. With $Q_x,W_y$ and $Q_x^c,W_{y,C}^c$ denoting their own generated complete laws, there is a split row satisfying $\sum_C\tau^c_{y,C}=\tau_y$ and
+
+$$
+\begin{aligned}
+D_p&:=\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^c)
+ \le\frac{15}{11}t+\frac4{11}\frac{V_\pi}{t},\\
+D_\beta&:=\sum_{(y,C)\in Y^c}\tau^c_{y,C}
+ \operatorname{TV}(W_y,W_{y,C}^c)
+ \le\frac6{11}t+\frac6{11}\frac{V_\pi}{t}.
+\end{aligned}
+\tag{9.3}
+$$
+
+For every pair of probability targets $T_p,T_\beta$ on the two original complete raw carriers, these same quantities bound the absolute differences of the corresponding configuration-before-TV losses. In particular, (2.4) for the old table implies (2.4) for the new table with slacks $\epsilon_p+D_p,\epsilon_\beta+D_\beta$, simultaneously for every supported depth. The construction has at most
+
+$$
+|Y|\min\{|X|,\lceil(b-a)/t\rceil+2\}
+\tag{9.4}
+$$
+
+suspended labels. This label count is not a COMPLETE or total-resource bound.
+
+Proof. Choose a shifted interval grid of width $t$. For $\theta\in[0,t)$ give $x$ the bin index $\lfloor(u_x-\theta)/t\rfloor$. Let $\mathcal C$ be the occupied bins, viewed as subsets of $X$, and let $C(x)$ denote the bin of $x$. Define the crossing mass
+
+$$
+\delta_\theta=
+\sum_{x,y,x':\,C(x)\ne C(x')}\pi_xB_{xy}A_{yx'}.
+\tag{9.5}
+$$
+
+For two real numbers separated by $d$, the proportion of shifts putting them in different width-$t$ bins is $\min\{1,d/t\}$. Integrating the finite sum (9.5) over the shift therefore gives
+
+$$
+\frac1t\int_0^t\delta_\theta\,d\theta
+=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+ \min\{1,|u_x-u_{x'}|/t\}\le V_\pi/t.
+\tag{9.6}
+$$
+
+There is a fixed shift with crossing mass $\delta\le V_\pi/t$. Choose one such shift. The integration is a mathematical selection argument: the installed observer has no shift sampler or correlated source seed. Each occupied bin has emission diameter less than $t$. Choose one old emission $c_C\in[a,b]$ in each bin and put $u_x^c=c_{C(x)}$. There are at most $\min\{|X|,\lceil(b-a)/t\rceil+2\}$ occupied bins.
+
+Split a suspended label by the bin of its incoming p label. Retain exactly the pairs $(y,C)$ with
+
+$$
+\tau^c_{y,C}=\sum_{x\in C}\pi_xB_{xy}>0.
+\tag{9.7}
+$$
+
+Define
+
+$$
+B^c_{x,(y,C)}=\mathbf1_{\{x\in C\}}B_{xy},
+\qquad v^c_{y,C}=v_y.
+\tag{9.8}
+$$
+
+Every row of $B^c$ sums to one; a nonzero entry cannot point to a deleted pair because $\pi_x>0$. Thus $\pi B^c=\tau^c$ exactly and $\sum_C\tau^c_{y,C}=\tau_y$.
+
+For $x'\in C$ define the missing influx
+
+$$
+d_{x'}^C=\pi_{x'}-\sum_y\tau^c_{y,C}A_{yx'}\ge0,
+\qquad D_C=\sum_{x'\in C}d_{x'}^C,
+\qquad m_{y,C}=\sum_{x'\notin C}A_{yx'}.
+\tag{9.9}
+$$
+
+Nonnegativity follows from $\tau A=\pi$ and $\tau^c_{y,C}\le\tau_y$. The equality of outgoing and incoming crossing masses for one bin is
+
+$$
+\begin{aligned}
+D_C
+&=\pi(C)-\sum_y\tau^c_{y,C}\sum_{x'\in C}A_{yx'}\\
+&=\sum_y\tau^c_{y,C}m_{y,C},
+\qquad \sum_C D_C=\delta.
+\end{aligned}
+\tag{9.10}
+$$
+
+Here $\sum_y\tau^c_{y,C}=\pi(C)$. If $D_C>0$, repair the outgoing cross-bin probability by
+
+$$
+A^c_{(y,C),x'}=
+\begin{cases}
+A_{yx'}+m_{y,C}d_{x'}^C/D_C,&x'\in C,\\
+0,&x'\notin C.
+\end{cases}
+\tag{9.11}
+$$
+
+If $D_C=0$, (9.10) implies $m_{y,C}=0$ for every retained pair in that bin; set $A^c_{(y,C),x'}=\mathbf1_{\{x'\in C\}}A_{yx'}$. No division by zero occurs. Every row is stochastic and supported inside $C$. For $x'\in C$,
+
+$$
+\sum_y\tau^c_{y,C}A^c_{(y,C),x'}
+=\sum_y\tau^c_{y,C}A_{yx'}+d_{x'}^C=\pi_{x'},
+\tag{9.12}
+$$
+
+with the same identity in the zero case. Hence $\tau^c A^c=\pi$. Moreover
+
+$$
+\operatorname{TV}(A_{y,\cdot},A^c_{(y,C),\cdot})=m_{y,C},
+\qquad
+\sum_{y,C}\tau^c_{y,C}m_{y,C}=\delta.
+\tag{9.13}
+$$
+
+Indeed probability $m_{y,C}$ is removed outside $C$ and added inside $C$. Every new positive $B^cA^c$ edge stays in one bin, so $u^c$ is exactly return-conserved. This proof uses stationarity for balance, without irreducibility, reversibility or a mixing-time bound.
+
+Use these emissions and these same acquired-letter kernels to generate the new decoders. Both old and new synthetic returns have survival probability at most $4/15$, from every label; their complete laws therefore normalize while retaining the infinite outcome with mass zero. Write
+
+$$
+p_x=\operatorname{TV}(Q_x,Q_x^c),
+\qquad b_{y,C}=\operatorname{TV}(W_y,W_{y,C}^c).
+$$
+
+Maximally couple the p emissions and then use the identical $B$ row with its indicated split label whenever beta matches. The complete-law recursion gives
+
+$$
+p_x\le |u_x-c_{C(x)}|+
+\frac23\sum_yB_{xy}b_{y,C(x)}.
+\tag{9.14}
+$$
+
+At suspension the emissions agree. Compare the old and repaired $A$ rows first, and compare their successor laws configuration by configuration next. Equation (9.13), TV contraction under a kernel of probability laws, and convexity give
+
+$$
+b_{y,C}\le\frac25\left(m_{y,C}+
+\sum_{x'}A^c_{(y,C),x'}p_{x'}\right).
+\tag{9.15}
+$$
+
+These inequalities concern entire stopped laws. They can also be obtained on every finite prefix and passed to the complete carrier using the uniform geometric survival bound; no conditioning on eventual completion is used. Average (9.14)–(9.15) with the same rows, and use both exact new flows:
+
+$$
+D_p\le t+\frac23D_\beta,
+\qquad D_\beta\le\frac25(\delta+D_p).
+\tag{9.16}
+$$
+
+Solving gives $D_p\le15t/11+4\delta/11$ and $D_\beta\le6t/11+6\delta/11$. Equation (9.6) proves (9.3). For a target $T_p$, the configurationwise reverse triangle inequality gives
+
+$$
+\left|\sum_x\pi_x\operatorname{TV}(Q_x^c,T_p)
+-\sum_x\pi_x\operatorname{TV}(Q_x,T_p)\right|\le D_p.
+\tag{9.17}
+$$
+
+At suspension apply the same inequality to each pair $(y,C)$ and use $\sum_C\tau^c_{y,C}=\tau_y$ to obtain the bound $D_\beta$. Thus both risks and every target are controlled by one repaired table, with TV taken before the configuration average.
+
+For its original-domain interpretation, apply [PAID97, Lemma 2.1.1] to this single finite table: keep the full original $C_0$, sample the fixed row $\pi$ privately after the original third record write and latch in that same update, use $B^c$ on p-beta and $A^c$ on suspended-alpha, and use the unchanged original completion and Stop rules. Before the latch use the supplied original-control product and fair synthesis. Both seeds, all marker records, all paid rejections, every finite return and every original permission remain. At every original history on every held-record fibre its actual private row is $\pi$ or $\tau^c$ by induction over these exact flows. Its target is the unchanged posterior mixture for that same once-sampled $K$. Countable TV convexity applies to the target only after each configuration's TV; it therefore turns simultaneous pure-depth upper bounds into all-history configuration-risk upper bounds for this one comparison. Rendering through each original $I_c$ preserves the complete-law comparisons and their Stop blocks.
+
+Only a finite label and the charged original control are retained online. Bins, shifts, flows, deficits and row vectors are fixed mathematical construction data, not readable online rows, an archive, a clock, an acquisition counter, a posterior or a source-reset operation. If all old table data and $t$ are rational, the crossing function has finitely many rational breakpoints and is constant between them. A rational shift in an interval minimizing that function, rational representatives $c_C$, and (9.7)–(9.11) give rational new tables. The supplied finite exact categorical-sampling convention charges all installed thresholds, program, numerical representation, workspace and sampler microstates to COMPLETE and uses the same sampler on acquired and synthetic updates. Arbitrary real entries specify abstract finite stochastic rules, without a physical exact-real oracle. No fixed resource budget or hard marginalized-defect budget is preserved. $\square$
+

@@ -1,0 +1,37 @@
+**Definition 2.2 (original comparison class).** The error is
+$$
+\mathsf E(\Phi)=
+ \max_{y,\epsilon,\chi}
+ \frac12\left\|
+ \Phi(E\rho_{y,\epsilon,\chi}E^\dagger)-\Omega_{y,\epsilon,\chi}
+ \right\|_{1,\mathrm{stopped\text{-}cq}}.
+\tag{GC.4}
+$$
+The HALF factor and the complete stopped-cq output are retained:
+live off-diagonal coherences, all five failure measures, singular-time
+parts, abort, wrong-support and zero-target sectors are included. Passive
+references retain their conditional operators, rather than only
+unconditional marginals. This convention does not replace the original
+twelve-input minimax objective by a different diamond-norm objective.
+
+A competitor is a common full complex CP acquisition instrument with
+full-output TP conditional decoders. All live Kraus multiplicities and
+all admitted failure-time laws are allowed. The resource constraints are
+$$
+\mathsf E(\Phi)=E_*,\qquad
+\mathsf V(F)\ge s,\qquad
+\mathsf W=\mathsf C(s),\qquad
+\max_{j\ {\rm actually\ generated}}\int_0^1\|R_j(a)\|\,da\le A.
+\tag{GC.5}
+$$
+Here $\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa$ is the original
+binary contrast, with $\kappa=h_0a+h_1b$ in the source notation of §3.
+The binary report is produced from the same acquisition; its common
+classical kernel may be absorbed into the actual label.
+
+The cost $\mathsf W$ is the maximum over all twelve histories of the
+probability that the **joint** future-accessible input-dependent quantum
+fibre at the acquisition cut has dimension at least three. Specimen,
+memory, controller, accessible environments and entangled shares are
+counted together. Later blank ancillas are independent; a correlated
+accessible share cannot be treated as blank. The activity acts on each

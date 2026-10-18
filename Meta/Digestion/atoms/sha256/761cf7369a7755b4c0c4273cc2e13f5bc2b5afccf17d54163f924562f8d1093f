@@ -1,0 +1,46 @@
+**Corollary 8.9 (first failure of same-code two-to-three normalization).**
+On the exact domain and service contract above, the following universal
+implication is false: every lawful prescribed binary code admitting an
+at-most-nine-state arbitrary-literal reader with at most two calls
+admits a same-code at-most-nine-state root-only reader with at most
+three calls. Nine is the first possible installed-state budget for
+failure of this implication. For $\sigma^\dagger$, the minimum installed
+state count among arbitrary-literal readers with at most two calls is
+also exactly nine.
+
+**Proof.** Proposition 8.3 supplies a lawful binary computation on the
+actual acquired current data. Theorem 8.4 supplies the universal premise
+for that code with exactly nine installed states and at most two calls.
+Theorem 8.6 excludes every root-only conclusion table within nine states
+and three calls, regardless of its faithful initialization or paths.
+This is an existence-level counterexample with identical pointwise code
+on both sides. Theorem 8.7 gives the exact replacement call count four
+for this code and state budget; Proposition 8.8's different exact count
+three concerns only the old code.
+
+For smaller budgets, directly apply *Native cut-birth provenance and
+literal past-row recovery*, Theorem 15.4, under its Definition 15.1.
+The hypothesis correspondence is complete: its actual inverse fiber is
+(NRE.8), its ordered trees and substitution are Definitions 1.1--1.2,
+its cut and complete current row are (NRE.6)--(NRE.7), and its five
+complete targets are Definition 2.2. Its acquired current finite data,
+prescribed arbitrary binary computation, actual export, complete cut,
+faithful recoverable entry and stationary service are Assumption 3.1.
+Its counted state-only fixed-literal Moore table, with every installed
+state and every invocation charged, is Definition 3.2. Its two upper
+budgets are at most eight states and at most two calls. The theorem
+therefore yields a root reader on the same installed states with the
+original code and initialization, unchanged whole outputs, and the same
+state paths and call counts on every original source. Such a reader
+already has at most two calls and hence at most three. Every smaller
+successful budget is included. The inherited normalization is reused
+with these hypotheses, not reproved or counted as new content.
+
+Thus failure is impossible at any budget at most eight, while the new
+code realizes it at nine. If an arbitrary-literal two-call reader for
+$\sigma^\dagger$ used at most eight states, the same inherited theorem
+would produce a same-code root two-call reader within eight states,
+contradicting Theorem 8.6. Hence the arbitrary-literal two-call state
+minimum for this code is at least nine, and Theorem 8.4 attains it.
+$\square$
+

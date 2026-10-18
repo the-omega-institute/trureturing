@@ -1,0 +1,86 @@
+**Theorem 8.6 (universal same-code three-call lower bound).** Every
+root-only reader of Definition 3.2 that returns $F(u)$ for every
+$u\in\mathcal U_*$ with the same pointwise code $\sigma^\dagger$
+and at most three calls has at least five installed Read states and
+at least five installed Halt states. Consequently it has at least ten
+installed states. The conclusion still holds if either occurrence root
+of $a$ or $c$ may be queried.
+
+**Proof.** Consider any such competing table and its own faithful entry
+map $\iota'$. On the six actual origins of Proposition 8.5 all complete
+codes are zero and all public entry fields agree, so every run begins
+at exactly the same state $\iota'(0)$. The five different required rows
+exclude an initial Halt. Set
+
+$$
+G_a=\{z_a,z_1,z_2\},\qquad G_c=\{z_c,z_3,z_4\}.
+\tag{NRE.19}
+$$
+
+The representative-root matrix gives every possible first query:
+$a$ or $c$ separates $G_a$ from $G_c$, and $b_j$ isolates exactly
+$z_j$. On every subset of the witnesses each possible root has at most
+two actual replies. From a common state, one remaining Read can
+therefore supply at most two different whole outputs. An earlier Halt
+supplies only one. After the last permitted invocation any attained
+successor must be a Halt, since a Read would make another paid call
+and no free transition or decoder is available. This justifies the
+one-remaining-call bound even with sharing and early stopping.
+
+Suppose the first query isolates $z_j$. On its other reply the remaining
+witnesses are the two zeros and the three other positives. They require
+four different rows and have at most two calls left. Halting there
+cannot be correct. If the second query is a partner, its reply selecting
+the group not containing $z_j$ leaves that entire group untouched: it
+has one zero and two positives, requiring three different rows with
+one call left. If the second query is $b_k$ for $k\ne j$, its
+nonisolating reply leaves the two zeros and two positives, again three
+different rows with one call left. If it repeats $b_j$, the reply is
+constant and leaves four different rows with one call left. These
+exhaust the root menu, and each contradicts the preceding bound.
+Thus no singleton root can be the first query. Both possible partner
+occurrence representatives have exactly the same replies as their
+class representatives, so they add no alternative split.
+
+The first query must therefore be $a$ or $c$, with one live branch
+containing precisely $G_a$ and the other precisely $G_c$. On $G_a$
+there are three different required rows $R_0,R_1,R_2$ and at most two
+calls. A Halt cannot serve them. Both partner queries and $b_3,b_4$
+are constant on this set; a call at any of them would leave three
+rows for one final call. Consequently the second query must be $b_1$
+or $b_2$. It isolates its positive witness. On the other reply the
+remaining zero and other positive witness have identical replies at
+every root except the other right-class root. They still require two
+different rows. Thus an actual final call at that other root is
+necessary. In particular the code-zero zero-target path on this branch
+queries both $b_1$ and $b_2$, in whichever order the competitor chose.
+
+On $G_c$ the three required rows are $R_0,R_3,R_4$. Both partners
+and $b_1,b_2$ are constant there. The same two-call argument forces
+$b_3$ or $b_4$ second, and the other one third on the nonisolating
+reply. The zero-target path on this branch therefore queries both
+$b_3$ and $b_4$. Stopping on an isolated positive is allowed throughout;
+it does not remove either necessary zero-target continuation.
+
+Thus actual required runs invoke at least five different root-address
+classes: the first partner and each of $b_1,b_2,b_3,b_4$. A Read state
+has one fixed literal, so these five classes require at least five
+different installed Reads. Choosing the other partner occurrence still
+uses a literal distinct from every right-class root and cannot reduce
+this count. Independently the six actual origins require all five
+pairwise distinct entire rows, so there must be at least five different
+fixed-output Halts. Reads and Halts are disjoint. This proves the total
+lower bound ten.
+
+The proof constrains the competing table itself; it assumes none of
+Theorem 8.4's paths, addresses or initialization choices. Histories may
+merge, Halts may be shared, states may be duplicated, and cycles may
+occur in the union of different-source paths. None changes the necessary
+fixed addresses or the number of distinct fixed whole outputs. A repeated
+query remains a paid query; an unattained absence edge at a reached root
+provides no additional reply. Unused installed states only increase the
+count. The six origins refute a full-domain correctness promise and do
+not replace that domain. This proves the universal exclusion, including
+all faithful code entries and all permitted occurrence representatives.
+$\square$
+

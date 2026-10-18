@@ -1,0 +1,99 @@
+**定义 41.1（Original joint source, INITIAL target and complete memory）。** Fix
+
+$$
+m\ge5,\qquad k=2m-2,\qquad T=k+1=2m-1,
+\qquad U=\{2,\ldots,m-1\},\qquad P=\mathbb Z/T\mathbb Z.
+\tag{41.1}
+$$
+
+Retain the original weights $G_i=2^i$ for $0\le i<k$ and $G_i=\sum_{h=1}^kG_{i-h}$ thereafter, with bits read in increasing original weight position. The supplied matched coefficient cycle is
+
+$$
+c_i=G_i\bmod2=\mathbf1_{\{0,T-1\}}(i\bmod T),
+\tag{41.2}
+$$
+
+extended periodically to integer indices. At complete-block endpoints the live record is $(v,\theta,s)$, where $v\in\mathbb F_2$, $\theta\in P$, and $0\le s<k$ is the inherited terminal run of ones. The independent rejection record is $\bot$. On a live record the literal bit operations are
+
+$$
+\begin{aligned}
+d_0(v,\theta,s)&=(v,\theta+1,0),\\
+d_1(v,\theta,s)&=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}\\
+d_b(\bot)&=\bot\qquad(b\in\{0,1\}).
+\end{aligned}
+\tag{41.3}
+$$
+
+Phases are modulo $T$. The source is the image of all actual finite original complete-block histories, including empty and rejected histories. Since $\gcd(m,T)=1$, it is exactly
+
+$$
+Q=(\mathbb F_2\times P\times\{0,\ldots,k-1\})\sqcup\{\bot\}.
+\tag{41.4}
+$$
+
+The simultaneous history witnesses establishing this equality are given below. Thus (41.4) is an actual joint source, rather than a product of separately reachable marginals. INITIAL history and length are unknown and unavailable to the controller.
+
+Choose even subsets $H_0,H_1\subseteq U$, allowing either to be empty. Choose labels $A_v,B_v\in Y$ with $A_v\ne B_v$ separately for $v=0,1$, and an arbitrary $y_\bot\in Y$. There is no restriction on cross-value or bottom-label coincidences. With $j=-\theta_{\rm INITIAL}\pmod T$, represented by $0,\ldots,T-1$, the target is
+
+$$
+f(v,-j,s)=
+\begin{cases}
+B_v,&j\in H_v,\\
+A_v,&j\notin H_v,
+\end{cases}
+\qquad 0\le s<k,\qquad f(\bot)=y_\bot.
+\tag{41.5}
+$$
+
+Every target value refers to the immutable INITIAL record. In particular, later scalar changes never change the required $v$ in (41.5). Every phase outside $U$, every inherited legal tail, and initial bottom remain in the source.
+
+Both original action alphabets separately equal $\{0,1\}^m$ here: a word of length $m<k$ cannot internally contain $1^k$. This equality of literal action sets does not remove rejection across the seam with the inherited tail. For $X=X_0\cdots X_{m-1}$, let $T_X=d_{X_{m-1}}\circ\cdots\circ d_{X_0}$. Execute every one of these $m$ updates. The response alphabet is $O=\{0,1,\bot\}$, with $o(v,\theta,s)=v$ and $o(\bot)=\bot$. Only the absolute endpoint response $o(T_X(q))$ is supplied; the device supplies neither its scalar increment nor any interior observation.
+
+A complete deterministic finite controller is $(K,c,u,\Delta)$, with finite $K$ and total maps
+
+$$
+\begin{aligned}
+c&:O\longrightarrow K,\\
+u&:K\longrightarrow
+\{\operatorname{Emit}(X):X\in\{0,1\}^m\}
+\sqcup\{\operatorname{Halt}(a):a\in Y\},\\
+\Delta&:K\times O\longrightarrow K.
+\end{aligned}
+\tag{41.6}
+$$
+
+It initializes once to $c(o(q_{\rm INITIAL}))$, using its one free initial value/bottom reading. A state with instruction $\operatorname{Emit}(X)$ executes its fixed literal word, reads the full-block endpoint, and moves to $\Delta(z,o(T_X(q)))$. A state with instruction $\operatorname{Halt}(a)$ returns its fixed literal label and is persistently absorbing: $\Delta(z,r)=z$ for every $r\in O$. There is no uncharged internal state transition between these instructions. In particular, a running state cannot freely change to a Halt state without executing its block.
+
+All runtime phase, program, branch, saved INITIAL-value, archive, stopping and output memory belongs to $K$. There is no external initial-value register, output register, counter, clock, archive, reset, copy, interior reading, further free device reading or observation from an unexecuted branch. The actual device record is part of the experiment, not a separately accessible controller register. Arbitrary finite cycles and sharing, including sharing across INITIAL fibres or execution depths, are permitted. A constant fibre or initial bottom may continue rather than stop freely if correctness and the fee bound permit it.
+
+Every actual Emit costs one complete block: all $m$ emitted bits count, including zeros, waits, padding and the remainder after any interior rejection. Halt costs no block. Success requires finite stopping with $f(q_{\rm INITIAL})$ for every $q_{\rm INITIAL}\in Q$. Define
+
+$$
+M_{\mathrm{fee}\le1}(f)=
+\min\{|K|:(K,c,u,\Delta)\text{ is complete and successful, with worst emitted-block fee }\le1\}.
+\tag{41.7}
+$$
+
+This resource counts the entire controller, including persistent literal outputs. Define the actual output set, active-fibre count and sharing indicator by
+
+$$
+\begin{aligned}
+Y_{\rm act}&=\{A_0,A_1,y_\bot\}\cup\{B_v:H_v\ne\varnothing\},
+&L&=|Y_{\rm act}|,\\
+n&=\mathbf1_{H_0\ne\varnothing}+\mathbf1_{H_1\ne\varnothing},\\
+\epsilon&=
+\begin{cases}
+1,&H_0=H_1\ne\varnothing,
+\quad A_0=B_1\text{ and }B_0=A_1,\\
+0,&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{41.8}
+$$
+
+A stipulated $B_v$ on an empty support need not be an actual output and is omitted unless it coincides with an actual label. All equalities here are mathematical equalities of labels.
+

@@ -1,0 +1,17 @@
+**Proposition 10.2 (finite representation is not sparse-acquisition optimality).**
+The existence of Theorem 6.6 and a small retained selected boundary
+does not make the prescribed full-capture observer globally optimal
+in Reads or storage.
+
+Proof. If $F=Q$, the selected boundary is always the constant root
+hole and singleton partition. A different native observer can take
+one root Read as its designated validation, discard its reply in
+canonical handoff, and return that constant boundary. On arbitrary
+finite sources it has the same source/count relation (NRF.8), with
+any $n$ updates before its Read and any $j$ afterwards. The
+prescribed full-capture implementation nevertheless reads every
+captured node on its successful traversal. Those trees have no
+uniform size bound. Thus the finite representation and equal final
+retention cannot refund the latter observer's acquisition cost or
+prove its global optimality. $\square$
+

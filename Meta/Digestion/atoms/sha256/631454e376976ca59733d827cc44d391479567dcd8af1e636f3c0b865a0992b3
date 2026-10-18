@@ -1,0 +1,20 @@
+**Definition 6.6 (original events, physical receipts and output costs).**
+Throughout the fragment the old original completed-row count is
+$n=|h|$, its existing physical receipts remain exactly those at $h$,
+and its original logical tick/fee coordinates remain $n,2n$.
+The $j$ fine commitments have the separate positive structural bill
+above. They are neither $j$ original rows nor $j$ implicit physical
+receipt cells. There is no separate permanent fine-event log, new
+input consumption, OUT, copy, ACK, historical package or native return
+in this component.
+
+All original input/setup costs for the particular Reserve, the
+original code and occupied source material remain at their real
+preceding states. The parent EX's old-R-to-blank assignments, native
+finite effects, original receipt construction, both meter-head
+effects, PC/authority commitment and return are additional unresolved
+work, not zero-cost effects of the last birth. A full-run price is
+undefined until that join is specified. For a future full compiler,
+one must sum its actual fragment vectors at their actual updated
+states, including input, all constructors and original receipts.
+

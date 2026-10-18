@@ -1,0 +1,19 @@
+**Definition 26.2 (an actual path descriptor).** For $p\in\mathcal P_D$
+of length $n$, write $p_j$ for its length-$j$ prefix. Define
+$\partial_p(t)=B$ when $p$ itself is initially branch. Otherwise let
+$\partial_p(t)=(j,e)$ at its first original leaf, where $1\le j\le n$,
+$e\in\{0,1\}$, and $\ell_0=\alpha,\ell_1=\beta$ is its label at
+$p_j$. This is a mathematical function of the actual source, rather
+than a supplied descriptor port. The original root is branch, so index
+zero is excluded. An initially absent endpoint has one such earlier
+leaf; it introduces no additional descriptor.
+
+For mathematical witnesses only, define
+
+$$
+C_\varepsilon[u]=u,\qquad
+C_{La}[u]=\langle C_a[u],\alpha\rangle,\qquad
+C_{Ra}[u]=\langle\alpha,C_a[u]\rangle.
+\tag{GDB.105}
+$$
+

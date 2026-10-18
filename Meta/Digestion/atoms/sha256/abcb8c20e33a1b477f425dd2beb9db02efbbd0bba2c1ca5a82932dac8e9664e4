@@ -1,0 +1,7 @@
+**Bridge 层。** 下列对象不由上述有限结构自动产生，必须由明确桥接公理或构造加入：
+\[
+(M,g),\ E,\ \nabla^A,\ \Phi,\ \rho_\Phi,\ \mathcal E[\Phi],
+\quad E_s,\quad M_{\mathrm{mob}},\quad J,\quad m_\kappa,
+\]
+树场与 FIB 的耦合 \(V_{\mathrm{bridge}}\)，三角网络的独立源提升，以及到 zeta 零点空间的酉映射或正则化行列式。特别地，\(\gamma r\) 只有在声明一个耗散迁移率后才是时间衰减率；\(\hbar\omega\) 只有在声明 cotangent 提升和量子化规则后才是能级。
+

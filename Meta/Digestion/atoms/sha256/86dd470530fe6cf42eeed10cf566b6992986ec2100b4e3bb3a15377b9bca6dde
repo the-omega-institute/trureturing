@@ -1,0 +1,14 @@
+**Example 5.3 (actual indistinguishable current right spines).** Take
+$u=\alpha$ and $v=(\alpha,\beta)=p_3$. They have $d(u)=0$, $d(v)=3$.
+At lags $3$ and $0$, the current trees are respectively
+
+$$
+y_u=((\beta,\alpha),\beta)=T_3,qquad y_v=(\alpha,\beta).
+$$
+
+Both have coordinate three. Their complete right-spine maps are
+$\mathsf{br}$ at the root, $\beta$ at $R$, and $\mathsf{abs}$ at every
+$R^j$, $j\ge2$. Their intrinsic depths are three and zero. The original
+left address $L$ distinguishes these current trees, which directly
+shows why the right-spine restriction in the theorem matters.
+

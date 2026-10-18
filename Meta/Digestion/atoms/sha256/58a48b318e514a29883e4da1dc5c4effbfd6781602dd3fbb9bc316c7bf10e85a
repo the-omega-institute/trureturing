@@ -1,0 +1,29 @@
+**Definition 4.1 (The actual reset complement).** Fix a reset index $i$. Let $S_i$ consist of every full complement $y=(w_j)_{j\ne i}$ compatible with $E_i$. Both completions $w^0(y)$ and $w^1(y)$, with center $0$ or $1$, are legal. Define
+
+$$
+m_y=\pi_n(w^0(y))+\pi_n(w^1(y)),\qquad
+q_y=\frac{\pi_n(w^1(y))}{m_y}.
+\tag{4.1}
+$$
+
+They satisfy
+
+$$
+m_y>0,\quad q_y\in[1/4,1/2],\quad
+\sum_{y\in S_i}m_y=M_i,\quad
+\sum_y m_yq_y=M_ic_i,\quad
+\sum_y m_y(q_y-c_i)^2=v_i.
+\tag{4.2}
+$$
+
+For a function $g$ on $S_i$ write
+
+$$
+\langle g\rangle_i=\frac1{M_i}\sum_y m_yg_y.
+\tag{4.3}
+$$
+
+This is precisely expectation over the full complement under $\pi_n(\cdot\mid E_i)$. Covariances and variances with subscript $i$ below use this probability, and no other law.
+
+Join two elements of $S_i$ when they differ by one legal flip at an exterior coordinate, preserving both anchor ones. Denote this graph by $\mathcal G_i$ and its edges by $\mathcal E_i^{\mathrm{int}}$. The notation for these finite edges is distinct from the infinite exterior sigma-field in §8.
+

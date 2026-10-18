@@ -1,0 +1,58 @@
+**Theorem 8.1 (I3: initial Taylor law).** Select $t_*=t_r$ by (TC.17)'s unique simple root in $(\sqrt{x_z},\sqrt{x_m})$; this is unrelated to JR's static $t_*$. Set
+
+$$
+\begin{gathered}
+X_*=t_*^2,\quad v_*=\sqrt{1-\alpha t_*^2},\quad \sigma_*=N_0+N_1t_*^2,\quad P_*=P_r(t_*),\\
+G_*=P_*/(2\sigma_*)>0,\quad
+P_{\rm pay}=(B_{\rm cross}/\sqrt\beta)t_*v_*-(A_{\rm loss}/\beta)v_*^2>0,\\
+S_0=2\sigma_*P_{\rm pay}/P_*,\qquad
+K_0=\frac{S_0F_2(r)(X_*-r)^2}{2\mu G_*^2}>0.
+\end{gathered}
+\tag{TC.26}
+$$
+
+These are evaluated algebraic scalars over the conditional source field, with the root fully selected, rather than radicals-only or decimal claims. There are source constants $\epsilon_0,K>0$ such that
+
+$$
+\left|\Phi(C_{\rm end}+\epsilon)-S_0\epsilon+K_0\epsilon^2\right|
+\le K\epsilon^3\qquad(0<\epsilon<\epsilon_0).
+\tag{TC.27}
+$$
+
+Thus $\Phi'_+(C_{\rm end})=S_0$ and $\Phi''_+(C_{\rm end})=-2K_0<0$. On the entire explicit initial branch the curvature is strictly negative. Its initial contact and mass expansions are
+
+$$
+\begin{aligned}
+u&=r-\frac{X_*-r}{\mu G_*}\epsilon+O(\epsilon^2),&
+a&=\epsilon/G_*+O(\epsilon^2),\\
+b_+&=\mu/2-\frac{1+Q(X_*)/Q_r}{2G_*}\epsilon+O(\epsilon^2),\\
+b_-&=\mu/2-\frac{1-Q(X_*)/Q_r}{2G_*}\epsilon+O(\epsilon^2),&
+X&=X_*+O(\epsilon).
+\end{aligned}
+\tag{TC.28}
+$$
+
+Proof. Along the stationary ratio the $X'$ terms cancel, giving
+
+$$
+S'(u)=\frac{P_0(X)F_2(u)(X-u)}{G_u(X)^2}
+=\frac{S(u)F_2(u)(X-u)}{G_u(X)}>0.
+$$
+
+Differentiating $a+b=\mu$ and $aX+bu=\mu r$ gives $a'(X-u)+aX'+b=0$. Together with $P_0(X)=SG_u(X)$ and $P_0'(X)=S[F_1(X)-F_1(u)]$, this cancels the residual tangent terms in the differentiated value and cost, proving
+
+$$
+\Psi_I'(u)=S(u)\Lambda_I'(u),\qquad
+\frac{d\Phi}{d\Lambda}=S(u),\qquad
+\frac{d^2\Phi}{d\Lambda^2}=S'(u)/\Lambda_I'(u)<0.
+$$
+
+At $u=r$, $a=0$, $b=\mu$ and $d=X_*-r$, so
+
+$$
+\Lambda_I'(r)=-\mu G_*/d,\qquad
+S'(r)=S_0F_2(r)d/G_*.
+$$
+
+Their quotient is $-2K_0$. The simple contact equation is analytic through $r$, and $\Lambda_I'(r)\ne0$ supplies an analytic inverse through $C_{\rm end}$. The resulting value has a bounded third derivative on a sufficiently small closed neighborhood, so Taylor's theorem gives the stated cubic bound with a fixed source constant. This is not merely a formal expansion. Inverting the first derivative gives the first line of (TC.28); substitution in (TC.20) gives the other masses, and analyticity gives the contact expansion. Positivity of $K_0$ rules out an exactly affine nonzero initial interval. Exact contacts and weights from (TC.20), rather than truncated expansions, are used for attainment. $\square$
+

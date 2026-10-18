@@ -1,0 +1,31 @@
+**Corollary 9.3 (Growing-cap endpoint).** After shrinking to one further source-only
+neighborhood, the direct choice $J=\lfloor\log_2(\eta/s)\rfloor$ gives
+
+$$
+M=O\!\left(s^{-r}\sqrt{\log(1/s)}\right),
+\qquad
+\max_i\mathbb E_iT
+=O\!\left(\frac{s^{-(2r+1)}}{\log(1/s)}\right).
+$$
+
+**Proof.** Let $t=\log(1/s)$. For $s$ small enough,
+$t\ge\max\{\log2,2(|\log\eta|+2\log2)\}$. Then
+$J=\lfloor(t+\log\eta)/\log2\rfloor$ obeys
+
+$$
+J-1\ge\frac{t}{2\log2}>0,
+\qquad J+1\le\frac{2t}{\log2},
+\qquad s2^J\le\eta.
+$$
+
+Thus $J\ge2$, including the smallest legal cap once the fixed neighborhood is chosen,
+and equality $s2^J=\eta$ is allowed. Substitution into Theorem 9.2 proves both bounds.
+The choice is direct and uses no parameter depending on $s$ other than the displayed cap.
+$\square$
+
+The explicit listed family also has
+$M\ge H(J+1)\ge R(J+1)/\delta$, so the upper and lower estimates for this particular
+list have the same $s^{-r}\sqrt{\log(1/s)}$ order at the endpoint. This is only a lower
+bound on the configurations deliberately listed by this construction. It is not a lower
+bound for arbitrary observers or for a minimal reachable realization.
+

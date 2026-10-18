@@ -1,0 +1,8 @@
+# FIB harmonic-edge load: intrinsic null kernel, dual residual and presentation obstruction
+
+This source supplies an exact finite interface for actual block-conditional
+nullity, an exact dual criterion for the existing finite response certificate,
+and a lawful obstruction to bounded searches in a stronger matrix kernel.
+It gives ordinary mathematical proofs, without Lean kernel verification.
+The arbitrary-finite attaining-law problem remains open.
+

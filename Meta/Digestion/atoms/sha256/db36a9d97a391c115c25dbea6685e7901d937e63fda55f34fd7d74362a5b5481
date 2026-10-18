@@ -1,0 +1,13 @@
+**Definition 1.2 (Actual future protocols).** The future menu consists of
+nonnegative waits $U(t)$, the complete five-outcome rank-one Lüders instrument
+$\mathcal J_s(X)=\Pi_sX\Pi_s$, and Stop. Each adaptive protocol has finite
+depth; all finite depths are included. Outcomes, chosen controls and stops
+belong to the retained history. Initial controls and any random control
+resources are independent of the source. Comparisons use the same policy.
+
+There are no independent mode phases, arbitrary future unitaries, source
+copies, resets, external quantum side information, probability oracle, or
+readable hidden Kraus index. An event obtained by grouping the five recorded
+outcomes is classical postprocessing of that full read. It does not authorize
+a coarse-block Lüders instrument.
+

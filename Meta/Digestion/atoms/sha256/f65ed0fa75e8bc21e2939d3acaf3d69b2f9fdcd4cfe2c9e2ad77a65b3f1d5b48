@@ -1,0 +1,10 @@
+## 251. The exit cannot close inside the core
+
+Xi's remaining faces are {Q,U,B}. They have only one distinct P label.
+They cannot match tau's unused faces, which contain M and not U; rho
+and eta have no free faces. If these two xi faces self-pair, all B
+intervals in eta and xi close: eta has one B slot, and xi has two,
+or three if Q=B. Every B-incident face of either owner has been paired
+within these two owners. This closed nonempty B subset has at most
+four slots, contradiction. Thus both exit faces leave K.
+

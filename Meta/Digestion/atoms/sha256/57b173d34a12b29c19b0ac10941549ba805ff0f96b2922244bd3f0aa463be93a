@@ -1,0 +1,48 @@
+**Definition 3.2 (the complete source operation, including earlier failure).**
+For any prescribed double-wall path starting at $a$, put
+
+$$
+\begin{aligned}
+\lambda(t)&=\frac{(k'(t))_+}{k(t)}+
+             \frac{(-k'(t))_+}{c-k(t)},\qquad
+S(t)=\exp\!\left(-\int_0^t\lambda(s)\,ds\right),\\
+K_t&=\sqrt{S(t)}\operatorname{diag}_i
+ \left(\sqrt{p_i(k(t))/p_i(a)}e^{-iH_i(t)}\right),\\
+g_i(t)&=\lambda(t)-(\log p_i(k(t)))',\qquad
+J_i(t)=\sqrt{g_i(t)}\,|f\rangle\langle i|K_t.
+\end{aligned}
+\tag{FH.5}
+$$
+
+These are the credited canonical operations. The rates are nonnegative
+almost everywhere: the logarithmic probability derivatives are
+$k'/k,-k'/(c-k),0$, and $\lambda$ is their maximum. Compact strict
+support and absolute continuity make all rates integrable. The squared
+modulus of the $i$th diagonal entry of $K_t$ has derivative
+$-g_i(t)|(K_t)_{ii}|^2$. Integrating proves
+
+$$
+K_T^\dagger K_T+\sum_{i=0}^4\int_0^T J_i(t)^\dagger J_i(t)\,dt=I_5.
+\tag{FH.6}
+$$
+
+For every actual conditional joint input $\rho^h_{AR}$, including arbitrary
+archive/reference correlations, the terminal live output is
+$(K_T\otimes I_R)\rho^h_{AR}(K_T^\dagger\otimes I_R)$.
+Failure on a Borel set $E$ in original mode $i$ is
+
+$$
+\int_E(J_i(t)\otimes I_R)\rho^h_{AR}
+              (J_i(t)^\dagger\otimes I_R)\,dt,
+\tag{FH.7}
+$$
+
+with the actual first timestamp, mode and $f$. Retain source/epoch,
+preparation, request, reference, calibration, permissions and all updates
+jointly. Integrate these branch maps against the same actual history
+distribution if histories are mixed. The mathematical source label $h$
+in this expression is not delivered to the controller. Already stopped
+inputs retain their old event and stopped successor. Equations
+(FH.5)–(FH.7) describe every branch of the six-unit preparation too;
+an unsuccessful preparation is never retried or silently removed.
+

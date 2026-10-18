@@ -1,0 +1,47 @@
+**Lemma 10.2 (Exact equality after two one edges, including ties).**
+After two vertex-disjoint phase-$\alpha$ active one edges $E,H$,
+the inherited continuation bound is $2a\eta^2$.
+If $T$ belongs to either pair, equality requires a last read that is a
+fresh extension of that pair. Both replies are positive. Their unique
+maximizing target spins are opposite: use the heavier three-spin
+completion of (3.3) on the extended pair.
+
+If $T$ is outside both pairs, an early halt attains equality exactly
+with label $h_\alpha(\sigma)$. Any last actual read can also attain
+it, with these complete maximizing-label rules on positive sections:
+
+1. If that read is active and its edge contains $T$ and one vertex
+   outside $E\cup H\cup\{T\}$, reply zero uniquely requires
+   $h_\alpha(\sigma)$; on reply one either $h_\alpha(0)$ or
+   $h_\alpha(1)$ is maximizing.
+2. Every other last read uniquely requires $h_\alpha(\sigma)$ on
+   each positive reply section.
+
+In particular neither a wrong-phase label nor a further read on a
+positive third-reply section can use the tie.
+
+Proof. Both pair components have weights $(\eta,\eta)$.
+For an internal target the best mass before a new read is $\eta^2$,
+strictly smaller than $2a\eta^2$. Joining the two tie pairs leaves
+the target tied; a disjoint query, repeat or separator also leaves it
+tied. Exactly a fresh extension of its own pair gives orientation
+weights $a^2b,ab^2$ on its three-spin component, with the other one
+pair independent. This is the equality operation in Lemma 3.5 and
+Lemma 3.1. For either last reply the heavier triple has two majority
+spins and one minority spin, so (3.3) gives unique, opposite target
+values at the two replies.
+
+For an exterior target, the current mass is already $2a\eta^2$.
+If a new edge joins the target to a tie pair, that pair contributes
+$\eta$ for either target value at either reply, and the target's
+prior $a>b$ keeps $\sigma$ uniquely preferred. If the new edge
+contains no target, it only partitions independent constraints;
+the same preference holds, including a join of the two nontarget
+pairs. Repeats and separators have the same conclusion on their
+possible replies. Finally an edge from $T$ to an entirely fresh
+vertex gives target weights $(a^2,b^2)$ on zero and $(\eta,\eta)$
+on one, times the unchanged factors from $E,H$. Its best sum leaves
+the old majority correctness unchanged, but its one reply has exactly
+the two stated tied labels. This exhausts every actual integer address
+and proves both necessity and sufficiency. $\square$
+

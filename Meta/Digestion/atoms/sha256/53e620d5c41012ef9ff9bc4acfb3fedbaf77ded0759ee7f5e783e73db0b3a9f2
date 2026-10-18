@@ -1,0 +1,85 @@
+**定理 7.1（Upper bound for arbitrary legal skew matrices）。** For every $X$
+in (2.1),
+
+$$
+L\le\begin{cases}
+\sqrt{10s},&0\le s\le10/7,\\
+\sqrt7+\sqrt{3(s-1)},&10/7\le s\le2.
+\end{cases}
+\tag{7.1}
+$$
+
+Proof. Choose a skew sign matrix $T$ whose upper signs agree with those of
+$X$, choosing either sign at a zero entry. Then
+
+$$
+L=\frac12\operatorname{tr}(T^TX).
+$$
+
+Orthogonally conjugate $T$ to $\mathcal D(\alpha,\beta)$ with
+$\alpha\ge\beta$, and let $Y$ be $X$ in the same coordinates. Orthogonal
+conjugation preserves skewness, the operator norm and the Frobenius norm.
+Consequently
+
+$$
+L=\alpha Y_{12}+\beta Y_{34}\le\alpha u+\beta v,
+\qquad u=|Y_{12}|,\quad v=|Y_{34}|,
+$$
+
+where $0\le u,v\le1$ and $u^2+v^2\le s$. By Lemma 6.1 and
+Cauchy–Schwarz,
+
+$$
+L\le\sqrt{(\alpha^2+\beta^2)(u^2+v^2)}\le\sqrt{10s}.
+\tag{7.2}
+$$
+
+For $10/7\le s\le2$, discard the cap on $v$ and write
+
+$$
+L\le F(u)=\alpha u+\beta\sqrt{s-u^2},\qquad 0\le u\le1.
+$$
+
+The square root is positive throughout this interval, since $s>1$. Its
+derivative satisfies
+
+$$
+F'(u)=\alpha-\frac{\beta u}{\sqrt{s-u^2}}\ge0,
+$$
+
+because the equivalent squared inequality is
+$\alpha^2s\ge(\alpha^2+\beta^2)u^2$, and
+
+$$
+\alpha^2s\ge7s\ge10\ge10u^2
+ =(\alpha^2+\beta^2)u^2.
+$$
+
+Thus $L\le F(1)=\alpha+\beta\sqrt{s-1}$. Put $r=\sqrt{s-1}$.
+For $0\le\beta\le\sqrt3$, the function
+
+$$
+g(\beta)=\sqrt{10-\beta^2}+r\beta
+$$
+
+has derivative
+
+$$
+g'(\beta)=r-\frac{\beta}{\sqrt{10-\beta^2}}
+ \ge r-\sqrt{3/7}\ge0.
+$$
+
+Here the first inequality follows by squaring the nonnegative ratio and
+using $\beta^2\le3$; the second uses $s\ge10/7$. Therefore
+
+$$
+L\le g(\sqrt3)=\sqrt7+\sqrt{3(s-1)}.
+\tag{7.3}
+$$
+
+At $s=10/7$, (7.2) and (7.3) both equal $10/\sqrt7$.
+Every relaxation in this argument enlarges the admissible scalar set and
+therefore preserves the direction of the upper bound. The next section
+supplies legal equality matrices, so realizability is not assumed from a
+relaxation optimum. $\square$
+

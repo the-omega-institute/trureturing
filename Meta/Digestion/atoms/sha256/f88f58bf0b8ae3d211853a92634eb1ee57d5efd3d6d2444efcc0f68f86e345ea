@@ -1,0 +1,78 @@
+**Convention 10.1 (credit and conditional scope).** The source-specific
+increment of this companion is the finite algebraic $K_1$ in EP.35
+and the correction $2K_1$ to EVERY normalized optimal contrast
+multiplier, with complete proofs in Sections 6–7. The local contact
+derivation in Sections 3–5 is retained as a self-contained analytic
+foundation and independent check. RC supplies the already complete
+conditional residual curve and transition; a second derivation of its
+endpoint branch is not counted as new mathematics. The local
+actual-label argument in Sections 8–9 keeps its stated neighborhood
+and full common-decoder hypotheses. Independent assessment and prior
+verdicts are not mathematical premises. The following correspondence
+fixes what is reused and what the endpoint calculation adds.
+
+| Source | Reused content and retained boundary |
+| --- | --- |
+| CG as specified in JR | Isolated root, exact ranks, normalization, coefficient formulas/enclosures, endpoint witnesses, support and original complete-cq minimax; all are conditional antecedents |
+| JR34–40 | Sharp jointly acquired worst-history cost, plateau, inverse cost law and full finite attainments; this cost is credited to JR, as clarified in JR53 |
+| JR41–49 | All-error-optimizer supported rigidity, original contrast-inequality four-PSD reduction, spectral failure readout, strong-regime evaluation and complex/reference/labelled-time realization |
+| JR50–52 | Maximal initial height plateau and spectral frame, strict residual decrease, retained-choice chord, interior finite dual minima, endpoint finite primal/equal dual infimum/no finite dual minimum |
+| JR53–54 | Residual sign reduction, exact initial branch through its least active discriminant zero, grouped uniqueness before that zero, three-real-atom cap and pre-cap obstruction; RC63 identifies that zero as the genuine transition |
+| JR55 | Leading square-root coefficient $\Gamma$, quantitative endpoint $O(\varepsilon)$ bounds, every-multiplier leading law and first-order contact concentration |
+| JR56–57 | Exhaustive uniform pre-cap three-real-atom exclusion and its trial four-atom witness, with inherited directed enclosures and stated limits |
+| RH4, RH7 | Global quadratic upper certificate, alternative initial certificate gauge, explicit optimized initial curvature and improved retained lower chords |
+| RH8–9 | One-ray-per-actual-label rigidity, actual three-versus-four inequality-feasibility threshold, cap evaluation, strict actual-three-label height obstructions and the lift of JR56 |
+| RC58–60 | Exact normalization dictionary, full nine-coordinate source-box inclusion, selected analytic algebraic root and directed interval/Bernstein sign and denominator comparisons; finite arithmetic remains conditional here |
+| RC61–62 | Complete post-contact global optimum, all four original PSD slacks, exact four contacts and positive weights, unique grouped optima and bijective full contrast coverage |
+| RC63 | Simple first $d_+$ zero, quantitative gluing with equal value and multiplier, genuine three-to-four onset and no later interior support/rank transition |
+| RC64 | Same endpoint, normalized and auxiliary contact correspondence, inherited $\Gamma$ and quantitative law; in particular coordinate-$0$-one and auxiliary vector derivatives differ by $-4$ |
+| RC65–66 | Matching actual common full-output instruments and complete conditional residual solution; construction counts are not universal actual-label minima, and all native bridges remain |
+| Sections 3–9 here | Independent local analytic proof supporting the evaluated next coefficient $K_1$ and every-multiplier correction $2K_1$, exact RC parameter match, and local four-actual-low-label necessity with complete common sufficiency |
+
+The initial curvature, initial exact branch, square-root leading term,
+pre-cap obstruction, generic real-null decomposition and actual-label
+projective mechanism are not counted again as new results. JR54 alone
+did not identify its least certificate zero as a support transition;
+RC63 now does. JR55's asymptotic family and JR56's strict trial witness
+alone did not prove an exact four-contact optimizer; RC61–63 now
+supplies that optimizer on the entire post-contact interval. The local
+proof here independently recovers the same germ to evaluate the next
+coefficient, rather than claiming either missing global conclusion.
+
+CA's exposed real equality face and compatible resource constructions,
+and IR's rank/image compression, spectral scalar realization and compact
+moment mechanism retain the scopes attributed in JR and RH. A fixed
+channel or prescribed complete binary effect in those sources is not
+silently substituted for EP.7. Necessary realness follows from equality
+in the original complex problem, while the actual lower construction
+chooses the particular complete approximate channel deliberately.
+
+The support, Gram, Born, trace-norm, image compression, Slater, analytic
+implicit-function and finite separation tools are standard mechanisms.
+The supplied attributions to Leppäjärvi–Sedlák, *Incompatibility of quantum
+instruments*, Definition 8, Remark 3 and Proposition 7, and to
+Muñoz-Moller–Leppäjärvi–Heinosaari, *Adversarial Information Gain in
+Non-ideal Quantum Measurements*, Definition 1 and Proposition 1,
+concern finite compatible joint operations, dilation and complementary
+postprocessing. They grant no accessible discarded environment or
+unrestricted continuous-outcome extension. Sekatski's *The bottleneck
+dimension of quantum operations* supplies finite rank/image compression,
+not this original state-dependent acquisition cost. Uhlmann's *Roofs and
+Convexity*, Proposition 2.2, is a flat-decomposition antecedent.
+Xia–Wang–Sheu's equality S-lemma retains JR54's sign-changing,
+nonzero-quadratic-constraint hypotheses in that earlier certificate.
+Lemma 4.2 gives the needed completion here by finite separation and the
+already supplied real-null decomposition. These are bounded supplied
+source attributions, not newly authenticated literature claims.
+
+The supplied generic library correspondence credits
+`UnitaryKrausMixingInvariance`, `FiniteKrausInstrumentBornMarginal`,
+`FiniteKrausRepresentation` and
+`AntidistinguishabilityGram.psd_summand_projection` with its kernel
+helper. The stated Physlib selection is
+`6a09b2d1761a0d4430083045a247eb121d8da260`; the stated mathlib pin is
+`db584cd6d46c92f209a44c0f1c829460d327499d`. These are conditional
+source references, not freshly inspected or compiled applications.
+No new root, Jacobian or minimax certification of the CG point, or
+numerical reauthentication of inherited tables, is supplied.
+

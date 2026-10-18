@@ -1,0 +1,87 @@
+**Theorem 35.1 (record-preserving reduction for EVERY optimizer).**
+Given any implementation in Definition 34.1, there is a mathematical
+sign-averaged implementation with the SAME normalized winding contrast,
+the SAME four-sign averaged acquisition cost at each height, and live
+Choi matrix $J_*$ of (JR.16). Its entire full channel need not be
+$\widehat\Phi_*$. Its total canonical-failure effect on the qutrit
+is $M$, with no other output mass on that input space. This reduction
+does not assert that its sign operations are natively supplied.
+
+Proof. Put $g=(e,n)$, $U_g=\operatorname{diag}(e,n,1)$ and
+$\chi(g)=en$. On the whole five-mode live output use the fixed unitary
+$\widetilde U_g=EU_gE^\dagger+(I_5-P)$; on all failure and extra
+sectors use identity. Denote that output action by $\mathcal U_g$.
+Append an independent uniform classical coin $g$ to the acquired label
+and use encoder $\mathcal E_\alpha\circ\operatorname{Ad}_{U_g}/4$
+on the supported qutrit, decoder
+$\mathcal U_g^\dagger\circ\mathcal R_\alpha$, and report
+
+$$
+\widetilde\Phi=\frac14\sum_g
+ \mathcal U_g^\dagger\circ\Phi\circ\operatorname{Ad}_{U_g},
+\qquad \widetilde r=\chi(g)r,\qquad d_{g,\alpha}=d_\alpha.
+\tag{JR.24}
+$$
+
+The encoders have total effect $I$ and all decoders remain full TP.
+The five-mode input version uses $\widetilde U_g$ as well. This is
+one common instrument with a generated independent coin, not a random
+choice of the unknown history. The signs permute the original four
+input/target pairs at each height, including their unchanged full
+failure measures. Convexity and unitary invariance of the complete
+norm give $E(\widetilde\Phi)\leq E_*$. The credited full-class lower
+bound gives equality. Applying the finite contraction of [CG,
+Convention 17.1] and then its Theorem 17.2 fixes precisely the averaged
+live Choi $J_*$. That theorem also gives $G_o=0$ and $G_f|0\rangle=0$
+before averaging. After averaging the live effect is
+$D^\dagger D+T^\dagger T+S^\dagger S=I-M$, so the total failure
+effect is $M$. No individual failure measure or unaveraged full channel
+has been identified by this argument.
+
+The binary relabelling is essential. Its plus effect and its high-fibre
+effect are
+
+$$
+\begin{aligned}
+\widetilde F
+ &=\frac12 I+\frac14\sum_g\chi(g)U_g^\dagger F U_g
+  =\frac12I+F_{01}|0\rangle\langle1|
+                   +F_{10}|1\rangle\langle0|,\\
+\widetilde Q_H&=\frac14\sum_gU_g^\dagger Q_HU_g
+                  =\operatorname{diag}((Q_H)_{00},(Q_H)_{11},(Q_H)_{22}),\\
+\widetilde p_H(\rho_{y,e,n})&=\overline p_{H,y}
+                                      \leq\mathsf W.
+\end{aligned}
+\tag{JR.25}
+$$
+
+For the first identity, the plus effect conditional on $g$ is
+$U_g^\dagger[I/2+\chi(g)(F-I/2)]U_g$.
+Character orthogonality retains exactly the $01,10$ entries in its
+signed average. This preserves the ACTUAL record's Fourier coordinate;
+averaging while discarding or keeping its old sign unchanged would not.
+The second identity follows because the same coin neither changes
+dimension nor deletes any branch. Summing the four actual input
+probabilities gives the last identity, without a source prior.
+
+In particular an individual coherent-input cost was not diagonalized
+inside the original implementation. For its original Hermitian $Q_H$,
+the exact cost is
+
+$$
+\begin{aligned}
+p_H(\rho_{y,e,n})={}&\sum_i p_{yi}(Q_H)_{ii}
+ +2enq_y\operatorname{Re}(Q_H)_{01}\\
+ &+2e\sqrt{p_{y0}p_{y2}}\operatorname{Re}(Q_H)_{02}
+ +2n\sqrt{p_{y1}p_{y2}}\operatorname{Re}(Q_H)_{12}.
+\end{aligned}
+\tag{JR.26}
+$$
+
+Those off-diagonal terms vanish in the FOUR-SIGN average, not in an
+individual history. The argument preserves low/high fibre membership
+throughout; it replaces neither the actual cut by a virtual Choi
+ensemble nor worst-history cost by an average-case objective.
+The finite coin also preserves the hypotheses for countable and
+specified integral factorizations. $\square$
+

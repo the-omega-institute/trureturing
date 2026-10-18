@@ -1,0 +1,39 @@
+**Proposition 62.13 (the actual H3 discriminator, statistics and phase).** At $H=3$ the authentic INITIAL $\langle\beta,\alpha\rangle$ has the actual chronological history
+
+$$
+\operatorname{Read}[BA];\ \rho[\mathrm{accept}];\
+\operatorname{Read}[A+B];\ \rho[\mathrm{reject}];\
+\operatorname{Read}[A+B];\ \operatorname{Stop}.
+\tag{62.33}
+$$
+
+Its original INITIAL target is $(1,(1,1),BA,A+B)$, unchanged by the added apparatus. Old addresses are $D=\{o,L,R\}$; accepted addresses are $D'=\{o,L,R,LL,LR\}$. Their killed root/left coefficients are respectively $1/4,9/26$ and their common coefficient is $1/2$ at both versions. Hence the old two-particle occupation $\{o,L\}$ has killed renewal energy change $-5\nu/52$ and common change zero, with the same one-body $\phi$ in both.
+
+The two-particle hard-core kinetic operator on $D'$ is not spectrally equivalent to $\Lambda^2 L_{D'}$: with $a=1,g=\nu=0$,
+
+$$
+\operatorname{tr}(K_{D',2}^6)=759280,
+\qquad
+\operatorname{tr}((\mathrm d\Gamma_{\wedge^2}L_{D'})^6)=759256.
+\tag{62.34}
+$$
+
+In particular their full-phase finite propagators differ. At $\theta=1/100$ the real part of their trace difference is strictly between
+
+$$
+-\frac{23121015983636759877992957832379}
+{694702008000000000000000000000000000000000000}
+\quad\text{and}\quad
+-\frac{23121015983636725212194415013051}
+{694702008000000000000000000000000000000000000}.
+\tag{62.35}
+$$
+
+Proof. The leaf counts are $2,3,5$, giving exactly one acceptance. The actual products are $BA$ and $BAB=A+B$, using the original $A^2=1,B^2=-1,AB+BA=1$. The full second candidate is refused and supplies no Read. The matrices for the old and new domains have diagonals $2,3,\ldots,3$ and $-1$ on the displayed actual seams. Their old Schur complements are respectively $L_D$ and $L_D-(2/3)|L\rangle\langle L|$. Direct rational inversion gives the stated two entries; (62.3) gives $1/2$. Substitution in (62.9) proves the energy change.
+
+For (62.34), enumerate the ten two-site configurations in the displayed address order. The hard-core diagonal at $S$ is $\sum_{p\in S}d_p$; each allowed move contributes $-1$. The exterior diagonal is the same, but a move $q\mapsto p$ contributes $-(-1)^{\#\{i\in S:i<q\}+\#\{i\in S\setminus\{q\}:i<p\}}$. These complete finite matrix formulas give (62.34) by six matrix multiplications. The six-move closed occupation path
+$\{o,LL\},\{L,LL\},\{LL,LR\},\{L,LR\},\{o,LR\},\{o,L\},\{o,LL\}$
+has hard-core hopping product $+1$ and exterior hopping product $-1$. This closed sign discriminator is stronger than a removable single basis-edge sign.
+
+For the explicit finite phase inequality, form powers through degree sixteen of those same integer matrices and sum the even Taylor trace terms of $e^{-i\theta K}$. Both matrices have norm at most twelve by the one-body compression bound. Each ten-dimensional trace tail after degree sixteen is at most $20(12\theta)^{17}/17!$; the two tails together are at most $40(12\theta)^{17}/17!$, since $12\theta<1/2$. Adding/subtracting this rational remainder from the computed rational even sum gives exactly (62.35). It is a mathematical propagator calculation, not an acquired trace or a new original Read. $\square$
+

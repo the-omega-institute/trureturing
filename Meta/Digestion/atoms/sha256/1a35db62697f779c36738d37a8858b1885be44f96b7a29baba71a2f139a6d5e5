@@ -1,0 +1,30 @@
+**定理 5.4（Common measured finite-history law for $V_2$）。** Under Definition 5.3, every finite positive-probability acquired history $h=(i_0,\ldots,i_N)$ has
+
+$$
+\Pr(h)=\pi_{i_0}\prod_{s=1}^N P_{i_{s-1}i_s},
+\qquad
+\rho_{KR}\mid h=(U_h\otimes I_R)\rho_{KR}^{(i_0)}
+(U_h^\dagger\otimes I_R),
+\tag{5.6}
+$$
+
+where $U_h=U_{i_Ni_{N-1}}\cdots U_{i_1i_0}$. For a fixed known root, omit $\pi$ or take it to be the point mass there. The actual retained initial root and successive returned successors recover every directed edge by the common update $(i,j)\mapsto j$ and the label $(i\to j)$. Conditioned on the acquired prefix, the future measured successors have the same kernel $P$.
+
+**证明。** First, for every positive edge $i\to j$, every definite source $i$ and every internal-reference state $\sigma$,
+
+$$
+(\mathcal J_j\otimes\operatorname{id}_R)
+(|i\rangle\langle i|\otimes\sigma)
+=P_{ij}|j\rangle\langle j|\otimes
+(U_{ji}\otimes I_R)\sigma(U_{ji}^\dagger\otimes I_R).
+\tag{5.7}
+$$
+
+To prove it, project the single-source expansion (1.4) onto $j$. There is one edge amplitude $\sqrt{P_{ij}}U_{ji}$ and its normalized record. Tracing that record gives (5.7). If $P_{ij}=0$, the corresponding branch is zero; no transport on an absent edge is required. Summing the completely positive branches in (5.4) is trace preserving, so this is one common instrument for all inputs, not a choice made using an unavailable old source.
+
+At step zero, (5.5), or the known root, supplies the stated configuration and internal state. Suppose a retained prefix through $i_s$ has its product probability and normalized state as in (5.6). Equation (5.7) supplies conditional probability $P_{i_si_{s+1}}$ for its next returned successor, independent of its internal-reference state, and composes the transport on the left. Multiplication gives the product probability for the extended prefix and the claimed $U_h$. Induction proves (5.6) for every finite $N$. It excludes no rare positive history. Applying the same induction from the attained definite successor proves the complete finite-future continuation law.
+
+The decoder uses the actually retained root and returned symbols; it never reads an unrecorded source. For $N=0$ the product is one and $U_h=I_K$. A known-root domain has one empty-edge history, whereas different roots in (5.5) are distinguished by actual $R_0$. $\square$
+
+The product-of-branches and fresh-register iteration supplier is already present in source §130 and [AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION, revision 6bfd5342e47ba7eb50a5022e301d228f17daa8d2, §110](https://github.com/the-omega-institute/trureturing/blob/6bfd5342e47ba7eb50a5022e301d228f17daa8d2/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md). Equation (5.7) is the necessary interface check for the smaller $V_2$ instrument; it is not inferred from one-step normalization alone.
+

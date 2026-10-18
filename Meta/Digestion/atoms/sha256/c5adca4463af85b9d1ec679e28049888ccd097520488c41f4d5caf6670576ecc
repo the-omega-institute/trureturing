@@ -1,0 +1,56 @@
+## 328. A strict endpoint rho ratio
+
+Work at the genuine endpoint u0=z+m+1 of Section 323. Set
+
+    lambda=21/5, Q=v^2+d^2, T=v*d,
+    ac=(1+lambda)*c+(lambda-1)=(26*c+16)/5,
+    C0=ac*(m+1)+2*lambda*(c+1).
+
+Direct expansion gives
+
+    Lr-lambda*Jr=(1+lambda)*Q+2*(1-lambda)*T
+                    -ac*(z+m)-2*lambda*(c+1).
+
+Substitute the strict upper bound z<Zb. The resulting T coefficient
+is 2*(1-lambda)-2*ac/[m*(m-1)]<0. Hence using T<=Q/2 gives
+
+    Lr-lambda*Jr>[2-ac*(m+1)/(m*(m-1))]*Q-C0.      (328.1)
+
+The coefficient of Q is positive: (327.1) gives
+
+    ac<156*m/125-23/5<5*m/4,
+    (m+1)/(m-1)<6/5,
+
+so that coefficient exceeds 1/2. The inequalities z>Z3 and z<Zb,
+together with T<=Q/2, also give
+
+    Q>m*(m-1)/(m+1)*(Z3(m,c,d)-1).
+
+Since Z3 decreases with d and d<d0=m-c-2, (328.1) implies
+
+    Lr-lambda*Jr>G(m,c),
+    G=[2*m*(m-1)/(m+1)-ac]*(Z3(m,c,d0)-1)
+                         -ac*(m+1)-2*lambda*(c+1). (328.2)
+
+The denominator
+
+    5*(m+1)*(c-m+1)*(c-m+3)
+
+is positive because c<m/4 and m>11 make its last two factors
+negative. Multiplying G by this denominator gives the polynomial
+
+    BR(m,c)=sum_{j=0}^4 BR_j(m)*c^j.
+
+For m=11+b, b>0 and c=[1+ell(m)*a]/(1+a), a>=0, define
+
+    PR(a,b)=50^4*sum_{j=0}^4 BR_j(m)
+              *[1+ell(m)*a]^j*(1+a)^(4-j), m=11+b. (328.3)
+
+This parametrization covers 1<c<ell(m); allowing a=0 only adds
+the boundary c=1. Section 331 gives all 30 coefficients of PR,
+each a positive integer, with constant 1376937500000. Thus G>0 and
+Lr>(21/5)*Jr. Endpoint genuineness gives Jr>0, so
+
+    x^2=K^2*Lr/Jr>(35/36)*(21/5)=49/12>4,
+    x>2.                                         (328.4)
+

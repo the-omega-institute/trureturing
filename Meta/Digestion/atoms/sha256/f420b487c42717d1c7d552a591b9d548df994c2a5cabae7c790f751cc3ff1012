@@ -1,0 +1,63 @@
+**Theorem 51.1 (Finite-carrier boundary acquisition).** If the fixed consumer carrier is finite, with any sigma algebra, every complete prescribed target family has a lawful preparation with uniform error exactly $R_\mu$. More generally the same conclusion holds when the carrier's sigma algebra is finite. Neither sourcewise finite target support on an infinite carrier nor finite support at the anchor is a substitute for this hypothesis.
+
+**Proof.** Partition the carrier into the $d$ nonempty atoms of its finite sigma algebra. Choose one actual tape representative in each atom. Every law is identified, without loss of measurable-event information, with a vector in the compact simplex $\Delta_d$. Write $v(A)$ for its mass on a union $A$ of atoms; there are only finitely many such events, and
+
+$$
+\operatorname{TV}(v,w)=\max_A|v(A)-w(A)|.
+\tag{51.1}
+$$
+
+For $q\in Q$, let $C_m(q)$ contain all original labels with that prefix, and define
+
+$$
+\begin{aligned}
+u_A(q)&=\inf_m\sup_{y\in C_m(q)}\mu_y(A),\\
+l_A(q)&=\sup_m\inf_{y\in C_m(q)}\mu_y(A),\\
+K(q)&=\{v\in\Delta_d:
+          u_A(q)-R_\mu\le v(A)\le l_A(q)+R_\mu
+          \text{ for every }A\}.
+\end{aligned}
+\tag{51.2}
+$$
+
+At each fixed depth the extrema are constant on prefix cylinders, hence continuous on $Q$. Therefore $u_A$ is upper semicontinuous and $l_A$ is lower semicontinuous. All original labels remain in the extrema, even when their target laws disagree on one complete observation fiber.
+
+Fix $q$ and choose approximate centers $v_m$ for $C_m(q)$ whose errors are at most $\rho_\mu(C_m(q))+1/(m+1)$. Compactness gives a convergent subsequence. Along it the radii decrease to $r_\mu(q)\le R_\mu$, and, for each event $A$, the center inequalities pass to
+
+$$
+u_A(q)-r_\mu(q)\le v(A)\le l_A(q)+r_\mu(q).
+$$
+
+Thus $K(q)$ is nonempty. It is compact and convex.
+
+The nonempty values also vary lower semicontinuously; nonemptiness by itself would not be enough. Write every inequality in (51.2), together with the simplex inequalities and the two inequalities for its total-mass equality, as
+
+$$
+K(q)=\{v\in\mathbb R^d:Mv\le b(q)\}.
+\tag{51.3}
+$$
+
+Here $M$ is one fixed finite matrix. Every nonconstant component of $b(q)$ is either $R_\mu-u_A(q)$ or $R_\mu+l_A(q)$, and hence lower semicontinuous. Hoffman's fixed-matrix error bound gives a finite constant $H_M$, independent of any consistent right-hand side, with
+
+$$
+\operatorname{dist}_2(v,K(q'))
+ \le H_M\left\|(Mv-b(q'))_+\right\|_\infty.
+\tag{51.4}
+$$
+
+For $v\in K(q)$ and any $\delta>0$, lower semicontinuity of the finitely many right-hand sides supplies a neighborhood of $q$ on which $b_i(q')>b_i(q)-\delta$ for every $i$. The residual in (51.4) is at most $\delta$. A point in $K(q')$ is consequently arbitrarily close to $v$ throughout a sufficiently small neighborhood. This is lower semicontinuity of $K$.
+
+The estimate used here is A. J. Hoffman's classical fixed-matrix bound, [*On approximate solutions of systems of linear inequalities*, J. Research NBS 49, 263--265](https://doi.org/10.6028/jres.049.027); its form for arbitrary fixed norms is stated in Peña, Vera and Zuluaga, [*An algorithm to compute the Hoffman constant of a system of linear constraints*, equation (1) and Proposition 1](https://arxiv.org/pdf/1804.08418v1). A constant for finitely many fixed rows is being used, not a constant for infinitely many tape-event constraints.
+
+The actual signature space $Q$ is metrizable, hence Hausdorff and paracompact. Michael's closed-convex-valued selection theorem therefore supplies a continuous $v:Q\to\mathbb R^d$ with $v(q)\in K(q)$. Its hypotheses are now explicit: a paracompact domain, the Banach range $\mathbb R^d$, nonempty closed convex values, and the lower semicontinuity just proved. The supplier is Michael, [*Continuous Selections. I*, Theorem 3.2″](https://doi.org/10.2307/1969615); this formulation is also recalled in the introduction of Gutev, [*Continuous Selections, Function Spaces and Partitions of Unity*](https://arxiv.org/html/2602.21313v1). No compactness or completion of $Q$ is used.
+
+For every original label $y$, its own target lies between the extrema:
+
+$$
+l_A([y])\le\mu_y(A)\le u_A([y]).
+$$
+
+Membership in $K([y])$ therefore gives $\operatorname{TV}(v([y]),\mu_y)\le R_\mu$. To turn the selection into a lawful preparation, first apply Theorem 46.3 on the finite power-set carrier of atom indices. Its one common uniform seed and finite-prime cumulative-probability certificates acquire the continuous vector family exactly. Then hand over the chosen representative tape of that atom. This last map is measurable into the original carrier and induces precisely the desired event law. Sourcewise almost-sure finite stopping, common deterministic rules and all finite-record/output measurability are inherited from that theorem. The same consumer runs after the handoff on the same source.
+
+The resulting error is at most $R_\mu$, and Theorem 50.2 forces equality. The selection and error-bound theorems are reused classical mathematics; the assertion is their finite-prime acquisition consequence for the entire prescribed family. $\square$
+

@@ -1,0 +1,62 @@
+## 43. Current as a derived conservation flux
+
+Let \(C^0(\mathcal K)\) be node quantities and \(C^1(\mathcal K)\) oriented edge fluxes. Let
+
+\[
+B:C^1(\mathcal K)\to C^0(\mathcal K)
+\]
+
+be the signed incidence divergence. A node density \(q\) and edge current \(j\) obey
+
+\[
+\dot q=-Bj.
+\tag{43.1}
+\]
+
+For a closed graph, \(\mathbf 1^\top B=0\), hence
+
+\[
+\frac{d}{d\tau}\mathbf 1^\top q=0.
+\tag{43.2}
+\]
+
+This is the finite form of a continuity equation. Given a constitutive mobility \(K\succeq0\) and a node potential \(\mu(q)\), the gradient-flow current is
+
+\[
+j=-K B^\top \mu(q),
+\qquad
+\dot q=B K B^\top\mu(q).
+\tag{43.3}
+\]
+
+The sign convention may be reversed by choosing \(B\) as an in-flow rather than out-flow divergence. The invariant statement is that current is an edge flux whose divergence changes the local conserved quantity.
+
+For a general conserved observable \(Q:\mathcal X\to\mathbb R\), the field-generated current is the derived rate
+
+\[
+I_Q(x)=dQ_x[\mathsf G(x)].
+\tag{43.4}
+\]
+
+If \(Q\) is localizable, (43.4) decomposes into boundary fluxes of the form (43.1). Therefore the mathematically correct version of “electric current is a result of the field” is:
+
+\[
+\text{current}
+=
+\text{the conserved flux induced by the coupled field generator},
+\]
+
+under an explicit constitutive law, action, or port model. In elementary Maxwell equations \(j^\mu\) may be supplied as an external source. In a coupled matter-gauge theory, it is obtained by varying the matter action with respect to the gauge potential, and local gauge invariance gives its continuity equation. Charge conservation alone determines the Maxwell source equations only after constitutive and boundary assumptions are supplied. See De Zela, arXiv:physics/0506054.
+
+On a finite cochain complex, the gauge realization is
+
+\[
+A\in C^1(\mathcal K),\qquad
+F=d_1A,\qquad
+d_1d_0=0.
+\]
+
+The identity \(d_1d_0=0\) is the discrete analogue of \(d^2=0\), hence the homogeneous field constraint is structural. The inhomogeneous equation couples the codifferential of \(F\) to the current \(j\). This is the bridge from the graph incidence carrier to electromagnetic curvature. The field \(A\), curvature \(F\), and current \(j\) occupy different typed slots and should not be collapsed into the same variable.
+
+The triangle network has a related incidence pattern, but its product-source condition is a probability factorization on hidden edge variables. It is not the same object as the divergence of an edge current. The two structures can be placed on one typed carrier only after their maps and constraints are separately defined.
+

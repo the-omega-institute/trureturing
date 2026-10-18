@@ -1,0 +1,31 @@
+**Proposition 7.2 (precise radial/whitened crosswalk).** Define the strictly increasing inverse of $x(p)$ by
+
+$$
+\chi(x)=\frac{\beta Wx}{V+(\beta W-\alpha V)x}.
+\tag{TC.23}
+$$
+
+On the initial branch, the whitened parameters of Theorem 5.1 are
+
+$$
+p=\chi(X(u)),\qquad q=\chi(u),\qquad
+m=a/A(p),\quad \omega_-=b_+/A(q),\quad\omega_+=b_-/A(q).
+\tag{TC.24}
+$$
+
+In particular $\chi(r)=1/2$, $\chi(x_z)=p_z$, $0<q<1/2$ when $u<r$, and $p=p(q)$. Costs and values agree exactly:
+
+$$
+\Lambda(q)=\Lambda_I(u),\qquad mg(p)=\Psi_I(u),\qquad \eta=S(u).
+\tag{TC.25}
+$$
+
+Proof. The sign change in (TC.3) means $zw>0$ is negative whitened cross sign. Thus the radial positive and same-sign baseline masses correspond to $e_P$ and the cross-minus $q$ line; the opposite-sign baseline corresponds to the cross-plus line. Division by $A$ is required because $d\nu=A\,dm$. Solving $x=Vp/A(p)$ gives (TC.23). The perspective identity is
+
+$$
+B_J(p,q)=A(p)[F_c(X)-F_c(u)-F_1(u)(X-u)],\quad
+ g(p)=A(p)P_0(X).
+$$
+
+For its first equality use $A(q)x'(q)=V\beta W/A(q)$ and $A(p)(X-u)=V\beta W(p-q)/A(q)$. Consequently the stationary ratio $P_0/G_u$ is exactly $g/B_J$, so (TC.12) holds and its unique root gives $p=p(q)$; its dual slope is $\eta=S(u)$. Covariance and (TC.4) give the mass, cost and objective identities. Positivity of $b_\pm$ makes $m<1$ by (TC.7). This proves correspondence of the two families without identifying their differently normalized parameters. $\square$
+

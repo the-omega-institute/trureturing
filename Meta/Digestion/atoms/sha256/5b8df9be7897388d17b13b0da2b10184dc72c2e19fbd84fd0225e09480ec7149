@@ -1,0 +1,39 @@
+**Theorem 30.1 (unrestricted original lower versus restricted-menu
+uppers).** For every $D\ge3$ and $1\le k\le2^D-1$,
+
+$$
+m(D)\le H_D(k)\le\min\{M_1(D),m(D)^k\},
+\tag{GDB.118}
+$$
+
+and
+
+$$
+\log_2M_1(D)-\log_2H_D(k)
+\ge\max\left\{0,\ 2^{D-3}\log_2R_{\rm a}-k\log_2m(D)\right\}.
+\tag{GDB.119}
+$$
+
+Proof. The singleton $\{R^D\}$ is among the menus in $H_D(k)$,
+so Theorem 28.1 gives the first lower inequality. Every scheme for
+the full original menu serves each restricted menu without changing
+its preparation or code. Thus $M_D(Q)\le M_1(D)$, and maximization
+gives the first upper. Theorem 29.1 and monotonicity of $m$ give
+$M_D(Q)\le m(D)^{|Q|}\le m(D)^k$, proving the other upper.
+
+Now reuse [NCE, Theorem 17.1][NCE], with its full original
+all-competitor quantifier:
+
+$$
+M_1(D)\ge\left\lceil R_{\rm a}^{\,2^{D-3}}\right\rceil.
+\tag{GDB.120}
+$$
+
+It applies to every original export, retaining arbitrary correlated
+fibers and all finite queries; no new local restriction is inserted.
+Subtract $\log_2H_D(k)\le k\log_2m(D)$ from its logarithmic lower.
+The difference is also nonnegative by $H_D(k)\le M_1(D)$, giving
+(GDB.119). This uses the credited NCE converse and proves a new
+comparison with the restricted-menu optima, rather than a new converse
+endpoint. $\square$
+

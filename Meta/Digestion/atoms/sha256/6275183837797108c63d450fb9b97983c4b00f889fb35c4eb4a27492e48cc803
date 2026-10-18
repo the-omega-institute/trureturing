@@ -1,0 +1,10 @@
+# Auric FIB-ATOM: compound communication and calibration
+
+This is the same-theme continuation of
+[Mixed-state capacity and certification, §§108–115](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md#115-原不可见-schur-族的无辅助量子容量与等谱全像).
+It retains the original sources, coordinates and cut. The mathematical increment
+is the placement of supplied calibration information and persistence of a source
+label across uses. All proofs here are ordinary finite-dimensional mathematics
+consuming the cited coding theorems. They have no exact Lean application or
+kernel certification.
+

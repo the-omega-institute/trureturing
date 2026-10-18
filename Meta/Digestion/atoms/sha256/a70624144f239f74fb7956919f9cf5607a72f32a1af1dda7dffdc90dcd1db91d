@@ -1,0 +1,35 @@
+**Definition 24.3 (the remaining interpreted constraint obligation).**
+The recognizer supplies neither a complete normalizer for arbitrary
+$\rho^a(x)=T$ nor a decision for an unsupported chart. In particular
+failure of $L_a$, inability to eliminate a cyclic definition, or a
+remaining decorated-variable/non-ground-constructor target comparison
+is an eligibility failure only. The finite solution
+$(x,y,z)=(\beta,\beta,\alpha)$ of
+$\rho(x)=\langle y,z\rangle$ forbids a branch-only inverse rule that
+would replace $x$ by a pair. The solution $x=\beta$ of
+$\rho(x)=\langle x,\alpha\rangle$ likewise forbids an unqualified
+interpreted occurs check.
+
+The synchronous methods here do not make constructor-offset graphs
+synchronous in the original coordinates. For the particular graph
+$y=\langle x,\alpha\rangle$, the supplied convolution obstruction can
+be checked directly. Suppose a deterministic bottom-up automaton
+recognized it. In the accepted convolution for
+$x=\langle\alpha,t\rangle$ and
+$y=\langle\langle\alpha,t\rangle,\alpha\rangle$, the $LR$ cone is the
+one-sided padding of $t$ and the other occurrence of $t$ lies in the
+disjoint $R$ cone. Two different finite $t,t'$ give the same state on
+that one-sided cone. Replacing only the $LR$ cone preserves acceptance
+and valid convolution, but makes $y=\langle\langle\alpha,t'\rangle,\alpha\rangle$
+while $x$ stays fixed. This contradicts the graph. Determinization covers
+nondeterministic recognizers. This is a representation obstruction, not
+an undecidability theorem. Theorem 22.1 uses an exact change to recoverable
+original coordinates instead.
+
+Finite productivity must also remain part of the decision. Infinite
+pair trees can satisfy $\rho(\Omega)=\Omega$, whereas every finite $t$
+satisfies $t\ne\rho(t)$ by its clock. Passing to arbitrary infinite
+solutions can therefore change complete partitions. Neither infinite
+solutions, satisfiability alone, a finite output image, nor a sampled
+source family settles the finite original-prefix question.
+

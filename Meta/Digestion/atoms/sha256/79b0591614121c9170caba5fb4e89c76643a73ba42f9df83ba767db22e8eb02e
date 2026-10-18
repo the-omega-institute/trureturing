@@ -1,0 +1,16 @@
+### 命题 54.7（Mosco 形式极限不决定 metric 几何）
+
+在固定 \(X=\{0,1\}\) 上取恒定形式 \(\mathcal E_j=\mathcal E\)，故 Mosco 收敛恒等成立；再令
+
+\[
+d_{2j}(0,1)=1,\qquad d_{2j+1}(0,1)=2.
+\]
+
+形式有唯一极限，度量没有全序列极限。因此
+
+\[
+\text{Mosco 收敛}
+\not\Rightarrow
+\text{metric-measure 收敛}.
+\]
+

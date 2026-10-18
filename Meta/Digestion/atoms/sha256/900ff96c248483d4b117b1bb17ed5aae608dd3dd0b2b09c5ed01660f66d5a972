@@ -1,0 +1,43 @@
+**Theorem 8.2 (strict positive-operator saving).** For every $0\leq s<1$,
+
+$$
+G_{\rm old}^{V}(s)-(p_sD^\dagger D+q_sT^\dagger T)\succ0.
+\tag{IR.52}
+$$
+
+At $s=1$ these two operators are equal. At every $s\in[0,1]$ the
+shared operator of §7 and current JR §38 is strictly below the original
+JR §§30–31 family's supported high effect
+$D^\dagger D+s^2T^\dagger T$. Hence the saving is strict on every
+positive five-mode input whose supported compression is nonzero.
+
+Proof. Write $p_c=c_s$, $q_c=s^2c_s$. The comparison construction's
+high and low coefficients have precisely form (IR.36) with $z=0$,
+so the scalar necessity argument of Theorem 6.2 gives $q_c\geq q_s$.
+In the weak regime this also follows from $q_s=0$ directly.
+Moreover
+
+$$
+p_c-\alpha q_c=1-\alpha s^2-\beta
+ =k+\alpha(1-s^2).
+\tag{IR.53}
+$$
+
+Since $p_s=k+\alpha q_s$, for $s<1$,
+$p_c-p_s=\alpha(q_c-q_s)+\alpha(1-s^2)>0$.
+The difference in (IR.52) is therefore
+$(p_c-p_s)D^\dagger D+(q_c-q_s)T^\dagger T$, positive definite
+because $D$ is invertible. At $s=1$ both coefficient pairs equal
+$(k/(1-\alpha),k/(1-\alpha))$.
+
+The original JR §§30–31 family's effect minus RE's older effect is
+$(D^\dagger D+s^2T^\dagger T)/R_s\succ0$ for every strength.
+Adding the nonnegative old-minus-new difference, or using equality at
+$s=1$, proves strict saving relative to that original JR family
+throughout. A positive definite supported operator has positive trace against every nonzero
+positive supported compression, including singular ones. On
+$V^\perp$ all three explicit high effects are zero. Binary relabeling
+proves the same claims for negative record coefficients. This comparison
+is an operator theorem about explicit designs; it does not assert a
+universal coherent-input minimum for the new design. $\square$
+

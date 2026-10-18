@@ -1,0 +1,102 @@
+**Theorem 9.2 (Exact partial operation, concatenation and reversal).**
+The lawful starting-height domain and the induced current-ray map are
+
+$$
+D_\gamma=(\ell_b-m_\gamma,\ u_b-M_\gamma),\qquad
+T_\gamma(k,[h])=(k+A_\gamma,[h+H_\gamma(k)]),
+\tag{9.4}
+$$
+
+where an interval with its left endpoint at least its right endpoint
+is empty. The source domain is $D_\gamma\times(U_b/\Lambda_b)$.
+It is nonempty exactly when $M_\gamma-m_\gamma<W_b$, and it is all
+of $\mathcal M_b$ exactly when $a$ is identically zero. A compact
+promised interval $[l,u]\subset J_b$ is lawful for every starting
+phase exactly when
+
+$$
+l+m_\gamma>\ell_b,\qquad u+M_\gamma<u_b.
+\tag{9.5}
+$$
+
+For an open promised interval $(l,u)\subset J_b$ the corresponding
+necessary and sufficient inequalities are non-strict. Endpoint
+membership alone, $k,k+A_\gamma\in J_b$, is in general weaker than
+lawfulness of the command.
+
+Run $\gamma$ first, then $\delta$, translating the second increment
+path by $(A_\gamma,B_\gamma)$ to concatenate them. Write this ordered
+path as $\gamma*\delta$. Then
+
+$$
+\begin{aligned}
+D_{\gamma*\delta}&=D_\gamma\cap(D_\delta-A_\gamma),\\
+H_{\gamma*\delta}(k)&=H_\gamma(k)+H_\delta(k+A_\gamma),\\
+T_{\gamma*\delta}&=T_\delta\circ T_\gamma
+\quad\hbox{on precisely this domain}.
+\end{aligned}
+\tag{9.6}
+$$
+
+Let $\bar\gamma(t)=(a(T-t)-A_\gamma,b(T-t)-B_\gamma)$.
+The reversed command has
+
+$$
+D_{\bar\gamma}=D_\gamma+A_\gamma,\qquad
+H_{\bar\gamma}(k)=-H_\gamma(k-A_\gamma),\qquad
+T_{\bar\gamma}=T_\gamma^{-1}.
+\tag{9.7}
+$$
+
+The maps are smooth bijections between their indicated open source
+and image domains. The same formulas hold on the real lift
+$J_b\times U_b$, before reducing phase increments modulo $\Lambda_b$.
+
+Proof. Since the extrema are attained, positivity along the whole path
+is equivalent to $k+m_\gamma>\ell_b$ and
+$k+M_\gamma<u_b$. Also $m_\gamma\le0\le M_\gamma$, because the path
+starts at zero. This proves all the interval assertions, including
+containment in $J_b$, the nonempty-domain criterion and (9.5).
+To contain every point of $J_b$ requires $m_\gamma=0=M_\gamma$;
+these extrema force $a\equiv0$. On an open promised interval equality
+at either excluded endpoint is allowed, which proves the non-strict
+version.
+
+For any admitted $k$, continuity keeps $k+a(t)$ in a compact positive
+subinterval. Consequently (9.3) exists and (9.2) obeys the original ODE
+almost everywhere, with the original initial state. Its phase derivative
+is exactly $w\dot\chi$, and its probability derivative is $d\dot\kappa$.
+Since $w\in U_b$ and $d^{\mathsf T}w=1$,
+
+$$
+H_\gamma(k)\in U_b,\qquad d^{\mathsf T}H_\gamma(k)=B_\gamma.
+\tag{9.8}
+$$
+
+Changing a phase representative by $\Lambda_b$ changes its endpoint
+by the same lattice vector. Changing $\chi_*$ by a real lift period
+does not change $db$ or the endpoint ray. Thus (9.4) is a well-defined
+map of the actual rays with arbitrary fixed preparation phases.
+Differentiation of (9.3) in $k$ is valid locally to every order: all
+relevant derivatives of $w$ are bounded on a common compact positive
+interval and the integrator has finite variation. This gives smoothness.
+
+The second path has starting height $k+A_\gamma$, so its additional
+lawfulness condition is exactly the intersection in (9.6). Splitting
+the phase integral at the join proves its addition law. Equivalently,
+its excursions are
+
+$$
+m_{\gamma*\delta}=\min(m_\gamma,A_\gamma+m_\delta),\qquad
+M_{\gamma*\delta}=\max(M_\gamma,A_\gamma+M_\delta).
+\tag{9.9}
+$$
+
+Reversal has extrema $m_\gamma-A_\gamma,M_\gamma-A_\gamma$ and
+negates the phase integral after shifting the starting height. This
+proves (9.7). Its domain is exactly the image-height interval of
+$T_\gamma$, so it proves the smooth inverse assertion too. The
+concatenation with the reverse is the identity on $D_\gamma$, which
+can be a proper subset of $J_b$; it is not an identity command lawful
+on the whole fiber. $\square$
+

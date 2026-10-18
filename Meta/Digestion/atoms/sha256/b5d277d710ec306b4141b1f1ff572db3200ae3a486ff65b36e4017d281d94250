@@ -1,0 +1,43 @@
+**Definition 142.1 (Full score coefficients).** For each of the 13 names
+$C3,C2,K1,K2,K3,K4,K5,R1,R2,R3,R4,R5,R6$ let $y^{(q)}_j$ be the
+nonnegative integer weights listed below; unlisted row weights are zero.
+Define the entire score, including its full terminal-coordinate expansion,
+by
+
+$$
+\begin{aligned}
+S_q(p)&=\sum_{j=0}^{93}y^{(q)}_j p_{b_j}(E_j),\\
+h^{(q)}_{S,c}(r)&=\sum_{j=0}^{93}y^{(q)}_j
+ \mathbf1_{c_N(b_j,S)=c}\mathbf1_{r\in E_j},\\
+M^{(q)}_{S,c}&=\max_{0\le r\le5}h^{(q)}_{S,c}(r),\qquad
+B^{(q)}_S=\sum_cM^{(q)}_{S,c},\qquad B_q=\max_S B^{(q)}_S,\\
+W_q&=\sum_jy^{(q)}_j,\qquad
+\sum_jy^{(q)}_j\eta_{b_j}(E_j)=T_{q,0}+\sum_{i=1}^5T_{q,i}a_i.
+\end{aligned}
+\tag{142.1}
+$$
+
+The formulas and sparse weights specify all 306 coefficients of every
+full $N$ score, not only a scalar inequality. Each maximum is over all
+six labels. Pair cells remain distinct and no saturated support mask is
+imposed. Within a maxima tuple use empty, singleton $(0,1)$ and pair
+$(00,01,10,11)$ cell order. The schedule order is the declared order in Definition 140.2. The summary table supplies all target polynomials.
+
+<!-- mathematical-data: score-summary -->
+
+| Score $q$ | Cut | Weight $W_q$ | Upper $B_q$ | Constant $T_{q,0}$ | $(T_{q,1},\ldots,T_{q,5})$ |
+| --- | --- | --- | --- | --- | --- |
+| C3 | 9 | 29 | 15 | 13 | (0,2,4,5,5) |
+| C2 | 10 | 18 | 9 | 7 | (0,2,3,3,3) |
+| K1 | 11 | 45 | 24 | 22 | (0,2,5,8,8) |
+| K2 | 12 | 22 | 12 | 11 | (0,1,3,4,3) |
+| K3 | 13 | 7 | 4 | 4 | (0,0,1,1,1) |
+| K4 | 14 | 19 | 10 | 9 | (0,1,2,3,4) |
+| K5 | 15 | 46 | 24 | 21 | (0,3,7,7,8) |
+| R1 | 16 | 4 | 3 | 3 | (0,0,1,0,0) |
+| R2 | 17 | 9 | 6 | 6 | (0,0,2,0,1) |
+| R3 | 18 | 10 | 6 | 5 | (0,1,2,2,0) |
+| R4 | 19 | 45 | 24 | 21 | (0,3,8,6,7) |
+| R5 | 20 | 11 | 6 | 5 | (0,1,2,2,1) |
+| R6 | 21 | 52 | 27 | 23 | (0,4,9,7,9) |
+

@@ -1,0 +1,47 @@
+**定理 14.2（所有原成功控制器的逐相位三事件支配）。** 对任意在定义14.1整个来源上合法、正确且逐相位终止的完整控制器 $C$，存在同一原网络上的完整控制器 $C'$，在每个初相位恰执行
+
+$$
+\operatorname{Read}_s,\quad e_{t\bmod p},\quad
+\operatorname{Read}_v,\quad \operatorname{Halt}(t),
+\qquad e_r\in G,
+\tag{14.2}
+$$
+
+并满足
+
+$$
+|K_{C'}|\le |K_C|,\qquad
+L_{C'}(t)=3\le L_C(t),\qquad
+\mathcal T_{C'}(t)\le\mathcal T_C(t)
+\quad\text{对全部 }0\le t<m.
+\tag{14.3}
+$$
+
+若 $C$ 是固定词控制器，可取 $C'$ 也是固定词。原控制器可有任意长路径、根自环、平行边、重复Read、不同首次到达时间及首次到达后的坏边、零边或返回；这些竞争者均在量词内。
+
+证明。固定根余数 $r$。定理13.5表明在第一次 $\operatorname{Read}_v$ 以前，同一 $r$ 的全部 $q$ 个初相位有相同实际响应、命令和控制地址序列；原模 $q$ 信息尚未被观察，所有此前运输在模 $q$ 上保持双射。故第一次到达 $v$ 的末边 $e_r:s\to v$ 及其Ack后第一次发行Read的地址 $V_r$ 均只依 $r$，且 $e_r\in G$。令 $\mathcal V=\{V_r:0\le r<p\}$、$J=|\mathcal V|$，并置 $\kappa(r)=c_{e_r}\bmod p$。
+
+把根余数按 $V_r$ 分块。定理13.5的实际共同像碰撞说明，任一块内 $\kappa$ 必为单射；此结论允许两个来源在不同事件时刻到达同一地址。原因是定义13.1不向后续选择供应时刻：相同装置—控制状态的确定性续接相同。复用该定理的首次边地址下界及13.6的字面输出下界，原地址集含互不相交的至少 $p$ 个首边地址、$J$ 个具名 $\operatorname{Read}_v$ 地址、一个根Read地址及 $m$ 个Halt地址。因此
+
+$$
+m+p+1+J\le |K_C|.
+\tag{14.4}
+$$
+
+直接按（13.17）构造根地址 $R_\circ$、每个余数的 $E_r$、每个上述块的 $W_j$ 及全部 $H_t$，共 $m+p+1+J$ 个地址。根真实响应 $r$ 进入 $E_r$，$E_r$ 只发原末边 $e_r$，其真实Ack进入所在块的 $W_j$，然后发实际 $\operatorname{Read}_v$。这个新执行的响应必须是
+
+$$
+y=p b_{e_r}t+c_{e_r}\pmod m,
+\tag{14.5}
+$$
+
+而非旧长路径的读值。它的模 $p$ 值为 $\kappa(r)$，块内单射首先确定 $r$ 和已发边；随后完全使用（13.18）从该真实 $y$ 恢复原 $t$，直接进入字面 $H_t$。解码式定义有限更新表的表项，不增设运行时计算器、历史或边身份寄存器。全部地址的准确支持就是从整个原来源执行这三步所达到的目标—装置对；秩为 $3,2,1,0$，实际响应将支持送入所列后继，Halt支持只含其字面目标。故合法性、终止性及完整记忆上界成立。
+
+旧执行在每个 $t$ 上实际含根Read、该 $e_r$ 的一次出现和第一次到达Read；故（14.1）的正费和至少为 $\rho_s+\tau_{e_r}+\rho_v$。新执行恰付这个和，且只有三个事件。即使旧策略在到达后根据模 $q$ 响应继续旅行，后续发生费也不能降低已付和，得（14.3）。若某条旧分支除这三个出现外还执行非Halt命令，则在该初相位上费用严格降低。
+
+固定词的第一次到达末边为共同 $e$；定理13.5强制 $p$ 个首到达Read地址。取 $p$ 个单点块并全部发 $e$ 即得同样固定词的三事件替换及（14.3）。$\square$
+
+本定理保留初始来源的逐点身份、原合法动作及原初输出，并给事件数、完整地址数和实际费的支配。它不建立命令词、响应词、到达相位、停止时刻或整个装置—控制轨迹的相等，也不建立运行的双向模拟。只将每个根余数的原末边用于新执行；删去前缀后重新实际读取（14.5），原响应与新响应可以不同。此适用范围依赖全支持、同步具名合同、同一双因子边形及正的命令固定费；不延伸到费用反馈、隐藏守卫、相位相关费、异步时钟或受限来源。
+
+数学引文及范围。本条为 `repo-derived` 的普通源特定推导。Frohme, *Active Automata Learning with Adaptive Distinguishing Sequences*, [arXiv:1902.01139v1](https://arxiv.org/abs/1902.01139v1), §2.4、§6.1供应预定与自适应鉴别语义背景。Larrauri–Bloem, *Minimization and Synthesis of the Tail in Sequential Compositions of Mealy machines*, [arXiv:2105.10292v2](https://arxiv.org/abs/2105.10292v2), §5 Theorem4供应实现与闭合相容覆盖的通用对应；Renkin等, *Effective Reductions of Mealy Machines*, [arXiv:2206.10228v1](https://arxiv.org/abs/2206.10228v1), §3.1 Theorem1供应其IGMM模型的覆盖、闭合和非空输出条件。这些通用对应不供应（14.3）的原仿射逐相位费支配。所列可核对的条目中未定位这一具体固定费定理，不据此声称穷尽检索或全球原创。Türker–Ünlüyurt–Yenigün, *Effective algorithms for constructing minimum cost adaptive distinguishing sequences*, [DOI10.1016/j.infsof.2016.02.001](https://doi.org/10.1016/j.infsof.2016.02.001) 在此只用题名元数据指明相关主题，不以未核对的全文定理作前置。
+

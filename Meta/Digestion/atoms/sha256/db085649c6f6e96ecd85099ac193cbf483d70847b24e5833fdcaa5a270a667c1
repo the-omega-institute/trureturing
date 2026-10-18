@@ -1,0 +1,78 @@
+**Theorem 4.1 (One complete allocation).**
+For $x,y\ge0$, $W=x+y\le24\tau$, use the single law
+
+$$
+\lambda(x,y)=(1-24\tau)R+(24\tau-W)P^0+yP^\star+xQ,\qquad
+R=O(1,2;1,2,0).
+\tag{4.1}
+$$
+
+Its exact original error, for both its stopped realization and its counted
+$N$ completion, is
+
+$$
+\max\left\{
+5\tau+\frac{22W}{3072},\
+5\tau+u-\frac{159x+106y}{3072},\
+5\tau+v-\frac{53x+106y}{3072}\right\}.
+\tag{4.2}
+$$
+
+Proof. The branch weights are nonnegative and sum to one. Each component
+is a complete normalized law; identical tables can have their weights
+added. No counterfactual cell receives an independent budget.
+Put $t=W/24\in[0,\tau]$ and $h=5\tau+22W/3072$. On every first-zero
+fibre through seven, and for the positive base event, (3.3) gives exactly
+the event probabilities of the supplied equal-tail law
+
+$$
+(1-24\tau)R+24(\tau-t)P^0+24tP^\star.
+\tag{4.3}
+$$
+
+XVIII 321.1's all-word affine endpoint argument proves every core
+$A,C,P$ row at $h$ for the fixed core amplitudes. Equivalently,
+probabilities and demands for each independent event are affine in
+law, amplitudes and cap; apply the complete endpoint inequalities in
+3.3 and the exact anchor rows to this one mixture. Multiple-zero suffixes,
+negative singleton demands and independent union rows are all included.
+
+On every class-2 word the correct mass is exactly
+
+$$
+(1-24\tau)+(24\tau-W)\frac8{24}+W\frac{1002}{3072}
+=1-16\tau-\frac{22W}{3072}.
+\tag{4.4}
+$$
+
+Its deficit is $h$, so this core bound is attained. The positive nonbase
+mass is also exactly $h$.
+
+Mixing the same full tables on the entire later first-zero fibres gives
+
+$$
+\begin{aligned}
+c_8&=\frac{159x+106y}{3072},&
+c_9&=\frac{53x+106y}{3072},\\
+Z_8:=1-p_8(0)&=5\tau+\frac{88W}{3072},&
+Z_9:=1-p_9(0)&=5\tau+\frac{39W}{3072},\\
+D_8=Z_8-c_8&=5\tau-\frac{71x+18y}{3072},&
+D_9=Z_9-c_9&=5\tau-\frac{14x+67y}{3072}.
+\end{aligned}
+\tag{4.5}
+$$
+
+The independent union deficits $D_8,D_9$ are at most $5\tau$.
+Also $c_8,c_9\le159W/3072\le159\tau/128<5\tau\le a_8,a_9$.
+Each base deficit $Z_n-a_n=c_n+D_n-a_n$ is consequently at most $D_n$.
+The remaining correct deficits are precisely the last two entries in
+(4.2). Thus $A,C,P$ are checked separately without clipping a demand.
+
+For every actual $n>9$, the output is the finite positive law and no
+label $n$ is emitted. By (1.3) its exact error is
+$\max\{h,a_n\}=h$, because $a_n\le5\tau\le h$.
+All finite first-zero fibres have actual witnesses. The attained core
+deficit and the two exact later correct deficits give the lower direction
+in (4.2), and all other rows give its upper direction. The original
+resource realization is 6.1. $\square$
+

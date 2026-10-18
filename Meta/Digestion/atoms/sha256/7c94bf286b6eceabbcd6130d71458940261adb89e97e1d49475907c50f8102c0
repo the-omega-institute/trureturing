@@ -1,0 +1,47 @@
+**Definition 67.1 (source, retained carrier and commissioned field).** Retain the entire source object of Definitions55.1,62.1,64.5 and66.1: immutable INITIAL, every label, bracket, left/right order and distinct occurrence, fixed original leaf cap $H$, source-independent original initialization, actual versions and contexts, complete candidates and their whole-candidate guards, all acceptances and refusals, original Read and absorbing Stop, and every acquired chronological record. A mathematical field attached to a version is neither another source nor a new observation. Accepted Left/Right grafts remain distinct from whole-rho and retain Proposition66.8's boundary.
+
+For each authentic nonempty installed $D$, use exactly the particle spaces, measures, cable and stub coordinates, exterior killing, mixed slices, dissected cells, exchange symmetry, missing atomic collision coordinates and trace conditions of Definition64.5. Write $A_D=0\oplus A_{\delta,D,1}\oplus A_{\delta,D,2}$, $K_D=0\oplus K_{D,1}\oplus K_{D,2}$ and
+
+$$
+\begin{aligned}
+\mathscr H_D&=\mathbb Cr\oplus\mathscr H_{D,1}\oplus\mathscr H_{D,2},&
+\mathcal K_D&=\mathbb Cr\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2}^{\rm hc},\\
+W_D&=I_r\oplus W_{D,1}\oplus W_{D,2},&
+J_D&=I_r\oplus J_{D,1}\oplus J_{D,2}.
+\end{aligned}
+\tag{67.1}
+$$
+
+Here $J$ is atomic injection and $W$ is the already supplied harmonic calibration of Theorem64.6; no harmonic minimization, Schur reduction or particle-only history theorem is counted again as new content. All particle generators on the reference are zero. The singleton has its full two-position cable space but zero discrete two-occupation space, exactly as in §64.
+
+Keep the separately commissioned complete prescriptions $G_D^{\rm c}$ and $G_D^{\rm k}$ of (62.2)–(62.4), both with the unchanged common one-body field $\phi(p)=2^{-|p|}$. Put
+
+$$
+F_D^{\rm k}=L_D,\qquad F_D^{\rm c}=L_D-P_{\operatorname{Leaf}(D)},\qquad
+(F_D^\diamond)^{-1}=G_D^\diamond,\qquad
+\lambda I\le F_D^\diamond\le6I,\quad\lambda=3-2\sqrt2.
+\tag{67.2}
+$$
+
+These are static input identities. For completeness the common boundary identification follows directly from (62.3): if $p$ is a current leaf and $q\in D$, each absent child's common Green column value is $G^{\rm c}(p,q)/2$. Restoring the two absent terms subtracts exactly $G^{\rm c}(p,q)$ from the compressed row. Every nonleaf row is unchanged, so $(L_D-P_{\operatorname{Leaf}})G_D^{\rm c}=I$. This includes the singleton $F^{\rm c}=[1]$, whereas $F^{\rm k}=[2]$. The bounds follow from (62.4) and $0<F^{\rm c}\le L_D\le6I$. Equivalently $F^{\rm c}$ is the internal unit-conductance graph Laplacian with leaf pinning one; $F^{\rm k}$ has leaf pinning two. These local boundary loads are not a retained dynamic exterior for the infinite common field.
+
+At the fixed cap supply an additional field bank with one canonical oscillator for each address in $\mathcal B_H=\{p:|p|\le H-1\}$. Every full binary tree with at most $H$ leaves has depth at most $H-1$, since a path of depth $d$ has at least $d$ off-path sibling leaves. Thus this bank covers every legal installed source, including later newborn ports. Its $2^H-1$ oscillators are additional apparatus, distinct from the original qubit/address bank. Extend $F_D^\diamond$ by identity on $\mathcal B_H\setminus D$, with no cross block, and call the result $\widehat F_D^\diamond$. On the complete bosonic Fock space $\mathcal F_H=\Gamma_s(\ell^2(\mathcal B_H))$, set
+
+$$
+\mathsf n=d\Gamma(I),\qquad h_D=d\Gamma(\widehat F_D^\diamond),\qquad
+q_p=\frac{b_p+b_p^*}{\sqrt2},\quad
+\pi_p=\frac{b_p-b_p^*}{i\sqrt2},\qquad
+\lambda\mathsf n\le h_D\le6\mathsf n.
+\tag{67.3}
+$$
+
+Every installed mode, every excitation and all spectator modes are retained; a finite oscillator count is not a finite-state carrier. In these fixed canonical coordinates
+
+$$
+h_D=\tfrac12(q^{\mathsf T}\widehat F_D^\diamond q+
+\pi^{\mathsf T}\widehat F_D^\diamond\pi-\operatorname{tr}\widehat F_D^\diamond).
+\tag{67.4}
+$$
+
+This choice supplies both coordinate and momentum couplings along actual seams. In particular the momentum couplings are a new apparatus premise, not a native spring law. The same Fock vacuum is annihilated by every $h_D$ and has energy zero under one declared normal-ordering convention on reference and particle branches. An ordinary coordinate-spring field $(\pi^{\mathsf T}\pi+q^{\mathsf T}F_Dq-\operatorname{tr}\sqrt{F_D})/2$ has instead vacuum covariance $\langle qq^{\mathsf T}\rangle=F_D^{-1/2}/2$, generally changing with $D$. It is a different field contract; its vacuum cannot be replaced at renewal for free. All actual physical zero-energy calibration remains a supply obligation.
+

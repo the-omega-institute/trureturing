@@ -1,0 +1,90 @@
+**Theorem 17.2 (source-entry prefix obstruction).** For every $P,H,R$
+of Definition 17.1, the finite prescribed setup reaches $s_P$ and
+$i_P$ without any further input after $e_P$. The Base subinterval itself
+adds exactly $b+2$ cells to $A_{55}$, all on its actual original work
+port $d$; its meter receipts are additional material. Every finite
+source-entry comparison path ending at a cut $y$ at or after $s_P$
+satisfies
+
+$$
+A_{55}(y)\ \ge\ A_{55}(P)+b+2
+             \ =\ A_{55}(R)+b+2\ >\ A_{55}(R).
+$$
+
+For every earlier endpoint $e_P\le y<s_P$ on that source-entry path,
+the physical source-prelude PC differs from every outer Ready PC.
+Consequently every endpoint in the stated class, including $e_P$
+itself and all unfinished source prefixes, satisfies
+
+$$
+O^+(y)\ne O^+(R).
+$$
+
+In particular this holds for each $z_{P,c}$ whose bit is lawful at the
+first header IN, although that individual IN has
+$\Delta A_{55}=\Delta\mu=0$ and exactly one receipt relative to $i_P$.
+No service-completion premise is used for the comparison path.
+
+Proof. ARC Definition 5.2 retains the whole choice block on70. Its
+Tail/Base, literal length, descriptor and import work uses the annex
+scratch, descriptors and banks. GCA Definition 3.1 preserves all three
+outer successors; GENERAL Definitions 2.1–2.3 retain this source arm
+without a hook inside $F^A$. Thus outer01 actually enters the original
+header setup, leaves port13 unchanged, and constructs no cell on0–55
+before $e_P$. In particular port13 still has precisely $b$ ordinary
+cells there. Its heads and producer tokens have the stated current
+values; the gate bits are not the first two source-header bits.
+
+CAP Definition 4.6 places a Base before the physical header block on13.
+Expand that Base by CAP Definition 3.3. Home(13); MR(13); New($d$)
+positions actual heads. New is Tail, not a clearing or allocation
+operation. The scan visits all $b$ existing ordinary cells of13 and
+executes Append($d$,1) once for each. On the existing R it executes
+Append($d$,0); Finish($d$) then appends sep and positions the newest
+word by Last. By CAP Definition 3.1 every one of these $b+2$ Appends
+is the actual EX($d$); WR($d$,symbol); MR($d$). Each EX converts the
+old R into an ordinary cell and constructs the next R; the next Append
+uses that new boundary. The ordinary cells are distinct even when
+$d$ held old words or its role has been reused. The output word is
+exactly $1^b0\mathsf{sep}$. All other Base operations are reads and
+moves. Hence this subinterval adds exactly $b+2$ cells to $A_{55}$,
+including two cells when $b=0$.
+
+Every tape scanned in this setup is finite at the fixed reached $P$.
+Home, Tail and Last terminate at their existing boundaries or the newly
+constructed word; the Base loop visits exactly those $b$ cells. The
+remaining positioning or literal work before the first unrolled header
+IN uses CAP's same finite routines. This establishes the two finite
+checkpoints without assuming future source bits or completion of a
+source computation.
+
+TMC PR57.D1 and Theorem 14.2's per-row allocation argument give
+monotonicity of $A_{55}$ on every actual suffix. WR of a blank, a status
+or an old word, token return, loss of a handle and retirement do not
+delete constructed cells. GENERAL Lemma 2.6 preserves these same
+effects in the incidence carrier. Additional setup allocations only
+increase the bound. Thus the $b+2$ cells persist at every $y$ at or
+after $s_P$, irrespective of later raw input, refusal, fault, return
+or halt. Lemma 15.1 gives $A_{55}(R)=A_{55}(P)$ and proves the displayed
+strict inequality.
+
+Before $s_P$ the path is still in the first header prelude. CAP's
+static inlining and ARC Definition 4.1's separately numbered $F^A$
+give this prelude only its prescribed internal successors and header
+continuation. Its loops do not return to outer Ready. GENERAL
+Definition 2.1's fresh numbering, with the finite parity product,
+keeps those physical source PCs disjoint from the outer Ready PCs.
+The sole changed source exit is the final idle CTL into InnerReturn,
+after the original row/delivery/ACK/source-token route; ARC Definition
+5.4 places CaptureCAP and its Ready afterward. None is an early exit
+from Base. Therefore the physical control coordinate already separates
+every $e_P\le y<s_P$ from $R$. At later cuts $A_{55}$ separates them.
+Both are retained by $O^+$.
+
+Finally the original first header body is IN(5); EX13; WR13,5; MR13.
+At $z_{P,c}$ only that IN has occurred since $i_P$. It changes the
+actual latch/control and receipt, and no ordinary cell. The earlier
+Base cells remain. SOURCECALL Lemma 2.3 and GENERAL Theorem 9.1 supply
+the unchanged-row original action here; they do not identify $i_P$
+with the different starting cut $P$. This proves the last assertion. ∎
+

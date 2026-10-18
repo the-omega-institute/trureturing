@@ -1,0 +1,114 @@
+**Theorem 64.2 (complete half-beta exclusion on positive supports of ranks three through nine).** At $\beta=1/2$, no ordered positive trace-one center of rank $3\leq k\leq9$ and no single common rank-$(3k-5)$ projection satisfy the strict system (S.59) for the whole complex unit phase sphere.
+
+Proof. Set $h=1/\sqrt2$, $T=(1+h)/2$, $d=(1-h)/2$, and reuse the scalar function of (S.75):
+
+$$
+\Delta=4s(1-s)-\frac12=4(T-s)(s-d),\qquad
+C(s,t)=\frac1{4s+2h}+\frac{t}{s(4t+2h)},\qquad
+f(s,t)=t-\Delta C(s,t).
+\tag{S.92}
+$$
+
+By Theorems 59.2, 60.1 and 61.1, a putative strict solution has
+
+$$
+\frac{31}{50}<s<T,\qquad
+t_*(s)=\frac32(T-s)<t\leq1-s,\qquad f(s,t)<d.
+\tag{S.93}
+$$
+
+In particular $s>1/2$, $\Delta>0$, and all denominators in (S.92) are positive. These necessities come from one fixed $\eta,L,G$ on the whole complex sphere: (S.73)–(S.75) include both cap branches and singular pencils, while (S.78) uses the exact rank-five trace allocation. Their proofs, including the quartic exclusion in (S.79)–(S.82), are reused without replacement.
+
+Choose
+
+$$
+\xi=2t+s-T,\qquad x=\sqrt{2s},\qquad y=\sqrt\xi,\qquad
+X=\operatorname{diag}(x,y,\ldots,y),\qquad c=\frac1y.
+\tag{S.94}
+$$
+
+The trace necessity gives $\xi>2(T-s)>0$. Also $\xi<2s$, because $t\leq s<T$, so $0<y<x$. To establish the other needed ordering, positive-side squaring shows
+
+$$
+\frac{s}{x}\geq\frac{t}{y}
+\quad\Longleftrightarrow\quad
+F_s(t):=s(2t+s-T)-2t^2\geq0.
+\tag{S.95}
+$$
+
+This polynomial is concave in $t$. Its endpoint values on $[t_*(s),1-s]$ are
+
+$$
+F_s(t_*)=\frac{(T-s)(13s-9T)}2,\qquad
+F_s(1-s)=-3s^2+(6-T)s-2.
+\tag{S.96}
+$$
+
+The bounds $7/10<h<71/100$ follow by squaring positive rational numbers; in particular $T<43/50$. Hence $13s-9T>13(31/50)-9(43/50)=8/25>0$. The second polynomial in (S.96) is concave in $s$ on $[31/50,T]$. At $s=31/50$ its value is greater than $21/625$, by $T<43/50$, and at $s=T$ it equals $2dh>0$. Both endpoint values in (S.96) are therefore positive throughout the required interval, proving (S.95).
+
+The eigenvalues of $K_c$ are $s/y$ once, $s/x$ twice, and $\lambda_j/y$ three times for each $j\geq2$. Since every $\lambda_j\leq t$, the five largest, with multiplicities and any ties, are
+
+$$
+\frac{s}{y},\quad\frac{s}{x},\quad\frac{s}{x},\quad
+\frac{t}{y},\quad\frac{t}{y}.
+\tag{S.97}
+$$
+
+Thus this entire ordering cone, including every ordered positive tail, gives
+
+$$
+\begin{aligned}
+J_c(X)&=\frac{2s}{x}+x+\frac{s+2t-T}{y}+y
+=2\sqrt{2s}+2\sqrt{2t+s-T},\\
+g(s)&=\frac{5T+s-4\sqrt{2sT}}2,\\
+J_c(X)\leq4\sqrt T&\quad\Longleftrightarrow\quad t\leq g(s).
+\end{aligned}
+\tag{S.98}
+$$
+
+Indeed $2\sqrt T-\sqrt{2s}>0$, so squaring that positive comparison with $\sqrt\xi$ proves the equivalence. Necessity (S.91) now forces $t>g(s)$.
+
+For the opposite consequence, $C(s,t)$ increases with $t$, its second summand having derivative $2h/[s(4t+2h)^2]>0$. Hence $C(s,t)\leq C(s,1-s)$. Put $Q=s(2s+h)(2-2s+h)>0$. Expansion using $h^2=1/2$ gives the exact identity
+
+$$
+\begin{aligned}
+\frac9{10}-4(s-d)C(s,1-s)&=\frac{P_h(s)}{10Q},\\
+P_h(s)&=44s^3+(-84+40h)s^2
++\left(\frac{89}{2}-42h\right)s+10h-5.
+\end{aligned}
+\tag{S.99}
+$$
+
+Here is a complete sign certificate. For $s=31/50+(6/25)u$, $0\leq u\leq1$, write
+
+$$
+P_b\!\left(\frac{31}{50}+\frac6{25}u\right)
+=\sum_{j=0}^3 p_j(b)\binom3j u^j(1-u)^{3-j}.
+\tag{S.100}
+$$
+
+All eight endpoint coefficients are
+
+| $j$ | $p_j(7/10)$ | $p_j(71/100)$ |
+| --- | --- | --- |
+| $0$ | $20127/62500$ | $4928/15625$ |
+| $1$ | $2131/62500$ | $524/15625$ |
+| $2$ | $15143/62500$ | $3992/15625$ |
+| $3$ | $97179/62500$ | $24836/15625$ |
+
+These are all strictly positive. The Bernstein weights are nonnegative and sum to one, so both endpoint polynomials are strictly positive on the full interval $[31/50,43/50]$, including its endpoints. Since $P_h$ is affine in $h$ and $7/10<h<71/100$, it is a convex combination of those two positive polynomials. In particular (S.99) proves $4(s-d)C(s,1-s)<9/10$ on $[31/50,T]$.
+
+For $s<T$, put $z=\sqrt{s/T}<1$. Direct factorization and $\sqrt2>7/5$ give
+
+$$
+\begin{aligned}
+g(s)-d&=(T-s)\left(\frac{2\sqrt2}{1+z}-\frac12\right)
+>(T-s)\left(\sqrt2-\frac12\right)
+>\frac9{10}(T-s),\\
+f(s,t)&>t-\frac9{10}(T-s).
+\end{aligned}
+\tag{S.101}
+$$
+
+The second line uses $\Delta=4(T-s)(s-d)>0$, $C(s,t)\leq C(s,1-s)$ and the strict bound just proved. Thus $t\geq g(s)$ would imply $f(s,t)>d$, contradicting (S.93). Strict feasibility requires $t<g(s)$ as well as $t>g(s)$, an impossibility; $t=g(s)$ is excluded too. Theorem 61.1 already excludes the complementary leading-eigenvalue bands, including $s=31/50$ and $s=T$. This proves the assertion for every stated support and every ordered positive tail. $\square$
+

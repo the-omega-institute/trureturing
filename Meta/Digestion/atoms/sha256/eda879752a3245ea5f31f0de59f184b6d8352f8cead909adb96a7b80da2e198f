@@ -1,0 +1,31 @@
+### theorem 7.1: 定理 5：完整 separator 的隐藏维数
+
+固定所有 prefix 和 suffix 边缘后，隐藏纤维的通用维数为
+
+$$
+\boxed{
+g_n=
+N_n-2N_{n-1}+N_{n-2}.
+}
+$$
+
+利用递推关系，对于 $n\ge4$，
+
+$$
+g_n=N_{n-4}.
+$$
+
+因此
+
+$$
+g_3=1,\qquad
+g_4=1,\qquad
+g_5=2,\qquad
+g_6=3,\qquad
+g_7=5.
+$$
+
+长窗口的隐藏维数再次呈 Fibonacci 增长。
+
+---
+

@@ -1,0 +1,28 @@
+### 76.1. Relative antiunitary parity and the remaining implication
+
+Retain the unit-entry input convention of §75 and fix \(0<|b|<1\).
+For \(w=(x,y)\), put \(\mu(w)=(\sum x_j,\sum y_j)\in\mathbb C^2\).
+Theorem 75.2 makes both entries nonzero for every noncanonical ray.
+The following implication remains a separate mathematical question:
+\[
+ w\perp v\quad\Longrightarrow\quad\mu(w)\perp\mu(v)
+ \qquad(w,v\text{ noncanonical common-flat}).                 \tag{76.1}
+\]
+This section gives exact finite systems equivalent to its failure; it
+proves no emptiness assertion for those systems.
+
+The choice of a three-distinct upper channel in Theorem 75.1 records a
+\(\Theta\) flag. Simultaneous application of \(\Theta\) preserves
+orthogonality, so only the relative flag matters. For selected inputs
+\(w=(x,y)\), \(v=(x',y')\), the applicable cross equations and targets are
+\[
+\begin{array}{c|c}
+ \mathcal O=\sum_j(\bar x_jx'_j+\bar y_jy'_j)=0
+   &\bar X X'+\bar Y Y'=0\\
+ \mathcal S=\sum_j(x_jy'_j-y_jx'_j)=0
+   &X Y'-Y X'=0.
+\end{array}                                                   \tag{76.2}
+\]
+Indeed \(w^*\Theta v=-\overline{\mathcal S}\). These are two alternative
+systems selected by relative parity, not simultaneous requirements.
+

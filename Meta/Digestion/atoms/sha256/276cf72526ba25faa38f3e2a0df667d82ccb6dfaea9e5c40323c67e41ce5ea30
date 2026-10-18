@@ -1,0 +1,44 @@
+**命题 C-106.4（C-105 读口在有泄漏时的无承诺认证）。** 对任意复二份密度算子
+$\Gamma$，不施加人口纤维或状态族限制，记
+
+$$
+\begin{aligned}
+d_0&=p_{0,13}(\Gamma),&d_{13}&=p_{13,0}(\Gamma),\\
+x&=p_{0,0}(\Gamma),&y&=p_{13,13}(\Gamma),\\
+c&=\langle0,13|\Gamma|13,0\rangle,&
+g&=p_R(\Gamma)-\tfrac12(d_0+d_{13})=\operatorname{Re}c.
+\end{aligned}
+\tag{C106.10}
+$$
+
+所有 $d_0,d_{13},x,y$ 非负。PPT 必须满足
+
+$$
+|c|^2\le xy,\qquad |g|\le\sqrt{xy};\qquad
+|g|>\sqrt{xy}\ \Longrightarrow\ \Gamma\text{ 非 PPT 且纠缠}.
+\tag{C106.11}
+$$
+
+不违反这些不等式不能认证一般二份态可分离。
+
+证明。这里消费 Peres PPT 必要条件及正半定二阶主子式条件：
+$\Gamma^{\mathsf T_2}$ 在 $|0,0\rangle,|13,13\rangle$ 上的压缩恰为
+$\begin{pmatrix}x&c\\\overline c&y\end{pmatrix}$。
+若其正半定，行列式 $xy-|c|^2\ge0$。
+由 $|\operatorname{Re}c|\le|c|$ 与 $x,y\ge0$ 得所列读口界；违反它即可排除 PPT。
+这是已知正性判据在当前读口中的参数对应，不另立一般正性定理。
+对 $g$ 的正方向，还可使用线性算子
+
+$$
+W=\tfrac12(P_0\otimes P_0+P_{13}\otimes P_{13})
+  -R_++\tfrac12(P_0\otimes P_{13}+P_{13}\otimes P_0),
+\qquad \operatorname{tr}(W\Gamma)=\tfrac{x+y}{2}-g.
+\tag{C106.12}
+$$
+
+其期望等于 $z_-=(|0,0\rangle-|13,13\rangle)/\sqrt2$ 在部分转置下的二次型，
+故在所有 PPT 态上非负。算术–几何均值给 $\sqrt{xy}\le(x+y)/2$，
+所以根号界在不对称泄漏下至少与这一固定线性界一样强；在 $x=y$ 时二者相同。
+在 $\mathfrak D$ 上 $x=y=0$、$d_0=d_{13}=1/5$，恢复 (C106.7)，
+而不曾把一般来源换成 $\Gamma_t$。证毕。
+

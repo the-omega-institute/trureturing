@@ -1,0 +1,11 @@
+**定义 5.2.1（有限过去—未来过程）。** 令 $\mathcal A$ 为有限动作字母表，$\mathcal Y$ 为有限结果字母表。对每个有限动作词 $a=a_0\cdots a_{t-1}$，过程给出结果词的概率
+
+$$
+P(y\mid a),
+\qquad y\in\mathcal Y^t.
+$$
+
+允许的过去实验族记为 $\mathcal U$，允许的未来测试族记为 $\mathcal V$。一个 $u\in\mathcal U$ 可以包含过去动作、过去结果、准备规则及其合法档案；一个 $v\in\mathcal V$ 可以包含未来动作词、未来效果和停止标签。
+
+<a id="claim-5-2-2"></a>
+

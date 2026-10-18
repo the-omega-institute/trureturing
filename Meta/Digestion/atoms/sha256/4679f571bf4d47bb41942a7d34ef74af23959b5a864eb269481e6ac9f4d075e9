@@ -1,0 +1,20 @@
+**Definition 269.1 (An exact quotient fibre).**
+Let $L\ge7$ and $3<r<k<\ell<m\le L$. For $s\ge0$ and
+$0\le h\le s$, prescribe
+
+$$
+\begin{gathered}
+\beta_1=-s,\quad\beta_3=s,\quad\beta_r=-s,\quad
+\beta_k=s,\quad\beta_\ell=h,\quad\beta_m=s,\\
+\beta_i=0\text{ otherwise},\qquad K=6s+h.
+\end{gathered}
+\tag{269.1}
+$$
+
+The fibre consists of all full nonnegative scores with exactly this
+$Q$, allowing arbitrary $A,C,P,T$ and all their cancellations.
+Let $\varphi=(1,2,3,r,k,\ell,m)$. A seven-bit word below is embedded
+at those addresses with every other bit one; its first-zero label is
+mapped by $\varphi$. This defines a score and does not restrict the
+acquisition catalog.
+

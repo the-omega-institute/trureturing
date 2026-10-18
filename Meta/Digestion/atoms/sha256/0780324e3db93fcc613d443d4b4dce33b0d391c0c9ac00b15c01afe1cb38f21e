@@ -1,0 +1,16 @@
+**定理 27.2（The coprime one-hole extension）。** Suppose $g=1$. At every actually acquired archive of Definition 27.1 with $|A|\le m$ and $\sigma\le k-m$, for every $d\ge0$ there is an adaptive continuation of additional fee at most $d$ if and only if there is a preset continuation of that fee, if and only if codes as in (27.1) exist. Consequently
+
+$$
+D_{\rm ad}(A,\lambda;b,\sigma)
+=D_{\rm pre}(A,\lambda;b,\sigma)=K(A,\lambda;b).
+\tag{27.2}
+$$
+
+This includes every chronological offset, wrapped window, repeated label and window with only one missing physical phase.
+
+Proof. The successful-path code extraction and early-stopping convention are those of [S15, Theorems 3.3–3.4]: at a nonconstant common-tail archive a rejecting action merges all candidates into the same absorbing output, so it cannot complete the target. On every actual successful path record the successive endpoint differences and pad with zero after its leaf. Unavailable physical phases give zero coordinates. Equal padded codes force the same observed prefix through the earlier stopping leaf, so different labels cannot have equal codes. Thus every adaptive protocol of depth at most $d$ supplies (27.1). This direction makes no independent-row assumption.
+
+For sufficiency take such a code assignment and prescribe its $i$th row on $A\cap W_{b+i}$. A window has $m+1$ physical vertices. If it has at least two holes relative to the fixed $A$, [S15, Lemma 2.1] constructs a literal realization containing a zero. If it has exactly one hole, necessarily $|A|=m$ and $A\subset W_{b+i}$. Even full-path parity fixes the missing charge and gives a unique word by (1.5). If that word is $1^m$, complement coordinate $i$ of every code $z_j$, $j\in A$. Every phase of $A$ is available at this coordinate, so the new codes remain in their lists. Complementing a common coordinate is a bijection on code vectors and preserves every required separation. The new row differs from the all-one word's response on $A$, so its unique inverse is not $1^m$ and contains a zero. Apply this operation independently at each such row. The fixed support is the original $A$ throughout; no hole is borrowed from a different output child.
+
+Every resulting word contains a zero. The first leading run is at most $m-1$, so its seam satisfies $\sigma+\alpha\le k-1$. Its terminal tail is at most $m-1$. Thereafter every seam has length at most $2m-2<k$. All prescribed code rows therefore occur on one literal stream, with every padding bit and every block emitted and paid. Its label decoder is well-defined by code separation. This proves all three conditions equivalent at every finite horizon. Finiteness follows from the safe paid phase-recovery stream in [S1, Theorem 3.1]; restriction of its phase-distinguishing codes to $A$ gives $K\le T-1$. Empty and constant archives stop freely. ∎
+

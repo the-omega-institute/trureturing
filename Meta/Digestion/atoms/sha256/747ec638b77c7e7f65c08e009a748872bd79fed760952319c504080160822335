@@ -1,0 +1,107 @@
+**引理 87.4（A lawful three-block adaptive controller on the entire target）。** The target (87.4) is acquired adaptively with worst fee three under both alphabets. Every high source pays one whole root, initial bottom pays zero, and the displayed rule lets every low source pay exactly three blocks.
+
+证明（one actual root and its complete children）。 Remember the free INITIAL value $v$. Issue
+
+$$
+P=11(01)^6=11010101010101.
+\tag{87.13}
+$$
+
+It has fourteen bits, prefix $110$, a zero and terminal tail one. Its charge is $\mathbf1_S$, where
+
+$$
+S=\{0,2,3,\ldots,14\},\qquad S^c=\{1,15,16\}.
+\tag{87.14}
+$$
+
+This follows from its charges $1,0,1$ at phases $0,1,2$, one at every subsequent phase through $14$, and zero at the two omitted phases. Each surviving low record is now exactly
+
+$$
+(v\oplus\mathbf1_S(j),-j+14,1).
+\tag{87.15}
+$$
+
+High tail $15$ rejects on the root's first bit and high tail $14$ on its second, but each still emits all fourteen bits and returns $R$ only at the completed paid endpoint. Initial bottom instead returns $L_\bot$ at its free reading. The root-success children and their labels always refer back to (87.4).
+
+For root difference zero use the complete words at absolute indices one and two
+
+$$
+U=0^3 1 0^{10}=00010000000000,
+\qquad V=0^5 1 0^8=00000100000000.
+\tag{87.16}
+$$
+
+Their full supports are respectively $\{0,1\}$ and $\{0,16\}$: their isolated ones are at absolute emitted positions $17$ and $33$. On this actual child phase zero is absent. The source's own two subsequent differences give
+
+$$
+1\longmapsto(1,0),\qquad
+15\longmapsto(0,0),\qquad
+16\longmapsto(0,1).
+\tag{87.17}
+$$
+
+At the second pulse's completed endpoint return respectively $A_{10},C,A_{11}$ when $v=0$, and $D_{00},C,D_{00}$ when $v=1$. Both words start and end zero, have only one internal one, and their actual seam sums with the root and with each other are $1$ and $0$, below sixteen. No extra clearing or terminal word is issued. Prescribing their charge at absent phase zero is part of these words, not a read on another source.
+
+证明（the small-capacity positive continuations）。 On $S$ the four-bit table is a bijection onto
+
+$$
+\Omega=\mathbb F_2^4\setminus\{0001,0011\}.
+\tag{87.18}
+$$
+
+For $v=0$ let $c^{(0)}(j)$ be its first two bits, and for $v=1$ let $c^{(1)}(j)$ be its last two bits. The four component labels use the four respective two-bit codes without any further selection. At the actual suffix indices one and two the omissions are
+
+$$
+M_1=\{12,13\},\qquad M_2=\{9,10\}.
+\tag{87.19}
+$$
+
+The first coordinate of both component codes is zero at phases $12,13$, since their table entries are $0000,0101$. The second coordinate of both is zero at phases $9,10$, whose entries are $0010,1010$. Thus these are simultaneous restrictions on the same row/column table at the actual chronological windows.
+
+For $t=1,2$ prescribe a full row by
+
+$$
+\begin{aligned}
+a_t^{(v)}(j)&=c_t^{(v)}(j)&&j\in S,\\
+a_t^{(v)}(1)&=\bigoplus_{j\in S}c_t^{(v)}(j),\\
+a_t^{(v)}(15)&=a_t^{(v)}(16)=0.
+\end{aligned}
+\tag{87.20}
+$$
+
+The phase-one compensation vectors are $00$ for $v=0$ and $10$ for $v=1$. Every full row is even and vanishes on its own pair (87.19); no compensation vertex is an omitted vertex. These are offline prescriptions for the same word's literal bits. The positive child observes none of the three excluded phases and receives no sibling output. Inverting each full row at its actual index by (87.9) gives
+
+$$
+\begin{aligned}
+A_1^{(0)}&=11100111101001,&
+A_2^{(0)}&=11011111010111,\\
+A_1^{(1)}&=11110001001101,&
+A_2^{(1)}&=00100000000101.
+\end{aligned}
+\tag{87.21}
+$$
+
+Here the letter $A$ denotes a word, while its indexed semantic labels in (87.4) retain their subscripts. Every displayed word has fourteen bits and contains zero. Their literal leading/trailing run pairs, including the inherited root, are
+
+$$
+\begin{array}{c|ccc|cc}
+\text{positive value}&P&A_1^{(v)}&A_2^{(v)}&
+\rho(P)+\alpha(A_1^{(v)})&
+\rho(A_1^{(v)})+\alpha(A_2^{(v)})\\\hline
+0&(2,1)&(3,1)&(2,3)&4&3\\
+1&(2,1)&(4,1)&(0,1)&5&1
+\end{array}
+\tag{87.22}
+$$
+
+Every seam is strictly below $k=16$, and every internal run is shorter than sixteen because a word has only fourteen bits. Since each word contains zero, the preceding actual outgoing tail equals its displayed literal trailing run. The inherited-tail exception for all-one words is not silently discarded. Every positive candidate safely executes the entire concatenation $P\mid A_1^{(v)}\mid A_2^{(v)}$ with no wait, padding, repair or cleanup insertion.
+
+If its own completed scalars are $v_0,v_1,v_2,v_3$, with remembered $v_0=v$, then
+
+$$
+(v_2\oplus v_1,v_3\oplus v_2)=c^{(v)}(j).
+\tag{87.23}
+$$
+
+Return $A_{c^{(0)}(j)}$ for the remembered value zero and $D_{c^{(1)}(j)}$ for remembered value one. These acquired bits decode the immutable component label, without revealing or using a hidden phase. The suffix selection uses the free INITIAL value, not a reinterpreted current value. Each component's four labels occurs on $S$, so there are actual positive sources paying all three words. The separate negative, high and bottom rules complete the entire full target at the stated fee. ∎
+

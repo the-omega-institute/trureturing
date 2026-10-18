@@ -1,0 +1,50 @@
+**Convention 16.3 (mathematical attribution and control boundary).** The
+algebraic ansatz (CG.112)–(CG.116), its rational center and the
+complementary three-Kraus construction are credited supplied
+mathematics. The particular instance-specific contribution is their
+root isolation, strict inequalities, full-class witness and exact-time
+attaining-channel deduction for (CG.20). The original histories,
+calibrated target law and common-input contract retain Attribution 7.2;
+the attainment, strict lower gap and fixed-filter upper facts are
+reused from §§8–12. These are ordinary computer-assisted and analytic
+proofs; no Lean/kernel verification or worldwide priority is asserted.
+
+The finite-matrix Choi/Kraus and joint CP/TP framework is established
+in Heinosaari, Jivulescu, Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/html/1205.0641v3), §2.1 and §6.1.
+Their Theorem 5 concerns at-most-qubit pairs and is not a qutrit
+pairwise substitute for a common channel. The full diagonal-sign
+covariance form, including population transfer and transposed
+coherence terms, is established in Nechita and Park, *Random covariant
+quantum channels*, [arXiv:2403.03667v2, §5](https://arxiv.org/html/2403.03667v2),
+[DOI:10.1007/s00023-025-01558-y](https://doi.org/10.1007/s00023-025-01558-y).
+The explicit block calculation (CG.128)–(CG.129) is the required
+specialization here. Jenčová, *Comparison of quantum channels and
+statistical experiments*,
+[arXiv:1512.07016v2](https://arxiv.org/html/1512.07016v2), Theorem 4,
+uses one common channel and the $2\epsilon$ trace-norm convention.
+These finite-dimensional literature results do not by themselves
+settle exact-time outputs; (CG.130)–(CG.133) and (CG.148)–(CG.153)
+provide the needed measure-level comparison directly.
+
+The attaining instrument acts on one normalized reached-old-live-cut
+specimen. The fixed metadata can be tensored onto every output in their
+same state. No height, parity, waveform, callback, helper specimen or
+survival-mass prior is furnished to it. All live coherences and five
+original labels are retained, with index $4$ still denoting mode $13$;
+the output time is exactly $t\in[0,1]$, equivalently $6+t$.
+The instrument specifies a joint output law and has no post-failure
+operation or acceptance renormalization. Mathematical sign averaging
+and real matrices install no physical conjugation gate.
+
+Realizing this particular common CPTP instrument using only the
+original native calibrated-actuator menu remains a separate interface
+obligation. Neither the source-indexed $K_x$ of (CG.14), an ideal
+continuous phase-record law nor a linear-observation coercivity lemma
+supplies that correspondence. The result provides the exact benchmark
+for such an interface, without constructing the interface or granting
+extra observations or controls. It asserts neither finite physical
+storage of an exact time, efficient synthesis, uniqueness of the
+optimizer, an unconditional-prefix optimum nor completion of the
+continuing research programme.
+

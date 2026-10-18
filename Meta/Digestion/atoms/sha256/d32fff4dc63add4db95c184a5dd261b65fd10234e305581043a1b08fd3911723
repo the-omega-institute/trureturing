@@ -1,0 +1,12 @@
+### 定理 56.4（有限可见记忆回收全局密度）
+
+\[
+\boxed{
+c_\ast=\sup\{d(Q):m<\infty,\ Q\text{ 为允许的有限可见 Markov 阶平稳律}\}.
+}
+\]
+
+#### 证明边界
+
+上界来自 \(\Phi_n(Q_n)\le\kappa_n\)。下界使用 dev 的 guarded-payload 构造：给定有限层近极值 \(\mu\) 和 \(\varepsilon>0\)，构造固定有限可见阶数且 full-support 的平稳 \(Q\)，使 \(d(Q)>c_\ast-\varepsilon\)。因此全局密度近极值可以由某个有限可见记忆层回收。该步骤是有限概率和有限图论，不是量子、连续时空或 RH 定理。来源：[FIB LEGAL EDGE LOAD FINITE VISIBLE MEMORY COMPLETENESS](https://github.com/the-omega-institute/trureturing/blob/dev/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md)，dev commit 93f4ac5279，merge #15837。
+

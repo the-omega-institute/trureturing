@@ -1,0 +1,59 @@
+**定义 7.1（每槽的完整过滤）。** 对实 $d,t$，令
+
+$$
+E=48-d,\ B=Y-d,\ A=z-d,\ V=24-d,\ u=2t-1,\ D=tu,
+$$
+
+及
+
+$$
+\begin{aligned}
+I&=126Eu-35Bt-45dD,&H&=42Eu+35Bt+5dD,\\
+Q_5&=-14Eu+35Bt-3dD,&K_6&=-21Eu+35Bt-5dD.
+\end{aligned}
+\tag{7.1}
+$$
+
+要求
+
+$$
+t>1,\qquad d\notin\{0,24,48,z,Y\},\qquad IH Q_5 K_6\ne0.
+\tag{7.2}
+$$
+
+置
+
+$$
+j=140VD/I,\quad n=70AD/H,\quad r=n-j,\quad b=t-1,\quad c=j-b,
+\tag{7.3}
+$$
+
+并要求全部严格来源过滤
+
+$$
+0<r<1,\qquad c>0,\qquad(t-1)c=r(1-r).
+\tag{7.4}
+$$
+
+整个 $g$ 只取式 (3.1) 的 $f=E/t,h=B/u$。它的采样为
+
+$$
+(g(i))_{i=0}^7=
+\left(-d,\frac I{140D},\frac Et,\frac H{70D},\frac Bu,
+                         \frac{Q_5}{28D},\frac{K_6}{35D},0\right).
+\tag{7.5}
+$$
+
+定义这个世界的实际响应
+
+$$
+\begin{aligned}
+\mathsf P(d,t)&=d+\frac{Q_5(H+70At)}{28tH},\\
+R_J(d,t)&=d+\frac{K_6}{35D}(1+2r+2b+c),\\
+R_M(d,t)&=d+\frac{K_6}{35D}(2+r+5b+c).
+\end{aligned}
+\tag{7.6}
+$$
+
+显式保留 $\mathsf P(d,t)\ne d$；在合法源上它也由 $Q_5\ne0$ 和正第五迹推出。固定第五响应 $p$ 时再要求 $\mathsf P(d,t)=p$。这些不是独立重新拟合的迹变量。
+

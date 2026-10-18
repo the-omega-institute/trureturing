@@ -1,0 +1,50 @@
+**Corollary 206.12 (Balanced completion with an explicit residual charge).**
+For an input (206.7), choose $0\le d\le\min(\mu,1)$ and set
+
+$$
+h=(\mu-2d)_+,\qquad s=\mu-h=\min(\mu,2d),\qquad
+c_1=c_2=h,\quad p_1=p_2=s,\quad
+\eta=\gamma,\quad \tau=\mu-d,\quad W'=3\mu-d.
+\tag{206.33}
+$$
+
+The balanced score has exact cost $d$, and its exact nonnegative
+residual charge is
+
+$$
+\Theta=\max\left\{0,2h-E,h-\gamma_2,
+             \frac{L-2}{L+1}(3\mu-d-W)\right\}.
+\tag{206.34}
+$$
+
+Thus $d+\Theta\le1$ suffices. If $\mu\ge1$, $\delta\le1$, three
+late totals attain $\mu$, and
+$E\ge2(\mu-2)_+$, $\gamma_2\ge(\mu-2)_+$, take $d=1$.
+This is a corollary of the balanced construction, not another
+independent family gain.
+
+**Proof.** The tail is nonnegative because $d\le\mu$, and
+$W'\ge2\mu$. Formula (206.29) gives $D=\max(d,s/2)=d$.
+With $R_k=0$, the residual readings are
+
+$$
+2h-E,\quad h-\gamma_2,\quad
+\frac{k-2}{k-1}(2h-E),\quad
+\frac{k-2}{k+1}(3\mu-d-W).
+$$
+
+After adjoining zero, the $u_k$ column is dominated by
+$\max(0,2h-E)$. If the last bracket is positive, its coefficient
+increases to $(L-2)/(L+1)$; if nonpositive, zero dominates it.
+These are the proved dominances yielding precisely (206.34).
+The unit assertion uses $W\ge3\mu-1$ from three-label collection.
+The cases $\mu=d=0$ give the zero score. At $d=0,\mu>0$, the
+constructed score has nonzero early correct rows and tail but zero
+excess. The endpoints $d=\mu$ and $\Theta=1$ remain included.
+
+This completion test is not universal. When $E=0$ and $\mu>2$, all
+allowed $d\le1$ have $h=\mu-2d$, whence
+$d+\Theta\ge d+2(\mu-2d)=2\mu-3d\ge2\mu-3>1$.
+This is a limitation of (206.33), not nonmembership in $E_N$.
+$\square$
+

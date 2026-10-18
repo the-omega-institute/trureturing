@@ -1,0 +1,51 @@
+**Theorem 13.1 (heterogeneous two-sector identity).** In Theorem 12.3,
+suppose $w_v$ gives value $A_v\ge0$ to every even perfect four-leaf
+tree and value $B_v\ge0$ to every odd one. Its values elsewhere in
+$S_3$ are arbitrary nonnegative numbers. If $G$ is connected, then
+
+$$
+Z_G=
+2^{e-n}\left[
+\prod_{v\in V}(A_v+B_v)+
+\prod_{v\in V}(A_v-B_v)
+\right].
+\tag{GDB.54}
+$$
+
+For disconnected $G$, multiply the expression (GDB.54) over its
+connected components, using each component's edge and vertex counts.
+Zeros and $A_v<B_v$ are allowed; the second product is a signed
+algebraic term, not a separate positive mass.
+
+Proof. Define the binary incidence syndrome
+
+$$
+H:\mathbb F_2^E\longrightarrow\mathbb F_2^V,\qquad
+(Hs)_v=\sum_{a\ni v}s_a.
+\tag{GDB.55}
+$$
+
+The kernel of its transpose consists exactly of vertex vectors
+constant on each connected component: the edge equation is
+$b_u+b_v=0$. For connected $G$, $\operatorname{rank}H=n-1$.
+Each column has two ones, so the image is contained in the
+even-total-parity subspace, also of dimension $n-1$, and hence
+equals it. Every feasible syndrome has $2^{e-n+1}$ preimages.
+It follows from the actual bijection (GDB.52) that
+
+$$
+Z_G=2^{e-n+1}
+\sum_{\substack{y\in\mathbb F_2^V\\\sum_vy_v=0}}
+\prod_v A_v^{1-y_v}B_v^{y_v}.
+\tag{GDB.56}
+$$
+
+Here the factors mean $A_v$ or $B_v$, so no $0^0$ convention is
+needed. The indicator of even total parity is
+$[1+(-1)^{\sum_vy_v}]/2$. Expanding the two finite product sums gives
+(GDB.54). Componentwise expansion proves the disconnected case.
+This proves equality, rather than a one-direction relaxation, with
+every original block weight once. The binary rank and character-sum
+steps are standard cut/cycle duality and parity Fourier summation.
+$\square$
+

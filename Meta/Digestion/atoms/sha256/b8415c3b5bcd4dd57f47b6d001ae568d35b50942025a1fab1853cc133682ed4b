@@ -1,0 +1,57 @@
+**Proposition 7.1 (the new structural class is not vacuous).** There is one original-domain finite rational observer with constant return weight on all fourth-segment p-to-suspended edges, nonconstant emissions at both phases, positive acquired-return p-emission variation, positive complete-law return motion, positive alpha-edge decrease, distinct indexed paired-event readouts, nonnative acquired p residuals, and neither acquired interface a complete redraw.
+
+Proof. On every original record fibre use two p labels and two suspended labels, with
+
+$$
+\pi=\tau=(1/2,1/2),\qquad
+B=I,\qquad A=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+$$
+u_0=\frac13,\quad u_1=\frac25,\qquad
+v_0=\frac7{20},\quad v_1=\frac7{18},\qquad c=\frac7{30}.
+\tag{7.1}
+$$
+
+Both acquired flows preserve the fair rows. On the two positive $B$ edges, $(1-u_i)v_i=c$. Both suspended emissions lie strictly inside $(a,b)$ and are distinct, while $A$ changes the p emission by $1/15$ on every return. Put
+
+$$
+g_0=\frac{13}{30},\qquad g_1=\frac{11}{30}.
+$$
+
+The same-update complete p laws are explicitly
+
+$$
+Q_i(w_{j,0})=c^ju_{i+j\bmod2},\qquad
+Q_i(w_{j,1})=c^jg_{i+j\bmod2},
+$$
+
+$$
+W_i=(1-v_i)\delta_\beta+v_i\alpha Q_{1-i}.
+\tag{7.2}
+$$
+
+At every $j$, the two p marker masses sum to $c^j(1-c)$. Summing the geometric series proves normalization and zero infinite mass; suspension then normalizes as well. These are laws of the one installed generator, not independently selected descriptors.
+
+Complete-law return motion is at least $|Q_0(\alpha)-Q_1(\alpha)|=1/15$. On the suspended alpha edges, the two next-alpha changes are $u_1-v_0=1/20$ and $u_0-v_1=-1/18$. The expected decrease is therefore $1/36>0$. The mean suspended interior tent mass is $1/72>0$.
+
+The p-event readout difference is
+
+$$
+Q_0(E_p)-Q_1(E_p)
+=\frac1{15}(1-c+c^2)=\frac{739}{13500}>0.
+$$
+
+The suspended-event readouts are $467/600$ and $421/540$, whose difference in the latter direction is $7/5400>0$. Both acquired kernels have different deterministic rows; neither is a row-independent complete redraw.
+
+Finally put $q_j=Q_0(w_{j,0})$. Then
+
+$$
+q_1^2-q_0q_2=c^2(b^2-a^2)=\frac{539}{202500}>0.
+\tag{7.3}
+$$
+
+For any Borel native stopped-p mixture on $[a,b]$, these coordinates have the form $q_j=\int r[r(1-r)]^j\,d\zeta(r)$ and satisfy $q_1^2\le q_0q_2$ by Cauchy–Schwarz. Thus $Q_0$ is nonnative. Since an actual alpha edge from suspended label 1 has residual $Q_0$, the table does not belong to the class where every acquired p residual is native. The moment test is a mature way to locate this example, not a new general moment theorem. ∎
+
+The example is not near-optimal and is not offered as a zero-level witness. Its role is to show that the newly excluded class contains nonconstant suspended emissions and lies outside the constant-suspension, return-conserved-p-emission, all-native-acquired-residual and complete-redraw structural classes. Positive values of previously necessary statistics are not claimed to jointly suffice for calibration.
+

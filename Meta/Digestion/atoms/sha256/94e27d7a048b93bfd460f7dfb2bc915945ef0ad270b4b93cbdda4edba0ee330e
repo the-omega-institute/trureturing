@@ -1,0 +1,23 @@
+**Lemma 5.2 (Positive guard cost).** Under $\mathsf B(P)$ and the construction with $\nu=\pi_n$,
+
+$$
+G_C(P,\pi_n)\ge\frac1{24}.
+\tag{5.1}
+$$
+
+Proof. Let $\rho=P(X_0=1)$. Stationarity and the band give
+
+$$
+\rho=\mathbb E_Pq_0\le\tfrac12P(F_0)
+\le\tfrac12P(X_{-1}=0)=\tfrac12(1-\rho),
+$$
+
+so $1-\rho\ge2/3$. The optimizer's insertion inequalities imply $\pi_n(W_1=0)\ge1/2$ and $\pi_n(W_n=0)\ge1/2$: in each free endpoint fiber the one mass is no greater than the zero mass, and forced endpoints are zero. Under $Q$, the guard at zero is free on $\{Y_{-1}=0,W_1=0\}$, and the other on $\{W_n=0,Y_{n+2}=0\}$. Independence of $W$ and $Y$ gives their respective probabilities. Since $Q\ll P$, each free guard has $q_i^2\ge1/16$. Hence
+
+$$
+G_C(P,\pi_n)\ge\frac{1-\rho}{16}
+\bigl[\pi_n(W_1=0)+\pi_n(W_n=0)\bigr]\ge\frac1{24}.
+$$
+
+For $n=1$ the two displayed word bits coincide, but the proof adds two expectations and requires no independence between them. $\square$
+

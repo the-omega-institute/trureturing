@@ -1,0 +1,21 @@
+**Lemma 5.3 (fresh buffers connect the whole legal branch domain).**
+Fix some coordinates of an injective tuple in one profile (NRN.9).
+All legal choices for its remaining branch coordinates are connected by
+changes of one coordinate at a time. Consequently, if throughout a
+positive profile the entry-output pair is $\{R_0,R_j\}$, and variation
+of each free branch coordinate changes replies at at most one Read,
+the prescribed code is constant on that entire profile. The same
+conclusion applies with further branch coordinates fixed.
+
+Proof. For two endpoint tuples choose one distinct buffer in $\mathcal B$
+for each free coordinate, avoiding every value in either endpoint and
+every fixed coordinate. Infinitude of $\mathcal B$ supplies these buffers.
+Move each coordinate to its buffer, then move each buffer to its desired
+endpoint value. At each move the tuple is injective and satisfies exactly
+the same profile. Supplier 2.4 gives an actual finite origin at every
+intermediate tuple; both occurrences of a repeated class receive the same
+value. Lemma 5.2 preserves the orientation at each move, and correctness
+identifies that orientation with the original positive code. Unqueried
+coordinates affect no Read. A branch-root query has constant branch
+reply and contributes no varying reply. $\square$
+

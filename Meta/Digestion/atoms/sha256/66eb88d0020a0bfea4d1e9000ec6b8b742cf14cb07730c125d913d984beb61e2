@@ -1,0 +1,19 @@
+**Definition 4.2 (same acquired event, not just a marginal).** For
+$M\geq1$ partition $(0,1]$ into equal half-open bins
+$I_x=((x-1)/M,x/M]$, $1\leq x\leq M$. Conditional on the actual
+$\mathsf F$, let $X_M=x$ mean $\tau\in I_x$. Let a common decoder
+of (EM.9) return $\widehat X_M$. Its event-preservation error is
+
+$$
+\Delta_M=\operatorname{TV}\bigl(
+ \mathcal L(X_M,X_M\mid\mathsf F),
+ \mathcal L(X_M,\widehat X_M\mid\mathsf F)\bigr).
+\tag{EM.10}
+$$
+
+The first coordinate is the mathematical actual input label in both
+couplings. It is not another copy or sensor supplied to the decoder.
+The ideal second coordinate copies that same event. An abort or an output
+outside the declared labels counts as incorrect. This metric is stronger
+than matching the decoded marginal distribution.
+

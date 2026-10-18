@@ -1,0 +1,155 @@
+## 135. A locally transposed Choi certificate for the noise term
+
+**Lemma C-135.1 (Two-pair real local certificate).**
+For this lemma only, identify each selected local pair with the real
+computational basis $|0\rangle,|1\rangle$. This is a local basis
+identification within the original support, not a new spatial cut. On one
+such bipartite pair put
+
+$$
+\begin{aligned}
+A&=i(|00\rangle\langle11|-|11\rangle\langle00|),\\
+P&=|00\rangle\langle00|+|11\rangle\langle11|,\\
+Q&=|01\rangle\langle01|+|10\rangle\langle10|,\\
+C&=A^{T_A}
+  =i(|10\rangle\langle01|-|01\rangle\langle10|),\\
+R_n&=A\otimes Q+Q\otimes A.
+\end{aligned}
+\tag{C135.1}
+$$
+
+Let $\mathcal F$ be any CPTP map admitting a product Kraus decomposition
+with every local factor real, from these two bipartite pairs to one output
+qubit $r$ at Alice and one output qubit $o$ at Bob.
+In particular it may be any finite-round real LOCC map with arbitrary
+finite real local ancillas. For the Hermitian output test
+
+$$
+W=i(|00\rangle\langle11|-|11\rangle\langle00|)_{ro},
+\qquad \|W\|_\infty=1,
+\tag{C135.2}
+$$
+
+one has
+
+$$
+\operatorname{tr}\bigl(W\mathcal F(R_n)\bigr)\le4.
+\tag{C135.3}
+$$
+
+The assertion also holds for every CPTP map whose Choi matrix is
+invariant under transposition of Alice's entire input/output block.
+That larger class is used only for the converse. Neither $R_n$ nor the
+dual operator below is asserted to be a state.
+
+Proof. Order the six Choi bits as $(r,a_1,a_2,b_1,b_2,o)$; write
+$a=(a_1,a_2)$ and $b=(b_1,b_2)$. The unnormalized Choi matrix is
+
+$$
+M_{rabo,\,sa'b'p}
+  =\bigl[\mathcal F(|ab\rangle\langle a'b'|)\bigr]_{ro,sp}.
+\tag{C135.4}
+$$
+
+It is positive, and $\operatorname{tr}_{r,o}M=I_{ab}$. Denote by
+$\Gamma$ transposition of the first three bits $(r,a_1,a_2)$, keeping
+the Bob block $(b_1,b_2,o)$ fixed. A real product Kraus matrix has a real
+vectorized factor on each side, whose rank-one projector is symmetric.
+Its Choi contribution is therefore invariant under $\Gamma$. Sums of
+such contributions give $M^\Gamma=M$ for real separable maps. For a
+finite adaptive real LOCC protocol, refine the local Kraus records and
+final discards. Each complete history has a product of real local Kraus
+matrices, so the same conclusion holds. Real blank ancillas and real
+mixed ancillary preparations can be absorbed into these local Kraus
+matrices; real spectral decompositions suffice for the mixed case.
+Classical randomization preserves the linear identity. If an instrument
+uses an integral of histories, the finite-dimensional Choi identity is
+preserved under that integral as well. No bound on the history count,
+round count or finite ancillary dimensions has been imposed.
+
+On the program bits, in the order $(a_1,a_2,b_1,b_2)$, define
+
+$$
+Z=Q\otimes Q+\tfrac12(A\otimes A+C\otimes C),
+\tag{C135.5}
+$$
+
+where tensor factors on the right first refer to copies
+$(a_1b_1),(a_2b_2)$ and are then reordered as stated. Thus
+$Z^{T_{a_1a_2}}=Z$ and $\operatorname{tr}Z=4$. Let $\widehat Z$ act as
+$Z$ on the four program bits and as identity on $r,o$. Define $H$ by
+
+$$
+H_{rabo,\,sa'b'p}
+ =W_{ro,sp}(R_n)_{a'b',ab}.
+\tag{C135.6}
+$$
+
+It is a real symmetric matrix and
+$\operatorname{tr}(MH)=\operatorname{tr}(W\mathcal F(R_n))$.
+The following six real vectors, with binary strings in the six-bit order
+above, give a positive certificate:
+
+$$
+\begin{aligned}
+v_1&=|000110\rangle-|011000\rangle,\\
+v_2&=|000111\rangle-|011001\rangle-|101100\rangle-|110010\rangle,\\
+v_3&=|001101\rangle+|010011\rangle+|100110\rangle-|111000\rangle,\\
+v_4&=|001100\rangle+|010010\rangle,\\
+v_5&=|101101\rangle+|110011\rangle,\\
+v_6&=|100111\rangle-|111001\rangle,\\
+S&=\sum_{h=1}^6|v_h\rangle\langle v_h|\ \ge0.
+\end{aligned}
+\tag{C135.7}
+$$
+
+Their exact identity is
+
+$$
+\frac{S+S^\Gamma}{2}
+   =\widehat Z-\frac{H+H^\Gamma}{2}.
+\tag{C135.8}
+$$
+
+For an entrywise verification, the only nonzero entries needed in the
+one-copy matrices are
+$A_{00,11}=i$, $A_{11,00}=-i$,
+$C_{10,01}=i$, $C_{01,10}=-i$ and
+$Q_{01,01}=Q_{10,10}=1$. Insert these entries in (C135.5)–(C135.6),
+expand the six rank-one matrices in (C135.7), and swap the first three
+row bits with the first three column bits for $\Gamma$.
+Equivalently, with $A=iT$, $C=iT_c$ and $W=iU$, all of
+$T,T_c,U$ real antisymmetric, the entries to check are
+
+$$
+\begin{aligned}
+(2Z)&=2Q\otimes Q-T\otimes T-T_c\otimes T_c,\\
+H_{rabo,sa'b'p}
+ &=U_{ro,sp}(T\otimes Q+Q\otimes T)_{ab,a'b'},\\
+2(S+S^\Gamma)
+ &=2\widehat Z+2\widehat Z^\Gamma-2(H+H^\Gamma).
+\end{aligned}
+\tag{C135.9}
+$$
+
+All entries in the last equality are integers. These expansions establish
+(C135.8); the vectors' disjoint supports also give
+$v_h^T v_k=0$ for $h\ne k$ and squared norms $2,4,4,2,2,2$.
+The certificate uses no eigenvalue approximation or optimizing premise.
+
+Partial transpose is self-adjoint for the trace pairing. Pairing
+(C135.8) with $M=M^\Gamma$ and using trace preservation gives
+
+$$
+\begin{aligned}
+\operatorname{tr}(W\mathcal F(R_n))
+ &=\operatorname{tr}(M\widehat Z)-\operatorname{tr}(MS)\\
+ &=\operatorname{tr}Z-\operatorname{tr}(MS)\le4.
+\end{aligned}
+\tag{C135.10}
+$$
+
+The last inequality follows from positivity of $M$ and $S$. All
+transpositions here are algebraic operations in a converse certificate;
+none is an allowed gate on an unknown state. QED.
+

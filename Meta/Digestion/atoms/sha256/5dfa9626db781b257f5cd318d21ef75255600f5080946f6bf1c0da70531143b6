@@ -1,0 +1,126 @@
+**Theorem 47.2 (same-source full held tube).**
+On $G_{\rho,\Lambda}$ no abort occurs, and the same actual policy satisfies
+
+$$
+\begin{aligned}
+D_{\max}(\bar q^{\rm N},\bar q)&\le A_0\rho\le\eta,\\
+\|a-\bar A\|_\infty,\ \|b-\bar B\|_\infty&\le6\rho,\\
+\|J-\bar K\|_\infty&\le(6K_*+15)\rho,
+\qquad K_*=\max(k-l,u-k).
+\end{aligned}
+\tag{47.2}
+$$
+
+In particular this is a whole-held, wrapped three-coordinate chance
+tube on the prescribed persistent source, not an endpoint or marginal
+approximation.
+
+Proof. First check all local branch and overshoot assertions. During a
+waiting gap, if the previous anchor-relative true coordinates were
+below $\rho$, (44.3) and the gap bound $\rho/16$ keep both first
+levels below $2\rho$ and the relative central coordinate below
+$\rho+\rho/16+\rho^2/16<2\rho$. These coordinates force the
+principal branches in (44.1), by the choice of $A_0$ and $\eta\le1$.
+Thus a waiting trigger, including a boundary detection, has genuinely
+bounded local data; an accepted normal service starts with true
+$|X|,|Y|,|D|\le2\rho$.
+
+Within attempt $j$, before a continuing poll the coordinates relative
+to its start are below $\epsilon_j$. The next gap and (44.3) keep
+both first levels below $2\epsilon_j$ and the central coordinate
+below $\epsilon_j+\epsilon_j/16+\epsilon_j^2/16<2\epsilon_j$,
+at every prefix, not just at the Read. Their phase differences again
+lie strictly inside the principal branches. Consequently no overshoot
+abort occurs. Each interrupted or completed attempt has true local
+first-level and central displacements bounded by $2\epsilon_j$.
+For any service prefix, summing them with (44.3) gives
+
+$$
+\begin{aligned}
+|\Delta\bar A|,|\Delta\bar B|
+ &\le\sum_{j\ge0}2\epsilon_j=\rho/16,\\
+|D^*_{s,t}|&\le\rho/16+
+              \tfrac12(\rho/16)^2<\rho/8.
+\end{aligned}
+\tag{47.3}
+$$
+
+The infinite sums only enlarge the actual finite sums. They also apply
+if a boundary or horizon Read cuts the last attempt. At completion,
+the relative coordinates from the new anchor at $s$ are therefore below
+$\rho$; its completion check never aborts. Its elapsed time is less
+than $\rho^2$, so waiting resumes with positive delay. The initial
+hold gives the first induction anchor. Thus every completed normal
+connector has the exact true lifted endpoint
+$(\bar A_s,\bar B_s,\bar K_s)$, not merely its wrapped endpoint:
+(44.1)'s local branches have just been verified, and its translated
+chronology is $a_{\rm start}Y+D$ with no reset.
+
+For the uniform comparison during a normal service, take its previous
+completed target anchor $p$. The own relative triple $(x,y,j)$ obeys
+$|x|,|y|\le2\rho$, $|j|\le2\rho$ by Lemma 34.2.
+At the service start the target triple relative to $p$ has those same
+bounds; (47.3) and (44.3) keep its subsequent relative triple
+$(x_*,y_*,j_*)$ within $3\rho$ in each coordinate. Here, for the
+central cross term, $2\rho(\rho/16)$ together with $\rho/8$ is
+at most $\rho/4$ since $\rho\le1$. Therefore
+
+$$
+|x-x_*|,|y-y_*|\le5\rho,\qquad |j-j_*|\le5\rho.
+\tag{47.4}
+$$
+
+With $h_p=k+\bar A_p$, the exact native phase errors are
+
+$$
+\Delta\widetilde\alpha=(y-y_*)/2,
+\qquad
+\Delta\widetilde\beta=
+ (\tfrac12-h_p/r)(y-y_*)-(j-j_*)/r.
+\tag{47.5}
+$$
+
+Thus their absolute values are at most $5\rho/2$ and
+$5\rho/2+5\rho/r$. The chronological error is at most
+$(5K_*+5)\rho$. While waiting, the own state is exactly its anchor
+and the stronger two-$\rho$ estimates above apply. These statements
+include every prefix before an as-yet-unseen target exit and every
+prefix between that exit and its boundary Read.
+
+At a boundary Read let the actual and target triples relative to the
+same last completed anchor be $(x,y,j)$ and $(x_*,y_*,j_*)$.
+If currently waiting use $(x,y,j)=(0,0,0)$; the estimates remain valid.
+The true terminal data from the actual own point are
+
+$$
+X=x_*-x,\qquad Y=y_*-y,\qquad D=j_*-j-xY.
+\tag{47.6}
+$$
+
+They obey $|X|,|Y|\le5\rho$ and
+$|D|\le5\rho+10\rho^2\le15\rho$.
+The current own-to-target phase differences in (47.5) are strictly
+less than $\pi$, so the terminal computation (44.1) selects exactly
+these true data. It is therefore accepted. The boundary observation
+proves that the target is now held, without identifying its earlier
+death time.
+
+During any terminal connector prefix $(x_0,y_0,j_0)$, Lemma 34.2 gives
+height error at most $|X|+\rho\le6\rho$,
+$|y_0-Y|\le|Y|+\rho\le6\rho$, and
+$|j_0-D|\le|D|\le15\rho$. Comparing with its fixed terminal target,
+
+$$
+|\Delta\widetilde\alpha|\le3\rho,\qquad
+|\Delta\widetilde\beta|\le3\rho+15\rho/r,
+\qquad |J-\bar K|\le(6K_*+15)\rho.
+\tag{47.7}
+$$
+
+These estimates persist for a horizon-truncated terminal leg at its
+original speed. On completion the errors are zero and both paths hold.
+Since $\max(6,3+15/r)\le32(1+r^{-1})$, the Lipschitz projection to
+the two original circles proves all of (47.2). This induction also
+proves that every possible abort test is avoided on $G_{\rho,\Lambda}$.
+No nonzero deck label was presumed at a paid point. $\square$
+

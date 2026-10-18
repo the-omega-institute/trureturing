@@ -1,0 +1,25 @@
+**Definition 6.1 (visit vectors and ordered gaps).** Fix now any
+$P\in\mathcal T_{n,k}$, before assuming a weighted cap. For every
+actual input $x$, let $v_i(x)$ count all visits to coordinate $i$,
+and put
+
+$$
+t(x)=\sum_i v_i(x)\le n,\qquad e_i(x)=v_i(x)-1,\qquad
+a_j(x)=\sum_{i=j+1}^n e_i(x)\quad(1\le j\le n-1).
+$$
+
+Thus certified repeats are included in $v$, with no truncation at the
+first certificate. For strictly increasing costs write
+
+$$
+b=c_1,\qquad g_j=c_{j+1}-c_j,\qquad
+p_1=0,\quad p_i=\sum_{j<i}g_j,\qquad c_i=b+p_i.
+$$
+
+Original costs have $b\ge5$ and $g_j\ge1$ integral. Write
+$R=p_n$, $S_p=\sum_i p_i$, and
+$L(P)=\{x:t(x)=n\}$. Let $B_P$ be the integer matrix with row
+$a(x)$ for each $x\in L(P)$, retaining inputs as row indices even
+when rows coincide. Matrix rows and chambers are proof coordinates,
+with no running memory added to $P$.
+

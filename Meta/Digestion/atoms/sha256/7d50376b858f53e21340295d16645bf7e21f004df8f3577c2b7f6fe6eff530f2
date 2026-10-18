@@ -1,0 +1,12 @@
+**Definition 35.1 (Fixed parameters and actual output).** Fix an integer $n\ge1$ and a real $0<q<1$ throughout each model. The index $k\ge0$ counts zeros preceding the next one, so the interevent duration is $k+1$. Define
+
+$$
+Z_n(q)=\sum_{k\ge0}k^nq^k,\qquad C_n(q)=Z_n(q)^{-1},\qquad \gamma_k=C_n(q)k^nq^k,\qquad D_n=\lceil n/2\rceil+1. \tag{35.1}
+$$
+
+The ratio test gives $0<Z_n(q)<\infty$ and convergence of every polynomially weighted version of this sum. Thus $\gamma_0=0$, $\gamma_k>0$ for $k\ge1$, and $\sum_k\gamma_k=1$. Use exactly the proper stationary renewal law of Definition 24.1, with $S_a$, $R_N$, $\mu$ and $\nu$ as in (24.2); in particular
+
+$$
+\mu=1+\frac{Z_{n+1}(q)}{Z_n(q)}<\infty,\qquad \nu=\mu^{-1}>0. \tag{35.2}
+$$
+

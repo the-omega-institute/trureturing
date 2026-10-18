@@ -1,0 +1,25 @@
+**Corollary 5.3 (boundary value, including ties).** In the same boundary
+domain the original optimal value is the finite expression
+$$
+\mathcal T(s,t)=\frac{H_0+qM_F+(1-q)M_R+P_{\rm bd}}2,
+\tag{GC.25}
+$$
+where
+$$
+P_{\rm bd}=
+\begin{cases}
+|B_z|,&t=t_0,\\
+\max\{|B_z|,|B_w|\},&t>t_0,\ k_w\le1,\\
+\displaystyle\max\left\{|B_z|,\frac{|B_w|}{k_w},
+ \frac{|B_z|(k_w-1)+|B_w|(1-k_z)}{k_w-k_z}\right\},
+ &t>t_0,\ k_w>1.
+\end{cases}
+\tag{GC.26}
+$$
+Proof. The constant part of the height sum in (GC.20) is
+$qM_F+(1-q)M_R$; evaluating the linear part at (GC.23) and the axial
+vertices gives (GC.26). At the floor use (GC.24). This is also the
+published FA boundary value, with the normalization of (GC.7)–(GC.9).
+Absolute values are evaluated before weighting, so zero signed
+heights require no extra branch convention. $\square$
+

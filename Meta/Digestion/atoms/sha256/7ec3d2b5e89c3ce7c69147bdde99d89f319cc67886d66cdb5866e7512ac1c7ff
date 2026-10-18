@@ -1,0 +1,40 @@
+**Proposition 2.3 (finite optimized joint envelope).** For $s=|S_d|$,
+put $j_d=\min_{\mu\in\Delta(S_d)}J_d(\mu)$. The minimum exists,
+$1/s\le j_d\le1$, and it is exactly the finite second-order cone
+optimization
+
+$$
+\min t\quad\text{subject to}\quad
+\mu\ge0,\quad\sum_x\mu(x)=1,\quad
+\|A_P\mu\|_2\le t
+\quad\text{for every nonempty range-feasible }P.
+\tag{RCE.12}
+$$
+
+For the denominator-$M$ simplex grid
+$G_M=\{(k_x/M)_x:k_x\in\mathbb N,\ \sum_xk_x=M\}$,
+
+$$
+j_d\le\min_{\mu\in G_M}J_d(\mu)
+       \le j_d+\frac{s-1}{M}.
+\tag{RCE.13}
+$$
+
+In particular $j_d$ is uniformly computable from the finite native
+tables, with no native length cutoff asserted.
+
+Proof. Continuity from Lemma 2.2 and compactness attain the minimum.
+Singleton supports give $J_d(\mu)\ge\max_x\mu(x)\ge1/s$;
+the opposite bound follows from its total mass. The matrices $A_P$
+have entries zero or one, so (RCE.12) is precisely the epigraph
+description of the same maximum.
+
+Round down $s-1$ coordinates of a minimizer to multiples of $1/M$
+and assign the remainder to its last coordinate. The resulting
+probability has total variation at most $(s-1)/M$ from the minimizer.
+Apply (RCE.11). At each grid point $J_d^2$ is a finite maximum of
+explicit rational quadratic expressions; square roots admit computable
+rational enclosures. Finite grids and (RCE.13) give two-sided
+enclosures for $j_d$. This computes a certificate-language threshold,
+not $b_d$ unless an additional equality is proved. $\square$
+

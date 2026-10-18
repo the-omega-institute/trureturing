@@ -1,0 +1,46 @@
+### 40.1 Unrestricted lower bound
+
+The common-tail capacity argument of Corollary 19.3 applies in this form. Candidates at one controller state, with one common current tail and at most $h$ further blocks each, may have different current values, phases, origins and earlier histories. The selected word rejects all or none, since legality depends only on tail and bits. Common rejection gives identical absorbing responses and identical future controller evolution, so only one required label can succeed. Otherwise there are at most two endpoint children, each again with common tail. Early Halt also yields one label. Induction from $h=0$ permits at most $2^h$ distinct labels in such a successful support. Bottom is not a third useful distinguishing response.
+
+Fix free INITIAL value $x$. Its root must run because seven labels occur. A first bit one rejects the actual sources $(x,\theta,5)$ for every $\theta$, irreversibly merging unequal labels. Every root therefore starts zero, is safe on all old tails and gives a common endpoint tail. For root $0bcd$, (40.9) gives an even-sized positive set contained in $\{1,2,3,4\}$; its zero set contains $0,5,6$. Each child has two blocks left and capacity four. Positive-set sizes zero and two leave seven and five labels in the zero child. Thus its size is four, forcing $b=b\oplus c=c\oplus d=d=1$. This recovers the root of (24.11):
+
+$$
+B_{\rm root}=0101,\qquad A=\{1,2,3,4\},\qquad Z=\{0,5,6\}.
+\tag{40.10}
+$$
+
+It ends in tail one and both children must run. Roots $c(0),c(1)$ are distinct: if equal, response zero puts $x=0,j\in Z$ and $x=1,j\in A$ in one successor, with common tail one, seven different labels for either target, and only two blocks left.
+
+Name the four first-block occurrences $A_0,A_1,Z_0,Z_1$, retaining INITIAL $x$; these are not yet assumed distinct states. All sixteen second words are safe from tail one. At $A_x$, second word $abcd$ has increments $(d,0,0,a)$ at $j=1,2,3,4$, by (24.12). Each child has one block left and capacity two. Thus $a=d=1$, allowing independently any of $1001,1011,1101,1111$. The mandatory pairs are
+
+$$
+P=\{2,3\},\qquad Q=\{1,4\},\qquad
+y_P=x\oplus1,\quad y_Q=x
+\quad\text{after two blocks}.
+\tag{40.11}
+$$
+
+Their inherited tails may depend on the middle bits and are retained.
+
+At $Z_x$, second-word increments at $j=0,5,6$ are $(c\oplus d,a\oplus b,b\oplus c)$. A constant response leaves three labels for one block and is impossible; hence a singleton and a pair remain. At final depth every word $efg\ell$ has row
+
+$$
+(r_0,r_1,r_2,r_3,r_4,r_5,r_6)
+=(0,e,e\oplus f,f\oplus g,g\oplus\ell,\ell,0).
+\tag{40.12}
+$$
+
+Pair $\{0,6\}$ already has common current value and tail and has identically zero final increments. No last word splits it, whether safe or uniformly rejecting. The mandatory $Z_x$ pair $T_x$ must be $\{0,5\}$ or $\{5,6\}$. Its singleton may Halt or continue for another block.
+
+The four first-block states are distinct. For value-phase any two supports have at least six distinct INITIAL labels, common tail one and two blocks left, exceeding capacity four. For phase any $A/Z$ union has seven labels and fails likewise. If $A_0=A_1$, their common second word acts on complementary current values for each $j$. Either absolute next response then puts all four $A$ phase labels in one successor with common tail and one block left, exceeding capacity two. The same argument for $Z_0=Z_1$ gives three labels in either successor and fails. No common-second-word constraint is imposed on different states.
+
+There are six mandatory final-pair occurrences $P_x,Q_x,T_x$, $x=0,1$. Each pair has common tail and two unequal labels, so its last word must be safe and give both absolute responses zero and one. Both fixed successors must immediately Halt because the actual executions have spent three blocks. Pairs sharing one final running state must use a word safe for each, even with different tails, and fit all labels into its same two Halt successors. A union of more than two pair labels cannot share.
+
+For value-phase all six pair target sets are disjoint: within $x$ their phase sets differ, and across $x$ their immutable first coordinates differ. Six final running states are necessary.
+
+For phase, different sets from $P,Q,T$ cannot share since their label union has more than two elements. The two $P$ occurrences across $x$ cannot share either, despite equal phase-label sets. Their corresponding $j$ have complementary current values by (40.11) and equal current phase $-j+8$. A common safe word adds the same increment, so their absolute responses remain complementary. One occurrence needs two different Halt labels on zero and one; the other needs the assignments reversed. A single $v$ cannot do both. Rejection of either occurrence instead destroys its distinction. This argument permits different tails. The same obstruction holds for the two $Q$ occurrences. These four $A$-derived final states need at least one additional $T$ state, giving five. The two $T$ occurrences may share when actual current values align.
+
+These depth counts cannot collapse. Every root uses $0101$. At a first-block $A$ occurrence that word gives increments $(1,0,0,0)$, leaving three labels together; at $Z$ it gives $(1,1,1)$, also leaving three. Neither can finish in one further block, so roots cannot equal first-block states. Every mandatory final-pair state has both binary successors Halt. Roots have both successors running, and every first-block state has at least one running successor because a pair remains. Final-pair states cannot equal either earlier type. These are conflicts of fixed instructions and successors, not a tree-node count or an acyclicity assumption. Cycles, cross-depth and cross-branch reuse, and singleton continuation cannot remove them.
+
+Thus running-state lower bounds are $2+4+5=11$ and $2+4+6=12$. Seven, respectively fourteen, live labels occur on actual sources and require distinct literal Halt states because $u$ is a function. Halt states are disjoint from running states. Bottom's label is already live. The total lower bounds hold over every complete controller (40.6).
+

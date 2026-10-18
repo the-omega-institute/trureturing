@@ -1,0 +1,58 @@
+**Definition 92.1 (retained carrier and closed domains).** Retain exactly
+Definitions 75.1 and 81.1. In particular the signed nonzero $\kappa$,
+source $o$, rational fields, raw measure and two height deaths are fixed.
+Write $u=(\theta,v)$, $d(k)=(A_\kappa(k),B_\kappa(k))$, and
+
+$$
+\pi(k,u,x)=(k,u),\qquad \mathcal B=I\times\mathbb R^2,
+\qquad d\bar Y=dk\,du,\qquad R=d(k)\cdot\partial_u.
+\tag{92.1}
+$$
+
+The retained free form and its operator are
+
+$$
+\bar b[h]=\int_{\mathcal B}
+ (\varepsilon^2|\partial_kh|^2+|Rh|^2)d\bar Y,
+\quad \bar{\mathcal Q}
+ =\overline{C_c^\infty(\mathcal B;\mathbb C)}^{(\|\cdot\|_2^2+\bar b)^{1/2}},
+\quad \bar B=-(\varepsilon^2\partial_k^2+R^2)_F.
+\tag{92.2}
+$$
+
+Equivalently, with the unitary Fourier transform in $u$ and
+$T_\eta=-\varepsilon^2\partial_k^2+(\eta\cdot d(k))^2$,
+
+$$
+\begin{aligned}
+\bar{\mathcal Q}
+ &=\left\{h:\widehat h(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\
+ \int_{\mathbb R^2}\!\int_I
+ (\varepsilon^2|\partial_k\widehat h|^2+
+ |\eta\cdot d(k)|^2|\widehat h|^2)dk\,d\eta<\infty\right\},\\
+D(\bar B)
+ &=\left\{h:\widehat h(\cdot,\eta)\in H^2(I)\cap H_0^1(I)
+ \text{ a.e.},\quad \int_{\mathbb R^2}
+ \|T_\eta\widehat h(\cdot,\eta)\|_2^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{92.3}
+$$
+
+Here and below a displayed domain includes membership of its underlying
+$L^2$ space. Both height traces are Dirichlet, all real frequencies are
+allowed, and the spaces are complex. The equivalence follows by
+Plancherel and closure of the smooth core: truncate the frequency
+variable, approximate in height by its Dirichlet core and then use
+smooth spatial cutoffs. On bounded frequency sets the potential is
+bounded uniformly on $I$, so this approximation is in form norm.
+The associated direct integral has the displayed operator domain,
+since each bounded-potential interval operator has domain
+$H^2\cap H_0^1$. Thus no isotropic phase $H^1$ hypothesis has been added.
+The same height Poincare inequality gives $\bar B\ge\lambda$.
+
+For a finite measure $\mu$ on $\mathcal C$ write $\pi_\#\mu$ for its
+pushforward. For an integrable density write
+$\mathsf M f(k,u)=\int_{\mathbb R}f(k,u,x)dx$.
+Pullback of bounded Borel functions is denoted $\pi^*h=h\circ\pi$;
+it is not an embedding of the retained $L^2$ space into the native one.
+

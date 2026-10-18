@@ -1,0 +1,39 @@
+### theorem 3.2: 推论 2.1：两个可见事件的联合发生恢复 $\kappa$
+
+由于
+
+$$
+U=x+z,
+\qquad
+V=y+z,
+$$
+
+有
+
+$$
+\mathbb E[U]=X+Z,
+\qquad
+\mathbb E[V]=Y+Z,
+$$
+
+但
+
+$$
+\mathbb E[UV]=
+Z+\kappa.
+$$
+
+因此
+
+$$
+\boxed{
+\kappa=\mathbb E[UV]-Z.
+}
+$$
+
+这说明：
+
+> 单独保存两个事件的边际信息，只得到三均值商；保存它们的联合发生，才得到隐藏 seam。
+
+---
+

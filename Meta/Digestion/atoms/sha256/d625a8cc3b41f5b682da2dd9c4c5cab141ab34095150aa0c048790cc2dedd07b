@@ -1,0 +1,22 @@
+### 60.1 Model and conclusions
+
+Fix L=X=Y=C² and the MC encoding V|i>=|ii>, J(T)=VTV*. Write ij=|i><j| on L. Consider
+
+    E(00)=α00+(1−α)11, E(11)=(1−β)00+β11,
+    E(01)=λ01+μ10, E(10)=conj(λ)10+conj(μ)01.
+
+These are exactly the qubit channels covariant under conjugation by Z=diag(1,−1). They form a narrower class than channels merely preserving the diagonal algebra, which can also convert off-diagonal input into diagonal output. The necessary and sufficient CPTP conditions are 0≤α,β≤1, |λ|²≤αβ and |μ|²≤(1−α)(1−β), by the two blocks of the input-first Choi matrix.
+
+Physical competitors are finite mixtures Φ=Σ_b p_b A_b⊗B_b of arbitrary local qubit CPTP maps, including local product ancillas. They act on every logical input through Φ∘J. Diamond norm is unhalved and includes arbitrary passive references. No code-preservation or covariance restriction is imposed on these competitors.
+
+The following conclusions hold.
+
+1. Exact physical implementation Φ∘J=J∘E is possible if and only if
+
+       |λ|≤min(α,β), |μ|≤min(1−α,1−β).
+
+   Every channel satisfying these simultaneous conditions has an implementation with at most four product-CPTP branches.
+2. For every physical competitor, there is a common physical competitor that preserves the code and is parity-covariant, with no greater diamond error against J∘E. Thus unrestricted leakage cannot improve the optimum anywhere in this family.
+3. After phase alignment, the unrestricted optimum equals the explicit finite semidefinite program below. Its optimizer yields the four-branch physical attainer. This is an exact optimization formula for all parameters, including unequal simultaneous deficits; it is not a claimed elementary closed form.
+4. In the simultaneous equal-deficit family α≥β, λ,μ≥0 and λ−β=μ−(1−α)=k>0, the exact optimum is sqrt(2)k. A three-branch common physical channel attains it. This differs from treating the two coherence constraints independently.
+

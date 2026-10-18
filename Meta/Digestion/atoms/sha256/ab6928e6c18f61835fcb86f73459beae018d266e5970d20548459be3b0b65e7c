@@ -1,0 +1,62 @@
+**Theorem 6.1 (N1, scalar-diagonal constructive bound).** For every integer $m\ge0$ and $t,\eta\in[0,1]$,
+
+$$
+[c-D_m]_+\ \le\ e_m(t,\eta)\ \le\ [c-K_mD_m]_+\ \le\ [c-sD_m]_+.
+\tag{6.1}
+$$
+
+The middle upper bound is achieved by one explicit whole-algebra CPTP processor with that same error for all four labels. If $m\ge1$, $\eta>0$, $c>0$ and the fixed-diagonal error $[c-sD_m]_+$ is positive, N1 has strictly smaller error.
+
+Proof. Fix $m,t,\eta$ and abbreviate $D=D_m$, $R=R_m$, $K=K_m$. Set
+
+$$
+r=\begin{cases}0,&D=0,\\ \min\{K,c/D\},&D>0,\end{cases}\qquad
+Q=\max\{s,r\},\qquad q_C=\frac{s-Q(1-R)}{R}.
+\tag{6.2}
+$$
+
+At $m=0$, $R=K=1$ and $D=0$, so $r=0$ and $Q=q_C=s$. For $m\ge1$, Proposition 5.1 gives $0<R<1$, $s\le K\le1$ and $K\le s/(1-R)$. Since $r\le K$, also $Q\le K$, and consequently $q_C\ge0$. Further,
+
+$$
+s-Q(1-R)\le s-s(1-R)=sR,
+$$
+
+so $q_C\le s\le1$. Thus both $Q$ and $q_C$ are lawful response diagonal parameters. For a string $z$, use
+
+$$
+q_z=\begin{cases}q_C,&z\in C_m,\\Q,&z\notin C_m,\end{cases}\qquad
+S_z=S(q_z,rh_a(z),rh_b(z)).
+\tag{6.3}
+$$
+
+On $C_m$ both coherence coefficients are zero. Outside $C_m$ their absolute values are at most $r\le Q=q_z$. Every $S_z$ is CPTP by Proposition 3.1, even for arbitrary unpromised data. Because $C_m$ has the same probability under every label,
+
+$$
+\mathbb E_X q_z=q_C R+Q(1-R)=s.
+\tag{6.4}
+$$
+
+Let $M_z$ be the product of the original six-outcome projections and define
+
+$$
+\mathcal P_m(\Omega)=\sum_z S_z\left(
+ \operatorname{tr}_{P_m}[(I_5\otimes M_z)\Omega(I_5\otimes M_z)]\right).
+\tag{6.5}
+$$
+
+Projection, partial trace and each response are CP. The trace of this sum equals $\operatorname{tr}\Omega$, since all responses preserve trace and $\sum_zM_z=I$. Hence (6.5) is one label-independent CPTP map on the entire joint complex algebra, including unpromised programs and data/program correlations. No outcome is rejected.
+
+For the promised independent program, the induced channel is the probability average of $S_z$. The scalar subfamily $S(q,v_a,v_b)$ is affine in its three real parameters. Equations (6.4) and (2.3), together with $(1-s)/4=\eta/5$, therefore give the exact full-algebra identities
+
+$$
+N_{\sigma X_a}=T_\eta(\sigma rD,0),\qquad
+N_{\sigma X_b}=T_\eta(0,\sigma rD).
+\tag{6.6}
+$$
+
+Both the matching diagonal and every wrong-output diagonal agree with the target. By Proposition 3.2 the error for each label is $c-rD$. If $D>0$, $rD=\min(KD,c)$; if $D=0$, $rD=0$. In either case the error is exactly $[c-KD]_+$. This proves N1's upper bound. Proposition 3.3 gives the unrestricted lower bound, and $K\ge s$ gives the last inequality in (6.1).
+
+For strictness, $m\ge1$ and $c>0$ imply $D\ge2c/5>0$. If also $\eta>0$, Proposition 5.1 gives $K>s$, hence $KD>sD$. When $c-sD>0$, either $c-KD>0$ and is strictly smaller than $c-sD$, or N1's bound is zero and is still strictly smaller. If the fixed-diagonal bound is zero, both upper bounds are zero. No strict gain is asserted at $m=0$, $c=0$ or $\eta=0$. QED.
+
+The scalar-diagonal construction redistributes the conditional diagonal action. The fixed-diagonal processor uses parameter $s$ at every outcome, limiting each conditional coherence to $s$. N1 allows outcomes carrying a nonzero signed response to use diagonal parameter $Q>s$; the common tie event absorbs additional wrong-coordinate noise. Its probability is computed from the actual noisy source, and (6.4) restores exactly the prescribed mean diagonal for every label. The conditional responses need not themselves have the target white-noise diagonal. This remains a useful implementation with at most nine response settings. The pair-specific processor of Theorem 4.1 uses separate absence events and attains the unrestricted optimum everywhere; the target and competitor class are the same for both constructions.
+

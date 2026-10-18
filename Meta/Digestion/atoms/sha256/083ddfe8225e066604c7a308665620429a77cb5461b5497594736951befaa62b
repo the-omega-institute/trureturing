@@ -1,0 +1,59 @@
+**Proposition 8.1 (consistency with the supplied controls).** The
+native endpoint flows, their diagonal half-native mixture and the
+nonnative contact of Proposition 4.1 retain their stated scopes under
+Theorem 6.1. In particular the theorem cannot be extended to $n=3$
+for both endpoints with any finite coefficient multiplying $e_{r,3}$.
+
+**Proof.** At either native r Dirac pair, $g=c_r$, $L=z_rP$ and
+$e_{r,n}=0$; both r losses vanish. These are the complete native laws
+and original unit flows in Theorem 2.1, with tails $z_r^j,rz_r^j$.
+
+For the mixture, take the original flows
+
+$$
+\begin{aligned}
+\Gamma_B&=\tfrac12\delta_{(P_{p,a},P_{\beta,a})}
+          +\tfrac12\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=\tfrac12\delta_{(P_{\beta,a},P_{p,a})}
+          +\tfrac12\delta_{(P_{\beta,b},P_{p,b})}.
+\end{aligned}
+\tag{8.1}
+$$
+
+Each conditional stays at its matching native endpoint, so both full
+residual equations and unweighted marginals hold. Its means are both
+midpoints, and for $n\ge4$
+
+$$
+e_{a,n}=e_{b,n}=\tfrac12(c_bz_b^n-c_az_a^n)>0,
+\qquad
+\int\operatorname{TV}(D,P_{s,r})\,d\nu_s=\rho_s.
+\tag{8.2}
+$$
+
+Thus (6.2) applies and (7.2) is consistent. This is a mixture of
+original native flows, not a singleton at the barycentric descriptor.
+As [PAIR, Corollary 12.3] shows, it has $\mathcal J=0$ when the
+supported depths are exactly 1 and 2, whereas any supported depth
+$k\ge3$ violates its p budget. The latter loss is still part of (11.9).
+
+For the nonnative singleton of Proposition 4.1, the complete-coordinate
+signs in (6.10) and its displayed rational parameters give
+
+$$
+e_{b,3}=0,\qquad
+\operatorname{TV}(Q,P_{p,b})=\frac{10951371}{190109375}>0,
+\qquad
+\operatorname{TV}(W,P_{\beta,b})=\frac{33663}{777505}>0.
+\tag{8.3}
+$$
+
+It is boxed and compatible, but has
+$e_{b,4}=486/9765625>0$ and fails both midpoint means. The proposed
+extension to index three would have a zero right side and a positive
+left side. In the proof of Theorem 6.1 the precise obstruction is the
+reversed predecessor order at $j=2$, so (6.7) is unavailable at $n=3$.
+The all-coordinate and complete-tail verification remains the one in
+Proposition 4.1. These supplied controls do not replace the universal
+proof over arbitrary Borel marginals. $\square$
+

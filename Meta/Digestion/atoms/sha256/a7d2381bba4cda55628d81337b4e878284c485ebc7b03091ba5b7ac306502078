@@ -1,0 +1,16 @@
+#### 17.1.5 随机几何图谱收敛
+
+García Trillos、Gerlach、Hein 和 Slepčev 的 [Error estimates for spectral convergence of the graph Laplacian on random geometric graphs towards the Laplace–Beltrami operator](https://arxiv.org/abs/1801.10108) 假设样本独立同分布于 \(M\subset\mathbb R^d\) 的 \(m\) 维光滑子流形，邻域带宽趋于零并满足样本规模和带宽的尺度关系。在这些条件下，图 Laplacian 的特征值和特征函数以显式速率逼近加权 Laplace–Beltrami 算子。
+
+接口必须写成条件形式：
+
+\[
+\mathrm{SampledManifold}(M,g,\mu)
++
+\mathrm{BandwidthScaling}(n,h)
+\Longrightarrow
+\mathrm{GraphSpectrum}\to\mathrm{LB\ Spectrum}.
+\]
+
+因此 Whole-rho 图若要获得 Riemannian 解释，必须先提供节点采样、距离、权重和尺度参数。仅有一个抽象图和一个 Poisson 型函数 \(\phi(p)=2^{-|p|}\) 不足以得到 Laplace–Beltrami 算子。
+

@@ -1,0 +1,8 @@
+### 85.7. Interpretation and boundary
+
+The result includes arbitrary coherent first-order changes inside the old two-dimensional environment, arbitrary first-order output leakage, arbitrary finite rank-raising new-environment directions, and simultaneous changes of the other original channel. It requires neither qubit-core factorization of the perturbed Grams nor their calibration. The square old-sector polar factor is available because a rank-two channel C^8->C^4 has a unitary minimal Stinespring isometry.
+
+New-environment leakage or failure to preserve either tight-frame row space forces a positive quadratic gap. Only the explicitly identified directions (16)--(17) can remain flat to this order. Even in that flat class, a smooth bilateral path can at most improve by o(t^2), or by O(t^3) under the Lipschitz condition. These statements concern the smooth amplitude parameter, and do not apply after a singular reparameterization t=sqrt(s) as if the same differentiability hypothesis held in s.
+
+This is a second-order obstruction, not a complete feasible-cone or local-minimum theorem. Higher-order nonfactorizable bilateral escape and the unrestricted quarter-optimum problem remain open.
+

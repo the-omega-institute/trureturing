@@ -1,0 +1,41 @@
+**定理 235.5（Proper-prefix ordered hierarchy）。** For every $m\ge5$,
+
+$$
+q_m^m\notin\operatorname{cone}\{q_k^m:4\le k<m\}+P_{H_m}.
+\tag{235.4}
+$$
+
+证明。 Set
+
+$$
+a=\frac{m+4}{4m-2},\qquad e=\frac{m-2}{4m-2},\qquad
+b^*=(a,\ldots,a;e)\in\mathbb R^{m+1}.
+$$
+
+All order conditions hold and
+
+$$
+(m-1)a-(m+1)e=1,\qquad
+(m-2)a-(m+1)e=\frac{3(m-2)}{4m-2}\ge0,
+$$
+
+so $b^*\in H_m$. Direct substitution of every prefix quotient,
+with zeros after $k$, gives
+
+$$
+F_{q_k^m}(b^*)
+=-\frac{3(k^2-4k+2)(m-k-1)}{4m-2}
+\qquad(4\le k\le m).
+\tag{235.5}
+$$
+
+For proper prefixes this is nonpositive, including zero at $k=m-1$;
+for $k=m$ it is strictly positive. Every nonnegative combination
+of the former readings plus any $P_{H_m}$ reading is nonpositive,
+which proves (235.4). Its own actual zero-cost score $Z_m$ and
+235.3 show that $b^*\notin H_N$, at every conic mass. Thus it
+is a relative cone witness, never a same-$b$ original separator.
+The comparison concerns exactly these proper-prefix directions
+and $P_{H_m}$, not all earlier suppliers or their semantic closure.
+$\square$
+

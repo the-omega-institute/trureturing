@@ -1,0 +1,48 @@
+**定理 23.7（复四角簇的相干符号应用）。** 对单位振幅 $\psi$ 及整数 $m\ge0$，定义数固定相干向量
+
+$$
+|\psi;m\rangle=\frac1{\sqrt{m!}}
+\left(\sum_s\psi_s a_s^\dagger\right)^m|\mathrm{vac}\rangle.
+$$
+
+它归一化，且对 $m\ge2$ 有
+
+$$
+\widehat A|\psi;m\rangle
+=\sqrt{m(m-1)}\,\mathfrak d(\psi)|\psi;m-2\rangle,
+$$
+
+$$
+\langle\psi;m|\widehat H_m|\psi;m\rangle=m(m-1)h([\psi]).
+$$
+
+$m=0,1$ 的期望为零。若 $[\psi]\in Q$，任何非零固定荷投影在归一化后都等于定理 23.5 的对应基态射线。
+
+证明。将产生算子的 $m$ 次幂展开，得到
+
+$$
+|\psi;m\rangle
+=\sum_{\sum n_s=m}\sqrt{\frac{m!}{\prod_s n_s!}}
+\prod_s\psi_s^{n_s}|n\rangle.
+$$
+
+多项式定理给范数平方 $(\sum_s|\psi_s|^2)^m=1$。由 $[a_s,\sum_t\psi_t a_t^\dagger]=\psi_s$，湮灭一次给 $\sqrt m\psi_s|\psi;m-1\rangle$，再湮灭一次给
+
+$$
+a_sa_t|\psi;m\rangle=\sqrt{m(m-1)}\psi_s\psi_t|\psi;m-2\rangle.
+$$
+
+相减得到 $\widehat A$ 的式子，再取范数平方得到期望。$m<2$ 两次湮灭为零。若 $\mathfrak d=0$，$\widehat H_m$ 消去该相干态；它又与荷扇区投影交换，所以每个投影也在该扇区零空间中。非零投影按定理 23.5 的一维性等于 $\Omega$ 射线。证毕。
+
+在所有相关振幅非零时也能逐项核对：固定荷展开系数 $c_k$ 的相邻比为
+
+$$
+\frac{c_{k+1}}{c_k}
+=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}
+\sqrt{\frac{(U-k)(V-k)}{(k+1)(R-U-V+k+1)}}.
+$$
+
+在 $Q$ 上复比值是一，剩下恰为 $\sqrt{\pi_{k+1}/\pi_k}$。此核对没有把概率本身当作振幅。有零振幅时一些扇区投影可为零；只能归一化实际非零的投影。
+
+对 $m\ge2$，$\widehat H_m/[m(m-1)]$ 的相干期望严格等于 $h$，而 $\widehat H_m/m$ 的相干期望严格等于 $(m-1)h$。这两个归一化分别用于符号和后文扇区时间尺度，不互相替代。相干态是符号计算的向量族；有限 $m$ 的酉演化不因此必然保持该向量族。
+

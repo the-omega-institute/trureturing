@@ -1,0 +1,55 @@
+**Definition 5.8 (placement and complete selector bill).** New blocks use
+the actual Base/Allocate discipline. For an arena with $r$ existing data
+cells and head at distance $h$ from its left marker, Base begins with
+Home and one MR, then scans to the old right marker while appending one
+counter mark per cell and its final zero. Its body, including this Home
+and initial move, has
+
+$$
+2h+1+1+5r+4=2h+5r+6
+\tag{RCA.5}
+$$
+
+primitives, provided its distinct output counter head is already at R.
+Its output head positioning is otherwise an added actual routine. Named Allocate
+requires a real length $U(\ell)$ at its first bit and the arena head at
+R. Its zero-fill loop costs $5\ell+1$; its full contract already includes
+the following delimiter. Count that delimiter once, then construct its descriptor from actual owner/port codes,
+the Base result, $U(\ell)$, flags and its actual block-creation ordinal.
+The latter is a maintained unary block counter, not an assumed receipt
+number. Numeric receipt identities, when required by a different record
+type, need their own authorized closed-cut scan.
+
+Descriptor fields are copied by AppendWord, with body five per copied
+symbol. Fixed literal fields use three per appended symbol. Home costs
+$2h+1$ at the actual entry distance; Seek costs $2h+3r+3$ for the actual
+constructed offset, plus positioning that offset's own head. Descriptor
+blocks are found by a full origin scan of the sealed delimited descriptor
+stream, counting blocks by the unary copy/increment/compare graphs, until
+the acquired block ordinal is reached. The stream's sealed end is a
+bound. This avoids an infinite regress of assuming a free descriptor seek.
+
+Let $P_i$ be the word of all these positioning, Base, length construction,
+allocation, descriptor, binding-copy, framing and seal occurrences for
+enumeration iteration $i$, expanded exactly as above. Let $k_i=a+i$.
+The count of a completed enumeration is
+
+$$
+\begin{aligned}
+C_{\rm enum}={}&C_{\rm initial\ copy/placement}
+ +\sum_{i=0}^{b-a}
+ \bigl(|P_i|+4k_i+2+5(k_i+1)+5k_i+7\bigr)\\
+&+C_{\rm final\ positioning}+4b+2+C_{\rm end\ seal},
+\qquad a\le b.
+\end{aligned}
+\tag{RCA.6}
+$$
+
+Here the final comparison is $(b+1,b)$ and its count is $4b+2$.
+The copy and increment bodies in (RCA.6) are excluded from $P_i$.
+Every $P_i$ is a specified finite recipe evaluated at its actual heads,
+stream lengths and descriptors, not a constant granted to the service.
+If reference framing needs another copy of a field, that copy belongs to
+$P_i$ and is counted there. The equation does not price the computation
+of $a,b$, the eventual decoder, or transport as enumeration.
+

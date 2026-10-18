@@ -1,0 +1,17 @@
+**定义 1.3（固定的共同历史）。** 令
+
+$$
+\begin{gathered}
+H_2=(0,J,24,M,48),\qquad H_3(C)=(H_2,J,C),\qquad
+\mathcal F_3(C)=\mathcal F(H_3(C)),\\
+H_4(C,X)=(H_3(C),M,X),\\
+H_{5J}(C,X,y)=(H_4(C,X),J,y),\qquad
+H_{5M}(C,X,m)=(H_4(C,X),M,m),\\
+H_{6J}(C,X,y,z)=(H_{5J}(C,X,y),J,z),\\
+\mathcal C_3(C)=\mathcal F_3(C)\cap\{d=0,g(7)=0\}.
+\end{gathered}
+\tag{1.5}
+$$
+
+下标是最后一个原时钟。为避免把不同父历史粘合，$C,X,y,m,z$ 始终是同一完整字面历史的实际响应。
+

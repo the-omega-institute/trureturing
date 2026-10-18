@@ -1,0 +1,31 @@
+**Entire indexed fibers (NARC Theorem 5.2).** For an attained label
+$\gamma$, write $C_\gamma=e^{-1}(\gamma)$ and $d(a,b)=a-b$.
+For integer normalized acquired clock $z\ge\lambda$, the entire
+rows and their exact compatible fibers in (NARC.5.3)--(NARC.5.6) are
+
+$$
+\begin{aligned}
+\mathcal R^R_z&=
+ \bigl(\langle\square_L,T_{q+z}\rangle,\{\{L\}\}\bigr),\\
+F_R(C_\gamma,z,\lambda)&=\{(a,b)\in C_\gamma:b\le z-\lambda\},&
+n_R(a,b)&=z+a-b,&\ell_R(a,b)&=z-b,\\
+\mathcal R^L_z&=
+ \bigl(\langle T_z,\square_R\rangle,\{\{R\}\}\bigr),\\
+F_L(C_\gamma,z,\lambda)&=\{(a,b)\in C_\gamma:a\le z-\lambda\},&
+n_L(a,b)&=q+z-a+b,&\ell_L(a,b)&=z-a.
+\end{aligned}
+$$
+
+The target coordinate is $b$ on right visibility and $a$ on left
+visibility. A terminal common target $v$ returns lag $z-v$.
+Every compatible index is realized by its own fixed original and its
+indicated legal continuation, with equality of the entire acquired
+row. Histories are not spliced. After an adaptive transcript the
+support contains every index producing all preceding actual replies,
+including the actual original. Equal ages or repeated target values
+do not identify indices. Root and visible-prefixed requests have
+constant replies on this whole input fiber; hidden-prefixed requests
+have exactly the relative replies on $T_{n_R}$ or $T_{n_L}$.
+Zero calls suffice exactly when the target is constant on the
+nonempty input fiber.
+

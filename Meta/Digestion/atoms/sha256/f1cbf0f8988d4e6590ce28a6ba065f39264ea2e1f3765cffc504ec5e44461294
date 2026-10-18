@@ -1,0 +1,44 @@
+**Example 18.1 (rational calibration above its unattained frontier).**
+Take the actual source of §8:
+$c=1/4$, $Z=r=1/2$, $a=1/16$, $b=3/16$.
+Then $H=1/3$, $P_0=1/6$, and
+
+$$
+\inf B_*(P)=\max\{0,3P/5-1/10\},\qquad
+\inf R_{\rm worst}(1/2)=2/5.
+\tag{AC.68}
+$$
+
+Choose $v=1/9$ and $d=3/56$. A positive two-unit triangle has
+$(q_a,q_b)=(5/13,1/9)$, and its mirror swaps these.
+The common height support margin is $a-d=1/112$.
+Use the four seeds wait-and-guess-$a$, wait-and-guess-$b$, positive
+and negative with respective probabilities
+
+$$
+\frac{59}{352},\quad\frac{59}{352},\quad
+\frac{117}{352},\quad\frac{117}{352}.
+\tag{AC.69}
+$$
+
+Pad each wait to the same two-unit duration. At either height
+
+$$
+\Pr(\mathsf L\mid X)=\frac12,\qquad
+\Pr(\mathsf L,\widehat X\ne X\mid X)=\frac9{44},\qquad
+\Pr(\widehat X\ne X\mid\mathsf L,X)=\frac9{22}>\frac25.
+\tag{AC.70}
+$$
+
+These are exact substitutions into (AC.62)–(AC.63), with total wait
+probability $59/176$. The controller really acquires its seed and
+the survival/failure event. A live guess is not an observed height.
+
+The six-unit preparation of Definition 14.2 has
+$B_{\beta,m}=8\beta-4\pi m$ and cut live mass $2/9$.
+From preparation, the completed-live mass is $1/9$.
+Earlier stopped mass $7/9$ and new acquisition failure mass $1/9$
+give total stopped mass $8/9$. The live chronology is eight units.
+All exact first-time/five-mode/reference outputs are (AC.45) with
+the old stopped sectors retained, rather than only these scalar totals.
+

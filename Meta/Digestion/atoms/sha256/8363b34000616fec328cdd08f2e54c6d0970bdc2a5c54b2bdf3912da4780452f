@@ -1,0 +1,40 @@
+**Corollary 27.3 (explicit positive error penalties).** Put
+$\eta=E(\Phi)-E_*$. For an original common processor one has
+$0\leq\eta\leq1$, since both outputs in the original metric are
+normalized, so Theorem 26.3 applies with $\epsilon=\eta$. Then
+
+$$
+\begin{aligned}
+J\in\mathfrak S_2
+&\quad\Longrightarrow\quad
+E(\Phi)\geq E_*+\frac{\delta_*^2}{4C^2},\\
+T_{ij}=0
+&\quad\Longrightarrow\quad
+E(\Phi)\geq E_*+\frac{\tau_{ij}^2}{C^2}
+\quad(ij\in\{01,10,02,20\}),\\
+E(\Phi)-E_*
+&\geq\frac{[\max\{\delta_*-\sqrt{24p_H^L(\rho)},0\}]^2}{4C^2}
+\quad\text{for each normalized }\rho
+\text{ in an actual factorization}.
+\end{aligned}
+\tag{CG.225}
+$$
+
+The last line remains valid with $p_H^{\rm acq}(\rho)$ in place of
+$p_H^L(\rho)$. These are positive symbolic source-dependent penalties,
+not numerical evaluations or sharp gaps. In particular the first line
+quantifies the earlier existential qubit-acquisition separation, and
+the second constrains each of the four individual transfers.
+
+Proof. For $J\in\mathfrak S_2$ the witness pairing is nonpositive;
+combine with (CG.222). For a vanishing transfer use its first bound in
+(CG.222). For the last line combine (CG.224) at $\epsilon=\eta$ with
+the homogeneous bound used in Theorem 27.2, and rearrange before
+squaring. Replacing the live probability by its larger acquisition
+probability can only decrease the right side. All four transfer
+penalties and the first witness penalty are finite and strictly positive
+by Definition 26.2 and the credited margins. The same first-line
+obstruction holds for closure of the finite-test low-dimensional class:
+$\mathfrak S_2$ is closed and the witness pairing is continuous.
+It supplies no actual flags to a limit. $\square$
+

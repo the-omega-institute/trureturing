@@ -1,0 +1,69 @@
+**Definition 2.1 (the four laws).** Put
+
+$$
+t=\frac29,\qquad x_j=\frac13t^j,\qquad y_j=\frac49t^j,
+\qquad v=\frac7{19},
+$$
+
+$$
+q=1-\frac{1-H}{v}=\frac{18959}{47250},\qquad
+U=\frac{q}{1-v}=\frac{360221}{567000},\qquad
+u=1-U=\frac{206779}{567000},\qquad
+c=Uv=\frac{18959}{81000}.
+\tag{2.1}
+$$
+
+Define
+
+$$
+\begin{aligned}
+d_B&=C-q-cq=\frac{80300447}{3827250000},\\
+s_B&=1-C-(1+c)u-x_3-(1+c)y_3-x_4-t^5
+     =\frac{84713716643}{3720087000000},\\
+d_A&=C-q-y_2=\frac{7411336}{79734375},\\
+s_A&=1-u-C+y_2-t^2=\frac{58511437}{637875000}.
+\end{aligned}
+\tag{2.2}
+$$
+
+The p laws are given by the following table, by
+$Q_B(w_{j,0})=Q_A(w_{j,0})=x_j$ and
+$Q_B(w_{j,1})=Q_A(w_{j,1})=y_j$ for $j\ge5$, and by zero infinite masses.
+
+| $(j,i)$ | $Q_B(w_{j,i})$ | $Q_A(w_{j,i})$ |
+|---|---:|---:|
+| $(0,0)$ | $u$ | $u$ |
+| $(0,1)$ | $q$ | $q$ |
+| $(1,0)$ | $cu$ | $s_A$ |
+| $(1,1)$ | $cq$ | $d_A$ |
+| $(2,0)$ | $s_B$ | $x_2$ |
+| $(2,1)$ | $d_B$ | $y_2$ |
+| $(3,0)$ | $x_3$ | $x_3$ |
+| $(3,1)$ | $y_3$ | $y_3$ |
+| $(4,0)$ | $x_4$ | $x_4$ |
+| $(4,1)$ | $cy_3$ | $y_4$ |
+
+The suspended laws have $W_B(\beta)=W_A(\beta)=1-v$ and, for $0\le j<4$,
+
+$$
+W_B(\alpha w_{j,i})=\frac{Q_B(w_{j+1,i})}{U},
+\qquad
+W_A(\alpha w_{j,i})=vQ_A(w_{j,i}).
+\tag{2.3}
+$$
+
+Their remaining coordinates are
+
+$$
+\begin{aligned}
+W_B(\alpha w_{4,0})&=\frac{u}{U}t^5
+                      =\frac{6616928}{21270689829},\\
+W_A(\alpha w_{4,0})&=(v-t)t^4=\frac{400}{1121931},\\
+W_B(\alpha w_{4,1})&=W_A(\alpha w_{4,1})=a y_4,\\
+W_B(\alpha w_{j,0})&=W_A(\alpha w_{j,0})=a x_j\quad(j\ge5),\\
+W_B(\alpha w_{j,1})&=W_A(\alpha w_{j,1})=a y_j\quad(j\ge5),\\
+W_B(\infty_\beta)&=W_A(\infty_\beta)=0.
+\end{aligned}
+\tag{2.4}
+$$
+

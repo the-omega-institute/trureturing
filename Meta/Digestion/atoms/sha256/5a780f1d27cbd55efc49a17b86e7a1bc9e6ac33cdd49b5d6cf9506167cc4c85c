@@ -1,0 +1,29 @@
+**Lemma 6.2 (Unmatched characters cannot improve the baseline).** Let
+$\xi(\alpha)=e^{i\alpha}$. If the character in Lemma 5.2 is neither
+$\xi$ nor $\xi^{-1}$, the model has error at least $R_0$.
+
+**Proof of Lemma 6.2.** Identify the useful output plane with
+$\mathbb C$ and write the real-linear map
+$M_*(z)=p_+z+p_-\overline z$. At a fixed height,
+
+$$
+a(k,\alpha)=c+p_+f(k)\chi(\alpha)
+ +p_-\overline{f(k)}\chi(\alpha)^{-1}.
+$$
+
+The characters $\xi^{-1}$, $\chi\xi^{-1}$ and
+$\chi^{-1}\xi^{-1}$ are all nontrivial under the stated
+assumption. Lemma 6.1 makes the average of
+$a(k,\alpha)\xi(\alpha)^{-1}$ tend to zero. Since
+
+$$
+|a-A(k)\xi|^2=|a|^2+A(k)^2
+ -2A(k)\operatorname{Re}(a\xi^{-1}),
+$$
+
+its supremum is at least $A(k)^2$: each finite average is at
+least $A(k)^2$ minus a term tending to zero. Proposition 3.5
+then gives the uniform lower bound $R_0$. All averages use actual
+phase points, including for discontinuous abstract characters.
+$\square$
+

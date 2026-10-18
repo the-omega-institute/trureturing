@@ -1,0 +1,37 @@
+**Proposition 228.3 (Independent rows and closed tails).** For any output
+law $p$ and a first-zero-$n$ target, its TV distance is
+
+$$
+\max\{1-a_n-p(0),\ a_n-p(n),\ 1-p(0)-p(n)\}.
+$$
+
+Indeed its overlap with the two-point target is
+$\min(p(0),1-a_n)+\min(p(n),a_n)$, whose complement is the displayed
+maximum. Thus the three independent rows of 222.2 are necessary and
+sufficient, on every word and label, including negative singleton demands.
+For example $a_n=1/2$, $\varepsilon=1/4$, $p(0)=p(n)=1/4$ passes both
+singleton rows but has TV $1/2$; another legal label carries the remainder.
+The positive row is also retained, even at zero score weight.
+
+If an actual output law $p_x$ uses only marks $0,\ldots,H$ and $n(x)>H$,
+the exact identity is
+
+$$
+\operatorname{TV}(p_x,\lambda_x^a)=\max\{1-p_x(0),a_{n(x)}\}.
+$$
+
+Half the absolute discrepancies is
+$\tfrac12(|a_{n(x)}-(1-p_x(0))|+1-p_x(0)+a_{n(x)})$.
+Replacing $p_x$ by a single positive-word law $p_{1^H}$ additionally
+requires all observed addresses to be at most $H$ and the output to
+depend only on the common seed and acquired replies. The constructed
+finite tables have these properties; they are not assumed of arbitrary
+competitors. For $\varepsilon>0$ the strict active length is
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$. Actual tails stay positive,
+vanish, and include ties $a_n=\varepsilon$. At the feasible point of 226
+one may take $a_1=\cdots=a_4=1$ and
+$a_{4+j}=(2/5)2^{1-j}$, cap $2/5$, giving $L_a=4$ and exact tail error
+$2/5$. Padding a hull point by $b_n=e$ does not make those padded
+coordinates strictly active. The original small lengths $0,1,2$ are not
+removed by the hypotheses $L\ge3$ or $L\ge4$ of the constructor results.
+

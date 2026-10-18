@@ -1,0 +1,56 @@
+## 8. 八、对动态未来商的推进
+
+设动态系统的隐藏坐标为
+
+$$
+\kappa_t.
+$$
+
+未来读出为：
+
+$$
+f_\ell(\kappa_t)=
+\lambda T(\kappa_t)^\ell O.
+$$
+
+如果存在某个 $\ell$ 使：
+
+$$
+\frac{\partial f_\ell}{\partial\kappa_t}\neq0,
+$$
+
+那么当前 $\kappa_t$ 会影响未来。
+
+如果对所有 $\ell$ 都有：
+
+$$
+\frac{\partial f_\ell}{\partial\kappa_t}=0,
+$$
+
+则该隐藏坐标可以被当前 future quotient 商掉。
+
+但是，若动态维护规则会在下一步重新生成新的边界或新的环流，则一次性 future blindness 不等于长期 memory blindness。
+
+定义：
+
+$$
+\Sigma^{(0)}=\text{当前可见摘要},
+$$
+
+$$
+\Sigma^{(t+1)}=
+\Sigma^{(t)}
+\cup
+\mathrm{Closure}\bigl(\Sigma^{(t)}\bigr).
+$$
+
+若存在某个 $t$ 使：
+
+$$
+\Sigma^{(t+1)}\neq\Sigma^{(t)},
+$$
+
+则当前摘要还没有 future-closed。
+
+---
+

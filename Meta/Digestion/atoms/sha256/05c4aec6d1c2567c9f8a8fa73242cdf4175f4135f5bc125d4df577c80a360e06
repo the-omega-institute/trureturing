@@ -1,0 +1,19 @@
+**Definition 2.2 (Unchanged threshold).** Keep the constants of [C,
+Definition 5.1], writing $K_{\rm count}$ for its constant $K$:
+
+$$
+\lambda=\min\{1,D_0/(2\mathrm e V_0)\},\qquad
+A=\frac{\log(1/\alpha)}\lambda,\qquad
+K_{\rm count}=4A+4,\qquad H=\lceil A/\delta\rceil.
+\tag{2.7}
+$$
+
+For later bounds put
+
+$$
+\kappa=\frac12-\frac1{4\mathrm e}>0,\qquad
+C_{\rm fp}=C_\beta+
+ \frac{C_\mu(A+3/2)}{\kappa D_0}.
+\tag{2.8}
+$$
+

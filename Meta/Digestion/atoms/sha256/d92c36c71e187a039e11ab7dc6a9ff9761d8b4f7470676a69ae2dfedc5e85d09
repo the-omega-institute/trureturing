@@ -1,0 +1,76 @@
+**Theorem 7.3 (Occupation certificate and uniform-site designs).**
+For arbitrary positive activities and site weights,
+put
+
+$$
+U=\min_i\frac{b_i}{1-\rho_i}.
+\tag{7.9}
+$$
+
+Then $\gamma\le U$, and $U\le D_{\mathcal M}$
+for any matching is sufficient for
+$\gamma+\Lambda\le1$. At $n\ge4$, if every weight
+is positive and there are two vertex-disjoint
+adjacent pairs with equal endpoint weights within
+each pair, then $\gamma+\Lambda<1$. Consequently,
+uniform site weights satisfy $\gamma+\Lambda\le1$
+at every length $n\ge2$, for arbitrary positive
+activities.
+
+Proof. Conditional on the complete exterior of
+site $i$, the bit is either blocked and zero or
+is Bernoulli with parameter $q_i$. If the exterior
+is free with probability $t_i$, then
+$\rho_i=t_iq_i$ and
+$\mathbb E_p\operatorname{Var}(s_i\mid\text{exterior})
+=t_iq_i(1-q_i)=\rho_i/(1+\lambda_i)$.
+Only site $i$ changes the observable $s_i$.
+Its Dirichlet energy and variance are therefore
+
+$$
+\mathcal E_\omega(s_i,s_i)=b_i\rho_i,
+\qquad\operatorname{Var}_p(s_i)=\rho_i(1-\rho_i).
+\tag{7.10}
+$$
+
+The Rayleigh quotient gives (7.9). The marginals
+$\rho_i$ are those of the actual constrained law;
+the independent Bernoulli parameters $q_i$ do not
+replace them. Combine $\gamma\le U$ with (7.3)
+to obtain the sufficient certificate.
+
+For adjacent $i,j$, exclusion and positive vacuum
+mass give $\rho_i+\rho_j<1$. Taking a weighted
+average of the two occupation bounds yields
+
+$$
+\gamma\le\min\left\{\frac{b_i}{1-\rho_i},
+\frac{b_j}{1-\rho_j}\right\}
+\le\frac{b_i+b_j}{2-\rho_i-\rho_j}<b_i+b_j.
+\tag{7.11}
+$$
+
+If $\omega_i=\omega_j=a$, (7.2) and the
+arithmetic--geometric mean inequality give
+
+$$
+d_{\{i,j\}}=a(1-\sqrt{q_iq_j})
+\ge\frac{a(2-q_i-q_j)}2=\frac{b_i+b_j}2.
+\tag{7.12}
+$$
+
+For the two disjoint pairs $e,f$, write
+$B_e=\sum_{i\in e}b_i$, $B_f=\sum_{i\in f}b_i$.
+Equations (7.3), (7.11) and (7.12) give
+
+$$
+\delta\ge d_e+d_f\ge\frac{B_e+B_f}2
+\ge\min(B_e,B_f)>\gamma.
+\tag{7.13}
+$$
+
+Every path of length at least four contains two
+disjoint adjacent pairs. Uniform weights satisfy
+their equalities; Theorem 7.2 supplies the shorter
+lengths. $\square$
+

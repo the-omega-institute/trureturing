@@ -1,0 +1,35 @@
+### 219.11 The remaining unrestricted obligation
+
+For every $L\ge3$ and every actual full $y\ge0$ with
+$\Delta_O(y)\le1$, the positive obligation remains to produce one
+unrestricted full $V\ge0$ and $\theta\in[0,1]$ satisfying (219.6).
+No exact-$Q$, fixed-anchor, unary, support, terminal, suffix or
+constructor requirement may be imposed on this universal search.
+The theorems here supply that object only under their stated hypotheses.
+The retraction does not prove $\min\Psi_N=\min\Psi_O$;
+the matrix cuts do not prove that arbitrary unit-O inputs are reducible
+to the donor domain with an affordable single residual.
+
+A genuine negative alternative still requires the same actual
+$(b,e)\in H_N$, the same full feasible $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$, $M=\sum\lambda\ge1$, and an actual
+full unit-O input $y$ with strict $F_{Q(y)}(b,e)>M$.
+This single realization must retain the original source, full carrier,
+unchanged consumer, one source-independent seed, arbitrary addresses,
+hard-two actual requests, sourcewise almost-sure finite handoff,
+every multiple-zero word, all independent event rows, positive vanishing
+amplitudes, actual tails and exact closed-cap transport.
+No such separator is supplied by the input gaps or local constructor
+obstructions above.
+
+Consequently the original implication, for every positive nonincreasing
+vanishing sequence and every positive closed cap,
+$\mathcal F_N(a,\varepsilon)\ne\varnothing
+\Rightarrow\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$,
+remains unresolved. Separately attainable marginals, an unaffordable
+fixed constructor, an off-$H_N$ affine witness, a hull-only point,
+a final-total-only tail test or an exact-law failure do not decide it.
+All finite equalities and real-parameter existence assertions in this
+section are ordinary mathematics; none asserts Lean/kernel validation,
+physical sampling cost or universal affordability.
+

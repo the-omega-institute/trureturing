@@ -1,0 +1,33 @@
+### 104.7. Regularized separation from the unbiased boundary
+
+The unit-norm equation gives
+\[
+|z|^2=\frac{1+m^2-2mpr}{4q^2},\qquad
+\tfrac12<v<\tfrac{25}2,\quad |z|,|w|,|g|<\tfrac{25}2.
+\tag{104.42}
+\]
+For \(g\), use \(g^2<\eta\zeta<|z|^2/m\); and \(v>A>1/2\) also implies \(|z|^2>1/4\).
+Set \(\kappa=(m-1)/d\) and \(\xi=[p(Am-B/m)-d]/d\). Multiplying the second endpoint inequality in Lemma 104.5 by \(2m\) gives
+\[
+0<\kappa<m+2/p<139/14<10.
+\tag{104.43}
+\]
+The commutator rearranges exactly to
+\[
+g+p=\frac{p^2(Am^2+B)}{m\xi}>0.
+\tag{104.44}
+\]
+Since \(Am^2+B-m=(m-1)(Am-B)>0\), (104.42) yields
+\(\xi>2c_*/27>1/80\). The last inequality follows from
+\(c_*>27/160\), equivalently \(\sqrt{33}>227/40\).
+With \(m=1+d\kappa\), the apparent factors \(d\) cancel:
+\[
+\begin{aligned}
+C_*&=m-p[1+A\kappa(m+1)]=-m\xi<-1/80,\\
+g&=\frac{2ABp^2\kappa(m+1)-mp}{C_*},\\
+\lambda&=1-r+p(m+1/m)-\kappa(m+1)(g+p)/m.
+\end{aligned}
+\tag{104.45}
+\]
+These are regular expressions on the indicated bounded coordinates. No division by \(\Delta\) or \(j\) enters the following margin.
+

@@ -1,0 +1,24 @@
+## 4. Transport from every positive original cap
+
+**Reused correspondence 4.1 (Finite class feasibility).**
+Use exactly the closed-cap correspondence and prefix premise stated in
+[XVII297.3 and 309.3](https://github.com/the-omega-institute/trureturing/blob/07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md)
+and
+[XVIII315.3](https://github.com/the-omega-institute/trureturing/blob/24e09b5c/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md),
+including their expressly cited Theorem 110.2 and Lemma 280.3.
+At a met positive closed cap $0<E\le1$, every original $N$ rule
+has some normalized complete finite representative on
+
+$$
+H=\max(\{i:a_i>E\}\cup\{0\}).
+\tag{4.1}
+$$
+
+This premise includes arbitrary original addresses and full-carrier
+outputs. Its supplied necessity uses countability for one probability-one
+seed event of termination at every source, control of the whole
+preselected schedule, actual finite witnesses, truncation and
+finite-simplex compactness. It supplies class feasibility and does not
+preserve an arbitrary starting output law or coupling. Vanishing of
+$a$, with no summability requirement, makes $H$ finite.
+

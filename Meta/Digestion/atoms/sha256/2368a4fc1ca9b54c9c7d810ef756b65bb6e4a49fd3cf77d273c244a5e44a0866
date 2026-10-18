@@ -1,0 +1,22 @@
+**Convention 17.3 (resource and recovery limits).** The graph,
+orientation, slot orders, scaffold, membership and reply-decoder
+tables are finite source-independent installed data. Their
+generation and installation, preparation work/control and temporary
+storage, post-request workspace, address construction, final
+predictor, authentic-count representation, entry, authentication,
+access isolation and physical time remain separate resources.
+For the factor alone $b\le2D$ and $c\in\{0,1\}$, so the bound
+$\lceil\log_2(2D+1)\rceil+1$ bits from §9 still applies.
+Neither the full seed assignment nor the syndrome is supplied
+to the reader or exported in (GDB.79).
+
+This deliberately nonoptimal construction demonstrates the
+original-task consumer; it asserts no acquisition optimum or
+new value of $M_1(D)$. Operational recovery is exactly (GDB.50):
+one complete acquired name and at most one actual reply recover
+the requested full temporal factor and then every authentic-count
+reply. The inverse trajectory recovers the first branch count and
+alpha-stage flag. Whole-source, hidden-age, history and physical
+space-time recovery, and the paid services themselves, do not
+follow.
+

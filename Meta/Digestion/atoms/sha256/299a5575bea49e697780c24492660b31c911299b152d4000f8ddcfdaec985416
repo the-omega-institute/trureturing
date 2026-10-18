@@ -1,0 +1,71 @@
+**Convention 12.3 (sources, consumed boundary and residual question).**
+Theorems 11.2–11.4 and Proposition 12.1 give a concrete source and
+parameter correspondence for the published shifted-context family of
+[SPC, Theorems 3.2–3.3, 4.2 and 5.2][SPC]. Take its proper one-hole
+context $C[t]=\langle\alpha,t\rangle$, hole word $R$ and shift $a=1$.
+Its $F(y)$ is exactly (NLC.33)'s $G(y)$, so its source $U$, three full
+rows, fixed point and common contact are the ones displayed here.
+The positive record in (SPC.13) reverses the two endpoints of the
+equality in (NLC.32); both reach guards are identical. Its additional
+negative $y\ne G(y)$ holds on every finite assignment by (NLC.37).
+Consequently its entire fiber equals the one in (NLC.35), even though
+the literal retained record lists differ. This is equality of the
+mathematical source fibers, not an identification of acquired physical
+states or an uncharged acquisition of the additional record.
+
+The singleton nonregular prescribed-pair contact and the other-pair
+regular alternative are therefore applications of those existing
+results, not new general contact theorems. The explicit four-reply
+tooth description (NLC.39), finite indices (NLC.41) and two-parameter
+constructor specification (NLC.43) supply the concrete correspondence
+and richer finite description. Theorem 8.4's unshifted comb has only
+itself and $\alpha$ as subtrees and is regular; allowing ordinary regular
+limits covers that earlier pair. The interpreted shift in (NLC.32)
+forces all distinct $T_j$ teeth in this specialization. Both source
+descriptions retain Open problem 9.2's unrestricted stopping obligation.
+
+Atomic recurrence and index injectivity are reused from ABC, native
+finite locality and acquisition from ARH, and exact finite feasibility,
+guarded compilation and supplied-depth decisions from
+[NSF, Theorems 4.3, 5.2 and 6.1][NSF]. These finite decisions are not
+a stopping rule for their outer existential. NSF §§9–10 retain their
+closure and chart-invariance hypotheses: this $D$ is not globally
+forward-closed, since its required $RRL$ leaf changes from $\alpha$
+to $\beta$. In the direct constructor chart
+$\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$ with
+$z=\rho(y)$, simultaneous residual $\rho$ preserves that equation
+but not the target bit $x=\langle\alpha,z\rangle$: its true left side
+becomes $\langle\beta,\rho(z)\rangle$. Eliminating $z=\rho(y)$ also
+does not by itself supply ARH's synchronous target comparisons;
+$x=G(y)$ still compares a variable with a nonground pair. The retained
+record is not a whole-root/proper-descendant certificate, and ARH's
+separate one-parameter graph $\langle\rho(y),y\rangle$ is not this
+two-parameter fiber. These observations assert no failure of every
+alternative chart or recognizer.
+
+Comon–Lescanne supplies the ordinary rational-tree definition and the
+free-constructor setting, not the native bridge (NLC.38), finite
+signed approximants or a theorem about interpreted $\rho$ equations.
+The source comparison is bounded to the cited suppliers and that
+primary definition; no literature-wide novelty or priority is asserted.
+
+Excluding ordinary finite constructor graphs at the contact point
+does not exclude finite recursive, transducer or indexed certificates,
+regular tree languages, effective search or all finite formalisms.
+Every finite approximant here is itself regular, and (NLC.43) is a
+finite richer description of the nonregular limit. Such a description
+does not establish a generally complete or decidable certificate
+language. Infinite trees remain auxiliary prefix-completion points,
+never admissible native sources or physical registers.
+
+Open problem 9.2, including the general arbitrary-signed
+$\exists h\,\operatorname{PrefDet}(D,Q,h)$ decision and its negative
+stopping obligation, remains unresolved by this increment. Additional
+retained constraints would define another fiber and require their
+own approximation proof. No undecidability result or additional
+observer reset, equality, selector or cost port follows. All statements
+retain the ordinary mathematical and handoff boundaries of
+Definitions 1.1–1.3 and Convention 10.3.
+
+[SPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md
+

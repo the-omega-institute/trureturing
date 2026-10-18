@@ -1,0 +1,29 @@
+**Lemma 9.3 (finite-prefix and completed-predecessor progress).** Every
+canonical successful flight on the supplied target domain terminates
+finitely under Assumption 1.3, including any finite number of earlier
+conversion flights. Every interior raw native phase remains a phase of
+the same execution.
+
+Proof. Word parsers/scans consume finite closed inputs; output goes to a
+different accumulator. Mask/contour traversal visits a finite tree; input
+extraction performs finite positional/descriptor scans; selection uses
+strict predecessor references and a finite row fold. RunN consumes exactly
+its finite countdown. Every Step and patch check is finite word work.
+The actual native compiler's source bank is immutable during both passes;
+all its scans have their existing F/sep/R ends. Publication loops consume
+their actual finite payload lengths. Thus none of these completions needs
+a uniform resource bound.
+
+For Boundary/Prefix and possible older converter work, induct on completed
+outer cycles as ARC Proposition 6.5. The zero-cycle initialization is
+finite. A new strict source cycle is the finite CAP call plus actual
+acquisition/CaptureCAP. A history cycle refers only to a strictly older
+completed predecessor; all its operands are finite by induction. Simulating
+its earlier work interprets individual native rows, including represented
+interpreter rows, never a semantic recursive Call. The additional suffix
+is the fixed five-stage finite sequence above, and its completed-cycle
+annotation is only final Ready. The next induction step therefore has
+the complete finite expanded prefix, not an omitted converter subtotal.
+Partial states occur within these native sequences and are never quotient
+identified with their word/service ends. ∎
+

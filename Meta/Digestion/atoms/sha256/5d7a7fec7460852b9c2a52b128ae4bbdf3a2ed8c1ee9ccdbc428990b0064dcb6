@@ -1,0 +1,131 @@
+**Proposition 8.5 (Basis phase, pulse phase and edge reconstruction).**
+For the oriented edge $e=(u,v)$, define the measurement-basis phase
+$\alpha$ by
+
+$$
+|\pm_\alpha;e\rangle
+=\frac{|u\rangle\pm e^{-i\alpha}|v\rangle}{\sqrt2}.
+\tag{8.8}
+$$
+
+At a fixed site these pairs, together with the original blocked vertices,
+form a complete orthonormal basis. Its measurement is implemented by a
+pulse followed by word measurement with
+
+$$
+\beta=-\alpha-\frac\pi2,\qquad t=\frac\pi4:
+\quad \text{final bit zero is }+,\quad\text{final bit one is }-.
+\tag{8.9}
+$$
+
+For any density matrix $\rho$ on $\mathcal K_n$, write
+$p_u=\rho_{uu}$ and $c_{uv}=\rho_{uv}$. The resolved probabilities satisfy
+
+$$
+q_{\pm,e}^{\alpha}
+=\frac{p_u+p_v}{2}\pm\operatorname{Re}(e^{-i\alpha}c_{uv}),
+\qquad
+c_{uv}=\frac12\bigl[
+(q_{+,e}^{0}-q_{-,e}^{0})
++i(q_{+,e}^{\pi/2}-q_{-,e}^{\pi/2})\bigr].
+\tag{8.10}
+$$
+
+Proof. The pairs are orthonormal on disjoint blocks. From (8.7),
+
+$$
+R_i(\beta,\pi/4)^\dagger|u\rangle
+=\frac{|u\rangle+i e^{i\beta}|v\rangle}{\sqrt2}
+=|+_\alpha;e\rangle,
+\qquad
+R_i(\beta,\pi/4)^\dagger|v\rangle
+=-e^{i\alpha}|-_\alpha;e\rangle.
+$$
+
+The last scalar has modulus one and leaves the projector unchanged.
+Taking the two projector expectations gives (8.10). At $\alpha=0$ the
+difference is $2\operatorname{Re}c_{uv}$; at $\alpha=\pi/2$ it is
+$2\operatorname{Im}c_{uv}$. This also checks the orientation and sign.
+$\square$
+
+One complete word-basis setting gives every diagonal entry. For each of
+the $n$ positions, the two settings $\alpha=0,\pi/2$ give both quadratures
+of every edge at that position simultaneously. Hence $2n+1$ settings
+recover all diagonal and legal-edge entries as an exact-probability
+identifiability statement. This counts settings, not preparations or
+samples. Different edges at the same site have different outside words.
+Keeping only the mean of the measured bit sums their differences and
+cannot recover each $c_{uv}$ separately.
+
+The actual resolved experiment has quantum branches and effects. With
+$\Pi_w=|w\rangle\langle w|$ and
+$V_{i,\alpha}=R_i(-\alpha-\pi/2,\pi/4)$, put
+
+$$
+\begin{aligned}
+K_{i,w}^{\alpha}&=\Pi_wV_{i,\alpha},&
+\mathcal I_{i,w}^{\alpha}(\rho)
+ &=K_{i,w}^{\alpha}\rho(K_{i,w}^{\alpha})^\dagger,\\
+E_{i,w}^{\alpha}&=(K_{i,w}^{\alpha})^\dagger K_{i,w}^{\alpha}
+ =V_{i,\alpha}^\dagger\Pi_wV_{i,\alpha},&
+\Pr(i,w)&=\frac1n\operatorname{Tr}(\rho E_{i,w}^{\alpha})
+\end{aligned}
+\tag{8.11}
+$$
+
+when $i$ is independently uniform. Each branch is completely positive,
+its trace is its event probability, and $\sum_wE_{i,w}^{\alpha}=I$.
+Thus the sum of branch maps is trace preserving. The pair $(i,w)$ is an
+actual output record; retaining it supplies the individual quantities in
+(8.10). Discarding that record or replacing it by a single mean is a
+change of observation.
+
+Here is the precise classical correspondence to [Output-Resolved
+Instrument, §15, Definition 3.1 and Theorem 15.1][OR8]. On a diagonal
+input $\rho=\sum_xp_x\Pi_x$, the branch (8.11) reduces to the nonnegative
+matrix
+
+$$
+M_{i,w}^{\alpha}(x,y)
+=\mathbf1_{\{y=w\}}\,|(V_{i,\alpha})_{wx}|^2.
+\tag{8.12}
+$$
+
+Its state set is $B_n$, action is $(i,\alpha)$, output is $w$, input is the
+row $p$, and terminal test for a record probability is the constant one.
+Then $pM_{i,w}^{\alpha}\mathbf1$ is exactly that branch probability.
+For a sequence with measurements after the actions, products of these
+matrices give the supplier's classical record words. Its invariant-space
+criterion applies to each resolved $M_{a,o}$ under precisely these
+hypotheses. Its §16 counterexample explains why closing only their summed
+kernels need not close recorded futures.
+
+For an arbitrary coherent input, (8.12) omits the cross terms
+$(V_{i,\alpha})_{wu}\rho_{uv}
+\overline{(V_{i,\alpha})_{wv}}$. A nonnegative classical matrix is not a
+coherent carrier; the CP branches and effects in (8.11) supply the actual
+extension. In a sequence without intermediate measurements the effect
+is instead $U^\dagger\Pi_wU$ for the whole unitary product $U$. Inserting
+measured branches between its pulses would change that experiment.
+
+The posterior qualification of [Output-Resolved Instrument, §17 and its
+editorial boundary Q5][OR8] also has an exact limited use. On a feasible
+classical affine family $p_s=p_0+s d$ with a nondegenerate prior $\Pi$,
+a resolved event has likelihood $Q(s)=a+s b$, where
+$b=dM_\omega g$, and requires
+$\mathbb E_\Pi Q(s)>0$. Bayes' formula then gives the supplier's update
+
+$$
+\mathbb E[s\mid E]-\mathbb E[s]
+=\frac{b\operatorname{Var}_\Pi(s)}{\mathbb E_\Pi Q(s)}.
+\tag{8.13}
+$$
+
+The map can use the five-word fiber with $s=p_{13}$ and its actual
+feasible interval, using (8.2). It never requires that a unit shift of
+$s$ be feasible. For coherent phase families the likelihood is instead
+$\operatorname{Tr}(\rho_sE)$; it need not be affine in $s$, so (8.13) is
+not transferred to them. Null events have no ordinary normalized
+posterior, and exact-probability reconstruction does not supply exact
+finite-sample knowledge.
+

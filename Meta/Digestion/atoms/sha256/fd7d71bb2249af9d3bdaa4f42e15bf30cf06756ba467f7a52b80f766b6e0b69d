@@ -1,0 +1,3 @@
+**Definition 39.3 (unchanged sharp problem).** The original requirement remains: for every actual all-real-Kraus encoder from $M_3$ to $M_5$, every complex CPTP recovery on the whole output, and every finite complex reference, either prove
+$\delta_N\geq1-\sqrt{1-\beta}$ with the unhalved diamond norm, or give an actual improving encoder and a rigorous full-reference recovery upper certificate. Sections 36--39 provide the full-beta R38 benchmark, the corrected marginal/reference interface, and the precise limitation of the marginal-packing route. They provide no general rank-two, rank-three or rank-four solution, physical preparation, apparatus, or global novelty claim.$\quad\square$
+

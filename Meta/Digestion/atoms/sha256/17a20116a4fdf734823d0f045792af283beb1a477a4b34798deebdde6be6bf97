@@ -1,0 +1,28 @@
+### 推论 457.2（自匹配点的两份 Robin 预算）
+
+若 $t>1$ 是严格自匹配根，满足
+
+$$
+N^-(t)=e^t,
+\qquad
+\varepsilon_*={1\over t\log t},
+$$
+
+则其对数 Robin 裕度有精确分解
+
+$$
+\boxed{
+\log\frac{e^\gamma\log\log N^-(t)}
+{\sigma(N^-(t))/N^-(t)}
+=\underbrace{\gamma+\log(\log t)-\log\mathcal C_P(\varepsilon_*)}
+_{\text{连续包络差}}
++\underbrace{\mathcal L_P(\varepsilon_*)}
+_{\text{floor 取整损失}}.
+}
+\tag{457.3}
+$$
+
+因此，连续包络差可以为负；要得到 Robin 正性，必须证明它的负部由同一
+指数剖面的取整损失支付。FIB 同余、支撑和指数向量本身不提供这两项的独立
+符号界；它们至多通过（457.2）确定两项之差的实际总和。
+

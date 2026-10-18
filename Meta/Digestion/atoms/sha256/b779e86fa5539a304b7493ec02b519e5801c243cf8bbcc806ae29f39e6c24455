@@ -1,0 +1,124 @@
+**Proposition 17.1 (full survivor spans with a strictly negative erased-gain transfer form).** There is a legal five-read history with a rank-one strict-fixed-polar-sign prefix, invertible $\mathsf B$, and four independent survivors after deletion of any endpoint, for which
+$$
+\mathfrak b\bigl(S,\mathsf T_{-1/4}^{-1}\mathsf C S\bigr)<0
+\tag{17.1}
+$$
+on every strictly positive rank-one actual source. Thus opposite transfer-form signs at this fixed erased-final-gain slope are not a universal consequence of those geometric and span conditions.
+
+**Proof: legal history and prefix geometry.** Take
+$$
+A_0=I,\quad
+A_1=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad
+A_2=LM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix},\quad
+A_3=ULM^2=\begin{pmatrix}3&4\\2&3\end{pmatrix}.
+$$
+The predetermined final multiplier is
+$$
+W=MJM=L^2J=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+A_4=WA_3=\begin{pmatrix}2&3\\7&10\end{pmatrix}.
+\tag{17.2}
+$$
+The chronological blocks are $(M,M)$, $(J,M)$, $(M,J)$, and $(M,J,M)$, with readings only at the displayed endpoints. They are finite forward words with actual indices $0,1,2,3,4$.
+
+The three trace-free endpoint triples $(a-e,b,c)$ of $A_1,A_2,A_3$ are
+$$
+(-1,1,1),\quad(-2,1,2),\quad(0,4,2).
+$$
+Their determinant is $6+4-8=2\ne0$. This proves independence of the first four matrices: applying the linear projection $(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})\mapsto(a-e,b,c)$ kills $I$ and makes the other three independent. The first three rows of $\mathsf B$ in entry order $(p,q,r,s)$ are
+$$
+(0,1,1,1),\qquad(0,2,1,2),\qquad(2,2,4,2).
+\tag{17.3}
+$$
+Their first two equations give $q=-s$ and $r=0$; the third gives $p=0$. Hence their kernel is precisely
+$$
+\mathbb RN,\qquad N=\begin{pmatrix}0&-1\\0&1\end{pmatrix},
+\qquad\mathfrak b(S,N)=p+r>0.
+\tag{17.4}
+$$
+The last quotient row on $N$ is $(10-7)-1=2\ne0$, so $\mathsf B$ is invertible. Lemma 14.1 also makes $\mathsf T_{-1/4}$ invertible.
+
+**Proof: every deletion leaves full span.** The five matrices satisfy
+$$
+3I-4A_1-6A_2+A_3+2A_4=0.
+\tag{17.5}
+$$
+The four entry checks, in row order, are
+$$
+3-4-6+3+4=0,\qquad -4-6+4+6=0,
+$$
+$$
+-4-12+2+14=0,\qquad 3-8-18+3+20=0.
+$$
+Since the first four matrices are independent, the space of five-matrix relations has dimension one. Every coefficient in (17.5) is nonzero. A dependence among any four survivors would extend to a relation with a zero coefficient, contradicting that one-dimensional relation space. This includes deletion of the initial endpoint as well as all four possible noninitial erasures.
+
+**Proof: exact inverse and transfer coefficients.** For this prefix the four trace values are
+$$
+f_0=p+s,\quad f_1=p+q+r+2s,\quad
+f_2=p+2q+r+3s,\quad f_3=3p+2q+4r+3s.
+$$
+Their linear inverse on arbitrary full matrices is
+$$
+x=f_0,\quad y=f_2-f_1,\quad r=f_1-x-y,
+\quad p=(f_3-f_2-3r)/2,\quad s=x-p,\quad q=y-s.
+\tag{17.6}
+$$
+Indeed $x=p+s$ and $y=q+s$, and direct substitution recovers $r,p,s,q$ in that order. Applying (17.6) to $\mathbf d$ gives
+$$
+X_\star=\begin{pmatrix}3/2&7/6\\-1/3&-1/2\end{pmatrix}.
+\tag{17.7}
+$$
+Applying it instead to $(f_0,4f_1/3,2f_2,4f_3)$ gives all entries of $\mathsf P S$:
+$$
+\begin{aligned}
+(\mathsf P S)_{11}&=(11p+8q+12r+11s)/2,\\
+(\mathsf P S)_{12}&=(31p+40q+40r+47s)/6,\\
+(\mathsf P S)_{21}&=(-p-4q+2r-5s)/3,\\
+(\mathsf P S)_{22}&=-(9p+8q+12r+9s)/2.
+\end{aligned}
+\tag{17.8}
+$$
+For example the scaled inverse first gives $y=(2p+8q+2r+10s)/3$ and $r=(-p-4q+2r-5s)/3$; its $p$ equation then gives the first line of (17.8), and $s=x-p$, $q=y-s$ give the other entries. Thus (17.8) is a direct prefix inversion, without a numerical or lifted-source step. In particular $(\mathsf P E_{12})_{21}=-4/3$ and $(\mathsf P E_{21})_{12}=20/3$, but both weak inequalities on $X_\star$ in (15.2) fail. This prefix is (16.1) with $h=u=a=b=1$, outside $a\ge2h+1$.
+
+**Proof: strict sign on the entire actual source domain.** Put $\mathsf H=\mathsf T_{-1/4}^{-1}\mathsf C$ and $F(S)=\mathfrak b(S,\mathsf H S)$. Equations (17.2) and (17.7) give
+$$
+f_4=2p+7q+3r+10s,\qquad
+6\mathfrak b(S,X_\star)=-3p+2q-7r+9s.
+\tag{17.9}
+$$
+Using (17.8) in the determinant polar, before any rank-one simplification, gives
+$$
+\begin{aligned}
+6\mathfrak b(S,\mathsf P S)={}&-27p^2+8q^2-40r^2+33s^2\\
+&-22pq-67pr+6ps-44qr+34qs-11rs.
+\end{aligned}
+\tag{17.10}
+$$
+Multiplication of the two expressions in (17.9) gives
+$$
+\begin{aligned}
+6f_4\mathfrak b(S,X_\star)={}&-6p^2+14q^2-21r^2+90s^2\\
+&-17pq-23pr-12ps-43qr+83qs-43rs.
+\end{aligned}
+\tag{17.11}
+$$
+For rank-one $S$, subtracting (17.11) from (17.10) in the exact transfer identity (15.6) yields
+$$
+\begin{aligned}
+6F(S)/4={}&-21p^2-6q^2-19r^2-57s^2\\
+&-5pq-44pr+18ps-qr-49qs+32rs.
+\end{aligned}
+$$
+Now use exactly the actual constraint $ps=qr$. The $18ps-qr$ term becomes $17qr$. Completing squares proves the identity
+$$
+\boxed{\quad F(S)=-\frac23\left[
+21p^2+5pq+44pr+49qs
++6\left(q-\frac{17r}{12}\right)^2
++\frac{167}{24}\left(r-\frac{384s}{167}\right)^2
++\frac{3375}{167}s^2\right].\quad}
+\tag{17.12}
+$$
+For an explicit check, the first square contributes $6q^2-17qr+(289/24)r^2$. The second contributes $(167/24)r^2-32rs+(6144/167)s^2$. Their $r^2$ coefficients sum to $19$, and adding the last square makes the $s^2$ coefficient $(6144+3375)/167=57$. This recovers the displayed polynomial after $ps=qr$. Every bracket term in (17.12) is nonnegative on the actual domain, and $21p^2>0$. Therefore $F(S)<0$ for every strictly positive rank-one source, proving (17.1). All such sources have the fixed-row, positive-unread-state realization (14.2) on the exact words (17.2). ∎
+
+This diagnostic proves only a method boundary. Even with strict fixed prefix polar sign, invertible $\mathsf B$, and all survivor spans full, the two-strict-sign hypothesis for transfer at $k=-1/4$ can fail everywhere. It does not prove that the history recovers the target. It does not exclude collisions at other slopes, nonlocal transfers, equal-slope constructions, or other finite actual-source mechanisms. Its recovery status is not determined by (17.12). In particular neither a failed coefficient test nor a transfer form with one strict sign is a recovery certificate.
+
+<a id="erased-gain-credits-and-residual"></a>

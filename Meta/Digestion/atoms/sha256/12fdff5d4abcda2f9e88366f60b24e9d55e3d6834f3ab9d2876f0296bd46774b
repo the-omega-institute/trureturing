@@ -1,0 +1,27 @@
+**Proposition 9.3 (zero transfer and Schmidt number at most two differ).**
+Let $\mathfrak S_2$ be the homogeneous cone of live Choi matrices admitting
+a positive rank-one decomposition into vectors whose reshaped $3$ by $3$
+matrices all have rank at most two, as in CG.187. The zero-transfer class
+and the class $J_\Lambda\in\mathfrak S_2$ are incomparable. Consequently
+(ZG.1) does not supply an explicit replacement for CG23's $\epsilon_2$.
+
+Proof. The always-live identity channel is zero-transfer: its Schur matrix
+has every entry one. Its Choi matrix is
+$|\Omega\rangle\langle\Omega|$, with
+$|\Omega\rangle=|00\rangle+|11\rangle+|22\rangle$, of Schmidt number
+three. Every positive rank-one decomposition of a rank-one positive matrix
+is supported on its range, so it cannot have rank-at-most-two vectorized
+terms. This gives a zero-transfer channel outside $\mathfrak S_2$.
+
+Conversely, the live Kraus operator $L=|0\rangle\langle1|$ has product
+Choi vector $|01\rangle$ and $T_{01}=1$. Complete it to a common CPTP
+channel by routing the positive complementary effect $I-P_1$ to original
+failure label $2$ with density $h_0(t)P_f$. Since $\int_0^1h_0=1$, this
+is a full normalized channel with live Schmidt number one and nonzero
+transfer. On the original five-mode algebra use
+$\widehat L=\iota L\iota^\dagger$ and complementary effect
+$I_5-\iota P_1\iota^\dagger$ with the same router. These are abstract
+comparison channels, not newly supplied native operations. The examples
+prove both noninclusions. Theorem 8.2 applies to their zero-transfer side;
+CG23's distinct existential theorem applies to its own cone. $\square$
+

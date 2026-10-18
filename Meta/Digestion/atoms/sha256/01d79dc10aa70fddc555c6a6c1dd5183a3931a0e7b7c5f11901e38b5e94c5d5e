@@ -1,0 +1,108 @@
+**Theorem 5.1 (parametric atomic-contact alternative).** For every input
+of Definitions 1.1–1.3 satisfying Assumption 2.1, with the exact companion
+covers constructed in §2, an effective terminating procedure returns
+exactly one of these alternatives:
+
+1. a finite $H\ge0$ such that $\neg J_B(H)$;
+2. finite data, including one chart tuple, one mode, one matching case and
+   one fixed finite parameter $\mathbf p_0$, defining an effective function
+   $h\mapsto(u_{r,h})_{r\in B}$ of actual finite original sources satisfying
+   $u_{r,h}\in D_r$ and $u_{r,h}\equiv_hu_{s,h}$ for all $r,s\in B$.
+
+In the second alternative $\mathbf p_0$ is chosen once before all depths.
+Divergent ranks and finite residual fillings may vary with $h$. Uniform
+contact holds exactly when at least one of the finitely many $G_\tau$
+is nonempty. These loci can contain infinitely many distinct contacts.
+
+Proof. First establish completeness of the finite classification. Suppose
+$J_B(h)$ for all $h$. Choose an actual joint witness tuple at each depth,
+and use the exact covers to lift every source to actual finite coordinates.
+A single chart tuple occurs at unbounded depths. Extract a subsequence on
+which each rank coordinate is either a fixed natural number $c_i$ or
+tends to infinity. Such an extraction is obtained successively over the
+finitely many coordinates: a value occurring infinitely often can be
+fixed; otherwise choose increasing lower bounds. Finitely many steps give
+one simultaneous extraction, rather than separate unboundedness claims.
+
+In the compact finite product of completed residual spaces extract a
+further convergent subsequence. The anchor outputs converge to the finite
+symbolic $K(\mathbf c)$. All companion outputs converge to that same tree,
+since their differences from the anchor are invisible through increasing
+prefix depths. Continuity of fixed powers and pairing gives exactly the
+completed output equality used by Lemma 3.2. That lemma chooses one case
+$\tau$ and fixed auxiliary indices $\mathbf d$. Its visible finite residual
+values are forced, not selected among competing completions.
+
+Every forced finite residual is isolated in the prefix topology. Thus at
+late indices every such actual residual is exactly
+$Z_{r,j,\tau}(\mathbf p)$, simultaneously for all names. The original
+finite witnesses retain every native negative, both guards, all literals
+and complete rows. They therefore prove $\Phi_\tau(\mathbf p,\mathbf w)$
+at arbitrarily large simultaneous $\mathbf w$. This puts
+$\mathbf p\in G_\tau$. No original sign, partition or row label was
+passed to a limit: only completed output equality and eventual exactness
+of finite coordinates were used.
+
+Now suppose $G_\tau\ne\varnothing$. Theorem 4.2 supplies one
+$\mathbf p_0$, a base $\mathbf w_0$ and a common positive ray. For a
+requested inclusive $h$, choose a finite $t$ with
+$w_{0,i}+tq_i\ge2h+2$ for every $i\in A$. This is one finite calculation
+on the produced integers. Set the entire rank tuple to these divergent
+values and the finite values $\mathbf c$. Equation (PAC.13) keeps all
+rank correlations, including those imposed by every companion and every
+signed-support projection.
+
+Keep every forced finite residual exactly at
+$Z_{r,j,\tau}(\mathbf p_0)$. For each forced infinite residual compute
+its valid prefix through $h$ from its finite description. Retain all early
+leaves and their absent descendants, put private holes in the unobserved
+children of the branches at the boundary, and use one such context for
+all occurrences of the same residual name. Each infinite description has
+an infinite branch, so its frontier is nonempty. For a hidden residual
+choose the prefix of $\Omega$ through $h$. Different original names have
+independent frontiers even when their completed values coincide; repeated
+names reuse the whole context and filling.
+
+By (PAC.11), after the forced finite coordinates have been inserted, each
+companion has a finite seed for its entire negative conjunction at this
+same rank tuple. Apply [SLP, Lemma 2.1][SLP] on this normalized Cartesian
+piece. It gives one finite tuple with every prescribed infinite prefix and
+all negative records together. [SLP, Theorem 3.1 and Corollary 3.2][SLP]
+express the same exact support-neighbourhood criterion; here its feasibility
+antecedent is furnished by the ray, not assumed for unknown finite values.
+No local prefix theorem is reproved. The §2 source reduction and the finite
+substitution of §4 verify its full carrier hypothesis at this use.
+
+The actual anchor output uses the same finite ranks and the produced
+divergent ranks; by (PAC.8) it agrees with $K(\mathbf c)$ through $h$.
+Every companion token does likewise: finite atoms and forced finite
+residuals agree exactly, divergent atoms satisfy (PAC.8), and live residuals
+have the prescribed prefixes. Nonexpansion of each fixed $\rho^e$ and
+pairing then gives agreement of every companion source with $K$ through
+$h$. Therefore they share one original four-valued prefix. Soundness of
+the exact source covers puts each actual finite output in its entire
+$D_r$, with every old and target exterior, partition, literal, sign,
+off-task relation and endpoint guard. It is not necessary that the finite
+sources satisfy the cross-source completed equalities literally.
+
+All chart tuples, rank modes and matching cases are finite, and every
+compiler and semilinear test terminates. A nonempty $G_\tau$ therefore
+gives the second alternative with a terminating construction at every
+requested $h$. If every $G_\tau$ is empty, the necessity argument gives
+$\neg\forall h\,J_B(h)$. To extract $H$, decide $J_B(0),J_B(1),\ldots$
+by NSF's fixed-depth multi-source feasibility. For each supplied $h$ one
+can enumerate the finitely many valid four-reply prefix patterns and
+conjoin one pattern with the entire stratum predicate for every $r$;
+NSF decides the resulting finite native queries. The search must stop,
+because the preceding finite classification has proved that some $H$
+fails. This is a terminating exclusion extraction after a terminating
+negative decision, not unsuccessful enumeration of possible contacts.
+The alternatives are incompatible by (PAC.5). $\square$
+
+The case of no divergent coordinates is included. Its support test is
+ordinary nonemptiness. If $K$ is finite, sufficient agreement isolates that
+one source, so distinct complete rows cannot have that contact. The theorem
+thus does not create a spurious contact by treating a finite tree as having
+a live frontier. Empty residual products and empty negative lists also
+retain their literal meanings in URR and SLP.
+

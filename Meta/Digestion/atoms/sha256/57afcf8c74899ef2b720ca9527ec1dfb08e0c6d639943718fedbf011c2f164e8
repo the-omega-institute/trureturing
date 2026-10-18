@@ -1,0 +1,37 @@
+**Theorem 2.3 (response identity and positive susceptibilities).** At the event,
+$$
+k_7'-k_6'=-p_4'd_6'=h^THh>0,
+\qquad
+k_7'>k_6'>0.
+$$
+
+**Proof.** From the six response equation and the equation for $h$,
+$$
+\begin{aligned}
+q^Th
+&=z_6'^THh+Y_6'^TAh\\
+&=-z_6'^TA^T\Delta Y-p_4'v^TY_6'\\
+&=-p_4'v^TY_6',
+\end{aligned}
+$$
+because $Az_6'=0$. The disappearing contact contributes $k_4p_4'$ to the seven contrast derivative, hence
+$$
+k_7'-k_6'
+=q^Th+k_4p_4'
+=p_4'(k_4-v^TY_6')
+=-p_4'd_6'.
+$$
+Also,
+$$
+h^THh=-(Ah)^T\Delta Y
+=p_4'v^T\Delta Y
+=-p_4'd_6'.
+$$
+The two strict transverse signs therefore give $h^THh>0$.
+
+The vector $z_6'$ lies in $\ker A$. Since $q|_{\ker A}\ne0$, it is nonzero, and
+$$
+k_6'=q^Tz_6'=z_6'^THz_6'>0.
+$$
+Consequently $k_7'=k_6'-p_4'd_6'>k_6'>0$. The positive definiteness of $H$ is used only on $\ker A$; $h$ is generally not tangent because $Ah=-vp_4'\ne0$. No positive seven-ray Hessian at the zero weight is assumed. $\square$
+

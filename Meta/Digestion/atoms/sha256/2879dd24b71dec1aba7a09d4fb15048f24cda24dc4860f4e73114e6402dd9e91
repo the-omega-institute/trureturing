@@ -1,0 +1,19 @@
+**Definition 2.1 (live histories and two witness families).** A cube
+history includes every invocation already made. Let $S$ be its exposed
+coordinate set, $h$ the number of exposed ones, and $z=|S|-h$.
+It is live when
+
+$$
+0\le h\le k-1,\qquad 0\le z\le n-k.
+\tag{CP.7}
+$$
+
+For each such pair, define $Z(h,z)$ by giving the successive selected
+queries the reply sequence $0^z1^h$, and define $O(h,z)$ using
+$1^h0^z$. Between these selected replies follow any native live
+nonselected invocation with its cube reply. After the prescribed
+sequence, follow such an invocation if present and stop immediately
+before the next selected query. The symbols $Z(h,z)$ and $O(h,z)$
+denote histories; write $v_Z(h,z)$ and $v_O(h,z)$ for their ending
+installed selected states.
+

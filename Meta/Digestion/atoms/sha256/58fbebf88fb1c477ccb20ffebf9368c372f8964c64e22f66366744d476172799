@@ -1,0 +1,8 @@
+## 9. An explicit all-state stability bound to the two-orbit union
+
+Let
+
+$$d(\psi,\mathcal M)=\min_{s\in\{+,-\},\,U\in U(2)^4,\,\theta\in\mathbb R}\|\psi-e^{i\theta}UH_s\|_2,\qquad \mathcal M=\mathcal O_+\cup\mathcal O_-.$$
+
+The minimum exists by compactness. We prove a global Holder bound with explicit, nonoptimal constants. This is a pure-state, trusted-coordinate mathematical estimate. It is neither an optimal robustness exponent nor a device-independent self-test.
+

@@ -1,0 +1,23 @@
+## 2. The literal source assertion
+
+Graham and O'Bryant's Conjecture 5.2 asserts that distinct positive
+$p_i$ coprime to $q$, satisfying
+
+$$
+q>(7/4)^n,\qquad \sum_{i=0}^{n-1}p_i\le q,\qquad
+R_k(q,p)\ge\frac{2}{\sin(\pi/q)}\quad(0\le k<n),
+$$
+
+force both $q=2^n-1$ and the ordinary residue-set equality
+
+$$
+\{p_i\bmod q:0\le i<n\}
+=\{2^i\bmod q:0\le i<n\}.
+$$
+
+The source is *A discrete Fourier kernel and Fraenkel's tiling conjecture*,
+Acta Arithmetica 118.3 (2005), 283–304, DOI
+[10.4064/aa118-3-4](https://doi.org/10.4064/aa118-3-4), printed page 302.
+The equality is of ordinary residues; it does not identify residues up to
+independent signs.
+

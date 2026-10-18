@@ -1,0 +1,24 @@
+**Convention 19.1 (material bounded checks and their limits).**
+The arithmetic and actual-tree examples admit bounded
+in-memory integer checks, without retained experiment
+code or data. The following readings corroborate the
+displayed proof:
+
+| Finite domain | Exact reading |
+| --- | --- |
+| All $123$ actual $S_3$ states | Total weight $23377809$, minimum $48071$, and pressure-fiber mass $9114093$ on its $100$ states. |
+| All $2048$ subsets of $S_2$ | The five necessary count hypotheses of Lemma 8.2 hold on respectively $1627,704,1206,193,112$ sets, with $35,22,30,13,10$ distinct count vectors; every vector has the stated domination. These are checks of a credited lemma. |
+| All $45$ entries of the four projection tables | Exactly the five heavy entries in (NCE.92); all their excesses are at most $48071$; maximum branch mass with both parent leaves $3651672$. |
+| All $261$ actual supports in classes I–V | Counts $9,9,81,81,81$; all are range-feasible, have the stated mass and designated hard target, and give exactly the cell lists and squared sums (NCE.93). |
+| Every word of length at most four on those supports | No selected hard target factors through its own reply. The proof in Lemma 15.1, rather than this bounded check, covers every finite word. Canonical words longer than three are absent. |
+| All seven targets on the $100$-state $P_B$ | Each is constant or factors through that same target's own literal. The existing full-family $D=3$ construction has $24$ attained names, seven preparation Reads, maximum length three and seventeen letters. |
+| All $1446$ actual right subtrees of height at most three | The paid seven-Read scan gives all $123$ canonical states and $24$ names, with $1369$ actual sources in the merged name. Reply and factor preservation hold on all $10122$ source/target pairs; $70854$ authentic-count replies for $0\le k\le6$ agree with direct substitution readout. This checks the credited paid construction, not optimal memory. |
+| Rational comparison and powers $n=1,2,4,8$ | Cross-difference $9050280$ and ceilings $3,7,44,1874$; the $n=8$ integers are (NCE.107). |
+
+No enumeration of all $2^{123}$ supports or all joint
+templates is needed or asserted. Projection domination,
+the missing-state charge, and the all-word witnesses
+prove completeness of the heavy cases. Theorem 2.2
+then proves all joint lengths; finite checks alone
+establish no asymptotic convergence or memory optimum.
+

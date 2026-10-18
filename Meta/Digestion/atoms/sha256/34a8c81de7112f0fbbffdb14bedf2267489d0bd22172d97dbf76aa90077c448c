@@ -1,0 +1,29 @@
+**Corollary 5.3 (Orders of the sufficient precisions).** Uniformly over
+all allowed caps, $B_0,Q_0=O(\log(1/s))$. For any fixed $J\ge1$,
+
+$$
+B_0=2r\log_2(1/s)+O(1).
+\tag{5.5}
+$$
+
+At the full allowed cap $J=\lfloor\log_2(\eta/s)\rfloor$,
+
+$$
+B_0=r\log_2(1/s)+O(1),\qquad
+Q_0=2r\log_2(1/s)-\log_2J+O(1).
+\tag{5.6}
+$$
+
+These are sufficient bounds for this construction. They assert neither
+least precision nor a necessary precision-versus-state tradeoff.
+
+Proof. Allowed caps obey $1\le J\le\log_2(\eta/s)$, and each logarithm
+in (5.1) is at most $2r\log_2(1/s)$ plus a fixed constant. This proves
+the uniform upper orders. For fixed $J$, the second argument of the
+maximum defining $B_0$ eventually dominates its fixed first argument,
+giving (5.5). At full cap, $J=\log_2(1/s)+O(1)$ and
+$rJ=r\log_2(1/s)+O(1)$. Substitution in the logarithms in (5.1), with
+ceilings changing them by at most one, gives (5.6); the maximum with
+$J$ preserves the stated $B_0$ formula also for $r=1$. The $Q_0$
+logarithm eventually dominates $r$. $\square$
+

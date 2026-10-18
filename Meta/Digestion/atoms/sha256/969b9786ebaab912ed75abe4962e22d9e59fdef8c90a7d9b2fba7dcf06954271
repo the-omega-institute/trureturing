@@ -1,0 +1,72 @@
+**引理 3.1（不除采样零的整个增益）。** 在 $g(7)=0$ 的层，令
+
+$$
+E=48-d,\quad B=Y-d,\quad A=z-d,\quad V=24-d,\quad
+D=tu,\quad f=E/t,\quad h=B/u.
+$$
+
+则唯一整个增益及剩余样本为
+
+$$
+g(s)=\frac d{56}(s-2)(s-4)(s-7)
+ +\frac f{20}s(s-4)(s-7)-\frac h{24}s(s-2)(s-7),
+\tag{3.1}
+$$
+
+$$
+a:=g(1)=\frac{9f}{10}-\frac h4-\frac{9d}{28},\quad
+e:=g(3)=\frac{3f}{5}+\frac h2+\frac d{14},
+$$
+$$
+q_5:=g(5)=-\frac f2+\frac{5h}4-\frac{3d}{28},\qquad
+k_6:=g(6)=-\frac{3f}{5}+h-\frac d7.
+\tag{3.2}
+$$
+
+证明。式 (3.1) 在四个互异节点 $0,2,4,7$ 的值恰为 $-d,f,h,0$；差多项式若有四个不同根且次数至多三，只能恒零。同一式代入给式 (3.2)。第一、第三祖先继续要求
+
+$$
+aj=V,\qquad en=A.
+\tag{3.3}
+$$
+
+只除了非零节点差及正 $t,u$，没有倒置 $f,h,q_5,k_6$ 或任何首项。∎
+
+置
+
+$$
+\begin{aligned}
+I&=126Eu-35Bt-45dD,&H&=42Eu+35Bt+5dD,\\
+Q_5&=-14Eu+35Bt-3dD,&K_6&=-21Eu+35Bt-5dD.
+\end{aligned}
+\tag{3.4}
+$$
+
+于是
+
+$$
+(g(i))_{i=0}^7=
+\left(-d,\frac I{140D},\frac Et,\frac H{70D},\frac Bu,
+                 \frac{Q_5}{28D},\frac{K_6}{35D},0\right).
+\tag{3.5}
+$$
+
+若 $e\ne0$，则 $n=70AD/H$。由实际第五、第六迹得到
+
+$$
+\begin{aligned}
+\mathsf P(d,t)&=d+\frac{Q_5(H+70At)}{28tH},\\
+R_M(d,t)&=d+\frac{2AK_6}{H}+\frac{2K_6}{35t}.
+\end{aligned}
+\tag{3.6}
+$$
+
+若另有 $a\ne0$，则
+
+$$
+R_J(d,t)=d+\frac{4AK_6}{H}+\frac{K_6}{35u}-\frac{4VK_6}{I}.
+\tag{3.7}
+$$
+
+例如 $n+u=u(H+70At)/H$，乘 $Q_5/(28D)$ 即得第五值；第六 $M$ 用 $n+2u$，第六 $J$ 用 $2n+t-j$。这些是同一个世界的实际函数，$\mathsf P$ 不表示源矩阵；即使 $q_5=0$ 或 $k_6=0$，恒等式仍成立。
+

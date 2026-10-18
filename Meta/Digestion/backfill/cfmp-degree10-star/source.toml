@@ -1,0 +1,5 @@
+source_id = "cfmp-degree10-star"
+path = "docs/develop/theory/CFMP_DEGREE10_STAR.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

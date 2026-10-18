@@ -1,0 +1,13 @@
+**Theorem 77.1 (aligned graph at \(b=1/2\)).** There are exactly eighteen
+noncanonical common-flat rays that, after a common phase and synchronous
+permutation, have the aligned form \((1,1,z;g,g,gr)\). Their induced
+orthogonality graph is \(K_{3,3}\sqcup K_{3,3}\sqcup K_{3,3}\).
+Every orthogonal pair among them has orthogonal nonzero channel-mean
+spinors. In particular they contain no orthogonal triple.
+
+This theorem controls the entire aligned set, including edges between
+its different symmetry orbits. It does not control edges involving a
+three-distinct-channel ray, or establish a complete ray census at this
+parameter. The following model-specific certificate uses the exact
+original-equation equivalence in Theorem 75.5.
+

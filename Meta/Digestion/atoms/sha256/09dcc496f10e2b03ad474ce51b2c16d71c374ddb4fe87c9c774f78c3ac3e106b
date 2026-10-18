@@ -1,0 +1,32 @@
+**Corollary 2.3 (the surviving source-time/memory statement).** Uniformly
+in every positive regime, a complete autonomous no-$11$ width satisfies
+
+$$
+L\ge\frac14\bigl(h+\log_2(T+1)\bigr).
+\tag{2.5}
+$$
+
+For fixed even $h$, no bound on this width independent of $T$ can
+hold, even with unrestricted genuine Updates and a fresh immutable
+installation for each $(h,T)$. SLHC Theorem 10.3's active macro width
+$\Theta(h)$ and SLHC Corollary 12.4's capped macro width remain claims
+about their stated conditional macro services.
+
+Proof. From (2.4), even without a fixed finite cap, the all-shape
+comb union gives $S_{\rm inst}\ge2^{h-1}+2$: its proof needs only that
+each tip has some separating literal. Equivalently use the finite
+worst-run cap of this one installation; there are only finitely many
+promised $(u,t)$ and each run terminates. Since $F_{L+2}\le2^L$,
+$L\ge h-1$. Equation (2.3) gives
+$L\ge\log_2(T+1)-1$ and also $L\ge2$. Writing
+$X=h+\log_2(T+1)$, these imply $L\ge X/2-1$; for $X\ge4$ use
+$X/2-1\ge X/4$, and for $X<4$ use $L\ge2$.
+
+The old macro contract leaves literal delivery a conditional service
+with no extra persistent field. Adding a real counted sender and
+receiver changes the measured system. It does not refute the macro
+construction or its one-bit responses. Increasing $U$ can reduce its
+retained clock-cell information; it cannot make an autonomously
+terminating source-quiescent long frame fit a bounded number of complete
+configurations. ∎
+

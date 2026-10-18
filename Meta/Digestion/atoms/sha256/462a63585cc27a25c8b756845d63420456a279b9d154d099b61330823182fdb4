@@ -1,0 +1,64 @@
+### 9.1 The actual mixed integral
+
+Prescribe native velocities $a_c=\dot k$ and $b_c=\dot\chi$ on a
+finite interval $[0,T]$, in the regularity class of §1. Define their
+relative parameters
+
+$$
+\rho(\tau)=\int_0^\tau a_c(v)\,dv,\qquad
+\Delta_k=\rho(T),\qquad
+L=\int_0^T b_c(\tau)\,d\tau,\qquad
+C=\int_0^T\rho(\tau)b_c(\tau)\,d\tau.
+$$
+
+The function $\rho$ is continuous and bounded on the compact interval,
+and $b_c$ has finite absolute integral, so $C$ exists. The exact source
+guard is
+
+$$
+0<k+\rho(\tau)<H\quad\hbox{for every }\tau\in[0,T].
+\tag{9.1}
+$$
+
+Equivalently, with the extrema on this same compact interval,
+
+$$
+k+\min\rho>0,\qquad k+\max\rho<H.
+\tag{9.2}
+$$
+
+The strict inequalities follow because the extrema are attained. Lawful
+endpoints alone do not ensure (9.1) for a general path.
+
+Integrating the actual equations of Lemma 1.1 on this guard gives
+
+$$
+k'=k+\Delta_k,\qquad
+\alpha'=\alpha+L/2,\qquad
+\beta'=\beta+\left(\frac12-\frac kr\right)L-\frac Cr.
+\tag{9.3}
+$$
+
+In particular,
+
+$$
+\int_0^T\left(\frac12-\frac{k+\rho(\tau)}r\right)b_c(\tau)\,d\tau
+=\left(\frac12-\frac kr\right)L-\frac Cr.
+$$
+
+This proves both the mixed term and its negative sign. The formula
+respects the phase circles and uses no stored past lift. If two paths
+with relative triples $(\Delta_1,L_1,C_1)$ and
+$(\Delta_2,L_2,C_2)$ are concatenated, their relative displacement in
+the second piece is $\Delta_1+\rho_2$. Thus the combined triple is
+
+$$
+(\Delta_1+\Delta_2,\ L_1+L_2,\ C_1+C_2+\Delta_1L_2).
+\tag{9.4}
+$$
+
+Substitution in (9.3) agrees with successive application. The combined
+guard consists of the first all-times guard and the second one from
+the actual intervening height. This verifies the source composition
+without replacing simultaneous control by an asserted finite splitting.
+

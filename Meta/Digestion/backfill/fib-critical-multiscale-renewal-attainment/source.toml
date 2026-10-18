@@ -1,0 +1,5 @@
+source_id = "fib-critical-multiscale-renewal-attainment"
+path = "docs/develop/theory/FIB_CRITICAL_MULTISCALE_RENEWAL_ATTAINMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

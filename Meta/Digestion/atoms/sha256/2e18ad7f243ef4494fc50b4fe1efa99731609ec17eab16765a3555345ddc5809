@@ -1,0 +1,26 @@
+**Theorem 4.2 (full-domain original operational fidelity).** On every finite actual history from before the first Read through delivered Stop, Construction 4.1 preserves the full original acquired filtration, operation menu, actual costs and $C_0$ events. Both [PH] Definition 1.5 compatibilities hold exactly on every legal positive predicted continuation, including both seeds, all record triples and invalid code histories.
+
+**Proof.** A complete retained operation-return configuration consists of original $c$, private finite labels and canonical charged workspace. The update is a product with original $\delta$; its projection to $C_0$ is always $\delta$. Induction over actual operations therefore preserves every original field and event on that *same* history: rejected pairs remain paid rejections, each segment completes by the original table, the third event writes its original $B,Q^+,Z$ before the table's latch, later original updates hold those exact records, fourth completion enables only its matching Stop, and that Stop delivers exactly once. Terminal states have no Read transitions. Private invalid flags never grant or remove original permissions. This product proof uses the full original table, so it applies to records not used in the lower witness as well as $c_*$. No field obtained on a different history is substituted.
+
+For per-configuration generation, define $D_z$ to be the full legal transcript law of the stated finite generator from $z$, submitting every synthetic letter to the very same actual letter-update kernel and its original deterministic event block. For every residual measurable event $E$ its one-operation cylinder identity is
+
+$$
+D_z(xE)=q_z(x)\sum_{z'}P_x(z,z')D_{z'}(E),
+\tag{4.2}
+$$
+
+where $xE$ includes the complete original event block and $x=\mathrm{Stop}$ has probability 1 at its sole legal menu. This is an identity of full law measures, not a bounded-tail identity. The early uniform seed generator accepts a pair with probability $1/2$, and each early payload return has probability $1/4$. The fourth-stage canonical survival factor is $a<1$, with at most one preceding exceptional branch. Thus completion is almost sure from every returned cut. Legal infinite noncompletion paths remain in the carrier with mass zero; pending and delivered laws are deterministic. Finite cylinder products plus this full continuation construction prove normalization and (4.2). Charged sampler microstates have the conditional continuation of their finite program; they are not additional source query cuts.
+
+Marginal compatibility needs a separate calculation. Given actual $h$, the private row is $\rho_h$ and the actual next-operation row is $\rho_{hx}=\rho_hP_x$, with no synthetic-probability reweighting. Conditioning the *predicted* marginal on $x$ instead gives
+
+$$
+\operatorname{res}_x\overline D_h(E)=
+\frac{\sum_z\rho_h(z)q_z(x)\sum_{z'}P_x(z,z')D_{z'}(E)}
+{\sum_z\rho_h(z)q_z(x)}.
+\tag{4.3}
+$$
+
+Before the latch, $q_z(x)=1/2$ on the entire same-$c$ fiber, so it cancels and (4.3) equals the report $\sum_{z'}\rho_{hx}(z')D_{z'}$. This includes the update which performs the third write and then latch: the incoming emissions are still uniform even if the successors have different first-$p$ decoders. At a $p$ cut the emissions may depend on the label, but for either fixed $x$ all successor decoder laws are identical on the resulting same-record fiber: for $\alpha$ the prescribed pending Stop law, for $\beta$ the canonical $\beta$ law. Hence reweighting by any positive $q_z(x)$ changes neither residual law. At a $\beta$ cut $q_z(x)$ is constant ($v$ or $1-v$), and its successors are canonical $p$ or matching pending Stop. At pending Stop the update is deterministic, and delivered has no continuation obligation. These cases exhaust all original cuts. Positive probabilities permit conditioning on every legal active letter. Iterating the one-operation equalities proves every legal finite-prefix equality. This is the precise reason that persistent private randomness here does not create the defect illustrated in [ACP]/[MDA].
+
+Actual private bits and synthetic output are not appended to the source acquired filtration. A synthetic cursor is initialized from an already held finite configuration in paid storage, without accessing, cloning or resampling the source. Synthesis does not call actual Read or test future events. The induction and identities preserve write-before-latch, same-history holding/delivery and the sole original Stop while allowing only original paid actual Reads. ∎
+

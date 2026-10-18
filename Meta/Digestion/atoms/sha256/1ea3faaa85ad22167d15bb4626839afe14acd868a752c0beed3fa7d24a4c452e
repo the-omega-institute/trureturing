@@ -1,0 +1,22 @@
+**Theorem 4.5 (same installed source and finite service progress).** For every
+valid paid boot and every finite lawful extended request sequence with finite
+public control and supply work, there is a unique finite service execution.
+At each completed call its current tree, response and complete successor have
+exactly Definition 4.3's values, on the same preparation occurrence. ReadE
+and TagRead do not mutate the source. All partial service cuts have the types
+of Definitions 4.1–4.4.
+
+**Proof.** Boot is the original actual packet installation. PR57.T1 establishes
+validity and fixes its decoded source and occurrence identity. Theorem 3.3
+handles TagRead on that very block. PR57.T2 handles ReadE and each whole
+modification, including rejected in-place MUX writes that retain all old bits.
+No routine changes the preparation identity or substitutes an independently
+installed tree. Counter work consumes finite sealed unary strings. The row and
+delivery routines consume finite constructed payloads and closed earlier fences;
+PR57.L1 and L4 give termination. These arguments apply call by call, and every
+prescribed routine is deterministic with a unique next primitive occurrence.
+During generation, writes, append and copying the explicit phase and token
+rules give precisely the stated unavailable/pending types. Only after complete
+writes does a response commit. Induction on the finite sequence proves all
+assertions. $\square$
+

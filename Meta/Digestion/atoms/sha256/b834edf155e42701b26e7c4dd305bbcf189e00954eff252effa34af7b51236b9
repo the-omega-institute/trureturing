@@ -1,0 +1,16 @@
+**Theorem 14.2 (two semidefinite remainders).** Under Assumption 10.1,
+if $R_-\succeq0$ and $R_+\succeq0$, then the complete contact
+partition has at most five groups. Every multiplier-optimal law
+has an exactly data-preserving replacement with at most five low
+labels, and $U_5=[r_-,r_+]$. No nonvanishing hypothesis on $L_o$
+is needed.
+
+Proof. The nonpositive-height contacts merge by Theorem 13.1.
+For each positive-height saturated contact,
+$0=D_cF_{0,\epsilon,+}+N_cx^TR_+x$ has two nonnegative
+summands. It therefore forces a pure contact with $\ell\ge0$,
+in the same compatible group. All saturated contacts now share
+pure groups, of which Theorem 12.2 gives at most five. The group
+replacement and Theorems 4.2 and 5.2 apply exactly as in Theorem
+14.1, regardless of whether $L_o$ vanishes. $\square$
+

@@ -1,0 +1,75 @@
+### 定理 22.8（循环到 seam 的观测转化）
+
+令 \(K=\ker B\)。
+
+1. 若
+   \[
+   U(K)\subseteq K,
+   \]
+   则
+   \[
+   K\subseteq\mathcal N_\infty^E.
+   \]
+   所有纯循环在任意未来窗口都保持不可见。
+
+2. 若存在
+   \[
+   k\in K,\quad m\ge0
+   \]
+   使
+   \[
+   ABU^m k\neq0,
+   \]
+   则 \(k\notin\mathcal N_\infty^E\)，即该循环在第 \(m\) 个未来窗口被转化为可见边界。
+
+3. 对任意 \(f\in\mathbb R^E\)，在 Gramian 收敛条件下有
+   \[
+   f^{\mathsf T}\mathcal G_\beta f
+   =
+   \sum_{m\ge0}
+   \beta^m
+   \|ABU^m f\|^2.
+   \]
+   特别地，
+   \[
+   f\in\ker\mathcal G_\beta
+   \iff
+   f\in\mathcal N_\infty^E.
+   \]
+
+#### 证明
+
+若 \(U(K)\subseteq K\)，则 \(U^m k\in K=\ker B\) 对所有 \(m\) 成立，因此
+
+\[
+ABU^m k=0.
+\]
+
+故 \(k\in\mathcal N_\infty^E\)。
+
+第二项是定义的直接展开。
+
+对于第三项，逐项计算：
+
+\[
+\begin{aligned}
+f^{\mathsf T}\mathcal G_\beta f
+&=
+\sum_{m\ge0}
+\beta^m
+f^{\mathsf T}(U^{\mathsf T})^mO^{\mathsf T}OU^m f\\
+&=
+\sum_{m\ge0}
+\beta^m
+\|OU^m f\|^2.
+\end{aligned}
+\]
+
+每项非负，因此总和为零当且仅当每一项都为零，即
+
+\[
+OU^m f=0
+\]
+
+对所有 \(m\) 成立。证毕。
+

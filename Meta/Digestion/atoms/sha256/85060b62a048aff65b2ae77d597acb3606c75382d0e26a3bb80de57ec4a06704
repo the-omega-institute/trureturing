@@ -1,0 +1,10 @@
+**Assumption 23.5 (sufficient lemma G, unproved).** For every $0<\beta\leq1/2$, $a=1-\beta$, and every real pair $(B,C_{\rm out})$ satisfying all of (R.108), there exists a nonzero complex Hermitian $X\in\mathcal H_0$ such that
+
+$$
+\|\mathcal L_{B,C_{\rm out}}(X)\|_1
+\leq\sqrt a\,\|X\|_1.
+\tag{R.113}
+$$
+
+No proof or counterexample to G is supplied. Theorem 23.2 already treats the part with $c_{\rm pl}\leq\sqrt a$ or $\operatorname{rank}C_{\rm out}\leq1$. Thus the remaining part of G has $c_{\rm pl}>\sqrt a$, $\operatorname{rank}C_{\rm out}\geq2$ and $\operatorname{rank}B\in\{2,3,4\}$. None of these three possible ranks of $B$ is discarded. The original unnormalized branch $q\leq a$ is another settled ingredient, whereas the domain of G itself has $q=1$.
+

@@ -1,0 +1,29 @@
+**定义 1.1（完整采集目标）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+$\mathcal W_3$ 的元素为 $W=(P,g,\delta)$，其中 $P$ 是严格逐项正的实 $2\times2$ 矩阵，$\det P=0$，$\operatorname{tr}P=1$；$g\in\mathbb R[T]$ 非零，$\deg g\le3$；$\delta\in\mathbb R$ 任意。不要求源对称，不要求非对角元小于一。对按时间排列的动作词 $E_1\cdots E_i$，定义
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta,
+\quad E_i\in\{M,J\}.
+\tag{1.1}
+$$
+
+初读计数；每个单独动作后立即读取，只有一条不可重置、不可复制的轨迹。八次总读数恰为原时钟 $0,\ldots,7$。协议不得跳读、作未读复合动作、作空动作读数、平移时钟或增加传感器。动作、提前停止与完整返回值可以是整个实际历史的任意确定性函数，不要求连续性、可测性或可计算性。目标始终是整个 $(P,g,\delta)$。所有非零三次及以下增益、两种系数符号、次数下降、采样根、重根、判别式零层及任意漂移均保留在原问题中。
+
+严格正秩一矩阵 $R$ 与非零多项式 $H$ 表示
+
+$$
+(P,g,\delta)=\left(\frac R{\operatorname{tr}R},
+ (\operatorname{tr}R)H,\delta\right),\qquad
+z_i=H(i)\operatorname{tr}(A_iR)+\delta.
+\tag{1.2}
+$$
+
+正归一因子保留增益次数、根与符号。恰好 $(R,H)\mapsto(qR,H/q)$、$q>0$ 给出同一完整目标的这种缩放歧义，漂移仍是独立坐标。
+

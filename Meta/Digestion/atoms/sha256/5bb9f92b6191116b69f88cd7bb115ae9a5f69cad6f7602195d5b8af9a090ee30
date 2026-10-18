@@ -1,0 +1,33 @@
+**Lemma 2.3 (Power quotients, their derivatives and source moments).** As $t\downarrow0$, for every fixed nonnegative integer $m$,
+
+$$
+\begin{aligned}
+R_m(t)&=m!t^{-(m+1)}(1+O(t)),\\
+g(t)&=A_r t^r+O(t^{r+1}),&
+g'(t)&=rA_r t^{r-1}+O(t^r).
+\end{aligned}
+\tag{2.7}
+$$
+
+There is a source-only $t_0>0$ on which
+
+$$
+\frac{rA_r}{2}t^{r-1}\le g'(t)\le2rA_r t^{r-1}.
+\tag{2.8}
+$$
+
+Both sources satisfy
+
+$$
+Z_i(e^{-s})=d!s^{-a}(1+O(s)),\qquad
+\mu_i(e^{-s})=\frac a s+O(1),\qquad
+\beta_i(e^{-s})=\frac{a+1}{2s}+O(1).
+\tag{2.9}
+$$
+
+All constants here concern the fixed source parameters.
+
+Proof. The geometric series gives $R_0(t)=1/(e^t-1)$. At every positive $t$, local absolute convergence permits differentiation, giving $R_m=(-d/dt)^mR_0$. The analytic function $(e^t-1)/t$ has value one at zero. Its reciprocal shows that $R_0(t)-1/t$ is analytic there. Differentiating that analytic remainder proves (2.7) for $R_m$, including derivative control after factoring the leading power. In particular $t^{m+1}R_m(t)$ has an analytic extension with nonzero value $m!$. Taking the quotient of these analytic factors proves both the expansion of $g$ and its differentiated expansion; no differentiation of an uncontrolled remainder is involved. Since $rA_r>0$, decreasing $t_0$ proves (2.8).
+
+Exactly $Z_0=R_d(s)$ and $Z_1=R_d(s)+cR_{d-r}(s)$. The unnormalized numerator of $\mu_i$ has leading term $(d+1)!s^{-(a+1)}$. The numerator $\sum k(k+1)F_i(k)e^{-sk}$ has leading term $(d+2)!s^{-(a+2)}$. Dividing the first by $Z_i$, and the second by twice the first, gives (2.9). Each perturbation lowers degree by at least one because $r\ge1$, so these ratio remainders are $O(1)$. $\square$
+

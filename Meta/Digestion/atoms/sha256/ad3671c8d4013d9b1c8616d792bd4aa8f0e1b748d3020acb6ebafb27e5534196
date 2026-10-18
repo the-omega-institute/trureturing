@@ -1,0 +1,60 @@
+**Proposition 10.17 (Static four coordinates and affine continuation differ).**
+The exact static four-coordinate response of §2 and the
+four-coordinate factors of §10.3 solve different tasks.
+
+**Proof.** Set $\alpha=u-v$, $\beta=u$, and write the static
+response coordinates as
+
+$$
+z_\alpha=2\sqrt{k(H-k)}\,U(\alpha),\qquad
+z_\beta=2\sqrt{kZ}\,U(u).
+$$
+
+The five native increment differences in edge order are
+$\alpha,u,\alpha,-\alpha,-\alpha$.
+Thus the original output is the fixed linear image
+
+$$
+y=O(z_\alpha,z_\beta,z_\alpha,Jz_\alpha,Jz_\alpha),
+\qquad J=\operatorname{diag}(1,-1),
+$$
+
+where $O$ is the block diagonal matrix of the fixed preparation
+rotations. The first two blocks recover both pairs after
+undoing their rotations. This proves the exact static readout
+without an affine update claim.
+
+Under a probability command,
+
+$$
+z_\beta'=\sqrt{\frac{k+s}{k}}\,z_\beta.
+$$
+
+Take $0<|s|<\ell$, so there is an open interval of lawful
+starting heights. If an affine map on these four coordinates
+represented this command, its last two coordinates would have
+the form
+
+$$
+c+M z_\alpha+N z_\beta
+ =\sqrt{\frac{k+s}{k}}\,z_\beta
+$$
+
+at every such height and all phases. At a fixed height,
+$\alpha$ and $u$ range independently over their circles.
+Comparing opposite $\alpha$ at fixed $u$ forces $M=0$,
+since the positive-radius $\alpha$ circle spans its plane.
+Comparing opposite $u$ then forces $c=0$ and
+$N=\sqrt{(k+s)/k}\,I_2$.
+For two different lawful heights this is impossible:
+the square of the scalar is $1+s/k$, which is nonconstant
+when $s\ne0$. Thus these static coordinates already fail
+this one short nonzero affine probability update.
+
+The $E_\sigma$ coordinates instead obey all the affine
+continuation requirements, but cannot decode the same
+coherence by Corollary 10.16. Equality of coordinate counts
+does not identify the representations or their readout
+contracts. No coordinate optimality statement is added.
+$\square$
+

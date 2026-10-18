@@ -1,0 +1,59 @@
+## 147. A strict response inequality for every run owner
+
+Let one genuine owner of I have cosh vector (z,m,c,o,m,c). Its other axial
+value o is arbitrary; no assumption about its actual label is needed.
+Let theta be its axial Z angle and beta its transverse M angle.
+Write k=m+c and
+
+    lambda_plus  = [sqrt(m^2-1)+sqrt(c^2-1)]/k
+                   *sqrt((z-1)/(z+1)),
+    lambda_minus = [sqrt(m^2-1)-sqrt(c^2-1)]/k
+                   *sqrt((z-1)/(z+1)).
+
+Both parameters are positive, since m>c>1. The exact half-sum and
+half-difference formulas give
+
+    beta = atan(lambda_plus*cot(theta/2))
+           + atan(lambda_minus*cot(theta/2)).       (146.2)
+
+These parameters are the same for every run owner, independently of o.
+
+We claim lambda_plus+lambda_minus>1. Its square is exactly
+
+    4*(m^2-1)*(z-1)/(k^2*(z+1)).
+
+Because z>k+1,
+
+    (z-1)/(z+1) > k/(k+2).
+
+Because m>c+2, k<2m-2; all factors are positive, so
+
+    k*(k+2) < (2m-2)*(2m)
+              =4*m*(m-1) <4*(m^2-1).
+
+Consequently
+
+    (lambda_plus+lambda_minus)^2
+       >4*(m^2-1)/(k*(k+2))>1,                    (146.3)
+
+which proves the claim without a limiting or numerical argument.
+
+For completeness the arctangent branch is explicit. If A,B,t>0 and
+A+B>1, then
+
+    atan(A*t)+atan(B*t)>atan(t).                   (146.4)
+
+If A*B*t^2>=1, the left side is at least pi/2 and the right side is
+strictly below pi/2. If A*B*t^2<1, the left side is in (0,pi/2) and its
+tangent is (A+B)*t/(1-A*B*t^2)>t. Strict monotonicity of atan on this
+branch proves (146.4).
+
+Apply (146.4) to A=lambda_plus, B=lambda_minus and t=cot(theta/2)>0.
+Since 0<theta<pi, atan(t)=(pi-theta)/2. Equations (146.2)--(146.3) therefore yield
+
+    theta+2*beta > pi.                             (146.5)
+
+This inequality holds for every owner of I, including any owner whose
+other axis repeats an M or C label. Its proof only uses the genuine paired
+shape and the shared inequalities m>c+2, z>1+m+c.
+

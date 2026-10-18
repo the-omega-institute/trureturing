@@ -1,0 +1,103 @@
+**Theorem 7.3 (exclusive sparse actual-run alternative).** For every
+fixed $P\in\mathcal T_{n,k}$, exactly one of the following holds.
+
+1. The same Boolean table, with every installed state retained, is in
+   $\mathcal F_{c,k}$ for some original positive integer position set.
+   Equivalently there exists $g\in\mathbb Z_{>0}^{n-1}$ with
+   $B_Pg\le0$.
+2. There are $1\le s\le n-1$ actual inputs
+   $x_1,\ldots,x_s\in L(P)$ and positive rational coefficients
+   $\lambda_1,\ldots,\lambda_s$ such that
+
+$$
+z=\sum_{\ell=1}^s\lambda_\ell a(x_\ell)\ge0,
+\qquad z\ne0.
+\tag{TC.16}
+$$
+
+In the second alternative the coefficients may be chosen as positive
+integers, or normalized to sum one. The selected runs exclude this
+table for every strictly increasing original cost vector, regardless
+of its common offset. The first alternative is also equivalent to
+nonemptiness of the real cone
+
+$$
+\mathcal C(P)=\{g\in\mathbb R^{n-1}:g_j>0,\ B_Pg\le0\}.
+\tag{TC.17}
+$$
+
+Proof. Actual original feasibility supplies the positive integer gaps
+by (TC.12) on the full-length runs. Conversely, given these gaps,
+choose $b\ge b_0(g)$ integral in Theorem 6.2. This makes every
+actual run feasible, with $s_i=b+p_i-4$ positive and strictly
+increasing. Correctness, query counts, transitions and installed states
+have not changed.
+
+For exhaustiveness use the existing finite rational inequality-Farkas
+theorem [Dvorak--Kolmogorov, Theorem 1.2][DK]. Its repository supplier
+is `D5.S3.Analytic.Convexity.FarkasAlternative.inequality_farkas`,
+with the owning [FarkasAlternative Scribe][FS]. Its exact finite
+mapping is: row type $I=L(P)$, column type $J=[n-1]$,
+field $\mathbb Q$, matrix $B_P$, right-hand side
+$b_F=-B_P\mathbf1$. All types are finite and equality on $I$
+is decidable. The supplier says exactly one of
+
+$$
+\exists y\ge0:\ B_Py\le-B_P\mathbf1
+$$
+
+and
+
+$$
+\exists\lambda\ge0:\quad
+z=B_P^{\mathsf T}\lambda\ge0,\qquad
+(-B_P\mathbf1)\cdot\lambda<0
+$$
+
+holds over $\mathbb Q$. The first branch is the rational condition
+$g=\mathbf1+y\ge\mathbf1$, $B_Pg\le0$; clearing
+denominators gives positive integer gaps. The last strict inequality
+in the second branch is $-\sum_j z_j<0$. Together with $z\ge0$
+it says precisely $z\ne0$. This is an application of the supplied
+general alternative with its stated signs and nonnegativity domains.
+
+To prove the sparse bound, retain a rational representation of this
+fixed nonzero $z$ by rows with positive coefficients. If it uses
+more than $d=n-1$ rows, they are rationally linearly dependent.
+Choose a nonzero rational dependence $\sum_\ell\alpha_\ell
+a(x_\ell)=0$ and reverse its sign if necessary so that some
+$\alpha_\ell>0$. Subtract
+
+$$
+\tau\alpha_\ell\quad\text{from each }\lambda_\ell,
+\qquad
+\tau=\min_{\alpha_\ell>0}
+\frac{\lambda_\ell}{\alpha_\ell}.
+$$
+
+All resulting coefficients are nonnegative, at least one vanishes,
+and their represented vector is still $z$. Delete zeros and iterate.
+This terminates with at most $d$ positive rational coefficients.
+Clear their denominators for integer coefficients, or divide by their
+positive sum for a rational probability distribution.
+
+For any positive real gaps $g$, (TC.16) gives $z\cdot g>0$.
+But $B_Pg\le0$ would give
+$z\cdot g=\sum_\ell\lambda_\ell a(x_\ell)\cdot g\le0$.
+Thus the alternatives are incompatible, and a real point of
+$\mathcal C(P)$ excludes the rational dual. The rational Farkas
+alternative then supplies rational, and hence integer, positive gaps.
+This proves the real-cone equivalence without discarding equality
+faces or assuming an interior rational approximation.
+
+Finally, on full-length runs (TC.12) gives
+
+$$
+\sum_\ell\lambda_\ell(J_c(x_\ell)-W)
+   =z\cdot g>0.
+$$
+
+At least one selected actual input violates its own cap. All runs
+belong to the one complete table; no independently optimized runs or
+residual pools have been combined. $\square$
+

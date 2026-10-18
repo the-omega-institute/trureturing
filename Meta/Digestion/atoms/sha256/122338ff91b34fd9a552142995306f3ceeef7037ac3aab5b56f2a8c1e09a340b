@@ -1,0 +1,24 @@
+**Corollary 8.3 (unit common-hit-gap price).** If $\delta=1$, put
+$t=v-\xi=q-\eta-1\in[0,u]$, $Y_1=Y\setminus Y_0$,
+$X_0=X\setminus X_1$, and $c_*=\min_{i\in D_I}c_i$. Then
+
+$$
+c_*\le
+\min\{C_{Y_1}+L_t(U),\ C_{X_0}+L_{u-t}(U)\}.
+\tag{WTF.31}
+$$
+
+Proof. Here the cross-filled sources have weights exactly $k-1,k$.
+On a weight-$k-1$ cube source every zero coordinate must be exposed
+before a correct entry: flipping an unexposed zero changes the
+prescribed entry while keeping every preceding actual native reply.
+Dually a weight-$k$ source must expose every one. The omitted
+coordinates in the first run are therefore contained in
+$Y_1\cup U_1$, and in the second in $X_0\cup U_0$, since their old
+supports were already exposed. Corollary 8.2 gives
+$c_*\le C_{Y_1}+C_{U_1}$ and
+$c_*\le C_{X_0}+C_{U_0}$ for every $t$-one assignment on $U$.
+Minimize these two necessary inequalities separately. The assignments
+minimizing them need not coincide; no joint attainment is claimed.
+$\square$
+

@@ -1,0 +1,178 @@
+**Definition 212.12 (Scope and original-source interface).**
+The substantive relations in this section are repository-derived:
+the full-score surplus and split-defect calculation with its coupled
+moment-box criterion; the equality-block invariant and whole-fiber
+moved-mass minimum; the unequal-star minimum for all terminal masses;
+and the graph embedding, attained full preserving-fiber minimum and
+unrestricted-output escape accounting. The three carrier variants
+in 212.1 are one mechanism. Restricted-method failures neither prove
+nonmembership in $E_N$ nor exclude the old convex, signed and nonzero
+zero-cost certificates.
+
+The supplier correspondences are specific. The signed hull and the
+complete alternative are
+[198.5 and 199.3–199.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md);
+(212.14) evaluates that hull rather than replacing it.
+The threshold constructor is
+[203.2–203.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md),
+with $a_{nj}=a_j$ in (212.33), and its $t\ge\max\gamma$ endpoint
+is directly reused. The equal-pair minimum and exact-unary matching
+belong to
+[209.3 and 209.12–209.15](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+The latter supplies the $X=c$ endpoint in 212.6; the safe four-word
+switch is 211.2. Full-fiber minima here impose exactly their displayed
+constraints, rather than inheriting extra pairwise or stock constraints
+from those suppliers. The conditional-moment and stock thresholds in
+210, and the fixed-menu and positive-linear-selector results in 211,
+retain their different domains. These comparisons are bounded to the
+named owner results and primary references, without an exhaustive
+novelty or worldwide-priority assertion.
+
+Kaibel's versioned finite polyhedral representation and projection
+results supply the classical geometry used inside the carrier proof;
+the box consists of actual suffix measures, not hypothetical independent
+moments. Clarke–Kosta's stated integer-fiber results provide the precise
+move-applicability comparison, not a real-score maximum theorem.
+Pulleyblank–Shepherd's author-hosted §1 supplies the classical
+independent-set convex hull. Huber–Marić's version 2 concerns symmetric
+Bernoulli agreement vectors, with the half-marginal correspondence
+given above. None of these classical results is a new standalone
+assertion of this section.
+
+Blackwell, [*Comparison of Experiments*, pp. 93–98, §§2–5](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+provides the attainable-risk and common-kernel framework.
+A Boolean word is a state, a schedule supplies a transcript partition,
+and a label is an action in that comparison. Its common stochastic
+postprocessing requirement does not itself respect increasing first-zero
+stopping or the hard-two count. The decision-theoretic correspondence
+therefore supplies no missing acquisition conversion. In particular,
+separately feasible cells or edge marginals do not constitute one
+normalized common rule.
+
+Concretely the actual source and static answers remain
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+        \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{212.55}
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and $p_i$ are the
+increasing primes. Boundaries 35.2 supplies actual witnesses for every
+finite pattern on arbitrary finite addresses. Hence all Boolean words
+used above, including multiple-zero words, have the original meaning.
+The full output carrier is
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each
+block a copy of $(0,1)$ and the disjoint-union Borel sigma algebra.
+The consumer returns unknown on $B_j$ and proposes $j$ on $P_j$;
+its original nonatomic targets remain those of Acquisition Resources
+73.1. The distinct marks $\theta_j=(B_1,1/(j+2))$ support the
+separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                    +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+\tag{212.56}
+$$
+
+Every sequence in (212.56) remains in the original comparison.
+Advice is zero, one source-independent seed fixes a deterministic
+rule common to all sources, and handoff is actually sourcewise almost
+surely finite. The resource is at most two actual requests, including
+repetitions and ignored replies. $N_2$ preselects its entire schedule
+and obtains the replies; $O_2$ preselects an increasing schedule and
+stops at its first queried zero or exhaustion. A queried zero need
+not be the actual first absence. Competitors retain arbitrary addresses
+and arbitrary outputs in the full carrier. The error remains uniform
+over all actual sources and all Borel events, with no source law,
+mean-request, address, depth or runtime surrogate.
+
+The finite measures and table maximizers in this section are dual
+scores. Only normalized probability-vector configurations satisfying
+all event rows can use
+[109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md).
+For a degree-at-most-two probability-vector kernel
+$p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q^{\rm ker}_{ij}w_iw_j$,
+109.1 gives the stopped criterion
+
+$$
+c\ge H^{\rm ker}:=\sum_i
+ \left(\sum_{j>i}(-Q^{\rm ker}_{ij})_+-\ell_i\right)_+.
+\tag{212.57}
+$$
+
+Normalization makes its scalar schedule-mass bound redundant, as
+in 108.4; these are kernel coefficients, not the score quotient $Q$.
+Theorem 110.2 retains full-carrier, arbitrary-address necessity and
+exact closed-cap sufficiency. A normalized finite configuration is
+realized by a partition of one source-independent uniform seed selecting
+the entire schedule and terminal table before replies. Different
+configurations can use different partitions and their common refinement
+on that same seed, without requiring seedwise equal outputs.
+The actual execution asks at most two questions and hands off finitely.
+A support-maximizing table alone is not asserted cap-feasible.
+
+For $0<\varepsilon\le1$, at the actual active length
+$L_a=\max(\{j:a_j>\varepsilon\}\cup\{0\})$, every actual
+$n>L_a$ retains the exact tail identity supplied by 110.2:
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}.
+\tag{212.58}
+$$
+
+Thus equality $a_n=\varepsilon$ is retained at a positive closed cap.
+Zero score masses and auxiliary $e=0$ hull vertices do not replace
+positive original tails. Small active lengths and cap one remain
+within the existing transport, and caps above one admit immediate
+base output.
+
+The universal inclusion remains unresolved:
+
+$$
+Q(y)\in E_N\quad\text{for every complete }y\ge0
+ \text{ with }\Delta_O(y)\le1\text{ and every }L\ge3.
+\tag{212.59}
+$$
+
+Its existing equivalent clipped comparison is
+$\rho_O(b)\le\max(1,\rho_N(b))$ for every $b\in H_N$.
+The original all-amplitude, all-positive-closed-cap question remains
+$\mathcal F_N(a,\varepsilon)\ne\varnothing\Rightarrow
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing$,
+with the all-word slice of 110.1 and normalized stopped region of
+109.1. Arbitrary base and late pair rows, unrestricted early credit,
+overlapping positive-event carriers, and unordered growing profiles
+outside the stated conditions still require a jointly affordable
+score and signed residual. The fixed-baseline equivalence does not
+supply that universal affordability; the explicit quartet rules out
+that promotion of this method.
+
+An original negative requires one actual complete unit-$O$ score $y$,
+a point in $H_N$, and the same actual full-$N$ configuration throughout:
+
+$$
+b\in H_N,\quad y\ge0,\quad\Delta_O(y)\le1,\qquad
+\lambda\ge0,\quad G_N\lambda\ge h(b),\quad
+M=\sum_D\lambda_D\ge1,\qquad F_{Q(y)}(b)>M.
+\tag{212.60}
+$$
+
+It also requires the owned original-source transport to an actual
+common-seed $N_2$ attainer and a uniform lower certificate against
+every full-carrier arbitrary-address $O_2$ competitor. A point in
+$H_L$ alone, or separately feasible cells using different configurations,
+does not meet (212.60). The graph quotients all have the zero-cost
+core (212.54), and the equality-block and star families have their
+explicit same-$Q$ certificates. These conclusions are structural
+relations and restricted-method boundaries, not original separators.
+The exact-law obstruction 112.2 still permits a different stopped
+law at the same cap.
+

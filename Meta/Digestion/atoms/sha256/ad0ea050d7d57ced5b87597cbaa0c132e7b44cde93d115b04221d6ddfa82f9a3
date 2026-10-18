@@ -1,0 +1,6 @@
+## 6. Remaining bounds and source attribution
+
+The chapter settles a precisely specified efficient one-phase-address compilation task and supplies a native realization of the specified four-corner measurement effects, with a conditional calibrated error guarantee. These are model-specific quantum control and certification results. No named universal quantum-information conjecture is declared solved. The established ingredients remain standard circuit algebra, routing, antiunitary invariance, trace-distance contraction and nonnegative-supermartingale theory.
+
+The next genuinely unfinished targets are tighter or optimal native routing costs, a primitive large-modulus arithmetic compiler with resource counts, finite-blockade and drift-derived calibration bounds, and explicit implementation-error models. Efficient generic state tomography, arbitrary-state-machine fast forwarding and quantum fault tolerance are not obtained from this construction.
+

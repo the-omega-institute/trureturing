@@ -1,0 +1,207 @@
+## 130. Relative-sign quantum retention realizes the supplied unrestricted optimum
+
+**Proposition C-130.1 (An explicit real instrument for conjugate program words).**
+Use the same $H=iR$ as in (C129.8)–(C129.9), and write
+$P_\epsilon=(I_2+\epsilon H)/2$. For every finite $m$, a finite real
+program-only instrument has a classical record and at most one retained
+qubit with the following promised action. The six-outcome words $z$ of
+(C121.4), with probabilities $\lambda_X(z)=p_X^{\otimes m}(z)$, are
+partitioned into conjugate pairs $\{z,\bar z\}$ by simultaneously swapping
+$a_+,a_-$ and $b_+,b_-$. A word containing no pair outcome is fixed.
+For each two-word orbit choose the representative whose first pair sign is
+$+$. The record identifies this orbit, and its unnormalized retained qubit is
+
+$$
+\tau_{X,z}=\lambda_X(z)P_++\lambda_X(\bar z)P_-,\qquad
+\operatorname{tr}\tau_{X,z}=\lambda_X(z)+\lambda_X(\bar z),\quad
+\operatorname{tr}(H\tau_{X,z})=\lambda_X(z)-\lambda_X(\bar z).
+\tag{C130.1}
+$$
+
+For a fixed word the outcome is its scalar weight $\lambda_X(z)$ with no
+retained qubit. The $*$ symbol includes all $20$ unmatched modes. Zero
+weights, all-neutral words, $m=0$ and every failure/no-pair branch are
+included. In particular, the qubit is not a supplied $H$ eigenstate, and its
+unknown sign is not measured into the record.
+
+Proof. On each actual copy use the four real sector effects
+$P_{d_a},P_{d_b},|Je_2\rangle\langle Je_2|,I_{25}-JJ^\dagger$.
+On the first two outcomes use the extraction $T_d$ in (C129.5), retaining
+a qubit. On the singleton discard its fixed coordinate; on $*$ discard the
+full unmatched sector. The latter map has the twenty real Kraus rows
+$\langle v|$, one for each unmatched original computational vector $v$.
+Together with $T_{d_a},T_{d_b},\langle Je_2|$, these rows have completeness
+operator $I_{25}$. Thus this is a complete instrument on every complex
+program, including correlated multiple-copy inputs, not a postselection.
+
+Fix its sector record and order the $k$ extracted qubits by original copy
+position. If $k=0$, nothing further is done. If $k\ge1$, retain qubit $1$
+and for $j=2,\ldots,k$ apply the following real orthogonal gate on qubits
+$1,j$, then measure and discard qubit $j$ in the computational basis:
+
+$$
+\begin{aligned}
+A&=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+Z=\operatorname{diag}(1,-1),\\
+V_{1j}&=(I_2\otimes A)
+ \big(I_2\otimes|0\rangle\langle0|
+       +R^{\mathsf T}\otimes|1\rangle\langle1|\big),\\
+V(H\otimes I_2)V^{\mathsf T}&=H\otimes I_2,\qquad
+V(I_2\otimes H)V^{\mathsf T}=H\otimes Z.
+\end{aligned}
+\tag{C130.2}
+$$
+
+The controlled matrix in parentheses and $A$ are individually real
+orthogonal. Multiplying the two $4\times4$ matrices gives the displayed
+identities. They imply, for the rank-one projectors and $e=\epsilon_1
+\epsilon_j$, the exact density-matrix identity
+
+$$
+V(P_{\epsilon_1}\otimes P_{\epsilon_j})V^{\mathsf T}
+ =P_{\epsilon_1}\otimes |b(e)\rangle\langle b(e)|,
+\qquad b(+1)=0,\quad b(-1)=1.
+\tag{C130.3}
+$$
+
+Indeed the left side is the joint eigenspace of $H\otimes I$ and
+$H\otimes Z$ with eigenvalues $\epsilon_1,\epsilon_j$; that space is
+one dimensional. Subsequent gates preserve $H$ on qubit $1$ and do not
+act on earlier measured bits. Hence the recorded bits give every relative
+sign $\epsilon_1\epsilon_j$ while the retained qubit keeps $P_{\epsilon_1}$.
+These bits, the sector record and the convention $\epsilon_1=+$ identify
+exactly $\{z,\bar z\}$. The original sources are diagonal in the complete
+commuting basis (C121.4). Their actual product weights, including the trace
+of every unmatched sector, are precisely $\lambda_X$. Summing the two
+possible global signs proves (C130.1), without assuming their values or
+preparing either eigenstate. For $m=0$ the empty word has unit scalar
+weight. Composition of the complete sector instruments, orthogonal gates,
+complete measurements and discards gives finite real Kraus operators and
+TP on the entire complex program algebra. QED.
+
+**Theorem C-130.2 (Fixed-basis real attainment of the supplied optimum).**
+For every finite $m\in\mathbb N_0$ and known $t,\eta\in[0,1]$, one common
+processor from the real menu in C-129.1 attains, simultaneously for all four
+original labels and arbitrary finite complex references,
+
+$$
+\boxed{e_m^{\mathbb R}(t,\eta)=e_m(t,\eta)=[c-D_m(t,\eta)]_+.}
+\tag{C130.4}
+$$
+
+The unrestricted value and converse are reused from
+[FIB noisy source programming minimax, Theorem 4.1](FIB_NOISY_SOURCE_PROGRAMMING_MINIMAX.md).
+Its Definitions 1.1–1.3 use exactly the same $B,f,J,U_4$, original cut,
+actual noisy copies, initial independence, target channel, unhalved norm
+and full complex reference domain as C-129.1. There is no relabelled source
+or pure-state replacement. The additional assertion here is its attainment
+by the explicit real relative-sign instrument and real conditional responses
+below, with whole-algebra CP/TP and the finite services of C-133.1.
+
+Proof. Reuse the supplier's Proposition 2.2 signed expectations,
+Proposition 2.3 presence probabilities and first-occurrence inequality,
+and (4.2)–(4.5) feasible pair-specific diagonal budgets. In full notation,
+put $D=D_m$, $Z_m=(1-2s/5)^m>0$, $T_m=1-Z_m$, and
+
+$$
+\begin{aligned}
+r&=\begin{cases}0,&D=0,\\ \min\{1,c/D\},&D>0,\end{cases}
+&Q&=\max\{s,r\},&q_{\emptyset}&=(s-QT_m)/Z_m,\\
+q_d(z)&=\begin{cases}Q,&\mathsf H_d(z)=1,\\
+q_{\emptyset},&\mathsf H_d(z)=0,\end{cases}
+&h_d(z)&=\operatorname{sgn}(n_{d_+}(z)-n_{d_-}(z)).
+\end{aligned}
+\tag{C130.5}
+$$
+
+Here $\mathsf H_d$ indicates at least one outcome of pair $d$, not just a
+nonzero signed count; a present tie still uses $Q$. The cited supplier
+proves $0\le q_{\emptyset}\le s\le Q\le1$,
+$0\le r|h_d(z)|\le q_d(z)$ and $\mathbb E_Xq_d=s$ under every label.
+Both $q_d$ and presence are unchanged by $z\mapsto\bar z$, whereas
+$h_d(\bar z)=-h_d(z)$. These are supplied quantitative budgets, not a
+second optimization or a new claim about the already known unrestricted
+value.
+
+Pinch the data into $d_a,d_b,\{2\}$ with real projections. Apply
+C-130.1 to the entire program batch. Conditional on a two-word orbit record
+$z$ and data pair $d=(j,k)$, set $a_d=r|h_d(z)|$ and use a three-outcome
+real coin of probabilities
+
+$$
+(a_d,\ q_d(z)-a_d,\ 1-q_d(z)).
+\tag{C130.6}
+$$
+
+In the first branch, if $h_d=+1$ use $G_d$ from (C129.8), and if $h_d=-1$
+replace its $R$ by $R^{\mathsf T}=R^{-1}$; then discard the retained qubit.
+When $h_d=0$ this branch has zero weight. In the second branch measure the
+data coordinate and leave it unchanged. In the third branch measure the
+data coordinate $l$ and prepare each of the other four coordinates with
+probability $1/4$. Discard the retained qubit in both latter branches.
+For a fixed no-pair word use just the latter two branches with probabilities
+$q_{\emptyset},1-q_{\emptyset}$. On data singleton $2$ discard all programs
+and use the real classical channel with stay probability $s$ and each
+wrong-output probability $(1-s)/4=\eta/5$.
+
+Every coin probability is nonnegative and their sum is one. Each branch
+is a real orthogonal gate and partial trace, or a real data-basis
+measure-and-prepare channel. All zero-probability branches are retained.
+Together with the complete instruments in C-130.1 and the complete data
+pinching, this proves CP and TP on the entire joint complex algebra,
+including unpromised programs, arbitrary data/program correlations and
+arbitrary complex references. No conjugation or transpose is applied to
+an unknown state.
+
+To compute the action, let $\tau$ be any unnormalized complex qubit
+operator. In the accepted branch the $jk$ multiplier before its coin
+weight is
+$\operatorname{tr}(\tau(R^{h_d})^{\mathsf T})
+ =ih_d\operatorname{tr}(H\tau)$; its reverse multiplier is the negative.
+Each diagonal multiplier is $\operatorname{tr}\tau$. The other branches
+kill pair off-diagonals. Therefore the complete conditional response obeys
+
+$$
+\begin{aligned}
+E_{ll}\otimes\tau&\longmapsto
+ (\operatorname{tr}\tau)\left(q_dE_{ll}
+ +\frac{1-q_d}{4}\sum_{v\ne l}E_{vv}\right),\quad l\in d,\\
+E_{jk}\otimes\tau&\longmapsto
+ irh_d(z)\operatorname{tr}(H\tau)E_{jk},\\
+E_{kj}\otimes\tau&\longmapsto
+ -irh_d(z)\operatorname{tr}(H\tau)E_{kj}.
+\end{aligned}
+\tag{C130.7}
+$$
+
+At $h_d=0$ the last two expressions are zero without using $R^0$ in a
+nonzero branch. Insert (C130.1) and sum the orbits. For the diagonal the
+sum is $\sum_z\lambda_X(z)q_d(z)=s$. For the coherence it is
+$r\sum_{\{z,\bar z\}}h_d(z)(\lambda_X(z)-\lambda_X(\bar z))
+ =r\sum_z\lambda_X(z)h_d(z)$. The supplier's signed expectations then give
+on all $25$ complex data matrix units
+
+$$
+N_{\sigma X_a}=T_\eta(\sigma rD,0),\qquad
+N_{\sigma X_b}=T_\eta(0,\sigma rD),\qquad rD=\min\{c,D\}.
+\tag{C130.8}
+$$
+
+Every cross-sector matrix unit is killed by the data pinching, every
+wrong-coordinate population is $(1-s)/4=\eta/5$, and the singleton has
+the target populations. Thus (C130.8) is equality of full complex linear
+maps, so it remains equality after tensoring every finite reference.
+The existing exact norm (C121.8), equivalently the supplier's Proposition
+3.2, gives error $c-rD=[c-D]_+$ on each label. The supplier's unrestricted
+optimum and $e_m\le e_m^{\mathbb R}$ give (C130.4).
+
+At $m=0$, $D=T_m=r=0$, $Z_m=1$ and $Q=q_{\emptyset}=s$; the circuit is
+$T_\eta(0,0)$. At $c=0$ the same common target is exact without copies;
+using the displayed circuit is also lawful. At $\eta=0$, $s=1$ and
+$Q=q_{\emptyset}=1$, including $t=0,1$. At $\eta=1$ or $t=0$ one has
+$c=D=r=0$. Every denominator in (C130.5) is either explicitly branched
+at zero or strictly positive for finite $m$. Zero source probabilities,
+$r=1$, $q_{\emptyset}=0$ and all singular endpoints require no limit.
+The gate calibration depends only on the known parameters, never on the
+unknown label or retained sign. QED.
+

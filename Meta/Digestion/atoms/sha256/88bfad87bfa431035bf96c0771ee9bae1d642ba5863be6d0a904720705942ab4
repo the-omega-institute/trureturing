@@ -1,0 +1,20 @@
+### Actual-budget consequences and the open boundary
+
+In the six-edge unique-flat source setting the genuine M capacity is pi,
+the genuine V capacity is pi, and the genuine Z and U capacities are
+2*pi each. The theorem implies:
+
+- At most one transverse M/V owner with axes C,D occurs.
+- At most two transverse Z/V owners with axes C,D occur, and likewise
+  at most two transverse U/V owners.
+- At most four owners in the union of these three transverse P/V
+  classes occur: each spends more than 4*pi/3 on P union {V}, whose
+  complete genuine capacity is 6*pi.
+
+These are separate valid subset sums of original slots, not simultaneous
+additions that double-count a slot. They do not classify the remaining
+axial-P/transverse-V,C or axial-P/transverse-V,D owners, and do not prove
+flat exclusion. These bounds do not resolve the required collection of at least two
+residual owners in Section 378. The full six-edge flat-exclusion
+obligation remains open.
+

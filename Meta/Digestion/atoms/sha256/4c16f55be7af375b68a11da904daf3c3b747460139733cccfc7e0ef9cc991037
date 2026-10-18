@@ -1,0 +1,6 @@
+#### 17.2.3 Erbar–Maas 的离散 Ricci 曲率
+
+Erbar 和 Maas 的 [Ricci curvature of finite Markov chains via convexity of the entropy](https://arxiv.org/abs/1111.2687) 用 entropy 在离散 Wasserstein 型度量下的 geodesic convexity 定义有限 Markov 链的 Ricci 曲率，并证明离散 Bakry–Émery、Otto–Villani 类结果和 tensorisation。
+
+对每个 FIB 节点，可定义一个有限状态 Markov kernel；但只有在给出可逆性、平稳分布和离散 transport metric 后，才可以使用离散 Ricci 语言。Fisher 曲率和 Erbar–Maas Ricci 曲率属于不同层次的对象，不能直接写成同一个符号。
+

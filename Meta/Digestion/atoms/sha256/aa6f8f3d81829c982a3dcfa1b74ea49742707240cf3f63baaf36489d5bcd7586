@@ -1,0 +1,57 @@
+**Definition 6.2 (explicit matrix and scalar bounds).** Put
+$K=\left.\frac{d}{dr}S_0(x(r))\right|_{r=0}$. To specify it without leaving
+an unevaluated directional-derivative operation, let
+$w_5=(d_{\alpha_1},d_{\alpha_2},0)^T$ and
+$w_{27}=(d_{\beta_1},d_{\beta_2},0)^T$, and at $x_\star$ form
+
+$$
+\begin{aligned}
+R'_y&=\frac{w_yv_y^T+v_yw_y^T}{v_y^Tv_y}
+       -\frac{2v_y^Tw_y}{v_y^Tv_y}R_y,\\
+K&=\operatorname{diag}(d_z,\ell p_{51},\ell p_{52})
+ -\ell(R_5\odot\rho_5-R_{27}\odot\rho_{27})\\
+&\hspace{1em}-\lambda_\star R'_5\odot\rho_5
+ -(1-\lambda_\star)R'_{27}\odot\rho_{27}.
+\end{aligned}
+\tag{ZG.27}
+$$
+
+All $v_y,R_y,R'_y$ on the right of (ZG.27) are at the exact starred point.
+Define
+
+$$
+\begin{aligned}
+k&=\sqrt{\operatorname{tr}(K^2)},
+&\gamma&=\frac{(\operatorname{tr}S)^2-\operatorname{tr}(S^2)}
+                         {2\operatorname{tr}S},
+&m_\lambda&=\lambda_\star(1-\lambda_\star),\\
+M&=2|\ell|(q_5+q_{27})+7(q_5^2+q_{27}^2),
+&b_{\rm q}&=M+\frac{2k^2}{\gamma}.
+\end{aligned}
+\tag{ZG.28}
+$$
+
+Here $m_\lambda$ is not the history's winding. Finally set
+
+$$
+\begin{aligned}
+\tau_{\rm q}
+&=\left[1+\frac{2(1+|\ell|)}{m_\lambda}
+ +\frac{2(1+|c_\kappa|)}{\kappa}
+ +\frac{2(1+k)}{\gamma}
+ +\frac{2(1+M+3b_{\rm q})}{\eta_{1,\star}}\right]^{-1},\\
+\boxed{\epsilon_{\rm q}=\frac{\eta_{1,\star}\tau_{\rm q}}2.}
+\end{aligned}
+\tag{ZG.29}
+$$
+
+The auxiliary parameter $r$ and its endpoint $\tau_{\rm q}$ do not alter the
+failure-time variable $t$ or the fixed metadata $\tau_{\rm meta}$. This is the
+constant supplied in the explicit-gap proposal, with notation disambiguated.
+An inverse in (ZG.23) may be written as adjugate divided by determinant;
+absolute values may be written $|a|=\sqrt{a^2}$. Hence every operation in
+(ZG.23)–(ZG.29) is finite algebraic arithmetic and a specified nonnegative
+square root applied to the isolated algebraic point and fixed algebraic
+matrices. The following proofs establish that every denominator is positive.
+No numerical value or sharpness is claimed.
+

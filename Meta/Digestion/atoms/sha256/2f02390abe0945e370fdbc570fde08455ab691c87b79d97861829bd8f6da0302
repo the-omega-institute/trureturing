@@ -1,0 +1,19 @@
+**Definition 3.1 (the intermediate input language).** Consider finitely
+many declared variables $x_1,\ldots,x_r$ ranging over $\mathcal T$, a
+natural parameter tuple $\mathbf n$, a finite Boolean affine guard
+$G(\mathbf n)$, and a finite Boolean combination $\Phi$ of equalities
+between expressions
+
+$$
+A::=\alpha\mid\beta\mid x_j\mid\langle A,A\rangle
+                   \mid\rho^{a(\mathbf n)}A.
+\tag{SFP.13}
+$$
+
+Each exponent is a specified integer-affine form; $G$ requires it to
+be nonnegative. Constants that are finite native trees abbreviate their
+literal syntax. All declared variables remain outputs, including unused
+ones. There are no infinite or rational trees, variable-address operations,
+arbitrary morphisms, products of epoch variables or tree-quantifier
+alternations in this language.
+

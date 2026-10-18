@@ -1,0 +1,23 @@
+**Definition 7.1 (the previously supplied mixed-word boundary).** The
+four-age phenomenon $[2,5]$ is [AOF Theorem 9.2][AOF], and its
+whole-tree embedding uses [NARC §§1--2][NARC]. In the present notation
+take $D=1,H=3,q=4$, $e(a)=a_0$, positive lags, $S=\{1\}$,
+code zero and displayed normalized clock five. The whole fiber consists
+of the genuine originals
+
+$$
+X_{(0,5-\ell)}=\langle T_0,T_{9-\ell}\rangle,
+\qquad \ell=2,3,4,5,
+\tag{LQF.17}
+$$
+
+each at its own lag. Their entire later row is
+$(\langle\square_L,T_9\rangle,\{\{L\}\})$ and their hidden ages
+are $2,3,4,5$. Thus the existing mixed suffix $LR=P_3$ is the actual
+whole word $LLR$, returning respectively $\bot,\alpha,\beta,\mathsf b$.
+The supplied one-call result and pair $4,5$ give the single joint
+frontier vector $(1,3,3)$: every correct service needs a word of
+length at least three, hence also total length at least three. Pure
+right suffixes need two calls here, as already established by AOF.
+This is a reused interval example, not an additional four-age theorem.
+

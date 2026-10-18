@@ -1,0 +1,4 @@
+## 十一、四素数域的有限加解析证书：既有安全族的一次应用
+
+既有供应 [SevenSmooth 的 `robin_seven_smooth`](https://github.com/the-omega-institute/trureturing/blob/c201d1da8b79b8462ec873accfd3f9983796d655/D5/S3/Arith/Robin/SevenSmooth.lean) 的条件为 $a,b,c,d\in\mathbb N_0$ 与 $5040<2^a3^b5^c7^d$，结论是这个数的严格 Robin 不等式；指数允许为零。本节消费该已知安全族，不主张新发现。以下用不同分区和完整有理误差给出用户指定的独立可复现证书，作为前述恢复任务的实际应用。
+

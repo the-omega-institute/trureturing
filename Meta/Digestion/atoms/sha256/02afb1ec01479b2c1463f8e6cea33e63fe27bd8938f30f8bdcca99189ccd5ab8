@@ -1,0 +1,62 @@
+**Theorem 85.1 (Hard count bounds the mass of a late correct mark).** Fix
+$0\le\varepsilon\le1$ and $k\in\mathbb N_0$. If
+$A\in\mathcal A_\varepsilon(a)$ and $K_{A,x}\le k$ almost surely at
+every actual $x$, then for every integer $n>k$,
+
+$$
+(n-k)(a_n-\varepsilon)_+\le n\varepsilon.
+\tag{85.1}
+$$
+
+The acquisition may use arbitrary adaptive addresses and may output on
+the entire original carrier.
+
+**Proof.** Fix an actual $x\in D_n$. For each integer $m\ge n$, choose
+actual sources $y_{i,m}$, $1\le i\le n$, whose answers through $m$
+match those of $x$ except that coordinate $i$ is flipped. These finite
+patterns are realized by Theorem 35.2, and the sources are fixed before
+using any seed. For $i<n$ their first absence is $i$. For $i=n$, all
+coordinates through $n$ are positive, so their first absence is greater
+than $n$, and is finite by finite prime support. In every case
+
+$$
+\lambda^a_{y_{i,m}}(\{\theta_n\})=0,\qquad
+\mathsf P_A\{\text{finite output at }y_{i,m}\text{ is }\theta_n\}
+\le\varepsilon.
+\tag{85.2}
+$$
+
+Let $E_m$ be the measurable event of finite output $\theta_n$ at $x$
+with at most $k$ requests, outside $J_{A,k,m}$. The cap at $x$ on that
+singleton, together with the hard bound, gives
+
+$$
+\mathsf P_A(E_m)\ge(a_n-\varepsilon)_+
+                         -\mathsf P_A(J_{A,k,m}).
+\tag{85.3}
+$$
+
+On $E_m$ all requested indices are at most $m$, and at least $n-k$ of
+the first $n$ coordinates have not been requested. Write $U_i$ for the
+measurable event that index $i$ is unrequested in this finite execution.
+On the whole event $E_m\cap U_i$, every requested answer agrees at
+$y_{i,m}$. Finite execution transport, with the same seed and zero
+advice, therefore hands the same $\theta_n$ there. In particular
+$E_m\cap U_i$ is contained in the corresponding output event of
+(85.2). Counting the unrequested coordinates on each seed and summing
+these event inclusions yields
+
+$$
+(n-k)\mathsf P_A(E_m)
+\le\sum_{i=1}^n\mathsf P_A(E_m\cap U_i)
+\le\sum_{i=1}^n\mathsf P_A\{\text{output at }y_{i,m}\text{ is }\theta_n\}
+\le n\varepsilon.
+\tag{85.4}
+$$
+
+The common finite-forest probability tends to zero as $m\to\infty$.
+Combining (85.3)--(85.4) proves (85.1). This comparison concerns one
+fixed actual $x$ and, at each $m$, a fixed finite actual comparison family.
+It counts whole seed events on which a correct output was made; it never
+selects a comparison source depending on an individual seed. $\square$
+

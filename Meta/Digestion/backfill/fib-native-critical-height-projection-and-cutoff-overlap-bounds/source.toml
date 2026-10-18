@@ -1,0 +1,5 @@
+source_id = "fib-native-critical-height-projection-and-cutoff-overlap-bounds"
+path = "docs/develop/theory/FIB_NATIVE_CRITICAL_HEIGHT_PROJECTION_AND_CUTOFF_OVERLAP_BOUNDS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

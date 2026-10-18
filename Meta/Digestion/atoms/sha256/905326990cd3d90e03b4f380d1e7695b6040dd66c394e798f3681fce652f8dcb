@@ -1,0 +1,188 @@
+**Theorem 2.2 (balanced regular actual observers and configured discrepancy).**
+Every table in Definition 2.1 has a finite rational original-domain
+installation using the product realization [PAID, Lemma 2.1.1]. These
+installations have the following simultaneous properties.
+
+For all hypotheses $\theta\in\{0\}\cup\{-1,+1\}^M$,
+
+$$
+\pi B^\theta=\tau,\qquad \tau A=\pi,\qquad
+B^\theta A=\mathbf1_X\pi,\qquad AB^\theta=\mathbf1_Y\tau.
+\tag{2.6}
+$$
+
+Moreover $B^\theta(i,\cdot)\ge\tfrac12\tau$ and
+$A(j,\cdot)=\pi$. Thus the private return chains mix exactly in one
+full return, and their relative minorization constants are uniform in
+$M$. All kernel entries are positive; an absolute positive lower bound
+on all $A$ entries is not asserted as $N$ increases.
+
+Every supplied $Q_i$ is in the original $\mathcal K_p$, every supplied
+$W_j$ is in $\mathcal K_\beta$, and descriptors within each phase are
+distinct. Both acquired edges have exactly the same unweighted phase
+marginals under every hypothesis. Under the null, all the supplied candidates are
+exactly its actual own complete laws at their respective returned cuts.
+For every alternative,
+
+$$
+e_A=0,\qquad e_B=\frac1{60}.
+\tag{2.7}
+$$
+
+Writing $Q_i^\theta,W_j^\theta$ for the actual own laws, every alternative
+satisfies
+
+$$
+\begin{aligned}
+W_j^\xi&=W_j,\qquad \sum_i\pi_iQ_i^\xi=P,\\
+Q_i^\xi-Q_i&=\frac{(1-u_i)\sigma_i}{4}\,
+                    \beta(W_{+1}-W_{-1}),\\
+\operatorname{TV}(Q_i^\xi,Q_i)&=\frac{1-u_i}{60}>\frac1{100},\\
+\sum_i\pi_i\operatorname{TV}(Q_i^\xi,Q_i)&=\frac{19}{1800}.
+\end{aligned}
+\tag{2.8}
+$$
+
+At every positive original fourth-segment p history $h$, its actual
+configuration row has private marginal $\pi$ and hence
+
+$$
+\mathcal D_\xi(h):=
+ \sum_i\pi_i\operatorname{TV}
+ \left((I_{C_0(h)})_*Q_i,(I_{C_0(h)})_*Q_i^\xi\right)
+ =\frac{19}{1800}.
+\tag{2.9}
+$$
+
+At every positive suspended history the corresponding discrepancy is
+zero. Thus (2.9) measures a candidate-versus-own configured full-law
+error, with TV before averaging, at actual positive histories.
+
+**Proof.** On every block of four labels, the affine formula for $u_i$
+gives the two cancellations
+
+$$
+\sum_{h=0}^3s_h=0,\qquad
+\sum_{h=0}^3s_hu_{4g+h}=0.
+\tag{2.10}
+$$
+
+Consequently $\sum_i\pi_i\sigma_i=0$ and
+$\sum_i\pi_i(1-u_i)\sigma_i=0$, while $\sum_i\pi_i u_i=c$.
+The first cancellation proves balance for $B^\xi$; constant rows of $A$
+prove the other identities in (2.6). The entries of $B^\xi$ are $1/4$
+or $3/4$, so its minorization is immediate. The null has the same
+properties.
+
+Normalization of (2.4) follows from
+$c+(1-c)^2=1-t$. In particular $P(T_p(j))=t^j$.
+Averaging (2.5) gives
+
+$$
+\sum_i\pi_iQ_i=c\delta_\alpha+(1-c)\beta\overline W=P.
+\tag{2.11}
+$$
+
+Both equations hold on every complete coordinate. For $j\ge1$,
+
+$$
+Q_i(T_p(j))=(1-u_i)ct^{j-1}\le\lambda^j,
+\qquad W_y(T_\beta(j))=v_yt^j\le b\lambda^j.
+\tag{2.12}
+$$
+
+Here $(1-u_i)c\le(2/3)(2/5)=\lambda$ and $t\le\lambda$;
+the $j=0$ constraints follow from normalization and $v_y\le b$.
+Their infinite masses are zero without deleting those atoms. The
+emission constraints follow from $a<u_i<b$ and $v_y\in[a,b]$.
+Distinct $u_i$ distinguish the entire $Q_i$, and distinct $v_y$
+distinguish the $W_y$. Thus conditioning on an entire candidate descriptor
+in (1.6) really isolates the indicated label; no label-fibre cancellation
+is concealed in (2.7).
+
+The null equations are exactly
+
+$$
+Q_i=u_i\delta_\alpha+(1-u_i)\beta\sum_jB^0_{ij}W_j,\qquad
+W_j=(1-v_j)\delta_\beta+v_j\alpha\sum_iA_{ji}Q_i.
+\tag{2.13}
+$$
+
+For an alternative define $W_j^\xi=W_j$ and define $Q_i^\xi$ by the
+first equation of (2.13) with $B^\xi$. They are normalized nonnegative
+laws, since that equation is a probability mixture. Their difference is
+(2.8); the second cancellation in (2.10) makes their $\pi$ average
+exactly $P$. Consequently the second same-update equation also holds.
+Before the latch the candidate and actual own laws also agree under
+every hypothesis: the fair pre-latch generator and original event blocks
+are common, and its eventual latch continuation is the same law
+$\sum_i\pi_iQ_i^\theta=P$ on each record fibre. Pending and delivered
+candidates are likewise exact.
+
+These solutions are the actual own laws: the regular same-update series
+and uniqueness supplied in [PAIR, proof of Theorem 11.4] apply, since
+$\operatorname{diag}(1-u)B^\theta\operatorname{diag}(v)A\mathbf1
+\le\lambda\mathbf1$. This also puts all actual own laws in (1.3).
+
+The signed law
+
+$$
+W_{+1}-W_{-1}=(b-a)(\alpha P-\delta_\beta)
+\tag{2.14}
+$$
+
+has disjoint positive and negative supports, so its TV norm is $b-a=1/15$.
+Now $\mathcal R_B(Q_i)=\overline W$ and
+$\sum_jB^\xi_{ij}W_j=\overline W+\sigma_i(W_{+1}-W_{-1})/4$.
+Thus every conditional B defect, before averaging, is $1/60$.
+Also $\mathcal R_A(W_j)=P=\sum_iA_{ji}Q_i$ on all complete coordinates;
+this is an exact zero opposite-direction defect, not a bound or a
+single-event identity. Equation (2.14) proves (2.8).
+
+For the actual installation retain the full $C_0$ of Assumption 1.1 and
+use fair synthetic letters before the latch. In the original update
+that writes the third record and then latches it, sample $\pi$
+independently of the source, after those original events. Subsequently
+use $B^\theta$ on p-beta and $A$ on suspended-alpha. Completing letters
+clear private labels; pendingStop and its sole delivery remain original.
+This is exactly the supplied same-update product construction. Its
+projection to $C_0$ commutes with every acquired update, so induction
+over original operations retains every record, permission and event,
+including both seeds, every paid rejection and all return histories.
+There is no operation enabling a source reset or a Read after Stop.
+
+Source conditioning does not use the synthetic probabilities. For a
+fixed original positive history $h$, [NATIVE-JOINT,
+`ordered_history_factorization` and `conditional_history_product`]
+factor its ordered private updates from the same-$K$ posterior source.
+Using (2.6), induction gives private row $\pi$ at every active p cut
+and $\tau$ at every suspended cut. Every label is positive there.
+The full-record renderer preserves TV, giving (2.9). The original target
+at this same history remains
+
+$$
+(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+ {\sum_l\mu(l)r_l^{A(h)}(1-r_l)^{B(h)}}.
+\tag{2.15}
+$$
+
+Both counts include every paid seed and payload Read. Neither (2.9) nor
+its proof substitutes a pure target or omits a supported depth.
+
+For rational representation, store the rational emissions, both tables,
+rows and fixed signs with their selectors and finite sampler program.
+A uniform label on $N$ points uses the finite rejection sampler supplied
+in [REPAIR, Corollary 7.1]: sample $\lceil\log_2N\rceil$ fair bits,
+accept integers below $N$, otherwise repeat, reusing the same finite
+partial-trial workspace. A common denominator gives the same construction
+for each emission; B updates use denominator four. All internal states,
+fresh bit use and work are charged. Termination is almost sure, not
+bounded in worst-case trials. The same represented service implements
+acquired and synthetic updates and makes no additional source call.
+COMPLETE contains its conditional continuation states as in [PAID,
+Lemma 2.1.1]. The explicit rational tables and candidate descriptions
+use $O(N\log(N+1))$ bits; the current private label uses
+$\lceil\log_2N\rceil$ bits at p. These are finite representation bounds,
+not a fixed total-resource bound across the family. $\square$
+

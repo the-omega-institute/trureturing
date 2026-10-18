@@ -1,0 +1,11 @@
+#### 24.3　公共种子是擦除信道
+
+令
+
+$$
+\beta=\Pr_\mu[f(0,U)\ne f(1,U)]
+=1-\sum_{a\in\mathcal A}\pi(a,a).
+$$
+
+<a id="claim-24-3-1"></a>
+

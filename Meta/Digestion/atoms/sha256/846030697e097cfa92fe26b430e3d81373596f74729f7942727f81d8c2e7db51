@@ -1,0 +1,46 @@
+**Theorem 12.2 (exact acquisition on every execution).** Start with a
+constant retained name on the known actual-source slice
+$\{t_s:s\in R_m\}$. A deterministic adaptive acquisition using
+arbitrary finite original-root literals and required to output
+$\chi(s)$ exactly needs at least $2m$ paid Reads on every execution.
+There is a procedure using exactly $2m$ Reads on every execution.
+Its literals have length $D$, so its total submitted letters are
+$2mD$, also minimal. Recovering either one specified bit $\chi_x$
+or $\chi_y$ alone has the corresponding exact bounds $m$ Reads
+and $mD$ letters. These statements allow the entire common law,
+every full conditional and all four normalizers as public data.
+
+Proof. Consider the $m$ full horizontal row cycles and the $m$ full
+vertical column cycles. These $2m$ cycles are pairwise edge-disjoint:
+different rows have different horizontal edges, different columns
+have different vertical edges, and horizontal edges are distinct from
+vertical edges. Each is in $R_m$ and toggles one nonzero coordinate
+of $\chi$.
+
+Fix any actual input and its terminating adaptive execution. If fewer
+than $2m$ distinct edge bits were queried, one of these cycles was
+never queried. Toggle it in that actual input. The new edge vector
+still lies in $R_m$ and has a different descriptor. Every query of
+the fixed execution has the same reply: constants remain constant,
+and every queried edge lies outside the toggled cycle. Induction on
+the execution shows identical subsequent queries, stopping decision
+and output under the deterministic procedure. This contradicts exact
+recovery. The argument is for each execution individually, not only
+the worst execution. Repeated observations and arbitrary off-target
+words do not weaken it, by Definition 12.1.
+
+Read the $m$ actual owner slots for the seam
+$\{e^x_{m-1,y}:y\in\mathbb Z/m\mathbb Z\}$ and the $m$ owner
+slots for $\{e^y_{x,m-1}:x\in\mathbb Z/m\mathbb Z\}$.
+The two parities are (OCC.35), giving the matching upper bound.
+All varying literals have length $D$, so the lower bound on distinct
+edge observations also proves the letter lower bound, attained by
+these owner words.
+
+For $\chi_x$ alone use only the $m$ pairwise disjoint horizontal
+cycles in the indistinguishability argument, and read only its one
+horizontal seam. Each such cycle toggles $\chi_x$. The vertical
+argument is identical with the coordinate names exchanged. Public
+distributional data depend on neither actual input and hence leave
+the identical-transcript argument intact. $\square$
+

@@ -1,0 +1,38 @@
+### 命题 457.1（连续 Euler 包络的精确拆分）
+
+在该稳定胞腔内，令 $N=N^-(\varepsilon)$。则
+
+$$
+\boxed{
+\log\frac{\sigma(N)}N
+=\log\mathcal C_P(\varepsilon)-\mathcal L_P(\varepsilon).
+}
+\tag{457.2}
+$$
+
+**证明。** 对每个支撑素数，式（456.4）给出
+$a_p+1=m_p$，因而
+
+$$
+\log\frac{\sigma(N)}N
+=\sum_{p\le P}
+\log\frac{1-p^{-m_p}}{1-p^{-1}}.
+$$
+
+另一方面，由（456.1），
+
+$$
+p^{-Y_p(\varepsilon)}
+=\frac{p^\varepsilon-1}{p^{1+\varepsilon}-1},
+$$
+
+所以
+
+$$
+\frac{1-p^{-Y_p(\varepsilon)}}{1-p^{-1}}
+=\frac{p^{1+\varepsilon}}{p^{1+\varepsilon}-1}
+=\left(1-p^{-1-\varepsilon}\right)^{-1}.
+$$
+
+逐素数相减即得（457.2）。$m_p\le Y_p$ 又给出（457.1）。$\square$
+

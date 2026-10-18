@@ -1,0 +1,54 @@
+**Definition 5.1 (Probability and phase directions).** Fix a finite
+$n\ge1$, a strictly positive normalized law $p$ on $B_n$, and the
+supplied real reference $\psi=(\sqrt{p_s})_{s\in B_n}$.
+Put $V=\psi^\perp\cap\mathbb R^{B_n}$. For $u,v\in V$, use the
+normalized pure-state path
+
+$$
+z(t)=\frac{\psi+t(u+iv)}{\|\psi+t(u+iv)\|}.
+\tag{5.1}
+$$
+
+Its derivative at zero is $u+iv$. These are all horizontal
+pure-state directions, rather than only derivatives within the
+activity family. In the negative-phase convention,
+$\dot p_s=2\psi_su_s$ and $\dot\theta_s=-v_s/\psi_s$.
+Thus normalization and the common-phase gauge are respectively
+$\sum_s\dot p_s=0$ and $\sum_sp_s\dot\theta_s=0$.
+
+Keep the complete recorded-site quadrature experiment of
+Parent/Readout Chapter 8 fixed at this reference. For a legal
+site-$i$ pair $\{s,t\}$ its phase projection is
+
+$$
+K_{st}=\frac{(\psi_t e_s-\psi_s e_t)
+(\psi_t e_s-\psi_s e_t)^{\mathsf T}}{p_s+p_t},\qquad
+K_i=\sum_{\{s,t\}\text{ at }i}K_{st}.
+\tag{5.2}
+$$
+
+At a fixed site the pairs are disjoint, and blocked words remain
+separate outcomes. Let $\omega_i\ge0$, $\sum_i\omega_i=1$ and
+$H_\omega=\sum_i\omega_iK_i$. A sample uses a quadrature site
+with total probability $r\in[0,1]$, conditional probabilities
+$\omega_i$, or a full mode-basis measurement with probability
+$1-r$. All setting labels and outputs are retained. The
+probabilities $r,\omega_i$ and the measurement effects do not
+change along (5.1).
+
+Write $B_\omega=H_\omega|_V$ and
+$\gamma(\omega)=\lambda_{\min}(B_\omega)$. Define the full local
+information ratio by
+
+$$
+\Gamma(r,\omega)=\inf_{(u,v)\ne(0,0)}
+\frac{J_{r,\omega}(u,v)}{4(\|u\|^2+\|v\|^2)}.
+\tag{5.3}
+$$
+
+The denominator is the pure-state QFI at the supplied reference.
+The ratio concerns first-order information, not an assertion of
+global identification or finite-sample minimax risk. Supplying
+the reference and coherent controls is an assumption separate
+from the sample count.
+

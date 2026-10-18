@@ -1,0 +1,10 @@
+# FIB harmonic-edge load: uniform renewal nonattainment and three-state separation
+
+No proper stationary renewal law with a finite nonnegative hidden representation attains the original harmonic-edge growth constant. This exclusion holds in every finite hidden dimension, without an initial restriction on the renewal gap support. On the entire original exact-real domains with at most three edge-emitting hidden states, it implies
+
+$$
+C_1=0,\qquad C_2\le C_3<c_\star.
+$$
+
+The argument is ordinary handwritten mathematics relative to the explicit Universal and Direct premises below. Its increment is a uniform obstruction for the renewal class and a reduction of the complete low-dimensional domains to that class. The original alternative for arbitrary finite hidden dimension remains open. No numerical gap or finite separation pair is evaluated.
+

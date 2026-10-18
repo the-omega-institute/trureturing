@@ -1,0 +1,38 @@
+**Theorem 7.5 (the exact minimum-alphabet one-read boundary).**
+Under Assumption 5.1, a deterministic encoder with exactly $q$
+attained labels and an all-lag decoder using at most one chronological
+fresh native original-root Read for both singleton visible regions
+exist if and only if
+
+$$
+1\le q\le6.
+\tag{NARC.7.5}
+$$
+
+This holds separately for $\ell\ge0$ and for $\ell\ge1$.
+The alphabet is the inherited minimum retained alphabet even if
+arbitrary finite current querying were allowed. At this alphabet,
+the exact worst fresh-call minimum is zero for $q=1$ and one for
+$2\le q\le6$.
+
+**Proof.** Theorems 7.3 and 6.2 prove the two directions of
+(NARC.7.5), including both lag conventions. The minimum-alphabet
+lower bound is the supplied [NAR, Theorem 16.3][NAR]: the $q$
+diagonal originals $X_{t,t}$ at positive lags $q-t$ have the same
+whole current tree $\langle T_q,T_{2q}\rangle$, the same later
+row for either selected region, and different required lags. They
+need distinct retained labels regardless of subsequent querying.
+[NAR, Theorem 16.4][NAR] already attains this $q$-label minimum
+with finite current recovery for the declared two-slot menu. Theorem
+7.3 refines its fresh-call resource through $q=6$.
+
+At $q=1$ the only original pair is $(0,0)$, so either normalized
+visible clock is already $\ell$. For $q>1$, suppose zero calls
+worked with $q$ labels. At $z\ge q+2$ each right-visible fiber
+is its full class, so Theorem 5.2 forces $b$ constant on that class.
+The full left-visible fiber forces $a$ constant there. Every class
+would therefore be a singleton, requiring $q^2>q$ labels. Thus
+the one-call upper bound for $2\le q\le6$ is sharp. This is
+also the two-slot specialization of the supplied zero-read memory
+criterion [NAR, Theorem 11.6 and Reuse 16.2][NAR]. $\square$
+

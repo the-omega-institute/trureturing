@@ -1,0 +1,50 @@
+**Corollary 7.4 (constructive improvement of the old residual chord).**
+The global quadratic upper bound and the exact initial branch imply
+locally, for some finite $K>0$,
+
+$$
+0<\frac{(\tau-\bar\tau)^2}{8\kappa_d}
+\leq T_{\rm bar}-\mathcal T(s_0\tau)
+\leq K(\tau-\bar\tau)^2.
+\tag{RH.66}
+$$
+
+There is an actual piecewise affine lower bound strictly above the
+credited plateau-to-endpoint chord at every residual interior point.
+
+Proof. RH.19 gives the left inequality, and RH.65 the right. Write
+
+$$
+\ell_{\rm old}(\tau)=\frac{1-\tau}{1-\bar\tau}T_{\rm bar}
++\frac{\tau-\bar\tau}{1-\bar\tau}T_{\rm end}.
+$$
+
+Choose a fixed $\vartheta\in(\bar\tau,\tau_\dagger)$ sufficiently close
+to $\bar\tau$ that $V_0=T_3(\vartheta)>\ell_{\rm old}(\vartheta)$;
+the quadratic loss and strictly negative chord slope ensure existence.
+Retain the actual choice between the $\bar\tau$ and $\vartheta$
+instruments below $\vartheta$, and between the $\vartheta$ and endpoint
+instruments above it. The resulting lower value is
+
+$$
+\ell_{\rm imp}(\tau)=\begin{cases}
+\dfrac{\vartheta-\tau}{\vartheta-\bar\tau}T_{\rm bar}
++\dfrac{\tau-\bar\tau}{\vartheta-\bar\tau}V_0,
+&\bar\tau\leq\tau\leq\vartheta,\\[2mm]
+\dfrac{1-\tau}{1-\vartheta}V_0
++\dfrac{\tau-\vartheta}{1-\vartheta}T_{\rm end},
+&\vartheta\leq\tau\leq1.
+\end{cases}
+\tag{RH.67}
+$$
+
+Definition 5.4 proves exact affine TV and oriented contrast, with common
+output, high effect and sharp cost. Subtracting $\ell_{\rm old}$ gives
+respectively $(\tau-\bar\tau)/(\vartheta-\bar\tau)$ and
+$(1-\tau)/(1-\vartheta)$ times the strictly positive number
+$V_0-\ell_{\rm old}(\vartheta)$. Thus the improvement is strict at every
+interior point and vanishes at the closed endpoints. The two segments
+use at most twenty-two and twenty-three actual labels. This constructive
+corollary is a lower bound below the complete value supplied by RC; it
+is not an additional exact branch theorem. $\square$
+

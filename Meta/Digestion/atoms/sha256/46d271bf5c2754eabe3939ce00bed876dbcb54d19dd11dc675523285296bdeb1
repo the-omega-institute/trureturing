@@ -1,0 +1,37 @@
+**Definition 6.1 (Attribution and domains of the ingredients).** The
+preparation-stabilizer normal form, the specialized full-block
+criterion (3.5), and the full-TP separation (4.7) are repository-derived
+consequences of the explicit QRC basis. General ingredients are
+credited within those proofs. In particular the invariant-product
+convex-hull method is established in
+[Vollbrecht–Werner, §II.2](https://arxiv.org/html/quant-ph/0010095v1);
+its use here keeps the actual joint group $\mathcal G$ and
+independent product factors. The binary square-root inequality has
+the same two-coordinate mechanism as
+[Singh–Nechita, Proposition 6.7](https://arxiv.org/html/2010.07898v2).
+Their diagonal-orthogonal covariance classes are not substituted
+for the present walk group. The principal-minor criterion and
+finite Fourier quadrature are mature linear-algebra ingredients,
+not new standalone results of this source.
+
+The representation-dependent averaging in
+[Nechita–Park, §2.1](https://arxiv.org/html/2403.03667v2)
+does not license full $O(5)$ menu invariance. The low-dimensional
+separability spaces in
+[Hildebrand, Theorems 3.8, 3.9 and 8.1](https://arxiv.org/html/math/0701571v1)
+do not make this $5\times5$ Choi cone equal to PPT: the $3+2$
+split in (3.8) is a direct sum in a measurement quadratic form,
+not a two-by-something tensor factorization of the Choi state.
+The distinction between separable sums and per-factor normalization
+in [Ohst et al., Remark 10](https://arxiv.org/html/2411.08110v2)
+also persists: (5.5) normalizes the common sum and does not impose
+TP on each individual generator. No literature assertion cited
+here evaluates this actual-menu minimax. Repository-derived does
+not assert worldwide novelty.
+
+The first-read identity, no-worse stationarity and real replacement,
+the exact cone and marginal, its affine dimension, and QJM's slack
+identity remain credited supplier results. Definitions 1.1–1.5
+and (5.4) specify their use; their restatement is not additional
+mathematical progress claimed for this source.
+

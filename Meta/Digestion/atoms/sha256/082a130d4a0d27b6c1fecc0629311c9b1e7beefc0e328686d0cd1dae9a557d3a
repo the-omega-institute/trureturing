@@ -1,0 +1,104 @@
+**定理 4.2（固定 H* 的异漂移连续实现）。** There are $\eta>0$ and
+smooth positive functions $\alpha(d),\beta(d)$ for $|d|<\eta$,
+with $\alpha(0)=\beta(0)=1$, such that the fixed complete targets
+
+$$
+W_d=\left(P(\alpha(d),\beta(d)),
+          G_{\alpha(d),\beta(d),d},d\right)
+                                                               \tag{4.6}
+$$
+
+all belong to $\mathcal F(H^*)$. They satisfy
+$g_{W_d}(0)=-d$ and $\delta(W_d)=d$. Distinct $d$ give distinct
+complete targets. The center is the target (3.2); every $d\ne0$
+lies outside the initial-root stratum.
+
+Proof. At $(\alpha,\beta,d)=(1,1,0)$, (4.2) gives
+$U=1,V=3/2,A=1/2$. The polynomial (4.3) agrees with $g_*$ at
+$0,1,2,3$, hence is exactly $g_*$. Thus
+
+$$
+(\mathcal Y,\mathcal Z)(1,1,0)
+                 =\left(\frac{48}{5},-\frac{532}{5}\right).
+                                                               \tag{4.7}
+$$
+
+For an explicit Jacobian computation, keep $d=0$ and temporarily
+regard $U,V,A$ as independent coordinates in (4.4)–(4.5). At
+$(U,V,A)=(1,3/2,1/2)$, differentiation at fixed $U$ gives
+
+$$
+\frac{\partial(\mathcal Y,\mathcal Z)}{\partial(V,A)}
+=\begin{pmatrix}
+5504/25&96/25\\81232/75&152/5
+\end{pmatrix}.
+                                                               \tag{4.8}
+$$
+
+For example, at $d=0$ the $V$ derivatives of the two gain samples
+in (4.5) are
+
+$$
+\partial_VG(4)=\frac{288}{V^2}-\frac{1248}{5(U+V)^2},\qquad
+\partial_VG(5)=\frac{960}{V^2}-\frac{624}{(U+V)^2}.
+                                                               \tag{4.9}
+$$
+
+Multiplication by the factors in (4.4), including the derivative
+$\partial_V(U+2V-A)=2$, yields the first column of (4.8).
+The second is $(G(4),-G(5))^{\mathsf T}$ at the center.
+Differentiating (4.2) at $(\alpha,\beta)=(1,1)$ gives
+
+$$
+\partial_\alpha U=\partial_\beta U=0,\qquad
+\frac{\partial(V,A)}{\partial(\alpha,\beta)}
+=\begin{pmatrix}-1/4&1/4\\-1/4&-1/4\end{pmatrix}.
+                                                               \tag{4.10}
+$$
+
+Although $U$ varies away from the center, its two first derivatives
+vanish at the center, so the ordinary chain rule uses exactly the
+product of (4.8) and (4.10). It follows that
+
+$$
+\begin{gathered}
+\left.\frac{\partial(\mathcal Y,\mathcal Z)}
+{\partial(\alpha,\beta)}\right|_{(1,1,0)}
+=\begin{pmatrix}
+-56&1352/25\\-20878/75&19738/75
+\end{pmatrix},\\
+\det\left.\frac{\partial(\mathcal Y,\mathcal Z)}
+{\partial(\alpha,\beta)}\right|_{(1,1,0)}
+=\frac{197952}{625}\ne0.
+\end{gathered}                                                   \tag{4.11}
+$$
+
+On the open domain $\alpha,\beta>0$, the denominators in
+(4.2)–(4.5) do not vanish. Consequently
+
+$$
+\Phi(\alpha,\beta,d)=
+\left(\mathcal Y(\alpha,\beta,d)-48/5,
+      \mathcal Z(\alpha,\beta,d)+532/5\right)
+                                                               \tag{4.12}
+$$
+
+is smooth near $(1,1,0)$, vanishes there, and has an invertible
+derivative in the two unknowns $(\alpha,\beta)$ by (4.11).
+The implicit function theorem, with $d$ free, supplies the claimed
+smooth $\alpha(d),\beta(d)$ and $\Phi(\alpha(d),\beta(d),d)=0$
+on some interval $|d|<\eta$. Shrink that interval to keep both
+parameters positive and $|d|<1$. Then
+$G_{\alpha(d),\beta(d),d}(1)=(24-d)/U>0$, so the polynomial is
+nonzero and has degree at most three. All sources retain strict
+positivity, rank one and trace one.
+
+The four interpolation equations supply every ancestor reading
+through clock three, and $\Phi=0$ supplies the actual clock-four
+and clock-five equations. Hence every $W_d$ realizes exactly
+$H^*$, not merely its action word or its final response. Its initial
+gain is $-d$, and its drift is $d$, so the targets are distinct for
+distinct $d$. Each triple in (4.6) is defined independently of any
+subsequent choice of an atom. This is a common fiber of fixed actual
+worlds. ∎
+

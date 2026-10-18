@@ -1,0 +1,18 @@
+**Theorem 6.1 (unique merged endpoint law and sharp counts).** Every optimum at $(s_S,\log1001)$ has at least six supported-nonzero low actual labels and at least seven total actual labels; both minima are attained. Every optimum at $(s_8,\log1001)$ has at least seven supported-nonzero low actual labels and at least eight total actual labels; both minima are attained. Its supported law, after merging identical endpoints, is the unique law specified by Definition 3.2. This is not uniqueness of the whole instrument or of its failure-time CP law.
+
+Proof. Every step in Theorem 5.1 has nonnegative slack. At an optimum matching Theorem 5.2 all slack vanishes, and $\lambda>0$ forces the contrast coordinate used by that proof to saturate. If $0<b_j<t\operatorname{cap}_j$, both endpoint chord masses are positive. Zero integrated dual slack would require the pure and saturated gaps both to vanish at the same circle direction. Theorem 4.1's two equality sets are disjoint, so this cannot occur. Every supported-nonzero optimal low label is therefore one of exactly seven pure/saturated endpoints. In the measurable extension this holds almost everywhere; finite cardinal minima are witnessed by the finite constructor.
+
+The seven columns $\Gamma_i$ have a nonzero minor on zero-based rows $(0,1,2,3,4,5,7)$, with strict enclosures
+
+$$
+0.009593173233<\det\Gamma_{S,\rm minor}<0.009593173364,
+$$
+
+$$
+0.009569506897<\det\Gamma_{8,\rm minor}<0.009569507027.
+$$
+
+The exact interval bounds are in §13. They can be obtained by Gaussian elimination with enclosed nonzero pivots; row swaps change the determinant sign and multiplying the pivots gives the enclosure. Thus the columns are linearly independent, and the eight moment equations admit at most one merged seven-endpoint weight vector. The seam's vector is its six strictly positive weights plus the identically zero seventh; the point's vector has seven strictly positive weights, the last exceeding $0.0001240025058$. No alternative optimizer can omit a required positive endpoint.
+
+The inherited double rigidity applies to each existing actual label and forbids merging different directions into a single low label, even using hidden multi-Kraus multiplicity. Splitting or duplicating a direction can only increase the number of actual labels. Consequently the required low counts are six and seven. Mandatory positive high acquired mass needs a separate high actual label, as a label cannot simultaneously have low and high fibre dimension. The common dimension-five high constructor includes the entire complement in just one such label, giving exactly seven and eight total. Supported-zero outcomes remain admitted and counted but cannot replace a positive supported endpoint or the mandatory high label. Neither a classical failure-label count nor a hidden Kraus count nor a quantum dimension is substituted for this actual acquisition count. $\square$
+

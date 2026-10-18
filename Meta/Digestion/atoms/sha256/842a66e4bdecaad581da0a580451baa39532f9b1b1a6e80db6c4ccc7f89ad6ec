@@ -1,0 +1,39 @@
+**Theorem 83.1 (eight and nine actual low labels suffice).** In every
+nonempty weak finite-budget class,
+
+$$
+n_{\rm feas}(s,A)\le8,\qquad n_{\rm opt}(s,A)\le9.
+\tag{FA.70}
+$$
+
+If an optimal extreme measure has strict contrast slack, eight labels
+suffice for its optimal height. These are upper bounds, not asserted
+minimum counts or Toeplitz-rank identities.
+
+**Proof.** Use the compact endpoint-measure formulation FA.20.
+Its real live Gram ranges in the five-dimensional space
+$\operatorname{tr}(Q_0X)=0$, and its failure effect has three real
+symmetric entries on $\operatorname{ran}M$. There are eight independent
+equalities. To establish feasibility while preserving the requested
+inequality, maximize the signed contrast under those equalities and
+choose an extreme maximizing measure. It has at most eight atoms.
+For height, retain the contrast inequality and choose an extreme
+maximizer; an active inequality adds at most one independent constraint,
+so at most nine atoms suffice. At an extreme maximizer with strict
+slack it adds none.
+
+Here is the extreme-measure count without an identification of atoms
+with hidden Kraus indices. If a measure had more than the number of
+active constraints worth of disjoint positive-mass sets, their moment
+vectors would be linearly dependent. A nonzero bounded signed density,
+constant on these sets, could then be added and subtracted with small
+coefficient while preserving all active constraints and positivity.
+Inactive constraints remain satisfied by their strict slack. This
+contradicts extremality. A nonatomic positive component supplies
+arbitrarily many such sets and is excluded too. Compactness and
+linearity ensure an extreme optimizer exists; the uniform trace mass
+bound is the one in Theorem 72.1. Each remaining atom is implemented
+as its own generated low label by FA.11–.13 and §86, including zero
+slot measures. Reports and objective signs can be chosen per atom.
+Thus these are actual label upper bounds. $\square$
+

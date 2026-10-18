@@ -1,0 +1,46 @@
+**Proposition 8.4 (Almost-surely-finite coordinate queries and recovery
+boundary).** Let a protocol query original visible coordinates
+$X_{i_1},X_{i_2},\ldots$, with indices in $\mathbb Z$. Its choices,
+stopping rule and real output are measurable functions only of the finite
+transcript of queried indices and revealed bits and a random seed $S$ independent
+of $(H,X)$, with a common law $\nu$ under both components. Suppose
+it terminates after $T<\infty$ queries $(P\otimes\nu)$-almost surely;
+no deterministic query bound is imposed. Then its output $\widehat D$
+cannot recover $D$ exactly even on $E$:
+
+$$
+(P\otimes\nu)(\widehat D\ne D\mid E)>0.
+\tag{8.6}
+$$
+
+Proof. Suppose exact recovery held almost surely on $E$. Since both
+mixture weights and both component probabilities of $E$ are positive,
+Fubini gives a seed for which termination and exactness hold on $E$
+almost surely under each component. Fix that seed. There are countably
+many finite stopping transcripts. Their leaves cover $E$ up to null
+sets, so some stopping leaf has positive $R^{1/3}$ probability within
+$E$. For a fixed seed, following that transcript and stopping is
+determined by precisely its finitely many revealed original bits.
+Its intersection with $E$ is therefore a nonempty legal cylinder,
+positive also under $R^{1/4}$. The same leaf has the same output under
+both laws, whereas exactness requires $11/49$ under one and $-33/169$
+under the other, a contradiction. This positive common-support leaf
+argument proves (8.6) without a uniform error-probability constant.
+$\square$
+
+The contract excludes tail queries, source-correlated advice and a
+supplied $H$ label. It does not apply to arbitrary finite-valued
+summaries: $H$ itself is a two-valued tail summary. If $H$ and the five
+local bits $x_{-2},\ldots,x_2$ are supplied, the identity cases and
+(8.4) recover $D$ on all of $\Omega$; on $E$, $H$ alone suffices.
+Acquisition of this label and retention of it for the comparison are
+separate obligations; its finite number of values supplies neither.
+
+This `repo-derived` application reuses the four-state construction,
+the cocycle interface and Theorem 4.1; its minimax and stopping-leaf
+steps are elementary common-support arguments, with no priority claim.
+It is ordinary mathematics with no Lean/kernel verification. It gives
+no new $c_\star$ conclusion, nonzero intrinsic response or all-$N$
+separation, and supplies no native-operation, metric, transport or
+physical three-dimensional bridge.
+

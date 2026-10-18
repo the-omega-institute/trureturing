@@ -1,0 +1,21 @@
+**推论 13.2.5（区域概率界）。** 若 $\rho=P_A\rho P_A$ 且 $T_t$ 是酉演化，则
+
+$$
+\boxed{
+p_B(t)\le \Lambda_{A\to B}(t)^2.
+}
+$$
+
+因此范围有限的局部生成元给出一个随距离阶数 $m$ 衰减的有限时间泄漏上界；这个上界是近似因果锥，而不是严格零锥。
+
+**证明。** 写 $\rho=\sum_jq_j|\psi_j\rangle\langle\psi_j|$，其中每个 $\psi_j$ 属于 $P_A$ 的像空间。则
+
+$$
+p_B(t)=\sum_jq_j\|P_BT_t\psi_j\|^2
+\le \Lambda_{A\to B}(t)^2\sum_jq_j.
+$$
+
+证毕。
+
+<a id="section-13-3"></a>
+

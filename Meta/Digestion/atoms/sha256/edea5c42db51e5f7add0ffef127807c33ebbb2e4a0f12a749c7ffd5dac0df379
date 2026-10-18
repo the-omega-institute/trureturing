@@ -1,0 +1,17 @@
+**Theorem 4.2 (zero reads, sourcewise termination and uniform service).** Zero-read identification is possible exactly when $\Sigma(R,h)$ is a singleton. Sourcewise finite exact recovery is possible for every attained boundary. In the anchored case uniform finite-call recovery without an additional retained field is possible exactly when
+
+$$
+|V_{\eta,\theta}|=1\quad\text{for every retained chart}.
+\tag{LRD.12}
+$$
+
+There is no uniform finite-call service without an additional field in the no-anchor case.
+
+**Proof.** A zero-read deterministic entry has the same output on the entire complete boundary fiber, proving necessity. If the spectrum is a singleton, the finite classification computes its value without reading the source, proving sufficiency.
+
+For sourcewise recovery use the actual traversal of [SLH, Proposition 53.2][SLH] or `ActualTreeReadoutAcquisition.acquisition_foundation`: query the root, recurse to ordered children on branch, and close the node on a leaf. It terminates on each finite source and reconstructs that actual tree. The supplied finite inverse parser computes $\nu$. This reacquisition is paid anew, even if the producer once queried the same nodes. Its source-dependent call count is not a uniform bound.
+
+For the constructive uniform service first acquire $\eta$ by reading, at each representative $p_b$, every suffix of length less than $d$. Early leaf and absence replies determine its unique pattern. Then for every reached frontier at representative absolute address $a_i$, test the finite templates $T_j$, $0\le j\le A_\eta$. A template's literal leaf-address certificate suffices: matching every template leaf label forces equality with that finite ordered tree by induction on its pair structure. Alternatively query every suffix through the maximum template height and compare complete prefix tables. Both use only actual four-reply calls. They determine the actual $\theta$, with no equality or image oracle. When (LRD.12) holds, return its singleton value.
+
+For necessity consider a proposed uniform service with bound $K$. At a fixed complete boundary its reachable reply tree has at most four successors per read and bounded read depth. It contains finitely many actual query words; terminating local computation introduces no additional source distinctions. Let $L$ bound all their literal lengths. If a chart with a residual has $c\ge1$, realize each of two different values in $\{0,\ldots,c\}$ by Theorem 2.2 with all residual leaves below depth $L$. Their ground pieces are the same and every residual returns branch at every relative address of length at most $L$. The two whole sources agree at all absolute words of length at most $L$, including words through ground leaves that are absent. They are legal actual sources of this same $R,h$ but have different targets. The service therefore executes identically and cannot be correct on both. Ground charts are singletons, so this proves (LRD.12). Without an anchor, a bounded four-branching reply tree has finitely many outputs while Theorem 3.4 supplies all natural-number targets. $\square$
+

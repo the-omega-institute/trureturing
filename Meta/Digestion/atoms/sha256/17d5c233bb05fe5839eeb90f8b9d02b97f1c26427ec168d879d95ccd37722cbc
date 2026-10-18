@@ -1,0 +1,32 @@
+**Corollary 19.1 (small budgets and general bounds).** The root cut has
+$q(\{\varepsilon\})=0$. Every incomplete cut, including the empty cut,
+a singleton nonroot cut and a cut leaving an uncovered ray, has infinite
+uniform budget. Among complete nonroot cuts, $q=1$ exactly for
+$P=\{L,R\}$, as already supplied by Theorem 10.4. For complete $P$,
+$q(P)\leq2$ exactly when $|I|\leq3$.
+
+For nonempty $I$, let $w(I)$ be the number of its maximal vertices. Then
+
+$$
+\max\{w(I),\lceil\log_2(|I|+1)\rceil\}
+\ \leq q(P)\leq |I|.
+\tag{CNA.33}
+$$
+
+**Proof.** The root has empty $I$. For any nonroot complete cut, coverage
+needs a query. Cost one allows only one new vertex, forcing $I$ to be
+just the root. A cover needs at least one endpoint for each maximal
+vertex, giving the width bound. Summing the capacities in (CNA.31)
+gives $|I|\leq2^k-1$. Querying $I$ in an ancestor-before-descendant order
+has every $d_i=1$, proving the upper bound. Thus $q\leq2$ forces
+$|I|\leq3$. Conversely, an internal skeleton of at most three vertices
+is a chain, or the root with its two children. A chain of length two or
+three is covered in budget two, and the two-child skeleton is covered by
+querying its children, with contributions $(2,1)$. These cover all cases.
+$\square$
+
+For example the complete mixed cut $\{L,RL,RRL,RRR\}$ and the balanced
+cut $\{LL,LR,RL,RR\}$ both have budget two, even on sources ending at
+the root or before either scheduled address. An absent query is resolved
+by actually reading its blocker, not by assuming every cut word reached.
+

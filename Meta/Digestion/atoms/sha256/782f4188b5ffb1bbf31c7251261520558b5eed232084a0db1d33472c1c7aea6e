@@ -1,0 +1,4 @@
+**Lemma 5.2 (nonnegative eigenbranch degeneracies).** For every $C\succeq0$ and $\lambda>0$, $\lambda B-C$ is strictly negative on the coefficient $D^\perp$ plane. It therefore has at most one nonnegative eigenvalue, and any such eigenvalue is simple.
+
+Proof. On that plane $\lambda z^\dagger Bz-z^\dagger Cz<0$ for $z\ne0$. A nonnegative spectral subspace of dimension two would intersect this two-dimensional plane, a contradiction. In particular multiplicity two is impossible. This argument permits repeated negative eigenvalues, $\alpha=\beta$, zero individual $T$ or $S$ components, and all relative phases. It isolates the top branch without requiring distinct complementary eigenvalues. $\square$
+

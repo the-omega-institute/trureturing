@@ -1,0 +1,20 @@
+**Proposition 4.4 (what cancellation can and cannot prove).** Suppose a
+continuation contract has a cancellative meter and the boundary retains the
+relevant prefix and total values.  Then a suffix meter is uniquely determined
+in the appropriate cancellation direction.  If the meter is max, Boolean-
+$\lor$, a saturated counter or another noncancellative summary, equal total
+meters need not imply equal suffix meters.  In either case no conclusion about
+the action order follows unless the trace kernel itself separates ordered
+words.
+
+**Proof sketch.** Apply (4.1) or (4.2) to the equality of total meters.  The
+finite table and the finite countermodel give witnesses for cancellation
+failure and for order loss.  The final statement follows because two distinct
+ordered words can have the same multiset and the same additive or idempotent
+summary. \square
+
+This is the resource version of the return-block obstruction in [Typed
+Residual Cocycle Reconstruction §3](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md):
+a descended additive cocycle can account for a path, while a commutative
+summary cannot in general reconstruct the path order.
+

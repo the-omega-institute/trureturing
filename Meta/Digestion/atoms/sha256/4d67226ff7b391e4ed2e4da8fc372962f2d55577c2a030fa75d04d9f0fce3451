@@ -1,0 +1,18 @@
+## 477. Proof from original pi slots
+
+The genuine witness of e contributes a strictly positive angle. Its complete 2*pi equation therefore permits at most one original flat pi slot: p_e<=1. Each of the two flat owners has two original axial pi slots. Thus all four selected labels are distinct, even within one owner. Since z,u>m, maximality of M excludes Z and U from selection. Exactly the four remaining labels M,C,D,V are selected, each once. This proves their p values and v<=m.
+
+The source's M slot is unique, so its other axis Q is C,D or V. The second flat must select precisely the remaining two low labels; it cannot select M or Q again. Every flat transverse pair lies in {C,D,V}, since M,Z,U all have value greater than m-2.
+
+Write phi's axis values as a>=b. The axial-flat test gives
+
+    (a-1)*(b-1)>=(h+k)^2
+
+for its transverse pair {H,K}. Because b<=a, this implies a>=1+h+k. Therefore A is neither H nor K: if A were H, the inequality would give a>=1+a+k, which is impossible, and likewise for K. The pair has two distinct labels among C,D,V, so it is precisely {B,Q}. Formula (476.1) follows. Finally
+
+    (b+q)^2=(b-1)*(b+2*q+1)+(q+1)^2
+
+proves (476.2). In particular a>b and a>q. This proves the claimed strict ordering, the exhaustion by the six rows, and the handling of equal numerical values.
+
+No owner identifications, face maps or normal intervals are contracted in this argument. It counts original axial pi slots only. Additional genuine occurrences and repeated visits cannot increase the available pi-slot capacities. No degree or normal-circle hypothesis is needed beyond the direct premises above.
+

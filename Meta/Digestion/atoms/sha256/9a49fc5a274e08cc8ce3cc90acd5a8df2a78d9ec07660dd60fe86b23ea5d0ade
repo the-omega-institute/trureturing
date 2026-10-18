@@ -1,0 +1,29 @@
+**Theorem 62.6 (fixed-N infima and their recovery quantifiers).** Fix $a,g,\nu$ and a finite integer $N$. On the infinite occurrence tree let $H_N^{\rm c}$ be the common operator of (62.2), and put $m_N=\inf_{\|f\|=1}\langle f,H_N^{\rm c}f\rangle$. For any original nonempty finite source $t$, let $D_j=\operatorname{Pos}(\rho^jt)$ as in §55. Once $|D_j|\ge N$, let $m_{j,N}^{\rm c},m_{j,N}^{\rm k}$ be the finite normalized infima. Then
+
+$$
+m_{j,N}^{\rm k}\ge m_{j,N}^{\rm c}\ge m_N,
+\qquad
+\lim_{j\to\infty}m_{j,N}^{\rm c}
+=\lim_{j\to\infty}m_{j,N}^{\rm k}=m_N.
+\tag{62.13}
+$$
+
+More precisely, for every $\epsilon>0$ there is a unit vector $f$ with finite configuration support and $\langle f,H_N^{\rm c}f\rangle\le m_N+\epsilon/2$. For each $t$ there is a finite $j_0$ such that for every $j\ge j_0$ its identical-address embedding $f_j$ is defined and
+
+$$
+\langle f_j,H_{D_j,N}^{\rm c}f_j\rangle
+=\langle f,H_N^{\rm c}f\rangle,
+\quad
+0\le\langle f_j,(H_{D_j,N}^{\rm k}-H_{D_j,N}^{\rm c})f_j\rangle
+\le\epsilon/2.
+\tag{62.14}
+$$
+
+The vector is selected for fixed $N,\epsilon$, before the tail comparison; it is not an exact state acquired by a Read. These claims contain no strong precompactness or ground-attainment conclusion, and no quantifier uniform in growing $N$ or unbounded clock time.
+
+Proof. The infinite fixed-$N$ operator is bounded, by the kinetic degree bound and (62.6). Finite configuration vectors are dense, hence supply the stated variational recovery vector. The all-source exhaustion in §55 eventually contains every address in its support and their old identities. Zero-extension makes the common expectation exactly equal, including killing. Entrywise domination in (62.4) makes the killed-minus-common pair multiplier nonnegative, proving the inequalities of infima.
+
+For fixed $p,q$, the path expansion proving (62.4) also proves $G_{D_j}^{\rm k}(p,q)\uparrow G^{\rm c}(p,q)$. Indeed each finite path is eventually in $D_j$, and the nonnegative convergent series permits taking its increasing union. Only finitely many coefficients occur in the expectation of the selected $f$. Their differences tend to zero, so choose $j_0$ for their finite weighted sum. This proves (62.14) and the matching limsup, while the common lower bound supplies the liminf.
+
+For actual finite execution each specified prefix $j$ is commissioned at a finite cap at least its largest actual leaf count; the bank and every word are finite. A fixed-cap source may instead refuse further growth. The mathematical family in (62.13) is a comparison of finite supported prefixes, not permission to change a running cap, prepare copies of an unknown source, sample independent histories, or execute a Read after an infinite prefix. The growing occupations in Proposition62.5 are outside the fixed-$N$ quantifier and prevent reversing that distinction. $\square$
+

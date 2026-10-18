@@ -1,0 +1,94 @@
+**Lemma 6.2 (First-zero alternatives, both later parities).**
+Universally $C_0\le Z$. Define
+
+$$
+Q_0=\frac{a^2}{2}+a\eta+K,\qquad
+A_0=\frac a2+a^3\eta+\frac{a\eta}{2}.
+\tag{6.2}
+$$
+
+The complete relevant upper bounds are these:
+
+| Actual zero-subtree alternative | Cap for $C_0$ |
+| --- | --- |
+| Halt on first zero | $a/2$ |
+| Second call of parity $\beta$ | $Q_0$ |
+| Second call of parity $\alpha$, halt on $00$ | $a/2+K$ |
+| Second call of parity $\alpha$, third call on $00$ of parity $\beta$ | $Q_0$ |
+| Second edge $F=E$, third call on $00$ of parity $\alpha$ | $a/2+K$ |
+| Second edge $F$ adjacent to $E$, third call on $00$ of parity $\alpha$ | $A_0$ |
+| Second edge $F$ disjoint from $E$, third call on $00$ of parity $\alpha$ | $a/2+K_0+K=Z$ |
+
+Their positive deficits satisfy
+
+$$
+Z-Q_0=g_2,\qquad Z-A_0=g_3,\qquad
+Z-(a/2+K)=K_0>g_3,\qquad Z-a/2>g_3.
+\tag{6.3}
+$$
+
+Proof. With a first-zero halt no state can exceed its prior $a/2$.
+Suppose the actual second call has parity $\alpha$, active edge
+$F$ there. Its $01$ section certifies $\alpha$. If $F=E$ this
+section is null. If adjacent, its continuation cap is $a\eta/2$
+by Lemma 4.2; if disjoint, its cap is $K$ by Lemma 4.3. Thus
+$K$ bounds it in every case, for any last call or early halt.
+
+On $00$, an immediate halt has mass at most $a/2$. If a third
+call has parity $\alpha$, the final-zero leaf contains the whole
+of phase $\beta$. Its individual-state maximum is exactly $a/2$:
+that phase's majority label has that mass, and no label exceeds its
+prior. At the final-one leaf the cases are as follows. A repeated
+second edge leaves only one distinct zero constraint; Corollary 4.5
+bounds a subsequent one by $K$, while its $01$ continuation was
+null. Adjacent distinct zeros give $a^3\eta$ by Lemma 5.1,
+and their $01$ continuation gives $a\eta/2$. Disjoint zeros give
+$K_0$ by Lemma 5.2, and their $01$ continuation gives $K$.
+These prove the three same-parity rows and the halt-on-$00$ row.
+
+Still with second parity $\alpha$, suppose its $00$ third call
+has parity $\beta$. The final all-zero leaf has at least one
+active-zero constraint in each phase. By Lemma 4.2 any particular
+state has joint mass at most $a^2/2$; extra constraints cannot
+increase a state's mass. The final one certifies $\beta$, where
+both earlier calls were separators, so its best mass is at most
+$a\eta$ from a single one edge. Add the $01$ cap $K$ to get
+$Q_0$, regardless of repetition or adjacency in the other phase.
+
+If instead the second call itself has parity $\beta$, its $01$
+continuation is one active-one constraint in phase $\beta$ with
+one call left, bounded by $a\eta$ in Lemma 4.2. On $00$ each
+phase has one active-zero constraint. A third zero, of either
+parity, gives individual-state maximum at most $a^2/2$. A third
+one certifies its address's phase, where there is a zero and a one
+constraint; Corollary 4.5 bounds that leaf by $K$, including
+contradictory repeats. Thus this case also gives $Q_0$. If this
+$00$ section halts early, its mass is already at most $a^2/2$,
+so the same cap still holds. This covers both third parities and
+all early halts in the mixed-parity case.
+
+It remains to verify the comparisons, rather than assume the
+largest cap. Using $a-a^2=\eta$ and (1.4),
+
+$$
+\begin{aligned}
+Z-Q_0
+&=\eta(1/2-a+a^2c)
+=\frac\eta2(b^2+a^2d^2),\\
+Z-A_0
+&=a\eta\bigl(a(1+c)-a^2-1/2\bigr)
+=\frac{a\eta dc}{2}.
+\end{aligned}
+\tag{6.4}
+$$
+
+For the first identity use
+$b^2+a^2d^2=1-2a+2a^2c$. For the second, the bracket
+equals $dc/2$ after inserting $c=1-2ab$. Also
+$K_0/g_3=2a/d>1$. These prove (6.3) and $C_0\le Z$.
+Every mixed-phase leaf has used the maximum of four individual
+state masses. In particular no two phase maxima were added as one
+output. The two actual target vertices in such a calculation remain
+$v_\alpha$ and $v_\beta$ in their respective phase alternatives.
+$\square$
+

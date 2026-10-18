@@ -1,0 +1,34 @@
+**Theorem 261.5 (Sharp finite directed radius and minorization).**
+For $L\ge2$,
+
+$$
+\max_{p\in N_L}\rho(p)=\frac13.
+\tag{261.6}
+$$
+
+The largest constant $c$ for which every $p\in N_L$ admits one
+$q\in O_L$ with $q_w(E)\ge c p_w(E)$ for every $w,E$ is $2/3$.
+For $L\le1$ the catalogs coincide and the directed radius is zero.
+
+**Proof.** The upper bounds are Theorem 261.2. For the lower bounds
+use $D=N(1,2;0,1,2,0)$ and the four words
+$00,01,10,11$ followed by $1^{L-2}$. Every complete stopped law obeys
+
+$$
+2q_{00}(0)+2q_{01}(1)+q_{10}(2)+q_{11}(0)\le4.
+\tag{261.7}
+$$
+
+Indeed, a deterministic increasing schedule observing both varying
+bits stops on bit one at the first two words. Their incompatible
+labels contribute at most two; the remaining two contribute at
+most one each. A schedule seeing only bit two has two cells of
+maximum weight two each. One seeing only bit one has maxima two
+and one. A schedule seeing neither has maximum weight three.
+All other queried bits are constant one, so this exhausts empty,
+singleton and pair schedules, including all terminal labels.
+Mixtures preserve (261.7). Uniform distance $r$ from $D$ requires
+each of the four success probabilities to be at least $1-r$;
+hence $6(1-r)\le4$. Simultaneous minorization similarly gives
+$6c\le4$. The claimed constants follow. $\square$
+

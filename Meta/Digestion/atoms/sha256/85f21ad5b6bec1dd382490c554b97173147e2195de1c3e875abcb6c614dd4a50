@@ -1,0 +1,57 @@
+### 94.4. The four remaining occupancy contradictions
+
+By Theorems 92.3–92.4, a hypothetical doubly rank-seven subquarter minimum has support on at most five coordinates meeting at least three original fibres. Corollary 93.3 excludes (1,1,1,0), using the sharp complex rank-at-most-two three-vector theorem and its complete-norm consumer. Thus only the following four patterns remain before applying Lemma 94.2:
+
+\[
+ (2,1,1,0),\qquad (1,1,1,1),\qquad
+                    (2,1,1,1),\qquad (2,2,1,0).             \tag{12}
+\]
+
+Here occupancies refer to the original fibres; a zero means a whole absent fibre.
+
+For (2,1,1,0), let 1,2 be the full fibre and 3,4 the singleton coordinates. All five edges in the lemma are cross-fibre. Equation (5) and the first weighted kernel row give
+
+\[
+ h_{13}+h_{14}=0,\qquad
+ 0=d_1+h_{13}+h_{14}=d_1>0,                                \tag{13}
+\]
+
+a contradiction. In the notation (6), the same contradiction appears as B=−d₂/(h₂₃h₂₄)≠0, so the second step of the lemma supplies a strict common negative direction.
+
+For (1,1,1,1), keep coordinate 1 in the first position and choose the omitted partner successively as 2,3,4. Every quartet has all five required cross-fibre edges. Equation (5) gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{12}+h_{14}=0,\qquad
+ h_{12}+h_{13}=0.                                         \tag{14}
+\]
+
+These equations force all three entries to vanish, contradicting cross-fibre nonvanishing. The omitted edge may be cross-fibre: setting it to zero in the direction (7) is permitted by the original constraints.
+
+For (2,1,1,1), let 1,2 be the full fibre and 3,4,5 the singleton coordinates. Apply the lemma to (1,2,j,k) for all three pairs from {3,4,5}. It gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{13}+h_{15}=0,\qquad
+ h_{14}+h_{15}=0,                                         \tag{15}
+\]
+
+so these nonzero cross-fibre entries would all vanish.
+
+For (2,2,1,0), let {1,2} and {3,4} be the full fibres and let 5 be the singleton. Apply the lemma using the full first fibre and the pairs (3,5),(4,5). For each i∈{1,2}, the two conclusions and its weighted kernel row imply
+
+\[
+ h_{i3}=h_{i4}=-h_{i5},\qquad
+ 0=d_i+h_{i3}+h_{i4}+h_{i5}=d_i-h_{i5},
+ \qquad h_{i5}=d_i>0.                                    \tag{16}
+\]
+
+Reverse the roles of the two full fibres to obtain h_j5=d_j>0 also for j∈{3,4}. The singleton row now contradicts positivity:
+
+\[
+ 0=d_5+\sum_{i=1}^4 h_{5i}
+   =d_5+\sum_{i=1}^4 d_i>0.                              \tag{17}
+\]
+
+The conjugations are retained: Hermiticity gives h₅ᵢ=conjugate(hᵢ₅)=d_i only after (16) has forced hᵢ₅ to be positive real. No positive gauge was assumed.
+
+All four patterns in (12) are excluded. Together with Corollary 93.3 and the earlier support-size and two-fibre exclusions, this exhausts the hypothetical doubly rank-seven subquarter support. Theorem 94.1 follows.
+

@@ -1,0 +1,52 @@
+### 63.5 四阶矩是同一个场的另一种读出
+
+令
+
+\[
+M_4(T)
+=
+\frac1T\int_0^T
+|\zeta(1/2+it)|^4\,dt.
+\]
+
+Ingham 的经典结果给出
+
+\[
+M_4(T)
+=
+\frac{1}{2\pi^2}(\log T)^4
++
+O((\log T)^3).
+\tag{63.11}
+\]
+
+对固定 \(\sigma>1/2\)，长平均满足
+
+\[
+\lim_{T\to\infty}
+\frac1T\int_0^T|\zeta(\sigma+it)|^4dt
+=
+\frac{\zeta(2\sigma)^4}{\zeta(4\sigma)}.
+\tag{63.12}
+\]
+
+这里的四来自四腿乘法约束 \(mk=n\ell\)，本质是一个四阶相关或乘法能量。它与 (63.4) 共享随机场
+
+\[
+X(t)=\log|\zeta(1/2+it)|,
+\]
+
+但读出不同：
+
+\[
+\mathcal D_{\rm RH}
+=
+\mathbb E_{\mu_C}[X],
+\qquad
+M_4(T)
+=
+\mathbb E_{\lambda_T}[e^{4X}],
+\]
+
+其中 \(\lambda_T\) 是区间上的均匀概率测度。前者是 RH 等价的零缺陷泛函，后者是四阶统计量，不能单独推出 RH。
+

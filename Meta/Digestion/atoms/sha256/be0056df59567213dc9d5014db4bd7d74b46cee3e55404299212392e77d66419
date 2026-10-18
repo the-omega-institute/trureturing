@@ -1,0 +1,70 @@
+## 131. Reused sharp values, first-hit comparison and a noise-only sufficient budget
+
+**Proposition C-131.1 (Real attainment of the reused endpoints and exact threshold).**
+The unrestricted values below are the supplier's Theorem 4.1,
+Corollary 4.2, Proposition 7.4 and Proposition 11.1; C-130.2 attains them
+within the explicit real menu:
+
+$$
+\begin{aligned}
+e_0^{\mathbb R}=e_0&=c,\qquad
+ e_1^{\mathbb R}=e_1=3c/5,\\
+e_2^{\mathbb R}=e_2&=c(5+4s)/25,\\
+e_m^{\mathbb R}=0&\ \Longleftrightarrow\ D_m\ge c.
+\end{aligned}
+\tag{C131.1}
+$$
+
+The real minimum prescribed-copy threshold is therefore exactly the
+supplier's $\min\{m\ge0:D_m\ge c\}$, with $\min\varnothing=\infty$.
+These are reused quantitative values, not additional uncovered minimax
+results. The first-hit circuit remains an alternative explicit realization,
+with error $E_m\ge[c-D_m]_+$ for every parameter; it is optimal at
+$m=0,1,2$ and at every point where its error vanishes.
+
+Proof. Apply C-130.2 directly to the cited supplier values and threshold.
+For the first-hit comparison reuse its Proposition 2.3,
+$D_m\ge(c/s)q_m$. If $q_m\le s$, then
+$\min(c,D_m)\ge(c/s)q_m$; if $q_m\ge s$, then $D_m\ge c$.
+Together with (C129.2) this gives the stated inequality and exact-regime
+agreement. At $m=0$ the first-hit error is $c$; at $m=1$ it is $3c/5$.
+At $m=2$, $q_2=4s/5-4s^2/25<s$ and hence
+$E_2=c-(c/s)q_2=c(5+4s)/25$. These comparisons do not replace the
+supplier's unrestricted optimization proof. The elementary first-hit
+circuit uses neither the multi-qubit relative-sign stage nor calibration
+of $D_m$; its larger error at some other copy counts is a stated
+performance tradeoff, not a resource-minimality claim. QED.
+
+**Theorem C-131.2 (An $\eta$-only sufficient exactness budget).**
+If $\eta>0$ and $c>0$, all four original noisy channels are simultaneously
+exactly programmed by the real construction C-129.2 whenever
+
+$$
+m\ge M_\eta:=\left\lceil
+ \frac{\log(1-s)}{\log(1-2s/5)}\right\rceil,
+\qquad s=1-4\eta/5.
+\tag{C131.2}
+$$
+
+This is a sufficient first-hit budget independent of $t$. The exact
+minimum prescribed-copy threshold is already the supplier's criterion
+$D_m\ge c$, now attained by C-130.2 with real controls. Neither threshold
+is a minimum physical acquisition, control or communication cost.
+At $t=0$ or $\eta=1$ no program is needed. At $\eta=0$, the sharper statement remains exactly
+C-122.1, including finite exactness for $0<t<1$ and the coherent-corner
+obstruction $e_m(1,0)=(3/5)^m>0$ for every finite $m$.
+
+Proof. The hypotheses imply $0<\eta<1$, hence $1/5<s<1$;
+$\log(1-s)$ and $\log(1-2s/5)$ are finite negative numbers.
+Condition (C131.2) is precisely $(1-2s/5)^m\le1-s$, or $q_m\ge s$.
+In C-129.2 the accepted hit mass is then $h=s$, so its active coefficient
+is $bh=(c/s)s=c$; directly (C129.4) equals
+the target. Equivalently (C129.2) vanishes. At $c=0$ the target is the
+single real channel $T_\eta(0,0)$, including both stated zero-copy cases.
+At $\eta=0$ the relative-sign processor of C-130.2 attains the entire
+reused exact minimax result C-122.1, whereas the first-hit error alone is
+$E_m(t,0)=t(3/5)^m$. At $t=1$ this agrees with the strict finite-copy
+obstruction and is not a finite exact imbit factory. Positive-definite
+programs for $\eta>0$ still cannot reveal the label perfectly, as in
+C-123.2; the exact noisy channel identity does not require doing so. QED.
+

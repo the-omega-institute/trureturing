@@ -1,0 +1,23 @@
+### 10.6 两接触读出的精确全实参数公式
+
+定义 Hermitian 流算子
+
+$$
+J_{AB}=-i(R_AL_B-L_AR_B),\qquad
+J_{BC}=-i(R_BL_C-L_BR_C).
+$$
+
+由命题 10.6 的边缘和 $T$ 的块作用得到
+
+$$
+\langle n_A\rangle_\pm=\langle n_B\rangle_\pm
+=\langle n_C\rangle_\pm=\frac12,
+$$
+
+$$
+\langle J_{AB}\rangle_\pm=\langle J_{BC}\rangle_\pm=0,
+\qquad \langle T\rangle_\pm=\pm1.
+$$
+
+前两个流的迹在相应 $I_4/4$ 上为零；最后一个式子使用对角部分与 $T$ 正交及 $\operatorname{Tr}T^2=4$。
+

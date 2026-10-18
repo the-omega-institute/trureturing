@@ -1,0 +1,99 @@
+### 60.5 The finite minor and source identity
+
+Let \(\rho=(\rho_1,\ldots,\rho_{405})\) and
+\(\kappa=(\kappa_1,\ldots,\kappa_{405})\) be the ordered integer lists
+in §60.8. The entries of each list are distinct, and the entries of
+\(\kappa\) are exactly \(\{0,\ldots,405\}\setminus\{385\}\).
+Define
+
+\[
+ V=\mathcal B[\rho,\kappa],\qquad w=\mathcal B[\rho,385].
+\tag{60.8}
+\]
+
+**Lemma 60.3.** The following exact identities hold in \(\mathbb L\):
+
+\[
+ N_{\mathbb L/\mathbb Q(b)}(\det V)=\mathcal R(b^2),\qquad
+ t_{385}\det V-t_\kappa\operatorname{adj}(V)w=0,
+\tag{60.9}
+\]
+
+where \(\mathcal R\) is the explicit rational function in §60.7.
+Moreover \(\det V\ne0\) at every real parameter \(0<|b|<1\).
+
+**Proof.** The following finite row recurrence gives the two identities
+using only the entries specified in §60.3 and the lists in §60.8.
+For \(r=1,\ldots,405\), set
+
+\[
+ \begin{aligned}
+ Y_{r,0}&=\mathcal B[\rho_r,:],\\
+ Y_{r,s}&=Y_{r,s-1}-(Y_{r,s-1})_{\kappa_s}N_s
+                     &&(1\le s<r),\\
+ p_r&=(Y_{r,r-1})_{\kappa_r},\qquad N_r=Y_{r,r-1}/p_r.
+ \end{aligned}
+\tag{60.10}
+\]
+
+Also set \(u_0=t\) and
+\(u_r=u_{r-1}-(u_{r-1})_{\kappa_r}N_r\).
+Substitution of (60.2), (60.5)–(60.7) into this recurrence, reducing
+coefficients by
+
+\[
+ i^2=-1,\qquad c^2=1+b^2,\qquad d^2=3-b^2,
+\]
+
+gives the exact finite identities
+
+\[
+ p_r\ne0\quad(1\le r\le405),\qquad u_{405}=0,\qquad
+ \prod_{r=1}^{405}\prod_{\eta\in\{1,-1\}^3}
+ p_r(\eta_1i,\eta_2c,\eta_3d)=\mathcal R(b^2).
+\tag{60.11}
+\]
+
+Here \(b\) is fixed in each conjugate product. The inner product always
+has eight factors, including repeated factors when a pivot lies in a
+proper subfield. Equations (60.10)–(60.11), with all tuple rules,
+integer lists and polynomial coefficients given in this section,
+are a finite rational identity specification; no sampling of the real
+parameter is used.
+
+The row operations on the selected minor are lower triangular with unit
+diagonal, and the resulting diagonal is \((p_1,\ldots,p_{405})\).
+Consequently \(\det V=\prod_rp_r\), giving the norm identity.
+The zero target remainder means that \(t\) is in the span of the selected
+rows over \(\mathbb L\). Solving the \(\kappa\)-coordinates by the adjugate
+formula and retaining coordinate 385 gives the second identity in (60.9).
+The factorization and exact Sturm counts in §60.7 show
+\(\mathcal R(b^2)\ne0\) for \(0<|b|<1\). Thus the minor is nonzero
+at every such parameter. \(\square\)
+
+All entries of the original matrix and target are defined on this
+interval: their denominators involve only the positive quantities
+\(c,k\), and the descent uses \(2k\). Define the explicit row of
+source multipliers
+
+\[
+ \lambda=\frac{t_\kappa\operatorname{adj}(V)}{\det V}.
+\]
+
+The selected coordinates and the remaining identity in (60.9) give
+
+\[
+ \lambda\mathcal B[\rho,:]=t.
+\tag{60.12}
+\]
+
+Equivalently, \(\lambda_r\) is the determinant of \(V\) with row \(r\)
+replaced by \(t_\kappa\), divided by \(\det V\).
+Undoing the injective coordinate encoding and the invertible source
+basis change expresses \(X^*G X\) as a linear combination of the ten
+original quadratics times bidegree-\((2,2)\) forms. After replacing each
+conjugate pair \(q,\bar q\) by \(\operatorname{Re}q,\operatorname{Im}q\),
+taking the Hermitian part gives real Hermitian quartic multipliers for
+the ten real quadratic constraints. No rank assertion for unselected
+sources is needed.
+

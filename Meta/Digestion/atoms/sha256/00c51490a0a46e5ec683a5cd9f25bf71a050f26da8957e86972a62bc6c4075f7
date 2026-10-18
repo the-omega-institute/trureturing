@@ -1,0 +1,28 @@
+### 37.1. 完整世界、原时钟与声明范围
+
+整个目标是一个从开始固定的三元组
+
+$$
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[t],\quad\deg g\le2,\quad d\in\mathbb R.
+\tag{37.1}
+$$
+
+四个源元严格正，迹一、行列式零，非零迹保证秩恰一。不要求对称、固定对角侧、增益为正、无根、恰好二次或已知漂移；正非对角元没有预设上界。常数、非恒定仿射、真正二次、任意零系数、采样与非采样零、重根及两种尺度符号全部先保留。
+
+定义实际左动作及立即读数
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP),\quad a_0=y_0=d+g(0).
+\tag{37.2}
+$$
+
+初读计数。六动作后原时钟零至六为七次 TOTAL 采集；只选一个末动作并在原时钟七立即读，才是八次 TOTAL。每个中间响应都取得并保留，一条轨迹无重置、复制、跳读、空动作、时钟更名或额外端口。两个末函数只是同一固定世界的互择预测，不允许取得两个响应。
+
+对记录 $\mathcal H=(y_0,\ldots,y_6)$，$\mathcal K_J(\mathcal H)$ 表示实际六动作 $JMJMJJ$ 后满足全部七个方程的所有式 (37.1) 完整世界。任意记录的纤维可以为空；可达记录由真实世界保证非空。去重只按整个 $P,g,d$，不按源投影、读数或形式根的重数。
+

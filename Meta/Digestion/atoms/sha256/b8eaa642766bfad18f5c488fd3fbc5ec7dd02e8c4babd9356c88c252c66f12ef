@@ -1,0 +1,50 @@
+**定义 6.1（共同预测是已知候选承诺）。** Independently of (1.3), use
+the literal parent and response functions of
+[II, Definitions 69.1–69.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+
+$$
+H_4(Y)=(0,M,1,M,23/7,J,331/35,M,Y),\qquad
+D=MJM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix}.
+                                                               \tag{6.1}
+$$
+
+For $\eta=(DP)_{22}>0$, $R=P/\eta$, $H=\eta g$, the coordinates are
+
+$$
+DR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(3x-1)y&3x-1\\(1-2x)y&1-2x\end{pmatrix},
+\qquad 1/3<x<1/2,\quad y>0.                                 \tag{6.2}
+$$
+
+They belong to this $D$, not the $Q$ of (1.5). Let
+$\mathcal F(Y;m,j)$ impose both fifth predictions, $m$ after $M$ and
+$j$ after $J$, on the entire parent (6.1). Write
+$\kappa=m-j$, $s=x+y$, $p=xy$, $v_6=H(6)$. The existing identities are
+
+$$
+\begin{gathered}
+H(5)=\kappa,\qquad \delta=j-\kappa s,\\
+a=\operatorname{read}(JJ)=\delta+v_6(p+1),\qquad
+b=\operatorname{read}(JM)=a+v_6x,\\
+c=\operatorname{read}(MJ)=a+v_6y,\qquad
+d_6=\operatorname{read}(MM)=c+v_6(x+1).
+\end{gathered}                                                   \tag{6.3}
+$$
+
+Words in (6.3) are chronological fifth/sixth choices, each atom
+individually read. Fix known real constants $Y,m,j,b_0,d_0$ and define
+the entire promised class
+
+$$
+\mathcal C=\{W\in\mathcal F(Y;m,j): b(W)=b_0,\ d_6(W)=d_0\},
+\qquad \omega=d_0-b_0.                                      \tag{6.4}
+$$
+
+These constants describe known candidates. They are not readings
+acquired on both branches of a single trajectory. The class has no
+cardinality bound. All parent equations, including the same literal
+$Y$, remain imposed. Within $\mathcal F(Y;m,j)$, $x,y$ determine the
+complete target: (6.2) determines the source, (6.3) determines the
+drift, and the positive parent trace factors at $0,1,2,3$ determine
+the entire cubic-or-lower gain by interpolation, as in II, Definition 69.1.
+

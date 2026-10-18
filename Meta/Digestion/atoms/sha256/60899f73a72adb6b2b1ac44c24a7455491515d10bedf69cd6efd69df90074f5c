@@ -1,0 +1,35 @@
+**Theorem 4.3 (independence from a particular source representation).**
+Suppose two effective presentations satisfy the hypotheses for the same
+original-source family, physical permitted literals, transport, entry
+epoch, actual replies and complete target $R$. Their arithmetic sentences
+(UDB.17) have the same truth value for every $K$, and each extracted
+literal table works on the common original task. No Presburger coordinate
+change between their charts is required. The conclusion also holds for a
+second task $(D',U',r',R')$ under a supplied effective bijection
+$\psi:D\to D'$ with the same permitted literals and entry epoch, satisfying
+
+$$
+\forall u\in D\;\forall j\in\mathbb N\;\forall p\in\mathcal W\quad
+r'_{U'^j\psi(u)}(p)=r_{U^ju}(p),\qquad R'(\psi(u))=R(u).
+$$
+
+An intertwining map on the full register carriers which restricts to
+$\psi$ supplies the displayed reply correspondence when it also
+preserves literal reads. The formula does not apply $\psi$ to a
+transported register outside its original-source domain.
+
+Proof 4.3. A successful table is defined by its literal instructions and
+actual executions on original sources. Theorem 4.2 identifies each
+presentation's sentence with existence of exactly such a table. Thus
+both truth values coincide. In the bijective version, induction on
+instructions transports the same replies, successors, epochs and output
+rows. The admission and reply formulas remain obligations of each
+presentation: merely re-encoding arbitrary relations does not make those
+formulas Presburger. $\square$
+
+For a prescribed graph rather than a state budget, its finite type
+disjunction gives the same decision with that graph fixed. For an observer
+which never updates, restrict enumeration to $E_U=\varnothing$. The
+full result concerns existence and extraction, not optimal installation
+size, efficient computation or a universal physical stopping bound.
+

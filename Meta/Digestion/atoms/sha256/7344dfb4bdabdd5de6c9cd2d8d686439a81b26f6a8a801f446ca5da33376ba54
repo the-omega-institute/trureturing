@@ -1,0 +1,49 @@
+**Lemma 15.2 (no new proper-star cut at a nonexceptional vertex).**
+Under (GDB.67), for any such $P$ and any nonexceptional $v$, a cut
+vector supported on $\operatorname{star}(v)\cup P$ restricts on
+$\operatorname{star}(v)$ to zero or to the full star. Moreover
+
+$$
+\{z|_{\operatorname{star}(v)}:
+       Hz=0,\ z|_P=0\}
+=\left\{b\in\mathbb F_2^4:\sum_jb_j=0\right\}.
+\tag{GDB.68}
+$$
+
+Proof. A supported cut has at most $r+4$ edges. Choose its smaller
+vertex side $U$, so expansion gives $|U|\le4(r+4)=K$.
+The girth condition makes every connected component of the induced
+graph $G[U]$ a tree. If a component $C$ has a boundary edge in
+$\operatorname{star}(v)$, one of its vertices is $v$ or a neighbor
+of $v$. Every vertex of $C$ is therefore within distance $K$ of
+$v$. None can be an endpoint of an edge in $P$, by the definition
+of nonexceptional. Since all boundary edges of $C$ belong to
+$\operatorname{star}(v)\cup P$, it follows that
+$\delta C\subseteq\operatorname{star}(v)$.
+
+A tree component in a 4-regular graph obeys
+$|\delta C|=4|C|-2(|C|-1)=2|C|+2$. This is at most four here,
+so $C$ is a singleton with all four star edges as its boundary.
+Simplicity forces that singleton to be $v$: a different vertex
+cannot have four distinct edges all incident to $v$. Other
+components have boundary wholly in $P$. This proves the cut
+assertion, including the zero cut.
+
+For completeness, let $Z_P=\ker H\cap\{z:z|_P=0\}$. Under the
+nondegenerate binary dot product,
+
+$$
+Z_P^\perp=\operatorname{im}H^{\mathsf T}+\mathbb F_2^P,
+\tag{GDB.69}
+$$
+
+where $\mathbb F_2^P$ means vectors supported on $P$. A linear
+functional on the star annihilates its projection of $Z_P$ precisely
+when its zero extension belongs to this sum. Since $P$ is disjoint
+from the star, these functionals are exactly star restrictions
+of cut vectors supported on $\operatorname{star}(v)\cup P$.
+The first part leaves only zero and full parity; full parity is
+indeed present, from the cut $\delta\{v\}$. Hence the projected
+space has annihilator spanned by full parity, proving (GDB.68).
+$\square$
+

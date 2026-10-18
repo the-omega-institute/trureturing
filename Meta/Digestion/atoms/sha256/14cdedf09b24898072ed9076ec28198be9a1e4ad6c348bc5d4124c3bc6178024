@@ -1,0 +1,30 @@
+**Definition 3.1 (Calibrated midpoint and finite-probability update).**
+Choose an immutable $\widehat\theta\in[0,2^{-r}]$ and numbers
+$\gamma,\epsilon\ge0$ with $|\widehat\theta-\theta|\le\gamma$.
+For every phase, including $\dagger$, put
+
+$$
+\widehat t_z=(v_z-\widehat\theta)/\delta,\qquad
+\widehat n_z=\lfloor\widehat t_z\rfloor,\qquad
+\widehat p_z=\widehat t_z-\widehat n_z.
+\tag{3.1}
+$$
+
+Choose $p_{B,z}\in[0,1]\cap2^{-B}\mathbb Z$ satisfying
+$|p_{B,z}-\widehat p_z|\le\epsilon$. The unabsorbed one-gap increment
+$U_B$, conditional on its terminal phase $z$, is
+
+$$
+U_B=\begin{cases}
+\delta\widehat n_z,&\text{with probability }1-p_{B,z},\\
+\delta(\widehat n_z+1),&\text{with probability }p_{B,z}.
+\end{cases}
+\qquad \chi=\gamma+\delta\epsilon.
+\tag{3.2}
+$$
+
+The integer destinations and probabilities are selected from the two
+promised laws before observation and installed identically under both
+labels. In particular $\widehat\theta$ is not selected using the unknown
+true source label.
+

@@ -1,0 +1,4 @@
+**The outside-support part.** Every original-support prime has even exponent in $k$. Repeatedly remove its square factors by the preceding descent. The resulting positive odd multiplier $k_0$ is coprime to $3B_N$ and still satisfies the same-kernel equation. If $k_0$ were composite, the least-prime argument would place its least prime divisor in $B_N$, a contradiction. Hence $k_0=1$ or $k_0=r$ for a prime $r\nmid B_N$. This proves the two stated forms of $k$.
+
+Finally, suppose $r$ is present and some prime divisor of $s$ exceeds $r$. Remove every original-support factor below $r$ by the same two-step descent. The remaining multiplier is composite, has least prime divisor $r$, and still satisfies the same-kernel equation. The least-prime argument would force $r\mid B_N$, again a contradiction. Thus every prime divisor of $s$ is smaller than $r$. ∎
+

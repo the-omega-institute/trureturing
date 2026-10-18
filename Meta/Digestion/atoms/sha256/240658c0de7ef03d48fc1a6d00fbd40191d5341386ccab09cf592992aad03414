@@ -1,0 +1,21 @@
+**Definition 2.2 (Guard and path variants).** Guard recovery additionally
+requires that, for every command, its lawful domain be the inverse image
+under $E$ of a subset of the actual encoded image. Equivalently, all rays
+in any encoder fiber must agree on lawfulness. This is separate from an
+identity required only where a command is lawful.
+
+The prescribed-path variant additionally requires one fixed affine update
+for each finite prescribed simultaneous native control path, on its full
+all-times source guard. The path and its integrable velocities are fixed
+independently of the starting ray. Section 9 gives the exact guard and
+endpoint formula. In the variant imposing both requirements, those full
+path guards must also be recoverable. Infima and finite tolerance sets are
+defined as above for each class; an empty class has infimum $+\infty$ and
+no finite tolerance.
+
+The stored dimension $m$, the dimension of
+$\mathscr H_E=\operatorname{aff}E(\mathcal M)$, and the rank of a
+particular affine readout on its direction space are different quantities.
+The lower proof will use the rank of the two-coordinate $\alpha$ readout,
+not the stored dimension alone or the rank of the entire decoder.
+

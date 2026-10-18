@@ -1,0 +1,10 @@
+\sum_{s\in\Sigma}p_s(\kappa)\log p_s(\kappa).
+\]
+由
+\[
+\partial_\kappa p=(1,-1,0,-1,1)
+\]
+直接得到
+\[
+\Phi'(\kappa)
+=

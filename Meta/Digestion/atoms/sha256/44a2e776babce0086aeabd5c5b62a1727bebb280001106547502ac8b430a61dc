@@ -1,0 +1,31 @@
+# FIB three reads: the installed-state endpoint-risk partial frontier
+
+For the original stationary biased XOR source, let $C_m$ be the greatest
+correct classification mass achievable with at most $m$ installed complete
+controller rows and almost-sure return within three paid visible calls.
+The exact values established here are
+
+$$
+\begin{aligned}
+C_1=C_2&=\frac a2,\\
+C_3&=\frac a2+a\eta,\\
+C_4&=\frac a2+a\eta(1+c),\\
+C_5&=\frac a2+a\eta(1+c+c^2),
+\end{aligned}
+$$
+
+where $a=\max(p,1-p)$, $b=\min(p,1-p)$, $\eta=ab$ and
+$c=a^2+b^2$. The inherited unrestricted value is
+$S_3=a/2+3a^2\eta+2\eta^3$, attained with nine rows and requiring
+at least nine rows. The exact five-row correct-mass deficit is
+
+$$
+S_3-C_5=(a-b)\eta^2(3-2\eta)>0.
+$$
+
+Complete six-, seven- and eight-row tables below give further attained
+lower points, with their source masses, labels and unconditional paid
+costs. A finite-menu theorem preserving actual installed rows proves
+attainment at every installed budget. Consequently $C_m<S_3$ for every
+$m\le8$. The exact values at $m=6,7,8$ remain open here.
+

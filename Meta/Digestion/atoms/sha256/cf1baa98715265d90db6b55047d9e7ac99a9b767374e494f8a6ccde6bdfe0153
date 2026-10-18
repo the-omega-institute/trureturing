@@ -1,0 +1,4 @@
+## 54. Full-support maximally correlated sources: exact LOSR output normal form
+
+Let M_n = span{|ii>: 1 <= i <= n}, with projector P_n. Let rho be a density operator strictly positive on M_n and zero on its orthogonal complement. Equivalently rho >= lambda P_n for some lambda > 0. Input and output local dimensions are n and m. Finite LOSR means a convex combination of product CPTP maps from n to m, with arbitrary finite local environments and no communication.
+

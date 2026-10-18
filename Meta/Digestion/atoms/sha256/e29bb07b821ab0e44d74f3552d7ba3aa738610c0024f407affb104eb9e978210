@@ -1,0 +1,10 @@
+**定义 1.1（数域、对数与操作）。** 本卷的整数均为普通算术整数，$\log$ 为自然对数，$\gamma$ 为 Euler–Mascheroni 常数。对 $n\ge2$，令
+
+$$
+V_n=(\mathbb Z/n\mathbb Z)^2,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\partial=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+$$
+
+两个操作共同供应，分别作用为 $M(u,v)=(v,u+v)$ 和 $\partial(u,v)=(v,0)$。令 $\mathscr L_n$ 为同时满足 $M(W)\subseteq W$、$\partial(W)\subseteq W$ 的加法子群 $W\le V_n$。方向提取是一个独立声明的接口；仅有替换关系 $\rho(\alpha)=\beta$ 不包含该接口。
+

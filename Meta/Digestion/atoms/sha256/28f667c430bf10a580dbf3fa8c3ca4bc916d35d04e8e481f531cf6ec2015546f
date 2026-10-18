@@ -1,0 +1,62 @@
+**Lemma 5.4 (Both target row bounds).** For each target $i\in\{0,1\}$, its own $W_i$ from (5.2), and every row $x$,
+
+$$
+\|U_i(x,\cdot)-W_i(x,\cdot)\|_{\rm TV}\le\kappa_L.
+\tag{5.7}
+$$
+
+If
+
+$$
+P_L=\sum_{k=1}^L(w_k)_+,\qquad
+N_L=\sum_{k=1}^L(-w_k)_+,\qquad (v)_+=\max\{v,0\},
+\tag{5.8}
+$$
+
+then $\kappa_L=\max\{P_L,N_L\}$. It is the exact variation of a collapsed scalar signed measure, and only an upper bound for the actual output-row variation.
+
+Proof. First,
+
+$$
+\begin{aligned}
+f_1(k)-f_0(k)
+&=\left(\frac{k^9+\Delta_H(k)}{Z_1}
+       -\frac{k^9}{Z_0}\right)q^k\\
+&=\frac{[\Delta_H(k)-\varepsilon k^9]q^k}{Z_1},
+\end{aligned}
+\tag{5.9}
+$$
+
+which verifies the normalization in (5.5). Summing the finite short part gives its drift formula. Subtract the two exact short/tail decompositions at each target, without separately estimating their terms:
+
+$$
+\begin{aligned}
+U_1-W_1&=\sum_{k=1}^Lw_k\mathcal K_k-m_LV_1^L,\\
+U_0-W_0&=-\sum_{k=1}^Lw_k\mathcal K_k+m_LV_0^L.
+\end{aligned}
+\tag{5.10}
+$$
+
+For example the tail coefficient in the first line is $(1-\pi_1)-(1-\pi_0)=-m_L$; in the second line it is $m_L$. Thus the tail compensation follows from the actual normalization and cannot be omitted.
+
+On the finite symbol set $\{1,\ldots,L,*\}$ define a signed measure $\lambda$ by $\lambda(k)=w_k$ and $\lambda(*)=-m_L$. It has total mass zero. Its positive and negative masses therefore agree, and each is
+
+$$
+\frac12\sum_z|\lambda(z)|=\kappa_L.
+\tag{5.11}
+$$
+
+For any function $g$ on this symbol set with $0\le g\le1$, its positive part contributes at most $\kappa_L$ and its negative part at least $-\kappa_L$. Consequently $|\sum_z\lambda(z)g(z)|\le\kappa_L$.
+
+Fix a row $x$ and a target $i$. Map symbol $k$ to the stochastic row $\mathcal K_k(x,\cdot)$ and symbol $*$ to $V_i^L(x,\cdot)$. For a state event $E\subseteq\mathcal S$, the resulting conditional values $g(k)=\mathcal K_k(x,E)$ and $g(*)=V_i^L(x,E)$ lie in $[0,1]$. By (5.10) the target row difference on $E$ is the image of $\lambda$, or its negative. Its absolute value is at most $\kappa_L$. Taking the supremum over events proves (5.7), since a finite zero-mass row has total variation equal to that supremum. The same argument, replacing an event indicator by any state function in $[0,1]$, also bounds the difference of its two row averages by $\kappa_L$.
+
+Finally $m_L=P_L-N_L$ and $\sum_{k\le L}|w_k|=P_L+N_L$. Hence
+
+$$
+\kappa_L=\frac{P_L+N_L+|P_L-N_L|}{2}
+=\max\{P_L,N_L\}.
+\tag{5.12}
+$$
+
+No sign was assumed for an individual $w_k$ or for the drift. Distinct symbols may map to the same row, so contraction can be strict, even zero. Equality with actual output-row variation is neither needed nor asserted. $\square$
+

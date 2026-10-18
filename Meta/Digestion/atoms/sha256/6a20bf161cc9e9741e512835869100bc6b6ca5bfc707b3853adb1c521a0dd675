@@ -1,0 +1,83 @@
+**Definition 12.2 (the represented complete state).** A simulated state is
+a fixed tuple of the following encoded words and finite lists:
+
+- Installed native row description, bootstrap description and finite
+  control/token bit vector; actual PC; eight symbol latches; phase and
+  purpose bits. Code has literal row order and literal finite effect
+  annotations for the bootstrap and CTL variants.
+- The 64 ports in their fixed order. An ordinary port is a finite list of
+  eight-bit cell records, including L and R, ordinary head, append/read
+  marks, seal and reserved bits. A not-yet-constructed boot port has the
+  empty list. Meter read and append heads use their distinct tracks.
+- Remaining typed boot material and consumed-input cursor; the chronological
+  native event list; unary primitive tally; the retained acquisition tally.
+
+A cell identity is its port and creation position in that port's append
+chain, including the old R replaced by EX. Counting the preceding actual
+cell records constructs its unary wire identity. All descriptors, source
+and scratch bits, dynamic code, counter versions, old banks, frame and
+row prefixes, mailbox and receiver states are ordinary cells in this
+carrier. They are not reconstructed by separate semantic approximations.
+Represented permissions are bits in this tuple; live tokens remain outside
+it. No represented source operand controls a physical producer operation.
+
+The new description's exact wire grammar is a framed list of rows, a
+framed initial finite-control/token word, and framed distinguished-entry
+labels. A row item is its seven concatenated PR57.03 unary fields followed
+by its framed finite-effect description. The native graph uses those
+seven fields with their specified finite local effects; outer wire framing
+is public code material, not an additional dynamic fetch. Write
+$\Delta(G)$ for this archival description and $E(G)$ for the owning graph's
+literal native boot encoding. They describe the same expanded graph but
+are not identified as bit strings. The finite serializer for $E$ traverses
+the row list in its order, decodes each unary field and emits its PR57.03
+wire word, then emits the local-effect/initial finite-control bit fields
+in their fixed installation order. Length Frames and archival tuple/list
+tags are removed by ReadFrame/ReadList. All effect bits are the fixed
+finite local constructors already specified for the actual CTL/WR variants;
+no extra interpreted opcode is introduced. This finite word transducer
+is also the definition of the native installation image of the expansion.
+The code/frame reservoir for a bootstrap contains $E(G)$; Step's lookup
+uses $\Delta(G)$, while its raw code-store coordinate contains the actual
+partly or completely installed $E(G)$. The original $v_0$ description
+uses its own fixed supplied codec, converted to this row-list grammar by
+consuming its finite unary fields. Each consumed bit and converted field
+is word work. Effect descriptions use the following finite constructors:
+no change; set a designated finite control bit to a literal or designated
+latched bit; seal the designated current or immediately preceding marker;
+enter the specified bootstrap stage; halt; and select F for this receipt.
+An effect is a finite list of such constructors, in written order.
+Finite control-bit locations are actual unary fields in the description.
+Replace implements each indicated virtual bit change. Bootstrap advance
+moves its designated finite control-store cursor; its current and next
+slots are existing fields, scanned and updated by the same list operations.
+All newer CTLs are purpose entry/restore, parity selection, seal, Ready,
+bootstrap entry/NEXT/advance/DONE or halt from these constructors. A row's
+finite variant also identifies literal versus latched-bit WR, its actual
+source latch on that branch, public/private IN kind, and ordinary versus
+control-bit boot write. These are finite annotations to PR57's already
+distinct local variants, not an extra string-operation opcode. The fixed
+bootstrap's slot selection is part of its finite phase/cursor encoding. Original
+CTL effect descriptions are the original supplier's fixed local effects,
+encoded in this same finite bit/marker convention. No CTL effect contains
+an unbounded state transformation, history append or semantic recovery.
+
+During either bootstrap, preserve the actual raw partly written control
+store separately from its last complete decoded table. Lookup uses the
+fixed active bootstrap rows until DONE. Only DONE enables the completely
+written new table. Thus a mid-installation image includes actual partial
+control bits without treating an invalid partial description as executable
+main code. Its capture-controller and service-table transitions are the
+actual two version changes. This raw/active distinction is part of the
+complete state codec.
+
+Native rows use PR57.03's seven unary fields. A CTL or bootstrap row also
+has its literal finite local-effect tag, drawn from the fixed finite table
+for that graph: seal at its designated current marker, phase/purpose update,
+commit, halt, control-bit write/advance, or boundary constructor. These tags
+specify the finite local effects already part of the owning graph, not an
+unbounded instruction. Without these tags PR57.03 alone would not describe
+a seal versus an ordinary testing CTL. The acquired description includes
+their finite bit encodings. A port, symbol, latch or Boolean-table field
+outside its finite range is rejected by the description parser.
+

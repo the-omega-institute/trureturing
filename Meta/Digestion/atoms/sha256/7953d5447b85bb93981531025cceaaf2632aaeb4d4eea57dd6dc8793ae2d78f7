@@ -1,0 +1,16 @@
+**Definition 2.1 (primitive carrier).** Use exactly PR57.D1's 64 finite tape
+ports, fixed finite native control, eight finite symbol latches, ownership
+tokens, constructed head marks and receipt meter. The atomic core occurrences
+are RD, WR, ML, MR, EX, BF, IN, OUT, TOK and CTL with their supplier meanings.
+EX constructs one adjacent cell; WR changes one symbol; IN changes its finite
+latch and does not write or move. Each occurrence appends one actual meter
+receipt, takes one tick and charges two fee units. No natural, pointer,
+interval, table, counter increment or whole seal record is an atomic register.
+
+Tape data cells have the supplier's eight-bit encoding. The fixed symbols
+$L,R,0,1,\square,\mathsf{sep},\mathsf{seal},\mathsf F$ are finite symbols.
+A record's seal is an actually constructed symbol cell. Metadata bits, unary
+fields, field separators, all head marks and all retired data remain physical
+parts of the carrier. Primitive atomicity is the declared ideal sequential
+atomicity; a finer device must provide its own intermediate-cut refinement.
+

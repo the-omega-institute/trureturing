@@ -1,0 +1,42 @@
+**定理 123.2（完整箭头似然及其充分统计量）。** 对全部 $N\ge0$ 与合法路径，
+
+$$
+\log\frac{\mathbb P_N(\gamma)}{\mathbb Q_N(\gamma)}
+=W(\gamma)\log\frac pq,
+\qquad D(\mathbb P_N\Vert\mathbb Q_N)=N\sigma(P).
+$$
+
+正向律下的有限时域涨落式为
+
+$$
+\Pr(W=w)=\left(\frac pq\right)^w\Pr(W=-w),\qquad
+\mathbb E\exp\!\left(-W\log\frac pq\right)=1.
+$$
+
+$W$ 保留这两个固定路径律的全部似然比，并且其推前律满足
+
+$$
+D(W_\#\mathbb P_N\Vert W_\#\mathbb Q_N)
+=D(\mathbb P_N\Vert\mathbb Q_N).
+$$
+
+所以它是本固定模型和固定时域的正反方向判别充分统计量；这里不主张最小性。
+
+证明（123.2）。初始均匀因子在路径比中相消，每条正向方形边贡献 $p/q$，反向边贡献 $q/p$，支路与自环贡献一。相乘再取对数得到第一式。平稳性给每一时刻有向边分布 $\pi_iP_{ij}$，故各步对数比的期望为 $\sigma(P)$；有限项线性相加给 KL 等式。这是在本五模式图上应用定义122.2所引用的经典平稳路径 KL 中间原理，不需要独立边假设。
+
+在 $W=w$ 的纤维上，第一式的概率比恒为 $(p/q)^w$。倒序将该纤维双射到 $W=-w$ 的纤维，逐路径求和给涨落式；不可达的两个纤维均为零，等式仍成立。再直接计算
+
+$$
+\sum_\gamma\mathbb P_N(\gamma)
+e^{-W(\gamma)\log(p/q)}
+=\sum_\gamma\mathbb Q_N(\gamma)=1.
+$$
+
+写 $P_W(w)=\mathbb P_N(W=w)$、$Q_W(w)=\mathbb Q_N(W=w)$。同一纤维的恒定比值给 $P_W(w)/Q_W(w)=(p/q)^w$；对正质量纤维，条件路径律满足
+
+$$
+\mathbb P_N(\gamma\mid W=w)=\mathbb Q_N(\gamma\mid W=w).
+$$
+
+因而在正反二元假设、任意固定先验的判别中，观察 $W$ 后整条路径不再追加关于假设的区别。其推前 KL 直接为 $\sum_wP_W(w)w\log(p/q)$，等于原路径 KL。$p=q$ 时两律相同，$N=0$ 时 $W=0$；所有公式保留这些退化情形，不由充分性推出唯一或最小摘要。$\square$
+

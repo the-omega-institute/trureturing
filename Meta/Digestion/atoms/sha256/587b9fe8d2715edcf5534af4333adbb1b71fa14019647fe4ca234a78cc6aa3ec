@@ -1,0 +1,12 @@
+**Remark 8.3 (the precise source-replacement discipline).**
+NBP Proposition 15.8 already refutes universal deep padding that
+preserves an arbitrary prescribed code. No argument here assumes it.
+The companions and fresh buffers of §5 are actual alternative origins
+used to constrain one common successful table. Their codes may change;
+correctness forces the opposite entry when their complete targets differ.
+The remaining configuration in Theorem 6.1 proves validity of both
+entries on every $\Pi_k$ vector before applying one-Read variation.
+No statement about one selected source per profile is promoted to
+constancy on a whole fiber without that argument or the actual-source
+connectivity proof.
+

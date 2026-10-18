@@ -1,0 +1,8 @@
+**定义。** 沿用实际物理权 $w(t)=(1+\log t)/(t^2(\log t)^2)$。
+对 $u>0$，定义
+
+$$
+F_N(u)=(1+\ell_N)\left(\log u-\frac1u\right)
+-h_N\left(u+\frac1u\right).
+$$
+

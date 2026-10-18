@@ -1,0 +1,126 @@
+## 84. 隐藏宽度、底面质量与所选面积的完整字典
+
+**约定 C-84.1（闭概率纤维与纯振幅完成）。** 沿用 C-76 的正交五模式载体，固定次序和占位词
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+\qquad (000,100,010,001,101).
+$$
+
+另给纯振幅 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，$\sum_s p_s=1$。
+本组固定三个可见均值及底面质量
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad 0<r<1,\quad 0<X,Y<r.
+\tag{C84.1}
+$$
+
+以 $\kappa=p_{13}$ 为隐藏概率，完整反解为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa).
+\tag{C84.2}
+$$
+
+允许合法零概率的闭纤维区间为
+
+$$
+[\kappa_-,\kappa_+],\qquad
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+\tag{C84.3}
+$$
+
+四底角分别非负恰给这四个不等式；中模式因 $r<1$ 严格正。
+以下“全正”指五概率全正，等价于 $\kappa_-<\kappa<\kappa_+$。
+零振幅处不把 $\theta_s$ 当作内在坐标，含相位的端点表达均由实际振幅或内部连续延伸解释。
+
+**命题 C-84.2（宽度与两边缘的共同最小量）。** 定义绝对宽度 $w=\kappa_+-\kappa_-$、
+相对宽度 $\nu=w/r$。则
+
+$$
+w=\min\{X,Y,r-X,r-Y\},\qquad 0<\nu\le\frac12,
+$$
+
+$$
+\min\{X(r-X),Y(r-Y)\}=w(r-w).
+\tag{C84.4}
+$$
+
+证明。若 $X+Y\le r$，则 $X\le r-Y$、$Y\le r-X$，故四项最小值为
+$\min(X,Y)=w$。若 $X+Y\ge r$，则
+$w=\min(X,Y)-(X+Y-r)=\min(r-X,r-Y)$，且这两项分别不大于 $Y,X$。
+四项都正，所以 $w>0$。置
+
+$$
+u=\min(X,r-X),\qquad v=\min(Y,r-Y).
+$$
+
+则 $u,v\in(0,r/2]$，$w=\min(u,v)$，给 $\nu$ 的范围。
+又 $X(r-X)=u(r-u)$、$Y(r-Y)=v(r-v)$。
+对 $0\le a<b\le r/2$，
+
+$$
+b(r-b)-a(r-a)=(b-a)(r-a-b)>0.
+$$
+
+故 $t(r-t)$ 在 $[0,r/2]$ 严格递增，取最小量即得最后的精确恒等式。
+特别地 $w=r/2$ 当且仅当 $X=Y=r/2$。证毕。
+
+宽度公式的概率来源为
+[《局部填充》§3.1](AURIC_FIB_ATOM_PYRAMID_LOCAL_FILLINGS_SOFT_TO_RIGID_AND_ODD_CYCLE_OBSTRUCTIONS.md#31-隐藏纤维的宽度)，
+其在相位商面积中的应用由 C-81.2 给出。
+$r$ 表示底面在完整五模式中的质量，$\nu$ 表示固定条件边缘后相对底面质量的余量；两者不能互相替代。
+
+**约定 C-84.3（相位商、尺度与面积）。** 先将归一化振幅除去共同相位成为射线，
+固定 $(X,Y,Z)$，再除去占位 $T^3$ 作用
+
+$$
+\theta_s\longmapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z.
+$$
+
+这里 $x=(0,1,0,0,1)$、$y=(0,0,0,1,1)$、$z=(0,0,1,0,0)$。
+全正内部的剩余角为
+
+$$
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}\pmod{2\pi}.
+$$
+
+C-73.2 的整周期消相位公式给周期恰为 $2\pi$。
+按 C-74、C-79 及[《辛预测完成》§35.5–35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化)选择
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+g=\frac{\mathcal I}{2}d\kappa^2+\frac2{\mathcal I}d\chi^2,\qquad
+\mathcal I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+\tag{C84.5}
+$$
+
+这是标准射影直线辛面积 $2\pi$ 的尺度，即原卷度量的两倍。
+$\det g=1$，故 Riemann 面积密度等于 $|\omega_{\rm red}|=d\kappa\,d\chi$，
+完整面积为
+
+$$
+\mathcal A=\int_{\kappa_-}^{\kappa_+}\int_0^{2\pi}d\chi\,d\kappa=2\pi w.
+\tag{C84.6}
+$$
+
+两端的新增点面积为零。C-80、C-81 已证明：$X+Y=r$ 使下端双零，
+$X=Y$ 使上端双零；其余端点单零。单零端点光滑，双零端点锥角为 $\pi$。
+因此非墙条件 $X\ne Y$、$X+Y\ne r$ 下是光滑闭曲面面积；
+墙上同一内部积分仍成立，却不把锥点变成普通光滑点。
+这是一种已选择的约化几何，不由宽度另推一种维数。
+
+在全正域，带标记概率关联椭圆继续使用
+
+$$
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3},\qquad
+\Xi=\frac{\psi_0\psi_{13}}{\psi_1\psi_3}=e^{4\eta-i\chi}.
+\tag{C84.7}
+$$
+
+$\log$ 在此为自然对数。概率椭圆的标记半轴为 $e^\eta,e^{-\eta}$；
+它的圆条件 $\eta=0$ 与下面条件振幅的谱圆条件不同。
+

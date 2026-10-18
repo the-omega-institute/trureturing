@@ -1,0 +1,80 @@
+**Theorem 2.2 (transport through projections with deficient reply
+capacity).** Fix integers $1\le r<m$ and real numbers
+$C_0>0$, $0<c_0\le C_0$. Suppose the finite interface satisfies:
+
+1. Every locally admissible $P$ has $w(P)\le C_0$.
+2. For every range-feasible locally inadmissible $P$, every experiment
+   has at most $r$ replies on $P$, and there is a target $q_P$ such
+   that $|g_{q_P}(P)|>r$ and
+   $w(P\cap g_{q_P}^{-1}\{v\})\le c_0$ for every value $v$.
+
+For every $n\ge1$ and every jointly admissible nonempty $B\subseteq S^n$,
+let $G$ be the set of coordinates with locally admissible projection
+$P_i=\pi_i(B)$, and $I$ its complement. Then
+
+$$
+\Omega(B)\le C_0^{|G|}c_0^{|I|}\le C_0^n.
+\tag{NCM.11}
+$$
+
+Consequently any cover of $S^n$ by jointly admissible sets has at least
+$\lceil(w(S)/C_0)^n\rceil$ members. The same product weight divided
+by $C_0^n$ is feasible for the joint fractional-cover dual.
+
+Proof. For any coordinate $i$ and target $q$, its witness on the
+unchanged $B$ has at most $m$ replies. Since $g_q(x_i)$ factors through
+that reply, $|g_q(P_i)|\le m$. Thus every $P_i$ is range feasible.
+
+For $i\in I$ choose $q_i=q_{P_i}$. A constant experiment cannot
+determine its more than $r$ target values. Nor can an experiment in
+any coordinate $j\in I$, because it has at most $r$ replies on $P_j$.
+The witnessing experiment must therefore belong to a coordinate
+$j(i)\in G$. The factorization in (NCM.8) supplies a function
+$d_i$ on its attained replies, so that, on this same $B$,
+
+$$
+g_{q_i}(x_i)=d_i(r_{a_i}(x_{j(i)})).
+\tag{NCM.12}
+$$
+
+Fix a tuple $u$ of all the $G$ coordinates jointly. In its section of
+$B$, each right-hand side in (NCM.12) is fixed. Each $I$ coordinate
+therefore lies in one target cell of weight at most $c_0$. That section
+is contained in the Cartesian product of those cells. Nonnegativity
+of the ambient product weights gives
+
+$$
+\begin{aligned}
+\Omega(B)
+&\le c_0^{|I|}
+ \sum_{u\in\pi_G(B)}\prod_{j\in G}w(u_j)\\
+&\le c_0^{|I|}\prod_{j\in G}w(P_j)
+ \le c_0^{|I|}C_0^{|G|}.
+\end{aligned}
+\tag{NCM.13}
+$$
+
+The empty product convention covers $I=\varnothing$. If $G$ were empty
+and $I$ nonempty, the required witnesses could not exist, so no such
+nonempty $B$ occurs. The proof never asserts that a section is a
+product, that its coordinates are independent, or that a bad projection
+is locally admissible after conditioning.
+
+The full product has weight $w(S)^n$. Summing the bound $C_0^n$ over
+a cover, even an overlapping one, proves its cardinality lower bound.
+More generally, for any fractional cover,
+
+$$
+\left(\frac{w(S)}{C_0}\right)^n
+\le\sum_B c_B\frac{\Omega(B)}{C_0^n}
+\le\sum_B c_B.
+$$
+
+This proves the dual assertion directly. $\square$
+
+The hypotheses are finite checks on sets, functions and weights; they
+are sufficient conditions, without a completeness claim. Fixing $u$
+in this proof is an analytical section, not information supplied to a
+native reader. Different bad coordinates may have different targets,
+experiments and donor coordinates.
+

@@ -1,0 +1,16 @@
+### 65.6 Shared randomness can be strictly necessary
+
+Take m=n=3 and
+
+    W=(1/2)[[1,1,0],[1,0,1],[0,1,1]].
+
+It lies in S and is therefore CPTP and exactly physically implementable. It is half the sum of the permutation matrices with supports {(1,1),(2,3),(3,2)} and {(1,2),(2,1),(3,3)}, so two product branches suffice.
+
+No single product channel implements it. Exact basis outputs are pure, so a putative product realization has local orthonormal records within each fibre, with cross-record contraction matrices R,T satisfying W=R⊙T. In every row,
+
+    1=Σ_j|R_ij T_ij|≤||R_i||₂||T_i||₂≤1.
+
+Equality forces both row norms to be one and |R_ij|=|T_ij| for every j. Therefore |R_ij|²=W_ij. Since R is a square contraction with every row norm one, RR*≤I and Tr(RR*)=3; positivity of I−RR* forces RR*=I, so its rows are orthonormal. But its first and second rows overlap in exactly one nonzero column, with overlap modulus1/2. They cannot be orthogonal, a contradiction. Thus the minimum number of product branches for exact implementation is exactly two.
+
+This uses the familiar obstruction to a bistochastic matrix being the squared moduli of a unitary matrix. The contribution here is its role in the actual common-channel resource count, not a new unistochastic-matrix obstruction.
+

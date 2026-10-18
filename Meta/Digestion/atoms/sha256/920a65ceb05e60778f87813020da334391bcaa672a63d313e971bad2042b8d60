@@ -1,0 +1,50 @@
+**Definition 2.3 (compilation, registers and entries).** The program is
+the ARC graph of Definitions 2–8 with the successful ClientImage tail
+replaced by §8, and the following fixed helper order:
+
+1. Definition 2.2's word macros, raw fixed-arity record parsers and finite
+   comparisons;
+2. §3's component work-stack, mask/contour parsers and raw layout inverse;
+3. ARC Step74 with this graph's actual descriptions, §5's local patch
+   formatter and constructor-role fold;
+4. §6's basic input extraction, counted replay and selected-memory emission;
+5. §7's four independent decoders and four direct arrows;
+6. §8's five unrolled publications, callbacks, fault cleanup and final return.
+
+This is a dependency order, not a recursive evaluator. Replay uses Step74;
+Step74 does not call a semantic replay/Call/conversion. Selection given a
+derived history does not invoke a decoder. Decoders do not invoke their own
+validators. Static calls are hygienically inlined and their fixed exits
+joined. While uses its actual testing entry as the back edge. A join has no
+receipt unless a CTL is explicitly present.
+
+The new persistent fields, in order, are `binding`, `received`, `sourceBody`,
+`candidate`, `firstS`, `fault`, `decodedPrefix`, `decodedRaw`, `birthMap` and
+`patches`, following ARC's manifest, completed cycles $M$, covers, packages,
+selector and acquired $c,p$. `received` is the sole callback import target;
+`sourceBody` is assigned only from its parsed body. `candidate` is cleared
+before callback import. Only `binding` and `firstS` survive between all five
+stages in addition to the inherited service fields. Derived fields and
+temporaries are cleared at each direct-arrow entry. Clear is a real bank
+assignment, not deletion of old material.
+
+Each helper has local words for its displayed inputs/outputs/cursors,
+reverse accumulator, current item, unary index/countdown, work stack,
+decoded record and Boolean-result word. Fresh names are the static call
+path followed by those names. Number registers by first textual occurrence
+after hygienic expansion; call their exact finite count $r_\circ$. Apply
+ARC Definition 2.1/RCA Definition 11.3 to **every** assignment: actual Base,
+dry emission of all $r_\circ$ fields, real emission, seps/F/seal, complete
+descriptor count/write and parity CTL. Tests use actual Field/RD scans.
+Thus this specification determines $r_\circ$ and a finite native row table
+by an effective syntactic recipe; it does not posit an atomic word machine.
+
+Retain original routine ordering, then the helper order above, textual
+row order, false before true, ascending port/latch order and ARC symbol
+order. Constants are finite cons chains. The five new stage entries are
+`RenderS`, `FromS`, `FromB`, `FromM`, `FromT`; their client entries are
+`CheckS0`, `CheckB`, `CheckM`, `CheckT`, `CheckS1`. Each has a finite
+product with bank parity. Every client→handler and handler→client edge in
+§8 is TOK followed by its named CTL. There is no variable return address,
+view registry, external Convert request or extra native tape role.
+

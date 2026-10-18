@@ -1,0 +1,211 @@
+**Theorem 2.1 (upper-endpoint tail atom).** For every pair in
+$\mathfrak C_{\rm box}$, with arbitrary Borel phase marginals, put
+
+$$
+m_b=\nu_p(\{P_{p,b}\}),\qquad
+d_n=\int Q(w_{n,1})\,d\nu_p(Q).
+\tag{2.1}
+$$
+
+Then
+
+$$
+\lim_{n\to\infty}\frac{Q(w_{n,1})}{z_b^n}
+ =c_b\,\mathbf1_{\{P_{p,b}\}}(Q)
+\quad(\nu_p\text{-a.e. }Q),\qquad
+\lim_{n\to\infty}\frac{d_n}{z_b^n}=c_bm_b.
+\tag{2.2}
+$$
+
+No finite-support, deterministic-successor, reversibility, mixing,
+eventual-recurrence or zero-excess hypothesis is imposed. In particular
+$m_b=0$ implies $d_n=o(z_b^n)$, not a strictly smaller exponential
+growth rate.
+
+**Proof.** All almost-everywhere equations may be placed on full-measure
+sets closed under the acquired transitions: remove the null exceptional
+sets, then their positive-probability predecessors, countably many times.
+Stationarity in (1.5) keeps the removed sets null. Weighted kernels below
+have the same null sets because all their weights are strictly positive.
+
+Let $C=BA$ be the unweighted acquired return kernel on p descriptors.
+Thus $\nu_pC=\nu_p$. Define the positive kernel and completion function
+
+$$
+\begin{aligned}
+L(Q,dQ')&=(1-u(Q))\int v(W)A(W,dQ')\,B(Q,dW),\\
+g(Q)&=Q(w_{0,1})
+ =(1-u(Q))\int(1-v(W))\,B(Q,dW).
+\end{aligned}
+\tag{2.3}
+$$
+
+Iteration of the original full residual equations, with Tonelli for
+nonnegative terms, gives
+
+$$
+Q(w_{n,1})=(L^ng)(Q),\qquad
+Q(w_{n,0})=(L^nu)(Q).
+\tag{2.4}
+$$
+
+This is a conditional path integral on the one common acquired chain;
+it makes no claim about boxes on individual sampled path products.
+Regularity gives
+
+$$
+c_b\le g\le c_a,\qquad
+\frac15C\le L\le\frac4{15}C.
+\tag{2.5}
+$$
+
+The upper endpoint at $w_{3,1}$ is $c_bz_b^3$, since
+
+$$
+c_bz_b^3-c_az_a^3=\frac{254584}{2562890625}>0.
+$$
+
+Consequently (1.7) gives $L^3g\le c_bz_b^3$.
+Write $T=L/z_b$, $e=g-c_b\ge0$, and set
+
+$$
+h=\frac{g+Tg+T^2g}{3},\qquad
+\delta=h-Th=\frac{g-T^3g}{3}\ge\frac e3.
+\tag{2.6}
+$$
+
+The measurable function $h$ has bounds $0<h_-\le h\le h_+<\infty$.
+For example $h_-=c_b/3$ is valid, while (2.5) bounds the other terms.
+Thus
+
+$$
+M(Q,dQ')=T(Q,dQ')\frac{h(Q')}{h(Q)}
+\tag{2.7}
+$$
+
+is a substochastic kernel. Its one-step killing probability is
+
+$$
+k(Q)=1-M\mathbf1(Q)=\frac{\delta(Q)}{h(Q)}
+ \ge\frac{e(Q)}{3h_+}.
+\tag{2.8}
+$$
+
+This finite-block construction of $h$ needs no eigenfunction theorem.
+
+There is also a pointwise kernel domination tied to the same $e$.
+Since $v\le b$ and $g\ge(1-u)(1-b)$,
+
+$$
+T\le\frac{1-u}{1-b}\,C
+ \le\frac g{c_b}\,C
+ =\left(1+\frac e{c_b}\right)C.
+\tag{2.9}
+$$
+
+The cost of changing path measure is therefore controlled by the
+quantity which pays for killing in (2.8).
+
+Consider the killed chain with kernel $M$ and initial law $\nu_p$,
+and let $\mathsf I$ be its event of surviving forever. Its row mass is
+strictly positive, by (2.5) and the bounds on $h$. Normalize each row of
+$M$ to a Markov kernel and apply the row masses as survival probabilities.
+Conditional on an infinite path of that normalized kernel, survival
+forever has probability $\prod_{i\ge0}(1-k(Q_i))$. This product is zero
+if $\sum_i k(Q_i)=\infty$. Equation (2.8) proves
+
+$$
+\sum_{i\ge0}e(Q_i)<\infty
+\quad\text{almost surely on }\mathsf I.
+\tag{2.10}
+$$
+
+Let $\mathbb P_C$ be the stationary, unweighted $C$-path law.
+For any $n$, the distribution of the first $n$ surviving steps of $M$
+is absolutely continuous with respect to the corresponding $C$ path.
+The Radon--Nikodym product, using (2.7)--(2.9), is bounded by
+
+$$
+\frac{h(Q_n)}{h(Q_0)}
+ \prod_{i<n}\left(1+\frac{e(Q_i)}{c_b}\right)
+\le
+\frac{h_+}{h_-}
+\exp\left(\frac1{c_b}\sum_{i<n}e(Q_i)\right).
+\tag{2.11}
+$$
+
+For an integer $R\ge1$, restrict the immortal-path measure to
+$\sum_i e(Q_i)\le R$. On every event depending on finitely many
+coordinates, (2.11) bounds this finite measure by
+$(h_+/h_-)\exp(R/c_b)\mathbb P_C$. The inequality extends from the
+cylinder algebra to the full path sigma algebra by the monotone class
+theorem. Taking the increasing union in $R$, and using (2.10), shows
+that the entire immortal-path measure is absolutely continuous with
+respect to $\mathbb P_C$, and is supported on
+
+$$
+\mathsf E=\left\{\sum_{i\ge0}e(Q_i)<\infty\right\}.
+\tag{2.12}
+$$
+
+We now identify this event under the stationary acquired law. It is
+invariant under deleting the first path coordinate. If
+$\mathbb P_C(\mathsf E)>0$, conditioning on $\mathsf E$ therefore
+preserves stationarity. On $\mathsf E$ the time averages of the bounded
+nonnegative function $e(Q_i)$ tend to zero. Bounded convergence and
+conditional stationarity imply
+$\mathbb E_C[e(Q_0)\mid\mathsf E]=0$. Hence $e(Q_i)=0$ for every
+$i\ge0$, almost surely on $\mathsf E$. The assertion is empty if that
+event has probability zero.
+
+To recover the full descriptor, define
+$f(Q)=\mathbb P_C(\mathsf E\mid Q_0=Q)$. The Markov property and the
+invariance of (2.12) give $Cf=f$ almost surely. Since $0\le f\le1$,
+stationarity gives the exact identity
+
+$$
+\mathbb E_C[(f(Q_1)-f(Q_0))^2]
+=2\int f^2\,d\nu_p-2\int f\,Cf\,d\nu_p=0.
+\tag{2.13}
+$$
+
+Also $f=0$ almost everywhere on $\{e>0\}$ by the preceding paragraph.
+Thus $H=\{f>0\}$ is, up to null sets, a $C$-closed set on which
+$g=c_b$. On $H$, equality in the lower bound for $g$ in (2.5) forces
+$u=b$ and $v=b$ on every conditional positive B successor, almost surely.
+The composition $BA$ stays in $H$, so on this set $L=z_b C$ and
+$u=b$, $g=c_b$. Formula (2.4) now gives every finite coordinate of
+$P_{p,b}$, and (1.3) supplies the zero infinite coordinate. Hence
+
+$$
+Q=P_{p,b}\quad\text{for }\nu_p\text{-almost every }Q\in H.
+\tag{2.14}
+$$
+
+As $\mathbb P_C(\mathsf E,Q_0\notin H)=0$, the immortal $M$-path
+measure can start only at the native singleton, by absolute continuity.
+It follows that $M^n\mathbf1(Q)\downarrow0$ for almost every
+nonnative $Q$ under $\nu_p$. The identity
+
+$$
+T^ng(Q)=h(Q)\,M^n(g/h)(Q)
+\tag{2.15}
+$$
+
+then gives $T^ng(Q)\to0$ at every such input, outside one null set.
+At $Q=P_{p,b}$, (2.4) and the known native coordinates give
+$T^ng(Q)=c_b$ for every $n$. This proves the pointwise assertion.
+For $n\ge3$, the full p boxes give $0\le T^ng\le c_b$.
+Dominated convergence proves the mean assertion in (2.2).
+$\square$
+
+**Mathematical citation 2.2 (the operator comparison).** The killed
+kernel and multiplication by a positive function are standard
+Feynman--Kac and Doob-transform constructions. The load-bearing
+source-specific step is the simultaneous pair of inequalities
+(2.8)--(2.9), obtained from the same completion coordinate and the
+upper complete-word box. The path comparison uses that pair to exclude
+escape of surviving mass into nonnative stationary configurations.
+It does not invoke finite Perron vectors, primitivity, a spectral gap,
+Feller regularity or a minorization condition.
+

@@ -1,0 +1,196 @@
+**Theorem 173.1 (All-word extension with an exact uniform cap).** For
+every core of Definition 172.2 and residuals of Definition 172.3 with
+$W\le1$, put
+
+$$
+\begin{aligned}
+\varepsilon&=re_0+E,\\
+a_i&=rA_i+W &&(1\le i\le m),\\
+a_i&=\varepsilon+g_i &&(m<i\le L),\\
+p_b&=r q_{(b_1,\ldots,b_m)}+\sum_{h=m+1}^Lw_hP_{h,b}.
+\end{aligned}
+\tag{173.1}
+$$
+
+Append any positive nonincreasing vanishing actual tail with
+$a_{L+1}\le\varepsilon$. Then $0<\varepsilon\le1$ and the entire
+sequence has the order and positivity of Definition 172.1.
+There is an original $O_2$ acquisition with this kernel at every actual
+low word and exact uniform error $\varepsilon$, and its same-seed
+$N_2$ completion has the identical law. The finite kernel belongs to
+$\mathscr C_L$ of Definition 108.2. If $g_L>0$, its actual active
+length at this cap is exactly $L$.
+
+For each actual source with $m<n(x)\le L$, its error is exactly
+$\varepsilon$, including every multiple-zero suffix. On an actual
+tail source $n>L$, its error is precisely
+
+$$
+\max\{t_{\rm tail},a_n\},\qquad
+t_{\rm tail}=r(1-q_{1^m}(0))+E\le\varepsilon.
+\tag{173.2}
+$$
+
+All actual tails have error $\varepsilon$ if and only if
+
+$$
+r\bigl[q_{1^m}(0)-(1-e_0)\bigr]=0.
+\tag{173.3}
+$$
+
+Thus core tail-row tightness suffices, and $r=0$ also suffices. Exact
+uniform attainment does not assert that this extension cap is optimal.
+
+**Proof.** Summation by parts in the finite residual list gives
+
+$$
+\begin{aligned}
+W&=\frac{(m+2)g_{m+1}+\sum_{i=m+2}^Lg_i}{3},\\
+E&=\frac{(m-1)g_{m+1}+\sum_{i=m+2}^Lg_i}{3},\\
+W-E&=g_{m+1},\qquad r+W=1,\\
+\sum_{h=n}^L\frac{3w_h}{h+1}&=g_n\quad(m<n\le L).
+\end{aligned}
+\tag{173.4}
+$$
+
+All weights are nonnegative. If $g_{m+1}>0$, then $E>0$ because
+$m\ge2$. Otherwise all residuals vanish, $W=E=0$, and
+$\varepsilon=e_0>0$. Moreover
+
+$$
+\varepsilon=1-g_{m+1}-r(1-e_0)\le1.
+\tag{173.5}
+$$
+
+The head is ordered by the $A_i$, the late list by the $g_i$, and
+
+$$
+\begin{aligned}
+a_m-a_{m+1}&=r(A_m-e_0)\ge0,\\
+a_i-\varepsilon&=r(A_i-e_0)+g_{m+1}\ge0\quad(i\le m).
+\end{aligned}
+\tag{173.6}
+$$
+
+Head amplitudes are at most $r+W=1$. Every late amplitude is at most
+$a_m$ and at least $\varepsilon>0$. The permitted actual tail preserves
+the order, is positive and vanishes. If $g_L>0$, all first $L$
+amplitudes exceed $\varepsilon$, and every later amplitude is at most
+$\varepsilon$, proving the asserted active length.
+
+The subset identities of Theorem 87.1 apply word by word. If the actual
+first zero is $n\le h$, the branch emits $n$ if and only if its selected
+subset contains $n$, hence
+
+$$
+P_{h,b}(n)=\frac{3}{h+1}.
+\tag{173.7}
+$$
+
+All preceding selected labels are positive, whether $n$ is queried or
+is the final unqueried label. Later zeros cannot change this equivalence.
+If $k_h(b)$ is the number of positive bits among the first $h$, the base
+probability is
+
+$$
+P_{h,b}(0)=\frac{\binom{k_h(b)}2}{\binom{h+1}3}.
+\tag{173.8}
+$$
+
+Indeed base emission requires selecting $\ast$ and two positive
+numerical labels. Consequently the outside-$\{0,n\}$ mass is at most
+$c_h$. If $n>h$, all first $h$ bits are positive; (173.8) is
+$3/(h+1)$, the correct mass is zero and the outside-pair mass is
+exactly $c_h$. These are applications of the subset supplier, used here
+inside the new residual mixture.
+
+Fix a word with first zero $n\le m$. Its target vector satisfies
+$\eta_n^a=r\eta_n^A+We_n$, since $a_n=rA_n+W$.
+For the same mixture at that word, (172.1), (173.7) and (173.4) give
+
+$$
+\begin{aligned}
+p_b(n)&\ge r(A_n-e_0)+W-E=a_n-\varepsilon,\\
+p_b(0)+p_b(n)&\ge r(1-e_0)+W-E=1-\varepsilon,\\
+p_b(0)&\ge r(1-A_n-e_0)=1-a_n-\varepsilon+E.
+\end{aligned}
+\tag{173.9}
+$$
+
+The second inequality uses the independent pair row of the core and
+the subset correct mass. It is not deduced by adding the two singleton
+lower bounds. All three required TV rows hold for every suffix.
+
+Next fix $m<n\le L$. The core sees $1^m$ and cannot emit $n$.
+Every subset branch with $h<n$ also cannot emit it. Thus
+
+$$
+p_b(n)=\sum_{h=n}^L\frac{3w_h}{h+1}=g_n=a_n-\varepsilon.
+\tag{173.10}
+$$
+
+The core's outside-pair mass is at most $re_0$, and the total subset
+outside-pair mass is at most $E$. Therefore
+
+$$
+1-p_b(0)-p_b(n)\le\varepsilon,\qquad
+p_b(0)\ge1-\varepsilon-g_n=1-a_n.
+\tag{173.11}
+$$
+
+These prove the pair row and the required base row independently.
+The correct-row deficit $a_n-p_b(n)=\varepsilon$ gives a TV lower
+bound $\varepsilon$, while all three rows give the upper bound. This
+proves equality on every such word, even when $g_n=0$.
+
+At $1^L$ the base probability is
+
+$$
+p_{1^L}(0)=r q_{1^m}(0)+g_{m+1},\qquad
+1-p_{1^L}(0)=r(1-q_{1^m}(0))+E=t_{\rm tail}.
+\tag{173.12}
+$$
+
+This satisfies the all-positive base row. At any actual $n>L$, all
+queried low answers are positive and no tail mark is emitted. The
+exact original-carrier identity (110.9) gives (173.2), including the
+closed endpoint $a_{L+1}=\varepsilon$. The difference
+$\varepsilon-t_{\rm tail}$ is the left side of (173.3). If it vanishes,
+every actual tail error is $\varepsilon$. If it is positive, vanishing
+of $a_n$ supplies later actual first absences with $a_n<\varepsilon$,
+whose errors are strictly smaller. Actual witnesses exist for each
+such finite first-absence pattern. Thus (173.3) is exactly the
+condition for equality on all tails. A particular tail can still have
+error $\varepsilon$ when its amplitude equals the cap.
+
+Partition one source-independent $U\in[0,1)$ into intervals of masses
+$r,w_{m+1},\ldots,w_L$, omitting zero masses. The finite complete-table
+realization of $q$, supplied by Definition 108.1 and Proposition 140.3,
+and the finite categorical realization of each subset branch subdivide
+their intervals. Rescaling within an interval fixes its entire schedule
+and terminal table before any answers. The rule queries the actual
+low primes, stops as required and hands the chosen $\theta_j$ to the
+unchanged consumer on the same source. Every branch is measurable and
+finite at every actual source and seed, with zero advice and at most
+two actual requests. Only the selected branch is executed.
+
+Using the identical $U$, the $N_2$ rule obtains the whole preselected
+schedule and reconstructs the same stopped cell and tape. Ignored
+replies are counted. This is exactly Proposition 90.2's completion,
+without a second source trajectory. Theorem 109.1 puts this explicitly
+stopped probability kernel in $\mathscr C_L$. Theorem 110.2 supplies
+the exact original closed-cap correspondence when $L$ is active,
+including its arbitrary-address/full-carrier necessity for competitors.
+When some $g_i$ vanish, $L$ is only an auxiliary length; the direct
+all-source argument above still applies without asserting it is active.
+
+An actual source with first absence $m+1$ exists, and (173.10) forces
+its error to be $\varepsilon$. All sources have error at most that
+number. This proves exact uniform error even for a slack core.
+At $W=1$, the core interval is simply omitted and the head amplitudes
+are all one; there is no division or limit sampler. At $W=0$, the
+rule is the core, the late amplitudes equal $e_0$, and actual late
+first absences still force uniform error $e_0$. Residual plateaus and
+zero terminal weights require only omission of empty intervals.
+$\square$
+

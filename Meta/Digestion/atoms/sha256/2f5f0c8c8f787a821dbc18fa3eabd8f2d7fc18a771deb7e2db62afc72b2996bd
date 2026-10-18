@@ -1,0 +1,17 @@
+**Mathematical citation 8.1 (dependencies and distinct boundaries).** The
+following sources support the indicated intermediate steps and comparisons.
+
+| Source | Precise use |
+| --- | --- |
+| [Typed Residual Resource Boundary](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_RESOURCE_BOUNDARY.md), §§1--6 | One actual source, complete typed responses and resource-relative memory. The action/transport interaction here retains that contract. |
+| [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), Theorems 1.4 and 3.2 | Strict path relations require equal domains, full labels and successors; descent uses saturated actual fibers. The residual-lift interaction in Theorem 3.2 additionally tests how actions carry those relations forward. |
+| [Transport--Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §1.7 | Total-domain tree normalization and basic-loop comparisons. Partial charts require actual coverage rather than only connected chart names. |
+| [MaximalForwardInvariantSubkernel](../../../D5/S1/FixedPoints/MaximalForwardInvariantSubkernel.lean), `maximal_forward_invariant_subkernel` | Reused greatest invariant subkernel for one total map; not a claim that the present partial labeled atlas was compiled. |
+| [StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean), `contextual_equivalence_is_greatest`, `signature_extension_refines` | Reused strong partial congruence and refinement under enlarged permissions. |
+| [TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean), `typed_finite_view_kernel` | Reused typed finite-path refinement and complete behavior kernel. |
+| [DynamicsDescent](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean), `dynamics_descends_iff` | Reused total fiber-preserving dynamics factorization; strict partial domains are separately specified here. |
+| [InverseLimitCompletion](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean), `stateThread_bijective_iff_complete_and_separates` | Thread completeness and state separation are distinct realization conditions. |
+| [LocalDescentGlobalCompatibility](../../../D5/S3/ConceptDynamics/Gluing/LocalDescentGlobalCompatibility.lean), `local_descent_requires_global_gluing_checks` | Distinguishes local descent, inverse-limit realization and cocycle compatibility. None supplies missing actual fiber coverage. |
+| [ZeroLoopPotentialEquivalence](../../../D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.lean), `closed_path_zero_iff_exists_potential` | Complete closed-path tests in a connected groupoid for additive potentials; an arbitrary selected partial loop list has weaker hypotheses. |
+| Forney, [*Codes on Graphs: Fundamentals*](https://arxiv.org/html/1306.6264v2), §§5.5 and 6.3 | `literature-attested`: effective trellis separator as trimmed projection modulo cross-section, used inside Theorem 7.2. |
+

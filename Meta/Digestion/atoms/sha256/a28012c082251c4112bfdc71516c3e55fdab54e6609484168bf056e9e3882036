@@ -1,0 +1,145 @@
+**Lemma 25.1 (endpoint principal upper comparison).** Fix separately one admitted member $d$ of the translated two-face family J Definition 51.1, retaining its original source and all analytic antecedents. Use its $F,H,J,U,R,\ell,u$ of J (53.1), where $J=s^5W_{1,d}\circ\Xi_s\circ\mathscr L_s$ denotes the long multiplier. There are $M_{0,d}\ge1$ and $C_d<\infty$ such that, for every separately fixed finite $M\ge M_{0,d}$,
+
+$$
+\limsup_{s\downarrow0}
+\frac{k_d(Ms^8)-\ell_d-\mathscr A W_{1,d}(o)s^5}{s^5}
+\le C_d(M^{-1/4}+M^{-1/2}).
+\tag{25.1}
+$$
+
+This comparison itself does not require (24.1). J Theorem 55.1 states the probes $s^6,s^7$; its ingredients give the following endpoint argument with the displayed finite-$M$ errors retained.
+
+Proof. Fix $d$, suppress it, and write $h=Ms^8$. Set
+
+$$
+\begin{aligned}
+x&=Fu,&y&=Ju,&m&=\int Fu^2,&\delta_s&=\int Ju^2,&n&=m+\delta_s,\\
+z&=U^{1/2}u/\sqrt n,&
+H^h&=\int_0^Te^{-ht}Q(t)dt,&
+L^h&=\int_T^\infty e^{-ht}Q(t)dt,\\
+D&=H-H^h,&R(h)&=H^h+L^h,&\mathscr K(h)&=U^{1/2}R(h)U^{1/2}.
+\end{aligned}
+\tag{25.2}
+$$
+
+J Lemma 53.3 gives $x\to Vp$ in $L^1$, bounded $L^1+L^2$ norms for $x$, $m\to\mu$ and $\ell\to C_*$. Since $W_1$ is bounded and continuous at $o$, $u^2\to p^2$ in $L^1$ and the physical chart tends to $o$ at each fixed microscopic point,
+
+$$
+\delta_s/s^5\to W_1(o),\qquad n\to\mu>0,\qquad\|y\|_2\le Cs^5.
+\tag{25.3}
+$$
+
+First establish the needed finite-$M$ spectral neighborhood. P Theorem 104.2, in these sheared coordinates, gives
+
+$$
+\|R(h)U-K_{\rm rec}\|
+\le\eta_s+C M^{3/4}s^6+C(M^{-1/4}+M^{-1/2}),\qquad\eta_s\to0.
+\tag{25.4}
+$$
+
+The nonzero canonical spectrum has isolated simple top $C_*$ by P §§87–88. Choose one norm-perturbation neighborhood of this compact operator, a contour around $C_*$, and $\delta>0$, so that throughout the neighborhood there is one simple eigenvalue near $C_*$ and every other spectral value has real part at most $C_*-3\delta$. Such a neighborhood follows from the resolvent identity on the contour and on the compact remaining spectral exclusion set. Choose $M_{0,d}$ so that the last two errors in (25.4) lie inside half this neighborhood. For each fixed $M\ge M_{0,d}$, the first two errors lie in the other half for small enough $s$, possibly depending on $M$.
+
+For each $s,h>0$, $\mathscr K(h)$ is positive, compact and selfadjoint by the original fixed-cutoff relative compactness. Bounded product factorization identifies its nonzero eigenvalues, with multiplicities, with those of $R(h)U$. For example factor these as $(R U^{1/2})U^{1/2}$ and $U^{1/2}(R U^{1/2})$; both factors are bounded. Therefore its principal value $k$ is uniformly bounded and simple, while the rest of its spectrum is at most $k_2\le C_*-3\delta$. The constants may be fixed for all $M\ge M_{0,d}$ once $s$ is sufficiently small for that fixed $M$. This is compact spectral separation, not a Hamiltonian threshold gap. In particular (25.4) has not been called norm convergence at a fixed finite $M$.
+
+The exact scaled late kernel J (55.3) is bounded globally by $Cs^5$. Since $h/s^2=Ms^6\to0$, its pointwise scaled limit at fixed endpoints is $j_0W_1(o)$. The global bound, $x\to Vp$ in $L^1$ and dominated convergence on the entire product space give
+
+$$
+\langle x,L^hx\rangle=j_0W_1(o)A_p^2s^5+o_{d,M}(s^5).
+\tag{25.5}
+$$
+
+Moving either input costs its $L^1$ error times a bounded $L^1$ norm. No output phase cutoff is used.
+
+The input-specific damping estimates J (55.4) remain
+
+$$
+0\le\langle x,Dx\rangle\le Ch,\qquad\|Dx\|_2\le Chs^{-1/2}.
+\tag{25.6}
+$$
+
+For the first, integrate $ht\|Q(t/2)x\|_2^2$ using contraction below one and $Ct^{-7/4}\|x\|_1$ above it; the latter integral is $\int_1^\infty t^{-5/2}dt$. For the second integrate $ht\|Q(t)x\|_2$ up to $T$, giving $ChT^{1/4}$. P (104.14), with the original long multiplier, yields
+
+$$
+0\le\langle y,Ry\rangle\le Cs^9h^{-1/2}=C M^{-1/2}s^5.
+\tag{25.7}
+$$
+
+Indeed $\|RJ\|\le Cs^4h^{-1/2}$ and $\|Ju\|_2\le Cs^5$. Since $0\le L^h\le R$ as operators, spectral Cauchy–Schwarz gives
+
+$$
+|\langle x,L^hy\rangle|\le C M^{-1/4}s^5,\qquad
+|\langle y,Dx\rangle|\le Cs^5hs^{-1/2}=o_{d,M}(s^5).
+\tag{25.8}
+$$
+
+Thus both long-field self and cross terms are retained. In particular the first error in (25.8) cannot be replaced by $o(s^5)$ at fixed $M$.
+
+Using $Hx=\ell u$, expand the full unit quotient exactly:
+
+$$
+\mathcal Q_s:=\langle z,\mathscr K(h)z\rangle
+=\frac{\ell m+2\ell\delta_s+
+ \langle x,L^hx\rangle-\langle x,Dx\rangle
+ -2\operatorname{Re}\langle y,Dx\rangle
+ +2\operatorname{Re}\langle x,L^hy\rangle+\langle y,Ry\rangle}
+ {m+\delta_s}.
+\tag{25.9}
+$$
+
+Subtract $\ell$ before dividing; one early cross copy remains. Equations (25.3)–(25.8), with the negative damping kept or dropped only in the upper direction, show $\mathcal Q_s\to C_*$ and
+
+$$
+\limsup_{s\downarrow0}
+\frac{\mathcal Q_s-\ell-\mathscr A W_1(o)s^5}{s^5}
+\le C_d(M^{-1/4}+M^{-1/2}).
+\tag{25.10}
+$$
+
+This is a quotient estimate so far. To obtain the principal upper bound use the full residual
+
+$$
+R(h)Uu=\ell u+e,\qquad e=-Dx+L^hx+Ry.
+\tag{25.11}
+$$
+
+Its three weighted terms have bounds
+
+$$
+\begin{aligned}
+\|U^{1/2}Dx\|_2^2&\le Ch^2s^{-1},\\
+\|U^{1/2}L^hx\|_2^2&\le C(s^8+s^9h^{-1/2}),\\
+\|U^{1/2}Ry\|_2^2&\le Cs^9h^{-1/2}.
+\end{aligned}
+\tag{25.12}
+$$
+
+For the second line use $\int F\le Cs^{-2}$ (shifted killed source mass up to $T$ is at most $e^\lambda T$), $\|L^hx\|_\infty\le Cs^5$, $\|L^hx\|_2\le Cs^2h^{-1/4}$, and $\|J\|_\infty\le Cs^5$. These respectively give its $F$ and $J$ pieces. The $L^2$ late-return estimate follows by integrating $Cs^2e^{-ht}t^{-3/4}\|x\|_1$ on $(T,\infty)$. The first line follows from (25.6) and bounded $U$. For the third,
+
+$$
+\|U^{1/2}Ry\|_2^2
+\le\|R^{1/2}UR^{1/2}\|\langle y,Ry\rangle,
+\tag{25.13}
+$$
+
+and the middle norm equals $k$, already uniformly bounded by the finite-$M$ spectral neighborhood. No $L^2$ norm of the multiplier $J$ is asserted.
+
+Since $n\to\mu$, (25.11)–(25.12) give
+
+$$
+\|(\mathscr K(h)-\ell)z\|_2^2
+\le C_d(h^2s^{-1}+s^8+s^9h^{-1/2})
+=C_d(M^2s^{15}+s^8+M^{-1/2}s^5).
+\tag{25.14}
+$$
+
+For a unit vector with quotient $\mathcal Q_s>k_2$, the spectral variance inequality reads
+
+$$
+0\le k-\mathcal Q_s
+\le\frac{\|(\mathscr K(h)-\mathcal Q_s)z\|_2^2}{\mathcal Q_s-k_2}
+\le C_d\|(\mathscr K(h)-\ell)z\|_2^2.
+\tag{25.15}
+$$
+
+To verify it, integrate $(k-t)(t-k_2)\le0$ over the spectral measure, supported at $k$ and at values at most $k_2$. The resulting variance is at least $(k-\mathcal Q_s)(\mathcal Q_s-k_2)$. Subtracting the quotient minimizes the squared residual. Here $\mathcal Q_s\to C_*$ and $k_2\le C_*-3\delta$, so the denominator is bounded below. Divide (25.14) by $s^5$ and take the fixed-$M$ limsup: its surviving error is $C_dM^{-1/2}$. Combining with (25.10) proves (25.1) as an upper bound for the full principal norm. $\square$
+

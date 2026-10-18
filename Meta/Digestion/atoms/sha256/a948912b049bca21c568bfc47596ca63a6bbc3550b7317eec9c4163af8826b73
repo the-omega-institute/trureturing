@@ -1,0 +1,155 @@
+**Proposition 7.2 (a terminal span-five graph outside SI11's class).**
+For $n=7,k=4,s_i=i$, there is a complete original graph with $106$
+running states, correct at caps $7,56$, whose sole late gap is $(2,7)$.
+It lies in $\mathfrak A_5\subseteq\mathfrak C_5$ and outside
+$\mathfrak C$. Its faithful native lift has $110+r$ preparation states
+at caps $8,59$ on the whole original fiber. Neither count is an optimum
+claim.
+
+Proof, fixed finite table. Write
+
+$$
+t=1,\quad \text{core}=\{1,2\},\quad x=4,\quad y=3,
+\quad u_1=5,\quad u_2=6,\quad u_3=7.
+$$
+
+Start from the full depth-seven binary query tree with all $127$ running
+vertices distinct, start at its root, and two distinct common terminals
+outside $m$. Query $1$, then $2$. In the core-$11$ subtree the
+remaining fixed order is $(y,x,u_1,u_2,u_3)$; in every other core
+subtree it is $(x,y,u_1,u_2,u_3)$. Every internal edge has its distinct
+child, and every final edge has the threshold-four output of its complete
+reply word. These are fixed labels at separate vertices, and every path
+reads a permutation.
+
+Delete the entire running subtree after each of the two reply prefixes
+
+$$
+\text{low}: (1,2,x)=(0,0,1),\qquad
+\text{high}: (1,2,y)=(1,1,1).
+\tag{TS.30}
+$$
+
+The roots are at depth three and each deleted subtree has fifteen running
+vertices. Redirect the two incoming edges to one new state $H$. Retain
+all other tree rows and leaf outputs, and install exactly these nine new
+distinct running rows:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $H$ | $u_1$ | $V$ | $B$ |
+| $V$ | $u_2$ | $X$ | $S$ |
+| $X$ | $x$ | $F$ | $J$ |
+| $F$ | $u_3$ | $\mathsf0$ | $\mathsf1$ |
+| $S$ | $u_3$ | $J$ | $Y$ |
+| $Y$ | $y$ | $\mathsf0$ | $\mathsf1$ |
+| $B$ | $u_2$ | $S$ | $O$ |
+| $O$ | $y$ | $F$ | $\mathsf1$ |
+| $J$ | $t$ | $\mathsf0$ | $\mathsf1$ |
+
+No row targets a deleted vertex. This table and the retained-tree rule
+specify both successors and the literal coordinate of every installed state.
+
+Proof, correctness and termination on all inputs. Inputs avoiding (TS.30)
+follow the full-scan permutation tree and are correct. Low has one old one,
+so its residual is threshold three on $\{y,u_1,u_2,u_3\}$, with old
+$x=1,t=0$. High has three old ones, so its residual is OR on
+$\{x,u_1,u_2,u_3\}$, with old $y=1,t=1$.
+
+If $u_1=0$, state $V$ queries $u_2$. For $u_2=0$, low is negative:
+$X$ rereads its $x=1$ and $J$ returns its old $t=0$. High still needs
+$x\lor u_3$: $X$ sends $x=1$ through $J$ to one, and $x=0$
+through $F$ to $u_3$. For $u_2=1$, low needs $y\land u_3$ and
+high is positive. State $S$ sends $u_3=0$ through $J$ to low zero
+or high one; with $u_3=1$, $Y$ reads the free low $y$ or the old
+high $y=1$, giving the correct output.
+
+If $u_1=1$, high is positive and low needs at least two of
+$y,u_2,u_3$. State $B$ with $u_2=0$ uses the same $y\land u_3$
+routine $S$. With $u_2=1$ it uses $O$, computing $y\lor u_3$
+on low; on high the old $y=1$ gives one immediately. These cases exhaust
+both contexts. Every new path is finite, as is every retained tree path.
+
+Proof, both paid caps on each actual input. Prefixes cost three calls
+and respectively $C_{\{1,2\}}+c_x$ or $C_{\{1,2\}}+c_y$.
+Every new suffix has at most four calls. The following are all possible
+suffix coordinate sequences; the entries are their complete-run excess
+$J-W$ in the respective context:
+
+| Suffix sequence | Low excess | High excess |
+| --- | --- | --- |
+| $(u_1,u_2,x,u_3)$ | impossible | $0$ |
+| $(u_1,u_2,x,t)$ | $c_x+c_t-c_y-c_{u_3}$ | $c_t-c_{u_3}$ |
+| $(u_1,u_2,u_3,t)$ | $c_t-c_y$ | $c_t-c_x$ |
+| $(u_1,u_2,u_3,y)$ | $0$ | $c_y-c_x$ |
+| $(u_1,u_2,y,u_3)$ | $0$ | impossible |
+| $(u_1,u_2,y)$ | $-c_{u_3}$ | $c_y-c_x-c_{u_3}$ |
+
+The impossible entries follow from low's old $x=1$ and high's old
+$y=1$. Here $c_t=5,c_x=8,c_y=7,c_{u_3}=11$ and
+$W=5+6+7+8+9+10+11=56$, so every displayed excess is nonpositive.
+In particular $c_x+c_t\le c_y+c_{u_3}$ pays the only potentially
+two-coordinate repeat trade. All repeats of $x,y,t$ and every certified
+visit have been included. Untouched inputs still read all seven coordinates,
+attaining both $7,56$ on the same run.
+
+Proof, installed count. The two deleted subtrees are disjoint. Exactly
+$127-2\cdot15+9=106$ running states remain. Retained vertices are all
+reachable by their original prefixes. The new states $V,X,B,S,O$ occur
+after the corresponding choices of $u_1,u_2$; $F$ is reached from high
+with $u_1=u_2=x=0$, $Y$ from low with
+$u_1=0,u_2=u_3=1$, and $J$ from low with $u_1=u_2=0$ and its
+old $x=1$. Thus no new row has an unmentioned installation status.
+The number is strictly above $G=16$.
+
+Proof, consecutive gap. Depths zero, one and two have fixed-prefix supports.
+The following pairs give different actual live supports at every later
+internal depth:
+
+| Depth | First actual live history | Second actual live history |
+| --- | --- | --- |
+| $3$ | low at $H$: $(h,z)=(1,2)$, support $\{1,2,x\}$ | high at $H$: $(3,0)$, support $\{1,2,y\}$ |
+| $4$ | low, $u_1=0$, at $V$: $(1,3)$, support $\{1,2,x,u_1\}$ | high, $u_1=0$, at $V$: $(3,1)$, support $\{1,2,y,u_1\}$ |
+| $5$ | low, $u_1=0,u_2=1$, at $S$: $(2,3)$, support $\{1,2,x,u_1,u_2\}$ | high, $u_1=u_2=0$, at $X$: $(3,2)$, support $\{1,2,y,u_1,u_2\}$ |
+| $6$ | low, $u_1=0,u_2=u_3=1$, at $Y$: $(3,3)$, support $\{1,2,x,u_1,u_2,u_3\}$ | high, $u_1=u_2=x=0$, at $F$: $(3,3)$, support $\{1,2,y,u_1,u_2,x\}$ |
+
+All earlier prefixes of these live histories are live. The common-support
+criterion in Convention 2.2 therefore makes depths three through six
+ambiguous, while $2$ and the formal endpoint $7$ are consecutive cuts.
+The other gaps have span one. Hence the graph is in $\mathfrak A_5$.
+
+Proof, failure of the SI11 sufficient condition. State $H$ has exactly
+two live incoming prefixes, reply words $001$ and $111$. Their set pairs
+are
+
+$$
+(A_{\rm low},B_{\rm low})=(\{x\},\{1,2\}),\qquad
+(A_{\rm high},B_{\rm high})=(\{1,2,y\},\varnothing).
+$$
+
+One directed intersection is empty and the other is $\{1,2\}$.
+Moreover
+
+$$
+\lambda(H)=\binom31^{-1}+\binom33^{-1}=\frac43>1.
+\tag{TS.31}
+$$
+
+Since $H$ is in the sole late pool $I_5$, the graph is outside
+$\mathfrak C$ and inside $\mathfrak C_5$. This proves the asserted
+strict class separation using an actual complete paid graph. Its overload
+does not imply a total deficit: Theorem 4.1 gives
+$S_{I_5}-O_{I_5}\ge1$ despite this overloaded state.
+
+Proof, full-fiber native realization. Replace each retained or new
+coordinate-$i$ row by the literal $a_i=LLL L^iR$, with branch following
+the one edge and alpha, beta and absent separately following the zero edge.
+Replace terminals by the original latches and add precisely the profile
+rows $D,T$ of Section 9 and all $r$ additional mandated latches.
+Thus every native successor is specified by the displayed table and the
+retained-tree rule. The full-fiber proof in Section 9 applies to this
+every-input Boolean proof and pays each actual visit. It gives
+$106+4+r=110+r$ preparation states and caps $8,59$, with the original
+complete reader separately paid. Actual cube origins of untouched
+full-scan vectors attain the two maxima together. $\square$
+

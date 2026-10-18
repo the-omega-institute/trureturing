@@ -1,0 +1,85 @@
+**Theorem 8.5 (Exact installed state costs for the inherited optima).**
+For every original $0<p<1$, $p\ne1/2$, either fixed original
+$j\in\{0,1\}$ and every given unchanged independent seed law,
+the minima of Definition 8.1 are
+
+$$
+M_1(p,j,\nu)=3,\qquad M_2(p,j,\nu)=6.
+\tag{8.8}
+$$
+
+The lower bounds hold over every attaining table of Definition 8.1,
+including tables with cycles, unused rows, early-return options and
+arbitrary measurable seed initialization. They require, respectively,
+at least one read and two halt states, and at least three read and
+three halt states. The matching tables below attain the original
+unrestricted optima, with one and two actual reads on every path.
+
+Proof. There is at least one initialization cell of positive measure.
+For every such cell, Lemma 8.2 and Propositions 8.3--8.4 give the
+stated numbers of distinct states in the installed $K$. Counting
+unused rows cannot reduce those lower bounds. In particular this
+argument bounds every attainer, rather than counting only a chosen
+construction or a representative of its risk.
+
+For the one-read upper bound take three distinct states
+$R,Z,P$, initialize constantly at $R$, and install
+
+$$
+\begin{array}{c|c|cc}
+\text{state}&\text{instruction}&\delta(\cdot,0)&\delta(\cdot,1)\\ \hline
+R&\operatorname{Read}(2(j+2))&Z&P\\
+Z&\operatorname{Halt}(h_1(\sigma))&-&-\\
+P&\operatorname{Halt}(h_0(\sigma))&-&-
+\end{array}
+\tag{8.9}
+$$
+
+The dash means that no successor is used at a halt. This is exactly
+Original, Theorem 11.4's one-call attainer, with its halting labels
+included in $K$. Its actual zero/one correct masses are $a/2$ and
+$a\eta$, so it attains $S_1$. The address is a phase-zero edge
+disjoint from $S_j$ for either allowed $j$; in phase one it is a
+charged separator.
+
+For the two-read upper bound take six distinct states
+$R,R_0,R_1,Z,P,Q$, initialize constantly at $R$, and install
+
+$$
+\begin{array}{c|c|cc}
+\text{state}&\text{instruction}&\delta(\cdot,0)&\delta(\cdot,1)\\ \hline
+R&\operatorname{Read}(2j)&R_0&R_1\\
+R_0&\operatorname{Read}(2(j+2))&Z&P\\
+R_1&\operatorname{Read}(2(j+1))&Q&P\\
+Z&\operatorname{Halt}(h_1(\sigma))&-&-\\
+P&\operatorname{Halt}(h_0(\sigma))&-&-\\
+Q&\operatorname{Halt}(h_0(1-\sigma))&-&-
+\end{array}
+\tag{8.10}
+$$
+
+These are the actual calls and outputs of Definition 5.1, with all
+runtime phases and output distinctions included in the six rows.
+Proposition 5.2 gives their correct masses $a/2,a^2\eta,
+a\eta/2,a\eta/2$ under the original $J_p$, hence correctness
+$S_2$. Neither table uses the seed after its constant initialization,
+so both constructions work on every given auxiliary space without
+changing its law. They need no phase observation or other acquisition
+beside their charged calls. Every binary reply path ends at a halt.
+This proves both upper bounds and (8.8).
+
+The source-relative additional conclusions are the equality rigidity
+of Propositions 8.3--8.4 and the all-attainers installed-state minimum
+(8.8), derived here from the owning endpoint bounds. The unrestricted
+risk values and the actual-source attainers retain their ownership in
+Original, Risk and Sections 5--6; the fuller two-read geometry remains
+credited to FixedSeed, Sections 2--4. Generic complete-state semantics
+and finite-memory controller background retain the citations in
+Definition 8.1. These are `repo-derived` endpoint-memory conclusions,
+with no global-priority claim. Finite representative existence and
+[address compression, Sections 4--6](FIB_FINITE_PAID_READ_ADDRESS_COMPRESSION_AND_SIGNATURE_RADIUS.md)
+are not state-minimality premises. The result compares a legal subclass
+attaining an inherited unrestricted optimum; it does not replace that
+unrestricted protocol comparison or extend (8.8) to a different runtime
+interface. $\square$
+

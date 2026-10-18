@@ -1,0 +1,40 @@
+**Definition 23.1 (Finite-gap phase instruments and the two observed data).** Fix an integer $H\ge1$, put $d=H+1$, and let $K\subseteq\{1,\ldots,H\}$ contain $H$. Choose $p_k>0$ for $k\in K$ with $\sum_{k\in K}p_k=1$, and set $p_k=0$ for every nonnegative integer outside $K$, including $p_0=0$. For integers $a\ge0$ define
+
+$$
+t(a)=\sum_{k\ge a}p_k,\qquad
+\mu=\sum_{k\ge0}(k+1)p_k=\sum_{a=0}^H t(a).
+\tag{23.1}
+$$
+
+On the orthonormal basis $e_0,\ldots,e_H$ of $\mathbb C^d$, let
+
+$$
+Se_j=e_{j+1}\ (j<H),\qquad Se_H=0,\qquad
+x_\theta=\sum_{k\in K}\sqrt{p_k}\,e^{i\theta_k}e_{H-k},\qquad
+J_\theta=x_\theta e_H^*.
+\tag{23.2}
+$$
+
+Here each $\theta_k\in\mathbb R/(2\pi\mathbb Z)$. Write $E_{ij}=e_ie_j^*$ and define complex-linear CP maps on the full matrix algebra $M_d(\mathbb C)$ by
+
+$$
+\mathcal C_0(A)=SAS^*,\qquad
+\mathcal C_{1,\theta}(A)=J_\theta A J_\theta^*=A_{HH}x_\theta x_\theta^*,\qquad
+\mathcal E_\theta=\mathcal C_0+\mathcal C_{1,\theta}.
+\tag{23.3}
+$$
+
+For a density $\sigma$, chronological words $w=b_1\cdots b_n$ have probabilities
+
+$$
+\mathbb P_{\theta,\sigma}(w)
+=\operatorname{Tr}\bigl(\mathcal C_{b_n,\theta}\cdots
+\mathcal C_{b_1,\theta}(\sigma)\bigr),\qquad
+\mathcal C_{0,\theta}=\mathcal C_0,\qquad
+\mathbb P_{\theta,\sigma}(\varnothing)=1.
+\tag{23.4}
+$$
+
+The complete stationary binary law means all these cylinder probabilities when $\sigma$ is invariant under $\mathcal E_\theta$. The second datum is
+$\chi_{\mathcal E_\theta}(\lambda)=\det(\lambda I_{M_d}-\mathcal E_\theta)$, equivalently the entire eigenvalue multiset of this $d^2$-dimensional complex-linear map, with algebraic multiplicities. It contains neither eigenoperators nor Jordan block data. It is a channel spectrum, distinct from the eigenvalues of a Choi matrix or a stationary density, and is not a specification of the channel map or of full process tomography.
+

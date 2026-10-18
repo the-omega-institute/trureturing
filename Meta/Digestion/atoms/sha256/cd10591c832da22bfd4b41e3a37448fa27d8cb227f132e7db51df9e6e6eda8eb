@@ -1,0 +1,23 @@
+**Lemma 5.2 (Finite positive character averages).** If
+$\psi_1,\ldots,\psi_b$ are finitely many nontrivial unitary
+characters of an abstract abelian group, finite probability
+averages can make all their averages tend to zero, while leaving
+every trivial character equal to one.
+
+Proof. This is [M, Lemma 6.1], whose finite construction is useful
+here. Choose $g_j$ with $\psi_j(g_j)\ne1$. Average with equal
+positive weights over the multiset
+$\sum_{j=1}^b n_jg_j$, $0\le n_j<N$. The average of any character
+$\psi$ is
+
+$$
+\prod_{j=1}^b\left(\frac1N\sum_{n=0}^{N-1}\psi(g_j)^n\right).
+$$
+
+Every factor has modulus at most one. For $\psi=\psi_j$, its
+$j$th factor is
+$(1-\psi_j(g_j)^N)/(N(1-\psi_j(g_j)))$, which tends to zero.
+If the list is empty, the point mass at the identity suffices.
+All operations are finite sums; no measurable group structure is
+needed. $\square$
+

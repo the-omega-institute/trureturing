@@ -1,0 +1,73 @@
+**Theorem 28.1 (source-specific all-complex norming-functional dual).** For any actual common real Kraus realization of Definition 23.1, let $P=|0\rangle\langle0|+|1\rangle\langle1|$, and define on $M_3$ the complex-linear map
+
+$$
+\Pi(Z)=Z-\frac{Z_{00}+Z_{11}}2P-Z_{22}E_{22},\qquad
+\mathcal A=\Pi\circ N^\dagger.
+\tag{R.134}
+$$
+
+Its restriction to Hermitian matrices is the real trace-inner-product orthogonal projection onto precisely the real seven-dimensional $\mathcal H_0$ in (R.102). In this theorem $\Pi$ is an input-space projection, not the output phase-support projection of Theorem 2.1, and $\mathcal A$ is a map, not the first-column matrix $A$ of (R.99). For every real $s\geq0$,
+
+$$
+\begin{aligned}
+m_0(N)\geq s
+\quad\Longleftrightarrow\quad
+&\text{for every }\psi\in\mathbb C^3,\ \|\psi\|_2=1,\text{ there exists }F_\psi=F_\psi^\dagger\in M_5\text{ with}\\
+&-I_5\preceq F_\psi\preceq I_5,\qquad
+\mathcal A(F_\psi)=2s\Pi(|\psi\rangle\langle\psi|).
+\end{aligned}
+\tag{R.135}
+$$
+
+The choices are pointwise in $\psi$; a linear selection is not required. Both sides depend only on the same $B,C_{\rm out}$, not $D$ or $D_\perp$. The vector $\psi$ indexes all complex norming functionals, not a pure-versus-pure restriction on the primal witness $X$.
+
+**Proof.** For Hermitian $Z$, $\Pi(Z)$ has trace zero and $22$ entry zero, and $\Pi$ fixes every $X\in\mathcal H_0$. The removed term belongs to $\operatorname{span}_{\mathbb R}\{P,E_{22}\}$, which is orthogonal to $\mathcal H_0$ for $\langle Z,X\rangle=\operatorname{Tr}(ZX)$. Conversely these are exactly the two independent real constraints defining $\mathcal H_0$, so its real dimension is $9-2=7$ and
+
+$$
+\operatorname{Tr}(\Pi(Z)X)=\operatorname{Tr}(ZX)\quad(X\in\mathcal H_0),\qquad
+\ker\Pi|_{\operatorname{Herm}}=\operatorname{span}_{\mathbb R}\{P,E_{22}\}.
+$$
+
+The formula is also a complex-linear projection on all matrices. No positivity of this projection is assumed. For a Hermitian $F$, $N^\dagger(F)=\sum_\alpha K_\alpha^TFK_\alpha$. The only entry using $D$ is its $22$ entry $\operatorname{Tr}(FD)$, by (R.103). The projection deletes that entry; every remaining entry is determined by $B,C_{\rm out}$ and $J$. Equivalently $\operatorname{Tr}(\mathcal A(F)X)=\operatorname{Tr}(F\mathcal L_{B,C_{\rm out}}(X))$. Thus this is the adjoint of the precise restricted action (R.104), establishing the claimed dependence on the common pair.
+
+For every traceless Hermitian qutrit $X$,
+
+$$
+\|X\|_1=2\|X\|_{\rm op}.
+$$
+
+Indeed if there are two positive eigenvalues, their sum is the absolute value of the single negative eigenvalue, which is at least each of them; the reverse sign case is identical. A zero eigenvalue gives the same equality, and the zero matrix is immediate. This proves the identity for rank two, rank three, repeated eigenvalues and both sign patterns. It is specific to the traceless qutrit space.
+
+Assume first the pointwise lifts in (R.135). For any $X\in\mathcal H_0$ and complex unit $\psi$,
+
+$$
+2s|\langle\psi|X|\psi\rangle|
+=|\operatorname{Tr}(F_\psi N(X))|
+\leq\|N(X)\|_1.
+$$
+
+The last inequality is Hermitian operator-norm/trace-norm duality, since $\|F_\psi\|_{\rm op}\leq1$. Taking the supremum over all complex unit $\psi$ gives $2s\|X\|_{\rm op}=s\|X\|_1\leq\|N(X)\|_1$. This is exactly the lower bound defining $m_0$. The absolute value covers both signs with the same functional; it needs no extra factor or second family of lifts.
+
+Conversely assume $m_0(N)\geq s>0$. The restriction of $N$ to the real normed space $\mathcal H_0$ is injective. On the real subspace $N(\mathcal H_0)\subseteq\operatorname{Herm}(M_5)$, define for each complex unit $\psi$
+
+$$
+\ell_\psi(N(X))=2s\operatorname{Tr}(X|\psi\rangle\langle\psi|).
+\tag{R.136}
+$$
+
+It is well defined by injectivity, real linear, and has norm at most one because
+
+$$
+|\ell_\psi(N(X))|\leq2s\|X\|_{\rm op}
+ =s\|X\|_1\leq\|N(X)\|_1.
+$$
+
+Apply the real Hahn–Banach theorem to extend it to all of $\operatorname{Herm}(M_5)$ with norm at most one. In finite dimension any real linear functional on this real Hermitian space has a unique Hermitian trace representative $F_\psi$: this follows by taking a real orthonormal Hermitian matrix basis and its coefficients. Testing the extension on the signed rank-one spectral projections of $F_\psi$ gives $\|F_\psi\|_{\rm op}\leq1$; conversely this bound controls the functional by spectral decomposition. The extension therefore has $-I_5\preceq F_\psi\preceq I_5$ and
+
+$$
+\operatorname{Tr}\bigl([\mathcal A(F_\psi)-2s\Pi(|\psi\rangle\langle\psi|)]X\bigr)=0
+\quad\text{for all }X\in\mathcal H_0.
+$$
+
+The bracket is itself in $\mathcal H_0$, so its pairing with itself forces it to vanish. This proves the other direction. At $s=0$, the lower bound is automatic and $F_\psi=0$ supplies every lift without injectivity; the separate endpoint requires no inverse. Real Hahn–Banach and finite-dimensional Schatten duality are standard ingredients consumed in this particular restricted-channel proof, not new general results. $\square$
+

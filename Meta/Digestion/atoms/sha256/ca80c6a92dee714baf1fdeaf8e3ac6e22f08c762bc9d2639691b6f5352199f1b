@@ -1,0 +1,38 @@
+**Definition 15.1 (Mathematical credit map).** The eight supplied items have the following roles. References inside them are secondary supplier attributions, rather than additional independently certified sources.
+
+| Supplied item | Exact contribution and boundary |
+| --- | --- |
+| `fixed-observer-source.md`, *Real renewal instruments and detector rank: finite observer memory*, revision `303bcf74526bab511d2175d5e302205d43654ab6`, Definitions 23.1–23.2, equations (23.1)–(23.7) | Exact $H_c$, $\delta,B,a$, all-integer envelope, stationary first-wait law, independent subsequent gaps and source moment orders in Section 2. Its nested envelope and moment proofs remain premises. |
+| The same supplied continuation, Lemma 23.4, Lemmas 25.1–25.3 | Same-budget stochastic normal form and actual epoch/stopping/payment methods, applied pointwise at known common $q$ in Sections 3 and 6. Its original fixed $q$-free full-family quantifiers are distinct from Definition 3.1. |
+| The same continuation, Lemma 24.2, Theorem 25.4, Definition 26.1 through Theorem 26.4, Proposition 27.2 | Existing fixed-machine eleventh-power converse, credited fixed sum-four upper classifier and its additional certificate, and geometric row-separation coefficient (14.5). Fixed-machine spectral constants are not treated as uniform over retuned matrices. |
+| `uniform-source.md`, *Retuned bounded-memory uniform renewal converse*, Definitions 2.1–3.1 and Lemma 3.2; Sections 5–7 | Known-common-$q$, source-blind complete-state class; common normal form; stationary mixture; lawful target clipping; actual stopped-history and payment interfaces. Its observer-uniform fixed-budget eleventh-power result retains its ownership. |
+| `lower-source.md`, *Growing state budgets in the renewal paid-mean tradeoff*, Sections 4–5 | Directed positive forests, marked and complementary sums, exponent $2n\le2(M-2)$ and additive hitting loss in Lemma 4.1. The argument is reproduced as a supplied interface, not reclassified as new entropy content. |
+| The same growing-budget source, Sections 6–7 and Theorems 9.1–10.1 | Stationary comparison, target-specific $W_i$, actual live epochs, predictable payment, and the prior simultaneous mass-based converse and necessary exponent $4/5$. Those results remain valid and credited. |
+| `refinement-proposal.json`, F1–F4 and G1–G3 | Signed-short normalization identity and proposed variation refinement with necessary exponent $8/9$. Its proposal-wide conclusion is conditional context, not a lower-proof premise. Equations (7.3), (7.10), (8.2)–(8.3) independently justify the overlapping algebra actually used here. No distinct assessment of this refinement is supplied here. |
+| `entropy-proposal.json`, E1–E7 | Mathematical formulation of the clipped-entropy bound, finite-path harmonic comparison, simultaneous eighth-power paid converse and necessary exponent one. Sections 7–13 present those complete ordinary proofs and the exact parameter substitutions. |
+| `entropy-check.json`, confirmed statements and E1–E7 acceptance analysis | A distinct fallible handwritten assessment of that mathematical proposal, under the same source conditions. It contributes an independent conditional assessment, not a new theorem, kernel certificate or final-manuscript approval. |
+| `upper-proposal.json`, complete controller and mark/separation/walk/risk/payment/resource results | The separate paid survival-flag and lazy-walk sufficient family summarized exactly in Assumption 14.1. Its $p_i$ is $z_i$ here, its boundary $L$ is $R$, and its completed-gap count is $G$. Both cubic means and complete-state count are explicit supplied upper statements. |
+| `upper-check.json`, approved mathematical statement and proof analysis | A distinct fallible handwritten assessment of the upper proposal. It concerns that proposal; it supplies no unsupplied final upper source and adjudicates neither this manuscript nor its lower proofs. |
+
+For comparison with the older lower results, the growing-budget source's simultaneous mass bound is
+
+$$
+\mathbb E_iT\ge
+\frac{9!b^{11}}{8B^2[b+2\delta(M-2)]^{10}}s^{-11}
+\tag{15.1}
+$$
+
+on its common source/risk neighborhood. That gives its credited necessary exponent $4/5$ for a fixed eventual cubic target. The signed-short refinement proposes instead
+
+$$
+\mathbb E_iT\ge\frac{b\,9!}{4B\delta}
+\frac{s^{-11}}{X_M^9\max\{1,sX_M\}},
+\tag{15.2}
+$$
+
+and its conditional $8/9$ consequence. No assumption of (15.2) is used to prove (12.2). The new argument changes the charge: finite-path entropy replaces the accumulated absolute harmonic drift, while the actual $W_i$, initial law, forest comparison and payment experiment are preserved. Its necessary exponent one is therefore not a renaming of either earlier growth consequence. No assertion of optimal constants, or of pointwise domination between every displayed bound with their differing constants, follows from this exponent comparison.
+
+The continuation and companions also credit unrestricted cubic procedures and prefix-entropy benchmarks to [Real renewal instruments and detector rank](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md), including the supplied append's Definition 22.8 through Definition 22.12 at revision `07123ef6f510e6df2d990240c55e29ed9d7c2485`. Those nested results are contextual suppliers, not dependencies of E1–E7. Their unbounded possible counters and growing arithmetic precision do not provide a finite complete-state budget merely because they use finitely many named registers. The separate finite upper comparison here is exactly Assumption 14.1.
+
+The continuation attributes time-invariant randomized finite-statistic updates to Flower and Hellman's *Hypothesis Testing With Finite Memory in Finite Time*, and stationary renewal conventions to Marzen and Crutchfield's *Informational and Causal Architecture of Discrete-Time Renewal Processes*. Those are secondary attributions here. Their exact external scopes and any priority for the present source-relative converse are not independently certified. In particular, iid finite-horizon testing and expected stopping on renewal-dependent raw bits are different experiments.
+

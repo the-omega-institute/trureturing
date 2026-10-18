@@ -1,0 +1,32 @@
+**Proposition 29.2 (coefficient signs and nonsingular phase mixtures).**
+The amplitudes $h_i,a,b,c$ in (JR.2) are positive, and $d\ne0$. Moreover
+
+$$
+0<\kappa<\frac14,\qquad
+h_0h_1-s^2ab>\frac{677}{1000}\quad(0\leq s\leq1).
+\tag{JR.3}
+$$
+
+Proof. The positive first pivots in (CG.117) give $h_0,a,c>0$.
+Theorem 22.1's enclosures $H_{01}>695/1000$ and $H_{02}>796/1000$
+give $h_1,h_2>0$, since $H=hh^T$. The off-diagonal entries of
+$Q^{01}$ and $Q^{02}$ are respectively $\eta_1N_{01}$ and $\eta_2N_{02}$.
+For $N_{01}$ both terms in (CG.112) are strictly positive: its two
+rank-one vectors have positive coordinates $0,1$. Hence $b>0$.
+The other transfer satisfies $d^2=(Q_*^{02})_{11}>0$ by
+(CG.166); its sign is immaterial to every conclusion below.
+
+Only $h_i,a,b>0$ enter the conclusions. Rank one gives
+$h_0h_1=H_{01}$ and $ab=Q^{01}_{01}$. Positivity gives
+$0<ab\leq\operatorname{tr}Q^{01}/2<18/1000$. Consequently
+$h_0h_1-s^2ab>695/1000-18/1000$. Finally Cauchy–Schwarz and the
+credited enclosures give
+
+$$
+\kappa^2\leq(H_{00}+H_{11})\operatorname{tr}Q^{01}
+ <\frac{1470\cdot36}{10^6}<\frac1{16}.
+\tag{JR.4}
+$$
+
+Together with positivity this proves (JR.3). $\square$
+

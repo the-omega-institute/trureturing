@@ -1,0 +1,64 @@
+**Theorem 2.2 (Exact collar iff on the entire finite domain).** For every
+$N\ge1$, $\theta\in\Theta_N$, $L\ge1$ and $f\in\mathbb R^{B_L}$,
+
+$$
+\mathbb E_P[f_C\mid\mathcal H_C]=0
+\quad\Longleftrightarrow\quad E_{\theta,L}f=0
+\quad\Longleftrightarrow\quad
+\mathbb E_P[f_C\mid\mathcal C_{N-1,L}]=0.
+\tag{2.1}
+$$
+
+Proof. The last equivalence follows from the actual finite collar atoms:
+their integrals against $f_C$ are precisely the coordinates of
+$E_{\theta,L}f$. Null atoms give the equation zero without division.
+Full-exterior nullity implies these equations by integration.
+
+For the converse, use the classical finite linear-realization spaces
+
+$$
+\mathscr R_t=\operatorname{span}\{\lambda M_a:|a|\le t\},\qquad
+\mathscr O_t=\operatorname{span}\{M_b\mathbf1:|b|\le t\},
+$$
+
+where $a,b$ range over all binary words. They satisfy
+
+$$
+\mathscr R_{t+1}=\mathscr R_t+\mathscr R_tM_0+\mathscr R_tM_1,\qquad
+\mathscr O_{t+1}=\mathscr O_t+M_0\mathscr O_t+M_1\mathscr O_t.
+$$
+
+Each starts in nonzero dimension one. A plateau is permanent because the
+space is then invariant under both generators. In an $N$-dimensional
+ambient space, both sequences therefore stabilize by $t=N-1$.
+Write $\mathscr R_\infty$ and $\mathscr O_\infty$ for their final spaces.
+
+Exactly length-$n$ words already span these final spaces. Indeed, for
+$|a|,|b|\le n$, stationarity and row normalization give
+
+$$
+\lambda M_a=\lambda A^{n-|a|}M_a,\qquad
+M_b\mathbf1=M_bA^{n-|b|}\mathbf1.
+$$
+
+Expanding the powers of $A=M_0+M_1$ pads rows on the left and columns on
+the right into length-$n$ words. Hence $E_{\theta,L}f=0$ implies
+$rK_fo=0$ for every $r\in\mathscr R_\infty$ and
+$o\in\mathscr O_\infty$. In particular,
+
+$$
+\lambda M_aK_fM_b\mathbf1=0
+\qquad\text{for every finite binary }a,b.
+\tag{2.2}
+$$
+
+This scalar is the integral of $f_C$ against the event specifying the
+adjacent left word $a$ and right word $b$. Every finite exterior cylinder
+is a finite disjoint union of such events after unspecified coordinates
+between it and $C$ are filled and summed. Equation (2.2) thus gives zero
+integral on the entire finite exterior cylinder algebra. Since $f_C$ is
+bounded, uniqueness of finite signed measures, or the bounded monotone
+class theorem, extends that identity to $\mathcal H_C$. This is full
+conditional nullity. No support, unifilarity or mixing assumption entered.
+$\square$
+

@@ -1,0 +1,59 @@
+**Proposition 100.1 (a finite bound and an allowed very-fine path).**
+There are constants $c,C,s_0>0$ such that for $0<s<s_0$ and
+$0\le\delta\le1$, with $g=(\chi_c+\delta)s^3$, the actual finite
+native infimum satisfies
+
+$$
+-C(s^{2/3}+\delta)
+ \le s^2E_{s^2}(g)
+ \le-c(\chi_c+\delta)^2s^8<0.
+\tag{100.1}
+$$
+
+Consequently, on every prescribed positive detuning path
+$\delta(s)=o(s^8)$,
+
+$$
+\frac{s^2E_{s^2}((\chi_c+\delta(s))s^3)}{\delta(s)}
+ \longrightarrow-\infty.
+\tag{100.2}
+$$
+
+In particular $\delta(s)=s^9$, $\tau=s^2$,
+$g=(\chi_c+s^9)s^3$ is an explicit original allowed path refuting
+an unrestricted assertion of (99.2) without a detuning restriction.
+This is an obstruction to that uncentered energy law, not a proof
+of failure of the critical profile on the excluded paths.
+
+Proof. The full-domain lower bound (98.1) and uniform boundedness
+of $U_s$ give the lower bound in (100.1), by subtracting
+$\delta\int U_s|F|^2$ for unit vectors. For the upper direction,
+positivity of the added short-time heat gives $W_{s^2}\ge W_1$.
+Hence the variational principle and the fixed-cutoff theorem (72.1)
+give, for all sufficiently small $g>0$,
+
+$$
+E_{s^2}(g)\le E_1(g)\le-cg^2,
+\qquad c=|e_*|/2>0.
+\tag{100.3}
+$$
+
+The smallness threshold for $g$ is uniform in $\delta\in[0,1]$
+when $s$ is small. Multiply by $s^2$ to obtain (100.1).
+This uses the macroscopic branch only as a trial upper direction;
+it does not identify it as the actual minimizing branch at these
+parameters. Finiteness and negative attainment also follow separately
+from Proposition 75.2. Since $\chi_c>0$, division by any positive
+$\delta=o(s^8)$ proves (100.2). The explicit $g(s)$ above is strictly
+increasing for $s>0$ and tends to zero, so its inverse also defines
+an allowed function $\tau(g)$ of the original formulation (75.3).
+
+More generally, if an uncentered finite-coefficient onset
+$s^2E_{s^2}(g)=-\mu_c\delta+o(\delta)$ holds on a positive path,
+(100.1) forces $\delta\ge c' s^8$ eventually for some $c'>0$.
+This necessary lower size restriction is far weaker than the proved
+sufficient window $s^{2/3}=o(\delta)$, and does not establish any
+sufficiency in the intervening range. In particular (100.3) is not
+a critical lower-error estimate, and supplies no matching coefficient
+on the finer scale $s^2g^2=\chi^2s^8$ of (91.5). $\square$
+

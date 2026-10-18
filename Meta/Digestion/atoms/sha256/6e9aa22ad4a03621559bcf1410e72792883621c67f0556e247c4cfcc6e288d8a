@@ -1,0 +1,15 @@
+**Definition 2.1 (actual source and original execution).** Fix $m=2,d=1,\ell=2,n=4$, with $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Before the first actual Read draw one $K$ from one installed finite or countable prior $\mu$. Conditional on that same $K=k$, every seed and payload Read is independent, with alpha probability
+
+$$
+r_k=F_{k+1}/F_{k+3},
+\qquad r_1=a,
+\qquad r_2=b,
+\qquad r_k\in I_0=[3/8,5/13]\quad(k\ge3).
+$$
+
+Equal seed pairs are paid rejections. Alpha-beta accepts seed 0 and beta-alpha accepts seed 1. In payload phase p, alpha completes marker 0 and beta suspends. At suspension, alpha returns to p and beta completes marker 1. The first three completions advance segments. The third record is written before its latch. Fourth completion enters the matching pendingStop; its unique original Stop enters deliveredStop. Neither terminal admits Read.
+
+Retain the full original finite control $C_0$: both seeds, parser, selectors, bare fields, full marker tree, held $B,Q^+,Z$ records, write/latch flags, permissions, completion and Stop delivery. Both seeds, all marker triples and all positive finite rejection and return histories stay in the domain. There is no source reset, fresh depth, future-event conditioning, additional actual observation, controller port or post-Stop operation.
+
+$\mathcal H_3$ is the first fourth-segment p cut after the third latch. $\mathcal H_p$ and $\mathcal H_\beta$ contain all positive finite fourth-segment p and suspended histories, including arbitrary finite returns. The proof uses the full $\mathcal H_p$, not just $\mathcal H_3$.
+

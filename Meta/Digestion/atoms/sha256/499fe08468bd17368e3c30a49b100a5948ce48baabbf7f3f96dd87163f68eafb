@@ -1,0 +1,50 @@
+**Proposition 14.3 (A local activity bound for the anchor mass).**
+On the positive hard-core path law,
+
+$$
+B_{00}\ge\frac1{1+\lambda_k+\lambda_{k+1}}.
+\tag{14.8}
+$$
+
+In particular,
+
+$$
+\Delta_2(\chi)
+\ge\frac{\delta_{\mathrm{local}}(\chi)}
+{2(1+\lambda_k+\lambda_{k+1})}.
+\tag{14.9}
+$$
+
+If both cut activities are at most M, the coefficient is
+at least $1/[2(1+2M)]$, independent of n and of activities
+far from the cut.
+
+Proof. Condition on any outside word having positive
+probability. The two boundary sites allow only 00, 10 and
+01. Neighboring outside occupations may suppress 10 or
+01; they cannot suppress 00. The three relative weights
+are $1,\epsilon_L\lambda_k,\epsilon_R\lambda_{k+1}$,
+where each $\epsilon$ is zero or one according to actual
+outside compatibility. Thus
+
+$$
+\Pr(00\mid\text{outside word})
+=\frac1{1+\epsilon_L\lambda_k+
+\epsilon_R\lambda_{k+1}}
+\ge\frac1{1+\lambda_k+\lambda_{k+1}}.
+\tag{14.10}
+$$
+
+Average over the original outside-word law to get (14.8),
+and use (14.5) to obtain (14.9). $\square$
+
+The reference rank two is required for the entropy step
+in (14.5), while the weighted-anchor purity calculation
+uses the actual blockaded product amplitudes. The constant
+improves the full-vacuum factor $1/Z$ by summing an entire
+compatible anchor sector. It does not price the diagonal
+controls needed to realize the selected phases, give a
+spectral gap bound for the update parent, or extend to a
+Gibbs law with extra crossing interactions without a new
+proof of (14.6).
+

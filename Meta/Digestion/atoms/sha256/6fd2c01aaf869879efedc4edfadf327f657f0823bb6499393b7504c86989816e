@@ -1,0 +1,27 @@
+**Lemma 1.2 (Attainment and monotonicity).** For every $N\ge1$ and
+$m\ge0$, the minimum in (1.1) is attained and
+$0\le d_{N,m}\le1$. For fixed $N$, $d_{N,m}$ is nondecreasing in $m$.
+If $m<N$, then $d_{N,m}=0$.
+
+**Proof 1.2.** The rank condition is the vanishing of all
+$(N+1)$-minors when such minors exist; otherwise it is vacuous.
+It therefore defines a closed set. The zero vector is feasible and
+has objective one. The set
+
+$$
+\{u\in\mathcal R_{N,m}:J_m(u)\le1\}
+$$
+
+is nonempty and closed, and lies in the compact box
+$0\le u_j\le2\sqrt j$. The continuous function $J_m$ attains a minimum
+on this set. Every feasible point outside it has objective greater than
+one, so this is the global minimum. This argument includes a minimum
+whose value is exactly one.
+
+Truncate a feasible vector at index $m+1$ to its first $2m+1$ entries.
+Its $H_m$ is the upper-left principal submatrix of $H_{m+1}$, so its
+rank is at most $N$. Removing coordinates cannot increase the objective.
+Applying this to a minimizer gives $d_{N,m}\le d_{N,m+1}$.
+If $m<N$, every $(m+1)$-square matrix has rank at most $N$, and the
+vector $u_j=\sqrt j$ is feasible with objective zero. $\square$
+

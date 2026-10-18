@@ -1,0 +1,77 @@
+### 59.2 Normalized mode maps and the rank-one case
+
+Put
+
+\[
+ \gamma=-i,\qquad r=\frac{z_0}{\gamma u_0},\quad
+ s=\frac{z_2}{\gamma u_2},\quad R=\bar r,\quad T=\bar s,
+ \qquad \omega=\frac{-1+i\sqrt3}{2},
+\]
+
+and define
+
+\[
+ \begin{aligned}
+ A_1&=(1+i)/2,& B_1&=(1-i)/2,\\
+ F&=\omega^2(A_1+B_1r),&G&=\omega(B_1+A_1r),\\
+ D&=A_1+B_1s,&E&=B_1+A_1s.
+ \end{aligned}
+\tag{59.2}
+\]
+
+These are the actual output amplitudes relative to the selected mode's
+fixed unit output phases. More explicitly,
+
+\[
+ T_1\binom{1}{\gamma}=\binom{\lambda}{\mu},\qquad
+ \lambda=\frac{P(1-i)}{\sqrt6},\quad
+ \mu=\frac{\bar P(1+i)}{\sqrt6},\quad
+ |\lambda|=|\mu|=1.
+\]
+
+Dividing the two whole output channels by \(\lambda,\mu\) gives
+Fourier triples \((Fu_0,t,Du_2)\) and \((Gu_0,t,Eu_2)\).
+Dividing the two input channels by \(1,\gamma\) gives
+\((u_0,t,u_2)\) and \((ru_0,t,su_2)\). These fixed unit divisions
+only preserve their norm and autocorrelation equations; they do not
+choose independent phases for an actual candidate.
+
+Let
+
+\[
+ c=(\bar u_0u_1,\bar u_1u_2,\bar u_2u_0).
+\]
+
+All three coordinates are nonzero. The two original input flatness
+conditions give
+
+\[
+ (1,1,1)\mathbin{\cdot}c=0,\qquad
+ (R,s,rT)\mathbin{\cdot}c=0.
+\tag{59.3}
+\]
+
+If \(R=s\), subtracting the two equations gives \(rT=R\), since
+\(c_2\ne0\). Now \(T=r\), so \(r^2=\bar r\). As \(r\ne0\),
+this implies \(|r|=1\) and \(r^3=1\). Hence
+\(r=\omega^m,s=\omega^{-m}\), with \(m=0,1,2\).
+For these three values, respectively, the matrix with rows
+
+\[
+ (1,1,1),\qquad(\bar F,D,\bar D F),\qquad
+ (\bar G,E,\bar E G)
+\]
+
+has determinants
+
+\[
+ 3\sqrt3\,i,\qquad
+ \frac94-\frac{3\sqrt3}{4}i,\qquad
+ -\frac94-\frac{3\sqrt3}{4}i.
+\tag{59.4}
+\]
+
+Each is nonzero, whereas the remaining actual autocorrelation equations
+would make its product with \(c\) zero. Thus the rank-one input-row
+case is impossible. No determinant-zero stratum is dropped here.
+

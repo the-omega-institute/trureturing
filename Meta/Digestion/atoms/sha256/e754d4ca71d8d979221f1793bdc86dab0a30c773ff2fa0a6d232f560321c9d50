@@ -1,0 +1,27 @@
+**Lemma 45.1 (simultaneous covariance event).** Put
+$x_T=6\log(e+T)$ and choose a fixed $L_0\ge1$ with
+$C_*/\sqrt{L_0}\le m$. For $T$ sufficiently large define
+
+$$
+n=\left\lfloor\log_2\frac{bT}{L_0x_T}\right\rfloor,\quad
+N=2^n,\quad h_*=b/N,\qquad
+L_0x_T/T\le h_*<2L_0x_T/T.
+\tag{45.1}
+$$
+
+Let $E_T$ require (43.6)'s covariance bound, with $x=x_T$, on
+every dyadic interval from $[0,b]$ down to its $N$ leaves. Then
+
+$$
+\mathbb P_{g,\tau}(E_T^c)\le C_b(e+T)^{-5},\qquad
+S_I\ge m|I|\,\mathrm{Id}\quad\hbox{on }E_T.
+\tag{45.2}
+$$
+
+Proof. There are fewer than $2N\le C_bT$ intervals. Their physical
+lengths are at least $L_0x_T\ge1$, so a union bound in (43.6)
+gives the probability assertion. On this event their errors are at
+most $C_*\sqrt{|I|x_T/T}\le m|I|$, whereas
+$B_I\ge2m|I|\,\mathrm{Id}$. This gives the lower bound and also a
+common upper bound proportional to $|I|$. $\square$
+

@@ -1,0 +1,63 @@
+**Proposition 115.6 (what the comparison retains and what zero forbids).**
+For every fixed $u$, put $\mathscr K_u=(\ker\Sigma_u)^\perp$.
+The polar decomposition $C_u=W_u\Sigma_u^{1/2}$ gives a unitary
+$W_u:\mathscr K_u\to\mathbf1^\perp\subset L^2(\nu_u)$ and the
+boundary comparison generator $(\Sigma_u|_{\mathscr K_u})^{-1}$ on
+the edge carrier, with domain $\operatorname{ran}(\Sigma_u|_{\mathscr K_u})$.
+This is the same complete polar/spectral construction as IV (111.8),
+with $\nu_u$ in place of $M$; it does not replace the biased law by
+the fair unit-conductance harmonic law.
+There is no identity-at-zero extension of $\mathcal T_u(s)$ on all
+$\mathscr H$. There is also no source-uniform conditioning claim
+for undoing positive-time heat or reconstructing every finite mode
+from a boundary limiting state.
+
+Proof. Centered cylinder indicators belong to $\operatorname{ran}C_u$
+and span a dense subspace of the centered $L^2(\nu_u)$ space.
+Every cylinder has positive $\nu_u$ mass and the cylinder sigma algebra
+is the whole boundary sigma algebra. Teschl's polar decomposition
+therefore has precisely the stated initial and final spaces. The
+compact positive injective restriction of $\Sigma_u$ has dense range
+in $\mathscr K_u$; spectral calculus gives its inverse with the stated
+domain. This directly consumes IV §111's polar representation; no
+additional boundary-memory or propagation theorem is needed here.
+
+Let $q=\delta_L+\delta_R$. Its boundary trace is identically one
+for every original, so $q\ne0$ lies in $\ker\Sigma_u$. For $n\ge2$
+both root edges occur in every $s_n$, whereas $J_nq$ is zero at the
+root and one at every other actual occurrence. Thus
+
+$$
+Q_nq=q,
+\qquad \langle q,\Sigma_nq\rangle=(N_n-1)/N_n^2,
+\qquad \mathcal T_u(s)q=0\quad(s>0).
+\tag{115.28}
+$$
+
+The centered finite heat equals $Q_n$ at zero. On $\mathscr K_u$ the
+boundary heat tends strongly to identity as $s\downarrow0$, while
+on $\mathscr H$ it tends to $P_{\mathscr K_u}$. Since $q\in\mathscr E_n$,
+$\|Q_n-P_{\mathscr K_u}\|\ge1$. Uniformity of (115.19) cannot include
+zero. Moreover a purely multiplicative relative estimate against
+$\langle z,\Sigma_uz\rangle$ alone is false, since (115.28) has zero
+boundary variance and strictly positive finite variance. The identity
+term in (115.8) is the specified unit-edge energy allowance, not a
+claim of multiplicative equivalence of covariance kernels.
+The consecutive finite transfer itself still has exact zero-time
+defect zero, because both finite node heats equal identity there;
+these are different endpoint assertions.
+
+All finite positive eigenspaces were retained by (115.18) and (115.23),
+including every direction orthogonal to the root spectral vector.
+The positive-time comparison allows fast modes to decay; it does not
+invert that decay. Indeed every nontrivial actual tree has
+$\lambda_{\max}(L_n)\ge1$, for example by its trace and $N_n-1$
+positive eigenvalues. The smallest singular value of $S_n(s)$ is
+$e^{-N_ns\lambda_{\max}(L_n)}\le e^{-N_ns}$, and $N_n\ge\Delta_n\to\infty$.
+Its inverse norm is unbounded at each fixed $s>0$, even on the
+single-alpha orbit. Uniformly well-conditioned transfer is thus
+distinct from a uniformly well-conditioned inverse heat experiment.
+The finite/infinite address probabilities still have total variation
+one as stated in IV Specification 113.11; (115.8) uses a different
+relative quadratic topology. $\square$
+

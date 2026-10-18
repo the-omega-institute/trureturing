@@ -1,0 +1,9 @@
+**定义 37.6（带明确步长的相位显示）。** 对 $n\ge2$，取标签集合 $\mathbb Z/F_n\mathbb Z$ 和加法作用
+
+$$
+j\longmapsto j+F_{n-1}\pmod{F_n},\qquad
+\alpha_n=\frac{F_{n-1}}{F_n}.
+$$
+
+标签 $j$ 可显示在 $(\cos(2\pi j/F_n),\sin(2\pi j/F_n))$。这是另供的圆周显示及标签动作；选择任意可逆实仿射变换把圆显示为椭圆，不改变标签或其加法周期。
+

@@ -1,0 +1,32 @@
+**Theorem 6.1 (the blind direction survives actual-row marginalization).** Write
+
+$$
+\overline Q^\theta=\frac1N\sum_i Q_i^\theta.
+$$
+
+For any distinct $\theta,\theta'$,
+
+$$
+\begin{aligned}
+\frac1N\sum_i\operatorname{TV}(Q_i^\theta,Q_i^{\theta'})
+&\ge\frac{|\theta-\theta'||\gamma_q|}{N}(U_0+U_1),\\
+\operatorname{TV}(\overline Q^\theta,\overline Q^{\theta'})
+&\ge\frac{|\theta-\theta'||\gamma_q|\eta}{N}>0.
+\end{aligned}
+\tag{6.1}
+$$
+
+After installation by Convention 2.2, these are respectively an average of individual decoder differences and a difference of averaged decoders at the same positive actual p history. They apply on every original record fibre with its current renderer, under the same arbitrary allowed $\mu$.
+
+**Proof.** TV dominates the discrepancy of a singleton event. Apply the first line of (5.1) at each configuration and average its absolute value, obtaining the first inequality. Average the signed mass difference before taking its absolute value to obtain
+
+$$
+\overline Q^\theta(w_{q,1})-\overline Q^{\theta'}(w_{q,1})
+=(\theta-\theta')\gamma_q\frac{U_0-U_1}{N}
+=(\theta-\theta')\gamma_q\frac\eta N.
+$$
+
+This proves the second inequality. The two bounds are distinct: in general TV and the actual configuration average cannot be interchanged.
+
+The source's actual letters are drawn using $r_K$, not the synthetic label-dependent emissions. The source-independent latch row is uniform. Conditioning on any actual acquired word therefore updates the private row by $B_\theta$ or $A$ without synthetic likelihood weighting. Doubly stochasticity preserves the uniform row after every noncompleting letter. Thus the actual row at every positive active fourth history is exactly the same $\pi$ or $\tau$ for every family member. The original $C_0$ and its target law depend on that same source history and are unaffected by the private table. The full-record renderer preserves both comparisons in (6.1). $\square$
+

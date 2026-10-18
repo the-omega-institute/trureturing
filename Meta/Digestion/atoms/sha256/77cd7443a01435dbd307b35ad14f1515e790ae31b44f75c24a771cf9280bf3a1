@@ -1,0 +1,46 @@
+### 38.1. 实际交替乘积与整个源的双射坐标
+
+沿用式 (37.1)—(37.2)，本节六动作明确为 $JMJMJM$，令整个七读纤维为 $\mathcal K_M(\mathcal H)$。前五乘积与第 37.2 节同，实际第六和两个末乘积不同。以下完整表中每行仍是 $y_i=d+T_i g(i)$。
+
+| 原时钟与动作 | $Q$ | 迹 $T_i$ |
+| --- | --- | --- |
+| $0$ 初读 | $\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ | $1$ |
+| $1,J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ |
+| $2,M$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ |
+| $3,J$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $j+r$ |
+| $4,M$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ |
+| $5,J$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $j+2r$ |
+| $6,M$ | $\left(\begin{smallmatrix}1&0\\3&1\end{smallmatrix}\right)$ | $1+3b$ |
+| $7$ 选 $J$ | $\left(\begin{smallmatrix}3&1\\1&0\end{smallmatrix}\right)$ | $j+3r$ |
+| $7$ 选 $M$ | $\left(\begin{smallmatrix}3&1\\4&1\end{smallmatrix}\right)$ | $1+2r+4b+c$ |
+
+第六行由 $M Q_5$，末两行由 $JQ_6,MQ_6$ 得到；式 (37.5) 给各迹。非负可逆、无零行与严格正列的配对继续证明所有迹正，无需增益符号或源逆。七读后只能选一次原时钟七的动作，共八次 TOTAL；中间、祖先、停止约束与无重置等限制全部保留。
+
+整个严格源恰有唯一坐标
+
+$$
+q=r/b>0,\quad s=2/b>2q,\qquad
+b=2/s,\quad r=2q/s,\quad c=q(1-2q/s),\quad
+j=q+2(1-q^2)/s.
+\tag{38.1}
+$$
+
+必要性由 $s-2q=2(1-r)/b>0$ 及秩一式推出；反向 $q>0,s>2q$ 给 $b>0,0<r<1,c>0$ 及 $bc=r(1-r)$，所以是整个严格源的双射。包括 $r=1/2$、两对角侧、对称／非对称和任意正非对角大小。
+
+定义
+
+$$
+\eta=1-q^2-q/2,\qquad e(t)=1+t/s,\qquad
+o(t)=j-r/2+(r/2)t=qe(t)+2\eta/s.
+\tag{38.2}
+$$
+
+$e$ 恰给实际四个偶迹，$o$ 恰给三个奇迹。$\eta$ 的根为 $(-1\pm\sqrt{17})/4$，唯一正根为
+
+$$
+\alpha=(\sqrt{17}-1)/4,\qquad 1/2<\alpha<1,\qquad \alpha^2+\alpha/2=1.
+\tag{38.3}
+$$
+
+界由 $3<\sqrt{17}<5$ 得到，尤其 $1-\alpha>0$。没有把未知源比例当外部标签。
+

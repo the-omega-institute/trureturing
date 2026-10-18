@@ -1,0 +1,74 @@
+**Lemma 4.4 (two endpoint calibrations bound switching).** Define
+
+$$
+S_p=\varepsilon_p+\frac{553}{20}\delta,
+\qquad
+S_\beta=\varepsilon_\beta+\frac{513}{50}\delta.
+$$
+
+Then
+
+$$
+|d_p(w-1/2)-L+H|\le S_p,
+$$
+
+$$
+|d_\beta(w-1/2)-aL+bH|\le S_\beta.
+\tag{4.8}
+$$
+
+Consequently
+
+$$
+L\le4100e,
+\qquad H\le L,
+\qquad d_p|w-1/2|\le L+281e.
+\tag{4.9}
+$$
+
+**Proof.** The actual mean p event mass is $\pi(g+f+t)$. Replacing its three coordinates by $g^*_{r,x},F_r,T_r$ changes it by at most $(513/20+2)\delta=553\delta/20$. The replacement mean is
+
+$$
+w\varphi_p(a)+(1-w)\varphi_p(b)-L+H,
+\qquad \varphi_p(r)=(1-r)^2(1+a_r+a_r^2).
+$$
+
+Use (3.3) to get the first inequality in (4.8).
+
+The actual mean suspended event mass is
+
+$$
+\tau(1-v+vAg)=\mathbb E_\zeta[1-r+rg_x].
+$$
+
+Replacing $g_x$ by $g^*_{r,x}$ changes this by at most $(2/5)(513/20)\delta=513\delta/50$. Its replacement mean is
+
+$$
+w\varphi_\beta(a)+(1-w)\varphi_\beta(b)-aL+bH,
+\qquad \varphi_\beta(r)=1-r+r(1-r)^2.
+$$
+
+Again (3.3) gives the second inequality. Both comparisons use the same $w,L,H$ and actual circulation.
+
+Put $q=d_\beta/d_p=806625/1116529<3/4$. Eliminate $w-1/2$ in (4.8), and use (4.7):
+
+$$
+[(q-a)-(q-b)R]L\le qS_p+S_\beta.
+\tag{4.10}
+$$
+
+Here
+
+$$
+(q-a)-(q-b)R
+=\frac{3048936419}{36094687500}>2/25.
+$$
+
+Since $\delta\le10e$, one has $S_p\le281e$ and $S_\beta\le111e$. Thus
+
+$$
+L\le\frac{25}{2}\left(\frac34\,281+111\right)e<4100e
+$$
+
+when $e>0$; the non-strict bound also holds at $e=0$. Finally (4.7) gives $H\le L$, and the first inequality of (4.8) gives $d_p|w-1/2|\le|L-H|+S_p\le L+281e$. $\square$
+

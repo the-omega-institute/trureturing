@@ -1,0 +1,45 @@
+**Corollary 5.1 (exact original native count).** Under every source,
+code, entry, access and simultaneous-budget hypothesis of Definition
+1.3, for $|A|=7$, $k=4$ and every $r\ge0$,
+
+$$
+H_{\mathrm{exec}}(A,4;r)=20+r
+\quad\text{at caps }8,\ W+3.
+\tag{TC.8}
+$$
+
+Proof. Apply the exact existing equivalence (TC.1). A native
+competitor with $H$ installed preparation states projects, without
+copying states, to a correct Boolean table with at most $H-4-r$
+running states and both caps $7,W$. Corollary 4.2 therefore gives
+$H\ge20+r$.
+
+Conversely lift the sixteen-state grid exactly as in WTF Theorem 4.1.
+Install each coordinate-$i$ state at the shortest original literal
+$a_i=LLL L^{s_i}R$. Branch uses its Boolean-one successor; alpha,
+beta and absent each have their separately installed Boolean-zero
+successor. Replace the two terminals by the original entry latches.
+Add the two paid profile states, start at $D$, and retain all $r$
+mandated latches:
+
+| State | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | grid start | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+On every $Z_{b_3}$ source the original occurrence identity identifies
+the selected run with the grid run on $\theta(x_a)$, for arbitrary
+allowed branch interiors, alpha replies and absent selected addresses.
+It pays at most $1+7$ calls and $3+W$ letters. The other ten
+profiles follow the original profile analysis: alpha at $D$ is
+$\Pi_3$; on its branch route only alpha at $T$ supplies the other
+code-one profile $\Pi_4$. All other routes require zero. These routes
+use at most two calls and six letters, within the same uniform caps.
+The full fiber, original pointwise code and complete entries are thus
+preserved. There are $16+2+2+r=20+r$ preparation states. The actual
+cube origin for $1110000$, supplied by WTF Supplier 2.1, attains
+$8,W+3$ together. Reader states and fresh reader costs remain
+separate. This uses the existing transfer, without adding an encoder,
+source copy, reset, reroot, equality port, workspace or acquisition
+service. $\square$
+

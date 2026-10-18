@@ -1,0 +1,100 @@
+### 92.2. Complete projective classification in the opposite chart
+
+Write the physical scaled mean \(G=x+iy\), \(R=3-b^2\), and set
+
+\[
+ \ell=x/y,\qquad s=(x^2+y^2-R)/y.
+\]
+
+The old variables were \(k=y/x\), \(t=(x^2+y^2-R)/x\). Thus on the
+overlap \(k=1/\ell, t=s/\ell\). For each primitive source curve
+\(h(b,k,t)\) of degree \(n=8,10,10\) from §87, define
+
+\[
+ h^\vee(b,\ell,s)=\ell^n h(b,1/\ell,s/\ell).
+\]
+
+The homogeneous global identities in §87 make these necessary for every
+original generic ray with \(y\ne0\), without assuming \(F_8\ne0\).
+The global zero-mean exclusion guarantees \((x,y)\ne(0,0)\). The
+opposite vertical test below excludes \(y=0\), so this chart is complete
+at the roots of \(L\).
+
+For a component \(P_j(b,k)\) of degree \(n_j\), put
+\(P_j^\vee=\ell^{n_j}P_j(b,1/\ell)\). For the decic put
+
+\[
+ F^\vee=\ell^{10}F(b,1/\ell),\quad
+ T^\vee=-\ell^9T(b,1/\ell),\quad D^\vee=\partial_\ell F^\vee.
+\]
+
+Its lift is \(s=T^\vee/D^\vee\). Indeed modulo \(F^\vee\),
+\(D^\vee=-\ell^8F_k(b,1/\ell)\); on the generic overlap this gives
+\(s=\ell t\). For each other component with old numerator \(N_j\) and
+denominator \(D_j\), set
+
+\[
+ a_j=\max(\deg_kD_j,\deg_kN_j-1),\quad
+ N_j^\vee=\ell^{a_j+1}N_j(b,1/\ell),\quad
+ D_j^\vee=\ell^{a_j}D_j(b,1/\ell).
+\]
+
+The eighteen published component identities transport to these formulas.
+One precise way to justify specialization, including the new point
+\(\ell=0\), is to reduce each transformed identity by the monic
+\(P_j^\vee\), with inverses of \(D_j^\vee\) formed by multiplication
+adjugates. Over \(\mathbb Q(i)(b)\) it is zero by the overlap identity.
+The following leading-coefficient and denominator witnesses show every
+coefficient operation is regular in \(K_L\). The zero identity therefore
+specializes there, without division by \(\ell\) at the exceptional point.
+
+Use exactly the degree-19 Macaulay construction of §88, in variables
+\((s,\ell)\). Its 210 columns are the pairs \((e_s,e_\ell)\) of total
+degree at most 19, in descending order of \((e_s+e_\ell,-e_\ell)\).
+Retain the 30 basis monomials of total degree at most 6, together with
+\((1,6),(0,7)\). Use all source multiples in the printed source order and
+in increasing multiplier \(e_s\), then increasing \(e_\ell\). Delete
+row indices \(1,13,78,183,184,185,186,187\), with zero-based indexing.
+The remaining 180-by-180 minor, on the nonbasis columns, is
+\(65\bmod97\). The 18-by-18 opposite vertical Sylvester minor formed
+from the first two source curves is \(28\bmod97\). Thus the affine
+algebra has dimension at most 30 and there is no opposite vertical point.
+As in §88, every border of the 30 proposed basis monomials is within the
+represented degree range, so the finite matrix bound is an algebra bound.
+
+Here are the component leading coefficients and denominator resultants,
+in order \(j=0,\ldots,5\), modulo 97 at \(b=9\):
+
+```text
+(25,48), (65,51), (26,65), (22,61), (67,10), (1,50).
+```
+
+For the pairwise component resultants the residues modulo 97 are:
+
+```text
+01:33, 02:96, 03:22, 04:45, 05:50,
+12:44, 13:35, 14:0, 15:0,
+23:31, 24:72, 25:35, 34:25, 35:61, 45:0.
+```
+
+The three zero residues are replaced by the nonzero witnesses at
+\((p,b)=(101,13)\): \(14:69, 15:68, 45:24\). They do not indicate
+characteristic-zero collisions. Every component denominator is a unit,
+every pair of components is coprime, and their degrees sum to 30. The
+transported identities give a surjection onto their product. The dimension
+upper bound therefore gives an isomorphism with this full product,
+retaining the two nonreduced components just as in §88.
+
+The homogeneous positivity proofs for the other five components exclude
+all their real projective points. At \(\ell=0\) this uses their old
+strictly positive leading coefficients; it is not an affine division by
+\(\ell\). Thus every physical generic mean lies in the decic radial algebra
+
+\[
+ \mathcal A^\vee_L=K_L[\ell,Y]/\bigl(F^\vee,
+ (1+\ell^2)Y^2-sY-R\bigr),\quad
+ s=T^\vee/D^\vee,\quad x=\ell Y,\quad y=Y.             \tag{92.1}
+\]
+
+It is a free algebra of dimension 20. No physical root count is needed.
+

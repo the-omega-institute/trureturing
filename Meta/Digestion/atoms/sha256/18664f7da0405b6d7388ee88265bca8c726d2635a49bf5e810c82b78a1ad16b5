@@ -1,0 +1,31 @@
+## 47. Mathematical dependencies and conditional theorem chain
+
+The finite mathematical relationships and their additional assumptions are:
+
+1. a finite StructurePreservingGenerator consists of the state carrier, energy, entropy, skew operator, positive operator, reference state, observation map, and closure residual;
+2. (41.2) and (41.4) depend only on skew-symmetry, positivity, and degeneracy;
+3. a finite graph current satisfies $\dot q=-Bj$; its charge conservation and relation to the graph Dirichlet energy require the corresponding incidence and constitutive conditions;
+4. for $\mathsf O_{\mathrm{FIB}}$, the equality $\mathcal R_{\mathsf O}=0$ is equivalent to generator invariance of the $\kappa$-fibers;
+5. the quantum closure residual is related to the commutator-orbit and Hamiltonian-effect theorems under their respective hypotheses;
+6. for the electromagnetic cochain $A\mapsto F=dA$, the homogeneous constraint follows from $d^2=0$;
+7. light and sound denote labeled spectral subspaces of $D\mathsf G_{\Phi_*}$, with the label carried by the observation port and constitutive block;
+8. continuum limits, physical units, and gravitational interpretation require additional assumptions beyond these finite relationships.
+
+The resulting theorem hierarchy is:
+
+\[
+\begin{aligned}
+&\text{state-flow-conservation}\\
+&\Downarrow\\
+&\text{observation quotient and closure residual}\\
+&\Downarrow\\
+&\text{reversible/dissipative split}\\
+&\Downarrow\\
+&\text{current, entropy defect, quantum commutator, gauge curvature}\\
+&\Downarrow\\
+&\text{normal modes and geometry interfaces}.
+\end{aligned}
+\]
+
+This hierarchy specifies the finite mathematical scope of the unified-field relationships. The commonality lies in the typed state, conservation law, generator, observation map, and defect functional. Maxwell theory, stochastic thermodynamics, finite quantum dynamics, FIB geometry, and triangle-source networks are distinct realizations connected by explicit maps. A physical identification requires proving those maps and their limiting laws.
+

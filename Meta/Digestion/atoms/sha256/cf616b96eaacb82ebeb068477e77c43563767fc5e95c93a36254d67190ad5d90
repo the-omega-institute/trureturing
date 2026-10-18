@@ -1,0 +1,42 @@
+**Definition 297.5 (One complete allocation and its score).**
+Let $R=O(1,2;1,2,0)$, $\alpha=(1,1,0,\ldots,0)$,
+$r=z_R=d(\alpha,0)$, $G_C=(z_D-r)_{D\in\mathcal D_C}$ and
+$h=d(b,e)-r$, where $z_D$ is the incidence vector on all the rows of
+297.4. One full feasible allocation is one vector
+$\lambda_D\ge0$ of any finite mass $M=\sum_D\lambda_D$ satisfying
+$G_C\lambda\ge h$. All word measures are supplied by this same vector.
+Mass one is normalized acquisition feasibility. A conic vector is not
+normalized at unchanged $(b,e)$ by dividing by $M$.
+
+A full nonnegative score $Y=(A_w,C_w,P_w;T)$ rewards label $\ell$ by
+
+$$
+g_Y(w,\ell)=A_w[\ell=0]+C_w[\ell=n]+P_w[\ell\in\{0,n\}]
+\quad(w\in\Omega_n),\qquad g_Y(+,\ell)=T[\ell=0].
+$$
+
+Its anchor, support, excess and quotient are
+
+$$
+\begin{gathered}
+W_Y=Y r,\qquad B_C(Y)=\max_{D\in\mathcal D_C}Y z_D,
+\qquad\Delta_C(Y)=B_C(Y)-W_Y\ge0,\\
+\beta_n=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+K_Y=\sum_{w\ne+}(A_w+C_w+P_w)+T,\qquad QY=(\beta;K_Y),\\
+F_{QY}(b,e)=\sum_n\beta_n(b_n-\alpha_n)-K_Ye=Yh.
+\tag{297.4}
+\end{gathered}
+$$
+
+In particular, for this same allocation,
+
+$$
+F_{QY}(b,e)\le YG_C\lambda
+ =\sum_D\lambda_D(Yz_D-W_Y)\le M\Delta_C(Y).
+\tag{297.5}
+$$
+
+The first inequality follows from nonnegativity of $Y$ and all the full
+rows. Thus zero excess gives $F_{QY}\le0$ at every finite mass, with
+no order, normalization or auxiliary hull hypothesis.
+

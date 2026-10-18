@@ -1,0 +1,9 @@
+**Definition 13.3 (actual triples and two realization scopes).** At a positive original fourth p history $h$, let $X,Y,Z$ be the full configurations before beta, after beta and after alpha, conditioned on the next actual noncompleting return beta-alpha. Pull their complete decoder laws back through their respective original record renderers. On the prescribed supports write their joint law as
+
+$$
+\Xi=\sum_{i,j,k}x_{ijk}\delta_{(Q_i,W_j,Q_k)}.
+\tag{13.5}
+$$
+
+Its first-two and last-two marginals must be exactly (13.2). Arbitrarily many distinct finite COMPLETE labels may carry the same descriptor; incoming memory and persistent randomness remain in those full labels. An abstract original-domain realization is one source-independent initialized finite observer with mathematical real stochastic kernels, retaining the full source/control contract of Hypotheses 13.1; it has these flows and triple at every positive fourth p history and these directional flows at their corresponding phases. A represented realization additionally supplies permitted finite exact sampler services for every primitive row and emission, with all their data and states charged. No uniform COMPLETE or other resource bound is asserted in either scope.
+

@@ -1,0 +1,26 @@
+**Definition 6.4 (Convert handler and current publication).** If $s=0$,
+import the selected completed Image wrapper, parse its actual HistoricalImage
+field and immutable $b,k$. Check its native history by finite $k$-row
+Step replay, including exact endpoint equality, from its own acquired
+seed/ingress/code fields. Render S by Definition 5.1 on its raw endpoint.
+Follow zero to three cycle arrows to $dd$.
+
+If $s=1$, import the selected ViewRef, compare its $q,b,d$ to the registry,
+validate its body by Definition 5.6, and follow zero to three cycle arrows
+from its source kind to $dd$. Same-kind requests still validate and copy
+their actual body. Preserve $b,k$; assign a new $q$ to the new publication.
+The direct branch has no Image lookup or fallback. The raw Image is an
+initial input witness for the first conversion only.
+
+Encode the result with PVC.2 and PVC.5, and run RCA Definition 13.4's full
+Publish: Base and dry length, actual binary sender copy on 39, F, seal,
+full descriptor; initialized distinct mailbox and receiver allocation;
+corrected staged-descriptor positions and fresh sender-length recovery;
+both six-row copy loops; completed flags/seal records; receiver authority;
+fresh positioning and mandatory RD/OUT printing; ACK. Run Definition
+6.3's post-ACK descriptor import and registry append, then the existing
+completed-frame update, mailbox availability return, invocation-token
+return and final Ready CTL. Each common-return operation occurs once.
+Source frames still use their original acknowledged row response before
+this common frame return.
+

@@ -1,0 +1,289 @@
+**Theorem 4.1 (Dyadic rows and calibrated midpoint on one implementation).**
+Under Assumption 2.1, for every allowed $s,J$, every integer $B\ge J$
+and every choice in Definition 3.1 satisfying
+
+$$
+\chi\le\frac{D_0I}{4\mathrm e},
+\tag{4.1}
+$$
+
+the single table of Definition 3.2 has all probabilities in
+$2^{-B}\mathbb Z$ and meets every condition (1.4). Its exact count
+is (3.5), with $M_J\le K_{\rm count}2^{rJ}$. For its actual one-gap
+increment, write
+
+$$
+b_i=\mathbb E_iU_B-(m_i-\theta),\qquad \sigma_0=-1,\quad\sigma_1=1.
+\tag{4.2}
+$$
+
+The signs $\sigma_i$ orient the proof only. The following bounds all
+concern this same installed table:
+
+$$
+\begin{gathered}
+|b_i|\le\chi,\qquad
+\sigma_i\mathbb E_iU_B\ge\Delta/2-\chi\ge\kappa\Delta>0,\\
+\left|\bigl(\mathbb E_1U_B-\mathbb E_0U_B\bigr)-\Delta\right|
+ \le2\delta\epsilon,\qquad
+\mathbb E_1U_B-\mathbb E_0U_B>0,\\
+|U_B|\le1,\qquad
+\operatorname{Var}_i(U_B)\le\mathbb E_iU_B^2
+ \le V_0I+2\chi\le\left(V_0+\frac{D_0}{2\mathrm e}\right)I,\\
+\mathbb E_0 e^{\lambda U_B}\le1,\qquad
+\mathbb E_1 e^{-\lambda U_B}\le1.
+\end{gathered}
+\tag{4.3}
+$$
+
+If $G_B$ is the number of completed post-first-tick gaps through
+absorption, then
+
+$$
+\begin{aligned}
+\mathbb E_iG_B&\le\frac{A+3/2}{\kappa\Delta},\\
+\mathbb E_iT&=1+\beta_i+\mu_i\mathbb E_iG_B\\
+&\le\frac{C_\beta}s+
+ \frac{C_\mu(A+3/2)}{\kappa D_0}\frac{s^{-(2r+1)}}J,\\
+\max_i\mathbb E_iT&\le C_{\rm fp}\frac{s^{-(2r+1)}}J.
+\end{aligned}
+\tag{4.4}
+$$
+
+The neighborhood $s_0$ and constants are fixed before all caps, budgets
+and calibrated tables. No assertion of unbiased finite-probability
+rounding is required.
+
+Proof. First, $B\ge J$ makes each $2^{-j}$ and its complement exactly
+$B$-bit dyadic for $j\le J$. The deterministic rows, installed tick
+probabilities and their complements have the same property. Summing
+probabilities at merged successors preserves it. The reader therefore
+has exactly the zero matrix $R$: conditional on every actual $K=k$,
+its terminal phase law is still $\mathbf e_1R^k$. Only the tick update
+has changed. Both labels use precisely these rows.
+
+For the error estimates, let $U(x)$ denote ideal adjacent-grid rounding
+of $x$ at spacing $\delta$, for $x\in[-2^{-r},2^{-r}]$. Its endpoints
+are $\ell=\delta\lfloor x/\delta\rfloor$ and $\ell+\delta$.
+Both lie in $[-1,1]$, since $|x|\le1/2$ and $\delta\le1/2$.
+For $\varsigma\in\{-1,1\}$ define
+
+$$
+F_\varsigma(x)=\mathbb E e^{\varsigma\lambda U(x)},\qquad
+W(x)=\mathbb E U(x)^2.
+\tag{4.5}
+$$
+
+On each grid cell $F_\varsigma$ is the linear interpolant of
+$e^{\varsigma\lambda u}$ at its endpoints. Its slope has absolute
+value at most $\mathrm e\lambda$, by the mean-value theorem,
+$\lambda\le1$ and the endpoint bound. The interpolants agree at grid
+points, so they are continuous there. Partitioning an interval at its
+finitely many grid crossings proves the global bound
+
+$$
+|F_\varsigma(x)-F_\varsigma(y)|
+ \le\mathrm e\lambda|x-y|.
+\tag{4.6}
+$$
+
+Likewise $W$ is the continuous linear interpolant of $u^2$. Its slope
+on a cell is $\ell+(\ell+\delta)$, of absolute value at most two.
+Thus $|W(x)-W(y)|\le2|x-y|$ throughout this interval. These bounds
+apply across changed floor cells, as well as at a grid boundary.
+
+At phase $z$, changing the center from $\theta$ to $\widehat\theta$
+changes $x=v_z-\theta$ by at most $\gamma$. At the new center, changing
+the upper-endpoint probability by at most $\epsilon$ changes the mean
+by at most $\delta\epsilon$, the exponential expectation by at most
+$\mathrm e\lambda\delta\epsilon$, and the second moment by at most
+$2\delta\epsilon$. The last two statements follow by multiplying
+the probability error by the difference of the two endpoint function
+values. Combining these observations gives, conditional on each phase,
+an exponential error at most $\mathrm e\lambda\chi$ and a second-moment
+error at most $2\chi$. Averaging over either unchanged terminal-phase
+law preserves the bounds. In particular,
+
+$$
+\begin{aligned}
+\left|\mathbb E_i e^{\varsigma\lambda U_B}
+      -\mathbb E_i e^{\varsigma\lambda U}\right|
+ &\le\mathrm e\lambda\chi,\\
+\left|\mathbb E_iU_B^2-\mathbb E_iU^2\right|&\le2\chi.
+\end{aligned}
+\tag{4.7}
+$$
+
+This comparison uses the actual gap/phase joint law. It adds no
+unconditional $\delta^2$ noise per gap and assumes no independence
+between a reward and its duration.
+
+Write $h_z=p_{B,z}-\widehat p_z$, so $|h_z|\le\epsilon$. The actual
+conditional mean, including its possible bias, is exactly
+
+$$
+\mathbb E(U_B\mid z)=v_z-\widehat\theta+\delta h_z,
+\qquad
+\mathbb E_iU_B=m_i-\widehat\theta+\delta\mathbb E_i h_z.
+\tag{4.8}
+$$
+
+Consequently $b_i=\theta-\widehat\theta+\delta\mathbb E_i h_z$ has
+absolute value at most $\chi$. The common displacement
+$\theta-\widehat\theta$ cancels on subtracting the two means; hence
+the contrast error is at most $2\delta\epsilon$, rather than requiring
+the weaker $2\chi$. Since $D_0I\le\Delta$, (4.1) gives
+$\chi\le\Delta/(4\mathrm e)$. It follows that both oriented drifts
+are at least $\kappa\Delta$ and that the contrast is at least
+$\Delta-2\delta\epsilon\ge\Delta(1-1/(2\mathrm e))>0$.
+The support bound applies also at the new center, proving $|U_B|\le1$;
+(2.6) and (4.7) prove the second-moment and variance bounds.
+
+For clarity, the strictly negative ideal exponential margin used here
+is [C, equation (5.12)]. It follows internally from (2.6): for
+$|u|\le1$, Taylor's integral remainder gives
+
+$$
+e^{\lambda u}\le1+\lambda u+
+ \frac{\mathrm e}{2}\lambda^2u^2.
+\tag{4.9}
+$$
+
+Under source zero, (2.7) yields
+
+$$
+\mathbb E_0 e^{\lambda U}
+ \le1-\lambda\Delta/2+(\mathrm e/2)\lambda^2V_0I
+ \le1-\lambda D_0I/4.
+\tag{4.10}
+$$
+
+The same inequality holds under source one for $e^{-\lambda U}$.
+Equation (4.7) consumes at most this margin because
+$\mathrm e\lambda\chi\le\lambda D_0I/4$. This proves both actual
+exponential inequalities in (4.3), for the very probabilities already
+used for the drift bounds.
+
+Next establish finite absorption before using any infinite stopping
+limit. On an analytical continuation of the same source history, use
+the iid post-first-tick gaps and independent fresh phase/tick randomness
+to form iid potential pairs $(K_n,U_{B,n})$. These pairs are independent
+of $\tau$, but their two coordinates need not be independent. The phase
+resets to one at each nonterminal tick, and its tick-increment law is
+independent of $a$. Thus the potential process agrees with the installed
+table until it exits. Let $\mathcal F_n$ contain $\tau$ and the first
+$n$ whole gap/coin blocks. Put, for proof purposes only,
+
+$$
+S_0^{\rm sc}=0,\qquad S_n^{\rm sc}=\sum_{h=1}^nU_{B,h},\qquad
+G_B=\inf\{n\ge1:|S_n^{\rm sc}|\ge H\delta\}.
+\tag{4.11}
+$$
+
+Before exit the retained evidence coordinate is $S_n^{\rm sc}/\delta$;
+at exit $\Gamma$ emits exactly the corresponding boundary label.
+The score and its terminal overshoot are proof variables, not extra
+configurations or a stopping-time decoder. For every finite $m$,
+
+$$
+|S_{G_B\wedge m}^{\rm sc}|\le H\delta+1
+ \le A+3/2.
+\tag{4.12}
+$$
+
+Here $H\delta\le A+\delta$ and each increment has magnitude at most one.
+The inclusion event $\{G_B\ge n\}$ lies in $\mathcal F_{n-1}$.
+Finite conditional expectation therefore gives, with
+$d_i=\sigma_i\mathbb E_iU_B\ge\kappa\Delta$,
+
+$$
+\begin{aligned}
+\mathbb E_i[\sigma_i S_{G_B\wedge m}^{\rm sc}]
+ &=\sum_{n=1}^m\mathbb E_i[
+   \mathbf1_{\{G_B\ge n\}}\sigma_iU_{B,n}]\\
+ &=d_i\sum_{n=1}^m\mathsf P_i(G_B\ge n)
+ =d_i\mathbb E_i(G_B\wedge m)\le A+3/2.
+\end{aligned}
+\tag{4.13}
+$$
+
+Monotone convergence proves
+$\mathbb E_iG_B\le(A+3/2)/(\kappa\Delta)<\infty$, and hence
+$G_B<\infty$ almost surely under both labels. Every gap and the first
+wait are almost surely finite. Actual stopping is therefore almost
+surely finite as well. This argument does not presume that the rounded
+transition graph retains an ideal absorption property.
+
+Under source zero,
+$\exp(\lambda S_{G_B\wedge m}^{\rm sc})$ is a nonnegative
+supermartingale starting at one; under source one use
+$\exp(-\lambda S_{G_B\wedge m}^{\rm sc})$. The conditional inequalities
+follow from (4.3) for the next independent block on the event not yet
+stopped, and equality holds after stopping. Bound (4.12) gives a common
+upper bound $\exp(\lambda(A+3/2))$. The already proved finite $G_B$
+allows bounded convergence, so the terminal exponential expectations
+are at most one. At the respective wrong exits their values are at
+least $\exp(\lambda H\delta)$. Consequently
+
+$$
+\mathsf P_0(D=1),\ \mathsf P_1(D=0)
+ \le e^{-\lambda H\delta}\le e^{-\lambda A}=\alpha.
+\tag{4.14}
+$$
+
+This is the bounded-stopped exponential-supermartingale argument
+corresponding to [C, equations (5.11)–(5.13)]; neither sign $\sigma_i$
+is an executable source-label input.
+
+For actual payment there is the pathwise identity
+
+$$
+T=1+\tau+\sum_{n=1}^{G_B}(K_n+1).
+\tag{4.15}
+$$
+
+It includes every initial zero, the initial one, every phase-holding
+zero, all zeros after phase death and the final closing one. This table
+has no terminal partial interval, because it stops directly at a tick;
+the general competitor contract still charges such partial intervals
+when a different table undertakes them. Since $\{G_B\ge n\}$ is
+measurable before block $n$, it is independent of its next $K_n$.
+Tonelli gives
+
+$$
+\begin{aligned}
+\mathbb E_i\sum_{n=1}^{G_B}(K_n+1)
+ &=\sum_{n\ge1}\mathbb E_i[
+    \mathbf1_{\{G_B\ge n\}}(K_n+1)]\\
+ &=\mu_i\sum_{n\ge1}\mathsf P_i(G_B\ge n)
+ =\mu_i\mathbb E_iG_B.
+\end{aligned}
+\tag{4.16}
+$$
+
+No independence of the deciding increment from its own interval is
+used. This is the predictable completed-gap payment of [C, equations
+(5.14)–(5.15)], now for the implemented stopping law. Combining it with
+(2.5) and (4.13) proves the first three lines of (4.4) and finite paid
+means. For every allowed cap,
+
+$$
+I=s^{2r}J\le s^{2r}L^r\le\eta^rs^r\le1.
+\tag{4.17}
+$$
+
+Thus $C_\beta/s\le C_\beta s^{-(2r+1)}/J$, yielding the last line.
+
+Finally, direct counting gives exactly (3.5). The threshold, grid and
+phase set have not changed, so [C, equation (5.17)] applies unchanged:
+using $H\le AL^r/J+1$, $J+1\le2J$ and $J+1\le L^r$,
+
+$$
+M_J\le3+(2AL^r/J+1)(J+1)
+ \le3+4AL^r+L^r\le(4A+4)L^r.
+\tag{4.18}
+$$
+
+Changed floors can change installed tick destinations but introduce no
+configuration. This completes every assertion. $\square$
+

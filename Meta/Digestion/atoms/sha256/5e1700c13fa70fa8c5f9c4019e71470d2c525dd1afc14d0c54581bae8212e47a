@@ -1,0 +1,15 @@
+**Definition 265.1 (Triple weights and ordered reserves).**
+A canonical normalized law is a distribution $x_T$ on the triples
+of $\{1,\ldots,L,\infty\}$. It queries the two smallest numerical
+members in increasing order; the third member is the exhaustion
+label, with $\infty$ meaning zero. Put
+
+$$
+m_n=\sum_{T\ni n}x_T,\quad m_\infty=\sum_{T\ni\infty}x_T,
+\qquad z_n=\sum_{i<j<n}x_{\{i,j,\infty\}}.
+\tag{265.1}
+$$
+
+The quantity $z_n$ is a prefix reserve, not a marginal of a single
+label. Every canonical pair is exactly one such triple.
+

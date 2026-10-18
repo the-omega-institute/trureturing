@@ -1,0 +1,15 @@
+**Lemma 6.3 (no strong live-failure attachments, including zero height).**
+For $s_0<s\leq1$ no low live-bearing label can carry either spectral
+failure sign at height equality. The same exclusion holds at $s=s_0$.
+
+Proof. For the four low rays TA.12 the ratio $c_2/c_1$ is
+$(\eta/\sigma)/\sqrt{v_s}$. The two same-sign rays have ratio
+$1/\sqrt{v_s}\geq1>t_+$; they cannot carry positive failure.
+The opposite-sign rays have strictly positive height by JR's sign
+theorem and so cannot carry negative failure. The only possibly
+negative or zero ray is $(-,-)$, with positive slope; it cannot
+carry negative failure since $t_-<0$, or positive failure since
+$1/\sqrt{v_s}>t_+$. This explicitly includes its zero-height
+crossing, where triangle equality alone would not exclude both signs.
+At $s=s_0$, $v_s=1$, and all these exclusions still apply. $\square$
+

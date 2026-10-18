@@ -1,0 +1,53 @@
+### 86.3. An explicit nearby minimum manifold
+
+At the base, the calibrated B blocks B_f are 2-by-2 unitaries. Set
+
+    N_f=conjugate(B_f) Z B_f^T.
+
+These are traceless Hermitian unitaries. After the allowed marker alignment, sum_f N_f=0, and their real span is the full three-dimensional Pauli space. This span condition holds at every allowed disphenoid, since x^2,y^2,z^2>=2/7.
+
+For nearby calibrated B frames satisfying sum_f N_f=0, take d-by-2 matrices S,W and real parameters h,beta near 1/2,0 such that
+
+    S^*S=(1/2-h/8)I_2,
+    W^*W=(h/2)I_2,
+    S^*W=i beta I_2.                                      (8)
+
+Define calibrated A frames through
+
+    C_f=S+(1/2)W N_f,
+    A_f=sqrt(2) C_f conjugate(B_f).                        (9)
+
+Equations (8) imply C_f^*C_f=I_2/2 and hence A_f^*A_f=I_2. Make both original isometries calibrated by assigning output f to the two columns of fibre f. Let M be the resulting local subset of X.
+
+Here is a local parameterization and a check of smoothness. The Gram matrix of [S W] is
+
+    [[1/2-h/8, i beta],[-i beta,h/2]] tensor I_2.
+
+It is positive definite at and near the base. Thus [S W] is parameterized by an arbitrary F_4 in St(C^4,C^d), multiplied on the right by the positive square root of this Gram matrix. The balance map (B_f)_f -> sum_f N_f has surjective differential at the base: each N_f can vary over its Bloch-sphere tangent plane, and a real vector orthogonal to all four such tangent planes would be parallel to every Bloch axis, which is impossible. Its zero set is therefore smooth of real dimension 16-3=13. Together with h,beta and dim_R St(C^4,C^d)=8d-16, the parameter space has dimension
+
+    dim_R M=8d-1.                                        (10)
+
+It is locally embedded. Indeed B_f are part of the tuple; C_f are recovered from A_f,B_f; balance gives S=mean C_f and W=(1/2)sum_f D_f, where D_f=C_f N_f. Finally h=||W||_F^2 and beta=Im Tr(S^*W)/2, and the Stiefel parameter is recovered by the inverse Gram square root.
+
+Every point of M is a minimum of F. In full plus/minus coordinates the subspace spanned by (s,0),(0,s), with s=ones/2, is invariant under T-K. Its compression is
+
+    [[h,-4i beta],[4i beta,1-h]],                          (11)
+
+which has trace one. The other six eigenvalues remain separated below this cluster after shrinking the neighborhood, by the base gap. Hence F=1/4 on M and its top projection is P_0.
+
+A further property of M will be important. Let
+
+    T_i=sqrt(2)[S+(-1)^i W/2].
+
+Then T_i^*T_i=I_2 and a_fi=T_i conjugate(b_fi). The balance condition implies sum_f |b_fi><b_fi|=2I_2 separately for both fixed bits. Thus, for each (A_m,B_m) in M, the bit-i Gram of A_m is the transpose of a rank-two tight-frame Gram H_i^m with H_i^m<=2I_4. For every original channel B with correct bit Gram H_i,
+
+    Tr(P_0 K)=(1/4)sum_i Tr(H_i^m H_i)
+                  <=(1/2)sum_i Tr H_i<=4,
+    Tr(P_0 T)=5.
+
+Consequently
+
+    F(A_m,B)>=1/4 for every original B.                    (12)
+
+This remains true when h and beta differ from their equality values. Their scalar cross overlap is T_0^*T_1=(1-h/2-2i beta)I_2; no assertion of full diamond equality for these additional parameters is made.
+

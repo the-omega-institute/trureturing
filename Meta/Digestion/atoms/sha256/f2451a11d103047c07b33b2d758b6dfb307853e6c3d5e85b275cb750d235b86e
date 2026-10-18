@@ -1,0 +1,36 @@
+### 9.3 Quantifiers and resource bounds
+
+The polynomial model uses exactly $2m+3$ stored real coordinates with
+the explicit sufficient $m$ in Theorem 2.2. Its degree is at most $m$,
+and (7.5) specifies all decoder coefficients by finite sums of interior
+radius samples. On the actual image it also satisfies the finite bound
+
+$$
+\|E_m(k,\alpha,\beta)\|_2^2
+=k^2+\sum_{j=0}^m k^{2j}
+\le H^2+\sum_{j=0}^m H^{2j}.
+$$
+
+Boundedness here is a property of this construction and was not an
+assumption about competing encoders. At equality in the attaining
+range, (8.1) uses one stored real coordinate with $0<K<H$.
+No coordinate count in this volume is an optimal-dimension assertion.
+
+All model maps are prescribed for every real signed command. Every
+asserted execution has finite duration and finite phase variation, and
+each finite concatenation uses its own actual guards. There is no
+uniform upper bound on the number of commands, their total variation,
+or their finite real magnitudes. No positive margin from the support
+boundary is imposed uniformly on the source. Each individual lawful
+continuous path on a compact time interval does have a positive
+height margin, as follows from (9.2); that pathwise fact does not
+restrict the full-domain supremum.
+
+Exact initialization and exact real operations are essential to the
+stated persistence argument. It propagates an exact encoded point,
+then evaluates its approximate readout. It supplies no error bound
+for perturbed initialization, rounding, noise, or approximation of a
+control integral. There is no finite-bit, runtime, conditioning,
+measurement, training, or implementation guarantee implicit in these
+coordinate and degree bounds.
+

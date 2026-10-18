@@ -1,0 +1,27 @@
+**Lemma 19.2 (all-slope rank and a nonsingular erased-gain member).** For every prefix in $\mathscr G$ and every legal final word, the prefix trace map
+$$
+\mathcal L_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)\bigr)_{i=0}^3
+$$
+is invertible, $\operatorname{rank}\mathsf T_k\ge3$ for every real $k$, and $\mathsf T_{-1/4}$ is invertible. Thus every singular member of the full pencil has rank exactly three.
+
+**Proof.** Orient $N=(\begin{smallmatrix}n_{11}&n_{12}\\n_{21}&n_{22}\end{smallmatrix})$ so that its polar is strictly positive. On the positive rank-one matrices $(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, it is
+$$
+n_{11}+n_{22}uv-n_{12}v-n_{21}u>0\qquad(u,v>0).
+$$
+Taking $u=v$ to zero and then to infinity, dividing by $u^2$ in the latter limit, gives $n_{11},n_{22}\ge0$. Taking $(u,v)=(T^{-2},T)$, dividing by $T$ and taking $T$ to infinity gives $n_{12}\le0$; the choice $(T,T^{-2})$ gives $n_{21}\le0$.
+
+If $\operatorname{tr}N=0$, its diagonal entries vanish. Its zero determinant then forces at least one off-diagonal entry to vanish. Nonzeroness makes it a negative multiple of $E_{12}$ or $E_{21}$. The prefix equations force the trace-paired off-diagonal entry of every $A_i$ to vanish. Each endpoint is nonnegative integral and unimodular, since it is a product of $M,J$. A triangular such endpoint has diagonal product one, hence both diagonal entries one. All four prefix matrices would lie in the same two-dimensional span of $I$ and one off-diagonal matrix unit. Their three difference rows could not have rank three, contradicting the one-dimensional kernel of $\mathsf B_{\rm pre}$. Therefore $\operatorname{tr}N>0$.
+
+Normalize $\operatorname{tr}N=1$. If $\mathcal L_{\rm pre}X=0$, then $\mathsf B_{\rm pre}X=0$, so $X=tN$; its zero initial trace gives $t=0$. The four-dimensional trace map is thus invertible. Also $\mathcal L_{\rm pre}N=(1,1,1,1)^{\mathsf T}$.
+
+In its invertible coordinates $f_i=\operatorname{tr}(A_iX)$, $0\le i\le3$, the first three rows of $\mathsf T_k$ are
+$$
+g_if_i-f_0,\qquad g_i=1+ik,\qquad i=1,2,3.
+\tag{19.7}
+$$
+At most one of these three gains vanishes. If none vanishes, the separate nonzero $f_i$ coefficients prove independence. If $g_j=0$, its row is $-f_0$; the other two rows have separate nonzero $f_i$ coefficients and are independent of it. This proves rank at least three at every real $k$.
+
+At $k=-1/4$, the last row is $-f_0$, independently of $A_4$, and the first three gains are $3/4,1/2,1/4$. A vector in the kernel therefore has $f_0=0$ and then $f_1=f_2=f_3=0$. Prefix trace invertibility makes that vector zero. Hence $\mathsf T_{-1/4}$ is invertible for every final word, including empty. A singular four-dimensional member now has rank exactly three. ∎
+
+<a id="global-exact-actual-fibre-theorem"></a>

@@ -1,0 +1,18 @@
+**Convention 2.2 (actual finite canonical representatives).** Write
+$C_0=\langle\alpha,\alpha\rangle$ and
+
+$$
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{m+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_m\},\qquad N_m=|S_m|.
+\tag{PPF.10}
+$$
+
+Hence $N_1=3$ and $N_{m+1}=2+N_m^2$. For $h(v)\le D$ and
+$1\le m\le D$, let $\pi_m(v)$ preserve reached constructors
+through relative depth $m-1$, completing a branch at that cutoff by
+$C_0$. This is AAR Theorem 16.3's actual canonical completion. It
+fixes $S_m$, preserves the reply table on $W_m$, and preserves
+$\Gamma_q$ for $q\in W_m$. The table reconstructs its unique
+representative in $S_m$, by CBN Theorem 2.2.
+

@@ -1,0 +1,42 @@
+**Lemma 3.1 (Orientation identity and geometry).** Suppose the target
+component has complementary weights $U\ge V>0$ and an independent
+component has complementary weights $A\ge B>0$. After a new joining
+edge, the sum over its two replies of the best target-spin mass is
+
+$$
+\begin{aligned}
+\max(UA,VB)+\max(UB,VA)
+&=UA+\max(UB,VA)\\
+&=\max\bigl(U(A+B),A(U+V)\bigr).
+\end{aligned}
+\tag{3.2}
+$$
+
+All other components contribute their common multiplicative factors.
+Either attachment orientation gives the same sum.
+
+Proof. The two labels specify the two possible relative orientations of
+the components. In one case the two target-spin weights are $UA,VB$;
+in the other they are $UB,VA$. The displayed maxima follow, with
+$UA\ge VB$. Reversing an attachment or the label order only interchanges
+the two cases.
+
+A fresh vertex has weights $a,b$. If $U/V\ge R$, (3.2) gives summed
+best mass $U$; the preferred old orientation remains a maximizer for
+each reply. If $U=V$, it gives $2aU$. A query wholly outside the target
+component only partitions independent factors and leaves their summed
+contribution unchanged.
+
+On the line, a new edge repeats an old edge, extends one component by a
+new vertex, joins two existing components, or is disjoint from them.
+There is no additional edge inside a connected path, and one edge cannot
+join three components. If a newly reached vertex is the target, treat
+it as the already adjoined target singleton, making that operation a
+join. Repeats and separators add no information. This exhausts all
+target incidences and all integer addresses, including negative and
+distant ones. Allowing a join comparison where the particular line
+geometry prevents a join only enlarges an upper bound. $\square$
+
+The next lemmas bound joint masses summed over a possible final reply.
+They do not optimize incompatible normalized posteriors separately.
+

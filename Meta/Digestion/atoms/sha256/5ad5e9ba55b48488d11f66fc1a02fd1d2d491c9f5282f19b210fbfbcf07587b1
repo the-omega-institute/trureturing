@@ -1,0 +1,189 @@
+**Theorem 6.1 (constant-positive-fiber theorem).**
+Let the original prescribed $\sigma$ admit a correct arbitrary-literal
+reader on every $u\in\mathcal U_*$, with at most nine installed states
+and at most two actual calls per run. Then $\sigma$ is constant on at
+least one entire $\Pi_j$.
+
+Proof. Suppose for contradiction that all four positive fibers attain
+both bits. The two faithful entries are distinct Reads, since each bit
+occurs with four different positive targets. Lemma 4.1 leaves at most
+four installed Reads. We classify these installed Reads, including
+unused or redundant ones, by their queried classes. Words shorter than
+three are exterior-constant Reads and have no queried class.
+
+First suppose no class is queried by more than one Read. If some $b_j$
+is unqueried, the first companion in Lemma 5.4 gives the output pair
+$\{R_0,R_j\}$ on all of $\Pi_j$. Every variable branch coordinate
+affects at most one Read. Lemma 5.3 makes the code constant on the entire
+$\Pi_j$, a contradiction. Otherwise all four right classes are queried.
+They exhaust the Read budget; there is no partner or exterior Read. If
+any right-class suffix is nonempty, its partner is unqueried and the
+second companion in Lemma 5.4 applies to that positive fiber. Lemma 5.3
+again forces constancy. If all four suffixes are empty, this very table
+is root-only, contradicting Theorem 4.2. This exhausts the case without
+repeated queried classes, including any exterior or unused Reads that
+fit in it.
+
+Now suppose a class is queried more than once. Lemma 5.5 requires at
+least three active classes: either at least three different right
+classes, or two right classes and a partner. With at most four Reads,
+there are therefore exactly four Reads in exactly three classes, with
+multiplicities $2,1,1$. There is no exterior Read. Patterns $3,1$ or
+$2,2$ leave only two active classes and violate Lemma 5.5; any further
+active class with a repetition exceeds four Reads. There are exactly
+five Halts, one unique $H_h$ with complete output $R_h$ for each
+$0\le h\le4$.
+
+If a partner $g$ is the repeated class, the two singly queried classes
+must be one right class from each pair. Choose the omitted right index
+$i$ in $g$'s pair. On $\Pi_i$ the two partner replies are fixed because
+$x_g=\beta$. Its first zero companion supplies the two-entry output
+pair, and every variable branch coordinate affects at most one of the
+other Reads. Lemma 5.3 forces constancy on the entire $\Pi_i$.
+
+It remains to consider a repeated right class $b_k$. If either of its
+two suffixes is empty, choose an unqueried right index $i$. On $\Pi_i$
+the value at $b_k$ is a branch image, so this root reply is constant.
+Changing $b_k$ affects at most its other Read. Every other variable
+coordinate is queried at most once, and the first zero companion for
+$\Pi_i$ again gives constancy by Lemma 5.3.
+
+We can therefore assume that both $b_k$ suffixes are nonempty. If its
+partner $g(k)$ is unqueried, the second zero companion applies to
+$\Pi_k$. Both repeated replies there are fixed absence at alpha; each
+other variable coordinate affects at most one Read. Constancy on
+$\Pi_k$ follows. This includes three distinct queried right classes
+with no partner, and two right classes with a queried partner from the
+opposite pair.
+
+The only remaining configuration has two nonempty-suffix Reads
+$A_0,A_1$ in $b_k$, one Read $G$ in its own partner $g=g(k)$, and one
+Read $B$ in $b_l$ from the opposite pair. Write $\{k,i\}$ for the
+right indices of $g$ and $\{l,j\}$ for the other pair. Thus $b_i,b_j$
+and the other partner are unqueried. Write the two $A$ suffixes as
+$w_0,w_1\ne\varepsilon$, the $G$ suffix as $v$, and the fixed $B$
+suffix as $w_B$. We prove the contradiction for this entire remaining
+configuration in four steps.
+
+First, by the first companion, all vectors on $\Pi_i$ have entry-output
+pair $\{R_0,R_i\}$, and all vectors on $\Pi_j$ have pair
+$\{R_0,R_j\}$. Fix any $d\in\mathcal B$ at $b_k$. With this value
+fixed, every other variable branch coordinate affects at most one Read.
+The fresh-buffer lemma shows that the positive orientation throughout
+the restricted $\Pi_i$ fiber depends only on $d$; call it $f_i(d)$.
+The same argument on $\Pi_j$ gives $f_j(d)$. These statements include
+all branch fillings, not just chosen samples.
+
+Choose distinct $e,c\in\mathcal B$ avoiding $d$. There are actual
+$\Pi_i$ and $\Pi_j$ fillings with $x_{b_k}=d$, $x_{b_l}=e$, and
+$x_g$ respectively beta and $c$. Assign the required alpha in each,
+assign its other partner as required, and fill the remaining unqueried
+slots with fresh distinct branch images. Their installed reply vectors
+differ at most at $G$. The two entry paths on the $\Pi_i$ vector are
+disjoint, so one avoids $G$ and persists on the $\Pi_j$ vector. Its
+output must belong to
+$\{R_0,R_i\}\cap\{R_0,R_j\}=\{R_0\}$. The same entry is consequently
+the zero entry in both contexts, and
+
+$$
+f_i(d)=f_j(d)=:f(d)\qquad(d\in\mathcal B).
+\tag{NRN.13}
+$$
+
+Since $\Pi_i$ attains both bits, $f$ is nonconstant. Choose
+$d_0,d_1\in\mathcal B$ with opposite orientations, and fix distinct
+$e,c$ avoiding both. The preceding construction gives four actual
+contexts, with $d=d_0$ or $d_1$ and $x_g=\beta$ or $c$. For each fixed
+entry, changing $d$ changes its output between zero and the positive
+target in each partner context. At the $d$ where that entry is positive,
+changing the partner context changes its output from $R_i$ to $R_j$.
+Both entries are known to terminate within two calls in all four contexts.
+
+Second, neither entry can be $B$. At the fixed value $e$ its first
+reply and successor are identical in all four contexts. For its output
+to depend on $d$ within one remaining call, that successor must be
+$A_0$ or $A_1$. A Halt is constant; $G$ depends only on the fixed
+partner context; $B$ depends only on $e$. But a second call at an $A$
+state depends only on $d$, so its resulting output is identical in the
+two partner contexts. It cannot supply $R_i$ and $R_j$ at the $d$
+where this entry is positive.
+
+Neither entry can be $G$ either. In each fixed partner context, its
+successor must be an $A$ state to distinguish $d_0,d_1$ in the last
+call. The beta and $c$ contexts must select different $A$ states;
+otherwise the positive output would be the same in both contexts.
+The other distinct entry is neither a Halt nor $B$ nor this $G$, so
+it is one of the two $A$ states. In one context the run from $G$
+therefore visits this other entry as its second Read. The two running
+paths meet on that fixed vector, contradicting Lemma 5.2 and their
+different outputs. Hence the two entries are precisely $A_0,A_1$, in
+one order.
+
+Third, we determine all relevant $G$ successors, rather than just those
+on the four contexts used to identify the entries. Take any
+$d\in\mathcal B$ and choose compatible fresh $e,c$. The common positive
+entry $f(d)$ is an $A$ state. Its first reply depends only on $d$,
+but its output must change from $R_i$ to $R_j$ between the beta and
+branch partner contexts. The only installed reply that can change is
+at $G$. Within two calls its first successor must therefore be $G$,
+and the second call forces
+
+$$
+\operatorname{next}(G,r_\beta(v))=H_i.
+\tag{NRN.14}
+$$
+
+For every prescribed $c\in\mathcal B$, choose $d,e$ fresh and distinct
+from $c$ and repeat this actual-source comparison. It forces
+
+$$
+\operatorname{next}(G,r_c(v))=H_j
+                  \qquad\text{for every }c\in\mathcal B.
+\tag{NRN.15}
+$$
+
+These successors really are Halts, since the second call exhausts the
+bound; their uniqueness follows from the exact five-Halt count. If an
+attainable branch reply equals $r_\beta(v)$, the two equations already
+contradict the fixed table. In all cases in which the configuration
+can persist, any second $G$ call at a beta partner returns $R_i$ and
+any second $G$ call at a branch partner returns $R_j$. Neither is
+$R_0$ or $R_k$.
+
+Fourth, take any original source $u\in\Pi_k$. Its $b_k$ value is
+alpha, its $g$ value is beta, and its $b_l$ value is a branch image.
+Replace the first two values by beta and a fresh branch image,
+respectively, keeping every other coordinate. The new injective
+all-image filling gives an actual $u'\in Z_{b_k}$, with target $R_0$.
+Both repeated partner occurrences are replaced together. Each $A$
+reply is absent on both sources, since $w_0,w_1$ are nonempty and
+both alpha and beta are leaves. The $B$ reply is identical. Thus
+only $G$ can differ between their installed vectors.
+
+Each actual correct execution starts at an $A$ entry and cannot visit
+$G$: a visit within two calls would be second, and (NRN.14)–(NRN.15)
+would return $R_i$ on $u$ or $R_j$ on $u'$, both incorrect. Each actual
+correct path therefore avoids $G$ and persists, with the same output,
+when started from that same entry on the other source. The two sources
+cannot use the same entry, since their targets are $R_k$ and $R_0$.
+They must use opposite bits. Their two correct $G$-free paths consequently
+establish that on this arbitrary $\Pi_k$ source both entries terminate
+within two calls with output pair $\{R_0,R_k\}$, and both paths avoid
+$G$. In particular the entry not prescribed on $u$ has been justified
+by a correct path on its actual zero companion.
+
+Throughout the entire $\Pi_k$, the two $A$ replies are fixed absence
+and the $G$ reply is its fixed beta reply. Only $B$ can vary with a
+branch filling. Any two $\Pi_k$ vectors thus differ at at most one
+Read and have the same two-entry output pair just proved. Lemma 5.2
+forces the same positive orientation on every source in $\Pi_k$.
+The original code is constant on this whole positive fiber, the final
+contradiction.
+
+All configurations of at most four installed Reads have now been
+exhausted. Exterior, deep, absent, repeated, redundant and unused Reads
+were included in that count and in the actual reply identities. The
+argument permits early stopping, shared states and cycles in unions of
+different-source paths. Therefore some entire positive fiber has
+constant prescribed code. $\square$
+

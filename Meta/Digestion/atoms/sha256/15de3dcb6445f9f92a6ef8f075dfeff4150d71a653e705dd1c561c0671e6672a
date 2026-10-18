@@ -1,0 +1,32 @@
+**Definition 6.3 (same-source actual run image).** A compiled run
+prefix has one actual stationary source, the same supplied
+source/epoch/type and original-root reference/permission contract,
+its current phase state, and its actual ordered Read prefix. Each
+reply, phase choice and successor comes from that one execution. The
+actual image is the image of these prefixes, not independently
+realizable source, work, reference, permission and history margins.
+
+If a record-bearing realization is desired, explicitly supply an
+authenticated same-source writer that appends $(w,r_t(w))$ on
+each completed Read, plus lawful callable access and persistence.
+With that service, at a running state $s$ let
+$w=\operatorname{addr}_{\rm compiled}(s)$. The successor is
+
+$$
+(t,s,\tau)\longmapsto
+\bigl(t,\operatorname{next}_{\rm compiled}(s,r_t(w)),
+\tau\mathbin{+\!+}[(w,r_t(w))]\bigr),
+\tag{NVC.17}
+$$
+
+with the reference/permission successor prescribed by that same
+service contract. Induction constructs its entire reachable joint
+image: initialize it from the actual paid entry and empty new
+archive, then append each truthful event and its declared successor.
+This is closure for this explicitly installed Read/writer system.
+The archive length, content, accessible controls, allocation and timing
+are additional complete state; the finite controller bounds do not
+bound this augmented observer. Without that writer service the
+mathematical prefix is not a callable archive or a verified PG34
+memory realization.
+

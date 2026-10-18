@@ -1,0 +1,73 @@
+**Theorem 9.2 (Exact rank stratification by active mirror sites).**
+The Schmidt rank of $\psi_{\chi_z}$ at the original cut is
+
+$$
+\operatorname{rank}A_{\chi_z}
+=|\mathcal I(P_m[A])|
+=\prod_{R}F_{|R|+2},
+\tag{9.3}
+$$
+
+where $R$ ranges over the maximal nonempty runs of active
+sites in $A$, and $F_0=0,F_1=1$. If every supplied
+$z_h\ne1$, this equals $F_{m+2}$, the maximum possible
+rank at that cut.
+
+Proof. Group all internally legal words on each side by
+their near-cut $m$-site pattern. Each pattern has positive
+activity mass: setting all farther sites to zero realizes
+it. The normalized positive amplitude vectors of different
+patterns are orthonormal because their supports are disjoint.
+They retain every internally legal word, including those
+on the longer side. As in Theorem 4.3, the full coefficient
+matrix therefore has the same nonzero singular values as
+a square sector matrix with nonzero row and column factors.
+Its unweighted core is
+
+$$
+K_z(S,T)=(1-s_mt_m)
+\prod_{i<m}[1+c_is_it_i],\qquad S,T\in\mathcal I_m.
+\tag{9.4}
+$$
+
+Expand this finite product, writing $c_I=\prod_{i\in I}c_i$.
+Only subsets of $S\cap T$ occur, and all such subsets are
+legal. Thus
+
+$$
+K_z(S,T)=\sum_{I\subseteq S\cap T}c_I
+=(Z\operatorname{Diag}(c_I)Z^{\mathsf T})(S,T),
+\qquad Z_{S,I}=\mathbf1_{\{I\subseteq S\}}.
+\tag{9.5}
+$$
+
+The finite inclusion matrix $Z$ is unit triangular when
+independent sets are ordered by size, with an arbitrary
+order within each size. It is invertible. This standard
+incidence-matrix factorization is an intermediate ingredient;
+the actual sector construction places it on the full
+inhomogeneous legal phase carrier.
+
+Multiplication by the two invertible inclusion matrices
+and the nonzero activity factors preserves rank. Hence
+the rank is the number of nonzero diagonal entries $c_I$.
+Such entries are exactly the independent sets $I\subseteq A$.
+The induced graph $P_m[A]$ is the disjoint union of its
+active runs. A run of length $r$ has $F_{r+2}$ independent
+sets, from the recurrence that separates its empty and
+occupied final site. Independent sets of disjoint runs
+combine freely, proving the product in (9.3).
+
+If all phases are nontrivial, every site is active and
+the rank is $F_{m+2}$. The two full half-chain dimensions
+are $F_{k+2}$ and $F_{n-k+2}$, whose smaller value is
+$F_{m+2}$. This proves maximality. $\square$
+
+With no active pair only the boundary site remains active,
+so the rank is two. One pair adjacent inside each boundary
+leaves an active run of length two and gives rank three.
+One farther mirror pair leaves two isolated active sites
+and gives rank four. These recover the applicable branches
+of Theorem 4.4. The rule for several phases depends on
+active runs, not just the number of nontrivial gates.
+

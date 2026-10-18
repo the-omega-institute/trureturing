@@ -1,0 +1,38 @@
+**Definition 1.3 (Full-complement posterior and reset variance).** Throughout the finite arguments fix $n$ and let $W\sim\pi_n$. For $1\le j\le n$ put
+
+$$
+\mathcal G_{n,j}=\sigma(W_k:1\le k\le n,\ k\ne j),\qquad
+a_{n,j}=\mathbb E_{\pi_n}[W_j\mid\mathcal G_{n,j}].
+\tag{1.5}
+$$
+
+Every extendible complement has positive mass. On a legal two-point fiber its posterior is the one-word mass divided by the sum of its two masses; on a forced singleton it is zero. Thus (1.2) gives
+
+$$
+\frac14\le a_{n,j}\le\frac12\quad\hbox{on free fibers},\qquad
+a_{n,j}=0\quad\hbox{on forced fibers}.
+\tag{1.6}
+$$
+
+For each reset index $3\le i\le n-2$ define
+
+$$
+\begin{aligned}
+E_i&=\{W_{i-2}=W_{i+2}=1\},&
+M_i&=\pi_n(E_i),\\
+c_i&=\mathbb E_{\pi_n}[a_{n,i}\mid E_i],&
+v_i&=M_i\operatorname{Var}_{\pi_n}(a_{n,i}\mid E_i),\\
+V_2(n)&=\sum_{i=3}^{n-2}v_i.
+\end{aligned}
+\tag{1.7}
+$$
+
+For $n<5$ the last sum is empty and equals zero. The event $E_i$ is measurable in $\mathcal G_{n,i}$, is nonempty and has positive mass. Its two neighbors of the center are zero. Conditional expectation therefore gives
+
+$$
+c_i=\pi_n(W_i=1\mid E_i),\qquad \frac14\le c_i\le\frac12.
+\tag{1.8}
+$$
+
+Every conditional variance in (1.7) conditions the full-complement posterior on the indicated event. It is not the variance of a posterior computed from only five coordinates.
+

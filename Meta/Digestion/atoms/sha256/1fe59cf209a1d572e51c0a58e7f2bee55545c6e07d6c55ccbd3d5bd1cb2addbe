@@ -1,0 +1,24 @@
+## 223. Special axes in a pair {X,B} satisfy q<x
+
+Let B=C or D, with value b<x-2. Suppose a special edge e has fixed
+pair {X,B}, with value q. Its entire star is genuine since the sole
+flat has pair {C,D}. Its n>=6 original axial angles theta_i sum to
+2*pi. For its transverse X angle use the individual response
+ beta(theta)=atan(lambda_plus*cot(theta/2))
+            +atan(lambda_minus*cot(theta/2)),
+ lambda_plus/minus=(sqrt(x^2-1) +/- sqrt(b^2-1))/(x+b)
+                    *sqrt((q-1)/(q+1)).
+Both parameters lie in (0,1). Thus beta is positive, decreasing and
+convex. An owner has two transverse X slots and at most two e axes,
+so its actual X expense is at least the sum of beta over its e slots.
+The complete X budget and Jensen give
+ 2*pi>=sum_i beta(theta_i)>=n*beta(2*pi/n)>=6*beta(pi/3).
+Write s=lambda_plus+lambda_minus, p=lambda_plus*lambda_minus>0.
+Since beta(pi/3)<=pi/3<pi/2, tangent addition has positive denominator
+and yields
+ sqrt(3)*s/(1-3*p)<=sqrt(3), hence s+3*p<=1.
+In particular s<=1. Consequently
+ (q-1)/(q+1)<=(x+b)^2/[4*(x^2-1)]
+             <(x-1)/(x+1),
+using b<x-2. The increasing inverse of (q-1)/(q+1) gives q<x.
+

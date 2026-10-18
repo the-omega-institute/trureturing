@@ -1,0 +1,96 @@
+**定理 21.1（no11 来源的黄金熵界及唯一达到者）。**
+令 $\phi=(1+\sqrt5)/2$。所有平稳 no11 二值源都满足
+
+$$
+h(\mu)\le\log\phi.
+\tag{21.1}
+$$
+
+等号唯一由密度
+
+$$
+t_*=\frac{5-\sqrt5}{10}=\frac1{\phi^2+1},\qquad
+q_*:=\frac{t_*}{1-t_*}=\phi^{-2},\qquad
+\kappa_{**}=\frac{t_*^2}{1-t_*}=\frac{t_*}{\phi^2}
+\tag{21.2}
+$$
+
+的平稳一阶链达到，其五态律为
+
+$$
+p_{**}=\left(t_*,\frac{t_*}{\phi},t_*,\frac{t_*}{\phi},
+\frac{t_*}{\phi^2}\right).
+\tag{21.3}
+$$
+
+因此五项比例是 $\phi^2:\phi:\phi^2:\phi:1$，不是五态均匀分配。
+
+证明。no11 给 $0\le t\le1/2$。对 $0<t<1/2$，
+定理 19.2 已在所有平稳源中给出唯一固定密度最大者与上界 $h_1(t)$。
+展开二元熵得到
+
+$$
+\begin{aligned}
+h_1(t)&=(1-t)\log(1-t)-t\log t-(1-2t)\log(1-2t),\\
+h_1'(t)&=\log\frac{(1-2t)^2}{t(1-t)},\\
+h_1''(t)&=-\frac1{t(1-t)(1-2t)}<0.
+\end{aligned}
+\tag{21.4}
+$$
+
+导数为零等价于 $1-5t+5t^2=0$，唯一落在 $(0,1/2)$ 的根为 $t_*$。
+也可由该二次式在区间内只有这一根，得左侧导数正、右侧负。
+端点以连续延拓有 $h_1(0)=h_1(1/2)=0$。
+在 $t=0$ 时源几乎处处全零；在 $t=1/2$ 时 (17.4) 给 $\mathbb P(00)=0$，
+与 no11 合并强迫逐位交替，平稳性把两个相位的质量固定为各半。
+两端点源的熵率也为零，所以没有漏掉边界达到者。
+
+由 $\phi^2=\phi+1$ 有 $1-q_* =\phi^{-1}$。代入 (19.1)，
+
+$$
+h_1(t_*)=(1-t_*)\big((1-q_*)+2q_*\big)\log\phi
+=(1-t_*)(1+q_*)\log\phi=\log\phi.
+$$
+
+严格的密度最大化及固定密度的唯一性一起给全类唯一性。
+将 $q_*$ 代入 (19.2) 的平稳三位乘积律，即得
+$p_0=(1-t_*)\phi^{-2}=t_*$、
+$p_1=p_3=t_*\phi^{-1}$、$p_2=t_*$、$p_{13}=t_*\phi^{-2}$。
+若误取五个模式各 $1/5$，则 $X=Y=2/5,Z=1/5$，
+违反滑动窗口的平稳等边缘条件 $X=Y=Z$；
+因此它虽然是一个合法局部律，却不是所论平稳窗口律。证毕。
+
+数学引文及参数对应。该黄金链是 [LocalClock 命题 15.6][SM-LC]
+的单位权体相链，亦是其命题 15.8 中 $\lambda=1$、$\eta=\phi^{-2}$、
+$\mu=t_*$ 的特例。置
+
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad v=(\phi,1)^T,
+\qquad Av=\phi v,
+\qquad P_{ij}=\frac{A_{ij}v_j}{\phi v_i}
+=\begin{pmatrix}\phi^{-1}&\phi^{-2}\\1&0\end{pmatrix}_{ij}.
+\tag{21.5}
+$$
+
+这里 $A$ 的符号 $0,1$ 分别是空位与占位，允许 $0\to0$ 的自环；
+$A$ 对称、不可约且 $A^2$ 严格正。其平稳律为
+$(\phi^2,1)/(\phi^2+1)$。
+Roberta Sinatra、Jesús Gómez-Gardeñes、Renaud Lambiotte、
+Vincenzo Nicosia、Vito Latora 的
+*Maximal-entropy random walks in complex networks with limited information*，
+[arXiv:1007.4936v2，Eq. (10)][SM-S] 给出
+$\pi(j\mid i)=a_{ij}u_j/(\lambda u_i)$。
+该文讨论连通、无向、无权图；式中的 $u,\lambda$ 在这里对应 $v,\phi$。
+本例含自环，所需归一化、平稳性和熵界由 (21.4)–(21.5) 直接核定，
+不把论文中图的约定扩大为未经论证的自环定理。
+
+Z. Burda、J. Duda、J. M. Luck、B. Wacław，
+*Localization of maximal entropy random walk*，
+[arXiv:0810.4113v2，Eqs. (6)–(13)][SM-B]，在有限连通对称邻接图上
+给出正 Perron 向量、相同转移、$\pi_i=\psi_i^2$、
+固定端点路径概率 $\lambda^{-m}\psi_{i_m}/\psi_{i_0}$ 以及熵率 $\log\lambda$。
+对应为 $\psi=v/\sqrt{\phi^2+1}$、$\lambda=\phi$；
+这里只使用此谱构造背景，不引用其无序图局域化结果来解释本位源。
+“Parry 链”是该类最大熵链的通用名称；上述两个具体引文的作者
+分别为 Sinatra 等人与 Burda 等人。
+

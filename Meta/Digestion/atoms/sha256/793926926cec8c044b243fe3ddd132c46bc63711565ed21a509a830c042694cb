@@ -1,0 +1,91 @@
+**Theorem 3.1 (height locates the actual entry cut).** For every $D\ge0$,
+the map
+
+$$
+(t,w)\longmapsto(h(t),X(t,w)),\qquad (t,w)\in\mathcal H_D,
+\tag{ER.7}
+$$
+
+is effectively injective. Every endpoint fiber $X^{-1}(x)$ has at most
+$D+1$ elements, and some endpoint fiber has exactly $D+1$ elements.
+
+More precisely, among all reference encoders $E:\mathcal F_D\to A$
+independent of the later word, the smallest attained alphabet
+$|E[\mathcal F_D]|$ permitting recovery of every $(t,w)$ from only
+$(E(t),X(t,w))$ is exactly $D+1$. Height attains this minimum. Its conditional
+fixed-width reference requires $\lceil\log_2(D+1)\rceil$ bits. These are
+supplementary-reference counts conditional on the complete current tree.
+
+On the attained image (ER.6), initialization and each action in (ER.4)
+are effective, preserve that image and retain the exact work-history target.
+This assertion concerns the declared successful work interface only.
+
+Proof. Use the existing substitution-image parser from [PG, §37.2 and
+Theorem 44.6][PG] and [JM, Convention 36.2][JM]. Its image grammar is
+
+$$
+I=\rho[\mathcal T]::=\beta\mid\langle\beta,\alpha\rangle
+                       \mid\langle I,I\rangle.
+\tag{ER.8}
+$$
+
+The three alternatives are disjoint: $\alpha\notin I$, so the exceptional
+pair cannot be a pair of two image trees. The supplied effective inverse
+$\delta:I\to\mathcal T$ recovers the unique predecessor under $\rho$.
+This parser and substitution injectivity are reused, not new results here.
+
+The image of $G$ consists of pairs with left child $\alpha$. It is disjoint
+from $I$: such a pair is neither the exceptional pair nor a pair of two
+image trees. Its unique $G$ predecessor is its right child. Consequently
+every current tree has at most one predecessor together with its last
+action under the two-action menu.
+
+Backward parsing terminates. Indeed, if $A(x),B(x)$ count the two leaf
+labels, the positive integer $n(x)=2A(x)+3B(x)$ satisfies
+
+$$
+\begin{aligned}
+n(\rho(x))-n(x)&=A(x)+2B(x)>0,\\
+n(G(x))-n(x)&=2.
+\end{aligned}
+\tag{ER.9}
+$$
+
+Thus the unique predecessor chain from $x$ is finite. Every possible
+initial $t\in\mathcal F_D$ giving endpoint $x$ lies on that chain; the
+removed action labels give its unique forward suffix $w$. Conversely every
+chain point in $\mathcal F_D$, with that suffix, is an admissible history.
+
+Heights never decrease under $\rho$, by induction on the input tree, and
+$h(G(x))=h(x)+1$. Each tree in $\mathcal F_D$ has left child $\alpha$,
+so cannot lie in $I$. Between two distinct chain points belonging to
+$\mathcal F_D$, the nonempty forward segment must therefore end with
+$G$. Their heights strictly increase. All initial heights lie in
+$\{1,\ldots,D+1\}$, proving the fiber bound and uniqueness of the chain
+point of a specified initial height. Parse backward to the end, select that
+point, and reverse the removed labels. This is a terminating decoder for
+(ER.7); off its attained image it may reject. Forward replay on this
+acquired syntax also reconstructs every intermediate tree and the full
+declared successful outputs.
+
+For sharpness put $x=G^{D+1}(\alpha)$. The $D+1$ trees
+
+$$
+t_j=G^j(\alpha)\in\mathcal F_D\quad(1\le j\le D+1)
+\tag{ER.10}
+$$
+
+all reach $x$, by $D+1-j$ grafts. These are different recovery targets
+with the same endpoint, so every successful $E$ must distinguish all
+$t_j$. Height takes all $D+1$ values and supplies the decoder already
+proved. The bit assertion follows because $b$ bits have at most $2^b$
+values and the height index has a fixed-width encoding.
+
+Finally an action updates $(e,x)$ to $(e,\rho(x))$ or $(e,G(x))$ and
+has exactly the output specified in Assumption 2.1. For a representative
+$(t,w)$, the successor is represented by $(t,w\mathsf S)$ or
+$(t,w\mathsf G)$. Hence it lies in the same actual image. Injectivity
+of (ER.7) makes these representative-independent transitions faithful to
+the entire initial tree and ordered word. No reverse work permission is
+used: backward parsing acts on already acquired syntax. $\square$
+

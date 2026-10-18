@@ -1,0 +1,33 @@
+**Definition 64.9 (exact suppliers and ordinary-proof scope).**
+The exact source suppliers are §§55.1–55.6 for the actual source, $L_D$, common
+field and grounded boundary; §§58,60 for source/record/clock ownership and the
+complete retained target; §§62.1–62.4 for literal symmetric statistics and both
+pair laws; and legacy §52.7 for the distinct Euclidean point-source contract.
+Chapter63's already completed binding/escape/spectral results are inherited;
+none is claimed as another accomplishment here.
+
+Bolte--Kerner, [*Quantum graphs with two-particle contact interactions*,
+arXiv:1207.5648v1, Definition3.1 and Proposition3.2](https://arxiv.org/pdf/1207.5648v1),
+supplies the mature diagonal-Dirichlet hard-core form method on a finite compact
+metric graph with Lebesgue edge-product measure. Its boundary maps $P,L$ are
+bounded and measurable, $P$ is an orthogonal projection, and $L$ is self-adjoint
+on $\ker P$; contact and vertex blocks are separated. Hard-core contact chooses
+$P_{\rm contact}=I$, $L_{\rm contact}=0$. Its delta-type Lipschitz strength is a
+different case. Proposition3.2 supplies closed semibounded forms, not automatic
+$H^2$ operator regularity; that further identification in Proposition3.3 requires
+additional regularity. It supplies neither atomic port masses, the mixed-stratum
+gluing nor this calibrated small-density limit and preparation. Lemmas64.5a–64.5b
+and Theorems64.6–64.7 prove those missing relations directly; no supplier theorem
+is applied outside its conditions. Closed-form representation, Hilbert-space
+orthogonal minimization and unitary Duhamel are classical intermediates. No
+additional Library note is needed.
+
+Equations (64.1)–(64.5) are ordinary metric/finite-matrix deductions with the full
+ten-pair target. Equations (64.6)–(64.12) are a new conditional stratified particle
+form, its admissible joint calibration and whole-state operator estimate.
+Exact finite checks of source coefficients, slice matrices, collision-free trial
+integrals and the stated bounds support the displayed finite identities; they
+cannot replace the continuum closedness, minimization or evolution proofs.
+These are ordinary repo-derived mathematics, without literature-priority,
+fresh Lean/kernel, current CI or physical evidence claims.
+

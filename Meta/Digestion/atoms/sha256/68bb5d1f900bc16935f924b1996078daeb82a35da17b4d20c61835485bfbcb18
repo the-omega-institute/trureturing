@@ -1,0 +1,54 @@
+**定义 204.1（完整事件锥与原始关系）。** 取 $L\ge3$。一个分数
+$y=(A,C,P,T)$ 是所有独立基行、正确行、pair 行（每个零字）以及正字基行的非负系数。首个零地址为 $n$ 时的三项需求为
+$1-b_n-e$、$b_n-e$、$1-e$，正字项的需求为 $1-e$；即使系数为零，行仍在完整矩阵中；每个 Boolean 字（包括多零字）都保留，负的 singleton 需求也保留。$\mathcal N_2$ 使用预先取得的完整四胞 pair 目录，$\mathcal O_2$ 使用预先递增的停止目录 $0,10,11$；空表、单例表均保留；静态重复的输出函数归入单例，$N$ 的反序归入四胞的置换，$O$ 的双询仍只允许递增地址。重复或忽略的实际请求仍计数。令
+
+$$
+R=(1,2;1,2,0),\qquad \alpha=(1,1,0,\ldots;0),\qquad r=z_R=d(\alpha),\qquad G_C=(z_D-r)_D,
+$$
+
+并写 $h(b)=d(b)-r$。令
+
+$$
+Q(y)=(\beta,K),\qquad \beta_j=\sum_{n(w)=j}(C_w-A_w),\qquad K=\sum_w(A_w+C_w+P_w)+T,
+$$
+
+$$
+F_q(b)=\sum_j\beta_j(b_j-\alpha_j)-Ke.
+$$
+
+本节涉及的输入满足 $A=0$，$P$ 只在首零类 1、2 上有支撑。记
+
+$$
+\gamma_j=\sum_{n(w)=j}C_w,\quad E=\gamma_1+\gamma_2,\quad G=\sum_{j\ge3}\gamma_j,
+\quad S=\sum_wP_w,\quad t=T,
+$$
+
+$$
+B=S+t,\qquad W=E+B,\qquad K_y=E+G+B,\qquad
+\delta=\Delta_O(y),\qquad \mu=\max_{j\ge3}\gamma_j.
+$$
+
+有序辅助域为
+
+$$
+H=\{1\ge b_1\ge\cdots\ge b_L\ge e\ge0:\ b_2=b_3,\ (L+1)e\le\sum_{j\ge3}b_j,\ b_1+\sum_{j\ge3}b_j-(L+1)e\le1\}.
+$$
+
+其完整凸包顶点为 $o,p,u_k,v_k$（$3\le k\le L$）：$o=0$，$p=(1,0,\ldots;0)$，$u_k$ 的前 $k$ 个坐标为 $1/(k-1)$ 且 $e=0$，而 $v_k$ 的前 $k$ 个坐标为 1、其余为 $e_k=(k-2)/(k+1)$。这些零端点只属于辅助多面体，不是原始正尾来源。若 $q$ 允许有符号，记 $\sigma_H(q)=\max_{b\in H}F_q(b)$；$P_H=\{q:F_q\le0\text{ on }H\}$，且 $E_N$ 表示存在 $V\ge0$、$\theta\in[0,1]$ 满足
+$\Delta_N(V)\le1-\theta$、$\sigma_H(Q(y)-Q(V))\le\theta$ 的证书类。
+
+本节 $w(Z)$ 表示零集恰为 $Z$、其余位全为 1 的字，$C_Z,P_Z$ 分别表示该字的正确权与 pair 权；直接写二进制下标时则指整个字。每个明确构造未列出的行权均为零，重合字的权相加；在指定长度后补位时一律补 1。有限测度 $\nu$ 的“平衡 early lifts”严格指 $P_{01x}=P_{10x}=\nu(x)/2$，不放 early 00 行。后面使用的 fair-suffix 分数也固定如下：在每个 $x\in\{0,1\}^{L-2}$ 上取 $P_{01x}=P_{10x}=S/2^{L-1}$，在每个 $1^{j-1}0v$（$v\in\{0,1\}^{L-j}$）上取 $C=\gamma_j/2^{L-j}$，并取 $T=t$。这规定全部支撑，而不只是边际总量。
+
+对日程 $D$ 的每个终端胞 $B$，记
+
+$$
+M_y(B)=\max_{0\le\ell\le L}\left[\sum_{n=1}^L\sum_{w\in B\cap\Omega_n}
+ \bigl(A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n}+P_w\mathbf1_{\ell\in\{0,n\}}\bigr)
+ +T\mathbf1_{1^L\in B,\ell=0}\right],
+\qquad B_D(y)=\sum_B M_y(B).
+$$
+
+上式的求和遍历所有零字及其首零 $n=n(w)$。于是 $\Delta_C(y)=\max_{D\in\mathcal D_C}B_D(y)-W$；每胞允许所有标签，包括早于地址和未查询的标签。以下支撑表的 $N$ 胞顺序为 $00,01,10,11$，$O$ 为 $0,10,11$；$O$ 的第一胞先合并奖励，再取标签最大值，不能合并两个已经取过的最大值。
+
+### 204.1 最大实际容量抽取
+

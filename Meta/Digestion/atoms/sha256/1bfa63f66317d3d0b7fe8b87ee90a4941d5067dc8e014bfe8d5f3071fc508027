@@ -1,0 +1,49 @@
+**Theorem 72.2 (strict subcode/full-code separation).** For every fixed actual $N_{\epsilon,Q}$ of (S.113), every complex unit $\xi$ has the whole-output recovery (S.129), independent of $\epsilon,Q$, satisfying
+
+$$
+\|R_\xi N_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq b:=\frac{55-24\sqrt3}{48},\qquad
+\delta_{N_{\epsilon,Q}}\geq\frac{17}{48}.
+\tag{S.141}
+$$
+
+In particular, with all recovery infima over complex CPTP maps $M_5\to M_3$,
+
+$$
+\sup_{\substack{\xi\in\mathcal C\\\|\xi\|=1}}
+\inf_R\|RN_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq b<\frac9{32}<1-\frac1{\sqrt2}<\frac{17}{48}
+\leq\inf_R\|RN_{\epsilon,Q}-\mathrm{id}_3\|_\diamond.
+\tag{S.142}
+$$
+
+Proof. Fix the same arbitrary recovery $R$ when comparing the purified outputs at $N_0$ and $N_{\epsilon,Q}$ for the same $\rho_\star$. Their trace-norm difference is at most $\eta_\epsilon$ by (S.140) and CPTP contraction. Their difference is Hermitian and traceless, so any effect probability differs by at most $\eta_\epsilon/2$: its positive and negative parts each have trace half its trace norm. Using the pure target effect and (S.127) gives, simultaneously for every $R$,
+
+$$
+F_e(\rho_\star,RN_{\epsilon,Q})
+\leq\frac{13}{16}+\frac{\eta_\epsilon}{2}\leq\frac{79}{96},\qquad
+\|RN_{\epsilon,Q}-\mathrm{id}_3\|_\diamond
+\geq2(1-79/96)=\frac{17}{48}.
+\tag{S.143}
+$$
+
+This is one fixed three-dimensional purification witnessing a lower bound for all unrestricted recoveries. For each $\xi$, use its fixed base recovery $R_\xi$ on the entire perturbed output, including the reset branch outside $P_\xi$. Input isometries and CPTP postprocessing do not increase diamond norm, so
+
+$$
+\|R_\xi N_{\epsilon,Q}\iota_\xi-\iota_\xi\|_\diamond
+\leq\frac{9-4\sqrt3}{8}+\eta_\epsilon
+\leq\frac{55-24\sqrt3}{48}.
+\tag{S.144}
+$$
+
+The three strict comparisons in (S.142) reduce, by squaring positive sides, to
+
+$$
+48\sqrt3>83\quad(6912>6889),\qquad
+\frac1{\sqrt2}<\frac{23}{32}\quad(512<529),\qquad
+\frac{31}{48}<\frac1{\sqrt2}\quad(961<1152).
+\tag{S.145}
+$$
+
+The uniform separation between the displayed full-code lower bound and the subcode upper bound is $17/48-b=(12\sqrt3-19)/24>0$, since $432>361$. Every upper estimate holds after every finite complex reference. Taking a separate recovery infimum for each direction and then the direction supremum is therefore legitimate. It does not place a single recovery before that supremum. $\square$
+

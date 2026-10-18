@@ -1,0 +1,94 @@
+### 定理 40.2（对角量子 Fisher 等于 FIB Fisher）
+
+令
+
+\[
+\rho_\kappa
+=
+\iota_\Sigma(p_\kappa)
+=
+\sum_{s\in\Sigma}p_{\kappa,s}|s\rangle\langle s|,
+\]
+
+并假设 \(\kappa\) 位于纤维内部，使得 \(p_{\kappa,s}>0\) 对所有 \(s\in\Sigma\)。令
+
+\[
+d=(1,-1,0,-1,1),
+\qquad
+\partial_\kappa p_\kappa=d.
+\]
+
+则
+
+\[
+L_\kappa
+=
+\operatorname{diag}
+\left(
+\frac{d_s}{p_{\kappa,s}}
+\right)_{s\in\Sigma},
+\]
+
+且
+
+\[
+\boxed{
+F_Q(\rho_\kappa)
+=
+\sum_{s\in\Sigma}
+\frac{d_s^2}{p_{\kappa,s}}
+=
+\mathcal I(\kappa).
+}
+\]
+
+因此 Bures 线元（取标准约定 \(ds_B^2=\tfrac14F_Q\,d\kappa^2\)）满足
+
+\[
+\boxed{
+ds_B^2
+=
+\frac14\mathcal I(\kappa)\,d\kappa^2.
+}
+\]
+
+#### 证明
+
+\(\rho_\kappa\) 和 \(\partial_\kappa\rho_\kappa\) 都是对角矩阵，因此 SLD 方程逐个对角元化为
+
+\[
+d_s=p_{\kappa,s}(L_\kappa)_{ss}.
+\]
+
+故
+
+\[
+(L_\kappa)_{ss}
+=
+\frac{d_s}{p_{\kappa,s}}.
+\]
+
+代入量子 Fisher 定义得到
+
+\[
+\begin{aligned}
+F_Q(\rho_\kappa)
+&=
+\sum_s p_{\kappa,s}
+\left(\frac{d_s}{p_{\kappa,s}}\right)^2\\
+&=
+\sum_s\frac{d_s^2}{p_{\kappa,s}}
+=
+\frac1{p_0}
++\frac1{p_2}
++\frac1{p_5}
++\frac1{p_{25}}
+=
+\mathcal I(\kappa).
+\end{aligned}
+\]
+
+Bures 线元的公式直接给出第二项。证毕。
+
+该定理说明：FIB 的隐藏 seam 并不是一个凭空增加的“量子变量”。它在对角量子态流形中对应一个严格定义的 Hermitian 切向扰动。若要研究真正的量子相干，还必须允许非对角密度矩阵并给出额外的非交换动力学。
+

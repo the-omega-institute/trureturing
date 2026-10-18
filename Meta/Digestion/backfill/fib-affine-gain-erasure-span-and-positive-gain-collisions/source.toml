@@ -1,0 +1,5 @@
+source_id = "fib-affine-gain-erasure-span-and-positive-gain-collisions"
+path = "docs/develop/theory/FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

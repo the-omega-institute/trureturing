@@ -1,0 +1,38 @@
+**Corollary 7.3 (paid realization of the existing strongest source producer).**
+For every actual $U\in\mathcal T_H$ with $m$ leaves, the adapter can execute the
+existing common full-source producer from root and empty stack. It returns
+the entire labelled ordered $U$ and makes exactly $2m-1$ TagRead calls,
+$2(m-1)$ NativeLocal markers and no source update. Its source-call transcript,
+full producer chronology and complete terminal output have authentic paid rows.
+The numeric producer can instead return its existing lossless `sourceName U`
+through additional paid numeric workspace computation and output writes.
+
+**Proof.** Directly implement `sourceControl`: a visit reads its stored
+address; alpha or beta constructs that acquired leaf; a branch pushes the
+right address and visits the left. Deliver with a pending right address saves
+the acquired left subtree and switches; deliver with a saved left subtree
+constructs their ordered pair. Empty stack stops. Append/copy scans implement
+finite address and stack operations, so this is one common finite effective
+controller, with no unknown subtree in its input. `native_source_producer`
+already supplies its actual run, truthful order and exact reconstruction for
+every finite $U$. The run has no updates and hence is capacity-safe at $H$.
+Theorem 7.2 realizes it on the installed packet. A full binary tree has
+$m-1$ branch nodes and $2m-1$ total nodes; its supplied `productionTrace`
+contributes one read per node and two locals per branch. These give the exact
+counts. The actual tape work inside each TagRead and each controller operation
+remains additional paid work.
+
+For a numeric output, reuse `NativeEffectiveSourceProducer.numericTick` and
+its name/instruction correspondence: leaf names are 0 and 1, and pair names
+are `Nat.pair(left,right)+2`. These operations on acquired finite naturals are
+implemented by finite paid arithmetic/encoding routines. The supplied
+`effective_source_producer` proves losslessness and actual external
+acquisition. No classical `sourceDecoder` is executed: if a tree-valued
+delivery is wanted, the direct acquired preorder serialization is already
+available. $\square$
+
+For an $m$-leaf acquired tree, its active TM token serialization has $4m-2$
+payload bits, and its `AtomicPrefixParser.code` serialization has $3m-1$.
+Choosing either output requires writing, framing and copying those actual bits.
+The padded private packet still has $2N$ bits, regardless of $m$.
+

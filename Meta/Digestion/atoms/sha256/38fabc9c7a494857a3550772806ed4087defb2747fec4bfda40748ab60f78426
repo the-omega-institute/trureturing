@@ -1,0 +1,50 @@
+### 推论 20.7（谱隙在显式可见子空间上传递）
+
+设 \(U_{j+1}\subseteq\mathcal H_{j+1}\) 是一个子空间，\(R_jU_{j+1}\) 位于粗层的零均值子空间，并且存在 \(c_j>0\) 使
+
+\[
+\|R_jf\|_{\mu_j}
+\ge
+c_j\|f\|_{\mu_{j+1}},
+\qquad
+f\in U_{j+1}.
+\]
+
+如果粗层满足
+
+\[
+\mathcal Q_j(g)
+\ge
+\lambda_j\|g\|_{\mu_j}^{\,2},
+\qquad
+g\in R_jU_{j+1},
+\]
+
+则细层满足
+
+\[
+\mathcal Q_{j+1}(f)
+\ge
+c_j^2\lambda_j\|f\|_{\mu_{j+1}}^{\,2},
+\qquad
+f\in U_{j+1}.
+\]
+
+#### 证明
+
+由定理 20.6 和粗层 Poincaré 不等式，
+
+\[
+\mathcal Q_{j+1}(f)
+\ge
+\mathcal Q_j(R_jf)
+\ge
+\lambda_j\|R_jf\|_{\mu_j}^{\,2}
+\ge
+c_j^2\lambda_j\|f\|_{\mu_{j+1}}^{\,2}.
+\]
+
+证毕。
+
+该推论只对 \(R_j\) 不丢失的指定子空间成立。对被粗粒化消除的高频方向，不能从粗层谱隙反推细层谱隙。
+

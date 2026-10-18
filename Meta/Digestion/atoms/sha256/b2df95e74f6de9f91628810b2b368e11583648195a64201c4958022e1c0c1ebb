@@ -1,0 +1,10 @@
+### 97.7. Simplifying the certificate character
+
+We have proved the exact pairing Gamma=(c/d) product_{p|d}(-eta e/p)_4. Since d=1mod4, c is positive odd and coprime to d, quadratic reciprocity gives (c/d)=(d/c).
+
+For every prime p|c with p not dividing5d, primitiveness and the norm equation imply a,b are units modulo p and (l/p)=1. Consequently (d/p)=(5/p)^epsilon. For epsilon=0 this says (d/p)=1 at every such prime; at p=5 the same holds from actual5-splitting. Hence (d/c)=1 in that case.
+
+For epsilon=1, 5 does not divide c: if it did, the equation a^2-5d b^2=5de c^2 would force both a and b divisible by5 as above. Thus (d/c)=(5/c)=(c/5). This proves both simplified formulas, including prime powers in c through their valuation multiplicities.
+
+The pairing is independent of all allowed choices. Therefore the primitive certificate character in the second formula is an invariant under the stated normalizations; weak approximation above does not authorize changing it to a preferred sign.
+

@@ -1,0 +1,5 @@
+### 67.1 Complete-basis classification
+
+Let \(C(b)\) denote the unit-entry canonical **input** matrix of §62,
+so \(C(b)^*C(b)=6I_6\) and \(|M(b)C(b)|^2=6\) entrywise.
+

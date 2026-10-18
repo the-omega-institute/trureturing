@@ -1,0 +1,27 @@
+**Definition 1.1 (objects and conventions).** Use the physical/passive correspondence (P.1)–(P.2), classes $\mathcal R_\beta\subseteq\mathcal C_\beta$, and full-input metrics of the [phase-gain volume](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md). Here $N:M_3\to M_5$ is the passive representation of an actual member of $\mathcal R_\beta$, $a=1-\beta$, $0\leq\beta\leq1/2$, and its Kraus matrices $K_\alpha$ are real in the fixed original bases. Put
+
+$$
+\sigma_\pm=N(\chi_\pm),\quad \sigma_2=N(|2\rangle\langle2|),\quad
+V|i\rangle=\sum_\alpha K_\alpha|i\rangle\otimes|\alpha\rangle_E,
+\quad \Gamma(X)=\operatorname{Tr}_B(VXV^\dagger).
+\tag{R.1}
+$$
+
+The environment basis in (R.1) is real. Recoveries are always all complex CPTP maps on the entire five-dimensional output. Root fidelity is $f(A,B)=\|\sqrt A\sqrt B\|_1$, $F$ is its minimum over all input purifications, $g_N=\max_R F(RN,\mathrm{id}_3)$, and $\delta_N=\inf_R\|RN-\mathrm{id}_3\|_\diamond$ uses the unhalved norm and all finite references. The actual passive phase-difference spectrum is $(a,\beta,0,-\beta,-a)$; the physical native inputs are $\theta_\pm$, with swapped passive signs. Real-frame hypotheses in this volume are not asserted for every member of $\mathcal C_\beta$.
+
+For $\Gamma:M_3\to M_r$ use the unnormalized input-first Choi matrix. If $J_0$ is its original-input-frame matrix and $J_p$ its phase-input-frame matrix, then
+
+$$
+H=(\chi_+,\chi_-,|2\rangle)
+=\frac1{\sqrt2}\begin{pmatrix}1&1&0\\ i&-i&0\\0&0&\sqrt2\end{pmatrix},
+\quad P=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},
+$$
+
+$$
+J_p=(H^T\otimes I)J_0(\bar H\otimes I),\qquad
+J_0=(\bar H\otimes I)J_p(H^T\otimes I).
+\tag{R.2}
+$$
+
+Indeed the $(k,l)$ block of the first expression is $\sum_{ij}H_{ik}\bar H_{jl}\Gamma(|i\rangle\langle j|)=\Gamma(H|k\rangle\langle l|H^\dagger)$. A physical input density has phase coordinates $\rho_p=H^\dagger\rho_0H$. The reference transformation in (R.2) is thus not $H^\dagger$ on the left.
+

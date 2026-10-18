@@ -1,0 +1,100 @@
+**Theorem 32.2 (Reachable-survival dimension consequence).** Let
+$\mathcal H$ be the span of the supports obtained from $\operatorname{supp}(\tau)$
+by all finite words in a Kraus family of $\Phi$, including the empty word,
+and let $d=\dim\mathcal H$.  Then $\mathcal H$ is invariant under every
+zero Kraus operator, the restriction $\Phi_{\mathcal H}$ has
+
+$$
+\rho(\Phi_{\mathcal H})=q,
+\tag{32.3}
+$$
+
+and
+
+$$
+D\ge d\ge m+1.
+\tag{32.4}
+$$
+
+Every persistent degree of freedom used by the branch is included in
+$d$.  An external clock, controller or correlated input is outside the
+model and cannot be used to evade (32.4).
+
+**Proof.** Since $\Phi+\Psi$ is trace preserving,
+$\gamma_j=S_j-S_{j+1}$.  Properness gives the tail identity
+
+$$
+S_k=\sum_{j\ge k}\gamma_j.
+\tag{32.5}
+$$
+
+Writing $j=k+t$ and expanding the power gives
+
+$$
+S_k=q^kQ(k),
+\qquad
+Q(k)=C\sum_{t\ge0}(k+t)^{2m}q^t.
+\tag{32.6}
+$$
+
+The series can be expanded term by term.  It is a polynomial of degree
+exactly $2m$; its leading coefficient is $C/(1-q)>0$.
+
+Choose Kraus operators $K_1,\ldots,K_s$ for $\Phi$ and let
+$\mathcal H_N$ be the span of $K_w\operatorname{supp}(\tau)$ over all
+words $w$ of length at most $N$, with the empty word included.  The
+sequence of subspaces is increasing and stabilizes after finitely many
+steps.  A plateau is permanent because each $K_\ell$ maps the plateau
+into itself, so for some $N\le d-\operatorname{rank}(\tau)$,
+$\mathcal H_N=\mathcal H$.  This argument uses only finite-dimensional
+linear algebra and does not assume convergence of an infinite series.
+
+Set
+
+$$
+X=\sum_{j=0}^{N}\Phi^j(\tau).
+\tag{32.7}
+$$
+
+The support of $X$ is exactly $\mathcal H_N=\mathcal H$, so there are
+numbers $0<a\le b$ with
+$ aI_{\mathcal H}\le X\le bI_{\mathcal H}$.
+For $T=\Phi_{\mathcal H}^k$, complete positivity gives
+$\|T\|_{\mathrm{op}\to\mathrm{op}}=\|T(I)\|_{\mathrm{op}}$.  Hence
+
+$$
+ a\|T\|\le\operatorname{Tr}T(X)\le bd\|T\|.
+\tag{32.8}
+$$
+
+On the other hand, (32.7) and (32.6) give
+
+$$
+\operatorname{Tr}\Phi_{\mathcal H}^k(X)
+ =\sum_{j=0}^{N}S_{k+j}=q^kQ_X(k),
+\tag{32.9}
+$$
+
+where $Q_X$ is a degree-$2m$ polynomial with positive leading
+coefficient.  Combining (32.8)--(32.9) and taking $k$th roots, using
+the finite-dimensional spectral-radius formula, proves (32.3).
+
+Apply Theorem 31.2 to the restricted map on $M_d(\mathbb C)$.
+The upper inequality in (32.8), the trace functional and (32.9) imply
+for some constant $K'$ that
+
+$$
+q^kQ_X(k)\le K'(1+k)^{2d-2}q^k.
+\tag{32.10}
+$$
+
+After cancelling $q^k>0$, the positive leading coefficient of $Q_X$
+forces $2m\le2d-2$.  Thus $d\ge m+1$, and the inclusion
+$\mathcal H\subseteq\mathbb C^D$ gives $D\ge d$. $\square$
+
+The conclusion is a necessary condition for the specified actual law.
+It allows arbitrary mixed $\tau$, arbitrary finite Kraus multiplicity and
+non-reset conditional states.  The proof uses the reachable restriction
+before taking a spectral radius: the full map on an ambient memory may
+have an unrelated spectral block that is never reached from $\tau$.
+

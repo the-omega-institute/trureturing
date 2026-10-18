@@ -1,0 +1,36 @@
+**定义 C-102.1（底面事件与连接算子）。** 令
+
+$$
+P_{\mathrm b}=\Pi_0+\Pi_1+\Pi_3+\Pi_{13},
+\qquad r=\operatorname{tr}(P_{\mathrm b}\rho).
+$$
+
+设 $\Gamma$ 是两份五模式系统上的任意密度算子，且两份边缘都等于 $\rho$：
+
+$$
+\operatorname{Tr}_1\Gamma=\operatorname{Tr}_2\Gamma=\rho.
+$$
+
+把
+
+$$
+\Delta=\Gamma-\rho\otimes\rho
+$$
+
+称为配对连接算子。它满足
+
+$$
+\operatorname{Tr}_1\Delta=\operatorname{Tr}_2\Delta=0.
+\tag{C102.1}
+$$
+
+因此任意单份观测量 $A$、$B$ 都看不到它：
+
+$$
+\operatorname{tr}\bigl((A\otimes I)\Delta\bigr)=0,\qquad
+\operatorname{tr}\bigl((I\otimes B)\Delta\bigr)=0.
+\tag{C102.2}
+$$
+
+它只可能通过真正的二份观测量显现。这个连接可以是经典相关，也可以含有跨份相干；零偏迹本身不判定纠缠。
+

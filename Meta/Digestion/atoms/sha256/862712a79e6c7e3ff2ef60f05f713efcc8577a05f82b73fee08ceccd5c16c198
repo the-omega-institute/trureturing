@@ -1,0 +1,21 @@
+**Theorem 29.1 (four-bit obstruction including internal rows).**
+At $1\le d\le4$, no installation of Assumption 25.1 can correctly
+first halt on the whole fiber, even if only eventual finite termination
+is required with no common Read cap.
+
+**Proof.** Legal-word counts obey $a_0=1,a_1=2$ and
+$a_d=a_{d-1}+a_{d-2}$ for $d\ge2$, by the disjoint $0$ and
+$10$ prefixes. Thus $a_4=8$, and shorter lengths have fewer words.
+The seven complete outputs need seven different reached halt words.
+At most one installed running word remains, now counting both
+query and internal rows. An initial halt cannot solve a nonconstant
+target. If the sole running word is internal, there is no query;
+its source-independent path yields only one output. If that word
+is query, there is no internal row or other query. Each successful
+actual successor must be a halt: a self successor repeats the same
+stationary running word forever by Lemma 25.3. Four replies yield
+at most four full outputs, contradicting seven. Duplicate halts and
+unused rows consume the same eight-word capacity. This directly
+covers internal rows; it does not infer the enlargement from Theorem
+23.1's query/halt-only statement. $\square$
+

@@ -1,0 +1,40 @@
+**二元见证 7.3（完整历史仍然累积）。** 取 $0<\varepsilon<1$，并令
+
+$$
+p=\frac1{1+\varepsilon}>\frac12.
+$$
+
+在对称选择器中，第一种输入下每个被选中的独立类型为 Bernoulli-$p$，第二种输入下为 Bernoulli-$(1-p)$。若 $K$ 是前一种协议下类型 $0$ 的计数，则完整历史接口的总变差为
+
+$$
+\tau_n^{\mathrm{fresh}}
+=\Pr_p(K>n/2)-\Pr_p(K<n/2).
+$$
+
+等价地，
+
+$$
+\tau_n^{\mathrm{fresh}}
+=2\Pr_p(K>n/2)+\Pr_p(K=n/2)-1.
+$$
+
+当 $n\ge2$ 且 $0<\varepsilon<1$ 时，
+
+$$
+\tau_n^{\mathrm{fresh}}
+<
+\frac{1-\varepsilon^n}{1+\varepsilon^n},
+$$
+
+右侧是持续同一类型见证的容量。前者仍趋近 $1$，但其小误差指数是
+
+$$
+\log\cosh\left(\frac{\Delta}{4}\right),
+\qquad
+\Delta=2\log(1/\varepsilon),
+$$
+
+而持续类型见证的指数是 $\Delta/2$。因此“重生消除放大”只有在末轮局部接口下成立；完整历史把问题变成独立样本判别。
+
+<a id="section-21-8"></a>
+

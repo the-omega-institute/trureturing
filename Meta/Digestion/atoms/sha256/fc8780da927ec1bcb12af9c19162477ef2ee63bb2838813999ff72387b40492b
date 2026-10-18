@@ -1,0 +1,31 @@
+**Theorem 6.1 (quantitative pool excess).** Every consecutive gap,
+of arbitrary span in every original graph, satisfies
+
+$$
+\begin{aligned}
+E_B&\ge P_B=(\beta_B-1)+\Delta_B,\\
+D_B-E_B&\le D_B-(\beta_B-1)-\Delta_B,\\
+|Q_B|&\ge|V_B|+(\beta_B-1)+\Delta_B-D_B.
+\end{aligned}
+\tag{CL.25}
+$$
+
+If some $\Gamma_v$ is nonbipartite, then $\Delta_B\ge1$.
+
+Proof. Theorem 5.1 gives $e_v\ge\kappa_v-1$. Summing on one
+diagonal gives $e_d\ge\Lambda_d$. Independently its noncommonness
+gives $e_d\ge1$ by (CL.12). Thus
+$e_d\ge\max(1,\Lambda_d)$. Sum over the disjoint internal diagonals
+for the first assertion; subtract it from $D_B$ for the second and
+use (CL.10) for the third. If a demand graph is nonbipartite,
+Corollary 5.2 and (CL.19) give $\kappa_v\ge3$, so that depth has
+$\Lambda_d\ge2$. One summand exceeds its baseline one by at least
+one, proving $\Delta_B\ge1$. All statements also hold for an empty
+interior. $\square$
+
+The baseline and the demand requirement combine by a maximum at each
+depth; adding them would allocate the same excess twice. Distinct cells
+are summed only as their actual excess incidences $b_p-1$. Sharing
+between cells still contributes to $D_B$. Excess incidences are not
+silently converted into distinct installed states.
+

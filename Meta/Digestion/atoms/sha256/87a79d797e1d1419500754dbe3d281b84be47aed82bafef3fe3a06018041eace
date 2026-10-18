@@ -1,0 +1,41 @@
+**Definition 24.1 (The fixed family and the permitted output access).** Specialize Definition 23.1 to $H=3$, $d=4$, $K=\{1,2,3\}$ and fixed known $p_1,p_2,p_3>0$ with sum one. Put
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x=x_\theta=(c_3,c_2,c_1,0)^{\mathsf T},\qquad
+q=p_2+p_3,\qquad \mu=2p_1+3p_2+4p_3,
+\qquad \delta=\theta_1-2\theta_2+\theta_3.
+\tag{24.1}
+$$
+
+The memory is $\mathbb C^4$, $Se_j=e_{j+1}$ for $j<3$, $Se_3=0$, $J_\theta=xe_3^*$, and the branches are $\mathcal C_0(A)=SAS^*$ and $\mathcal C_{1,\theta}(A)=J_\theta A J_\theta^*$. Their sum is $\mathcal E_\theta$. Inner products are conjugate-linear in the first entry. For chronological $w=b_1\cdots b_n$, set $K_0=S$, $K_1=J_\theta$ and $K_w=K_{b_n}\cdots K_{b_1}$.
+
+An actual observed outcome $1$ is a heralded tick. After that tick, supply the additional ability to apply the same fixed isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle
+\tag{24.2}
+$$
+
+successively, retaining its chronological output flags coherently and accessibly. The branch representatives are stable during these uses; no inaccessible environment retains which-branch records. There are no intermediate memory interventions and no terminal memory measurement. A permitted terminal POVM on the $n$ flags has every effect commuting with
+
+$$
+N_1=\sum_{r=1}^n |1\rangle\langle1|_r.
+$$
+
+Arbitrary measurements within each eigenspace of $N_1$ are allowed, but no external reference breaking this count symmetry is supplied. If $P_m^{(n)}$ projects onto words with $m$ ticks, the complete observable datum is the count-sector twirl
+
+$$
+T_{n,\theta}=\mathcal T_n(\Omega_{n,\theta}),\qquad
+\mathcal T_n(A)=\sum_{m=0}^n P_m^{(n)} A P_m^{(n)},
+\qquad
+\Omega_{n,\theta}=\operatorname{Tr}_{\mathbb C^4}
+\left|\sum_{w\in\{0,1\}^n}K_wx\otimes|w\rangle\right\rangle
+\left\langle\sum_{w\in\{0,1\}^n}K_wx\otimes|w\rangle\right|.
+\tag{24.3}
+$$
+
+Indeed all permitted effects have the same expectation on $\Omega$ and $\mathcal T_n(\Omega)$, and their unrestricted choices inside the blocks determine each block. Replacing $S,J$ by $e^{i\alpha_0}S,e^{i\alpha_1}J$ multiplies a length-$n$, count-$m$ amplitude by $e^{i[(n-m)\alpha_0+m\alpha_1]}$. Thus these independent constant branch phases cancel within every retained block; averaging them gives precisely $\mathcal T_n$. Stability across uses is essential: independently varying phases at each time are a different access model.
+
+Memory-unitary equivalence of the averaged channels means that some unitary $U$ satisfies $\mathcal E_{\theta'}\circ\operatorname{Ad}_U=\operatorname{Ad}_U\circ\mathcal E_\theta$, where $\operatorname{Ad}_U(A)=UAU^*$. Outcome-labeled instrument equivalence requires the same equation separately for the two CP branches, with their labels fixed. These definitions concern CP maps and allow scalar phases on Kraus representatives.
+

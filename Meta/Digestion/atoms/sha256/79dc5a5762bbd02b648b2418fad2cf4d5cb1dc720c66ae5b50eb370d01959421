@@ -1,0 +1,10 @@
+**Definition 3.1 (the proof automaton).** A finite simple probabilistic automaton is $A=(Q,\Gamma,(M_x)_{x\in\Gamma},q_0,F)$ with finite $Q,\Gamma$, a deterministic initial state, accepting subset $F$, and row-stochastic matrices whose entries are $0,1/2,1$. Define
+
+$$
+p_A(w)=\delta_{q_0}M_w\mathbf1_F,\qquad
+V_A=\sup_{w\in\Gamma^*}p_A(w).
+\tag{3.1}
+$$
+
+A row of such a matrix is deterministic or has two equally likely successors, so one fresh fair bit suffices for an update. Add a private proof letter $I$ with identity matrix. Deleting its occurrences preserves acceptance and hence the supremum. These letters are encoded below; they are never exposed as new source operations.
+

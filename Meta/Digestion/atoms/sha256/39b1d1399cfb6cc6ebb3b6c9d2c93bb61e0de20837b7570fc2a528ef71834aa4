@@ -1,0 +1,92 @@
+**Proposition 1.2 (source weights, both faces and a stationary moment).**
+Let $h_I(t;x,z)$ be the raw $dz$ kernel of height Brownian motion with
+variance rate $\sigma^2$, killed at both $l$ and $u$. The height kernel
+in (1.3) is exactly
+
+$$
+Q_t(x,dz)=e^{\lambda t}\frac{\phi(z)}{\phi(x)}h_I(t;x,z)dz.
+\tag{1.4}
+$$
+
+It is conservative, has invariant probability $\pi$, and its finite
+paths remain in $I$. With fixed initial height $x$, its derivative
+relative to the Brownian path law restricted to survival through $t$ is
+$e^{\lambda t}\phi(K_t)/\phi(x)$. With initial law $\pi$, its height
+path density relative to Lebesgue-start Brownian height is therefore
+
+$$
+e^{\lambda t}\phi(K_0)\phi(K_t)
+\mathbf1_{\{K_r\in I\text{ for every }0\le r\le t\}}.
+\tag{1.5}
+$$
+
+For $0\le s\le t\le\tau$, there is a fixed constant $C_\tau$ such that
+
+$$
+\mathbf E_\pi\mu(K)^2=\sigma^4\int_I\phi'(k)^2dk<\infty,
+\qquad
+\mathbf E|K_t-K_s|^2\le C_\tau(t-s).
+\tag{1.6}
+$$
+
+Proof. The Dirichlet sine kernel satisfies
+$\int_Ih_I(t;x,z)\phi(z)dz=e^{-\lambda t}\phi(x)$.
+Consequently (1.4) integrates to one. Cancellation of its middle
+$\phi$ factors gives the semigroup identity. Symmetry of $h_I$ gives
+detailed balance with $\phi(x)^2dx$, whose mass is one. The Doob
+path derivative follows first on cylinder events by the same
+cancellation and then on path events by a monotone class argument.
+It assigns mass one to continuous paths surviving each finite horizon;
+countably many horizons give the conservative interior realization.
+The product rule applied to $\phi^{-1}(\varepsilon^2\partial_k^2+
+\lambda)(\phi f)$ gives exactly the height generator in (1.3).
+Multiplication by the initial density $\phi(K_0)^2$ proves (1.5).
+This change of measure uses only height and preserves the independent
+phase driver.
+
+The square of $\mu$ multiplied by $\phi^2$ cancels its apparent
+endpoint singularities and gives the first identity in (1.6).
+Writing the height increment as a Brownian increment plus its drift
+integral, the inequality $(a+b)^2\le2a^2+2b^2$, Cauchy--Schwarz and
+stationarity give
+
+$$
+\mathbf E|K_t-K_s|^2
+\le2\sigma^2(t-s)+2(t-s)^2\mathbf E_\pi\mu(K)^2.
+\tag{1.7}
+$$
+
+This proves (1.6) without removing either height boundary layer.
+$\square$
+
+The stationary Q source is a stipulated probability, not a native
+preparation service. To fix the source distinction explicitly, let
+$\mathbb P_\rho$ be the original law with height equation $dK=\sigma dW^1$
+and the same phase equations, killed at
+$\zeta=\inf\{t:K_t\notin I\}$, with initial height probability $\rho$.
+Let $\mathbb Q_\rho$ be its Q law,
+$S_k(t)=\mathbb P_k(\zeta>t)$ and
+$S_\rho(T)=\int_I S_k(T)\rho(dk)$. Then on full paths
+
+$$
+\frac{d\mathbb P_\rho(\,\cdot\,,\zeta>T)}{d\mathbb Q_\rho}
+=e^{-\lambda T}\frac{\phi(K_0)}{\phi(K_T)}.
+\tag{1.8}
+$$
+
+On a prefix through $r\le T$, conditioning that mixture on survival
+through $T$ instead gives the derivative
+
+$$
+\frac{e^{-\lambda r}\phi(K_0)S_{K_r}(T-r)}
+     {\phi(K_r)S_\rho(T)}.
+\tag{1.9}
+$$
+
+These identities follow by inverting the fixed-start derivative above
+and using the killed Markov property. Conditioning each fixed-start
+law before mixing replaces the denominator by $S_{K_0}(T)$, a
+different convention. None of these source weights is silently
+removed in the present theorem, and no unchanged risk theorem for
+those different laws is asserted.
+

@@ -1,0 +1,21 @@
+## Setup
+
+Fix (k\ge2). Choose an odd prime (p>k), set (K=\\mathbb F_{p^2}), and write (Q=|K|=p^2). Consider the planar bouquet of (k) triangular loops: a central vertex (O), two outer vertices per loop, and two boundary legs at each outer vertex. Every internal and boundary edge has unit cut weight.
+
+Let (D\in K^{k\times 2k}) be an outer MSRD generator with sum-rank block partition ((2,\ldots,2)), and write its (j)-th block as (D_j=(a_j\ b_j)). We obtain (D) explicitly from the linearized Reed–Solomon construction of Martínez-Peñas and Kschischang, arXiv:1809.11158, Construction 1 and Proposition 1, using (g=k), base field (\\mathbb F_p), extension degree (m=2), and locality (r_j=2). Their hypotheses (p>k) and (m\ge2) hold.
+
+At each outer vertex use the ([4,2]) local map
+[
+A=\begin{pmatrix}1&0&1&1\\0&1&1&-1\end{pmatrix}.
+]
+The four virtual central directions in loop (j) are (a_j,b_j,a_j+b_j,a_j-b_j). The boundary row map on latent ((\lambda,z)\in K^k\times K^k) is
+[
+(a_j\lambda+z_j, a_j\lambda-z_j, b_j\lambda+z_j, b_j\lambda-z_j)_{j=1}^k.
+]
+
+The central tensor is (Q^{-k/2}\sum_\lambda |D^T\lambda\rangle), which is AME((2k,Q)) because an MSRD generator is MDS. Each outer tensor is (Q^{-1}\sum_{u,v}|u,v,u+v,u-v\rangle), an AME((4,Q)) tensor since (p) is odd. The normalized boundary state is
+[
+|\Psi\rangle=Q^{-k}\sum_{\lambda,z}|F(\lambda,z)\rangle.
+]
+The full row map has rank (2k): differences of the (+/-) rows give the (z_j) directions, and sums give the central span.
+

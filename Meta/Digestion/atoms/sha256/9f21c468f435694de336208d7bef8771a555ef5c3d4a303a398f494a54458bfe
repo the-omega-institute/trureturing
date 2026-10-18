@@ -1,0 +1,17 @@
+**定义 1.2（四值字面读口）。** 令 $\mathcal A$ 为全部有限 $L/R$ 字，根地址为 $\varepsilon$，拼接写作 $pq$。对每个 $T\in\mathcal T$ 与 $q\in\mathcal A$，原始回复 $r(q,T)$ 属于 $\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}$，递归规定为
+
+$$
+\begin{aligned}
+r(\varepsilon,\alpha)&=\alpha,&
+r(\varepsilon,\beta)&=\beta,&
+r(\varepsilon,(S,T))&=\mathsf{br},\\
+r(Lq,(S,T))&=r(q,S),&
+r(Rq,(S,T))&=r(q,T),\\
+r(cq,\alpha)&=\mathsf{abs},&
+r(cq,\beta)&=\mathsf{abs}\qquad(c\in\{L,R\}).
+\end{aligned}
+\tag{NIC.2}
+$$
+
+每个有限字均可直接请求，无须先请求其祖先。此口与 [JM §28.1][JM]、[ActualTreeReadoutAcquisition 的 Address、Reply、readout][Readout] 相同；Lean 载体中 false 表示 $L$，true 表示 $R$，叶 true 表示 $\alpha$，叶 false 表示 $\beta$。配对与 $\rho$ 是输入树的数学生成运算，不是此读口供应的源编辑权限。
+

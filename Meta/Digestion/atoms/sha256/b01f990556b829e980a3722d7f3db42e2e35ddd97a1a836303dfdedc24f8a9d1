@@ -1,0 +1,13 @@
+**定义 1.4（先验、损失与整数重叠参数）。** 令 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，$M=M_n=|B_n|=F_{n+2}$。采用完整 $B_n$ 上的均匀先验和整词零一损失。协议 $\Pi$ 的逐源成功概率为 $p_\Pi(b)=\Pr_b(\widehat b=b)$，定义
+
+$$
+\begin{aligned}
+\beta_n(L,q)&=\sup_\Pi\frac1M\sum_{b\in B_n}p_\Pi(b),\\
+\varepsilon_n^\star(L,q)&=1-\beta_n(L,q),\\
+\beta_n^{\mathrm{mm}}(L,q)&=\sup_\Pi\min_{b\in B_n}p_\Pi(b),\\
+x&=\cos(2q\theta)=\cos\left(\frac{\pi q}{2L}\right),\qquad 0\le x\le1.
+\end{aligned}
+$$
+
+非法答案可归给一个固定合法词，因而末端不必另设失败标签。错误指整词错误，不是平均单个位错误。$x$ 是一次准备后连续酉迭代的重叠，不是 $q$ 份新样本的重叠，也不是 $(\cos(2\theta))^q$。以 $x$ 表示有限矩阵不授予固定设备内自由改角度的操作。Bayes、minimax、指定策略分数及逐源分数分别按其定义解释。
+

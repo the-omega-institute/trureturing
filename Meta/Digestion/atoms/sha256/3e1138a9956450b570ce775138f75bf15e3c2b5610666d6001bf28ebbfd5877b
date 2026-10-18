@@ -1,0 +1,27 @@
+## 第二部分：FIB-ATOM 因果纤维动力学
+
+当前项目已经出现了三个可以直接合并的结果：
+
+1. **静态五态投影**：三维边际 $(X,Y,Z)$ 留下一维隐藏关系 $\kappa$；
+2. **双投影闭合**：加入 $W=Z+\kappa$ 后，五态概率可以完整恢复；
+3. **动态未来商**：完整未来律由 $(\mathrm{phase},A,B)$ 决定，而不仅由当前一次读出决定；
+4. **配对校准**：两个不同阶段的响应联合起来，可以确定单独读出无法确定的发射参数。
+
+GitHub 当前的研究方向也已经把 AURIC FIB 与 escape dynamics、thermodynamic action、acquired prediction fibres 和 typed bridge 联系起来。[github.com](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+下一步最自然的统一方式，不再把 FIB 看成静态金字塔，而是把它看成：
+
+$$
+\boxed{
+\text{每个因果事件上附着一个 FIB 隐藏纤维，}
+}
+$$
+
+$$
+\boxed{
+\text{因果边负责把一个 FIB 纤维输运到另一个 FIB 纤维。}
+}
+$$
+
+---
+

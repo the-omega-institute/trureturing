@@ -1,0 +1,30 @@
+**Lemma 4.2 (all finite words and the local weighted selector bound).**
+On the family of Definition 4.1 every literal is either constant,
+or depends on just one gadget through a local suffix in this table.
+The entries list replies on $g_0,\ldots,g_4$.
+
+| Local suffix | Reply vector | Maximum identified weight, in units of $1/7$ |
+| --- | --- | ---: |
+| $\varepsilon$ | $(\alpha,\beta,\mathsf{branch},\mathsf{branch},\mathsf{branch})$ | $5$ |
+| $R$ | $(\mathsf{absent},\mathsf{absent},\alpha,\beta,\mathsf{branch})$ | $5$ |
+| $L$ | $(\mathsf{absent},\mathsf{absent},\alpha,\alpha,\alpha)$ | $3$ |
+| $RL$ or $RR$ | $(\mathsf{absent},\mathsf{absent},\mathsf{absent},\mathsf{absent},\alpha)$ | $3$ |
+| Every other suffix | $(\mathsf{absent},\mathsf{absent},\mathsf{absent},\mathsf{absent},\mathsf{absent})$ | $2$ |
+
+For the analytical measure
+$\mu=(2,2,1,1,1)/7$, a decoder of any single local reply can
+correctly identify that gadget on mass at most $5/7$. Its decoded
+state map has image of size at most four. A constant query has
+maximum identified mass $2/7$.
+
+Proof. The original outer root is branch, its left leaf is alpha,
+and strict extensions of that left leaf are absent. In the right
+subtree, a word ending strictly above the scaffold frontier is
+constant branch. Every other word reaches exactly one frontier
+gadget and has a unique local suffix. Inspecting the five finite
+gadgets gives the displayed exhaustive table, including arbitrary
+depths and words outside the target cone. For a decoder to identify
+the state it may choose at most one state in each reply cell. Summing
+the heaviest weights in those cells gives the third column.
+There are at most four replies, proving the image bound. $\square$
+

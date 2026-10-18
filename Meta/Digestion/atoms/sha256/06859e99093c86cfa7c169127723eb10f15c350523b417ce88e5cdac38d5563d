@@ -1,0 +1,14 @@
+**定义 1.2（已知候选族与实际子集）。** $\mathcal F(H)$ 表示实现字面历史 $H$ 的全部完整目标。对任意基数的已知集合 $K\subseteq\mathcal F(H)$，令
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_{s-1}\bigl(K\cap\mathcal F(H,E,z),(H,E,z)\bigr).
+\end{aligned}
+\tag{1.3}
+$$
+
+这里 $s$ 是不超过剩余原时钟预算的非负整数。它表示每个至多再读 $s$ 次的策略均不能恢复整个已知 $K$，包括提前停止。非失败时，单元素子集立即返回；否则按固定次序 $M,J$ 选择所有可达实际响应子集均非失败的动作，再按实际读数递归。此构造说明否定 $L_s$ 给出一个作用于整个已知集合的策略；不需要候选族有限。集合为空的不可达历史可任意补定义。
+

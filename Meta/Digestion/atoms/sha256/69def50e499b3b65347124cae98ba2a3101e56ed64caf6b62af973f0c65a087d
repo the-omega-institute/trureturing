@@ -1,0 +1,30 @@
+**Lemma 3.2 (single-occurrence dynamic invariant).** At any fixed complete
+acquired prefix $h$ in Definition 2.3's bracket comparison interface, there are
+a common known one-hole context $C_h$ and integer $e_h\ge0$ such that every
+compatible source has current tree
+
+$$
+C_h\bigl[S[\rho^{e_h}G_{x_1},\ldots,\rho^{e_h}G_{x_m}]\bigr].
+\tag{DAF.3}
+$$
+
+The context has exactly one occurrence of its hole. Its material and the exponent
+are determined by $h$, not separately chosen for each compatible source.
+
+Proof. Initially $C_h$ is the identity and $e_h=0$. Literal Reads, word
+observations and local work preserve both. A graft composes its known one-hole
+context with $C_h$, preserving one occurrence. Applying $\rho$ to a context
+means substituting all its constant leaves and preserving its hole. Because
+$\rho$ preserves each original branch constructor, an accepted substitution
+replaces $C_h$ by that substituted context and increments $e_h$ in (DAF.3).
+A rejected guarded request leaves the tree unchanged. At a fixed acquired prefix
+the deterministic requests and supplied actual contexts agree. All current
+words in (DAF.3) agree, so their complete candidate word counts and guard outcomes
+also agree. Induction over these actual actions proves the formula.
+
+Here $e_h$ counts successful substitutions of the retained original occurrence.
+It is not the complete action-word length: Reads, local steps, grafts and
+executed rejects remain distinct events. With grafts, (DAF.3) is not the global
+certificate $r=\rho^e(U_x)$ used by `actual_register_execution`. Without grafts
+and with native unconditional updates it is precisely that source equation.
+

@@ -1,0 +1,50 @@
+**Definition 5.1 (joint profile and common output).** Choose one piece $b_r$
+per $r\in B$, scalar divergence sets $A_r$, a finite complement
+$\mathbf c_r$, and residual completions $\boldsymbol\eta_r$. Let $F_r$ be
+exactly their finite residual coordinates and put
+$\mathbf f_r=(\boldsymbol\eta_r)_{F_r}$. Every other coordinate of
+$\boldsymbol\eta_r$ has an infinite branch. Write
+$\lambda_r=(\mathbf c_r,\infty_{A_r})$. The common-output equation is
+
+$$
+\widehat U_{r,b_r}(\lambda_r,\boldsymbol\eta_r)=v
+\qquad(r\in B)
+\tag{FNS.24}
+$$
+
+for one original completed tree $v$. There is no assertion of a finite row
+partition or a signed record at $v$. Within each finite source the full
+original record list still shares one source.
+
+For the fixed finite profile define
+
+$$
+\Psi_r(\mathbf c_r,\mathbf w_r,\mathbf f_r)
+\Longleftrightarrow
+P_{r,b_r}(\mathbf c_r,\mathbf w_r)\land
+\exists\mathbf z_r\;
+\Delta_{r,b_r}(\mathbf c_r,\mathbf w_r,\mathbf f_r,\mathbf z_r).
+\tag{FNS.25}
+$$
+
+Here $\mathbf z_r$ comprises the remaining Cartesian residuals. Section 2
+and [SLP, Corollary 3.2][SLP] give its exact Presburger compiler for every
+supplied finite original $\mathbf f_r$. Group all finite scalar coordinates
+as $\mathbf c=(\mathbf c_r)_{r\in B}$ and all finite trees as
+$\mathbf f=(\mathbf f_r)_{r\in B}$. The arithmetic cofinal locus is
+
+$$
+\mathcal G_{\mathbf b,\mathbf A,\mathbf F,\mathbf f}
+ =\left\{\mathbf c:
+ \forall M\;\exists(\mathbf w_r)_{r\in B}\;
+ \left[\bigwedge_{r\in B}\Psi_r(\mathbf c_r,\mathbf w_r,\mathbf f_r)
+ \land\bigwedge_{r\in B}\bigwedge_{j\in A_r}w_{r,j}\ge M\right]\right\}.
+\tag{FNS.26}
+$$
+
+The same $(\mathbf c,\mathbf f)$ precedes every $M$ and depth. Each row's
+ranks may differ; forcing equality of different rows' ranks or residuals
+would change the input. With the product chart, (FNS.26) is exactly the joint
+spectrum (FNS.11), with the entire negative conjunction retained. It leaves
+all finite original profiles in scope, not a finite profile catalogue.
+

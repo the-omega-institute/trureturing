@@ -1,0 +1,10 @@
+**更正命题 Q4。** 按原文所写，全函数 $\Phi:\mathcal E\times\mathcal E\to\mathcal A$ 在每一对事件上都有定义，因此 $\mathbf1_{\{\Phi(e,e')\text{ 可定义}\}}$ 恒等于一，不能编码一般因果支持。要使这一支持指示有意义，须改用指定域 $D\subseteq\mathcal E\times\mathcal E$ 上的部分场、取值于 $\mathcal A\sqcup\{\bot\}$ 的 option-valued 场，或另行指定合法关系 $C$。若要保留 $S(e)=\Phi(e,e)$，还须规定全部对角点可取值；若这些对角点只用于状态记录而不表示合法动作，合法因果域需与记录域分开。
+
+一元势差 $\delta=d\Phi$ 只确定每个连通分量中的相对值，恢复势需要参考值或规范选择。第九节的二元定义有更大的未定项：对任意选定的 $S(e)$，
+
+```math
+\Phi(e,e')=S(e)+\Delta(e,e')
+```
+
+均给出同一个 $\Delta$，只要 $\Delta(e,e)=0$。因此 $\Delta$ 本身不恢复对角状态值 $S$；不能把一元势与二元关系场当成已证明等价的类型。
+

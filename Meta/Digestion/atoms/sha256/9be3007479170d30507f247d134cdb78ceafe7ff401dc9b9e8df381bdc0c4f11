@@ -1,0 +1,56 @@
+**Theorem 4.1 (same-realization bounds).** There are finite constants $K_1,K_2,K_{\rm t},\Gamma$ such that on all $\mathbb R^4$,
+
+$$
+V_1^2\le K_1V,\qquad V_2^2\le K_2V,\qquad V_{\rm t}^2\le K_{\rm t}V,
+\qquad
+\int V^{1/2}|u|^2\le\Gamma b[u]\quad(u\in\mathcal Q_E).
+\tag{4.1}
+$$
+
+Consequently $|V_1|,|V_2|,V_{\rm t}$ are bounded homogeneous form multipliers, on the full complex domain.
+
+Proof. On the common bridge set $x=M_0^{-1/2}z$, $A_b=M_0^{-1/2}M_1M_0^{-1/2}$ and $B_b=M_0^{-1/2}M_2M_0^{-1/2}$. Matrix order gives $\|A_b\|\le S_t$ and $\|B_b\|\le S_t^2$. For $A_N=M_0^{-1/2}NM_0^{-1/2}$, matrix differentiation yields
+
+$$
+D\log\gamma[N]=-\tfrac12\operatorname{tr}A_N+\tfrac14x^{\mathsf T}A_Nx,
+\qquad
+D^2\log\gamma[N,N]=\tfrac12\operatorname{tr}A_N^2-\tfrac12x^{\mathsf T}A_N^2x.
+\tag{4.2}
+$$
+
+Put $R_1=-2D\gamma[M_1]/\gamma$ and $R_2=(3D\gamma[M_2]+2D^2\gamma[M_1,M_1])/\gamma$. Since $D^2\gamma/\gamma=D^2\log\gamma+(D\log\gamma)^2$, every term is retained and
+
+$$
+|R_1|\le CS_t(1+|x|^2),\qquad |R_2|\le CS_t^2(1+|x|^4).
+\tag{4.3}
+$$
+
+For fixed $\xi$, use the single positive measure
+$d\mu_\xi=j_0^{-1}h_t(r)\gamma_{M_0}(z)dt\,d\mathbb P_{0,r}^t$ on $t\ge1$. Its mass is $V(\xi)$, and its $R_1,R_2,t$ moments are exactly $V_1,V_2,V_{\rm t}$. Cauchy–Schwarz first on finite time windows and then by convergence gives
+
+$$
+\frac{V_j^2}{V}\le\int R_j^2d\mu_\xi,\qquad
+\frac{V_{\rm t}^2}{V}\le\int t^2d\mu_\xi.
+\tag{4.4}
+$$
+
+A polynomial in $x$ times its Gaussian is bounded uniformly. Hence $\gamma R_1^2\le CS_t^2(\det M_0)^{-1/2}$ and $\gamma R_2^2\le CS_t^4(\det M_0)^{-1/2}$. The $m=2,4$ cases of (3.4) bound their time integrals by constants times $\int_1^\infty t^{-5/2}dt$ and $\int_1^\infty t^{-3/2}dt$. The last integral in (4.4) is bounded by $C\int_1^\infty t^2t^{-7/2}dt$. All are finite, uniformly in $\xi$. This proves the first three inequalities, justifies the time limits, and keeps the original $j_0$ factors.
+
+The boxes $\{N\le R\}$ have volume $16R^7$. The decay of $V$ implies $V^{1/2}\in L^3\cap L^\infty$, since its $L^3$ dyadic summands are bounded by $C2^{7j}2^{-15j/2}$. Conservativity gives $\|P_tV^{1/2}\|_\infty\le\|V^{1/2}\|_\infty$ for $t\le1$. The heat bound and mass one give $\|p_E(t;0,\cdot)\|_{3/2}\le Ct^{-7/6}$. Young's inequality on this unimodular group thus gives $\|P_tV^{1/2}\|_\infty\le Ct^{-7/6}\|V^{1/2}\|_3$ for $t\ge1$. Their time integrals are bounded by a finite $\Gamma$.
+
+For $b>0$ apply the positive-kernel weighted Schur test to
+$V^{1/4}(\mathcal E+b)^{-1}V^{1/4}$, with weight $V^{1/4}$. Its weighted row integral is bounded by $\Gamma V^{1/4}$, so its operator norm is at most $\Gamma$. Factoring through $(\mathcal E+b)^{-1/2}$ gives
+$\int V^{1/2}|u|^2\le\Gamma(b[u]+b\|u\|_2^2)$. Let the positive resolvent parameter decrease to zero. This proves the last part of (4.1), also for complex functions. The pointwise bounds give $|V_j|\le\sqrt{K_j}V^{1/2}$ and the analogous bound for $V_{\rm t}$, proving the assertion. $\square$
+
+In particular, for any $L\in\{V_1,V_2,V_{\rm t}\}$,
+
+$$
+\left|\int Lp u\right|
+ \le\left(\int\frac{L^2}{V}p^2\right)^{1/2}
+       \left(\int V|u|^2\right)^{1/2}
+ \le C\sqrt{b[u]}.
+\tag{4.5}
+$$
+
+The inequalities prove finiteness and continuity. They do not combine independently attainable extrema into a sign assertion.
+

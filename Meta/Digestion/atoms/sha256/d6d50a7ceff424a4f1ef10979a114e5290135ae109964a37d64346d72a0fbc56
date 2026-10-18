@@ -1,0 +1,35 @@
+**Convention 1.5 (credited rates and the unresolved effective premise).**
+Let $K_d(n)$ be the minimum admissible cover size of $S_d^n$. Reuse
+[FMR, Theorems 3.3 and 6.3–6.4][FMR] and [NPC, Theorems 5.3, 6.1–6.2
+and 7.1][NPC]:
+
+$$
+\begin{aligned}
+\sigma_d&=\inf_{n\ge1}n^{-1}\log_2K_d(n),\qquad
+\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_{d\ge1}2^{-d}\sigma_d,\\
+2^{-\sigma_d}&=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+|\beta_d(\mu)-\beta_d(\nu)|
+&\le\operatorname{TV}(\mu,\nu),\qquad
+\operatorname{TV}(\mu,\nu)=\tfrac12\sum_x|\mu(x)-\nu(x)|,\\
+\beta_d(w+e)&\le\beta_d(w)+\sum_xe(x)
+                      \quad(w,e\ge0).
+\end{aligned}
+\tag{JPL.8}
+$$
+
+A cap $\beta_d(\mu)\le C$ for a probability gives, against every
+original preparation and reader,
+
+$$
+M_1(D)\ge\left\lceil C^{-2^{D-d}}\right\rceil\quad(D\ge d),
+\qquad \lambda\ge-2^{-d}\log_2C.
+\tag{JPL.9}
+$$
+
+NPC's semantic minimizing distribution is not an effective verifier.
+The still-required optimizer-cofinality is: for every $d$ and rational
+$\epsilon>0$, a total sound verifier accepts some rational $(\mu,C)$
+with $-\log_2C>\sigma_d-\epsilon$. An accepted cap must bound every
+length and complete arbitrary-donor template with the full joint weight.
+

@@ -1,0 +1,16 @@
+**引理 55.2（两种奇偶的叶分离位置）。** 写 $N=2k+e$，$e\in\{0,1\}$，令
+
+$$
+d_N(\alpha)=k,\qquad d_N(\beta)=k+e,
+\qquad
+c_N(b)=
+\begin{cases}b,&e=0,\\ \beta,&e=1, b=\alpha,\\ \alpha,&e=1, b=\beta.\end{cases}
+\tag{SLH.55.3}
+$$
+
+对每个叶 $b$，$r_{\rho^Nb}(R^{d_N(b)})=c_N(b)$；在原根存在的全部 $z\in\mathcal T$ 上，这一个等式成立当且仅当 $z=b$。其当前回复是实际存在的叶标签。相应最短全地址分离深度为：$N=2k$ 时 $\alpha$ 与 $\beta$ 的像首次在深度 $k$ 不同；$N=2k+1$ 时，$\alpha$ 与 $\beta$ 的像首次在深度 $k$ 不同，而 $\beta$ 与 $\langle\alpha,\alpha\rangle$ 的像首次在深度 $k+1$ 不同。
+
+**证明。** 使用定义2.1的根解码及[原子边界三分卷定理8.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md#82-奇偶替换的来源纤维传输)。根解码在偶数 $2k$ 的 $R^k$ 上分别给 $\alpha,\beta,\mathsf{branch}$；$k=0$ 就是根读。在奇数 $2k+1$ 的 $R^k$ 上，先对 $\rho z$ 使用偶数式，得到原 $\alpha$ 给 $\beta$，原 $\beta$ 或分支给分支。在 $R^{k+1}$ 上，定义2.1分别给缺席、$\alpha$、以及 $\beta$ 或分支。这证明两个标签的分离等价式，保留了缺席分支而未把负余量当成存在。
+
+定理8.2的两步首次差异深移律，将原 $\alpha/\beta$ 的零深差异送到偶数深度 $k$；一次替换后该对仍在根不同，而 $\beta/\langle\alpha,\alpha\rangle$ 的一次像为 $\langle\beta,\alpha\rangle/\langle\beta,\beta\rangle$，首次差异在深度一。再迭代两步律得到奇数两式。这里直接复用全地址深移律，未从有限前缀样本推断深度下界。$\square$
+

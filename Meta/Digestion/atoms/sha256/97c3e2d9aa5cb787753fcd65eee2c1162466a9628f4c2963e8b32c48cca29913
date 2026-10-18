@@ -1,0 +1,101 @@
+**Theorem 8.2 (Two attained minima with a strict seed-law gap).**
+Let
+
+$$
+q_*=2\eta^2.
+\tag{8.2}
+$$
+
+For a constant seed, or any auxiliary space consisting modulo null
+sets of one measure atom, $q_*$ is the smallest positive feasible
+mass and
+
+$$
+\mathcal L_{2,\mathrm{constant}}(q_*)=bq_*.
+\tag{8.3}
+$$
+
+For every atomless auxiliary probability space,
+
+$$
+\mathcal L_{2,\nu}(q_*)=\frac{b^2}{c}q_*.
+\tag{8.4}
+$$
+
+Both values are attained by lawful paid policies. Their difference is
+
+$$
+\Delta=\left(b-\frac{b^2}{c}\right)q_*>0.
+\tag{8.5}
+$$
+
+Proof. By (3.3), the smallest positive entry of $\mathcal R$ is
+$2\eta^2$, whereas the smallest positive entry of $\mathcal S$
+is $\eta/2>2\eta^2$. Thus in (4.4) the smallest positive
+mass is $q_*$, and its only decomposition is $r=q_*,s=0$.
+The type-$D$ entry gives correct mass $2a\eta^2=aq_*$,
+strictly exceeding the type-$I$ entry $\eta^2$. The deterministic
+minimum is therefore $q_*-aq_*=bq_*$.
+
+A direct attainer makes both predetermined actual calls
+
+$$
+2(j+4),\qquad 2(j+8),
+\tag{8.6}
+$$
+
+and returns $h_0(\sigma)$ only on $11$. Otherwise it continues
+internally forever after those two paid calls. That record certifies
+phase zero. Its two spin pairs are disjoint from one another and
+from $S_j$, so in the same original source
+
+$$
+q=\frac12(2\eta)^2=q_*,\qquad C=aq_*,\qquad L=bq_*.
+\tag{8.7}
+$$
+
+For the atomless attainer, use the inherited selective anchor: read
+the two predetermined actual addresses
+
+$$
+2j,\qquad 2(j+2),
+\tag{8.8}
+$$
+
+and accept only $01$, with output $h_0(\sigma)$. In phase zero
+the first zero edge contains $S_j$ and the disjoint second edge
+is one. The phase-one replies would both be zero. Hence this
+anchor has
+
+$$
+q_H=\eta c,\qquad C_H=a^2\eta,\qquad L_H=b^2\eta.
+\tag{8.9}
+$$
+
+These are exactly the $n=2$ masses of Original, (10.4), not a new
+selective anchor. By Lemma 6.2 the original atomless seed space
+contains an event $G$ with
+
+$$
+\nu(G)=\frac{2\eta}{c}\in(0,1),
+\tag{8.10}
+$$
+
+where $2\eta<c$ follows from $\eta<1/4$. Still make both
+calls (8.8) on every path, but return only on $G$ and $01$.
+All other paths internally do not return after the second call.
+Independence gives
+
+$$
+q=\nu(G)\eta c=q_*,\qquad
+L=\nu(G)\eta b^2=\frac{b^2}{c}q_*.
+\tag{8.11}
+$$
+
+Lemma 8.1 proves its optimality over the full original class.
+Finally $c-b=a(a-b)>0$, so $b-b^2/c>0$, proving (8.5).
+Thus the two distinct minima are both actual values. The
+atomless construction also permits every $0<q<q_*$ by a smaller
+gate; all such masses are infeasible for the constant seed.
+$\square$
+

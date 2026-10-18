@@ -1,0 +1,36 @@
+### 218.9 Finite verification and evidence limits
+
+The exact rational arithmetic program
+/Users/auricstudio/trureturing-experiments/author218/check.py
+and result data exact_results.json retain useful score reconstruction,
+catalog maximization, coefficient and source-witness checks.
+They evaluate the literal independent A,C,P,T tables over every label in
+every empty, singleton and pair cell. The A checks include zero debts,
+gaps, ties and padded positive profiles; B includes overlapping weighted
+odd cycles and cyclic fixed-remainder failures; C includes both endpoint
+kernels, all-word multilinear coefficients and signed t cases with
+exact primal constructions or violated budget cuts. D includes unequal
+and nonadjacent positives, zero rows, exhausted conversions and the full
+closed relocation interval at rational parameters. E includes all printed
+schedule supports, all prefix projections of its example, changed-Q
+residuals and general lifts with signed low residuals, nonzero anchor
+readings and negative low K differences.
+
+The probability checks use one complete quarter-table allocation over
+all seven- and eight-bit words, retain base, correct, independent pair
+and positive rows, compare its N completion and verify exact closed
+tails. The arithmetic checks construct all 256 eight-bit original
+patterns with ninth reply zero at Fibonacci index 101,
+$F_{101}=573147844013817084101$ and modulus 223092870;
+their g representatives lie in the original window.
+The source 0100 regression and whole-table resource correspondence are
+also retained explicitly above.
+
+These finite exact checks can detect a transcription error or refute
+a printed literal example. They do not prove an all-real-parameter
+statement, infer universal feasibility from a sample, certify every
+external version or supply independent acceptance of this source.
+The parameter assertions rest on the ordinary proofs and the named
+owning suppliers. No Lean/kernel verification, compilation, admission,
+ingestion, coverage, freezing, CI or publication is claimed.
+

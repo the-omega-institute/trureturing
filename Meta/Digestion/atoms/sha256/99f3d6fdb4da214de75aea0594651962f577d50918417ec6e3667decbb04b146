@@ -1,0 +1,35 @@
+**Definition 3.1 (actual finite common designs).** A design $\mathfrak F$
+has a finite actually generated acquisition label $\xi$, common CP maps
+$\mathcal C_\xi:M_5\to M_{d_\xi}$ with $1\leq d_\xi<\infty$,
+and common CP full-output TP decoders $\mathcal R_\xi$, satisfying
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I_{d_\xi})=I_5,
+\qquad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\widehat\Phi_*.
+\tag{IR.12}
+$$
+
+The second identity holds on all complex matrices, in every output
+sector and every Borel time set. Only the total encoder is TP. Each
+positive encoder effect is at most their joint sum and is therefore
+TNI. Every decoder is TP on its entire fibre; its supported live
+compression is only TNI. Arbitrarily large finite fibres, mixed
+encoders, nonisometric decoders and arbitrary finite refinements of the
+binary label are included in universal statements.
+
+The block $M_{d_\xi}$ counts **jointly** everything accessible to future
+execution that can influence output: specimen, quantum memory and
+controller, accessible environment, returned systems and all retained
+entanglement shares. There is no other quantum path across the cut.
+Independent later blank ancillas may be absorbed into the decoders; a
+receiver share of earlier entanglement is not a blank. Other dilation
+systems must be permanently inaccessible before this cut if omitted
+from the block. A passive reference can be arbitrary and entangled,
+but is inaccessible to both maps. Their identities tensor with its
+identity. There is no callback, helper specimen, source-dependent
+programme, copy, reset, retry or acceptance division. Fixed common
+classical metadata remain available. A coherent branch sum without an
+actually enacted classical record is one quantum payload; an algebraic
+Kraus decomposition does not supply acquired flags.
+

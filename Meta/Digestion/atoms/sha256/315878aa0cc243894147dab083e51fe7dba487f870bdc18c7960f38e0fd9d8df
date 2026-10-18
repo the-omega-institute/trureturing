@@ -1,0 +1,49 @@
+**Theorem 30.1 (global minima at the selected points).** At $S$ every
+original optimizer needs at least six supported-nonzero actual low
+labels and at least seven total actual labels. Both minima are attained:
+four pure low qubits, two saturated low qubits and one counted
+five-dimensional high fibre. At $D$ the corresponding minima are five
+low and six total, attained by three pure low qubits, two saturated low
+qubits and that high fibre. These are weak-class statements.
+
+Proof. Equality in AC.141 makes every nonnegative sheet slack vanish
+on every positive supported label and forces $k_u=s/C_s$.
+A strict intermediate $0<b<1000c$ would have positive weights at
+both endpoints of AC.140. Equality would require both endpoints at
+the same direction to be contacts, contrary to Lemma 28.1's disjoint
+pure/saturated zero sets. Every optimal supported label is therefore
+one of the six certified endpoints with its aligned report.
+
+Take the six columns $\Gamma_i$ and rows $(0,1,2,4,3,5)$ in that
+order, with zero-based indices in AC.46. Exact interval determinant
+elimination on §27's boxes gives
+
+$$
+-0.113788<\det\Gamma_{S,\mathrm{rows}}<-0.113786,\qquad
+-0.018404<\det\Gamma_{D,\mathrm{rows}}<-0.018402.
+\tag{AC.142}
+$$
+
+Thus all six columns are independent. Their total weights solving the
+moments are unique. At $S$ all six are strictly positive; at $D$ the
+unique sixth weight is zero and all the others are positive. FA69's
+double rigidity is about each existing actual low label. It forbids
+packing two distinct effective supported live directions into one low
+label by hiding a Kraus index. Hence at least six or five actual low
+labels are necessary. The same zero-integral argument is almost
+everywhere in the stipulated integral class; a nonatomic actual record
+already has infinitely many outcomes and cannot improve a finite minimum.
+
+The original sharp-cost equality fixes positive high acquired mass,
+so at least one further actual high label is needed. Section 32 realizes
+exactly one, containing the full complement in its counted fibre.
+A full-$M_5$ outcome zero on the supported specimens remains admissible
+and is actually counted. It contributes no supported moment and cannot
+replace a positive required weight. Extra labels and splitting are
+allowed, so these are minimum counts, not counts of every optimizer.
+Projection lines, the two physical failure lines, actual readable
+outcomes, inaccessible Kraus multiplicity and joint Hilbert dimension
+are different quantities. No six- or seven-label strong region follows;
+the separate strong fixed-source four-low counts at $r=1,2$ and five-low
+counts elsewhere retain their original scope. $\square$
+

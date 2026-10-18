@@ -1,0 +1,58 @@
+### 79.2. Exact antiunitary transport on all twenty algebra points
+
+The following substitution defines an involutive automorphism \(\sigma\)
+of \(\mathcal A\):
+\[
+x_\sigma=-Rx/(x^2+\eta^2),\qquad
+\eta_\sigma=-R\eta/(x^2+\eta^2).
+\tag{79.3}
+\]
+Indeed, substitute (79.3) homogeneously into the printed polynomials:
+\(f(\eta_\sigma)=0\), and
+\(P_x(\eta_\sigma)/f'(\eta_\sigma)=x_\sigma\), as exact polynomial
+remainders modulo \(f\). The denominator \(G\bar G\) is a unit. The
+substitution squares to the identity, so it is an automorphism. The same
+rational substitution, clearing denominators and reducing real and
+imaginary integer coefficients separately modulo \(f\), gives
+\[
+G_\sigma=-R/\bar G,\quad
+C_\sigma=RC/\Delta,\quad
+D_\sigma=-RG\bar D/(\bar G\Delta),\quad
+q_\sigma=qG\bar G/R.                                    \tag{79.4}
+\]
+These are identities on the entire degree-twenty algebra, not evaluations
+at its six physical points. A compact additional identity for the last
+formula is
+\[
+U=(D-C)\Delta-G(C\bar C+D\bar D)-\bar GCD,
+\qquad U\bar U=RY_c\bar Y_c.
+\tag{79.5}
+\]
+It follows by the same cleared integer remainder calculation and gives the
+last equality of (79.4) after substituting the first three.
+
+The geometric interpretation fixes the normalization. In the scaled
+coordinates the projective antiunitary is
+\(J_R(x,y)=(-\bar y/\sqrt R,\sqrt R\bar x)\), differing from the original
+\(\Theta\) by one common unit phase. For
+\(x=t\mathbf1+u,y=Gt\mathbf1+Cu+D\bar u\), choose \(t_\sigma^2=q_\sigma\).
+Normalizing the first channel mean to \(3t_\sigma\) gives
+\[
+x_\sigma=t_\sigma[\mathbf1+(\bar Du+\bar C\bar u)/(\bar Gt)],\qquad
+y_\sigma=-Rt_\sigma(\mathbf1+\bar u/t)/\bar G.
+\tag{79.6}
+\]
+The centered change of basis is invertible because \(\Delta\) is a unit.
+Its two-by-two interpolation gives (79.4), and the phase multiplier has
+squared norm \(Rq_\sigma/(qG\bar G)=1\).
+
+The argument also holds in a faithful finite splitting algebra: adjoin
+\(t^2=q\), fixed by bar, and all roots of the reciprocal cubic of §78.2.
+The circle identities are algebraic, with bar sending a root to its inverse;
+all stated denominators and the cubic discriminant are units. The invertible
+centered change preserves the three-distinct interpolation. Its correlation
+and product identities recover the transformed cubic as well. Hence the
+\(\sigma\)-point represents \(J_Rw\), up to phase and one of the six orders,
+in this splitting algebra. No real inequality is imposed on non-real
+coefficient points.
+

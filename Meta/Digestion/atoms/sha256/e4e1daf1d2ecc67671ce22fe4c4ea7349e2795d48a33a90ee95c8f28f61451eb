@@ -1,0 +1,56 @@
+**Theorem 8.2 (totality, exact leaf pressure and strict extension).**
+The new verifier is total and sound for every complete native
+template at every length. More generally, if $P,r$ satisfy the
+three structural conditions above, then, for any nonnegative
+$w_i$ supported on $P$,
+
+$$
+\max_{B\subseteq S_d^n\text{ admissible}}
+       \sum_{x\in B}\prod_iw_i(x_i)=\prod_iL_r(w_i).
+\tag{RCE.32}
+$$
+
+The extended grammar accepts $(9,\mu_0,3/16)$ and
+$(9,\mu_\delta,7/32)$ from Theorem 7.2. Neither label is
+accepted by the old grammar at those caps.
+
+Proof. Each structural check is on finitely many states, subsets,
+targets, experiments and decoder entries, so it terminates. Longer
+native words are functions of boundary experiments or constants,
+and therefore retain the reply-range bound.
+
+Restrict any admissible relation to its positive product-weight rows.
+Every remaining projection lies in $P$. If one contained $r+1$
+states, condition 2 would give a target taking more than $r$
+values, whereas its chosen donor has at most $r$ replies by
+condition 1. A constant also cannot serve it. Thus every projection
+has size at most $r$, and the nonnegative product mass is at most
+$\prod_iL_r(w_i)$.
+
+For the reverse inequality choose maximizing $r$-subsets and use
+their Cartesian product. Condition 3 supplies own-coordinate
+witnesses for all targets. If fewer than $r$ positive weights
+occur, extend them by zero-weight states to an $r$-subset; the
+same witnesses remain valid. An identically zero weight makes both
+sides zero. This proves (RCE.32), including the degenerate case
+$|P|=r$, when condition 2 is vacuous and the whole support is
+locally admissible.
+
+Consequently a new leaf certifies $\beta_d(\mu)\le L_r(\mu)\le C$.
+The old joint, scaffold and stability nodes keep their original
+soundness by [JTC, Theorem 9.2], its scaffold pressure identity and
+(RCE.9). Induction proves soundness of the extension.
+
+For $P$ of Proposition 7.1, take $r=3$. Theorem 6.4 supplies all
+three structural conditions and the exact cap $3/16$. One
+existing stability node accepts the perturbation at $7/32$, since
+$3/16+\operatorname{TV}(\mu_0,\mu_\delta)\le25/128<7/32$.
+Theorem 7.2 excludes both labels from the old grammar. Thus this
+is a strict sound extension with actual native witnesses, not just
+a different representation of an old proof. $\square$
+
+This new leaf uses the reply range on the common support of all
+positive rows. Range-feasibility alone uses the ambient four-reply
+limit and does not imply its stronger projection bound. It is this
+additional relation that crosses the old Euclidean floor.
+

@@ -1,0 +1,21 @@
+**Definition 3.1 (a closed owned-tape importer).** Let $i$ be one of 26, 28,
+29, with its actual read token, and let its complete ordinary prefix remain
+unchanged during this importer. Clear a saved-distance register $d_i$.
+At Save read $i$ testing L; on a non-L branch execute ML($i$), then the
+compiled literal cons $d_i:=1d_i$, and repeat Save. At L perform MR($i$).
+Clear a reverse symbol accumulator. At Scan read $i$ testing R. At each
+non-R symbol choose its literal three-bit symbol code
+$b_0b_1b_2$ by the eight finite cases, execute the three literal cons
+assignments in order $b_0,b_1,b_2$, then MR($i$) and repeat Scan.
+At R Reverse gives the forward concatenation of the symbol triples.
+Clear/copy a restore counter from $d_i$; Home($i$); while this counter is
+nonempty, execute MR($i$) and its compiled tail. Stop on its compiled empty
+test. Distinct registers retain the copied symbol word and $d_i$.
+
+The source-head save includes all cells from the original marked cell to L,
+not only payload bits. The scan excludes L and R and includes physical
+seps, statuses, F and seal symbols. Compiler rows touch only 64–68; they
+never move $i$. The branch encoding a symbol is fixed before its three
+cons assignments. No symbol is expected to survive in latch 4 across an
+assignment. The scan does not read the seal track or change source bytes.
+

@@ -1,0 +1,19 @@
+**Definition 3.1 (physical success handoffs).** In GENERAL's actual
+hygienically expanded graph, let $E_0$ be the finite set of bank-parity
+variants of the final successful ClientImage handoff CTL into RenderS.
+Its preceding work is the received Image import, complete Image/binding
+checks, Image ACK, mailbox-availability return and client→handler TOK.
+Let $E_1$ be the corresponding variants of the final successful CheckS0
+handoff CTL into FromS, after its import/checks, firstS copy,
+ACK/mailbox return and client→handler TOK.
+
+An edge identity includes its actual active-code regime, physical pre-PC,
+its installed row and physical post-PC. No numeric row table is supplied
+as advice: these are the indicated textual occurrences expanded and
+numbered by GENERAL Definition 2.1. The construction directory records
+call paths and entry/exit roles; GENERAL Definition 2.2 expressly gives
+it no runtime effect or source permission. Two adjacent actual primitive
+successor records suffice to test a handoff, using the earlier record's
+PC as pre-PC and the later record's executed row/post-PC. A record
+beginning after the handoff does not contain that test witness.
+

@@ -1,0 +1,14 @@
+**Definition 6.1 (public perfect template).** For $m\ge1$ let
+$B_0=\alpha$, $B_{i+1}=\langle B_i,B_i\rangle$, and put $g=B_m$.
+Here $B_0$ is a tree, unrelated to the scalar upper price in Theorem 5.4.
+Keep the entire graph input (GRS.2), and choose
+
+$$
+H_0^{(m)}=\{(0,RRw,\alpha):w\in\Sigma^m\},\qquad
+Q=\{L,RL,RR\},\qquad N\ge1.
+\tag{GRS.20}
+$$
+
+The template is a common finite consequence of the actual retained
+literals. Its preparation and storage are not new free source evidence.
+

@@ -1,0 +1,8 @@
+**Definition 1.1 (Complete open-word graphs).** For every integer $n\ge1$, let
+
+$$
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\text{ for }1\le j<n\}.
+$$
+
+The graph $\Gamma_n$ has vertex set $B_n$ and all Hamming-one edges between its vertices. There is no constraint between the last and first bits. Thus $0^n$ and every legal word beginning or ending with $1$ are included. Write $b_0=b_{n+1}=0$ for the purpose of testing an upward flip. Each edge is uniquely $\{b,b+e_i\}$ with $b_{i-1}=b_i=b_{i+1}=0$.
+

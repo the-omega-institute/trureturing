@@ -1,0 +1,101 @@
+**定理 3.1（公共等价质量最大剥离定理）。** 对定义 1.1 的任意固定有限标记产生器，若存在不相容支撑对，则上述 $L=2d$ 及定义 2.3 的 $\kappa<1$ 满足：对任意非负子分布行 $r,v$ 和每个 $n\geq0$，
+
+$$
+0\leq G_n(r,v)
+\leq\sqrt{|r|\,|v|}\ \kappa^{\lfloor n/L\rfloor}.
+$$
+
+若没有不相容支撑对，则所有 $G_n$ 恒为零。两种结论均不要求平稳性、不可约性、非周期性、路径合并性或标记乘积正性。
+
+证明。**共同有限时域与最大对存在性。** 取 $L=2d$。任意两条实数行在全部长度 $L$ 柱集上的线性读数相等，当且仅当它们在全部有限柱集上的线性读数相等。
+
+令
+
+$$
+V_m=\operatorname{span}\{B_w\mathbf1:|w|\leq m\}.
+$$
+
+$V_0$ 的维数为一，且
+
+$$
+V_{m+1}=\operatorname{span}\bigl(V_m\cup\{B_yv:y\in\Sigma,\ v\in V_m\}\bigr).
+$$
+
+若 $V_m=V_{m+1}$，则 $V_m$ 对每个 $B_y$ 不变，故已包含全部柱集向量。维数至多为 $d$，所以至迟 $V_{d-1}$ 已稳定。另一方面，对 $|w|\leq L$，
+
+$$
+\sum_{z\in\Sigma^{L-|w|}}B_{wz}\mathbf1
+=B_wB^{L-|w|}\mathbf1=B_w\mathbf1.
+$$
+
+长度 $L$ 的等式因而蕴含全部较短等式，继而蕴含整个稳定空间上的等式。逆向立即成立。这是 [CK, Proposition 3(c) 与 Appendix A] 的有限语言等价机制；上述线性论证直接适用于实数项，不借用有理编码的算法复杂度结论。
+
+由上述共同有限时域，等价条件给出有限个闭线性等式，行不等式给出有界闭集，零对可行；故定义 1.3 的最大值存在。定义 2.1 中的相容也因此恰好表示两个闭面中存在未来输出等价的概率行。
+
+**原始行最大剥离递推。** 先处理有不相容对的情形。在空前缀处选取最大等价对，得到
+
+$$
+r=U_\varepsilon+R_\varepsilon,\qquad
+v=V_\varepsilon+S_\varepsilon,\qquad
+U_\varepsilon\equiv V_\varepsilon,\qquad
+c(R_\varepsilon,S_\varepsilon)=0.
+$$
+
+在每个长度 $kL$ 的前缀 $w$ 处维持不变量
+
+$$
+rB_w=U_w+R_w,\qquad vB_w=V_w+S_w,\qquad
+U_w\equiv V_w,\qquad c(R_w,S_w)=0,
+$$
+
+且四行均非负。对长度 $L$ 的扩展词 $z$，先将四行乘以 $B_z$，再从 $R_wB_z,S_wB_z$ 中选取最大等价对 $a_{wz},b_{wz}$。定义
+
+$$
+\begin{aligned}
+U_{wz}&=U_wB_z+a_{wz},&
+V_{wz}&=V_wB_z+b_{wz},\\
+R_{wz}&=R_wB_z-a_{wz},&
+S_{wz}&=S_wB_z-b_{wz}.
+\end{aligned}
+$$
+
+等价在乘法与加法下保持，引理 2.2 使新的剩余行仍满足 $c=0$，故不变量归纳成立。特别地，所有累计剥离行始终逐坐标受原始行 $rB_w,vB_w$ 支配。每个有限深度仅需有限个已证明存在的最大对。
+
+置
+
+$$
+A_k=\sum_{w\in\Sigma^{kL}}\sqrt{|R_w|\,|S_w|}.
+$$
+
+初始 $A_0\leq\sqrt{|r|\,|v|}$。每次剥离从两行中减去相同非负质量，因此不会增大剩余质量的乘积。引理 2.5 遂给出
+
+$$
+\begin{aligned}
+A_{k+1}
+&\leq
+\sum_{w\in\Sigma^{kL}}\sum_{z\in\Sigma^L}
+\sqrt{|R_wB_z|\,|S_wB_z|}\\
+&\leq\kappa A_k
+\leq\kappa^{k+1}\sqrt{|r|\,|v|}.
+\end{aligned}
+$$
+
+最后写 $n=kL+s$，$0\leq s<L$。对末尾 $s$ 个符号只传播上述分解，不再要求剥离；在每个长度 $n$ 的前缀 $a$ 仍有原始行分解及 $U_a\equiv V_a$。令 $h_a=|U_a|=|V_a|$。累计等价对对原始 $c(rB_a,vB_a)$ 可行，所以
+
+$$
+c(rB_a,vB_a)\geq h_a,
+\qquad
+\min(|rB_a|,|vB_a|)
+=h_a+\min(|R_a|,|S_a|).
+$$
+
+从而原始证书的该项满足
+
+$$
+\min(|rB_a|,|vB_a|)-c(rB_a,vB_a)
+\leq\min(|R_a|,|S_a|)
+\leq\sqrt{|R_a|\,|S_a|}.
+$$
+
+求和并应用引理 2.5 的系数一余段界，得到 $G_n(r,v)\leq A_k$，即所需结论。累计对不必实现原始 $c$ 的最大值；其可行性给出的是这里所需的上界方向。零行使相应乘积和缺口同时为零，$n=0$ 也已包含。无不相容对的情形由引理 2.4 完成。
+

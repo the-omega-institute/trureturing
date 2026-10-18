@@ -1,0 +1,44 @@
+**Theorem 2.2 (source-faithful projection).** Let $V_b$ be the indices
+of the rank coordinates actually occurring in $U_b$, and write
+$\mathbf v=(n_i)_{i\in V_b}$. There is an effectively computed Presburger
+predicate
+
+$$
+S_b(\mathbf v)\iff
+\exists(n_i)_{i\notin V_b}\ \exists\mathbf z\quad
+C_b(\mathbf n,\mathbf z)
+\tag{AAB.6}
+$$
+
+such that the entire anchor fiber, with no source omitted or added, is
+
+$$
+D_{r_*}=\bigcup_b\{U_b(\mathbf v):S_b(\mathbf v)\}.
+\tag{AAB.7}
+$$
+
+A witness for any feasible $\mathbf v$ can recover all eliminated
+coordinates and the finite original source.
+
+Proof. On a NIC Cartesian signed piece, NIC Proposition 3.5 applies URR
+to the entire native negative pullback. Its rank-support equivalence
+is exact for every rank tuple. More generally, URR Corollary 3.2's
+scalar-preserving NSF argument leaves designated primitive ranks free
+through the finite native branches and existentially eliminates only
+the auxiliary scalars. It preserves their actual values in both native
+source directions. Conjoin the Presburger policy to the resulting
+arithmetic formulas and existentially quantify unused rank coordinates.
+Presburger elimination gives (AAB.6). Witness extraction, or finite
+enumeration using the guaranteed feasibility, returns finite auxiliary
+values. Fixed navigation uses NIC Proposition 5.3's finite rank splits;
+it does not replace a variable rank by a finite cutoff.
+
+For one inclusion, a satisfying tuple in (AAB.5) has $S_b(\mathbf v)$
+and the same visible output. For the other, (AAB.6) supplies a full
+satisfying tuple; $U_b$ does not use any eliminated variable, so that
+tuple's original source is precisely $U_b(\mathbf v)$. Its signs, guards,
+old classes, exterior and new full label hold by (AAB.5). This proves
+(AAB.7). Independence of the output is the essential hypothesis.
+Fixing an observable residual tree to URR's section would instead
+discard original sources and is not this projection. $\square$
+

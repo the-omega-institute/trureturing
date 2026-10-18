@@ -1,0 +1,16 @@
+**Example 11.5 (two distinct failures in small native sources).** The
+following collisions instantiate both missing distinctions. Every
+entry refers to an actual finite tree and its whole indicated table.
+
+| Target and sampled ray | Two sources | Common sampled score | Different target replies at zero |
+| --- | --- | --- | --- |
+| $p=R$, $Q=\{RLR^\infty\}$ | $\langle\alpha,\beta\rangle$, $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ | $3$ | beta, branch |
+| $p=RL$, $Q=\{RLR^\infty\}$ | the same two sources | $3$ | absent, alpha |
+
+The first row uses $D=1$ and misses $[RR]$. The second uses $D=2$:
+its ray does hit $[RLR]$, but it misses the required parent-right
+cylinder $[RR]$. Thus a test retaining only the first line of
+(AAR.47) is false even when the sampled ray lies strictly inside
+the target's right cylinder. Adding $R^\infty$ supplies the second
+row's missing distinction: the two scores there are three and four.
+

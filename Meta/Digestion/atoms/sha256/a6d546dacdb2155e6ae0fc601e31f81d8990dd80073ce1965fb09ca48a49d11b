@@ -1,0 +1,90 @@
+**Definition 1.1 (source, current row and whole target).** Retain the
+original source and observation conventions of [WTF, Definition 1.1][WTF]
+and [PCA, Definitions 1.1 and 4.1][PCA]. The source algebra and update are
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+\tag{IC.1}
+$$
+
+Every finite absolute original-root address in $\{L,R\}^*$, including
+the empty address, is legal. A query returns alpha, beta, branch or
+absent; descent beyond a leaf is absent. Equal subtrees at different
+addresses retain different occurrences. For a prefix-free cut, a complete
+row contains the ordered exterior, every reached occurrence hole, the
+entire equality partition of its hidden subtrees, all different-class
+disequalities, and every concrete strict-prefix blocking guard. Canonical
+class names follow first occurrences after restriction.
+
+At $P=\{L,R\}^3$, fix the perfect depth-three exterior with classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4.
+\tag{IC.2}
+$$
+
+Write this complete row as $R_*$. Its six class values are pairwise
+different, with the two occurrences of each repeated class retained.
+The domain and required whole predecessor target are
+
+$$
+\mathcal U_* =\{u\in\mathcal T:R_P(\rho u)=R_*\},
+\qquad F(u)=R_P(u).
+\tag{IC.3}
+$$
+
+This is the entire fiber of finite nonempty ordered trees. There is no
+size, depth or interior-shape bound, and every compatible actual inverse
+source belongs to the domain.
+
+For six distinct values $x$, its current filling is
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,
+                  \langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,
+                  \langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{IC.4}
+$$
+
+The supplied image grammar is
+$\mathcal I=\rho[\mathcal T]=\{\beta,\langle\beta,\alpha\rangle\}
+\cup\{\langle y,z\rangle:y,z\in\mathcal I\}$.
+Its disjoint parsing cases have inverse
+$\delta(\beta)=\alpha$,
+$\delta\langle\beta,\alpha\rangle=\beta$, and
+$\delta\langle y,z\rangle=\langle\delta y,\delta z\rangle$ for
+image children. It satisfies $\delta\rho=\mathrm{id}$ and
+$\rho\delta=\mathrm{id}$ on their respective domains. A filling
+(IC.4) is an image exactly when all six values are images, or exactly
+one right-class value $x_{b_j}$ is alpha, its repeated left partner is
+beta, and the remaining values are images. Its actual origin is
+$\delta(\mathscr S(x))$. These are the actual-source suppliers recorded
+in WTF Definition 1.1; neither inverse nor image membership is a native
+operation.
+
+Use the supplied eleven full profiles. On $\Pi_j$, class $b_j$ is
+alpha, its partner is beta, and all other class roots are branches.
+On $Z_d$, only class $d$ is beta and the other roots are branches;
+on $Z_*$ all six roots are branches. Branch class values range over
+all allowed branch images. Distinct-class disequalities remain imposed.
+The profiles exhaust (IC.3). Their five whole targets are $R_0=R_*$
+on every $Z_d,Z_*$ and $R_j$ on $\Pi_j$. With
+
+$$
+(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR),
+$$
+
+$R_j$ replaces the two sibling holes at $q_jL,q_jR$ by concrete beta
+at $q_j$, retains the rest of the exterior and old holes, and restricts
+the entire partition canonically. The other occurrence of that repeated
+partner remains an old hole. All surviving disequalities and blocking
+guards belong to the output.
+

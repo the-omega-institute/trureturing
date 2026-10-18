@@ -1,0 +1,14 @@
+**Proposition 58.10 (the clock restriction is material for the full-phase task).** For $g>3a/4$, fix one original finite source. Let $m_j$ be its finite ground energies and $w_j$ the zero-extended positive normalized finite ground vectors. Let $m,w$ be the common ground pair. Then
+
+$$
+ m_j>m,\qquad m_j\downarrow m,\qquad w_j\to w,
+\qquad \tau_j=\frac\pi{m_j-m}<\infty,
+\qquad
+ \|e^{-i\tau_jm_j}w_j-e^{-i\tau_jm}w\|\longrightarrow2.
+\tag{58.22}
+$$
+
+These are separate finite histories with a supplied holding interval before Stop on their actually reached domains; no renewals during that interval are required. Consequently a uniform unbounded-clock full-amplitude guarantee cannot replace (58.17), even though initial states and energies converge. This discriminator alone does not refute gauge-invariant probability fidelity; Corollary58.9 proves a clock-independent ground-ray/effect bound in precisely that restricted task.
+
+Proof. Theorem55.4 supplies convergence and the simple strictly positive common ground state. Every finite connected compression likewise has a positive simple ground vector by the same absolute-value and connectivity argument; choose the positive phases. If $m_j=m$, its finite-support zero extension would minimize the common form and hence be a multiple of $w$, impossible because $w$ is strictly positive at every address. Thus $m_j>m$. Compactness and uniqueness give $w_j\to w$. At the stated finite time the relative scalar phase is $-1$, so the norm in (58.22) equals $\|w_j+w\|\to2$. A scalar phase cancels from a one-state effect probability, which is why this particular obstruction is scoped to the full complex-amplitude task. It asserts neither failure of every probability task nor a native waiting, phase sensor or limit Read. □
+

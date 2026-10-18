@@ -1,0 +1,62 @@
+**定义 84.1（The original two-omission full target）。** Retain [IC, Definitions 1.1–1.3 and Interface 1.4]: original integer weights $G_i$, matched $V_k\bmod2$ reading, the full joint actual complete-history prior, immutable INITIAL labels, a free initial scalar and independent absorbing bottom, and complete endpoints only. Fix
+
+$$
+m\ge7,\qquad 3\nmid m,\qquad k=m+2,\qquad T=m+3,
+\qquad g=\gcd(m,T)=\gcd(m,3)=1.
+\tag{84.1}
+$$
+
+Thus every phase is actual. Write $j=-\theta_{\rm INITIAL}\pmod T$, let $A=\{0,\ldots,m\}$, and take two finite tables $\lambda_0,\lambda_1:\mathbb Z/T\mathbb Z\to Y$. Choose $R$ fresh relative to both entire low images. Define the entire target, including the history pullback, by
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+\lambda_v(j),&0\le s<m,\\
+R,&s=m\text{ or }s=m+1,
+\end{cases}
+&&v\in\mathbb F_2,\ j\in\mathbb Z/T\mathbb Z,\\
+f(\bot)&=L_\bot,\qquad
+F(w)=f(q_{\rm INITIAL}(w)),\qquad
+\Lambda(j)&=(\lambda_0(j),\lambda_1(j)).
+\end{aligned}
+\tag{84.2}
+$$
+
+The initial-bottom label is arbitrary and independent, including possible coincidences with other labels. The low target is tail-independent separately on each INITIAL value fibre; the two tables need not agree. No target is reevaluated on a later record.
+
+Index issued complete words by $t=0,1,\ldots$. Their ordered paths and two omitted vertices are
+
+$$
+\begin{aligned}
+u_t&=tm\pmod T=-3t\pmod T,\\
+W_t&=[u_t,u_t+m]\pmod T,\\
+M_t&=\{u_t+m+1,u_t+m+2\}\pmod T
+     =\{-3t-2,-3t-1\}\pmod T.
+\end{aligned}
+\tag{84.3}
+$$
+
+For any actual word $B$ define its complete arithmetic row by
+
+$$
+\begin{aligned}
+q_{t,B}(j)&=\bigoplus_{i=0}^{m-1}B_i\gamma_{-j+tm+i},
+&&\gamma_i=\mathbf1_{\{0,T-1\}}(i\bmod T),\\
+q_{t,B}(u_t)&=B_0,\qquad
+q_{t,B}(u_t+i)=B_{i-1}\oplus B_i&&1\le i<m,\\
+q_{t,B}(u_t+m)&=B_{m-1},\qquad
+q_{t,B}|_{M_t}=0.
+\end{aligned}
+\tag{84.4}
+$$
+
+These are the supplied original literal charges, not new observations. The row has even full-path charge; conversely an even row vanishing on $M_t$ has the unique width-$m$ inverse
+
+$$
+B_{t,i}=\bigoplus_{b=0}^i q_t(u_t+b),\qquad 0\le i<m.
+\tag{84.5}
+$$
+
+On success the row equals that source's own completed scalar difference. On rejection its actual endpoint is bottom, and the arithmetic row is not a scalar readout. Every issued word is emitted completely and costs one block and $m$ bits, including an absorbed suffix. Both alphabets contain every width-$m$ word because $m<k$. GLOBAL means one preset stream for this fixed full target, on both values and every actual source, with endpoint stopping. There is no reset, copy, hidden INITIAL clock, intermediate read or borrowed sibling output.
+

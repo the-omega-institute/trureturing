@@ -1,0 +1,66 @@
+**Theorem 6.1 (Finite rational midpoint and effective-parameter boundary).**
+For each finite $J$ keep the matrix and vector (2.3), and define
+
+$$
+\mathcal D_q=q\frac{d}{dq},\qquad
+C(q)=qR(\operatorname{Id}-qR)^{-1},\qquad
+C_m(q)=\mathcal D_q^m C(q),\qquad
+z_m(q)=\mathcal D_q^m\frac q{1-q}.
+\tag{6.1}
+$$
+
+Then the exact means in (2.4), for every $0<q<1$, are
+
+$$
+\begin{aligned}
+m_0&=\frac{\mathbf e_1C_{2r-1}(q)v}{z_{2r-1}(q)},\\
+m_1&=\frac{\mathbf e_1\bigl(C_{2r-1}(q)+cC_{r-1}(q)\bigr)v}
+ {z_{2r-1}(q)+cz_{r-1}(q)}.
+\end{aligned}
+\tag{6.2}
+$$
+
+They and $\theta=(m_0+m_1)/2$ are finite rational expressions in $q,c$
+with dyadic matrix/vector coefficients, and their stipulated denominators
+do not vanish. For computably supplied $q,c$ they allow finite certified
+interval evaluation to any prescribed positive absolute tolerance.
+For arbitrary known reals this is an existence and calibration
+specification; it supplies neither a uniform effective encoding of
+noncomputable parameters nor a bit-operation complexity bound.
+
+Proof. Stochasticity gives $\|R^k\|_\infty=1$. Hence for $0<q<1$
+the matrix Neumann series converges, proves invertibility, and yields
+
+$$
+C(q)=\sum_{k\ge1}q^kR^k.
+\tag{6.3}
+$$
+
+On every compact interval below one and above zero the series obtained
+by any fixed number of derivatives is uniformly absolutely convergent:
+its terms are bounded by a fixed polynomial in $k$ times a geometric
+sequence. Termwise Euler differentiation therefore gives
+
+$$
+C_m(q)=\sum_{k\ge1}k^m q^kR^k,\qquad
+z_m(q)=\sum_{k\ge1}k^m q^k.
+\tag{6.4}
+$$
+
+Substitution of the exact shapes (1.1) in (2.4) proves (6.2). The scalar
+normalizers are strictly positive, and $\operatorname{Id}-qR$ is
+invertible. Matrix inversion, finitely many derivatives and arithmetic
+give finite rational expressions. Since all powers $2^{-j}$ and
+$2^{-rj}$ are dyadic, the claimed coefficient description follows.
+
+For computable $q,c$, refine their certified rational intervals until
+the $q$ interval lies inside $(0,1)$ and the nonzero denominators have
+interval bounds separated from zero. This eventually succeeds by the
+nonvanishing just proved and continuity. Further interval refinement
+then evaluates the finite rational expression to any positive requested
+tolerance. A sufficiently fine dyadic approximation, clipped to
+$[0,2^{-r}]$, supplies a certificate of the form (5.3), without deciding
+an exact floor equality of the true midpoint. This finite evaluation
+argument puts no uniform bound on the cost of obtaining parameter
+intervals, derivatives or the desired tolerance. $\square$
+

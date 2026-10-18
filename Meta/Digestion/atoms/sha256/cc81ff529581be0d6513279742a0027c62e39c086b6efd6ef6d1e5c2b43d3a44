@@ -1,0 +1,78 @@
+**Example 8.15 (A positive five-word bottleneck).** Let
+$0<\varepsilon<1/2$ and, in (8.1), set
+
+$$
+p_0=\varepsilon,\qquad p_2=\frac12,\qquad
+p_1=p_3=p_{13}=t_\varepsilon
+:=\frac{1/2-\varepsilon}{3}.
+\tag{8.29}
+$$
+
+These five probabilities sum to one and are strictly positive. Set
+$f_2=1$ and $f_u=0$ on the other four modes. Then
+
+$$
+\mathcal Q_p[f]=1,\qquad
+J_p[f]=\frac{4\varepsilon}{3(1+2\varepsilon)}\longrightarrow0,
+\tag{8.30}
+$$
+
+while
+
+$$
+\Phi_3(p)=
+\frac{2\varepsilon t_\varepsilon}{\varepsilon+t_\varepsilon}
++\frac{\varepsilon}{1+2\varepsilon}+t_\varepsilon
+\longrightarrow\frac16,
+\qquad
+\operatorname{tr}J_p\longrightarrow\frac49.
+\tag{8.31}
+$$
+
+Derivation. The variable $f(U)$ is Bernoulli with mass $1/2$ at one, so
+$4\operatorname{Var}_p(f)=1$. Only the edge $0\! -\!2$ changes $f$,
+and its conductance is
+$h(\varepsilon,1/2)=\varepsilon/(1+2\varepsilon)$. Equation (8.22) with
+$n=3$ gives (8.30). The two edges $0\! -\!1$, $0\! -\!3$ contribute
+the first term of (8.31), the middle edge contributes the second, and
+the edges $1\! -\!13$, $3\! -\!13$ each contribute
+$h(t_\varepsilon,t_\varepsilon)=t_\varepsilon/2$. As
+$\varepsilon\downarrow0$, $t_\varepsilon\to1/6$, proving the two limits.
+
+Every positive-$\varepsilon$ support is connected and therefore has exact
+pure identifiability. Nevertheless the specified direction has vanishing
+local classical information, and (8.27) gives
+$\gamma(p)/3\le4\varepsilon/[3(1+2\varepsilon)]$.
+The middle vertex's only connector is $0$. At $\varepsilon=0$ the
+positive support splits into the isolated middle vertex $2$ and the
+connected bottom path $1\! -\!13\! -\!3$. Its relative component phase
+is then a genuine null direction. This displays both the positive
+ill-conditioned limit and its disconnected endpoint; a nonzero limiting
+trace does not bound the weakest direction away from zero.
+
+For a scalar locally unbiased estimator of $t$ at the same-phase
+reference, using $N$ independent preparations of exactly the experiment
+in Theorem 8.11 and treating all other parameters as known, the regular
+classical Cramér–Rao bound is
+
+$$
+\operatorname{Var}(\widehat t)
+\ge\frac{1}{N J_p[f]}
+=\frac{3(1+2\varepsilon)}{4N\varepsilon}.
+\tag{8.32}
+$$
+
+The conditions are differentiable outcome probabilities on their fixed
+positive support, differentiation through the finite outcome sum, finite
+estimator variance, and local unbiasedness
+$\mathbb E_0\widehat t=0$,
+$\left.\partial_t\mathbb E_t\widehat t\right|_0=1$.
+For completeness the product-experiment score has mean zero and variance
+$N J_p[f]$. Differentiating the local-unbiasedness equation gives
+$\operatorname{Cov}_0(\widehat t,\text{score})=1$; Cauchy–Schwarz proves
+(8.32). This is the scalar regular bound used in [Paris, §2,
+equations (1)–(2)][Paris8], with its preparation count mapped to $N$.
+It is a bound for this protocol, not for every quantum measurement.
+It gives neither finite-sample exact phase knowledge nor a claim that
+an unbiased estimator saturating it exists at each finite $N$.
+

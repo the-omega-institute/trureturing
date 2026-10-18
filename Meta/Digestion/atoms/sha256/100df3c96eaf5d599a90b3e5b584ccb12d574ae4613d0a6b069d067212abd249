@@ -1,0 +1,21 @@
+**Proposition 3.4 (shape coincidence does not merge values).** The
+construction is valid even when different residual variables receive
+the same ground shape, when multiple occurrences of one shape variable
+have independent rank fields, and when a negative first differs
+arbitrarily deep inside a residual.
+
+Proof. The vertex names in (SFP.7) contain both the code name and the
+leaf address. Ground shape coincidence adds no edges to the positive
+graph. Its only effect on a negative is to require the leaf-witness
+alternative in Definition 2.3 instead of the shape-disagreement
+alternative. Lemma 3.3 compares every such leaf with its actual shared
+rank and allows all depths in the supplied finite shapes.
+
+For example $F([0],[0])$ and $F([0],[2])$ are normal and share a shape,
+but their rank differences are not a constant function. They cannot be
+identified by a shape equation. NIC Lemma 2.4 derives connectivity of
+residual sorts from the provenance of its original positive shape
+equations. We need no such connectivity assumption, and use no such
+lemma after introducing structural tests for negatives. The forest
+always retains all of its actual components. $\square$
+

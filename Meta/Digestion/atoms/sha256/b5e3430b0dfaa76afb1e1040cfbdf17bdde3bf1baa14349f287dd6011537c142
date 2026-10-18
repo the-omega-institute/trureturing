@@ -1,0 +1,28 @@
+**Theorem 11.2 (Finite minor lower bound).** If an affine predictive boundary
+as in Definition 11.1 exists and
+
+$$
+\det M\ne0,
+\tag{11.3}
+$$
+
+then $k\ge3$. If a three-dimensional affine boundary exists, the minimum
+dimension for this response task is therefore exactly three.
+
+**Proof.** Let $Z$ be the $k\times3$ matrix whose $j$-th column is
+$z(s_j)-z(s_0)$, and let $L$ be the $3\times k$ matrix whose $i$-th row is
+$\ell_i$. Subtracting the $s_0$ response in (11.2) gives
+
+$$
+M=LZ.
+$$
+
+Thus $3=\operatorname{rank}M\le\operatorname{rank}Z\le k$. The last
+statement follows by comparing with the supplied three-dimensional
+realization. $\square$
+
+The minor condition is a source-and-task statement: it uses the same actual
+sources in every row and the same legal continuation family in every column.
+It cannot be replaced by three unrelated response ranks from different
+source domains.
+

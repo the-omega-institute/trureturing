@@ -1,0 +1,44 @@
+**Definition 54.1 (Target fibers and their local compatibility refinement).** Fix the entire labeled source (44.1), the zero advice, the consumer and every prescribed target law as in Definition 50.1. In this section the tape carrier $\Theta$ is nonempty and countable, with its power-set sigma algebra. Let $P=\mathcal P(\Theta)$ and $d=\operatorname{TV}$, always with the event-supremum normalization. Probability vectors identify $P$ with the closed subset of $\ell^1(\Theta)$ consisting of nonnegative vectors of sum one, and
+
+$$
+d(v,w)=\frac12\sum_{\theta\in\Theta}|v(\{\theta\})-w(\{\theta\})|.
+\tag{54.1}
+$$
+
+Thus $P$ is complete and separable: finitely supported rational probability vectors are dense. Use only the actual signature space $Q$ of (50.2), with no additional limit signatures. Its occupied prefix neighborhoods are
+
+$$
+U_m(q)=\{q'\in Q:q'_i=q_i\ (1\le i\le m)\},
+\qquad C_m(q)=\{y\in X:[y]\in U_m(q)\}.
+\tag{54.2}
+$$
+
+They form a countable clopen basis; $U_0(q)=Q$. Fix a cap $\eta\in[0,1]$. Start with the closed convex sets, possibly empty,
+
+$$
+K_0^\eta(q)=\bigcap_{y\in X:\,[y]=q}
+                 \{v\in P:d(v,\mu_y)\le\eta\}.
+\tag{54.3}
+$$
+
+Every label in the fiber occurs in this intersection, even when equal observations have different target laws. For a closed-valued correspondence $K:Q\to 2^P$, allowing empty values, use $\operatorname{dist}(v,A)=\inf_{w\in A}d(v,w)$ for nonempty $A$, put $\operatorname{dist}(v,\varnothing)=+\infty$, and define
+
+$$
+\mathcal D K(q)=\left\{v\in K(q):
+  \forall\delta>0\ \exists m\ \forall q'\in U_m(q),\quad
+          \operatorname{dist}(v,K(q'))<\delta\right\}.
+\tag{54.4}
+$$
+
+For countable ordinals define the decreasing refinement by
+
+$$
+K_{\alpha+1}^\eta=\mathcal D K_\alpha^\eta,
+\qquad
+K_\lambda^\eta(q)=\bigcap_{\alpha<\lambda}K_\alpha^\eta(q)
+   \quad(\lambda\text{ a nonzero limit ordinal}).
+\tag{54.5}
+$$
+
+The recursion involves only original target balls, actual occupied cylinders, metric distances and intersections. It does not take a proposed prepared-law family as input. Each point in a value is merely a probability center on the original tapes; membership is progressively tested against all neighboring values.
+

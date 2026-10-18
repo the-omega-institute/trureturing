@@ -1,0 +1,59 @@
+**Theorem 6.4 (exact top-three pressure at every length).** For every
+support in Definition 6.3, every $n\ge1$, and every nonempty
+$B\subseteq P_H^n$,
+
+$$
+B\text{ is natively admissible}
+\quad\Longleftrightarrow\quad
+|\pi_iB|\le3\quad\text{for every }i.
+\tag{RCE.26}
+$$
+
+The full $P_H$ is range-feasible, and every finite literal has at
+most three replies there. If $w_i:S_d\to[0,\infty)$ vanish
+outside $P_H$, let $L_3(w_i)$ be the sum of their three largest
+weights on $P_H$, counting zero weights. Then
+
+$$
+\max_{B\subseteq S_d^n\text{ admissible}}
+       \sum_{x\in B}\prod_iw_i(x_i)
+       =\prod_iL_3(w_i).
+\tag{RCE.27}
+$$
+
+In particular, for any nonnegative whole-block $w$ supported there,
+$A_n^{(d)}(w)=L_3(w)^n$ and $\beta_d(w)=L_3(w)$.
+
+Proof. Any finite literal either ends above the fixed frontier and
+is constantly branch, or enters one actual module and returns one
+of its core replies. Lemma 6.2 gives at most three possibilities.
+Every target above the frontier is constant; any other target is
+one of the seven core targets. It has at most four values, so
+$P_H$ is range-feasible.
+
+Suppose some projection contains four distinct states. A separating
+column of $H$ makes the target at that module's $LL$ take the four
+distinct factors of (RCE.24). But every possible donor literal in
+every coordinate has at most three replies on $B$. No decoder of
+one such reply, and no constant, can produce those four target
+values. This contradicts admissibility, regardless of donor topology,
+correlations or off-target choices.
+
+Conversely suppose each coarse projection has at most three states.
+At any module its core projection has at most three states. Lemma
+6.2 supplies one $L$ or $RL$ experiment identifying that module's
+possible core states. Prefix it by the module's public actual
+address. It determines the requested factor; targets above the
+frontier are constants. These are own-coordinate native witnesses
+for every target and remain valid on $B$. This proves (RCE.26).
+
+For (RCE.27), restrict any admissible relation to its positive
+product-weight rows. If none remain its mass is zero; otherwise its
+projections are subsets of $P_H$ of size at most three. Containment
+in their Cartesian product and nonnegativity bound its mass by
+$\prod_iL_3(w_i)$. Conversely choose a maximizing triple in each
+coordinate and take their product. It is admissible by the converse
+just proved and attains that mass. If some weight is zero, both
+sides of (RCE.27) are zero. The original weights are never split
+among modules; they may correlate all $k$ module symbols. $\square$
+

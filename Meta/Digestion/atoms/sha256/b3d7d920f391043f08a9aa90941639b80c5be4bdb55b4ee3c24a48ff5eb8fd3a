@@ -1,0 +1,11 @@
+**Corollary 10.4 (Failure of strong zero for this law).** Use the fixed original-law losses $\ell_i(x)=(x_i-q_i(x))^2$. Under the band and $A_P<\infty$, [Guarded, Lemma 2.2] supplies a shift-invariant conull set saturated under legal finite modifications on which
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))
+\tag{10.9}
+$$
+
+is absolutely convergent for every finitely differing pair. Strong zero $\mathsf Z_\Delta(P)$ asserts that this cocycle is zero on every such pair in a saturated conull set. The present law does not satisfy $\mathsf Z_\Delta(P)$.
+
+Proof. Theorems 5.1 and 10.2 pay exactly the band and summability premises for this $P$. [Guarded, Theorem 5.1] proves that these premises together with strong zero imply $d(P)=c_\star$ for that same law. Its implication follows from independent insertion of a finite optimizer between two zero guards: the exact loss identity has nonnegative exterior, guard and conditional-discrepancy penalties, so strong zero gives $(n+2)d(P)\ge\kappa_n$ for every $n$; use (1.3) and (1.8). The equality it would force contradicts (10.5). This is a contrapositive for a proved strict nonattainer, not a deduction of strong zero from attainment. $\square$
+

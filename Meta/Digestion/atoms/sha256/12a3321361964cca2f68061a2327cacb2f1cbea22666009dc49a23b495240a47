@@ -1,0 +1,18 @@
+### Primitive
+
+以下对象属于原始有限数学：
+
+\[
+\Sigma,\quad
+\Delta(\Sigma),\quad
+H,\quad
+\mathsf D(H),\quad
+\operatorname{CPTP},\quad
+\otimes,\quad
+\operatorname{tr},\quad
+\text{POVM},\quad
+G=(V,E,w),\quad
+B,\quad
+L_w.
+\]
+

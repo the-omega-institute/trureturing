@@ -1,0 +1,59 @@
+**Theorem 2.3 (alphabet-preserving global replacement).** The original
+minimum $m_D$ equals the minimum on the canonical actual sources
+$\{\langle\alpha,x\rangle:x\in S_D\}$ with later probes restricted
+to $Rq$, $q\in W_D$, together with zero Reads. From any original
+encoder $E$ one can construct an effective encoder
+
+$$
+E^\circ(\langle\alpha,v\rangle)
+ =E(\langle\alpha,\pi_D(v)\rangle),
+\qquad
+|E^\circ[\mathcal F_D]|\le |E[\mathcal F_D]|.
+\tag{FMR.10}
+$$
+
+It acquires its source dependence using at most
+
+$$
+T_D\le2^D-1,\qquad Q_D\le D,
+\qquad A_D\le(D-1)2^D+1
+\tag{FMR.11}
+$$
+
+actual preparation Reads, peak submitted length and submitted letters,
+respectively. These are sufficient bounds, not preparation optima.
+
+Proof. Actually submit every $Rq$, $q\in W_D$, on the stationary
+source, including words that return absent. The acquired finite table
+determines $\pi_D(v)$. A common installed table contains the original
+encoder's output on each canonical actual source. It can be generated
+effectively by simulating its terminating preparation on those finitely
+many explicit trees, computing their replies locally. This installation
+uses no unknown actual source and is a separate resource. Output only
+the selected complete code. The isolation assumption removes access to
+the acquired table, selection workspace and every other distinction.
+Canonical representatives belong to the original family, proving the
+range inequality.
+
+Given a late request, simulate the original reader on its canonical
+source. Its chosen arbitrary literal is either an outer constant,
+a preserved boundary word, an immediate exit, or a strict extension
+of an exit. Lemma 2.2 supplies its exact reply using at most one actual
+boundary Read. The word choice and translation use only the complete
+code, $D,p$ and common tables; no $k$ is available. A zero-Read original
+branch remains a zero-Read branch. The original resulting predictor
+has the canonical trajectory, and (FMR.8) makes that the actual required
+trajectory for every subsequent $k$.
+
+Conversely, a canonical reader with boundary probes works on the
+actual family after that same acquisition: boundary replies agree
+and all target factors agree. The two optimum inequalities follow.
+There are $2^D-1$ submitted words, maximum length $D$, and
+$\sum_{j=0}^{D-1}(j+1)2^j=(D-1)2^D+1$ submitted letters. $\square$
+
+The theorem replaces the whole encoder by $E\circ\pi_D$. It does not
+assert that a fixed correlated fiber is invariant under completion,
+that its child projections are legal fibers, or that queries can be
+restricted to prefixes of the selected target. All off-target words
+inside $W_D$ remain available.
+

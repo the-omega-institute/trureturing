@@ -1,0 +1,4 @@
+# FIB harmonic-edge load: fixed-state tail nonuniformity and an erasure-risk jump
+
+This volume gives ordinary handwritten probability proofs. One stationary four-state family on the original emitted-bit clock has finite erasure-defect tails at every parameter, but unbounded tail suprema at every fixed radius. Its finite marginals are continuous while its actual full-exterior Brier risk is zero off the fair parameter and $1/8$ at that parameter. These are boundaries for the existing conditional-stability and compact-separation interfaces; the arbitrary-finite attainment problem remains open.
+

@@ -1,0 +1,165 @@
+**Theorem 4.2 (sharp live block dimension three).** For every base, height
+and preparation in Definition 4.1, the minimum $d$ in (QC.20)–(QC.21)
+is exactly three, even though $n$ may be any finite integer. Four actual
+original-control endpoints already force the lower bound. This is a
+minimum for the exact live quantum block, under the unassisted coding
+contract, and not a minimum for the full observer or its archive.
+
+Proof. First specify the actual finite witness, rather than arbitrary
+qutrit states. Put
+
+$$
+p=\sqrt Z e_2,
+\quad v_+=\sqrt{2k}U_++\sqrt{2(c-k)}U_-,
+\quad v_-=\sqrt{2k}U_+-\sqrt{2(c-k)}U_-.
+\tag{QC.22}
+$$
+
+Select the four states
+
+$$
+\phi_1=p+v_+,\quad \phi_2=p-v_+,
+\quad \phi_3=p-i v_-,\quad \phi_4=p+i v_-.
+\tag{QC.23}
+$$
+
+Their $(\beta,m)$ values are respectively
+$(0,0),(\pi,0),(\pi/2,1),(3\pi/2,1)$.
+For explicit reachability fix one auxiliary $a\in(0,c)$, $a\ne k$,
+before selecting a state. Prepend the unit-time fixed-height phase leg of
+increment $2\pi m$. Then use the supplied four-leg rectangle from $k$
+to $a$ with signed phase height
+
+$$
+B_{\beta,m}
+  =\frac{r(\pi m-\beta)-2\pi mk}{a-k}.
+\tag{QC.24}
+$$
+
+The actual residual is
+
+$$
+2\pi m w(k)+B_{\beta,m}(w(a)-w(k))
+ =(\beta,\beta-\pi m,0,\beta-\pi m,\beta).
+\tag{QC.25}
+$$
+
+Indeed $w(a)-w(k)=-(a-k)(1,1,0,1,1)/r$; substituting (QC.24)
+gives each coordinate. The rectangle's phase increment is zero, so the
+full real increment is exactly $2\pi m$. The paths all have duration five
+and the same probability waveform: hold $k$, move to $a$, hold $a$,
+return to $k$, hold $k$, with one unit per leg. Their finite phase
+variations are $2\pi|m|+2|B_{\beta,m}|$. Every probability is at least
+
+$$
+\delta=\min\{k,a,c-k,c-a,Z\}>0.
+\tag{QC.26}
+$$
+
+The affine controls belong to both supplied regularity alternatives and
+start from the same preparation. If their preparation is itself made with
+the canonical stopped instrument, the successful histories have the same
+strictly positive probability: (QC.7) depends only on their common $k$
+waveform. Conditioned on the live event, they yield the four exact states
+with the same no-failure record and clock. No failed branch is retried.
+The prior generator's state or waveform is not handed to the code as
+additional information. These are mathematical ordinary-operation
+witnesses, not claims of a previously recorded physical occurrence.
+
+Use the inner product conjugate linear in the first argument. Since
+$\langle v_+,v_-\rangle=4k-2c$, every cross-parity overlap between
+$\{\phi_1,\phi_2\}$ and $\{\phi_3,\phi_4\}$ is one of
+
+$$
+Z+i(4k-2c),\qquad Z-i(4k-2c).
+\tag{QC.27}
+$$
+
+All four are nonzero because $Z>0$. The overlap graph therefore contains
+the connected complete bipartite graph on these two pairs. Same-parity
+overlaps may vanish; no assumption that every pair overlaps is needed.
+Moreover,
+
+$$
+\phi_1+\phi_2=2p,
+\quad \phi_1-\phi_2=2v_+,
+\quad \phi_4-\phi_3=2i v_-.
+\tag{QC.28}
+$$
+
+Strict $k>0$ and $c-k>0$ make $v_+,v_-$ independent. Since $Z>0$,
+these equations show that the four actual vectors span all of $V$.
+
+Now apply the mature pure-state no-imprinting argument to the common
+composite channel $\mathcal T=\mathcal R\mathcal C$. For clarity its
+exact use is included here. A Stinespring isometry $S$ for $\mathcal T$
+has, by (QC.21) and purity,
+
+$$
+S\phi_j=\phi_j\otimes\eta_j,\qquad \|\eta_j\|=1.
+\tag{QC.29}
+$$
+
+Any output phase can be absorbed in $\eta_j$. Isometry gives
+
+$$
+\langle\phi_j,\phi_l\rangle
+ =\langle\phi_j,\phi_l\rangle\langle\eta_j,\eta_l\rangle.
+\tag{QC.30}
+$$
+
+On each nonzero-overlap edge (QC.30) forces inner product one, hence equal
+environment vectors. Connectivity in (QC.27) gives one common $\eta$.
+Linearity and (QC.28) imply $Sx=x\otimes\eta$ for every $x\in V$.
+Consequently
+
+$$
+\mathcal T(X)=X\qquad(X\in M_3).
+\tag{QC.31}
+$$
+
+There is no assumption that arbitrary superpositions of the four histories
+are preparable. The all-operator identity follows from one linear channel
+that exactly fixes their actual pure states.
+
+Write $\mathcal C_\alpha:M_3\to M_{d_\alpha}$ for an encoder branch
+and $\mathcal R_\alpha:M_{d_\alpha}\to M_3$ for the decoder on that
+block. Each $\mathcal C_\alpha$ is CP and generally trace decreasing;
+only their direct sum is TP. Each block decoder is CPTP. Choose finite
+Kraus families $C_{\alpha u}$ and $R_{\alpha v}$. Their products give
+a Kraus representation of $\mathcal T$ with
+
+$$
+Q_{\alpha vu}=R_{\alpha v}C_{\alpha u},
+\qquad \operatorname{rank}Q_{\alpha vu}\leq d_\alpha\leq d.
+\tag{QC.32}
+$$
+
+The Choi matrix of (QC.31), using the unnormalized maximally entangled
+vector $\Omega=\sum_{j=1}^3 g_j\otimes g_j$, is
+
+$$
+|\Omega\rangle\langle\Omega|
+  =\sum_{\alpha,v,u}|Q_{\alpha vu}\rangle\!\rangle
+                    \langle\!\langle Q_{\alpha vu}|.
+\tag{QC.33}
+$$
+
+A sum of positive rank-one matrices with one-dimensional range can have
+no summand outside that range: evaluate on every vector orthogonal to
+$\Omega$ and use nonnegativity of each summand. Thus every nonzero
+$Q_{\alpha vu}$ is a scalar multiple of $I_3$ and has rank three.
+At least one is nonzero because $\mathcal T$ is TP. Equation (QC.32)
+therefore forces $d\geq3$, for every finite $n$.
+
+For attainment retain the qutrit with coordinates
+$(U_+,U_-,e_2)$, use the first three columns of $W$ and its inverse, and
+take $n=1,d=3$. The usual whole-domain completion sends the inactive
+orthogonal complement to a fixed live state. It is CPTP and exactly
+recovers every supported joint input. Theorem 3.1 supplies the legal
+reduced canonical continuation, including all five labelled failures and
+the separately retained absorbing status. The unitaries and Kraus
+operations needed for this attainment are conditional services, not
+hardware obtained from the original source law. This proves the claimed
+minimum. $\square$
+

@@ -1,0 +1,18 @@
+**Definition 1.1 (Open source and commands).** Fix $0<Z<1$, put
+$r=1-Z$ and $H=r/2$, and write the current ray as
+$(k,\alpha,\beta)\in(0,H)\times\mathbb T^2$. For signed real $h,t$,
+
+$$
+P_h(k,\alpha,\beta)=(k+h,\alpha,\beta),\quad 0<k+h<H,
+$$
+
+and
+
+$$
+Q_t(k,\alpha,\beta)=\left(k,\alpha+t/2,\beta+(1/2-k/r)t\right).
+$$
+
+The first domain is exactly the displayed strict inequality and the second is
+all of the source. All finite lawful histories, prefixes, and prescribed
+simultaneous paths are retained.
+

@@ -1,0 +1,27 @@
+## 10. Credits, conditions, and the surviving endpoint problem
+
+Theorem 3.1 supplies the existing opposite-strict-sign obstruction. Theorem 7.1 strengthens it by excluding every positive-source zero at an invertible slope, including a one-sided zero and the identically zero case. Theorem 8.1 treats singular slopes: rank at most two or an unsafe line reuses the existing prescribed-slope criterion, while the safe rank-three case acquires a further transverse sign requirement. Theorems 9.1–9.2 combine these branches into an all-history critical-point obstruction and the exact quadratic requirement (9.3). These results range over every legal minimum-length history at their stated hypotheses; no additional excluded tail family replaces that quantifier.
+
+The exact quotient and transfer are those of Section 2. The positive-secant and safe-subspace results, actual positive factorization, and prescribed-slope collision criterion are credited to Proposition 1.1 and Theorems 2.1 and 3.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md). They are consumed in Section 8 and the singular branches of Section 9; their old proofs and excluded families are not repeated here. Equations (6.2)–(6.3) apply their realization interface to every new quotient collision.
+
+The upper and lower numerical bounds retain their credited sources. Theorems 2.1 and 5.1 of [Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md) give the affine upper bound $\max(d+6,7)$ and all-fixed-history lower bound $d+5$. Its Theorem 4.1 concerns its specified baseline/shear prefix. Theorem 2.1 and Proposition 2.2 of [Affine six-read recovery and unknown-slope collisions](FIB_AFFINE_SIX_READ_RECOVERY_AND_UNKNOWN_SLOPE_COLLISIONS.md) give the six-read constant-drift construction and its compatibility test. Its prescribed-slope safe-line inverse and different-positive-slope collisions remain separate path-specific results.
+
+Theorem 4.1 and Lemma 3.2 of [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md) give the broader common polynomial-gain construction, with its positive-scale fibre and specified-prefix optimum in Theorems 6.1 and 8.1. On the affine restriction its target conversion is
+$R_0=S/\operatorname{tr}S$ and
+$H(t)=(\operatorname{tr}S)(1+\kappa t)$, with inverse
+$S=H(0)R_0$, $\kappa=H'(0)/H(0)$, and $H(0)>0$.
+These are correspondences of entire common-source targets. The references to the original self-calibrating source in Sections 1 and 5 remain credits with their stated scopes.
+
+The original numerical alternatives are unchanged:
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+The unresolved target is a sharp uniform count over all predetermined finite-word cumulative histories, with a legal attaining history and a common-source inverse for every real affine slope and the entire degree-at-most-$d$ drift. No endpoint construction or universal endpoint collision obstruction is established here.
+
+More precisely, the surviving regular-slope residual consists of transfer forms strictly of one sign on all positive rank-one sources. The singular residual consists of rank-three slopes with a safe kernel line and a transverse functional whose entry coefficients have one weak sign and are not all zero. A candidate must meet these requirements simultaneously at all slopes and satisfy (9.3) at every positive source shape. These results neither show that a legal history satisfies all of them nor eliminate distant different-slope collisions for a history that does. Everywhere local derivative nonsingularity does not give a global common-source inverse.
+
+All statements keep strict positive rank one, one fixed positive row per run, the known $M,J$, every finite cumulative word including the empty word, the actual recorded-reading index, arbitrary real slopes, and one entire allowed drift polynomial. Sampled gain zeros and negative gains are included by the undivided equations in Section 6. The representation scales remain exactly those of Section 1. These ordinary conditional proofs assert no independent review or Lean certification, adaptive lower bound, optimal atom count, bit-precision bound, noisy stability, physical acquisition claim, empirical-learning consequence, external priority, or completion of the programme.
+

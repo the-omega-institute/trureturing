@@ -1,0 +1,4 @@
+**Theorem 94.1.** No calibrated local minimum of (1) with rank G=rank H=7 has error below 1/4.
+
+This is a statement about calibrated local minima, not about every doubly rank-seven competitor. The physical calibration comparison of section 72 is global and may enlarge ranks; it does not transfer local minimality from an arbitrary leaking pair. The unrestricted quarter lower bound and unequal-rank cases, including pairs with one rank seven, are not asserted here.
+

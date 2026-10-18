@@ -1,0 +1,70 @@
+**Theorem 3.1 (same-encoder gain/recovery obstruction).** Every $N^{\rm ph}\in\mathcal C_\beta$ and every complex CPTP $R$ satisfy
+
+$$
+\|RN^{\rm ph}-\mathrm{id}_3\|_\diamond
+\geq L(\beta):=\frac{2\beta}{3+2\sqrt{2(1-\beta)}}=L(\gamma).
+\tag{P.8}
+$$
+
+More generally the bound holds for any complex CPTP encoder $N:M_3\to M_5$ having one actual pure input with output nonzero spectrum $(a,\beta)$, omitting the zero weight at $\beta=0$. This sufficient condition does not require real Kraus matrices or a second specified output.
+
+**Proof.** First (P.4) gives $\|\rho^{\rm ph}-\sigma^{\rm ph}\|_1=2$. For density operators, the positive spectral projection $Q$ of their difference then has $\operatorname{Tr}(Q\rho^{\rm ph})=1$ and $\operatorname{Tr}(Q\sigma^{\rm ph})=0$. Positivity forces their supports into orthogonal subspaces. Therefore these actual states are the positive and negative parts of their difference; each has nonzero eigenvalues $(a,\beta)$. The physical $\theta_+$ is an actual pure preimage under this same $N^{\rm ph}$.
+
+For the more general sufficient condition, take a finite Stinespring isometry of the actual encoder and its complement $\Gamma:M_3\to M_r$. Contracting this isometry with a basis of the five-dimensional retained output supplies at most five Kraus matrices for $\Gamma$. Thus its unnormalized input-first Choi matrix $J=\sum_{ij}|i\rangle\langle j|\otimes\Gamma(|i\rangle\langle j|)$ has rank at most five and $\operatorname{Tr}_EJ=I_3$. The complement output $\tau$ at the stipulated pure input has the same nonzero eigenvalues $(a,\beta)$ by Schmidt decomposition.
+
+Fix one environment density $\omega$ and let $t=\lambda_2(\omega)$, with $t=0$ when $r=1$. The eigenvalue trace inequality, applied to $\sqrt\tau$ and $\sqrt\omega$ in the trace-norm variational formula, gives
+
+$$
+F(\Gamma,\mathcal C_\omega)\leq f(\tau,\omega)
+\leq\sqrt{a\lambda_1(\omega)}+\sqrt{\beta t}
+\leq\sqrt{a(1-t)}+\sqrt{\beta t},
+\quad \mathcal C_\omega(X)=\operatorname{Tr}(X)\omega.
+\tag{P.9}
+$$
+
+Here $0\leq t\leq1/2$. To obtain another bound for this same $\omega$, suppose $r\geq2$ and $t>0$, and span its top two eigenvectors by $E_2$. The six-dimensional space $\mathbb C^3\otimes E_2$ meets $\ker J$ in a nonzero vector because $\operatorname{rank}J\leq5$. Choose a unit $\xi$ there, with reference Schmidt support $S$ of dimension $k\leq2$. Put $q=\Pi_S/k$ and $A_q=\sqrt q\otimes I$. The vector $\sum_{ij}(\sqrt q)_{ij}|i\rangle_R|j\rangle_A$ has actual input marginal $q^T$, and gives normalized output states
+
+$$
+\Omega_q=A_qJA_q,\qquad Q_q=q\otimes\omega.
+$$
+
+Because $A_q\xi=\xi/\sqrt k$ and $J\xi=0$, $\Omega_q\xi=0$. The probability assigned by $Q_q$ to $\xi$ is
+
+$$
+p=\langle\xi|Q_q|\xi\rangle
+=\langle\xi|I\otimes\omega|\xi\rangle/k\geq t/k\geq t/2.
+$$
+
+The binary CPTP measurement $\{|\xi\rangle\langle\xi|,I-|\xi\rangle\langle\xi|\}$ yields distributions $(0,1)$ and $(p,1-p)$. Root-fidelity data processing gives $F(\Gamma,\mathcal C_\omega)^2\leq1-t/2$. If $r<2$ or $t=0$, this inequality is simply fidelity normalization; no six-dimensional subspace is invoked in that branch.
+
+The unrestricted Bény–Oreshkov recovery/complement theorem, with target $\mathrm{id}_3$, now gives
+
+$$
+g_N=\max_\omega F(\Gamma,\mathcal C_\omega),\qquad
+g_N^2\leq\max_{0\leq t\leq1/2}
+\min\{s(t),1-t/2\},\quad
+s(t)=(\sqrt{a(1-t)}+\sqrt{\beta t})^2.
+\tag{P.10}
+$$
+
+The identity complement is the scalar trace, and channels from that scalar system prepare exactly the densities $\omega$. The theorem optimizes all complex CPTP recoveries and permits nonminimal complements. Both inequalities in (P.10) were imposed at the same center before maximizing; centers for separate inputs are never substituted.
+
+For $\beta>0$, $s$ increases on $[0,\beta]$ and decreases thereafter: write $t=\sin^2 u$, $\beta=\sin^2 v$ to get $s(t)=\cos^2(u-v)$ with $u,v\in[0,\pi/4]$. Its unique intersection with $1-t/2$ on $[0,\beta]$ maximizes the lower envelope. In this interval the intersection equation is
+
+$$
+\sqrt{\beta(1-t)}-\sqrt{at}=\sqrt{t/2},
+\qquad t_0=\frac{2\beta}{3+2\sqrt{2a}},
+\qquad g_N^2\leq1-t_0/2.
+$$
+
+Indeed moving the nonnegative terms and squaring gives $\beta=t(3/2+\sqrt{2a})$. Beyond $\beta$ the second term only decreases. At $\beta=0$ the envelope is $\min(1-t,1-t/2)=1-t$, with maximum one at zero, giving the same formula without division by $\beta$.
+
+For any single recovery and purification $\psi$, measurement of its pure ideal target gives
+
+$$
+\|((RN)\otimes\mathrm{id})(\psi)-\psi\|_1
+\geq2\bigl(1-f(((RN)\otimes\mathrm{id})(\psi),\psi)^2\bigr).
+$$
+
+Taking the worst purification yields $\|RN-\mathrm{id}\|_\diamond\geq2(1-F(RN,\mathrm{id})^2)\geq2(1-g_N^2)\geq t_0$. The factor two is the unhalved convention. This proves the sufficient-condition theorem and its application to the actual physical channel. The equality $\gamma=\beta$ comes from Theorem 2.1 on that same channel. $\square$
+

@@ -1,0 +1,122 @@
+**Definition 237.1 (Complete rows and one common allocation).**
+For $L\ge3$, words are literal reply vectors $w\in\{0,1\}^L$;
+$0$ is a zero answer, $n(w)$ is the first zero, and $w_+=1^L$.
+Every multiple-zero word is included. Write $\Omega_n=\{w:n(w)=n\}$.
+Labels are all of $0,\ldots,L$, including earlier and unqueried labels.
+A probability kernel $p_w$ meets a cap $e$ for amplitudes $a$ exactly when
+
+$$
+p_w(0)\ge1-a_n-e,\qquad p_w(n)\ge a_n-e,\qquad
+p_w(0)+p_w(n)\ge1-e\quad(w\in\Omega_n),\qquad p_+(0)\ge1-e.
+\tag{237.1}
+$$
+
+These are three independent rows, including negative singleton demands.
+Indeed the total common mass of $p_w$ and $(1-a_n)e_0+a_ne_n$ is
+$\min(p_w(0),1-a_n)+\min(p_w(n),a_n)$, so their TV distance is
+
+$$
+\max\{1-a_n-p_w(0),\ a_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{237.2}
+$$
+
+There are $3(2^L-1)+1$ rows. In particular there are 382 at $L=7$.
+No row is removed when its score coefficient is zero.
+
+A full nonnegative score has independent coefficients $A_w,C_w,P_w,T$,
+with rewards
+
+$$
+g_V(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]+P_w[\ell\in\{0,n(w)\}],
+\qquad g_V(w_+,\ell)=T[\ell=0].
+$$
+
+The full N catalog includes empty schedules, singletons and all pairs;
+a distinct pair $i<j$ has cells $00,01,10,11$. The O catalog uses
+increasing preselected pairs with cells $0,10,11$. An O table
+$(i,j;x,y,z)$ has those three outputs; its N completion has outputs
+$(x,x,y,z)$. N reversals permute cells and repeats give singleton
+information. Actual repeated or ignored requests still count.
+For either catalog, $B_{\mathcal C}(V)$ is the maximum reward over
+all its deterministic tables. Thus for any schedule with cells $E$ its
+optimized reward is the sum of
+
+$$
+\max_{0\le\ell\le L}\sum_{w\in E}g_V(w,\ell).
+\tag{237.3}
+$$
+
+The maximum includes every label, separately in each cell; it bounds
+every whole table without postulating a probability law from those maxima.
+Set
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0),\\
+W_V&=\sum_{n\ge3}A_w+\sum_{n\le2}C_w+\sum_wP_w+T,
+&\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V,\\
+\beta_n&=\sum_{\Omega_n}(C_w-A_w),&K&=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+$$
+
+The summation conditions on $A_w,C_w$ refer to $n(w)$.
+Write $Q(V)=(\beta,K)$ and
+$F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke$.
+The anchor gives $0\le\Delta_O\le\Delta_N$.
+The inherited hull and its actual feasible subdomain are
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,\\
+ &(L+1)e\le\sum_{n\ge3}b_n,\quad
+ b_1+\sum_{n\ge3}b_n-(L+1)e\le1\},\\
+H_N=\{(b,e)\in H_L:&\exists\lambda\ge0,\ G_N\lambda\ge h(b,e)\}.
+\end{aligned}
+\tag{237.4}
+$$
+
+Here $d$ is the full demand vector in (237.1), $r=z_R=d(\alpha,0)$,
+$h=d-r$, and $G_N=(z_D-r)_D$ on whole full N tables. A conic
+configuration $\lambda$ has mass $M=\sum_D\lambda_D$, which need
+not be one. For the same full $\lambda$ and a full score,
+
+$$
+F_{Q(V)}(b,e)=V\cdot h\le V\cdot G_N\lambda\le M\Delta_N(V).
+\tag{237.5}
+$$
+
+The vector inequality precedes score pairing, so it retains all rows.
+In particular a zero-cost score gives a necessary cut for every mass.
+If one unrestricted $V\ge0$ and one signed residual satisfy
+
+$$
+0\le\theta\le1,\qquad \Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(q-Q(V))\le\theta,
+\tag{237.6}
+$$
+
+then this same allocation gives
+$F_q(b,e)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+The residual is paid once; $\theta=1$ permits nonzero zero-cost $V$.
+These are the interfaces of §§198–199 and §229, reused here.
+
+For clarity, their complete signed vertex test is also fixed here.
+Put $B=\beta_1+\beta_2$, $S_k=\sum_{n\le k}\beta_n$,
+$\kappa=K-S_L$. The vertices are $o=(0,\ldots,0;0)$,
+$p=(1,0,\ldots,0;0)$, and, for $3\le k\le L$,
+$u_k$ with first $k$ entries $1/(k-1)$ and remaining entries zero,
+and $v_k$ with first $k$ entries one, remaining entries and cap
+$(k-2)/(k+1)$. The cap at $u_k$ is zero. Consequently
+
+$$
+\begin{aligned}
+F_q(o)&=-B,&F_q(p)&=-\beta_2,\\
+F_q(u_k)&=S_k/(k-1)-B,&
+F_q(v_k)&=\frac{3S_k-(k-2)\kappa}{k+1}-B.
+\end{aligned}
+\tag{237.7}
+$$
+
+The maximum of all these signed values is $\sigma_{H_L}(q)$;
+it is not clipped to zero. Hull vertices alone do not establish $H_N$.
+

@@ -1,0 +1,79 @@
+### 81.6. Division-free elimination and reconstructible resultants
+
+The following finite operations specify the remaining certificate without
+requiring large expanded coefficient lists. For a rational expression \(f\),
+let \(\mathcal N(f)\) mean: cancel common numerator/denominator factors,
+take the numerator, take its remainder modulo \(S_0\) in \(R\), and
+again take the canceled numerator. Coefficients are rational functions of
+the other displayed variables. Numerator signs and nonzero rational
+contents do not matter. No parameter-dependent factor may be dropped
+unless explicitly specified below. The only new denominators in this
+remainder operation divide powers of \(bB(U+1)\).
+
+Define
+\[
+\begin{aligned}
+ E&=\mathcal N\!\left(\operatorname{rem}_K
+ [-(I_{01}+KI_{11})(J_{00}+KJ_{10})
+             +KJ_{11}(I_{00}+KI_{10}),\ K^2-G]\right),\\
+ F_0&=\mathcal N\!\left(\operatorname{rem}_K
+ [H(J_{00}+KJ_{10})^2-GJ_{11}^2,\ K^2-G]\right).
+\end{aligned}                                                    \tag{81.15}
+\]
+Both are linear in \(K\); write \(E=e_0+Ke_1\),
+\(F_0=f_0+Kf_1\). Each original solution necessarily satisfies
+\[
+ \widehat C=\mathcal N(e_0f_1-f_0e_1)=0,\qquad
+ \widehat N_E=\mathcal N(e_0^2-Ge_1^2)=0,\qquad
+ \widehat N_F=\mathcal N(f_0^2-Gf_1^2)=0.                 \tag{81.16}
+\]
+In particular \(e_1=0\), \(f_1=0\), and dependent equations have not
+been excluded. Remove only the factor \(UbB\) from \(\widehat C\),
+and take the primitive integer parts of the resulting three polynomials
+in \((R,U,b)\), denoting them by \(C,N_E,N_F\). This removes only
+nonzero rational constants from \(\widehat N_E,\widehat N_F\).
+All three are \(R\)-linear. The removed integer contents in one
+normalization are respectively \(15925248,1327104,191102976\);
+the factor \(UbB\) is nonzero on the physical domain.
+
+Put
+\[
+ A_*=(U-1)^2U^2b^3(U+1)^3(b^2-3)^2B^3,
+ \quad V_*=Ub^2+1,\quad W_*=b^2-3U,
+\]
+and print the small factor
+\[
+ P_4(U,q)=9U^4q-12U^3q+4U^2q^2-10U^2q-12U^2+4Uq+q.
+\]
+The following table defines four further primitive integer polynomials
+by **exact polynomial division**. In the last row the quotient defines
+\(P_8\); the other rows define \(A_{15},B_{15},C_{19}\).
+Replace every even power \(b^{2j}\) in each primitive quotient by \(q^j\).
+The resulting degrees in \(U\) are the indicated subscripts.
+
+| Sylvester resultant in \(R\) | Exact divisor, up to rational constant | Quotient |
+| --- | --- | --- |
+| \(\operatorname{Res}(C,N_E)\) | \(A_*V_*^2W_*^6\) | \(A_{15}(U,q)\) |
+| \(\operatorname{Res}(C,N_F)\) | \(A_*V_*^3W_*^7\) | \(B_{15}(U,q)\) |
+| \(\operatorname{Res}(N_E,N_F)\) | \(UA_*V_*^2W_*^6\) | \(C_{19}(U,q)\) |
+| \(\operatorname{Res}(C,S_0)\) | \((b^2-1)A_*V_*^3W_*^7P_4(U,b^2)\) | \(P_8(U,q)\) |
+
+For the primitive normalization used above, the four rational multipliers
+can be taken as \(9,27,18,-27\), with signs depending only on primitive
+sign choices. Each division has zero remainder, and each quotient has
+only even powers of \(b\). These facts, (81.9)–(81.10), and the gcds
+below are exact polynomial identities specified entirely by the printed
+seeds and finite rational operations. A resultant is the determinant of
+the usual Sylvester matrix; the gcd below is the Euclidean gcd in
+\(\mathbb Q[q]\). No specialization or numerical factor selection is
+part of these definitions.
+
+All displayed divisor factors except \(W_*\) and \(P_4\) are nonzero
+for \(0<U<1,0<b<1\). If \(U\ne b^2/3\), every surviving solution
+therefore has
+\[
+ A_{15}=B_{15}=C_{19}=0,\qquad P_4P_8=0.                 \tag{81.17}
+\]
+This inference uses the product factorization in the last table row;
+it does not divide by \(P_4\) at a solution.
+

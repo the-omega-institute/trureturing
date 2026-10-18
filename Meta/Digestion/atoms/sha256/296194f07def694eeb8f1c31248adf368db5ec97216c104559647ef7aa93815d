@@ -1,0 +1,15 @@
+**数学引文 21.5（经典流分解的范围）。**
+Goldstein、Kuna、Lebowitz、Speer，
+*Translation invariant extensions of finite volume measures*，
+[arXiv:1508.04448v2，§4.1 Theorem 6](https://arxiv.org/html/1508.04448v2#S4.SS1)，
+将二进制 de Bruijn 图 $G_k$ 上的局部平移一致律表示为守恒流，
+并以简单圈的归一化流给出极点及有限凸组合。
+其证明的核心是从正流中扣除圈上最小边权，直至正边减少而终止。
+下章使用这一经典方法，但保留位置层和每层质量一，并单独证明对应的提升。
+该文 $X_k$ 是长度 $k+1$ 的二进制块，$G_k$ 有 $2^k$ 个状态。
+[§4.2 Theorem 8](https://arxiv.org/html/1508.04448v2#S4.SS2)
+对没有 no11 限制的单个 LTI 块律给出最小通用环长
+$\operatorname{lcm}\{1,\ldots,2^k\}$，$k=2$ 时是 $12$。
+它没有直接陈述本章的位置依赖族或下章相对基础环长的最小六重提升。
+经典方法在这里是文献已有的中间供应；分层限制及其量词由本卷的构造承担。
+

@@ -1,0 +1,11 @@
+**Definition 1.4 (One-activity family).** For every $n\ge1$ and $\lambda>0$, define
+
+$$
+Z_n(\lambda)=\sum_{b\in B_n}\lambda^{k(b)},\qquad
+\nu_{n,\lambda}(b)=\frac{\lambda^{k(b)}}{Z_n(\lambda)},\qquad
+H_n=\sup_{\lambda>0}\Phi_n(\nu_{n,\lambda}).
+\tag{1.3}
+$$
+
+The partition function is the independent-set polynomial of an $n$-vertex path at equal positive fugacities, as in Scott–Sokal [SS], §1.1, equation (1.3), and §3.2, Example 3.2. This classical identification and [Growth], Proposition 7.1 and Lemma 7.2, supply the comparator, not the strict harmonic-prior separation below.
+

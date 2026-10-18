@@ -1,0 +1,20 @@
+**Theorem 57.7 (verified identification-to-acquisition bridge and its threshold).** At every feasible depth,
+
+$$
+D_h\le A+E_h.
+\tag{57.15}
+$$
+
+If $D_h<B$, then $E_h\le D_h-A$. In particular
+
+$$
+A+E_h<B\quad\Longrightarrow\quad D_h=A+E_h.
+\tag{57.16}
+$$
+
+More generally either $D_h\ge B$ or $D_h=A+E_h$. No unconditional identity $D_h=A+E_h$ across the beta-frontier threshold is asserted.
+
+Proof. Run a finite weighted identification tree, recording every actual request and reply. Reject immediately on an edge not realized by any surviving positive. When a leaf names $V$, request every *still unqueried* address of $\mathcal A(V)$ and check for $\alpha$. A mismatch rejects; completion accepts. On a positive all these requests are within $H$, its diagnostic leaf is correct, and the distinct acquired alpha addresses finally total $A$. The other distinct requests are exactly its diagnostic non-alpha addresses. Hence its paid cost is $A$ plus its diagnostic weight. Every actual negative either takes a rejected diagnostic edge, fails the final frontier, or would supply an entire matching frontier of $V$; the last case is impossible by Theorem57.3. This proves (57.15) for an actual causal policy against the whole negative domain.
+
+For the converse restrict an optimal policy with $D_h<B$ to its positive actual runs. Its terminal transcripts contain all alphas and uniquely identify their positive source. Suppress repeats and discard empty positive edges to obtain a finite positive-identification tree. Its path weight at $V$ is exactly the non-alpha term in (57.9), so $E_h\le D_h-A$. If $A+E_h<B$, (57.15) puts the optimum below $B$ and the two inequalities give (57.16). If the optimum is below $B$ without that hypothesis, the same lower inequality and (57.15) still give equality. Identification depth independence follows by deleting universally absent queries deeper than $H$, exactly as in Theorem57.4. □
+

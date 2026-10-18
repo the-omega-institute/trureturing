@@ -1,0 +1,36 @@
+**定理 24.4（Sharp complete-threshold family）。** For any $k\ge2,m\ge1$, choose $1\le a_v\le k-1$ and $L_v\ne H_v$ for each $v\in\mathbb F_2$. Cross-value coincidences are unrestricted. On every actual phase set
+
+$$
+f(v,\theta,s)=
+\begin{cases}
+L_v,&s<k-a_v,\\
+H_v,&s\ge k-a_v,
+\end{cases}
+\qquad f(\bot)\text{ arbitrary}.
+\tag{24.10}
+$$
+
+Then
+
+$$
+C_{\rm ad}(f)=\max_v\left\lceil\frac{a_v}{m}\right\rceil.
+\tag{24.11}
+$$
+
+Writing $a_{\min}=\min(a_0,a_1)$ and $a_{\max}=\max(a_0,a_1)$,
+
+$$
+C_{\rm pre}(f)=
+\begin{cases}
+\lceil a_{\max}/m\rceil,&a_0=a_1\text{ or }m\mid a_{\min},\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{24.12}
+$$
+
+**证明。** Fix one free-value fibre and one actual phase. The two INITIAL tails $k-a_v-1$ and $k-a_v$ have different labels. Before $a_v$ leading ones they both survive with equal outputs; an earlier zero merges them alive. Thus fewer than $\lceil a_v/m\rceil$ blocks cannot distinguish them. The literal prefix of $a_v$ ones followed, if necessary, by zero padding to its complete-block boundary rejects exactly the high band and preserves exactly the low band. Every rejection leaf is $H_v$ and every successful leaf is $L_v$. This attains the bound, with the free initial value choosing the fibre and its own protocol.
+
+If $m\nmid a_v$, that pair cannot stop before the block containing position $a_v$. A first zero before $a_v$ merges it alive; a first zero after $a_v$, including an all-one containing block, rejects both members within that block, since there is no endpoint between their consecutive rejection times $a_v$ and $a_v+1$. Therefore any finite correct stream on this unresolved fibre has its first zero exactly after $a_v$ ones. If $m\mid a_v$, the endpoint after $a_v$ ones already separates rejection from success and returns both labels, so this fibre stops there and places no constraint on later bits.
+
+For unequal thresholds with non-boundary $a_{\min}$, its forced first zero at $a_{\min}$ clears both differently labelled sources of the larger-threshold pair before either rejects. Both had survived all previous endpoints with one common archive, so this loss is irreversible. Preset fee is infinite. When the thresholds agree, their common threshold word works. When $m\mid a_{\min}$, issue ones through $a_{\max}$, padding its containing block with zeros if needed. The smaller fibre stops at its earlier all-one endpoint; the larger fibre attains its own threshold fee. No continuation is charged to the stopped fibre. The larger pair gives the matching lower bound, proving (24.12). This includes wide blocks, $g=1$, $p=1$, and every other gcd. ∎
+

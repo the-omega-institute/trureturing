@@ -1,0 +1,47 @@
+**Theorem 19.2 (selected analytic root and displacement).** For every
+$t\in I$, $0\le\lambda\le10^{-12}$ and each source comparison
+point, AC.95 has a unique root in $\mathcal B_X$. It is real analytic
+in the parameters on their analytic domains, with local extensions
+at the rectangle endpoints, and satisfies
+
+$$
+\|\partial_\lambda X(t,\lambda)\|_\varrho<5\cdot10^9,
+\qquad
+\|X(t,\lambda)-X(t,0)\|_\varrho<5\cdot10^9\lambda
+\quad(\lambda>0).
+\tag{AC.100}
+$$
+
+At $\lambda=0$ the displacement is zero. These are contact-root
+statements, not source-root or off-root TP assertions.
+
+Proof. FA96's correlated-parameter rational certificate for
+$T_0(X)=X-R\mathcal F(X;t,0)$ gives self-map radius ratio $<3/4$
+and weighted derivative norm $<1/100$. Its centre residual is
+preconditioned before taking the common $t$ interval; in particular
+the two target derivative rows are $\mu/t^2$ and $\alpha V/t^2$.
+No independent copies of that parameter are introduced. By AC.96,
+$T_\lambda=X-R\mathcal F(X;t,\lambda)$ has
+
+$$
+\begin{aligned}
+T_\lambda(\mathcal B_X)&\subset
+\bar X+(3/4+4\cdot10^9\lambda)(\mathcal B_X-\bar X)
+\subset\bar X+(4/5)(\mathcal B_X-\bar X),\\
+\|D_XT_\lambda\|_\varrho
+&<1/100+10^6\lambda\le0.010001<1/50.
+\end{aligned}
+\tag{AC.101}
+$$
+
+The geometric-series contraction argument gives its unique fixed
+point. The Neumann series makes $RD_X\mathcal F$ invertible;
+since these are square matrices, both $R$ and $D_X\mathcal F$ are
+invertible, and a fixed point is a root. Differentiation gives
+$X_\lambda=-(D_X\mathcal F)^{-1}\mathcal F_\lambda$ and
+norm $<4\cdot10^9/(1-1/50)<5\cdot10^9$. Integration proves
+AC.100. The positive source pivots and denominators make the equations
+analytic. Their invertible Jacobian and common-box uniqueness identify
+the local implicit solutions on overlaps, including the endpoints.
+$\square$
+

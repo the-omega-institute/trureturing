@@ -1,0 +1,46 @@
+### 102.4. Quotient records and an exact real parameter
+
+Factor \(R\) as a Gram of unit records \(v_1,v_2,v_3,v_4\). Equation (2) implies the corresponding record-level relation: if \(R=V^*V\) and \(RB=0\), then \(VB=0\), since \(\|VBx\|^2=x^*B^*RBx=0\). Applying this to the first two columns of \(H_S\) gives
+\[
+\overline z\,v_1=-\frac{b v_3+d u v_4}{\sqrt2},
+\qquad
+zv_2=-\frac{b v_3+d\overline u v_4}{\sqrt2}.
+\tag{11}
+\]
+The unit norm of both left-hand records implies
+\[
+\operatorname{Re}(uR_{34})
+=\operatorname{Re}(\overline uR_{34}).
+\]
+Because \(bds\ne0\), \(R_{34}\) is real. Put
+\[
+r=R_{34}\in[-1,1],\qquad
+2|z|^2=b^2+d^2+2bdcr.
+\tag{12}
+\]
+The actual supported entry satisfies
+\[
+G_{34}H_{34}=c^2r.
+\]
+The subquarter matrix-unit inequality therefore gives \(r>0\). Only this positivity, rather than its stronger quantitative lower bound, will be needed.
+
+Taking inner products in (11), and using \(G=H\odot\overline R\), gives the following exact cross blocks. Set \(K=(G\odot H)_{F,\{3,4\}}\). Then
+\[
+C=-\frac\alpha{\sqrt2}
+\begin{pmatrix}
+zb&zd\overline u\\
+\overline z b&\overline z d u
+\end{pmatrix},
+\tag{13}
+\]
+\[
+K=-\frac1{2\sqrt2}
+\begin{pmatrix}
+(b+dru)/\overline z&(br\overline u^{2}+d\overline u)/\overline z\\
+(b+dr\overline u)/z&(bru^2+du)/z
+\end{pmatrix},
+\qquad E=\tfrac12J_2-K.
+\tag{14}
+\]
+All complex conjugations here follow the convention \(H_{ij}=\langle h_i,h_j\rangle\), conjugate-linear in the first variable.
+

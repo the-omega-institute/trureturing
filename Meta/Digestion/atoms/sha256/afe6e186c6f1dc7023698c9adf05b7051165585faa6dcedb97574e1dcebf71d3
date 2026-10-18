@@ -1,0 +1,37 @@
+**Definition 1.1 (trees, literal observations and prediction).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle x,y\rangle)=1+\max\{h(x),h(y)\}.
+\tag{NCE.1}
+$$
+
+Pairing is free and ordered. An address is any finite word over $\{L,R\}$,
+including the empty word $\varepsilon$. Every address is a legal literal
+query. Its reply $r_t(a)$ belongs to
+$\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$: it gives the
+constructor at the addressed vertex, or absent if traversal passes a leaf.
+Define the substitution
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{NCE.2}
+$$
+
+For each public integer $D\ge1$, retain exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},
+\qquad W_D=\{q:|q|\le D-1\},
+\qquad\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{NCE.3}
+$$
+
+One actual initial source $t$ remains stationary through preparation and
+later acquisition. The trees $\rho^kt$ are prediction targets, rather than
+updates to that register. There is no subtree, equality, source-identity,
+age, reset, copying, free-navigation or free-advice port.
+

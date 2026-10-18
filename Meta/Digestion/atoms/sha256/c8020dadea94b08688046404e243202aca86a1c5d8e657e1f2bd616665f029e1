@@ -1,0 +1,52 @@
+### 3. 未来律读出
+
+给每个模式赋予一个未来概率律：
+
+$$
+\mathscr L_0,\quad
+\mathscr L_1,\quad
+\mathscr L_2,\quad
+\mathscr L_3,\quad
+\mathscr L_{13}.
+$$
+
+未来混合律为
+
+$$
+\overline{\mathscr L}(p)=
+\sum_I p_I\mathscr L_I.
+$$
+
+沿隐藏方向变化为
+
+$$
+\frac{d}{dt}
+\overline{\mathscr L}(p+th_{13})=
+\mathscr L_{13}-\mathscr L_1-\mathscr L_3+\mathscr L_0.
+$$
+
+定义
+
+$$
+\boxed{
+J_{\mathscr L}=
+\mathscr L_{13}-\mathscr L_1-\mathscr L_3+\mathscr L_0.
+}
+$$
+
+则
+
+$$
+J_{\mathscr L}=0
+$$
+
+意味着未来律仍然看不见 $\kappa$，而
+
+$$
+J_{\mathscr L}\neq0
+$$
+
+意味着未来读出可以恢复 $\kappa$。
+
+---
+

@@ -1,0 +1,68 @@
+**Definition 212.9 (One graph stock and the full preserving fiber).**
+Let $r\ge1,m\ge2$, $L=r+m+2$,
+$I_c=\{3,\ldots,r+2\}$, $J=\{r+3,\ldots,L\}$ and
+$I=I_c\cup J$. Let $G=(J,E_G)$ be any finite simple graph.
+Choose $g>0$, $0\le\gamma_n\le g$ for $n\in I_c$, and $t\ge g$.
+For a set $Z$ of addresses, write $w(Z)$ for the full word with
+zero set exactly $Z$. On the late cube, identified by its zero sets,
+define the single measure
+
+$$
+\nu=2g\delta_\varnothing+2g\sum_{i\in I}\delta_{\{i\}}
+       +g\sum_{\{i,j\}\in\binom I2\setminus E_G}\delta_{\{i,j\}},
+\qquad
+S=|\nu|=g\left(2(|I|+1)+\binom{|I|}{2}-|E_G|\right).
+\tag{212.38}
+$$
+
+Graph edges are only between vertices of $J$; all pairs involving
+$I_c$ are included among the nonedges in this formula.
+Put $B=S+t$ and $\Gamma=\sum_{n\in I_c}\gamma_n$.
+For each $n\in I_c$ choose any actual measure $\mu_n$ on all
+subsets of $J$ of mass $\gamma_n$. Assemble the score $Y(\mu)$ by
+
+$$
+P_{w(\{1\}\cup Z)}=P_{w(\{2\}\cup Z)}=\nu(Z)/2,\qquad
+C_{w(\{n\}\cup Z)}=\mu_n(Z),\qquad A=0,\quad T=t.
+\tag{212.39}
+$$
+
+In the pair formula $Z\subseteq I$; in the correct formula
+$Z\subseteq J$. Thus every correct atom has first zero $n$.
+The quotient is $q=(\beta,\Gamma+B)$, with $\beta_n=\gamma_n$
+on $I_c$ and zero elsewhere, and $W_{Y(\mu)}=B$.
+
+For $0\le c_j\le\gamma$, define the common-coupling minimum
+
+$$
+\kappa_G(\gamma,c)=
+\min_{\substack{\mu\ge0,\ |\mu|=\gamma\\
+                       \mu\{Z:j\in Z\}=c_j\ (j\in J)}}
+       \max_{e\in E_G}\mu\{Z:e\subseteq Z\}.
+\tag{212.40}
+$$
+
+The maximum for an edgeless graph is zero. The domain is compact and
+nonempty: for $\gamma>0$ an independent product of Bernoulli variables
+with means $c_j/\gamma$, scaled by $\gamma$, is one feasible measure;
+for $\gamma=0$ every $c_j=0$ and only the zero measure is feasible.
+This product supplies nonemptiness, not a claim of optimality.
+
+Given $c_{nj}\in[0,\gamma_n]$, let $\mathcal F_G(c)$ contain all
+full nonnegative scores $V$ satisfying
+
+$$
+\begin{gathered}
+Q(V)=q,\qquad \sum_wP_w+T=B,\\
+\sum_{w:w_i=w_j=0}P_w=0\quad(\{i,j\}\in E_G),\qquad
+\sum_{w\in\Omega_n:w_j=0}C_w=c_{nj}
+                      \quad(n\in I_c,j\in J).
+\end{gathered}
+\tag{212.41}
+$$
+
+This fiber permits all full output rows. It does not fix $\nu$, the
+early pair allocation, individual pair rows, terminal mass, or other
+correct suffix coordinates. Its explicit invariants, rather than an
+implicit restriction to (212.39), define its competitor class.
+

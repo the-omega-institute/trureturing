@@ -1,0 +1,33 @@
+**Lemma 3.1 (presence and finite moving traversals).** On every legal RA
+history, guard search, exterior traversal and `same` issue only present-address
+Reads. In each exterior traversal an address is processed at most once. In
+each pair comparison a relative address $z$ is processed at most once.
+On a history with at most finitely many updates, each such operation finishes
+after finitely many observer actions.
+
+Proof. The root exists. A descent is made only after its parent replied
+branch; the branch and both children persist. Each pending right sibling
+selected by `after` has an earlier branch ancestor. Stopping at a cut hole
+does not descend into it. A hole is present when emitted: it is either root
+or a child reached through those branch replies. It remains present when
+used in any later comparison.
+
+For `same`, initially both bases are present. Descent at a relative $z$
+requires branch replies on both sides; both parents and both pairs of
+children then persist. Pending right siblings use the same invariant. Even
+an update between the two replies cannot create an absent query. Unequal
+replies terminate that comparison immediately. Equal leaves skip both
+subtrees; they never reopen a skipped subtree if it later grows.
+
+The `after` operation is the ordinary next-subtree operation on finite words.
+Each step either enters a fresh left descendant or moves past a completed
+subtree; no address is revisited within one traversal. For a pair, apply the
+same argument to relative words. Let $V$ be the finite final iterate after
+all the history's updates. Persistence puts every visited address inside
+$\operatorname{Pos}(V)$. The guard follows distinct prefixes there; exterior
+visits are distinct there; a comparison's visited words inject into each of
+the two finite descendant sets of $V$. All are therefore finite. Scans of
+the finite cut and candidate and all local sequence operations are finite.
+Observer progress completes these actions. This reasoning uses $V$ only in
+the proof and does not tell the observer when updates stop. $\square$
+

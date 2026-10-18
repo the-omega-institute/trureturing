@@ -1,0 +1,5 @@
+source_id = "fib-jmjm-affine-ancestor-guards-and-stratum-exclusion"
+path = "docs/develop/theory/FIB_JMJM_AFFINE_ANCESTOR_GUARDS_AND_STRATUM_EXCLUSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

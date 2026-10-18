@@ -1,0 +1,22 @@
+**Proposition 13.5 (a paid static upper comparison).** There is also a
+successful static table on $\mathcal D_m$ with $m$ read states and the
+two halt states. Its exact worst costs are
+
+$$
+\left(m,0,B_m-\frac{m(m-1)}2\right).
+\tag{CAR.69}
+$$
+
+Proof. At stage $i=0,\ldots,m-1$ read the literal word
+$p_i=LLR^{2m-i}$. On absence go to stage $i+1$, and on $\alpha$ or
+$\beta$ go to the corresponding full-row halt. At the last read send
+absence to either halt, and send branch to either halt at every stage;
+these responses are unreachable. The residual at stage $i$ is
+$n-2m+2i$, the same as (CAR.64) after $i$ two-update loops. Thus the
+first non-absent response is the same and occurs no later than stage
+$m-1$. All sources halt correctly without updates. The word lengths
+are $2m+2-i$, so the longest path, attained at $n=2,3$, pays
+$\sum_{i=0}^{m-1}(2m+2-i)$, yielding (CAR.69). This uses a distinct
+installed read state for each stage; it has no free stage counter.
+Its installation size need not equal that of $C_m$. $\square$
+

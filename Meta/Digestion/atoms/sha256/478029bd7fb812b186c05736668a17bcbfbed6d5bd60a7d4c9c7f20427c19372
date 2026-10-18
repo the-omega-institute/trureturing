@@ -1,0 +1,16 @@
+**Proposition 6.3 (necessary paid length).** In the three-depth family, let $0<\epsilon<g$. Any history with phase score greater than $L-\epsilon$ must be one of the special $h_n$, and must satisfy
+
+$$
+4\delta(9/8)^{\ell(h_n)}>1-\epsilon/g.
+\tag{6.2}
+$$
+
+Consequently, whenever the numerator ratio below exceeds one,
+
+$$
+\ell(h_n)>\frac{\log((1-\epsilon/g)/(4\delta))}{\log(9/8)}.
+\tag{6.3}
+$$
+
+**Proof.** Both ordinary phase-score bounds are smaller than $L-g$. The score is special, and (4.2),(5.4) give $L-(e(h_n)-\rho_p)=m(h_n)-3/8\ge g(1-\nu_{h_n}(3))$. A score greater than $L-\epsilon$ therefore needs $\nu_{h_n}(3)>1-\epsilon/g$. Apply (5.6) and take logarithms. This is necessary length of a possible paid witness, not a probability, waiting time or internal computational duration. $\square$
+

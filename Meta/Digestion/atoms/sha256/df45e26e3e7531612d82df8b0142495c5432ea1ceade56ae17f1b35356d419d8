@@ -1,0 +1,27 @@
+**命题 15.3（Complete five-row realization of $\mathsf Q$, with pair-dependent rank）。** Every instance of Condition $\mathsf Q$ has a complete $N+5$-state GLOBAL controller correct within four blocks, without requiring its control graph to be acyclic.
+
+Proof. Use the two distinct roots (9.9), two first queries $b_w,b_i$, and one final row $p$, all three installing the very same $B=B_E$. Set
+
+$$
+V(b_w,e)=b_i,\qquad V(b_i,e)=p,\qquad V(p,x)=H_{G(x)}.
+\tag{15.9}
+$$
+
+At raw response $h_e$, marker $\operatorname{Stop}(L)$ installs $H_L$, marker Final installs $p$, and marker Cross installs the other query. All word-row bottom updates are $H_R$; every actual Halt self-updates and initial bottom initializes to its own Halt. This fully specifies $c,u,V$ on $N+5$ rows. The single stream is $1^m\mid B\mid B\mid B$.
+
+After the first suffix, all successful incoming tails are $\tau(B)$; every further $B$ begins zero and is safe on that tail. Trace the fixed raw updates (15.9), keeping the actual scalars. The early $i,e$ case reaches $p$ at index two, giving $G(e\oplus q_2^B)$. The $w,e$ case reaches $b_i$ at index two: charge zero reaches $p$ last, while charge one takes its marker. A late Cross here enters $b_w$ last, so it can stop only through a Stop marker at raw $h_e$, exactly the guard $\theta_w=\operatorname{Stop}(L),q_3^B=0$. An early Cross from $b_w,h_e$ enters $b_i$ at index two; an early Cross from $b_i,h_e$ enters $b_w$ there. Their two charges give precisely the last four rows of Definition 13.3, including the undefined case in which a last $b_i$ has no Halt exit. The other marker cases give that table's direct or final returns. Its identities therefore prove literal INITIAL-label correctness and termination for every actual phase and both values, not just $O$.
+
+Here is the exact union-support and rank certificate for these possibly repeated rows. Roots have $\Gamma_{a_v}=\mathcal R_v$. Before the first query at index one use $\mathcal S_v$. For each $v,j$, take the finite itinerary just specified by (15.9) and its markers. If word row $x$ occurs before index $t\in\{2,3\}$, include exactly the pair
+
+$$
+\left(\lambda_v(j),
+\left(v\oplus\bigoplus_{\ell=1}^{t-1}q_\ell^B(j),
+-j+tm,\tau(B)\right)\right)
+\quad\text{in }\Gamma_x.
+\tag{15.10}
+$$
+
+Together with the first-query supports, these are all actual word-row pairs, with union taken across every occurrence. All original $s<h$ have those same later images because the first $B$ clears them. Halt supports are the exact initial-bottom and incoming images (5.6).
+
+Give each query pair the number of word steps remaining in its displayed itinerary, each root rank four, and each Halt rank zero. This is a well-defined function of the immutable label, current record and control row: if the same triple is reached twice, its remaining installed deterministic execution is identical. The table proves that execution ends; thus both occurrences have the same remaining count. Every actual word update decreases that count by one, and each root-to-query step decreases from four to at most three. A Cross can produce a cycle in the nominal control graph; it produces no cycle in this proved terminating closed-loop graph. This is precisely the existing [FC, Theorems 27.2–27.3] certificate, with no runtime rank, archive or stage input. Some actual mixed $O$ sources issue all four blocks by Theorem 3.2. ∎
+

@@ -1,0 +1,79 @@
+**Lemma 1.4 (an aligned finite-set interpretation).** For any finite
+skeleton shape and fixed epoch and routing annotations, its physical
+reply predicates and each exact $D_\eta$ have effective WS2S formulas.
+Their suffix variables range over arbitrary finite words. Their source
+variables range over complete arbitrary finite trees, including arbitrary
+continuations below every suffix marker.
+
+Proof. Work in the binary successor tree $\{L,R\}^*$, with root
+$\varepsilon$, and use ordinary two-valued WS2S. Represent a residual tree
+$x$ by three finite sets $X_\alpha,X_\beta,X_{\mathsf{branch}}$. Require
+them disjoint, their union $T_X$ to contain the root, every nonroot member
+to have a parent in $X_{\mathsf{branch}}$, each branch to have both
+children in $T_X$, and no leaf to have a child in $T_X$. These formulas
+are exactly the nonempty finite ordered-tree condition: repeatedly taking
+parents reaches the root, and the child conditions give full branching.
+They exclude disconnected islands and allow every finite source tree.
+Use one such triple for each distinct residual variable, not one for
+each occurrence. Coordinate domains can overlap in this common suffix
+universe; they are not independent feasible languages.
+
+Conjoin the tree-validity formulas just given into $D_\eta$. For its
+remaining conditions, take its supplied exact automaton from
+[ARH, Lemma 11.2][ARH]. The union of the coordinate domains is exactly its
+padded convolution domain; positions used only to name markers are not
+inserted into that domain. Existentially quantify a finite state set for
+each automaton state, partition this union into those sets, impose its
+finite transition disjunction at every node with the actual coordinate
+labels and padding, and require an accepting root state. At a binary
+union node use both child states; at a nullary node use a nullary
+transition. This is an explicit WS2S run formula, equivalent to acceptance
+in both directions. It retains all disequalities and signed guards already
+compiled into $D_\eta$. Zero-coordinate charts instead have their computed
+constant feasibility truth; no empty tuple automaton is presumed.
+
+There is also a direct reply formula that needs no general transducer
+closure. For a fixed $e$, expand the two finite trees $\rho^e\lambda$.
+For $r\in\{\alpha,\beta,\mathsf{branch}\}$ set
+
+$$
+\begin{aligned}
+\mathsf{Reply}_{e,r}(X,z)\quad\Longleftrightarrow\quad&
+ [r=\mathsf{branch}\ \land\ z\in X_{\mathsf{branch}}]\\
+ &\lor\!\bigvee_{\substack{\lambda\in\{\alpha,\beta\},\ t\in\operatorname{Pos}(\rho^e\lambda)\\
+                             r_{\rho^e\lambda}(t)=r}}
+ \exists y\ (y\in X_\lambda\ \land\ z=y t).
+\end{aligned}
+\tag{SRF.3}
+$$
+
+Here each $t$ is a fixed literal word, so $y t$ is a finite composition
+of successor symbols, not concatenation of two variable words. Define
+$\mathsf{Reply}_{e,\mathsf{absent}}$ as the complement of the three
+nonabsent replies. The domain of $\rho^e x$ consists exactly of its
+preserved original branch nodes and the finite images rooted at original
+leaves. These parts are disjoint. This proves (SRF.3), its absent case and
+uniqueness of the reply for every $z$, including $e=0$ and $z=\varepsilon$.
+For a fixed ground $g$, the nonabsent reply formula is just the finite
+disjunction $\bigvee_{t:r_g(t)=r} z=t$; for $g=\varnothing$ it is false.
+Lemma 1.3 now supplies each chart's formula for the same physical word.
+
+Crucially, the complete source sets and the automaton's run sets are
+quantified without a depth restriction depending on the markers. A marker
+$z$ may lie above, inside or below a source tree. If it lies at an original
+branch, its children and every deeper source constraint are still present
+in $T_X$ and in the run formula. If it lies beyond the source, the finite
+leaf-image terms decide born versus absent. Thus a marker-only truncation
+of the convolution is not being used. At no step is a relation
+$z=cw$ between two variable address tracks needed: the physical prefix
+$c$ has been handled by the finite routing annotation, while (SRF.3)
+only appends a fixed template word to $y$.
+
+WS2S permits Boolean operations and quantification over all finite sets
+and all binary-tree positions, and has an effective decision procedure;
+[MONA, §§7.1–7.2, pp. 39–40][MONA] gives precisely these interfaces.
+Consequently every finite combination of the displayed formulas is an
+actual decidable sentence. The run encoding above specifies why the
+supplied source automata enter that language; no assertion about arbitrary
+constructor offsets is a premise. $\square$
+

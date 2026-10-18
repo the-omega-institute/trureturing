@@ -1,0 +1,25 @@
+**Definition 2.2 (weights and atomic descendants).** Write
+$e(\alpha)=0$, $e(\beta)=1$,
+$s(p)=\#_L(p)+2\#_R(p)$ and $T_n=\rho^n\alpha$.
+The supplied right clock is
+
+$$
+c(\alpha)=0,\quad c(\beta)=1,\quad
+c(\langle x,y\rangle)=2+c(y),\quad
+c(\rho^k u)=c(u)+k.
+\tag{AAR.4}
+$$
+
+For finite $q$, let $a(u,q)$ be its longest reached prefix and use
+the [NAR, Definition 11.2] variant
+
+$$
+J^c_q(u)=s(a(u,q))+c(u|_{a(u,q)}),\qquad
+J^c_q(\rho^k u)=J^c_q(u)+k.
+\tag{AAR.5}
+$$
+
+This is not the intrinsic inverse-depth coordinate $J^\nu$. The
+longest-prefix rule handles absent addresses using a concrete blocking
+leaf. On a reached leaf $a$ of label $e$, $J^c_a(u)=s(a)+e$.
+

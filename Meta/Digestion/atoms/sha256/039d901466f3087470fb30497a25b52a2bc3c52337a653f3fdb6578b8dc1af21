@@ -1,0 +1,53 @@
+**Theorem 6.1 (contact decision with finite witnesses or a finite
+exclusion depth).** Under Definition 5.2 there is an effective
+terminating decision of (NLC.15).
+
+A YES answer gives, for every $h$, finite original witnesses
+$u_h^0\in D_0$ and $u_h^1\in D_1$ with
+
+$$
+u_h^0\equiv_h K_C\equiv_h u_h^1,
+\qquad R_Q(u_h^0)=r_0\ne r_1=R_Q(u_h^1).
+\tag{NLC.18}
+$$
+
+A NO answer gives an effective finite $H$ and identifies at least one
+$i\in\{0,1\}$ for which no member of $D_i$ agrees with $K_C$ through
+$H$. This NO result concerns only the supplied context and row pair.
+
+Proof. If $m=0$, then $K_C=C$ is finite. Agreement through $d_C$ forces
+a finite source to be exactly $C$. It cannot have both distinct full
+rows. Return NO with $H=d_C$, checking the two fixed-prefix stratum
+queries to identify an excluded stratum.
+
+For $m\ge1$, apply Corollary 4.2 to the exact formula (NLC.16) and all
+its $2m$ designated hole values. In its DEEP case reconstruct the two
+sources at each requested $h$. Lemma 5.4 proves YES and (NLC.18).
+
+In its EMPTY case set $H=d_C$. If both strata had a source agreeing
+with $K_C$ through $H$, Lemma 5.3 would provide two context fillings
+satisfying (NLC.16), a contradiction. Hence one stratum is excluded.
+
+In its BARRIER case let $C_0$ be the uniform bound on the minimum of
+the $2m$ hole depths and set
+
+$$
+H=d_C+C_0.
+\tag{NLC.19}
+$$
+
+If each stratum had a matching source through this $H$, Lemma 5.3
+would yield fillings with
+$\mu(z_j^i)>H-|p_j|\ge C_0$ for every $i,j$. Their joint tuple would
+contradict the all-solutions barrier. Thus again at least one stratum
+has an empty such neighborhood.
+
+To identify it, query each entire stratum with the finite list of
+literal replies of $K_C$ through the computed $H$. Every reply in
+that list is computable from the finite context, so these are NSF's
+fixed-navigation queries on original finite sources. At least one is
+empty by the preceding argument. This final decision preserves all
+signs, guards and full row labels. All classification steps terminate
+by §4; the two final queries terminate by NSF. The construction does
+not enumerate contexts or search for an unknown common limit. $\square$
+

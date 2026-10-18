@@ -1,0 +1,52 @@
+**Theorem 78.1 (Error under a hard address ceiling).** Among all lawful
+adaptive acquisitions satisfying $M_{A,x}\le m$ almost surely at every
+actual source, the attained minimum of
+$\sup_x\operatorname{TV}(\widehat\lambda_{A,x},\lambda^a_x)$ is $R_m$.
+For every $0<\varepsilon\le1$, the least possible deterministic
+maximum-index ceiling in $\mathcal A_\varepsilon(a)$ is the finite integer
+
+$$
+h_\varepsilon=\min\{m\ge0:S_m(\varepsilon)\le\varepsilon\}
+             =\min\{m\ge0:R_m\le\varepsilon\}.
+\tag{78.1}
+$$
+
+It has an attainer with $K_{A,x}\le h_\varepsilon$ and
+$M_{A,x}\le h_\varepsilon$ at every source and seed. The minimum remaining
+error after an actually observed all-positive prefix of length $m$, with
+no further source observations and a common continuation seed law, is
+$R_m$. A prefix containing a negative answer instead fixes $n(x)$ and has
+remaining error zero.
+
+**Proof.** Fix an acquisition under the ceiling and one actual $x\in H_m$.
+Let $E_{x,m}$ be its measurable event of finite handoff with all requested
+indices at most $m$. It has probability one. On this whole event every
+$y\in H_m$ follows the same finite execution and hands the same tape:
+the initial inputs are common, and every requested answer agrees. This
+is the finite-record transport in Lemma 45.3 and the proof of Theorem
+71.3, applied to the complete event rather than to a selected seed.
+The output submeasure on $E_{x,m}$ is dominated by every
+$\widehat\lambda_{A,y}$. Its mass is one, so it equals each of these
+probabilities. There is therefore one common probability on $H_m$,
+whose uniform error is at least $R_m$ by Theorem 77.2. Adaptivity and
+repeated requests do not alter this argument.
+
+For attainment query $p_1,\ldots,p_m$ in order, stopping at the first
+negative answer. If that answer has index $n\le m$, sample $\lambda_n$.
+If all $m$ answers are positive, sample $\nu_m^*$. The finite-support
+sampling tables use a uniform coordinate of one source-independent seed,
+and the same rule applies at every actual source. The queried prefix
+chooses the appropriate table. Handoff is finite for every seed, and its
+finite records and output events are measurable intervals. The error is
+zero on $D_n$ with $n\le m$ and at most $R_m$ on $H_m$, with equality
+in the supremum by Theorem 77.2. Both $K$ and $M$ are at most $m$.
+
+The center criterion proves both equalities in (78.1). An $m$ with
+$a_{m+1}\le\varepsilon$ has $S_m(\varepsilon)=0$, proving finiteness.
+For the continuation assertion the possible selected laws are precisely
+$\lambda_n$, $n>m$, so a zero-request continuation produces a common
+center and Theorem 77.2 applies. An observed negative fixes the first
+absence and permits its exact two-point sampler. This assertion uses a
+common continuation seed law; it does not condition a source-dependent
+failure event away. $\square$
+

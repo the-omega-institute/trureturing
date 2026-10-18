@@ -1,0 +1,62 @@
+**Definition 11.1 (representation and the reserved lanes).** The service
+uses verifier lanes 32–39, in this order: bank A, bank B, Base/ordinal
+scratch, length scratch, descriptor stream, installation manifest, retained
+frame stream, and service archive. The five source handlers and the
+no-update acquisition invoke producer, actor, arithmetic and channel
+routines, not PR57.D8's verifier. In the standard PR57 port assignment,
+32–39 therefore have no accesses on the original source-frame call graph.
+This is a syntactic call-graph fact: the original five dispatch arms lead
+to LJA's generators, producer, counter, row and actor-delivery routines;
+none leads to the exhaustive verifier. Public arithmetic ports 0–15 are
+not service scratch. No token or position on them is borrowed by the word
+compiler. Optional verification is outside $\mathcal R_H$'s five-frame
+language; it is not silently inserted between its frames.
+
+The compiler below uses Next through its own word program. The independent
+selector of §5 on ports 40–47 is not invoked by this version and its body
+prices are not added to the compiler's word-instruction prices.
+
+Original $q,g,e,j$ and $E,A_P,P$ retain LJA's original event language.
+A memory-service frame, like the supplier's paid Fetch, is primitive work
+with its own typed outcome, not an extra producer source event. Completed
+frame count, cover/package count and descriptor count are separately typed
+unary words. They never substitute for source-event count or primitive time.
+
+The installation of §14 transfers the eight unused verifier-lane tokens
+to $O$. The service reads the seed and ingress only after their authorized
+copies. It has no producer-lane token. There are still exactly 64 ports.
+The extension does not change the source handlers' access to the installed
+private interval. After activation, source requests run their original
+handler graphs, with the new frame dispatch and retention work outside
+those graphs. Their tree semantics is unchanged; their absolute clocks
+and later allocation origins are those of the extended run.
+
+A word program has finitely many bit-string registers $x_0,\ldots,x_{r-1}$.
+It uses only assignments $x_i:=\epsilon$, $x_i:=x_j$,
+$x_i:=b x_j$, $x_i:=\operatorname{tail}(x_j)$, and tests for empty or
+first bit. Tail of empty is defined to be empty. Sequence, finite case,
+and while have their usual labelled finite-flow meaning. A finite word
+constant is a finite chain of cons assignments. No register stores an
+unbounded integer in finite control. A natural used in a word program is
+the actual word $1^m$; its wire form is $U(m)=1^m0$.
+
+At a word-instruction boundary, one of A and B has the active complete
+bank
+
+$$
+x_0\,\mathsf{sep}\;x_1\,\mathsf{sep}\;\cdots\;
+x_{r-1}\,\mathsf{sep}\;\mathsf F.
+\tag{RCA.10}
+$$
+
+Each bank tape initially receives a literal F sentinel. Later versions are
+appended, never substituted for preceding versions. F is outside each
+version's $\ell=\sum_i(|x_i|+1)$ payload cells. A completed version has an
+actual descriptor on port 36 and a seal occurrence. The parity of the
+active bank is one finite control bit. The other bank is the next append
+destination. All port heads are actual marks; the boundary relation places
+no head by a mathematical offset. Scratch and descriptor streams are
+fixed owner-local work ports, like AIF's template and Base-counter ports;
+they are not exported allocated data intervals. Their raw cells and old
+versions are nevertheless counted and replayed.
+

@@ -1,0 +1,41 @@
+**定义 1.1（下侧分支与双曲读出）。** 置
+
+```math
+\varphi=\frac{1+\sqrt5}{2},\qquad a=\log\varphi>0,\qquad
+\psi=-\varphi^{-1},\qquad i^t=e^{i\pi t/2}.
+```
+
+选取 $`\log(i\varphi)=a+i\pi/2`$，并选取 $`\psi`$ 的下侧对数值 $`L_-=-a-i\pi`$；所有非整数幂均按这份选择定义。令
+
+```math
+\mathcal F(t)=\frac{2}{\sqrt5\,e^{i\pi t/2}}
+\sinh\bigl((a+i\pi/2)t\bigr).
+```
+
+负实轴两侧的对数值相差 $`2\pi i`$；本定义不是把不同底数的主值对数任意相加。由 [DLMF 4.2.28、4.28.1](../../../Library/Analytic/nist2026dlmfcomplexpowerhyperbolic.md) 的定义，直接有
+
+```math
+\begin{aligned}
+\mathcal F(t)
+&=\frac{e^{-i\pi t/2}}{\sqrt5}
+\left(e^{(a+i\pi/2)t}-e^{-(a+i\pi/2)t}\right)\\
+&=\frac{e^{at}-e^{(-a-i\pi)t}}{\sqrt5}.
+\end{aligned}
+```
+
+对实 $`t`$，实虚部因而为
+
+```math
+\Re\mathcal F(t)=\frac{\varphi^t-\varphi^{-t}\cos(\pi t)}{\sqrt5},
+\qquad
+\Im\mathcal F(t)=\frac{\varphi^{-t}\sin(\pi t)}{\sqrt5}.
+```
+
+实部是指数增长项减去指数衰减的振荡修正，不是有界周期波。对 $`n\in\mathbb Z`$，$`e^{-i\pi n}=(-1)^n`$，故经典 Binet 式给
+
+```math
+\mathcal F(n)=\frac{\varphi^n-\psi^n}{\sqrt5}=F_n.
+```
+
+这里 $`F_0=0,F_1=1`$，整数递推向正负两端延伸。将 $`L_-`$ 换为 $`L_+=-a+i\pi`$ 得 $`B_+(t)`$，对实参数恰有 $`B_+(t)=\overline{\mathcal F(t)}`$；整数点仍相同。这正是所引连续 Fibonacci 论文 §5.1 的相反分支。若扩展到复参数 $`z`$，正确关系是 $`B_+(z)=\overline{\mathcal F(\bar z)}`$，不能省去参数上的共轭。
+

@@ -1,0 +1,59 @@
+**Definition 8.2 (primary-literature correspondence and limits).**
+Cicalese--Laber--Saettler, [*Decision Trees for Function Evaluation:
+Simultaneous Optimization of Worst and Expected Cost*,
+arXiv:1309.2796v2, §§1--2][CLS], gives the discrete function evaluation
+problem with objects, target classes, a complete test family, positive
+test costs and a prior. Here objects are $\{0,1\}^m$, nonempty target
+classes are the fibers of $f$, tests are individual coordinates, and
+the positive test prices are $d_i$. Their worst/expected scalar-cost
+approximation results are not the three-coordinate equality proved
+here, and are not invoked to claim an efficient exact frontier.
+
+Deshpande--Hellerstein--Kletenik, [*Approximation Algorithms for
+Stochastic Boolean Function Evaluation and Stochastic Submodular Set
+Cover*, arXiv:1303.0726v2, §§1--2][DHK], explicitly gives a product
+distribution on input bits, a cost per bit test, adaptive sequential
+testing and an expected-cost objective. Proposition 3.3 supplies a
+uniform product law on the *selected input coordinates*, so its
+Boolean-target case has that probabilistic test interpretation.
+The surrounding initial ages and selected lag do not become independent
+after conditioning. Their approximation theorems and time guarantees
+are not used for native acquisition, encoding or address generation.
+
+Charpenay--Le Treust--Roumy, [*Optimal Zero-Error Coding for Computing
+under Pairwise Shared Side Information*, arXiv:2211.03649v2,
+Definitions II.1, III.1--III.3 and Theorem III.4][CLR], defines
+characteristic conflicts by different target values at common
+compatible side information, and uses proper colorings. That is the
+mature separation principle behind an early summary. Their i.i.d.
+block coding, expected prefix lengths and asymptotic rates are not
+the one-export, attained-alphabet objective on (NTL.2); their side
+information does not supply the literal current-port service.
+
+These decision-tree, coding and parity ingredients are
+`literature-attested` or already supplied by the cited repository
+results. The `repo-derived` addition is their conjunction through a
+specific native interface: a globally minimum early encoder whose
+zero-label set selects exactly the desired Boolean histories, a
+proof using the full acquired row in both directions, and all-word
+sourcewise cost transport with the geometry (NTL.15). The comparison
+does not assert worldwide originality. The relationship between the
+task quotient and its source, the paid preparation assumptions, and
+the all-entry address obstruction remain part of the theorem's scope.
+
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[NARC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[AA]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[CG]: RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md
+[WPE]: RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md
+[GFT]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[ATRA]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[ACPD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[CLS]: https://arxiv.org/html/1309.2796v2
+[DHK]: https://arxiv.org/html/1303.0726v2
+[CLR]: https://arxiv.org/html/2211.03649v2
+

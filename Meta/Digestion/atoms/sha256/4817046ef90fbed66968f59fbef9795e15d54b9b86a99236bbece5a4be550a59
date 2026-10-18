@@ -1,0 +1,92 @@
+**Theorem 5.2 (Application of the cubic criterion with full complementarity).**
+Suppose the data (5.1) satisfy all conditions in (3.5), including
+the global interior cubic inequality. Then
+
+$$
+e(T)\ge\beta-\tau^Ty\qquad(T\in\mathfrak C_1).
+\tag{5.2}
+$$
+
+For any one feasible $x=\sum_fw_fk(a_f,b_f)\in\mathcal F$, with
+$w_f>0$ and unit real independent factors, and any $z$ satisfying
+all fifteen inequalities $-zI\preceq H_J(x)\preceq zI$,
+equality $z=\beta-\tau^Ty$ holds exactly when the following
+complementarity conditions hold:
+
+$$
+\begin{gathered}
+\operatorname{ran}A_J^+\subseteq\ker(zI-H_J(x)),\qquad
+\operatorname{ran}A_J^-\subseteq\ker(zI+H_J(x))
+\quad(J\in\mathcal J_{15}),\\
+\mathcal B_{C,y,\delta}(a_f)b_f=0\quad\text{for every }f.
+\end{gathered}
+\tag{5.3}
+$$
+
+When equality holds, after the exact normal form (2.2), a positive-weight atom with
+canonical preparation $a(p)$ has its radial measurement in
+$\ker\mathcal R(p)$, or its tangent measurement in
+$\ker\mathcal T(p)$. A nonzero radial kernel vector requires
+$\mathscr F(p)=0$, and a nonzero tangent kernel vector requires
+$B_+(p)B_-(p)-t^2p_+p_-=0$. These requirements apply also to
+boundary populations; determinant zero alone is not a kernel-vector
+or TP certificate.
+
+Proof. Theorem 3.2 makes every $\mathcal B(a)$ PSD. Use the
+following credited slack identity of QJM Convention 6.3:
+
+$$
+\begin{aligned}
+z-(\beta-\tau^Ty)
+={}&\sum_J\operatorname{tr}\bigl[
+A_J^+(zI-H_J(x))+A_J^-(zI+H_J(x))\bigr]\\
+&+\sum_fw_f b_f^T\mathcal B_{C,y,\delta}(a_f)b_f.
+\end{aligned}
+\tag{5.4}
+$$
+
+Its use retains all three TP multipliers. To fix explicitly the
+normalization and adjoint orientation, put
+$L(x)=\sum_J\operatorname{tr}(Z_JS_x^\dagger(\Pi_J))$.
+Equation (1.8) gives
+$L(x)=\langle C,M\rangle+\sum_\nu\delta_\nu\eta_\nu$.
+The first sum in (5.4) is $z-\beta+L(x)$.
+Since the preparation factors are unit,
+$\tau^Th(a_f)=1$, so
+
+$$
+\sum_fw_fh(b_f)=M^T\tau=\tau.
+\tag{5.5}
+$$
+
+Equation (3.6) therefore makes the second sum exactly
+$\tau^Ty-L(x)$, proving (5.4) for this same channel. This is an
+application of the supplied slack identity, not an independent
+general conic-duality assertion.
+
+All summands are nonnegative PSD pairings. For $x\in\mathcal F$,
+take $z=e(T_x)$ in (1.11); (5.4) proves
+$e(T_x)\ge\beta-\tau^Ty$. For any original complex competitor,
+Definition 1.5 supplies a possibly different channel $T_x$ with
+$e(T)\ge e(T_x)$, giving (5.2). Thus the real-product test is
+sufficient for the entire original complex class, rather than an
+assumption that the original competitor already has real factors.
+
+For PSD matrices $P,Q$, $\operatorname{tr}(PQ)=0$ exactly when
+$\operatorname{ran}P\subseteq\ker Q$: the PSD matrix
+$Q^{1/2}PQ^{1/2}$ then has trace zero and is zero, equivalently
+$P^{1/2}Q^{1/2}=0$. Likewise a PSD matrix has zero quadratic form
+at $b$ exactly when it annihilates $b$. Apply these facts term by
+term to (5.4), whose atom weights are positive. This gives precisely
+(5.3) in both directions.
+
+Theorem 2.2 can be applied to this same $x$. Equivariance of
+$\mathcal B$ transports kernels under the canonical-preparation
+rotation. At a canonical preparation, (3.8) splits the quadratic
+form into two nonnegative block quadratic forms. If an unsplit
+measurement has zero form, each nonzero radial or tangent part
+separately has zero form and hence lies in the corresponding kernel.
+Alternatively apply (5.4) to its split generator decomposition.
+This proves the asserted support conditions without assuming any
+orbit support beforehand. $\square$
+

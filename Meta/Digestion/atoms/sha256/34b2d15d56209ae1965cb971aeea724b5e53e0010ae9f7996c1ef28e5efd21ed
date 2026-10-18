@@ -1,0 +1,60 @@
+**Lemma 9.2 (credited one-ray mechanism, including complex multiplicity).**
+Each actual low live-bearing label in the sharp weak-cost class has
+dimension two and contributes one projective real-null coefficient ray,
+even with arbitrary inaccessible complex encoder and decoder Kraus
+multiplicity. This is the RH8.2 mechanism.
+
+Proof. On the supported qutrit write its encoder matrices as
+$C_j:\mathbb C^3\to\mathbb C^d$ and compressed live-decoder matrices
+as $R_i:\mathbb C^d\to\mathbb C^3$, all for this ONE actual label.
+Proposition 2.2 makes every nonzero $R_iC_j$ a phase multiple of
+
+$$
+K(x_0,z_0,w_0)=\begin{pmatrix}
+x_0h_0&z_0a_K&w_0c_K\\z_0b_K&x_0h_1&0\\w_0d_K&0&x_0h_2
+\end{pmatrix},\qquad x_0\ne0,
+\tag{EP.60}
+$$
+
+with real projective ratios and rank exactly two. Thus $d=1$ cannot
+be live-bearing. For $d=2$, fix a nonzero $R_{i_0}C_{j_0}$. Rank two
+makes $R_{i_0}$ injective and $C_{j_0}$ onto. Every other nonzero
+supported $C_j$ gives a nonzero rank-two product $R_{i_0}C_j$ with
+image $\operatorname{ran}R_{i_0}$.
+
+The left null line of EP.60 is generated, after removal of the common
+phase, by
+
+$$
+\left(1,-\frac{a_Kz_0}{h_1x_0},-\frac{c_Kw_0}{h_2x_0}\right)^T.
+\tag{EP.61}
+$$
+
+Since $a_K,c_K,h_1,h_2$ are nonzero, the image determines $z_0/x_0$
+and $w_0/x_0$. Therefore all $R_{i_0}C_j$ are proportional to
+$R_{i_0}C_{j_0}$, and injectivity makes all supported $C_j$
+proportional to $C_{j_0}$. For every other nonzero $R_i$,
+surjectivity of $C_{j_0}$ makes $R_iC_{j_0}$ nonzero and rank two.
+Its right kernel is the same $\ker C_{j_0}$. But the right null line
+of EP.60 is
+
+$$
+\left(1,-\frac{b_Kz_0}{h_1x_0},-\frac{d_Kw_0}{h_2x_0}\right)^T,
+\tag{EP.62}
+$$
+
+which again determines the coefficient ray. Thus all supported live
+products of this actual label are proportional to one $K$ and their
+coefficient Gram has rank one. All denominators are nonzero. The proof
+assumed neither an isometric encoder nor a TP live restriction. Complex
+phases, later failure subeffects and arbitrary inaccessible multiplicities
+are allowed. Later failure subeffects kill coordinate $0$ and add no
+winding moment.
+
+For countable CP branches the same finite-dimensional argument applies.
+Under the stipulated integral hypotheses it applies almost everywhere;
+if an internal index is unacquired and aggregated into a coarse label,
+that finite-dimensional CP encoder has its own Kraus representation
+and one actual decoder, so the same argument applies to that CP mass.
+Hidden indices never select different decoders. $\square$
+

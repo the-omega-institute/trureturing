@@ -1,0 +1,39 @@
+**Proposition 4.2 (A new exclusion beyond the radius-one comparison).** The
+original radius-one upper value for this curve is
+
+$$
+D_1(P_\epsilon)=\frac3{13}\frac{196+9\epsilon}{316+9\epsilon}.
+\tag{4.2}
+$$
+
+At the feasible endpoint $\epsilon=14/3$ it exceeds $W$, while (4.1)
+excludes the entire curve, including this endpoint. For every nonzero
+feasible $\epsilon$, the curve also lies outside the event-independent
+renewal class of [Renewal, Definition 5.1][R].
+
+Proof. Summing the two columns of Lemma 3.1 gives
+$P_\epsilon([000])=\eta a$ and $P_\epsilon([010])=3/13$.
+Their harmonic term is $21a/[13(7a+3)]$, which becomes (4.2) by (2.4).
+At the upper endpoint,
+$D_1=357/2327>3/20$, since $7140>6981$. Meanwhile
+$1372/543<253/100$, $588/247<239/100$, and $63/113<56/100$ give
+$W<137/950<3/20$. Thus the uniform radius-two result supplies an exclusion
+that this radius-one comparison does not give.
+
+For the renewal comparison, set
+$t_2=3/10+3\epsilon/20$ and $t_3=3/10$, the two row sums of $K^\epsilon_{RR}$.
+The event cylinders in the proof of Lemma 3.1 give, with $p=3/13$,
+
+$$
+P_\epsilon([101])=\frac p2(t_2+t_3),\qquad
+P_\epsilon([10101])=\frac p2(t_2^2+t_3^2),\qquad
+\Gamma_{10,01}(P_\epsilon)
+:=P_\epsilon([10101])P_\epsilon([1])-P_\epsilon([101])^2
+=\frac{81\epsilon^2}{270400}.
+$$
+
+The last quantity is positive exactly for $\epsilon\ne0$, so the
+event-independence hypothesis of that supplied renewal exclusion fails.
+These supporting cylinder identities locate the restricted exclusion;
+they do not imply optimality or hidden-state minimality. $\square$
+

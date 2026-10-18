@@ -1,0 +1,43 @@
+**Lemma 3.2 (coefficient conventions and complete rank-two locus).**
+In order $(D,T,S)$ define
+
+$$
+\begin{aligned}
+K(z)&=uD+vT+wS,\quad z=(u,v,w)^T,\quad (K_D,K_T,K_S)=(D,T,S),\\
+B_0&=\operatorname{diag}(1,-\alpha,-\beta),\quad
+X_c=|D\rangle\langle T|+|T\rangle\langle D|,\\
+\Theta(Z)&=\sum_{i,j}Z_{ij}K_j^\dagger K_i,\qquad
+C(\rho)_{ij}=\operatorname{tr}(K_i^\dagger K_j\rho),\\
+\mathcal Z&=\{u=0\}\cup\{u^2-\alpha v^2-\beta w^2=0\},\\
+\mathcal C_2&=\left\{\sum_{j=1}^N z_jz_j^\dagger:
+                      z_j\in\mathcal Z,\ N<\infty\right\}.
+\end{aligned}
+\tag{QO.16}
+$$
+
+Zero sums are allowed. Then
+$z^\dagger C(\rho)z=\operatorname{tr}(K(z)^\dagger K(z)\rho)$ and
+$\operatorname{tr}(CZ)=\operatorname{tr}(\Theta(Z)\rho)$.
+For unnormalized output-input Choi columns
+$\mathcal V=(|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle)$,
+the coefficient Choi is $\mathcal VZ\mathcal V^\dagger$ and its output
+partial trace is $\Theta(Z)^T$. Every nonzero singular $K(z)$ has
+rank exactly two, and (QO.16) contains its entire complex locus.
+
+Proof. Expansion of traces gives the stated index convention; output
+partial trace of $|K_i\rangle\!\rangle\langle\!\langle K_j|$ is
+$(K_j^\dagger K_i)^T$. Direct determinant expansion gives
+
+$$
+K(z)=\begin{pmatrix}h_0u&av&cw\\bv&h_1u&0\\dw&0&h_2u\end{pmatrix},
+\qquad
+\det K(z)=h_0h_1h_2u(u^2-\alpha v^2-\beta w^2).
+\tag{QO.17}
+$$
+
+When $u\ne0$, the rows/columns $1,2$ minor is $h_1h_2u^2\ne0$.
+When $u=0,z\ne0$, column zero is nonzero in rows one/two and some
+other column is nonzero in row zero. They are independent. This proves
+the rank statement on both components and their intersection, including
+all phases. $\square$
+

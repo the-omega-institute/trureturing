@@ -1,0 +1,54 @@
+**Definition 24.3 (consumed mathematical correspondence and remaining
+scope).** The native suppliers are [§§17--20 at their immutable
+source][NARC-3R-parent]. Proposition 17.2 supplies both directions of
+the acquired-row fiber, Definition 17.3 the full lag target, and
+Assumption 17.4 the complete-state and immediate-write services.
+Theorem 18.1 covers every native literal function and arbitrary state
+budgets; its quantified two-Read obstruction and Theorem 20.1 are
+consumed only at $k=2$. Equations (NARC.18.2) and Definition 5.3
+supply the actual replies and materialized literals of Theorem 22.2.
+[FIB, Theorem 27.2 and §§45--47][FIB-RW] supply support/rank,
+conditional one-bit writing, separate charges and actual-path refinement,
+with the same target-source pairs and identity source transition.
+
+The following mature mathematical models clarify distinct parts of
+this correspondence. Their cited results are intermediate suppliers
+and model boundaries, not additional numerical native bounds.
+
+| Primary source | Consumed relation | Exact transfer boundary |
+| --- | --- | --- |
+| Robert D. Nowak, *The Geometry of Generalized Binary Search*, [arXiv:0910.4397v5][Nowak-3R], §§I--II.A, Definition 1, pp.1--3 | A fixed unknown source gives a reply function on the permitted query family; query-response signatures determine transcript partitions. This explains why Proposition 24.1 changes an actual permitted experiment. | Nowak identifies an entire binary-valued hypothesis and supplies binary-query bounds under additional hypotheses. Here replies are four-valued, the target is only a repeated lag, and complete mutable updates are constrained. Its numerical identification bounds do not supply (NARC.23.2). |
+| Allan Borodin and Stephen Cook, *A Time-Space Tradeoff for Sorting on a General Sequential Model of Computation*, SIAM Journal on Computing 11(2), 287--297 (1982), [§2, p.289][BC-3R] | Access depth and shared configuration capacity are distinct. Their branching-program model explicitly abstracts from storage representation and manipulation, locating the additional obligation met by the word table. | Their model is a leveled directed acyclic graph with integer input access and space capacity measured by logarithmic node count. Unrolling an actual native path is a proof representation, not an uncharged runtime level or PC. Their sorting bound supplies no no11-width bound here. |
+| Randal E. Bryant, *Graph-Based Algorithms for Boolean Function Manipulation*, IEEE Transactions on Computers C-35(8), 677--691 (1986), [§2, Definitions 1--5 and Theorem 1][Bryant-3R], electronic pp.4--6 | Sharing residual computations distinguishes a decision graph from a transcript tree, as the shared output-sixteen word in Definition 22.1 illustrates. | Binary tests with fixed increasing variable order imply acyclicity in Bryant's model. Its reduced-graph canonicity and size minimum do not transfer to arbitrary native controllers or to legal immediate-write layouts. Merging equal-output halts need not preserve an embedding. |
+| Ivan Havel and Jaroslav Morávek, *B-valuations of graphs*, [Propositions 1--2][HM-RW-full], pp.340--341 | Their injective adjacency-preserving cube coding is the binary state-transition correspondence reused in FIB45.4. Theorem 22.2 supplies actual supported edges and legal words for it. | An unrestricted cube encoding does not impose no11 legality. The required map preserves edges, not all nonedges or distances. The explicit word certificate supplies the extra restriction; ordinary cube embeddability or bipartiteness alone does not. |
+| Sergio Cabello, David Eppstein and Sandi Klavžar, *The Fibonacci Dimension of a Graph*, [arXiv:0903.2507v1][CEK-3R], definition and Corollary 3.6, pp.1, 7--8 | Isometric Fibonacci-cube tree encodings supply the general finite-history existence route already used in FIB47.2. | Isometric dimension preserves all distances. The present shared controller requires only immediate edges. The tree theorem is neither a lower bound for this weaker encoding nor a minimum installed-state theorem, and refinement need not preserve width or state count. |
+
+The new mathematical content is the repo-derived actual native
+$P_{28}/P_{16}/P_{18}/P_{30}$ immediate-write construction and the
+all-budget four-bit obstruction. The frontier combines them with the
+reused two-Read endpoint. These are ordinary conditional statements;
+no global literature novelty is assigned to the finite native increment.
+
+The minimum installed-state count and minimum running-state count at
+five bits are unresolved here; twelve and four are attained counts.
+Best peak and summed address costs, their joint optimization with other
+resources, and total physical cost remain unresolved. Allowing explicit
+internal write phases defines a different competition and its tradeoffs
+are not supplied by these theorems. Genuine acquisition, stationarity,
+discard, compilation and physical interface availability remain premises.
+
+The recovered integer is the substitution count relative to the acquired
+original, not elapsed physical time. The cut and entire boundary row are
+already acquired; they are not recovered by the controller. The six
+origins $(j,15)$ still share the same reply transcript and halt, so the
+result does not reconstruct all original trees. It gives one exact
+exchange of chronological interaction allowance against legal internal
+memory geometry at this fixed fiber, not a uniform frontier over other
+labels, cuts, acquired rows or unbounded lags.
+
+[NARC-3R-parent]: https://github.com/the-omega-institute/trureturing/blob/570727d8fa74341c576bee694ff0e2cd4e79b936/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[Nowak-3R]: https://arxiv.org/pdf/0910.4397v5
+[BC-3R]: https://www.cs.toronto.edu/~bor/Papers/time-space-tradeoffs-sorting-general.pdf
+[Bryant-3R]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+[CEK-3R]: https://arxiv.org/pdf/0903.2507v1
+

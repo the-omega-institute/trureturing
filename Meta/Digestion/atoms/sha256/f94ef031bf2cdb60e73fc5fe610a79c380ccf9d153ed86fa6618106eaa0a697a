@@ -1,0 +1,78 @@
+**Theorem 5.2 (the native variational identities).** For fixed $d\ge1$,
+
+$$
+\sigma_d=\max_{p\in\Delta(S)}\{H(p)-\alpha_d(p)\},
+\tag{NPC.17}
+$$
+
+and, for every strictly positive $w$,
+
+$$
+P_d(w)=\max_{p\in\Delta(S)}
+\left\{\alpha_d(p)+\sum_xp_x\log_2w(x)\right\}.
+\tag{NPC.18}
+$$
+
+Proof. For $p=\nu/n$, the standard finite type-size bounds are
+
+$$
+(n+1)^{-s}2^{nH(p)}\le|T_\nu|\le2^{nH(p)}.
+\tag{NPC.19}
+$$
+
+Here is the needed elementary lower estimate. Under iid $p$, all words
+of type $\nu$ have probability $2^{-nH(p)}$. That type has maximal
+type probability: for any type $\eta$ with the same support condition,
+its probability divided by that of $\nu$ is
+
+$$
+\prod_{x:\nu_x>0}\nu_x^{\eta_x-\nu_x}\frac{\nu_x!}{\eta_x!}.
+$$
+
+Every factor is at most one. For $\eta_x>\nu_x$, write its denominator
+as a product of integers greater than $\nu_x$; for $\eta_x<\nu_x$,
+write its numerator as a product of integers at most $\nu_x$.
+If $\nu_x=0<\eta_x$, the other type has probability zero; common
+zeros contribute one. At most $(n+1)^s$ types share total probability
+one, so the modal type has probability at least $(n+1)^{-s}$.
+This proves (NPC.19).
+
+Put $R_n=\max_\nu|T_\nu|/a_n(\nu)$. [NDR, Theorem 3.2][NDR]
+supplies, with $H_m=\sum_{j=1}^m1/j$,
+
+$$
+R_n\le K_d(n)\le H_{s^n}(n+1)^sR_n,
+\qquad H_{s^n}\le1+n\ln s.
+$$
+
+The normalized logarithmic error tends to zero. Combine this with
+(NPC.19), (NPC.14) and density of length-$n$ type grids in the
+simplex to obtain (NPC.17), using the supplied limit for $K_d(n)$.
+The maximum exists by continuity and compactness.
+
+At fixed $n$, an iid word weight depends only on its type. Consequently
+
+$$
+\max_\nu a_n(\nu)\prod_xw(x)^{\nu_x}
+\le A_n(w)\le
+(n+1)^s\max_\nu a_n(\nu)\prod_xw(x)^{\nu_x}.
+\tag{NPC.20}
+$$
+
+The lower bound uses an attaining admissible type subset. For the
+upper bound, divide any admissible set into its type intersections.
+Take logarithms, divide by $n$, and use (NPC.14), continuity and
+density of the type grids. The limit is the right-hand side of
+(NPC.18). Products in Lemma 3.1 also give
+$A_{n+m}(w)\ge A_n(w)A_m(w)$, while
+$A_n(w)\le(\sum_xw(x))^n$. The same superadditive quotient-and-remainder
+argument as in Theorem 4.3, with a finite lower remainder bound, shows
+that $n^{-1}\log_2A_n(w)$ tends to its supremum. Thus this limit is
+$P_d(w)$ as defined in (NPC.15), proving (NPC.18). $\square$
+
+The graph capacity/complementary-entropy relation discussed in
+[Charpenay–Le Treust–Roumy, Theorem 7][CLR] is a related mature
+type-method identity for specified graph products. Here (NPC.17) uses
+NDR's native type-cover comparison. FMR §7's higher-arity obstruction
+does not permit substitution of a pair-confusability graph.
+

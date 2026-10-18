@@ -1,0 +1,15 @@
+## 4. Native implementation of the four-corner measurement effects
+
+Use the five legal three-site states. The encoded bottom space is the image of J_2; let P_b=J_2J_2^dagger and let a=|010> be the apex. The C-117/C-121 operators are exactly
+
+$$K_1=J_2(X\otimes Z)J_2^\dagger,\qquad K_2=J_2(Z\otimes X)J_2^\dagger,$$
+$$E_{j,\pm}=(P_b\pm K_j)/2,\qquad E_{j,0}=I_5-P_b. \tag{4.1}$$
+
+The bottom word dictionary is 00->000, 10->100, 01->001, 11->101. No tensor-product decomposition of the whole five-dimensional space is assumed.
+
+Let h_1 be the parent's two-pulse implementation of -i times Hadamard on the first data qubit, with identity action on the apex. Let S be the native twenty-one-pulse data SWAP. Define
+
+$$V_1=h_1^\dagger C_Z,\qquad V_2=V_1 S. \tag{4.2}$$
+
+Here only native site one has the second quadrature. After V_j, measure the complete legal word. Record 0 for apex 010; on the bottom record + or - according to whether the first data bit is zero or one. Keep the setting label j.
+

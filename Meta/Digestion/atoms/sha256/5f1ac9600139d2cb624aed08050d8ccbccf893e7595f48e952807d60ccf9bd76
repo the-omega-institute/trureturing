@@ -1,0 +1,57 @@
+## 463. The companion-M return is the only owner of its fixed pair
+
+Only the second case of (461.2) remains:
+
+    rho=(C,Z,M,Q,Z,M).
+
+Its genuine inequality and (459.1) give
+
+    (c+1)*(q+1)>(z-m)^2>=(c+1)^2,
+
+so q>c and Q!=C. Both tau and rho contain C and each spends more
+than pi of genuine M/Z capacity. A genuine owner whose labels were
+all in {M,Z} would be different from both and would spend more than
+pi of M/Z itself, which is impossible.
+
+The latter is the two-value estimate of Section 157 of the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md),
+which allows repeated axes. Its application here is as follows.
+Every local cosh is >3.
+At each vertex its axial angle theta and the two transverse angles
+have sum theta+2*atan(lambda*cot(theta/2)), where 1>lambda>2/3.
+For t=tan(theta/2)>0, tangent addition and AM-GM give
+
+    atan(t)+atan(lambda/t)>=2*atan(sqrt(lambda)),
+
+with both sides in (0,pi/2). The vertex sum is at least
+4*atan(sqrt(lambda))>pi/2. Summing the four vertices counts every
+angle twice, giving six-angle total >pi.
+
+Now any pair-{Z,M} owner must have at least one axis B outside M,Z,
+with b<=m; its other axis has value r<=z. It is genuine since it
+contains Z. Put
+
+    L=(z+m)^2-(b-1)*(r-1)>0,
+    J=(b+1)*(r+1)-(z-m)^2>0.
+
+Monotonicity of the following polynomial in b,r yields
+
+    L-2*J=3*z^2-2*z*m+3*m^2-3*b*r-b-r-3
+         >=3*z^2-5*z*m+3*m^2-m-z-3
+         =(m-3)*(m+1)+(z-m)*(m-1)+3*(z-m)^2>0.
+
+Both b and r are positive; each partial derivative of the subtracted
+part is negative. The last expression is positive for m>3 and z>m.
+The squared paired coefficient
+
+    K=[(sqrt(z^2-1)+sqrt(m^2-1))/(z+m)]^2>8/9
+
+therefore satisfies K*L/J>16/9>1. The response
+
+    beta_Z+beta_M=2*atan(sqrt(K*L/J))>pi/2
+
+shows that the four transverse M/Z slots spend more than pi.
+Two such owners together with tau would exceed 3*pi. Thus rho is
+the unique actual owner of pair {Z,M}, even with repeated axes.
+All owners other than tau,rho have combined M/Z capacity below pi.
+

@@ -1,0 +1,76 @@
+**Definition 171.1 (The attributed containment ingredient).** The mature
+projected-polyhedron criterion used in the common-budget analysis is
+[Kellner, *Containment problems for projections of polyhedra and
+spectrahedra*, arXiv:1509.02735v1, Theorem 3.1](https://arxiv.org/abs/1509.02735v1).
+For $\pi(P_A)=\{x:\exists u,\ a+Ax+A'u\ge0\}$ and
+$\pi(P_B)=\{x:\exists v,\ b+Bx+B'v\ge0\}$, with $\pi(P_A)\ne\varnothing$,
+the numbered theorem gives containment exactly when
+$z^T(b+Bx)\ge0$ for all $x\in\pi(P_A)$ and $z\ge0$ satisfying
+$B'^Tz=0$. When $\ker(B'^T)\cap\mathbb R_{\ge0}^k$ is nonzero, the
+multipliers can instead be restricted to $\sum z=1$. Its Farkas proof
+is a polyhedral statement and needs no spectrahedral Slater assumption.
+
+For the outer $O$ projection use the inequalities
+
+$$
+A_O\lambda-h(x)\ge0,\qquad\lambda\ge0,\qquad1-\sum\lambda\ge0.
+$$
+
+The auxiliary-variable matrix is $B'=[A_O;I;-\mathbf1^T]$ and the
+affine part is $[-h(x);0;1]$. An annihilating nonnegative multiplier
+has the form $z=(y,v,k)$ with
+
+$$
+A_O^Ty+v-k\mathbf1=0,\quad y,v,k\ge0,
+\quad\text{equivalently }k\ge\Delta_O(y),\quad
+v=k\mathbf1-A_O^Ty.
+\tag{171.1}
+$$
+
+Its value is $k-y\cdot h(x)$. Minimizing $k$ at fixed $y$ gives
+
+$$
+\Delta_O(y)-y\cdot h(x)=B_O(y)-y\cdot d(x),
+\tag{171.2}
+$$
+
+exactly the full score inequality. The inner $N$ projection may include
+$Q_L$; it is nonempty since $\alpha$ with $R$ is feasible.
+The annihilator cone is nonzero: $y=0,v=\mathbf1,k=1$ is an element.
+Thus the hypotheses of the numbered theorem, including its optional
+simplex normalization, hold for this encoding. That multiplier simplex
+is different from the normalization $\Delta_C(y)\le1$ in Theorem 166.2.
+Deleting the probability-budget row yields instead the zero-$\Delta$
+Farkas cone, explaining why finite conic feasibility omits the mass bound.
+Only the numbered containment theorem and its stated hypotheses are
+used as this intermediate ingredient.
+
+The radial map, whole-sequence law identity and exact common-budget
+comparison are repository-derived compositions with the reused
+Theorems 109.1, 110.2, 113.2 and 113.3. They do not constitute a new
+standalone LP-duality theorem, a spectrahedral relaxation of the actual
+problem, or an exhaustive novelty or literary-priority assertion.
+
+**Open problem 171.2 (All-length exchange at the exact probability
+budget).** For every remaining $L\ge7$ and every $b\in H_L$ with finite
+$\rho_N(b)$, establish
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\},
+\tag{171.3}
+$$
+
+or provide an explicit failing direction and the complete certificate
+of Definition 169.1, with the boundary bridge if necessary.
+Equivalently establish the complete-table budget exchange of Theorem
+167.2. The entire six-active comparison is supplied by
+[Theorem 161.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_III.md#161-every-original-six-active-profile-and-every-actual-tail);
+Theorem 162.2 additionally gives the stronger prefix-cone inclusion on
+$Q_6$. Neither statement proves (171.3) for larger lengths.
+The exact-law obstruction of Theorem 112.2 does not settle this cap
+comparison, and failure of the stronger prefix condition (167.4) would
+not by itself settle it. No actual full-class separator is given here.
+The continuing universal obligation remains the original all-amplitude,
+all-tail closed-cap intersection, not a weaker cone or law-preservation
+problem.
+

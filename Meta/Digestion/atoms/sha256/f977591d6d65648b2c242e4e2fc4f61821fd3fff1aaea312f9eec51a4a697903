@@ -1,0 +1,21 @@
+## 351. T: one-g triangle certificates with both budgets
+
+The complete coefficient criterion of XIX 341.2 supplies one zero-sum vector $g_{ij}$ for every pair, including pairs with $Q_{ij}=0$. Define
+
+$$
+\begin{aligned}
+r_{ij}&=(-g_{ij})_+,&s_{ij}&=(-g_{ij}-Q_{ij})_+,&t_{ij}&=\max\{m(r_{ij}),m(s_{ij})\},\\
+D_i&=\ell_i-\sum_{h<i}g_{hi},&R_i&=\sum_{j>i}r_{ij},&S_i&=\sum_{j>i}s_{ij},\\
+T_i&=\sum_{j>i}t_{ij},&U_i&=\max\{R_i,S_i-D_i\},&u_i&=m(U_i).
+\end{aligned}
+\tag{351.1}
+$$
+
+The same $g$ must satisfy both accepted budgets
+
+$$
+ c\ge\sum_iU_i\quad\text{coordinatewise},\qquad
+ \sum_i\max\{u_i,T_i\}\le M.
+\tag{351.2}
+$$
+

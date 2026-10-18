@@ -1,0 +1,43 @@
+**Theorem 8.3 (paid full-family realization of the boundary).** Let
+$n=g(L+1)$, $H=\lceil\log_2n\rceil$, $N=2^H$ and $D=H+1$.
+Embed the $n$ blocks in the first $n$ frontier slots of a fixed
+perfect height-$H$ right-subtree scaffold, filling the other
+$N-n$ slots by alpha. There is a correct original code on all
+$\mathcal F_D$ merging precisely the resulting $3^g$ canonical
+states into one name and naming every other $S_D$ state separately.
+Its complete attained alphabet is exactly
+
+$$
+|S_D|-3^g+1,
+\tag{SIR.43}
+$$
+
+with preparation bounds (SIR.40) and at most one late original-root
+Read of length at most $D$. For $L=1,g=2$, the construction has
+$D=3$, $115$ attained names, seven preparation Reads and
+$17$ submitted letters.
+
+Proof. The fixed scaffold with its ordered actual $S_1$ leaves
+defines an injective map into $S_{H+1}$. The group choices give
+$3^g$ distinct canonical states. Before any target, scan every
+$Rq$, $q\in W_D$, and select the described merged-or-singleton
+name from the acquired $\pi_D(v)$. Isolate all other acquired
+source dependence under Assumption 1.2. Canonical actual sources
+attain every name, proving (SIR.43) and the stated paid scan.
+
+On a singleton name, the public table supplies every canonical
+factor without a Read. On the merged name, targets strictly
+above the frontier are constantly branch. A frontier target is
+served by its own original-root literal, decoding alpha, beta
+and branch as in Theorem 8.2. Padded frontier slots are constant
+alpha and can use zero Reads. Every target in $\mathcal P_D$
+is of one of these forms. Canonicalization preserves all used
+replies and factors on the full assigned variable-shape fiber.
+Equation (SIR.4) proves correctness for every later authentic
+count. No group value or source identity is supplied as advice.
+
+Finally $|S_1|=3$, $|S_2|=11$, $|S_3|=123$, so the indicated
+case has $123-9+1=115$ names; the scan-letter sum is
+$(3-1)2^3+1=17$. This deliberately nonoptimal code witnesses
+the actual source class, not the optimum. $\square$
+

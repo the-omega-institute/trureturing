@@ -1,0 +1,26 @@
+### 60.4 An explicit exact finite projection program
+
+Independent diagonal input and output unitaries can make λ and μ simultaneously real and nonnegative: for input angle θ and output angle φ their phases change by −θ−φ and −θ+φ, respectively. These logical unitaries lift to local physical unitaries, preserve the allowed class, and preserve diamond distance. Zero coefficients need no phase choice. Hence write the aligned target as (α,β,l,m) with l,m≥0.
+
+For a competitor let a,b be its survival probabilities and x,y its real coherence coefficients. Real coefficients lose no optimality: average a feasible competitor with its entrywise complex conjugate, using that the target is real and diamond norm is invariant under simultaneous input/output complex conjugation. The exact feasible inequalities are
+
+    0≤a,b≤1,
+    −a≤x≤a, −b≤x≤b,
+    −(1−a)≤y≤1−a, −(1−b)≤y≤1−b.
+
+These linear constraints imply the CPTP inequalities automatically. Define u=α−a, v=β−b and the real symmetric Choi difference blocks
+
+    D1=[[u,l−x],[l−x,v]],
+    D2=[[-u,m−y],[m−y,−v]].
+
+The blocks use ordered bases {|0,0>,|1,1>} and {|0,1>,|1,0>} of the logical input/output Choi space. They are unnormalized Choi blocks; no factor1/2 is inserted.
+
+Minimize a real scalar δ over a,b,x,y and real symmetric two-by-two matrices Z1,Z2, subject to the feasible inequalities above and
+
+    Z1−D1≥0, Z1+D1≥0,
+    Z2−D2≥0, Z2+D2≥0,
+    (Z1)11+(Z2)11≤δ,
+    (Z1)22+(Z2)22≤δ.
+
+The minimum equals the unrestricted physical LOSR diamond optimum. To see this, for any Hermiticity-preserving difference map with Choi matrix D, the standard diamond-norm dual is min ||Tr_out Z||∞ over Hermitian Z≥D and Z≥−D. Here the trace bound is exactly Tr_out Z≤δ I. Averaging Z under Z⊗Z makes it block diagonal in the displayed parity blocks; averaging with entrywise conjugation makes it real, without changing feasibility or increasing δ. Partial trace gives precisely the two diagonal sums displayed above. Conversely any listed Z1,Z2 reconstruct a feasible diamond dual. Thus the program is exactly the ordinary diamond dual optimized over the independently established physical feasible class; the retraction theorem proves that no unrestricted leakage competitor was omitted. Feasibility and attainment follow from the compact parameter minimum and the finite-dimensional diamond dual. Each two-by-two positive-semidefinite constraint can equivalently be written as a second-order-cone constraint. No numerical solution is assumed in this theorem, and the general unequal-deficit value is specified by this exact finite program rather than an unproved closed formula.
+

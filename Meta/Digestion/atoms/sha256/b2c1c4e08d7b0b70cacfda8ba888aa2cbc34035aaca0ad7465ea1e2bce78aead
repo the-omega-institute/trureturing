@@ -1,0 +1,20 @@
+**Definition 8.3 (primary arithmetic source).** Seymour Ginsburg and Edwin
+H. Spanier, *Semigroups, Presburger Formulas, and Languages*, Pacific
+Journal of Mathematics **16**(2), 285–296, DOI
+[10.2140/pjm.1966.16.285][GS-PAGE], §1, Theorems 1.2–1.3, is the primary
+literature used here. Theorem 1.2 states decidability of natural-number
+Presburger sentences; Theorem 1.3 states effective equivalence with
+semilinear descriptions. The finite functional-orbit calculation is given
+explicitly in Definition 3.1 rather than importing a general
+counter-machine reachability theorem. The new ordinary deductions make
+no claim that their abstract packaging or boundary test is an externally
+unprecedented result.
+
+[NPS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PHASE_SYNTHESIS.md
+[CAR]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+[CG]: RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[GS-PAGE]: https://msp.org/pjm/1966/16-2/p09.xhtml
+

@@ -1,0 +1,74 @@
+**Proposition 7.1 (The exact two-coordinate comparator in the combined
+class).** Set
+
+$$
+E_*(k,\alpha,\beta)=2H\sqrt T\,e^{\lambda k/H}U(\alpha),\qquad
+\mathcal D_*(z)=D(z,0).
+$$
+
+This model belongs to $\mathfrak F_{\le2,\mathsf{GP}}$ and has error
+exactly $4H\sqrt T$. Consequently
+
+$$
+e_{2,\mathsf C}^{\rm aff}(Z)=4H\sqrt T
+\quad\text{for every }
+\mathsf C\in\{\mathsf L,\mathsf G,\mathsf P,\mathsf{GP}\}.
+$$
+
+Proof. This is the attaining annulus of [M, §§8–9]. Its exact image is
+
+$$
+\mathscr A_*=
+\{z\in\mathbb R^2:2H\sqrt{T-\tau}<\|z\|<2H\sqrt T\},
+$$
+
+since $\lambda<0$ and $e^\lambda=\sqrt{(T-\tau)/T}$.
+On this actual image,
+
+$$
+\kappa_*(z)=\frac H\lambda
+\log\frac{\|z\|}{2H\sqrt T}
+$$
+
+recovers exactly $k$. Its fibers are the $\beta$ circles at fixed
+$(k,\alpha)$, its affine hull is the whole plane, and its exact
+initial value is $2H\sqrt T e^{\lambda k_0/H}U(0)$.
+For all signed real commands and every prescribed path, the maps are
+
+$$
+\mathcal U_s^*(z)=e^{\lambda s/H}z+0_2,\qquad
+\mathcal V_t^*(z)=R_{t/2}z+0_2,\qquad
+\mathcal W_{\rm p}^*(z)=e^{\lambda\Delta/H}R_{L/2}z+0_2.
+$$
+
+Substituting the native endpoints proves these identities exactly as
+for each block in §6. The straight guard is
+$0<\kappa_*(z)+s<H$, and the full path guard is
+$0<\kappa_*(z)+\rho(t)<H$ at every prescribed time. The same
+substitution, truncation and concatenation arguments therefore put
+this single model in the combined class, without changing its two
+coordinates or the full guards.
+
+Its pointwise squared error, by Lemma 1.4, is
+
+$$
+4\bigl(2H f(k/H)-A(k)\bigr)^2+4Zk=16H^2F_0(k/H).
+$$
+
+Theorem 3.5 bounds this by $16H^2T$, and equality occurs at the
+actual interior height $k=Hx_*$ for every phase pair. Its error
+is exactly $4H\sqrt T$; no endpoint ray is needed for attainment.
+
+For any of the four contracts, subclass inclusion and Proposition 3.3
+give
+
+$$
+4H\sqrt T=e_{2,\mathsf L}^{\rm aff}(Z)
+\le e_{2,\mathsf C}^{\rm aff}(Z)
+\le\operatorname{err}(E_*,\mathcal D_*)=4H\sqrt T.
+$$
+
+Both inequalities are now supported by models and a lower bound for
+the correct classes. Equality of these capacities does not identify
+the classes of all admissible models. $\square$
+

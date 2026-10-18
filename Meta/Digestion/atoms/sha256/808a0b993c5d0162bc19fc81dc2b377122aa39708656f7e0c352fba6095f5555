@@ -1,0 +1,13 @@
+**Relation to existing results and boundary.** RP.3 already gives a mod-5
+weighted depth identity for odd-index primitive Fibonacci blocks. The present
+statement is not an instantiation of RP.3: the factors here have exact rank
+\(2r_j\), the even-rank Lucas block B_j is the fixed-golden TBN tower, and the
+argument uses its cubic recurrence to evaluate B_j modulo 25. A targeted search
+of the dev tree and WSS PR history found no prior \(\lambda_5(B_j)\) or even-rank
+B_j depth balance. The claim is paper-first; no Lean/Scribe declaration is
+introduced. It constrains the actual initial-depth vector but does not prove a
+WSS prime, a non-WSS prime family, or a resolution of Wall--Sun--Sun.
+
+The only arithmetic inputs are the already recorded TBN.2--TBN.3 identities,
+the elementary multiplicativity of the Fermat quotient, and the RP.1 kernel
+calculation. No abc, height, equidistribution, or Robin/RH hypothesis is used.

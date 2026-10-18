@@ -1,0 +1,20 @@
+## 8. Complete critical window bounds
+
+Throughout this section put
+
+$$
+\ell=e_{\mathsf a}+e_{\mathsf b},\qquad
+r=e_{\mathsf c}+e_{\mathsf d}.
+\tag{20}
+$$
+
+Both are nonnegative integers. For a specified pool let $A$ count shared states with an axis endpoint and $N$ those without. Lemma 7.2 gives $D_B=A+N$. Counting each non-axis shared state once at its lower endpoint and once at its upper endpoint in (17) gives
+
+$$
+N\le b_{\mathsf a}+b_{\mathsf b}=2+\ell,\qquad
+N\le b_{\mathsf c}+b_{\mathsf d}=2+r.
+\tag{21}
+$$
+
+These counts concern distinct states of one installed graph, not separately optimized histories or residual subgraphs.
+

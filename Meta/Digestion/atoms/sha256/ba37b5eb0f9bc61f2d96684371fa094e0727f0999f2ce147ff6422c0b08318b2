@@ -1,0 +1,28 @@
+## 241. The branch containing an entirely high-labelled owner
+
+Suppose one such owner exists. The four K owners then have combined
+original genuine P expense greater than 3*pi/2+3*pi=9*pi/2.
+Every single-high transverse owner has original P expense greater than
+2*pi/3 by the preceding single-high classification. Its addition would
+make the total greater than 31*pi/6>5*pi. Therefore no single-high
+transverse owner exists in this branch.
+
+Every genuine high-containing owner outside K is consequently in the
+class A of single-high axial owners with distinct transverse pair {C,D}.
+Each has exactly one high axis: two distinct high axes would put it in
+K, and two equal high axes would force flatness. Let g=|A|, let Theta_A
+be the sum of their original high axial angles, and let B_A be the sum
+of beta_C+beta_D counted once per actual A owner. The dominant-axis
+inequality gives g*pi<=2*Theta_A+B_A, with equality allowed only for
+the empty sum. Each owner contributes two original copies of each
+transverse angle, so 2*B_A is its total original C/D expense summed
+over A. The complete genuine C/D budget is at most4*pi, hence
+B_A<=2*pi. The strict four-core expense leaves Theta_A<pi/2.
+It follows that g*pi<3*pi, so g<=2.
+
+The unique flat owner contributes one additional high-containing owner.
+Thus in this branch there are at most 1+4+2=7 actual owners containing
+any high label, and every genuine one outside the interacting core is
+single-high axial with pair {C,D}. This conclusion does not restrict
+the size of the external low-only region or eliminate the branch.
+

@@ -1,0 +1,65 @@
+**Lemma 75.8 (exact form lift and complete recovery in the actual hole).** For every $F\in\mathcal Q^{\rm fr}$,
+
+$$
+JF\in\mathcal Q_{{\rm mix},\varepsilon},\qquad
+\|JF\|=\|F\|,\qquad q_{0,\varepsilon}[JF]=q^{\rm fr}[F].
+\tag{75.29}
+$$
+
+For every $f\in\mathcal Q^{\rm hc}$ there are $v_\varepsilon\in\mathcal Q_{\varepsilon,R}^{\rm D}$ such that
+
+$$
+\|\iota_\varepsilon v_\varepsilon-L_\varepsilon f\|\longrightarrow0,
+\qquad q_{0,\varepsilon}[\iota_\varepsilon v_\varepsilon]
+                                  \longrightarrow a k_{\delta,2}[f].
+\tag{75.30}
+$$
+
+**Proof.** On each product of chamber and cylinder pieces the lift(75.7) is $H^1$. Across a matching plate, a cell trace equals its slice, and a slice endpoint equals its atomic value, so the physical traces agree in the other coordinate's entire piece. At a ground half-chamber the lift is zero and the adjacent cable endpoint trace is zero. These identities also give the required zero traces on both grounded product faces. Piecewise $H^1$ gluing proves global membership: integration of the weak-derivative identity against an interior smooth test function on all pieces cancels the matched interface trace terms; interface rims have boundary measure zero. The resulting piecewise derivatives belong to $L^2$. No derivative transmission or $H^2$ regularity is needed.
+
+For the norm, $c_\varepsilon^4$ times the chamber/chamber, chamber/cylinder and cylinder/cylinder fiber volumes gives exactly $1,\delta,\delta^2$. Chambers contribute no derivative. In a chamber/cylinder piece the derivative coefficient is
+
+$$
+\beta c_\varepsilon^4
+       \frac{\varepsilon^{s-1}}\delta\,\varepsilon^{s-1}=a,
+\qquad
+\beta c_\varepsilon^4\varepsilon^{2(s-1)}=a\delta
+\quad\text{on a cylinder/cylinder piece}.
+\tag{75.31}
+$$
+
+Both coordinate derivatives and both mixed orders are counted. This proves(75.29) on the complete form domain, rather than only on tensor or atomic data. It is a form identity, compatible with72.11's failure of exact finite-thickness operator intertwining.
+
+Let $j_D:X_D\to\mathbb R^s$ be the fixed injective skeleton embedding of72.3, including all distinct ground tips. Collapse a source chamber to its port, a ground half-chamber to its ground tip, and a cylinder to its own unit longitudinal coordinate; call this piecewise map $\pi_\varepsilon$. The actual assembly gives a fixed $C_D<\infty$ with
+
+$$
+|x-j_D(\pi_\varepsilon x)|\le C_Dr_\varepsilon
+\quad\text{on all physical pieces, for small }\varepsilon.
+\tag{75.32}
+$$
+
+Here is the required quantitative geometric reason. Centre distances are $1+h_v+h_w=1+O(r_\varepsilon)$; recursive placement on the finite source moves every source centre by $O_D(r_\varepsilon)$. The ground-centre formula(72.8) is smooth near its fixed strictly positive square root, so it has the same displacement bound. Directions therefore differ by $O_D(r_\varepsilon)$, plate offsets are $O(r_\varepsilon)$, chamber diameters are $O(r_\varepsilon)$ and transverse radii are $O(\varepsilon)=o(r_\varepsilon)$. Comparing each physical longitudinal segment with its fixed unit skeleton segment proves(75.32).
+
+The compact embedded tree has the inverse modulus
+
+$$
+\omega_D(t)=\sup\{d_X(\xi,\zeta):\xi,\zeta\in X_D,
+                             |j_D(\xi)-j_D(\zeta)|\le t\},
+\qquad \omega_D(t)\longrightarrow0\quad(t\downarrow0).
+\tag{75.33}
+$$
+
+The last assertion follows from compactness and injectivity: a sequence violating it would have limiting distinct points with the same embedded position. Thus a forbidden physical pair obeys
+
+$$
+|x-y|\le R_\varepsilon
+\quad\Longrightarrow\quad
+d_X(\pi_\varepsilon x,\pi_\varepsilon y)
+ \le\omega_D(R_\varepsilon+2C_Dr_\varepsilon)\longrightarrow0.
+\tag{75.34}
+$$
+
+Fix any member of the core of75.7, vanishing for $d_X<h$. Its lift is zero on the whole physical forbidden set for all sufficiently small $\varepsilon$, by(75.34). Pieces with a ground half-chamber already have zero lift. Consequently its restriction to $G_{\varepsilon,R}$ belongs to exactly(75.9).
+
+For arbitrary $f\in\mathcal Q^{\rm hc}$ choose core members $F_m\to Ef$ in the full form norm. For each $m$ choose a positive threshold below which $JF_m$ avoids the hole, and replace these thresholds by a decreasing sequence tending to zero. Let $m(\varepsilon)\to\infty$ increase sufficiently slowly that $JF_{m(\varepsilon)}$ avoids the hole. Set $v_\varepsilon=\iota_\varepsilon^*JF_{m(\varepsilon)}$. Its zero extension equals that lift. Equation(75.29) proves both limits in(75.30). The same source, geometry, radius and operators serve all inputs; only the recovery vector depends on $f$. This is mathematical form recovery, not an acquired preparation operation. $\square$
+

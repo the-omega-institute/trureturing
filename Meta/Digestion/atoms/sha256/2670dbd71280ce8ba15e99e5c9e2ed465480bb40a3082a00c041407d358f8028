@@ -1,0 +1,60 @@
+**Theorem 20.2 (a total-description finite-preparability classification).**
+On the promise $\mathsf{Tot}_2$, finite preparation of $\sigma_a$ is
+exactly finite support of $a$. It has neither a positive nor a negative
+uniform semidecision on that promise. On the explicit total syntax
+(PCA.44), the set
+
+$$
+\{e:\sigma_{b_e}\text{ has a finite original-entry preparer on }
+                          \mathcal U_*\}
+\tag{PCA.45}
+$$
+
+is $\Sigma^0_2$-complete under computable many-one reductions.
+Every input to those reductions describes a total acquired-term code
+served by precisely the unchanged reader of 4.3. Its resource vector,
+when finite, is the exact vector of Theorem 19.1, with $A$ the stages
+of genuinely new enumeration events and $W$ their weighted sum.
+
+Proof. The source-specific equivalence is Corollary 19.2.
+An enumerator emits only finitely many distinct numbers if and only
+if only finitely many stages introduce a new number. Hence (PCA.45)
+is the classical finite-c.e.-set index problem $\mathsf{FIN}$.
+For this explicit syntax its upper definition is
+$\exists N\,\forall s>N\, b_e(s)=0$, with a decidable bounded-simulation
+matrix. Totality is built into (PCA.44), rather than inserted as an
+extra quantifier over arbitrary program indices.
+
+For completeness, the standard $\mathsf{FIN}$ reduction can be made
+explicit. Given any predicate $\exists m\forall n\,R(z,m,n)$ with
+decidable $R$, at stage $t$ let
+
+$$
+c_t=\min\bigl(\{m\le t:\forall n\le t\ R(z,m,n)\}
+                                     \cup\{t+1\}\bigr).
+\tag{PCA.46}
+$$
+
+Construct an enumerator that successively computes and emits $c_t$.
+Each stage ends because $R$ is decidable; a finite enumerator description
+is effectively obtained from $z$. The sequence $c_t$ is nondecreasing:
+an excluded old candidate never returns, and the only newly eligible
+candidate at the next stage is the previous default. If a least true
+witness $m$ exists, it is eventually the least remaining candidate and
+$c_t=m$ thereafter. If none exists, every fixed finite set of candidates
+is eventually excluded, so $c_t$ is unbounded. The emitted set is
+therefore finite exactly for the stated $\Sigma^0_2$ predicate.
+Its transition-step enumeration need not share the stage numbers $t$;
+finiteness is unchanged by that finite effective simulation.
+
+Neither semidecision assertion needs a hierarchy-separation assumption.
+For an arbitrary machine $e$, the total predicate that is one exactly
+while $e$ has not halted by stage $s$ has finite support exactly when
+$e$ halts. The total predicate that is one exactly when $e$ has halted
+by stage $s$ has finite support exactly when $e$ never halts. These
+are uniform bounded simulations and preserve the totality promise.
+A negative semidecision in the first reduction or a positive one in
+the second would semidecide nonhalting. Together with the usual halting
+semidecision that would decide halting, contradicting Turing's endpoint.
+This proves both assertions. $\square$
+

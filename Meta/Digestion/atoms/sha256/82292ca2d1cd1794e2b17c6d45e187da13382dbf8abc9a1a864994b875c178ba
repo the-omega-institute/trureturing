@@ -1,0 +1,31 @@
+**引理 1.3（本卷使用的迹数据，复用）。** 置 $t=1+b>1,u=2t-1,j=b+e,n=a+j$。一般迹公式是
+
+$$
+\operatorname{tr}\left(\begin{pmatrix}p&q\\r&s\end{pmatrix}P\right)
+=s+(p-s)a+rb+qe.
+\tag{1.5}
+$$
+
+分区卷引理 2.1 在同一左乘约定下给
+
+| 时钟、动作 | 累积矩阵 | 迹 |
+| --- | --- | --- |
+| $0$ | $I_2$ | $1$ |
+| $1:J$ | $J$ | $j$ |
+| $2:M$ | $L=MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $t$ |
+| $3:J$ | $N=JL=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $n$ |
+| $4:M$ | $U=MN=\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ |
+| $5:M$ | $Q=MU=\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u$ |
+| $6:M$ | $MQ=\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $n+2u$ |
+| $6:J$ | $JQ=\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $n+t+a=2n+t-j$ |
+
+这些迹严格正；每个第七续行的迹也严格正。全部已取得方程是
+
+$$
+g(0)=-d,\quad g(1)j=24-d,\quad g(2)t=48-d,\quad
+g(3)n=C-d,\quad g(4)u=X-d,\quad g(5)(n+u)=m-d.
+\tag{1.6}
+$$
+
+迹数据直接使用式 (1.5)，其中 $b,e$ 的系数不可互换。第七根令每个第七续行读数为 $d$，不表示取得了所有续行。
+

@@ -1,0 +1,45 @@
+**Definition 51.1 (the common frame instrument).** For
+$`f\in\{v_*,u_*,w_*\}`$, set $c_f=Lf$ and
+
+$$
+K_f=(c_f)_0D+(c_f)_1T+(c_f)_2S.
+\tag{JR.115}
+$$
+
+Each $K_f$ has rank two. Choose an isometry $V_f:\mathbb C^2\to\mathbb C^3$ onto its image and use encoder $V_f^\dagger K_fE^\dagger$
+with the full TP decoder
+
+$$
+A\longmapsto EV_fAV_f^\dagger E^\dagger.
+\tag{JR.116}
+$$
+
+The low reports are $`r(v_*)=-1`$, $`r(u_*)=+1`$, and $`r(w_*)=-1`$.
+The high-dimensional pair uses
+
+$$
+K_{H,\sigma}=\sqrt{(1-\delta)/2}\,D,\qquad \sigma=\pm1,
+\tag{JR.117}
+$$
+
+with the full live decoder $A\mapsto EAE^\dagger$, and both high labels
+are fair. Let $\Xi$ be the $2\times2$ failure difference matrix of
+JR.49 and choose real unit eigenvectors $f_+,f_-$. For
+$\epsilon,r=\pm1$, use the scalar row
+
+$$
+C_{\epsilon,r}={1\over\sqrt2}\langle f_\epsilon|M^{1/2}E^\dagger.
+\tag{JR.118}
+$$
+
+Its decoder sends $z$ to $z\,w_\ell g(t)dt\,P_f$ in every original
+label $\ell=0,\ldots,4$. Finally use two complement labels, with each
+complement CP map having effect $(I_5-P)/2$, scalar retained fibre,
+and decoder $z\mapsto z\,g(t)dt\,P_f$ at original label $2$ only; the
+Kraus multiplicity inside $V^\perp$ is permanently inaccessible.
+
+There are $3+2+4+2=11$ base branches. Every input, all twelve histories,
+and every passive reference use this one fixed instrument. The jointly
+counted accessible fibre includes every retained specimen, memory,
+controller, environment, or entanglement share at the cut.
+

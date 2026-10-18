@@ -1,0 +1,20 @@
+**Corollary 3.2 (uniform budget bridge for an explicit witness).** If
+one explicit virtual witness has complete entry alphabet at most $r$,
+total finite states at most $K$, at most $q$ calls and at most
+$\ell$ submitted letters on every source of its declared domain,
+then its compiled witness has simultaneous upper budgets
+
+$$
+(r,K,q,\ell)\longmapsto(r,2K,2q,2\ell).
+\tag{NVC.10}
+$$
+
+The sharper same-run bounds are (NVC.8)–(NVC.9). A source-specific
+choice of witness or controller is not included unless that selector
+is genuinely acquired and counted.
+
+Proof. Apply Theorem 3.1 to the given tables and acquired entry.
+Every original call contributes one virtual visit and every original
+letter is counted on that same run, so (NVC.9) implies the two
+uniform inequalities. $\square$
+

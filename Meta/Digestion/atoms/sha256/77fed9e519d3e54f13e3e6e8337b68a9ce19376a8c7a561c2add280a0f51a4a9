@@ -1,0 +1,13 @@
+## 482. 两个首素数边界与第一段准确储备平台
+
+沿用同一实际压力，令实际事件阈值为
+
+$$
+\theta_{p,j}=\frac{\beta_{p,j}}{\log p},\qquad
+\beta_{p,j}=\log\left(1+\frac1{p+\cdots+p^j}\right),
+\qquad
+\alpha=\frac{\log(3/2)}{\log2}.
+$$
+
+这些是 §85 的实际几何前缀事件，亦是 Robin1984 原始事件表示；不把参考项 $1/(jp^j)$ 当作实际收益。
+

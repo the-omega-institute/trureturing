@@ -1,0 +1,59 @@
+**Theorem 2.2 (complete span and endpoint balance).** Every cover of
+Definition 1.2, under either lag convention, satisfies
+
+$$
+\begin{aligned}
+\nu_j&=q-|j|+h_j && (|j|<q),\\
+h_0&=h_{-(q-1)}=h_{q-1}=0,&
+0&\le h_j\le |j| &&(|j|<q),\\
+G&=\sum_{j\in\mathbb Z}h_j,\\
+A_j&=1+h_j-h_{j-1}&& (-(q-1)\le j\le0),\\
+B_j&=1+h_j-h_{j+1}&& (0\le j\le q-1),\\
+U_t-L_t&=18-\delta_t+g_t,\\
+\sum_t(U_t-L_t)&=q(q-1)+G.
+\end{aligned}
+\tag{NAGC.2.3}
+$$
+
+In particular the last total is $306+G$ at eighteen labels and
+$342+G$ at nineteen labels. The endpoint equations include the
+degenerate endpoint zero. Equivalently, for $1\le k<q$,
+
+$$
+\#\{t:U_t<k\}=k-h_k,\qquad
+\#\{t:-L_t<k\}=k-h_{-k}.
+\tag{NAGC.2.4}
+$$
+
+**Proof.** The band $d=j$ has exactly $q-|j|$ cells when $|j|<q$.
+Complete disjoint coverage puts these in $q-|j|$ different classes,
+since one class cannot contain two equal differences. A span covering
+$j$ either supplies its one occupied difference or omits that integer.
+Counting these alternatives gives the first equation. At zero every
+class contains its anchor. At either extreme, a span reaches the
+extreme integer only if that integer is its occupied endpoint. Hence
+the three stated $h$ values vanish. Since $\nu_j\le q$, the first
+equation also gives $h_j\le|j|$. Counting the pairs $(t,j)$ with
+$j\in[L_t,U_t]\setminus D_t$ in the two orders proves the equation
+for $G$.
+
+For $j\le0$, every $U_t\ge0$ implies that no interval ends before
+$j$. Therefore $\nu_j-\nu_{j-1}=A_j$. At the lowest index use
+$\nu_{-q}=h_{-q}=0$; throughout the specified range the occupied
+band count increases by one. This proves the equation for $A_j$.
+For $j\ge0$, every $L_t\le0$ implies that no interval begins after
+$j$, and $\nu_j-\nu_{j+1}=B_j$. At the highest index use
+$\nu_q=h_q=0$. The occupied count decreases by one, giving the
+equation for $B_j$. In particular
+$A_0=1-h_{-1}$ and $B_0=1-h_1$, with singleton spans counted by
+both endpoint statistics when they occur.
+
+For positive $k$, a span contains $k$ exactly when $U_t\ge k$.
+Subtracting $\nu_k=q-k+h_k$ from $q$ gives the first identity
+of (NAGC.2.4). Apply the same argument to $-k$ for the second.
+The class-size definition gives $U_t-L_t=m_t-1+g_t$.
+Summing it uses $\sum_t m_t=q^2$ and exactly $q$ classes, yielding
+$q^2-q+G$. All arguments use occupied differences rather than
+coordinate step signs. They therefore include nonmonotone fused
+classes and every allowed defect allocation. $\square$
+

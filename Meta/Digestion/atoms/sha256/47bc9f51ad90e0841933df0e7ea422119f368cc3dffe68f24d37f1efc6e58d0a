@@ -1,0 +1,26 @@
+**Assumption 23.1 (source and feasible-law entry).** Retain Assumption
+1.1, the same consistent positive source of Definition 17.2, and its
+membership in all nine dyadic rows of GC Definition 6.1. The GC source
+is fixed at revision `321589a8be98de4fe179f99f6e593d8784952db1`.
+Source existence, isolation, Jacobian, ranks and root TP; the original
+minimax, sharp worst-history JOINT cost, separate unaveraged equality
+face, full-complex multi-Kraus necessity, physical capacity and common
+constructor remain inherited assumptions. A rectangular expression
+enclosure does not supply any of those premises at off-root points.
+
+Fix any finite $t\ge t_0$. Use the directed circle, fractional cylinder,
+complete eight moments, contrast and height of (FC.3)–(FC.4). A feasible
+common law here means a coefficient probability law $\pi$ with
+$\int\Gamma\,d\pi=B(t)$. At a specified request it must also satisfy
+$K(\pi)\ge r$, where $0\le r\le r_{\max}(t)$. The original finite
+and convergent countable classes, and only the stipulated measurable
+finite-dimensional-fibre/Kraus/integrable-effect extension of GC
+Convention 2.3, retain their scopes. Mathematical probability measures
+on the compact cylinder will be used for finite-dimensional comparison;
+this does not enlarge the admitted physical necessity class.
+
+Unlike Assumptions 10.1 and 17.1, this entry does not require a dual,
+a positive multiplier or an optimal law. Those extra premises are
+introduced only in §28. In particular the feasible-law conclusions
+below do not follow merely by assuming the law is on an attained face.
+

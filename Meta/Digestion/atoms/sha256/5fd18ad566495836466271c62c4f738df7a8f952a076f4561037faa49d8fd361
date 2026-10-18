@@ -1,0 +1,23 @@
+**数学引文 67.3（Intermediate suppliers）。** Chapters 52–60 of
+[the original manuscript at 1590efae](https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)
+supply the actual word domain, leaf positions, cache replay and finite frontier attainment;
+[chapter 65 at cf4b9edd](https://github.com/the-omega-institute/trureturing/blob/cf4b9edd2cf0b4410767cfd5e409b29753586105/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)
+supplies the exact prefix and its coarse replay. The named FibonacciAtomic declarations above
+are taken at 1590efae55f93022396cb1984f0014bbc73b8f65. The native finite-table representation
+is applicable to the attaining reader with bound $N$: all its requests and decoded addresses
+are in $Q_N$. Its `Admissible(N)` normalization and coverage conclusions retain their larger
+source-domain hypotheses. Buhrman–de Wolf, [Complexity Measures and Decision Tree Complexity:
+A Survey](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf), §§4.1–4.2, supplies the classical
+certificate and sensitive-support hitting principle used inside the replay argument.
+Loday, [Realization of the Stasheff polytope](https://arxiv.org/pdf/math/0212126v1), §1 and §2.8,
+supplies the planar ordered-tree and Tamari background for the source shapes.
+
+The generic overlap with [ActualExactTraceCompiler.exactObserver, firstRaw and exact_all_history_factorization][ExactTrace]
+is finite coarse control with chronological first-occurrence raw caches and absorbing halts. The source-specific
+shortlex construction and complete-window reconstruction remain those of parent theorem 57.2 and chapter 66.3.
+[ActualObserverFiniteTable.bounded_table_representation][FiniteTable] represents the already supplied attaining observer:
+its bounds cover requests and decoded addresses on every nominal row, and its relabelling preserves the complete carrier.
+This representation supplies neither actual reachability nor task correctness. The strategy, exact-competitor and phase
+suppliers retain the larger-domain hypotheses stated in parent Mathematical Citation 66.6; none supplies the $W_n$-only
+capacity conclusion, original prefix emission or observer acquisition.
+

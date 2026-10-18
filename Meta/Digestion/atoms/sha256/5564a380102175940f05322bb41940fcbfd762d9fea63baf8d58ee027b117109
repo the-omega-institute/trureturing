@@ -1,0 +1,16 @@
+**Definition 5.1 (Compiled lattice rows).** For a permitted pair set
+
+$$
+\delta=\sqrt u\in(0,1),\qquad R=2\log(1/\alpha)>0,\qquad H=\lceil R/\delta\rceil.
+\tag{5.1}
+$$
+
+Add a formal category $0$ solely to define impossible consecutive-one rows and set $\ell_0=0$. For every $z\in\{0,1,\ldots,L,\star\}$ compile
+
+$$
+m_z=\lfloor\ell_z/\delta\rfloor\in\mathbb Z,\qquad t_z=\ell_z/\delta-m_z\in[0,1).
+\tag{5.2}
+$$
+
+At a closing one choose $m_z$ with probability $1-t_z$ and $m_z+1$ with probability $t_z$. The floor is the usual floor also for negative $\ell_z$; it does not truncate negative scores toward zero. Integers, probabilities and destinations are immutable table entries. Category $0$ is absent from both laws $a_i$ and has $m_0=t_0=0$.
+

@@ -1,0 +1,5 @@
+source_id = "kneser-triangle-ramsey"
+path = "docs/develop/theory/KNESER_TRIANGLE_RAMSEY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

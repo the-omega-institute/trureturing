@@ -1,0 +1,48 @@
+**Lemma 3.2 (coefficient order and the complete singular locus).** In
+coefficient order $(D,T,S)$ put
+
+$$
+\begin{aligned}
+K(z)&=uD+vT+wS,\quad z=(u,v,w)^T,\quad(K_D,K_T,K_S)=(D,T,S),\\
+B_0&=\operatorname{diag}(1,-\alpha,-\beta),\\
+X_c&=|D\rangle\langle T|+|T\rangle\langle D|,\\
+\Theta(Z)&=\sum_{i,j}Z_{ij}K_j^\dagger K_i,
+\qquad C(\rho)_{ij}=\operatorname{tr}(K_i^\dagger K_j\rho).
+\end{aligned}
+\tag{NP.16}
+$$
+
+Then $z^\dagger C(\rho)z=\operatorname{tr}(K(z)^\dagger K(z)\rho)$
+and $\operatorname{tr}(CZ)=\operatorname{tr}(\Theta(Z)\rho)$. If
+$\mathcal V=(|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle)$
+in unnormalized output-input Choi order, its coefficient Choi matrix is
+$\mathcal VZ\mathcal V^\dagger$, whose output partial trace is
+$\Theta(Z)^T$, not $\Theta(Z)$. The entire nonzero singular locus is
+
+$$
+\mathcal Z=\{u=0\}\ \cup\ \{u^2-\alpha v^2-\beta w^2=0\},
+\qquad
+\mathcal C_2=\left\{\sum_{j=1}^N z_jz_j^\dagger:z_j\in\mathcal Z,
+                                                       N<\infty\right\}.
+\tag{NP.17}
+$$
+
+Zero sums are included. Every nonzero singular $K(z)$ has rank exactly two.
+
+Proof. Expand the trace to obtain (NP.16), keeping its index order.
+Vectorization gives the Choi statement on every complex matrix unit.
+The matrices $D,T,S$ have disjoint nonzero entry patterns and are linearly
+independent, although their Choi columns need not be normalized. Explicitly
+
+$$
+K(z)=\begin{pmatrix}h_0u&av&cw\\bv&h_1u&0\\dw&0&h_2u\end{pmatrix},
+\qquad
+\det K(z)=h_0h_1h_2u(u^2-\alpha v^2-\beta w^2).
+\tag{NP.18}
+$$
+
+For $u\ne0$ its lower-right minor is $h_1h_2u^2\ne0$. For $u=0,z\ne0$,
+column zero is nonzero in rows one/two and some other column is nonzero
+in row zero, so there are two independent columns. This proves both
+components, including their intersection and every complex phase. $\square$
+

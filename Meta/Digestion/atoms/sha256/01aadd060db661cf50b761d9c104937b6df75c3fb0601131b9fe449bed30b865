@@ -1,0 +1,40 @@
+**Lemma 44.2 (one conditional oscillation estimate).**
+At an acquired stopping time $s$, and for $0<\epsilon\le1$ and a
+positive duration $h$ known at $s$, with
+$|\lambda|h\le\epsilon/2$, the conditional probability that, for some
+$t\in[s,s+h]$, one of
+
+$$
+|\bar A_t-\bar A_s|,\quad |\bar B_t-\bar B_s|,\quad |D^*_{s,t}|
+\quad\hbox{reaches or exceeds }\epsilon
+\tag{44.4}
+$$
+
+is at most
+
+$$
+\Psi(\epsilon,h)=8e^{-\epsilon^2/(4h)}
+          +2e^{-\epsilon^2/[16(1+\nu^2)h]}.
+\tag{44.5}
+$$
+
+The same bound holds for the unstopped relative Brownian triple.
+
+Proof. Conditional strong Markov gives fresh covariance-$2$ increments
+of the three independent Brownian coordinates. Before either first-level
+increment reaches $\epsilon$, the relative central martingale
+$\int_s^t(W^1_v-W^1_s)dW^2_v+\nu(C_t-C_s)$ has quadratic variation
+at most $2(\epsilon^2+\nu^2)h\le2(1+\nu^2)h$.
+Its drift has absolute value at most $\epsilon/2$.
+Reflection and the normal exponential tail bound give at most
+$8e^{-\epsilon^2/(4h)}$ for the two first-level exits. The stopped
+exponential-martingale inequality gives at most the second term for
+an absolute central excursion of $\epsilon/2$ before those exits.
+For example the latter inequality follows by applying
+$\exp(zM-z^2[M]/2)$ at the first level crossing, optimizing $z$, and
+summing the two signs. Stopping additionally at $S$ only reduces the
+quadratic-variation and drift bounds. If $s\ge S$, all three relative
+held coordinates vanish. Conditioning on a known random $h$ gives the
+same formula. Supremum information here is used only to bound probability;
+no threshold in (44.4) is an actual operation. $\square$
+

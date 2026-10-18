@@ -1,0 +1,43 @@
+**Corollary 47.2 (separate parameter moduli and collapse).** Replacing
+the current resolved target by a fixed target at
+$\bar\kappa\in\mathcal K$ adds at most
+$C_b\|M_\kappa-M_{\bar\kappa}\|_F$ to path $W_1$, endpoint
+$W_1$, and endpoint weighted variation. In original coordinates,
+replacement by the zero-parameter collapsed target adds at most
+
+$$
+C_b\bigl(|\kappa|+\|M_\kappa-M_0\|_F\bigr)
+\tag{47.3}
+$$
+
+to either transport estimate. Thus the temporal errors remain
+respectively (42.3) and (42.4), with these additional parameter
+errors; arbitrary $\kappa(T)\to\bar\kappa$ supplies no power of
+$T$ for those errors. The collapsed covariance is
+$2J_0M_0J_0^{\mathsf T}$ of rank two. No total variation convergence
+to this singular three-coordinate law is asserted.
+
+Proof. Take one standard three-dimensional Brownian motion $W$ and
+couple the two targets as $\sqrt2M_\kappa^{1/2}W$ and
+$\sqrt2M_{\bar\kappa}^{1/2}W$, with a common independent terminal
+height of law $\nu_g$. Lemma 44.2 and
+$\mathbb E\sup_{s\le b}|W_s|\le C_b$ from Lemma 44.1 bound the
+path and endpoint coupling costs by the stated modulus. For
+endpoint weighted variation, integrate the first density derivative
+in (46.7) along the positive segment between $2bM_\kappa$ and
+$2bM_{\bar\kappa}$; its common lower eigenvalue is $2bm$, giving
+the same bound. Triangle inequalities with Theorem 42.2 prove the
+resolved statements.
+
+For collapse use the same Brownian path with coefficient matrices
+$J_\kappa M_\kappa^{1/2}$ and $J_0M_0^{1/2}$. Their difference is
+bounded by $C(|\kappa|+\|M_\kappa-M_0\|_F)$, by adding and
+subtracting $J_\kappa M_0^{1/2}$ and applying Lemma 44.2.
+This proves (47.3) in transport. Its limiting upper $2\times2$
+block is positive definite, so the rank is exactly two. For every
+nonzero $\kappa$ the Gaussian original target is full rank and
+gives zero mass to the plane $D=0$, whereas the collapsed target
+gives that plane mass one. Their total variation distance is one.
+This explicit obstruction excludes a total variation analogue of
+(47.3). $\square$
+

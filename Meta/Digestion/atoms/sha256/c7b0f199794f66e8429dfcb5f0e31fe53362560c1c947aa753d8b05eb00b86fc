@@ -1,0 +1,24 @@
+**Theorem 42.3 (an exact half-beta instance and its kernel charge).** At
+
+$$
+ a=\beta=\tfrac12,\qquad u=\tfrac1{18},\qquad
+ \omega_*=\operatorname{diag}(17/20,3/20),
+$$
+
+the same actual family has
+
+$$
+ \begin{aligned}
+ f(\tau,\omega_*)^2=f(\bar\tau,\omega_*)^2
+ &=\frac12+\frac{\sqrt{51}}{20}>T_{1/2},\\
+ \sup_q\operatorname{Tr}[(q\otimes\omega_*)\Pi_{\ker A_q}]
+ &=\frac{11}{80},\qquad
+ 1-\frac{11}{80}=\frac{69}{80}>T_{1/2},\\
+ E_\xi&=\frac{\operatorname{diag}(u,a)}{(\sqrt a+\sqrt u)^2},
+ \qquad t_\xi=\frac5{16}<\beta.
+ \end{aligned}
+\tag{R.212}
+$$
+
+**Proof.** For $\tau=I_2/2$, the phase fidelity is $1/2+\sqrt{\omega_{00}\omega_{11}}=1/2+\sqrt{51}/20$. At these parameters $(\sqrt a+\sqrt u)^2=8/9$, and (R.199) gives $11/80$, attained by $q_*=\operatorname{diag}(1/4,0,3/4)$. The two strict comparisons with $T_{1/2}=(1+1/\sqrt2)/2$ reduce respectively to $51>50$ and $29>20\sqrt2$, the latter following from $841>800$. Equations (R.187) and (R.201) give the effect and $t_\xi=a(u+\beta)/(\sqrt a+\sqrt u)^2=5/16$. The kernel is one-dimensional by Theorem 41.2, so changing its unit-vector phase cannot increase this charge. Thus a uniform assertion of $t_\xi\geq\beta$ for some vector of every actual Choi kernel is false. This does not negate the sufficient implication (R.194). $\square$
+

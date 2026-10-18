@@ -1,0 +1,115 @@
+### 31.2 Coordinate feasibility and the canonical generators in Theorem 31.3
+
+The two index identities
+
+$$
+B_i(a)+B_{i+1}(a)=|a|-a_i,
+\qquad \sum_i B_i(a)=k|a|
+\tag{31.8}
+$$
+
+hold because the two alternating index sets partition all indices
+except $i$, and each coordinate occurs in exactly $k$ of the sums.
+For $(m,c)$, summing the edge slacks gives
+$|a|=nm-2\sum c_i=m+2\delta$. The candidate
+$B_i(a)-\delta$ has adjacent sums
+$|a|-a_i-2\delta=m-a_i$, the same as $c_i+c_{i+1}$.
+A difference vector with zero adjacent sums alternates sign around
+the odd ring, so it is zero. This proves both inverse formulas in
+(31.4), and all the maps are additive integer-linear maps.
+
+The forward feasibility conditions follow from $a_i\ge0$, $\delta\ge0$
+and $c_i=B_i(a)-\delta\ge0$. Conversely, suppose (31.5) holds and
+define $m,c$ by (31.4). The coordinates $c_i$ are nonnegative integers.
+Nonnegativity of $m$ requires proof as well: summing
+$\delta\le B_i(a)$ gives $n\delta\le k|a|$, whence
+
+$$
+n m=n|a|-2n\delta\ge(n-2k)|a|=|a|\ge0.
+\tag{31.9}
+$$
+
+Thus $m\ge0$. Formula (31.8) gives
+$c_i+c_{i+1}=m-a_i\le m$ and
+$km-\sum c_i=\delta\ge0$. Hence $(m,c)\in\mathcal S_k$.
+This includes $m=0$: (31.9) forces $a=0$ and then $\delta=c=0$.
+The supplied integer decomposition consequently realizes every point
+of (31.5) by common histories. If $m$ is fixed in advance, its slack
+vector already determines
+
+$$
+\delta=\frac{|a|-m}{2},\qquad
+c_i=B_i(a)-\frac{|a|-m}{2}.
+\tag{31.10}
+$$
+
+In that fixed-degree domain, feasible $a$ have the indicated parity
+and bounds; there is no additional missing deficit to recover.
+The usefulness of $(a,\delta)$ is that it expresses multiplication
+across all degrees additively.
+
+Normality is the general odd-cycle cone argument of §29.2, applied to
+the polytope and integer decomposition of Theorem 28.2: the zero mode
+and singleton modes generate the full group $\mathbb Z^{n+1}$, and
+$\mathcal S_k$ is the intersection of its rational cone with that
+lattice. Its generators have degree one, so the ring is standard
+graded; the cone is full dimensional and has group rank $n+1$.
+The facet verification in §29.2 applies to every $2k+1\ge5$.
+Consequently an exponent is interior precisely when
+
+$$
+c_i\ge1,\qquad a_i\ge1,\qquad\delta\ge1.
+\tag{31.11}
+$$
+
+Hochster's Cohen–Macaulay theorem and the Danilov–Stanley description
+of the canonical module now apply. A multigraded reference with the
+needed hypotheses is Barile–Bruns, *$\mathbb Z^r$-graded rings and
+their canonical modules*, [§5 and Theorem 5.1][BB31]. Here their
+normal affine monoid $M$ is $\mathcal S_k$, their $r$ is $n+1$ and
+their coefficient field is $\mathbb C$; the cone is pointed and the
+group lattice is full, as checked above. The theorem identifies
+$\omega_{R_k}$ with the monomial ideal (31.11), while the domain
+property follows from its inclusion in a polynomial ring.
+
+For each $1\le j\le k-1$, $\nu_j$ has slack vector $\mathbf1$,
+deficit $k-j$, and positive occupancy $j\mathbf1$. Thus it is interior.
+Let $p=(m,c)$ be any interior exponent. If $\delta(p)\ge k-1$,
+subtract $\nu_1=(3;\mathbf1)$. The degree is nonnegative because
+$c_i,c_{i+1}\ge1$ and $c_i+c_{i+1}\le m-1$ imply $m\ge3$.
+The remaining occupancies are nonnegative, its edge sums are at most
+$m-3$, and its deficit is $\delta(p)-(k-1)\ge0$. Therefore
+$p-\nu_1\in\mathcal S_k$.
+
+If $1\le\delta(p)\le k-2$, set $j=k-\delta(p)$, so
+$2\le j\le k-1$. Delete position $i$ and partition the remaining
+$2k$ positions into the $k$ edges
+$\{i+1,i+2\},\ldots,\{i+2k-1,i+2k\}$. Their strict edge bounds give
+
+$$
+km-\delta(p)=\sum_r c_r\le c_i+k(m-1),
+\qquad c_i\ge k-\delta(p)=j.
+\tag{31.12}
+$$
+
+This holds for every $i$, so $m\ge2j+1$ by an edge bound.
+The exponent $p-\nu_j$ has nonnegative degree and coordinates,
+edge sums at most $m-(2j+1)$, and deficit zero. It is a face point.
+Conversely adding $\nu_j$ to any semigroup point preserves (31.11).
+These two cases prove generation by the stated $k-1$ monomials.
+
+To prove minimality without overlooking a possible smaller interior
+divisor, suppose $\nu_j-s$ is interior for some
+$s=(q,b)\in\mathcal S_k$. Its edge slacks are $1-a_i(s)$ and
+must be at least one. Since $a_i(s)\ge0$, all $a_i(s)$ vanish.
+Thus $b_i+b_{i+1}=q$ on every edge. Oddness forces $b_i=q/2$ for
+every $i$. The global inequality for $s$ then gives
+$nq/2\le kq$, so $q\le0$. As $q\ge0$, $q=0$ and $b=0$.
+No nonzero semigroup exponent can be subtracted from any $\nu_j$
+while remaining interior. Generation proves that every other
+interior exponent has one of these as a divisor; if it is different,
+that divisor uses a nonzero semigroup remainder. Thus there are
+exactly these minimal exponents. Monomial independence extends the
+minimality assertion to generators of the ideal, not just to a list
+of monomials.
+

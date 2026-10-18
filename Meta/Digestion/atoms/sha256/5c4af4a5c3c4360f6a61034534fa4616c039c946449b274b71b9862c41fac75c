@@ -1,0 +1,15 @@
+**定义 20.1（联合有界误差取得合同）。** 对一个未知 $(t,p)\in\mathcal D_{L,H,d_0}$ 执行
+
+$$
+\operatorname{Read},\rho,\operatorname{Read},\rho,
+\operatorname{Read},\operatorname{Stop}.
+$$
+
+这是三次付费完整向量回复、两次破坏性原更新的一条实际历史，停止时当前源为 $\rho^2t$。另供应同时误差承诺
+
+$$
+|y_j-x_j|\le\delta\qquad(0\le j\le2),\quad\delta\ge0.
+$$
+
+制备和动作仍准确。三个误差可联合对抗、相关及依赖历史，不假设独立抽样、复读、平均、噪声分布或重播。回复不必是任何精确实际 $W_3$。公共界只是制备／仪器供应者承担的域与精度承诺，不是读出原 $a,b$ 的校准。
+

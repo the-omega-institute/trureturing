@@ -1,0 +1,16 @@
+## 66. 原始全分支条件祖先纤维、原始续行与粗动作的分离
+
+本章的 $h_n^{\mathrm{raw}}$ 是固定叶词域的地址历史；第65章的 $(t,h)$ 是真实入口及替换次数，二者各依自己的来源与操作合同。
+
+本节沿用第52–60章的不可变有序满二叉 α/β 树、
+$\rho(\alpha)=\beta$、$\rho(\beta)=(\beta,\alpha)$、$\rho(s,t)=(\rho s,\rho t)$ 及
+$T_n=\rho^n\alpha$。$I_1=\rho[\mathcal T]$，$r$ 是原四值读数，$\kappa$ 将
+`alpha`、`beta` 分别记为 `some true`、`some false`，将 `branch`、`absent` 都记为
+`none`。$W_n$ 是完整精确叶词 $w(T_n)$ 的整个原树纤维；所有字面地址仍可任意查询，
+缺席、重复和 truthful cache hit 都保留。$\operatorname{Pos}$ 仍是第三像成员位，
+$Q$ 是独立的深度／原始端点任务。把 Fibonacci 数写作 $F(k)$。本章的全分支原始 shortlex 前缀、地址集和纤维分别记为 $h_n^{\mathrm{raw}}$、$J_n^{\mathrm{raw}}$ 和 $F_n^{\mathrm{raw}}$。
+
+第57章的全词静态证书和第58章的 $L_n$ 是本节前置。本节的分支前缀既非（JM.181）的
+$\alpha$ 前缀，也非（JM.183）的 $LL,RR$ 双读前缀。以下保留同一实际分支前缀的整个
+原始纤维刚性、准确原始续读及全递归粗动作下界。
+

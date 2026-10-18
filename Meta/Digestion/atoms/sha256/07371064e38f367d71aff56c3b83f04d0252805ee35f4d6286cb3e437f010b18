@@ -1,0 +1,32 @@
+**Definition 2.1 (the supplied normal algebra).** Reuse [ABC, Theorems
+2.2–2.3][ABC]. Its ambient codes and normal subdomain are
+
+$$
+\mathcal K::=[n]\ (n\in\mathbb N)\mid F(\mathcal K,\mathcal K),
+\qquad
+F(X,Y)\in\mathcal N
+\ \Longleftrightarrow\
+X,Y\in\mathcal N\ \land\
+\neg\exists j\ge0\ (X=[j+1]\land Y=[j]).
+\tag{NSF.6}
+$$
+
+Every primitive $[n]$ is normal. The two effective inverse maps are
+$B:\mathcal T\to\mathcal N$ and $E:\mathcal N\to\mathcal T$, with
+$E([n])=T_n=\rho^n\alpha$. Native pairing corresponds to
+
+$$
+J(X,Y)=
+\begin{cases}
+[j+2],&X=[j+1],\ Y=[j],\\
+F(X,Y),&\text{otherwise},
+\end{cases}
+\tag{NSF.7}
+$$
+
+and $\rho^k$ corresponds to $\tau_k$, addition of $k$ at every
+primitive leaf, preserving $F$. Translation preserves normality and
+its image consists exactly of normal codes all of whose ranks are at
+least $k$. In particular $\rho$ is injective. These facts are reused,
+not new normal-form theorems.
+

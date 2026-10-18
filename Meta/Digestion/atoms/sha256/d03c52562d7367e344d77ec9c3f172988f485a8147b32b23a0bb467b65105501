@@ -1,0 +1,66 @@
+**Theorem 31.1 (original-history information, without certain readout).**
+For a normalized qutrit density $\rho$, put
+$A(\rho)=\operatorname{tr}(D^\dagger D\rho)$,
+$B(\rho)=\operatorname{tr}(T^\dagger T\rho)$ and
+$C(\rho)=\operatorname{tr}(S^\dagger S\rho)$.
+The ACTUAL unnormalized acquisition probabilities are
+
+$$
+\begin{aligned}
+p_{r,L}(\rho)&=\tfrac12[A(\rho)+s^2B(\rho)]
+                    +rs\kappa\operatorname{Re}\rho_{01},\\
+p_{r,T}(\rho)&=\tfrac12(1-s^2)B(\rho),
+&p_{r,S}(\rho)&=\tfrac12 C(\rho),\\
+p_{r,f_k}(\rho)&=\tfrac12m_k\rho_{kk},
+&\Pr_\rho(r)&=\tfrac12+rs\kappa\operatorname{Re}\rho_{01}.
+\end{aligned}
+\tag{JR.8}
+$$
+
+On the twelve specimens the binary law is
+
+$$
+\Pr_{y,e,n}(r)=\frac12+rs\kappa en\,q_y
+ =\frac12+rs\kappa(-1)^m\frac{\sqrt{y(64-y)}}{128}.
+\tag{JR.9}
+$$
+
+If $s>0$, the full finite record laws have exactly six distinct classes,
+indexed by $(y,m)$; the two values of $\beta$ at fixed $(y,m)$ have
+identical classical laws. Each of the twelve laws gives positive
+probability to the same label $(+1,L)$, so these distinct laws do not
+give certain single-specimen identification, even of those six classes.
+The binary laws for opposite winding parities at the same $y$ have
+total variation distance $2s\kappa q_y<1/8$.
+
+Proof. The Born trace identity, already supplied by
+`FiniteKrausInstrumentBornMarginal`, reduces the branch laws to effects.
+Here
+
+$$
+D^\dagger T+T^\dagger D
+ =\kappa(|0\rangle\langle1|+|1\rangle\langle0|).
+\tag{JR.10}
+$$
+
+Expanding $L_r^\dagger L_r$ proves (JR.8); summing all its unnormalized
+branches uses (JR.7) and proves the binary formula. On (JR.1),
+$\operatorname{Re}\rho_{01}=enq_y$, giving (JR.9).
+Every other branch effect is diagonal, so no record law depends
+separately on $e$ or $n$. Distinct heights have distinct probabilities
+$p_{+,f_1}=m_1(64-y)/256$, since $m_1>0$. At a fixed height the two
+parities have different $p_{+,L}$ for $s>0$.
+
+The determinant calculation
+
+$$
+\det L_r=\frac{h_2}{2\sqrt2}(h_0h_1-s^2ab)>0
+\tag{JR.11}
+$$
+
+uses (JR.3), so $L_r^\dagger L_r$ is strictly positive. Thus
+$p_{+,L}>0$ on every actual input. The variation formula follows
+from the two binary probabilities; $q_y\leq1/4$ and $\kappa<1/4$
+give its strict bound. This is a comparison of conditional laws, without
+placing a probability distribution on the unknown histories. $\square$
+

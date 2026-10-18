@@ -1,0 +1,36 @@
+**Definition 2.5 (permutation coefficients and entropy envelope).** For
+$A\subseteq[k]$ put
+
+$$
+\gamma_k(A)=\frac{|A|!(k-|A|)!}{(k+1)!}
+           =\frac1{(k+1)\binom{k}{|A|}},\qquad
+B_A=(B_g)_{g\in A}.
+\tag{COK.12}
+$$
+
+These coefficients are positive, sum to one, and are unchanged on
+replacing $A$ by its complement. They are the probabilities that
+exactly the owner groups $A$ precede the local block in a uniformly
+random ordering of it and its $k$ distinct incoming owner blocks.
+For $k=0$ the empty subset has coefficient one.
+
+On a nonempty $R_\eta(w)$ define, for one probability law $p$ on it,
+
+$$
+\begin{aligned}
+F_\eta(p)&=\sum_{A\subseteq[k]}\gamma_k(A)H_p(O\mid B_A)
+                         +\mathbb E_p\log_2\Phi_\eta,\\
+h_\eta(w)&=\max_{p\in\Delta(R_\eta(w))}F_\eta(p),\qquad
+\Omega_d(w)=\max_{\eta\in\mathcal E_d}2^{h_\eta(w)}.
+\end{aligned}
+\tag{COK.13}
+$$
+
+An empty $R_\eta$ contributes zero to the last maximum, and
+$\Omega_d(0)=0$. Empty tuples have one value and entropy zero.
+Every entropy in $F_\eta$ uses the same law $p$; maximizing its
+different marginal terms independently would define another relaxation.
+For nonzero $w$ a no-seed constant decoration at any $x\in F$ is
+available, so $\Omega_d(w)>0$. The maxima exist by compactness of
+finite simplexes and continuity of finite entropy.
+

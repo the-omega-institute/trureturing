@@ -1,0 +1,36 @@
+**Lemma 5.1 (The phase-space alternatives).** Either $V$ consists only
+of constants, in which case the error is at least $R_0$, or there is
+one nontrivial abstract unitary character $\chi:\mathbb T\to S^1$
+such that
+
+$$
+V=\operatorname{span}_{\mathbb C}\{1,\chi,\overline\chi\},\qquad
+a(k,\alpha)=c(k)+M(k)
+\binom{\operatorname{Re}\chi(\alpha)}{\operatorname{Im}\chi(\alpha)},
+$$
+
+where $M(k)$ is a real invertible matrix for every interior height.
+
+**Proof of Lemma 5.1.** Lemma 3.2 supplies the character basis.
+The space is closed under complex conjugation because its original
+generators are real, so each character occurs with its conjugate.
+A real unitary character takes values in $\{1,-1\}$ and is trivial:
+for each circle element $h$ choose a half $h/2$ and use
+$\chi(h)=\chi(h/2)^2=1$. A nontrivial character and its conjugate
+are therefore distinct. A character eigenspace has dimension one,
+since evaluation at zero determines every eigenfunction as a scalar
+multiple of that character. With the constant already present, dimension
+at most three leaves exactly the stated alternatives.
+
+In the constant case $a(k,\alpha)$ is independent of $\alpha$;
+its distance from the radius-$A(k)$ circle has supremum at least $A(k)$,
+so Proposition 3.5 gives $R_0$. Otherwise the real coefficients of the
+character pair give $c(k),M(k)$. If $M(k)$ were singular at one
+height, the span of $1,a_1(k,\cdot),a_2(k,\cdot)$ would have dimension
+at most two, contradicting the common three-dimensional space $V$.
+No heightwise collapse or unproved continuity assertion is used.
+$\square$
+
+For a unit complex number $z$, let $\mathsf R(z)$ denote its real
+multiplication matrix on $\mathbb C\cong\mathbb R^2$.
+

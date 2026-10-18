@@ -1,0 +1,17 @@
+**命题 477.2（完整平滑修正的积分）。** 对 $1<x\le N+1$，有
+
+$$
+\int_x^{N+1}t\bigl[1-(\log t-1)h_N+\ell_N\bigr]w(t)\,dt
+=F_N(\log(N+1))-F_N(\log x).
+$$
+
+**证明。** 直接求导给出
+
+$$
+F_N'(u)=\frac{1+u}{u^2}\bigl[1+\ell_N-(u-1)h_N\bigr].
+$$
+
+链式法则于是给出
+$\frac d{dt}F_N(\log t)=t[1-(\log t-1)h_N+\ell_N]w(t)$，其中 $t>1$。
+在 $[x,N+1]$ 上应用微积分基本定理即得结论。$\square$
+

@@ -1,0 +1,21 @@
+## 395. The remaining four-P-slot class
+
+Let
+
+    m>3, r,p,o>=m, 1<q<=m-2,
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+For the paired frame (r,p,q,o,p,q), with edge order
+(12,13,14,34,24,23), use the genuine angles determined by
+
+    x=sqrt(L/J),
+    theta_r/2=atan(sqrt((r-1)/(r+1))/x),
+    theta_o/2=atan(sqrt((o-1)/(o+1))/x),
+    beta_p=atan(Kplus*x)+atan(Kminus*x),
+    Kplus=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q),
+    Kminus=(sqrt(p^2-1)-sqrt(q^2-1))/(p+q).
+
+Every inverse tangent in these formulas is its ordinary real branch.
+In particular theta_r,theta_o,beta_p are in (0,pi).
+

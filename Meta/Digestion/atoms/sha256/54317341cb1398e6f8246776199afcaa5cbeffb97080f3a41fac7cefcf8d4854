@@ -1,0 +1,9 @@
+**Definition 4.1 (Pruned analytical tree and original paid tag).** For a normalized finite tree $T$ and $\gamma\in\{0,1\}$, form $P_\gamma(T)$ recursively. Retain every parity-$\gamma$ read node with both children. Bypass each opposite-parity read node through its zero child. A retained terminal carries the tag
+
+$$
+\lambda=(v,\ell,n),
+\tag{4.1}
+$$
+
+where $v$ is its original terminal position in $T$, $\ell\in\mathcal A\cup\{\bot\}$ its original label, and $n$ its original paid depth in $T$. Active height counts only retained reads. Tags keep the original paid depth rather than this active depth.
+

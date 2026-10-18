@@ -1,0 +1,19 @@
+**命题 8.2（有限素数支持的尺度盒饱和界）。** 固定有限非空素数集 $\mathcal P$，令
+
+$$
+C_{\mathcal P}=\prod_{p\in\mathcal P}(1-p^{-1})^{-1}.
+$$
+
+对每个正整数 $n$，若 $\mathcal P(n)\subseteq\mathcal P$，则 $Z(n)<C_{\mathcal P}$。因而
+
+$$
+n>\exp\!\left(\exp(C_{\mathcal P}e^{-\gamma})\right)
+\quad\Longrightarrow\quad R(n)<1.
+$$
+
+这是固定支持上的有限危险域归约，而不是任意支持的统一界。
+
+证明。每个被使用方向的有限和严格小于其无限和 $(1-p^{-1})^{-1}$；未使用方向的 $S_p(0)=1$ 亦严格小于该饱和因子。因此把所有 $p\in\mathcal P$ 都纳入有限乘积后，每个因子严格小于对应正饱和因子，得到 $Z(n)<C_{\mathcal P}$；$n=1$ 时 $Z(1)=1<C_{\mathcal P}$ 也成立。所列阈值使 $\log\log n>C_{\mathcal P}e^{-\gamma}>0$，于是 $e^\gamma\log\log n>C_{\mathcal P}>Z(n)$。
+
+对固定集合，阈值以内只有有限多个整数；界外没有危险实例。若允许加入新素数，则 $C_{\mathcal P}$ 本身变化，此推理没有提供一个对所有支持适用的阈值。证毕。
+

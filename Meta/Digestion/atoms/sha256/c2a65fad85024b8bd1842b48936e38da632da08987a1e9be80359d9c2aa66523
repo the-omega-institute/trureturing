@@ -1,0 +1,61 @@
+## 175. The one-owner return core persists
+
+For any genuine owner with axial Z and fixed pair {M,B}, b<=m-2, let
+theta be its axial Z angle and beta its transverse M angle. The exact
+paired response is
+
+    beta=atan(lambda_plus*t)+atan(lambda_minus*t), t=cot(theta/2),
+    lambda_plus/minus = [sqrt(m^2-1) +/- sqrt(b^2-1)]/(m+b)
+                       *sqrt((z-1)/(z+1)).
+
+Both parameters are positive. Moreover
+
+    (lambda_plus+lambda_minus)^2
+      =4(m^2-1)/(m+b)^2 * (z-1)/(z+1)
+      >(m+1)^2/((m-1)(m+3))>1.
+
+The strict inequality remains valid at b=m-2 because z>m+2. For
+A,B,t>0 and A+B>1, the arctangent addition formula on its positive
+branch gives atan(At)+atan(Bt)>atan(t); if the sum is at least pi/2
+the same inequality is immediate. Thus
+
+    theta+2*beta>pi.                                      (173.1)
+
+Consider the maximal axial Z run I containing tau. Its transported
+pair is {M,C}. Its owners are genuine by Section 174 and distinct: two
+axial Z slots in one owner would imply (z-1)^2>=(m+c)^2 and flatness.
+The whole Z circle cannot be axial. Otherwise its n>=6 distinct owners
+would, by (173.1), consume more than n*pi of M/Z genuine angle, whose
+complete capacity is only 3*pi.
+
+At either boundary of the proper run I, actual face transport gives a
+genuine owner (B,Z,A,Q,Z,A), with {A,B}={M,C}. Its other axis obeys
+
+    q<1+z+a:
+
+an H axis has q<=z, and a special axis has this fixed-pair barrier.
+The transverse Z cosine numerator is increasing in q and satisfies
+
+    N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z)<=0.
+
+Since the actual q is strictly smaller, N(q)<0 and its two Z angles
+are therefore obtuse. The two distinct boundary Z
+slots must belong to one owner rho, since two such owners would each
+contribute more than pi to Z. Thus rho's two Z angles gamma satisfy
+2*gamma>pi.
+
+Let g be the number of run owners, Theta their axial Z angle sum, and
+Beta their transverse M angle sum. The original equations give
+
+    Theta<pi, 2*Beta<=pi.
+
+Summing (173.1) gives g*pi<Theta+2*Beta<2*pi, so g=1 and its owner is tau.
+The two faces of tau at Z are therefore paired to the two return faces
+of the distinct owner rho. In particular tau consumes more than pi of
+M/Z through theta_Z+2*beta_M, and rho consumes more than pi through
+its two transverse Z slots.
+
+The return is one of
+
+    (C,Z,M,Q,Z,M),  (M,Z,C,Q,Z,C).                       (173.2)
+

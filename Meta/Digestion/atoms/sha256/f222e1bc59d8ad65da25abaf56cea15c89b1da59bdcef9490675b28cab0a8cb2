@@ -1,0 +1,32 @@
+**Lemma 9.1 (finite original code and all-row storage).** Definitions
+2–8 determine one finite originally installable native program, bank
+arity, finite catalog and raw patch table, independent of every future
+capacity value. Its initialized storage transports every actual native
+raw row with its original guard, label and successor.
+
+Proof. The helper dependency order is acyclic; all repeated computation
+uses finite word loops rather than recursive native calls or variable
+code generation. Component recursion has the explicit work stack. Step
+looks up literal rows; role/pattern enumeration is finite code computation.
+Hygienic finite inlining and RCA Proposition 11.4 therefore determine the
+native table and actual bank compiler. Enlarging the syntax changes
+$r_\circ$ in the prelude and every rebuild; it does not reinterpret an
+old bank. ARC's capture-only $L$ is independent of the later length and
+actually acquires the selected own description before its use. Its two
+bootstraps install precisely the matching tables. Initial authentic imports
+are the owned, head-restoring ones. Thus the entry is actual, without a
+self-description constant or occupied verifier lane.
+
+For raw transport redo UAS's finite pattern enumeration for this catalog,
+not the old $\Pi_U$. Its finite maxima of route/effect/template sizes exist
+because all native row/effect fields are fixed finite and locally typed.
+The opcode/effect/receipt cases of Definition 5.1 and unary templates are
+identical at their actual local arguments. Alias combination preserves
+the new meter read mark and separate lanes. Failed native guards have
+no patch. A raw enabled wrong input retains its bit; partial active/raw
+stores and decoded malformed successors use their actual cases. Starting
+with $F_{75}$, optional scaffold, two actual meter cells/links and endowed
+primitive bits gives UAS's charged foundation. Induction includes every
+original/additional boot, import, bank, copy, callback, token and halt row.
+No finer-than-atomic internal cuts are asserted. ∎
+

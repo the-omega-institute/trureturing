@@ -1,0 +1,25 @@
+**Theorem 4.2 (uniform existence, uniqueness and regularity).** Every cell table selects a unique exact root in each $\mathcal B_\vartheta$, uniformly for its entire parameter interval and the supplied source rectangles. The physical contact system has an invertible Jacobian there.
+
+Proof. Let $F$ be Definition 3.2's system and $J=F_X$. Directed arithmetic on integer intervals uses rational embedding by floor and ceiling on the $2^{-190}$ lattice, all four endpoint products, reciprocal endpoint reversal away from zero, and integer square-root bounds. A square on an interval containing zero has lower endpoint zero. These rules enclose their exact real operations. Keeping a common parameter is essential: addition is coefficientwise; multiplication retains degrees $0,1,2$, encloses cubic powers by $[-1,1]$, quartic powers by $[0,1]$ and encloses every term containing a remainder by interval ranges.
+
+For inversion write $q=a+b\vartheta+c\vartheta^2+e$, and choose $z=1/a$, $z_1=-b/a^2$, $z_2=b^2/a^3-c/a^2$. The exact residual identity is
+
+$$
+q^{-1}=z+z_1\vartheta+z_2\vartheta^2+
+\frac{-(bz_2+cz_1)\vartheta^3-cz_2\vartheta^4-e(z+z_1\vartheta+z_2\vartheta^2)}{q}.
+$$
+
+It encloses the inverse remainder whenever the range of $q$ excludes zero. Discarding coefficient correlations outward is legitimate. Finite samples are not needed to justify these enclosing identities.
+
+For every listed tube the exact evaluations give
+
+$$
+\begin{aligned}
+q_*&=\max_i\sum_j\sup|\delta_{ij}-(RJ)_{ij}|\,r_j/r_i<1,\\
+\iota_*&=\max_i\left(\sup|(RF(X_0))_i|/r_i+
+\sum_j\sup|\delta_{ij}-(RJ)_{ij}|\,r_j/r_i\right)<1.
+\end{aligned}
+$$
+
+They are bounded by the corresponding `q` and `inclusion` entries. Uniform rounded upper bounds for the long, six-band and seven-band groups are respectively $(.112,.362)$, $(.006086,.256086)$ and $(.007305,.257305)$. At every fixed parameter section $X\mapsto X-RF(X)$ contracts the closed tube into itself in the weighted norm. Completeness and the contraction theorem give a unique fixed point. The norm bound makes $RJ$ invertible, hence square $R$ and $J$ invertible, so the fixed point is exactly a root. Analytic rational equations with positive denominators and invertible Jacobian give analytic dependence on $\lambda$. For six contacts the augmented Jacobian is block triangular with the $20$-variable physical block and the nonzero unused curvature block, so the physical Jacobian is invertible too. $\square$
+

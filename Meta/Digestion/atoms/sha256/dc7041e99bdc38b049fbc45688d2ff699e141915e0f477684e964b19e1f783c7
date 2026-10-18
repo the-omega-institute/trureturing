@@ -1,0 +1,129 @@
+**Theorem 205.12 (Exact conditional fixed-data minimum).** Let $J$ be a
+nonempty ordered set of active late addresses, $z=\max J$, and assume
+
+$$
+0<\gamma_i\le\gamma_j\quad(i<j\text{ in }J),\qquad
+\mu=\gamma_z,\qquad\nu(x_z=1)=0,\qquad m_j\ge2\gamma_j.
+\tag{205.31}
+$$
+
+Here $\nu$ is the actual fixed pair projection onto $J$. No condition
+is imposed on the original correct suffixes or on the early pair
+splitting, which may include $00$ words. Put
+$h_{ij}=\nu(x_i=x_j=1)$, and define
+
+$$
+\begin{aligned}
+d_*&=\max\left\{0,\max_{i<z}[\mu-(S-m_i)],
+                      \max_{i<j<z}[\gamma_j-d_{ij}]\right\},\\
+D(\tau)&=\max\left\{0,\mu-\tau,
+ \max_{j<z}\left[\mu-\frac{S-m_j}{2}-\tau\right],
+ \max_{i<z}[\mu-(S-m_i)],\right.\\
+ &\hspace{35mm}\left.
+ \max_{i<j<z}\big[(\gamma_j-d_{ij})_+
+                         +(\mu-h_{ij}-\tau)_+\big]\right\}
+ \qquad(\tau\ge0).
+\end{aligned}
+\tag{205.32}
+$$
+
+All indices belong to $J$, and empty maxima contribute no entry.
+Among all $A=E=0$ early-pair scores with the same $\nu$, late totals
+$\gamma$, and $T=\tau$, both complete excesses have attained minimum
+$D(\tau)$. Correct suffixes, early pair allocation and unprojected bits
+may vary in this minimization.
+
+An attainer $V_\tau$ balances $\nu(x)/2$ between early lifts $01,10$,
+setting inactive bits to one. For each $j\in J$ and each $x_j=0$, put
+correct coefficient
+
+$$
+\frac{\gamma_j}{m_j}\nu(x)
+\tag{205.33}
+$$
+
+at the word with bits before $j$ reset to one, bit $j$ zero, later
+active bits copied from $x$, and inactive bits one. Add coincident
+words and put $T=\tau$; all other rows vanish. Zero-total classes may
+be retained in the declared projection by omitting their correct
+coefficients, with no division by zero. In particular the formulas
+include reductions of the profile to zero.
+
+**Proof.** Positive $\gamma_j$ implies $m_j>0$, and every conditional
+density $\gamma_j/m_j$ is at most $1/2$. The constructed correct class
+has total $\gamma_j$ and first zero $j$. Every correct word has bit
+$z$ zero, because the actual measure is supported there. Label zero
+earns each cell's pair baseline and the terminal reward if present;
+early labels earn subsets of that baseline, and each late label earns
+only its own correct mass.
+
+Consider an active query pair $i<j$ and a correct class $n$.
+If $n<i$, both queried bits are copied from $x$, and its reward in
+any cell $c$ is at most
+$\nu(x_n=0,(x_i,x_j)=c)/2\le p_c/2$.
+If $n=i$, its reward in each $0b$ cell is at most $p_{0b}/2$ and
+it has no reward in the other cells. If $i<n<j$, it lies in $10$ or
+$11$, with each contribution at most $\gamma_n\le\gamma_j$.
+If $n=j$, all its mass $\gamma_j$ is in $10$. If $n>j$, all its
+mass is in $11$, bounded by $\mu$. This exhausts all late labels.
+
+On $(1,2)$ the gain is $(\mu-\tau)_+$. On early/$j$, $j<z$,
+the early-zero branch has no late correct reward. In $10$, earlier
+classes contribute at most $m_j/2$ by (205.33), class $j$ contributes
+$\gamma_j\le m_j/2$, and later classes contribute zero. In $11$,
+the terminal class $z$ supplies the entire $\mu$ and no label
+exceeds it. The exact gain is
+$(\mu-(S-m_j)/2-\tau)_+$.
+On early/$z$, every correct row lies in $10$, whose pair mass
+$S/2\ge\mu$ covers it, while $11$ contains only $\tau$; the gain
+is zero.
+
+For $i<j<z$, the $00$ and $01$ cells are covered by the conditional
+density bounds. In $10$, earlier classes are covered by $d_{ij}$,
+intervening classes have totals at most $\gamma_j$, and class $j$
+contributes all of $\gamma_j$. Its exact maximum is
+$\max(d_{ij},\gamma_j)$. In $11$, class $z$ contributes all of
+$\mu$, so the exact maximum is $\max(h_{ij}+\tau,\mu)$.
+The two gains must therefore be added, giving the last entry of
+(205.32). For $(i,z)$, $00$ is covered, $01$ is empty, $10$ has
+exact maximum $\max(S-m_i,\mu)$, and $11$ contains only $\tau$.
+Thus its gain is $(\mu-(S-m_i))_+$.
+
+These computations can be collected as follows; each entry includes
+all labels and is the excess over the common anchor $S+\tau$.
+
+| Query pair | Exact excess of the constructed score |
+| --- | --- |
+| $(1,2)$ | $(\mu-\tau)_+$ |
+| early/$j$, $j<z$ | $(\mu-(S-m_j)/2-\tau)_+$ |
+| early/$z$ | $0$ |
+| $i<j<z$ | $(\gamma_j-d_{ij})_++(\mu-h_{ij}-\tau)_+$ |
+| $(i,z)$ | $(\mu-(S-m_i))_+$ |
+
+In each split first-zero branch, label zero simultaneously maximizes
+both constituent cells. Merging them loses no score, so a stopped
+table attains every displayed maximum as well. Inactive bits are
+constant one and their schedules reduce to singleton or constant
+information. These embed in the pairs already bounded; repetition and
+reversal add no information type. This proves
+$\Delta_N(V_\tau)=\Delta_O(V_\tau)=D(\tau)$ over the full catalog.
+For one active class only the first entry remains, as asserted.
+
+It remains to prove that arbitrary fixed-data competitors cannot do
+better. The stopped table $(1,2;1,2,z)$ forces $(\mu-\tau)_+$.
+For early/$j$, start from constant zero and optionally output $z$ in
+$11$. The entire correct class $z$ lies there regardless of its suffix.
+The lost pair masses for early choices 1 and 2 have disjoint support
+and sum at most $S-m_j$. Averaging the two positive parts, using their
+convexity and monotonicity in lost mass, forces
+$(\mu-(S-m_j)/2-\tau)_+$. On a late pair $i<j<z$, independently
+choose zero or $j$ in $10$, and zero or $z$ in $11$, keeping label
+zero on the first branch. These two classes lie wholly in their
+respective cells for every correct suffix. Thus a single stopped
+table forces the sum of the two positive parts in (205.32).
+On $(i,z)$ it forces $(\mu-(S-m_i))_+$. All these comparisons use
+the same competitor's measure, and early $00$ words do not invalidate
+the disjointness inequalities. They prove $\Delta_O\ge D(\tau)$;
+$N$ contains the same output functions. The constructed upper bound
+therefore proves both attained minima. $\square$
+

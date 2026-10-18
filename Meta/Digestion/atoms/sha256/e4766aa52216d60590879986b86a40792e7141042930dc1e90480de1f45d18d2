@@ -1,0 +1,29 @@
+**Definition 14.1 (the complete saturated path families).** In the
+$19\times19$ square let $\mathcal P_t^+$ contain every nineteen-point
+class of Theorem 13.3 containing $(t,t)$, for $0\le t\le18$.
+The generation permits all twenty macro words, every initial point
+and every positive integer outer step that stays in the square.
+The six middle steps are unit. Equivalently choose ten increasing
+$a$ values, ten decreasing $b$ values and a macro word, with the
+second, fifth and eighth gaps of each coordinate equal to one,
+then take its nineteen vertices. Retain all such embeddings containing
+the anchor. Let $\mathcal P_t^0$ be the subfamily passing
+(NARC.13.4). The superscripts $+$ and $0$ mean positive and
+nonnegative lags, respectively.
+
+A *constrained exact cover* chooses one $C_t$ from each corresponding
+family, pairwise disjoint, with union the entire square. In finite
+binary-variable notation the same condition is
+
+$$
+\sum_{t=0}^{18}\ \sum_{C\in\mathcal P_t^\lambda:\,p\in C}x_{t,C}=1
+\quad(p\in[0,18]^2),\qquad x_{t,C}\in\{0,1\},
+\tag{NARC.14.1}
+$$
+
+where $\mathcal P_t^1=\mathcal P_t^+$ and
+$\mathcal P_t^0$ has the meaning above. A candidate has exactly
+one diagonal point by strict increase of $d$, so the equations on
+diagonal points already force one selected candidate per anchor.
+Duplicate descriptions of the same subset are treated as one candidate.
+

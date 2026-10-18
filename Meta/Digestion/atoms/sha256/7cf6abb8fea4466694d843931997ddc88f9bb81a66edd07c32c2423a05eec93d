@@ -1,0 +1,27 @@
+## 207. Exact source-star budgets
+
+Every slot outside sigma is genuine. There are three alternatives.
+
+If O=C, sigma has one M pi slot, one C pi slot, two transverse C zero
+slots, and two transverse D zero slots. Thus M has degree(M)-1 genuine
+slots with total angle pi; C has degree(C)-3>=3 genuine slots with total
+angle pi; and D has degree(D)-2>=4 genuine slots with total angle 2*pi.
+All Z, U and special slots are genuine.
+
+If O=D, interchange C and D in that statement. In particular D has
+at least three genuine slots with budget pi, and C has at least four
+with budget 2*pi.
+
+If O=S is special, sigma has one M pi slot, one S pi slot, and two zero
+slots on each of C,D. M and S each have at least five genuine slots
+with budget pi. C and D each have at least four genuine slots with
+budget 2*pi. Every other special edge, and Z and U, is wholly genuine.
+
+All counts are original slot multiplicities. In particular, an axis
+repeated as a transverse reservoir in sigma contributes all three
+original slots to its degree, although only one is pi-selected.
+These statements reduce the possible flat set and record exact remaining
+capacities. They do not exclude any of the three source alternatives or
+prove five-reservoir realization.
+
+

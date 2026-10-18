@@ -1,0 +1,14 @@
+**Proposition 3.3 (exact permanent shortest-cylinder criterion).** For
+every finite $u$ and actual leaf $(a,e)$, the following are equivalent:
+
+1. $2|a|+e=m(u)$.
+2. At every $k\ge0$ the descendants of $a$ include a globally shortest
+   leaf of $\rho^k u$.
+3. That shortest-depth equality holds at both $k=0$ and $k=1$.
+
+Proof. Set $x=2|a|+e$ and $y=m(u)$, so $x\ge y$. By (AAR.9)–(AAR.10)
+the equality at $k$ is $\lfloor(x+k)/2\rfloor=\lfloor(y+k)/2\rfloor$.
+Equality of $x,y$ implies all of them. Conversely
+$\lfloor z/2\rfloor+\lfloor(z+1)/2\rfloor=z$ for every natural $z$;
+the two equalities in item 3 therefore imply $x=y$. $\square$
+

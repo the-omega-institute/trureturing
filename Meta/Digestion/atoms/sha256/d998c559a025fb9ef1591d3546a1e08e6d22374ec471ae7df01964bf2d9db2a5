@@ -1,0 +1,38 @@
+**Theorem 4.1 (N2: necessary and sufficient projective test).** For $p_z<p<p_s$, put $q=1-p$ and
+
+$$
+\begin{gathered}
+\Delta_J=J'(p)-J'(q)>0,\quad
+B_J(p,q)=J(p)-J(q)-J'(q)(p-q)>0,\\
+\eta_p=g'(p)/\Delta_J,\qquad
+c_p=v(p)[\eta_p B_J(p,q)-g(p)].
+\end{gathered}
+\tag{TC.8}
+$$
+
+The orthogonal pair
+
+$$
+e_P=(\sqrt{1-p},-\sqrt p),\qquad
+ e_N=(\sqrt p,\sqrt{1-p})
+\tag{TC.9}
+$$
+
+with unit whitened masses is globally optimal at budget $C(p)$ if and only if $c_p\le0$. Its value is $g(p)$. Every strict-interior projective optimizer is obtained this way.
+
+Proof. Set $\eta=\eta_p$, $c=c_p$, $\ell=-\eta J'(q)+2cv'(p)$, $a=-\eta J(q)-\ell q-2cv(q)$ and $b=a+\ell$. If $c\le0$, then $c+\zeta>0$, since
+
+$$
+c>-v(p)g(p)\ge-\gamma/2>-\zeta.
+$$
+
+Here $B_J>0$, $g\le\gamma$ and $\gamma<\zeta$. The first function of (TC.6) becomes $\eta J+a+\ell t+2cv(t)$; its value and derivative at $q$ vanish. The second becomes $\eta J+a+\ell t-g(t)-2cv(t)$; its derivative at $p$ is $\eta\Delta_J-g'(p)=0$. Its value there is
+
+$$
+\eta B_J-g(p)-c/v(p)=0,
+$$
+
+using $v'(p)(2p-1)-2v(p)=-1/(2v(p))$. Both functions are strictly convex on the entire closed interval, so their stationary zeros are global minima zero. Thus (TC.5) holds on every line, axis and sector. The pair (TC.9) has covariance $I_2$, cost $C(p)$, positive expectation $g(p)$ and negative companion expectation. Both used gaps vanish, so $\operatorname{tr}H+\eta C(p)=g(p)$. This matches a global upper certificate with attainment.
+
+Conversely fix any strict-interior optimal projective pair and its finite dual. Theorem 3.1 forces these signs, $q=1-p$, and $c\le0$. Both coordinates are interior. Differentiating the two gap functions at their zeros and subtracting gives $\eta\Delta_J=g'(p)$. Their zero values then give exactly $c=c_p$ by the same identity. Since $\eta>0$, $g'(p)>0$ and $p<p_s$. Active cost fixes the budget to $C(p)$. This proves necessity and exhaustion. $\square$
+

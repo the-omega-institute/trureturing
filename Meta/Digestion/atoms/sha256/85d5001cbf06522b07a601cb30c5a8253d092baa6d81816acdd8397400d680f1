@@ -1,0 +1,64 @@
+**Definition 65.2 (the complete response target and the point-field model).**
+Use the unit-conductance, counting-measure rooted occurrence operator $L$ and
+its authentic Dirichlet compression $L_D$ from Definitions55.1–55.2. Retain,
+separately, the common and killed pair prescriptions of (62.2):
+
+$$
+G_D^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle,\qquad
+G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle,
+\qquad p,q\in D.
+\tag{65.4}
+$$
+
+Neither prescription changes the common one-body field $\phi(p)=2^{-|p|}$.
+The inherited root diagonal is two, every other diagonal is three, and every
+actual seam has entry $-1$. Missing-child and collision contributions are
+retained as in (62.2). There is no added parent seam at the root.
+
+The representation under consideration assigns finite points $x_p$ in the
+complete homogeneous hyperbolic space $\mathbb H^3_\ell$ of curvature
+$-\ell^{-2}$ and uses
+
+$$
+\widehat G_D(p,q)=
+\frac{\kappa}{\exp(2d_{\mathbb H^3_\ell}(x_p,x_q)/\ell)-1},
+\qquad \kappa>0,\quad\ell>0,\quad p\ne q.
+\tag{65.5}
+$$
+
+There is one calibration $\kappa$ for the entire table. Both $\kappa$ and $\ell$,
+and the whole configuration, may be independently refitted for each source or
+installed version. Pair-specific calibration, alteration of prescribed entries
+or removal of actual pairs is outside (65.5). At $D=B_3$ the target comprises
+all $\binom{15}{2}=105$ unordered off-diagonal pairs, for either choice in (65.4).
+Restrictions to eight or five terminal sites below are necessary witnesses for
+that full target, not new target domains.
+
+The unscreened, decaying, volume-normalized Laplace–Beltrami point fundamental
+solution in this complete homogeneous space is the special case
+$\kappa=(2\pi\ell)^{-1}$. Cohl–Kalnins,
+[arXiv:1201.4406v1, Theorem3.1, its dimension-three evaluation and Proposition4.1](https://arxiv.org/pdf/1201.4406v1),
+supplies this law with precisely those source, operator and exterior conditions.
+Indeed the area of a geodesic sphere is $4\pi\ell^2\sinh^2 r$,
+$r=d/\ell$; unit flux and decay give
+$(4\pi\ell)^{-1}\int_r^\infty\sinh^{-2}u\,du
+=(4\pi\ell)^{-1}(\coth r-1)$, which equals (65.5) at that normalization.
+Allowing arbitrary positive $\kappa$ enlarges the admissible family, so an
+obstruction for (65.5) also obstructs the unit-source subfamily.
+
+Exact positive responses would fix the normalized distances and their candidate
+Lorentz Gram matrix by
+
+$$
+r_{pq}=\frac12\log\left(1+\frac{\kappa}{G_D^\diamond(p,q)}\right),
+\qquad C_{pp}=1,\qquad C_{pq}=\cosh r_{pq}\quad(p\ne q),
+\qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\tag{65.6}
+$$
+
+Thus $\ell$ does not change the normalized dimension test. The diagonal one
+in $C$ is hyperboloid normalization. It is not a fitted value of the finite
+original $G_D^\diamond(p,p)$: a point-field self-response in (65.5) is singular.
+Coincident modeled sites have infinite off-diagonal response and cannot give
+a finite-error fit to the positive finite original coefficients.
+

@@ -1,0 +1,85 @@
+**Definition 9.3 (unchanged open mathematical obligations).** The
+original target is a total sound verifier with accepted rational
+caps optimizer-cofinal at every unchanged $\sigma_d$, as in NPC
+Definition 8.1 and RRN Open problem 8.2. An alternative sufficient
+target is a uniform effective length error
+
+$$
+\sigma_d\ge\frac{\log_2K_d(n)}n-\eta_d(n),
+\qquad\eta_d(n)\longrightarrow0,
+\tag{SIR.44}
+$$
+
+with effective control sufficient for terminating two-sided original
+rate approximation. Neither target is proved by an incidence cutoff.
+For each fixed $d,L$, (SIR.30) still ranges over unbounded lengths
+and arbitrary bounded-incidence components with the same guards,
+shared seeds, compatibility zeros and full joint block weights.
+No sound optimizer-cofinal $W$ of Definition 6.2, finite length
+cutoff, uniform width, zero-free condition or fixed-dimensional
+matrix correspondence is supplied. Theorems 5.1–5.2 give an
+effective error in $L$ between semantic regularized quantities,
+not an effective procedure for evaluating those quantities.
+
+Finite cover values upper-bound their regularized infima. Finite
+mass maxima lower-bound all-length pressure suprema. Exact finite
+evaluation or enumeration of finite proofs does not reverse either
+direction or establish optimized coverage. The exact section count
+at fixed $L$ may be exponential in $n$; its normalized logarithmic
+penalty vanishes as $L$ increases, not as $n$ increases at fixed $L$.
+Transferred caps at least one can yield only a trivial rate lower.
+These boundaries provide no noncomputability conclusion or universal
+obstruction to other overlap-sensitive certificate methods.
+
+The credited interval and finite value remain
+
+$$
+\frac18\log_2\frac{33}{13}\le\lambda<\frac3{16},
+\qquad M_1(3)=4,
+\tag{SIR.45}
+$$
+
+with lower from NCE and upper and finite value from D3. Sharp
+$\lambda$, general exact $M_1(D)$, effective two-sided convergence
+and the broader minimal-relations/internal-observer/mutual-recovery
+programme remain unresolved. Under the paid services, the retained
+observer correspondence is exactly
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{SIR.46}
+$$
+
+Its reverse recovers the first branch count and alpha-stage flag.
+It does not recover a whole hidden source, unknown age, seed vector,
+physical space-time or an authentication service. An original-task
+completion still requires the all-size optimized certificate or
+length-error obligation, together with its stated separate resources.
+
+[Base]: https://github.com/the-omega-institute/trureturing/tree/f586077f0b16eb03fc18e753a30e4b6b68996dae
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[JTC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[RCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[Depth]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[Join]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[Minimax]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[Criterion]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[MinimaxB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.md
+[CriterionB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.md
+[Dechter]: https://arxiv.org/pdf/1302.3572
+[Forney]: https://arxiv.org/html/1306.6264v2
+[GS]: https://arxiv.org/html/1805.03284v1
+

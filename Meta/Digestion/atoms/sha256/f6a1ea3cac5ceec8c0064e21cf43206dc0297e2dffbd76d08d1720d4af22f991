@@ -1,0 +1,21 @@
+**定义 1.3（All finite complex competitors）。** For nonzero $C\succeq0$ define
+
+$$
+k(C)=\min\left\{
+\max_{1\le\ell\le N}|\operatorname{supp}_B z_\ell|:
+C=\sum_{\ell=1}^N z_\ell z_\ell^\dagger,\quad
+1\le N<\infty,\quad z_\ell\in\mathbb C^5\setminus\{0\}
+\right\}.
+\tag{1.4}
+$$
+
+All finite lengths, arbitrary norms, complex phases, overlapping supports and support
+patterns are allowed. Positive coefficients are absorbed into the vectors.
+The spectral theorem ensures that the set of decompositions is nonempty, so
+the minimum is an integer. Positive scalar multiplication leaves $k$
+unchanged by scaling every vector. Unless a normalization is explicitly built
+in, the lists below realize $M$; division of every vector by $\sqrt5$ realizes
+the actual $C$. Zero slots are removed. Equality of Gram sums with $M$ gives
+total squared norm five, and the normalized $C$ lists consequently have total
+squared norm one.
+

@@ -1,0 +1,12 @@
+**Proposition 4.3 (stationary search does not transfer without an exit).**
+On $T_6$ the replies at $R^2$ and $R^4$ are branch and absent. Apply
+two global updates, then pause the writer. The midpoint $R^3$ on $T_8$
+replies branch and leaves the stored bracket $(3,4)$ adjacent. A
+floor-midpoint loop without a width check repeats depth three forever.
+Definition 4.1 instead ends this round with INVALID.
+
+Proof. The right clocks are six and eight. The exact reply intervals
+of [DOR] give all three replies. The repeated midpoint would remain
+three after the writer has stopped. Thus finite interference alone
+does not make that stationary-only loop total. $\square$
+

@@ -1,0 +1,18 @@
+**Convention 12.2 (bounded exact checks).** The following are finite
+exact in-memory readings, with rational arithmetic. No experimental
+program or data is retained in this repository.
+
+| Finite domain | Exact reading |
+| --- | --- |
+| All 54 indices, $N=1$, all $121$ actual pairs per index | $6,534$ pair/index tests: each pinned relation is the asserted singleton, each unpinned relation its asserted three rows, and each free row has one violation. |
+| $b=C_0,h=A,u=b$, $N=1,2$, all $S_2^{2N}$ | Respectively $121$ and $14,641$ actual tuples; pinned counts $1,1$, unpinned counts $3,5$; hard masses $8/625$ and $64/390625$ at the credited law. |
+| Same index, $N=1,2,4,6$, all displayed $B_N$ rows | Respectively $2,4,16,64$ one-defect rows at block distance $2N$, with exact mass ratios $16,256,65536,16777216$; graph counts $4N$ vertices and $4N-1$ edges, connected and seed incidence at most two. |
+| Same index, $N=1,2$, $\varepsilon=1/10$ | Exhaustive actual-tuple defect sums and exhaustive $6^N$ seed sums satisfy all three bounds in (SCP.34). Kernel sums are $761/7500$ and $1023721/56250000$; floor sums are $301/1250$ and $124901/1562500$. |
+| Support-zero law $\mu(A)=\mu(B)=1/4$, $\mu(C_0)=1/2$, zero elsewhere | With $h=A,u=A,N=2$, the exact sector ratio is $9=3^2$, as in (SCP.31)–(SCP.32). |
+| Theorem 11.1 at $N=1,b=C_0,h=A,u=C_0$, all of $\mathcal F_3$ | All $1,446$ original variable-shape sources give $123$ canonical states and exactly $122$ complete attained names. All seven requests and authentic counts $0,\ldots,6$ agree with direct substitution/readout in $70,854$ comparisons. The explicit scan has seven Reads, maximum length three and seventeen letters. |
+
+The all-$N$, all-law and all-count assertions rest on the proofs,
+not extrapolation from these finite domains. These checks are not
+Lean verification, independent review or an empirical convergence
+claim.
+

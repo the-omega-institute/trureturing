@@ -1,0 +1,55 @@
+**Definition 1.2 (Admissible protocol, unchanged from Original Definition
+9.1).** Choose an arbitrary probability space
+$(\mathsf U,\mathcal U,\nu)$ independent of the entire $J_p$ source, and
+keep its law $\nu$ unchanged. Constant public data may be included in
+$\mathsf U$; all random public data and all internal randomness are part
+of this same source-independent auxiliary variable $u$. A finite acquired
+record is an ordered list
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))
+\in(\mathbb Z\times\{0,1\})^n,
+\qquad n\in\mathbb N_0.
+\tag{1.3}
+$$
+
+A protocol is a measurable next-event rule based only on the fixed public
+data, $u$, and this acquired record. Its next event is either a read at an
+integer address $t_{n+1}$, a return of a state $A\in\mathcal A$, or
+indefinite internal continuation with no further read and no return.
+Finite events may follow internal waiting. Their occurrence, kind,
+address or output, and their finite waiting time are measurable functions
+only of those same available data. Thus adaptive addresses are allowed,
+but no extra information can enter through a waiting time.
+
+The reply to a requested address is precisely the actual $X_{t_{n+1}}$
+of the same stationary source. Every actual call costs one read. This
+includes repeated addresses, separator zeros, negative and positive
+addresses, disconnected sets, and arbitrarily distant addresses. Ignoring
+a call in a later likelihood calculation does not refund its cost.
+
+Let $\tau$ be the return time and let
+$N\in\mathbb N_0\cup\{\infty\}$ count all actual reads. These are separate
+random variables. Every nonreturn has $\tau=\infty$. Internal continuation
+forever after finitely many reads is allowed, including $N=0$; infinite
+read paths are allowed as well. A return has finite $N$, and its output
+and return time depend measurably only on the public data, $u$, and the
+terminal acquired record, denoted $\mathsf R$.
+
+No hidden-state read, half-line read, tail read, source-dependent seed or
+timing, reset, law switch, moving endpoint, or erased-coordinate
+substitution is permitted. A protocol may return without reading and may
+choose a state from the wrong phase. Null records and versions completed
+by null sets are included using the usual measurable completion. These
+are exactly the operations and allowances of [Original, Definition
+9.1][Original], rather than a restriction to consecutive, connected, or
+always-returning protocols. Put
+
+$$
+\mathbb P_p=J_p\otimes\nu.
+\tag{1.4}
+$$
+
+In particular all public and auxiliary randomness is independent of both
+the original endpoint and every visible coordinate.
+

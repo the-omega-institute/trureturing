@@ -1,0 +1,28 @@
+**Proposition 7.5 (Continuous spectral family and confluence).** The
+diagonal and confluent formulas vary continuously in their finite
+complex parameters, in the uniform norm on $[0,1]$. The confluent
+family is also a limit of distinct-root profiles, with no required
+bound on their separate scalar coefficients.
+
+Proof. Exponentiation and multiplication are jointly continuous on
+compact parameter sets and the compact scalar interval, giving
+the first assertion. For a direct collision formula, let $h\ne0$
+be complex and write
+
+$$
+R_h(x)=c e^{\lambda x}
+       +d\frac{e^{(\lambda+h)x}-e^{\lambda x}}h
+       =\left(c-\frac dh\right)e^{\lambda x}
+         +\frac dh e^{(\lambda+h)x}.
+$$
+
+The quotient equals $e^{\lambda x}\int_0^x e^{ht}\,dt$, which
+converges uniformly on $[0,1]$ to $xe^{\lambda x}$. Thus
+$R_h\to(c+dx)e^{\lambda x}$ uniformly. The integral is of an
+ordinary continuous exponential. If $d\ne0$, the two displayed
+coefficients are unbounded as $h\to0$, even though the profiles
+converge. Vanishing coefficients and equal roots can also lower
+minimal order. These degenerations explain why neither bounded
+individual coefficients nor exclusion of collisions is an
+appropriate compactness hypothesis for T2. $\square$
+

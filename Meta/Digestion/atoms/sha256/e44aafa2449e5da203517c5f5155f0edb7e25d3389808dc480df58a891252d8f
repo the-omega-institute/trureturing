@@ -1,0 +1,33 @@
+**Definition 16.1 (common realization and reconstruction convention).** Retain Definitions 1.1–3.2 and their conditional analytic antecedents, including the original raw source, $B$ heat clock, fixed signed nonzero $\kappa$, full rational vector, both height deaths and entire complex native domains. Write $h_0=h/a$, $\gamma=\chi_c/a=C_*^{-1}$, $\mathcal L=\ell/a$ and $\nabla_H=(X,Y)$. The real odd homogeneous energy space is $\dot{\mathcal H}_-$, with
+
+$$
+\theta b[u]\le h_0[u]\le b[u],\qquad 0<\theta<1.
+\tag{16.1}
+$$
+
+The local representatives and injection of this completion are those of [Height projection and cutoff overlap](FIB_NATIVE_CRITICAL_HEIGHT_PROJECTION_AND_CUTOFF_OVERLAP_BOUNDS.md), Theorem 4.1. Its Theorem 5.1 supplies the exact height projection $U_h=pF_*$, where $F_*(0)=0$, $F_*'=q_*=J/\rho$, and
+
+$$
+h_0[U_h]=\mathcal L(U_h)=I_h=\int p^2q_*^2.
+\tag{16.2}
+$$
+
+[Entire-height response escape](FIB_NATIVE_ENTIRE_HEIGHT_RESPONSE_ESCAPE.md), §§3–5, and [Exterior response gain](FIB_NATIVE_EXTERIOR_RESPONSE_GAIN_BOUND.md), Lemmas 4.1–4.2, supply the full-space bounds
+
+$$
+p\le C(1+\mathfrak d)^{-5},\quad |\nabla_Hp|\le C(1+\mathfrak d)^{-6},
+\quad \|q_*\|_\infty<\infty,\quad |F_*(r)|\le C|r|,
+\tag{16.3}
+$$
+
+and the positive heat fundamental solution $\mathcal G=\int_0^\infty p_E(t;0,\cdot)dt$, homogeneous of degree $-5$. Here $\mathfrak d(\xi)=d(0,\xi)$ for the original homogeneous control metric; it is invariant under $\sigma$ and satisfies $\mathfrak d\ge c_r|r|$ for a fixed $c_r>0$. Its balls $\mathbb B_R$ have volume $v_dR^7$. All these suppliers refer to the same $p,V,V_1,V_2,V_{\rm t}$.
+
+Use the ordered group convolution
+
+$$
+(f*g)(\xi)=\int f(\eta)g(\eta^{-1}\xi)d\eta,\qquad Y^{\rm R}=\partial_y.
+\tag{16.4}
+$$
+
+An output left invariant derivative acts on the second factor. An input derivative satisfies $(Yf)*g=f*(Y^{\rm R}g)$, since $Y_\eta g(\eta^{-1}\xi)=-(Y^{\rm R}g)(\eta^{-1}\xi)$. These identities follow from (2.4); the convolution factors are not interchangeable. The matching primary formulas are Bahouri–Barilari–Gallagher–Léautaud, [arXiv:2206.10396v1](https://arxiv.org/pdf/2206.10396v1), (3.6)–(3.13), (3.24)–(3.25) and (5.12).
+

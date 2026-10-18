@@ -1,0 +1,11 @@
+### 2. Markov square move
+
+形式化
+
+$$
+\delta_{\mathrm{null}}+\delta_{13}=
+\delta_1+\delta_3
+$$
+
+以及它保持 $X,Y,Z$ 不变。
+

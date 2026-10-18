@@ -1,0 +1,5 @@
+source_id = "fib-native-cyclic-information-transport"
+path = "docs/develop/theory/FIB_NATIVE_CYCLIC_INFORMATION_TRANSPORT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

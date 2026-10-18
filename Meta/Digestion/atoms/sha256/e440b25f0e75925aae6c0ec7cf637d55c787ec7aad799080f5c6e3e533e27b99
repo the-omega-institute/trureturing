@@ -1,0 +1,28 @@
+**Definition 4.1 (the exact subclass).** Compress the live output of a common
+full channel to $V$ and call that CP, trace-nonincreasing map $\Lambda$.
+It is zero-transfer if
+
+$$
+T_{ij}:=\langle i|\Lambda(P_j)|i\rangle=0\qquad(i\ne j).
+\tag{ZG.13}
+$$
+
+We reuse CG18.1's equivalence with diagonal live Kraus operators and with
+
+$$
+\Lambda(A)=C\odot A,
+\qquad C\succeq0,
+\qquad 0\leq C_{ii}\leq1,
+\qquad G_L=\Lambda^\dagger(I)=\operatorname{diag}(C_{ii}).
+\tag{ZG.14}
+$$
+
+The matrix $C$ may be complex Hermitian. The elementary reason for the exact
+scope is $T_{ij}=\sum_a|(L_a)_{ij}|^2$ in any live Kraus representation:
+zero transfer forces every off-diagonal entry of every $L_a$ to vanish.
+Factoring $C$ recovers diagonal Kraus operators, and its diagonal is exactly
+the live effect. Equivalently, its output-input Choi matrix is supported on
+$\operatorname{span}\{|00\rangle,|11\rangle,|22\rangle\}$ with block $C$.
+This recalls a prior characterization; it imposes neither reality nor an
+additional covariance hypothesis on competitors.
+

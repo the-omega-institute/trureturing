@@ -1,0 +1,21 @@
+**Definition 6.1 (continuation and audit task).** Starting at a cut of
+$\mathscr H_{H,J}$, an experiment may request any finite number of `Advance`
+actions. At an unfinished cut, `Advance` executes precisely the next
+prescribed primitive of $P_{H,J}$. Its complete response includes that
+primitive's label, released finite output, original joint successor, actual
+writer/archive changes, reference and permission changes and successor type.
+There is no choice of alternative source command at this interface. At halt,
+`Advance` is illegal-unexecuted, and has no successor or failure row.
+
+The root readout is $\mathsf{Running}$ before halt and
+$\mathsf{Halt}(O(u))$ at halt. It is retained also for the empty experiment.
+The complete response to a finite experiment retains ordered responses and
+the terminal readout, with illegality at the first unavailable step. This is
+the task of continuing and auditing the installed observer. In particular it
+includes its actual complete consumer archive; replacing that output by only
+a final numerical tree statistic would define a different task.
+
+Write $K_{\mathcal V}$ for equality of all these complete experiment responses.
+The task is specified from the observer's operation and output contract before
+using the four views. It does not define equivalence to be equality of a view.
+

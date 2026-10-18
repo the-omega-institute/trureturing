@@ -1,0 +1,46 @@
+**Definition 5.1 (the supplied source family and a literal design parameter).**
+Fix $m\ge6$. Use exactly the acquired input and original target of
+[CAR, Definition 13.1 and Proposition 13.2][CAR], with
+
+$$
+N_m=2m+1,\qquad B_m=m(2m+2),\qquad D_m=B_m+1.
+\tag{NPS.17}
+$$
+
+The supplied two-way recognition identifies its entire fiber as
+
+$$
+\mathcal D_m=
+\left\{U_{D_m}(T_n,T_{n\bmod2},T_h):
+           2\le n\le2m+1,\quad h\ge2m+2\right\},
+\tag{NPS.18}
+$$
+
+where $T_j=\rho^j\alpha$, $G_0(v)=v$,
+$G_{i+1}(v)=\langle\alpha,G_i(v)\rangle$, and
+$U_D(x,z,w)=\langle x,G_{D-1}(\langle z,w\rangle)\rangle$.
+This displayed parametrization is the cited conclusion about the
+acquired fiber, not a new promise made by its observer. The retained
+literals, signed relations and old three-class row are exactly CAR's
+input. Its target cut is $Q_m=\{L,R^{D_m}R\}$. Its two complete rows
+$Y_0\ne Y_1$ have the full fixed marked comb exterior, concrete
+$T_e$ at $R^{D_m}L$, and the reached unequal holes at $L,R^{D_m}R$.
+The unbounded $h$ coordinate is retained in the source domain.
+
+Consider the five-state graph with initial read state $r$, update
+states $v_1,v_2$ and halts $h_0,h_1$. Its read successors for
+$(\mathsf{absent},\alpha,\beta,\mathsf{branch})$ are
+$(v_1,h_0,h_1,h_0)$, and its update edges are
+$v_1\to v_2\to r$. For each integer $t\ge1$ install the single word
+
+$$
+p_t=LLR^t.
+\tag{NPS.19}
+$$
+
+Leave the halt rows unspecified when asking whether this design is
+successful. The parameter $t$ is literal installation data, not an
+online repetition counter. The case $t=2m$ is the table supplied by
+[CAR, Theorem 13.3][CAR]; the question here concerns **every** $t\ge1$
+with no read or update bound.
+

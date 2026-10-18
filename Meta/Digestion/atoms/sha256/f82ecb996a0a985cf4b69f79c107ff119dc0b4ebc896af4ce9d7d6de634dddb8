@@ -1,0 +1,78 @@
+**Theorem 6.2 (strict original full-family lower).** Under Assumption 1.2,
+for every $D\ge3$,
+
+$$
+\boxed{\displaystyle
+M_1(D)\ge
+\left\lceil\left(\frac{33}{13}\right)^{2^{D-3}}\right\rceil,
+\qquad
+\lambda\ge\frac18\log_2\frac{33}{13}.}
+\tag{NCE.44}
+$$
+
+This applies to every original preparation and reader, allowing the
+complete variable-shape family, target-dependent off-target queries,
+arbitrarily correlated code fibers and all finite original-root words.
+
+Proof. Put $h=D-3$ and $n=2^h$. In the actual right subtree $v$
+fix a perfect ordered binary scaffold of height $h$. Its frontier
+addresses $a_1,\ldots,a_n$ all have length $h$. For every tuple
+$x\in S_3^n$, fill those frontier occurrences with the actual
+trees $x_i$, obtaining $v_x$ and
+$t_x=\langle\alpha,v_x\rangle$. This is an injective actual
+family: taking the mathematically specified subtrees at the fixed
+frontier recovers the tuple. Its height is at most $h+3=D$,
+so every $t_x$ belongs to the original $\mathcal F_D$.
+
+Restrict any correct original complete code $E$ to these sources;
+do not alter its values or project any of its fibers. For every
+block target $q\in W_3$, the address $Ra_iq$ is an original
+allowed request, since
+
+$$
+1\le|Ra_iq|=1+h+|q|\le1+h+2=D.
+\tag{NCE.45}
+$$
+
+Every block occurrence is actually present on every tree in this
+slice. Equation (NCE.7) identifies its complete target trajectory
+with that of $\Gamma_q(x_i)$ for every subsequently supplied $k$.
+
+Fix an attained code and such a request. Determinism and access
+isolation fix the zero-Read decision or submitted literal before
+any reply or supplied $k$. Every possible original-root word has
+one of the following meanings on this actual slice. The root is
+constant branch; $L$ is constant alpha and its strict extensions
+are absent. A right-cone word ending strictly above the block
+frontier is constant branch. Every other right-cone word enters
+one uniquely specified block $j$, and its remaining suffix $a$
+is an arbitrary finite block word. For $|a|\le2$ it is exactly
+one boundary experiment. For $|a|=3$ its reply is alpha when its
+length-two parent is branch, and absent otherwise. For $|a|>3$
+it is constant absent. Thus every arbitrary query is a function
+of one allowed boundary reply in its original queried block, or
+is a constant. In particular it need not query the target block.
+
+If two tuples in the restricted code fiber give the same boundary
+reply in that block, they give the same actual reply and hence
+the same final predictor. Correctness for every later $k$ then
+gives equality of target trajectories, and Convention 1.3 gives
+equality of target factors. A constant query or zero Reads gives
+a constant factor on the fiber. Consequently every nonempty
+restricted fiber satisfies (NCE.9) on the unchanged tuple.
+
+These fibers partition $S_3^n$, of product weight $429^n$.
+Theorem 6.1 bounds each fiber's mass by $169^n$. Their number
+is therefore at least $\lceil(429/169)^n\rceil$, and it is no
+larger than $|E[\mathcal F_D]|$. This proves the finite bound
+against every original competitor. Divide its logarithm by
+$2^D=8n$ and use the supplied existence of $\lambda$ to obtain
+the rate bound.
+
+This is FMR's actual scaffold restriction with the new all-joint
+mass inequality. No artificial root is queried, no subtree is
+handed to a reader, and no original source is changed or copied.
+All originally allowed targets and off-target choices remain in
+the competitor class; only an actual source slice and legal
+requests are used to test its mandatory correctness. $\square$
+

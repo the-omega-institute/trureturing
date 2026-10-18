@@ -1,0 +1,19 @@
+**注记 6.3（Preparation, leakage and learning boundaries）。** Spectral choices
+and coordinate cancellations construct mathematical vectors; they do
+not supply available gates or preparation of $\Gamma(X)$ from a native
+FIB system. Likewise the witness is not a granted measurement, and an
+arbitrary Gram decomposition is not a physically executable ensemble
+preparation. Source copies, joint instruments, local phase references,
+external reference access and other controls require their own
+interfaces. Equal local marginals do not supply independent copies of
+the source.
+
+C-110's same-source population-leakage identities and necessary
+error–leakage bounds remain inherited. Neither those necessary bounds
+nor the maximum in (2.4) supplies a sufficient port design, an exact
+unconstrained error optimum, a physical preparation map or a transfer
+to neural computation. No empirical machine-learning improvement,
+sample complexity, running-time advantage or physical memory advantage
+is established here. The Gram result does not resolve other port,
+error or broader FIB objectives.
+

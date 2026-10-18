@@ -1,0 +1,37 @@
+**Corollary 5.1 (the exact remaining Boolean objectives).** For
+$2\le k\le n-1$, use the original $H_{\mathrm{exec}}(A,k;r)$ and
+$H_{\min}(A,k;r)$ of PCA Definition 32.2. Let $b(n,k)$ be the minimum
+running-state count of a total stationary Boolean threshold graph with
+no execution caps. Then
+
+$$
+\begin{aligned}
+H_{\mathrm{exec}}(A,k;r)
+ &=4+r+\min\{m:\mathsf B_{c,k}(m,n,W)\},\\
+H_{\min}(A,k;r)&=4+r+b(n,k).
+\end{aligned}
+\tag{WTF.16}
+$$
+
+In particular, unrestricted $H_{\min}$ is independent of the actual
+positive selected positions $A$ at fixed $(n,k,r)$. No independence of
+$H_{\mathrm{exec}}$ from the weights, and no new numerical optimum, is
+asserted.
+
+Proof. The first equation is Theorem 4.1 at the original simultaneous
+caps $p=n+1$, $L=3+W$. For the second, every finite total Boolean
+graph has finite uniform query and weighted maxima, since each fixed
+input terminates and there are finitely many inputs. With no execution
+caps, changing positive $c_i$ changes those finite prices but not
+which graphs compute the threshold or their installed count. Minimize
+Theorem 4.1 over the finite feasible budgets. The finite grid of PCA
+Theorem 26.1 supplies nonempty sets of feasible cardinalities, so these
+integer minima exist. Its supplier, not this identification, supplies
+the already established numerical special cases. $\square$
+
+Writing $G=k(n-k+1)$, strict original subgrid feasibility under both
+execution caps is therefore equivalent to a Boolean graph with fewer
+than $G$ installed running states, at most $n$ queries and weighted
+charge at most $W$. The existence of such a graph, or a general lower
+bound forbidding it, is not proved by (WTF.16).
+

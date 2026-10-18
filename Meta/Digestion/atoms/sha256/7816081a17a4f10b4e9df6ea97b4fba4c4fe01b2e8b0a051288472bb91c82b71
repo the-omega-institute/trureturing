@@ -1,0 +1,18 @@
+**Lemma 6.1 (Power-sum averaging bound).** For every fixed nonnegative integer $r$,
+
+$$
+\sum_{n\ge1}n^r e^{-sn}=r!s^{-r-1}+O_r(s^{-r})
+\quad(s\downarrow0).
+$$
+
+For each fixed integer $m\ge1$, omitting the finitely many terms $n<m$ preserves this expansion. An absolute remainder bounded by a constant times $n^r$ therefore has summed magnitude $O_r(s^{-r-1})$.
+
+Proof. Let $f(x)=x^re^{-x}$ on $[0,\infty)$. Its derivative is integrable, including $r=0$, and $\int_0^\infty f(x)\,dx=r!$ by integration by parts. On the interval $[(n-1)s,ns]$, the difference between $sf(ns)$ and the integral of $f$ is at most $s\int_{(n-1)s}^{ns}|f'(x)|\,dx$. Sum the errors to obtain
+
+$$
+\left|s\sum_{n\ge1}f(sn)-r!\right|
+\le s\int_0^\infty|f'(x)|\,dx.
+$$
+
+Dividing by $s^{r+1}$ proves the claim. Finitely many omitted terms contribute $O_{r,m}(1)$, which is within the displayed remainder. The final upper bound follows by applying the same estimate to the absolute majorant. $\square$
+

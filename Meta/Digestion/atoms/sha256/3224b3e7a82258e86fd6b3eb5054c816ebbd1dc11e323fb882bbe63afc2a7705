@@ -1,0 +1,24 @@
+## 5. 适用域、归属和未决问题
+
+一般定理 3.1 的完整前提是归一化两侧平稳合法达到律及实际条件零均值；有限隐藏不是前提。矩阵桥和证书（4.3）遍历任意有限 $N$ 的完整精确实数、非负 $\Theta_N$，允许结构零、零平稳质量、可约链、周期链和任意接缝。预算与零响应不在未假设达到的任意模型上宣称成立。全零词、端点词、强制纤维和零总质量纤维始终保留。$R_t$ 与复制律只是归一化合法有限密度改变，不必平稳或有限隐藏；所需事实是每个实际有限边缘仍在原完整单纯形。
+
+[Positive Unique Optimizer] 定理 3.1 和式（3.11）是 [Universal Posterior Defect] 普适后验及支撑结果的前置；本卷复用其结果。[Growth] 供应有限图上界，[Stationary] 供应原调和风险身份；完整 $\Theta_N$ 联合律明确归于 [Universal Posterior Defect] 定义 4.1、命题 4.2。[Ergodic Full Support]、[Nonattainment] 与 [Finite Visible Completeness] 分别保留遍历达到、有限可见阶严格非达到及逼近边界，不能把有限隐藏生成转成有限可见记忆。[P7 separation] 的零质量裁剪、$N_+\le3$ 与秩一重置排除仍是已有边界。
+
+成熟机制的方法归属是 [Dawid–Lauritzen–Parry] arXiv:1104.2224v2，§§4.2.1–4.2.2、例 4.4、式（14）的条件 Brier／ratio matching 平方差，以及 [van Enter–Verbitskiy] arXiv:1001.3122v1，Definition 4、Theorems 5–6 的外部擦除不确定性背景。前者的全乘积空间论证要求处处正概率；后者涉及 Shannon 擦除熵，Theorem 6 另有 Gibbs 前提。两者都不供应本卷的调和目标、矩阵零响应或有限证书；所需二点代数和条件投影已在原合法纤维上证明，不移用估计或 Gibbs 结论。相对这些供应，达到律的一侧预算、条件零响应和有限严格违反消费者是本卷的普通综合，不作世界优先性或内核核验宣称。
+
+[UDB] 的确定性有限关系源、共同字面描述符、联合 Presburger／完整行及 read/update/halt 条件，没有在此转换为随机隐藏生产者或调和风险的假设。观察器状态数不是生产者资源；本卷不增加观察端口或样本，不给资源等价、取得效率、有限样本保证、最优律唯一性、物理或实际机器学习收益。
+
+仍未解决的原问题是：任意有限非重置、$N_+\ge4$ 的准确隐藏生产者是否存在达到 $c_\star$ 的同律。矩阵零空间维数、有限依赖条目数或秩锥信息既不推出 $S_P(f)\ne0$，也不推出（4.3）的违反。下一步须证明一个对任意精确达到者都成立的生产性有限见证，或给出明确达到者。单个 $(L,r,f)$ 证书只排除其对应律；固定 $N$ 的全域排除仍需覆盖完整紧集 $\Theta_N$。任意有限非重置域的统一排除和任意有限达到问题均保持开放，没有由必要响应条件推出全有限排除的推论。
+
+[Stationary]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[Ergodic Full Support]: FIB_LEGAL_EDGE_LOAD_ERGODIC_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[Universal Posterior Defect]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[Positive Unique Optimizer]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[Growth]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[Finite Visible Completeness]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md
+[Nonattainment]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[P7 separation]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[UDB]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_DESCRIPTOR_BOUNDARY.md
+[Dawid–Lauritzen–Parry]: https://arxiv.org/html/1104.2224v2
+[van Enter–Verbitskiy]: https://arxiv.org/html/1001.3122v1
+

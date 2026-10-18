@@ -1,0 +1,53 @@
+**Theorem 65.2 (Persistent-source finite-cover obstruction).** For any finite family of such centers and any $\delta\ge0$ satisfying
+
+$$
+\min_j\operatorname{TV}(\mu_y,\nu_j)\le\delta
+\qquad(y\in D),
+\tag{65.2}
+$$
+
+one has
+
+$$
+a\le b+2\delta,
+\qquad
+\chi_{\mathrm{TV}}(D)\ge\frac{(a-b)_+}{2}.
+\tag{65.3}
+$$
+
+In particular $a>b$ prevents TV total boundedness and relative TV compactness of this target tail on any measurable tape carrier.
+
+**Proof.** Assign each $y\in D$ the least index $j$ for which (65.2) holds, and give every source outside $D$ color zero. This is a finite coloring $c:X\to\{0,1,\ldots,n\}$. It is only a proof object; neither the consumer nor any preparation is given this color. Apply [Boundaries, Theorem 37.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#37-finite-valued-advice-and-persistent-obstruction-to-adaptive-upper-calibration) to this finite partition and the occupied finite probe cylinder $C$. It gives one actual $x\in C$ with $\Omega(x)>K$ which is persistent for $c$: in every finite further probe menu, sources with the same answers and color as $x$ have unbounded $\Omega$. Thus $x\in D$ and $c(x)=j\ge1$. Every same-color comparison source $y$ belongs to $D$ and obeys
+
+$$
+\operatorname{TV}(\mu_x,\mu_y)
+\le\operatorname{TV}(\mu_x,\nu_j)+\operatorname{TV}(\nu_j,\mu_y)
+\le2\delta.
+\tag{65.4}
+$$
+
+This use of Theorem 37.2 is its finite-color persistence conclusion, not an alteration of the supplied zero advice.
+
+Let $A_m(x)\subseteq\Theta$ be the original consumer's measurable event of a finite proposal within $m$ transitions, querying only primes in $P_m$, with terminal real proposal at most $m$. These events increase to $H_x$: each actual finite proposal has a finite execution length, a finite prime menu and a finite real value. Hence
+
+$$
+\mu_x(A_m(x))\uparrow h_x.
+\tag{65.5}
+$$
+
+For each $m$ large enough to include the prefix defining $C$ and the threshold $K$, persistence at this same $x$ supplies an actual $y_m$ of color $j$, agreeing with $x$ on $P_m$, with $\Omega(y_m)>m$. This is one source for the whole event $A_m(x)$, selected before quantifying over its tapes. For each tape in that event, deterministic finite-record replay on the matching actual prime answers preserves every consumer transition and its final real proposal. The proposal is at most $m<\Omega(y_m)$ and is therefore false at $y_m$. Consequently $A_m(x)\subseteq F_{y_m}$ and event-TV gives
+
+$$
+\mu_x(A_m(x))
+ \le\mu_{y_m}(A_m(x))+2\delta
+ \le e_{y_m}+2\delta
+ \le b+2\delta.
+\tag{65.6}
+$$
+
+Only continuity from below at the fixed original source $x$ is used in passing to the limit; no convergence of the comparison sources or their measures is assumed. Equations (65.5)--(65.6) yield $a\le h_x\le b+2\delta$. For any chosen finite centers their supremal covering error supplies a $\delta$ in (65.2), so taking the infimum over all finite center families proves the second bound in (65.3). If $a>b$, no finite cover of radius below $(a-b)/2$ exists, which excludes total boundedness and hence relative compactness. $\square$
+
+For the all-source truthful positive row $h_y=h>0$, $e_y=0$, every occupied high-target tail has $a=h$, $b=0$, so its finite-cover radius is at least $h/2$. This is a restriction on the target laws themselves, including on countable carriers; it does not prohibit compact selected prepared-law ranges. Preparation can change the original consumer's row, as already required by the fixed-family contract. Section 61 remains the separate reused correct-mass bound on the unchanged acquisition value. Neither (65.3) nor failure of target precompactness determines cap attainment, identifies $\chi_{\mathrm{TV}}$ with $R_\mu$, or classifies general nonzero-error or divergence profiles.
+
+The three results leave the general nonatomic endpoint problem open. A target-intrinsic necessary-and-sufficient order-exhaustion criterion, or an original-target-defined nonlinear supplier at the unchanged $R_\mu$, is still required beyond the stated subclasses. Necessity and endpoint nonemptiness of the finite-dimensional certificate are not established for unrestricted preparations. General positive-proposal, prescribed error/divergence and arbitrary-consumer endpoint classifications remain unresolved beyond the existing bounds and subclasses. Infimum, attained cap, exact acquisition, metric continuity and common-submeasure exhaustion remain separate, as do local and uniform conclusions and sourcewise finite and common finite stopping. The proofs use original-tape measures, the actual labeled prime-divisibility source and the stipulated measurable common rules; they supply no source probability, extra observation, source selection operation, reset, failure conditioning, effectiveness or resource guarantee. These are ordinary mathematical results with the cited classical inputs and no literature-priority or formal-verification assertion.
+

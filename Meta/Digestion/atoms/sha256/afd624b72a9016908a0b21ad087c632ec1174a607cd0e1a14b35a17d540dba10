@@ -1,0 +1,78 @@
+**Theorem 8.2 (uniform floor for an arbitrary finite joint handoff).**
+Fix $0<Z<1$ and any nondegenerate interval $I\subset(0,c)$.
+For any one fixed finite algebra and arbitrary handoffs of §4, acquired
+before the later phase request is supplied, every family of common CPTP
+processors satisfies
+
+$$
+\sup_{x\in I,\ \beta\in\mathbb R,\ m\in\mathbb Z,\
+               \alpha\in\mathbb R} e_{x,\beta,m}(\alpha)
+ \geq\sqrt{Zr}.
+\tag{FH.27}
+$$
+
+It already suffices to test $\beta=m=0$. All requests in the supremum
+have individually finite action and may have the same duration $L=1$.
+There is no common action or phase-speed bound. At $Z=1/2$ this is
+$1/2$, also a lower bound for the full original future menu under this
+finite handoff access condition. No full-menu minimax value is identified.
+
+Proof. Choose distinct $x_n\in I$ converging to an interior $x_*$.
+The normalized states $\sigma_{x_n,0,0}$ in (FH.11) lie in the compact
+state space of the fixed finite algebra $\widehat{\mathcal B}$.
+This is the finite-dimensional Heine–Borel theorem, independent of any
+regularity of the encoding. Some subsequence converges. Pair consecutive
+members of that subsequence, with heights $x_j,y_j$. Then both heights
+tend to $x_*$ and
+
+$$
+t_j=\tfrac12\|\sigma_{x_j,0,0}-\sigma_{y_j,0,0}\|_1\longrightarrow0.
+$$
+
+For each pair choose the one common public request
+$\alpha_j=\pi r/(y_j-x_j)$. It is finite and legal on both histories.
+This choice is a witness to worst-case failure: it supplies neither height
+label to the processor. Let
+$v_x=\sqrt{2x}|+\rangle+\sqrt{2(c-x)}|-\rangle$. A common output
+unitary $\operatorname{diag}(e^{i\alpha_j/2},1,1)$ removes the known
+plus-only phase. The two target vectors then have inner product
+
+$$
+\begin{aligned}
+Z+e^{i(y_j-x_j)\alpha_j/r}\langle v_{x_j},v_{y_j}\rangle
+ &=Z-\langle v_{x_j},v_{y_j}\rangle,\\
+\langle v_x,v_y\rangle
+ &=2\sqrt{xy}+2\sqrt{(c-x)(c-y)}\longrightarrow2c=r.
+\end{aligned}
+\tag{FH.28}
+$$
+
+The trace distance of two pure states with unit vectors $u,v$ is
+$\sqrt{1-|\langle u,v\rangle|^2}$: diagonalizing their difference
+on their two-dimensional span gives eigenvalues of those opposite
+magnitudes. Thus the target distance tends to
+$\sqrt{1-(Z-r)^2}=2\sqrt{Zr}$.
+For the same $\Phi_{\alpha_j}$, contraction and the triangle inequality
+give
+
+$$
+\operatorname{dist}(\rho_{x_j,0,0}^{\alpha_j},
+                         \rho_{y_j,0,0}^{\alpha_j})
+ \leq e_{x_j,0,0}(\alpha_j)+t_j+e_{y_j,0,0}(\alpha_j).
+\tag{FH.29}
+$$
+
+Take the limit and bound each error by the displayed supremum. This proves
+(FH.27). Acquisition losses were included in the normalized $\sigma$;
+they were not conditioned away. Stopped archives can be forgotten only
+because their successor cannot assist a live continuation. Keeping them
+in the full error can only strengthen this lower test. $\square$
+
+The conclusion is a supremum: for every $\varepsilon<\sqrt{Zr}$
+some actual histories and one finite request force error above
+$\varepsilon$. It does not assert that one fixed pair attains the limit.
+With a common phase-speed bound $v_\chi$, action $|\alpha|$ needs
+duration at least $|\alpha|/v_\chi$. The same unrestricted-action
+argument then uses arbitrarily large finite horizons. It gives no such
+constant for a fixed bounded-action, bounded-horizon menu.
+

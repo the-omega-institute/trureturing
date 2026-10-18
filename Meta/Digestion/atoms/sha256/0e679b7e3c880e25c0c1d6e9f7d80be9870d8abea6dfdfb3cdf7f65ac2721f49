@@ -1,0 +1,11 @@
+**Theorem 8.2 (complex certificates at the isometric endpoint).** Let $E:\mathbb C^3\to\mathbb C^5$ be the real coordinate isometry onto the first three output coordinates and $N(X)=EXE^\dagger$. For every complex density $\rho$, including singular and nonreal ones, $Y=E\rho E^\dagger$ gives a matched trace-one certificate in (R.32).
+
+**Proof.** Here $D_\rho=d=\operatorname{vec}(E\rho)$. It is supported in the range of $Y\otimes I_3$, and
+
+$$
+d^\dagger(Y^+\otimes I_3)d
+=\operatorname{Tr}(\rho\rho^+\rho)=\operatorname{Tr}\rho=1.
+$$
+
+Cauchy–Schwarz on that support implies $Y\otimes I_3-dd^\dagger\succeq0$, also when $\rho$ has zero eigenvalues. The full recovery with Kraus matrices $E^\dagger$, $|0\rangle\langle e_3|$, $|0\rangle\langle e_4|$ is TP and exactly inverts $N$, so the primal value is one and matches $\operatorname{Tr}Y=1$. Nonreal $\rho$ gives genuinely complex certificates; their validity does not justify an entrywise-real phase-input restriction. Under (P.1) this is an actual member of $\mathcal R_0$. $\square$
+

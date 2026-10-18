@@ -1,0 +1,57 @@
+**Definition 2.2 (compatible pair, reused).** Use the complete carriers $\Omega_p,\Omega_\beta$ in Definition 2.1. With $\lambda=4/15$, set
+
+$$
+\begin{aligned}
+T_p(j)&=\{w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_p\},\\
+T_\beta(j)&=\{\alpha w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_\beta\},\\
+\mathcal K_p&=\{Q\in\mathcal P(\Omega_p):a\le Q(\alpha)\le b,
+                         \ Q(T_p(j))\le\lambda^j\text{ for all }j\ge0\},\\
+\mathcal K_\beta&=\{W\in\mathcal P(\Omega_\beta):a\le1-W(\beta)\le b,
+                         \ W(T_\beta(j))\le b\lambda^j\text{ for all }j\ge0\}.
+\end{aligned}
+$$
+
+These are exactly [PAIR, equations (11.1)–(11.2)]: normalized probability laws with the complete-law TV topology. The tail bounds force their infinite masses to zero, without deleting the infinite outcomes. For a p descriptor $Q$ and a suspended descriptor $W$, put
+
+$$
+u(Q)=Q(\alpha),\quad U(Q)=1-u(Q),\quad
+v(W)=1-W(\beta),\qquad a\le u,v\le b.
+$$
+
+For measurable sets on the opposite complete carriers, define the normalized residuals
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+$$
+
+Both are full probability laws; prefixing includes the corresponding infinite outcome and deletes exactly the next original operation block through $I_c$. Arbitrary descriptors need not have their residual in the opposite $\mathcal K$. Compatibility supplies that residual as a barycentre.
+
+There are Borel probability flows $\Gamma_B$ on $\mathcal K_p\times\mathcal K_\beta$ and $\Gamma_A$ on the reversed product, with
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta.
+$$
+
+Their conditional residual equalities are
+
+$$
+\mathcal R_B(Q)=\int W\,B(Q,dW),\qquad
+\mathcal R_A(W)=\int Q\,A(W,dQ)
+\tag{2.5}
+$$
+
+almost surely, where $B,A$ are disintegrations of these very flows. The original equations condition on the entire input descriptor. Conditioning merely on an emission or on a residual projection is not substituted. In particular,
+
+$$
+\begin{aligned}
+Q&=u(Q)\delta_\alpha+U(Q)\beta\int W\,B(Q,dW),\\
+W&=(1-v(W))\delta_\beta+v(W)\alpha\int Q\,A(W,dQ),\\
+\nu_pB&=\nu_\beta,\qquad \nu_\beta A=\nu_p.
+\end{aligned}
+\tag{2.6}
+$$
+
+Both marginals are unweighted acquired marginals. The factors $U,v$ occur in synthetic word generation only. All laws retain their infinite outcomes, of mass zero under the supplied uniform tail bounds. Disintegration and countable atom tests are supplied in [PAIR]; no new martingale-coupling theorem is claimed.
+

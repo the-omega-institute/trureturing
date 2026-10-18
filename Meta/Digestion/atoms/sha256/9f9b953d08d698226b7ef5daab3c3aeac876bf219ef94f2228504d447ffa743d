@@ -1,0 +1,89 @@
+**Theorem 3.10 (Four-height determinant).** Assume neither $E_-$ nor $E_+$,
+and choose
+$\kappa_0<\kappa_1<\kappa_2<\kappa_3$ in the positive fiber. Let $C$ be the
+$3\times3$ matrix whose $j$th column is
+$(w(\kappa_j)-w(\kappa_0))_{0,1,3}$, $j=1,2,3$. Define
+
+$$
+Q_b(\kappa)=XY(r-X-Y)+2XY\kappa-r\kappa^2
+=I(\kappa)\prod_{s\in B}p_s(\kappa)>0.
+$$
+
+Then
+
+$$
+|\det C|=
+\frac{XY(r-X)(r-Y)|X-Y|\,|X+Y-r|
+ \displaystyle\prod_{0\le i<j\le3}(\kappa_j-\kappa_i)}
+ {\displaystyle\prod_{j=0}^3Q_b(\kappa_j)}.
+$$
+
+For each $h\in V_b$, the unique rectangle coefficients at these heights are
+$a=C^{-1}(h_0,h_1,h_3)^{\mathsf T}$; the remaining entries are recovered by
+$h_2=0$ and $h_{13}=h_1+h_3-h_0$.
+
+Proof. Write $A=p_0$, $B_1=p_1$, $C_1=p_3$, $D_1=p_{13}$ temporarily.
+Multiplying $I$ by their product groups the four triple products as
+
+$$
+B_1C_1(A+D_1)+AD_1(B_1+C_1).
+$$
+
+Set $s=X+Y$. This is
+
+$$
+(XY-s\kappa+\kappa^2)(r-s+2\kappa)
++\kappa(r-s+\kappa)(s-2\kappa)
+=XY(r-s)+2XY\kappa-r\kappa^2,
+$$
+
+establishing the formula for $Q_b$ and its positivity without a sign
+assumption on $r-X-Y$.
+
+Let $B_4$ be the four-by-four matrix whose columns are the bottom components
+of $w(\kappa_j)$ in order $(0,1,3,13)$. Replace its last row by the signed
+sum of its rows with coefficients $(1,-1,-1,1)$. This row operation has
+determinant one, because the old last row has coefficient one, and its new
+entries are all one. Subtract column zero from each of the other columns.
+The last row is then $(1,0,0,0)$; expansion along it shows
+$|\det B_4|=|\det C|$, with no multiplicative factor.
+
+The Cauchy determinant, in the form of Krattenthaler's equation (2.7), applied
+with row variables $-\lambda_s$ and column variables $\kappa_j$, gives
+
+$$
+|\det B_4|=
+\frac{\displaystyle\prod_{s<t}|\lambda_s-\lambda_t|
+      \displaystyle\prod_{i<j}(\kappa_j-\kappa_i)}
+ {\displaystyle\prod_j I(\kappa_j)
+      \displaystyle\prod_{s,j}|\kappa_j-\lambda_s|}.
+$$
+
+Here all poles are distinct and all denominators are nonzero, exactly the
+hypotheses needed for that classical identity. The denominator groups as
+$\prod_j Q_b(\kappa_j)$, since
+$\prod_s|\kappa_j-\lambda_s|=\prod_s p_s(\kappa_j)$. Its pole product is
+
+$$
+\prod_{s<t}|\lambda_s-\lambda_t|
+=XY(r-X)(r-Y)|X-Y|\,|X+Y-r|.
+$$
+
+Substitution proves the determinant formula. It is nonzero in the stated
+domain, so solving the first three coordinates gives unique coefficients.
+Every difference column and every target in $V_b$ has its last coordinate
+determined by the same relation, proving exact recovery of the whole vector.
+$\square$
+
+There is a precise singular-limit consequence. Consider a family of these
+matrices for which every sampled bottom probability is at least one fixed
+$\varepsilon>0$. Their entries are bounded, and their denominators $Q_b$ are
+bounded away from zero. If a symmetry gap $X-Y$ or $X+Y-r$ tends to zero, or
+two chosen heights coalesce, the determinant formula tends to zero. Thus the
+least singular value tends to zero: if it had a positive lower bound, the
+product of the three singular values could not tend to zero. Every convergent
+matrix subsequence has a singular limit. This is a loss of conditioning of
+the chosen exact synthesis coordinates. Without a uniform positive margin,
+$Q_b$ can also approach zero; the formula does not imply determinant decay for
+all families approaching a probability endpoint.
+

@@ -1,0 +1,45 @@
+**Lemma 3.2 (positive lower-left height forces a small horizontal coordinate).**
+Under Assumption 1.1, if $a_r,b_r>0$, $a_r^2+b_r^2=1$ and
+$\ell(-a_r,-b_r)>0$, then
+
+$$
+b_r>9/10,\qquad a_r<\sqrt{19}/10<11/25.
+\tag{PC.12}
+$$
+
+Proof. On $0\le w<1$ use the actual lower-left directed height
+
+$$
+\phi(w)=\ell(-\sqrt{1-w^2},-w)
+=A_\ell+\gamma_\ell w^2
+ -(2a_\ell w+l_u)\sqrt{1-w^2}-l_vw.
+\tag{PC.13}
+$$
+
+Its second derivative, also (FC.67), is
+
+$$
+\phi''(w)=2\gamma_\ell+
+\frac{l_u+2a_\ell w(3-2w^2)}{(1-w^2)^{3/2}}>0.
+\tag{PC.14}
+$$
+
+In particular $\phi$ is convex on $[0,9/10]$. The endpoint bounds are
+
+$$
+\begin{aligned}
+\phi(0)&<0.00463-0.00504=-41/100000<0,\\
+\phi(9/10)&<0.00463+0.01058\frac{81}{100}
+                 -0.00504\frac{43}{100}-0.01251\frac9{10}\\
+&=-283/1250000<0.
+\end{aligned}
+\tag{PC.15}
+$$
+
+For the second line, $\sqrt{19/100}>43/100$ by squaring positive
+rationals; the term $-2a_\ell w\sqrt{1-w^2}$ is negative.
+The convex chord between these two negative endpoint bounds is
+negative throughout the interval. Thus $\phi(b_r)>0$ requires
+$b_r>9/10$. The circle identity gives $a_r^2<19/100$, and
+$19/100<(11/25)^2$ proves the last inequality. $\square$
+

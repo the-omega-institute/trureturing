@@ -1,0 +1,36 @@
+**Proposition 4.3 (a finite native witness for the mode-one route).** Fix
+$h=h(P,1)$ and $N=n(h)$. EXPOSURE Proposition 6.1's existing two-flight
+continuation supplies a finite record from $h$ on which Definition 4.1
+succeeds for the second flight. A finite literal native action word, with
+physical control checks and this extraction, can recognize that success
+uniformly over alternative canonical starts. It introduces no execution
+row and no additional Supply beyond that continuation.
+
+Proof. Reuse EXPOSURE Proposition 6.1 directly: the first completed
+AcquisitionOffset0 flight reaches an authentic Ready covering $h$; the
+second AcquisitionOffset$(N-a)$ flight retrieves $h$ and completes all
+checks/ACKs and return. It contains the whole second ClientImage→RenderS→
+Publish0→CheckS0→FromS interval, with preceding responses witnessing $E_0$.
+Its binding has $k=N$, and Theorem 3.3 gives its live View0.
+
+Fix the finite sequence of actual native actions and supplied bits from
+this reference continuation. Require the corresponding actual public
+physical PC/phase after each executed row; stop without extraction success
+on a mismatch or nonexecution. These are finite mathematical experiment
+checks on existing public observations; no check is inserted in the
+machine. The first reference action is the single EX70 whose post-PC is
+this mode receiver's WR70,6. In the expanded graph that WR site has only
+its preceding mode EX as incoming edge; no other ingress/copy site or
+nested simulated PC has this physical identity. Therefore a canonical
+alternative that matches the first action starts at a genuine mode cut
+$h(P',\mu')$. The subsequent actual mode test and its literal reference
+branch require $\mu'=1$. All remaining INs and literal bits are those of
+the two existing framed requests, aligned by their actual physical sites.
+They give canonical continuations; a range failure or different loop
+length cannot match the complete successful control record. Every accepted
+record consequently contains the whole identified second stage interval.
+Corollary 4.2 establishes its authentic target and output without assuming
+uniform authenticity. Finiteness is pointwise for the reference word;
+there is no runtime bound uniform in $P'$ and no guarantee that another
+start matches. ∎
+

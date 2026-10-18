@@ -1,0 +1,5 @@
+source_id = "fib-jmj-pair-classification-and-promised-root-decoder"
+path = "docs/develop/theory/FIB_JMJ_PAIR_CLASSIFICATION_AND_PROMISED_ROOT_DECODER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

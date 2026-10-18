@@ -1,0 +1,25 @@
+**Definition 32.1 (Actual zero branch and proper gap law).** Let
+$\Phi,\Psi:M_D(\mathbb C)\to M_D(\mathbb C)$ be completely positive
+maps with $\Phi+\Psi$ trace preserving.  Let $\tau$ be the actual
+density at the beginning of a gap, and put
+
+$$
+S_k=\operatorname{Tr}\Phi^k(\tau),
+\qquad
+\gamma_j=\operatorname{Tr}\Psi\!\left(\Phi^j(\tau)\right).
+\tag{32.1}
+$$
+
+The index $j$ counts the preceding zero outcomes.  The law is called
+proper when $S_k\to0$, so that a one outcome occurs almost surely.
+Assume, for an integer $m\ge1$ and a real number $q$ with $0<q<1$,
+
+$$
+\gamma_j=Cj^{2m}q^j\quad(j\ge0),
+\qquad C>0.
+\tag{32.2}
+$$
+
+The value at $j=0$ is therefore zero.  The density $\tau$ is actual:
+it may be mixed, and it is not replaced by a selected pure vector.
+

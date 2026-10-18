@@ -1,0 +1,35 @@
+**Theorem 11.3 (controlled inversion and quadratic comparator slack).** On
+$[\lambda_e-h_b,\lambda_e]$,
+$$
+l_b\le k_{b,\lambda}\le u_b .
+$$
+Both inverse multipliers $\lambda_b(\kappa)$ exist whenever
+$k_e-d_{\rm branch}<\kappa\le k_e$. The extended six law there has its six positive old weights and is feasible for all eight moments and $K=\kappa$, even though its unused dual gap is negative on the left. In the notation $J_b(\kappa)=J_b(\lambda_b(\kappa))$,
+$$
+E_6(\kappa):=J_e-\lambda_e(\kappa-k_e)-J_6(\kappa)
+\quad\hbox{satisfies}\quad
+0\le E_6(\kappa)\le C(\kappa-k_e)^2.
+$$
+For $w_6=(p,\phi,Y,\lambda_6)$ in the twelve occupied endpoint variables and nine multipliers,
+$$
+\|w_6(\kappa)-w_e\|_2\le C_{\rm br}|\kappa-k_e|.
+$$
+
+Proof. The stated cleared systems are affine in $\lambda$, hence
+$F_{b,\lambda\lambda}=0$. Implicit differentiation gives
+$$
+X_b'=-F_{b,X}^{-1}F_{b,\lambda},\qquad
+X_b''=-F_{b,X}^{-1}
+       (F_{b,XX}[X_b',X_b']+2F_{b,X\lambda}X_b').
+$$
+The box bounds give $\|X_b'\|\le U_b$, $\|X_b''\|\le W_b$ and
+$|k_b''|\le T_b$. Integration from the exact event then proves the derivative windows. Each increasing branch image contains
+$[k_e-l_bh_b,k_e]$, so both inverse sections exist on the displayed common interval. Their inverse multipliers are evaluated separately at the same $\kappa$; they are not equated. The six old-weight margins hold on its full supplied box, so this continued six law is a feasible primal comparator.
+
+Proposition 3.1 gives $J_{b,\kappa}=-\lambda_b$ and
+$J_{b,\kappa\kappa}=-1/k_{b,\lambda}$. Thus
+$E_6(k_e)=E_6'(k_e)=0$ and $0<E_6''\le1/l_6$. Twice integration yields the asserted $C=1/(2l_6)$ bound. Matching the target contrast is essential to the first-order cancellation.
+
+Finally every local half-angle chart obeys $|d\phi/dx|\le2$.
+The endpoint weights, angles and $Y$ therefore have $\lambda$-derivative norm at most $2U_6$ after dropping unused $x_4$. The multiplier coordinate adds at most one to the norm bound. Since $d\lambda_6/d\kappa\le1/l_6$, integration gives $C_{\rm br}$. This is the Euclidean conversion, separate from the scaled inverse bound above. $\square$
+

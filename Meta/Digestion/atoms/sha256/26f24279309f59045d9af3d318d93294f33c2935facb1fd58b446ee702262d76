@@ -1,0 +1,13 @@
+**Proposition 4.4 (the one-letter target degeneracy).** For every
+$D\ge1$ and $p=R$, $V_{D,R}(\mu)=1$ for every source law under the
+global-correctness contract.
+
+Proof. Read $R$ once. Its label or branch descriptor suffices for all
+supplied counts by AAR13.3. An encoder stopping without any Read
+would have the same complete state on every source, since its
+initialization and local work are source-blind. The family contains
+sources whose initial $R$ replies are alpha and beta, contradicting
+correctness at $k=0$. Hence every admissible encoder makes at least
+one Read on every source. This includes $D=1$, for which $R$ is the
+only admissible target. $\square$
+

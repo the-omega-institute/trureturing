@@ -1,0 +1,24 @@
+**Definition 2.1 (canonical and correlated representatives).** Put
+
+$$
+t_{j,e}=C_{p_j}[\lambda_e],
+\qquad 1\le j\le8,\quad e\in\{0,1\}.
+\tag{2.2}
+$$
+
+For $j=1$, set $s_{1,e}=t_{1,e}$. For $j\ge2$, alter only the subtree at
+$RR$ in $t_{j,e}$ and call the result $s_{j,e}$, using
+
+$$
+\begin{array}{c|c}
+ j& s_{j,e}|_{RR}\\ \hline
+ 2,3&\alpha\\
+ 4,5,6&\beta\\
+ 7,8&\langle\alpha,\alpha\rangle.
+\end{array}
+\tag{2.3}
+$$
+
+The alteration is made only where $RR$ is an existing off-path sibling. The
+path to $p_j$ and its label are unchanged.
+

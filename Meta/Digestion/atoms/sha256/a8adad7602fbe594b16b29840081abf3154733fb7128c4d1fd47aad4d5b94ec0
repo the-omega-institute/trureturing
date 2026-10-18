@@ -1,0 +1,42 @@
+**Example 225.2 (Saturated unit family and its closed branch).** For every
+real $s\ge1$, define
+
+$$
+Y_s:\quad A_{00\tau}=s,\quad C_{01\tau}=s-1,\quad
+P_{01\tau}=1,\quad C_{10\tau}=s,\quad T=s.
+$$
+
+At each word $A_wC_w=0$. Direct full-head maxima are $(s,s,s,s)$,
+and stopped-head maxima are $(s+1,s,s)$. The empty and singleton
+supports are at most $2s+1$, and later queries are constant on the
+weighted words. Hence
+
+$$
+W=3s,\quad Q(Y_s)=(-1,s,0,\ldots;4s),\quad
+B_N=4s,\quad B_O=3s+1,\quad\Delta_N=s,\quad\Delta_O=1.
+$$
+
+On the whole hull, using $b_1\ge b_2$ and the preceding capacity bound,
+
+$$
+\begin{aligned}
+F_{Q(Y_s)}&=1-b_1+s b_2-s-4se\\
+ &\le1-s+(s-1)b_2-4se\\
+ &\le\frac{1-s}{2}-(2s+2)e\le\frac{1-s}{2}.
+\end{aligned}
+$$
+
+Equality at $u_3$ proves $\sigma_H(Q(Y_s))=(1-s)/2$.
+Every interior mask fixes the score. Thus for $s>1$ every normalized
+convex-mask output has cost at least $s>1$, while $(0,0)$ succeeds.
+At the closed value $s=1$, the sole resulting convex score $Y_1$ has
+$J_{Q(Y_1)}(Y_1)=1$ and is a valid boundary certificate; the unrestricted
+minimum remains zero. No strict failure is asserted at this endpoint.
+
+The normalization restriction is essential. Zero belongs to the
+arbitrarily scaled erasure cone and certifies each of these inputs.
+Theorem 225.1 is therefore not an obstruction to arbitrary conic scaling.
+The single-baseline $A/P$ zero-conflict criterion of 200.5 already
+supplies membership for this family; the result concerns a constructor
+boundary and adds no original membership region.
+

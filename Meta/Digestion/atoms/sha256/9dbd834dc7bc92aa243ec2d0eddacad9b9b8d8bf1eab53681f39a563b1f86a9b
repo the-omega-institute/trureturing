@@ -1,0 +1,27 @@
+### 仍然必须标为开放的内容
+
+以下内容不能因为项目当前 PR 或理论文档提到，就自动视为完成：
+
+1. AURIC 与实际 escape dynamics 的完整动态等价；
+2. thermodynamic action 在真实动态系统中的唯一物理解释；
+3. common cyclic control 的一般最小性定理；
+4. future quotient 在无界历史计数下的有限性；
+5. 具体 complete-law flow 是否已经有有限 common generator；
+6. AURIC 结构是否已经解释某个物理系统或时空规律。
+
+这些都需要明确：
+
+$$
+\text{状态空间}
++
+\text{转移算子}
++
+\text{假设}
++
+\text{证明}
++
+\text{依赖闭包}.
+$$
+
+---
+

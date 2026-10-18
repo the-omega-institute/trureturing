@@ -1,0 +1,9 @@
+## 4. The finite products for arbitrary integer addresses
+
+An address $2\ell+\alpha$ is active in phase $\alpha$ and reads
+the spin-line edge $e=\{\ell,\ell+1\}$ there. In the other phase it
+is a separator. Two distinct active edges either share one vertex
+or have disjoint vertex sets. Together with repetition, this is the
+complete incidence list, for arbitrary signs, distances and order
+of acquisition.
+

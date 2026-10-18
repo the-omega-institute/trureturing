@@ -1,0 +1,149 @@
+**Definition 315.2 (Full rows, allocations and scores).**
+For $L\ge3$ retain every $w\in\{0,1\}^L$, every output label
+$0,\ldots,L$, and $+=1^L$. At a word with first zero $n$, the
+three independent events $A,C,P$ are $\{0\},\{n\},\{0,n\}$ and
+their demands are $1-b_n-e,b_n-e,1-e$. At $+$ retain the event
+$\{0\}$ with demand $1-e$. Negative singleton demands remain literal.
+For a probability vector and $0\le b_n\le1$,
+
+$$
+\operatorname{TV}(p_w,(1-b_n)e_0+b_ne_n)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{315.3}
+$$
+
+For unrestricted real $(b,e)$ these linear demands define an affine
+feasibility problem; a probability-target interpretation additionally
+requires normalized laws and $b_n\in[0,1]$.
+
+The complete finite $N$ catalog contains constants, singletons and every
+$N(i,j;u,v,s,z)$ with arbitrary output labels on $00,01,10,11$.
+The complete $O$ catalog contains constants, singletons and every
+$O(i,j;u,s,z)$, $i<j$, on stopped cells $0,10,11$. Earlier and
+unqueried output labels are legal. Repetition gives singleton information
+without refunding an actual request; reversal of static queries permutes
+the four cells.
+
+Write $z_D$ for the full event-incidence vector of $D$, and set
+
+$$
+R=O(1,2;1,2,0),\quad \alpha=(1,1,0,\ldots,0),\quad
+r=z_R=d(\alpha,0),\quad h=d(b,e)-r,\quad
+G_C=(z_D-r)_{D\in\mathcal D_C}.
+\tag{315.4}
+$$
+
+One complete feasible allocation is one $\lambda\ge0$ satisfying
+every row of $G_C\lambda\ge h$, with its single finite mass
+$M=\sum_D\lambda_D$. Mass one is normalized feasibility. Dividing
+by $M$ does not normalize an allocation at unchanged $(b,e)$.
+
+A nonnegative full score $Y=(A_w,C_w,P_w;T)$ has rewards
+
+$$
+\begin{aligned}
+g_Y(w,\ell)&=A_w[\ell=0]+C_w[\ell=n(w)]
+                           +P_w[\ell\in\{0,n(w)\}],\quad w\ne+,\\
+g_Y(+,\ell)&=T[\ell=0],\\
+W_Y&=Yr,\quad B_C(Y)=\max_DYz_D,\quad\Delta_C(Y)=B_C(Y)-W_Y,\\
+\beta_n&=\sum_{w:n(w)=n}(C_w-A_w),\quad
+K_Y=\sum_{w\ne+}(A_w+C_w+P_w)+T,\\
+F_{QY}(b,e)&=\sum_n\beta_n(b_n-\alpha_n)-K_Ye=Yh.
+\end{aligned}
+\tag{315.5}
+$$
+
+The reused nonnegative pairing from 297.5 and 309.2 is
+
+$$
+F_{QY}(b,e)\le YG_C\lambda
+ =\sum_D\lambda_D(Yz_D-W_Y)\le M\Delta_C(Y).
+\tag{315.6}
+$$
+
+It pairs a score with the same entire allocation; it does not combine
+separately optimized output, head or tail budgets.
+
+**Reused correspondence 315.3 (Actual words and exact closed caps).**
+The actual finite-pattern interface is the elementary proof of 297.3
+and Proposition 280.1, without dependence on an absent locator.
+For completeness, modulo a prime $p$ the Fibonacci matrix
+$Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ is invertible,
+and
+$Q^k=\left(\begin{smallmatrix}F_{k+1}&F_k\\F_k&F_{k-1}\end{smallmatrix}\right)$.
+It is scalar precisely when $p\mid F_k$. Its class in the finite group
+$\operatorname{PGL}_2(\mathbb F_p)$ has order $z(p)\ge3$, since
+$F_1=F_2=1$. Consequently $p\mid F_k$ iff $z(p)\mid k$.
+For a finite prime set of product $D$, choose a prime $r$ above all
+these ranks, large enough that $F_r\ge10(D+2)$. Then no rank divides
+$r$, so $F_r$ is invertible modulo $D$. Prescribe
+$g=-F_r^{-1}\pmod p$ at desired ones and $g=0\pmod p$ at desired
+zeros. CRT gives a residue modulo $D$. The actual integer interval
+$[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]$ has length at least
+$F_r/10-2\ge D$, and therefore contains a representative. This
+realizes every finite word, including all multiple-zero words and
+positive prefixes. Finite prime support of the actual positive integer
+$N(r,g)$ gives finite first absence.
+
+Reuse the complete
+[Theorems 109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md)
+and the prefix consequence 280.3, as stated in 297.3 and proved in
+309.3. At a positive closed cap $c\le1$, an arbitrary original
+competitor supplies some normalized finite representative in its own
+class on $L_a=\max(\{i:a_i>c\}\cup\{0\})$ bits. Necessity uses
+countability for one common probability-one execution event, finite
+actual witnesses, whole-schedule truncation, sourcewise finite handoff
+and finite-simplex compactness. It preserves class feasibility and
+does not assert preservation of an arbitrary initial law or coupling.
+The normalized stopped criterion is $c_0\ge H$ coordinatewise for
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$,
+$H=\sum_i(\sum_{j>i}(-Q_{ij})_+-\ell_i)_+$; its scalar schedule
+budget follows from normalization. Degree at most two alone is insufficient.
+
+At a required prefix $K$, restrict a longer representative by fixing
+higher replies to zero, projecting higher labels to zero and contracting
+constant observations. TV contracts, including on a positive low
+prefix whose target projects to zero. Extend a shorter representative
+by ignoring added inputs. For a probability law on labels at most $H$
+and any actual $n>H$, the exact marked-target identity is
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+                      =\max\{1-p_+(0),a_n\}.
+\tag{315.7}
+$$
+
+Thus each newly represented first-zero class satisfies the cap, since
+$a_n\le c$. All independent rows and closed ties are retained in
+one representative. These are proof representations, not free actual
+observations. A finite positive word represents later actual zeros,
+not an infinite all-positive source. Every positive vanishing tail
+is retained; no summability assumption is needed.
+
+The support rule reused from Lemma 309.3 will be applied twice below.
+For a $d$-bit score put
+
+$$
+m^Y_{ij,uv}=\max_{0\le\ell\le d}
+ \sum_{w:(w_i,w_j)=uv}g_Y(w,\ell),\qquad uv=00,01,10,11.
+\tag{315.8}
+$$
+
+Four-cell sums at most $W_Y$, with the stopped anchor attaining $W_Y$,
+prove $B_N=B_O=W_Y$. A full $N$ table chooses a label independently
+in each cell. Constants, singletons and repeats coarsen a distinct-pair
+partition, reversal permutes cells, and stopped tables merge $00,01$;
+none increases the sum of cell maxima. At every embedding
+$(1,2,j_1,\ldots,j_{d-2})$, set nonskeleton bits to one on scored
+words and map numerical labels accordingly. Outside queries then
+give constant or singleton information on that support; outside labels
+earn zero. Hence the bound is for the complete catalog at every
+horizon and gap, with all unscored constraints still present. Pairing
+with (315.6) proves the resulting affine relation for any real profile
+and any finite allocation mass. The preceding closed-cap transport
+gives necessity for every original arbitrary-address, full-carrier
+competitor. Applying each positive cap above its error and decreasing
+the cap proves the corresponding error lower bound, including zero
+error. At error one the specific inequalities below follow directly
+from $a_i\le1$.
+

@@ -1,0 +1,126 @@
+**Theorem 10.4 (Guarded central transport and the original output).** Assume
+$X=Y=r/2$. At any actual ray $q_0=(k_0,\alpha_0,\beta_0)$ use the phases
+of (8.17), $\alpha=u-v$, $\beta=u$, and the real local differences
+
+$$
+c_0=\frac12-\frac{k_0}{r},\qquad
+x=\kappa-k_0,\quad y=2(\alpha-\alpha_0),\quad
+z=-r\{(\beta-\beta_0)-c_0y\}.
+\tag{10.9}
+$$
+
+A source chart is $|x|<\delta$, $|y|<2\pi$,
+$|c_0y-z/r|<\pi$, where
+$0<\delta\le\min(k_0,r/2-k_0)$; all inequalities are strict. In it
+
+$$
+P=\partial_x,\qquad Q=\partial_y+x\partial_z,
+\qquad [P,Q]=\partial_z.
+\tag{10.10}
+$$
+
+Declare $A=I_2$. For a compact promise $[l,u]\subset(0,r/2)$, choose
+$0<R<\min(l,r/2-u)$ and either sign $s\in\{1,-1\}$. One and the same
+relative command is lawful for every height in the promise and every phase,
+and closes its real control base with central displacement $\tau=s\pi R^2$.
+At every $k_0\in[l,u]$, the distance to its resulting ray is exactly
+
+$$
+d_{I_2}(q_0,q_\tau)=2\pi R=2\sqrt{\pi|\tau|},
+\qquad \Delta\alpha=0,\quad\Delta\beta=-\tau/r.
+\tag{10.11}
+$$
+
+Here the distance may allow all positive native paths, or be restricted to
+any interior open domain containing the constructed path. The original
+$02$ coherence pair differs by
+
+$$
+\|y_{02}(q_\tau)-y_{02}(q_0)\|_2
+=4\sqrt{k_0Z}\left|\sin\left(\frac{\tau}{2r}\right)\right|.
+\tag{10.12}
+$$
+
+All other original coherence pairs return, so (10.12) is also the Euclidean
+norm of the full ten-component output difference. This holds for arbitrary
+preparation phases and arbitrary current phases.
+
+**Proof.** From §8.5, $Q\alpha=1/2$, $Q\beta=1/2-\kappa/r$.
+The map (10.9) is invertible with
+$\kappa=k_0+x$, $\alpha=\alpha_0+y/2$,
+$\beta=\beta_0+c_0y-z/r$, so it gives exactly (10.10), including the
+bracket sign. Take, on $0\le t\le1$,
+
+$$
+a(t)=x(t)=R\sin(2\pi t),\qquad
+b(t)=y(t)=sR(1-\cos(2\pi t)),\qquad z(t)=\int_0^t x\,dy.
+\tag{10.13}
+$$
+
+Then $A_\gamma=B_\gamma=0$, $m_\gamma=-R$, $M_\gamma=R$ and
+$K_\gamma=\tau=s\pi R^2$. Formula (9.11) gives precisely the displayed
+phase endpoint. All bottom masses on the common promise are at least
+$\min(l-R,r/2-u-R)>0$; the middle mass remains $Z>0$.
+The phase variation is $4R<\infty$, so this is an original admissible
+zero-winding loop, not a new central actuator.
+
+At a fixed $k_0$, the path satisfies $|x|\le R$, $|y|\le2R$ and
+$|z|\le\pi R^2$. Since $R<r/4$ and $0<c_0<1/2$, it has
+$|\alpha-\alpha_0|\le R<\pi$ and
+$|\beta-\beta_0|\le R+\pi R^2/r<\pi$. Thus one may choose
+$R<\delta\le\min(k_0,r/2-k_0)$ in the chart above. Its control norm is
+$\sqrt{\dot x^2+\dot y^2}$, so its length is $2\pi R$.
+
+For any rectifiable horizontal path with these real central endpoints,
+$x,y$ form a closed planar curve and $\tau=\int x\,dy$. Reparametrize
+by arclength on $[0,L]$ and subtract the two coordinate means. Periodic
+Wirtinger and Cauchy--Schwarz give the classical intermediate inequality
+
+$$
+\left|\int x\,dy\right|
+=\frac12\left|\int(x\dot y-y\dot x)\,dt\right|
+\le\frac12\left(\int(x^2+y^2)\right)^{1/2}\sqrt L
+\le\frac{L^2}{4\pi}.
+\tag{10.13a}
+$$
+
+The circle attains equality. This lower bound also applies to every
+potential shorter path between the actual rays, without assuming its lift:
+if $L<2\pi R<\pi/2$, then
+$|\Delta\alpha|\le L/2<\pi/4$ and $|\Delta\beta|\le L/2<\pi/4$,
+since $|Q\beta|<1/2$ throughout the positive source. Its endpoint must
+have $\Delta\alpha=2\pi m$ and
+$\Delta\beta=-\tau/r+2\pi n$. As $|\tau|/r<\pi/16$, these bounds force
+$m=n=0$. Its real $y$ endpoint is zero and its real $z$ endpoint is $\tau$;
+(10.13a) excludes the shorter path. This proves sharp distance on rays,
+not just a lower bound in one chosen winding sector. Larger displacements
+must be reduced by the phase lattice; (10.11) asserts only the stated range.
+
+The original output (8.8) has radius $2\sqrt{k_0Z}$ and angle
+$\delta_{02}^0+\beta$. Its chord under $\Delta\beta=-\tau/r$ gives
+(10.12); the arbitrary preparation rotates both vectors equally. In (8.19),
+the four bottom-edge pairs depend only on the returned $k_0,\alpha_0$, so
+the full output difference has exactly this same norm. For an
+explicit instance, let $Z=1/5$, $r=4/5$, $X=Y=2/5$,
+$[l,u]=[3/20,1/4]$, $k_0=1/5$, $R=1/20$ and $s=1$.
+Every bottom mass is at least
+$1/10$ on the whole promised family, while at $k_0$
+
+$$
+\tau=\pi/400,\qquad d_{I_2}=\pi/10,\qquad
+\Delta\beta=-\pi/320,\qquad
+\|\Delta y_{02}\|_2=\frac45\sin(\pi/640)>0.
+\tag{10.13b}
+$$
+
+For the mature Heisenberg correspondence, put $\zeta=z-xy/2$.
+Then (10.10) becomes
+$\partial_x-(y/2)\partial_\zeta$ and
+$\partial_y+(x/2)\partial_\zeta$, exactly the fields and orthonormal
+horizontal norm of [Bonnefont--Juillet, §2.1](https://arxiv.org/abs/1801.04109v2).
+Their generator is half the sum of squares; the full sum below uses their
+process at time $2t$. The coordinate map applies only on the guarded source
+chart, not as a global homogeneous identification of the phase torus.
+The sharp constant above follows from (10.13a) with the native norm, so no
+unspecified normalization of a central-distance formula is used. $\square$
+

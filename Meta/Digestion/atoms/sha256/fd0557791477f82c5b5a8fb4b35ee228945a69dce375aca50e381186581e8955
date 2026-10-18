@@ -1,0 +1,89 @@
+**Theorem 2.1 (all admitted priors, both original risks and both compatibilities).** For every prior in Convention 1.1 and each $j\in\{\mathrm{law},\mathrm{conf}\}$,
+
+$$
+\inf_{O\in\mathcal F_{\rm coh}}\mathcal A_j^\mu(O)
+=\inf_{O\in\mathcal F_{\rm det}}\mathcal A_j^\mu(O)=0.
+\tag{2.1}
+$$
+
+Every individual $O\in\mathcal F_{\rm coh}$ has strictly positive values of both averages. Hence all four infima are unattained. For every fixed $\mu$ and $\varepsilon>0$, one finite deterministic observer, installed before the first actual Read, simultaneously has $\mathcal A_{\rm law}^\mu=\mathcal A_{\rm conf}^\mu<\varepsilon$. No rationality, finite-support, computability, entropy or mean-depth assumption on $\mu$ is needed for this ordinary existence statement.
+
+Proof. We construct a complete finite generator and bound its complete-law error, then use the existing worst-history obstruction for nonattainment.
+
+### 2.1 Finite installed rows and the unchanged actual update
+
+Fix integers $N\ge1$ and $b\ge4$, and set $\delta=2^{-b}$. For each of the finitely many $(a,d)$ with $a+d<N$, choose an installed dyadic number $q_{a,d}$, with denominator $2^b$, such that
+
+$$
+\frac14\le q_{a,d}\le\frac12,
+\qquad |q_{a,d}-\lambda_\mu(a,d)|\le\delta.
+\tag{2.2}
+$$
+
+For example, $q_{a,d}=2^{-b}\lfloor2^b\lambda_\mu(a,d)\rfloor$ provides such a value, since the true row lies in $[1/3,2/5]$. The finitely many selected integers are installed data. The machine does not retain or consult $\mu$, $K$, an exact posterior or any real-valued register at runtime.
+
+The monitor alphabet is
+
+$$
+\mathcal V_N=\{(a,d)\in\mathbb N^2:a+d<N\}\cup\{\bot\}.
+\tag{2.3}
+$$
+
+Initialize $(C_{0,\mathrm{initial}},(0,0))$ before the first paid Read. On every actual Read, perform the unchanged original update $\Delta(c,x)$ and increment the corresponding monitor count if the new sum is below $N$. The Read reaching $N$ changes the monitor to permanent overflow $\bot$. Overflow holds thereafter while all original control and record updates continue. Original Stop performs its prescribed update and leaves the monitor alone. This deterministic augmented update $U$ is time-homogeneous and source-independent. Every paid seed rejection and return is counted until overflow; afterwards every such Read still executes the original process. Overflow restricts retained calibration information, not execution or the benchmark histories.
+
+At an active nonoverflow configuration, the predictive generator chooses $\alpha$ with probability $q_{a,d}$. At overflow it uses fixed $\alpha$ probability $r_1=1/3$ at every active phase. Each synthetic letter executes that same $U$. At pending it generates precisely the original $\mathrm{Stop}_b$ and its update; at delivered it generates the empty residual. Define $D_z$ to be the full law of this generator from $z$, with current original $c$ and all original derived events included. At earlier phases it describes the remaining original stages through Stop, so generation is defined before as well as after $H_3$.
+
+This continuation is the already supplied depth1 stopped law and original parser, not a new optimized fallback. Before overflow the generator either completes or reaches $\bot$ after finitely many Reads. A partially read seed pair resolves on the next Read. Thereafter the seed rejection probability per full pair is $5/9<1$ and the payload return probability per circle is $2/9<1$. A partial payload circle likewise completes or returns after one Read. The remaining number of stages is finite. Thus every $D_z$ is normalized, completes almost surely, and assigns zero mass to the original infinite noncompletion paths without removing them. It includes arbitrarily long finite tails; a finite horizon is never substituted.
+
+### 2.2 Both compatibility laws on the entire legal domain
+
+Write $s_z(x)$ for the generator's active letter row. All its active rows are strictly positive. Row products and the deterministic original events give, for every legal next letter and remaining continuation,
+
+$$
+D_z(xw)=s_z(x)D_{U(z,x)}(w).
+\tag{2.4}
+$$
+
+Here $xw$ abbreviates the operation transcript, including the events determined by $\Delta$, and the right side starts with the updated original configuration after deletion of that operation prefix. Iteration gives the same factorization for every legal finite prefix. Pending Stop has probability one and the prescribed residual; delivered has no further operation. This proves per-configuration same-update generation, including seed acquisition, rejected pairs, all four payload stages, overflow and both terminal cuts.
+
+Actual retention is deterministic: $\rho_h$ is a point mass at $z(h)$ and $z(hx)=U(z(h),x)$. Consequently $\overline D_h=D_{z(h)}$, and (2.4) separately proves actual-history marginalized update compatibility on every original legal prefix with positive predictive probability. This implication uses deterministic retention; it is not asserted for arbitrary randomized competitors. The original full-tree writer and latch order are part of $\Delta$ on every branch, independently of whether that history will satisfy $E_1$.
+
+### 2.3 Complete-tail comparison under the actual stopping law
+
+For $h\in\mathcal H_3$, write $t=T_3(h)=A(h)+B(h)$. When $t<N$, analytically couple the true conditional future and the predictive generator while their letters agree, until original fourth completion or total acquired count $N$. At each matched active prefix before that boundary, the monitor has the true acquired counts. Its two next-letter laws are Bernoulli rows whose parameters differ by at most $\delta$; an optimal two-letter coupling has mismatch probability at most $\delta$ [LPW, Proposition 4.7][LPW]. There are at most $N-t$ such comparisons. A union bound bounds a mismatch by $(N-t)\delta$. This coupling is an analytic comparison, not another actual sample, acquisition port or source operation.
+
+If no such mismatch occurs and the actual $T_4\le N$, all future letters through completion agree. The unchanged original updates then give identical current records, future derived events, fourth marker and Stop. Completion on the Read reaching $N$ is included: pending prediction is already the prescribed deterministic Stop, even when the monitor has just overflowed. Beyond the boundary both coupled marginals may continue according to their own full laws; the remaining possible discrepancy is charged by the actual event $T_4>N$. The coupling inequality therefore gives
+
+$$
+e_{\rm law}^O(h)=e_{\rm conf}^O(h)
+\le (N-t)_+\delta+\Pr_\mu(T_4>N\mid H_3=h).
+\tag{2.5}
+$$
+
+When $t\ge N$, the same bound holds because $T_4>t\ge N$ on that third-latch atom and TV is at most one. The supplied injective transcript map includes all future letters, not just the fourth outcome, so this is a bound for the required complete residual law.
+
+Multiply (2.5) by the actual $p_\mu(h)$ and sum over the whole stopping partition. The tower identity and (1.4) give
+
+$$
+\mathcal A_{\rm law}^\mu(O)=\mathcal A_{\rm conf}^\mu(O)
+\le N2^{-b}+\Pr_\mu(T_4>N)
+\le N2^{-b}+\frac{183}{14N}.
+\tag{2.6}
+$$
+
+No synthetic history weights, independently mixed segments or favorable-history condition enter this calculation. In particular future overflow is paid even when the queried $h$ itself has not overflowed; exact full-tail decoding before overflow is not claimed.
+
+Choose finite $N>2C/\varepsilon$ and $b\ge4$ with $N2^{-b}<\varepsilon/2$. Both averages are then below $\varepsilon$. Nonnegativity and $\mathcal F_{\rm det}\subset\mathcal F_{\rm coh}$ prove the four zero infima.
+
+### 2.4 Nonattainment from the existing positive-history theorem
+
+For this very fixed $\mu$, [PC, Theorem 2.1][PC], consuming [ST, §§3.1,3.3][ST], gives for every finite complete observer in the larger randomized class
+
+$$
+\sup_{h\in\mathcal H_3}e_{\rm law}^O(h)
+\ge\rho_p=\frac{1116529}{22781250}>0.
+\tag{2.7}
+$$
+
+If $\mathcal A_{\rm law}^\mu(O)=0$, nonnegative summands and the strictly positive weights (1.3) force $e_{\rm law}^O(h)=0$ at every finite $h\in\mathcal H_3$, contradicting (2.7). Thus its average is positive. TV convexity gives $\mathcal A_{\rm conf}^\mu(O)\ge\mathcal A_{\rm law}^\mu(O)>0$. The exclusion applies to the full randomized class and hence both subclasses here. No finite history need attain the worst-history supremum, and no common positive average lower bound over growing finite machines follows. This completes the proof.
+

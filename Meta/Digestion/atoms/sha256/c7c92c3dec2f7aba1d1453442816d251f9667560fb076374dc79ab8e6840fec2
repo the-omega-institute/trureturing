@@ -1,0 +1,44 @@
+**Definition 77.2 (one separate symbolic fixed-cap commission).** Use the
+unchanged whole substitution of55.1,
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad\rho\langle t,u\rangle=\langle\rho t,\rho u\rangle.
+\tag{77.8}
+$$
+
+Define finite syntax by
+
+$$
+B_0=\alpha,\quad B_{j+1}=\langle B_j,B_j\rangle,
+\qquad
+S_0=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\quad S_{j+1}=\langle S_j,S_j\rangle.
+\tag{77.9}
+$$
+
+Repeated expressions always denote distinct ordered occurrences. These
+syntax identities add no copy operation. Fix the separate commission's
+immutable INITIAL $B_{15}$ and its one cap $H=98304$ before any command.
+$B_{15}$ belongs to the original ordered-tree prior at that cap.
+Literal substitution gives $\rho^3\alpha=S_0$ and therefore
+$\rho^3 B_{15}=S_{15}$. $B_{15}$ has $2^{15}=32768$ leaves.
+The three whole candidates have respectively $32768$, $65536$ and
+$98304$ leaves: each original leaf becomes successively $\beta$,
+$\langle\beta,\alpha\rangle$ and $S_0$. Every candidate passes the
+same unchanged guard $\ell\le H$. Thus this is a separately legal
+symbolic prefix at the predeclared cap. It is not an executed or
+authenticated acquisition, a continuation of(77.6), or a cap increase.
+All original Read/refusal/Stop rules continue to govern this commission
+if it is actually executed.
+
+For the geometric witness fix $D=\operatorname{Pos}(S_{15})$.
+It has $3\cdot2^{15}=98304$ source leaves, $196607$ source vertices,
+$196606$ inherited seams, $196608$ distinct ground tips and that many
+stubs. Its maximum source-seam depth is $15+2=17$. At each of the
+$2^{15}$ addresses of depth15 there is a distinct pendant $S_0$
+occurrence. These $32768$ subtrees are vertex-disjoint, each has five
+source vertices and six tips, and together their tip sets partition all
+ground tips. All their attachment seams and all upper-tree seams remain
+part of $X_D$.
+

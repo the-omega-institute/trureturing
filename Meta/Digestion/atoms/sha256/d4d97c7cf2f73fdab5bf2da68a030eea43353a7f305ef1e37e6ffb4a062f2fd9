@@ -1,0 +1,60 @@
+**Proposition 8.3 (task-relative recovery and unrecovered relations).**
+Under Assumption 1.1 the acquired boundary and retained code determine
+the joint relation (LQF.2); the native address geometry determines its
+allowed reply partitions and prices. That relation determines exactly
+the feasible three-coordinate recovery budgets through Theorem 4.2,
+and a selected attaining controller recovers the substitution lag under
+its local feasibility condition. This does not in general recover the
+hidden original source, the discarded row or the historical acquisition
+process.
+
+Proof. Lemma 1.3 gives the first determination from the acquired data
+and installed encoder. Theorem 2.2 computes the permitted experiments
+on the same histories, and Theorems 3.2--4.2 give both directions of
+budget feasibility. In Proposition 6.2, however, two distinct original
+left values have the same code, complete acquired row and recovered
+lag. These data cannot reconstruct both original sources. No step
+recovers how a row was acquired or authenticates its provenance;
+truthful acquisition, same-source continuation and stationarity are
+premises. $\square$
+
+The spatial quantity here is the prefix geometry and literal length of
+native addresses. The temporal quantity is an integer substitution lag
+relative to the acquired original. The boundary is an already acquired
+complete cut row. The memory quantity fixed here is the retained origin
+code, with unrestricted later local computation and workspace. The
+proved correspondences concern these specified relations and this lag
+task; they imply neither physical spacetime reconstruction nor a total
+memory or execution-cost law.
+
+The encoder-wide memory/call/address optimum and a uniform joint
+frontier over all acquired rows and unbounded lags remain separate.
+In particular [NAR Theorem 16.6][NAR] already proves that a uniform
+finite address cap for a globally correct encoder is possible exactly
+when that encoder satisfies the zero-extra-read separation condition.
+A finite $\mathcal A_\eta$ at each entry cannot supply a single
+lag-uniform word bound. Nonstationary services, restricted workspace,
+mutable-word geometry, acquisition and authentication prices, and
+extensions to arbitrary native sources require their own interfaces.
+The finite lag-recovery interface established here is one conditional
+connection among boundary, memory, address geometry and temporal
+recovery, not a completion of their general mutual-recovery programme.
+
+[BASE]: https://github.com/the-omega-institute/trureturing/tree/e8891b5bc48c50f494096810d09453c8ec81020f
+[NAR]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[SLH]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[AOF]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[NARC]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NPL]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[JRF]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[GFT]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[ATR]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[DOR]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[ACP]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[NDP]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[AFS]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.lean
+[PPN]: https://github.com/the-omega-institute/trureturing/blob/e8891b5bc48c50f494096810d09453c8ec81020f/D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean
+[Nowak]: https://arxiv.org/html/0910.4397v5
+[CLS]: https://proceedings.mlr.press/v32/cicalese14.pdf
+[LWD]: https://arxiv.org/html/2305.19706v4
+

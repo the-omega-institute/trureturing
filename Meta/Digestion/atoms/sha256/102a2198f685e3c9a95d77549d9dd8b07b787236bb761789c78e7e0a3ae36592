@@ -1,0 +1,31 @@
+## 281. Exact inherited setting and closing claim
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+277, and the complete forced-split theorem in Sections 278–280 of the
+return continuation. In particular the original finite face-paired
+carrier has positive lengths shared by global edge labels, angle sum
+2*pi at every original edge, and connected circular normal links with
+original degree at least six. The chosen paired frames have distinct
+transverse labels in H={M,C,D,Z,U}; these are five distinct actual global
+labels. Repeated axes, repeated neighboring owners, parallel face
+pairings and self-pairings of distinct faces remain allowed.
+
+Write P={M,Z,U}. The four distinct interacting genuine owners are
+K={tau,rho,eta,xi}. Every face containing two distinct P labels is marked
+and its partner belongs to K. The established actual source and return
+are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+Tau's two {M,Z,C} face occurrences pair to rho's two M-incident faces.
+Tau's other two faces are {M,C,D}. Rho's remaining two faces {U,Z,C}
+are, by the forced-split theorem, paired one to eta and one to xi.
+Thus every face occurrence of rho is occupied. Section 277 ensures
+that at least one of eta,xi contains M.
+
+We prove these inherited conclusions are inconsistent. Consequently
+there is no mixed-flat critical configuration under these original
+five-reservoir paired hypotheses. This closing statement concerns this
+inherited paired class; no unrestricted CFMP assertion is made here.
+A geometric realization corollary requires the separately applicable
+existence and original manifold hypotheses, and is not asserted in this
+local closing argument.
+

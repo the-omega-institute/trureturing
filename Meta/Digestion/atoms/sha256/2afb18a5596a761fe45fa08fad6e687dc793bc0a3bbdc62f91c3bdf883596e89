@@ -1,0 +1,33 @@
+**Lemma 4.2 (the unique saturated branch, including degeneracies).** If $b_0<k$, there is exactly one $\lambda>\lambda_0$ with a $\mu>0$ and real unit $v$, $v_D>0$, such that
+
+$$
+A=C+\mu I-\lambda B\succeq0,\quad \operatorname{rank}A=2,\quad
+Av=0,\quad v^TBv=k.
+\tag{RG.20}
+$$
+
+Proof. For $\lambda\ge\lambda_0$ let $\mu(\lambda)$ be the largest eigenvalue of $\lambda B-C$. Its quadratic form is strictly negative on $D^\perp$, so at most one eigenvalue is nonnegative. At $\lambda_0$ it has a simple top eigenvalue zero; at a larger $\lambda$, the Rayleigh test $v_0$ makes the top eigenvalue positive and simple, while the other two remain strictly negative. The real unit top eigenvector can be chosen with $v_D>0$, since $\mu=\lambda v^TBv-v^TCv\ge0$ implies $b=v^TBv>0$.
+
+Differentiating its simple eigenpair gives
+
+$$
+\mu'(\lambda)=b(\lambda),\qquad
+b'(\lambda)=\mu''(\lambda)
+ =2\sum_{j\ne\mathrm{top}}
+ \frac{|v_j^TBv|^2}{\mu-\mu_j}\ge0.
+\tag{RG.21}
+$$
+
+For completeness, differentiating $Mv=\mu v$, $v^Tv=1$, with $M=\lambda B-C$, gives $v^Tv'=0$, $\mu'=v^TBv$ and $v_j^Tv'=v_j^TBv/(\mu-\mu_j)$. Differentiating $v^TBv$ yields (RG.21). An orthonormal eigenbasis of the complementary space suffices even when its eigenvalues coincide. The simple top eigenpair is locally differentiable by solving the eigen-equation together with normalization on $v^\perp$; its positive-$D$ convention patches these solutions.
+
+Vanishing of (RG.21) would make $Bv$ parallel to $v$. Since $b>0$, the only possible eigenline of $B$ is $e_D$. Its eigen-equation then makes $Ce_D$ parallel to $e_D$. In that decoupled case the sole positive generalized kernel in Lemma 4.1 is already $e_D$ and $b_0=1$, contrary to $b_0<k<1$. Thus $b$ increases strictly in the case at hand. This argument also covers $\alpha=\beta$.
+
+The $e_D$ Rayleigh test gives $\mu\ge\lambda-c_{00}$. Combining it with $\mu=\lambda b-v^TCv$ gives
+
+$$
+0\le1-b\le c_{00}/\lambda.
+\tag{RG.22}
+$$
+
+Hence $b\to1$. It starts at $b_0<k$ and crosses $k<1$ once by continuity and strict increase. The resulting $\mu>0$ and $v$ give (RG.20). Conversely PSD of $A$ and a zero eigenvalue make $\mu$ the unique positive top eigenvalue of $\lambda B-C$; therefore any pair in (RG.20) is on the curve just considered. This proves uniqueness. $\square$
+

@@ -1,0 +1,13 @@
+## 4. Complete interpolation on a sixth-M response fiber
+
+Fix one normalized drift $d$ and the entire same ancestor. Write
+
+$$
+A=24-d,\quad B=48-d,\quad C_*=c_0-d,\quad
+Y_*=y-d,\quad Z_*=\zeta-d.
+\tag{4.1}
+$$
+
+On a sixth-$M$ response fiber let $c=v_M-d$, so
+$f(6)=c/(1+2t)$ and $f(3)=C_*/t$. Suppose $f(7)=0$.
+

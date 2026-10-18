@@ -1,0 +1,43 @@
+**Lemma 9.2 (actual extension and support envelopes).** Every actual
+live history at depth $d$ extends through actual live histories to
+every specified depth $e$ with $d\le e\le n-1$. The supports at
+the depths in (SI.28) form a strictly increasing chain, with
+$|T_a|=a$. For $B=(a,b)\in\mathcal B$ and any actual live
+occurrence $(p,S,q)\in\mathcal R$ at depth $a\le d<b$,
+
+$$
+T_a\subseteq S\subsetneq T_b,\qquad
+i(q)\in T_b\setminus S\subseteq X_B.
+\tag{SI.31}
+$$
+
+At a common-support depth, different cells have disjoint host sets.
+No state hosted at that depth is live at another depth.
+
+Proof. If $h+z<n-1$ and $(h,z)\in V$, it is not the corner
+$(K-1,L-1)$. At least one of the replies zero and one therefore has
+its child count still in $V$. The next query is fresh by Theorem 2.2,
+and (SI.8) makes that child an actual live history with the installed
+successor. Iterating to the specified depth proves extension. At each
+step the chosen reply fixes an unread coordinate, so a completion of
+the resulting exposed assignment follows the entire finite prefix.
+No inconsistent syntactic path is used.
+
+Extending a history between two common depths gives containment of
+their supports; Theorem 2.2 gives their cardinalities and hence strict
+containment. The same statement at the endpoint $n$ follows from
+$T_n=[n]$. An occurrence at depth $d\ge a$ has an actual live
+ancestor at depth $a$, so its support contains $T_a$. If $b<n$,
+extend the occurrence to depth $b$. Since $d<b\le n-1$, this
+extension includes its next query and gives both $S\subsetneq T_b$
+and $i(q)\in T_b\setminus S$. If $b=n$, these assertions follow
+from $|S|<n$ and freshness. This proves (SI.31).
+
+At a common depth all supports coincide, and different cells have
+unequal hits. Their hosts are disjoint by the equal-support exclusion
+supplied in Section 2. Any live support at an earlier depth is a
+proper subset of the common support, by extension; any live support
+at a later depth properly contains it, by ancestry. The supplied
+nested-support exclusion therefore forbids the last asserted sharing.
+$\square$
+

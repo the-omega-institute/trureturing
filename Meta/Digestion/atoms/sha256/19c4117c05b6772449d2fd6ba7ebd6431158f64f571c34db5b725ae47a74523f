@@ -1,0 +1,230 @@
+**定理 442.1（全部幂次阻尼的常数级展开）。** 定义宏观肩部函数
+
+\[
+K(t)=A-(C-1)(\log t+\gamma_E)
+ +C\int_0^\infty e^{-tu}\frac{1/Q(u)-1}{u}\,du,
+\qquad t>0.
+\tag{FD.1}
+\]
+
+该积分对每个 \(t>0\) 绝对收敛，\(K\) 在正轴连续。完整首积分满足
+
+\[
+J_z(tL^{-\alpha})=
+\begin{cases}
+(C-1)\alpha\log L+A-(C-1)(\log t+\gamma_E)+o(1),
+ &0<\alpha<1,\\[2mm]
+(C-1)\log L+K(t)+o(1),&\alpha=1,\\[2mm]
+(C-\alpha)\log L+\log t+\gamma_E+B_*+o(1),&\alpha>1.
+\end{cases}
+\tag{FD.2}
+\]
+
+**证明：极限轮廓的完整积分。** 置
+\(H_\Phi(v)=\Phi(v)(1-e^{-v})-v\)，并定义固定残差
+
+\[
+\mathfrak a(v)=
+\begin{cases}
+H_\Phi(v)/v^2,&0<v\le1,\\[1mm]
+\Phi(v)(1-e^{-v})/v^2-C/v,&v>1.
+\end{cases}
+\]
+
+\(\Phi(0)=1\)、\(\Phi'(0)=1\) 给
+\(H_\Phi(0)=H_\Phi'(0)=0\)，其二阶连续性使第一段在零端有界。
+在远端使用 §441 内的经典指数积分恒等式
+
+\[
+\Phi(v)=Cv\exp(E_1(v)),\qquad
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw\le\frac{e^{-v}}v.
+\]
+
+因此 \(v\ge1\) 时
+\(\mathfrak a(v)=C[\exp(E_1(v))(1-e^{-v})-1]/v\) 的绝对值
+不超过固定常数乘 \(e^{-v}/v\)。这支付两个端点，且
+\(\int_0^\infty\mathfrak a(v)\,dv=A\)。几乎处处精确地有
+
+\[
+\frac{H_\Phi(v)}{v^2}
+=\mathfrak a(v)+(C-1)\frac{\mathbf1_{(1,\infty)}(v)}v.
+\]
+
+从而对每个正阻尼
+
+\[
+J_\Phi(\sigma):=\int_0^\infty e^{-\sigma v}
+ \frac{H_\Phi(v)}{v^2}\,dv
+=\int_0^\infty e^{-\sigma v}\mathfrak a(v)\,dv+(C-1)E_1(\sigma).
+\tag{FD.3}
+\]
+
+这里 \(\int_1^\infty e^{-\sigma v}\,dv/v=E_1(\sigma)\)。经典恒等式
+\(E_1(\sigma)=-\log\sigma-\gamma_E+\operatorname{Ein}(\sigma)\)
+以及 \(0\le\operatorname{Ein}(\sigma)\le\sigma\)，结合固定可积残差的
+支配收敛，给
+
+\[
+J_\Phi(\sigma)=A-(C-1)(\log\sigma+\gamma_E)+o(1)
+\qquad(\sigma\downarrow0).
+\tag{FD.4}
+\]
+
+所需的一致性也直接由同一残差支付。对任意固定 \(\alpha>0\)，
+
+\[
+\sup_{t\in[a,b]}
+\left|\int_0^\infty(e^{-tL^{-\alpha}v}-1)\mathfrak a(v)\,dv\right|
+\le\int_0^\infty(1-e^{-bL^{-\alpha}v})|\mathfrak a(v)|\,dv\longrightarrow0.
+\]
+
+指数积分的误差一致不超过 \(bL^{-\alpha}\)。因此（FD.4）可在这些
+随 \(L\) 收缩的阻尼区间上一致使用，无须给残差积分附加收敛速率。
+
+**证明：\(0<\alpha<1\) 的完整全轴误差。** §441 的原时钟运输给固定
+\(B>0\)，使全部 \(v\ge0\) 满足
+\(|\log F_z(v)-\log\Phi(v)|\le Bv/L\) 及 \(\Phi(v)\le e(1+v)\)。
+由 \(|e^x-1|\le e^{|x|}|x|\)，得到
+
+\[
+|F_z(v)-\Phi(v)|\le\Phi(v)e^{Bv/L}\frac{Bv}L.
+\]
+
+两个补偿分子具有相同的 \(-v\)，其差恰为
+\((F_z-\Phi)(1-e^{-v})\)。当 \(\sigma>B/L\) 时，完整差积分满足
+
+\[
+\begin{aligned}
+|J_z(\sigma)-J_\Phi(\sigma)|
+&\le\frac{eB}L\int_0^\infty e^{-(\sigma-B/L)v}
+ \frac{(1+v)(1-e^{-v})}{v}\,dv\\
+&\le\frac{2eB}{L(\sigma-B/L)}.
+\end{aligned}
+\tag{FD.5}
+\]
+
+第二步在 \(0<v\le1\) 使用 \(1-e^{-v}\le v\)，在 \(v\ge1\) 使用
+\(1-e^{-v}\le1\)，因而全轴上的剩余因子不超过二。正的指数衰减支付
+整个无限尾。固定 \(0<\alpha<1\) 后，最终
+\(B/L\le aL^{-\alpha}/2\)，所以对所有 \(t\in[a,b]\)，
+\(\sigma=tL^{-\alpha}\) 满足 \(\sigma-B/L\ge\sigma/2\)。于是（FD.5）
+一致不超过 \((4eB/a)L^{\alpha-1}=o(1)\)。与（FD.4）合并即得
+（FD.2）的第一式。
+
+**证明：\(\alpha=1\) 的完整宏观修正。** 精确换元 \(v=Lu\) 给
+
+\[
+J_z(t/L)-J_\Phi(t/L)=\int_0^\infty e^{-tu}d_z(u)\,du,
+\qquad
+d_z(u)=\frac{[F_z(Lu)-\Phi(Lu)](1-e^{-Lu})}{Lu^2}.
+\tag{FD.6}
+\]
+
+在每个固定 \(u>0\)，§441 中由第三 Mertens 定理所得的
+\(C_z/L\to C\)，以及绝对收敛的经典 Euler 乘积，给
+
+\[
+\frac{F_z(Lu)}L\longrightarrow\frac{C}{\zeta(1+u)},\qquad
+\frac{\Phi(Lu)}L\longrightarrow Cu,\qquad 1-e^{-Lu}\longrightarrow1.
+\]
+
+故
+
+\[
+d_z(u)\longrightarrow d_\infty(u)
+=C\frac{1/Q(u)-1}{u}.
+\]
+
+为支付整个零端，在 \(0<u\le1\) 使用全轴对数误差，得到
+
+\[
+|d_z(u)|\le eB e^{Bu}\frac{1+Lu}{Lu}(1-e^{-Lu})
+\le2eB e^B.
+\tag{FD.7}
+\]
+
+最后一步正是（FD.5）中对任意正实数成立的因子界，故也覆盖
+\(u\ll1/L\)，并不要求 \(Lu\ge1\)。由 §441 的
+\(1\le Q(u)\le1+u\)，还有 \(|d_\infty(u)|\le C\)。
+
+在 \(u\ge1\)，取固定 \(C_0\) 使最终 \(C_z/L\le C_0\) 及 \(L\ge1\)。
+有限完整乘积的上界 \(F_z\le C_z\) 和 \(\Phi(Lu)\le e(1+Lu)\) 给
+
+\[
+|d_z(u)|\le\frac{C_0+e(u+1/L)}{u^2}
+\le\frac{C_0+e(u+1)}{u^2},\qquad
+|d_\infty(u)|\le\frac Cu.
+\]
+
+因此 \(e^{-au}|d_z(u)-d_\infty(u)|\) 在 \((0,1]\) 有固定常数界，
+在 \([1,\infty)\) 由固定常数乘
+\(e^{-au}(1+u)/u^2\) 控制，两段合为一个固定可积主导函数。普通
+支配收敛给
+
+\[
+\begin{aligned}
+\sup_{t\in[a,b]}\left|\int_0^\infty
+ e^{-tu}[d_z(u)-d_\infty(u)]\,du\right|
+&\le\int_0^\infty e^{-au}|d_z(u)-d_\infty(u)|\,du\\
+&\longrightarrow0.
+\end{aligned}
+\tag{FD.8}
+\]
+
+此处只用了每个固定 \(u>0\) 的 Euler 收敛；零端由（FD.7）直接支付。
+与（FD.4）在 \(\sigma=t/L\) 的一致展开合并，得到（FD.1）和
+（FD.2）的第二式。
+
+为了同时确认 \(K\) 的定义，令 \(\beta(u)=(1/Q(u)-1)/u\)。上述
+\(Q\) 界给
+
+\[
+\beta(u)\le0,\qquad |\beta(u)|\le1\quad(u>0),\qquad
+|\beta(u)|\le1/u\quad(u>0).
+\]
+
+用第一个绝对值界支付 \((0,1]\)，第二个支付指数阻尼下的
+\([1,\infty)\)，得到（FD.1）的绝对收敛。在每个正 \(t\) 紧区间上，
+同样的 \(e^{-au}\) 主导函数支付连续性。
+
+**证明：\(\alpha>1\) 的完整联合阻尼尾。** 使用 §441 已得的统一局部
+预算：最终存在固定 \(K_0\)，使 \(0\le v\le1\) 上
+\(|H_z(v)|\le K_0v^2\)。令 \(\mathcal B_z\) 为（PX.15）中的原常数。
+扣除它并保留全部负线性尾，精确地有
+
+\[
+\begin{aligned}
+J_z(\sigma)-\mathcal B_z
+={}&\int_0^1(e^{-\sigma v}-1)\frac{H_z(v)}{v^2}\,dv\\
+&+\int_1^\infty(e^{-\sigma v}-1)
+ \frac{F_z(v)(1-e^{-v})}{v^2}\,dv-E_1(\sigma).
+\end{aligned}
+\]
+
+第一积分的绝对值不超过 \(K_0\sigma/2\)。对 \(0<\sigma\le1\)，第二
+积分的绝对值不超过
+
+\[
+C_z\int_1^\infty\frac{\min(\sigma v,1)}{v^2}\,dv
+=C_z\sigma[1+\log(1/\sigma)].
+\]
+
+这一步包含 \(v\ge1/\sigma\) 的全部尾。结合
+\(-E_1(\sigma)=\log\sigma+\gamma_E+O(\sigma)\)，得到固定最终预算
+\(K_1\) 下的全轴界
+
+\[
+|J_z(\sigma)-\log\sigma-\gamma_E-\mathcal B_z|
+\le K_1\sigma+C_z\sigma[1+\log(1/\sigma)].
+\tag{FD.9}
+\]
+
+当 \(\sigma=tL^{-\alpha}\)、固定 \(\alpha>1\) 时，\(C_z=O(L)\)
+使右侧在 \(t\in[a,b]\) 上一致为
+\(O_{a,b,\alpha}(L^{-\alpha}+L^{1-\alpha}\log L)=o(1)\)。使用 §441
+通过先固定切点比例再令比例趋零而得到的
+\(\mathcal B_z=C\log L+B_*+o(1)\)，再代入
+\(\log\sigma=\log t-\alpha\log L\)，即得（FD.2）的第三式。
+这只消耗原有 \(C_z/L\to C\) 与已匹配常数，不要求加强 Mertens
+误差的速率。定理得证。
+

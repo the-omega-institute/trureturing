@@ -1,0 +1,38 @@
+**Theorem 3.3 (whole-tree validation from a possibly moving traversal).**
+Every accepted first-leaf transcript is sound on every legal history
+realizing it. If $s$ is its first-leaf Read and $v$ its validation Read,
+there are no updates between $s$ and $v$, and
+
+$$
+T=U_s=U_v,\qquad R_P(T)=R_P(U_v).
+\tag{CNA.4}
+$$
+
+The source is constant throughout that interval. Earlier Reads may
+cross updates. This holds for every finite source and every finite
+prefix-free cut, including all cases in Definition 1.2.
+
+**Proof.** Equal leaf replies imply zero updates between $s$ and $v$.
+Before $s$ every traversal reply was branch, by definition of first leaf.
+Every such branch persists to $v$. All other traversal replies occur
+in the stationary interval and are exact replies of $U_v$.
+
+Every queued address exists when queried. The root exists; children
+are queued only after their parent was read as branch, and persistence
+keeps them present. No address is queried twice within the traversal:
+each nonroot address has one parent, which queues it only once.
+These invariants hold under interleaving, without stationarity advice.
+
+For a completed grammar, induction from its leaves to its root shows
+that its finite tree is $U_v$. At a recorded leaf the actual subtree
+is exactly its label; at a recorded branch the two actual children
+have their recursively reconstructed values. Stack exhaustion excludes
+an omitted child or unexamined subtree. This uses the existing stationary
+reconstruction argument after proving that every retained constructor
+reply agrees with one actual version.
+
+Structural comparison of acquired subtrees now determines equality
+and disequality on this same $T$. Exterior and blocked guards also
+come from $T$. The proof works for every legal realization of the
+checked transcript, without inspecting its generating schedule. $\square$
+

@@ -1,0 +1,69 @@
+**Open problem 9.2 (the original effective all-size obligation).** At
+fixed $d$, put $S=S_d$. For every length $n\ge1$, a complete native
+template $\Theta$ chooses for every $(i,q)\in[n]\times W_d$ a
+constant factor or an equation
+$\Gamma_q(x_i)=\delta(r_{x_j}(a))$, with a total four-reply decoder,
+$j\in[n]$ and $a\in W_d$. Let $C_\Theta\subseteq S^n$ be its
+simultaneous solution set. All shared references, arbitrary correlated
+solutions, off-target donors, guards, cycles and compatibility zeros
+are retained. Each full block weight is used once. For a probability
+$\mu$ define
+
+$$
+\beta_d(\mu)=\sup_{n\ge1}\max_\Theta
+\left(\sum_{x\in C_\Theta}\prod_{i=1}^n\mu(x_i)\right)^{1/n},
+\qquad b_d=\min_\mu\beta_d(\mu)=2^{-\sigma_d}.
+\tag{PPF.28}
+$$
+
+The equality is credited NPC semantic completeness. Its effective
+consumer still requires a total computable predicate $V(d,\mu,C,\pi)$
+on rational probability vectors, rational $C>0$ and finite certificates,
+whose acceptance implies
+
+$$
+\forall n\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_i\mu(x_i)\le C^n,
+\tag{PPF.29}
+$$
+
+and whose accepted endpoints are cofinal: for each $d\ge1$ and
+rational $\epsilon>0$, some accepted input satisfies
+$-\log_2C>\sigma_d-\epsilon$. Alternatively one needs a uniform
+effective vanishing error in
+$\sigma_d\ge n^{-1}\log_2K_d(n)-\eta_d(n)$, where $K_d(n)$ is
+the unrestricted native integral-cover minimum. These are the original
+[NPC Definition 8.1][NPC], [GDB Definition 11.1][GDB] and
+[COK Open problems 9.3 and 25.2][COK] obligations.
+
+Theorems 3.2–5.1 supply no such universal cap, cofinality proof, length
+modulus or equality between the conditional-owner envelope optimum and
+$b_d$.
+They determine preparation-resource projections and reduce sufficient
+acquisition at exact $M_1(D)$; finite cover generation remains separate
+from effective convergence of the original rate. The constrained
+preparation minima in (PPF.22), a joint Pareto frontier of names and
+acquisition, general exact $M_1(D)$, sharp $\lambda$, terminating
+two-sided rate approximation and full mutual recovery remain
+unresolved. The precise source-domain and budget obstructions in §7
+do not strengthen these open boundaries into global impossibility.
+
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[NPC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[NCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[COK]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[OCC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+[GDB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[D5G]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[D5A]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[D5N]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[NLM]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLMB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.md
+[FCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FCEB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.md
+[KK]: https://arxiv.org/pdf/1105.0240v2
+[QWS]: https://arxiv.org/pdf/2609.18024
+

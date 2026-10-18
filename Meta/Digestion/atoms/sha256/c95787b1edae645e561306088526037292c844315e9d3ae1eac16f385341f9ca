@@ -1,0 +1,54 @@
+**Construction 2.3 (use of the existing ground solution equivalences).**
+Within a conjunction, let $C$ be its positive equations that contain
+only Boolean leaves, variables and pairing. Let $\Delta$ contain its
+free-constructor disequalities, and let $G$ be the conjunction of all
+remaining interpreted constraints. Keep the finite variable set
+$X=X_\eta$ in full, including variables absent from $C$.
+
+The exact source interface is [NativeGroundSolutionSpace][NGSS].
+Use its Presentation enumerating all of $X$, encodeEquations, and a
+successful output $S$ of the actual empty-state free-term unifier.
+Its notation gives
+
+$$
+\begin{aligned}
+Y&=\{x\in X:x\notin D(p,S)\},\\
+\operatorname{Ext}(w)(x)
+  &=\operatorname{evaluate}(w,\sigma(x)),\\
+\{w:Y\to\mathcal T:\ &
+  \operatorname{Diseq}(\Delta)(\operatorname{Ext}w)
+       \land G(\operatorname{Ext}w)\}\\
+&\simeq
+\{v:X\to\mathcal T:
+  \operatorname{Sol}(C)(v)\land
+  \operatorname{Diseq}(\Delta)(v)\land G(v)\}.
+\end{aligned}
+\tag{PDC.6}
+$$
+
+This is precisely constrainedEquiv; solutionEquiv is its unrestricted
+equation interface. Their inverse is restriction to the unbound
+original variables. The declarations restriction_Ext, Ext_restriction,
+Ext_sol and action_identity supply the identities, including unused
+and repeated original variables. The predicate $G$ is pulled back
+through the same Ext, not through an independently chosen witness.
+
+The underlying Source is FreeMagma Bool and Term $X$ is
+FreeMagma $(\mathrm{Bool}\mathbin{\oplus}X)$, with
+$\alpha=\mathtt{of\ true}$, $\beta=\mathtt{of\ false}$ and pairing
+$\mathtt{mul}$. The native encoding and its support conditions come
+from [NativeUnificationCore][NUC]. [NativeTermUnification][NTU] supplies
+the terminating free-term procedure; [NativeSubstitution][NSUB]
+supplies its well-formed substitution idempotence and native constructor
+preservation; [UnificationCompleteness][UC] supplies unify_sound,
+unify_mgu and unify_complete. NativeGroundSolutionSpace's
+native_complete justifies discarding a failed free subsystem.
+
+No part of that syntax contains interpreted $\rho$. Thus (PDC.6)
+retains $G(\operatorname{Ext}w)$ and does not yet meet URR's hypothesis.
+Substitute the supplied finite terms $\sigma(x)$ into every remaining
+constraint, source expression, mask and hole expression. An unbound
+$y\in Y$ is still the source subtree at $a_{\eta,y}$, because Ext fixes
+it. The empty free subsystem is allowed. No free unification theorem
+or ground-decoding theorem is reproved here.
+

@@ -1,0 +1,36 @@
+**Proposition 75.11 (retained complements, both cross blocks and restriction loss).** Let $\mathsf S_{\varepsilon,C}(z)=\iota_\varepsilon(H_{\varepsilon,R,C}^{\rm D}-z)^{-1}\iota_\varepsilon^*$, and put
+
+$$
+P_\varepsilon=L_\varepsilon L_\varepsilon^*,\quad
+Q_\varepsilon=I-P_\varepsilon,\quad
+A_\varepsilon=\iota_\varepsilon\iota_\varepsilon^*,\quad
+F_\varepsilon^{\rm forb}=I-A_\varepsilon.
+\tag{75.46}
+$$
+
+The entire $Q_\varepsilon$ block and both cross blocks of the actual extended resolvent tend to zero uniformly on $K$:
+
+$$
+\begin{aligned}
+\|Q_\varepsilon\mathsf S_{\varepsilon,C}(z)Q_\varepsilon\|,
+\quad\|Q_\varepsilon\mathsf S_{\varepsilon,C}(z)P_\varepsilon\|,
+\quad\|P_\varepsilon\mathsf S_{\varepsilon,C}(z)Q_\varepsilon\|
+&\le D_{\varepsilon,C}^0(z),\\
+\|K_{\varepsilon,C}(z)F_\varepsilon^{\rm forb}\|,
+\quad\|F_\varepsilon^{\rm forb}K_{\varepsilon,C}(z)\|
+&\le D_{\varepsilon,C}^0(z).
+\end{aligned}
+\tag{75.47}
+$$
+
+Nevertheless, for all sufficiently small $\varepsilon$, the raw restricted lift satisfies
+
+$$
+\|I-T_\varepsilon^*T_\varepsilon\|_{\mathcal B(\mathcal K)}=1.
+\tag{75.48}
+$$
+
+**Proof.** The target resolvent has only a $P_\varepsilon$–$P_\varepsilon$ block. Multiplying the full difference in(75.14) by these orthogonal projections proves the first three bounds. The actual extended resolvent vanishes on the forbidden subspace in both directions, proving the last two. Thus the estimates include nonconstant chamber and transverse functions, ground half-chamber functions, the excluded effective atomic coordinates, arbitrary complementary forcing and both directions of coupling to the retained range.
+
+For(75.48), choose any cable. A nonzero symmetric smooth cell function supported in $[1/4,3/4]^2\cap\{|x-y|<R_\varepsilon/4\}$, with every other stratum zero, defines a target Hilbert vector; normalize it in the actual $\delta^2$ cell norm. Choose an even factor vanishing at $x=y$, so the vector also belongs to the literal target form domain, with all outer cell traces zero. Since $R_\varepsilon/\varepsilon\to\infty$, its entire physical transverse product lies in the forbidden region for small $\varepsilon$, by the same separation estimate as75.6. Its restriction $T_\varepsilon f$ is zero. The positive contraction $T_\varepsilon^*T_\varepsilon$ therefore has a unit kernel vector, while $0\le I-T_\varepsilon^*T_\varepsilon\le I$, proving(75.48). For these normalized vectors, (75.27) and their strip support give $a k_{\delta,2}[f]\ge4a/(\delta R_\varepsilon^2)\to\infty$. This explains why exact raw isometry cannot replace the complete lower, recovery and compact resolvent proof. The allowed comparison(75.15) remains an operator norm on its entire actual carrier. $\square$
+

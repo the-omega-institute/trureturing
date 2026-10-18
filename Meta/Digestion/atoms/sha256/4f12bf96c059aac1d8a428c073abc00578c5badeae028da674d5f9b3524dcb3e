@@ -1,0 +1,73 @@
+**Corollary 24.3 (The square-root gap Hankel controls exact coherent bond).**
+Let $H_{\ell,r}=[\sqrt{\gamma_{i+j}}]_{i<\ell,j<r}$.
+Then
+
+$$
+\operatorname{rank}H_{\ell,r}
+\le\operatorname{SR}_{\ell\,|\,r}\Psi_{\ell+r}(P)
+\le\operatorname{rank}H_{\ell,r}+2.
+\tag{24.11}
+$$
+
+Consequently the prescribed positive coherent embeddings
+have a uniform finite exact open-chain bond bound over
+all windows if and only if the infinite scalar Hankel
+matrix $[\sqrt{\gamma_{i+j}}]_{i,j\ge0}$ has finite rank.
+Equivalently, the shifted tails of the sequence
+$h_k=\sqrt{\gamma_k}$ span a finite-dimensional real
+vector space. This is also equivalent to a finite
+real linear realization of that same sequence.
+
+Proof. The top-left block of (24.5) gives the lower
+rank bound; appending one row and one column increases
+rank by at most two. If all finite Hankel blocks have
+rank at most R, the same bounds give all cut ranks
+at most R+2. Successive exact Schmidt decompositions
+then give, for each finite window, one exact MPS with
+that bond bound. Conversely a common exact bond bound
+bounds every such block rank by the lower inequality.
+
+For completeness, bounded finite-block rank is
+equivalent to finite tail-span dimension. If finitely
+many infinite tails are linearly independent, their
+restrictions to a sufficiently long initial coordinate
+segment remain independent. Indeed the kernels of
+these successive restrictions form a decreasing chain
+in their finite-dimensional coefficient space. Once
+the chain stabilizes its value is the intersection,
+which is zero. Any finite list of tail indices is
+contained in an initial column segment. Thus arbitrarily
+large independent lists would yield arbitrarily large
+finite block ranks. The reverse implication is immediate
+by restriction.
+
+The final equivalence is the existing realization
+theorem, not a new realization construction. In
+`D5/S3/Observer/Hankel/SequenceHankelRealization.lean`,
+apply `finite_tailSpace_iff_exists_realization` to
+$m_k=h_k\operatorname{id}_{\mathbb R}$.
+The scalar tails identify with its `tailSpace` because
+`dataTail m j a` is a times the shifted h-tail.
+Under the explicit finite-dimensional premise,
+`dataHankel_rank_eq_tailSpace` additionally identifies
+sufficiently large finite block ranks with this minimal
+dimension. $\square$
+
+This criterion concerns the sequence $\sqrt\gamma$.
+A finite classical renewal producer already gives a
+finite linear representation of $\gamma$, which need
+not give one of $\sqrt\gamma$: §22 supplies a fixed
+two-state counterexample. Finite linear realizations
+here may have signed coordinates and are not claimed
+to be stochastic generators or quantum instruments.
+Per-window open-chain MPS factorizations are not an
+assertion of one homogeneous tensor, a common infinite
+pure-state extension, or a physical preparation.
+
+The renewal cylinder law is standard; the isometric
+grouping is an explicit finite-window application of
+renewal factorization. The general tail-space realization
+result is reused from its existing owner. No literature
+priority or complete Lean formalization of Theorem 24.2
+is asserted.
+

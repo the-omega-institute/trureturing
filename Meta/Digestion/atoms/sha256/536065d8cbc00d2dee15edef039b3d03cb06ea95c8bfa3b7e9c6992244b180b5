@@ -1,0 +1,16 @@
+**定理 18.2（三维静态接口不决定时间闭合）。** 假设 18.1 中，固定 $u$ 的最小能量为 $E_\partial(u)=\tfrac12u^{\mathsf T}Su$，$S=A-BD^{-1}B^{\mathsf T}$。同一边界的完整动态却含
+
+$$
+\begin{aligned}
+h(t)&=e^{-Dt}h_0-\int_0^t e^{-D(t-s)}B^{\mathsf T}u(s)\,ds,\\
+u'(t)&=-Au(t)+f(t)-Be^{-Dt}h_0
++\int_0^t K(t-s)u(s)\,ds,\qquad K(t)=Be^{-Dt}B^{\mathsf T}.
+\end{aligned}
+$$
+
+当前即时项、隐藏初态项和历史反馈项不能相互删去。若要求对全部初态仅由 $u$ 自主预测，则此梯度模型中恰须 $B=0$；静态 Schur 形式即使为零，也不能推出这一条件。
+
+证明。最小值及达到点 $h_*=-D^{-1}B^{\mathsf T}u$ 复用 [SchurMinimum 的 `schur_quadratic_is_least`](../../../D5/S3/Quantum/Matrix/SchurMinimum.lean)，以实矩阵视为 Hermitian 矩阵并加 $1/2$ 系数。网络上的 Schur/Kron 背景见 [Dörfler–Bullo 文献注](../../../Library/GraphInvariants/dorflerbullo2013kron.md)，它是静态中间输入。动态两式是 [Gouasmi–Parish–Duraisamy 文献注](../../../Library/Dynamics/gouasmiparishduraisamy2017memory.md) §2.1 式 (2.1)–(2.3) 在块 $(-A,-B,-B^{\mathsf T},-D)$ 上的直接应用，边界另加同一 $f$。也可对第一式求导验证初值，再代入边界式。$D>0$ 给内部指数衰减，但不使有限时记忆恒为零，精确改写也未降低计算量。
+
+若 $B\ne0$，选 $\delta h$ 使 $B\delta h\ne0$，两个相同 $u_0$、不同 $h_0$ 的来源在初始导数上已不同，任意足够短未来亦不同。若 $B=0$ 则 $u'=-Au+f$ 闭合。这里用全部隐藏初态为允许来源；指定 $h_0$ 或受约束子集须重查目标纤维。定理 18.4 给静态零响应但动态不闭合的共同实例。证毕。
+

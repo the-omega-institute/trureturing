@@ -1,0 +1,99 @@
+**Definition 206.3 (The reused signed hull and certificate rule).**
+Let $\alpha=(1,1,0,\ldots,0;0)$ and use the auxiliary polytope of
+[198.5](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md):
+
+$$
+H_L=\left\{(b,e):\begin{array}{l}
+1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+(L+1)e\le\sum_{j=3}^Lb_j,\quad
+b_1+\sum_{j=3}^Lb_j-(L+1)e\le1
+\end{array}\right\}.
+\tag{206.8}
+$$
+
+For signed $q=(\beta,K)$ set
+$F_q(b,e)=\sum_j\beta_j(b_j-\alpha_j)-Ke$ and
+$\sigma_H(q)=\max_{(b,e)\in H_L}F_q(b,e)$. Its complete vertex set is
+
+$$
+\begin{aligned}
+o&=(0,\ldots,0;0),&p&=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{1/(k-1),\ldots,1/(k-1)}_k,0,\ldots,0;0),\\
+v_k&=(\underbrace{1,\ldots,1}_k,e_k,\ldots,e_k;e_k),&
+e_k&=(k-2)/(k+1),\qquad3\le k\le L.
+\end{aligned}
+\tag{206.9}
+$$
+
+The hull assertion and its proof remain in 198.5. In its difference
+coordinates $x_i=b_i-b_{i+1}$, $b_{L+1}=e$, the conditions are
+$x_2=0$, $x_1,x_3,\ldots,x_L,e\ge0$,
+$\sum_{k\ge3}(k-2)x_k\ge3e$ and
+$x_1+\sum_{k\ge3}(k-1)x_k-2e\le1$.
+The normalized rays $(x_k,e)=(1,0),(1,(k-2)/3)$ and the $x_1$ ray
+give precisely (206.9). Thus the same hull applies to signed
+residuals without a positivity assumption on their coordinates.
+
+For a comparison score with early correct totals $c_1,c_2$, late
+correct totals $\eta_j$, no base rows, early pair support, and anchor
+$W'$, write
+
+$$
+a=\gamma_1-c_1,\qquad b=\gamma_2-c_2,\qquad
+R_k=\sum_{j=3}^k(\gamma_j-\eta_j).
+$$
+
+Here $a,b$ in the residual formula are scalar differences, whereas the
+argument of $F$ in (206.8) is the vector $(b_1,\ldots,b_L;e)$.
+Since $K_y-K_V=R_L+W-W'$, substitution at the four types of vertices
+gives the exact formula
+
+$$
+\sigma_H(Q(y)-Q(V))=
+\max\left\{-a-b,-b,
+ \max_{3\le k\le L}\frac{R_k-(k-2)(a+b)}{k-1},
+ \max_{3\le k\le L}\frac{3R_k+(k-2)(W'-W)}{k+1}\right\}.
+\tag{206.10}
+$$
+
+Indeed at $v_k$ the early coordinates are one, the suffix late
+coordinates equal $e_k$, and the late contribution is
+$R_k+e_k(R_L-R_k)-e_k(R_L+W-W')$.
+This yields the last column and shows exactly where the early terms
+cancel. Both $u_k$ and $v_k$ columns are retained unless their dominance
+is proved under the hypotheses of a particular application.
+
+For completeness of the certificate notation, $d(b,e)$ has the three
+rows $1-b_n-e,b_n-e,1-e$ at every $w\in\Omega_n$ and row $1-e$ at
+$1^L$. Let $z_D$ be the complete event indicator vector of table $D$,
+$r=z_R=d(\alpha)$, $h(b,e)=d(b,e)-r$, and let $G_C$ have all columns
+$z_D-r$. No row is removed when its score coefficient is zero. Use
+199.2's set
+
+$$
+E_N=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\
+       \Delta_N(V)+\theta\le1,\
+       \sigma_H(q-Q(V))\le\theta\}.
+\tag{206.11}
+$$
+
+Its weak-duality application, reused from 199.3–199.4, is the following.
+For the same complete attained vector $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ and $M=\sum_D\lambda_D$, a certificate gives
+
+$$
+\begin{aligned}
+F_q(b,e)&\le V\cdot h(b,e)+\theta
+ \le V\cdot G_N\lambda+\theta\\
+ &\le M\Delta_N(V)+\theta\le\max\{1,M\}.
+\end{aligned}
+\tag{206.12}
+$$
+
+If $M\le1$, use $M\Delta_N\le\Delta_N$; if $M\ge1$, use
+$\theta\le M\theta$. This covers $M=0,1$, $\theta=0,1$ and nonzero
+zero-excess scores at $\theta=1$. It uses one assembled score and one
+residual, without requiring $V\le y$ or assigning separate budgets to
+its components. Auxiliary $e=0$ vertices do not represent original
+positive tails.
+

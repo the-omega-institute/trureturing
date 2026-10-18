@@ -1,0 +1,44 @@
+**Corollary 7.1 (The inherited almost-sure slice as a support check).**
+The support formula gives
+
+$$
+B(0)=\frac a2+a\eta+a^2\eta,\qquad
+L_{\mathrm{univ}}(0)=0,\qquad
+L_{\mathrm{univ}}(1)=1-\frac a2-a^2b(1+a).
+\tag{7.1}
+$$
+
+The last value is the attained almost-sure-return two-read result
+of [`FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md`][Endpoint], *FIB two paid reads: exact almost-sure-return endpoint risk*,
+Theorem 6.1 and its §§5–6 paid construction. It is not a new
+independent endpoint result here and is not a premise for
+Theorem 3.2.
+
+Proof. At $\lambda=0$ the first-one functions satisfy
+$T=H=a\eta$. On first zero the type-$I$ maximum is
+$Z_I=a/2+a^2\eta$: its differences from $Z_R,Z_A,O_I$ are,
+respectively,
+
+$$
+a^2\eta,\qquad a\eta(a-1/2),\qquad
+\eta(1/2-\eta),
+\tag{7.2}
+$$
+
+all strictly positive. For type $D$ the maximum is
+$Z_D=a/2+a\eta c$; it exceeds $Z_A$ since $c>1/2$,
+exceeds $Z_R$, and $O_{DD}=O_{DI}=a/2$. Finally
+$Z_I-Z_D=a\eta(a-c)=D>0$. Thus (3.2) gives the displayed
+$B(0)$, also exceeding the immediate-return value $a/2$.
+
+The canonical type-$I$ tree with first-one adjacent second
+address $2(j+1)$ and first-zero disjoint second address
+$2(j+2)$, accepting all leaves, has mass one and correct
+mass $B(0)$ by Lemma 3.6. It is exactly the paid tree in
+the cited slice's Definition 5.1 and Proposition 5.2.
+Thus the support upper bound at zero is attained at mass
+one under every auxiliary law. Its risk is
+$1-B(0)=1-a/2-a^2b(1+a)$ because $\eta=ab$.
+At mass zero the joint risk is zero by definition, and
+internal nonreturn attains it. $\square$
+

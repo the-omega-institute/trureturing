@@ -1,0 +1,10 @@
+**Mathematical citation 2.2 (the operator comparison).** The killed
+kernel and multiplication by a positive function are standard
+Feynman--Kac and Doob-transform constructions. The load-bearing
+source-specific step is the simultaneous pair of inequalities
+(2.8)--(2.9), obtained from the same completion coordinate and the
+upper complete-word box. The path comparison uses that pair to exclude
+escape of surviving mass into nonnative stationary configurations.
+It does not invoke finite Perron vectors, primitivity, a spectral gap,
+Feller regularity or a minorization condition.
+

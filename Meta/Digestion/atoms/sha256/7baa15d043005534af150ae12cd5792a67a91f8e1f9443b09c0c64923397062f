@@ -1,0 +1,9 @@
+**Proposition 8.4 (No transfer to unchanged nonatomic accuracy).**
+Every constructed finite marked output law has TV distance one from
+every unchanged original nonatomic target.
+
+Proof. Its finite support of actual marks has output mass one and
+$\mu_x^{\rm orig}$ mass zero. TV is at least their difference one
+and at most one. Thus the selected marked-target results give no
+accuracy against those unchanged nonatomic targets. $\square$
+

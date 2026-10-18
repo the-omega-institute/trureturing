@@ -1,0 +1,89 @@
+**Theorem 6.1 (global angular-quadratic and fractional-linear control).** Let
+$d_{\mathbb T}$ be shortest angular distance and define
+
+$$
+\rho(\phi,\xi)^2=\min_{1\le i\le m}
+             \{d_{\mathbb T}(\phi,\phi_i)^2+|\xi-\eta_i|\}.
+\tag{QS.30}
+$$
+
+Under Assumption 5.1 there is $c_0>0$ such that
+
+$$
+D_\xi(\phi)\ge c_0\rho(\phi,\xi)^2\quad((\phi,\xi)\in X),\qquad
+\int_X\rho^2\,d\pi\le\mathcal E/c_0
+\tag{QS.31}
+$$
+
+for every common feasible law. The assertion concerns the entire cylinder,
+not just endpoint support.
+
+Proof. At contact $i$, $u_i\ne0$ and $H_{\eta_i}(\phi_i)\ne0$ make
+the endpoint gap smooth on an angular arc. Its nonnegativity and zero
+value force first derivative zero. Continuity of its second derivative
+and $\gamma_i>0$ allow an arc, in a local angular coordinate
+$q=\phi-\phi_i$ with $|q|=d_{\mathbb T}(\phi,\phi_i)$, on which
+$D_{\eta_i}''\ge\gamma_i/2$. Taylor's integral formula gives
+
+$$
+D_{\eta_i}(\phi)\ge\gamma_i q^2/4.
+\tag{QS.32}
+$$
+
+Define the continuous function
+
+$$
+A_i(\phi)=Y\cdot\Gamma_{1-\eta_i}(\phi)-\lambda k(\phi)
+                                  -\varepsilon_iH_{1-\eta_i}(\phi).
+$$
+
+By (QS.26), $A_i(\phi_i)=\chi_i>0$. Shrink the arc so that
+$A_i\ge\chi_i/2$. Since the contact height is nonzero, further shrink
+it and choose a fractional width $\zeta_i>0$ so that both
+$H_\xi(\phi)$ and $H_{\eta_i}(\phi)$ have sign $\varepsilon_i$
+whenever $\zeta=|\xi-\eta_i|<\zeta_i$ on this arc. Also require
+$\zeta_i\le1/2$. In the opposite-height case the sign width may need
+to be smaller than $1/2$; no uniform half-cylinder sign assertion is used.
+On this relative neighbourhood $U_i\subset X$ the exact affine formula is
+
+$$
+D_\xi(\phi)=(1-\zeta)D_{\eta_i}(\phi)+\zeta A_i(\phi).
+\tag{QS.33}
+$$
+
+Indeed the two height terms here are taken with their actual common sign,
+while $A_i$ uses the signed other endpoint. Using (QS.32) and
+$1-\zeta\ge1/2$ gives
+
+$$
+\begin{aligned}
+D_\xi(\phi)&\ge(\gamma_i/8)q^2+(\chi_i/2)\zeta\\
+&\ge\min\{\gamma_i/8,\chi_i/2\}
+                  (d_{\mathbb T}(\phi,\phi_i)^2+|\xi-\eta_i|)\\
+&\ge\min\{\gamma_i/8,\chi_i/2\}\rho(\phi,\xi)^2.
+\end{aligned}
+\tag{QS.34}
+$$
+
+There are no other zeros of $D$. At an endpoint the complete equality
+set is specified by Assumption 5.1. If $0<\xi<1$, the nonnegative
+identity (QS.25) can vanish only when $D_0=D_1=0$ and $\tau_\xi=0$.
+For real heights and an interior fraction, equality in that triangle
+inequality is precisely $H_0H_1\ge0$, including a zero height. This
+would be a compatible same-angle endpoint pair, which is excluded.
+Thus the listed endpoint pairs are the complete zero set on $X$.
+
+Let $U=\bigcup_iU_i$. Its complement is closed in the compact cylinder
+and contains no zero. If nonempty it has a strictly positive minimum
+$d_{\rm off}=\min_{X\setminus U}D$. Also
+$\rho^2\le\pi^2+1$ everywhere, since angular distance is at most $\pi$
+and fractional distance at most one. Choose any positive $c_0$ no larger
+than every $\min\{\gamma_i/8,\chi_i/2\}$ and, when the complement is
+nonempty, than $d_{\rm off}/(\pi^2+1)$. On $U$ equation (QS.34) applies;
+on its complement the latter bound applies. This proves the pointwise
+inequality on the whole cylinder. Integrate and use
+$\int D\le\mathcal E$ from (QS.28) to obtain (QS.31).
+The complete zero set and exact full-circle feasibility are essential;
+finite-grid positivity or a small stationary residual gives neither.
+$\square$
+

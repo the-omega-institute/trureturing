@@ -1,0 +1,8 @@
+### 61.4. No common full-code implementation exists
+
+Suppose a single finite physical LOSR channel Φ satisfied Φ∘J=J∘E_(p,q) on the full qutrit input. Its output is then code-supported on every input, so the saturated-path constraint applies. The survival probabilities are p_1=p, p_2=q, p_3=1. Since p≤q and both adjacent retained coherences saturate their smaller survival probability, λ12=p and λ23=q, that constraint forces λ13=p. But E_(p,q) has λ13=0 and p>0, a contradiction.
+
+This excludes every finite physical LOSR realization of the full channel, including competitors initially allowed to leak outside the code: exact equality to the target itself forces code support, which is the premise of §54. It does not merely exclude the pairwise constructions displayed above. The contradiction occurs at the action on a single coherent matrix unit, so matching all three basis populations is insufficient.
+
+There is also a strictly positive, though not quantified here, unrestricted diamond separation. In fixed dimension the set of local CPTP maps is compact; its set of product channels is compact; and its convex hull is compact in the finite-dimensional real space of Hermiticity-preserving linear maps. This convex hull is exactly the finite LOSR class by the finite-dimensional convex-hull theorem. Restriction through J is continuous. Therefore the encoded physical channel set is compact. The continuous diamond distance to J∘E_(p,q) attains its minimum; the minimum cannot be zero because exact equality has just been excluded. This establishes positivity only, not an exact numerical value or an explicit uniform lower bound across the family. As p approaches zero the obstruction may vanish.
+

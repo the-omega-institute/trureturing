@@ -1,0 +1,33 @@
+**Theorem 7.1 (positive distance from the entire affine line).** Define
+
+$$
+\Delta_{\rm aff}=h[\Psi-t_0rp].
+\tag{7.1}
+$$
+
+Then
+
+$$
+\begin{gathered}
+\Delta_{\rm aff}=D_{\rm resp}-a t_0^2>0,\\
+h[\Psi-trp]=\Delta_{\rm aff}+a(t-t_0)^2\quad(t\in\mathbb R),\\
+C_{\rm resp}=\min_{t\in\mathbb R}C_{\rm aff}(t)-\nu^2\Delta_{\rm aff}
+ <\min_{t\in\mathbb R}C_{\rm aff}(t)\le C_{108},\\
+C_{\rm aff}(t)-C_{\rm resp}
+ =\nu^2\{\Delta_{\rm aff}+a(t-t_0)^2\},\\
+C_{108}-C_{\rm resp}=\nu^2\{\Delta_{\rm aff}+a(t_0-1)^2\}>0.
+\end{gathered}
+\tag{7.2}
+$$
+
+Proof. Extend the response equation continuously from the odd core to $rp$. Since $h[rp]=a$ and $h(\Psi,rp)=\ell(rp)=a t_0$, the vector $\Psi-t_0rp$ is $h$-orthogonal to $rp$. The Hilbert-space Pythagorean identity gives the first two equalities in (7.2). Theorem 6.1 excludes its being zero, so its squared Hilbert norm is strictly positive. Completing the full scalar polynomial in (3.4) gives
+
+$$
+C_{\rm aff}(t)
+ =\nu^2(K_{\rm base}-a t_0^2)-\lambda D_{\rm clock}
+    +a\nu^2(t-t_0)^2.
+\tag{7.3}
+$$
+
+Insert $D_{\rm resp}=a t_0^2+\Delta_{\rm aff}$ into the full response coefficient. Since $\nu>0$, all assertions follow. The time-weighted and threshold clock contributions remain present in each complete coefficient; they cancel only when taking this exact difference. Every quantity belongs to the same original realization. $\square$
+

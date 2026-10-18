@@ -1,0 +1,27 @@
+**Proposition 8.2 (actual excursion survival).** Write $t_0=d/a\in(0,1)$.
+For the positive excursion the two survival probabilities are
+
+$$
+u=\frac{3-t_0}{3(1+t_0)}\quad(x=a),\qquad
+v=\frac{3(1-t_0)}{3+t_0}\quad(x=b).
+\tag{AC.29}
+$$
+
+The negative mirror swaps them. For each fixed actual $x$, the terminal
+no-failure operator on the entire live space is $\sqrt{S_{x,\pm}}I$.
+
+Proof. Integrating the credited hazard on the upward and downward unit
+legs gives charges $\log((x+d)/x)$ and
+$\log((c-x)/(c-x-d))$. Hence
+
+$$
+S_{x,+}=\frac{x}{x+d}\frac{c-x-d}{c-x}.
+\tag{AC.30}
+$$
+
+Substituting $x=a,3a$ gives (AC.29); reflection $x\mapsto c-x$ gives
+the negative mirror. End probabilities equal start probabilities and
+all transported increments vanish. The diagonal ratio formula (OC.19)
+therefore gives $K=\sqrt S I$, also on arbitrary entangled references
+when the operation is actually supplied. $\square$
+

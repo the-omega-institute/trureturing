@@ -1,0 +1,18 @@
+**Convention 10.2 (literature status and transfer conditions).** The
+local optional-control construction, current activation-frontier instance,
+wire square and their assembled result are `repo-derived`. Finite alphabet
+coding, deterministic replay, tree prefix closure and kernel factorization
+are reused methods. No worldwide novelty or absence claim is made.
+
+| Primary source | Precisely supported ingredient and transfer boundary |
+| --- | --- |
+| Luidnel Maignan and Antoine Spicher, *Causal Graph Dynamics and Kan Extensions*, published LMCS 22(1:16), Definitions 1.1, 1.3–1.6 and Proposition 1.7; [primary text](https://arxiv.org/pdf/2403.13393) | `literature-attested`: nonintersecting finite port endpoints, consistency, bounded local output and conjugate renaming are separate hypotheses. The present serial root/head-linked atomic rule proves its own endpoint consistency and finite naming. The synchronous local-output union theorem supplies no owner permissions, prices or physical wires. |
+| Nancy Lynch and Frits Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*; [author source and abstract](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.html) | `literature-attested`: refinement, forward/backward simulations, history/prophecy relations and their soundness/completeness are established methods. The specific initialized one-row, inverse-cut, owner and price equations used here are CSA.3, not an inferred consequence of trace-level simulation alone. |
+| SSA §11 and RCA §10's primary-source discussions | Retained context for history/complement and acquired-backing distinctions. No unchecked snapshot, lens or OS record/replay implementation is imported as a new premise of this construction. |
+
+The pinned library sources and the finite-port primary definitions were
+inspected directly. The local mathlib package checkout was unavailable;
+remote pinned source inspection supplies documentary hypotheses, not a
+current compilation. The source search establishes reuse choices in the
+inspected scope, not an exhaustive literature or Lean-ecosystem survey.
+

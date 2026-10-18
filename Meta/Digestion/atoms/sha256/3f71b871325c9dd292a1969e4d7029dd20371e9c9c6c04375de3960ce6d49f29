@@ -1,0 +1,92 @@
+**Theorem 4.1 (full phase slices and strict slope bounds).** Define
+
+$$
+C_{\mathcal G}=\int_{\mathbb R^3}\mathcal G(1,\mathbf z)^2d\mathbf z,\quad
+D_{\mathcal G}=\int_{\mathbb R^3}|Y\mathcal G(1,\mathbf z)|^2d\mathbf z,\quad
+E_{\mathcal G}=\int_{\mathbb R^3}|X\mathcal G(1,\mathbf z)|^2d\mathbf z.
+\tag{4.1}
+$$
+
+These numbers are finite and
+
+$$
+C_{\mathcal G}>0,\qquad D_{\mathcal G}>0,\qquad
+E_{\mathcal G}+D_{\mathcal G}=10C_{\mathcal G},\qquad
+E_{\mathcal G}>4C_{\mathcal G},\qquad
+t_\infty:=\frac{D_{\mathcal G}}{2C_{\mathcal G}}\in(0,3).
+\tag{4.2}
+$$
+
+On both tails,
+
+$$
+\begin{aligned}
+\rho(r)&\sim c_\infty^2C_{\mathcal G}|r|^{-4},&
+m_Y(r)&\sim c_\infty^2D_{\mathcal G}|r|^{-6},\\
+J(r)&\sim\tfrac12c_\infty^2D_{\mathcal G}|r|^{-4},&
+F_*'(r)=q_*(r)&\longrightarrow t_\infty,&F_*(r)/r&\longrightarrow t_\infty.
+\end{aligned}
+\tag{4.3}
+$$
+
+Moreover
+
+$$
+\lim_{R\to\infty}R^3\int_{|r|\ge R}\rho(r)(q_*(r)-t_0)^2dr
+=\frac23c_\infty^2C_{\mathcal G}(t_\infty-t_0)^2.
+\tag{4.4}
+$$
+
+Consequently $I_h=t_0^2$ requires $t_0=t_\infty\in(0,3)$. If $t_0\ne t_\infty$, then $I_h>t_0^2$. Neither condition on $t_0$ is evaluated here.
+
+Proof. The phase dilation $\mathbf z\mapsto(Ry,R^2z,R^3w)$ has Jacobian $R^6$ and phase-box volume proportional to $R^6$. At height one, $d(0,(1,\mathbf z))$ is bounded below and comparable to $1+\max(|y|,|z|^{1/2},|w|^{1/3})$. Equations (3.1) and (3.2) therefore supply integrable phase majorants of degrees $-10$ for the squared modes and $-12$ for the squared derivatives. In particular
+
+$$
+|p_R(1,\mathbf z)|\le Cd(0,(1,\mathbf z))^{-5},\qquad
+|Dp_R(1,\mathbf z)|\le Cd(0,(1,\mathbf z))^{-6}\quad(R\ge1).
+\tag{4.5}
+$$
+
+Dominated convergence on the entire phase space now gives, as $r=R\to\infty$,
+
+$$
+r^4\rho(r)\to c_\infty^2C_{\mathcal G},\qquad
+r^6m_Y(r)\to c_\infty^2D_{\mathcal G}.
+\tag{4.6}
+$$
+
+This verifies the phase tails rather than integrating an uncontrolled local limit. It also gives the corresponding uniform big-oh bounds. Parity supplies the negative-height statements.
+
+Homogeneity of $\mathcal G$ and its derivatives gives, for $r>0$,
+
+$$
+\rho_{\mathcal G}(r):=\int\mathcal G(r,\mathbf z)^2=C_{\mathcal G}r^{-4},\quad
+\int|Y\mathcal G(r,\mathbf z)|^2=D_{\mathcal G}r^{-6},\quad
+\int|X\mathcal G(r,\mathbf z)|^2=E_{\mathcal G}r^{-6}.
+\tag{4.7}
+$$
+
+Second horizontal derivatives of $\mathcal G$ are smooth off zero and homogeneous of degree $-7$. On a compact positive height interval their bounds justify twice differentiating $\rho_{\mathcal G}$ under the phase integral: $\mathcal G X^2\mathcal G$ and $(X\mathcal G)^2$ have integrable degree $-12$ phase majorants. Harmonicity gives $X^2\mathcal G=-Y^2\mathcal G$ there. To integrate the latter term by parts in phases, insert cutoffs of the form $\zeta(y/L,z/L^2,w/L^3)$. On bounded height intervals $|Y\zeta_L|\le C/L$. Cauchy–Schwarz with the phase $L^2$ bounds makes the boundary term tend to zero, and the degree $-12$ bounds justify the other integrals. Thus
+
+$$
+\rho_{\mathcal G}''(r)
+=2\int|X\mathcal G|^2+2\int|Y\mathcal G|^2
+=2(E_{\mathcal G}+D_{\mathcal G})r^{-6}.
+\tag{4.8}
+$$
+
+Comparing with $20C_{\mathcal G}r^{-6}$ proves the sum identity. Also $\int\mathcal G X\mathcal G=-2C_{\mathcal G}r^{-5}$, so Cauchy–Schwarz at height one gives $E_{\mathcal G}\ge4C_{\mathcal G}$. Equality would force $X\mathcal G(1,\mathbf z)=-2\mathcal G(1,\mathbf z)$ almost everywhere. Continuity and homogeneity extend it to $X\mathcal G(r,\mathbf z)=-2\mathcal G(r,\mathbf z)/r$ for every positive height and phase. Hence $\mathcal G(r,\mathbf z)=r^{-2}a(\mathbf z)$. The height bound $\mathcal G(r,\mathbf z)\le Cr^{-5}$ as $r\to\infty$ forces $a=0$, contradicting positivity. The inequality is strict.
+
+If $D_{\mathcal G}=0$, continuity and homogeneity make $Y\mathcal G=0$ on the positive-height half-space. Harmonicity then gives $X^2\mathcal G=0$. At each fixed phase the resulting affine function of height decays at infinity and must vanish, again contradicting positivity. Thus $0<D_{\mathcal G}<6C_{\mathcal G}$, proving all of (4.2).
+
+The full-height bound on $V_1$ and (4.6) give
+
+$$
+|v_1(r)|\le C(1+|r|)^{-4}\rho(r)=O(|r|^{-8}).
+\tag{4.9}
+$$
+
+Integrating $2r m_Y+\gamma v_1$ on the positive tail gives $J(r)\sim c_\infty^2D_{\mathcal G}r^{-4}/2$. Explicitly, the error in $m_Y(t)$ is uniformly $o(t^{-6})$ beyond a sufficiently large fixed height, and its integrated contribution is $o(r^{-4})$; (4.9)'s contribution is $O(r^{-7})$. Evenness gives the other tail. Dividing by the positive $\rho$ proves the quotient limit. The average of $q_*$ over $[0,r]$ tends to its tail limit, so its primitive satisfies the last assertion of (4.3) on both sides. The continuous quotient is a valid representative of $F_*'$.
+
+Finally (4.3) gives the two-sided asymptotic of $\rho(q_*-t_0)^2$. Integrating $r^{-4}$ on both tails, with uniform error bounds beyond a fixed height, proves (4.4), including when $t_\infty=t_0$. H's equality criterion in (2.3) then proves the necessary condition and the stated sufficient condition for a strict height gap. A matching limiting slope alone does not make the quotient constant. $\square$
+

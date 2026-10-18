@@ -1,0 +1,79 @@
+**Theorem 10.1 (every original competitor and every depth).** Under
+Assumption 1.2, every jointly correct original preparation and reader
+satisfies, for every $D\ge3$,
+
+$$
+\boxed{\displaystyle
+|E[\mathcal F_D]|\ge
+ \left\lceil\left(\frac{6407}{2499}\right)^{2^{D-3}}\right\rceil.}
+\tag{NCE.71}
+$$
+
+Consequently
+
+$$
+\boxed{\displaystyle
+M_1(D)\ge
+ \left\lceil\left(\frac{6407}{2499}\right)^{2^{D-3}}\right\rceil,
+\qquad \sigma_3\ge\log_2\frac{6407}{2499},\qquad
+\lambda\ge\frac18\log_2\frac{6407}{2499}.}
+\tag{NCE.72}
+$$
+
+Proof. This uses the actual-scaffold restriction of Theorem 6.2,
+equivalently [NPC, Theorem 7.1][NPCj], with the new cap. Its original
+quantifiers can be checked directly. Set $h=D-3$, $n=2^h$, and fix a
+perfect ordered height-$h$ scaffold in the right subtree. Insert the
+actual $S_3$ trees at its frontier words $a_1,\ldots,a_n$, $|a_i|=h$.
+Each tuple gives a distinct actual $t_x=\langle A,v_x\rangle\in
+\mathcal F_D$. All these occurrences are present. For $q\in W_3$,
+
+$$
+p=Ra_iq\in\mathcal P_D,\qquad |p|=1+h+|q|\le D,
+\qquad r_{\rho^kt_x}(p)=\operatorname{Pred}(\Gamma_q(x_i),k).
+\tag{NCE.73}
+$$
+
+Restrict an arbitrary original complete export $E$ to this slice,
+keeping its values and all its fibers unchanged. Fix one attained
+name and one such request. The reader's zero-Read choice or entire
+query word is fixed before a reply and before every authentic count.
+Every finite original-root word is constant in the root/left wrapper
+or strictly above the scaffold frontier, or enters one uniquely fixed
+actual donor block with an arbitrary finite suffix. In $S_3$, a
+suffix of length at most two is a boundary experiment; at length
+three its reply is alpha exactly when its length-two parent is
+branch and absent otherwise; at greater length it is constant absent.
+Thus every query is a function of one boundary reply in that same
+donor block, or a constant. It need not query the target block.
+
+Equal selected boundary replies within this unchanged fiber produce
+equal actual replies and the same final predictor. Correctness for
+all later authentic $k$ makes the complete trajectories, and hence
+$\Gamma_q$, equal. Constant queries and zero-Read branches make
+that target constant. The restricted fiber is therefore an unrestricted
+jointly admissible subset of $S_3^n$ for every target simultaneously.
+This conclusion retains arbitrary cross-block correlations, different
+donors for different targets, off-target words and cycles.
+
+The mathematical product law $\mu_{\rm j}^{\otimes n}$ on the entire
+slice has total mass one. By Theorem 9.2 each restricted code fiber
+has mass at most $(2499/6407)^n$. They partition that slice, so
+there are at least $\lceil(6407/2499)^n\rceil$ of them, and the
+full original attained alphabet is at least this large. This proves
+(NCE.71); no rival preparation has been replaced or granted a free
+scan. The same mass argument for integral or fractional covers at
+every $n\ge1$ gives
+
+$$
+Z_3(n)\ge(6407/2499)^n,\qquad
+K_3(n)\ge\lceil(6407/2499)^n\rceil.
+\tag{NCE.74}
+$$
+
+Take the supplied limit for $\sigma_3$, and divide the original
+finite lower logarithm by $2^D=8n$ for the supplied limit $\lambda$.
+This proves (NCE.72). The product law is an analytical counting
+witness, not a source prior, acquired advice, imposed independence
+of competing fibers or a source-dependent request. $\square$
+

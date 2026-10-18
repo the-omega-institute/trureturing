@@ -1,0 +1,16 @@
+**Definition 7.1 (sufficient native menus and their literal cost).** Let $k=|B|$, $P_*=\max_b|p_b|$, and $N_*=\max_\eta|X_\eta|$ over kept cells. Empty maxima are zero. In the anchored case put $A_*=\max_\eta A_\eta$ and $H_*=\max_{0\le j\le A_*}\operatorname{height}(T_j)\le A_*$. One sufficient menu first reads all $k$ representative suffixes of length less than $d$, then reads every suffix of length at most $H_*$ at each actual frontier. It has at most
+
+$$
+Q_*=k(2^d-1)+N_*(2^{H_*+1}-1)
+\tag{LRD.20}
+$$
+
+new calls and maximum literal word length at most $P_*+d+H_*$. Its total submitted literal length is at most $Q_*(P_*+d+H_*)$. This bound counts repeated submissions; caching may improve it. There are exactly $2^j$ binary suffixes of length $j$, so an inclusive suffix menu through $K$ has $2^{K+1}-1$ words, and their suffix lengths sum to
+
+$$
+\sum_{j=0}^{K}j2^j=(K-1)2^{K+1}+2\qquad(K\ge0).
+\tag{LRD.21}
+$$
+
+All three coordinates are finite for a fixed boundary. They are sufficient bounds, not a sharp call count or a word-cost optimum. No call is made when $k=0$.
+

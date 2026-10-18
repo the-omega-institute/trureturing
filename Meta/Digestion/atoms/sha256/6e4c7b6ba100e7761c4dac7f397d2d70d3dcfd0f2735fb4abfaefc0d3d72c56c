@@ -1,0 +1,31 @@
+### 2.15 Classical sources and precise authority
+
+The literature supplies methods with explicit normalization and support
+conditions. The following uses distinguish that background from the concrete
+calculations in this proof unit.
+
+| Source | Passage and authority used |
+| --- | --- |
+| Miguel Abreu, [Toric Kähler metrics: cohomogeneity one examples of constant scalar curvature in action-angle coordinates](https://arxiv.org/abs/0912.0491) | §3, metric (5) and scalar formula (6), p. 12: the inverse-Hessian description and scalar curvature in action-angle coordinates. Its normalization footnote explicitly distinguishes the earlier convention. |
+| Miguel Abreu, [Kähler geometry of toric manifolds in symplectic coordinates](https://www.math.tecnico.ulisboa.pt/~mabreu/preprints/symp-coords.pdf) | §2.2 gives the Hessian/inverse-Hessian metric; equations (3.2)–(3.3), p. 11, have the earlier scalar convention, and Example 3.1 gives scalar value one on its canonical sphere. The Gaussian curvature here is derived in Theorem 2.12. |
+| Barry Simon, [Holonomy, the Quantum Adiabatic Theorem, and Berry's Phase](https://authors.library.caltech.edu/records/2pepc-k9f58), Physical Review Letters 51, 2167–2170 | The opening line-bundle construction uses an isolated nondegenerate eigenvalue, and the subsequent parallel-transport discussion identifies the geometric phase with holonomy. This supplies the geometric language, not an adiabatic realization of the present control law. |
+| Reyer Sjamaar and Eugene Lerman, [Stratified symplectic spaces and reduction](https://annals.math.princeton.edu/1991/134-2/p05), Annals of Mathematics 134(2), 375–422 | The primary abstract states that the reduction result distinguishes a free regular level from a singular level which is a union of symplectic strata. It supports the stratified viewpoint, not an assumption that a singular quotient is a smooth surface. |
+
+For a direct coordinate match to the Abreu metrics, take $x=\kappa$ and
+$y=-\chi$. Then $dx\wedge dy=d\chi\wedge d\kappa$ and the metric is
+unchanged by the angle sign. The local symplectic potential
+$u(\kappa)=\tfrac12\sum_{s\in B}p_s\log p_s$ has Hessian
+$u''=I/2=1/b$, exactly the Hessian block used in those formulas.
+
+In the convention of Abreu's formula (6), the one-dimensional real scalar
+curvature is $-b''=2K$. The earlier symplectic-coordinate scalar formula has a
+factor $1/2$ in front of the inverse-Hessian second derivative and gives
+$-b''/2$ for this matrix. These differently normalized scalar quantities must
+not be equated by name. Theorem 2.12 fixes $K$ intrinsically and is independent
+of that naming convention.
+
+The cited methods are literature-attested. The finite-path, variational and
+curvature applications here are repo-derived ordinary proofs, with the
+existing suppliers consumed as specified in §1. This classification assigns
+provenance and does not certify priority.
+

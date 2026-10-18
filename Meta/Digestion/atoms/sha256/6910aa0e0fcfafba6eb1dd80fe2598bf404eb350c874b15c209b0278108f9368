@@ -1,0 +1,24 @@
+**Definition 6.2 (exact polynomial and adjugate selector).** No numerical optimization is implicit in the branch choice. Equivalently let
+
+$$
+\mathcal P(\lambda,\mu)=\det(C+\mu I-\lambda B).
+$$
+
+Select the unique solution with
+$\lambda>0,\mu>0$, $C+\mu I-\lambda B\succeq0$ and
+
+$$
+\mathcal P=0,\qquad \mathcal P_\lambda+k\mathcal P_\mu=0 .
+\tag{PG.31}
+$$
+
+At that solution the positive rank-one adjugate $A=\operatorname{adj}(C+\mu I-\lambda B)$ gives
+
+$$
+v=\frac{Ae_D}{\sqrt{A_{DD}\operatorname{tr}A}}.
+\tag{PG.32}
+$$
+
+Indeed $A=\gamma vv^T$, $\gamma>0$, and its derivative identities give
+$\mathcal P_\lambda=-\gamma v^TBv$, $\mathcal P_\mu=\gamma$. This proves equivalence and fixes the sign without inverting $C$. Algebraic source data therefore specify algebraic selected values and endpoints exactly; this is not a claim of efficient evaluation.
+

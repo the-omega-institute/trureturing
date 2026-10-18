@@ -1,0 +1,59 @@
+**Proposition 5.1 (phase-area certificate without a phase-speed bound).**
+For the general interpolant of Definition 3.1 set
+
+$$
+\begin{aligned}
+\mathcal A&=\int_0^T k\chi',&
+\widetilde{\mathcal A}
+ &=\sum_{j=0}^{n-1}b_j(x_{j+1}^{\rm raw}-x_j^{\rm raw}),\qquad
+b_j=(y_j+y_{j+1})/2,\\
+E_A&=(Lh_*/2+d_k)V+d_x(2c+M),&
+P&=d_x+E_A/r.
+\end{aligned}
+\tag{SC.13}
+$$
+
+Then $|\mathcal A-\widetilde{\mathcal A}|\leq E_A$. The real terminal
+phases of true and surrogate controls satisfy
+$\max_i|H_i(T)-\widetilde H_i(T)|\leq P$; in particular their character
+errors are at most $\min(2,P)$.
+
+Proof. On a cell with endpoints $s_j,s_{j+1}$,
+
+$$
+\left|k(t)-\frac{k(s_j)+k(s_{j+1})}{2}\right|
+\leq\frac L2(s_{j+1}-s_j)\leq Lh_*/2.
+$$
+
+Replacing the two heights by $y_j,y_{j+1}$ adds at most $d_k$.
+Integration against $|\chi'|$ over all cells costs at most the first term
+in $E_A$. Write $e_j=x_j^{\rm raw}-\xi(s_j)$, so $|e_j|\leq d_x$.
+The remaining error is exactly
+
+$$
+\sum_j b_j(e_{j+1}-e_j)
+=b_{n-1}e_n-b_0e_0
+ +\sum_{j=1}^{n-1}(b_{j-1}-b_j)e_j.
+\tag{SC.14}
+$$
+
+Both endpoint coefficients are bounded by $c$. Moreover
+$\sum_{j=1}^{n-1}|b_j-b_{j-1}|\leq\sum_j|y_{j+1}-y_j|\leq M$:
+each difference of averages is half the sum of two adjacent increments,
+and every interior increment is charged at most once. This proves $E_A$.
+
+The displayed trapezoid sum is exactly the integral
+$\int\widetilde k\,d\widetilde\xi$ of the simultaneous affine
+interpolants. It depends on vertices, not cell durations; centering every
+phase vertex by the same $x_0^{\rm raw}$ changes no increment. The original
+signed weights give, as real numbers,
+
+$$
+H_+=\xi(T)/2-\mathcal A/r,\qquad H_-=-\mathcal A/r,\qquad H_2=0.
+\tag{SC.15}
+$$
+
+The surrogate endpoint differs from $\xi(T)$ by at most $2d_x$.
+Substitution gives $P$, and $|e^{iu}-e^{iv}|\leq\min(2,|u-v|)$ gives
+the character bound. No phase derivative reconstruction is used. $\square$
+

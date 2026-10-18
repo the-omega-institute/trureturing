@@ -1,0 +1,68 @@
+**Definition 2.3 (full fixed Halt outputs).** Reuse NBP Proposition
+9.3, NRE Definition 2.2 and NRN Definition 2.3. Write
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. The five rows
+$R_h=(C_h,\pi_h)$ have these complete exteriors:
+
+$$
+\begin{aligned}
+C_0={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_1={}&\left\langle
+ \left\langle\beta,\langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_2={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,\beta\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_3={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\beta,\langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_4={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{TCR.6}
+$$
+
+Their complete partitions are
+
+$$
+\begin{aligned}
+\pi_0&=\{\{LLL,LRL\},\{LLR\},\{LRR\},
+                      \{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_1&=\{\{LRL\},\{LRR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_2&=\{\{LLL\},\{LLR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_3&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RRL\},\{RRR\}\},\\
+\pi_4&=\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RLL\},\{RLR\}\}.
+\end{aligned}
+\tag{TCR.7}
+$$
+
+Different blocks assert disequality in each partition. The canonical names
+and all absence guards are part of the rows:
+
+| Row | Ordered reached holes | Canonical name vector | Absent cuts and their concrete guard |
+| --- | --- | --- | --- |
+| $R_0=R_*$ | $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,0,3,4,5,4,7)$ | None |
+| $R_1$ | $LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LLL,LLR$; beta at $LL$ |
+| $R_2$ | $LLL,LLR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LRL,LRR$; beta at $LR$ |
+| $R_3$ | $LLL,LLR,LRL,LRR,RRL,RRR$ | $(0,1,0,3,4,5)$ | $RLL,RLR$; beta at $RL$ |
+| $R_4$ | $LLL,LLR,LRL,LRR,RLL,RLR$ | $(0,1,0,3,4,5)$ | $RRL,RRR$; beta at $RR$ |
+
+In $R_1,R_2$ the other occurrence of $a$ survives as a hole; in
+$R_3,R_4$ the other occurrence of $c$ survives. Only the selected pair
+at $q_j$ is replaced by a concrete beta. Distinct reached supports make
+these five rows different. Each Halt used below stores its entire row,
+including all this data.
+

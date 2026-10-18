@@ -1,0 +1,8 @@
+### 95.7. Exhaustion and the remaining global problem
+
+The quotient has exactly zero, one, two, three, or four singular original fibre blocks. Sections 95.5–95.6 exclude every case, proving Theorem 95.1. All directions were embedded in the original eight coordinates, had zero entire original fibre blocks, and annihilated the full opposite kernel through (10). Every common-witness quadratic used the same fixed G,H,a and the same cross-fibre quotient. Complex phases were varied explicitly rather than discarded by a real gauge.
+
+The new exclusion uses the exact adaptive objective and simultaneous common stresses of sections 91–92, the quotient of Lemma 95.2, and the fixed-direction argument of Lemma 95.3. It does not require the sharp three-vector theorem or the doubly rank-seven support-size reduction. Section 94 separately excludes all doubly rank-seven subquarter calibrated local minima.
+
+A hypothetical global subquarter optimum can still lie at a calibrated minimum whose rank-seven kernel has smaller coordinate support, whose opposite Gram has rank at most five, or whose two ranks are both at most six, subject to the earlier reductions. Neither a missing whole fibre nor a single missing coordinate is covered by Theorem 95.1. In smaller opposite ranks, annihilating R need not annihilate the full opposite kernel. No rank-preservation assertion under calibration or unsupported reduction to extreme Grams is used. The unrestricted quarter lower bound for the original channels, including leakage, remains open.
+

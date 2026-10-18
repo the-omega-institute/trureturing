@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-uniform-renewal-nonattainment-and-three-state-separation"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

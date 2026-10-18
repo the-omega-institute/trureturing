@@ -1,0 +1,103 @@
+**Theorem 77.1 (joint full-domain persistence).** Let Definition 75.1
+hold and assume $\tau(g)\to0$ and $\chi(g)\to0$. Then
+
+$$
+\frac{E_{\tau(g)}(g)}{g^2}\longrightarrow
+ e_*=-\frac{\beta^2}{4a},\qquad
+\beta=\frac{\phi(k_0)\int_I\phi^3dk}{4\pi\sqrt{\det M}}.
+\tag{77.1}
+$$
+
+For every family of normalized complex $\psi_g\in\mathcal Q$ with
+
+$$
+\mathfrak e_{g,\tau(g)}[\psi_g]-E_{\tau(g)}(g)=o(g^2),
+\tag{77.2}
+$$
+
+there are constant phases $\theta_g\in\mathbb R$ such that, with
+$\rho=\beta/(2a)$ and the same function as (72.4),
+
+$$
+\begin{aligned}
+h_*(z)&=(\det M)^{-1/4}(\rho^3/\pi)^{1/2}e^{-\rho d(z)},\\
+\left\|g^{-3/2}\psi_g(k,z/g)-e^{i\theta_g}\phi(k)h_*(z)
+                                      \right\|_{L^2(dk\,dz)}&\longrightarrow0.
+\end{aligned}
+\tag{77.3}
+$$
+
+Moreover, for the actual height projection $P=|\phi\rangle\langle\phi|$,
+
+$$
+T[\psi_g]=O(g^2),\qquad
+\|(1-P)\psi_g\|_2^2=O(g^2),\qquad
+\lim_{R\to\infty}\limsup_{g\downarrow0}
+ \int_{|gq|>R}|\psi_g(k,q)|^2dk\,dq=0.
+\tag{77.4}
+$$
+
+These conclusions include every normalized ground-state choice.
+They require no translation of the fixed source.
+
+Proof. The reference cutoff throughout this proof is exactly one.
+By (76.7), for every $\psi\in\mathcal Q$,
+
+$$
+0\le\mathfrak e_{g,1}[\psi]-\mathfrak e_{g,\tau}[\psi]
+ \le C\chi T[\psi].
+\tag{77.5}
+$$
+
+Proposition 71.1 at cutoff one and a fixed band radius gives, for
+normalized $\psi$, $V_1[\psi]\le C\sqrt{T[\psi]}+CT[\psi]$.
+Consequently every normalized native vector of nonpositive joint
+energy satisfies
+
+$$
+0\ge\mathfrak e_{g,\tau}[\psi]
+ \ge(a-C\chi-Cg)T[\psi]-Cg\sqrt{T[\psi]}.
+\tag{77.6}
+$$
+
+For $g$ and $\chi$ small enough, the coefficient of $T$ is at least
+$a/2$, proving $T[\psi]\le Cg^2$ uniformly over all such vectors.
+This estimate holds on the full complex domain (75.1).
+
+Monotonicity $W_\tau\ge W_1$ gives $E_\tau(g)\le E_1(g)$.
+Apply (77.6) to an attained joint ground state, whose existence and
+negative energy are reused from Theorem 72.1 at its positive cutoff.
+By (77.5) and the reference variational principle,
+
+$$
+E_1(g)-C\chi g^2\le E_\tau(g)\le E_1(g).
+\tag{77.7}
+$$
+
+The fixed-cutoff conclusion $E_1(g)/g^2\to e_*$ of Theorem 72.1
+therefore proves (77.1). The upper direction may also be realized
+by the same admissible reference trials
+$\phi(k)g^{3/2}h_*(gq)$: their reference energies are
+$e_*g^2+o(g^2)$ and their joint energies are no larger.
+Both the infimum comparison and the lower estimate use the whole
+$\mathcal Q$, rather than a product-state restriction.
+
+Now (77.1), (77.2) and $e_*<0$ make the joint energies of $\psi_g$
+negative eventually. Thus (77.6) gives $T[\psi_g]=O(g^2)$, and
+(77.5), (77.7) imply
+
+$$
+0\le\mathfrak e_{g,1}[\psi_g]-E_1(g)
+ \le\mathfrak e_{g,\tau(g)}[\psi_g]-E_{\tau(g)}(g)
+                      +C\chi(g)g^2=o(g^2).
+\tag{77.8}
+$$
+
+Theorem 73.1 now applies directly to this same family on its entire
+complex domain, with fixed $a$, source, tensor and reference cutoff
+one. Its conclusions are exactly (77.3)--(77.4), including the
+actual height projection, source-centred tightness and a single
+constant complex phase for each vector. In particular no compactness
+of a cutoff-dependent family of potential multipliers is being
+assumed. The uniform replacement for it is (76.7). $\square$
+

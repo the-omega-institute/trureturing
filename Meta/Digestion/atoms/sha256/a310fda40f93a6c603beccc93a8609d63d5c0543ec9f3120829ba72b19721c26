@@ -1,0 +1,29 @@
+**Definition 1.1 (One stationary source on all integer coordinates).** Fix
+$0<p<1$, $p\ne1/2$, and $j\in\{0,1\}$. Let $\varphi$ be uniform on
+$\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$. On the original integer emitted-bit clock,
+set
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+This is exactly $J_p$ of [Original, Proposition 2.1 and (2.2)][Original]. To
+identify the joint law, write $\pi_0=1-p$, $\pi_1=p$. An active
+transition goes from $a_s$ to $b_t$ with probability $\pi_t$, emitting
+$s\oplus t$; the next transition copies $b_t$ to $a_t$ and emits zero.
+Each $a_s$ and $b_s$ has mass $\pi_s/2$. Indeed the incoming mass at
+$b_t$ is $\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and copying gives that same
+incoming mass at $a_t$. The realization (1.1) has these transition factors
+on every finite interval, including intervals starting in either state
+class. It therefore has the original ordered hidden-visible cylinder
+law, with its stationary initial row. Uniform phase and reindexing of iid
+spins preserve that law under an integer shift. There is no rescaling of
+time or replacement of its separator coordinates.
+

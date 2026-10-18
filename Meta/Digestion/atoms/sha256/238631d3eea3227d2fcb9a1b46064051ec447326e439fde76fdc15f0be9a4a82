@@ -1,0 +1,27 @@
+**Definition 1.1 (native values and prefixes).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle,
+\qquad T_n=\rho^n\alpha.
+$$
+
+Original values belong to the nonempty finite ordered tree algebra
+$\mathcal T$. Its completion $\widehat{\mathcal T}$ also allows infinite
+branches. At every reached node the reply is $\alpha$, $\beta$, or branch;
+below a leaf it is absent. Write $s\equiv_h t$ when the four replies agree
+at every original address of length at most $h$, inclusively. The unique
+tree with a branch at every address is $\Omega$.
+
+Fixed powers of $\rho$ are supplied natural numerals, with no common bound
+across inputs. A repeated variable always denotes one whole value. The
+extension of $\rho$ to completion trees uses these same local rules.
+Pairing and each fixed power preserve $\equiv_h$. For pairing this follows
+by passing to corresponding children. For $\rho$, matching leaf roots have
+identical complete finite images, and matching branch roots reduce the
+claim to the children at one smaller depth. Induction on $h$, followed by
+iteration, proves the assertion, including absent replies.
+

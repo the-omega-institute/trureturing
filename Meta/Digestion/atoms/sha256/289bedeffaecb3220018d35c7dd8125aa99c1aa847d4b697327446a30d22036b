@@ -1,0 +1,14 @@
+**Compatibility with Proposition 17.1.** That proposition concerns the separate fixed slope $a=-1/4$ and $\mathsf H_a=\mathsf T_a^{-1}\mathsf C$. Its exact identity on positive rank-one $S$ is
+$$
+\mathfrak b(S,\mathsf H_aS)=-\frac23\left[
+21p^2+5pq+44pr+49qs
++6\left(q-\frac{17r}{12}\right)^2
++\frac{167}{24}\left(r-\frac{384s}{167}\right)^2
++\frac{3375}{167}s^2\right]<0.
+\tag{22.13}
+$$
+Its proof in Section 17 remains intact. Algebraically the square terms contribute $6q^2-17qr+(289/24)r^2$, $(167/24)r^2-32rs+(6144/167)s^2$, and $(3375/167)s^2$; the $r^2$ and $s^2$ coefficients become $19$ and $57$. Together with $ps=qr$ these give exactly the transfer polynomial (17.12), and $21p^2>0$ gives strict negativity. This says that opposite transfer signs at the single erased-final-gain slope are unavailable for this history. It places no prohibition on the finite transfer $\mathsf B^{-1}\mathsf C$ between slopes zero and one. Thus (22.13) and Theorem 22.1 coexist.
+
+The conclusion of Theorem 22.1 is for exactly $A_4=(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$, $W=MJM$. It excludes this history as a globally recovering five-read history. It does not prove collision for every final word after the same prefix and does not address the different endpoint $(\begin{smallmatrix}5&7\\7&10\end{smallmatrix})$. The prior equation (17.12) alone still has its original method-only implication; the exclusion now follows from the separate finite witness (22.7)–(22.12).
+
+<a id="global-fibres-attribution-and-current-residual"></a>

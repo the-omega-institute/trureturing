@@ -1,0 +1,29 @@
+### 定义 9.1（三角网络源结构）
+
+三角网络的独立源结构为
+
+\[
+\mu_{\alpha\beta\gamma}
+=
+\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma.
+\]
+
+局部响应为
+
+\[
+A(a\mid\beta,\gamma),\quad
+B(b\mid\gamma,\alpha),\quad
+C(c\mid\alpha,\beta).
+\]
+
+输出分布为
+
+\[
+P(a,b,c)
+=
+\int A(a\mid\beta,\gamma)
+B(b\mid\gamma,\alpha)
+C(c\mid\alpha,\beta)
+\,d\mu_\alpha d\mu_\beta d\mu_\gamma.
+\]
+

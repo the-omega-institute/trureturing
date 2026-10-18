@@ -1,0 +1,25 @@
+**定义 4.1.3（Blackwell 支配）。** 写
+
+$$
+E\succeq_B F
+$$
+
+若存在一个不依赖 $\theta$ 的通道 $G$，使得
+
+$$
+\boxed{K_F=K_EG.}
+$$
+
+这表示 $F$ 的整份记录律可以由 $E$ 的记录经过合法随机后处理精确重现。
+
+给定有限动作集 $A$ 和损失 $\ell:\Theta\times A\to\mathbb R$，实验 $E$ 的决策规则是 $\delta:A\mid\Omega$，即 $\delta(a\mid\omega)$ 是观察记录后选动作 $a$ 的概率。对状态 $\theta$ 的风险为
+
+$$
+R_E(\delta,\theta)
+=
+\sum_{\omega,a}
+K_E(\omega\mid\theta)\delta(a\mid\omega)\ell(\theta,a).
+$$
+
+<a id="section-4-2"></a>
+

@@ -1,0 +1,128 @@
+**Theorem 1.4 (exact full-fiber native--Boolean transport).** For every
+integer triple $(H,p,\ell)$,
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3).
+\tag{1.1}
+$$
+
+This is the uniform feasibility correspondence of [WTF, Theorem 4.1][WTF].
+It does not assert pointwise domination of an arbitrary source's old charges
+by a normalized preparer. The following proof records the actual-source
+suppliers and lower offsets explicitly.
+
+Proof. First construct the lower-test cube. Set $G_0=\langle\beta,\beta\rangle$,
+$C_0=G_0$, $C_{v+1}=\langle C_v,\beta\rangle$ and take a comb depth
+at least $s_n$. Replace its beta at the prefix-free $w_i$ by $G_0$ exactly
+when $\theta_i=1$, producing a branch image $B_\theta$. Choose four fixed
+pairwise distinct branch images $D_c,D_1,D_2,D_4$ outside the finite family
+of all $B_\theta$. Use these as $x_c,x_{b_1},x_{b_2},x_{b_4}$,
+use $x_a=B_\theta$ and $x_{b_3}=\beta$, fill the ordered cut exterior,
+and apply the recursive image inverse. This yields an actual finite
+$u_\theta\in Z_{b_3}$ with both repeated classes at both occurrences,
+disequalities and guards. This is [WTF, Supplier 2.1][WTF], at the scope
+exposed there; the inverse is a mathematical construction, not a controller
+operation. For every cut occurrence $p$, the occurrence identity is
+$r_{\rho u}(pv)=r_{x_{[p]}}(v)$. The only nonconstant words on this cube
+are the pairwise disjoint sets
+
+$$
+E_i=\{p w_i v:p\in\{LLL,LRL\},\ v\in\{\varepsilon,L,R\}\}.
+\tag{1.2}
+$$
+
+At their roots, bit zero/one gives beta/branch; at either child it gives
+absent/beta. Proper prefixes stay branch and deeper extensions are absent
+in both cases, so all other finite words are cube-constant. Every word in
+$E_i$ has length at least $c_i$, with equality only at its occurrence roots.
+
+Two offset arguments apply to an arbitrary native competitor, without
+assuming it contains the displayed profile front. On each negative cube
+input, keep $B_\theta,D_1,D_2,D_4$ and change $x_c$ to beta and
+$x_{b_3}$ to alpha. The resulting actual $\Pi_3$ source has code one,
+with all selected replies unchanged. On each positive cube input, change
+only $x_{b_3}=\beta$ to a fresh branch image distinct from the other classes.
+This actual $Z_*$ source has code zero and unchanged selected replies.
+Both comparisons preserve the exterior before depth three and all row
+constraints. If that cube run queried no distinguishing word, its comparison
+source would follow the same fixed successors to the same latch. Correctness
+therefore forces a nonselected call of length at least three on that very
+cube run. This is a per-input charge, without adding costs across sources.
+
+For installed states, take an actual $Z_c$ source with $x_c=\beta$ and
+pairwise distinct branch images elsewhere. Changing only $b_3$ to alpha
+produces $\Pi_3$, of opposite code, so some installed query word lies in
+$RLR\{L,R\}^*$. Changing instead only $b_4$ to alpha produces $\Pi_4$
+and forces an installed word in $RRR\{L,R\}^*$. These disjoint cones
+are outside all $E_i$. If $M$ counts all installed selected running states,
+including unused ones, adding these two states and the $2+r$ latches gives
+
+$$
+M\le H_P-4-r.
+\tag{1.3}
+$$
+
+Now retain one Boolean running state for each selected native state reached
+on at least one cube input, labeled $i$ for a word in $E_i$. Use its
+beta/branch or absent/beta edges, according to its word. Bypass
+cube-constant states along their unique constant-reply successors, starting
+from the old fixed start and after each realized selected edge. A realized
+constant chain is finite by actual native termination and ends at a retained
+selected state or the appropriate original latch. The initial chain reaches
+a selected state because the threshold is nonconstant. For a selected edge
+unrealized on every cube input at that state, assign any output terminal.
+For each fixed $\theta$, induction follows exactly the selected-state
+subsequence on its own $u_\theta$; every edge so used is realized by that
+same source. An arbitrarily completed impossible edge never becomes reachable
+in this induction. This constructs a total correct terminating graph without
+copying, unfolding, ordering or leveling states. Its count and same-input
+charges satisfy
+
+$$
+m\le M\le H_P-4-r,\qquad
+t_B(\theta)+1\le q_P(u_\theta),\qquad
+J_B(\theta)+3\le\ell_P(u_\theta).
+\tag{1.4}
+$$
+
+The selected lengths dominate the original $c_i$ on every visit, and the
+extra call and letters come from the mandatory nonselected query on this
+same run. Repeated selected visits are retained. Thus projection proves
+all three bounds in the forward implication simultaneously.
+
+Conversely, install every Boolean running state, including unused ones, at
+$a_{i(q)}$. At each such state install its one successor for branch and,
+separately for each of alpha, beta and absent, its zero successor. Replace
+the terminals by $\widehat e_0,\widehat e_1$. Add the following two distinct
+profile states, start at $D$, and retain every further mandated latch:
+
+| state | literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | Boolean start | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+On every $Z_{b_3}$ source its arbitrary branch image defines one static
+indicator vector. The occurrence identity makes every selected native visit
+exactly its Boolean test, with the stated four-reply interpretation. This
+covers noncomb images and absent selected addresses as well as the cube.
+At $D$, alpha is $\Pi_3$, beta is precisely $Z_{b_3}$, and in the branch
+case the only remaining code-one profile is $\Pi_4$, detected by alpha at
+$T$. All other profiles require zero. Thus the lift is correct and
+terminating on the entire original fiber with exactly $m+4+r$ states.
+The selected routes have exactly $1+t_B(\theta)$ calls and $3+J_B(\theta)$
+letters; the other routes use at most two calls and six letters.
+
+For completeness, every correct Boolean threshold graph has one input
+exposing all $n$ coordinates: give one to the first $k-1$ new coordinates
+and zero thereafter, retaining old answers on repeats. Before the last
+exposure both outputs remain possible. No terminal is correct there and
+no actual state can recur. Finiteness forces progress to all coordinates.
+Complete this consistent assignment to obtain the actual input. Its charges
+are at least $n,W$ on that same run, so Boolean feasibility forces
+$t\ge n$, $J\ge W$. The lifted bounds therefore also cover the two-call,
+six-letter profile routes. Negative shifted bounds exclude a native witness
+by (1.3)--(1.4); negative unshifted bounds are infeasible by definition.
+This proves (1.1) for all integer triples. $\square$
+

@@ -1,0 +1,28 @@
+**Convention 2.3 (ordinary residual domain).** The mask presentation
+(RNL.6) requires no preliminary equations. If an equivalent presentation uses
+ordinary constructor equations, take a fully composed idempotent
+occurs-check most-general unifier $\tau$ with no fresh variables. Its remaining
+coordinates are $Z_\eta=X_\eta\setminus\operatorname{dom}\tau$. For
+$z\in Z_\eta$, $\tau(z)=z$, so the same fixed original address still recovers
+the coordinate:
+
+$$
+(W_\eta[\tau(v)])|_{p_z}=v(z),\qquad p_z=a_b s_z,\qquad |s_z|=d.
+\tag{RNL.9a}
+$$
+
+Here $\tau(v)(x)=\tau(x)[v]$ reconstructs every eliminated coordinate.
+Subsequent target unification is over $Z_\eta$ and retains these full original
+recovery addresses; a substitution never resets their depth to $|a_b|$.
+Such a presentation must preserve the exact retained cell in both directions.
+All remaining cell restrictions are the original old/literal/guard conditions
+and a finite conjunction of negative records of the form (RNL.7). No target
+equality is added to the retained negative domain; target equations are
+diagnostic queries only.
+
+The finite cell list is a selector only after its source correspondence is
+proved. If two original sources have the same depth-$d$ mask replies, they
+select the same cell. Conversely every source in a cell has that mask. This
+cross-cell coverage is used below; it is not inferred from a finite semantic
+row list.
+

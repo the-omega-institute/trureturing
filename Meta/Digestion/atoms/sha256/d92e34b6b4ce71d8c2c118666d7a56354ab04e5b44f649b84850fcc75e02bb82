@@ -1,0 +1,44 @@
+### 95.6. Four invertible fibres give four-vertex directions
+
+It remains to exclude zero singular fibres. For arbitrary u∈C² put x_f(u)=U_f⁻¹u. For every Hermitian 4×4 matrix Z with diagonal zero and Z1₄=0, define the full eight-coordinate matrix
+
+\[
+ E_{fg}=Z_{fg}x_f(u)x_g(u)^*\quad(f\ne g),\qquad E_{ff}=0.
+                                                                    \tag{32}
+\]
+
+This is Hermitian, preserves every original fibre block, and satisfies EU*=0: its f-th block row against U* is x_f(u)(Σ_gZ_fg)u*=0. Substitution into (23) therefore gives
+
+\[
+ \begin{aligned}
+ -\sum_{f\ne g}k_{fg}(u)Z_{fg}^{2}&\ge0,\\
+ k_{fg}(u)&=\sum_{i\in f,\,j\in g}
+          c_{ij}x_f(u)_i^2\overline{x_g(u)_j}^{2}.
+ \end{aligned}                                                     \tag{33}
+\]
+
+For fixed u the coefficients satisfy k_gf=overline(k_fg). The following elementary four-vertex observation forces every one of them to vanish. Use the Hermitian zero-row-sum matrix with upper entries
+
+\[
+ Z_{12}=0,\quad Z_{13}=x,\quad Z_{14}=-x,\quad
+ Z_{23}=-x+is,\quad Z_{24}=x-is,\quad Z_{34}=is,
+ \qquad x\in\mathbb C,\ s\in\mathbb R.                     \tag{34}
+\]
+
+With A=k₁₃+k₁₄, B=k₂₃+k₂₄, C=k₃₄, the left side of (33) is −2Re Φ, where
+
+\[
+ \Phi=(A+B)x^2-2isBx-s^2(B+C).                              \tag{35}
+\]
+
+Setting s=0 and varying complex x gives A+B=0. If B≠0, take s=1 and x=i[1+Re(B+C)]/(2B). Then Re Φ=1, contradicting (33). Thus B=0 and A=0. Relabeling the four vertices gives all three pairwise sums of the coefficients in any fixed row equal to zero. Each coefficient is therefore zero. In particular, k_fg(u)=0 for every u.
+
+To recover the original 2×2 coefficient block C_fg=(c_ij)_(i∈f,j∈g), set m(u)=(u₁²,u₁u₂,u₂²)ᵀ and write x_f(u)⊙x_f(u)=A_fm(u). The 2×3 matrix A_f has rank two: its rows are squares of two independent linear forms, whose squares remain linearly independent. Hence
+
+\[
+ m(u)^T A_f^T C_{fg}\overline{A_g}\,\overline{m(u)}=0
+                                      \quad(u\in\mathbb C^2).       \tag{36}
+\]
+
+The nine monomials of bidegree (2,2) in u and overline u are linearly independent as polynomials in the four real coordinates of u. Indeed the change of variables from those real coordinates to u₁,u₂,overline(u₁),overline(u₂) is invertible over C. Thus (36) gives A_fᵀC_fg overline(A_g)=0. Since A_fᵀ has full column rank and overline(A_g) has full row rank, C_fg=0. This contradicts (22), excluding zero singular fibres.
+

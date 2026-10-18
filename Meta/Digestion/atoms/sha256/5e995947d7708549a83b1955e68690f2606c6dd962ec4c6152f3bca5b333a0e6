@@ -1,0 +1,42 @@
+## 157. A two-value tetrahedron consumes more than pi
+
+Consider a genuine tetrahedron all six of whose actual labels belong to
+{M,Z}. Its fixed reservoir pair must be {M,Z}, since the two reservoir
+labels are distinct. Its axes also belong to {M,Z}; hence every cosh
+length is strictly greater than three.
+
+At a vertex adjacent to an axis of value r, let theta be the axial angle,
+and beta,delta the reservoir angles. If the reservoir values are a,b,
+Section 95 gives
+
+    beta+delta=2*atan(lambda*cot(theta/2)),
+    lambda=[sqrt(a^2-1)+sqrt(b^2-1)]/(a+b)
+                  *sqrt((r-1)/(r+1)).
+
+Here a,b,r>3. Thus
+
+    [sqrt(a^2-1)+sqrt(b^2-1)]/(a+b)>sqrt(8)/3,
+    sqrt((r-1)/(r+1))>1/sqrt(2),
+    1>lambda>2/3.                                 (156.2)
+
+For any 0<lambda<1 and 0<theta<pi, one has
+
+    theta+2*atan(lambda*cot(theta/2))
+          >=4*atan(sqrt(lambda)).                  (156.3)
+
+To verify the branch and inequality, set t=tan(theta/2)>0 and
+F=atan(t)+atan(lambda/t). Since lambda<1,
+0<F<pi/2. The tangent addition formula and AM--GM give
+
+    tan(F)=(t+lambda/t)/(1-lambda)
+             >=2*sqrt(lambda)/(1-lambda)
+              =tan(2*atan(sqrt(lambda))).
+
+Both compared angles lie in (0,pi/2), proving (156.3).
+
+Because sqrt(lambda)>sqrt(2/3)>1/2>sqrt(2)-1=tan(pi/8),
+equations (156.2)--(156.3) show that every vertex-angle sum is strictly greater
+than pi/2. Summing the four vertex sums counts every dihedral angle
+twice. Consequently the sum of all six dihedral angles is greater than
+pi. This conclusion includes every repetition of M or Z in the axes.
+

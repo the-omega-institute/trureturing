@@ -1,0 +1,65 @@
+**Proposition 5.3 (Native coefficient and the exact error corridor).**
+There is a complex homogeneous row $\ell$ on $X_{\mathbb C}$ with
+
+$$
+\ell V_\delta=e^{i\delta}\ell,\qquad
+f(k)=\ell F(k,0),\qquad
+|f(k)-A(k)|\le\sqrt{\epsilon^2/4-Zk}\quad(0<k<H).
+\tag{5.1}
+$$
+
+The row is allowed to be zero at this stage. The right-hand side
+is real and nonnegative.
+
+Proof. Let $a$ be the useful planar observable from Theorem 2.1
+and $z=a_1+ia_2$. Form the complex row space $W$ spanned by the
+two real rows of $a$, all their phase translates, and $\lambda_0$.
+Each generator is bounded on actual states, since phase translation
+permutes all $\alpha$ at each height. On $W$ the quantity
+
+$$
+\|h\|_{\rm obs}=\sup_{0<k<H,\ \alpha\in\mathbb T}
+|hF(k,\alpha)|
+$$
+
+is a genuine finite norm: a row vanishing on actual states vanishes
+on their span. Right multiplication by $V_\delta$ gives commuting
+invertible isometries of $W$.
+
+For completeness, an eigenvalue of an isometry on a finite complex
+normed space has modulus one. A nontrivial Jordan pair would give
+$Tu=\lambda u$, $Tv=\lambda v+u$ and
+$T^nv=\lambda^nv+n\lambda^{n-1}u$, contradicting bounded iterates.
+Thus each isometry is diagonalizable. A common eigenbasis for the
+commuting family follows by induction: split into eigenspaces of
+a nonscalar member, preserve them by commutation, and continue in
+smaller dimension; if every member is scalar there is no split to
+make. This is the bounded-module argument of [M, Lemmas 3.2 and
+14.2], without the budget-three multiplicity restriction.
+
+Each common eigenrow satisfies $hV_\delta=\chi(\delta)h$ for an
+abstract unitary character $\chi$, and hence
+$hF(k,\alpha)=\chi(\alpha)hF(k,0)$. Decompose the row of $z$
+into its finitely many character components, grouping any equal
+characters. Let $\xi(\alpha)=e^{i\alpha}$, and let $\ell$ be the
+$\xi$ component, or zero if absent. This defines an actual row
+on the whole $X_{\mathbb C}$, with the stated eigenrow identity;
+its coefficient is $f(k)$.
+
+At each fixed height Theorem 2.1 gives, for every $\alpha$,
+
+$$
+|z(k,\alpha)-A(k)e^{i\alpha}|
+\le r_\epsilon(k),\qquad
+r_\epsilon(k)=\sqrt{\epsilon^2/4-Zk}.
+$$
+
+The radicand is nonnegative because $\epsilon\ge e_*$. Multiply
+the error by $e^{-i\alpha}$ and apply Lemma 5.2 to the finite list
+of nontrivial characters $\chi\xi^{-1}$. Convexity of the closed
+disk of radius $r_\epsilon(k)$ puts each finite average in that
+disk. The averages converge to $f(k)-A(k)$, proving (5.1).
+The averaging is over actual phase points, so an irregular encoder
+has not been integrated. In particular $f$ is uniformly bounded on
+$(0,H)$ by $H+\epsilon/2$. $\square$
+

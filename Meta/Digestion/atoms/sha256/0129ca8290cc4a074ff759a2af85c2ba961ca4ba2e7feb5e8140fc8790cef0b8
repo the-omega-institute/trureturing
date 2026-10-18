@@ -1,0 +1,45 @@
+**Definition 4.3 (evaluated constants).** For $C$ in (RG.16) define
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{case}&\lambda&\mu& H^*&F(C)\\ \hline
+b_0\ge k&\lambda_0&0&\displaystyle\frac{k}{b_0}v_0v_0^T&k\lambda_0\\
+b_0<k&\text{Lemma 4.2}&\text{Lemma 4.2}&vv^T&k\lambda-\mu
+\end{array}
+\tag{RG.23}
+$$
+
+In the first row write $v=v_0$, $t=k/b_0\le1$; in the second write $t=1$. At $b_0=k$ use the first spectral row and the saturated lift below. A decoupled $D$ is in the unsaturated row with $b_0=1$, never in the strict-monotonicity case.
+
+The algebraic branch can be stated explicitly. In coefficient order $D,T,S$ put
+
+$$
+\begin{aligned}
+P(\lambda,\mu)={}&(c_{00}+\mu-\lambda)(c_{11}+\mu+\alpha\lambda)(c_{22}+\mu+\beta\lambda)
+ +2c_{01}c_{02}c_{12}\\
+&-(c_{00}+\mu-\lambda)c_{12}^2
+ -(c_{11}+\mu+\alpha\lambda)c_{02}^2
+ -(c_{22}+\mu+\beta\lambda)c_{01}^2.
+\end{aligned}
+\tag{RG.24}
+$$
+
+For $b_0<k$, the unique branch is exactly
+
+$$
+P=0,\qquad P_\lambda+kP_\mu=0,\qquad
+\lambda>\lambda_0,\quad\mu>0,\quad C+\mu I-\lambda B\succeq0.
+\tag{RG.25}
+$$
+
+Indeed the PSD matrix $A$ then has rank two, with $\operatorname{adj}A=\gamma vv^T$, $\gamma>0$. Cofactor differentiation gives $P_\mu=\operatorname{tr}\operatorname{adj}A>0$ and $P_\lambda=-\operatorname{tr}((\operatorname{adj}A)B)$, so the derivative equation is precisely $v^TBv=k$. Lemma 4.2 proves both selection and uniqueness, rather than inferring optimality from stationarity. In either row of (RG.23) a normalized kernel formula is
+
+$$
+v=\frac{\operatorname{adj}(A)e_D}
+ {\sqrt{(\operatorname{adj}A)_{DD}\operatorname{tr}\operatorname{adj}A}},
+\qquad A=C+\mu I-\lambda B.
+\tag{RG.26}
+$$
+
+The denominator is nonzero because $v_D>0$; substituting $\gamma vv^T$ verifies the normalization and sign. These are finite spectral operations and a uniquely specified branch, with no instrument or matrix minimization left in $F$.
+

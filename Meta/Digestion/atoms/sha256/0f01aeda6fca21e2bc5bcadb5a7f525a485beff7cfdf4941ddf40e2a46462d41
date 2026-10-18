@@ -1,0 +1,49 @@
+**Definition 10.2 (row coordinates and an explicit actual-address basis).**
+Write $R_*=(C_*,\pi_*)$, let $H$ be its reached cut support and $D$ its
+class set. Use NBP Definition 10.1's legal valuation notation
+$\mathscr F_*(x)=C_*[(x_{[p]})_{p\in H}]$ and
+$\mathcal X_* =\{x:D\to\mathcal T:(\forall d\ne e,\ x_d\ne x_e)
+\land\mathscr F_*(x)\in\mathcal I\}$, where $\mathcal I=\rho[\mathcal T]$.
+Its actual origin is $u_x=\delta(\mathscr F_*(x))$; this is the supplier's
+bijection to the original $\mathcal U$, not an inverse port available
+to a controller. For a class $d$, choose its shortest actual occurrence
+
+$$
+a_d=\underset{p\in H,\,[p]=d}{\operatorname{argmin}}\ (|p|,p).
+\tag{PCA.23}
+$$
+
+The tie order is the public lexicographic order. This is NBP Definition
+13.1's convention; it does not change the canonical class name.
+Traverse each word of $M$ in the finite exterior. If traversal first
+enters an occurrence hole $p$, write that word uniquely as $pw$.
+Put
+
+$$
+\begin{aligned}
+b&=\max\bigl(\{0\}\cup
+ \{|w|:pw\in M,\ p\in H\text{ is its first hole}\}\bigr),\\
+B_b&=\{\varepsilon\}\ \cup\
+ \{a_dw:d\in D,\ w\in\mathcal W,\ |w|\le b\}.
+\end{aligned}
+\tag{PCA.24}
+$$
+
+Thus $B_b$ is finite, consists only of original absolute native words,
+and depends only on the original row and the supplied certificate.
+It is independent of the competing preparation table and every budget.
+If $D=\varnothing$, it is $\{\varepsilon\}$. A hole at the root has
+$a_d=\varepsilon$. Words stopped by an exterior leaf, including all
+extensions in its absent cone, contribute no residual depth to $b$.
+
+For a legal class valuation $x$, let $\eta_b(x)$ consist of the
+four-valued actual replies of each $x_d$ at relative words of length at most $b$.
+Early leaves stop further descent and give absent at every strict
+descendant. The tuple is a mathematical finite profile, not accessible
+configuration. Two actual sources with the same profile have the same
+replies on $M$, the same original code and the same complete entry.
+They also have the same whole target, by NBP Theorem 10.4: the profile
+includes the class roots, which determine the predecessor row on this
+fixed current-row one-image fiber. That supplier is used for the whole
+row, not replaced by a root-type target.
+

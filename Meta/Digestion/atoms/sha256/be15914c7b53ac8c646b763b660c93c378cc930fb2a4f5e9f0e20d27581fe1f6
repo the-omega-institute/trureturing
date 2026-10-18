@@ -1,0 +1,64 @@
+**引理 44.2（原菜单可执行的层间间隙证书）。** 公开供应一个数 $\alpha$，满足
+
+$$
+\kappa<\alpha<\tau,\qquad
+\nu=\sqrt{1-\alpha^2},\quad
+m=\tau\alpha-\kappa\nu>0,\quad
+h=\tau\nu-\kappa\alpha>0,\quad
+H=\tau\nu+\kappa\alpha,
+$$
+
+并要求
+
+$$
+G=Uh-LH>0.
+\tag{44.4}
+$$
+
+这些是不必然成立的充分来源／方向条件，尤其 $\kappa<\alpha<\tau$ 要求 $\tau>1/\sqrt2$；不作所有来源的充要分类。任取公开单位四元数 $t\perp n$，置
+
+$$
+\ell=\alpha n+\nu t,\qquad p=\bar\ell=\ell^{-1}.
+\tag{44.5}
+$$
+
+则 $p$ 能由至多两个单位纯虚内部控制的有序积实现。对来源中的任一半径 $R\in\{L,U\}$，首锚前采用该积，写 $bp=s+w$、$w\in E$，有
+
+$$
+s\ge Rm>0,\qquad Rh\le|w|\le RH,\qquad
+b=(\sqrt{R^2-|w|^2}+w)p^{-1}.
+\tag{44.6}
+$$
+
+两层实际投影像之间的欧氏距离至少 $G$；每层逆在其实际像上的Lipschitz常数至多 $1/m$。这里 $p$ 为单位，首锚真实Read恰为 $w$，没有收缩后读数的未声明归一化。
+
+证明。$|\ell|=1$、$\langle n,\ell\rangle=\alpha$。写 $p=p_0+v_p$，选公开单位 $c_1\in E$ 且 $c_1\perp v_p$（$v_p=0$ 时任取），令
+
+$$
+c_2=-c_1p.
+\tag{44.7}
+$$
+
+四元数结合性给 $c_1c_2=p$；$\operatorname{Re}(c_2)=\langle c_1,v_p\rangle=0$、$|c_2|=1$，所以两动作均在原内部菜单且满足幅度上限。这是§41的单位控制构造在所选方向上的直接应用，不是新权限。选择只消费公共来源参数，既不按隐藏 $b$ 选择，也不从后续读数倒选初始控制。
+
+对 $b/R$ 写 $\eta n+\sqrt{1-\eta^2}\,u$，其中 $\tau\le\eta\le1$、$u\perp n$ 为单位；$\eta=1$ 时第二项为零。由 $|\langle u,\ell\rangle|\le\nu$ 及 $s=\langle b,\ell\rangle$，
+
+$$
+\alpha\eta-\nu\sqrt{1-\eta^2}
+ \le s/R\le
+\alpha\eta+\nu\sqrt{1-\eta^2}.
+\tag{44.8}
+$$
+
+左端在 $[\tau,1]$ 非减；右端在该区间非增，因为 $\eta\ge\tau>\alpha$ 使其在 $\eta<1$ 的导数 $\alpha-\nu\eta/\sqrt{1-\eta^2}<0$。故
+
+$$
+m\le s/R\le K,\qquad K=\tau\alpha+\kappa\nu,
+\qquad m^2+H^2=1,\quad K^2+h^2=1.
+\tag{44.9}
+$$
+
+$\alpha>\kappa$ 给 $m>0$，$\alpha<\tau$ 给 $h>0$，均由正量平方比较得出。$|bp|=R$、$s^2+|w|^2=R^2$，即得 (44.6)。内层像包含于 $|w|\le LH$，外层像包含于 $|w|\ge Uh$，反三角不等式给任意跨层读数距离至少 $G$。没有把两层分别可达的极值假定为来自同一来源。
+
+在闭球 $|w|\le RH$ 上，平方根图 $f_R(w)=(\sqrt{R^2-|w|^2}+w)p^{-1}$ 有三个微分奇异值 $1,1,R/\sqrt{R^2-|w|^2}$，至多 $1/m$；闭球线段留在定义域内，积分微分界即得Lipschitz界。这直接复用§42的球面逆计算，但把它接到未标记两层的间隙 (44.4) 上。证毕。
+

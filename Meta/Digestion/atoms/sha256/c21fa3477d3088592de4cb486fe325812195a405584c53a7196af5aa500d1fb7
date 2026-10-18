@@ -1,0 +1,38 @@
+**引理 4.1（Real skew normal form, including degeneracies）。** Every real skew
+$5\times5$ matrix is orthogonally conjugate to
+
+$$
+\mathcal D(a,b)=aR\oplus bR\oplus0,
+\qquad R=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad a,b\ge0.
+\tag{4.1}
+$$
+
+Its Hermitian matrix $iX$ has eigenvalues $a,-a,b,-b,0$. Consequently
+
+$$
+I_5+iX\succeq0\quad\Longleftrightarrow\quad
+a,b\le1\quad\Longleftrightarrow\quad\|X\|_{\mathrm{op}}\le1,
+\qquad s=a^2+b^2.
+\tag{4.2}
+$$
+
+Proof. The real symmetric matrix $-X^2=X^TX$ is positive semidefinite. For
+a real unit eigenvector $v$ with positive eigenvalue $a^2$, set
+$w=-Xv/a$. Then
+
+$$
+v^Tw=0,\qquad\|w\|=1,\qquad Xv=-aw,\qquad Xw=av.
+$$
+
+The orthonormal plane spanned by $v,w$ is invariant. Its orthogonal complement
+is also invariant: if $z$ is perpendicular to that plane, skewness gives
+$\langle Xz,v\rangle=-\langle z,Xv\rangle=0$ and likewise for $w$.
+Repeat on the complement. A remaining one-dimensional skew block is zero;
+if a larger residual space has only zero eigenvalues of $-X^2$, then
+$\|Xz\|^2=\langle z,-X^2z\rangle=0$ there, so $X$ vanishes on it.
+This yields (4.1) with zero parameters allowed.
+
+The two blocks give the listed eigenvalues of $iX$ and the singular values
+$a,a,b,b,0$ of $X$. This proves the positivity and norm equivalences.
+Finally $\operatorname{tr}(X^TX)=2s=2(a^2+b^2)$. $\square$
+

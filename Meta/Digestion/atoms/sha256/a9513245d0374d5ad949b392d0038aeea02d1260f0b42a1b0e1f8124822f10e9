@@ -1,0 +1,56 @@
+**Theorem 4.4 (initialized source- and owner-preserving lift).** Let
+$\widehat h$ be the resulting structural execution of any original
+preparation/acquisition prefix or any $h\in\Omega$. Then
+
+$$
+\operatorname{end}(\widehat h)=\Gamma_+(Y(h)),\qquad
+\operatorname{step}_{\Pi}(\Gamma_+(Y(h)),a)
+ =\Gamma_+(Y(ha))
+\tag{CSA.3}
+$$
+
+for each enabled lawful next native action $a$. The same local equation
+represents its enabled raw-IN exit in $\partial_{\rm raw}\Omega$.
+Disabled/unauthorized actions have the same nonexecution. Every actual
+native cut has one structural cut, with the same output bits, raw fields,
+source occurrence, tokens and receipt ordinal.
+
+Proof. The foundation decodes to the actual native primitive entrance,
+with no endowed source or future code bits. For every ordinary cell,
+latch, Boolean, move, EX, TOK, seal/CTL and boundary-constructor row use
+SSA Theorem 6.2's per-opcode proof, applied to these identical local roles.
+The proof uses only the actual native finite pattern, so a bank, staged
+descriptor or source cell has no different storage case. In particular
+all emitted word-program instructions remain their full native expansions.
+
+Existing finite fields use the same switch assignment proof. The additional
+fresh-control case is Lemma 4.2. Mode/cursor tests and changes have their
+actual finite encodings; raw and active tables remain distinct throughout
+both bootstraps. Install is precisely RCA's bounded mode/PC change on
+existing fields and one receipt, with its original Ready/owner guard.
+There is no new ordinary-cell effect or early construction of $L,D_1$.
+All effects are combined on actual overlapping roles before commitment.
+This proves the local equation from any related pre-row record. Induction
+from the foundation proves CSA.3 through boot, acquisition, both later
+bootstraps and every subsequent row.
+
+Raw IN changes the identical latch and PC and constructs the identical
+receipt for either bit; the physical patch does not apply a canonical
+input filter. Hence a noncanonical edge still has its raw structural
+successor. The lawful domain does not include that successor. A failed
+guard has no native effect and no patch. No later malformed semantics is
+needed for either statement.
+
+Each component's authority is the authority of its unique native field.
+TOK changes the same finite permission fields; publication and availability
+change at the same actual seal rows. Internal primitive probes do not become
+actor-readable output. Thus source handlers still act on the same private
+source; service replay still acts only on acquired banks. Fixed naming
+preserves actual origins and copying chains. The inherited whole-source
+service results therefore retain ordered grafts, genuine substitution,
+whole-capacity guards, literal/numerical replies and executed rejects.
+During a source WR the equation concerns raw bytes, without calling a
+valid-tree decoder. Semantic annotations will be recovered from the same
+history in §5. Under the stated atomic basis no additional maintenance
+cuts occur, and no native installation/copy cut is removed. ∎
+

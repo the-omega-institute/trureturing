@@ -1,0 +1,25 @@
+**Definition 3.1 (available input and common CPTP comparison).** Alongside
+the sole cut specimen there is a fixed common state $\tau$ of metadata
+and blanks: the complete accessible input is
+$\rho_{x,\beta,m}\otimes\tau$. The metadata contain the no-failure flag,
+aligned cut time, common source/preparation/epoch identity, fixed reference
+calibration, permissions and controller state. They contain no unknown
+history index, readable old waveform, generator word, source callback,
+height programme, parity helper,
+environment port or additional specimen. No source-dependent installed
+processor is supplied.
+
+Arbitrary independent ancillary spaces, private randomness, computation,
+finite adaptive instruments and retained classical or quantum records are
+allowed. Branch maps remain unnormalized, and every branch, including
+acquisition abort and unexecuted rejection, contributes to the output.
+Composition with a fixed common output interpretation gives a single
+history-independent CPTP map. Absorb $\tau$ and independent ancillas into
+it and write this map as $\Phi$ on $V$. Enlarging the comparison to all
+such common CPTP maps only makes a necessary lower bound stronger; it
+supplies no new legal quantum read, original actuator or permission.
+
+The ideal continuation is a source-indexed target family. Its dependence
+on $x$ does not install $x$ in $\Phi$. Earlier source-sensitive assistance
+would be a different joint-input premise, outside this experiment.
+

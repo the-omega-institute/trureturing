@@ -1,0 +1,90 @@
+**Definition 1.4 (The selected real channel space).** Work in the passive
+frame
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(1,i,i,i,1),\qquad A=-iD^\dagger KD,
+\qquad O(t)=e^{tA}=D^\dagger U(t)D,\\
+\widehat T(X)=D^\dagger T(DXD^\dagger)D,\qquad
+r=\sqrt{17},\quad \mu_\pm=(5\pm r)/2,\quad \omega_\pm=\sqrt{\mu_\pm},\\
+B=-A^2,\qquad
+R_\pm=\frac{B(B-\mu_\mp I)}{\mu_\pm(\mu_\pm-\mu_\mp)},
+\qquad R_0=I-R_+-R_-=dd^T,\quad d=(e_2-e_5)/\sqrt2,\\
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\qquad
+v_\pm=Au_\pm/\omega_\pm,\qquad
+\mathsf J=\operatorname{diag}(1,-1,-1,-1,1).
+\end{gathered}
+\tag{1.4}
+$$
+
+The sector dimensions in order $(0,+,-)$ are $(1,2,2)$. All transposes
+refer to this fixed frame; a map dagger denotes the trace-pairing adjoint.
+Put $F(a,b)=(ab^T+ba^T)/\sqrt2$ for orthogonal unit vectors and use
+QRC's orthonormal basis
+
+$$
+H_0=R_0,\qquad H_+=R_+/\sqrt2,\qquad H_-=R_-/\sqrt2,
+\qquad \tau=(1,\sqrt2,\sqrt2)^T,
+\tag{1.5}
+$$
+
+with the following six ordered orthonormal pairs:
+
+$$
+\begin{aligned}
++ &: F(d,u_+),\ F(d,v_+),\\
+- &: F(d,u_-),\ F(d,v_-),\\
+2+ &: (u_+u_+^T-v_+v_+^T)/\sqrt2,\ F(u_+,v_+),\\
+2- &: (u_-u_-^T-v_-v_-^T)/\sqrt2,\ F(u_-,v_-),\\
+\Delta &: [F(u_+,u_-)+F(v_+,v_-)]/\sqrt2,\
+[F(v_+,u_-)-F(u_+,v_-)]/\sqrt2,\\
+\Sigma &: [F(u_+,u_-)-F(v_+,v_-)]/\sqrt2,\
+[F(v_+,u_-)+F(u_+,v_-)]/\sqrt2.
+\end{aligned}
+\tag{1.6}
+$$
+
+Call these matrices $F_{\nu1},F_{\nu2}$, for
+$\nu\in\mathcal N=\{+,-,2+,2-,\Delta,\Sigma\}$, and let
+$P_\nu(E)=\sum_{a=1}^2\operatorname{tr}(F_{\nu a}E)F_{\nu a}$.
+For $x=(M,\eta)\in M_3(\mathbb R)\times\mathbb R^6$ define
+
+$$
+\begin{aligned}
+Z(x)&=\sum_{i,j}M_{ij}H_i\otimes H_j
++\sum_\nu\eta_\nu\sum_{a=1}^2F_{\nu a}\otimes F_{\nu a},
+&\chi(x)&=Z(x)/5,\\
+S_x(E)&=\sum_{i,j}M_{ij}\operatorname{tr}(H_jE)H_i
++\sum_\nu\eta_\nu P_\nu(E).
+\end{aligned}
+\tag{1.7}
+$$
+
+The action on arbitrary complex matrices is the complex-linear extension
+after replacing $E$ by $(E+E^T)/2$. Choi order is output $O$ first,
+input $I$ second. Thus, on all matrices,
+
+$$
+S_x(X)=5\operatorname{Tr}_I[(I_O\otimes X^T)\chi(x)].
+\tag{1.8}
+$$
+
+Write $\mathcal W=\{\chi(x):x\in\mathbb R^{15}\}$ for this linear
+Choi space. Its full TP condition is
+
+$$
+M^T\tau=\tau,
+\qquad \operatorname{Tr}_O\chi(x)=I_I/5.
+\tag{1.9}
+$$
+
+Indeed the partial trace of $Z$ is
+$\sum_j(M^T\tau)_jH_j$, because the twelve $F$ matrices are
+traceless. There are three independent marginal equations, not merely
+one trace equation. Every element of $\mathcal W$ is invariant under
+transposition of either tensor factor separately. Positive $\chi(x)$
+with (1.9) gives a complex CPTP map, by finite spectral factorization of
+its Choi matrix. QRC's commutant calculation makes this map stationary
+and $\mathsf J$-covariant even if it is not separable. Neither
+$M=M^T$ nor $M\tau=\tau$ is imposed.
+

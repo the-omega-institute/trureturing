@@ -1,0 +1,58 @@
+### 引理 46.3（共同左因子的正实割线）
+
+固定一个六原子词 $w$ 和 $y>0$，写
+
+$$
+A_i\begin{pmatrix}1\\y\end{pmatrix}
+ =\begin{pmatrix}r_i(y)\\s_i(y)\end{pmatrix},\qquad 0\le i\le6.
+$$
+
+设实多项式 $P,Q$ 次数至多二，$E$ 仿射，且
+
+$$
+r_iP(i)+s_iQ(i)+E(i)=0\quad(0\le i\le6).                         \tag{46.2}
+$$
+
+取固定实数 $(a,b,c,d,e)$，满足 $a\ne0$，并令
+
+$$
+m=b/a>0,\qquad p=-c/a>0,\qquad m^2>p,\qquad
+h=\sqrt{m^2-p},\qquad \rho_\pm=m\pm h.
+$$
+
+若 $P,Q$ 线性无关，则以下是两个合法的固定世界：
+
+$$
+\begin{aligned}
+R_\pm&=\begin{pmatrix}1&\rho_\pm\\y&y\rho_\pm\end{pmatrix}
+       =\begin{pmatrix}1\\y\end{pmatrix}(1,\rho_\pm),\\
+G_\pm(t)&=a\bigl(Q(t)-\rho_\mp P(t)\bigr),\\
+D_\pm(t)&=d+et\pm ahE(t).
+\end{aligned}                                                     \tag{46.3}
+$$
+
+它们的规范来源不同，沿 $w$ 的全部七读相同，共同值为
+
+$$
+V_i=ar_iQ(i)+b\bigl(s_iQ(i)-r_iP(i)\bigr)+cs_iP(i)+d+ei.           \tag{46.4}
+$$
+
+**证明。** $0<h<m$，故 $\rho_+>\rho_->0$，来源严格正且秩一。
+它们的规范来源的 $(1,1)$ 元分别是 $1/(1+y\rho_\pm)$，互不相等。
+$P,Q$ 线性无关使 $Q-\rho P$ 对每个实数 $\rho$ 都不是零多项式，因此两个
+增益非零且次数至多二，两个漂移固定且仿射。又
+$\rho_++\rho_-=2m$、$\rho_+\rho_-=p=-c/a$，逐项展开 (46.3) 的读数得
+
+$$
+z_i^\pm=V_i\pm ah\bigl(r_iP(i)+s_iQ(i)+E(i)\bigr)=V_i.
+$$
+
+这同时计算了漂移差 $2ahE$，没有除以任何采样增益。$M,J$ 保持列的严格正性，
+故每个实际原子后的来源也合法。∎
+
+此引理复用前卷引理 40.2 的正割线方法；它本身不是新的通用工具。
+这里两个来源共享左因子 $(1,y)^{\mathsf T}$，右因子不同。两增益不成比例：
+若 $Q-\rho_-P=\lambda(Q-\rho_+P)$，线性无关性先给 $\lambda=1$，再给
+$\rho_-=\rho_+$，矛盾。构造也不要求 $G_+(6)=G_-(6)=0$。共同右因子加共同末读根的分类只约束满足那两项附加假设的
+碰撞，不排除本引理的候选。此区分不否定该分类，也不把分类当作本卷的证明。
+

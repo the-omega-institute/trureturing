@@ -1,0 +1,24 @@
+**Lemma 4.2 (exact image bounds on the full domain).** Subject to the
+fixed-rank check, every named expansion has natural leaf ranks exactly
+when each free primitive rank is at least $L_C$ and each unrestricted
+sink has minimum leaf rank at least $L_C$. On normal sinks the changes
+in Definition 4.1 are bijections from, respectively, $\mathbb N$ and
+$\mathcal N$. After substitution, every displayed variable offset is
+nonnegative.
+
+Proof. An occurrence $\tau_dS_C$ has natural labels exactly when
+$\min\operatorname{rank}(S_C)+d\ge0$. In the primitive case this minimum
+is its single rank. Every leaf of every expansion is either such a
+translated sink leaf or a checked fixed primitive. The conjunction over
+all occurrences is therefore exactly (PDC.11), in both directions.
+The representative occurrence ensures that the sink itself is among
+the conditions.
+
+For an actual normal sink satisfying the bound, [ABC, Theorem 2.3][ABC]
+supplies its unique normal preimage under $\tau_{L_C}$. Conversely
+translation of any normal preimage gives exactly that image. For a
+primitive this is the usual unique decomposition of a natural rank as
+$L_C+n_C$. Each occurrence now has offset $L_C+d\ge0$. Normality of
+the explicit constructors remains to be imposed; it has not been
+inferred merely from the rank bound. $\square$
+

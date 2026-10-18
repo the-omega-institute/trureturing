@@ -1,0 +1,46 @@
+**Definition 2.1 (selected-input acquisition resource).** Let
+$X_{01}=|0\rangle\langle1|+|1\rangle\langle0|$. For $0\leq s\leq1$
+prescribe the full every-input effects
+
+$$
+F_r(s)=\frac{I_5+r s\kappa EX_{01}E^\dagger}{2},\qquad r=\pm1.
+\tag{AS.10}
+$$
+
+A competitor consists of a finite actually generated accessible
+classical label $\xi$, a report $r(\xi)$, a finite joint quantum fibre
+$\mathbb C^{d_\xi}$, CP encoders $\mathcal C_\xi:M_5\to M_{d_\xi}$,
+and full-output whole-fibre CPTP decoders $\mathcal R_\xi$, with
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I)=I_5,\quad
+\sum_{r(\xi)=r}\mathcal C_\xi^\dagger(I)=F_r(s),\quad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\Phi_*.
+\tag{AS.11}
+$$
+
+All future-accessible input-dependent quantum systems are counted
+jointly: specimen, memory, controller, environment, returned systems
+and entanglement shares. A coherent flag counts as quantum until an
+actual classical direct sum is generated. Every omitted dilation share
+is permanently inaccessible before this cut. Independent later blank
+ancillas are permitted; a correlated accessible share is not a blank.
+Passive references are inaccessible to execution. The decoder's live
+restriction is TNI, whereas the whole decoder is TP.
+
+Define
+
+$$
+G_{\rm acq}=\sum_{d_\xi\geq3}\mathcal C_\xi^\dagger(I),\qquad
+E_s(\sigma)=\inf_{\text{(AS.11)}}\operatorname{tr}(G_{\rm acq}\sigma).
+\tag{AS.12}
+$$
+
+This is acquired mass, including high acquisition later failing. There
+is no prior, history sensor, helper, bypass, hidden share, extra copy,
+callback, reset, retry or postselection. For supported states abbreviate
+$E_s(\rho)=E_s(E\rho E^\dagger)$. A public selected input and strength
+may select fixed matrices before the unknown specimen arrives; the
+chosen instrument still acts commonly on every unknown input. Pointwise
+minima are not one simultaneous twelve-input or all-input optimum.
+

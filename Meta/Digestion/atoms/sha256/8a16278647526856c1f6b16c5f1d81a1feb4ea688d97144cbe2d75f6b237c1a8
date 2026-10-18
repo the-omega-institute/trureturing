@@ -1,0 +1,23 @@
+### 7.2 Encoding, actual image and the original error
+
+Store
+
+$$
+E_m(k,\alpha,\beta)=(K,f_0,\ldots,f_m),\qquad
+K=k,\qquad f_j=k^jU(\alpha)\in\mathbb R^2.
+\tag{7.6}
+$$
+
+There are $1+2(m+1)=2m+3$ real coordinates. On the entire ambient
+feature space use the one fixed linear decoder
+
+$$
+L_m(K,f_0,\ldots,f_m)=D\left(\sum_{j=0}^m\pi_jf_j,0\right).
+\tag{7.7}
+$$
+
+Its offset is zero, which is allowed by the affine contract. Its column
+on the stored height is zero: it reads stored polynomial features
+linearly, rather than evaluating a polynomial nonlinearly on $K$ at
+readout time.
+

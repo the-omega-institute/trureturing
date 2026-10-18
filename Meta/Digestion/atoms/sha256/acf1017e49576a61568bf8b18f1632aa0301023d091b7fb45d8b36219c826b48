@@ -1,0 +1,81 @@
+**definition 4.1 (Sector, membership and Bell instruments).**
+Alice first pinches the data into the sectors $d_a,d_b,\{2\}$ with
+their real original-coordinate projections and tells Bob the sector.
+Both the target and every protocol below annihilate all cross-sector
+matrix units. In sector $\{2\}$ Bob prepares output $2$ with probability
+$s$ and each of the other four coordinates with probability $5n=\eta/5$;
+all programs are discarded.
+
+In a data pair $d=(j,k)$, each examined copy is tested by both parties
+for membership in their prescribed local two-dimensional supports.
+Each local instrument has the projector and its complement. The two
+membership bits are communicated. Acceptance means both are inside;
+all three other membership outcomes are failures and are retained
+before the corresponding program is discarded. No matching versus
+unmatched test within the accepted product is performed. The accepted
+unnormalized state is
+
+$$
+\tau_v=\operatorname{diag}(w,n,n,w)
+             +iv(|00\rangle\langle11|-|11\rangle\langle00|),
+\qquad\operatorname{tr}\tau_v=q,
+\tag{4.1}
+$$
+
+where $v=\sigma u$ for $X=\sigma X_d$ and $v=0$ on the other axis.
+Its acceptance probability $q$ is label independent. These values
+describe the actual branch, and are never source-dependent controls.
+
+For a retained pair, Alice measures the data bit and her half in the
+four real Bell vectors
+
+$$
+|\beta_V\rangle=(I_2\otimes V)(|00\rangle+|11\rangle)/\sqrt2.
+$$
+
+The complete correction table is
+
+| Bell-vector matrix $V$ | Bob's correction |
+| --- | --- |
+| $I_2$ | $I_2$ |
+| $Z_2=\operatorname{diag}(1,-1)$ | $Z_2$ |
+| $X_2=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $R_2$ |
+| $R_2=\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$ | $X_2$ |
+
+All four outcomes are sent and corrected; every correction is real
+orthogonal and independent of the source label. The actual pair
+contraction, reused from C-137.1, is
+
+$$
+\mathcal T_{\tau_v}(Y)=
+\begin{pmatrix}
+2wY_{00}+2nY_{11}&2ivY_{01}\\
+-2ivY_{10}&2nY_{00}+2wY_{11}
+\end{pmatrix},\qquad
+\operatorname{tr}\mathcal T_{\tau_v}(Y)=q\operatorname{tr}Y.
+\tag{4.2}
+$$
+
+For completeness, the $I_2$ outcome contracts the resource entry
+$(a,b),(a',b')$ with $Y_{aa'}/2$ and produces one quarter of (4.2).
+The $Z_2$ outcome's off-diagonal signs cancel its correction. For $X_2$,
+the swapped indices send the coherent entry to $-ivE_{10}$, and
+$R_2E_{10}R_2^T=-E_{01}$ corrects this sign. For $R_2$, the Bell
+vector already supplies that minus sign and $X_2$ corrects the swap.
+In both cases the correction also restores the diagonal ordering.
+Thus every corrected outcome is one quarter of (4.2), on
+$E_{00},E_{11},E_{01},E_{10}$ separately. In particular the calculation
+keeps both independent complex off-diagonal units.
+
+The same fixed Bell instrument, when given
+
+$$
+\omega(a,b,z)=\operatorname{diag}(a,b,b,a)
+                   +iz(|00\rangle\langle11|-|11\rangle\langle00|),
+\tag{4.3}
+$$
+
+has stay population $2a$, partner population $2b$, and coherence
+multiplier $2iz$ with its negative on the reverse unit. This follows
+from the identical contraction with $w,n,v$ replaced by $a,b,z$.
+

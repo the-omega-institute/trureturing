@@ -1,0 +1,10 @@
+**定义 17.1（共同来源上的受控线性未来）。** $H$、$Y$ 为有限维实内积空间，全部 $x\in H$ 都是允许来源，$C:H\to Y$ 线性，操作字母集 $\mathcal A$ 有限，$A_a:H\to H$ 为总线性映射。词 $w=a_1\cdots a_k$ 按先 $a_1$ 后 $a_k$ 执行，故 $A_w=A_{a_k}\cdots A_{a_1}$，空词为恒等。令
+
+$$
+O_0=\operatorname{im}C^{\mathsf T},\qquad
+O_{h+1}=O_h+\sum_{a\in\mathcal A}A_a^{\mathsf T}O_h,
+\qquad O_\infty=\bigcup_{h\geq0}O_h.
+$$
+
+有限字母集保证每个阶段只需有限矩阵运算；即使字母集无限，相同线性张成定义仍有意义，但不自动有有限枚举方法。全部未来响应是同一初态的函数族 $(CA_wx)_w$；它是行为语义，不假设能够在一条实际历史上免费重置并执行所有词。
+

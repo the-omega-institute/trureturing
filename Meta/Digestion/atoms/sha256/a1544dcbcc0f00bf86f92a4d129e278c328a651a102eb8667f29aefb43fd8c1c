@@ -1,0 +1,39 @@
+**Definition 11.1 (full remaining four-view problem).** Let $Q$ be the
+original typed continuation/audit response map of AIF Definition 2.6,
+instantiated with CAP's original task and the actual installed entry
+relation. Empty response retains terminal type and actual task output.
+Write $Q_G$ separately for the response map that also includes the new
+history entries and their actual typed outputs. No equality of these two
+response maps is assumed. The original-consumer correspondence of §9
+concerns the original target and its actual terminal route, rather than
+silently redefining $Q$ by adding a full-state terminal readout.
+The full carrier includes every original and added partial native phase,
+raw enabled input successor, invalid packet, incomplete bank/descriptor,
+code version, loan, sender/mailbox/receiver state and final halt.
+
+For four independently defined spatial support/incidence, ordered-operation,
+terminal-boundary and retained/callable-memory expressions $V_i$, the
+remaining exactness obligations are, separately for each $i$,
+
+$$
+V_i(x)=V_i(y)\ \Longrightarrow\ Q(x)=Q(y),\qquad
+Q(x)=Q(y)\ \Longrightarrow\ V_i(x)=V_i(y).
+$$
+
+Their lawful partial-transition transport must additionally preserve
+simultaneous legality, labels, successor relation, and all terminal
+readouts. A fourfold copy of manifest/$I_k$/$k$, a shadow source, or an
+intersection of kernels is not such an independent definition. Theorem
+9.2 supplies an actual acquired returning historical interface on its
+specified preterminal family; it supplies none of these eight implications
+for independently defined natural views.
+
+The abstract statement `typed_finite_view_kernel` in
+[D5 TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+(and its owning Scribe) concerns independently specified typed edges,
+labels and readouts. The statement `predictive_memory_minimal_quotient` in
+[D5 PredictiveMemoryMinimalQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+(and its owning Scribe) assumes both readout and update factorization.
+Neither provides this missing concrete natural-view identification or
+actual owner authority.
+

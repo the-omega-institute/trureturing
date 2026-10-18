@@ -1,0 +1,14 @@
+**定义 1.3（任意基数及停止）。** 对已知 $K\subseteq\mathcal F(H)$，在原时钟剩余预算内定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff \#K\ge2,\\
+L_{s+1}(K,H)&\iff \#K\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists a\in\mathbb R:\
+L_s\bigl(K\cap\mathcal F(H,E,a),(H,E,a)\bigr).
+\end{aligned}
+\tag{1.8}
+$$
+
+空集不可达且不满足基数子句，已知单点可立即返回整个目标；同一记录下的两个不同完整目标不允许正确停止。最终两个动作的碰撞可由不同的世界对承担，不能从较大的失败族默认抽取一个失败对。
+

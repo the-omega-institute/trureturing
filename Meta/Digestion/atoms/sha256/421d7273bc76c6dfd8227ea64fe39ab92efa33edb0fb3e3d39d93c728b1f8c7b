@@ -1,0 +1,18 @@
+**Proposition 9.3 (one blank-recovery witness and its uniform scope).** In
+Definition 9.1's one boot, supply 01, the actual Reserve(2) frame, then
+1 with its delivered old unified ordinal $m$, $z=0,s=2$. Recovery returns
+the actual first source blank after EX and before WR(0), at $k=n_0+2$,
+then returns to the parked original client. Optional 01/Raise(2) and
+01/Rho followed by 00 produce the original INITIAL output and global halt.
+The source payloads on this optional route are $10$, $100000$, and
+$111001$, while the target remains $(0,B,1)$.
+
+Proof. Here $d=4$. Proposition 8.4 gives 24 fragment rows and 25 cuts,
+including the selected first blank. Proposition 7.4 supplies the three
+actual deliveries and callbacks, not merely an available integer package.
+Raise(2) is valid and the original beta Rho accepts
+$\langle\beta,\alpha\rangle$ under guard 2. CAP Proposition 17.2 supplies
+the displayed packet/initial-target correspondence. Theorem 9.2 gives
+the full original consumer and halt. Its arbitrary-$J_i$ induction,
+rather than this $d=4$ arithmetic instance, is the uniformity argument. ∎
+

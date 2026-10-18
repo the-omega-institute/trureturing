@@ -1,0 +1,9 @@
+**定义 4.3（有限素数支撑的容斥）。** 对有限素数集 $S$，包括空集，定义
+
+$$
+\mathcal Q_S(r)=\prod_{p\in S}\left(I-\frac1pT_{\log p}\right)h(r),
+\qquad P_S=\prod_{p\in S}p.
+$$
+
+空乘积为恒等算子或数值 $1$。$\mu$ 表示 Möbius 函数。
+

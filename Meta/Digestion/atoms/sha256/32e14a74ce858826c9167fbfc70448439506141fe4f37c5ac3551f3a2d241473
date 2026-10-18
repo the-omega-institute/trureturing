@@ -1,0 +1,17 @@
+## 492. The input inventories
+
+Section 479 gives, when v>m-2, exactly the alternatives
+
+    sigma axes {M,C}, phi axes {V,D}, both pair {C,D};
+    sigma axes {M,D}, phi axes {V,C}, both pair {C,D}.
+
+In both alternatives sigma has no V slot, and phi has exactly one V slot, its axial slot. Let H={M,V,Z,U}. Theorem 480.1 proves:
+
+- there are exactly five genuine owners meeting H;
+- the only owner with exactly three original H slots is tau;
+- every other H-incident genuine owner has four or five original H slots;
+- there is no genuine owner with one or two original H slots;
+- all remaining genuine owners have no H slot.
+
+Only these conclusions are used below. There is no restriction on the number of low-only genuine owners.
+

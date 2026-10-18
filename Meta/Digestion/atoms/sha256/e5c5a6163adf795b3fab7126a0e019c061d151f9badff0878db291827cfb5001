@@ -1,0 +1,14 @@
+**Proposition 85.9 (the admissible-state quantifier and one-sided collapse).** The finite-band form does not extend the all-core form contract of §82, nor the relatively compact zero-extension contract of §83. It has no nonzero state with compact central support. Restricting instead to a half-infinite central frequency range, with no upper bound in one direction, still permits collapse for the same actual field.
+
+Proof. On almost every $\xi$ fibre, a function whose Fourier transform is supported in $B_\Lambda$ has the entire extension $(2\pi)^{-1}\int_{B_\Lambda}e^{i\lambda\zeta}b(\lambda)d\lambda$ in $\zeta\in\mathbb C$, since $b\in L^2(B_\Lambda)\subset L^1(B_\Lambda)$. If it has compact support in the real central coordinate, its continuous representative vanishes on an open real interval. The identity theorem forces that entire function to vanish. Fubini therefore proves the claimed absence of nonzero compact-central-support states, even if the compact interval is allowed to depend on the fibre. In particular $\mathcal H_\Lambda\cap\mathcal D_0=\{0\}$. Whenever a relatively compact §83 domain is placed on this carrier, its zero extensions have bounded central support and hence cannot be nonzero band states. For other §83 carriers no identification with $\mathcal H_\Lambda$ is supplied.
+
+Under (85.25), central Fourier support scales by $\rho^{-2}$. A nonzero $L^2$ band state cannot have central support only at frequency zero, so its concentrating dilates eventually leave every fixed $\mathcal H_\Lambda$. Thus fixed-band stability changes precisely the admissible-state quantifier that carried the §82 collapse. It does not change the proof or conclusion on the whole punctured core.
+
+For the half-infinite restriction, take the smooth product witness of Corollary 85.6 with its central transform supported in $[\alpha,\beta]\subset(0,\infty)$, with $\alpha$ beyond any prescribed finite lower endpoint. It has finite $T$ and strictly positive finite $V$. Its dilates $U_\rho\psi$, $\rho\downarrow0$, remain in that half-infinite sector and satisfy
+$$
+aT[U_\rho\psi]-gV[U_\rho\psi]
+ =a\rho^{-2}T[\psi]-g\rho^{-3}V[\psi]\longrightarrow-\infty.
+\tag{85.35}
+$$
+A negative-frequency interval gives the other direction, with its negative endpoint beyond any prescribed finite upper endpoint. These are actual horizontally admissible states; no compact-central-support assertion is needed. A finite bound in both frequency directions, not just a sign selection or one finite endpoint, is what excluded this scaling family. $\square$
+

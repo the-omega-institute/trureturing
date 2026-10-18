@@ -1,0 +1,20 @@
+**Theorem 89.1 (continuity on the whole PSD cone).**
+$\mathcal R_\varphi$ is continuous on all of $\mathcal K_Q$ for every continuous
+real payoff $\varphi$. In particular, the available-contrast roof
+$\mathcal V_Q(B)=\mathcal R_{|z|}(B)$ is continuous at every rank.
+
+**Proof.** Compactness of the ellipse and fixed mass give attainment and weakly
+convergent maximizing subsequences, hence upper semicontinuity. At $B\succ0$,
+choose $\varepsilon_n\downarrow0$ with
+$B_n\succeq(1-\varepsilon_n)B$ and write
+$R_n=B_n-(1-\varepsilon_n)B\in\mathcal K_Q$. Mixing representing measures
+for $B$ and $R_n$ gives lower semicontinuity. If $\operatorname{rank}B=2$,
+the compression $B^{1/2}QB^{1/2}$ has nonzero eigenvalues $\kappa,-\kappa$:
+a real two-plane cannot be totally isotropic for signature $(1,2)$. Its two
+null lines are the pullbacks of the vectors
+$(a_++a_-)/\sqrt2$ and $(a_+-a_-)/\sqrt2$, and their weights are uniquely
+fixed by $B$. Thus every representing measure for $B_n\to B$ converges to
+that unique two-atom measure. Rank one has one atom and rank zero has the zero
+measure, so the same argument gives lower semicontinuity at all boundary ranks.
+$\square$
+

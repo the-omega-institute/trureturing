@@ -1,0 +1,61 @@
+**Theorem 219.5 (Separated-sign unrestricted retraction).**
+Let $I,J\subseteq\{1,\ldots,L\}$ be disjoint,
+$|I|,|J|\ge3$ and $\max I<\min J$.
+Let $d_i\ge0$, $\gamma_j>0$, $D=\sum_I d_i$, $G=\sum_J\gamma_j$,
+and prescribe $\beta=-d$ on $I$, $\beta=\gamma$ on $J$, zero elsewhere,
+$K=D+G$. Put $E=\sum_{i\in I\cap\{1,2\}}d_i$.
+On every full score in this exact-$Q$ fiber perform two resets:
+set all inactive bits outside $I\cup J$ to one; then, in each $A$ atom
+of class $i$, set every other $I$ bit to one. Sum coincident coefficients.
+This is an idempotent nonnegative linear pushforward $\rho$ with
+
+$$
+Q(\rho V)=Q(V),\quad W_{\rho V}=W_V,\quad
+B_N(\rho V)\le B_N(V),\quad B_O(\rho V)\le B_O(V).
+\tag{219.14}
+$$
+
+Each unrestricted fiber minimum is attained in the retract.
+This assertion does not identify the N and O minima or their minimizers.
+
+**Proof.** Zero absolute stock in (219.3) forces $P=T=0$ and no
+class cancellation: only $A$ in $I$ with totals $d_i$, and only $C$
+in $J$ with totals $\gamma_j$, can occur. Thus $W=D-E$.
+Both resets preserve first zeros, nonnegativity and these totals;
+performing them twice changes nothing.
+
+For the inactive reset, any table on the new score can be simulated on
+the old score by deleting inactive queries and inserting reply one in
+its output table. The remaining schedule is legal and has at most two
+requests. For O it remains increasing and stops at its first queried
+zero. Output labels are untouched. Every new reward is therefore at
+most the corresponding old support.
+
+For the guard reset, fix an observation partition $\Pi$ and let
+$A(H)$ and $C_j(H)$ be masses in its cell $H$.
+The exact optimized table reward on this forced-stock face is
+
+$$
+D+\sum_{H\in\Pi}\bigl(\max_{j\in J}C_j(H)-A(H)\bigr)_+.
+\tag{219.15}
+$$
+
+Label zero earns $A(H)$, label $j$ earns $C_j(H)$ and other labels
+earn zero; thus (219.15) retains the complete label maximum.
+Every $C$ word has all guard bits one. With no guard query, the reset
+changes no cell. With one guard query, moved $A$ leaves a guard-zero
+cell with no $C$ and enters a guard-one cell with the same other reply.
+Its departure loses no surplus and its arrival can only reduce surplus.
+This includes the stopped guard-zero cell. With two guard queries,
+only cell 11 contains $C$ and its $A$ mass can only increase.
+All other cells remain $C$-free. These cases cover both full catalogs,
+including singletons, empty schedules and constant inactive queries.
+They prove the two support inequalities.
+
+The full fiber is nonempty, closed and bounded in finitely many
+nonnegative coefficients with sum $K$. Both supports are continuous
+maxima of finitely many linear functions, so each attains its minimum.
+Retracting an unrestricted minimizer gives an equally good retracted
+minimizer. This proves separate attainment, without a common-minimizer
+assertion. ∎
+

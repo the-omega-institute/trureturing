@@ -1,0 +1,60 @@
+**Lemma 3.1 (entropy charge with a boundary vector).** Let
+$X=(X_1,\ldots,X_m)$ have any one finite joint law. For each $i$,
+let $U_i$ be a finite vector of functions of $X_i$, let $Y_i$ be
+a subvector, and put $Y=(Y_1,\ldots,Y_m)$. Suppose every component
+of $U_i$ outside $Y_i$ is also a function of some single $X_j$
+with $j\ne i$. Then
+
+$$
+\begin{aligned}
+\sum_iH(X_i\mid Y)-H(X\mid Y)
+    &\ge\frac12\sum_iH(U_i\mid Y),\\
+H(X)-\frac12H(Y)
+    &\le\sum_i\left(H(X_i)-\frac12H(U_i)\right).
+\end{aligned}
+\tag{RCE.14}
+$$
+
+Repeated donors, dependent components, empty subvectors and directed
+cycles are allowed.
+
+Proof. Fix a donor for each component outside $Y_i$ and an order of
+the components in each $U_i$. For a permutation $\pi$ of the block
+indices, let $T_i(\pi)$ be the components whose selected donor
+precedes $i$. Those components form a vector that is a function both
+of $X_i$ and of the preceding blocks. Conditional data processing gives
+
+$$
+I(X_i;X_{\operatorname{pre}_\pi(i)}\mid Y)
+\ge H(U_{i,T_i(\pi)}\mid Y)
+\ge\sum_{a\in T_i(\pi)}
+ H(U_{i,a}\mid Y,U_{i,b}:b<a).
+$$
+
+The second inequality is the chain rule with conditioning monotonicity.
+Each selected donor precedes $i$ in exactly half of the permutations.
+Components belonging to $Y_i$ have conditional entropy zero given $Y$.
+Average over permutations and sum over $i$. The left sum is
+$\sum_iH(X_i\mid Y)-H(X\mid Y)$ for each permutation;
+the right sum becomes $\frac12\sum_iH(U_i\mid Y)$.
+This proves the first inequality on the same original law.
+
+Set $D_i=I(X_i;Y)$ and $E_i=I(U_i;Y)$. Since $U_i$ is a function
+of $X_i$, $E_i\le D_i$. Also $Y_i$ is a function of $X_i$ and
+a component of $Y$, whence
+
+$$
+\sum_iD_i\ge\sum_iH(Y_i)\ge H(Y),\qquad
+\sum_iD_i-\frac12\sum_iE_i\ge\frac12H(Y).
+$$
+
+Expanding the first inequality of (RCE.14) now gives
+
+$$
+H(X)\le\sum_i\left(H(X_i)-\frac12H(U_i)\right)
+     +H(Y)-\sum_iD_i+\frac12\sum_iE_i,
+$$
+
+which proves the second. No independent replacement of a block or
+conditional law was introduced. $\square$
+

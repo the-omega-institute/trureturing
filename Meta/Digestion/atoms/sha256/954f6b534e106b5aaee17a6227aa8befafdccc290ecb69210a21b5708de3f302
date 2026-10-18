@@ -1,0 +1,77 @@
+**定理 220.20（Same-block gate retraction and its exact operational scope）。**
+If $\delta_a\le\zeta_a$ for every $a\in\mathcal A$, replace the
+entire $\eta$ by $\delta_a$ units of each gate $O(a;a,0)$ and
+$s-\sum_a\delta_a$ units of empty output zero. Keep $\kappa$.
+The new allocation has exactly mass $M$ and satisfies every original
+event row. Base and independent pair rows improve pointwise;
+correct rows remain feasible but need not improve pointwise.
+If $\kappa$ is already $O$, the result is an $O$ witness.
+If $\kappa$ belongs to the existing $W_N$ catalog of VI 190.2,
+VI 194.1 then supplies a same-mass $O$ witness.
+For arbitrary $\kappa$ this is only a feasible $N$ surgery.
+
+The inequalities are necessary as well as sufficient for this specified
+fixed-remainder singleton replacement whose positive output coordinates
+are componentwise dominated by the old block. They are not necessary
+for general $O$ feasibility or arbitrary surgery.
+
+**证明。** Define $q_w(a)=\delta_a[w_a=0]$.
+It is at most $\eta_w(a)$ on the zero face by hypothesis and off
+that face by nonnegativity. Choose a single word with every bit in
+$\mathcal A$ zero. At this word the bounds coexist, giving
+$\sum_a\delta_a\le\sum_a\eta_w(a)\le s$.
+Thus the empty-zero mass is nonnegative and the common block is funded.
+
+Now $q_w(0)=s-\sum_aq_w(a)$, whereas
+$\eta_w(0)=s-\sum_a\eta_w(a)$.
+Their difference is $\sum_a(\eta_w(a)-q_w(a))\ge0$,
+proving every base row, including the positive word.
+For each first-zero label $n$ independently,
+
+$$
+ q_w(0)+q_w(n)
+ =s-\sum_{a\ne n}q_w(a)
+ \ge s-\sum_{a\ne n}\eta_w(a)
+ =\eta_w(0)+\eta_w(n).
+$$
+
+For $n\notin\mathcal A$ the numerical coordinates are zero in both
+blocks. This proves the pair rows separately, without replacing them
+by a sum of separately minimized singleton bounds.
+On $\Omega_a$, the new correct coordinate is $r_w(a)+\delta_a$,
+whose minimum is at least $b_a-e$. Outside $\mathcal A$ the old
+block supplied no correct mass, so the unchanged remainder already
+satisfies its correct demand. This covers negative demands as well.
+Adding the same remainder proves all rows even if it is signed.
+
+For necessity a candidate gate mass $t_a$ must be at least
+$\delta_a$ to meet the correct demand and at most $\zeta_a$ to be
+componentwise dominated on the zero face. This gives exactly the
+stated criterion. The construction treats empty $\mathcal A$,
+zero masses, ties and closed endpoints with the same inequalities.
+For $W_N$ invoke VI 194.1 after this replacement; that supplier
+preserves mass, improves base/pair coordinates and correct-class
+lower envelopes, without asserting pointwise correct dominance.
+$\square$
+
+For precision, $W_N$ allows every empty output; singleton $i$ uses
+$\{0,i\}$ on zero and $\{0,i+1,\ldots,L\}$ on one.
+Its pair $i<j$ allows $\{0,i\}$ on $00,01$,
+$\{0,i+1,\ldots,j\}$ on $10$, and
+$\{0\}\cup(\{i+1,\ldots,L\}\setminus\{j\})$ on $11$.
+$W_O$ additionally shares the first two outputs. These are sufficient
+witness catalogs, never restrictions on full competitors.
+
+Whenever this operation yields an $O$ witness $\mu$ of the same mass,
+for every full nonnegative score
+
+$$
+ F_{Q(y)}(b,e)=y\cdot h(b,e)
+ \le\sum_D\mu_D\,y\cdot(z_D-r)\le M\Delta_O(y).
+ \tag{220.16}
+$$
+
+Thus at this same point an actual unit-$O$ score cannot give
+$F_{Q(y)}>M$. No proof supplies a qualifying decomposition at every
+point or constructs an unrestricted $(V,\theta)$ for every input.
+

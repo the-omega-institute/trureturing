@@ -1,0 +1,16 @@
+# Retained cross-record relations and unknown native epochs
+
+This volume extends the finite signed native feasibility argument to
+unknown, unbounded natural epochs. Its principal result is an effective
+finite affine description of the entire chronological epoch support,
+with a terminating existence decision and one finite common-source
+witness at every accepted tuple. The finite templates select witnesses;
+they do not parametrize every original source in a fiber.
+
+The arguments are ordinary mathematics, not Lean kernel evidence.
+The reference-input and append-only conventions of the theory-volume
+template apply: incorporated statements retain their bytes and numbers;
+corrections and extensions follow the final append anchor. The native
+deductions below are `repo-derived`; supplied results and their exact
+language boundaries are identified explicitly.
+

@@ -1,0 +1,26 @@
+**命题 B-8.3（规范 FIB 来源的面积修正）。** 令 $`T_n=\rho^n\alpha`$，$`G(T_n)=(\mathbf{\text{𝐪}}_n,A_n)`$，$`d=\det(v,u)`$。有
+
+
+```math
+\mathbf{\text{𝐪}}_0=u,\quad \mathbf{\text{𝐪}}_1=v,\quad A_0=A_1=0,
+\qquad \mathbf{\text{𝐪}}_{n+2}=\mathbf{\text{𝐪}}_{n+1}+\mathbf{\text{𝐪}}_n,
+```
+
+
+```math
+A_{n+2}=A_{n+1}+A_n+\tfrac12\det(\mathbf{\text{𝐪}}_{n+1},\mathbf{\text{𝐪}}_n),
+\qquad \det(\mathbf{\text{𝐪}}_{n+1},\mathbf{\text{𝐪}}_n)=(-1)^nd,
+```
+
+
+<table><tbody><tr><td>
+
+```math
+A_n=\frac d2\bigl(F_{n-2}+(-1)^n\bigr),\quad n\ge2.
+```
+
+</td></tr></tbody></table>
+
+
+证明。保持有序配对的替换给 $`T_{n+2}=\langle T_{n+1},T_n\rangle`$，应用命题B-8.2得到两个递推。下一行列式为 $`\det(\mathbf{\text{𝐪}}_{n+1}+\mathbf{\text{𝐪}}_n,\mathbf{\text{𝐪}}_{n+1})`$，是原值负数，从初值 $`d`$ 归纳。$`A_2=d/2,A_3=0`$ 与显式式相合；Fib 项满足齐次递推，交替项的二阶递推余量正好为 $`(-1)^nd/2`$，归纳证明全部 $`n\ge2`$。$`d=0`$ 时全部面积为零，端点递推仍成立。∎
+

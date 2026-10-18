@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-intrinsic-depth-certificates"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_INTRINSIC_DEPTH_CERTIFICATES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

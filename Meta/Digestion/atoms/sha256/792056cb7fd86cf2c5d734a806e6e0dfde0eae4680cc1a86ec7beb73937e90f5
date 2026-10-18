@@ -1,0 +1,12 @@
+### 59.2 Exact feasible class and finite common implementations
+
+First assume α≥β and phase-align λ=c≥0. The general case follows by local output phase unitaries and simultaneous logical input/output flips: J intertwines the logical flip with X⊗X, and those pre/post operations preserve the finite physical LOSR class and diamond norm. Simultaneous flips exchange α,β and conjugate λ.
+
+For completeness, §54's full-support channel normal form supplies a direct necessity proof for exact implementation. Apply it to J(I/2), which is strictly positive on the two-dimensional MC code. If Φ∘J=J∘E, every positive-weight product branch preserves that code on all matrix units. Such a branch has a deterministic label map f:{0,1}→{0,1}. Constant f kills the off-diagonal; the flip f sends |00><11| to a multiple of |11><00|; only the identity f contributes to the coefficient of |00><11|. Each such coefficient has modulus at most one. If their total probability is a, then c≤a, while both survival probabilities α and β are at least a. Hence c≤min(α,β). This is an equality of channel actions, not merely a statement about one source state.
+
+Here is an explicit converse using one common random branch. Let I be identity on both physical systems; let R0 reset both to |0>; let Cid=Δ⊗Δ, where Δ is computational-basis dephasing; and let Cflip=(Ad_X∘Δ)⊗(Ad_X∘Δ). Both classical branches erase every off-diagonal code matrix unit. If c≤β≤α, use weights
+
+    c I + (1−α) Cflip + (α−β) R0 + (β−c) Cid.
+
+They are nonnegative and sum to one. On 00 and 11 they give precisely the displayed populations, and on 01 they give c01. Thus all matrix units, and consequently all reference-extended inputs, agree. A local output diagonal unitary restores the desired phase of λ. Zero weights may be omitted. This construction also proves the endpoint cases, including c=0 and α or β equal to zero or one. The necessity above is a consumer of §54, not a new claim of priority for PIO-type channel constructions.
+

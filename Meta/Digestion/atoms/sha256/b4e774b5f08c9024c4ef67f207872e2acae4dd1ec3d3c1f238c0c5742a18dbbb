@@ -1,0 +1,44 @@
+### theorem 4.1: 定理 5：闭环控制的线性化秩条件
+
+设某个局部闭合解为 $(\kappa^\star,v^\star)$，并假设 $H$ 在该点可微。
+
+若需要通过隐藏坐标的微小调整消除 $r$ 个独立闭合缺陷，则任意局部控制至少需要：
+
+$$
+\operatorname{rank}
+D_\kappa H(\kappa^\star,v^\star)
+$$
+
+个独立控制方向。
+
+若控制矩阵在该像空间上满秩，则这些控制在局部足以消除 holonomy 缺陷。
+
+#### 证明
+
+线性化为：
+
+$$
+D_\kappa H\,\delta\kappa
++
+D_vH\,\delta v=
+-\;H(\kappa^\star,v^\star).
+$$
+
+若固定闭合向量 $v^\star$，则需要通过 $\delta\kappa$ 解决一个线性方程。
+
+可被隐藏坐标调整的缺陷空间正是
+
+$$
+\operatorname{Im}(D_\kappa H).
+$$
+
+因此需要的独立控制方向至少等于该像空间的维数，也就是：
+
+$$
+\operatorname{rank}D_\kappa H.
+$$
+
+若控制矩阵在此像空间上满秩，则线性方程可解。由隐函数定理，在适当正则条件下可得到局部非线性闭合。证毕。
+
+---
+

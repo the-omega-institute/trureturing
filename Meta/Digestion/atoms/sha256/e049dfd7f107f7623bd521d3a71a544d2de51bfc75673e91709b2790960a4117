@@ -1,0 +1,14 @@
+**Lemma 57.2.** Put
+\[
+\rho=1/16,\quad e=1-b,\quad x=s+1/5,\quad y=t+2/5,
+\quad h=\sqrt{(3-b^2)/(1+b^2)}.
+\]
+In either proper chart, the four necessary rows have no common zero on
+\[
+0\le e\le\rho,\qquad |x|,|y|\le\rho,\qquad |v|\le1,
+\qquad e^2+x^2+y^2>0.                                      \tag{57.10}
+\]
+All chart endpoints and reciprocal infinity are retained. The transverse
+origin is excluded from this assertion: it is the polynomial
+zero stratum \(b=h=1,\ s=-1/5,t=-2/5,m=0\), for every \(v\).
+

@@ -1,0 +1,37 @@
+**Proposition 2.2 (exact cell correspondence and target commute).** The
+nonempty cells give a disjoint union
+
+$$
+D^{-}=\coprod_{\eta}\{W_\eta[v]:v\in\Omega^-_\eta\}.
+\tag{RNL.8}
+$$
+
+For each source, its unique cell is recovered by the depth-$d$ masks of its old
+class trees and each frontier variable $x$ is recovered at its fixed original
+address $p_x$ in (RNL.6a). Conversely, every $v\in\Omega^-_\eta$ fills a genuine finite source
+in $D^{-}$. Along every cell there are a fixed reached set $J_\eta\subseteq Q$,
+a concrete exterior context $E_\eta$ and one term $T_{\eta,q}$ for each reached
+$q$ such that
+
+$$
+\begin{aligned}
+I_Q(W_\eta[v])&=J_\eta,\qquad
+C_Q(W_\eta[v])=E_\eta[v],\\
+q\sim r&\Longleftrightarrow T_{\eta,q}[v]=T_{\eta,r}[v]
+\quad(q,r\in J_\eta).
+\end{aligned}
+\tag{RNL.9}
+$$
+
+Proof. The masks are strictly below every named address, so [ARH,
+Proposition 3.2][ARH] applies its guarded endpoint analysis without changing
+any record. The old-row filling and recovery maps are inverse, including every
+repeated class and every cross-class inequality. The same argument preserves
+all literal records and both endpoint guards. Navigation to $Q$ cannot meet a
+frontier variable before reaching the cut, so the reached set is fixed in the
+cell; the concrete exterior is the filled context $E_\eta[v]$, and equality of
+reached whole subtrees is exactly equality of the displayed terms. Thus both
+source directions and both target directions hold. A finite list of cells is
+not a replacement source domain: (RNL.8) quantifies over every valuation in
+every cell. $\square$
+

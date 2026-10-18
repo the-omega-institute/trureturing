@@ -1,0 +1,41 @@
+**Definition 3.2 (complete stopped cq metric).** The canonical output has
+one terminal live quantum block and five classical failure sectors indexed
+by the original mode, each carrying the exact first-failure time and
+stopped state $P_f=|f\rangle\langle f|$. Time $t\in[0,1]$ is elapsed
+continuation time, equivalently the exact absolute time $6+t$ by a common
+translation. It is a measurable variable, with no time binning or assumed
+finite-bit representation. The first executed failure is absorbing: no
+later operation, retry, reversal, reset or replacement specimen follows it.
+All old archives and declared controller updates remain in their
+corresponding branches. The displayed canonical factors give a necessary
+marginal of any larger required joint output.
+
+For normalized outputs $\omega,\eta$ the convention is [AC, (AC.4)][AC]:
+
+$$
+\operatorname{dist}(\omega,\eta)
+       =\frac12\|\omega-\eta\|_{1,\mathrm{cq}}.
+\tag{CG.11}
+$$
+
+When both outputs have canonical densities, this is
+
+$$
+\frac12\left(\|\omega_{\rm live}-\eta_{\rm live}\|_1+
+ \sum_{i=0}^4\int_0^1\|\omega_i(t)-\eta_i(t)\|_1\,dt\right).
+\tag{CG.12}
+$$
+
+For arbitrary simulated measures, take densities relative to a common
+dominating scalar measure in each sector and integrate their trace norms.
+This includes singular time events. Additional abort, rejection or other
+output sectors are included in the same direct-sum norm; their ideal
+weights are zero where absent from the target. Retained auxiliary records
+can be included jointly or subjected to the same fixed interpretation.
+Forgetting only extra fields gives a necessary canonical-output test; it
+does not discard any acquisition outcome or first-failure event. No branch
+mass is divided by its success probability.
+
+This is a pointwise comparison of source-indexed statistical experiments,
+not a common-input metric between different source-dependent instruments.
+

@@ -1,0 +1,51 @@
+**Theorem 3.2 (effective complete joint upper-budget Pareto basis).** Let
+$\mathcal F_S\subseteq\mathbb N^3$ be all finite upper-budget triples
+attainable on the entire acquired $U$. If the prefix decision is negative,
+$\mathcal F_S=\varnothing$, and every correct service has unbounded worst
+read count and unbounded worst submitted-length sum. If positive, one can
+compute a finite nonempty set $\mathcal B_S$ with
+
+$$
+ \mathcal F_S=\{b\in\mathbb N^3:\exists v\in\mathcal B_S, v\le b\},
+ \qquad \mathcal B_S=\operatorname{Min}(\mathcal F_S),
+\tag{SRF.11}
+$$
+
+and construct a service with exact worst vector $v$ for every
+$v\in\mathcal B_S$.
+
+Proof. The finite optimization is [JRF, Lemma 5.2 and Theorem 5.3][JRF]
+with the following exact supplier replacement. Its source domain is the
+whole $U$ of ARH, its read/update coordinates are $q,d$, its third
+coordinate is (SRF.1), its static upper budget is Definition 3.1, its
+operational cap is ABC Proposition 6.4, and its two decision procedures
+are Theorem 2.2 and Corollary 2.3. No literal-only `Adm/SameRow` routine
+is applied to the signed input.
+
+For explicit termination, first decide every pair
+$0\le q\le K$, $0\le d\le U_N$ with addresses unbounded, by Theorem 2.2.
+For each true pair extract a skeleton and its finite worst length
+$L^{\rm wit}_{q,d}$. Only then use Corollary 2.3 in the finite interval
+$0\le L\le L^{\rm wit}_{q,d}$ to find the least feasible $L_{q,d}$.
+Take the coordinatewise minimal retained triples $(q,d,L_{q,d})$.
+False pairs never trigger an unbounded search for addresses.
+
+To check cofinality, normalize any finite-budget comparator with the
+supplied cap and cleanup. Write its resulting worst read and length
+costs as $q',L'$. They satisfy $q'\le L'+\max(0,2-N)$. If $q'\le K$,
+its pair is in the grid, whose least length is no greater than $L'$.
+If $q'>K$, then $q'>K_0$ and $L'>L_0$, so the sufficient static service
+is no worse in every worst coordinate. This compares coordinate maxima,
+not costs on each same source. The grid is therefore cofinal. Conversely
+every retained triple is feasible by the constructed skeleton. These two
+inclusions give (SRF.11). At a minimal triple the witness's actual worst
+vector cannot be strictly smaller, because that vector would itself be
+feasible. Exact maxima have actual-source witnesses by Corollary 2.3.
+
+On a negative prefix decision, ARH equation (2.3) excludes finite worst
+reads. If any correct service had finite worst length $L$, the supplied
+cap and cleanup would give a correct uniform read bound
+$L+\max(0,2-N)$, a contradiction. A pointwise total static traversal still
+attains the extended vector $(\infty,0,\infty)$; unbounded worst costs do
+not mean an infinite execution on a finite source. $\square$
+

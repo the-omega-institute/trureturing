@@ -1,0 +1,55 @@
+**Theorem 61.2 (Local depletion and the intrinsic correct-mass lower bound).** For every lawful preparation on the original arbitrary measurable carrier,
+
+$$
+\inf_{y\in D(C,K)}\widehat\mu_y(S_y)=0
+\qquad(C\in\mathscr C,\ K\ge0).
+\tag{61.3}
+$$
+
+If its uniform event-TV error is $\varepsilon$, then
+
+$$
+\varepsilon\ge L_\mu,
+\qquad
+R_\mu=I(\mu)\ge L_\mu\ge\inf_{y\in X}(h_y-e_y).
+\tag{61.4}
+$$
+
+There is no row or error constraint on the prepared laws in this statement, and no assumption that the consumer terminates almost surely.
+
+**Proof.** Fix $C=C_d(z)$, $K$ and $\gamma>0$. Write $D=D(C,K)$ and
+
+$$
+p_y=\widehat\mu_y(H_y),\qquad
+c_y=\widehat\mu_y(S_y),\qquad M=\sup_{y\in D}p_y\le1.
+\tag{61.5}
+$$
+
+If $M=0$, every $c_y$ in $D$ is zero. Otherwise choose one actual $x\in D$ with $p_x>M-\gamma/2$. Flatten preparation and consumer chronologically under their one common seed as in Proposition 45.2. Let $G_m(x)$ be the measurable seed event on which the actual composite execution terminates with a finite proposal within $m$ transitions, uses only primes in $P_m$, and has terminal proposal at most $m$. These events increase to the actual composite proposal event at $x$. Finite proposals have finite composite length and finite queried menus; preparation divergence is null. Consequently choose an integer $m\ge\max\{d,K,1\}$ such that
+
+$$
+\mathsf P(G_m(x))>p_x-\gamma/2>M-\gamma.
+\tag{61.6}
+$$
+
+Theorem 35.2 supplies one actual $y$ matching $x$ on all of $P_m$ and satisfying $\Omega(y)>m$. This source is chosen for the whole measurable event $G_m(x)$, before quantifying over its seeds. It belongs to $D$: matching the first $d$ bits puts it in $C$, and $m\ge K$ gives its target bound. Deterministic replay of each finite composite record at that same $y$ keeps its handoff, consumer record and terminal proposal identical. All transported proposals are at most $m<\Omega(y)$, so they are false at $y$. Therefore
+
+$$
+\widehat\mu_y(F_y)\ge\mathsf P(G_m(x)),\qquad
+c_y=p_y-\widehat\mu_y(F_y)\le M-\mathsf P(G_m(x))<\gamma.
+\tag{61.7}
+$$
+
+This proves (61.3) by nonnegativity and arbitrary $\gamma$. The selected comparison source is a proof witness, not an operation that selects or samples the execution source. The same source works for the entire finite event, including all its real-output restrictions.
+
+At that witness, event-TV on the source's own correct event gives
+
+$$
+s_y\le\widehat\mu_y(S_y)+\varepsilon<\gamma+\varepsilon.
+\tag{61.8}
+$$
+
+When $M=0$ the analogous inequality holds at every $y\in D$. Thus $\inf_{y\in D}s_y\le\varepsilon$ after letting $\gamma$ decrease to zero. Taking the two suprema in (61.2) proves $\varepsilon\ge L_\mu$. Taking the infimum over lawful preparations and reusing Theorem 50.2 proves the bound on the unchanged sharp expression. Finally $D(X,0)=X$, since every actual $\Omega$ is positive, so $L_\mu\ge\inf_y s_y$.
+
+This proof uses finite-record replay, continuity from below and event-TV. Compared with the saturation calculation (43.29), the approximate supremum over $D(C,K)$ removes the need for an anchor or a radius attainer to realize maximal proposal mass. It constructs no new acquisition procedure, uses no uniform horizon and conditions away no failures. $\square$
+

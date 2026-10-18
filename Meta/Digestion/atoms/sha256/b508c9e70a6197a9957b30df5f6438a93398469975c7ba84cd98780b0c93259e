@@ -1,0 +1,33 @@
+**Corollary 322.1 (Every unit-$O$ score on the specified $H_9$ continuum).**
+Restrict Theorem 321.1 to $\tau=1/24$ and $0<t\le1/24$.
+Its actual finite profile lies in $H_9$ of (317.2) and its
+full-feasible part $H_N$, with the same mass-one stopped allocation
+$\lambda^O$. For every unrestricted full score $y\ge0$,
+
+$$
+F_{Qy}(b,E_*)\le\Delta_O(y).
+\tag{322.1}
+$$
+
+In particular a full unit-$O$ score, $\Delta_O(y)\le1$, cannot
+satisfy $F_{Qy}(b,E_*)>M$ for a same-profile $N$ allocation of
+mass $M\ge1$.
+
+**Proof.** Here $b_2=b_3$. Its hull excess and head sum are
+
+$$
+\sum_{n=3}^9b_n-10E_*=\frac14+\frac{9t}{32}\ge0,\qquad
+b_1+\sum_{n=3}^9b_n-10E_*
+ =\frac{19}{24}+\frac{9t}{32}\le\frac{617}{768}<1.
+\tag{322.2}
+$$
+
+The remaining hull conditions follow from the order and active
+length in 321.1. Its same normalized stopped law witnesses $H_N$.
+For every full nonnegative $y$, apply the existing pairing to this
+one stopped law:
+$y h\le yG_O\lambda^O\le\Delta_O(y)$, since its mass is one.
+This proves (322.1) and the claimed exclusion. The restriction on
+$\tau$ is essential to the stated hull conclusion; no $H_9$
+membership is asserted for all other scales. $\square$
+

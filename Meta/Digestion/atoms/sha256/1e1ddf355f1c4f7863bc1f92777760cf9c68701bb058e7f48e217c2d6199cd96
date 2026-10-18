@@ -1,0 +1,18 @@
+### 定义 34.1（有限 Hamiltonian 通道）
+
+令 \(H=H^\ast\) 是有限维 Hermitian 矩阵，定义
+
+\[
+\mathcal U_t(X)
+=
+e^{-itH}Xe^{itH}.
+\]
+
+则 \(\mathcal U_t\) 是 CPTP，且
+
+\[
+\mathcal U_{t+s}
+=
+\mathcal U_t\circ\mathcal U_s.
+\]
+

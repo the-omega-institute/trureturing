@@ -1,0 +1,12 @@
+### 99.5. Mixed diagonal entries
+
+The local calculation of section 96 does not use nullity 2 until its final rank deduction. Applied to d=p,e=qr, it therefore gives <lambda_p,mu_p>=(-5qr/p)_4. For completeness the primitive-denominator version is checked here.
+
+Primitiveness and the norm equation force p not dividing b c, and p dividing a. Indeed p|c would first give p|a and then p|b modulo p^2; once c is a unit, valuation parity forces b a unit. Thus (b/c)^2=-5e modulo p. Choose z1=-b/c,z2=a/c,t=1 and z3=-2b/c modulo p. Then L3=2p b^2/c exactly, and L2 has reduction beta(3beta+1)^2/2, beta=b/c. If that reduction vanishes, choose the other root; it gives -3beta(beta-1)^2/2 and is a unit in that case. Since p=1 modulo 24, the unit L2 has character (beta/p). For the other factor,
+
+ (L3,p)_p=(-1/p)(2b^2/c/p)=(c/p).
+
+The product is (b/p). On the other hand (beta/p)=(-5e/p)_4, so (b/p)=(c/p)(-5e/p)_4.
+
+It remains to show (c/p)=1. For every odd ell|c with ell not dividing 5p, the norm equation and primitiveness give (p/ell)=1: otherwise reduction forces a,b both zero modulo ell, contrary to primitiveness. This applies also at ell=3 and the other support primes; alternatively the known support symbols already suffice there. At ell=5, (p/5)=1 by actual support. The prime p cannot divide c, and (2/p)=1. Since p=1 modulo4, quadratic reciprocity, including all valuation multiplicities in c, now gives (c/p)=1. Therefore the claimed quartic diagonal holds for every normalized primitive certificate. The identical argument gives <lambda_q,mu_q>=H_q.
+

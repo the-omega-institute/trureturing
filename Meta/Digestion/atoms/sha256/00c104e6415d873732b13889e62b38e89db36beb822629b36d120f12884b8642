@@ -1,0 +1,44 @@
+**Theorem 69.4 (actual reachable row capacity).** Under Hypothesis 69.2, let $\mathcal
+R_n$ be the rows reached by actual prefixes $h_{k,\sigma}$ on sources in $W_n$, for all
+$0\le k\le j$ and all such $\sigma$. Then
+
+$$
+|\mathcal R_n|\ge\sum_{k=0}^{j}2^k=2^{F(n-2)+1}-1,
+\qquad |E|\ge|\mathcal R_n|.
+\tag{JM.237}
+$$
+
+Proof. Theorem 69.3 supplies an actual row for every $(k,\sigma)$, including $(0,[])$,
+with decoder exactly $h_{k,\sigma}$ in first-occurrence order. Different lengths give
+different decoder support sizes. At equal length, different masks give different raw
+values at an address. Thus no single row can serve two pairs, since decoder is a fixed
+function of the row. There are $2^k$ masks at length $k$, yielding the geometric sum.
+Every such row belongs to the original complete finite $E$, giving the second
+inequality. The comparison uses actual source prefixes established in Theorem 69.3.
+[ActualAcquisitionCacheFiber.cacheEquiv and compatible_cache_card][Cache] count all
+nominal lifts of a coarse history, including unrealizable ones; here every lift of these
+distinct-address coarse-none prefixes is realized by Theorems 68.2 and 69.3 before the
+rows are counted. Contextual distinguishability background: Kozen, *On the Myhill–Nerode
+Theorem for Trees* ([original][Kozen]); the separation here is by the actual raw
+decoder. The premises provide the actual emission, not a minimum-state construction or a
+physical memory, query, time, communication or termination bound. $\square$
+
+[JM]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[Native]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.lean
+[Pair]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverPairReach.lean
+[Cache]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/Observer/ActualAcquisitionCacheFiber.lean
+[Loday]: https://arxiv.org/pdf/math/0212126v1.pdf
+[Kozen]: https://www.cs.cornell.edu/~kozen/Papers/mn.pdf
+[BdW]: https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf
+
+[JM52]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[Source]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[Readout]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[Geometry]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.lean
+[Coarse]: https://github.com/the-omega-institute/trureturing/blob/1590efae55f93022396cb1984f0014bbc73b8f65/D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutHistory.lean
+
+[JMPublic]: https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[JMOldRaw]: https://github.com/the-omega-institute/trureturing/blob/cf4b9edd2cf0b4410767cfd5e409b29753586105/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[ExactTrace]: https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean
+[FiniteTable]: https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.lean
+

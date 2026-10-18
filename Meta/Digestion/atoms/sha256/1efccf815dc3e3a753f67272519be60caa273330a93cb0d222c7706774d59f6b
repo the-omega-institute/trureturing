@@ -1,0 +1,44 @@
+**Theorem 10.2 (uniform failure and weight-optimized gate obstruction).**
+For each of the three specified carriers, if $\mu$ gives positive
+mass to both leaves and any branch, then
+$\mathsf{Rel}_\star(\mu)$ is false. Every accepted cap of a method
+in Definition 10.1 has $C\ge1$, even if all probability laws with
+support zeros are permitted. Consequently such a method is not
+optimizer-cofinal at the credited
+$\sigma_2=\log_2(25/17)>0$.
+
+Proof. For the first assertion select the public family of Theorem
+9.1. Theorem 8.4 places it in $\mathcal T_2(2N)$ and its hard mass
+is positive. By (SCP.35), (SCP.36) would force
+$e_\mu(\varepsilon)\ge\frac12\log_2R\ge1/2$ for every
+$\varepsilon>0$, contradicting its required limit.
+
+To cover the complementary supports, the credited local native
+sets [NCM, (NCM.15)][SCP-NCM] include
+
+$$
+H_A=\{A\}\cup\mathcal G,\qquad
+H_B=\{B\}\cup\mathcal G,\qquad \{A,B\}.
+\tag{SCP.37}
+$$
+
+Their local witnesses can also be read directly from (SCP.26).
+The root target uses its own root reply. For $H_A$, a side's
+absent reply decodes to that side's root-leaf $A$ factor, while
+its three present child replies decode to the corresponding
+$\gamma$ value; $H_B$ is identical with $B$. On $\{A,B\}$ all
+targets decode from the own root reply. Their products therefore
+have complete native witnesses at every length.
+
+If either leaf has zero mass, the support of $\mu$ is contained
+in $H_A$ or $H_B$. If both leaves have positive mass but no branch
+does, the support is contained in $\{A,B\}$. In every case one
+displayed local set has mass one. Its products have mass one at
+every length, and saturation by complete templates cannot reduce
+that mass. Thus $\beta_2(\mu)=1$: the reverse inequality follows
+because these are subsets of a probability space. Soundness forces
+$C\ge1$ for such a law. At every remaining law the mandatory gate
+is false by the first assertion, forbidding acceptance with $C<1$.
+All accepted block lower endpoints $-\log_2C$ are consequently
+at most zero, proving the cofinality failure. $\square$
+

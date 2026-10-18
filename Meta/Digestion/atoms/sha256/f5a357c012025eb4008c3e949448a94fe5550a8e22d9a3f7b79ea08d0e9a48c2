@@ -1,0 +1,32 @@
+### 12.1 原合同与强化下界的完整陈述
+
+本章沿用定义 1.1–1.3、10.1 的原取得问题。来源是未知的有限、非空、完整有序二叉字面树；叶标为 $\alpha,\beta$，分支有两个非空子树，全部括号、左右次序与每个出现均保留。替换作用于整棵宏树：
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=(\beta,\alpha),\qquad
+\rho(S,T)=(\rho S,\rho T),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+对每个整数 $k\ge1$，令 $d=3k$；对每个正整数 $a,b$、$n=a+b\ge4$，公开准确组成为
+
+$$
+C=(A,B)=M^d(a,b)
+=\bigl(F_{d-1}a+F_db,\ F_da+F_{d+1}b\bigr),
+\qquad H=d+n-1.
+$$
+
+这里 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$。竞争域 $\mathcal T_C$ 是组成恰为 $C$ 的全部有限非空完整有序字面树；正域 $\mathcal P=\mathcal T_C\cap\operatorname{im}\rho^d$ 包含此组成的全部 $d$ 次像。负域 $\mathcal T_C\setminus\mathcal P$ 不受正源高度 $H$ 的筛选。
+
+对每个 $h\in\mathbb N\cup\{\infty\}$、$h\ge H$，策略可直接请求任意有限 $L/R$ 词 $u$ 的端点，只要求 $|u|\le h$，无需先查祖先；$\varepsilon$ 为根地址。固定源 $U$ 上的真实回复 $r_U(u)$ 保留全部四值：端点叶 $\alpha$、端点叶 $\beta$、分支 $\mathsf{br}$、穿过叶的缺失 $\varnothing$。策略 $\pi$ 从共同的、来源无关的空初始化及空取得历史出发，仅依公开参数及其自己的完整实际历史选择下一原词或布尔返回。历史按时间排列，保留原字面词、全部四值及重复。原合法性要求 $\pi$ 在每个 $U\in\mathcal T_C$ 上正确且逐源有限终止。
+
+记 $T_\pi(U)$ 为从空史开始的完整真实终端，$Q(T)$ 为其中不同的实际请求词集合。原费用与正源最坏优化仍是
+
+$$
+\operatorname{paid}(T)=|Q(T)|,
+\qquad D_h(a,b;d)=\min_{\pi\text{ 原合法}}\max_{V\in\mathcal P}|Q(T_\pi(V))|.
+$$
+
+每种回复都按实际不同地址收费；重复仍执行并入史，只不增加不同地址数。不同字面词即使给出相同向量，也各有自己的首次取得费用。局部精确数学计算没有另定价格；这不会提供免费来源索引、根报告、前沿、导航、重置、谱读数或 GA/Clifford 坐标到访问的捷径。
+

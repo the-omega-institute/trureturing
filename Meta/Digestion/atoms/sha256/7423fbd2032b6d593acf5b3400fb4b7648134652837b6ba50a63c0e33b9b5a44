@@ -1,0 +1,113 @@
+**Theorem 44.1 (normalized second charge).** Define
+
+$$
+\mathcal R_2=\mathcal N_2g_0+\mathcal N_1g_1.
+\tag{44.1}
+$$
+
+There is a unique normalized real even $g_2\in L^2$ such that
+
+$$
+Ag_2=\gamma\mathcal R_2,\qquad
+\langle p,g_2\rangle=0.
+\tag{44.2}
+$$
+
+It has the consumed norms
+
+$$
+g_2\in L^1,\qquad \omega^4g_2\in L^2.
+\tag{44.3}
+$$
+
+Moreover
+
+$$
+u_2=\gamma\mu(G_2g_0+G_1g_1+G_0g_2)
+ \in\dot{\mathcal H},\qquad
+u_2=\Upsilon+d_2p
+\tag{44.4}
+$$
+
+for a real $d_2$. This identifies the homogeneous second response without asserting its $L^2$ membership.
+
+Proof. Reuse the particular identity
+$v=\gamma\mu(G_1g_0+G_0g_1)$ from §§36–37. Put
+$W_2=\gamma\mu(G_2g_0+G_1g_1)$.
+Lemma 43.1 and the first-charge bounds give $W_2\in L^{14/5}$ and
+
+$$
+\mathcal EW_2=-\mathscr D_1v-\mathscr D_2p
+\tag{44.5}
+$$
+
+in distributions. The right side is continuous in free homogeneous energy: its divergence terms involve $rYv,r^2Yp\in L^2$, and the scalar term is $\lambda p\in L^{14/9}$, by (22.6). Riesz representation for $b$ gives a homogeneous solution in $L^{14/5}$.
+
+To identify that solution with $W_2$, their difference is distributionally $\mathcal E$-harmonic and in $L^{14/5}$. Hypoellipticity makes it smooth. For each real or imaginary part $w$ take compact dilated cutoffs $\eta_R$, with horizontal derivative bounded by $C/R$, and test against $\eta_R^2|w|^{q-2}w$, $q=14/5$. Regularization at $w=0$, the product rule and absorption give
+
+$$
+b[\eta_R|w|^{q/2}]
+ \le CR^{-2}\|w\|_q^q.
+\tag{44.6}
+$$
+
+Letting $R\to\infty$ makes its horizontal derivatives zero on every compact set. Bracket generation makes $w$ constant; infinite Haar volume and $L^q$ membership force zero. Thus $W_2\in\dot{\mathcal H}$ and (44.5) is its homogeneous equation.
+
+Expanding the two rows gives exactly
+
+$$
+\gamma\mu\mathcal R_2
+ =VW_2+\mathcal V_1v+\mathcal V_2p.
+\tag{44.7}
+$$
+
+Test (44.5) with $p$ and use $\mathcal Ep=\gamma Vp$. All the pairings are homogeneous-energy pairings; (24.1)–(24.4) then give
+
+$$
+\langle p,\mathcal R_2\rangle
+ =-\frac{\mathfrak a_2[p]+\mathfrak a_1(p,v)}
+          {a\gamma^2\mu}
+ =-\frac{C_{\rm resp}}{a\gamma^2\mu}=0.
+\tag{44.8}
+$$
+
+Here is also the required input regularity, before solving for $g_2$. In (44.7), $\mathcal V_2p\in L^1$ follows from $\mathcal V_2\in L^3$ and $p\in L^{3/2}$; its weighted $L^2$ bound follows from bounded $\omega^3\mathcal V_2$ and $\omega p\in L^2$. The term $\mathcal V_1v$ is $L^1$ by $\mathcal V_1,v\in L^2$, and its weighted bound uses bounded $\omega^4\mathcal V_1$. For $VG_2g_0$, the $L^1$ pair is $L^{5/3}\cdot L^{5/2}$; the weighted $L^2$ pair is $L^{10}\cdot L^{5/2}$, since
+
+$$
+\omega^4V\le C(1+\mathfrak d)^{-1}\in L^{10}.
+\tag{44.9}
+$$
+
+Finally $VG_1g_1$ uses $V,G_1g_1\in L^2$ for $L^1$, and bounded $\omega^4V$ for the weighted $L^2$ norm. The $L^2$ return here follows from the same time powers as Lemma 43.1 using (38.1). Consequently
+$\mathcal R_2\in L^1$ and $\omega^4\mathcal R_2\in L^2$, in particular $\mathcal R_2\in L^2$.
+
+Proposition 34.1's compact Fredholm argument has
+$\ker A=\mathbb Cg_0$, $\ker A^\ast=\mathbb Cp$ and
+$\langle p,g_0\rangle=1$. Equation (44.8) therefore gives exactly one solution of (44.2). Conjugation and reflection preserve its normalization and even real right side, giving reality and evenness.
+
+The weighted conclusion requires a bootstrap, rather than an inverse on general threshold data. Let
+$R_V=G_0\sqrt V$ be precisely P Theorem 87.2's bounded specified reconstruction. Its adjoint factorization gives
+
+$$
+\mathcal N_0=\sqrt V\,R_V^\ast,\qquad
+\mathcal N_0:L^2\longrightarrow L^{6/5},
+\tag{44.10}
+$$
+
+because $\sqrt V\in L^3$. The equation
+$g_2=\gamma\mathcal N_0g_2+\gamma\mathcal R_2$ first gives $g_2\in L^{6/5}$. Here $\mathcal R_2\in L^{6/5}$ follows by interpolation between its already proved $L^1$ and $L^2$ norms. Lemma 43.1 now constructs $G_0g_2$ as an absolutely convergent $L^2$ heat integral, without any new weight assumption. Compact testing and cutoff density identify the adjoint product in (44.10) with $VG_0g_2$.
+
+For finite heat integrals, spectral calculus gives
+$\mathcal E\int_\delta^TP_tg_2\,dt=P_\delta g_2-P_Tg_2$.
+The right side tends in $L^2$ to $g_2$; the large-time heat bound forces $P_Tg_2\to0$. Closedness gives $G_0g_2\in D(\mathcal E)$ and $\mathcal EG_0g_2=g_2$. Since $V\in L^2$ and $\omega^4V$ is bounded, $VG_0g_2$ belongs to $L^1$ and has $\omega^4$ times it in $L^2$. Returning to the charge equation proves (44.3), without circularly using it to define $G_0g_2$.
+
+The vector in (44.4) is in $\dot{\mathcal H}$: this holds for $W_2$, and $G_0g_2\in D(\mathcal E)$ has finite energy. Equations (43.6), (44.2) and (44.7) imply
+
+$$
+h(u_2,z)=-\mathfrak a_2(p,z)-\mathfrak a_1(v,z)
+       =-\mathcal F_2(z)\qquad(z\in\dot{\mathcal H}).
+\tag{44.11}
+$$
+
+Projecting along $p$ and using Lemma 24.1's homogeneous complement uniqueness gives $u_2=\Upsilon+d_2p$. Reality gives $d_2\in\mathbb R$. No $L^2$ conclusion about $u_2$ or $\Upsilon$ follows or is needed. $\square$
+

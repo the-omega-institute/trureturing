@@ -1,0 +1,43 @@
+**Definition 14.1 (Boundary-vacant anchor sectors).** Keep the
+positive path law, proper cut and arbitrary phase of §§8
+and 11. Let $L_0$ be the internally legal left words with
+site k empty, and let $R_0$ be the internally legal right
+words with site $k+1$ empty. Put
+
+$$
+B_{00}=\Pr_p(s_k=s_{k+1}=0)>0.
+\tag{14.1}
+$$
+
+For $u\in L_0,v\in R_0$, all pairs $(\ell,v)$,
+$(u,r)$ and $(u,v)$ are legal for every internally legal
+$\ell,r$. Define
+
+$$
+\begin{aligned}
+\mathfrak h_{u,v}(\ell,r)
+&=\frac{\chi(\ell,r)\chi(u,v)}{\chi(\ell,v)\chi(u,r)},\\
+W_{u,v}
+&=\sum_{(\ell,r)\text{ legal}}
+p(\ell,r)|1-\mathfrak h_{u,v}(\ell,r)|^2,\\
+a_{u,v}(\ell)&=\chi(\ell,v),\qquad
+b_{u,v}(r)=\frac{\chi(u,r)}{\chi(u,v)}.
+\end{aligned}
+\tag{14.2}
+$$
+
+Every term and phase belongs to the original legal carrier.
+The anchor sectors retain all words with the stated boundary
+vacancies; they do not replace the Gibbs law by a law on
+sectors. Let
+
+$$
+\delta_{\mathrm{local}}(\chi)
+=\inf_{|a|=|b|=1}
+\bigl\|\psi_\chi-(D_a\otimes D_b)\psi_+\bigr\|^2,
+\tag{14.3}
+$$
+
+where a and b range over arbitrary phases on the actual
+internally legal half-chain words.
+

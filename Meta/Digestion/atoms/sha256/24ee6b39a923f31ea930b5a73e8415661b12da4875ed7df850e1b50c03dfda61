@@ -1,0 +1,61 @@
+**Proposition 36.2 (deleting one acquired negative constraint destroys
+uniform bounded recovery).** Delete only $d_1$ from (LAC.36.1), retaining
+$P,R,H_0,e_L,e_R,d_2,N$ and the same entire target $Q$. The exact fiber is
+
+$$
+U^-=\{\langle T_i,T_j\rangle:i,j\ge2,\ i-j\notin\{0,2\}\}.
+\tag{LAC.36.5}
+$$
+
+It still has a local atomic cover. No source-total permitted serial or
+static service has a uniform finite new-read bound for its complete
+target, although a pointwise terminating actual static service exists.
+
+Proof. The two original-source directions in Proposition 36.1 apply with
+only the comparison to $T_{j+1}$ omitted. In particular the old
+$i\ne j$, both branch literals and both guards of $d_2$ remain. No new
+source promise or changed cut is involved.
+
+For any cutoff $K$, choose $M\ge\max(K,3)$ and the two admitted tuples
+
+$$
+(i,j)=(M+1,M),\qquad (i',j')=(M+3,M).
+\tag{LAC.36.6}
+$$
+
+Their clipped tuples at $K$ both equal $(K,K)$. All five target cuts
+are reached in both sources, and their concrete exteriors coincide with
+the second exterior in (LAC.36.3). Formula (LAC.36.4) gives the first
+source's partition as
+$\{\{1,3,4\},\{2,5\}\}$, since its rank difference is one. The second
+source has only the repeated class $\{1,3\}$, since its difference is
+three. These are distinct complete native rows. Both sources are finite
+and satisfy every remaining original predicate. The first is itself the
+native atomic tree $T_{M+2}$; its alternative paired expression is not
+counted as a different source.
+
+Thus (LAC.35.3) is false for this full input. For an explicit negative
+witness at any inclusive original depth $h$, take
+$M=\max(2h+2,3)$ in (LAC.36.6) and apply Proposition 35.2. The resulting
+admitted finite sources agree at every address of length at most $h$
+and disagree on the whole target. Theorem 35.3 excludes all permitted
+uniformly bounded comparators, including adaptive serial updates.
+
+For completeness, on any one source recover each finite atomic index
+by actual epoch-two reads at $LR^t$ and $RR^t$, respectively, for
+$t=0,1,\ldots$, stopping each sequence at its first leaf reply.
+For a child index $k$, the current index is $x=k+2$. All preceding
+right-spine replies are branch, and at $t=\lfloor x/2\rfloor$ the
+reply is $\alpha$ when $x=2t$ and $\beta$ when $x=2t+1$.
+Thus the two sequences terminate, yield the two indices from actual
+reads, and permit local computation of the complete original row.
+Their lengths have no common finite bound on $U^-$.
+
+The full target image here consists of three rows: the two in
+(LAC.36.3) and the same five-hole exterior with partition
+$\{\{1,3,4\},\{2,5\}\}$. Indeed, for $i\ge3$ the only newly permitted
+cross-equality condition in (LAC.36.4) is $i-j=1$; for $i=2$ the old
+first row remains unchanged. The obstruction therefore comes from a
+source-sensitive constraint deletion in the joint interpretation, even
+when the complete target image is finite. $\square$
+

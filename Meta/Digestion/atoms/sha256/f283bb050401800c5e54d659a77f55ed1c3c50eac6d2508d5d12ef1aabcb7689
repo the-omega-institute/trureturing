@@ -1,0 +1,63 @@
+**Theorem 7.1 (all-original-competitor mass transport).** Let $d\ge1$
+and let a probability $\mu$ and a real $C>0$ satisfy
+$\beta(\mu)\le C$. For every $D\ge d$ and every original correct
+preparation/reader pair of Assumption 1.2,
+
+$$
+|E[\mathcal F_D]|\ge
+\left\lceil C^{-2^{D-d}}\right\rceil.
+\tag{NPC.33}
+$$
+
+Hence the same bound holds for $M_1(D)$ and
+$\lambda\ge-2^{-d}\log_2C$. In particular the attained $\mu_d$
+gives the cap $C=2^{-\sigma_d}$ simultaneously at every $D\ge d$.
+
+Proof. Put $h=D-d$ and $n=2^h$. Fix an actual perfect ordered binary
+scaffold of height $h$ in the right subtree. At its frontier addresses
+$a_1,\ldots,a_n$, all of length $h$, insert all tuples $x\in S_d^n$
+of actual trees. The resulting $t_x=\langle\alpha,v_x\rangle$ have
+right-subtree height at most $h+d=D$ and are distinct. They are one
+mandatory slice of the full original variable-shape family.
+
+For every block target $q\in W_d$, $p=Ra_iq$ is an original permitted
+request, since $1\le|p|\le1+h+d-1=D$. The occurrence $Ra_i$ is
+actually present in every source on this slice. Homomorphic transport
+(NPC.3) therefore identifies the entire target trajectory with that
+of $\Gamma_q(x_i)$ at every authentic count. This meets exactly
+`original_present_transport`'s presence premise.
+
+Restrict the same original complete code to this slice. On a fixed
+code and request the decision to make zero Reads, or the literal
+submitted, is fixed before any reply or supplied $k$. Account for
+every finite word: the root and left-wrapper cone give fixed replies;
+a right-cone word ending strictly above the frontier gives branch;
+every other right-cone word enters one unique actual block $j$ with
+an arbitrary finite suffix. Convention 2.3 replaces that suffix by
+a function of one boundary reply in the same $j$, or by a constant.
+It does not move it to the target block.
+
+Equal selected boundary replies in a restricted code fiber therefore
+give equal actual replies, identical final predictors, and equal
+complete target trajectories by correctness for all $k$. Convention
+2.1 makes the target factors equal. A zero-Read branch or constant
+reply makes the factor constant on that fiber. Thus every nonempty
+restricted fiber is a member of $\mathcal B_n$, retaining all its
+correlations and every target's own witness choice.
+
+Assign the analytical product law $\mu^n$ to the entire slice. Its
+total mass is one and each restricted fiber has mass at most $C^n$.
+The fibers form a partition, so their number is at least $C^{-n}$.
+It is at most the original complete attained alphabet, proving the
+ceiling. Minimize over original competitors, divide logarithms by
+$2^D=2^dn$, and use the supplied rate limit to get the rate bound.
+The last assertion follows from (NPC.27). $\square$
+
+This transport is the all-word actual-scaffold restriction of [FMR,
+Theorem 6.3][FMR] and [NDR, Proposition 3.3][NDR], with (NPC.26)'s
+attained global cap. The product law is an analytical lower witness,
+not a source prior, an observation, retained advice, or a choice of
+source-dependent request. Fixed coordinates in Lemma 3.1 provide no
+cut descriptor or selector to the reader. All actual blocks retain
+their original occurrences; no artificial root is queried.
+

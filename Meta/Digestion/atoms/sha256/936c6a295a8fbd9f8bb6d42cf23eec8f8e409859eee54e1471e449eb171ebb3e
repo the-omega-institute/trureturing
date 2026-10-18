@@ -1,0 +1,19 @@
+**Proposition 6.3 (finite risk minima at a fixed charged shape).** Omit a defect restriction and the optional exact-endpoint constraints. For a fixed regular shape let
+
+$$
+J_{\rm shape}=\min_{\rm tables}\max\{R_{\rm conf}(\mathcal H_p)-\rho_p,
+R_{\rm conf}(\mathcal H_\beta)-\rho_\beta\}.
+$$
+
+Let $j_L$ be the finite polynomial minimum replacing the full risks by $\max_{i,r\in S_L}F_{s,i,L}(r)$. Then
+
+$$
+0\le J_{\rm shape}-j_L
+\le\max\left\{b^L+\zeta_{p,L},\ \frac25b^L+\zeta_{\beta,L}\right\}.
+\tag{6.7}
+$$
+
+The finite value $j_L$ is allowed to be negative because partitioning lowers the risks. In particular a proved $j_L>0$ is a positive-gap certificate for this whole fixed shape, not merely for sampled parameter values.
+
+**Proof.** Theorem 5.2 and Proposition 5.3 bound, uniformly over all table parameters, the difference of each full risk and its finite expression by the displayed errors. Each finite expression is continuous on the compact table space. The full expression is its uniform limit, hence continuous and attains its minimum. Taking the maximum and then the minimum preserves the uniform bound. ∎
+

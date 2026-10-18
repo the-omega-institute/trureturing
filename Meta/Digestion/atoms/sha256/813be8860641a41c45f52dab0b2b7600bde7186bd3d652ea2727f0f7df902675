@@ -1,0 +1,24 @@
+### 68.4 Quartet obstruction and coordinate convention
+
+If \(H\) is a complex Hadamard unitary in the neighborhood, a unitary
+basis \(B\) is unbiased to \((I_6,H)\) exactly when \(B\) and
+\(H^*B\) are flat. Each column \(v=H^*B_j\) therefore belongs to
+\(\mathcal F(H)\), with output \(Hv=B_j\).
+
+If two additional bases \(B,C\) formed a quartet with the pair,
+choose any columns and set \(v=H^*B_j\), \(w=H^*C_k\). Unitarity
+and mutual unbiasedness would give
+
+\[
+ |v^*w|^2=|B_j^*C_k|^2=\frac16,
+\]
+
+contradicting (68.3). This proves the last assertion of Theorem 68.1.
+\(\square\)
+
+The multiple common-unbiased bases at the central point remain:
+they are not mutually unbiased to one another. The theorem excludes
+quartets containing the specified nearby pair, and does not settle
+the general dimension-six fourth-basis problem or every parameter
+of the full Hadamard family.
+

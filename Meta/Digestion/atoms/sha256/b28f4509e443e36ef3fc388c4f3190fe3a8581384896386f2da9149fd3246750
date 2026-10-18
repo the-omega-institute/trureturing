@@ -1,0 +1,50 @@
+**Open problem 9.3 (joint completion and optimizer-cofinality).** Put
+
+$$
+b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\qquad
+b_{\rm cond}^{\mathbb Q}(d)=
+ \inf_{\mu\in\Delta(S_d)\cap\mathbb Q^{S_d}}\Omega_d(\mu).
+\tag{COK.57}
+$$
+
+The sound certificate specification gives
+$b_{\rm cond}^{\mathbb Q}(d)\ge b_d$. Optimizer-cofinality of this
+particular family would require equality: for every rational
+$\epsilon>0$ there would be rational $\mu,C$ and an accepted
+certificate with $-\log_2C>\sigma_d-\epsilon$. That equality is
+unproved at general depth. Even equality of the corresponding
+infima over real weights would require a justified rational
+approximation bridge for the support-dependent local family;
+Theorem 4.2 alone supplies none.
+
+The concrete missing relation is compatibility of local laws across
+their shared actual owner blocks, with their full joint weights,
+guards and actual-tree zeros retained. A locally feasible law in
+(COK.13), or a solution of the algebraic saturation system, need
+not be the marginal of any global solution law. Even a jointly
+realizable collection may have positive global loss $\Delta$ in
+(COK.22). No uniform control of these losses or global completion
+theorem has been supplied. The exact identities identify the
+remaining obligations without treating soft local assignments as
+native implementations.
+
+For a chosen rational weight, Theorem 6.1 offers a finite test:
+if every joint-bound saturation law is excluded, one obtains a strict
+rational all-size cap at that weight. If saturation is feasible,
+the law explicitly identifies the functional and independence
+conditions that a further joint rule must constrain. Neither
+outcome settles weight-optimized coverage. Increasing unrelated
+local samples or a finite checked network size does not impose
+the missing shared realization.
+
+[SIR][SIR] gives an exact counted high-incidence reduction, with
+regularized semantic quantities approaching the original rate
+from above within $2/(L+1)$, uniformly in depth. The present family
+is sound without any incidence restriction and therefore also on
+each bounded-incidence subfamily. This does not construct the
+cofinal verifier needed by SIR's conditional transfer. Fixed
+$d,L$ still permits arbitrary sizes, cycles, shared seeds, guards,
+hard zeros and full correlated block weights. Bounded incidence
+does not here establish bounded width, hyperfiniteness, mixing,
+positivity, a fixed transfer matrix or an optimizer length cutoff.
+

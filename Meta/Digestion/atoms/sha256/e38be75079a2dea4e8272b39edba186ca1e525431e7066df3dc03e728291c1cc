@@ -1,0 +1,55 @@
+## 7. Original obligations, boundaries and mathematical credit
+
+The original alternatives retain the entire domain (1.2): with
+$C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and
+$U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$, decide whether some
+finite producer attains $c_\star$, or whether $C_N<c_\star$ for every
+finite $N$. [Universal, Theorem 6.2][U] owns the equivalence of the
+latter with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{7.1}
+$$
+
+A hypothetical same-law attainer also obeys the supplied full support
+bounds $P([0^m]_a)\ge2^{-m}$ and
+$P([w]_a)\ge2^{-(n+2)}3^{-k(w)}$, the bulk bounds
+$nc_\star\le\Phi_n(P_n)\le\kappa_n\le(n+1)c_\star$, and the
+attained-law projection budget $D_r(P)-c_\star\le c_\star/(r+1)$.
+Its actual positive-weight components attain by [Universal, Theorem 5.1][U].
+These conditions and $\mathsf Z(P)$ keep their supplier ownership.
+The smaller premise list used in Theorem 4.1 is not a definition of
+the full necessary-attainer domain or a sufficient test for attainment.
+In particular the all-$n$ bulk lower bound itself implies attainment
+after taking the limit; a low-risk example cannot satisfy that bound.
+
+**Open Problem 7.1 (Unpaid actual-law bridge).** Under hypothetical
+same-law attainment and the additional $A_P<\infty$ hypothesis, do
+the supplied all-length balances imply $R_{C,f}=0$ for every interval
+and every intrinsic direction, almost everywhere? The unpaid part
+is precisely (6.2). The question is unproved and unrefuted here.
+An affirmative answer pays only the first missing order. Applying
+Theorem 4.1 still requires all orders, or an equivalent proof of RP.
+Even RP would need a separate incompatibility argument before it could
+exclude a finite attainer. Failure of a continuation argument does
+not decide either alternative in (7.1).
+
+No new $S_P(f_C)\ne0$ is supplied to the existing response or finite
+dual-residual certificate. A second-order tilt defect is not such an
+input. Strict finite certificates can also contradict an attainer's
+projection budget, so their existence is not identified with a
+nonzero full response. There is no universal productivity, exclusion
+of a specific remaining producer, efficient radius, uniform family
+rate or fixed-$N$ margin in this volume.
+
+The $N=1$ original domain is retained: scalar legality forces $M_1=0$
+and gives the all-zero law, whose free posterior fails (2.1).
+Thus the conditional theorem does not remove that law from $\Theta_1$.
+At any $N$, positivity of compatible visible completions under the
+band does not force positive hidden entries. Forced sites and both
+seams remain in (2.4); null exterior records remain outside the
+pointwise assertions. No visible locality, conditional log-density
+identity, global tilted law or Gibbs conclusion follows from the
+finite collar or from finite-sum compatibility.
+

@@ -1,0 +1,16 @@
+**Removing an original-support prime square.** Suppose $q\mid B_N$ and $q^2\mid k$. Put $t_1=Nk/q$ and $t_2=Nk/q^2$. Both are odd multiples of $N$ with relative multipliers coprime to $3$, so $B_N$ divides both $B_{t_1}$ and $B_{t_2}$. The quotient gcd and (88.1) give
+
+$$\gcd(B_{t_1},Q_q(L_{t_1}))\mid q,\qquad v_q(Q_q(L_{t_1}))=1.$$
+
+Every other prime in this quotient is absent from $B_{t_1}$, and hence absent from $D$. Since $B_{Nk}=B_{t_1}Q_q(L_{t_1})$ has squarefree kernel $D$, every such quotient prime has even valuation. Thus
+
+$$Q_q(L_{t_1})=qu_1^2$$
+
+for a positive integer $u_1$. For every prime already dividing $B_{t_1}$ other than $q$, its valuation is unchanged in the product. The squarefree kernel of $B_{t_1}$ is therefore precisely $D$ with the membership of $q$ toggled.
+
+All primes of this toggled kernel still divide $B_N$, including $q$ even when $q\nmid D$ initially. They consequently divide $B_{t_2}$. Apply the same gcd and valuation argument to
+
+$$B_{t_1}=B_{t_2}Q_q(L_{t_2}).$$
+
+It gives $Q_q(L_{t_2})=qu_2^2$ for a positive integer $u_2$. The two toggles cancel, and $B_{t_2}$ again has full squarefree kernel $D$. Thus $B_{t_2}=Dc_2^2$ for a positive integer $c_2$. This is a two-step descent; a single step need not preserve $D$.
+

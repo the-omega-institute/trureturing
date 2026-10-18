@@ -1,0 +1,143 @@
+### 定理六：Auric FIB ATOM 的隐藏 seam—因果读出统一定理
+
+设：
+
+```math
+\mathcal H=\mathbb R^\Sigma,
+\qquad
+\ker P=\operatorname{span}\{d\},
+```
+
+其中：
+
+```math
+d=(1,-1,0,-1,1).
+```
+
+对任意合法路径 $w$，令：
+
+```math
+U_w:\mathcal H\to\mathcal H
+```
+
+为状态转移，令：
+
+```math
+R_w:\mathcal H\to\mathcal Y_w
+```
+
+为实际读出。
+
+则：
+
+```math
+\boxed{
+\begin{aligned}
+\text{静态隐藏}
+&\Longleftrightarrow d\in\ker P,\\[1mm]
+\text{动态保留}
+&\Longleftrightarrow U_wd\neq0,\\[1mm]
+\text{局部读出可见}
+&\Longleftrightarrow R_wU_wd\neq0,\\[1mm]
+\text{过程层面消除}
+&\Longleftrightarrow U_wd=0.
+\end{aligned}
+}
+```
+
+若 $R_w$ 是局部时钟读出，则：
+
+```math
+R_wU_wd
+```
+
+对应局部等待核的四角响应。
+
+若 $R_w$ 是输出分支读出，则：
+
+```math
+R_wU_wd
+```
+
+对应：
+
+```math
+dM_\omega g.
+```
+
+若 $R_w$ 是吸收体的粗粒化读出，则它决定射线信息是否进入当前观察者保留的变量。
+
+因此：
+
+```math
+\boxed{
+\text{时间方向}
+=
+\text{因果路径上隐藏方向逐步变得可读的方向}.
+}
+```
+
+这不是说时间被证明不存在，也不是说已经证明引力就是时间场，而是给出了一个不依赖 $3+1$ 语言的严格候选框架：
+
+```math
+\boxed{
+\text{局部时间场}
+=
+\text{局部因果转移上的等待核与输出核族}.
+}
+```
+
+```math
+\boxed{
+\text{时间的形状}
+=
+\text{隐藏关系在因果历史中首次产生非零读出所需的结构深度}.
+}
+```
+
+```math
+\boxed{
+\text{信息损失}
+=
+\text{某个指定读出上的隐藏响应为零，}
+}
+```
+
+而不是无条件地断言：
+
+```math
+\text{宇宙中的全部信息已经被本体性地消灭}.
+```
+
+对 Auric FIB ATOM 金字塔来说，最小的隐藏结构仍然是：
+
+```math
+\boxed{
+F[1]\times F[3]
+\longrightarrow
+F[1,3],
+}
+```
+
+也就是：
+
+```math
+\boxed{
+xy=\text{两个可见端点方向的联合 seam}.
+}
+```
+
+而它是否成为“时间方向”，取决于：
+
+```math
+\boxed{
+\text{因果转移是否保留它，}
+\qquad
+\text{局部时钟是否响应它，}
+\qquad
+\text{实际输出是否读出它。}
+}
+```
+
+<!-- 供文正文结束：以下为单列的编者适用条件与更正。 -->
+

@@ -1,0 +1,29 @@
+**定义 1.1（完整目标与原时钟）。** A legal complete world is a triple
+$W=(P,g,\delta)$, where $P$ is a strictly entrywise positive real
+$2\times2$ matrix of rank one and trace one,
+$g\in\mathbb R[T]\setminus\{0\}$ has degree at most three, and
+$\delta\in\mathbb R$. Set
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+A_0=I,\qquad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+The reading at original clock $i$ is
+$g(i)\operatorname{tr}(A_iP)+\delta$. The initial reading counts;
+every atom is followed immediately by its reading on one unresettable,
+uncopyable trajectory. A chronological word $EF$ acts by $FE$ and
+includes both immediate readings. Actions, stops and answers may be
+arbitrary deterministic functions of the entire actual history, without
+regularity or computability assumptions. The gain may have either sign,
+lower degree, sampled roots and repeated roots.
+
+The complete-target and acquisition conventions are those of
+[I, Definitions 39.1 and 44.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md),
+[II, Definitions 51.1 and 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md),
+and [VIII, Definition 1.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md).
+In particular, distinctions concern the entire triple, rather than only
+the source or a gain ray.
+

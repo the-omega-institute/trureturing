@@ -1,0 +1,31 @@
+**Lemma 7.3 (Uniform reset-event floor).** For every actual reset index,
+
+$$
+M_i\ge\frac1{256}.
+\tag{7.12}
+$$
+
+Proof. From (1.6), the full-complement posterior at every coordinate is at most $1/2$, including forced fibers. For any event $A$ depending only on the other coordinates,
+
+$$
+\pi_n(A,W_j=0)=\mathbb E_{\pi_n}[\mathbf1_A(1-a_{n,j})]
+\ge\frac12\pi_n(A).
+\tag{7.13}
+$$
+
+If $A$ also forces both existing neighbors of $j$ to be zero, the lower band gives
+
+$$
+\pi_n(A,W_j=1)=\mathbb E_{\pi_n}[\mathbf1_Aa_{n,j}]
+\ge\frac14\pi_n(A).
+\tag{7.14}
+$$
+
+First prescribe zero at every existing site in
+
+$$
+\{i-3,i-1,i+1,i+3\}\cap[1,n].
+$$
+
+There are at most four distinct such sites. Successive applications of (7.13) give the resulting event probability at least $2^{-4}$. Now prescribe one first at $i-2$ and then at $i+2$. Each current conditioning event is external to the site being specified and makes all its existing neighbors zero. Two applications of (7.14) give probability at least $2^{-4}4^{-2}=1/256$ to an event contained in $E_i$. Missing neighbors at open endpoints reduce the number of zero prescriptions and do not weaken the bound. This establishes an event floor, not a positive posterior variance. $\square$
+

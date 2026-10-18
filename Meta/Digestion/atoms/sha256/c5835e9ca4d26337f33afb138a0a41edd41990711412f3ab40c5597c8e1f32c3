@@ -1,0 +1,9 @@
+**Definition 3.2 (Permitted cutoffs).** Fix $\eta\in(0,1)$ so that
+
+$$
+G\eta^r\le\frac12,\qquad \frac{\eta^a}{z_-}\le\frac12,
+\tag{3.7}
+$$
+
+and fix $0<s_*<\min\{s_0,1,\eta/2\}$. These choices depend only on the sources. From now on a permitted pair means $0<s<s_*$ and an integer $L\ge1$ with $sL\le\eta$. No further neighborhood in Sections 4–9 depends on $L$, a budget or an observer.
+

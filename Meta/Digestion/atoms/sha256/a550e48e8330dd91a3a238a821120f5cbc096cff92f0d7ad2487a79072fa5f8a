@@ -1,0 +1,15 @@
+**Definition 6.4 (counted replay and memory selection from raw).** `RunN`
+starts at the same encoded irreducible entrance and copies $1^n$ to a
+countdown. Until empty, execute precisely one Step of Definition 5.1,
+feeding its next typed consumed bit from Definition 6.3; optionally emit
+Definition 5.3's patch and update the constructor/role maps, then tail
+the countdown. An absent required bit or illegal represented row fails.
+This is one literal row per iteration, including older converter rows.
+
+To select memory from raw $W$, first perform only the basic scans of
+Definition 6.3, run `RunN`, require its full physical endpoint equals $W$,
+then perform Definition 6.2 using that derived history. For an M-body first
+parse its seven lists and do basic extraction directly; replay precedes
+reselection and exact M-body comparison. This order avoids a circular
+premise in partial-object role classification.
+

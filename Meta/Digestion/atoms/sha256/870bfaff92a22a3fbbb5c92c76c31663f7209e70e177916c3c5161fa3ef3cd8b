@@ -1,0 +1,30 @@
+## 165. The residual-face contradiction
+
+In the proposed return (162.1), the two faces at its M axis are already
+paired to tau's two faces at the axial Z slot. Its other two faces have
+labels {Z,Z,C}. Across either one, follow the actual transported target
+Z slot. If the next occurrence is axial, its two complementary face
+slots force reservoir pair {Z,C}. If it is transverse, its companion
+cannot also be Z, so it is C and the other Z is axial. Its reservoir
+pair is again {Z,C}. This remains true whichever of the two equal Z
+slots the actual face permutation carries the target to.
+
+By (162.4), the next owner is again rho. Its extra axial Z slot is incident
+to these same two residual faces. Tau's only Z slot leads to rho on
+both sides; rho's shared-M faces lead to tau, and its residual faces
+can only lead to rho. The complete connected Z normal circle therefore
+contains only the one Z slot of tau and the three Z slots of rho.
+It follows that degree(Z)<=4, contradicting minimum degree six.
+
+Hence the companion-C return (162.1) cannot occur. The remaining return
+must have companion M and shared axis C. This theorem does not by itself
+eliminate its other H-axis possibilities M,Z,D. It uses complete edge
+equations and actual continuation across the paired faces, rather than
+assuming the two-owner core is already a complete edge star.
+
+Combining this exclusion with Section 160, every remaining return has
+frame (C,Z,M,Q,Z,M), with Q in {M,Z,D}, and necessarily
+d>z-m-1>c. These are necessary conditions; no compatible complete
+quotient or exclusion of all three remaining cases is asserted.
+
+

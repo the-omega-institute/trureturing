@@ -1,0 +1,22 @@
+**Definition 1.3 (whole occurrence row).** For a finite prefix-free cut
+$P$, set $H_P(t)=P\cap\operatorname{Pos}(t)$. Replace the entire subtree
+at each reached $p\in H_P(t)$ by its occurrence hole $\square_p$.
+Keep every remaining bracket and concrete leaf; call the result $C_P(t)$.
+The complete row is
+
+$$
+R_P(t)=(C_P(t),\pi_P(t)),\qquad
+p\sim_{\pi_P(t)}q\ \Longleftrightarrow\ t|_p=t|_q.
+\tag{NRE.5}
+$$
+
+Distinct classes assert disequality. An unreached member of $P$ has a
+concrete blocking leaf at a strict prefix, exposed by the exterior.
+Order reached holes lexicographically, with $L<R$. The canonical class
+name is the ordinal position of its first reached hole, using zero-based
+positions. Thus names need not be consecutive. Whenever holes are removed,
+positions and first-occurrence names are computed again on the retained
+ordered holes. The symbols used for classes below are aliases for these
+names, never additional acquired values. This is the complete-row
+convention of the owning volume's Definition 1.2.
+

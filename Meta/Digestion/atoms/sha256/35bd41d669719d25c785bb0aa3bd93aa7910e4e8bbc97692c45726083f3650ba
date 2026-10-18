@@ -1,0 +1,13 @@
+**Lemma 6.3 (certified finite-cap full-future calculation for this family).** For a constructed member, fixed rational installed prior and finite $H\ge7$, all four $\Phi_H$ values are computably approximable with an explicit absolute error bound. For each chosen order separately, retaining the complete words of indices $j<J$ gives its rational lower value $L_H$ with
+
+$$
+L_H\le\Phi_H\le L_H+4^{-J}\qquad(J\ge1).
+\tag{6.5}
+$$
+
+The calculation is external, terminating finite rational work, with no runtime posterior or full-TV oracle.
+
+**Proof.** Enumerate the finitely many original binary source words of at most $H$ Reads and run the unchanged original finite parser/table to select active legal cuts; deterministic event and permission fibers are determined by that word. All supported depths give each such source word positive probability. Compute its rational posterior using (2.1), and its private accepting probability by rational automaton products only if it is a gate. Other cuts have one baseline decoder. Thus law uses $Q^{\lambda\theta}$ at a gate, conf averages $Q^0,Q^\lambda$ with weights $1-\theta,\theta$, and beta uses $V$.
+
+For a $p$ report $Q^x$, (3.7)'s omitted mass at indices $j\ge J$ is $(1-x/l)a^J$. For $V$ it is $va^J$; its separate single-word $\beta$ atom is always included. The actual omitted masses are respectively $\sum_k\nu_h(k)a_{r_k}^J$ and $\sum_k\nu_h(k)r_k a_{r_k}^J$. All are at most $4^{-J}$ since $a<1/4$ and $a_{r_k}\le6/25<1/4$. Both infinite outcomes have zero mass. For any two such normalized laws the finite half-sum of absolute coordinate differences is a lower TV value; the omitted half-sum is bounded by one half the sum of their omitted masses, hence by $4^{-J}$. For conf apply this bound to each decoder and average with the same actual row; the bound is unchanged. For law compute the mixture's finite coordinates first. Pushforward through this cut's own $I_c$ preserves these statements on complete records, event blocks, Stop and delivery. Taking maxima over the finite original histories and subtracting the exact phase radii preserves the same two-sided enclosure, proving (6.5). Choose a finite $J$ by integer powers until $4^{-J}$ is below any requested rational error. Table enumeration, matrix/posterior arithmetic, work, storage and output remain paid offline. This elementary geometric bound concerns this particular constructed family; it supplies no general semantic membership test or arbitrary-chain full-TV service. $\square$
+

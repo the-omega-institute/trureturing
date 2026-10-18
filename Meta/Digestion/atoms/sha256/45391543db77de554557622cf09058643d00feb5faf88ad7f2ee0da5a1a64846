@@ -1,0 +1,89 @@
+**Theorem 10.12 (Intersection kernel and universal state equivalence).**
+For a finite affine factor define
+
+$$
+K_E=\{c\in\mathbb T:
+           E(C_cx)=E(x)\text{ for every }x\in\mathcal M_I\}.
+$$
+
+Then
+
+$$
+\bigcap_E K_E=2\pi\mathbb Q/(2\pi\mathbb Z).
+$$
+
+More fully, two source states have equal encodings under every
+finite affine factor if and only if they differ by a rational
+common turn:
+
+$$
+x\sim_{\rm all}x'
+\quad\Longleftrightarrow\quad
+x'=C_{2\pi q}x\text{ for some }q\in\mathbb Q.
+$$
+
+For continuous finite affine factors, the equivalence is instead
+
+$$
+(k,u,v)\sim_{\rm cont}(k',u',v')
+\quad\Longleftrightarrow\quad
+k=k'\ \hbox{and}\ u-v=u'-v'\ \hbox{in }\mathbb T.
+$$
+
+Every continuous factor has a continuous factorization
+
+$$
+E(k,u,v)=\overline E(k,u-v),\qquad
+\overline E:I\times\mathbb T\longrightarrow\mathbb R^n.
+$$
+
+All these assertions also hold when the class of factors is
+restricted to those supporting every prescribed simultaneous path.
+
+**Proof.** By affine spanning, $K_E$ is exactly the kernel of
+the abstract action $\mathcal R$ on $\mathscr H$.
+Theorem 10.6 puts every rational common turn in every $K_E$.
+Theorem 10.10 excludes every irrational common turn from at
+least one such kernel. This proves the intersection identity.
+
+Proposition 10.11 distinguishes two states when their heights
+or difference-circle values differ. If those two quantities
+agree, the two states have the form $x'=C_cx$ for a single
+$c\in\mathbb T$: the differences $u'-u$ and $v'-v$ agree.
+For rational $c/(2\pi)$ Theorem 10.6 erases this distinction
+for every factor. For irrational $c/(2\pi)$ Theorem 10.10
+gives a factor distinguishing these particular states.
+This proves the full arbitrary-factor equivalence.
+
+For continuous $E$, fix $x$ and a real representative $c$.
+Choose rational numbers $q_j$ such that $2\pi q_j\to c$.
+In the actual source topology,
+$C_{2\pi q_j}x\to C_cx$. Rational erasure and continuity yield
+
+$$
+E(C_cx)=\lim_j E(C_{2\pi q_j}x)=E(x).
+$$
+
+Only continuity along each common orbit is needed for this
+invariance statement. Full continuity of $E$ gives continuity
+of the quotient factor by the explicit section
+
+$$
+\overline E(k,\alpha)=E(k,\alpha,0).
+$$
+
+The input $\alpha$ here is a circle class; no continuous real
+argument branch is selected. Since
+$(k,u,v)=C_v(k,u-v,0)$, this section has the required
+factorization. Common invariance proves one direction of
+$\sim_{\rm cont}$, and the continuous witness $E_\Delta$
+proves the other.
+
+The universal erasure statements apply to the stronger path
+contract because it includes the pure commands. Both types of
+separating witnesses, $E_\sigma$ and $E_\Delta$, satisfy that
+stronger contract by Propositions 10.9 and 10.11. Thus the
+intersection and equivalence relations are unchanged.
+The continuous argument takes limits of already finitely
+reachable points; it executes no infinite history. $\square$
+

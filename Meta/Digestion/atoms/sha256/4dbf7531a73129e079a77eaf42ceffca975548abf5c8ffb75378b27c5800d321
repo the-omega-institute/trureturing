@@ -1,0 +1,25 @@
+**Lemma 4.3 (Cyclicity and the minimal polynomial of the quotient).** For Definition 2.1 the vector $e_0$ is cyclic for $P$, the minimal polynomial of $P$ is $f$, and
+
+$$
+\mathbb C[z]/(f)\longrightarrow V,\qquad
+[h]\longmapsto h(P)e_0
+\tag{4.2}
+$$
+
+is a linear isomorphism intertwining multiplication by $z$ with $P$. Every root of $f$ is nonzero.
+
+Proof. The shift columns give $P^je_0=e_j$ for $0\le j\le H$, so these iterates form a basis. Also
+
+$$
+P^de_0=Pe_H=q=\sum_{i=0}^H q_iP^ie_0,
+\qquad f(z)=z^d-\sum_{i=0}^H q_i z^i.
+$$
+
+Thus $f(P)e_0=0$. Since $f(P)$ commutes with $P$, it annihilates each $P^je_0$, hence $f(P)=0$ on $V$. If $r$ has degree less than $d$, the equality $r(P)e_0=0$ is a relation among the basis $e_0,\ldots,e_H$ and forces all coefficients of $r$ to be zero. Dividing any polynomial $h$ by the monic polynomial $f$ now shows
+
+$$
+h(P)e_0=0\quad\Longleftrightarrow\quad f\text{ divides }h.
+$$
+
+This proves that (4.2) is well-defined and injective; the basis iterates prove surjectivity. Multiplying a polynomial representative by $z$ corresponds exactly to applying $P$. In particular every annihilating polynomial of $P$ is divisible by $f$, while $f$ itself annihilates $P$, proving minimality. Finally $f(0)=-q_0=-p_H\ne0$, excluding zero roots. $\square$
+

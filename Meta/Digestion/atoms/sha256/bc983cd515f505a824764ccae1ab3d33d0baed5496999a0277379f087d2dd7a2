@@ -1,0 +1,17 @@
+**Definition 6.1 (terminal-label coordinates).** Fix $D\ge1$ and an
+actually acquired $c=\pi_D(v)\in S_D$. Let
+
+$$
+\begin{aligned}
+B_c&=\{a\in\{L,R\}^{D-1}:r_c(a)=\mathsf{branch}\},
+& b_c&=|B_c|,\\
+U_c&=\{RaL,RaR:a\in B_c\},&r&=|U_c|=2b_c.
+\end{aligned}
+\tag{CCF.18}
+$$
+
+Order $U_c$ lexicographically. For
+$\theta\in\{\alpha,\beta\}^{U_c}$, let $t_\theta$ replace the
+artificial two children of each cutoff branch in $c$ by their indicated
+labels and retain the outer $\langle\alpha,\cdot\rangle$.
+

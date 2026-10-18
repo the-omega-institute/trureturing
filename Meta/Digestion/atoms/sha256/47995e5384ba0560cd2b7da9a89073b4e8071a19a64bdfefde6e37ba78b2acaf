@@ -1,0 +1,17 @@
+## 12. A correction across disjoint adjacent depth pairs
+
+Keep the combined chromatic and fixed-size cut bound $\kappa_v$ of
+(CL.19) in full. For each internal depth name its existing lower bound
+
+$$
+p_d=\max(1,\Lambda_d),\qquad
+\Lambda_d=\sum_{v\in V_d}(\kappa_v-1),\qquad
+P_B=\sum_{a<d<b}p_d=(\beta_B-1)+\Delta_B.
+\tag{CL.45}
+$$
+
+These are exactly the quantities of (CL.24), with $p_d$ naming its
+summand. An edge-containing graph has $\chi_v\ge2$ and
+$\tau(\chi_v)\ge2$, so $\kappa_v\ge2$. Thus $\kappa_v=1$ is
+equivalent to $\Gamma_v$ being edgeless under the original convention.
+

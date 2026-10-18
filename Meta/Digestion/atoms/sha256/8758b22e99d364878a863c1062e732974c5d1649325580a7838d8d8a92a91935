@@ -1,0 +1,42 @@
+**Theorem 2.3 (Published comparison interface).** For precisely the
+literal contract of Definition 2.1 and every $0<Z<1$,
+
+$$
+\bigl(e_{2,\mathsf L}^{\rm aff}(Z)\bigr)^2
+=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\sup_{0<k<H}\left\{4(Ce^{\gamma k}-A(k))^2+4Zk\right\}.
+$$
+
+For every finite dimension $n$, the inherited lower floor is
+
+$$
+e_{n,\mathsf L}^{\rm aff}(Z)\ge 2\sqrt{ZH}.
+$$
+
+Supplier correspondence. The first statement is [M, Theorem 6.4], with
+its $e_2^{\rm aff}$ equal to the present $e_{2,\mathsf L}^{\rm aff}$.
+The source has the same $k,\alpha,\beta,r,H,Z$, the same arbitrary fixed
+preparation, the same maps $P_s,Q_t$ with their full partial domains,
+and the same $D$ and Euclidean metric. Its composed decoder $q$ is the
+present $\mathcal D\circ E$. Its dimension is at most two, not exactly
+two and not the dimension of an assumed smooth image. The theorem
+includes affine offsets, deficient affine hulls, irregular encoders and
+unbounded hidden coordinates. Thus no symmetry or regularity of a
+competitor is an additional premise in this application.
+
+The second statement is [A, Theorem 3.3 and Proposition 4.1], also
+reconstructed in [M, Theorem 3.4 and Proposition 3.5]. Their bounded
+affine-observable theorem makes every finite-error decoder independent
+of $\beta$. Its orthogonal decomposition $q=D(a,b)+w$, with
+$w\perp\operatorname{im}D$, has exact worst-$\beta$ squared error
+
+$$
+\|w\|^2+4\|a-A(k)U(\alpha)\|^2+(\|b\|+B(k))^2\ge4Zk.
+$$
+
+Taking the supremum through interior heights gives $4ZH$. Infinite-error
+models satisfy the bound as well. Only bounded affine observables are
+being declared $\beta$-independent, not arbitrary hidden coordinates.
+This volume uses these published lower theorems; it does not repeat
+their all-competitor proofs as new results. $\square$
+

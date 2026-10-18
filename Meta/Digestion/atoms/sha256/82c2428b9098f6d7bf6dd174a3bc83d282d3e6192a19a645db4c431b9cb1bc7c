@@ -1,0 +1,26 @@
+**Definition 4.3 (total rational certificate specification).** Define
+$V_{\rm cond}(d,w,C,\pi)$ as follows. Its finite input requires an
+integer $d\ge1$, a nonnegative rational weight array on the canonical
+$S_d$, a rational $C>0$ and a finite certificate string $\pi$.
+Malformed inputs are rejected. Recompute the complete canonical
+finite type list and its $R_\eta(w)$. For every nonempty relation,
+$\pi$ must supply every row of every kernel $Q_{\eta,A}$, indexed by
+the full owned tuple and full context. Check that entries are positive
+rationals and that every row sums to one. For each $s\in R_\eta$ put
+$r=(k+1)!$ and check the exact rational inequality
+
+$$
+\Phi_\eta(s)^r
+ \le C^r\prod_{A\subseteq[k]}
+       Q_{\eta,A}(O(s)\mid B_A(s))^{\,|A|!(k-|A|)!}.
+\tag{COK.26}
+$$
+
+Reject missing, duplicate, incorrectly indexed or additional malformed
+data. Empty relations need no kernels. For $w=0$ accept precisely the
+canonical empty witness, subject to the valid input checks.
+Type order is that of Definition 2.2; subsets, contexts and tuple
+entries use their induced finite lexicographic orders. A certificate
+is the corresponding finite array of rational numerators and positive
+denominators, with no implicit unspecified rows.
+

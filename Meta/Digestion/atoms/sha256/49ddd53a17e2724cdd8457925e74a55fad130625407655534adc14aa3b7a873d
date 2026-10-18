@@ -1,0 +1,23 @@
+**The real coordinate is the full block.** The normalized real isomorphism
+
+$$z=X/(5D),\qquad w=Y/(5D)^{3/2}$$
+
+gives the fixed curve $w^2=z(z+1)(z-3)$. Now $z(R)=B$, whereas $z(K)=B_n>B$. Define
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}},\qquad
+u(B)=\int_B^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+As in §90, the identity component is parametrized by $\mathbb R/\omega\mathbb Z$, and coordinates greater than $B$ correspond to $(0,u(B))$ and $(\omega-u(B),\omega)$. Replacing $m$ by $a=|m|$ leaves the coordinate unchanged. If $au(B)\ge\omega$, then $a\ge\omega/u(B)$; otherwise $a>1$ excludes the first arc and forces $au(B)>\omega-u(B)$. Hence
+
+$$|m|>\omega/u(B)-1.$$
+
+The same integrand inequalities as in §90 give
+
+$$\omega>2/\sqrt3,\qquad u(B)<1/\sqrt{B-3}.$$
+
+Because $B\ge144$, it follows that
+
+$$|m|>2\sqrt{(B-3)/3}-1>\sqrt B.\tag{92.1}$$
+
+No restriction on $C$ enters this first-return argument.
+

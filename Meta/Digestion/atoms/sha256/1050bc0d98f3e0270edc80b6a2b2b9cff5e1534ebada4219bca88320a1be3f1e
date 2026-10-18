@@ -1,0 +1,88 @@
+**Theorem 3.3 (Sampling bounds and the joint-occupation coefficient).**
+For every finite positive activity pair,
+
+$$
+\frac14<\omega_1^*=\omega_3^*<\frac13
+<\omega_2^*<\frac12.
+\tag{3.22}
+$$
+
+For the law (3.1), set
+$X=\mathbb E_p n_1=\mathbb E_p n_3$,
+$z=\mathbb E_p n_2$, $\kappa=\mathbb E_p(n_1n_3)$,
+$p_0=p(000)$ and $D_{\rm occ}=(1-z)(p_0+z)$. Then the
+coefficients of the same optimal-design problem satisfy
+
+$$
+c_0=\frac{p_0}{D_{\rm occ}},\qquad
+c_1=\frac{2z(X-\kappa)}{D_{\rm occ}},\qquad
+c_2=\frac{z\kappa}{D_{\rm occ}}
+=\frac{\operatorname{Cov}_p(n_1,n_3)}{D_{\rm occ}}.
+\tag{3.23}
+$$
+
+Proof. At the root, (3.7) and $\sum_jc_j=1$ give the identities
+
+$$
+\frac{c_1}{(1-t_*)^2}
+=(2F_*-1)((2-t_*)F_*+1)>0,
+\tag{3.24}
+$$
+
+$$
+\frac{2c_2}{(2-t_*)^2}
+=1-t_*F_*-2(1-t_*)F_*^2>0.
+\tag{3.25}
+$$
+
+The first implies $F_*>1/2$. If $F_*\ge1$, the right side of
+the second is at most $t_*-1<0$, a contradiction. Thus
+$1/2<F_*<1$, and (3.9) gives (3.22).
+
+Conditioned on $n_2=0$, the endpoint occupations are independent
+Bernoulli variables with parameter $\rho=a/(1+a)$, directly
+from the four weights $(1,a,a,a^2)$. Hence
+
+$$
+X=(1-z)\rho,\qquad
+\kappa=(1-z)\rho^2,\qquad
+\kappa(1-z)=X^2,\qquad
+\operatorname{Cov}_p(n_1,n_3)=\kappa z.
+\tag{3.26}
+$$
+
+Also $p_0=1/Z$, $z=b/Z$, $X-\kappa=a/Z$ and
+$D_{\rm occ}=s^2(1+b)/Z^2$. Substitution into (3.3)
+gives (3.23). In particular, the activities can be recovered as
+
+$$
+a=\frac{\kappa}{X-\kappa},\qquad
+b=\frac{\kappa-X^2}{(X-\kappa)^2}.
+\tag{3.27}
+$$
+
+These formulas require the law (3.1), rather than arbitrary
+reflection-symmetric five-state probabilities. $\square$
+
+The coefficient $c_2$ measures the center projector's squared
+overlap with the double-endpoint spectral direction $k$.
+It is determined by a normalized occupation covariance.
+It is not a complex coherence or an interaction energy.
+
+For a centered phase function $f$, put $q_j=\psi_jf_j$.
+Direct substitution in the endpoint projector gives
+
+$$
+q^{\mathsf T}K_1q
+=\frac{X-\kappa}{1+a}(f_0-f_1)^2
++\frac{\kappa}{1+a}(f_3-f_{13})^2.
+\tag{3.28}
+$$
+
+Thus the joint state supplies a second phase-difference block
+whose conductance relative to the first is
+$\kappa/(X-\kappa)=a$. Both blocks consume the same endpoint
+site budget. Changing the phases of the pure state leaves
+$X,z,\kappa$ unchanged while changing its off-diagonal entries;
+the occupation bridge does not determine arbitrary coherence.
+

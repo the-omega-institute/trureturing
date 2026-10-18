@@ -1,0 +1,118 @@
+**Lemma 6.1 (Spatial uniform integrability).** Let $g$ be a bounded function with the decomposition (5.2) in the stationary filtration $\mathcal F_k$. Define
+
+$$
+G_n=\sum_{j=1}^ng\circ T^j.
+\tag{6.1}
+$$
+
+Then $\|G_n/\sqrt n\|_2\le A(g)$ for every $n$, and the family
+$\{G_n^2/n:n\ge1\}$ is uniformly integrable. If, on this same probability space,
+
+$$
+0\le Z_n\le n,\qquad \sup_n\mathbb E_PZ_n\le K<\infty,
+\tag{6.2}
+$$
+
+then
+
+$$
+\frac1n\mathbb E_P[|G_n|Z_n]\longrightarrow0.
+\tag{6.3}
+$$
+
+No independence between $G_n$ and $Z_n$ is required.
+
+**Proof.** For each fixed $k$, stationarity makes $f_k\circ T^j$ a martingale difference at time $k+j$: it is $\mathcal F_{k+j}$-measurable and has zero conditional mean given $\mathcal F_{k+j-1}$. Distinct such times are orthogonal. Therefore
+
+$$
+\left\|\sum_{j=1}^nf_k\circ T^j\right\|_2=\sqrt n\,\|f_k\|_2.
+$$
+
+For an integer $m\ge a$ define
+
+$$
+G_n^{(m)}=\sum_{k=a}^m\sum_{j=1}^nf_k\circ T^j,
+\qquad \eta_m=\sum_{k>m}\|f_k\|_2.
+$$
+
+Minkowski's inequality and (5.2) give
+
+$$
+\left\|\frac{G_n}{\sqrt n}\right\|_2\le A(g),\qquad
+\sup_n\left\|\frac{G_n-G_n^{(m)}}{\sqrt n}\right\|_2\le\eta_m\longrightarrow0.
+\tag{6.4}
+$$
+
+For fixed $n,m$, group the finite sum by $t=k+j$:
+
+$$
+d_t=\sum_{\substack{a\le k\le m\\1\le t-k\le n}}f_k\circ T^{t-k},
+\qquad G_n^{(m)}=\sum_{t=a+1}^{m+n}d_t.
+$$
+
+Each $d_t$ is a martingale difference for $\mathcal F_t$. There are
+$J=n+m-a$ terms and
+
+$$
+|d_t|\le M_m:=2\|g\|_\infty(m-a+1),
+\tag{6.5}
+$$
+
+because each conditional expectation of $g$ is bounded by $\|g\|_\infty$.
+
+We prove the fourth-moment estimate needed for this finite truncation. For any $J$ successive martingale differences bounded by $M$, let $S_j$ be their partial sums. Orthogonality gives $\mathbb E_PS_{j-1}^2\le(j-1)M^2$. In the expansion
+
+$$
+(S_{j-1}+d_j)^4-S_{j-1}^4
+=4S_{j-1}^3d_j+6S_{j-1}^2d_j^2+4S_{j-1}d_j^3+d_j^4,
+$$
+
+the first expectation is zero. The other three are bounded above by
+$6M^2\mathbb E_PS_{j-1}^2$, $4M^3\mathbb E_P|S_{j-1}|$ and $M^4$. Cauchy–Schwarz consequently yields
+
+$$
+\mathbb E_PS_J^4
+\le M^4\sum_{j=1}^J\bigl(6(j-1)+4\sqrt{j-1}+1\bigr)
+\le8M^4J^2.
+\tag{6.6}
+$$
+
+For the last inequality use $\sqrt{j-1}\le j-1$ for integral $j\ge1$; the resulting sum is $5J^2-4J\le8J^2$. Applying (6.6) to (6.5) shows, for each fixed $m$,
+
+$$
+C_m:=\sup_{n\ge1}\mathbb E_P\left(\frac{G_n^{(m)}}{\sqrt n}\right)^4
+\le8M_m^4(m-a+1)^2<\infty.
+\tag{6.7}
+$$
+
+Write $Y_n=G_n/\sqrt n$, $Y_n^{(m)}=G_n^{(m)}/\sqrt n$ and
+$E_{n,R}=\{|Y_n|>R\}$. By (6.4), Markov's inequality gives
+$P(E_{n,R})\le A(g)^2/R^2$. Thus
+
+$$
+\begin{aligned}
+\mathbb E_P[Y_n^2\mathbf1_{E_{n,R}}]
+&\le2\mathbb E_P(Y_n-Y_n^{(m)})^2
+ +2\mathbb E_P[(Y_n^{(m)})^2\mathbf1_{E_{n,R}}]\\
+&\le2\eta_m^2+2C_m^{1/2}A(g)/R.
+\end{aligned}
+\tag{6.8}
+$$
+
+Take the supremum over $n$, then let $R\to\infty$ with $m$ fixed, and finally $m\to\infty$. This proves uniform integrability of $Y_n^2$. The bound on its expectation alone would not prove this conclusion.
+
+Finally fix $\varepsilon>0$. Split according to $|G_n|\le\varepsilon n$ and its complement, and use both bounds in (6.2):
+
+$$
+\begin{aligned}
+\frac1n\mathbb E_P[|G_n|Z_n]
+&\le\varepsilon K+\mathbb E_P[|G_n|\mathbf1_{\{|G_n|>\varepsilon n\}}]\\
+&\le\varepsilon K+\frac1\varepsilon
+\mathbb E_P\left[\frac{G_n^2}{n}
+\mathbf1_{\{|G_n|/\sqrt n>\varepsilon\sqrt n\}}\right].
+\end{aligned}
+\tag{6.9}
+$$
+
+For fixed $\varepsilon$ the last term tends to zero by the uniform integrability just proved. First let $n\to\infty$ and then $\varepsilon\downarrow0$, proving (6.3). $\square$
+

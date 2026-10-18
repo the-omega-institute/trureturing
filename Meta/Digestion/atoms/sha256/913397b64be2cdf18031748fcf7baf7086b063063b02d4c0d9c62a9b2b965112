@@ -1,0 +1,21 @@
+**Proposition 6.2 (all 24 cases and 147 covering leaves).** Every quotient of Definition 6.1 is strictly positive throughout its closed chart. In each box the eight leaf counts are $(1,7,10,7,3,8,6,7)$, totaling $49$; all three boxes have $147$ leaves. Every retained Bernstein control is greater than $1/8000$. The exact power-coefficient enclosures, every leaf and every control are in Appendix 16.
+
+Proof. Synthetic division of a polynomial $\sum_{j=0}^ma_jx^j$ by $(x-c)^2$ is obtained in descending order by
+
+$$
+b_{m-2}=a_m,\quad b_{m-3}=a_{m-1}+2cb_{m-2},\quad
+b_{j-2}=a_j+2cb_{j-1}-c^2b_j,
+$$
+
+with absent higher coefficients zero. It also gives the exact residual constant and linear term. At an actual root the equations $P(c)=P'(c)=0$ prove that both remainders vanish. An interval remainder containing zero is never taken to prove this fact. Contact separation in Proposition 7.1 makes successive exact divisions legitimate. The chart change for contact 6 has nonzero derivative and positive clearing factor, so preserves its double multiplicity.
+
+For the six unused contact only the linear Taylor term vanishes. Algebra gives $P_4=P_4(x_4)+(x-x_4)^2Q_4$ exactly, irrespective of the unused value. Thus the fifth coefficient table encloses $Q_4$, while $P_4(x_4)$ remains a separate term. The method does not delete that term.
+
+For completeness, on a listed dyadic leaf $(l,d)$ put $L=l/2^d$, $H=(l+1)/2^d$, $y=(x+1)/2$ and $x=2(L+(H-L)t)-1$, $0\le t\le1$. If the substituted polynomial is $\sum_{j=0}^na_jt^j$, its degree-$n$ Bernstein controls are
+
+$$
+b_k=\sum_{j=0}^k\frac{\binom kj}{\binom nj}a_j,\qquad 0\le k\le n.
+$$
+
+The nonnegative Bernstein basis sums to one. Outward evaluation of the enclosed power coefficients by this formula gives the complete integer endpoint arrays in Appendix 16. Their lower endpoints all exceed $D_{150}/8000$ by integer cross multiplication. For each case the leaf intervals, in their listed order, abut exactly and run from $0$ to $1$ in $y$; this verifies coverage including the endpoints. Consequently the quotient is positive on every closed leaf. This is whole-arc positivity of exact polynomials at the roots, without a sampled gap argument. $\square$
+

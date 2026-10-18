@@ -1,0 +1,25 @@
+**Corollary 2.4 (one advancing coordinate and a stationary structure).**
+For a normal code let $\mu(X)$ be its least primitive rank, and set
+$Z(X)=\tau_{-\mu(X)}X$, where the subtraction is defined on the image
+specified in Theorem 2.3. Let
+
+$$
+\mathcal Z=\{X\in\mathcal N:\mu(X)=0\}.
+$$
+
+Every original source corresponds uniquely and effectively to a pair
+$(Z,m)\in\mathcal Z\times\mathbb N$, with
+
+$$
+u=E(\tau_m Z),\qquad
+\rho^n u=E(\tau_{m+n}Z).
+\tag{ABC.2.6}
+$$
+
+Proof. A finite nonempty code has a finite nonempty rank set and hence a
+least rank. Theorem 2.3 justifies subtraction, and the result has minimum
+zero. Conversely $\tau_m Z$ has minimum $m$ and recovers the same $Z$.
+These inverse operations and Theorem 2.2 prove uniqueness and effectivity.
+Translation changes that minimum by $n$ and leaves all rank differences
+and the constructor structure unchanged. $\square$
+

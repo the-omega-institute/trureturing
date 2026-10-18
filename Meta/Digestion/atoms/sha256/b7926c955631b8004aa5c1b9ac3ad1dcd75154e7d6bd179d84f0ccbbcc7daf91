@@ -1,0 +1,25 @@
+### 102.1. Statement
+
+**Theorem 102.1.**
+
+Write K=Q(sqrt5), O=Z[phi], phi=(1+sqrt5)/2. Let j>h>=1 be integers, N=3^j, M=3^h, and p any prime dividing B_M=L_M^2+3. Choose a totally positive algebraic integer gamma_p in O of norm p. Such a choice always exists, as proved in section 102.3. Put
+
+ F_p=K(sqrt p,sqrt(gamma_p)).
+
+For the actual later block B_N=D C^2, D its full positive squarefree kernel and C a positive integer, suppose (p/q)=1 for every q dividing D. Define chi_p(q) as the quadratic residue character of gamma_p at either of the two primes of K over q. This is a nonzero, root-independent sign. Then
+
+ product_(q|D) chi_p(q)=1.
+
+No assumption about (p/q) is made at primes occurring only in C. If D=Q is prime, the assumption is automatic and Q splits completely in F_p. Both the field and the signs on p-split primes are independent of the totally positive integral norm-p choice.
+
+Consequently fix any finite collection of distinct primes p_1,...,p_t, t>=1, each dividing a ternary block of index 3^h with 1<=h<=J. Every unique odd-depth prime Q of a block B_(3^j) with j>J splits completely in their compositum L=F_(p_1)...F_(p_t).
+
+The degrees and maximal abelian field are exactly
+
+ [L:Q]=2*4^t,
+ L_ab=K(sqrt(p_1),...,sqrt(p_t)).
+
+Among rational primes Q=19 modulo 120 satisfying (p_i/Q)=1 for all i, every one of the 2^t possible character vectors (chi_(p_i)(Q)) occurs in an abstract Chebotarev class of natural density 1/(32*4^t). Only the all-positive vector is permitted for the stated actual unique odd-depth role. Thus the simultaneous new signs remove a proportion 1-2^(-t) of this precisely specified abstract quadratic candidate set, whose density is 1/(32*2^t).
+
+These densities do not assert realization by an exact golden clock, independence from all previous higher-order tests, existence of WSS primes, or exclusion of every support. The general multi-prime product statement retains its explicit p-splitting premise. No rank or Sha premise occurs.
+

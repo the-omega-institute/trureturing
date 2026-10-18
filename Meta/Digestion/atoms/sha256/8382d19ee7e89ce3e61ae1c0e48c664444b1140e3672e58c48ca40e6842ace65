@@ -1,0 +1,72 @@
+**Definition 297.2 (Hard two actual requests).**
+There is one source-independent common seed, zero advice and sourcewise
+almost-sure finite handoff to the unchanged consumer. In $\mathcal N_2$
+the whole schedule is preselected before replies and its replies are obtained.
+In $\mathcal O_2$ an increasing schedule is preselected before replies and
+execution stops at its first **queried** zero or exhaustion. Its second
+address is not chosen from the first reply. Both classes allow at most two
+actual requests, counting repetitions and ignored replies. Competitors may
+query arbitrary addresses and output anywhere in $\Theta$. There is no
+source distribution, bounded-address, runtime or mean-request assumption.
+Completing a stopped schedule under the same seed produces an $N$ rule
+with identical output laws; its ignored second request is counted.
+
+**Reused source and transport facts 297.3.**
+The arithmetic premise is the genuine
+[Proposition 280.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md).
+For clarity, its finite-pattern argument is as follows. Modulo a prime $p$,
+the invertible Fibonacci matrix
+$Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ satisfies
+$Q^k=\left(\begin{smallmatrix}F_{k+1}&F_k\\F_k&F_{k-1}\end{smallmatrix}\right)$.
+It is scalar exactly when $p\mid F_k$. The inverse image of the scalar
+subgroup is $z(p)\mathbb Z$; finiteness of
+$\operatorname{PGL}_2(\mathbb F_p)$ gives $z(p)>0$, and $F_1=F_2=1$
+gives $z(p)\ge3$. Thus $p\mid F_k$ iff $z(p)\mid k$.
+For any finite collection of primes with product $D$, choose a sufficiently
+large prime index $r>\max z(p)$. Then $F_r$ is invertible modulo $D$.
+Impose $g\equiv-F_r^{-1}\pmod p$ at prescribed ones and
+$g\equiv0\pmod p$ at prescribed zeros. CRT gives a residue modulo $D$;
+the actual interval $[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]$
+contains $D$ consecutive integers for large $r$. It contains a legal $g$.
+Every finite word, including multiple zeros and positive prefixes, is
+therefore actual. Each actual positive integer $N(r,g)$ has only finitely
+many prime divisors, proving finite first absence.
+
+At a positive closed cap $e\le1$, put
+$L_a=\max(\{i:a_i>e\}\cup\{0\})$. The class-feasibility equivalence
+of [Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md)
+gives some complete normalized finite $N$ representative on $L_a$ bits
+for every original cap-feasible $N$ rule. Its necessity uses countability
+to obtain one probability-one seed event for termination at every source,
+control of the entire preselected schedule, actual finite-pattern witnesses,
+truncation and finite-simplex compactness. It does not assert preservation
+of an arbitrary starting output law or coupling. Its stopped counterpart
+uses the exact normalized criterion of
+[Theorem 109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md):
+for a probability-vector kernel
+$p_w=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$, set
+$V_i=\sum_{j>i}(-Q_{ij})_+$ and $H=\sum_i(V_i-\ell_i)_+$.
+Stopped realizability is exactly $c\ge H$ coordinatewise; normalization
+makes its scalar schedule budget automatic. Degree at most two alone is
+not that criterion.
+
+For any probability law $p$ on marks $0,\ldots,L$ and actual $n>L$,
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Lp(j)\delta_{\theta_j},\lambda_x^a\right)
+       =\max\{1-p(0),a_n\}.
+\tag{297.2}
+$$
+
+This is the exact positive-tail formula, including $a_n=e$.
+The prefix consequence used here is
+[Lemma 280.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md):
+if a score uses a prefix of length $K\le L_a$, fix higher finite replies
+to zero, project higher labels to zero and contract constant observations.
+TV contracts, and at most two variable observations remain. If $L_a<K$,
+ignore added inputs; on each added first-zero fibre use the old positive
+law, whose error is (297.2), at most $e$. These operations establish
+finite representation and grant no free actual query. Consequently a
+zero-cost score on any finite prefix applies even to inactive selected
+addresses, all multiple-zero words and closed ties.
+

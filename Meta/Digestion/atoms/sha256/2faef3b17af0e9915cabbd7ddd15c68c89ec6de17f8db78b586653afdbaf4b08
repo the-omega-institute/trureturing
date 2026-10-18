@@ -1,0 +1,21 @@
+**定义 14.3（源特定费槽与联合预算）。** 使用原 $H,G$，对每个 $\eta\in H$ 定义
+
+$$
+\alpha_\eta=\min\{\tau_e:e\in G,\ c_e\bmod p=\eta\},\qquad
+c_*=\rho_s+\rho_v,\qquad C_*=m+p+1.
+\tag{14.6}
+$$
+
+有限非空边集保证最小费由某条实际原边达到。将全部 $h$ 个不同偏移类按其最小费非降排列，记 $\eta_1,\ldots,\eta_h$ 及 $\alpha_1\le\cdots\le\alpha_h$；相同费的不同偏移类保留各自身份，任取同费内顺序。
+
+对任意整数完整记忆上界 $A\ge0$、整数事件预算 $B\ge0$ 及逐相位实数费上界 $f:\{0,\ldots,m-1\}\to\mathbb R$，联合可行意味着存在定义14.1的原完整控制器，满足 $|K_C|\le A$、$L_C(t)\le B$、$\mathcal T_C(t)\le f(t)$ 对全部原相位同时成立。置
+
+$$
+F_r=\min_{\{t:t\bmod p=r\}}f(t),\qquad
+F_{[1]}\le\cdots\le F_{[p]},\qquad
+n_0=\lceil p/h\rceil.
+\tag{14.7}
+$$
+
+这是资源上界的可行关系，不假定任意长控制器的实际费在根纤维上常值，也不要求其精确地址数等于 $A$。
+

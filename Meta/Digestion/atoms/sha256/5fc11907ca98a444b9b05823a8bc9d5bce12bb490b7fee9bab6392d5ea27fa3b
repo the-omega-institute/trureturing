@@ -1,0 +1,8 @@
+**定理 4.4（合法延拓的因果前沿）。** 设事件形成偏序，$C$ 有限且向下闭，$e\notin C$ 的全部严格前驱属于 $C$。令 $\partial C=\operatorname{Max}(C)$、$\downarrow e=\{x:x\preceq e\}$，则
+
+$$
+\partial(C\cup\{e\})=(\partial C\setminus\downarrow e)\cup\{e\}.
+$$
+
+**证明。** 向下闭性排除 $e$ 位于旧事件之前；旧极大事件中仅位于 $e$ 之前的成员失去极大性，$e$ 成为新极大事件。两个并行事件汇合为一个验证事件时，前沿数可从二降至一，历史域仍扩大。$\square$
+

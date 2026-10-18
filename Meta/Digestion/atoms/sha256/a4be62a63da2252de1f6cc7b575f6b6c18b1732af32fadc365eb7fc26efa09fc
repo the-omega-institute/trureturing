@@ -1,0 +1,22 @@
+**Definition 2.2 (Correct mass and installed budgets).** Let $\tau$
+be return time, equal to infinity on nonreturn, and let
+$N\in\mathbb N_0\cup\{\infty\}$ count every actual call. Put
+
+$$
+\begin{gathered}
+E_3=\{\tau<\infty,N\le3\},\quad
+q_3=(J_p\otimes\nu)(E_3),\quad
+L_3=(J_p\otimes\nu)(A\ne H_j,E_3),\\
+C_m=\sup\{q_3-L_3:|\mathcal K|\le m,\ q_3=1\},\qquad R_m=1-C_m.
+\end{gathered}
+\tag{2.2}
+$$
+
+An immediate halt makes each class nonempty. The requirement $q_3=1$
+is almost sure. It retains exceptional null nonreturns, excess-read
+paths, arbitrary null cycles and completed versions. It imposes no
+all-input stopping cap. On this slice $L_3$ is unconditional
+four-state classification error up to null extension, distinct from
+visible-bit Brier loss. Total paid cost is the extended expectation
+$\mathbb E N$, including every nonreturning path.
+

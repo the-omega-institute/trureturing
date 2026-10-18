@@ -1,0 +1,15 @@
+## 442. 变化秩接触路线的固定因子逃逸条件
+
+上一节只取固定的 $r$。变化秩并不能任意绕过同一个模障碍。设
+
+$$
+N_k=1+F_{r_k}g_k,\qquad r_k\ge3,\quad g_k\ge1,
+$$
+
+并假设 $N_k$ 属于同一个固定横坐标的 Musin 高阶算术族 $\mathcal C_k$，其中
+$k\to\infty$。沿用 Corollary 3.8：对每个固定正整数 $d$，存在 $k_0(d)$，使得
+
+$$
+d\mid n\qquad(n\in\mathcal C_k,\ k\ge k_0(d)).
+$$
+

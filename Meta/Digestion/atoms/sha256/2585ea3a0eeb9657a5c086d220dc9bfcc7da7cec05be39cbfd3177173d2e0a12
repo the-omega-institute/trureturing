@@ -1,0 +1,39 @@
+### 10.15. Distinct conclusions and support boundaries
+
+Theorem 10.2 concerns overlap of classical probability scores.
+Theorem 10.8 concerns competition between probability and conjugate
+phase information in the chosen pure family (10.21), for all regular
+joint measurements on independent copies.
+Theorems 10.14–10.16 concern a specified site menu in the different
+full-phase nuisance task (10.40).
+Their matrices share $D,P,G$, but their sample spaces, parameter
+constraints and allowed measurements have been specified separately.
+In particular, the absence of a common optimal site cannot be used
+to strengthen (10.25) for unrestricted measurements.
+
+The empty word is a shared statistical reference with mass
+$p_\varnothing>0$. Its inverse mass in (10.7) is neither a zero-event
+singularity nor a physical energy or gravitational source.
+All inverse-$P$ statements require full positive support. At a boundary
+with some $p_I=0$, one must specify the actual support, allowed
+two-sided tangents and reference score regularity afresh; deleting
+denominators or assigning limiting Fisher values does not extend these
+theorems. Likewise the fixed-reference identities do not assert that
+their covariance matrices remain constant away from the reference.
+
+The general tools cited in §10.14 are used with their stated hypotheses.
+The selected-relation overlap, top-chain substitutions, dual lift,
+directional budget, common-port equivalence and alternating-target
+loss are ordinary mathematical applications with the proofs above.
+They concern neither a stationary attaining producer nor the arbitrary
+finite-producer question in Open Problem 7.2. All its hypotheses and
+its unresolved status are separate from the finite calibrated models
+of this chapter.
+
+[Correlation10]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md#232-层析及奇偶应用所用的已有观察坐标
+[Symplectic10]: SYMPLECTIC_PREDICTIVE_COMPLETION.md#3513-长路径关系矩与共轭差分相位
+[KMS10]: https://arxiv.org/abs/1804.08140v1
+[Matsumoto10]: https://arxiv.org/abs/quant-ph/9711008v1
+[GM10]: https://arxiv.org/abs/quant-ph/9902063v2
+[FisherSymmetric10]: https://arxiv.org/abs/1507.06904v2
+

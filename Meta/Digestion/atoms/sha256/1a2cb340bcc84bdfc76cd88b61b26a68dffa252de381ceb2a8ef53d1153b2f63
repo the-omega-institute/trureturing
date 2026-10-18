@@ -1,0 +1,17 @@
+**定义 6.7.1（动作签名细化）。** 对分区 $\mathcal P$，定义状态 $s,t$ 等价，当且仅当：
+
+1. $s,t$ 属于同一个 $\mathcal P$ 块；
+2. 对每个动作 $a$ 和每个 $C\in\mathcal P$，有
+
+$$
+\sum_{u\in C}K_a(s,u)=\sum_{u\in C}K_a(t,u).
+$$
+
+记由此得到的细化分区为 $\operatorname{Ref}(\mathcal P)$，并递归
+
+$$
+\mathcal P_{r+1}=\operatorname{Ref}(\mathcal P_r).
+$$
+
+<a id="claim-6-7-2"></a>
+

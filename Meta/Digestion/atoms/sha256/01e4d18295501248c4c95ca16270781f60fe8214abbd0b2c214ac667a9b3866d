@@ -1,0 +1,23 @@
+**定义 23.2（对角背景子族）。** 以下全阶块公式仅限于前卷定理 18.3 的实际子族
+
+$$
+R=D=\operatorname{diag}(p_0,p_1,p_2,p_3,p_4),\qquad
+p_j\ge0,\quad\sum_jp_j=1,\qquad
+|s|^2,|t|^2\le p_2p_4.
+\tag{23.3}
+$$
+
+记 $A=p_2$、$B=p_4$、$q_{\mathrm{sp}}=p_0+p_1+p_3=1-A-B$、
+$x=|s|^2$、$y=|t|^2$。
+对 $0\le k\le m$，以 $\{1,\ldots,m\}$ 的 $k$ 元子集 $X,Y$ 为行列，
+定义 Johnson 距离块
+
+$$
+B_{m,k}(x)_{X,Y}
+=A^{m-k-\ell}B^{k-\ell}x^\ell,\qquad
+\ell=|X\setminus Y|=|Y\setminus X|.
+\tag{23.4}
+$$
+
+$m=0$ 时只有一个空子集。约定零次幂 $0^0=1$，即空乘积。
+

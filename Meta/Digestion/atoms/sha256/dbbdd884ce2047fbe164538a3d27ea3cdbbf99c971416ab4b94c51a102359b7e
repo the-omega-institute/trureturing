@@ -1,0 +1,69 @@
+**Theorem 35.1 (a two-history exclusion for installed running states).**
+Let two live cube histories of the same preparer end at the same
+installed running state. Write their exposed coordinate sets as
+$S,T$ and their numbers of exposed ones as $h,g$. Set
+
+$$
+a=|S\setminus T|,\quad b=|T\setminus S|,\quad
+U=[n]\setminus(S\cup T),\quad u=|U|.
+$$
+
+Then the following integer intersection must be empty:
+
+$$
+[0,u]\ \cap\
+[k-h-b,k-h-1]\ \cap\
+[k-g-a,k-g-1]\ \cap\ \mathbb Z.
+\tag{PCA.86}
+$$
+
+Also, if $S=T$, then necessarily $h=g$. These are necessary
+conditions for sharing, not a sufficient sharing criterion or a
+converse construction.
+
+Proof. Suppose first that an integer $t$ lies in (PCA.86).
+Fix one assignment on $U$ with exactly $t$ ones. In the first
+history, after all of $U$ has these values, the unexposed part
+$T\setminus S$ still has the nonconstant residual threshold
+
+$$
+1\le k-h-t\le b.
+$$
+
+For the second history the corresponding assertion is
+$1\le k-g-t\le a$ on $S\setminus T$. Hence after any partial
+exposure of that fixed $U$ assignment both histories still have
+zero and one completions: complete the rest of $U$ as fixed and
+vary their respective remaining private sets. This argument does
+not require their old assignments on $S\cap T$ to agree.
+
+Follow the successors from the common state using that assignment
+on $U$. Every cube-constant word has the same reply in both
+histories. A selected word in $S\cup T$ would repeat a coordinate
+already exposed in at least one of the two still-live histories.
+Theorem 34.3 excludes that invocation. The same theorem excludes
+any selected child, any other nonselected word except $RLR$,
+a second $RLR$, or a repeat within $U$. Consequently the common
+continuation can use at most the $u$ fresh coordinates of $U$
+and one $RLR$. Both histories remain live throughout these
+possibilities, so a latch is impossible. After those finitely many
+possibilities are exhausted, no permitted next invocation remains.
+This contradicts correctness and sourcewise termination. This is
+the use of live-prefix saturation in the state-merger argument;
+mere equality of residual names is not a premise.
+
+Now suppose $S=T$ but, say, $h>g$. Apply Theorem 34.3 to the
+first history, taking its positive saturated completion of total
+weight $k$. Give the second history the same values on every
+coordinate outside $S$. Both actual cube sources then follow the
+same suffix from the alleged common state. Indeed, until its last
+fresh selected query the first run is live, so it queries only
+previously unread coordinates and possibly $RLR$; these replies
+agree on the two sources. On that saturated run all coordinates
+are read exactly once, and its unique $RLR$ precedes the last
+one. It therefore latches immediately after that last selected
+invocation, with no further source distinction. The second source
+reaches the same latch, but its total weight is
+$k-h+g<k$. Their required entries differ, a contradiction.
+Interchanging the histories covers $g>h$. $\square$
+

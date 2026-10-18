@@ -1,0 +1,20 @@
+**Lemma 4.4 (Nonempty compact complement and positive gap).** The set
+$K$ is nonempty and compact, $m>0$, and its defining maximum exists
+with $d>0$.
+
+Proof. Each factor in the definition of $m$ is positive: $\eta>0$,
+$T>\tau>0$, $f(x_*)>0$, and $v(x_*)>0$. Thus $m>0$.
+The continuous function $f-s$ is positive at zero and negative at
+$x_*$. It has a zero at some point strictly between them. There
+$W=2(f-s)h=0\ge-m$, proving $K\ne\varnothing$.
+
+The function $W$ is continuous on $[0,1]$, including both scalar
+endpoints, so $K$ is closed in a compact interval. Lemma 4.2 shows that
+each of $0,x_*,1$ has $W\le-2m<-m$. Hence $K$ avoids the entire
+active set of Theorem 3.5. Continuity makes $F_0$ attain its maximum
+on $K$. If that maximum were $T$, a point of $K$ would be active,
+contradicting the preceding sentence. Since $F_0\le T$, the maximum
+is strictly smaller than $T$, proving $d>0$. This proves the global
+gap needed away from strict descent; contact signs alone would not do
+so. $\square$
+

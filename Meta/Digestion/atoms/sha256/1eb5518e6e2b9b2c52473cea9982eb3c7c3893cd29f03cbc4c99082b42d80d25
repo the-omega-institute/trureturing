@@ -1,0 +1,10 @@
+### 463.6 全部剩余质量、矩与对数积分
+
+定义完整剩余预算和新增层预算
+
+$$
+r_n=\int R_n,\quad m_n=\int vR_n,\qquad
+z_n=\int D_n,\quad t_n=\int vD_n.
+\tag{RVF.24}
+$$
+

@@ -1,0 +1,71 @@
+**Proposition 29.2 (exact cylinder decision for the remaining nested bit).**
+Let $s$ be a reached position of a depth-$d$ pattern $t$, with
+$m=d-|s|\ge1$, and suppose $sL$ is reached throughout $\mathcal C(t)$.
+On this cylinder consider
+
+$$
+e_s(y)=[y|_s=\rho(y|_{sL})].
+\tag{ARH.29.3}
+$$
+
+If the subpattern $t_s$ contains a concrete leaf, $e_s$ has an effective
+finite-prefix bound. If it contains no concrete leaf, $e_s$ has finite
+positive and negative witnesses agreeing to every requested finite
+depth in the whole cylinder. Both alternatives are decidable.
+
+Proof. Lemma 29.1 identifies the positive values of $z=y|_s$ exactly as
+$T_k$, $k\ge2$, that fill $t_s$. The subpattern records every relative
+level below $m$ and has variables only at level $m$.
+
+For $k\ge2m+2$, every relative address of length less than $m$ in $T_k$
+is reached and has reply branch. Indeed its weight is at most
+$2(m-1)$, and the guarded formula (ARH.4.3) gives reach and residual index
+at least two. If $t_s$ contains a concrete leaf, no such $T_k$ can fill
+it. Compute the finite set
+
+$$
+A_s=\{T_k:2\le k<2m+2,\ T_k\in\mathcal C(t_s)\}.
+\tag{ARH.29.4}
+$$
+
+Membership in this set is exactly the bit in question on the cylinder.
+Matching all replies of a given finite tree $g$ through its height
+forces the whole tree, by its concrete leaves and pairing. Thus, if
+$A_s\ne\varnothing$, the effective choice
+
+$$
+h_s=|s|+1+\max_{g\in A_s}\operatorname{ht}(g)
+\tag{ARH.29.5}
+$$
+
+makes $y\equiv_{h_s}y'$ preserve membership in $A_s$. If $A_s$ is empty
+the bit is constantly false and take $h_s=0$. This proves the first
+alternative without bounding other subtrees of $y$.
+
+If $t_s$ has no concrete leaf, it is the complete pairing pattern to
+depth $m$, with distinct free frontier variables. Fix any requested
+inclusive depth $b$ and set
+
+$$
+K=2(d+b+3),\qquad z=T_K.
+\tag{ARH.29.6}
+$$
+
+The tree $z$ fills $t_s$. Its rightmost leaf, at $R^{K/2}$, is $\alpha$,
+by (ARH.4.3); this depth is greater than both $m$ and $b$. Change only
+that leaf to $\beta$, giving a different finite tree $z'$. It still
+fills $t_s$, and $z\equiv_{b+1}z'$. Its whole left child is unchanged,
+so
+
+$$
+\rho(z'|_L)=\rho(z|_L)=z\ne z'.
+\tag{ARH.29.7}
+$$
+
+Consequently $z$ has positive status and $z'$ negative status. Fill the
+rest of $t$ identically by $\alpha$ at the frontier variables outside
+$s$, and insert $z,z'$ respectively at $s$. The same context argument
+as in Lemma 28.1 gives two finite cylinder trees with agreement through
+depth $b$ and opposite bits. Every $b$ has such a construction; it uses
+finite trees, not the infinite all-branch limit. $\square$
+

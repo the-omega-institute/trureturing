@@ -1,0 +1,174 @@
+**Example 346.1 (One shared fourteen-schedule law and a full-$N$ lower).**
+Take the prefix
+
+$$
+(a_1,\ldots,a_7)=\frac1{64}(43,34,34,29,27,25,22)
+\tag{346.1}
+$$
+
+and any entire positive ordered vanishing tail with $a_8\le15/64$.
+Both original hard-two classes have attained minimum error $15/64$.
+Every positive closed cap is feasible in either class exactly when
+it is at least $15/64$.
+
+Here is the whole upper allocation. A row displays integer numerators
+over $64$; each of its three terminal vectors sums to its mass $m$.
+Write $e_j$ for a label unit vector. All omitted coordinates are zero.
+
+| Pair | $m$ | First-zero vector | Middle vector | Exhaustion vector |
+| --- | ---: | --- | --- | --- |
+| $(1,2)$ | 17 | $17e_1$ | $17e_2$ | $7e_0+5e_3+5e_4$ |
+| $(1,3)$ | 7 | $7e_1$ | $7e_3$ | $7e_0$ |
+| $(1,4)$ | 2 | $2e_1$ | $2e_4$ | $2e_0$ |
+| $(1,5)$ | 2 | $2e_1$ | $2e_5$ | $2e_0$ |
+| $(2,3)$ | 7 | $5e_0+2e_2$ | $7e_3$ | $7e_0$ |
+| $(2,4)$ | 2 | $2e_0$ | $2e_4$ | $2e_0$ |
+| $(2,5)$ | 2 | $2e_0$ | $2e_5$ | $2e_0$ |
+| $(3,4)$ | 5 | $5e_0$ | $5e_4$ | $4e_0+e_7$ |
+| $(3,5)$ | 4 | $4e_0$ | $4e_5$ | $4e_0$ |
+| $(3,6)$ | 2 | $2e_0$ | $2e_6$ | $2e_0$ |
+| $(4,5)$ | 4 | $4e_0$ | $4e_5$ | $4e_0$ |
+| $(4,6)$ | 2 | $2e_0$ | $2e_6$ | $2e_0$ |
+| $(5,6)$ | 6 | $6e_0$ | $6e_6$ | $2e_0+4e_7$ |
+| $(6,7)$ | 2 | $2e_0$ | $2e_7$ | $2e_0$ |
+
+Proof of the upper bound. The masses sum to $64$, so this is
+one normalized complete allocation. On a first-zero-$n$ word the
+integer correct masses are respectively
+$(28,19,19,14,12,10,7)$, independent of its suffix.
+For $n=1$ this is $17+7+2+2$ from the four first cells;
+for $n=2$ it is $17+2$ from $(1,2)$ and the first cell of
+$(2,3)$; for $n=3$ it is $7+7+5$ from $(1,3),(2,3),(1,2)$;
+for $n=4$ it is $2+2+5+5$ from $(1,4),(2,4),(3,4),(1,2)$;
+for $n=5$ it is $2+2+4+4$ from its incoming middle cells;
+for $n=6$ it is $2+2+6$; for $n=7$ it is $1+4+2$.
+Earlier bits force the indicated exhaustion cells, and the first
+zero forces the indicated middle or first cells. No later cell can
+emit the correct label. These counts equal $64a_n-15$.
+
+For an explicit all-suffix bound, let $W_n=64(1-p_w(0)-p_w(n))$.
+With $F,G,E$ the integer vectors in the table, its exact expression is
+
+$$
+W_n(w)=\sum_{(i,j)}\sum_{z\notin\{0,n\}}
+ \bigl((1-w_i)F_{ij}(z)+w_i(1-w_j)G_{ij}(z)
+                       +w_iw_j E_{ij}(z)\bigr).
+\tag{346.2}
+$$
+
+Fix the first $n-1$ bits to one and bit $n$ to zero. Substitution
+of every suffix in lexicographic order gives the following complete
+lists, of lengths $64,32,16,8,4,2,1$, respectively. Thus these
+are all $127$ zero-word evaluations, not only sole-zero words.
+
+| $n$ | Values of $W_n$ in suffix order |
+| --- | --- |
+| 1 | $2,2,4,2,8,8,8,6,8,8,8,6,10,10,8,6,13,13,13,11,15,15,13,11,15,15,13,11,13,13,9,7,11,11,13,11,15,15,15,13,15,15,15,13,15,15,13,11,15,15,15,13,15,15,13,11,15,15,13,11,11,11,7,5$ |
+| 2 | $11,11,13,11,15,15,15,13,15,15,15,13,15,15,13,11,15,15,15,13,15,15,13,11,15,15,13,11,11,11,7,5$ |
+| 3 | $13,13,15,13,15,15,15,13,15,15,15,13,13,13,11,9$ |
+| 4 | $15,15,15,13,13,13,11,9$ |
+| 5 | $15,15,13,11$ |
+| 6 | $11,11$ |
+| 7 | $10$ |
+
+Their maxima are therefore
+
+$$
+\max W_n=(15,15,15,15,15,11,10).
+\tag{346.3}
+$$
+
+Hence the correct deficit is exactly $15/64$, the union deficit is
+at most $15/64$, and the base deficit is
+$(W_n-15)/64\le0$. This proves all independent rows on every
+suffix. At $1^7$ the law is
+$(49e_0+5e_3+5e_4+5e_7)/64$.
+Thus its positive-base deficit is $15/64$. Its stopped coefficients
+also have $c=H=(34,28,2,0,0,0,0,0)/64$ in 109.1.
+The one-seed execution and counted $N$ completion are those of 345.1.
+At an actual first absence $n>7$, exact error is
+$\max(15/64,a_n)=15/64$, including the tail tie.
+
+For the full-$N$ lower, the following nonzero score weights are
+used; all unlisted row weights in the $382$-row system are zero.
+
+| Type | Word | Weight |
+| --- | --- | ---: |
+| $C$ | 0010111 | 1 |
+| $P$ | 0100110 | 1 |
+| $P$ | 0101001 | 1 |
+| $P$ | 0101100 | 1 |
+| $P$ | 0110010 | 1 |
+| $P$ | 0110100 | 1 |
+| $P$ | 0111000 | 1 |
+| $P$ | 1000100 | 1 |
+| $P$ | 1000101 | 1 |
+| $P$ | 1001000 | 1 |
+| $P$ | 1001010 | 1 |
+| $P$ | 1010000 | 1 |
+| $P$ | 1010001 | 1 |
+| $P$ | 1100010 | 1 |
+| $C$ | 1101100 | 2 |
+| $C$ | 1101110 | 2 |
+| $C$ | 1110000 | 1 |
+| $C$ | 1110100 | 4 |
+| $C$ | 1111000 | 5 |
+| $C$ | 1111100 | 5 |
+| $C$ | 1111110 | 5 |
+| $T$ | 1111111 | 4 |
+
+Its quotient is $\beta=(1,0,4,5,5,5,5)$, $K=42$, $C_y=17$.
+The complete $N$ maxima from (344.3) are listed here; the maximum row
+sum is $18$, and each maximum ranges over every label $0,\ldots,7$.
+
+| Pair | $00$ | $01$ | $10$ | $11$ |
+| --- | ---: | ---: | ---: | ---: |
+| 12 | 1 | 6 | 6 | 5 |
+| 13 | 3 | 4 | 5 | 6 |
+| 14 | 4 | 3 | 5 | 6 |
+| 15 | 3 | 4 | 5 | 6 |
+| 16 | 4 | 3 | 5 | 6 |
+| 17 | 5 | 2 | 5 | 6 |
+| 23 | 4 | 2 | 5 | 7 |
+| 24 | 4 | 2 | 5 | 7 |
+| 25 | 4 | 2 | 5 | 7 |
+| 26 | 5 | 1 | 5 | 7 |
+| 27 | 4 | 2 | 6 | 5 |
+| 34 | 4 | 4 | 5 | 5 |
+| 35 | 4 | 4 | 5 | 5 |
+| 36 | 5 | 3 | 5 | 5 |
+| 37 | 6 | 2 | 5 | 5 |
+| 45 | 4 | 4 | 5 | 5 |
+| 46 | 5 | 3 | 5 | 5 |
+| 47 | 6 | 2 | 5 | 5 |
+| 56 | 5 | 3 | 5 | 5 |
+| 57 | 6 | 2 | 5 | 5 |
+| 67 | 6 | 3 | 5 | 4 |
+
+The same cell-mass argument of 345.1, including constants,
+singletons, repeats and reversed schedules, yields
+
+$$
+b_1+4b_3+5(b_4+b_5+b_6+b_7)\le1+42e.
+\tag{346.4}
+$$
+
+For (346.1) the left side is $694/64$.
+Thus every normalized finite feasible law has $e\ge15/64$.
+To exclude every original competitor at a smaller positive cap,
+use the necessity proof of 110.2 retaining the seven selected
+coordinates and fixing higher replies to zero on finite actual
+witnesses, with all higher output labels projected to zero.
+Its common-seed truncations converge in the seven-bit catalog to
+a feasible seven-bit allocation with these same seven demands.
+The finite positive target is $\delta_{\theta_0}$ after projection,
+even if the actual tail amplitude exceeds the smaller cap. No tail assumption
+is required for this necessary seven-prefix restriction.
+Consequently (346.4) holds at that proposed cap, a contradiction.
+An exact zero-error competitor would also be feasible at every
+smaller positive cap and is excluded. The upper law then proves
+both attained original minima and every stated closed-cap equivalence.
+This example is a completely displayed member of the joint
+classification, without additional novelty claimed for its isolated
+cut or individual allocation. $\square$
+

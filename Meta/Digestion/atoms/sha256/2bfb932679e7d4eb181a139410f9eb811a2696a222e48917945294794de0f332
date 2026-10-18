@@ -1,0 +1,29 @@
+**Lemma 383.1 (repo-derived).** Let a,b,v>1 and p>=m>1. Suppose
+
+    (m-1)*(v-1)>=(a+b)^2
+
+and an owner with axes p,b and transverse pair v,a is genuine. Then
+v>b.
+
+Indeed p>=m and v-1>0 give
+
+    (p-1)*(v-1)>=(a+b)^2.
+
+Its strict L test gives (v+a)^2>(p-1)*(b-1). Multiply by v-1>0:
+
+    (v+a)^2*(v-1) > (a+b)^2*(b-1).                   (383.1)
+
+The right side is f(b) for f(x)=(x+a)^2*(x-1). On x>1,
+
+    f'(x)=(x+a)*(3*x+a-2)>0.
+
+Thus (383.1) is f(v)>f(b), forcing v>b. The proof does not require
+numerical inequality between a and b, or between any other distinct
+labels. In particular v=b is excluded by the strict genuine test.
+No face partner, circle degree, gap, or partial budget is used in this
+scalar lemma.
+
+Apply it with p in {m,z,u}. An axial-P residual owner of the form
+(P,V,C,D,V,C) requires v>d; an owner of the form (P,V,D,C,V,D)
+requires v>c. Consequently both families are absent under (382.2).
+

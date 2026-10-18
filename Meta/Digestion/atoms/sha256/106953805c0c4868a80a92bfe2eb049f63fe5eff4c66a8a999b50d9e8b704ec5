@@ -1,0 +1,47 @@
+**Theorem 51.3 (physical moving-vector and full-input limits).** For every fixed interior $Y\ne o$,
+
+$$
+w_s(Y)\longrightarrow\frac{j_0A_p}{C_*}G(o,Y),\qquad
+\frac{v_s(Y)}{s^3}\longrightarrow\frac{A_p}{C_*}G(o,Y)^2.
+\tag{51.6}
+$$
+
+These are pointwise limits, with global domination (51.5); they concern the auxiliary early eigenvector only.
+
+Proof. By (35.5), $A_s\to A_p$ and $x_s\to Vp$ in $L^1$. For any bounded continuous test $g$ on the ambient physical $\mathbb R^4$, replace $x_s$ by $Vp$ in $\int g(Y_s\xi)x_s(\xi)d\xi$ with error at most $\|g\|_\infty\|x_s-Vp\|_1$. Dominated convergence on the remaining fixed input gives $A_pg(o)$. Thus $\nu_s\rightharpoonup A_p\delta_o$, with total masses converging. Exact heat scaling and the early eigen-equation give
+
+$$
+\frac{F_s(Y_s^{-1}Y)}{s^5}=\int_{s^2}^1K(t;o,Y)dt,\qquad
+w_s(Y)=\frac{j_0}{\ell_s}\int_{\mathcal C}G(A,Y)d\nu_s(A).
+\tag{51.7}
+$$
+
+The first identity includes the field-only $j_0^{-1}$ in the microscopic definition of $F_s$; the return kernel in the second has the factor $j_0s^5$. For fixed $Y\ne o$, the first integral tends to $G(o,Y)$ and is at most $Cr(Y)^{-5}$.
+
+Choose $0<\epsilon<r(Y)/2$ sufficiently small that the ball about $o$ is interior. On $r(A)<\epsilon$, off-diagonal continuity gives
+
+$$
+\left|\int_{r(A)<\epsilon}[G(A,Y)-G(o,Y)]d\nu_s(A)\right|
+\le A_s\sup_{r(A)<\epsilon}|G(A,Y)-G(o,Y)|.
+\tag{51.8}
+$$
+
+The mass of its complement is $O_\epsilon(s^3)$ by (51.5). More strongly its whole kernel contribution is $O_{\epsilon,Y}(s^3)$, since
+
+$$
+\int_{r(A)\ge\epsilon}G(A,Y)d\nu_s(A)
+\le Cs^3\int_{r(A)\ge\epsilon}r(A)^{-10}
+ d_E(\Phi^{-1}A,\Phi^{-1}Y)^{-5}dA<\infty\cdot s^3.
+\tag{51.9}
+$$
+
+For $r(A)>2r(Y)$ the triangle inequality gives $d_E(\Phi^{-1}A,\Phi^{-1}Y)\ge r(A)/2$. The integral is finite near $A=Y$ because the degree $-5$ singularity is locally integrable in homogeneous dimension seven; away from that point there is no singularity, and at infinity the integrand is bounded by $Cr(A)^{-15}$. First let $s\downarrow0$ and then $\epsilon\downarrow0$ in (51.7)–(51.9), using $\ell_s\to C_*$. This proves the first limit. Finally the exact identity
+
+$$
+\frac{v_s(Y)}{s^3}=\frac1{j_0}
+ \frac{F_s(Y_s^{-1}Y)}{s^5}w_s(Y)
+\tag{51.10}
+$$
+
+proves the second. The faces have raw measure zero, while all dominating bounds include their killed realization and every real phase. $\square$
+

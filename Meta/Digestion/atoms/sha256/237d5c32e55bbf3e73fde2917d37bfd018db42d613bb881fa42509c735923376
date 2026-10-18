@@ -1,0 +1,35 @@
+**Proposition 7.1 (a genuinely joint whole-block potential).** Use the
+five actual motif trees $u_0,\ldots,u_4$ of [SRP, Definition 3.1], credited
+to [NCM, Proposition 6.1]. Put
+
+$$
+T=\{\langle u_s,u_t\rangle:0\le s,t<5\}\subset S_4,
+\qquad w(\langle u_s,u_t\rangle)=1+\mathbf1_{s=t},
+$$
+
+and set $w=0$ elsewhere. Then $|T|=25$, $w(T)=30$, and
+$H(T)=\{LLL,RLL\}$. The joint hard-target squared cell mass is $78$,
+whereas either single hard target has squared cell mass $252$. Hence
+every admissible $B\subseteq T^n$ whose positive coordinate projections
+are all exactly $T$ satisfies $\Omega_w(B)\le78^{n/2}$.
+
+**Proof.** On the motif, only $LL$ has no own witness; the other six
+targets use respectively a constant, $L,R,L,RL,R$ for
+$\varepsilon,L,R,LR,RL,RR$, as in [NCM, (NCM.27)--(NCM.30)].
+Every experiment on a paired tree is constant at its root or enters just
+one motif module. Since $T$ is the full paired support, an experiment in
+the other module cannot determine a nonconstant target of this module.
+Thus precisely $LLL,RLL$ are hard.
+Every target has at most four values by those same motif tables, so
+$T$ is range-feasible.
+
+The motif $LL$ partition has index cells
+$\{0,4\},\{1\},\{2\},\{3\}$. Their paired joint cell masses consist
+of $6,2,2,2$ on the diagonal, six off-diagonal masses $2$ and six masses
+$1$. Their squared sum is $36+12+24+6=78$. For one target the cell
+masses are $12,6,6,6$, whose squared sum is $252$. Apply Theorem 2.2.
+The potential does not factor across the two actual modules: its
+$\{0,1\}\times\{0,1\}$ minor is
+$\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$, with
+determinant $3$. It is owned once as a function on $S_4$. $\square$
+

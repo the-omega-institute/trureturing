@@ -1,0 +1,49 @@
+### 454.1 同一实际对象与两个配对
+
+保持 §§424、453 的字面定义
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,\qquad
+w(t)=\frac{1+\log t}{t^2\log^2t},
+\]
+\[
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)dt,\qquad
+J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),\qquad
+\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m).
+\tag{BC.1}
+\]
+这里 \(\eta\) 固定，\(x\ge e\) 为同一实数源；全部整数索引均为正。令
+\[
+\ell=\log x,\quad L=\log2,\quad
+\mathcal P_x=\{p\text{ 素数}:2x<p\le4x\},\quad Q_x^\mathrm{p}=\#\mathcal P_x,
+\]
+\[
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p),\qquad
+\Pi_x=-\mathcal A_x.
+\tag{BC.2}
+\]
+上端闭、下端严格，面板中的每个素数均为奇数且 \(\mu(p)=-1\)。\(Q_x^\mathrm{p}\) 是素数数目，不是此前的核积分范数 \(Q_x\)。
+
+对 \(n\ge0\)，定义面板的真实奇数前缀及完整 Möbius 前缀分量
+\[
+\mathcal U_x(n)=\sum_{\substack{p\in\mathcal P_x\\p\le n}}\mu(p)
+=-\#\{p\in\mathcal P_x:p\le n\},
+\qquad
+\mathcal V_x(n)=\mathcal U_x(n)-\mathcal U_x(\lfloor n/2\rfloor).
+\tag{BC.3}
+\]
+两列在零处为零；\(\mathcal U_x(n)=0\) 当 \(n\le2x\)，而
+\(\mathcal U_x(n)=-Q_x^\mathrm{p}\) 当 \(n\ge4x\)。
+实际 \(\mu(2p)=-\mu(p)=1\) 给
+\[
+\mathcal V_x(n)=-\#\{p\in\mathcal P_x:p\le n<2p\}.
+\tag{BC.4}
+\]
+所以 \(\mathcal V_x\) 支撑于 \(n<8x\)。有限面板及完整整数纤维求和直接给
+\[
+\sum_{n\ge1}\mathcal V_x(n)J_x^\eta(n)
+=-\sum_{p\in\mathcal P_x}\sum_{n=p}^{2p-1}J_x^\eta(n)
+=-\mathcal A_x=\Pi_x.
+\tag{BC.5}
+\]
+这正是 §453 的实际面板，不是另选符号或测试输入。
+

@@ -1,0 +1,32 @@
+**Lemma 11.2 (L1: the inner singleton-support obstruction).**
+A state cannot host both $\mathsf a=(1,3)$ and
+$\mathsf c=(3,1)$ if each of $\mathsf a,\mathsf M=(2,2)$ and
+$\mathsf d=(3,2)$ has one exposed support.
+
+**Proof.**
+The adjacent singleton-support cells $\mathsf a,\mathsf M$ on
+depth four have the same support $S$, of size four. Indeed, take an
+actual history at their common parent $\mathsf P=(1,2)$; its zero
+and one children are live and have equal supports, and the singleton
+hypotheses identify those supports with the two unique ones.
+
+Suppose $q$ hosts actual $\mathsf a,\mathsf c$ histories with
+supports $S,T$. The supports both have size four. Equal-support
+unequal-hit exclusion gives $T\ne S$. Put $x=i(q)$. Freshness at
+both occurrences gives $x\notin S\cup T$. The actual zero child of
+the $\mathsf c$ occurrence is a live $\mathsf d$ occurrence with
+support $T\cup\{x\}$. Independently take an actual history at
+$\mathsf M$. Its live one child is also at $\mathsf d$, and its
+support contains $S$.
+
+Let $D_*$ be the unique size-five support at $\mathsf d$. These two
+actual children imply
+$S\subseteq D_*$ and $D_*=T\cup\{x\}$.
+In particular $x\in D_*\setminus S$. Since $|S|=4$ and $|D_*|=5$,
+it follows that $D_*=S\cup\{x\}$. But $x\notin T$ and $|T|=4$,
+so $T=D_*\setminus\{x\}=S$, a contradiction.
+
+The two $\mathsf d$ children may be realized on different completing
+inputs. Both are live children at their installed fixed successors;
+no certified successor or common completion is required. $\square$
+

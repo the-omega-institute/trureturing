@@ -1,0 +1,17 @@
+**Proposition 2.3 (an executable recut can refine memory).** Let
+$X=\{x,y,u,v\}$, with constant initial observation and no informative ordinary
+actions. Add an executable probe $e$ taking $x$ to $u$ and $y$ to $v$, with
+equal labels, and a read probe $b$ returning zero at $u$ and one at $v$.
+The action-only stable core merges $x,y$, whereas the enlarged core separates
+them.
+
+**Proof.** Ordinary continuations produce equal observations from $x,y$.
+The allowed word $eb$ produces different labels. Any response-preserving
+invariant equivalence merging $x,y$ would have to merge $u,v$ after $e$ and
+then preserve the unequal $b$ labels, a contradiction. $\square$
+
+A pure relabeling is excluded from (2.1). If it does not satisfy (1.2) for
+$R_\infty$, that quotient does not support the proposed atlas. Refining the
+relation for representation compatibility is an additional constraint, not
+evidence that a new physical experiment distinguishes the original pair.
+

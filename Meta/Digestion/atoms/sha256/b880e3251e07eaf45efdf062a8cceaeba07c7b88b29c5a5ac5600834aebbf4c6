@@ -1,0 +1,17 @@
+**Definition 9.1 (the fixed INITIAL-Stop client).** Set $H_0=h=K=1$,
+$u=\beta$, with actual finite preparation $\xi$ and prior
+$D=\mathcal T_1=\{\alpha,\beta\}$. The original finite client table's
+next instruction is Stop with the original proposal
+$\tau=q_1(\beta)=(0,B,1)$. Its actual finite output material, initial
+configuration and table are written once by CAP Definitions 2.4 and 8.1.
+Acquire the initial beta by the original stationary producer and park
+this client at its initial table entry as in §4. The original seed
+acquisition's own Stop returns to the surrounding dispatcher; it is not
+the global Stop of this parked client.
+
+Install the fixed $L,G$ and owner/role assignment above. Its constants
+contain neither a future $J$ nor a future list length. History requests,
+auxiliary source frames and gate choices are actual runtime inputs.
+The original client has no history-opcode knowledge and receives no
+future-capacity advice.
+

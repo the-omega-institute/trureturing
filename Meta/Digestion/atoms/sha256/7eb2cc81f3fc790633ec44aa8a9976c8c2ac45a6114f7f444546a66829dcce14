@@ -1,0 +1,26 @@
+**Theorem 5.3 (Quantitative improvement and its distinct structural limit).**
+For the unchanged original problem,
+
+$$
+\frac{129931}{250000}\le\varepsilon_1\le\lambda_{\rm mix},\qquad
+\lambda_Q-\lambda_{\rm mix}>\frac7{12500000}.
+\tag{5.9}
+$$
+
+The lower is the credited all-complex QJM bound. Neither the decoder
+port nor the twenty-seven-flag port is a globally optimal port.
+The necessary splitting-event relation (4.7)–(4.12) is independent
+of the small endpoint improvement.
+
+Proof. QJM Theorem 2.3 supplies the necessary lower for every
+original complex competitor, while Theorem 5.2 supplies a legal
+attaining sufficient channel. Subtracting the strict upper $u_m$
+from the credited strict lower $\ell$ for $\lambda_Q$ gives
+$\ell-u_m=7/12500000$, proving the improvement. Both constructed
+channels are stationary and have only the keep event $N$ active.
+Theorem 4.3 therefore excludes their global optimality. The mass
+and active-event theorems use the comparison point and full TP,
+not the mixing coefficient or the root isolation of either improved
+port. They do not assert which splitting pair, signs, atom support
+or globally positive certificate realizes the true optimum. $\square$
+

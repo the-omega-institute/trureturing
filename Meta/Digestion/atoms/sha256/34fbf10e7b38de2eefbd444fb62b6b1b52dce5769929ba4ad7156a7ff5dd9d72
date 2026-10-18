@@ -1,0 +1,15 @@
+**Definition 2.2 (the reused attaining traversal).** Start a pending list at the $k$ known hole roots. Query a pending root; at a reported branch insert its ordered children, and at a reported leaf close that pending item. Reconstruct the $U_i$ from these actual reports and fill the retained $C$.
+
+The mechanism is the prefix-translated `acquisitionStep`, `acquisitionTrace` and `restore` of [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean). Its `acquisition_foundation` supplies the actual root traversal; [Sparse Literal History Transport](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md), Proposition 53.2, already states its full-tree consumer. The exact actual-node fee for the supplied bounded pure observer is `ActualPureAcquisitionCompiler.pure_node_fee`; it is an attainment statement, not an optimum over Assumption 1.3.
+
+For this policy $A_{\rm tr}$,
+
+$$
+d_{A_{\rm tr}}(T)=n_{A_{\rm tr}}(T)=2M_C(T)-k.
+\tag{NDR.5}
+$$
+
+Each finite $U_i$ is completely traversed, with no absent request and no repetition. Its $m(U_i)$ leaves and $m(U_i)-1$ branches give $2m(U_i)-1$ nodes. Different hole cones are disjoint, so summing gives (NDR.5). The full-binary node identity and traversal are also supplied by [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §44.9. They require no beforehand knowledge of $m(U_i)$.
+
+The unknown part in the comparison below is whether another single source-total policy can uniformly discover determining evidence with a smaller multiplier. Equations (NDR.4) and (NDR.5) separately give a certificate and a traversal; neither is that discovery lower bound.
+

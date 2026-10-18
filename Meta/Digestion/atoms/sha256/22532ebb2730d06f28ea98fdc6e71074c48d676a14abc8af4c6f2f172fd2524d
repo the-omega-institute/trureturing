@@ -1,0 +1,90 @@
+**Theorem 386.2 (Necessary stock at every affine mass).** Every complete stopped allocation satisfying (384.2) at $L=8$, arbitrary $b_j\ge0$, $e\ge0$ and finite $M\ge0$ obeys
+
+$$
+4b_2+26b_3+34b_4+28b_5+34b_6+28b_7+54b_8
+\le4+324e+20g_8(p).
+\tag{386.3}
+$$
+
+In particular, at $b=b^*$ and $e\le c$, every such allocation has $g_8(p)\ge465/15808$. This stock is part of the same positive-word nonbase mass, which is at most $e$; the stock lower bound is not asserted sharp or sufficient for feasibility.
+
+*Proof.* Use the nonnegative full score $Y$ whose only nonzero rows are the following $29$ entries. Row types and rewards are those of XXIII 368.4; every unlisted row retains weight zero.
+
+$$
+\begin{array}{c|c|r@{\qquad}c|c|r}
+P&00110100&2&P&00111000&2\\
+P&01001110&3&P&01010100&7\\
+P&01011000&2&P&01011010&10\\
+P&01100100&2&P&01100110&10\\
+P&01101000&7&P&01110010&1\\
+C&10000010&4&P&10001100&8\\
+P&10001110&3&P&10010010&6\\
+P&10010100&5&P&10100010&6\\
+P&10101000&5&P&10110010&3\\
+C&11000010&26&P&11000110&4\\
+P&11001010&4&C&11100000&34\\
+C&11110000&28&P&11110000&6\\
+C&11111000&34&C&11111100&28\\
+P&11111100&6&C&11111110&54\\
+T&11111111&14&&&
+\end{array}
+\tag{386.4}
+$$
+
+Their totals are $\beta=(0,4,26,34,28,34,28,54)$, $K=324$, $C_0=116$ and $W_Y=120$. For each stopped cell let
+
+$$
+H_{s,d}(z)=\sum_{w:\,c_s(w)=d}f_Y(w,z)
+ -20\mathbf1_{\{8\notin s,\ d=+,\ z=8\}}.
+\tag{386.5}
+$$
+
+The following table gives $\max_{0\le z\le8}H_{s,d}(z)$ in every cell. The indexed rows enumerate all $37$ schedules; cell order is the empty cell, singleton $0,1$, or pair $0,10,11$.
+
+$$
+\begin{array}{c|c|c}
+s&\text{charged cell maxima}&\text{sum}\\ \hline
+\varnothing&(116)&116\\
+(1)&(46,70)&116\\
+(2)&(40,76)&116\\
+(i),\ 3\le i\le7&(52,64)&116\\
+(8)&(102,14)&116\\
+(1,2)&(46,40,34)&120\\
+(1,j),\ 3\le j\le7&(46,34,40)&120\\
+(1,8)&(46,56,14)&116\\
+(2,j),\ 3\le j\le7&(40,34,46)&120\\
+(2,8)&(40,62,14)&116\\
+(i,j),\ 3\le i<j\le7&(52,34,34)&120\\
+(i,8),\ 3\le i\le7&(52,54,14)&120
+\end{array}
+\tag{386.6}
+$$
+
+These are finite integer identities from (386.4)–(386.5): a $P$ entry contributes its weight to labels $0,n(w)$ in its visited cell, a $C$ entry only to $n(w)$, and $T$ only to label $0$ in the positive cell; then the displayed charge is subtracted. Maximizing includes every one of the nine labels, including labels absent from the queried schedule. For example, in the empty cell the uncharged totals at labels $0,\ldots,8$ are $(116,46,40,34,34,34,34,34,54)$; its charged maximum is $116$.
+
+Each cell's mass is its owning $m_s$, so (386.6) gives, for this same allocation,
+
+$$
+Y\cdot z(p)-20g_8(p)
+=\sum_{s,d,z}H_{s,d}(z)X_{s,d}(z)\le120M.
+$$
+
+Pairing its same literal demands with $Y\ge0$ gives
+
+$$
+Y\cdot z(p)\ge116+\beta\cdot b-324e+120(M-1)
+=120M-4+\beta\cdot b-324e.
+$$
+
+Cancellation proves (386.3), including $M=0$ with all signed floors retained. At $b^*$, $\beta\cdot b^*=1327/16$, so
+
+$$
+324e+20g_8(p)\ge\frac{1263}{16},\qquad
+g_8(p)\ge\frac{1263/16-324c}{20}=\frac{465}{15808}
+\quad(e\le c).
+$$
+
+Finally $p_{1^8}(0)\ge M-e$ and total word mass $M$ give $\sum_{j=1}^8p_{1^8}(j)\le e$, containing the very stock in (386.2).
+
+This is a label-specific heterogeneous constraint. The plateau theorem [XIII 224.1–224.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIII.md) already forces total numerical exhaustion reserve, but does not force a particular last label to be guessed. Indeed for its $k\ge4$ and $s=3/(k+1)$, put mass $s$ uniformly on triples $\{i,k,\infty\}$ with $i<k$ and mass $1-s$ uniformly on triples among $1,\ldots,k-1$. Every old inclusion marginal is $[s+3(1-s)]/(k-1)=s$, and the $k,\infty$ marginals are $s$. Its inherited triple rule always queries $k$ when it outputs $k$. Thus that plateau reserve conclusion does not supply the last-label bound above. $\square$
+

@@ -1,0 +1,44 @@
+### 104.15. Original residuals and positive inequalities
+
+Form
+\[
+ V=V_0-r,\qquad Z=Z_0-r,\qquad
+ T=\operatorname{pos}(V-1),\qquad \lambda=Z+1.                     \tag{104.85}
+\]
+Reject if zero is absent from either of the following expressions, tested in this order:
+\[
+\begin{aligned}
+ N&=c_NV^{[2]}+d_NZ^{[2]}+2e_NVZ-M+2pr,\\
+ P&=c_VV^{[2]}+c_ZZ^{[2]}+c_XVZ+l_VV+l_ZZ.
+\end{aligned}                                                     \tag{104.86}
+\]
+The second expression is the displayed coefficient expansion of the correct original phase polynomial; it is the interval expression (104.86), rather than a reassociated unexpanded expression, that defines this predicate.
+
+In the following order define
+\[
+\begin{aligned}
+ \Delta&=\operatorname{cut}_{10^{-27},10000}
+       \left(\operatorname{pos}\left((T^{[2]}-D\lambda^{[2]})/4-g^{[2]}\right)\right),\\
+ R&=\operatorname{cut}_{1/21,625/4}\bigl((M-2pr)/(4Q)\bigr),\\
+ J&=\bigl[(2p-p^{[2]}M-DQa)V^{[2]}
+       -D(2p+p^{[2]}M+DQa)Z^{[2]}
+       -2D(QM+p^{[2]}a)VZ\bigr]/(4QH),\\
+ C&=\operatorname{pos}\bigl((MT+Da\lambda)/4\bigr),\\
+ \Gamma&=\operatorname{pos}\bigl((M-Da)/4-R-J/2\bigr),\\
+ j&=\operatorname{cut}_{1/42000000,3125/8}(C+\Gamma),\\
+ U&=T/2-pg,\\
+ B&=M\bigl(U+Da\lambda/(2M)\bigr)^{[2]}
+                     +D\lambda^{[2]}/M+MQg^{[2]}.
+\end{aligned}                                                     \tag{104.87}
+\]
+Here $B$ in (104.87) is an auxiliary interval, distinct from the geometric box argument of $\mathcal R$; $R,j$ are the scalar invariant quantities. Apply $\operatorname{pos}$ first to
+\[
+ QR-4B                                                            \tag{104.88}
+\]
+and then to
+\[
+ R^{[2]}-16H\left((C-j)^{[2]}
+       +Dp^{[2]}\lambda^{[2]}(a+M)^{[2]}/(16Q)\right).             \tag{104.89}
+\]
+The latter retains the original singleton coefficient; no free coefficient is substituted.
+

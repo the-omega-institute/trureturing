@@ -1,0 +1,29 @@
+**定义 2.1（整个比例来源层）。** 令
+
+$$
+\beta=\frac{1+\sqrt{17}}4,\qquad
+2\beta^2-\beta-2=0,\qquad
+\beta-\frac1\beta=\frac12,
+\tag{2.1}
+$$
+
+并置
+
+$$
+\mathcal R=\left\{
+P_r=\begin{pmatrix}r&\beta r\\(1-r)/\beta&1-r\end{pmatrix}:0<r<1
+\right\},\qquad
+\widehat{\mathcal R}=\{W:P_W\in\mathcal R\}.
+\tag{2.2}
+$$
+
+这是 DEV 第 18 节的同一来源曲线，不是新加的增益或漂移承诺。每个 $P_r$ 严格正、迹一，且行列式为零，故秩一。对其置
+
+$$
+x=\frac{\beta r}{2},\qquad0<x<\frac\beta2,\qquad
+b=2x,\qquad j=\frac1\beta+\frac r2.
+\tag{2.3}
+$$
+
+实际偶节点 $0,2,4$ 的迹是 $e(t)=1+xt$ 在这些节点的值；实际奇节点 $1,3,5$ 的迹是 $o(t)=(1+xt)/\beta$ 在这些节点的值。特别 $o(1)=j,o(3)=j+r,o(5)=j+2r$。这里的偶迹描述仅用于已取得的三个偶节点：第六 $J$ 的迹是 $1+2b=1+4x$，第六 $M$ 的迹才是 $1+3b=1+6x$，不能把两者都写成 $e(6)$。
+

@@ -1,0 +1,54 @@
+## 369. Any opposite-V exit would force v<d
+
+Suppose any actual owner has fixed frame
+
+    rho=(W,V,D,C,V,D), W in {M,Z,U}.                      (369.1)
+
+It is genuine and its W cosh r satisfies
+r<Q/(m-1)+m+1 by (366.5). The actual four V slots at rho and eta
+have budget 2*beta_V(rho)+2*beta_V(eta)<=pi. Define
+
+    Lr=(v+d)^2-(r-1)*(c-1),
+    Jr=(r+1)*(c+1)-(v-d)^2,
+    K=[sqrt(v^2-1)+sqrt(d^2-1)]/(v+d),
+    x=K*sqrt(Lr/Jr), y=K*sqrt(Le/Je).
+
+Their transverse sums are S(rho)=2*atan(x), S(eta)=2*atan(y).
+By (366.7),
+
+    K^2>(3*m-5)/(3*m-4),
+    y^2>K^2*(m-1)/(m+1).                                (369.2)
+
+For lambda>1 put Ac=(1+lambda)*c+lambda-1. Exact expansion and
+2*T<=Q give
+
+    Lr-lambda*Jr
+      >[2-Ac/(m-1)]*Q-Ac*(m+1)-(lambda-1)*c-lambda-1.   (369.3)
+
+For lambda=3/2 or 4/3, (367.1) makes the coefficient of Q positive.
+Use Q>m*(m-1) and substitute the upper bound c0=3*m/7-3/2.
+The right side of (369.3) is strictly greater than, respectively,
+
+    (-2*m^2+45*m+21)/14,   (67*m+28)/21.                 (369.4)
+
+If 43/6<m<=10, the first is positive. Thus
+
+    x^2*y^2>(3/2)*(33/35)^2*(37/49)
+             =120879/120050>1.
+
+If m>=10, the second is positive and
+
+    x^2*y^2>(4/3)*(25/26)^2*(9/11)
+             =1875/1859>1.
+
+Therefore xy>1 and S(rho)+S(eta)>pi. For a response with pair V,D,
+
+    beta_V=atan(K*t)+atan(B*t),
+    beta_D=atan(K*t)-atan(B*t),
+    B=[sqrt(v^2-1)-sqrt(d^2-1)]/(v+d), t=sqrt(L/J).
+
+If v>=d, then B>=0 and beta_V>=S/2 at both owners. Their actual
+V expense would exceed pi. Hence every rho as in (369.1) forces
+
+    v<d.                                                (369.5)
+

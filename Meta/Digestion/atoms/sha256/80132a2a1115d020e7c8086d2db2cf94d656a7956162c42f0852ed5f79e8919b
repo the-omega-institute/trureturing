@@ -1,0 +1,28 @@
+**Definition 11.1 (Anchored phase distance and purity deficit).**
+Use the full-support path law and a proper cut from Definition
+8.1. Entropies use natural logarithms. Put
+
+$$
+\begin{aligned}
+\mathcal W(\chi)
+&=\sum_{(\ell,r)\text{ legal}}p(\ell,r)
+|1-\mathfrak h_\chi(\ell,r)|^2,\\
+\Delta_2(\chi)
+&=\operatorname{Tr}(\rho_+^2)-\operatorname{Tr}(\rho_\chi^2).
+\end{aligned}
+\tag{11.1}
+$$
+
+The distance uses the actual complete occupation law, not
+a replacement law on phase coordinates. Write
+$a_{\ell r}=\sqrt{p(\ell,r)}$, extended by zero at illegal
+concatenations. For a rectangle with all four corners legal,
+set
+
+$$
+Q_{\ell\ell';rr'}
+=\chi(\ell,r)\overline{\chi(\ell',r)}
+\chi(\ell',r')\overline{\chi(\ell,r')}.
+\tag{11.2}
+$$
+

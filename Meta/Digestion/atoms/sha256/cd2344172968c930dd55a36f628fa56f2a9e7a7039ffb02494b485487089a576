@@ -1,0 +1,37 @@
+**Theorem 47.1 (Unrestricted and finite-carrier infima).** Let $\mathcal D_{\mathrm{all}}$ be the class of all lawful designs with arbitrary measurable carriers, and let $\mathcal D_{\mathrm{fin}}$ be the subclass with finite consumer carrier. For every profile (45.2) and anchor row $(h,d,z)\in\mathscr S$,
+
+$$
+\inf_{\mathcal D_{\mathrm{all}}}\varepsilon=R=\frac{(1-B)h}{2-B},
+\qquad
+\inf_{\mathcal D_{\mathrm{fin}}}\varepsilon=\frac h2,
+\tag{47.1}
+$$
+
+and both infima are attained.
+
+**Proof.** The lower bounds are Theorems 46.1 and 46.2. For the unrestricted upper bound, use the countable carrier and the tapes $v,u,a_j$ of Theorem 44.2. Put
+
+$$
+q=\frac h{2-B},\qquad r=(1-B)q,
+$$
+
+and give the proposal tapes the law $\lambda$ with tails $T_1=1$ and $T_k=B-b(k)$ for $k\ge2$, so $\lambda(a_j)=T_j-T_{j+1}$. Let
+
+$$
+\nu=q\lambda+(d+r)\delta_v+z\delta_u,
+\qquad
+\alpha=h\lambda+d\delta_v+z\delta_u.
+\tag{47.2}
+$$
+
+The target law at every source with $N=27$ is $\alpha$. At a source of target $k\ge2$ and $B<1$, set $E_k=\{a_1,\ldots,a_{k-1}\}$ and $f_k=\lambda(E_k)=1-B+b(k)$ and prescribe
+
+$$
+\mu_y=\nu-\frac r{f_k}\lambda|_{E_k}+r\delta_{a_k};
+\tag{47.3}
+$$
+
+at every other target-one source use $\nu$. When $B=1$, use $\nu$ at every non-anchor source. The target rows are $(h,d,z)$ at $27$, $(q,d+r,z)$ at other target-one sources, and $(q,b(k)q,d+r,z)$ in the notation $(h_y,e_y,d_y,z_y)$ at target $k\ge2$. The removed mass in (47.3) is available because $r/f_k\le q$; normalization follows from $q+r=h$. The distance from $\nu$ is $r$ at the anchor and at every modified source, and zero elsewhere. All duplicate numerical labels receive the same law.
+
+Take the common seed space $(\Theta,2^\Theta,\nu)$; preparation hands the seed tape to the consumer in one transition without a prime query. It is finite at every source and gives $\widehat\mu_y=\nu$, so its uniform acquisition error is exactly $r=R$. The arbitrary real masses describe a probability measure and are not claimed to have an effective sampler. If $h=0$, use the common two-tape law $d\delta_v+z\delta_u$. The finite-carrier attainer is the midpoint construction in Theorem 46.2. $\square$
+

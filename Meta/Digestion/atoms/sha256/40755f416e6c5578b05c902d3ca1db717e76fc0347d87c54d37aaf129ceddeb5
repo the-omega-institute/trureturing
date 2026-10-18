@@ -1,0 +1,15 @@
+**Remark 7.3 (unrestricted existence and bounded exclusions).**
+Theorem 7.1 gives an affirmative unrestricted terminating root-existence
+implication for every code in its premise, with the constructive cap
+four. Theorem 4.2 gives the exact unrestricted criterion for all
+prescribed binary codes in this model; its all-mixed complement has
+the exact ten-state minimum of Theorem 4.3. Theorem 6.1 shows that this
+complement cannot admit a nine-state arbitrary-literal two-call reader.
+
+NRE's two-call and three-call exclusions remain exactly statements at
+those call budgets. They supply no unrestricted nonexistence assertion.
+The ten-state upper in Theorem 4.3 is a four-call construction for
+all-mixed positive fibers; neither it nor Corollary 7.2 supplies
+ten-state sufficiency at three calls. Unused states and duplicate-output
+Halts cannot evade any lower bound, since they consume installed budget.
+

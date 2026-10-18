@@ -1,0 +1,65 @@
+**Proposition 10.2 (Command correspondence, chart bounds and cost).** Every
+horizontal curve in this contract is an original history from its starting
+ray, and conversely every Definition 3.1 history in $\Omega$ is such a curve.
+The same prescribed controls give an original-source lawful family on a
+height promise exactly under (10.5). Concatenation and reversal retain (9.6)--(9.7), with
+their translated domains.
+
+Choose $q_0=(k_0,[h_0])$, a box
+$|\kappa-k_0|<\delta$, $|h-h_0|_\infty<\eta<\pi$ whose closure lies in
+$\Omega$, and constants $0<\lambda\le\Lambda$ with
+$\lambda I_2\le A\le\Lambda I_2$ there. Put
+$M=\max_{|k-k_0|\le\delta}|w(k)|_\infty$. Every initial path segment in
+this box satisfies
+
+$$
+|\kappa-k_0|\le\sqrt\Lambda\,\mathsf L_A,
+\quad |h-h_0|_\infty\le M\sqrt\Lambda\,\mathsf L_A,
+\quad \mathsf V_\chi\le\sqrt\Lambda\,\mathsf L_A,
+\quad \mathsf L_A^2\le T\mathsf E_A.
+\tag{10.5a}
+$$
+
+Consequently a curve from $q_0$ of length less than
+$\min(\delta,\eta/M)/\sqrt\Lambda$ cannot first exit this box. This is
+an explicit positive-probability and phase-chart bound for local metric use.
+
+For loops to which Theorem 3.11 applies, with all bottom masses at least
+$\varepsilon>0$ and $A\le\Lambda I_2$ along the whole path, its cost bounds give
+
+$$
+\mathsf L_A\ge
+\frac{16\varepsilon^2}{r\sqrt\Lambda}
+\frac{|h_1-h_3|}{|X-Y|},\qquad
+\mathsf L_A\ge
+\frac{16\varepsilon^2}{r\sqrt\Lambda}
+\frac{|h_0-h_{13}|}{|X+Y-r|},
+\tag{10.5b}
+$$
+
+Here $h_s$ denotes the loop's full five-mode increment, expanded from the
+grouped coordinates. Each bound requires its denominator to be nonzero.
+For phase-class targets replace the
+numerator by its distance to $2\pi\mathbb Z$. On the exact wall the
+corresponding increment difference vanishes; there is no division by zero.
+
+**Proof.** In a continuous real phase lift, (10.1) gives
+$\dot\kappa=v^1$, $\dot h=w(\kappa)v^2$. Integrating $v$ reconstructs
+$a,b$ and gives exactly (9.2). Conversely differentiation of that original
+history gives the displayed equation. Path lifting on a compact time
+interval uses finitely many torus charts; it preserves absolute continuity.
+The coefficient $Q$ never vanishes, and on a compact interior set its inverse
+on its one-dimensional image is bounded, so the two control coefficients
+are integrable. The identity $d^{\mathsf T}w=1$ also recovers the real
+relation increment. Thus no extra phase velocity has been admitted.
+Theorem 9.2 supplies precisely the extrema guard and composition rules.
+
+Pointwise $|v|\le\sqrt\Lambda\sqrt{v^{\mathsf T}A^{-1}v}$ gives the
+first three estimates by integration; Cauchy--Schwarz gives the fourth.
+At a first box exit one of the first two inequalities contradicts the
+strict length bound. Combining the third with Theorem 3.11 gives (10.5b),
+including its real-lift and positive-margin restrictions. These comparisons
+are consequences of the declared norm, not a physical calibration. A distance
+between specified rays supplies neither unknown-height feedback nor phase
+acquisition, reset, extra controls or a finite-shot readout. $\square$
+

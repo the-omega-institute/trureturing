@@ -1,0 +1,77 @@
+**Theorem 304.2 (Exact full support at every finite embedding).**
+For every such $L,S,I,c$, the complete supports and anchor are
+
+$$
+\begin{aligned}
+B_N(Y_c)=B_O(Y_c)
+ &=\max\{17,\ 16+c_{[1]}+c_{[2]},\
+                    c_{[1]}+c_{[2]}+c_{[3]}\},\\
+W_{Y_c}&=17,\\
+\Delta_N(Y_c)=\Delta_O(Y_c)
+ &=\max\{0,\ c_{[1]}+c_{[2]}-1,\
+                    c_{[1]}+c_{[2]}+c_{[3]}-17\}.
+\end{aligned}
+\tag{304.2}
+$$
+
+In particular zero excess is equivalent to $c_{[1]}+c_{[2]}\le1$.
+The formula also describes all positive-excess regimes.
+
+**Proof.** The reused 22 rows in 298.2 give constant-zero reward 16.
+Their singleton cell maxima, in skeleton order, are
+
+$$
+(6,10),\ (6,10),\ (7,9),\ (7,9),\ (8,8),\ (9,7),\ (12,4).
+\tag{304.3}
+$$
+
+These follow by the full-label addition rule (298.2). Every singleton
+support is 16. Every $11$ entry of the $Y_2$ pair certificate in 298.4
+is at least four. These are properties of that existing score, which
+also has full support 17 and is attained by $R$.
+
+Consider an arbitrary deterministic $N$ table with two distinct
+queries. If both queries are in $S$, all new words lie in its $11$
+cell. To earn any new correct reward its output there must be a label
+in $I$. That label earns no old reward, losing at least four from the
+old pair-cell maximum. Thus its total is at most $13+c_{[1]}$;
+if it earns no new reward, the total is at most 17. Both bounds are
+at most the maximum in (304.2).
+
+If exactly one queried coordinate is in $S$, old scored words supply
+only singleton information, with old reward at most 16. All new words
+have value one at the skeleton query, so occupy at most two cells of
+the pair. At most two distinct correct labels can be rewarded there,
+with total at most $c_{[1]}+c_{[2]}$.
+
+If neither query is in $S$, all old scored words lie in $11$.
+When that cell's output is outside $I$, its old reward is at most 16
+and at most two new correct rewards can occur in the other cells.
+When its output is in $I$, old reward is zero and at most three new
+correct rewards occur. Indeed, for sole-zero words the only possible
+cells are $01,10,11$; a fixed cell output rewards at most one of
+their distinct first-zero labels. This gives the last two branches
+of the maximum. Unscored outside coordinates are included in these
+cases. Constants and singleton or repeated schedules have coarser
+information and obey the same bounds; reversal just permutes cells.
+All labels, including earlier and unqueried ones, have been allowed.
+
+For attainment, $R$ earns 17 and earns zero on every added correct
+row. With at least two weights, query the addresses of two largest
+weights increasingly, emit the queried first address at its first
+zero, the second address at $10$, and zero at $11$. This stopped
+table earns $16+c_{[1]}+c_{[2]}$. For one weight the singleton
+$(k;k,0)$ earns $16+c_{[1]}$; for none this branch is 16 and
+does not exceed 17. With at least three weights, query any two of
+their three largest-weight addresses and emit the remaining label at
+$11$. The stopped table earns their sum and no old reward. For fewer
+than three weights that branch is dominated by the preceding branch.
+These are actual legal stopped schedules regardless of the gaps in
+$S$ or the order of addresses in $I$. Since $O\subseteq N$, the
+upper bounds and these stopped attainers give both support equalities.
+The anchor remains 17 because $R$ emits zero on every new word.
+Subtracting it proves the excess formula. Finally
+$c_{[1]}+c_{[2]}\le1$ implies
+$c_{[1]}+c_{[2]}+c_{[3]}\le3/2<17$, proving the zero-excess
+equivalence, including ties and zero coefficients. $\square$
+

@@ -1,0 +1,16 @@
+**Definition 393.1 (The unchanged unrestricted comparison).** Retain the full nonnegative scores, anchor excesses $\Delta_N,\Delta_O$, quotient $Q$ and signed support $\sigma_{H_L}$ of [XXIII 368.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md#368-original-resources-complete-cells-and-signed-scores) and [XXV 389.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXV.md#389-the-unrestricted-assertion). The unresolved assertion is
+
+$$
+\begin{gathered}
+\forall L\ge8\ \forall y\ge0\text{ full with }\Delta_O(y)=1,
+\quad\exists V\ge0\text{ full}\ \exists\theta\in[0,1]:\\
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\end{gathered}
+\tag{393.1}
+$$
+
+The same unrestricted $V$ and the same $\theta$ pay both inequalities before the hull point varies. Both endpoints, signed residuals and nonzero zero-$N$-excess $V$ are allowed. No fixed complementary allocation, fixed stock vector, named score basis or first-zero-invariant output restriction is imposed.
+
+Its alternative is one entire positive nonincreasing vanishing profile $a$, one complete original common-seed $A_N\in\mathcal N_2$ attaining $c_0=e_a(A_N)$, and $\varepsilon>0$ such that every original $A_O\in\mathcal O_2$ has $e_a(A_O)\ge c_0+\varepsilon$. Original competitors have arbitrary addresses and full-carrier outputs; repeated and ignored actual requests count, $N$ preselects the whole schedule, and $O$ stops at its first queried zero in its preselected increasing schedule. All original sources, labels and positive ordered vanishing tails with closed ties remain in scope. The original nonatomic-target and complete paid-$M1$ tasks retain their separate target and resource conditions.
+

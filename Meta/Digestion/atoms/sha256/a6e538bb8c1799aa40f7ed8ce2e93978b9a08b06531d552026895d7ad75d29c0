@@ -1,0 +1,11 @@
+**定理 141.4（非正交输入不留下可区别的无扰记录）。** 在假设141.3下，
+
+$$
+\langle\psi_i|\psi_j\rangle
+=\langle\psi_i|\psi_j\rangle\langle m_i|m_j\rangle.
+$$
+
+若 $\langle\psi_i|\psi_j\rangle\ne0$，则 $\langle m_i|m_j\rangle=1$，因而 $m_i=m_j$，记录不能区分这两个输入。沿非正交关联链连通的指定态，都使用同一记录。
+
+证明（141.4）。等距保持输入内积；输入记录相同且单位，输入内积为 $\langle\psi_i|\psi_j\rangle$。输出张量内积为两个内积之积，得等式。非零时消去系统内积；两个单位向量的距离平方为 $2-2\operatorname{Re}\langle m_i|m_j\rangle=0$，故相同。逐边相同沿任意有限关联链传递，给最后结论。$\square$
+

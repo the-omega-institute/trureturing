@@ -1,0 +1,26 @@
+**Definition 1.3 (paid comparison class).** Services are common
+deterministic effective controllers correct and terminating on every
+$u\in D$. Their source operations are actual physical
+$\mathsf{Read}(p)$ at any finite original-root word, forward same-register
+$\mathsf{ApplyRho}$, and absorbing $\mathsf{Halt}$. A reply may select
+the next action. There is no equality, chart, source-identity, reset,
+reroot, clone or unknown-tree port. Set
+
+$$
+\begin{aligned}
+c_A(u)&=(q_A(u),a_A(u),\ell_A(u)),&
+\ell_A(u)&=\sum_{\text{actual reads at }p}|p|,\\
+b(A)&=(\sup_Dq_A,\sup_Da_A,\sup_D\ell_A),&
+W_\lambda(A)&=\sup_{u\in D}\lambda\cdot c_A(u).
+\end{aligned}
+\tag{NSF.5}
+$$
+
+Here $q$ counts every raw read, including repeated and absent replies,
+and $a$ counts actual post-entry updates. Root reads cost one call and
+zero literal length. The nonnegative rational weights in $W_\lambda$
+are applied to each finite sourcewise run before the supremum.
+Different coordinate maxima need not occur on one source.
+Computation, installation, address generation, memory, authentication,
+retention, output and physical time remain separately supplied resources.
+

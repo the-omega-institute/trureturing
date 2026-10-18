@@ -1,0 +1,43 @@
+**Theorem 76.1 (local continuation from an already certified seed).**
+At a strict interior parameter $(t,\tau)$ suppose there is a finite
+positive endpoint family of supported-nonzero low labels and a matching
+full-circle certificate of Theorem 68.1. Suppose all zeros of the eight
+nonnegative polynomials are tracked, isolated double zeros with strictly positive angular
+second derivative, with no additional zeros. Fix the gauge
+$Y\mapsto Y+a_QQ$. Choose either the branch $\lambda>0$ with
+contrast equality, or the branch $\lambda=0$ with strict contrast
+slack. In the first branch contacts have $z\ne0$ by Proposition 70.2.
+
+Form the analytic equations for the complete moment constraints,
+contact values and angular derivatives, and active contrast when
+appropriate. Assume a square set of independent equations in all
+contact, positive-weight and certificate unknowns has nonsingular
+Jacobian, and every remaining equation is an analytic consequence in
+a neighborhood. Identical report constraints at $\lambda=0$ are
+counted only once. Then a sufficiently small parameter neighborhood
+has an analytic family of common original global optimizers and
+matching certificates.
+
+**Proof.** The analytic implicit function theorem continues the
+unknowns; the consequence hypothesis retains every equation, rather
+than silently discarding dependent-looking ones. Weights, branch
+signs, strict contrast slack when present, and positive denominators
+persist. Near each tracked zero, its zero value and derivative together
+with uniformly positive angular second derivative give a nonnegative
+gap. On the compact complement of these neighborhoods every polynomial
+has a strictly positive minimum at the seed; continuity preserves it.
+Thus the eight whole-circle inequalities remain feasible. The complete
+moments, contact equalities and contrast complementarity give equality
+of primal and dual values. The common constructor in §75 then gives
+original global optimizers. $\square$
+
+This is sufficient, not a seed-existence assertion. Extra zeros,
+vanishing weights, zero curvature, a singular Jacobian or a change of
+contrast branch require separate analysis. A certificate may have
+unused zeros, but those must be tracked as well to apply the theorem.
+A finite set of KKT equations without the full-circle inequality and
+complete-equation hypotheses is insufficient. No actual globally
+optimal three-line or larger interior seed, parameter atlas, or global
+root inventory is supplied here; the two-line family cannot be such
+a seed by Theorem 73.1.
+

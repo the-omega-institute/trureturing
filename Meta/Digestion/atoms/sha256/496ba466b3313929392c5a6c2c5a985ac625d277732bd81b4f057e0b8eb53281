@@ -1,0 +1,78 @@
+**Definition 2.1 (the credited algebraic point).** The following gives
+an exact specification of the source constants, rather than replacing
+them by decimal fits. In this definition only, let
+$\mathbf x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ and
+$\eta=(\eta_0,\eta_1,\eta_2)$. The coordinates $\beta_1,\beta_2$
+are algebraic variables, not the history phase $\beta$. Put
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,&
+v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y^{\rm src}&=v_yv_y^T/(v_y^Tv_y),&
+A_5^{\rm src}&=\lambda R_5^{\rm src},\quad
+A_{27}^{\rm src}=(1-\lambda)R_{27}^{\rm src},\\
+\zeta&=(z,59\lambda/128,\lambda/2),&
+N&=A_5^{\rm src}\odot(a_5a_5^T)
+ +A_{27}^{\rm src}\odot(a_{27}a_{27}^T),\\
+S_0^{\rm src}&=\operatorname{diag}\zeta-N,&
+S_{ij}^{\rm src}&=
+\begin{pmatrix}
+\zeta_j-\sum_{y=5,27}(A_y^{\rm src})_{ii}p_{yj}&-N_{ij}\\
+-N_{ij}&\zeta_i-\sum_{y=5,27}(A_y^{\rm src})_{jj}p_{yi}
+\end{pmatrix}\quad(i<j),\\
+F^{\rm src}(\mathbf x)&=\sum_{y=5,27}\operatorname{tr}(A_y^{\rm src}B_y)
+-\sum_i\zeta_i+6\lambda/11,&
+\mathbf g&=(1000\det S_0^{\rm src},\det S_{01}^{\rm src},
+\det S_{02}^{\rm src}),\\
+\mathcal L^{\rm src}(\mathbf x,\eta)&=F^{\rm src}(\mathbf x)
++\eta\cdot\mathbf g(\mathbf x),&
+\Psi&=(\nabla_{\mathbf x}\mathcal L^{\rm src},\mathbf g).
+\end{aligned}
+\tag{RE.7}
+$$
+
+Here $\odot$ is entrywise product and the radicals in (RE.2), (RE.5)
+are positive. The source premise is that $\Psi$ has a unique zero
+$u_*=(\mathbf x_*,\eta_*)$ in the product of radius-$10^{-24}$ closed
+intervals centred at these exact rational numbers:
+
+| Coordinate | Rational centre |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+All following source matrices are evaluated at that point. Define
+
+$$
+\begin{aligned}
+H&=1000\eta_0\operatorname{adj}S_0^{\rm src},&
+Q^{01}&=\eta_1\operatorname{adj}S_{01}^{\rm src},&
+Q^{02}&=\eta_2\operatorname{adj}S_{02}^{\rm src},\\
+h&=He_0/\sqrt{H_{00}},&
+(a,b)^T&=Q^{01}e_0/\sqrt{Q^{01}_{00}},&
+(c,d)^T&=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+r_1^{\rm src}&=H_{11}+Q^{01}_{00},&
+r_2^{\rm src}&=H_{22}+Q^{02}_{00},&
+m_k&=1-r_k^{\rm src}\quad(k=1,2),\\
+D&=\operatorname{diag}(h_0,h_1,h_2),&
+T&=a|0\rangle\langle1|+b|1\rangle\langle0|,&
+S&=c|0\rangle\langle2|+d|2\rangle\langle0|,\\
+M&=\operatorname{diag}(0,m_1,m_2),&
+\kappa&=h_0a+h_1b,&g(t)&=2/(1+t)^2.
+\end{aligned}
+\tag{RE.8}
+$$
+
+The $e_0$ in the first two lines is the first standard coordinate of
+the relevant matrix size. The amplitude $h_0$, the dimension
+$d_\alpha$, the coefficient $d$, and the ramp displacement
+$\delta_{\rm ramp}$ are different quantities.
+

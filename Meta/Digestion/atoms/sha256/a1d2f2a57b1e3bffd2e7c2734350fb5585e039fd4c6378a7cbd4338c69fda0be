@@ -1,0 +1,42 @@
+**Proposition 10.7 (a genuine span-four support gap).** If
+$\min(K,L)\ge4$, there exists a complete correct graph at both
+caps whose common-support cuts include the consecutive pair $1,5$.
+Thus allowing span four strictly enlarges the support-gap class of
+Corollary 9.5.
+
+Proof. Take a fully unfolded finite decision tree, querying coordinate
+$1$ first. In the zero child use the order $2,3,4,5$; in the one
+child use $3,4,5,2$. After those four queries, use the remaining
+coordinates in the same fixed order in both subtrees. Read all $n$
+coordinates on every path and attach the threshold output at each
+leaf. Each tree node has its fixed query and fixed successors, and
+every node is an installed counted state. There is no free branch
+selector. Every actual input pays exactly $n$ queries and $W$
+letters, including the full suffix after any earlier certificate,
+and receives the correct output.
+
+At depths $2,3,4$, the respective supports after first reply zero
+and one are
+
+$$
+\begin{array}{c|cc}
+\text{depth}&\text{first reply zero}&\text{first reply one}\\
+2&\{1,2\}&\{1,3\}\\
+3&\{1,2,3\}&\{1,3,4\}\\
+4&\{1,2,3,4\}&\{1,3,4,5\}.
+\end{array}
+\tag{SI.54}
+$$
+
+Each displayed support has an actual live history: choose the replies
+to have one one and one zero at depth two, two ones and one zero
+at depth three, and two of each at depth four, with either specified
+first reply. All proper prefixes of these live histories are live.
+The count bounds hold since $K,L\ge4$. Thus none of these three
+depths is common-support. At depth one the support is $\{1\}$,
+and at depth five every live history has support
+$\{1,2,3,4,5\}$. Such depth-five live histories exist with two
+ones and three zeros. Therefore $1,5$ are consecutive cuts.
+The supplied full-fiber lift also realizes this example with the
+unchanged native task and its original charges. $\square$
+

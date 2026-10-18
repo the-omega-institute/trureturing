@@ -1,0 +1,62 @@
+**Theorem 31.2 (all-mode fixed-clock limit and exact density factor).**
+For every $t>0$ and all sufficiently small nonzero $\kappa$,
+$Z_\kappa(t)<\infty$, and
+$0<F(t)<\infty$. Through either sign of $\kappa\to0$,
+
+$$
+aZ_\kappa(t)\longrightarrow F(t)
+\tag{31.4}
+$$
+
+uniformly on every compact subinterval of $(0,\infty)$.
+The resolved real-$x$ cover of Definition 21.1 at $\kappa=0$ has
+trace density per unit raw $x$ length exactly $F(t)/(2\pi)$.
+
+Proof. Let $E_{\kappa,h}(\eta)$, $h\ge1$, denote every scalar height
+eigenvalue, in increasing order. Scalar min-max and (26.6) give
+$E_{\kappa,h}\ge\lambda h^2$ and
+$E_{\kappa,h}\ge\lambda+c\Psi(|\eta|)$. Averaging these bounds yields
+
+$$
+T_\kappa(t;n,m,\xi)\le
+ e^{-\lambda t}S(t)e^{-ct\Psi(\sqrt{n^2+m^2+\xi^2})/2},\qquad
+S(t)=\sum_{h\ge1}e^{-\lambda t(h^2-1)/2}.
+\tag{31.5}
+$$
+
+This estimate includes every height level, is uniform on the closed
+small parameter interval including zero, and holds for all $t>0$.
+The right side is summable in $(n,m)$ and integrable in $\xi$ on each
+positive compact time interval. The exact completed-domain Fourier
+sum in (26.13) therefore gives the trace-class identity
+
+$$
+Z_\kappa(t)=\sum_{n,m,j\in\mathbb Z}
+                      T_\kappa(t;n,m,\kappa j).
+\tag{31.6}
+$$
+
+For bounded $(n,m,\xi)$ the scalar potentials converge uniformly as
+$\kappa\to0$. Min-max bounds the change of every height eigenvalue
+by the supremum change of the potential. The lower bound $\lambda h^2$
+then gives locally uniform convergence of the scalar traces, also in
+$t$ on positive compact intervals. On a bounded frequency box the
+Riemann sums $a\sum_j$ converge to $\int d\xi$, uniformly in these
+$t$; the sign reverses the lattice without changing the sum.
+For the complement use (31.5) and
+$\Psi(|\eta|)\ge[\Psi(|n|)+\Psi(|m|)+\Psi(|\xi|)]/3$.
+Integral comparison of the decreasing last factor bounds its weighted
+lattice tails uniformly for $0<a\le1$; the first two factors have
+summable tails. Thus box removal is uniform, proving (31.4).
+
+Fourier transformation of the smooth core and then form closure give
+the cover as the direct integral of these same Dirichlet fibres.
+On the cover, the two visible orthonormal modes have factor $(2\pi)^{-1}$,
+and the real Fourier transform has inverse measure $d\xi/(2\pi)$.
+Consequently its diagonal kernel, integrated over $I\times\mathbb T^2$
+at any fixed $x$, is $F(t)/(2\pi)$. Equivalently the exact quotient
+length is $2\pi/a$, and $a$ times that length is $2\pi$.
+These factors follow from the raw measures, not normalized Haar
+measure. Positivity follows, for example, from the positive scalar
+trace on $n=m=0$ and any bounded nonempty $\xi$ interval. $\square$
+

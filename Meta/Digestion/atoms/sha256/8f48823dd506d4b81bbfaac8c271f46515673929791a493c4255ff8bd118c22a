@@ -1,0 +1,32 @@
+**Definition 31.2 (The canonical quotient and its face coordinates).**
+Let $\omega_{R_k}$ be realized as the interior-monomial ideal, and put
+
+$$
+\begin{aligned}
+\nu_j&=(2j+1;j\mathbf1),\qquad 1\le j\le k-1,\\
+A_k&=\operatorname{span}_{\mathbb C}
+ \{X^s:s\in\mathcal S_k,\ \delta(s)=0\},\\
+J_k&=\operatorname{span}_{\mathbb C}
+ \{X^s:s\in\mathcal S_k,\ \delta(s)>0\},\\
+\mathcal C_k&=\omega_{R_k}/X^{\nu_1}R_k.
+\end{aligned}
+\tag{31.2}
+$$
+
+The interior realization and all canonical generators will be justified
+inside Theorem 31.3. Deficit is additive and nonnegative on
+$\mathcal S_k$, so $A_k$ is a subalgebra and $J_k$ is an ideal.
+For the maximum independent set
+
+$$
+M_i=\{i+2,i+4,\ldots,i+2k\}\pmod n,
+\qquad y_i=X^{(1,\mathbf1_{M_i})},
+\tag{31.3}
+$$
+
+the slack vector is the $i$th standard basis vector. The symbols
+$e_j=[X^{\nu_j}]$, $2\le j\le k-1$, denote classes in $\mathcal C_k$;
+they will be an $A_k$-basis, with $\deg e_j=2j+1$.
+As usual $A_k(-d)_m=(A_k)_{m-d}$, and a negative homogeneous degree
+piece is zero.
+

@@ -1,0 +1,44 @@
+**Proposition 5.3 (Exact fair finite-radius risk and nonuniform approximation).** For every finite $r\ge0$, put
+
+$$
+a_r=\tfrac12\,2^{-2\lfloor r/2\rfloor},\qquad
+b_r=\tfrac12\,2^{-2\lceil r/2\rceil}.
+$$
+
+Then
+
+$$
+D_r(P_{1/2})=\frac18+\frac{a_rb_r}{4(a_r+b_r)}>\frac18,
+\qquad D_r(P_{1/2})\downarrow\frac18.
+\tag{5.4}
+$$
+
+For each fixed $r$, $D_r(P_p)$ is continuous in $p$, but its pointwise decrease to $d(P_p)$ is not uniform, even on this compact curve. In particular, for $N\ge4$,
+
+$$
+\sup_{\theta\in\Theta_N}(D_r(P_\theta)-d(P_\theta))\ge\frac18\quad\text{for every }r,
+\tag{5.5}
+$$
+
+and the two limits are
+
+$$
+\lim_{\substack{p\to1/2\\p\ne1/2}}\lim_{r\to\infty}D_r(P_p)=0,
+\qquad
+\lim_{r\to\infty}\lim_{\substack{p\to1/2\\p\ne1/2}}D_r(P_p)=1/8.
+\tag{5.6}
+$$
+
+Proof. At fairness every finite exterior atom containing a one identifies the phase, so its finite posterior equals its full posterior. The all-zero radius-$r$ exterior atom has active-center phase mass $a_r$, with $2\lfloor r/2\rfloor$ retained active bits, and separator-center phase mass $b_r$, with $2\lceil r/2\rceil$ retained active bits. Given this atom the finite posterior is $a_r/[2(a_r+b_r)]$. Orthogonal projection therefore gives
+
+$$
+D_r(P_{1/2})-d(P_{1/2})
+=a_r\left(\tfrac12-\frac{a_r}{2(a_r+b_r)}\right)^2
++b_r\left(\frac{a_r}{2(a_r+b_r)}\right)^2
+=\frac{a_rb_r}{4(a_r+b_r)}.
+$$
+
+Both phase masses are positive at each finite radius and tend to zero, proving (5.4). This includes $r=0$, when $a_0=b_0=1/2$ and $D_0=3/16$.
+
+The finite-fiber identity supplied in [Universal, (1.5)][U] writes $D_r$ as a finite sum of $h$ applied to actual center-zero/center-one cylinder masses; forced atoms contribute zero. The function $h$ is continuous even at $(0,0)$, so Proposition 2.1 proves continuity of $D_r(P_p)$ without any continuity claim for pointwise quotient versions on zero fibers. By (5.1), along biased $p\to1/2$ the approximation error tends to $D_r(P_{1/2})>1/8$. This proves (5.5) on $\Theta_4$, and padding proves it for $N>4$. Pointwise conditional-projection convergence still gives $D_r(P_p)\downarrow d(P_p)$ for every fixed $p$; (5.1) and (5.4) prove (5.6). $\square$
+

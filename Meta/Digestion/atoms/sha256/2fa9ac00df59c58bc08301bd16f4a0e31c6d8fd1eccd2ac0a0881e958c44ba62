@@ -1,0 +1,49 @@
+**约定 2.2（复用整个合法世界双射）。** 四次卷定理 2.2 的准确域是
+
+$$
+t>1,\qquad I(t)H(t)\ne0,\qquad 0<a(t)<1,\qquad e(t)>0,\qquad
+R(t)=F_{d,w}(t)=0.
+\tag{2.7}
+$$
+
+它与整个正则 $K_d(m)$ 双射，返回完整世界
+
+$$
+\mathcal W(t)=\left(\begin{pmatrix}a(t)&t-1\\e(t)&1-a(t)\end{pmatrix},g_t,d\right).
+\tag{2.8}
+$$
+
+一个 $t$ 固定整个源与整个增益，反向 $t=1+b$。该接口包括全部原时钟祖先、行列式和严格源过滤；单独 $F$ 的根不是合法世界。特别实际世界满足
+
+$$
+n(t)=\frac{70AD(t)}{H(t)}>0,\qquad
+\operatorname{sgn}H(t)=\operatorname{sgn}A,
+\tag{2.9}
+$$
+
+其中 $D(t)>0$ 且正则 $A\ne0$。
+
+两个第六实际函数仍是同一重建源的
+
+$$
+\begin{aligned}
+\mathrm{Den}&=35DHI,\\
+N_M&=2uIK_6(H+35At),\qquad N_J=tK_6[HI+140u(AI-VH)],\\
+r_M(t)&=d+\frac{N_M}{\mathrm{Den}}=d+\frac{2AK_6}{H}+\frac{2K_6}{35t},\\
+r_J(t)&=d+\frac{N_J}{\mathrm{Den}}=d+\frac{4AK_6}{H}+\frac{K_6}{35u}-\frac{4VK_6}{I}.
+\end{aligned}
+\tag{2.10}
+$$
+
+不在整个纤维域增加 $K_6\ne0$ 或第六符号条件；这些函数在此没有固定值。
+
+在 $t>1,H(t)\ne0$ 上定义同一第五偏移函数
+
+$$
+\Phi_d(t)=\frac{Q(t)[H(t)+70At]}{28tH(t)},\qquad
+F_{d,w}(t)=28tH(t)[\Phi_d(t)-w].
+\tag{2.11}
+$$
+
+由 $n+u=u(H+70At)/H$ 及 $g_t(5)=Q/(28tu)$，每个实际世界的第五方程恰为 $\Phi_d(t)=m-d$。这里没有单独拟合响应；第 6 节对 $m=d$ 的使用将直接证明其前向重建，不把正则双射未经证明地跨越零样本。
+

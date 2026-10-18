@@ -1,0 +1,4 @@
+## 68. Local norm-to-order control in a fixed range of regular block densities
+
+Keep the original labeled sources, Advice0 with $\beta_0=0$, consumer, measurable tape carrier and targets of Definition 59.1. In particular $X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\}$, $N(r,g)=1+F_rg$, and $\Omega(r,g)=\omega(N(r,g))$ counts distinct prime factors. Use the original target mixture $\sigma$, likelihood information $\mathcal G$, actual signatures $Q$ and occupied neighborhoods $U_m(q)$ of Sections 59 and 54. The original target and prepared laws below are measures on the entire original $(\Theta,\mathcal F)$; the explicitly introduced rank pushforwards and auxiliary product-seed laws live on their declared spaces. TV has its event-supremum normalization. A supplied range is fixed from the original target and tape data before any preparation is selected; it need not contain the targets.
+

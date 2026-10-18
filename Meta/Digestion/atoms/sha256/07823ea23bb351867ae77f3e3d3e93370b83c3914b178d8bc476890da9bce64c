@@ -1,0 +1,34 @@
+**Definition 19.1 (original edges and rank transaction).** The selected-history edges on (SC.40) are
+
+$$
+\begin{array}{c|cc}
+\text{old tag}&\alpha&\beta\\ \hline
+s&s_\alpha&s_\beta\\
+s_\alpha&s&P_{0,\varepsilon}\\
+s_\beta&P_{1,\varepsilon}&s\\
+P_{\rho,v}&D_{\rho,v0}&Q_{\rho,v}\\
+Q_{\rho,v}&P_{\rho,v}&D_{\rho,v1}
+\end{array}
+\quad
+D_{\rho,vx}=
+\begin{cases}P_{\rho,vx},&|vx|<3,\\L_{\rho,vx},&|vx|=3.
+\end{cases}
+\tag{SC.45}
+$$
+
+There are no outgoing selected-history edges from $L$; the actual source continues with its unchanged fourth segment. Order tags first as $s,s_\alpha,s_\beta$, then payload tags by $(\rho,|v|,v,\text{phase})$ with $0<1$ and $P<Q$, then latch tags by $(\rho,v)$. Order incoming edges to each tag by their source tag and then by $\alpha<\beta$. Every target has at most two incoming edges. An incoming edge includes its old tag, not just its letter: for example $s_\beta\xrightarrow{\alpha}P_{1,\varepsilon}$ and $Q_{1,\varepsilon}\xrightarrow{\alpha}P_{1,\varepsilon}$ are different blocks.
+
+Initialize the sole supplementary rank $r=0$. Suppose the actual returned letter $x$ takes $\kappa$ to $\kappa'$. First acquire the new counts $(A',B')$. If $\delta_\alpha(y)=\mathbf1\{y=\alpha\}$ and $\delta_\beta(y)=\mathbf1\{y=\beta\}$, write
+
+$$
+\begin{aligned}
+O_{\kappa,x}(A',B')&=
+\sum_{(\eta,y)<(\kappa,x)\ \text{incoming to }\kappa'}
+G_\eta(A'-\delta_\alpha(y),B'-\delta_\beta(y)),\\
+r'&=r+O_{\kappa,x}(A',B').
+\end{aligned}
+\tag{SC.46}
+$$
+
+The count calculation uses (SC.41)–(SC.43) and the fixed installed grammar, not a table of the observed past. The old tag, actual letter and post-Read counts suffice. Complete this rank/count transaction and all prescribed original marker writes before the third latch, then hold the same selected rank/count/record bank through every fourth-segment event and original Stop. No $U$ word or persistent return-vector counters are needed for this realization.
+

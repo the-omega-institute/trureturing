@@ -1,0 +1,21 @@
+### 边界 456.2（当前 FIB 观察还缺什么）
+
+命题 456.1 给出一个明确的同观察不可识别性：知道 $N$ 的 FIB 仿射同余、
+CA 支撑和指数剖面，并不能确定 Vega 的 $\mathcal F_P(\varepsilon)$，因为
+同一剖面允许一整段 $\varepsilon$ 而 residual 在该段严格变化。自匹配条件
+
+$$
+\varepsilon_*=\frac1{(\log N)\log\log N}
+$$
+
+会从胞腔中选出一个参数，但它提供的是额外的实数尺度方程，不是 FIB 同余
+的推论。因此，若要用 Vega 窗口推进 Robin，必须再证明以下至少一项：
+
+1. 自匹配尺度 $\varepsilon_*$ 处的 $\mathcal F_P$ 有独立的点值界；
+2. FIB 地址能控制 $\mathcal S_P(\varepsilon_*)$ 的误差，从而通过（456.5）支付 residual；
+3. 引入保留 $\varepsilon_*$ 与完整指数剖面的新观察，而不是继续只使用
+   $N\equiv1\pmod{F_r}$。
+
+所以，严格自匹配根的 CA 识别已经完成，但“FIB 同余 $\Rightarrow$ Robin
+符号”仍然没有成立；本节把缺口收缩为同一 CA 胞腔内的实参数 residual 控制。
+

@@ -1,0 +1,73 @@
+**Lemma 7.1 (Analytical live epochs and per-target telescoping).** Follow the full source history while holding an actually emitted label fixed thereafter. Let $Y_n$ be the observer state just after the source tick at $\tau_n$, and put
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},
+\qquad Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t,
+\qquad p_i=\mathsf P_{i,q}(D=1).
+\tag{7.1}
+$$
+
+Under the actual source $i$, $Y_0$ has law $\nu_i$ and the epoch kernel is $U_i$. For a compliant observer,
+
+$$
+N<\infty\ \text{almost surely},\qquad Y_N=d_D,
+\qquad N\le Q_T\le T,\qquad \mathbb E_iN<\infty.
+\tag{7.2}
+$$
+
+For each target $i$ separately, with its own analytical $W$ in (6.7), let
+
+$$
+\chi^*_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\tag{7.3}
+$$
+
+Then
+
+$$
+|p_i-p_j|\le r_H(q)+\chi^*_{M,L}+(\pi_i+\pi_j)\mathbb E_iN,
+\qquad j=1-i.
+\tag{7.4}
+$$
+
+Proof. The stationary first wait and the independent subsequent gaps give exactly (3.2) for the epoch process, using the ordinary fresh update randomness along that process. If stopping is before or at the first tick then $N=0$. Otherwise every live state $Y_0,\ldots,Y_{N-1}$ is immediately after an actually read tick and commits to another read. Those are $N$ distinct paid ticks, so $N\le Q_T\le T$. If a zero run contains the actual stop, the next analytical tick records the frozen decision and need not itself have been read. It is not added to $Q_T$. All source waits and gaps are finite almost surely, so actual almost-sure stopping gives finite $N$ and $Y_N=d_D$. The target's finite paid mean gives finite $\mathbb E_iN$. These are the epoch-accounting facts of the continuation's Lemma 25.1 and the uniform companion's Lemma 6.1.
+
+Let $h$ and $h_j$ be actual hitting probabilities of $d_1$ for $W$ and $U_j$, respectively. First-step conditioning gives
+
+$$
+0\le h,h_j\le1,\qquad Wh=h,\qquad U_jh_j=h_j,
+\qquad h(d_0)=h_j(d_0)=0,\quad h(d_1)=h_j(d_1)=1.
+\tag{7.5}
+$$
+
+By the entrywise comparison in (6.8), Theorem 5.1 applies on the same configuration set, with its interior size at most $M-2$. Since $(v-1)/(v+1)$ increases for $v\ge1$,
+
+$$
+\sup_x|h(x)-h_j(x)|\le\chi^*_{M,L}.
+\tag{7.6}
+$$
+
+For a positive integer $m$, sum the stopped live increments of $h(Y_r)$ under the actual target chain. Conditional expectation gives
+
+$$
+\mathbb E_i h(Y_{N\wedge m})-\nu_i h
+=\mathbb E_i\sum_{r=0}^{(N\wedge m)-1}[(U_i-W)h](Y_r).
+\tag{7.7}
+$$
+
+Indeed on $r<N$ the conditional drift is $(U_i-I)h=(U_i-W)h$, and after $N$ it is zero. A $[0,1]$-valued function has average difference bounded by the row variation, so each summand has absolute value at most $\pi_i+\pi_j$ by (6.8). Bounded convergence for the terminal value and domination by $(\pi_i+\pi_j)N$ for the sum justify $m\to\infty$. Since $h(Y_N)=D$,
+
+$$
+|p_i-\nu_i h|\le(\pi_i+\pi_j)\mathbb E_iN.
+\tag{7.8}
+$$
+
+The opponent's almost-sure stop from its actual initial row gives $p_j=\nu_jh_j$. Decompose the same actual decision probabilities as
+
+$$
+p_i-p_j=(p_i-\nu_i h)+\nu_i(h-h_j)+(\nu_i-\nu_j)h_j.
+\tag{7.9}
+$$
+
+Equations (7.8), (7.6) and (6.2) prove (7.4). Both hitting functions remain meaningful at nonabsorbing abstract states, so no global-absorption condition was used. Repeating the argument for the other target changes only $W$ and the target expectation. It yields two separate bounds for the same machine, rather than a bound on the sum of means. The stopped-telescope interface is the supplied one; (7.6) is its improved comparison input. $\square$
+

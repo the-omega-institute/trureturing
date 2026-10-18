@@ -1,0 +1,11 @@
+### 定义23（原树上的辅助黄金时长选择）
+
+采用 [FIBONACCI_ATOMIC_RELATION_GENERATION，定义2.1、3.1、3.3及定理2.2、3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的有序原树、替换 $\rho$ 与组成列向量 $c(u)=(c_\alpha(u),c_\beta(u))^T$：$\rho(\alpha)=\beta$、$\rho(\beta)=\langle\beta,\alpha\rangle$。对 $\Delta>0$，另赋辅助时长
+
+~~~math
+\varphi=\frac{1+\sqrt5}{2},\qquad
+ d(u)=\Delta\,[c_\alpha(u)+\varphi c_\beta(u)].
+~~~
+
+由此 $d(\alpha)=\Delta$、$d(\beta)=\varphi\Delta$、$d(\langle u,v\rangle)=d(u)+d(v)$。其在假设18中的用途仅是选择 $a=\Delta,b=\varphi\Delta$。这份加法解释忘掉树的次序和括号，不改原数量映射，也不认证原生时钟、物理黄金时长或其他非交换表示。
+

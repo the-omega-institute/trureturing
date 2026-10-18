@@ -1,0 +1,20 @@
+**定义 47.1（Actual multiplicities and aggregate types）。** Fix one $B\in\mathcal B_a$ with $a\in\mathcal A(\Gamma)$, already emitted as one paid block. Its successful phase children are $S_1=E_B$ and $S_0=P\setminus E_B$. On each child use its immutable joined labels $\Lambda$. For any $S\subseteq P$ put
+
+$$
+N(S)=|S|,\qquad n(S)=|\Lambda[S]|,\qquad
+r(S)=|\{L\in\Lambda[S]:|S\cap\Lambda^{-1}(L)|\text{ odd}\}|.
+\tag{47.1}
+$$
+
+These multiplicities count actual phases, not INITIAL tails, histories or label names. Define $\ell(0)=\ell(1)=0$ and $\ell(n)=\lceil\log_2 n\rceil$ for $n\ge2$, and put $h=\max\{\ell(n(S_0)),\ell(n(S_1))\}$.
+
+For $d\ge0$ let $\Sigma_d(S)$ consist of the vectors
+
+$$
+\bigoplus_{j\in S}z_j,\qquad z_j\in\mathbb F_2^d,\qquad
+\Lambda(j)\ne\Lambda(j')\Longrightarrow z_j\ne z_{j'}\quad(j,j'\in S).
+\tag{47.2}
+$$
+
+A label may occupy several codes. Codes used by different labels in this same child must be disjoint; codes on different children may coincide. The aggregate is over one code per actual phase, with repetitions included. Write $V=\mathbb F_2^d$ and $V^\times=V\setminus\{0\}$.
+

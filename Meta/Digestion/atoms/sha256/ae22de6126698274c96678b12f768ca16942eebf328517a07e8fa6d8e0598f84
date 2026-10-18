@@ -1,0 +1,75 @@
+**Proposition 11.3 (A source-compatible FIB witness).** Put
+
+$$
+q(\alpha)=e_1,\qquad q(\beta)=e_2,
+$$
+
+$$
+q(\langle s,t\rangle)=q(s)\times q(t),
+\qquad q(\rho t)=Rq(t),
+$$
+
+where
+
+$$
+R=
+\begin{pmatrix}
+0&0&-1\\
+1&0&0\\
+0&-1&0
+\end{pmatrix}\in SO(3).
+$$
+
+Using the FIB recursion
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$ and the identity
+$R(u\times v)=(Ru)\times(Rv)$, these clauses are compatible. Define the
+source readout by
+
+$$
+y(s)=e_1^{\mathsf T}q(s);
+$$
+
+equivalently, the vector readout is $\widetilde y(v)=e_1^{\mathsf T}v$ and
+$y=\widetilde y\circ q$. Take sources
+
+$$
+s_0=\langle\alpha,\alpha\rangle,
+\quad s_1=\alpha,
+\quad s_2=\beta,
+\quad s_3=\langle\beta,\alpha\rangle,
+$$
+
+and continuations $p_1=\varepsilon$, $p_2=\rho$, $p_3=\rho^2$. They are
+all legal on these FIB terms. Since
+
+$$
+q(s_0)=0,
+\quad q(s_1)=e_1,
+\quad q(s_2)=e_2,
+\quad q(s_3)=-e_3,
+$$
+
+the response minor is
+
+$$
+M=
+\begin{pmatrix}
+1&0&0\\
+0&0&1\\
+0&1&0
+\end{pmatrix},
+\qquad
+\det M=-1.
+\tag{11.4}
+$$
+
+The map $q$ itself is a three-dimensional affine predictive boundary for
+this finite response family, so Theorem 11.2 makes its dimension minimal.
+
+This is a finite source-compatible continuation certificate, not a native
+closed-loop holonomy result: for example, $\rho^3\alpha\ne\alpha$ as FIB
+terms. Restricting the source set or changing the readout can change the
+minor rank. The witness therefore supplies the missing source-level
+instantiation for this task only; it does not establish a native $SO(3)$
+action, metric transport, or physical ambient dimension for FIB.
+

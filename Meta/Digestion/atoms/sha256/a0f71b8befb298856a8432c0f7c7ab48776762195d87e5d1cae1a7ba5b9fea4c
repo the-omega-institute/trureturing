@@ -1,0 +1,47 @@
+## 1. The full finite support and the old collision
+
+Keep the parameters of the preceding chronology volume: $m=2$, $d=1$, $\ell=2$, $n=4$, actual seed $\rho=1$, and the zero-return fingerprint cell $E_1$. The six positive accepted marker words are
+
+$$
+1100,\qquad 1010,\qquad 0110,\qquad 1001,\qquad 0101,\qquad 0011.
+$$
+
+The first three have selected prefixes of weight two; the last three are the weight-one cell $H$. Their selected event words are respectively
+
+$$
+bda,\qquad bad,\qquad abd,\qquad bac,\qquad abc,\qquad acb,
+$$
+
+where $a$ is the first zero, $c$ the second zero, $b$ the first one and $d$ the second one. The original parser identifies these events from the old fields $(t,\beta)$ and the newly acquired marker $e$:
+
+* $e=0$ and $t-\beta=0$ gives $a$;
+* $e=0$ and $t-\beta=1$ gives $c$;
+* $e=1$ and $\beta=0$ gives $b$;
+* $e=1$ and $\beta=1$ gives $d$.
+
+The old scopes are
+
+$$
+S_1=\{a,c\},
+\qquad
+S_2=\{b,c\}.
+$$
+
+On the weight-two cell, all three selected prefixes have the same old records; the first-marker register is shared only by the first two:
+
+$$
+Q_{\rm old}=(a,b),
+\qquad Z=1\text{ for }110,101,
+\qquad Z=0\text{ for }011.
+$$
+
+The bare snapshot and the continuing output are also common:
+
+$$
+B_2=(\rho,\ell,t,\beta,h)=(1,2,3,2,0),
+\qquad Y=0,
+\qquad s_{\rm stop}=0.
+$$
+
+Consequently $110$ and $101$ reach the unchanged decoder with identical $(B_2,Q_{\rm old},Z,Y,s_{\rm stop})$, but their selected pasts differ. This is a concrete remaining fiber of the full $E_1$ source, outside the previous $H$ restriction.
+

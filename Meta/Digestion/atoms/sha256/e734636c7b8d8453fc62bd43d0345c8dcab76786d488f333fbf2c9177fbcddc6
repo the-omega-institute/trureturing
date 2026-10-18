@@ -1,0 +1,13 @@
+**Definition 18.2 (finite projection and current dictionaries).** Write $v$ for the completed marker prefix, $t=|v|$ and $w=|v|_1$. The finite projection $\kappa$ has the following 47 possible tags:
+
+$$
+s,\ s_\alpha,\ s_\beta;\qquad
+P_{\rho,v},\ Q_{\rho,v}\quad(\rho\in\{0,1\},\ |v|<3);\qquad
+L_{\rho,v}\quad(\rho\in\{0,1\},\ |v|=3).
+\tag{SC.40}
+$$
+
+Here $P$ is the original segment-entry phase $p_{t+1}$, $Q$ its pending-$\beta$ phase, and $L$ records the cut just after third-marker writes and before any fourth Read. This is a projection of the actually available fields, not the complete source configuration space and not a privately retained marker word. Before seed acceptance, the original seed phase gives the first three tags. After acceptance $\rho$ is the actual seed. For $t=0$ the marker prefix is empty; for $t=1$ it is $Z$; for $t=2$ it is $(Z,w-Z)$; for $t=3$ it is recovered by Theorem 6.2's complete table. The original phase supplies $P$ versus $Q$, and the original latch state supplies $L$. Thus every tag is computed from existing written fields, including all-equal triples. Remaining original finite syndromes and selector fields are determined by the same seed, marker prefix and phase and remain charged.
+
+Let $\mathcal P_\kappa(A,B)$ be all legal finite raw prefixes from the initialized original parser ending at this tag with these acquired counts, with no earlier crossing of the third latch. At a latch tag it includes exactly the histories first completing the third marker at their final letter. Its cardinality is $G_\kappa(A,B)$. Negative count arguments give zero. The empty history lies only in $\mathcal P_s(0,0)$, whose size is one. These dictionaries include every return visit to a parser state, rather than just first visits. Every member has positive cylinder mass under every such $\mu$, since every finite raw letter word has positive mass and parsing is deterministic. They are sets of attainable histories for analysis; the observer is not given their literal elements.
+

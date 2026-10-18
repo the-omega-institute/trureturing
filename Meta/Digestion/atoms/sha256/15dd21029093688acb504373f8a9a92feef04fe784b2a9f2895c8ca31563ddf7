@@ -1,0 +1,81 @@
+**定理 9.1（Legal fixed-purity interval filling）。** At each $s\in[0,2]$, every
+value of $L$ between the two established boundary values occurs at an actual
+legal $X$ with that same $s$. Thus (3.6) is the full joint attainable set.
+
+Proof. If $s=0$, then $X=0$ and the assertion is immediate. Fix $s>0$ and put
+
+$$
+c=\min(\sqrt{s},1),\qquad d=\sqrt{s-c^2}.
+$$
+
+The lower matrix is $\mathcal D(c,d)$. Let $(a_*,b_*)$ be the ordered skew
+singular parameters of the upper matrix from Section 8:
+
+$$
+(a_*,b_*)=
+\begin{cases}
+\bigl(\sqrt{7s/10},\sqrt{3s/10}\bigr),&0<s\le10/7,\\
+\bigl(1,\sqrt{s-1}\bigr),&10/7\le s\le2.
+\end{cases}
+\tag{9.1}
+$$
+
+They satisfy $\sqrt{s/2}\le a_*\le c$. On the first branch,
+$7s/10\ge s/2$; for $s\le1$ one has $7s/10\le s$, and for
+$1\le s\le10/7$ one has $7s/10\le1$. On the second branch $a_*=c=1$
+and $s\le2$ gives the remaining inequality.
+
+First vary $a$ continuously from $c$ down to $a_*$ and set
+$b=\sqrt{s-a^2}$. Throughout this segment,
+
+$$
+\sqrt{s/2}\le a\le1,\qquad0\le b\le a\le1.
+$$
+
+Consequently $\mathcal D(a,b)$ is a continuous legal fixed-$s$ path from
+the lower matrix to $\mathcal D(a_*,b_*)$.
+
+By Lemma 4.1 there is an orthogonal matrix $Q_0$ with
+
+$$
+X_{\mathrm{up}}(s)=Q_0\mathcal D(a_*,b_*)Q_0^T.
+\tag{9.2}
+$$
+
+There is always a zero direction: the fifth coordinate of $\mathcal D$.
+Right multiplication of $Q_0$ by $\operatorname{diag}(1,1,1,1,-1)$
+reverses its determinant and leaves (9.2) unchanged. Choose $Q_0\in SO(5)$.
+This also works when a skew parameter is zero or when the two are equal.
+
+For completeness, a matrix in $SO(5)$ is joined to the identity by a finite
+product of coordinate-plane rotations. To see this, left multiply by plane
+rotations containing the first coordinate to eliminate the other entries
+of its first column and make that column $\varepsilon_1$; a rotation by $\pi$ in a
+two-coordinate plane can correct a negative first direction. Orthogonality
+then leaves a block of determinant $+1$ on the last four coordinates.
+Repeat on that block, down to a two-coordinate rotation. The remaining
+one-coordinate block is $+1$ by the determinant condition. Reversing these
+steps writes $Q_0$ as a finite product of plane rotations. Replace every
+angle in that product by $t$ times the angle. This gives a continuous
+$Q(t)\in SO(5)$ with $Q(0)=I_5$ and $Q(1)=Q_0$.
+
+The second path
+
+$$
+X(t)=Q(t)\mathcal D(a_*,b_*)Q(t)^T
+\tag{9.3}
+$$
+
+preserves skewness, singular parameters, legality and $s$, and ends at the
+upper matrix. Concatenating the two paths gives a continuous path of legal
+states from the lower to the upper endpoint at exactly the same purity.
+The function $L(X)$ is a continuous sum of absolute entries. The intermediate
+value theorem therefore supplies an actual state for every value between
+the endpoint values; monotonicity along the path is unnecessary. Universal
+lower and upper bounds exclude every value outside this interval.
+This proves the full region. $\square$
+
+The orthogonal conjugations here are constructions of mathematical states
+in the fixed class. They are not asserted to be available local operations
+on the original two subsystems.
+

@@ -1,0 +1,30 @@
+**Convention 9.2 (unchanged source and unresolved obligations).** One
+depth $K$ is still sampled once from the original finite or countable
+prior before the first paid Read; no step resamples it. Both seeds,
+every supported depth, every positive finite paid rejection, partial
+parse and return history, all marker triples, held records, third
+write before latch, fourth completion and matching Stop remain in
+the source and risk domains. The original renderer of [PAIR, Section
+2] retains the complete records and operations and preserves TV.
+The operators here supply analytical identities, not a posterior port,
+new source operation, exact sampler or paid installation. Acquired
+and synthetic updates remain identical, and all original program,
+number, control, selector, workspace and persistent-randomness charges
+remain part of COMPLETE.
+
+The coefficient $C_{r,n}$ is not optimized. It is finite at each fixed
+index and grows with $n$: since $\lambda/z_a=6/5$ and
+$\lambda/z_b=10/9$, (6.1) gives $C_{r,n+1}>5C_{r,n}$.
+Thus the guaranteed lower corrections $\delta_{r,n}$ tend to zero.
+No uniform-depth positive gap follows. The bounds neither evaluate
+$j_c$ nor decide simultaneous zero-face feasibility for the original
+supported targets. They supply no new actual feasibility, attainment,
+finite representation, exact sampling, paid installation or COMPLETE
+optimality conclusion. The supported-depth budgets, both midpoint
+means, both full residual equations, common source and any operational
+realization must still be met together by any proposed solution.
+
+[SERIAL-JOINT]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[RESTART]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FreshServiceRestart.lean
+[SERIAL]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorSerialExecution.lean
+

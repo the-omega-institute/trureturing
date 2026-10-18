@@ -1,0 +1,52 @@
+**Theorem 13.2 (exact attained chronological source-value projection).**
+The logical source-value image of completed canonical source-only extensions
+from this same $P$, allowing the installed Reserve/Raise maintenance, is
+exactly $\mathsf{HasBeta}$. At final guard/reserve $h=K$ its image is
+exactly $\mathsf{HasBeta}\cap L_h$.
+
+More precisely, for every $t\in\mathsf{HasBeta}$ and every tuple
+$0=n_0\le\cdots\le n_{m-1}$ with
+$\rho^{n_{m-1}}t\in L_h$, there is a finite actual extension which first
+constructs $t$ with accepted-Rho epoch zero and guard/reserve $h$, then
+performs exactly $n_{m-1}$ accepted original Rho calls. At its Ready
+boundaries the designated values are precisely $\rho^{n_i}t$ at these
+identical epochs. Tied indices may designate the same boundary, including
+$P$ when no construction is required. Every tuple with such a preparation
+and pure-Rho tail satisfies these semantic conditions.
+
+Proof. The beta-occurrence invariant holds initially. Reads, maintenance
+and executed refusal preserve the source. An accepted Left/Right retains
+the entire old source as one child. Each leaf's $\rho$ image contains
+beta, so an accepted Rho also preserves the invariant. CAP's source-domain
+invariant gives $\lambda(t)\le h$ at a completed boundary with guard $h$.
+These prove necessity; no statement about the equality of full histories
+has been made.
+
+For the unrestricted image choose a numeral $h\ge\lambda(t)$; for the
+fixed-capacity image use its stipulated $\lambda(t)\le h$. Select any
+beta leaf in this supplied $t$. Starting at the actual $\beta$, build
+the ancestors of that occurrence from the leaf
+upwards. If the current subtree is the desired left child, issue
+Right($v$) with the actual right sibling as context; if it is the right
+child, issue Left($v$) with the actual left sibling. Supply that complete
+finite sibling in the canonical prefix code. First complete Reserve($h$)
+and Raise($h$) if $h>1$; omit them if $h=1$. CAP Theorems 5.2–5.3
+preserve this same source occurrence and set $h=K$ without a Rho. Every
+intermediate subtree has at most $\lambda(t)$ leaves, so every supplied
+whole graft is accepted at this guard. If $h=1$, the only such $t$ is
+beta and no graft is required. CAP Theorem 4.5, Lemmas 4.7 and 6.7,
+ARC's actual outer01 entry and GENERAL Lemma 8.1 give the full finite
+return after each call. This is a prescribed sequence of existing legal
+frames; it does not replace the parked controller with a tree builder.
+
+For the chronological assertion note
+$\lambda(\rho u)=\lambda(u)+b(u)\ge\lambda(u)$, with $b(u)$ the
+number of beta leaves. The stated final bound therefore bounds every
+intermediate candidate, including $t$. Each of the next $n_{m-1}$ Rho
+calls accepts and installs the declared iterate. Maintenance and grafts
+have preserved accepted-Rho epoch zero, and subsequent accepted Rho
+increments it once per call. The complete-return induction gives all
+designated Ready boundaries. Conversely the stated prepared pure tail
+has exactly these values, and its source-domain invariant gives the final
+bound. $\square$
+

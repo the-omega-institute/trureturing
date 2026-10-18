@@ -1,0 +1,15 @@
+**定义 28.2.1（Möbius 交互项）。** 对每个 $T\subseteq N$，定义 signed measure
+
+$$
+\Gamma_T
+=
+\sum_{S\subseteq T}
+(-1)^{|T|-|S|}\mu_S.
+$$
+
+其中 $T=\varnothing$ 时 $\Gamma_\varnothing=\mu_\varnothing$。
+
+$\Gamma_T$ 是在所有严格子联盟贡献被扣除后，第一次由联盟 $T$ 共同出现的交互项。它可以是带符号的 signed measure，因此不要求自身是概率律。
+
+<a id="claim-28-2-2"></a>
+

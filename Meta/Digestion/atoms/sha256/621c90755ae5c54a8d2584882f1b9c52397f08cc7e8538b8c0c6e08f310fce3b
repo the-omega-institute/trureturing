@@ -1,0 +1,20 @@
+**Definition 4.1 (Boundary-conditioned discrepancy).** For $L\ge1$ and $\alpha,\beta\in\{0,1\}$ let
+
+$$
+K_L^{\alpha,\beta}=\{w\in B_L:\alpha w_1=w_L\beta=0\}.
+$$
+
+Give this set every legal Hamming-one edge. For a probability $p$ and a positive probability $r$ on this set, the conditional Brier discrepancy of [Guarded, Definition 3.1][G] is
+
+$$
+\begin{aligned}
+\mathcal D_K(p\Vert r)
+&=\sum_{i=1}^L\mathbb E_p(p_i(W_{-i})-r_i(W_{-i}))^2\\
+&=\sum_{u\to v\text{ in }K}(p_u+p_v)
+\left(\frac{p_v}{p_u+p_v}-\frac{r_v}{r_u+r_v}\right)^2.
+\end{aligned}
+\tag{4.1}
+$$
+
+A zero-total $p$ edge contributes zero; forced singleton posteriors are zero. A probability is band-compatible when $p_u/3\le p_v\le p_u$ on every insertion edge.
+

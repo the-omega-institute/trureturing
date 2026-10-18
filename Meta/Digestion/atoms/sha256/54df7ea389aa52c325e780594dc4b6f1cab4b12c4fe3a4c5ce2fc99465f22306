@@ -1,0 +1,110 @@
+**Theorem 5.1 (same-code universal root obstruction).** For the very
+same bit (NRE.12), no representative-root-only reader of Definition 3.2
+can return $F(u)$ on all of $\mathcal U_*$ in at most two calls, for
+any finite number of installed states. The exclusion also holds if
+either occurrence root of a repeated class is allowed.
+
+**Proof.** Use the finite orbit $T_n$ and inverse already established.
+The following are four fixed current-value tuples, all in class order
+$(a,c,b_1,b_2,b_3,b_4)$:
+
+| Origin name | $x_a$ | $x_c$ | $x_{b_1}$ | $x_{b_2}$ | $x_{b_3}$ | $x_{b_4}$ | $h$ | $\sigma$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $v_0$ | $\beta$ | $T_4$ | $T_5$ | $T_3$ | $T_6$ | $T_7$ | $0$ | $0$ |
+| $v_1$ | $\beta$ | $T_3$ | $\alpha$ | $T_5$ | $T_6$ | $T_7$ | $1$ | $0$ |
+| $v_2$ | $\beta$ | $T_3$ | $T_4$ | $\alpha$ | $T_6$ | $T_7$ | $2$ | $0$ |
+| $v_3$ | $T_3$ | $\beta$ | $T_4$ | $T_2$ | $\alpha$ | $T_5$ | $3$ | $0$ |
+
+For each row $i$, let $t_i=\mathscr S(x^{(i)})$ and
+$v_i=\delta(t_i)$. These are actual finite sources, as follows.
+The six values in each tuple are pairwise distinct by orbit distinctness.
+The first tuple has only image values. In the next three, the sole
+nonimage is the displayed alpha at $b_1,b_2,b_3$ respectively, and its
+left partner is beta. All other entries are images. The exact image
+calculation in the proof of Theorem 4.1 therefore puts $t_i$ in
+$\mathcal I$, and $\rho v_i=t_i$. Literal filling preserves both
+occurrences of $a$ and $c$ with all six-class disequalities, so
+$R_P(t_i)=R_*$ and $v_i\in\mathcal U_*$. Explicit inverse expressions
+for these origins are
+
+$$
+\begin{aligned}
+v_0={}&\left\langle
+ \left\langle\langle\alpha,T_4\rangle,\langle\alpha,T_2\rangle\right\rangle,
+ \left\langle\langle T_3,T_5\rangle,\langle T_3,T_6\rangle\right\rangle
+\right\rangle,\\
+v_1={}&\left\langle
+ \left\langle\beta,\langle\alpha,T_4\rangle\right\rangle,
+ \left\langle\langle T_2,T_5\rangle,\langle T_2,T_6\rangle\right\rangle
+\right\rangle,\\
+v_2={}&\left\langle
+ \left\langle\langle\alpha,T_3\rangle,\beta\right\rangle,
+ \left\langle\langle T_2,T_5\rangle,\langle T_2,T_6\rangle\right\rangle
+\right\rangle,\\
+v_3={}&\left\langle
+ \left\langle\langle T_2,T_3\rangle,\langle T_2,\beta\rangle\right\rangle,
+ \left\langle\beta,\langle\alpha,T_4\rangle\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{NRE.15}
+$$
+
+Their required complete targets are respectively $R_0,R_1,R_2,R_3$,
+which are different. The code is zero on $v_1,v_2$ by its $h=1,2$
+clause, on $v_3$ because $x_{b_2}=T_2=E$, and on $v_0$ because
+$h=0$ and $x_{b_2}=T_3\notin\{\beta,E\}$. These are evaluations of
+the original prescribed function, not a new coloring of four witnesses.
+
+Here is the exact representative-root native reply matrix, with
+$\mathsf{br}$ denoting $\mathsf{branch}$:
+
+| Source | $p_a=LLL$ | $p_c=RLL$ | $p_{b_1}=LLR$ | $p_{b_2}=LRR$ | $p_{b_3}=RLR$ | $p_{b_4}=RRR$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| $v_0$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_1$ | $\beta$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_2$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_3$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\alpha$ | $\mathsf{br}$ |
+
+For completeness, retaining every occurrence separately gives
+
+| Source | $LLL$ | $LLR$ | $LRL$ | $LRR$ | $RLL$ | $RLR$ | $RRL$ | $RRR$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $v_0$ | $\beta$ | $\mathsf{br}$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_1$ | $\beta$ | $\alpha$ | $\beta$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_2$ | $\beta$ | $\mathsf{br}$ | $\beta$ | $\alpha$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ |
+| $v_3$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\mathsf{br}$ | $\beta$ | $\alpha$ | $\beta$ | $\mathsf{br}$ |
+
+Suppose a root-only reader with any finite installed state set succeeds
+on every actual origin with the same code and at most two calls.
+All four displayed origins start at its one state $\iota(0)$, since
+their complete code is zero and all other entry fields are common.
+An initial Halt would return one fixed whole row and cannot be correct
+on these four different targets. Thus the initial state is a Read.
+
+Every possible first representative root has a reply shared by at least
+three of these four origins. Indeed, $a$ and $c$ separate $v_3$ from
+$\{v_0,v_1,v_2\}$; $b_1$ isolates $v_1$, $b_2$ isolates $v_2$,
+$b_3$ isolates $v_3$, and $b_4$ is constant. After taking that common
+first reply, at least three origins with three different required rows
+are in exactly the same successor state. At most one invocation remains.
+
+If this state is a Halt, it returns just one row. If it is a Read, its
+fixed root address has at most two different actual replies on the four
+origins, hence at most two on the selected three. For each such reply
+there is one fixed successor. Every attained successor must be a Halt:
+a running successor would have to make a third native call, and the
+contract supplies no free transition or output decoder. Therefore this
+second Read can return at most two whole rows. Neither possibility
+serves the three different targets, a contradiction.
+
+This argument ranges over the competing table itself. It assumes no
+relationship to the address paths or state paths of Theorem 4.1.
+Any amount of state sharing or duplication, either choice of the other
+code's entry, early halts, repeated roots, or cycles in the union graph
+is covered by the same common-state argument. Unattained transition
+entries add no actual replies. The all-occurrence matrix duplicates the
+partner columns and gives the identical obstruction when either partner
+occurrence may be read. The four witnesses refute a universal correctness
+promise; they do not restrict the domain of the upper construction.
+The exclusion thus has no installed-state upper bound. $\square$
+

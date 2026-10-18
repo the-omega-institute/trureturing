@@ -1,0 +1,39 @@
+**Proposition 8.3 (Finite-coordinate minimax obstruction).** For every
+finite $K\subset\mathbb Z$ and every real-valued estimator $g$ based
+only on the original/modified records
+$Y_K(x)=(x|_K,(Rx)|_K)$,
+
+$$
+\operatorname*{ess\,sup}_{x\sim P(\,\cdot\mid E)}
+\left|g(Y_K(x))-D(x)\right|
+\ \ge\ \frac12\left|\frac{11}{49}+\frac{33}{169}\right|
+=\frac{1738}{8281}.
+\tag{8.5}
+$$
+
+Different finite sets for the two records are included by taking their
+union. The lower bound is sharp for every $K$: the constant estimator
+$g=121/8281$, the midpoint of the two target values, attains it.
+
+Proof. On $E$, the modification changes only the known center zero to
+one. Every positive-probability $Y_K$ fiber within $E$ therefore fixes
+only finitely many original bits and is a nonempty legal cylinder.
+Both component laws have positive probability on every such cylinder,
+by [Universal, Proposition 7.2][U]. Removing $\Omega^c$ preserves these
+probabilities. Thus the same observed record occurs with both labels
+on sets of positive conditional probability. For any value $z$ assigned
+to it, the triangle inequality gives
+$\max(|z-11/49|,|z+33/169|)\ge1738/8281$.
+There are only finitely many record fibers, proving (8.5); the midpoint
+proves sharpness. Independent randomization cannot lower this bound:
+condition on the seed and apply the same argument, with essential
+supremum taken over the joint conditional law. $\square$
+
+This is a conditional essential-supremum absolute-error bound, not a
+mean-square, mean-absolute, or fixed error-probability bound. Its
+boundary-locality consumer is [Exterior Localization, §6][L]: a
+finite visible collar for the center cocycle is a special case of
+$K$, so finite hidden presentation does not supply that missing
+finite-boundary-dependence hypothesis. Three changing summands do not
+make their values recoverable from a finite visible boundary.
+

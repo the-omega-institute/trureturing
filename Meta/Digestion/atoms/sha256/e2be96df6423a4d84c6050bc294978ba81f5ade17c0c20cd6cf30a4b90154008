@@ -1,0 +1,28 @@
+**定理 38.2（全部有限日程无需追加源读取）。** 在假设35.1和定义38.1下，基础码向量为每个 $u\in\mathcal V(H)$ 正确服务每个这样的有限日程，而不再请求来源。输出 $E_q(\sigma_q(y_u),k)$ 即可。其单步语义运输 $S_q:\mathcal C_q\to\mathcal C_q$ 为
+
+$$
+\begin{aligned}
+&S_q(\mathsf C)=\mathsf C,\qquad
+ S_q(\mathsf A)=\mathsf B,\qquad S_q(\mathsf B)=\mathsf C,\\
+&S_q(\mathsf D_t)=\mathsf D_{t-1}\quad(t>1),\\
+&S_q(\mathsf D_1)=
+\begin{cases}\mathsf B,&q\text{ 末字母为 }L,\\\mathsf A,&q\text{ 末字母为 }R.
+\end{cases}
+\end{aligned}
+\tag{SLH.38.1}
+$$
+
+根没有 $\mathsf D_t$ 分支，并且
+
+$$
+\sigma_q(\rho y)=S_q(\sigma_q(y)),\qquad
+E_q(S_q^m c,k)=E_q(c,m+k).
+\tag{SLH.38.2}
+$$
+
+证明。定义35.2的四类序列删去第零项，逐类得到 (SLH.38.1)。定理37.1的序列单射给第一式，再对 $m$ 归纳给第二式。实际日程归纳中，更新之后寄存器确为 $\rho^{N+k+1}u$，读数目标的正确值由 (SLH.36.1) 给出；输出动作不修改来源。相同程序的每个自适应选择由真实保留输入及正确旧答案决定，故同样归纳适用。整个过程只计算有限整数、有限码和有限输出，没有进行未声明的来源读取，也没有以无限序列为计算输入。
+
+$S_q$ 一般不单射：$S_q(\mathsf B)=S_q(\mathsf C)$。若破坏性地只保留移动后的码，就只保留从新切点起的未来，不能反推所有旧码或基础窗口。保留基础码和实际偏移才能同时恢复基础完整序列及其各个后缀；偏移来自计数和认证，不由饱和为分支的码反推出。
+
+输出值属于派生预测或任务答案，不追加为过去或当前的 raw Read 事件，不伪造首次出现缓存。若任务要求一次真实原始读事件，必须执行并支付该事件；若要求原始完整观察者继续运行，还须保留其完整状态并满足原动作合同。`ActualObserverPrefixRigidity.actualPrefix_history_rigid` 和本卷命题23.3的重放以前缀真实缓存、同一静止安装及终止等条件为前提；这里只有预测码，不能借其结论重建已丢弃的控制或档案。$\square$
+

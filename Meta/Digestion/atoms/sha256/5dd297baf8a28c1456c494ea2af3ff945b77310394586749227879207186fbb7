@@ -1,0 +1,78 @@
+### 55.2 非退化性与保留全部相位的插值
+
+反设存在实际三元组，写 \(\sqrt6v=(x,y)\)，其中 \(x_j,y_j\in\mathbb T\)，并记
+\[
+\alpha_x=\sum_{j=0}^2\bar x_jx_{j+1},\quad
+\alpha_y=\sum_{j=0}^2\bar y_jy_{j+1},\quad
+X=\sum_jx_j,\quad Y=\sum_jy_j.
+\]
+下标按三取模。循环正交给出 \(\alpha_x+\alpha_y=0\)，并且对未归一化的三点 Fourier 变换有
+\[
+|\widehat x_k|^2+|\widehat y_k|^2=6\quad(k=0,1,2),
+\qquad |X|^2+|Y|^2=6.
+\tag{55.4}
+\]
+任一单位三元组的一个 Fourier 坐标若为零，乘相应单位模字符后其三个单位数之和为零，故它们是正三角形的三个顶点。按任意顺序排列仍是另一个 Fourier 单模，其某个 Fourier 坐标的平方模为九。这与式 (55.4) 矛盾。因此 \(X,Y\ne0\)。
+
+两个 channel 的坐标也各自互异。事实上 \(\operatorname{Im}\alpha_x\) 是坐标三角形有向面积的两倍；三个互异单位圆点不共线，所以它为零当且仅当有重复坐标。若一个 channel 重复，则 \(\alpha_y=-\alpha_x\) 使另一个也重复。若重复位置相同，实际向量被一个同步换位固定，与前卷命题 51.1 矛盾。若位置不同，可把给定坐标描述为
+\[
+x=\rho(r_0,1,1),\qquad y=\sigma(1,t_0,1),
+\qquad |\rho|=|\sigma|=|r_0|=|t_0|=1.
+\]
+这里仅分解给定坐标，没有把两 channel 的相位当作独立 gauge。循环条件给出 \(\operatorname{Re}(r_0+t_0)=-1\)，故
+\[
+\langle v,R_{01}v\rangle
+=\frac{1+\operatorname{Re}(r_0+t_0)}3=0,
+\]
+与前卷命题 51.2 的严格换位正性矛盾。常数 channel 可选择固定另一 channel 重复位置的换位，已包含在前一种情形。因此
+\[
+\operatorname{Im}\alpha_x\ne0,
+\qquad x_0,x_1,x_2\text{ 及 }y_0,y_1,y_2\text{ 分别互异}.
+\tag{55.5}
+\]
+
+只乘整个六维向量的一个公共相位，使 \(X>0\)。令 \(\chi=x_0x_1x_2\)，则 \(|\chi|=1\)，且 \(x_j\) 恰为
+\[
+f(Z)=Z^3-XZ^2+\chi XZ-\chi
+\tag{55.6}
+\]
+的三个互异根。于这些根上，
+\[
+Z^2=XZ-\chi X+\chi Z^{-1},\qquad
+Z^{-2}=XZ^{-1}-\bar\chi X+\bar\chi Z.
+\tag{55.7}
+\]
+函数 \(1,Z,Z^{-1}\) 在三个根上线性无关：将一个线性关系乘以 \(Z\)，所得二次多项式不能有三个互异根。因此存在唯一的同一组复系数 \(A_0,B,C\)，使
+\[
+y_j=XA_0+Bx_j+C\bar x_j,\qquad
+\zeta=Y/X=3A_0+B+C=s+it,
+\quad r=|\zeta|^2,\quad n=1+r,
+\quad X^2n=6.
+\tag{55.8}
+\]
+这没有删除任何相对相位。
+
+下面记录三点模条件的完整恒等式。对任意复数 \(E,F,G\) 和实数 \(R\)，定义
+\[
+\begin{aligned}
+\mathcal T_0(E,F,G;R)
+ &=|E|^2+|F|^2+|G|^2-R-X(\chi F\bar G+\bar\chi\bar F G),\\
+\mathcal T_1(E,F,G)
+ &=\bar EF+E\bar G+XF\bar G+\bar\chi\bar F G.
+\end{aligned}
+\]
+式 (55.7) 逐项给出
+\[
+|E+FZ+G\bar Z|^2-R
+=\mathcal T_0+\mathcal T_1Z+\overline{\mathcal T_1}\bar Z.
+\tag{55.9}
+\]
+故三个模方都为 \(R\)，当且仅当一个实系数 \(\mathcal T_0\) 和一个复系数 \(\mathcal T_1\) 同时为零。
+
+对式 (55.8) 展开循环相关，除 \(|B|^2\alpha_x+|C|^2\bar\alpha_x\) 外的项均为实数。由式 (55.5) 及 \(\alpha_y=-\alpha_x\)，得到
+\[
+|C|^2-|B|^2=1.
+\tag{55.10}
+\]
+另外 \(r>0\)。命题 52.1 已在同一实际基方向上排除 \(|X|^2=|Y|^2=3\)，所以 \(r\ne1\)。
+

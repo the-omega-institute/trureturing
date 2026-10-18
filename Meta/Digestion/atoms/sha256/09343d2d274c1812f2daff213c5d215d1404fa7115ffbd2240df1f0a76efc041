@@ -1,0 +1,31 @@
+### 96.3. A two-fibre unitary best-response fact
+
+We next analyze the four-coordinate occupancy consisting of two whole original fibres. Its principal Grams have the form
+
+\[
+ G_S=\begin{pmatrix}I_2&X\\X^*&I_2\end{pmatrix},\qquad
+ H_S=\begin{pmatrix}I_2&Y\\Y^*&I_2\end{pmatrix},\qquad
+ \|X\|_{\rm op},\|Y\|_{\rm op}\le1.
+                                                                    \tag{12}
+\]
+
+For M=J₂/2−X⊙Y, the exact two-fibre adaptive norm is ∥M∥op. To verify the upper bound, put C=W₁₂, A=W₁₁, B=W₂₂. Positivity of W and ρ−W gives
+
+\[
+ \begin{aligned}
+ \|C\|_1&\le\sqrt{\operatorname{Tr}A\,\operatorname{Tr}B},\\
+ \|C\|_1&\le\sqrt{\operatorname{Tr}(\rho_1-A)
+                           \,\operatorname{Tr}(\rho_2-B)},\\
+ 2\|C\|_1&\le\sqrt{\operatorname{Tr}\rho_1\,
+                          \operatorname{Tr}\rho_2}\le\frac12.
+ \end{aligned}                                                     \tag{13}
+\]
+
+The first inequality follows by factoring a positive block matrix as blocks P*P,P*Q,Q*P,Q*Q and applying the Hilbert–Schmidt product inequality; the second is the same argument for ρ−W. Adding and applying the scalar Cauchy–Schwarz inequality gives the third. Thus the objective 4Re Tr(MC*) is at most ∥M∥op. For unit left and right singular vectors u,v attaining that norm, equality is realized by
+
+\[
+ \rho=\operatorname{diag}(uu^*/2,vv^*/2),\qquad
+ W=\frac14\binom{u}{v}\binom{u}{v}^{*},\qquad
+ \rho-W=\frac14\binom{u}{-v}\binom{u}{-v}^{*}\ge0.               \tag{14}
+\]
+

@@ -1,0 +1,31 @@
+### 83.1. Original coordinates and statement
+
+Keep the actual matrix of (81.1), now throughout \(0<|b|<1\):
+\[
+ \rho=3-b^2,\quad h=\sqrt{\frac{\rho}{1+b^2}},\quad
+ \kappa=(b-i)h,\quad
+ P=\frac{bh-3+i(h+b)}2,\quad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J+PI_3&J+QI_3\\J+\bar QI_3&-J-\bar PI_3\end{pmatrix}.
+                                                               \tag{83.1}
+\]
+Here \(J\) is the all-ones matrix. Inputs have unit-modulus entries,
+norm \(\sqrt6\), and are common-flat when their images under \(H_0\)
+also have unit-modulus entries. Unit rays are obtained by dividing by
+\(\sqrt6\). An aligned input has a common repeated pair in its two
+channels. After a phase and synchronous permutation it has the form
+\[
+ w=(1,1,z;g,g,gr),\qquad |z|=|r|=|g|=1.                 \tag{83.2}
+\]
+Constants and either singleton phase equal to \(-1\) are included.
+
+**Theorem 83.1.** For fixed \(0<|b|<1\), an aligned common-flat
+input in (83.2) is uniquely determined by \((g,z/r)\).
+
+This is a fiber statement, with no assumption about the number of rays.
+The same-position pair classification will follow in §84, and the
+all-aligned triple obstruction across different symmetry unions in §85.
+The generic-containing triple problem remains outside these conclusions.
+

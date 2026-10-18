@@ -1,0 +1,78 @@
+**命题 53.2。** 取 §§51–52 的实分支 \(-1<a<1\)，
+\[
+H_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},
+\qquad A=J+(p-1)I,\quad B=J+(q-1)I,
+\]
+其中 \(p,q\) 和分支方向与正文相同。设
+\[
+v=\frac1{\sqrt6}\binom{x}{y},\qquad x,y\in\mathbb T^3,
+\]
+满足 \(H_0v\) 平坦且 \(v,Sv,S^2v\) 正交归一。令
+\[
+K=\frac1{\sqrt6}M(x,y),\qquad C=H_0K.
+\]
+则 \(K\) 与 \(C\) 均不属于 Fourier union。
+当 \(a\ne0\) 时，\(H_0\) 也不属于 Fourier union。
+因此若这样的实际 cyclic triple 在 \(a\ne0\) 处存在，
+\((I,H_0,C)\) 是三条相对 Hadamard 边均在该 union 之外的 MUB triplet。
+
+**证明。** §51 的实际构造已经给出 \(K\) 与 \(H_0K\) 的平坦性及酉性。
+写
+\[
+H_0v=\frac1{\sqrt6}\binom{u}{z},\qquad
+u=\frac{Ax+By}{\sqrt6},\quad z=\frac{B^*x-A^*y}{\sqrt6}.
+\]
+于是 \(u,z\in\mathbb T^3\)。\(H_0\) 与所有同步坐标置换交换，
+故输出的 cyclic triple 也正交归一，且
+\[
+\alpha(u)+\alpha(z)=0.
+\]
+对三种同步 transposition \(R_j\)，酉性、交换性及正文 §51 的严格正性给出
+\[
+\langle H_0v,R_jH_0v\rangle
+ =\langle v,R_jv\rangle>0. \tag{53.2}
+\]
+这里严格正性只对原来的实际输入 \(v\) 使用；没有将 \(H_0^*\) 擅自代入
+实分支定理作为新的 seed。
+
+若单位相位三元组 \(t\) 满足 \(\alpha(t)=0\)，命题 53.1 证明中的根分析表明
+它的相邻比值恰为 \(1,\omega,\omega^2\)。所以恰有两个坐标相等，
+第三个坐标是共同值的 \(\omega\) 或 \(\omega^2\) 倍。
+三种 transposition 的内积 \(\langle t,R_jt\rangle\) 因而恰为
+\(3,0,0\) 的一个排列：交换相等坐标给出 \(3\)，另外两种给出
+\(1+\omega+\omega^2=0\)。
+
+若 \(\alpha(u)=0\)，则 \(\alpha(z)=0\)。每个 channel 的上述内积最多只在
+一个 transposition 处非零，两个 channel 合起来仍留下至少一个 \(R_j\) 满足
+\[
+\langle H_0v,R_jH_0v\rangle
+ =\frac{\langle u,R_ju\rangle+\langle z,R_jz\rangle}{6}=0,
+\]
+与式 (53.2) 矛盾。因此 \(\alpha(u)\ne0\)。相同论证也可用于输入；
+上节还给出了更强的 \(\operatorname{Re}\alpha(x)\ne0\)。
+
+令 \(U,Z\) 分别是以 \(u,z\) 为首列的 circulant 矩阵。
+由 circulant 块交换及实际乘法，
+\[
+U=\frac{AX+BY}{\sqrt6},\qquad
+Z=\frac{B^*X-A^*Y}{\sqrt6},
+\]
+\[
+H_0K=\frac1{\sqrt6}\begin{pmatrix}U&Z^*\\Z&-U^*\end{pmatrix}
+ =\frac1{\sqrt6}M(u,z)\operatorname{diag}(I,-I).
+\]
+分别对 \((x,y)\)、\((u,z)\) 应用命题 53.1，即知 \(K,C\) 均在 Fourier union
+之外。实际列方向下，completion 是 \(C\)，它的两条边分别为
+\(C\) 与 \(H_0^*C=K\)；因此两个结论没有互相替代。
+最后 \(A\) 的首列是 \((p,1,1)\)，且
+\[
+\alpha(p,1,1)=1+2\operatorname{Re}p=a.
+\]
+同一判据在 \(a\ne0\) 时排除 \(H_0\) 的两个 Fourier 方向。证毕。
+
+[Matolcsi–Matszangosz–Varga–Weiner, *Triplets of mutually unbiased bases* (2026)](https://doi.org/10.1007/s10801-026-01506-x)
+的 §4 Conjecture 1 预测所有六维 MUB triplet 都属于具有 Fourier 边的已知构造。
+命题 53.2 表明，本节实际 cyclic triple 若在 \(a\ne0\) 处存在，将落在该预测之外。
+这保留了一个精确的存在性问题：本节没有构造这样的 triple，也没有用该猜想
+代替非存在性证明；对一般不同轨道的 common-flat 向量及第四个基仍未给出排除。
+

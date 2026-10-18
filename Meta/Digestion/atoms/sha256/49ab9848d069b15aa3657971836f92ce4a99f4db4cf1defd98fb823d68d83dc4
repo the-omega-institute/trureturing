@@ -1,0 +1,23 @@
+## 489. The last six-high profile exceeds H capacity
+
+In profile (1,0,3,1), degree(X)>=6 forces rho to have exactly three X slots and each of the three five-high owners to have one axial X slot. Thus deg(X)=6. Their three axial angles have sum strictly below 2*pi because rho's three X angles are positive. At least one of these axial angles theta is at most 2*pi/3.
+
+For that owner's formula (483.2), the function
+
+    f(theta,lambda)=theta+4*atan(lambda*cot(theta/2))
+
+strictly decreases in theta and strictly increases in lambda on the actual paired domain 1/2<lambda<1. Here K<1 and sqrt((r-1)/(r+1))<1 give lambda<1. Indeed
+
+    partial_theta f=1-2*lambda/
+       [sin(theta/2)^2+lambda^2*cos(theta/2)^2]<0.
+
+Therefore, using lambda>8/9,
+
+    E_H>2*pi/3+4*atan(8/(9*sqrt(3)))>7*pi/6.     (489.1)
+
+The last comparison follows from 8/(9*sqrt(3))>1/2>sqrt(2)-1=tan(pi/8). Both inverse tangents use their positive principal branch.
+
+Tau costs more than pi, the two other five-high owners each more than pi, the owner in (489.1) more than 7*pi/6, and rho more than 11*pi/6. These disjoint actual H slots sum to more than 6*pi, a contradiction. This excludes every n_6=1 profile.
+
+Only the two profiles (480.3) remain. The individual degree statements follow by subtracting tau's vector (2,0,1,0) from (480.2), and using the exact total high-slot count of the four remaining owners: 20 in the four-five-slot profile, and 19 in the three-five/one-four-slot profile. QED.
+

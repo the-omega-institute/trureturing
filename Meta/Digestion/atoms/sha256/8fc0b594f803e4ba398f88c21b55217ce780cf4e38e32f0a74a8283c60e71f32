@@ -1,0 +1,25 @@
+**Corollary 47.3 (actual native zero leaf).** On the actual leaf
+$D=D_0$ at $\kappa=0$, the two moving native phases have the same
+path bound (42.3) and joint endpoint weighted-variation bound
+(42.4), with $z\in\mathbb R^2$, tensor
+$N_0=(M_0)_{\{1,2\}\times\{1,2\}}$, and the same two distinct
+height targets. Their target covariance is $2\min(s,t)N_0$.
+The frozen original coordinate contributes a Dirac factor.
+
+Proof. The projection of the resolved $\kappa=0$ process retaining
+height and $(\theta,v)$ solves exactly the zero-leaf SDE in DEV
+Theorem 39.2. Explicitly its coefficients are
+$a_0=((H-k)/(2H),-k/(2H))$. The same height-only law changes
+therefore give exactly its Q and terminal-survivor laws.
+Projection contracts the phase norm and the path cost. For a signed
+measure its projected variation is at most the projection of its
+variation, as follows by testing against measurable functions of
+absolute value at most one. The weight satisfies
+$1+|\operatorname{pr}z|\le1+|z|$, so weighted variation contracts
+as well. Project Theorem 42.2. The projected Gaussian has covariance
+$2N_0$, and $N_0$ is positive definite as a principal block of
+$M_0$. Adding the constant coordinate $D_0$ changes no distance or
+rank. This proves a statement about the actual two-phase process,
+not a third native phase or a raw four-dimensional density.
+$\square$
+

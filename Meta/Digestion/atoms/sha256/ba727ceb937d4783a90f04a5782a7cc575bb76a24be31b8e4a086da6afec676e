@@ -1,0 +1,60 @@
+**Corollary 3.2 (nonnegative covering dual and integral rounding).**
+Under the hypotheses of Theorem 3.1 with $\sqrt m\,c\le C$, let
+$Z(n)$ and $K(n)$ be the fractional and integral covering optima of
+$S^n$ by the entire family of nonempty jointly admissible subsets.
+Then
+
+$$
+y(x)=C^{-n}\prod_iw(x_i),\qquad
+\left(\frac{w(S)}C\right)^n\le Z(n),\qquad
+\left\lceil\left(\frac{w(S)}C\right)^n\right\rceil\le K(n),
+\tag{CIT.12}
+$$
+
+and the classical finite harmonic rounding bound is
+
+$$
+Z(n)\le K(n)\le H_{|S|^n}Z(n),\qquad
+H_N=\sum_{j=1}^N\frac1j.
+\tag{CIT.13}
+$$
+
+These formulas do not assert equality of either optimum with the
+displayed weight lower bound.
+
+Proof. Theorem 3.1 says $\sum_{x\in B}y(x)\le1$ for every
+admissible $B$, and $y\ge0$. For any fractional cover
+$\alpha_B\ge0$ with $\sum_{B\ni x}\alpha_B\ge1$,
+
+$$
+\left(\frac{w(S)}C\right)^n
+=\sum_xy(x)
+\le\sum_xy(x)\sum_{B\ni x}\alpha_B
+=\sum_B\alpha_B\sum_{x\in B}y(x)
+\le\sum_B\alpha_B.
+\tag{CIT.14}
+$$
+
+This proves the dual direction. An integral cover gives the same
+inequality with its number of members on the right, and that number
+is an integer, proving the ceiling. Overlaps do not affect the argument.
+
+For completeness, the finite harmonic rounding used here is purely
+combinatorial. Singletons are admissible, so a cover exists. Greedily
+choose a member covering the most uncovered points until all
+$N=|S|^n$ points are covered. Charge each newly covered point the
+reciprocal of the number newly covered in that step. Total charge is
+the number of chosen members. For any fixed admissible set $A$, when
+$j$ of its points remain uncovered, a greedy step covers at least
+$j$ points overall, since $A$ itself is available. If that step
+covers $r$ points of $A$, their total charge is at most $r/j$,
+which is at most $1/j+1/(j-1)+\cdots+1/(j-r+1)$. Summing the
+steps gives total charge on $A$ at most $H_{|A|}\le H_N$.
+Multiply a fractional cover's inequalities by the nonnegative point
+charges and sum. The greedy cover size is at most
+$H_N\sum_A\alpha_A$. Minimizing over fractional covers proves
+the upper bound in (CIT.13); the lower bound follows because every
+integral cover is a fractional one. This reuses the classical covering
+argument also credited in NCM and FMR. It supplies neither a new local
+primal cover nor an operational acquisition procedure. $\square$
+

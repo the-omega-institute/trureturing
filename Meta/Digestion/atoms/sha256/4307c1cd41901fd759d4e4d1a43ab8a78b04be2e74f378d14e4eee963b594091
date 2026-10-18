@@ -1,0 +1,13 @@
+**Corollary 2.2 (deletion cost under a hard cap).** If a common weight
+$w$ has $\beta_{d,L}(w)\le C$, then for every $B$,
+
+$$
+\sum_s\prod_{i\notin B}\Phi_i^w(s)
+ \le R_d^{|B|}C^{\,n-|B|},
+\tag{SCP.7}
+$$
+
+with $C^0=1$. This is valid for $L=\infty$ as well. It is a bound on
+the exact once-owned carrier, not a product approximation of the block
+weights.
+

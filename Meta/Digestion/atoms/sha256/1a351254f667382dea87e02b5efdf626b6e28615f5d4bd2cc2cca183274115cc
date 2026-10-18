@@ -1,0 +1,41 @@
+**Theorem 2.3 (The full $25$-dimensional positivity test on this face).**
+For the tuple (2.1),
+
+$$
+Z(x)\succeq0\quad\Longleftrightarrow\quad
+\Lambda_{ij}\ge0\ (i,j\in I),\quad\Gamma\succeq0,
+\quad\Lambda_{ij}\Lambda_{ji}\ge\Gamma_{ij}^2\ (i<j).
+\tag{2.6}
+$$
+
+Whenever positive, this matrix is PPT. Conditions (2.6) do not
+by themselves imply (2.2).
+
+Proof. Choose real orthonormal bases $\mathcal B_i$ of $V_i$,
+and write $\Omega_i=\operatorname{vec}(R_i)/\sqrt{n_i}$.
+On $\operatorname{span}(\Omega_0,\Omega_+,\Omega_-)$ the matrix
+is $[\Gamma_{ij}/\sqrt{n_in_j}]_{ij}$, a congruence of $\Gamma$.
+In each plane $V_j\otimes V_j$, the sum
+$\sum_aF_{2j,a}\otimes F_{2j,a}$ has eigenvalues $1,0,0,-1$
+on the trace, two symmetric traceless, and antisymmetric directions.
+Consequently the last three directions of $Z(x)$ have eigenvalues
+$\Lambda_{jj}/4,\Lambda_{jj}/4,0$.
+
+For $i<j$ and $a\in\mathcal B_i,b\in\mathcal B_j$, the ordered
+pair $(a\otimes b,b\otimes a)$ carries the block
+
+$$
+\frac1{n_in_j}
+\begin{pmatrix}\Lambda_{ij}&\Gamma_{ij}\\
+                \Gamma_{ij}&\Lambda_{ji}\end{pmatrix}.
+\tag{2.7}
+$$
+
+There are $n_in_j$ copies for each pair of sectors. These orthogonal
+blocks exhaust $3+3+3+2(2+2+4)=25$ dimensions. Their elementary
+PSD conditions are precisely (2.6). Separate-transpose invariance
+in (1.6) proves PPT. The analogous diagonal-sign block calculation
+is mature; compare Singh–Nechita Lemma 2.12. The multiplicities
+and normalizations in (2.7) are those of this walk. The example in
+§4 proves the final assertion. $\square$
+

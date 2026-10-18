@@ -1,0 +1,18 @@
+## 1. Scope and mathematical inputs
+
+This is an ordinary mathematical continuation of the existing [HS4 dossier](../../../Problems/higuchi-sudbery-2000-four-qubit-average-entropy-maximum.md). Its new statements have not been formalized in Lean. The existing maximum theorem and its degree-six certificate remain unchanged. Historical originality of the continuation is not asserted.
+
+Throughout, A,B,C,D are labelled qubits, psi is a normalized pure state in (C^2)^{tensor 4}, and the three cuts are AB|CD, AC|BD, AD|BC, in that order. The amplitude index is 8a+4b+2c+d. Local-unitary equivalence means a product of four one-qubit unitaries, allowing a global phase and **not** allowing a permutation of the four parties unless explicitly stated.
+
+Let rho_c be the two-qubit marginal of cut c, lambda_{c,j} its four eigenvalues, and
+
+$$F(\psi)=\frac{1}{3}\sum_c S_2(\rho_c),\qquad F_*=1+\frac12\log_2 3,\qquad \Delta=F_*-F(\psi).$$
+
+Here S_2 denotes von Neumann entropy with logarithm base 2; the subscript specifies the logarithm base, not Renyi order. Below Renyi entropy is denoted R_alpha instead. Put
+
+$$P=\sum_c\operatorname{Tr}\rho_c^2,\qquad E=\sum_c e_3(\operatorname{spec}\rho_c),\qquad e_3(v)=\sum_{i<j<k}v_iv_jv_k.$$
+
+The actual inputs already present in the HS4 development are P>=1, E<=5/36, and the cubic entropy majorant. Their owners are `HS4Assembly.literal_purity_identity`, `HS4Assembly.spectrum_e3_eq_minors`, `PrimeHierarchyCertificate.prime_certificate_identity`, `ReflectionEvaluation.ref_eval_rhs_nonneg`, and `HermiteEntropy.hermite_majorant`, including their private live proof components under `D5/S3/Quantum/Entanglement/HiguchiSudbery/`. This text reuses those mathematical inputs; it does not replace their kernel proof with numerical tests.
+
+The only external classification input used below is the one-uniform normal-form theorem, Gour-Wallach [GW10], Theorem 5: every normalized four-qubit pure state with all four one-qubit marginals equal to I_2/2 is locally unitarily equivalent to a vector in the Bell-product subspace A. That theorem is used with all its hypotheses. The uniqueness sentence of their Theorem 10 is **not** used. Sections 3 and 4 keep the complex-conjugate branches distinct for labelled parties.
+

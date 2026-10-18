@@ -1,0 +1,67 @@
+**Corollary 10.1 (qualified residual terminal slack).** Fix one actual
+live prefix of an original graph, with support $S$, particular assignment
+and $h$ ones. Put
+
+$$
+R_0=[n]\setminus S,\qquad N=|R_0|,\qquad q=k-h.
+$$
+
+Suppose $N\ge7$ and $4\le q\le N-3$. Let $P_0$ be the no-copy
+residual graph of this prefix. If $P_0\in\mathfrak C_5$ for its own
+parameters, or if it has its own terminal span-five gap with
+$\min(q,N-q+1)\le6$, then
+
+$$
+m(R_0)\ge
+q(N-q+1)+\nu_0+E_{{\rm reg},0}
++b_{{\rm short},0}+2\tau_0+\rho_0+\Xi_0+\eta_{5,0}.
+\tag{TS.39}
+$$
+
+All subscript-zero quantities concern that same residual graph. For a
+native preparer and its supplied cube projection, with $M_i$ counting all
+installed native states in $E_i$, the corresponding actual live prefix
+satisfies the same lower bound for
+$M(R_0)=\sum_{i\in R_0}M_i$.
+
+Proof. Live freshness gives prefix charges $|S|,C_S$, so every completion
+has remaining caps $N,C_{R_0}$. Freeze precisely its actual old assignment,
+retain the $R_0$-labelled states reached on those completions, and suppress
+fixed-$S$ chains. A realized chain is finite and ends at a retained state
+or terminal. The initial chain reaches a retained state because the
+residual threshold is nonconstant. Arbitrarily completing unrealized edges
+does not make them actual: inputwise induction follows each original
+$R_0$-state subsequence. The residual graph is correct and terminating at
+both residual caps, with at most $m(R_0)$ states, no copies, and the same
+original costs reindexed in their increasing order. This is the actual-prefix
+restriction exposed in [SB, Theorem 6.2][SB] and used by SI Theorem 10.8
+and TC Corollary 5.2.
+
+A residual live history with $j$ new ones and $z'$ new zeros is still
+live originally, since
+
+$$
+h+j\le k-1,\qquad
+|S|-h+z'\le |S|-h+N-q=n-k.
+$$
+
+Thus its live queries are literal fresh original queries; no old-coordinate
+step is silently suppressed on this live portion. Apply Theorem 6.4 or
+Corollary 5.3 to this one residual graph, then its installed-count upper
+bound $m(R_0)$, to obtain (TS.39). For native states (TS.37) gives
+coordinatewise $m_i\le M_i$, so summing over this $R_0$ proves the
+native assertion. All suppressed invocations stay paid in the original
+runs. No runtime restriction, reset or residual entry is supplied.
+$\square$
+
+Different actual-prefix restrictions may overlap on the one original
+installed vector. Their inequalities hold simultaneously but cannot be
+added as disjoint allocations, or subtracted to assign a difference of
+lower bounds to a complement. For example
+$|Q_1|+|Q_2|=|Q_1\cup Q_2|+|Q_1\cap Q_2|$ requires overlap
+control before obtaining a union lower bound. TC's unconditional
+residual-seven bound of Convention 8.2 remains the applicable stronger
+supplier in its solved slice; it has no inherited-cut premise. SI10's
+inherited-cut theorem and SB's short-block refinement remain credited
+sufficient conditions in their respective residual ranges.
+

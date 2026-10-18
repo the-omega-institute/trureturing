@@ -1,0 +1,39 @@
+**Definition 11.2 (whole-owner edge data).** Fix $d,n\ge1$ and any
+valid owned-seed network $\mathcal N$ of Definition 1.4, with all seed
+domains nonempty. Retain its actual owner ports, every prescribed
+table, constants, and arbitrary nonnegative whole-block weights
+$w_i:S_d\to[0,\infty)$. Order each seed tuple by a fixed public
+ordering. Let $O_i$ contain all seeds owned at block $i$. For each
+distinct outside owner $j\ne i$ whose seeds occur at block $i$, let
+$B_{ji}$ be the entire tuple of those seeds, counting each distinct
+seed once. Put
+
+$$
+\begin{aligned}
+E&=\{(j,i):j\ne i,\ B_{ji}\ne\varnothing\},\\
+I_i&=(B_{ji})_{(j,i)\in E},\qquad
+\operatorname{pr}_{ji}:\prod_{c\in O_j}T_c
+       \longrightarrow\prod_{c\in B_{ji}}T_c.
+\end{aligned}
+\tag{COK.59}
+$$
+
+There is one directed edge for an entire outside-owner group.
+Different groups may use overlapping projections of $O_j$; their
+shared coordinates remain the same variables. References to an own
+seed stay internal to its block. In particular $O_i,I_i$ are disjoint
+tuples whose union has at most $m_d=2^d-1$ seeds.
+
+Let $R_i$ consist of assignments $a=(o,b)$ to $(O_i,I_i)$ whose
+entire prescribed local factor vector reconstructs an actual
+$x_i(a)\in S_d$. Write
+
+$$
+R_i^+=\{a\in R_i:w_i(x_i(a))>0\}.
+\tag{COK.60}
+$$
+
+Thus neither actual-tree compatibility nor a weight zero is filled.
+No outside-owner-image condition is imposed in $R_i$ itself.
+It will follow on positive matching laws from actual owner tuples.
+

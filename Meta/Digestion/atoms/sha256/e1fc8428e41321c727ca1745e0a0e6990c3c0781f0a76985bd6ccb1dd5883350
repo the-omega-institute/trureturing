@@ -1,0 +1,27 @@
+**Corollary 3.3 (late endpoint tails fix both event means).** If a
+pair in $\mathfrak C_{\rm box}$ has, for all sufficiently large $n$,
+
+$$
+d_n=(1-\vartheta)c_az_a^n+\vartheta c_bz_b^n
+\quad\text{for some }\vartheta\in[0,1],
+\tag{3.9}
+$$
+
+then its original flows are (3.2) with $\theta=\vartheta$ and
+
+$$
+\int Q(E_p)\,d\nu_p=M_p+(1-2\vartheta)\rho_p,\qquad
+\int W(E_\beta)\,d\nu_\beta=M_\beta+(1-2\vartheta)\rho_\beta.
+\tag{3.10}
+$$
+
+Here $M_p,M_\beta$ are the means in (1.9). In particular arbitrary
+Borel support enlargement cannot repair two incorrect midpoint means
+while preserving this exact eventual averaged tail.
+
+**Proof.** Equation (3.9) implies (3.1). Theorem 2.1 gives
+$m_b=\vartheta$, and Theorem 3.1 identifies the original complete
+flows. Their endpoint event values are $M_s+\rho_s$ at a and
+$M_s-\rho_s$ at b, which gives (3.10).
+$\square$
+

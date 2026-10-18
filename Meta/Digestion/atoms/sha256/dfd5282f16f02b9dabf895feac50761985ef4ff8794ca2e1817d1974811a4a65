@@ -1,0 +1,19 @@
+**注记 7.1（What is settled and what is not classified）。** The full universal
+statement (2.4) has two complete ordinary proofs of its required bounds:
+(3.6)–(3.9) construct at most sixty actual four-support vectors for every
+legal $X$, and (5.2)–(5.8) exclude every finite complex three-support
+decomposition of an actual legal $C_*$. Repeated eigenvalues, zero
+parameters, zero terms and singular positive semidefinite boundaries
+are included. There is no remaining mathematical construction or
+exclusion obligation for this sharp maximum.
+
+This establishes a maximum over the entire fiber, not a pointwise
+classification of $k(C)$ for every member or a classification of all
+maximizers. In particular, the use of one inherited negativity maximizer
+does not classify the coherence numbers of all negativity maximizers.
+The inherited edge/triangle examples retain their original two/three
+values and ownership. No conclusion is made for different populations,
+non-skew invisible directions, another coordinate basis, another
+dimension, approximate population zeros or finite-sample substitutes
+for exact source laws.
+

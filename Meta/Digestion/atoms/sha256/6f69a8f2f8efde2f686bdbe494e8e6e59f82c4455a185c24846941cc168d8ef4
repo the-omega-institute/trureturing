@@ -1,0 +1,42 @@
+**Definition 1.3 (fixed repeated partners and full domain).** Fix
+$P=\{L,R\}^{3}$ and its perfect depth-three exterior $C_*$. Its complete
+partition $\pi_*$ has the six classes below. The aliases denote canonical
+classes, not acquired values.
+
+| Alias | Representative $p_d$ | All occurrence holes |
+| --- | --- | --- |
+| $a$ | $LLL$ | $LLL,LRL$ |
+| $c$ | $RLL$ | $RLL,RRL$ |
+| $b_1$ | $LLR$ | $LLR$ |
+| $b_2$ | $LRR$ | $LRR$ |
+| $b_3$ | $RLR$ | $RLR$ |
+| $b_4$ | $RRR$ | $RRR$ |
+
+Put $D=\{a,c,b_1,b_2,b_3,b_4\}$ and $R_*=(C_*,\pi_*)$. For class
+values $x:D\to\mathcal T$ write
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,
+                  \langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,
+                  \langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{FCS.4}
+$$
+
+The domain and target throughout are exactly
+
+$$
+\mathcal U_*=
+ \{u\in\mathcal T:R_P(\rho u)=R_*\},\qquad
+t_u=\rho u,\qquad F(u)=R_P(u).
+\tag{FCS.5}
+$$
+
+Every compatible finite origin is included. There is no source-size,
+depth, rank, selected-family or additional history promise. Both
+occurrences of each partner use the same value, and all six different
+classes are pairwise disequal.
+

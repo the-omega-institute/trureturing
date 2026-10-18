@@ -1,0 +1,16 @@
+**Proposition 6.2 (extension-stable target and coherent restriction).**
+For two authentic covers of the same actual original history, the
+selected historical image at every common covered $k$ is equal. A frozen
+package keeps that target under later covers and later inputs. For
+$k\le\ell$ within one cover, restricting the decoded length-$\ell$
+history to $k$ gives the decoded length-$k$ history.
+
+Proof. Lemma 4.5 selects exactly the actual consumed input prefix and
+actual chronology through $k$, independently of an unused later suffix.
+The acquired seed, version and absolute target are fixed. Restriction
+of prefixes in one word gives the coherence assertion. A later cover
+changes none of the frozen fields or immutable backing. Physical copy
+origin metadata may differ across two independently created packages;
+the equality asserted is of their decoded historical images, not of
+the complete later package objects or their construction costs. ∎
+

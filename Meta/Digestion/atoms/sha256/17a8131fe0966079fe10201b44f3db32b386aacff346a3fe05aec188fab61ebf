@@ -1,0 +1,23 @@
+## 11. Propagation of all actual supports at a cell
+
+Retain the entire graph, source interfaces and notation of Sections 1–10.
+In particular both bounds (CL.2) hold on every complete actual run of
+this one stationary graph. Fix a consecutive gap $B=(a,b)$ and write
+$d(v)=h(v)+z(v)$ for the depth of a cell. Every support family below
+is the entire actual family at that cell, rather than a selection of
+representatives or the supports inherited from just one parent.
+
+For $v\in V_B$ put
+
+$$
+U_v=\bigcup_{S\in\mathcal S_v}S,\qquad
+\rho_v=|U_v|-d(v),\qquad
+\nu_v=|\{x\in X_B:\deg_{\Gamma_v}(x)>0\}|.
+\tag{CL.40}
+$$
+
+Thus $\nu_v$ counts only coordinates incident to a demand edge; isolated
+coordinates are still vertices of $\Gamma_v$. It is distinct from the
+number $u$ of genuinely never-live installed states. All these finite
+sets describe actual histories and provide no history store or selector.
+

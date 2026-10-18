@@ -1,0 +1,20 @@
+**Definition 2.1 (actual supports and incidence).** A history is an actual
+finite prefix ending just before a running query. Its exposed support
+$S\subseteq[n]$ consists of coordinates already queried, with assignment
+$\eta_S$. Write $h=|\eta_S^{-1}(1)|$ and $z=|\eta_S^{-1}(0)|$.
+The history is live exactly when $(h,z)\in V$, so both outputs have
+completions. For $p=(h,z)\in V$ put
+
+$$
+\begin{aligned}
+F_p&=\{q\in Q:\text{an actual live history with counts }p\text{ ends at }q\},\\
+\mathcal S_p&=\{S:\text{such a history has support }S\},\\
+\mathcal R&=\{(p,S,q):\text{one actual live history witnesses all three}\},\\
+b_p&=|F_p|,\qquad a_p=|\mathcal S_p|.
+\end{aligned}
+$$
+
+A live host of $p$ is a member of $F_p$. A cell is support-ambiguous when
+$a_p>1$. These are mathematical indices of actual histories, with no extra
+running memory. All statements below use one complete graph at both caps.
+

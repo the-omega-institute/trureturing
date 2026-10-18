@@ -1,0 +1,23 @@
+**Assumption 21.1 (one entry and a variable Read allowance).** Retain
+Assumption 17.1, the exact acquired entry (NARC.17.2), and all the
+complete-state and conditional immediate-write requirements of
+Assumption 17.4. Replace only its two-Read allowance by at most
+$k$ chronological native Reads, where $k\ge0$ is a finite integer.
+The stationary actual sources, full numeric lag target, legal literal
+addresses, reply alphabet and response-write permission are identical
+for every $k$.
+
+In particular, conditional compilation uses only the common acquired
+entry and public data. It installs one table and one initial word for
+all fifteen origins of Proposition 17.2, then discards and closes access
+to acquisition inputs and compilation workspace. The current word is
+the entire mutable accessible configuration. Running or halting type,
+the fixed literal at a running word, its four successor words, and the
+complete integer at a halt are immutable functions of that word. The
+current reply is used only for the immediate zero-or-one legal bit
+update and is discarded. There is no retained reply, program counter,
+clock, counter, history, mutable decoder or internal write phase.
+All installed words count, including halts and unused words. Acquisition,
+compilation, immutable tables, initialization and physical services retain
+the separate conditional supply and charges of §§17 and 20.2.
+

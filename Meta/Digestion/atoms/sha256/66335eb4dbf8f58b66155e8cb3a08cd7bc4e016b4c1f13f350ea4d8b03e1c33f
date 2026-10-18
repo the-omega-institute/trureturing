@@ -1,0 +1,54 @@
+**Theorem 9.2 (The same annulus realizes all paths and all truncations).**
+The annulus of Theorem 8.1 has, for every prescribed path of
+Proposition 9.1, the fixed linear update
+
+$$
+\mathcal W_{\rm p}(z)=e^{\gamma\Delta}R_{L/2}z
+$$
+
+on the exact recoverable guard
+
+$$
+0<\kappa(z)+\eta(t)<H\quad(0\le t\le T_{\rm p}).
+$$
+
+Exact encoding and the same optimal uniform error hold at every
+intermediate time and every prefix of every finite lawful concatenation.
+Below $Z=2/3$, the literal, guard-recoverable, prescribed-path, and
+combined dimension-at-most-two capacities all equal $4H\sqrt{T_\tau}$,
+and all include that tolerance endpoint.
+
+**Proof of Theorem 9.2.** Substitute the endpoint in Proposition 9.1
+into $E_*$:
+
+$$
+E_*(k',\alpha',\beta')
+=2H\sqrt T\,e^{\gamma(k+\Delta)}U(\alpha+L/2)
+=e^{\gamma\Delta}R_{L/2}E_*(k,\alpha,\beta).
+$$
+
+The mixed source term has not been deleted from the native formula.
+It is invisible to this encoder because its fibers are the $\beta$
+circles. The update coefficients depend only on the prescribed path
+and fixed model. The recovered height gives precisely the full source
+guard, including empty guards, and proves image preservation there.
+
+Replace the upper integration limit by any intermediate time. The
+same identity proves the exact intermediate encoding, including
+every truncated path and its own all-times guard. For two successive
+paths, the encoded maps compose by adding $\Delta$ and $L$ because
+scalar multiplication commutes with planar rotation. Proposition
+9.1 retains the additional $\Delta_1L_2$ in the true source's
+mixed parameter. Thus encoded commutation is a consequence of the
+permitted phase loss, not commutation of the original controls.
+Induction proves every finite lawful concatenation, with the
+current-state error from Theorem 8.1 at every point.
+
+Each stronger class is a subclass of the literal class, so
+Theorem 7.6 supplies its lower bound. The one annular model belongs
+to all four classes and supplies the matching upper bound.
+Its error equals the endpoint, so every finite tolerance at or
+above it is achievable and none below it is. No equality of
+arbitrary model classes is inferred from equality of their
+capacities. $\square$
+

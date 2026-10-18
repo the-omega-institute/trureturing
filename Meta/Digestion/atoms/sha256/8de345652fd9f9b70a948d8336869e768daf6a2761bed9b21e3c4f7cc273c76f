@@ -1,0 +1,59 @@
+**Definition 8.2 (complete table with one fixed retained t separator).**
+Start with a complete binary query tree of depth $n$, all internal vertices
+distinct, and threshold terminals only at depth $n$. It queries every
+coordinate once per path, including paid work after a certificate. First
+query $r_1,\ldots,r_M$. The routing vector $e_j$ denotes the $j$th unit
+vector and is unrelated to reader entries. In cylinder $R=e_j$, query
+$t$ next, then $I_j\setminus(R\cup\{t\})$ in increasing coordinate-index
+order. If $t=0$, query $x,x'$ next; if $t=1$, query $y,y'$ next. Finish
+the remaining coordinates in increasing order. In $R=0^M$, use increasing
+order among the remaining coordinates except that $t$ is last. Every other
+routing cylinder uses increasing order among its remaining coordinates.
+These rules assign one fixed label to each tree vertex.
+
+Select two prefixes in each $R=e_j$. The low prefix has $t=0$, all old
+$u_i$ zero, $v_1,\ldots,v_{M-j}$ one, the remaining $v_i$ zero, and
+$(x,x')=(1,0)$. The high prefix has $t=1$, all old $u_i$ zero, all $v_i$
+one, and $(y,y')=(0,1)$. Here old $u_i$ means only
+$u_i\notin U_j$; $U_j$ is unread on both histories. Empty lists impose
+no condition. Their supports are $I_j\cup X$, $I_j\cup Y$, both of
+size $n-j-2$.
+
+In the untouched $R=0^M$ cylinder, take the existing final vertex labeled
+$t$ whose prefix gives one to every $v_i$ and to $x,x',y$, and zero to
+every $u_i$ and to $y'$. Call exactly this vertex $J$. Its prefix has
+$M+3=k-1$ ones. Thus its literal fixed table is
+
+| state | coordinate | zero successor | one successor |
+| --- | --- | --- | --- |
+| $J$ | $t$ | $\mathsf0$ | $\mathsf1$ |
+
+This vertex is retained and counted once; no new copy of $J$ is installed.
+The identity $i(J)=t$ fixes its charge to $c_t$ on every incoming route.
+Delete the remaining subtree, including its root, at each selected low and
+high prefix, and redirect both incoming edges at scale $j$ to a new $V_j$.
+Each deleted subtree has $j+2$ query levels. Add the following distinct scan
+states, disjoint from all retained tree vertices:
+
+| state | coordinate | zero successor | one successor |
+| --- | --- | --- | --- |
+| $V_1$ | $u_M$ | $B_X$ | $B_Y$ |
+| $V_j$, $2\le j\le M$ | $u_{M-j+1}$ | $Z_{M-j+2}$ | $O_{M-j+2}$ |
+| $Z_i$, $2\le i<M$ | $u_i$ | $Z_{i+1}$ | $J$ |
+| $O_i$, $2\le i<M$ | $u_i$ | $J$ | $O_{i+1}$ |
+| $Z_M$ | $u_M$ | $B_X$ | $J$ |
+| $O_M$ | $u_M$ | $J$ | $B_Y$ |
+
+Add four further distinct private states, disjoint from the tree and scans:
+
+| state | coordinate | zero successor | one successor |
+| --- | --- | --- | --- |
+| $B_X$ | $x$ | $B_{x'}$ | $J$ |
+| $B_{x'}$ | $x'$ | $\mathsf0$ | $\mathsf1$ |
+| $B_Y$ | $y$ | $J$ | $B_{y'}$ |
+| $B_{y'}$ | $y'$ | $\mathsf0$ | $\mathsf1$ |
+
+All other retained tree transitions are unchanged. The two original terminals
+are the only terminals. This completely specifies $B_M$, including $M=2$,
+when the intermediate $Z_i,O_i$ lists are empty.
+

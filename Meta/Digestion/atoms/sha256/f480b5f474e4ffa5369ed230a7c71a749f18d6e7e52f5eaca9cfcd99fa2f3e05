@@ -1,0 +1,153 @@
+**Theorem 12.1 (specified native state, read and update budgets).**
+For a nonempty cycle-covered input and specified integers $K,k,d\ge0$,
+existence of a successful native table satisfying
+
+$$
+|E|\le K,\qquad
+q_C(u)\le k,\qquad a_C(u)\le d\quad(u\in D)
+\tag{CAR.48}
+$$
+
+is decidable. An additional bound $\ell_C(u)\le L$ for a specified
+integer $L\ge0$ is also decidable. A positive answer constructs a
+literal table satisfying all the requested bounds. With no $L$ bound,
+the read words may have arbitrary finite lengths. Installation is finite
+but has no prescribed upper bound in this theorem.
+
+Proof. If $K=0$ the answer is false. Otherwise enumerate the finitely
+many state sets $E=\{0,\ldots,s-1\}$ with $1\le s\le K$, initial
+states, instruction types and successor tables. A read state has four
+successors, an update state one, and a halt is absorbing. At this stage
+leave literal read words and halt outputs unspecified.
+
+Assign to each read state $e$ exactly one descriptor $\delta_e$ of
+Definition 6.1. There are finitely many descriptor types: short words,
+or a fixed pair $(z,e')$ for a long descriptor. Its long numeric
+parameters satisfy (CAR.19). They are common existential design
+variables, selected before all source quantifiers. Every visit to the
+same state uses the same descriptor. This invokes the existing
+all-chart, all-epoch correspondence of Theorem 6.2, rather than giving
+separate addresses to unfolded visits.
+
+Let $B=k+d$. For each chosen graph enumerate its formal paths from the
+initial state through at most $B$ nonhalt actions. Stop a path at its
+first halt. Read edges are labeled by literal replies; update edges are
+the unique update successors. Cycles are allowed in the graph and a
+path can visit a state repeatedly. This finite expansion is used only
+to describe the graph's executions, not as its implemented state set.
+
+For a path $\pi$, let $a_{\pi,i}$ count updates strictly before its
+$i$th action. In chart $\eta$, define
+
+$$
+\operatorname{Path}_{\eta,\pi}(\mathbf n;\boldsymbol\delta)
+=\bigwedge_{i:\,\text{action }i\text{ is a read at }e_i}
+\operatorname{Reply}_{\eta,c_i}
+ (\mathbf n,N+a_{\pi,i},\delta_{e_i}).
+\tag{CAR.49}
+$$
+
+The same tuple $\mathbf n$ supplies every conjunct. Thus update counts
+are actual elapsed updates on the path; there is no virtual epoch cap.
+Let $q_\pi,a_\pi$ count its reads and updates, and let $v_{\pi,e}$
+count visits to read state $e$. Its length cost is
+
+$$
+\ell_\pi=\sum_{e\text{ read}}v_{\pi,e}|\delta_e|.
+\tag{CAR.50}
+$$
+
+All multiplicities here are fixed integers of a finite path. Repeated
+reads and absent replies are included. For a halt state $h$, put
+
+$$
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+=\bigvee_{\pi:\,\pi\text{ ends at }h,\ |\pi|\le B}
+\operatorname{Path}_{\eta,\pi}(\mathbf n;\boldsymbol\delta).
+\tag{CAR.51}
+$$
+
+Impose the following finite collection of conditions. First, every
+admitted source reaches a halt within the horizon:
+
+$$
+\forall\mathbf n\quad
+\operatorname{Adm}_\eta(\mathbf n)
+\Longrightarrow\bigvee_h H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+\quad\text{for every }\eta.
+\tag{CAR.52}
+$$
+
+Second, on every reachable terminal path require $q_\pi\le k$,
+$a_\pi\le d$, and, when requested, $\ell_\pi\le L$. Reachability
+means $\exists\mathbf n\,(\operatorname{Adm}_\eta\land
+\operatorname{Path}_{\eta,\pi})$ for some chart. Third, for each
+halt state impose the cross-history condition
+
+$$
+\begin{aligned}
+\forall\mathbf n\,\forall\mathbf m\quad
+&\operatorname{Adm}_\eta(\mathbf n)\land
+ \operatorname{Adm}_\theta(\mathbf m)\land
+ H_{\eta,h}(\mathbf n;\boldsymbol\delta)\land
+ H_{\theta,h}(\mathbf m;\boldsymbol\delta)\\
+&\hspace{25mm}\Longrightarrow
+ \operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)
+ \quad\text{for every }\eta,\theta,h.
+\end{aligned}
+\tag{CAR.53}
+$$
+
+This compares all histories ending at one installed halt, including
+different terminal epochs and different charts. Constancy separately
+at each leaf of an unfolded tree would not imply (CAR.53).
+
+These are Presburger conditions by Lemma 4.1 and Theorem 6.2. Formula
+(CAR.50) is linear because its visit counts are fixed, even when
+descriptor lengths are unbounded variables. Existentially quantify all
+descriptor parameters outside these conditions and decide the finite
+disjunction over graphs and descriptor types using Definition 4.2.
+Empty path sets have disjunction false; a root halt has the empty path
+with all three costs zero. Thus zero budgets, ground charts, absent
+reads and immediate halts need no additional assumptions.
+
+For necessity, take any successful table satisfying (CAR.48). Each run
+has at most $B$ actions. Replace each read word by its descriptor, once
+per state. Theorem 6.2 preserves all its replies and its exact length on
+each same source at every actual epoch, so induction preserves its
+control-state sequence and costs. By Theorem 3.2 every original source
+has one admitted chart tuple, and every admitted tuple is such a source.
+Thus (CAR.52) and the reachable-path budgets hold. Two sources reaching
+the same halt must have its one installed complete row, giving (CAR.53).
+No record or cross-class inequality has been omitted from $\operatorname{Adm}$.
+
+For sufficiency, extract the common descriptor parameters after a true
+decision and realize each state descriptor once as a fixed literal word
+by Theorem 6.2. For every halt whose support in (CAR.51) is nonempty,
+extract one admitted tuple, expand its finite source by (CAR.12), and
+compute that source's entire original row. Install this concrete row at
+the halt. Condition (CAR.53) makes it correct for every other source
+reaching the same halt. At an unreachable halt install any concrete row,
+for example the row of one witness to nonempty $D$.
+
+On any actual source, the unique tuple of Theorem 3.2 and the literal
+reply equivalence (CAR.21) inductively identify its unique execution
+with the compatible paths (CAR.49). Condition (CAR.52) forces that
+execution to halt by $B$; the path inequalities give its actual paid
+costs; (CAR.53) gives its actual full output. The implementation uses
+the chosen $s$ states themselves. Neither path position, descriptor
+parameters under quantification, witness source nor proof tuple is a
+runtime input. This proves both operational directions on exactly $D$.
+
+To connect this particular implementation to Continuation II Theorem
+27.2, at state $e$ take the support of all actually reachable pairs
+$(R_Q(u),\rho^j u)$. All its selected operations are legal, including
+absent reads, and their actual responses preserve that support. The
+remaining number of actions is a natural-valued decreasing rank, at
+most $B$ initially. It is well defined from the plant and control state:
+equal such configurations have the same deterministic continuation,
+even when reached from different histories. At a halt the support has
+the installed complete output by (CAR.53). These are proof supports and
+ranks, with no additional observable register or supplied finite plant.
+$\square$
+

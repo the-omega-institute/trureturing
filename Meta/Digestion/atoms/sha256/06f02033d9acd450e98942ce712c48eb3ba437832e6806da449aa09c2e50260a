@@ -1,0 +1,13 @@
+### 74.8. Negative transport and the same-union graph consequence
+
+Let \(X=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\) and
+\(Z=\operatorname{diag}(1,-1)\). Directly from (74.1),
+\[
+ H_0(-b)=(Z\otimes I_3)H_0(b)(X\otimes I_3).             \tag{74.23}
+\]
+Both factors are monomial, \(X\otimes I_3\) commutes with every
+synchronous permutation, and channel exchange maps (74.2) to the
+negative-parameter set, with the sign relabeled after dephasing.
+This proves the negative half case. Conjugation inside \(S_3\) proves
+the other two transposition cases.
+

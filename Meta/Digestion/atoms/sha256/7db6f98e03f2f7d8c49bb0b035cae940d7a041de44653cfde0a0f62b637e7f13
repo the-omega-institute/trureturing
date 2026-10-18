@@ -1,0 +1,61 @@
+## Theorem 12. Complete native integral defect and arithmetic index
+
+Write \(D_q=\mathrm{id}+\Theta_q\) and
+\(c_q=\operatorname{of}_0(w)\), retaining the original class of
+Proposition 4. For positive even \(q\), \(D_q\) is an integer-linear
+bijection. For positive odd \(q\),
+\[
+ \ker D_q=\mathbb Zc_q,\qquad
+ \operatorname{im}D_q=\ker\Lambda_q,\qquad
+ G_q/\operatorname{im}D_q\cong\mathbb Z.
+\]
+The coefficient of \(c_q\) in the kernel is unique. If
+\(\Lambda_q(y)=0\), all solutions of \(D_qx=y\) are exactly
+\[
+ x=F_q^{-1}\bigl(v^*(F_qy)\bigr)+kc_q,\qquad k\in\mathbb Z,
+\]
+with unique \(k\), where \(v^*\) is the particular finite solution of
+Theorem 10. The exact kernel-character pairing and combined quotient are
+\[
+ \Lambda_q(c_q)=q+1,\qquad
+ \ker D_q\cap\operatorname{im}D_q=\{0\},\qquad
+ G_q/(\operatorname{im}D_q+\ker D_q)
+    \cong\mathbb Z/(q+1)\mathbb Z.
+\]
+In particular,
+\[
+ x\in\operatorname{im}D_q+\ker D_q
+ \quad\Longleftrightarrow\quad
+ (q+1)\mid\Lambda_q(x).
+\]
+
+Proof. The equivalence of Theorem 11 gives
+\(F_qD_q=(\mathrm{id}+T_q)F_q\) and \(F_qc_q=w\).
+Transport the whole finite classification of Theorem 10, including its
+constructive solver, unique kernel coefficient and surjective character.
+This yields the native kernel, image, fibres and ordinary cokernel; no
+second finite elimination is needed.
+
+For the pairing, the contribution of suffix \(i\) in \(w\) is two
+when \(i\) is even and zero when it is odd. Equivalently it is
+\(1+(-1)^i\). Therefore
+\[
+ \ell_q(w)=\sum_{i<q}\bigl(1+(-1)^i\bigr)=q+1
+\]
+for odd \(q\). If \(kc_q\) belongs to the image, its character is zero,
+so \(k(q+1)=0\), forcing \(k=0\). If
+\(x=a+kc_q\), with \(a\) in the image, then
+\(\Lambda_q(x)=k(q+1)\). Conversely, if
+\(\Lambda_q(x)=k(q+1)\), the difference \(x-kc_q\) has zero
+character and lies in the image. Thus reduction of \(\Lambda_q\)
+modulo \(q+1\) has kernel exactly the actual sum of the two submodules.
+It is onto, and the first isomorphism theorem gives the combined quotient.
+
+At \(q=1\), the native coordinates are \(\mathbb Z^2\), genuine time
+swaps the coordinates, \(c_1=(1,-1)\), and
+\(\Lambda_1(a,b)=a-b\). The ordinary cokernel is \(\mathbb Z\);
+the combined quotient has order two. Thus a zero intersection does not make
+the image and kernel a decomposition of the entire integer lattice.
+The obstruction is the exact index \(q+1\), not torsion in the ordinary
+cokernel and not a rational spectral obstruction.
+

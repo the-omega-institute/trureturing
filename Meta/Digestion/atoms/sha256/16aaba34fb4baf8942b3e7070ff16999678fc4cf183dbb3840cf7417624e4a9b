@@ -1,0 +1,24 @@
+**Definition 262.1 (The complete natural family).** For every real
+$0<t\le1/10$ set
+
+$$
+u=\frac{1-t}{3},\qquad v=\frac{2(1-t)}3,\qquad
+k=u+t,\qquad e=v,
+\qquad a_1=a_2=a_3=\frac9{10},\quad
+a_n=\frac1{10}2^{4-n}\ (n\ge4).
+\tag{262.1}
+$$
+
+Let $D=N(1,2;0,1,2,3)$,
+$A=O(1,2;1,2,3)$ and $B=O(2,3;0,1,0)$, and put
+$p_t=tD+uA+vB$. Its complete low-word laws are
+
+| words | $p_t$ |
+|---|---|
+| $000,001$ | $(v+t)e_0+u e_1$ |
+| $010$ | $e_1$ |
+| $011$ | $v e_0+k e_1$ |
+| $100,101$ | $v e_0+k e_2$ |
+| $110$ | $v e_1+k e_3$ |
+| $111$ | $v e_0+k e_3$ |
+

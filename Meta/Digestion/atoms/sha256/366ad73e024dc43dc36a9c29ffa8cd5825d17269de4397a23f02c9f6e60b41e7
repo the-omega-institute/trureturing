@@ -1,0 +1,33 @@
+**Corollary 16.2 (both finite envelopes at this fixed law).**
+With the definitions of [COK, Definitions 2.5 and 5.1][COKa],
+
+$$
+J_3(\mu_{\rm a})=\Omega_3(\mu_{\rm a})
+=\beta_3(\mu_{\rm a})=\frac{3038031}{7792603}.
+\tag{NCE.100}
+$$
+
+Proof. For clarity, $J_3(w)$ is the maximum, over nonempty
+range-feasible $P$, of the Euclidean norm of its cell masses
+under the vector of all targets having no own boundary-reply
+decoder on $P$, including constants as easy. If
+$w_{\rm a}(P)\le C_{\rm a}$, that norm is at most the
+total mass. Otherwise Theorem 15.3 supplies one target in
+this hard vector. Its joint cells refine that target's
+cells, so their squared sum cannot increase: for nonnegative
+$a,b$, $a^2+b^2\le(a+b)^2$. Lemmas 15.1–15.2
+therefore bound the joint norm by $C_{\rm a}$. Hence
+$J_3(w_{\rm a})\le C_{\rm a}$. On $P_B$ every target
+is easy, so its hard vector is empty and its sole cell
+has mass $C_{\rm a}$. Equality follows for $J_3$.
+
+The conditional-owner envelope $\Omega_3$ is exactly the
+maximum of the one-law, full actual-owner-group objectives
+in COK Definition 2.5, retaining their joint owner-image
+tests. COK Theorem 5.2 gives
+$\beta_3\le\Omega_3\le J_3$. Insert Theorem 16.1
+and normalize to force (NCE.100). These are equalities
+at one specified law; none optimizes over laws or asserts
+positive rational kernel acceptance at the boundary cap.
+$\square$
+

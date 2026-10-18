@@ -1,0 +1,14 @@
+**Definition 4.1 (finite acquired-word monitor).** Let $\mathcal A$ be any finite rational probabilistic automaton with a finite nonempty alphabet $\Gamma$, rational initial row $\eta_{\mathcal A}$, rational row-stochastic matrices $T_i$, and accepting states $F_{\mathcal A}$. Write $p_{\mathcal A}(w)=\eta_{\mathcal A}T_w\mathbf1_F$ and $V_{\mathcal A}=\sup_{w\in\Gamma^*}p_{\mathcal A}(w)$. Runtime holds one sampled automaton state; it never holds this probability row.
+
+Set $X=\alpha\alpha$, $Y=\beta\beta$. Choose $d=\max\{1,\lceil\log_2(|\Gamma|+1)\rceil\}$ by integer comparison. Assign the $|\Gamma|$ data letters codes $0,\ldots,|\Gamma|-1$ and the monitor delimiter $\diamond$ code $|\Gamma|$, all at width $d$ over pair tokens $X,Y$. Unassigned codes invalidate the monitor. At completed data blocks, sample the corresponding $T_i$ transition with fresh source-independent fair bits. At the completed delimiter freeze the sampled state. Thereafter only $Y$ rejections are allowed by the monitor, and they leave that state unchanged; any $X$ invalidates it. An accepted unequal pair before delimiter, an incomplete block, or a seed other than 1 invalidates it. Invalidity is absorbing for private monitoring only; it never suppresses an actual original history.
+
+After valid delimiter and any number of $Y$ pairs, the monitor recognizes exactly the original six-letter suffix
+
+$$
+S_0=\beta\alpha\mid\beta\beta\alpha\alpha.
+$$
+
+The accepted seed is 1 and the first three markers are 100 with no payload returns. Monitor suffix states are a bounded literal prefix matcher, executed after each unchanged original update and its entire ordered event block. Only the final suffix state, reached after the third write and latch, is a special gate. Every other seed, record, return and malformed word uses the baseline. At the first fourth-segment Read the sampled automaton label and gate are cleared to a fixed baseline tag, for either letter. This is an internal holding update at an existing Read, not an additional operation.
+
+Earlier than the third latch, every synthetic next-letter probability is $1/2$, independently of private state. At a special gate in $p_4$, emit synthetic $\alpha$ with probability $u+\lambda\mathbf1_F(q)$. All other $p_4$ cuts use $u$ and all suspended fourth cuts use $v$. The same source-independent monitor update is used after an actual or synthetic letter. Pending generates only the original Stop and delivery; delivered has empty residual. $D_z$ is the executable full law of this program, rendered from that configuration's own original record.
+

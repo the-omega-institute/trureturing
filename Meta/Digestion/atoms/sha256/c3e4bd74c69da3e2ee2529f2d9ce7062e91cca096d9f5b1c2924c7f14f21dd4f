@@ -1,0 +1,14 @@
+**Definition 7.1 (native witness family).** Let $B_d^\alpha$ and
+$B_d^\beta$ be the perfect height-$d$ trees with the indicated
+uniform leaf label. For $q\in\{L,R\}^d$ let $V_{d,q}$ be
+$B_d^\beta$ with the single leaf at $q$ relabelled alpha. These
+are mathematical alternative sources, not allowed edits during
+one source's history. Their scores are
+
+$$
+m(B_d^\alpha)=m(V_{d,q})=2d,\qquad
+m(B_d^\beta)=2d+1,\qquad
+\rho B_d^\alpha=B_d^\beta.
+\tag{AAR.24}
+$$
+

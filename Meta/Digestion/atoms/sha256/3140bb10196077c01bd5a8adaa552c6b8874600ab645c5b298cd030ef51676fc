@@ -1,0 +1,72 @@
+## 5. Finite cubic inverse and exact common-source compatibility
+
+**Proposition 5.1.** Arbitrary real data $z_0,\ldots,z_5$ on (2.1) have a realization in (1.1) exactly when the following procedure has a passing candidate. If one passes, it is the unique effective target.
+
+First form (3.5) and require $u>0$. Define
+
+$$
+\begin{aligned}
+H(k)={}&-(W-ku)(1+4k)(1+5k)\\
+&+2Y(1+k)(1+5k)-Z(1+k)(1+4k).
+\end{aligned}
+\tag{5.1}
+$$
+
+Its leading coefficient is $20u>0$, so it is a nonzero cubic. Consider its distinct real roots, counting a repeated root once. This is a finite exact algebraic prescription. A nonzero cubic has at most three distinct roots: at any root polynomial division removes a linear factor, and every other distinct root remains a root of the quotient. It has at least one real root by its opposite limits at the two ends of the real line and continuity.
+
+For each root define
+
+$$
+P_k=\begin{pmatrix}
+1+k&1+k\\
+2(1+4k)&1+4k\\
+3(1+5k)&1+5k
+\end{pmatrix},\qquad
+b_k=\begin{pmatrix}W-ku\\Y\\Z\end{pmatrix}.
+\tag{5.2}
+$$
+
+Label these rows by $n=1,2,3$, with associated clock indices $j_1=1$, $j_2=4$, $j_3=5$. At least two gains $1+j_nk$ are nonzero, since the affine gain has intercept one and at most one root. Any two surviving rows have determinant
+
+$$
+(1+j_nk)(1+j_mk)(n-m)\ne0\qquad(n\ne m).
+$$
+
+Thus $P_k$ has rank two for every real $k$. Expanding a three-by-three determinant gives
+
+$$
+H(k)=\det_3[P_k^{(1)},P_k^{(2)},b_k],
+\tag{5.3}
+$$
+
+where the superscripts denote columns. Since the first two columns are independent, $H(k)=0$ is exactly $b_k\in\operatorname{range}P_k$, including the equation of any erased row.
+
+Choose any two surviving row labels $n<m$. Define only their corresponding quotients from
+
+$$
+V_1=\frac{W-ku}{1+k},\qquad
+V_2=\frac{Y}{1+4k},\qquad
+V_3=\frac{Z}{1+5k},
+$$
+
+and set
+
+$$
+t=\frac{V_m-V_n}{m-n},\qquad v=V_n-nt.
+\tag{5.4}
+$$
+
+Their denominators are selected nonzero gains and a positive integer. The third row is satisfied by (5.3), whether or not its gain vanishes. Form (3.2) and require $p,q,r>0$. Then form
+
+$$
+s=qr/p,\qquad S=\begin{pmatrix}p&q\\r&s\end{pmatrix},
+$$
+
+and the whole affine $D$ in (3.7). Require every original observation equation (1.1) at all six matrices in (2.1).
+
+**Proof.** For actual data $u>0$, the true slope satisfies (5.1) by (3.6) and (5.3). Rank two of $P_k$ makes (5.4) return the true $t,v$; all positivity and original equations hold, and (3.7) returns the entire original drift. Thus a candidate passes for every actual target.
+
+Conversely a passing candidate has strictly positive entries and $ps=qr$. Its one affine polynomial meets the declared bound. Use the original parameters and positive factors (1.2) on exactly the words (2.2). Equations (1.3)–(1.4) realize all positive read and unread states with a fixed row, and the checked six equations realize the proposed data. Thus compatibility is sufficient in the original common-source model. Section 4 excludes two passing targets. ∎
+
+All degeneracies are covered. The branch $k=0$ is included in the cubic. The repeated $Q$ observations use the linear formulas (3.5) even when their gains vanish at $k=-1/2$ or $-1/3$. At $k=-1$, $-1/4$, or $-1/5$, exactly one row of (5.2) is erased; the other two determine $t,v$, and (5.3) retains the erased right-hand-side equation. Gain at index zero is one. Negative slopes, negative gains, zero or negative readings, repeated cubic roots, and zero drift coefficients require no further restriction. No leading gain coefficient or prescribed gain sample is a compulsory divisor. Apart from the fixed integer divisions and selected surviving gains, source reconstruction divides only by $p>0$.
+

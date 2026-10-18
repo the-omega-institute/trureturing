@@ -1,0 +1,22 @@
+**Definition 1.2 (specific missing relation).** At an actual live cut after
+an unknown original history, an observer is asked to acquire inputs that
+support the next lawful operation and its complete successor. The negative
+contract here supplies only the sole surviving specimen and common metadata
+at that cut. It permits arbitrary common specimen-only processing and
+retention, with every acquisition branch counted. It supplies no readable
+old generator word, source callback, height programme, parity helper,
+waveform log, environment port or additional specimen.
+
+The quantitative conclusions have three different meanings:
+
+| Consumer | Conclusion and exact sharpness boundary |
+| --- | --- |
+| One horizontal request over an interval of possible heights | A general affine survival lower bound, sharp among unrestricted affine scalar approximations. |
+| One horizontal request on twelve actual histories | An exact discrepancy between two full ideal output mixtures, giving live error at least $1/22$ and complete-experiment error at least $1/99$. Neither is asserted to be the full-instrument minimax value. |
+| One original return excursion at two possible heights | Exact specimen-only survival-bit minimax error $23/434$. Its attaining effect does not reproduce the instrument. |
+
+The fixed-acceptance decision calculation and the conditional return-record
+consumer in §§9–10 identify the same missing acquisition/actuation relation.
+They neither obtain a complete observer nor assert that exact height labels
+are the only possible additional resource.
+

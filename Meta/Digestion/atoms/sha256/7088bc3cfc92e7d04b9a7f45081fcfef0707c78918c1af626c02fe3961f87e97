@@ -1,0 +1,38 @@
+### 95.7. All mixed pairs, aligned triples, and the basis conclusion
+
+Use the complete aligned quintic and reconstruction of §90. At the good
+map, its scalar exceptions have residues
+\[
+ (r_0,r_2,\operatorname{lc}F_{\rm al},\text{pole factor})=(45,95,79,100),
+\]
+and its five-dimensional unit norms are
+
+~~~text
+d:116; V:2; K:2; J:96; Fa:13; zden:84; rden:39.
+~~~
+
+Thus every original aligned chart, including constant channels and all
+poles, is covered by the same exact shape at these four parameters.
+Form the full generic/aligned ordinary norm of §79.5 in the
+\(19\times5\times2=190\)-dimensional algebra. Its determinant is
+97 modulo 137 and hence nonzero in \(K\). No selected generic ray is
+ordinary-orthogonal to an aligned ray at any position. The aligned set is
+Theta-stable. Moving relative Theta parity onto the aligned endpoint
+therefore excludes symplectic mixed edges as well, without requiring
+Theta-stability of (95.5).
+
+An arbitrary noncanonical triple is either all generic, mixed, or all
+aligned. The first case was excluded above, the second contains an
+excluded mixed edge, and the third is excluded uniformly by delivered
+§85, including constant channels, poles and both parameter signs.
+An arbitrary common-flat basis containing a canonical ray is canonical
+by §60. A basis containing no canonical ray would contain a forbidden
+noncanonical triple. This proves basis uniqueness at the four roots.
+
+Finally, if output rays are flat and unbiased to columns of \(H_0(b)\),
+then \(w=H_0(b)^*v\) is a common-flat input ray, and inner products are
+preserved. Two output bases extending \((I_6,H_0(b))\) would transport to
+two common-flat input bases. Both would be the same canonical basis up
+to phases and permutations, so could not be mutually unbiased. Hence the
+specified fixed pair cannot belong to a quartet.
+

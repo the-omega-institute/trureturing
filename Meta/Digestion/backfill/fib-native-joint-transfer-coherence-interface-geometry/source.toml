@@ -1,0 +1,5 @@
+source_id = "fib-native-joint-transfer-coherence-interface-geometry"
+path = "docs/develop/theory/FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

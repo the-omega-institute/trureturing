@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-spatial-records-chronology"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

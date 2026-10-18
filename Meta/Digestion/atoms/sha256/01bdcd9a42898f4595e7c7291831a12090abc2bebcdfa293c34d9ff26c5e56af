@@ -1,0 +1,67 @@
+### 453.1 原字面对象与既有供应
+
+固定真实 Möbius 函数 \(\mu\)，\(M(n)=\sum_{r=1}^n\mu(r)\)。对于全部 \(y>0\)，保持
+
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y.
+\]
+
+\(\eta\) 是这个固定函数，不随 \(x\)、素数面板或截止改变。对于实数 \(x>1,s>0\) 和正整数 \(n\)，保持 §424.1 的字面定义
+
+\[
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1).
+\tag{DP.1}
+\]
+
+同一个完整目标是
+
+\[
+I_\psi(x)=\int_x^\infty[\psi(t)-t]w(t)\,dt,
+\qquad Z_\psi(x)=\sqrt x\log x\,I_\psi(x).
+\tag{DP.2}
+\]
+
+下列既有供应直接复用，并保留其证据范围。
+
+* §§422、424：存在固定有限 \(C_M\)，对全部 \(n\ge1\) 有
+  \( |M(n)|\le C_M n/(1+\log n)^4\)。§424.5 已支付积分前绝对预算，故
+  \(I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n)\) 绝对收敛，包含原首块及全部整数纤维。它没有支付未阻尼的 Möbius 原子绝对和。
+* §425.5：对于固定 \(U\ge0\)，既有有限常数 \(\mathsf C_\beta(U),\mathsf L_\beta(U)\) 满足
+
+  \[
+  \left|n^2\log x\,J_x^\eta(n)
+  -\left[\frac{\log^2(n/x)}2+\gamma_1\right]\right|
+  \le\frac{\mathsf C_\beta(U)}{\log x}
+  +\frac{\mathsf L_\beta(U)}n
+  \quad(x\ge e,\ x\le n\le e^Ux).
+  \tag{DP.3}
+  \]
+
+  这些是 §425.3 对全部无界 β 来源的完整常数，不能换成逐个固定来源的极限。
+* §429.2–3：\( |\eta(y)|\le1+\log y\) 对 \(y\ge1\) 成立。若 \(s>x\ge e\)，\(\ell=\log x\)、\(v=\log(s/x)\)，则
+
+  \[
+  -\frac{d}{ds}P_x^\eta(s)=\frac{G_{\eta,x}(\log s)}{s^2},\qquad
+  |\ell G_{\eta,x}(\ell+v)|\le v^2/2+v+12.
+  \tag{DP.4}
+  \]
+
+  该导数来自同一完整阶乘核，不用点值包络代替跳跃差分。
+* \(\gamma_1\) 使用原约定 \(\zeta(1+z)=z^{-1}+\gamma_E-\gamma_1z+O(z^2)\)。下一小节用纯解析证明 \(\gamma_1>-167/1600>-1/8\)，面板正性据此付款。既有 `robin-kernel-diagonal.json` 的向外下端点为
+
+  \[
+  g_-=-3656579760393884564419850453066548425766419045455786552735\cdot2^{-195}.
+  \]
+
+  该保存区间及精确比较 \(g_->-1/8\) 只作交叉参考，不是下文的证明前提，也不是 Lean 定理。来源是既有 FLINT `acb.stieltjes(1)` 区间，源说明还核对 deflated ζ 的一次系数约定；两接口不是独立数值算法的声明。
+* 仓内 `Library/Weil/johnstonyang2022pnt.md` 记录 Johnston–Yang arXiv:2204.01980v2，Theorem 1.1、(1.3)、印刷 p.2：对全部 \(t\ge2\)，
+
+  \[
+  |\psi(t)-t|\le9.39t(\log t)^{1.515}e^{-0.8274\sqrt{\log t}}.
+  \tag{DP.5}
+  \]
+
+  这是包含全部素幂的无条件既有供应。下文的 PNT 求和和粗于临界的尾预算都是它的经典后果，没有把有限验零输入升级成全局 RH。
+

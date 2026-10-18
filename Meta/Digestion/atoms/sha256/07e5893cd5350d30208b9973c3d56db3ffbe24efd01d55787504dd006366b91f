@@ -1,0 +1,62 @@
+**theorem 5.1 (Terminating two-sided and exact algorithms).** For each
+$q=1,2,3,4$ and rational $\eta>0$, a terminating exact algorithm returns
+rational $l,u$ and an algebraically specified fixed legal port $T$ with at
+most $625$ flags such that
+
+$$
+l\le\varepsilon_q\le e(T)\le u,\qquad u-l\le\eta.
+\tag{5.1}
+$$
+
+Each negative threshold decision is a lower certificate against all legal
+complex competitors. Each positive decision has an exact algebraic Kraus
+witness. There is also a terminating algorithm producing a real-algebraic
+description of the exact $\varepsilon_q$ and an algebraic optimal port.
+These are algorithm specifications and computability statements; no
+evaluated frontier value or explicit optimizer tuple is specified.
+
+Proof. Use Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second
+edition, Algorithm 11.14, Cylindrical Decision, with ordered domain
+$\mathbb Q$ (or integer polynomials after clearing positive denominators).
+Its input is a finite polynomial sentence with equalities and inequalities;
+its output is its exact truth value. It invokes cylindrical decomposition
+with algebraic sample points, extracts realizable cylindrical sign data,
+and evaluates the finitely many quantified sign conditions. The algorithm
+includes zero signs and weak inequalities, so it decides boundary cases.
+Its correctness is the stated cylindrical-decision theorem, not a numerical
+mesh assumption or an unproved completeness assertion for a hierarchy.
+
+Apply it to $\exists C\ \mathcal P_q(C,m)$ at each rational threshold $m$.
+Initialize $l=b_q$, $u=u_q$ from QMB. If $u-l>\eta$, test $m=(l+u)/2$.
+On a true decision replace $u$ by $m$; on a false decision replace $l$ by
+$m$. Theorem 4.3 maintains $l\le\varepsilon_q\le u$. Every step halves
+the width. After at most the first integer $n$ with
+$(u_q-b_q)2^{-n}\le\eta$, the loop ends. Every decision is finite by the
+cylindrical-decision algorithm. A feasible cell at the final $u$ has an
+algebraic sample $C$; if necessary make that decision once more to obtain its sample.
+The associated port of Theorem 5.2 has $e(T)\le u$.
+
+A positive certificate consists of exact algebraic coordinates and verified
+equations and signs. A negative certificate can retain the exact finite
+cylindrical decomposition, algebraic sample encodings and sign data showing
+that no cell satisfies the conjunction. These certificate descriptions
+specify finite algebraic objects, without specifying a cell decomposition
+or feasible coordinates for a particular instance of (4.4).
+
+For exact computation one may directly use BPR Algorithm 14.9, Global
+Optimization, on the displayed quantifier-free semialgebraic set and the
+polynomial objective $r$. This algorithm returns the infimum and a minimizer
+when one exists. Its block elimination, univariate sample points, triangular
+sign determination and removal of infinitesimals give finite univariate
+algebraic representations. The compact nonempty set of Theorem 4.3 supplies
+the attained-minimum hypothesis.
+
+There is also a direct endpoint description: cylindrical elimination of
+the $C$ variables projects (4.4) to exactly $[\varepsilon_q,1]$.
+Its left endpoint is a finite real-algebraic cell endpoint over $\mathbb Q$.
+Root isolation identifies it, and algebraic sampling in its nonempty fiber
+returns an algebraic minimizing tuple. Thus both the value and some
+minimizer are real algebraic and effectively computable, rather than merely
+abstractly existent. No particular endpoint polynomial, isolating interval
+or minimizing tuple is specified. $\square$
+

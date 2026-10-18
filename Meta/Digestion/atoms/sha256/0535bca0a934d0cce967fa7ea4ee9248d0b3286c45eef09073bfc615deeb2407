@@ -1,0 +1,118 @@
+**Proposition 18.1 (whole-rectangle rational bounds).** Under the source
+enclosure premises of Assumption 17.1, all decimals in the following
+tables denote exact terminating rationals and all displayed intervals
+are strict outer intervals. The pinned input is the entire rectangle
+of GC Definition 6.1: each of its nine lower and upper integer
+numerators is divided by $2^{224}$, without fixing any coordinate at
+its centre or at a corner. That rectangle is strictly inside the
+following wider independent rectangle:
+
+| Source coordinate | Coarse open interval |
+| --- | --- |
+| $h_0$ | $(0.984,0.985)$ |
+| $h_1$ | $(0.706,0.707)$ |
+| $h_2$ | $(0.809,0.810)$ |
+| $a_s$ | $(0.0656,0.0657)$ |
+| $b_s$ | $(0.1459,0.1461)$ |
+| $c_s$ | $(0.0154,0.0156)$ |
+| $d_s$ | $(0.0987,0.0989)$ |
+| $m_1$ | $(0.49,0.50)$ |
+| $m_2$ | $(0.34,0.35)$ |
+
+For the expressions in (FC.55)–(FC.58), independent outward rational
+interval evaluation gives:
+
+| Expression | Entire pinned $2^{224}$ rectangle | Entire coarse rectangle |
+| --- | --- | --- |
+| $\alpha$ | $(0.877713330842,0.877713330843)$ | $(0.876520533289,0.878719191903)$ |
+| $\beta$ | $(0.122286669157,0.122286669158)$ | $(0.121280808097,0.123479466711)$ |
+| $\delta$ | $(0.015710310993,0.015710310994)$ | $(0.015648789254,0.015755169391)$ |
+| $E_{\ell,11}$ | $(0.004598725613,0.004598725614)$ | $(0.00457,0.00463)$ |
+| $E_{\ell,22}$ | $(0.014984627434,0.014984627435)$ | $(0.01481,0.01515)$ |
+| $E_{\ell,12}$ | $(-0.000310288045,-0.000310288044)$ | $(-0.00032,-0.00030)$ |
+| $l_u$ | $(0.005060625904,0.005060625905)$ | $(0.00504,0.00508)$ |
+| $l_v$ | $(0.012628207726,0.012628207727)$ | $(0.01251,0.01274)$ |
+| $e$ | $(0.007691619447,0.007691619448)$ | $(0.007626170518,0.007751346035)$ |
+| $d_*$ | $(0.020930231666,0.020930231667)$ | $(0.020667228141,0.021179522724)$ |
+| $\chi$ | $(0.734977000,0.734977001)$ | $(0.720145644,0.750109883)$ |
+| $\mathcal R$ | $(0.576580883,0.576580884)$ | $(0.550612697,0.597517323)$ |
+
+In particular $\chi<1$ and $\mathcal R>1/2$ already follow from
+the coarse rectangle, without a root TP or isolation computation.
+
+Proof. The seven amplitude comparisons extend those in Theorem 11.1;
+the $m_1,m_2$ coarse bounds are also the bounds in CG.117. Their
+containment follows directly from the nine dyadic rows, by multiplying
+the coarse rational endpoints by $2^{224}$ and comparing integers.
+For completeness, the interval calculation giving the table can be
+specified entirely with rational operations. For a positive rational
+$x$ let
+
+$$
+q_r=10^{70},\qquad k(x)=\max\{k\in\mathbb Z_{\ge0}:k^2\le q_r^2x\}.
+\tag{FC.59}
+$$
+
+Enclose $\sqrt{[l,h]}$, for $0\le l\le h$, by
+$[k(l)/q_r,(k(h)+1)/q_r]$. Integer square comparisons prove the
+outward directions. Apply this to the six radicals in (FC.55), and
+to every subsequent positive square root. Addition, subtraction and
+multiplication use their exact endpoint extrema; divide only by
+strictly positive intervals. In each rectangle first form
+
+$$
+\begin{gathered}
+r_s=\frac{c_sd_sh_1}{a_sb_sh_2},\quad
+\alpha=\frac1{1+r_s},\quad\beta=1-\alpha,\quad
+\delta=\frac{a_sb_s}{h_0h_1}+\frac{c_sd_s}{h_0h_2},\\
+\chi=\frac{-128\Delta_{12}}{11}\,
+       \frac{b_sh_2}{d_sh_1}\sqrt{r_s},\qquad
+\mathcal R=\frac{c_sb_sh_2m_1}{a_sd_sh_1m_2}.
+\end{gathered}
+\tag{FC.60}
+$$
+
+The cancelled formulas retain exact algebraic identities; their
+interval evaluation makes no assumption of independence between
+repeated expressions. For example the coarse lower and upper
+endpoints for $r_s$ are respectively
+
+$$
+\frac{0.0154\cdot0.0987\cdot0.706}{0.0657\cdot0.1461\cdot0.810},
+\qquad
+\frac{0.0156\cdot0.0989\cdot0.707}{0.0656\cdot0.1459\cdot0.809}.
+\tag{FC.61}
+$$
+
+Taking $1/(1+r_s)$ reverses their order, and subtracting from one
+gives the displayed $\beta$ endpoints. For $\mathcal R$, use the
+product of lower positive numerator endpoints divided by upper
+positive denominator endpoints for the lower bound, and the reverse
+for the upper bound. These coarse endpoints lie strictly between
+$0.553951184140$ and $0.593916276390$, hence inside its stated
+wider interval. Formula (FC.60) gives coarse $\chi$ endpoints
+strictly between $0.729016412872$ and $0.740982445562$, also inside
+the stated wider interval.
+
+Form the entries of $N$ by (FC.56), equivalently the literal trace
+sum $\sum_{r,k,l}(K_i)_{rk}\Delta_{kl}(K_j)_{rl}$, and then use
+(FC.57). Here are the more detailed coarse endpoints bearing on
+the five short height bounds:
+
+| Expression | Strict rational outer interval from the coarse rectangle |
+| --- | --- |
+| $E_{\ell,11}$ | $(0.004579190981,0.004619265951)$ |
+| $E_{\ell,22}$ | $(0.014819612551,0.015139161958)$ |
+| $E_{\ell,12}$ | $(-0.000314031930,-0.000306381868)$ |
+| $l_u$ | $(0.005042004017,0.005079100333)$ |
+| $l_v$ | $(0.012513805577,0.012732663987)$ |
+
+All the table comparisons reduce to cross multiplication of positive
+rational denominators, with (FC.59) supplying the square-root
+comparisons. Repeating these same operations on the nine original
+dyadic intervals gives the pinned column. This is interval
+containment on both full rectangles, not evaluation at sample points.
+Off-root points are used only to bound expressions. No TP identity,
+common-law existence or physical realization is asserted there.
+$\square$
+

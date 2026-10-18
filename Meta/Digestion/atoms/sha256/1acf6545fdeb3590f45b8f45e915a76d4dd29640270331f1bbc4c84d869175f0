@@ -1,0 +1,44 @@
+## 132. 可移动的三维关系块与端点 holonomy
+
+对任意 $A\in M_2(\mathbb C)$，定义随配置框架移动的关系块
+$$
+ \overline A=\sum_i|i\rangle\langle i|\otimes G_iAG_i^\dagger.\tag{132.1}
+$$
+若 $\mathcal E^*$ 是边通道的 Heisenberg 对偶，则由 (131.2)
+$$
+ \mathcal E^*(\overline A)
+ =\sum_{i,j}P_{ij}|i\rangle\langle i|\otimes G_iAG_i^\dagger
+ =\overline A.\tag{132.2}
+$$
+映射 $A\mapsto\overline A$ 还是保持单位和伴随的单射代数表示，因为逐块有
+$$
+ \overline A\,\overline B=\overline{AB},\quad
+ \overline{A^\dagger}=(\overline A)^\dagger,\quad
+ \overline I=I_{10}.
+$$
+其中配置 $0$ 的块就是 $A$，故核为零，说明单射性。
+因此
+$$
+ \overline X^2=\overline Y^2=\overline Z^2=I_{10},\qquad
+ \overline X\overline Y=\mathrm i\overline Z,\quad
+ \overline Y\overline Z=\mathrm i\overline X,\quad
+ \overline Z\overline X=\mathrm i\overline Y,
+$$
+反向乘积各取负号，$\operatorname{span}_{\mathbb C}\{I_{10},\overline X,\overline Y,\overline Z\}$ 表示完整 $M_2(\mathbb C)$。同一边运输固定全部 $\overline A$，包括三个非恒定实 Pauli 方向；这些是内部逻辑坐标，不是配置位置轴。
+
+取 $D=\sum_i|i\rangle\langle i|\otimes G_i^\dagger$，则
+$$
+ DK_{ji}D^\dagger=(-1)^{\nu_{ji}}\sqrt{P_{ij}}\,|j\rangle\langle i|\otimes I_2.\tag{132.3}
+$$
+故共轭后的通道为 $\widetilde{\mathcal E}=\mathcal P\otimes\operatorname{id}_{2}$，其中配置通道必须明确定义为
+$$
+ \mathcal P(A)=\sum_{i,j}P_{ij}\langle i|A|i\rangle\,|j\rangle\langle j|.\tag{132.4}
+$$
+它删除配置非对角元并执行 Markov 推进；随机矩阵 $P$ 本身不是量子通道。对任意配置—逻辑—参考联合密度态 $\omega_{CLR}$，取框架变换后的输入，乘积通道给出
+$$
+ \operatorname{Tr}_C[(\mathcal P\otimes\operatorname{id}_{LR})(\omega_{CLR})]
+ =\operatorname{Tr}_C\omega_{CLR}.
+$$
+证明是将 $\omega=\sum_{i,k}|i\rangle\langle k|\otimes\omega_{ik}$ 展开；输出为
+$\sum_{i,j}P_{ij}|j\rangle\langle j|\otimes\omega_{ii}$，对配置取迹并用行和一即得。这对全部密度态及未触动参考成立，保留完整逻辑密度和其参考关联，不只三个标签；配置相干及配置与逻辑的全部联合态并不保持。环境只记录配置边，不读逻辑因子，增加会读取该因子的耦合后不能沿用此保护结论。实际框架读取和运输资源仍须供应。这里是一个具体的逻辑接口实例，不是对所有无噪声子系统的新一般定理；可参见 David W. Kribs、Raymond Laflamme、David Poulin、Maia Lesosky, [“Operator quantum error correction”](https://arxiv.org/abs/quant-ph/0504189), *Quantum Information and Computation* 6 (2006), 382–399。该文统一标准纠错、无退相干子空间和无噪声子系统；本图的保护由上述乘积通道直接证明。
+

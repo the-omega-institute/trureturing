@@ -1,0 +1,4 @@
+**Proposition 11.1 (degenerate cases).** Success requires $N\ge3$, $P\ge1$ and $L\ge1$. The normalization itself still holds for every unsuccessful explicit preparer, with or without Reads or both Halt labels.
+
+Proof. $N=0$ supplies no nonempty state space or common start. Both attained bits require at least two different bit Halts. A common initial Halt produces only its one bit, so a successful preparer also needs a Read and at least one call. This excludes $N<3$ and $P=0$. With $L=0$ only a selected initial serving Halt can accept. The two entries can issue at most two fixed rows, whereas all five distinct targets occur on $\mathcal U_*$. Thus $L=0$ cannot succeed. None of these feasibility obstructions was a hypothesis of the summary contraction or joint relation proof. $\square$
+

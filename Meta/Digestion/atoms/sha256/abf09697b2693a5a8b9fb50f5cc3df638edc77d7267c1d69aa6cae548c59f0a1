@@ -1,0 +1,32 @@
+**Convention 9.2 (mature background and bounded literature scope).**
+Deterministic query indistinguishability is background: equal acquired
+replies along a common path cannot determine different required answers.
+For a readable example, Ronald de Wolf, *Quantum Computing: Lecture
+Notes*, [arXiv:1907.09415, §2.4.1][DW], explains the deterministic
+Deutsch–Jozsa lower argument by the answer remaining undetermined after
+the all-zero partial transcript. Only that indistinguishability
+principle is credited here. Its promise, query model and numerical
+bound are not premises for (PCA.15) or (PCA.20). Moore-machine
+stationarity is supplied in the exact native form by NBP Proposition
+12.5 and reused in Lemma 2.3.
+
+Harry Buhrman and Ronald de Wolf, *Complexity Measures and Decision
+Tree Complexity: A Survey*, *Theoretical Computer Science* 288(1),
+21–43, 2002, is a bibliographic reference verified from [de Wolf's publication
+list][BDW]. No unread theorem from that survey is used as a proof
+premise. The arXiv exposition above was read for the stated elementary
+example. No Boolean, XOR, spectral, graph or quantum numerical frontier
+is imported.
+
+The overlap search was bounded to the owner, native/acquisition theory
+texts and the relevant FibonacciAtomic source/Blueprint descriptions,
+using prescribed-code, common-start, generated-code, fixed-address and
+finite-observation terms. The neighboring finite-menu, passive-service,
+representative-reply and continuous-control interfaces in 9.1 are the
+relevant comparisons read. This is not global literature coverage or
+evidence of worldwide novelty. The finite-observation equivalence is
+an elementary deterministic-table deduction. The native cone transfer,
+the simultaneous arbitrary-context preparation optimum, and the
+compatible nongenerable code are `repo-derived` ordinary-paper
+deductions relative to the cited native suppliers.
+

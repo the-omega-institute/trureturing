@@ -1,0 +1,4 @@
+## 100. Separate dual-face costs for missing partners
+
+The positive dual metric in §99 averages two PSD faces. Keeping their separate Schur costs gives a stronger attained algebraic bound for each actual missing partner. Its comparison with \(1/16\), all seven remaining support patterns and the global quarter optimum remain open.
+

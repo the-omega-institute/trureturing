@@ -1,0 +1,64 @@
+**Theorem 3.1 (same-coordinate native section identity).** Fix a network
+$\mathcal N$ and any $H\subseteq J$. For
+$a\in\prod_{c\in H}T_c$, replace every prescription
+$B_v(s_c)$ with $c\in H$ by the full-factor constant $B_v(a_c)$,
+and delete those seeds and their owner designations. Keep every
+other prescription, owner, domain and actual block unchanged.
+Denote the resulting network by $\mathcal N_a$. Then
+
+$$
+C_{\mathcal N_a}
+=\{x\in C_{\mathcal N}:r_{x_{i_c}}(q_c)=a_c\ (c\in H)\},
+\qquad o_c=(i_c,q_c),
+\tag{SIR.14}
+$$
+
+and these full solution sets form a disjoint partition of
+$C_{\mathcal N}$. For every nonnegative tuple weight
+$W:S_d^n\to[0,\infty)$,
+
+$$
+\sum_{x\in C_{\mathcal N}}W(x)
+=\sum_{a\in\prod_{c\in H}T_c}\sum_{x\in C_{\mathcal N_a}}W(x).
+\tag{SIR.15}
+$$
+
+In particular, for all the arbitrary once-owned $w_i$,
+
+$$
+Z(\mathcal N;w_1,\ldots,w_n)
+=\sum_a Z(\mathcal N_a;w_1,\ldots,w_n).
+\tag{SIR.16}
+$$
+
+Proof. Every substituted constant belongs to its original $G_q$.
+Remaining owners stay distinct and remain assigned to their own
+seeds, with (SIR.10) unchanged. Thus each branch is a network of
+Definition 2.1, not merely a projected constraint relation.
+
+If $x$ solves the original network, its unique seed vector consists
+of its actual owner replies. Fixing its coordinates in $H$ gives
+exactly the substituted prescriptions and the same actual compatible
+blocks. This proves one inclusion in (SIR.14). Conversely a solution
+of the substituted network has, at the former owner of $c\in H$,
+factor $B_{o_c}(a_c)$ and therefore reply $a_c$ by (SIR.10).
+Adjoining these fixed values to its remaining seed vector satisfies
+all original prescriptions. This proves the other inclusion.
+
+Different $a$ differ at an actual owner reply, hence cannot give
+the same tuple. Every original tuple has one such vector. The
+partition proves (SIR.15), without a product assumption on $W$.
+For $W(x)=\prod_iw_i(x_i)$, the credited one-lift identity in RRN
+identifies both sides with (SIR.16). In each branch $\Phi_i$ is
+the original full $\Phi_i$ with $s_H=a$ substituted; its weight
+has neither been split nor repeated.
+
+If a conditioned domain is empty there are no branches, and the
+original solution set is empty. An unconditioned empty domain
+makes every branch empty. Empty $H$, singleton domains, no seeds,
+zero weights and incompatible constant prescriptions obey the same
+identity, with the usual empty-product convention. Finite
+conditioning and distributivity are the mature ingredients, as in
+[Dechter, §§3–4][Dechter]; (SIR.14) supplies the additional native
+same-coordinate closure. $\square$
+

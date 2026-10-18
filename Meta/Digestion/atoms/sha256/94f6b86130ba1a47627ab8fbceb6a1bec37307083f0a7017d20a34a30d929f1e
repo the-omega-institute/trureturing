@@ -1,0 +1,28 @@
+**Corollary 5.2 (The remaining unrestricted interval).** With the
+credited QPC lower constant
+
+$$
+L=1-\frac12\left(\frac{5556+423\sqrt{17}}{13414}
++\frac{63}{125}\right),
+\tag{5.4}
+$$
+
+the original unrestricted minimax problem satisfies
+
+$$
+L\le\varepsilon_1\le
+\frac{17\sqrt{17}+3+\sqrt{10458+198\sqrt{17}}}{80\sqrt{17}}
+<\frac{11}{20}<\frac47.
+\tag{5.5}
+$$
+
+In particular the QMB Theorem 3.1 scalar real-projection channel,
+whose exact error is $4/7$, is not a minimizer for this menu.
+
+Proof. The lower bound is precisely
+QPC Theorem 6.4, which covers every original complex finite-flag
+competitor. Theorem 2.3 places the displayed port in that same class,
+so $\varepsilon_1\le e(T_*)$. Apply Theorem 5.1.
+Its strict error improvement excludes the former $4/7$ channel as a
+minimizer without restricting any competitor. $\square$
+

@@ -1,0 +1,22 @@
+**Definition 8.2 (operational meaning of the missing law).** Interpret
+(RB.43) through the existing FC Theorem 8.1 and GC Propositions
+10.1 and 12.2, applied to that very law after compatible merging:
+all eight moments, physical capacity, $K=r$ and
+$J_t=y\cdot B-\lambda r$ must hold simultaneously. Their original
+height and minimum-count dictionary is
+
+$$
+\mathcal T(s,t)=\frac{H_0+y\cdot B(t)-\lambda r}{2},\qquad
+n_{\rm tot}(s,t)=1+n_t(r).
+\tag{RB.44}
+$$
+
+Here $s=s_0r/\sqrt\alpha$, $H_0$ is the fixed positive high height,
+and GC.10 is an identity of minima. A law satisfying (RB.43) would
+therefore have a realization with at most seven supported low labels
+and one counted coherent high, with all the quantum and entire-fibre
+requirements of Assumption 1.1. Coefficient weights, failure
+intensities, endpoint nodes, matrix rank, hidden Kraus indices and
+actual acquisition labels are distinct quantities. Theorem 7.1
+provides no representation satisfying (RB.43).
+

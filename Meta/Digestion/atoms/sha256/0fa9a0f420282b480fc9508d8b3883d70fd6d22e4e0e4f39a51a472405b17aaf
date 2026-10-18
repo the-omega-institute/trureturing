@@ -1,0 +1,77 @@
+**Lemma 4.3 (complete replies, factors and finite-word reduction).**
+On $P$, with columns in the order $u_0,u_1,u_2,u_3,u_4$, the reply
+table at the seven boundary words is
+
+$$
+\begin{array}{c|ccccc}
+q&r_{u_0}(q)&r_{u_1}(q)&r_{u_2}(q)&r_{u_3}(q)&r_{u_4}(q)\\\hline
+\varepsilon&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}&\alpha\\
+R&\alpha&\alpha&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+LL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{absent}\\
+LR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\mathsf{absent}\\
+RL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\
+RR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\alpha
+\end{array}
+\tag{CIT.21}
+$$
+
+The target table, evaluated by (CIT.19), is
+
+$$
+\begin{array}{c|ccccc}
+q&\Gamma_q(u_0)&\Gamma_q(u_1)&\Gamma_q(u_2)&\Gamma_q(u_3)&\Gamma_q(u_4)\\\hline
+\varepsilon&(0,0)&(0,0)&(0,0)&(0,0)&(0,0)\\
+L&(2,1)&(1,0)&(0,0)&(0,0)&(2,1)\\
+R&(2,1)&(2,1)&(0,0)&(0,0)&(0,0)\\
+LL&(3,0)&(2,0)&(2,1)&(1,0)&(3,0)\\
+LR&(4,1)&(3,1)&(2,1)&(2,1)&(4,1)\\
+RL&(3,0)&(3,0)&(2,1)&(1,0)&(0,0)\\
+RR&(4,1)&(4,1)&(2,1)&(2,1)&(2,1)
+\end{array}
+\tag{CIT.22}
+$$
+
+Every length-three experiment is a public function of its length-two
+parent reply, and every length-at-least-four experiment is constant
+absent. Thus the finite interface with the seven experiments in $W_3$
+has exactly the same local and joint admissible sets on $P^n$ as the
+interface allowing all finite experimental words. All experiments have
+at most $m=4$ replies.
+
+Proof. The root of each tree is a pair. Their left children are,
+in order, $A,B,C_0,J_0,A$ and their right children are
+$A,A,C_0,J_0,Q_0$, giving the first three reply rows. Following one
+further edge gives respectively the four rows $LL,LR,RL,RR$ displayed
+in (CIT.21): the only branch at depth two is $C_0$ at $RL$ in
+$u_4$. Its two children are alpha leaves.
+
+For the factor table, a branch endpoint contributes $(0,0)$ and an
+actual alpha or beta leaf endpoint contributes $(2,1)$ or $(1,0)$.
+These rules give the entire root, $L$ and $R$ rows. In $u_0,u_1,u_4$,
+the left leaf precedes the $LL$ and $LR$ endpoint: the remaining
+letter contributes $s(L)=1$ or $s(R)=2$, with last-letter bit zero
+or one. This gives their entries $(3,0),(2,0),(3,0)$ in $LL$ and
+$(4,1),(3,1),(4,1)$ in $LR$. The corresponding endpoints in
+$u_2,u_3$ are actual leaves, giving $(2,1),(1,0)$ in $LL$ and
+$(2,1),(2,1)$ in $LR$. In $u_0,u_1$, the right leaf is alpha,
+so $RL$ and $RR$ give $(3,0)$ and $(4,1)$. In $u_2,u_3$ their
+right children have leaves alpha or beta on the left, and alpha on
+the right, giving the stated entries. Finally $u_4$ has a branch
+at $RL$ and an alpha leaf at $RR$, giving $(0,0)$ and $(2,1)$.
+This accounts for every entry of (CIT.22).
+
+For a length-three word $ab$, where $|a|=2$ and $b$ is one letter,
+its reply is alpha precisely if $r_u(a)=\mathsf{branch}$; otherwise
+it is absent. Indeed the only possible depth-two branch just identified
+has two alpha children, and an endpoint that is a leaf or absent has
+no child. This supplies the same reply function for either final letter.
+All trees of $P$ have height at most three, so a longer word is absent.
+For any implication using a coarsened experiment, equality of the
+parent replies entails equality of the coarsened replies and hence the
+same target equality. The donor coordinate and unchanged joint set are
+preserved. A constant reply can serve only a constant target. Conversely
+the seven boundary experiments are available in the full interface.
+This proves equivalence for every coordinate and target separately,
+including arbitrary off-coordinate donors. $\square$
+

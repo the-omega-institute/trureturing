@@ -1,0 +1,35 @@
+**Definition 1.1 (one stationary original source).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad \operatorname{ht}(\langle u,v\rangle)
+=1+\max\{\operatorname{ht}(u),\operatorname{ht}(v)\}.
+$$
+
+Pairing is free and ordered. Every finite word in $L,R$, including
+$\varepsilon$, is a legal original-root literal. Its reply $r_t(a)$
+is the addressed constructor, or absent when traversal passes a leaf,
+in the alphabet
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+The homomorphic substitution and the original source and request families are
+
+$$
+\begin{aligned}
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},&
+W_D&=\{q:|q|\le D-1\},&\mathcal P_D&=\{Rq:q\in W_D\},
+\end{aligned}
+\tag{SIR.1}
+$$
+
+where $D\ge1$ is public. The one actual initial source remains
+stationary throughout preparation and late acquisition; $\rho^kt$
+specifies the prediction target. There is no subtree, equality,
+source-identity, age, reset, copying, navigation or advice port.
+

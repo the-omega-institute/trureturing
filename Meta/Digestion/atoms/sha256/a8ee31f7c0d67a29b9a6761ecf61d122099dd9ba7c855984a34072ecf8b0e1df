@@ -1,0 +1,6 @@
+**定理 62.2（共同占位不等于两模式相干）。** 有 $N_2N_5=\Pi_{25}$、$N_2N_3=N_3N_5=0$。$\operatorname{tr}(\varrho\Pi_{25})$ 是联合占位概率；$\langle2|\varrho|5\rangle$ 是另一种关系。
+
+证明（62.2）。正交配置投影满足 $\Pi_s\Pi_t=\delta_{st}\Pi_s$，展开即得三式。取 $|\psi_+\rangle=(|2\rangle+|5\rangle)/\sqrt2$，其 $25$ 对角元为零，而 $\langle2|\varrho|5\rangle=1/2$。取 $\varrho=\Pi_{25}$，联合占位概率为一，相干为零。故同配置中的两端占位与两个互斥基态的叠加不同。
+
+第 40 章的通道开闭是在同一输出端相加 $A+B$，给 $|A+B|^2=|A|^2+|B|^2+2\operatorname{Re}(A\overline B)$；同 Hilbert 输出的环境单位记录将交叉项乘以重叠。这些传播合同不由单个 $\Pi_{25}$ 或一个非对角矩阵元自动给出。实际对角 Kraus 与置换菜单中同对角态仍不可分，见钉版 [相干运输边界，命题 2.3](https://github.com/the-omega-institute/trureturing/blob/93586271400cc6ffafb1e8312eedd8bc6108cf83/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md)。有相干不等于已经取得相位敏感操作。$\square$
+

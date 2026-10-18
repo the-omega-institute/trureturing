@@ -1,0 +1,74 @@
+**定理 56.1（交替码的普通算子范数通用性）。** 对每个 $k\geq2$、每个 $U\in U(\mathcal L_k^{\mathrm{alt}})$ 及每个 $\varepsilon>0$，在假设 55.2 的同一个物理安装下存在有限字 $W\in\mathcal W_{2k-1}$，使
+
+$$
+\|W\iota_k-\iota_kU\|_{\mathrm{op}}<\varepsilon.
+\tag{VII.10}
+$$
+
+这个字对全部编码输入共同有效，无须在 (VII.10) 外另加整体相位。设 $R$ 是任意有限参考，$\rho\in\mathsf D(\mathcal L_k^{\mathrm{alt}}\otimes R)$，记实际及理想输出为
+
+$$
+\begin{aligned}
+\omega_W&=(W\iota_k\otimes I_R)\rho
+                       (W\iota_k\otimes I_R)^\dagger,\\
+\omega_U&=(\iota_kU\otimes I_R)\rho
+                       (\iota_kU\otimes I_R)^\dagger .
+\end{aligned}
+\tag{VII.11}
+$$
+
+同一个 $W$ 同时满足
+
+$$
+\|\omega_W-\omega_U\|_1<2\varepsilon,\qquad
+\operatorname{tr}\!\left[
+ ((I_{\mathcal K_N}-P_k^{\mathrm{alt}})\otimes I_R)\omega_W
+ \right]<\varepsilon^2.
+\tag{VII.12}
+$$
+
+第二项是实际物理输出离开交替码的概率；离开整个合法域的概率始终为零。结论不要求近似字的中间终点精确回到交替码，也不声称任意目标可精确有限综合或具有统一高效的脉冲数、时间及精度成本。
+
+**证明。** 标准有限门分解作为中间输入：Barenco 等，*Elementary gates for quantum computation*，[arXiv:quant-ph/9503016v1](https://arxiv.org/html/quant-ph/9503016v1)，§8 的一般门构造，给任意 $U(2^k)$ 一个不使用额外工作位的精确有限二比特门分解。这里只使用该有限存在结论，不重复其分解，也不把它的二比特门计数当作本原生菜单的脉冲复杂度。若采用其单比特门加 XOR 表述，$k\geq2$ 允许把每个单比特门与另一个逻辑位上的恒等合为一个二比特门。
+
+相邻逻辑交换生成任意逻辑位排列，故对分解中的每个有序逻辑位对，先用一个有限相邻交换序列将其依序送到第一、第二逻辑位置，在第一窗口作用指定二比特门，再作逆排列。所有相位调用始终位于物理位置 $(1,3)$；被路由的是逻辑数据。把全部这些理想操作展开为有限逻辑序列 $g_1,\ldots,g_L$，有 $g_L\cdots g_1=U$。各项或为相邻交换，或为第一逻辑位对上的指定 $U(4)$。取正数 $\delta_j$ 满足 $\sum_j\delta_j<\varepsilon$，用命题 55.3 分别选实际全链酉字 $A_j$，使
+
+$$
+\|A_j\iota_k-\iota_kg_j\|_{\mathrm{op}}<\delta_j.
+\tag{VII.13}
+$$
+
+置 $W=A_L\cdots A_1$。无需假定实际近似前缀保码，精确的混合望远镜恒等式为
+
+$$
+\begin{aligned}
+W\iota_k-\iota_kg_L\cdots g_1
+ =\sum_{j=1}^L A_L\cdots A_{j+1}
+ (A_j\iota_k-\iota_kg_j)g_{j-1}\cdots g_1 .
+\end{aligned}
+\tag{VII.14}
+$$
+
+空前缀或后缀取恒等。右侧理想前缀始终作用于逻辑域，实际后缀只用全合法域上的酉性，故算子范数小于 $\sum_j\delta_j$。特别地，前一窗口近似残留在辅助方向的振幅不需要被下一窗口精确清除。若 $U=I$，亦可直接取空字。这证明 (VII.10) 及输入无关性。
+
+令 $A=W\iota_k$、$B=\iota_kU$，二者均为等距。张量 $I_R$ 不改变 $\|A-B\|_{\mathrm{op}}$；使用
+
+$$
+\begin{aligned}
+\omega_W-\omega_U
+ &=((A-B)\otimes I_R)\rho(A^\dagger\otimes I_R)\\
+ &\quad +(B\otimes I_R)\rho((A-B)^\dagger\otimes I_R)
+\end{aligned}
+\tag{VII.15}
+$$
+
+及迹范数乘积界，得到第一项 (VII.12)。又因 $(I-P_k^{\mathrm{alt}})B=0$，
+
+$$
+\|(I-P_k^{\mathrm{alt}})A\|_{\mathrm{op}}
+ \leq\|A-B\|_{\mathrm{op}}<\varepsilon.
+\tag{VII.16}
+$$
+
+把左侧算子张量参考恒等，其平方为泄漏概率的统一上界，得第二项。窗口的精确合法性由假设 55.2 与命题 55.3 保证。本推导增加的是指定交替码上的同址相位复用、行列式补偿及泄漏容许下的有限字组合，不重新认领标准门分解或定理 31.1 的局部相位论证。$\square$
+

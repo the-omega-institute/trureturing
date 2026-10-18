@@ -1,0 +1,26 @@
+**Theorem 57.1 (all directions before taking their trace).** Fix one $V,\omega,U,P$ as in Section 52 with $k\geq2$. Let $X>0$ and use $B_X,m_X$ of (S.47). If every phase-plane real overlap exceeds $v$, the Hermitian $2\times2$ matrix
+
+$$
+(\mathcal K_X)_{ij}=\operatorname{Tr}(B_XD_{ij}),\qquad i,j\in\{0,1\},
+$$
+
+satisfies
+
+$$
+\mathcal K_X\prec(m_X+\operatorname{Tr}B_X-2v)I_{\mathcal C}.
+\tag{S.54}
+$$
+
+For commuting diagonal weights this is the matrix relation whose trace is (S.20).
+
+Proof. Since $D_{ji}=D_{ij}^\dagger$ and $B_X$ is Hermitian, $\mathcal K_X$ is Hermitian. By (S.16), (S.17) and (S.49), every complex unit $\psi\in\mathcal C$ satisfies
+
+$$
+\psi^\dagger\mathcal K_X\psi
+=\operatorname{Tr}(B_XD_\psi)
+\leq m_X+\operatorname{Tr}B_X-2r_\psi
+<m_X+\operatorname{Tr}B_X-2v.
+$$
+
+Every unit eigenvector of $\mathcal K_X$ is one of these directions, so its largest eigenvalue is strictly below the displayed scalar. Taking the trace retains only one consequence of the full directional family. $\square$
+

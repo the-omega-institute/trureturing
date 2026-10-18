@@ -1,0 +1,119 @@
+**Lemma 7.1 (Uniform estimate from interior Bernstein samples).** For
+all $0<k<H$ and all integers $m\ge1$,
+
+$$
+|P_m(k)-A(k)|\le\sqrt2\,H m^{-1/4}.
+\tag{7.2}
+$$
+
+**Proof.** For nonnegative $a,b$, assume for example $a\ge b$.
+Then
+
+$$
+(\sqrt a-\sqrt b)^2
+\le(\sqrt a-\sqrt b)(\sqrt a+\sqrt b)=a-b.
+$$
+
+Interchanging them gives $|\sqrt a-\sqrt b|\le\sqrt{|a-b|}$.
+For $k,l\in(0,H)$,
+
+$$
+|k(H-k)-l(H-l)|=|k-l|\,|H-k-l|\le H|k-l|.
+$$
+
+It follows that
+
+$$
+|A(k)-A(l)|\le2\sqrt H\,|k-l|^{1/2}.
+\tag{7.3}
+$$
+
+The weights in (7.1) are nonnegative and sum to one by the binomial
+theorem. The finite coefficient identities
+
+$$
+j\binom mj=m\binom{m-1}{j-1},\qquad
+j(j-1)\binom mj=m(m-1)\binom{m-2}{j-2}
+$$
+
+give
+
+$$
+\sum_j j w_j=mt,\qquad
+\sum_j j(j-1)w_j=m(m-1)t^2.
+$$
+
+The first coefficient identity is used for $j\ge1$ and the second
+for $j\ge2$; the omitted lower-index contributions are zero. The
+second identity is needed only for $m\ge2$.
+For $m=1$ the factorial moment on each side is directly zero. Thus in
+all cases $m\ge1$,
+
+$$
+\sum_j(j-mt)w_j=0,\qquad
+\sum_j(j-mt)^2w_j=mt(1-t).
+$$
+
+Since
+
+$$
+\kappa_j-k=\frac H{m+2}\bigl((j-mt)+(1-2t)\bigr),
+$$
+
+the cross term vanishes on summing, and
+
+$$
+\begin{aligned}
+\sum_jw_j(\kappa_j-k)^2
+&=\frac{H^2}{(m+2)^2}\bigl(mt(1-t)+(1-2t)^2\bigr)\\
+&\le\frac{H^2(m+4)}{4(m+2)^2}
+\le\frac{H^2}{4m}.
+\end{aligned}
+\tag{7.4}
+$$
+
+Here $t(1-t)\le1/4$, $|1-2t|\le1$, and the last comparison is
+$m(m+4)\le(m+2)^2$. No limiting distribution or numerical estimate
+is involved.
+
+For the finite probability weights, two Cauchy–Schwarz applications give
+
+$$
+\begin{aligned}
+\sum_jw_j|\kappa_j-k|^{1/2}
+&\le\left(\sum_jw_j|\kappa_j-k|\right)^{1/2}\\
+&\le\left(\sum_jw_j(\kappa_j-k)^2\right)^{1/4}.
+\end{aligned}
+$$
+
+Apply (7.3) term by term in (7.1), then use (7.4). The result is
+
+$$
+|P_m(k)-A(k)|
+\le2\sqrt H\left(\frac{H^2}{4m}\right)^{1/4}
+=\sqrt2\,H m^{-1/4},
+$$
+
+as required. This proof includes $m=1$ and is uniform arbitrarily close
+to either end of the open interval. $\square$
+
+For an exact fixed-coefficient decoder, write
+
+$$
+P_m(k)=\sum_{l=0}^m\pi_l k^l,
+$$
+
+where finite expansion of $(1-k/H)^{m-j}$ gives explicitly
+
+$$
+\pi_l=H^{-l}\sum_{j=0}^l
+A(\kappa_j)\binom mj\binom{m-j}{l-j}(-1)^{l-j}
+\quad(0\le l\le m).
+\tag{7.5}
+$$
+
+Indeed the term indexed by $j$ contributes to $k^l$ only when
+$l-j$ factors of the expanded power supply $-k/H$. All coefficients
+are exact real constants determined by the fixed source and tolerance.
+No encoder value occurs in their definition.
+

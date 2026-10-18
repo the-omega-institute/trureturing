@@ -1,0 +1,24 @@
+## 425. The extra six-owner role must be transverse P/V
+
+In (424.2), let T be the noncheap owner other than tau and the two
+five-slot owners. It is not heavy, since k=2. If its P expense were
+greater than pi, those four noncheap owners would spend more than
+2*(4*pi/3)+2*pi=14*pi/3, leaving X<pi/3. Both cheap axial angles
+would be less than pi/3, and their conditional compensation (407.1) would
+again give 4*pi<3*X+Y<4*pi.
+
+By the exhaustive role table, the only noncheap, nonheavy class not
+already proved to spend more than pi on P is
+
+    C(P0)=(C,P0,V,D,P0,V), P0 in {M,Z,U}.
+
+Therefore T must have this transverse P/V form. It has exactly two
+original P slots. In (424.2) we consequently have D_P=13+2+2=17;
+in (424.3) we already have D_P=13+4=17. Since the componentwise lower
+bounds sum to 17, both alternatives have exact genuine P degrees
+
+    (degree_M,degree_Z,degree_U)=(5,6,6).          (425.1)
+
+No assumption that all C(P0) owners cost at most pi is used: if the
+specific owner costs more than pi, that instance is excluded too.
+

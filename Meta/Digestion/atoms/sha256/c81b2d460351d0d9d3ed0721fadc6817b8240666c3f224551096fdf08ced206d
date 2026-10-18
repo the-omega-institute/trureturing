@@ -1,0 +1,38 @@
+**Corollary 211.13 (Scaled actual zero-cost inputs defeat only this selector method).**
+For $j=3,4$ let $Y_j$ have unit correct mass at $w(\{j\})$,
+unit pair mass at each of $w(\{1,j\}),w(\{2,j\})$, and $T=1$.
+These are the existing zero-cost rays of 198.7 and 204.4, with
+$Q(Y_j)=q_j$ and $\Delta_N(Y_j)=\Delta_O(Y_j)=0$.
+For every selector in 211.11 there is one $j\in\{3,4\}$ such
+that, for every real $r_0>4$,
+
+$$
+\Delta_O(r_0Y_j)=0,\qquad
+\Delta_N(\mathcal S(Q(r_0Y_j)))\ge r_0/4>1.
+\tag{211.43}
+$$
+
+**Proof.** Reuse the zero-ray supplier with its sole late address
+mapped to $j$, early addresses fixed as $1,2$, and all other bits one.
+Its support argument keeps every competitor: a table collecting the
+correct word leaves at least one of the three coordinates $1,2,j$
+unqueried; flipping that coordinate produces one of the three other
+scored words with the same acquired information but a lost reward.
+If it does not collect the correct word, that reward is already lost.
+Thus support is at most three and the anchor attains three in both
+catalogs. This is the stated supplier applied at the new address,
+not a new zero-core result. Choose $j$ from 211.12's maximum bound.
+Linearity and positive homogeneity of complete support prove (211.43).
+The selected score has exact quotient and hence zero residual, but its
+cost exceeds one for every permitted $\theta\ge0$.
+
+Each actual input $r_0Y_j$ nevertheless has its own exact zero-cost
+$N$ certificate $V=r_0Y_j$, with either $\theta=0$ or $\theta=1$.
+For every $b\in H_N$ and every full feasible $\lambda$,
+$F_{Q(r_0Y_j)}(b)\le r_0Y_j\cdot G_N\lambda\le0$.
+It cannot be the strict separator required by 199.3.
+Nonlinear or piecewise-linear quotient choices, choices depending on
+the entire input score, maps not factoring through $Q$, signed residuals
+and nonzero zero-cost cores all remain available. There is no assertion
+at $L=3$ and no exclusion of those alternative methods. $\square$
+

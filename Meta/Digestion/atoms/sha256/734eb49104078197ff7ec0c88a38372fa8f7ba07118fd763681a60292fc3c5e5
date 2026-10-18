@@ -1,0 +1,10 @@
+#### 10.10　Holonomy 的定量传播界
+
+设续接 $C:S\to S$ 和观察 $\pi:S\to Y$ 在相关集合上分别是 $L_C$ 与 $L_\pi$ Lipschitz。令两条路径在续接前的状态差为
+
+$$
+\delta(s)=T_bT_a(s)-T_aT_b(s).
+$$
+
+<a id="claim-10-10-1"></a>
+

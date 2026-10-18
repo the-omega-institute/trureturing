@@ -1,0 +1,46 @@
+**定理 7.3（同一律的提升交换与两种信息损失）。** 对定义 7.1 的同一概率律，令
+
+```math
+X=p_2+p_{25},\qquad Y=p_5+p_{25},\qquad Z=p_3,\qquad
+u=X+Y,\qquad v=Y+Z,\qquad \bar c=(u,v)^{\mathsf T}.
+```
+
+则整个均值提升、复数量曲线及实组成投影恰为
+
+```math
+\begin{aligned}
+\bar z_p(t)&=\sum_\sigma p_\sigma z_\sigma(t)=T_3(t)J\bar c,\\
+\bar f_p(t)&=qL\bar z_p(t)=u\mathcal F(t+3)+v\mathcal F(t+4),\\
+\bar r_p(t)&=B\bar z_p(t)=A(t)\bar c.
+\end{aligned}
+```
+
+整条 $`\bar f_p`$ 相等，当且仅当 $`\bar c`$ 相等。相比之下，半时刻 $`h\in1/2+\mathbb Z`$ 的 $`\bar r_p(h)`$ 相等，当且仅当 $`P_+(\bar c_p-\bar c_{p'})=0`$；在完整实均值域，后一个关系严格更粗。
+
+证明。表中直接给 $`\sum p_\sigma d_\sigma=(p_2+p_5+2p_{25},p_3+p_5+p_{25})^{\mathsf T}`$。固定律的有限求和可与每个线性映射交换，故前三式完全作用于同一来源。整条曲线至少包含 $`t=0,1`$，它们给
+
+```math
+\binom{\bar f_p(0)}{\bar f_p(1)}
+=\begin{pmatrix}2&3\\3&5\end{pmatrix}\binom uv,\qquad
+u=5\bar f_p(0)-3\bar f_p(1),\quad
+v=-3\bar f_p(0)+2\bar f_p(1).
+```
+
+行列式为一，故曲线相等迫使 $`u,v`$ 相同；反向由曲线公式。两次数量恢复是第二阶卷 §1 的既有输入，这里将它接在同一个 $`p`$ 的五贡献与连续提升上。半时刻条件由 $`A(h)=e^{ah}P_+`$ 直接给出。
+
+为证明严格性确实发生在这份来源域而非任意拼接实态，取按本卷顺序的合法律
+
+```math
+p^{\circ}=(1/5,1/5,1/5,1/5,1/5),\qquad
+p^\epsilon=p^{\circ}+\epsilon\bigl(-(1+\psi),1,0,0,\psi\bigr),\qquad
+\epsilon=1/20.
+```
+
+因为 $`-1<\psi<0`$，所有概率仍严格正，增量和为零，且
+
+```math
+\bar c_{p^\epsilon}-\bar c_{p^{\circ}}=\epsilon(1,\psi)^{\mathsf T}.
+```
+
+这恰是负谱方向。二律在 $`h=1/2`$ 的实投影相同，完整提升的第三坐标却不同；继续表示时间 $`1/2`$ 后 $`A(1)`$ 把差送到 $`\epsilon\psi(1,\psi)^{\mathsf T}\ne0`$。整条数量曲线也不同，因为 $`q(1,\psi)^{\mathsf T}=2+3\psi\ne0`$。这些律有实的无理概率，不能转述为精确有理概率计数或确定整数树的碰撞。∎
+

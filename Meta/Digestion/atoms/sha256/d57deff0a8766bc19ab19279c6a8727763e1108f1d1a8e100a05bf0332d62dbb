@@ -1,0 +1,37 @@
+**Lemma 8.2 (gaps starting at depth one).** If $B=(1,b)$ is consecutive and $b\in\{7,8\}$, then
+
+$$
+D_B-E_B\le8-b.
+\tag{30}
+$$
+
+**Proof.** Lemma 7.3 gives $A\le4$. Put $\kappa=1$ if $A=4$ and $\kappa=0$ otherwise. By (21) and the forced fork,
+
+$$
+D_B\le5+\kappa+\min(\ell,r),\qquad e_3\ge1+\kappa.
+\tag{31}
+$$
+
+For $b=7$ the internal depths are two through six. Their noncommon-support condition, together with (20), gives both
+
+$$
+E_B\ge\ell+r+3+\kappa,\qquad E_B\ge5+\kappa.
+\tag{32}
+$$
+
+The first retains $e_2,e_3,e_6$ outside the cells counted by $\ell+r$; the second retains at least one excess at every internal depth and the extra fork unit. If $\ell+r>0$, then
+
+$$
+D_B-E_B\le2-\max(\ell,r)\le1.
+$$
+
+If $\ell=r=0$, (31)–(32) give $D_B\le E_B$ directly.
+
+For $b=8$ there is one more internal noncommon depth, seven. Hence
+
+$$
+E_B\ge\ell+r+4+\kappa,\qquad E_B\ge6+\kappa.
+$$
+
+If $\ell+r>0$, the deficit is at most $1-\max(\ell,r)\le0$. If both vanish, $D_B\le5+\kappa< E_B$. This exhausts both endpoints, both axis-count cases and all nonnegative excesses. The fork excess is an actual host requirement on this graph, not a separately allocated residual cost. $\square$
+

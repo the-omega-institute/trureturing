@@ -1,0 +1,63 @@
+**Proposition 18.1 (actual acquisition of the pressure-attaining fiber).**
+The construction of Proposition 11.1, unchanged, realizes
+the equality fiber in Theorem 16.1. Explicitly, for
+$D=3+h$, $n=2^h$, merge the canonical scaffold image
+of $P_B^n$ and name every other canonical $S_D$ state
+separately. Its complete attained alphabet on the entire
+original $\mathcal F_D$ is exactly
+
+$$
+|S_D|-100^n+1.
+\tag{NCE.108}
+$$
+
+On every source preparation uses exactly $2^D-1$ Reads,
+maximum submitted length $D$ and $(D-1)2^D+1$ letters.
+Every late request uses zero Reads or one actual
+original-root Read of length at most $D$, before every
+supplied count. This is a nonoptimal full-family consumer
+of the chosen equality fiber, not equality for $M_1(D)$.
+
+Proof with the paid correspondence. The ordered scaffold
+map is injective on $P_B^n$, so its image has $100^n$
+canonical states. Before any request, the source-blind
+preparer actually submits every $Rq$, $|q|\le D-1$,
+in one fixed public order, including absent replies.
+The credited FMR canonicalization computes $\pi_D(v)$
+from this paid table. A public finite installed lookup
+then gives the merged-or-singleton name. Canonicalization
+fixes $S_D$, so all those names are attained, proving
+(NCE.108). The scan has
+$\sum_{\ell=0}^{D-1}2^\ell=2^D-1$ words and
+$\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1$
+letters. This acquisition depends only on public $D$
+and common tables, never on the later request.
+
+At singleton names every factor is fixed, so use zero
+Reads. At the merged name, a target above the frontier
+ends at a known branch. A target $Ra_iq$ entering a
+block has $q\in W_3$; if $q=\varepsilon$ its factor
+is also constant branch. Otherwise the own-literal
+witness for $P_B$ in Theorem 16.1 is implemented by
+the one actual word $Ra_iq=p$, with length at most
+$D$. This single reply gives the requested full factor
+and (NCE.6) supplies every authentic subsequent count.
+The prefix identifies an actually present occurrence;
+no subtree or extra root is supplied as an input.
+
+On all original variable shapes assigned that name,
+canonicalization preserves both the selected boundary
+reply and the full requested factor. Thus the reader
+also serves the entire inverse-image fiber, including
+initially absent targets. Fixed-width names, public
+allocation and a padded finite selection schedule,
+together with the declared separately paid isolation
+and handoff, leave no additional accessible acquired
+distinctions: the scan arrays, transcripts, intermediate
+selectors, buffers, lengths, allocation, control and
+accessible timing beyond the name are isolated. Those
+services are premises of Assumption 1.2. This is exactly
+the credited Proposition 11.1 mechanism; it is independent
+of which analytical positive law is used to weigh the
+same fiber. $\square$
+

@@ -1,0 +1,12 @@
+## Relation to existing CFMP work
+
+The existing Section 16 theorem treats a four-low-edge cycle and already has
+high threshold 12; it does not cover this three-star packet. Section 26's
+transition estimates use high thresholds 16/17 in a different mixed packet
+system. The previous three-edge theorem used a common high interval ending at
+`10/7` and required every high degree to be at least 12. The present result
+uses actual incidence and degree-dependent intervals to realize a degree-10
+high edge in a nonempty orientable manifold. It is not a claim about arbitrary
+three-star triangulations, arbitrary minimum-eight triangulations, or the
+original CFMP minimum-six conjecture.
+

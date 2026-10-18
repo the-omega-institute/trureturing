@@ -1,0 +1,28 @@
+**Proposition 50.1 (remaining complete comparison).** The exact baseline has the enclosure
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^0x_s\rangle}{n_s}
+ +O_{d,M}(s^8),\qquad h=Ms^8.
+\tag{50.1}
+$$
+
+Under the additional conditional identities $C_{\rm resp}=C_4=\mathfrak m_d=0$, the conclusions above and Theorem 42.2 give only
+
+$$
+k_d(Ms^8)-C_*=O_{d,M}(s^{41/8}).
+\tag{50.2}
+$$
+
+The positive uplift in (49.2) therefore does not evaluate the sign of this complete difference.
+
+Proof. The damping difference of the late quadratic is $O(s^5\sqrt b)=O_M(s^8)$ by (43.5), while $\langle x_s,Dx_s\rangle=O(h)=O_M(s^8)$. This proves (50.1). On the stated zero stratum, $Z_d+W_1(o)=0$ by the zero-stratum assumption and (32.8). Insert $\ell_s=C_*+\mathscr A Z_ds^5+O(s^{41/8})$ from (42.7) into (49.3). The two fifth-order terms cancel, giving (50.2). Neither $O(s^{41/8})$ nor the remaining $O(s^6)$ endpoint/input enclosure is $o(s^8\log(1/s))$. In particular the unresolved early scalar
+
+$$
+\ell_s-C_*=
+ \frac{\langle E_s^{\rm row},u_s\rangle}{\langle G_s,u_s\rangle}
+\tag{50.3}
+$$
+
+from (24.42), together with $\ell_s\delta_s/n_s$ and the full undamped late quadratic in (50.1), remains a signed joint obligation. $\square$
+

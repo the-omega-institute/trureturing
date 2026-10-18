@@ -1,0 +1,50 @@
+### 2.3 Proof of optimal recovery over all one-block probes
+
+Let $a=q\theta$, $c=\cos a$ and $t=\sin a$, so $0\le a\le\pi/4$ and $c,t\ge0$. It suffices to bound pure probes: any mixed probe can be purified with a finite extra reference, and granting terminal access to that purification can only improve attainable success. Let $|\psi\rangle$ be an arbitrary unit vector on the system and all references. Define
+
+$$
+v_A=c^{n-|A|}(it)^{|A|}(Z_A\otimes I)|\psi\rangle,
+\qquad
+|\psi_s\rangle=\sum_A s_Av_A.
+$$
+
+Each $Z_A$ is unitary, hence $\|v_A\|=c^{n-|A|}t^{|A|}$, independent of the probe and reference. For an arbitrary label POVM $(M_s)_{s\in S_n}$, form vectors in the orthogonal direct sum of $2^n$ copies of the output space:
+
+$$
+w_A=\big(s_A\sqrt{M_s}\,v_A\big)_{s\in S_n}.
+$$
+
+Because $\sum_sM_s=I$, their norms satisfy
+
+$$
+\|w_A\|^2=\sum_s\langle v_A,M_sv_A\rangle=\|v_A\|^2.
+$$
+
+The average success is therefore bounded by the triangle inequality in that direct sum:
+
+$$
+\begin{aligned}
+2^{-n}\sum_s\langle\psi_s,M_s\psi_s\rangle
+&=2^{-n}\left\|\sum_Aw_A\right\|^2\\
+&\le2^{-n}\left(\sum_A\|v_A\|\right)^2\\
+&=2^{-n}(c+t)^{2n}
+=\left(\frac{1+\sin(2a)}2\right)^n.
+\end{aligned}
+\tag{2.10}
+$$
+
+This bound holds for every probe, finite reference and POVM. Source-independent mixtures of protocols satisfy it as well. Failure outcomes can be assigned a label before applying the bound. The proof optimizes over the input rather than merely optimizing the measurement for a chosen input.
+
+For attainment, prepare $|+\rangle^{\otimes n}$. After the block the state on factor $i$ is
+
+$$
+|\psi_{s_i}\rangle
+=\frac{e^{i s_i a}|0\rangle+e^{-i s_i a}|1\rangle}{\sqrt2}.
+$$
+
+With $Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix}$ its expectation is $-s_i\sin(2a)$. Measure each $Y_i$, record its eigenvalue $y_i\in\{-1,+1\}$, and decode $\widehat s_i=-y_i$. Each bit is correct with probability $(1+\sin(2a))/2$. Product output states and local measurements make the bit outcomes independent conditional on the fixed $s$, so all $n$ bits are correct with probability (2.3), for every $s$.
+
+No protocol's minimum source success exceeds its average. The strategy just given reaches the average upper bound at each source, proving both optima. At $q=0$ this gives $2^{-n}$; at $q=L$ it gives one. Dividing by the score-only value gives the stated improvement factor.
+
+Maximum-success product laws are mature tools: [Molina and Watrous][MW], Section 4, proves multiplicativity for specified joint outcomes of independent interactive measurements. The direct-sum estimate (2.10) gives the needed bound for the present source family and its entire probe class. Neither that supplier nor this estimate establishes a full-vector finite-error optimum with arbitrary intervening controls.
+

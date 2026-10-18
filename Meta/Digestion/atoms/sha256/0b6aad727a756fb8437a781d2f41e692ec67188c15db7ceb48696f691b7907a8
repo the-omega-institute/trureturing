@@ -1,0 +1,30 @@
+**Source bridge 1.2 (Whole histories and total literal updates).** These are jointly actual records, not a product of marginal reachability sets. The credited supplier [IC, Chapter 1] uses
+
+$$
+G_i=2^i\ (i<k),\qquad G_i=\sum_{b=1}^kG_{i-b}\ (i\ge k),
+\qquad c_i=G_i\bmod2=\mathbf1_{\{0,T-1\}}(i\bmod T).
+$$
+
+For every displayed $v,j,s$, choose an integer $\ell$ with
+
+$$
+\ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad \ell\ge s+2,
+\qquad d=\bigoplus_{i=\ell-s}^{\ell-1}c_i.
+$$
+
+Then $(v\oplus d)0^{\ell-s-1}1^s$ is one legal complete-block history with value $v$, phase $-j$ and tail $s$. Generalized CRT applies because $g\mid j$. An all-one complete-block history of length at least $k$ realizes bottom. History length is not observed or supplied to the controller. Thus (1.2) factors the target through the entire original INITIAL record and assigns every original source its immutable label.
+
+For a successful current record, the original total bit updates are
+
+$$
+\delta_0(v,\theta,s)=(v,\theta+1,0),\qquad
+\delta_1(v,\theta,s)=
+\begin{cases}(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+\tag{1.4}
+$$
+
+A word means these updates composed for all its $m$ bits. Only its completed endpoint is read. Both original alphabets are retained: all $m$-bit words and internally legal $m$-bit words coincide here because $m<k$. Cross-block rejection remains part of (1.4). Every issued block costs one, including waits and blocks that reject before the endpoint.
+

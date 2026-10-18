@@ -1,0 +1,28 @@
+**Definition 2.5 (complete source-family error).** Canonical output is the
+classical–quantum direct sum of terminal live success and exact first
+failure time/mode with $f$. An acquisition abort or rejection absent from
+the ideal output occupies a separate sector and counts as error. For two
+normalized outputs let
+
+$$
+\operatorname{dist}(\omega,\eta)=\tfrac12\|\omega-\eta\|_{1,\rm cq}.
+\tag{AC.4}
+$$
+
+The norm is the sum/integral of trace norms over the classical sectors.
+For the canonical density representation it is the terminal block norm
+plus $\sum_{i=0}^4\int_0^L\|\omega_i(t)-\eta_i(t)\|_1dt$.
+For other measures use any common dominating scalar measure; singular
+events and aborts remain included. Exact time is a measurable variable,
+not an uncountable orthonormal Hilbert basis or a finite-bit register.
+
+For each actual history the error is
+$e_{x,\beta,m}=\operatorname{dist}(\Phi(\rho_{x,\beta,m}),
+\Omega_{x,\beta,m})$, with its own prescribed ideal output $\Omega$.
+This is comparison of source-indexed statistical experiments. It is not
+substitution of different inputs into Instrument Stability's common-input
+$d_{\rm op}$. A uniform complete-map/reference claim would imply these
+source-family bounds, because it includes these inputs with trivial
+reference. Retaining more actual joint fields can only strengthen the
+requirement; forgetting fields gives a necessary lower test.
+

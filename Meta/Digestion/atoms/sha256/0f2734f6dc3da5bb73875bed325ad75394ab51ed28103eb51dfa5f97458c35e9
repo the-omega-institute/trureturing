@@ -1,0 +1,79 @@
+**Theorem 7.1 (One-block realization and total-variation obstruction).** Assume (1.5)–(1.6), with no
+$\mathsf Z(P)$ premise. Fix one finite $C$ and one $t\in\mathbb R$. The density
+
+$$
+\rho_{C,t}(x)=\frac{\pi_C^t(x_C;x_{C^c})}{p_C(x_C;x_{C^c})},\qquad
+Q_{C,t}=\rho_{C,t}P
+\tag{7.1}
+$$
+
+is well defined on the positive actual fibers. Set it to one on the exceptional null set. Then
+
+$$
+0\le\rho_{C,t}\le c_L^{-1}\quad P\text{-almost surely},\qquad
+\mathbb E_P[\rho_{C,t}\mid\mathcal H_C]=1,\qquad
+\left\|\frac1n\sum_{k=0}^{n-1}(T^k)_*Q_{C,t}-P\right\|_{\rm TV}\longrightarrow0.
+\tag{7.2}
+$$
+
+This includes reducible and periodic producers. Total variation here is $\sup_A|Q(A)-P(A)|$. No
+convergence rate is asserted.
+
+Proof. Conditional summation of (7.1) gives one, and $\pi_C^t\le1$ together with (2.1) bounds the
+density. Thus it is in $L^2(P)$ and $Q_{C,t}$ is a probability with the same complete exterior marginal
+$\mu_C$. More explicitly, for any exterior event $H$,
+$Q_{C,t}(X_C=w,Y\in H)=\int_H\pi_C^t(w;y)\,d\mu_C(y)$. It realizes precisely this block kernel.
+
+Let $\mathcal I$ be the shift-invariant sigma-field modulo $P$-null sets. [Universal, Theorem 5.1][U]
+decomposes this same actual law into finitely many distinct visible ergodic laws with positive weights.
+Their labels are measurable from past word frequencies. These frequencies can be taken entirely to the
+left of $C$; deleting finitely many terms has no effect on a limit. Equivalently, modifying $C$ changes
+only finitely many occurrences for each fixed word, so it cannot change those frequencies. The labels
+therefore have $\mathcal H_C$-measurable versions. An invariant event has probability zero or one in each
+ergodic component and is, modulo $P$, a union of their labels. Conversely the labels are invariant. Hence
+$\mathcal I\subseteq\mathcal H_C$ modulo null sets, and
+
+$$
+\mathbb E_P[\rho_{C,t}\mid\mathcal I]=1.
+\tag{7.3}
+$$
+
+These are actual component labels; no independently chosen hidden or visible decomposition is
+substituted. Irreducible periodic classes are ergodic for the one-step shift as supplied there; mixing is
+unnecessary.
+
+Use the classical Hilbert mean ergodic theorem in [Tao, Theorem 2 and the conditional-expectation
+Corollary 2][ME], with $Uv=v\circ T^{-1}$ on $L^2(P)$. Finite cylinder simple functions are dense, so
+this Hilbert space is separable. To exhibit the precise application, $U$ is unitary by invertibility and
+stationarity, and
+
+$$
+L^2(P)=\operatorname{Fix}(U)\mathbin{\oplus}
+\overline{\operatorname{range}(I-U)},\qquad
+\operatorname{Fix}(U)=L^2(\mathcal I,P).
+\tag{7.4}
+$$
+
+Indeed the orthogonal complement of the range is $\ker(I-U^*)=\operatorname{Fix}(U)$, and invariant
+functions have invariant level sets. On $(I-U)v$, the averaging operator is $(v-U^nv)/n$, whose norm is
+at most $2\|v\|_2/n$. Averages have operator norm at most one, so this convergence extends to the closure
+of the range; on the fixed subspace they are the identity. Thus (7.3)–(7.4) yield
+
+$$
+\bar\rho_n:=\frac1n\sum_{k=0}^{n-1}U^k\rho_{C,t}\longrightarrow1
+\quad\text{in }L^2(P).
+\tag{7.5}
+$$
+
+Stationarity identifies $U^k\rho_{C,t}$ as the density of $(T^k)_*Q_{C,t}$ with respect to $P$.
+Consequently the distance in (7.2) is $\tfrac12\|\bar\rho_n-1\|_1\le\tfrac12\|\bar\rho_n-1\|_2$, proving
+it. The Hilbert theorem and this norm comparison are classical; the content of this application is the
+exterior normalization preserving the actual invariant components of the given producer. $\square$
+
+$C$ and $t$ are fixed before averaging. The construction supplies no stationary law simultaneously
+realizing all interval kernels, and no finite hidden realization of $Q_{C,t}$. Even if a local
+second-order defect exists, these translate averages recover $P$. A different stationary continuation
+would require its own construction and control of joint modifications, original losses and any desired
+rank preservation; this result neither provides nor rules out such a continuation. No growing-block or
+positive-density modification limit is taken.
+

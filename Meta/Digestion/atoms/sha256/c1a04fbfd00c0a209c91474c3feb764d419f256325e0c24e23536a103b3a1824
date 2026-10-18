@@ -1,0 +1,25 @@
+**推论 467.5（加权相对熵的完整极限）。** 同一实际残差满足
+
+$$
+0<r_nD(p_n\Vert q_n)
+=A-L_n
+\le\ell_n+\frac{m_n}{e},\qquad
+r_nD(p_n\Vert q_n)\longrightarrow0.
+\tag{RSK.13}
+$$
+
+**证明。** 命题 467.1 给等号与严格正性。完整对数比公式给
+
+$$
+A-L_n=-\int_0^\infty\log(v)R_n(v)\,dv
+       +r_n\log(m_n/r_n).
+$$
+
+首项不超过 $\ell_n$。令 $x=r_n/m_n>0$，用经典标量不等式 $x\log x\ge-1/e$，得到
+
+$$
+r_n\log(m_n/r_n)=-m_nx\log x\le m_n/e.
+$$
+
+两项相加即为所述上界；§465 的完整预算极限 $\ell_n,m_n\to0$ 给夹逼极限。这个极限保留 $r_n$ 权重；因 $r_n\to0$，它本身不给 $D(p_n\Vert q_n)\to0$，也不给两列概率测度共同弱极限。证毕。
+

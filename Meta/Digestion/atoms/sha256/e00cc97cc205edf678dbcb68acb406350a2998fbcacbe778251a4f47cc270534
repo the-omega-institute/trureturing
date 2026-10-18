@@ -1,0 +1,35 @@
+**Assumption 1.2 (the complete paid-export interface).** Preparation is
+one deterministic effective procedure initialized source-blind from $D$
+and common source-independent installed tables. It receives no later
+request, terminates on every $t\in\mathcal F_D$, and acquires source
+dependence only through charged original-root literal Reads. It exports
+a finite code $E(t)$ containing every accessible surviving source
+distinction, including selectors, control, operands, buffers, lengths,
+allocation, handles, counters and accessible timing. Every other accessible
+field is a function of this code and public data. A separately paid handoff
+and access-isolation service removes access to all other preparation
+dependence, including transcripts, and supplies lawful common reader entry.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. A common deterministic effective reader uses $E(t),D,p$ and the
+installed tables. It chooses zero Reads or one fresh Read of the same
+stationary $t$ at any finite original-root word, before receiving its reply
+or any authentic count. Its final predictor $Z$ must satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0)
+\tag{JPL.2}
+$$
+
+for every authentic subsequently supplied count, without further Reads.
+There is no subtree, equality, source-identity, age, copying, reset,
+free-navigation or advice port. Define $M_1(D)$ as the minimum complete
+attained cardinality $|E[\mathcal F_D]|$. Preparation Reads, work/control,
+temporary storage, installed codebooks, post-request workspace, final
+predictor size, submitted literal length and letters, count representation,
+authentication, handoff, isolation, entry and physical time are separate
+resources. The declared services are assumptions, not inferred physical
+operations. This is the interface of [FMR, Assumption 1.3][FMR] and
+[NPC, Assumption 1.2][NPC].
+

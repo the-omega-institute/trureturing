@@ -1,0 +1,28 @@
+**定义 199.1（完整事件行、目录矩阵与有符号商）。** 对每个完整表 $D$，令
+$z_D$ 为它在全部事件行上的事件指示向量，并令
+$$
+a_D=z_D-\mathbf r.
+$$
+对 $C\in\{N,O\}$，令 $G_C$ 是列为所有 $a_D$ 的完整矩阵。因锚表 $R$ 在两个完整目录中均有
+$a_R=0$，对任意非负事件评分
+$$
+y=(A_w,C_w,P_w)_{w\ne1^L}\ ,\quad T\ge0
+$$
+定义
+$$
+\beta_n=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_{w\ne1^L}(A_w+C_w+P_w)+T,
+$$
+并置 $Q(y)=(\beta_1,\ldots,\beta_L,K_y)$。对任意有符号对
+$q=(\beta_1,\ldots,\beta_L,K)\in\mathbb R^{L+1}$，置
+$$
+F_q(b)=\sum_{n=1}^L\beta_n(b_n-\alpha_n)-Ke,
+\qquad
+\sigma_H(q)=\max_{b\in H}F_q(b).
+\tag{199.1}
+$$
+于是 $F_{Q(y)}(b)=y\!\cdot h(b)$；简记 $F_y=F_{Q(y)}$。评分 $y$ 和下文的评分
+$V$ 始终逐行非负，而商差 $q-q'$ 可以是任意有符号向量。比如
+$(0,-1,1,0,\ldots,0;0)$ 在 $H$ 上表示常数一，因为 $b_2=b_3$；它不是任何
+非负评分的代表，这不改变有符号商的定义。
+

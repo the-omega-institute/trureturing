@@ -1,0 +1,31 @@
+### 79.3. Full-reference norm and an attaining input
+
+Write Q_4=id-Delta_4, where Delta_4 is complete dephasing in the fibre basis. On the logical input C^4 tensor C^2 define the Hermitian scalar functional
+
+    phi_R(X)=Tr(R^T X).
+
+By (5), the logical channel difference, before the fixed output MC isometry, is exactly
+
+    Q_4 composed with (id_4 tensor phi_(R_eta)).       (6)
+
+The transpose in this functional is necessary: Tr(R^T |i><j|)=R_ij. The eigenvalues of the Hermitian matrix R_eta are
+
+    -1/6 +/- |2eta/3-1/2|.
+
+For any Hermitian two-dimensional matrix R, (6) has diamond norm
+
+    ||Q_4||diamond ||R||op.                           (7)
+
+To prove the upper bound with arbitrary references, diagonalize R^T=sum_s beta_s Pi_s. On a normalized positive input with any reference, the two partial traces obtained by the orthogonal projections Pi_s are positive operators with traces summing to one. Applying Q_4 to each, using its diamond norm, and applying the triangle inequality bounds the output trace norm by ||Q_4||diamond max_s|beta_s|. A Hermiticity-preserving map's diamond norm can be optimized on normalized positive inputs with a reference, so this proves the upper bound. Conversely choose a bit eigenstate of R^T with eigenvalue of maximal absolute value and an input attaining the norm of Q_4. This proves (7).
+
+For completeness ||Q_4||diamond=3/2. Let Z=diag(1,i,-1,-i). The identity Delta_4=(1/4)sum_(a=0)^3 Ad_(Z^a) gives
+
+    Q_4=(3/4)id-(1/4)sum_(a=1)^3 Ad_(Z^a),
+
+so the triangle inequality gives the upper bound 3/2. On the normalized uniform vector |s>=(1/2)sum_f |f>, Q_4(|s><s|) has eigenvalues 3/4,-1/4,-1/4,-1/4, attaining 3/2 without any reference. Therefore
+
+    ||Q_4||diamond ||R_eta||op
+       =(3/2)(1/6+|2eta/3-1/2|)=1/4+|eta-3/4|.
+
+The fixed output MC isometry preserves these norms and proves (2). At eta=3/4 any normalized bit state tensored with |s> attains the value 1/4. The physical input is its fixed MC encoding. All arbitrary-reference inputs obey the matching upper bound.
+

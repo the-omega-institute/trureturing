@@ -1,0 +1,31 @@
+**Proposition 8.3 (continued use with the actual archive retained).**
+For every finite feedback policy using the lattice requests, actual
+records and matched external inputs, this implementation preserves the
+complete joint input/record/successor law. It retains all five failure
+names, the exact first failure time, all old events, source/epoch,
+reference, calibration, permissions, clock, controller and every selection
+and update input. Rejection remains unexecuted and failure remains absorbing.
+
+Proof. On each live block the integer guard has the same domain as the
+actual relative ramp. Theorem 3.1 gives equality of every success and
+failure CP operation on that block, tensor identity on the actual joint
+registers. Append the actual request, its outcome and controller update
+to the archive; do not overwrite old events when changing the working
+label. On an executed failure there is only the stopped continuation.
+Condition on the actually retained classical records, apply the same
+next selector and its full update kernel, and integrate. Induction proves
+the claim for any finite number of requests, exactly as in Instrument
+Boundaries Theorem 14.1. Matching chronological heights and the translated
+real phase tail follow from `concatenate_original`. $\square$
+
+The number $3M$ in (QC.46) counts only the live state-and-domain component
+at a cut with fixed remaining payload. It is not a $3M$ implementation
+of Proposition 8.3's growing full archive. Any accessible archive or
+assistance preserved by tensor identity is included in the total count
+of Definition 7.4; an extra variable payload increases that count. Even
+without an event payload, adding a stopped status sector changes the
+live-only algebra. Exact nonatomic event records fall outside a fixed
+finite algebra, as Event Memory and Coarse Aliasing Theorem 4.3 and
+Corollary 4.4 already establish. Failed branches cannot calibrate a second
+live specimen, since no such specimen or retry is supplied.
+

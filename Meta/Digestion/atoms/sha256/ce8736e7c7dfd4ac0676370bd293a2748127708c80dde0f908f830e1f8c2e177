@@ -1,0 +1,31 @@
+**约定 B-21.2（正多边形类别）。** 沿用命题B-3.2的非退化、简单、凸正多边形，边数 &#x1D45B;&#x2265;&#x33;，外接半径 &#x1D445;&#x3E;&#x30;。只比较类型时，令
+
+```math
+\Omega_{\rm reg}=\{P_n:n\ge3\},\qquad
+A=\{P_3\},\qquad B_{\rm crit}=\{P_4\},\qquad
+C=\{P_n:n\ge5\}.
+```
+
+命题B-3.2已证明内角 &#x3B8;<sub>&#x1D45B;</sub>&#x3D;&#x3C0;&#x2212;&#x32;&#x3C0;&#x2F;&#x1D45B;，故
+
+```math
+\theta_n\lt \frac\pi2\iff n=3,\qquad
+\theta_n=\frac\pi2\iff n=4,\qquad
+\theta_n\gt \frac\pi2\iff n\ge5.
+```
+
+按命题B-13.2的相对补集，在完整论域中
+
+```math
+\Omega_{\rm reg}\setminus A=B_{\rm crit}\cup C;
+```
+
+显式删去临界类后，才有
+
+```math
+\Omega_\ast =\Omega_{\rm reg}\setminus B_{\rm crit},\qquad
+\Omega_\ast \setminus A=C,\qquad \Omega_\ast \setminus C=A.
+```
+
+补集的两次作用还原原事件。上述两个已证明的接口说明，“三角形类对应无限多类”可以指互补类别；它没有供应把一个三角形可逆地变成全部多边形的点变换。
+

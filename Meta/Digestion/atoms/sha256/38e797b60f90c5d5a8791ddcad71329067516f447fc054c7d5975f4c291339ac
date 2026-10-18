@@ -1,0 +1,39 @@
+**Definition 1.4 (complete quantum operational metric).** For any common
+normalized input $\rho$ on the live space and an arbitrary unchanged reference
+$R$, let $\omega_{\gamma,\mathsf s}(\rho)$ be its unnormalized successful
+output and $\omega_{\gamma,i}(t;\rho)$ its failure output density, applying
+the maps in (IS.3) tensored with $\operatorname{id}_R$. Define
+
+$$
+\begin{aligned}
+D_\rho(\gamma,\widetilde\gamma)=\frac12\bigg(&
+ \|\omega_{\gamma,\mathsf s}(\rho)
+       -\omega_{\widetilde\gamma,\mathsf s}(\rho)\|_1\\
+ &+\sum_{i=0}^4\int_0^T
+   \|\omega_{\gamma,i}(t;\rho)
+       -\omega_{\widetilde\gamma,i}(t;\rho)\|_1\,dt\bigg),\\
+d_{\mathrm{op}}(\gamma,\widetilde\gamma)&=\sup_{R,\rho}D_\rho(\gamma,\widetilde\gamma).
+\end{aligned}
+\tag{IS.7}
+$$
+
+These are trace distances on the full classical–quantum output, with exact
+time treated as a measurable classical variable, not a finite register.
+The definition applies also to trace-class states on an infinite-dimensional
+reference. The classical output norm is the displayed integral norm; no
+uncountable orthonormal time basis is assumed. Operational distinguishability
+here allows arbitrary tests of this declared output, not access to the control
+description. It supplies no such laboratory tests.
+
+For a source-family input, tracing out the quantum output gives (IS.6), so
+
+$$
+d_{\mathrm{mark}}\leq D_\rho\leq d_{\mathrm{op}}.
+\tag{IS.8}
+$$
+
+Indeed the absolute trace of each Hermitian output difference is bounded by
+its trace norm; summing the classical blocks proves the first inequality.
+No converse metric substitution is made. Exact equality of these metrics
+will be proved only for the particular counterexamples below.
+

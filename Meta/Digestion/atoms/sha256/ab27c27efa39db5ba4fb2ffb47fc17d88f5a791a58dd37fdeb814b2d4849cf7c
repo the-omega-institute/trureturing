@@ -1,0 +1,30 @@
+**Definition 211.9 (The exact menu class).** Let $m\ge3$,
+$L=m+3$, $J=\{3,\ldots,L-1\}$, $z=L$, $d\ge0$ and $s>4d$.
+Set $g=s+d$. For every unordered pair $\{i,j\}\subset J$ define
+$q_{ij}=(\beta,K)$ by
+
+$$
+\beta_i=\beta_j=\beta_z=g,\qquad
+\beta_k=0\ (k\notin\{i,j,z\}),\qquad K=7s+4d.
+\tag{211.27}
+$$
+
+An eligible representative of $q_{ij}$ is an input-family score
+$V$ with exact $Q(V)=q_{ij}$ and $\Delta_N(V)\le d$.
+Because $A=0$, these conditions force zero early correct mass,
+exactly the three displayed late totals, and $S+T=4s+d$.
+Correct suffixes and the early split, including $00$, are otherwise
+free. The pair/terminal split is also free.
+
+A menu is a finite list of fixed nonnegative measures on the entire
+late cube. It covers $\{i,j\}$ if an eligible representative has
+actual projection $\nu(x)=P_{00x}+P_{01x}+P_{10x}$ equal to one
+entry, as a measure on all late coordinates. The representative and
+its correct suffixes may depend on $\{i,j\}$. The entry itself is
+fixed before that pair is selected. A new mixture, permutation or
+formula-generated projection must be counted as its actual resulting
+measure unless it already equals an entry. Let $\mathcal M(m,s,d)$
+be the least menu size covering every pair in $J$.
+Write $C(m,3,2)$ for the least number of three-element subsets of
+$J$ containing every two-element subset.
+

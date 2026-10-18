@@ -1,0 +1,26 @@
+**Definition 2.1 (the two unfinished requests).** Let $P$ be any authentic
+reached outer Ready of this one apparatus, after any finite permitted
+sequence of returning source and history cycles. From $P$ use the existing
+gate1 and separate HistoryMode1. Supply, respectively, the history frames
+
+$$
+w_0=111\,U(3)\,010,\qquad
+w_1=111\,U(3)\,100,\qquad U(j)=1^j0.
+$$
+
+Stop both alternative histories immediately after the last payload
+$\mathrm{IN}(0)$, before its matching EX70. Call the cuts $x_0,x_1$.
+These are alternatives from one fixed initialization and one common
+prefix, not two simultaneous branches of one execution. Both frames
+have ten supplied frame bits. GCA Definition 3.2 parses their completed
+payloads as AcquisitionOffset$(1)$ and SourceOffset$(0,0)$, respectively.
+No accepted target or authentic occurrence is required at these
+pre-parser cuts: GENERAL's canonical physical domain includes the
+subsequent typed range/occurrence rejections.
+
+Let $c$ be the actual base of this history frame on70, measured by its
+existing Base routine. Its three tag cells are $c,c+1,c+2$, its $U(3)$
+cells are $c+3,\ldots,c+6$, and its first two payload cells are
+$c+7,c+8$. At either cut the last payload bit is pending in latch6;
+the matching location $c+9$ is still the old append R.
+

@@ -1,0 +1,101 @@
+**Theorem 80.1 (The full-carrier common-subprobability criterion).** Fix
+$m\ge0$, $0\le\varepsilon\le1$ and $p\in[0,1]$. For a nonnegative
+measure $\rho$ on the original carrier of total mass $1-p$, probabilities
+$\sigma_n\ge\rho$ with
+$\operatorname{TV}(\sigma_n,\lambda_n)\le\varepsilon$ for every $n>m$
+exist if and only if
+
+$$
+\rho(\Theta\setminus\{\theta_0\})\le\varepsilon,
+\qquad
+\rho(\{\theta_n\})\ge(a_n-\varepsilon-p)_+\quad(n>m).
+\tag{80.1}
+$$
+
+There exists such a common $\rho$ of mass $1-p$ exactly when
+
+$$
+S_m(\varepsilon+p)\le\varepsilon.
+\tag{80.2}
+$$
+
+No atomic-support restriction on $\rho$ or on the probabilities
+$\sigma_n$ is part of necessity. When (80.2) holds, one explicit choice,
+with $C=S_m(\varepsilon+p)$, is
+
+$$
+\begin{aligned}
+\rho&=(1-p-C)\delta_{\theta_0}
+       +\sum_{j>m}(a_j-\varepsilon-p)_+\delta_{\theta_j},\\
+q_n&=\min\{p,(a_n-\varepsilon)_+\},\\
+\sigma_n&=\rho+q_n\delta_{\theta_n}+(p-q_n)\delta_{\theta_0}.
+\end{aligned}
+\tag{80.3}
+$$
+
+**Proof.** Write $C_\rho=\rho(\Theta\setminus\{\theta_0\})$ and
+$r_n=\rho(\{\theta_n\})$. The positive discrepancy of $\rho$ over
+$\lambda_n$ has total mass
+
+$$
+\begin{aligned}
+e_n&=(a_n-p-C_\rho)_++(r_n-a_n)_++C_\rho-r_n\\
+   &=\max\{C_\rho,a_n-p\}-\min\{r_n,a_n\}.
+\end{aligned}
+\tag{80.4}
+$$
+
+The three contributions are respectively the excess on $\theta_0$, the
+excess on $\theta_n$, and the mass on their complement. This formula
+includes every other original tape. If $\sigma_n\ge\rho$, the positive
+mass of $\sigma_n-\lambda_n$ is at least $e_n$. Since $\sigma_n$ and
+$\lambda_n$ are probabilities, their TV is that positive mass. Thus
+$e_n\le\varepsilon$ is necessary.
+
+It is also sufficient for completion at a fixed $n$. Let
+$\Delta_n=(\lambda_n-\rho)_+$ be the positive deficit measure.
+Because $\lambda_n(\Theta)-\rho(\Theta)=p$, it has total mass
+$p+e_n$. If that mass is positive, put
+
+$$
+\sigma_n=\rho+\frac{p}{p+e_n}\Delta_n.
+\tag{80.5}
+$$
+
+This is a probability dominating $\rho$. The added measure fills only
+deficits and fills no more than their full amount. Its remaining positive
+discrepancy over $\lambda_n$ is exactly $e_n$, so its TV is $e_n$.
+If $p+e_n=0$, then $p=e_n=0$ and $\rho=\lambda_n$; use
+$\sigma_n=\rho$ without division. This proves the completion assertion
+for an arbitrary full-carrier $\rho$.
+
+As $n\to\infty$, (80.4) tends to $C_\rho$, because $a_n\to0$ and
+$\min\{r_n,a_n\}\to0$. Therefore $e_n\le\varepsilon$ for every
+occupied $n>m$ forces $C_\rho\le\varepsilon$. Under this bound, if
+$a_n-p>\varepsilon$, then $r_n\le C_\rho\le\varepsilon<a_n$ and
+(80.4) reduces to $a_n-p-r_n$. Its cap is precisely
+$r_n\ge a_n-p-\varepsilon$. If $a_n-p\le\varepsilon$, (80.4) is at
+most $\varepsilon$ without any extra marked mass. This proves (80.1).
+
+Summing the required disjoint singleton masses gives
+$S_m(\varepsilon+p)\le C_\rho\le\varepsilon$, proving necessity of
+(80.2). For its sufficiency the first line of (80.3) has nonnegative base
+coefficient. Indeed if $1-p>\varepsilon$, then
+$C\le\varepsilon<1-p$; if $1-p\le\varepsilon$, then
+$\varepsilon+p\ge1\ge a_j$ and $C=0$. The measure has mass $1-p$
+and satisfies (80.1).
+
+The last line of (80.3) is a probability dominating this $\rho$.
+For each $n>m$ its mass at $\theta_n$ is
+
+$$
+(a_n-\varepsilon-p)_++\min\{p,(a_n-\varepsilon)_+\}
+=(a_n-\varepsilon)_+.
+$$
+
+Its mass outside $\theta_0$ is $C+q_n$. If $a_n>\varepsilon$,
+$C+q_n\le\varepsilon+(a_n-\varepsilon)=a_n$, so (77.7) gives TV
+$\varepsilon$. If $a_n\le\varepsilon$, then $q_n=0$ and the marked
+mass at $n$ is zero; (77.7) gives $\max\{C,a_n\}\le\varepsilon$.
+This proves all of (80.3). $\square$
+

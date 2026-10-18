@@ -1,0 +1,32 @@
+**Definition 2.1 (charged sequential storage).** Fix a finite program with a
+constant number of named, extensible sequence regions and a constant number
+of scalar registers. Each sequence cell has an alphabet of sixteen symbols,
+hence four bits. A region supports reading and writing a cell, appending one
+cell and retracting its last cell. A head is a binary encoded offset, counted
+as mutable state even when the region is immutable. Scalar integers are
+variable-length binary strings; arithmetic is performed by finite bit steps.
+No unbounded integer, program counter, pointer or region length is one bit.
+
+Regions have fixed names; there are no per-node heap pointers. Used capacity,
+lengths, head offsets and the finite control are billed. Extension is by one
+cell at the end, not by making a second copy of a growing tree. Retraction
+and clearing take paid local steps. This is an abstract finite-sequence
+storage model, not a claim about a language runtime's allocator, garbage
+collector, secure deletion or physical memory bandwidth. A realization with
+extra allocation tables, unreclaimed capacity, address translation or copies
+must add them to its account.
+
+The immutable cut tape encodes its addresses in lexicographic order, each
+terminated by `/`, followed by `!`. Its length is
+
+$$
+K=1+\sum_{p\in P}(|p|+1),\qquad M=|P|.
+\tag{CWS.2}
+$$
+
+It occupies $4K$ bits in this encoding, even when most cut addresses are
+absent. No cut trie or bound on source height is installed. Input validity
+and prefix freeness are the stated public promise; scanning the tape is paid.
+Code and its fixed literal alphabet occupy a source-independent constant
+$I_{\rm code}$ bits. There is no source-specific immutable address dictionary.
+

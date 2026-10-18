@@ -1,0 +1,50 @@
+**Proposition 9.15 (Horizontal derivatives and their complex relation).**
+At $(\kappa,\chi)=(\kappa_0,0)$, in the mode basis,
+
+$$
+u:=\partial_\kappa\psi
+=\left(\frac{d_s}{2\sqrt{\bar p_s}}\right)_s,\qquad
+v:=\partial_\chi\psi
+=\left(-\frac{i\,d_s}{I_0\sqrt{\bar p_s}}\right)_s
+=-\frac{2i}{I_0}u.
+\tag{9.47}
+$$
+
+They are horizontal, and
+
+$$
+\langle\psi|u\rangle=\langle\psi|v\rangle=0,\qquad
+\|u\|^2=\frac{I_0}{4},\quad
+\|v\|^2=\frac1{I_0},\quad
+\langle u|v\rangle=-\frac i2.
+\tag{9.48}
+$$
+
+The pure-state QFI matrix in coordinates $(\kappa,\chi)$ is
+
+$$
+H=\begin{pmatrix}I_0&0\\0&4/I_0\end{pmatrix}.
+\tag{9.49}
+$$
+
+Proof. Differentiate the square root in (9.44) in $\kappa$
+and the fixed exponential in $\chi$. This gives (9.47);
+there is no derivative of $a_s$. The two horizontal
+identities follow from $\sum_sd_s=0$. Taking the indicated
+finite sums gives (9.48). The pure-state information formula
+is $H_{ab}=4\operatorname{Re}
+(\langle\partial_a\psi|\partial_b\psi\rangle
+-\langle\partial_a\psi|\psi\rangle
+ \langle\psi|\partial_b\psi\rangle)$.
+Substitution proves (9.49). $\square$
+
+The metric coefficients $I_0/4$ and $1/I_0$ are exactly
+HiddenRelations C-14.1–C-14.2 at this reference, after
+$\Phi=-\chi$. Its varying optimal phase lift
+$d_s/(p_sI_\kappa)$ is consumed only at $p=\bar p$;
+(9.44) uses the frozen values (9.42) throughout its
+neighborhood. The real off-diagonal entry of $H$ vanishes,
+but the nonzero imaginary inner product in (9.48) remains.
+It cannot be discarded as evidence of simultaneous
+measurement compatibility.
+

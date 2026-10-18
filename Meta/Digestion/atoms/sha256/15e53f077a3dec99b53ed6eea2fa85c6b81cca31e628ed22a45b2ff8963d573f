@@ -1,0 +1,58 @@
+**Lemma 5.2 (Common center and complex commutant).** In the nontrivial
+case there are a fixed $c\in\mathbb R^2$, a real invertible matrix
+$M_*$, and a function $f:(0,H)\to\mathbb C\setminus\{0\}$ with
+$f(H/2)=1$ such that
+
+$$
+a(k,\alpha)=c+M_*\bigl(f(k)\chi(\alpha)\bigr).
+$$
+
+For each $|s|<H$ there is one nonzero complex number $m_s$ with
+$f(k+s)=m_sf(k)$ at every lawful starting height. Every phase update
+and every probability update with nonempty domain fix the same center $c$.
+
+**Proof of Lemma 5.2.** Write the update of $a$ for $Q_{2h}$ as
+$z\mapsto C_hz+d_h$, where $h\in\mathbb R$ and $\chi(h)$ means
+evaluation on its circle class. Comparing
+the independent constant and character coefficients in Lemma 5.1 gives
+
+$$
+c(k)=C_hc(k)+d_h,\qquad
+M(k)\mathsf R(\chi(h))=C_hM(k).
+$$
+
+Choose $h$ with $\chi(h)\ne1$. Since $C_h$ is similar to
+$\mathsf R(\chi(h))$, the matrix $I-C_h$ is invertible. Thus every
+$c(k)$ equals the one solution of $(I-C_h)c=d_h$. Call it $c$;
+the displayed identity also shows that every other phase update fixes $c$.
+
+Let $k_*=H/2$ and $M_*=M(k_*)$. Comparing phase actions at $k$
+and $k_*$ shows that $M_*^{-1}M(k)$ commutes with every
+$\mathsf R(\chi(h))$. The image of this nontrivial character is not
+contained in $\{1,-1\}$, by the half-element argument of Lemma 5.1.
+Choose a value with nonzero imaginary part and put
+
+$$
+J_0=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+Commuting with that rotation is equivalent to commuting with $J_0$,
+after subtracting its scalar real part and dividing by its nonzero
+imaginary part. Solving $NJ_0=J_0N$ gives
+$N=\begin{pmatrix}a&-b\\b&a\end{pmatrix}$, exactly complex
+multiplication by $a+ib$. Invertibility excludes zero. This proves
+the representation by $f(k)$ and its normalization.
+
+Write the useful probability update as $z\mapsto L_sz+b_s$.
+For any lawful pair $k,k+s$, coefficient comparison gives
+
+$$
+L_sM(k)=M(k+s),\qquad L_sc+b_s=c.
+$$
+
+Thus $L_s$ is invertible for $|s|<H$. In the $M_*$ coordinates it
+is multiplication by $f(k+s)/f(k)$, which is independent of the
+lawful starting height because $L_s$ is one fixed matrix. Denote it
+by $m_s$. No statement has been made about unused ambient directions
+in other models or about maps with empty lawful domain. $\square$
+

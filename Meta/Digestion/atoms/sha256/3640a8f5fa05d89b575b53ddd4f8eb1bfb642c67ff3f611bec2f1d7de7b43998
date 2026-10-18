@@ -1,0 +1,33 @@
+**Remark 12.7 (Unchanged model and research boundaries).** These results
+concern current rays on the full open positive support, with the
+original two signed real controls and all finite lawful histories.
+Retained lifts, history encoders, external height inputs, endpoint
+rays, a smaller command menu or a finite-horizon replacement are
+different models. There is no assumed regularity of competing
+encoders; the continuous normal forms are conclusions only for
+strict improvers. Empty-domain ambient maps remain unconstrained
+in the original model. The fixed covector, derived primary
+decomposition and actual-hull saturation do not classify all
+finite affine factors.
+
+Guard recovery concerns subsets of the actual encoded image;
+it imposes no off-image guard behavior or affine inverse.
+The full all-times path guard remains distinct from an endpoint
+test. The explicit witnesses use noninjective encoders and
+decoded vectors outside the native output image. Requiring
+injection or physical decoded outputs would require its own
+upper-bound analysis. All preparation rotations, original norm
+weights and affine-offset permissions remain present.
+
+The fixed-dimension positive lower certificate is inherited,
+and does not become a sharp dimension rate or an effective
+algorithm here. No general dimension-parity law, general
+higher-dimensional attainment classification, or result about
+the separate original finite-hidden-$N$ alternative is supplied.
+That alternative still lacks a proved identification of its
+objective and admissible realizations with this affine problem.
+Exact-real initialization and continuation provide no finite-bit,
+noise, conditioning, acquisition, runtime, physical-implementation,
+training or empirical machine-learning conclusion. The scoped
+theorems do not complete the broader research objective.
+

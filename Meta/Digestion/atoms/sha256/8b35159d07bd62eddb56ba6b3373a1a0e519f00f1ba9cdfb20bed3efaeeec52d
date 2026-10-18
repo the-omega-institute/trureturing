@@ -1,0 +1,29 @@
+**Assumption 3.1 (paid native capture and complete accessibility).**
+Use the one-register history and Read port of [CNA, Definitions 1.1–1.4][CNA]
+and [CWS, Definition 1.1][CWS]. A Read submits its entire finite
+literal address and returns $\alpha,\beta$, branch or absent.
+The only writer action is the global $\rho$ on the same authentic
+register. There is no reset, rerooting, source identity test, snapshot,
+clock, equality port, size bound or source-dependent initial advice.
+Updates may occur between observer events, including local computation.
+
+Use the existing full-capture instance $\mathrm{RA}(\varnothing)$ of
+[CWS, Definition 2.4 and Theorems 3.3–3.4][CWS]. At its designated final
+guard Read $v$, every returning legal history has acquired the complete
+finite tree $U_v$. Termination holds under unknown finite total writer
+interference and observer progress. The full tree is paid acquired data.
+The supplier's return to its caller and the outer Return are separate.
+
+The outer producer computes (NRF.4) from those acquired bytes, then
+performs the complete canonical handoff of [CAB, Definition 1.3][CAB].
+The accessible final data are exactly the public selector and declared
+public parameters, and canonical $b$. All source-dependent temporary
+values, actual state annotations, guards, operands, counters, retry
+history, earlier outputs, control residue and allocation distinctions
+are cleared, retracted or excluded from accessibility as stipulated
+there. Output identities are fixed and extents depend only on output
+bytes. Any additionally accessible field changes the observation and
+must be included. This is an accessibility assumption, not physical
+erasure. No permission to inspect the live register is created by a
+mathematical decoder.
+

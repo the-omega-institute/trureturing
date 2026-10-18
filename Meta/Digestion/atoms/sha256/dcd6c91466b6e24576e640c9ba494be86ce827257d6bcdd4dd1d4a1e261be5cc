@@ -1,0 +1,94 @@
+**Convention 1.1 (sources and scope).** The isolated CG root, its
+isolation/Jacobian certificate, exact ranks, TP normalization and original
+minimax/support identification are named `ASSUMED-UNVERIFIED`
+antecedents. Operator equalities apply at that root. Supplied enclosures
+are conditional inequalities, not off-root normalization. All statements
+here are ordinary conditional mathematics.
+
+[JR] denotes *Native complete-continuation joint record and quantum
+payload*; [RC] denotes *Native complete-continuation residual contact
+curve*; [FA] denotes *Native complete-continuation finite activity
+frontier*. WE denotes the supplied companion *Weak finite-activity
+endpoint: an evaluated feasibility constant and the full-record limit*.
+JS denotes the supplied companion *Joint endpoint records: the evaluated
+finite-activity saturation boundary*. Their named results retain their
+stated analytic and CP hypotheses.
+
+There is one unknown normalized reached-cut specimen in the original
+five modes $(0,1,2,3,13)$. Write
+
+$$
+\begin{gathered}
+E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2),\qquad P=EE^\dagger,\\
+p_y=(y/128,(64-y)/128,1/2),\quad a_y=(\sqrt{p_{yi}})_i,\\
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\\
+y\in\{5,16,27\},\qquad e,n\in\{\pm1\}.
+\end{gathered}
+\tag{SC.1}
+$$
+
+The received state is $E\rho_{y,e,n}E^\dagger$; original height is
+$y/256$ and winding parity is $en=(-1)^m$. Neither history is supplied.
+The ideal live block remains the entire coherent matrix
+$EU_{e,n}B_y^{\rm ideal}U_{e,n}^\dagger E^\dagger$ of CG.111. The five
+separate ideal failure measures are $w_\ell f_y(u)du\,P_f$, with
+
+$$
+w=(0,1/4,1/2,1/4,0),\qquad f_y(u)=\frac{6y}{(y+6u)^2},\qquad 0\le u\le1.
+\tag{SC.2}
+$$
+
+Absolute time is $6+u$. Error is HALF the full stopped-cq trace norm,
+maximized over all twelve histories, including every live coherence,
+singular-time part, abort, wrong-support and zero-target sector. Every
+passive-reference amplification retains its conditional reference
+operators. The recovery density $g(u)=2/(1+u)^2$ never replaces the
+ideal $f_y$.
+
+An acquisition has CP encoders of total effect $I_5$, actually generated
+dephased labels, and whole-fibre full-output TP decoders. Each fibre
+jointly counts every future-accessible input-bearing specimen, memory,
+quantum controller, environment, return system and entanglement share.
+Other dilation systems are permanently inaccessible before the same cut.
+The cost is the sharp worst-history ACQUIRED probability of dimension
+at least three, including later failure. With binary plus effect $F$,
+the constraint remains
+
+$$
+\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa\ge s,
+\qquad \mathsf W=\mathsf C(s),\qquad E(\Phi)=E_*.
+\tag{SC.3}
+$$
+
+Other effect coordinates and the forgotten full channel remain free.
+There is no prior, helper, copy, postselection, acceptance division,
+reset, retry, readable history, hidden Kraus access, bypass or free time.
+
+Use exactly FA Definition 67.2: measurable PSD first-event rates on
+whole fibres have integrable operator norm; arbitrary admitted
+noncommuting and unobserved TP survivor controls are allowed; terminal
+survivor processing is TP on the whole fibre. Loss obeys trace balance.
+There is no singular or forced deadline failure, or positive-carrier
+action after first absorption. Activity is the supremum over labels of
+the integrated rate norm. Necessity covers finite and convergent
+countable instruments and exactly CG Convention 21.3's stipulated
+measurable/integrable finite-fibre extension, without further
+continuous-outcome or infinite-dimensional extensions. More explicitly,
+for each survivor map $\mathcal S_{j,u}$,
+
+$$
+-\frac d{du}\operatorname{tr}\mathcal S_{j,u}(X)
+=\operatorname{tr}(R_j(u)\mathcal S_{j,u}(X)),\quad
+\mathcal S_{j,0}=\mathrm{id},\qquad
+\mathsf A=\sup_j\int_0^1\|R_j(u)\|du.
+$$
+
+Use a maximum for finite labels and the stipulated essential supremum
+for integral instruments. For nonempty classes, $\mathcal T_A(s)$ is
+the supremal TV between the full actual acquisition-label laws at
+$(5,+,+)$ and $(27,+,+)$, under (SC.3) and $\mathsf A\le A$.
+The necessary measurable extension retains measurable Kraus fields,
+integrable effects/live Choi matrices and whole-output TP decoders
+almost everywhere. Empty classes have no claimed TV maximum.
+

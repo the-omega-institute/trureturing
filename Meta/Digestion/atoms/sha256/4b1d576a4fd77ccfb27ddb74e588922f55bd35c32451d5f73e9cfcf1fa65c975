@@ -1,0 +1,13 @@
+**Corollary 78.2 (the refined spectral interval).** Hypothetical feasibility requires
+
+$$
+\begin{gathered}
+t<d+A_u\varepsilon,\qquad
+\varepsilon<d(1+u)=\frac\beta2,\qquad
+uT<s<T.
+\tag{S.175}
+\end{gathered}
+$$
+
+Proof. Combine $q_2<d$, (S.165) and (S.168) to get the first inequality. Since $t>3\varepsilon/2$, it follows that $(3/2-A_u)\varepsilon<d$. The exact identity $3/2-A_u=1/(1+u)>0$ gives $\varepsilon<d(1+u)=\beta/2$. Subtracting this from $T$ gives $s>T-\beta/2=uT$, while $s<T$ is already known. $\square$
+

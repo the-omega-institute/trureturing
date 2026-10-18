@@ -1,0 +1,37 @@
+**Proposition 262.5 (A decomposition can change repair cost without
+changing the whole kernel).** Let $P$ be the equal mixture of
+$A$, $R$, $O(1,3;1,3,0)$ and $O(2,3;2,3,0)$. At profile
+$(1,9/10,9/10)$ and cap $3/10$, put
+
+$$
+p=\frac45P+\frac1{10}\text{constant }0
+                 +\frac1{10}\text{constant }1.
+\tag{262.5}
+$$
+
+This stopped law has exact error $3/10$ and $\omega(p)=0$.
+Replacing its two constant components by
+$\tfrac1{10}N(1,2;1,0,1,0)+\tfrac1{10}(2;0,1)$
+gives exactly the same kernel and every same event slack. Endpoint
+repair of the latter decomposition has exact error $2/5$.
+
+**Proof.** The four canonical components of $P$ have correct mass
+$3/4$ in every low class and positive base $3/4$.
+After adding constants the class-one correct mass is $7/10$,
+other correct masses $3/5$, and positive base $7/10$.
+Base masses at $100,101,110$ are respectively
+$1/10,3/10,3/10$; class-one base masses are at least $1/10$.
+The pair minima are $4/5,7/10,9/10$ in classes one, two, three.
+Thus all 22 rows hold and class one and the positive word attain
+error $3/10$. The two alternative components emit one of each
+label $0,1$ at every word, so their combined kernel is identical
+to the constant pair. Only endpoint repair changes their $00$ cell.
+At $000,001$ it changes mass $1/10$ from label one to zero,
+reducing correct mass from $7/10$ to $3/5$; all other cells are
+unchanged. Hence exact error becomes $2/5$.
+Append $a_{3+j}=(1/10)2^{1-j}$; the actual tail cap remains
+$3/10$ for both repairs because positive base is unchanged.
+This profile is outside $H_3$. The example concerns representation
+and fixed repair, not intrinsic distance or class nonmembership.
+$\square$
+

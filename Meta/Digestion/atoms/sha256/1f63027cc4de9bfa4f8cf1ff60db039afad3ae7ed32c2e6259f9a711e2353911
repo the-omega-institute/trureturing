@@ -1,0 +1,46 @@
+**Definition 4.1 (the entire live algebra).** Let
+
+$$
+\mathcal B=\bigoplus_{\alpha=1}^N M_{n_\alpha},\qquad
+R=\dim_{\mathbb R}\mathcal B_{\rm sa}=\sum_\alpha n_\alpha^2,
+\qquad D=\sum_\alpha n_\alpha<\infty.
+\tag{FH.10}
+$$
+
+The usual sum of matrix traces is used. All jointly accessible
+history-bearing inputs to a future live operation factor through this
+one fixed algebra: specimen, archives, references and receiver shares,
+source/epoch and programme fields, clock latches, calibration, permissions,
+controller, selectors and every input used for updates. An installed
+source-dependent configuration, shared seed with source-bearing joint
+correlations, readable environment or continuously valued source-sensitive
+setting is an input too. A source-independent marginal does not exempt
+its joint correlations. A genuinely inaccessible spectator may stay
+outside $\mathcal B$ only if it never assists later selection or processing.
+
+For each actual original history $h=(x,\beta,m)$, acquisition produces
+an arbitrary positive live block $L_h\in\mathcal B$ with
+$\operatorname{tr}L_h\leq1$. Every acquisition outcome with a live
+successor, including a refusal that leaves the specimen live and may
+later be reconsidered, is included jointly in $L_h$. No product form,
+phase/winding independence, purity, known ensemble, readable height label,
+continuity of $h\mapsto L_h$ or common encoder is assumed. This grants
+even hypothetical arbitrary encodings; it is an impossibility relaxation,
+not a construction of such acquisition.
+
+The remaining acquisition mass is permanently stopped or aborted and
+cannot assist a live branch. Its exact actual archive remains in the full
+output, possibly outside a finite algebra. For necessary lower tests only,
+forget that archive and map these sectors to one absorbing symbol $\bot$:
+
+$$
+\sigma_h=L_h\oplus(1-\operatorname{tr}L_h)|\bot\rangle\langle\bot|
+\quad\text{in}\quad\widehat{\mathcal B}=\mathcal B\oplus\mathbb C.
+\tag{FH.11}
+$$
+
+This is normalized. Forgetting stopped archives contracts the comparison
+distance; it neither erases them from the actual contract nor resamples
+their events. If a supposedly stopped record can control a surviving
+specimen on the same branch, it belongs in $L_h$ instead.
+

@@ -1,0 +1,24 @@
+**坐标约定。** 复用第八章的四元数切面与 Baez 的 [Cayley–Dickson 构造](https://math.ucr.edu/home/baez/octonions/node5.html)。按定义 37.1 的 Fano 表取 $\mathbb H=\operatorname{span}(1,e_1,e_2,e_3)$，并将
+
+$$
+x_i=(a_i,b_i)\in\operatorname{Im}\mathbb H\oplus\mathbb H,
+\qquad a_i=P_Ex_i,
+\qquad e_4=(0,1),\ e_5=(0,e_1),\ e_6=(0,e_2),\ e_7=(0,e_3).
+$$
+
+这个坐标中的八元数乘法与虚部叉积分别为
+
+$$
+(a,b)(p,q)=(ap-\bar q b,\ qa+b\bar p),\qquad
+(a,b)\times(p,q)=(a\times p-\operatorname{Im}(\bar q b),\ qa-bp),
+\tag{38.1}
+$$
+
+后一式的 $a,p$ 为虚四元数。Baez 的第二坐标约定给 $(a,b)(p,q)=(ap-q\bar b,\bar a q+pb)$；将第二坐标共轭，即 $(a,b)\mapsto(a,\bar b)$，便得式 (38.1) 的约定，与这里的 Fano 表一致。所有后续四元数乘法在结合的 $\mathbb H$ 内计算，绝不重排八元数叉积树的括号。记
+
+$$
+Q_{ij}=\bar b_i b_j,\qquad Q_{ji}=\overline{Q_{ij}},\qquad Q_{ii}=|b_i|^2.
+$$
+
+它们是同一实际元组的联合数据，不是各源独立取最优所得的边缘数据。
+

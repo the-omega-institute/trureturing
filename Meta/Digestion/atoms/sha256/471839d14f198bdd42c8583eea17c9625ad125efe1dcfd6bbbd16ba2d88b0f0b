@@ -1,0 +1,48 @@
+**Definition 17.1 (same-start source prefixes and their setup checkpoint).**
+Keep Assumption 1.2 and Definitions 1.3–1.4. Fix an authentic outer Ready
+$P$, and a nonempty returning history sequence $H:P\longrightarrow R$
+of Lemma 15.1. On an alternative continuation of this very $P$, supply
+outer01 and execute its installed receiver, import and dispatch. Let
+$e_P$ be the actual cut immediately after that dispatch, at the first
+header-Base/setup label of $F^A$. This is SOURCECALL Lemma 2.3's entry
+and GCA Definition 5.3's physical entry successor, including its actual
+code version and bank-parity control component. It is not an entry
+chosen inside the subsequent header routine.
+
+Let $b$ be the number of constructed ordinary cells on port13 at $P$,
+including all old headers, delimiters, statuses, blank and retired
+material. In the first header Base(13;$d$), $d$ denotes the actual
+producer work port assigned to its output role by the installed finite
+role permutation. Thus $d\in\{1,\ldots,12\}$; no globally fixed numbered
+output port is assumed. Let $s_P$ be the cut just after this Base has
+completed, including its Finish and final positioning. Let $i_P$ be
+the reached cut immediately before the first original header IN, and
+$z_{P,c}$ the cut just after Supply$(c)$ there, before its matching EX13.
+The setup through $i_P$ has no external IN. These checkpoints concern
+the original header on13, not an activation or gate Base on70.
+
+A source-entry comparison path here means a finite path of the actual
+installed native controller beginning at $P$, taking this outer01
+dispatch, and ending at or after $e_P$. It follows prescribed control
+and current guards; it may end inside the setup, wait at an IN, remain
+unfinished, or continue through any physically defined later work.
+Later supplied source bits need not be canonical, and no completed
+event, journal invocation, counter update or return is required.
+Unexecuted disabled trials may be interspersed but are not rows.
+No new scheduler entry, code installation, cancellation, reset,
+reclamation or jump to an internal helper is supplied by this path
+class. This native path domain asserts neither original-$Q$ admission
+for its added rows nor coverage of all original semantic protocols.
+
+The starting authority is ARC Definition 5.1's actual Ready relation:
+the twelve work tokens are at the producer, the source-service token
+is at its dispatcher, heads13/17 are at R, and the original client is
+parked on24–27. ARC Definition 5.2's stored outer01 selects the source
+phase by its actual CTL. The original header prelude needs the current
+producer workspace/ingress authority, not a historical permission or
+a loan from the verifier or consumer. CAP Definition 4.6 retains its
+later source-token admission after complete frame acquisition/parsing.
+The occupied verifier/INITIAL consumer and the original waiting packet
+are unchanged. A snapshot or retained query is not another incoming
+edge at this current PC.
+

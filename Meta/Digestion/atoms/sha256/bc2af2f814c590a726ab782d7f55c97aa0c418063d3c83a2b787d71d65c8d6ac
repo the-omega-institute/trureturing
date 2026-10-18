@@ -1,0 +1,19 @@
+**Corollary 6.2 (Restricted entropy and actual-erasure rate).** Under Assumption 6.1, there exist law-dependent constants $C_c<\infty$ and $0<\alpha_c<1$ such that
+
+$$
+a_{c,k}\le C_c\alpha_c^k,\qquad
+\tau_{P_c}(R)\le
+\frac{C_c\alpha_c^R}{(1-\alpha_c)^2}\longrightarrow0.
+\tag{6.2}
+$$
+
+These conclusions are independent of attainment.
+
+Proof. [Travers, §2.2.1 and Theorem 2][TR] assumes a finite irreducible hidden chain in its stationary law. In its edge-emitting convention, the marked matrices are exactly those of this component. Its Theorem 2, using Theorem 1 and Lemma 6, gives a number $\rho_c<1$ with
+
+$$
+\limsup_{k\to\infty}a_{c,k}^{1/(k+1)}\le\rho_c
+$$
+
+on the original symbol clock. Here its length-$t$ entropy estimate $h(t)$ is our $h_{c,t-1}$. Changing entropy units does not change this root bound. Choose $\rho_c<\beta<\alpha_c<1$. For all sufficiently large $k$, $a_{c,k}\le\beta^{k+1}\le\alpha_c^k$. Increase a finite constant $C_c$ to cover the finitely many initial terms. Corollary 4.3 now gives (6.2). The entropy-rate theorem is reused, rather than reproved as an erasure theorem. $\square$
+

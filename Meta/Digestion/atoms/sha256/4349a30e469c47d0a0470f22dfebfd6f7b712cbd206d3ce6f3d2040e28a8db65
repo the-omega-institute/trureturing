@@ -1,0 +1,26 @@
+**Proposition 75.2 (source and pointwise fixed-cutoff properties).** For
+every positive $\tau$, the source identities are still exactly
+
+$$
+SW_\tau=\rho_\tau=e^{\lambda\tau}p_\tau(o,\cdot),\qquad
+\int\rho_\tau dY=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),
+\qquad \int\phi(k)\rho_\tau(k,q)dk\,dq=\phi(k_0).
+\tag{75.4}
+$$
+
+The first charge tends to one as $\tau\downarrow0$; the second is
+constant. For each fixed $g>0$ and $\tau>0$, Proposition 70.2 and
+Theorem 72.1 apply on precisely $\mathcal Q$ and $D(S)$: the energy
+is finite, negative and attained. These assertions do not assert
+uniform boundedness of $W_\tau$ as $\tau\downarrow0$.
+
+Proof. The identities are (70.4) at the specified positive time.
+Integrating $p_t(o,Y)$ over the real phases leaves the killed height
+heat kernel. Hence its raw mass is the survival probability of
+$k_0+\sqrt2\varepsilon W_t^1$ in $I$, which tends to one at time
+zero because $k_0$ is interior. Pairing instead with the eigenfunction
+$\phi$ gives the different charge in (75.4). Boundedness and spatial
+decay at each positive cutoff are the hypotheses used in Proposition
+70.2 and Theorem 72.1 and remain true separately at every pair
+$(g,\tau)$. Their existence conclusion is reused here. $\square$
+

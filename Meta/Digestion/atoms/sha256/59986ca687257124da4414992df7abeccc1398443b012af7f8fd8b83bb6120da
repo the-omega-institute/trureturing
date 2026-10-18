@@ -1,0 +1,45 @@
+**Definition 1.2 (Original measurable paid protocol).** Let
+$(\mathsf U,\mathcal U,\nu)$ be any probability space independent of
+the entire $J_p$ source. Its law $\nu$ stays unchanged. Fixed public data
+are constants; all random public data and all internal randomness belong
+to this same auxiliary variable $u$. A finite acquired record is an
+ordered list
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))
+\in(\mathbb Z\times\{0,1\})^n,
+\qquad n\in\mathbb N_0.
+\tag{1.4}
+$$
+
+Given only the public constants, $u$ and $r$, a measurable next-event
+rule requests an integer address, returns a state $A\in\mathcal A$, or
+continues internally indefinitely with neither another read nor a return.
+A finite event may follow internal waiting. Its occurrence, kind,
+address or output and finite waiting time are measurable functions of
+exactly those available data. Waiting supplies no additional source
+information. Addresses may depend on all earlier acquired replies.
+
+A call at $t$ replies with precisely the actual $X_t$ in (1.1). Every
+actual call costs one read, including repeats, ignored replies, separator
+zeros, negative or positive addresses, disconnected configurations and
+arbitrarily distant addresses. No later calculation refunds a call.
+
+Let $\tau$ be the return time, with $\tau=\infty$ on every nonreturn,
+and let $N\in\mathbb N_0\cup\{\infty\}$ count all actual calls. These
+are separate variables. Internal nonreturn after any finite number of
+calls, including zero, and infinite-read paths are admitted. A return
+has finite $N$; its output and return time depend measurably only on the
+public constants, $u$ and its terminal acquired record. A rule may return
+before reading, or choose a wrong-phase state. Null records and versions
+completed by null sets are included through the usual measurable
+completion.
+
+There is no hidden-state, half-line or tail read, source-dependent seed
+or timing, reset, law switch, endpoint movement, or erased-coordinate
+substitution. No additional coin is supplied. All ordinary measurable
+rules satisfying this interface remain admitted; no effective
+computability or bounded-storage condition is added. This is the
+contract of Original, Definition 9.1, and Risk, Definition 1.2. Put
+$\mathbb P_p=J_p\otimes\nu$.
+

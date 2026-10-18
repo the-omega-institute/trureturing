@@ -1,0 +1,16 @@
+**Proposition 4.2 (what bounded equality does not optimize).** If a
+common class of admissible encoders always stops within $r$ Reads,
+its optimized mean Read price is the same under
+$\mu_0\equiv_r^\partial\mu_1$. Equality also holds for the infimum
+of $\mathbb E\min(T_A,r+1)$ over any common class. It need not hold
+for the uncapped objective (NCO.4).
+
+Proof. Apply Theorem 4.1 to each fixed encoder, then take the infimum
+of the equal quantities over the identical class. Public laws may
+lead to different choices of installed encoder, but do not alter this
+pointwise-in-program comparison or the common class. For uncapped
+cost the omitted tail terms involve cylinders of higher order. In
+Theorem 1.3 those tails yield strictly different infima; its useful
+locating record has $C+1>r$ Reads. Thus no equality at arbitrary
+length follows by optimizing the bounded comparison. $\square$
+

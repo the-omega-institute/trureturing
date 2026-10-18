@@ -1,0 +1,18 @@
+**Definition 7.2 (optional fine receipts, disjointness and lag).** Impose
+the following extra policy on the proposed class, not on the original
+goal. Of its first $m$ fine events, let $r(m)$ have completed actual
+retained fine receipts. Each such receipt requires at least $a\ge1$
+distinct vertices, with $a$ a positive natural number; receipt blocks
+are pairwise disjoint, and their
+vertices are disjoint from $D(m)$ distinct currently required nonreceipt
+vertices. Every counted completed receipt remains retained at the cut
+in question. Finite initial receipt stock is allowed and credited in
+$R_0$.
+
+If bounded backlog is claimed, require one fixed $L\in\mathbb N$, independent
+of the future Reserve input, with
+$r(m)\ge\max(0,m-L)$ at the cuts to which the bound is applied.
+No lag assumption is needed for the first inequality below. A fully
+settled cut has $r(m)=m$. The counts are mathematical quantities of
+this actual execution, not readable registers or A-owned inputs.
+

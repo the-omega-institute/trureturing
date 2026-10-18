@@ -1,0 +1,147 @@
+**Corollary 11.1.** For every $m\ge5$, a preassigned word $M^aJJM^{2m-2-a}$ with $a$ in (3.5) admits no all-input countable palette for the full gain vector on the domain of Section 1 at $2m+1$ reads. For the other gaps, any positive critical realization must obey (3.3)–(3.4) and every condition of (10.1).
+
+**Proof.** The credited critical classification of Section 2 makes positive interpolation plus nonsingularity necessary for such fixed-word full-domain success. Theorem 3.1 excludes interpolation itself at the listed gaps. On the remaining gaps it supplies the stated necessary conditions. $\square$
+
+This corollary does not assert that every excluded word has no universal identity of any sign. An opposite-sign functional and its exceptional positive-source stratum are distinct issues; their countable-palette treatment is part of the credited critical theorem.
+
+The credited low-degree exclusions in *FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Section 13, resolve $m=2,3,4$. They give sharp fixed mixed gain-ray counts six, eight, and ten for $d=1,2,3$, respectively. The quadratic proof uses equal repeated-state values and reflection; the cubic proofs use fourth differences on consecutive reciprocal values, six centered original clocks, and the positive shifted-parameter check. Those results are prior supplied mathematics, not consequences newly claimed from the $m\ge5$ proof.
+
+For every $m$, the credited mixed word $JM^{2m}$ succeeds at $2m+2$ reads, with positive scale $\operatorname{tr}(JP)$. The credited pure word $M^{2m}$ returns the exact gain and drift at $2m+1$ reads. Together with the earlier mixed obstruction through $2m$ reads, the exact critical classification gives the following status:
+
+| Problem | Established result and boundary |
+| --- | --- |
+| Fixed acquisition without a mixed-word requirement | Sharp gain count $2d+3=2m+1$, credited Hermite result |
+| Fixed mixed gain extraction, $d=1,2,3$ | Sharp counts six, eight, ten, with arbitrary countable palettes |
+| Fixed mixed gain extraction, $m\ge5$ | Either $2m+1$ or $2m+2$; the decision remains exactly (10.1) |
+| Adaptive gain extraction among several words | No sharp count or new joint-word lower bound follows from the present exclusions |
+| Complete-target recovery | The global sharp count remains unresolved, with or without the specified gain-output mechanism |
+
+Separate fixed-word all-input failures do not give an adaptive lower bound: their failure strata need not have a common world, and a protocol may select different words from different histories. A simultaneous common-domain covering or target-ambiguity argument would be needed.
+
+For the complete-target programme the supplied *FIB Moving-Trace Recovery and Sharp Calibrated Continuations* gives the stronger current upper bound
+
+$$
+2d+s+5\le3d+5,\qquad s=\deg g,
+\tag{11.1}
+$$
+
+with exactly the full $\beta$ returned by one fixed matrix per terminal word. This retains the whole domain, including all root patterns and $\eta=0$. Its precise mechanism is as follows. Credited pure-$M$ calibration after the prefix $M^{2d+2}$ costs $2d+3$ reads and provides the exact $g,\delta,t_P$. From the actual state $C=M^{2d+2}$, one $J$ and subsequent individual $M$ actions produce matrices $M^pJC$ at clocks $2d+3+p$. Any two distinct such powers with nonzero sampled gain give two useful source traces. Among $s+2$ consecutive continuation clocks at least two gains are nonzero by the polynomial root bound. Reads at roots are retained and cost only their mandatory action and read; no return is needed.
+
+The all-pairs independence used here has a direct proof. The entries of
+
+$$
+aI+bM+cJ+eMJ=\begin{pmatrix}a+e&b+c\\b+c+e&a+b+e\end{pmatrix}
+$$
+
+show that $I,M,J,MJ$ are a basis: vanishing of the off-diagonal difference gives $e=0$, then the two diagonal entries give $a=b=0$, and finally $c=0$. Right multiplication by $C=M^{2d+2}$ is invertible and preserves $\operatorname{span}\{I,M\}$ bijectively, since $M^{-1}=M-I$. Thus $I,M,JC,MJC$ are a basis. For any $p<q$, a relation between $M^p,M^q$ tested on the two eigenspaces gives $a+b\phi^{q-p}=a+b\psi^{q-p}=0$. As $\phi>1>|\psi|$, it forces $a=b=0$. Consequently the coordinate rows of these powers in $I,M$ form an invertible matrix. Multiplication by $JC$ changes the last two basis elements invertibly to $M^pJC,M^qJC$. This proves the claimed all-pairs basis for the actual useful indices. Negative powers in this argument are auxiliary algebra only.
+
+The two recovered traces, trace one, and $t_P$ therefore uniquely determine $P$ by nondegeneracy of the trace pairing: a matrix pairing to zero with a basis pairs to zero with every matrix unit and has every entry zero. The actual source supplies the solution. Every division is by a checked nonzero gain. The fixed gain matrix acts only on the original calibration prefix and is padded with zero columns thereafter. This proves the bound and output mechanism on the full declared domain.
+
+For clarity, the same supplied moving-trace source proves sharpness of $s+2$ additional reads only for calibrated continuation from a pure-$M$ state with exact $g,\delta,t_P$ supplied and no additional source information. Its crossing-fiber obstruction uses the entire positive source fiber at $t_P=\phi$ and one common gain hiding the next $s$ clocks by roots. It permits arbitrary deterministic adaptive continuation and nonlinear answers. It also proves the exact total $2d+s+5$, and worst-case $3d+5$, among protocols constrained to start with $M^{2d+2}$. That fixed prefix is essential to the lower bound. These credited results do not establish global complete-target sharpness for earlier mixed protocols or different calibrations.
+
+Writing $N_d^{\mathrm{lin}}$ for the optimal uniform complete-target read bound with the everywhere successful countable fixed-linear gain-ray mechanism, the credited general lower bound and moving-trace upper bound give
+
+$$
+2d+3\le N_d^{\mathrm{lin}}\le3d+5.
+\tag{11.2}
+$$
+
+At $d=1$ the separate common-open-domain complete-target argument in the critical source improves the lower bound to six, so the combined current bounds are $6\le N_1^{\mathrm{lin}}\le8$. No sharp complete-target count follows. The left sides of these mechanism-specific bounds are not asserted for unrestricted nonlinear global recovery.
+
+The valid prior $4d+5$ complete-target upper construction remains a credited result; (11.1) is the supplied moving-trace improvement. The unrestricted original complete-target goal remains open. In particular the present theorem decides neither unrestricted cubic eight-read recovery nor an unrestricted cubic nine-read lower bound.
+
+The current local cubic frontier is supplied by DEV *FIB Self-Calibrating Relation Mathematics VI* and *VII*. This is a separate declared cubic domain $0\ne g\in\mathcal P_3$, not the $m\ge5$ interpolation candidate of this volume. Here an actual history fiber $\mathcal F(H)$ retains every earlier action and reading. For a known family $K$ the losing predicates are
+
+$$
+L_0(K,H)\Longleftrightarrow |K|\ge2,\qquad
+L_{h+1}(K,H)\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z:\
+L_h(K\cap\mathcal F(H,E,z),(H,E,z)).
+\tag{11.3}
+$$
+
+Negation is one recovery strategy on the entire known family within $h$ further original-clock reads, including early stops. The exact MMJM parent and matrices are
+
+$$
+\begin{gathered}
+H_3=(0,M,1,M,23/7,J,331/35),\quad H_4(Y)=(H_3,M,Y),\\
+T=M^2=I+M,\quad B=JT=\begin{pmatrix}1&2\\1&1\end{pmatrix},\quad
+D=MB=\begin{pmatrix}1&1\\2&3\end{pmatrix},\\
+(A_0,\ldots,A_4)=(I,M,T,B,D),\quad Q_M=MD=B+D,\quad Q_J=JD=2B-M.
+\end{gathered}
+\tag{11.4}
+$$
+
+Write $m_5,j_5$ for VI's fifth predictions $m,j$, keeping them distinct from the coefficient dimension $m$. They equal $\delta+g(5)\operatorname{tr}(Q_MP)$ and $\delta+g(5)\operatorname{tr}(Q_JP)$. The supplied chart is
+
+$$
+\eta=(DP)_{22}>0,\quad R=P/\eta,\quad H=\eta g,\quad
+DR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\quad
+R=\begin{pmatrix}(3x-1)y&3x-1\\(1-2x)y&1-2x\end{pmatrix},\quad
+1/3<x<1/2,\ y>0.
+\tag{11.5}
+$$
+
+With $s=x+y,p=xy$ its parent trace factors are $(3p+1-s-x,s-2p,p+1-x,s-p,p+1)$, all positive, and
+
+$$
+j_5=\delta+H(5)s,\quad m_5=\delta+H(5)(s+1),\quad
+z_6^{MJ}=\delta+H(6)(p+y+1),\quad
+z_6^{MM}=\delta+H(6)(p+s+2).
+\tag{11.6}
+$$
+
+All five actual parent equations with readings $(0,1,23/7,331/35,Y)$ are imposed. Identical $x,y,\delta$ give the same normalized source and, by interpolation at clocks zero through three, the same whole gain. Auxiliary predictions for unchosen actions add no acquired reads.
+
+VI, Theorem 3.1 derives, for every arbitrary exactly three-target set at this same literal $H_4(Y)$, that $L_3$ forces common fifth predictions $m_5\ne j_5$. VI, Theorem 3.2 then recovers every known set of at most three targets in at most three further reads, eight total. Its exact II/V interfaces are II, Theorems 52.1, 53.1–53.2, 58.1 and V, Corollary 4.1: fixed-drift double-last-root uniqueness; common drift, seventh roots and nonzero sixth gains for a two-target $L_2$ actual fifth child; exclusion of a two-target fifth-$J$ bad child; the whole root-five $JJJ$ inverse; and the known-at-most-three-target inverse on one common non-diagonal joint fifth fiber. These nested II/V proofs have not been independently consulted. The complete VI, Lemma 2.1 and Theorem 2.2 proofs of the intervening roots-five-and-seven uniqueness and common-$j_5$ fifth-$M$ pair exclusion, and the bridge and recovery proofs, are reproduced in the companion critical volume, Section 17.1.
+
+The bridge's actual-child argument is essential. Fifth $J$ in a losing triple must retain the whole triple because its two-target losing alternative is excluded. Thus $j_5$ is constant on that original triple. Fifth $M$ must also retain the whole triple because a two-target losing pair with the same $j_5$ is excluded. Equality $m_5=j_5$ puts that whole triple in the root-five inverse and is impossible. The resulting non-diagonal joint fiber meets V's stated premise, so one whole-triple strategy exists. Known pairs use fifth $J$ and its two-target exclusion; singletons stop. Therefore an unrestricted losing family at this MMJM parent must have at least four targets. The arbitrary three-target bridge is resolved, and no extraction of a losing triple from a larger family is asserted.
+
+The other complementary histories retain different ancestors. VI fixes $D_0\in\mathbb R$, $\lambda\ne0$, $0<\varepsilon<1/6$, $a_0=D_0-21\lambda$, $a_2=D_0+5\lambda(1+\varepsilon)$ and uses
+
+$$
+C_3=(a_0,M,D_0,J,a_2,M,D_0),\quad
+C_4(Y)=(C_3,M,Y),\quad C_5(Y,z)=(C_4(Y),J,z).
+\tag{11.7}
+$$
+
+This is MJMMJ, with matrices $I,M,U,MU,M^2U,JM^2U$, $U=JM$. VI, Theorem 5.1 excludes a two-target $L_2$ in each entire actual fifth-$J$ child for arbitrary target drifts and both sixth-gain strata. VI, Theorem 6.1 gives an eight-total-read policy on a known family at $C_4(Y)$ only if every entire actual fifth-$J$ child has at most two targets; at $C_3$ the bound is imposed on every actual fourth-$M$, fifth-$J$ joint child.
+
+VII instead uses the JMMJM histories
+
+$$
+\begin{aligned}
+H_J^-&=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5),\\
+H_J(Y)&=(H_J^-,J,Y),\quad H_{JM}(Y,z)=(H_J(Y),M,z),\qquad\lambda\ne0.
+\end{aligned}
+\tag{11.8}
+$$
+
+Their matrices are $I,J,L,J+L,C,Q$, with $L=MJ$, $C=\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$ and $Q=MC=\left(\begin{smallmatrix}1&1\\3&2\end{smallmatrix}\right)$. VII's bijection $f=g/\lambda$, $e=(\delta-D_0)/\lambda$ normalizes the six readings to $(0,24,48,312/5,(Y-D_0)/\lambda,(z-D_0)/\lambda)$ and preserves sources, clocks, and target distinctions. VII, Theorem 4.1 excludes two-target $L_2$ on every actual fifth-$M$ child for arbitrary drifts and gain samples. Its proof in Sections 1–4 includes the double-last-root stratum and the complete rational Bernstein certificate. VII, Theorem 5.1 gives an eight-total-read policy only under the bound of at most two targets on every whole actual fifth-$M$ child at $H_J(Y)$, or on every fourth-$J$, fifth-$M$ joint child at $H_J^-$. In (11.7)–(11.8), $D_0$ is a history parameter, not a promise that it equals the target drift. Each policy takes the specified actions, retains its actual singleton or pair, and executes a separating suffix of at most two atoms on that whole pair. These pair theorems do not recover arbitrary larger children or identify these histories with MMJM.
+
+VII, Theorem 6.2 adds a whole-known-class result at the MMJM parent (11.4). Write $(a_6,b_6,c_6,d_6)$ for its chronological fifth/sixth responses $(a,b,c,d_6)$ and let $v_6=H(6)$. Then
+
+$$
+a_6=\operatorname{read}(JJ)=\delta+v_6(p+1),\quad
+b_6=\operatorname{read}(JM)=a_6+v_6x,\quad
+c_6=\operatorname{read}(MJ)=a_6+v_6y,\quad
+d_6=\operatorname{read}(MM)=c_6+v_6(x+1).
+\tag{11.9}
+$$
+
+For known constants $Y,m_5,j_5,b_0,d_0$, impose all parent equations and the whole-class promises $m_5(W)=m_5$, $j_5(W)=j_5$, $b_6(W)=b_0$, $d_6(W)=d_0$. Set $\kappa=m_5-j_5$, $\omega=d_0-b_0$. For $\omega\ne0$, at least one of $a_6,c_6$ is injective on the whole class, including disjoint putative collision pairs, giving seven total reads. This case includes $\kappa=0$. The exact response-curve mapping is
+
+$$
+t=1/(y+1)\in(0,1),\quad \rho=\kappa/\omega,\quad
+e=1-\rho,\quad K=(b_0-j_5)/\omega-\rho,\quad
+v_6=\omega t,\quad ex=K+\rho/t-t,\quad
+a_6=b_0-\omega tx,\quad c_6=d_0-\omega t(x+1).
+\tag{11.10}
+$$
+
+The $\rho$ here is a separate response-curve parameter, not the positive interpolation parameter of (1.8). The proof treats all real values of this ratio. For $\omega=0$, $\kappa\ne0$, $v_6=0$, $\delta=b_0$, and $s=(j_5-b_0)/\kappa>0$ is common. The inherited II, Lemma 71.1 on exactly that non-diagonal root-six class makes the last $JJJ$ response $b_0+sH(7)$ injective, giving eight total reads. No $\omega=\kappa=0$ assertion is supplied. VII, Corollary 6.3 applies these inverses to known subsets and to $H_3$ when every actual fourth-$M$ child has supplied known constants placing its entire retained family in such a class. Those promises are not inferred from unrestricted reads. The complete proof, arm choice and II interface correspondence are VII, Section 6, also mapped in the companion critical volume, Section 17.3.
+
+The unresolved local MMJM question is whether some entire $\mathcal F(H_4(Y))$ has $L_3$; any such losing family needs at least four targets. At the distinct MJMM and JMMJ parents, larger actual designated fifth children with at least three targets and their simultaneous opposite-arm realization remain unresolved. Different actions on a larger family can retain different bad pairs. The supplied pair theorems and whole-class promises do not settle arbitrary larger fibers, nor the original-root eight-versus-nine alternative on all cubic worlds. DEV VI/VII's local and original-root simultaneous-realization systems have no feasibility verdict supplied here. All ancestor equations and the distinction between known promised families and unrestricted observations remain in force.
+
+The continuing pure-theory research programme is not completed by this partial all-degree unit. No known-factor restriction of the gain space, generic-source assumption, omitted positive source, deleted root clock, or actual-degree truncation is used here.
+

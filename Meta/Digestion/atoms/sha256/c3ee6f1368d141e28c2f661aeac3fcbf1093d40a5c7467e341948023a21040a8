@@ -1,0 +1,241 @@
+**Theorem 212.3 (Exact full-score support and joint carrier-box criterion).**
+For every permitted replacement,
+
+$$
+\begin{aligned}
+B_N^{ij}(V)&=a_{ij}+X_{ij}+Y_{ij},\\
+B_O^{ij}(V)&=b_{ij}^0+X_{ij}+Y_{ij},\\
+\Delta_N(V)&=\max_{i<j}(a_{ij}+X_{ij}+Y_{ij}-W).
+\end{aligned}
+\tag{212.9}
+$$
+
+For completeness, put $b_i^a=\max_r z_r\{w_i=a\}$ and
+$b_\varnothing=\max_r|z_r|$. Both catalogs have the exact short supports
+
+$$
+B^\varnothing(V)=\max(b_\varnothing,\max_{n\in I}k_n),\qquad
+B^{(i)}(V)=b_i^0+\max(b_i^1,\max_{n\in I,\ n>i}k_n).
+\tag{212.10}
+$$
+
+Fix any $\eta_n\ge0$ and $d\ge0$. A replacement (212.7) with
+$\Delta_N(V)\le d$ exists if and only if there are common ceilings
+$u_{ij},v_{ij}$ for all $i<j$ such that
+
+$$
+\begin{gathered}
+u_{ij}\ge\max\{b_{ij}^{10},k_j\ (j\in I)\},\qquad
+v_{ij}\ge\max\{b_{ij}^{11},k_n\ (n\in I,n>j)\},\\
+a_{ij}+u_{ij}+v_{ij}\le W+d,
+\tag{212.11}
+\end{gathered}
+$$
+
+and the following moment-box conditions hold for each $n\in I$.
+For $j>n$ set
+
+$$
+\begin{aligned}
+\ell_{nj}&=\max\left(0,\max_{i<n}
+                     (k_n-v_{ij}-\pi_{nj})\right),\\
+h_{nj}&=\min\left(\eta_n,\min_{i<n}(u_{ij}-\pi_{nj})\right).
+\end{aligned}
+\tag{212.12}
+$$
+
+Require $\ell_{nj}\le h_{nj}$ and, for every real vector
+$\xi=(\xi_0,(\xi_j)_{j>n})$, require
+
+$$
+\begin{aligned}
+\xi_0\eta_n+\sum_{j>n}
+ \bigl((\xi_j)_+\ell_{nj}+\min(\xi_j,0)h_{nj}\bigr)
+ &\le\mathcal H_n(\xi),\\
+\mathcal H_n(\xi)
+ &=\max_{\tau\in\mathcal T_n}\sum_v
+ (\Omega_{\tau,n}(v)-\pi_n(v))
+ \left(\xi_0+\sum_{j>n}\xi_j\mathbf1_{v_j=0}\right)_+.
+\end{aligned}
+\tag{212.13}
+$$
+
+At $n=L$ there is only the mass coordinate $\xi_0$.
+The criterion concerns exactly the declared fixed-baseline replacement
+class, including zero capacities and all closed boundaries.
+
+For any resulting score define the signed prefixes
+
+$$
+R_k=\sum_{n=3}^k(\gamma_n-\eta_n),\qquad
+\Theta=\max\left(0,\max_{3\le k\le L}\frac{3R_k}{k+1}\right).
+\tag{212.14}
+$$
+
+Then $\sigma_H(Q(y)-Q(V))=\Theta$. If the common ceilings satisfy
+$d+\Theta\le1$, the same score with $\theta=\Theta$ is a certificate
+(212.5). No universal existence of affordable $\eta,d$ or ceilings
+is asserted.
+
+**Proof.** For a late class $n\le i$, the reward of its label after
+replacement is the reset of $\pi_n+\sigma_n$, not of $\sigma_n$
+alone. By (212.7), this whole measure is dominated by
+$\Omega_{\tau_n,n}$. When $n<i$, both queried bits are suffix bits
+and survive reset to $1^{n-1}0v$. When $n=i$, the first queried bit
+is already zero on the restricted donor. Therefore, on any applicable
+pair cell $E$,
+
+$$
+\text{reward of label }n\text{ in }V\text{ on }E
+ \le\sum_r\tau_{n,r}z_r(E\cap\{w_n=0\})
+ \le\max_r z_r(E).
+\tag{212.15}
+$$
+
+The same statement holds for the merged cell $w_i=0$.
+Classes $n>i$ never occupy that branch. Since adding correct rows to
+$Z$ only increases rewards, its maxima in $00,01,0$ remain exactly
+$b_{ij}^{00},b_{ij}^{01},b_{ij}^0$.
+
+For $i<n<j$ the total label-$n$ rewards in $10,11$ are exactly
+$t_{nj},k_n-t_{nj}$. Class $j$ contributes $k_j,0$ and every class
+$n>j$ contributes $0,k_n$. All other rewards are retained in the
+baseline maxima or bounded by (212.15). This exhausts the labels and
+proves the two pair identities, with their exact difference $\chi_{ij}$.
+For a singleton at $i$, classes $n\le i$ are bounded by the corresponding
+baseline cell maxima by the same restriction argument; those with
+$n>i$ contribute their whole totals in the positive cell. Label totals
+give the empty formula. Short $N$ functions refine into pairs, proving
+the last identity in (212.9); it is nonnegative because $R$ is available.
+Taking the maximum of (212.9)'s stopped expressions and (212.10) also
+gives the complete $O$ support without a short-schedule assumption.
+
+For fixed ceilings, $X_{ij}\le u_{ij}$ and $Y_{ij}\le v_{ij}$
+are equivalent to their baseline, queried and future lower bounds
+in (212.11) and, for every intermediate class,
+
+$$
+k_n-v_{ij}-\pi_{nj}\le c_{nj}\le u_{ij}-\pi_{nj}.
+\tag{212.16}
+$$
+
+Intersecting (212.16) over all $i<n$, with $0\le c_{nj}\le\eta_n$,
+gives exactly (212.12). This intersection must be used for one unary
+number, rather than different numbers for different first addresses.
+
+Let $\mathcal D_n$ be the mass/unary image of all pairs
+$(\tau,\sigma)$ satisfying $\tau\in\mathcal T_n$ and
+$0\le\sigma\le\Omega_{\tau,n}-\pi_n$. This is a compact convex
+polytope: the variables range in finite bounded closed polyhedra and
+the moment map is linear. This is the finite projection framework
+of Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1,
+Theorem 8 and §1.6](https://arxiv.org/pdf/1001.2161v1), applied to
+suffix-atom capacities and their mass/unary map.
+For a fixed $\tau$, a linear functional is maximized by taking the
+full capacity at atoms with positive affine coefficient and zero at
+atoms with negative coefficient. Maximization over $\tau$ therefore
+gives precisely $\mathcal H_n$ as the support of $\mathcal D_n$.
+
+The desired box is
+$\mathcal B_n=\{\eta_n\}\times\prod_{j>n}[\ell_{nj},h_{nj}]$.
+The left side of (212.13) is its infimum in direction $\xi$.
+Intersection with $\mathcal D_n$ implies every cut. Conversely, if
+the two nonempty compact convex sets were disjoint, choose closest
+points $b\in\mathcal B_n,z\in\mathcal D_n$ and put $\xi=b-z$.
+Differentiating squared distance along segments in each set gives
+
+$$
+\inf_{x\in\mathcal B_n}\langle\xi,x\rangle
+ \ge\langle\xi,b\rangle
+ >\langle\xi,z\rangle
+ \ge\sup_{x\in\mathcal D_n}\langle\xi,x\rangle,
+$$
+
+contradicting (212.13). This is the classical finite convex separation
+step within this carrier argument. Thus the cuts supply an actual
+single suffix measure with every required moment, not only separately
+attainable marginals. Each class choice coexists with the others in
+its distinct first-zero class. The common table ceilings then prove
+$\Delta_N(V)\le d$. Conversely, any permitted score of that cost
+supplies the ceilings $X_{ij},Y_{ij}$ and its actual moment vectors,
+which satisfy every cut. This proves the equivalence.
+
+Only late correct totals changed, so $W_V=W$ and
+
+$$
+F_{Q(y)-Q(V)}(b,e)
+ =\sum_{n=3}^L(\gamma_n-\eta_n)(b_n-e).
+\tag{212.17}
+$$
+
+Use all four vertex families of the already established hull 198.5.
+The readings are zero at $o,p$, $R_k/(k-1)$ at $u_k$, and
+$3R_k/(k+1)$ at $v_k$. For $R_k\ge0$ the last reading dominates
+the $u_k$ reading because $k\ge3$; for $R_k<0$ both are below zero.
+Their maximum is (212.14), with no sign restriction on the residual.
+Combining this charge once with the complete score cost proves
+(212.5) by 199.3–199.4. $\square$
+
+The following are variants of the same mechanism. They do not give
+three different inclusion statements. If only a selected subset
+$J\subseteq I$ is replaced, retain the other correct rows in $Z$,
+restrict every changed-class index in (212.6)–(212.17) to $J$, and
+put $\gamma_n-\eta_n=0$ outside $J$. The proof is unchanged because
+all unchanged labels stay in the baseline maxima. A stronger sufficient
+carrier choice requires the full-word difference
+
+$$
+D_n=\sum_r\tau_{n,r}z_r-z_n\ge0\quad\text{at every word}
+\qquad(n\in J).
+\tag{212.18}
+$$
+
+Its restricted suffix projection is exactly
+$\Omega_{\tau_n,n}-\pi_n$. Thus a submeasure of that projected
+difference satisfies (212.7). Requiring (212.18) is stronger than
+requiring only nonnegativity of the projected surplus.
+
+A second useful specialization keeps $\eta_n=\gamma_n$ and uses
+original-input cell intervals. For every $n<j$ put
+
+$$
+H^0_{nj}=\min_{i<n}m_y(10;i,j),\qquad
+H^1_{nj}=\min_{i<n}m_y(11;i,j),\qquad
+k_n-H^1_{nj}\le t_{nj}\le H^0_{nj}.
+\tag{212.19}
+$$
+
+These bounds allow unary movement. In the moment test substitute
+$\ell_{nj}=\max(0,k_n-H^1_{nj}-\pi_{nj})$ and
+$h_{nj}=\min(\gamma_n,H^0_{nj}-\pi_{nj})$.
+The original correct moments show these intervals are nonempty,
+but need not belong to the surplus moment image.
+Whenever actual dominated measures meet them, the new stopped pair
+supports do not exceed the original ones: intermediate rewards obey
+(212.19), queried and future totals are unchanged, and $Z\le y$.
+The singleton comparison follows from (212.10), and empty support
+is unchanged because all label totals are unchanged.
+
+Consequently, with
+
+$$
+\overline B=\max\left\{
+ \max_{|s|\le1}B^s(y),\
+ \max_{i<j}\bigl(a_{ij}+m_y(10;i,j)+m_y(11;i,j)\bigr)\right\},
+\qquad\overline d=\max(0,\overline B-W),
+\tag{212.20}
+$$
+
+one has $\Delta_N(V)\le\overline d$ and
+$\Delta_O(V)\le\Delta_O(y)$, with zero quotient residual.
+If every $\chi_{ij}=0$, then $\overline d\le\Delta_O(y)$;
+a nonzero defect can also be paid by the global slack in (212.20).
+There is no need for each individual cell to decrease in the general
+criterion (212.11). For example, inequalities between two intermediate
+entries include differences $c_{nj}-c_{mj}$; when $n=m$ their
+complementary contributions sum to $k_n$ and cannot be charged twice.
+For an explicit sufficient measure, any admissible surplus of mass
+$M\ge\eta_n$ can be used at constant density $\eta_n/M$ if its
+moments obey the required box. At $M=\eta_n=0$ use zero; if
+$M=0<\eta_n$ that particular choice is impossible.
+

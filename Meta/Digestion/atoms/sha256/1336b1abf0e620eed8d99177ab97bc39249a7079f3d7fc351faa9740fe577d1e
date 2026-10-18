@@ -1,0 +1,23 @@
+**Source interface 7.2 (Credited purity and minimum memory of this pair).** In the family of Theorem 7.1, Source Proposition 23.3 gives $\mu=3$, stationary diagonal $(1,2,3,3)/9$, and
+
+$$
+\operatorname{Tr}(\rho_\theta^2)=\frac{37+8\cos\delta}{81},
+\qquad \delta=\theta_1-2\theta_2+\theta_3.
+\tag{7.3}
+$$
+
+Its actual stationary pair is
+
+$$
+9\rho_+=\begin{pmatrix}
+1&1&1&0\\1&2&2&1\\1&2&3&2\\0&1&2&3
+\end{pmatrix},\qquad
+9\rho_-=\begin{pmatrix}
+1&1&-1&0\\1&2&0&-1\\-1&0&3&0\\0&-1&0&3
+\end{pmatrix},
+$$
+
+with purities $5/9$ and $29/81$, respectively. The range (7.3) over this stationary family is exactly $[29/81,5/9]$. Faithfulness, stationarity and equality of their entire stationary binary laws are inherited from Source Theorem 23.2. Thus these are states and instruments from the same specified shift/reset construction, not independently selected matrices with matching spectral data.
+
+Source Theorem 23.4 gives minimum complex memory dimension **four** for this law among all **exact finite homogeneous binary CP realizations**. The comparison allows arbitrary Kraus counts and mixed initial densities and assumes neither reset nor stationary initialization in a competitor. It counts all persistent classical, quantum and controller registers influencing future outputs and excludes an uncounted external time-dependent controller. Its stated class and dimension bound are the premise used below; no minimum-memory theorem for arbitrary $H$ is asserted here. Source also proves that $\mathcal E_+$ and $\mathcal E_-$ are not related by memory-unitary conjugation and that the outcome-labeled CP instruments are not unitarily equivalent, even allowing scalar phases on Kraus representatives.
+

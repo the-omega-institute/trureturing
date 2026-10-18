@@ -1,0 +1,20 @@
+**定义 7.1（四标记端口）。** 对整数 $k\ge3$，置
+
+$$
+P_k=\{(o,i,s):o,s\in\{0,1\},\ 0\le i\le k\}.
+$$
+
+其中 $o$ 区分两组继承切口，$s$ 区分一个切口的两端。记 $R_i^o=(o,i,0)$、$L_i^o=(o,i,1)$，并定义
+
+$$
+\tau(R_i^o)=L_i^o,\qquad \tau(L_i^o)=R_i^o.
+$$
+
+因此 $|P_k|=4(k+1)$，$\tau$ 是无固定点对合。用 $\bar o=1-o$ 表示翻转标记，定义提升
+
+$$
+\ell_k(o,i,s)=(\bar o,i+1,s).
+$$
+
+它把 $P_k$ 双射到 $P_{k+1}$ 的正下标端口，并满足 $\ell_k\tau=\tau\ell_k$。令 $\epsilon_k=1$ 当 $k$ 为偶数，$\epsilon_k=0$ 当 $k$ 为奇数；于是 $\epsilon_{k+1}=\bar\epsilon_k$。
+

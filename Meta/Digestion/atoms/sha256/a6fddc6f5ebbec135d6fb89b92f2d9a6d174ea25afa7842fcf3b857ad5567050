@@ -1,0 +1,50 @@
+**命题 4.3（Positivity, normalization and inherited source facts）。** The
+matrix $X_*$ is real skew and belongs to $\mathcal X$. Its compressed
+density matrix has
+
+$$
+\operatorname{spec}C_*=\{2/5,2/5,1/5,0,0\},\qquad
+(C_*)_{ss}=1/5,\qquad \operatorname{tr}C_*=1.
+\tag{4.8}
+$$
+
+Both $C_*$ and $\Gamma_*$ have rank three, and
+$\operatorname{tr}(\Gamma_*^2)=9/25$. The original matched populations,
+marginals and original $Q$ readout have their inherited values.
+
+Proof. Real skewness follows from (4.1). Adding one to the eigenvalues
+in (4.3), then dividing by five, gives (4.8) and positive
+semidefiniteness. Zero skew diagonal gives the stated diagonal and trace.
+The isometry $J$ preserves nonzero eigenvalues; $\Gamma_*$ has twenty
+additional ambient zero eigenvalues. The sum of squared nonzero
+eigenvalues is $(4+4+1)/25=9/25$.
+
+For completeness the matching matrix units obey
+
+$$
+\begin{aligned}
+\operatorname{Tr}_2(|s,f(s)\rangle\langle t,f(t)|)
+ &=\delta_{st}|s\rangle\langle t|,\\
+\operatorname{Tr}_1(|s,f(s)\rangle\langle t,f(t)|)
+ &=\delta_{st}|f(s)\rangle\langle f(t)|.
+\end{aligned}
+\tag{4.9}
+$$
+
+Here injectivity of $f$ gives the first Kronecker symbol. Thus the diagonal
+$1/5$ yields all matched populations
+$p_{su}=\mathbf1_{\{u=f(s)\}}/5$ and both marginals $I_5/5$.
+The inherited normalized vector
+
+$$
+\Omega=\tfrac12\bigl(|0,13\rangle+|13,0\rangle
+                         -|1,3\rangle-|3,1\rangle\bigr),\qquad
+q=J^\dagger\Omega=(1,-1,0,-1,1)^T/2
+$$
+
+is real with $q^Tq=1$. Skewness implies $q^TX_*q=0$, so for
+$Q=|\Omega\rangle\langle\Omega|$ one has
+$\operatorname{tr}(Q\Gamma_*)=q^TC_*q=1/5$.
+These are inherited fiber properties, not additional preparation or
+measurement permissions. $\square$
+

@@ -1,0 +1,54 @@
+**Proposition 7.3 (reused complete common attainers).** At every strength
+one finite design has acquired high effect $EG_0(s)E^\dagger$, and
+attains all positive diagonal minima, all three original means and the
+worst-history value simultaneously.
+
+Proof. In weak strengths take, for each $r$, high matrix
+$\sqrt{k/2}D$ and low matrices
+
+$$
+\sqrt{\frac{1+r\epsilon s/\sqrt\ell}{8}}
+ (\sqrt\ell D+\epsilon T+\zeta S),\qquad \epsilon,\zeta\in\{+1,-1\}.
+\tag{CA.43}
+$$
+
+Their weights are nonnegative and their quadratic determinants vanish.
+At each record their low coefficient diagonals are $(\ell,1,1)/2$,
+$DT=rs/2$ and other cross entries zero, by summing the two signs.
+Adding high supplies $k/2$ to $DD$, giving $Z_r^0$.
+In strong strengths take high and low matrices
+
+$$
+A_r=\frac{\sqrt pD+r\sqrt qT}{\sqrt2},\qquad
+B_{r,\zeta}=\frac{\sqrt{1-p}D+r\sqrt{1-q}T+\zeta S}{2}.
+\tag{CA.44}
+$$
+
+Their coefficient sum at each record is $Z_r^0$, because their $DT$
+entry is $rF(p,q)/2=rs/2$ and the two $S$ signs cancel the other
+couplings. Each nonzero low matrix has rank two by (CA.14) and
+$1-p=\alpha(1-q)+\beta>0$. Each high is rank three, since
+$p-\alpha q=k>0$. In the weak case $D$ is invertible.
+
+Use fixed low range compression (CA.15), live TP isometric decoders,
+half scalar failure rows $\sqrt{m_j/2}\langle j|$, $j=1,2$, and the
+scalar $Q_5/2$ complement at each record. The full encoder/decoder
+construction of Theorem 6.3 applies with $N_r=M/2$. It proves all joint
+effects, full complex/reference identities, separate labelled Borel-time
+measures, zero cross-support and extra-sector actions. The high effects
+sum to $pD^\dagger D+qT^\dagger T$ and all high mass is live. Hence it
+attains (CA.38) on every diagonal input. On every original sign it has
+value $g_y(s)$. JR Proposition 34.2 proves that
+$\operatorname{tr}(D^\dagger D\tau_y)$ and
+$\operatorname{tr}(T^\dagger T\tau_y)$ strictly increase through the
+three heights; with $p>0,q\geq0$, the largest value is $g_{27}(s)$.
+The maximum is at least that sharp mean for every competitor, proving
+attainment of the reused worst-history optimum.
+
+These formulas are JR §38 under (CA.1), with an absorbed classical coin
+in the weak range; they are not a new common-attainer result. At the
+threshold the weak zero branches disappear and (CA.43) equals (CA.44).
+At $s=0$ the binary record is fair, though finer tags may depend on input.
+At $s=1$ both coefficients are $q_{\max}$. Negative strength just
+exchanges reports. $\square$
+

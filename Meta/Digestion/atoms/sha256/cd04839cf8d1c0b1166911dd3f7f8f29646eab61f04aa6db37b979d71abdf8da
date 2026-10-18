@@ -1,0 +1,84 @@
+**Theorem 7.1 (Refined finite-$q$ bound for each target).** Under the exact source and observer premises above, fix any finite $M\ge2$, $0<\alpha<1/2$, $q\in(0,1)$, $\mathcal A\in\mathfrak A_M(q,\alpha)$ and finite integer $L\ge1$. Put
+
+$$
+b=1-2\alpha>0,\qquad
+\chi_{M,L}=\frac{\gamma_L^{M-2}-1}{\gamma_L^{M-2}+1}.
+\tag{7.1}
+$$
+
+For each $i\in\{0,1\}$ separately,
+
+$$
+b\le r_H(q)+\chi_{M,L}
+       +\kappa_L B(1-q)\mathbb E_{i,q}^{\mathcal A}T.
+\tag{7.2}
+$$
+
+If $\kappa_L>0$, then
+
+$$
+\mathbb E_{i,q}^{\mathcal A}T
+\ge\frac{[b-r_H(q)-\chi_{M,L}]_+}
+          {B(1-q)\kappa_L}.
+\tag{7.3}
+$$
+
+If $\kappa_L=0$ and $b>r_H(q)+\chi_{M,L}$, no compliant observer exists at these parameters. If $\kappa_L=0$ and the residual is nonpositive, this interface provides only the nonnegative mean bound.
+
+Proof. Fix the target $i$, let $j=1-i$, and use its own lawful $W_i$. Let $h(x)$ be the actual probability of ever hitting $d_1$ for $W_i$ started at $x$, including time zero. Let $h_j$ be that hitting probability for the actual opponent $U_j$. These definitions make sense even on reducible supports or states with a positive chance of never reaching either label. First-step conditioning gives
+
+$$
+\begin{gathered}
+0\le h,h_j\le1,\qquad W_ih=h,\qquad U_jh_j=h_j,\\
+h(d_0)=h_j(d_0)=0,\qquad h(d_1)=h_j(d_1)=1.
+\end{gathered}
+\tag{7.4}
+$$
+
+The two label conditions are explicit: both kernels fix $d_0,d_1$, so their actual hitting probabilities have these values regardless of other recurrent classes. By (5.3) the hypotheses of supplied interface 4.1 hold for $P=U_j$, $Q=W_i$, $\gamma=\gamma_L$, on the same configuration set. Its interior size $n$ is at most $M-2$. Since $(v-1)/(v+1)$ is increasing for $v\ge1$, (4.3) gives
+
+$$
+\sup_{x\in\mathcal S}|h(x)-h_j(x)|\le\chi_{M,L}.
+\tag{7.5}
+$$
+
+This identifies a comparison to the actual opponent hitting function. It does not assume that $W_i$ terminates from the target's initial law or from every abstract state.
+
+Now use the actual target epoch chain $Y_r$, with $Y_0\sim\nu_i$ and kernel $U_i$, and its stopping epoch $N$ from (4.6). For a positive integer $m$, finite stopped conditional expectation gives
+
+$$
+\mathbb E_i h(Y_{N\wedge m})-\nu_i h
+=\mathbb E_i\sum_{r=0}^{(N\wedge m)-1}
+       [(U_i-W_i)h](Y_r).
+\tag{7.6}
+$$
+
+Indeed, in the ordinary epoch filtration containing the past gaps and update randomness already used, $\{N>r\}$ is measurable. On that event the next epoch has conditional kernel $U_i$, because the next source gap and future fresh update choices are independent of that past. Its conditional drift is $(U_i-I)h=(U_i-W_i)h$ by (7.4). After $N$ the increment is zero. Summing these $m$ finite conditional identities proves (7.6). No filtration exposing future update coins is used for this step.
+
+Lemma 5.4, applied to the $[0,1]$-valued function $h$, bounds every summand in absolute value by $\kappa_L$. Under the actual target, (4.7) gives $N<\infty$ almost surely and $\mathbb E_iN<\infty$. The terminal values in (7.6) are bounded by one, and the absolute drift sum is bounded by the integrable variable $\kappa_LN$. Bounded convergence on the left and dominated convergence on the right therefore allow $m\to\infty$. Since $Y_N=d_D$, the boundary values in (7.4) give $h(Y_N)=D$. Writing $p_i=\mathsf P_i(D=1)$, we obtain
+
+$$
+|p_i-\nu_i h|\le\kappa_L\mathbb E_iN.
+\tag{7.7}
+$$
+
+The opponent's actual almost-sure stop, from its actual initial row $\nu_j$, gives $p_j=\nu_jh_j$. No assertion about stopping from other initial configurations is needed. Decompose the same actual decision probabilities as
+
+$$
+p_i-p_j=(p_i-\nu_i h)+\nu_i(h-h_j)+(\nu_i-\nu_j)h_j.
+\tag{7.8}
+$$
+
+The first term is bounded by (7.7), the second by (7.5), and the third by (4.5) since $h_j\in[0,1]$. Hence
+
+$$
+|p_i-p_j|\le\kappa_L\mathbb E_iN+\chi_{M,L}+r_H(q).
+\tag{7.9}
+$$
+
+Both selected risks imply $p_0\le\alpha$ and $p_1\ge1-\alpha$, and therefore $p_1-p_0\ge b$. Inserting the actual payment inequality (4.9) into (7.9) proves (7.2). Repeating the argument with the other target changes its analytical $W_i$ and its expectation, while preserving the same actual $\eta,A,C$ and both decision probabilities. Thus the result bounds each mean individually, rather than the sum of means.
+
+If $\kappa_L>0$, the denominator $B(1-q)\kappa_L$ is strictly positive. Division and nonnegativity of the mean prove (7.3). If $\kappa_L=0$, use (7.2) directly to obtain the two stated alternatives; no division by zero is taken. In that case (5.5) also gives every short $w_k=0$ and $m_L=0$, so (5.10) has zero actual target perturbation. $\square$
+
+All stopping and payment in this proof refer to the same real source history and observer. A future analytical tick recording a frozen decision is not an extra paid or accessible bit. The proof uses neither a full-gap price for an interrupted terminal interval nor independence of that interval from the terminal decision. It imposes no global absorption, exit threshold, continuity of the retuned table or spectral assumption.
+

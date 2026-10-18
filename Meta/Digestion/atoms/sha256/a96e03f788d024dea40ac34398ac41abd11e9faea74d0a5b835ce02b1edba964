@@ -1,0 +1,111 @@
+**Theorem 320.2 (All-word endpoint certificate).**
+For every $w\in\{0,1\}^9$, $P^\star$ satisfies every independent
+row at target (320.1) and cap $662/3072$. Its positive-word base
+mass is $1-662/3072$.
+
+**Proof.** In units $1/3072$ the target counts and correct counts
+on the complete first-zero fibres are
+
+$$
+\begin{aligned}
+T&=(1664,1664,1664,1280,1152,1024,768,768,768),\\
+c&=(1081,1002,1002,618,490,362,106,106,106).
+\end{aligned}
+\tag{320.3}
+$$
+
+These follow by adding the same schedule vectors. A positive first
+or middle output is its queried label, and every numerical exhaustion
+output is later than both queries. In its first-zero fibre those
+earlier queried bits are one. Hence the correct contributions are
+constant on the entire fibre, independently of all later zeros.
+For example class 1 receives $944+110+27=1081$; class 2 receives
+$944+58=1002$; class 3 receives $391+391+220=1002$.
+For classes 4 through 9 the sums are respectively
+$110+110+236+162$, $27+27+132+117+99+88$,
+$125+110+127$, $15+17+74$, $15+17+17+4+53$,
+and $17+53+36$. They give the remaining entries of $c$.
+Thus $T_n-662\le c_n\le T_n$, with left equality for $n\ge2$.
+
+To bound the independent pair deficit, write $x_i=w_i$ and
+$Z(x)=3072[1-P^\star_x(0)]$. Directly from the complete vectors,
+
+$$
+Z(x)=\sum_{(i,j)}\bigl[f_{ij}(1-x_i)
+              +v_{ij}x_i(1-x_j)+z_{ij}x_ix_j\bigr],
+\tag{320.4}
+$$
+
+where $f_{ij},v_{ij},z_{ij}$ are the nonzero-label counts in
+that schedule's first, middle and exhaustion vectors. This is one
+common polynomial for the same law, not independently maximized
+wrong masses. Collecting its terms gives
+
+$$
+\begin{aligned}
+Z={}&J+A x_6+B(x_7+x_8)
+            -17(x_6x_7+x_6x_8+x_7x_8+x_8x_9),\\
+A={}&127-125x_3-110x_4-127x_5,\\
+B={}&17-15x_3-17x_5,\\
+J={}&1139+391x_1+470x_2+523x_3+227x_4+161x_5\\
+ &-463x_1x_2-391x_1x_3-110x_1x_4-27x_1x_5\\
+ &-391x_2x_3-110x_2x_4-27x_2x_5
+      -148x_3x_4-132x_3x_5-117x_4x_5.
+\end{aligned}
+\tag{320.5}
+$$
+
+For fixed $x_1,\ldots,x_5$, $B\le17$. Set $x_9=0$ when
+maximizing. If $x_6=0$, the remaining maximum is
+$\max\{0,B,2B-17\}=\max\{0,B\}$. If $x_6=1$, the
+coefficients of $x_7,x_8$ are $B-17\le0$ and their product
+coefficient is nonpositive, so the maximum is $A$, at
+$x_7=x_8=0$. Therefore
+
+$$
+\max_{x_6,\ldots,x_9}Z=J+\max\{0,A,B\}.
+\tag{320.6}
+$$
+
+For a first-zero class $n\le5$, substitute
+$x_1=\cdots=x_{n-1}=1$, $x_n=0$, and each lexicographic
+assignment of $x_{n+1},\ldots,x_5$. Subtracting its constant
+correct count $c_n$ gives these complete grouped maxima of the
+outside-$\{0,n\}$ count:
+
+| Class | Grouped wrong-count maxima |
+| --- | --- |
+| 1 | $185,219,302,329,583,610,662,572,655,662,662,662,662,662,631,514$ |
+| 2 | $655,662,662,662,662,662,631,514$ |
+| 3 | $662,642,559,532$ |
+| 4 | $662,635$ |
+| 5 | $649$ |
+
+This is finite substitution into (320.5)–(320.6), specifying all
+$16+8+4+2+1$ groups without an optimization assumption.
+For classes 6 through 9, $x_1=\cdots=x_5=1$ gives
+$J=995$, $A=-235$, $B=-15$. The restricted expressions and
+their complete wrong-count maxima are
+
+| Class | Restricted $Z$ | $\max(Z-c_n)$ |
+| --- | --- | ---: |
+| 6 | $995-15(x_7+x_8)-17(x_7x_8+x_8x_9)$ | 633 |
+| 7 | $760-32x_8-17x_8x_9$ | 654 |
+| 8 | $728$ | 622 |
+| 9 | $679$ | 573 |
+
+Every grouped value is at most 662. If $d_w=Z(w)-c_n$ is the
+outside-pair count on a zero word, the three deficits (315.3),
+multiplied by 3072, are
+
+$$
+c_n+d_w-T_n\le d_w\le662,\qquad
+T_n-c_n\le662,\qquad d_w\le662.
+\tag{320.7}
+$$
+
+This proves the base, correct and independent union rows separately
+for every word, including every multiple-zero suffix. At $1^9$,
+(320.5) gives $Z=995-235-30-68=662$, proving the positive
+row and its stated equality. $\square$
+

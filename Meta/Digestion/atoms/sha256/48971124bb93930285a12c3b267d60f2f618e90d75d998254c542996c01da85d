@@ -1,0 +1,27 @@
+**Theorem 6.2 (exact original-source fiber and exact-address sensitivity).**
+The map $\theta\mapsto t_\theta$ is a bijection onto
+
+$$
+\{\langle\alpha,v\rangle\in\mathcal F_D:\pi_D(v)=c\}.
+\tag{CCF.19}
+$$
+
+This fiber has $2^r=4^{b_c}$ actual sources. Its entire original
+prediction menu is constant for every $k\ge0$. For every finite word
+$w$, the stationary reply is fixed throughout the fiber unless
+$w\in U_c$; at $u\in U_c$ it is exactly $\theta(u)$.
+
+Proof. The boundary fixes every reached constructor and labelled leaf
+through relative depth $D-1$. At a branch at depth $D-1$, the height
+bound forces its two original children at depth $D$ to be leaves, whose
+labels are freely and jointly realizable. They are the only undetermined
+source data. This gives the bijection and its cardinality. The prediction
+statement is precisely the credited (CCF.4).
+
+Changing one child label leaves every strict ancestor branch, every
+proper extension of that leaf absent, and every other cone unchanged.
+Changing any subset of these labels therefore affects exactly its
+corresponding literal addresses and no other words. This covers empty,
+outer-left, off-target and arbitrarily long words as well as words in the
+right cone. $\square$
+

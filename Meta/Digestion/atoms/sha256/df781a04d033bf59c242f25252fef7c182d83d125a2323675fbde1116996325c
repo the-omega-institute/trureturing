@@ -1,0 +1,23 @@
+**Assumption 14.1 (protected entry, followed by unknown finite interference).**
+Keep the actual source, four-valued literal port, complete row and observer
+progress of Definitions 1.1–1.4. The observer is deterministic, read-only
+and initially source-blind. Its program may depend on the public finite
+prefix-free cut $P$ and an integer budget $k\geq0$. It may perform adaptive
+Reads and finite local work in an entry phase, ending with a source-free
+Release event or a Return. The writer performs zero updates from invocation
+through that event. After Release it may apply any unknown finite total
+number of global $\rho$ updates, at any permitted positions during Reads,
+local computation and the separate Return. It uses the same register and
+root throughout. Release conveys no source-dependent information.
+
+Protection is an additional scheduling hypothesis. It is neither a native
+lock construction nor a derived physical capability. Every protected
+Read counts, including a repeated, root, absent, below-hole or arbitrarily
+deep query. On **every** finite source, the entry phase must reach Release
+or Return after finitely many local steps and at most $k$ Reads. There is
+no source-dependent height, epoch, update bound, query-length bound or
+nonuniform advice in its initial state. Post-Release observations,
+materialized trees and finite computation are permitted and paid.
+Correctness means returning the fixed $R_P(u)$ of the invocation source
+on every observer-progressing history with finite interference.
+

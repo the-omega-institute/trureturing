@@ -1,0 +1,4 @@
+**Corollary 4.4 (exact costs of a finite service).** Every constructed finite service has effectively computable sourcewise path costs and exact coordinatewise worst budgets. For each coordinate maximum, an actual source attaining it can be produced. A maximum of a weighted sum is computed by summing on each reachable leaf and then maximizing; it too has an actual-source witness. Different coordinate maxima need not have a common witness.
+
+Proof. There are finitely many leaves, each has the fixed cost $(k_t,d_t,L_t)$, and exact reachability with a source witness is decidable. Remove empty leaves from the numerical maximum. Every remaining cost is realized by its source witness, and every source follows one remaining leaf. $D\ne\varnothing$ guarantees at least one such leaf. $\square$
+

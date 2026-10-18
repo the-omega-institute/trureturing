@@ -1,0 +1,9 @@
+**定义 76.7（installation and finite rounded powering）。** A valid loss word installs $p=K+10$, the integer $T=2^{h+2}(K+4)$, and Fibonacci numbers through the least $J\geq6$ with $F_{J-2}\geq2T+2$. Set
+
+$$
+w=h+p+\operatorname{bitlength}(K+8)+16,\quad B=2^w,\quad
+u=B-a2^{w-p-h},\quad v=B-b2^{w-p-h}.
+$$
+
+These are exact grid numerators for reconstructed bases in $[0,1]$. To multiply two grid numerators, take $\lfloor XY/B\rfloor$. To evaluate a power of degree $n\geq0$, start with the unit numerator $B$, process the finite binary digits of $n$ by multiplication for one bits and successive squaring of the base, applying this same downward rounding after each multiplication. Degree zero returns $B$, including at a zero base. This is a finite integer recursion with no exact-power register of exponentially large rational width. For $3\leq j<J$, compute $r=3+(j\bmod3)$ and the integer exponents $R,S$ of §78 from the installed Fibonacci list. Compute the two rounded powers and one rounded product, multiply the stored phase-anchor integers by the resulting grid numerator, and round back to the $2^{-p}$ coordinate grid with the fixed half-tie rule. For $j\geq J$, return zero at precision $p$. §80 proves both the head estimate and the true entire-tail bound; neither arbitrary source queries nor later names occur in this recursion.
+

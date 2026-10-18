@@ -1,0 +1,23 @@
+**Proposition 5.3 (Rank has no uniform positive entropy bound here).**
+Fix any placement of rank three or four in Theorem 4.4 and
+any $z\ne1$. Setting all activities to $\varepsilon>0$ keeps
+that exact rank for every $\varepsilon$, while its entropy
+tends to zero as $\varepsilon\downarrow0$. At fixed positive
+activities, letting $z\to1$ keeps the same elevated rank
+until $z=1$, while the entropy tends to the reference entropy.
+
+Proof. In the first limit the coherent states tend in norm to
+the vacuum, because every nonvacuum activity monomial vanishes
+and the partition function tends to one. The reduced state
+then tends to a pure vacuum projector. In the second limit
+the finite-dimensional coefficient matrix tends entrywise to
+$A_+$. Entropy is continuous on the finite-dimensional
+probability spectrum, whereas the exact nonzero minors in
+(4.8)–(4.9) persist for every nontrivial phase and positive
+activity. $\square$
+
+Strict positivity is essential to these rank statements. For
+example, allowing $\lambda_2=0$ on a two-site path removes
+one occupied sector and leaves a product coherent state.
+That excluded boundary does not have the baseline rank two.
+

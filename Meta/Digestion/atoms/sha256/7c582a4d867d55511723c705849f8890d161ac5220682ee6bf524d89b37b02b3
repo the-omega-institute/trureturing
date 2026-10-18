@@ -1,0 +1,191 @@
+**Theorem 38.5 (nine reachable selected cells and the exact bound).** Every
+preparer in Scope 38.1 has at least nine distinct installed running states
+whose literals lie in ⋃ᵢ Eᵢ. Consequently
+
+$$
+H ≥ 13 + r.   (PCA.96)
+$$
+
+Together with Theorem 26.1, this gives
+
+$$
+H_exec(A,3;r) = 13 + r   (|A| = 5).   (PCA.97)
+$$
+
+**Proof.** By Lemma 38.2 the first selected coordinate is a fixed x. The
+following nine live cells are reachable by actual cube prefixes:
+
+$$
+\{(d,h)\}=\{(0,0),(1,0),(1,1),(2,0),(2,1),(2,2),
+             (3,1),(3,2),(4,2)\}.
+\tag{PCA.98}
+$$
+
+The displayed strings record their selected replies, not runtime registers:
+
+| d | h | one reachable reply prefix |
+|---:|:---:|:---|
+| 0 | 0 | ε |
+| 1 | 0, 1 | 0, 1 |
+| 2 | 0, 1, 2 | 00, 01, 11 |
+| 3 | 1, 2 | 001, 011 |
+| 4 | 2 | 0011 |
+
+Every prefix in the table satisfies (PCA.94), so Lemma 24.1 realizes it and
+sourcewise termination prevents an earlier latch or repeated state.
+
+Histories with the same exposed set and different hit counts cannot merge by
+Theorem 35.1; histories with the same d,h and different exposed sets cannot
+merge by Corollary 35.2. We also use the following direct budget observation.
+Once a branch has made five selected invocations, Lemma 38.2 supplies a
+mandatory nonselected invocation, so no sixth selected invocation is available
+under p_P ≤ 6. If two actual sources then have the same reply at a state but
+opposite required entries, a nonselected cube word has the same reply on both
+sources, and a sixth selected query is forbidden.
+
+First, Lemma 38.3 excludes proper containment. Since every exposed set after
+the first query contains x, this disposes of all comparisons involving the
+d = 0 or d = 1 cells. A d = 4 set either contains an earlier set, or has no
+coordinate outside its union with that earlier set; Theorem 34.3 then forbids
+a common next selected query. Thus the only possible cross-depth comparison
+left is an incomparable d = 2 set and an incomparable d = 3 set.
+
+Consider the three d = 2 histories. Let a₀ be the second coordinate after
+reply 0 at x, and a₁ the second coordinate after reply 1. Write 00, 01, 10, 11
+for the two selected replies. If a₀ = a₁, the three displayed d = 2 cells
+have the same support and their different hit counts exclude sharing by
+Theorem 35.1. Hence in the following cross-branch comparisons assume
+a₀ ≠ a₁. The pairs 00,01 and 10,11 have the same
+support and are excluded by Theorem 35.1; 01,10 have the same d,h and
+different support and are excluded by Corollary 35.2. If 00 and 10 shared a
+state, their private old values would both be zero. The only common unread
+coordinates are two coordinates z,w. After either first common query, choose
+reply one; both histories remain live, so the next effective selected query is
+the other common coordinate. With both replies one, the 00 history still
+needs its private coordinate, while the 10 history is already positive. The
+common next query must therefore be the private coordinate of the 10 history.
+Give it value zero also on the 00 completion. This is the fifth selected
+invocation on both paths; their beta replies agree and the budget observation
+forbids any later selected split, so the opposite required entries are
+impossible.
+
+If 01 and 11 shared a state, their private old values would both be one. Give
+the first common unread query, and then the second, reply zero. The 01 history
+is then forced to zero, while the 11 history must query the private coordinate
+of the 01 history. Give that fresh coordinate value one, which is also the old
+value in the 01 history. This is the fifth selected invocation on both paths;
+the common branch reply and the budget observation again contradict the
+opposite required entries.
+
+It remains to compare 00 and 11. Put a = a₀, b = a₁ and let z,w be
+the two common unread coordinates. The histories have supports {x,a} and
+{x,b}, old private values a = 0 and b = 1, and residuals
+AND({b,z,w}) and OR({a,z,w}). Lemma 38.4 applies with U = {z,w}.
+Explicitly, the 11 history completed by a = z = w = 0 has weight two
+and must read all three of those coordinates before its zero latch.
+Replaying its entire suffix on 00 repeats a and omits b, forcing
+cₐ ≤ c_b. The 00 history completed by b = z = w = 1 has weight three
+and must read all three before its one latch. Replaying on 11 repeats b
+and omits a, forcing c_b ≤ cₐ. These are both required actual executions
+of one alleged shared graph. Distinct selected positions have distinct
+costs cᵢ = sᵢ + 4, so their simultaneous inequalities are impossible.
+
+This exclusion allows post-certification discrimination. For example, if
+the common suffix first reads z = 1,w = 0, both histories have become
+constant with opposite values after four selected invocations. A fifth
+selected invocation at a distinct installed running state querying the old
+coordinate x returns beta on 00 and branch on 11 and can directly choose
+the two original latches. That state and its invocation both count.
+With an earlier RLR its call count is six. Its respective selected charges
+are W_A + c_x − c_b and W_A + c_x − cₐ, so both local paths can obey
+the literal cap, for instance when c_x is least. No common-reply argument
+excludes this repeat. Instead, the two complete saturated continuations
+above exclude the merger regardless of the choices on this mixed branch
+or any other decided branch. Repeated roots, selected children or further
+cube-constant queries on such branches remain ordinary paid operations;
+they cannot change either forced extremal charge. Thus the three displayed
+d = 2 cells require three different installed states.
+
+For d = 3, a one-hit history has an AND residual on its two unread
+coordinates and a two-hit history has an OR residual. Equal supports are
+already excluded. Since both supports contain x, different supports have
+intersection size one or two. In the size-one case each history has two
+private coordinates and there is no common unread coordinate. In Theorem
+35.1 put a = b = 2, u = 0, h = 1, g = 2. The intersection (PCA.86) is
+[0,0] ∩ [0,1] ∩ [−1,0], which contains the integer zero. That geometry
+is therefore excluded by the existing theorem.
+
+In the size-two case the private coordinates are a (exposed in the AND
+history) and b (exposed in the OR history), with one common unread
+coordinate z. At z = 0 the AND history is forced zero and the
+OR history must query a. If the old AND value of a were one, choose fresh
+a = 1 in the OR source; both replies would be branch at the fifth selected
+visit, and the budget observation forbids a later split between the opposite
+entries. Hence the old AND value is a = 0. At z = 1 the OR history is
+forced one and the AND history must query b. If the old OR value of b were
+zero, choose fresh b = 0 in the AND source; both replies would be beta at the
+fifth selected visit, and the budget observation again forbids a later split.
+Hence the old OR value is b = 1. Lemma 38.4 now applies with U = {z}:
+complete the OR source by a = z = 0 and the AND source by b = z = 1.
+Their saturated suffixes replay on the opposite histories with exactly the
+two paid repeats established in that lemma. They force cₐ = c_b, impossible.
+Therefore the two d = 3 cells are distinct.
+
+It remains to compare d = 2 and d = 3. For supports of sizes two and three,
+with one common unread coordinate, Theorem 35.1's intersection is
+
+$$
+[0,1] ∩ [1 − h, 2 − h] ∩ [2 − g, 2 − g],
+$$
+
+where h is the d = 2 hit count and g the d = 3 hit count. For h ∈ {0,1,2}
+and g ∈ {1,2} it is nonempty, and hence sharing is forbidden, except for
+(h,g) = (0,2) and (h,g) = (2,1).
+
+For (h,g) = (0,2), incomparable supports have the form S = {x,a} and
+T = {x,b,c}. The first history has x = a = 0; the second must have x = 1
+and exactly one of b,c equal to one, since equal replies at x would force the
+same second coordinate. Let z be the unique common unread coordinate. Give z
+reply one. The d = 2 history still needs both b,c, while the d = 3 history is
+already positive. If the common next query is b and its old value in the d = 3
+history is zero, give fresh b = 0 to the d = 2 source. The beta reply is
+common, the first source is forced zero and the second requires one, and the
+second source has now made five selected visits; the budget observation rules
+out any later selected split. If that old value is one, give fresh b = 1: the
+common branch reply leaves the first history live and the second history after
+five selected visits. The first requires the other private query c, which
+would be a sixth selected visit on the second source and is forbidden by its
+mandatory nonselected invocation. The same argument applies if the common
+query is c.
+
+For (h,g) = (2,1), the first history has x = a = 1; the second has x = 0
+and exactly one of b,c equal to one. Give the common unread coordinate z reply
+zero. The d = 2 history needs one of b,c, while the d = 3 history can never
+reach three if its queried private coordinate is zero and is forced zero. If
+the common query is b and its old value in the d = 3 history is zero, give
+fresh b = 0 to the d = 2 source. The common beta reply leaves the first source
+live and the second source forced zero. Any correct common continuation must
+query the first source's remaining private coordinate c, but the second source
+has already made five selected visits and has a mandatory nonselected visit,
+so this would be a forbidden sixth selected query; latching would fail the
+first source. If that old value is one, give fresh b = 1: the common branch
+reply gives the first source one while the second is forced zero, and the same
+five-visit budget rules out a later split. Querying c is symmetric. Thus no
+d = 2 state can be a d = 3 state.
+
+All nine cells in (PCA.98) therefore require distinct installed selected
+running states. Each is a state with a word in one of the disjoint supports
+Eᵢ, so there are at least nine such states. Lemma 7.1 requires, separately,
+one running state in the b₃ occurrence cone and one in the b₄ occurrence
+cone; those cones are disjoint from all Eᵢ and from one another. The two
+original complete-entry latches and the r mandated additional latches are
+also installed and counted. Hence H ≥ 9 + 2 + 2 + r = 13 + r.
+
+Theorem 26.1 with n = 5 and k = 3 supplies the full-domain grid with nine
+selected states, the two profile states, the two original latches and the r
+mandated latches, and it attains p = 6 and ℓ = 3 + W_A. Its proof covers
+every original profile, every finite address, all four replies, the complete
+reader entries and all output guards. Thus the lower and upper bounds
+coincide. No ordering, read-once or acyclicity property of an arbitrary
+competitor was used. ∎
+

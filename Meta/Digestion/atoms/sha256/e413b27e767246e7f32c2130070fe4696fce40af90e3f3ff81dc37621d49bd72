@@ -1,0 +1,45 @@
+**Theorem 7.3 (exact supplied finite-box decision).** For arbitrary
+$D$ under Assumption 1.2 and supplied integers $K,A,L\ge0$, it is
+decidable whether any service of Definition 1.3 satisfies
+
+$$
+q_A(u)\le K,\qquad a_A(u)\le A,\qquad\ell_A(u)\le L
+\quad\text{for every }u\in D.
+\tag{NSF.16}
+$$
+
+A positive answer returns a finite lawful service meeting all three
+bounds on the whole original fiber. The comparison includes all legal
+effective adaptive serial services, with no uniform local running-time
+promise.
+
+Proof. Enumerate finite four-reply tree shapes of read depth at most
+$K$, with early halts allowed, epochs in $\{N,\ldots,N+A\}$, and
+physical words of length at most $L$. This is a finite enumeration,
+including the empty word and absent addresses. Test each tree by
+Theorem 7.2. Require its path sums and counts to meet (NSF.16) only
+on nonempty leaves. A passing tree gives the positive consumer by
+that theorem.
+
+For the opposite comparator direction, take any service meeting
+(NSF.16). At a reachable reply prefix, all initial accessible data and
+acquired replies agree. Its next computation/update segment, next
+read word or halt, and halt output are therefore fixed. At least one
+source realizes that prefix. Source-totality on this source makes
+that segment finite. A read bound $K$ leaves only finitely many
+reachable reply prefixes. Unroll these segments into a finite tree,
+replace unreachable children by immediate halts, and delete updates
+after the last read on each terminal path. They cannot reveal a new
+source distinction and their deletion preserves its output.
+
+Every reachable read word has length at most $L$, its epoch at most
+$N+A$, and its monotone schedule is one enumerated choice. The
+unrolling preserves read counts and read lengths on each same source
+and weakly decreases its update count. Its leaf fibers are exactly
+the original joint path fibers. Correctness implies full row constancy
+there, so Theorem 7.2 accepts it with the same terminal output.
+This proves that failure of the finite enumeration excludes *every*
+allowed bounded comparator. It does not require a procedure extracting
+this finite unfolding from an arbitrary promised source-total program.
+$\square$
+

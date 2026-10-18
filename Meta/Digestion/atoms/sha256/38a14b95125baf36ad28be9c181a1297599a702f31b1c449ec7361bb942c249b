@@ -1,0 +1,51 @@
+### theorem 10.1: 定理 7：传递可见性判据
+
+若存在某个 $\ell$ 使
+
+$$
+\boxed{
+\lambda
+\left(
+\sum_{r=0}^{\ell-1}
+T^rHT^{\ell-1-r}
+\right)O
+\neq0,
+}
+$$
+
+则隐藏方向 $H$ 对该未来仪器是一阶可见的。
+
+若对所有 $\ell\ge0$ 都为零，则该方向对该仪器是一阶不可见。
+
+#### 证明
+
+由矩阵幂的导数公式，
+
+$$
+\frac{d}{d\varepsilon}
+(T+\varepsilon H)^\ell
+\Big|_{\varepsilon=0}=
+\sum_{r=0}^{\ell-1}
+T^rHT^{\ell-1-r}.
+$$
+
+左右乘以 $\lambda$ 和 $O$ 即得。证毕。
+
+需要注意：
+
+- 这个判据是**一阶可见性**；
+- 精确的全局未来等价要求比较所有 $\theta,\theta'$ 的全部幂；
+- 对固定 $T,H$，上述导数序列可由维数至多 $2d$ 的块矩阵
+  $$
+  \begin{pmatrix}
+  T&H\\
+  0&T
+  \end{pmatrix}
+  $$
+  生成，因此可以用有限阶线性递推截断检查；
+- 经过可达—可观测最小化后，这个上界还可能下降。
+
+这正是“静态 $\kappa$”如何进入动态 future quotient 的精确接口。
+
+---
+

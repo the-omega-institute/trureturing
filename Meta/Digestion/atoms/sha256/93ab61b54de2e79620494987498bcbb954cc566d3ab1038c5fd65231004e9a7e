@@ -1,0 +1,13 @@
+**Theorem 8.2 (the precise naming consequences).** Under the unrestricted fixed-width naming contract, $N$ configurations require and admit $\lceil\log_2N\rceil$ naming bits. Hence the sharp small-error initialized observer has naming width $\lceil\log_2(6+N_2)\rceil$; for fixed unequal parameters it is $\log_2\log(1/\epsilon)+O_{p,q,r}(1)$. Seven exact initialized configurations at equality require three such bits. Exact unequal prediction has no uniform naming width; a fixed-width encoding on histories of length at most $L\ge2$ needs initialized width at least $\lceil\log_2(L+6)\rceil$. An internally retained tagged, self-delimiting counter gives $O(\log(L+2))$ worst-case width on that domain. Under the optional no-$11$ language the naming width is instead
+
+$$
+\min\{\ell\ge0:F_{\ell+2}\ge N\},\qquad
+F_0=0,\quad F_1=1.
+$$
+
+These are configuration-name statements, not total executable or physical memory bounds.
+
+**Proof (8.2).** A width-$b$ unrestricted word has $2^b$ values, so injective names require $2^b\ge N$; conversely choose any $N$ such names. The counts and asymptotics follow from Theorems 2.2, 4.2 and 6.3. A tag for synchronization versus unresolved startup, together with a delimited integer $k$, supplies the variable-width exact representation; the delimiter and tag are part of the word. All finite histories admit finite words, while the class count prevents a bounded worst-case word.
+
+For the optional language, the existing independent-seam capacity of [Fiber Calculus, Theorem 2.5](FIB_RELATIONAL_FIBER_CALCULUS.md) is reused: splitting by the first digit gives the recurrence with counts one and two at lengths zero and one, hence $F_{\ell+2}$. Injective naming again gives necessity and sufficiency. Seven labels require $\ell=4$, since $F_5=5<7\le F_6=8$. Neither recurrence prescribes legal physical rewrites or decoder workspace. Startup, current branch and transient position are already contained in the configurations counted above; multiplying by an additional free phase or current-symbol register would count a different representation. $\square$
+

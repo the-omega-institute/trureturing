@@ -1,0 +1,36 @@
+**Theorem 7.3 (finite-state properties of the original source).**
+Given any other finite total deterministic bottom-up automaton $B$
+with state map $q_B$, the set
+
+$$
+\mathcal V_b(B)=\{q_B(u):\exists n\ E_b(u,n)\}
+\tag{NRF.35}
+$$
+
+is effectively computable, together with an actual original and
+producing history for each state in it. At an attainable boundary,
+$q_B(u)$ is recoverable exactly when this set is a singleton. Any
+specified regular property of the invocation source is decidably
+constant or nonconstant on that boundary, with finite counterexample
+sources in the nonconstant case.
+
+Proof. Replace $M$ in Definition 6.1 by $M\times B$ before assigning
+states to free blocks. Geometry, equality types and ground exclusions
+are unchanged. The capacity construction applies to this finite total
+deterministic product. Evaluate the original term $W_{S,\theta}$
+in the $B$ component, using the free values' assigned states and
+the actual $B$ states of forced constants. This computes one fixed
+$q_B(u)$ for every source in that cell. Keep its value precisely
+when the nonempty cell has some $e_r$ true. Theorem 6.6 proves both
+inclusions of (NRF.35), and Theorems 6.5 and 3.2 extract the stated
+sources and histories.
+
+On a nonempty fiber, singleton image is exactly constancy. For a
+regular property with accepting set $F_B$, ask whether the computed
+image lies wholly in $F_B$, wholly in its complement, or meets
+both. In the last case the two extracted originals have opposite
+property values and the same actual retained boundary. The state
+being evaluated is explicitly that of $u$, not that of the captured
+$\rho^n u$. No morphic image-complement interchange is needed.
+$\square$
+

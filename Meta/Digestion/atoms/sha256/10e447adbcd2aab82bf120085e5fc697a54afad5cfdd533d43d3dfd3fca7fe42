@@ -1,0 +1,15 @@
+**Definition 4.1 (total moving right search).** At a present base address
+$a$, read $a$. A leaf finishes with its actual label and relative depth
+zero. On branch, probe $aR^1,aR^2,aR^4,\ldots$. A leaf finishes with
+its actual depth and label. On the first absent reply save its exponent
+$r$ and the last branch exponent $l$, allowing $l=0$. While $r-l\ge2$,
+read $aR^{\lfloor(l+r)/2\rfloor}$. A leaf finishes; branch replaces $l$;
+absence replaces $r$. If the endpoints become adjacent without an
+observed leaf, finish with INVALID. Never infer an unobserved leaf
+label. All powers are fully materialized literal words.
+
+This is [IDC, Definition 6.1][IDC]'s search with a finite failure exit for
+mixed replies. A returned leaf is an authentic observation regardless
+of earlier search motion. On a stationary source the strict branch/absent
+bracket contains the rightmost leaf, so INVALID is impossible.
+

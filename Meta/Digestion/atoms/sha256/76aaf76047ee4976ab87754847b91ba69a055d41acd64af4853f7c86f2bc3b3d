@@ -1,0 +1,32 @@
+**Definition 6.3 (finite truth labels).** Attach bits $h_r,e_r$ to a
+cell for every $r\in J$ as follows. If $\gamma_{S,r}$ fails, both
+bits are false. Otherwise compute all pairwise comparisons of the
+hole expressions (NRF.16) using Lemma 5.4. The type $\theta$
+determines every variable-variable or variable-ground comparison
+that occurs, because every relevant ground inverse is in $G_S$.
+Set $h_r$ true precisely when the resulting equality partition is
+exactly $\pi$, including every false bit.
+
+If $h_r$ is false or $b$ is not selection-valid, put $e_r$ false.
+Otherwise give an original-hole variable the $r$ coordinate of its
+free block's $\sigma_i$, or $q_{A_r}(h)$ if forced to $h$.
+Give each born hole its actual state $q_A(g_{r,p})$. Holes of the
+same row class have the same state: for a mixed equality this follows
+from $\rho^r h=g_{r,p}$, and for two original holes from their shared
+actual value. Evaluate $C$ at these states and set $e_r$ to the truth
+value of (NRF.6). The evaluations are finite and use no hidden
+actual state retained by the producer.
+
+For this cell define its arithmetic guards
+
+$$
+I^H=\bigcup_{r\in J:h_r}I_r,\qquad
+I^E=\bigcup_{r\in J:e_r}I_r.
+\tag{NRF.24}
+$$
+
+They are finite unions of singletons and arithmetic progressions.
+The construction keeps the same equality type and the same product
+state vector across *all* representatives; it does not choose new
+original values when changing $r$.
+

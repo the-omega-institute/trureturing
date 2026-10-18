@@ -1,0 +1,25 @@
+**Theorem 1.2 (exact binary incidence realization).** The solutions of this
+complete native template are in bijection with assignments of one bit to each
+terminal-slot class. In particular, for a binary potential incidence pattern
+on the slots, the native mass is
+
+$$
+W^{-n}\sum_y\prod_i f(y|_{\text{slots of block }i}).
+\tag{GCB.3}
+$$
+
+Each whole-block potential occurs once.
+
+**Proof.** The internal equations force every strict internal target to be a
+branch endpoint, hence the prescribed perfect shape. The terminal equations
+force a labelled leaf and identify the donor leaf bit with the terminal bit.
+Along a successor cycle all bits are equal, so one class bit remains. Restricting
+to the classes and assembling the ordered perfect trees are inverse maps. The
+product weight in (GCB.3) is therefore the native whole-block product, with no
+replica multiplicity. $\square$
+
+The equality and constructor conditions in this proof are exactly those of
+[CBN, Theorems 2.2, 4.2 and 6.2]. In particular, the representation does not
+replace a repeated reply by independent replicas and does not factor an
+arbitrary block weight into pairwise constructor weights.
+

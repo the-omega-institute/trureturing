@@ -1,0 +1,5 @@
+source_id = "kbonacci-multilabel-prefix-and-terminal-cost"
+path = "docs/develop/theory/KBONACCI_MULTILABEL_PREFIX_AND_TERMINAL_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

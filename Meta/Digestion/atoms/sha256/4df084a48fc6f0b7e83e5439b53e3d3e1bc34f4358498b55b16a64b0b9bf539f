@@ -1,0 +1,87 @@
+**Convention 331.1 (Objects and independent demands).**
+Use exactly the source, carrier, consumer, selected targets and resource
+classes of 315.1. In particular, $x=(r,g)$ has prime $r$ and
+$\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor$,
+$N(x)=1+F_rg$, $q_i(x)=[p_i\mid N(x)]$, and
+$n(x)=\min\{i:q_i(x)=0\}$. On the full Borel carrier
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, put
+
+$$
+\theta_j=(B_1,1/(j+2)),\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                    +a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L(A(x)),\lambda_x^a).
+\tag{331.1}
+$$
+
+Always $1\ge a_1\ge a_2\ge\cdots>0$ and $a_n\to0$.
+The original nonatomic target $\mu_x^{\rm orig}$ of 315.1 is a
+different measure. The selected accuracy requirement in (331.1)
+does not change the consumer or identify these two targets.
+
+All competitors have zero advice, one source-independent seed,
+sourcewise almost-sure finite measurable handoff, arbitrary addresses
+and arbitrary Borel outputs. The bound counts at most two actual
+requests, including repeated and ignored replies. An $O$ schedule
+is increasing and preselected; it stops at its first queried zero or
+exhaustion. Its second address is independent of replies. An $N$
+schedule is preselected and acquires every reply in that schedule.
+
+Keep the complete rows and affine notation $d,r,h,G_C,Q,\Delta_C$
+of 315.2. At a word with first zero $n$ the demands for the three
+independent events $A=\{0\}$, $C=\{n\}$ and $P=\{0,n\}$ are
+$1-b_n-e,b_n-e,1-e$. At the positive word the demand for $\{0\}$
+is $1-e$. Negative singleton demands are not truncated. For one
+complete finite allocation $\lambda\ge0$ of finite mass
+$M=\sum_D\lambda_D$, feasibility means every row of
+$G_C\lambda\ge h(b,e)$, with the same $\lambda$ in every row.
+For any nonnegative full score $Y$,
+
+$$
+Yh=F_{QY}(b,e)\le YG_C\lambda\le M\Delta_C(Y).
+\tag{331.2}
+$$
+
+This is the pairing (315.6). Neither counterfactual terminal cells
+nor independent event rows receive separate mass budgets.
+
+**Reused correspondence 331.2 (Actual sources and closed caps).**
+Every finite reply word, including multiple-zero words and positive
+prefixes, has an actual source by 315.3: the class of the Fibonacci
+matrix in $\operatorname{PGL}_2(\mathbb F_p)$ has order $z(p)\ge3$;
+a prime $r$ larger than the finitely many ranks makes $F_r$
+invertible modulo the prescribed prime product. CRT prescribes $g$,
+and the expanding legal interval contains its residue representative.
+Every actual $N(x)$ has finite prime support and hence finite first
+absence. No infinite all-positive actual source is used.
+
+The normalized stopped criterion is precisely the coordinatewise
+$c_0\ge H$ of Theorem 109.1, with the scalar schedule budget
+following from normalization. Theorem 110.2, in the form 315.3,
+supplies at every met closed cap $0<c\le1$ some finite normalized
+representative in the same class. Its necessity uses countability
+for one common full-measure execution event, whole-schedule address
+cutoffs, finitely many actual witnesses and handoff cutoffs, and
+finite-simplex compactness. It asserts existence of a representative,
+not preservation of an arbitrary competitor's law.
+
+A longer representative may be restricted by fixing higher bits to
+zero, projecting higher output labels to zero and removing constant
+observations. A shorter representative may ignore newly added bits.
+All independent rows survive these operations. On a new first-zero
+class above its original horizon $H$, its error is exactly
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+                       =\max\{1-p_+(0),a_n\},\qquad n>H.
+\tag{331.3}
+$$
+
+Consequently a finite lower certificate applies to arbitrary original
+addresses and full-carrier outputs even when a smaller cap activates
+more tail coordinates. For an original error below one, apply it at
+positive met caps decreasing to that error; error zero is included.
+At error one the bounded amplitude coefficients give the lower
+inequalities below directly. These correspondences are reused from
+109.1, 110.2, 117.2, 280.3, 297.3 and 309.3, as collected in 315.3.
+

@@ -1,0 +1,25 @@
+**Open problem 11.1 (the unchanged universal middle range).** For every
+$n\ge7$, $4\le k\le n-3$, every strictly increasing positive integer
+position vector and every complete correct graph at both same-input caps
+$n,W$, prove
+
+$$
+D\le E+\nu,\qquad\text{equivalently }m\ge G,
+$$
+
+or construct one complete original graph with $m<G$ and its faithful
+full-fiber lift. In the notation of this volume the missing universal
+inequality is exactly (TS.21), or (TS.28). No bound on the total remaining
+late deficit is proved here for arbitrary graphs. When $\rho=0$ the
+equation is the original unmodified aggregate; when $\rho=1$ the new
+contribution is the actual $1+\eta_5$ of that graph.
+
+A contrary construction must specify every fixed row, prove correctness
+and actual termination on every Boolean input, and pay both caps on each
+same input. Its native upper must cover all of $\mathcal U_*$ with the
+same code, original literal latches, complete entries, all four replies,
+all installed states and all original services. A local overload, an
+abstract support pattern, a relaxation, independently attainable block
+minima or an above-grid example does not meet those requirements.
+Theorems 4.1 and 6.4 are bounded results, not a resolution of this problem.
+

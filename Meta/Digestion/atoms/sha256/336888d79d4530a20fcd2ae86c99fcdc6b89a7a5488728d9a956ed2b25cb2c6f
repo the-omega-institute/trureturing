@@ -1,0 +1,17 @@
+**Corollary 43.5 (Endpoints, simplex faces and the strict carrier separation).** All regions (43.12) and (43.19) include their boundary rows and attainments. They have the following consequences.
+
+1. At $\delta=0$, both minima equal $h/2$. At $\delta=1$, both are zero and every simplex row is admitted for every $\eta\ge0$.
+2. If $h=0$, every row $(0,d,z)$ with $d+z=1$ has a common-law attainer and radius zero. At $\eta=0$ and $\delta<1$, both regions force $h=0$; at $\eta=1$, every simplex row is admitted.
+3. For $0\le\delta<1$, the largest anchor proposal mass at radius cap $\eta$ is $\min\{1,(2-\delta)\eta/(1-\delta)\}$ in the measurable class and $\min\{1,2\eta\}$ in the finite class. Within either class, the split of $1-h$ between literal divergence $d$ and finite nonproposal $z$ does not affect its minimum radius. This includes both faces $d=0$ and $z=0$ and their intersection $(1,0,0)$.
+4. If $0<\delta<1$ and $h>0$, the finite minimum is strictly larger:
+
+   $$
+   \frac h2-\frac{(1-\delta)h}{2-\delta}
+   =\frac{\delta h}{2(2-\delta)}>0.
+   \tag{43.22}
+   $$
+
+   For fixed $h>0$, the finite minimum stays $h/2$ as $\delta\uparrow1$ and becomes zero at $\delta=1$, while the measurable minimum tends to zero continuously.
+
+**Proof.** Substitute the specified parameters into (43.11)--(43.12) and (43.18)--(43.19), dividing only when $1-\delta>0$. The simplex imposes $h\le1$; every remaining nonnegative split $d+z=1-h$ is realized by the corresponding full-source attainer. Equation (43.22) follows by a common denominator. All zero-proposal statements use the inequality $e_y\le\delta h_y$ itself, not an undefined conditional ratio. The common law at $h=0$ places masses $d,z$ on the divergent and unknown tapes. A larger finite carrier cannot improve (43.18), whereas (43.15) already realizes the measurable optimum on a countably infinite carrier. $\square$
+

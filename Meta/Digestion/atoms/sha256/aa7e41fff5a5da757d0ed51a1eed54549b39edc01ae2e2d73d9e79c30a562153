@@ -1,0 +1,13 @@
+**Remark 2.2 (degenerate cases and the graph's meaning).** The graph
+records a chosen valid witness for one actually missing target at each
+bad projection. It is neither a pair-confusability graph nor a replacement
+for the other target obligations. All their witnesses remain required
+on $B$. Zero point weights, zero cell weights and zero traces are
+permitted in every step of the proof. If any projection has weight
+zero, every tuple of $B$ has product weight zero. There are no bad
+coordinates when $n=1$: the joint condition is then the local one,
+and (CIT.7) reduces to $\Omega(B)=w(P_1)$. The proof includes
+$m=2$, where each cycle has at least two vertices and trace cost at
+most twice its cell-weight product. An empty $B$ has weight zero
+without any choice of projections or graph.
+

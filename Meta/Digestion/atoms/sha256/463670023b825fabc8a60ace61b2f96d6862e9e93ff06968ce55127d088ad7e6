@@ -1,0 +1,33 @@
+**Lemma 27.1 (selected exact roots).** Each box contains exactly one
+zero of its indicated system, uniformly for the source expression
+intervals above. At that zero the system Jacobian is nonsingular.
+For $\|y\|_r=\max_i|y_i|/r_i$ the certificate bounds are
+
+| System | $\max_i\sum_j\sup|(I-RJ)_{ij}|r_j/r_i$ | $\max_i\{\sum_j\sup|(I-RJ)_{ij}|r_j/r_i+\sup|(RF(c))_i|/r_i\}$ | $\max_i r_i$ |
+| --- | --- | --- | --- |
+| $S$ | $<8\cdot10^{-15}$ | $<11/10000$ | $<2.50\cdot10^{-16}$ |
+| $D$ | $<6.24\cdot10^{-12}$ | $<11/10000$ | $<2.11\cdot10^{-15}$ |
+
+Proof. All bounds in this section are rational interval inequalities.
+One precise evaluation convention uses endpoints on $2^{-320}\mathbb Z$:
+round lower endpoints down and upper endpoints up after every operation,
+take all four endpoint products/quotients, use exact integer square-root
+bounds for positive square roots, and apply the product/quotient rules
+entrywise for the Jacobian. Evaluate $F(c)$ before multiplication by
+$R$; do not replace it by a residual at a rounded alleged zero.
+Substitution of the displayed source bounds, centres, radii and matrices
+in the two expressions in the table gives the strict bounds shown.
+They also remain valid at dyadic precision $2^{-240}$ with the supplied
+outward endpoints. The equations specify exact zeros; interval residuals
+containing zero alone would not prove their existence.
+
+For $T(X)=X-RF(X)$ the mean-value inequality bounds its Lipschitz
+constant by the first column. The second column makes $T$ a strict
+self-map of the closed box. The contraction theorem gives a unique fixed
+point. Since $\|I-RJ\|_r<1$, the Neumann series makes $RJ$ invertible;
+these are square matrices, so $R$ and $J$ are invertible as well.
+The fixed point is therefore an actual zero. Positive denominators and
+source pivots make the system analytic. This establishes contact-root
+selection, not a new global uniqueness statement for the original
+nine-coordinate source root or TP away from it. $\square$
+

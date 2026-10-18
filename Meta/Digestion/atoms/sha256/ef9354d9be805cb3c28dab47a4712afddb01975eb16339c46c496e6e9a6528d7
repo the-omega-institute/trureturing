@@ -1,0 +1,151 @@
+**Theorem 211.10 (The fixed-measure menu equals the triple covering number).**
+In exactly the class of 211.9,
+
+$$
+\mathcal M(m,s,d)=C(m,3,2)
+ \ge\left\lceil\frac{m(m-1)}6\right\rceil.
+\tag{211.28}
+$$
+
+For $m=3^r$, every integer $r\ge1$, equality with $m(m-1)/6$
+is attained. Every quotient (211.27) separately has an actual score
+with both complete costs $d$; when $d\le1$ it is a unit-$O$
+quotient with an $E_N$ certificate of charge zero.
+The simultaneous menu requirement is the assertion here, not a new
+individual membership result.
+
+**Proof.** For any eligible representative, $\Delta_O\le\Delta_N\le d$.
+The actual guards of 203.2 and 208.2, equivalently (211.10) with
+$E=0$, give for every active $k$ and every late $a<k$
+
+$$
+\nu(Z_k)\ge2s,\qquad \nu(Z_k\setminus Z_a)\ge s,\qquad
+T\ge g-d=s,\qquad S\le3s+d.
+\tag{211.29}
+$$
+
+These are full stopped-table lower bounds with no suffix or early-$00$
+restriction. Fix one menu entry $\nu$, and call $k\in J$ eligible
+for this entry if it occurs in any pair covered by that entry.
+For such $k$, its representative also has active terminal $z$;
+hence $D_{kz}\ge s$. With $A_k=Z_k^c$ and $a_k=\nu(A_k)$,
+
+$$
+s\le a_k\le S-2s\le s+d,\qquad
+\nu(A_a\cap A_b)=a_a-D_{ab}\le a_a-s
+ \quad(a<b\text{ eligible}).
+\tag{211.30}
+$$
+
+For the second assertion it suffices to use a representative making
+$b$ active: (211.29) permits every earlier address $a$, whether active
+in that representative or not. All these inequalities coexist because
+the full measure $\nu$ is exactly the same across representatives.
+There is no assumption that their correct placements agree.
+
+Four eligible indices $k_1<k_2<k_3<k_4$ are impossible. The pointwise
+inequality $\mathbf1_{\cup A_k}\ge\sum\mathbf1_{A_k}
+-\sum_{k<l}\mathbf1_{A_k\cap A_l}$ holds because, at a point in
+$r_0$ of these four events, its right side is
+$r_0-\binom{r_0}2\le\mathbf1_{r_0>0}$.
+Integration and (211.30) give
+
+$$
+\begin{aligned}
+S&\ge\nu\left(\bigcup_{r=1}^4A_{k_r}\right)\\
+ &\ge\sum_{r=1}^4a_{k_r}
+           -\sum_{r<t}(a_{k_r}-s)\\
+ &=6s-2a_{k_1}-a_{k_2}+a_{k_4}
+ \ge4s-3d.
+\end{aligned}
+\tag{211.31}
+$$
+
+Together with $S\le3s+d$, this forces $s\le4d$, a contradiction.
+Thus each entry covers pairs only within one set of at most three
+eligible indices. Extend that set to a triple if necessary, ignoring
+entries covering no pair. A covering menu therefore gives a triple
+covering, proving $\mathcal M\ge C(m,3,2)$.
+
+For the reverse inequality choose any triple covering. For each block
+$F\subset J$ with $|F|=3$, make one fixed late measure
+
+$$
+\nu_F=s\sum_{k\in F}\delta_{(F\setminus\{k\})\cup\{z\}}
+                       +d\delta_\varnothing,
+\tag{211.32}
+$$
+
+where atoms are described by zero sets and every unlisted late bit is
+one. Its stock is $3s+d$. For a requested $\{i,j\}\subset F$,
+lift each atom equally to prefixes $01,10$, set $T=s$, and put
+
+$$
+\begin{aligned}
+C_{w(\{n,z\})}&\mathrel{+}=s,\qquad
+C_{w(\{n,z\}\cup\{k\in F:k>n\})}\mathrel{+}=d
+                         &&(n=i,j),\\
+C_{w(\{z\})}&=g.
+\end{aligned}
+\tag{211.33}
+$$
+
+There is no early correct mass. This is the three-coordinate subset
+measure $\mathcal L_3(s)$ of 201.2/207.4, with terminal zero, plus
+the empty-set stock $d$, and the threshold words of 203.2.
+The parameter map is $a_{nk}=s$ for $n<k$ in $F$ and
+$a_{nz}=0$, so a class of mass $s+d$ splits into its singleton
+part of length $s$ and its absorbing part of length $d$ exactly as
+in (211.33). No new realization supplier is required.
+It has $Q=q_{ij}$ and $W=4s+d$.
+
+Here is a complete support bound for this specialization, including
+all unqueried labels. At the head pair the exact maxima are
+$(0,(3s+d)/2,(3s+d)/2,g)$, totaling $W+d$.
+At an early/$k$ pair, $k\in F$, the early-zero maxima sum to
+$(3s+d)/2$; the $10$ maximum is at most $g$; and the $11$
+maximum is $(3s+d)/2$, which dominates every correct reward since
+$s>d$. At early/$z$, the first two maxima again sum to
+$(3s+d)/2$, the $10$ maximum is $3s/2$, and the $11$ maximum is
+$s+d/2$, so its support is $W$. Here $3s/2\ge g$ follows from
+$s>4d$.
+
+At two coordinates of $F$, the four maxima are bounded by
+$(s,s,g,g)$. The pair baselines are $(s,s,s,d)$ and the terminal
+adds $s$ in $11$. Correct $00$ rewards are absorbing pieces at most
+$d\le s$; $01$ rewards are at most $s$; the queried or intermediate
+$10$ rewards are at most $g$; earlier and later $11$ rewards are
+also at most $g$. On $(k,z)$ with $k\in F$, the bounds are
+$(2s,0,g,g)$: all correct words have $z=0$, the terminal class
+is in $10$, and $T+d=g$ covers $11$. Each bound sums to at most
+$W+d$. Early labels collect only subsets of the pair baseline in
+these late pairs. Unused coordinates are constant one on every scored
+word and give shorter observations; short $N$ rules refine into pairs.
+This proves the complete $N$ bound. The stopped head table
+$(1,2;1,2,i)$ attains $W+d$, so both complete costs equal $d$.
+Thus one entry serves every pair of its block, proving
+$\mathcal M\le C(m,3,2)$.
+
+A triple contains three pairs, so counting pairs gives (211.28).
+For $m=3^r$, identify $J$ bijectively with the vector space
+$\mathbb F_3^r$. The affine lines
+$\{x,x+v,x+2v\}$, $v\ne0$, are triples; each pair determines
+exactly one of them. Therefore they partition the $\binom m2$
+pairs into groups of three and give exactly $m(m-1)/6$ blocks.
+Using (211.32) for these blocks attains the menu bound.
+The covering definition, pair count and finite-geometry method are
+classical; see Gordon, Kuperberg, Patashnik and Spencer,
+[*Asymptotically optimal covering designs*, introduction and §2](https://arxiv.org/pdf/math/9511224v1).
+No asymptotic design theorem is used. $\square$
+
+The theorem includes $d=0$, still requiring $s>0$; it asserts nothing
+at $s=4d$ or below. For example $m=9,s=5,d=1$ gives exactly twelve
+fixed measures for the thirty-six placements, each profile having
+$W=21,K=39$ and both costs one. This count restricts a method of
+choosing proof measures. It is not a lower bound on requests, seeds,
+computation or source information. Allowing arbitrary full scores,
+late pair rows, signed residuals, nonzero zero-cost cores or new
+mixture projections leaves the stated menu class. Every displayed
+quotient is already certified; a smaller menu's failure cannot prove
+unrestricted $E_N$ nonmembership.
+

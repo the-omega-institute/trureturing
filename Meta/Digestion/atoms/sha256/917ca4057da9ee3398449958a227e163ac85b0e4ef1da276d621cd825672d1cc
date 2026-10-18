@@ -1,0 +1,11 @@
+**Convention 9.2 (authenticated literature interfaces).** The load-bearing sign proof is the elementary factor/Bernstein argument of Theorem 4.1; the local arguments use the ordinary analytic implicit and inverse function theorems and Banach contraction theorem. The following literature interfaces are `literature-attested` intermediate context, not proofs of contact selection or of the original-model bridge:
+
+| Source and exact locator | Applicable interface and missing transfer |
+| --- | --- |
+| Dritschel–Rovnyak, *The Operator Fejér–Riesz Theorem*, [arXiv:0903.3639v1, Theorem 2.1](https://arxiv.org/abs/0903.3639v1) | An operator Laurent polynomial already nonnegative on the entire circle admits polynomial $P^*P$ factorization. It neither proves the required nonnegativity from selected zeros nor selects contacts. |
+| Dette–Melas, *A note on the de la Garza phenomenon for locally optimal designs*, [arXiv:1105.3575v1, §3 Theorem 1](https://arxiv.org/abs/1105.3575v1), journal/PDF Theorem 3.1 | The stated Chebyshev-system hypotheses imply complete classes for information-matrix Loewner dominance. The unmodified eight-function two-sheet vector here fails its ordinary Chebyshev determinant condition on eight pure-sheet points: the last three functions are identically zero there. Loewner dominance has not been shown to preserve this absolute-height objective and physical failure covariance. |
+| Goldsztejn et al., *Certified parametric continuation*, [§§3.1–3.3](https://pagesperso.ls2n.fr/~jermann-c/dw/mggj-jogo14.pdf) | Certified initial solutions, regularity, domain control and verified crossings are prerequisites for regular-curve continuation. They do not supply missing active-set changes or coverage of all components. |
+| *Duality attainment and strict feasibility of the generalized moment problem and its relaxations*, [arXiv:2604.15072v1, Theorem 1.1](https://arxiv.org/abs/2604.15072v1) | The GMP dual-attainment assertion requires $h_1\equiv1$, $b_1>0$ and $b$ in the moment-cone relative interior. Attainment does not evaluate or select original contact branches. |
+
+None of those unproved transfers is used in Theorems 3–8. The inspected literature scope is not exhaustive and supports no worldwide novelty or nonexistence assertion.
+

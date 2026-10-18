@@ -1,0 +1,6 @@
+### 62.5. Scope and sources
+
+Section61 supplied exact incompatibility and a compactness-only positive gap. The present estimate supplies an explicit leakage-tolerant gap and a finite coherent full-code upper construction. The general inequality (1) applies in every finite dimension to any three selected labels. The result does not determine the exact global projection of the qutrit family, nor give a uniform positive gap as p tends to zero.
+
+Stinespring dilation, Cauchy–Schwarz, the trace-zero effect bound and elementary diamond-norm properties are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The finite dephasing/label constructions use the established local incoherent-operation background already attributed in §§54 and61; see Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature-priority, formal-kernel, arbitrary-channel, or full RT recovery claim is made.
+

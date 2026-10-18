@@ -1,0 +1,26 @@
+**Convention 1.1 (the bounded claim).** In the original twelve-history,
+single-specimen experiment of [Complete Continuation Gap][CG], let
+$E_\star$ denote its complete-output common-CPTP optimum. This volume gives
+a closed positive algebraic constant $\epsilon_{\rm q}$ such that every
+original common processor whose supported live map has zero population
+transfer satisfies
+
+$$
+E(\Phi)\geq E_\star+\epsilon_{\rm q}.
+\tag{ZG.1}
+$$
+
+The exact task is restated in §§2–4, the credited algebraic point is specified
+in §5, and the constant is defined in §6. Sections 7–8 prove its positivity
+and its uniform applicability. No unknown minimum, distance to an optimizer,
+stability modulus or optimization value occurs in that constant.
+
+CG18 already proves an existential zero-transfer gap. CG17 already identifies
+every optimizer's sign-averaged live map and four necessary positive
+transfers. Current CG21–25 also already prove an actual joint acquisition
+bottleneck, Schmidt-number-three necessity, an existential dimension-two gap
+and positive high-dimensional mass on every normalized input. Those results
+are prior coverage, with the precise correspondence in §10. The increment
+here is the explicit constant in (ZG.1), for the zero-transfer class. It does
+not quantify the distinct dimension-two gap.
+

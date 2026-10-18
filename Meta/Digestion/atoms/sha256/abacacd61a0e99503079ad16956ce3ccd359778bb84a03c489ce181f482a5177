@@ -1,0 +1,16 @@
+**定理 3.4（固定 reached entry 的全调用体原任务核）。** 令 $\mathcal D_P\subset\mathcal I_P$ 为 next row 仍是引理 2.3 所述未改原始行的所有 running 切口；删去 next row 是最后 changed idle CTL 的切口及它的后继。则对每个 $V\in\{S,B,T,M_J\}$，分别有
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h=k
+\quad\Longleftrightarrow\quad h\sim_Q k,
+\qquad h,k\in\mathcal D_P.
+$$
+
+该域包含全部七标签、全部规范 ingress 的半读入及未写 latch、所有接受/拒绝/维护值分支，以及源操作、分配、目录、计数、事件、行、信道、贷款、检查、ACK、source TOK 的实际原始阶段，不仅是 strict Reserve 的 Zero 段。
+
+证明。$h=k$ 保持同一装置、同一状态及输入位置，所以所有原始实验的合法域、标签、输出和后继均相等，包含未执行 `none`、未来 Supply 的任务未定义及空响应。
+
+反向设 $h\sim_Q k$。若 $h$ 的下一行非 IN，Advance 是实际启用的原始一步。若它是 IN，由规范前缀的定义至少有一个 $b$ 使当前前缀 $pb$ 可延长为完整帧，取该 Supply$(b)$。这是数学上选择一个存在的共同测试，不主张 actor 可秘密查看 $p$。该测试在 $h$ 定义且成功；响应映射相等迫使它在 $k$ 同样定义且执行成功，不得变成无权 `none` 或任务未定义。引理 2.3 保持该原始一步实际后继。两响应的完整原始后继相等，故其 13、latch 5、原始收据数相等。
+
+两实际后继仍在定理 3.3 的解码区间内，包括下一行已是最后 idle CTL 的边界。解码得到相同的后继历史；去掉各自最后一条实际原始发生，得 $h=k$。这里使用完整后继中的旧坐标，没有把新增银行或历史表塞入响应。最后，$\mathcal D_P\subset\mathcal C$，逐个应用 UAS 定理 3.5 即得每个独立视图的两方向。这个最后步骤复用旧历史核，不算新的几何逆。$\square$
+

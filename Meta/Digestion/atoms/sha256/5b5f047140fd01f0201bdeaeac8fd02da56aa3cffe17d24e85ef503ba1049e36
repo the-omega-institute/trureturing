@@ -1,0 +1,16 @@
+## 473. Exact six-actual-edge application
+
+Retain the full manifold, face-involution, fixed-frame and original-degree
+hypotheses of Section 466. In this class, take exactly six
+actual reservoir labels, distinct transverse labels per fixed frame,
+and allow repeated axes. Assume the given common positive generalized
+field has a nonempty flat set. The source and six-reservoir witness
+reductions supply all premises of Theorem 467.1, so (467.1) holds for
+its designated source label Z. Corollary 466.1 additionally gives
+at least one U!=Z with u>m; the maximum w is therefore greater than m.
+
+The bound is z<1+2*max_{e!=Z}x_e. It does not order the extra label V,
+replace w by a chosen U without a separate maximum premise, or give
+the one-sided bound z<u+m+1 needed in the older four-distinct analysis.
+The repeated source-axis C/D and possible two-flat cases remain open.
+

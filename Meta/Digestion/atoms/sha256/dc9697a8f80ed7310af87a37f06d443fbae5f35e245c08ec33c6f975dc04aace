@@ -1,0 +1,33 @@
+## 434. Comparison at the zero of the cosine numerator
+
+The numerator N is affine in r with positive slope a+p*b. At r=1,
+
+    N(1)=a*(1+b)+p*(b+a^2-p^2+1).
+
+For p>=a+b, this is strictly negative. To verify it, its derivative
+with respect to p is b+a^2+1-3*p^2, which is at most
+
+    1+b-2*a^2-6*a*b-3*b^2<0.
+
+At the boundary p=a+b, exact factorization gives
+
+    N(1)=-(2*a+b)*(a*b+b^2-b-1)<0,                 (434.1)
+
+because a*b>b and b^2>1. Therefore the unique zero of N as a
+function of r is
+
+    r0=[p*(p^2-a^2-1)-a*b]/(a+p*b)>1.             (434.2)
+
+Our current branch N>0 implies r>r0. The following comparison does not
+require the genuine tests at r0; it is a polynomial identity evaluated
+at that rational point. Since D_r0>0 and r0>1, (433.1) gives
+
+    D_r0*F(r0)=(p^2-1)*(r0-1)*J(r0)^2>=0.
+
+Thus F(r0)>=0. By the strict positive slope A and r>r0,
+
+    F(r)>F(r0)>=0.
+
+Equation (433.1) yields Delta>0, proving the angle comparison (432.2)
+and hence (431.2). Both signs of N have been handled, including N=0.
+

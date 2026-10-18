@@ -1,0 +1,45 @@
+**Proposition 5.2 (the precise excluded logical inference).** The
+normal-domain step proposed in [ABC, Assumption 7.3 and Propositions
+7.5–7.6][ABC] cannot be implemented by a finite formula of its stated
+ambient language, nor by the total canonicalization graph (TPO.15).
+This exclusion concerns that interpretation step. It leaves the
+all-source correspondences of ABC §§2–6 and the fixed-numeral,
+fixed-address operation formulas of ABC Theorem 7.2 intact, as well as
+ABC Proposition 7.4's normality formulas for a supplied finite shape.
+It supplies
+no undecidability theorem for (TPO.16), no physical impossibility theorem
+and no general failure of bounded full-row recovery.
+
+Proof. The excluded domain formula is exactly (TPO.13), and the proposed
+graph is (TPO.15), so Corollaries 4.2 and 4.4 apply. ABC's structural
+proofs use induction on supplied finite trees and the maps $B,E,J$;
+they do not assume that $\mathcal N$ is a definable ambient subset.
+ABC Theorem 7.2 explicitly asserts the meanings of its finite graphs
+on normal arguments, not a formula restricting all quantifiers to
+normal arguments. Those premises therefore do not invoke the excluded
+formula. At a supplied finite shape, ABC Proposition 7.4 enumerates its
+finitely many primitive cherries and tests their rank relations. The
+formula-dependent choice of a larger witness height in Theorem 4.1
+places no restriction on that fixed-shape result.
+
+Its conditional Propositions 7.5–7.6 remain implications with
+their stated additional premise; Corollary 4.2 prevents discharging that
+premise in this language. They consequently provide no unconditional
+algorithm by this particular route.
+
+The nondefinability conclusion compares ambient representations with
+different membership in $\mathcal N$. It gives no pair of sources in
+a fixed acquired fiber with the same every permitted observation and
+different required outputs. Nor does it reduce an undecidable problem
+to acquired recovery. Indeed normality of a supplied finite code is
+decided by traversing its finitely many cherries and testing the integer
+successor relation. That ordinary decision coexists with Corollary 4.2.
+An alternative exact interpretation in another language or with another
+representation is not ruled out by a theorem about Definition 1.2.
+
+Theorems 3.1–4.1 establish invariance under a permutation chosen for a
+finite formula and parameter tuple. They do not establish a global
+automorphism: the height-one separating formula of Proposition 3.2
+already forbids that conclusion. Thus they also do not identify ordered
+native sources, native actions or acquired histories. $\square$
+

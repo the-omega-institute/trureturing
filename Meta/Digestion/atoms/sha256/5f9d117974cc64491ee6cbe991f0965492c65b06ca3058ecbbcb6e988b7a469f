@@ -1,0 +1,4 @@
+## 89. The critical-radius complete-word law
+
+The endpoint below concerns the actual source of [supplier §§1–5](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) and the complete numerical-word convention of [supplier §75](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md). A source is a nonempty finite ordered tree with leaves $\alpha,\beta$ and interpretation $E_{a,b}(\langle s,t\rangle)=E_{a,b}(s)\times E_{a,b}(t)$ in oriented Euclidean $\mathbb R^3$. One preparation $(a,b)$ and one frame remain fixed throughout $x_j=E_{a,b}(\rho^jt)$, where $\rho\alpha=\beta$ and $\rho\beta=\langle\beta,\alpha\rangle$. The observation schedule is the original three Reads, two intervening destructive substitutions, and Stop. The required answers are numerical vectors for every finite $j\geq3$, with error measured by the unweighted supremum over the entire future.
+

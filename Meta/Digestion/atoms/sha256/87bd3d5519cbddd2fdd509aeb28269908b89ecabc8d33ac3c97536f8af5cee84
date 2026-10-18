@@ -1,0 +1,67 @@
+### 81.5. Nonplane chart and seven rational coefficients
+
+First take \(0<b<1\). Since \(\delta t\rho\ne0\), (81.5) makes
+\(c=0\) impossible. Put
+\[
+ U=c^2,\quad R=cd,\quad K=c\delta,\quad T=t/c,\quad B=b^2+3.
+\]
+Then
+\[
+ 0<U<1,\quad K\ne0,\quad
+ a=T[\rho(1+U)+R],\quad K^2=G,\quad T^2H=1,
+\]
+\[
+\begin{aligned}
+ G&=(3-b^2)U-3U^2-R^2-2bUR>0,\\
+ H&=\rho^2(1+U)^2+2\rho R(1+U)+3U=3D_0/B^2>0,\\
+ D_0&=2RbB(U+1)+3U^2b^2+Ub^4+12Ub^2+9U+3b^2.
+\end{aligned}                                                    \tag{81.11}
+\]
+Divide (74.14)'s \(I,S_f,O_f\) by \(c\), substitute these relations,
+and reduce \(K^2=G,T^2=1/H\). The sum becomes
+\[
+ \frac{S_f}{c}=\frac{6(U+1)S_0}{UD_0}=0,
+\]
+\[
+\begin{aligned}
+ S_0={}&bB(U+1)R^2
+ +2[3b^2U^2+(b^4+4b^2+3)U+b^2]R\\
+ &+bU[(9b^2+3)U+b^2+3].
+\end{aligned}                                                    \tag{81.12}
+\]
+Its leading \(R\)-coefficient \(bB(U+1)\) is positive. Reduce the
+numerators of the remaining rational coefficients modulo \(S_0\) in
+\(R\), retaining their denominators. With \(\mathcal I\) denoting
+this reduction of \(I/c\), and \(\mathcal J\) that of
+\((O_f-6bI/B)/c\), the result is
+\[
+ \mathcal I=I_{00}+I_{01}T+I_{10}K+I_{11}KT,\qquad
+ \mathcal J=J_{00}+J_{10}K+J_{11}KT.                      \tag{81.13}
+\]
+All seven coefficients are printed here; their long expanded denominator factor
+is exactly \(D_0\) from (81.11):
+
+```text
+I00 = -4*b*(3*U^2 + 2*U*b^2 - 1)*(2*R*U*b^2 - 3*R*U - R*b^2 + 3*U^2*b + U*b^3 - 6*U*b)/(U*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+I01 = -12*(3*R*U^2*b^2 - 6*R*U - R*b^2 + 9*U^3*b - 6*U^2*b + 2*U*b^3 - 9*U*b)/(U*(b^2 + 3))
+I10 = 4*(3*R*U^2*b^3 + 9*R*U^2*b + 2*R*U*b^3 + 6*R*U*b - R*b^3 - 3*R*b - 9*U^3*b^2 + 6*U^2*b^4 + 3*U^2*b^2 + 4*U*b^4 + 3*U*b^2 - 18*U + 3*b^2)/(U*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+I11 = -12*b*(-3*U^2 + 2*U*b^2 + 4*U + 1)/(U*(b^2 + 3))
+J00 = 48*(b - 1)*(b + 1)*(2*R*U*b^2 - 3*R*U - R*b^2 + 3*U^2*b + U*b^3 - 6*U*b)/(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2)
+J10 = -48*b*(-3*R*U^2*b^3 - 9*R*U^2*b - 2*R*U*b^3 - 6*R*U*b + R*b^3 + 3*R*b - 9*U^3*b^2 - 21*U^2*b^2 - 18*U^2 + 2*U*b^4 + 3*U*b^2 + 3*b^2)/(U*(b^2 + 3)*(2*R*U*b^3 + 6*R*U*b + 2*R*b^3 + 6*R*b + 3*U^2*b^2 + U*b^4 + 12*U*b^2 + 9*U + 3*b^2))
+J11 = 144*(-3*U^2*b^2 + U*b^4 + 2*U*b^2 + 3*U + b^2)/(U*(b^2 + 3)^2)
+```
+
+These identities are obtained by ordinary rational substitution in (74.14).
+Their only denominator factors are \(U,B,D_0\), together with the
+nonzero leading coefficient \(bB(U+1)\) used for the reduction.
+Most importantly,
+\[
+ J_{11}=\frac{144[-3U^2b^2+Ub^4+2Ub^2+3U+b^2]}{UB^2}>0,
+\]
+because the bracket is \(b^2(1-U)(1+3U)+U(b^4+3)>0\). Therefore
+\[
+ T=-\frac{J_{00}+KJ_{10}}{KJ_{11}}                       \tag{81.14}
+\]
+is legitimate on the entire nonplane chart, including every parameter
+fiber and every possible zero of the other coefficients.
+

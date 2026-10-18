@@ -1,0 +1,15 @@
+## 271. The two M owners already spend more than two pi on C/D
+
+For 0<lambda<1 define
+ b_lambda(theta)=atan(lambda*cot(theta/2)), 0<theta<pi.
+This is strictly decreasing and strictly convex, as established in the
+paired response calculation. A genuine pair-CD owner with chosen M
+axis has actual transverse C/D expense 4*b_lambda_M(theta_M).
+Jensen and Theta<2*pi/3 give
+ 4*[b_lambda_M(theta_M(A_1))+b_lambda_M(theta_M(A_2))]
+ >=8*b_lambda_M(Theta/2)
+ >8*b_lambda_M(pi/3)>2*pi,
+because lambda_M>1/sqrt(3) and cot(pi/6)=sqrt(3).
+These are the original four transverse slots of each of two distinct
+owners. Any additional C/D axial slots are omitted as nonnegative.
+

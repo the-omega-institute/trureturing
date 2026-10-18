@@ -1,0 +1,42 @@
+**Theorem 6.1 (a full-constraint pure-column tangent).** The selected strength satisfies $s'(\lambda)>0$ on both physical open branches. Together with the common event and all joins, it is continuous and strictly increasing on the entire closed interval.
+
+Proof. Write $z_{\rm var}=(p,\phi)$, $M_0=d_{z_{\rm var}}\sum p_i\Gamma_i$, and
+
+$$
+L=Y\cdot(\sum p_i\Gamma_i-B)-\sum p_i(|H_i|+\lambda|u_i|).
+$$
+
+On fixed signed contacts, the weight-weight Hessian is zero and the mixed blocks vanish by zero gaps and zero first angular derivatives. The angular block is $\operatorname{diag}(p_i\gamma_i)$ with $\gamma_i>0$ the contact curvatures. On $\ker M_0$ this Hessian is positive definite: a tangent with zero quadratic value has zero angular variations, then $\Gamma\dot p=0$; column independence forces $\dot p=0$. The physical Jacobian's invertibility makes $M_0$ full row rank, since a left null vector would otherwise be a pure-dual kernel vector. For a basis matrix $N_0$ of $\ker M_0$, differentiated stationarity and the moment equations yield
+
+$$
+k_\lambda=q^T(N_0^TL_{zz}N_0)^{-1}q,\qquad q=N_0^T\nabla k.
+$$
+
+Indeed projection eliminates the dual derivative and gives $(N_0^TL_{zz}N_0)\zeta=q$, while the moment derivative makes $z'=N_0\zeta$. Thus positivity is strict precisely when some moment tangent changes $k$.
+
+Use pure contacts $0,1,2$, with report signs $+,-,-$. Let
+
+$$
+A_i=\sqrt{p_i}(1,u_i,v_i)^T,\quad Q_0=\operatorname{diag}(1,-1,-1),\quad
+S_{ij}=A_i^TQ_0A_j=\sqrt{p_ip_j}[1-\cos(\phi_i-\phi_j)]>0.
+$$
+
+Choose the skew matrix $\Omega$ by $\Omega_{10}=1/S_{01}$, $\Omega_{20}=-1/S_{02}$, $\Omega_{21}=1/S_{12}$ and set $\dot A=A\Omega$. Skewness gives $\dot{(AA^T)}=0$, preserving every first and second angular moment of these columns. Also $\operatorname{diag}(S\Omega)=0$: its first component is $1-1$, its second is $-1+1$, its third is $1-1$. Hence each column remains on its null cone to first order. Its positive first coordinate determines a legitimate $\dot p_i$; the null relation supplies the corresponding circle-angle tangent. These pure columns have all last three joint moments identically zero and all saturated columns are untouched. The variation therefore preserves ALL eight joint constraints.
+
+Direct differentiation gives
+
+$$
+\dot k=2\left[\frac{u_0+u_1}{1-\cos(\phi_0-\phi_1)}-
+\frac{u_0+u_2}{1-\cos(\phi_0-\phi_2)}\right].
+$$
+
+For $a=x_0$, $b=x_1$, $c=x_2$, put $\rho_1=(a-b)/(1+ab)$ and $\rho_2=(a-c)/(1+ac)$. The bases of contacts $1,2$ are $\pi$, so
+
+$$
+\frac{u_0+u_j}{1-\cos(\phi_0-\phi_j)}=\cos\phi_0\,\rho_j^2-\sin\phi_0\,\rho_j,
+\qquad
+\dot k=2\cos\phi_0(\rho_1-\rho_2)(\rho_1+\rho_2-\tan\phi_0).
+$$
+
+Every cell's `witness` has strictly positive lower endpoint; uniformly it exceeds $.0065974136$. Its denominators exclude zero by the same geometry bounds. Thus $q\ne0$, $k_\lambda>0$ and $s_\lambda=s_0k_\lambda/\sqrt\alpha>0$. This argument is used on physical branches with positive occupied weights, without dividing by the event's zero weight. The common law at the event and all joins give continuous strict global order. $\square$
+

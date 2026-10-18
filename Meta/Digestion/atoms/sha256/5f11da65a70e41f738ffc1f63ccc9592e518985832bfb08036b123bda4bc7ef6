@@ -1,0 +1,16 @@
+### 82.8. Exact Kraus rank and the minimal product
+
+Equations (20)--(24) give
+
+    S^*S=7I_2/16,   W^*W=I_2/4,   S^*W=0.           (25)
+
+Hence S and W have rank two and orthogonal column ranges; their combined column span has dimension four. By (15), every C_f has its columns in this four-dimensional span. Since B_f is unitary and C_f=A_f B_f^T/sqrt(2), the columns of all A_f have the same collective span as all C_f. Conversely S is the mean of the C_f, while W=sum_f v_fD_f and D_f=C_fN_f, so the columns of S and W belong to that collective span. Therefore
+
+    dim span{a_fi : f=1,...,4, i=0,1}=4.             (26)
+
+For a calibrated Stinespring map V_A|f,i>=|f> tensor a_fi, the minimal environment dimension equals this record-span dimension: a linear combination of its environment-indexed Kraus operators vanishes exactly when the corresponding covector annihilates every a_fi. Thus the original channel A has Kraus rank exactly four.
+
+Every local rank is at least two. An integer rank product below eight must be (2,2), (2,3), or (3,2), all excluded at exact quarter error by the theorem. The established marker construction of section 79 attains error 1/4 with ranks (4,2). Hence the least rank product at that exact error is eight.
+
+As a qualitative corollary, the minimum error with rank bounds (3,2) or (2,3) is strictly greater than 1/4. Indeed the sets of finite-dimensional CPTP maps with those Kraus-rank upper bounds are compact (closed bounded Choi sets with closed rank constraints), and the error is continuous. The centroid-support lower bound is 1/4 throughout the set, and the equality case has just been excluded. This argument gives no numerical size for the strict gap.
+

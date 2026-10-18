@@ -1,0 +1,17 @@
+**Proposition 4.5 (connected base without fiber coverage).** Let
+$Q_0=\{a\}$, $Q_1=\{b,c\}$, and let the only nontrivial transport send
+$a$ to $b$, with its inverse. Every actual closed word is identity, and the
+base graph is connected. Nevertheless no full root frame exists. The
+partial atlas is
+
+$$
+Y=\{[a,b],[c]\}.
+$$
+
+**Proof.** Every nonempty legal closed path alternates the edge and its
+inverse, so returns to its input. At $c$ only the empty path is legal. The
+orbit classes are exactly the two displayed classes, and both chart maps
+are injective. The orbit $[c]$ has no root representative; furthermore the
+fiber cardinalities differ. Connectedness of chart names therefore does
+not yield whole-fiber transport. $\square$
+

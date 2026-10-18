@@ -1,0 +1,18 @@
+**Theorem 88.1 (structure of a repeated-kernel multiplier).** Let $j,C,c,k$ be positive integers, let $N=3^j\ge81$, and suppose that $k$ is odd, $3\nmid k$, and
+
+$$B_N=DC^2,\qquad B_{Nk}=Dc^2,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Then every prime $q\mid B_N$ has even valuation in $k$. Moreover,
+
+$$k=s^2\quad\text{or}\quad k=rs^2,$$
+
+where $s$ is a positive integer supported on the prime divisors of $B_N$, and, in the second case, $r$ is a prime not dividing $B_N$. If $s>1$ in the second case, $r$ exceeds every prime divisor of $s$.
+
+If $k$ is composite and $p=P^-(k)$, then
+
+$$p\mid B_N,\qquad v_p(k)\in2\mathbb Z_{>0},\qquad p\ge6N+1,\qquad Nk\ge N(6N+1)^2.$$
+
+In particular, if $k>1$ and $\gcd(k,B_N)=1$, then $k$ is prime.
+
+**Proof.** We first locate the least prime divisor of a composite multiplier, then prove the valuation identity and the two-step descent needed to remove its original-support square factors.
+

@@ -1,0 +1,8 @@
+**Remark 2.3 (Endpoints and cuts).** Formula (2.4) retains the initial marginal when it changes, the truncated list of transition factors near the last endpoint, and empty products. In particular
+
+$$
+P_n(0^n)=\pi_P(0^k)K_P(0\mid0^k)^{n-k}>0\qquad(n\ge k).
+$$
+
+Every shorter all-zero cylinder and every legal endpoint-one cylinder is also positive. A cut at any other coordinate retains the same joint factorization; there is no new independence assumption or edge restriction at a cut or seam.
+

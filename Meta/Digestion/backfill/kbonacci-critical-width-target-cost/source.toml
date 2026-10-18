@@ -1,0 +1,5 @@
+source_id = "kbonacci-critical-width-target-cost"
+path = "docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

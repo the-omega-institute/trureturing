@@ -1,0 +1,36 @@
+**Proposition 272.5 (Nonimplication from the named earlier scalar cuts).**
+Take the actual sequence
+$a_1=\cdots=a_9=1/2$,
+$a_{9+j}=(5/16)2^{1-j}$ for $j\ge1$, at cap $e=5/16$.
+It belongs to $H_9$ and satisfies the named cuts of Sections 113,
+117 and 256, but violates (272.3).
+
+**Proof.**
+The active length is 9 and $a_{10}=e$.
+Here $E_b=7/2-10e=3/8\in[0,1/2]$.
+The Section 113 reading is
+$D_3=21/16\le3e+1-a_1=23/16$.
+For the Section 117 prefix inequalities, after division by $m-2$,
+the slacks at $m=4,\ldots,9$ are respectively
+
+$$
+13/16,\quad17/24,\quad9/16,\quad2/5,\quad11/48,\quad3/56.
+\tag{272.10}
+$$
+
+These follow by substituting
+$\sum_{n=3}^m a_n=(m-2)/2$ in its first- and second-head
+bound. For $m\ge10$, use
+$\sum_{n=3}^m a_n\le7/2+(m-9)e$.
+The corresponding divided slack is at least
+$-3/8+(m-3)/(2(m-2))\ge1/16$.
+Thus every prefix, including the infinite positive tail, passes.
+The earlier mixed-eight cut is $43e\ge13$, with slack $7/16$.
+But the new score gives
+$F_{Y_9}(b,e)=621>0$, or equivalently
+$319/992-5/16=9/992$.
+Theorem 272.2 therefore excludes every full feasible $N$ conic
+allocation at this same point. This is nonimplication from those
+specific scalar inequalities. The point is outside $H_N$ and is not a
+same-realization $N/O$ separator. $\square$
+

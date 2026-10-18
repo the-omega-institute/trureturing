@@ -1,0 +1,13 @@
+**开放问题 12.2（Residual map on the original target and parameters）。** At the original deadline three, $|\Lambda[O]|\le2$, Theorems 6.2 and 9.2 now determine every $r=2,3,4$ branch, all seven cross-table equality patterns and every original actual-gcd phase placement satisfying Definition 3.1. This does not price deadline four for a target whose original optimum fee is three.
+
+At the original deadline four, $|\Lambda[O]|=3$, Theorem 10.2 determines all $r=4$ targets as $N+6$, and Theorem 11.1 determines its stated sufficient $r=2$ region as $N+4$. Every $r=2$ target outside that sufficient region, and every $r=3$ target, retains the original exact-choice obligation
+
+$$
+K_{\min}^{\rm GLOBAL}(4;f)\in\{N+4,N+5,N+6\}.
+\tag{12.1}
+$$
+
+No failure of (11.2) is an exclusion theorem. Lemma 10.1 removes shared mandatory first queries for $r=3$ but does not classify its four-/five-row possibilities, shared initial roots, delayed $C,R$, repeated words or other raw-update reuse. The unresolved proofs still require universal four-/five-row existence or exclusion with complete matched attainments, actual immutable-target/current-record unions and the same installed raw updates at every occurrence. They retain arbitrary literal words, actual source seams, homogeneous rejection, safe all-one words, waits, early and delayed stops, both initial values, every original tail and phase, and arbitrary bottom-label equalities. Selected word menus, finite samples and joined block prices do not supply these exclusions.
+
+Tail-dependent low tables, nonhomogeneous $H$, other class counts or target extensions, other parameter regions and the arbitrary-target/all-$k,m$ adaptive/GLOBAL objective of [IC, Open Problem 9.1] keep their full original obligations. The earlier restricted theorems retain their own hypotheses. Exact classification of the whole original goal is not claimed.
+

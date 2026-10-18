@@ -1,0 +1,42 @@
+## 230. At most nine actual owners contain any high label
+
+Partition all genuine owners containing a label from P into K, T, and A.
+The first two classes are defined above. The remaining class A consists
+exactly of single-high axial owners with transverse pair {C,D}: if its
+unique high label is not transverse, distinct transverse labels force
+that low pair. Each A owner has exactly one high slot. Two high axes
+would either give two distinct P labels and put it in K, or repeat the
+same X with x>=m>1+c+d, forcing axial flatness. Let g=|A|.
+
+Write Theta_A for the sum of its high axial angles, and B_A for the
+sum of beta_C+beta_D, counted once per A owner. The dominant-axis
+inequality gives pi<2*theta+beta_C+beta_D for each A owner. Summing
+(with a weak inequality allowed when A is empty) yields
+ g*pi<=2*Theta_A+B_A.
+The actual C/D transverse expense of A is 2*B_A, so B_A<=2*pi from
+the complete genuine C/D budget at most4*pi. Distinct owner classes
+have disjoint original high slots. The strict expense of K and the
+lower expense of T therefore give
+ Theta_A<(5-k-2*j/3)*pi.
+Consequently
+ g<12-2*k-4*j/3.
+
+For k=3, the allowed j=0,1,2 imply respectively g<=5,4,3. Thus the
+number of all high-containing owners, including the unique flat, is
+ 1+k+j+g<=9.
+For k=4, j=0,1 imply respectively g<=3,2, and the same count is at
+most8. The flat contributes one owner and exactly one high slot M;
+its other axis is C,D or special. These are upper bounds on the actual
+union, not sums of stars that count an interacting owner repeatedly.
+
+As an optional original-slot consequence, each K owner has at most six
+high slots and tau has exactly three. Each T owner has at most four,
+since its distinct transverse pair has only one high label. Each A
+owner has one, and the flat has one. Therefore the sum of the three
+actual degrees is at most
+ 1+3+6*(k-1)+4*j+g.
+The same finite cases give at most27 when k=3 and at most28 when k=4.
+In particular degree(M)+degree(Z)+degree(U)<=28. All these statements
+use original slot counts and all three complete angle budgets; they
+still do not exclude the remaining finite high-core configurations.
+

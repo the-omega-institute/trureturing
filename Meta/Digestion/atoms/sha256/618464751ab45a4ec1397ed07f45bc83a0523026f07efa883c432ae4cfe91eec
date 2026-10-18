@@ -1,0 +1,43 @@
+**Convention 1.1 (conditional scope and mathematical credit).** This is a
+standalone sequel to [Complete Continuation Distinguishability Gap][CG],
+[Joint Record and Quantum Payload][JR], [Fixed-Channel Record and Resource
+Envelope][RE] and [Interior Record and Resource Reduction][IR]. Its fixed
+object is the particular complete channel of CG (CG.135)–(CG.142), not the
+set of all channels having its minimax error. The exact algebraic point,
+source enclosures, normalization, minimax certificate and nested
+preparation/control/instrument premises retain their conditional ordinary
+mathematical status. They are specified below but are not authenticated
+anew. A supplied proposal or independent assessment is fallible evidence;
+neither an assessment nor a source identity proves a theorem.
+
+The additional deductions are an exact spectral lift for the **full
+complex** singular-direction cone, a constructive six-atom decomposition,
+its exact exposed trace face and a separating counterexample to a scalar
+relaxation, an improvement of the actual finite realization bound from
+thirty to twenty-four branches, and a complete classification of the
+resource vectors at equality in any sharp original four-sign mean. That
+equality set is a singleton except at a finite nonempty set of strong
+interior strengths, where it is a nontrivial closed segment.
+
+Current JR §§34–40 already owns the diagonal/common-attainer and original
+averaged/worst-history laws used here. The dictionary is
+
+$$
+\alpha=\theta_{\rm JR},\qquad \beta=\omega_{\rm JR},\qquad
+\ell=\delta_{\rm JR},\qquad k=k_{\rm JR},\qquad
+p_s=1-u_{\rm JR},\qquad q_s=1-v_s^{\rm JR},
+\quad u_{\rm JR}=\alpha v_s^{\rm JR}+\beta.
+\tag{CA.1}
+$$
+
+In particular the matching diagonal constructions, three sharp means and
+worst-history optimum are reused results. Statements in the supplied IR
+snapshot attributing those laws to an additional interior result, or
+comparing only with JR §§29–33, must be read with this fuller JR credit.
+Here that attribution is corrected in this text alone. IR's full complex
+compact reduction, binary-live freedom and perturbation results retain
+their separate role. JR's all-optimizer scope for the averaged and
+worst-history problem is stronger in a different direction: sign
+averaging fixes a live Choi matrix, not each optimizer's complete forgotten
+channel or individual failure-time law.
+

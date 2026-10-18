@@ -1,0 +1,38 @@
+**Proposition 7.3 (an attained paired joint-profile relation).** Let
+$\tau$ swap $1,4$ and fix $0,2,3$. The 25-row relation
+
+$$
+B_{25}=\{(\langle u_s,u_t\rangle,
+              \langle u_{\tau(s)},u_{\tau(t)}\rangle):0\le s,t<5\}
+\subset S_4^2
+$$
+
+is jointly admissible, with both projections $T$ and product mass $40$.
+For $n=2^h$, $h\ge1$, its disjoint products are actual admissible
+relations on $n$ blocks, with $25^{n/2}$ rows and mass $40^{n/2}$.
+
+**Proof.** In each side module use the credited paired motif witnesses
+of [NCM, Proposition 6.1]: its $LL$ target reads $RL$ in the mate module
+of the other block; all other targets use the own witnesses in the proof
+of Proposition 7.1. Prefixing by the side preserves all thirty target
+equations. The involution preserves equality of $s,t$, so five rows have
+product weight four and twenty have product weight one, giving forty.
+Products use the same witnesses within each pair.
+
+For paid realization, place these $n$ actual blocks at the public
+height-$h$ scaffold in the right subtree, with $D=h+4$. Merge exactly
+this canonical relation into one name and give every other state of
+$S_D$ its own name, extending by $\pi_D$ to the whole $\mathcal F_D$.
+All names are attained; their complete number is
+$|S_D|-25^{n/2}+1$. Acquire every $Rq$, $q\in W_D$, before the
+request: $2^D-1$ Reads, maximum length $D$ and $(D-1)2^D+1$ letters.
+Export only the fixed-width name and isolate the boundary and all other
+source dependence under the declared paid service. Singleton names need
+no Read; the special name uses the mate's fixed actual-root literal for
+the hard target and its own literal for the other targets. Every literal
+has length at most $D$ and is chosen before the authentic count.
+The all-count factor law proves correctness on every canonicalization
+fiber, including variable shapes and terminal-label variations. Tables,
+membership work, control/allocation, workspace, predictor and physical
+services remain separate resources. $\square$
+

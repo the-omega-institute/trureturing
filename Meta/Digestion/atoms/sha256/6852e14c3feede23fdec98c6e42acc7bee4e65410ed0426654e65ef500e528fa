@@ -1,0 +1,34 @@
+**Definition 6.3 (Unresolved obligations and separate resources).** A
+matching lower bound at $\theta$, an evaluated minimum of the full QRC
+cone with its three TP equations and all fifteen event inequalities,
+and a globally optimal original port remain open. This volume proves
+neither an optimum within an orbit ansatz nor that an unrestricted
+optimizer belongs to the displayed fourteen-flag family. It also gives
+no further no-loss restriction to $a=b$, real Kraus for an unchanged
+channel, unital channels, symmetric $M$, or definite-character Kraus
+operators. QRC's no-worse real replacement changes a channel and keeps
+independent factors; QPC §9's obstructions remain in force.
+
+The lower slack $\gamma$ is a sufficient exact spectral shift, not a
+maximal shift or an optimum of a PPT relaxation. Zero pair multipliers
+in its inherited weighted-test dual do not remove any pair constraint
+from the primal. The upper satisfies every pair and singleton inequality
+for one common normalized channel. Neither certificate replaces real
+product separability by PPT.
+
+The original $q=2,3,4$ optima and their credited bounds are unchanged.
+The native all-length verifier, native memory-rate theorem, a preparation
+map from the $\alpha/\beta$ trees to Assumption 1.1, and the general
+mutual-recovery bridges between relations, space, time, boundary and
+memory remain open programme obligations. The native definitions
+`GraftAffineClosure.step`, `quantity`, and `run` specify a classical
+composition dynamics; they do not constitute a quantum preparation map.
+
+Fourteen finite scalar flags, rank-one composite Kraus matrices and
+exact algebraic coefficient descriptions suffice for this mathematical
+port. These resources are separate from coefficient synthesis,
+finite-precision robustness, state acquisition, clocks, physical
+transport and storage duration. No bounds for those physical resources
+are inferred. The finite-wait alternatives in Corollary 2.5 also do
+not provide a sample-complexity or channel-identification theorem.
+

@@ -1,0 +1,26 @@
+**Proposition 7.3 (acquisition and certificate boundaries).** The
+negative consumer above preserves the original paid-input task. Its
+witness pairs are not a replacement source domain, a free equality
+query, or one finite sample refuting every budget.
+
+Proof. Each constructed $u_h^i$ satisfies (NLC.4) with every guard,
+old class and additional record, by Lemma 5.4. At a supplied public
+acquisition schedule, [ARH, Proposition 2.1][ARH] produces exactly this
+retained fiber under the complete handoff assumption. It traverses
+finite actual subtrees, keeps their paid descriptions for comparison,
+performs the actual forward updates and reaches $N$. Thus every such
+finite witness can give the same stipulated retained data; conversely
+every successful original source satisfies all those data. Acquisition
+costs can vary without a uniform bound and are not cancelled by the
+short retained signs.
+
+Theorem 7.1 uses those sources to refute a proposed common post-cut
+controller. It performs no post-cut comparison outside its legal
+reads. The offline computation of a pair at depth $h$ is a mathematical
+certificate operation, not an observation made by that controller.
+Different $h$ or different finite controller trees can require
+different finite pairs. [NFO, Proposition 8.1][NFO] still applies:
+every finite source sample admits some finite static budget. There is
+no quantifier exchange to a single finite sample obstructing all
+budgets. $\square$
+

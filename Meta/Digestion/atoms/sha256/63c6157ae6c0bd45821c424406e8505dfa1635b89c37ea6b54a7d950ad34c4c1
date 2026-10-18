@@ -1,0 +1,8 @@
+**Counterexample 5.4 (guard depth is not operand peak).** Take
+$w_h=\langle\alpha,t_h\rangle$, $h\ge1$, and $P=\varnothing$.
+RA's guard is $L$ of depth one, but its exterior traversal submits right
+subtree addresses of depth $h+1$. Consequently $d=1$ and
+$Q_{\rm peak}=h+1$. Here the output legitimately is the complete literal
+source; this does not authorize a second snapshot. It also shows why a
+bound defined only from first-leaf depths cannot measure all query operands.
+

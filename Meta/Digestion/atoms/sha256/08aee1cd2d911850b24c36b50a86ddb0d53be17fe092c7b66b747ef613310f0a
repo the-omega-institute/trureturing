@@ -1,0 +1,52 @@
+**Theorem 4.2 (Square-residual localization and all-length equivalence).** Assume (1.5)–(1.6) and
+$\mathsf Z(P)$. Let $f\in\mathcal K_C(P)$, let $g$ be a bounded function of finitely many exterior
+coordinates, and let $D$ be any finite interval containing $C$ and these coordinates. Define
+$h_D(X_D)=f(X_C)g(Y)$. Then $h_D\in\mathcal K_D(P)$ and
+
+$$
+R_{D,h_D}=\mathbb E_P[g(Y)R_{C,f}(Y)\mid\mathcal H_D],\qquad
+\mathbb E_P[h_DD_D^2]=\int gR_{C,f}\,d\mu_C.
+\tag{4.2}
+$$
+
+In particular, these conditions are equivalent:
+
+- $R_{C,f}=0$ almost surely for every finite $C$ and $f\in\mathcal K_C(P)$;
+- $\mathbb E_P[f(X_C)D_C^2]=0$ for every such $C,f$.
+
+If any $R_{C,f}$ is nonzero on positive actual exterior probability, some finite exterior-cylinder
+indicator $g$ makes the right side of (4.2) nonzero, producing a finite enlarged intrinsic direction
+outside $\mathcal K_D^{\rm pair}$.
+
+Proof. Since $\mathcal H_D\subseteq\mathcal H_C$,
+$\mathbb E_P[h_D\mid\mathcal H_D] =\mathbb E_P[g\mathbb E_P[f(X_C)\mid\mathcal H_C]\mid\mathcal H_D]=0$.
+The exact collar accepts this direction, including adjacent seam bits and coordinates on either side of
+$C$. Bounded values on unsupported patterns are immaterial. Cocycle additivity on the saturated set gives
+
+$$
+D_D=D_C+b,\qquad b(X)=\Delta_P(Z_CX,Z_DX)=D_D-D_C.
+\tag{4.3}
+$$
+
+Both configurations defining $b$ ignore $X_C$, so $b$ is $\mathcal H_C$-measurable. Theorem 3.1 gives
+$b\in L^2$. Expand $fg(D_C+b)^2$. All terms are integrable, and conditioning on $\mathcal H_C$ removes
+the cross term $2gb\mathbb E_P[fD_C\mid\mathcal H_C]=2gbT_{C,f}=0$ and the term
+$gb^2\mathbb E_P[f\mid\mathcal H_C]=0$. The remaining term is $gR_{C,f}$. Unbounded $b$ causes no
+module-property gap: truncate it, apply conditional expectation, and pass in $L^1$ using Cauchy–Schwarz.
+The tower property gives (4.2).
+
+By Theorem 3.2, $\nu(H)=\int_H R_{C,f}\,d\mu_C$ is a finite signed measure on the exterior. Finite
+cylinders, including the whole space, form an intersection-stable generating family. If all their
+integrals were zero, signed-measure uniqueness would give $\nu=0$, hence $R_{C,f}=0$ almost surely.
+Therefore a nonzero residual has a cylinder with nonzero integral, and (4.2) gives the asserted
+direction. Proposition 4.1 excludes membership in its pair span. If all integrated all-length identities
+hold, apply them to these $h_D$ and invoke the same uniqueness argument. The reverse implication is
+direct integration of (3.7). Finite kernel bases and countably many intervals give simultaneous
+conditional identities as in Convention 2.1. $\square$
+
+For a single localization identity it suffices to assume $T_{C,f}=0$; all-length $\mathsf Z(P)$ supplies
+this uniformly and the pair conclusion. The cylinder and enlarged block have no effective or uniform size
+bound. Under the theorem's hypotheses $S_P(h_D)=0$ remains true. A nonzero square contrast supplies no
+new nonzero first-order response or strict-risk certificate, and no actual nonzero square contrast is
+asserted here.
+

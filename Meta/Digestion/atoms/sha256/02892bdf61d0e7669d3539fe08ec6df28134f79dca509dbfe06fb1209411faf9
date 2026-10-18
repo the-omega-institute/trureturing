@@ -1,0 +1,77 @@
+**Definition 1.3 (Real frame, effects and supplied correspondences).** Put
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(1,i,i,i,1),\qquad
+A=-iD^\dagger KD=
+\begin{pmatrix}
+0&1&1&1&0\\
+-1&0&0&0&-1\\
+-1&0&0&0&0\\
+-1&0&0&0&-1\\
+0&1&0&1&0
+\end{pmatrix},\\
+O(t)=e^{tA}=D^\dagger U(t)D,\qquad
+\Pi_J=\sum_{s\in J}\Pi_s,\qquad Q_J(t)=O(t)^T\Pi_JO(t),\\
+\widehat T(X)=D^\dagger T(DXD^\dagger)D.
+\end{gathered}
+\tag{1.4}
+$$
+
+All channel calculations below use this frame. A transpose is taken in
+this fixed frame; a dagger is the matrix adjoint, or the trace-pairing
+dual of a map. Write $\operatorname{Ad}_g(X)=gXg^\dagger$. The notation
+$e(S)$ for a frame channel means the transported original criterion.
+The frame change is a coordinate identification, not a future control.
+
+The credited first-read identity, QMB Theorem 2.1, is
+
+$$
+e(T)=\sup_{t\ge0}\max_{J\subseteq\mathsf S}
+\|Q_J(t)-\widehat T^\dagger(Q_J(t))\|_{\rm op}.
+\tag{1.5}
+$$
+
+It applies to all complex density inputs and all the histories in
+Assumption 1.1. Its rank-one first read resets the conditional state to
+$\Pi_s$, so a common suffix cannot increase the first-result TV.
+The reverse inequality uses one full read and Stop.
+
+QMB Theorem 5.1 identifies $\mathfrak C_1$ with finite rank-one Kraus
+channels. In particular, after omitting zero terms, any competitor has
+
+$$
+\widehat T(X)=\sum_i s_i^2 a_i a_i^\dagger
+\operatorname{tr}(b_i b_i^\dagger X),\qquad
+\|a_i\|=\|b_i\|=1,\quad s_i>0,\quad
+\sum_i s_i^2b_i b_i^\dagger=I_5.
+\tag{1.6}
+$$
+
+This is the known measure-and-prepare/rank-one-Kraus equivalence of
+[Horodecki–Shor–Ruskai, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031),
+including its separate POVM condition for TP maps. The matrix marginal
+in (1.6), rather than merely its trace, is retained throughout.
+
+The channel predicate in
+[FiniteStateChannel.QuantumChannel](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
+is complete positivity with trace preservation on all matrices. The
+finite rectangular interface
+[finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
+takes $K_f:\mathbb C^a\to\mathbb C^b$ and
+$\sum_fK_f^\dagger K_f=I_a$. Encoder branches below have rectangular
+rows $B_f:\mathbb C^5\to\mathbb C$. Equivalently embed the flag algebra
+as diagonal matrices on $\mathbb C^F$ and take
+$K_f=e_fB_f$, $(a,b)=(5,|F|)$; the range is diagonal and its trace is
+the direct-sum trace. For each decoder take $(a,b)=(1,5)$ and the
+single Kraus column $R_f$ with $R_f^\dagger R_f=1$. The branch trace
+pairing is the one in
+[finite_kraus_instrument_born_marginal](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean):
+the sum of branch sandwich traces equals the Born weight of the sum of
+$K_f^\dagger K_f$. For the decoded branches its parameters are
+$n=\mathsf S$, one setting, outcomes $F$, one Kraus index per outcome,
+and branch matrix $C_f=R_fB_f$. Its normalization is
+$\sum_fC_f^\dagger C_f=I_5$. TP decoding makes each decoded branch
+trace equal to the corresponding encoder branch trace. These are the
+exact CP, TP and probability conventions used below.
+

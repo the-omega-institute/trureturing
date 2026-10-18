@@ -1,0 +1,51 @@
+**Definition 1.5 (All fifteen residuals on the same channel).** Put
+$\mathcal J_{15}=\{J\subseteq\mathsf S:1\le|J|\le2\}$,
+$\Pi_J=\sum_{s\in J}\Pi_s$, $t_J=(\operatorname{tr}(H_i\Pi_J))_i$,
+and
+
+$$
+\begin{aligned}
+\mathcal H_J(x)&=\Pi_J-S_x^\dagger(\Pi_J)\\
+&=\sum_i[t_J-M^Tt_J]_iH_i
++\sum_\nu(1-\eta_\nu)P_\nu(\Pi_J),\\
+f(x)&=\max_{J\in\mathcal J_{15}}\|\mathcal H_J(x)\|_{\rm op}.
+\end{aligned}
+\tag{1.10}
+$$
+
+The events are the five singletons and all ten pairs
+$\{N,2\},\{N,3\},\{N,5\},\{N,25\},\{2,3\},\{2,5\},
+\{2,25\},\{3,5\},\{3,25\},\{5,25\}$.
+By QMB's first-read identity, for every positive TP $\chi(x)$,
+
+$$
+e(DS_x(D^\dagger\,\cdot\,D)D^\dagger)=f(x).
+\tag{1.11}
+$$
+
+For clarity, stationarity makes the residual at wait $t$ equal to
+$O(t)^T\mathcal H_J(x)O(t)$. TP gives complementary residuals of
+opposite signs. After the first complete rank-one read both conditional
+states are $\Pi_s$, so every common finite adaptive suffix is the
+same probability kernel. This includes zero-probability branches and
+source-independent random controls. Maximizing a Hermitian event
+expectation over all complex density inputs gives its operator norm;
+a maximizing real eigenvector, wait zero, a complete read and Stop
+attain (1.11). These arguments use the adjoint, not self-adjointness
+of the channel.
+
+Let $\mathcal F$ be the positive TP elements of $\mathcal W$ that
+are finite sums of independent real product projectors. QRC Theorems
+3.2, 5.2 and 6.2 give the credited exact correspondence
+
+$$
+\varepsilon_1=\min_{\chi(x)\in\mathcal F}f(x).
+\tag{1.12}
+$$
+
+Every original complex scalar port has a no-worse representative here,
+and every point here is an original fixed scalar port. The replacement
+can change the channel. Independent preparation and measurement vectors
+remain independent; no restriction to $a=b$, two orbits, unital maps,
+or definite-character rank-one Kraus operators follows.
+

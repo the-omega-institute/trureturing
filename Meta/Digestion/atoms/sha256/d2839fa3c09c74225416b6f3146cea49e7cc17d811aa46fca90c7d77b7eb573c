@@ -1,0 +1,21 @@
+**构造 73.4（One actual fixed suffix）。** Choose the codes of Lemma 73.3. On the actual ordered window at index $a+r$ prescribe the rotated physical charge $q_r$ by
+
+$$
+\begin{aligned}
+q_r(x)&=c_r(\lambda(x))&& (x\in A\setminus\{e_r\}),\\
+q_r(z)&=\bigoplus_{x\in A\setminus\{e_r\}}c_r(\lambda(x)),\\
+q_r(e_r)&=0.&&
+\end{aligned}
+\tag{73.10}
+$$
+
+The last line is the charge outside this window. By the first line of (73.5), including alternative (73.8), it is also the desired code coordinate at $e_r$. The full window charge is even. Its unique literal inverse is the complete $m$-bit word
+
+$$
+B_r=(x_{r,0},\ldots,x_{r,m-1}),\qquad
+x_{r,i}=\bigoplus_{h=0}^i q_r(s_r+h\bmod T).
+\tag{73.11}
+$$
+
+Thus the fixed suffix is $B_1\mid\cdots\mid B_d$. Compensation at $z$ prescribes bits of these very words; it supplies neither a source nor another observation. For a successful source the successive endpoint differences are precisely $c_1(\lambda(x)),\ldots,c_d(\lambda(x))$. At the last endpoint return the unique label with this code. The controller uses its remembered current baseline and its own subsequent endpoints. No phase reading is required. It may stop earlier at a homogeneous prefix, but the displayed attainment can simply issue all $d$ suffix blocks on every candidate of this child.
+

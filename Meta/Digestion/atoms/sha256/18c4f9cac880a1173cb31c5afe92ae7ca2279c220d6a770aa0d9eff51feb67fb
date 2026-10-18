@@ -1,0 +1,20 @@
+**Theorem 81.1.** For \(0<|b|<1\), the common-flat rays satisfying
+\(w^*R_0w=0\) are exactly
+\[
+ w=\left(f_m,\frac{\epsilon(b+i)}{\sqrt{1+b^2}}f_m\right),
+ \quad f_m=(1,\omega^m,\omega^{2m}),\quad
+ \omega=\frac{-1+i\sqrt3}{2},\quad
+ m\in\{1,2\},\quad\epsilon\in\{1,-1\}.                 \tag{81.2}
+\]
+The same statement holds for either other synchronous transposition.
+In particular, a noncanonical common-flat ray has no orthogonal
+transposition image anywhere on this punctured branch.
+
+The proof extends the half-parameter obstruction of
+[§74](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md#74-reflection-edge-rigidity-at-the-two-half-parameters)
+to every stated parameter. It uses the original necessary-and-sufficient
+quaternion reduction (74.3)–(74.15), followed by the polynomial identities
+printed below. No finite ray census is assumed. The center and endpoints
+are excluded from the theorem, and no assertion about edges between
+unrelated symmetry orbits is made.
+

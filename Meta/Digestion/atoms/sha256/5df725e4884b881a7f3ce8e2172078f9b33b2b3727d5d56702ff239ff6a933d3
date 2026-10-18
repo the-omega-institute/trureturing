@@ -1,0 +1,20 @@
+**Corollary 8.2 (Attained order for sufficiently large fixed budgets).** Conditional also on the supplied upper-observer premise (8.2) and the source results in Definition 8.1, for every fixed $M\ge S_\alpha$ the class $\mathfrak A_M(q,\alpha)$ is nonempty at every $q\in(0,1)$. For each $i$, define
+
+$$
+\mathfrak m_{i,M}(q)=\inf_{\mathcal A\in\mathfrak A_M(q,\alpha)}
+\mathbb E_{i,q}^{\mathcal A}T.
+\tag{8.10}
+$$
+
+Then
+
+$$
+\mathfrak m_{i,M}(e^{-s})=\Theta_{M,H_c,\alpha}(s^{-11})
+\quad(i=0,1),
+\tag{8.11}
+$$
+
+with one common observer attaining this order under both hypotheses.
+
+Proof. The supplied observer has at most $S_\alpha$ complete states by (8.5), both required errors by (8.7), and almost-sure termination and finite means by (8.9). It is admissible at known $q$ by ignoring $q$, so it proves nonemptiness. Theorem 7.2 bounds each infimum below uniformly over all retuned machines. The same supplied observer bounds each infimum above by (8.9), with positive leading coefficients. This proves the order statement and simultaneous order attainment. The source construction has not become a new construction by this application, and an order bound does not identify an exact optimizer. $\square$
+

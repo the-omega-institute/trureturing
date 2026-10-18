@@ -1,0 +1,33 @@
+### 105.2. Phase normalization and endpoints
+
+If \(c=0\) or \(s=0\), an original cross-fibre product entry vanishes and its matrix-unit error is \(1/2\), contradicting (105.1). Thus \(c,s>0\). Reciprocal diagonal phase changes of the full Grams preserve every product coefficient, positivity, ranks and the original fibre blocks. Together with a record-space basis choice they put the supported records in the form
+\[
+h_3=(cv,s\overline v),\qquad
+h_4=(s\overline v,cv),\qquad |v|=1.
+\tag{105.5}
+\]
+Indeed, let \(\theta_{11},\theta_{12},\theta_{21},\theta_{22}\) be the phases of the four entries of \(H_{FJ}\), with the column labels referring to 3 and 4. Choose \(\theta\) such that
+\[
+4\theta=\theta_{11}+\theta_{22}-\theta_{12}-\theta_{21}
+\pmod {2\pi}.
+\]
+With the convention \(H'_{ij}=e^{-i\phi_i}H_{ij}e^{i\phi_j}\), the choices
+\[
+\phi_1=0,\quad \phi_3=\theta-\theta_{11},\quad
+\phi_4=-\theta-\theta_{12},\quad
+\phi_2=2\theta-\theta_{11}+\theta_{21}
+\]
+make the diagonal cross phases \(\theta\) and the off-diagonal cross phases \(-\theta\). Apply the reciprocal phases to \(G\) on the same eight coordinates, and take \(v=e^{i\theta}\). This normalization does not make \(G\) or an outside record real.
+
+Write
+\[
+v^2=p+iq,\qquad p,q\in\mathbb R,\quad p^2+q^2=1,
+\qquad h=H_{34}=2cs p\in\mathbb R.
+\tag{105.6}
+\]
+If \(c=s\), both singleton \(H\) records are unbiased and RT III §102 excludes the case. If \(q=0\), the cross-ratio phase is real, since \(v^4=1\); thus \(H_S\) admits a real diagonal phase gauge, excluded by RT III §101. If \(p=0\), the entry \(H_{34}\) vanishes and again gives matrix-unit error \(1/2\). It remains to consider
+\[
+c,s>0,\qquad c^2-s^2\ne0,\qquad pq\ne0.
+\tag{105.7}
+\]
+

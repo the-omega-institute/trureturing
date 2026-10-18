@@ -1,0 +1,48 @@
+**Definition 12.1 (a prescribed smooth coordinate box).** Use block coordinates
+$x=(p,\phi,r)\in\mathbb R^{18}$ indexed by $O$, with
+$x_e=(p^e,\phi^e,0)$ and $\xi_i=\eta_i+(1-2\eta_i)r_i$. On the full closed box
+$$
+\mathcal X=\{\|p-p^e\|_\infty\le1,              \|\phi-\phi^e\|_\infty\le1,              \|r\|_\infty\le1\}
+$$
+define the signed smooth extensions
+$$
+\begin{aligned}
+\mathcal M(x)&=\sum_{i\in O}p_i\Gamma_{\eta_i+(1-2\eta_i)r_i}(\phi_i),\\
+\mathcal J(x)&=\sum_{i\in O}p_i\epsilon_i
+                   H_{\eta_i+(1-2\eta_i)r_i}(\phi_i),\\
+\mathcal K(x)&=\sum_{i\in O}p_i\sigma_i\cos\phi_i,\qquad
+E_rx=r,\\
+Q(x)&=[D\mathcal M(x)^T,                      -\nabla\mathcal K(x),                      -E_r^T]\in\mathbb R^{18\times15}.
+\end{aligned}
+$$
+The affine fractional extensions for $r\in[-1,1]$ may leave the physical interval; they remain smooth because the capacity denominator depends only on $\phi$. The fixed signs in $\mathcal J,\mathcal K$ define smooth functions throughout this bounding box. Their equality to the actual absolute-value functions is used only in the smaller ball specified below.
+
+Choose rational $M_{Hx},L_Q,L_J\ge1$ such that on $\mathcal X$ each individual
+$H_{\eta_i+(1-2\eta_i)r_i}(\phi_i)$ has gradient norm at most $M_{Hx}$,
+$Q$ has Lipschitz constant at most $L_Q$, and $\nabla\mathcal J$ has Lipschitz constant at most $L_J$. Put
+$$
+R_{\rm chart}=\min\{1/2,p_*/4,\Delta/4,u_*/2,h_*/(2M_{Hx})\}.
+$$
+On $\|x-x_e\|_2<R_{\rm chart}$ with physical $r\ge0$, all weights are positive, $r_i<1/2$, and the report and occupied fractional-height signs remain the stated ones. Thus $\mathcal J=J$ and $\mathcal K=K$ there, with the unique local angular lifts. There is no absolute-value differentiability assumption at other cylinder points.
+
+At the event set
+$$
+\begin{gathered}
+H_i^{\rm opp}=H_{1-\eta_i}(\phi_i^e),\qquad
+R_i=D_{1-\eta_i}^e(\phi_i^e),\qquad
+\chi_i=R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp},\\
+\nu_i^e=p_i^e\chi_i,\qquad
+y_e=(Y_e,\lambda_e,\nu^e),\qquad Q_e=Q(x_e).
+\end{gathered}
+$$
+Choose a certified lower bound $\sigma>0$ with
+$\sigma_{\min}(Q_e)\ge\sigma$; the exact rank argument below establishes that such a bound exists, but gives no decimal value. Define
+$$
+\begin{gathered}
+m_\mu=\min\{190,p_*c_{\rm sh}\Delta^2\}>0,\qquad
+C_\mu=\frac{2(L_J+L_Q\|y_e\|_2)}{\sigma}>0,\\
+R_x=\min\left\{R_{\rm chart},\frac{\sigma}{2L_Q},
+                                   \frac{m_\mu}{2C_\mu}\right\}.
+\end{gathered}
+$$
+

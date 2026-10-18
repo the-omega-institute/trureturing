@@ -1,0 +1,73 @@
+**Theorem 5.2 (one whole equality defeats generic filtered emptiness
+and unboundedness).** From every instance $(\Sigma,f,g)$ effectively
+construct a finite scheme $\mathcal P$ of order at most $2$ and a
+finite checker $\mathsf E$ using one whole-subtree equality, such that
+
+$$
+\begin{aligned}
+\mathcal L(\mathcal P)\cap\mathcal L(\mathsf E)\ne\varnothing
+&\iff\exists w\in\Sigma^+\quad f(w)=g(w),\\
+\mathit{SUP}_{\{\mathsf{tick}\}}
+   (\mathcal L(\mathcal P)\cap\mathcal L(\mathsf E))
+&\iff\exists w\in\Sigma^+\quad f(w)=g(w).
+\end{aligned}
+$$
+
+Consequently neither filtered emptiness nor filtered tick unboundedness
+is decidable uniformly for arbitrary finite higher-order schemes and
+even this single syntactic equality test.
+
+Proof. Let $\mathsf{bundle}$ be a binary terminal. A notation
+$\mathsf{nd}_{i\in\Sigma}$ denotes a fixed finite binary choice
+cascade, with no choice node needed for a singleton list. Use
+parameters $a,b:o\to o$ and equations
+
+$$
+\begin{aligned}
+\mathsf{Start}
+&=\mathsf{nd}_{i\in\Sigma}
+      \bigl(\mathsf{Next}\,C_{f(i)}\,C_{g(i)}\bigr),\\
+\mathsf{Next}\,a\,b
+&=\mathsf{nd}\,(\mathsf{Stop}\,a\,b)\\
+&\quad\bigl(\mathsf{nd}_{i\in\Sigma}
+    (\mathsf{Next}\,(\lambda x.a(C_{f(i)}x))
+                     (\lambda x.b(C_{g(i)}x)))\bigr),\\
+\mathsf{Stop}\,a\,b
+&=\mathsf{nd}\,(\mathsf{bundle}\,(a\alpha)\,(b\alpha))
+                  (\mathsf{tick}\,(\mathsf{Stop}\,a\,b)).
+\end{aligned}
+$$
+
+The first tile is chosen before $\mathsf{Next}$, excluding the empty
+input word. After tiles $i_1\cdots i_k=w$, the two deterministic
+context parameters are $C_{f(w)}$ and $C_{g(w)}$: appending tile
+$i$ composes $C_{f(w)}$ with $C_{f(i)}$, and likewise for $g$.
+Induction on the chosen tile sequence proves this assertion. An
+eventual stop and $n$ delay choices therefore give exactly
+
+$$
+\mathsf{tick}^n\mathsf{bundle}(W(f(w)),W(g(w))),
+\qquad w\in\Sigma^+,\quad n\in\mathbb N.
+$$
+
+Conversely every such $w,n$ prescribes a finite choice sequence.
+An infinite tile selection retains infinitely many choice nodes;
+an infinite delay retains an infinite ordinary tick spine. Neither
+is a finite output under Definition 2.1. These observations prove
+the displayed output language exactly. Context parameters have
+order $1$, and $\mathsf{Next},\mathsf{Stop}$ have order $2$.
+Lambda lifting the finite context compositions preserves this bound.
+
+The checker first enforces this finite tick/bundle layout, and then
+compares the entire two native subtrees immediately below the bundle.
+They are nonempty and at distinct positions. Its only nonlocal test
+is their equality. It can also be presented by the singleton
+$q\approx q'$ construction of Theorem 3.5, with empty equational
+theory. By injectivity of $W$, acceptance is precisely
+$f(w)=g(w)$. If there is a solution, its fixed context pair permits
+every $n$ through $\mathsf{Stop}$. If no solution exists, no finite
+output is accepted. This proves both equivalences. A purported
+uniform decision for either left side would decide binary-output
+nonempty PCP, contradicting the stated undecidability premise.
+$\square$
+

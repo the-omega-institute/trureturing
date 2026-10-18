@@ -1,0 +1,44 @@
+**Theorem 5.2 (local continuation and completion under those premises).**
+For any row satisfying Definition 5.1, core-phase-first dispatch and
+one final Finish give a positive finite completion with its actual
+source/guard/site binding, complete original successor and exactly one
+completed original receipt. The changes to native code, TOK entry
+bits or halt encoding in §3 do not obstruct its remaining stages.
+The original consumer can receive the original completed result at
+that boundary; no original experiment is thereby supplied at an
+interior Busy cut.
+
+Proof. Admission has the original guard and binds the actual row;
+on IN it consumes its one authentic bit. Suppose $k$ stages of the
+finite list have executed. The retained phase selects stage $k+1$
+before consulting the changed native admission fields. Its actual
+operand/constructor/link and current continuing-permission premises
+enable it. It performs exactly its designated limited effect and
+the charged phase update, preserving the interpretation of all other
+material. This inductive step is independent of whether a staged
+native token pair still equals $(1,0)$, a new raw selector is disabled,
+or a raw halted encoding is already present. Finite list length proves
+arrival at the ready-to-finish cut.
+
+For the actual Recover pair, the two token data stages can therefore
+be SetBit$(s,0)$ then SetBit$(d,1)$ under that bound permission.
+They follow $(1,0)\to(0,0)\to(0,1)$ without reusing the first pair
+as a current guard. Each setter includes its own phase update;
+Busy grants no client callback at the intermediate pair. The
+remaining fixed control/head/receipt stages and Finish are still
+required. Likewise, selecting the raw halt field while Busy leaves
+the final permission available to Finish, which alone selects the
+absorbing core Halt. These are applications of the declared limited
+atoms, not native TOK or CTL executions inside the fragment.
+
+At that cut the original data, both links, control and single receipt
+are the specified successor. Finish publishes exactly this successor
+and retires its permission once. Definitions 4.1–4.2 and Theorem 4.3
+give exact wire and receipt correspondence. If its actual original
+successor is blocked nonhalt raw code, Ready has no new admission;
+if it is genuine final halt, Halt has no rule at all. Thus neither
+case is repaired into a different task or serviced after halt.
+Original consumers of completed rows see their original binding and
+result. The proof constructs no invocation/return adapter or read
+capability for fine-stage material. ∎
+

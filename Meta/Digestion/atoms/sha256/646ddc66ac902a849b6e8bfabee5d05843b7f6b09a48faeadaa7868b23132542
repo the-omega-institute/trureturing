@@ -1,0 +1,21 @@
+**Definition 2.1 (Completion sets and the original score).** For boundary bits $\xi,\zeta\in\{0,1\}$ set
+
+$$
+K_m^{\xi,\zeta}=\{w\in B_m:\xi w_1=w_m\zeta=0\},\qquad m\ge1.
+\tag{2.1}
+$$
+
+Keep every legal Hamming-one edge of this set. A probability $\nu$ on it is band-compatible when $\nu_u/3\le\nu_v\le\nu_u$ on every insertion edge $u\to v$. For $W\sim\nu$, let $\nu_i(w_{-i})=\nu(W_i=1\mid W_{-i}=w_{-i})$, conditioning on all the other bits. Given a positive probability $r$ on the same set, use these full finite-complement posteriors to define
+
+$$
+\begin{aligned}
+\mathcal D_K(\nu\Vert r)
+&=\sum_{i=1}^m\mathbb E_\nu\bigl(\nu_i(W_{-i})-r_i(W_{-i})\bigr)^2\\
+&=\sum_{u\to v}(\nu_u+\nu_v)
+\left(\frac{\nu_v}{\nu_u+\nu_v}-\frac{r_v}{r_u+r_v}\right)^2.
+\end{aligned}
+\tag{2.2}
+$$
+
+A zero-total $\nu$ edge contributes zero without division. Forced singleton fibers have zero posterior under both laws. Write $\Phi_K$ for the edge sum of $h$ on this graph. These are [Guarded, Definition 3.1]'s interfaces.
+

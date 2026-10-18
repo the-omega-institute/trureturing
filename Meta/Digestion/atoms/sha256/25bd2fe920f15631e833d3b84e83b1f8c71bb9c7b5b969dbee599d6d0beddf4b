@@ -1,0 +1,20 @@
+**Lemma 2.2 (Two directions of the same-seed argument).** Suppose a specified map $C:\mathcal T_k\to\mathcal T_k$ preserves each tree's source law of $Z$. Then $C(T(u))$ gives one lawful full-law representative on the unchanged seed space. Conversely, a full-law representative of an input ignoring $u$ has that input's deterministic source law at almost every seed.
+
+Proof. Put $a_{T,p}(z)=J_p(Z^T=z)$. Every map on the countable discrete tree space is measurable. Select $C(T(u))$ using the seed and public data and run it with actual replies. On records inconsistent with that selected tree prescribe internal nonreturn. The countable measurable partition into selected trees and the finite record tests on each cell make this a total measurable rule. Its formal cap is inherited from the selected tree. For every $G\in\mathcal U$ and $z\in\mathcal Z_k$, independence gives
+
+$$
+\begin{aligned}
+\mathbb P_p(u\in G,Z^{\mathrm{input}}=z)
+&=\int_G a_{T(u),p}(z)\,d\nu(u)\\
+&=\int_G a_{C(T(u)),p}(z)\,d\nu(u)\\
+&=\mathbb P_p(u\in G,Z^{\mathrm{new}}=z).
+\end{aligned}
+\tag{2.2}
+$$
+
+The alphabet is finite, so these rectangle identities give the whole joint law.
+
+For the converse, let $w_z$ be the seed-ignoring input's source vector and $a_z(u)$ the normalized competitor's measurable source masses. Full-law equality gives $\int_G(a_z-w_z)\,d\nu=0$ for every $G$. If $a_z-w_z$ were positive on a set of positive measure, one of the measurable sets where it exceeds $1/n$ would contradict that identity. Apply the same argument to its negative. Thus $a_z=w_z$ almost everywhere, and intersection over the finite $z$ alphabet gives a measurable full-measure set of good seeds with the exact deterministic vector $w$.
+
+These are integrals of source sections, without regular conditional probabilities given singleton seeds. They work on arbitrary atomic or nonstandard spaces, split no seed atom, add no randomness, and survive the permitted completions. This is the inherited source-section method, including Stopping Lemma 2.2 and Two-read Lemma 2.2. $\square$
+

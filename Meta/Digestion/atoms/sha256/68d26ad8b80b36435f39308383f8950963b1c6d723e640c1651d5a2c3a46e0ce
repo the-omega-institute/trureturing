@@ -1,0 +1,70 @@
+**Proposition 42.4 (The seven-cycle counts and a scoped shared-root comparison).**
+For shared-edge seven-cycles,
+
+$$
+A_{3,1}=1,\qquad A_{3,2}=45,\qquad
+\operatorname{type}R^e_{3,b}=1+45^b-44^b.
+\tag{42.8}
+$$
+
+For two cycles the degree-three generator is unique and the
+degree-five generators number $89$, giving type $90$.
+The complete comparison with the one-common-vertex family
+of Proposition 35.6 [Supplier41] is
+
+| Number $b$ of labelled seven-cycles | One common vertex | One retained common edge |
+| ---: | ---: | ---: |
+| 1 | 2 | 2 |
+| 2 | 202 | 90 |
+| 3 | 30302 | 5942 |
+
+Proof. For $j=2$ the matrix and its successive row products are
+
+$$
+T_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix},
+\qquad
+\begin{aligned}
+e_1^{\mathsf T}T_2^0&=(0,1,0),&
+e_1^{\mathsf T}T_2^1&=(1,1,0),\\
+e_1^{\mathsf T}T_2^2&=(2,2,1),&
+e_1^{\mathsf T}T_2^3&=(5,4,2),\\
+e_1^{\mathsf T}T_2^4&=(11,9,5),&
+e_1^{\mathsf T}T_2^5&=(25,20,11),\\
+e_1^{\mathsf T}T_2^6&=(56,45,25),&
+e_1^{\mathsf T}T_2^7&=(126,101,56).
+\end{aligned}
+\tag{42.9}
+$$
+
+Each multiplication replaces $(x,y,z)$ with $(x+y+z,x+y,x)$.
+The edge case uses six edges with fixed endpoints, hence the
+middle entry $45$ at power six. In the common-root case the
+closed walk uses all seven edges, hence the middle entry
+$101$ at power seven, exactly the supplier in (35.11)–(35.16).
+For two branches the basic degree-five tuples are one pair
+$(\nu_2,\nu_2)$ and $44$ choices in each of the two labelled
+mixed orders. Thus $45^2-44^2=1+44+44=89$.
+For three branches the difference is $45^3-44^3=5941$;
+including degree three gives $5942$. The shared-root supplier
+gives $1+101^2-100^2=202$ and
+$1+101^3-100^3=30302$.
+
+An explicit mixed edge tuple pairs $\nu_2$ with
+$p=(5;2,2,1,1,1,1,1)$ on the other cycle. The latter is
+$\nu_1+(2;1,1,0,0,0,0,0)$, whose remainder is the sum
+of the singleton rows $\{a\}$ and $\{b_0\}$.
+It is locally reducible and has boundary $(5,2,2)$.
+The global tuple is basic because the branch equal to
+$\nu_2$ blocks every positive-common-degree subtraction.
+This demonstrates why multiplying local types would fail.
+
+The two columns concern different graphs: their vertex counts
+are $6b+1$ and $5b+2$ respectively. The numerical comparison
+is therefore scoped to these two constructions. It does not
+prove a general monotonicity of type or computational complexity
+as separator size changes. Nor does clique gluing alone imply
+Theorem 42.2 for arbitrary graphs; its proof uses the specific
+local generators and the common rule (42.4). $\square$
+
+[Miyazaki42]: https://arxiv.org/html/2205.01409v1
+

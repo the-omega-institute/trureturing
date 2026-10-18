@@ -1,0 +1,20 @@
+**定义 16.2（完整动作的全历史粗限制）。** 保持原供应的
+
+$$
+\kappa(\alpha)=\alpha,\quad\kappa(\beta)=\beta,\quad
+\kappa(\mathsf{branch})=\kappa(\mathsf{absent})=\bot,\qquad
+\kappa_{\rm hist}([(q_i,y_i)])=[(q_i,\kappa(y_i))].
+\tag{SLH.16.5}
+$$
+
+令 $\mathcal C_p\subseteq\mathcal R_p$ 另满足：对全部有限报告历史 $h,h'$，
+
+$$
+\kappa_{\rm hist}(h)=\kappa_{\rm hist}(h')\ \Longrightarrow\ A(h)=A(h').
+\tag{SLH.16.6}
+$$
+
+相等包含请求地址、停止与否以及停止四值，不是只限制下一请求。历史可以使用虚构地址、不一致回复、重复报告或停止后额外报告。缓存保留仍是四值原始记录，未被 $\kappa$ 删除。取所有报告地址均为根即可推出：等长、逐位粗相等的两个原始回复词，其从 $e_0$ 出发的有效 fold 动作相等。反向，这个回复词条件使 (SLH.16.6) 成立，因为相等粗历史给相等粗回复词。
+
+这个相容桥使用 ActualObserverPairReach 的 pairActionInvariant_iff_allHistoryFactorization 的准确条件和证明：从共同初态生成全部逐位粗相等的回复对，停止行吸收，不加来源、地址、缓存或实际可达限制。把该等式论证的动作余域由 Boolean 停止换成四值停止不改变论证；这是普通数学对应，不声称原 Lean 声明已经核验更换后的合同。
+

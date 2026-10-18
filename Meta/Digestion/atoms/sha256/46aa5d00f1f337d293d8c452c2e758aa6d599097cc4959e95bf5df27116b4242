@@ -1,0 +1,29 @@
+**引理 452.1（全部整数纤维的精确算子成本）。** 若 \(\|v\|_{1,1/2}<\infty\)，则
+\[
+\boxed{\ \|T_v\|_{\mathcal X_j\to\mathcal X_j}
+=\sum_{d\ge1}|v_d|d^{-1/2}.\ }
+\tag{IC.7}
+\]
+**证明。** 对 \(d\le N\)，令 \(n=\lfloor N/d\rfloor\)。由
+\(1\le n\le N/d\)、\(j\ge0\)，有 \(W_j(n)/W_j(N)\le d^{-1/2}\)。
+完整正尾预算因而给
+\(\|T_vf\|_{\mathcal X_j}\le\|v\|_{1,1/2}\|f\|_{\mathcal X_j}\)。
+
+反向固定整数 \(D\ge1\)，取整数 \(N>D(D+1)\)。因为
+\(N/d-N/(d+1)=N/[d(d+1)]>1\) 对 \(1\le d\le D\) 成立，
+前 \(D\) 个正商 \(n_d=\lfloor N/d\rfloor\) 严格互异，而全部 \(d>D\)
+的商都严格低于 \(n_D\)。定义 \(f_N\) 仅在这些 \(D\) 个商上非零：
+当 \(v_d\ne0\) 时取
+\(f_N(n_d)=\overline{v_d}W_j(n_d)/|v_d|\)，当 \(v_d=0\) 时取零；
+其余处及零点取零。实核只需取 \(\operatorname{sign}(v_d)W_j(n_d)\)。
+则 \(\|f_N\|_{\mathcal X_j}\le1\)，且无后续商混入，
+\[
+\|T_v\|_{\mathcal X_j\to\mathcal X_j}
+\ge\frac{|(T_vf_N)(N)|}{W_j(N)}
+=\sum_{d\le D}|v_d|\frac{W_j(\lfloor N/d\rfloor)}{W_j(N)}.
+\]
+先令 \(N\to\infty\)，每个固定 \(d\) 的比值趋于 \(d^{-1/2}\)；
+再令 \(D\to\infty\)，完整非负级数收敛，得到反向界。这里是对
+operator norm 的有限支撑测试，测试输入随 \(N,D\) 变化，
+不是指定的实际 \(M\)。证毕。
+

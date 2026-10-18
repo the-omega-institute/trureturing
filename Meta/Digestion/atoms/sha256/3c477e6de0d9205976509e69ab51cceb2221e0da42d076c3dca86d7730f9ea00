@@ -1,0 +1,43 @@
+**Theorem 6.2 (exact inverse on the actual compatible image).**
+On every nonempty set (SCC.29), the maps
+
+$$
+\delta\longmapsto l-k-\delta,\qquad
+\lambda\longmapsto l-k-\lambda
+\tag{SCC.31}
+$$
+
+are mutually inverse bijections between $\mathcal D_b(i,k,j,l)$ and
+$\mathcal L_b(i,k,j,l)$. Thus, conditional on these endpoints and
+this actual retained fiber, a unique calibration is equivalent to a
+unique lag. Neither support is declared uniquely determined when
+the compatible set is empty.
+
+For a finite collection of allowed actual endpoint pairs, all from one source
+and history and covering a spanning tree of each component of $G$,
+its $V_G$ and its vector of calibrated lags determine one another,
+provided the endpoint indices and acquired readings are also kept.
+Only the actual image of that collection is the domain of this
+mutual recovery.
+
+Proof. For every compatible $a$, subtraction of (SCC.29) gives
+$t_a-s_a=l-k-\Delta_{ij}(a)$. Conversely each supported lag comes
+from such an $a$, whose calibration is the inverse expression.
+Reflection about $l-k$ is injective, proving the first assertion.
+
+Given $V_G$, compute each $\Delta_{ij}$ and then its lag by
+(SCC.31). In the other direction each retained pair and its lag
+gives $\Delta_{ij}$. Subtract $(j-i)q$ and integrate these signed
+edge differences along a spanning tree. The potential is determined
+up to a component constant; subtracting its component minimum gives
+exactly $V_G$. Common-source realizability ensures consistency with
+any other retained edges. These are deterministic inverse maps on
+the joint actual image, not a claim that a lag alone identifies a
+relative coordinate or that endpoint numbers establish provenance.
+$\square$
+
+The one-input supports in (SCC.30) can be singletons even for an
+encoder that fails uniform recovery. Theorem 2.2 is stronger because
+each missing edge distinction admits the specific overlapping legal
+inputs (SCC.9); it does not claim that every input is ambiguous.
+

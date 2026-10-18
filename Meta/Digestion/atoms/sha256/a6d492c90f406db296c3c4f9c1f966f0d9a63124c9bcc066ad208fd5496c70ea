@@ -1,0 +1,35 @@
+### 2.3. The exact density identity and component optimality
+
+For $\lambda\in\Lambda_2$, apply the stationary risk identity (1.1) to
+$R_\lambda$ and use (2.8) at $i=0$:
+
+$$
+d(R_\lambda)=\int(X_0-q_0)^2\,dR_\lambda\le c_\star.
+\tag{2.9}
+$$
+
+The density is a measurable function of $\lambda$: it is the limit of
+the measurable finite-cylinder functions
+$\Phi_n((R_\lambda)_n)/n$, and the limit exists for every stationary
+component by (1.1). Equations (2.6), (2.9) and $d(Q_\star)=c_\star$ give
+
+$$
+c_\star=\int(X_0-q_0)^2\,dQ_\star
+=\int_\Lambda d(R_\lambda)\,dW(\lambda).
+\tag{2.10}
+$$
+
+In the last equality it suffices to use the conull set $\Lambda_2$;
+all integrands are bounded. The nonnegative function
+$c_\star-d(R_\lambda)$ therefore has integral zero. Hence
+
+$$
+\Lambda_\star=\Lambda_2\cap\{\lambda:d(R_\lambda)=c_\star\}
+\tag{2.11}
+$$
+
+is one measurable conull set of exact attainers. Identity (2.10) concerns
+the infinite-exterior risk. No equality between a finite-window risk of
+the mixture and the average of the components' finite-window risks is
+used or asserted.
+

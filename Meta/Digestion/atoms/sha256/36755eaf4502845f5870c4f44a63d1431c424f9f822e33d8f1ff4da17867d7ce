@@ -1,0 +1,60 @@
+### 62.5 Analytic elimination and its second-order correction
+
+The free phase variables left by (62.5) are indices 28 and 29, namely
+\(\theta_{45}\) and \(\theta_{55}\). Use the coordinates
+
+\[
+ \theta_{45}=x-\arctan b,\qquad
+ \theta_{55}=y-\arctan b.
+\tag{62.10}
+\]
+
+The analytic implicit-function theorem, applied to the selected 28
+original equations, solves uniquely for the other 28 phases in terms of
+\((b,x,y)\) near zero. Denote the resulting full 31-coordinate map by
+\(\Psi(b,x,y)\). Every nearby zero of all 60 equations lies in this chart.
+
+The actual canonical phase curve has all upper-channel phases zero.
+Its lower-channel relative phases, for both signs of each mode, are
+
+\[
+ \theta^{\rm can}_{r,0}(b)=\theta^{\rm can}_{r,1}(b)
+ =\arctan\frac{2b^3}{b^2+3}\quad(r\ge3),
+ \qquad
+ \theta^{\rm can}_{rk}(b)=-\arctan b\quad(r\ge3,\ k\ge2).
+\tag{62.11}
+\]
+
+Indeed \(g_0/i=(b^2+3+2ib^3)/(ck)\) has positive real part near zero,
+and \(g_1/i=(1-ib)/c=e^{-i\arctan b}\). The minus-column signs cancel
+against their signs in \(V\). These identities and IFT uniqueness give
+
+\[
+ \Psi(b,0,0)=(\theta^{\rm can}(b),b)
+\tag{62.12}
+\]
+
+for the exact canonical family, not just its tangent.
+
+The first derivative of \(\Psi\) is \(xK_1+yK_2+bK_c\), by (62.6)
+and the prescribed free coordinates (62.10). Write
+
+\[
+ \Psi(b,x,y)=xK_1+yK_2+bK_c+E_2(b,x,y)
+               +O((|b|+|x|+|y|)^3),
+\]
+
+where \(E_2\) is the actual quadratic correction from eliminating the
+regular variables. Define the analytic reduced residual
+\(G=\Lambda F\circ\Psi\). Its quadratic term is
+
+\[
+ \Lambda\bigl(\mathcal JE_2+
+ Q_{\mathrm{full}}(xK_1+yK_2+bK_c)\bigr).
+\]
+
+The first summand vanishes exactly by \(\Lambda\mathcal J=0\).
+The quadratic part is therefore precisely the four-vector in (62.8).
+No second-order eliminated variable has been omitted or assumed zero.
+Moreover \(G(b,0,0)=0\) identically by (62.12).
+

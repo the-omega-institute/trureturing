@@ -1,0 +1,34 @@
+**Definition 8.1 (native vector and storage).** Evaluate all prices on one
+actual $G_{\rm sel}$ run, including original boot and final continuation
+when present. Refine ARC Definition 10.1's disjoint opcode/purpose classes
+finitely by mode ingress, parser, acquisition binding, source lookup,
+source anchor scan and binding serialization. A helper inherits its caller's
+purpose unless an explicit finite CTL changes it. Each actual row belongs
+to exactly one $(o,p)$ coordinate. Let $A(n)$ count constructed nonmeter
+ordinary cells, $b_{\rm ctl}(n)$ every installed finite control bit, active
+or inactive, and $C_\tau(n)$ the actually consumed bits at each site kind
+of Definition 3.3. Count current partial material and all retained old/dead
+banks, scratch, descriptors, captures, inputs and stage blocks.
+
+For an enabled native row at its actual state let $a_n$ be one for EX or
+a single ordinary-boundary constructor and zero otherwise; let $c_n$ be
+one for a newly installed finite control bit and zero otherwise. Its
+complete increments are
+
+$$
+\begin{aligned}
+\Delta N_{o,p}&=[(o,p)=(o_n,p_n)],&
+\Delta A&=a_n,&\Delta b_{\rm ctl}&=c_n,\\
+\Delta C_\tau&=[o_n=\operatorname{IN}_\tau],&
+\Delta T&=1,&\Delta F&=2,\\
+\Delta S&=8a_n+c_n+8.
+\end{aligned}
+$$
+
+The last eight bits are this actual row's one meter receipt. Existing-cell
+WR/erasure reduces no constructed storage. A disabled attempt is no row
+and contributes none of these increments. $S_{\rm irr}$ denotes the fixed
+irreducible material before these constructions; initialized material is
+never also inserted for free in $S_{\rm irr}$ after being counted in $A$
+or $b_{\rm ctl}$.
+

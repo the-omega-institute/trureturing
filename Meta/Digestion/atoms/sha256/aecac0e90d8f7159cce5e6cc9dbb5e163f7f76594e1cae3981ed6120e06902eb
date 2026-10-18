@@ -1,0 +1,67 @@
+**Proposition 10.3 (an explicit perturbation through every interior base).**
+For every $s<1$ and either record, the high branch of Definition 7.1
+lies on a lawful two-sided curve of (IR.59) for which the $S$
+coefficient is $z$, the $T$ coefficient is $x_r(z)$ with
+$x_r'(0)=0$, and $\theta'(0)=0$.
+
+Proof. If $s<\sqrt\ell$, take $x_r(z)=0$. The base has
+$\theta(0)=k/2$, and (IR.60) is strict at zero. Explicitly any
+
+$$
+|z|<\frac12\min\left\{\frac1{\sqrt\beta},
+ \sqrt{\frac{\ell-s^2}{B_s}}\right\}
+\tag{IR.62}
+$$
+
+has positive denominator and satisfies the ellipse strictly. This
+includes $s=0$. Its dependence on $z$ is even, so $\theta'(0)=0$.
+
+For $\sqrt\ell\leq s<1$, put
+
+$$
+\Delta_s=(1-s^2)\mathscr H_s>0,\qquad
+x_r(z)=r\frac{ks-\sqrt{\Delta_s-A_sB_sz^2}}{A_s}.
+\tag{IR.63}
+$$
+
+The identity $k^2s^2-A_s(s^2-\ell)=\Delta_s$ shows that this
+curve is on the boundary of (IR.60). At $z=0$ it is the root of smaller
+absolute value. It equals $r\sqrt{q_s/p_s}$: the latter solves the
+same boundary equation, starts at zero at the threshold, and varies
+continuously without a root collision since $\Delta_s>0$ for $s<1$.
+Thus $\theta(0)=p_s/2$, the new high matrix's coefficient.
+At the threshold $\sqrt{\Delta_s}=ks$, so (IR.63) also starts at
+$x_r(0)=0$, with no singular branch choice.
+
+Here is an explicit nonempty interval that also controls the denominator.
+Let $\delta_0=k/p_s>0$ and set
+
+$$
+\varepsilon_s^2=\min\left\{
+\frac{\Delta_s}{2A_sB_s},\quad
+\frac{\sqrt{\Delta_s}}{B_s},\quad
+\frac{\delta_0}{2(\beta+3\alpha B_s/\sqrt{\Delta_s})}
+\right\}>0.
+\tag{IR.64}
+$$
+
+For $|z|<\varepsilon_s$, the radical in (IR.63) is positive.
+Rationalizing its difference from the value at zero gives
+
+$$
+|x_r(z)-x_r(0)|=
+\frac{B_sz^2}{\sqrt{\Delta_s}+\sqrt{\Delta_s-A_sB_sz^2}}
+ \leq\frac{B_sz^2}{\sqrt{\Delta_s}}<1.
+\tag{IR.65}
+$$
+
+Since $|x_r(0)|=\sqrt{q_s/p_s}\leq1$, it follows that
+$|x_r(z)^2-x_r(0)^2|\leq3B_sz^2/\sqrt{\Delta_s}$.
+Consequently
+$\delta(x_r(z),z)\geq\delta_0-
+(\beta+3\alpha B_s/\sqrt{\Delta_s})z^2>\delta_0/2>0$.
+Thus this entire interval is lawful. Formula (IR.63) is differentiable
+and even in $z$ there, so $x_r'(0)=0$ and $\theta'(0)=0$.
+This treats both sides of the threshold and every interior strength;
+no $s=1$ inverse is used. $\square$
+

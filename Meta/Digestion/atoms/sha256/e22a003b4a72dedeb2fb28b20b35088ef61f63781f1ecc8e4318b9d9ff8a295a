@@ -1,0 +1,18 @@
+**Convention 12.1 (native scope and ownership).** All objects in
+Sections 12–16 are the actual $S_d,W_d,\Gamma,\operatorname{Pred}$
+of Convention 1.2. Admissibility means Definition 1.3 on the same
+tuples, with every donor coordinate, self donor, repeated donor, cycle
+and correlation allowed. A weight is owned once by its entire original
+block. The certificate grammar is exactly Convention 4.3 together with
+Definition 8.1, retaining all four values $r=1,2,3,4$ and all conditions
+on the entire declared support, including its zero-weight states.
+
+The additional structural statements are the path-record argument in
+Theorem 12.3 and the depth-two hard-partition comparison in Theorem
+14.3. Their pressure and certificate consequences use the previously
+specified transport, tensorization and soundness results. In particular
+the depth-two native tables and maximal local sets are inherited from
+[NCM, Convention 3.1][NCM], and $17/25$ and its attaining law are
+inherited from [NCM, Theorems 3.3 and 4.1][NCM] and [NPC, Theorem
+6.2 and Convention 7.3][NPC].
+

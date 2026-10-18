@@ -1,0 +1,2 @@
+**Mathematical status.** The new results in this volume have ordinary mathematical proofs. They have no Lean kernel verification or frozen formal status; their formal claims remain open in this repository. The source-specific argument, rather than a finite enumeration or numerical optimization, bears the universal quantifiers below.
+

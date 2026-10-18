@@ -1,0 +1,30 @@
+## 357. Original objects and complete allocations
+
+Retain the source and resources of [Acquisition Resources 73.1 and 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions) and [Continuation 110.1–110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source). Explicitly,
+
+$$
+\begin{aligned}
+F_0&=0,\quad F_1=1,\quad F_{k+2}=F_{k+1}+F_k,\\
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{357.1}
+$$
+
+where $p_i$ is the $i$th prime. The source has no probability law. Every finite word of replies, including several zeros, has an actual witness by [Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows). Its hypotheses apply to these same windows: for finitely many probe primes, choose a prime index above their Fibonacci entry ranks, so that $F_r$ is invertible modulo their product. CRT imposes $g=-F_r^{-1}$ at positive probes and $g=0$ at negative probes. Fibonacci growth makes the legal window contain a representative of every resulting residue class. This is a source-existence argument, not an observation supplied to an acquisition.
+
+The full carrier is the Borel disjoint union of interval copies $B_j,P_j$, $j\ge1$. The unchanged consumer returns unknown on $B_j$ and proposes $j$ on $P_j$. Put $\theta_j=(B_1,1/(j+2))$ for $j\ge0$. For an entire sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_j\longrightarrow0,
+\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\tag{357.2}
+$$
+
+the targets $\lambda_x^a$ are separately selected marked laws. They do not replace the original nonatomic targets $(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$.
+
+There is zero advice and one source-independent seed. Once that seed is fixed, one deterministic rule applies to every actual source and hands off an original tape after sourcewise almost surely finitely many transitions. Class $N$ preselects its entire schedule and obtains all its replies. Class $O$ preselects an increasing schedule and stops at its first **queried** zero or exhaustion. The hard bound is two actual requests, counting repeats and ignored calls. The next address is never selected from a reply. No source label, reset, copy, additional observation or mean-budget relaxation is available. Original competitors may use arbitrary addresses and output anywhere in the full carrier.
+

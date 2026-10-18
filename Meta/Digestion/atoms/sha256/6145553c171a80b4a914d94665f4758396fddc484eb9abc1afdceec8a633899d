@@ -1,0 +1,16 @@
+**Proposition 4.4 (Every strict improver has a full beta-independent hull).**
+If a model with at most four coordinates has error $\epsilon<e_2(Z)$,
+then $d=4$ and $N=0$. Such a model can occur only for $0<Z<2/3$.
+All remaining competitors are already dominated by an inherited
+attaining $e_2$ model.
+
+Proof. If $d\le3$, Lemma 4.2 gives a literal budget-three model
+with the same output, contrary to Theorem 2.3. Thus $d=4$.
+If $N\ne0$, Lemma 4.3 gives another contradiction with dimension
+at most three. Therefore $N=0$, which says precisely that $E$ itself
+is independent of $\beta$. For $Z\ge2/3$, $e_2=e_*$ and Theorem
+2.1 excludes a strict improver. A model of error at least $e_2$,
+including infinite error, is dominated by the annular or zero
+profile of Theorem 2.3. Each is in $\mathcal E_2$ after the
+normalization of Definition 1.6. $\square$
+

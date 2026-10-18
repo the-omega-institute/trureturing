@@ -1,0 +1,28 @@
+**Definition 5.1 (a domain-safe pair of amplitudes).** Choose any compact
+height subinterval $[j_0,j_1]\subset I\setminus\{k_o\}$ with
+$j_0<j_1$, and any real $\phi\in C_c^\infty((j_0,j_1))$ of
+$L^2(I)$ norm one. Such functions exist on either nonempty side of $k_o$;
+a normalized interior smooth bump suffices. For $0<a<1$ put
+
+$$
+N_a=1+a^2/2,\qquad
+f_\pm(k,\alpha,\beta)=
+\frac{\phi(k)}{2\pi\sqrt{N_a}}
+ \bigl(1\pm a\cos(\beta-\beta_o)\bigr).
+\tag{5.1}
+$$
+
+These are smooth Hilbert-space amplitudes on the current-ray cylinder.
+They are not five-mode pure rays, and no native operation preparing them
+is assumed. Define their base amplitude summary as $J^*f$, its normalized
+version as $b_f=J^*f/\|J^*f\|_2$ when nonzero, and their base probability
+summary as the actual pushforward density
+
+$$
+m_f(k,\alpha)=\int_{\mathbb T}|f(k,\alpha,\beta)|^2d\beta.
+\tag{5.2}
+$$
+
+The linear amplitude projection and the quadratic probability summary are
+different maps.
+

@@ -1,0 +1,77 @@
+**Lemma 10.3 (all sharing pairs in a four-coordinate interval).**
+Suppose $B=(a,a+4)$, and put $d=a+1$,
+
+$$
+\begin{aligned}
+\alpha&=d-L+1,&\beta&=K-1,\\
+A&=(\alpha,L-1),&
+C&=(\alpha+1,L-2),\\
+Y&=(K-2,d-K+2),&
+Z&=(K-1,d-K+1),\\
+U&=(\alpha+1,L-1),&
+V'&=(K-1,d-K+2).
+\end{aligned}
+\tag{SI.44}
+$$
+
+The first four displayed cells have depth $d$; $U,V'$ have
+depth $d+1$. Every state shared by distinct cells of $V_B$ hosts
+exactly two cells. Its pair is one of
+
+$$
+AZ,\quad CZ,\quad AY,\quad UV',\quad AV',\quad ZU.
+\tag{SI.45}
+$$
+
+A displayed pair denotes two distinct valid cells; omit invalid cells,
+coincident endpoints and pairs failing (SI.7). A state at depth
+$d+2$ shares with no other cell of $V_B$. Moreover every $CZ$
+host has its actual zero successor at a shared $UV'$ host, and
+every $AY$ host has its actual one successor at a shared $UV'$
+host. These successor assertions do not assert injectivity.
+
+Proof. The last-depth assertion is Lemma 10.2, since $d+2=b-1$.
+If two distinct cells at depth $d+1$ share a state and have a
+common live reply, Theorem 2.2 puts their distinct child cells at
+its one fixed successor at depth $d+2$, which is forbidden.
+Their nonempty live-reply sets must therefore be opposite
+singletons. The only possible pair is $UV'$.
+
+For a state shared between depths $d$ and $d+1$, a common live
+reply would similarly share its successor between depths $d+1$
+and $d+2$, again forbidden. Thus the two live-reply sets are
+opposite singletons. The unique possibilities are $AV'$ and $ZU$.
+
+Consider two hosted cells at depth $d$. If they have no common live
+reply, the pair is $AZ$. If zero is common, their two child cells
+at depth $d+1$ must be $U,V'$ by the preceding same-depth
+classification. Subtracting the zero increment $(0,1)$ from these
+cells gives precisely $C,Z$. If one is common, subtracting $(1,0)$
+instead gives $A,Y$. This proves (SI.45), and the same actual
+fixed-successor argument proves its two successor assertions. In
+particular, a common reply cannot be treated as a new independently
+chosen child host.
+
+It remains to exclude a state with three or more hosted cells.
+Write $H=\beta-\alpha=n-1-d$, so $H\ge2$. If $H=2$, (SI.7)
+deletes every pair in (SI.45) except $AZ$: the pairs $CZ,AY,UV'$
+have hit and zero gaps only one, and the two cross-depth pairs have
+one gap only one. Thus no triple is possible, including when $C=Y$.
+If $H\ge3$, all six formal cells in (SI.44) are distinct.
+Among depth-$d$ cells the allowed pairs form the path
+$C-Z-A-Y$, which has no triple of pairwise adjacent cells.
+Deleting invalid cells or forbidden pairs cannot introduce such a
+triple. Any shared state hosts at most the two cells $U,V'$
+on depth $d+1$.
+
+A mixed triple with two cells at depth $d+1$ would contain $U,V'$.
+A depth-$d$ cell sharing with each would need a live-reply set
+disjoint from both opposite singletons, which is impossible.
+A mixed triple with two cells at depth $d$ and one at depth $d+1$
+would require both earlier cells to have the same singleton live-reply
+set opposite to the later cell's set. At a given depth there is at
+most one cell with either specified singleton live-reply set.
+The earlier cells would coincide, a contradiction. The last layer
+cannot participate in any triple by exclusivity. All possibilities
+are excluded. $\square$
+

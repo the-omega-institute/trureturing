@@ -1,0 +1,21 @@
+## 249. Inherited setting and conclusion
+
+Retain the mixed-flat five-reservoir hypotheses through Section 245.
+Let tau=(Z,M,C,D,M,C) and rho=(C,M,Z,U,M,Z), with both tau faces
+{M,Z,C} paired to rho. Suppose rho's two remaining {U,M,Z} faces both
+pair to eta. Write xi for the fourth interacting owner. Use the entirely-high double-return exclusion in Sections 246–248.
+
+We prove that, after exchanging the two unused owner names if needed,
+ eta=(M,U,Z,B,U,Z),
+ xi=(Z,U,B,Q,U,B),
+where B and Q are each C or D. Both remaining eta faces {B,U,Z} pair
+to xi. Both remaining xi faces {Q,U,B} leave the interacting core.
+The actual Z edge has degree exactly six. Outside the core, no genuine
+single-high transverse-U owner can also have a U axis. If Q=B, both
+exit faces must meet the unique single-high transverse-U owner; if
+Q differs from B, they may also meet axial-U/{C,D} owners.
+
+This is a necessary chain with an explicit low boundary. It does not
+exclude the remaining configurations or assert their realizability.
+All counts below refer to original slots and actual face occurrences.
+

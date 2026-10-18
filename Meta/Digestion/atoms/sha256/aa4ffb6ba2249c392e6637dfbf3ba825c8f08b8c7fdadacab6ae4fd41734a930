@@ -1,0 +1,82 @@
+**Theorem 7.3 (whole-domain weak continuity).** Under Assumption 1.2,
+$\mathcal T$ is continuous on all of $\mathcal D_w$ in its relative
+topology, including the floor, its join, the rising boundary, $s=0$,
+contact collisions, vanishing weights and zero signed heights.
+
+Proof. First prove upper continuity. Along a convergent sequence of
+finite weak feasible parameters $(s_j,t_j)\to(s,t)$ choose the inherited
+at-most-nine-supported-low endpoint optimizer, padded with zero
+weights to nine atoms. Endpoint reduction preserves feasibility and
+cannot decrease the absolute-height objective; at an optimum it
+therefore preserves its value. The probability simplex and the two
+circles are compact. Along a subsequence achieving the upper limit,
+all weights, directions and endpoint sheets converge. The limit
+satisfies (GC.31), including its contrast inequality, since $B(t)$
+and all integrands are continuous for finite $t\ge t_0>0$.
+The limiting height sum equals the limiting value, so
+$\limsup_j\mathcal T(s_j,t_j)\le\mathcal T(s,t)$.
+Omit zero weights. This uses only finite families.
+
+For lower continuity at $t>t_0$, $s<s_0\tau_{\max}(t)$, use RC
+§68's relative-interiority result. Its full-support positive
+components on **both** sheets and its strict contrast slack imply
+that the target lies in the relative interior after quotienting
+moment identities. Multiplying the last three moment coordinates
+by the nonzero scalar $t$ transfers that result to (GC.30).
+The fixed projection is independent of the neighboring budget.
+Allowing the contrast target to decrease below zero also provides
+the same local projection near $s=0$; the final assertion is relative
+to $s\ge0$.
+
+For explicit content of this premise, RC constructs a failure moment
+measure with a small uniform angular component, adjusts its
+four-sign component to preserve $(\mu,V,W,0)$, and divides by
+$t\mathfrak c$. At $t>t_0$ the residual live diagonal is
+$\operatorname{diag}(1-q,1-qu_F,1-qv_F)\succ0$.
+A small full-support pure-sheet component can also be subtracted
+and restored. The achieved contrast approaches $\tau_{\max}(t)$,
+hence can be chosen strictly above the requested value.
+A nonnegative supporting functional that vanishes at this target
+must have zero contrast coefficient by slack, vanish on both entire
+circles by their full support, and therefore be a moment identity.
+This is the required relative interiority, not just feasibility.
+
+Apply Lemma 7.2 with the payoff frozen at the limiting $t$. The
+targets $(B(t_j),r(s_j))$ converge in the same projection and the
+roof is continuous at the limiting target. Moreover,
+$$
+\|g_{t'}-g_t\|_\infty
+ \le |t'-t|\max_h\mathfrak c(h)|f(h)|.
+\tag{GC.33}
+$$
+This uniform bound, and continuity of $H_0$, transfer the fixed-payoff
+conclusion to the moving actual payoff. Thus lower continuity holds
+at all strict weak points, including $s=0$.
+
+Now take a rising boundary point with $t>t_0$. Choose a maximizing
+polygon point $(X_*,Y_*)$ in (GC.21). For any approaching feasible
+$t_j$ define
+$$
+a_j=\min\left\{1,
+ \frac1{k_z(t_j)|X_*|+k_w(t_j)|Y_*|}\right\},
+\tag{GC.34}
+$$
+using $a_j=1$ if the denominator is zero.
+The limiting denominator is at most one, hence $a_j\to1$.
+The point $(a_jX_*,a_jY_*)$ lies in the new polygon. Its family has
+available contrast $\tau_{\max}(t_j)$ and therefore meets every
+admissible nearby requested $s_j$. All weights and directions
+converge, as does the continuous absolute-height sum. This proves
+the lower-limit inequality at the boundary, even across $k_w=1$
+and objective-sign or vertex-type changes.
+
+Finally take a floor point and choose an optimal endpoint
+$(X_*,Y_*)=(1,0)$ or $(-1,0)$ in (GC.24).
+For all $t_j\ge t_0$ sufficiently close to $t_0$ the same endpoint
+is feasible because $k_z(t_j)<1$. These maximum-contrast families
+meet every admissible requested $s_j$. Their two $R$ directions
+with opposite $w$ signs merge as $v_R\downarrow0$, and their
+heights converge to the floor optimum. There is no division by
+$v_R$ in this limiting statement. This includes the floor join.
+Upper and lower continuity together prove the theorem. $\square$
+

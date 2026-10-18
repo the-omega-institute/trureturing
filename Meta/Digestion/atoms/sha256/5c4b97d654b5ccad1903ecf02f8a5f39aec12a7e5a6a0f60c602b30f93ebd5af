@@ -1,0 +1,28 @@
+**Corollary 4.4 (the total canonicalization graph is not definable).**
+Define the total mathematical map
+
+$$
+C:\mathcal K\to\mathcal N,\qquad C(X)=B(E(X)).
+\tag{TPO.14}
+$$
+
+There is no well-defined finite formula $G(X,Y;\bar a)$ in the language
+of Definition 1.2, even with fixed finite parameters, satisfying
+
+$$
+\forall X,Y\in\mathcal K,\qquad
+\mathfrak A\models G(X,Y;\bar a)
+\ \Longleftrightarrow\ Y=C(X).
+\tag{TPO.15}
+$$
+
+The assertion also holds under the finite expansions of Corollary 4.3.
+
+Proof. ABC's inverse identities give $C(X)=X$ for $X\in\mathcal N$.
+Conversely $C(X)$ is always normal, so $C(X)=X$ implies
+$X\in\mathcal N$. Substitution $Y=X$ in a formula satisfying (TPO.15)
+would make $G(X,X;\bar a)$ a formula satisfying (TPO.13), contrary to
+Corollary 4.2. This uses correctness of the graph on all ambient
+arguments. A graph promised correct only for already-normal inputs,
+where $C$ is the identity, has no such consequence. $\square$
+

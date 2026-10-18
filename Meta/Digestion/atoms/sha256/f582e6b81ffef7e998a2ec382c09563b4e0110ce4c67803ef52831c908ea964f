@@ -1,0 +1,76 @@
+**Theorem 73.1 (band collapse, phase profile and tightness).** Suppose
+$\psi_g\in\mathcal Q$ is complex, $\|\psi_g\|_2=1$, and
+
+$$
+\mathfrak e_g[\psi_g]-E_\tau(g)=o(g^2),\qquad g\downarrow0.
+\tag{73.1}
+$$
+
+There exist numbers $\theta_g\in\mathbb R$ such that
+
+$$
+\left\|g^{-3/2}\psi_g(k,z/g)
+             -e^{i\theta_g}\phi(k)h_*(z)\right\|_{L^2(dk\,dz)}
+ \longrightarrow0.
+\tag{73.2}
+$$
+
+In particular $T[\psi_g]=O(g^2)$,
+$\|(1-P)\psi_g\|_2^2=O(g^2)$ for the actual height projection
+$P=|\phi\rangle\langle\phi|$, and the rescaled states are tight about
+the fixed source:
+
+$$
+\lim_{R\to\infty}\limsup_{g\downarrow0}
+ \int_{|gq|>R}|\psi_g(k,q)|^2dk\,dq=0.
+\tag{73.3}
+$$
+
+No translating centres are required. The conclusion includes every
+choice of normalized ground states and allows a varying constant
+complex phase.
+
+Proof. Theorem 72.1 makes the energies in (73.1) negative for small
+$g$, so its a priori estimate gives $T[\psi_g]=O(g^2)$.
+The height gap $H_I-\lambda\ge3\lambda(1-P)$, and nonnegativity of
+the phase potential in every fibre, give the asserted height estimate.
+Extract $f_g,r_g$ by Proposition 71.1 with $\delta=g^{1/4}$ and
+rescale $f_g$ to $h_g$ as in (72.5).
+Then $\|h_g\|_2\to1$, $h_g$ is bounded in $H^1$, and (72.5),
+(71.5), (72.1) and (73.1) show
+
+$$
+ aK[h_g]-\int U|h_g|^2\longrightarrow e_*.
+\tag{73.4}
+$$
+
+To check compactness rather than assume it, take any subsequence.
+A further subsequence converges weakly in $H^1$ to some $h$ and
+strongly in $L^2$ on bounded sets. Its Coulomb integrals converge:
+near zero use the $4b\|\nabla h_g\|_2^2$ estimate from Proposition
+71.2, at infinity use $R^{-1}\|h_g\|_2^2$, and on the intervening
+annulus use local strong convergence. Weak lower semicontinuity and
+(73.4) give
+
+$$
+e_*\ge aK[h]-\int U|h|^2
+       \ge e_*\|h\|_2^2\ge e_*.
+\tag{73.5}
+$$
+
+Because $e_*<0$, equality forces $\|h\|_2=1$, strong $L^2$
+convergence and $h=e^{i\theta}h_*$ by (72.3).
+The convergence of energies and potential integrals then also forces
+$K[h_g]\to K[h]$, hence strong $H^1$ convergence on this subsequence.
+Every subsequence has this property. Choosing $\theta_g$ to be the
+argument of $\langle h_*,h_g\rangle$, which is nonzero for small $g$,
+gives $e^{-i\theta_g}h_g\to h_*$ in $H^1$ for the whole family.
+
+Finally (71.2) gives
+$\|r_g\|_2=O(g/\delta)$ and
+$\|J_\delta f_g-\phi f_g\|_2=O(\delta g)$.
+The rescaling in (73.2) is unitary, so both errors vanish in the full
+$L^2$ norm. This proves (73.2). Its limit has unit mass and a fixed
+centre; taking the tail of that fixed $L^2$ function proves (73.3).
+$\square$
+

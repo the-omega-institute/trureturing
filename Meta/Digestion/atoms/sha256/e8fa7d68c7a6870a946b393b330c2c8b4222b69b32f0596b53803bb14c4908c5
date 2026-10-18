@@ -1,0 +1,26 @@
+**Lemma 2.1 (loss balance needed for stability).** For every control of
+Definition 1.1, every source-family input, every mode and every $t$,
+
+$$
+F_i(t)=p_i(a)-S(t)p_i(k(t)).
+\tag{IS.9}
+$$
+
+Consequently
+
+$$
+S(t)=1-F_2(t)/Z,\qquad
+k(t)=\frac{a-F_0(t)}{S(t)},\qquad
+F_0(t)+F_4(t)=2a-2S(t)k(t).
+\tag{IS.10}
+$$
+
+Proof. Write $q_i=S p_i(k)$. The absolutely continuous product rule gives
+$q_i'=-g_iq_i$. In (IS.3), $J_i\rho J_i^*$ depends on the live input only
+through its $ii$ entry; the phase cancels. That entry is $p_i(a)$ on
+(IS.4), so the failure density is $g_iS p_i(k)=-q_i'$. Integrating from
+zero, where $S(0)=1$ and $k(0)=a$, proves (IS.9) at every time. The
+middle probability is $Z$ and the two plus probabilities equal $k$,
+giving (IS.10). These calculations use the credited instrument; they do
+not assert its acquisition or a new instrument classification. $\square$
+

@@ -1,0 +1,47 @@
+**Lemma 4.1 (signs and dimensionless parameters).** The supplier premises
+imply $d>0$. Define
+
+$$
+\alpha=\frac{ab}{h_0h_1},\qquad
+\beta=\frac{cd}{h_0h_2},\qquad
+\ell=\alpha+\beta,\qquad k=1-\ell.
+\tag{IR.17}
+$$
+
+These $\alpha,\beta$ are dimensionless constants, neither an acquisition
+label nor $\beta_{\rm hist}$ nor the root coordinates in (IR.7).
+They satisfy $\alpha,\beta>0$, $0<\ell<1$, $k>0$.
+
+Proof. The positive sign is already established in RE Lemma 4.1 and
+JR Proposition 34.2. A self-contained deduction uses the exact source
+formula
+
+$$
+N^{\rm src}_{02}=
+-\frac{\lambda\alpha_1\sqrt5}{16(1+\alpha_1^2+\alpha_2^2)}
++\frac{(1-\lambda)\beta_1\sqrt{27}}
+ {16(1+\beta_1^2+\beta_2^2)}.
+\tag{IR.18}
+$$
+
+From (IR.9),
+$\alpha_1/(1+\alpha_1^2+\alpha_2^2)<1/(2\sqrt2)<3/8$:
+the first inequality follows from
+$\alpha_1^2+2\geq2\sqrt2\alpha_1$ and $\alpha_2>1$.
+Also
+$\beta_1/(1+\beta_1^2+\beta_2^2)>
+(2/5)/(1+1/4+25/36)=36/175>1/5$.
+Positive squaring gives $\sqrt5/16<3/20$ and
+$\sqrt{27}/16>3/10$. Thus the negative magnitude in (IR.18) is
+less than $441/16000$, while the positive term exceeds $153/5000$.
+Their difference is greater than $243/80000>0$. The adjugate formula
+in (IR.8) gives $cd=\eta_2N^{\rm src}_{02}>0$; since $c>0$, $d>0$.
+This is a symbolic deduction from the supplied box bounds.
+
+Rank one and positivity give
+$ab\leq(a^2+b^2)/2<18/1000$ and
+$cd\leq(c^2+d^2)/2<18/1000$.
+Consequently $0<\alpha<18/695$ and $0<\beta<18/796$.
+Each upper bound is below $1/2$, so $\ell<1$. All denominators in
+(IR.17) are positive by (IR.9). $\square$
+

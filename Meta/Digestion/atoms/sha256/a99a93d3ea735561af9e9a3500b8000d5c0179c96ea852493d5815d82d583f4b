@@ -1,0 +1,12 @@
+**Theorem 480.1.** Exactly five genuine owners meet H. One is tau, with h=3. Their only possible high-slot count profiles (n_3,n_4,n_5,n_6) are
+
+    (1,0,4,0), (1,1,3,0).                        (480.3)
+
+There are no genuine owners with h=1,2 or 6. Any additional genuine owner uses only C,D and is not counted in (480.3). This is not a bound on the whole genuine-owner count.
+
+The four owners other than tau have individual H-slot requirements, in order M,V,Z,U,
+
+    (3,5,5,6).                                  (480.4)
+
+In profile (1,1,3,0), their vector is exactly (3,5,5,6), so all four original H degrees equal six. In profile (1,0,4,0), their vector is (3,5,5,6)+e_X for exactly one H label X, so exactly one original H degree is seven and the other three are six. Repeated copies of a role remain separate actual owners.
+

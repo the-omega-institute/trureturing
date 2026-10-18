@@ -1,0 +1,155 @@
+## 33. Directed six-point construction preserving the original contrast
+
+**Proof of Theorem 32.3.** First, $S\le0.01$, (FC.32), and the same-law
+identities (FC.131) imply
+
+$$
+\begin{gathered}
+P\ge0.99,\quad U_0>0.866,\quad
+\lambda_{\min}(\Sigma)>0.111,\quad
+\|m\|\le0.01,\quad |C_0|\le S/2\le0.005,\\
+\omega_0:=\Sigma^{-1}m,\qquad \|\omega_0\|<1/11.
+\end{gathered}
+\tag{FC.134}
+$$
+
+Indeed $\int xx^T d\rho_1\preceq SI_2$, its $uv$ entry has
+absolute value at most $S/2$, and $\|\int x d\rho_1\|\le S$.
+These inequalities use the one original law, including its odd moments.
+Also $u^2\le|u|$ and Cauchy–Schwarz give
+$U_0\le k_0\le\sqrt{PU_0}$. The identity
+$(u^2,uv)=|u|(|u|,\operatorname{sgn}(u)v)$ and the vector triangle
+inequality give $U_0^2+C_0^2\le k_0^2$; the value at $u=0$ is zero.
+Thus define
+
+$$
+a_0=U_0/k_0,\quad b_0=\sqrt{1-a_0^2},\quad
+T_0=k_0^2/U_0,\quad Z_0=P-T_0\ge0.
+\tag{FC.135}
+$$
+
+Here $k_0,U_0,T_0>0$. These subscripts refer to the replacement
+construction, not the source $s_0$, high height $H_0$, or budget $t_0$.
+For $b_0>0$, put
+
+$$
+q_\pm=\frac12\left(T_0\pm\frac{C_0}{a_0b_0}\right).
+\tag{FC.136}
+$$
+
+Both are nonnegative because
+$T_0a_0b_0=\sqrt{k_0^2-U_0^2}\ge|C_0|$. Form an antipodally even
+measure $\nu_0$: put mass $q_+/2$ at each of
+$(a_0,b_0),(-a_0,-b_0)$, mass $q_-/2$ at each of
+$(a_0,-b_0),(-a_0,b_0)$, and mass $Z_0/2$ at each of $(0,\pm1)$.
+Its mass is $P$, its first moment is zero, and
+
+$$
+\int u^2\,d\nu_0=T_0a_0^2=U_0,\quad
+\int uv\,d\nu_0=a_0b_0(q_+-q_-)=C_0,\quad
+\int v^2\,d\nu_0=P-U_0=V_0,\quad
+\int|u|\,d\nu_0=T_0a_0=k_0.
+\tag{FC.137}
+$$
+
+If $b_0=0$, then $k_0=U_0$ and $C_0=0$. Instead put mass
+$U_0/2$ at each of $(\pm1,0)$ and $(P-U_0)/2$ at each of
+$(0,\pm1)$. This has the same data (FC.137). Delete zero masses
+and deduplicate coincident points; $Z_0=0$, $q_+=0$ or $q_-=0$
+requires no division by zero. Antipodes remain distinct directed points.
+
+Define the odd tilt
+
+$$
+d\widehat\rho_0(x)=(1+\omega_0\cdot x)\,d\nu_0(x).
+\tag{FC.138}
+$$
+
+Every retained multiplier is strictly greater than $10/11$. Odd
+integrands have zero integral against $\nu_0$. Hence (FC.138) preserves
+mass, second moments and the even function $|u|$, while its first
+moment is $\Sigma\omega_0=m$. It therefore preserves the complete
+pure angular Gram and the original pure contribution to $K$, rather
+than merely a subset of the moments.
+
+It remains to prove the strict negative-height margin. The bounds of
+§18 give, with $A_\ell=E_{\ell,11}$,
+
+$$
+\begin{gathered}
+A_\ell<0.00463,\quad \gamma_\ell<0.01058,\quad
+0<a_\ell<0.00032,\quad
+0.00504<l_u<0.00508,\quad0.01251<l_v<0.01274,\\
+a_0^2\ge U_0/P>\frac{0.876-S}{1-S}\ge\frac{0.866}{0.99},
+\qquad 0\le b_0<9/25.
+\end{gathered}
+\tag{FC.139}
+$$
+
+All decimals are exact terminating rationals. Since
+$a_0=\sqrt{1-b_0^2}\ge1-b_0^2$, the source height satisfies
+
+$$
+\ell(-a_0,-b_0)
+<-0.00041+0.01566b_0^2-0.01251b_0<-1/2500.
+\tag{FC.140}
+$$
+
+The last quadratic is convex on $[0,9/25]$ and both endpoint values
+are below $-1/2500$. If $b_0\le1/50$, the other left point obeys
+
+$$
+\begin{aligned}
+\ell(-a_0,b_0)
+&<-0.00041+0.01566b_0^2+0.01338b_0\\
+&\le-0.00041+0.01566/2500+0.01338/50\\
+&=-0.000136136<-1/10000.
+\end{aligned}
+\tag{FC.141}
+$$
+
+Here $0.01338$ bounds $2a_\ell+l_v$. For $b_0\le1/50$ all left
+points with $|u|=a_0$ have height below $-1/10000$. Their total
+mass after tilting is greater than $5T_0/11$. Consequently
+
+$$
+\int\ell_-\,d\widehat\rho_0
+>\frac{T_0}{22000}>\frac{433}{11000000}>\frac1{30000}.
+\tag{FC.142}
+$$
+
+This includes $b_0=0$. If $b_0>1/50$, then
+$T_0a_0b_0=k_0b_0>0.866/50=0.01732$, so
+$|C_0|/(T_0a_0b_0)<0.3$. Thus $q_+>7T_0/20$, and the tilted
+mass at $(-a_0,-b_0)$ is greater than $7T_0/44$. Equation (FC.140)
+gives instead
+
+$$
+\int\ell_-\,d\widehat\rho_0
+>\frac{7T_0}{110000}>\frac{3031}{55000000}>\frac1{30000}.
+\tag{FC.143}
+$$
+
+Since $\ell=x^TE_\ell x+l_u u+l_vv$, its signed integral is fixed by
+the matched moments. The identity $|\ell|=\ell+2\ell_-$ therefore
+gives the pure absolute-height gain
+$2(\int\ell_-d\widehat\rho_0-H_-(\pi))$. Keeping $\rho_1$ leaves
+all saturated contributions and all three failure moments unchanged.
+The preceding endpoint projection adds a nonnegative triangle gain.
+This proves the first inequality of (FC.133), including its strictness.
+The original $K$ is exactly retained, so the comparison still meets
+$K\ge r$, and remains active if the original law had $K=r$.
+
+For a nonfinite law, the replacement and unchanged $\rho_1$ define a
+mathematical endpoint measure. Apply the compact continuous
+$(\Gamma,k,g_t)$ representation of GC Proposition 12.2, exactly as
+in Theorem 27.1, to obtain a finite law preserving the full target,
+$K$ and the height of $\widehat\pi$. GC Proposition 10.1 then supplies an
+admitted finite comparison. This step need not preserve $\rho_1$ as
+a measure and asserts no general continuous-instrument or native bridge.
+Its height is at most $R_t(r)$, proving the second inequality of
+(FC.133). For finite $\pi$, the explicit construction itself retains
+its finite saturated law. Nonnegative interpolation of the original
+and comparison laws on their union also retains every $\Gamma$ and
+$K$; no such interpolation is claimed to use seven labels. $\square$
+

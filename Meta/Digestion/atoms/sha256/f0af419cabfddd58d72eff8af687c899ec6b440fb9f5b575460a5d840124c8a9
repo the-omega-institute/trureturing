@@ -1,0 +1,36 @@
+**Proposition 16.2 (resource and clock correspondence).** These recurrences
+specify a complete opcode/purpose vector on the one actual installation
+and service run. If its scalar sum through cut $z$ is $C(z)$, then the
+actual ticks, fee and storage are
+
+$$
+T(z)=C(z),\qquad F(z)=2C(z),\qquad
+S(z)=S_0+b_{\rm ctl}(z)+8A(z)+8C(z).
+\tag{RCA.11}
+$$
+
+$A$ includes all old source and work cells, bank versions, scratch,
+manifest, descriptors, archive, mailbox and receiver cells. $C$ includes
+all their receipt constructions. None of these coordinates is a logical
+selector-width optimum. A target's unary word is acquired computation
+or input, never a mathematical resource allowance.
+
+Proof. Definition 11.5 reduces every compiler instruction to the displayed
+primitive graphs; Lemma 13.2a includes both manifest-entry moves, all
+field/terminal tests and the exact emitted fields. §§13–14 reduce ingress,
+installation, source adaptation, outputs and return to those graphs and
+existing primitive supplier paths.
+There is no remaining instruction that reads a string, updates a map,
+allocates a block, calls a decoder or restores an entry in one step.
+Assign each primitive one entering purpose tag and retain the tag through
+its helpers, counting each explicit tag-changing CTL. Add costs at their
+actual successor heads, rather than adding maxima from separate runs.
+PR57.D1 gives one receipt/tick and two fee units per occurrence. Each
+ordinary EX constructs one eight-bit cell, including replaced R and new
+R accounting by net one cell; installed finite control is counted in its
+own actual bit size. Induction on the expanded graph gives (RCA.11) at
+all interior cuts, including partially initialized destinations and banks.
+This proves a symbolic executable price; it asserts no numerical full-run
+measurement and no physical optimum. ∎
+
+

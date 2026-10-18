@@ -1,0 +1,56 @@
+## 12. Mathematical correspondence and the preserved full target
+
+The permanent mathematical dependencies and the new deductions have
+the following precise roles.
+
+| Source and location | Reused result, new deduction and scope |
+| --- | --- |
+| [IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Definitions 1.1–1.4 and Theorems 2.1, 3.1 | Complete worlds, literal ancestor, affine normalization, positive traces, $\Delta>0$ on the rank-one-free nonnegative domain, and the exact source-conditioned graph in Sections 1–2. Conditional gain/drift recovery leaves the source unknown. |
+| IX, Theorem 4.1 and Proposition 4.2 | A fixed positive finite trace corridor and fixed or bounded readings yield coefficient/drift bounds. Moving late readings do not yield a uniform drift bound. No arbitrary-history compactness is imported. |
+| IX, Definitions 5.2–5.3 | The same fixed worlds, actual-child recursion and all raw responses in Sections 10–11; the original-root eight-versus-nine quantifiers remain unchanged. |
+| IX, Theorems 7.2, 8.1, 9.2, 10.1 and Definition 11.1 | The exact escape locus and fixed-$H_*$ six-point compactification are context in Section 11. They do not settle legal incidence, diagonals or seventh-zero limits. Their large boundary certificates are not new work here. |
+| [Pairs](FIB_JMMJM_ZERO_SIXTH_PAIR_INJECTIVITY_AND_JOINT_COLLISION_OBSTRUCTIONS.md), Sections 3–5 | Signed terminal/ancestor conversions, whole-class $AB$ and $AD$ injection, and exhaustive $AC$ alternatives. Sections 5–6 state and validate their exact interfaces. Theorem 3.1 eliminates I; the legal-source trace lemma eliminates II. |
+| Pairs, Sections 6–7 | Actual TT equivalence, complete-source simultaneous system, and known-set scalar-policy boundary. Theorem 8.2 strengthens its pattern reduction globally; Corollary 10.1 removes TT on the entire closed interval. |
+| [G](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorem 2.1, Section 3, Theorems 4.1, 6.1 and Propositions 5.1–5.2, 7.1 | Repeated-sixth singleton/ranges/sign, signed reconstruction, three-coordinate injection, incidence and actual TT interfaces. Repeated-root facts have the scope in (11.3); the large certificate is not a premise of the new exclusions. |
+| [F](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Sections 1–2, Theorem 4.1, Corollary 4.2, Theorem 6.1 and Section 7 | Positive terminal chart, chronological coordinates and complete-target inverse agree with Sections 5 and 7. Common source sum from five ratios needs nonzero sixth gains; diagonal-swap exclusion needs common $f(6)/f(7)\ne0$. Neither inference is made at zero sixth gain. The PP/PT/TP/TT interface remains an actual-child interface. |
+| This volume, Theorem 3.1 and Section 4 | New rank-one fourth-gain positivity on $0\le d\le24$, its strict actual-late inequality, and the closed $H_*$ world gap and separate $d=0$ exclusion. The positivity statements permit seventh-zero limits at the expressly stated nonnegative domain. |
+| This volume, Lemma 7.1, Proposition 7.2 and Theorem 8.1 | New legal-source endpoint trace estimates and affine extension remove the second $AC$ branch; combining complementary exclusions proves whole-class $AC$ injection for every fixed $y,\zeta,d$ in this family. |
+| This volume, Theorem 8.2, Theorem 9.1 and Corollaries 10.1–10.2 | New global removal of every constant column and every $(2,2,0)$ TT assignment; exact remaining proper patterns; closed-interval $BC/BD/CD$ injections including both endpoints, extra $BD$ injection at 24, whole TT exclusion on that interval, and the limited known-set policy. |
+
+The new mathematical ingredients are exact Lagrange evaluation,
+coefficient collection, a quadratic chord identity with the source
+determinant bound, endpoint trace estimates in a legal rank-one chart,
+polynomial divisibility, affine sign changes and same-triple
+pigeonhole reasoning. Root counting and the intermediate value theorem
+retain their stated multiplicity and sign conditions.
+These are source-relative mathematical deductions in the prescribed
+model; no exhaustive literature or worldwide-originality assertion is
+made. The results carry no Lean/kernel certification, empirical or
+general neural-network conclusion, nor stability, conditioning,
+efficiency or computational-resource claim.
+
+The full remaining zero-sixth question is still an exact legal
+simultaneous solution of (11.1), for some common $y,\zeta,d$, versus
+a universal all-drift exclusion of all such solutions.
+Every possible solution is now restricted to (8.1), outside the
+closed interval of Corollary 10.1, with the stated endpoint and
+$H_*$ restrictions. No surviving $BC$, $BD$ or $CD$ assignment is
+asserted attainable or impossible in the remaining ranges.
+
+The common-drift nonzero-sixth varying-ratio PP system remains open.
+Arbitrary or differing drifts, seventh-zero strata, other terminal-root
+strata, larger and infinite losing families and their full actual
+fibers, other literal histories, the earlier $JMMJ$ parent-arm gluing
+and the separate $MMJM$ and $MJMMJ$ obligations remain outside the
+proved exclusions. No larger-family-to-triple reduction or acquisition
+of unchosen terminal coordinates is supplied.
+
+The original-root target remains a lawful complete-target decoder on
+every legal world with at most eight total readings versus
+$n_{\mathrm{det}}(3,0)\ge9$. It includes both initial actions,
+every actual history and early stop, arbitrary constant drift,
+all positive nonsymmetric rank-one trace-one sources and all nonzero
+cubic-or-lower gains with both signs, sampled roots and multiplicities.
+The fixed-ancestor results here still require the appropriate
+earlier-history bridge for that target. The strengthened pair and
+pattern obstructions do not redefine or settle the full problem.

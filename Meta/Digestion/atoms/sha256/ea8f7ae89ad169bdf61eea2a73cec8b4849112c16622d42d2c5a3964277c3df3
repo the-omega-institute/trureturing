@@ -1,0 +1,18 @@
+**Definition 1.2 (complete canonical row).** For a finite prefix-free cut
+$P$, let $H_P(t)=P\cap\operatorname{Pos}(t)$. Replace the whole subtree
+at each reached $p\in H_P(t)$ by its occurrence hole $\square_p$, retaining
+every other exterior bracket and concrete leaf. The complete row is
+$R_P(t)=(C_P(t),\pi_P(t))$, where
+
+$$
+p\sim_{\pi_P(t)}q\quad\Longleftrightarrow\quad t|_p=t|_q.
+\tag{FCS.3}
+$$
+
+Every two different blocks assert disequality. An unreached cut has its
+concrete strict-prefix blocking leaf in the exterior. Order reached holes
+lexicographically, and name a class by the zero-based position of its
+first member. Recompute names after restriction; the occurring names
+need not be consecutive. A tuple indexed by classes indexes the occurring
+names, not an assumed consecutive list of raw ordinals.
+

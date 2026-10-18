@@ -1,0 +1,66 @@
+## 8. Mathematical suppliers and the remaining common-flow question
+
+**Mathematical citation 8.1 (scope of transport suppliers).**
+[EN, Definition 3.1 and Lemma 3.2] supply marginal transport by gluing on
+Polish spaces with finite first moments. Here there are two factors,
+$p=1$, the product metric is a sum, and one factor's coupling is diagonal.
+All ground spaces are (1.3), so the hypotheses hold. The entropy assertion
+in that lemma is not used. [AWR, Algorithm 2 and Lemma 7] give finite
+nonnegative-matrix rounding to prescribed probability rows and columns,
+with an $\ell^1$ error bound twice the sum of the marginal $\ell^1$
+errors. That result is a finite marginal-repair supplier, not a
+complete-law own-generation assertion. Its cost is distinct from (2.4).
+
+[LV, Theorems 1.2–1.4] concern real vectors with finite first moments,
+measurable families of such laws, and conditional martingale couplings.
+Finite completed-word projections here are bounded vectors and satisfy
+those integrability premises; those theorems alone do not give both
+complete flows or (3.2). The prescribed-entire-marginal criterion in
+[PAIR, Theorem 20.2] already supplies the full projected-convex-order
+criterion for zero residual defect. Repair instead allows the generated
+law marginals to move; it does not contradict that criterion.
+
+In [BVP, §3, property (A)] weak-transport costs are lower bounded and
+lower semicontinuous in the input and successor probability law, and
+convex in the latter. The costs
+$C_B(Q,\kappa)=d_\beta(\mathcal R_B(Q),\int Wd\kappa)$ and its A
+counterpart satisfy these conditions: barycentring is continuous from
+probabilities on compact $\mathcal K_s$ to complete TV, since finite
+coordinate convergence plus the uniform geometric tails gives TV
+convergence; residuals are continuous and TV is convex. This explains
+the classical conditional-barycentre context of (2.3). No new generic
+transport, disintegration or contraction principle is asserted.
+
+**Mathematical citation 8.2 (source-specific premise boundaries).**
+The joint repair (3.1)–(4.6) is a source-specific, repo-derived consequence;
+the transport principles in citation 8.1 are literature-attested suppliers.
+[PAIR, Theorem 11.4] regenerates already compatible flows; [PAIR,
+Theorem 14.2] compares their full losses to an endpoint chord; [PAIR,
+Proposition 17.1] supplies a complete-residual example inside prescribed
+boxes. None of those premises permits arbitrary simultaneous violations
+of balance and full-descriptor compatibility. [REV, Theorem 17.2] starts
+inside $\mathfrak C$ and gives a deterministic comparison with conditional
+barycentre preservation. Theorem 3.1 starts from arbitrary edges and
+asserts neither such barycentre preservation nor a deterministic comparison.
+[RETURN, §§11–15] additionally constrain actual return motion, whose
+joint law is not determined by the two repaired descriptor edges.
+[RISK, Theorem 2.1] requires its five boxes; only the full-domain exclusion
+[SEVEN, Theorem 6.2] is used in Theorem 4.4.
+
+[NATIVE] constructs the actual same-source joint law with ordered acquired
+updates. [CONST] excludes sufficiently small endpoint excess under
+constant suspended emissions on positive support. [RARE3] and [RAREABS]
+bound capped rare-prior risks and absolute complete-history risks for
+their specified native observer. Their original finite COMPLETE
+representation and radius-identification premises cannot be replaced by
+the analytical input in Definition 2.1. In particular no capped-history
+estimate discards any supported target in (4.2).
+
+The five-mode static-seam circulation and local-clock models of [STATIC,
+§§2–3, 21], the legal joint-window fibres of [PYRAMID, §§14–18], and
+the supplied waiting-kernel model of [CLOCK, Theorems 19–22] have different
+state and observation carriers. No map identifying their probability
+coordinates or clock readings with the complete descriptors (1.3) is
+assumed. Their marginal-versus-joint distinctions do not supply such an
+identification or the source-specific implication (3.1)–(4.6).
+

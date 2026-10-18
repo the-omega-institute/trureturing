@@ -1,0 +1,14 @@
+D(\rho_{n+1}\Vert\sigma)
+\ge0,
+\]
+并且
+\[
+\tau_N
+=
+\sum_{n=0}^{N-1}\Delta\tau_n
+=
+D(\rho_0\Vert\sigma)-D(\rho_N\Vert\sigma).
+\]
+
+因此时间账本在离散网络更新中是严格可加的。每一步不需要预设外部时间变量，只需要记录相对熵下降。
+

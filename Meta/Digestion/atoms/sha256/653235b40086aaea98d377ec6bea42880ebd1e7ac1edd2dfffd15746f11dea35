@@ -1,0 +1,24 @@
+**假设 178.1（同一十五边仪器与固定输入）。** 本章的普通数学供应源为本卷[固定版本 c32e033a62a0a4a3bd63ab6b7af1d1ea59059651，第126–135章](https://github.com/the-omega-institute/trureturing/blob/c32e033a62a0a4a3bd63ab6b7af1d1ea59059651/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)。配置依原顺序为 $0,1,2,3,4$，分别表示 $\mathrm{null},[2],[25],[5],[3]$；完整系统仍为 $\mathcal C\otimes K=\mathbb C^5\otimes\mathbb C^2$。固定所有 $p,q,r>0$ 且 $p+q+r<1$，记
+
+$$
+\delta=1-p-q-r,\qquad \epsilon=1-p-q,\qquad \zeta=1-r,
+\qquad
+P=\begin{pmatrix}
+\delta&p&0&q&r\\
+q&\epsilon&p&0&0\\
+0&q&\epsilon&p&0\\
+p&0&q&\epsilon&0\\
+r&0&0&0&\zeta
+\end{pmatrix}.
+$$
+
+行是来源，列是后继。五个自环、八条有向方形边及两条支边全部严格为正。内部运输精确使用第127章的 $a=-iX,b=-iY,c=ba=iZ$：
+
+$$
+U_{10}=a,\quad U_{21}=c,\quad U_{32}=a^\dagger,
+\quad U_{03}=c^\dagger,\quad U_{40}=b,
+\qquad U_{ij}=U_{ji}^\dagger,\quad U_{ii}=I_2.
+$$
+
+这不采用第124章的另一赋值，也不采用第128章的 $p+q=1$ 四态合同。每轮仍是第130章的同一个分支 $K_{ji}=\sqrt{P_{ij}}|j\rangle\langle i|\otimes U_{ji}$，使用新准备的十五维正交边记录及其明列的实际读取权限。起点已知且固定为 $0$；$N\ge0$ 是公开指定的有限轮数。输入 $\varrho_{KR}$ 任意，$K=\mathbb C^2$ 携带未知量子信息，$R$ 是任意未触及参考，不提供给控制器或解码器。固定根准备、轮数、记录保持和读取均按定义130.1供应，不由编码取得。
+

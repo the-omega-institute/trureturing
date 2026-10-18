@@ -1,0 +1,38 @@
+### Definition 48.1 (Future-behavior equivalence)
+
+Let \(X\) be a state set, \(\mathcal A\) a finite action alphabet, \(F_a:X\to X\) an update for each \(a\in\mathcal A\), and \(O:X\to Y\) an observation. For a word \(w=a_1\cdots a_m\), set
+
+\[
+F_w=F_{a_m}\circ\cdots\circ F_{a_1},
+\qquad
+F_\varepsilon=\operatorname{id}_X.
+\]
+
+Define the complete future behavior
+
+\[
+\mathcal B_O(x)(w)=O(F_wx),
+\qquad
+w\in\mathcal A^\ast,
+\]
+
+and define
+
+\[
+x\sim_O y
+\quad\Longleftrightarrow\quad
+\mathcal B_O(x)=\mathcal B_O(y).
+\]
+
+For a relation \(R\subseteq X\times X\), define
+
+\[
+\Phi_O(R)
+=
+\left\{
+(x,y):
+O(x)=O(y),\
+(F_ax,F_ay)\in R\ \forall a\in\mathcal A
+\right\}.
+\]
+

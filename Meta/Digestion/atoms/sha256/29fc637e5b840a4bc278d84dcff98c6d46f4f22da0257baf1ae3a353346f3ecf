@@ -1,0 +1,31 @@
+**Theorem 5.1 (Actual exterior posterior).** On $F_0$, let the nearest exterior ones be at $-\ell$ and $r$. Almost surely $\ell,r\ge2$, and
+
+$$
+\frac{q_0}{1-q_0}=\frac{f(\ell)f(r)}{f(\ell+r)}.
+\tag{5.1}
+$$
+
+In particular $\mathsf B(P)$ holds, with strict free-site inequalities $1/4<q_i<1/2$.
+
+Proof. Fix $\ell,r\ge2$ and the exterior event specifying ones at $-\ell,r$ and zeros between them except at the omitted center. With center zero the intervening renewal factor is $f(\ell+r)$; with center one it is $f(\ell)f(r)$. For any additional finite collars outside these anchors, $M_1=ve$ factors out the same left and right likelihoods in both completions. On a positive collar event the ratio is therefore (5.1); a zero-likelihood collar requires no division.
+
+More explicitly, let $Q_{\ell,r}=f(\ell)f(r)/(f(\ell+r)+f(\ell)f(r))$. On the specified anchor event the conditional integral identity for $X_0$ and the constant $Q_{\ell,r}$ holds against every finite exterior cylinder: refine the cylinder into contiguous collars containing the anchors and sum the common-factor identities. Finite exterior cylinders generate $\mathcal E_0$. Uniqueness of finite measures extends the identity to every exterior event. The countably many nearest-anchor events cover $F_0$ up to a null set by Lemma 4.3. This proves that (5.1) is the full-exterior posterior of the same $P$, not only a posterior with distant observations omitted.
+
+For every $g\ge2$,
+
+$$
+pa s^{g-2}\le f(g)\le k s^{g-2}.
+\tag{5.2}
+$$
+
+The exponents in the numerator and denominator of (5.1) consequently give
+
+$$
+L(p)=\frac{p^2a^2}{ks^2}
+\le\frac{f(\ell)f(r)}{f(\ell+r)}
+\le\frac{k^2}{pa s^2}=U(p).
+\tag{5.3}
+$$
+
+By (3.3) these odds are strictly between $1/3$ and one. On $F_0^c$ a retained neighboring one forces $X_0=0$. Translation and a countable intersection prove the stated band at every site. $\square$
+

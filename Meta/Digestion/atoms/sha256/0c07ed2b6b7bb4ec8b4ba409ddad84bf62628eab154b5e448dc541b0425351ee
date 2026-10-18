@@ -1,0 +1,166 @@
+## 4. Fixed-M decoders at the four early drifts
+
+**Theorem 4.1.** For each fixed
+$d\in\{0,24,48,312/5\}$, the scalar sixth response under $M$ is
+injective on the entire class
+
+$$
+\mathcal K_d^7=\{W\in\mathcal F(H):d_W=d,\ f_W(7)=0\}.
+\tag{4.1}
+$$
+
+One $M$ and its immediate sixth read recover the complete target on
+this known class and every known subset, with no cardinality bound.
+In particular neither $L_1$ nor $L_2$ holds on such a subset. The
+$d=0$ decoder is the credited baseline root-seven case; the other
+three formulas extend the drift coverage.
+
+**Proof, the positive trace parameter.** Put $k=j/\ell>0$ and
+$A=24-d$, $B=48-d$, $C_*=312/5-d$. The first four equations and
+Lemma 2.1 give
+
+$$
+20d+\frac{70A}{j}-\frac{84B}{\ell}
+                       +\frac{35C_*}{j+\ell}=0.
+\tag{4.2}
+$$
+
+These divisions use only positive traces, so sampled zeros are not
+excluded. We examine all four drifts.
+
+If $d=0$, multiplying (4.2) by $j\ell(j+\ell)$ gives
+$-168\ell^2(24k^2+k-10)=0$. Since
+
+$$
+24k^2+k-10=(8k-5)(3k+2),
+\tag{4.3}
+$$
+
+positivity forces $k=5/8$. The four initial gain samples are
+$(0,24/j,30/j,24/j)$, hence interpolation gives
+
+$$
+f(T)=cT(T-5)(T-7),\qquad c=1/j>0.
+\tag{4.4}
+$$
+
+Here $\ell=8j/5$ and $v_M=-6c-156/5$, an injective function of
+$c$. Recovering $c$ fixes the gain, $j,\ell,u=\ell-1$ and
+$v=j-\ell+1$. Since $f(4)=12c\ne0$, the fourth equation fixes
+$r$. This calculation supplies the baseline in full, without
+requiring an unseen proof from V.
+
+For each nonzero $d$ in the theorem, (4.2) is equivalently
+
+$$
+20d\ell=84B-70A/k-35C_* /(k+1).
+\tag{4.5}
+$$
+
+At $d=24$, this gives
+
+$$
+\begin{aligned}
+\ell&=\frac{7(3k+1)}{5(k+1)},&
+f(6)&=\frac{120(1-3k)}{7(3k+1)},\\
+v_M-d=B_{24}(k)&=\frac{24}{7}
+                  \left(9-42k+\frac{10}{3k+1}\right).
+\end{aligned}
+\tag{4.6}
+$$
+
+Indeed $1+2(k+1)\ell=(42k+19)/5$ and
+
+$$
+(1-3k)(42k+19)=(9-42k)(3k+1)+10.
+\tag{4.7}
+$$
+
+For $k_2>k_1>0$, both $-42k$ and $10/(3k+1)$ strictly decrease.
+Thus $B_{24}$ is strictly decreasing, including its zero at
+$k=1/3$ without division by that zero.
+
+At $d=48$, the formulas are
+
+$$
+\begin{aligned}
+\ell&=\frac{7(7k+10)}{40k(k+1)},&
+f(6)&=\frac{480(k-2)}{7(7k+10)},\\
+v_M-d=B_{48}(k)&=\frac{24(k-2)(69k+70)}{7k(7k+10)}\\
+&=\frac{24}{7}\left(\frac{69}{7}-\frac{14}{k}
+                              -\frac{480}{7(7k+10)}\right).
+\end{aligned}
+\tag{4.8}
+$$
+
+The sixth trace is $(69k+70)/(20k)$. The partial fraction identity
+is certified by
+
+$$
+\begin{aligned}
+(k-2)(69k+70)&=69k^2-68k-140,\\
+(k-2)(69k+70)-\tfrac{69}7k(7k+10)
+ &=-\tfrac{1166}7k-140\\
+ &=-14(7k+10)-\tfrac{480}7k.
+\end{aligned}
+\tag{4.9}
+$$
+
+Both negative reciprocal terms in (4.8) strictly increase for
+$k>0$, so $B_{48}$ is strictly increasing, including $k=2$.
+
+At $d=312/5$, one obtains
+
+$$
+\begin{aligned}
+\ell&=\frac{7(20-9k)}{65k},&0<k&<20/9,\\
+f(6)&=\frac{312(9k-8)}{7(20-9k)},\\
+v_M-d=B_{312/5}(k)
+ &=\frac{312}{7}\left(-1+\frac{12}{20-9k}\right)
+       +\frac{48}{5}\left(9k+1-\frac8k\right).
+\end{aligned}
+\tag{4.10}
+$$
+
+The interval is forced by $\ell>0$. The complete simplifications are
+
+$$
+\frac{9k-8}{20-9k}=-1+\frac{12}{20-9k},\qquad
+\frac{(9k-8)(k+1)}k=9k+1-\frac8k.
+\tag{4.11}
+$$
+
+Both summands in (4.10) strictly increase on this interval. The
+possible sixth zero $k=8/9$ is included.
+
+In all nonzero-drift cases, equal sixth $M$ responses give equal
+$k$, then equal $\ell,j$. The first four ancestor equations fix
+$f(0),\ldots,f(3)$, dividing only by positive traces, hence fix the
+entire gain. Moreover $d$ equals the reading at one clock
+$q\in\{1,2,3\}$, so $f(q)=0$. Both $f(4)$ and $f(5)$ cannot
+vanish: together with $q,7$ that would give four distinct roots of a
+nonzero degree-at-most-three polynomial. A nonzero one of these two
+samples fixes $r$, using respectively $1+r+j$ or $j+2\ell-r$.
+Thus the complete worlds agree. This argument allows every degree
+drop and root multiplicity and never divides by an unproved nonzero
+gain sample.
+
+**Proof, inverse and actual-child quantifiers.** The known whole
+class has a unique inverse at its actual sixth $M$ response by the
+injectivity just proved; existence comes from the actual candidate.
+Reconstruction above and (1.10) return $P,g,\delta$. A known
+singleton may stop; empty classes are unreachable. The same fixed
+action and inverse restrict to every known subset $K$, including
+infinite or disconnected subsets. For every real raw response $w$,
+
+$$
+K_w=\{W\in K:D_0+\lambda v_M(W)=w\}
+\tag{4.12}
+$$
+
+has at most one world. Thus $L_0(K_w,(H,M,w))$ and
+$L_1(K_w,(H,M,w))$ both fail for every $w$. The $M$ conjunct of
+(1.9) fails for both $L_1(K,H)$ and $L_2(K,H)$; empty and
+singleton parents also fail their cardinality clause. The last
+clock is six, with at most seven total readings. ∎
+

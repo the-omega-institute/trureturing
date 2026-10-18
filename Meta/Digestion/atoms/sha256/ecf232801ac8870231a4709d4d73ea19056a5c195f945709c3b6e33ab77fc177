@@ -1,0 +1,123 @@
+**Theorem 12.2 (full-family exact refinement).** For every $m\ge1$
+and $h\ge0$, at $D=h+6m-2$ the prescribed complete export
+$E^\circ$ is lawfully acquired and correct for $\mathsf P$ on the
+entire original $\mathcal F_D$, with exactly
+
+$$
+N_{\mathsf P}=s_D-(3m)^n+1
+\tag{LTR.36}
+$$
+
+attained names. Among all preparations and readers correct for the
+original $\mathsf U$ on that full family and refining this same
+$E^\circ$, the exact minimum attained alphabet is
+
+$$
+N_{\mathsf U\mid E^\circ}=s_D-(3m)^n+m^n.
+\tag{LTR.37}
+$$
+
+Thus the exact additional-name premium for this prescribed refinement
+is $m^n-1$. Both attaining constructions use, on every actual source,
+exactly
+
+$$
+T_{\rm prep}=2^D-1,\qquad
+Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1
+\tag{LTR.38}
+$$
+
+charged preparation Reads, maximum submitted length, and submitted
+address letters. Their later readers use at most one original-root
+Read: length at most $D$ for $\mathsf P$ and at most $D-1$ for
+$\mathsf U$. These are attaining sufficient costs, not preparation
+optima.
+
+**Proof.** First, each $u\in S_D$ is an actual right subtree in
+the family and is fixed by $\pi_D$. Hence all names in (LTR.35)
+are attained, giving (LTR.36).
+
+For the original reader, replace $\star$ by the $m^n$ vector
+names of Theorem 11.1 on its canonical scaffold image and retain
+each name $[u]$ elsewhere. Explicitly, when $\pi_D(v)\in G_{m,h}$,
+its unique ordered comb entries determine $(g_i)$ as in that theorem.
+This defines a refinement $E^*$: map every vector name to $\star$
+and every other name to itself. Its range has exactly (LTR.37)
+elements.
+
+Conversely, any full-family $\mathsf U$ refinement $E$ must have
+at least $m^n$ distinct names on the actual subset $X_{m,h}$ by
+Theorem 11.1. Each of the other $s_D-(3m)^n$ canonical states
+has its own distinct attained $E^\circ$ name and therefore demands
+at least one disjoint $E$ name. These names cannot be shared with
+$X_{m,h}$. This proves the lower bound (LTR.37) even if the
+refinement splits noncanonical inverse images in arbitrary ways.
+
+Here is an actual preparation for each displayed export. Before
+receiving $p$ or $k$, submit all words $Rw$ with $|w|\le D-1$
+in a fixed public order, including words returning absent. This is
+the credited full boundary scan. Its acquired constructor array
+determines $\pi_D(v)$: stop at every reached labelled leaf, recurse
+through earlier branches, and put $C_0$ at each branch at cutoff
+depth $D-1$. A finite common table computes either $E^\circ$ or
+$E^*$ from this acquired state. Membership in the scaffold and the
+comb heights are computed from this array, never obtained from an
+identity, equality or subtree port. Every comparison is a local
+comparison of already acquired finite descriptions.
+
+The table can be generated effectively by enumerating the finite
+$S_D$, the fixed ordered scaffold and its comb tuples. For each
+fixed installed integer $m$, one procedure works for every public
+$D\ge6m-2$ by taking $h=D-(6m-2)$. At smaller depths the same
+procedure may use one name for each canonical state. It depends on
+public $D$ and fixed installed code, never on a later target or count.
+All its loops and tables are finite, so it terminates on every actual
+source. This specifies an effective acquisition, rather than assigning
+free colors to an unknown source.
+
+A later name $[u]$ fixes every requested factor, so both readers
+use zero Reads there. On $\star$, use Corollary 10.2's pointwise
+reader. On a vector name, use (LTR.34)'s count-blind reader and
+then the all-count factor decoder. For $q$ stopping above the
+frontier, both output constant branch. Every other original target
+enters one unique actual scaffold occurrence. These cases exhaust
+all $p\in\mathcal P_D$.
+
+To check correctness beyond the canonical sources, let
+$u=\pi_D(v)\in G_{m,h}$. Canonicalization preserves all constructors
+through relative depth $D-1$. The scaffold roots at depth $h$ are
+therefore actually present in $v$, and every selected relative query
+has length at most $D-1$. Its reply on $v$ equals its reply on $u$.
+The requested $\Gamma_q$ also agrees, including when $q$ is
+initially absent and including any terminal labels not retained by
+$\pi_D$. Thus exactly the same installed query and decoder work
+on the entire actual inverse image of the canonical name. Transport
+at a scaffold root is lawful because that root is present; no absent
+address is treated as a supplied subtree. On a name $[u]$, factor
+preservation alone proves correctness with zero Reads. This proves
+both whole-family attainments with the same stationary actual source.
+
+There are $\sum_{l=0}^{D-1}2^l=2^D-1$ scan words. They include
+length-$D$ original-root words, whether present or absent, and their
+length sum is
+
+$$
+\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1.
+$$
+
+This proves every equality in (LTR.38). The late length bounds were
+proved in Corollary 10.2 and Theorem 11.1.
+
+Finally export only a fixed-width encoding of the displayed complete
+name. Use public allocation, the fixed scan schedule and padded finite
+table selection. The separately paid handoff and access-isolation
+services of Assumption 1.3 make all arrays, acquired shape information,
+selectors, operands, buffers, lengths, transcripts, control, allocation
+and accessible timing inaccessible except for functions of this name
+and public inputs. If any additional acquired distinction survives,
+it belongs in the alphabet and these counts would no longer describe
+that export. The services are declared premises, not inferred physical
+erasure or entry operations. This completes the paid complete-code
+construction. $\square$
+

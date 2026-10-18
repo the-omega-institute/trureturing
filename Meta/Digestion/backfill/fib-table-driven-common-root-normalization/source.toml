@@ -1,0 +1,5 @@
+source_id = "fib-table-driven-common-root-normalization"
+path = "docs/develop/theory/FIB_TABLE_DRIVEN_COMMON_ROOT_NORMALIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

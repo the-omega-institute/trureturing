@@ -1,0 +1,20 @@
+**Definition 2.1 (unary temporal summaries).** Put
+
+$$
+Q_0=\{(0,0),(2,1),(1,0)\},\qquad \ell_L=1,\quad\ell_R=2,
+$$
+
+and, for an attained factor $z=(b,c)$, define
+
+$$
+U(z)=\begin{cases}\star,&z=(0,0),\\b,&\text{otherwise},\end{cases}
+\qquad
+D_e(z)=\begin{cases}\star,&z\in Q_0,\\b-\ell_e,&z\notin Q_0.
+\end{cases}
+\tag{OCB.12}
+$$
+
+The formal label $\star$ is distinct from every integer. All port
+prescriptions still take values in their actual $G_q$ and retain their
+owner domains and guards.
+

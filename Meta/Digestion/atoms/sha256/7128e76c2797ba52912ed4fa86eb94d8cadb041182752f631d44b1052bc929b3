@@ -1,0 +1,62 @@
+**Theorem 20.3 (validity and all-three-budget feasibility remain different
+from supply).** For a promised total $a$, invalidity of a proposed finite
+menu certificate with literal entry labels is semidecidable. So is
+failure of feasibility at a supplied triple $H,p,\ell$ for this sparse
+family. Neither corresponding positive property is decidable, even
+with both totality and finite preparability promised. On syntax
+(PCA.44), each is $\Pi^0_1$-complete: for certificate validity this
+already holds for one fixed proposed certificate, and for budget
+feasibility for any fixed triple with $H\ge4,p\ge2,\ell\ge6$.
+Triples failing one of those baseline inequalities are uniformly
+infeasible and are excluded from that hardness assertion.
+
+Proof. A certificate is a finite menu $M$ and a finite assignment
+$\chi$ of its reply tuples to the original $e_0,e_1$, with arbitrary
+completion on unattained tuples. Enumerate finite origins, retain
+exactly those with $R_P(\rho u)=R_*$, and evaluate the promised total
+code and actual finite replies. A mismatch with $\chi$ refutes validity.
+It is found after finite work whenever one exists. If just menu
+determination is proposed, enumerate pairs instead and look for
+equal menu replies with unequal codes. The class test is exact finite
+tree computation; no regular-language assumption on the whole fiber
+is being used. These are mathematical semidecision constructions,
+not additional operations supplied to a native running state.
+
+For budgets satisfying the baseline, Theorem 19.1 makes feasibility
+equivalent to the simultaneous inequalities
+
+$$
+|A|\le H-4,\qquad |A|\le p-1,\qquad
+\sum_{s\in A}(s+4)\le\ell-3.
+\tag{PCA.47}
+$$
+
+If $A$ is infinite these finite thresholds all eventually fail.
+Successive evaluations of the total $a(s)$ semidecide a violation
+of any one inequality, and every violation has a finite witness.
+For (PCA.44) this gives an ordinary co-c.e. property of all $e$;
+equivalently every finite partial count and weight obey their bounds.
+The same applies to validity, since every described evaluator is total.
+
+For hardness, let $M_0$ be the six representative class roots and
+let $\chi_0$ return $e_1$ if $b_3$ or $b_4$ has alpha reply,
+and $e_0$ otherwise. This is a valid certificate for $A=\varnothing$.
+It is invalid for every nonempty singleton support: Lemma 18.1 gives
+same-root actual sources in $Z_{b_3}$ with different required entries,
+and $\chi_0$ assigns zero to both.
+
+Given an arbitrary machine $e$ and a fixed feasible baseline triple,
+construct an enumerator which first takes more than $\ell+1$ dummy
+transition steps, then simulates $e$, and emits just one number if
+and when $e$ first halts. No other number is ever emitted. Its compiled
+description is effective and its emitted set is always finite. Apply
+$\Gamma$ to that description. The selected support is empty if $e$
+never halts, and otherwise is a singleton $\{s\}$ with $s>\ell+1$.
+In the latter case the exact literal minimum $s+7$ exceeds $\ell$.
+Thus both validity of $(M_0,\chi_0)$ and feasibility at the given
+triple hold exactly when $e$ never halts. Every reduced input is total
+and finitely preparable, with the same source, code template and fixed
+reader. Nonhalting is the classical co-c.e.-complete endpoint; bounded
+simulation and the explicit native frontier establish the required
+promise-preserving reductions. $\square$
+

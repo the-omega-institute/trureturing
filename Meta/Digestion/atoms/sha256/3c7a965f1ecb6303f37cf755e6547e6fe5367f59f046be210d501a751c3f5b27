@@ -1,0 +1,35 @@
+**Definition 23.1 (The two fixed polynomial shapes).** Let $H=H_c$ be the rational-center polynomial from equation (19.7) of [Real renewal instruments and detector rank](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md). Explicitly, for a real argument $x$,
+
+$$
+\begin{aligned}
+H(x)=x^9+\frac1{35\cdot10^{24}}\bigl(&55800726477138x-224986136658885x^2
++420664314485485x^3\\
+&-540138133491075x^4+518234977000797x^5
+-254383031435085x^6\\
+&+77668004560980x^7+43377331415040x^8\bigr).
+\end{aligned}
+\tag{23.1}
+$$
+
+Set
+
+$$
+\begin{aligned}
+F_0(x)&=x^9,&F_1(x)&=H(x),\\
+\delta&=\frac{2749658638697}{10^{24}},&B&=1+\delta,&
+a&=\frac{43377331415040}{35\cdot10^{24}}>0.
+\end{aligned}
+\tag{23.2}
+$$
+
+The polynomial is the one belonging to the rational center in Definition 12.1 of that source, rather than the limiting residual-zero coefficient vector. Theorem 15.5 there supplies, for every integer $k\ge1$,
+
+$$
+k^9\le F_i(k)\le Bk^9\quad(i=0,1),
+\qquad
+1\le\frac{H(k)}{k^9}\le1+\frac\delta k.
+\tag{23.3}
+$$
+
+Both shapes are monic of degree nine. In particular $H(k)-k^9=ak^8+O(k^7)$. These exact shapes remain fixed in every assertion below.
+

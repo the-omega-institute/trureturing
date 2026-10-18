@@ -1,0 +1,54 @@
+**theorem 8.2 (All zero-white-noise values and sufficient exactness).**
+For every $t\in[0,1]$,
+
+$$
+\boxed{E_3(t,0)=\frac{t(23+4t^2)}{125}.}
+\tag{8.3}
+$$
+
+For all $t,\eta\in[0,1]$, $E_3=0$ when $c=0$. Moreover,
+
+$$
+\eta\ge\eta_F:=\frac{25\sqrt7-55}{12}
+\quad\Longrightarrow\quad E_3(t,\eta)=0
+\quad\text{for every }t\in[0,1].
+\tag{8.4}
+$$
+
+The threshold in (8.4) is sufficient; no necessity assertion is made.
+
+Proof. At $\eta=0$, $w=h=1/5$, $n=0$, $r=3/5$ and $u=t/5$.
+Then
+
+$$
+B_3=M_3=\frac{102t-4t^3}{125},\qquad
+F_3=\frac{98t}{125},\qquad
+M_3-F_3=\frac{4t(1-t^2)}{125}\ge0.
+\tag{8.5}
+$$
+
+The lower and upper bounds in (2.2) coincide at
+$t-B_3=t(23+4t^2)/125$. The majority protocol is directly lawful:
+its paid populations are $\alpha_M=98/125$, $\beta_M=0$ and its
+failure mass is $27/125$. Its failure preparation stays at the
+measured coordinate with probability one. Thus (8.3) includes $t=0$,
+$t=1$ and zero source eigenvalues, with finite rounds and no limit.
+At $t=1$ its error is $27/125$; for $0<t<1$, majority improves the
+three-copy first-hit error by $4t(1-t^2)/125$.
+
+At $c=0$ the common measure-and-prepare target in Theorem 7.2 proves
+exactness. For the first-hit protocol, $G_F=c$ whenever
+
+$$
+1+r+r^2\ge5/2
+\quad\Longleftrightarrow\quad
+r\ge(\sqrt7-1)/2
+\quad\Longleftrightarrow\quad\eta\ge\eta_F.
+$$
+
+At and above this threshold, (5.1) gives $\alpha_F=s$ and
+$\beta_F=5n$. The normalized failure preparation supplies the three
+other coordinates and the achieved coherence equals $c$. Its entire
+channel is the target, including at the threshold. This proves (8.4)
+without an assertion that these are all exactness parameters. QED.
+

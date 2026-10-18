@@ -1,0 +1,27 @@
+**定理 5.2（保留固定余量的首层等价）。** 在假设 1.3 下，
+条件（EL.8）等价于同一量词和同一完整原族的条件
+\[
+ \exists\kappa_{\rm prime}<\sqrt2/4\quad\forall T<\infty\quad
+ \exists\text{合格原见证 }X\text{ 且 }\ell_X\ge T:
+ \quad J_{\rm prime}(X)\ge-\kappa_{\rm prime}M_X.
+\tag{EL.9}
+\]
+而（EL.8）与离散比较（EL.0.5）不能同时成立。
+
+**证明。** 从（EL.8）出发，先选取
+\(\kappa+1/4<\kappa_{\rm prime}<\sqrt2/4\)。
+把 \(H_{\rm ref}/M_X\) 的误差起点加入每个给定的 \(T\)，
+使其绝对误差小于这两个系数的固定差。
+由 \(J_{\rm prime}=\mathcal I-H_{\rm ref}\) 得（EL.9）。
+反向先选 \(\kappa_{\rm prime}-1/4<\kappa<c_Q\)，
+以同样的固定差控制参考误差，再用
+\(\mathcal I=J_{\rm prime}+H_{\rm ref}\) 得（EL.8）。
+两次均只扩大共同起点，没有缩小原见证的 \(S_X\)。
+最后固定 \(\eta=(c_Q-\kappa)/2>0\)，
+在（EL.0.5）与（EL.8）的同一见证上得到
+\[
+ \frac{c_Q-\kappa}{2}+\frac{\mathcal C_X}{M_X}
+ \le\frac{\varepsilon_X}{M_X}=o(1),
+\]
+与 \(\mathcal C_X\ge0\) 及固定正差矛盾。\(\square\)
+

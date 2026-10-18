@@ -1,0 +1,27 @@
+**Proposition 28.2 (occupied reversing contacts are singleton groups).**
+Under Assumption 28.1 define
+
+$$
+Z_{\rm rev}=\{(u,v,1)\in Z:\Psi(u,v)>0\},\qquad
+\mathscr G_{\rm rev}=\{\{z\}:z\in Z_{\rm rev}\}.
+\tag{FC.113}
+$$
+
+Every member of $Z_{\rm rev}$ is a singleton compatible group, and
+every optimal representation on this face occupies at least one of
+these groups. Its total coefficient mass on their saturated endpoints
+is greater than $4/(5t)$.
+
+Proof. For any $z\in Z_{\rm rev}$, Theorem 25.1 gives
+$\eta_0>0>\eta_1$ at its actual direction. Even if its pure
+endpoint also belongs to $Z$, their product is strictly negative,
+so Definition 3.2 keeps them in two singleton groups. If the pure
+endpoint is absent, the saturated endpoint is already a singleton.
+The exact gap decomposition (FC.8) also excludes a strict fractional
+contact at this direction. Theorem 4.2 puts every optimum on the
+complete contact set. Corollary 27.2 then gives the stated mass and
+occupancy for each such optimum, rather than only for a chosen primal
+table. The complete inventory is finite; admitted integral contact
+laws therefore collect into its finite group data as in Theorem 3.3.
+$\square$
+

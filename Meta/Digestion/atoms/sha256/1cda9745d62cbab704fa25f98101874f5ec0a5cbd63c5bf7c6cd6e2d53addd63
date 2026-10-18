@@ -1,0 +1,125 @@
+**引理 5.1（All-complex zero-sum triple budget）。** A finite three-support
+Gram decomposition of $L$ implies
+
+$$
+b\le\beta=\frac{4}{3\sqrt3}\left(1-\frac1{\sqrt7}\right).
+\tag{5.4}
+$$
+
+Proof. In any Gram sum,
+$0=\mathbf1^\dagger L\mathbf1=\sum_\ell|\mathbf1^\dagger z_\ell|^2$,
+so every vector has coordinate sum zero. Let $Q$ cyclically permute the
+middles, and let $\mathcal T$ be complex conjugation followed by exchanging
+the outers and reflecting middle indices $j\mapsto-j$. Both fix $L$.
+For $\mathcal T$, conjugation reverses $ibK_3$, reflection reverses it back,
+and outer exchange restores the conjugated $c_*,h_*$ entries in (5.3).
+They preserve supports and the zero-sum equation. The six maps
+$Q^j$ and $Q^j\mathcal T$, $j=0,1,2$, form the resulting symmetry group.
+Applying each to every vector and dividing the vector by $\sqrt6$ averages
+its rank-one matrix, also for an antiunitary map. Their finite sum is still
+$L$. We may therefore use a decomposition invariant as a labelled collection
+under these six maps, with no loss of a possible complex competitor.
+
+Separate the terms into B-type using both outers, C-type using exactly one
+outer, and D-type using none. B-type has at most one middle; C-type at most
+two. Assign a containing middle label to pure-outer B terms, and an oriented
+cyclic middle pair to smaller C supports. Make these assignments on the
+initial list and propagate the labels when forming its six images.
+These choices exist for every support of the required size and
+do not change any vector. No nonzero singleton can satisfy the zero-sum
+condition.
+
+The total B contribution has equal outer diagonals, say $V$, and its outer
+edge is $c_*$ because no other group uses both outers. Its PSD compression
+$\left(\begin{smallmatrix}V&c_*\\\bar c_*&V\end{smallmatrix}\right)$
+forces $V\ge\kappa$. The total C diagonal at each outer is then $U=2-V$.
+Thus
+
+$$
+0\le U\le2-\kappa.
+\tag{5.5}
+$$
+
+Cyclic averaging puts one third of the B outer compression at each middle
+label. In such a term the middle coordinate is minus the sum of the two
+outer coordinates. Consequently B gives each middle diagonal
+$(2V+2\operatorname{Re}c_*)/3=(2V-1)/3$, each first-outer/middle entry
+$-(V+c_*)/3$, its conjugate at the other outer, and no middle off-diagonal.
+This remains true for a pure-outer labelled term because its outer sum is
+zero.
+
+Sum the C-type terms with label $(1,m_j,m_{j+1})$. Each resulting block is
+PSD, Hermitian and has row sum zero. Solving its row equations gives exactly
+
+$$
+A(x,y,z,q)=
+\begin{pmatrix}
+x+y&-x+iq&-y-iq\\
+-x-iq&x+z&-z+iq\\
+-y+iq&-z-iq&y+z
+\end{pmatrix},
+\qquad x,y,z,q\in\mathbb R.
+\tag{5.6}
+$$
+
+For example the real parts of its first two off-diagonals define $-x,-y$,
+their imaginary parts are opposite by the first row equation, and the
+remaining equations force the third off-diagonal and the two remaining
+diagonals in (5.6). Cyclic invariance makes the three outer-1 blocks identical
+in their ordered coordinates. Conjugation and reflection reverse the ordered
+middle pair together; the outer-5 partner is $A(y,x,z,q)$, with the same
+$q$. Write
+
+$$
+S=x+y=U/3\ge0.
+$$
+
+Its outer/first-middle principal minor gives
+
+$$
+0\le S(x+z)-|-x+iq|^2=xy+Sz-q^2,\qquad
+q^2\le S^2/4+Sz.
+\tag{5.7}
+$$
+
+Here $xy\le(x+y)^2/4$ for any real $x,y$. Adding all six C blocks gives
+oriented middle edge $-2z+2iq$, middle diagonal $2S+4z$, and each
+outer-to-middle entry $-S$.
+
+The D group is a PSD middle circulant with zero row sum. Its diagonal can
+be written $2w$, and its oriented edge $-w+ir$ with $w,r$ real. On
+$u,v,n$ from (4.1) its eigenvalues are $0,3w+\sqrt3r,3w-\sqrt3r$.
+Thus
+
+$$
+w\ge0,\qquad |r|\le\sqrt3\,w.
+\tag{5.8}
+$$
+
+The target middle edge has real part zero and imaginary part $b$. The B
+group has no such edge, so
+$w=-2z$, $z\le0$, and $b=2q+r$.
+
+If $S=0$, PSD with zero outer diagonal forces that entire row to vanish
+by its two-coordinate principal minors. Hence $x=y=q=0$ in (5.6).
+The remaining middle block is
+$\left(\begin{smallmatrix}z&-z\\-z&z\end{smallmatrix}\right)\succeq0$,
+so $z\ge0$. Together with $z\le0$ this gives $z=w=r=b=0$.
+If $S>0$, define $Y=\sqrt{S^2/4+Sz}$. Equation (5.7) makes the radicand
+nonnegative and $z\le0$ gives $0\le Y\le S/2$. Therefore
+
+$$
+\begin{aligned}
+b&\le2|q|+|r|\le2Y-2\sqrt3z\\
+&=\frac{2S}{\sqrt3}
+-\frac{2\sqrt3}{S}\left(Y-\frac{S}{2\sqrt3}\right)^2
+\le\frac{2S}{\sqrt3}.
+\end{aligned}
+\tag{5.9}
+$$
+
+Using $S=U/3$ and (5.5) gives
+$b\le2(2-\kappa)/(3\sqrt3)=\beta$. All zero budgets have been treated
+without division; the proof covers all finite lengths and complex phases.
+$\square$
+

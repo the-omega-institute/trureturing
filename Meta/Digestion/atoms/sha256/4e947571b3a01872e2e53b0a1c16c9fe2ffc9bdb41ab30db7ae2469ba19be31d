@@ -1,0 +1,42 @@
+**Proposition 10.2 (positive-spacing limiting infimum comparison).**
+For each finite $n\ge1$ and parameter,
+
+$$
+\frac{c_\tau}{n+1}\le R^*_{n,\kappa}\le r_{n-1,\kappa}.
+\tag{10.2}
+$$
+
+For $n\ge2$ the upper comparison is obtained as a limit of actual
+$n$-query schedules with positive cluster windows. The approximation
+can be made uniform in $\kappa$ for each fixed $n$.
+
+Proof. The lower bound is Theorem 7.1. Fix $n\ge2$, $m=n-1$, and
+replace $h_n$ in (4.1) by any $0<h<\tau$, with $\delta=h/m$.
+Use $g_{m,\kappa}$ of the normalized sum of squared wrapped short
+increments as estimator. With real comparison increments, (4.6)
+now gives $\mathbf E|S_{\rm real}-S_{\rm fr}|^2\le C_\tau h$.
+The fixed-$m$ Lipschitz bound from Definition 10.1 gives convergence
+in mean square of the estimator outputs. Boundedness then gives
+convergence of their risks. The frozen pair has exactly the static
+law in Definition 10.1, because $K_\tau\sim\pi$, so its risk is
+$r_{m,\kappa}$. The wrapping error is at most
+$2d^2m\exp[-\pi^2/(2a_+\delta)]$, which tends to zero with $h$.
+All bounds are uniform in $\kappa$ for this fixed $m$. For every
+tolerance, a strictly positive $h$ therefore gives an original lawful
+pair within that tolerance of $r_{n-1,\kappa}$. Taking the infimum
+proves its upper bound. For $n=1$, ignoring the value at the required
+terminal query gives the prior variance $r_{0,\kappa}$. $\square$
+
+For each finite $n$, Definition 4.1 itself is an actual policy with
+finite risk. Its sharp coefficient is attained along that sequence
+of finite experiments. Proposition 10.2 is a different, fixed-$n$
+limiting comparison. At a zero cluster window the short increments
+are zero, a repeated same-time query returns the same value, and
+normalization by $\sqrt\delta$ is undefined. No independent data
+exist at that boundary. The results prove neither
+$R^*_{n,\kappa}=C_\kappa/n$ nor
+$R^*_{n,\kappa}=r_{n-1,\kappa}$ at finite $n$. The exact finite-$n$
+infimum, its relation beyond (10.2) to the static comparison, and
+existence, nonexistence or structure of a finite-$n$ optimizing policy
+remain unresolved.
+

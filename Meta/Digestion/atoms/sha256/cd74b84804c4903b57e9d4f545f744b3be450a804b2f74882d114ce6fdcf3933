@@ -1,0 +1,18 @@
+## 8.99 Scope of the adaptive-query application
+
+**Scope clarification 8.5 (independent finite-query argument).**
+Proposition 8.4 is a source-specific ordinary-mathematical application, not
+an invocation of a generic DEV finite-query theorem. Its proof uses only the
+displayed mixture, the positive mass of $E$ under both components, a
+source-independent seed, almost-surely finite stopping, the countable family
+of finite stopping transcripts, and the fact that every nonempty legal finite
+cylinder in $E$ has positive mass under both component laws. Its contract is
+therefore limited to adaptive queries of original visible coordinates and
+exact recovery of $D$ on $E$ under $P\otimes\nu$. It makes no claim for tail
+queries, source-correlated advice or seeds, an externally supplied $H$ label,
+arbitrary finite-valued summaries, approximate recovery, or a different
+source/response contract. A result from another DEV source may be reused only
+after an explicit correspondence of source, responses, seed law, stopping
+semantics and target; no such transfer is asserted here. The proposition
+remains unverified by Lean or the kernel.
+

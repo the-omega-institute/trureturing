@@ -1,0 +1,42 @@
+**Theorem 82.3 (integrated convergence, including infinite time).**
+With the zero extension convention of Definition 81.1,
+
+$$
+\|U_s-V\|_{L^\infty(\mathbb R^4)}\longrightarrow0,
+\qquad \sup_{0<s\le s_0}\|U_s\|_\infty<\infty.
+\tag{82.10}
+$$
+
+More precisely, finite positive-time windows converge locally
+uniformly as in (81.8), and, for every $M\ge1$,
+
+$$
+\sup_{\xi\in\Omega_s}\frac1{j_0}
+ \int_M^\infty e^{\lambda s^2t}P_s(t;0,\xi)dt
+ \le CM^{-5/2}+Cs^5.
+\tag{82.11}
+$$
+
+The tangent integral over $[M,\infty)$ is at most $CM^{-5/2}$.
+These assertions concern the complete integrated threshold field,
+including its original infinite-time part.
+
+Proof. On $[1,M]$ use (81.8). Between rescaled times $M$ and $s^{-2}$,
+when this interval is nonempty, (76.1) gives the integrable upper
+bound $Ct^{-7/2}$, because the threshold factor is bounded there.
+For original times at least one use exactly (82.9). If $M>s^{-2}$,
+the whole remaining integral is already bounded by that expression.
+This proves (82.11); (82.4) gives the tangent assertion.
+Thus first $s\to0$ at fixed $M$, then $M\to\infty$, proves locally
+uniform convergence of the integrated potentials. It also gives
+uniform boundedness. To pass from local to global uniform
+convergence, use (82.7) and (82.4) outside the fixed compact box
+$\{N\le R\}$. For each fixed $R$ it lies in $\Omega_s$ eventually;
+then let $R\to\infty$. Points outside $\Omega_s$ have already been
+included by zero extension and the same tangent tail bound.
+This proves (82.10). The argument separates a finite-time local
+supplier from two explicit integrable time tails and a spatial
+tail; no local heat theorem is being used as an infinite Green
+interchange. $\square$
+
+

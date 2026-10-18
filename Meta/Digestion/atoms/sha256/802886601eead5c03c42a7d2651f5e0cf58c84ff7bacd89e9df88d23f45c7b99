@@ -1,0 +1,58 @@
+**Definition 206.25 (Remaining full-family and original-source obligations).**
+Use the complete cone masses and feasible auxiliary domain
+
+$$
+\rho_C(b,e)=\min_{\lambda\ge0,\ G_C\lambda\ge h(b,e)}\sum_D\lambda_D,
+\qquad
+H_N=\{(b,e)\in H_L:\rho_N(b,e)<\infty\},
+$$
+
+where an infeasible minimum is infinity. The unresolved comparison is
+
+$$
+\rho_O(b,e)\le\max\{1,\rho_N(b,e)\}\quad((b,e)\in H_N).
+\tag{206.59}
+$$
+
+Even within the entire all-$L$ family (206.7), with arbitrary early
+credit, arbitrary correct suffixes and late profile, and arbitrary
+low $t$, a certificate for every $\Delta_O(y)\le1$ has not been
+established here. The moment reduction preserves this problem; the
+other four groups have explicit coverage hypotheses. Their union is
+not proved exhaustive. Failures of clipping, coupled stock completion
+or unconditional chain relocation are failures of those constructions,
+not counterexamples to (206.59).
+
+A genuine finite refutation requires one common $(b,e)\in H_L$, a
+nonnegative full score $y$ with $\Delta_O(y)\le1$, and an actual
+attained $\lambda\ge0$ satisfying every row of
+
+$$
+G_N\lambda\ge h(b,e),\qquad
+M=\sum_D\lambda_D\ge1,\qquad F_{Q(y)}(b,e)>M.
+\tag{206.60}
+$$
+
+An auxiliary vertex, a support gap or failure of a sufficient test is
+not such a $\lambda$. The existing normalization in 199.7 and its
+positive-cap boundary supplier 168.1, followed by 110.2, apply only
+under their proved hypotheses. Arbitrary original amplitude/cap
+vectors are not presumed to lie in $H_L$.
+
+For the original problem, the remaining obligation is, for every
+sequence (206.2) and every positive closed cap,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing,
+\tag{206.61}
+$$
+
+or an explicit original common-seed $N_2$ attainer and a uniform lower
+certificate against every full-carrier, arbitrary-address $O_2$
+competitor. The exact-law obstruction of 112.2 permits a different
+stopped law at the same cap and therefore does not settle this
+obligation. Neither the five scoped groups nor their overlap
+comparisons establish universal completion.
+

@@ -1,0 +1,45 @@
+**Example 15.4 (A lawful additive shear without an affine center).**
+Using the same $h$ and $C$, the encoder
+
+$$
+E_{\rm sh}(k,\alpha,\beta)=
+(C\cos\alpha,\ C\sin\alpha,\ h(\alpha))
+$$
+
+has full affine hull and finite error with the same decoder, but
+its phase action has no common affine fixed point.
+
+**Proof of Example 15.4.** The probability maps are again the
+identity, and the exact phase maps are
+
+$$
+(z_1,z_2,z_3)\longmapsto
+\bigl(R_{t/2}(z_1,z_2),\ z_3+h(t/2)\bigr).
+$$
+
+Additivity proves all lawful identities. Unboundedness of $h$
+and linear independence of $1,\cos,\sin$ prove the full hull as
+in Example 15.3. The decoder remains bounded. Choose a phase
+increment $\delta$ with $h(\delta)\ne0$. Its map translates the
+third coordinate by a nonzero constant, and therefore fixes no
+ambient point. On the homogeneous coordinates $(1,z_3)$ its block
+is
+
+$$
+\begin{pmatrix}1&0\\h(\delta)&1\end{pmatrix}.
+$$
+
+It has the invariant first-coordinate covector but no vector with
+first coordinate one fixed by this increment. Thus the full phase
+family has no normalized fixed vector or common affine center.
+$\square$
+
+These examples disprove phase-triviality of every extra hidden
+coordinate and the inference from a fixed homogeneous covector to
+an affine center. They do not disprove the capacity plateau: their
+useful readout is already the constant-radius radial model. They
+ignore height, so no guard-recovery assertion is made for them.
+Both examples satisfy the unrestricted literal contract. The basis
+choice only exhibits permitted irregular encoders and is not a
+premise of the lower-bound proof.
+

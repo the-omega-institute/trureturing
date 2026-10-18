@@ -1,0 +1,27 @@
+## 396. An elementary angle-distortion estimate
+
+For u>3, put a=sqrt(1-u^(-2)). For phi in (0,pi), let psi be the unique
+angle in (0,pi) whose positively oriented vector is proportional to
+
+    (cos(phi), a*sin(phi)).
+
+Then
+
+    |psi-phi|<1/u^2.                                        (396.1)
+
+Indeed, phi and psi are on the same side of pi/2, so their difference
+has absolute value less than pi/2. If delta=|psi-phi|, the angle-between-
+vectors formula gives
+
+    tan(delta)=(1-a)*|sin(phi)*cos(phi)|
+               /(cos(phi)^2+a*sin(phi)^2)
+              <=(1-a)/(2*sqrt(a)).
+
+The inequality follows by expanding
+(|cos(phi)|-sqrt(a)*sin(phi))^2>=0; it also holds when the numerator is
+zero. Using delta<=tan(delta), 1-a=1/(u^2*(1+a)), and a>1/2 gives
+
+    delta<=1/(2*u^2*sqrt(a)*(1+a))<1/u^2.
+
+This proves (396.1), including phi=pi/2.
+

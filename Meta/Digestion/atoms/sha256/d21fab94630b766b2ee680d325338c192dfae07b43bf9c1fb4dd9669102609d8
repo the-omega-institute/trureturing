@@ -1,0 +1,24 @@
+**Corollary 22.3 (a precisely excluded completion mechanism).** Fix
+$0<\theta\le1$. There is no completion rule which, on an
+unbounded sequence of the whole-group covers (COK.104), both
+preserves their full local laws with error
+$\varepsilon_m\to0$, chooses relative matchings with
+$f(h_m)/m\le1-\theta$, and supplies common actual laws with
+$\Delta(P_m)/(2m)\to0$. Their lower limit is at least
+$\theta I_0/4>0$.
+
+Proof. Apply (COK.114) and $v(\varepsilon_m)\to0$.
+$\square$
+
+Compatibility is not the missing premise in this example:
+(COK.110) supplies compatible full-support common laws for
+every matching. The obstruction is to retaining the displayed
+local optima while depleting reciprocal actual-owner matching
+and asking for vanishing common-law chain loss. In this class
+one must retain that joint matching information or pay the
+quantified loss. It is not an obstruction to arbitrary cover
+choices, global recoloring, other native certificates, lawful
+recuts, optimization over $\mu$, or computability. The result
+does not identify the compatible law with a prescribed Gibbs
+law or determine its component normalizers.
+

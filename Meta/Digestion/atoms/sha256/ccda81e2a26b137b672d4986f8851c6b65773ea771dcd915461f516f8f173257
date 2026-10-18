@@ -1,0 +1,37 @@
+### 推论 40.4（层级 FIB Fisher 能量的量子解释）
+
+如果第 \(j\) 层场在每个节点使用独立乘积态，并将节点权重吸收到参数速度中，则
+
+\[
+\mathcal I_j(p;u)
+=
+F_Q(\rho_j;\dot{\boldsymbol\kappa})
+\]
+
+是该层乘积量子态沿 FIB seam 方向的 SLD Fisher 信息。由前文定理 20.4 的随机粗粒化收缩，
+
+\[
+F_Q(\mathcal E_j(\rho_j);\dot{\mathcal E}_j)
+\le
+F_Q(\rho_j;\dot{\rho}_j)
+\]
+
+在对角随机读出层上成立。
+
+因此当前架构可以严格写成：
+
+\[
+\text{FIB 隐藏 seam}
+\longrightarrow
+\text{对角密度矩阵切向量}
+\longrightarrow
+\text{SLD Fisher 几何}
+\longrightarrow
+\text{CPTP 粗粒化收缩}.
+\]
+
+这条链条仍然只使用有限概率、有限矩阵和 CPTP 映射。它还没有给出引力，也没有把 FIB 的五态载体识别成物理量子系统。
+
+
+---
+

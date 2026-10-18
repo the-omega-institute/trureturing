@@ -1,0 +1,22 @@
+**Definition 3.1 (Diagonal coordinates and the extension block).** For Definition 2.1 set $V=\mathbb C^d$ and define complex-linear maps
+
+$$
+D:M_d(\mathbb C)\longrightarrow V,\quad
+D(A)=(A_{00},\ldots,A_{HH})^{\mathsf T},\qquad
+\Delta:V\longrightarrow M_d(\mathbb C),\quad
+\Delta(v)=\operatorname{diag}(v).
+$$
+
+Put $\mathcal N=\ker D$ and $q_i=p_{H-i}$ for $0\le i\le H$. Define
+
+$$
+\begin{aligned}
+T:\mathcal N&\longrightarrow\mathcal N,& T(n)&=SnS^*,\\
+P:V&\longrightarrow V,& Pe_j&=e_{j+1}\ (j<H),\quad Pe_H=q,\\
+u_\theta&=x_\theta x_\theta^*-\Delta(q),&
+B_\theta:V&\longrightarrow\mathcal N,\quad B_\theta(v)=v_Hu_\theta.
+\end{aligned}
+$$
+
+Here $u_\theta\in\mathcal N$ because $|(x_\theta)_i|^2=q_i$. Each $A$ has the unique decomposition $A=n+\Delta(v)$, with $v=D(A)$ and $n=A-\Delta D(A)$.
+

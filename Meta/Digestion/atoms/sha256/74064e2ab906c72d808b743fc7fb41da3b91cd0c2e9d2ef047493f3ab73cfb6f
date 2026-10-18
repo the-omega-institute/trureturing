@@ -1,0 +1,113 @@
+**Proposition 23.1 (The stationary age controls the coherent Schmidt tail).**
+For the same fixed law (22.1), let K be the number of
+zeros since the last one at the left endpoint of a cut.
+Its stationary age probabilities and tails are
+
+$$
+\Pr(K=k)=\frac{k+1}{2^{k+2}},\qquad
+\mathbb EK=2,\qquad
+\Pr(K\ge r)=\frac{r+2}{2^{r+1}},\quad k,r\ge0.
+\tag{23.1}
+$$
+
+For every finite length n and proper cut after $\ell$,
+the positive coherent cut entropy, in bits, obeys
+
+$$
+S(\rho_{n,\ell})\le H(\min(K,\ell))\le H(K)\le4.
+\tag{23.2}
+$$
+
+If $\sigma_1\ge\sigma_2\ge\cdots$ are its Schmidt
+coefficients, then, for every integer $r\ge1$,
+
+$$
+\sum_{j>r}\sigma_j^2\le\frac{r+2}{2^{r+1}}.
+\tag{23.3}
+$$
+
+These bounds concern every window and cut of one stationary
+law, with constants independent of both.
+
+Proof. The event $K=k$ is the actual cylinder
+$1\,0^k$ ending at the cut. By stationarity and (22.2),
+
+$$
+\Pr(K=k)=\lambda M_1M_0^k\mathbf1
+=\frac{k+1}{2^{k+2}}.
+\tag{23.4}
+$$
+
+The zero-tail limit in Lemma 22.2 ensures that K is finite
+almost surely. Summing the geometric series and its first
+two moments gives (23.1).
+
+Partition the actual left words by trailing zero count k,
+using k=$\ell$ for the unique all-zero left word. For a
+left word u containing a one and ending in k zeros,
+the reset gives $\lambda M_u=c_u\alpha M_0^k$, with
+$c_u>0$. Consequently all coefficient-matrix rows in
+one group are proportional with positive factors
+$\sqrt{c_u}$. Each group can be compressed to a single
+normalized left vector. Groups have disjoint computational
+supports, so these left vectors are orthonormal. The
+all-zero group is already one row.
+
+The diagonal probabilities of the left reduction in this
+orthonormal basis are exactly the group masses, namely the
+distribution of $K_\ell=\min(K,\ell)$, since summing
+squared row coefficients recovers the actual marginal.
+Dephasing in this finite orthonormal basis cannot decrease
+entropy, giving the first inequality of (23.2).
+Deterministic coarse-graining gives $H(K_\ell)\le H(K)$.
+Finally
+
+$$
+H(K)=\sum_{k\ge0}\frac{k+1}{2^{k+2}}
+\bigl(k+2-\log_2(k+1)\bigr)\le\mathbb EK+2=4.
+\tag{23.5}
+$$
+
+For (23.3), if $\ell\ge r$, retain only the r groups
+$k=0,\ldots,r-1$. The resulting coefficient matrix has
+rank at most r and discarded squared Frobenius norm
+$\Pr(K_\ell\ge r)=\Pr(K\ge r)$.
+The best rank-r singular-value truncation has no larger
+error, proving the bound. If $\ell<r$, the full matrix
+already has at most $\ell+1\le r$ such groups, so the
+Schmidt tail is zero. $\square$
+
+Equations (22.6) and (23.3) refer to the same positive
+coherent state. Exact rank grows, while a fixed cut's
+squared Schmidt tail decays exponentially with retained
+rank. This single-cut estimate alone does not identify
+one globally accurate MPS with that same fixed bond at
+every cut; a simultaneous approximation requires an
+additional truncation theorem and its length-dependent
+error accounting.
+
+The broader probability/tensor separation is also existing
+literature. [Glasser–Sweke–Pancotti–Eisert–Cirac,
+*Expressive power of tensor-network factorizations for
+probabilistic modeling, with applications from hidden
+Markov models to quantum machine learning*,
+arXiv:1907.03741v2, §3.1 (HMM correspondence), §4,
+Proposition 5 and supplementary
+Lemma 13](https://arxiv.org/abs/1907.03741v2) already
+construct nonnegative tensor families with nonnegative
+TT rank two and unbounded real Born rank, using prime
+matrices. Their real Born rank optimizes over sign choices;
+the present theorem treats the prescribed positive square
+root. Their general family does not by itself supply the
+same stationary no11 cylinder law or its boundary factors.
+Here those interfaces are (22.3)–(22.9), not a new general
+tensor-rank separation theorem.
+
+A classical nonnegative rank bound, a fixed positive-root
+rank, a rank minimized over real signs, a rank minimized
+over complex phases, mixed-state Schmidt number and a
+quantum instrument's memory cost remain different
+quantities. None of §§19–23 equates them, or turns an
+occupation-law representation into a specified quantum
+preparation.
+

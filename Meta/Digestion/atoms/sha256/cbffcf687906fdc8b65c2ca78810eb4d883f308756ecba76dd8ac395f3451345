@@ -1,0 +1,60 @@
+**Proposition 4.3 (Actual one-sided conditional-block estimate).** Assume $\mathsf B(P)$ and fix $C=[a,b]$. With $p_C(\cdot;Y)$ from (1.8), define
+
+$$
+\begin{aligned}
+\mathcal V_t^R&=\sigma(X_j:j<a\text{ or }b<j\le t),&
+s_t^R&=P(X_C=\cdot\mid\mathcal V_t^R),&&t\ge b+1,\\
+\mathcal V_t^L&=\sigma(X_j:t\le j<a\text{ or }j>b),&
+s_t^L&=P(X_C=\cdot\mid\mathcal V_t^L),&&t\le a-1.
+\end{aligned}
+\tag{4.4}
+$$
+
+Both adjacent bits $X_{a-1},X_{b+1}$ are retained in either field. Then
+
+$$
+\begin{aligned}
+\mathbb E_P\|p_C-s_t^R\|_1^2&\le H_L\sum_{i=a}^b e_R(t-i),&&t\ge b+1,\\
+\mathbb E_P\|p_C-s_t^L\|_1^2&\le H_L\sum_{i=a}^b e_L(i-t),&&t\le a-1.
+\end{aligned}
+\tag{4.5}
+$$
+
+**Proof.** On a full exterior fiber, condition the band on the other block coordinates. For each legal insertion $u\to v$, its free posterior lies in $[1/4,1/2]$, which is equivalent to
+$p_C(u;Y)/3\le p_C(v;Y)\le p_C(u;Y)$. More formally, integrate the band against arbitrary exterior events and the specified other block coordinates; conditional integration gives these mass inequalities almost surely. They hold for all the finitely many edges simultaneously. Thus $p_C$ is band-compatible on
+
+$$
+K=K_L^{X_{a-1},X_{b+1}}.
+$$
+
+The graph $K$ is measurable in each field in (4.4), since both boundary bits are retained. Moreover $s_t^R=\mathbb E_P[p_C\mid\mathcal V_t^R]$ coordinate by coordinate. The same inequalities pass through this conditional expectation, and incompatible words keep mass zero. Therefore $s_t^R$ and $p_C$ are band-compatible on the same actual $K$, with the floor (4.2); the left-side argument is identical.
+
+Apply (4.2) in the order $p=p_C$, $r=s_t^R$. For a site $i\in C$, the single-site posterior of $p_C$, evaluated at the actual other block bits, is $q_i$. The corresponding posterior of $s_t^R$ conditions on
+
+$$
+\mathcal V_t^R\vee\sigma(X_j:j\in C,\ j\ne i)
+=\sigma(X_j:j\le t,\ j\ne i).
+\tag{4.6}
+$$
+
+To verify the identification, multiply the candidate finite conditional ratio by the conditional probability of the other block bits; its defining numerator is exactly the conditional probability with $X_i=1$. Testing against the retained field and summing the finitely many other-bit choices gives the conditional-expectation identity. Positive compatible masses justify division on every actual compatible fiber; null exterior records are immaterial.
+
+The field in (4.6) is the translated original right-erasure field with offset $t-i$: it keeps the entire left half-line and $t-i$ future bits. Disintegrating the $p_C$-weighted discrepancy in (4.1) and using stationarity gives exactly
+
+$$
+\mathbb E_P\mathcal D_K(p_C\Vert s_t^R)
+=\sum_{i=a}^b\mathbb E_P\left(q_i-\mathbb E_P[X_i\mid\sigma(X_j:j\le t,j\ne i)]\right)^2
+=\sum_{i=a}^b e_R(t-i).
+\tag{4.7}
+$$
+
+This proves the first inequality in (4.5). For the other direction the joined field is
+
+$$
+\mathcal V_t^L\vee\sigma(X_j:j\in C,j\ne i)
+=\sigma(X_j:j\ge t,j\ne i),
+\tag{4.8}
+$$
+
+the translated left-erasure field with offset $i-t$. The same disintegration gives the second inequality. Singleton completion graphs contribute zero. Countably many intervals, cuts and sites permit simultaneous conditional versions. No two-sided finite-window rate, conditional independence or hidden filtering stability is used. $\square$
+

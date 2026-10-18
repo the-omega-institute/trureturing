@@ -1,0 +1,67 @@
+**Theorem (repo-derived).** Suppose the inventory obeys
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, m<u<z+m+1,
+    (m-1)*(v-1)>=(c+d)^2.                          (322.2)
+
+Require all six strict genuine inequalities
+
+    Lt=(m+c)^2-(z-1)*(d-1)>0,
+    Jt=(z+1)*(d+1)-(m-c)^2>0,
+    Lr=(v+d)^2-(u-1)*(c-1)>0,
+    Jr=(u+1)*(c+1)-(v-d)^2>0,
+    Le=(v+d)^2-(m-1)*(z-1)>0,
+    Je=(m+1)*(z+1)-(v-d)^2>0.                      (322.3)
+
+Assume also the bad-eta condition and the retained actual partial
+M-angle budget, respectively,
+
+    theta_M(eta)+theta_Z(eta)<=pi,
+    2*beta_M(tau)+theta_M(eta)<=pi.                (322.4)
+
+Then, writing S=beta_V+beta_D at rho and eta,
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.           (322.5)
+
+Consequently no actual configuration satisfying these premises exists:
+the nine original slots in (322.5) have genuine V/D capacity at most
+pi+2*pi. The scalar implication (322.2)–(322.5) is proved below without
+using the C,Z,U budgets. Both inequalities in (322.4), including the
+whole stated partial M budget, remain premises throughout.
+
+For clarity, the paired response formulas used in the proof are
+reproduced here. Put
+
+    K=(sqrt(v^2-1)+sqrt(d^2-1))/(v+d),
+    w=sqrt((d-1)*Jt/[(d+1)*Lt]),
+    x=K*sqrt(Lr/Jr), y=K*sqrt(Le/Je),
+    A=[sqrt(m^2-1)+sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt),
+    B=[sqrt(m^2-1)-sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt).
+
+Then
+
+    theta_D(tau)=2*atan(w), beta_M(tau)=atan(A)+atan(B),
+    S(rho)=2*atan(x), S(eta)=2*atan(y),
+    tan(theta_M(eta)/2)^2=(m-1)*Je/[(m+1)*Le],
+    tan(theta_Z(eta)/2)^2=(z-1)*Je/[(z+1)*Le].       (322.6)
+
+All genuine angles lie in (0,pi); A,B are positive since m>c. The
+M budget forces beta_M(tau)<pi/2 and therefore
+
+    Ht=(m+c)*Jt-(m-c)*Lt>0,
+    4*(m-1)^2*Lt*Jt*Je<=Ht^2*Le.                  (322.7)
+
+These two conditions are equivalent to the M budget: on this branch
+tan(beta_M)=2*sqrt(m^2-1)*sqrt(Lt*Jt)/Ht and the budget is
+tan(beta_M)<=cot(theta_M(eta)/2). Squaring positive quantities yields
+(322.7). Similarly the bad-eta condition is equivalent to
+
+    (m+1)*(z+1)*Le^2>=(m-1)*(z-1)*Je^2.           (322.8)
+
+These are exact reformulations, not replacements by weaker budgets.
+The generalized hyperideal angle conventions agree with Luo–Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+[arXiv:1404.5365v2](https://arxiv.org/html/1404.5365v2).
+The inventory-specific implication here is a deduction from the
+displayed paired formulas and original-slot capacities.
+

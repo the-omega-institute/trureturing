@@ -1,0 +1,90 @@
+**Theorem 7.2 (Uniform bound for $s$-coordinate probes).** For every integer $s\ge1$ and every probe $f:S_i\to[0,1]$ depending on at most $s$ specified exterior coordinates as in Definition 7.1,
+
+$$
+v_i\ge\frac{M_i\,d_i(f)^2}{(1+4s/3)^2}.
+\tag{7.2}
+$$
+
+For a one-coordinate probe, in particular $f_y=\mathbf1_{\{y_k=b\}}$ with $k\ne i$ and $b\in\{0,1\}$,
+
+$$
+v_i\ge\frac9{49}M_i\,d_i(f)^2.
+\tag{7.3}
+$$
+
+Proof. Suppress $i$ temporarily, writing $M,c,v,H$ for the corresponding quantities. Multiply (5.3) by $f_y$ and sum. Rearranging gives
+
+$$
+M\langle f(1-2c-H)\rangle_i
+=2\sum_y m_yf_y(q_y-c)
++\sum_{e=\{y,z\}}\nabla J_e(q_y,q_z)\mathbin{\cdot}(f_y,f_z).
+\tag{7.4}
+$$
+
+By (4.7), each edge contribution on the right is exactly
+
+$$
+\frac{2C_e\delta_e(f_y-f_z)}{d_e}
+-\frac{C_e\delta_e^2(1-2\theta_e)
+[\alpha f_y+(1-\alpha)f_z]}{d_e^2}.
+\tag{7.5}
+$$
+
+The second displayed term is subtracted and is nonnegative before subtraction: $f\ge0$ and $\theta_e\le1/2$. Thus it may be dropped in an upper bound for (7.4). This is the sign that requires a nonnegative probe; the argument does not assert the same bound for arbitrary signed probes.
+
+Since the weighted mean of $q-c$ is zero, and a variable in $[0,1]$ has variance at most $1/4$,
+
+$$
+2\left|\sum_y m_yf_y(q_y-c)\right|
+=2M|\operatorname{Cov}_i(f,q)|
+\le2\sqrt{Mv\operatorname{Var}_i(f)}
+\le\sqrt{Mv}.
+\tag{7.6}
+$$
+
+For the internal edges, $C_e/h(a,b)=ab/(a+b)^2\le1/4$ and $d_e\ge3/16$, hence
+
+$$
+\frac{2C_e}{d_e}\le\frac83h(m_y,m_z).
+\tag{7.7}
+$$
+
+Let $\mathcal E_K$ consist of all internal edges whose flipped coordinate belongs to $K$. Outside this set $f_y=f_z$; inside it $|f_y-f_z|\le1$. For each one of these coordinates its edges form a matching. Since $h(a,b)\le(a+b)/4$, summing over at most $s$ such matchings gives
+
+$$
+\sum_{e\in\mathcal E_K}h(m_y,m_z)\le\frac{sM}{4}.
+\tag{7.8}
+$$
+
+For any real $u,v'$ and positive $a,b$,
+
+$$
+au^2+b(v')^2-\frac{ab}{a+b}(u-v')^2
+=\frac{(au+bv')^2}{a+b}\ge0.
+$$
+
+Apply this with $u=q_y-c$, $v'=q_z-c$. A vertex occurs at most once in each coordinate matching, so
+
+$$
+\sum_{e\in\mathcal E_K}h(m_y,m_z)(q_y-q_z)^2\le sv.
+\tag{7.9}
+$$
+
+Weighted Cauchy--Schwarz applied to (7.8)--(7.9) gives
+
+$$
+\sum_{e\in\mathcal E_K}h(m_y,m_z)|q_y-q_z|
+\le\frac s2\sqrt{Mv}.
+\tag{7.10}
+$$
+
+After dropping the nonpositive part of (7.5), bound its remaining term above by its absolute value and use (7.7) and (7.10). Together with (7.6), equation (7.4) yields
+
+$$
+M\langle f(1-2c-H)\rangle_i
+\le(1+4s/3)\sqrt{Mv}.
+\tag{7.11}
+$$
+
+The right side is nonnegative. Taking the positive part on the left and squaring, using $M>0$, proves (7.2), including the case $v=0$. Setting $s=1$ gives (7.3). The estimates use matchings and the actual masses, not any independence or product structure. $\square$
+

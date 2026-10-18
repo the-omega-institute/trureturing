@@ -1,0 +1,20 @@
+**Proposition 3.5 (a normalized kernel need not fill native zeros).**
+At $d=1,n=1$, take one seed owned at the root, with full domain
+$\{\alpha,\beta,\mathsf{branch}\}$ and owner table
+$B(\alpha)=\Gamma_{\varnothing}(\alpha)$,
+$B(\beta)=\Gamma_{\varnothing}(\beta)$,
+$B(\mathsf{branch})=\Gamma_{\varnothing}(C_0)$.
+In that order let $w=(1,0,0)$, $q=(1,0,0)$ and $\varepsilon=1$.
+The softened local table is $(2,0,0)$, despite positive
+$\varepsilon$ and normalization of $q$.
+
+**Proof.** The three actual sources
+$\langle\alpha,\alpha\rangle$, $\langle\alpha,\beta\rangle$ and
+$\langle\alpha,C_0\rangle$ belong to $\mathcal F_1$ and give precisely
+these seed replies at the original-root literal $R$. Each owner-table
+entry has its declared reply and reconstructs the corresponding unique
+state of $S_1$. Formula (SCP.9) therefore gives
+$(1,0,0)+(1,0,0)=(2,0,0)$. This leaves (SCP.11)–(SCP.13) intact:
+their proof uses nonnegativity and normalization, not full support.
+$\square$
+

@@ -1,0 +1,51 @@
+**Lemma 4.2 (One active edge and a mixed triple).** Conditional on
+a phase, one active edge has the following target-spin joint masses:
+
+| Target position | Zero reply | One reply |
+| --- | --- | --- |
+| In the pair | $a^2,b^2$ | $\eta,\eta$ |
+| Outside the pair | $ac,bc$ | $2a\eta,2b\eta$ |
+
+A single active-zero constraint gives maximal full-law state mass at
+most $a^2/2$. A single active-one constraint with at most one further
+call gives summed full-law correct mass at most $a\eta$. Two
+adjacent active edges with at least one one label, with at most one
+further call, give summed full-law correct mass at most $a\eta/2$
+for every target position.
+
+Proof. A zero pair has two constant assignments of weights $a^2,b^2$;
+a one pair has two opposite assignments, both of weight $\eta$.
+An exterior target supplies the independent factor $a$ or $b$.
+This proves the table and the zero bound, since $ac<a^2$.
+
+For an internal target on a one pair, its tie can gain only by a
+fresh extension, giving $2a\eta$ before the phase factor. A repeat,
+separator or query elsewhere leaves at most $\eta$. For an exterior
+target, its singleton has weights $a,b$. Joining the tie pair gives
+$\max(2a\eta,\eta)=2a\eta$; joining a fresh vertex leaves its
+summed majority mass $a$ unchanged, times the one-pair probability
+$2\eta$. Other queries only partition that independent factor.
+These exhaust the last moves and prove the single-one bound.
+
+For adjacent mixed edges the larger assignments, in left-to-right
+vertex order for labels $01,10,11$, are respectively
+
+$$
+(\sigma,\sigma,1-\sigma),\quad
+(1-\sigma,\sigma,\sigma),\quad
+(\sigma,1-\sigma,\sigma).
+\tag{4.2}
+$$
+
+Their weights are $a^2b=a\eta$, their complementary weights are
+$ab^2=b\eta$, and their total is $\eta$. An internal target
+has component odds $R$, so a fresh extension cannot increase its
+best sum $a\eta$. No other component with a nontrivial constraint
+is present; other operations leave at most this sum. For an exterior
+target, joining its singleton to the triple gives
+$\max(a\eta,a\eta)=a\eta$ by (4.1); joining a fresh
+vertex or querying elsewhere also gives at most $a\eta$.
+Restore the phase factor $1/2$. Both acquisition orders and all
+target positions are included. Early halts obey the same caps by
+(2.5), or directly by the displayed masses. $\square$
+

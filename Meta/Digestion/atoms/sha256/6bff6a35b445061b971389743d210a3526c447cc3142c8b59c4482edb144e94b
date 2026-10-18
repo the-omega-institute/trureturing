@@ -1,0 +1,149 @@
+**定理 2.1（祖先漂移残差严格非退化）。** For every
+$P\in\mathcal N$,
+
+$$
+\alpha_4(P)=0
+\quad\Longrightarrow\quad
+V_P(5)>V_P(3)=\frac1{t_3}\ge\frac1{t_5},
+\quad \alpha_5(P)<0.
+\tag{2.1}
+$$
+
+Consequently $\Delta(P)>0$ throughout $\mathcal N$. Neither assertion
+requires rank one, a reading vector, a gain polynomial or a drift.
+
+**证明。** The Lagrange weights at clocks four and five are
+
+$$
+\begin{aligned}
+(\ell_0(4),\ell_1(4),\ell_2(4),\ell_3(4))&=(-1,4,-6,4),\\
+(\ell_0(5),\ell_1(5),\ell_2(5),\ell_3(5))&=(-4,15,-20,10).
+\end{aligned}
+\tag{2.2}
+$$
+
+Substitution of (1.7) therefore gives
+
+$$
+\begin{aligned}
+V_P(4)&=-1+\frac4u-\frac6v+\frac4{u+v},\\
+V_P(5)&=-4+\frac{15}u-\frac{20}v+\frac{10}{u+v},\\
+V_P(3)&=\frac1{u+v}.
+\end{aligned}
+\tag{2.3}
+$$
+
+Assume $\alpha_4=0$. Introduce positive-denominator coordinates
+
+$$
+\begin{gathered}
+r=u/v>0,\qquad h=r(r+1)>0,\\
+N=4+2r-6r^2=2(1-r)(3r+2),\qquad B=15+4r-20r^2,\\
+A=N/h,\qquad D=B/h.
+\end{gathered}
+\tag{2.4}
+$$
+
+Here $A,D$ are scalar expressions, distinct from the cumulative
+matrices $A_i$. Equations (2.3) become
+
+$$
+V_P(4)=-1+\frac Av=\frac1{1+a+rv}>0,
+\qquad V_P(5)-V_P(3)=-4+\frac Dv.
+\tag{2.5}
+$$
+
+In particular $A>v\ge1$. Thus $N>0$, so $r<1$, and $A>1$ gives
+
+$$
+N>h,\qquad 7r^2-r-4<0.
+\tag{2.6}
+$$
+
+The quadratic on the right has one negative and one positive root.
+Its value at $5/6$ is $1/36>0$, so (2.6) implies
+
+$$
+0<r<5/6.
+\tag{2.7}
+$$
+
+Since $a\le1$, the first identity in (2.5) also gives
+
+$$
+\left(-1+\frac Av\right)(2+rv)
+ =\frac{2+rv}{1+a+rv}\ge1.
+\tag{2.8}
+$$
+
+Multiplying by $v>0$ and rearranging yields $F(v)\ge0$, where
+
+$$
+F(w)=-rw^2+(rA-3)w+2A.
+\tag{2.9}
+$$
+
+Here $r,A>0$. The discriminant is $(rA-3)^2+8rA>0$ and the
+product of the two roots is $-2A/r<0$. Hence the roots are
+$w_-<0<w_+$; since $v>0$ and $F(v)\ge0$, one has $v\le w_+$.
+
+The following polynomial identity decides the comparison with $D/4$:
+
+$$
+\begin{aligned}
+16h^2 F(D/4)
+ &=-rB^2+4(rN-3h)B+32Nh\\
+ &=80r^5-48r^4+28r^2-37r\\
+ &=rR(r),\\
+R(r)&=80r^4-48r^3+28r-37
+     =16r^3(5r-3)+28r-37.
+\end{aligned}
+\tag{2.10}
+$$
+
+For completeness, the first equality follows by substituting
+$D=B/h$ and $A=N/h$ in (2.9) and multiplying its three terms
+by $16h^2$; expansion with (2.4) gives the second equality.
+On $0<r\le3/5$, the first term in the final expression for $R$
+is nonpositive, and
+
+$$
+R(r)\le28(3/5)-37=-101/5<0.
+\tag{2.11}
+$$
+
+On $3/5\le r<5/6$, both $r^3$ and $5r-3$ are nonnegative
+and bounded above by their values at $5/6$. Therefore
+
+$$
+R(r)\le16\frac{125}{216}\frac76+\frac{70}3-37
+      =-\frac{232}{81}<0.
+\tag{2.12}
+$$
+
+Thus $F(D/4)<0$. To determine which side of the roots contains
+$D/4$, note that $B(r)$ is concave on $[0,5/6]$, with endpoint
+values $B(0)=15$ and $B(5/6)=40/9$. It lies above the chord
+joining those positive values. Hence $B>0$, so $D/4>0$.
+The negative-root alternative is excluded; (2.9) now implies
+
+$$
+D/4>w_+\ge v.
+\tag{2.13}
+$$
+
+The second identity in (2.5) proves $V_P(5)>V_P(3)$.
+Finally,
+
+$$
+t_5-t_3=v-a\ge0,
+\tag{2.14}
+$$
+
+because $v\ge1$ and $a\le1$. Positivity of both traces gives
+$V_P(3)=1/t_3\ge1/t_5$. Multiplication by $t_5>0$ proves
+$\alpha_5=1-t_5V_P(5)<0$. If $\Delta$ vanished, both real
+residuals would vanish, contradicting this implication. The proof
+used only the inequalities defining $\mathcal N$ and did not remove
+any of its permitted boundary entries. ∎
+

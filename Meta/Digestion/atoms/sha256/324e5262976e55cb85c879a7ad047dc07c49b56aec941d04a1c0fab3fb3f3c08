@@ -1,0 +1,38 @@
+# Native FIB on the full open domain: affine approximation and finite attainment
+
+Fix $0<Z<1$, and set
+
+$$
+r=1-Z,\qquad H=\frac r2,\qquad e_0=2\sqrt{ZH}.
+$$
+
+For the actual native current rays on $(0,H)\times\mathbb T^2$, with
+$\mathbb T=\mathbb R/(2\pi\mathbb Z)$, consider arbitrary finite real
+encoders, exact state-independent affine updates for all lawful real
+probability and phase commands, and one fixed affine decoder into the
+original ten outputs with their original Euclidean norm. The infimum of
+uniform output errors is $e_0$. The achievable tolerances are exactly
+
+$$
+\begin{cases}
+(e_0,\infty),&0<Z<2/3,\\
+[e_0,\infty),&2/3\le Z<1.
+\end{cases}
+$$
+
+The same classification holds when every prescribed simultaneous native
+path, with its full all-times guard, is also required. The lower result
+allows irregular, unbounded and noninjective encoders and both affine
+offsets. The upper results give explicit exact-real finite models on the
+entire open domain. In the attaining range a stored height and the zero
+decoder suffice. In the other range finite dimension prevents attainment,
+even though one finite model exists for every tolerance strictly above
+$e_0$.
+
+The source conventions come from *Native FIB continuation: exact affine
+obstruction and compact-band approximation*. Its source and output
+identifications are reconstructed below, rather than used as unstated
+bridges. The present question concerns full-open affine approximation;
+it is different from the original finite-hidden-$N$ attainment alternative.
+Source credit and the precise limits of the classification appear in §10.
+

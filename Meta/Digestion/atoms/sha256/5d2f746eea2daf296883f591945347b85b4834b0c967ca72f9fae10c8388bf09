@@ -1,0 +1,106 @@
+**Theorem 364.2 (Complete family and the same-cap stopped survivor).** Set
+
+$$
+b=\frac1{64}(43,34,34,29,27,25,22),\qquad e_*=\frac{15}{64}.
+\tag{364.4}
+$$
+
+For every entire sequence (363.2) with this prefix and $a_8\le e_*$, and for every $0\le t\le5/64$, there is a complete $p_t\in\mathscr N_7$ with an original $\mathcal N_2$ realization attaining error $e_*$. The law $p_0=:p_*$ belongs to $\mathscr O_7$ and has an original $\mathcal O_2$ realization at that same cap. The attained optimum $e_*$ in both original classes, and the stopped law $p_*$, are those of [XIX 346.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#346-a-complete-original-attainer-at-error-fifteen-sixty-fourths).
+
+*Proof.* Put $h=64t$. All entries in the following table, including the owning masses, are numerators over $64$. An omitted coordinate or schedule is zero.
+
+| Pair | Mass | $00$ | $01$ | $10$ | $11$ |
+| --- | ---: | --- | --- | --- | --- |
+| 12 | 17 | $17e_1$ | $17e_1$ | $17e_2$ | $7e_0+5e_3+5e_4$ |
+| 13 | 7 | $7e_1$ | $7e_1$ | $7e_3$ | $7e_0$ |
+| 14 | 2 | $2e_1$ | $2e_1$ | $2e_4$ | $2e_0$ |
+| 15 | 2 | $2e_1$ | $2e_1$ | $2e_5$ | $2e_0$ |
+| 23 | 7 | $(5-h)e_0+(2+h)e_2$ | $5e_0+2e_2$ | $7e_3$ | $7e_0$ |
+| 24 | 2 | $2e_0$ | $2e_0$ | $2e_4$ | $2e_0$ |
+| 25 | 2 | $2e_0$ | $2e_0$ | $2e_5$ | $2e_0$ |
+| 34 | 5 | $5e_0$ | $5e_0$ | $5e_4$ | $4e_0+e_7$ |
+| 35 | 4 | $4e_0$ | $4e_0$ | $4e_5$ | $4e_0$ |
+| 36 | 2 | $2e_0$ | $2e_0$ | $2e_6$ | $2e_0$ |
+| 45 | 4 | $4e_0$ | $4e_0$ | $4e_5$ | $4e_0$ |
+| 46 | 2 | $2e_0$ | $2e_0$ | $2e_6$ | $2e_0$ |
+| 56 | 6 | $6e_0$ | $6e_0$ | $6e_6$ | $2e_0+4e_7$ |
+| 67 | 2 | $2e_0$ | $2e_0$ | $2e_7$ | $2e_0$ |
+
+Every cell is nonnegative and has its owning mass, and the masses sum to $64$. Thus (363.4) defines the entire normalized kernel. At $t=0$ the first two cells of every pair agree, giving exactly the cited stopped survivor. On the whole cube,
+
+$$
+p_t(w)=p_*(w)+t(1-w_2)(1-w_3)(e_2-e_0).
+\tag{364.5}
+$$
+
+Here are explicit cap calculations for every suffix. In $64p_*(w)$ the base coordinate is
+
+$$
+\begin{aligned}
+B(w)={}&9(1-w_2)+11(1-w_3)+6(1-w_4)+6(1-w_5)+2(1-w_6)\\
+ &+7w_1w_2+7w_1w_3+2w_1w_4+2w_1w_5\\
+ &+7w_2w_3+2w_2w_4+2w_2w_5
+   +4w_3w_4+4w_3w_5+2w_3w_6\\
+ &+4w_4w_5+2w_4w_6+2w_5w_6+2w_6w_7.
+\end{aligned}
+\tag{364.6}
+$$
+
+For first zero $n$, the correct numerator $c_n$ is constant on its entire suffix fiber. Substituting $w_1=\cdots=w_{n-1}=1,w_n=0$ in (364.6) gives:
+
+| $n$ | $c_n=64p_*(w)(n)$ | $\min B(w)$ | $\max(64-B(w)-c_n)$ |
+| ---: | ---: | ---: | ---: |
+| 1 | 28 | 21 | 15 |
+| 2 | 19 | 30 | 15 |
+| 3 | 19 | 30 | 15 |
+| 4 | 14 | 35 | 15 |
+| 5 | 12 | 37 | 15 |
+| 6 | 10 | 43 | 11 |
+| 7 | 7 | 47 | 10 |
+
+Each minimum is over all $2^{7-n}$ suffixes. The table can equivalently be evaluated by repeatedly replacing a suffix polynomial $f$ by $\min\{f|_{w_j=0},f|_{w_j=1}\}$. Together with the explicit polynomial, this includes every multiple-zero case. The correct counts also follow directly from the displayed complete cells, and satisfy $c_n=64b_n-15$. The base deficit in (363.7) is therefore the wrong mass minus $15/64$; the last column bounds every union deficit by $15/64$.
+
+Only $w_2=w_3=0$ changes in (364.5). If the first zero is $2$, its correct coordinate increases by $t$ and its union coordinate is unchanged. Its old base is at least $30/64$, so its new base is at least $25/64$, above the literal demand $15/64$. If the first zero is $1$, its correct coordinate stays $28/64$. On the affected subfiber the old base is at least $26/64$, hence its wrong mass is at most $10/64$. To see that restricted bound directly, put $u=w_4,v=w_5,z=w_6,r=w_7$; then
+
+$$
+B(w)=20+6(1-u)+6(1-v)+2(1-z)+4uv+2uz+2vz+2zr.
+\tag{364.7}
+$$
+
+The part following $20$ has minimum $6$ when $z=0$, and minimum $8$ when $z=1$. The change increases wrong mass by at most $5/64$, and leaves base at least $21/64$, above its demand $6/64$. All other zero words are unchanged. This proves all three independent rows throughout the whole interval of $t$.
+
+At the positive word, for every $t$,
+
+$$
+p_t(1^7)=\frac1{64}(49e_0+5e_3+5e_4+5e_7).
+\tag{364.8}
+$$
+
+The positive row is tight. For an actual $n>7$, (363.8) gives exactly
+$\max\{15/64,a_n\}=15/64$, including $a_8=e_*$. At every first-zero-$3$ word the correct deficit is $15/64$ and the law is unchanged by (364.5); actual such sources exist by 363.1. Thus the supremum error is attained at $e_*$, not merely bounded above.
+
+For completeness, the same whole gauge in both coefficient budgets is
+
+$$
+g_{23}=t(e_0-e_2),\qquad g_{ij}=0\quad((i,j)\ne(2,3)).
+\tag{364.9}
+$$
+
+It is $X^{01}-X^{00}$ in the displayed cells. In particular
+$r_{23}=te_2$ and $s_{23}=7e_3/64$, so $t_{23}=7/64$ throughout the closed parameter range. Substitution in (364.2), for every pair including zero-$Q$ pairs, yields
+
+$$
+\begin{aligned}
+U_1&=28e_1/64,&U_2&=(9/64-t)e_0+(2/64+t)e_2,\\
+U_3&=11e_0/64,&U_4=U_5&=6e_0/64,\\
+U_6&=2e_0/64,&U_7&=0,\\
+c&=\sum_iU_i=(34/64-t)e_0+28e_1/64+(2/64+t)e_2,\\
+(u_i)_{i=1}^7&=(T_i)_{i=1}^7=(28,11,11,6,6,2,0)/64.
+\end{aligned}
+\tag{364.10}
+$$
+
+Both (364.3) are equalities. They validate this complete $N$ law, without providing any universal score-selection budget.
+
+Realize the table by the single interval seed of 363.3, query its actual two primes, and emit its mark. All $p_t$ executions acquire exactly two replies, even when the first is zero. For $p_*$, stop at that first queried zero and use its common first cell. These constructions have zero advice and finite measurable handoff. The original optimum and its lower bound are reused from XIX 346.1; no new optimality argument is needed. $\square$
+

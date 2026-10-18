@@ -1,0 +1,36 @@
+**Assumption 8.2 (local routing interface).** The following are local
+obligations of the extension on every reachable configuration.
+
+1. Every writer update is the original atomic $U\leftarrow\rho U$ on
+   the same register. It leaves $c,w$ unchanged. Every service step
+   leaves $U,c$ unchanged. A service Read consumes its actual raw reply,
+   including replies changed by intervening writer updates.
+2. At a ready configuration the next designated action is the action
+   selected by $c$. A designated local step has exactly its RA effect.
+   A designated Read submits the whole operand selected by $c$, and its
+   actual reply has exactly the RA receipt effect. Return exposes exactly
+   the accepted candidate. These one-action requirements apply also to
+   retry, clearing, operand delivery and output preparation; a substituted
+   storage interface must realize them and charge its own work.
+3. Before each next designated action there is at most one routing
+   episode, with a finite natural measure $\nu(c,w)$. Within that episode
+   every pending service action is enabled, every one of its possible
+   actual responses strictly decreases $\nu$, and writer updates leave
+   $\nu$ unchanged. A nonready episode has a pending service action.
+   Readiness ends the episode and enables the designated action;
+   no fresh episode can postpone that same action. Entry and exit local
+   work are included among these actions or among the designated steps.
+4. All newly used mutable fields, response latches, operand delivery,
+   selection/control state and immutable installation are included in
+   the storage and service account. The decoder and measure in the proof
+   do not provide an extra source observation, uncharged controller,
+   retained certificate or knowledge of a final source.
+
+There is no common bound on $\nu$, source height, candidate length or
+number of attempts. The measure need not be stored. Item 3 requires
+progress for every actual response and update interleaving; an
+existential finite path, a source-preserving hold loop or an equation
+defining a possibly infinite continuation is insufficient. Observer
+progress here applies to the next pending service or designated action
+in the sense of Definition 1.1.
+

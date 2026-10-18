@@ -1,0 +1,36 @@
+**Corollary 5.3 (extended budgets and sourcewise traversal).** Let
+$\overline{\mathbb N}=\mathbb N\cup\{\infty\}$ and allow upper budgets
+in this set. On a positive gate their feasible region is the upward
+closure of the same finite $\mathcal B$ in
+$\overline{\mathbb N}^{3}$. On a nonempty negative gate it is exactly
+
+$$
+\{(\infty,d,\infty):d\in\overline{\mathbb N}\},
+\tag{GRS.18}
+$$
+
+with its minimal extended vector $(\infty,0,\infty)$ attained by a
+source-total static service. On a logical empty fiber the convention of
+nonnegative empty suprema equal to zero gives basis $\{(0,0,0)\}$.
+This last case is not an actual acquired entry.
+
+Proof. At the fixed actual epoch $N$, the paid original-node decoder
+of [SLH, Theorem 2.2][SLH] recovers an original reply with at most two
+current physical reads. Decode the root and recurse on the original
+children only after a decoded branch. The original tree is finite,
+so this reconstructs it and its entire $R_Q$ with finitely many reads
+on each source and zero updates. It creates neither inverse execution
+nor free original observations. On a negative gate its two uniform
+costs are infinite by Theorem 5.2. This proves (GRS.18).
+
+On a positive gate a comparator with finite read bound has a finite
+reachable reply tree by the necessity proof of Theorem 4.2. Sourcewise
+termination makes each of its finitely many segments finite, so its
+actual update and length maxima are finite as well. A finite length
+bound reduces to this case after deleting root reads. In either case
+Theorem 5.2 supplies a basis vector no greater than the resulting
+extended budget. If both read and length bounds are infinite, the static
+supplier fits any nonnegative update bound. Conversely a basis witness
+meets every larger extended budget. Empty-domain correctness is vacuous
+and is witnessed by immediate output of any fixed row. $\square$
+

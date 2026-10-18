@@ -1,0 +1,10 @@
+**Definition 2.1 (Stationary context products).** A legal order-$m$ kernel consists of numbers $k(z\mid s)\ge0$, $s\in B_m$, $z\in\{0,1\}$, summing to one over legal $sz$ and vanishing on illegal extensions. It gives the context transition $s\longmapsto s_2\cdots s_mz$. If $\pi$ is a stationary context distribution, its stationary visible cylinders, for $n\ge m$, are
+
+$$
+Q_n(b)=\pi(b_1\cdots b_m)
+\prod_{j=m+1}^n k(b_j\mid b_{j-m}\cdots b_{j-1}).
+\tag{2.1}
+$$
+
+Here the displayed expression is a product of the initial factor and the transition product. Shorter cylinders are its marginals. Rows on zero-mass contexts may be chosen arbitrarily among legal probability rows. Stationary laws of visible order at most $m$ have this representation by successive conditioning; the tower property replaces conditioning on a finite past of length at least $m$ by the same last-$m$ kernel.
+

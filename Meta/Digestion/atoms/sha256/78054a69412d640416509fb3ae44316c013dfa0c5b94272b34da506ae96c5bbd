@@ -1,0 +1,80 @@
+**定理 4.1（Exact horizontal outer-edge transition）。** For $0\le a\le A$,
+
+$$
+k(C(a,B_0))=
+\begin{cases}
+3,&0\le a\le1/3,\\
+4,&1/3<a\le A.
+\end{cases}
+\tag{4.5}
+$$
+
+Both signs of each parameter are covered by Lemma 2.2.
+
+Proof. First construct $M(a,B_0)$ for $a\le1/3$. Put
+
+$$
+d=1-a,\qquad c=\frac{3a^2}{d},\qquad g=\sqrt{d/3}.
+$$
+
+Here $d>0$, $g\sqrt c=a$, and $c\le1/2$ is equivalent to
+$6a^2\le1-a$, which holds precisely for $0\le a\le1/3$. Take
+
+$$
+\sqrt a(e_1-i e_5),
+\quad
+g e_1-i\sqrt c\,w_j,\quad g e_5+i\sqrt c\,w_j\quad(j=0,1,2),
+\quad
+\sqrt{1-2c}\,u,\quad \sqrt{2-2c}\,v.
+\tag{4.6}
+$$
+
+The six mixed terms have outer diagonals $3g^2=d$, no outer-pair entry,
+and middle block $2c(uu^\dagger+vv^\dagger)$. Equation (4.4) makes each
+first-outer/middle entry $ig\sqrt c=ia$ and each last-outer/middle entry
+$-ia$. The outer-pair vector adds outer diagonals $a$ and entry $ia$ at
+$(1,5)$. The last two vectors add
+$(1-2c)uu^\dagger+(2-2c)vv^\dagger$, giving (4.2). This verifies every
+entry of $M(a,B_0)$. All nine slots have original support at most three,
+and all radicands are nonnegative. At $a=0$ the zero slots disappear; at
+$a=1/3$ the coefficient $1-2c$ is zero. Divide by $\sqrt5$ for $C$.
+
+For necessity let any finite at-most-three-support decomposition of
+$M(a,B_0)$ be given. Its kernel vector implies
+
+$$
+0=\sum_\ell|n^\dagger(z_\ell)_{\rm mid}|^2,
+$$
+
+so every term's middle part is perpendicular to $n$. A vector with both
+outers could use at most one middle; because every coordinate of $n$ is
+nonzero, that middle must vanish. Group terms into $E_{15}$ using both
+outers, $E_1$ using only outer 1, $E_5$ using only outer 5, and middle-only
+terms. This partitions actual nonzero supports without assumptions on phases.
+Let
+
+$$
+o_i=\sum_{E_{15}}|(z_\ell)_i|^2,\quad
+d_i=\sum_{E_i}|(z_\ell)_i|^2=1-o_i,\quad
+c_i=\sum_{E_i}|u^\dagger(z_\ell)_{\rm mid}|^2
+\qquad(i=1,5).
+$$
+
+Only $E_{15}$ contributes the outer entry $ia$. Complex Cauchy–Schwarz gives
+$o_1o_5\ge a^2$, so $o_1+o_5\ge2a$ and
+$d_1+d_5\le2(1-a)$. The total middle $u$-energy is one by (4.2), giving
+$c_1+c_5\le1$. Only $E_i$ contributes the corresponding outer-to-$u$ entry,
+whose magnitude is $\sqrt3a$, and hence $d_ic_i\ge3a^2$. Therefore
+
+$$
+12a^2\le(\sqrt{d_1c_1}+\sqrt{d_5c_5})^2
+\le(d_1+d_5)(c_1+c_5)\le2(1-a).
+\tag{4.7}
+$$
+
+No division by a possibly zero budget occurs. Factoring as in (3.7) forces
+$a\le1/3$, excluding every complex finite three-support sum above that
+threshold. On the constructed segment, $B_0>1/2$ excludes support two by
+Theorem 3.1. Above the threshold Theorem 6.1 below supplies an actual finite
+four-support upper list, giving exact value four. $\square$
+

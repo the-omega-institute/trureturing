@@ -1,0 +1,56 @@
+**Theorem 4.3 (soundness and a sharp ceiling after scaffold and stability).**
+The predicate $V_{\mathrm{core}}$ is total computable and sound for
+every native length and complete template. Every accepted label satisfies
+
+$$
+-2^{-d}\log_2C\le L_{\mathrm{core}}.
+\tag{JPL.22}
+$$
+
+The ceiling is attained at every leaf depth. Even exact joint-weight
+optimization over this atlas, followed by arbitrary finite uses of these
+two closure rules, is not optimizer-cofinal for the original problem.
+Its best original-rate endpoint is more than $1/10$ below the credited
+original lower bound.
+
+Proof. All checks involve finite tree tables and rational arithmetic,
+so they terminate. Induction over the node list proves soundness:
+Theorem 3.3 supplies the leaves, credited exact scaffold transport
+supplies the scaffold step, and (JPL.8) supplies stability.
+
+At a leaf, Theorem 4.1 forces $C\ge(3/4)^{2^h}$ and proves
+(JPL.22). At a scaffold step, monotonicity of the logarithm gives
+
+$$
+-2^{-(d_0+r)}\log_2C
+\le-2^{-d_0}\log_2C_0.
+$$
+
+At a stability step $C\ge C_0$, so the same-depth endpoint cannot
+increase. This proves (JPL.22) for every finite derivation, even when
+stability has produced full-support probabilities outside the atlas.
+Uniform core probabilities with the exact rational caps in (JPL.20)
+are accepted leaves and attain the ceiling.
+
+The credited [NCE, Theorems 6.1–6.2][NCE] give
+$\sigma_3\ge\log_2(33/13)$ and
+$\lambda\ge\log_2(33/13)/8$. At depth three all accepted block
+endpoints are at most $\log_2(4/3)$. Their gap below that credited
+lower bound for $\sigma_3$ is
+
+$$
+\log_2(33/13)-\log_2(4/3)=\log_2(99/52)>1/2,
+$$
+
+since $99^2>2\cdot52^2$. Consequently the cofinality test of
+Convention 1.5 already fails with $d=3,\epsilon=1/2$. Across all
+depths, the original-rate gap is at least
+$\log_2(99/52)/8>1/10$, since $99^5>16\cdot52^5$.
+These are exact inequalities. $\square$
+
+This theorem exhausts the specified support atlas, rather than merely
+one weight search. It does not constrain the other leaves of
+$V_{\mathrm{rec}}$; its credited NCE joint leaf is outside this atlas.
+No conclusion about unrestricted $V_{\mathrm{rec}}$ optimizer-cofinality
+follows from (JPL.22).
+

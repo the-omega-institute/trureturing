@@ -1,0 +1,101 @@
+**Proposition 9.1 (exact supplier separation).** The new implication
+proved here is
+
+$$
+\begin{aligned}
+&\text{finite native normal branches with all-solution factorization}\\
+&\quad\Longrightarrow
+ \text{simultaneous minimum-depth barrier or finite witnesses at all depths}\\
+&\quad\Longrightarrow
+ \text{exact contact decision for a supplied finite constructor context}\\
+&\quad\Longrightarrow
+ \text{finite original counterpairs against every bounded legal service
+ in each YES case}.
+\end{aligned}
+\tag{NLC.30}
+$$
+
+This implication has the following reuse boundaries.
+
+| Supplier | Exact use and retained limit |
+| --- | --- |
+| [ABC, §§2–4][ABC] | All-source normal-code conjugacy, native rank translation, exact expansion and mask interpretation. The proof uses its normal subdomain; it does not replace it by ambient free terms. |
+| [NSF, §§2–5][NSF] | Finite native feasibility, original-solution branch factorization, shape markers, scalar/block offset separation and exact guarded compilation. A fixed formula's marker witnesses are not all solutions and do not bound depth for changing prefix formulas. |
+| [NSF, §§6–10][NSF] | Supplied-prefix decision, bounded boxes and their consumers, plus forward-closed fibers and exact invariant charts under their hypotheses. Theorem 4.1 imposes no forward-closure or chart-invariance condition on the QF input. |
+| [NPL, §§2–5][NPL] | Anchored/free scalar data, marker witnesses, all-solution rigidity and exact finite/infinite output-image classification, including full rows and original witnesses. Infinite image does not imply simultaneous minimum-depth growth, as Proposition 4.3 shows. |
+| [NPL, §§6–8][NPL] | Exterior limitedness, whole-source finiteness and actual entire-finite-fiber Pareto/weighted services. A finite image or a finite witness list is not an observable partition selector on an infinite fiber. |
+| [NFO, §§3–7 and 8.1–8.4][NFO] | Arbitrary-word decisions at prescribed budgets, finite-source obstruction completeness for each such budget, exact rational thresholds including zero weights and conditional complete optimization after finite success. No all-budget finite sample follows; the outer existential stopping problem remains separate. |
+| [ARH, §§1–3][ARH] | Entire acquired signed fiber, paid producer and serial/static/prefix existence equivalence on it. The all-comparator argument uses its operational hypotheses, not an unsupported general source-language decision. |
+| [JRF, §§2–3][JRF] | Universal sourcewise nonexpansive late probes, actual update capping and read cleanup. Its literal-only GB and matched WS2S decision in §§4–7 are not transferred to arbitrary signed fibers. |
+| [URR, Theorem 3.1, Corollaries 3.2–3.3 and Theorem 5.1][URR] | A rank-independent residual tuple and exact rank support for negative mixed templates over a full Cartesian residual domain; an entire acquired family where that premise is independently proved. No arbitrary positive residual normalizer or whole-source representative theorem is supplied. |
+
+Proof. The first line of (NLC.30) is the supplier input in Lemma 2.2.
+Lemmas 3.3–3.4 add a universal anchored bound and a simultaneous
+free-rank ray; neither the universal bound nor its simultaneous converse
+follows from image infinitude. Theorem 4.1 makes their alternative
+terminate. Lemmas 5.3–5.4 give both exact finite-source directions for
+its supplied-context application. Theorem 7.1 then uses original-prefix
+locality and the entire legal service class. These prove the displayed
+chain without changing the original row or operations.
+
+URR can be reused after an independent positive correspondence gives
+its unrestricted Cartesian residual domain. Here arbitrary positive
+equations and fixed-navigation guards are retained and solved in the
+NSF branches; they are not presumed to have that domain. URR's one
+fixed tuple realizes negative constraints uniformly in its rank
+parameters. Such a tuple need not make a designated residual's minimum
+leaf depth large, and it need not satisfy a newly imposed positive
+residual equation, as URR Proposition 7.1 already demonstrates. The
+ray in Lemma 3.4 changes witnesses with $h$ after all positive branch
+relations have been enforced. It is consequently not a relabeling of
+URR's fixed section or a claim to represent every source. $\square$
+
+**Open problem 9.2 (unrestricted recovery and complete signed finite
+approximability).** For arbitrary nonempty (NLC.4), retain the original
+question from [NFO, Open problem 8.4][NFO]: decide
+
+$$
+\exists K\ \operatorname{Win}_D(K,U)
+\quad\Longleftrightarrow\quad
+\exists h\ \operatorname{PrefDet}(D,Q,h),
+\qquad U=\max(0,5-N).
+\tag{NLC.31}
+$$
+
+Here $\operatorname{Win}_D(K,U)$ requires a legal correct service with
+$q_A(u)\le K$ and $a_A(u)\le U$ for every $u\in D$, permitting arbitrary
+finite physical words. The universal all-source cap supplies this update
+allowance. The predicate $\operatorname{PrefDet}(D,Q,h)$ says that any two
+members of $D$ agreeing on all original replies through depth $h$ have
+the same complete $Q$ row.
+NSF already decides each supplied $h$, and NFO each supplied $K$.
+A succession of negative answers does not decide the existential.
+
+When NPL gives a finite full-row image on an infinite source fiber,
+Theorem 6.1 decides one additional kind of exact cross-row contact,
+with a finite negative stopping rule for each supplied context. It does
+not give a complete finite list of context limits to test. Theorem 8.4
+rules out completeness for every prescribed row pair within this
+context language: an anchored leaf can recur indefinitely along a
+common limit. Proposition 8.5 prevents strengthening that example to
+a claim that the entire fiber evades all context certificates.
+
+The remaining signed finite-approximability obligation is to decide
+which joint prefix behaviors of two different exact finite-row strata
+have original finite witnesses at every depth, retaining all native
+positive equations, negative equations and both guards. An assignment
+of infinite trees satisfying selected limiting equalities is not such
+a certificate: finite signs or distinct row labels may coalesce at its
+limit. In (NLC.28) the two finite labels approach a tree whose three
+reached target subtrees are all equal. The finite labels must therefore
+be carried by their actual finite approximants, as in (NLC.18), rather
+than recovered from that ideal partition.
+
+Neither arbitrary mixed constructor/atomic closure, an effective
+complete certificate language, nor a general negative stopping rule
+for (NLC.31) is proved here. Conditional resource optimization remains
+available from NFO after a finite success; a contact YES supplies the
+scoped infinite-observation-price conclusion of Corollary 7.2. No
+global novelty, priority, undecidability or completion of the
+unrestricted minimal-relations programme is asserted.
+

@@ -1,0 +1,24 @@
+**Lemma 5.3 (exact context decomposition near its limit).** Suppose
+$m\ge1$.
+
+1. If $u\equiv_H K_C$ and $H\ge d_C$, then there is a unique tuple
+   $\mathbf z$ of finite original subtrees with $u=C[\mathbf z]$.
+   Moreover $\mu(z_j)>H-|p_j|$ for every $j$.
+2. If $u=C[\mathbf z]$ and $\mu(z_j)>h$ for every $j$, then
+   $u\equiv_h K_C$.
+
+Proof. In the first assertion, every explicit pair of $C$ is confirmed
+by the prefix, and every explicit concrete leaf stops the source at
+exactly that position with exactly that value. Every hole position is
+reached, since its limit reply is branch. Take $z_j=u|_{p_j}$; induction
+on the finite context proves the reconstruction and uniqueness. At
+all suffixes of length at most $H-|p_j|$, the corresponding reply in
+$z_j$ is branch. Definition 1.1 gives the depth inequality.
+
+For the second assertion, follow any word of length at most $h$.
+Outside holes its reached branch, concrete leaf or absent reply is
+fixed by $C$. If it enters hole $j$, its remaining length is at most
+$h$, so it sees a reached branch in $z_j$, just as in $\Omega$.
+These cases exhaust all words, including words extending concrete
+leaves. $\square$
+

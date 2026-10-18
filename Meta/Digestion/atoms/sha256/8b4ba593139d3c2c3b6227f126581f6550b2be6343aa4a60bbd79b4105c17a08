@@ -1,0 +1,27 @@
+**Lemma 14.1 (prefix trace invertibility from strict fixed polar sign).** Let a legal prefix $I,A_1,A_2,A_3$ satisfy
+$$
+\ker\mathsf B_{\rm pre}=\mathbb RN,\qquad
+\mathsf B_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^3,
+\tag{14.6}
+$$
+where $N\ne0$ has rank one and $\mathfrak b(S,N)$ has one strict fixed sign on every strictly positive rank-one $S$. Orient $N$ so that this sign is positive. Then $\operatorname{tr}N>0$, and
+$$
+\mathcal L_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)\bigr)_{i=0}^3
+\tag{14.7}
+$$
+is invertible.
+
+**Proof.** Write $N=(\begin{smallmatrix}n_{11}&n_{12}\\n_{21}&n_{22}\end{smallmatrix})$. Its polar on the actual positive rank-one sources $(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, $u,v>0$, is
+$$
+n_{11}+n_{22}uv-n_{12}v-n_{21}u>0.
+\tag{14.8}
+$$
+Taking $u=v\downarrow0$ gives $n_{11}\ge0$. Taking $u=v\to\infty$ and dividing by $u^2$ gives $n_{22}\ge0$. Taking $(u,v)=(T^{-2},T)$ and dividing by $T$ gives $n_{12}\le0$ as $T\to\infty$; using $(u,v)=(T,T^{-2})$ gives $n_{21}\le0$.
+
+If $\operatorname{tr}N=0$, both diagonal entries vanish. Since $\det N=0$, at least one off-diagonal entry also vanishes. Nonzeroness then makes $N$ a negative nonzero multiple of $E_{12}$ or $E_{21}$, where $E_{ab}$ is the matrix unit. Equation (14.6) forces the corresponding trace-paired off-diagonal entry of every $A_i$ to vanish. Every legal endpoint is nonnegative integral with determinant $\pm1$. A triangular such endpoint has diagonal product one, hence both diagonal entries one. All four endpoints would therefore lie in $\operatorname{span}\{I,E_{12}\}$ or $\operatorname{span}\{I,E_{21}\}$, making $\operatorname{rank}\mathsf B_{\rm pre}\le1$. This contradicts (14.6), whose kernel dimension one makes that rank three. Hence $\operatorname{tr}N>0$.
+
+If $\mathcal L_{\rm pre}Y=0$, all three prefix differences vanish, so $Y=tN$. Its initial trace is zero, and $\operatorname{tr}N>0$ forces $t=0$. The four-dimensional map (14.7) is injective, hence invertible. One may normalize $\operatorname{tr}N=1$, in which case $\mathcal L_{\rm pre}N=(1,1,1,1)^{\mathsf T}$. ∎
+
+<a id="erased-final-gain-certificate"></a>

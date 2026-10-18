@@ -1,0 +1,65 @@
+**定理 230.3（Arbitrary ordered-five-late cut）。** For every
+$3\le j_1<\cdots<j_5\le L$ and every profile $(b,e)$ admitting
+one complete finite conic configuration $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ or $G_O\lambda\ge h(b,e)$,
+
+$$
+4b_{j_1}+8b_{j_2}+7b_{j_3}+8b_{j_4}+8b_{j_5}\le63e.
+\tag{230.1}
+$$
+
+In particular this holds throughout $H_N$ and $H_O$; membership
+in $H_L$ is not needed for this pairing inequality.
+
+For either original resource class, an attainer at any positive closed
+cap $\varepsilon$ for a positive nonincreasing vanishing sequence
+$a$ necessarily satisfies
+
+$$
+4a_{j_1}+8a_{j_2}+7a_{j_3}+8a_{j_4}+8a_{j_5}
+                                                   \le63\varepsilon.
+\tag{230.2}
+$$
+
+There is no active-horizon assumption in (230.2).
+
+证明。 Embed the seven coordinates of 230.1 at
+$(1,2,j_1,\ldots,j_5)$, setting every intervening or later coordinate
+to one on every scored zero word and placing $T$ at $1^L$. Labels
+are mapped to their actual addresses. Any additional queried
+coordinate is constant one on this score support; it reduces the
+partition to a legal singleton or empty schedule. Any added label
+has zero reward. Every low schedule embeds with its order preserved.
+Thus the embedded score, denoted $D_J$, has both supports and anchor
+equal to $28$, and quotient equal to the displayed five coefficients
+at their actual labels, with $K=63$. The ambient demands still contain
+every word and label; only the dual support is sparse.
+
+For the same complete feasible configuration of any finite mass $M$,
+
+$$
+F_{Q(D_J)}(b,e)=D_J\cdot h(b,e)
+\le D_J\cdot G_N\lambda\le M\Delta_N(D_J)=0.
+$$
+
+This proves (230.1). The same argument holds for complete $O$
+configurations. A normalized finite cap-feasible kernel paired with
+$D_J$ gives $24+4+\sum_r\gamma_r a_{j_r}-63\varepsilon\le28$,
+which is (230.2).
+
+For original competitors at $0<\varepsilon<1$, let
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$.
+Use the full-carrier, arbitrary-address necessary direction of
+[I, Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+If $L_a\ge j_5$, pair its normalized complete finite kernel with
+$D_J$. If $L_a<j_5$, extend that kernel to horizon $j_5$, ignoring
+the new coordinates and outputting no new label. For a word whose
+first zero is new, its observed prefix is positive, so its base mass
+is at least $1-\varepsilon$; its correct demand is
+$a_n-\varepsilon\le0$, and the base and independent union demands
+are at most $1-\varepsilon$. Old first-zero demands and the positive
+row are unchanged. This also covers $L_a=0,1,2$. Pair the resulting
+normalized kernel. For $\varepsilon\ge1$, the left side is at most
+$35\le63\varepsilon$. Original competitors are not restricted to
+the displayed addresses, words, labels or tape marks. $\square$
+

@@ -1,0 +1,71 @@
+**Theorem 3.2 (whole-domain prescribed-budget finite obstruction).** Under
+Assumption 1.1, for every supplied finite downward-closed
+$\mathcal B\subseteq\{0,\ldots,K\}\times\{0,\ldots,A\}$,
+
+$$
+\boxed{
+\operatorname{Win}_D(\mathcal B)
+\quad\Longleftrightarrow\quad
+\forall S\subseteq D\text{ finite},\
+                  \operatorname{Win}_S(\mathcal B).
+}
+\tag{NFO.9}
+$$
+
+When the left side holds it has a finite lawful physical skeleton witness.
+When it fails there is a finite original-source obstruction. In particular
+this holds for the rectangle defining $\operatorname{Win}_D(K,A)$, with
+no bound on physical word length and no assumption that $R_Q(D)$ or $D$
+is finite.
+
+Proof. Restriction of a whole-domain service proves the forward direction.
+For the converse suppose every finite subset admits a service. Exhaust
+$D$ by the finite sets $S_j$ of admitted trees of size at most $j$; omit
+initial empty sets. If $D$ is finite, repeat its eventual full set.
+The sequence is increasing and every original source eventually belongs
+to it. For each $j$ take a service correct only on $S_j$ and satisfying
+$\mathcal B$ there. Convention 2.3, applied to that comparison domain,
+unrolls it to a finite physical skeleton. Deleting terminal updates
+preserves membership in $\mathcal B$ by downward closure.
+
+Apply Lemma 3.1 to these skeletons. The selected indices remain unbounded,
+so every fixed pair $u,v\in D$ belongs to all sufficiently late selected
+$S_j$. Ignore the skeletons' terminal output labels during this selection:
+these labels can range over an infinite set and are not being compactified.
+Let $T$ be the resulting finite auxiliary tree.
+
+If $u,v$ reach the same leaf of $T$, Lemma 3.1 says they reach that same
+leaf of each sufficiently late selected skeleton. Both sources then
+belong to that skeleton's correctness set $S_j$, so
+$R_Q(u)=R_Q(v)$. This proves full-row constancy on every nonempty leaf of
+$T$, without ever stabilizing an unbounded output label. For a fixed
+$u$, its eventually stable path has the fixed read count $k_t$ and final
+epoch $n_t$. Its late skeletons obey $\mathcal B$, hence
+$(k_t,n_t-N)\in\mathcal B$ in the auxiliary tree as well.
+
+It remains to turn this auxiliary object into an actual service.
+At each $\infty$ vertex follow only its absent child and remove the
+vertex. Do not send an infinite word to the source. Retained ordinary
+read vertices keep their fixed finite words and absolute epochs. Between
+two retained vertices execute just the forward epoch difference. If a
+path now ends in a halt, omit updates after its last retained read.
+All remaining epochs are monotone and at least $N$; the number of actual
+updates is its last retained read epoch minus $N$. On each same original
+source, induction through retained vertices gives exactly the same leaf
+as in $T$. Removal decreases the read count and cannot increase updates.
+Consequently its actual pair still lies in $\mathcal B$.
+
+The finite tree now contains only lawful finite-word reads, actual
+forward updates and halts. At each nonempty leaf install its common full
+row. These finite outputs exist by the constancy already proved. On this
+native signed domain their values can also be obtained effectively:
+apply NSF Theorem 7.2 to the remaining tree's fixed path fibers. That test
+returns a finite source witness for each nonempty fiber and hence its
+actual row. Empty leaves can receive any fixed default row.
+
+This is a deterministic effective finite program correct on the entire
+original $D$. The auxiliary absent labels were used only to prove its
+existence and never became source operations or receipts. The reverse
+implication is established. Contraposition gives a finite obstruction
+when no whole-domain service exists. $\square$
+

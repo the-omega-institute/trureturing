@@ -1,0 +1,63 @@
+**Theorem 12.7 (literal, nested and disjoint consumers).** The recurrence
+has the following attained values, for every admissible $D$:
+
+| Public menu $P$ | Minimum labels | Canonical right-subtree representatives or count |
+| --- | ---: | --- |
+| $\varnothing$ | $1$ | $\alpha$ |
+| $\{R\}$ | $3$ | $\alpha,\beta,\langle\alpha,\alpha\rangle$ |
+| $\{RL\}$ | $5$ | $\alpha,\beta,\langle z,\alpha\rangle$ with $z\in\{\alpha,\beta,\langle\alpha,\alpha\rangle\}$ |
+| $\{RR\}$ | $5$ | $\alpha,\beta,\langle\alpha,z\rangle$ with the same three $z$ |
+| $\{RL,RR\}$ | $11$ | two leaves and all nine pairs of those three $z$ |
+| $\{R,RL\}$ | $5$ | the five representatives for $\{RL\}$ |
+| $\{RLL,RLR\}$ | $12$ | $\alpha$ and $\langle z,\alpha\rangle$ for all eleven representatives of $\{RL,RR\}$ |
+| $\{RLL,RLR,RR\}$ | $35$ | two leaves and $11\cdot3$ branch combinations |
+
+Every listed right subtree is used in the initial source
+$\langle\alpha,v\rangle$, not supplied as a hidden decoder operand.
+For a singleton $P=\{Rq\}$, let $m=|q|$ and let $\lambda(q)$ be
+the number of $L$ letters among the first $m-1$ letters of $q$, zero
+when $m\le1$. Then the general singleton value is
+
+$$
+ N(\{Rq\},D)=2m+3-\lambda(q).
+\tag{AAR.70}
+$$
+
+Proof. For $S=\{\varepsilon\}$, both child menus are empty and
+$\delta=0$, giving three codes. For $S=\{L\}$ or $\{R\}$ one child
+has those three codes and the other has one, giving five. For
+$S=\{L,R\}$ both have three, giving eleven. Adding $\varepsilon$
+to $\{L\}$ does not add child constraints or alter its zero overlap
+indicator, so the nested menu still has five. This equality is about
+complete future replies; a single current reply at $RL$ would not
+recover the same information.
+
+For $S=\{LL,LR\}$ the left suffix menu is $\{L,R\}$, the right
+one is empty, and $\delta=1$, giving $11+2-1=12$. In particular the
+initial right subtrees $\beta$ and $\langle\alpha,\alpha\rangle$
+are distinct but agree at both selected addresses at every count,
+by the overlap argument of Theorem 12.6. They are represented by
+one of the eleven branch combinations, not counted twice. At the
+shallower address $RL$ these same initial sources instead have
+$(b,c)=(2,0)$ and $(2,1)$: absent and alpha at zero, followed by
+beta and then branch in both. This verifies that the flag cannot be
+removed from the general spatial statistic.
+
+For $S=\{LL,LR,R\}$ both suffix menus are nonempty, with counts
+eleven and three; a right-starting target forces $\delta=0$, giving
+thirty-five. More generally, whenever both $S_L,S_R$ are nonempty,
+there are $n(S_L)n(S_R)$ jointly attained branch combinations and
+two further leaf classes. This explains why disjoint selected
+addresses do not justify multiplying their separate whole-source
+optima: for $\{RL,RR\}$ that multiplication would give $25$, whereas
+the actual common-source count is $11$.
+
+For the singleton formula, start at the terminal suffix menu
+$\{\varepsilon\}$ with value three and ascend its $m$ edges. Each
+step adds two, except that an $L$ edge with a nonempty remaining
+suffix has $\delta=1$ and adds only one. These are exactly the
+$\lambda(q)$ edges in (AAR.70). The representative construction of
+Theorem 12.6 supplies all claimed distinctions with the required
+height bounds. Thus $D=1$ has only the empty menu and $\{R\}$,
+with values one and three, respectively. $\square$
+

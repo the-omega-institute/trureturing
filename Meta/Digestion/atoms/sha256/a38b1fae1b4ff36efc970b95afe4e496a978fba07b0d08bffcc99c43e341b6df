@@ -1,0 +1,35 @@
+**Proposition 23.3 (a paid one-block consumer of the section maximum).**
+For any three distinct credited states $x_z$ of Proposition
+19.2, the analogous full-family construction on $\mathcal F_{15}$
+has exactly $|S_{15}|-2$ attained names, one for those three
+canonical states and one for every other canonical state. Its
+preparation uses $32767$ actual Reads, maximum address fifteen
+and $458753$ submitted letters. On the merged name every
+request needs zero Reads or one actual original-root Read of
+length at most fourteen.
+
+Proof. NWO Theorem 4.2 supplies their complete own-coordinate
+witnesses: in a chain slot with three distinct heights
+$h_1<h_2<h_3$, query $L^{h_2}$ inside that slot. Its replies
+are absent, alpha, branch, respectively. For two distinct
+heights query the smaller height, giving alpha or branch; for
+one use constants. Among heights $0,1,2,3$ the selected
+exponent is at most two. The slot prefix has length eleven,
+so the full literal with the original $R$ wrapper has length
+at most $1+11+2=14$. Varying digit slots use their actual
+root replies. Above-slot factors, fixed slots and marker
+factors are constants. Once the height or digit is identified,
+its table gives every requested full factor within that slot,
+including initially absent suffixes. These are exactly the
+credited one-block witnesses, not a new hash family.
+
+Apply Theorem 16.1's $N=1$ construction to this admissible
+three-state subset of its complete one-block solution set.
+The scan acquires all $Rq$, $q\in W_{15}$, computes the
+canonical state, and selects the merged-or-singleton name on
+every original source. The same canonical inverse-image and
+authentic-count proof as Proposition 23.2 covers all requests.
+The attained-name count is $|S_{15}|-3+1$, and
+$2^{15}-1=32767$ and $14\cdot2^{15}+1=458753$ give the
+stated preparation charges. $\square$
+

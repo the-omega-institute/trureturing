@@ -1,0 +1,15 @@
+**Definition 2.3 (entire finite complex acquisition class).** An admissible design is one common finite CP instrument $\{\mathcal A_\gamma\}$, with joint effect $\sum_\gamma\mathcal A_\gamma^\dagger(I)=I_5$, actual generated finite classical labels $\gamma$, a fixed report $r(\gamma)$ after absorbing any independent coin, and arbitrary finite jointly counted quantum fibres $\mathcal H_\gamma$. Each decoder $\mathcal R_\gamma$ is TP on its whole fibre and has the full output algebra of (PG.9). Forgetting the acquired label must give exactly (PG.9) on every complex matrix, and the report must have (PG.10). The live restriction of a decoder is only TNI.
+
+Count every future-accessible input-dependent quantum system at the cut, including retained specimen, memory, controller, accessible environment, returned systems and entanglement shares. All other dilation systems are permanently inaccessible before this cut. There is no helper specimen, readable old history, clock-history sensor, quantum bypass, callback, retry, reset, copy, prior, postselection or acceptance division. An arbitrary passive reference is inaccessible to execution and is preserved in the comparison.
+
+Define the acquired high effect and selected resource by
+
+$$
+G_{\rm acq}=\sum_{\gamma:\dim\mathcal H_\gamma\ge3}\mathcal A_\gamma^\dagger(I),
+\qquad
+\mathsf E_s(\sigma)=\inf\operatorname{tr}(G_{\rm acq}\sigma),\qquad \sigma\succeq0.
+\tag{PG.11}
+$$
+
+Thus acquired high mass includes a high acquisition later decoded to failure. Traces on subnormalized tests are raw masses. For a supported test write $\rho=E^\dagger\sigma E$ and also $\mathsf E_s(\rho)$. One public selected test and strength choose one common instrument before the unknown input arrives: $\forall(\rho,s)\,\exists$ such a design. This is not one design simultaneously minimizing all tests, and $\rho,y,e,n$ are never execution-time inputs to a decoder. Necessity uses the entire class just stated, without imposing realness, covariance, a JR-conditioned form, isometric decoding or a chosen failure split.
+

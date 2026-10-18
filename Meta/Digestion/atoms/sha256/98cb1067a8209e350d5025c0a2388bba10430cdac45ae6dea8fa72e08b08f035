@@ -1,0 +1,49 @@
+### 可以直接承重的有限数学
+
+以下结论完全来自显式定义和有限证明：
+
+$$
+\ker A=
+\operatorname{span}\{(1,-1,0,-1,1)\};
+$$
+
+$$
+\kappa\in
+[
+\max(0,X+Y+Z-1),
+\min(X,Y)
+];
+$$
+
+$$
+\Delta=(1-Z)\kappa-XY;
+$$
+
+$$
+\det T=-Z\Delta;
+$$
+
+$$
+\mathcal A'(\kappa)=
+\log\frac{p_0p_{13}}{p_1p_3};
+$$
+
+$$
+\mathcal A''(\kappa)>0;
+$$
+
+$$
+\mathbb E[S^2]=
+4X+9Z+25Y+20\kappa;
+$$
+
+$$
+v_5(|N(U)|)=a_7;
+$$
+
+以及：
+
+$$
+\dim\ker\partial_G=|E|-|V|+c.
+$$
+

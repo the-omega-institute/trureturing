@@ -1,0 +1,17 @@
+### 86.1. Exact completion statement
+
+Continue with the actual common-flat input convention and
+\(0<|b|<1\). Inputs have unit-modulus entries and norm \(\sqrt6\).
+
+**Theorem 86.1.** Let \(w\) be an aligned common-flat ray. If a
+common-flat ray \(q\) is orthogonal to both \(w\) and \(\Theta w\),
+then \(w\) is one of the two constant canonical rays, and \(q\) is
+one of the four nonzero-Fourier canonical rays. Conversely each of those
+four rays is orthogonal to the constant canonical \(\Theta\) pair.
+
+Thus a noncanonical aligned \(\Theta\) pair has no common-flat
+third ray orthogonal to both, even when the third ray has three distinct
+entries in a channel. In conjunction with Theorem 84.1, this excludes
+an arbitrary third ray above any noncanonical aligned orthogonal pair
+with the same singleton position. All aligned poles are included.
+

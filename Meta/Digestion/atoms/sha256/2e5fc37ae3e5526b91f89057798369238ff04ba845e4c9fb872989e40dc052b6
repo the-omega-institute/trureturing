@@ -1,0 +1,24 @@
+**Proposition 6.2 (degenerate inputs and the dependence on the whole
+row).** The representation includes all of the following cases.
+
+1. For $m=1$, the only possible epoch tuple is $(0)$; it is accepted
+   exactly when the row validates. If a zero-record input is admitted
+   with vacuous chronology, its fiber is the singleton empty tuple
+   and any finite original, for example $\alpha$, is a witness.
+2. A root cut has precisely one valid row. If every cut is the root
+   singleton, then $E=\mathcal C_m$ and $U=\mathcal T$.
+3. Empty cuts and fully blocked cuts have ground exteriors and no
+   class variables. Deep and mixed cuts use their exact finite
+   addresses and blockers. Equal epochs use the same whole tree at
+   those captures, without weakening any conjunct.
+4. No epoch bound depending only on the cut depths can replace the
+   row-dependent threshold for general inputs.
+
+Proof. The first three statements follow directly from validation,
+the filling supplier and the fixed-epoch formula. For the fourth,
+take two empty cuts and full rows $\alpha,T_j$. Their unique lag
+is $j$, by injectivity and distinctness of the atomic orbit. Both
+cut depths are zero while $j$ is arbitrary. The literal second row
+has grown; its finite exterior is part of the input to (NUE.5).
+$\square$
+

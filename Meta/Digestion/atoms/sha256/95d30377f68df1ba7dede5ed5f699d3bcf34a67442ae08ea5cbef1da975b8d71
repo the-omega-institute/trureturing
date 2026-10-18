@@ -1,0 +1,46 @@
+## 306. The exact third-owner contradiction
+
+Here 1<u<=m<z, u>m-2, and q<q0=1+z+u. Set
+
+    k=z+u, h=z-u, alpha=sqrt((m-1)/(m+1)),
+    L=k*k-(m-1)*(q-1)>0, J=(m+1)*(q+1)-h*h>0.
+
+The exact axial and transverse responses give
+
+    tan(theta/2)^2=alpha^2*J/L,
+    gamma=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A+B=2*sqrt(z*z-1)*alpha/k, A*B*t*t=(h/k)*L/J.
+
+Both A,B are positive. Increasing q to q0 strictly decreases L/J:
+L remains positive up to q0, where L0=k*(k-m+1)>0, while J is positive
+and increasing. Thus
+
+    A+B+A*B*t*t > F(u)
+      =2*sqrt(z*z-1)*alpha/(z+u)
+       +(z-u)*(z+u-m+1)/[(m+1)*(z+u+2)-(z-u)^2].
+
+On u<=v<=m the first term of F decreases. The second numerator
+N(v)=(z-v)*(z+v-m+1)>0 has derivative m-1-2*v<3-m<0.
+Its denominator J0(v)>0 has derivative m+1+2*(z-v)>0.
+Consequently F(u)>=F(m). At m, J0(m)=(z+1)*(3*m+2-z)>0 and
+
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms increase strictly in z on m+2<=z<3*m+2: their derivative
+signs follow from m*z+1>0 and 2*m+2>0 respectively. Hence
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+For the final inequality, the squared comparison with 1-1/m reduces
+to (m-1)*(2*m*m+m+1)>0. All denominators are positive since m>3.
+Therefore A+B+A*B*t*t>1. If gamma>=pi/2 then theta+2*gamma>pi.
+Otherwise the positive tangent branch yields
+
+    tan(gamma)=(A+B)*t/(1-A*B*t*t)>t,
+
+and again theta+2*gamma>pi. This contradicts eta's actual complete-
+budget bound. The lemma is proved. No absent axial Z zero occurrence
+was silently replaced by a genuine one: every used run has its fixed
+pair and genuineness checked, and the connected residual arc cannot
+exit that pair without the expressly enumerated transverse boundary.
+

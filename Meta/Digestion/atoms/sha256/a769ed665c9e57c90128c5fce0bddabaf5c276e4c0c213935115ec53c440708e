@@ -1,0 +1,52 @@
+## 276. Complete special circles and the high-angle payment
+
+Let S0 be the set of distinct actual labels among R1,R2, and n=|S0|,
+so n is one or two. For each label R in S0, its connected original
+normal circle propagates fixed transverse pair {C,D}. Indeed, across
+an R-incident face the special label R must again be axial, and the
+other two face labels are C,D. Connectedness reaches every original
+R slot, even when an owner or an axial label repeats.
+
+None of these R labels occurs in the unique flat sigma, whose axes are
+M and the low label O. Therefore every R slot is genuine and its full
+angle sum is 2*pi. None of their owners belongs to K: fixed pair {C,D}
+with a special R axis leaves at most one axis for a P label, so such an
+owner cannot contain two distinct P labels.
+
+Write alpha_i=theta_{R_i}(A_i). Because r_i<m, the two exact axial
+responses of A_i give
+ tan(alpha_i/2)/tan(theta_M(A_i)/2)
+ =sqrt([(r_i-1)/(r_i+1)]/[(m-1)/(m+1)])<1.
+Thus alpha_1+alpha_2<Theta. Removing these two distinct original slots
+from the complete R circles leaves total angle
+ T_remaining=2*n*pi-alpha_1-alpha_2.
+All remaining slots lie in genuine owners outside K and outside A1,A2.
+
+Partition these residual slots by whether their opposite axis is high,
+meaning labelled in P, or low-only, meaning outside P. A residual slot
+with high opposite label Y has one R axis and one Y axis. It has exactly
+one selected special slot, even if S0 contains two labels. Its angle
+psi is strictly less than theta_Y, by the same axial-response comparison
+and r<b<m<=y. Distinct such selected slots belong to distinct owners
+and select distinct actual high-axis slots.
+
+There is in fact at most one such high-opposite residual slot. The
+published four-core bound in Sections 231–234 allows at most eight
+actual high-containing owners. The four K owners, sigma, A1 and A2
+are seven distinct such owners. Every high-opposite residual owner is
+outside this set and contains exactly one selected R slot. Hence only
+one remains possible. The following summed budget also works directly
+without relying on this cardinality refinement.
+
+Let H be the sum of those selected high-axis angles and Psi the sum of
+their R angles. The four K owners spend more than 4*pi of the total
+5*pi P budget. The A_i spend Theta on their distinct M axes. Therefore
+ Theta+H<pi.
+If there are no high-opposite residual slots, H=Psi=0; otherwise Psi<H.
+In all cases Psi<=H<pi-Theta.
+Consequently the low-only residual selected slots have total angle
+ T_low=2*n*pi-alpha_1-alpha_2-Psi
+       >(2*n-1)*pi+Theta-alpha_1-alpha_2>pi.
+No bound on the number of low-only owners, or closure of the external
+low-only region within the high core, was used.
+

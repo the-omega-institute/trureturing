@@ -1,0 +1,14 @@
+**Definition 5.1 (distinct reconstruction questions).** Current-prefix
+recovery asks for $D:Q_{k,d}\to U_k$ with
+$D(B_{k,d}(u))=u$ for every $u\in U_k$. Full-source snapshot recovery asks
+for $E:Q_{k,d}\to C$ with
+
+$$
+E(B_{k,d}(x_1,\ldots,x_k))=x\qquad(x\in C).
+\tag{5.1}
+$$
+
+The latter tests a static map on full codewords, and does not add a hidden
+source to the action semantics of Definition 1.2. No ordered execution
+history is an input to either decoder.
+

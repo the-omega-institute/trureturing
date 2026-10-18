@@ -1,0 +1,23 @@
+**Example 5.4 (Bounded encoders can retain a discontinuous unit phase).**
+For any additive $\ell:\mathbb R\to\mathbb R$ and finite real
+$\gamma$, the bounded encoder
+
+$$
+E(k,\alpha,\beta)=e^{\gamma k}U(\alpha+\ell(k))
+$$
+
+has exact updates $e^{\gamma s}R_{\ell(s)}$ and $R_{t/2}$ for
+the full straight-command menu. Its unit phase need not be continuous.
+
+**Proof of Example 5.4.** Additivity and the native command formulas
+give the two identities by substitution. Boundedness follows from
+$0<k<H$ and finite $\gamma$. To see explicitly that the phase can
+be discontinuous, choose an irrational $a$ and a rational vector-space
+basis of $\mathbb R$ containing $1,a$. Prescribe $\ell(1)=0$,
+$\ell(a)=1$, zero on the remaining basis elements, and extend
+rationally linearly. For rationals $q_j\to a$, the increments
+$a-q_j$ tend to zero while $e^{i\ell(a-q_j)}=e^i\ne1$.
+The same increments at any interior height disprove phase continuity
+there. This choice example is only a boundary example; the minimax
+argument uses no basis choice and no phase regularity. $\square$
+

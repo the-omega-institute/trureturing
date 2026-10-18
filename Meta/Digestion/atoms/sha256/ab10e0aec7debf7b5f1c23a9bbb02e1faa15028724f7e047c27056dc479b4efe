@@ -1,0 +1,34 @@
+**Assumption 1.2 (complete paid export and late-target access).** A
+single deterministic effective preparation begins source-blind from $D$
+and common source-independent tables, receives no later request, and
+terminates on every $t\in\mathcal F_D$. It acquires all source dependence
+by charged original-root literal Reads. Its finite export $E(t)$ includes
+every accessible surviving source distinction: selectors, control,
+buffers, operands, lengths, allocation, handles, counters and accessible
+timing. Every other accessible field is a function of this complete name
+and public data. A separately paid handoff and access-isolation service
+removes access to all other preparation dependence, including transcripts,
+and supplies lawful common reader entry.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. The deterministic reader, from $E(t),D,p$ and common tables,
+chooses zero Reads or one fresh Read of that same stationary $t$ at an
+arbitrary finite original-root word. This choice precedes the reply and
+every supplied count. Its final predictor must give
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D)
+\tag{OCB.2}
+$$
+
+for every subsequently supplied authentic $k\ge0$, without further
+Reads. Define $M_1(D)=\min|E[\mathcal F_D]|$ over these jointly correct
+procedures. There is no subtree, equality, source-identity, age, reset,
+copying, free-navigation or advice port. Handoff, isolation, continuity,
+entry and authentication are service premises. Preparation Reads,
+work/control, temporary storage, installed tables, post-request workspace,
+final predictor size, submitted address lengths and letters, authentic
+count representation and physical time are separate resource coordinates.
+This is the original interface of [FMR, §§1–2][FMR] and [NPC, §1][NPC].
+

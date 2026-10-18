@@ -1,0 +1,79 @@
+**Lemma 53.2 (signs of every residual optimum).** Put
+$\bar\tau=\bar s/s_0$. For $\bar\tau<\tau\leq1$, every optimal tuple has
+saturated signed contrast, every finite real-null decomposition of it
+has report aligned with the sign of its $01$ product, and
+
+$$
+X_{+,-}=0.
+\tag{JR.131}
+$$
+
+Consequently its optimizing tuples correspond exactly to the minimizers
+of $\operatorname{tr}(GC_0)$ subject to
+
+$$
+A_0,B_0,C_0\succeq0,\quad A_0+B_0+C_0=I,\quad
+\operatorname{tr}(QA_0)=\operatorname{tr}(QB_0)=\operatorname{tr}(QC_0)=0,
+\quad 2(A_0)_{01}\geq\tau,
+\tag{JR.132}
+$$
+
+by $A_0=X_{+,+},B_0=X_{-,+},C_0=X_{-,-}$, with value
+$j(\tau)=\operatorname{tr}G-2\operatorname{tr}(GC_0)$ and equality in the
+last constraint at every optimum.
+
+**Proof.** First, for the entire source box (JR.86),
+
+$$
+\alpha u^2+\beta v^2=1,\quad u\geq0
+\quad\Longrightarrow\quad f_G(u,v):=(1,u,v)G(1,u,v)^T>0.
+\tag{JR.133}
+$$
+
+For $v\geq0$, the quadratic part is at least
+$(g_1-|z|)u^2+(g_2-|z|)v^2\geq0$ and the remaining terms are positive.
+For $v<0$, drop $2zuv\geq0$ and use
+$\sqrt{1-\alpha u^2}\leq1-\alpha u^2/2$. This bounds $f_G$ below by
+$c_0+2xu+c_2u^2$ on $[0,1/\sqrt\alpha]$, where
+
+$$
+c_0=g_0+g_2/\beta-2y/\sqrt\beta,\qquad
+c_2=g_1-\alpha g_2/\beta+\alpha y/\sqrt\beta.
+$$
+
+Outward rational substitution of (JR.86), with the square-root rules
+in §56, gives
+
+$$
+c_0>.00234727>.0023,\qquad
+c_0+2x/\sqrt\alpha+c_2/\alpha
+=g_0+g_1/\alpha+2x/\sqrt\alpha-y/\sqrt\beta>.00334029>.0033.
+$$
+
+If $c_2\leq0$, the minimum is at an endpoint; otherwise the quadratic
+is increasing for $u\geq0$. This proves (JR.133), including the axes.
+
+Reuse the rank-supported zero-Rayleigh decomposition (JR.60): a PSD
+matrix with zero $Q$ trace is a sum of exactly its rank in real null
+outer products. A nonzero null vector has nonzero coordinate $0$, so
+reverse its global sign and write it $\sqrt\pi(1,u,v)$, $\pi>0$.
+Normalization of the whole tuple gives $\sum h_0^2=\sum h_1^2=1$;
+hence every reassignment of reports has contrast at most
+$\sum|h_0h_1|\leq1$. The strict decrease in Proposition 51.3 implies
+that an optimum cannot have contrast larger than $\tau$; at $\tau=1$
+the same statement follows directly from this ceiling. Moving a
+misaligned atom to the other report keeps objective and all matrix
+constraints, but strictly raises contrast, contradicting strict decrease
+or the ceiling. In $X_{+,-}$ all remaining atoms therefore have $u\geq0$.
+By (JR.133), changing their objective sign to $+$ strictly improves the
+objective without changing any constraint. Thus that entire block is
+zero. An objective-sign mismatch in any other atom is excluded by the
+same sign flip. With $X_{+,-}=0$, the normalization identity makes signed
+contrast $2(A_0)_{01}$. Conversely every feasible triple in (JR.132)
+embeds as $(A_0,0,B_0,C_0)$ in (JR.84). Compactness and elimination
+establish the claimed correspondence of optimizers. This is not equality
+of the two full feasible sets. Atom reassignments here are mathematical
+modifications of a tuple; Theorem 45.1 constructs a new actual instrument
+for the modified tuple, without revealing a flag of an old instrument.
+$\square$
+

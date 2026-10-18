@@ -1,0 +1,38 @@
+### 3.4 从列振幅到每个来源的错误
+
+由 $T^\dagger T=G$、$G_{bb}=1$，列 $b$ 的总概率为一。令 $P_b^\perp=I-\mathbf e_b\mathbf e_b^\dagger$，$r_b=R_T\mathbf e_b$，则该旋转接收器的错误精确为
+
+$$
+\eta_b^{\mathrm{rot}}
+=\|P_b^\perp T\mathbf e_b\|^2
+=\|xD\mathbf e_b+P_b^\perp r_b\|^2.
+$$
+
+所以式（3.2）、（3.8）给出
+
+$$
+\begin{aligned}
+|\eta_b^{\mathrm{rot}}-L_b(a^{\mathrm{opt}})x^2|
+&\le2x\|D\mathbf e_b\|\,\|r_b\|+\|r_b\|^2\\
+&\le3n^2x^3+9n^3x^4
+\le\frac{21}{4}n^2x^3.
+\end{aligned}
+\tag{3.10}
+$$
+
+平方余项也由 $nx\le1/4$ 吸收；仅控制交叉项不足以推出该界。最大负载为 $\kappa_n$，取全部来源的最大值便证明式（2.1）的可达上界。
+
+同一平方根列估计还控制未旋转 SRM。取 $D=A/2$、$K=0$，则
+
+$$
+\begin{aligned}
+\eta_b^{\mathrm{SRM}}
+ &=\left\|\frac x2A\mathbf e_b+P_b^\perp R_S\mathbf e_b\right\|^2,\\
+\left|\eta_b^{\mathrm{SRM}}-\frac{d_b}{4}x^2\right|
+ &\le2n^2x^3+4n^3x^4\le3n^2x^3.
+\end{aligned}
+\tag{3.11}
+$$
+
+这是逐来源界。其平均界可改用既有有限夹逼取得更小常数，见 §3.6；两种界分别用于平均误差和最坏来源比较。
+

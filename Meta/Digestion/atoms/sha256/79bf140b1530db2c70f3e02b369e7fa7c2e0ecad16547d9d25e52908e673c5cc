@@ -1,0 +1,24 @@
+### 锚点 36.4（自旋网络中的纠缠与曲率）
+
+*Curvature from multipartite entanglement in quantum gravity states*（Physical Review D 108, 046010, 2023）研究以图、自旋网络和非平凡 \(SU(2)\) holonomy 表示的量子几何，并分析多体纠缠与有界区域内禀曲率之间的关系。
+
+它与本卷的关系是结构性的：
+
+\[
+\text{图连接}
++
+\text{边 holonomy}
++
+\text{量子态纠缠}
+\longrightarrow
+\text{曲率候选量}.
+\]
+
+本卷目前只使用一般有限 CPTP holonomy 缺陷
+
+\[
+\Omega_\gamma=\mathcal E_\gamma-\operatorname{id}
+\]
+
+和有效电阻度量。自旋网络论文并不证明这两个量等于其几何曲率；因此它只能支持后续构造的方向，不能升级当前的定理。
+

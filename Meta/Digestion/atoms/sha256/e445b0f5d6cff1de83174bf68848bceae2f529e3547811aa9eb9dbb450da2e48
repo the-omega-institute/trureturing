@@ -1,0 +1,8 @@
+## 21. The checked synchronous interface for complete-row disagreement
+
+This section records only the finite automaton interface needed by the
+constructor presentation. Its graph construction and productive-prefix
+method are reused synchronous methods. Automaticity is asserted in the
+surviving-coordinate presentation, not in the old tuple with constructor
+offsets still present.
+

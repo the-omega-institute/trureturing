@@ -1,0 +1,88 @@
+**Convention 7.3 (reuse of ALL current stability, error and resource
+consequences).** CG26.3 and CG27.1 already state, for the actual live
+Choi matrix $J$ of ANY original common full channel with
+$E(\Phi)\leq E_\star+\epsilon$, $0\leq\epsilon\leq1$,
+
+$$
+\begin{aligned}
+\overline J&=\frac14\sum_{e,n}(U_{e,n}\otimes U_{e,n})
+                         J(U_{e,n}\otimes U_{e,n})^\dagger,\\
+\|\overline J-J_\star\|_1&\leq K\sqrt\epsilon,\\
+|T_{ij}-\tau_{ij}|&\leq K\sqrt\epsilon\quad(0\leq i,j\leq2),\\
+\operatorname{tr}(W_3J)&\geq\delta_\star-2K\sqrt\epsilon,
+\qquad\tau_{ij}=\langle ij|J_\star|ij\rangle.
+\end{aligned}
+\tag{JG.44}
+$$
+
+The four values
+$\tau_{01}=(Q_\star^{01})_{00}$,
+$\tau_{10}=(Q_\star^{01})_{11}$,
+$\tau_{02}=(Q_\star^{02})_{00}$,
+$\tau_{20}=(Q_\star^{02})_{11}$ are positive.
+These estimates also hold for every finite-test channel, with $E_c$
+in the premise. Sign averaging fixes the Choi diagonal entries and
+$W_3$, whose operator norm is $2$; this is why the bounds concern
+actual transfers and actual witness pairing without identifying the
+whole unaveraged channel.
+
+The inherited proof CG.207–CG.220 controls the slack tail by
+$\operatorname{tr}((I-P)\overline J)\leq\epsilon/s$ and positive
+compression by
+$\|\overline J-P\overline JP\|_1\leq a\sqrt\epsilon$,
+using $\operatorname{tr}J\leq3$, with zero trace treated directly.
+The compressed face is $\sum_k\widehat\eta_k\mathcal B_k$.
+The SAME endpoint effect deficits bound the six-coordinate fixed-matrix
+first differential by $A\sqrt\epsilon$; trace pairing contributes
+$La\sqrt\epsilon$, and injectivity of $G$ bounds coefficient displacement
+by $(A+La)\sqrt\epsilon/\sigma$. This gives precisely (JG.43),
+without a new exact-time representation or a new strong-duality premise.
+These are uses of CG26, not additional stability claims here.
+
+For every ACTUAL fully counted factorization with these original error
+hypotheses, CG27.2 already gives, on EVERY normalized complex $\rho$,
+
+$$
+p_{\geq3}^{\rm acq}(\rho)\geq p_{\geq3}^L(\rho)
+ \geq\frac{D(\epsilon)^2}{24},\qquad
+ D(\epsilon)=\max\{\delta_\star-2K\sqrt\epsilon,0\}.
+\tag{JG.45}
+$$
+
+For positive subnormalized $\rho$, multiply the last right side by
+$\operatorname{tr}\rho$; this follows by linearity, and zero input is
+immediate. The exact-optimal case reuses CG24's
+$\delta_\star^2/24>361/2400>3/20$. Its mechanism is the homogeneous
+estimate $\operatorname{tr}(W_3J_H)\leq2\sqrt{6p_{\geq3}^L(P_\psi)}$
+for every pure complex input of the same CP/TNI high submap, together
+with the product-rank low-cone obstruction. It covers the finite,
+countable and specified integral actual cuts in Definition 4.1.
+A finite-test closure without such a cut has no probability reading.
+
+With $\eta=E(\Phi)-E_\star\in[0,1]$, CG27.3 already supplies
+
+$$
+\begin{aligned}
+J\in\mathfrak S_2&\ \Longrightarrow\
+ \eta\geq\frac{\delta_\star^2}{4K^2},\\
+T_{ij}=0&\ \Longrightarrow\
+ \eta\geq\frac{\tau_{ij}^2}{K^2}
+       \quad(ij\in\{01,10,02,20\}),\\
+\eta&\geq\frac{[\max\{\delta_\star-
+                  \sqrt{24p_{\geq3}^L(\rho)},0\}]^2}{4K^2}
+ \quad\text{for each normalized }\rho\text{ in an actual cut}.
+\end{aligned}
+\tag{JG.46}
+$$
+
+The last line remains valid with the larger acquisition probability.
+The witness inequality is nonpositive on $\mathfrak S_2$; inserting
+that sign or a zero transfer into (JG.44) gives the first two lines.
+Combining the high-submap estimate with the last line of (JG.44) and
+rearranging before squaring gives the last line. These deductions and
+their positive symbolic penalties are inherited from CG27. In particular
+the dimension-two error penalty and the near-optimal resource theorem
+are already quantitative current results. Theorem 6.1 addresses a
+different, arbitrary failing $C$ by a phase-adapted supported witness;
+it does not replace or sharpen these optimizer/performance results.
+

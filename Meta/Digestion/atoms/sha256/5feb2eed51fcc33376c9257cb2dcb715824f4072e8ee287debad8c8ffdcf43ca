@@ -1,0 +1,10 @@
+**Convention 2.5 (observation and access).** The theorem compares actual
+row-successor observations, not an original hidden-query trace. Actor $A$
+already owns the active banks and the source seal; the scan uses only
+that current authority. The mathematical inverse is not an extra native
+operation or a uniform actor procedure choosing a stopping time. It makes
+no original-$Q$ claim until the interface conditions of §5 hold. In
+particular it is different from EXPOSURE's 010/100 payload exposure: here
+an arbitrary completed predecessor, rather than one bit of a pending
+history frame, is recovered before the next header input.
+

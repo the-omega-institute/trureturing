@@ -1,0 +1,108 @@
+**Theorem 15.2 (promised finite preparation does not give a uniform extractor).**
+Every program in (PCA.37) is total on acquired finite data and its original
+code is finitely preparable on the entire $\mathcal U_*$. All share
+precisely the same original eight-state, at-most-two-call reader of 4.3.
+Nevertheless there is no effective procedure which, on every program
+in this family, terminates and returns any one of the following:
+
+1. a valid finite determining absolute depth for its original code;
+2. a valid finite native determining menu for that code;
+3. a finite installed stationary fixed-address common-start preparer
+   generating its original complete entry on the entire fiber.
+
+Thus no such extractor exists on all program descriptions under the
+promises of totality and finite preparability. This does not obstruct
+Theorems 10.3–14.3 with a supplied valid certificate.
+
+Proof. If $e$ never halts, $f_e\equiv0$. If it halts at stage $\tau$,
+then on every branch image
+
+$$
+f_e(B)=\mathbf1_{\{r_B(L^{\tau+1})=\mathsf{branch}\}}.
+\tag{PCA.38}
+$$
+
+Indeed, if $h(B)\ge\tau$, the bounded simulation discovers that first
+stage and uses exactly this test. If $h(B)<\tau$, a node at depth
+$\tau+1$ cannot be a branch; the test and (PCA.37) are both zero.
+Hence in the halting case this is one fixed finite suffix test, and
+in the nonhalting case it is constant. In either case a finite menu
+of class roots, together with $LLL L^{\tau+1}$ in the halting case,
+determines the literal code on the entire fiber: roots identify the
+profiles in (PCA.12), and the suffix decides its only varying case
+$Z_{b_3}$. Theorem 3.2 supplies a finite preparer with the original
+entries. This existence argument makes no uniform choice between the
+two cases. Supplier application 4.3 serves every $f_e$ without any
+change to the reader table, entries, outputs or two-call bound.
+
+We next prove the required actual-source lower witness rather than
+appeal to Rice's theorem. Suppose $e$ halts first at $\tau$ and set
+$m=\tau+1$. Let $B^-$ be the complete all-beta tree with leaves at
+depth $m$. Let $B^+$ replace its beta at occurrence $L^m$ by
+$\langle\beta,\beta\rangle$. Both are finite branch images, because
+beta and ordered pairs of images are images. They agree at every
+relative word of length less than $m$, while
+
+$$
+r_{B^-}(L^m)=\beta,\qquad
+r_{B^+}(L^m)=\mathsf{branch},\qquad
+f_e(B^-)=0,\quad f_e(B^+)=1.
+\tag{PCA.39}
+$$
+
+The last equations hold even if one evaluates via (PCA.37): both
+heights are at least $m>\tau$. Choose four other finite branch images
+for $c,b_1,b_2,b_4$, mutually distinct and avoiding both $B^-,B^+$.
+Such choices exist by the infinite distinct image orbit used in NBP
+Proposition 15.2. Set $x_{b_3}=\beta$, take $x_a=B^-$ or $B^+$,
+and keep those four other values fixed. Each valuation has six
+pairwise distinct values, all images. Its full current filling is
+an image, repeats $a$ at both $LLL,LRL$ and $c$ at both $RLL,RRL$,
+and has the exact original complete row. NBP Proposition 9.3 and
+its inverse give two actual finite origins $u^-,u^+\in Z_{b_3}$,
+with the same whole predecessor target $R_0$ and different prescribed
+codes and complete entries.
+
+Every absolute word of length less than $m+3=\tau+4$ has the same
+reply on their current trees. Above the cut it sees the common
+exterior. In every class other than $a$ the entire subtree is unchanged.
+In either occurrence of $a$, its suffix length is less than $m$,
+so (PCA.39)'s common prefix gives the same reply. This covers every
+original address, including absent words in unchanged classes. Thus
+any determining absolute depth $D$, or any determining menu whose
+maximum word length is $D$, must satisfy
+
+$$
+D\ge\tau+4\quad\text{whenever }e\text{ halts at }\tau.
+\tag{PCA.40}
+$$
+
+Now suppose an extractor in item 1 or 2 exists. From its returned
+finite output obtain $D$ (use zero for an empty menu) and simulate
+$e$ through stage $D$. If it halts, report halting. If it does not,
+it cannot halt later: a later $\tau>D$ contradicts (PCA.40). This
+would decide halting for arbitrary finite descriptions, although every
+input supplied to the extractor is within its promised class.
+
+For item 3, take the maximum length of all words in the returned
+finite preparer's installed running states, again using zero for no
+running states. Lemma 2.3 makes that installed menu determining, so
+the same reduction applies. Unused long words may make this bound
+larger; they remain finite and do not invalidate the halting decision.
+They are used here only as a bound extracted from a finite description,
+not charged as executions.
+
+The undecidability endpoint is the standard halting problem. Alan M.
+Turing's *On Computable Numbers, with an Application to the
+Entscheidungsproblem*, §8, pp. 247–248, proves the corresponding absence
+of a general procedure determining whether an arbitrary described
+machine ever prints a specified symbol. The equivalence needed here
+is explicit: simulate any machine until its first halt and then print
+a distinguished symbol; conversely simulate a printing machine until
+its first occurrence of that symbol and then halt. Both transformations
+are effective finite descriptions. A bounded simulation at a returned
+$D$ is a finite operation, so the supposed extractor contradicts this
+endpoint. No premise about partiality of the code programs, failure of
+the finite-preparability promise, or additional source port is used.
+$\square$
+

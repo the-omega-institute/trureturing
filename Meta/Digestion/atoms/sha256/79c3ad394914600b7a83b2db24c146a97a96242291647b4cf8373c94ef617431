@@ -1,0 +1,35 @@
+**Lemma 4.1 (Zero-decoder baseline).** The zero decoder has error $R_0$,
+where
+
+$$
+R_0=
+\begin{cases}
+(4H+Z)/2=1-Z/2,&0<Z<2/3,\\
+2\sqrt{ZH},&2/3\le Z<1.
+\end{cases}
+$$
+
+It is optimal among constant decoders. Below the transition its error
+is attained at the interior height $k_*=H/2+Z/8$.
+
+**Proof of Lemma 4.1.** Its squared error is
+
+$$
+4A(k)^2+B(k)^2=16k(H-k)+4Zk
+=-16\left(k-\frac H2-\frac Z8\right)^2
+ +\frac{(4H+Z)^2}{4}.
+$$
+
+The vertex is interior exactly when $Z<4H$, equivalently $Z<2/3$.
+For $Z\ge4H$ the supremum on $(0,H)$ is its limit $4ZH$ at $H$.
+For any constant decoder $q_0$, replacing $(\alpha,\beta)$ by
+$(\alpha+\pi,\beta+\pi)$ replaces $y$ by $-y$, and
+
+$$
+\frac{\|q_0-y\|_2^2+\|q_0+y\|_2^2}{2}
+=\|q_0\|_2^2+\|y\|_2^2.
+$$
+
+The uniform error is therefore at least $R_0$, attained by $q_0=0$.
+$\square$
+

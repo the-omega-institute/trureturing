@@ -1,0 +1,33 @@
+##### 定义 2.2.1： 输入端与输出端
+
+固定有限维空间：
+
+$$
+\mathcal H_A,\qquad\mathcal H_B,\qquad\mathcal H_C,
+$$
+
+以及量子通道：
+
+$$
+\mathcal N:
+\mathcal L(\mathcal H_A\otimes\mathcal H_B)
+\to
+\mathcal L(\mathcal H_C).
+$$
+
+其中 $C$ 是所关心的输出端。
+
+称 **$A$ 对 $C$ 无信号作用**，若对任意联合输入 $\rho,\sigma$：
+
+$$
+\operatorname{Tr}_A\rho=\operatorname{Tr}_A\sigma
+\Longrightarrow
+\mathcal N(\rho)=\mathcal N(\sigma).
+$$
+
+也就是说：保持 $B$ 输入相同，改变 $A$ 及其与 $B$ 的关联，仍不改变 $C$ 的输出。
+
+这是对全部输入的结构性质，比“某个初态上没观察到变化”更强。
+
+<a id="claim-2-2-2"></a>
+

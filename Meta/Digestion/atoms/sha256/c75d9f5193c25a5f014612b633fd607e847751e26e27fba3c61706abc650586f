@@ -1,0 +1,90 @@
+**Theorem 207.17 (Attained full fixed-data minima).** Both complete
+excesses have attained minimum $D$ over the class of 207.16. An
+attaining score $V$ is the threshold placement supplied by 203.2:
+put $P=\nu(Z)/2$ at each $w(\{a\}\cup Z)$, $a=1,2$, put $C=s$
+at $w(\{j\})$ and $C=r_j$ at $w(\{j,\ldots,L\})$ for every late
+$j$, and put $T=s$. It preserves $Q$, the anchor $W=(c+1)s$ and
+the entire $\nu$, and $\Delta_N(V)=\Delta_O(V)=D$.
+
+Every unit-$O$ input in this $E=0$ fixed-data class therefore has the
+same-$Q$ certificate $(V,0)$. After arbitrary early correct rows are
+added to both input and representative, $Q$ is still preserved and
+$\Delta_N(V)\le D$; this gives a certificate when $D\le1$. A
+fixed-data minimum and an automatic implication from unit-$O$ input to
+$D\le1$ are asserted only at $E=0$. If $D=r_{\max}$, the head table
+still attains $D$ after arbitrary early additions.
+
+**Proof.** The threshold cutoffs of 203.2 are all
+$\nu(n\in Z,k\notin Z)=s$, so its full words are exactly the two
+correct words just specified. They have the declared first zero and
+the correct totals, including coincident terminal words.
+
+The complete cell maxima of $V$ are
+
+| Schedule | $N$ maxima in order $00,01,10,11$ |
+| --- | --- |
+| $(1,2)$ | $(0,cs/2,cs/2,s+r_{\max})$ |
+| early/late $(a,j)$ | $(s,b_*,s+r_j,s+\max(b_*,R_j))$ |
+| late/late $i<j$ | $(s,s,s+r_j,s+\max(z,R_j))$ |
+
+For an early/late pair, its early-zero cells contain only pair rewards.
+In $10$, class $j$ supplies $s+r_j$; earlier absorbing residuals are
+at most $s$ and future classes do not occur. In $11$, earlier
+singleton contributions are at most $s$, future classes have maximum
+$s+R_j$, and zero gives $s+b_*$. For late $i<j$, every correct
+contribution in $00$ is an absorbing residual at most $s$. In $01$
+only class $i$ can contribute its singleton mass $s$. In $10$, class
+$j$ supplies $s+r_j$ and intermediate residuals are at most $s$.
+In $11$, earlier singletons are at most $s$, future classes supply
+$s+R_j$, and zero gives $s+z$. Early labels collect subsets of pair
+mass. This proves the table over all labels, including earlier and
+unqueried ones. Its three excess formulas are exactly the three
+families in (207.40); each $j\ge4$ occurs as the second late query.
+Catalog completion gives $\Delta_N(V)=D$.
+
+For any fixed-data competitor, the stopped head table forces
+$r_{\max}$. Start a late pair $i<j$ with label zero on all stopped
+cells, whose reward is the anchor $W=cs+s$. Independently switch $10$
+to label $j$ and $11$ to a largest future class whenever beneficial.
+These classes lie wholly in their respective cells for any correct
+suffixes. The two gains in one table sum to
+$r_j+(R_j-z)_+$ (omit the future switch if there is no future class).
+Thus every such $O$ cost is at least the third family in (207.40).
+
+For early/late $(a,j)$ set
+$p_{a0}=P\{w_a=1,w_j=0\}$, $p_{a1}=P\{w_a=1,w_j=1\}$.
+The two loss sets for $a=1,2$ are disjoint on early pair support,
+even for atoms with prefix $00$. Hence
+
+$$
+p_{10}+p_{20}\le2s,\qquad
+p_{11}+p_{21}\le(c-2)s=2b_*.
+\tag{207.41}
+$$
+
+The stopped table independently switching $10$ to $j$ and $11$ to
+a largest future class has gain at least
+
+$$
+f(p_{a0},p_{a1})=(s+r_j-p_{a0})_++(R_j-p_{a1})_+.
+\tag{207.42}
+$$
+
+When no future class exists the second summand is zero. The function
+$f$ is convex and decreasing in each capacity. The maximum of the two
+legal schedule gains is at least their average, which by convexity
+and (207.41) is at least
+$f(s,b_*)=r_j+(R_j-b_*)_+$. This bounds a maximum of two whole
+tables; it does not average their requests into a new acquisition.
+All entries of $D$ therefore lower-bound every fixed-data $O$ cost.
+Apply this to $V$ and use $B_O\le B_N$ to obtain both equalities and
+both attained minima. Equality of $Q$ gives zero residual.
+
+Adding early correct rows raises a fixed table by at most their total
+$E$ and the anchor by $E$, proving the sufficient extension. The head
+table retains all of them, giving the claimed exactness when
+$D=r_{\max}$. Ties, $r_j=0,s$, $D=1$, and $c=3,4$ whenever the
+stipulated measure exists are included. At the separate $s=0$ limit,
+the late, pair and $T$ score is zero and $D=0$. These auxiliary zero
+endpoints do not replace positive original amplitude tails. $\square$
+

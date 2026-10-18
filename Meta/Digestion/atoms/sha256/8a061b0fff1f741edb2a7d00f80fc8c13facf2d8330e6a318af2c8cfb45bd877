@@ -1,0 +1,14 @@
+**Definition 1.4 (Whole-label success and behavioral distance).** For a protocol $\Pi$, put $p_\Pi(s)=\Pr_s[\widehat s=s]$. Its uniform whole-label Bayes score is $2^{-n}\sum_s p_\Pi(s)$ and its minimax score is $\min_s p_\Pi(s)$. The optimal scores take the supremum over the specified contract. A score-only protocol uses $\mathcal H(s)$ and source-independent resources, with no ordinary calls or other source-dependent input. Zero-error recovery means $p_\Pi(s)=1$ for every promised source, and not just success on average or on one selected bit.
+
+For $s,r\in S_n$, let $h(s,r)=|\{i:s_i\ne r_i\}|$ and define the distance of their $q$-iterate channels by
+
+$$
+D_q(s,r)=\sup_{R,\rho}
+\frac12\left\|
+(\Lambda_s^q\otimes\mathrm{id}_R)(\rho)
+-(\Lambda_r^q\otimes\mathrm{id}_R)(\rho)
+\right\|_1.
+$$
+
+Here the supremum ranges over all finite references and density states; $\|A\|_1=\operatorname{Tr}\sqrt{A^\dagger A}$. This is a distance for the uninterrupted iterate, not the output distance of an arbitrary controlled $q$-call strategy.
+

@@ -1,0 +1,153 @@
+**Theorem 4.2 (all-negative determining-prefix criterion).** Under
+Assumptions 1.2–1.3, for arbitrary finite prefix-free original $P,Q$, the
+following terminating procedure is exact.
+
+1. If the NPL mask split is infinite, it returns **negative** together with a
+   finite-source generator for every requested inclusive depth $h$.
+2. If the mask split is finite, it constructs all exact cells (RNL.8). For each
+   cell and each reached target pair it submits the joint positive query
+   $\exists v\in\Omega^-_\eta$ with $T_{\eta,q}[v]=T_{\eta,r}[v]$ to [NSF,
+   Lemma 5.1 and Theorem 5.2][NSF]. An infeasible query fixes that bit false.
+   A feasible query is fully composed with an occurs-check MGU. If its
+   bindings are all ground, [SLH, Theorem 74.4][SLH] and the supplied ground
+   criterion reduce the bit to finitely many original tests. If a feasible
+   nonidentity MGU contains a free variable in a binding, the procedure
+   returns **negative** with a pump producing a finite opposite-row pair at
+   every requested $h$.
+3. If every finite-cell query is infeasible, identically true, or has only
+   ground bindings, the procedure returns **positive** with a finite $H$ such
+   that $\operatorname{PrefDet}(D^{-},Q,H)$. It also returns a paid static
+   service at epoch $N$ with
+
+$$
+q\le 2(2^{H+1}-1),\qquad
+ a=0,\qquad
+ \ell\le2(2^{H+1}-1)(H+\lceil N/2\rceil).
+\tag{RNL.13}
+$$
+
+In the positive branch let $B$ be the old class set and $\mathcal E$ the
+finite set of feasible cells. For each feasible positive target-pair query,
+write $\theta_{\eta,qr}$ for its fully composed MGU, after any preliminary
+substitution of Convention 2.3; its nonidentity bindings are all ground.
+With leaf height zero, use the single original inclusive depth
+
+$$
+H=\max\left(
+ \{0\}\ \cup\ \{|a_b|+d-1:b\in B\}\ \cup\
+ \left\{|p_x|+\operatorname{height}(\theta_{\eta,qr}(x)):
+ \substack{\eta\in\mathcal E,\ q,r\in J_\eta,\ \text{query feasible}\\
+ x\in\operatorname{dom}\theta_{\eta,qr}}\right\}
+ \right).
+\tag{RNL.13a}
+$$
+
+Every $p_x$ is the full original coordinate address from (RNL.6a) or
+(RNL.9a). Empty binding sets contribute no template depths. The same $H$
+is used in (RNL.13); no optimality or execution-time claim is made.
+
+Proof. The negative infinite-mask branch is an explicit finite-source
+pigeonhole construction, not a successive-$h$ search. There are
+$2^{h+1}-1$ original addresses of length at most $h$, hence at most
+
+$$
+B_h=4^{\,2^{h+1}-1}
+\tag{RNL.14}
+$$
+
+four-reply prefix vectors. Generate $B_h+1$ actual finite sources
+$G(0),\ldots,G(B_h)$ and compute their actual original prefix vectors. Two
+vectors agree. Their complete masks differ because $G$ has pairwise distinct
+masks. The selected pair is finite, jointly admissible in (RNL.3), agrees at
+every original address through $h$, and has different full $R_Q$ rows. This is
+a post-decision finite certificate; no infinite source, raw-prefix automaton,
+or representative domain is introduced.
+
+Assume now the finite mask branch. Proposition 2.2 gives both source
+inclusions for every cell and exact full target rows. If a cell exterior
+$E_\eta$ retained a free coordinate on a feasible subfamily, the same deep
+replacement construction as Corollary 3.2 (with no exclusions when the
+negative list is empty) would produce infinitely many distinct complete masks,
+contradicting the NPL finite branch. Thus every feasible cell has a fixed concrete exterior after
+its finite mask is selected.
+
+Consider one reached pair $(q,r)$. NSF decides the joint feasibility query
+using the full old row, all literal records, every negative relation, both
+endpoint guards and one common source. If it is infeasible, the pair is never
+equal. Otherwise let $\theta$ be the fully composed MGU for
+$T_{\eta,q}=T_{\eta,r}$. The MGU is exact: every solution is precisely an
+assignment to its free variables followed by $\theta$, and every such
+assignment solves the target equation.
+
+Suppose a binding $x=\theta(x)(Y)$ contains a free variable $y\in Y$. Start
+with the finite witness supplied by the joint NSF query. Substitute $\theta$
+into every retained negative record. Lemma 3.1 and Corollary 3.2 give only
+finitely many forbidden values for $y$; choose a value outside them with
+more than $2^h$ leaves. The extended valuation still satisfies every negative
+record and solves the target equation, so it is a finite source $u_h\in D^{-}$
+with the selected target bit true. Its value of $x$ has more than $2^h$
+leaves, hence height greater than $h$ and a branch at relative depth $h$.
+Replacing within one child cone of that branch preserves all replies through
+relative depth $h$.
+
+Return to the original residual domain, where the target equation is not a
+retained condition. Freeze all free variables and all residual coordinates
+other than this bound variable $x$. Apply Lemma 3.1 to every retained
+negative record with $x$ as the varying coordinate. Corollary 3.2 supplies a
+finite $x'_h$ that agrees with $x$ through relative depth $h$, and therefore
+through every required original depth-$h$ cone, avoids all finite forbidden
+values, has larger leaf count, and differs from
+$\theta(x)(Y)$. Replace $x$ by $x'_h$ in every occurrence. The old row,
+literals, guards, all repeated classes and all negative records remain true;
+the two reconstructed sources are in the same exact cell and agree on every
+original reply of length at most $h$. The MGU equivalence says the changed
+source no longer solves $T_{\eta,q}=T_{\eta,r}$, so its full target row differs
+in this equality-partition bit. This gives a jointly admissible finite
+opposite-row pair for every $h$. It is crucial that the diagnostic target
+equation was removed again before the second replacement.
+
+It remains to consider feasible nonidentity MGUs with no such free binding.
+Then all bindings are ground. The ordinary ground criterion of [SLH,
+Theorem 74.4][SLH] and its finite delayed-template tests decide each bit on
+the whole cell; an empty binding is identically true. There are finitely many
+cells and finitely many reached pairs, so this finite analysis terminates.
+Use the single $H$ in (RNL.13a). Each representative-mask reply is at
+$a_b s$ with $|s|<d$, so $|a_b s|\le |a_b|+d-1\le H$. Therefore two sources
+with equal original $H$-prefixes select the same exact mask tuple, including
+all absent replies.
+
+For a ground binding $x=g=\theta_{\eta,qr}(x)$, (RNL.6a), or (RNL.9a) after
+preliminary substitution, recovers the coordinate at $p_x$. Its equality
+test is exactly
+
+$$
+v(x)=g\quad\Longleftrightarrow\quad
+\forall |s|\le\operatorname{height}(g),\
+r_u(p_x s)=r_g(s).
+\tag{RNL.15}
+$$
+
+Matching all these replies forces every constructor and terminating leaf of
+the finite ground tree $g$, so no extension or different tree passes. Every
+test address satisfies
+$|p_x s|\le |p_x|+\operatorname{height}(g)\le H$.
+This is the full original position $a_b s_x s$ used in [SLH,
+(SLH.74.14)][SLH]. Thus equal original $H$-prefixes give the same result for
+every ground binding, hence every target-pair bit; infeasible and identity
+queries are already constant. Equation (RNL.9) gives the same reached set,
+fixed concrete exterior and complete partition, hence the same $R_Q$.
+The finite maximum is computed once, without prospective depth enumeration.
+Cross-cell coverage follows from both directions of (RNL.8), not from a
+finite row table.
+
+For the positive consumer, use the paid historical decoder of [NSF, Theorem
+6.1][NSF] (equivalently [SLH, Theorem 2.2][SLH]) at the authentic current
+register. Using exactly $H$ from (RNL.13a), it recovers all
+$2^{H+1}-1$ original replies through $H$, with at most two current reads per
+reply and physical address length at most $H+\lceil N/2\rceil$. These are
+the bounds (RNL.13). It selects the unique cell, performs the finite ground tests, and
+installs the complete original row. The source used internally to compute a
+constant row is only an offline feasibility witness; the online service has
+no source selector or membership oracle. Therefore positive and negative
+branches are exhaustive and exact. $\square$
+

@@ -1,0 +1,41 @@
+\mathcal L_{\mathrm{coh}}
++
+\mathcal L_{\mathrm{diss}},
+\qquad
+\mathcal L_{\mathrm{coh}}(\rho)=-i[H,\rho],
+\]
+且
+\[
+[H,\sigma]=0,
+\]
+则相干部分保持参考态相对熵不变：
+\[
+D\!\left(
+e^{t\mathcal L_{\mathrm{coh}}}\rho
+\middle\Vert\sigma
+\right)
+=
+D(\rho\Vert\sigma).
+\]
+因此外部参数 \(t\) 可以沿可逆相位轨道推进，而内部熵时间
+\[
+\tau(t)=D(\rho_0\Vert\sigma)-D(\rho_t\Vert\sigma)
+\]
+只记录耗散部分造成的不可逆信息损失。若
+\[
+\Sigma_{\mathrm{diss}}(\rho_t)>0
+\]
+几乎处处成立，则 \(\tau\) 可以作为 \(t\) 的单调重参数；若 \(\Sigma_{\mathrm{diss}}\equiv0\)，相干演化仍可存在，但熵时间不推进。
+
+这给出静态大场上的两种时间参数：
+
+\[
+\boxed{
+\text{可逆参数时间 }t
+\quad\text{与}\quad
+\text{不可逆熵时间 }\tau
+}
+\]
+
+前者由 Hamiltonian 或其他可逆网络参数化，后者由局部量子耗散和相对熵账本定义。把观测者的岁月流逝解释为后者，需要额外证明观察过程只依赖 \(\tau\)，或至少对 \(t\) 和 \(\tau\) 给出可识别的映射。
+

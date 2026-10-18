@@ -1,0 +1,127 @@
+**Theorem 205.8 (Protected positive cells and an exact fixed-data minimum).**
+If $\tau\ge0$ and $\tau+\zeta\ge\mu$, the following score $V$ has
+
+$$
+\Delta_N(V)=\Delta_O(V)=D=
+ \max\{\kappa,(\mu-\tau)_+\}.
+\tag{205.21}
+$$
+
+This is the attained minimum of each complete excess over the
+fixed-data family in Definition 205.7. Balance every $\nu(x)$ between
+the two early lifts $01x,10x$, each with weight $\nu(x)/2$, setting
+inactive late coordinates to one. In correct class $n\in J$, for
+$s\in[0,\gamma_n)$ use the word which is one before $n$, zero at $n$,
+and has later active bit $k$ equal to one exactly when $s<a_{nk}$.
+Its coefficient is the length of the set of such $s$ yielding that
+word. Set $T=\tau$ and all other rows zero. Thus finitely many threshold
+intervals specify every coefficient, including coincidences.
+
+For an $E=0$ input with $\zeta\ge(\mu-t)_+$, take $\tau=t$.
+Then $Q(V)=Q(y)$, anchors agree, and $D\le\delta$; if $\delta\le1$
+this supplies $(V,0)$ in (205.2), with no ordering restriction on
+$\gamma$ or bound on $|J|$.
+
+**Proof.** First consider any fixed-data competitor. The constant-zero
+score is $S+\tau$, also its anchor. For an early address $a=1,2$ and
+$j\in J$, changing just the stopped $10$ label to $j$ collects the
+whole correct class $j$ and loses pair mass
+$p_a=P(w_a=1,w_j=0)$. The two loss sets are disjoint on early pair
+support, even when early $00$ pair words are allowed, and
+$p_1+p_2\le m_j$. Hence some early/$j$ guard forces gain at least
+$(\gamma_j-m_j/2)_+$. For $i<j$, independently selecting zero or $i$
+in stopped cell $0$, and zero or $j$ in $10$, forces
+$(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+$. These are two gains of one
+table. Finally $(1,2;1,2,n)$ for a largest correct class forces
+$(\mu-\tau)_+$. Thus every $O$ excess, and consequently every $N$
+excess, is at least $D$.
+
+For the constructed score, label zero earns the cell's full pair mass,
+plus $\tau$ in $11$. Early labels earn only pair subsets, inactive
+late labels earn zero, and each other label earns only its own correct
+class. We check all of them. On $(1,2)$ the exact gain is
+$(\mu-\tau)_+$. On early/$k$, the early-zero cells contain no late
+correct rows. In $10$, classes $n<k$, $n=k$, $n>k$ contribute respectively
+$(\gamma_n-a_{nk})_+$, $\gamma_k$, and zero. The inclusion
+$m_n\le m_k+a_{nk}$ gives
+
+$$
+[(\gamma_n-a_{nk})_+-m_k/2]_+
+ \le(\gamma_n-m_n/2)_+\le\kappa.
+\tag{205.22}
+$$
+
+If $\gamma_n\le a_{nk}$ the left side is zero; otherwise compare
+inside the positive part using $a_{nk}+m_k/2\ge m_n/2$.
+For $n=k$ use the unary term of $\kappa$.
+
+For a late pair $i<j$, write $p_{ab}=\nu(x_i=a,x_j=b)$.
+For $n\le i$ the correct reward in $01$ is
+
+$$
+[\min(\gamma_n,a_{nj})-\min(\gamma_n,a_{ni})]_+\le p_{01}.
+\tag{205.23}
+$$
+
+Indeed the unclipped difference of the two threshold masses is at most
+$\nu(x_n=0,x_i=0,x_j=1)$; clipping cannot increase its positive part.
+For $n<i$ the reversed clipped difference bounds the $10$ reward by
+$p_{10}$. At $n=i$ the $10$ reward is zero. Classes after $i$ do not
+appear in $01$. These statements include nonzero earlier-label rewards;
+they do not discard those labels.
+
+The only possible uncovered non-$11$ cells are therefore $00$ and
+$10$. A candidate $00$ label $n\le i$ has reward
+$(\gamma_n-h_n)_+$, where $h_n=\max(a_{ni},a_{nj})$.
+Since $m_n\le p_{00}+2h_n$,
+
+$$
+[(\gamma_n-h_n)_+-p_{00}]_+
+ \le(\gamma_n-m_n/2)_+\le\kappa.
+$$
+
+A positive $10$ maximizing label must be $i<r\le j$, with reward
+$(\gamma_r-a_{rj})_+$. The inclusion
+$d_{ir}\le p_{10}+a_{rj}$ gives its individual gain at most
+$(\gamma_r-d_{ir})_+\le\kappa$. If both cell gains are positive,
+choose the actual maximizing labels $n\le i<r\le j$. Only then remove
+the positive-part truncations. Their sum equals
+
+$$
+\gamma_n+\gamma_r-h_n-a_{rj}-m_j.
+$$
+
+For the same measure $\nu$, the event $x_n=0$ or $x_r=0$ is contained
+in the union of $x_j=0$, $(x_n=0,x_j=1)$ and $(x_r=0,x_j=1)$.
+Consequently
+
+$$
+\begin{aligned}
+m_n+d_{nr}&\le m_j+a_{nj}+a_{rj}\le m_j+h_n+a_{rj},\\
+g_{00}+g_{10}&\le\gamma_n+\gamma_r-(m_n+d_{nr})\\
+ &\le(\gamma_n-m_n)_++(\gamma_r-d_{nr})_+\le\kappa.
+\end{aligned}
+\tag{205.24}
+$$
+
+If only one gain is positive, use its individual bound; if neither
+is positive, their sum is zero. This is the non-$11$ union argument
+of 203.2, with both gains paid by one $\kappa$.
+
+The $11$ baseline is $\tau+(S-m_k)/2$ on early/$k$ and
+$\tau+p_{11}$ on late $i,j$. It is at least $\tau+\zeta\ge\mu$,
+so covers every correct label. Each of these schedules therefore
+spends at most $\kappa$, while $(1,2)$ spends the tail deficit; one
+takes their maximum, not their sum. Inactive coordinates are constant
+one on the constructed support. Queries involving them reduce to
+singleton or constant information; those information types embed in
+complete distinct pairs. Repetitions and reversed $N$ schedules add
+no further type. Hence the full $N$ upper bound is $D$. The preceding
+necessary $O$ bound applies to this construction as well, giving
+both equalities and the attained minima. The same proof retains
+zero-total coordinates when a larger projection was fixed.
+
+For the final assertion the fixed-data lower bounds applied to the
+original $E=0$ input give $D\le\delta$. The construction preserves
+all totals, $T$ and $K$, hence $Q$ and the anchor. $\square$
+

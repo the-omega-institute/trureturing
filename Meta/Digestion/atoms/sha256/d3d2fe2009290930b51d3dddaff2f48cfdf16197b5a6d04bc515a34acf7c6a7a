@@ -1,0 +1,21 @@
+## Proposition 3: central direction condition
+
+For each j set V_j=(a_j,b_j,a_j+b_j,a_j-b_j). Select, independently in each block, either no row, one row of V_j, or the pair (a_j,b_j). Whenever the total number of selected rows is three, they are independent over K.
+
+Proof. There are 4^3=64 selections of one direction from each block and 3 times 2 times 4=24 selections of a full pair and one direction from another block. All 88 determinants are nonzero. Here is the complete determinant certificate, with residues modulo 13.
+
+For fixed u=0,1,2,3, let D_u[v,w]=det(V_0[u],V_1[v],V_2[w]); the four matrices are
+
+    D_0 = [[1,11,12,3], [2,1,3,1], [3,12,2,4], [12,10,9,2]],
+    D_1 = [[2,8,10,7], [5,2,7,3], [7,10,4,10], [10,6,3,4]],
+    D_2 = [[3,6,9,10], [7,3,10,4], [10,9,6,1], [9,3,12,6]],
+    D_3 = [[12,3,2,9], [10,12,9,11], [9,2,11,7], [2,4,6,11]].
+
+The vectors (det(a_j,b_j,V_l[u])) for u=0,1,2,3 are
+
+    (j,l)=(0,1): [3,2,5,1];   (0,2): [2,10,12,5];
+          (1,0): [11,1,12,10]; (1,2): [7,4,11,3];
+          (2,0): [4,3,7,1];    (2,1): [4,6,10,11].
+
+These identities follow by the three-by-three determinant formula. The twenty triples of original C rows occur among these selections, so C is MDS. More generally every allowed collection of E rows has rank min(3,E). For E<3, extend it to an allowed three-row collection. Extending a chosen a_j+b_j or a_j-b_j to its full block preserves its span inside span(a_j,b_j), because a_j,b_j are independent. An extension exists since the three blocks offer six total directions. For E>3, choose an allowed three-row subcollection. QED.
+

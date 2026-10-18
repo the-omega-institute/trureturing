@@ -1,0 +1,30 @@
+**Definition 149.2 (Joint event image and downward closure).** Put
+
+$$
+\begin{aligned}
+R_{O,L}&=\{v\in\mathbb R^{m_L}:v_j=p_{b_j}(E_j)
+                             \text{ for one }(w,T)\in K_{O,L}\},\\
+U_{O,L}&=R_{O,L}-\mathbb R_{\ge0}^{m_L}.
+\end{aligned}
+\tag{149.3}
+$$
+
+These are images of one complete globally normalized allocation, rather
+than independently attainable marginal events. At any $(a,e)\in D_L$,
+$O$ cap feasibility is exactly $d(a,e)\in U_{O,L}$.
+For $y\in\mathbb R_{\ge0}^{m_L}$ define
+
+$$
+\begin{aligned}
+h^y_{S,c}(r)&=\sum_{j=0}^{m_L-1}y_j
+             \mathbf1_{c_O(b_j,S)=c}\mathbf1_{r\in E_j},\\
+B_{O,L}(y)&=\max_{S\in\mathcal S_L}
+              \sum_{c\in\operatorname{cells}_O(S)}\max_{r\in J_L}h^y_{S,c}(r).
+\end{aligned}
+\tag{149.4}
+$$
+
+Its outer choice is one schedule, and its inner choices are one complete
+predetermined table on that schedule's stopped cells. It is not a sum of
+independent per-word upper envelopes.
+

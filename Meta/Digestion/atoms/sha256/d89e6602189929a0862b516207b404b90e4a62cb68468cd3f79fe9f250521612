@@ -1,0 +1,56 @@
+**Definition 9.1 (cuts and interval incidence on one complete graph).**
+Fix one graph of Definition 1.2, with correctness, actual termination
+and both caps (SI.3). All notation and original costs remain those of
+(SI.1), (SI.4), (SI.6) and (SI.18). For $0\le d<n$, put
+$V_d=\{(h,z)\in V:h+z=d\}$. Call $d$ a common-support depth if
+every actual live history at that depth has the same support $T_d$.
+By the diagonal argument in Theorem 4.1, this is equivalent to
+$a_p=1$ for every $p\in V_d$: that argument requires no singleton
+hypothesis on other diagonals. Depth zero is common, with
+$T_0=\varnothing$.
+
+Adjoin the mathematical endpoint $n$, with $T_n=[n]$, and list all
+common-support depths together with that endpoint as
+
+$$
+0=d_0<d_1<\cdots<d_s=n.
+\tag{SI.28}
+$$
+
+Write $\mathcal C=\{d_0,\ldots,d_{s-1}\}$ and let $\mathcal B$
+be the set of open intervals $B=(d_j,d_{j+1})$. The length of
+$B=(a,b)$ means $\beta_B=b-a$, including its boundary spacing.
+There is no live cell at the formal endpoint $n$. Define
+
+$$
+\begin{aligned}
+V_B&=\{p\in V:a<h(p)+z(p)<b\},&
+Q_B&=\bigcup_{p\in V_B}F_p,\\
+E_B&=\sum_{p\in V_B}(b_p-1),&
+D_B&=\sum_{q\in Q_B}
+       \bigl(|\{p\in V_B:q\in F_p\}|-1\bigr),\\
+Q_a^{\mathrm{cut}}&=\bigcup_{p\in V_a}F_p,&
+E_a&=\sum_{p\in V_a}(b_p-1),\qquad
+E_{\mathrm{cut}}=\sum_{a\in\mathcal C}E_a.
+\end{aligned}
+\tag{SI.29}
+$$
+
+An empty interval contributes empty sets and zero sums. For the same
+installed coordinate multiplicity vector, put
+
+$$
+\begin{aligned}
+m_i&=|\{q\in Q:i(q)=i\}|,&
+m(X)&=\sum_{i\in X}m_i,\\
+X_B&=T_b\setminus T_a,&
+u_B&=|\{q\in Q\setminus Q_{\mathrm{live}}:i(q)\in X_B\}|,\\
+g_B&=|V_a|+|V_B|.&&
+\end{aligned}
+\tag{SI.30}
+$$
+
+Cuts, depths, supports and coordinate blocks are indices used to
+describe actual histories. They supply no running clock, block entry,
+reset, selector or additional state to $P$.
+

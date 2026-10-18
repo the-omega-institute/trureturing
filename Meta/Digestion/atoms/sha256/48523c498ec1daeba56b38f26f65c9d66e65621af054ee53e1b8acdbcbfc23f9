@@ -1,0 +1,19 @@
+**Proposition 6.1 (Every actual conditional-null response here vanishes).** For any $p\in[0,1]$, $L\ge1$, block $C=[1,L]$ and bounded $f_C=f(X_C)$ with $f:B_L\to\mathbb R$ satisfying
+
+$$
+\mathbb E_{P_p}[f_C\mid\mathcal H_C]=0,\qquad
+\mathcal H_C=\sigma(X_j:j\notin C),
+$$
+
+and every $i\in\mathbb Z$, let $q_i=\mathbb E_{P_p}[X_i\mid\mathcal E_i]$ and $\ell_i=(X_i-q_i)^2$. Then
+
+$$
+\mathbb E_{P_p}[f_C\ell_i]=0,\qquad
+S_{P_p}(f):=\sum_{i\in\mathbb Z}\mathbb E_{P_p}[f_C\ell_i]=0,
+\tag{6.1}
+$$
+
+with absolute convergence.
+
+Proof. Under biased and endpoint laws every actual loss is zero almost surely; stationarity and a countable intersection give this simultaneously at all sites. At fairness $\ell_i=A_i/4$. Lemma 2.2 makes the phase, and thus $A_i$, measurable in $\mathcal H_C$, even when $i\in C$. Conditioning the product on $\mathcal H_C$ proves each zero term. $\square$
+

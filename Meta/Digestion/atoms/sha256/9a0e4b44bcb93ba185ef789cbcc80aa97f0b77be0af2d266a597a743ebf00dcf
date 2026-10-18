@@ -1,0 +1,81 @@
+**Convention 20.3 (source correspondence, attribution and remaining scope).**
+The native objects used here are the actual twelve histories of §§2–4,
+not a replacement source. The following correspondence fixes the limits
+of applying Corollary 18.3 or Proposition 20.2 to those objects.
+
+| Source and mathematical contract | Consequence and unsupplied bridge |
+| --- | --- |
+| `OriginalControlComposition.OriginalControl`, `FiniteC1Control`, `concatenate_original` and its owning Scribe | These are regularity, strict-domain and literal chronological composition statements about real paths. They construct no common actuator, unknown-height sensor or swap on $M_3$. The private absolute-continuity and concatenation lemmas support those same path conclusions. |
+| [Acquired Continuation Limits][ACR], Definitions 2.3–2.5 and Proposition 4.1 | One normalized unresolved specimen, fixed common metadata and all-outcome error; the calibrated $K_x$ and complete original failure densities are source-indexed targets. Their dependence on $x$ neither makes $x$ readable nor installs a common implementation. |
+| [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), Definition 1.3, (QC.8)–(QC.17), Theorem 3.1 | A fixed calibrated qutrit correspondence retains every separate failure CP measure and every actual joint reference. The prescribed no-failure kernels are diagonal in $(+,-,2)$, conditional on the waveform and calibrated instrument services. Encoding, decoding, clocks, recording and operations remain declared resources; the representation theorem acquires none of them. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5.2, Proposition 17.2 and Definition 17.3 | Canonical prescribed no-failure filters and full stopped successors are conditional CP instruments. The known-height/full-orbit rigidity and programme contracts differ from this approximate three-height common-channel task. They do not show that every callable native operation belongs to Definition 18.2. |
+| [Probability/Phase Transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §8.5 and §9.1 | The actual fields include $P=\partial_k$ and $Q=(1/2-k/r)\partial_u-(k/r)\partial_v$, with $[P,Q]=-(\partial_u+\partial_v)/r\ne0$. Probability-changing paths and this noncommuting geometry cannot be identified with an exhaustive Schur operation menu. The relative-path convention itself asserts no additional physical actuator. |
+
+The current source sections and path supplier named in this table
+are taken at revision `3c285d3b1e09bcfe8dcc9818db0665914d81bbdf`;
+the historical links [AC] and [IB] retain their earlier fixed attribution
+for the credited target. No earlier source hypothesis is replaced by a
+stronger service in Definition 20.1. The five-mode support decomposition
+and conditional swaps in that definition are resources in their own
+right, not arbitrary rotations authorized by geometric reachability.
+
+The new task-specific deductions are (CG.156)–(CG.166), the strict gap
+(CG.167) for the explicitly defined subclass, and the same-effects
+benchmark/separation pair (CG.171)–(CG.177) with its conditional synthesis.
+Their provenance is `repo-derived` ordinary mathematics conditional on
+the credited certificate, rather than another certificate for (CG.154).
+The finite Choi/Kraus framework is reused from the repository's
+`FiniteKrausRepresentation` (including `choi_of_kraus`,
+`choi_PSD_iff_CP_map` and `krausRepresentation`) and its cited Physlib
+source at `6a09b2d1761a0d4430083045a247eb121d8da260`.
+These declarations are source references here, not new compiled
+applications. Standard CP/TP facts are also literature-attested in
+Heinosaari, Jivulescu, Reeb and Wolf,
+[*Extending quantum operations*, arXiv:1205.0641v3](https://arxiv.org/html/1205.0641v3),
+§§2.1 and 6.1. Their at-most-qubit Theorem 5 is not used as a qutrit
+compatibility criterion.
+
+The Schur equivalence is the cited de Vicente–Streltsov §II.2 result,
+not new mathematical content. Sign covariance and its population and
+reverse-coherence blocks are literature-attested in Nechita and Park,
+[*Random covariant quantum channels*, arXiv:2403.03667v2](https://arxiv.org/html/2403.03667v2),
+§5, especially Proposition 5.3. Covariance there permits population
+transfer and does not imply diagonal Kraus operators. The present
+trace-decreasing live block is handled by its explicit positive Choi
+budget, rather than importing a trace-preserving hypothesis. The
+Helstrom support/equality argument, determinant first differential and
+finite-dimensional compactness used above are mature tools; their
+particular equality-to-stationarity composition and all-optimizer
+consequence are proved in §17.
+
+A related recent joint-operation contract is Definition 1 and Proposition 1
+of Muñoz-Moller, Leppäjärvi and Heinosaari,
+[*Adversarial Information Gain in Non-ideal Quantum Measurements*,
+arXiv:2602.20941v1](https://arxiv.org/html/2602.20941v1): meter/instrument
+compatibility requires one joint instrument with both prescribed
+marginals; its conjugate-instrument characterization uses meters on
+a dilation ancilla. Equality of effects in (CG.173) grants no such
+access. Jing, Guo, Zhu, Yao and Wang,
+[*Programmable Open Quantum Systems*, arXiv:2512.08279v1](https://arxiv.org/html/2512.08279v1),
+Propositions 3–4, instead concern retrieving a fixed-generator
+Lindbladian semigroup from its programme family on arbitrary inputs.
+Those hypotheses supply neither the diagonal instrument nor the swaps
+and exact-time service required here; their exclusions are not a native
+impossibility theorem for this stopped task. These comparisons bound
+the claimed reuse and assert no worldwide originality.
+
+The source result `SchurHornEntropyMonotonicity.spectral_readout_entropy_le`
+concerns a finite unitary conjugate of a diagonal nonnegative spectrum
+and its doubly stochastic diagonal readout. It supplies no equality
+classification for this trace-decreasing live map or exact-time stopped
+instrument; no entropy inference is used here.
+
+The all-optimizer necessity does not establish uniqueness of the whole
+channel or its failure laws. The subclass gap does not establish
+impossibility for the full native operation menu. Exact synthesis in
+Definition 20.1 is conditional on actually supplied operations and
+permissions, and is distinct from acquiring them from the original
+unresolved specimen. The global original acquisition/physical realization
+problem and the continuing programme remain open. No Lean/kernel evidence,
+physical efficiency bound or finite exact-clock implementation is asserted.
+

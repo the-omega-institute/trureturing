@@ -1,0 +1,14 @@
+**Definition 5.1 (family).** Let $t_h$ be the complete tree of height $h\ge0$
+with alpha leaves, and put $u_h=\langle t_h,t_h\rangle$, $P=\{L,R\}$.
+Its source has
+
+$$
+N_h=2^{h+2}-1,\qquad H_h=h+1,\qquad
+A_h=\sum_{a\in\operatorname{Pos}(u_h)}|a|=h2^{h+2}+2.
+\tag{CWS.10}
+$$
+
+These are finite geometric sums, not source advice. The exterior encoding
+has seven cells, the single partition bit is equality, and two framing cells
+give $s=10$. Thus its retained row occupies forty bits in the chosen alphabet.
+

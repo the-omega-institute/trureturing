@@ -1,0 +1,79 @@
+**Theorem 15.2 (coherent representatives from interior singletons).**
+For every $P\in\mathfrak I$ there are sets
+
+$$
+\varnothing=U_0\subsetneq U_1\subsetneq\cdots
+\subsetneq U_{n-1},\qquad |U_d|=d,
+\tag{SI.135}
+$$
+
+and actual live histories $H_{h,z}$ at every $(h,z)\in V$ whose
+supports are $U_{h+z}$. Their ending states define an injection
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},\qquad
+\Phi(h,z)\in F_{h,z}.
+\tag{SI.136}
+$$
+
+Consequently the same installed graph satisfies
+
+$$
+|Q_{\mathrm{live}}|\ge G,\qquad D\le E,
+\qquad m\ge G+u.
+\tag{SI.137}
+$$
+
+Proof. Reuse Theorem 2.2 for actual nonempty cell families, live
+freshness and the fixed-successor sibling law (SI.8). Reuse the
+singleton-diagonal argument of Theorem 4.1 inside the smaller
+rectangle of (SI.134), as follows. Adjacent cells $(h,z)$ and
+$(h+1,z-1)$ on an interior diagonal have a live common parent
+$(h,z-1)$. Choose one actual history at that parent. Its separately
+actual zero and one children have the same support. Since the two
+child support families are singletons, their unique supports agree.
+The admissible interior hit counts on any diagonal form a nonempty
+integer interval. Adjacency therefore supplies one support $U_d$
+for its entire interior diagonal, for every $0\le d\le n-3$.
+
+At every such depth below $n-3$ there is an interior cell other
+than $(K-2,L-2)$; it has an interior child. An actual history there
+and (SI.8) give $U_{d+1}=U_d\cup\{i(q)\}$ with
+$i(q)\notin U_d$. This proves strict nesting and $|U_d|=d$
+through $n-3$. The only interior cell at depth $n-3$ is
+$(K-2,L-2)$, since $K+L=n+1$.
+
+We next supply representatives on the unrestricted boundary, rather
+than assert uniqueness of its supports. Consider $(h,L-1)$ of
+depth $d\le n-3$. Then $h\le K-3$. Choose an actual history
+at $(h,L-2)$. Its one-child $(h+1,L-2)$ is interior and has
+support $U_d$; its zero-child is the required boundary cell and
+has that same support. For a boundary cell $(K-1,z)$ of depth
+$d\le n-3$, use a history at $(K-2,z)$. Its zero-child
+$(K-2,z+1)$ is interior, so its one-child supplies the boundary
+representative with support $U_d$. These are actual sibling
+extensions of the chosen parent histories.
+
+There are two remaining diagonals. Choose one actual history at
+$C=(K-2,L-2)$, with ending state $q_C$ and support $U_{n-3}$.
+Both its children are live, and they are precisely
+$(K-1,L-2)$ and $(K-2,L-1)$, the two cells of depth $n-2$.
+Both have support
+$U_{n-2}=U_{n-3}\cup\{i(q_C)\}$. Extend either of these
+actual child histories by its sole live reply. This gives an actual
+history at the only depth-$(n-1)$ cell, $(K-1,L-1)$, with support
+$U_{n-1}=U_{n-2}\cup\{i(q')\}$. Freshness proves the last
+two strict inclusions. This completes (SI.135) and all chosen histories.
+
+At one depth their supports coincide, and different cells have
+different hit counts. [PCA, Theorem 35.1][PCA] excludes equal
+supports with unequal hits at one host. Across different depths the
+chosen supports are properly nested, so [PE, Lemma 4.1][PE] excludes
+a common host. These suppliers apply to the full-fiber lift of this
+same complete dual-cap Boolean graph, as in Section 2. Its selected
+histories are actual cube histories; no syntactic path has been
+declared actual. Thus the selected endpoints are distinct and give
+(SI.136). Finally Theorem 5.2 gives
+$|Q_{\mathrm{live}}|=G+E-D$ and $m=|Q_{\mathrm{live}}|+u$,
+which prove (SI.137). $\square$
+

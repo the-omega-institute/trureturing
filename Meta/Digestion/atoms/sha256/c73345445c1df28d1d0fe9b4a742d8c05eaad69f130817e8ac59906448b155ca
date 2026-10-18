@@ -1,0 +1,58 @@
+### 52.6 两组 flatness 的联合系数方程
+
+写 `gamma=G+iH`。两个未归一化输出 channel 的分量为
+
+```math
+P x_j+\gamma Q\overline{x_{j+1}}+\sqrt3(1+\gamma),\qquad
+\overline Qx_j-\gamma\overline P\overline{x_{j+1}}+\sqrt3(1-\gamma).
+```
+
+定义
+
+```math
+A_+=\sqrt3P(1+\overline\gamma),\quad B_+=\sqrt3Q(1+\gamma),\qquad
+A_-=\sqrt3\overline Q(1-\overline\gamma),\quad B_-=\sqrt3\overline P(1-\gamma),\qquad
+D=P\overline Q\overline\gamma\xi.
+```
+
+使用 `x_j x_(j+1)=xi conjugate(x_(j+2))`，两个输出平方模的非恒定部分分别为 `A+u+B+S conjugate(u)+D S² conjugate(u)` 和 `A-u+B-S conjugate(u)-D S² conjugate(u)` 的两倍实部。由式 (52.4) 与线性无关性，两组 flatness 必须同时满足
+
+```math
+\mathcal E(A_+,B_+,D)=0,\qquad\mathcal E(A_-,B_-,-D)=0,
+```
+```math
+\mathcal E(A,B,D)=A-\frac{\overline B+\overline D}{2}
++\frac{3i}{2n}\bigl(\overline d(B-D)+\overline B-\overline D\bigr).
+\tag{52.6}
+```
+
+令 `L=bar(P)+Q=-3-ia/h`、`M=bar(P)-Q=a-ih`、`z=gamma M`。相加式 (52.6)，再乘 `2n/sqrt(3)`，得到
+
+```math
+n\overline L+3n\overline z+
+3i\bigl(\overline d(L-z)+\overline L-\overline z\bigr)=0.
+\tag{52.7}
+```
+
+这是关于同一个 `G,H` 的两个实线性方程。用式 (52.5) 和种子关系化简，其系数行列式为 `-48h²n²/(s+1)!=0`，所以
+
+```math
+G=\frac{6a(s+1)\nu-h^3n^2+9h}{6h^2n},\qquad
+H=\frac{a(s+1)n^2+6h^3\nu}{6h^2n}.
+\tag{52.8}
+```
+
+把式 (52.8) 代回第一组方程，记 `A0=a(5s+3)`、`B0=h(s-1)>0`，展开得到
+
+```math
+\operatorname{Re}\frac{\mathcal E(A_+,B_+,D)}{\sqrt3}
+=-\frac{2A_0(\nu-n)-B_0(n^2+9)}{8h^2n},
+```
+```math
+\operatorname{Im}\frac{\mathcal E(A_+,B_+,D)}{\sqrt3}
+=\frac{A_0(n^2-3)+18B_0(n+\nu)}{24h^2n}.
+\tag{52.9}
+```
+
+式 (52.7)–(52.9) 在清去已证明非零的分母后都是多项式恒等式，仅用了 `a²=s(3-s)/(1+s)` 与式 (52.5)。它们没有放松任何一组相位。
+

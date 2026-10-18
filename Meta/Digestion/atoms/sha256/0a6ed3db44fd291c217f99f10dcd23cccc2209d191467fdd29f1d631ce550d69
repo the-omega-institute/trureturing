@@ -1,0 +1,32 @@
+**Definition 7.1 (binary actual-owner cycles).** Fix $d\ge3$ and a
+cyclic length $n\ge4$. Let $s_i\in\{\alpha,\beta\}$ be owned at
+the actual port $(i,L)$. Prescribe root factor $(0,0)$ and, at all
+remaining targets in $W_d$,
+
+$$
+z_{i,Lr}=\Gamma_r(s_i),\qquad
+z_{i,Rr}=\Gamma_r(s_{i+1}),
+\qquad i\pmod n.
+\tag{OOA.25}
+$$
+
+These are attained full-factor tables: their values are those of the
+actual trees $\langle s_i,s_{i+1}\rangle\in S_d$. At the owner,
+extend the leaf-factor table to branch and absent by the alpha factor;
+its reply is alpha, excluding both forbidden inputs. Extend nonowner
+tables arbitrarily within the target range. This gives total native
+decoders and the required actual owner guards.
+
+On the whole $S_d$ use the probability
+
+$$
+\mu(\langle a,b\rangle)=
+\begin{cases}2/6,&a=b,\\1/6,&a\ne b,\end{cases}
+\qquad a,b\in\{\alpha,\beta\},\qquad
+\mu(x)=0\text{ otherwise}.
+\tag{OOA.26}
+$$
+
+This is one full joint weight per original block. Its two-by-two weight
+minor has determinant $1/12\ne0$, so it is not a product of leaf weights.
+

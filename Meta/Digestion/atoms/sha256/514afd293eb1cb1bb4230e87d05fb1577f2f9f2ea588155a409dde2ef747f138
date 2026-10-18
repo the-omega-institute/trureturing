@@ -1,0 +1,32 @@
+**命题 476.1（共同截止上的实际边界）。** 可以选择同一实际奇数调和率的
+$A>0,D_0\in\mathbb N$，使对 $D(x)=\max(D_0,\lceil e^x\rceil)$，当 $x$ 足够大时，
+
+$$
+|C_x(D(x))|
+\le4A\bigl(2+4\cdot2^{5/4}\bigr)x^{-3/4}.
+$$
+
+因而
+
+$$
+\begin{aligned}
+\sqrt x\log x\,|C_x(D(x))|&\longrightarrow0,\\
+\sqrt x\log x\,
+|\operatorname{clippedCutoff}_x(D(x))-
+  \operatorname{naturalCutoff}_x(0,D(x))|&\longrightarrow0.
+\end{aligned}
+$$
+
+证明使用原完整 collar 合同的 $p=2,q=5/4$。取 $N=D(x)$、$k=\lfloor N/2\rfloor$，
+整数除法给出 $N\le2k+1$；当 $N\ge8$ 时，$N\le k^2$，所以
+
+$$
+x\le\log N\le2\log k.
+$$
+
+再由 $\log x\le x/2$、$x\ge2R_0$ 及固定 $D_0$，得到实际窗口前提
+$D_0<k$、$x\le k$ 和 $\max(R_0,\log x)\le\log k$。
+因此原奇数和、两个真实端点以及整个 $\lfloor N/2\rfloor<m\le N$ 窗口均进入预算，
+并得到 $(\log N)^{-3/4}\le x^{-3/4}$。乘临界因子后，上界为常数倍
+$\log x/x^{1/4}$，它趋于零。
+

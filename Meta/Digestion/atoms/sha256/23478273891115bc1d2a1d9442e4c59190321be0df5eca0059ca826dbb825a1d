@@ -1,0 +1,17 @@
+**Theorem 386.1 (actual VCD receiver ordering).** Each original VCD
+face of sigma pairs to a face of an external genuine owner of type
+
+    A(P)=(P,V,C,D,V,C), necessarily v>d; or
+    B(P)=(P,V,D,C,V,D), necessarily v>c,
+    P in {M,Z,U}.                                    (386.2)
+
+The displayed forms permit exchanging the axes or transverse positions
+within the same fixed frame. The two target face occurrences are
+distinct, but their receiving owners need not be distinct.
+
+Consequently v>min(c,d). If v<=d, both source faces use the B family;
+if v<=c, both use the A family. The theorem assumes no tau owner,
+upper gap, angle equation, high-axis expense inequality, or normal-circle
+condition at another label. In particular degree six is not needed.
+Only the strict L test of the genuine receivers will enter its proof.
+

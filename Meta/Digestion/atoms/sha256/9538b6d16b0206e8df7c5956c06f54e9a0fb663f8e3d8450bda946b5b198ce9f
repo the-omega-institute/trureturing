@@ -1,0 +1,33 @@
+**定义 2.1（两坐标及解码表）。** $k=0$ 时只取支持 $S_{0,p}=\{p\}$，输出当前回复。$k>0$ 时写
+
+$$
+m=\lfloor k/2\rfloor,\qquad h=\lceil k/2\rceil,
+\qquad \ell_{k,p}=pR^h.
+$$
+
+根的支持为 $S_{k,\varepsilon}=\{R^h\}$，存在守卫恒为真。非根的另一个坐标、支持及存在守卫为
+
+$$
+g_{k,p}=p^-R^{m+1},\qquad
+S_{k,p}=\{g_{k,p},\ell_{k,p}\},
+$$
+
+$$
+G_{k,p}(a)=
+\begin{cases}
+a\ne\mathsf{absent},&k\text{ 为偶数},\\
+a\in\{\beta,\mathsf{branch}\},&k\text{ 为奇数}.
+\end{cases}
+$$
+
+若非根的守卫为假，解码为旧回复 $\mathsf{absent}$。守卫为真或地址为根时，按坐标 $\ell_{k,p}$ 的当前回复 $z$ 使用下表，记所得为 $D_{k,p}$：
+
+| 当前 $z$ | 正偶数滞后的旧回复 | 奇数滞后的旧回复 |
+| --- | --- | --- |
+| $\mathsf{absent}$ | 不在守卫为真的实际像中 | $\alpha$ |
+| $\alpha$ | $\alpha$ | $\beta$ |
+| $\beta$ | $\beta$ | $\mathsf{branch}$ |
+| $\mathsf{branch}$ | $\mathsf{branch}$ | $\mathsf{branch}$ |
+
+在非实际回复元组上可以把表中未定义项固定为 $\mathsf{absent}$，使 $D_{k,p}:\mathcal A^{S_{k,p}}\to\mathcal A$ 全定义；这个默认值不承担认证功能。重复坐标只取得一次。两个坐标均只由 $k,p$ 计算，不依赖未知树或先验定位。
+

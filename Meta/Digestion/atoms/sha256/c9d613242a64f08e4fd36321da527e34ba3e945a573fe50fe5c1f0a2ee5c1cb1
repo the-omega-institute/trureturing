@@ -1,0 +1,18 @@
+**Supplied interface 4.3 (Actual live epochs).** Follow the full history while holding an actually emitted label fixed thereafter. If $Y_n$ is the state just after the tick at $\tau_n$, define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},\qquad
+Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t.
+\tag{4.6}
+$$
+
+Under the actual target $i$, $Y_0$ has law $\nu_i$ and the epoch kernel is $U_i$. For a compliant observer the supplied identities and inequalities are
+
+$$
+N<\infty\ \text{almost surely},\qquad Y_N=d_D,\qquad
+N\le Q_T\le T,\qquad \mathbb E_iN<\infty.
+\tag{4.7}
+$$
+
+These are fixed-observer-source Lemma 25.1, lower-source Lemma 7.1 and uniform-source Lemma 6.1. If stopping is before or at the first tick, $N=0$. Otherwise each live $Y_0,\ldots,Y_{N-1}$ follows an actually read tick and commits to a next read: the $N$ live epochs are charged to those distinct paid ticks. If a zero run contains the actual stop, the next analytical tick only records the frozen label; it is not added to $Q_T$. Thus (4.7) does not charge an unread closing tick or assert that every undertaken epoch is completed operationally.
+

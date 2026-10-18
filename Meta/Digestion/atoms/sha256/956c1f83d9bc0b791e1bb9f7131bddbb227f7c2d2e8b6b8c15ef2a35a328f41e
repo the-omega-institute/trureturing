@@ -1,0 +1,38 @@
+**命题 24.7（四次 Hamilton 函数的初始联系及边缘混合）。** 对常数 $g$，取双系统 Hamiltonian $H_2=gV$，从相同独立纯准备开始，令 $u=g\tau$。则
+
+$$
+\frac12\langle\psi\otimes\psi|H_2|\psi\otimes\psi\rangle
+=2gR\cos\chi,
+\qquad
+\left.\frac{d\kappa'}{d\tau}\right|_{\tau=0}=2gR\sin\chi.
+$$
+
+这分别等于[《辛预测完成》命题 35.9](SYMPLECTIC_PREDICTIVE_COMPLETION.md#359-四次相互作用与同均值概率交换)的 $H_{\rm int}$ 及其初始 $\dot\kappa$，其中 $g_0=g$，同一 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，同一 $R$、$\chi$ 和辛尺度。它不意味着精确双系统演化始终沿该纯态非线性乘积轨道。
+
+证明。命题 24.6 给 $\langle H_2\rangle=4gR\cos\chi$，除以系统数二即得第一式。定理 24.5 中 $\sin^2u$ 在零点导数为零，$\sin2u$ 导数为二，链式法则给第二式。已有纯态 Hamilton 方程按 $\Omega_{\rm red}=d\chi\wedge d\kappa$ 为 $\dot\kappa=-\partial_\chi H_{\rm int}=2gR\sin\chi$，故符号和因子一致。
+
+乘积不闭合可由一个精确输入看出。取 $|\psi\rangle=(|0\rangle+|13\rangle)/\sqrt2$，在 $u=\pi/2$ 时联合态为
+
+$$
+|\Psi'\rangle=\frac12\bigl(|0,0\rangle+|13,13\rangle
+-i|1,3\rangle-i|3,1\rangle\bigr).
+$$
+
+四项的第二系统标签两两不同，故偏迹消去全部交叉项，得到
+
+$$
+\rho_1'=\rho_2'
+=\frac14\bigl(|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|\bigr).
+$$
+
+它有四个特征值 $1/4$ 和一个零特征值，不是纯态；联合纯态也不是两个边缘的乘积。概率坐标仍满足定理 24.5，但不能给这个混合边缘任意填回一组纯态角，再继续冒充原联合幺正轨迹。证毕。
+
+对于已独立供应两份同态输入的准备族，可定义边缘更新
+
+$$
+\mathcal F_u(\rho)=\operatorname{Tr}_2\bigl(U(u)(\rho\otimes\rho)U(u)^\dagger\bigr).
+$$
+
+这是对输入 $\rho$ 的非线性使用，不是一个未知单系统上的固定 CPTP 通道。例如在 $u=\pi/2$，$\rho_0=|0\rangle\langle0|$ 与 $\rho_{13}=|13\rangle\langle13|$ 各自固定，而 $\rho=(\rho_0+\rho_{13})/2$ 的乘积输入含两个活动对角格，各质量 $1/4$；更新后 $p_{13}'=1/4$，不同于 $\bigl(\mathcal F_u(\rho_0)+\mathcal F_u(\rho_{13})\bigr)/2$ 的 $p_{13}=1/2$。非仿射性来自另供第二份同态准备；它没有违反定义 24.2 所消费的单系统刚性，也没有构造克隆过程。上述载体与算子均为所声明的数学模型，不供给原生读者端口或器件实现。
+

@@ -1,0 +1,22 @@
+**Definition 2.2 (one coherent role and authority map).** The 64 ports
+have precisely RCA's placement. The additional word work has the following
+roles; no further port is declared unused.
+
+| Port | Actual role and input alphabet |
+| --- | --- |
+| 32, 33 | $O$'s alternating banks, each beginning with its own literal F; fields are binary words separated by sep, versions terminated by F |
+| 34 | $O$'s Base/ordinal scratch, retained unary words with sep |
+| 35 | $O$'s length scratch, retained unary words with sep |
+| 36 | $O$'s full descriptor stream, RCA grammar and creation ordinals |
+| 37 | $O$'s captured-description/manifest frozen prefix, then immutable binary staging fields separated by F |
+| 38 | $O$'s immutable external frame ingress, literal binary frames separated by F |
+| 39 | $O$'s immutable service/archive/result blocks with measured descriptors |
+| 40 | Predeclared $C=A$'s initialized service receiver and completed read authority |
+| 48 | The separately allocated mailbox, with its actual lease and return |
+
+Producer 16–23 retains its source token; actor 24–31 keeps its source row
+stream. Public arithmetic 0–15 is not compiler scratch. Installation pays
+the eight real lane TOKs and the receiver handoff. The separately encoded
+service invocation token belongs to $C$ at installed Ready. It is distinct
+from source ownership. Historical token/seal bits in any output are data.
+

@@ -1,0 +1,52 @@
+## Theorem 16. Primitive five-character and the actual time action
+
+Suppose $q\equiv2\pmod4$. Let $\operatorname{aug}(x)$ be the sum of the
+literal sign coefficients and let $w_i\in\mathbb Z/5\mathbb Z$ repeat
+$1,2,0,4$ in original vertex order. Define
+
+$$
+\nu_q(x)=\sum_{i<q}w_i\operatorname{aug}
+\bigl((\operatorname{resetNativeEquiv}_q x)_i\bigr).
+$$
+
+This is an onto integer-linear map, and
+
+$$
+\ker\nu_q=\operatorname{im}(I+\Theta_q^2),\qquad
+\nu_q(\Theta_qx)=3\nu_q(x).
+$$
+
+Thus the ordinary cyclic-five quotient has genuine time action given by
+multiplication by three. Its nonzero residues form the four-phase orbit
+$1\mapsto3\mapsto4\mapsto2\mapsto1$.
+
+Proof. First work in the original row lattice. Augmentation is unchanged
+by right multiplication by $[\tau]$. The weights satisfy
+$w_{i+1}=3w_i-1$, while $w_0=1$ and $w_{q-1}=2$. Expanding the actual reset
+head and successor coordinates makes all nonterminal terms telescope;
+the terminal equality is $3\cdot2=1$ modulo five. Hence the character
+of $T_qv$ is three times that of $v$. An integer coefficient at vertex
+zero and sign one reaches every residue, proving primitivity. Applying
+time twice shows the character of $(I+T_q^2)v$ is zero, since
+$1+3^2=0$ modulo five. To prove the reverse inclusion, descend the
+character to the independently computed ordinary cokernel from
+Theorem 15. This is an onto map from a five-element group to itself,
+hence injective; its kernel is zero. Transport through the same native
+equivalence proves both assertions on $G_q$.
+
+The full representation from Definition 5 satisfies
+$\rho_q(\operatorname{unitShift})=\Theta_q$, and multiplicativity gives
+the actual squared shift. If an actual history element $h$ had
+$\rho_q(h)=I+\Theta_q^2$, its image would be an integral equivalence,
+so Theorem 15 forces $4\mid q$. This is only a necessary condition;
+no converse history realization is proved. Complement is not substituted
+for time, and $I+\Theta_q^2$ is not $(I+\Theta_q)^2$.
+
+These are repository-derived recurrence and integral-lattice results.
+Pinned Mathlib supplies finite sums, additive equivalences, quotient
+isomorphisms and finite surjective-to-injective conversion. The source
+interfaces inspected outside the repository do not supply this exact
+normal form or clock. No literature novelty, full representation image,
+Gaussian image-plus-kernel quotient or arbitrary-time classification is
+claimed.
+

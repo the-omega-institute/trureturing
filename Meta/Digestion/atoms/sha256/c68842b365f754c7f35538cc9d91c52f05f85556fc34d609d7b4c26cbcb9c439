@@ -1,0 +1,31 @@
+**Definition 176.1 (Restricted and augmented complete-table catalogs).**
+Fix $L\ge3$ and the complete stopped catalog $\mathcal D_O$ of
+[Definition 164.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#164-complete-deterministic-catalogs-and-event-demands).
+Write $D=(i,j;s,r,\ell)$ for the increasing schedule $(i,j)$,
+$i<j$, with outputs $s,r,\ell$ on its stopped cells $0,10,11$.
+The complete table, including its schedule, is fixed before replies.
+
+Let $T_L$ consist exactly of the empty schedule emitting zero,
+the singletons $(i;i,0)$, the pairs $(i,j;i,j,0)$, the numerical
+triples $(i,j;i,j,k)$ with $i<j<k\le L$, and the four prefix
+tables $(1,2;s,r,0)$ with $s\in\{0,1\}$ and $r\in\{0,2\}$.
+Let
+
+$$
+\begin{aligned}
+Z_L&=\{(i,j;0,r,\ell):1\le i<j\le L,\ i<r\le j,
+                   \ \ell=0\text{ or }j<\ell\le L\},\\
+E_L&=T_L\cup Z_L.
+\end{aligned}
+\tag{176.1}
+$$
+
+The primary convention identifies equal schedule/table pairs, including
+entries appearing in two descriptions, while retaining distinct
+schedules with identical output kernels. The indexed list $Z_L$ has
+one coordinate for each quadruple $(i,j,r,\ell)$ satisfying (176.1).
+The union $E_L$ identifies its intersection with $T_L$. A further
+kernel quotient identifies entries with identical outputs on every word.
+Any of these conventions can describe mixtures, provided each chosen
+coordinate contributes its weight exactly once to the same total mass.
+

@@ -1,0 +1,86 @@
+**Theorem 4.5 (Explicit negative-determinant thresholds).**
+Fix $a,c>0$ with $c<a^2$. Define
+
+$$
+B=\frac{2(a+c)^2}{TU},\qquad C=\frac{ac}{U},\qquad
+\ell=\frac{c(1+a)^2}{(a^2-c)T},
+\tag{4.36}
+$$
+
+$$
+J_d=\frac{qB}{2(q-d)^2}+\frac{C}{(2-d)^2},\qquad
+s=d^2J_d,
+\tag{4.37}
+$$
+
+$$
+b_{\mathrm{act}}
+=\frac{2}{2\ell+s+\sqrt{s^2+4s(\ell+1)}},\qquad
+b_{\mathrm{prem}}=\frac{1-d}{\ell+d}.
+\tag{4.38}
+$$
+
+Then $0<b_{\mathrm{prem}}<b_{\mathrm{act}}$.
+For $b<b_{\mathrm{act}}$ the strict even--odd crossing is
+active; at equality the modes meet; for $b>b_{\mathrm{act}}$
+only the even mode is active. Independently, the center has
+less, equal or more weight than each endpoint according as
+$b<b_{\mathrm{prem}}$, $b=b_{\mathrm{prem}}$ or
+$b>b_{\mathrm{prem}}$.
+
+Proof. Here $0<d<1<q$, and substitution into (4.5) gives
+
+$$
+F(d)=\frac{1-\ell b}{d(1+b)},\qquad
+R(d)^2=\frac{b}{1+b}J_d.
+\tag{4.39}
+$$
+
+The first quantity decreases strictly from $1/d>0$ and
+vanishes at $b=1/\ell$; the second increases strictly from
+zero. Thus their positive square roots meet exactly once
+in $(0,1/\ell)$. The equation is
+$(1-\ell b)^2=sb(1+b)$, whose selected root is (4.38).
+The branch test (4.20) proves the active-sector statements.
+
+At the even stationary root, put $f=F(\widehat t)$.
+The normalization and stationary equation also give
+
+$$
+\frac{2(2-q)C_2}{(2-\widehat t)^2}
+=1-\widehat t f-2(q-\widehat t)f^2>0.
+\tag{4.40}
+$$
+
+If $f\ge1$ and $q\ge1$, the right side is at most
+$1-2q+\widehat t<1-q\le0$, a contradiction. Hence the
+even stationary branch has $f<1$ throughout $q\ge1$.
+For $c<a^2$, monotonicity of $F$ therefore gives
+$F_*<1\iff F(d)<1$. Solving (4.39) at one gives
+$b_{\mathrm{prem}}$. At that value $F(d)=1>f$, so
+$d<\widehat t$ and $F(d)>R(d)$; it lies strictly below
+$b_{\mathrm{act}}$. Theorem 4.3 proves the ordering.
+For $c=a^2$, $q=d=1$ and only the even stationary mode is
+active, so (4.40) recovers the center premium for all
+$b>0$. $\square$
+
+The determinant-zero surface and the active-sector surface
+are different. In particular a negative determinant permits
+a crossing but does not force it; the center can have a
+premium within the crossing branch itself.
+
+For all signs of the determinant there is also a scalar
+necessary and sufficient premium test. Let $t_1\in(0,t_0)$
+be the unique solution of $F(t_1)=1$, selected by the cubic
+$N(t_1)=t_1(q-t_1)(2-t_1)$. Then
+
+$$
+F_*<1\iff t_1<d\ \text{ and }\ R(t_1)<1.
+\tag{4.41}
+$$
+
+Indeed $F_*<1\iff t_*>t_1$, and
+$\widehat t>t_1\iff F(t_1)>R(t_1)$ by strict monotonicity.
+This test does not treat determinant sign as a substitute
+for the center-overlap coefficients.
+

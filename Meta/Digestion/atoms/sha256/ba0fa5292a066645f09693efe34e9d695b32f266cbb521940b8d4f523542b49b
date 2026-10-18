@@ -1,0 +1,62 @@
+**Definition 6.1 (remaining positive verifier obligation).** A positive
+cap verifier at fixed $(d,L)$ is a total computable predicate
+
+$$
+V^\star(d,L,\mu,\varepsilon,C,\pi)
+$$
+
+on rational $\mu$, rational $\varepsilon>0$ (also $\varepsilon\le1$ for
+$\star=\mathrm{def}$), positive rational $C$, and a finite certificate
+string $\pi$. Soundness requires acceptance to
+prove, for every $n$ and every network in the same owned-seed class,
+
+$$
+Z^\star_{\mathcal N}(\mu,\ldots,\mu)\le C^n,
+\tag{SCP.21}
+$$
+
+with the selected carrier $\star\in\{\mathrm{ker},\mathrm{fl},\mathrm{def}\}$
+and its exact hypotheses. In the strictly positive kernel specialization
+fix the uniform owner kernels of Definition 3.1; more generally a fixed
+effective rational full-support kernel rule independent of $\mu$ may
+be specified as part of the carrier. Arbitrary
+normalized kernels remain covered by the additive bounds, but need not
+define a strictly positive model. For the defect carrier the constraint
+factors are positive; its complete weighted summands have support
+$(\operatorname{supp}\mu)^n$. A result requiring positivity on all of
+$S_d^n$ additionally requires full support of $\mu$.
+For $\star=\mathrm{ker}$ or $\mathrm{fl}$ the
+universal quantifier ranges over owned-seed networks; for
+$\star=\mathrm{def}$ it ranges over complete native templates (the RRN
+correspondence supplies the stated representation). Cofinality requires accepted endpoints whose
+$-\log_2C$ approach $\tau_{d,L}$ as rational $\varepsilon\downarrow0$;
+for the unrestricted class, letting $L\to\infty$ must additionally reach
+$\sigma_d$. The verifier must quantify over arbitrary lengths, shared
+seeds, repeated/self/cyclic donors, compatibility zeros, and complete
+joint block weights. Neither a fixed finite catalog nor finite proof
+enumeration supplies this obligation.
+
+If such a verifier supplies $Z^\star\le C_0^n$, hard domination and the
+credited SIR bound give
+
+$$
+\beta_d(\mu)\le4^{m_d/(L+1)}C_0.
+\tag{SCP.22}
+$$
+
+For any rational $\widehat C$ with
+$\widehat C^{L+1}\ge4^{m_d}C_0^{L+1}$, the credited NPC/FMR transport
+therefore yields, for every $D\ge d$,
+
+$$
+M_1(D)\ge\left\lceil\widehat C^{-2^{D-d}}\right\rceil,\qquad
+\lambda\ge-2^{-d}\log_2\widehat C.
+\tag{SCP.23}
+$$
+
+The two losses are separate: the incidence loss is
+$2m_d/(L+1)$ in block pressure, while the soft losses are respectively
+$\log_2(1+s_d\varepsilon)$ and
+$\log_2(1+s_dR_d\varepsilon)$ at the optimized semantic level.
+These are credited SIR/NPC consequences, not a constructed verifier.
+

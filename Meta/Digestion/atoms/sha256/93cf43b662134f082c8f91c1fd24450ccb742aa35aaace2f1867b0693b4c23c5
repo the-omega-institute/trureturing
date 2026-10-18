@@ -1,0 +1,17 @@
+### 105.7. Distinct-kernel and dyadic limitations
+
+**Proposition 105.6.** In the distinct-kernel residue stratum of section 98, U4=U0=U24=0, so the quartic form (105.3) evaluates no nonconstant common-cut direction. For a general U0, its lambda block is zero precisely on subspaces isotropic for (105.6); even dyadic parity alone does not suffice.
+
+**Proof.** In section 98 all three support primes are 19 modulo 24 and
+
+ A=[[0,0,0],[1,1,0],[1,1,0]],
+ K=<111,110>, K'=<111,011>.
+
+Their intersection is <111>. Lemma 105.1 therefore gives U4=U0=U24=0. Same-cut quartic data evaluate no nonconstant direction at all, although the pure Selmer quotient has the additional lambda=(rs,1) and mu=(1,qr) and their mixed certificate sign Xi. This is an exact domain obstruction to recovering the section 98 determinant from (105.3); it is not an impossibility theorem for all possible marked-prime comparisons.
+
+For U0 containing primes 13 modulo 24, equation (105.6) is a second independent obstruction. The fact that each cut has an even number of such primes only says L(v,v)=0; it does not say L(v,w)=0 for different cuts. The block argument in Corollary 105.4 therefore requires an isotropic U and may not be used on all of U0 without checking (105.6). Similarly, on U4 outside U0 the correct first class is (5d_v,1). Section 97's full local calculation retains the primitive certificate character (c/5) in the self mixed pairing; the pure quartic formula (105.3) is not asserted there.
+
+Thus the common-cut quartic form does not by itself evaluate the whole nonsymmetric left/right kernel pairing, and the pairwise quadratic symbols alone do not supply the missing pairing entries in this argument. ∎
+
+The certificate-free rank-one criterion of Corollary 105.4 requires a certified complete B_(3^j)=D C^2, both Legendre kernels, an isotropic common-cut subspace U of dimension r, and an anisotropic q on U. Corollary 105.5 specifies one such sufficient arithmetic pattern. No existence of an actual block meeting it, converse, independence from every previous golden-support restriction, finiteness of Sha, rational-rank parity, or universal WSS exclusion is asserted.
+

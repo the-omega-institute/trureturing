@@ -1,0 +1,61 @@
+**Premise 7.1 (the credited exact benchmark and algebraic data).** The
+root isolation, nonsingular bordered Jacobian, ranks and margins in
+CG13–16 are ordinary computer-assisted premises. In particular CG16.1
+supplies
+
+$$
+E_\star=F(x_\star)=\delta_{27},\qquad
+0.14817810291080132013<E_\star<0.14817810291080132014.
+\tag{JG.40}
+$$
+
+This answers the enlarged common-CPTP minimax questions in CG7 and CG11;
+it leaves the native-control correspondence separate. The decimal
+center of its isolating box is not substituted for its exact algebraic
+zero. All comparisons here with $E_\star$ and inherited constants are
+conditional on these credited data, their calibration and theorem
+premises. The coefficient criterion, completions, complete-channel pair
+and supported mass theorem do not depend on that arithmetic certificate.
+
+For exact notation, CG.112–CG.114 use
+$x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$,
+$v_5=(\alpha_1,\alpha_2,-1)^T$, $v_{27}=(\beta_1,\beta_2,1)^T$,
+$R_y=v_yv_y^T/(v_y^Tv_y)$, $A_5=\lambda R_5$,
+$A_{27}=(1-\lambda)R_{27}$, and
+
+$$
+\begin{aligned}
+\zeta&=(z,\lambda p_{51},\lambda p_{52}),\qquad Z_d=\operatorname{diag}\zeta,\\
+N&=A_5\odot\rho_5+A_{27}\odot\rho_{27},\qquad S_0=Z_d-N,\\
+S_{ij}&=\begin{pmatrix}
+\zeta_j-\sum_{y=5,27}(A_y)_{ii}p_{yj}&-N_{ij}\\
+-N_{ij}&\zeta_i-\sum_{y=5,27}(A_y)_{jj}p_{yi}
+\end{pmatrix},\\
+S(x)&=S_0\oplus S_{01}\oplus S_{02}\oplus S_{12},\\
+F(x)&=\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                       -\operatorname{tr}Z_d+6\lambda/11,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}).
+\end{aligned}
+\tag{JG.41}
+$$
+
+The chart coordinates $\beta_1,\beta_2$ are unrelated to the original
+history phase $\beta$. The exact $u_\star=(x_\star,\eta_\star)$ is the isolated zero of
+$\Psi=(\nabla_x(F+\eta\cdot g),g)$ in the rational box of CG13.2.
+The block order is $(00,11,22)$, $(01,10)$, $(02,20)$, $(12,21)$
+in output-input Choi order. At that point put
+
+$$
+\begin{aligned}
+H_\star&=1000\eta_{0,\star}\operatorname{adj}S_{0,\star},\\
+Q_\star^{01}&=\eta_{1,\star}\operatorname{adj}S_{01,\star},\qquad
+Q_\star^{02}=\eta_{2,\star}\operatorname{adj}S_{02,\star},\\
+J_\star&=H_\star\oplus Q_\star^{01}\oplus Q_\star^{02}\oplus0,\\
+\delta_\star&=\mathbf1^TH_\star\mathbf1-2\operatorname{tr}J_\star>19/10.
+\end{aligned}
+\tag{JG.42}
+$$
+
+The last margin is inherited from CG22, not recomputed. This starred
+$H_\star$ is distinct from the supported separator $H$ of (JG.17).
+

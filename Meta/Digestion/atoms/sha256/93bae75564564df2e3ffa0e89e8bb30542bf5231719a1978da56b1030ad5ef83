@@ -1,0 +1,30 @@
+**Proposition 261.4 (Attainment and the exact decomposition meaning).**
+Both minima in (261.4) are attained, and
+
+$$
+\omega(p)=\min_{\pi:\ p^\pi=p}\pi\{u\ne v\},\qquad
+\rho(p)\le\frac{\omega(p)}3
+ \le\frac{\min\{1,4\kappa(p)\}}3.
+\tag{261.5}
+$$
+
+Here $p^\pi=p$ requires equality of every full word-label law,
+not merely equality of its scored event vector. The quantity
+$\kappa(p)=3-\zeta\cdot z_p$ is the fair deficit of Section 252.
+The composite bound involving $4\kappa$ is not asserted sharp.
+
+**Proof.** The complete catalog is finite. Its probability simplex,
+its fiber over $p$, and $O_L,N_L$ are compact. The constraint
+$p=(1-t)o+tn$ is closed in a compact product and has the solution
+$t=1,n=p$; continuity therefore gives both minima. Splitting any
+decomposition into unchanged and changed tables gives a representation
+in (261.4) with $t=\mu$, because each unchanged table is stopped.
+Conversely decompose a minimizing $o,n$ into their complete tables.
+Represent every $O$ table as an unchanged $N$ table. The resulting
+whole decomposition of $p$ has changed mass at most $t$.
+The two inequalities prove equality of the minima, including
+$t=0,1$ where an unused component may be chosen arbitrarily.
+Apply Theorem 261.2 to a minimizing decomposition. The last bound
+is the existing all-label quarter-gap estimate of Theorem 252.2;
+it is not an additional proof of that estimate. $\square$
+

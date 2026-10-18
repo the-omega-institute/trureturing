@@ -1,0 +1,25 @@
+### 52.3 A common certificate and finite minima without an infinite normalized ground state
+
+Set
+
+$$
+\mathcal H_j^b=aL_j^b-gI,\qquad
+\mathcal E_j^b(f)=aQ_j^b(f)-g\|f\|_2^2,
+\quad b\in\{\mathrm N,\mathrm D\},
+\qquad \mathcal H_\infty=aL_\infty-gI.
+\tag{52.9}
+$$
+
+The classical graph ground-state transform is used only as an intermediate identity; its positive function is not assumed square summable. See [the graph-transform source note](../../../Library/GraphInvariants/kellerpinchoverpogorzelski2021rellich.md), §6 of the primary preprint. Here the actual certificate is $h_j=1$. The exact killing-aware identity is simply
+
+$$
+\mathcal E_j^b(f)
+=a\sum_{\{x,y\}\subset V_j}h_j(x)h_j(y)
+ \left|\frac{f(x)}{h_j(x)}-\frac{f(y)}{h_j(y)}\right|^2
++\sum_{x\in V_j}
+ \left(a\frac{L_j^bh_j(x)}{h_j(x)}-g\right)|f(x)|^2.
+\tag{52.10}
+$$
+
+Its second coefficient equals $-g$ for N, and $-g+a\mathbf1_{r_j}$ for D. Thus the pointwise certificate supplies the *same* lower bound $-g$ for every layer and convention. The infinite positive function $h=1$ likewise certifies $\mathcal H_\infty\ge-gI$, but $h\notin\ell^2(V_\infty)$.
+

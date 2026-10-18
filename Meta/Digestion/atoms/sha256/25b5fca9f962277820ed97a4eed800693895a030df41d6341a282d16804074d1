@@ -1,0 +1,70 @@
+**Theorem 13.1 (diagonal-prefix saturation).** Let $\mathcal A$ be any
+finite bottom-up automaton over $\Sigma_{2k}$, with finite state set $S$
+and final set $F$, accepting exactly a given relation of valid tuple pairs.
+A symbol is diagonal if each coordinate in the first half equals the
+corresponding coordinate in the second half, including $\bot$.
+Compute the productive states $Z_0$ as in Lemma 11.2, and define
+
+$$
+\begin{aligned}
+Z_{j+1}={}&\{s:\text{some diagonal nullary transition ends at }s\}\\
+ &\cup\{s:\text{some diagonal binary transition }
+                  a(s_L,s_R)\to s\text{ has }s_L,s_R\in Z_j\}.
+\end{aligned}
+\tag{ARH.13.1}
+$$
+
+This sequence decreases and reaches a fixed set $Z_\infty$ effectively.
+There is a finite number $j$ of initial tuple levels on which no accepted
+pair agrees if and only if $F\cap Z_\infty=\varnothing$.
+An empty intersection yields such a computable $j$. A nonempty
+intersection yields, for every requested $j$, an accepted pair of
+**finite** tuples agreeing at every coordinate address of length $<j$.
+
+Proof. For every $j\ge0$ and state $s$, the exact invariant is
+
+$$
+s\in Z_j\quad\Longleftrightarrow\quad
+\text{some finite term has a run to }s
+\text{ and every label at depth }<j\text{ is diagonal}.
+\tag{ARH.13.2}
+$$
+
+At $j=0$ there is no label restriction, so this is productivity, including
+its finite-witness direction. At $j+1$ a nullary root must be diagonal
+and then has no children. A binary root must be diagonal and each child
+must have the property at $j$. Both directions of the induction now
+follow exactly from (ARH.13.1): combine two finite child witnesses to
+obtain a finite parent, or decompose an existing run into its children.
+It is immaterial whether the automaton is deterministic.
+
+Any transition with productive children has a productive target, hence
+$Z_1\subseteq Z_0$. The operator in (ARH.13.1) is monotone in its child
+set, so induction gives $Z_{j+1}\subseteq Z_j$. There are at most $|S|$
+strict decreases. Once two consecutive sets are equal, every later set
+is equal; this gives a terminating test, with at most one additional
+comparison to detect stabilization. Stored productive witnesses and the
+induction also give an effective witness construction for any requested
+finite $j$ and any state in $Z_j$.
+
+For a valid tuple pair, diagonality through these $j$ levels is exactly
+agreement of all paired coordinate replies at addresses of length $<j$.
+Indeed every address present in either coordinate occurs in the union
+domain. Equality of its labels includes presence versus absence. Addresses
+outside the union have absence in both copies automatically. This proves
+both directions even when some coordinates terminate early.
+
+Consequently $F\cap Z_j$ is nonempty exactly when an accepted pair has
+that prefix agreement. If the stable intersection is empty, a computed
+stage has empty intersection and is a separating depth. If it is nonempty,
+a stable accepting state lies in every $Z_j$; (ARH.13.2) produces a finite
+accepted pair for each $j$. Witnesses may depend on $j$. No single infinite
+tree, infinite run, compactness argument or changed source domain is used.
+$\square$
+
+The condition is about the accepting **root** states of the same exact
+relation automaton. Productive internal states may encode partial padding
+or unfinished checks; every accepted completion still satisfies $V_{2k}$
+and all constraints. This avoids treating independently productive
+coordinate marginals as a jointly feasible source pair.
+

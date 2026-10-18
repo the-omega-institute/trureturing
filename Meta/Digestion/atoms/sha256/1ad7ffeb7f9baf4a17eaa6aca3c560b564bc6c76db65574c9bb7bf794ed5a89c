@@ -1,0 +1,30 @@
+**Definition 3.1 (HistoryMode receiver).** Keep ARC Definition 5.2's outer
+receiver, stored choice and all three successors. On choice1 execute its
+actual invocation TOK to the handler and reserve CTL. Before the original
+three-bit history header, execute Tail66; Base70, retaining the native
+measured base. At R70 execute IN6; EX70; WR70,6; MR70, then a CTL testing
+the still unchanged latch6. Its two branches retain the bit by their
+fixed control path until the common import; neither value is a rejection.
+There is no bank assignment between IN and its matching WR/test.
+
+Append the one F and seal the mode block. Construct literal $U(1)$ on67,
+with sep/seal. Count preceding Fs on68 into distinct ordinal scratch and
+write the actual complete RCA descriptor using the saved base, length
+one, flags10 and this count. All Base/descriptor/Seek helpers are ARC
+Definition 2.2's literal scans/copies. Select the last binary block of70
+by RCA LastBank: Tail, backwards across its terminal F and payload to the
+preceding F, then MR to its first bit. Before any new70 append, import
+bits by RD70, finite literal-bit branch, compiled cons, MR70, stop at F,
+and Reverse. Require length one. Copy that actual word to persistent
+mode. Bank rebuilds touch64–68, not head70. The completed seal and $A$'s
+current read token authorize the import; the descriptor does not grant it.
+
+The subsequent history receiver is ARC Definition 5.3's native routine
+on the same70 with a newly measured base. Its three tag-bit bodies,
+unary-length IN/EX/WR/RD/MR bodies, copied bound and six-row tested payload
+bodies retain every actual supplied bit. F, seal, constructed whole-frame
+length, descriptor and the same F-bounded import precede parsing. Length
+scratch and data latch are distinct. The mode's earlier descriptor stays
+retained even when descriptor scans and bank rebuilds append newer ones.
+No extra descriptor-stage copy or external address input is required.
+

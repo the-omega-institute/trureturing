@@ -1,0 +1,20 @@
+**Definition 14.1 (all window gates and HALF-TV constants).** With every input defined in §§9–13, set
+$$
+\begin{gathered}
+d_*=\min\left\{
+1,\frac{k_e}{2},d_{\rm branch},\frac{p_*}{2A_w},
+\frac{R_x}{D_{\rm loc}},
+\frac{R_f}{2C_{\rm joint}D_{\rm loc}},
+\frac{R_f}{2C_{\rm br}},\frac{R_f}{2\beta_B}
+\right\},\qquad
+\varepsilon=\frac{d_*}{a_s},\\
+c_- =\frac{\alpha}{4s_0^2}
+              \left(\frac1{u_6}-\frac1{l_7}\right),\qquad
+c_+ =\frac{\alpha}{4s_0^2}
+              \left(\frac1{l_6}-\frac1{u_7}\right).
+\end{gathered}
+$$
+Every term in this finite minimum is required. All denominators are strictly positive:
+$a_s,s_0,\alpha,\beta,d_\eta,c_h,l_b,u_b,1-q_b,c_e,p_*,
+\sigma,C_\mu,D_{\rm loc},C_{\rm br},\beta_B,L_B$ have the respective positive bounds already specified. The original source supplies $k_e>0$ and $\lambda_e>190$. Thus $d_*>0$ and $\varepsilon>0$. The strict ordering $u_6<l_7$ gives $c_->0$, and $l_6<u_7$ gives $c_+>0$. These are exact symbolic constants conditional on the stated source and finite bounds. No numerical value of $d_*,\varepsilon,c_-,c_+$ is asserted.
+

@@ -1,0 +1,27 @@
+**Theorem 6.3 (all-cut material account).** Let $V_h,L_h,\ell_h$ be
+the actual original carrier's vertex, geometric-terminal and access-link
+counts at $h$. Let $\eta_j$ count the births among the first $j$
+whose parent already had its other child. Then the exact graph counts
+at $C_j(h)$ are
+
+$$
+\begin{aligned}
+V_j&=V_h+j,&L_j^{\rm term}&=L_h+\eta_j,\\
+E_{\rm tree,j}&=V_h+j-1,&E_{\rm access,j}&=\ell_h,\\
+\operatorname{occupied}_j&=2(V_h+j-1+\ell_h),&
+\operatorname{capacity}_j&=7(V_h+j).
+\end{aligned}
+$$
+
+Here $\eta_{24}=8$, so the completed append adds 24 vertices and
+eight terminals. There is no discarded allocation or record.
+
+Proof. Every birth adds one connected vertex and one child edge;
+all old access edges stay fixed. A fresh child at a terminal replaces
+that terminal by one new terminal and leaves the terminal count
+unchanged. At a parent with its other child already present, it adds
+one terminal and removes none. These are the only cases, proving
+the formula for $\eta_j$. The completed subtree has nine terminals
+instead of $z$ alone, proving $\eta_{24}=8$. Each reciprocal child
+or access edge occupies two of the seven slots per vertex. ∎
+

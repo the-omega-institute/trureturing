@@ -1,0 +1,41 @@
+**Theorem 282.1 (Weighted five-address necessity and a full quotient cone).**
+Fix any five ordered late addresses $J_*$ and weights $\gamma_j\ge0$.
+Put $G=\sum_{j\in J_*}\gamma_j$ and $\mu=\max_j\gamma_j$.
+There is a nonnegative full score with
+
+$$
+\beta=\gamma,\quad K_0=G+21\mu/5,\quad
+W=B_N=B_O=21\mu/5.
+\tag{282.1}
+$$
+Every complete feasible $N$ allocation, of any mass and at any real
+profile, therefore satisfies
+
+$$
+\sum_{j\in J_*}\gamma_jb_j\le(G+21\mu/5)e.
+\tag{282.2}
+$$
+Every full input $y\ge0$ with this $\beta$, zero elsewhere, and actual
+$K\ge K_0$ has one nonnegative full score $V$ with $QV=Qy$ and
+$\Delta_N(V)=0$; its residual is zero and $\theta=0$ suffices.
+For every original positive monotone vanishing $a$, an original $N_2$
+cap attainer at $e>0$ necessarily satisfies
+
+$$
+\sum_{j\in J_*}\gamma_ja_j\le(G+21\mu/5)e,
+\tag{282.3}
+$$
+including inactive selected addresses. The same necessity holds for $O_2$.
+
+**Proof.** In $Y^{\rm f}$ scale every $P,T$ coefficient by $\mu$,
+and the $C$ coefficients of class $j$ by $\gamma_j$. Every late-label
+cell reward is at most $\mu$ times its former reward, whereas zero
+receives exactly $\mu$ times its former reward. The complete domination
+proof of 281.2 persists without division by $\mu$. Class sums give
+(282.1), including the zero score when $\mu=0$. Equation (280.2) gives
+(282.2). Add positive-row mass $K-K_0$ to obtain the exact input quotient;
+that row has nonpositive excess at every column and zero at $R$.
+This proves the unrestricted quotient assertion, regardless of the
+input's cancellations or coefficient placements. Lemma 280.3 proves
+(282.3) for the original entire sequence and every positive cap. $\square$
+

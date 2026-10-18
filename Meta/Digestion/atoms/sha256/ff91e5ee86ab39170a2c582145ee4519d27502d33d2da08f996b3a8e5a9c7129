@@ -1,0 +1,22 @@
+## 270. The response transfer applies with two owners
+
+Put s=c+d and
+ K=(sqrt(c^2-1)+sqrt(d^2-1))^2/s^2,
+ T=(m-1)/(m+1), lambda_M^2=K*T.
+At least one of the two genuine M angles is less than pi/3, since their
+sum is less than 2*pi/3. The transfer calculation in Section 209, which
+explicitly uses only the existence of one angle at most pi/3, therefore
+applies. It does not require three axial-M owners. Its conclusions are
+ K*T>1/3,
+ F(m)=2*(m-1)/s^2-T*(c-d)^2/s^2<1/3.
+The flat source supplies the actual product inequality
+ (m-1)*(o-1)>=s^2.
+Consequently
+ lambda_O^2=K*(o-1)/(o+1)
+             >=K/[1+2*(m-1)/s^2]>1/7,
+as in the same transfer calculation. For clarity about the last step,
+0<T<1 and (c-d)^2/s^2<1 give
+ 1+2*(m-1)/s^2=1+F(m)+T*(c-d)^2/s^2<7/3.
+Also K>1/3 follows from K*T>1/3 and T<1. Therefore the displayed
+ratio is strictly greater than (1/3)/(7/3)=1/7.
+

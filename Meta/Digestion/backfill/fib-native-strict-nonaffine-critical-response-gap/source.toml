@@ -1,0 +1,5 @@
+source_id = "fib-native-strict-nonaffine-critical-response-gap"
+path = "docs/develop/theory/FIB_NATIVE_STRICT_NONAFFINE_CRITICAL_RESPONSE_GAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

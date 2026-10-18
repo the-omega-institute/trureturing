@@ -1,0 +1,103 @@
+**Theorem 7.2 (Exact interior-zero alternatives for the radial cubic).**
+For the actual determinant $\mathscr F$ of (3.4), precisely one
+of the following alternatives holds:
+
+(a) $\mathcal P_{\mathfrak d}$ is empty.
+
+(b) $\mathcal P_{\mathfrak d}=\{p_*\}$ is a single point.
+
+(c) There are nonzero real homogeneous linear forms $l,m$ such that
+
+$$
+\mathscr F=l^2m,\qquad
+m(p)=m_0p_0+m_+p_++m_-p_-,\qquad m_i\ge0,\qquad
+\mathcal P_{\mathfrak d}=\{p\in\Delta_2^\circ:l(p)=0\}\ne\varnothing.
+\tag{7.2}
+$$
+
+(d) $\mathscr F$ is identically zero and
+$\mathcal P_{\mathfrak d}=\Delta_2^\circ$.
+
+If $\mathscr F$ is not identically zero, every interior zero has
+multiplicity exactly two on the affine plane $\sum_ip_i=1$.
+In case (b) the quadratic term there is positive definite; in
+case (c) it has rank one. In both cases the actual radial block
+has rank exactly two at every interior zero. More generally, an
+interior radial kernel of dimension at least two forces case (d).
+For any case, including (d), the exact pointwise radial rank is
+determined by its principal minors: a singular PSD block has rank
+two if some principal $2\times2$ minor is positive, rank one if
+all those minors vanish and some diagonal entry is positive, and
+rank zero if all diagonal entries vanish. The condition $uvw>0$
+ensures rank two at any singular interior block even in case (d).
+
+Proof. The cubic is homogeneous and nonnegative on the entire
+nonnegative orthant by Theorem 3.2 and homogeneity. First use only
+these two properties. Suppose distinct $p,q\in\Delta_2^\circ$
+are zeros. Restrict the cubic to their affine line. Nonnegativity
+holds on an open interval about each point, so each zero of a
+nonzero restriction has even multiplicity at least two. A polynomial
+of degree at most three cannot have both zeros. The restriction
+therefore vanishes identically.
+
+Homogeneity makes $\mathscr F$ vanish on the two-dimensional
+linear plane spanned by $p,q$. If $l$ is a linear equation of
+that plane, polynomial division gives $\mathscr F=lQ$, with
+$Q$ homogeneous quadratic. At each positive point of this plane,
+$l$ changes sign transversely inside the positive orthant. Unless
+$Q$ also vanishes there, $lQ$ changes sign. Thus $Q$ vanishes
+on an open subset of that plane, and division again gives $Q=lm$.
+Off the plane, $m=\mathscr F/l^2\ge0$ in the positive orthant;
+continuity extends this inequality to the plane and to the closed
+orthant. Evaluation on its coordinate rays gives $m_i\ge0$.
+If the cubic is nonzero, $m$ is nonzero and strictly positive at
+every positive point. Its interior zeros are therefore exactly the
+line section in (7.2). If the cubic vanishes on all of
+$\Delta_2^\circ$, it vanishes on an open set by homogeneity and
+is the zero polynomial. This proves the four exhaustive alternatives.
+
+At an interior zero $p_*$, restrict to the affine population plane
+and translate $p_*$ to zero. The resulting polynomial has zero
+constant and linear terms and can be written $Q_2+Q_3$, with
+$Q_j$ homogeneous of degree $j$. Here $Q_2\succeq0$ by local
+nonnegativity. If $Q_2=0$, the odd polynomial $Q_3$ is nonnegative
+in a neighborhood only if it vanishes, forcing the original cubic
+to vanish identically. If $Q_2$ has a null direction $v$, the
+restriction to that line is $s^3Q_3(v)$, which must also vanish.
+It then supplies a second nearby interior zero. Consequently the
+singleton case has positive-definite $Q_2$. Formula (7.2) gives
+the rank-one quadratic term $m(p_*)l(p_*+v)^2$ in case (c).
+This also proves the asserted exact multiplicities.
+
+The rank conclusion uses the actual matrix, rather than just an
+arbitrary nonnegative cubic. Its entries are smooth at positive
+populations. Suppose $\mathcal R(p_*)$ has rank one. Choose a
+constant orthonormal basis making its positive eigenvalue the first
+pivot. In a neighborhood in the affine population plane this pivot
+stays positive. Its $2\times2$ Schur complement $S(p)$ is PSD,
+is smooth, and satisfies $S(p_*)=0$. For every fixed real vector
+$v$, the nonnegative scalar $v^TS(p)v$ has a local minimum zero,
+so its first derivatives vanish. Polarization makes every first
+derivative of $S$ zero. Along any affine line through $p_*$,
+$S(p_*+sh)=O(s^2)$, hence
+
+$$
+\mathscr F(p_*+sh)
+=\text{(positive pivot)}\det S(p_*+sh)=O(s^4).
+\tag{7.3}
+$$
+
+This restriction is a polynomial of degree at most three and is
+therefore identically zero. Varying the line shows that the cubic
+vanishes on the affine plane, and homogeneity gives case (d).
+If the rank is zero, each nonnegative linear diagonal $A_i$ vanishes
+at a positive population. Its nonnegative coefficients must all
+vanish. PSD then forces every off-diagonal entry to vanish as well,
+and again $\mathscr F=0$. Thus every interior zero of a nonzero
+cubic has rank two. The principal-minor rank tests are the usual
+Gram-matrix rank tests for PSD matrices. Finally a rank-one PSD
+$3\times3$ matrix has nonnegative product of its three off-diagonal
+entries. Here that product is $-uvw\,p_0p_+p_-$, strictly negative
+when $uvw>0$ and $p\in\Delta_2^\circ$. This excludes ranks zero
+and one at a singular block and proves the last assertion. $\square$
+

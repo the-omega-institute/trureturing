@@ -1,0 +1,105 @@
+**Contract 1.3 (inherited analytic premises and exact correspondence).**
+The mathematical reference [Q] is *Native observation quotient, hidden
+Green harmonics and attractive response*. The following are the inherited
+facts about the singular native realization. They are stated explicitly
+so that no result about an unopened supplier is an additional premise.
+
+1. [Q, Definition 1.3] supplies a strictly positive smooth free heat
+   kernel $p_t^\Omega$ for $e^{-tL}$, a positive free spectral gap and
+   compact free resolvent. For the fixed original point
+   $o=(k_o,\alpha_o,\beta_o)\in\Omega$, its Green field is
+
+   $$
+   \Gamma_o(q)=\int_0^\infty p_t^\Omega(o,q)\,dt.
+   \tag{1.7}
+   $$
+
+   It is positive, integrable on $\Omega$, smooth and finite off $o$,
+   and infinite at $o$. Its unit-source normalization is
+   $\int_\Omega\Gamma_o L\varphi\,d\mu=\varphi(o)$ for compact smooth
+   tests. This full infinite-time field is used in every full energy.
+
+2. [Q, Theorem 2.1] supplies the closed-domain free reduction
+
+   $$
+   \begin{gathered}
+   \Pi\mathcal F\subset\mathcal F,\qquad
+   \mathcal F\cap\operatorname{Ran}J=J\overline{\mathcal F},\qquad
+   T[Jv]=\overline T[v],\\
+   T(\Pi f,(1-\Pi)z)=0\quad(f,z\in\mathcal F),\qquad
+   e^{-tL}J=Je^{-t\overline L}.
+   \end{gathered}
+   \tag{1.8}
+   $$
+
+   In the normalized base eigenbasis
+
+   $$
+   e_{jm}(k,\alpha)=\sqrt{\frac2d}
+    \sin\frac{j\pi(k-l)}d\,\frac{e^{im\alpha}}{\sqrt{2\pi}},
+   \qquad \lambda_{jm}=\varepsilon^2(j\pi/d)^2+m^2/4,
+   \tag{1.9}
+   $$
+
+   where $j\ge1$ and $m\in\mathbb Z$, the form and operator domains
+   are respectively $\sum\lambda_{jm}|v_{jm}|^2<\infty$ and
+   $\sum\lambda_{jm}^2|v_{jm}|^2<\infty$.
+
+3. [Q, Definition 2.2 and Theorem 3.1] supplies the base heat product,
+   the same height killing and the exact hidden marginal. With
+   $x_o=(k_o,\alpha_o)=\pi o$,
+
+   $$
+   \begin{aligned}
+   \overline p_t(x_o,(k,\alpha))
+      &=h_t^I(k_o,k)s_t(\alpha-\alpha_o),\\
+   h_t^I(k_o,k)&=\frac2d\sum_{j\ge1}
+     e^{-\varepsilon^2(j\pi/d)^2t}
+     \sin\frac{j\pi(k_o-l)}d\sin\frac{j\pi(k-l)}d,\\
+   s_t(a)&=\frac1{2\pi}\sum_{m\in\mathbb Z}e^{-m^2t/4}e^{ima},\\
+   \overline\Gamma_{x_o}(x)&=\int_0^\infty\overline p_t(x_o,x)dt,
+   \qquad
+   W(x)=\frac{\overline\Gamma_{x_o}(x)}{2\pi}
+        =\frac1{2\pi}\int_{\mathbb T}\Gamma_o(x,\beta)d\beta.
+   \end{aligned}
+   \tag{1.10}
+   $$
+
+   The extended value $W(x_o)$ is infinite. The corresponding heat marginal is
+   $\int_{\mathbb T}p_t^\Omega(o,(x,\beta))d\beta
+   =\overline p_t(x_o,x)$. It holds for every source point and every
+   positive time. Consequently the base kernel is strictly positive
+   at every pair of interior points. The height process has generator
+   $\varepsilon^2\partial_k^2$ and is killed on leaving $I$.
+   The full Green height marginal is the pointwise identity
+
+   $$
+   \int_{\mathbb T^2}\Gamma_o(k,\alpha,\beta)d\alpha d\beta
+    =\varepsilon^{-2}G_I(k_o,k),\qquad
+   G_I(a,k)=\frac{(\min(a,k)-l)(u-\max(a,k))}{d}.
+   \tag{1.11}
+   $$
+
+4. [Q, Definition 3.2, equation (3.7)] supplies constants $C_H>0$ and
+   $0\le B_\varepsilon<\infty$ for this fixed realization such that
+
+   $$
+   V_o[f]:=\int_\Omega\Gamma_o|f|^2d\mu
+   \le\frac{2rC_H}{\varepsilon^2}T[f]
+      +B_\varepsilon\|f\|_2^2
+   \qquad(f\in\mathcal F).
+   \tag{1.12}
+   $$
+
+   In particular $V_o[f]$ is finite on the original full form domain.
+   This supplied bound, rather than a new Hardy surrogate potential,
+   controls the actual point-source multiplier.
+
+The source's first-harmonic theorem is restated with its normalization
+argument in Lemma 5.1 below. Closedness and attainment are deduced here
+from the displayed bound and compactness. Standard Hilbert-space
+compactness, weak lower semicontinuity of a Hilbert norm, the Sobolev
+chain rule, Fourier/Parseval identities and the elementary integral and
+sequence inequalities used below have their usual meanings. None is an
+additional assumption about the singular full attractive operator.
+

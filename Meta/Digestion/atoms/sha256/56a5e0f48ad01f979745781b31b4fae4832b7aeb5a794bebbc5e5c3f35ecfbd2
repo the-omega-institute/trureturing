@@ -1,0 +1,52 @@
+**Theorem 7.2 (Actual four-coordinate strict affine improvement).** For
+every arbitrary fixed preparation and every $0<Z<2/3$, the model
+of §§5–6 uses exactly four stored real coordinates, has actual affine
+hull $\mathbb R^4$, and belongs to the combined class. In each of
+the four contracts,
+
+$$
+\boxed{
+e_{4,\mathsf C}^{\rm aff}(Z)
+\le\operatorname{err}(E_\varepsilon,\mathcal D_\varepsilon)
+\le4H\sqrt{T-\mu}
+<4H\sqrt T=e_{2,\mathsf C}^{\rm aff}(Z).}
+$$
+
+The explicit certified squared improvement and additive improvement are
+respectively
+
+$$
+\bigl(e_{2,\mathsf C}^{\rm aff}(Z)\bigr)^2
+-\bigl(e_{4,\mathsf C}^{\rm aff}(Z)\bigr)^2
+\ge16H^2\mu>0,
+$$
+
+$$
+e_{2,\mathsf C}^{\rm aff}(Z)-e_{4,\mathsf C}^{\rm aff}(Z)
+\ge
+\frac{4H\mu}{\sqrt T+\sqrt{T-\mu}}>0.
+$$
+
+Proof. Propositions 5.2 and 5.4 give the dimension, actual affine hull,
+initialization and all straight affine maps, including their zero
+offsets. Section 6 proves the full guard and prescribed-path obligations
+for the same encoder and decoder. Thus the model belongs to
+$\mathfrak F_{\le4,\mathsf{GP}}$, and hence to every weaker class.
+Theorem 5.5 supplies its error bound. Proposition 7.1 supplies the
+exact two-coordinate comparator in each corresponding class.
+Theorem 4.6 gives $0<\mu<T-\tau<T$, so the square roots are
+positive and the strict comparison follows. Squaring the bounds and
+rationalizing
+$4H(\sqrt T-\sqrt{T-\mu})$ gives the two displayed margins.
+They also bound the improvement of the actual displayed witness over
+the two-coordinate optimum. $\square$
+
+For each fixed $Z$, all scalar constants are fixed before a current
+state or producing history is selected. They are independent of that
+state, the phase coordinates, the arbitrary preparation phases and
+the finite history length. Preparation only fixes initialization and
+the rotations of the single decoder. The certified tolerance
+$4H\sqrt{T-\mu}$ is achieved as an upper bound by this actual model,
+but it is not asserted to equal its exact error or the four-dimensional
+infimum. Nothing here asserts attainment of that infimum.
+

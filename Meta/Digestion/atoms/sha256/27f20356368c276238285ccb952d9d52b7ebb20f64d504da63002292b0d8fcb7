@@ -1,0 +1,79 @@
+**Theorem 4.4 (transported seven-feature exclusion).** The repair satisfies
+
+$$
+V(\widehat G)\le V_0+H.
+\tag{4.5}
+$$
+
+If the fixed prior of Assumption 1.1 has at least one supported depth
+$k_*\ge3$, then
+
+$$
+\boxed{J_0+\max\{D_p,D_\beta\}+\sqrt{V_0+H}\ge10^{-26}.}
+\tag{4.6}
+$$
+
+This holds on the original finite or countable supported-target domain.
+It does not require, or assert preservation of, the five additional boxes
+of [RISK, Definition 1.3].
+
+**Proof.** The normalization estimate needed here is already supplied by
+[PAID, (17.7)]: for normalized $P,P'$ and an event $E$ of positive masses
+$q,q'$, its conditional laws satisfy
+
+$$
+\max\{q,q'\}\operatorname{TV}(P(\cdot\mid E),P'(\cdot\mid E))
+ \le\operatorname{TV}(P,P').
+\tag{4.7}
+$$
+
+Indeed for $q\ge q'$ the $\ell^1$ difference restricted to $E$ is at
+least $q\|P(\cdot\mid E)-P'(\cdot\mid E)\|_1-(q-q')$;
+the complementary difference is at least $q-q'$. Adding and dividing by
+two proves (4.7); interchange the laws for the other order. Consequently,
+on (1.3), including all the residual coordinates,
+
+$$
+d_\beta(\mathcal R_B(Q),\mathcal R_B(Q'))\le\frac53d_p(Q,Q'),\qquad
+d_p(\mathcal R_A(W),\mathcal R_A(W'))\le3d_\beta(W,W').
+\tag{4.8}
+$$
+
+For four numbers in $[0,1]$,
+$|(z-t)^2-(z'-t')^2|\le2(|z-z'|+|t-t'|)$.
+Each atom evaluation is 1-Lipschitz for TV. Thus for the B integrand
+$h_B(Q,W)=\|g(W)-g(\mathcal R_B(Q))\|_2^2$,
+
+$$
+|h_B(Q,W)-h_B(Q',W')|
+ \le8d_\beta(W,W')+\frac{40}{3}d_p(Q,Q').
+\tag{4.9}
+$$
+
+For $h_A(W,Q)=\|f(Q)-f(\mathcal R_A(W))\|_2^2$,
+
+$$
+|h_A(W,Q)-h_A(W',Q')|
+ \le6d_p(Q,Q')+18d_\beta(W,W').
+\tag{4.10}
+$$
+
+First integrate (4.9) on the coupling (3.7) from $G_B$ to $H_B$.
+Only its successor changes, so this costs at most $8m_\beta$.
+Then integrate it on the deterministic pushforward from $H_B$ to
+$\widehat G_B$, which costs at most $8d_\beta^*+(40/3)d_p^*$.
+For A the two costs are $6m_p$ and $6d_p^*+18d_\beta^*$.
+Their sum is bounded by $H$, proving (4.5); in fact the same argument
+bounds the absolute difference between the two residual statistics.
+
+The pair $\widehat G$ belongs to the full original $\mathfrak C$.
+[SEVEN, Convention 6.1 and Theorem 6.2] apply to exactly a fixed finite
+or countable prior with both endpoint masses positive and some supported
+$k_*\ge3$, without further boxes, support or successor conditions. They
+give $J(\widehat G)+\sqrt{V(\widehat G)}\ge10^{-26}$.
+Use (4.3), (4.5) and monotonicity of the square root to obtain (4.6).
+The three-point case is included because $r_3=3/8$; the larger-prior
+assertion uses the stated general-prior theorem in SEVEN §6, not an
+extrapolation of its three-point Chapters 1–5 or the boxed RISK theorem.
+$\square$
+

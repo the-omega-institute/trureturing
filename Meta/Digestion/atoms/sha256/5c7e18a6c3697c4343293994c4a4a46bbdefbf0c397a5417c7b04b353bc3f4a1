@@ -1,0 +1,23 @@
+**Convention 357.2 (The reused complete coefficient criterion).** For one zero-sum vector $g_{ij}$ at **every** pair, including $Q_{ij}=0$, put
+
+$$
+\begin{aligned}
+r_{ij}&=(-g_{ij})_+,&s_{ij}&=(-g_{ij}-Q_{ij})_+,&
+t_{ij}&=\max\{m(r_{ij}),m(s_{ij})\},\\
+D_i&=\ell_i-\sum_{h<i}g_{hi},&R_i&=\sum_{j>i}r_{ij},&
+S_i&=\sum_{j>i}s_{ij},\\
+T_i&=\sum_{j>i}t_{ij},&U_i&=\max\{R_i,S_i-D_i\},&u_i&=m(U_i).
+\end{aligned}
+\tag{357.5}
+$$
+
+The two conditions
+
+$$
+c\ge\sum_iU_i\quad\text{coordinatewise},\qquad
+\sum_i\max\{u_i,T_i\}\le M
+\tag{357.6}
+$$
+
+must hold for the **same whole family** $g$. [XIX 341.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#341-the-complete-preselected-coefficient-cone) supplies exactly the complete allocation and constructive inverse under (357.6), with $b_{ij}-a_{ij}=g_{ij}$ and $e_{ij}-d_{ij}=Q_{ij}+g_{ij}$. Both budgets and all zero-$Q$ variables are retained. The inverse and the independent scalar-budget obstruction XIX 342 are reused results.
+

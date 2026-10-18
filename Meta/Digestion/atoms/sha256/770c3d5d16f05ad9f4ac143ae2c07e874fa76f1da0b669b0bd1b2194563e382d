@@ -1,0 +1,119 @@
+## 9. Original full-fiber native consumer
+
+The native interpretation uses only the conditional correspondence
+SI.5. In this section $r\ge0$ is the original additional-latch parameter.
+Its source is the entire unbounded fiber
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\quad \rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle,
+\qquad
+\mathcal U_*=\{u:R_{\{L,R\}^3}(\rho u)=R_*\}.
+\tag{CL.35}
+$$
+
+There is no size, depth or interior-shape restriction on these finite
+nonempty ordered trees. The complete current row has classes
+$\{LLL,LRL\}=a$, $\{LLR\}=b_1$, $\{LRR\}=b_2$,
+$\{RLL,RRL\}=c$, $\{RLR\}=b_3$, $\{RRR\}=b_4$,
+with different classes disequal. At the original literals
+$w_i=L^{s_i}R$, $a_i=LLLw_i$, define
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$; alpha, beta
+and absent each contribute zero. Retain the original eleven profiles
+and the literal pointwise code
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ in another zero profile}.
+\end{cases}
+\tag{CL.36}
+$$
+
+Preparation must return the original latch $\widehat e_{\sigma_{A,k}(u)}$,
+and code-only handoff must enter literally the original complete
+$e_{\sigma_{A,k}(u)}$ on that same source. The supplied interface is
+
+$$
+\mathsf N_{A,k,r}(H,p,\ell)
+\quad\Longleftrightarrow\quad
+\mathsf B_{c,k}(H-4-r,p-1,\ell-3).
+\tag{CL.37}
+$$
+
+In its projection direction a correct full-fiber native preparer with
+both caps $n+1,W+3$ has one actual Boolean projection with both
+$n,W$ caps and $m\le H_P-4-r$. Apply the preceding results to that
+particular graph, without separately selecting or optimizing residual
+graphs. For example (CL.32) gives the conditional data-dependent bound
+
+$$
+H_P\ge G+4+r+R-
+\sum_{B\in\mathcal L_*}
+\bigl(D_B-(\beta_B-1)-\Delta_B\bigr),
+\tag{CL.38}
+$$
+
+where every quantity on the right is from that one supplied projection.
+Indeed $H_P\ge m+4+r$, and (CL.32) bounds that same $m$. No
+independent native lower-bound or source-realization bridge is being
+asserted.
+
+For clarity the supplied lift leaves a Boolean graph unchanged at
+the original fixed literals. At each coordinate-$i$ row, its four
+fixed successors are installed separately as
+
+$$
+(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+\longmapsto(\delta_0,\delta_0,\delta_1,\delta_0),
+\tag{CL.39}
+$$
+
+with terminals replaced by the original latches. Its original paid
+profile front is
+
+| State | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | Boolean start | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Together with all $r$ additional mandated latches, this counts
+$m+4+r$ preparation states: $m$ running rows, two profile rows and
+$2+r$ latches. The Boolean terminals are replaced, not charged a
+second time. The all-address occurrence identity in SI.5 makes each
+$Z_{b_3}$ source's selected route an actual Boolean run on its one
+fixed indicator vector, including noncomb images, absent selected
+addresses, repeats and certified visits. Its profile front adds one
+call and three letters. Other profiles use at most two calls and six
+letters. This is the stated full-fiber supplier, not a new proof of
+its source homomorphism or profile classification. The lower projection
+uses actual cube witnesses and selected-state subsequences; it is not
+a restriction of the upper's full source domain or a read-once
+normalization.
+
+The independent original whole-row reader has three running states and
+five whole-row halts, eight separately priced states, and at most two
+fresh calls and six fresh letters. It returns the entire predecessor
+row, including ordered exterior, occurrences, canonical equality
+partition, repetitions, disequalities and strict-prefix guards. All
+finite original addresses and alpha, beta, branch and absent replies
+retain their meaning and permission. Every installed output, running,
+unused and latch state and every actual constant, repeated or
+postcertificate invocation keeps its charge.
+
+Source binding, the fixed register, acquired same-version row,
+authentication, permission, export, access isolation, code-only handoff,
+lawful complete entry and stationary service remain the separate
+supplied assumptions of SI Convention 1.3 and WTF Assumption 1.5.
+No acquired source, free history, archive reread, clock, address
+computation or extra work register follows. Installed control,
+table and address representation, retained export alphabet, workspace,
+acquisition, elapsed time and physical memory remain distinct
+quantities. These conditional finite-control bounds assert no physical
+resource or realization law.
+

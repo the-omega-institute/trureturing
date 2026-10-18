@@ -1,0 +1,12 @@
+## 3. Exact identifiability at a prescribed slope
+
+Fix a legal history and a real number $\kappa$. Define the linear interpolation kernel
+
+$$
+\mathcal K(\kappa,d)=\left\{\Delta:\ \exists H\in\mathcal P_d,
+\ (1+\kappa i)\operatorname{tr}(A_i\Delta)=H(i)
+\text{ for every }0\le i<n\right\}.
+$$
+
+This is a linear subspace of the four-dimensional matrix space. It describes a difference of signals compensated by a single polynomial, without introducing independent lifted sources.
+

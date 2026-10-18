@@ -1,0 +1,51 @@
+**Lemma 3.1 (Power sums, exact normalization and moments).** There are $s_0>0$ and constants $z_-,z_+,G,C_\mu,C_\beta>0$, depending only on the fixed sources, such that for every $0<s<s_0$,
+
+$$
+z_-s^{-a}\le Z_0(s)\le z_+s^{-a},\qquad
+0<g(s):=\frac{R_{r-1}(s)}{R_{2r-1}(s)}\le Gs^r,
+\tag{3.1}
+$$
+
+and $\mu_i\le C_\mu/s$, $1+\beta_i\le C_\beta/s$ for both $i$, where $R_m(t)=\sum_{k\ge1}k^m e^{-tk}$ for nonnegative integers $m$. At every positive integer $k$ the exact normalized ratio is
+
+$$
+\frac{f_1(k)}{f_0(k)}=\frac{1+c k^{-r}}{1+cg(s)},\qquad g(s)=\sum_{k\ge1}f_0(k)k^{-r}\in(0,1].
+\tag{3.2}
+$$
+
+Proof. The geometric identity is $R_0(t)=1/(e^t-1)$. Write $e^t-1=tE(t)$, where $E$ is analytic near zero and $E(0)=1$. Then $R_0(t)-1/t$ extends analytically through zero. Local absolute convergence on positive $t$-intervals permits differentiation of the defining series, so
+
+$$
+R_m(t)=(-\mathrm d/\mathrm dt)^mR_0(t)=m!t^{-(m+1)}+O(1)\quad(t\downarrow0).
+\tag{3.3}
+$$
+
+The remainder remains bounded after each of the finitely many derivatives needed here because it is analytic. Exactly $Z_0=R_d$ and $Z_1=R_d+cR_{d-r}$, with $d-r=r-1\ge0$. Thus
+
+$$
+g(s)=\frac{(r-1)!}{(2r-1)!}s^r(1+O(s)),\qquad Z_i=d!s^{-a}(1+O(s)).
+\tag{3.4}
+$$
+
+Taking the ratio of the two normalized full masses proves (3.2), including its expectation expression. These facts give (3.1) on one source-only neighborhood.
+
+For explicit moment numerators put
+
+$$
+\begin{aligned}
+W_i(s)&=R_{d+1}+R_d+i c(R_{d-r+1}+R_{d-r}),\\
+\mathcal V_i(s)&=R_{d+2}+R_{d+1}+i c(R_{d-r+2}+R_{d-r+1}),
+\end{aligned}
+\qquad \mu_i=\frac{W_i}{Z_i},\quad \beta_i=\frac{\mathcal V_i}{2W_i}.
+\tag{3.5}
+$$
+
+All power sums on the right are at $s$. Their leading terms are $(d+1)!s^{-(a+1)}$ and $(d+2)!s^{-(a+2)}$. Since $r\ge1$, each perturbation lowers degree by at least one. Therefore
+
+$$
+\mu_i=\frac a s+O(1),\qquad \beta_i=\frac{a+1}{2s}+O(1).
+\tag{3.6}
+$$
+
+A finite enlargement of constants and shrinkage of the same neighborhood yield the simultaneous moment bounds. $\square$
+

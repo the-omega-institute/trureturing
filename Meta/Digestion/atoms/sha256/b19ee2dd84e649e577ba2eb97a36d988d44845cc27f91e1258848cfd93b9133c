@@ -1,0 +1,21 @@
+**Corollary 8.2 (the precise original-fiber consumer).** The extensive
+excess in Theorem 5.2 occurs on an attained fiber of a lawful
+full-family original code, and not just on an abstract graphical
+partition function. A proposed mechanism requiring a uniformly
+vanishing-loss Definition 2.1 subroutine on every original code
+fiber fails on these fibers. This assertion gives no new value or
+lower bound for optimal $M_1(D)$.
+
+Proof. On the scaffold slice put the analytical product law $\mu^n$
+of Definition 5.1 on its first $n$ actual blocks and fix the padding.
+The same-assignment bijection makes the mass of its merged graph
+event exactly $Z_G$. Each original block law occurs once. Conditional
+on that event its actual law is $W/Z_G$. The auxiliary trial law
+$P$ in Lemma 3.2 remains a variational witness, not an assumption
+about this conditional distribution. Apply Theorem 5.2 and Proposition
+5.3 to these exact graph masses. All original sources outside the
+merged canonical inverse image retain their lawful singleton
+behavior. The code is deliberately nonoptimal, and neither its
+alphabet nor its analytical event mass is substituted for the optimum
+over all original competitors. $\square$
+

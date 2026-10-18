@@ -1,0 +1,6 @@
+# CFMP pure three-cycle packet at degree (8,9): exact box certificate
+
+This paper-first note proves a restricted packet theorem: all low global edges have
+degree 8 and all high global edges have degree 9 in a role-homogeneous pure
+three-cycle packet.
+

@@ -1,0 +1,45 @@
+**定义 53.3（同一寄存器的实际有限取得族）。** 对公共 $0<\rho\le1/10$，取
+
+$$
+\begin{aligned}
+K&=\sqrt{1-\rho^2},\qquad
+\alpha=\frac35K-\frac45\rho,\qquad
+\nu=\frac45K+\frac35\rho,\qquad q=\alpha+\nu i,\\
+c_1&=j,\qquad c_2=-\alpha j+\nu k,\qquad c_1c_2=q,\\
+h&=\frac45\nu-\frac35\alpha=\frac{7K+24\rho}{25}.
+\end{aligned}
+\tag{53.10}
+$$
+
+两个命令为单位纯虚元。实际事件严格为
+
+$$
+\operatorname{Read}(y_0);\quad A_{\gamma_1c_1};\quad
+\operatorname{Read}(y_1);\quad A_{\gamma_2c_2};\quad
+\operatorname{Read}(y_2);\quad A_d;\quad
+\operatorname{Read}(y_3);\quad\operatorname{Stop}.
+\tag{53.11}
+$$
+
+记录中的命令仍是 $c_1,c_2$，不记录潜在 $\gamma_jc_j$。保留全部四个实际报告及有序命令、调用种类、公共区间证书和Stop。对同一真实来源写 $bq=s+w$、$w\in E$、$R=|b|$、$\mu=\gamma_1\gamma_2\in[m,1]$。逐次状态律给
+
+$$
+\begin{aligned}
+y_0&=a+e_0,\\
+y_1&=\gamma_1(c_1\times a)+e_1,\\
+y_2&=\mu\,c_2\times(c_1\times a)+e_2,\\
+y_3&=\mu w+e_3,\qquad |e_j|\le\delta.
+\end{aligned}
+\tag{53.12}
+$$
+
+最后锚把同一演化中的可见量放入隐藏槽，故任意无界 $a$ 不进入 $y_3$，INITIAL的 $a$ 仍由已保存初读估计。采用§45的原帽几何，
+
+$$
+s\ge-R\rho,\qquad Rh\le|w|\le R.
+\tag{53.13}
+$$
+
+具体地，帽条件是 $\alpha s+\nu\langle w,i\rangle\ge(4/5)R$；若 $s=-t<0$，则
+$\nu\sqrt{1-(t/R)^2}-\alpha(t/R)\ge4/5$，其左端严格递减且在 $t/R=\rho$ 取等，给负分支界。正实部最大值为 $R((4/5)\alpha+(3/5)\nu)$，其平方与 $(Rh)^2$ 相加为 $R^2$；这一正端点至少为 $R\rho$。因此同一帽上的全部实部分支都给所列投影下界。这里重复写出供应关系，以明确使用的是原完整帽；未把球面换成一个填充区间。两条上界证明只改变有限族中的公共 $\rho$ 和末读解码器，不改变（53.11）的动作与实际Read。
+

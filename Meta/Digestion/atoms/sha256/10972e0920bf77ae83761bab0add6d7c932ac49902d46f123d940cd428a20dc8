@@ -1,0 +1,26 @@
+**命题 15.2（Complete five-row realization of $\mathsf P$）。** Every instance of Condition $\mathsf P$ has a complete $N+5$-state GLOBAL controller correct within four blocks.
+
+Proof. Use the two distinct roots and their complete updates (9.9). At both first-query rows install $B=B_E$. Let $w=1-i$, $z$ be the constant label on $J\setminus M_i$, and install one additional row $X$ with word $D=D_F$. Use
+
+$$
+V(b_i,x)=H_{G(x)}\ (x\in\mathbb F_2),\qquad
+V(b_w,e)=X,\quad V(b_w,1-e)=H_z,\quad V(X,e)=b_i.
+\tag{15.7}
+$$
+
+For the other scalar update of $X$, use the homogeneous literal Halt when choosing the constancy alternative of Definition 13.2, and otherwise use $V(X,1-e)=b_i$. Every bottom update is $H_R$, every actual Halt self-updates, and $c(\bot)=H_{L_\bot}$. The stream is $1^m\mid B\mid D\mid B$.
+
+Let $A=M_i\cap\{q_2^D=0\}$, enlarged to all $M_i$ when both children enter $b_i$. The exact word supports are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,\qquad \Gamma_{b_w}=\mathcal S_w,\\
+\Gamma_X&=\{(\lambda_w(j),(e,-j+2m,\tau(B))):j\in M_i\},\\
+\Gamma_{b_i}&=\mathcal S_i\ \cup\
+\{(\lambda_w(j),(e\oplus q_2^D(j),-j+3m,\Phi_D(\tau(B)))):j\in A\}.
+\end{aligned}
+\tag{15.8}
+$$
+
+The same word and raw decoder at $b_i$ work on both occurrences by (13.2)–(13.4). The middle seam is the strict actual inequality in (13.2), including the no-zero case; the last zero-leading $B$ clears its actual incoming tail. Exact Halt images are (5.6). Ranks $4,3,2,1,0$ on roots, $b_w,X,b_i$, Halts give the complete support certificate, with early $b_i$ occurrences legitimately skipping ranks. Mixed $O$ sources emit all four blocks. ∎
+

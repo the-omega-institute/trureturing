@@ -1,0 +1,110 @@
+**Theorem 27.1 (forced functions, without direct query adjacency).**
+Every controller in $\mathfrak W_{\rm int}(2,d)$ has three distinct
+reached query words $R,A,B$. All sources first query $R$, with
+function $P_{27}$. Its absence support $D_L$ follows a common internal
+path to second query $A$, whose function is $P_{16}$. Its branch
+support $D_U$ follows a common internal path to second query $B$,
+whose function is $P_{30}$. Every member of those two supports has
+its last Read there. Thus $A$ requires three distinct complete outputs
+and $B$ four. Direct edges $R-A$ and $R-B$ are not part of this
+conclusion.
+
+**Proof, exhaustive literal functions.** On the exact sources
+$Y_{a,b}=\langle T_n,T_{33}\rangle$, every original-root literal
+is $\varepsilon$, $Rp$ or $Lp$. The empty word returns branch;
+$Rp$ reads the same $T_{33}$ for all origins and is constant, even
+when absent. The word $Lp$ has exactly the relative reply on $T_n$.
+An empty relative suffix gives $E$, constant branch on $D$.
+
+The native laws of Definition 5.3 and (NARC.18.2) cover every nonempty
+relative word as follows. Give $L$ weight one and $R$ weight two.
+For $p\ne\varepsilon$, every edge requires its proper-prefix filling
+to be a branch. The last such guard is strongest, because prefix
+weights strictly increase. Writing $p^-$ for deletion of the final
+letter, traversal is possible precisely when
+$n\ge w(p^-)+2$. When reached, the filling is $T_{n-w(p)}$.
+If the final letter is $R$, let $t=w(p)\ge2$; the guard is
+$n\ge t$ and the function is $P_t$. If the final letter is $L$,
+let $t=w(p)+1\ge2$; the guard is again $n\ge t$ and the function
+is $S_t$. Explicitly, in reply order,
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+P_t&n<t&n=t&n=t+1&n\ge t+2\\
+S_t&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{NARC.27.1}
+$$
+
+There is no $P_1$; the relative weight-one word $L$ realizes $S_2$.
+Arbitrarily long literals and uniformly absent functions are included.
+This correspondence reuses the literal laws, without turning hidden
+age or query indices into runtime inputs.
+
+**Proof, one remaining Read after internal processing.** Suppose an
+actual support enters a common word with at most one Read remaining.
+By Lemma 25.3 it follows one common internal path to a halt or query.
+A halt requires a constant target. A query has at most four realized
+reply cells; each immediate successor must then follow an internal-only
+path to a fixed-output halt. Its reply cells must therefore be
+target-constant. This necessary condition includes arbitrary processing
+before and after that remaining Read and all merged arriving supports.
+
+Use the actual subset $D_0=\{2,16,17,18\}$, with full outputs
+$(2,16,16,17)$. For $P_t$ with $t\le15$, ages $17,18$ both
+return branch but require different outputs. For $t\ge17$, ages
+$2,16$ both return absence but require different outputs. Only
+$P_{16}$ survives, and it solves all $D_L$, with output tuple
+$(2,16,16,17)$ in reply order. For $S_t$, $t\le16$ merges
+$17,18$ in branch, while $t\ge17$ merges $2,16$ in absence.
+Constants fail. Thus $P_{16}$ is the only one-Read solver function
+for $D_0$, and consequently for $D_L$.
+
+The set $D_0\cup\{27\}$ has no one-Read solver: its sole candidate
+$P_{16}$ merges $18,27$ in branch, with outputs $17,12$.
+It cannot halt at one constant either.
+
+**Proof, the first query.** Seven required outputs prevent a common
+initial halt. The source-independent initial internal path therefore
+ends at a common first query $R$. A constant first function leaves
+seven outputs for one remaining four-valued Read and fails.
+If its function is $P_t$ with $t\le26$, the branch cell contains
+$28,29,30,31,32$, with five distinct outputs $13,14,15,16,17$.
+If $t\ge28$, the absence cell contains $D_0\cup\{27\}$, which
+the preceding argument excludes. Thus only $P_{27}$ survives.
+For $S_t$, $t\le27$ has the same five-output branch obstruction,
+and $t\ge28$ has the same unsolvable absent subset. These cases
+exhaust every native first function, including $E$ and constant
+original-root queries.
+
+**Proof, the second queries and actual arrivals.** The $P_{27}$ cells
+are $D_L,\{27\},\{28\},D_U$. Every member of one cell has the
+same immediate successor and follows the same internal path until
+a query or halt. Both $D_L$ and $D_U$ are target-nonconstant,
+so their paths reach respective second queries $A,B$. The lower
+subset argument forces $P_{16}$ at $A$.
+
+On $D_U=\{29,30,31,32\}$, four different outputs require four
+different replies. Constants and every $S_t$ have too few. For
+$P_t$ with $t\le29$, ages $31,32$ merge in branch; with $t\ge31$,
+ages $29,30$ merge in absence. Only $P_{30}$ works, with output
+tuple $(14,15,16,17)$. The fixed functions $P_{27},P_{16},P_{30}$
+are different on $D$, so $R,A,B$ are distinct complete words.
+The lower and upper runs already read $R$; their visits to $A,B$
+are second and last Reads. Each has an actual immediate predecessor
+different from itself, by Lemma 25.3, however long its internal
+arrival path. No contraction of that path gives a new cube edge.
+
+The singleton first replies $27,28$ have not been assumed to halt
+immediately or to remain separate: they may merge and use another
+second query. Adding their support to a shared word can only add
+requirements. In particular they cannot join the lower path to $A$,
+whose $P_{16}$ branch already serves output $17$ at age $18$;
+their required outputs are $12,13$. They cannot join the upper path
+to $B$, whose $P_{30}$ absence already serves $14$ at age $29$.
+Any shared internal path into either query has that same conflict.
+The forced lower and upper paths cannot merge before their second
+query, since their union requires five different outputs. Other
+shared paths and equal-output suffixes remain allowed. $\square$
+

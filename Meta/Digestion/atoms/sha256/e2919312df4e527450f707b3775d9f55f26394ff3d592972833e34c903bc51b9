@@ -1,0 +1,14 @@
+**Corollary 10.2 (pointwise recovery on the whole scaffold slice).**
+Under the explicit promise $t\in X_{m,h}$, the constant export
+with no preparation Reads serves $\mathsf P$ for every original
+target and count, with at most one actual Read of length at most
+$D$.
+
+**Proof.** Write $p=Rq$. If $|q|<h$, it ends at a scaffold branch
+which remains branch. Otherwise $q=a_iq'$ for a unique $i$, with
+$|q'|\le d-1$. Apply Lemma 10.1 to $q',k$ and implement its
+query as $Ra_iL^a$. Its length is $1+h+a\le D$, and (LTR.28)
+gives its required prediction. Only this one local response is
+acquired. The promise in this corollary is not supplied for free in
+the full-family construction below. $\square$
+

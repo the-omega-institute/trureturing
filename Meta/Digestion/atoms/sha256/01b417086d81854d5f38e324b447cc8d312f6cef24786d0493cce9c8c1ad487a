@@ -1,0 +1,39 @@
+## 5. 金字塔层与黄金热层的几何接口
+
+[GoldenHeatLayers](../../../Blueprint/D5/S3/Midline/HeatLayers/GoldenHeatLayers.md) 给出每个黄金层的发散横坐标
+
+\[
+\alpha_k=\frac1{o5Beta(k+1)},\qquad
+\alpha_0=\frac1{\varphi^2},\qquad
+\alpha_k\downarrow0.
+\]
+
+为了给金字塔一个单调的层高坐标，可以定义模型接口
+
+\[
+r_k=\frac{\alpha_k}{\alpha_0},\qquad
+Z_k=1-r_k.
+\]
+
+于是 \(r_0=1,\ Z_0=0\)，并且 \(Z_k\uparrow1\)。在这个接口下，第 \(k\) 层的水平截面面积按
+
+\[
+\operatorname{Area}(P_{Z_k})=r_k^2
+\]
+
+缩放，底面 determinant 的预算满足
+
+\[
+|\Delta_k|\le r_k^2/4.
+\]
+
+这把几何横截面、关联容量和黄金热层的二次缩放放在同一坐标中。该 embedding 是模型定义，不是从物理模型推出的热力学等式；层号 \(k\) 与真实时间、\(r_k\) 与实际温度、能量或动力学松弛参数之间的关系仍须另行给出。
+
+在离散层上，可以把每一层的三个读数并列保存：
+
+\[
+(\text{capture mass}_k,\ w_{\kappa,k},\ D_k).
+\]
+
+它们分别回答“这一层分离了多少 pair”“还剩多少不可辨识 fiber 容量”“还有多少隐藏关联没有热化”。这三个量不能合成一个无类型的 escape 标量。
+

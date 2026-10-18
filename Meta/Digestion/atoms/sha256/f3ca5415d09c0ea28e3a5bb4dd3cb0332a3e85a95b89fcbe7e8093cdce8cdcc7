@@ -1,0 +1,17 @@
+**命题 4.3（finite implementation of the update and output）。** The operations just defined admit finite integer executions in
+$O(P+S+\log(h+K+2))$ simultaneous bits on the specified register interpreter. They do not construct a denominator of length $h$.
+
+**证明。** The leading exponent of a represented positive dyadic $(M,v)$ is
+$\operatorname{bitlength}(M)-1+v$. Dividing by $d$ is an integer shift: compare its signed shift count with the actual operand length first. A right shift at least that length gives zero. A left shift is performed only when the bound $A,B<2^{P+1}$ proves its bounded resulting width. The same rule applies to $\lfloor ABd\rfloor$, whose result is bounded by $\min(A,B)$. Products use schoolbook integer arithmetic and linear-width scratch. Thus a very large numerical exponent is handled by its binary description and a comparison, not a long zero-filled integer.
+
+The returned mantissa has at most $P+2$ bits. Its leading scale does not fall below the largest input leading scale, by $C\ge\max(A,B)$, unless clipped to one, which is larger. The pair's minimum remains no smaller than the initial smaller seed's leading bin. Hence throughout the active execution all represented exponents have magnitude at most $h+P+O(1)$.
+
+For a current represented deficit $\widehat\delta\in[0,1]$, form
+$a_*= \lfloor2^{2S}\widehat\delta\rfloor$ with the same shift guards. It has $O(S)$ bits. Binary integer-square comparison on $[0,2^S]$ finds
+
+$$
+m_*=\left\lfloor\sqrt{2^{2S}-a_*}\right\rfloor.
+$$
+
+This is a finite interval search with $O(S)$ comparisons of $O(S)$-bit integers, including exact-square equality. Its dyadic amplitude $m_*2^{-S}$ differs from $\sqrt{1-\widehat\delta}$ by at most $2\,2^{-S}$: taking the floor in $a_*$ changes the square-root argument by less than $2^{-2S}$, and the final integer root contributes at most $2^{-S}$. Multiplying this amplitude by a stored direction and rounding the three coordinates back to the $S$ grid uses only $O(S)$-bit products and emits a full $O(S)$-bit vector frame. Register lengths, shift counts and search counters have their actual binary widths.
+

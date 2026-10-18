@@ -1,0 +1,55 @@
+**Definition 12.5 (menu geometry and a finite code grammar).** For a
+finite set $S$ of words, possibly containing $\varepsilon$, define
+
+$$
+ \begin{aligned}
+ S_L&=\{q:Lq\in S\},& S_R&=\{q:Rq\in S\},\\
+ \delta(S)&=\begin{cases}
+ 1,&S\ne\varnothing\text{ and every }q\in S
+                      \text{ starts with }L\text{ and has }|q|\ge2,\\
+ 0,&\text{otherwise}.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.65}
+$$
+
+Define the positive integer $n(S)$ recursively by
+
+$$
+ n(\varnothing)=1,\qquad
+ n(S)=n(S_L)n(S_R)+2-\delta(S)\quad(S\ne\varnothing).
+\tag{AAR.66}
+$$
+
+This recursion uses only the finite prefix tree of the public menu.
+It is not a recursion over all possible sources. For nonempty $S$,
+put $J=n(S_L)n(S_R)$. The codes $0,\ldots,J-1$ are ordered branch
+pairs $i\,n(S_R)+j$. Code $J$ is alpha. Code $J+1$ is beta only
+when $\delta(S)=0$. When $\delta(S)=1$ the beta source uses the
+branch code whose left entry is the alpha code for $S_L$ and whose
+right entry is the sole empty-menu code. Thus beta is identified with
+one particular branch code, not given an additional name.
+
+More explicitly, define $e_S(u)$ by
+
+$$
+ \begin{aligned}
+ e_\varnothing(u)&=0,\\
+ e_S(\langle u_L,u_R\rangle)
+    &=e_{S_L}(u_L)n(S_R)+e_{S_R}(u_R),\\
+ e_S(\alpha)&=J,\\
+ e_S(\beta)&=\begin{cases}
+ J+1,&\delta(S)=0,\\
+ e_{S_L}(\alpha)n(S_R)+e_{S_R}(\alpha),&\delta(S)=1.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.67}
+$$
+
+The last three lines apply when $S\ne\varnothing$. In the overlap
+case $S_R=\varnothing$, while $S_L$ is nonempty and does not contain
+$\varepsilon$. A canonical representative $r_S(i)$ is defined by
+reversing the branch-pair numbering, using $\alpha$ for the alpha
+code, $\beta$ for the separate beta code when present, and $\alpha$
+for the empty-menu code. All these are finite native trees.
+

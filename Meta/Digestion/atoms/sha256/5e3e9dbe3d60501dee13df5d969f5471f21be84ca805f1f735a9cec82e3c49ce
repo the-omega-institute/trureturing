@@ -1,0 +1,45 @@
+**Proposition 74.2 (real-direction diagonal weighted-input interface).** For real $\theta$ and $p\in[0,1]$, set $\xi=\cos\theta|0\rangle+\sin\theta|1\rangle$, $P_\xi^{\rm in}=|\xi\rangle\langle\xi|$ on the input, $\rho_{\theta,p}=pP_\xi^{\rm in}+(1-p)P_2$, and
+
+$$
+\begin{gathered}
+e_j(\theta)=\cos\theta b_j+\sin\theta g_j,\quad
+D_\theta=a e_1e_1^\dagger+\beta e_2e_2^\dagger=N(P_\xi^{\rm in}),\\
+Q_N=\mathsf T\mathsf T^\dagger=N(P_2),\qquad
+X_\theta=\sqrt a\,e_1t_1^\dagger+\sqrt\beta\,e_2t_2^\dagger=N(|\xi\rangle\langle2|).
+\end{gathered}
+\tag{S.148}
+$$
+
+Then the exact optimum over all complex whole-output recoveries is
+
+$$
+\begin{aligned}
+\max_R F_e(\rho_{\theta,p},RN)
+=\max_{0\preceq P\preceq I_5}\Bigl\{&p^2(1-\operatorname{Tr}(PD_\theta))
++(1-p)^2\operatorname{Tr}(PQ_N)\\
+&+2p(1-p)\|\sqrt{I_5-P}\,X_\theta\sqrt P\|_1\Bigr\}.
+\end{aligned}
+\tag{S.149}
+$$
+
+Proof. Restricting recovery output to the target plane loses nothing: postcompose any qutrit recovery with the channel that compresses to the plane and returns leakage to one fixed vector in it. In the Kraus-trace formula the compressed branch preserves the original overlap with the supported $\rho_{\theta,p}$; added reset branches contribute nonnegative squared overlaps. Thus code-valued recoveries attain the unrestricted optimum.
+
+For their unital CP adjoints put $P=R^\dagger(P_2)$, $B=R^\dagger(|\xi\rangle\langle2|)$. Complete positivity and unitality are exactly
+
+$$
+\begin{pmatrix}I_5-P&B\\B^\dagger&P\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+B=\sqrt{I_5-P}\,C\sqrt P,\quad\|C\|_\infty\leq1.
+\tag{S.150}
+$$
+
+This block contraction factorization includes singular $P$ and $I_5-P$. The objective before optimizing $B$ is
+
+$$
+p^2\operatorname{Tr}((I_5-P)D_\theta)+(1-p)^2\operatorname{Tr}(PQ_N)
++2p(1-p)\operatorname{Re}\operatorname{Tr}(B^\dagger X_\theta).
+\tag{S.151}
+$$
+
+Substituting (S.150), cyclicity gives $\operatorname{Re}\operatorname{Tr}(C^\dagger\sqrt{I_5-P}X_\theta\sqrt P)$. Optimizing this one common contraction $C$ yields exactly the trace norm in (S.149). Conversely every such positive block defines a unital CP adjoint and a whole-output CPTP recovery, so this is equality. At $p=0$ choose $P=I_5$; at $p=1$ choose $P=0$. Both optima are one, as required for a pure known input. No inverse is used at a singular effect or endpoint. The displayed input is diagonal in the real-direction code basis; (S.149) is not asserted as a formula for arbitrary input coherences or all complex directions. $\square$
+

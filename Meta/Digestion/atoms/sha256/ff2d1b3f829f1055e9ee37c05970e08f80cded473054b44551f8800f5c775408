@@ -1,0 +1,33 @@
+**Mathematical citation 2.3 (endpoint consequences).** Put
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+$$
+C_p=\frac{11758471}{22781250},\qquad
+C_\beta=\frac{5261}{6750},\qquad
+d_p=2\rho_p,\quad d_\beta=2\rho_\beta.
+$$
+
+The supplied endpoint events realize their full TV differences, so (2.4) implies
+
+$$
+|\pi Q(E_p)-C_p|\le\epsilon_p,\qquad
+|\tau W(E_\beta)-C_\beta|\le\epsilon_\beta.
+\tag{2.5}
+$$
+
+The supplied coordinate triangle identity gives
+
+$$
+\sum_x\pi_x\sum_w\operatorname{dist}
+\bigl(Q_x(w),[P_{p,a}(w)\wedge P_{p,b}(w),
+               P_{p,a}(w)\vee P_{p,b}(w)]\bigr)
+\le2\epsilon_p.
+\tag{2.6}
+$$
+
+It includes the infinite outcome. In particular the upper endpoint bound for $w_{2,1}$ is $T_a=16/729$, the lower bound for $w_{1,1}$ is $F_b=54/625$, and the upper bound for $w_{3,1}$ is $q_*=1944/390625$ [ST; CLIP; INTERIOR; SEH]. These are consequences of configuration-before-TV risk, not pointwise minimax assumptions.
+

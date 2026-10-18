@@ -1,0 +1,29 @@
+**Proposition 8.2 (the finite-partition obstruction remains a full-goal boundary).**
+On the whole admitted fiber of all pairs with the root old row and the
+literal original-root reply branch, take $Q=\{L,R\}$. Its full row image
+has exactly the equal-child and unequal-child partitions, while no
+uniform finite-read whole-row service exists. Nevertheless every fixed
+budget has a finite obstruction as in Theorem 4.2, and no finite subset
+refutes all budgets.
+
+Proof. Reuse NSF Proposition 11.4 and NPL Example 9.4. For every $h$,
+large native orbit trees supply
+$\langle T_m,T_m\rangle$ and $\langle T_m,T_{m+1}\rangle$ with the
+same original prefix through $h$ and different full partitions.
+ARH (2.3) excludes every uniform finite-read service on that entire
+fiber. It is an allowed instance with empty extra signed history and
+its concrete exterior is fixed; no target replacement is involved.
+Theorem 4.2 gives a finite obstruction separately for each prescribed
+$(K,A)$, or Corollary 4.3 for each $K$ without an update cap.
+Proposition 8.1 proves the last assertion. Thus the quantifiers are
+
+$$
+\forall K\ \exists S_K\subseteq D\text{ finite}\
+          \neg\operatorname{Win}_{S_K}(K,U),
+\tag{NFO.24}
+$$
+
+not $\exists S\ \forall K\ \neg\operatorname{Win}_S(K,U)$.
+This reuses the established native counterexample; it is not a new
+undecidability result. $\square$
+

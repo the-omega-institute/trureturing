@@ -1,0 +1,32 @@
+**Definition 8.3 (Unresolved optimization and transfer problems).** The
+sufficient $M_{\rm det}$ in (6.1) is conservative. The minimum
+nonempty deterministic or fixed-dyadic capacity, smaller intermediate
+budgets, exact finite-budget optimum and sharp paid-time constants
+are not determined by the construction. The count (6.2) is not a
+lower bound on competing tables. Maintaining the stochastic cap
+count $O(L^r)$ with deterministic rows, or maintaining a prescribed
+leading paid constant, remains a different optimization question.
+Theorem 7.1 permits all positive polynomial exponents with
+family-dependent constants; it gives no joint optimum for states,
+installed precision, offline center accuracy and immutable description.
+
+The known-$q$ quantifiers leave unknown-$q$ adaptation and one
+$q$-independent logarithmic-order table unresolved. They also leave
+effective design complexity and physical realization outside the
+stated result. No broader recovery objective is inferred from the
+deterministic order theorem.
+
+The exact positive linear tilt in (1.1) is essential to (3.9).
+No transfer is asserted to the older degree-nine rational-center pair,
+mere upper envelopes, sparse, signed or oscillating perturbations,
+varying $r,c,\alpha$, extra histories or additional workspace and
+observation contracts. Such a transfer would require its own normalized
+contrast, source moments, common-table construction and paid-cost
+proof. In particular an upper envelope alone supplies no positive
+variance contrast for a different pair. The source-class sparse
+example in [S, Section 12] already distinguishes those hypotheses.
+
+[C]: RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_RENEWAL_LOGARITHMIC_FRONTIER.md
+[S]: FIB_SOURCE_CLASS_RENEWAL_RESOURCE_FRONTIER.md
+[P]: FIB_CRITICAL_RENEWAL_DYADIC_PRECISION_AND_CALIBRATION.md
+

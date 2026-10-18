@@ -1,0 +1,21 @@
+**Definition 1.1 (source, image and native reading).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\end{aligned}
+\tag{BPS.1}
+$$
+
+These are finite nonempty ordered trees with literal brackets and leaf labels. Write $\mathcal W=\{L,R\}^{*}$, including $\varepsilon$, and $\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$. Every finite word is a legal query. The reply $r_t(v)$ is the reached constructor, or absent when an earlier leaf blocks descent. Every nonempty continuation from a leaf is absent. For every reached occurrence $p$,
+
+$$
+r_t(pw)=r_{t|_p}(w).
+\tag{BPS.2}
+$$
+
+Native true/false name alpha/beta, and false/true address letters name $L/R$. The exported labels $0,1$ below keep their original separate meaning. Different occurrences of equal subtrees are not identified.
+

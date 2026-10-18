@@ -1,0 +1,63 @@
+### 五、最新非交换代数进展对 FIB 的意义
+
+最新的 [`96e0ba0`](https://github.com/the-omega-institute/trureturing/commit/96e0ba0ecebaa879b1e01d4789272761d506186c) 通过显式矩阵构造，机器检查地展示了一个算子值命题在 $2\times2$ 复矩阵中失败。
+
+这里最值得迁移到 FIB 的不是该猜想本身，而是方法论：
+
+```math
+\boxed{
+\text{只知道每个局部变化的边缘性质，}
+\quad
+\text{不能推出变化算子整体可交换。}
+}
+```
+
+对 FIB 来说，这意味着必须区分：
+
+```math
+M_xM_y=M_yM_x
+```
+
+这一静态逐点代数事实，和：
+
+```math
+U_aU_b=U_bU_a
+```
+
+这一动态路径事实。
+
+二者完全不同。
+
+静态状态函数 $x,y$ 可以交换，但两个真实因果动作 $a,b$ 可能不交换。
+
+因此统一场若要成为真正的算子值场，应当写成：
+
+```math
+\Phi:\mathcal E\longrightarrow\mathcal A,
+```
+
+其中 $\mathcal A$ 不一定是交换代数。
+
+不同物理或观察概念都可以是：
+
+```math
+\Phi_\lambda=L_\lambda\Phi,
+```
+
+而不同变化是：
+
+```math
+D_a\Phi=(U_a-I)\Phi.
+```
+
+这时：
+
+- “一个场”对应 $\Phi$；
+- “不同场”是不同投影 $L_\lambda\Phi$；
+- “不同力”是不同变化算子 $D_a$；
+- “时间方向”是变化算子的可允许排列；
+- “路径曲率”是 $[U_a,U_b]$；
+- “FIB seam”是对称混合项 $S_{a,b}$ 的一个最小离散实例。
+
+---
+

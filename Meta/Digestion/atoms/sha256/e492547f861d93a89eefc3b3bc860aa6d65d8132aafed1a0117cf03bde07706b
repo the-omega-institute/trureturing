@@ -1,0 +1,30 @@
+**命题 236.2（One common seed and two actual requests）。** Every
+finite normalized table law displayed here defines an original
+rule by one source-independent $U\sim\operatorname{Unif}[0,1)$.
+Enumerate its complete tables $D$ and partition $[0,1)$ into fixed
+half-open intervals of their masses. Before any replies, $U$
+selects the whole table, its entire schedule and all terminal
+outputs; output label $j$ means the actual tape $\theta_j$.
+The stopped rule follows the increasing preselected schedule until
+its first queried zero or exhaustion. The nonadaptive completion
+acquires the complete preselected schedule and ignores any reply
+not needed by the stopped table, using the same $U$ and output.
+
+证明。 Interval lengths sum to one; zero masses have empty
+intervals. A selected table is a deterministic measurable rule
+with at most two requests. Finite schedules and finitely many
+terminal outputs give a measurable finite handoff for every source
+and seed in these constructions. On the first-zero cell the
+completion outputs the same label in both $00,01$ cells, so it
+agrees pointwise with the stopped rule. The ignored second reply
+is nevertheless actually acquired and counted. Advice is zero,
+and there is only this one common random seed, shared across all
+sources. $\square$
+
+The hard bound counts all actual requests, including repetitions
+and ignored replies. It is not a bound on address, depth, runtime
+or mean count. Original competitors retain arbitrary addresses,
+the full carrier, and sourcewise almost-sure finite handoff. They
+receive no source label, source prior, first absence, adaptive
+second address, free probe or extra seed.
+

@@ -1,0 +1,71 @@
+**Definition 292.1 (One nonnegative score and five signed row vectors).**
+In the seven-coordinate core put $J=(3,4,5,6,7)$ and
+
+$$
+r^\star=(13,10,9,8,6)/5,\quad
+B=(72,30,18,18,36),\quad\kappa=B/3=(24,10,6,6,12).
+$$
+
+Let $Z=Y^{\rm f}+Y^{\rm p}+Y^{\rm n}$, the sum of the three scores in
+281.1. Its complete coefficients are the following numerators divided
+by $60$; all unspecified rows and all $A$ coefficients vanish.
+This sum reuses the five-address result of 281.2.
+
+| Row | Word | $60 Z_{\mathrm{row}}$ |
+| --- | --- | --- |
+| C | 1100101 | 20 |
+| C | 1100110 | 66 |
+| C | 1101010 | 40 |
+| C | 1101011 | 8 |
+| C | 1101101 | 46 |
+| C | 1110001 | 40 |
+| C | 1110100 | 140 |
+| C | 1111000 | 136 |
+| C | 1111001 | 44 |
+| C | 1111100 | 112 |
+| C | 1111101 | 68 |
+| C | 1111110 | 180 |
+| P | 0100010 | 4 |
+| P | 0100100 | 28 |
+| P | 0100101 | 20 |
+| P | 0100110 | 27 |
+| P | 0101000 | 35 |
+| P | 0101001 | 32 |
+| P | 0101010 | 10 |
+| P | 0101100 | 24 |
+| P | 0110000 | 39 |
+| P | 0110001 | 18 |
+| P | 0110010 | 14 |
+| P | 0110100 | 18 |
+| P | 0111000 | 4 |
+| P | 0111001 | 8 |
+| P | 1000010 | 12 |
+| P | 1000100 | 8 |
+| P | 1000101 | 38 |
+| P | 1000110 | 19 |
+| P | 1001000 | 13 |
+| P | 1001001 | 16 |
+| P | 1001010 | 50 |
+| P | 1001100 | 24 |
+| P | 1010000 | 17 |
+| P | 1010001 | 26 |
+| P | 1010010 | 30 |
+| P | 1010100 | 18 |
+| P | 1011000 | 12 |
+| P | 1100010 | 6 |
+| P | 1100100 | 2 |
+| P | 1100110 | 4 |
+| P | 1110000 | 4 |
+| P | 1110001 | 4 |
+| P | 1110010 | 4 |
+| P | 1111000 | 8 |
+| P | 1111001 | 4 |
+| P | 1111100 | 12 |
+| P | 1111110 | 4 |
+| T | 1111111 | 140 |
+
+For $j=3,\ldots,7$ define the signed row vector $H_j$ by the next
+five lists; their entries are the coefficients themselves. These signed
+vectors are algebraic devices. Only the nonnegative combinations in
+292.10 are used as scores.
+

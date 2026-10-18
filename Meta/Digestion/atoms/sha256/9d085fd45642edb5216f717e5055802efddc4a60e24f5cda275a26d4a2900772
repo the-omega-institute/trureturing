@@ -1,0 +1,21 @@
+**Theorem 5.2 (simultaneous substitution gives the exact actual next boundary).** For an actual next query $q$ and reply $a$, the shared cells can be effectively refined by one finite operation so that their legal fillings represent exactly $D(R,h')$. Every old equality, whole-class disequality and literal or absence guard remains imposed. Theorems 3.4, 4.2 and 4.4 consequently reclassify the exact new spectrum, uniform-service criterion and minimum extra range.
+
+**Proof.** Follow $q$ in the fixed syntax of each $W_\eta$. A reached constructor root has its fixed reply; a literal leaf has its fixed label at its root and absent reply at every strict extension. Keep or discard that case according to $a$. If the path first enters a residual name $x$ with remaining suffix $w$, enumerate its native patterns to depth $|w|+1$, including all early leaf patterns. Retain precisely those producing $a$ at $w$. For an absent response, these are precisely the patterns with a terminating leaf at a strict prefix of $w$; at $w=\varepsilon$ absence has no pattern. Branch, $\alpha$ and $\beta$ are likewise tested at the actual reached endpoint.
+
+Substitute each retained pattern for $x$ simultaneously in $W_\eta$, every $E_{\eta,b}$ and both sides of every old negative. The replacement is global at every occurrence of this name, including other repeated-class cones. New names are indexed by the old name and new frontier position. Names not on the query path remain, and no off-path negative is removed. Discard cases with syntactically identical negative sides; existing free-term separation decides the remaining pure negative feasibility. If a common normal form is wanted, refine every old class to
+
+$$
+d'=\max(d,|q|+1),
+$$
+
+using the same simultaneous substitution. This only subdivides the cases and preserves their reconstruction.
+
+An old ground solution with the actual new reply has its unique native decomposition for the queried residual and therefore lies in one kept refinement. Conversely every legal filling of a kept refinement evaluates to an old legal solution with exactly the new reply; all original negatives and guards were transported by substitution. The inverse correspondence follows by extracting the actual old and new frontiers. Existing `NativeSymbolicRecutting.symbolic_recut_exact` and `NativeHistoryCells` supply this source-level refinement mechanism. The common next-step replay of Assumption 5.1 supplies its operational converse, giving
+
+$$
+D(R,h')=D(R,h)\cap\{u:r_u(q)=a\}.
+\tag{LRD.15}
+$$
+
+This equality is accompanied by the explicit finite shared substitution, not used as a substitute for it. The actual source remains, so the new fiber is nonempty. Applying the proved root chart and service construction to these exact new cells gives the stated depth and code consequences. $\square$
+

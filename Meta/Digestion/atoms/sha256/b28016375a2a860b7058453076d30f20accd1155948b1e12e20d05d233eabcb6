@@ -1,0 +1,15 @@
+**Definition 29.6 (Short-pair iid design class and its charge).** Let
+
+$$
+\mathcal I_5=\{(a,b):1\le a,b\le3,\ a+b\le5\}.
+$$
+
+A design chooses nonnegative known weights $w_{ab}$ summing to one. They may depend on $(p,v,\varepsilon,\delta)$, but not on $\theta$ or $\pi$. Each trial draws a class independently with these weights, performs that actual ordered pair with its own two heralds and the common ordered joint law $\pi$, and retains its class label. The complete one-trial density, before any terminal measurement, is the orthogonal direct sum
+
+$$
+\sigma_w(\theta,\pi)=\bigoplus_{(a,b)\in\mathcal I_5}w_{ab}\rho_{ab}(\theta,\pi).
+\tag{29.28}
+$$
+
+The lower-bound class allows arbitrary collective POVMs on $\sigma_w^{\otimes N}$, including simultaneous use of all retained labels and all actual flag sectors. The coherent charge is the maximum allowed pair sum, not its weight-averaged sum, and each realized pair is charged its actual $a+b$ applications. There is no class-dependent relabeling of the ordered noise angles. A single-window class, if also allowed, has its corresponding local count-twirled density and one charged herald.
+

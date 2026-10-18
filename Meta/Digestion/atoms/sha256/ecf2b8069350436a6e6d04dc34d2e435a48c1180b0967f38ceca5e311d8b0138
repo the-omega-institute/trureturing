@@ -1,0 +1,27 @@
+**Definition 55.2 (one field, common kinetic law and all missing-child data).** On $\ell^2(\mathcal P)$ put
+
+$$
+(Lf)(p)=\deg(p)f(p)-\sum_{q\sim p}f(q),\qquad
+Q(f)=\sum_{\{p,q\}}|f(p)-f(q)|^2=\langle f,Lf\rangle,
+\qquad \mathsf H=aL-gM_\phi.
+\tag{55.3}
+$$
+
+Every unoriented seam is counted once. The degree bound makes $L$ bounded self-adjoint, $0\le L\le6I$, and all displayed form domains are the full $\ell^2$ space. For an actual domain $D=D_j(t)$ let $I_D$ denote zero extension and $P_D=I_DI_D^*$ the orthogonal projection. Wavefunction Dirichlet data mean zero exterior amplitude, hence
+
+$$
+\begin{aligned}
+L_D&=I_D^*LI_D,\
+Q_D(f)&=\sum_{\{p,q\}\subset D}|f(p)-f(q)|^2
+ +2\sum_{p\in\operatorname{Leaf}(t_j)}|f(p)|^2,\
+\mathsf H_D&=aL_D-gM_{\phi|D},\
+\mathcal E_D(f)&=aQ_D(f)-g\sum_{p\in D}\phi(p)|f(p)|^2
+ =\langle I_Df,\mathsf H I_Df\rangle.
+\end{aligned}
+\tag{55.4}
+$$
+
+A current leaf has both missing children, irrespective of its $\alpha/\beta$ label. A nonroot leaf also retains its parent seam. Thus $L_D$ has diagonal two at the root and three at every other node, including every leaf; its off-diagonal entry on an existing seam is $-1$. The root has no artificial killing seam. If $D=\{o\}$, its two missing children give $L_D=[2]$. These are the actual inherited seams and exterior terms, not the single-root killing convention of the moving-root graft in §52.
+
+The field in (55.3)–(55.4) is the *one common infinite solution* restricted to $D$. It retains its actual exterior field values, even though the amplitude exterior is zero. For comparison only, write $\phi_D^0$ for the newly solved killed field $L_D\phi_D^0=\mathbf1_o$. Replacing $\phi|D$ by $\phi_D^0$ gives a different finite potential and is never implicit in (55.4).
+

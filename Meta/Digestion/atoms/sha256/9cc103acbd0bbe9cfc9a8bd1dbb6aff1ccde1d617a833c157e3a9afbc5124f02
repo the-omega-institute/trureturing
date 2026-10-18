@@ -1,0 +1,36 @@
+**Definition 4.1 (An orthonormal symmetric-matrix basis).** Use
+$\langle X,Y\rangle=\operatorname{tr}(XY)$ on
+$\operatorname{Sym}_5(\mathbb R)$, and for orthogonal unit vectors set
+$F(a,b)=(ab^T+ba^T)/\sqrt2$. Define
+
+$$
+H_0=R_0,\qquad H_+=R_+/\sqrt2,\qquad H_-=R_-/\sqrt2,
+\qquad \tau=(1,\sqrt2,\sqrt2)^T.
+\tag{4.1}
+$$
+
+Thus $I=\sum_i\tau_iH_i$. The six ordered orthonormal pairs
+$(F_{\nu1},F_{\nu2})$ are
+
+$$
+\begin{aligned}
+\nu=+ &: \quad F(d,u_+),\quad F(d,v_+),\\
+\nu=- &: \quad F(d,u_-),\quad F(d,v_-),\\
+\nu=2+ &: \quad (u_+u_+^T-v_+v_+^T)/\sqrt2,\quad F(u_+,v_+),\\
+\nu=2- &: \quad (u_-u_-^T-v_-v_-^T)/\sqrt2,\quad F(u_-,v_-),\\
+\nu=\Delta &: \quad
+\frac{F(u_+,u_-)+F(v_+,v_-)}{\sqrt2},\quad
+\frac{F(v_+,u_-)-F(u_+,v_-)}{\sqrt2},\\
+\nu=\Sigma &: \quad
+\frac{F(u_+,u_-)-F(v_+,v_-)}{\sqrt2},\quad
+\frac{F(v_+,u_-)+F(u_+,v_-)}{\sqrt2}.
+\end{aligned}
+\tag{4.2}
+$$
+
+Let $\mathcal N=\{+,-,2+,2-,\Delta,\Sigma\}$ and define
+$P_\nu(E)=\sum_{a=1}^2\langle F_{\nu a},E\rangle F_{\nu a}$.
+Together with the three $H_i$, (4.2) gives fifteen orthonormal matrices.
+For arbitrary complex matrices all formulas extend complex linearly
+after replacing $X$ by $(X+X^T)/2$.
+

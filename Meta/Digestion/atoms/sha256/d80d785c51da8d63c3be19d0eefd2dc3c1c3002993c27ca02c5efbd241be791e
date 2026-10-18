@@ -1,0 +1,20 @@
+#### 17.1.6 最新的 Ricci-limit 与不同维度结果
+
+Inagaki 的 [Spectral convergence of graph Laplacians with Ricci curvature bounds and in non-collapsed Ricci limit spaces](https://arxiv.org/abs/2506.07427) 在闭 \(m\) 维流形上假设
+
+\[
+\operatorname{Ric}_g\ge -(m-1)K,
+\]
+
+正的体积下界和有界直径，并对 \(\varepsilon\)-邻域图给出特征值与特征函数的高概率误差界。该框架还推广到 non-collapsed Ricci-limit spaces，因此极限允许出现非光滑点。
+
+Bungert 和 Slepčev 的 [Convergence of graph Dirichlet energies and graph Laplacians on intersecting manifolds of varying dimensions](https://arxiv.org/abs/2509.24458) 研究不同内维流形相交的情形。其结论显示，非归一化图能量可能只看见最高维 sector，归一化能量才得到适应多个维度的 tensorized Dirichlet energy。
+
+金字塔层级的极限因此依赖以下归一化条件：
+
+\[
+\mathrm{LayerNormalization}
+\]
+
+必须成为类型参数或定理假设。否则不同层的维数变化可能导致低维隐藏 sector 在极限中被系统性丢弃。
+

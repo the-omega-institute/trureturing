@@ -1,0 +1,33 @@
+**Lemma 2.5 (all-word lower bound on the canonical core).** For every
+globally correct all-word encoder $A$,
+
+$$
+\frac1{16}\sum_{j=1}^{8}\sum_{e=0}^{1}T_A(t_{j,e})
+\ge \frac{21}{8}.
+\tag{2.9}
+$$
+
+**Proof.** AAR Lemma 13.5 says that $A$ must Read $p_j$ on each $t_{j,e}$:
+flipping only that leaf label gives another member of $\mathcal F_8$ with
+the same replies at every other word and a different future trajectory.
+This obligation applies even if the source has zero mass in a later law.
+
+Apply the all-word projection theorem AAR14.1 to $A$. On the canonical
+representatives the projection is the representative itself, so the theorem
+produces a prefix-only encoder whose cost on each $t_{j,e}$ is no larger.
+By AAR Lemma 13.7, every prefix query $p_i$ gives absent for $j<i$, the
+actual label for $j=i$, and branch for $j>i$; both labels at a key therefore
+have the same successful-search depth $d_j$. An ordered search tree on eight
+keys has at most one key at depth one, two at depth two and four at depth
+three. The remaining key is at depth at least four, so
+
+$$
+\sum_{j=1}^{8}d_j\ge1+2\cdot2+4\cdot3+4=21.
+\tag{2.10}
+$$
+
+The prefix encoder's mean on the sixteen canonical sources is at least
+$21/8$, and the projection cost is no larger than $A$'s cost there. The
+argument began with arbitrary legal words, so it is not a restriction to
+prefix competitors. $\square$
+

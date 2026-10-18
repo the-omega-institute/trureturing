@@ -1,0 +1,23 @@
+**Proposition 6.5 (materialization and callable access are different).** The
+suffix bound of Theorem 6.4 does not forbid deferred paid recovery through
+an authorized handle to the sealed sender or mailbox. A handle with that
+backing can supply the remaining suffix by later reads. A common pointer
+string without its bound backing is not a sufficient substitute.
+
+Proof. After the mailbox seal its token permits the receiver's prescribed
+reads, each acquiring one actual mailbox bit. Completing those operations
+and the destination seal gives all $\ell$ bits by the copy induction.
+These are new paid acquisitions after the cut, not a decoder of the
+earlier materialized prefix. If the entire callable object includes the
+bound mailbox, different suffixes give different callable objects even
+when their descriptors have the same wire representation. If only that
+common string is given and no backing access is allowed, the two suffix
+histories in Theorem 6.4 again have equal supplied data and different
+required payloads. Hence the string alone cannot perform the recovery. ∎
+
+The final destination may contain every payload bit before its seal while
+still having no legal client read. Internal acquisition, complete writing,
+publication and authorized client access are separate relations. Theorems
+6.2–6.5 do not grant an arbitrary receiver the ingress owner's latch or a
+free freeze of a busy cut.
+

@@ -1,0 +1,15 @@
+### 71.6 Consequence for the scope of the present results
+
+The [2025 McNulty--Weigert Comment](https://arxiv.org/pdf/2504.13067)
+addresses a different step, Lemma 11(v), Part 6, concerning real submatrices.
+The explicit examples above identify separate boundaries in the inspected
+rank-two and real-entry arguments. They do not establish that those
+no-quartet statements are false, that no repair exists, or that all relevant
+literature has been exhausted.
+
+Accordingly, the reported global exclusions are not imported here as
+certificates for the whole actual branch. The exact central census and
+the local basis and ambient no-quartet theorems retain their independent
+proofs. The ray pair in §70 limits a sufficient pair-gap method and does
+not provide two additional mutually unbiased bases.
+

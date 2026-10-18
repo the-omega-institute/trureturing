@@ -1,0 +1,72 @@
+**Theorem 4.1 (all non-upper-shear tails).** For all integers
+$$
+n\ge1,\qquad c\ge n+1,\qquad v\ge3,
+\tag{4.1}
+$$
+the prefix
+$$
+I,\quad L^n,\quad P_c,\quad N_c(v)
+\tag{4.2}
+$$
+satisfies Theorem 3.1's coefficient conditions. Every legal final multiplier whose matrix is not $U^b$, $b\ge0$, therefore has the finite collision of Theorem 3.1.
+
+**Proof.** One legal implementation has successive prefix multipliers
+$$
+L^n,\qquad UL^{c-1-n},\qquad U^{v-1}J.
+\tag{4.3}
+$$
+All exponents are nonnegative,
+$$
+(UL^{c-1-n})L^n=UL^{c-1}=P_c,\qquad
+U^{v-1}JP_c=N_c(v).
+$$
+Replacing $L,U$ by $MJ,JM$ gives finite literal words, without interior reads. Any other legal implementation with the same endpoints is covered as well.
+
+For (4.2), the rows of $V$ are
+$$
+(0,n,0),\qquad(c-1,c-1,1),\qquad(cv-2,c,v),
+$$
+and expansion along its first row gives $\det V=n(v-2)>0$. Set $d_*=v-2$ and $z=v-c(v-1)$. The prefix transfer equations give
+$$
+Q=q+(p+s)/n,
+$$
+$$
+P=\frac{(cv-3-z/n)p+(v-cd_*)q+vr+(3-2v-z/n)s}{d_*},
+\tag{4.4}
+$$
+$$
+R=2cp+2(c-1)q+2r+2s-(c-1)(P+Q).
+$$
+Indeed the first equation is $nQ=p+nq+s$. Subtracting $v$ times the second prefix equation from the third yields
+$$
+d_*P+zQ=(cv-3)p+[3c-2v(c-1)]q+vr+(3-2v)s.
+$$
+Substitution of $Q$ proves (4.4), and the second equation gives $R$.
+
+Consequently
+$$
+K_{Q,r}=0,\qquad
+K_{P,r}-K_{Q,s}=\frac v{v-2}-\frac1n>0,
+$$
+$$
+K_{R,q}=(c-1)\left(c+1-\frac v{v-2}\right).
+\tag{4.5}
+$$
+Since $c\ge2$ and $v/(v-2)\le3$, the last quantity is positive except possibly $c=2,v=3$. The parameter constraints force $n=1$ there. For precisely $(n,c,v)=(1,2,3)$, $z=-1$, $d_*=1$, and
+$$
+K_{P,s}=(3-2v-z/n)/d_*=-2<0.
+$$
+Thus the alternative negative clause covers the exceptional boundary exactly.
+
+It remains to identify all final words in the theorem. Write their multiplier matrix as
+$$
+W=\begin{pmatrix}h&b\\g&e\end{pmatrix}.
+$$
+It is nonnegative integral and unimodular, and
+$$
+(WN_c(v))_{22}=gv+e.
+$$
+If $g>0$, this is at least $v>1$. If $g=0$, unimodularity forces $h=e=1$, so $W=U^b$ and this entry is one. Thus the entry differs from one exactly for the asserted non-upper-shear matrices. Literal words with cancellations are classified by their resulting matrix. Equation (3.2) and Theorem 3.1 apply to every such final word, regardless of length. ∎
+
+Both diagonal sequences vary in these covered histories: $(A_2)_{11}=c>1$, while $(A_4)_{22}>1$ and the first four lower-right entries are one. The upper-shear final branch stays in the lower-right-one stratum and is outside this theorem's diagonal-exit hypothesis.
+

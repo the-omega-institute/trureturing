@@ -1,0 +1,54 @@
+### 定义 30.2（局部节点信道）
+
+设
+
+\[
+\mathcal A:
+\mathsf L(H_{CA}^{A}\otimes H_{AB}^{A})
+\to
+\mathsf L(K_A),
+\]
+
+\[
+\mathcal B:
+\mathsf L(H_{AB}^{B}\otimes H_{BC}^{B})
+\to
+\mathsf L(K_B),
+\]
+
+\[
+\mathcal C:
+\mathsf L(H_{BC}^{C}\otimes H_{CA}^{C})
+\to
+\mathsf L(K_C)
+\]
+
+均为 CPTP。网络输出状态为
+
+\[
+\rho_{ABC}
+=
+(\mathcal A\otimes\mathcal B\otimes\mathcal C)(\Omega),
+\]
+
+其中输入张量因子按各节点收到的两条边重新排列。
+
+给定 POVM
+
+\[
+(M_a^A)_a,\qquad
+(M_b^B)_b,\qquad
+(M_c^C)_c,
+\]
+
+定义输出分布
+
+\[
+P(a,b,c)
+=
+\operatorname{tr}
+\left[
+(M_a^A\otimes M_b^B\otimes M_c^C)\rho_{ABC}
+\right].
+\]
+

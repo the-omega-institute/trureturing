@@ -1,0 +1,41 @@
+**Example 5.3 (return costs an exact tenth).** Take the actual source
+
+$$
+c=\frac14,\quad Z=\frac12,\quad
+k=\frac9{40},\quad l=\frac3{16},\quad
+\eta_+=(1,0),\quad \eta_-=(1/2,\sqrt3/2).
+\tag{PR.18}
+$$
+
+Then $\mu=1/2$, $u=4/5$, $v=1/2$, and
+
+$$
+p_C=\frac9{10},\quad x_C=\frac35,
+\qquad
+p_R=\frac45,\quad x_R=\frac45,
+\qquad s_*=\frac25.
+\tag{PR.19}
+$$
+
+For C the residual moduli are $|\mu-x_C|=1/10$ and
+$|\mu u-vx_C|=1/10$, with $x_C\leq p_C$. The normalized success
+record overlap is $x_C/p_C=2/3$. For R the two residual moduli are
+$1/10$ and $1/5$, both at most $1-p_R=1/5$; here $x_R=p_R$, so the
+extra normalized success residue is common and the returned helper's
+overlap stays $1/2$. Formula (PR.14) supplies the matching upper bounds.
+The helper-return condition therefore has a strict price, even though
+return on failure is not imposed.
+
+These are actual original endpoints. Set auxiliary $a=1/8$ in (PR.6).
+For $(\beta/\pi,m)=(0,0),(1/2,0),(0,1),(1/2,1)$, respectively,
+
+$$
+B/\pi=(0,5/2,-1/2,2),\qquad
+\operatorname{TV}(\chi)/\pi=(0,5,3,6).
+\tag{PR.20}
+$$
+
+The five-unit histories and their common unit-time horizontal tails have
+support at least $1/40$. The helper pair is an additional joint source
+premise; the rectangle construction does not generate it.
+

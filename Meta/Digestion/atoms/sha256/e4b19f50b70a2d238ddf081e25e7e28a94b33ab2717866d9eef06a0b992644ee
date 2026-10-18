@@ -1,0 +1,44 @@
+**Theorem 7.1 (explicit Cauchy error floor).** Fix $M>R$, distinct tested
+heights $x_j\in(0,c-d)$, one actual nuisance history at each, and distinct
+$u_i\in(0,d]$. Let $C$ be (FH.16) and define
+
+$$
+K(C)=\|C^{-1}\|_{\ell_\infty^M\to\ell_1^M}
+ =\max_{s\in\{-1,1\}^M}
+   \sum_j\left|\sum_i(C^{-1})_{ji}s_i\right|.
+\tag{FH.22}
+$$
+
+For every §4 handoff and common processor for this one request,
+
+$$
+\max_j e_{h_j}(q)\geq\frac1{K(C)}>0.
+\tag{FH.23}
+$$
+
+Thus every fixed finite algebra has a positive uniform-error floor on
+every nondegenerate height interval. This is a finite-test lower bound,
+not the sharp complete-instrument minimax value or a sampling theorem.
+
+Proof. Since $M>R$, there is a nonzero real relation
+$\sum_j a_jL_{h_j}=0$. Normalize it so $\sum_j|a_j|=1$.
+Let $p_{ij}$ be the actual unconditional probability of a newly executed
+failure of this request by time $u_i/v$, summed over original modes.
+Absorbing acquisition stops cannot execute it. Its effect on the live
+algebra is one common linear functional, so $\sum_j a_jp_{ij}=0$.
+With $\varepsilon=\max_j e_{h_j}(q)$, the event inequality in
+Definition 4.3 gives $|p_{ij}-C_{ij}|\leq\varepsilon$. Therefore
+
+$$
+\|Ca\|_\infty\leq\varepsilon,\qquad
+1=\|a\|_1\leq K(C)\|Ca\|_\infty\leq K(C)\varepsilon.
+$$
+
+Lemma 6.1 makes $K(C)$ finite and positive. For the vertex formula,
+$\|C^{-1}s\|_1$ is convex in each coordinate of $s\in[-1,1]^M$.
+Successively replacing each coordinate by an endpoint never decreases
+some maximizer's value, so the maximum is attained at a cube vertex.
+This proves (FH.22) and (FH.23). The argument uses normalized complete
+outputs, while keeping the live input blocks subnormalized. No accepted
+subensemble or failed acquisition is divided away. $\square$
+

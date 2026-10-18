@@ -1,0 +1,8 @@
+## 5. 数学归属与未解问题
+
+完整合法词图、调和变分式、有限对偶、最大值存在性及反转平均归于 [增长常数卷][Growth] 定义 2.1–2.5、引理 3.1、定理 3.2 与推论 3.3。该卷开放问题 9.5 中的唯一性和满支撑两项由本卷定理 3.1 回答。Fibonacci 立方及路径独立集描述是既有组合数学；[Hsu][Hsu] 是该图的经典来源，[Codara–D'Antona][CD] 给出本卷使用的独立集描述和计数。调和变分式、紧集取极值、可行方向的一阶条件及比例等号均为既有数学工具。
+
+相对于这些前置，本卷的新增结论是实际完整 $\Gamma_n$ 上的两个全称结构命题。证明使用引理 2.1 的邻域对应、定理 3.1 中最大与最小插入比的比较、以及在原单纯形上成立的（3.11）。插入比界、正质量界、唯一均衡分配与真面严格次优是同一证明的后果及接口，区别于新的经典分析原理。
+
+P. Codara 与 O. M. D'Antona 的 [*Independent subsets of powers of paths, and Fibonacci cubes*][CD]，arXiv:1211.2251v1，提供路径独立集背景。W.-J. Hsu 的 [*Fibonacci cubes—a new interconnection topology*][Hsu]，IEEE Transactions on Parallel and Distributed Systems 4（1993），3–12，是 Fibonacci 立方的经典文献。M. Sion 的 [*On general minimax theorems*][Sion]，Pacific Journal of Mathematics 8（1958），171–176，供应增长常数卷有限对偶中的一般 minimax 定理。这些背景和工具分别具有其自身来源。
+

@@ -1,0 +1,19 @@
+**Definition 2.4 (explicit native admissible fibers).** Let
+$g_q(x)=\Gamma_q(x)$ and $R_a(x)=r_x(a)$ on $S_D$, for $q,a\in W_D$.
+Include a formal constant experiment $\bot$, representing zero Reads.
+A nonempty $H\subseteq S_D$ is admissible when
+
+$$
+\forall q\in W_D\ \exists a\in W_D\cup\{\bot\}\ 
+\forall x,y\in H,\quad
+R_a(x)=R_a(y)\ \Longrightarrow\ g_q(x)=g_q(y).
+\tag{FMR.12}
+$$
+
+For $a=\bot$ the reply is constant. Let $\mathcal H_D$ be all these
+admissible subsets. This is an explicit finite family defined solely
+by native constructor replies and (FMR.4); it does not quantify over
+unknown encoders. It is downward closed on nonempty subsets, and every
+singleton belongs to it. The chosen experiment may depend on both
+$H$ and $q$, and may be off-target.
+

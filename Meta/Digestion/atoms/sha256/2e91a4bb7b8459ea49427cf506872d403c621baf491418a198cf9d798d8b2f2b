@@ -1,0 +1,22 @@
+### 99.3. Certificate existence and all auxiliary places
+
+For lambda_p=(p,1), the triple is (p,1,p), and its conics are
+
+ H1: z2^2-p z3^2=20D t^2,
+ H2: z1^2-z3^2=15(D/p)t^2,
+ H3: z2^2-p z1^2=5D t^2.
+
+For mu_p=(1,p), the triple is (1,p,p), and its conics can be written
+
+ J1: z2^2-z3^2=20(D/p)t^2,
+ J2: z1^2-p z3^2=15D t^2,
+ J3: z1^2-p z2^2=-5D t^2.
+
+These are locally soluble because the full classes are in Selmer. The Hasse principle gives rational points on each conic. Each of H3,J2,J3 has nonsquare coefficient p, so a rational projective point has t nonzero and gives the displayed affine norm equation. At q, p is a square unit. Taking the second affine coordinate equal to 1 gives square-root first coordinates for p+5D, p+15D, and p-5D, respectively. They are all q-units. Rational parametrization of each conic and density of Q in Q_q supply rational points sufficiently close to these local points. Clearing denominators and dividing the gcd gives the three required primitive triples with q-unit last and second coordinates. The same argument with p,q exchanged supplies the lambda_q certificate. The norm equations also force q-unit first coordinates for the three p-norm certificates. This establishes existence with every stated normalization.
+
+For all pairings below whose second argument is p or q, that argument is a square at infinity, at 2, at 3, at 5, and at every different support prime. Here positivity, residue1 modulo 24, actual 5-splitting and mutual Legendre symbols are used separately. Thus only its own ramified prime and auxiliary good primes can contribute.
+
+At a good odd prime ell not dividing 30D, use primitive integral local covering points. Every conic projection is primitive: vanishing of one projected triple modulo ell forces the fourth coordinate to vanish by the other covering equation. Every tangency point obtained by clearing denominators is primitive. Its tangent form is primitive because all conic coefficients are units at ell. This includes primes in the certificate denominators.
+
+A primitive tangent to a smooth conic has even valuation at another integral point whenever its evaluation is nonzero. To check this universally, use unimodular coordinates taking the tangency section to (1,0,0). The conic becomes aXZ+bY^2+cYZ+dZ^2=0, with a,b units, and the tangent is Z=0 up to a unit. Away from the reduced tangency point the evaluation is a unit. Near it, X is a unit and Y,Z are divisible by ell, so Z(aX+cY+dZ)=-bY^2 gives even valuation. Zero evaluations may be avoided on the smooth local covering because each tangent has only finitely many zeros and a locally soluble smooth curve has infinitely many nearby points. Consequently every good-prime Hilbert factor against the unit second argument is 1. Rational rescaling of a tangent changes the global product by 1 through Hilbert reciprocity. These statements account for all denominator places, without assuming affine integrality of rational norm points.
+

@@ -1,0 +1,18 @@
+**Corollary 7.5 (The existing isotropic source).** For
+$p_{\mathrm{iso}}=(1,1,8,1,1)/12$ from (6.11), all statements above hold
+with $\lambda=1/9$. In particular,
+
+$$
+\mathcal E_{p_{\mathrm{iso}}}^*(Q)
+ =\frac49\bigl(1-\max(Q_{33},0)\bigr),\qquad
+\mathcal E_{p_{\mathrm{iso}}}^*(Q_*)=\frac49,
+$$
+
+whereas the independent re-preparation error is $2/3$ for every fixed loop
+and every proper comparison target. All these minima are attained under the
+original doubled-coherence and ten-output metric convention.
+
+**Proof.** Substitute $a=b=1/12$ into $16ab$, Theorem 7.3,
+Corollary 7.4 and (7.6). The finite loops constructed in the theorem remain
+inside this source's positive fiber. $\square$
+

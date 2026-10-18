@@ -1,0 +1,99 @@
+**Theorem 3.1 (finite-expression and selector invariance).** Let
+$\mathcal D,\bar a,b$ be as in Lemma 2.4. For all $h>2b+2$ and $k\ge0$,
+write $e^+$ and $e^-$ for the evaluations with $X=U^+_{h,k}$ and
+$X=U^-_{h,k}$. Every expression has the same definedness in both.
+For defined expressions the following hold:
+
+$$
+\begin{array}{c|l}
+\text{sort of }e&\text{correspondence}\\\hline
+\mathsf{shape}&e^+=e^-\\
+\mathsf{term},\ \operatorname{sh}(e^\pm)=s
+ &e^+[w]=e^-[\sigma_s(w)]\quad(w\in\operatorname{Leaves}(s))\\
+\mathsf{leafset},\ e^\pm=(s,A^\pm)
+ &A^-=\sigma_s[A^+]\\
+\mathsf{bool}&e^+=e^-.
+\end{array}
+\tag{TPO.10}
+$$
+
+In particular every Boolean expression in the diagram has the same
+truth value. The result covers full leafsets and their selectors,
+cardinality tests, arbitrary finite constructor contexts, repeated
+arguments and all remaining inner arithmetic quantifiers.
+
+Proof. Non-Boolean definedness, primitive-operation domains and the
+shape case are Lemma 2.4. We prove the other cases, including equality
+of outer partial truth values, simultaneously through the finite
+expression diagram.
+
+For $X$, flipping the last edge exchanges exactly the two bottom rank
+positions in (TPO.5); this gives the term assertion at every leaf.
+Every fixed parameter has only shallow leaves in this diagram, so
+$\sigma$ fixes its positions and the assertion is immediate for both
+term and leafset parameters. A primitive numeral, if retained as a
+fixed finite value, is included in this case.
+
+Term constructors preserve the assertion by (TPO.9), applied to their
+two children. Term selectors preserve it by the inverse cone identity.
+The tests for a term constructor or a primitive depend only on the
+shape. Equality of two defined terms with different shapes is false
+in both evaluations. If their shapes agree, they use the same
+$\sigma_s$; equality is equivalent to equality of their primitive
+values at every aligned leaf. The common permutation and the inductive
+term assertion preserve that condition in both directions.
+
+Consider an inner instance $[\theta]^I_s(t_1,\ldots,t_r)$. If a shape
+guard fails, it fails on both sides. Otherwise, for every leaf $w$,
+
+$$
+(t_1^+[w],\ldots,t_r^+[w])
+ =(t_1^-[\sigma_s(w)],\ldots,t_r^-[\sigma_s(w)]).
+\tag{TPO.11}
+$$
+
+The base structure is unchanged. Hence every first-order base formula
+$\theta$ has the same truth value on these identical tuples. To make
+the quantifier case explicit, if
+$\theta(\bar z)=\exists n\,\eta(\bar z,n)$, each witness
+$n\in\mathbb N$ on one side is that very same witness on the other;
+the inductive assertion for $\eta$ gives both implications. For
+$\forall n$ the comparison uses the same complete set $\mathbb N$.
+Boolean connectives and additional quantifier alternations follow by
+induction. This is equality of tuples, not an automorphism or an
+approximation of arithmetic.
+
+Equivalently, at the inner term-quantifier level, terms of shape $s$
+are all assignments of natural values to its finitely many leaves.
+For an existential test at one leaf every natural witness can be
+completed at the other leaves, for example with zeros. The map
+$Z\mapsto Z'$ specified by $Z'[\sigma_s(w)]=Z[w]$ is a bijection of
+these assignments, so the pointwise unions and intersections agree
+under $\sigma_s$. This proves the inner-binder case directly from KR
+Figure 10 as well as from (TPO.4). No inner witness is required to be
+native normal; its quantifier is the ambient same-shape quantifier.
+Thus (TPO.11) proves the leafset assertion for each inner instance.
+
+Full and empty leafsets are preserved by every permutation. A bijection
+commutes with union, intersection and relative complement, so all the
+indexed Boolean leafset operations preserve the assertion when their
+tags match. Leafset constructors preserve it by the disjoint-cone
+formula (TPO.3) and (TPO.9). Leafset selectors preserve it by restriction
+to the selected cone and removal of its first edge. This handles any
+finite alternation of these operations and inner instances.
+Leafset shape, constructor tests and primitive tests depend only on
+the preserved tag. Equality of two leafsets with unequal tags is false
+on both sides; with equal tags, the same bijection preserves equality
+and inequality of their subsets. Cardinalities are identical under a
+bijection, so $=k$ and $\ge k$ have equal truth values for every numeral
+$k$, including zero. Their tag guards have already been preserved.
+
+Shape constructors, selectors and tests are covered by the shape
+assertion, including tests against $c$. Undefined arguments and failed
+guards produce the same partial values. Finally each outer Boolean
+connective has identical input truth values, so its prescribed truth
+table has identical output, including all undefined cases. On a guarded
+formula this is equality of ordinary truth values. These cases exhaust
+the operations in Definitions 1.2–1.3 after simplification and outer
+quantifier elimination. $\square$
+

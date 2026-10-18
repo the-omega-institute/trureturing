@@ -1,0 +1,36 @@
+**Convention 8.2 (the stronger current seven-coordinate results).**
+For exactly this unrestricted $n=7,k=4$ graph and every original $A$,
+[TC, Theorem 4.1 and Corollaries 4.2--4.3][TC] already gives
+
+$$
+\begin{gathered}
+|Q_{\rm live}|\ge16+\max(0,b_{1,1}-2),\\
+m\ge16+\nu+\max(0,b_{1,1}-2),\qquad \min m=16,\\
+\sum_{I\in\mathcal L_*}(D_I-E_I)
+\le E_{\rm reg}+\sum_{I\in\mathcal A_*}(E_I-D_I)
+-\max(0,b_{1,1}-2).
+\tag{TS.33}
+\end{gathered}
+$$
+
+This central-host and collective statement is stronger than merely
+$m\ge16$; it is retained as current coverage. Its proof counts coherent
+representative forks and an additional actual successor when both remaining
+collisions occur, using distinct successors at live states. It is not a
+local nonnegative assertion for every late pool. Corollary 8.1 supplies
+the separately proved strict local inequalities; no new numerical novelty
+is assigned to their weaker whole-graph consequence.
+
+Likewise [TC, Corollary 5.1][TC] already gives the full-fiber preparation
+minimum $20+r$ at caps $8,W+3$, with the complete eight-state reader
+separate. TC Corollary 5.2 gives $m(R)\ge16$, and its selected native
+analogue $M(R)\ge16$, at every actual residual-seven/threshold-four
+prefix, without an inherited-cut condition. Such prefixes exist throughout
+the original middle range: their counts are
+$(k-4,n-k-3)$ at depth $n-7$. TC Corollary 5.3 further gives
+$\sum_{i\ne j}m_i\ge16$ at $n=8,k=4$ or $5$, where $j$ is the
+start label, and forces $m_j=1$ in any hypothetical $m=17$ graph.
+Those are inherited one-vector constraints, not disjoint cone allocations.
+The earlier cross-cone boundary in [SB, Corollary 6.3][SB] does not leave
+the seven-coordinate optimum unresolved in the presence of these TC results.
+

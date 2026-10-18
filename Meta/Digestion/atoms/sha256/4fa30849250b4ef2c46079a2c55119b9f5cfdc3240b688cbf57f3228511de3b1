@@ -1,0 +1,9 @@
+**定义 162.1（树替换和线性弦运输）。** 原生 $\rho$ 仍取基础卷定义1.1：$\alpha\mapsto\beta$、$\beta\mapsto\langle\beta,\alpha\rangle$，并保持有序配对。叶序替换因此为 $\alpha\mapsto\beta$、$\beta\mapsto\beta\alpha$；这个对应由第156.3条的结构归纳复用，包括来源括号的保留。端点更新是
+
+$$
+\mathbf q'=M\mathbf q,\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad \det M=-1.
+$$
+
+“线性弦运输”指将旧路径的每个顶点直接乘 $M$；“原生折线运输”则按替换后的真实叶序作单位步。二者有相同端点，但后一种还含每片旧 $\beta$ 的内部折线。
+

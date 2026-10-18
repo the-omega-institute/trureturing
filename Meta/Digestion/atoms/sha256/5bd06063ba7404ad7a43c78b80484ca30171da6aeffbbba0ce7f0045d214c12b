@@ -1,0 +1,14 @@
+**Definition 11.3 (post-first-Ready selection domain).** Let
+$\mathcal D_\sigma$ consist of all actual finite prefixes extending
+$P_\sigma$, before outer00, with subsequent source/mode/history input
+restrictions exactly as in Definition 1.4. No later Ready, successful
+conversion or correct off-domain historical answer is required. Put
+$\mathcal D=\mathcal D_0\cup\mathcal D_1$. The selected memory
+$M_{\rm ret}$ on this domain has exactly Definitions 3.1–3.2 and CYCLE
+Definitions 6.1–6.2's seven physical families, schemas and ordering,
+with the unchanged acquired construction directory. Family1 includes
+the existing $c_j$ by their fixed catalog identities; it is not enlarged
+by a history field, complementary full state, selector bit or new archive.
+Construction relations mean actual construction occurrences, including
+partial spans, rather than the truth of a later historical payload.
+

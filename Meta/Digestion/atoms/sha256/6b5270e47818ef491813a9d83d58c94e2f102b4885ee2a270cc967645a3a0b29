@@ -1,0 +1,177 @@
+**定理 12.1（全局漂移系数不同时消失）。** 对每个合法源和
+$E\in\{J,M\}$，
+
+$$
+S_E=A_4^2+A_{5,E}^2>0.
+\tag{12.1}
+$$
+
+这个结论对任意实数 $z,Y,p$ 成立；不要求 $b\ne c$，不要求 $z,Y,p$ 落在窗口中，也不要求增益的实际次数或任何采样值非零。
+
+**证明。** 先令 $b\ge4$。因为 $j>b$、$n>j$，且 $u=2t-1$，有
+
+$$
+\begin{aligned}
+A_4
+&=1+u+\frac{6u}{t}-\frac{4u}{j}-\frac{4u}{n}\\
+&>2t-4-\frac6t-\frac8b
+\ge\frac{14}{5}>0.
+\end{aligned}
+\tag{12.2}
+$$
+
+这里最后一个下界在 $b=4,t=5$ 取到，右端随 $b$ 增大而增加。因此同时为零只可能在
+$0<b<4$。
+
+在此区间设
+
+$$
+\kappa=2ut,\qquad K=t^2+3u,\qquad H=t^2-18t+5.
+\tag{12.3}
+$$
+
+若 $A_4=0$，则
+
+$$
+\frac1j+\frac1n=\frac K\kappa.
+\tag{12.4}
+$$
+
+令
+
+$$
+D=Kn-\kappa,\qquad N=\kappa n.
+\tag{12.5}
+$$
+
+由式 (12.4) 得
+
+$$
+D=\frac{\kappa n}{j}>0,\qquad j=\frac ND.
+\tag{12.6}
+$$
+
+源秩一方程 $r^2-tr+bn-b^2=0$，代入 $r=n-j$，等价于
+
+$$
+j^2+(t-2n)j+n^2-n-b^2=0.
+\tag{12.7}
+$$
+
+乘以 $D^2$ 后得到 $C(n,b)=0$，其中按 $n$ 的升幂排列
+
+$$
+\begin{aligned}
+C(n,b)={}&-b^2\kappa^2
++\bigl(2b^2\kappa K-(t+1)\kappa^2\bigr)n\\
+&+\bigl(4\kappa^2+(t+2)\kappa K-b^2K^2\bigr)n^2\\
+&-\bigl(K^2+4\kappa K\bigr)n^3+K^2n^4.
+\end{aligned}
+\tag{12.8}
+$$
+
+若同时 $A_{5,M}=0$，将式 (12.4) 和式 (11.2) 代入并乘以
+$\kappa n$，得到
+
+$$
+Q_M(n,b)=5u\kappa+(Hu+6\kappa)n+Hn^2=0.
+\tag{12.9}
+$$
+
+若同时 $A_{5,J}=0$，同样消去 $j$，并乘以 $\kappa D$，得到
+
+$$
+Q_J(n,b)=-16\kappa^2+\kappa(11K-3H)n+2KHn^2=0.
+\tag{12.10}
+$$
+
+下面给出不依赖根选择的整系数证书。对两个多项式都按 $n$ 的降幂写入
+六阶 Sylvester 矩阵：前两行为 $C$ 的系数向右平移，后四行为 $Q_E$ 的系数向右平移，缺项补零。其行列式就是
+$\operatorname{Res}_n(C,Q_E)$。式 (12.8) 的升幂系数向量为
+
+$$
+[-b^2\kappa^2,\,
+2b^2\kappa K-(t+1)\kappa^2,\,
+4\kappa^2+(t+2)\kappa K-b^2K^2,\,
+-K^2-4\kappa K,\,
+K^2],
+\tag{12.11}
+$$
+
+式 (12.9) 和式 (12.10) 的升幂系数向量分别为
+
+$$
+[5u\kappa,\,Hu+6\kappa,\,H],\qquad
+[-16\kappa^2,\,\kappa(11K-3H),\,2KH].
+\tag{12.12}
+$$
+
+对这个显示的 $6\times6$ 行列式作整数行列式展开并按 $b$ 收集，得到
+
+$$
+\operatorname{Res}_n(C,Q_M)
+=16(1+b)^2(1+2b)^4\mathcal R_M(b),
+\tag{12.13}
+$$
+
+$$
+\operatorname{Res}_n(C,Q_J)
+=256b^2(1+b)^4(1+2b)^4(b^2+8b+4)^2\mathcal R_J(b),
+\tag{12.14}
+$$
+
+其中所有系数均按 $b$ 的升幂排列：
+
+$$
+\begin{aligned}
+\mathcal R_M(b)={}&71680+834560b+4266880b^2+13027456b^3\\
+&+28167328b^4+49669216b^5+77097576b^6\\
+&+103197064b^7+112237206b^8+93879326b^9\\
+&+56647044b^{10}+22502243b^{11}+5180250b^{12}\\
+&+576939b^{13}+24294b^{14}-198b^{15}-27b^{16},
+\end{aligned}
+\tag{12.15}
+$$
+
+$$
+\begin{aligned}
+\mathcal R_J(b)={}&57344+778240b+4552704b^2+15120384b^3\\
+&+31699968b^4+44357120b^5+42960384b^6\\
+&+29398144b^7+13939808b^8+4101632b^9\\
+&+543416b^{10}-14256b^{11}-6960b^{12}\\
+&-216b^{13}+9b^{14}.
+\end{aligned}
+\tag{12.16}
+$$
+
+Equations (12.13)–(12.16), together with the displayed Sylvester coefficient
+vectors, are a finite ordinary determinant certificate: expanding the six rows
+gives the left sides, and coefficient comparison with the two displayed
+right sides gives the identities. No numerical root assertion enters this
+calculation.
+
+For $0<b<4$, the terms of $\mathcal R_M$ below degree $14$ are positive and its
+remaining part is
+
+$$
+b^{14}(24294-198b-27b^2)
+=b^{14}\bigl(23070+(4-b)(306+27b)\bigr)>0.
+\tag{12.17}
+$$
+
+For $\mathcal R_J$, the terms below degree $10$ are positive,
+
+$$
+\begin{aligned}
+&b^{10}(543416-14256b-6960b^2-216b^3)\\
+&\qquad=b^{10}\bigl(361208+(4-b)(45552+7824b+216b^2)\bigr)>0,
+\end{aligned}
+\tag{12.18}
+$$
+
+and the last term is $9b^{14}>0$. Thus both resultants in
+(12.13)–(12.14) are strictly positive on $0<b<4$, so $C$ has no common
+root with either $Q_M$ or $Q_J$. A simultaneous zero of $A_4,A_{5,E}$
+would produce precisely such a common root through (12.6)–(12.10), a
+contradiction. Together with (12.2), this proves $S_E>0$. ∎
+

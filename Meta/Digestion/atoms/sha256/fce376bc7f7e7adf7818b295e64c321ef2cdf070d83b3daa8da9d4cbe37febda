@@ -1,0 +1,25 @@
+**Proposition 9.2 (capacity and birth thresholds cannot be omitted).**
+Nonempty accepting state languages do not suffice for distinct row
+classes. The leaf-state preperiod alone is not a valid cutoff for
+selected-boundary equality on all sources.
+
+Proof. Let $A$ accept exactly $\alpha$. With two child holes in
+different classes, both could be assigned its accepting state but
+both would have to be the identical tree $\alpha$. Their required
+disequality is impossible. One repeated class is realized by
+$\langle\alpha,\alpha\rangle$. The obstruction is capacity one
+versus two *classes*, not two occurrences of a shared class.
+
+For the second assertion use the automaton that accepts both leaves
+and rejects every pair, with leaf state $a$, branch state $d$, and
+constant pair transition $d$. Its leaf-state orbit is
+$(a,a),(a,d),(d,d),(d,d),\ldots$, so $\mu=2,\lambda=1$.
+On original $\alpha$, epoch two is
+$\langle\beta,\alpha\rangle$, selecting $\{L,R\}$.
+Epoch three is
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$,
+selecting $\{LL,LR,R\}$. The fixed epoch-two selected boundary
+holds at $2$ and fails at $3$, refuting a cap at $\mu$.
+The missing premise is saturation of the particular cut addresses;
+$B_0$ in Theorem 4.2 supplies it. $\square$
+

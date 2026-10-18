@@ -1,0 +1,119 @@
+**Definition 210.1 (Inherited full comparison and notation).** Use the
+source and resource classes of 207.1, the full scores of 207.2 and the
+single certificate of 207.3. Explicitly, the countable labeled source is
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\qquad q_i=\mathbf1_{p_i\mid N(r,g)}.
+$$
+
+Here $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$, the $p_i$ are increasing
+primes, and $n(x)=\min\{i:q_i(x)=0\}$. The full Borel tape carrier is
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with every block a
+copy of $(0,1)$. Its unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$; the original nonatomic targets remain those of
+Acquisition Resources 73.1. The marks $\theta_j=(B_1,1/(j+2))$,
+$j\ge0$, support the separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+$$
+
+The resources are exactly Acquisition Resources 90.1: zero advice,
+one source-independent common seed, actual sourcewise almost-sure
+finite handoff, arbitrary addresses and full-carrier outputs.
+$N$ preselects and obtains its schedule's replies. $O$ preselects an
+increasing schedule and stops at its first queried zero or exhaustion.
+At most two actual requests are allowed, including repeated or ignored
+requests. TV is uniform over all actual sources and all Borel events.
+
+For $L\ge3$, retain every $w\in\{0,1\}^L$, all labels $0,\ldots,L$,
+and $\Omega_n=\{w:n(w)=n\}$. At every zero word, independent
+coefficients $A_w,C_w,P_w\ge0$ score a label by
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+                    +P_w\mathbf1_{\ell\in\{0,n(w)\}};
+\qquad g_V(1^L,\ell)=T\mathbf1_{\ell=0},\quad T\ge0.
+\tag{210.1}
+$$
+
+The independent demands are $1-b_n-e,b_n-e,1-e$, respectively,
+and $1-e$ at $1^L$. Negative singleton demands, multiple-zero words
+and zero-scored event rows remain. $B_N,B_O$ maximize the sum of
+all-label cell maxima over every empty, singleton and pair schedule;
+pair cells are $00,01,10,11$ for $N$, and $0,10,11$ for $O$.
+For $R=(1,2;1,2,0)$ in stopped-cell order set
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_C(V)&=B_C(V)-W_V\ge0\quad(C=N,O),\\
+Q(V)&=(\beta,K),\quad \beta_n=\sum_{\Omega_n}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{210.2}
+$$
+
+Earlier unqueried labels are legal. The restricted-catalog equality
+194.2 and the surviving-label hypothesis in 197.3 are unchanged:
+on $0100$, the full $N$ table $(3,4;1,0,0,0)$ correctly outputs 1.
+Changing that output to zero loses its correct row.
+
+The input family, when explicitly invoked, has $A=0$, arbitrary $C$,
+and $P$ supported on $\Omega_1\cup\Omega_2$, including early $00$.
+Write $\gamma_n=\sum_{\Omega_n}C$, $E=\gamma_1+\gamma_2$,
+$G=\sum_{n\ge3}\gamma_n$, $S=\sum P$, $B=S+T$; then
+$W=E+B$, $Q=(\gamma,G+W)$. The actual late measure is
+$\nu(x)=P_{00x}+P_{01x}+P_{10x}$. Use
+$m_i=\nu\{x_i=0\}$ and $D_{ij}=\nu\{x_i=1,x_j=0\}$ for $i<j$.
+These are measures of proof weights, not laws on sources or acquisition
+probabilities. Write $w(Z)$ for the full word with zero set $Z$.
+Unspecified coefficients are zero and coincident coefficients add.
+
+For signed $q=(\beta,K)$, put $\alpha=(1,1,0,\ldots,0)$ and
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+F_q(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad
+\sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{210.3}
+$$
+
+The vertices $o,p,u_k,v_k$ are exactly those of 198.5 and 207.3.
+A complete certificate for $q$ is one $V\ge0$, $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+\tag{210.4}
+$$
+
+Its set of quotients is $E_N$. In particular $\theta=1$ permits a
+nonzero zero-cost $V$. Let $r=z_R=d(\alpha,0)$, $h=d-r$,
+$G_C=(z_D-r)_D$, and
+$H_N=\{b\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b)\}$.
+For the same complete feasible $\lambda$ of mass $M$, the existing
+weak-duality inequality is
+$F_q\le M\Delta_N(V)+\theta\le\max(1,M)$.
+No cell or component receives a second allowance.
+
+The full hull and alternative belong to
+[198.5 and 199.3–199.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md).
+The latter uses the finite Farkas alternative of Volker Kaibel,
+[*Basic Polyhedral Theory*, Theorem 1(ii)](https://arxiv.org/pdf/1001.2161v1).
+The full-table comparison here retains its resource constraints;
+David Blackwell's
+[*Comparison of Experiments*, §§2 and 5](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf)
+supplies the classical attainable-risk and common-randomization framework,
+not a conversion between these two constrained catalogs.
+
+### 210.1 A four-late inequality and a specified relaxation obstruction
+

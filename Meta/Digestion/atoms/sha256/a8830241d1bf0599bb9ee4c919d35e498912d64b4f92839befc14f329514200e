@@ -1,0 +1,73 @@
+### 定理 20.10（Fisher–Dirichlet 的纯数学联合稳定量）
+
+在定理 20.4 和定理 20.6 的假设下，取任意 \(\tau\ge0\)，定义
+
+\[
+\mathcal S_j^{(\tau)}(f,p;u)
+=
+\mathcal Q_j(f)
++
+\tau\,\mathcal I_j(p;u).
+\]
+
+若
+
+\[
+f_j=R_jf_{j+1},
+\qquad
+p_j=q_jp_{j+1},
+\qquad
+u_j=Dq_j\,u_{j+1},
+\]
+
+则
+
+\[
+\boxed{
+\mathcal S_j^{(\tau)}(f_j,p_j;u_j)
+\le
+\mathcal S_{j+1}^{(\tau)}(f_{j+1},p_{j+1};u_{j+1}).
+}
+\]
+
+#### 证明
+
+由定理 20.4，
+
+\[
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}),
+\]
+
+由定理 20.6，
+
+\[
+\mathcal Q_j(f_j)
+\le
+\mathcal Q_{j+1}(f_{j+1}).
+\]
+
+将第二个不等式乘以 \(1\)，将第一个不等式乘以 \(\tau\ge0\)，相加即得结论。证毕。
+
+因此，一个纯数学的联合稳定量可以定义为
+
+\[
+\mathcal S_\infty^{(\tau)}
+=
+\sup_j
+\mathcal S_j^{(\tau)}
+\in[0,+\infty].
+\]
+
+若该上确界有限，则沿任意相容族有极限
+
+\[
+\lim_{j\to\infty}
+\mathcal S_j^{(\tau)}
+=
+\mathcal S_\infty^{(\tau)}.
+\]
+
+这里 \(\tau\) 只是两个二次型之间的数学权重。只有在额外指定单位和动力学结构后，才可赋予它物理解释。
+

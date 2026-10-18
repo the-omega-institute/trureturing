@@ -1,0 +1,67 @@
+**原始行最大剥离递推。** 先处理有不相容对的情形。在空前缀处选取最大等价对，得到
+
+$$
+r=U_\varepsilon+R_\varepsilon,\qquad
+v=V_\varepsilon+S_\varepsilon,\qquad
+U_\varepsilon\equiv V_\varepsilon,\qquad
+c(R_\varepsilon,S_\varepsilon)=0.
+$$
+
+在每个长度 $kL$ 的前缀 $w$ 处维持不变量
+
+$$
+rB_w=U_w+R_w,\qquad vB_w=V_w+S_w,\qquad
+U_w\equiv V_w,\qquad c(R_w,S_w)=0,
+$$
+
+且四行均非负。对长度 $L$ 的扩展词 $z$，先将四行乘以 $B_z$，再从 $R_wB_z,S_wB_z$ 中选取最大等价对 $a_{wz},b_{wz}$。定义
+
+$$
+\begin{aligned}
+U_{wz}&=U_wB_z+a_{wz},&
+V_{wz}&=V_wB_z+b_{wz},\\
+R_{wz}&=R_wB_z-a_{wz},&
+S_{wz}&=S_wB_z-b_{wz}.
+\end{aligned}
+$$
+
+等价在乘法与加法下保持，引理 2.2 使新的剩余行仍满足 $c=0$，故不变量归纳成立。特别地，所有累计剥离行始终逐坐标受原始行 $rB_w,vB_w$ 支配。每个有限深度仅需有限个已证明存在的最大对。
+
+置
+
+$$
+A_k=\sum_{w\in\Sigma^{kL}}\sqrt{|R_w|\,|S_w|}.
+$$
+
+初始 $A_0\leq\sqrt{|r|\,|v|}$。每次剥离从两行中减去相同非负质量，因此不会增大剩余质量的乘积。引理 2.5 遂给出
+
+$$
+\begin{aligned}
+A_{k+1}
+&\leq
+\sum_{w\in\Sigma^{kL}}\sum_{z\in\Sigma^L}
+\sqrt{|R_wB_z|\,|S_wB_z|}\\
+&\leq\kappa A_k
+\leq\kappa^{k+1}\sqrt{|r|\,|v|}.
+\end{aligned}
+$$
+
+最后写 $n=kL+s$，$0\leq s<L$。对末尾 $s$ 个符号只传播上述分解，不再要求剥离；在每个长度 $n$ 的前缀 $a$ 仍有原始行分解及 $U_a\equiv V_a$。令 $h_a=|U_a|=|V_a|$。累计等价对对原始 $c(rB_a,vB_a)$ 可行，所以
+
+$$
+c(rB_a,vB_a)\geq h_a,
+\qquad
+\min(|rB_a|,|vB_a|)
+=h_a+\min(|R_a|,|S_a|).
+$$
+
+从而原始证书的该项满足
+
+$$
+\min(|rB_a|,|vB_a|)-c(rB_a,vB_a)
+\leq\min(|R_a|,|S_a|)
+\leq\sqrt{|R_a|\,|S_a|}.
+$$
+
+求和并应用引理 2.5 的系数一余段界，得到 $G_n(r,v)\leq A_k$，即所需结论。累计对不必实现原始 $c$ 的最大值；其可行性给出的是这里所需的上界方向。零行使相应乘积和缺口同时为零，$n=0$ 也已包含。无不相容对的情形由引理 2.4 完成。
+

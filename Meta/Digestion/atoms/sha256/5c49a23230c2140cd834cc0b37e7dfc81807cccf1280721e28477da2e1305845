@@ -1,0 +1,89 @@
+**Theorem 51.1 (the exact invisible space).**
+For arbitrary full amplitudes, define
+
+$$
+\begin{aligned}
+\mathscr N&=\bigcap_{t\ge0}\ker Q_t,\\
+\mathscr C&=\overline{\operatorname{span}}
+       \{e^{-tH_\infty}Jh:t\ge0,\ h\in\mathscr H_B\}.
+\end{aligned}
+\tag{51.1}
+$$
+
+Then, with equalities of amplitudes understood almost everywhere,
+
+$$
+\begin{aligned}
+\mathscr C&=\mathscr N^\perp
+ =\{f\in\mathscr H:f(D)=f(-D)\},\\
+\mathscr N&=\{f\in\mathscr H:f(D)=-f(-D)\}.
+\end{aligned}
+\tag{51.2}
+$$
+
+In particular, for any $f_1,f_2\in\mathscr H$,
+
+$$
+Q_tf_1=Q_tf_2\text{ for every }t\ge0
+\quad\Longleftrightarrow\quad
+f_1(D)+f_1(-D)=f_2(D)+f_2(-D)\text{ a.e.}
+\tag{51.3}
+$$
+
+Proof. Selfadjointness gives
+$\langle Q_tf,h\rangle=\langle f,e^{-tH_\infty}Jh\rangle$;
+thus $\mathscr N=\mathscr C^\perp$. Reflection in $D$ commutes
+with $H_\infty$, and $Jh$ is even, so $\mathscr C$ is contained
+in the even subspace. It remains to prove the converse; mere
+separation of the scalar labels would not suffice for arbitrary
+$\mathscr H_B$-valued amplitudes.
+
+Every bounded selfadjoint $e^{-uH_\infty}$ preserves $\mathscr C$
+by its semigroup law, and therefore also preserves
+$\mathscr C^\perp$. For $v\in\mathscr C\cap D(H_\infty)$,
+the strong generator difference quotient shows
+$H_\infty v\in\mathscr C$. In particular, for $h\in D(K)$,
+
+$$
+H_\infty Jh=JKh-c_bJMh.
+\tag{51.4}
+$$
+
+Both $Jh$ and $JKh$ are in $\mathscr C$, hence so is $c_bJMh$.
+The set $M D(K)$ is dense in $\mathscr H_B$: $D(K)$ is dense,
+$M$ is bounded, and $\overline{\operatorname{Ran}M}=\mathscr H_B$
+because $M=M^*$ and $\ker M=0$. Boundedness of $c_b$ now implies
+$c_bJh\in\mathscr C$ for every $h\in\mathscr H_B$.
+
+Inductively, suppose $c_b^rJh\in\mathscr C$ for every base $h$.
+For $h\in D(K)$ this vector belongs to the exact domain (50.2),
+and
+
+$$
+H_\infty(c_b^rJh)=c_b^rJKh-c_b^{r+1}JMh.
+\tag{51.5}
+$$
+
+The same density argument gives $c_b^{r+1}J\mathscr H_B
+\subset\mathscr C$. Thus all vector-valued coupling polynomials
+belong to $\mathscr C$. By Theorem 50.2, every measurable even
+function of $D$ is a measurable function of $c_b(D)$, up to null
+sets. Polynomials are dense in $L^2(\mu_b)$: continuous functions
+are dense for this finite compactly supported measure, and the
+Weierstrass theorem approximates continuous functions uniformly.
+Finite sums of scalar functions times base vectors are dense in
+the vector-valued $L^2$ space. Hence the coupling polynomials
+are dense in the entire even subspace. This proves (51.2), and
+applying it to $f_1-f_2$ proves (51.3).
+
+No bounded inverse of $M$ was used; $\phi$ vanishes at the height
+faces. Nor was an interior test space asserted to be an operator
+core. Equations (51.4)--(51.5) use the full operator domain.
+The spectral and reducing-subspace principles used here are the
+classical ones in Teschl's
+[author text, §3.1, (3.30)--(3.37) and Theorem 3.7,
+printed pp.93--96](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The identification of their generated subspace with the native
+even amplitudes is the additional correspondence proved above.
+$\square$
+

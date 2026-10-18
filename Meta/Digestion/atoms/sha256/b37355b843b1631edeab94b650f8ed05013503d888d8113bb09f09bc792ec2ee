@@ -1,0 +1,51 @@
+**Definition 3.1 (charts and contact equations).** The seven indexed contacts have the following sheet, height sign, report sign and base chart:
+
+| $i$ | $\eta_i$ | $\epsilon_i$ | $\sigma_i$ | $\phi_i^{\rm base}$ |
+| --- | --- | --- | --- | --- |
+| 0 | 0 | $+1$ | $+1$ | $0$ |
+| 1 | 0 | $+1$ | $-1$ | $\pi$ |
+| 2 | 0 | $-1$ | $-1$ | $\pi$ |
+| 3 | 1 | $+1$ | $+1$ | $0$ |
+| 4 | 1 | $-1$ | $+1$ | $3\pi/2$ |
+| 5 | 0 | $+1$ | $+1$ | $0$ |
+| 6 | 1 | $-1$ | $-1$ | $\pi$ |
+
+Write $\phi_i=\phi_i^{\rm base}+2\arctan x_i$. Thus the exact centre entries $x_i$ in §11 are half-angle coordinates, not the angles $\phi_i$. Set $r=1+x^2$. The base-$0$, base-$\pi$ and base-$3\pi/2$ charts respectively use
+
+$$
+(U,V_v)=(1-x^2,2x),\quad(-1+x^2,-2x),\quad(2x,-1+x^2),
+\qquad (u,v)=(U/r,V_v/r).
+$$
+
+Let $Z=U/\sqrt\alpha$, $W_n=V_v/\sqrt\beta$ and
+
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r^2+b^2Z^2+d^2W_n^2,\\
+N_c&=h_1^2h_2^2\delta r^2+a^2h_2^2Z^2+c^2h_1^2W_n^2,\\
+L_c&=(r,Z,W_n)G(r,Z,W_n)^T,\\
+F_c&=-\frac{11}{64}(dW_n/h_2)^2
+-\frac{2\Delta_{12}db}{h_1h_2}ZW_n.
+\end{aligned}
+$$
+
+The numerator vector, positive denominator, height numerator and report numerator are
+
+$$
+\begin{aligned}
+\Gamma^0_{\rm num}&=(r^2,rU,rV_v,U^2,UV_v,0,0,0)^T,&D^0_{\rm num}&=r^2,\\
+H^0_{\rm num}&=L_c,&W^0_{\rm num}&=rU,\\
+\Gamma^1_{\rm num}&=(D_cr^2,D_crU,D_crV_v,D_cU^2,D_cUV_v,N_cr^2,N_cU^2,N_cUV_v)^T,
+\\D^1_{\rm num}&=D_cr^2,&H^1_{\rm num}&=D_cL_c+tN_cF_c,\quad W^1_{\rm num}=D_crU.
+\end{aligned}
+$$
+
+Dividing gives $\Gamma_\eta,H_\eta,u$. For $\mathbf d=(d_0,\ldots,d_7)$ put
+
+$$
+P_i(x)=\mathbf d^T\Gamma^{\eta_i}_{\rm num}(x)
+-\epsilon_iH^{\eta_i}_{\rm num}(x)-\lambda\sigma_iW^{\eta_i}_{\rm num}(x).
+$$
+
+The exact contact equations are $P_i(x_i)=P_i'(x_i)=0$, where the prime is local-$x$ differentiation. The denominators are strictly positive on every chart used here.
+

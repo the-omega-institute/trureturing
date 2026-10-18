@@ -1,0 +1,49 @@
+**Proposition 6.4 (Finite concatenation, every prefix and no feedback of
+readout error).** For two successive relative prescribed paths, their
+parameters combine as
+
+$$
+(\Delta_1,L_1,C_1)\star(\Delta_2,L_2,C_2)
+=(\Delta_1+\Delta_2,\ L_1+L_2,\ C_1+C_2+\Delta_1L_2).
+$$
+
+The combined guard is the first full path guard together with the second
+full path guard from height $k+\Delta_1$. From exact initialization,
+the same four-coordinate model stays exactly encoded at every prefix
+and every intermediate time of every finite lawful concatenation.
+Its original-output error is always bounded by $4H\sqrt{T-\mu}$.
+
+Proof. In the second piece, displacement from the original starting
+height is $\Delta_1+\rho_2(t)$. The mixed integral of that piece
+is consequently $C_2+\Delta_1L_2$. Adding the first piece proves
+the displayed triple. Substituting this triple in Proposition 6.2
+agrees with successive application: the phase increment from the
+second piece contains $-\Delta_1L_2/r$ through its initial height.
+The stated conjunction of all-times guards describes exactly the
+combined height trajectory.
+
+For each encoded block, the two affine maps compose as
+
+$$
+\bigl(e^{\nu_j\Delta_2/H}R_{L_2/2}\bigr)
+\bigl(e^{\nu_j\Delta_1/H}R_{L_1/2}\bigr)
+=e^{\nu_j(\Delta_1+\Delta_2)/H}R_{(L_1+L_2)/2}.
+$$
+
+Thus the combined encoded map agrees with Theorem 6.3, while the
+source retains its additional mixed term. The commutation visible
+in the encoded blocks is not a claim that the native controls
+commute; the rectangle of Proposition 1.2 changes the true $\beta$.
+
+Starting with $z^{\rm in}=E_\varepsilon(k_0,0,0)$, apply the exact
+intertwining identity successively. Induction over any finite number
+of paths proves exact encoding at each endpoint. The truncation
+statement of Theorem 6.3 proves every intermediate point as well.
+Straight legs are included, using their corresponding prescribed
+velocities; fractional legs give their intermediate encodings. The
+uniform readout estimate is evaluated on each exact current encoding.
+No approximate decoded output is fed back into an update, so no
+readout error accumulates with the length of the history. There is
+no uniform bound on that finite length or on its finite real command
+parameters. $\square$
+

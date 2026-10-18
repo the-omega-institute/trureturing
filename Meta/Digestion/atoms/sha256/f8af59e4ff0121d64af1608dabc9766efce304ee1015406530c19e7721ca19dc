@@ -1,0 +1,69 @@
+### 62.4 Four annihilators and the exact quadratic obstruction
+
+The following sparse rows \(\Lambda_0,\ldots,\Lambda_3\) have length
+60. Each displayed pair is (row index, coefficient), omitted entries
+are zero, and \(s=\sqrt3\):
+
+\[
+\begin{aligned}
+\Lambda_0:\quad&
+(2,s/9),(3,-1/9),(8,-1/9),(9,-s/27),\\
+&(22,-1/9),(23,s/27),(30,-s/162),(31,-2s/81),\\
+&(32,-2s/81),(33,-s/54),(34,-s/27),\\
+&(40,2s/81),(41,-s/81),(42,-s/81);\\[2pt]
+\Lambda_1:\quad&
+(2,1/9),(8,-s/27),(22,-s/27),(31,-1/108),\\
+&(32,-1/54),(34,-1/36),(40,1/54),(42,-1/54);\\[2pt]
+\Lambda_2:\quad&
+(2,(1-s)/12),(3,-(s+1)/12),\\
+&(8,1/12-s/36),(9,-1/12-s/36),\\
+&(22,1/12-s/36),(23,s/36+1/12),\\
+&(30,s/108+1/36),(31,-s/54),(32,-1/36+s/108),\\
+&(40,1/36-s/108),(41,-1/36-s/108),(42,s/54);\\[2pt]
+\Lambda_3:\quad&
+(2,-1/6),(3,-1/6),(8,s/18),(9,-s/18),\\
+&(22,s/18),(23,s/18),(30,s/54),\\
+&(31,-1/36-s/108),(32,1/36-s/108),\\
+&(40,-1/36+s/108),(41,-s/54),(42,s/108+1/36).
+\end{aligned}
+\tag{62.7}
+\]
+
+Let \(\Lambda\) be the matrix with these four rows. Exact substitution
+in the original derivatives gives
+
+\[
+ \Lambda\mathcal J=0,\qquad
+ \Lambda Q_{\mathrm{full}}(xK_1+yK_2+bK_c)
+ =\begin{pmatrix}x^2-y^2\\xy-\frac{\sqrt3}{2}y^2\\bx\\by\end{pmatrix}.
+\tag{62.8}
+\]
+
+For an explicit expansion of the second identity, let \(\Phi\) be the
+phase-coordinate matrix of \(xK_1+yK_2+bK_c\), with its first row zero.
+Using coordinatewise multiplication \(\odot\) and coordinatewise
+squaring, put
+
+\[
+ \begin{aligned}
+ Z_1&=iV\odot\Phi,& Z_2&=-\tfrac12V\odot\Phi^2,\\
+ Y_1&=M(0)Z_1+bM'(0)V,&
+ Y_2&=M(0)Z_2+bM'(0)Z_1+\tfrac12b^2M''(0)V.
+ \end{aligned}
+\tag{62.9}
+\]
+
+For \(j<k\), the complex Gram quadratic term is
+
+\[
+ -\frac12\sum_{r=0}^5\bar V_{rj}V_{rk}
+       (\Phi_{rk}-\Phi_{rj})^2.
+\]
+
+The output quadratic term is
+\(|(Y_1)_{ak}|^2+2\operatorname{Re}(\bar Y_{ak}(Y_2)_{ak})\).
+Taking real and imaginary parts in the order of §62.2 gives
+\(Q_{\mathrm{full}}\) on the full kernel. Thus (62.3)–(62.9) are
+finite exact formulas for every coefficient of the displayed identities;
+no selected phase ansatz has replaced the original constraints.
+

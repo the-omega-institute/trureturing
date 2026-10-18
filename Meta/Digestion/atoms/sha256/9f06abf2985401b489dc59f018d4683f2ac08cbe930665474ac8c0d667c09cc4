@@ -1,0 +1,48 @@
+**Lemma 2.3 (The elementary spin products).** Conditional on a fixed
+phase, one active edge has the following joint target-spin masses:
+
+| Target position | Edge zero | Edge one |
+| --- | --- | --- |
+| In the edge | $a^2,b^2$ | $\eta,\eta$ |
+| Outside the edge | $ac,bc$ | $2a\eta,2b\eta$ |
+
+For two distinct active edges, the only possibilities are one shared
+vertex or disjoint vertex sets. For shared-vertex edges, each
+specified one-containing label pair $\xi\in\{01,10,11\}$ has
+phase-conditional mass $\eta$ and maximal full-law state mass
+$a\eta/2$, for any target position. The union of those three label
+events has phase-conditional mass $3\eta$. Their all-zero label pair
+has phase-conditional mass $1-3\eta$.
+Constraints on vertex-disjoint edges multiply within that same phase.
+
+Proof. A zero edge has equal endpoint spins, with products $a^2,b^2$.
+A one edge has the two complementary products $ab,ab$. An exterior
+target contributes its independent factor $a$ or $b$, proving the
+table.
+
+Two edges of the integer line can only coincide, be adjacent, or
+have disjoint vertex sets. For adjacent edges write their union in
+left-to-right spin order. The larger-mass completions of the three
+one-containing label pairs are
+
+$$
+\begin{array}{c|c}
+\text{left/right edge labels}&\text{larger-mass spin triple}\\ \hline
+01&(\sigma,\sigma,1-\sigma)\\
+10&(1-\sigma,\sigma,\sigma)\\
+11&(\sigma,1-\sigma,\sigma).
+\end{array}
+\tag{2.3}
+$$
+
+Each has product $a^2b=a\eta$; its complement has product
+$ab^2=b\eta$. If the target belongs to the triple, its two
+values distinguish these two products. If outside, the triple event
+has mass $\eta$, and multiplication by the majority prior gives
+$a\eta$. In either case the phase factor gives $a\eta/2$.
+The zero pair instead forces three equal spins, of total mass
+$a^3+b^3=1-3ab$. Disjoint edges use disjoint iid spins, proving
+the product assertion. These incidences exhaust all integer addresses,
+including negative and arbitrarily distant ones. Repetition repeats
+a constraint but retains its paid call. $\square$
+

@@ -1,0 +1,49 @@
+## 8. Rounded increments, stopping, and paid reads
+
+For a potential completed gap let $Y_n$ be its category and let $V_n$ be the rounded
+increment chosen at its closing one. Across potential gaps $(Y_n,V_n)$ are iid under each
+source and independent of $\tau$. Conditional on $Y_n=j$,
+
+$$
+V_n\in\{\delta m_j,\delta(m_j+1)\},\qquad
+\mathbb E(V_n\mid Y_n=j)=\ell_j,
+$$
+
+and, with $\varepsilon_n=V_n-\ell_{Y_n}$,
+
+$$
+\mathbb E(\varepsilon_n\mid Y_n)=0,\qquad
+|\varepsilon_n|\le\delta,\qquad
+|V_n|\le C_0+\delta.
+$$
+
+Let $D_i=D(a_i\|a_{1-i})$. Then
+
+$$
+\mathbb E_0V_n=-D_0,\qquad \mathbb E_1V_n=D_1,\qquad D_i\ge2u.
+$$
+
+Indeed the first two identities follow by averaging the exact category log ratio, and
+for $p=a_i,b=a_{1-i}$, $\log x\le x-1$ at
+$x=\sqrt{b(j)/p(j)}$ gives
+
+$$
+D(p\|b)=-2\sum_jp(j)\log\sqrt{b(j)/p(j)}
+ \ge2\sum_j\bigl(p(j)-\sqrt{p(j)b(j)}\bigr)=2u.
+$$
+
+Define $S_0=0$, $S_n=\sum_{m=1}^nV_m$, and
+
+$$
+N=\inf\{n\ge1:S_n\ge H\delta\text{ or }S_n\le-H\delta\}.
+$$
+
+Before exit, $S_n=e\delta$ is exactly the live evidence coordinate. Since
+$H\delta<R+\delta$ and $\delta<1$,
+
+$$
+|S_{N\wedge m}|\le H\delta+C_0+\delta<R+C_0+2=:B
+$$
+
+for every deterministic $m$.
+

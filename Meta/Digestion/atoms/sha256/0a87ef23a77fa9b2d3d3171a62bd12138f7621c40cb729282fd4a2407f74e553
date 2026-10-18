@@ -1,0 +1,21 @@
+**Definition 1.2 (finite validation of a proposed row).** A proposed row
+$R=(C,\pi)$ at $P$ is valid when all the following finite conditions hold.
+
+1. $C$ is a nonempty finite ordered full binary context whose leaves are
+   $\alpha$, $\beta$, or addressed holes. Each hole label is its actual
+   address in $C$, appears once, and belongs to $P$. Let $H$ be this
+   set of hole addresses.
+2. For every $p\in P\setminus H$, some concrete leaf of $C$ has an
+   address that is a strict prefix of $p$.
+3. $\pi$ is an equivalence relation on exactly $H$, specifying the
+   equality or disequality of every pair in $H$. Equivalently, it is a
+   partition of $H$, with no omitted pairwise information.
+
+These conditions reject, for example, a concrete leaf at a requested
+cut position: such a position is reached and must have been replaced by
+a hole. They also reject a hole at a falsely claimed address, missing
+blockers, and an incomplete or inconsistent partition. Validating an
+input does not assume joint realizability with another input. Class
+names have no meaning beyond their partition and can be ordered by
+their least hole addresses.
+

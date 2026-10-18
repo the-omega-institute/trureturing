@@ -1,0 +1,13 @@
+**定义 170.3（整数坐标的拼接式及实际像）。** 对左五元组 $(u,v,D,E,F_m)$ 和右五元组 $(p,t,H,I,J)$，令 $c_0=ut-vp$，定义数值接口
+
+$$
+\begin{aligned}
+&(u,v,D,E,F_m)\star(p,t,H,I,J)\\
+&\quad=\bigl(u+p,v+t,D+H+c_0,\
+E+I+3(Hu-Dp)+c_0(u-p),\
+F_m+J+3(Hv-Dt)+c_0(v-t)\bigr).
+\end{aligned}
+$$
+
+此式就是定理170.2按 $D=2A,E=12m_x,F_m=12m_y$ 换坐标。写 $\mathcal I_+=G(\widehat W)$ 为正词加空贡献的实际数学像；这里的“像”不声称其中每个词已实际执行。
+

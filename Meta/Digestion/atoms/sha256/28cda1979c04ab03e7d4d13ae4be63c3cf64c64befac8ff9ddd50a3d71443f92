@@ -1,0 +1,107 @@
+**Proposition 6.4 (A rational length-four witness).** Order
+the legal words as
+
+$$
+(0000,0001,0010,0100,0101,1000,1001,1010)
+\tag{6.11}
+$$
+
+and take
+
+$$
+p=\frac{(1,100,100,100,100,100,100,100)}{701}.
+\tag{6.12}
+$$
+
+For every quadrature site allocation,
+$\Gamma(1,\omega)\le6/707$. Uniform conditional site
+allocation with quadrature fraction $r=9/10$ satisfies
+
+$$
+\Gamma(9/10,\bar\omega)\ge\frac9{500}
+>\frac6{707},\qquad
+\frac9{500}-\frac6{707}=\frac{3363}{353500}.
+\tag{6.13}
+$$
+
+Proof. Here $M=7$ and $\epsilon=1/100$, so (6.3) gives
+$6/707$. For the uniform phase lower bound use indices
+$0,\ldots,7$ in order (6.11). The site pair sets are
+
+$$
+\begin{aligned}
+1 &: \{\{0,5\},\{1,6\},\{2,7\}\},\\
+2 &: \{\{0,3\},\{1,4\}\},\\
+3 &: \{\{0,2\},\{5,7\}\},\\
+4 &: \{\{0,1\},\{3,4\},\{5,6\}\}.
+\end{aligned}
+\tag{6.14}
+$$
+
+For $D=\operatorname{diag}(\sqrt p)$ and $u=Df$, the
+condition $u\perp\sqrt p$ is $\sum_sp_sf_s=0$, and
+
+$$
+\|u\|^2=\operatorname{Var}_p(f),\qquad
+u^{\mathsf T}H_{\bar\omega}u
+=\sum_{\{s,t\}\text{ legal}}c_{st}(f_s-f_t)^2,
+\quad c_{st}=\frac{p_sp_t}{4(p_s+p_t)}.
+\tag{6.15}
+$$
+
+Use the spanning tree whose long path is
+$2\!-\!7\!-\!5\!-\!6\!-\!1\!-\!4\!-\!3$
+and whose remaining leaf edge is $0\!-\!5$.
+For each unordered pair $\{s,t\}$ let $P_{st}$ be its
+unique tree path. The variance identity and Cauchy's
+inequality along that path give
+
+$$
+\begin{aligned}
+\operatorname{Var}_p(f)
+&=\sum_{s<t}p_sp_t(f_s-f_t)^2\\
+&\le\sum_{e\text{ in the tree}}L_e(\nabla_e f)^2,
+\qquad
+L_e=\sum_{s<t:e\in P_{st}}p_sp_t|P_{st}|.
+\end{aligned}
+\tag{6.16}
+$$
+
+The exact edge loads relative to (6.15) are
+
+| Tree edge $e$ | $L_e/c_e$ |
+|---|---:|
+| $\{2,7\}$ | $24$ |
+| $\{5,7\}$ | $40$ |
+| $\{5,6\}$ | $33712/701$ |
+| $\{1,6\}$ | $33696/701$ |
+| $\{1,4\}$ | $28072/701$ |
+| $\{3,4\}$ | $16840/701$ |
+| $\{0,5\}$ | $8080/701$ |
+
+These fractions follow by enumerating the 28 unordered
+pairs in (6.16); their maximum is $33712/701<50$. All remaining
+legal-edge energies are nonnegative. Consequently
+
+$$
+\operatorname{Var}_p(f)
+\le50\,u^{\mathsf T}H_{\bar\omega}u,
+\qquad\gamma(\bar\omega)\ge\frac{701}{33712}>\frac1{50}.
+\tag{6.17}
+$$
+
+For $r=9/10$, the amplitude block $I-rB_{\bar\omega}$
+is at least $I/10$, and the phase block
+$rB_{\bar\omega}$ is at least $9I/500$.
+Equation (5.8) and exact rational subtraction prove
+(6.13). $\square$
+
+The gain concerns the worst direction of the full
+horizontal pure-state tangent at a supplied calibrated
+reference. It neither makes the classical Fisher
+matrix equal to QFI nor proves simultaneous attainment
+of individual QFI limits. The comparison uses the same
+number of preparations and changes the recorded setting
+distribution; it supplies no finite-sample risk theorem,
+hardware implementation or physical energy assignment.
+

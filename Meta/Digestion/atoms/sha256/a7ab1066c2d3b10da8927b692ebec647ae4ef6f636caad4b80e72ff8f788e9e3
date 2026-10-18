@@ -1,0 +1,31 @@
+### 55.1 Theorem (exact error on a mixed-source edge family)
+
+Use unhalved trace norm and finite LOSR. Sort and phase-align a mixed MC qubit source rho(r,c), r>=1/2, q=1-r, q<=c<=sqrt(rq), q>0. Define D=sqrt(c^2+q^2), R*=c^2/D^2, Q*=q^2/D^2. Consider a physical target rho(P,w) with P>=r, w>=0, w^2<=P(1-P), and impose
+
+    t=(q(1-P)+cw)/D^2 <= 1.
+
+Then the exact trace error over all finite LOSR outputs is
+
+    delta = 2 max{0, (qw-c(1-P))/D}.
+
+Proof. R*>=1/2, Q*>0. Put a=D^2/q. The source equals a sigma_R*+(1-a)|00><00|, where sigma_R* is the pure MC state with populations R*,Q*. Indeed aQ*=q and a sqrt(R*Q*)=c; a<=1 follows c^2<=rq. For u=(1+sqrt(R*))/2, let H=2|psi_u><psi_u|-I. The all-product-CPTP support result of §53 gives Tr H Lambda(sigma_R*)<=sqrt(R*) for every LOSR map Lambda. A product source can only yield separable outputs, and their overlap with psi_u is at most its largest Schmidt weight u, so the same bound holds for Lambda(|00><00|). By the source decomposition it holds for Lambda(rho). The MC block of H is [[c/D,q/D],[q/D,-c/D]], with -I on the remaining two basis vectors. Its operator norm is1. Hence trace-norm duality gives
+
+    ||tau-Lambda(rho)||_1 >= Tr H tau-c/D
+                              =2(qw-c(1-P))/D.
+
+If qw<=c(1-P), put z=w/c. Then z<= (1-P)/q<=1 and the exact target is
+
+    z rho + [P-zr]|00><00| + [(1-P)-zq]|11><11|.
+
+All coefficients are nonnegative: the last by hypothesis, and P-zr>=P-r(1-P)/q=(P-r)/q>=0. They sum1, giving three product-CPTP branches.
+
+If qw>c(1-P), t>0 and the imposed t<=1 makes omega=t rho+(1-t)|00><00| attainable with two product-CPTP branches. Set b=(qw-c(1-P))/D>0. The MC block of tau-omega is
+
+    b [[c/D,q/D],[q/D,-c/D]],
+
+as follows by inserting t into its diagonal tq-(1-P) and offdiagonal w-tc. This matrix has eigenvalues +/-b, giving norm2b and matching the unrestricted-output lower bound.
+
+At c=q the witness becomes the Bell-source witness, and a=2q<=1. At c=sqrt(rq), the source is pure and this specializes to the section53 result subject to the stated projection condition. For c<q the reduction R*>=1/2 fails, so this proof makes no claim. For t>1, the proposed mixture is invalid and no exact error formula is asserted. General target phases and reversed target/source populations are handled only by the appropriate local unitary reductions; the displayed theorem is for sorted coordinates.
+
+This is a direct quantitative consumer of the all-output pure-source support theorem. It does not establish the complete mixed-source error landscape, a coherent multisector channel optimum, or novelty of its ingredients.
+

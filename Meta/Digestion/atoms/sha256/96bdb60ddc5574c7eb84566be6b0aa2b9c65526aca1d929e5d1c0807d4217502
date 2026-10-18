@@ -1,0 +1,6 @@
+**定理 10.3（双步计数矩阵的 Lorentz 合同与原更新的区别）。** 对 $A=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix}\in SL(2,\mathbb R)\subset SL(2,\mathbb C)$，Hermitian 合同 $H\mapsto AHA^*$ 保持 $\det H$ 和正半定锥。该合同与单边计数更新 $c\mapsto M^2c$ 是不同类型的作用；它不证明 $\tau$ 为物理时间或三维方向为位置。
+
+证明。$\det M=-1$、$\det M^2=1$，而 $\det(AHA^*)=|\det A|^2\det H=\det H$。正半定性由 $v^*AHA^*v=(A^*v)^*H(A^*v)\geq0$ 保持。$SL(2,\mathbb C)$ 的 Hermitian 合同是标准自旋覆盖／Lorentz 关系，来源是 Baez 的 [node11](https://math.ucr.edu/home/baez/octonions/node11.html)。本章只使用明确的矩阵合同。
+
+计数向量有两个实坐标且单边更新，$H$ 有四个实坐标且双边合同，连输出类型都不同。即使单次实矩阵 $M$ 的合同也保持行列式（$|\det M|^2=1$，亦可用 $iM\in SL(2,\mathbb C)$ 给同一合同），仍不能把它当成原计数作用的四维物理解释。迹一切片一般也不在合同下保持；要返回量子态还需另行归一化。证毕。
+

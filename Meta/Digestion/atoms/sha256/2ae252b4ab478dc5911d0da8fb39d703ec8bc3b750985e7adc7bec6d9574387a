@@ -1,0 +1,10 @@
+# FIB noisy source programming: attained unrestricted minimax for all parameters
+
+For every finite integer $m\ge0$ and every known $t,\eta\in[0,1]$, programming from the four prescribed original source states has the attained unrestricted value
+
+$$
+e_m(t,\eta)=[c-D_m(t,\eta)]_+,\qquad c=(1-\eta)t.
+$$
+
+One common processor attains this error simultaneously for all four labels. The converse covers every complex CPTP processor on the entire data/program algebra, with every finite complex reference. The programs, original cut, target channels and initial copy/data/reference independence are fixed below. Separate conditional diagonal budgets, certified by a first-occurrence statistic on the actual program words, supply the attainment. Exactness is equivalent to $D_m\ge c$, determining the minimum prescribed-copy threshold. N1–N3 remain useful explicit constructions and special consequences. All proofs are ordinary finite-dimensional mathematics; no Lean or kernel certification is asserted.
+

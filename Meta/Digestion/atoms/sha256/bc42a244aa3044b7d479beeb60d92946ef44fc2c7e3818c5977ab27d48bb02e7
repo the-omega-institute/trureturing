@@ -1,0 +1,22 @@
+**Proposition 11.2 (terminal and horizon compatibility).** This construction
+retains the hypotheses of CAP's absorbing-terminal and Ready-only horizon
+results. Its historical outputs are later images of strictly older cuts;
+they do not identify complete history with original terminal behavior,
+provide a self-encompassing literal endpoint image, or cover the final
+stopping suffix through a Ready that does not exist there.
+
+Proof. Theorem 9.2 has no history entry after original global halt. The
+terminal target remains $q_{H_0}(u)$, with no added empty-response archive.
+CAP Corollary 16.7's exhibited finer-history terminal fibres therefore
+remain a constraint wherever its same-output/no-audit hypotheses apply;
+no terminal-type coincidence alone is used here. Every issued target
+has $k\le b$ for its acquired predecessor. The final stopping route has
+no new Ready interception. CAP Theorems 17.3–17.4 consequently retain
+their exact endpoint restrictions, including the distinction between
+Ready-only and arbitrary strict-past services. The received Image is
+constructed at later cuts, outside the represented old endpoint, as
+required by CAP Proposition 18.2. Its completed output/copy cost also
+retains Proposition 18.3's endpoint and Corollaries 18.4–18.5's applicable
+necessary bounds. No 64-port nested-codec constant is silently transferred
+to a 74-port list. ∎
+

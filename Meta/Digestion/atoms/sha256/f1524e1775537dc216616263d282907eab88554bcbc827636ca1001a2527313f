@@ -1,0 +1,21 @@
+**Open problem 7.2 (unrestricted stopping).** For arbitrary complete
+acquired native $I$ and arbitrary finite distinct attained full rows
+$B$, decide $\forall h\ J_B(h)$ with actual finite-source synthesis
+or a finite exclusion depth. General mixed covers can require
+unbounded atomic-rank coordinates, whose joint cofinal finite support
+must be preserved, and common-output equations can have multiple
+nonfunctional constraints or image/inverse restrictions. No complete
+effective reduction of those cases to (FJC.10) is proved here. A failed
+reduction has no NO meaning for such an input. Fixed-depth feasibility,
+finite images and equality of supplied recursive descriptions do not
+supply that missing reduction or an outer stopping rule.
+
+The functional decision asserts existence of one synthesized contact
+certificate for each positive instance in its stated class. It does
+not represent every semantic common completion point. A completion
+point outside a chosen description language does not refute an
+existential certificate basis when the same instance has another
+representable contact. No claim of all-input synthesis, physical
+spacetime recovery, undecidability, global research completion or
+resource optimality follows.
+

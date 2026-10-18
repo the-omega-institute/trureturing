@@ -1,0 +1,32 @@
+**Definition 2.2 (entire finite-profile support).** For supplied finite
+$(\mathbf c,\mathbf f)$ define
+
+$$
+S_b(\mathbf c,\mathbf f)=
+\{\mathbf w:P_b(\mathbf c,\mathbf w)\land
+ \exists\mathbf z\in\mathcal T^m\;\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)\}.
+\tag{FNS.10}
+$$
+
+The exact cofinal spectrum is
+
+$$
+\Xi_b(\mathbf c,\mathbf f)\Longleftrightarrow
+\forall M\in\mathbb N\;\exists\mathbf w,\mathbf z\quad
+\left[
+\begin{array}{l}
+P_b(\mathbf c,\mathbf w)\land
+\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z),\\
+\displaystyle\bigwedge_{j=1}^{q}w_j\ge M
+\end{array}\right].
+\tag{FNS.11}
+$$
+
+Thus $\Xi_b$ is a diagonal cofinality statement, not coordinatewise
+unboundedness. The same finite $\mathbf c$ and the same finite original
+tuple $\mathbf f$ occur before every $M$. If $q=0$, the empty rank tuple is
+the unique tuple and the lower-bound conjunction is true. If $m=0$, the
+residual tuple is the unique empty tuple. If $p=0$, $\mathbf f$ is the
+unique empty finite profile. If $k=0$, $\mathbf c$ is the unique empty
+scalar complement. These conventions include all zero-dimensional edges.
+

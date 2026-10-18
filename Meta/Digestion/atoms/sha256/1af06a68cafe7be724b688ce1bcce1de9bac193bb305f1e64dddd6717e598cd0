@@ -1,0 +1,66 @@
+**Theorem 6.2 (same-source complete primitive correspondence).** Under
+Assumption 3.1, canonical structural installation is finite and uniform.
+For every $h\in\mathcal R_H$ its actual endpoint is
+
+$$
+\widehat X(\widehat h)=\Gamma(W(h)).
+\tag{SSA.8}
+$$
+
+For each lawful primitive action $a$ with executed successor $ha$,
+
+$$
+\operatorname{step}_{G}(\Gamma(W(h)),a)
+ =\Gamma(W(ha)).
+\tag{SSA.9}
+$$
+
+Decoding that graph and applying Proposition 2.1 returns the complete
+original successor $X(ha)$, including original identities and all semantic
+annotations. Every lawful original primitive cut has exactly its
+corresponding structural cut. There is no extra maintenance phase under
+this atomic primitive convention.
+
+Proof. Initially the finite structural port encodes exactly the original
+irreducible meter/register state and empty unconstructed ordinary ports.
+The boot constructor case appends exactly one boundary cell per original
+constructor and activates its head when appropriate. The single-bit
+installer case changes exactly its prescribed bit. Both append the
+original receipt. This proves the bootstrap correspondence without a
+post-acquisition conversion or an uncharged source renderer.
+
+For the induction step suppose the current carrier is $\Gamma(W)$.
+The fixed finite-register and cell decoders return the actual operand
+bits, not substituted representatives. RD therefore gives the same latch
+and original testing successor. WR assigns the same symbol/bit and retains
+all other tracks. The neighbor routes give precisely the adjacent original
+cells, so ML/MR have the same guard, mark changes and target. EX changes
+the old R to blank and adds the single new R while keeping the core head
+where PR57.D1 requires it. BF uses the identical finite truth table. IN
+sets the identical actual supplied bit without an early tape write. OUT
+releases the same permitted bit. TOK and CTL alter just their original
+finite state or addressed seal mark. The complete per-opcode effects are
+therefore the original ones. No row performs a full TagRead, ReadE, graft,
+counter arithmetic, seek, archive scan, or copy in place of its paid
+multirow computation.
+
+The receipt template assigns exactly the original old append cell and new
+R, with both meter heads represented. A possible overlap is the same
+finite union of original operands, so the enumerated joint effect agrees
+on that cell too. Assigning the corresponding structural switches and
+links consequently gives exactly $\Gamma$ of the next physical record.
+This proves SSA.9 at each boot, acquisition, and later step, hence SSA.8
+by induction. Original cell occurrences have the same creation events;
+auxiliary names have their fixed template roles. All descriptor/source
+versions and preparation identity remain those of this one execution.
+
+Proposition 2.1 decodes the actual endpoint and AIF replay recovers its
+whole original prefix and complete $X$. Thus the complete successor
+correspondence includes semantic interpretations even when they are not
+separate physical stores. The additional slot rewiring and temporary
+bounded truth-table work are parts of one atomic occurrence, with no
+intermediate cuts by Assumption 3.1. The many intermediate cuts of the
+original programs remain, since every one of their native rows remains
+an individual patch. This proves all-cut coverage at exactly the declared
+granularity. ∎
+

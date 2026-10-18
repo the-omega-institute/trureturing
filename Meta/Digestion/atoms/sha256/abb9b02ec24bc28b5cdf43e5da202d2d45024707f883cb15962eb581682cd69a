@@ -1,0 +1,32 @@
+**Definition 21.1 (coordinate identification and operational algebras).**
+Retain the original source and all the separately scoped suppliers of
+Assumption 1.2. Write Native for
+[the static compatibility-fibre owner](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md),
+with its ideal independently addressed menu in Assumption 55.2. Define
+one COMPLEX-linear map by its ordered orthonormal bases:
+
+$$
+\begin{array}{c|ccccc}
+\text{GC vector}&e_0&e_1&e_2&e_3&e_{13}\\ \hline
+\mathcal V\text{ image}&|000\rangle&|100\rangle&|010\rangle&|001\rangle&|101\rangle
+\end{array}
+\qquad \mathcal V:\mathbb C^5\longrightarrow\mathcal K_3.
+\tag{GC.89}
+$$
+
+For a finite weak law with $m$ occupied low labels, its acquisition
+output is the CLASSICAL direct sum
+
+$$
+\mathcal A_{\rm acq}=\left(\bigoplus_{j=1}^m M_2(\mathbb C)\right)
+                         \oplus M_5(\mathbb C).
+\tag{GC.90}
+$$
+
+Each label is genuinely generated and dephased. Every conditional
+decoder is TP on its entire matrix block, with a live five-mode output
+and the five separately labelled Borel failure measures of §2.
+Decoder Kraus indices are traced out unless the original instrument
+actually records them. A coherent Hilbert sum before measurement and
+this classical algebra after measurement are different interfaces.
+

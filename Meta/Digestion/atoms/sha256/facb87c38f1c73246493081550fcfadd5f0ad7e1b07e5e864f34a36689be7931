@@ -1,0 +1,33 @@
+### 98.2. Exact curved realization with the original fibre blocks
+
+**Lemma 98.1.** Let \(K\in\mathcal E\), and let \(D=D^*\) have \(D_{ff}=0\) and \(N_KDN_K=0\). There is a smooth two-sided feasible path
+\[
+K(s)=K+sD+s^2C_K+O(s^3)\in\mathcal E,\qquad
+(C_K)_{ff}=0, \tag{4}
+\]
+such that every complementary PSD stress \(ZK=0\) obeys
+\[
+\operatorname{Tr}(ZC_K)=\operatorname{Tr}(ZDK^+D). \tag{5}
+\]
+In particular no hypothesis \(D\ker K=0\) is required.
+
+**Proof.** Factor \(K=V^*V\), so the fibre columns \(V_f\) are orthonormal. With \(N=N_K\), \(P=P_K\), put
+\[
+X=VK^+D(P/2+N),\qquad
+V^*X=PDP/2+PDN,\qquad V^*X+X^*V=D. \tag{6}
+\]
+The identities use \(KK^+=P\) and \(NDN=0\); they require no inverse of \(VV^*\). Therefore \(V_f^*X_f+X_f^*V_f=0\), and the exact fibrewise normalization
+\[
+V_f(s)=(V_f+sX_f)(I_2+s^2X_f^*X_f)^{-1/2} \tag{7}
+\]
+has orthonormal columns for both signs of sufficiently small real \(s\). Its Gram is feasible on all eight original coordinates. Expanding the positive inverse square root gives
+\[
+C_K=X^*X-\tfrac12(MK+KM),\qquad
+M=\operatorname{blockdiag}_f(X_f^*X_f). \tag{8}
+\]
+The fibre blocks vanish. Complementarity gives \(Z=NZN\), while
+\[
+XN=VK^+DN,\qquad NX^*XN=NDK^+DN. \tag{9}
+\]
+The \(M\)-terms in (8) vanish in trace against \(Z\), proving (5). Thus the displayed pseudoinverse cost is attained by an original-fibre feasible curve. \(\square\)
+

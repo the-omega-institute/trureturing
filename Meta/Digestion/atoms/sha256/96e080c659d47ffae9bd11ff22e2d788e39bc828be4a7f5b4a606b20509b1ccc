@@ -1,0 +1,74 @@
+## 9. Remaining completion and optimization obligations
+
+**Open problem 9.1 (the unchanged effective global bridge).** Define
+$A_n^{(d)}(w)$ as the maximum full-template mass with whole-block
+weight $w$, and $\beta_d(w)=\sup_{n\ge1}A_n^{(d)}(w)^{1/n}$.
+[NPC, Theorems 5.3 and 6.2][NPC] supplies
+
+$$
+\sigma_d=\inf_n\frac{\log_2K_d(n)}n
+=-\log_2\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\qquad
+\lambda=\sup_d2^{-d}\sigma_d,
+\quad 0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\tag{OOA.38}
+$$
+
+with $U_0=1,U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h\le1$, credited to FMR.
+The original goal still requires a total sound cap verifier with
+optimized accepted rational endpoints cofinal in every $\sigma_d$,
+or a uniform effective length error
+
+$$
+\sigma_d\ge\frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0
+\tag{OOA.39}
+$$
+
+with effective control. Neither is proved here. Soundness of
+$V_{\rm swap}$ is distinct from such cofinality. No theorem says that
+near-optimal kernels have positive-density certified defects in all
+high neighborhoods. Zero-defect regions require another completion or
+loss argument; even order agreement leaves the exact retained relation
+and pointwise slacks in (OOA.12).
+
+The plain envelope used for the reusable local checks in
+Assumption 2.3 is exactly that of
+[NWO, Definitions 1.3–1.7][NWO]: the same $d,S_d,W_d$, complete
+COK decorations, simultaneous positive-support owner-group tests
+and coefficients $\gamma_k(A)$. NWO Theorems 3.2–3.3 prove
+exact-support continuity, global lower semicontinuity and
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+   =\inf_{\nu\in\Delta(S_d)\cap\mathbb Q^{S_d}}\Omega_d(\nu)
+   \ge b_d:=\min_{\mu\in\Delta(S_d)}\beta_d(\mu).
+$$
+
+Its Theorems 5.3 and 6.2 give an effective support-disjunctive
+semialgebraic epigraph and a computable positive algebraic $a_d$.
+Theorem 7.2 supplies every rational $C>a_d$ at some rational
+probability with complete positive rational COK rows. These are
+also all-low certificates of Convention 6.4: set $c_0=c_1=C$
+and choose any rational $0<\delta<1$ in Definition 6.2.
+Support-preserving approximation therefore settles this
+finite-envelope infimum; filling zeros is unnecessary and global
+continuity across supports fails in general (NWO Corollary 4.5).
+
+Equality $a_d=b_d$ at general depth remains unproved (NWO Open
+problem 8.4). Nor does NWO supply approximation preserving high-type
+coverage and a positive swap margin under support enlargement,
+optimized completeness of $V_{\rm swap}$, or control of the SIR
+incidence-transfer loss. Those enhanced-certificate and global
+pressure obligations are separate from the solved plain-envelope
+rational approximation.
+
+The strict cycle correction is not an optimized unrestricted pressure
+improvement, as Proposition 7.3 proves with an actual mass-one
+competitor. It does supply a genuine extensive joint loss and a bound
+on every original code via (OOA.33), while preserving the precise
+unclosed obligation of [GDB, Definition 11.1][GDB] and [COK, Open
+problem 9.3][COK]. No best numerical endpoint is asserted here; exact
+general $M_1(D)$, sharp $\lambda$, effective two-sided convergence and
+the wider minimal-relations/mutual-recovery programme remain open.
+

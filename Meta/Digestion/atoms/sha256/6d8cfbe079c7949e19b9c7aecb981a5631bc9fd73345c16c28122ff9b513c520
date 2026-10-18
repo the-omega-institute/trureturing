@@ -1,0 +1,17 @@
+**Theorem 8.3 (universal literal-only linear normalization).** For every explicit nonempty preparer, including an unsuccessful one and arbitrary initial finite words, there is an effective preparer $A'$ with exactly its old installed state set, Read/Halt partition, common start, all four successors and original Halt bits, such that
+
+$$
+\begin{gathered}
+\mathcal J_{A'}=\mathcal J_A,\qquad
+|a'_P(q)|\le |a_P(q)|\quad(q\in Q_P),\\
+\max\bigl(\{0\}\cup\{|a'_P(q)|:q\in Q_P\}\bigr)
+\le3+b+6m\le3+b+6(q_T+N)
+\quad\text{if }|K_P|\le N.
+\end{gathered}
+\tag{BPS.24}
+$$
+
+Every serving record is literally identical. No reply recoding, silent transition or runtime address operation is installed.
+
+Proof. For $m\ge1$ use Theorem 7.1. At every preparer index retain its original $p_i$ and install that prefix followed by the contracted suffix. Its suffix weakly shortens and has depth at most $b+6m$. Serving indices remain pinned, so their full original words remain identical. A preparer word shorter than three may be replaced by $\varepsilon$: both query a common exterior branch on every actual source, and the real call remains paid. The serving short words stay unchanged. Lemma 8.2 and these constant components give the joint relation equality. All other preparer records are kept, including unused states and duplicate Halt labels. If $m=0$, every installed word in either apparatus is shorter than three; just make the stated short preparer substitutions. Their reply vectors are constant and the target coordinate is unchanged, so the relation equality and bound hold directly. This also covers no preparer Reads. $\square$
+

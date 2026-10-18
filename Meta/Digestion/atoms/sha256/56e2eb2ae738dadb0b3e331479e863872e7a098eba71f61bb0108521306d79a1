@@ -1,0 +1,2 @@
+**定义 4.4（固定 beta 的 source-only/INITIAL 联合域）。** 取 ARC 定义 9.1 的那一个初始化：$H_0=h=K=1,u=\beta$，先验 $\{\alpha,\beta\}$，原始已初始化的客户端只执行其 Stop，提案为 $q_1(\beta)=(0,B,1)$。从其第一个实际 Ready $P_\beta$ 以后，允许任意有限次完整的规范七标签 `01` 调用而无 history `1`，以及可选的最终 `00`。令 $\mathcal D_\beta$ 包含所有源调用的上述封口原始行切口，以及 `00` 新增 setup 完成后，从第一条原始 workspace TOK 的前驱起，经真实十二个贷款 TOK、客户端、生产者、验证器、consumer，直至最终 halt CTL 的前驱（含）为止，next row 是启用原始非 IN 行的 running 切口。终端后继不在域内。新增 `00` setup、gate、返回和 CaptureCAP 的切口仍不在域内。
+

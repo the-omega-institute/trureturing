@@ -1,0 +1,193 @@
+**Theorem 3.1 (Forced zero-return sections).** Under Assumption 1.1 and
+Definition 1.2, let $k\ge1$ be an integer and put
+
+$$
+\begin{aligned}
+z_k&=\frac{c^{\lfloor k/2\rfloor}+c^{\lceil k/2\rceil}}{2},\\
+d_k&=\frac{(1-e_k)c^k}{2},\\
+F_k(q)&=e_kq+\frac{d_k}{z_k}(q+z_k-1)_+,
+\qquad 0\le q\le1.
+\end{aligned}
+\tag{3.1}
+$$
+
+Every admissible protocol, for every arbitrary unchanged independent
+auxiliary law, satisfies
+
+$$
+L_k\ge F_k(q_k).
+\tag{3.2}
+$$
+
+The improvement over $e_kq_k$ is strict when $q_k>1-z_k$. No condition is
+imposed on paths outside $E_k$; no almost-sure return or moment assumption
+is required. For $q_k>0$, the conditional error on $E_k$ is at least
+$F_k(q_k)/q_k$; no such conditional quantity is asserted at $q_k=0$.
+If every returning path uses at most $k$ reads, $q_k$ equals
+the total return probability. If $\mathbb P_p(T)=1$ and $N\le k$ almost
+surely, the unconditional classification error is at least $e_k+d_k$.
+These general-budget constants are not asserted optimal.
+
+Proof. First consider any finite list of at most $k$ actual addresses and
+its all-zero reply cylinder $C$. In phase $\phi$, let $m_\phi$ be the
+number of distinct active edges in this list. The active-edge graph is a
+disjoint union of finite paths. A component with $\ell\ge1$ edges has
+$\ell+1$ spins; its all-zero XOR constraint says precisely that those
+spins are constant. Its conditional mass is therefore
+$a^{\ell+1}+b^{\ell+1}$. Convexity of $t\mapsto t^\ell$, with weights
+$a,b$ summing to one, gives
+
+$$
+a^{\ell+1}+b^{\ell+1}
+=a\,a^\ell+b\,b^\ell
+\ge(a\,a+b\,b)^\ell=c^\ell.
+\tag{3.3}
+$$
+
+The different components use disjoint iid spins, so their masses
+multiply. Separator reads impose no further constraint, and repeated
+zero labels impose no new edge constraint. Thus
+
+$$
+J_p(C,\varphi=\phi)\ge\frac{c^{m_\phi}}2.
+\tag{3.4}
+$$
+
+With no active edge, the conditional mass is one and the same formula
+holds. Each distinct integer address is active in exactly one of the two
+phases; hence $m_0+m_1\le k$, with repetitions still counted as actual
+paid calls in the budget.
+
+For $0<c<1$, the minimum of $c^x+c^y$ over nonnegative integers with
+$x+y\le k$ uses sum $k$ and balanced exponents. Increasing an exponent
+decreases its power. If $x\ge y+2$, the change upon replacing $(x,y)$ by
+$(x-1,y+1)$ is
+
+$$
+(1-c)(c^{x-1}-c^y)\le0.
+\tag{3.5}
+$$
+
+Repeated balancing proves the assertion. Consequently
+
+$$
+J_p(C)\ge z_k,
+\qquad J_p(C,\varphi=\phi)\ge c^k/2\quad(\phi=0,1).
+\tag{3.6}
+$$
+
+Every endpoint state has positive mass on $C$: in either phase the
+finite path constraints admit a constant assignment of either spin value
+on the endpoint component, and $a,b$ are positive. These arguments apply
+equally to negative, distant, and disconnected addresses and to the
+empty list.
+
+Next fix a seed whose hypothetical all-zero decision path returns after
+$n\le k$ reads, and let $C$ be its zero terminal cylinder. If its output
+is $h$, let $\bar h$ be the complementary-spin state of the same endpoint
+phase, and write
+
+$$
+w=J_p(C,H_j=h),\qquad \bar w=J_p(C,H_j=\bar h),\qquad
+O=J_p(C,\text{opposite phase}),
+\qquad W=w+\bar w+O,\quad L=\bar w+O.
+\tag{3.7}
+$$
+
+Here the phase associated with $h$ is determined by the fixed $j$ and
+(1.2), even when that output is a wrong-phase state on some actual
+sources. Let $v$ be the number of vertices in its endpoint component,
+adjoining the endpoint as a singleton if needed. The comparison in
+Definition 2.1 gives $w\le R^v\bar w$.
+
+If $v\le k$, use (3.6) for the entire opposite-phase mass to obtain
+
+$$
+\begin{aligned}
+L-e_kW
+&=\frac{R^kL-w}{1+R^k}\\
+&\ge\frac{R^kO}{1+R^k}
+=(1-e_k)O\ge d_k.
+\end{aligned}
+\tag{3.8}
+$$
+
+If $v=k+1$, the endpoint component already needs $k$ distinct edges.
+Since $n\le k$, necessarily $n=k$ and every call is a distinct active
+edge in that component. There are no other components with edges, no
+separator calls, and no repeats in this case. All its replies are zero,
+so the component is constant. In the opposite phase all these calls are
+separators, giving $O=1/2$. The two same-phase state masses are
+$a^{k+1}/2$ and $b^{k+1}/2$. For their fixed total, $L-e_kW$ is minimized
+by choosing the state of larger mass. At that choice,
+
+$$
+L-e_kW
+=\frac{1-e_k}{2}\bigl[1-(a-b)b^k\bigr].
+\tag{3.9}
+$$
+
+For $k\ge1$, $b^k\le b$ and
+$1-(a-b)b=c+b\ge c\ge c^k$. Thus (3.9) is at least $d_k$ as well;
+choosing the smaller state only increases the error. The earlier case
+$v=1\le k$ also includes return with no reads. We have proved the
+absolute excess bound $L-e_kW\ge d_k$ for every such zero terminal
+section and every output.
+
+It remains to show how many seeds must have such a section. Let $B$ be
+the set of seeds for which the hypothetical all-zero path returns
+within $k$ reads. This is measurable: it is a countable union over finite
+ordered integer-address zero records of the measurable conditions that
+the rule follows that record and then returns in finite time. Following
+zero replies is an analysis of the existing rule, not a new observation
+available to a protocol.
+
+For a seed outside $B$, follow zero replies until the rule either
+continues internally forever or will make call $k+1$. The already
+acquired zero prefix has at most $k$ calls. On its cylinder, $E_k$ is
+impossible. Internal nonreturn before the first read uses the empty
+cylinder; internal nonreturn after any finite prefix is included. A path
+that takes this $(k+1)$st call cannot return in at most $k$ calls, regardless
+of its later behavior. By (3.6) this excluded cylinder has mass at least
+$z_k$. The $E_k$ source-section mass is therefore at most $1-z_k$ off
+$B$ and at most one on $B$. Integration gives
+
+$$
+q_k\le1-z_k+z_k\nu(B),
+\qquad
+\nu(B)\ge\frac{(q_k+z_k-1)_+}{z_k}.
+\tag{3.10}
+$$
+
+At each seed, every other terminal section with at most $k$ reads obeys
+the reused inequality $L\ge e_nW\ge e_kW$, including $n=0$. Terminal
+sections are disjoint at a fixed seed. For a seed in $B$, its particular
+zero terminal section has the additional excess at least $d_k$ from
+(3.8)--(3.9). Sum these nonnegative excesses over the countable finite
+terminal records, and integrate the source sections against $\nu$.
+Tonelli's theorem, or finite sums followed by monotone convergence,
+yields
+
+$$
+L_k-e_kq_k\ge d_k\nu(B)
+\ge\frac{d_k}{z_k}(q_k+z_k-1)_+.
+\tag{3.11}
+$$
+
+No disintegration of the auxiliary space was used. Null sections and
+measurable completions do not alter these integrated identities.
+All-zero records, both phase alternatives, wrong outputs, repetitions,
+all finite address configurations, and internal or infinite-read
+nonreturn remain in the competitor class. Since $d_k,z_k>0$, the strict
+improvement and the assertions at total or almost-sure return follow.
+$\square$
+
+The reused ingredients in this theorem are the original law and endpoint
+identification, the finite-section reduction of [Original, Theorems
+9.2--10.1][Original], the component products of its Lemma 3.1, and its
+count-only estimate. The additional quantitative bridge is the zero
+cylinder mass $z_k$, its absolute excess $d_k$, and the forced seed mass
+in (3.10). Convexity and finite-product likelihood comparison retain
+their usual elementary meaning; the displayed return-mass statement is
+repo-derived, without a literature-priority assertion.
+

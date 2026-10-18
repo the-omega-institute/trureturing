@@ -1,0 +1,12 @@
+**Proposition 8.3 (Optional finite cap and its accounting boundary).** If a supplied positive integer cap $W$ is imposed on Definition 7.1, give an ordinary boundary decision priority when its block closes on the last allowed read; otherwise emit a fixed default at timeout. Then each error under $\mathsf P_{i,q}$ is at most
+
+$$
+\alpha/2+\mathsf P_{i,q}(L_m>W).
+$$
+
+Use $U_W=1+B_{H,m}+B_\alpha+\lceil\log_2(W+2)\rceil$ in Proposition 8.2, charging the cap's description even on an early-stopping path. Every such prefix has $J_L\le\lfloor(W-1)/(2m)\rfloor$.
+
+Proof. A wrong capped decision is contained in the union of a wrong uncapped decision and timeout. This gives the probability bound without reconditioning a block law on finishing before the deadline. A block costs at least $2m$ reads after its starting tick, since every gap has at least one zero. The initial acquisition costs at least one read. The stated deterministic block-count bound follows. Counters and arithmetic at a final closing tick, or counters in a partial interval at timeout, are included as in Proposition 8.2. This proposition supplies no sharp or uniform deadline constant. $\square$
+
+These are pathwise arithmetic upper bounds. The mean-read order in Theorem 7.2 alone does not turn a nonlinear bound in $L$ and $J_L$ into an expected bit-operation endpoint order. No optimized storage, uniformly efficient preprocessing, finite-bit producer or physical elapsed-time bound follows. Producer dimension, observer storage, arithmetic work, read count and initialization are separate resource coordinates.
+

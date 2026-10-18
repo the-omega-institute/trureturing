@@ -1,0 +1,14 @@
+**Corollary 6.3 (N3 at $d=1$).** A six-read identically singular history still eligible for uniform recovery has one common safe generator normalized by
+
+$$
+\operatorname{tr}K=1,\qquad \operatorname{tr}(A_iK)=1
+\quad(0\le i\le5).
+\tag{6.1}
+$$
+
+Equivalently its six recorded matrices lie in the affine hyperplane $\{A:\operatorname{tr}(AK)=1\}$ in matrix space.
+
+**Proof.** Theorem 5.1 makes $Q$ constant. Its value at $A_0=I$ is $\operatorname{tr}K\ge0$. If this constant were zero, Lemma 6.1 would contradict rank three. Hence it is strictly positive. Dividing $K$ by this positive trace preserves safety, the common kernel line, and rank, and gives (6.1). The trace functional defined by a nonzero $K$ is nonzero by nondegeneracy of the trace pairing, so this level set is an affine hyperplane. ∎
+
+The hyperplane condition is necessary only. It provides no unknown-slope inverse and does not settle the choice between six and seven reads.
+

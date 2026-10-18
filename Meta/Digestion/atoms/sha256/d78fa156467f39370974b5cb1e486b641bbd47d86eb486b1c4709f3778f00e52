@@ -1,0 +1,34 @@
+**Definition 1.3 (complete canonical row and repeated partners).** For a finite prefix-free cut $C$, the row $R_C(t)$ replaces each reached cut subtree by its occurrence hole and retains the complete equality partition of those subtrees. Every two different blocks assert whole-subtree disequality. All exterior brackets and concrete leaves remain; a blocked cut has its concrete strict-prefix blocking leaf. Order reached holes lexicographically and name each block by the zero-based position of its first hole. Restriction recomputes these names, which need not be consecutive.
+
+Fix the cut $C=\{L,R\}^{3}$ and perfect depth-three exterior. Its current row $R_*=(C_*,\pi_*)$ has exactly these six classes:
+
+| Class | All occurrence holes | Chosen representative |
+| --- | --- | --- |
+| $a$ | $LLL,LRL$ | $LLL$ |
+| $c$ | $RLL,RRL$ | $RLL$ |
+| $b_1$ | $LLR$ | $LLR$ |
+| $b_2$ | $LRR$ | $LRR$ |
+| $b_3$ | $RLR$ | $RLR$ |
+| $b_4$ | $RRR$ | $RRR$ |
+
+Write $D=\{a,c,b_1,b_2,b_3,b_4\}$. For six pairwise distinct whole values $x_d\in\mathcal T$, set
+
+$$
+\mathscr S(x)=
+\left\langle
+ \left\langle\langle x_a,x_{b_1}\rangle,\langle x_a,x_{b_2}\rangle\right\rangle,
+ \left\langle\langle x_c,x_{b_3}\rangle,\langle x_c,x_{b_4}\rangle\right\rangle
+\right\rangle.
+\tag{BPS.5}
+$$
+
+The domain and whole target are exactly
+
+$$
+\mathcal U_*:=\{u\in\mathcal T:R_C(\rho u)=R_*\},\qquad
+t_u=\rho u,\qquad F(u)=R_C(u).
+\tag{BPS.6}
+$$
+
+Equivalently its elements are all injective valuations $x$ with $\mathscr S(x)\in\mathcal I$, via $u=\delta(\mathscr S(x))$. Extraction at the representatives is the inverse map. This is the legal row-fiber identification of NBP Definitions 1.1–1.2, Definition 9.1 and Proposition 9.3. There is no source-size, depth, rank, hidden-history or selected-family promise.
+

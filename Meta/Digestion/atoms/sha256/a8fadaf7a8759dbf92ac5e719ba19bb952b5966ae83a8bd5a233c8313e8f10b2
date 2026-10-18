@@ -1,0 +1,20 @@
+**命题 65.3（祖先重切与新生节点的两个反例）。** 原切址的祖先合并不必降低所需信息。取
+
+$$
+P=\{L,RL,RR\},\quad Q=\{L,R\},\quad
+u=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle,
+\quad v=\langle\langle\beta,\alpha\rangle,\langle\alpha,\beta\rangle\rangle.
+\tag{SLH.65.1}
+$$
+
+则 $R_P(u)=R_P(v)$ 而 $R_Q(u)\ne R_Q(v)$。此外，固定 $P=\{LL,R\}$，来源 $x=\langle\beta,\alpha\rangle$ 与 $y=\langle\beta,\beta\rangle$ 有相同原行，但
+
+$$
+R_P(\rho x)\ne R_P(\rho y).
+\tag{SLH.65.2}
+$$
+
+因此共同纪元中的原孔运输不等于在当前树上重新解释公共切址。
+
+证明。第一对旧外部均为 $\langle\square_1,\langle\square_2,\square_3\rangle\rangle$，三个孔值两两不同；新左右子树在 $u$ 相等而在 $v$ 不等。第二对原 $LL$ 均被具体 $\beta$ 叶阻断，外部为 $\langle\beta,\square_1\rangle$。更新后 $LL$ 新生且值为 $\beta$；$x$ 的当前 $R$ 子树为 $\beta$，$y$ 的当前 $R$ 子树为 $\langle\beta,\alpha\rangle$，故当前两孔的分区不同。所有区别都发生在允许的原有限树上。$\square$
+

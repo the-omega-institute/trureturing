@@ -1,0 +1,39 @@
+**Proposition 13.3 (passive decoding and the distinction acquisition must
+resolve).** On the whole family (AAR.73),
+$\Gamma_p(\partial_p(t))=(b_p(t),c_p(t))$ from Definition 12.2.
+Consequently the effective decoder (AAR.59), applied to this pair and
+supplied $k$, satisfies (AAR.74). Different descriptors may have the same
+predictive factor; for each fixed leaf position, however, its two labels
+have different factors and different future trajectories.
+
+Proof. An initially present branch persists. At a reached leaf $p_j$,
+same-source present-subtree transport supplies $T_{k+e}=\rho^{k+e}\alpha$.
+At $j=n$ the root replies of this tree give the first case of (AAR.76).
+At $j<n$ the guarded atomic law of SLH §§35–38 applies to the nonempty
+suffix $r$. Its first branch count is $s(r)+2-e$; an alpha stage occurs
+exactly when the last letter is $R$. This is precisely (AAR.57)–(AAR.59).
+It does not transport a subtree from an absent address, and for a
+left-ending suffix it does not convert absence at a formal residual
+index zero into alpha.
+
+For $j=n$ the two initial replies are already different. For $j<n$ put
+$d=s(r)$. At the common count $k=d+1$, the source with label alpha at
+$p_j$ gives beta at $p$, while the source with label beta gives branch.
+Thus the label matters even when the target was absent on both sources.
+The collision between different positions is real: for $p=RLL$,
+$t=\langle\alpha,\beta\rangle$ has descriptor $(1,1)$, whereas
+$t'=\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ has descriptor
+$(2,0)$. Both give $(b,c)=(3,0)$ and the trajectory
+absent, absent, beta, branch, branch, $\ldots$. Both sources are actual
+members of every admissible $\mathcal F_D$ for this $p$. $\square$
+
+The arbitrary-code minimum is already supplied by Theorems 12.6–12.7.
+For $p=Rq$, it has $2n+1-\lambda(q)$ values, where $\lambda(q)$ counts
+left letters before the last letter of $q$. It is not necessary to
+reconstruct that quotient to acquire a sufficient code. The descriptor
+has $2n+1$ possible values and may over-refine it. After acquisition one
+may instead retain (AAR.76), or its minimum name from §12, with local
+encoding and complete clearing separately charged. Theorem 12.4 gives
+its factorization through sufficient acquired boundary coordinates.
+It does not supply those coordinates without Reads.
+

@@ -1,0 +1,100 @@
+**Lemma 5.2 (saturated and transition lift).** Suppose $H^*=vv^T$, with $v=(v_D,v_T,v_S)^T$ real unit, $v_D>0$ and $v^TBv=k$. This includes $b_0=k,\mu=0$ and $b_0<k,\mu>0$. Set
+
+$$
+Q_c=I-vv^T,\qquad R_v=\alpha v_S^2+\beta v_T^2>0.
+\tag{RG.32}
+$$
+
+Define a real symmetric $J=J_v$ by
+
+$$
+\begin{aligned}
+J_{DD}&=-v_T/v_D,&J_{DT}&=1,&J_{DS}&=0,\\
+J_{TT}&=-\frac{v_T(\beta v_D^2+v_S^2)}{v_DR_v},&
+J_{SS}&=-\frac{v_T(v_T^2-\alpha v_D^2)}{v_DR_v},&
+J_{TS}&=\frac{v_S(v_T^2-\alpha v_D^2)}{v_DR_v}.
+\end{aligned}
+\tag{RG.33}
+$$
+
+Put
+
+$$
+\begin{gathered}
+\tau=-(h_0^2J_{DD}+b^2J_{TT}+d^2J_{SS}),\qquad
+Z_v=J+\tau I,\qquad W_v=\Theta(Z_v)-\kappa X_{01},\\
+M_2=\operatorname{diag}(m_1,m_2),\qquad W_2=W_v[\{1,2\}],\\
+s_{\rm cap}(C)=\min\left\{\frac12,\frac1{|\tau|},
+\frac1{\|J+\tau Q_c\|_{\rm op}},
+\frac1{\|M_2^{-1/2}W_2M_2^{-1/2}\|_{\rm op}}\right\}>0.
+\end{gathered}
+\tag{RG.34}
+$$
+
+A reciprocal with zero denominator means $+\infty$ and imposes no restriction. For every $0\le s\le s_{\rm cap}(C)$ set
+
+$$
+\begin{aligned}
+H_r&=\frac{1+rs\tau}{2}vv^T,\\
+L_r&=\frac{Q_c+rs(J+\tau Q_c)}2,\\
+N_r&=\frac{M-rsW_v}2.
+\end{aligned}
+\tag{RG.35}
+$$
+
+These are real PSD matrices satisfying $\operatorname{tr}(BL_r)=0$ and all identities (RG.31). Each $N_r$ kills specimen coordinate $0$ and has rank at most two.
+
+Proof. Unit length and $v^TBv=k=1-\ell$ give
+
+$$
+(1+\alpha)v_T^2+(1+\beta)v_S^2=\ell>0.
+\tag{RG.36}
+$$
+
+Thus $v_T,v_S$ are not both zero, proving $R_v>0$. No formula divides by either of those coordinates individually. The $D$ row of $Jv$ is $-v_T+v_T=0$ and its $S$ row cancels directly. Its $T$ row is
+
+$$
+v_D+\frac{-v_T^2(\beta v_D^2+v_S^2)+v_S^2(v_T^2-\alpha v_D^2)}{v_DR_v}
+ =v_D-\frac{v_D^2(\beta v_T^2+\alpha v_S^2)}{v_DR_v}=0.
+\tag{RG.37}
+$$
+
+The $B$ trace of $J$, with common denominator $v_DR_v$, has numerator
+
+$$
+-v_TR_v+\alpha v_Tv_S^2+\beta v_T^3=0.
+\tag{RG.38}
+$$
+
+Hence $Jv=0$, $J=Q_cJQ_c$, and $\operatorname{tr}(BJ)=0$. These calculations remain valid if $v_T=0$ or $v_S=0$.
+
+For a real symmetric coefficient $Z$, direct use of (RG.7) gives
+
+$$
+\Theta(Z)_{00}=h_0^2Z_{DD}+b^2Z_{TT}+d^2Z_{SS},\quad
+\Theta(Z)_{01}=\kappa Z_{DT},\quad
+\Theta(Z)_{02}=(h_0c+h_2d)Z_{DS}.
+\tag{RG.39}
+$$
+
+The exact $00$ normalization is $h_0^2+b^2+d^2=1$. Substituting $Z_v$ and the definition of $\tau$ makes $\Theta(Z_v)_{00}=0$, its $01$ entry $\kappa$, and its $02$ entry zero. Therefore $W_v$ has zero first row and column. Its $12$ entry is permitted to be nonzero; $W_2$ is the full remaining block.
+
+Every denominator in (RG.33) is positive and finite. Since $M_2\succ0$, all matrices in (RG.34) are finite. With the zero-reciprocal convention, their minimum with $1/2$ is strictly positive. The cap makes $1\pm s\tau\ge0$. On $v^\perp$, $Q_c$ is the identity and $\|s(J+\tau Q_c)\|\le1$; on $v$ both terms vanish. This proves $L_r\succeq0$. On specimen coordinates $1,2$, the failure condition follows from
+
+$$
+N_r|_{\{1,2\}}=\tfrac12 M_2^{1/2}
+ [I-rsM_2^{-1/2}W_2M_2^{-1/2}]M_2^{1/2}\succeq0.
+\tag{RG.40}
+$$
+
+Its coordinate $0$ is zero. The proof includes all closed cap endpoints, rank drops and zero high weights.
+
+Finally $\operatorname{tr}(BQ_c)=k-k=0$ and (RG.38) prove the low traces. Summing records gives $H^*$, $I-H^*$ and $M$. At a record,
+
+$$
+H_r+L_r=\frac{I+rs(J+\tau I)}2,
+\tag{RG.41}
+$$
+
+so the definition of $W_v$ gives (RG.31). These lifts use the lawful freedom of interior binary live maps; a fixed JR-conditioned split was never assumed in the lower argument. $\square$
+

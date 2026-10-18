@@ -1,0 +1,63 @@
+**Lemma 24.1 (actual selected-bit realizations).** There is a family of
+actual finite origins $(u_\theta)_{\theta\in\{0,1\}^n}\subset Z_{b_3}$
+with whole predecessor row $R_0$ and
+
+$$
+\sigma_{A,k}(u_\theta)=\mathbf1_{\{\sum_i\theta_i\ge k\}}.
+\tag{PCA.54}
+$$
+
+For every actual finite word $v$, its reply on this family is either
+constant or depends injectively on exactly one coordinate $\theta_i$.
+The latter case occurs precisely at
+
+$$
+E_i=\{p w_i z:p\in\{LLL,LRL\},\ z\in\{\varepsilon,L,R\}\}.
+\tag{PCA.55}
+$$
+
+These sets are disjoint. At $p w_i$ the two replies, in bit order
+$0,1$, are $(\beta,\mathsf{branch})$; at its two children they are
+$(\mathsf{absent},\beta)$. Every word in $E_i$ has length at least
+$s_i+4$. There is no address reading a combination of two bits.
+
+Proof. Reuse the finite comb construction of Lemma 18.1, now making
+all selected replacements simultaneously. Explicitly let
+$G=\langle\beta,\beta\rangle$, $C_0=G$ and
+$C_{m+1}=\langle C_m,\beta\rangle$, with $m\ge s_n$.
+In $C_m$, independently replace the beta at $w_i$ by $G$ exactly
+when $\theta_i=1$; call the result $B_\theta$. Prefix-freeness of the
+$w_i$ makes this a well-defined finite branch image. Distinct bit
+vectors give different trees, since their selected root replies differ.
+Choose four pairwise distinct branch images $D_c,D_1,D_2,D_4$ avoiding
+all these finitely many trees, using NBP Proposition 15.2's infinite
+branch-image supply. For every $\theta$ set
+
+$$
+x_a=B_\theta,\quad x_{b_3}=\beta,\quad
+x_c=D_c,\quad x_{b_j}=D_j\quad(j=1,2,4),\qquad
+u_\theta=\delta(\mathscr S(x)).
+\tag{PCA.56}
+$$
+
+All six values are pairwise distinct images. NBP Proposition 9.3
+therefore supplies an actual finite inverse with exactly the original
+current row and whole predecessor row $R_0$. Both occurrences of $a$
+use the same $B_\theta$ and both occurrences of $c$ use $D_c$.
+The selected replies give (PCA.54) directly from the prescribed code.
+
+At a selected relative root the replacement changes beta to branch,
+and at its two children changes absent to beta. Below either child
+both replies are absent. Proper prefixes remain branch, disjoint
+subtrees are unchanged, and the selected cones are disjoint. These
+statements hold simultaneously for every selected replacement.
+A word shorter than three stays in the fixed exterior. Every longer
+word has one cut prefix; an unchanged class gives a constant reply,
+while either $a$ occurrence reduces to its actual suffix in
+$B_\theta$ by (NBP.9.7). This proves the complete address classification
+(PCA.55), including both leaf labels, absence, unselected slots and
+arbitrarily deep words. No observational restriction has been placed
+on a competitor. The finite family is used only for lower bounds;
+its inverse and bit coordinates are proof objects, not runtime ports.
+$\square$
+

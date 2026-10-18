@@ -1,0 +1,28 @@
+**Theorem 4.3 (a sufficient saturation order on a fixed family).** Fix
+$D,p$. The finite response vector indexed by
+
+$$
+W_D=\{Ru:u\text{ is a word with }|u|\le D\},
+\qquad |W_D|=2^{D+1}-1,
+\tag{NCO.30}
+$$
+
+uniquely determines $t\in\mathcal F_D$. Consequently, if
+$r\ge2^{D+1}-1$ and $\mu_0\equiv_r^\partial\mu_1$, then
+$\mu_0=\mu_1$. All strategy cost distributions and their optimized
+means are then equal. The stated order is sufficient, without a
+minimality assertion.
+
+Proof. The entries include every possible node of the right subtree
+through its height cap, and give every branch, labelled leaf and
+absence. Recursively reconstruct $v$ from these replies. The outer
+root and left child are fixed, strict descendants of that left leaf
+are absent, and all $R$-leading words longer than $D+1$ are absent.
+Thus the response map is injective. Apply (NCO.5) to the entire tuple
+$W_D$ and combine with the common $d$ law. Equality of its law implies
+equality of the law of the uniquely recovered source. The remaining
+assertions follow by evaluating each deterministic encoder on that
+source. Therefore agreement at every order on one fixed $\mathcal F_D$
+cannot give a price gap. Theorem 1.3 varies $D,p$ with $r$ and has a
+different quantifier order. $\square$
+

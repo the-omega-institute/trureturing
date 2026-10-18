@@ -1,0 +1,79 @@
+**Definition 41.1 (application content and limits of mature tools).** The
+bearing deductions of §§32–40 are source-specific conditional
+applications: a pure replacement preserving the entire original angular
+Gram and $|u|$ has a uniform negative-height contribution; it forces
+negative pure coordinates even in reverse-retaining group families,
+and restricts $R_-$ to the two inertia classes of Theorem 34.3.
+The separate physical application evaluates the reverse-region trace,
+original-history and intensity witnesses, attains each scalar bound
+with one exact original finite law, and supplies the individual-history,
+Loewner and terminal-interface obstructions and regional joint-limit
+estimates. These are repo-derived applications in ordinary mathematics,
+not new general moment, PSD, quadrature, CP or rare-weight theorems.
+
+The endpoint triangle identity, compatible groups and complete-face
+interpretation are reused from Theorems 3.3 and 4.2, GC Theorem 15.1
+and §§23–31. The full-law moment and physical maps are GC Propositions
+10.1 and 12.2, with the original retained-record distinction also
+specified in [QS Definitions 1.2–1.3, Proposition 2.3 and §4](FIB_NATIVE_COMPLETE_CONTINUATION_QUANTITATIVE_OUTPUT_STABILITY.md).
+No curvature, higher-contact or count-deficit hypotheses from QS are
+supplied by the scalar witnesses.
+
+The following primary moment interfaces delimit the replacement and
+finite comparison, without a quadrature-to-label transfer:
+
+- di Dio–Schmüdgen, *The Moment Cone*, [Theorems 19 and 52](https://arxiv.org/html/1809.00584v1):
+  Theorem 19 gives at most $\dim V$ atoms for the chosen finite
+  function space. Theorem 52 requires its normalized evaluation image
+  to have at most $m-1$ path-connected components for its $m-1$ bound.
+  A complete contact zero set has no supplied such
+  connectedness, and neither theorem gives seven actual labels here.
+- di Dio–Schmüdgen, *The multidimensional truncated Moment Problem:
+  Atoms, Determinacy, and Core Variety*, [Lemma 3 and Proposition 4](https://arxiv.org/html/1703.01497v2):
+  nonnegative continuous zero-integral functions restrict support,
+  and finite-dimensional real integrable moment data have finite
+  representatives. The compact continuous $(\Gamma,k,g_t)$ with
+  constant mass in Theorem 32.3 meets that comparison interface;
+  it does not preserve an entire arbitrary saturated measure in
+  the subsequent finite representation or construct a continuous
+  physical instrument.
+- Dette–Melas, *A note on the de la Garza phenomenon*, [§3 Theorem 1](https://arxiv.org/html/1105.3575v1):
+  interval Chebyshev systems, the distinguished diagonal information
+  entry and its Loewner improvement are required. No map preserving
+  the original rational capacity, $K$, absolute $J_t$ and actual
+  labels follows without verifying those additional interfaces.
+- Nailwal–Zalar, *Gaussian Quadratures with prescribed nodes via
+  moment theory*, [Theorem 3.1 and Example 3.6](https://arxiv.org/html/2412.20849v1):
+  the theorem requires full univariate moment data, positive definite
+  initial data, invertible prescribed-node localizing matrix and
+  positive definite generated extension. For $\gamma_i=i!$ and
+  prescribed nodes $1/3,11$, the proposed six-atomic extension fails
+  positivity in that example. It is neither an AURIC counterexample
+  nor permission to prescribe short original supports freely.
+- Riener–Turatti, *Quadrature rules with few nodes supported on
+  algebraic curves*, [Theorem 1.1](https://arxiv.org/html/2509.06643v1):
+  full polynomial strength and the stated smooth-curve/places-at-infinity
+  or rational-parametrization/pole conditions are required. The
+  two-sheet rational capacity, absolute values, directed nodes and
+  original physical labels are not automatically preserved by its
+  node bounds.
+
+Bertsimas–Popescu's pointwise integration method is applied directly
+in (FC.159); sharpness uses (FC.169)–(FC.173), not a general SDP
+strong-duality claim. Scott's finite spanning-test interface applies
+only to the explicit real lower-supported effect space in (FC.180).
+Watrous is a textbook cross-check for the elementary CP and binary
+trace-distance arguments, not primary priority evidence. No theorem
+from the Davies–Lewis primary instrument article is a premise here.
+
+Alibert–Bouchitté, *Non-uniform integrability and generalized Young
+measures*, [Theorems 2.5 and 2.9](https://journalofconvexanalysis.com/articles/jca04006/jca04006.pdf),
+separates ordinary and concentration measures for bounded $L^1$
+sequences on a fixed Radon measure space with its admissible
+recession-integrand class. The varying laws $\pi_n$ in §40 have no
+supplied fixed-base parametrization satisfying that theorem. This is
+context for concentration, not an invoked transfer; (FC.182)–(FC.186)
+are direct estimates and FA/JS supplies the generic recovery. No
+exhaustive literature search, priority or worldwide novelty claim is
+made for either application.
+

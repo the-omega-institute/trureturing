@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-acquired-alpha-calibration-compatibility"
+path = "docs/develop/theory/AURIC_FIB_ATOM_ACQUIRED_ALPHA_CALIBRATION_COMPATIBILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,38 @@
+### 3. Acquired Return Variation
+
+PR #15020 的 return variation 表明，精确的未来控制不能只依靠静态边界均值，还需要描述实际回流过程中的状态变化。
+
+其不等式
+
+$$
+\frac{61}{11}e(M)
++
+\frac{19}{11}\sqrt{\mathcal V(M)}
+>
+\frac{\eta}{400000}
+$$
+
+可以在 FIB 语言中解释为：
+
+$$
+\text{预测误差}
++
+\text{动态回流变化}
+$$
+
+不能同时无条件地消失。
+
+这意味着 $\kappa$ 在更大的递归模型中可能不再是固定常数，而是一个随深度、历史和输出路径变化的隐藏响应坐标：
+
+$$
+\kappa
+\longrightarrow
+\kappa_h
+\longrightarrow
+\kappa_{h+1}.
+$$
+
+于是未来记忆不只是保存一个静态 $\kappa$，而是保存某种能够更新 $\kappa_h$ 的响应状态。
+
+---
+

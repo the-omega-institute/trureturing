@@ -1,0 +1,14 @@
+**Proposition 18.2 (evaluated gap constants).** With exactly the inputs above, the constants of Definition 10.1 have outward intervals
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $\gamma_*$ | $3.28515625\cdot10^{-7}$ | $3.28515625\cdot10^{-7}$ |
+| $\rho$ | $4.11498555177\cdot10^{-14}$ | $4.11498555178\cdot10^{-14}$ |
+| $d_{\rm off}$ | $5.60019691210\cdot10^{-60}$ | $5.60019691211\cdot10^{-60}$ |
+| $c_{\rm sh}$ | $5.60019691210\cdot10^{-61}$ | $5.60019691211\cdot10^{-61}$ |
+| $c_e$ | $5.35200636714\cdot10^{-64}$ | $5.35200636715\cdot10^{-64}$ |
+
+Consequently $D_e\ge c_e\mathfrak d^2$ on the entire fractional cylinder, including height zeros and both report axes.
+
+Proof. Substitute $q_B=1/8000$, $\Delta=29/100$, $d_{\max}=4$ into $\gamma_*=q_B\Delta^2/(8d_{\max})$. In the minimum defining $\rho$, the smallest member is $\gamma_* /(2M_3)$; compare it with $1/2,\Delta/4,u_*/2,h_* /(2M_H)$ by positive cross multiplication. Then substitute successively into $d_{\rm off}=q_B(\rho/2)^4/d_{\max}$, $c_{\rm sh}=\min(\gamma_*/4,d_{\rm off}/10)$ and $c_e=c_{\rm sh}\Delta^2/88$. Here $d_{\rm off}/10$ is the smaller member. These exact rational operations give the table. Theorem 10.2 supplies the full-cylinder consequence using the inherited exact event factors and complete leaves, with the factor $\Delta^2/88$ retained. No uncomputed off-support minimum is introduced. The contact-$6$ chart change has $x_6+1>1.49$ on its refined event rectangle, so its denominator also excludes zero. $\square$
+

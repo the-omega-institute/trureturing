@@ -1,0 +1,22 @@
+#### 17.1.3 Ambrosio–Honda
+
+Ambrosio 和 Honda 的 [New stability results for sequences of metric measure spaces with uniform Ricci bounds from below](https://arxiv.org/abs/1605.07908) 采用 extrinsic common-host 方法处理 measured-Gromov–Hausdorff 收敛。在统一 Ricci 下界等条件下，他们证明 Cheeger energies 的 Mosco 收敛，并建立 Sobolev、Hessian、\(W^{2,2}\) 和 Bakry–Émery/Ricci 条件的稳定性。
+
+有限层 Fibonacci 图的场若要具有所述几何极限，桥接条件必须显式包含：
+
+\[
+\iota_j:\Phi_j\hookrightarrow \mathcal H,
+\]
+
+\[
+\text{uniform coercivity},
+\qquad
+\text{equicoercivity},
+\qquad
+\text{compactness},
+\qquad
+\text{Mosco liminf/recovery}.
+\]
+
+逆极限的相容性只负责记录层间投影，不能替代 common-host 分析。
+

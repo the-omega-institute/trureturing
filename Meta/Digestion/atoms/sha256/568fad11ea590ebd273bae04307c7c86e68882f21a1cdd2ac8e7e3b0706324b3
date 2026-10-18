@@ -1,0 +1,6 @@
+**约定 94.2（原 programme 完整保留）。** 原弱有限 $(s,A)$ 前沿仍须在全部可行内点上联合评价定向 failure allocation 和全部 live-height decompositions，包括低于固定 allocation 最大对比度的情形，并给出共同正全局最优族、完整 contact／rank／optimizer 变化和参数 atlas。隐式 SDP、静态支持、局部 KKT、首阶达到族或五 low 加一 high 的构造上界均不替代该目标。精确有限 $A$ 最优仪器及其最小实际字母表、JS 边缘根清单、接触后重合集、剩余统一端点区间、下一项、临界五标签／静态接触联合插值与尺度均保留原范围的未决义务。不把固定强度或接触首阶极限与 $s\uparrow s_0$ 的非一致端点极限互换。
+
+同一个原共同达到族保持全部十二输出，$e_{5,e,n}=e_{27,e,n}=E_*$，$e_{16,e,n}<71/484<37/250<E_*$；没有十二误差全相等的结论。报告是 $\mathsf V\ge s$，联合量子份额按未来可访问性计数，活动按每个实际整个 fibre 积分后取最大；隐藏 Kraus 数、静态原子数、极限失败射线数、live 投影线数及实际获取标签数仍是不同数量。五 Borel 分量、条件参考、正 survivors、TP 控制及 FIRST $6+u$ 由原同一构造同时承担，不能用分别可达到的边缘值拼成一个仪器。
+
+未知 specimen 的合法 native 访问、原源／目标校准、共同 coherent storage／计数和持续时间、decoder actuation、统一物理时钟、实际 FIRST、archive/source/epoch/controller/permission 的共同实现桥仍未验证。OriginalControl 仍为几何供应；没有 Boolean／native／资源计数转移，也没有全有限平面、完整 programme 或源最终批准结论。
+

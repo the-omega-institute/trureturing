@@ -1,0 +1,17 @@
+**Theorem 173.1.** There is an actual reservoir label
+
+    U in H_Z \ {M,C,D,Z} with x_U > m-2.
+
+In particular, when |H|=5, its fifth label must satisfy u>m-2. Equivalently,
+a flat is impossible if every reservoir in H_Z other than M,Z has value
+at most m-2. The latter exclusion allows arbitrarily many reservoir labels.
+
+This does not assert u<=z, that U is witnessed, or that U is pi-selected.
+It is a necessary constraint, not a solution of the five-reservoir case.
+
+The proof reuses the actual-slot maximal-selected escape theorem, the
+paired-angle formulas and convexity in Section 95, the special-edge
+barrier of Section 112, and the algebraic estimates of the
+four-reservoir core closure in Sections 156--172. The new assertion is that its complete-star
+closure remains valid for an arbitrary number of additional low labels.
+

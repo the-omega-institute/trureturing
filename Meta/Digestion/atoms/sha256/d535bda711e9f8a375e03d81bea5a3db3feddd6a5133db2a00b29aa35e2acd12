@@ -1,0 +1,8 @@
+## 1. 原目标、来源与交付边界
+
+原目标仍为每个 $n\ge4$ 的无符号图 $\operatorname{Cay}(S_n,\{r_n,r_{n-1},r_{n-2}\})$ 存在覆盖全部 $n!$ 顶点且包含闭合边的 Hamilton 圈。本卷证明一个对所有 $n\ge5$ 有效的局部切换及其最小删边分类，给出全局拼接的充分条件和具体障碍；没有证明该充分条件在所有阶数存在。
+
+先复用 [项链端口接口](BIG3_NECKLACE_TRANSITION_INTERFACE.md) 中的完整陪集坐标。二因子切换、二面体陪集和项链机制继续归属于既有文献；关系 $(abcb)^2=1$ 不是新关系。本卷的规范长路径切换、分类与拼接推导不作全球新颖性或 unique 解题声明。
+
+产地：使用 theory-volume-template 与 formal-thinking-and-answer；先前 NyxID 任务通过 `chrono-chatgpt-pro-500-pool` 给出切换建议，已完成一次调用，观测为 `gpt_6_pro/pro`。Codex 主席整理本文；隔离 CLI 席独立推导两条 $a$ 边的切换、分类与端点公式，另一 CLI 席研究删标签层及洞的障碍。普通证明与有限运行分别核验；CLI 席不冒充不同模型族，Pro 的研究建议不等于本文的 PR 审批。会话为 `01a0e72e-78cf-77b3-9fa7-615080425971`。
+

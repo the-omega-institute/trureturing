@@ -1,0 +1,39 @@
+### 69.4 Conversion from residual to matrix distance
+
+Suppose \(H\) is unitary,
+\(\eta=\|H-H_\star\|_{\mathrm F}\le\rho\), and (69.2) fails.
+Separately dephase \(v,w\in\mathcal F(H)\) and multiply by \(\sqrt6\)
+to obtain unit-entry vectors \(z,w\) with first coordinate one. Then
+
+\[
+ |Q|=36\left|\,|v^*w|^2-1/6\,\right|\le1/10,
+\]
+
+so these coordinates with \(r=\sqrt3\) belong to \(T\).
+Write \(M_\star=\sqrt6H_\star\) and \(M=\sqrt6H\).
+For either \(a=z,w\), unitarity and \(\|a\|_2=\sqrt6\) give
+
+\[
+ |(M_\star a)_j|\le6,\qquad |(Ma)_j|\le6,\qquad
+ |((M_\star-M)a)_j|\le6\|H_\star-H\|_{\mathrm{op}}\le6\eta.
+\]
+
+Output flatness gives \(|(Ma)_j|^2=6\). Therefore
+
+\[
+ |F_{a,j}|=4\left|\,|(M_\star a)_j|^2-|(Ma)_j|^2\,\right|
+ \le4(6+6)6\eta=288\eta,
+\]
+
+\[
+ G\le12\cdot288^2\eta^2=995328\eta^2
+ <2^{20}\rho^2=2^{-E-2}<2^{-E}.
+\tag{69.11}
+\]
+
+This contradicts (69.10), proving the strict gap (69.2) even on the
+closed-radius boundary. If additional bases \(B,C\) formed a quartet
+with \(I_6,H\), the input vectors \(H^*B_j,H^*C_k\) would lie in
+\(\mathcal F(H)\), while their squared overlap would be \(1/6\).
+Unitarity preserves that overlap, contradicting (69.2).
+

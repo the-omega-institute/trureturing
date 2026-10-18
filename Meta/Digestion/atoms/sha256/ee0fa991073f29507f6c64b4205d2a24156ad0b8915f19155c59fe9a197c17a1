@@ -1,0 +1,18 @@
+### 定理三：局部时钟识别隐藏 seam 的充要条件
+
+在固定 $(X,Y,Z)$ 的非退化纤维上，观察：
+
+```math
+\mathcal O_K(p)
+=
+\bigl(P(p),C_K(p)\bigr)
+```
+
+能够唯一恢复 $\kappa$，当且仅当：
+
+```math
+\boxed{
+\operatorname{Curv}_K\neq0.
+}
+```
+

@@ -1,0 +1,39 @@
+**Definition 1.1 (stationary native family and all-word objective).** Let
+$\alpha,\beta$ be leaves and let $\langle x,y\rangle$ be a branch. The height
+of a leaf is $0$ and
+
+$$
+\operatorname{height}(\langle x,y\rangle)
+ =1+\max(\operatorname{height}(x),\operatorname{height}(y)).
+$$
+
+For $D\ge1$, use exactly the published family
+
+$$
+\mathcal F_D
+ =\{\langle\alpha,v\rangle:
+       \operatorname{height}(v)\le D\},
+\tag{1.1}
+$$
+
+Fix a public word $p$ beginning with $R$, with $1\le n:=|p|\le D$, and write
+$p_j$ for its length-$j$ prefix. A `Read` of an original-root word $w$
+returns `absent`, $\alpha$, $\beta$ or `branch` according to the one actual
+tree. A deterministic encoder starts from the same source-blind state on
+every member of $\mathcal F_D$, may choose arbitrary finite words adaptively,
+and must terminate and be correct on every member of $\mathcal F_D$. Its
+exported state must support one decoder for every authentic supplied count
+$k$ and the target future at $p$, with no new Reads. The source is sampled
+once and is unchanged throughout acquisition.
+
+For a public rational full-support law $\mu$ on $\mathcal F_D$, define
+
+$$
+V_{\rm all}(\mu)
+ :=\inf_A\sum_{t\in\mathcal F_D}\mu(t)T_A(t),
+\tag{1.2}
+$$
+
+where the infimum ranges over these globally correct all-word encoders and
+$T_A(t)$ counts every actual Read, including repeated and absent Reads.
+

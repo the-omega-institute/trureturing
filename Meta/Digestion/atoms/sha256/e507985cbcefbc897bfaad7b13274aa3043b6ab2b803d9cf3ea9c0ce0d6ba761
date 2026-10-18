@@ -1,0 +1,18 @@
+**Corollary 12.2 (one finite action budget suffices).** Keep the finite
+state bound $K$. Theorem 12.1 still decides feasibility if only the
+read bound or only the update bound is specified, with an optional
+finite length bound.
+
+Proof. In a terminating execution, a consecutive update-only block
+cannot revisit an update state: its source-independent successors would
+then repeat updates forever. Each such block has at most $K$ actions.
+If $q\le k$, there are at most $k+1$ such blocks, including any block
+before the first read or after the last. Hence $a\le(k+1)K$.
+
+At a fixed actual epoch, a read-only block cannot revisit a read state,
+since the register and control state would repeat and prevent halt.
+It has at most $K$ reads. If $a\le d$, there are at most $d+1$ such
+blocks, so $q\le(d+1)K$. Apply Theorem 12.1 with the derived bound.
+This preserves the candidate table and uses no resource normalization.
+$\square$
+

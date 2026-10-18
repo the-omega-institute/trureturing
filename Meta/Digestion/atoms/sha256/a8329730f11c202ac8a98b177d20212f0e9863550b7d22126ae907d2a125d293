@@ -1,0 +1,25 @@
+**Theorem 75.1 (complete punctured-branch chart coverage).** For every
+\(0<|b|<1\), every common-flat ray has one of the following descriptions:
+
+1. One of the four canonical nonzero-mode rays (74.2).
+2. A solution of the four-real-variable system (75.13)–(75.15), followed
+   by its cubic reconstruction in any of the six root orders, and
+   optionally by \(\Theta\).
+3. A common phase and synchronous permutation of an aligned input
+   \((1,1,z;g,g,gr)\). These are exactly the two constant canonical rays
+   (75.28), the finite two-real-variable quotient (75.31) with both
+   \(\Theta\) choices, and the pole pair (75.36)–(75.37).
+
+The pole pair occurs only when \(b^2\) equals the unique zero in \((0,1)\)
+of \(2t^5+33t^4+90t^3+4t-1\). No finite number of solutions of either
+quotient is asserted. The center and endpoints are outside this coverage
+theorem; the unaligned exclusion in Theorem 75.4 includes them.
+
+The proof is supplied by Theorems 75.2–75.5 below and their concluding
+coverage argument. These model-specific reductions are repo-derived.
+Algebraic construction of vectors unbiased to a prescribed Hadamard
+matrix has a prior computational treatment in Brierley and Weigert,
+[Constructing Mutually Unbiased Bases in Dimension Six](https://arxiv.org/abs/0901.4051v2),
+Phys. Rev. A 79, 052316 (2009). No census, approximation bound or
+no-quartet assertion from that source is a premise here.
+

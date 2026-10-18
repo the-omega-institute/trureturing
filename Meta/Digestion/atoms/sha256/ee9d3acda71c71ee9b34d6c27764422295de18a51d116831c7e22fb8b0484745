@@ -1,0 +1,23 @@
+**数学引文 5.3（数学公式的归属与文献边界）。** 本卷的各步依赖以下具体结论。
+
+| 来源与精确条目 | 使用的数学结论及条件 |
+| --- | --- |
+| [Minimax][Minimax] 定义 1.5，定理 2.1(A)，§§3.2–3.4、式（3.8）–（3.10） | 图份额系数 $\kappa_n$、全部共同准备和有限参考的有限下界、同一共同旋转接收器及其精确振幅。对该接收器的词长一致余项由本卷式（3.8）、（3.10）给出。 |
+| [Recovery][Recovery] 定理 2.1(A)–(C)，§§3.4–3.5 | Gram 距离公式、SRM、$C_n$、有限 Bayes 夹逼。常数 $3/4$ 的平均余项是该夹逼的直接定量推论。 |
+| [Growth][Growth] 定理 5.2、定理 7.3、推论 7.4 | $c_\star$ 的存在、$c_\star n\le\kappa_n\le c_\star(n+1)$、解析有理下界、Fibonacci 比值极限及正系数差；Cartesian 可加性和 Fekete 步骤仍使用该卷的结论。 |
+| [Eldar–Forney][EF]，版本 v2、定理 3 | SRM 正交化 $\Phi G^{-1/2}$；不将其特殊对称态族的精确最优性套用于本来源。 |
+| [Tyson][Tyson]，版本 v1、§§1.3–1.4、定义 6、定理 7 | 等先验时幂权平方根测量一致；近正交测量渐近最优性固定有限先验与态数，不提供增长标签数或本源输入优化的一致界。 |
+| [Montanaro][Montanaro]，版本 v2、§2.2、式（8） | Gram 平方根的逐来源平方重叠界；其直接应用不确定图份额最优系数。 |
+| [Quartic][Quartic] 定理 2.1(A) 与 [Sixth][Sixth] 定理 2.1 | 同一源的固定词长四阶、六阶最优 Bayes 展开；常数和邻域依赖 $n$，不替代本卷的联合估计。 |
+
+这里使用的文献范围限于表中具名条目的结论与假设。平方根谱演算和反对称矩阵指数作为这些推导的标准工具；所述源特定一致估计不作为一般近正交态族、一般图到量子源的对应、局部或 LOCC 类的最优性、价格优势或实际学习收益的结论。精确 $c_\star$、内部有限参数精确最优值、较大 $nx$ 区域及词长一致的更高阶最优余项不由这些估计确定。
+
+[Minimax]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_ATOM_WHITEBOX_LEGAL_EDGE_MINIMAX.md
+[Recovery]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[Growth]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[Quartic]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_PREPARATION_QUARTIC.md
+[Sixth]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_BAYES_SIXTH_ORDER.md
+[EF]: https://arxiv.org/abs/quant-ph/0005132v2
+[Tyson]: https://arxiv.org/abs/0907.1884v1
+[Montanaro]: https://arxiv.org/abs/quant-ph/0607011v2
+

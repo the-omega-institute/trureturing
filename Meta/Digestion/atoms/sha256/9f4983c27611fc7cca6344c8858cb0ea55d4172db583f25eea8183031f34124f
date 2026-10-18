@@ -1,0 +1,33 @@
+**Definition 1.1 (native expressions and their output images).** Put
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle x,y\rangle&=\langle\rho x,\rho y\rangle.
+\end{aligned}
+\tag{NPL.1}
+$$
+
+All trees are nonempty, finite, free and ordered. Native expressions use
+variables, the two constants, pairing and fixed numeral powers of $\rho$.
+Let $\Phi(\mathbf x)$ be a finite Boolean combination of equalities of
+such expressions, and let $\mathbf t=(t_1,\ldots,t_s)$ be a finite tuple
+of native expressions in the same finite variable list. Define
+
+$$
+\operatorname{Sol}(\Phi)=\{\mathbf x\in\mathcal T^n:\Phi(\mathbf x)\},
+\qquad
+\operatorname{Im}_{\Phi}(\mathbf t)
+ =\{\mathbf t(\mathbf x):\mathbf x\in\operatorname{Sol}(\Phi)\}.
+\tag{NPL.2}
+$$
+
+Variables not occurring in the output are still jointly existentially
+quantified; none is deleted from $\Phi$. Fixed finite tree parameters
+are native constructor expressions. Zero variables, empty output tuples
+and empty solution sets are allowed. There is no quantified epoch,
+physical word, arbitrary pointwise rank predicate or universal tree
+quantifier in this syntax.
+

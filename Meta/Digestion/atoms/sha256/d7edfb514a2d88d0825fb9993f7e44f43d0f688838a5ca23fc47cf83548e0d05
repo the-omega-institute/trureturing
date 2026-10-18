@@ -1,0 +1,111 @@
+**Lemma 5.2 (Every first-zero subtree).** Uniformly over all addresses
+and adaptive choices,
+
+$$
+B_0\le Z:=\frac a2+a^2\eta(1+c).
+\tag{5.4}
+$$
+
+Proof. Introduce the comparison quantity
+
+$$
+Q=\frac{a^2}{2}+a\eta+a^2\eta.
+\tag{5.5}
+$$
+
+First suppose the second call after the first zero has parity
+$\alpha$, with active edge $f$ in that phase. Its second reply one
+certifies $\alpha$ and imposes $e=0,f=1$. If $f=e$ this continuation
+is null. For adjacent $e,f$, Lemma 3.3 bounds the summed final
+continuation by $a\eta/2$. For disjoint $e,f$, Lemma 3.4 bounds it
+by $a^2\eta$. In all cases $a^2\eta$ is a valid upper bound.
+These comparisons allow either parity and any address for that branch's
+third call.
+
+Consider the second-zero prefix. If its third call has parity
+$\alpha$, the final-zero leaf contains all of phase $\beta$:
+every call on this leaf is a separator there. The phase-$\beta$
+majority state therefore has mass $a/2$. Every individual state has
+prior at most $a/2$, so this leaf's maximum is exactly $a/2$.
+Its final-one leaf imposes $e=0,f=0,g=1$ in phase $\alpha$.
+
+When $f=e$, that last leaf has a single zero edge and one one edge.
+If $g$ is adjacent to $e$, Lemma 3.3 bounds it by
+$a\eta/2\le a^2\eta$. If $g$ is disjoint, Corollary 3.6, or the
+disjoint comparison of Lemma 3.4 without a further query, bounds it by
+$a^2\eta$. If $g=e$, its required one contradicts the zero prefix.
+The second-one branch is null in this repeated-prefix case. Hence
+
+$$
+B_0\le\frac a2+a^2\eta\qquad(f=e).
+\tag{5.6}
+$$
+
+This explicitly treats the adjacent, disjoint and repeated final edges
+separately.
+
+For distinct adjacent $e,f$, Lemma 4.1 bounds the final-one leaf by
+$a^3\eta$, while Lemma 3.3 bounds the second-one continuation by
+$a\eta/2$. For disjoint $e,f$, Lemma 4.2 bounds the final-one leaf
+by $a^2c\eta$, while Lemma 3.4 bounds the second-one continuation
+by $a^2\eta$. Thus
+
+$$
+\begin{array}{c|c}
+\text{incidence of }e,f&\text{upper bound for }B_0\\ \hline
+\text{adjacent}&a/2+a^3\eta+a\eta/2\\
+\text{vertex-disjoint}&a/2+a^2c\eta+a^2\eta=Z
+\end{array}
+\tag{5.7}
+$$
+
+The repeated bound in (5.6) is smaller than $Z$ by $a^2c\eta>0$.
+The adjacent bound is also smaller, since
+
+$$
+Z-\left(\frac a2+a^3\eta+\frac{a\eta}{2}\right)
+=\frac{a\eta\delta c}{2}>0.
+\tag{5.8}
+$$
+
+Still with the second call of parity $\alpha$, suppose instead that
+the third call on the second-zero prefix has parity $\beta$. The final
+all-zero leaf then has at least one active zero edge in each phase.
+Lemma 3.2 bounds each individual state's mass by $a^2/2$; imposing
+further constraints cannot increase that state's joint mass. Its
+final-one leaf certifies $\beta$. In this phase both earlier calls
+were separators, so the sole active constraint is this last one edge.
+Its maximal full-law state mass is at most $a\eta$ by Lemma 3.2.
+Adding the at-most-$a^2\eta$ second-one continuation proves
+$B_0\le Q$ in this case, including repeats or adjacency among the
+earlier active edges in the other phase.
+
+Now suppose the second call after the first zero has parity $\beta$.
+Its second reply one certifies $\beta$ and leaves one active one edge
+with one query remaining, so Lemma 3.2 bounds that continuation by
+$a\eta$. On its second-zero prefix each phase has one active zero
+edge. Whatever parity the third call has, the final all-zero leaf has
+maximal individual state mass at most $a^2/2$. A final one certifies
+the phase of the third address and leaves a zero edge and one edge
+there. Corollary 3.6 bounds that leaf by $a^2\eta$: repeated edges
+are contradictory, adjacent edges use Lemma 3.3, and disjoint edges
+use their full products. This again gives $B_0\le Q$.
+
+Finally, using $a+b=1$ and $\delta=a-b$,
+
+$$
+\begin{aligned}
+Z-Q
+&=\eta\left(\frac12-a+a^2c\right)\\
+&=\frac\eta2\left(b^2+a^2\delta^2\right)>0.
+\end{aligned}
+\tag{5.9}
+$$
+
+Every case therefore gives $B_0\le Z$. Both second-call parities,
+both third-call parities on the zero-zero prefix and independently
+chosen third calls on the other prefix have been allowed. The bounds
+are uniform in target location and component orientation. On every
+mixed-phase leaf we took a single state's maximum, not a sum of
+different-phase answers. $\square$
+

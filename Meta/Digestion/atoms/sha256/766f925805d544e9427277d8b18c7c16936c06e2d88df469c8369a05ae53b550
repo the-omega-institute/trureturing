@@ -1,0 +1,29 @@
+**Lemma 4.1 (global inequality with precisely four zeros).** On the
+entire compact ellipse $\alpha u^2+\beta v^2=1$, set
+$k(u,v)=[-f(u,v)]_+$ and $H_p(u,v)=|u|+p k(u,v)$. For all
+sufficiently small positive $p$, the selected polynomial satisfies
+
+$$
+P_{a(p)}(u,v)\geq H_p(u,v),
+\tag{EP.23}
+$$
+
+with equality exactly at the four contacts of Lemma 3.2.
+
+Proof. At zero,
+$P_{a(0)}-|u|=(|u|-1)^2/2$, whose only ellipse zeros are the four
+corners. Choose disjoint small corner arcs on which $u,v$ and $f$ have
+their strict corner signs and $d=|u|-1$ is an analytic coordinate.
+Outside those arcs compactness gives a positive minimum of the base
+difference. Uniform convergence of $P_{a(p)}$ and boundedness of $k$
+preserve strict positivity there for small $p$.
+
+Inside each arc the difference is the analytic function
+$a(p)\cdot m_j(d)-(1+d+p k_j(d))$. Its value and first derivative
+vanish at $d_j(p)$. Its second $d$ derivative equals one at $p=0$
+throughout the arc, and stays at least $1/2$ after shrinking the arcs
+and parameter interval. Taylor's integral formula bounds it below by
+$(d-d_j(p))^2/4$. This proves the inequality and its complete zero set.
+Axes, zeros of $f$ and all remote ellipse points are included in the
+compact complement argument. $\square$
+

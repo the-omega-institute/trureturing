@@ -1,0 +1,6 @@
+**Corollary 91.3 (representation-stratum inversion).** Under Definition 89.1's numerical convention there are $c,C>0$ such that, for all sufficiently large integer bit caps $B$, the constructed $B$-bit representation covers every source with at most $\lfloor2^{c2^B}\rfloor$ leaves, while a $B$-bit cover of a sufficiently large $N$ stratum requires $N\leq2^{C2^B}$. Equivalently, the logarithm of the supportable worst-case source-size cap is $\Theta(2^B)$.
+
+**Proof.** Apply the upper and lower in Theorem 89.2 and exponentiate twice, absorbing their fixed additive constants into $c,C$. The particular upper is constructed in §§92–93. $\square$
+
+This inverts a family of representation statements. It supplies neither a source-size oracle nor a free double-exponential source generator. Arbitrarily required evidence invalidates an evidence-independent total-length inversion.
+

@@ -1,0 +1,18 @@
+## Exact scope comparison
+
+The abstract barrier/co-volume mechanism is related to the proof in
+CFMP_EIGHT_TRIANGLE_CLUSTERS.md and CFMP_DEGREE10_STAR.md, but the
+canonical Uemura box is a different box. It must not be silently substituted
+for the narrower heterogeneous boxes in those files.
+
+The generic three-edge theorem with degree-eight lows and arbitrary high
+degrees at least 12 is not a direct corollary of Uemura Theorem 4.2. For the
+homogeneous three-star endpoint with adjacent high valences 12 and opposite
+valence 12, the C=2 canonical endpoint
+
+  phi(2,2,2,gamma_12,b_12,b_12)
+
+is strictly greater than 1/sqrt(2), so the corresponding single angle is
+strictly less than pi/4. Thus the generic theorem's incidence estimate
+remains an independent certificate.
+

@@ -1,0 +1,27 @@
+**Definition 7.1 (the original risk and the separate midpoint condition).**
+For the source of Assumption 6.1 use exactly
+[PAIR, (11.9)][PAIR-STABILITY]:
+
+$$
+\mathcal J=\max_{s\in\{p,\beta\}}
+ \left\{\sup_{k:\mu(k)>0}
+       \int\operatorname{TV}(D,P_{s,r_k})\,d\nu_s(D)-\rho_s\right\},
+\qquad
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750}.
+\tag{7.1}
+$$
+
+A compatible zero-excess pair means $\mathcal J=0$, with every supported
+target still present. Separately, a boxed p-midpoint pair means a pair
+satisfying Assumption 6.1 and
+
+$$
+\int Q(E_p)\,d\nu_p=C_p,\qquad
+C_p=\frac{11758471}{22781250}.
+\tag{7.2}
+$$
+
+This second condition asserts neither the suspended midpoint nor the
+supported-target loss budgets.
+

@@ -1,0 +1,258 @@
+**Theorem 313.1 (Both heads may be strict).**
+Let $\tau,\sigma\ge0$, $\tau+\sigma>0$, and prescribe
+
+$$
+\begin{gathered}
+E=5\tau+17\sigma,\\
+(a_3,a_4,a_5,a_6,a_7)=
+(13\tau+46\sigma,10\tau+35\sigma,9\tau+29\sigma,
+ 8\tau+26\sigma,6\tau+20\sigma).
+\end{gathered}
+\tag{313.1}
+$$
+
+Take any ordered heads $1\ge a_1\ge a_2\ge a_3$ satisfying
+
+$$
+a_1+7\tau+23\sigma\le1,\qquad
+ a_2+11\tau+34\sigma\le1,
+\tag{313.2}
+$$
+
+and any entire positive nonincreasing vanishing continuation with
+$a_8\le E$. Then
+
+$$
+\min_{A\in\mathcal N_2} e_a(A)
+ =\min_{A\in\mathcal O_2} e_a(A)=E.
+\tag{313.3}
+$$
+
+Both minima are attained by the law below and its same-seed counted
+completion. For this fixed entire sequence, feasibility in either
+class at any positive closed cap $c$ is equivalent to $c\ge E$.
+This includes $a_8=E$, both parameter axes, and both strict head
+inequalities. It imposes no summability requirement on the tail.
+
+**Proof: lower bound on every original competitor.**
+Use (312.3) at $(j_1,\ldots,j_5)=(3,4,5,6,7)$. The exact generator
+products are
+
+$$
+\begin{aligned}
+(5,5,4,5,4)\mathbin{\cdot}(13,10,9,8,6)&=215=43\cdot5,\\
+(5,5,4,5,4)\mathbin{\cdot}(46,35,29,26,20)&=731=43\cdot17.
+\end{aligned}
+\tag{313.4}
+$$
+
+Therefore every original competitor has $43e_a(A)\ge43E$.
+This is independent of both heads. In particular a hypothetical
+smaller cap cannot escape the bound by changing active horizon or
+by activating additional actual tail coordinates.
+
+**Reused construction for the upper bound.**
+Use exactly Construction 307.2, with no new primal credit. To give
+the complete attaining rule here, the following table lists
+$O(i,j;u,v,z)$ on stopped cells $0,10,11$ and its mass
+$A\tau+B\sigma$:
+
+| $i$ | $j$ | $u$ | $v$ | $z$ | $A$ | $B$ |
+| --- | --- | --- | --- | --- | ---: | ---: |
+| 1 | 2 | 1 | 2 | 3 | 2 | 7 |
+| 1 | 2 | 1 | 2 | 4 | 1 | 4 |
+| 1 | 2 | 1 | 2 | 5 | 1 | 4 |
+| 1 | 3 | 1 | 3 | 0 | 3 | 11 |
+| 1 | 4 | 1 | 4 | 0 | 1 | 3 |
+| 2 | 3 | 0 | 3 | 0 | 3 | 8 |
+| 2 | 3 | 2 | 3 | 0 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 | 3 |
+| 3 | 4 | 0 | 4 | 0 | 1 | 6 |
+| 3 | 4 | 0 | 4 | 5 | 1 | 2 |
+| 3 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 3 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 4 | 5 | 0 | 5 | 0 | 1 | 3 |
+| 4 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 5 | 6 | 0 | 6 | 0 | 1 | 3 |
+| 6 | 7 | 0 | 7 | 0 | 1 | 3 |
+
+The core mass is $20\tau+69\sigma$. Set
+
+$$
+\rho=1-20\tau-69\sigma,\qquad
+x_1=a_1-13\tau-46\sigma,\qquad
+x_2=a_2-9\tau-35\sigma.
+\tag{313.5}
+$$
+
+The remaining mass is one prefix $(1,2)$ branch with cell vectors
+
+$$
+(\rho-x_1)e_0+x_1e_1,\qquad
+(\rho-x_2)e_0+x_2e_2,\qquad \rho e_0.
+\tag{313.6}
+$$
+
+Order and (313.2) give
+
+$$
+\rho\ge4\tau+11\sigma>0,\qquad
+0\le x_1\le\rho,\qquad
+4\tau+11\sigma\le x_2\le\rho.
+\tag{313.7}
+$$
+
+Indeed $a_2\ge a_3$ and its head bound imply
+$24\tau+80\sigma\le1$, giving the lower bound on $\rho$.
+The two upper bounds $x_i\le\rho$ are exactly the two head
+inequalities; the lower bounds follow from head order.
+Thus every core mass and every vector entry is nonnegative, and
+the core plus the one prefix mass totals one. To specify complete
+table weights for that prefix, set
+
+$$
+\begin{aligned}
+q_{11}&=\min(x_1,x_2),&q_{10}&=(x_1-x_2)_+,\\
+q_{01}&=(x_2-x_1)_+,&q_{00}&=\rho-\max(x_1,x_2).
+\end{aligned}
+\tag{313.8}
+$$
+
+Assign mass $q_{ab}$ to $O(1,2;a,2b,0)$ for $a,b\in\{0,1\}$.
+All four masses are nonnegative and total $\rho$, with first-cell
+correct mass $x_1$ and middle-cell correct mass $x_2$. Equivalently,
+on one local uniform coordinate $V$, fix both counterfactual choices
+by $V<x_1/\rho$ and $V<x_2/\rho$ before replies. There is no
+condition $x_1+x_2\le\rho$: for example $x_1=x_2=\rho$ selects
+just $O(1,2;1,2,0)$ of mass $\rho$. This explicit coupling only
+unpacks the existing common-prefix construction.
+
+**Verification on every word for the same law.**
+Direct addition of the sixteen core rows gives the following correct
+mass coefficients, independent of every bit after the first zero:
+
+$$
+\begin{array}{c|rrrrrrr}
+n&1&2&3&4&5&6&7\\\hline
+\tau&8&4&8&5&4&3&1\\
+\sigma&29&18&29&18&12&9&3
+\end{array}
+\tag{313.9}
+$$
+
+For example the first three rows give $(4,15)$ in each of the
+first two classes; rows $(1,3),(1,4)$ add $(4,14)$ in class 1,
+and $(2,3;2,3,0)$ adds $(0,3)$ in class 2. In the later classes,
+earlier queried bits are one, so the displayed second or exhaustion
+outputs give the same totals for every suffix. Adding $x_1,x_2$
+from the prefix proves
+
+$$
+p_w(n)=a_n-E\qquad(n=n(w)\le7).
+\tag{313.10}
+$$
+
+It remains to bound the independent union deficit, not just the
+correct event. Let $D_n$ be the mass outside $\{0,n\}$.
+The prefix contributes zero to this mass. For the core set
+$(s,t,u,v,z)=(w_3,w_4,w_5,w_6,w_7)$ and define
+
+$$
+\begin{aligned}
+B&=2s(1-t)+st+(s+t)(2-u-v)+u(1-v)+v(1-z),\\
+G&=3(1-s)+(1-t),\\
+B'&=8s(1-t)+2st+3(s+t)(2-u-v)+3u(1-v)+3v(1-z),\\
+G'&=11(1-s)+3(1-t).
+\end{aligned}
+\tag{313.11}
+$$
+
+Evaluation of the listed stopped rows gives these exact coefficients
+of $D_n$, retaining every Boolean suffix:
+
+| First zero | Coefficient of $\tau$ | Coefficient of $\sigma$ |
+| --- | --- | --- |
+| 1 | $B+w_2G$ | $B'+w_2G'+3(1-w_2)$ |
+| 2 | $B+G$ | $B'+G'$ |
+| 3 | $2+2(1-t)+t(2-u-v)+u(1-v)+v(1-z)$ | $8+6(1-t)+3t(2-u-v)+3u(1-v)+3v(1-z)$ |
+| 4 | $3+(1-u)+(1-v)+u(1-v)+v(1-z)$ | $11+3[(1-u)+(1-v)+u(1-v)+v(1-z)]$ |
+| 5 | $3+2(1-v)+v(1-z)$ | $11+6(1-v)+3v(1-z)$ |
+| 6 | $5$ | $17$ |
+| 7 | $5$ | $17$ |
+
+Here is an analytic all-suffix bound, so no extrapolation from
+rational parameter tests is needed. For $q=s+t$, distinguish
+$uv=00,01,10,11$ in
+$q(2-u-v)+u(1-v)+v(1-z)$. After maximizing over $z$ its maximum
+is $\max\{2q,q+1,1\}$, giving $1,2,2,4$ for
+$st=00,01,10,11$. Substitution yields
+
+$$
+\begin{array}{c|rrrr}
+st&00&01&10&11\\\hline
+\max B&1&2&4&5\\
+G&4&3&1&0\\
+\max B'&3&6&14&14\\
+G'&14&11&3&0
+\end{array}
+\tag{313.12}
+$$
+
+Thus $B+G\le5$ and $B'+G'\le17$.
+Class 1 with $w_2=1$ uses those bounds, and with $w_2=0$ uses
+$B\le5$ and $B'+3\le17$.
+In class 3, $t=0$ gives bounds five and seventeen because
+$u(1-v)+v(1-z)\le1$; $t=1$ gives four and fourteen because
+$2-u-v+u(1-v)+v(1-z)=2-uv-vz\le2$.
+For class 4 its bracket is likewise $2-uv-vz\le2$.
+Class 5 follows from $v=0,1$, and classes 6 and 7 are constant.
+Consequently every coefficient is bounded by five or seventeen,
+respectively. Nonnegative real $\tau,\sigma$ give $D_n\le E$
+on every word for this same law.
+
+Using (313.10), the three distinct deficits (309.2) are
+
+$$
+1-a_n-p_w(0)=D_n-E\le0,\qquad
+a_n-p_w(n)=E,\qquad
+1-p_w(0)-p_w(n)=D_n\le E.
+\tag{313.13}
+$$
+
+Thus TV is exactly $E$ on every first-zero fibre up to seven.
+The positive word has nonbase mass from just the first three core
+exhaustion outputs and $(3,4;0,4,5)$:
+$(4\tau+15\sigma)+(\tau+2\sigma)=E$.
+The prefix emits zero there, so $p_+(0)=1-E$.
+
+**Original execution, tails and closed caps.**
+Partition one source-independent uniform seed into half-open intervals
+of the sixteen core masses and the prefix mass $\rho$. The prefix
+local coordinate fixes both thresholds, or the four weights (313.8),
+before seeing replies. Interval endpoints can be assigned to either
+adjacent table; every resulting table obeys the same resource bound.
+Execute the selected increasing schedule on the same actual source,
+stop at the first queried zero or exhaustion, and emit the indicated
+actual original mark. This is a measurable zero-advice rule with
+finite handoff at every seed and source and at most two actual calls.
+Its $N$ completion uses exactly the same seed and actual source,
+obtains the entire preselected schedule, reconstructs the stopped
+output and counts any ignored second reply. It has the identical law.
+
+No mark above seven is emitted. Every actual $n>7$ therefore has
+exact error
+
+$$
+\max\{1-p_+(0),a_n\}=\max\{E,a_n\}=E.
+\tag{313.14}
+$$
+
+This includes the tie $a_8=E$ and every permitted positive
+nonincreasing vanishing continuation. The positive finite word
+represents actual later-zero sources, not an infinite all-positive
+source. Since $a_7-E=\tau+3\sigma>0$, the active horizon at $E$
+is exactly seven. Hence both original rules attain $E$, matching
+(313.4). The same law meets every larger cap, while (313.4) excludes
+every smaller cap. This completes the proof of (313.3) and its
+closed-cap equivalence. $\square$
+

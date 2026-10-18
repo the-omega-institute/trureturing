@@ -1,0 +1,44 @@
+## 4. The horizontal outer edge: kernel energy and a matching list
+
+On the original middle triple define
+
+$$
+\omega=\frac{-1+i\sqrt3}{2},\qquad
+u=\frac{(1,1,1)}{\sqrt3},\quad
+v=\frac{(1,\bar\omega,\omega)}{\sqrt3},\quad
+n=\frac{(1,\omega,\bar\omega)}{\sqrt3}.
+\tag{4.1}
+$$
+
+The equations $1+\omega+\bar\omega=0$, $|\omega|=1$ make them orthonormal.
+Multiplication by $K_3$ gives
+$K_3u=0$, $K_3v=-i\sqrt3v$, $K_3n=i\sqrt3n$. Consequently
+
+$$
+I_3+iB_0K_3=uu^\dagger+2vv^\dagger,\qquad
+(I_3+iB_0K_3)n=0.
+\tag{4.2}
+$$
+
+The full $M(a,B_0)$ also kills the embedded $(0,n,0)$: its outer-middle
+rows are constant and the coordinates of $n$ sum to zero. For each cyclic
+$j$ put
+
+$$
+w_j=\frac{m_j-\omega m_{j+1}}{1-\omega}.
+\tag{4.3}
+$$
+
+Since $|1-\omega|^2=3$,
+
+$$
+\sum_jw_j=\sqrt3u,\qquad
+\sum_jw_jw_j^\dagger=uu^\dagger+vv^\dagger.
+\tag{4.4}
+$$
+
+For the second identity, its diagonals are $2/3$ and its oriented cyclic
+entries are $-\bar\omega/3=(1+\omega)/3$, exactly those of the two
+projections. The first identity follows by collecting each middle
+coordinate's coefficient $(1-\omega)/(1-\omega)=1$.
+

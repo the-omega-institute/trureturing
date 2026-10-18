@@ -1,0 +1,71 @@
+**Theorem 12.1 (pointwise minimum and all possible edge contacts).**
+For $0<\varpi<\gamma_f$, the minimum number of nonzero physical
+failure rays in an optimizing limiting measure at
+$\lambda=\lambda_*(\varpi)$ is two if
+$\phi_\varpi'(x_+)\le0$ and three if this derivative is positive.
+At $C_{\rm end}$ and at/above $C_{\rm sat}$ it is two.
+
+For explicit effects use $x=x_*$, $y=y_\varpi(x)$, $m=x+y$,
+$p=y/m$, $q=(1-y)/(2-m)$ and
+
+$$
+\begin{gathered}
+e_P=(\sqrt{1-p},-\sqrt p)^T,\qquad
+e_\pm=(\sqrt{1-q},\pm\sqrt q)^T,\\
+\omega_\pm=\frac12\left[2-m\pm
+ \frac{\sqrt{xy}}{\sqrt{q(1-q)}}\right],\\
+B_P=mM_2^{1/2}e_Pe_P^TM_2^{1/2},\qquad
+B_\pm=\omega_\pm M_2^{1/2}e_\pm e_\pm^TM_2^{1/2}.
+\end{gathered}
+\tag{JS.57}
+$$
+
+Zero weights are omitted. These effects sum to $M_2$. Every possible
+edge/interior change lies among the zeros on $(p_z,p_s)$ of
+
+$$
+E_{\rm edge}(p)=g_+(p)C'(p)-g_+'(p)D_J(p,1-p).
+\tag{JS.58}
+$$
+
+This zero set is finite and nonempty. No singleton, simple-zero,
+ordered-root or actual finite-acquisition-alphabet assertion is made.
+
+Proof. The complement of (JS.53) has diagonals $1-x,1-y$ and
+cross entry $\sqrt{xy}$. Formula (JS.57) matches all these entries.
+Its determinant is $1-m$. For $m<1$ both $\omega_\pm$ are positive;
+for $m=1$ the minus weight vanishes. Both negative-line expectations
+are strictly negative because $q<1/2$ and $d_f>2b_{\rm off}$.
+Strict Jensen forces this same $q$ in every cost-minimal complement.
+Two positive rank-one whitened effects summing to $I_2$ must be
+orthogonal projections with masses one. Thus $m<1$ cannot have an
+alternative two-ray optimum. Equivalently use TC's unique optimizing
+line measure. For $m=1$ (JS.57) is exactly that orthogonal pair.
+Rank-two covariance excludes one ray. At critical cost strict Jensen
+forces $p=1/2$ and opposite cross signs; at spectral cost the equality
+classification of Theorem 8.2 applies. These give the endpoint counts.
+
+At an edge point $x=1-p,y=p$ the contour derivative is
+$y_\varpi'=-P_{+,x}/P_{+,y}$, so direct substitution yields
+
+$$
+\phi_\varpi'(x_+)=-E_{\rm edge}(p)/P_{+,y},\qquad
+c_p=-\frac{\sqrt{p(1-p)}}{C'(p)}E_{\rm edge}(p).
+\tag{JS.59}
+$$
+
+Here $c_p$ is exactly TC.8's dual cross entry, and $P_{+,y}>0$,
+$C'(p)>0$. Thus the clamped edge rule, $E_{\rm edge}\ge0$ and
+TC's necessary-and-sufficient $c_p\le0$ are the same test.
+Equation (JS.55)'s $\chi\ge0$ is the same sign once more.
+
+The functions are real analytic on a neighborhood of $[p_z,p_s]$:
+all radial arguments remain strictly between their axes there.
+At $p_z$, $E_{\rm edge}=-g_+'D_J<0$; at $p_s$ it is
+$\gamma_f C'>0$. Continuity gives at least one zero. An infinite
+zero set in this compact interval would have an accumulation point
+in its analytic neighborhood and force the function to vanish
+identically, contradicting these endpoint signs. Hence the set is
+finite, including possible multiple roots or roots without a sign
+change. $\square$
+

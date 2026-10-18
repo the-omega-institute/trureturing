@@ -1,0 +1,30 @@
+**Corollary 249.2 (Original full-class repair with the allowance paid).**
+For every entire original positive nonincreasing vanishing $a$ and every
+positive closed cap $\varepsilon$ whose strict active length is $L\ge3$,
+original N feasibility implies original O feasibility at cap
+
+$$
+\min\left\{1,\ \varepsilon+
+ \min\left\{1,c_L\left[2-\sum_{i=1}^La_i+(L+1)\varepsilon\right]\right\}\right\}.
+\tag{249.3}
+$$
+
+The chosen finite N representative and its repaired O rule use the
+same seed. Every actual tail still has error at most $\varepsilon$.
+
+Proof. Use the necessary direction of §110.2 at the exact original
+cap to obtain one normalized full finite N law $p$. Apply Theorem
+248.2 to any of its complete-table decompositions and execute the
+repaired law on the actual low primes. Every active word has error at
+most $\varepsilon+\mu$, bounded by (249.3) since TV is at most one.
+Its entire positive-word law is unchanged. Thus every actual $n>L$
+has error $\max\{1-p_{v^+}(0),a_n\}\le\varepsilon$, including
+$a_{L+1}=\varepsilon$ and all later ties. One pre-reply seed selects
+all outputs and the increasing schedule; execution has at most two
+actual requests and finite handoff. The initial original competitor
+need not retain its laws or seed coupling under §110.2; the same-seed
+assertion is for its selected finite representative and this repair.
+Small active lengths retain their existing suppliers.
+The displayed positive allowance is part of the cap, so this corollary
+does not establish the original same-cap implication when it is positive. ∎
+

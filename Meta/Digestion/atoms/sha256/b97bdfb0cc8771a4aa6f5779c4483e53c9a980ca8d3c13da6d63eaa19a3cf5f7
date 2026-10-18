@@ -1,0 +1,22 @@
+**数学引文 4.1（成熟有限记忆理论）。** Berg–Ordentlich–Shayevitz 的 [有限记忆统计推断综述][Survey] §2.3 明确使用来源独立随机性与时间齐次有限状态，§6.1 讨论随机有限记忆假设检验，§7.3 讨论相对于常数预测器的累计冗余。[确定性有限记忆二元检验][BOS] §I、式(1)–(9)使用长期分类错误及状态数误差指数。这些条件与有限保持有关，但其风险不是本卷同一实际停止历史上的完整转录条件 TV，因而不能直接供应定理2.1的上界或相位生成器。
+
+TV 凸性、半 $\ell^1$ 的三角等号、几何级数和两点平衡均是成熟方法，在本卷的活证明中消费。新增关系是原停止词族上的相位生成中心：关键事件平衡与有限起点比例控制无界词族，实际 Fibonacci 非端点间隙给统一余量，同一原逐字更新同时承担完整转录生成和边缘化条件更新。由此，既有端点完整尾下界在全部有限或可数正端点先验上成为达到的精确值，两种风险无需分离。
+
+[ST] 供应的两深度值、全先验终局 $13/266,9/266$、全先验完整尾下界、有限见证以及公平端点标签的实际三深度反例全部保持。定理2.1新增的是较大先验完整尾的匹配上界和合法闭合达到；推论3.1只区分单一 iid 合成模型与相位模型，不宣称通用的更大下界。固定有理循环参数是满足证明中有限严格不等式的一个选择，不是自然常数或最小资源价格。
+
+这里的全域是原第三标记后全部合法有限切面及原 Stop；不把此前各取得阶段的条件预测纳入所给统一半径。生成描述在此前阶段合法闭合，用来证明从第一笔 Read 起的因果可实现性，不为那些阶段另宣称最优误差。实际历史平均风险、固定完整配置预算的最优值、所有达到器的分类、总描述和物理成本的最优值仍是不同问题。本卷也没有给一个模型同时达到两个单独相位最小值的分类或结论；模型 $A$ 已达到完整联合查询域的最小值。
+
+[有限起点预测记忆][FS] §§10–11 的五模式被动来源、[树几何延续][HG] §65 的整树操作与全对 Green 目标、[六阶白盒 Bayes][SO] 的张量符号取得均有不同的来源、操作、记录、损失与资源。这里没有转移其半径、维数或算子结论；本卷的桥只使用实际原 Read 词与其原控制转录。原五类关系和白盒性可以帮助组织问题，不替代任何来源对应。
+
+文献关系为仓内来源特定推导，不主张通用凸性或有限记忆理论的新颖性，也不主张世界范围优先权、Lean 核验、实际训练网络定理、物理实现或持续研究目标的完成。
+
+[ST]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[FR]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[BD]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[FS]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md
+[HG]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md
+[SO]: https://github.com/the-omega-institute/trureturing/blob/c5408c868deab35a192a8ed9105f2838a80a155d/docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_BAYES_SIXTH_ORDER.md
+[BOS]: https://arxiv.org/pdf/2005.07445v1
+[Survey]: https://arxiv.org/pdf/2312.15225v1
+

@@ -1,0 +1,13 @@
+**Theorem 6.3 (evaluated small-record law).** For every $\rho$ in (RG.16) and every $0\le s\le s_{\rm cap}(C(\rho))$,
+
+$$
+\mathsf E_s(\rho)=F(C(\rho)).
+\tag{RG.53}
+$$
+
+The supported live high minimum is the same. For any positive five-mode test $\sigma$ whose unnormalized compression satisfies (RG.16), its acquired and live minima are $F(C(E^\dagger\sigma E))$. Each has an actual common attainer of at most fourteen branches.
+
+Proof. Theorem 4.4 is a lower bound for every original design at every strength. Lemmas 5.1–5.2 and Theorem 6.2 match it throughout the indicated cap, giving (RG.53) and actual attainment. The five-mode domination in (RG.18) supplies the lower bound for $\sigma$, including complement mass and cross-support coherence; the constructed effect is supported on $V$ and gives the matching upper. There is no normalization of the compression. $\square$
+
+Positive rescaling $\rho\mapsto c\rho$, $c>0$, scales $C,\lambda,\mu,F$ by $c$ and leaves $v,H^*$ and the cap unchanged. This follows directly from the eigen-equations and lift formulas. Algebraic $C$ gives algebraic selected constants: the spectral root, the unique polynomial/PSD branch, adjugate kernel and finite spectral norms in the caps are all real algebraic. This is an exact specification, without a decimal evaluation or efficient-computation claim.
+

@@ -1,0 +1,33 @@
+**Definition 84.2 (Nonnegative row weights and depth values).** Let
+$\mathcal R$ index the TV rows of (84.1). Write each row as
+$p_{b_r}(H_r)\ge d_r$, where $H_r\subseteq J$ is respectively
+$\{0\}$, $\{n\}$ or $\{0,n\}$ at a non-all-one input, and $\{0\}$
+at the all-one input. For $\alpha=(\alpha_r)_{r\in\mathcal R}\ge0$ set
+
+$$
+c_{b,j}=\sum_{r:b_r=b}\alpha_r\mathbf1_{\{j\in H_r\}}.
+\tag{84.3}
+$$
+
+A partial assignment $\tau$ fixes some subset of the $L$ coordinates;
+let $Q(\tau)$ be its consistent inputs. Define
+
+$$
+V_0(\tau)=\max_{j\in J}\sum_{b\in Q(\tau)}c_{b,j},
+\tag{84.4}
+$$
+
+and, for $d\ge1$, define
+
+$$
+V_d(\tau)=\max\left\{
+V_0(\tau),\quad
+\max_{i\notin\operatorname{dom}\tau}
+ \left[V_{d-1}(\tau\cup\{i=0\})+
+       V_{d-1}(\tau\cup\{i=1\})\right]\right\}.
+\tag{84.5}
+$$
+
+When every coordinate is assigned the query maximum is omitted. In
+particular all these quantities are obtained by a finite recurrence.
+

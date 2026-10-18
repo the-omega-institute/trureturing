@@ -1,0 +1,23 @@
+**Definition 1.1 (a passive source with a finite address interface).**
+Fix public integers $N,t$ with $0\le t<N$, put $A=\{1,\ldots,N\}$,
+and let $\binom At$ be the set of $t$-element subsets of $A$.
+The source space, numerical target and response function are
+
+$$
+\begin{aligned}
+X_{N,t}&=\{b\}\sqcup\bigl(\mathbb N_{>0}\times\tbinom At\bigr),\\
+g(b)&=0,& f_b(a)&=0,\\
+g(n,J)&=n,&
+f_{(n,J)}(a)&=\begin{cases}0,&a\in J,\\ n,&a\notin J.\end{cases}
+\end{aligned}
+\tag{1.1}
+$$
+
+One actual $x\in X_{N,t}$ stays fixed throughout an execution.
+The legal source action $\operatorname{Read}(a)$ returns $f_x(a)$ and
+leaves $x$ unchanged. Every $a\in A$ is legal, including a repeated
+address. Reading an address is an acquisition; a response at an unread
+address is not supplied. There is no prior on $X_{N,t}$.
+The address interface has no metric, and the order of actual actions is
+an execution order without a supplied physical clock.
+

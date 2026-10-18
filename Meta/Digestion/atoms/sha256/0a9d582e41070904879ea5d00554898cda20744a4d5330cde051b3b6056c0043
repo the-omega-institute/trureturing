@@ -1,0 +1,41 @@
+**Definition 1.2 (One stationary joint law).** Let $\varphi$ be
+uniform on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$. The four symbols in
+$\mathcal A=\{a_0,a_1,b_0,b_1\}$ are distinct. Set, on the original
+integer clock,
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+Write $J_p$ for this joint law. It is [Original, Proposition 2.1 and
+(2.2)][O]. To check the stationary clock, put $\pi_0=1-p$,
+$\pi_1=p$. An active transition takes $a_s$ to $b_t$ with
+probability $\pi_t$, emitting $s\oplus t$; the next transition
+copies $b_t$ to $a_t$, emitting zero. Incoming mass at each state
+with spin $t$ is $\pi_t/2$. Thus the uniform phase gives the
+original stationary emitted-bit law, including its separator sites.
+
+Fix $j\in\{0,1\}$ before acquisition, and define
+
+$$
+\begin{array}{c|cc|cc}
+ &h_0(s)&v_0&h_1(s)&v_1\\ \hline
+j=0&a_s&0&b_s&0\\
+j=1&b_s&1&a_s&0
+\end{array}
+\qquad H_j=h_\varphi(S_{v_\varphi}).
+\tag{1.2}
+$$
+
+In particular $v_0=j$ and $v_1=0$. The phase-specific label sets
+are disjoint. Correctness for one returned state never adds the
+correct masses of two different-phase states. Formula (1.1) describes
+the law and grants no access to an unqueried spin or to its phase.
+

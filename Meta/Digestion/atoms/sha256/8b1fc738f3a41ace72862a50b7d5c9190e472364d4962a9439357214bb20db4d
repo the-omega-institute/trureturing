@@ -1,0 +1,50 @@
+**Convention 6.1 (The supplied rotation data).** Put $\rho_{17}=\sqrt{17}$,
+$\lambda_\pm=(5\pm\rho_{17})/2$, and
+$\omega_\pm=\sqrt{\lambda_\pm}$. QMB Theorem 4.1 decomposes the real
+space into two rotation planes $L_+,L_-$ and the fixed dark line
+$L_0=\mathbb R d$, where $d=(e_2-e_5)/\sqrt2$. Their projections
+$R_0,R_+,R_-$ have ranks $1,2,2$. Explicit algebraic formulas are
+
+$$
+\begin{gathered}
+B=-A^2,\qquad
+R_\pm=\frac{B(B-\lambda_\mp I)}
+{\lambda_\pm(\lambda_\pm-\lambda_\mp)},\qquad
+R_0=I-R_+-R_-,\qquad W_\pm=AR_\pm/\omega_\pm,\\
+O(\theta_+,\theta_-)=R_0+\cos\theta_+R_++\sin\theta_+W_+
++\cos\theta_-R_-+\sin\theta_-W_-.
+\end{gathered}
+\tag{6.1}
+$$
+
+This is orthogonal, since $W_\pm^2=-R_\pm$, and equals the actual
+$O(t)$ at $\theta_\pm=\omega_\pm t$. These angle variables are mathematical
+coordinates, not independent allowed controls.
+
+We use the supplied weights $a_s=(0,1,0,1,3)$ and $w_s=a_s/5$ in the
+original mode order. For $r_{sj}=\|R_je_s\|^2$, the supplied length table is
+
+$$
+\begin{array}{c|ccc}
+s&r_{s0}&r_{s+}&r_{s-}\\\hline
+N&0&(1+1/\rho_{17})/2&(1-1/\rho_{17})/2\\
+2&1/2&(1+3/\rho_{17})/4&(1-3/\rho_{17})/4\\
+3&0&(1-3/\rho_{17})/2&(1+3/\rho_{17})/2\\
+5&1/2&(1+3/\rho_{17})/4&(1-3/\rho_{17})/4\\
+25&0&(1-1/\rho_{17})/2&(1+1/\rho_{17})/2
+\end{array}
+\tag{6.2}
+$$
+
+In particular $S_{ij}:=\sum_sa_sr_{si}r_{sj}$ satisfies
+
+$$
+\begin{gathered}
+S_{00}=\frac12,\quad
+S_{0\pm}=\frac{1\pm3/\rho_{17}}4,\quad
+S_{\pm\pm}=\frac{67}{68}\mp\frac{3}{4\rho_{17}},\quad
+S_{+-}=\frac{13}{17}.
+\end{gathered}
+\tag{6.3}
+$$
+

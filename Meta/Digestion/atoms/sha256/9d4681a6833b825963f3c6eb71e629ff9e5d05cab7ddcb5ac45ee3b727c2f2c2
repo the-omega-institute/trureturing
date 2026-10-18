@@ -1,0 +1,36 @@
+**Lemma 338.1 (repo-derived).** Under (333.1)–(333.5), the parameters
+in (334.1) satisfy w>4/5, x>7/2 and y>9/10.
+
+**Proof.**
+
+First, the exact identity
+
+    (m+c)*Jt-(m-c)*Lt=2*N
+
+and N>=0 imply
+
+    w^2 >= [(m-c)/(m+c)]*[(d-1)/(d+1)]
+         > (7/9)*(11/13)=77/117>16/25.           (338.1)
+
+Here c<m/8 and d>3*m/4>12. Thus w>4/5.
+
+Next use (336.1) with lambda=13. From c+1<m/8,
+14*c+12<7*m/4-2. Therefore, using r<Q/(m-1) and 2*T<=Q,
+
+    Lr-13*Jr
+      > [2-(14*c+12)/(m-1)]*Q-12*c-14
+      > m*Q/[4*(m-1)]-12*c-14
+      > m^2/4-3*m/2-2>0.                        (338.2)
+
+The last line uses Q>(m-1)*(m+c+1)>m*(m-1), c<m/8-1 and m>16.
+Since Jr>0, (335.3) gives
+
+    x^2>(24/25)*13=312/25>49/4, so x>7/2.       (338.3)
+
+Finally, (334.5), (335.3) and m>16 give
+
+    y^2>(24/25)*(15/17)=72/85>81/100,
+    hence y>9/10.                               (338.4)
+
+These bounds do not assert any false individual low-angle pi/4 bound. QED.
+

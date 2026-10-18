@@ -1,0 +1,24 @@
+**Assumption 31.1 (a supplied classical chain and its separation).**
+For the $n,k$ of Definition 29.1, supply a finite chain MA-program
+in Sinha's Definitions 3.14 and 3.17 [printed pp. 31–33][SINHA95].
+It has $b\ge1$ boxes with positive integer moduli
+$q_1,\ldots,q_b$ and size $S=\sum_{j=1}^b q_j$. Box $j$ has
+input and output positions $0,\ldots,q_j-1$. An integer $h$
+entering input $s$ leaves at output $(s+h)\bmod q_j$.
+Every output is either a sink or is connected by a supplied fixed
+map $M$ to an input of box $j+1$; the last box's outputs are sinks.
+The source is a supplied input $(j_0,s_0)$; it may be taken in
+box one, and unused preceding boxes, if any, still contribute to
+$S$ and $b$. In particular the box connections are acyclic.
+
+The chain separates $\{0,\ldots,k-1\}$ and
+$\{k,\ldots,n\}$: no sink receives an integer from both sets
+when routed from the supplied source. Label a sink zero or one
+according to the set reaching it; assign zero to sinks reached by
+neither set. This labeling is common table data depending on the
+supplied chain and $n,k$, never on the actual native source. A
+chain not satisfying this separation is not a premise of the
+following upper bound. The integer $h$, the chain inputs and its
+abstract routing operation are mathematical specification objects,
+not accessible native preparation ports.
+

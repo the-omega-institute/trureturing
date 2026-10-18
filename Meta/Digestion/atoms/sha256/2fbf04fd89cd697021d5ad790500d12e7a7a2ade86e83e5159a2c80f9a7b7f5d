@@ -1,0 +1,37 @@
+## 435. Exact high/low separation in the near-maximal range
+
+Let the six distinct actual labels be M,V,Z,U,C,D, with corresponding
+coshes m,v,z,u,c,d. Suppose
+
+    c,d>1, m>=v>1, z,u>=m,
+    v>m-2, (m-1)*(v-1)>=(c+d)^2.                  (435.1)
+
+Set H={M,V,Z,U}. Since m<v+2, the product gives
+
+    (c+d)^2< (v+1)*(v-1)=v^2-1.
+
+Consequently
+
+    v>sqrt(5)>2, c+d<v, c,d<v-1,                 (435.2)
+
+and every H value is at least v. Every pair of distinct H labels,
+with values r,p, also satisfies
+
+    (r-1)*(p-1)>=(m-1)*(v-1)>=(c+d)^2.            (435.3)
+
+Indeed V is a least H value and all other H values are at least m.
+This retains the actual distinct-label product constraint. It does
+not replace both factors in (435.3) by v-1.
+
+The later role argument uses only the following reusable conditions,
+which (435.1)-(435.3) supply with s=v:
+
+    c,d>1; every H value is at least s>c+d;
+    (r-1)*(p-1)>=(c+d)^2 for every distinct H pair. (435.4)
+
+Conditions (435.4) imply s>2 and c,d<s-1. The pairwise product is a
+separate hypothesis, not inferred merely by lowering both high values
+to s. It can equivalently be checked on the two least H values at
+distinct labels. This separates the direct four-high theorem from
+the specific near-maximal sufficient conditions.
+

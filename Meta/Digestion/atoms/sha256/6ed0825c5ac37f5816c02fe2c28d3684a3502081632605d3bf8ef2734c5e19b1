@@ -1,0 +1,53 @@
+**Lemma 4.1 (A state-budget bound without an exit-probability threshold).** Let $P,Q$ be row-stochastic matrices on the same finite state set of size at most $M$, with common absorbing labels $d_0,d_1$. Suppose $\gamma\ge1$ and
+
+$$
+\gamma^{-1}P(x,y)\le Q(x,y)\le\gamma P(x,y)
+\quad\text{for all }x,y.
+\tag{4.1}
+$$
+
+Let $h_P(x),h_Q(x)$ be their probabilities of ever reaching $d_1$, without assuming absorption from every state. Set $K_M=2\cdot3^M$. Then
+
+$$
+\gamma^{-K_M}h_P(x)\le h_Q(x)\le\gamma^{K_M}h_P(x),
+\qquad
+\sup_x|h_Q(x)-h_P(x)|\le\gamma^{K_M}-1.
+\tag{4.2}
+$$
+
+Proof. The entrywise comparison gives identical directed supports. Let $\mathcal Z$ be the common set of vertices with no directed path to $d_1$. Their hitting values are zero. Replace both rows at each such vertex by an identity row. This preserves the hitting probabilities: once such a vertex is reached, $d_1$ can never be reached. Comparison survives the replacement. The boundary now consists of $d_1$, with hitting value one, and the vertices of $\mathcal Z$, with hitting value zero; it uses only existing vertices.
+
+Fix a vertex $x$ outside this boundary. Every remaining nonboundary vertex has a path to $d_1$. To eliminate another such vertex $z$, for either current matrix $p$ put
+
+$$
+e_z=\sum_{v\ne z}p(z,v)=1-p(z,z)>0,
+\qquad
+p'(u,v)=p(u,v)+\frac{p(u,z)p(z,v)}{e_z}
+\quad(u,v\ne z).
+\tag{4.3}
+$$
+
+The positive exit sum follows from the path to $d_1$. Each new row sums to $(1-p(u,z))+p(u,z)e_z/e_z=1$, and boundary rows remain identity rows. Formula (4.3) preserves actual hitting probabilities on surviving vertices: at a visit to $z$, its self-loop excursions exit almost surely, with exit law $p(z,v)/e_z$. Observe the chain only when it is outside $z$. Its next-state distribution is exactly (4.3). Reaching the surviving target $d_1$ is unchanged. Countably many visits to $z$ introduce no positive probability of remaining there forever, since the conditional probability of such a permanent self-loop excursion at each visit is zero. Equivalently, the first-step identity
+
+$$
+h(z)=\frac{\sum_{v\ne z}p(z,v)h(v)}{e_z}
+\tag{4.4}
+$$
+
+substitutes into the identities at surviving states, and the excursion interpretation identifies the preserved solution with the actual hitting probabilities. This avoids relying on uniqueness of harmonic solutions in nonabsorbing classes.
+
+Positive paths through $z$ become positive shortcuts in (4.3). A path with no repeated vertices shows that every surviving nonboundary vertex still has a path to $d_1$. Thus the next elimination again has a positive exit sum.
+
+Suppose the current pair of matrices is entrywise comparable by $\kappa\ge1$. Its two $e_z$ values, being nonnegative sums of off-diagonal entries, are comparable by the same factor. Consequently the excursion terms in (4.3) are comparable by $\kappa^3$. The direct terms are comparable by $\kappa$, hence also by $\kappa^3$. Addition of nonnegative terms preserves the latter bound, including at zero entries. After $r$ eliminations the comparison factor is at most $\gamma^{3^r}$. No lower bound on $e_z$ is used; comparison of a nonnegative sum, rather than subtraction of nearly equal self-loop probabilities, controls its denominator.
+
+Eliminate all nonboundary vertices except $x$. In the final chain every other vertex is boundary, and a path to $d_1$ remains. Therefore
+
+$$
+h(x)=\frac{p(x,d_1)}{\sum_{v\ne x}p(x,v)}.
+\tag{4.5}
+$$
+
+The denominator is positive. Both numerator and denominator are comparable by $\gamma^{3^r}$, so the quotient is comparable by $\gamma^{2\cdot3^r}$, bounded by $\gamma^{K_M}$ because fewer than $M$ vertices were eliminated. A zero numerator is zero in both chains. Boundary vertices already have equal values. This proves the multiplicative inequalities for every $x$.
+
+If two numbers in $[0,1]$ are comparable by a factor $G\ge1$, subtract the smaller from the larger and bound the result by $(G-1)$ times the smaller, hence by $G-1$. Take $G=\gamma^{K_M}$ to finish (4.2). Reducibility, periodicity, unreachable closed classes and arbitrarily small exits are all included. $\square$
+

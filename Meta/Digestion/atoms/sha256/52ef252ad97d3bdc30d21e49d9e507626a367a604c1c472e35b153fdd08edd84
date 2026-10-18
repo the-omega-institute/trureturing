@@ -1,0 +1,57 @@
+**推论 14.1（整族非 L3 及失败 J 子纤维的非根六成员）。** For every
+known $K\subseteq\mathcal C_6(H_p)$,
+
+$$
+\neg L_3(K,H_p),\qquad
+\neg L_2(K_x,(H_p,J,D_0+\lambda x))\quad\text{for every }x,
+\tag{14.1}
+$$
+
+where $K_x$ is the entire actual fifth-$J$ response child of $K$.
+These conclusions have no finite-cardinality hypothesis.
+
+More generally, let $K\subseteq\mathcal F(H_p)$ be unrestricted
+and known. Define its actual children
+
+$$
+\begin{aligned}
+H_x&=(H_p,J,D_0+\lambda x),&
+K_x&=K\cap\mathcal F(H_x),\\
+H_{x,w}&=(H_x,J,D_0+\lambda w),&
+K_{x,w}&=K\cap\mathcal F(H_{x,w}).
+\end{aligned}
+\tag{14.2}
+$$
+
+Whenever $L_2(K_x,H_x)$, some actual sixth-$J$ response $w$ has
+$L_1(K_{x,w},H_{x,w})$, and every such losing sixth child contains
+a world with $f(6)\ne0$. For that world $d\ne w$. In particular
+$L_3(K,H_p)$ necessarily supplies such a fifth-$J$ child and such
+a non-sixth-root member in its losing sixth-$J$ child.
+
+Proof. On a root-six fifth-$J$ child the continuation of Theorem 13.2
+uses at most two further readings. Each actual sixth-$J$ response
+acquires $d$, after which Lemmas 12.3 and 13.1 give either a
+singleton or a pair separated by one chosen last atom. Thus every
+whole fifth child is not $L_2$, and the parent is not $L_3$ by
+(1.2). This works directly on the entire known set; no triple is
+extracted from a larger or infinite losing family.
+
+For unrestricted $K$, recursion (1.2) applied to $L_2(K_x,H_x)$
+supplies a losing actual sixth-$J$ response child. If all of its
+worlds had $f(6)=0$, (12.5) would give $d=w$ on that whole child,
+placing it inside $\mathcal C_{x,w}$. Lemmas 12.3 and 13.1 would
+then give a one-read decoder on it, contradicting $L_1$. Hence
+it contains a non-sixth-root world. Its positive trace factor in
+(12.5) gives $w-d=f(6)(1+r+k\ell)\ne0$. Finally $L_3(K,H_p)$
+supplies a losing fifth-$J$ child by the same recursion.
+
+Consequently a losing certificate on the fifth-$M$ arm supported
+entirely on sixth-root worlds, even an exact three-world certificate,
+cannot by itself be joined into a losing parent consisting only of
+sixth-root worlds. The necessary alternate-arm nonroot member need
+not be one of those three worlds, and its sixth child need not
+contain any sixth-root world. All witnesses must still share the
+literal parent (12.1). This conclusion neither realizes nor excludes
+a fifth-$M$ losing triple. ∎
+

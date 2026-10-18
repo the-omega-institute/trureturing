@@ -1,0 +1,101 @@
+**Lemma 28.1 (whole-circle dual and its exact zero sets).** At either
+selected zero, for both sheets and every angle,
+
+$$
+\boldsymbol d\cdot\Gamma_\eta(\phi)
+ \ge |H_\eta(\phi)|+\lambda|u|.
+\tag{AC.134}
+$$
+
+The geometric zero set consists precisely of the six indexed endpoints
+of §26; at $D$ endpoint 5 is unused. Pure and saturated zero sets are
+disjoint, all their report coordinates and signed heights are nonzero,
+and every listed zero is an exact double zero of its signed gap.
+
+Proof. On $u\ge0$ use the base-zero chart $x\in[-1,1]$; on
+$u\le0$ use the base-$\pi$ chart $x\in[-1,1]$. Each is a complete
+closed semicircle. For each height sign $\epsilon$ use its report sign
+$\sigma$ and the polynomial AC.132. The following exact factor inventory
+removes the listed factors $(x-a)^2$:
+
+| $\eta$ | $\epsilon$ | $\sigma$ | Roots $a$ removed | Quotient degree |
+| --- | --- | --- | --- | --- |
+| $0$ | $-$ | $-$ | $x_2$ | $2$ |
+| $0$ | $-$ | $+$ | none | $4$ |
+| $0$ | $+$ | $-$ | $x_1$ | $2$ |
+| $0$ | $+$ | $+$ | $x_0,x_5$ | $0$ |
+| $1$ | $-$ | $-$ | none | $8$ |
+| $1$ | $-$ | $+$ | $(x_4-1)/(x_4+1)$ | $6$ |
+| $1$ | $+$ | $-$ | none | $8$ |
+| $1$ | $+$ | $+$ | $x_3$ | $6$ |
+
+The selected equations give $P=P'=0$ exactly. The chart change for
+contact 4 gives its stated base-zero root. Thus synthetic division is
+exact at the selected root, and interval division encloses the exact
+quotient. In descending coefficients, division by $x-a$ uses
+$q_{n-1}=P_n$, $q_{k-1}=P_k+a q_k$; apply this twice per factor.
+No numerical remainder is declared zero. Distinct root boxes exclude
+collisions of contacts 0 and 5 or any other pair.
+
+Here is the complete positivity certificate. For a quotient
+$Q(x)=\sum_{j=0}^n a_jx^j$ and a leaf $[l,r]\subseteq[0,1]$, set
+
+$$
+\begin{aligned}
+b_j(l,r)&=(2(r-l))^j\sum_{k=j}^n
+ a_k\binom{k}{j}(2l-1)^{k-j},\\
+\mathcal B_i(l,r)&=\sum_{j=0}^i
+ b_j(l,r)\frac{\binom{i}{j}}{\binom{n}{j}},\qquad 0\le i\le n.
+\end{aligned}
+\tag{AC.135}
+$$
+
+These are the Bernstein controls of $Q(2l-1+2(r-l)y)$ on
+$0\le y\le1$. Each table entry below is an integer $L$ such that
+**every** exact control on that leaf is strictly greater than
+$L\,10^{-12}$. The entries result by outward rational substitution of
+§27's boxes in the synthetic-division recurrence and AC.135.
+They are relaxed lower bounds, not an assertion that rounded controls
+are equal to exact controls. Both selected systems use the same complete
+partitions; the two bound columns correspond to $S,D$.
+
+| $(\eta,\epsilon,\sigma)$ | Leaf $[l,r]$ | $L_S$ | $L_D$ |
+| --- | --- | --- | --- |
+| $(0,-1,-1)$ | $[0,1/2]$ | $61970621872$ | $83218831972$ |
+| $(0,-1,-1)$ | $[1/2,1]$ | $116435494988$ | $111247014721$ |
+| $(0,-1,1)$ | $[0,1/2]$ | $7299105911$ | $7311601216$ |
+| $(0,-1,1)$ | $[1/2,1]$ | $19338534425$ | $19318706704$ |
+| $(0,1,-1)$ | $[0,1/2]$ | $70386590074$ | $58728522922$ |
+| $(0,1,-1)$ | $[1/2,3/4]$ | $13915792430$ | $19686051087$ |
+| $(0,1,-1)$ | $[3/4,1]$ | $82449952632$ | $59003944310$ |
+| $(0,1,1)$ | $[0,1]$ | $503587022418$ | $317086330420$ |
+| $(1,-1,-1)$ | $[0,1/4]$ | $5197535516$ | $5429036047$ |
+| $(1,-1,-1)$ | $[1/4,1/2]$ | $6369066347$ | $6381249154$ |
+| $(1,-1,-1)$ | $[1/2,1]$ | $36720704108$ | $35794691050$ |
+| $(1,-1,1)$ | $[0,1]$ | $8930768772$ | $29250759002$ |
+| $(1,1,-1)$ | $[0,1/2]$ | $36757199486$ | $35831186428$ |
+| $(1,1,-1)$ | $[1/2,9/16]$ | $1933497373$ | $1696227607$ |
+| $(1,1,-1)$ | $[9/16,19/32]$ | $100584374$ | $96583898$ |
+| $(1,1,-1)$ | $[19/32,5/8]$ | $1809671784$ | $2067788060$ |
+| $(1,1,-1)$ | $[5/8,3/4]$ | $14949067641$ | $15801916829$ |
+| $(1,1,-1)$ | $[3/4,1]$ | $264698850353$ | $268454959788$ |
+| $(1,1,1)$ | $[0,1]$ | $1104012476659$ | $1108574628148$ |
+
+For each gap the listed adjacent closed leaves cover $[0,1]$ without
+holes, hence the whole closed semicircle. All bounds are positive;
+the least exceeds $0.0001005$ for $S$ and $0.0000965$ for $D$.
+The Bernstein basis is nonnegative and sums to one, proving strict
+positivity of every quotient. The only zeros are the removed double
+factors. Both axes $u=0$ and the half-angle point missing from a single
+unbounded chart are included. The opposite report inequality is weaker
+by $2\lambda|u|$, since both selected multipliers are positive.
+Taking both height signs proves AC.134 on the entire two-sheet domain.
+
+The signed-height bounds are $\epsilon_iH_i>0.0032$ at every occupied
+contact in either system; the unused contact at $D$ is positive too,
+by the same source/root substitution. Its pure height has a positive
+$0.0032$ lower bound as well. Every contact has $\sigma_i u_i>0$.
+These sign bounds ensure that the signed contacts used here are exactly
+contacts of the absolute objective, with no cusp substitution.
+$\square$
+

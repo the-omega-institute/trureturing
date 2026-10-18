@@ -1,0 +1,14 @@
+**Open problem 11.2 (the full original finite frontier).** The target
+remains an evaluated all-budget, all-contrast finite-$(s,A)$ roof over
+every common oriented failure allocation and live-height decomposition,
+including points below the maximum contrast of a fixed allocation.
+Global branch ordering, connected coverage, selected coefficients,
+orientations, contacts and positive weights; all occupied and unused
+root signs and multiplicities; collisions, capacity/rank/count
+transitions; endpoint, threshold, budget and degenerate-orientation
+gluing; coefficient gluing, next terms and uniform joint limits retain
+their original scopes. FA Theorem 81.2 and the JS limiting interfaces
+referenced by FC §40 supply no additional finite-budget optimal-support
+restriction. Weak, strong optimal and strong feasible counts remain
+different questions.
+

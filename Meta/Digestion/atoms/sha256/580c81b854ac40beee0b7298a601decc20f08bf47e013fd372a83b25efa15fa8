@@ -1,0 +1,15 @@
+**Definition 2.1 (Bad pair and defect).** Fix $0<\tau<1$, set
+$a=1-\tau$, and for a bad pair write
+
+$$
+R(x)=c_1e^{i\omega_1x}+c_2e^{i\omega_2x},\quad
+c_1c_2\ne0,\quad \Omega=|\omega_1-\omega_2|>2\pi.
+$$
+
+Put $p=2\pi/\Omega<1$, $T=J_\tau(R)$ and $\delta=T-\tau$. Then
+
+$$
+|R(x)-s(x)|\le\sqrt{T-\tau x}\quad(0\le x\le1).
+\tag{2.1}
+$$
+

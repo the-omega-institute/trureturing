@@ -1,0 +1,9 @@
+## 131. 相似的群、运输群与 Regge 路线的必要边界
+
+本文所用群链是
+
+$$S_4\cong W(A_3)\cong\operatorname{AGL}(2,\mathbb F_2)
+\longrightarrow S_4/V_4\cong S_3\cong\operatorname{Sp}(2,\mathbb F_2).$$
+
+源端描述顶点重标记，商群描述真正需要排除的三个平坦态；一个三阶局部像已经足够。该商、仿射群及有限群固定点论均属经典输入，本节新增用途是第 127 节的实际角关联作用及第 129–130 节的严格分离实例。
+

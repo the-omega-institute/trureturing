@@ -1,0 +1,26 @@
+**lemma 3.2 (Finite averaging over actual initialized rows).** For a
+fixed installed table, let
+$w_r=\nu(c_{\rm init}^{-1}\{r\})$, and let $q(r),C(r)$ be its source
+masses of return and correct return within two calls when started
+deterministically at $r$. Then
+
+$$
+q_2=\sum_{r\in K}w_rq(r),\qquad
+q_2-L_2=\sum_{r\in K}w_rC(r),\qquad
+\sum_{r\in K}w_r=1.
+\tag{3.3}
+$$
+
+If $q_2=1$, then $q(r)=1$ for every $w_r>0$. Any uniform bound
+on these deterministic-start correct masses bounds the original
+table under its given seed law.
+
+Proof. After initialization the seed has no role. Independence gives
+the product mass on each of the finitely many initialization cells,
+proving (3.3). The equality $q_2=1$ forces
+$\sum_rw_r(1-q(r))=0$; every summand is nonnegative. This proves the
+claim and the averaging assertion. No regular conditional law on
+$\mathsf U$, atomlessness, new gate, or additional random coin is
+needed. Zero-weight cells contribute zero regardless of their
+behavior. $\square$
+

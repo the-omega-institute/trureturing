@@ -1,0 +1,28 @@
+**Definition 1.1 (Activity law and normalized local terms).** Let $n\ge1$,
+use the open-boundary legal words $B_n$ and Hilbert space $\mathcal K_n$
+of Parent/Readout §8, and fix $a_i>0$. For the occupied set $I(u)=\{i:u_i=1\}$ put
+
+$$
+p_u=\mathcal Z^{-1}\prod_{i\in I(u)}a_i,\qquad
+|\psi_+\rangle=\sum_{u\in B_n}\sqrt{p_u}|u\rangle,\qquad
+D=\operatorname{diag}(\sqrt p).
+\tag{1.1}
+$$
+
+Take the local parent of [Boundary Calculus, Definition 15.22][BC8]:
+
+$$
+\begin{aligned}
+v_i&=\sqrt{a_i}|0\rangle_i-|1\rangle_i,\\
+h_i&=P_{i-1}|v_i\rangle\langle v_i|P_{i+1},\\
+K_i&=(1+a_i)^{-1}h_i,\qquad H_{\rm loc}=\sum_i h_i.
+\end{aligned}
+\tag{1.2}
+$$
+
+All operators in (1.2) are restricted to $\mathcal K_n$;
+$P_0=P_{n+1}=I$. The other tensor factors carry the identity.
+In particular $K_i^2=K_i$, whereas $h_i^2=(1+a_i)h_i$.
+By Boundary Calculus, Proposition 15.23, their common zero space is
+$\mathbb C\psi_+$.
+

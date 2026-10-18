@@ -1,0 +1,70 @@
+**定义 4.1（互补历史及全部参数）。** Independently of (1.3), fix
+
+$$
+D_0\in\mathbb R,\qquad \lambda\ne0,\qquad
+0<\varepsilon<1/6,\qquad Y,z\in\mathbb R.
+$$
+
+Put $a_0=D_0-21\lambda$, $a_2=D_0+5\lambda(1+\varepsilon)$ and
+
+$$
+\begin{aligned}
+C_3&=(a_0,M,D_0,J,a_2,M,D_0),\\
+C_4(Y)&=(C_3,M,Y),\\
+C_5(Y,z)&=(C_4(Y),J,z).
+\end{aligned}                                                   \tag{4.1}
+$$
+
+The cumulative matrices along this chronological $MJMMJ$ history are
+
+$$
+\begin{gathered}
+I,\ M,\ U,\ MU,\ A_4,\ Q,\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\\
+MU=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+A_4=M^2U=\begin{pmatrix}1&2\\1&3\end{pmatrix}=U+MU,\qquad
+Q=JA_4=\begin{pmatrix}1&3\\1&2\end{pmatrix}.
+\end{gathered}                                                   \tag{4.2}
+$$
+
+Thus every compatible world satisfies all six equations
+
+$$
+g(i)\operatorname{tr}(A_iP)+\delta
+=(a_0,D_0,a_2,D_0,Y,z)_i\qquad(0\le i\le5).                  \tag{4.3}
+$$
+
+The parameter $D_0$ is part of the history and is not presumed to be
+the target's drift. This is the $H_{MJ}$ history of [V, Definition 5.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)
+and its actual fifth-$J$ child. It is different from the $JMMJ$ history
+there and from the $MMJM$ parent (1.3).
+
+For a target at (4.1), put $\eta=(QP)_{22}>0$, $R=P/\eta$ and $H=\eta g$.
+The inverse $Q^{-1}=\left(\begin{smallmatrix}-2&3\\1&-1\end{smallmatrix}\right)$
+gives the unique chart
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(3-2x)y&3-2x\\(x-1)y&x-1\end{pmatrix},
+\qquad 1<x<3/2,\quad y>0.                                    \tag{4.4}
+$$
+
+Conversely these inequalities make every displayed entry positive and
+the matrix rank one. As before, the normalized target is
+$(R/\operatorname{tr}R,(\operatorname{tr}R)H,\delta)$.
+For $s=x+y$, $p=xy$, the actual parent trace factors and the next two
+trace factors are
+
+$$
+\begin{aligned}
+\operatorname{tr}(MR)&=p+2-s,&
+\operatorname{tr}(MUR)&=p+x+1-s,\\
+\operatorname{tr}(A_4R)&=s,&\operatorname{tr}(QR)&=p+1,\\
+\operatorname{tr}(JQR)&=s,&\operatorname{tr}(MQR)&=s+1.
+\end{aligned}                                                   \tag{4.5}
+$$
+
+All are positive. These are the traces at original clocks $1,3,4,5$
+and the two possible sixth actions, respectively. Equations (4.3)
+continue to impose clocks zero and two as well.
+

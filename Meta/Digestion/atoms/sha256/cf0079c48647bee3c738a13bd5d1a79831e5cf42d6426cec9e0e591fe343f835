@@ -1,0 +1,27 @@
+**Theorem 12.4 (Exact all-attainers installed-state minimum).**
+For the original biased source, with $0<p<1$, $p\ne1/2$, either
+fixed original $j\in\{0,1\}$ and every given unchanged independent
+seed probability space, in exactly the closed class of Two Read,
+Definition 8.1,
+
+$$
+\boxed{M_3(p,j,\nu)=9=6+3.}
+\tag{12.1}
+$$
+
+Every attaining table has at least six installed read rows and three
+installed halt rows. Definition 12.2 attains the bound, separately for
+either chosen first parity. Thus the minimum has no further dependence
+on $p,j,\nu$ in the stated parameter range.
+
+Proof. A finite initialization partition has at least one cell of
+positive measure. Lemma 9.2 makes its deterministic start an attainer.
+Proposition 11.1 and Lemma 12.1 force six distinct read states and
+three distinct halt states in the original installed $K$.
+Thus $|K|\ge6+3=9$ for every attaining table, regardless of the
+number of positive initialization cells or unused rows. The actual
+table of Definition 12.2 has exactly those nine rows and attains
+$S_3$ by Proposition 12.3. The universal lower bound and the original
+source upper realization therefore agree. The risk value itself
+remains Theorem 7.1's unrestricted result. $\square$
+

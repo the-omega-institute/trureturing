@@ -1,0 +1,50 @@
+**Theorem 6.1 (resource and truth boundary).** The results above establish a
+semantic minimum for complete conditional field cardinality and its actual native
+attainment on the stated inputs. They do not establish a global stopping solver,
+physical spacetime recovery, an optimal raw-read Pareto point, or completion of
+the broader relation/space/time/boundary/memory programme.
+
+*Proof.* The lower bound in Theorem 2.2 uses only the existing actual
+prefix/locality and complete-handoff suppliers, and quantifies over every legal
+serial competitor. The upper bound uses the same source description and current
+register, with finite local enumeration. Propositions 4.2–4.6 and 5.1 use
+finite sources and finite signed guards in both directions. Theorem 3.2
+separates fixed-set exclusion, all-set multiplicity bounds and the global
+optimizer. The latter still needs a certified minimizing depth and matching
+all-depth lower evidence; a complete fixed-set chooser with source-faithful
+witnesses would suffice but is not supplied. No statement here supplies that
+stopping or realization mechanism.
+
+The conditional alphabet charge is $|E(D)|$, not the size of $I$, installed
+row/prefix tables, transient acquired descriptions, physical words or total
+memory. All of these are separate paid resources. The rank table is finite
+for each supplied $I,h$ but no uniform installation, local computation or
+pre-cut acquisition bound across inputs is asserted. Current-prefix acquisition
+uses the stated physical read and address-length upper bounds and no post-entry
+updates; allowing real updates in the lower bound does not establish equal
+minimum raw-call or update costs. Sourcewise finite traversal does not imply
+uniform finite acquisition or physical time. The remaining claims are therefore
+outside the proved scope. $\square$
+
+**文献与来源表态。**
+
+| 来源 | 精确转移与边界 |
+| --- | --- |
+| [ARH, §§1–3, (ARH.2.3)](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md) | `repo-derived`: complete signed source fiber, paid same-root producer, endpoint guards, current register and static/serial prefix bridge. It does not supply a uniform optimizer for arbitrary signed input. |
+| [SLH, §§2, 59–75](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md) | `repo-derived`: actual original-address locality and current-epoch decoding, including born and absent positions. It does not turn a finite test sequence into an all-depth stopping certificate. |
+| [NPL, Lemma 5.2, Theorem 5.3 and §§6, 10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md) | `repo-derived`: Lemma 5.2 provides complete guarded source cells; Theorem 5.3 decides finite/infinite complete-row image and returns the exact finite row list with original witnesses. Combined with NSF in (SJM.35), this compiles every supplied-depth rank table. It does not compute a global minimizing depth. |
+| [NSF, Lemma 5.1 and Theorem 5.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md) | `repo-derived`: fixed-coordinate Boolean whole-source queries with supplied epochs, full row tests, all old constraints and signed endpoint guards. Positive answers reconstruct all original finite source copies. It does not decide the all-depth quantifier. |
+| [NIC, Proposition 5.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md) | `repo-derived`: mixed interpreted-$\rho$ navigation and finite-depth signed feasibility. Its finite image cover is not a uniform synthesis theorem for arbitrary signed contacts. |
+| [RDR, Theorem 6.2](RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_ROW_DEPTH_RECOVERY.md) | `repo-derived overlap`: conditional rank coding for retained-row intrinsic depth. The present target is a signed full original recut and its native joint examples. |
+| [SPC, §§2–5](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_PRODUCTIVE_CONTACT.md) | `repo-derived`: finite productive signed witnesses and the discipline that every negative is checked on actual finite approximants. Supplied certificates are sufficient evidence, not complete stopping decisions. |
+| `D5/S0/History/Coding/MinimumRollbackAlphabet.minimum_rollback_alphabet` | Exact finite process-fiber lower bound and fiberwise attaining labels. At fixed $h$ take $X_h=\{(p,r):r\in S_h(p)\}$, $Y$ the finite set of attained prefixes, $U(p,r)=p$ and $L(p,r)=r$; the largest process fiber is exactly $m_h$. ARH/SLH supply acquisition and current-register decoding. |
+| Charpenay–Le Treust–Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, Definition III.1 and the colouring equivalence in the proof of Theorem III.4, [arXiv:2211.03649](https://arxiv.org/abs/2211.03649) | `literature-attested`: at fixed $h$, use finite support $X_h=\{(p,r):r\in S_h(p)\}$, decoder side information $Y=p$, $g(Y)=Y$, encoder observation $X=(p,r)$ and target $r$; any positive distribution on this support gives disjoint prefix cliques of sizes $|S_h(p)|$. Proper colouring is exactly distinct labels within each prefix, and ranks attain $m_h$. Theorem III.4's asymptotic rate is not used. No stochastic acquisition or free physical side information transfers; ARH/SLH separately pay for and realize $p$. |
+| Barguñó–Creus–Godoy–Jacquemard–Vacher, *Decidable Classes of Tree Automata Mixing Local and Global Constraints Modulo Flat Theories*, Theorem 5.22 and Corollaries 5.23–5.24, [arXiv:1302.6960](https://arxiv.org/abs/1302.6960) | `literature-attested`: emptiness for their constrained-tree-automaton classes. No faithful translation of arbitrary interpreted mixed-epoch $\rho$ histories or the unbounded joint-prefix obligation is assumed. |
+| Milius–Moss, *The Category Theoretic Solution of Recursive Program Schemes*, §7.3 and Theorem 7.15, [arXiv:0904.2385v2](https://arxiv.org/abs/0904.2385v2) | `literature-attested`: interpreted guarded solutions as unique fixed points in the stated nonempty complete metric/contracting-functor setting. This is background only: Proposition 4.5 directly proves its needed prefix stabilization. No metric completeness of finite native sources, signed preservation on a limit, or completeness of finite productive descriptions transfers. |
+| PR15621 at `0487ddfee131db56e40b654fad5a69689948e3c7` and PR15653 at `c0f820f0b4800326b5c9d06b23f11ce925b404fb` | Published overlap only: supplied-coordinate closure and guarded-description equality. They are not premises for arbitrary stopping or universal certificate completeness. |
+| Retained literal root-depth manuscript, merged at `3508d303746985c18ca446a13c92b5c22f9df10d` | Static root target and specified normal-code continuation. It is distinct from this signed mixed-epoch full-row target. |
+
+The canonical merged mathematical supplier pin for this volume is
+`21dc7376d6bf6518ffd95621637dd6bb1ee8764d`. No external literature or repository
+source cited here is being promoted to a kernel-certified premise.
+

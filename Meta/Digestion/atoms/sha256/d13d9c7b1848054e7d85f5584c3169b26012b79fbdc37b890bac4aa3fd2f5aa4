@@ -1,0 +1,54 @@
+**定理 5.1（四次实际读取留下准确的双树纤维）。** 取两个合法原来源
+
+$$
+U=((\beta,\alpha),(\beta,\beta)),\qquad
+V=((\beta,\beta),(\beta,\beta)),
+\tag{NIC.14}
+$$
+
+以及固定顺序的请求 $LL,LRL,RL,RR$。这组来源无关请求在两个来源上都取得同一真实历史
+
+$$
+h_*=\bigl((LL,\beta),(LRL,\mathsf{abs}),(RL,\beta),(RR,\beta)\bigr).
+\tag{NIC.15}
+$$
+
+其全部原树纤维、深度与构造坐标满足
+
+$$
+\mathcal S(h_*)=\{U,V\},\qquad
+\nu(U)=\nu(V)=1,\qquad Q(U)=Q(V)=(1,0).
+\tag{NIC.16}
+$$
+
+其中 $Q=(\nu,e)$ 与 $e(T)=1\iff P(T)=\alpha$ 按 [JM §§49–50][JM] 原定义使用。两来源各有四个真实叶，叶地址恰为 $\{LL,LR,RL,RR\}$，所以
+
+$$
+N(U)=N(V)=4,\qquad
+\Lambda(U)=\Lambda(V)=8,
+$$
+
+而
+
+$$
+|\operatorname{paid}(h_*)|=4,\qquad
+\sum_{q\in\operatorname{paid}(h_*)}|q|=9,\qquad
+LR\notin\operatorname{paid}(h_*).
+\tag{NIC.17}
+$$
+
+因此四读历史达到不同地址数的准确深度下界，却没有达到地址负载下界，也不是完整空间证书。
+
+证明。$LL=\beta$ 迫使根及左孩子均为分支，左左孩子恰为 $\beta$。由于原树为满二叉树，$LR$ 已到达。$LRL=\mathsf{abs}$ 排除 $LR$ 为分支：若它是分支，其左孩子必存在，回复不可能缺席。因此 $LR$ 恰为一个叶，标签尚可为 $\alpha$ 或 $\beta$。$RL=RR=\beta$ 同时强制右孩子为分支，两个孩子恰为 $\beta$。所以候选恰为 (NIC.14) 的两个，没有任何尺寸或标签许诺被加入竞争域。
+
+两树的一阶前像为
+
+$$
+U=\rho\bigl((\beta,(\alpha,\alpha))\bigr),\qquad
+V=\rho\bigl(((\alpha,\alpha),(\alpha,\alpha))\bigr).
+$$
+
+两个前像都有左孩子为 $\alpha$ 叶的节点，不在 $I_1$。复用唯一像解析及原始射线，得两树深度恰为一，其原始端点分别就是所列前像；均不是 $\alpha$，故标志 $e=0$。这也可由右子树的终端 $(\beta,\beta)$ 直接排除二阶像。$Q$ 的这一计算仅应用已有坐标定义，不另认领新的 $Q$ 合成律。
+
+四个叶都在地址长度二处，前沿负载为八。四个实际请求的长度依次为二、三、二、二，合计九，且互异。定理3.2对两来源给不同地址数至少四，故 (NIC.15) 取到此坐标的最小值。$U\ne V$ 且 $LR$ 未读，证明其非单点及未取得完整前沿。$\square$
+

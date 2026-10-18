@@ -1,0 +1,29 @@
+**Definition 10.1 (the spectator acquisition and action class).** During
+acquisition the old specimen and its archives/reference are acted on by
+identity. All new source dependence is through the port in Definition 9.1.
+Initial probe/ancillary inputs and all controls are jointly common and
+independent of $j,\beta,m$. No readable pre-existing source-bearing assistance,
+source-sensitive timing input or installed index is permitted. All outcomes
+are retained, and acquisition must provide a total implementation of the
+subsequent causal target without deleting rejected or unsuccessful branches.
+
+Use the exact charged access class of [RA], Definition 14.1: after dilating
+every instrument and retaining its outcomes and environments, the common
+implementation has, between finitely many common instantaneous operations,
+
+$$
+H_k(t)=H_0(t)-\frac{k}{r}G(t),\qquad
+\mathcal A=\int_0^{T_c}\operatorname{diam}(\operatorname{spec}G(t))\,dt.
+\tag{CP.33}
+$$
+
+Here $T_c<\infty$ is a common terminal time; $H_0,G$ are common bounded
+self-adjoint operators, norm-measurable with integrable norms on each piece.
+The full coherent implementation includes retained outcomes, controls and
+routing. Common mixed inputs may be purified independently of the source.
+Finite-dimensional protocols are included. Parallel couplings and coherently
+controlled inverse calls pay their full spectral width. Early branches can be
+latched and padded with the port off; cost is the whole padded implementation's
+action, not its expected cost or a selected branch's cost. Calibration and
+execution processors remain supplied ideal services.
+

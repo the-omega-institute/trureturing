@@ -1,0 +1,170 @@
+**Theorem 4.2 (finite affine support and simultaneous finite witnesses).**
+From $G,\Phi$ one can effectively construct a finite set $\mathcal A$
+and finite conjunctions $Q_b(\mathbf z)$ of affine equalities,
+disequalities and weak inequalities such that, for every
+$\mathbf z\in\mathbb N^k$,
+
+$$
+G(\mathbf z)\ \land\
+\exists\mathbf x\in\mathcal T^r\ \Phi(\mathbf z,\mathbf x)
+\quad\Longleftrightarrow\quad
+G(\mathbf z)\ \land\ \bigvee_{b\in\mathcal A}Q_b(\mathbf z).
+\tag{NCE.10}
+$$
+
+The construction also returns finite normal-code templates for every
+tree variable and, for each true branch, a terminating assignment of
+their ranks at that same $\mathbf z$. Expanding the templates gives one
+simultaneous tuple of finite native witnesses. The finite branch list
+and all template shapes are independent of the values of $\mathbf z$.
+
+Proof. The proof extends [NSF, Sections 2--4][NSF]. The extension must
+preserve the free parameter tuple at each step; the details below
+establish that quantifier order.
+
+First use [ABC, Theorems 2.2--2.3][ABC]. Its normal codes are finite
+terms built from $[j]$ for $j\in\mathbb N$ and $F$, excluding every
+primitive cherry $F([j+1],[j])$. The maps $B,E$ are inverse between
+$\mathcal T$ and this normal domain $\mathcal N$. Native pairing is
+the smart constructor
+
+$$
+J(X,Y)=
+\begin{cases}
+[j+2],&X=[j+1],\ Y=[j],\\
+F(X,Y),&\text{otherwise},
+\end{cases}
+\qquad B(\rho^n t)=\tau_nB(t),
+\tag{NCE.11}
+$$
+
+where $\tau_n$ adds $n$ to every primitive rank. These supplied
+identities hold for every natural $n$. Using them pointwise does not
+invoke an existing solver with a variable exponent.
+
+Convert $\Phi$ to disjunctive normal form. In each conjunction give
+every tree variable and every subexpression a code name, sharing all
+uses of a variable. Keep all defining constraints positive, even for
+a subexpression inside a disequality. Definitions are
+
+$$
+Z=[0],\quad Z=[1],\quad Z=\tau_{a(\mathbf z)}X,
+                  \quad Z=J(X,Y).
+\tag{NCE.12}
+$$
+
+For every $J$ occurrence choose either the collapse case
+$X=[r+1],Y=[r],Z=[r+2]$, $r\in\mathbb N$, or the constructor case
+$Z=F(X,Y)$ with normality required. There are finitely many choices
+from the expression graph, regardless of parameter sizes. At a fixed
+assignment every actual solution chooses one of these cases, and
+normal solutions of any chosen case expand to its native definition.
+
+Erase ranks, writing $c$ for a primitive shape and $f$ for the free
+binary shape constructor. The positive shape equations are: primitive
+names have shape $c$; shift and equality constraints identify shapes;
+and a constructor definition gives $s_Z=f(s_X,s_Y)$. These equations
+contain no parameters. Solve them by finite first-order unification
+with the finite-tree occurs check. A failed branch has no finite
+solution. For a successful branch take an idempotent most general
+unifier, giving finite terms $S_Z$ over $c,f$ and remaining shape
+variables $w_1,\ldots,w_s$. Every actual finite shape solution factors
+through these terms. The occurs check is applied to free shapes only,
+after native collapse splitting; for instance the native solution of
+$\rho x=\langle x,\alpha\rangle$ at $x=\beta$ is not discarded.
+
+Decorate every explicit $c$ occurrence of $S_Z$ with its own scalar
+rank. Decorate each occurrence of $w_j$ with its own block name of
+sort $j$. Different occurrences of the same shape variable are not
+identified as values. Every use of one code name reuses its entire
+decorated template. This preserves both source occurrence sharing
+and any distinct subtrees that merely have the same shape.
+
+Traverse each positive equation through its identical unified shapes.
+Each aligned $c$ pair gives a scalar equation
+$r_u-r_v=a(\mathbf z)$; each aligned $w_j$ pair gives a whole-block
+equation $U_u=U_v+a(\mathbf z)$. A constant definition supplies an
+equation to rank zero, and collapse supplies offsets $1$ and $2$.
+For $Z=F(X,Y)$ compare $S_Z$ with $f(S_X,S_Y)$ at offset zero.
+Thus the only remaining equations are scalar differences and
+same-sort whole-block differences. A scalar cannot be compared with
+a residual block: their unified shape positions would be $c$ and
+$w_j$, contradicting identical terms. Nor can different residual
+sorts be compared. Reassembly of these aligned constraints recovers
+every positive code equation. This is NSF Lemma 3.2 with affine labels.
+
+At every explicit $c/c$ cherry in every named template impose
+$r_L-r_R\ne1$. For each negative comparison $X\ne Y$, if $S_X=S_Y$
+syntactically, choose a mismatching aligned scalar or whole block.
+This is a finite disjunction, since the template is finite. Distribute
+these choices jointly for all negative comparisons. If $S_X,S_Y$
+are syntactically different, reserve that negative comparison for
+shape separation. These choices include all original negative atoms;
+no class inequality or link is dropped. Choosing a mismatch of a
+block with itself yields an impossible arithmetic branch, as required.
+
+Use the nonleaf markers of [NSF, Lemma 4.1][NSF]. More explicitly,
+let $L$ be the maximum of $1$ and the leaf counts of all $S_Z$,
+counting each residual occurrence as one leaf, and choose
+$M=\max(3,L+1,s+1)$. For each sort choose a different ground full
+ordered shape $G_j$ with $M$ leaves. A root joining left and right
+combs with $j$ and $M-j$ leaves gives at least $M-1$ choices.
+There are no markers to choose when $s=0$.
+
+These choices preserve every syntactic shape inequality in the finite
+list. At a first disagreement, different variables get different
+markers; a marker has $M$ leaves and cannot equal $c$; a ground
+compound subterm has fewer than $M$ leaves; and a compound containing
+a variable has more than $M$ leaves after substitution. A
+constant/constructor disagreement stays a constructor disagreement.
+This argument also covers subterms of listed terms, whose leaf counts
+are no larger. Marker selection is independent of $\mathbf z$.
+
+Replace each block name $U$ of sort $j$ by $G_j$ with one scalar
+$b_U\in\mathbb N$ on every leaf. Translate its whole-block relations
+to differences of those scalars, keeping their affine labels. Retain
+every explicit rank constraint and explicit cherry inequality. The
+result is a finite scalar system $A_b(\mathbf z,\mathbf r)$ of the
+form (NCE.6), together with its fixed zero and nonnegativity. It has
+no scalar/block comparisons and no hidden arithmetic constraints.
+
+For soundness, every inserted marker is normal: a primitive cherry
+inside it has equal ranks, never consecutive descending ranks. Its
+root is nonleaf, so insertion creates no primitive cherry at a
+template/marker boundary. All other primitive cherries are the
+explicit ones whose inequalities were imposed. Every named code is
+therefore normal. The aligned constraints reassemble all positive
+definitions. A reserved shape inequality holds by marker separation;
+every other negative comparison has its chosen mismatch. Formula
+(NCE.11) then expands one consistent valuation of all names to a
+native solution of the chosen original conjunction. In particular,
+$Z=\tau_aX$ with natural ranks in $X$ forces every rank in $Z$ to be
+at least $a$, exactly the supplied image condition. Negative labels
+in a difference graph are integer differences, not native inverse
+operations.
+
+For completeness, fix an arbitrary guarded $\mathbf z$ and an
+arbitrary finite native solution. Its evaluated normal codes select
+the collapse branch and factor through the shape unifier. Read the
+explicit scalar ranks; they satisfy every explicit cherry condition.
+For each negative comparison with identical symbolic shapes, select
+an actually differing aligned scalar or block. An actual residual
+shape may be primitive or compound, but its leaf set is finite and
+nonempty. Its block decorations solve the same-sort functional system
+at this very $\mathbf z$. Lemma 3.3 replaces those functions by
+constant ranks on the preselected $G_j$, simultaneously for all
+sorts. The explicit scalar ranks can be left unchanged. No constraint
+ties them to a residual block. Replacing a primitive residual by a
+nonleaf may remove a boundary cherry but creates none. All selected
+constraints survive, and syntactically different shapes become
+separated. Hence $A_b(\mathbf z,\mathbf r)$ has a solution at the
+unchanged parameter tuple.
+
+Finally apply Lemma 3.2 to $A_b$, obtaining $Q_b$ and its finite rank
+extractor. Boolean branching, collapse splitting, finite unification,
+template expansion, negative splitting, marker selection and graph
+traversal all terminate before parameter values are chosen. The two
+preceding paragraphs prove both directions of (NCE.10), not merely
+separate decisions after supplying the parameters. Every returned
+rank is a finite natural, so expansion by $E$ terminates. $\square$
+

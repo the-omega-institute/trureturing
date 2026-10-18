@@ -1,0 +1,69 @@
+**Theorem 9.3 (relative gaps for all three specified carriers).** Use
+the same law, public family and pinned network as in Theorem 9.1.
+For every $0<\varepsilon\le1$, Definition 4.1's actual-tuple carrier
+and Definitions 3.1–3.2's uniform owner-kernel and floor carriers obey
+
+$$
+\begin{aligned}
+Z^{\mathrm{def}}_{\Theta_N,\varepsilon}(\mu)
+ &\ge Z_N(1+\varepsilon R^N),\\
+Z^{\mathrm{ker},\varepsilon}_{\mathcal N_N}(\mu)
+ &\ge Z_N\left(1+\frac{\varepsilon}{2F}R^N\right),\\
+Z^{\mathrm{fl},\varepsilon}_{\mathcal N_N}(\mu)
+ &\ge Z_N\left(1+\frac{\varepsilon}{F}R^N\right).
+\end{aligned}
+\tag{SCP.34}
+$$
+
+For each of these three fixed carriers $\star$,
+
+$$
+\liminf_{N\to\infty}\frac1{2N}
+ \log_2\frac{Z_N^\star(\varepsilon;\mu)}{Z_N}
+ \ge\frac12\log_2R\ge\frac12.
+\tag{SCP.35}
+$$
+
+The same lower limit holds along dyadic $N$. At the credited NCM
+law $\mu(A)=\mu(B)=8/25$, $\mu(g)=1/25$ for every $g\in\mathcal G$,
+choose $u=b$ and either $h$. Then $R=16$, so the right side of
+(SCP.35) is two bits per original block.
+
+Proof. Hard solutions contribute $Z_N$ to every carrier. Each
+actual row of $B_N$ has exactly one violated prescription, so its
+contribution to the defect carrier is its original weight times
+$\varepsilon$. This proves the first bound.
+
+For the seed carriers retain exactly the owned seeds of Definition
+8.3. On the seed assignments of the free sector, all $T_i$
+potentials are $\mu(t_i)$ and all $Y_i$ potentials except the last
+are $F$. The final prescribed vector has root $f$, left factor
+$\Gamma_L(f)$ and right factor $\Gamma_R(h)$. No actual state
+has that vector: the root fixes the leaf $f$, whose right factor
+differs. Hence the final hard potential is zero. Its owned tuple is
+the one binary root seed $s_N$, so its uniform owner kernel is
+$1/2$; all $T_i$ owner kernels are $1/3$ and all other $Y_i$
+owner kernels are $1/2$.
+
+In the nonnegative softened product, choose the added term only
+at this final block and choose the original terms at all other
+blocks. Summing these terms over the free-sector seed assignments
+gives $\varepsilon\mu^{\otimes2N}(B_N)/(2F)$ for the kernel
+and $\varepsilon\mu^{\otimes2N}(B_N)/F$ for the floor. Their
+assignments are disjoint from the hard assignment. All remaining
+terms are nonnegative. This proves the other two bounds, with no
+weight placed on a seed occurrence in addition to its original block.
+
+For each fixed $\varepsilon>0$, each bound has the form
+$1+aR^N$, with $a>0$ independent of $N$. Its logarithm divided
+by $2N$ tends to $\frac12\log_2R$. Substitution of the credited
+law gives $R=16$. $\square$
+
+The proof allows zero masses outside $\{A,B,b\}$. Uniform kernel
+softening makes its local seed tables strictly positive even then;
+the defect carrier's weighted support remains
+$(\operatorname{supp}\mu)^{2N}$. No assertion here replaces a
+normalized kernel having zeros by a positive kernel. The kernel
+conclusion is for the fixed uniform rule, not arbitrary rules whose
+mass at the final owner value could shrink with $N$.
+

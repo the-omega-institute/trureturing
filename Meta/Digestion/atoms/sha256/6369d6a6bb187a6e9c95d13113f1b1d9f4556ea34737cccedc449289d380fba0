@@ -1,0 +1,55 @@
+**Theorem 5.1 (a nonempty strict stability regime).** In Definition 4.1,
+choose
+
+$$
+0<\gamma<(2rC_H)^{-1},\qquad
+ g=\gamma\varepsilon^2,\qquad\varepsilon>0.
+\tag{5.1}
+$$
+
+The actual full-Green form
+
+$$
+q_{\varepsilon,\gamma}[f]
+=T_\varepsilon[f]-\gamma\varepsilon^2
+\int_\Omega\Gamma_{\varepsilon,o}|f|^2\,d\mu
+\tag{5.2}
+$$
+
+is closed and semibounded on exactly $\mathcal F_\varepsilon$ and satisfies
+
+$$
+q_{\varepsilon,\gamma}[f]
+\ge(1-2rC_H\gamma)T_\varepsilon[f]
+-\gamma\varepsilon^2B_\varepsilon\|f\|_2^2.
+\tag{5.3}
+$$
+
+Its associated selfadjoint operator has compact resolvent, and its lowest
+energy on the unit $L^2$ sphere is finite and attained. The strict margin
+in (5.3), rather than positivity of the lowest energy, is the meaning of
+strict stability here.
+
+**Proof.** Proposition 4.3 makes the negative potential a Hermitian form on
+$\mathcal F_\varepsilon$, with relative bound at most
+$a=2rC_H\gamma<1$ and additive bound
+$b=\gamma\varepsilon^2B_\varepsilon$. Apply [T, Theorem 6.24 (KLMN)]
+to the closed nonnegative form $T_\varepsilon$. The resulting domain is
+$\mathcal F_\varepsilon$ and the lower bound is (5.3). This proves
+closedness as well as semiboundedness; finiteness of the potential alone
+would not prove either assertion.
+
+For any $c>b+1$, (5.3) and $q\le T_\varepsilon$ show that
+$q+c\|\cdot\|_2^2$ and $T_\varepsilon+\|\cdot\|_2^2$ give equivalent
+Hilbert norms. Proposition 2.1 therefore makes the new form-domain
+embedding compact too. Its resolvent factors through this embedding,
+hence is compact. Equivalently, for a normalized minimizing sequence the
+lower estimate bounds the form norm. A weakly convergent subsequence in
+the new Hilbert form norm converges strongly in $L^2$ by compactness, so its
+limit still has norm one. Weak lower semicontinuity of the positive shifted
+form shows that the limit attains the infimum. The Euler--Lagrange identity
+for arbitrary form-domain variations puts this minimizer in the associated
+operator domain and makes it an eigenvector at the lowest energy.
+No compactness of the critical potential multiplier was presumed.
+$\square$
+

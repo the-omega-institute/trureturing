@@ -1,0 +1,35 @@
+**Proposition 23.3 (the same target with finite negative witnesses).** Delete
+only (CE.23.5), keeping $P,R,H_0$, (CE.23.4), $Q$ and $N$ as above.
+The entire fiber becomes
+
+$$
+U^- =\{u(x,y):x,y\in\mathcal T,\ x\ne y\}.
+\tag{CE.23.14}
+$$
+
+It still belongs to $\mathcal E_{\rm CE}$, but no permitted source-total
+serial or static service has a uniform finite new-read budget.
+
+Proof. The same two-direction derivation and (CE.23.8) leave exactly the
+old $x\ne y$. The same single navigation chart and two eliminations work;
+the domain and all comparisons of (CE.23.10) remain synchronous. This is
+an all-chart negative instance of Theorem 22.1.
+
+Explicitly fix an inclusive depth $b$. Let $x=B_{b+3}$ and $y=\rho(x)$.
+In $y$, change the leaf at address $L^{b+3}$ from $\beta$ to $\alpha$,
+obtaining $y'$. These are different finite trees with equal replies at
+all relative depths at most $b$. This leaf lies outside the right spine,
+so $\kappa(y')=\kappa(y)=\kappa(x)+1$. Consequently $x\ne y$ and
+$x\ne y'$, preserving the full old partition in both reconstructed
+sources. The changed third class is recomputed according to its retained
+definitions, rather than held as an independently chosen value.
+
+Lemma 19.2 gives $u(x,y)\equiv_{b+1}u(x,y')$. Both are finite members of
+the entire fiber (CE.23.14). All six original holes exist. Holes $2,3$
+are equal in the first and unequal in the second. Thus their entire
+rows differ. This exhibits finite bad pairs at every requested depth;
+the finite-reply-tree implication in Theorem 22.1 excludes every uniform
+finite raw budget, including all allowed adaptive serial updates.
+The source domain and the complete six-hole target have not been reduced
+to that one witnessing comparison. $\square$
+

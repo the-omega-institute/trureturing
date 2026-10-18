@@ -1,0 +1,16 @@
+**Definition 2.1 (canonical actual representatives).** Put
+$C=\langle\alpha,\alpha\rangle$ and
+
+$$
+S_1=\{\alpha,\beta,C\},\qquad
+S_{D+1}=\{\alpha,\beta\}\ \sqcup
+\{\langle x,y\rangle:x,y\in S_D\},\qquad N_D=|S_D|.
+\tag{FMR.7}
+$$
+
+All elements are actual trees of height at most $D$. For $h(v)\le D$,
+let $\pi_D(v)$ keep every reached constructor through depth $D-1$,
+replacing a branch reached at depth $D-1$ by $C$. Thus $\pi_D(v)\in S_D$,
+and $\pi_D$ fixes $S_D$. This is AAR Theorem 16.3's canonical
+completion for the full prefix menu $W_D$.
+

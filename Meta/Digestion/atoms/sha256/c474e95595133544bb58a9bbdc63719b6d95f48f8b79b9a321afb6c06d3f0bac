@@ -1,0 +1,3 @@
+**Corollary 349.2 (Conditional original bridge).** Fix $0<e\le1$ and
+$L=\max(\{i:a_i>e\}\cup\{0\})$. If one normalized complete $N$ kernel satisfies (348.3), the positive row and all full labels, and its chosen $W_N$ coefficients satisfy (349.3) with $B_W\le1$, then one normalized $O$ allocation satisfies the same rows at the same $(a,e)$. The proof is the already supplied VI 191–197 full-vector conversion and increasing-first-zero induction applied to the single W allocation; it does not preserve an arbitrary input $N$ law or coupling. The finite word at $1^L$ represents a table endpoint, not an infinite all-positive source, and the tail is handled by §354.
+

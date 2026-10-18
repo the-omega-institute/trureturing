@@ -1,0 +1,15 @@
+## 59. 最新外部研究锚点与管线位置
+
+本节只记录外部研究对接口设计的支持，不把其模型假设转写为 Auric FIB 内部定理。
+
+1. Zhang、Yamagata、Suzuki 的 2026 工作将 Petz 单调度量用于多参数 Bayesian 量子估计，支持把 §49 的 SLD 特例扩展为一族单调量子度量，但不替代 §49 的有限维证明，也不证明 FIB 参数是物理参数。参见 [arXiv:2607.01685](https://arxiv.org/abs/2607.01685)。
+
+2. Movilla Miangolarra、Sabbagh、Kolchinsky 的 2026 工作把详细平衡 Markov 链和耗散 Lindblad 动力学放入 Wasserstein-2 自由能梯度流框架，并讨论含 Hamiltonian 项的广义度量。它为 §50 的 metric-measure 数据提供候选构造，但必须先给出状态空间、mobility、参考态和极限识别，不能从 \(QCD(K)\) 自动推出 Wasserstein 几何。参见 [arXiv:2606.00698](https://arxiv.org/abs/2606.00698)。
+
+3. Inagaki 的 2025 结果在 Ricci 下界、体积下界、直径上界和非塌缩条件下建立随机图 Laplacian 的谱收敛，支持 §50 中 (G)、(K) 和非塌缩条件分开记录。参见 [arXiv:2506.07427](https://arxiv.org/abs/2506.07427)。
+
+4. Chen 关于 pointed Gromov-Hausdorff 收敛下热核界稳定性的工作构造极限 Dirichlet 形式并沿子列得到 Mosco 收敛，支持 §50 的“空间紧性先于形式极限”顺序，但其假设不能被有限 FIB 数据默认满足。参见 [arXiv:2411.19047](https://arxiv.org/abs/2411.19047)。
+
+因此，最新研究支持接口选择和假设分层，不能替代 Auric FIB 自己的有限层证明或 RH 谱识别定理。
+
+

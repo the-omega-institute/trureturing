@@ -1,0 +1,75 @@
+**Lemma 16.3 (endpoint split repair and complete-law transport).** For the threshold of Lemma 16.2, there is one endpoint-valued return-conserved regular comparison with the same p labels and row $\pi$, at most $2|Y|$ suspended labels, split row $\tau^c$ with old marginal $\tau$, and both exact acquired flows. Its complete-law discrepancies satisfy
+
+$$
+\begin{aligned}
+D_p&:=\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^c)
+       \le\frac{15M_\theta+4\delta_\theta}{11},\\
+D_\beta&:=\sum_{y,C}\tau^c_{y,C}
+        \operatorname{TV}(W_y,W_{y,C}^c)
+       \le\frac{6M_\theta+6\delta_\theta}{11},\\
+\max(D_p,D_\beta)&\le\frac{450J+90V_\pi}{11}=:K_0.
+\end{aligned}
+\tag{16.6}
+$$
+
+For every pair of complete probability targets, these same discrepancies bound the changes in their configuration-before-TV losses. In particular this one comparison satisfies (2.4) for every supported depth with common slack $E=\epsilon+K_0$.
+
+Proof. Reuse the balanced split construction (9.7)–(9.13) for the at-most-two nonempty cells $C$ of $c_\theta$. Explicitly, retain exactly $(y,C)$ with
+
+$$
+\tau^c_{y,C}=\sum_{x\in C}\pi_xB_{xy}>0,\qquad
+B^c_{x,(y,C)}=\mathbf1_{\{x\in C\}}B_{xy},\qquad
+u_x^c=c_\theta(x),\quad v^c_{y,C}=v_y.
+\tag{16.7}
+$$
+
+Thus $B^c$ is stochastic, $\pi B^c=\tau^c$ and $\sum_C\tau^c_{y,C}=\tau_y$. For $x'\in C$ set
+
+$$
+\begin{aligned}
+d_{x'}^C&=\pi_{x'}-\sum_y\tau^c_{y,C}A_{yx'}\ge0,\\
+D_C&=\sum_{x'\in C}d_{x'}^C,\qquad
+m_{y,C}=\sum_{x'\notin C}A_{yx'}.
+\end{aligned}
+$$
+
+Nonnegativity follows from $\tau^c_{y,C}\le\tau_y$ and $\tau A=\pi$. The mass of cell $C$ agrees on both sides of $B^c$, so exact balance gives
+
+$$
+D_C=\sum_y\tau^c_{y,C}m_{y,C},\qquad
+\sum_CD_C=\delta_\theta.
+\tag{16.8}
+$$
+
+For $D_C>0$, remove the old $A$ mass outside $C$ and add $m_{y,C}d_{x'}^C/D_C$ inside:
+
+$$
+A^c_{(y,C),x'}=
+\begin{cases}
+A_{yx'}+m_{y,C}d_{x'}^C/D_C,&x'\in C,\\
+0,&x'\notin C.
+\end{cases}
+\tag{16.9}
+$$
+
+If $D_C=0$, (16.8) implies $m_{y,C}=0$ for every retained pair in that cell; use the restricted old row. No zero denominator is used. These rows are stochastic. Summing their influx at $x'\in C$ gives the old cell influx plus $d_{x'}^C$, hence $\tau^cA^c=\pi$. Their row-TV cost is exactly $m_{y,C}$: this mass is removed outside and added inside. Its $\tau^c$ average is $\delta_\theta$. Every new positive $B^cA^c$ edge stays within one endpoint-tag cell. No detailed balance, irreducibility, mixing, positive minimum row mass or equality of carrier sizes enters this construction.
+
+Generate $Q^c,W^c$ using these emissions and these same comparison acquired kernels. The full-law couplings (9.14)–(9.17), now with averaged emission cost $M_\theta$ rather than interval width, give
+
+$$
+D_p\le M_\theta+\frac23D_\beta,\qquad
+D_\beta\le\frac25(\delta_\theta+D_p).
+\tag{16.10}
+$$
+
+At p couple emissions, then use the old $B$ transition with its indicated split cell when beta matches. At suspension the emissions coincide; compare the $A$ rows with cost $m_{y,C}$, then their complete successor laws. Average with the two exact comparison flows. Solving (16.10) proves the first two lines of (16.6); both are at most $(15M_\theta+6\delta_\theta)/11$, to which (16.4) applies.
+
+These are entire-law comparisons. Both regular programs have synthetic return survival at most $4/15$ from every configuration. Finite-prefix couplings therefore pass to all stopped words and the retained infinite outcomes, whose masses are zero, without conditioning on completion. For any p target $T$, the individual reverse triangle inequality gives
+
+$$
+\left|\sum_x\pi_x\operatorname{TV}(Q_x^c,T)
+      -\sum_x\pi_x\operatorname{TV}(Q_x,T)\right|\le D_p.
+$$
+
+At suspension apply the same inequality before averaging over $(y,C)$ and use $\sum_C\tau^c_{y,C}=\tau_y$. The bound is $D_\beta$. Neither the threshold nor the repair depends on the target, so the same comparison and both bounds hold simultaneously for all supported depths, including a countable set. $\square$
+

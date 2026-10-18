@@ -1,0 +1,10 @@
+**Proposition 74.3 (common full-input Schur interface).** For the same real data (S.147), the fixed input $\rho_\star$ and a real symmetric $Y\succ0$, the full dual inequality (S.121) is equivalent to
+
+$$
+\frac1{16}(E_0^\dagger Y^{-1}E_0+E_1^\dagger Y^{-1}E_1)
++\frac14\mathsf T^\dagger Y^{-1}\mathsf T\preceq I_r.
+\tag{S.152}
+$$
+
+Proof. The $\alpha$th vector of (S.118) is the stacked real vector $((E_0)_\alpha/4,(E_1)_\alpha/4,t_\alpha/2)$. Collect these as columns of $W$. The positive-definite Schur criterion $WW^\dagger\preceq I_3\otimes Y$ iff $W^\dagger(I_3\otimes Y^{-1})W\preceq I_r$ gives exactly (S.152). It retains every off-diagonal Kraus-index term and the same $Y$ across all three input blocks. For singular Hermitian $Y$, use the full inequality $C_{\rho_\star,N}\preceq I_3\otimes Y$ directly. Merely substituting a pseudoinverse into (S.152) without a range condition is not an equivalent singular formulation. $\square$
+

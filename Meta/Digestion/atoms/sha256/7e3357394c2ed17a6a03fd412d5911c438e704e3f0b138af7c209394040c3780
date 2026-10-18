@@ -1,0 +1,35 @@
+**Definition 20.2 (the shared carrier and graph hypothesis).** Let
+$G=(V,E)$ be a connected simple 4-regular graph, $n=|V|\ge5$, such that
+$G-v$ is connected for every $v\in V$. Use exactly Definition 12.2's
+actual owned edge replies, total guarded decoders and seven target
+factors at depth three. Write $s\in\mathbb F_2^E$ for their one common
+assignment, $x(s)\in S_3^V$ for Theorem 12.3's unique actual lift,
+$\operatorname{st}(v)$ for the four incident edges, and $H$ for (GDB.55).
+There are $|E|=2n$ shared variables; every original whole-block weight
+is used once. At Definition 12.4's law on the entire 123-state $S_3$,
+put $A=63/619$, $B=1/619$ and
+
+$$
+\begin{aligned}
+\Phi_v(s)&=\begin{cases}A,&(Hs)_v=0,\\ B,&(Hs)_v=1,\end{cases}
+& W(s)&=\prod_{v\in V}\Phi_v(s),\\
+Z_G&=\sum_{s\in\mathbb F_2^E}W(s)
+=2^n\big[(A+B)^n+(A-B)^n\big].
+\end{aligned}
+\tag{GDB.84}
+$$
+
+The last equality is credited Corollary 13.2, not a new partition
+calculation. Formulas below also allow arbitrary positive parameters
+$A>B$ on this same finite carrier; statements about the original
+probability law use the specified $63:1$ values. No original state,
+variable shape, owner guard or target is removed.
+
+There is such a graph for every integer $n\ge5$: on vertices modulo
+$n$, take the edges $\{i,i+1\}$ and $\{i,i+2\}$, oriented
+$i\to i+1,i+2$. This is the simple four-regular circulant $G_n$.
+Its cycle of step-one edges, after deletion of a vertex, contains a
+path through all remaining vertices. Thus it satisfies the stated
+connected-deletion hypothesis. Its orientation has two incoming and
+two outgoing edges, as required by Definition 12.2.
+

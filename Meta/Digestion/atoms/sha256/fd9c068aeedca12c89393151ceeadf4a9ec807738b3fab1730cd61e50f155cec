@@ -1,0 +1,23 @@
+### 102.1. Original hypotheses and conclusion
+
+Retain the original four two-coordinate fibres and the calibrated Gram domain
+\[
+\mathcal E=\{G\succeq0:G_{ff}=I_2\}.
+\]
+The local physical channels have dimensions \(\mathbb C^8\to\mathbb C^4\), the correlated encoding is fixed, and the arbitrary-reference error has the original unhalved diamond normalization. Write
+\[
+F(G,H)=\max_{\rho,W}2\operatorname{Tr}[(T-G\odot H)W],
+\quad T_{ff}=I_2,\quad T_{fg}=\tfrac12J_2\ (f\ne g),
+\]
+where \(\rho\) is PSD and fibre-block diagonal, \(\operatorname{Tr}\rho=1\), and \(0\preceq W\preceq\rho\).
+
+Assume \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), its ranks are \((7,6)\), and
+\[
+0<t=F(G,H)<\tfrac14.
+\]
+Let \(a\) span the full kernel of \(G\). Suppose its support \(S\) has occupancy \((2,1,1,0)\). Label its whole original fibre \(F=\{1,2\}\), and its two singleton coordinates \(3,4\). The extra hypothesis of the present theorem is
+\[
+|H_{13}|=|H_{23}|=|H_{14}|=|H_{24}|=\frac1{\sqrt2}.
+\tag{1}
+\]
+

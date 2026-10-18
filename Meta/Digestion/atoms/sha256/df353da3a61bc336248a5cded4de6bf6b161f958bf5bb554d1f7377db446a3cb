@@ -1,0 +1,110 @@
+**Theorem 37.1 (positive-sign probabilities and the original maximum).**
+For each original input of GC Definition 2.1,
+
+$$
+P^{\rm rev}_{y,\epsilon,\chi}
+=\operatorname{tr}(F_{\rm rev}\rho_{y,\epsilon,\chi})
+=\int_{\mathcal R_+}
+ (\chi a_f\sqrt{q_y}\,v-b_fu/\sqrt2)^2\,d\sigma.
+\tag{FC.161}
+$$
+
+It is independent of $\epsilon$. Put
+
+$$
+L_y^+=\frac{400}{1681}\left[
+\frac25a_f^2q_y-\frac12b_f^2+
+\frac{39}{10}a_fb_f\sqrt{q_y/2}\right],\qquad C_y^+=S_\Psi L_y^+.
+\tag{FC.162}
+$$
+
+At the stipulated source, $L_y^+>0$, and every feasible common law obeys
+
+$$
+P^{\rm rev}_{y,\epsilon,+1}\ge C_y^+,\qquad
+\max_{y,\epsilon,\chi}P^{\rm rev}_{y,\epsilon,\chi}\ge C_5^+.
+\tag{FC.163}
+$$
+
+The arithmetic sign average satisfies
+
+$$
+\overline P_y:=\tfrac12(P^{\rm rev}_{y,\epsilon,+1}
+                         +P^{\rm rev}_{y,\epsilon,-1})
+=q_y(F_{\rm rev})_{11}+\tfrac12(F_{\rm rev})_{22}
+\ge\overline C_y:=S_\Psi L(b_f^2/2,a_f^2q_y).
+\tag{FC.164}
+$$
+
+All seven physical scalar constants have these strict outer intervals;
+each numerator in the last two columns is divided by $10^{12}$.
+
+| Scalar | Value | Lower numerator | Upper numerator |
+| --- | --- | ---: | ---: |
+| $C_{\rm tr}$ | $0.046934492735440449795\ldots$ | 46934492735 | 46934492736 |
+| $C_5^+$ | $0.042300241764800747578\ldots$ | 42300241764 | 42300241765 |
+| $C_{16}^+$ | $0.036854112188807889317\ldots$ | 36854112188 | 36854112189 |
+| $C_{27}^+$ | $0.030891834186173803257\ldots$ | 30891834186 | 30891834187 |
+| $\overline C_5$ | $0.022250881537514215035\ldots$ | 22250881537 | 22250881538 |
+| $\overline C_{16}$ | $0.019438389443262815153\ldots$ | 19438389443 | 19438389444 |
+| $\overline C_{27}$ | $0.016381313626343393410\ldots$ | 16381313626 | 16381313627 |
+
+Thus all six $\chi=+1$ histories have probability greater than
+$0.030891834186$, and the maximum over the original twelve histories
+is at least $C_5^+$, or $4.2300241764800747578\ldots$ percent.
+The sign average is only an algebraic average of the specified original
+test states. It supplies no prior, randomized input, extra specimen or
+estimation procedure, and does not lower-bound both signs individually.
+Each scalar minimum, and the minimum of the twelve-history maximum,
+is attained by a finite feasible original law at $s=0,t\ge3000$.
+Different scalars can have different attaining laws. Sharpness among
+height-optimal laws at a prescribed request is not asserted.
+
+Proof. The lower two coordinates of the original input vector are
+$(\chi\sqrt{q_y},1/\sqrt2)$ and the first coordinate of $n_h$ is
+zero. This proves (FC.161), including independence of $\epsilon$.
+For the plus sign use
+
+$$
+k_y=(-b_f/\sqrt2,a_f\sqrt{q_y})^T,\qquad
+\mathsf W_y^+=k_yk_y^T,\qquad
+d_{\mathsf W}=\mathsf W_{11}-2\mathsf W_{22}/5+39\mathsf W_{12}/10.
+\tag{FC.165}
+$$
+
+The source intervals give $d_{\mathsf W_y^+}<0$, and
+
+$$
+\det(\mathsf W_y^+-\lambda Q_\Psi)
+=-\lambda d_{\mathsf W_y^+}-\frac{1681}{400}\lambda^2.
+\tag{FC.166}
+$$
+
+Its positive root is exactly $L_y^+$. The first diagonal entry there
+is positive, so the root gives a PSD matrix. Apply (FC.159).
+Averaging the two signs in (FC.161) cancels the cross term and uses
+$\operatorname{diag}(b_f^2/2,a_f^2q_y)$, giving (FC.164).
+The exact formulas, the nine source rows and the rational radical rule
+(FC.85) give the table by positive-denominator interval arithmetic.
+For example the corresponding $\lambda$ intervals are
+
+$$
+\begin{gathered}
+0.0375616344817884925064<L(b_f^2,a_f^2)<0.0375616344817884925066,\\
+0.0338528473849035410538<L_5^+<0.0338528473849035410540,\\
+0.0294943145330201090151<L_{16}^+<0.0294943145330201090152,\\
+0.0247227085357821406900<L_{27}^+<0.0247227085357821406902,\\
+0.0178073615053387801172<L(b_f^2/2,a_f^2q_5)<0.0178073615053387801174,\\
+0.0155565264825194047412<L(b_f^2/2,a_f^2q_{16})<0.0155565264825194047414,\\
+0.0131099513151791055261<L(b_f^2/2,a_f^2q_{27})<0.0131099513151791055262.
+\end{gathered}
+\tag{FC.167}
+$$
+
+The exact equality laws in §38 prove sharpness without a generic
+strong-duality premise. For $\mathsf W_5^+$, all reverse intensity is
+on a negative-slope line, so $F_{12}>0$. The plus sign is consequently
+maximizing, and $q_yF_{11}+F_{22}/2+2\sqrt{q_y/2}F_{12}$ increases
+with $q_y$. Since $q_5$ is largest, the maximum over all twelve is
+exactly $C_5^+$ in that law. $\square$
+

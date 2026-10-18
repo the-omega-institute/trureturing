@@ -1,0 +1,60 @@
+**Theorem 7.3 (a strict source-specific gain on the credited core).**
+Use the four core states $u_0,u_1,u_2,u_3$ from (OCB.39). Give them
+probabilities $\mu=(4,3,2,1)/10$, with zero probability elsewhere in
+$S_3$. Then
+
+$$
+\alpha_3(\mu)=H(4/10,3/10,3/10),\qquad
+H(\mu)-\alpha_3(\mu)
+=\frac15\log_2\frac32+\frac1{10}\log_2 3.
+\tag{OCB.53}
+$$
+
+For every $D\ge3$ and every original complete code, under the
+analytical law of $n=2^{D-3}$ such actual iid blocks,
+
+$$
+H(E)\ge n\left(\frac15\log_2\frac32+\frac1{10}\log_2 3\right)
+       >n\log_2\frac{10}{9}.
+\tag{OCB.54}
+$$
+
+The latter is the maximum-fiber-mass entropy bound for this same law;
+the strict improvement concerns that source-specific consequence.
+
+Proof. On the four-state core, credited SRP pressure is the sum of
+the three largest weights. For $w=(4,3,3,3)/10$ on this core and
+zero elsewhere, it is one. Every word in a type-$\mu$ class has
+$w$-weight $\prod_sw_s^{n\mu_s}$, so the all-size mass bound gives
+
+$$
+\alpha_3(\mu)\le-\sum_s\mu_s\log_2w_s
+                    =H(4/10,3/10,3/10).
+$$
+
+This use of zero weights requires no boundary differentiation or
+unproved variational extension. For the reverse inequality write
+
+$$
+\mu=\frac23(4/10,3/10,3/10,0)
+        +\frac13(4/10,3/10,0,3/10).
+$$
+
+Each constituent triple is identified by one native literal on the
+credited core, hence its entire Cartesian powers are admissible and
+its type capacity equals its entropy. The two entropies coincide.
+Concavity of $\alpha_3$ supplies the matching lower. Subtracting
+entropies gives (OCB.53), and Theorem 7.2 gives (OCB.54).
+
+For this same $\mu$, SRP gives $\beta_3(\mu)=9/10$.
+A bound of $(9/10)^n$ on each actual name probability implies only
+$H(E)\ge n\log_2(10/9)$ by the maximum-atom argument.
+The strict inequality in (OCB.54) follows exactly from
+$27/4>(10/9)^{10}$ after raising to the tenth power. The source laws
+in the two comparisons are identical. No source-dependent request,
+new observation, physical randomness service or preparation prior is
+introduced. The conclusion is a native application of the credited
+core pressure and profile to complete original names, not a new
+core-pressure theorem or a numerical improvement of $\lambda$.
+$\square$
+

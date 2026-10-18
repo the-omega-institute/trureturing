@@ -1,0 +1,29 @@
+**Theorem 10.1 (worst-case retained chronology versus predictive counts).** For every integer $m\ge0$, the positive $100$ slice contains a count fiber at
+
+$$
+A=B=2m+3,\qquad N=4m+6,
+$$
+
+with at least $\binom{2m}{m}$ histories. A record that permits exact raw-history recovery for every member, even with the count boundary and all original future, needs at least
+
+$$
+\left\lceil\log_2 F(2m+3,2m+3)\right\rceil
+\ \ge\ 2m-\log_2(2m+1)
+\tag{SC.19}
+$$
+
+bits of distinguishable supplementary retained configurations. Conversely Hypothesis 7.1 recovers every positive third-latch history with $O(N+1)$ retained bits. Thus worst-case retained raw chronology grows linearly with paid past length, while the acquired predictive count fields $(A,B)$ need only $O(\log(N+2))$ retained bits. No uniformly finite retained record reconstructs every positive third-latch past.
+
+Proof. In (SC.8), take $s=0,p=q=m$: every ordering of $m$ rejected $X$ pairs and $m$ rejected $Y$ pairs is a distinct actual positive history of length $4m+6$. The central binomial coefficient is the maximum among the $2m+1$ coefficients whose sum is $2^{2m}$, so $\binom{2m}{m}\ge2^{2m}/(2m+1)$. Theorem 9.3 gives the required configuration lower bound; future observations cannot relieve it. A bounded-bit retained device has only finitely many distinguishable configurations, contradicting this sequence for sufficiently large $m$.
+
+For the upper bound, encode $U$ as one bit per rejected pair and retain its length/occupancy metadata in $O(\log(N+2))$ bits. The three exact return counters each use $O(\log(N+2))$ bits. The original seed, marker records, selector and fixed four-segment control have bounded alphabets. The same representation works during acquisition; no prefix has more completed retry pairs or returns than the reads it has actually consumed. Since $|U|=p+q\le N/2$, its held footprint is
+
+$$
+|U|+O(\log(N+2))\le N/2+O(\log(N+2)).
+\tag{SC.20}
+$$
+
+Initialization, occupancy and counter encodings are included, not hidden persistent modes. For an analysis bound $N\le L$, fixed buffers/counter widths therefore give a finite $O(L+1)$ retention bound on that domain. This is not permission to truncate the original source at $L$; paths outside it continue and need growing storage for universal exact recovery.
+
+The predictive counts are actually acquired from zero as in Future Response Sufficiency §§9,15, and with the supplied finite control determine the legal continuation law. Retaining the two integers costs logarithmic space. This does not bound probability materialization: exact rational numerators/denominators, model installation, arithmetic workspace and output may require more space; an arbitrary real or countable prior needs its own effective representation obligations. The comparison is between held chronological information and held count fields, not between optimal total machines. $\square$
+

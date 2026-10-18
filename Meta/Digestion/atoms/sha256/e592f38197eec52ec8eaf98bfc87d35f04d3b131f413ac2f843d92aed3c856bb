@@ -1,0 +1,62 @@
+**Theorem 5.1 (unchanged full-family memory lower).** Under the stationary
+task and complete export assumptions, for every integer $D\ge2$,
+
+$$
+\boxed{\displaystyle
+M_1(D)\ge
+\left\lceil\left(\frac{25}{17}\right)^{2^{D-2}}\right\rceil,
+\qquad
+\lambda\ge\frac14\log_2\frac{25}{17}.}
+\tag{NCM.22}
+$$
+
+In particular the normalized lower is strictly larger than the credited
+LTR lower $\frac14\log_2(7/5)$. Together with the unchanged FMR strict
+upper it gives
+
+$$
+\frac14\log_2\frac{25}{17}\le\lambda<0.216605159.
+\tag{NCM.23}
+$$
+
+Proof. Set $h=D-2$, $n=2^h$. Use precisely FMR Theorem 6.3's actual
+restriction: put a perfect ordered binary scaffold of height $h$ in
+$v$, and fill its $n$ frontier occurrences, at words $a_i$ of length
+$h$, with all tuples $x\in S_2^n$. These are simultaneous actual
+trees of height at most $D$, each giving
+$t_x=\langle\alpha,v_x\rangle\in\mathcal F_D$.
+
+For any correct original preparation, restrict its same complete code
+$E$ to these sources. For every block target $q\in\{\varepsilon,L,R\}$,
+the actual target is $Ra_iq$, of length at most $D$, and its factor
+is $\Gamma_q(x_i)$. The occurrence is present in every tree of this
+slice, so the supplied present-subtree transport is lawful for every
+subsequent $k$.
+
+Every original-root word is accounted for. The root, the left wrapper
+cone and words ending strictly above the block frontier give constant
+replies. Every other right-cone word enters exactly one actual block
+with a finite suffix. On $S_2$ that suffix is either a boundary
+experiment, a length-two coarsening of a side experiment, or constant
+absent, by (NCM.14). Its queried block may be different from the
+target block. This is the native every-word correspondence in the
+credited scaffold restriction, without modifying any fiber or
+projecting away its correlations.
+
+Fixing a complete code and a target fixes its zero-Read decision or
+chosen literal before any reply or supplied $k$. Equal replies must
+give the same trajectory, hence the same factor by Convention 1.4.
+Thus each nonempty restricted code fiber is jointly admissible in
+$S_2^n$. These fibers partition a set of total integer product weight
+$25^n$, and each has weight at most $17^n$ by Theorem 3.3. Their
+number, and therefore $|E[\mathcal F_D]|$, is at least
+$\lceil(25/17)^n\rceil$. This holds for every original competitor,
+whatever its paid preparation, correlations or target-specific literal
+choices.
+
+Taking the minimum proves the finite bound. Divide its logarithm by
+$2^D=4n$ and use the rate existence supplied by FMR Theorem 3.3.
+This proves the rate lower. Its strict improvement is the exact
+comparison $25\cdot5=125>119=7\cdot17$. FMR Theorem 5.2 supplies
+the upper in (NCM.23); it is not rederived or renamed here. $\square$
+

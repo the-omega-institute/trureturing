@@ -1,0 +1,37 @@
+**Lemma 6.2 (Exact measurable cutting without a new random source).**
+If $E$ is an atomless measurable set of finite measure, then for
+each $t\in[0,\nu(E)]$ it has a measurable subset of measure
+exactly $t$. Consequently $\mathsf U_0$ can be partitioned into
+any prescribed finite vector of nonnegative masses summing to $d$.
+
+Proof. First, every positive-measure atomless set contains a
+measurable subset with measure in $(0,\varepsilon]$ for each
+$\varepsilon>0$. If its measure is too large, split it into two
+positive-measure measurable pieces and choose a smaller piece.
+It has at most half the old measure and is still atomless. Repeating
+finitely many times yields the required small piece.
+
+The cases $t=0,\nu(E)$ are immediate. Otherwise build disjoint
+increments inside the remaining part of $E$, keeping their total
+measure at most $t$. At a step with positive remaining gap, let
+$s$ be the supremum of the measures of measurable subsets of the
+remainder with measure at most that gap. The small-piece property
+gives $s>0$. Choose an increment of measure greater than $s/2$
+and at most the gap. Stop if the gap becomes zero. If this process
+is infinite, its increasing union has measure $l\le t$.
+
+Suppose $l<t$. Its final complement in $E$ has positive measure,
+so contains a fixed measurable piece $B$ with
+$0<\delta:=\nu(B)\le t-l$. This $B$ was available at every
+step: it is disjoint from all chosen increments and its measure is
+at most every remaining gap. Every step's supremum was therefore
+at least $\delta$, forcing each increment to have measure greater
+than $\delta/2$. Their sum cannot be bounded by $t$, a
+contradiction. Hence $l=t$, proving exact cutting.
+
+Apply this fact successively to obtain the desired finite masses;
+take the last piece to be the remainder. Every piece belongs to
+the original sigma-algebra. No uniform variable, point measurability,
+countable generation, or completion of the space was needed.
+$\square$
+

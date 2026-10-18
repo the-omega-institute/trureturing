@@ -1,0 +1,49 @@
+**Convention 1.2 (credited native interface).** Put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{RCE.3}
+$$
+
+Use the credited temporal factors of [AAR, §§12–13]. Write
+$s(a)=\#L(a)+2\#R(a)$ and $e(\alpha)=0,e(\beta)=1$. At an original
+branch endpoint set $\Gamma_q(u)=(0,0)$. Otherwise let the first
+original blocking leaf along $q$ have label $\ell$ at $a$, and put
+$q=ab$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&b=\varepsilon,\\
+(s(b)+2-e(\ell),\mathbf1_{b\text{ ends in }R}),&b\ne\varepsilon.
+\end{cases}
+\tag{RCE.4}
+$$
+
+For attained $(b,c)$, the supplied all-count decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{RCE.5}
+$$
+
+This equals $r_{\rho^ku}(q)$ for every $k\ge0$. Its trajectory
+recovers $b$ as the first branch count and $c$ by the occurrence of an
+alpha stage. Initially absent targets are included.
+
+At depth $d$, write $g_q=\Gamma_q$ and $r_a(x)=r_x(a)$ for
+$a,q\in W_d$, and include a constant experiment. FMR canonicalization
+$\pi_d$ preserves these replies and factors and fixes $S_d$.
+Every finite word on $S_d$ is a function of one boundary reply in the
+same block, or a constant: a length-$d$ reply is alpha exactly when
+its length-$(d-1)$ parent is branch, and longer words are absent.
+This is the every-word simulation of [FMR, Lemma 2.2].
+

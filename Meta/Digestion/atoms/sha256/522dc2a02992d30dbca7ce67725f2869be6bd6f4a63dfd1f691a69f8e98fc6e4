@@ -1,0 +1,7 @@
+## 3. The inherited bounded-observable reduction
+
+The bounded-observable theorem and worst-$\beta$ decomposition in this
+section are the results of [O, §§3–4]. Their needed proofs are included to
+make the interface to arbitrary encoders explicit. They are not new
+phase-erasure or floor claims.
+

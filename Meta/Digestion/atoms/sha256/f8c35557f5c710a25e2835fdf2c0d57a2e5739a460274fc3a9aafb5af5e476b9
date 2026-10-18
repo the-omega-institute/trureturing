@@ -1,0 +1,107 @@
+**Theorem 7.1.** For every real $D_0$ and every $\lambda\ne0$, take
+$Y=D_0+30\lambda$, $z=D_0$. Put
+
+$$
+\begin{gathered}
+c_-=(23-\sqrt{13})/20,\qquad c_+=(23+\sqrt{13})/20,\\
+r_c=\frac{3}{2c}-1,\qquad u_c=\frac{8}{5c}-1,\qquad
+v_c=1-\frac{3}{5c},\qquad
+P_c=\begin{pmatrix}r_c&u_c\\v_c&1-r_c\end{pmatrix},\\
+f_c(T)=cT(T-5)(T-7),\qquad
+g_c=\lambda f_c,\qquad \delta_c=D_0,
+\quad c\in\{c_-,c_+\}.
+\end{gathered}
+\tag{7.1}
+$$
+
+These are exactly the two worlds of the entire $\mathcal Z_{57}$
+on this one history. They prove the cardinality bound sharp and
+are not an $L_2$ witness.
+
+**Proof, coefficients and legality.** The complete normalized gain
+coefficient vector is $(0,35c,-12c,c)$; the raw vector is
+$\lambda(0,35c,-12c,c)$. The two amplitudes are exactly the roots of
+
+$$
+100c^2-230c+129=0,
+\tag{7.2}
+$$
+
+since its discriminant is $1300=100\cdot13$. From
+$3<\sqrt{13}<4$ one has
+
+$$
+19/20<c_-<1,\qquad 13/10<c_+<27/20.
+\tag{7.3}
+$$
+
+Thus $3/4<c<3/2$ gives $0<r_c<1$, and $3/5<c<8/5$ gives
+$u_c,v_c>0$. The trace is one. Direct multiplication gives
+
+$$
+\begin{aligned}
+r_c(1-r_c)&=9/(2c)-2-9/(4c^2),\\
+u_cv_c&=11/(5c)-1-24/(25c^2),\\
+r_c(1-r_c)-u_cv_c
+ &=-\frac{100c^2-230c+129}{100c^2}=0.
+\end{aligned}
+\tag{7.4}
+$$
+
+The matrices are therefore strictly positive, rank one and trace
+one. They are nonsymmetric: $u_c=v_c$ would require $c=11/10$,
+outside both intervals in (7.3). Both gains are nonzero cubics with
+simple roots $0,5,7$, for either sign of $\lambda$. The worlds
+are distinct because their gain coefficients differ.
+
+**Proof, every actual ancestor reading.** Here $d=0$, $y=30$,
+$\zeta=0$. For each of the two fixed worlds the full table is
+
+$$
+\begin{array}{c|c|c|c|c}
+i&A_i&\operatorname{tr}(A_iP_c)&f_c(i)&
+                    d+f_c(i)\operatorname{tr}(A_iP_c)\\ \hline
+0&I&1&0&0\\
+1&J&1/c&24c&24\\
+2&L&8/(5c)&30c&48\\
+3&J+L&13/(5c)&24c&312/5\\
+4&C&5/(2c)&12c&30\\
+5&Q&1+27/(10c)&0&0
+\end{array}
+\tag{7.5}
+$$
+
+Thus all six equations of precisely the same $JMMJM$ ancestor hold.
+The raw readings are $D_0,D_0+24\lambda,D_0+48\lambda,
+D_0+312\lambda/5,D_0+30\lambda,D_0$. Theorem 5.1 gives at most
+two worlds in this root class; the two legal worlds displayed here
+are consequently the entire class. This does not assert that they
+are the whole unrestricted fiber.
+
+**Proof, every sixth and terminal response and the losing-child
+quantifiers.** One has
+
+$$
+\begin{aligned}
+f_c(6)&=-6c,&t_J&=17/(5c),&t_M&=1+26/(5c),\\
+v_J(W_c)&=-102/5,&v_M(W_c)&=-6c-156/5,\\
+r_{JJ}(W_c)&=r_{JM}(W_c)=r_{MJ}(W_c)=r_{MM}(W_c)=0.
+\end{aligned}
+\tag{7.6}
+$$
+
+The difference in sixth $M$ values, plus-world minus minus-world,
+is $-3\sqrt{13}/5\ne0$. In raw units the sixth $J$ value is
+$D_0-102\lambda/5$, the sixth $M$ value is
+$D_0+\lambda(-6c-156/5)$, and every terminal value is $D_0$.
+
+Let $K$ be this pair. Under first action $J$, the actual response
+$D_0-102\lambda/5$ retains both worlds. Under either last action
+$F$, response $D_0$ retains that same pair, so this particular
+$J$ child has $L_1$. Every other raw sixth $J$ response has an
+empty child. Under first action $M$, every real raw response has
+at most one world, hence no $M$ child has $L_1$. Therefore the
+$M$ conjunct in (1.9) fails and $L_2(K,H)$ is false. This includes
+every sixth response and both last actions and does not turn
+terminal-root collisions into a losing pair. ∎
+

@@ -1,0 +1,38 @@
+**Definition 20.1 (explicit additional services).** A conditional
+realization of $\Phi_K$ consists of the following COMMON services,
+with parameters fixed by $u_*$ before receiving the specimen:
+
+1. A calibrated diagonal instrument on $V$ with distinguishable live
+   operations $A\mapsto D_aAD_a^\dagger$, $a=0,01,02$, and complementary
+   effect $M=\operatorname{diag}(m_*)$. Its complete branch operations,
+   including signed/complex amplitudes, are supplied. Equivalently its
+   complementary precursor can have Kraus operator $\sqrt M$ before the
+   absorbing router. The instrument acts on the sole specimen and tensors
+   by identity on every retained reference.
+2. On a live record $01$ or $02$, the corresponding fixed calibrated
+   swap $U_{01}$ or $U_{02}$ on that specimen; on record $0$, identity.
+   This is control by a generated branch, not by an unknown height,
+   sign or history. Each swap fixes the remaining active basis direction.
+3. An absorbing router for the complementary branch, with stopped
+   successor $f$, original-label distribution
+   $w=(0,1/4,1/2,1/4,0)$, and no later specimen operation. For the
+   five-dimensional completion it also routes $V^\perp$ to original
+   label $2$, using a supplied calibrated support decomposition
+   $V\oplus V^\perp$ and exactly (CG.177).
+4. An EXACT-TIME output service with normalized law
+   $h_0(t)dt=2(1+t)^{-2}dt$ on $[0,1]$. It is independent of the
+   specimen, reference and branch conditional state. The router records
+   the label and this exact time together and preserves the old archive,
+   source/epoch, aligned clock, permissions and declared controller
+   updates. For a physical first-failure realization, this service must
+   additionally make the absorbing event occur at that actual elapsed
+   time, with live output at terminal time $1$ and no later positive-
+   carrier action on a failed branch. An ideal timestamp register alone
+   is not that physical timing service.
+
+The live branch record may be discarded under the fixed canonical output
+interpretation after its swap. Independent randomness here supplies no
+readable history, helper specimen, survival prior, reset, retry or
+source-bound programme. The services and their permissions are hypotheses
+of this interface, not consequences of the comparison class.
+

@@ -1,0 +1,33 @@
+**Proposition 16.1 (nonempty comparison on the initialized source).** Under
+Assumption 1.2's finite-supply and reached-computation termination premises,
+first Ready admits an actual accepted history flight of Lemma 15.1 and
+an alternative actual returning ReadE service branch of Theorem 15.2.
+Both retain the original source $u=\beta$ and the occupied original roles.
+
+Proof. Let $a$ and $b$ be this authentic predecessor's acquisition and
+Ready tallies. GENERAL Theorem 8.2 supplies the accepted AcquisitionOffset0
+name for $a\in[a,b]$. Supply gate1, HistoryMode1 and its existing frame
+
+$$
+111\,U(2)\,0U(0).
+$$
+
+The two-bit payload is AcquisitionOffset0. The existing received-body
+cycle and checked return give $H$, not a new selector or hypothetical
+service. Alternatively supply outer01 and CAP's canonical ReadE frame
+$000\,U(0)$. ARC Definitions 5.1–5.2 put the twelve word tokens at the
+producer, the source token at its dispatcher, and route01 to the genuine
+$F^A$ header prelude. CAP's original source admission, row/dependency
+checks, ACK and return, followed by the actual InnerReturn/CaptureCAP
+routing, give the next Ready by ARC Proposition 5.5 and GENERAL Theorem
+8.4. This branch has $E=1$ and a freshly constructed original unified
+row; ReadE preserves $\beta$. Thus the comparison class has an actual
+nonempty instance with legitimate old-service entry on this very source.
+No journal entry at a busy history cut is postulated.
+
+The unchanged source body has GENERAL Theorem 9.1's fixed-entry original
+Supply/Advance correspondence, with its stated exclusion of changed
+final idle CTL. The assertion here about the complete outer routes is
+native reachability with genuine old-service entry. It does not add
+original-$Q$ admission for their outer gate or changed return rows. ∎
+

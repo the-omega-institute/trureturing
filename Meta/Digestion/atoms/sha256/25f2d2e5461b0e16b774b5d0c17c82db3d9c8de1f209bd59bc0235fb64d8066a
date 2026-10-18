@@ -1,0 +1,66 @@
+**theorem 7.1 (A complete majority protocol in its proved budget region).**
+For all $t\in[0,1]$ and $0\le\eta\le2/3$, a complete finite real LOCC
+processor has response coefficient $M_3$ and error $c-M_3$.
+
+Proof. Use Definition 4.1 and test all three copies for local
+pair-product membership. If exactly one or two copies are accepted,
+Bell-use the first accepted copy and discard every other program.
+If all three are accepted, apply Theorem 6.1 and then Bell-use the
+retained pair. If none is accepted, use Definition 4.2 with the
+weights below.
+
+On the actual independent batch, the exactly-one and exactly-two
+acceptance branches contribute $3r^2\mathcal T_{\tau_v}$ and
+$3qr\mathcal T_{\tau_v}$, respectively. For example their probabilities
+are $3qr^2$ and $3q^2r$, while the selected state's Bell channel is
+$\mathcal T_{\tau_v}/q$. Their sum is $3r\mathcal T_{\tau_v}$.
+The all-accepted branch gives (6.1) as an unnormalized state of trace
+$q^3$. Equation (4.3) now gives the aggregate paid weights
+
+$$
+\begin{aligned}
+\alpha_M&=6wr+2a=w(6r+8w^2+24n^2),\\
+\beta_M&=6nr+2b=n(6r+24w^2+8n^2),\\
+\alpha_M+\beta_M&=6hr+8h^3=1-r^3.
+\end{aligned}
+\tag{7.1}
+$$
+
+On $v=\sigma u$, the active coefficient is $\sigma M_3$, since
+$6vr+2v_P=6vr+12v(w^2+n^2)-4v^3$; at $v=0$ it vanishes.
+The no-acceptance probability is $z_M=r^3>0$.
+
+The diagonal budgets hold throughout $[0,2/3]$. Because $w\ge n$,
+the coefficient multiplying $w$ in $\alpha_M$ is at most the coefficient
+multiplying $n$ in $\beta_M$. The latter is
+
+$$
+6r+24w^2+8n^2=\frac{2850-60\eta+392\eta^2}{625}.
+\tag{7.2}
+$$
+
+Its numerator is convex in $\eta$. On $[0,2/3]$ it is at most its
+endpoint maximum, whose two values are $2850$ and $26858/9$, both
+strictly less than $3125$. Thus $\alpha_M\le5w=s$ and
+$\beta_M\le5n$. This argument includes $n=0$ directly, with
+$\beta_M=0$, rather than dividing by $n$.
+Use (4.5) with $(\alpha_M,\beta_M,r^3)$. All target populations
+are then recovered and no off-diagonal failure contribution occurs.
+
+It remains to check that the stated coefficient is below $c$ in this
+region. Algebra from (2.1) gives $B_3-M_3=24uwn\ge0$.
+For $c>0$, since $3/25\le h\le1/5$ here and $1-2h+2h^2$ decreases
+on that interval,
+
+$$
+\frac{B_3}{c}
+ =\frac65(1-2h+2h^2)-\frac{4c^2}{125}
+ \le\frac{2958}{3125}<1.
+\tag{7.3}
+$$
+
+Also $M_3\ge0$, directly from $u\le w$ in its defining formula.
+Hence $0\le M_3<c$ when $c>0$. If $c=0$ then $M_3=0$.
+The response action is (4.6) and its exact error is $c-M_3$.
+QED.
+

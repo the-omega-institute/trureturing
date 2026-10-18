@@ -1,0 +1,5 @@
+source_id = "wss-tbn-mod27-balance"
+path = "docs/develop/theory/WSS_TBN_MOD27_BALANCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

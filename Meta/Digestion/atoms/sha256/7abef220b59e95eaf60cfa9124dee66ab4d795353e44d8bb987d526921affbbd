@@ -1,0 +1,11 @@
+**约定 7.1（固定版本供应及承重范围）。** 本文的普通证明相对于以下明确供应；不同任务的“取得”不自动保持费用。
+
+| 固定来源 | 使用的数学内容与范围 |
+| --- | --- |
+| [S1] [KBonacci Irreversible Target Acquisition](https://github.com/the-omega-institute/trureturing/blob/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) | 第1–2节实际读者、完整块费用及字母表等价；第4–6节首零及阈值分类；第8.5节原混合目标；第11.1节一般最优费问题。固定正文 SHA256 为 `97791e0a4806b27403f6b1faefc43ed75190ead6a076a78a2674ee9b0d650685`。 |
+| [S2] [KBonacci Minimal Modular Observer](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md) | 第13–14节原阶匹配读口及周期 $(1,0,\ldots,0,1)$。不是三项式 $X^k-X-1$ 的任意阶标量接口。 |
+| [S3] [KBonacci Self-Calibrating Boundaries](https://github.com/the-omega-institute/trureturing/blob/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) | 第15节的同词联合来源、完整块输出和独立拒绝。全部后缀行为记录不能代替一条轨道已经取得的档案。 |
+| [S4] [KBonacci Actual Acquisition Geometry](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) | 命题7.1的合法实际支撑是定理3.1证明内的构造机制；已知目标的编码词、饱和长度不是未知初始目标的最优测试深度。 |
+| [S5] [Recursive Relational Observation Recovery Geometry](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) 第8节 | 合法有限策略、同一实际分支、硬预算和首步拼接的通用供应。本文不另立一个 Bellman 或信念机器定理。 |
+| [S6] [KBonacciActualSaturation](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.lean) | 证明内 `hshortChoice`、`hcomplement` 的互补合法代表机制。其任务是已知目标的合法像饱和，本文直接给出费用所需的字面实现。 |
+

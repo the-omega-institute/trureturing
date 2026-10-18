@@ -1,0 +1,48 @@
+**Definition 1.2 (unchanged pointwise code and reader).** Fix
+$n\ge6$, $3\le k\le n-2$, positive integer positions
+$s_1<\cdots<s_n$, and $r\ge0$. Put
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,
+\qquad C_B=\sum_{i\in B}c_i,\qquad W=C_{[n]}.
+\tag{IC.5}
+$$
+
+For a branch image $B$ set
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$.
+Alpha, beta and absent each contribute zero. The prescribed function on
+the whole original fiber is exactly
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ belongs to any other zero profile},
+\end{cases}
+\qquad A=\{s_1,\ldots,s_n\}.
+\tag{IC.6}
+$$
+
+The original entries $e_0,e_1$ and all their contents are fixed as in
+[PCA, Supplier application 4.3 and Convention 23.2][PCA], equivalently
+[WTF, Convention 1.3][WTF]. Write $i_1,i_2$ for the original fixed
+order of $\{1,2\}$ in the zero-entry chain; this order is not a design
+variable here. The entire running table is
+
+| Original reader state | Absolute literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $e_0$ | $q_{i_1}R$ | $H_{i_1}$ | $H_0$ | $Q_2$ | $H_0$ |
+| $Q_2$ | $q_{i_2}R$ | $H_{i_2}$ | $H_0$ | $H_0$ | $H_0$ |
+| $e_1$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+The five distinct halts $H_0,\ldots,H_4$ carry literally the complete
+rows $R_0,\ldots,R_4$ just defined. Thus the independent reader has
+three running states and five whole-row halts, with separate installed
+count $K=8$, fresh invocation bound $2$ and fresh letter bound $6$.
+Preparation must end at the original latch
+$\widehat e_{\sigma_{A,k}(u)}$. Code-only handoff enters that same
+literal complete entry on the same source. A different usable encoding
+or a root-type answer does not meet this requirement.
+

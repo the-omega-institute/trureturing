@@ -1,0 +1,26 @@
+**Lemma 4.1 (Every open interval spans).** Let $I$ be an open interval
+and let $v(k,\sigma)$ take values in a finite-dimensional real or
+complex vector space, for $k\in I$ and arbitrary labels $\sigma$.
+Suppose that for each displacement $a$ there is one linear map taking
+$v(k,\sigma)$ to $v(k+a,\sigma)$ whenever both heights belong to
+$I$. Then the values with heights in any nonempty open subinterval
+span the same space as all values on $I$. No regularity of $v$ is
+required.
+
+Proof. For an open subinterval $J$ let $X(J)$ be its value span.
+If two subintervals have the same finite length, translation maps
+one span onto the other, while reverse translation is an inverse on
+their generating vectors. Their dimensions agree. Let $d_0$ be the
+least dimension among finite-length open subintervals and choose one
+of length $\ell_0$ with that dimension. Any interval of positive
+length less than $\ell_0$ can be translated inside this interval;
+inclusion and minimality show that its dimension is $d_0$ too.
+
+Two such short intervals with open overlap have identical spans:
+their overlap already has dimension $d_0$ and is contained in both.
+A finite chain of overlapping short intervals inside $I$ connects
+any two of them, so their spans all coincide. These intervals cover
+$I$, and every nonempty open subinterval contains one. Their common
+span is therefore exactly the span over $I$. This proof also covers
+$d_0=0$ and unbounded $I$. $\square$
+

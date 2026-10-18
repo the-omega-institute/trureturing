@@ -1,0 +1,118 @@
+**Theorem 26.1 (One positive global approximation by excluding long zero runs).**
+Use the proper stationary renewal law of Definition 24.1.
+For an integer $D\ge2$, let $E_{n,D}$ be the event that
+the complete length-n word contains no D consecutive zeros.
+Define
+
+$$
+|\Theta_{n,D}\rangle=
+\frac{\sum_{w\in E_{n,D}}\sqrt{P(w)}|w\rangle}
+ {\sqrt{P(E_{n,D})}}.
+\tag{26.1}
+$$
+
+This is well-defined and has an exact open-boundary MPS
+representation of bond at most D with nonnegative tensors.
+It retains no11 support. Moreover,
+
+$$
+\|\Psi_n(P)-\Theta_{n,D}\|^2
+\le2(n-D+1)_+\nu R_D.
+\tag{26.2}
+$$
+
+For the fixed SNS of §22 this becomes
+
+$$
+\|\Psi_n(P)-\Theta_{n,D}\|^2
+\le\frac{(n-D+1)_+(D+2)}{2^D}.
+\tag{26.3}
+$$
+
+Thus the logarithmic choice (25.4) is also sufficient
+for norm error at most $\epsilon$, now with bond at
+most D and nonnegative amplitudes and tensors.
+
+Proof. Full legal support assigns positive mass to an
+alternating word, so $P(E_{n,D})>0$. Use virtual states
+$a=0,\ldots,D-1$, initialized at zero. At site t,
+with $1\le t\le n$, take
+
+$$
+\begin{aligned}
+(T_t^0)_{a,b}&=\mathbf1_{\{b=a+1<D\}},\\
+(T_t^1)_{a,b}&=\mathbf1_{\{b=0\}}c_{t,a},\\
+c_{t,a}&=
+\begin{cases}
+\sqrt{\nu S_a},&a=t-1,\\
+\sqrt{\gamma_a},&a\ne t-1.
+\end{cases}
+\end{aligned}
+\tag{26.4}
+$$
+
+All tensors are nonnegative. A path that survives
+records the number of zeros since the last one, or
+the number of initial zeros if none has appeared.
+At the input to site t, a reachable state equals
+t-1 precisely when no one has yet appeared. Hence
+the first one supplies $\sqrt{\nu S_A}$, and
+later ones supply $\sqrt{\gamma_g}$ for their
+actual complete gaps. The zero transition kills
+a D-zero run. Two adjacent ones after the first
+are killed by $\gamma_0=0$.
+
+Use terminal vector
+
+$$
+f_n(a)=
+\begin{cases}
+\sqrt{\nu R_n},&a=n<D,\\
+\sqrt{S_a},&\text{otherwise}.
+\end{cases}
+\tag{26.5}
+$$
+
+Only an all-zero word can reach a=n. Its exceptional
+terminal value is therefore exactly its amplitude.
+For every other surviving word, the terminal value
+supplies its last survival factor. There is a unique
+virtual path for each word; (24.3) proves that its
+amplitude is $\mathbf1_{E_{n,D}}(w)\sqrt{P(w)}$.
+Divide the terminal vector by $\sqrt{P(E_{n,D})}$
+to obtain (26.1), without increasing bond.
+
+Let $\eta=P(E_{n,D}^c)$. There are
+$(n-D+1)_+$ possible starting positions of a D-zero
+run. Stationarity, the union bound and (24.3) give
+
+$$
+\eta\le(n-D+1)_+P(0^D)
+=(n-D+1)_+\nu R_D.
+\tag{26.6}
+$$
+
+The overlap of the two normalized positive vectors
+is $\sqrt{1-\eta}$. Thus their squared distance
+is $2(1-\sqrt{1-\eta})\le2\eta$, proving (26.2).
+For SNS, $P(0^D)=(D+2)/2^{D+1}$, which gives
+(26.3). This bound is at most one quarter of the
+right side of (25.3), for the same D, so (25.4)
+is sufficient as claimed. $\square$
+
+This construction directly supplies one vector for all
+cuts, without separate cut truncations or a subsequent
+support MPO. Its classical measurement law is exactly
+$P(\,\cdot\mid E_{n,D})$. For $n\ge D$ it removes
+some words that originally had positive mass; preserving
+legal support here does not mean retaining full legal
+support or the original probabilities. The tensors
+depend on site position through the first-event test
+and on n through the terminal boundary. No stationary
+family or native preparation is inferred.
+
+The underlying renewal factorization is standard and
+the construction is a direct application at the actual
+finite-window law. It makes no priority claim or new
+general truncation-theorem claim.
+

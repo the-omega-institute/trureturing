@@ -1,0 +1,13 @@
+### Corollary 13.2. Circuit-level intertwining and an explicit overhead
+
+Given a known m-qubit circuit C with G_1 one-qubit SU(2) gates and CNOT pairs at distances delta_1,...,delta_{G_2}, the construction yields a finite native word V_C with
+
+$$\boxed{V_CJ_m=J_mC,\qquad
+L\le3G_1+9\sum_{e=1}^{G_2}[6(\delta_e-1)+1].} \tag{13.5}$$
+
+For general U(2) single-qubit gates, the same statement has an explicitly tracked input-independent phase e^{i theta_C}. The clock and arithmetic work qubits of a known algorithm are included among the m data bits. In particular, a supplied ordinary Shor/phase-estimation circuit can be compiled with linear space overhead and at most linear-in-m pulse overhead per source two-qubit gate.
+
+Proof. The elementary identities return the separators to zero, so they compose by induction without entangling the final data with residual separator records. SWAP routing restores the original order. Removing the determinant phase of each single-qubit U(2) gate produces only a tracked global phase on the full m-qubit register. The gate universality of one-qubit gates and CNOT is established [B95]; (13.2)-(13.5) supply their present native realization. QED.
+
+This compilation translates a known circuit including its controlled operations. It does not attach a new control to an unknown compiled black box, so the phase-reference issue in Section 5 is retained. It also does not itself produce cheap large powers for a generic state machine. Section 7's modular-arithmetic structure still supplies that separate ingredient. The blocker-controlled phase mechanism has established neutral-atom gate precedent [J00]; the present theorem is a precise ideal-model encoding and pulse-count construction, without a novelty or experimental-fidelity claim.
+

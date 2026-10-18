@@ -1,0 +1,19 @@
+**Lemma 25.1 (An analytical renewal chain and actually observed ticks).** Couple the normalized observer to the one-sided source of Definition 23.2, keeping its state fixed after its actual absorption. Let $Y_n$ be its resulting state just after the tick at $\tau_n$, and set
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},\qquad
+Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t.
+\tag{25.1}
+$$
+
+Under $\mathsf P_{i,q}$, $Y_0$ has law $\nu_i(q)$ and $Y_n$ has transition matrix $U_i(q)$. If the observer terminates, $Y_N=d_D$ and
+
+$$
+N\le Q_T\le T.
+\tag{25.2}
+$$
+
+Proof. Independence of the future complete gaps in (23.6), and the fixed fresh transition randomness, give exactly the kernels (24.5). If the observer stops before or at the first tick, $Y_0$ is already its decision and $N=0$. Otherwise, every live state $Y_n$, $n<N$, occurs immediately after an actually read tick and commits to a further read. These are $N$ distinct ticks paid before stopping. This proves the first inequality. The second holds since each counted tick is one of the $T$ actual reads.
+
+If stopping occurs during the zeros after the last such live tick, the state at the next source tick is merely the frozen label. That next tick need not have been read and is not added to $Q_T$. Thus $N$ counts live tick boundaries, equivalently the ensuing epochs whose first read is undertaken, rather than fictitious completed paid gaps. Since all $K_j$ and $\tau$ are finite almost surely, actual termination gives a finite $N$ with the asserted terminal label. $\square$
+

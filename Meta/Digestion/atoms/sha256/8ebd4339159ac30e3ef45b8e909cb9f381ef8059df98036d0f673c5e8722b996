@@ -1,0 +1,20 @@
+**约定 1.2（One joint history for each record）。** The joint-source supplier is [S1, Convention 1.3], also used in [S10, equation (1.7)] and [S15, equation (1.1)]. Here is its applicable construction. For $v\in\mathbb F_2$, $j\in P$, and $0\le s<k$, choose
+
+$$
+\ell\equiv0\pmod m,\qquad
+\ell\equiv-j\pmod T,\qquad \ell\ge s+2,
+\qquad d=\bigoplus_{i=\ell-s}^{\ell-1}c_i,
+\tag{1.4}
+$$
+
+and take the actual word
+
+$$
+w=(v\oplus d)\,0^{\ell-s-1}1^s.
+\tag{1.5}
+$$
+
+The congruences are compatible because $g\mid j$. Generalized CRT supplies a residue class modulo $\operatorname{lcm}(m,T)$, so arbitrarily large choices of $\ell$ exist. The first factor in (1.5) is one bit. At least one zero separates it from the terminal $s<k$ ones. Thus the word is legal, has length divisible by $m$, and splits into actual internally legal complete blocks. Its first bit contributes $v\oplus d$, its terminal run contributes $d$, and its record is simultaneously $(v,-j,s)$. Different records can use different history lengths; these lengths are not observed by the controller. Rejected histories are actual as well: a complete-block word of all ones with length at least $k$ reaches $\bot$.
+
+Every source used below has this joint interpretation. No proof joins separately attainable value, phase, and tail marginals into a fictitious source.
+

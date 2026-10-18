@@ -1,0 +1,75 @@
+## 1. Result and scope
+
+Fix an integer $r\ge 1$, a real number $c>0$, and a risk level $0<\alpha<1/2$. Put
+$d=2r-1$. The two source shapes are
+
+$$
+F_0(k)=k^{2r-1},\qquad F_1(k)=k^{2r-1}+c k^{r-1},\qquad k=1,2,\ldots .
+$$
+
+The common, known design parameter is $q=e^{-s}$ with $s>0$. The parameters
+$r,c,\alpha$ are fixed before any neighborhood, cap, or table is selected. This volume
+proves a fully paid finite implementation for the exact pair above. It uses
+a source-blind dyadic stochastic category for each completed gap. The category keeps
+$J+1$ observer levels, including its reset value, while retaining an affinity deficit of
+order $s^{2r}(J-1)$. It is then composed with a rounded evidence lattice whose complete
+configuration product is charged.
+
+There are source-only constants $\eta\in(0,1)$, $s_0>0$ and $h_-,h_+>0$, and positive
+resource constants $C_M,C_T$ depending only on the fixed $(r,c,\alpha)$, all chosen
+before $s$ and $J$, such that for every
+$0<s<s_0$ and every integer $J\ge 2$ satisfying $s2^J\le\eta$, the one table defined
+below has
+
+$$
+ h_-s^{2r}(J-1)\le u(s,J)\le h_+s^{2r}(J-1),
+$$
+
+where $u$ is the Hellinger-affinity deficit of its completed-gap category. With
+$\delta=\sqrt u$, $R=2\log(1/\alpha)$, and
+$H=\lceil R/\delta\rceil$, its exact listed configuration count is
+
+$$
+ M(s,J)=3+(2H-1)(J+1),
+$$
+
+and the same table satisfies both risks, both almost-sure stopping conditions, and both
+finite paid-mean conditions. Uniformly over the stated caps,
+
+$$
+ M(s,J)\le C_M\frac{J+1}{s^r\sqrt{J-1}},
+ \qquad
+ \max_{i\in\{0,1\}}\mathbb E_iT
+ \le C_T\frac{s^{-(2r+1)}}{J-1}.
+$$
+
+On one further fixed neighborhood, choose
+
+$$
+J(s)=\left\lfloor\log_2(\eta/s)\right\rfloor.
+$$
+
+Then $J(s)=\Theta(\log(1/s))$ and the same construction gives
+
+$$
+M(s,J(s))=O\!\left(s^{-r}\sqrt{\log(1/s)}\right),\qquad
+\max_i\mathbb E_iT
+ =O\!\left(\frac{s^{-(2r+1)}}{\log(1/s)}\right).
+$$
+
+These are sufficient bounds for the displayed family, with resource and $O$-constants
+allowed to depend on the fixed $(r,c,\alpha)$; no uniformity as the risk varies is
+asserted. They do not prove a minimum complete-configuration cost or a total-memory
+lower bound. Under the same fixed source/risk and paid contract, the supplied ordinary
+theory [Critical renewal observation: a counted logarithmic frontier](RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_RENEWAL_LOGARITHMIC_FRONTIER.md)
+gives a stronger counted controller (Theorem 5.1), the uniform all-sufficient-budget
+order frontier (Theorem 6.1 and Corollary 6.2), and the eventual positive-polynomial
+budget criterion (Theorem 7.1). Section 11 compares its sufficient count with this
+family. The arbitrary-common-kernel active-alphabet theorem in Sections 10--11 remains
+a separate statement.
+
+The exact pair, known common $q$, unpriced immutable real transition probabilities, and
+all consecutive-bit payment are part of the theorem. Unknown $q$, changing parameters,
+finite precision, other source shapes, physical storage, neural or empirical-ML transfer,
+and universal controller optimality are outside it.
+

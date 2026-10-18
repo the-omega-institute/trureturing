@@ -1,0 +1,5 @@
+source_id = "kbonacci-full-positive-window-logarithmic-price"
+path = "docs/develop/theory/KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

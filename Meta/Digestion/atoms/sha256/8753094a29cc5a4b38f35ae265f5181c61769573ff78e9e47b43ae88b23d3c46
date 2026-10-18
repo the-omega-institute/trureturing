@@ -1,0 +1,35 @@
+**引理 447.2（唯一等号层之外的对数差）。** 对 \(r>0\) 令
+
+\[
+f(r)=\log r+\frac1r-1.
+\]
+
+则 \(f(r)\ge0\)，等号恰在 \(r=1\)。对任意 \(a>1\) 和
+\(r\ge a\)，还有 \(f(r)\ge f(a)>0\)。原 Euler 幅度关系
+\(\gamma_E=\log C=\log(1+k)\) 给准确恒等式
+
+\[
+h(y)-\Lambda(k)=k f(ky)\ge0,\qquad y>0.
+\tag{EA.2}
+\]
+
+**证明。** 经典严格对数切线界等价于
+\(\log r\ge1-1/r\)，在 \(r\ne1\) 时严格。
+若 \(r\ge a>1\)，将同一非严格界应用于 \(r/a\)，得到
+
+\[
+\begin{aligned}
+f(r)-f(a)
+ &=\log(r/a)+\frac1r-\frac1a\\
+ &\ge1-\frac ar+\frac1r-\frac1a
+ =(a-1)\left(\frac1a-\frac1r\right)\ge0.
+\end{aligned}
+\]
+
+（EA.2）由 \(\log(ky)=\log k+\log y\) 与原 \(C=1+k\)
+直接展开；不改变归一化常数。证毕。
+
+（EA.1）与（EA.2）已立即给 \(G(x)\ge\Lambda(k)\)。这是
+§444 同一比较函数下界的完整平均证明。进一步，非退化的完整指数
+权重不能仅支撑于单一等号层 \(ky=1\)，因此可以支付显式正储备。
+

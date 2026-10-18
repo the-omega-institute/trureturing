@@ -1,0 +1,88 @@
+**Theorem 36.1 (one joint coefficient constraint).** For the averaged
+implementation of Theorem 35.1 there are numbers $u,v,w\in[0,1]$
+such that
+
+$$
+\begin{aligned}
+u&\leq\theta v+\omega w,\\
+\mathsf V(F)&\leq\sqrt{uv}+\sqrt{(1-u)(1-v)}\leq1,\\
+\overline p_{H,y}&\geq
+ A_y(1-u)+B_y(1-v)+C_y(1-w)
+                       \quad(y=5,16,27).
+\end{aligned}
+\tag{JR.27}
+$$
+
+The SAME $u,v,w$ occur in all three inequalities and at all heights.
+The cost inequality uses the original implementation's averaged
+ACQUISITION probability, including any high fibre that later fails.
+
+Proof. Refine the actual label by its binary coin, so $r$ is determined
+by it. Choose encoder Kraus matrices $C_{\alpha j}$ and compressed
+live-decoder Kraus matrices $R_{\alpha i}^L$. Their products
+$L_{\alpha ij}=R_{\alpha i}^LC_{\alpha j}$ give the live Choi matrix.
+Their rank is at most $d_\alpha$, and the live decoder is TNI.
+These are analytic Kraus refinements of the same branches, not newly
+observable records. In the integral case use its stipulated measurable
+Kraus fields. Integrable positive Choi matrices make the following
+finite-dimensional moments well defined.
+
+Every such Kraus vector lies in the span of $|D\rangle\!\rangle$,
+$|T\rangle\!\rangle$, $|S\rangle\!\rangle$: a vector orthogonal to
+this support has zero quadratic form against their total $J_*$,
+so positivity kills each summand, or almost every integrand. This is
+the positive-summand support mechanism already used in (JR.17).
+Write each product uniquely as $L_j=x_jD+z_jT+w_jS$.
+The three Kraus vectors are linearly independent with disjoint matrix
+supports. Applying their Gram left inverse to the Choi equality gives
+
+$$
+\sum_j
+ \begin{pmatrix}x_j\\z_j\\w_j\end{pmatrix}
+ \begin{pmatrix}\overline x_j&\overline z_j&\overline w_j\end{pmatrix}
+ =I_3.
+\tag{JR.28}
+$$
+
+In particular each total squared coefficient mass is $1$, and the total
+$D,T$ cross moment is zero. Partition these SAME products by their
+actual fibre dimension. Let $u,v,w$ be the low-fibre sums of
+$|x_j|^2,|z_j|^2,|w_j|^2$, respectively; high means $d_\alpha\geq3$.
+Each low product has rank at most two. By (JR.22), either $x_j=0$
+or $x_j^2=\theta z_j^2+\omega w_j^2$. The complex triangle inequality
+therefore gives $|x_j|^2\leq\theta|z_j|^2+\omega|w_j|^2$ in both
+cases. Sum to get the first line of (JR.27).
+
+The plus branch's failure effect is dominated by $M$. Positivity and
+$M|0\rangle=0$ imply that its $01$ entry is zero, even when the
+full failure measures differ from those of $\widehat\Phi_*$.
+There is no other mass on the qutrit input space. Computing the live
+effect as in (JR.18), and using (JR.28), consequently gives the exact
+signed-record identity
+
+$$
+\frac{2\operatorname{Re}\widetilde F_{01}}\kappa
+ =\sum_j r_j\operatorname{Re}(\overline x_jz_j).
+\tag{JR.29}
+$$
+
+Taking an absolute value and applying Cauchy–Schwarz separately on
+the low and high sets bounds this by
+$\sqrt{uv}+\sqrt{(1-u)(1-v)}$. Cauchy–Schwarz on the two real unit
+vectors $(\sqrt u,\sqrt{1-u})$, $(\sqrt v,\sqrt{1-v})$ gives the
+ceiling $1$. This proof retains arbitrary complex phases and the
+actual acquired binary record.
+
+For the cost, the aggregate low and high live maps separately commute
+with the sign action, because membership in those sets was preserved
+in (JR.24). Their coefficient Gram matrices are therefore diagonal:
+$D,T,S$ have the distinct characters $1,en,e$.
+Equivalently, average their effects over those same signs before
+testing $\rho_y$. The high live-output probability is exactly
+$A_y(1-u)+B_y(1-v)+C_y(1-w)$. Full TP of each decoder makes its
+supported live trace at most its encoder trace. Summing over the same
+high branches gives the last line of (JR.27). Countable sums and the
+specified integrals obey the same support, triangle and Cauchy–Schwarz
+arguments. No decoder has been treated as TP on just its live part.
+$\square$
+

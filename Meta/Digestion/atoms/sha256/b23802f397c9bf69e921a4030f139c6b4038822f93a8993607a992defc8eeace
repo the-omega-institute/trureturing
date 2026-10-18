@@ -1,0 +1,55 @@
+**Proposition 4.4 (The actual adjoint and all population equations).** Let
+
+$$
+\Lambda=
+\begin{pmatrix}
+\beta_U&W_B\beta_U(1-t)&0\\
+1-\beta_U&W_A\alpha s+W_B(1-\beta_U)(1-t)&2\alpha\\
+0&W_A(1-\alpha)s&2(1-\alpha)
+\end{pmatrix}.
+\tag{4.9}
+$$
+
+Its column sums are exactly $(1,2,2)$. For real symmetric $E$ and
+$t_i(E)=\operatorname{tr}(R_iE)$, the passive adjoint
+$\mathcal A=S_{\rm J}^\dagger$ is
+
+$$
+\begin{aligned}
+\mathcal A(E)={}&
+\Lambda_{00}t_0(E)R_0+
+\sum_{j=\pm}\frac{\Lambda_{jj}}8
+\bigl(t_j(E)R_j+2R_jER_j\bigr)\\
+&+\sum_{i\ne j}\frac{\Lambda_{ij}t_i(E)}{n_in_j}R_j
++g(R_0ER_++R_+ER_0)\\
+&+\frac{h_U}{2}(R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{4.10}
+$$
+
+For a general complex matrix apply the same formula to $(E+E^T)/2$;
+this is a complex-linear extension. In particular $\mathcal A(I)=I$.
+All three full TP equations are retained:
+in QRC coordinates $M_{ij}=\Lambda_{ij}/\sqrt{n_in_j}$ and
+$M^T(\sqrt{n_i})_i=(\sqrt{n_i})_i$.
+
+**Proof.** For each flag the effect map is
+$E\mapsto c_fb_fb_f^T(a_f^TEa_f)$, with the measurement factor on the
+outside. The sector population tensor is
+
+$$
+\Lambda=W_A(0,\alpha,1-\alpha)^T(0,s,1-s)
++W_B(\beta_U,1-\beta_U,0)^T(t,1-t,0).
+\tag{4.11}
+$$
+
+This gives (4.9), its three column sums and the $i\ne j$ terms of
+(4.10). Circle fourth moments give the diagonal-plane coefficient
+$\Lambda_{jj}/8$. Circle second moments in the $0,+$ cross term give
+$g$, and the two independent plane second moments in the $+,-$ term
+give $h_U/2$. The zero-plane term is as displayed. This also proves
+the complex-linear extension, since $a_f^TEa_f$ annihilates the
+transpose-antisymmetric part. Substitution of $I$ gives the identity.
+This is the adjoint, not the state map; no self-adjointness or
+unitality of $S_{\rm J}$ is asserted. $\square$
+

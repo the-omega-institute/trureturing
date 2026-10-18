@@ -1,0 +1,10 @@
+**Definition 16.41 (case 1, six).** The signs are $(0,1,1)$, the double-factor index list is $(0,3)$, and the quotient degree is $0$.
+
+| Power coefficient index | Integer endpoint pair |
+| --- | --- |
+| $0$ | $(544006521949871845353403253703021043016289137546,544006527662972024548762041762695911233571636025)$ |
+
+| Leaf $(l,d)$ | Ordered Bernstein integer endpoint pairs |
+| --- | --- |
+| $(0,0)$ | $((544006521949871845353403253703021043016289137546,544006527662972024548762041762695911233571636025))$ |
+

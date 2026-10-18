@@ -1,0 +1,36 @@
+**Theorem 11.3 (Existential criterion for an attained guarded optimum).**
+For $0<Z<2/3$, the common value in Theorem 10.3 is attained in
+$\mathsf G$ if and only if it is attained in $\mathsf{GP}$,
+if and only if at least one global scalar minimizer has a
+confluent form, a distinct pair with a nonzero real exponent
+part, or a purely imaginary distinct pair of separation at
+most $2\pi$.
+
+Proof. The inherited strict witness gives the common value
+$e_4<e_2$ by Theorem 2.5. Therefore any optimal model in any
+of the four contracts is a strict improver. Theorem 3.2 applies
+to its actual original encoder. It has full four-dimensional
+affine hull, and its coordinate change to the minimal spectral
+encoding is an affine isomorphism. In particular it preserves
+all encoder fibers, and saturation leaves no unused hidden
+direction that could distinguish colliding heights.
+
+Suppose a $\mathsf G$ optimum exists. Its fibers have constant
+height by Lemma 11.2. Replace its decoder by the native scalar
+decoder furnished by §§5–7, using the same encoder in spectral
+coordinates. The replacement cannot increase error. It also
+cannot reduce the error below the common optimum, since it
+remains an admissible literal model. Thus its scalar profile
+satisfies $J_\tau(R)=T_4(\tau)$. It has minimal order two by
+Proposition 9.5, and its unchanged fibers have constant height.
+Lemma 11.1 forces one of the three stated spectral cases.
+
+Conversely, a scalar global minimizer in any of those cases
+has the actual realization of Proposition 8.1. Lemmas 11.1–11.2
+give every recovered straight and full path guard, and
+Proposition 8.3 gives all required affine path maps. Its error
+is exactly the common value. It is a $\mathsf{GP}$ optimum,
+and hence a $\mathsf G$ optimum by inclusion. This proves
+every direction without using a possibly guard-losing quotient
+as the necessity argument. $\square$
+

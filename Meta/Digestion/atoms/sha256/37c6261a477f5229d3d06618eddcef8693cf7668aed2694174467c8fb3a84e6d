@@ -1,0 +1,65 @@
+**Proposition 9.1 (Native simultaneous path formula).** Prescribe
+integrable velocities $a_c=\dot k$ and $b_c=\dot\chi$ on a finite
+compact interval $[0,T_{\rm p}]$, in the native regularity class.
+Put
+
+$$
+\eta(t)=\int_0^t a_c(v)\,dv,\qquad
+\Delta=\eta(T_{\rm p}),\qquad
+L=\int_0^{T_{\rm p}}b_c(t)\,dt,\qquad
+C_{\rm p}=\int_0^{T_{\rm p}}\eta(t)b_c(t)\,dt.
+$$
+
+The exact guard from initial height $k$ is
+
+$$
+0<k+\eta(t)<H\quad\text{for every }t\in[0,T_{\rm p}],
+$$
+
+equivalently
+
+$$
+k+\min_{[0,T_{\rm p}]}\eta>0,\qquad
+k+\max_{[0,T_{\rm p}]}\eta<H.
+$$
+
+On that guard the native endpoint is
+
+$$
+k'=k+\Delta,\qquad
+\alpha'=\alpha+L/2,\qquad
+\beta'=\beta+(1/2-k/r)L-C_{\rm p}/r.
+$$
+
+Two successive relative paths have combined parameters
+
+$$
+(\Delta_1+\Delta_2,\quad L_1+L_2,\quad
+C_1+C_2+\Delta_1L_2).
+$$
+
+**Proof of Proposition 9.1.** The displacement $\eta$ is absolutely
+continuous, hence continuous and bounded on the compact interval.
+The mixed integral exists since $b_c$ is integrable. The entire
+height trajectory is $k+\eta(t)$, proving the all-times guard.
+Its extrema are attained, justifying the strict extremal
+inequalities. Lawful endpoints alone cannot replace this guard.
+
+Integrating Lemma 1.2 gives the height and $\alpha$ formulas, and
+
+$$
+\int_0^{T_{\rm p}}\left(\frac12-\frac{k+\eta(t)}r\right)b_c(t)\,dt
+=\left(\frac12-\frac kr\right)L-\frac{C_{\rm p}}r
+$$
+
+gives the $\beta$ formula, including the negative mixed term.
+These are circle identities and require no stored real phase lift.
+During the second path of a concatenation, displacement relative
+to the original start is $\Delta_1+\eta_2(t)$. Its contribution to
+the mixed integral is $C_2+\Delta_1L_2$, proving the combined
+triple. Substitution in the endpoint formula agrees with successive
+source application. The combined guard is the first full guard
+together with the second full guard from height $k+\Delta_1$.
+This argument integrates the source directly, without any
+finite-splitting or trajectory-limit assertion. $\square$
+

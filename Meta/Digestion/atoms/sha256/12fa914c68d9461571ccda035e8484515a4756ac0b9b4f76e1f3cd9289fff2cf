@@ -1,0 +1,118 @@
+**Theorem 38.1 (three-line intensity and positive residual lift).** For
+any one of the seven scalar certificates of §§36–37, and separately
+for the intensity certificate $\mathsf W=I_2$, its lower bound is
+attained by an original finite common law at every $s=0,t\ge3000$.
+The lift preserves all eight $\Gamma$ equations, the full live Gram
+$I_3$, the full failure covariance $M$, pointwise capacity and $K\ge0$.
+
+Proof. Let $\lambda$ be the appropriate value in (FC.158) or (FC.162).
+Choose the kernel slope of $\mathsf W-\lambda Q_\Psi$:
+
+$$
+z_*=-\frac{\mathsf W_{11}+2\lambda/5}
+                 {\mathsf W_{12}+39\lambda/20}.
+\tag{FC.168}
+$$
+
+For these source-specific tests the denominator is positive. Substitution
+with the source intervals gives the following strict enclosures.
+
+| Test | Kernel slope interval |
+| --- | --- |
+| Trace | $(-0.870,-0.869)$ |
+| Sign average, $y=5$ | $(-0.907,-0.906)$ |
+| Sign average, $y=16$ | $(-1.008,-1.007)$ |
+| Sign average, $y=27$ | $(-1.158,-1.157)$ |
+| Plus sign, $y=5$ | $(-1.304,-1.303)$ |
+| Plus sign, $y=16$ | $(-1.495,-1.494)$ |
+| Plus sign, $y=27$ | $(-1.808,-1.807)$ |
+
+They all satisfy $z_*<-\max\{1/10,V_2/(4U)\}$. The $\mathsf W=I_2$
+case has $z_*<-1$ and satisfies the same inequality. Set
+$z_1=z_*,z_2=-1/10,z_3=4$, and for $\{i,j,k\}=\{1,2,3\}$ put
+
+$$
+d_i=\frac{V_2+z_jz_kU}{(z_i-z_j)(z_i-z_k)},\qquad
+x_i=(1,z_i)^T/\sqrt{1+z_i^2}.
+\tag{FC.169}
+$$
+
+All $d_i$ are strictly positive. The numerator for $d_1$ is
+$S_\Psi>0$, and its denominator is positive. For $d_2$ the numerator
+$V_2+4z_*U$ and denominator are both negative. For $d_3$ the numerator
+$V_2-z_*U/10$ and denominator are both positive. Interpolating the
+polynomials $1,z,z^2$ at these three distinct slopes, or substituting
+(FC.169) directly, gives
+
+$$
+\sum_i d_i=U,\qquad \sum_i z_id_i=0,\qquad
+\sum_i z_i^2d_i=V_2.
+\tag{FC.170}
+$$
+
+Give each directed point $\pm x_i$ intensity mass
+$d_i(1+z_i^2)/2$. This finite intensity measure has exactly (FC.155).
+Only the $z_*$ antipodal pair lies in $\mathcal R_+$; the other
+four points lie on $\Psi=0$. On the reverse pair
+$x^T(\mathsf W-\lambda Q_\Psi)x=0$, and there is no negative
+$\Psi$ contribution off it. Thus equality holds in (FC.159).
+
+Now lift this intensity to the original coefficient law. For each of
+its six directed atoms with intensity $s_i>0$, set
+
+$$
+h_i=(1,u_i/\sqrt\alpha,v_i/\sqrt\beta)^T,\qquad
+p_i=\frac{s_i}{t\mathfrak c(h_i)},\quad \xi_i=1,\quad
+S_t=\sum_i p_i h_ih_i^T.
+\tag{FC.171}
+$$
+
+Antipodal pairs have equal capacity, so the first off-diagonal entries
+of $S_t$ vanish. The original bounds give
+$\alpha,\beta>3/25$, $\mu<12$, $\mathfrak c>1/25$ and
+$\|h\|^2\le1+1/\min(\alpha,\beta)<28/3$. Consequently
+
+$$
+\operatorname{tr}S_t<2800/t\le14/15,\qquad
+B_R:=I_3-S_t\succ\frac1{15}I_3\quad(t\ge3000).
+\tag{FC.172}
+$$
+
+Write its diagonals as $r_0,r_z,r_w$ and lower off-diagonal entry
+as $r_{zw}$. The pointwise ellipse identity implies
+$r_0=\alpha r_z+\beta r_w$, and positivity gives
+$|c_R|<1$ for $c_R=r_{zw}/\sqrt{r_zr_w}$. Add four pure atoms
+
+$$
+h_{\sigma,\upsilon}=
+(1,\sigma\sqrt{r_z/r_0},\upsilon\sqrt{r_w/r_0})^T,\quad
+p_{\sigma,\upsilon}=\frac{r_0}{4}(1+\sigma\upsilon c_R),\quad
+\xi=0,\qquad \sigma,\upsilon\in\{\pm1\}.
+\tag{FC.173}
+$$
+
+Their weights are strictly positive and they lie on the original
+ellipse. Direct summation gives Gram $B_R$: their odd moments vanish,
+the diagonals are $r_0,r_z,r_w$, and the lower cross entry is
+$r_{zw}$. Thus the saturated atoms plus these pure atoms have full
+live Gram $I_3$ and coefficient mass one. The saturated recovery has
+$b_i=t\mathfrak c(h_i)$ exactly, and its intensity moments are
+(FC.170), so its physical failure covariance is exactly $M$.
+The pure atoms contribute no failure. GC Proposition 12.2 therefore
+gives all eight original $\Gamma$ equations. At $s=0$ the original
+contrast requirement is $K\ge0$ and is automatic; another request
+requires checking its achieved $K$. The dyadic $t_0<3000$ ensures
+the stated finite feasible range.
+
+GC Proposition 10.1 supplies the common original finite instrument
+for this precise law. Equations (FC.122)–(FC.123) give the full-fibre
+activity and positive finite survivor effects, with TP survivor controls,
+chronological FIRST $6+a$ and no action on a failed carrier. It has
+one counted coherent high, the complete complex live output, all five
+separate Borel failure components and arbitrary passive-reference
+conditional operators. The original minimax, sharp JOINT and
+unaveraged/full-class suppliers retain their original scopes. No
+height-optimality assertion is used in this scalar equality construction.
+Every listed scalar thus has a full-common-law equality lift, rather
+than only a relaxed failure marginal. $\square$
+

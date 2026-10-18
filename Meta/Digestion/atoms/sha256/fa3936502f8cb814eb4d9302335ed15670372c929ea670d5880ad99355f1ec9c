@@ -1,0 +1,63 @@
+## 1. The finite source cell and the projected event interface
+
+Keep the source, seed, parser, selector, bookmark, suffix and Stop contract of the chronology volume. On the positive cell $H$ there are three selected prefixes
+
+$$
+010,\qquad 100,\qquad 001,
+$$
+
+with selected chronological event words
+
+$$
+abc,\qquad bac,\qquad acb.
+$$
+
+Let $u$ denote an actual completed-marker prefix, and let $\delta_e(u)$ denote the same source execution after its next completed marker $e\in\{0,1\}$ has been acquired. A raw event that is not a completed marker is written $\delta_\mathtt{hold}$. It includes the seed prelude, paid retries, return cycles, partial parsing, and post-bookmark suffix events whenever those events do not complete a marker. This is a projection of the original event stream, not a replacement parser.
+
+For a prefix with completed-marker count $t$ and integer marker weight $\beta$, write the already supplied parser fields as $p(u)=(t,\beta)$. The event identity supplied by the original parser is:
+
+* $e=0$ with old $t-\beta=0$ is the first zero event $a$;
+* $e=1$ with old $\beta=0$ is the first one event $b$;
+* $e=0$ with old $t-\beta=1$ is the second zero event $c$.
+
+Only these three identities are needed on the selected cell. The local scopes remain
+
+$$
+S_1=\{a,c\},
+\qquad
+S_2=\{b,c\},
+$$
+
+and $Q(u)$ is the pair of ordered records obtained by appending the completed event to every scope containing it. The chronology register is $Z(u)\in\{0,1\}$, initialized at $0$ and written with the first completed marker; later events hold it.
+
+Define the boundary update maps on the realized states by
+
+$$
+\begin{aligned}
+U_\mathtt{hold}(p,q)&=q,
+&V_\mathtt{hold}(p,z)&=z,\\
+U_e(p,q)&=\text{append the event identified by }p\text{ and }e\text{ to its scopes},
+&V_e(p,z)&=
+\begin{cases}
+e,&t=0,\\
+z,&t>0.
+\end{cases}
+\end{aligned}
+$$
+
+The variables $t$ and $\beta$ in $U_e,V_e$ are the old fields in $p(u)$, not independently supplied decoder inputs. The source projection used for dynamic closure is therefore
+
+$$
+\mathsf b(u)=\bigl(p(u),Q(u),Z(u)\bigr).
+$$
+
+The parser fields are already part of the original source interface; the newly retained relation is still only the pair $(Q,Z)$.
+
+Write $\tau_e(p)$ for the original parser's update of the completed-marker fields. The bundled boundary maps used below are therefore
+
+$$
+\overline F_e(p,q,z)=\bigl(\tau_e(p),U_e(p,q),V_e(p,z)\bigr),
+\qquad
+\overline F_\mathtt{hold}(p,q,z)=(p,q,z).
+$$
+

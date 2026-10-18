@@ -1,0 +1,7 @@
+**定义。** 固定本卷的实际理想面配对剖分，令实际全局边集合分成不交的 $E=H\sqcup S$，其中 $|H|\ge2$、$S\ne\varnothing$。对每个四面体 $\sigma$ 选一个顶点框架，使其六个实际标签为
+
+$$\boxed{(R_\sigma,A_\sigma,B_\sigma,O_\sigma,A_\sigma,B_\sigma),
+\quad A_\sigma,B_\sigma\in H,\quad A_\sigma\ne B_\sigma.} \tag{101.1}$$
+
+$R_\sigma,O_\sigma\in E$ 可以重复。$H$ 中可以有任意多个不同全局边，不把它们当成两种等长颜色。称 $S$ 的标签为特殊边；由定义，它们只可能占据两个轴向对边槽。框架是组合数据，不要求各块角相同、长度相同或存在全局对称群。
+

@@ -1,0 +1,67 @@
+**Definition 6.1 (uniform controller).** A controller is a typed tuple
+
+$$
+\Pi=(\mathsf{sel},\mathsf{upd},\mathsf{halt},\mathsf{emit},\mathsf{ns}),
+$$
+
+where `sel` chooses a legal namespaced action from the accessible boundary,
+`upd` updates the inherited memory and meter, `halt` is a declared terminal
+condition, `emit` produces the task output, and `ns` allocates fresh names
+according to the namespace contract.  For a target map
+$Q:X_{\mathsf C}\to Y$, define the pointwise predicate
+
+$$
+\operatorname{Correct}(\Pi,Q,x)
+\;:\Longleftrightarrow\;
+\Pi\text{ terminates on }x\text{ and emits }Q(x).
+$$
+
+Then
+
+$$
+\operatorname{Correct}(\Pi,Q)
+\;:\Longleftrightarrow\;
+\forall x\in X_{\mathsf C},\operatorname{Correct}(\Pi,Q,x).
+\tag{6.1}
+$$
+
+The uniform synthesis statement has the quantifier order
+
+$$
+\boxed{\exists\Pi\;\operatorname{Correct}(\Pi,Q).}
+\tag{6.2}
+$$
+
+It is not the weaker statement $\forall x\,\exists\Pi_x$, which permits a
+different controller for every source.
+
+Let the actual run resource be $c_\Pi(x)\in[0,\infty]^k$, where a
+nonterminating run has an infinite coordinate and therefore cannot satisfy
+$\operatorname{Correct}$.  For a uniform budget vector
+$b\in[0,\infty]^k$, feasibility is
+
+$$
+\exists\Pi\;\operatorname{Correct}(\Pi,Q)\land
+\forall x\in X_{\mathsf C}\quad c_\Pi(x)\le b.
+\tag{6.3}
+$$
+
+Put $B(\Pi)=(\sup_{x\in X_{\mathsf C}}c_{\Pi,r}(x))_r$.  The Pareto order
+is the coordinatewise order on $B(\Pi)$.  For a nonnegative rational weight
+vector $\lambda$, use the extended-real convention $0\cdot\infty=0$ and
+define
+
+$$
+W_\lambda(\Pi)=\sup_{x\in X_{\mathsf C}}
+      \lambda\mathbin{\cdot}c_\Pi(x),
+\qquad
+W_\lambda^*=\inf_{\Pi:\operatorname{Correct}(\Pi,Q)}W_\lambda(\Pi).
+\tag{6.4}
+$$
+
+The infimum need not be attained.  In general
+$W_\lambda(\Pi)\ne\lambda\cdot B(\Pi)$: the supremum is taken after the
+per-source weighted sum.  On two sources with costs $(1,0)$ and $(0,1)$,
+$B(\Pi)=(1,1)$, while the weight $(1,1)$ has worst-run value $1$, not
+$2$.
+

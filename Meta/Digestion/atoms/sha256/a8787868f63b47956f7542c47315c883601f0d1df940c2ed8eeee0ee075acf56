@@ -1,0 +1,25 @@
+**Convention 17.1 (primary and native suppliers).** The classical
+cycle/face quotient is `literature-attested`; its native operational
+and owner-accounting correspondences here are `repo-derived`.
+There is no worldwide-originality or independent-review assertion.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| A. Yu. Kitaev, *Fault-tolerant quantum computation by anyons*, quant-ph/9707021v1, §1, equation (3) and its noncontractible-loop discussion [primary text][TorusKitaev] | The square torus has two binary cycle classes modulo face boundaries and hence four sectors. Passing to the dual grid interchanges the paper's face-parity and the vertex-parity convention used here. Theorem 11.1 supplies an elementary binary proof and separately counts actual owners. No quantum state, channel, anyon operation or physical memory is imported. |
+| [GDB, §§12–14][TorusGDB] | Actual four-port graph lift, guards, incidence two, once-owned parity weights and the unconditioned hard-parity COK value. These are credited suppliers, not new embeddings or a repeated optimized bound. |
+| Lemma 3.2 of this volume; [COK, Theorem 3.2 and §§12–17][TorusCOK] | Component-normalizer uniqueness, same-Gibbs-law loss, rational full-group cover completion and its information charge. Cover completion can change the network; its averaged mass gives a lower witness, not a universal upper or the base Gibbs law. |
+| P. O. Vontobel, *Counting in Graph Covers*, 1012.0065v2, Theorem 25 [primary text][TorusVontobel] | Rational points of the local marginal polytope are exactly finite-cover lift-realizable pseudomarginals. That result supplies neither actual component acquisition nor the residual COK loss bound in this volume. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, 1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][TorusRuozzi] | Binary log-supermodular factorization gives cover domination and the Bethe lower direction. The hard even-parity table used here is not log-supermodular: its allowed $1100,1010$ have forbidden meet $1000$ and join $1110$. Thus its hypothesis is not obtained for this representation. No missing native upper direction is transferred. |
+| RRN Theorems 5.2 and 7.1; CBN Theorem 2.2; FMR Lemma 2.2 and Theorems 2.3–2.5 | Credited exact guarded owners, actual constructor reconstruction, paid canonical scans, and preservation of every original factor and boundary reply. The special scaffold and descriptor witnesses are proved in §§12–15. |
+| [NPC, Definition 8.1][TorusNPC]; [NWO, Open problem 8.4][TorusNWO] | The unchanged sound/cofinal cap obligation and the unresolved equality $a_d=b_d$. NWO already settles finite-envelope optimization and support-preserving rationalization. The present torus calculation does not settle that equality. |
+
+The same-full-assignment assumptions of
+`FiniteNaturalJoin.join_covers` do not construct the affine sectors
+or a global law. Theorem 11.1 proves their actual existence instead.
+The predecessor-row minimax and effective-root-criterion declarations
+and their Blueprint contracts have different targets and acquired-image
+handoffs. The finite-reader synthesis Theorems 6.1 and 10.2 distinguish
+some-code synthesis for a fixed reader from verifying a prescribed
+acquired-term program. No transfer from those interfaces is used here.
+Inspecting their statements is not compilation or Lean certification.
+

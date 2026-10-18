@@ -1,0 +1,79 @@
+### 59.3 Independent input rows and the norm obstruction
+
+It remains to treat \(R\ne s\). The two rows in (59.3) are
+independent and have null vector
+
+\[
+ n=(s-rT,rT-R,R-s).
+\]
+
+Consequently \(c=\tau n\) for some \(\tau\ne0\), and all three
+\(n_j\) are nonzero. Put
+
+\[
+ \mathcal P=(\bar F,D,\bar D F)\mathbin{\cdot}n,\qquad
+ \mathcal Q=(\bar G,E,\bar E G)\mathbin{\cdot}n,\qquad
+ L=-\frac12-\frac{\sqrt3}{6}+i\frac{1+\sqrt3}{2}.
+\]
+
+The two original output flatness equations require
+\(\mathcal P=\mathcal Q=0\). Expansion of the explicit formulas
+(59.2), with \(R=\bar r,T=\bar s\), gives the identity
+
+\[
+ L\mathcal P+\bar L\mathcal Q
+           =(R-s)(rT+2+\sqrt3).
+\tag{59.5}
+\]
+
+As \(R-s\ne0\), it follows that
+
+\[
+ rT=-k,\qquad Rs=-k,\qquad k=2+\sqrt3>0.
+\tag{59.6}
+\]
+
+In particular \(s=-k/R,T=-k/r\); the denominators are nonzero by
+full support.
+
+Let \(w_l=|u_l|^2\). Since \(c=\tau n\),
+
+\[
+ \frac{w_2}{w_0}=
+ \frac{|c_1|^2}{|c_0|^2}=
+ \frac{|n_1|^2}{|n_0|^2}.
+\]
+
+Both input coefficient triples have squared norm one, and their
+selected-mode masses agree. Their norm difference therefore forces
+
+\[
+ N=(|r|^2-1)|n_0|^2+(|s|^2-1)|n_1|^2=0.
+\tag{59.7}
+\]
+
+On the relations (59.6), direct substitution gives
+
+\[
+ \begin{aligned}
+ |r|^2N&=(6+4\sqrt3)J,\\
+ J&=v^2+k^2+(1+\sqrt3)x(k-v),\qquad
+ v=|r|^2>0,\quad x=\operatorname{Re}r.
+ \end{aligned}
+\tag{59.8}
+\]
+
+Because \(|x|\le\sqrt v\) and \((1+\sqrt3)^2=2k\),
+
+\[
+ J\ge v^2+k^2-\sqrt{2kv}\,|k-v|
+   \ge\frac{v^2+k^2}{2}>0.
+\tag{59.9}
+\]
+
+The second inequality is \(2AB\le A^2+B^2\) with
+\(A=|k-v|, B=\sqrt{2kv}\), for which \(A^2+B^2=v^2+k^2\).
+This contradicts (59.7). Every denominator used in this argument was
+nonzero on the retained full-support branch, and every equation was
+an original flatness consequence. The case \(c_1^+\) is proved.
+

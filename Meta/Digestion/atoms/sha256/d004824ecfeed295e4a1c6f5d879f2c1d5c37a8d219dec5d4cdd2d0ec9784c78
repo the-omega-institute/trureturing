@@ -1,0 +1,45 @@
+**Theorem 9.2 (explicit full-class comparison lower bound).** For every pair permitted in Definition 9.1,
+
+$$
+\Psi(\omega,r)\ge c_*:=
+\frac{3554869594}{1857643496310087890625}
+>\frac1{10^{12}}.
+\tag{9.4}
+$$
+
+Consequently the unchanged minimum satisfies $\gamma\ge c_*$. The proof consists of the pointwise stability and Borel integration below; it does not identify the numerical optimum of $\gamma$.
+
+**Proof, endpoint and complete-coordinate ingredients.** Consume the exact endpoint signs and distances of [ST, §2.2], used also by [PH, §2] and (3.1). At p the endpoint-2/endpoint-1 ratios on marker 0 words are $(6/5)(27/25)^j>1$, and on marker 1 words are $(81/100)(27/25)^j$, below 1 exactly at $j=0,1,2$. In suspension the ratios on prefixed marker 0 words are $(36/25)(27/25)^j>1$, those on prefixed marker 1 words are $(243/250)(27/25)^j$, below 1 only at $j=0$, and the direct $\beta$ mass is larger at endpoint 1. These comparisons cover every completed word; both infinite masses vanish. Thus the endpoint 1 positive events are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their probabilities, differences and midpoints are
+
+$$
+\begin{aligned}
+P_{p,t_1}(E_p)&=412/729,&P_{p,t_2}(E_p)&=7299/15625,\\
+P_{\beta,t_1}(E_\beta)&=22/27,&P_{\beta,t_2}(E_\beta)&=93/125,\\
+d_p&=1116529/11390625,&d_\beta&=239/3375,\\
+C_p&=11758471/22781250,&C_\beta&=5261/6750.
+\end{aligned}
+\tag{9.5}
+$$
+
+Here $C_s$ is the midpoint event probability and $\operatorname{TV}(P_{s,t_1},P_{s,t_2})=d_s$. These are credited intermediate values, rather than a new endpoint minimax assertion.
+
+The complete-coordinate triangle identity of [NATIVE, (6.4)] and [CLIP, (3.6)] states, for normalized countable laws,
+
+$$
+\begin{aligned}
+&\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-\operatorname{TV}(P_1,P_2)\\
+&\hspace{7mm}=\sum_w\operatorname{dist}
+\bigl(D(w),[\min(P_1(w),P_2(w)),\max(P_1(w),P_2(w))]\bigr).
+\end{aligned}
+\tag{9.6}
+$$
+
+It follows by summing the scalar absolute-value identity, including the infinite coordinate. All terms on the right are nonnegative and the sum converges by normalization. This full slack, rather than an objective on selected words alone, will control two selected violations.
+

@@ -1,0 +1,64 @@
+**Theorem 7.1 (a uniform exponential obstruction at the same cell
+charge).** Fix any $\theta\in[0,1]$ and the missing-target cell
+allowance $c=1+\theta$. There is no positive sequence $A_n$ with
+$\log_2 A_n/n\to0$ such that every jointly admissible
+$B\subseteq P^n$ with all coordinate projections locally
+inadmissible satisfies
+
+$$
+\Omega_\theta(B)\le A_n c^n.
+\tag{CIT.34}
+$$
+
+More precisely, for every integer $N\ge1$, the actual relation
+$B_*^N\subseteq P^{2N}$ forces
+
+$$
+A_{2N}\ge
+\left(\frac{3+2\theta}{(1+\theta)^2}\right)^N,
+\qquad
+\frac{3+2\theta}{(1+\theta)^2}\ge\frac54.
+\tag{CIT.35}
+$$
+
+Proof. Pair the $2N$ coordinates and put the five-element relation
+$B_*$ in each pair. All targets use the pair's witnesses from §6
+and Lemma 4.4, which remain valid with arbitrary values in the other
+pairs. This gives a jointly admissible relation with all projections
+equal to $P$. Distributivity over this specifically constructed
+product gives $\Omega_\theta(B_*^N)=(3+2\theta)^N$.
+Inserting it into (CIT.34) yields the first inequality in (CIT.35).
+For the uniform gap, the exact polynomial identity
+
+$$
+4(3+2\theta)-5(1+\theta)^2
+=(1-\theta)(5\theta+7)\ge0
+\tag{CIT.36}
+$$
+
+holds on $[0,1]$, and the denominator in (CIT.35) is positive.
+Consequently
+
+$$
+\frac{\log_2 A_{2N}}{2N}
+\ge\frac12\log_2\frac{3+2\theta}{(1+\theta)^2}
+\ge\frac12\log_2\frac54>0.
+\tag{CIT.37}
+$$
+
+This contradicts the stipulated limit, even if a different correction
+sequence is allowed for each fixed $\theta$. Equality in the uniform
+ratio bound occurs at $\theta=1$. At $\theta=0$ the pair still
+has mass three while its cell allowance is one. $\square$
+
+The failed extension drops the deficient-donor-capacity hypothesis of
+NCM while retaining only the smaller cell charge and trying to hide
+every cyclic contribution in a subexponential factor. The theorem
+does not refute a bound with a larger per-coordinate allowance, an
+additional simultaneous-target constraint, different weights or sharper
+cycle traces. Indeed Theorem 5.2 proves a valid bound with allowance
+$3+\theta$ on the same alphabet. The obstruction uses a positive
+density of short cycles; it says nothing equivalent about the loss per
+coordinate of one isolated long cycle. The full traces in (CIT.7)
+remain available. Nor is (CIT.34) the full-family memory converse.
+

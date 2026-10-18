@@ -1,0 +1,39 @@
+**Theorem 13.5 (fixed-base averaged-cover pressure).** At this fixed
+base network and fixed nonnegative whole-block weights,
+
+$$
+\limsup_{m\to\infty}
+ \left(\mathbb E_\sigma Z(\mathcal N^\sigma;\boldsymbol w)\right)^{1/m}
+=2^{\max_{p\in\mathcal P^+(\mathcal N;\boldsymbol w)}
+          \mathcal B_{\mathcal N}(p;\boldsymbol w)}.
+\tag{COK.69}
+$$
+
+If the positive matching polytope is empty, both sides are zero,
+with the convention $\max\varnothing=-\infty$.
+
+Proof. A positive solution in any cover has a matching empirical
+type, so the empty case is immediate. Otherwise sum (COK.65) over
+all denominator-$m$ positive matching types. Set
+$r_0=\sum_i|R_i^+|$ and let $t_0$ be the sum of the finite group
+alphabet sizes. There are at most $(m+1)^{r_0}$ local type
+collections and $t(p)\le t_0$. The upper half of (COK.67) thus
+gives the upper bound in (COK.69) after taking $m$th roots.
+
+The positive matching polytope is a compact rational polytope.
+Its rational points are dense: its rational vertices span it,
+and rational convex coefficients approximate arbitrary convex
+coefficients. Entropy and the displayed log-weight energy are
+continuous on this fixed support. Approximate a maximizer by
+a rational matching $p$, take $m$ through multiples of its
+denominator, and apply the lower half of (COK.67). Let the
+approximation error tend to zero. This proves the reverse bound.
+Some sheet numbers can have no compatible type, which is why the
+statement uses a limsup. $\square$
+
+The normalization in (COK.69) is per sheet of this fixed $n$-block
+base. Per original block its logarithmic exponent is
+$\max\mathcal B_{\mathcal N}/n$. It is an averaged value over
+covers. No comparison with the partition value of the unlifted
+base, and no upper bound on every individual cover, follows.
+

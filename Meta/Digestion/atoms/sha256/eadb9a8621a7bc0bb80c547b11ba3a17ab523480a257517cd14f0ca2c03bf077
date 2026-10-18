@@ -1,0 +1,2 @@
+**Definition 388.1 (Only label $8$ requires its own query).** Let $\mathcal O_2^{[8]}$ consist of original $\mathcal O_2$ procedures for which, on every source almost surely, an output $\theta_8$ is preceded in that execution by an actual request to address $8$. No restriction is imposed on any other output label or on full-carrier outputs.
+

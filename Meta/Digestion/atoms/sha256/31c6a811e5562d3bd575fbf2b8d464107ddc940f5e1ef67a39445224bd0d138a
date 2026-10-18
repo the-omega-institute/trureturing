@@ -1,0 +1,51 @@
+**Definition 2.3 (actual initial installation).** Execute ARC Definitions
+4.1–4.3 with $G_{\rm sel}$ replacing $G$ throughout. Pay for the ten L/R
+pairs and their owner/phase bits; keep the single original preparation and
+stationary acquisition. The two fresh bootstraps receive respectively
+$E(L)$ and $E(G_{\rm sel})$. Between them the native capture-only $L$
+actually receives
+
+$$
+101\,U(\delta_{\rm sel})\,\Delta(G_{\rm sel}),\qquad
+\delta_{\rm sel}=|\Delta(G_{\rm sel})|.
+$$
+
+$E$ is the installation serialization and $\Delta$ the framed row/effect/
+entry description; RCA's finite serializer connects them. The strings
+are different objects. Capture69 has its unique sentinel F, base one,
+descriptor ordinal zero and payload length $2\delta_{\rm sel}+4$.
+$L$ contains neither the main description nor its length. The main graph
+reads its own description only from this actual captured field, not a
+self-description constant.
+
+In the captured description's finite entry component retain the original
+entries and append two fixed slots, SourceEntrySet and SourceExitSet.
+Each is an encoded list of the two parity alternatives, each item a tuple
+of version tag, pre-row state number and successor state number. The
+assembler obtains these numbers from the symbolic edges of Definition
+5.3 after the graph is expanded/numbered. The entry parser reads these
+two slots in their fixed order, validates arity/ranges, and resolves every
+item to the unique decoded CTL row with that successor and appropriate
+fixed local phase effect. The main program obtains these words only by
+Nth/ReadList on its actual captured description. This is finite entry
+metadata, erased with the other entry framing when emitting $E$; it is
+not code that emits an unknown unary numeral for its own row address.
+The source edges have symbolic targets before this numbering, so neither
+graph construction nor register count depends on the digits of these
+metadata numbers. Their actual bits and validation work are paid.
+
+On main entry append bank sentinels, unroll exactly $r_{\rm sel}$ empty
+fields in the ARC empty-bank prelude, describe/seal bank64 and set parity A.
+Initialize sentinels70–73, without a second sentinel69. Append ARC's fixed
+ordered initial69 fields: actual public/prior/controller/boot bindings;
+finite earlier graph/boot/$L$ descriptions; actual acquired seed and its
+delivery origin; closed28/29 imports with preactivation dependencies; and
+saved26/28/29 head table with its fixed activation position. Restore those
+heads. ManifestPrefix starts Home69; MR; MR, imports the entire closed
+initial prefix before later staging, validates field zero and its entries,
+then initializes $M$, cover/package lists and the new persistent fields.
+They start empty, with a distinguished unset mode; no request uses an
+unset field. Actual TOK to the outer client and Ready CTL establish the
+first $R_r$. Canonical supply of all these bits is a premise, not a silent
+change to a running $G$.
+

@@ -1,0 +1,27 @@
+**Definition 2.2 (complete fixed channel and binary law).** For every complex $A\in M_5$ put $A_V=E^\dagger AE$, $g(t)=2/(1+t)^2$ for $0\le t\le1$, and fix
+
+$$
+\begin{aligned}
+\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi_{*,j}^f(A)(dt)&=g(t)\left[w_j\operatorname{tr}(MA_V)+\mathbf1_{j=2}\operatorname{tr}(Q_5A)\right]dt\,P_f.
+\end{aligned}
+\tag{RG.9}
+$$
+
+Every extra-sector map is zero. This channel annihilates every $V$–$V^\perp$ cross operator and has zero complementary live action. Since $\int_0^1g(t)dt=1$ and $\sum_jw_j=1$, (RG.8) proves TP; each term is CP, also at arbitrary passive-reference amplification. Equality with this channel always includes all complex matrices, conditional reference operators and every separate labelled Borel-time CP measure. The inherited benchmark is $\mathcal E(\Phi_*)=\mathcal E_*=F^{\rm src}$, with the conditional enclosure
+
+$$
+0.14817810291080132013<\mathcal E_*<0.14817810291080132014.
+\tag{RG.10}
+$$
+
+For public $s\in[0,1]$ the required every-input binary effects are
+
+$$
+F_r(s)=\frac{I_5+rs\kappa EX_{01}E^\dagger}{2},\quad
+X_{01}=|0\rangle\langle1|+|1\rangle\langle0|,\quad r\in\{+1,-1\}.
+\tag{RG.11}
+$$
+
+On a positive $\sigma$, write the unnormalized compression $\rho=E^\dagger\sigma E$. Its record mass is $\operatorname{tr}\sigma/2+rs\kappa\operatorname{Re}\rho_{01}$. On an original history this is $1/2+rs\kappa en\sqrt{y(64-y)}/128$. Only the forgotten full channel (RG.9) and these effects are fixed. In particular, the interior binary-conditioned live maps and binary failure-time splits are free to vary. Negative record coefficient means exchanging $r$.
+

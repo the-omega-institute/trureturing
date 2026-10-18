@@ -1,0 +1,69 @@
+**Theorem 11.7 (qualified exact minima at both original caps).**
+Every graph in $\mathfrak C$ satisfies
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,
+\qquad m\ge G+u.
+\tag{SI.69}
+$$
+
+For every original $n,k,A$ in Convention 11.1, the minimum Boolean
+running-state count within $\mathfrak C$, at both caps $n,W$ on
+one graph, is exactly $G=k(n-k+1)$. For complete original native
+preparers whose supplied Boolean projection belongs to $\mathfrak C$,
+the exact preparation minimum at both native caps $n+1,W+3$ is
+$G+4+r$.
+
+Proof. For $B\in\mathcal L_*$ apply Corollary 11.5. For every
+other pool reuse the existing suppliers: Theorems 9.4 and 10.4
+compensate spans at most four; Lemma 10.2 gives $D_B=0$ when
+$b\le e_*$. These cover exactly $\mathcal A_*$, with no condition
+on its state-history families. Summing on the same installed graph
+in (SI.32), and retaining $E_{\mathrm{cut}}\ge0$, proves (SI.69).
+No graph is changed between different pool arguments.
+
+The supplied grid of PCA Theorem 26.1 has $G$ running states,
+satisfies both caps and has every depth common-support. Thus
+$\mathcal L_*$ is empty and it belongs to $\mathfrak C$, proving
+equality. Its states generally have many actual live prefixes. More
+explicitly, at its state of cell $(h,z)$ every prefix has the same
+fixed support consisting of the first $h+z$ coordinates in its order.
+Distinct histories give distinct $h$-element one sets in that support,
+so Lemma 11.3 gives both conflicts and (SI.64) gives total mass one
+at that state. This is the fixed-cell, fixed-support argument; the
+grid's membership does not depend on a false unique-history premise.
+
+For a native competitor, WTF Theorem 4.1 gives a complete correct
+projection with both Boolean caps and $m\le H_P-4-r$. Its class
+membership is an explicit hypothesis, so (SI.69) gives
+$H_P\ge G+4+r$. Conversely the same supplied grid has the original
+full-fiber lift with exactly $G+4+r$ preparation states and both
+native caps. Its projection is the grid just discussed. Hence the
+native projection-class minimum is attained as claimed.
+
+The native quantifier remains over all finite nonempty ordered trees
+in $\mathcal U_*$, of unbounded size, depth and shape, with the
+original homomorphic $\rho$, complete current row and fixed pointwise
+code (SI.2). The original repeated occurrences and different-class
+disequalities are retained. The upper is the supplied full-fiber
+upper, rather than a cube-only upper; the cube is a lower-witness
+projection. Every finite original address and its alpha, beta, branch
+and absent replies retain their original permission and meaning.
+The original latches hand off literally to the complete $e_0,e_1$.
+The independent original eight-state reader, with its three running
+states and five whole-row halts, returns the ordered predecessor
+exterior, all reached occurrences, its canonical equality partition,
+repetitions, disequalities and strict-prefix guards. Its at most two
+fresh queries and six letters remain separate charges.
+
+All installed running, output, unused and latch states count; the
+Boolean terminals are replaced by native latches, not charged twice.
+Every actual constant, repeated or post-certificate invocation is
+paid. Binding, authentication, acquired same-version data, native
+access, export, isolation, code-only handoff, lawful complete entry
+and stationary continuity remain the separate supplied services of
+Convention 1.3. No free source copy, archive re-read, selector,
+acquisition, record register, clock or address calculation follows.
+This is an exact qualified installed-control theorem, not unrestricted
+grid optimality or a physical realization theorem. $\square$
+

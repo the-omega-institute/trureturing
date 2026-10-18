@@ -1,0 +1,25 @@
+**Theorem 8.2 (Exact support of every finite-past posterior).** For every $r\ge1$ and every word $w$ with $J(W_r=w)>0$,
+
+$$
+\operatorname{supp}\nu_r(\cdot\mid W_r=w)
+=\begin{cases}
+\{F_0,F_1,F_2\},&w_r=0,\\
+\{T_0,T_1,T_2\},&w_r=1.
+\end{cases}
+\tag{8.3}
+$$
+
+The symbols here are the quotient classes, with indices modulo three. At radius zero the support is all six classes. In particular no finite-radius posterior is Dirac on an event of positive probability.
+
+Proof. Reuse the actual marked quotient $T_x$ of Proposition 3.2 and its strictly positive stationary masses $\pi$ from Proposition 4.2. For a positive word the posterior is exactly
+
+$$
+\nu_r(a\mid W_r=w)
+=\frac{(\pi T_w)_a}{\pi T_w\mathbf1},\qquad
+\pi T_w\mathbf1=J(W_r=w)>0.
+$$
+
+By Proposition 4.2 these positive words are precisely the legal no11 words. The last transition in (4.1) makes their final phase free for a last zero and tail for a last one, irrespective of the initial phase. Thus no other phase can enter the support.
+
+Let $k(w)$ be the number of ones in $w$, reduced modulo three. From every initial free class $F_z$, every legal word has a positive path: a zero from a free class has probability $1-p_z>0$, a one has probability $p_z>0$, and the required zero after a one is certain. Each one increments the residue by one; each zero preserves it. For any desired final residue $b$, start in $F_{b-k(w)}$. Its positive stationary mass and positive path give strictly positive mass to the class of the prescribed final phase and residue $b$. This proves all three inclusions in (8.3). For $r=0$, $\nu_0=\pi$ has all six positive entries. Null words receive no quotient or division and affect none of these conclusions. $\square$
+

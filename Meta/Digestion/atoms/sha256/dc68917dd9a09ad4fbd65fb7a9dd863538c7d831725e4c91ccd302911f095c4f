@@ -1,0 +1,47 @@
+**Corollary 10.5 (a multiple-host endpoint in the surviving list).**
+Every nineteen-state original competitor has complete cut list
+
+$$
+(0,1,2,7,8),
+\tag{49}
+$$
+
+and its sharing endpoints satisfy
+
+$$
+\ell+r\ge1.
+\tag{50}
+$$
+
+Equivalently, at least one of
+$`\mathsf a,\mathsf b,\mathsf c,\mathsf d`$ has at least two
+actual live hosts.
+
+**Proof.** Corollary 9.2 and Theorem 10.4 leave only (49).
+For its sole long pool $`B=(2,7)`$, equality still gives
+$`D=E+1`$. Suppose first that $`\ell+r=0`$.
+All four nonnegative endpoint excesses then vanish; the four
+cells each have one host and one support.
+Only $`Z_3,Z_4,O_3`$ can be axis endpoints in this pool,
+so $`A\le3`$, while (41) gives $`N_{\rm sh}\le2`$.
+The four internal noncommon depths give $`E\ge4`$. Consequently
+$`D\le5`$ and $`D=E+1`$ force
+
+$$
+E=4,\quad D=5,\quad A=3,\quad N_{\rm sh}=2,\qquad
+e_3=e_4=e_5=e_6=1.
+\tag{51}
+$$
+
+The two non-axis shared states consume all four endpoint hosts.
+The only non-axis partner of $`\mathsf a`$ is $`\mathsf c`$,
+and the only one of $`\mathsf d`$ is $`\mathsf b`$.
+Thus these two states must be an $`\mathsf a,\mathsf c`$
+host and a $`\mathsf b,\mathsf d`$ host.
+The cells $`\mathsf b,\mathsf d`$ have unique supports, so
+Lemma 10.3 applies to the former host and gives $`e_6\ge2`$,
+contrary to (51). The zero-excess branch is impossible.
+In the remaining branch $`\ell+r>0`$, integrality gives (50);
+no sufficiency or further realization is inferred from that branch.
+$`\square`$
+

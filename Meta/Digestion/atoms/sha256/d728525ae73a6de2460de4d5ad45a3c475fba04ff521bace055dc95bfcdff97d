@@ -1,0 +1,132 @@
+**Theorem 18.2 (Robust extensive mirror obstruction).**
+On $P_{2m}$, $m\ge2$, cut after site $m$. Assume
+$0<\ell_0\le\lambda_i\le M$ and $w_i>0$, and define
+
+$$
+\chi(S)=(-1)^{\sum_{h=2}^m s_{m+1-h}s_{m+h}},
+\qquad
+\eta=\frac{\ell_0}{(1+M)^2+\ell_0}.
+\tag{18.2}
+$$
+
+Then
+
+$$
+E_{\rm orb}(\chi)\ge
+\frac{4\eta^2}{1+M}
+\sum_{h=2}^m(w_{m+1-h}+w_{m+h}).
+\tag{18.3}
+$$
+
+In particular, for uniform activities and weights equal to
+one, with the actual deletion rates $d_i=1/2$,
+
+$$
+E_{\rm orb}(\chi)\ge\frac{4(m-1)}{25}.
+\tag{18.4}
+$$
+
+Proof. On any path segment with activities in the stated
+range, the occupation odds at a free site are its activity
+times the vacancy probabilities at the endpoints of the
+two adjacent segments. Each such endpoint vacancy is at
+least $1/(1+M)$; an absent segment contributes one.
+Thus its occupation probability $u$ satisfies
+
+$$
+\eta\le u\le\frac{M}{1+M},\qquad
+1-u\ge\frac1{1+M}\ge\eta.
+\tag{18.5}
+$$
+
+The same assertion holds if an end site is forced vacant,
+after deleting that site and considering the remaining
+segment. The final inequality follows from
+$\ell_0\le M$.
+
+Fix any complete left word containing a matching endpoint
+$i=m+1-h$, $h\ge2$, with partner $j=m+h$.
+Conditionally on that left word the right side is its
+original Gibbs path, with at most its first site forced
+vacant. The partner $j\ge m+2$ is free, so its conditional
+occupation probability satisfies (18.5).
+
+Deleting $i$ changes only its matched sign. For any chosen
+row and column gauge, the column gauge cancels in the
+phase increment, and the row-gauge ratio is one unit
+complex number fixed by the left word. For a Bernoulli
+occupation with parameter $u$, and every unit $z$,
+
+$$
+\mathbb E\left|(-1)^{s_j}-z\right|^2
+\ge\min_{|z'|=1}\mathbb E\left|(-1)^{s_j}-z'\right|^2
+=4\min(u,1-u)\ge4\eta.
+\tag{18.6}
+$$
+
+The unconditional probability that $i$ is occupied is at
+least $\eta$, and its actual deletion rate is at least
+$w_i/(1+M)$. Its energy contribution is therefore at
+least $4\eta^2w_i/(1+M)$ for every gauge. The symmetric
+argument applies to the right endpoint. All matching
+endpoints are distinct, so their nonnegative contributions
+add without counting an update twice. This proves (18.3)
+for every gauge and hence for the infimum. With
+$\ell_0=M=1$, $\eta=1/5$, giving (18.4). $\square$
+
+For the uniform family, $\alpha\ge1/3$ by Theorem 14.3,
+and $\beta,\zeta\ge1/5$ by (18.5). In particular the
+reference cut spectrum stays nondegenerate. Nevertheless
+$\delta_{\rm local}\le2$ and $\Delta_2\le1$, while
+(18.4) grows with $m$. Thus bounded activities, bounded
+actual update rates and a nondegenerate cut spectrum do not
+supply any size-independent constant C for either
+$E_{\rm orb}\le C\delta_{\rm local}$ or
+$E_{\rm orb}\le C\Delta_2$. Rescaling all weights changes
+the parent and the energy bound and must be stated explicitly.
+
+The established spectral comparison remains valid with its
+actual global scale. Write $\Omega_H=\|H\|=\Lambda$
+and retain the gap $\gamma$ of Definition 1.2. For any
+unit phase $f$, the simple zero eigenspace gives
+
+$$
+\gamma\left(1-|\mathbb E_pf|^2\right)
+\le\langle\Psi_f,H\Psi_f\rangle
+\le\Omega_H\left(1-|\mathbb E_pf|^2\right),
+\qquad\Omega_H\le\sum_iw_i.
+\tag{18.7}
+$$
+
+Overall phase is an allowed local gauge. Compactness of the
+finite phase tori gives the maximal absolute overlap
+$M_\chi=\max_{|a|=|b|=1}|\mathbb E_p[\chi/(ab)]|
+=1-\delta_{\rm local}/2$. Applying the lower
+bound to every gauge and the upper bound at a
+maximum-overlap gauge yields
+
+$$
+\gamma\left(\delta_{\rm local}-
+\frac{\delta_{\rm local}^2}{4}\right)
+\le E_{\rm orb}\le
+\Omega_H\left(\delta_{\rm local}-
+\frac{\delta_{\rm local}^2}{4}\right).
+\tag{18.8}
+$$
+
+This reuses the spectral theorem; it does not equate the
+energy and distance optimizers. Combining it with the new
+same-law estimate (17.3), and monotonicity of
+$x-x^2/4$ on $[0,2]$, gives
+
+$$
+\gamma\left(\frac{\Delta_2}{2}-\frac{\Delta_2^2}{16}\right)
+\le E_{\rm orb}\le\frac{\Omega_H}{C_{\rm cut}}\Delta_2.
+\tag{18.9}
+$$
+
+The global factor in this upper comparison cannot be
+replaced by only the cut activities and reference spectrum,
+as (18.4) proves. None of these parent expectations assigns
+a physical energy unit or the work of acquiring the phases.
+

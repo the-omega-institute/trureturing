@@ -1,0 +1,38 @@
+**Theorem 8.1 (an exact two-point joint frontier on an infinite admitted fiber).** Take the acquired single-root-hole row, the actual history $H=((0,RL,\mathsf{absent}))$, authenticated entry $N=0$, and original recut $Q=\{L\}$. The entire admitted fiber and its full outputs are
+
+$$
+ D=\{\alpha,\beta\}\cup
+       \{\langle x,\alpha\rangle:x\in\mathcal T\}\cup
+       \{\langle x,\beta\rangle:x\in\mathcal T\},
+\tag{JRF.8.1}
+$$
+
+$$
+ r_\alpha=\alpha,\quad r_\beta=\beta,\quad
+ r_{L\alpha}=\langle\square_1,\alpha\rangle,\quad
+ r_{L\beta}=\langle\square_1,\beta\rangle,
+\tag{JRF.8.2}
+$$
+
+with the unique one-hole equality partition in the latter two rows. Its Pareto basis for actual calls, actual updates, and literal length is exactly
+
+$$
+ \mathcal B=\{(2,0,1),(1,1,1)\}.
+\tag{JRF.8.3}
+$$
+
+Proof. SCR Theorem 7.2 establishes (JRF.8.1) as an entire-fiber equality: a root leaf makes $RL$ absent, and a branch has $RL$ absent exactly when its right child is a leaf. It also establishes the four distinct complete rows and the arbitrary-address one-read lower bound at epoch zero.
+
+For the first vector, read the root at epoch zero. A leaf reply determines its concrete no-hole row and halts; a branch reply is followed by a read at $R$ and the appropriate one-hole row. The worst costs are exactly $(2,0,1)$ on this whole fiber. For the second vector, perform one actual update and read $R$. In the order of (JRF.8.2), its replies are
+
+$$
+ (\mathsf{absent},\alpha,\beta,\mathsf{branch}),
+\tag{JRF.8.4}
+$$
+
+so one read of a length-one address identifies the complete row. Its costs are $(1,1,1)$ on every source.
+
+Every correct service needs at least one new read: without a new reply, common control and updates give the same output on the four different rows. Every correct service also needs a nonempty address on at least one source. Indeed choose the same $x$ in $\langle x,\alpha\rangle$ and $\langle x,\beta\rangle$. Every root reply at every epoch is branch for both. If a service used only root reads on all sources, induction through its reply-dependent actions would give the same finite output on these two sources, contrary to their different rows. Thus every finite feasible budget has $q\ge1$ and $L\ge1$.
+
+If its update budget is zero, it is static at epoch zero, so SCR Theorem 7.2 forces $q\ge2$ and the first vector dominates its budget. If its update budget is positive, it is at least one, and the second vector dominates its budget. The two displayed feasible vectors are incomparable, proving (JRF.8.3) and its complete coverage of all reply-dependent schedules. The arbitrary $x$ has no size or depth bound. $\square$
+

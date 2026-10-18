@@ -1,0 +1,28 @@
+### 86.2. The smooth rank-two comparison function
+
+For the correct-output Grams G,H put K=G entrywise-multiplied by H. The target T has diagonal 2-by-2 blocks I_2 and off-diagonal blocks J_2/2. Define
+
+    F(A,B)=Lambda_2(T-K)/4,                                (4)
+
+where Lambda_2 sums the two largest Hermitian eigenvalues. On the normalized reference input 8^(-1/2) sum_(f,i)|f,i>_R|f,i>_logical, the correct joint reference/output compression is K^T/8 on {|f,i>_R tensor |ff>_out}. Pinching and retaining the complementary positive trace give
+
+    delta(A,B)>=Tr(T-K)_+/4>=F(A,B).                        (5)
+
+The section-85 refinement of the original contraction/support witness gives
+
+    F(A,B)>=1/4 whenever B has Kraus rank two,              (6)
+
+for every original A, including leakage. Explicitly, with C_f=A_f B_f^T/sqrt(2), D_f=A_f Z B_f^T/sqrt(2), S=mean_f C_f and Z=diag(1,-1), project onto {SX:Tr X=0}. Its complex dimension is at most three. A unit vector in the kernel of the four projected D columns, together with the uniform plus vector, gives a rank-two projection of T-K with trace at least one. Only one kernel vector is selected, even if the kernel is larger.
+
+At any section-82 equality member the two largest eigenvalues of T-K are 1/2,1/2; the others are at most zero. Thus the top cluster has a gap at least 1/2, including boundary disphenoids. In marker-aligned bit coordinates its projection is
+
+    P_0=(J_4/4) tensor I_2.                                (7)
+
+The function F is real-analytic near the base in the ambient real channel coordinates. We also view it as a smooth function of Stinespring isometries. The comparison space is
+
+    X=St(C^8,C^4 tensor C^d) times U(8),
+
+where the second factor is traced over an environment of dimension two. By (6), F>=1/4 everywhere on X. Both correct and wrong output blocks are retained in this space.
+
+We prove a quadratic growth estimate on X about an explicit smooth minimum manifold M. This intermediate manifold consists of minima of F; it is larger than the quarter-error equality family of the full diamond norm.
+

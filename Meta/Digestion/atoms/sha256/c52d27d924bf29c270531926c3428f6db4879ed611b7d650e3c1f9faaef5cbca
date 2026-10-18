@@ -1,0 +1,30 @@
+**Assumption 7.3 (when a semantic input describes actual captures).**
+For an observational interpretation, the rows must actually be
+acquired on the stipulated same original-root register, at coherent
+captures of its pure-$\rho$ history. Ordinary materialized
+$\mathsf{Read}(p)$ returns only
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$. There is no
+whole-tree, subtree-equality, boundary-profile or epoch port.
+
+The paid producer [ARH, Proposition 2.1][ARH] is available under
+its exact public fixed-schedule, authentic-epoch and complete-access
+conditions. It acquires finite descriptions by literal traversal
+and compares those descriptions locally, retaining and transporting
+them until their intended comparisons are made. Raw calls, full
+address lengths, comparison work, workspace, retention, transport,
+updates and epoch certification remain separately charged. Its
+sourcewise finite acquisition cost is not a uniform cost bound.
+Its schedule and retained-state hypotheses are not silently replaced
+by unknown epochs or adaptive selection.
+
+Theorems 3.3 and 4.1 are offline consumers of supplied finite
+mathematical records. They supply no new producer, no free observation
+port and no concurrent snapshot guarantee. If concurrent reads are
+used, the coherent-capture conditions must be established at that
+interface; [Concurrent Native Cut Acquisition, Definitions 1.3--1.4][CNA]
+explicitly distinguish such conditions from a sequence of atomic
+individual reads. Source-dependent acquisition control or undiscarded
+auxiliary state changes the observation fiber unless included in the
+retained input. None of these physical premises is inferred by a
+successful consistency decision.
+

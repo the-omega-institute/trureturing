@@ -1,0 +1,54 @@
+**Theorem 6.2 (I1: polynomial, unique simple root and global inequality).** For $0<u\le r$ define $A_u=F_c(u)$, $B_u=F_1(u)$, $c_u=A_u-uB_u$, and the following fully specified polynomial coefficients and polynomials:
+
+$$
+\begin{gathered}
+p_4=D_1-2N_1B_u,\quad p_3=-2D_1,\quad
+p_2=D_0+D_1-2(N_0B_u+N_1c_u),\\
+p_1=-2D_0,\quad p_0=D_0-2N_0c_u,\qquad
+\sigma(t)=N_0+N_1t^2,\\
+P_u(t)=p_0+p_1t+p_2t^2+p_3t^3+p_4t^4,\\
+R_u(t)=N_0p_1+(2N_0p_2-2N_1p_0)t+(3N_0p_3-N_1p_1)t^2
++4N_0p_4t^3+N_1p_3t^4+2N_1p_4t^5,\\
+E_u(t)=(1-2\alpha t^2)P_u(t)\sigma(t)-t(1-\alpha t^2)R_u(t),\\
+T_u(t)=2\alpha tP_u(t)\sigma(t)+(1-\alpha t^2)R_u(t),\\
+Z_u(t)=\beta B_{\rm cross}^2E_u(t)^2
+-A_{\rm loss}^2(1-\alpha t^2)T_u(t)^2.
+\end{gathered}
+\tag{TC.17}
+$$
+
+$Z_u$ has degree at most sixteen and exactly one real root $t_u$ in the explicit radical interval $(\sqrt{x_z},\sqrt{x_m})$. That root is simple. Define
+
+$$
+X(u)=t_u^2,\quad v_u=\sqrt{1-\alpha t_u^2},\qquad
+S(u)=\frac{2\sigma(t_u)[(B_{\rm cross}/\sqrt\beta)t_uv_u-(A_{\rm loss}/\beta)v_u^2]}{P_u(t_u)}>0.
+\tag{TC.18}
+$$
+
+On the WHOLE ellipse,
+
+$$
+k(z,w)_+\le S(u)[F_c(z^2)-F_c(u)-F_1(u)(z^2-u)].
+\tag{TC.19}
+$$
+
+Equality is precisely $z^2=u$ in either sign sector, or $z^2=X(u)$ with $zw>0$. No axis is an equality point.
+
+Proof. For proof only write $G_u(x)=F_c(x)-F_c(u)-F_1(u)(x-u)$. Lemma 2.1 gives $G_u\ge0$ on $[0,U]$, with only the zero $u$. For $x>x_z>u$, both $G_u,G_u'$ are positive and $G_u''=F_2(x)>0$. The derivative numerator of $P_0/G_u$ is
+
+$$
+N_u(x)=P_0'(x)G_u(x)-P_0(x)G_u'(x),\qquad
+N_u'(x)=P_0''(x)G_u(x)-P_0(x)F_2(x)<0
+$$
+
+on $(x_z,U)$. It is positive at $x_z$ and negative at $x_m$. Hence it has exactly one zero $X\in(x_z,x_m)$, and the ratio increases then decreases throughout the positive-payoff interval, with zero endpoint limits. Elsewhere the payoff is zero. Its maximum $S=P_0(X)/G_u(X)$ therefore proves (TC.19), with the stated radial and sector equality cases.
+
+To evaluate the contact, put $t=\sqrt x$, $v=\sqrt{1-\alpha t^2}$, $A=A_{\rm loss}/\beta$ and $B=B_{\rm cross}/\sqrt\beta$. Direct coefficient expansion in (TC.17) gives
+
+$$
+G_u(t^2)=P_u(t)/(2\sigma(t)),\qquad
+G_u'(t^2)=R_u(t)/(4t\sigma(t)^2).
+$$
+
+Multiplying $N_u(t^2)$ by the strictly positive $4t\sigma(t)^2v$ gives exactly $BE_u(t)+AvT_u(t)$. On the entire proposed root interval $P_u,R_u>0$. Since $t^2>x_z>1/(2\alpha)$, also $E_u<0$ and $T_u>0$. Squaring the equation $BE_u+AvT_u=0$ and multiplying by $\beta^2$ gives $Z_u=0$. Conversely those strict signs force every polynomial root in this interval to satisfy this unsquared equation. Thus every extraneous squared branch is excluded there. At the root the other factor $BE_u-AvT_u$ is strictly negative, while the first factor has nonzero derivative because $N_u'<0$ and $t>0$. The root is simple. Degrees in (TC.17) give the asserted cap sixteen. Substitution yields (TC.18); all its denominators are positive. The simple-root equation proves analyticity of $X,S$ on any closed subinterval of $(0,r]$, with local extensions at its endpoints. The root interval and simplicity supply evaluated algebraic selection, not an unspecified extremum or a suggested numerical search. $\square$
+

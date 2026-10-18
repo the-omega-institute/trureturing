@@ -1,0 +1,18 @@
+##### 定义 1.6.1： 查询接口因子
+
+设 $\kappa:\mathcal M\to K$ 是实现摘要。如果对某个查询族 $\mathcal Q$ 存在响应函数
+
+$$
+\overline{\mathcal R}:K\to\operatorname{im}(\mathcal R_{\mathcal Q})
+$$
+
+使
+
+$$
+\mathcal R_{\mathcal Q}=\overline{\mathcal R}\circ\kappa,
+$$
+
+则称 $\kappa$ 是该查询族的接口因子。
+
+<a id="claim-1-6-2"></a>
+

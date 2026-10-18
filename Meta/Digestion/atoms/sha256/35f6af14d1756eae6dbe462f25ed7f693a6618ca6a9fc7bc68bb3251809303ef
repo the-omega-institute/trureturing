@@ -1,0 +1,4 @@
+# 六维第四个无偏基问题：理论续卷 IV
+
+本卷承接[理论续卷 III](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_III.md)，沿用实际 paired-circulant 族与原始输入基约定。第 87–90 节给出所有 generic 射线的投影必要条件、有限代数分类、任意 generic 正交对刚性及 generic–aligned 混合边排除证书；第 91 节推出明确有限代数例外集之外的 canonical 基唯一性与固定 MUB 对的四基排除。全部 guard 零点仍作为未决参数纤维保留；本卷不将稠密补集的结论延伸到这些例外点。
+

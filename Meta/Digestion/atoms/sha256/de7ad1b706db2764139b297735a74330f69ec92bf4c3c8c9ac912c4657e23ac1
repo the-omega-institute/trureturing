@@ -1,0 +1,66 @@
+**Definition 8.1 (retained complete groups and exact missing relation).**
+The complete directed endpoint inventory, weak-sign partition
+$\mathscr G$, full matrix $A$, contrast row $\kappa$ and polytope
+$\mathcal P$ remain those of FC Definitions 3.1–5.1. Every paired
+group retains both independent endpoint coordinates. Reverse
+singletons remain singletons, including arbitrary additional reverse
+contacts. In the rank-one range $30000\le t<2000000000$, every
+candidate law still must carry the mandatory negative pure coordinate
+in $G_*$ as well as the mandatory reverse saturated mass from FC28.
+Occupying $G_*$ solely at its saturated coordinate is insufficient.
+
+The remaining seven-low problem asks, on each relevant complete
+face and for every $r\in[r_-,r_+]$, for a vector
+
+$$
+w\ge0,\qquad Aw=B(t),\qquad \kappa^Tw=r,\qquad
+\#\left\{G\in\mathscr G:\sum_{i\in G}w_i>0\right\}\le7.
+\tag{RB.43}
+$$
+
+By FC Theorem 5.2 this is exactly $U_7=[r_-,r_+]$.
+Neither the affine factor (RB.7), the Toeplitz matrix (RB.29),
+nor the curvature estimate implies a row dependence of the full
+augmented $(\Gamma,k)$ table or constructs (RB.43). Theorem 7.1
+excludes a class of complete jointly attained faces at large finite
+budget; it supplies no short-support law in the remaining class.
+Indefinite faces, including the high-budget faces of Corollary 7.2,
+retain the original compression question.
+
+The mature moment interfaces illustrate the missing correspondence.
+Di Dio–Schmüdgen, *The Moment Cone*,
+[Theorems 19, 30 and 52](https://arxiv.org/html/1809.00584v1),
+works with the specified finite measurable function space:
+Richter's representation bound uses its dimension; Theorem 30
+describes atom sets by the appropriate moment-face zero sets; the
+$m-1$ refinement in Theorem 52 requires at most $m-1$
+path-connected components of the normalized nonzero evaluation
+image. The scalar gap factor in (RB.7) supplies neither those
+full-table dimension reductions nor the required connectedness.
+
+Nailwal–Zalar, *Gaussian Quadratures with prescribed nodes via
+moment theory*,
+[Theorem 3.1 and Example 3.6](https://arxiv.org/html/2412.20849v1),
+requires full real univariate data through
+$D=d_1+2d_2-1$, a positive definite initial moment matrix,
+distinct prescribed nodes, an invertible prescribed-node localizer
+and positive definiteness of its recursively generated extension.
+Its factorial example with nodes $1/3,11$ fails that extension
+positivity despite the invertible localizer. The mandatory $x_*$
+here supplies none of the missing univariate or original
+$\Gamma,K,J_t$ correspondence.
+
+Riener–Turatti, *Quadrature rules with few nodes supported on
+algebraic curves*,
+[Theorem 1.1](https://arxiv.org/html/2509.06643v1),
+matches full polynomial strength under its smooth plane-curve and
+places-at-infinity hypotheses, or its rational parametrization degree
+and real-pole hypotheses. Factoring one signed dual gap does not
+map the full two-sheet rational-capacity, absolute-height tests and
+directed actual labels to that interface. These primary moment and
+quadrature results are cited at this applicability boundary, not
+used as replacement theorems for (RB.43). The scalar
+Fejér–Riesz application in Proposition 5.1 is the only external
+factorization used in the exclusion. The source-specific composition
+of §§2–7 is a repo-derived conditional deduction.
+

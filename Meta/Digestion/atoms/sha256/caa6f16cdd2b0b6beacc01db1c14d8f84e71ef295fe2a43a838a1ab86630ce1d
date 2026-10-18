@@ -1,0 +1,31 @@
+## 4. The complete `V_rec+range` grammar
+
+First specify the support-complete joint functional of [RCE, Definition 2.1][RCE]. A nonempty $P\subseteq S_d$ is range-feasible if $|\Gamma_q(P)|\le4$ for every $q\in W_d$. A target $q$ is hard on $P$ if no one boundary experiment, including a constant experiment, determines $\Gamma_q$ there. Let $\mathcal H(P)$ be the set of those hard targets and let $U_P(x)=(\Gamma_q(x))_{q\in\mathcal H(P)}$. For nonnegative $w$ put
+
+$$
+\kappa(w,P)^2=
+\sum_y\left(\sum_{x\in P:U_P(x)=y}w(x)\right)^2,
+\qquad
+J_d(w)=\max_{\substack{\varnothing\ne P\subseteq S_d\\P\text{ range-feasible}}}
+\kappa(w,P).
+$$
+
+An empty hard vector has one cell. Zero-weight states can be removed from this maximum: deleting them can only make more targets easy, so the restricted hard partition coarsens and its nonnegative cell norm cannot decrease. A support with no positive states has norm zero. For probabilities define
+
+$$
+\operatorname{TV}(\mu,\nu)=\frac12\sum_{x\in S_d}|\mu(x)-\nu(x)|.
+$$
+
+The joint-functional bound $|J_d(\mu)-J_d(\nu)|\le\operatorname{TV}(\mu,\nu)$ is [RCE, Lemma 2.2][RCE]. The pressure bound $|\beta_d(\mu)-\beta_d(\nu)|\le\operatorname{TV}(\mu,\nu)$ is the separately credited [RCE, Convention 1.4][RCE].
+
+The grammar considered here is exactly [RCE, Convention 4.3 and Definition 8.1][RCE]: the old recursive grammar together with the finite range leaf. A label is $(d,\nu,C)$, where $\nu$ is a rational probability on the entire $S_d$ and $C>0$ is rational. A certificate is a finite list of justified labels whose last label is its input. Its nodes are:
+
+1. An exhaustive old joint leaf checks $\kappa(\nu,P)^2\le C^2$ on every feasible positive support. A grouped joint leaf of any positive finite size $k$ makes the corresponding exhaustive tests on the product interface against $C^{2k}$, each experiment returning one constituent reply. A bounded-bundle leaf selects a nonempty bundle of hard targets on each feasible support of mass greater than $C$ and checks its squared cell norm against $C^2$; supports of mass at most $C$ need no bundle.
+2. A one-parent scaffold node from $(d_0,\nu,C_0)$ has $d=d_0+r$ for $r\ge0$ and output law $\nu^\uparrow$. At $k=2^r$, this law assigns $\prod_{i=1}^k\nu(x_i)$ to $T_r(x_1,\ldots,x_k)$ and zero off that image. Its cap satisfies $C\ge C_0^{2^r}$.
+3. A same-depth one-parent stability node from $(d,\nu,C_0)$ to $(d,\mu,C)$ has $C\ge C_0+\operatorname{TV}(\mu,\nu)$.
+4. A range leaf has declared finite support $P\subseteq S_d$ and $1\le r\le\min\{4,|P|\}$. Its law vanishes off $P$; every boundary experiment has at most $r$ replies on $P$; every $(r+1)$-subset of $P$ has a target taking more than $r$ values on that subset; and every target has a supplied constant or own-coordinate witness on every $r$-subset of $P$. Its cap is at least the sum $L_r(\nu)$ of the $r$ largest weights on $P$, counting zeros.
+
+All tables, subsets, equations, probabilities, and rational inequalities are checked finitely; incomplete or malformed data are rejected. In particular declared zero-weight and off-$R$ states are still subject to the range leaf's structural conditions. When $|P|=r$, its separation condition is vacuous but its own-coordinate conditions remain. There is no heterogeneous-product, superposition, conditioning, or other unlisted inference rule. The extended grammar is sound for all native lengths and complete templates by [RCE, Theorem 8.2][RCE].
+
+The old-calculus characterization [RCE, Theorem 4.4][RCE] says that its finite derivations accept a rational label exactly when $C\ge J_d(\nu)$; an exhaustive ungrouped leaf already suffices at that same cap. Its tensorization theorem concerns product weights on product interfaces with individual targets and single-constituent experiments, while retaining every correlated feasible support. Those hypotheses will be verified below. It does not assert that arbitrary whole-block weights factor.
+

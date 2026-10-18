@@ -1,0 +1,35 @@
+**接口 1.4（Literal charges and first-zero loss, reused）。** In the proper-narrow range, set $u_t=tm\pmod T$, where index $t=0$ is the first issued block, and retain the ordered path
+
+$$
+W_t=[u_t,u_t+m]\pmod T.
+$$
+
+A successful literal block $x_0\cdots x_{m-1}$ has endpoint difference
+
+$$
+q_t(j)=\bigoplus_{i=0}^{m-1}x_i c_{-j+tm+i}.
+$$
+
+Its path charges are
+
+$$
+\begin{aligned}
+q_t(u_t)&=x_0,\\
+q_t(u_t+i)&=x_{i-1}\oplus x_i\quad(1\le i<m),\\
+q_t(u_t+m)&=x_{m-1},\\
+q_t(j)&=0\quad(j\notin W_t).
+\end{aligned}
+\tag{1.4}
+$$
+
+The full path has even total charge. Conversely an even support $E\subseteq W_t$ gives the unique actual word
+
+$$
+\mathcal B_t(E)_i=\bigoplus_{h=0}^i\mathbf1_E(u_t+h),\qquad 0\le i<m.
+\tag{1.5}
+$$
+
+More generally the same formula inverts any even binary charge assignment. The path is traversed in the indicated order, including a wrap. These interfaces are [S10] (Interface 2.1; S15, Section 1). Restriction to $P$ need not have even parity: nonactual vertices may supply compensation without becoming sources. Every use of (1.5) still requires a tail and seam proof.
+
+If the first zero occurs after $b<m$ leading ones, a source survives that prefix precisely when $s+b<k$. Any two surviving sources with the same value and phase merge at that zero, because their tails are both cleared. Their different INITIAL labels cannot subsequently be recovered from a common archive. This is the first-zero interface [S1] (Lemmas 4.2–4.3 and Theorem 5.2). Because $m<k$, no internally later run in this block rejects a surviving source. In particular, $1^m$ rejects exactly $s\ge k-m$ and has successful charge support $\{0,m\}$.
+

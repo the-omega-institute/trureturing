@@ -1,0 +1,15 @@
+**Proposition 2.4 (coverage, not joint completion).** Every positive
+global assignment of every uniform-$w$ actual owned-seed network lies
+in the relation of its decoration at each block. The same holds with
+the heterogeneous supports just specified. The finite family is an
+outer relaxation: no converse global realization statement is included.
+
+Proof. The local block itself supplies condition 1. The actual common
+outside owner block of each incoming group supplies its single witness
+for condition 2, and has positive weight in a positive global
+assignment. All its owned ports have their required full factors and
+actual replies. This proves coverage. These tests do not impose the
+other ports of the outside blocks, their shared incoming seeds or a
+consistent completion around a cycle. They are necessary local tests,
+not a construction of those missing data. $\square$
+

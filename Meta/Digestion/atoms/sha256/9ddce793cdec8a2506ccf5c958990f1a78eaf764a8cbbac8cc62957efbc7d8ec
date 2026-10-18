@@ -1,0 +1,51 @@
+**Proposition 7.1 (necessary-and-sufficient remaining system).**
+Solutions of (7.1) correspond bijectively to ordered triples of
+distinct worlds of (1.7) with $L_2(K,H)$, through
+
+$$
+W_i=(P_i,\lambda f_{P_i},D_0+\lambda d).
+\tag{7.2}
+$$
+
+**Proof.** Necessity follows from IX, Theorem 3.1: every legal world
+on the full ancestor has precisely its compatible source and the
+reconstructed gain and drift. Projection onto sources is injective,
+so distinct complete worlds give distinct $P_i$. The sixth-zero and
+seventh-nonzero requirements give the corresponding conditions in
+(7.1), and Proposition 6.1 gives all four products.
+
+For sufficiency, the strict inequalities, trace and determinant
+conditions in (7.1) give legal sources. The positive denominator
+$\Delta(P_i)$ and compatibility give the unique interpolated
+$(f_{P_i},d)$ satisfying all six actual equations by (2.6).
+Each gain has degree at most three and is nonzero because the
+initial readings zero and 24 differ. The two future sample
+conditions place (7.2) in (1.7), with distinct complete worlds
+because their sources differ. The affine inverse works for both
+signs of $\lambda$. Finally the four products and Proposition 6.1
+provide the actual sixth children and last-action real-response
+witnesses on this very triple. Reconstruction and projection are
+inverse by IX's uniqueness. ∎
+
+Theorem 4.1, Theorem 5.1 and Theorem 6.2 are necessary consequences
+of this exact system. Their parameter inequalities do not replace its
+source equations, do not prove sufficiency and do not constitute an
+implicit witness. Separately realizable colliding pairs, or extrema
+attained at different sources, cannot be joined without (7.1).
+This is the source-graph version of G, Proposition 7.1, retaining
+IX, Definition 5.2 and F, Proposition 7.2.
+
+For a supplied known finite $K\subseteq\mathcal K_{\mathbf c,d}$,
+one scalar injective on the whole $K$ gives the lawful policy of
+G, Proposition 5.2: select its literal word $EF$, execute and read
+sixth $E$, then execute and read seventh $F$. For every pair of
+raw real responses $w,v$ the retained set has at most one member:
+it is empty if $w\ne D_0+\lambda d$, and otherwise the selected
+terminal scalar separates $K$. At reachable responses actual
+membership supplies the unique complete target. A singleton can stop
+earlier. This policy is conditional on whole-known-set scalar
+injectivity. Two-coordinate injectivity alone does not acquire both
+coordinates on one trajectory and does not imply that every allowed
+triple has an injective scalar. The present obstructions supply no
+uniform policy on the full class or on a larger losing family.
+

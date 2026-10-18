@@ -1,0 +1,65 @@
+**Definition 1.2 (coefficients and failure problem).** Use the positive source amplitudes
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad S=ce_0e_2^T+de_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\quad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad\kappa=h_0a+h_1b,\\
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad U=1/\alpha,\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad
+\mu=\alpha V+\beta W,\quad r=V/\mu.
+\end{gathered}
+$$
+
+Thus $\alpha+\beta=1$, $0<\delta<1$ and $0<r<1<U$. On $[0,U]$ put
+
+$$
+\begin{aligned}
+Y(x)&=(1-\alpha x)/\beta,& H(x)&=(\sqrt x-1)^2/2,\\
+D_c(x)&=D_0+D_1x=\delta h_0^2+b^2x+d^2Y(x),\\
+N_c(x)&=N_0+N_1x=\delta h_1^2h_2^2+a^2h_2^2x+c^2h_1^2Y(x),\\
+c_*(x)&=N_c(x)/D_c(x),& F_c(x)&=H(x)D_c(x)/N_c(x).
+\end{aligned}
+$$
+
+Both affine functions are strictly positive through both axes. Radial $x$ is unrelated to history height. On the compact ellipse $\mathcal E=\{\alpha z^2+\beta w^2=1\}$ set
+
+$$
+\begin{gathered}
+h(z,w)=(1,z,w)^T,\quad K(z,w)=s_0D+zT+wS,\\
+n(z,w)=(0,dw/h_2,-bz/h_1)^T,\quad
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad k(z,w)=n^T\Delta n,\\
+d_0=d_f=11m_1/64,\quad
+\zeta=-z_f=\sqrt{m_1m_2}(\sqrt{59}-\sqrt{37})/16>0,\\
+\Xi=\begin{pmatrix}-d_0&-\zeta\\-\zeta&0\end{pmatrix},\quad
+L_f=\sqrt{d_0^2+4\zeta^2},\quad
+\gamma=(L_f-d_0)/2,\quad b_f=(L_f+d_0)/2.
+\end{gathered}
+$$
+
+The limiting objective is exactly JS.20:
+
+$$
+\Phi(\lambda)=\max\left\{\int k_+d\nu:
+\nu\ge0,\quad\int nn^Td\nu=M,\quad
+\int F_c(z^2)d\nu\le\lambda\right\}.
+\tag{TC.1}
+$$
+
+Covariance fixes mass $\mu$, $z^2$ moment $V$, $w^2$ moment $W$ and $zw$ moment zero. These are failure/coefficient measures, not source priors or acquisition probabilities. JS supplies compact attainment, $C_{\rm end}=\mu F_c(r)$, the evaluated saturation cost $C_{\rm sat}$, and continuous concave strict increase from $0$ to $\gamma$ on $[C_{\rm end},C_{\rm sat}]$. Its spectral equality cases are retained.
+
+For the original endpoint constants define $N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$, $(K_0,K_1,K_2)=(D,T,S)$, $G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1)$ and $f(z,w)=h^TGh$. Then
+
+$$
+H_{\rm live}=(1-\delta)\Delta A,\quad
+\Delta A=\operatorname{tr}(D^\dagger D\Delta)>0,\quad
+S_{\rm corner}=\tfrac14\sum_{\sigma,\eta=\pm1}|f(\sigma,\eta)|,
+$$
+
+$$
+T_0=(H_{\rm live}+S_{\rm corner}+L_f)/2,\qquad B_0=T_0-\gamma.
+$$
+

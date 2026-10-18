@@ -1,0 +1,33 @@
+**开放问题 236.5（The unrestricted original comparison）。** It remains
+open to prove, for every $L\ge3$ and every actual full $y\ge0$
+with $\Delta_O(y)\le1$, existence of one unrestricted full
+$V\ge0$ and one $\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+$$
+
+No fixed anchor preservation, fixed unary profile, fixed quotient,
+exact law, positive residual or membership in 235.1's cone is
+imposed on this obligation. Nonzero zero-cost scores at
+$\theta=1$ remain allowed.
+
+The negative alternative requires the same actual $(b,e)\in H_N$,
+one complete feasible $\lambda\ge0$ with $G_N\lambda\ge h(b,e)$
+and mass $M\ge1$, and an actual unit-$O$ input $y$ with the
+strict inequality $F_{Q(y)}(b,e)>M$. It further requires an
+original common-seed $N_2$ attainer and a uniform lower bound
+against every original arbitrary-address full-carrier $O_2$
+competitor, retaining all actual positive vanishing tails and
+positive closed caps. The hull points excluded from $H_N$ in
+232.2 and 235.5 do not meet these conditions.
+
+The sharp family 231.3 and the uniform construction 233–235
+do not settle either alternative. Constructor failure, a
+detector outside $H_N$, exact-law failure or finitely many
+instances are not original separation. The original implication
+for every positive monotone vanishing sequence and every
+positive closed cap remains unclassified outside the stated
+scopes.
+

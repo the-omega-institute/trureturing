@@ -1,0 +1,144 @@
+**Theorem 2.2 (credited reduction with its equality mechanism).** Define
+
+$$
+\begin{aligned}
+J(\tau)=\max\quad&\sum_{r,\epsilon=\pm1}
+                    \epsilon\operatorname{tr}(GX_{r,\epsilon})\\
+\text{subject to}\quad&X_{r,\epsilon}\in\operatorname{Sym}_3(\mathbb R),
+\quad X_{r,\epsilon}\succeq0,\quad
+\operatorname{tr}(QX_{r,\epsilon})=0,\\
+&\sum_{r,\epsilon}X_{r,\epsilon}=I_3,\qquad
+ t(X):=\sum_{r,\epsilon}r\operatorname{tr}(CX_{r,\epsilon})\geq\tau.
+\end{aligned}
+\tag{RH.11}
+$$
+
+Then, in the entire original comparison class of Definition 1.2,
+
+$$
+\mathcal T(s_0\tau)=
+ \frac{(1-\delta)\Delta A+L_f+J(\tau)}2,
+\qquad 0\leq\tau\leq1.
+\tag{RH.12}
+$$
+
+Every sharp-cost optimizer has supported live map
+$\Lambda_*=D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$,
+total supported failure effect $M$, no other supported output mass, and
+high acquired effect $(1-\delta)D^\dagger D$. Every nonzero low
+encoder/live-decoder Kraus product is a common phase times a real
+$K(c)$ with $c^TQ_0c=0$ and $c_0\ne0$. These are supported equalities,
+not uniqueness of the complete channel or individual failure measures.
+
+Proof. The CG support and endpoint-saturation premises used in JR42
+place every product in the span of $D,T,S$ and fix its total diagonal
+coefficient masses to $(1,1,1)$. Positivity gives this support for each
+summand, or almost every integrand: a positive total matrix killing a
+vector has every positive summand killing that vector. The three Kraus
+vectors have disjoint supports and are linearly independent; applying
+their Gram left inverse transfers Choi equalities to coefficient Grams.
+The same CG premises give no other supported output and a total failure
+effect killing coordinate $0$ before averaging.
+
+For complex coefficients direct determinant expansion gives
+
+$$
+\det K(c)=h_0h_1h_2c_0
+ (c_0^2-\theta c_1^2-\omega c_2^2).
+\tag{RH.13}
+$$
+
+For a low product, rank at most two therefore implies
+$|c_0|^2\leq\theta|c_1|^2+\omega|c_2|^2$, including the singular
+plane $c_0=0$. Let $(u_L,v_L,w_L)$ be its aggregate low squared
+coefficient masses. Four-sign averaging of acquisition probabilities,
+solely as a necessary cost test, yields
+
+$$
+\begin{aligned}
+u_L&\leq\theta v_L+\omega w_L\leq\delta,\qquad
+v_L,w_L\leq1,\\
+\mathsf W&\geq\overline p_{H,27}\geq
+ A_{27}(1-u_L)+B_{27}(1-v_L)+C_{27}(1-w_L).
+\end{aligned}
+\tag{RH.14}
+$$
+
+The second inequality uses the TNI live restriction of a whole TP
+decoder. Its acquired effect minus supported live effect is PSD, so
+it also counts high branches later failing. At sharp cost, positivity
+of all three weights forces $(u_L,v_L,w_L)=(\delta,1,1)$. The aggregate
+high acquired-minus-live effect has zero trace against
+$\operatorname{diag}(p_{27})\succ0$ and thus is zero. Every branch
+slack is nonnegative, so it vanishes separately, or almost everywhere.
+High products are multiples of $D$ and have no supported later failure.
+
+The low triangle slacks also sum to zero. Each nonzero low product
+therefore satisfies both
+$c_0^2=\theta c_1^2+\omega c_2^2$ and
+$|c_0|^2=\theta|c_1|^2+\omega|c_2|^2$, and cannot have $c_0=0$.
+Divide by $c_0^2$. Equality in the complex triangle inequality makes
+the nonzero squared ratios nonnegative real, so $c_1/c_0,c_2/c_0$
+are real, also when either is zero. Removing one common phase leaves
+a real null vector. Complex, noncovariant acquisitions were not excluded
+in advance.
+
+The total coefficient Gram is consequently real with diagonal one.
+TP and the failure effect killing coordinate $0$ force its $DT,DS$
+entries to vanish, since $\kappa,\kappa_{02}>0$. A remaining real
+$TS$ entry $t$ changes the height-$27$ endpoint live witness by
+$n t C_{TS}$, where
+$C_{TS}=2(\zeta_{27}^TTa_{27})(\zeta_{27}^TSa_{27})>0$ for the
+credited positive CG endpoint witness vector $\zeta_{27}$.
+Each sign separately saturates that witness, whose nonlive payoff is
+zero. Both signs of $n$ force $t=0$. The supported live Gram is $I$,
+the failure effect is $M$ by TP, the high Gram is
+$\operatorname{diag}(1-\delta,0,0)$, and the low Gram is $L_0$.
+This also proves the stated high acquired effect.
+
+The failure plus subeffect is dominated by $M$ and hence kills
+coordinate $0$. After one global binary reversal, the exact winding
+coordinate is
+$\mathsf V(F)=\left|\sum_j r_j(c_j)_0(c_j)_1\right|$ on the analytic low products;
+the high products have no $DT$ coordinate. Stochastic reports use their
+mean coefficients in $[-1,1]$, or may be included as actual generated
+coins. Write $c_j=Lf_j$ and group the real projectors $f_jf_j^T$ by
+the actual report $r$ and the sign $\epsilon$ of $f_j^TGf_j$.
+Their total is $I$, each has zero $Q$ trace, and their signed $01$
+moment is at least $\tau$. Splitting a label analytically and separating
+its live and failure differences can only increase its absolute height
+difference. No such refinement is made readable. The high absolute sum
+is $(1-\delta)\Delta A$. For failure subeffects $B_\alpha\succeq0$
+summing to $M$, write
+$B_\alpha=M^{1/2}E_\alpha M^{1/2}$ on $\operatorname{ran}M$, with
+$\sum E_\alpha=I$. Then
+
+$$
+\sum_\alpha|\operatorname{tr}(B_\alpha\Delta)|
+ \leq\sum_\alpha\operatorname{tr}(E_\alpha|\Xi|)=L_f.
+\tag{RH.15}
+$$
+
+The same inequality integrates in the stipulated integral class. This
+proves the upper direction of RH.12 without sign averaging height TV.
+
+For the reverse direction, a real PSD slot $X$ with zero $Q$ trace
+has a null decomposition with at most $\operatorname{rank}X$ vectors.
+Indeed $X^{1/2}QX^{1/2}$ on $\operatorname{ran}X$ is symmetric and
+traceless. If nonzero it has both signs, so continuity between positive
+and negative unit eigenvectors gives a unit zero-Rayleigh vector. Its
+orthogonal compression remains traceless; induction supplies an
+orthonormal zero-Rayleigh basis. A zero compression permits any basis.
+Multiplication by $X^{1/2}$ yields
+$X=\sum_jf_jf_j^T$ with $f_j^TQf_j=0$.
+Section 5 gives actual range encoders for these atoms, spectral failure
+rows and complementary completion, with all output identities. A
+maximizing tuple is attained because RH.11 is nonempty, closed and
+bounded by $0\preceq X\preceq I$. Its actual refined objective is at
+least the grouped signed objective; strict excess would contradict the
+upper direction just proved. Thus RH.12 is exact with finite attainment.
+All sums of nonnegative slacks and all moment steps above extend under
+exactly the specified measurable/integrable hypotheses. This is the
+JR45/JR50 reduction, reconstructed for its use here, rather than new
+mathematical credit. $\square$
+

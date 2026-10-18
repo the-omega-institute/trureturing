@@ -1,0 +1,26 @@
+**Definition 6.2 (the reused static upper witness).** A successful finite
+skeleton yields a determining $h$: take the maximum length of its
+physical read words, using $h=0$ for a root halt. Native original-prefix
+locality states that an epoch-$n$ reply at $p$ depends only on original
+replies through depth $|p|$. Induction through the finite tree therefore
+makes equal original $h$-prefixes follow the same halt, hence have the
+same full original row. This is the locality direction of ARH (2.3),
+with the exact formal supplier `original_prefix_locality` in
+[NativeDepthPatterns][D5-DEPTH].
+
+For either input to Assumption 6.1, NSF Theorem 6.1 now supplies a finite
+static consumer at the actual entry epoch, with computable upper bounds
+
+$$
+(K_0,0,L_0)=
+\left(2(2^{h+1}-1),\ 0,\
+2(2^{h+1}-1)(h+\lceil N/2\rceil)\right).
+\tag{NFO.17}
+$$
+
+Its physical reads decode original literal values; they do not recreate
+past receipts. The exact leaf costs may be smaller. Any sharper verified
+static upper bounds may be used instead. A supplied serial witness with
+positive update cost is not silently treated as a zero-update witness;
+(NFO.17) is the actual static conversion.
+

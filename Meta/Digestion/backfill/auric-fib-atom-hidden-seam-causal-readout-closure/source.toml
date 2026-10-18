@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-hidden-seam-causal-readout-closure"
+path = "docs/develop/theory/AURIC_FIB_ATOM_HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

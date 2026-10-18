@@ -1,0 +1,10 @@
+**Convention 6.3 (producer charges).** The finite inventory, default-bit
+lookup, two entire ground tuples, fixed code and any reconstruction
+workspace are producer resources. Their size can depend on $T,L$ and
+the chosen witnesses. The theorem gives no useful uniform size or time
+bound and does not charge them as if they were installed reader states.
+The producer already has the acquired terms under Assumption 3.1.
+Acquiring them, computing the bit, storing constants, exporting it,
+isolating other material and entering the reader remain separate paid
+operations. A finite table criterion supplies none of those services.
+

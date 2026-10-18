@@ -1,0 +1,27 @@
+## 342. Original capacities and the unique source pair
+
+**Proof of Theorem 341.2.** The unique flat sigma already contributes pi at each of M and V.
+Consequently all genuine original M slots together have total pi, and
+the same is true of V. All genuine D slots together have total 2*pi.
+Any subset of these slots has at most the corresponding capacity,
+because all original angles are nonnegative.
+
+In particular every genuine owner in which M is transverse contributes
+two distinct original M slots of the same angle beta_M, so
+
+    2*beta_M<=pi.                                (342.1)
+
+This remains true when its faces are self-glued or another owner has
+the same role vector. Such identifications do not identify original
+slots in the zero-curvature sum.
+
+Sigma is the only owner with transverse pair {C,D}. To see this without
+an additional face-reduction premise, any such owner's two distinct
+axes lie in {M,V,Z,U}. By (341.1), z,u>m>v, so the smallest possible
+product of their shifted coshes is (m-1)*(v-1). Hence its L is at most
+
+    (c+d)^2-(m-1)*(v-1)<=0.
+
+It cannot be genuine by (341.2). By the unique-flat premise it is sigma.
+This proves the precise unique-CD-owner fact used in the link argument.
+

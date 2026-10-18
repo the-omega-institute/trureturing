@@ -1,0 +1,12 @@
+**Proposition 49.2 (Strict-profile optimizer support belongs to the correct carrier).** Suppose $h>0$ and $b$ is strict. If $B<1$, an optimizer at error $R$ cannot have a finitely supported prepared anchor law, even without a target-support restriction. For any $B$, a preparation with a finitely supported common seed law cannot attain $R$.
+
+**Proof.** Below limit one, the inequalities in Theorem 46.1 saturate at $\varepsilon=R$: with $q=h/(2-B)$ one has $M=\widehat\mu_{x_*}(H_{x_*})=q$. If the prepared anchor law is a finite point mixture, one consumer cutoff $A_m\subseteq H_{x_*}$ carries all that mass. Combine its menu with an arbitrarily accurate preparation coupling of tolerance $\gamma$. Lemma 48.1 with $H=m+1$ supplies one actual matching source of target $m+2\le k\le K=m+22$, before quantifying over seeds. Transport and (46.5) give
+
+$$
+q-\gamma\le\widehat\mu_y(A_m)\le b(K)M+R=b(K)q+(1-B)q.
+$$
+
+Letting $\gamma\downarrow0$ contradicts $b(K)<B$ and $q>0$. A finite point-mixture seed yields a finite point-mixture output at every source, so this also excludes such seeds below limit one.
+
+At $B=1$, attaining $R$ means exact acquisition. Remove zero-weight seed points from a purported finite seed mixture. Each remaining seed prepares finitely at every actual source, since its weight is positive. Flattening then gives finitely many deterministic composite tape procedures under one common finite seed law, with the exact target outcome probabilities. Collect their finite anchor proposal records and color each source by its first correct composite tape, or zero if none. The auxiliary finite-color argument in Theorem 46.2 selects one actual matching source, above all anchor proposal outputs, with no correct composite tape. Its transported proposal mass is at least $h>0$, all of it false, contradicting $b(k)<1$ at that actual finite target. Infinite seeds are thus essential to the finite-anchor exact attainer (48.8)--(48.10); a uniform one-query preparation is not a finite seed mixture. $\square$
+

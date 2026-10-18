@@ -1,0 +1,24 @@
+**Lemma 8.1 (binary compression capacity).** For any Hermitian PSD
+$2\times2$ matrix $A_2$,
+
+$$
+\max_{0\preceq W\preceq A_2}\operatorname{Re}W_{01}
+=\frac{\operatorname{Re}(A_2)_{01}
+ +\sqrt{(A_2)_{00}(A_2)_{11}-(\operatorname{Im}(A_2)_{01})^2}}2.
+\tag{NP.52}
+$$
+
+Proof. For $A_2>0$ substitute $W=A_2^{1/2}TA_2^{1/2}$, $0\preceq T\preceq I$.
+Twice the objective is $\operatorname{tr}(YT)$ for
+$Y=A_2^{1/2}X A_2^{1/2}$, $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$.
+Diagonalize $Y$; the maximum is the sum of its positive eigenvalues.
+Its trace is $2\operatorname{Re}(A_2)_{01}$ and determinant is
+$-\det A_2$, so that sum is
+$\operatorname{Re}(A_2)_{01}+
+\sqrt{(A_2)_{00}(A_2)_{11}-(\operatorname{Im}(A_2)_{01})^2}$.
+For singular $A_2$, use the same factorization on its support; equivalently
+approximate by $A_2+\epsilon I$ and take a convergent maximizing
+contraction. At determinant zero the square root is
+$|\operatorname{Re}(A_2)_{01}|$, giving the required positive part.
+This includes $A_2=0$ and proves (NP.52). $\square$
+

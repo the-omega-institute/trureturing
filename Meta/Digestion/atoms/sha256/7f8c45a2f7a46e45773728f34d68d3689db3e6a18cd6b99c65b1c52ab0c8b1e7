@@ -1,0 +1,24 @@
+**Definition 3.2 (signed response charges on the same path).** On the chain in the proof of Theorem 3.1 put, for $j=1,2,3$,
+
+$$
+A_j=\mathbb E\left[
+ \left(\prod_{i=0}^{j-1}Z_i-c^j\right)g_j\right],
+\qquad A_P=A_1+A_2,
+$$
+
+$$
+\begin{aligned}
+J_U&=\mathbb E\frac{(U_0-3/5)(2/3-U_0)}{(2/5)U_0},\\
+J_R&=\mathbb E(U_1/U_0)-1,\\
+E_\beta^{\rm wt}
+&=\mathbb E\left[\delta_0\frac{1+c-U_1}{U_0}\right]
+  +\mathbb E[V_0\delta_1],\\
+K_\beta&=E_\beta^{\rm wt}
+  +\frac{5c(1+c)}{2S(c)}A_P,\\
+K_3&=\frac{c^3}{S(c)}A_P-A_3.
+\end{aligned}
+\tag{3.10}
+$$
+
+Both $J_U$ and $J_R$ are nonnegative. The other quantities are signed, including $A_j$; replacing them by independently chosen moments changes the relation. These are finite-window functions of the descriptor kernels $B,A$ and their common marginal on the chain used in (3.4). They are not online counters or observations, and they are not defined by selecting an arbitrary hidden-label coupling with the same two pairwise law flows.
+

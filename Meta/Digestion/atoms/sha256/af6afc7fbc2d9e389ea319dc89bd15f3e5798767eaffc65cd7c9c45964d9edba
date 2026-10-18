@@ -1,0 +1,62 @@
+**Proposition 7.2 (Paired responses identify the lawful action).** Under
+Definition 7.1 put $Y(h)=y(h)-c$ and $Y_u(h)=y(h+u)-c$. Their ordered
+common-history cross moment satisfies
+
+$$
+C_u:=\mathbb E_\mu[Y_u(h)Y(h)^{\mathsf T}]
+       =DT(u)D^{\mathsf T},\qquad
+T(u)=\lambda^{-2}D^{\mathsf T}C_uD.
+\tag{7.4}
+$$
+
+Thus $C_u$ determines the native endpoint action of a lawful loop, although
+it need not determine that loop's path or full integer winding. The analogous
+paired matrix of the comparison response is $C_Q=DQD^{\mathsf T}$, and
+$C_u=C_Q$ holds if and only if $T(u)=Q$. The same pairing gives
+
+$$
+\mathcal E_p(u,Q)
+ =\lambda\|T(u)-Q\|_F^2
+ =\lambda\bigl(6-2\operatorname{tr}(T(u)^{\mathsf T}Q)\bigr).
+\tag{7.5}
+$$
+
+For independent re-preparation, meaning two independent residual classes
+$h,h'\sim\mu$ while keeping $u$ fixed, the corresponding identities instead
+are
+
+$$
+\mathbb E[Y_u(h')Y(h)^{\mathsf T}]=0,\qquad
+\mathbb E\|y(h'+u)-y_Q(h)\|_{\mathbb R^{10}}^2=6\lambda.
+\tag{7.6}
+$$
+
+**Proof.** The supplied update law gives $Y_u(h)=DT(u)q(h)$. Substituting
+the common-history second moment in (7.2) proves the first equality of
+(7.4). Multiplication on the left by $D^{\mathsf T}$ and on the right by
+$D$ gives $\lambda^2T(u)$, proving recovery and, with $T(u)$ replaced by
+$Q$, the assertion about $C_Q$. For $M=T(u)-Q$, the same moment gives
+
+$$
+\mathbb E\|DMq(h)\|^2
+ =\operatorname{tr}(M^{\mathsf T}D^{\mathsf T}DM)
+ =\lambda\operatorname{tr}(M^{\mathsf T}M).
+$$
+
+Both $T(u)$ and $Q$ are orthogonal $3\times3$ matrices, so expansion gives
+(7.5), including odd-winding $T(u)$ of determinant $-1$. This conversion
+of a least-squares objective into trace maximization is the classical
+orthogonal Procrustes reduction; see J. Lawrence, J. Bernal and
+C. Witzgall, *A Purely Algebraic Justification of the Kabsch–Umeyama
+Algorithm*, [arXiv:1902.03138v6](https://arxiv.org/html/1902.03138v6), §1.
+Here the common-source law and the original decoder fix the trace pairing,
+and the optimization domain remains the restricted native image
+$\mathcal N$.
+
+For independent $h,h'$, the zero means in (7.2) imply
+$\mathbb E[q(h')q(h)^{\mathsf T}]=0$. Hence both the displayed independent
+cross moment and the cross term in the independent squared error vanish.
+Each of its two squared terms has expectation $3\lambda$, by (7.2) and
+orthogonality. This proves (7.6). These are identities for the specified
+joint laws, not instructions for acquiring paired data. $\square$
+

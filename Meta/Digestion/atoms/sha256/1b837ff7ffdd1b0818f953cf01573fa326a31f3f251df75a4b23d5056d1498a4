@@ -1,0 +1,16 @@
+**定理 10.4（精度追索速度阈值）。** 若 $\varepsilon_s=\varepsilon_0\,2^{-vs}$，则
+
+$$
+R_s^*=\min(D/2,\varepsilon_0\,2^{(1-v)s}).
+$$
+
+对精确位接口，初始目标在第 $j>K_0$ 位，后续可读深度为 $K(s)=K_0+\lfloor vs\rfloor$，恢复条件为 $K(s)\ge j+s$。当 $v>1$，
+
+$$
+s_{\min}=\left\lceil\frac{j-K_0}{v-1}\right\rceil;
+$$
+
+$v\le1$ 时不能追上。当 $D>0$、$\varepsilon_0>0$ 时，恢复风险趋零也恰好要求 $v>1$。
+
+**证明。** 代入定理 10.3 得风险。目标每步向深处移动一位；因 $s$ 和 $j-K_0$ 为整数，$\lfloor vs\rfloor\ge j-K_0+s$ 等价于 $(v-1)s\ge j-K_0$，得到阈值。若有更优旧读数、快照或逆操作，此接口假设不成立，须另计。$\square$
+

@@ -1,0 +1,22 @@
+#### 32.6　工具设计与识别对象
+
+一个 IV 设计至少有三种可区分的目标：
+
+$$
+\boxed{
+\text{第一阶段 }\Delta_A
+\quad|
+\text{reduced form }\Delta_Y
+\quad|
+\text{主层效应 }\tau_C
+\quad|
+\text{全体效应 }\operatorname{ATE}.
+}
+$$
+
+第一阶段非零只说明存在被工具推动的处理变化；它不保证全体单位都改变处理。reduced form 是工具到结果的总体对比；除以第一阶段后，在单调性与排除限制下得到的是 complier 层的效应。ATE 还需要对 never/always 层缺失坐标加入同质性、边界或其他结构信息。
+
+若 $\pi_C=0$，即使 $\Delta_Y=0$，也不能把 Wald 比值定义为零；这时工具没有产生可用的处理对比，分母为零是设计退化，而非“无效应”的证明。
+
+<a id="section-32-7"></a>
+

@@ -1,0 +1,43 @@
+**Definition 5.3 (The matching lower problem and resource boundary).**
+For the attained sufficient endpoint (4.6), a matching unrestricted
+lower would require
+$e(T)\ge\alpha$ for every $T\in\mathfrak C_1$.
+Equations (5.4)–(5.5) do not supply that inequality or an exact value
+of $\varepsilon_1$.
+In the output-first normalized Choi convention, the competitors
+equivalently obey
+
+$$
+\chi_T=\frac15\sum_f
+|\operatorname{vec}C_f\rangle\langle\operatorname{vec}C_f|,
+\qquad
+\operatorname{Tr}_{\rm out}\chi_T=I_5/5,\qquad
+\operatorname{SN}(\chi_T)\le1.
+\tag{5.6}
+$$
+
+This is the credited QMB Theorem 5.1 correspondence.
+[Terhal–Horodecki, Definition 1 and Theorem 1](https://arxiv.org/html/quant-ph/9911117v4)
+give the low-Schmidt-number and positive-map witness framework.
+A lower certificate for (1.3) must additionally retain the TP marginal
+and the actual menu objective; a maximally entangled overlap bound
+alone is a different test.
+QPC §§4–5 give a complete algebraic decision specification, not an
+evaluated matching lower for (4.6).
+Likewise, the exact primal/dual bounds in
+[Watrous, §2, Theorems 1–2](https://arxiv.org/html/0901.4709v2)
+apply to the stated semidefinite program; its completely bounded
+trace-norm program in §3 has a different objective and does not
+replace either (1.3) or the low-Schmidt-number constraint (5.6).
+
+The algebraic vector coefficients, finite flag count, full-block CPTP
+design and zero-wait attainment are separate mathematical resources
+from physical coefficient synthesis, finite precision, preparation
+acquisition, clocks, storage duration and transport.
+No such additional resource bounds, native $\alpha/\beta$ preparation
+bridge, or mutual recovery of space, time, boundary and memory are
+part of (5.5).
+The real projector properties in (2.3) describe only the sufficient
+construction, not a reduction of the complex competitor class.
+
+## 追加锚（本行以下为增补区）

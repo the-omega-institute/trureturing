@@ -1,0 +1,21 @@
+**Convention 10.3 (scope of the rejected mechanism).** This conclusion
+is not a characterization of the existing recursive, range-separation,
+joint, scaffold, stability or conditional-owner certificate rules.
+Those rules are not defined to impose (SCP.36). In particular the
+positive all-size verifier obligation of Definition 6.1 does not
+require a small relative error for each individual hard template.
+Theorems 3.3 and 4.2 compare all-size suprema additively, and
+Proposition 5.1 remains valid after weight optimization. None is
+contradicted by (SCP.35).
+
+The rejected gate asks for a vanishing normalized relative error
+uniform in both template and length. It fails even with nonempty
+hard solutions, a vanishing fraction $1/(6N)$ of violated targets,
+a tree incidence graph, positive uniform soft tables and a
+two-valued actual boundary. A bound on the boundary alphabet or on
+defect density alone cannot supply this premise. No obstruction to
+global recoloring, lawful recuts, a comparison between different
+templates, all-boundary-sector summation, unrestricted effective
+caps or computability is inferred. Nor does this depth-two gate
+obstruction rule out another original-rate method using other depths.
+

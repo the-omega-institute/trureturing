@@ -1,0 +1,17 @@
+**Definition 3.4 (selected strength and value).** At either selected root put
+
+$$
+k=\sum_i p_i\sigma_i u_i=\sum_i p_i|u_i|,\quad
+\tau=k/\sqrt\alpha,\quad s=s_0\tau,\quad
+\mathcal V=\frac{H_{\rm high}+\mathbf d^TB(1000)-\lambda k}{2}.
+$$
+
+The signs and equality with the original optimum are proved below. The exact enclosures in §13 imply
+
+| Selected root | Multiplier | Strength | Value |
+| --- | --- | --- | --- |
+| Seam $S$ | $4.52667157096<\lambda_S<4.52667157097$ | $0.124962083660<s_S<0.124962083663$ | $0.09965916109<\mathcal V_S<0.09965916113$ |
+| Point $8$ | $\lambda=23/5$ | $0.124965524751<s_8<0.124965524755$ | $0.09960047739<\mathcal V_8<0.09960047743$ |
+
+The geometry tables give $0<\tau_S,\tau_8<0.998$, while the reused feasibility formula gives $t_0<265$ and $\tau_{\max}(1000)>0.99892345794$. Both points are therefore strict weak feasible interior points, rather than minimum-budget boundary points.
+

@@ -1,0 +1,24 @@
+**Theorem 5.2 (The common upper law on the entire family).**
+On $181v\le75u$, choose
+
+$$
+x=3072u/181,\qquad y=0,\qquad W=x
+\tag{5.5}
+$$
+
+in (4.1). Its exact error is $5\tau+22u/181$. Together with (5.2),
+this yields the upper bound $U$ on the entire fixed family.
+
+Proof. Since $3072/181<24$ and $u\le\tau$, all weights are nonnegative.
+The entries of (4.2) become
+
+$$
+5\tau+22u/181,\qquad5\tau+22u/181,\qquad5\tau+v-53u/181.
+\tag{5.6}
+$$
+
+The last is at most the first precisely when $181v\le75u$.
+Also $22u/181\ge11(u+v)/128$ is equivalent to that condition.
+This evaluates this law and supplies $U$; it does not evaluate the
+full-catalog complementary minimum. $\square$
+

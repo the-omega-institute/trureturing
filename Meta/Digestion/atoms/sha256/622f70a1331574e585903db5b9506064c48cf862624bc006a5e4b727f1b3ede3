@@ -1,0 +1,49 @@
+**Proposition 7.3 (Transition bad-minimizer witness).** At $\tau=1$ (hence
+$Z=2/3$), put
+
+$$
+R_\star(x)=\frac{\sin(2\pi(1-x))}{4\pi}
+=\frac{e^{-2\pi i x}-e^{2\pi i x}}{8\pi i}.
+$$
+
+Then $R_\star$ has minimal order two and is transition-bad in the same
+spectral sense because its two frequencies have separation $4\pi>2\pi$, and
+
+$$
+J_1(R_\star)=T_4(1)=1.
+$$
+
+The zero profile $W=0$ also satisfies the displayed threshold in (7.1),
+$J_1(W)=1$. Thus the transition has a bad global minimizer in this spectral sense. This does not imply
+nonattainment: the credited transition attainment result in [S] separately
+supplies guarded attainment at $\tau=1$.
+
+**Proof.** The two displayed coefficients are nonzero and the exponents are
+distinct. The profile has zeros at $x=0$ and $x=1/2$ but is nonzero at
+$x=1/4$, whereas a nonzero one-mode profile $ce^{\lambda x}$ has no zeros;
+therefore its order is exactly two. Write $y=1-x$,
+
+$$
+r(y)=R_\star(1-y)=\frac{\sin(2\pi y)}{4\pi},\qquad
+S(y)=\sqrt{y(1-y)},\qquad V(y)=\sqrt y.
+$$
+
+For $0\le y\le1/2$, $0\le r(y)\le y/2\le V(y)$ and
+$0\le S(y)\le V(y)$, so $|r(y)-S(y)|\le V(y)$. For
+$1/2\le y\le1$, one has $-1/(4\pi)\le r(y)\le0$. Also
+
+$$
+V(y)-S(y)=\sqrt y\bigl(1-\sqrt{1-y}\bigr)>\frac18,
+$$
+
+because $\sqrt y\ge1/2$, $\sqrt{1-y}\le1/\sqrt2<3/4$, and
+$\pi>2$. Hence $r(y)>S(y)-V(y)$, while $r(y)\le0\le S(y)+V(y)$.
+Thus $|R_\star(x)-s(x)|^2\le1-x$ on the whole closed scalar interval,
+so $J_1(R_\star)\le1$. At $x=1$, $s(1)=0$ and every profile satisfies
+$|R(1)-s(1)|^2+1\ge1$, so $T_4(1)\ge1$; equality at $x=1$ for $R_\star$
+gives $J_1(R_\star)=T_4(1)=1$. The two exponents differ by $4\pi$, so the
+profile is transition-bad in this spectral sense. Finally, $J_1(0)=\max_{0\le x\le1}(2x-x^2)=1$, so the
+threshold in (7.1) is met at equality. The final statement uses the
+separately credited transition attainment conclusion and makes no claim that
+a bad minimizer forces nonattainment. $\square$
+

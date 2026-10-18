@@ -1,0 +1,43 @@
+**Corollary 8.3 (the precise per-template approximation obstruction).**
+Let $U_R(d,3,\mu_d,n,p_R)$ depend only on the displayed full marked
+profile and counts. Even allowing noncomputable functions, it is
+impossible to have both
+
+$$
+\mathcal P(\mathcal N)\le U_R(d,3,\mu_d,n,p_R(\mathcal N))
+\tag{GDB.40}
+$$
+
+for every actual network, and a uniform approximation condition
+
+$$
+U_R(d,3,\mu_d,n,p_R(\mathcal N))-\mathcal P(\mathcal N)
+ \le\delta_R+\epsilon_R(n),
+\quad\delta_R\longrightarrow0,\quad
+\epsilon_R(n)\longrightarrow0\text{ for fixed }R.
+\tag{GDB.41}
+$$
+
+At every $R$, the excess at some arbitrarily large input is at least
+$3/5$. A two-sided estimator from these same inputs has worst error at
+least $3/10$. On dyadic padded inputs the corresponding lower bounds
+are greater than $3/10$ and $3/20$.
+
+Proof. Both networks in Theorem 8.2 give identical arguments to $U_R$.
+Soundness for the larger pressure forces excess at least their gap on
+the smaller one. Their sizes are arbitrarily large, so an error tending
+to zero in $n$ cannot absorb it. Choose $R$ with $\delta_R$ below
+the fixed gap to contradict (GDB.41). For two-sided approximation,
+one common real output must have error at least half the pressure
+separation. The padded version follows from the same argument.
+$\square$
+
+This rules out uniform approximation of every individual template by
+these fixed finite-neighborhood data. It permits sound but loose local
+uppers, and does not refute approximation of an optimized all-network
+supremum, optimizer-cofinal cap hierarchies, all global verifiers,
+local-global colored feasibility, or faithful operational recuts.
+In particular it does not identify the optimizer of $\beta_d(\mu_d)$.
+Optimizing over $\mu$ changes yet another quantifier. No
+noncomputability conclusion follows.
+

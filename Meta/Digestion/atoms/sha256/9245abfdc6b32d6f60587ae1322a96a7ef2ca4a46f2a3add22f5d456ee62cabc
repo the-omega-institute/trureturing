@@ -1,0 +1,12 @@
+**Generalized incidence theorem.** The same argument applies to any finite
+orientable ideal triangulation whose global degrees lie in
+`{8,10} ∪ {d:d>=38}`, with three-star packets in every tetrahedron, provided
+that every degree-ten occurrence admits a formula-coordinate relabelling with
+low neighbours in positions 2 and 6, opposite low edge in position 4, and high
+neighbours in positions 3 and 5, with at least one of those two high neighbours
+of degree at least 38 (the other may have degree 10 or at least 38). For each high edge of degree `d>=38`, use an upper endpoint `21/20` and
+choose a lower endpoint `1+delta_d` with
+`0<delta_d<2*(1-cos(2*pi/d))/(2+cos(2*pi/d))`; the interval is nonempty
+(and the finite product is compact). The degree-ten interval is the one below.
+The explicit 16-tetrahedron table supplies a nonempty orientable instance.
+

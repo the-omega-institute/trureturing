@@ -1,0 +1,35 @@
+## 476. Direct hypotheses and conclusion
+
+Use a finite actual ideal face pairing with fixed-point-free involution on original face occurrences, vertex-induced fixed frames (R,A,B,O,A,B) in edge order (12,13,14,34,24,23), and distinct transverse actual labels A,B. Axes may repeat transverse labels. Retain every original slot, face map and normal interval. Use one common positive generalized length field with all original angle equations 2*pi.
+
+Assume exactly six actual labels E={M,C,D,Z,U,V}, with distinct names and values greater than one. Suppose:
+
+1. Every actual label has a genuine occurrence; every flat owner selects its two axial slots, each contributing pi.
+2. M is a maximal-valued label selected by a flat pi slot. There is a source flat sigma of fixed pair {C,D} and one M axis, and a genuine source tau=(Z,M,C,D,M,C).
+3. m>=1+c+d, z>=1+m+c and u>m. Thus c,d<m-2 and z,u>m.
+4. No flat has a transverse occurrence of any label with value greater than m-2.
+5. There are exactly two actual flat owners.
+
+**Theorem 476.1.** These hypotheses imply p_M=p_C=p_D=p_V=1 and p_Z=p_U=0, where p_e counts original flat pi slots. In particular v<=m. The source has axes {M,Q} for exactly one Q in {C,D,V}; its other axis cannot repeat M. The second flat phi has the other two members of {C,D,V} as its distinct axes.
+
+Let A be the larger-valued axis of phi and B its other axis. Then Q,A,B are exactly C,D,V, A is the unique numerically largest member of that three-label set, and phi has fixed pair {B,Q}. Its necessary flat inequality is
+
+    (a-1)*(b-1)>=(b+q)^2.                     (476.1)
+
+Consequently
+
+    a>=b+2*q+2+(q+1)^2/(b-1)>b+2*q+2.        (476.2)
+
+All six possibilities, up to vertex-induced exchanges of the two axes and of the transverse pair, are listed below. A word lists the fixed six slots, not merely a multiset.
+
+| Q | A | B | sigma | phi | strict consequence |
+|---|---|---|---|---|---|
+| C | D | V | (M,C,D,C,C,D) | (D,V,C,V,V,C) | d>v+2*c+2 |
+| C | V | D | (M,C,D,C,C,D) | (V,D,C,D,D,C) | v>d+2*c+2 |
+| D | C | V | (M,C,D,D,C,D) | (C,V,D,V,V,D) | c>v+2*d+2 |
+| D | V | C | (M,C,D,D,C,D) | (V,C,D,C,C,D) | v>c+2*d+2 |
+| V | C | D | (M,C,D,V,C,D) | (C,D,V,D,D,V) | c>d+2*v+2 |
+| V | D | C | (M,C,D,V,C,D) | (D,C,V,C,C,V) | d>c+2*v+2 |
+
+These rows are necessary role cases, not six constructed quotients. Distinct actual labels with equal numerical lengths are retained; a tie for the largest of C,D,V is ruled out by (476.2), not by identifying labels.
+

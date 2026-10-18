@@ -1,0 +1,43 @@
+**Definition 2.1 (precise use of the literal supplier).** SLHC Theorem
+12.3 is used with its all-shape domain, independent original labels,
+common initialization, genuine adaptive Updates and full root-relative
+literals. Its larger comparison class permits deterministic source-free
+internal steps with all state counted and arbitrary local writes.
+For every correct controller in a positive regime it supplies $Q\ge h$
+on every promised run and **one** promised run satisfying
+
+$$
+P_{\rm run}\ge h-1+\lfloor T/2\rfloor,
+\qquad
+A\ge A_0(h,T):=\frac{(h-1)(h+2)}2+h\lfloor T/2\rfloor.
+\tag{2.1}
+$$
+
+Here its $\lceil\max(T-1,0)/2\rceil$ equals $\lfloor T/2\rfloor$.
+The statement includes $T=0$ and the $h=1,T=0$ boundary. With a
+worst-run Update cap $v$, it also supplies
+
+$$
+M\ge 2^{h-1}\left\lceil\frac{T+1}{v+3}\right\rceil.
+\tag{2.2}
+$$
+
+The same-run witness is the all-$\alpha$ comb at entry $T$, compared
+separately against each one-leaf flip. Its first separating Read in
+that leaf's original cone has suffix $s$ at the same accumulated
+Update count $a$. The supplier's guarded windows give
+$T+a\le\#_L(s)+2\#_R(s)+1\le2|s|+1$.
+The distinct leaves give distinct occurrences on that fixed run.
+Its cone argument does not require a reset, a shape port, a reply to a
+prefix, or a stationary source across different source calls. This is
+the premise correspondence for consuming (2.1), not a new literal
+lower-bound theorem.
+
+For a finite composite installation, every commitment configuration
+selects one fixed finite decoded literal. Treat its earlier local
+steps as the supplier's counted source-free steps. Thus (2.1)–(2.2)
+apply to the composite as well as to the original macro supplier.
+Only terminal configurations select fixed Halt bits. Deterministic
+local transport contributes no new source distinction to the first
+separation argument.
+

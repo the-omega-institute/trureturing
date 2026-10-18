@@ -1,0 +1,51 @@
+**Theorem 5.1 (sixth signs, including zero).** Suppose a three-world
+$K\subseteq\mathcal F^{\ne0}_7(H)$ has common drift and $L_2$.
+Then all three sixth gains have the same sign, where zero is a
+separate sign. If that common sign is nonzero, neither sixth action
+has a response shared by all three. The two sixth partitions are
+different proper pairs, and the terminal gains have a common sign.
+
+Proof. In chart coordinates, the normalized sixth responses minus
+the common $d$ are $h_i s_i$ and $h_i(s_i+1)$. Both multipliers
+are positive, and $f_i(6)=T_{i,0}h_i$ with $T_{i,0}>0$.
+Thus distinct sixth-sign classes cannot share a response for either
+action. Multiplication by the common nonzero $\lambda$ preserves
+the assertion that all original sixth signs are equal.
+
+If all three signs differ, every sixth child has size at most one,
+contrary to $L_2$. If the signs are not all equal but two agree,
+that unique same-sign pair is the only possible sixth child of
+size at least two for either action. The $L_2$ condition would
+make that pair agree in $A,B$ and in $C,D$. Lemma 2.3 would make
+the two complete worlds identical. Therefore all three signs
+coincide. This includes the all-zero case and excludes every
+mixture of zero and nonzero.
+
+Now suppose the common sixth sign is nonzero. If both sixth
+responses were shared by all three, Corollary 4.2 would give one
+fixed injective terminal coordinate on the triple, contradicting
+$L_2$. If exactly one sixth action had a shared-three response,
+the other action would have a losing proper-pair child. That
+pair has both sixth predictions common: one because its own
+response collides, the other because the other action's response
+is shared by the whole triple. Its drift is common and its sixth
+gains are nonzero. Its $L_1$ condition requires equality in two
+terminal coordinates, $A,B$ for a $J$ child or $C,D$ for an $M$
+child. Theorem 4.1 excludes this.
+
+This argument places no requirement on the two terminal collision
+pairs inside the shared-three child. They can be different pairs;
+the contradiction uses the other, actual proper-pair child.
+Thus no shared-three sixth response is possible. Theorem 3.1
+applies and, after relabeling, the exact pattern is
+
+$$
+U_1=U_2\ne U_3,\qquad V_1=V_3\ne V_2,\qquad
+A_1=A_2,\ B_1=B_2,\ C_1=C_3,\ D_1=D_3.
+\tag{5.1}
+$$
+
+It also gives the common terminal-gain sign. In the all-zero
+sixth case, $U_i=V_i=d$ for every world; the shared-three pattern
+is retained and no terminal-sign conclusion is asserted here. ∎
+

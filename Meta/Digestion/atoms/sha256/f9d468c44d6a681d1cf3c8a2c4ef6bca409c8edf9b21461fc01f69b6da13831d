@@ -1,0 +1,45 @@
+**Theorem 5.1 (normalizer bridge).** Suppose for every $h\in H$ there is a
+permutation $a\mapsto h.a$ of the full declared action menu, satisfying
+
+$$
+hT_ah^{-1}=T_{h.a}.
+\tag{5.2}
+$$
+
+Then for every equivalence $K$,
+
+$$
+\operatorname{Core}_A(\operatorname{Sat}_H(K))
+=\operatorname{Sat}_H(\operatorname{Core}_A(K))
+=\operatorname{Core}_{A\cup H}(K).
+\tag{5.3}
+$$
+
+Consequently the representation-compatible refinement of the action core
+is still action stable, and it is the largest $A$- and $H$-invariant
+equivalence inside $K$. If $K$ is already $H$-invariant, then
+$\operatorname{Core}_A(K)$ admits transport descent without further
+refinement. For $K$ encoding complete process observations, the corresponding
+semantic assertion requires complete response covariance under the same
+menu and invertible dictionaries.
+
+**Proof.** The first relation in (5.3) tests $K(hT_ux,hT_uy)$ for every
+$u,h$. The second tests $K(T_uhx,T_uhy)$. Extend the menu permutation
+letterwise to words. Equation (5.2) gives $hT_u=T_{h.u}h$ and
+$T_uh=hT_{h^{-1}.u}$. Since these substitutions biject the full word menu,
+the two universal tests are identical. Moving each group letter to the
+left by this identity rewrites every finite mixed transformation as
+$hT_u$; every such transformation is itself a mixed word. Thus the same
+tests are exactly the third relation in (5.3).
+
+The word-intersection construction is the reused greatest-invariant
+subkernel mechanism: a stable relation inside $K$ remains inside $K$
+after every word, hence is contained in that intersection. It follows that
+the common relation is invariant under the enlarged transformation menu.
+If $K$ is $H$-invariant, $\operatorname{Sat}_H(K)=K$, so (5.3) says its
+action core is also $H$-invariant. For complete process observations, moving
+an action past a transport must move its complete label by the declared
+dictionary as well as its state successor. Otherwise the state-relation
+identity remains true but does not assert a complete semantic square.
+$\square$
+

@@ -1,0 +1,83 @@
+**Corollary 15.8 (rolling reference-counterpart recovery, with mate
+ambiguity retained).** On
+$\mathcal R_0\cup\mathcal R_1$ define the actual reference counterpart
+
+$$
+\nu(z)=\begin{cases}
+z,&z\in\mathcal R_0,\\
+\tau z,&z\in\mathcal R_1.
+\end{cases}
+$$
+
+For $h\in\Gamma_0\cup\Gamma_1$ and any lawful executed original
+primitive $a$, the single fixed reference $P_0$ and its existing
+response determine $\nu(h)$:
+
+$$
+P_0\star\operatorname{dropLast}
+ \bigl(D_{P_0}(\operatorname{sel}(R_h(a)))\bigr)=\nu(h).
+$$
+
+For $h,k$ in this union,
+
+$$
+\begin{aligned}
+h\sim_Q k&\ \Longrightarrow\ \nu(h)=\nu(k),\\
+\nu(h)=\nu(k)&\ \Longleftrightarrow\ k\in\{h,\tau h\}.
+\end{aligned}
+$$
+
+Every off-counterpart pair has a separating one-original-primitive
+experiment; if it executes lawfully at both, their existing successor
+$K$ selections already differ. Separately on each $\Gamma_\sigma$,
+each of $S,B,T,M_{\rm ret}$ has the history and original-$Q$ kernel
+of Theorem 15.5; on sheet0 this memory agrees with $M_J$.
+
+Proof. Proposition 15.7 is needed before making an original-response
+claim at later sheet1 entries. It gives $\nu(z)\in\mathcal R_0$ and
+$K(z)=K(\nu(z))$ for every endpoint in this union. Theorem 15.4,
+applied only at the fixed canonical reference $P_0$, therefore gives
+
+$$
+P_0\star D_{P_0}(K(z))=\nu(z).
+$$
+
+By the proved current correspondence, an executed original primitive
+from either $\Gamma_\sigma$ adds exactly one actual row, lands in
+$\mathcal R_\sigma$, and supplies that triple in its original
+response. The counterpart successor is one row beyond the counterpart
+predecessor, so deleting the final occurrence proves the response
+formula, including the landing immediately before changed idle.
+
+Choose Advance or one constant canonical-extending Supply at $h$,
+as in Theorem 15.5. If the response at $k$ is task-undefined or
+unexecuted `none`, it differs from this executed response. If both
+execute lawfully and their successor triples agree, the formula
+recovers the same $\nu(h)=\nu(k)$. Disjointness and the involution
+of Proposition 15.7 identify precisely $k=h$ or $k=\tau h$.
+This proves the separation statement and the two displayed claims.
+No synchronization of different branches' absolute counts is assumed;
+equal selected triples would itself force equal successor counts.
+
+For the within-sheet conclusions, the matching-write/exhaustion
+proof of Lemma 15.2 and the induction of Theorem 15.4 also start at
+the fixed actual $P_1$: their premises concern its current installed
+rows and resources, supplied by Proposition 15.7, rather than a
+canonical first input. Thus each sheet separately has an exact
+history inverse and the original-response predecessor argument.
+Theorem 11.4 supplies the four independent history kernels on these
+post-first-Ready/pre-00 domains and the stated memory agreement.
+These are existing view inverses, not a new union-domain equality
+between views and $Q$.
+
+The recovered history is the actual reference-sheet history. At a
+sheet1 cut it contains $w_0$ at its reference entrance, not the actual
+$w_1$ entrance. The corollary does not determine the actual entrance
+sheet from $K$, does not assert which other coordinates occur in a
+complete original response, and proves neither equality nor separation
+of synchronized mates' complete responses. In particular the
+opposite retained $c_p$ and the four views can distinguish those
+histories while their complete original-$Q$ comparison remains
+unsettled. No actor acquisition or physical erasure of a sheet is
+part of $\nu$. ∎
+

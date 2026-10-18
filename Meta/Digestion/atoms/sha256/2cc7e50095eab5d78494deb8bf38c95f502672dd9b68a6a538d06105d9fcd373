@@ -1,0 +1,15 @@
+**定义 76.6（rational orientation and finite selection order）。** Let $n=(w,x,y,z)$ be a nonzero integer quadruple and $d=w^2+x^2+y^2+z^2$. Its rational rotation matrix is
+
+$$
+R(n)=\frac1d
+\begin{pmatrix}
+w^2+x^2-y^2-z^2&2(xy-wz)&2(xz+wy)\\
+2(xy+wz)&w^2-x^2+y^2-z^2&2(yz-wx)\\
+2(xz-wy)&2(yz+wx)&w^2-x^2-y^2+z^2
+\end{pmatrix}.
+$$
+
+For reflection $\pi\in\{0,1\}$, multiply its third column by $(-1)^\pi$. The three resulting columns are a rational orthonormal phase basis. The orientation word contains gamma($p$), gamma($\pi$), and four signed fields for $n$, with no trailing data; zero $n$ and a different reflection value are invalid. The decoder selects the column using $j\bmod3$, halves it, and rounds its three coordinates to precision $p$. All rational denominators and intermediate products have their actual widths.
+
+For a represented positive rational excess $\tau$, use $\min(\tau,1/8)$, form $Q=\lceil32/\tau\rceil$, and choose $p$ as one plus the least nonnegative integer for which $2^{-p}\leq\min(1,\tau/16)$. Thus the represented output precision has strictly sufficient rounding slack. Request the archive at $b=2p+24$ and compute the same three raw anchors as in §76.5. The candidate order first considers $(1,0,0,0)$, then every nonzero integer quadruple in $[-Q-1,Q+1]^4$ in increasing lexicographic order; within each quadruple, consider reflection zero then one. Repetition of the initial identity quadruple in the later enumeration is permitted and charged. Accept the first candidate for which all three squared distances between its half-columns and the approximate anchors are at most $(1/2+\tau/2)^2$, including equality. §83 proves existence for every semantically valid actual plateau history and the full error bound for every accepted candidate. A violated supplier promise is not repaired by the finite syntax or selection test.
+

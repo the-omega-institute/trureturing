@@ -1,0 +1,11 @@
+**Open problem 8.3 (operational mutual recovery).** Determine which
+actually acquirable and retainable interfaces allow the semantic
+relation (NUE.10) to yield exact internal recovery with optimal
+resources. The questions include coherent concurrent acquisition,
+unbounded physical address choices, workspace and retained-memory
+tradeoffs, and recovery of boundary data when the whole original
+is not determined. Relative update counts do not by themselves
+recover physical durations. A finite description of compatible
+histories is not a universal minimal relational structure, a proof
+of physical provenance, or a completion of these further tasks.
+

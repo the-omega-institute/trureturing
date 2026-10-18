@@ -1,0 +1,11 @@
+**Definition 3.4 (output rigidity in a branch).** A feasible branch is
+output-rigid when both of the following hold:
+
+1. Every output shape term $S_{t_i}$ contains no residual shape variable.
+2. Every explicit scalar leaf in those output templates lies in the
+   anchored scalar component.
+
+Both conditions are finite inspections of the branch. They concern
+only the designated output tuple; residual shapes or free scalar
+components elsewhere are permitted.
+

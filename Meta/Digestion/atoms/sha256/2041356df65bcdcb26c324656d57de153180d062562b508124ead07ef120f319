@@ -1,0 +1,26 @@
+**Lemma 7.2 (exact nonnegative cost identity).** Let
+$l_0=\sqrt{q/p}$. In these coordinates,
+
+$$
+\begin{aligned}
+W-F
+&=\lambda[\beta-m\cos u]
+  +d_{\rm cert}(l_0^2P+Q-2l_0R)\\
+&=\lambda\eta+\lambda m(1-\cos u)
+  +\frac{d_{\rm cert}}P\bigl[(l_0P-R)^2+x^2\bigr].
+\end{aligned}
+\tag{QO.37}
+$$
+
+Every term on the last line is nonnegative in the chosen neighborhood.
+
+Proof. The pairing with the old dual is
+$\operatorname{tr}(B_{\theta_0}H)-k_{\rm tilt}
+=\beta-m\cos(\theta-\theta_0)$, by substituting
+$P-\alpha Q=1-\alpha-m\cos\theta$ and
+$2\sqrt\alpha R=m\sin\theta$. The other term of (QO.28)
+is the DT trace from (QO.27), since the reassigned high SS entry is
+zero. Finally $Q=(R^2+x^2)/P$ completes its square. The exact
+identity retains radial slack; it is not just a Hessian calculation.
+$\square$
+

@@ -1,0 +1,38 @@
+**Definition 6.1 (the scope of the inference).** The phase count in the
+proof of Theorem 3.2 holds for every finite native source. Effective
+synthesis additionally uses the cycle-covered whole-fiber bijection,
+joint admission, full-row equality and uniform physical-word predicates
+of Definition 1.2. For general signed fibers with unforced non-atomic
+skeletons, those uniform predicates have not been supplied by this
+argument. A bijection with arbitrary native normal codes does not
+supply their decision theory; no ambient normal-domain or
+canonicalization solver is assumed.
+
+The bound $3r+1$ counts constant-response intervals. The positive
+integers $t_{i+1}-t_i$ and the repetitions in (NPS.6) are unbounded.
+Theorem 5.2 shows why those durations cannot be replaced by a bound
+depending only on $K$ over all successful installations. Once a
+particular literal table has been constructed, [CAR, Theorem 11.2][CAR]
+supplies its word-dependent uniform stopping bound on all sources.
+That result is compatible with the present proof, but is not used as
+a uniform search horizon for unknown words.
+
+The arithmetic statement is a feasibility decision. Multiplying a
+fixed cycle update count $b$ by a repetition variable $z$ is linear.
+Multiplying an unbounded visit count by an unbounded symbolic word
+length would be a different expression, with two variable factors.
+No such product occurs in (NPS.15), and no arbitrary unbounded
+word-length-weighted optimum follows from its decidability. After
+literal extraction, costs of that one table may instead be analyzed
+under the existing per-table and bounded-path contracts. Installation
+minimization and any additional symbolic price objective require their
+own arguments.
+
+The complete-state convention is the native atomic-operation convention
+of CAR. Bitwise word emission, output serialization, physical timing,
+acquisition, erasure and authenticated access are not constructed by
+this mathematical synthesis. The result concerns original complete-row
+recovery on the given fiber, not complete future-law recovery or a
+uniform-depth or stochastic-law conclusion. No complexity or efficient
+implementation bound is asserted.
+

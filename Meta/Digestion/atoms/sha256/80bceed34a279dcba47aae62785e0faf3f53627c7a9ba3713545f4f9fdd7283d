@@ -1,0 +1,32 @@
+## 360. Additional two-owner bounds: m>16, v>4m/5, d>m/2, v>d
+
+Because u>m, the left side of (358.1) is greater than m²−1. Using v≤m−2,c<5m/12 in its right side gives
+
+    25m²−456m+480>0.
+
+For 4<m≤16 this polynomial equals
+
+    25(m−4)(m−16)+44m−1120<0.
+
+Therefore m>16, in particular m>14.
+
+Using the weaker c<4m/9 in (358.1) gives
+
+    v²>65m²/81−8m/9+7/9>16m²/25.
+
+The last difference, multiplied by 2025, is 329m²−1800m+1575; at m=14+b it equals 329b²+7412b+40859>0. Thus v>4m/5>c.
+
+Also v>m−c. Otherwise the right side of (358.1) is at most its value at v=m−c, which is strictly below m²−1 because the difference is
+
+    2c(m−c−1)+2c²/m−1>0.
+
+Here m−c>3 by (357.4). Hence v>m−c>d+2, so in particular v>d.
+
+Finally suppose d≤m/2. By (358.2), (358.3), and monotonicity in d, tau's M cosine is smaller than C_t(R,m/2). The polynomial
+
+    Q_D(m,c)=4m²(m−1)²[D_t(R)D_t(m/2)−4N_t(R,m/2)²]
+
+is positive on m>14,1<c<4m/9 by the third certificate. Thus this comparison cosine has absolute value below 1/2, again contradicting (357.5). We have proved
+
+    m>16, v>4m/5, d>m/2, v>d, v>c.               (360.1)
+

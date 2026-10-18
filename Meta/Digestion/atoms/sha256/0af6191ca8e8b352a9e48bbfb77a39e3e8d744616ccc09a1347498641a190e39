@@ -1,0 +1,39 @@
+**Definition 2.1 (word language and canonical framing).** Reuse RCA
+Definitions 11.1 and 12.1. A register holds a finite binary word; instructions
+are empty, copy, literal cons, tail, empty/first-bit test, sequence, finite
+case and while. Internal naturals are $1^n$, wire naturals are $U(n)=1^n0$,
+and
+
+$$
+F(w)=U(|w|)w,\qquad
+\operatorname{List}([])=0,\qquad
+\operatorname{List}(w::r)=1F(w)\operatorname{List}(r).
+\tag{PVC.2}
+$$
+
+A tuple is an exactly specified arity list. Parsing exhausts its enclosing
+field. Symbols and finite tags use their fixed bit order; naturals always
+include their terminal zero on the wire. Reverse, Cat, Length, Equal, Take,
+ReadUnary, ReadFrame, ReadList, Nth, Replace and AppendItem mean RCA's actual
+acyclic expansions. A word argument is never a host address or native
+state number selected by its value.
+
+The following additional macros fix the word algorithms used below.
+Prefix cancels copies of two words, accepting when the first ends without
+mismatch. LexLess cancels their common prefix; a proper prefix precedes its
+extension, and otherwise 0 precedes 1. Find scans a list with Equal and
+retains an item and its constructed unary index. OrderedInsert traverses a
+sorted list, emits the argument before the first greater item, and either
+rejects equality or suppresses it, according to its fixed call-site mode.
+Emit means Cat of literal 1 and Frame(item), followed eventually by the
+terminal 0. Push prepends one such framed item; pop is ReadList. A tree
+traversal stack is a word list, never a native return stack.
+
+Fixed-record field projections are Nth with literal finite indices.
+Dynamic indices are actual unary words. To enumerate prefixes of a path,
+start with the empty word, emit it, then consume its bits one at a time,
+appending the consumed bit and emitting the new prefix. Deduplication and
+membership are repeated finite scans. No sorting or graph traversal is
+atomic. These descriptions determine a finite acyclic list of helpers;
+every nested loop consumes a copied finite cursor or an explicit countdown.
+

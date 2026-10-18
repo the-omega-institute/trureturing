@@ -1,0 +1,41 @@
+3. In full balanced support, let $d=|d_1|=\sqrt{p_1p_2p_4}$, $q_2=1+e^{i\phi _2}$, and set $a_p=1/(32(1+B/A))$ and $T=a_pvD_0^{\rm f}\varepsilon=a_pvd^2\varepsilon$. If $|\widehat Z|\le T$, set $\widehat u_2=-1$. If $|\widehat Z|>T$, use $((\widehat R/\widehat Z)-1)$ and circle projection; a zero estimated denominator is assigned to the first branch. On (28.10), the first branch implies $|u_2+1|\le O_p(\varepsilon)$, and the second implies $|\widehat u_2-u_2|\le O_p(\tau/(vd^2\varepsilon))$. The projected $C_3$ formula used in case 2 gives $\widehat u_1$. Choosing $\tau\le c_pv\varepsilon^2$ makes both errors at most $\varepsilon$, so
+
+$$
+N\le C_pv^{-2}\varepsilon^{-4}\log(C_p/\delta).
+\tag{28.12}
+$$
+
+The threshold is an approximate small-signal branch and is never an exact-zero test.
+
+**Proof.** For every unit $u$, radial projection with the stated zero convention obeys $|\operatorname{circ}(z)-u|\le2|z-u|$. If $|\zeta|<|z|$, the exact ratio estimate is
+
+$$
+\left|\frac{r+\xi}{z+\zeta}-\frac rz\right|
+\le\frac{|\xi|+|r/z||\zeta|}{|z+\zeta|}.
+$$
+
+The sparse margin is $|R_s|\ge vD_0$. The full unbalanced margin is $|Z|\ge v|d_1|\kappa$, and $|R/Z|\le1+\eta$. Choose the positive $p$-dependent score-error constant small enough that the empirical denominators exceed half these margins. The ratio estimate and projection then bound the second coordinate by a chosen small multiple of $\varepsilon$. In full support the first-coordinate error is at most $2(\tau+B|\widehat u_2-u_2|)/A$. These inequalities prove cases 1 and 2, including total estimators outside the confidence event.
+
+For the balanced case take $\varepsilon\le1$ and
+
+$$
+c_p\le\min\left\{\frac{a_pd^2}{2},\frac{a_pd^2}{48(1+B/A)},\frac A{16}\right\},
+\qquad \tau\le c_pv\varepsilon^2 .
+$$
+
+On the small branch, $|Z|\le T+\tau$ and $|Z|=|\mu|d^2|u_2+1|$, so
+
+$$
+|\widehat u_2-u_2|\le 2a_p\varepsilon.
+$$
+
+On the large branch, $|\widehat Z|>T$ and $\tau\le T/2$, so the true $Z$ is nonzero. Since $|R/Z|\le2$, the ratio estimate and projection give
+
+$$
+|\widehat u_2-u_2|
+\le\frac{6\tau}{T}
+\le\frac{\varepsilon}{8(1+B/A)}.
+$$
+
+The small-branch second-coordinate bound is even smaller. In either branch the projected first coordinate has error at most $2\tau/A+2(B/A)|\widehat u_2-u_2|\le\varepsilon$. The second-coordinate error is also at most $\varepsilon$. Substituting (28.10) proves (28.11)–(28.12); the required sample counts are sufficient integer ceilings. $\square$
+

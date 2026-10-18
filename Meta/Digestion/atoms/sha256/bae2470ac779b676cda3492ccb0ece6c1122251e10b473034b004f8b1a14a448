@@ -1,0 +1,45 @@
+**Lemma 6.1 (effective four-regular graph family).** For every $j\ge0$,
+with $N=8\cdot2^j$, there is a finite simple four-regular bipartite graph
+$G_N=(V,E)$ on $N$ vertices such that
+
+$$
+|E|=2N,\qquad
+|\partial A|\ge |A|/4\quad(1\le|A|\le N/2),
+\tag{NDR.27}
+$$
+
+where $\partial A$ is the set of edges with exactly one endpoint in $A$.
+A graph satisfying these rational inequalities can be selected effectively
+from $N$ alone.
+
+**Proof.** [Marcus–Spielman–Srivastava, Theorems 5.3 and 5.5][MSS]
+give a bipartite Ramanujan two-lift at every stage starting from $K_{4,4}$.
+A two-lift of a simple bipartite four-regular graph is again simple,
+bipartite and four-regular, and doubles its order. Its new adjacency
+eigenvalues lie in $[-2\sqrt3,2\sqrt3]$; old eigenvalues are retained.
+The trivial eigenvalues $\pm4$ stay simple, since no new eigenvalue can
+equal them. Thus these graphs are connected and their second largest
+adjacency eigenvalue is at most $2\sqrt3$.
+
+For $a=|A|$, put $f=\mathbf1_A-(a/N)\mathbf1$. With adjacency matrix
+$M$ and Laplacian $L=4I-M$, $f\perp\mathbf1$, and
+
+$$
+|\partial A|=f^{\mathsf T}Lf
+\ge(4-2\sqrt3)\|f\|^2
+=(4-2\sqrt3)a(1-a/N)
+\ge(2-\sqrt3)a>a/4.
+$$
+
+The last strict inequality follows from $3<49/16$, equivalently
+$\sqrt3<7/4$. This implies (NDR.27).
+
+For an effective choice, enumerate all labeled simple graphs with a fixed
+balanced bipartition of $V$, test four-regularity, and test
+$4|\partial A|\ge|A|$ for every $A$ with $1\le|A|\le N/2$.
+These are finite integer tests. Existence from the preceding proof ensures
+termination; no numerical spectral decision is needed. A crude bound is
+$2^{\binom N2}$ candidates and $2^N$ subset tests per candidate, each with
+at most $N^2$ edge inspections. This bounds a separate public computation,
+not an efficient graph generator or an actual source acquisition. $\square$
+

@@ -1,0 +1,58 @@
+**Theorem 4.2 (unary carrier and row bill).** The exact carrier counts are
+
+$$
+\begin{aligned}
+V_U&=147+2q+c+24C,& L_U&=74+q+8C,\\
+E_{\rm tree}&=V_U-1,& E_{\rm access}&=\ell,\\
+\operatorname{occupied}&=2(V_U-1+\ell),&
+\operatorname{slotcapacity}&=7V_U.
+\end{aligned}
+$$
+
+For Definition 4.1's exact stencil the new vertices, assignments and
+row charge are
+
+$$
+v_i=24e_i+s_i,\qquad
+w_i=3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\qquad
+g_i=1+p_i+w_i+v_i.
+$$
+
+At ordinal zero $C_0=2$, so $V_{U,0}=195+2q+c_0$ and
+$L_{U,0}=90+q$. The charged foundation is $g_{U,0}=1+8V_{U,0}$.
+Add the separately priced finite rule mechanism/description $\rho_U$.
+For the first $n$ actual native occurrences the structural bill is
+$G_U(n)=g_{U,0}+\sum_{i=1}^n g_i$, plus $\rho_U$.
+
+Proof. The eight bit sockets contribute sixteen vertices and eight
+terminals, and their $F_8$ scaffold seven internal vertices. A $k$-cell
+tape therefore has $24k+1$ vertices and $8k+1$ terminals. The finite
+component has $q-1$ internal scaffold vertices, $q$ socket roots and
+$c$ children, hence $2q-1+c$ vertices and $q$ terminals. The outer
+$F_{75}$ contributes 74 internal vertices. Summing the 74 tape terms,
+finite component and outer scaffold gives the formulas. A finite child
+tree has $V_U-1$ child edges; each reciprocal edge, including each access
+link, occupies two endpoint slots.
+
+Depth-first inspection of a $v$-vertex component probes $2v$ child
+slots and $v-1$ parent returns, hence $3v-1$, including unary vertices.
+For a cell this is 68; for the finite component it is
+$6q+3c-4$. The displayed ordered routes charge all remaining probes,
+including repeated aliases and marker roles. Each designated old bit
+has three assignments. Each append/fresh finite bit assigns its two
+old-root child slots and initializes seven slots per new vertex.
+Head retargets and activations contribute three and two assignments.
+These disjoint lists give $w_i,v_i,g_i$. Alias combination precedes
+target-bit counting; it does not remove repeated inspections. Separate
+meter lanes preserve overlapping read/append effects without charging
+two native receipts.
+
+The foundation initializes each of its seven slots, including empty
+slots and its two head links, and creates each vertex, then commits
+once. This gives $1+8V_{U,0}$. The rule mechanism is additional fixed
+apparatus; if material installation of its description is required,
+all ingress/allocation/write/move/receipt/token work is additional and
+needs its own initialization relation. It is not supplied by $g_{U,0}$.
+Summation follows the actual updated states of this one run. Erasure,
+retirement and deactivation subtract no constructed material. ∎
+

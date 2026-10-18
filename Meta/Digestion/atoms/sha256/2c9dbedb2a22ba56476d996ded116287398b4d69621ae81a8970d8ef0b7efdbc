@@ -1,0 +1,22 @@
+### 64.8 与 RH、能级和四面体几何的接口
+
+本节给出的可检验接口是
+\[
+\boxed{
+\Delta^4
+\longrightarrow
+\mathcal P^3_{\mathrm{square\ pyramid}},
+\qquad
+\Delta^4_{\mathrm{mir}}\cong\Delta^3_{\mathrm{tetrahedron}}.
+}
+\tag{64.19}
+\]
+
+它把前一节的 RH 固定集解释成一条双账本约束：
+
+1. \(\kappa\) 账本记录观察投影遗漏的联合方向；
+2. \(\eta\) 账本记录镜像反射的奇法向；
+3. 四面体是镜像固定切片或局部 simplex chart；
+4. 方金字塔是三维可见事件的全局凸包；
+5. 四维概率场同时容纳两种账本。
+

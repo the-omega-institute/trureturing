@@ -1,0 +1,14 @@
+### Lemma 132.1
+
+Every flat transverse occurrence of M has angle pi, not zero.
+
+Proof. Its block has reservoir values m,c. Selecting c,c would require
+c>m by (T), contrary to the choice of M, since the selected label is in H.
+If the block were axial-flat, every H-valued selected axis has value at
+most m; every S-valued selected axis has value strictly below 1+m+c by
+(S). If both axes are in H, their shifted product is at most (m-1)^2.
+If exactly one is in S, it is strictly smaller than (m-1)(m+c).
+If both are in S, it is strictly smaller than (m+c)^2. All three bounds
+contradict (A) for reservoir pair m,c. The only remaining flat selection
+is the transverse M,M pair. QED.
+

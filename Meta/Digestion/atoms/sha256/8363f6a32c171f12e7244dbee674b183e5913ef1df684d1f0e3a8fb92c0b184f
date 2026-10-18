@@ -1,0 +1,8 @@
+**Definition 3.1 (entry-dependent physical menu).** On an attained
+entry put $J=I\setminus S$ and $U_j=\max_{h\in\mathscr H_\eta}n_j(h)$.
+For $j\in J$ retain $w_j$ and the shortest whole words in (LQF.6)
+for both $P_t$ and $S_t$, $2\le t\le U_j$. Call this finite
+set $\mathcal A_\eta$. An empty threshold range contributes no words;
+if $J=\varnothing$ the menu is empty. Every word in the menu is an
+ordinary legal current-root request with the length specified above.
+

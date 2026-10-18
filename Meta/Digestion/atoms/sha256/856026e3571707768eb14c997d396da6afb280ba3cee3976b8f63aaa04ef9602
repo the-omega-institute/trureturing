@@ -1,0 +1,42 @@
+**命题 4.1（全参数上界与平衡角点）。** 对所有正词，
+
+$$
+-u^2v/2\le E\le u^2v,\qquad
+-uv^2\le F_m\le uv^2/2.
+$$
+
+因此固定纤维有
+
+$$
+|\mathcal M_{u,v,K}|\le
+\left(\left\lfloor\frac{u^2v}{8}\right\rfloor+1\right)
+\left(\left\lfloor\frac{uv^2}{8}\right\rfloor+1\right).
+\tag{JM.6}
+$$
+
+特别对每个 $m\ge1$，
+
+$$
+-4m^3\le E\le8m^3,\qquad -8m^3\le F_m\le4m^3,
+\qquad C_m\le(m^3+1)^2\le4m^6.
+\tag{JM.7}
+$$
+
+平衡纤维中 $E=-4m^3$ 恰由 $a^mb^{2m}a^m$ 实现并强迫 $F_m=-8m^3$；$E=8m^3$ 恰由 $b^ma^{2m}b^m$ 实现并强迫 $F_m=4m^3$。故两个交叉角点 $(-4m^3,4m^3)$、$(8m^3,-8m^3)$ 都是真实孔洞，尽管满足坐标范围和（JM.3）。
+
+证明。$u,v>0$ 时 $K^2/v\le Q\le uK$，故
+
+$$
+-u^2v/2+\frac6v(K-uv/2)^2\le E\le u^2v.
+$$
+
+对 $L=\sum_i y_i=uv-K$ 和 $U=\sum_i y_i^2$，有 $L^2/u\le U\le vL$，而（JM.1）的等价式是 $F_m=-6U+6vL-uv^2$，于是
+
+$$
+-uv^2\le F_m\le uv^2/2-\frac6u(L-uv/2)^2.
+$$
+
+每个坐标在一个模十二剩余类中；长度 $3u^2v/2$ 的闭区间至多含 $\lfloor u^2v/8\rfloor+1$ 个该类整数，另一个同理。两数相乘只作联合像的上界。零计数时（JM.6）为一，使用命题3.4而不作除零计算。
+
+平衡时 $\sum_j(x_j-m)^2=Q-2m^3$，下端等号恰当全部 $x_j=m$；上端 $Q=2mK$ 恰当全部 $x_j\in\{0,2m\}$，固定和及单调性强迫 $m$ 个零接 $m$ 个 $2m$。两列的 $T$ 分别为 $4m^3,6m^3$，给所列配对和唯一逆词。两个角点不能交叉配对。$K$ 偶数使 $Q,T$ 都偶数，两个长度 $2m^3$ 的统计区间各有 $m^3+1$ 个可能值，与（JM.6）的专门化一致。$\square$
+

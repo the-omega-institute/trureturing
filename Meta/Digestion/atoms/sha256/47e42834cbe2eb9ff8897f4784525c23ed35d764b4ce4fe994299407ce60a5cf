@@ -1,0 +1,20 @@
+#### 定理 1：静态隐藏纤维定理
+
+对于固定的 $`(X,Y,Z)`$，所有合法概率律构成一个线段：
+
+```math
+P^{-1}(X,Y,Z)
+=
+\{p+t d:t\in[\kappa_--\kappa,\kappa_+-\kappa]\}.
+```
+
+其中
+
+```math
+\kappa_-=\max(0,X+Y+Z-1),
+```
+
+```math
+\kappa_+=\min(X,Y).
+```
+

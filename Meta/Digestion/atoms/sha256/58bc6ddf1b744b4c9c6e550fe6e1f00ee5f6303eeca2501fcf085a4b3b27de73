@@ -1,0 +1,83 @@
+**Theorem 4.1 (exclusion or actual joint realizers).** On every eligible
+represented anchor and input of Definitions 1.2–1.3, there is a terminating
+choice between the following mutually exclusive outcomes:
+
+1. A finite $H\ge0$ with $\neg J_B(H)$.
+2. An effective procedure which, for every requested $h\ge0$, returns
+   actual finite $u_r\in D_r$ for every $r\in B$, all sharing one
+   inclusive original $h$-prefix.
+
+Equivalently, with the exhaustively synthesized basis of Theorem 3.1,
+
+$$
+\forall h\ J_B(h)
+\quad\Longleftrightarrow\quad
+\exists K\in\mathcal K\quad
+K\in\bigcap_{r\in B}\overline{D_r}.
+\tag{AAB.12}
+$$
+
+Neither a functional common-output equation presentation nor a contact
+list is supplied. All companion fibers remain entire arbitrary signed
+full-row strata of (AAB.3).
+
+Proof. Compute $\mathcal K$. For each $K$ choose its finite constructor
+context, expanding finite grounds and naming each $\Omega$ occurrence
+as a separate hole. Repeated values may fill separate holes; no
+disequality between holes is inferred. Apply NLC Theorem 6.1 to each
+pair $(r_*,r)$, $r\in B\setminus\{r_*\}$, at this same context.
+Theorem 3.1 already proves $K\in\overline{D_{r_*}}$. Therefore YES is
+equivalent to $K\in\overline{D_r}$; a NO excluded stratum must be $D_r$,
+since no finite prefix of $K$ excludes the anchor. The supplier's finite
+queries identify that excluded row with its depth $e_K$.
+
+If some $K$ has YES for every companion, request NLC's realizers at $h$
+and keep each companion source. All agree with that same $K$ at $h$.
+Obtain an anchor source using Theorem 3.1's joint cofinal arithmetic
+witness and Theorem 2.2's lift. The tuple satisfies (AAB.4), with every
+sign and guard checked on its own actual finite source. The different
+anchor witnesses used internally by the separate pair decisions need
+not be identified; replacing them by the one constructed anchor is
+valid because every returned companion already matches the same $K$.
+No negative constraint is evaluated at the infinite limit.
+
+If no $K$ passes every companion, choose for each $K$ a failed row
+$r_K\ne r_*$ and its depth $e_K$. Compute the finite remainder $X$ in
+(AAB.11), and set
+
+$$
+H=\max\bigl(\{0\}\cup\{e_K:K\in\mathcal K\}
+\cup\{\operatorname{ht}(u):u\in X\}\bigr).
+\tag{AAB.13}
+$$
+
+For any prospective joint tuple, its anchor either matches some $K$
+through $e_K$, or lies in $X$. In the first case a companion in $D_{r_K}$
+matching the anchor through $H$ would match $K$ through $e_K$, contrary
+to exclusion. In the second case agreement with the finite anchor
+through $H$ isolates that very tree, forcing a distinct full-row label
+on the same source. This is impossible. Thus $\neg J_B(H)$.
+With an empty basis, the second case alone applies and (AAB.13)
+uses the entire finite anchor. All decisions and enumerations terminate
+by the cited supplier, Theorems 3.1–3.2 and Presburger decision.
+
+For completeness of (AAB.12), suppose $J_B(h)$ holds at every depth
+and choose its joint tuples at increasing depths. No finite anchor
+source can recur at unbounded depths: once the depth reaches its height,
+matching would force a different row on that same source. Extract
+distinct anchor sources from one piece at depths tending to infinity.
+The coordinate extraction in Theorem 3.1 gives a limit
+$K\in\mathcal K$. For each fixed $d$, these anchors eventually match
+$K$ through $d$, and their companions match the anchor there because
+their joint requested depth tends to infinity. Every row therefore has
+actual finite $K$-prefix realizers at every $d$. This gives the right
+side. Its converse follows from the positive construction above.
+Monotonicity of $J_B$ makes the two outcomes exclusive. $\square$
+
+For a piece with $k$ used coordinates, the class test forms $2^k-1$
+cofinal-fiber formulas. A basis with $M$ distinct points uses at most
+$M(|B|-1)$ NLC pair decisions, plus the finite-remainder calculation in
+the negative case. These counts concern these exact supplied domains.
+They give no polynomial preparation, running-time, witness-size or
+optimal-resource assertion.
+

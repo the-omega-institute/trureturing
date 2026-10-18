@@ -1,0 +1,2 @@
+**约定 5.2（联合恢复不是当前可用）。** 定理 3.3 和第 4 节是数学上从完整原始后继恢复联合历史。原始任务把隐藏坐标列入成功响应，不授予 actor 根探测、producer 13/17、latch 或 meter 的当前读权。$A$ 的实际包和此前取得的历史证据也不激活历史 token。若要称一种表示当前可用，必须另给实际 owner route、已取得的目标绑定、有限 codec 和输入/code/scratch 权限、receiver 检查、ACK、mailbox/token return 和每步成本。本文没有这样的新增服务。
+

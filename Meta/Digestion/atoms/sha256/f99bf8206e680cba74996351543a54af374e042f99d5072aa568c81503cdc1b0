@@ -1,0 +1,21 @@
+**Assumption 7.3 (uniform native-domain interpretation, an open obligation).**
+There is a finite formula $\mathsf{Normal}(X)$ in precisely the language
+of Definition 7.1, supplied effectively with a proof that
+
+$$
+\mathfrak A\models\mathsf{Normal}(X)
+ \quad\Longleftrightarrow\quad X\in\mathcal N
+\quad\text{for every }X\in\mathcal K.
+\tag{ABC.7.3}
+$$
+
+Its meaning must impose (ABC.2.1) at every internal occurrence of an
+arbitrarily shaped finite term. A recursive traversal deciding normality
+of a *given* term is not such a formula. Nor is a scheme with one clause
+for every depth, a new primitive predicate declared decidable, or a
+quantifier over subterms absent from the cited language. An alternative
+finite interpretation may replace (ABC.7.3) only with proved full-domain
+source correspondence, equality, constructor, fixed-epoch navigation
+and whole-row formulas in a decidable language. No such unrestricted
+interpretation is assumed in §§1–6 or proved here.
+

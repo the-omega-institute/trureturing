@@ -1,0 +1,39 @@
+**Lemma 8.2 (Actual image and full affine hull of the minimal forms).**
+For the minimal distinct pair and minimal confluent forms, the
+actual images are exactly, respectively,
+
+$$
+\mathscr S_{\lambda_1,\lambda_2}
+=\{e^{i\alpha}(e^{\lambda_1x},e^{\lambda_2x}):
+0<x<1,\ \alpha\in\mathbb T\},
+$$
+
+$$
+\mathscr S_{\lambda}^{\rm conf}
+=\{e^{i\alpha}(e^{\lambda x},xe^{\lambda x}):
+0<x<1,\ \alpha\in\mathbb T\}.
+$$
+
+Each has real affine hull $\mathbb R^4$. Equality of encoded points
+always ignores the whole beta circle; any further identification
+is determined exactly by equality of the displayed complex pairs.
+
+Proof. Full reachability of $\mathcal M$ proves the image
+descriptions and the statement about beta. The height vectors
+$(e^{\lambda_1x},e^{\lambda_2x})$ span $\mathbb C^2$ when the
+exponents are distinct: a constant complex dependence would make
+$e^{(\lambda_1-\lambda_2)x}$ constant, whose derivative is nonzero.
+The vectors $(e^{\lambda x},xe^{\lambda x})$ also span, since
+division by the nowhere-zero exponential reduces a putative
+dependence to a linear polynomial vanishing on an interval.
+
+The phase replacement $\alpha\mapsto\alpha+\pi$ negates a whole
+encoded pair, so its affine hull contains zero. If a real linear
+functional vanished on the image, express it as the real part
+of a complex linear row on $\mathbb C^2$. Variation of
+$e^{i\alpha}$ would force that complex row to vanish on every
+height vector. Their complex spanning property makes the row zero.
+Thus the real affine hull is full. The exact same images and
+fibers describe strict improvers after their affine isomorphism
+from §§6–7. $\square$
+

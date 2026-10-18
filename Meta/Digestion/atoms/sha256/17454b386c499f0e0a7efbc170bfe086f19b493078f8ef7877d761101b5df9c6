@@ -1,0 +1,17 @@
+**定义 1.4（重叠与完整合法词图）。** 令
+
+$$
+x=\cos\left(\frac{\pi q}{2L}\right)=\cos(2q\theta),\qquad 0\le x\le1.
+$$
+
+这是同一次准备后连续酉迭代的重叠参数，不是 $q$ 份重新准备样本的重叠。以完整 $B_n$ 为顶点，Hamming 距离为一时连一条无向边，得到图 $\Gamma_n$。记其边集为 $E_n$、邻接矩阵为 $A=A_n$、边数为 $e=e_n$、顶点度数为 $d_b$。复用 [Recovery][Recovery] 式（2.4）–（2.5），其中渐近式对每个固定 $n$ 沿原整数合同且 $x\to0$ 的族成立：
+
+$$
+e_n=\frac{nF_{n+1}+2(n+1)F_n}{5},\qquad
+C_n=\frac{e_n}{2M_n},\qquad
+\varepsilon_n^\star(L,q)=C_nx^2+O_n(x^3).
+\tag{1.1}
+$$
+
+该计数和 Bayes 首项是既有供应，不作为本卷新增结论。实际源始终为 $n=3N\ge3$。
+

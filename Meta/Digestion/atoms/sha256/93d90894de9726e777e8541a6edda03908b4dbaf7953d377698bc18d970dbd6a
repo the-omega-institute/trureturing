@@ -1,0 +1,33 @@
+**Definition 3.1 (coefficient conventions).** Coefficient space has ordered coordinates $D,T,S$. Put
+
+$$
+\begin{gathered}
+K(z)=uD+vT+wS\quad(z=(u,v,w)^T\in\mathbb C^3),\\
+B=\operatorname{diag}(1,-\alpha,-\beta),\qquad \operatorname{tr}B=k,
+\qquad X_c=|D\rangle\langle T|+|T\rangle\langle D|,\\
+\Lambda_Z(A)=\sum_{i,j}Z_{ij}K_iAK_j^\dagger,\qquad
+\Theta(Z)=\sum_{i,j}Z_{ij}K_j^\dagger K_i,\qquad (K_D,K_T,K_S)=(D,T,S),\\
+C(\rho)_{ij}=\operatorname{tr}(K_i^\dagger K_j\rho).
+\end{gathered}
+\tag{RG.14}
+$$
+
+For $\rho\succeq0$, $C(\rho)$ is Hermitian positive semidefinite and
+
+$$
+z^\dagger C(\rho)z=\operatorname{tr}(K(z)^\dagger K(z)\rho),\qquad
+\operatorname{tr}(C(\rho)Z)=\operatorname{tr}(\Theta(Z)\rho).
+\tag{RG.15}
+$$
+
+These follow by expanding the sums; the reversed indices in $\Theta$ are essential. In unnormalized output-input vectorization, if $\mathcal V=(|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle)$, then $J_{\Lambda_Z}=\mathcal VZ\mathcal V^\dagger$ and $\operatorname{Tr}_{\rm out}J_{\Lambda_Z}=\Theta(Z)^T$. The actual input effect is $\Theta(Z)$, not its transpose. Its order is positive and $\Theta(I)=I-M$, $\Theta(X_c)=\kappa X_{01}$.
+
+The new evaluated domain is
+
+$$
+\rho\succeq0,\qquad C(\rho)\text{ real symmetric},\qquad C(\rho)\succ0.
+\tag{RG.16}
+$$
+
+Every real positive definite $\rho$ belongs to it: $K(z)\ne0$ for $z\ne0$ because the three matrices have disjoint supports, and (RG.15) is then strictly positive. A singular $\rho$ can also belong; all the original pure states do. No nonreal Gram is replaced by its real part, and no competing instrument is required to be real.
+

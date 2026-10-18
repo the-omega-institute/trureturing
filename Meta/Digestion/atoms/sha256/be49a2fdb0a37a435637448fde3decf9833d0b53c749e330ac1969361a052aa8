@@ -1,0 +1,34 @@
+**Convention 3.1 (feasible domain).** Write
+$c_*(u)=c(1,\sqrt u,\sqrt{(1-\alpha u)/\beta})$ on
+$[0,1/\alpha]$. It is a positive increasing linear-fractional function
+under the source inequalities of FA78. Set
+
+$$
+\begin{gathered}
+u_f=V/\mu,\quad v_f=W/\mu,\quad c_f=c_*(u_f),\quad
+\nu=\mu/c_f,\quad t_0=W/c_f,\quad q=\nu/t,\\
+\tau_{\max}(t)=q\sqrt{u_f}+\sqrt{(1-q)(1-qu_f)},\qquad
+\tau_*=\tau_{\max}(t_0).
+\end{gathered}
+\tag{AC.14}
+$$
+
+Here $0<u_f<1<v_f$, $\alpha u_f+\beta v_f=1$.
+FA78 evaluates the entire weak feasibility threshold: it is exactly
+$t\ge t_0$, $0\le\tau\le\tau_{\max}(t)<1$. Equivalently
+$t_{\min}(\tau)=t_0$ for $\tau\le\tau_*$, and for
+$\tau>\tau_*$ it is the unique $t>t_0$ solving
+$\tau=\tau_{\max}(t)$. Put
+$A_{\min}(s)=\log(1+t_{\min}(s/s_0))$.
+FA79 supplies attainment, height and capacity equality on this minimum
+boundary, including the collapsed residual direction at $t=t_0$.
+Those are boundary results, not boundary dual-attainment assertions.
+
+At $A=0$, AC.10 cannot supply $M_2\succ0$, so the class is empty.
+The weak interval is separate from FA71's isolated strong point:
+for $s\in[s_0,1]$ finite feasibility occurs only at
+$s=s^\dagger\in(s_0,1)$ and $A\ge A_\dagger$, with the exact
+$s^\dagger,A_\dagger$ of FA71. In particular $s=s_0$ and $s=1$
+are infeasible at finite activity. No theorem about the weak interval
+below is asserted on the isolated strong component.
+

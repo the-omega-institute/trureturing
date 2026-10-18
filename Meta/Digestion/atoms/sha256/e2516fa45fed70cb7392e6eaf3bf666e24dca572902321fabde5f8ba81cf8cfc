@@ -1,0 +1,16 @@
+**核验 4.2（Finite corroboration, separate from the ordinary proofs）。** Direct checks use the original bit transitions, retaining INITIAL sources and grouping only complete endpoint archives. They enumerate all three-symbol phase tables with exactly three labels and homogeneous $H$ for every allowed width $3\le m\le6$. Cases with fewer than three actual root-zero phases have no such table. On each table they exhaust every first literal word and every second literal word, allowing either separate adaptive second words or one common second word. Their exact depth-zero/one/two tests agree with (2.1): among 1,038 symbol-labelled tables, 876 have additional price two and 162 have additional price three. All constructed words and endpoint decoders are executed for every surviving INITIAL tail and both free values.
+
+| $(m,k)$ | Actual $g$ | Price-two tables | Price-three tables |
+| --- | --- | --- | --- |
+| $(3,4)$ | $1$ | $6$ | $0$ |
+| $(4,6)$ | $1$ | $36$ | $0$ |
+| $(5,6)$ | $1$ | $150$ | $0$ |
+| $(5,7)$ | $1$ | $150$ | $0$ |
+| $(5,8)$ | $1$ | $150$ | $0$ |
+| $(6,9)$ | $2$ | $6$ | $0$ |
+| $(6,10)$ | $1$ | $378$ | $162$ |
+
+For every one of those tables, a full consumer (3.2) uses the three ordered pairs $(0,0),(1,0),(0,1)$ as its joined labels. Its adaptive words and common GLOBAL stream are checked on every INITIAL phase and tail of both free values, with fresh root labels and independently stopped initial bottom. These are 1,038 complete consumer checks, not an enumeration of every possible full target or every possible labelling of its two components.
+
+A separate original-weight check generates $G_i$ by the integer recurrence, verifies 5,254 complete-history witnesses (1.4), and compares 7,292 actual successful root/suffix endpoint values with $V_k\bmod2$. Its parameter cases are $(m,k)=(3,4),(4,6),(6,9),(6,10),(8,9)$ and $(6q,11q-1)$ for $2\le q\le6$. The case $(8,9)$ includes an empty-$H$ three-class table. Absorbing-bottom complete-history witnesses are checked separately. For the five listed cases with $m\le8$, every literal full root on both free values is also tested on a specified complete consumer: all 816 root actions agree with root forcing, and each zero-containing root produces an irreversible unequal-INITIAL-label collision. The finite checks pass; they corroborate the ordinary proofs and do not establish their unbounded quantifiers by enumeration. No check program or separate runtime data is delivered.
+

@@ -1,0 +1,45 @@
+**Definition 71.1 (Source, carrier and exact acquisition).** Retain the labeled
+source and static prime answers of
+[Source-Correlated Laws, Definition 45.1](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#45-lawful-acquisition-through-one-inherited-seed):
+
+$$
+\begin{aligned}
+&F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+&X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+          \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+&N(r,g)=1+F_rg,\qquad
+p_1<p_2<\cdots,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\\
+&C_m(x)=\{y\in X:q_i(y)=q_i(x)\text{ for }1\le i\le m\},
+\qquad C_0(x)=X.
+\end{aligned}
+\tag{71.1}
+$$
+
+The set $X$ is countable and retains all its labels. Its members have positive
+integer $N(x)$ and hence finite prime support. Every prescribed finite prime
+answer pattern is realized by an actual member of $X$, by
+[Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows).
+Only these actual sources enter any cylinder or comparison below.
+
+Fix a nonempty measurable original tape carrier $(\Theta,\mathcal F)$ and its
+consumer. An acquisition uses one source-independent probability space
+$(S,\mathcal A,\mathsf P_A)$ as its seed and one common deterministic rule after
+the seed is fixed. Its only source observations are the static answers $q_i$;
+the supplied advice is zero. Addresses may be chosen arbitrarily and
+adaptively, and requests may be repeated. Finite records and tape-output
+events are measurable. At each actual source, handoff occurs after finitely
+many transitions almost surely, and the original consumer then runs on the
+same source with the handed original tape. The rule receives no source label,
+integer value, first-absence index, source distribution or extra probe, and
+uses no restart or conditioning away of failures.
+
+For a selected family of probability measures $\lambda=(\lambda_x)_{x\in X}$
+on this carrier, let $\mathcal A(\lambda)$ be the class of all such acquisitions
+whose handed-tape law is exactly $\lambda_x$ at every actual $x$. Different
+members of $\mathcal A(\lambda)$ may use different seed probability spaces.
+All probabilities and expectations indexed by $A$ use its own seed law.
+Fixed shared tables and countable product seed spaces are permitted, as in
+[Source-Correlated Laws, Theorem 46.4](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#46-operational-envelopes-and-a-fixed-family-criterion).
+This is a measurable common-rule class with no computability or processing-time
+bound imposed.
+

@@ -1,0 +1,80 @@
+**Proposition 9.1 (a faithful finer cut defeats this example's component
+obstruction).** Split each vertex block into its four actual depth-three
+modules and regroup those $4N$ module coordinates by graph edges. In
+these coordinates $B_G$ is exactly a product of $2N$ copies of the
+credited relation $B_*$. Its donor components for the complete module
+menu can consequently have size two.
+
+**Proof.** Each edge independently chooses its five possible paired
+module states, and every module belongs to exactly one edge. Regrouping
+is a permutation of this list of actual module occurrences, not a claim
+that arbitrary correlated competitors factor. The definition of $B_G$
+is precisely the product of these pair relations. Their readers use
+(NDR.23), with each source-bearing query still the full literal at the
+selected actual module occurrence. Module root locations and pairings
+are public graph data, not navigation operations or new source ports.
+Paid acquisition may use the already specified full-source scan.
+$\square$
+
+Thus Theorem 7.2 concerns bounded components on the original $S_5$
+coordinates. It does not obstruct all changes of coordinates, all lawful
+finer cuts, edge regrouping, unbounded-component methods with controlled
+separators, or arbitrary global recoding. In particular this example
+itself is simple after a finer cut. A universal reblocking theorem for
+every native competitor, preserving the complete retained alphabet and
+all literal operations with quantified loss, is a different unproved
+claim. Proposition 9.1 proves it only for this family.
+
+Nor does an exponential repair price for one intentionally nonoptimal
+attained code show that optimal full-family covers must pay that price.
+A global recoloring can use relationships between different old fibers
+and need not replace each old fiber separately. Such a theorem is not
+excluded by the intersection bound. The graph parameter $N$ counts
+original blocks, not physical distance, elapsed time or the number of
+available operations.
+
+**Open problem 9.2 (the unchanged effective lower bridge).** Produce
+certified all-competitor lower endpoints converging to the original
+$\lambda$, with effective error, or establish an appropriate exact-rate
+theorem. One sufficient bridge would be explicit uniform errors
+
+$$
+\sigma_d\ge \frac{\log_2K_d(n)}n-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{NDR.37}
+$$
+
+effective in the stated parameters. Another would be a complete effective
+lower-certificate hierarchy over the unrestricted templates of §2, with
+a proved approximation error. Neither is supplied here. Finite type
+computations in §3 compare finite quantities; NCE's sufficient weights
+cover all cycles but have no established completeness theorem.
+
+By Corollary 7.4, finite component enumeration cannot be made complete by
+uniform subexponential per-fiber repair at the fixed original-block
+interface. Lawful changes of variables that retain shared relations and
+global certificates are alternative possible mechanisms; all-competitor
+coverage and vanishing loss remain required. Finite vocabulary, binary
+closure, graph existence and finite LP decidability alone do not establish
+those properties.
+
+**Open problem 9.3 (finite memory and the wider programme).** The general
+exact $M_1(D)$, the credited unresolved $M_1(3)\in\{3,4\}$, sharp
+$\lambda$, and the broader minimal-relations/internal-observer mutual
+recovery programme remain open. The exact recovery relation used here is
+
+$$
+(E(t),D,p,\text{at most one paid native reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NDR.38}
+$$
+
+The inverse recovers this temporal factor, not the full original source,
+an unknown age, hidden history, authentication, or physical space and
+time. The unchanged interval is (NDR.9). FMR's exact finite optima and
+gluing give computable decreasing upper approximants to $\lambda$.
+Effective two-sided convergence, a complete lower hierarchy and
+closed-form exactness remain distinct claims, none proved by this volume.
+No native noncomputability conclusion follows either.
+

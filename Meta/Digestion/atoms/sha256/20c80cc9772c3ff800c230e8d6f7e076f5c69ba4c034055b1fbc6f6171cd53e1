@@ -1,0 +1,17 @@
+**Corollary 316.4 (A saturated-head lower consequence).**
+If an entire sequence (315.2) satisfies $\tau>0$,
+$a_2=1-11\tau$ and $(a_3,\ldots,a_7)=(13,10,9,8,6)\tau$,
+every original competitor in either class has
+
+$$
+e_a(A)\ge5\tau+\frac{a_8+a_9+a_{10}-15\tau}{13}.
+\tag{316.5}
+$$
+
+**Proof.** The first five weighted late terms sum to $211\tau$.
+Using consecutive late addresses in (316.3) gives
+$52e_a(A)\ge200\tau+4(a_8+a_9+a_{10})$, which is (316.5).
+Only sequence order is imposed on the later tail here. This is a
+lower bound; it asserts neither attainment nor a larger-cap
+classification. $\square$
+

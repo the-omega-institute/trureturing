@@ -1,0 +1,26 @@
+**定理 3.1（普通约数响应的明确不实现）。**
+定理 2.2 的 $\widetilde Z$ 不等于普通约数响应 $\sigma(n)/n$。
+$\widetilde\psi$ 也不等于普通素数幂的 Chebyshev 函数。
+
+**证明。** 在同一个整数 $n_j=2^{2^j}$ 上，有限几何和给
+
+$$
+\frac{\sigma(n_j)}{n_j}=2-2^{-2^j}<2,
+\qquad
+\widetilde Z(n_j)=e^\gamma\log a_j\,e^{ba_j^{-\eta}}\longrightarrow\infty.
+\tag{3.1}
+$$
+
+因此两者在全部充分大的来源上不相等。
+式（2.11）保证 $\widetilde\psi$ 最终连续可微；
+普通 $\psi$ 在每个普通素数处有正跳跃 $\log p$，
+素数无穷性保证这些跳跃超出任何有限阈值，所以二者不能相等。
+
+定理 2.2 保留的是式（1.3）—（1.4）的联合标量关系，
+没有把式（3.1）中的两项识别成同一个算术函数。
+尤其 $\widetilde\vartheta=\widetilde\psi-\sqrt t$ 重现端点数值，
+并未提供普通素数幂共同关系
+$\psi(t)=\sum_{r\ge1}\vartheta(t^{1/r})$ 或 Riemann $\zeta$ 的显式公式。
+因此式（2.7）否定的是只依赖这些松弛合同的统一下界推论；
+它没有给出实际来源类中的反例，也没有证明或反驳 RH。$\square$
+

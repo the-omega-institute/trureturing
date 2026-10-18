@@ -1,0 +1,13 @@
+## 5. Exact early and late secants for an actual M collision
+
+Consider two distinct legal worlds sharing $d,y,\zeta$, root seven and
+sixth-$M$ response $d+c$. Assume $AB\ne0$. Lemma 4.2 implies their
+parameters $t_1,t_2$ differ. All functions below are the interpolation
+functions of this one response fiber, evaluated at its actual members.
+Put
+
+$$
+q=(1+2t_1)(1+2t_2)>0,\qquad p=t_1t_2>1.
+\tag{5.1}
+$$
+

@@ -1,0 +1,13 @@
+## Analytic min-cut profile
+Let k=|R|<=4. For an arbitrary vertex-side assignment let S be the outer vertices on the R side, n=|S|, r the number of selected boundary legs incident to S, and h the number of cut internal edges. The total cut cost is
+
+    k + 2n - 2r + h.
+
+After minimizing the central vertex side, the minimum possible h at a fixed S is 0,2,2 or 4,2,0 for n=0,1,2,3,4 respectively. At n=2 the value 2 occurs exactly for S={A,B} or {C,D}; otherwise it is 4. These follow directly by counting the six displayed internal edges.
+
+Using r<=min(k,2n), every cost is at least k for k<=3. For k=4 this remains true except when S is one complete loop pair and R consists of precisely that pair's four legs; then cost 2 is achievable and is minimal. Placing every graph vertex on the complement side always gives cost k. By complement symmetry:
+
+    m(R) = min(|R|,8-|R|),
+
+except for the two four-leg full-loop regions AB and CD, for which m(R)=2.
+

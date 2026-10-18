@@ -1,0 +1,33 @@
+### 64.3. A normalized two-dimensional-reference witness
+
+Let Δ=J_out∘E_z−Φ∘J_in and d=z−λ. We claim
+
+    ||Δ||_diamond≥||d||₂.                                 (4)
+
+If d=0 the claim is immediate. Otherwise set r=||d||₂ and
+
+    |a>=Σ_i conj(d_i)|i>/r.
+
+This is a normalized vector in the leaf subspace. First, the trace-norm-one matrix unit |a><h| satisfies
+
+    <00|Δ(|a><h|)|11>=Σ_i conj(d_i)d_i/r=r.
+
+The trace norm dominates any matrix element, so the definition of the diamond norm already implies (4).
+
+The same constant can be witnessed using a positive input state and a two-dimensional passive reference. Take
+
+    |Ψ>=(|0>_R|a>+|1>_R|h>)/sqrt(2),
+    H=|0,00><1,11|+|1,11><0,00|.
+
+The input is normalized and H is Hermitian with operator norm1. In (id_R⊗Δ)(|Ψ><Ψ|), the indicated off-diagonal entry is r/2 and its adjoint is r/2. Its other entries do not contribute to the expectation of H. Therefore
+
+    Tr[H (id_R⊗Δ)(|Ψ><Ψ|)]=r,
+
+and trace-norm duality proves (4) with no omitted factor of two. This explicitly handles arbitrary competitor populations, extra coherences and leakage: the reference blocks and the two selected output entries isolate the coefficient difference.
+
+Combining (3) and (4), every physical competitor obeys
+
+    ||Δ||_diamond≥||z−λ||₂≥min_{||w||₁≤1}||z−w||₂.
+
+The witness depends on the competitor through d, which is permitted in the supremum defining its diamond error. It is a bound for one common channel on all inputs, not separate sector optimizations.
+

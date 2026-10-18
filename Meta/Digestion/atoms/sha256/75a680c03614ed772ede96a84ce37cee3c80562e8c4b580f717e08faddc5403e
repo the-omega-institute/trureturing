@@ -1,0 +1,32 @@
+**Proposition 7.3 (rational loss witness and exact global boundary).**
+The rows (OOA.28) admit rational witnesses for $\delta=1/20$:
+
+$$
+(633/1000)^2\ge2/5,\qquad (317/1000)^2\ge1/10,
+\qquad 633/1000+317/1000=19/20.
+\tag{OOA.32}
+$$
+
+For a pair context $p(b)$, multiply these two majorants by $p(b)$
+for the matching and nonmatching values of $a$; they meet (OOA.22).
+For example, the rational cap $c'=211/400$ satisfies
+$(c')^2>10/36$ and $(c')^4(39/40)<(10/36)^2$.
+It therefore gives $c'(39/40)^{1/4}<c$, proving the strict network
+correction with entirely rational pointwise and square-root witnesses.
+
+Nevertheless the very same $\mu$ satisfies
+$A_n^{(d)}(\mu)=1$ for every $n$ and $\beta_d(\mu)=1$.
+
+Proof. The rational square comparisons are direct integer arithmetic.
+The two cap comparisons are also exact rational inequalities. On the
+four-state support of (OOA.26), the root is constant
+branch, and any side target is determined by that same side's own
+literal $L$ or $R$, including every longer residual suffix by (OOA.4).
+Thus the whole support to the power $n$ is admissible with self donors
+and has product probability one. No mass can exceed one. This is
+also the credited two-reply closure of [RCE, §12][RCE] and the
+depth-two warning of [COK, Proposition 8.2][COK], applied at the
+present depth. The cycle estimate therefore cannot be asserted as a
+universal cap below one, an optimized depth improvement or a numerical
+rate endpoint. $\square$
+

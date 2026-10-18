@@ -1,0 +1,52 @@
+**Lemma 3.1 (regularity, positivity and integrability).** Write $\xi=(r,\mathbf z)$ and define, initially almost everywhere in height,
+
+$$
+\begin{aligned}
+\rho(r)&=\int_{\mathbb R^3}p(r,\mathbf z)^2d\mathbf z,&
+m_Y(r)&=\int_{\mathbb R^3}|Yp(r,\mathbf z)|^2d\mathbf z,\\
+v_1(r)&=\int_{\mathbb R^3}V_1(r,\mathbf z)p(r,\mathbf z)^2d\mathbf z,&
+f(r)&=2r m_Y(r)+\gamma v_1(r),\\
+J(r)&=\int_r^\infty f(t)dt.
+\end{aligned}
+\tag{3.1}
+$$
+
+The function $\rho$ has an even continuous representative in $W^{1,1}(\mathbb R)$, $\int\rho=1$, and a positive lower bound on each compact height interval. In particular $\int_K\rho^{-1}<\infty$ for compact intervals $K$, whereas each unbounded half-line has infinite integral of $\rho^{-1}$. The functions $m_Y$ and $v_1$ are respectively even and odd. Both $f$ and $rf$ are integrable and $f$ is odd. Moreover $J$ is even, locally absolutely continuous, integrable, tends to zero at both infinities, and
+
+$$
+J'=-f,\qquad
+\int_{\mathbb R}|J|\le\int_{\mathbb R}|r f(r)|dr<\infty,\qquad
+\int_{\mathbb R}J(r)dr=\int_{\mathbb R}r f(r)dr=t_0.
+\tag{3.2}
+$$
+
+Proof. The distributional derivative $Xp=\partial_rp$ is in $L^2$, so $p\in H^1(\mathbb R;L^2(\mathbb R^3))$. Its Hilbert-valued continuous representative gives the continuous finite marginal $\rho$. The Hilbert-space product rule gives
+
+$$
+\rho'(r)=2\int p(r,\mathbf z)Xp(r,\mathbf z)d\mathbf z,
+\qquad \|\rho'\|_1\le2\|p\|_2\|Xp\|_2,
+\tag{3.3}
+$$
+
+and Fubini gives $\int\rho=1$.
+
+To prove a lower bound rather than infer it from almost everywhere positivity, use boundedness and nonnegativity of $V$. The positive Dyson expansion gives $p=e^{-tH_c}p\ge P_{at}p$ almost everywhere for fixed $t>0$. Choose a compact input set $K_0$ with $0<\int_{K_0}p<\infty$, which exists because $p>0$ and is locally $L^1$. Fix a compact height interval $K$ and a compact phase box $Z$ of positive volume. The continuous strictly positive heat kernel has a positive minimum on $K_0\times(K\times Z)$. Therefore $p\ge c_K>0$ almost everywhere on $K\times Z$, and $\rho\ge c_K^2|Z|$ almost everywhere on $K$. Continuity extends this inequality to all of $K$. This also proves local integrability of $1/\rho$. For any $A<B$, Cauchy–Schwarz and $\int\rho=1$ give
+
+$$
+(B-A)^2\le\left(\int_A^B\rho\right)\left(\int_A^B\rho^{-1}\right)
+ \le\int_A^B\rho^{-1}.
+\tag{3.4}
+$$
+
+Letting either endpoint tend to its corresponding infinity proves the asserted divergence on both tails.
+
+The involution $\sigma$ has a phase part of absolute determinant one. Its action on $p,Yp,V_1$ proves all marginal parities. The weighted mode gives $\int r^2m_Y=A<\infty$, and $\int m_Y=\|Yp\|_2^2<\infty$, so $\int|r|m_Y<\infty$ by Cauchy–Schwarz. Boundedness of $V_1$ and $p,rp\in L^2$ give
+
+$$
+\int |v_1|\le\|V_1\|_\infty,\qquad
+\int |r v_1|\le\|V_1\|_\infty\|rp\|_2\|p\|_2.
+\tag{3.5}
+$$
+
+Thus $f,rf\in L^1$, and oddness gives $\int f=0$. Consequently, for $r<0$, $J(r)=-\int_{-\infty}^r f(t)dt$; this and the defining positive-side tail show its two zero limits, evenness and $J'=-f$. On each half-line absolute Fubini bounds its $L^1$ norm by the corresponding part of $\int|rf|$. The same absolute justification without absolute values gives $\int J=\int rf$. Substitution in (3.1) yields $2A+\gamma B_1=t_0$. $\square$
+

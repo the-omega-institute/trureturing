@@ -1,0 +1,24 @@
+**Definition 9.1 (two physical boundary specimens).** Put
+
+$$
+\psi_T=\frac{(\sqrt{r_T},1,0)^T}{\sqrt{1+r_T}},\qquad
+\psi_S=\frac{(\sqrt{r_S},0,1)^T}{\sqrt{1+r_S}} .
+\tag{PG.42}
+$$
+
+They satisfy the off-plane quadratic of (PG.20). For the $T$ test let
+$\eta=\alpha,\zeta=\beta$ and
+$A=(h_0^2r_T+h_1^2)/(1+r_T)$.
+For the $S$ test let
+$\eta=\beta,\zeta=\alpha$ and
+$A=(h_0^2r_S+h_2^2)/(1+r_S)$.
+In either case define
+
+$$
+p=\frac{1-\zeta}{1+\eta},\quad q=\frac{\ell}{1+\eta},\quad
+x=\sqrt p,\quad y=\sqrt q,\quad t=y/x .
+\tag{PG.43}
+$$
+
+Thus $p+q=1$ and $p-\eta q=k$.
+

@@ -1,0 +1,28 @@
+**Proposition 9.1 (credited actual-state bridges).** R Theorems 6.1, 9.1 and 10.1 supply, on exactly the domains above,
+
+$$
+\begin{gathered}
+\limsup_{s\downarrow0}E_s\le C_{\rm resp},\qquad
+q_s^c[F]\ge-Cs^2\|F\|_2^2\quad(F\in\mathcal Q_s\text{ complex}),\\
+\operatorname{dist}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)\to0
+ \ \Longrightarrow\ \liminf_nE_{s_n}\ge C_{\rm resp},\qquad
+\mathcal O_c=\{e^{i\theta}p:\theta\in\mathbb R\}.
+\end{gathered}
+\tag{9.1}
+$$
+
+The last implication requires a prescribed sequence $s_n\downarrow0$ and actual normalized complex ground states $\psi_{s_n}\in D(S)$ on the exact path (1.6). P Theorem 105.1, with these same actual-state hypotheses, supplies
+
+$$
+r_{s_n}\to\infty
+ \quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)\to0.
+\tag{9.2}
+$$
+
+P Proposition 100.1 gives $E_s\le-cs^6$, hence $r_s\ge c>0$, for small $s$. Its direction is an upper bound on energy, not a matching lower bound.
+
+These results include the original lower arguments. R's upper construction uses compact odd approximants of $\Psi$, not $\Psi$ itself as an $L^2$ trial. Its full-domain lower estimate localizes a general complex vector, uses the compact horizontal-energy gap on its complement to $p$, and retains the nonnegative native $C_s$ outside the inner strip. Its unit-profile lower implication completes the full complex response square after obtaining an $O(s^2)$ complement energy; the strip limit is taken before the auxiliary strip parameter tends to zero. Thus none of (9.1) is merely an affine trial assertion.
+
+P's equivalence depends on its finite-native resolvent estimate and actual negative attainment. It is not an assertion for arbitrary near-minimizers. P Theorem 90.1's weaker critical near-minimizer class has the entire weak disk $\{cp:|c|\le1\}$, including lost mass, and cannot supply the unit norm in (9.1) or (9.2).
+

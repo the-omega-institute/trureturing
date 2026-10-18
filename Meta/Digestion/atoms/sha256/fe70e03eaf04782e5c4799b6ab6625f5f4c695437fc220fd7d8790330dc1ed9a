@@ -1,0 +1,43 @@
+**Lemma 2.2 (finite product-space Finner inequality).** On a finite
+product probability space with strictly positive coordinate laws, let
+nonnegative functions $g_i$ have coordinate scopes $S_i$. For
+$0<\eta_i\le1$ assume
+$\sum_{i:a\in S_i}\eta_i\le1$ at every coordinate $a$. Then
+
+$$
+\mathbb E\prod_i g_i\le
+\prod_i\big(\mathbb E g_i^{1/\eta_i}\big)^{\eta_i}.
+\tag{WBF.9}
+$$
+
+Additional functions with exponent zero may be included by replacing
+their factors on the right by their global maximum.
+
+Proof. First bound each zero-exponent function pointwise by its
+maximum and remove it. For the positive exponents, induct on the number
+of coordinates. Constants and empty scopes cause no difficulty. Fix a
+coordinate $a$ and hold all others fixed. Hölder with exponents
+$1/\eta_i$ for the functions depending on $a$, and a constant-one
+factor of reciprocal exponent
+$1-\sum_{i:a\in S_i}\eta_i$ if this is positive, gives
+
+$$
+\mathbb E_a\prod_i g_i\le
+\left(\prod_{i:a\notin S_i}g_i\right)
+\prod_{i:a\in S_i}
+\left(\mathbb E_a g_i^{1/\eta_i}\right)^{\eta_i}.
+\tag{WBF.10}
+$$
+
+Replace each involved function by
+$\widetilde g_i=(\mathbb E_a g_i^{1/\eta_i})^{\eta_i}$,
+whose scope is contained in $S_i\setminus\{a\}$. The same
+incidence inequalities hold on all remaining coordinates. Apply the
+induction hypothesis with the same $\eta_i$. For every involved
+function, $\widetilde g_i^{1/\eta_i}=\mathbb E_a g_i^{1/\eta_i}$,
+so the resulting norm is exactly its original full-product norm by
+finite summation. For uninvolved functions it is unchanged. This proves
+(WBF.9); the no-coordinate case is equality for constants. The
+zero-exponent argument also applies to identically zero functions.
+$\square$
+

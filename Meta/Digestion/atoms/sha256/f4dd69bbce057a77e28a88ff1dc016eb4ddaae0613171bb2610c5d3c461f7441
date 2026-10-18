@@ -1,0 +1,49 @@
+**Theorem 44.5 (A fixed finite-anchor family has a strict gap).** Suppose $h>0$ and the profile is strict. Fix an admissible common procedure and a full law family whose anchor law is finitely supported. Its best-reference radius, allowing every probability reference on the given carrier, satisfies
+
+$$
+\operatorname{rad}(\mu)>R.
+\tag{44.19}
+$$
+
+This holds even if the best-reference infimum of this fixed family is not attained. More precisely, if $B<1$, choose $m$ with $\mu_{x_*}(A_m)=h$ and one actual matching source of target $k>m$. Then
+
+$$
+\operatorname{rad}(\mu)\ge
+\frac{(1-B)h}{2(1-B)+b(k)}
+>\frac{(1-B)h}{2-B}.
+\tag{44.20}
+$$
+
+If $B=1$, one actual source selected using the finite list supporting the anchor law has a finite target $k$ for which
+
+$$
+\operatorname{rad}(\mu)\ge\frac{(1-b(k))h}{2}>0.
+\tag{44.21}
+$$
+
+The matching sources in these bounds are fixed before the reference is varied.
+
+**Proof.** A finite anchor point mixture permits the stated $m$, by covering its finitely many proposal records. For $B<1$, fix one matching source of target $k>m$, so $A_m\subseteq F_y$. For any reference write $s=\rho_\nu$ and $M=\sup_y\nu(H_y)$. Theorem 43.2 and (44.15) give
+
+$$
+M\le\frac{s}{1-B},\qquad
+h-s\le\nu(A_m)\le b(k)M+s.
+\tag{44.22}
+$$
+
+It follows that $h\le s[2+b(k)/(1-B)]$, which proves the first inequality in (44.20). Since $b(k)<B$, its denominator $2(1-B)+b(k)$ is strictly smaller than $2-B$, proving the strict comparison. Both denominators are positive. This bound holds for every reference on the fixed carrier, so it passes to their infimum without taking a limit of measures.
+
+For $B=1$, let $T$ be the finite list of anchor-support tapes. First choose $m$ so that every anchor proposal run on $T$ lies in $A_m$. The finite-color argument supplies one actual source $y$ matching the anchor on $P_m$, with target $k>m$ and with no correct proposal on any tape in $T$. To spell out its source quantifier, color a source by the least tape in $T$ giving a correct finite proposal there, using color zero when there is none. The associated advice procedure simulates that tape, or returns unknown at color zero, and is sound on each advice cell. Theorem 37.2 selects a persistent source in the desired finite probe cylinder above the bound; Corollary 37.3 forces its color to be zero. The selected source works simultaneously for every tape in $T$.
+
+For this $y$, put $k=\Omega(y)$, $t=\operatorname{TV}(\mu_{x_*},\mu_y)$ and $S_y=H_y\setminus F_y$. The anchor law gives $\mu_{x_*}(S_y)=0$. The chosen anchor cutoff satisfies $\mu_{x_*}(A_m)=h$ and $A_m\subseteq F_y$. Thus
+
+$$
+(1-b(k))h_y\le\mu_y(S_y)\le t,
+\qquad h\le\mu_y(A_m)+t\le b(k)h_y+t.
+\tag{44.23}
+$$
+
+Eliminating $h_y$ gives $t\ge(1-b(k))h$. For every reference the event-TV triangle inequality gives $2\rho_\nu\ge t$, proving (44.21) after taking the infimum. Again $k$ is one actual finite target and $b(k)<1$.
+
+The global restricted infimum in Theorem 44.4 is approached by changing the whole design, including the finite anchor distribution and its record cutoff. It is not the best-reference infimum of a single fixed finite-anchor family. Equations (44.20)--(44.21) show why taking unattained reference infima cannot remove this distinction. $\square$
+

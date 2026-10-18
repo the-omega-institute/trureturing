@@ -1,0 +1,80 @@
+**Proposition 2.1 (pure-support restriction and positive affine factor).**
+Under Assumptions 1.1 and 1.3, suppose (RB.6) holds. Every pure
+contact is in
+$Y=\{x\in S^1:u\le0\ \text{or}\ f(x)\le0\}$.
+There is a strictly positive affine circle function $L_*(x)$ such that
+
+$$
+\begin{aligned}
+F_0(x)&:=P(x)+\ell(x)+\lambda u
+       =(1-x_*\cdot x)L_*(x),\\
+S_-(x)&:=P(x)+\ell(x)+\lambda u-\rho c(x)(w\cdot x)^2\\
+ &=(1-x_*\cdot x)
+       [L_*(x)-\rho c(x)(1+x_*\cdot x)],\\
+L_*(x)-\rho c(x)(1+x_*\cdot x)&\ge0\quad(x\in S^1),\\
+L_*(x_*)&\ge2\rho c(x_*)>0.
+\end{aligned}
+\tag{RB.7}
+$$
+
+The function $S_-$ is the globally nonnegative smooth negative-height,
+negative-report saturated signed gap. Weakly zero saturated height at
+$x_*$ is allowed.
+
+Proof. Let $x$ be a positive-height pure contact and choose its report
+sign $\epsilon=\operatorname{sgn}u$, which is defined by FC20.1.
+The pure positive-height test vanishes there. Its saturated version
+is nonnegative by (RB.3), so $x^TR_+x\ge0$. Substitution of (RB.6)
+gives $-2tf(x)-\rho(w\cdot x)^2\ge0$, hence $f(x)\le0$.
+Every other pure contact has strictly negative height by FC20.1;
+FC11.1 then gives $u<0$. This proves the full pure inventory is
+in $Y$, without restricting any saturated contact.
+
+The globally nonnegative degree-two trigonometric polynomial $F_0$
+vanishes at $x_*$ by the inherited negative pure contact and its
+left report sign. Its angular derivative vanishes there as well,
+since a smooth nonnegative function has zero derivative at a zero.
+Rotate coordinates so $x_*=(1,0)$, and write
+
+$$
+F_0(\theta)=A_0+A_1\cos\theta+B_1\sin\theta+
+                         A_2\cos2\theta+B_2\sin2\theta.
+\tag{RB.8}
+$$
+
+Value and derivative at zero give $A_1=-A_0-A_2$ and
+$B_1=-2B_2$. Therefore
+
+$$
+F_0(\theta)=(1-\cos\theta)
+ [(A_0-A_2)-2A_2\cos\theta-2B_2\sin\theta].
+\tag{RB.9}
+$$
+
+Rotating back gives the first factorization of (RB.7), with affine
+$L_*$. For $x\ne x_*$ its first factor is positive, so $L_*\ge0$
+there. Continuity gives the same inequality at $x_*$.
+
+The kernel relation makes $w$ perpendicular to the unit vector $x_*$.
+In two dimensions this gives
+$(w\cdot x)^2=1-(x_*\cdot x)^2$ on $S^1$. Substituting in the
+globally nonnegative saturated test proves the second factorization.
+Dividing away from $x_*$ and then taking the limit to $x_*$ proves
+the bracket inequality everywhere and its strict lower bound for
+$L_*(x_*)$.
+
+If $L_*(x)=0$ elsewhere, then $F_0(x)=0$. Pure feasibility writes
+this as a sum of nonnegative terms:
+
+$$
+0=F_0(x)=
+[P-|\ell|-\lambda|u|]+[|\ell|+\ell]+\lambda[|u|+u].
+\tag{RB.10}
+$$
+
+It forces a pure contact with $u\le0$, $\ell\le0$. The axis and
+pure zero-height exclusions in FC20.1 make both inequalities strict.
+This would be a second directed negative pure contact, contradicting
+FC34.3. Thus $L_*>0$ everywhere. This conclusion uses the inherited
+uniqueness, not a positive-contact inventory cap. $\square$
+

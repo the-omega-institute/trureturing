@@ -1,0 +1,5 @@
+source_id = "fib-native-complex-atomic-cone-and-optimal-resource-faces"
+path = "docs/develop/theory/FIB_NATIVE_COMPLEX_ATOMIC_CONE_AND_OPTIMAL_RESOURCE_FACES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

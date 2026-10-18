@@ -1,0 +1,57 @@
+**Lemma 9.1 (the two-projection-line obstruction).** No globally
+height-optimal weak finite-budget instrument can have all its
+supported-nonzero low projection lines in at most two lines.
+Additional supported-zero labels remain allowed.
+
+Proof. This is RC72–73's common-dual exclusion, recalled with its
+operative conditions. The projected live covariance is $I_2$ and the
+same two-line failure covariance is $\operatorname{diag}(V,W)$,
+with $V<W$. Two weighted live columns summing to $I_2$ form an
+orthogonal matrix. The failure covariance diagonalizes in that basis;
+its distinct eigenvalues force the two lines to be the coordinate
+axes. Live first moments then force both orientations, with masses
+$\alpha/2$ at $(1,\pm\alpha^{-1/2},0)$ and $\beta/2$ at
+$(1,0,\pm\beta^{-1/2})$.
+
+The layer is feasible only for $t\ge t_{\rm ax}=W/c_w$,
+$\tau\le\sqrt\alpha$, where $c_w=c_*(0)<c_f<c_z$.
+It has an explicit height attainer using the two $z$ rows with
+$b=V$, and a pure/saturated allocation on the $w$ rows filling the
+lower positive pure height first. To justify that optimization, the
+source signs are
+
+$$
+\begin{gathered}
+a_z=g_0+g_1/\alpha<b_z=2x_G/\sqrt\alpha,\quad a_z>0,\\
+a_w=g_0+g_2/\beta>b_w=2y_G/\sqrt\beta>0,\quad
+f(h_{z,\pm})=0,\quad f(h_{w,\pm})=-k_w,\\
+k_w=11d_{\rm src}^2/(64h_2^2\beta),\qquad
+Wk_w>a_w+b_w.
+\end{gathered}
+\tag{AC.43}
+$$
+
+Thus each $w$-row's endpoint splitting is optimal, and the negative
+orientation must be filled before the positive one. If the layer
+value equalled the global value, this specific layer attainer would
+also be globally optimal. It lies in the strict dual domain because
+$t_{\rm ax}>t_0$ and
+
+$$
+\tau_* -\sqrt\alpha
+=\frac{\beta\sqrt{u_f}(1-\sqrt{\alpha u_f})}
+ {1-\alpha u_f}>0.
+\tag{AC.44}
+$$
+
+Its two $z$ rows are strictly unsaturated, $0<V<tc_z$, have opposite
+nonzero live heights, and have the same physical failure line $e_2$.
+The common-contact kernel argument AC.34, applied to their strict
+endpoint interpolation equalities, forces simultaneously
+$(Z-\Delta_f)e_2=0$ and $(Z+\Delta_f)e_2=0$.
+But $\Delta_fe_2=(\Delta_{12},0)^T\ne0$. This contradiction
+excludes global equality for the entire layer. One line cannot give
+rank-two live covariance. This proves the lemma without fixing a
+maximum-contrast completion or citing a support-count heuristic.
+$\square$
+

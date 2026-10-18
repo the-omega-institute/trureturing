@@ -1,0 +1,60 @@
+**Convention 6.1 (separate resource accounts).** The alphabet
+$|\mathcal H_A(D)|$ counts earlier actual sequences, not their
+lengths. Equations (NPH.11)–(NPH.12) bound fresh calls; $K$ is a
+conditional supplement, not total observer memory. Acquisition
+buffers, reconstructed syntax, address construction, complete retained
+state, installed public code, decoder workspace, transcript output,
+local simulation work, archive persistence and access, and the
+handoff/isolation/continuity/authentication services are separate
+coordinates. No monetary, energy or physical execution optimum is
+claimed. Theorem 4.3 can have large output even when its call count
+is bounded by (NPH.13).
+
+**Supplier correspondence 6.2 (repository contracts).**
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [PPF, §§1,3–7][PPF] | Original all-source/all-target/all-count contract, per-call prices, native comparison witnesses, actual `Acquire`, effective optimal naming and image disjointness. Its preparation projections are not the transcript-alphabet theorem. |
+| [AAR, §§12–13,16][AAR]; [CBN, §§1–2][CBN] | Entire-trajectory factor and actual canonical trees/reply tables. These already own the finite spatial/prediction correspondence. |
+| [FMR, §3][FMR]; [D3, §§2,4][D3] | Existence of the original rate, four-name depth-three value and strict rate upper bound used in Corollary 4.4. |
+| [SCE, §§5–6][SCE] | Four-reply capacity method for a different task: common target-table pooling. The required image here is the actual earlier preparation sequence. |
+| [NDR, §6][NDR]; [SLH, §43.5][SLH] | Existing deterministic replay boundary and terminal-record distinctions. Replay and generic coding are reused, not counted as the new native lower bound. |
+| [ActualTreeReadoutAcquisition][ATR] and [its owning Scribe][ATB] | `readout` and stationary history-only `Policy`; `paid` counts distinct addresses for its membership task, whereas this volume charges each invocation. Its comparison operation `flip` is not a lawful source update. |
+| [FixedTreeCommonExtension][FTE] and [its owning Scribe][FTB] | `Implementation` receives given leaf coordinates and full child-message tuples on a fixed `Full` tree. It supplies neither literal acquisition nor a past archive. |
+| [NativeLiteralMoore][NLM] and [its owning Scribe][NLB] | `NativeLiteralFeasible` runs on `substitution u.val` and outputs predecessor `canonicalRow P u.val`. By PPF 7.1 this is not an identity-port handoff to the unchanged original family. |
+
+**Literature correspondence 6.3 (primary models and transfer limits).**
+
+| Primary source | Verified correspondence |
+| --- | --- |
+| Jain, Klauck and Santha, *Optimal Direct Sum Results for Deterministic and Randomized Decision Tree Complexity*, [arXiv:1004.0105v1](https://arxiv.org/pdf/1004.0105v1), Theorem 1 | `literature-attested`: deterministic query depth for independent Boolean-input relations has a direct-sum lower bound. Independent actual cones motivate comparison; four-valued probes, residual admissibility and terminal-leaf multiplication in Theorem 3.3 are proved here and are not an application of that depth theorem. |
+| Greenwald, Moore, Pierce and Schmitt, *A Language for Bi-Directional Tree Transformations*, [author manuscript](https://www.cis.upenn.edu/~bcpierce/papers/lenses.pdf), Definitions 3.1.1–3.1.2 | `literature-attested`: partial get/put laws include GetPut and PutGet, and put receives the old concrete state, or the explicit missing-state argument. That complement is not an acquired inverse of a compressed native export or an event archive. |
+| Matsuda, Nguyen and Wang, *Lenses for Partially-Specified States*, [extended version](https://arxiv.org/pdf/2601.04573), Definitions 2–3; [DOI](https://doi.org/10.1007/978-3-032-22723-2_2) | `literature-attested`: partial-state lenses use i-posets and a partial put; duplicability supplies a designated merge operation. Neither merge nor partial specification grants physical copying, historical acquisition or native prices. |
+| Littman, Sutton and Singh, *Predictive Representations of State*, [primary paper](https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf), Theorem 1 | `literature-attested`: finite-POMDP environments admit linear predictive representations with no more tests than minimal POMDP states, preserving history distributions. Prediction of future tests does not recover a realized deterministic past; POMDP structure and probabilistic coordinates do not supply native acquired names. |
+| van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2), introduction and adaptive-test construction | `literature-attested`: adaptive testing identifies states under a declared finite input/output transition-system model and compatibility conditions. Those input/output permissions are not original-root Reads, and state identification is not historical receipt recovery. |
+| Prabhakaran and Prabhakaran, *Assisted Common Information with Applications to Secure Two-Party Computation*, [arXiv:1002.1916](https://arxiv.org/pdf/1002.1916), §II, Theorem 2.1 and Corollary 2.2 | `literature-attested`: correlated iid blocks, asymptotic agreement and a rate-limited omniscient helper define a common-information region; zero-rate common information follows support components. No helper, iid law, entropy-rate or allowed-error theorem is transferred to this single-source zero-error task. |
+
+The native local calculation, its multiplicative propagation and the
+history-recovery consequence are `repo-derived`. The paper models
+above delimit useful comparisons; no exhaustive literature search or
+global originality claim is made. Ordinary proofs establish the
+quantified statements. Finite checks of small actual trees can falsify
+them but do not certify their universal or kernel status.
+
+[PPF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PREPARATION_FRONTIERS.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[SCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SELECTOR_COMMON_EXTENSION.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DISCOVERY_AND_RETAINED_CONTEXT.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[PG]: RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[Atlas]: RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+[ATR]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ATB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs
+[FTE]: ../../../D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTB]: ../../../Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[NLM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+

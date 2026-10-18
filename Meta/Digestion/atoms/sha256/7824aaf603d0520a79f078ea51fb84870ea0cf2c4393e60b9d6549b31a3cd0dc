@@ -1,0 +1,31 @@
+**Lemma 3.1 (Every open height strip spans the actual affine hull).**
+For every nonempty open interval $I\subset(0,H)$,
+
+$$
+\operatorname{aff}E(I\times\mathbb T^2)=\mathscr L.
+$$
+
+**Proof of Lemma 3.1.** Denote the hull for $I$ by $\mathscr L_I$.
+If $I,I+s\subset(0,H)$, the lawful identities give
+$\mathcal U_s\mathscr L_I=\mathscr L_{I+s}$ and the reverse equality
+for $-s$. The two compositions are identities on the respective encoded
+strips and hence on their hulls. These hulls are affinely isomorphic.
+
+Choose an open interval $I_0$ whose hull has the minimum possible
+dimension $d$. A minimum exists among the finitely many integer values
+$0,\ldots,m$. Shrink $I_0$ to have interior closure and length less
+than $H$. Inclusion and minimality leave its hull dimension equal to
+$d$. Every translate with interior closure has the same hull dimension.
+If two such translates overlap, the intersection is a nonempty open
+interval. Its hull has dimension at least $d$ and lies in both hulls of
+dimension $d$, so those hulls coincide.
+
+The permissible translation parameters form an interval. Any two can
+be joined by finitely many steps smaller than the length of $I_0$,
+giving an overlapping chain. Thus all these translates have the same
+hull. They cover $(0,H)$, so their common hull is $\mathscr L$.
+Any other open strip has its hull contained in this space and dimension
+at least $d$, and therefore has that same hull. This also covers $d=0$.
+Only finite affine combinations and lawful translations were used; no
+limit of encoder values at any height was taken. $\square$
+

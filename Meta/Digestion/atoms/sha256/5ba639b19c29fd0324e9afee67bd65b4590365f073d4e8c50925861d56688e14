@@ -1,0 +1,19 @@
+**Proposition 3.2 (import and head restoration).** The importer returns
+exactly the ordinary symbol word of the chosen actual tape and restores
+its entry head. It terminates with paid finite work, including on an empty
+tape. It neither acquires another owner's backing nor grants authority
+from an encoded permission.
+
+Proof. After $a$ Save iterations, the source has moved $a$ cells toward L
+and the bank distance has $a$ leading ones. Source L already exists, so
+Save terminates at its actual original distance $h_i$. After $j$ Scan
+iterations the source points to the next cell and the accumulator is the
+reverse of the first $j$ literal triples. The finite symbol branch and
+three cons assignments establish this invariant without using a surviving
+read latch. Because no source writer runs during Scan, its existing R is
+fixed. Reverse returns exactly its finite symbol word. Home and the
+$h_i$ actual restore moves return the mark to its old cell, including when
+that cell was R. Word-bank updates preserve the source mark. All loops
+consume a fixed finite source, distance or accumulator. No assertion about
+restoring the compiler's own heads or latches follows or is needed. ∎
+

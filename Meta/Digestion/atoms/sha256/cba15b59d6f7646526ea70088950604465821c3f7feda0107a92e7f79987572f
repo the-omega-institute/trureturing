@@ -1,0 +1,141 @@
+**定理 23.5（全部固定扇区的概率平衡应用）。** 在 §23.5 的任意可行整数扇区上，定义作用于函数列 $f=(f(k))$ 的连续时间生成元
+
+$$
+(Lf)(k)=\beta_k[f(k+1)-f(k)]+\delta_k[f(k-1)-f(k)],
+$$
+
+$$
+\beta_k=(U-k)(V-k),\qquad
+\delta_k=k(R-U-V+k).
+$$
+
+只使用可行区间内的邻点，端点外率为零。则其唯一平衡律为
+
+$$
+\pi_k=\frac{\binom Uk\binom{R-U}{V-k}}{\binom RV},
+\qquad k_-\le k\le k_+,
+$$
+
+并满足详细平衡。令 $S_\pi=\operatorname{diag}(\sqrt{\pi_k})$，有精确相似关系
+
+$$
+\widehat H_{m;U,V,W}=-S_\pi L S_\pi^{-1}.
+$$
+
+因此扇区唯一的归一化零能射线由
+
+$$
+|\Omega_{m;U,V,W}\rangle=\sum_{k=k_-}^{k_+}\sqrt{\pi_k}\,|k\rangle
+$$
+
+代表。该扇区的全部特征值为
+
+$$
+\lambda_j=j(R-j+1),\qquad j=0,1,\ldots,w,
+\qquad w=k_+-k_-=\min(U,V,R-U,R-V).
+$$
+
+它们各重数一；只有 $D\ge2$ 的扇区才有正谱隙，且谱隙为 $R$。
+
+证明中的平衡律。取 $R$ 个位置，其中一个固定 $U$ 元集合带标记，从所有 $V$ 元子集均匀选择。交集大小 $k$ 的选择数是 $\binom Uk\binom{R-U}{V-k}$，可行范围正是所列区间。按交集分组枚举全部 $\binom RV$ 个子集，证明归一化；每个区间内的 $\pi_k$ 正。
+
+直接取相邻组合数的比值得
+
+$$
+\frac{\pi_{k+1}}{\pi_k}
+=\frac{(U-k)(V-k)}{(k+1)(R-U-V+k+1)}
+=\frac{\beta_k}{\delta_{k+1}},
+$$
+
+即 $\pi_k\beta_k=\pi_{k+1}\delta_{k+1}$。内部双向率正，因此有限区间连通。若 $\rho$ 是平衡概率列，方程是 $L^{\mathsf T}\rho=0$；下端方程令第一条边的净流为零，逐点方程继而令每条边净流为零。相邻比值和归一化便强迫 $\rho=\pi$，单点区间则直接成立。这既证明唯一性，也区分函数列和概率列的方向。
+
+此分布的矩用于后文波动应用。令 $J_a$ 是第 $a$ 个标记位置被随机 $V$ 元子集选中的指标，则 $k=\sum_{a=1}^U J_a$。当 $R>0$ 时 $\mathbb E J_a=V/R$，故
+
+$$
+\mathbb E_\pi k=\frac{UV}{R}.
+$$
+
+当 $R>1$ 时，不同标记位置同时入选的概率是 $V(V-1)/[R(R-1)]$，于是
+
+$$
+\begin{aligned}
+\operatorname{Var}_\pi k
+&=U\frac VR\left(1-\frac VR\right)
++U(U-1)\left[\frac{V(V-1)}{R(R-1)}-\frac{V^2}{R^2}\right]\\
+&=\frac{UV(R-U)(R-V)}{R^2(R-1)}.
+\end{aligned}
+$$
+
+$R=0$ 只有 $U=V=k=0$，$\pi_0=1$；$R=1$ 的所有可行扇区也是单点，方差零，不使用显示的 $R-1$ 分母。
+
+证明中的相似变换。$L$ 的对角元是 $-(\beta_k+\delta_k)$，上邻元为 $\beta_k$，下邻元为 $\delta_k$。所以 $-S_\pi L S_\pi^{-1}$ 的上邻元是
+
+$$
+-\frac{\sqrt{\pi_k}\beta_k}{\sqrt{\pi_{k+1}}}
+=-\sqrt{\beta_k\delta_{k+1}}=-t_k,
+$$
+
+下邻元相同，对角元是 $\beta_k+\delta_k$，逐项等于 §23.5 的正算子矩阵。由于 $L\mathbf1=0$，$S_\pi\mathbf1$ 是归一化零能向量。唯一性还可直接由有限 Dirichlet 形式看出：
+
+$$
+\langle f,-Lf\rangle_\pi
+=\sum_{k=k_-}^{k_+-1}\pi_k\beta_k|f(k+1)-f(k)|^2.
+$$
+
+其零空间只有常数；相似变换便给所列唯一射线。$\pi_k$ 是概率，$\sqrt{\pi_k}$ 是量子振幅，这两者不可交换。唯一性只在一个固定扇区内，未宣告整个 $\mathcal H_m$ 的唯一基态。
+
+证明中的全可行区间谱。对 $j\ge1$，展开 $f(k)=k^j$ 的前两阶有限差分，最高可能的系数由
+
+$$
+j(\beta_k-\delta_k)k^{j-1}
++\frac{j(j-1)}2(\beta_k+\delta_k)k^{j-2}
+$$
+
+给出，其中 $j=1$ 时第二项为零。因
+
+$$
+\beta_k-\delta_k=UV-Rk,\qquad
+\beta_k+\delta_k=2k^2+(R-2U-2V)k+UV,
+$$
+
+次数 $j+1$ 的项抵消，次数 $j$ 的系数是
+
+$$
+-jR+j(j-1)=-j(R-j+1).
+$$
+
+余下差分项的次数至多 $j-1$，而 $L1=0$，故 $L$ 保持次数过滤。即使端点的一项引用区间外的多项式值，该项率为零，因此这个多项式计算在原可行区间每一点仍完全有效，不要求下端点为零。
+
+区间的 $D$ 个不同整数上，$1,k,\ldots,k^{D-1}$ 的评价矩阵是可逆 Vandermonde 矩阵。故它们构成全部函数空间的一组基，$L$ 在该基中是三角矩阵，所列对角系数就是全部特征值，没有漏掉其他函数。若 $U+V\le R$，宽度为 $\min(U,V)$；若 $U+V>R$，宽度为 $R-\max(U,V)$，两式一起给 $w=\min(U,V,R-U,R-V)\le R/2$。对 $0\le j<w$，
+
+$$
+\lambda_{j+1}-\lambda_j=R-2j>0.
+$$
+
+因此谱简单，$w\ge1$ 时首个正特征值 $\lambda_1=R$。$w=0$ 时只有零特征值，包括所有零尺度边界。相似关系把这些结论逐项传到 $\widehat H$，完成该四角应用的证明。
+
+这个链是经典 Bernoulli–Laplace 交换及其 Hahn/dual Hahn 多项式机制的一个明确参数实例，不作为新的通用链定理。Lim–Pickering 的 *A Nonlinear Transform for the Diagonalization of the Bernoulli-Laplace Diffusion Model and Orthogonal Polynomials*，[arXiv:1812.01143v1](https://arxiv.org/abs/1812.01143v1) §2 式 (2.1)–(2.4) 的参数对应是
+
+$$
+(N,N_1,N_2,N_w,N_b,i)=(R,U,R-U,V,R-V,k).
+$$
+
+原文的上、下跳概率因此为 $p_k=\beta_k/[U(R-U)]$、$q_k=\delta_k/[U(R-U)]$。它的 $T$ 是概率列矩阵，故当 $0<U<R$ 时，本章函数列生成元为
+
+$$
+L=U(R-U)(T^{\mathsf T}-I).
+$$
+
+式 (3.25) 的离散特征值 $1-j(R-j+1)/[N_1N_2]$ 经该缩放给本章 $-\lambda_j$。原文 §4 的对称化是 $Z=S_\pi^{-1}TS_\pi$；详细平衡使 $S_\pi T^{\mathsf T}S_\pi^{-1}=Z$，这正与本章相似方向一致。
+
+原文式 (6.1) 用另一等价抽样方向写平衡律，代入后为
+
+$$
+\frac{\binom Vk\binom{R-V}{U-k}}{\binom RU}
+=\frac{\binom Uk\binom{R-U}{V-k}}{\binom RV}.
+$$
+
+等号按阶乘逐项约掉得到，体现同一交集而非两个不同概率模型。原文展示的 $i=0,\ldots,N_w\le N_1$ 范围还需下端非负率；在上述映射中，完整的零起点区间需要 $V\le U$、$U+V\le R$。其他边际使用真实可行区间 $[k_-,k_+]$，由本证明承担其端点和谱。$U=0$ 或 $U=R$ 时缩放因子零，扇区为单点，直接有 $L=\widehat H=0$，不用除以 $N_1N_2$；$R=0$ 同样直接处理。原文平衡情形的混合时间估计没有转移到这里任意边际或零尺度边界。
+
+共享谱不等于共享时间律：量子态用 $e^{-it\widehat H}$，概率列用 $e^{tL^{\mathsf T}}$。此外，只取交换项 $B+B^\dagger$ 会丢掉本章对角项。在 $D\ge2$ 时，这个交换算子是非零 Hermitian 矩阵而对角全零，迹为零，因此必有负特征值；本章 $\widehat H$ 正半定，所以二者的谱不同。单点扇区两者都为零，直接按该退化情形处理。
+

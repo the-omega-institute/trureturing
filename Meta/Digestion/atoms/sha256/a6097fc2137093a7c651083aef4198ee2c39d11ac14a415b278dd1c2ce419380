@@ -1,0 +1,142 @@
+**Theorem 4.2 (Exact full-TP PPT channels with a nontrivial cycle).**
+For every $\xi>0$, $\chi'_\xi$ is positive, has rank $13$,
+is invariant under either partial transpose, and satisfies
+$\operatorname{Tr}_{\rm out}\chi'_\xi=I_5/5$. Its channel
+
+$$
+T_\xi(X)=D\operatorname{Tr}_{\rm in}
+ [(I\otimes(D^\dagger XD)^T)Z'_\xi]D^\dagger
+\tag{4.4}
+$$
+
+is complex CPTP, stationary and reflected in the passive frame.
+It admits a scalar port if and only if $\xi=1$.
+The witness $W'_\xi$ is nonnegative on every complex product
+vector and
+
+$$
+\operatorname{tr}(W'_\xi\chi'_\xi)=(8\xi-7)/5.
+\tag{4.5}
+$$
+
+Thus for $0<\xi<7/8$ this same full-TP point is separated from
+the entire complex scalar-port cone by an explicit witness.
+
+Proof. The seed is the tuple (2.1) with
+$\Lambda_{ij}=n_in_je_{ij}$ and $\Gamma_{ij}=n_in_j$.
+Its trace-sector block has rank one. Each planar traceless
+direction has eigenvalue one, each planar antisymmetric direction
+has eigenvalue zero, and each ordered cross-sector block is
+$\left(\begin{smallmatrix}e_{ij}&1\\1&e_{ji}\end{smallmatrix}\right)$.
+These eight cross blocks have rank one because
+$e_{ij}e_{ji}=1$. The rank is therefore $1+4+8=13$.
+This proves positivity by the actual block decomposition of
+Theorem 2.3, rather than by low-dimensional PPT sufficiency.
+
+Each tensor factor in (4.1) is real symmetric, proving separate
+transpose invariance. Its sums are invariant under simultaneous
+orthogonal transformations within each $V_i$: the planar traceless
+sum and the cross-sector sum are sums over orthonormal matrix bases.
+This includes the actual walk and $\mathsf J$. Congruence by
+$C_\xi$ preserves those properties and positivity. The traceless
+terms have zero partial output trace, so (4.2) and (4.3) give
+$\operatorname{Tr}_{\rm out}Z'_\xi=I_5$ exactly. Thus its trace
+is five and its channel is CPTP on all complex matrices.
+
+For a literal identification with the original coefficient space,
+the coordinates of $Z'_\xi$ are
+
+$$
+\begin{gathered}
+M'_{ij}=\sqrt{n_in_j}\,e_{ij}/m_j,\\
+\eta'=\left(\frac2{\sqrt{m_0m_+}},
+\frac2{\sqrt{m_0m_-}},\frac1{m_+},\frac1{m_-},
+\frac2{\sqrt{m_+m_-}},\frac2{\sqrt{m_+m_-}}\right).
+\end{gathered}
+\tag{4.6}
+$$
+
+The three column sums of
+$\Lambda'_{ij}=n_in_je_{ij}/m_j$ are $(1,2,2)$.
+Furthermore (3.1) holds with $t_i=n_i/\sqrt{m_i}$, and the
+cycle ratio is $\sigma=\xi^6$. Theorem 3.1 proves the exact
+scalar-port assertion, including the complex case. At $\xi=1$
+the port (3.6) applies; the other values are not ports.
+
+For universal positivity of the witness, take arbitrary real
+$a,b\in\mathbb R^5$, with $p_i=\|R_ia\|^2$,
+$q_i=\|R_ib\|^2$ and $s_i=(R_ia)^T(R_ib)$. Its product form is
+
+$$
+\Psi(a,b)=\sum_ip_iq_i+p_0q_++p_+q_-+p_-q_0
+                   -2(s_0s_++s_0s_-+s_+s_-).
+\tag{4.7}
+$$
+
+Since $s_is_j\le\sqrt{p_ip_jq_iq_j}$, it is at least
+$y^T\mathcal C(p)y$, for $y_i=\sqrt{q_i}$ and
+
+$$
+\mathcal C(p)=\begin{pmatrix}
+p_0+p_-&-\sqrt{p_0p_+}&-\sqrt{p_0p_-}\\
+-\sqrt{p_0p_+}&p_++p_0&-\sqrt{p_+p_-}\\
+-\sqrt{p_0p_-}&-\sqrt{p_+p_-}&p_-+p_+
+\end{pmatrix}.
+\tag{4.8}
+$$
+
+Its diagonal is nonnegative. With $(x,y,z)=(p_0,p_+,p_-)$,
+its three two-by-two principal minors are
+$x^2+xz+yz$, $xy+yz+z^2$, and $xy+xz+y^2$.
+Its determinant is
+
+$$
+x^2y+y^2z+z^2x-3xyz\ge0
+\tag{4.9}
+$$
+
+by AM–GM, including zero populations. All principal minors are
+nonnegative, so $\mathcal C(p)\succeq0$. This proves (4.7)
+nonnegative without sign or support restrictions.
+
+The matrix $W$ lies in
+$\operatorname{Sym}_5(\mathbb R)\otimes\operatorname{Sym}_5(\mathbb R)$.
+For complex $a=u+iv,b=w+iz$, its product expectation is the sum
+of the four real-product expectations at $(u,w),(u,z),(v,w),(v,z)$.
+Each is nonnegative by the preceding proof. Hence it is nonnegative
+on all complex product vectors. The real invertible local congruence
+in (4.3) preserves this property.
+
+For the trace pairing, the diagonal terms contribute
+$\sum_i n_i^2=9$, the three directed terms contribute
+$(2+4+2)\xi=8\xi$, and the cross terms contribute
+$-2(2+2+4)=-16$. The planar traceless terms are orthogonal
+to $W$. Thus $\operatorname{tr}(WZ_\xi)=8\xi-7$.
+The filters in the pairing cancel, proving (4.5).
+Every complex separable matrix has nonnegative pairing with a
+complex-product-positive witness, so negative pairing excludes
+every complex scalar realization. In the original basis the normalized
+Choi matrix and witness are, explicitly,
+
+$$
+\chi^{\rm phys}_\xi=(D\otimes\overline D)\chi'_\xi
+                         (D^\dagger\otimes D^T),\qquad
+W^{\rm phys}_\xi=(D\otimes\overline D)W'_\xi
+                         (D^\dagger\otimes D^T).
+\tag{4.9a}
+$$
+
+This local unitary change preserves PPT, the full input marginal,
+complex-product positivity and every trace pairing above. The same
+transport applies to the second normalization and the mixtures below.
+No additional physical operation is required. $\square$
+
+The quadratic matrix (4.8) is the classical Choi positive-map
+mechanism, not a new positive map. Its three-coordinate predecessor
+is displayed explicitly in Singh–Nechita Example 7.5, equation (43).
+The proof above establishes its all-population lift and complex
+extension in the actual sector representation. The cyclic seed
+uses the same mature obstruction as Johnston–MacLean Example 1;
+the sector multiplicities, normalization and original-channel
+consequences are the additional correspondence.
+

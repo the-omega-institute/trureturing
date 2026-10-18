@@ -1,0 +1,36 @@
+**Proposition 14.3 (Unmatched abstract characters give the baseline).**
+If $a$ is phase-independent, or if the nontrivial pair in (14.3)
+is neither $\xi,\xi^{-1}$, then
+$\operatorname{err}(E,q)\ge R_0$.
+
+**Proof of Proposition 14.3.** At fixed $k$, a phase-independent
+value has worst distance from the radius-$A(k)$ circle at least
+$A(k)$. In the other case the characters
+
+$$
+\xi^{-1},\qquad \chi\xi^{-1},\qquad
+\overline\chi\xi^{-1}
+$$
+
+are all nontrivial. Lemma 6.1 applies to this finite list on the
+abstract circle. Explicitly, choose one circle element for each
+listed character on which it differs from one, and average over
+all finite sums of integer multiples of those elements with
+coefficients $0,\ldots,N-1$. The average of each character is a
+product of finite geometric averages; one factor tends to zero
+and the others have modulus at most one. Consequently, at this
+fixed height, the finite average of $z(k,\alpha)\xi(\alpha)^{-1}$
+tends to zero. Since
+
+$$
+|z-A(k)\xi|^2=|z|^2+A(k)^2
+       -2A(k)\operatorname{Re}(z\xi^{-1}),
+$$
+
+and $|z|^2\ge0$, the supremum of the squared useful error is at
+least $A(k)^2$. Equation (12.1) gives $R_0^2$ after taking the
+height supremum. These are finite averages of actual phase states;
+no Haar integral, measurability, continuity, or density of a chosen
+phase sequence is required. This exhausts every nonnative pair in
+the bounded useful module. $\square$
+

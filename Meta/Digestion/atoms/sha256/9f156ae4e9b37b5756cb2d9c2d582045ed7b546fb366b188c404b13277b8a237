@@ -1,0 +1,13 @@
+**Proposition 58.3 (scope of the all-state obstruction).** Whenever $\mathcal B(s)\ne\varnothing$, exact intertwining
+$e^{-i\tau\mathsf H_{D'}}J=Je^{-i\tau\mathsf H_D}$ for every $\tau$ is impossible. Moreover put $M=6a+g$. For every such $s$ and $0<\tau\le a/(4M^2)$,
+
+$$
+\bigl\|e^{-i\tau\mathsf H_{D'}}J-Je^{-i\tau\mathsf H_D}\bigr\|
+\ge\frac{a\tau}{\sqrt2}.
+\tag{58.4}
+$$
+
+After at least one accepted whole-rho substitution every nonempty original source has a beta leaf. Therefore this all-state operator obstruction persists uniformly at arbitrarily advanced separately legal versions. The operator comparison concerns an actually accepted next renewal or its separately legal source-indexed mathematical pair; a refusal leaves the installed operator unchanged. It does not assert failure for every particular state or for the subescape finite-clock task below.
+
+Proof. Differentiation at zero would give $\Delta_s=0$, contrary to (58.2). The first-order term has norm $a\sqrt2\tau$. The two exponential remainders together have norm at most $M^2\tau^2e^{M\tau}$. Since $M\ge6a$ and $M\tau\le1/24$, $e^{M\tau}<2$ and the remainder is at most $a\tau/2$. This is less than $a\tau/\sqrt2$, yielding (58.4). Finally the exact source composition update is $(A,B)\mapsto(B,A+B)$, so the new beta count is the old positive leaf count. This uses the original source substitution, not an amplitude sensor. □
+

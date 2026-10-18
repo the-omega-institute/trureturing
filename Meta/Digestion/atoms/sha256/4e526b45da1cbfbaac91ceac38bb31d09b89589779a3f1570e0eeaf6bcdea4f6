@@ -1,0 +1,30 @@
+### 定理 16.4（熵势的 canonical Hessian）
+
+在每个内部局部概率场 \(\Pi_j^\circ\) 上，负熵的 Hessian 满足
+\[
+D^2\mathcal V_{\mathrm{ent},j}(p)[u,u]
+=\sum_{v\in V_j}\sum_{s\in\Sigma}
+\frac{u_{v,s}^2}{p_{v,s}}
+=:g_{F,j,p}(u,u)>0
+\]
+对任意非零 \(u\in T_p\Pi_j\)。因此 Fisher 纤维度量不是额外物理能量，而是负熵势的 canonical 二阶型。若在每个节点取 seam 方向
+\[
+u_{v,\cdot}=a_vd,
+\]
+则
+\[
+g_{F,j,p}(u,u)
+=\sum_{v\in V_j}a_v^2
+\left(
+p_{v,0}^{-1}+p_{v,2}^{-1}
++p_{v,5}^{-1}+p_{v,25}^{-1}
+\right).
+\]
+当 \(V_j=\{*\}\) 且 \(a_*=1\) 时，这正是五态纤维的
+\[
+\mathcal I(\kappa)
+=p_0^{-1}+p_2^{-1}+p_5^{-1}+p_{25}^{-1}.
+\]
+
+证明：逐项微分 \(p_{v,s}\log p_{v,s}\) 两次得到 \(1/p_{v,s}\)，再限制到逐节点质量零切空间即可。正性来自所有 \(p_{v,s}>0\)。代入 \(u_{v,\cdot}=a_vd\) 并使用 \(d_s^2=1\) 得到 seam 公式。证毕。
+

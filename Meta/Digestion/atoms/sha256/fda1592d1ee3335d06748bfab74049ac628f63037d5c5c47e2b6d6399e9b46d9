@@ -1,0 +1,166 @@
+**定理 10.2（正有限循环的单模式全尾支配）。** 任取定义5.3的一个 $G$，周期 $d\ge1$，固定 $0<u_i,v_i<1$，下标按模 $d$ 解释。存在固定 $0<u,v<1$ 的 $d=1$ 观察者 $S$，保留全部原 $C_0$，从第一笔实际 Read 前确定性初始化，同时满足定义1.5的两项相容性。这个同一 $S$ 对每个定义1.2的有限或可数先验、两个相位及任意两个风险次序满足
+
+$$
+R_j(\mathcal H_s;S)\le R_{j'}(\mathcal H_s;G),
+\qquad s\in\{p,\beta\},\quad
+j,j'\in\{\mathrm{law},\mathrm{conf}\}.
+\tag{10.1}
+$$
+
+$S$ 只依赖所给循环参数，不依赖先验或实际深度。具体地，置
+
+$$
+\begin{aligned}
+a_i&=(1-u_i)v_i,& b_i&=(1-u_i)(1-v_i),&
+g&=\left(\prod_{i=0}^{d-1}a_i\right)^{1/d},\\
+t_0&=1,& t_i&=\frac{\prod_{j=0}^{i-1}a_j}{g^i},&
+\pi_i&=\frac{t_i}{\sum_{j=0}^{d-1}t_j},\\
+u&=\sum_i\pi_i u_i,& b&=\sum_i\pi_i b_i,&
+v&=\frac{g}{1-u},\qquad
+\sigma_i=\frac{\pi_i(1-u_i)}{1-u}.
+\end{aligned}
+\tag{10.2}
+$$
+
+令 $Q_i,V_i$ 为(5.2)的两个循环全尾律，$Q,V$ 为 $S$ 的对应全尾律，则
+
+$$
+Q=\sum_i\pi_iQ_i,\qquad V=\sum_i\sigma_iV_i,
+\tag{10.3}
+$$
+
+且对于每个 $r\in(0,1)$ 同时有
+
+$$
+\begin{aligned}
+\operatorname{TV}(Q,P_{p,r})
+&\le\sum_i\pi_i\operatorname{TV}(Q_i,P_{p,r})
+\le\max_i\operatorname{TV}(Q_i,P_{p,r}),\\
+\operatorname{TV}(V,P_{\beta,r})
+&\le\sum_i\sigma_i\operatorname{TV}(V_i,P_{\beta,r})
+\le\max_i\operatorname{TV}(V_i,P_{\beta,r}).
+\end{aligned}
+\tag{10.4}
+$$
+
+这些是两个最坏风险坐标的支配，不要求每条实际历史的报告或误差被保留。
+
+**证明。** 首先核对整个无限尾及其条件关系。记 $xL$ 为给律 $L$ 的每个原始词加字母前缀 $x$，点质量记为 $\delta_{[w]}$。每个循环的原解析器给出
+
+$$
+Q_i=u_i\delta_{[\alpha]}+(1-u_i)(\beta V_i),
+\qquad
+V_i=(1-v_i)\delta_{[\beta]}+v_i(\alpha Q_{i+1}).
+\tag{10.5}
+$$
+
+从模式 $i$ 生存 $j$ 圈的质量为 $\prod_{t<j}a_{i+t}$，至多 $(\max_i a_i)^j$，趋于零。两种完成质量之和逐圈望远镜相消为1。因此(10.5)是归一化完整律的等式，保留原无限不完成结果并赋它零质量；没有截断词族。
+
+由于全部 $a_i>0$，(10.2)中的权重严格正。乘积恒等式 $g^d=\prod_i a_i$ 使最后一条循环边也满足
+
+$$
+\pi_i a_i=g\pi_{i+1},\qquad
+\sum_i\pi_i a_i=g.
+\tag{10.6}
+$$
+
+又因 $u_i+b_i+a_i=1$，有 $u+b+g=1$，其中 $u,b,g>0$。所以 $g<1-u$，$0<v<1$，$b=(1-u)(1-v)$。另有
+
+$$
+\sum_i\sigma_i=1,\qquad
+\sigma_i v_i=v\pi_{i+1}.
+\tag{10.7}
+$$
+
+令 $\overline Q=\sum_i\pi_iQ_i$、$\overline V=\sum_i\sigma_iV_i$。分别以这两套权重平均(10.5)，(10.7)给
+
+$$
+\overline Q=u\delta_{[\alpha]}+(1-u)(\beta\overline V),
+\qquad
+\overline V=(1-v)\delta_{[\beta]}+v(\alpha\overline Q).
+\tag{10.8}
+$$
+
+因此从第一重心条件于 $\beta$ 正好得到第二重心，从第二重心条件于 $\alpha$ 正好返回第一重心。两相位的权重一般不同；它们不是两份独立选择的预测中心，也不是实际深度的后验混合。
+
+代入消去 $\overline V$ 得
+
+$$
+\overline Q=u\delta_{[\alpha]}+b\delta_{[\beta\beta]}
+              +g(\beta\alpha\overline Q).
+$$
+
+迭代这个等式，对每个 $j\ge0$ 得到
+
+$$
+\begin{aligned}
+Q(u_{j,0})&=ug^j,&Q(u_{j,1})&=bg^j,\\
+V(\beta)&=1-v,&V(\alpha u_{j,0})&=vug^j,&
+V(\alpha u_{j,1})&=vbg^j.
+\end{aligned}
+\tag{10.9}
+$$
+
+有限完成质量总和为 $(u+b)/(1-g)=1$；余下无限质量为 $\lim_jg^j=0$。故(10.8)唯一确定这两个完整律，证明(10.3)。也可直接由 $\pi_i\prod_{t<j}a_{i+t}=g^j\pi_{i+j}$ 对所有完成词求和。半 $\ell^1$ 的三角不等式及有限非负权重给(10.4)，其中目标参数任取 $r$，权重不随目标改变。
+
+还须把模式最大值接回同一个固定先验的实际有限历史。对于任何当前实际 $h$，其真实原始尾律为(1.4)的后验混合，确定性循环报告为当前 $Q_i$ 或 $V_i$。可数后验凸性和 $I_c$ 的单射性给风险的上界
+
+$$
+\begin{aligned}
+R_j(\mathcal H_p;G)&\le
+ \max_i\sup_{k:\mu(k)>0}\operatorname{TV}(Q_i,P_{p,r_k}),\\
+R_j(\mathcal H_\beta;G)&\le
+ \max_i\sup_{k:\mu(k)>0}\operatorname{TV}(V_i,P_{\beta,r_k}).
+\end{aligned}
+\tag{10.10}
+$$
+
+以下证明反向，不假设任意后验混合都可取得。固定一个支持参数 $r$、$0\le i<d$ 和 $e\in\{0,1\}$，置 $m_N=\lfloor Nr\rfloor$、$n_N=\lfloor N(1-r)\rfloor$，取原历史
+
+$$
+h_{N,i,e}=(\alpha\alpha)^{m_N}(\beta\beta)^{n_N}
+ \beta\alpha\mid\beta\beta\alpha\alpha
+ (\beta\alpha)^i\beta^e.
+\tag{10.11}
+$$
+
+竖线仅标提种与载荷的分界。前两段相等对全部是付费拒绝，随后取得种子1、前三标记100，先完成第三次写入再锁存；末尾 $i$ 圈到达模式 $i$，$e=0,1$ 分别在 $p,\beta$ 查询。每条历史在每个支持深度下都有正质量，实际付费 Read 长度为 $2m_N+2n_N+6+2i+e$。没有查询无限历史或增加取得端口。
+
+写 $F_r=\{k:r_k=r\}$，以及
+
+$$
+c_k=\mu(k)r_k^{3+i}(1-r_k)^{3+i+e},
+\qquad C_r=\sum_{k\in F_r}c_k>0.
+$$
+
+整个后验正比于 $c_kr_k^{2m_N}(1-r_k)^{2n_N}$，且 $\sum_kc_k\le1$。除以参数 $r$ 的两个幂后，额外似然比为
+
+$$
+L_N(r_k)=\exp\{-2N\operatorname{KL}
+ (\operatorname{Ber}(r)\Vert\operatorname{Ber}(r_k))+E_{N,k}\},
+\qquad
+|E_{N,k}|\le2\log(6/5)+2\log(10/9).
+\tag{10.12}
+$$
+
+两个取整误差均在 $(-1,0]$；$r,r_k\in[1/3,2/5]$ 给出所示统一对数界。KL非负，参数不同则严格正，所以 $L_N$ 统一有界，在 $F_r$ 上等于1，在每个其他参数上趋零。对可求和的 $c_k$ 使用支配收敛，得到
+
+$$
+\sum_{k\notin F_r}c_kL_N(r_k)\longrightarrow0,
+\qquad \nu_{h_{N,i,e}}(F_r)\longrightarrow1.
+\tag{10.13}
+$$
+
+这一论证包含全部可数非端点质量，即使支持参数互相积聚也成立。于是该历史的真实全尾律与 $P_{s,r}$ 的 TV 至多 $1-\nu_{h_{N,i,e}}(F_r)$，趋于零；报告一直是所选固定模式的 $Q_i$ 或 $V_i$。每个右侧距离都是有限实际历史误差的极限。因此(10.10)取等号，对 $d=1$ 同样成立。确定性实际保持使两个风险次序相等；这独立证明了所需的(6.8)桥。该极限没有提供统一取得长度界，且不要求机器保存 $m_N,n_N$ 或后验。
+
+最后构造 $S$ 的完整从零实现。第一笔实际 Read 前只初始化原 $C_0$，每笔实际字母使用原确定性更新 $\delta$。预测合成在提种及前三段使用公平字母，在第四段 $p_4,q_{\beta,4}$ 使用 $u,v$；在 $z_b$ 只生成原 $\mathrm{Stop}_b$，交付后生成空残余。公平提种每轮接受概率为 $1/2$，前三段公平返回因子为 $1/4$，第四段生存因子为 $g<1$，故整个合成几乎必然完成。两种种子和全部原标记树仍使用同一原更新，第三次写入先于锁存，记录保持及 Stop 交付次序完整保留。
+
+从任意实际配置开始的这个合成程序定义 $D_c$。对于每个合法正概率下一字母及其确定性事件，有
+
+$$
+D_c(xw)=q_c(x)D_{\delta(c,x)}(w).
+\tag{10.14}
+$$
+
+这证明每配置同更新生成。实际保持确定，边缘报告为 $D_{C_0(h)}$，下一实际字母也转到 $C_0(hx)=\delta(C_0(h),x)$；故同式另行证明实际历史边缘化更新相容性。终端切面分别只接原 Stop、空残余，误差为零。实际字母概率仍为唯一共同 $K$ 的 $r_K$；合成不重抽 $K$，不调用实际 Read。结合实际风险等式与(10.4)即得(10.1)。$\pi,\sigma$ 只是证明坐标，没有被抽样、保持或作为运行时分布向量读取。证毕。
+

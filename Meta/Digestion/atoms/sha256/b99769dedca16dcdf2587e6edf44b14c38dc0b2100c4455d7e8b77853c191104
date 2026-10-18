@@ -1,0 +1,13 @@
+**Proposition 4.4 (infinite output image as an existing early rejection).**
+If NPL Theorem 5.3 returns an infinite full-row image, then for any fixed
+$K$ its witness family provides a finite obstruction of $4^K+1$ sources,
+independent of a supplied update bound.
+
+Proof. Choose that many witnesses with distinct rows. A four-reply
+controller with at most $K$ reads unrolls to a tree with at most $4^K$
+leaves. At least two different rows must share a leaf. Deterministic
+common control cannot output both there. This is NPL's finite-output
+necessity, used as an early certificate rather than a new limitedness
+criterion. Theorem 4.2 is needed also when the output image is finite.
+$\square$
+

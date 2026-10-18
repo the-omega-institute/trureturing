@@ -1,0 +1,46 @@
+**Theorem 249.3 (One full feasible conic allocation and the score correction).**
+Fix the same $(b,e)\in H_L$ and one complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h(b,e)$, of mass $M=\sum_T\lambda_T\ge1$.
+Set $D_b=2-\sum_i b_i+(L+1)e$. For every full nonnegative score $y$,
+
+$$
+F_{Q(y)}(b,e)\le M\Delta_O(y)+K_y\min\{M,c_LD_b\}.
+\tag{249.4}
+$$
+
+Thus a full unit-O score with strict $F_{Q(y)}(b,e)>M$ requires
+$D_b>0$; its strict gap is at most $K_y\min\{M,c_LD_b\}$.
+No such separator occurs on the feasible $D_b=0$ face.
+
+Proof. Normalize this very allocation to $p_T=\lambda_T/M$ and put
+
+$$
+x=(1-1/M)(\alpha,0)+(b,e)/M,
+\qquad \alpha=(1,1,0,\ldots,0).
+\tag{249.5}
+$$
+
+Affineness of every full demand row gives
+$Z_Np=r+G_N\lambda/M\ge r+h(b,e)/M=d(x)$.
+The auxiliary amplitudes are ordered in $[0,1]$ and at least their cap
+$e/M$; equality of the second and third coordinates is unnecessary.
+All normalized rows hold, and $D(x)=D_b/M$, because $\sum\alpha_i=2$.
+Theorem 248.2 applies even if this finite auxiliary point has zero cap,
+inactive coordinates, or lies outside $H_L$.
+Its single repaired law $q$ has
+$\mu\le\min\{1,c_LD_b/M\}$. Every independent event changes by at
+most $\mu$, so, using $y\ge0$,
+
+$$
+y\cdot d(x)\le y\cdot Z_Oq+K_y\mu\le B_O(y)+K_y\mu.
+$$
+
+But $y\cdot d(x)=W_y+F_{Q(y)}(b,e)/M$ and
+$B_O(y)=W_y+\Delta_O(y)$. Multiplication by $M$ proves (249.4),
+with the same $b$ and full $\lambda$ throughout. The independent pair
+coefficient is counted once in $K_y$, as are all other full event
+coefficients. No separately optimized row costs enter.
+If $D_b=0$ the correction vanishes. If $K_y=0$ the full score is zero
+and cannot strictly separate. The positive correction at $D_b>0$
+is retained; it has not been financed by the original unit budget. ∎
+

@@ -1,0 +1,4 @@
+# Native Coulomb column: exact mass law and amplitude inverse
+
+This conditional companion evaluates the original anisotropic Friedrichs Coulomb column and its full $L^2$ norm. It gives a positive convergent series for that norm, a strictly monotone scalar law, its unique inverse from a supplied core amplitude, and both endpoint mass and amplitude coefficients. The actual two-scale reconstruction, its common phase and its complete mass accounting are credited results of [Actual critical solvability and conditional microscopic disappearance](FIB_NATIVE_ACTUAL_CRITICAL_SOLVABILITY_AND_MICROSCOPIC_DISAPPEARANCE.md), called Source below. The new deductions evaluate its comparison column; they do not establish occurrence or select an actual branch.
+

@@ -1,0 +1,8 @@
+**Remark 4.5 (Cofactors).** Expansion in the coordinates of Definition 4.2 gives $q_7=(ab-1)\,(k-2)\,k$, that is $q_7=(\lambda^2-4\lambda+3-t^2)\,c\,(c+2)$, and $p=-k\cdot s$ with
+
+$$
+s=a^3b^3-a^3b-4a^2b^2+2a^2-ab^3-ab^2+5ab+a+2b^2+2b-2 .
+$$
+
+These identities are not used in any proof of this volume. Stance: repo-derived.
+

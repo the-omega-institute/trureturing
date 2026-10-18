@@ -1,0 +1,12 @@
+**引理 60.5（The one pair and the later singleton departures）。** Along the successful zero-difference path of all-one words from the original root, the actual phase supports are
+
+$$
+U_0=P,\qquad U_q=P\setminus\{0,m,2m,\ldots,qm\}
+\quad(1\le q\le D).
+\tag{60.7}
+$$
+
+At index zero the positive successful child is the pair priced by $\chi_v$. At index $1\le t<D$, its positive child on this path is the singleton $j=(t+1)m$, at paid depth $t+1$ and original height $h_{t+1}$, priced by $\eta_v((t+1)m,t+1)$. Its rejection archive is the whole rectangle $U_t\times[h_t-m,h_t)$.
+
+**证明。** The actual all-one charge is $\{tm,(t+1)m\}$. At the root both endpoints are present. A zero root response removes both. At each later index the leading endpoint $tm$ was already removed, while $(t+1)m$ has not been removed. No wrap or repetition occurs because every indicated endpoint is at most $Dm\le k-1<T$. Induction gives the supports and singleton departures. The height and rejection statements follow from adding $m$ to each actual tail $s+tm$. Every displayed phase and tail is a joint actual source by (1.3), and the observed prefix is exactly its own successful all-one archive. ∎
+

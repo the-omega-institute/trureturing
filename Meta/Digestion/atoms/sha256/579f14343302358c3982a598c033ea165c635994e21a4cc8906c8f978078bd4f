@@ -1,0 +1,14 @@
+**Open problem 11.3 (The critical multiscale bridge).** At equality, the leading entropy density of Section 6 is $k^{d-2r}=1/k$. Summing through the typical length $1/s$ yields a logarithm. The bound for a single geometric scale in (9.5) has $\lambda^{2r-a}=1$ and supplies no logarithmic improvement. The full-gap entropy lower calculation alone supplies no attainable upper rate.
+
+Closing the critical case requires a lawful actual-bit controller that combines enough scales on one history, counts its scale-selection state, every retained evidence coordinate, all phases and both labels, and proves both errors, both almost-sure actual stops and both finite actual paid means. It must either attain $s^{-(a+1)}/\log(e/s)$ with a declared complete budget or establish that the gain is unavailable under a specified budget. Separate per-scale optimal costs cannot be treated as simultaneously attainable or aggregated without an implementation proof. The one-scale estimate's lack of gain is also not an impossibility theorem for all controllers.
+
+A precise necessary condition already follows. If a compliant critical family with fixed $C_T$ and fixed target attained an upper $C_Ts^{-(a+1)}/\log(e/s)$, (11.1) would force
+
+$$
+1+\log(\min\{L_{M(s)},1/s\})
+\ge\frac{A_-}{C_T}\log(e/s).
+\tag{11.2}
+$$
+
+By (7.6), $1+\log L_{M(s)}\le C+\frac1r\log(1+M(s))$. Hence budgets with $\log(1+M(s))=o(\log(1/s))$ cannot attain that proposed gain. This identifies a necessary obstruction without supplying a sharp necessary power, a sufficient multiscale budget, or the full critical frontier. For $(d,r)=(1,1)$, the retained sandwich is $s^{-3}/\log(e/s)$ versus $s^{-3}$.
+

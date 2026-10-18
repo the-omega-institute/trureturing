@@ -1,0 +1,19 @@
+**Definition 5.1 (duplicate live incidence and other installed states).**
+Put
+
+$$
+\begin{aligned}
+Q_{\mathrm{live}}&=\bigcup_{p\in V}F_p,&
+u&=|Q\setminus Q_{\mathrm{live}}|,\\
+d(q)&=|\{p\in V:q\in F_p\}|\quad(q\in Q_{\mathrm{live}}),&
+D&=\sum_{q\in Q_{\mathrm{live}}}(d(q)-1),\\
+E&=\sum_{p\in V}(b_p-1).
+\end{aligned}
+\tag{SI.18}
+$$
+
+Here $D$ measures duplicate count-cell incidences of actual live
+states. The number $u$ includes unused states and states reached only
+after certification. A state live on one input contributes to
+$Q_{\mathrm{live}}$ even if another input visits it after certification.
+

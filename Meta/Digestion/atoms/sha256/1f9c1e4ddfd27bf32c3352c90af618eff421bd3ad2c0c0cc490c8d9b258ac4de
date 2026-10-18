@@ -1,0 +1,35 @@
+**定理 138.5（三周期的另一把尺）。** 在表达层令
+
+$$
+Z=I+2J-2M=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+C=ZM=\begin{pmatrix}0&1\\-1&-1\end{pmatrix}.
+$$
+
+有 $C^2+C+I=0,C^3=I$。它保持
+
+$$
+Q(a,b)=a^2+ab+b^2,
+\qquad G_{\triangle}=\begin{pmatrix}1&1/2\\1/2&1\end{pmatrix}>0,
+\qquad C^TG_{\triangle}C=G_{\triangle},
+$$
+
+但不保持标准尺 $I$。在对应内积下，同一映射可表示为转角绝对值 $120^\circ$ 的旋转；这须共同变换向量、坐标和量具。
+
+证明（138.5）。直接计算 $C^2=\begin{pmatrix}-1&-1\\1&0\end{pmatrix}$，加 $C+I$ 为零；乘以 $C-I$ 给 $C^3-I=0$。$C(a,b)^T=(b,-a-b)^T$，代入 $Q$ 得 $b^2-b(a+b)+(a+b)^2=a^2+ab+b^2$。$Q=(a+b/2)^2+3b^2/4$ 给正定性及矩阵保长。标准尺下 $\|Ce_2\|^2=2$，而 $\|e_2\|^2=1$，所以不能冒用原来的直角尺。
+
+取
+
+$$
+P=\begin{pmatrix}1&1/2\\0&\sqrt3/2\end{pmatrix},\qquad
+P^TP=G_{\triangle},\qquad
+PCP^{-1}=\begin{pmatrix}-1/2&\sqrt3/2\\-\sqrt3/2&-1/2\end{pmatrix}.
+$$
+
+新表示 $Pc$ 与按 $P^{-1}$ 运输的量具给同一关系；所列矩阵在新标准尺上是有向 $-120^\circ$ 旋转。反选定向会改角的符号。经典因式分解
+
+$$
+a^3-b^3=(a-b)(a^2+ab+b^2)
+$$
+
+含有同一个二次型，沿用前卷第30–31、49、52章的条件平面解释；不是立方次数决定三维空间。$Z$ 使用的加减仍是表达运算，不由这个恒等式取得反射门或 $C$ 门。$\square$
+

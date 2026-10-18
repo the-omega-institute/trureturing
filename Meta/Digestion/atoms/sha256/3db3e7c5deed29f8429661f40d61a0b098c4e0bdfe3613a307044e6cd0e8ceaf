@@ -1,0 +1,23 @@
+**Proposition 2.2 (attainment and nonattainment are different).**
+The policy in Theorem 2.1 has error $p_{N,t,s}$ at every high source.
+There is also a minimax policy with error strictly less than $p_{N,t,s}$
+at every source, whose worst-source error is nevertheless $p_{N,t,s}$.
+
+**Proof.** Retain the uniform subset $S$, but on the all-zero branch
+output an independent integer $G\ge1$ with
+$\Pr(G=m)=2^{-m}$. On a positive reply still output $n$. Then
+
+$$
+e_b=0,\qquad
+e_{(n,J)}=p_{N,t,s}\Pr(G<n)
+ =p_{N,t,s}\bigl(1-2^{-(n-1)}\bigr)<p_{N,t,s}.
+\tag{2.6}
+$$
+
+Every $G$ is finite and $\Pr(G<n)\uparrow1$. Thus the supremum is
+$p_{N,t,s}$ and is attained by no finite source. The unbounded finite
+integer-output distribution is already used in
+[KBonacci, Proposition 38.4](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md);
+its use here separates the two notions of attainment for (2.1).
+$\square$
+

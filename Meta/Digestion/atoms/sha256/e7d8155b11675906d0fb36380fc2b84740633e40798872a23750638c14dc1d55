@@ -1,0 +1,17 @@
+**Proposition 3.3 (a fixed-route normalizer is not necessary).** There is a
+faithful partial-chart task satisfying the residual square whose fixed input
+route cannot remain the output route.
+
+**Proof.** In each of two charts take states $0,1$ and the action $T:0\mapsto1$.
+Let $r_0$ transport $0$ to its copy in the other chart, and let $r_1$ transport
+$1$ to its copy. All responses are identical under the copy dictionaries.
+On the required domain $\{0\}$,
+
+$$
+Tr_0=r_1T,
+$$
+
+including legality and complete labels. But $r_0T$ is undefined there,
+because $T0=1$ is outside $r_0$'s domain. Each chart retains the states
+faithfully. The output residual route is $r_1$, not $r_0$. $\square$
+

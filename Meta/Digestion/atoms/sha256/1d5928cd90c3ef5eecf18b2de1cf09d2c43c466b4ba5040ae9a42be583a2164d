@@ -1,0 +1,63 @@
+**Definition 207.3 (Reused signed residual and one-budget certificate).**
+Use the hull and certificate of 198.5, 199.3–199.4 and 206.3. With
+$\alpha=(1,1,0,\ldots,0)$,
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\ b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+F_{(\beta,K)}(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,
+\qquad\sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{207.7}
+$$
+
+Its vertices are $o=0$, $p=(1,0,\ldots;0)$, and for $3\le k\le L$,
+$u_k$ with its first $k$ entries $1/(k-1)$ and all other entries zero,
+and $v_k$ with its first $k$ entries one and all remaining entries,
+including $e$, equal to $(k-2)/(k+1)$. For a comparison score with early
+correct totals $c_1,c_2$, late totals $\eta$, early pair support, no
+base rows and anchor $W'$, put
+$x=\gamma_1-c_1$, $y=\gamma_2-c_2$,
+$R_k=\sum_{j=3}^k(\gamma_j-\eta_j)$. The exact residual readings are
+
+$$
+-x-y,\qquad-y,\qquad
+\frac{R_k-(k-2)(x+y)}{k-1},\qquad
+\frac{3R_k+(k-2)(W'-W)}{k+1}.
+\tag{207.8}
+$$
+
+These follow by substitution, using $K_y-K_V=R_L+W-W'$; both prefix
+columns are retained and the residual need not have positive coordinates.
+Its nonnegative charge is the maximum of these readings and zero.
+
+Let $d(b,e)$ contain all three demands $1-b_n-e,b_n-e,1-e$ at every
+zero word and $1-e$ at the positive word. Put $r=z_R=d(\alpha,0)$,
+$h=d-r$, and $G_C=(z_D-r)_D$ for the full event columns. A certificate
+is one $V\ge0$ and one $\theta\in[0,1]$ with
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+\tag{207.9}
+$$
+
+Write $E_N$ for the set of $q$ admitting (207.9). For $(b,e)\in H_L$
+and the same complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h(b,e)$, of mass $M$, nonnegativity gives
+
+$$
+F_q(b,e)\le V\cdot h(b,e)+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+\tag{207.10}
+$$
+
+For $M\le1$ use $M\Delta_N\le\Delta_N$; for $M\ge1$ use
+$\theta\le M\theta$. Every same-$Q$ construction below has residual
+identically zero, so uses $\theta=0$. This is the existing certificate
+rule, not separate allowances for cells or components.
+

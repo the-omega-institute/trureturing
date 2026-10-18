@@ -1,0 +1,44 @@
+### 65.3 Unrestricted continuations and reconstructible tangents
+
+The original five-phase Jacobians at \(u_0,u_1\) are invertible by
+(63.2)–(63.3). The analytic implicit-function theorem supplies unique
+unrestricted common-flat ray curves through these seeds. Transport
+by \(R_p,\Theta\), and by \(X\) with the parameter replaced by
+\(-b\), is an invertible transformation of the full original solution
+set. It therefore supplies unique unrestricted curves through all
+36 rays, not just curves within a symmetry-restricted ansatz.
+
+For completeness, the two seed phase tangents needed to reconstruct
+every comparison are, in coordinate order \(1,\ldots,5\),
+
+\[
+ \begin{aligned}
+ \alpha_0&=\frac1{84}(0,-48+20\sqrt{21},-104,-104,-56+20\sqrt{21}),\\
+ \alpha_1&=\frac1{84}(70-14\sqrt{21},59-17\sqrt{21},
+                 -32-14\sqrt{21},38,-21-17\sqrt{21}).
+ \end{aligned}
+\tag{65.5}
+\]
+
+Set \((v_s)_0=0\), \((v_s)_r=i(u_s)_r\alpha_{s,r}\).
+For a label \((s,p,e,c)\), first form
+
+\[
+ w=X^c\Theta^eR_pu_s,\qquad
+ v=(-1)^cX^c\Theta^eR_pv_s.
+\]
+
+The dephased value and velocity are then
+
+\[
+ z_r=\frac{w_r}{w_0},\qquad
+ \dot z_r=\frac{v_rw_0-w_rv_0}{w_0^2}.
+\tag{65.6}
+\]
+
+The sign \((-1)^c\) records the parameter reflection in (65.1).
+All derivatives are with respect to the real parameter \(b\).
+Shrinking finitely many implicit-function neighborhoods gives a
+common interval and 36 disjoint fixed ray neighborhoods, each
+containing exactly its named curve.
+

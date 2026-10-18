@@ -1,0 +1,55 @@
+**Definition 219.1 (Words, rewards and complete supports).**
+For an integer $L\ge3$, let $B_L=\{0,1\}^L$, $w_+=1^L$ and
+$\Omega_n=\{w\in B_L:n(w)=n\}$, where $n(w)$ is the first zero
+of $w\ne w_+$. All multiple-zero words remain in the domain.
+Write $w(Z)$ for the word whose zero set is exactly $Z\subseteq\{1,\ldots,L\}$.
+A full score $V$ has independent coefficients $A_w,C_w,P_w,T\ge0$ and rewards
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_V(w_+,\ell)=T\mathbf1_{\ell=0}.
+\tag{219.1}
+$$
+
+Every cell permits every label $0,\ldots,L$, including labels earlier
+than both queries and unqueried labels. The complete catalogs contain
+empty schedules, singletons and every distinct pair $i<j$.
+An N pair observes $00,01,10,11$; an increasing O pair observes
+$0,10,11$, merging the first two N cells before maximizing.
+The notation $(i,j;o_0,o_{10},o_{11})$ denotes the entire stopped table.
+Reversing an N pair permutes its cells; repeated requests have singleton
+information. These statements about information do not reduce the
+number of actual requests. Set
+
+$$
+\begin{aligned}
+B_{\mathcal C}(V)
+ &=\max_{D\in\mathcal D_{\mathcal C}}\sum_{w\in B_L}g_V(w,D(w)),
+ &&\mathcal C=N,O,\\
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(V)&=B_{\mathcal C}(V)-W_V,\\
+\beta_n(V)&=\sum_{\Omega_n}(C_w-A_w),\qquad
+K_V=\sum_w(A_w+C_w+P_w)+T,\qquad Q(V)=(\beta(V),K_V).
+\end{aligned}
+\tag{219.2}
+$$
+
+Equivalently, for each schedule sum its cellwise all-label maxima,
+then maximize over schedules. Unspecified coefficients vanish;
+coincident contributions add. No zero coefficient deletes an event row.
+For class totals $A_n,C_n$, the reused stock identities are
+
+$$
+K_V-\sum_n|\beta_n|=2\sum_n\min(A_n,C_n)+\sum_wP_w+T,
+\qquad W_V=Z_V+\beta_1+\beta_2,
+\quad Z_V=\sum_wA_w+\sum_wP_w+T.
+\tag{219.3}
+$$
+
+If $G=\sum_n(\beta_n)_+$ and $D=\sum_n(-\beta_n)_+$,
+absolute stock is $K-G-D$ and literal reserve is $K-G$.
+They differ by $D$ and neither is a probability budget.
+The legal anchor $R=(1,2;1,2,0)$ gives $\Delta_N\ge\Delta_O\ge0$.
+The constant-zero table gives $B_{\mathcal C}\ge Z_V$.
+

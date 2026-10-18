@@ -1,0 +1,11 @@
+**Corollary 80.3 (three distinct transitions).** The feasibility turn
+satisfies
+$\bar\tau<\tau_*<\tau_\dagger$, where $\bar\tau$ is the static
+height plateau endpoint and $\tau_\dagger$ its static contact.
+
+**Proof.** JR50's supplied enclosure gives
+$\bar\tau<.993781$, RC63 gives $\tau_\dagger>.9962433511188$,
+and Lemma 78.2 gives $.99448<\tau_*<.99499$. Thus the new
+feasibility turn is neither static transition. No static contact-support
+sufficiency for a finite-budget optimum follows. $\square$
+

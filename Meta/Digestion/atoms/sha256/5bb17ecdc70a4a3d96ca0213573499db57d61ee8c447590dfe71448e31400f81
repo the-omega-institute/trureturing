@@ -1,0 +1,80 @@
+**Theorem 9.2 (Full resource count, stopping, exact risks and payment).** This one table has exactly $4H+1$ listed complete configurations. It satisfies all six obligations at its selected $q$. Let $G$ be its number of completed post-first-tick gaps through absorption. With
+
+$$
+u_i=p_i(1-\theta),\qquad v_i=(1-p_i)\theta,\qquad
+\rho_i=v_i/u_i,
+\tag{9.3}
+$$
+
+its wrong-label probabilities and means are
+
+$$
+\begin{aligned}
+e_0&=\frac1{1+\rho_0^H},&
+e_1&=\frac1{1+\rho_1^{-H}},& e_i&\le\alpha,\\
+\mathbb E_iG&=\frac{2H}{\Delta}(1-2e_i)\le\frac{2H}{\Delta},\\
+\mathbb E_iT&=1+\beta_i+\mu_i\mathbb E_iG<\infty.
+\end{aligned}
+\tag{9.4}
+$$
+
+After decreasing $s_U$ independently of every scale, there are source/risk constants $K,C_U>0$ such that throughout the whole scale interval,
+
+$$
+4H+1\le K\lambda^r,\qquad
+\mathbb E_iG\le C_U s^{-a}\lambda^{2r-a},\qquad
+\mathbb E_iT\le C_U s^{-(a+1)}\lambda^{2r-a}.
+\tag{9.5}
+$$
+
+Proof. The count is $1+2+2(2H-1)=4H+1$, including $H=1$. Every row in the table is nonnegative and sums to one. The pre-one flag is the mark; no separate mark register is required. Failed flags continue to read the entire gap. Each nonterminal one starts the next flag at one.
+
+Use the potential independent gap/coin blocks of Lemma 8.1 to define the gap-boundary walk $J_n$, freezing it at $\pm H$ after its first boundary time $G$. Before absorption, its step law is upward $u_i$, downward $v_i$ and holding $1-u_i-v_i$. Both move probabilities are strictly positive. The drift is $u_i-v_i=p_i-\theta$, equal to $-\Delta/2$ under source zero and $+\Delta/2$ under source one. In the proof only, sign $J_n$ toward the correct label, giving $Z_n=-J_n$ or $Z_n=J_n$. This sign is not controller information. Let $\mathcal F_n$ contain the first wait and the first $n$ complete gap/coin blocks. Independence of the next block gives $\mathbb E_i[Z_{n+1}-Z_n\mid\mathcal F_n]=(\Delta/2)\mathbf1_{\{G>n\}}$. Summing these finite conditional expectations from $Z_0=0$ gives
+
+$$
+\mathbb E_i Z_{G\wedge m}=\frac\Delta2\mathbb E_i(G\wedge m)\le H
+\quad(m\ge1).
+\tag{9.6}
+$$
+
+Monotone convergence proves $\mathbb E_iG\le2H/\Delta<\infty$, hence $G<\infty$ almost surely, before any unbounded stopping formula is invoked. All individual gaps and $\tau$ are finite almost surely, so this is also a finite actual stop at a read closing tick.
+
+The ratios satisfy $\rho_0>1$ and $0<\rho_1<1$. At each interior coordinate, $\rho_i^{J_n}$ is a martingale because
+
+$$
+u_i\rho_i+v_i/\rho_i+1-u_i-v_i=1.
+\tag{9.7}
+$$
+
+The stopped value is bounded between its two finite boundary powers at this selected $q,H$. Bounded convergence at the already proved finite $G$ gives $1=P_i(J_G=H)\rho_i^H+(1-P_i(J_G=H))\rho_i^{-H}$. Solving gives the first two formulas in (9.4), with the appropriate wrong boundary under each law. For $0<x<y$, integrating $1/u$ gives $\log(y/x)\ge(y-x)/y$. Here $v_0\le\theta\le p_1$ and $u_1\le p_1$, so
+
+$$
+\log\rho_0\ge\frac{\Delta}{2v_0}\ge\frac{\Delta}{2p_1},\qquad
+\log\rho_1^{-1}\ge\frac{\Delta}{2u_1}\ge\frac{\Delta}{2p_1}.
+\tag{9.8}
+$$
+
+The ceiling in (9.1) makes each favorable boundary exponent at least $h_\alpha$. Hence each error is at most $1/(1+e^{h_\alpha})=\alpha$. The factor $p_1$ in the threshold is essential for rare marks. Passing to the limit in (9.6), with bounded convergence on its left and monotone convergence on its right, yields $(\Delta/2)\mathbb E_iG=H(1-2e_i)$.
+
+On each terminating path this particular controller has the exact cost
+
+$$
+T=1+\tau+\sum_{n=1}^{G}(K_n+1).
+\tag{9.9}
+$$
+
+The event $\{G\ge n\}$ is determined before gap $n$ from preceding completed gaps and coins and the independent first wait. It is independent of the next $K_n$. Tonelli thus gives
+
+$$
+\mathbb E_i\sum_{n=1}^{G}(K_n+1)
+=\sum_{n\ge1}\mu_i\mathsf P_i(G\ge n)
+=\mu_i\mathbb E_iG.
+\tag{9.10}
+$$
+
+This is predictable inclusion, not independence of the current duration from its mark or absorption decision. It pays every holding gap, every failed-flag suffix, the first wait and first tick, and the terminal closing tick. Pointwise finite source moments and finite $\mathbb E_iG$ prove both finite paid means.
+
+By (8.2), $p_1/\Delta\le C\lambda^r$ and $\Delta\ge C' (s\lambda)^a\lambda^{-r}$. The ceiling contributes at most one; since $\lambda\ge1$, it and all waiting/label/flag states are absorbed into one $K$ fixed before any budget. The gap-mean bound then gives $C s^{-a}\lambda^{2r-a}$. Lemma 2.3 gives $\mu_i\le C/s$ and $1+\beta_i\le C/s$. The initial term is absorbed uniformly: $s^{-a}\lambda^{2r-a}\ge1$ for $s\le1$. If $2r-a\ge0$, use $\lambda\ge1$; otherwise $\lambda\le1/s$ gives the stronger lower bound $s^{-2r}\ge1$. This proves (9.5) on a single source/risk neighborhood.
+
+All possible histories remain in (9.2), even with indefinitely many zeros or holds. There is no unbounded gap or gap-number register, retained seed, coin index, arithmetic workspace, additional program phase, unread suffix or external decoder. Gap indices and coin blocks are analytical variables only. $\square$
+

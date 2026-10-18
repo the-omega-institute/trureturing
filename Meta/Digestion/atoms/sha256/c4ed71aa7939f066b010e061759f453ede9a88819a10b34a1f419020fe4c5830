@@ -1,0 +1,45 @@
+**Definition 1.1 (one predetermined cumulative history).** Fix $d\ge0$ and $n=d+5$. Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_{i+1}=W_iA_i\quad(0\le i<n-1),
+$$
+
+where every $W_i$ is a predetermined finite word in $M,J$, possibly empty. Products act on the left and are executed from right to left. The recorded indices are exactly $0,\ldots,n-1$. Every recorded scalar advances this index, including an empty-word repeat; unread atoms do not.
+
+Write $V=\operatorname{Mat}_{2\times2}(\mathbb R)$ and
+
+$$
+\mathcal R_+=\left\{S=\begin{pmatrix}p&q\\r&s\end{pmatrix}:
+ p,q,r,s>0,\ ps=qr\right\}.
+$$
+
+An actual effective target is $(S,k,D)\in\mathcal R_+\times\mathbb R\times\mathcal P_d$, with observations
+
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+D(i).
+\tag{1.1}
+$$
+
+Here $\mathcal P_h$ is the real polynomial space of degree at most $h$, including zero; set $\mathcal P_{-1}=\{0\}$. The slope $k$ is arbitrary real. All sampled gain zeros and negative gains are included. The target contains the entire polynomial $D$, used throughout its run.
+
+In original parameters $S=\alpha R$, $k=\beta/\alpha$, $\alpha>0$, and $R=c\ell$ has a strictly positive column $c$ and one strictly positive row $\ell$ fixed throughout its run. Each effective source has the actual realization
+
+$$
+\alpha=1,\quad\beta=k,\quad R=S,\qquad
+c=(p,r)^{\mathsf T},\quad \ell=(1,q/p).
+\tag{1.2}
+$$
+
+Indeed $rq/p=s$, so $c\ell=S$ and $\ell A_ic=\operatorname{tr}(A_iS)$. Both atoms preserve positive columns:
+
+$$
+M(v_1,v_2)^{\mathsf T}=(v_2,v_1+v_2)^{\mathsf T},\qquad
+J(v_1,v_2)^{\mathsf T}=(v_2,v_1)^{\mathsf T}.
+$$
+
+Thus the same row realizes every read and unread state. There is no reset, copy, free row change, independent lift, per-read drift, inverse acquisition, or combination of unexecuted histories. Candidate runs can have different fixed rows, as the source domain permits.
+
+For a fixed effective target the original relation/gain representations are exactly $R=S/t$, $\alpha=t>0$, $\beta=kt$, with $D$ fixed. A fixed relation has the separate internal positive-factor freedom $c\mapsto\mu c$, $\ell\mapsto\ell/\mu$, $\mu>0$. These credited representation fibres do not identify distinct effective triples.
+

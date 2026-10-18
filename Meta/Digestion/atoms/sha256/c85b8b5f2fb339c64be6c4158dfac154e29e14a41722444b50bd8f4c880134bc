@@ -1,0 +1,73 @@
+**Theorem 185.2 (All-word law and exact description counts).** For
+every first-zero-$n$ word with $n\le h$,
+
+$$
+P_{h,u}^{\rm cyc}(n)=\frac3{h+1},\qquad
+1-P_{h,u}^{\rm cyc}(0)-P_{h,u}^{\rm cyc}(n)
+   \le\frac{h-2}{h+1},
+\tag{185.1}
+$$
+
+and its entire base polynomial is
+
+$$
+P_{h,u}^{\rm cyc}(0)
+=\frac{u_1u_2+u_1u_h+u_{h-1}u_h}{h+1}.
+\tag{185.2}
+$$
+
+Replacing the subset branches of Theorem 173.1 by these windows
+at $h=6,\ldots,L$ retains that theorem's residual amplitude
+projection and exact uniform cap for a tight core. It uses the same
+$w_h,W,E,r$; it does not enlarge the amplitude projection.
+The raw descriptions across every such $h$ number
+
+$$
+\sum_{h=6}^L(h+1)=\frac{(L+1)(L+2)}2-21.
+\tag{185.3}
+$$
+
+If $g_L>0$ and exactly $k$ of these $w_h$ are positive, their
+distinct positive complete tail tables number $L-1+2k$. If every
+$w_h>0$, this is $3L-11$. These counts exclude the core.
+
+**Proof.** Each label lies in exactly three windows. If a window
+contains the actual first zero $n$, every selected label preceding
+$n$ is positive. Thus it emits $n$, whether that label is its first
+query, second query or unqueried last label. If a window does not
+contain $n$, it cannot emit $n$. This proves the correct identity
+for every later-zero pattern; nonnegative base mass gives the pair
+bound. Exactly three windows contain $\ast$, and their numerical
+query pairs are $(1,2),(1,h),(h-1,h)$, proving (185.2).
+On $1^h$ the base mass is $3/(h+1)$. If the first absence exceeds
+$h$, the branch has no correct-tail mass and outside-pair mass
+exactly $(h-2)/(h+1)$.
+
+These are precisely the correct, pair and positive-prefix inputs
+used in the residual extension of Theorem 173.1. The same telescoping
+weights therefore give its existing amplitude and cap formulas;
+the core rows and independent pair rows are unchanged inequalities.
+For a tight core the all-positive base is $1-\varepsilon$, so the
+supplied actual-tail identity is unchanged. The word laws themselves
+need not agree with the subset law. All endpoints are numerical
+triples or canonical base-exhausting pairs in $E_L$.
+
+Formula (185.3) counts indexed descriptions before removing zero
+weights or combining duplicates. When $g_L>0$, $w_L>0$ and its
+$L-2$ consecutive numerical triples already contain every numerical
+triple from each smaller cyclic branch. Every active $h$ adds the
+distinct pairs $(1,h),(h-1,h)$; all active branches also share pair
+$(1,2)$. These pairs are distinct from numerical triples and from
+each other. Their total is $(L-2)+2k+1=L-1+2k$.
+If all weights are positive, $k=L-5$, giving $3L-11$.
+Active raw descriptions instead number $\sum_{w_h>0}(h+1)$.
+No description count here bounds runtime, precision or requests.
+The request bound is separately the hard-two contract.
+
+For the sharp-five core used below, its suffix graph is the triangle
+on $2,3,4$ plus edge $4-5$. In (185.2) only edge $(h-1,h)$ can
+be a suffix-suffix edge; the edges incident to one become constants
+or unary terms. Thus the positive combined graph is a subgraph of
+the triangle plus path $4-5-\cdots-L$. Plateaus can remove edges.
+Theorem 184.2 applies. $\square$
+

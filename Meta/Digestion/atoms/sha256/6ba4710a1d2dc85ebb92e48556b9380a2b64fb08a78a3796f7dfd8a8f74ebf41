@@ -1,0 +1,45 @@
+**Proposition 12.2 (The inherited useful-observable interface).**
+For every finite-error competitor of Definition 12.1 there is a bounded,
+$\beta$-independent affine two-output observable $a$ of its encoder
+such that
+
+$$
+\operatorname{err}(E,q)^2\ge
+\sup_{0<k<H,\ \alpha\in\mathbb T}
+\left\{4\|a(k,\alpha)-A(k)U(\alpha)\|_2^2+4Zk\right\}.
+\tag{12.1}
+$$
+
+Replacing the decoder by $D(a,0)$ cannot increase its error.
+Furthermore,
+
+$$
+(e_2^{\rm aff}(Z))^2=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\mathcal R_Z(C,\gamma).
+\tag{12.2}
+$$
+
+**Proof of Proposition 12.2.** Theorem 3.4 applies to the bounded
+components of the decoder, since finite error and bounded $y$ imply
+bounded $q$. Proposition 3.5 then gives the orthogonal decomposition
+$q=D(a,b)+w$ and the exact worst-$\beta$ expression
+
+$$
+\|w\|^2+4\|a-A(k)U(\alpha)\|^2+(\|b\|+B(k))^2,
+\qquad B(k)^2=4Zk.
+$$
+
+Dropping the indicated nonnegative terms gives (12.1) and the decoder
+domination. This uses $D^{\mathsf T}D=4I_2\oplus I_2$ from Lemma
+1.5, including the fixed preparation rotations. Equation (12.2), and
+the stronger assertion that each budget-two competitor is dominated
+by an individual radial choice, are Theorem 6.4. These are reused
+results. Neither their application nor boundedness of $a$ bounds an
+unread coordinate of $E$. $\square$
+
+The bounded-observable erasure and worst-$\beta$ reduction are the
+credited results of [O, §§3–4], presented in §3 of this volume.
+The exact two-coordinate reduction, scalar endpoint, and matching
+witnesses are §§4–10 of this volume. The new lower-bound obligation is
+therefore to control the extra hidden direction at budget three.
+

@@ -1,0 +1,33 @@
+## 154. Excluding a special return with companion C
+
+Now a=z,b=c, and the necessary return inequality gives q>m. Since
+m>1+c+d and d>1, m>c+2. The response parameters satisfy
+
+    lambda_plus*lambda_minus
+       =((z-c)/(z+c))*((q-1)/(q+1))
+       >((m+1)/(m+2c+1))*((m-1)/(m+1))
+       =(m-1)/(m+2c+1)>1/3.                      (C)
+
+The first strict inequality uses z>m+c+1 and q>m; the ratio
+(z-c)/(z+c) increases with z. The last uses m>c+2.
+
+Let f(theta)=B_lambda_plus(theta)+B_lambda_minus(theta), the transverse
+Z angle in an owner of the Q star. It is positive, decreasing and convex.
+By (C), the product of sqrt(3)*lambda_plus and sqrt(3)*lambda_minus
+exceeds one. For positive x,y, xy>1 implies atan(x)+atan(y)>pi/2.
+Consequently
+
+    f(pi/3)>pi/2.
+
+Weighted Jensen over the n>=6 actual Q slots yields
+
+    sum_j w_j*beta_j >= n*f(2*pi/n)
+                         >= 6*f(pi/3)>3*pi.
+
+But every owner contributes two Z slots and w_j<=2. The actual entire Z
+budget therefore gives
+
+    sum_j w_j*beta_j<=2*sum_j beta_j<=2*pi,
+
+a contradiction. This excludes the companion-C special-axis return too.
+

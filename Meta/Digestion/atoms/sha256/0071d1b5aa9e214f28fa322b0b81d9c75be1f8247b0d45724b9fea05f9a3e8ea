@@ -1,0 +1,28 @@
+**Definition 1.1 (ordered source).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\begin{aligned}
+h(\alpha)&=h(\beta)=0,\\
+h(\langle u,v\rangle)&=1+\max(h(u),h(v)),\\
+\rho(\alpha)&=\beta,\\
+\rho(\beta)&=\langle\beta,\alpha\rangle,\\
+\rho(\langle u,v\rangle)&=\langle\rho(u),\rho(v)\rangle.
+\end{aligned}
+\tag{ER.1}
+$$
+
+Pairing is free and ordered; every bracket and every leaf occurrence belongs
+to the source. For a public integer $D\ge0$ put
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+G_u(x)=\langle u,x\rangle,\qquad G=G_\alpha.
+\tag{ER.2}
+$$
+
+An action word executes from left to right. Thus $\mathsf G\mathsf S$
+means first $G$, then $\rho$, where $\mathsf S$ denotes a substitution
+commit and $\mathsf G$ a specified left-graft commit.
+

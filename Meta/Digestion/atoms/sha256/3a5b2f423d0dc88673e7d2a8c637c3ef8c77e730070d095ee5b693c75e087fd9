@@ -1,0 +1,20 @@
+**Corollary 5.3 (a zero pair requires one of two signed correlations).** At a zero-level compatible pair for the unchanged three-depth problem, the charges in (3.10) satisfy at least one of
+
+$$
+K_\beta>\frac1{2000},\qquad
+K_3>\frac1{160000}.
+\tag{5.4}
+$$
+
+More precisely, $c\le463/2000$ forces the first inequality and $c\ge463/2000$ forces the second. These are conditions on one joint path, not on two separately optimized product envelopes.
+
+Proof. The zero face gives $P=C$, $T=H$ and $q\le q_*$. If $c\le c_*$, monotonicity and (4.6) give $F(c,C)-H>1/2000$. From the first exact identity in (3.11),
+
+$$
+K_\beta=F(c,C)-H+c(1+c)J_U+cJ_R>\frac1{2000},
+$$
+
+since both defects are nonnegative. If $c\ge c_*$, the second identity and (4.6) give $K_3=G(c,C)-q\ge G(c_*,C)-q_*>1/160000$. The two cases include equality at the cut. The full depth-3 losses are retained as hypotheses of the zero-level problem, but are not inferred from this necessary correlation alternative. ∎
+
+The signed condition explains why a broad claim based only on nonzero emission ranges would fail. In the lower-$c$ regime the suspended response needs a positive weighted cancellation large enough to overcome two nonnegative balance defects. In the higher-$c$ regime the third-return completion needs a deficit relative to the common geometric reference. The same word coordinates and kernels must supply that cancellation or deficit while retaining both complete phase losses. This corollary is not a proof that either mechanism is impossible.
+

@@ -1,0 +1,61 @@
+**Theorem 3.1 (N1: unique optimizing line measure).** For every $C_{\rm end}<\lambda<C_{\rm sat}$ there is exactly one optimizing measure on failure lines. It has one positive-$k$ line and one or two negative-$k$ lines, hence at most three lines. It has no zero-$k$ or axis contact. Up to antipodes and proportional splitting its weights are unique. $\Phi$ is strictly concave on $[C_{\rm end},C_{\rm sat}]$. These assertions concern failure measures, not physical-label minima or whole-instrument uniqueness.
+
+Proof. At each strict-interior budget there is a finite attained supporting certificate
+
+$$
+\operatorname{tr}H+\eta\lambda=\Phi(\lambda),\quad \eta\ge0,\quad H=H^T,
+\qquad e^THe+\eta J(e_2^2)\ge(e^T\Xi e)_+
+\quad(\|e\|=1).
+\tag{TC.5}
+$$
+
+For completeness, strict feasibility and separation justify finite attainment here. The critical covariance measure has unit whitened masses on the two lines with $p=1/2$ and opposite cross signs. Mix it with a sufficiently small positive amount of uniform circle covariance measure. The cost is still strictly below $\lambda$ and a positive uniform density component remains. Perturb that component by small independent $\cos2t$ and $\sin2t$ densities. Both independent trace-fixed covariance coordinates vary over a neighborhood while positivity and the strict cost margin persist. The convex hull of the compact circle moment/objective image is compact at fixed mass two; adjoining upward cost slack and downward objective slack is locally closed. Separation at the maximum therefore has nonzero objective coefficient: a zero coefficient would support the covariance/cost projection at its interior point. Normalize that coefficient to one. Upward cost slack forces $\eta\ge0$; the two covariance multipliers and the constant multiplier combine as the symmetric $H$. This proves (TC.5) and equality of its value, rather than assuming an infinite-dimensional dual minimizer. Its integral nonnegative gap gives complementarity for every optimizing measure.
+
+Cost is active by JS's strict increase. Moreover $\eta>0$. Otherwise the inequality says both $H\succeq0$ and $H\succeq\Xi$. Pairing with the positive spectral projection and its complement gives $\operatorname{tr}H\ge\gamma$, contradicting $\Phi(\lambda)<\gamma$.
+
+Write $H=\left(\begin{smallmatrix}a&c\\c&b\end{smallmatrix}\right)$ and $\ell=b-a$. The full-circle inequality (TC.5) is equivalent to TWO WHOLE-INTERVAL inequalities
+
+$$
+\begin{aligned}
+\psi_0(t)&=\eta J(t)+a+\ell t-2|c|v(t)\ge0,\\
+\psi_1(t)&=\eta J(t)+a+d_0+(\ell-d_0)t-2|c+\zeta|v(t)\ge0,
+\qquad 0\le t\le1.
+\end{aligned}
+\tag{TC.6}
+$$
+
+Indeed they minimize, over both cross signs, the inequalities against zero and against $e^T\Xi e$ respectively. Continuity includes both axes and all sectors. Each function is strictly convex because $\eta>0$, $J$ is strictly convex and $-v$ is convex. A nonnegative strictly convex function has at most one zero: two distinct zeros would give a negative interior value.
+
+The optimal positive objective and the fixed signed expectation $\int e^T\Xi e\,dm=-d_0<0$ require both positive and negative contacts. A positive contact has cross sign $-$ and coordinate $p\in(p_z,1)$; it is the unique zero of $\psi_1$. A zero-expectation contact would zero both inequalities, hence have this same $p$. At this $p$ the cross-minus line is strictly positive and the cross-plus line strictly negative. Neither is zero, a contradiction. This also excludes zero-expectation axis contacts.
+
+At the positive contact $c+\zeta>0$. A negative sign would select the wrong cross sign; if it were zero, equality against $\Xi$ would also hold on the strictly negative opposite-sign line and violate the inequality against zero. All negative contacts use the unique zero $q$ of $\psi_0$. Covariance must cancel the positive contact's strictly negative cross entry, so a negative contact has positive cross entry and $q$ is not an axis. If $c>0$, every minimizing cross sign in $\psi_0$ would instead be negative. Therefore $c\le0$. The mass and $p$ moments force $q<1/2$: some positive mass lies above $1/2$ and all other mass has coordinate $q$. Thus
+
+$$
+0<q<\tfrac12<p_z<p<1.
+$$
+
+If $c<0$, only the cross-plus negative line is possible. The two weighted unit columns have product with their transpose $I_2$, hence form an orthogonal matrix. Both masses equal one and $q=1-p$.
+
+If $c=0$, both cross signs at $q$ are permitted. Let $m$ be the whitened mass on the positive line. Total mass, $p$ moment and cross cancellation give
+
+$$
+\begin{gathered}
+m=\frac{1-2q}{p-q},\\
+\omega_+=\frac{2-m+m v(p)/v(q)}2,\qquad
+\omega_-=\frac{2-m-m v(p)/v(q)}2.
+\end{gathered}
+\tag{TC.7}
+$$
+
+Here $\omega_+$ and $\omega_-$ belong to cross signs $+$ and $-$ on the negative lines. One has $0<m<2$, and
+
+$$
+(2-m)^2q(1-q)-m^2p(1-p)=1-m.
+$$
+
+Thus nonnegative masses are equivalent to $m\le1$. For $m<1$ there are exactly three positive masses; for $m=1$ the cross-minus negative mass vanishes and the pair is orthogonal. This proves the contact bound even for arbitrary supported measures.
+
+Fix this one dual. Every optimizer is supported on the same at-most-three lines, since the zero coordinates and allowed signs just derived concern the certificate itself. Three distinct unit rank-one projectors in dimension two are linearly independent: their trace-one Bloch coordinates lie on a circle, and three distinct circle points are not collinear. The corresponding assertion for two is immediate. Covariance therefore fixes their weights uniquely, including a possible zero weight. This proves the stated line-measure uniqueness.
+
+Finally, if $\Phi$ were affine on a nontrivial interval, fix a dual at a strict-interior point of that interval. Its supporting line agrees with $\Phi$ at two distinct strict-interior budgets. Optimizers at both budgets saturate that same certificate and therefore are the same line measure by the preceding argument. Active cost would make their budgets equal, a contradiction. Any affine interval touching an endpoint contains two such interior budgets. Concavity is already supplied by covariance-preserving mixtures, so its strengthening is strict throughout the closed interval. $\square$
+

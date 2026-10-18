@@ -1,0 +1,46 @@
+### 106.2. The same complete common-witness subset
+
+Suppose now that \((G,H)\) is a full-domain local minimum, \(\operatorname{rank}G=7\), \(0<t=F(G,H)<1/2\), and \(S\) is exactly the support of a fixed vector \(a\) spanning \(\ker G\). Let \(\mathcal A(G,H)\) be the norming pairs in (106.1), and define the complete canonical common-witness subset by
+\[
+\begin{aligned}
+\mathcal A_0(G,H)
+ &=\{(\rho,W)\in\mathcal A(G,H):
+             b_{G,H}(W;Q,R)\ge0\text{ for every }Q,R\in\mathcal E\},\\
+b_{G,H}(W;Q,R)
+ &=-2\operatorname{Tr}
+       [((Q-G)\odot H+G\odot(R-H))W].
+\end{aligned}
+\tag{106.10}
+\]
+[RT III §§92,95](ARITHMETIC_HOLOGRAPHIC_RT_III.md) make this a nonempty compact convex subset. Its definition retains one and the same norming pair for both first-order inequalities.
+
+**Corollary 106.2.** For every sufficiently small \(\tau>0\) in Theorem 106.1,
+\[
+\mathcal A_0(G_\tau,H_\tau)=\mathcal A_0(G,H).
+\tag{106.11}
+\]
+For each such common pair, its first stress \(\alpha aa^*\), \(\alpha>0\), and supported positive correlation quotient from RT III §95 can be retained unchanged.
+
+**Proof.** RT III Lemma 96.1 says that every canonical common density and witness is supported on \(S\). For such a witness the unchanged principal blocks give
+\[
+\overline{H_\tau}\odot W=\overline H\odot W,
+\qquad
+\overline{G_\tau}\odot W=\overline G\odot W.
+\tag{106.12}
+\]
+In (106.10), the terms depending on \(Q,R\) are consequently unchanged, and the constant term is unchanged by the full product identity. Thus \(b_{G_\tau,H_\tau}=b_{G,H}\) for this witness and every original feasible \(Q,R\). The full norming sets \(\mathcal A\) are identical because their complete coefficients agree. This proves one inclusion in (106.11).
+
+The new pair is itself a full-domain local minimum, with the same rank-seven kernel and value. Lemma 96.1 therefore supports all its common pairs on the same \(S\). Reversing the preceding argument proves the other inclusion.
+
+For completeness, the complementary stresses associated with one fixed common pair have the form
+\[
+\begin{aligned}
+P_A&=\operatorname{blockdiag}(\Lambda_A)-2\overline H\odot W
+      =\alpha aa^*,\qquad P_AG=0,\\
+P_B&=\operatorname{blockdiag}(\Lambda_B)-2\overline G\odot W
+      \succeq0,\qquad P_BH=0.
+\end{aligned}
+\tag{106.13}
+\]
+Both are supported on \(S\), by RT III §95. Equations (106.12) leave their displayed matrices unchanged with the same multipliers. The first still annihilates \(G_\tau\) by equality of kernels. The second annihilates both \(H\) and \(B_H\): support on \(S\) reduces the latter assertion to \((P_B)_{SS}H_S=0\). It therefore annihilates \(H_\tau\). The same supported diagonal congruence defining the quotient retains that quotient and \(\alpha\). \(\square\)
+

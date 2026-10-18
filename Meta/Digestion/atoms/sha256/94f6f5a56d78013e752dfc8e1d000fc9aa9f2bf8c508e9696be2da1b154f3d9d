@@ -1,0 +1,135 @@
+**Theorem 29.2 (Complete three-by-three density and an actual uniform spectral gap).** Put
+
+$$
+\begin{gathered}
+h=p_3+p_4,\qquad s=1-p_1,\qquad
+A=p_2\sqrt{p_1p_3},\qquad B=\sqrt{p_1p_2p_3p_4},\\
+d_1=c_4\overline c_1\overline c_2,\qquad
+d_2=d_1+c_3\overline c_1^{\,2},\qquad D=|d_1|^2=p_1p_2p_4>0,\\
+\eta=\sqrt{\frac{p_1p_3}{p_2p_4}}>0,\qquad
+q=\frac{d_2}{d_1}=1+\eta\overline u_2,\qquad
+C=C_3=p_1p_2+A u_1+B u_2,\\
+G=\begin{pmatrix}p_2&\overline C\\C&p_1\end{pmatrix},\qquad
+K=\begin{pmatrix}|d_1|^2&d_2\overline d_1\\d_1\overline d_2&|d_2|^2\end{pmatrix}
+=D\begin{pmatrix}1&q\\\overline q&|q|^2\end{pmatrix}.
+\end{gathered}
+\tag{29.5}
+$$
+
+Let $u_0=000,u_1^{\rm w}=001,u_2^{\rm w}=010$ denote words; word superscripts distinguish them from the target characters. In the joint support order
+
+$$
+(u_0,u_0)\ \big|\
+((u_0,u_1^{\rm w}),(u_0,u_2^{\rm w}),(u_1^{\rm w},u_0),(u_2^{\rm w},u_0))
+\ \big|\
+((u_1^{\rm w},u_1^{\rm w}),(u_1^{\rm w},u_2^{\rm w}),
+ (u_2^{\rm w},u_1^{\rm w}),(u_2^{\rm w},u_2^{\rm w})),
+$$
+
+the whole density is
+
+$$
+\boxed{\rho_{33}=h^2\ \oplus\
+\begin{pmatrix}hG&\mu K\\\overline\mu K&hG\end{pmatrix}
+\ \oplus\ (G\otimes G).}
+\tag{29.6}
+$$
+
+All other rows, columns and cross-count blocks in the six-flag space of dimension $64$ are zero. In particular,
+
+$$
+\begin{aligned}
+P&=\rho_{33}[(u_0,u_1^{\rm w}),(u_1^{\rm w},u_0)]=\mu D,\\
+W&=\rho_{33}[(u_0,u_1^{\rm w}),(u_2^{\rm w},u_0)]=\mu d_2\overline d_1=\mu Dq.
+\end{aligned}
+\tag{29.7}
+$$
+
+The terminal marginal coefficient in either window is $C$. The entire state depends on $\pi$ only through $\mu$ and $\overline\mu$.
+
+On its fixed nine-word support, for every phase and every probability measure $\pi$,
+
+$$
+\rho_{33}\ge\lambda_p I_9,\qquad
+\lambda_p=(p_1p_2p_4^3)^2>0.
+\tag{29.8}
+$$
+
+The bound is independent of $v$ and remains valid at $|\mu|=1$ and $\mu=0$.
+
+**Proof.** Normalization gives $S^\dagger S+J^\dagger J=I$, and the first-tick maps from any memory operator $M$ are
+
+$$
+\mathcal H_a(M)=JS^aM(S^\dagger)^aJ^\dagger
+=xx^\dagger\langle e_{4-a},Me_{4-a}\rangle\quad(0\le a\le4),\qquad
+\sum_{a=0}^4\mathcal H_a(M)=xx^\dagger\operatorname{Tr}M.
+\tag{29.9}
+$$
+
+Because $S^5=0$, every waiting path is included and the tick occurs in at most five monitored applications. For any old retained system $F$ entangled with memory $M$,
+
+$$
+\left(\operatorname{id}_F\otimes\sum_a\mathcal H_a\right)(\zeta_{FM})
+=\operatorname{Tr}_M\zeta_{FM}\otimes xx^\dagger.
+\tag{29.10}
+$$
+
+This follows by expanding $\zeta$ in the memory matrix units: the sum keeps all diagonal units with the same reset and kills off-diagonal units. Coherent generation from the new reset therefore leaves the old flag marginal unchanged and supplies its product with $\Omega_n$. In particular, serially reheralding gives the actual product in (29.3), even when a separately retained waiting-time record correlates with old flags. The latter record must be averaged over, as the definition requires. This rederives the replacement premise of Theorem 27.2 rather than inferring a product from equal marginals.
+
+The complete nonzero local history vectors through length three are
+
+$$
+\begin{array}{c|c}
+\text{word}&K_wx\\\hline
+0&Sx\\
+00&S^2x=c_4e_2+c_3e_3+c_2e_4\\
+01&c_1x\\
+000&S^3x=c_4e_3+c_3e_4\\
+001&c_2x\\
+010&c_1Sx.
+\end{array}
+\tag{29.11}
+$$
+
+All omitted vectors vanish because $Jx=0$ and the next admissible tick must be separated by at least one zero. Taking their actual Gram entries gives
+
+$$
+\Omega_1=|0\rangle\langle0|,\qquad
+\Omega_2=\begin{pmatrix}s&d_2\\\overline d_2&p_1\end{pmatrix},\qquad
+\Omega_3=\begin{pmatrix}h&d_1&d_2\\\overline d_1&p_2&\overline C\\\overline d_2&C&p_1\end{pmatrix}.
+\tag{29.12}
+$$
+
+For example,
+
+$$
+\begin{aligned}
+\Omega_3[000,001]&=\overline c_2\langle x,S^3x\rangle=c_4\overline c_1\overline c_2,\\
+\Omega_3[000,010]&=\overline c_1\langle Sx,S^3x\rangle
+=c_4\overline c_1\overline c_2+c_3\overline c_1^{\,2},\\
+\Omega_3[010,001]&=c_1\overline c_2\langle x,Sx\rangle\
+&=p_1p_2+c_1c_3\overline c_2^{,2}+c_1c_4\overline c_2\overline c_3
+=p_1p_2+A u_1+B u_2.
+\end{aligned}
+$$
+
+Division of the second summand of $d_2$ by $d_1$ gives $\eta e^{-i\phi_2}$ with the displayed conjugation. These local entries are credited antecedents (27.9)–(27.10), explicitly recomputed here for the new consumer.
+
+For a row $(w,z)$ and column $(w',z')$, the rotations multiply the product entry by
+
+$$
+\int e^{i[\beta_1(|w|_1-|w'|_1)+\beta_2(|z|_1-|z'|_1)]}\,d\pi.
+$$
+
+The total twirl deletes the entry unless the two differences sum to zero. Every supported local count is zero or one. At zero transfer the factor is one, at first-window transfer $-1$ it is $\mu$, and at transfer $+1$ it is $\overline\mu$. This proves the arbitrary-measure version of the mode rule used in Theorem 28.2. The total-count-zero block is $h^2$. The two diagonal parts of the count-one block are $hG$. Its cross entry in row $(u_0,u_i^{\rm w})$, column $(u_j^{\rm w},u_0)$ is $\mu d_j\overline d_i$, so the cross matrix is $\mu\overline d\,d^{\mathsf T}=\mu K$, with $d=(d_1,d_2)^{\mathsf T}$. At count two, both local indices lie in $G$ and no count transfer occurs, giving $G\otimes G$. These exhaust the nine actual words. The trace is $(h+p_1+p_2)^2=1$. Partial trace over either window gives the local count twirl, so its $(010,001)$ coefficient is $C$.
+
+For an explicit spectral gap, assemble the two or three history vectors as columns of a matrix $B_n$. The matrix $\Omega_n$ is the transpose of $B_n^\dagger B_n$ and has the same eigenvalues. In $B_2$, the minor on memory rows $e_0,e_2$ has determinant $-c_1c_4^2$. In $B_3$, the minor on rows $e_0,e_1,e_3$, with column order in (29.11), has determinant $c_1c_2c_4^3$. Cauchy–Binet therefore gives
+
+$$
+\det\Omega_2\ge p_1p_4^2=:\ell_2>0,\qquad
+\det\Omega_3\ge p_1p_2p_4^3=:\ell_3>0.
+\tag{29.13}
+$$
+
+Both densities have trace one. All their eigenvalues are at most one, so each smallest eigenvalue is at least its determinant. Thus $\Omega_2\ge\ell_2I_2$ and $\Omega_3\ge\ell_3I_3$ on their actual supports. The product $\Omega_3\otimes\Omega_3$ is at least $\ell_3^2I_9$. All count rotations preserve this word support and its identity, as do the averaging and total twirl. This proves (29.8). It establishes full support and a gap from actual Gram vectors, without a Fisher-information or generic-phase argument. $\square$
+

@@ -1,0 +1,260 @@
+**Lemma 99.1 (Constructive universal finite sufficiency).** For every
+real $1\ge u\ge v\ge w\ge z\ge0$ and every $t>0$, the following
+conditions suffice for one common finite adaptive hard-two scheme:
+
+$$
+w\le4t,\qquad w+z\le6t,\qquad u+v+w+z-2\le5t.
+\tag{99.1}
+$$
+
+For one common ordered hard-two scheme it suffices instead that
+
+$$
+w\le4t,\qquad w+z\le6t,\qquad
+u+w+z-1\le5t,\qquad v+2w+2z-1\le10t.
+\tag{99.2}
+$$
+
+The finite error is at most $t$ on every word. The schemes are mixtures
+of the corresponding catalog kernels of Section 98, with nonnegative
+weights totaling one. These statements include every real parameter,
+all equality boundaries and auxiliary zero amplitudes.
+
+**Proof.** Introduce the nonnegative gaps
+
+$$
+(d_0,d_1,d_2,d_3,d_4)=(1-u,u-v,v-w,w-z,z),\qquad
+\sum_{i=0}^4d_i=1,
+\tag{99.3}
+$$
+
+and scaled coordinates
+
+$$
+(X,Y,Z,R,S)=t^{-1}(d_0,d_1,d_2,d_3,d_4),\qquad H=R+2S-5.
+\tag{99.4}
+$$
+
+Here $X$ in the tuple is a real gap coordinate, distinct from the actual
+source set $X$ retained by the contract. Since $w=t(R+S)$ and
+$w+z=t(R+2S)$, the common constraints become
+
+$$
+(R,S)\in\Delta=\{R,S\ge0:R+S\le4,\ R+2S\le6\}.
+\tag{99.5}
+$$
+
+The adaptive last constraint is exactly $2X+Y\ge H$, because
+$u+v=2-2d_0-d_1$. The restricted last two are exactly
+$X\ge H$ and $X+Y\ge2H$, because $u=1-d_0$ and
+$v=1-d_0-d_1$. $Z$ is unrestricted except for nonnegativity.
+These equivalences use the unit total gap mass in (99.3), not a
+normalization of an unknown source law.
+
+The polygon $\Delta$ has vertices $(0,0),(4,0),(2,2),(0,3)$.
+Write
+
+$$
+L_0=(0,0),\quad L_1=(4,0),\quad D=(3,1),\quad
+P_0=(0,5/2),\quad Q_0=(2,2),\quad Q_1=(0,3).
+\tag{99.6}
+$$
+
+Its part $H\le0$ is the quadrilateral $L_0,L_1,D,P_0$;
+its part $H\ge0$ is $D,Q_0,Q_1,P_0$. The following explicit triangle
+coordinates establish their full coverage. For any point $(R,S)$ in
+$H\le0$, use the first row if $R\ge3S$, and the second otherwise:
+
+$$
+\begin{array}{c|ccc}
+\text{triangle}&\text{first vertex weight}&\text{second vertex weight}
+ &\text{third vertex weight}\\\hline
+(L_0,L_1,D)&1-(R+S)/4&(R-3S)/4&S\\
+(L_0,D,P_0)&(5-R-2S)/5&R/3&(2/5)(S-R/3)
+\end{array}
+\tag{99.7}
+$$
+
+For $H\ge0$, use the first row below if $2R+3S\ge9$, and the
+second otherwise:
+
+$$
+\begin{array}{c|ccc}
+(D,Q_0,Q_1)&6-R-2S&2R+3S-9&4-R-S\\
+(D,Q_1,P_0)&R/3&R+2S-5&(2/3)(9-2R-3S)
+\end{array}
+\tag{99.8}
+$$
+
+In every selected row the weights are nonnegative by the case inequality
+and (99.5), sum to one, and give $(R,S)$ on multiplying the stated
+vertices. In the first row of (99.7), $S\le1$ follows from
+$R\ge3S$ and $R+S\le4$; the displayed sum and nonnegativity suffice.
+In the second row the base weight is nonnegative because $H\le0$.
+In (99.8), its first and third entries in the first row are exactly the
+two common slack coordinates, while the middle entry is the diagonal
+case condition. In its second row the middle entry is $H$, and the last
+is the other diagonal case condition. These identities prove coverage
+on the diagonals, edges and vertices as well as their interiors.
+They do not assert convex-hull membership from finitely sampled points.
+
+Use conic vectors written $(X,Y,Z,R,S;T)$, where $T$ is the error
+allowance coordinate. Let $e_0,e_1,e_2$ be the unit $X,Y,Z$-axis
+vectors with $T=0$. They have gap mass one and normalize to the
+zero-error catalog points $U_0,U_1,U_2$. First suppose $H\le0$.
+Subtract the nonnegative excesses $X e_0+Y e_1+Z e_2$. Lift each
+vertex of (99.7) to $(0,0,0,R,S;1)$, preserving its barycentric
+weight. The four lifted vertices have the following gap masses and
+normalized points:
+
+$$
+\begin{array}{c|c|c}
+\text{vertex}&\text{gap mass}&\text{normalized catalog point}\\\hline
+L_0&0&\text{error-only ray }V=(0,0,0,0,0;1)\\
+L_1&4&B_0\\
+D&4&B_1\\
+P_0&5/2&P
+\end{array}
+\tag{99.9}
+$$
+
+The error-only ray has no probability mass and will not be sampled.
+All other lifts normalize by their positive gap masses: for example,
+$D$ gives $(d_3,d_4)=(3/4,1/4)$ and error $1/4$.
+
+Now suppose $H>0$ in the adaptive case. The condition $2X+Y\ge H$
+ensures a nonempty interval
+
+$$
+\max\{0,1-Y/H\}\le\beta\le\min\{1,2X/H\}.
+\tag{99.10}
+$$
+
+Both upper endpoints are nonnegative, the lower endpoint is at most one,
+and $1-Y/H\le2X/H$, proving nonemptiness. Choose any $\beta$ in
+this interval. Then $(X,Y)$ dominates
+$(\beta H/2,(1-\beta)H)$ coordinatewise. Subtract its nonnegative
+$X,Y$ excesses and $Z e_2$. The remaining vector is the combination
+with weights $\beta,1-\beta$ of the two affine lifts
+
+$$
+L_x(R,S)=(H/2,0,0,R,S;1),\qquad
+L_y(R,S)=(0,H,0,R,S;1).
+\tag{99.11}
+$$
+
+Decompose $(R,S)$ by (99.8), holding this same $\beta$ fixed.
+Affineness of $H=R+2S-5$ makes each lift of the barycentric combination
+the corresponding combination of the lifted vertices. Every high-part
+vertex has $H\ge0$, so no negative gap is introduced. At $D,P_0$,
+$H=0$ and the two lifts coincide, giving $B_1,P$. At the other
+vertices their normalized points are
+
+$$
+\begin{array}{c|cc|cc}
+ &\text{mass of }L_x&\text{point}&\text{mass of }L_y&\text{point}\\\hline
+Q_0&9/2&A_9&5&A_5\\
+Q_1&7/2&A_7&4&C
+\end{array}
+\tag{99.12}
+$$
+
+For instance $Q_0$ has $H=1$. Its $L_x$ gaps are
+$(1/2,0,0,2,2)$, giving amplitudes $(8/9,8/9,8/9,4/9)$ and
+error $2/9$; its $L_y$ gaps are $(0,1,0,2,2)$, giving
+$(1,4/5,4/5,2/5)$ and error $1/5$. The $Q_1$ substitutions give
+exactly the other two listed points. This covers every adaptive fiber,
+including fibers with one of $X,Y$ zero.
+
+For the restricted case with $H>0$, $X\ge H$ and $X+Y\ge2H$
+ensure the nonempty interval
+
+$$
+\max\{0,1-Y/H\}\le\beta\le\min\{1,X/H-1\}.
+\tag{99.13}
+$$
+
+Here $X/H-1\ge0$, and $1-Y/H\le X/H-1$ is exactly the second
+constraint. Now $(X,Y)$ dominates $((1+\beta)H,(1-\beta)H)$.
+Subtract the nonnegative excesses and $Z e_2$. Use the two affine lifts
+
+$$
+L_{\mathrm{hi}}(R,S)=(H,H,0,R,S;1),\qquad
+L_{\mathrm{lo}}(R,S)=(2H,0,0,R,S;1),
+\tag{99.14}
+$$
+
+with weights $1-\beta,\beta$. Decomposition by (99.8), again with
+fixed $\beta$, gives at $D,P_0$ the same $B_1,P$, and at the
+remaining vertices
+
+$$
+\begin{array}{c|cc|cc}
+ &\text{mass of }L_{\mathrm{hi}}&\text{point}
+ &\text{mass of }L_{\mathrm{lo}}&\text{point}\\\hline
+Q_0&6&O_{6,\mathrm{hi}}&6&O_{6,\mathrm{lo}}\\
+Q_1&5&O_{5,\mathrm{hi}}&5&O_{5,\mathrm{lo}}
+\end{array}
+\tag{99.15}
+$$
+
+Indeed at $Q_0$ the gap vectors are $(1,1,0,2,2)$ and
+$(2,0,0,2,2)$; at $Q_1$ they are $(1,1,0,0,3)$ and
+$(2,0,0,0,3)$. Dividing by six or five gives exactly (98.3).
+At $H=0$ use the low-part construction, with no division by $H$;
+both high lifts have zero first two coordinates there. Thus no boundary
+is excluded.
+
+It remains to turn the conic identity into a probability scheme.
+Multiplying the obtained decomposition of $(X,Y,Z,R,S;1)$ by $t$
+gives
+
+$$
+(d_0,d_1,d_2,d_3,d_4;t)
+   =\sum_{g\ne V}c_g g+c_V V,\qquad c_g,c_V\ge0.
+\tag{99.16}
+$$
+
+The finite nonvertical generators $g$ comprise the three axes and the
+lifted vertices just identified. Give such a generator its gap mass
+$m_g=\sum_{i=0}^4g_i>0$ and let its error coordinate be $T_g$.
+Its normalized gaps are $g_i/m_g$ and its catalog allowance is
+$\tau_g=T_g/m_g$ (zero on axes). Set $\alpha_g=c_gm_g$. Then
+
+$$
+\sum_{g\ne V}\alpha_g=1,\qquad
+(d_i)_{i=0}^4=\sum_{g\ne V}\alpha_g(g_i/m_g)_{i=0}^4,
+\qquad
+\sum_{g\ne V}\alpha_g\tau_g=t-c_V\le t.
+\tag{99.17}
+$$
+
+The first equality uses the original unit gap mass, including $d_0$.
+The vertical generator has gap mass zero, so no division by zero or
+extra probability component is permitted. If its coefficient is
+positive it accounts only for unused error allowance. Zero coefficients
+are simply omitted. Since the original gaps sum to one there is at least
+one positive nonvertical weight, even when the chosen polygon vertex
+has zero gap mass.
+
+Amplitudes are recovered linearly from normalized gaps by
+$a_n=\sum_{i=n}^4d_i$ for $1\le n\le4$. At each fixed low word the
+target is affine in these amplitudes; at $1111$ it is always base.
+Therefore $\eta_b^a=\sum_g\alpha_g\eta_b^{a^{(g)}}$ simultaneously
+for every $b$. Choose kernel $g$ with probability $\alpha_g$, using
+weights common to all words. For any measurable tape event $E$,
+
+$$
+\left|\sum_g\alpha_g\bigl(\nu_b^{(g)}(E)
+                  -\eta_b^{a^{(g)}}(E)\bigr)\right|
+ \le\sum_g\alpha_g\tau_g\le t.
+\tag{99.18}
+$$
+
+Taking the event supremum proves the full finite TV cap. Lemma 98.2
+places every component in the required strategy class. The explicit
+triangle coordinates, fiber intervals and positive-mass normalization
+supply the universal construction for arbitrary real parameters; no
+optimization oracle, finite enumeration fit or per-word mixing is used.
+$\square$
+

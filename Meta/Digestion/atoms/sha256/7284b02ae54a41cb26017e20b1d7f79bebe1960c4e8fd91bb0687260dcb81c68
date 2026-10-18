@@ -1,0 +1,16 @@
+**Corollary 5.1 (zero-level survival cannot concentrate).** A compatible pair satisfying both full endpoint boxes, both midpoint means and both original depth-3 configuration bounds must satisfy
+
+$$
+D>\kappa_0.
+\tag{5.1}
+$$
+
+For any sequence of compatible pairs whose original objectives tend to zero,
+
+$$
+\liminf_nD_n\ge\kappa_0.
+\tag{5.2}
+$$
+
+Proof. The complete boxes, midpoint means and supported losses are the zero-level conditions of [PAIR, Section 11.8]. Both residual equations and the shared marginals remain part of compatibility. Thus $\mathcal J=0$, and (5.1) follows from Theorem 4.1. The same inequality gives $D_n>\kappa_0-19\mathcal J_n$, proving (5.2). ∎
+

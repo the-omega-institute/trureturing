@@ -1,0 +1,10 @@
+**Definition 5.2 (Existence rounding and effective calibration).** Exact
+downward rounding of an arbitrary known real specifies an existing
+midpoint; it does not by itself give a uniform effective procedure for
+deciding equality to a dyadic boundary. An effective calibrator may
+instead choose any certified dyadic approximation satisfying (5.3).
+The precision $Q$ prices an offline value, not an additional denominator
+for the installed probability rows and not a retained runtime field.
+The finite midpoint expression and the effective-parameter distinction
+are given in Theorem 6.1.
+

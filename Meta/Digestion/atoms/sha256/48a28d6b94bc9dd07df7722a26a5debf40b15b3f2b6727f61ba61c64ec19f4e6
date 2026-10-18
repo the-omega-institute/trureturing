@@ -1,0 +1,16 @@
+**定义 8.1（七维共同载体与候选接口成本）。** 取 $W=\operatorname{Im}\mathbb O$、$u\times v=(uv-vu)/2$，使用欧氏内积。经典八元数叉积满足
+
+$$
+u\times v\perp u,v,\qquad
+\|u\times v\|^2=\|u\|^2\|v\|^2-\langle u,v\rangle^2;
+$$
+
+其来源见 Baez 的 [叉积与 $G_2$](https://math.ucr.edu/home/baez/octonions/node14.html) 和 [Darpö 文献注](../../../Library/Geometry/darpo2009vectorproduct.md)。固定正交单位输入 $a,b$，令 $E_0=\operatorname{span}\{a,b,a\times b\}$。对包含 $a,b$ 的线性候选接口 $E\subset W$，记正交投影 $P_E$，定义
+
+$$
+L(E)=\sum_{i<j}\|(I-P_E)(e_i\times e_j)\|^2,\qquad
+J(E)=\lambda\dim E+\gamma L(E),\quad\lambda,\gamma>0,
+$$
+
+其中 $e_i$ 是 $E$ 的任意正交单位基。$\lambda$ 和 $\gamma$ 是已指定且单位相容的方向维护成本与泄漏惩罚系数，不由八元数或 FIB 语法自动提供。
+

@@ -1,0 +1,43 @@
+**theorem 8.3 (An explicit positive-noise residual interval).**
+If $c>0$ and $0<\eta<\eta_F$, the interval in (2.2) has strictly
+positive width. In particular the bounds do not determine a general
+positive-noise value or a necessary threshold for exactness. At
+$t=1,\eta=1/2$ they give precisely
+
+$$
+\boxed{\frac{303}{6250}\le E_3(1,1/2)\le\frac{327}{6250},}
+\qquad\mathcal W=\frac{12}{3125}.
+\tag{8.6}
+$$
+
+Proof. Positive noise and $c>0$ imply $u,w,n>0$ and $h>u$.
+Both coefficient differences in (8.1) are strictly positive, so
+$K_3<B_3$. Below $\eta_F$, $F_3<c$. If majority is selected,
+Theorem 7.1 gives $M_3<c$; if it is not selected, $K_3=F_3<c$.
+Hence $K_3<c$ in every case and (8.2) gives positive width, even
+where $B_3\ge c$ and the lower endpoint is zero. A zero lower endpoint
+does not imply a zero optimum, and positive interval width does not
+imply that the true optimum is positive.
+
+At the stated rational point, the parameters are
+
+$$
+c=\tfrac12,\quad u=\tfrac1{10},\quad w=\tfrac3{25},\quad
+n=\tfrac1{50},\quad h=\tfrac7{50},\quad r=\tfrac{18}{25}.
+$$
+
+Direct substitution in the symbolic formulas gives, in denominator
+$6250$,
+
+$$
+c=\frac{3125}{6250},\quad B_3=\frac{2822}{6250},\quad
+F_3=\frac{2798}{6250},\quad M_3=\frac{2786}{6250}.
+$$
+
+Thus first-hit is selected, yielding (8.6). Neither endpoint in
+(8.6) has been identified as the exact optimum. The remaining
+mathematical bridge would require a sharper full-class converse,
+an improved actual local protocol, or an argument between them.
+In particular separate saturation of terms in (3.13) would not prove
+simultaneous saturation by one admissible processor. QED.
+

@@ -1,0 +1,18 @@
+**Corollary 9.2 (weighted completion congestion).** Any mathematical
+Markov kernel sending every row of $B_N$ into the unchanged hard
+solution set $C_{\Theta_N}$ has weighted preimage congestion $R^N$
+at its only output, relative to that output's original product weight.
+A uniform input on $B_N$ has $N$ bits of selector entropy and its
+image has entropy zero.
+
+Proof. Every row must be sent to $x^h$ with probability one. Thus
+the incoming weighted mass at that point is $Z_NR^N$, whereas its
+reference weight is $Z_N$. The $2^N$ different selector strings
+give the entropy assertion. This kernel is an analytical completion
+map, not a physical operation on the stationary source. $\square$
+
+This is a loss of joint weighted mass, not an exponential lower bound
+on the original retained alphabet. The unpinned relation has only two
+boundary sectors; splitting it by $s_N$ uses just two names. The small
+number of boundary values does not bound their conditional mass ratio.
+

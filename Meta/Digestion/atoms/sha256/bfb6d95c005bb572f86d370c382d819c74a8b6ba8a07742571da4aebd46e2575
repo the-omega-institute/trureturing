@@ -1,0 +1,18 @@
+**Definition 207.12 (Protected shared-terminal class).** Fix $h\ge2$
+actual late internal addresses $I$ and an actual address $z>\max I$,
+with $L\ge z$, and $s>0$. Put correct mass $s$ at $w(\{j,z\})$ for
+each $j\in I\cup\{z\}$, interpreting $\{z,z\}=\{z\}$. Put no other
+late correct or base mass. For one measure $\nu$ on subsets of $I$,
+put pair mass $\nu(Z)/2$ at each
+
+$$
+w(\{1,z\}\cup Z),\qquad w(\{2,z\}\cup Z).
+\tag{207.32}
+$$
+
+Put $T=\tau\ge0$, and allow arbitrary early correct rows with prescribed
+totals and total $E$. Inactive coordinates are one on the specified
+core. Protection means that, after removing early correct rows, in
+every non-$11$ cell of every distinct $N$ pair, every late-label reward
+is at most the label-zero pair reward.
+

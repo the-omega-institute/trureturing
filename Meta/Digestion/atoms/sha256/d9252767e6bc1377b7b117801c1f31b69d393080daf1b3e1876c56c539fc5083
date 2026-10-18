@@ -1,0 +1,47 @@
+**Proposition 72.9 (grounding by a normalized odd restriction).**
+Let $A_\varepsilon$ be the all-Neumann Laplacian on the full
+$\Omega_\varepsilon$, defined by its $H^1$ Dirichlet-energy form.
+Set $\Omega_\varepsilon^+=\Omega_\varepsilon\cap\{x_3>0\}$ and
+$\Sigma_\varepsilon=\Omega_\varepsilon\cap\{x_3=0\}$.
+Let $A_\varepsilon^+$ be the operator represented by
+
+$$
+ q_\varepsilon^+[h]=\int_{\Omega_\varepsilon^+}|\nabla h|^2,
+ \qquad
+ \operatorname{Dom}q_\varepsilon^+
+  =\{h\in H^1(\Omega_\varepsilon^+):
+                         \operatorname{Tr}_{\Sigma_\varepsilon}h=0\}.
+ \tag{72.24}
+$$
+
+This gives Dirichlet boundary on the cut and natural Neumann boundary
+on the exterior. Define $S_\varepsilon$ from half-domain $L^2$ onto
+the full odd space by
+
+$$
+ (S_\varepsilon h)(x)=
+ \begin{cases}h(x)/\sqrt2,&x_3>0,\\
+       -h(\mathcal R x)/\sqrt2,&x_3<0.
+ \end{cases}
+ \qquad
+ (S_\varepsilon^*h)(x)
+       =\frac{h(x)-h(\mathcal R x)}{\sqrt2},\quad x_3>0.
+ \tag{72.25}
+$$
+
+Then $S_\varepsilon^*S_\varepsilon=I$,
+$S_\varepsilon S_\varepsilon^*=P_{\rm odd}$, and
+$S_\varepsilon A_\varepsilon^+
+ =A_\varepsilon S_\varepsilon$ on their corresponding operator
+domains. Also $\Theta_\varepsilon$ is reflection-equivariant.
+
+**Proof.** Lipschitz trace and gluing across the cut show that a zero-trace
+$H^1$ function extends oddly to $H^1$ on the full domain. Conversely
+an odd $H^1$ function has zero cut trace and restricts to that form
+domain. The normalized extension preserves both $L^2$ norm and
+Dirichlet energy. Unitary equivalence of the represented forms gives
+the stated operator-domain and resolvent identities. This uses no mixed
+$H^2$ assertion at the cut/exterior intersection. Formula(72.19), the
+reflected pieces and the even ground chambers prove equivariance.
+$\square$
+

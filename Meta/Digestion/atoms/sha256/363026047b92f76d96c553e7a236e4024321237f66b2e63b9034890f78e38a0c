@@ -1,0 +1,20 @@
+**Theorem 7.1 (universal nine-state two-to-four normalization).**
+For every lawful prescribed binary computation $\sigma$ in Assumption
+3.1, existence of an arbitrary-literal reader with at most nine installed
+states and at most two calls, correct on all of $\mathcal U_*$, implies
+existence of a representative-root reader with nine installed states
+and at most four calls, correct on every same actual origin with exactly
+the original $\sigma(u)$.
+
+Proof. Theorem 6.1 supplies $j,z$ with constancy on the whole $\Pi_j$.
+Use the complete nine-state table and entries in Theorem 4.2. Its actual
+right-root tests and stored entire rows give correctness on all eleven
+profiles, hence on the whole actual domain. Acquisition and computation
+of the code are unchanged: the producer exports exactly its originally
+specified value. The alternative entry map has different entries for
+different attained bits and retains no additional payload. All installed
+states, all four successors and all running visits are charged as in
+Definition 3.2. The theorem asserts existence of an alternative table;
+it does not preserve the original reader's state names, paths, replies
+or two-call bound. $\square$
+

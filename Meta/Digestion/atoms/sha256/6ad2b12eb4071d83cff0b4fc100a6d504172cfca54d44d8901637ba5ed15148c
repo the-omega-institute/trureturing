@@ -1,0 +1,84 @@
+**Theorem 17.1 (complete attained original-task code).** For one
+graph in Definition 12.2 on $n$ vertices, let
+$H_0=\lceil\log_2n\rceil$, $K_0=2^{H_0}$ and $D=H_0+3$.
+Put its $n$ actual blocks in the first $n$ frontier positions
+of a public perfect height-$H_0$ scaffold in the right subtree,
+pad the other positions by alpha, and add the original left alpha
+wrapper. There is a deterministic effective preparation and reader
+on every $t\in\mathcal F_D$ with exactly
+
+$$
+|S_D|-2^{2n}+1
+\tag{GDB.79}
+$$
+
+complete attained names. It merges precisely these $2^{2n}$
+canonical scaffold states into one name and names every other
+canonical state separately. On every source, preparation uses
+
+$$
+T_{\rm prep}=2^D-1,\qquad
+Q_{\rm prep}\le D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+\tag{GDB.80}
+$$
+
+Every later original request is answered with zero Reads or one
+Read of the same stationary source, at an original-root literal
+of length at most $D$, selected before its reply and every
+authentic count.
+
+Proof. The ordered scaffold is an injection from the graph's
+$2^{2n}$ actual tuples into $S_D$; padding changes no equality
+between rows. Before the request actually scan every $Rq$ with
+$q\in W_D$, including absent replies. These paid replies determine
+$\pi_D(v)$ by the credited FMR/RRN canonical scan. A public finite
+membership table then chooses its merged-or-singleton name.
+Enumeration of finite canonical trees and memberships is effective,
+with no useful efficiency assertion. Every canonical state is
+an actual right subtree in $\mathcal F_D$, so every stated name
+is attained and the cardinality (GDB.79) is exact.
+
+Export only a fixed-width representation of that name. Use public
+allocation, fixed scan order and a padded finite selection schedule;
+apply the separately paid isolation and handoff of Assumption 1.3
+to make every other acquired distinction, buffer, selector, length,
+control field and transcript inaccessible. Every other accessible
+field is a function of the name and public inputs. This is an
+acquired implementation, not a free preassigned coloring.
+Counting the actual scan words and their lengths gives (GDB.80),
+as in Theorem 9.1 and [RRN, Theorem 7.1][ParityRRN].
+
+At a singleton canonical name every requested full factor is fixed,
+so the reader makes zero Reads. At the merged name, a target ending
+strictly above the scaffold frontier is branch. In a graph block,
+the root and its two children are branch. A terminal request
+selects the actual owner of its incident edge and submits the
+one word
+
+$$
+Ra_{\operatorname{tail}(a)}q_{\operatorname{owner}(a)},
+\qquad |a_{\operatorname{tail}(a)}|=H_0,\quad
+|q_{\operatorname{owner}(a)}|=2.
+\tag{GDB.81}
+$$
+
+Its length is $D$. Its alpha or beta reply gives (GDB.51)'s
+target factor. Padding slots have their fixed alpha factors at
+all remaining suffixes, including initially absent targets.
+Every allowed request has now been covered: its suffix has length
+at most $H_0+2$, so it either ends above the cut or enters one
+slot with a suffix of length at most two.
+
+All prefixes used for subtree transport are actually present,
+and (GDB.45) applies only at those occurrences. Canonicalization
+preserves both the queried reply and the full requested factor
+on every original source assigned that name. This includes every
+variable-shape inverse image and does not assume the entire
+original source was reconstructed. The chosen word is a public
+function of the name, $D$ and the target, before any reply or
+count; no free subtree, navigation, copying, source-identity or
+reference port has appeared. Apply (GDB.4) to the obtained factor
+for every subsequently supplied authentic $k\ge0$, without Reads.
+$\square$
+

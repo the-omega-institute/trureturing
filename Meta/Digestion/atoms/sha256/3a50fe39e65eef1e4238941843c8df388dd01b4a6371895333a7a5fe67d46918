@@ -1,0 +1,49 @@
+**Definition 2.1 (source quantities).** Use the positive amplitudes
+$h_0,h_1,h_2,a_s,b_s,c_s,d_s,m_1,m_2$ of Assumption 1.1 and set
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a_se_0e_1^T+b_se_1e_0^T,\quad
+S=c_se_0e_2^T+d_se_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=\frac{a_sb_s}{h_0h_1},\quad
+\omega=\frac{c_sd_s}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\\
+\alpha=\theta/\delta,\quad \beta=\omega/\delta,
+\quad \alpha+\beta=1,\\
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad
+(K_0,K_1,K_2)=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\\
+L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\qquad
+H_0=(1-\delta)N_{00}>0.
+\end{gathered}
+\tag{PC.4}
+$$
+
+The vectors in the source matrices are qutrit coordinate vectors.
+For $u^2+v^2=1$, retain the directed point $(u,v)$ and put
+
+$$
+\begin{gathered}
+h=(1,u/\sqrt\alpha,v/\sqrt\beta)^T,\qquad
+K_h=s_0D+(u/\sqrt\alpha)T+(v/\sqrt\beta)S,\\
+n_h=(0,d_sv/(h_2\sqrt\beta),-b_su/(h_1\sqrt\alpha))^T,\\
+\ell=h^TGh,\qquad f=n_h^T\Delta n_h,\\
+\mathfrak c(u,v)=
+\frac{h_1^2h_2^2\delta+(a_s^2h_2^2/\alpha)u^2
+                          +(c_s^2h_1^2/\beta)v^2}
+     {h_0^2\delta+(b_s^2/\alpha)u^2+(d_s^2/\beta)v^2}>0,\\
+V=\frac{m_2h_1^2}{b_s^2},\quad W=\frac{m_1h_2^2}{d_s^2},
+\quad \mu=\alpha V+\beta W,\quad
+u_F=V/\mu,\quad v_F=W/\mu,\\
+\mathfrak c_f=\mathfrak c(\sqrt{\alpha u_F},\sqrt{\beta v_F}),
+\qquad t_0=W/\mathfrak c_f.
+\end{gathered}
+\tag{PC.5}
+$$
+
+This is the source dictionary (FC.1)–(FC.3), (FC.55)–(FC.58).
+In particular the source amplitude $c_s$ differs from capacity
+$\mathfrak c$, and the matrix $K_h$ differs from scalar contrast.
+

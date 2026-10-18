@@ -1,0 +1,15 @@
+**Definition 5.1 (Trial profile).** For $3/4\le\tau<1$ let
+
+$$
+a=1-\tau,\qquad c=\frac{a^{3/2}}2,\qquad
+b=\frac{a^{7/2}}{12},\qquad L=\frac1{c^2}=\frac4{a^3},
+$$
+
+and define
+
+$$
+R_\tau(x)=b+c(1-e^{-L(1-x)})
+=(b+c)-ce^{-L}e^{Lx}.
+\tag{5.1}
+$$
+

@@ -1,0 +1,28 @@
+**Theorem 9.2 (local authorized use and conditional conversion).** Every
+already authorized original primitive operation and finite service has
+the structural operation of Theorem 6.2 under the same owner/token guards.
+If a receiver additionally possesses a complete authentic finite
+description of one of the four views for a correctly bound named cut,
+the mathematical conversions of Theorem 7.3 determine the other three.
+This conditional determination does not establish an oldcut acquisition
+or callable-memory service.
+
+Proof. The first assertion follows from the per-row permission checks
+and direct storage reads/writes in Definition 5.2. For example, the literal
+source service still uses its authorized private gates and raw source
+RD/WR operations; it does not replace TagRead by an actor's exploration
+of the whole support. Each private source byte is the switch component
+on which those original operations actually act. The semantic result and
+all partial availability states therefore agree by SSA.9.
+
+For the conditional second assertion, a complete authentic description is
+in the actual image of the relevant view. Apply the finite maps of
+Theorem 7.3; their inverse proof gives the unique same-cut descriptions.
+If the receiver executes a conversion, its program, scratch, scans,
+serialization, output framing, seals and copies are additional paid work.
+No exact numerical cost for that unprovided acquisition/conversion program
+is asserted by the mathematical map. Existing archive handles can perform
+their original paid lookup because their backing and permissions persist;
+they do not thereby acquire the pending current input latch or another
+owner's entire support. ∎
+

@@ -1,0 +1,47 @@
+**Lemma 3.1 (Residual rigidity on the actual return classes).** In a regular table with native acquired residuals, each closed irreducible class of the actual p-return kernel $C=BA$ has one parameter $r\in I$ such that every associated suspended residual is $J_y=P_{p,r}$ and the class-conditional p mean law is $P_{p,r}$.
+
+Proof. A positive stationary finite row decomposes into closed irreducible classes. One way to see the required closedness is to order the strongly connected components of the finite transition graph: stationarity forces zero flow across the outward cut of a component with no incoming flow, and induction removes all intercomponent edges on positive support. Fix one class $X_0$. Let $Y_0$ be its positive $B$ successors. Closedness of $BA$ forces every $A$ row from $Y_0$ back into $X_0$. Distinct closed p classes cannot share a suspended successor, since its stochastic $A$ row would then have to be supported on two disjoint classes. The kernel $AB$ on $Y_0$ is irreducible: take an $A$ step into $X_0$, a $BA$ path within $X_0$, and a final $B$ step to any specified $Y_0$ label.
+
+Restrict all matrices to these classes and put
+
+$$
+U=\operatorname{diag}(1-u),\qquad V=\operatorname{diag}(v),\qquad
+H=UBVA,\qquad T=AUBV.
+\tag{3.1}
+$$
+
+$BA$ is the actual p-return matrix. $H$ is its synthetic survival matrix. $T$ describes the same synthetic survival viewed from the actual alpha-successor averages; it is not an acquired transition matrix. The positive-entry graph of $T$ is exactly that of $AB$, since $1-u_x>0$ and $v_y>0$.
+
+From exact individual generation,
+
+$$
+Q_x(w_{j,0})=(H^ju)_x,\qquad
+J_y(w_{j,0})=(T^jAu)_y.
+\tag{3.2}
+$$
+
+The second identity follows from $AH^j=T^jA$. Let $p_T$ be the characteristic polynomial of $T$. Cayley–Hamilton gives, for every $j\ge0$ and every native representation $\nu_y$ of $J_y$,
+
+$$
+0=\int_I r\lambda_r^j p_T(\lambda_r)\,\nu_y(dr).
+$$
+
+Taking the linear combination whose coefficients are those of $p_T$ gives $\int_I r p_T(\lambda_r)^2\nu_y(dr)=0$. Thus all these measures are supported on the same finite set of roots. The map $r\mapsto\lambda_r$ is strictly increasing on $I$, so that set has at most $|Y_0|$ members. Let $c_r(y)$ be their nonnegative probability-weight columns.
+
+Applying $T$ to (3.2) and comparing successive $j$ gives
+
+$$
+\sum_r r\lambda_r^j(Tc_r-\lambda_rc_r)=0\quad(j\ge0).
+$$
+
+The Vandermonde matrix at distinct $\lambda_r$ is invertible, hence $Tc_r=\lambda_rc_r$ for each root. A nonzero nonnegative eigenvector of the irreducible $T$ is strictly positive: a zero coordinate and $T^nc_r=\lambda_r^nc_r$ would force every reachable coordinate to be zero. Two strictly positive eigenvectors cannot have different eigenvalues. At a maximum of their coordinate ratio the eigenvalue inequality is one way, and at a minimum it is the reverse. Since $r\mapsto\lambda_r$ is injective, only one parameter remains. Row normalization makes its weight column identically one, giving $J_y=P_{p,r}$ for all $y\in Y_0$.
+
+Normalize the stationary rows within this class to $\pi^0,\tau^0$. They retain $\pi^0B=\tau^0$ and $\tau^0A=\pi^0$, so
+
+$$
+\sum_x\pi_x^0Q_x=\sum_y\tau_y^0J_y=P_{p,r}.
+\tag{3.3}
+$$
+
+This proves the lemma. It does not assert $Q_x=P_{p,r}$ individually. The recurrence and positive-eigenvector method is mature and is used in [NATIVE, Lemma 4.2 and Theorem 5.1] for a different hypothesis, native individual p laws. Here it is applied to the actual residual operator $T$ and establishes (3.3) without that hypothesis. $\square$
+

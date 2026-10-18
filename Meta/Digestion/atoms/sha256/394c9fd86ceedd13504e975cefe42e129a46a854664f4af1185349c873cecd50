@@ -1,0 +1,81 @@
+**引理 455.1（共同误差，含完整高商）。** 固定 \(0<\alpha\le\beta<\infty\)。对全部 \(x\ge e\) 及 \(s\ge x\)，若
+
+\[
+a=\frac{\log(s/x)}\ell\in[\alpha,\beta],
+\]
+
+则有同一个显式常数
+
+\[
+K_\beta=\frac32\beta+\frac{15}2+
+\frac L2\left[1+\log(1+\beta+L)\right]
+\tag{CC.8}
+\]
+
+使得
+
+\[
+\boxed{\left|s\mathscr D_x(s)-\frac\ell2F(a)\right|\le K_\beta.}
+\tag{CC.9}
+\]
+
+**证明。** 令 \(r=\log s=\ell(1+a)\)。§453（DP.9）的低商积分为
+
+\[
+sP_{x,\mathrm{low}}^\eta(s)
+=r\log r+(\ell^{-1}-\log\ell-1)r
++(\ell^{-1}+\ell-1)-r^{-1}.
+\]
+
+代入 \(r=\ell(1+a)\) 并逐项整理，精确得到
+
+\[
+sP_{x,\mathrm{low}}^\eta(s)=\ell F(a)+a+\ell^{-1}-r^{-1}.
+\tag{CC.10}
+\]
+
+高商使用同一 \(\eta\) 的全部区间 \(t\ge s\)。由
+
+\[
+|\eta(y)|\le1+\log y\quad(y\ge1),\qquad
+\int_1^\infty(1+\log y)y^{-2}\,dy=2,
+\]
+
+及 \(u^{-1}+u^{-2}\) 在 \(u>0\) 上递减，换元 \(t=sy\) 给
+
+\[
+\left|sP_{x,\mathrm{high}}^\eta(s)\right|
+\le2(r^{-1}+r^{-2}).
+\tag{CC.11}
+\]
+
+写 \(sP_x^\eta(s)=\ell F(a)+R_x(s)\)。因为 \(\ell\ge1\)、\(r\ge\ell\)，且 \(0\le\ell^{-1}-r^{-1}\le\ell^{-1}\)，（CC.10）–（CC.11）给
+
+\[
+|R_x(s)|\le a+\ell^{-1}+2r^{-1}+2r^{-2}\le a+5.
+\tag{CC.12}
+\]
+
+在 \(2s\) 上参数恰为 \(a+L/\ell\)，故
+
+\[
+s\mathscr D_x(s)
+=\ell F(a)-\frac\ell2F(a+L/\ell)+R_x(s)-\frac12R_x(2s).
+\tag{CC.13}
+\]
+
+由 \(F'=\log(1+a)\) 的单调性，
+
+\[
+0\le\ell[F(a+L/\ell)-F(a)]
+\le L\log(1+\beta+L).
+\]
+
+（CC.12）在两个端点给 \( |R_x(s)|\le\beta+5\)、
+
+\[
+|R_x(2s)|\le\beta+L+5.
+\]
+
+代入（CC.13）并取绝对值即得（CC.8）–（CC.9）。该估计同时支付了完整 \(s\) 到 \(2s\) 的纤维与全部高商，常数不依赖 \(x,s\)。证毕。
+

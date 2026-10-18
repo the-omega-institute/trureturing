@@ -1,0 +1,51 @@
+**Theorem 7.3 (Equality-face classification, including the exceptions).**
+With the preceding hypotheses the entire face is
+
+$$
+\mathcal E_{\mathfrak d}
+=\mathcal E_{\mathfrak d,\partial}
++\operatorname{cone}\{k(a(p),b):p\in\mathcal P_{\mathfrak d},\quad
+b\in\ker\mathcal R(p),\ \|b\|=1\},
+\tag{7.4}
+$$
+
+where radial vectors are embedded in $V_{\rm rad}$. In case (a)
+the second cone is $\{0\}$. In case (b), choose a unit generator
+$b_*$ of the one-dimensional kernel; then the second cone is the
+single ray $\mathbb R_{\ge0}k(a(p_*),b_*)$. If $b_*$ misses a
+sector, that ray already belongs to
+$\mathcal E_{\mathfrak d,\partial}$. In case (c), the radial
+generators range over exactly the line section in (7.2), with their
+rank-two kernel lines. In case (d), they range over all interior
+populations with the actual kernels, including the higher-dimensional
+kernels distinguished in Theorem 7.2. Neither exceptional case
+permits replacing that family by a single preparation population.
+
+For an explicit description of the boundary term, take every
+canonical split zero seed from Theorem 2.2 for which either factor
+misses a sector. Its radial part obeys
+$b\in\ker\mathcal R(p)$, and its tangent part obeys
+$b\in\ker\mathcal T(p)$. These seeds generate exactly
+$\mathcal E_{\mathfrak d,\partial}$, including vertices, edges,
+zero diagonal coefficients, vanishing couplings and all tangent
+kernels. A tangent measurement always misses the dark sector even
+when its preparation is interior.
+
+Proof. Decompose any point of the zero face into finitely many
+product generators and apply Theorem 2.2 without changing the point.
+Every resulting summand has nonnegative $\ell_{\mathfrak d}$;
+their sum is zero, so every positive-weight summand has zero pairing.
+For a PSD matrix a zero quadratic form is equivalent to membership
+in its kernel. Equation (3.8) therefore puts every split measurement
+in the stated radial or tangent kernel. Preparations on the boundary,
+measurements missing any sector, and all tangent measurements belong
+to the boundary term. Every remaining seed is radial with an interior
+preparation and $\det\mathcal R(p)=0$. This proves one inclusion
+in (7.4); every displayed generator has zero pairing, proving the
+reverse inclusion. Canonical rotations preserve sector populations,
+and splitting cannot fill a missing sector, which also proves the
+description of the boundary term. The alternatives and kernel
+dimensions now follow from Theorem 7.2; the two unit vectors on a
+kernel line differ by a sign and give the same product atom.
+$\square$
+

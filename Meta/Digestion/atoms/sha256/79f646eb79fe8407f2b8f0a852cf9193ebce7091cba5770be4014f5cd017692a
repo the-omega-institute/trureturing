@@ -1,0 +1,199 @@
+**Theorem 11.1 (closed restricted forms, attained minima and actual limit).**
+With the fixed neighborhood and constants of Theorem 10.2, put
+
+$$
+g_* =\pi/A,\qquad 0<g<g_*,\qquad
+W_\kappa=G_\kappa/(2\pi),\qquad
+\mathfrak h_{\kappa,g}[z]
+ =\mathcal E_\kappa[z]-g\int_BW_\kappa|z|^2d\nu,
+\quad D(\mathfrak h_{\kappa,g})=\mathcal F_\kappa^B.
+\tag{11.1}
+$$
+
+These are closed semibounded forms on their natural completed horizontal
+domains, with the uniform coercivity
+
+$$
+\mathfrak h_{\kappa,g}[z]
+ \ge\tfrac12\mathcal E_\kappa[z]
+             -\frac{g_*B_0}{2\pi}\|z\|_2^2.
+\tag{11.2}
+$$
+
+Their form operators have compact resolvent. Every normalized infimum
+$e_\kappa(g)=\min_{\|z\|_2=1}\mathfrak h_{\kappa,g}[z]$ is finite
+and attained. For every fixed $g$ in this one positive interval,
+
+$$
+\mathfrak h_{\kappa,g}\longrightarrow\mathfrak h_{0,g}
+ \quad\hbox{in shifted Mosco sense},\qquad
+e_\kappa(g)\longrightarrow e_0(g)
+\tag{11.3}
+$$
+
+through either sign. The limit is the native three-coordinate double-wall
+point-Green form with coupling $g/(2\pi)$ relative to its unit source.
+It is not that form with coupling $g$.
+
+There is a unique nonnegative normalized ground state $z_\kappa$;
+it is positive almost everywhere. For this choice,
+
+$$
+\begin{gathered}
+z_\kappa\to z_0\quad\hbox{strongly in }L^2(B),\\
+(\varepsilon\partial_kz_\kappa,R_\kappa z_\kappa)
+ \to(\varepsilon\partial_kz_0,R_0z_0)
+ \quad\hbox{strongly in }L^2(B)\oplus L^2(B),\\
+\int_BG_\kappa|z_\kappa|^2d\nu
+ \longrightarrow\int_BG_0|z_0|^2d\nu.
+\end{gathered}
+\tag{11.4}
+$$
+
+Arbitrary normalized complex ground states require fixing their constant
+phases, for example by making their inner product with $z_0$ positive
+real for all sufficiently small parameters. Without phase fixing the
+conclusion is convergence of the ground-state lines.
+
+Proof. Equation (10.6) gives relative form bound
+$gA/(2\pi)<1/2$. KLMN [T, Theorem 6.24] proves closedness on exactly
+$\mathcal F_\kappa^B$, norm equivalence and (11.2).
+The attractive operator is defined by the variational domain
+
+$$
+D(\mathscr H_{\kappa,g})=
+ \{z\in\mathcal F_\kappa^B:\ \exists F\in L^2(B), \mathfrak h_{\kappa,g}(z,w)=\langle F,w\rangle \text{ for all }w\in\mathcal F_\kappa^B\},
+ \qquad\mathscr H_{\kappa,g}z=F.
+$$
+
+This domain is not replaced by an intersection of a free operator domain
+and a multiplier domain. Collective compactness of the free energy balls
+then gives compactness of the shifted attractive form balls. In particular each individual form
+has compact resolvent. Alternatively, a normalized minimizing sequence
+is bounded in the free form norm, has a strongly $L^2$ convergent
+subsequence, and a weakly convergent subsequence in the closed attractive
+form norm; weak lower semicontinuity proves attainment and finiteness.
+
+We give the singular lower-limit argument explicitly. Fix $g$ and
+$\kappa_j\to0$, and suppose $u_j\rightharpoonup u$ in $L^2$ with
+bounded shifted attractive energy. By (11.2) and collective compactness,
+a subsequence converges strongly to $u$, has bounded free energy, and
+free lower semicontinuity puts $u\in\mathcal F_0^B$.
+In the source charts choose smooth real cutoffs
+$\chi_{\kappa,r}^2+\vartheta_{\kappa,r}^2=1$ with
+$\chi=1$ for $N_\kappa\le r$, $\chi=0$ for $N_\kappa\ge2r$.
+They can be obtained as cosine and sine of a fixed smooth function of
+$N_\kappa/r$ constant near both endpoints. They satisfy
+
+$$
+\varepsilon^2|\partial_k\chi_{\kappa,r}|^2+
+ |R_\kappa\chi_{\kappa,r}|^2+
+\varepsilon^2|\partial_k\vartheta_{\kappa,r}|^2+
+ |R_\kappa\vartheta_{\kappa,r}|^2
+ \le Cr^{-2}\mathbf1_{\{r<N_\kappa<2r\}}.
+\tag{11.5}
+$$
+
+For each fixed $r$ these cutoffs and their derivatives converge smoothly
+as $\kappa\to0$. Horizontal IMS is an identity for both completed forms;
+the potential term splits without a remainder. Denote its nonnegative
+kinetic error by $\mathcal R_{\kappa,r}[u]$, the integral of the left
+side of (11.5) against $|u|^2$.
+The inner form is at least $-gB_0\|\chi u_j\|_2^2/(2\pi)$ by
+(10.6). For the outer form, the Green multipliers are uniformly bounded
+and converge pointwise off the pole; strong $L^2$ convergence therefore
+makes their integrals converge. Free lower semicontinuity applies to the
+outer cutoff functions. Consequently
+
+$$
+\liminf_j\mathfrak h_{\kappa_j,g}[u_j]
+ \ge \mathfrak h_{0,g}[\vartheta_{0,r}u]
+       -\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2
+       -\mathcal R_{0,r}[u].
+\tag{11.6}
+$$
+
+The local Hardy inequality also gives
+$N_0^{-1}u\in L^2$ near the pole. Thus
+$r^{-2}\int_{r<N_0<2r}|u|^2\to0$ by absolute continuity of that
+weighted integral. Equation (11.5) implies
+$\mathcal R_{0,r}[u]\to0$, and the product rule gives
+$\chi_{0,r}u\to0$ in the free form norm. The potential follows by
+(10.6). Hence $\vartheta_{0,r}u\to u$ in the attractive form norm;
+letting $r\downarrow0$ in (11.6) proves the required lower bound.
+This is the step that retains the inverse-square singularity.
+
+Recovery follows first for a fixed compact smooth test: its free energy
+converges by smooth coefficient convergence, and its potential converges
+by $L^1$ Green convergence. Approximate a general $u\in\mathcal F_0^B$
+in its form norm by such tests and use a diagonal sequence. A fixed shift
+larger than $g_*B_0/(2\pi)$ makes all forms nonnegative, so these lower
+and recovery statements are precisely shifted Mosco convergence.
+They do not assume compactness of the critical potential multiplier.
+
+Normalized recovery gives $\limsup e_{\kappa_j}(g)\le e_0(g)$.
+For actual normalized minimizers, (11.2), a fixed finite trial bound and
+collective compactness give a strongly convergent subsequence with
+norm-one limit. The lower bound just proved gives the reverse inequality
+and identifies every such limit as a limit-form minimizer. This proves
+the minimum convergence in (11.3).
+
+The modulus contraction for the two real fields decreases kinetic energy
+and leaves the potential unchanged, so a nonnegative ground state exists.
+To check simplicity and positivity with the singular potential, truncate
+$W_\kappa$ from above. For a bounded nonnegative truncation, the
+Trotter product formula gives
+$e^{-t(\mathscr L_\kappa-g\min(W_\kappa,M))}f
+ \ge e^{-t\mathscr L_\kappa}f$ for $f\ge0$.
+The decreasing truncated forms have the same lower bound and converge
+on the natural domain to the closed form (11.1); the monotone closed-form
+convergence theorem gives strong resolvent, hence heat convergence.
+The inequality passes to the limit. The free heat kernel is strictly
+positive: (10.10) gives bracket accessibility on the connected cylinder,
+and the killed free heat positivity principle applies with the same
+height boundary. Thus the restricted attractive heat operator is
+positivity improving. The elementary positive-eigenvector argument of
+[T, Theorem 10.11] applies on this $L^2(B)$ as well: its proof uses only
+selfadjointness, reality and positivity improvement. The lowest
+eigenvalue is simple and its nonnegative eigenvector is positive almost
+everywhere. These are restricted semigroups only.
+
+We finally verify the stronger assertions in (11.4), rather than infer
+them from compactness alone. Along a convergent minimizing subsequence
+write $u_j=z_{\kappa_j}$, $u=z_0$ and
+$c_g=1-gA/(2\pi)>0$. The IMS identity and (10.6) give
+
+$$
+\begin{aligned}
+c_g\limsup_j\mathcal E_{\kappa_j}
+ [\chi_{\kappa_j,r}u_j]
+ &\le e_0(g)-\mathfrak h_{0,g}[\vartheta_{0,r}u]
+       +\mathcal R_{0,r}[u]
+       +\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2\\
+ &=\mathfrak h_{0,g}[\chi_{0,r}u]
+       +\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2
+ \longrightarrow0\quad(r\downarrow0).
+\end{aligned}
+\tag{11.7}
+$$
+
+The potential of these inner cutoffs tends uniformly to zero by (10.6).
+Outside them bounded multipliers and strong $L^2$ convergence give
+potential convergence. This proves the last line of (11.4).
+The energy identity then gives
+$\mathcal E_{\kappa_j}[u_j]\to\mathcal E_0[u]$.
+Distributional testing, smooth coefficient convergence and the uniform
+energy bound identify the weak limits of the two horizontal derivatives
+as $(\varepsilon\partial_ku,R_0u)$. Convergence of their combined squared
+norm makes that convergence strong. Positivity and simplicity identify
+all subsequential limits, so the whole positive family converges.
+The same argument applies after the stated constant-phase choice.
+
+At zero parameter, $b_0=1/2$ and $s_0=H$. In the actual unimodular
+angles $(\alpha,\beta)=(\theta-v,\theta)$,
+$R_0=\tfrac12\partial_\alpha+
+(\tfrac12-k/(2H))\partial_\beta$. This is exactly the native double-wall
+operator of [G, Definition 4.1], with $r=2H$, the same density and clock.
+Its unit point source is $G_0$. Equation (11.1) therefore has native
+coupling $g/(2\pi)$, as claimed. $\square$
+

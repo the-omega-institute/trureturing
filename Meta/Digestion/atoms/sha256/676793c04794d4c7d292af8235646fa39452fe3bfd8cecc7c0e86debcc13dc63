@@ -1,0 +1,41 @@
+### 95.2. One rank-seven side gives a supported PSD quotient
+
+For this subsection retain that (G,H) is a local minimum on the full calibrated domain, with 0<t=F(G,H)<1/2 and rank G=7; no full-support or opposite-rank hypothesis is imposed. Fix one nonzero a spanning ker G and let S=supp(a). Set L=T−G⊙H. Let 𝒜 be the compact convex set of norming pairs (ρ,W) in (1), and define
+
+\[
+ b(W;G',H')=-2\operatorname{Tr}
+  [((G'-G)\odot H+G\odot(H'-H))W],
+ \qquad G',H'\in\mathcal E.                                  \tag{2}
+\]
+
+The simultaneous first-order result of section 92 supplies the nonempty compact convex common-witness subset
+
+\[
+ \mathcal A_0=\{(\rho,W)\in\mathcal A:
+             b(W;G',H')\ge0\text{ for all }G',H'\in\mathcal E\}.
+                                                                    \tag{3}
+\]
+
+For every pair in this subset there are complementary PSD stresses
+
+\[
+ \begin{aligned}
+ P_A&=\operatorname{blockdiag}(\Lambda_A)
+                           -2\overline H\odot W\ge0,
+       &P_AG&=0,\\
+ P_B&=\operatorname{blockdiag}(\Lambda_B)
+                           -2\overline G\odot W\ge0,
+       &P_BH&=0.
+ \end{aligned}                                                     \tag{4}
+\]
+
+Both stresses are nonzero by the positive-subhalf argument of section 92. Thus P_A=αaa* with α>0. Moreover every cross-fibre entry of G and H is nonzero: the original matrix-unit test gives |1/2−G_ijH_ij|≤t<1/2. Equating the cross-fibre entries in (4) gives
+
+\[
+ W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},
+ \qquad
+ (P_B)_{ij}=\alpha a_i\overline{a_j}
+                           \frac{\overline{G_{ij}}}{\overline{H_{ij}}}
+ \quad(i,j\text{ in different fibres}).                         \tag{5}
+\]
+

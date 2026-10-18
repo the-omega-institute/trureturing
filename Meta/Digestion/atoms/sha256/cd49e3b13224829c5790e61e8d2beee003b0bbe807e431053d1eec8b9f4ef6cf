@@ -1,0 +1,34 @@
+**Lemma 7.1.** If there exists a noninitial position $j\in\{1,2,3,4\}$ whose deletion leaves a matrix span of dimension at most three, the history has an actual collision between distinct positive rank-one sources, with common slope $k=-1/j$ and common constant drift zero. Therefore uniform five-read recovery requires the four surviving matrices to be independent after every such deletion.
+
+**Proof.** The survivors include $I$. Choose survivors $A,B$ so that $I,A,B$ span them, repeating $I$ if needed. There is a nonzero trace-zero matrix $X=(\begin{smallmatrix}a&b\\c&-a\end{smallmatrix})$ annihilating $A,B$ under the trace pairing: these are only two homogeneous equations in three unknowns. For $A=(\begin{smallmatrix}u&v\\w&x\end{smallmatrix})$ its equation is
+
+$$
+(u-x)a+wb+vc=0.
+$$
+
+If $a\ne0$ or $bc<0$, the four coefficients $a,-b,-c,-a$ have both strict signs. Otherwise $a=0$ and $bc\ge0$; orient $X$ so that $b,c\ge0$, not both zero. Nonnegativity makes $wb+vc=0$ force the appropriate off-diagonal entry of each selected matrix to vanish. Such a triangular nonnegative integral unimodular matrix has both diagonal entries one. Thus $\operatorname{diag}(1,-1)$ also annihilates $I,A,B$, and hence all survivors. Replace $X$ by this matrix. In either case we have a nonzero annihilator $X=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$ for which $a,-b,-c,e$ contain both strict signs.
+
+We construct positive rank-one endpoints with difference $X$. Define
+
+$$
+E(x,y)=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+f(x,y)=exy+a-cx-by,\qquad x,y>0.
+$$
+
+The function $f$ takes both signs: its values at $(\epsilon,\epsilon)$ tend to $a$; its values at $(T,T)$ divided by $T^2$ tend to $e$; its values at $(T,T^{-2})$ and $(T^{-2},T)$ divided by $T$ tend to $-c,-b$. Any strictly signed coefficient therefore supplies an actual point of its sign. Choose positive points with $f_-<0<f_+$ and join them by a positive straight segment. All entries of $E$ on this compact segment have a common lower bound $m>0$.
+
+Put $\Delta=\det X$ and choose
+
+$$
+\lambda>\max\left\{\frac{\max_{a,b}|X_{ab}|}{m},
+\frac{|\Delta|}{\min(-f_-,f_+)}\right\}.
+$$
+
+The intermediate value theorem gives a segment point with $f=-\Delta/\lambda$. At that point set $S_0=\lambda E$ and $S_1=S_0+X$. Both are strictly positive, $\det S_0=0$, and
+
+$$
+\det S_1=\lambda f+\Delta=0.
+$$
+
+Thus both are positive rank one and are distinct. All surviving traces agree because $X$ annihilates them. At $k=-1/j$ the remaining gain is zero, so all five observed readings agree with drift zero. Equations (1.2)–(1.4) realize each source on precisely the original words with a fixed positive row. ∎
+

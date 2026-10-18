@@ -1,0 +1,36 @@
+**Definition 1.3 (Boolean model and feasibility).** A Boolean graph has a
+finite installed running set $Q$, two distinct output terminals
+$\mathsf0,\mathsf1$, one source-independent running start, one fixed
+coordinate $i(q)\in[n]$ and two fixed successors $\delta(q,0),\delta(q,1)$
+at each $q\in Q$. Its entire changing configuration is its current state.
+A visit reads $\theta_{i(q)}$, pays one query and $c_{i(q)}$ letters,
+and follows that successor, with no silent transitions. If its actual visited
+running states on $\theta$ are $q_1,\ldots,q_{t_B(\theta)}$, define
+
+$$
+J_B(\theta)=\sum_{v=1}^{t_B(\theta)}c_{i(q_v)}.
+$$
+
+Thus every visit, including repeated-coordinate and certified work, is paid.
+Every installed state counts in $m=|Q|$, including unused states.
+Correctness means termination with $\mathbf1_{\{|\theta|\ge k\}}$ on
+every Boolean input. Arbitrary sharing, coordinate orders, repeated queries,
+paid certified continuations, union cycles and inconsistent graph paths are
+allowed; an inconsistent path need not be realizable. There is no auxiliary
+changing memory or control port. Write $\mathsf B_{c,k}(m,t,J)$ for
+existence with running-state count at most $m$ and both uniform upper bounds
+$t_B(\theta)\le t$, $J_B(\theta)\le J$ on every input; negative bounds
+are infeasible. The terminals are outside $m$.
+
+Unless other bounds are explicit, the Boolean caps below are $n,W$ on the
+same input. Put
+
+$$
+K=k,\qquad L=n-k+1,\qquad
+V=\{0,\ldots,K-1\}\times\{0,\ldots,L-1\},\qquad G=KL.
+$$
+
+The unrestricted original question concerns every $n\ge7$,
+$4\le k\le n-3$, every original position set $A$ and every $r\ge0$.
+The broader structural range above does not replace that intermediate target.
+

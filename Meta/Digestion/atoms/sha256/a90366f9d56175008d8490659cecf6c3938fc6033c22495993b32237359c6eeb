@@ -1,0 +1,28 @@
+**定理 22.12.1（唯一中间运行时）。** 当 $N>1$ 且 $q_0<q_1$ 时，存在唯一 $q_*\in(q_0,q_1)$，使
+
+$$
+\boxed{
+\Delta_{\mathrm{flag}}
+=\frac{N\delta}{S_N(q_*)}
+=\frac{N\delta}{\mathbb E_{q_*}T_N}.
+}
+$$
+
+并且
+
+$$
+\boxed{
+\frac{N\delta}{\mathbb E_1T_N}
+<\Delta_{\mathrm{flag}}<
+\frac{N\delta}{\mathbb E_0T_N},
+\qquad
+\delta<\Delta_{\mathrm{flag}}<N\delta.
+}
+$$
+
+**证明。** $S_N(q)$ 在 $N>1$ 时严格递增，因此积分中的导数严格位于端点值之间；积分中值定理给出唯一的 $q_*$。因为 $S_N(q)$ 严格递增，中值也唯一。证毕。
+
+这就是逆运行时律：有效旗标放大是“总轮数除以一个中间运行时”，而不是“总轮数乘以平均运行时”。在极限 $q_0,q_1\to0$ 且对数几率差 $\delta$ 固定时，$\Delta_{\mathrm{flag}}\to N\delta$；在 $q_0,q_1\to1$ 时，$\Delta_{\mathrm{flag}}\to\delta$。
+
+<a id="section-22-13"></a>
+

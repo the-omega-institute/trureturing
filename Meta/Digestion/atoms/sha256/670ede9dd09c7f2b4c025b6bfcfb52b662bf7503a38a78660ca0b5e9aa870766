@@ -1,0 +1,64 @@
+**Theorem 5.3 (source-specific one-fragment history recovery).** For
+each $V\in\{S_C,B_C,T_C,M_C\}$ separately and
+$(h,j),(k,t)\in\mathcal H_C$,
+
+$$
+V(h,j)=V(k,t)\quad\Longleftrightarrow\quad (h,j)=(k,t).
+$$
+
+Each view therefore recovers the actual partial raw graph, old native
+history and this fragment's fine history. On its actual image its
+decoder $D_V$ and encoder $E_V$ satisfy
+
+$$
+D_VE_V=\operatorname{id}_{\mathcal H_C},\qquad
+E_VD_V=\operatorname{id}_{\operatorname{im}E_V}.
+$$
+
+Proof. First decode a whole support. The fixed outer sockets locate
+source 16 and the original finite fields. Along its actual tape
+spine, the old complete marked R cell remains unchanged. All newly
+constructed portions have only prefixes of the unmarked $c_R$
+template; none adds another occupied true head-mark track. The
+original complete marked cell therefore remains uniquely identifiable
+from child geometry. Its P,R route identifies the original $z$,
+even when the last new trailing child is still absent. Count the
+strict descendants below $z$ to obtain $j$.
+
+Prune these descendants mathematically, retaining $z$. This gives
+exactly the original child tree at $h$. This pruning is a decoder,
+not an executable deletion or source reset. UAS Theorem 3.2 decodes
+its whole raw record $W(h)$, with its original cursor-track-determined
+access links. The new O/H slots are empty and every old access link
+has been unchanged, so they also reconstruct the fine graph.
+Selecting $M_J(h)$ and applying the supplied UAS Theorem 3.4 on
+$\mathcal C$ recovers $h$. Equal whole supports consequently give
+equal $h,j$. Conversely equal $h,j$ give the same graph and support
+by Theorem 3.4. This proves both support implications.
+
+For the independently observed boundary, finite-tree prefix closure
+gives the same whole support, including the unfinished component.
+The preceding decoder therefore gives $h,j$. Equal $h,j$ give the
+same terminal paths. This proves both boundary implications.
+
+For retained memory, its $M_J$ part is exactly the unchanged
+$M_J(h)$, not a later completed reservoir. UAS Theorem 3.4 gives
+$h$ from it. Its extra bounded append component has $j$ strict
+descendants and hence supplies $j$. Conversely $h$ fixes the actual
+selected backing and rights, and its deterministic $j$ births fix
+the selected append. This proves both memory implications.
+
+For process, the two occurrence types distinguish the old UAS
+prefix from the new attachment suffix. Native erasure of that old
+prefix is $h$, and the actual suffix has length $j$. Conversely
+$h$ fixes its original initialized occurrence word, and the fixed
+list fixes the $j$ actual birth roles. This proves both process
+implications. No separately installed process transcript is used.
+
+The same arguments construct all four decoders. Their observation
+direction returns the same actual graph/material/process; their
+reconstruction direction returns the same pair. Original absolute
+creation identities are those of the recovered native history;
+fresh ones are its actual appended template roles. No arbitrary
+external birth names are guessed from an unnamed tree. ∎
+

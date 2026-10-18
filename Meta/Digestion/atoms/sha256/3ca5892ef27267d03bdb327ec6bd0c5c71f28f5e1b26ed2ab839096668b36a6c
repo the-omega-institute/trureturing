@@ -1,0 +1,28 @@
+#### 30.5　同结构核下的上下文漂移界
+
+现在考虑更强情形：
+
+$$
+\delta_t=\delta_s=\delta
+\qquad\text{在全部 }Z\text{ 上}.
+$$
+
+机制没有改变，但上下文分布可能改变。定义总变差距离
+
+$$
+\operatorname{TV}(\mu_t,\mu_s)
+=
+\frac12\sum_{z\in Z}
+|\mu_t(z)-\mu_s(z)|,
+$$
+
+以及响应振幅
+
+$$
+\operatorname{osc}(\delta)
+=
+\max_{z\in Z}\delta(z)-\min_{z\in Z}\delta(z).
+$$
+
+<a id="claim-30-5-1"></a>
+

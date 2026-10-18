@@ -1,0 +1,17 @@
+**Definition 18.1 (The actual parent energy on a phase orbit).**
+Retain the parent $H$ of Definition 1.2 and its occupied
+endpoint form (6.2). Put
+
+$$
+E_{\rm orb}(\chi)=\inf_{|a|=|b|=1}
+\sum_Sp(S)\sum_{i\in S}\frac{w_i}{1+\lambda_i}
+\left|\frac{\chi(S)}{a(\ell_S)b(r_S)}-
+\frac{\chi(S\setminus\{i\})}
+{a(\ell_{S\setminus\{i\}})b(r_{S\setminus\{i\}})}\right|^2.
+\tag{18.1}
+$$
+
+The infimum changes only the phase representative. It
+retains the original law, weighted parent and deletion
+clocks, and does not conjugate the parent with the phase.
+

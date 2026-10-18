@@ -1,0 +1,34 @@
+#### 17.2.2 Maas 的有限 Markov 链梯度流
+
+Maas 的 [Gradient flows of the entropy for finite Markov chains](https://arxiv.org/abs/1102.5238) 假设有限状态空间上的 Markov kernel 不可约且可逆。论文构造离散 Benamou–Brenier 型度量，使连续时间 Markov 链的概率律成为相对于平稳分布的相对熵梯度流。
+
+若采用这条路线，必须提供随机核
+\[
+K_{st}\ge0,\qquad \sum_tK_{st}=1,\qquad
+\pi_sK_{st}=\pi_tK_{ts},
+\]
+其连续时间生成元可取 \(Q=K-I\)。一般生成元满足的是 \(Q_{st}\ge0\)（\(s\ne t\)）和 \(\sum_tQ_{st}=0\)，不能与随机核的归一化混写。
+
+FIB 的四角质量作用流在完整单纯形上是非线性的，需要单独验证 Onsager 因子分解，不能直接套用有限线性 Markov 链定理。设
+\[
+a=p_2p_5,\quad b=p_0p_{25},\quad
+\Lambda(a,b)=
+\begin{cases}
+\dfrac{b-a}{\log b-\log a},&a\ne b,\\
+a,&a=b,
+\end{cases}
+\]
+并给定 \(\gamma>0\)，则
+\[
+\mathsf M_p=\gamma\Lambda(a,b)\,dd^{\mathsf T}
+\]
+是从余切空间到切空间的半正定 Onsager 算子。因为
+\[
+d^{\mathsf T}D\mathcal V(p)=\log(b/a),
+\]
+所以
+\[
+-\mathsf M_pD\mathcal V(p)=\gamma(a-b)d.
+\]
+这条有限代数恒等式证明所声明的 FIB 质量作用流确实是负熵的退化梯度流。其退化方向对应被保持的可见约束；参数 \(\gamma\) 仍是新增动力学数据。
+

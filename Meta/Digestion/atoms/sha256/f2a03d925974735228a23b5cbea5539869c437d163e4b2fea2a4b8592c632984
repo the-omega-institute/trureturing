@@ -1,0 +1,4 @@
+**Proposition 5.2 (mutual recovery at the stated scope).** With the labelled scopes, source cell and bookmark supplied, the augmented boundary $(q,z)$ and chronological selected word $\omega$ determine one another on $\Omega$. Their common retained information is sufficient for $T$; neither the bare scopes, $q$ alone, nor $z$ alone has that property.
+
+Proof. Reading a chronological word gives both restrictions and its $b\prec a$ bit. Conversely $(ac,bc,0)$, $(ac,bc,1)$ and $(ac,cb,0)$ reconstruct respectively $abc,bac,acb$, including every precedence relation between $a,b,c$. Replacing $a,c$ by 0 and $b$ by 1 gives $T$, and the table gives the inverse within this cell. The scopes are fixed across all three histories; $q$ merges the first two; $z=0$ merges $abc,acb$. Thus the joint recovery does not make all four bare expressions independently sufficient. $\square$
+

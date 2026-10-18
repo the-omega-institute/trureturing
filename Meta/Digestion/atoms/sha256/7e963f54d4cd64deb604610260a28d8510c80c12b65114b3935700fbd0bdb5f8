@@ -1,0 +1,44 @@
+**Definition 4.2 (public state and admission).** Choose $\tau_i>0$ with
+$\sum_i\tau_i=1$, and set
+$A=\sum_i h_i^2\tau_i$, $B=b^2\tau_0+a^2\tau_1$,
+$C_S=d^2\tau_0+c^2\tau_2$. For $0<\xi<1$ put
+
+$$
+\begin{aligned}
+\theta_0&=2\arctan\xi,&
+c_0&=\frac{1-\xi^2}{1+\xi^2},&
+\sigma_0&=\frac{2\xi}{1+\xi^2},\\
+\delta_0&=1-\alpha-\beta c_0,&
+Z_0&=\sqrt{\delta_0^2+\beta^2\sigma_0^2},\\
+p&=(Z_0+\delta_0)/2,&
+q&=(Z_0-\delta_0)/(2\alpha),&
+r_0&=\beta\sigma_0/(2\sqrt\alpha),\\
+k_{\rm tilt}&=(1-\alpha)c_0-\beta,&
+\lambda&=\frac{Ap-Bq}{c_0Z_0},&
+d_{\rm cert}&=B+\lambda\alpha c_0,\\
+\gamma&=\lambda\sqrt\alpha\,\sigma_0+d_{\rm cert}\sqrt{q/p}.
+\end{aligned}
+\tag{QO.21}
+$$
+
+Admission is exactly
+
+$$
+p+q<1,\quad k_{\rm tilt}>0,\quad Ap>Bq,\quad
+\gamma<\chi\sqrt{\tau_0\tau_1}.
+\tag{QO.22}
+$$
+
+For admitted parameters define
+
+$$
+\rho=\begin{pmatrix}\tau_0&i\gamma/\chi&0\\
+-i\gamma/\chi&\tau_1&0\\0&0&\tau_2\end{pmatrix},\qquad
+C=\begin{pmatrix}A&i\gamma&0\\-i\gamma&B&0\\0&0&C_S\end{pmatrix},
+\quad h=(\sqrt p,i\sqrt q,0)^T,
+\quad H_*=hh^\dagger,\quad s_*=\sqrt{1-p-q},\quad F=\lambda k_{\rm tilt}.
+\tag{QO.23}
+$$
+
+The coefficient vector $h$ is distinct from the source amplitudes $h_i$.
+

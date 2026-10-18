@@ -1,0 +1,18 @@
+## 441. 固定秩 FIB 仿射族不能成为 Musin 高阶接触层
+
+这一节只检验一个容易被“共同几何切面”掩盖的来源条件。令
+
+$$
+\mathcal F_r=\{N_{r,g}=1+F_rg:g\ge1\},
+$$
+
+其中 $F_r$ 是第 $r$ 个 Fibonacci 数。对 $r\ge3$，有 $F_r>1$，并且
+
+$$
+N_{r,g}\equiv1\pmod{F_r},
+\qquad \gcd(N_{r,g},F_r)=1.
+\tag{441.1}
+$$
+
+另一方面，Musin 预印本的 Corollary 3.8 对其固定横坐标的高阶算术族给出：对每个固定正整数 $d$，存在 $k_0(d)$，使得所有阶数 $k\ge k_0(d)$ 的成员都被 $d$ 整除。这里的量词是“该层的每一个成员”，不是只对首个接触点成立；其来源与适用条件见 [Musin 文献卡](../../../Library/Analytic/musin2026higherorder.md)。
+

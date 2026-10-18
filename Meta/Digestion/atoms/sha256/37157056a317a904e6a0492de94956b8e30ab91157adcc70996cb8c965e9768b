@@ -1,0 +1,16 @@
+## 443. A reusable direct four-high exclusion theorem
+
+Assume a finite actual face-paired tetrahedral quotient with exactly
+six distinct actual labels M,V,Z,U,C,D. Each original owner has a
+fixed vertex-induced paired frame with four distinct actual labels.
+Assume one common positive length field with coshes satisfying (435.4),
+and complete original angle sums 2*pi at every actual edge.
+
+Assume sigma=(M,C,D,V,C,D) is the unique flat owner, with angle pi
+at its M,V axes and zero at its four transverse slots. Every other
+owner is genuine, with strict L,J>0 and the usual paired response
+angles. As for genuine hyperideal paired tetrahedra throughout the
+published theory, each genuine owner's six-slot total is less than
+2*pi. This follows by adding its two vertex-link inequalities
+theta_r+beta_p+beta_q<pi and theta_o+beta_p+beta_q<pi.
+

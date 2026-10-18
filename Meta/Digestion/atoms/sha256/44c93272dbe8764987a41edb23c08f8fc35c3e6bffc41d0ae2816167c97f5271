@@ -1,0 +1,48 @@
+### 93.4. Original generic reconstruction and all units
+
+Form the twenty-dimensional free algebra
+\[
+ \mathcal A_Q=K_Q[z,X]/
+ (f_W(z),\ (1+k(z)^2)X^2-t(z)X-R),\qquad R=3-b^2,
+\]
+and set \(x=X,\ y=k(z)X,\ G=x+iy\). Construct the original affine
+line and \(a_Y,\mu_Y,F_8\) from §87. Then
+\[
+ \tau=-\mu_Y/a_Y,\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma.
+\]
+Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\) by the original formulas.
+The physical unscaled input coefficients are
+\(G/\kappa,C/\kappa,D/\kappa\).
+
+The exact multiplication norm residues modulo 61 are:
+
+~~~text
+1+k^2:57; fW_prime:41; radial discriminant:22; y:49;
+aY:57; sigma:35; beta:1; barbeta:10;
+C:55; barC:59; D:55; barD:40; Yc:41; barYc:41;
+q:5; e:39; bare:56; F8:4; G:39; barG:45;
+Delta:47; delta:48.
+~~~
+
+The radial discriminant is \(t^2+4R(1+k^2)\). The determinant of
+\(1,y,\ldots,y^{19}\) in the ordered basis
+\((1,z,\ldots,z^9,X,Xz,\ldots,Xz^9)\) is \(17\bmod61\).
+All reconstruction divisions are therefore regular at every root of \(Q\).
+
+Over the generic parameter field this source representation is the same
+source/decic algebra as §89. Its original-equation identities consequently
+transport to the new finite arrays and specialize through the certified
+denominators. Direct finite-algebra multiplication also gives both parts of
+\(E=0\), and \(N_Y=N_D=0\), as exact corroboration.
+
+For necessity, the division-free §87 theorem first puts every original
+generic mean into the full source quotient. Positivity removes the other
+five components, so its mean lies in \(\mathcal A_Q\) before any \(F_8\)
+division. The norm \(4\bmod61\) proves \(F_8\ne0\) there. The complete
+line reconstruction and strict physical filters then cover all original
+leading and pivot strata and all six root orders. The unit \(\Delta\)
+ensures both channels are three-distinct; optional \(\Theta\) chart
+interchanges lose no rays.
+

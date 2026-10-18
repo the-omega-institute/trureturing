@@ -1,0 +1,150 @@
+**Theorem 2.1 (missing-target components and exact cyclic traces).**
+Fix the finite interface and weights of §1, $n\ge1$ and a nonempty
+jointly admissible $B\subseteq S^n$. Write $P_i=\pi_i(B)$, let
+$G$ be the indices with locally admissible $P_i$, and let
+$I=[n]\setminus G$. For each $i\in I$, choose any locally missing
+target $h_i=g_{q_i}$: it is neither constant nor determined by an
+own-coordinate experiment on $P_i$. Define
+
+$$
+V_i=h_i(P_i),\qquad t_i=|V_i|,\qquad
+c_i=\max_{v\in V_i}\sum_{\substack{z\in P_i\\h_i(z)=v}}w(z).
+\tag{CIT.4}
+$$
+
+For every such choice, joint admissibility gives a donor $j(i)$,
+experiment $a_i$ and a decoder with precisely the domain and codomain
+
+$$
+d_i:r_{a_i}(P_{j(i)})\longrightarrow V_i,
+\qquad
+h_i(x_i)=d_i(r_{a_i}(x_{j(i)}))\quad(x\in B).
+\tag{CIT.5}
+$$
+
+Necessarily $j(i)\ne i$ and $2\le t_i\le m$. Give each bad
+vertex $i\in I$ its single edge $i\to j(i)$; good vertices have
+no outgoing edge. Each weak component has one good terminal root or
+one directed cycle of length at least two. Let $\mathcal K$ be the
+set of these cycles and let $J$ be the bad vertices outside them.
+
+For a cycle $C=(i_1,\ldots,i_\ell)$ ordered by
+$j(i_s)=i_{s+1}$, with subscripts interpreted cyclically, define
+$V_s=V_{i_s}$, $V_0=V_\ell$ and the rectangular matrix
+
+$$
+T_s(v_s,v_{s-1})=
+\sum_{\substack{z\in P_{i_s}\\
+h_{i_s}(z)=v_s\\
+d_{i_{s-1}}(r_{a_{i_{s-1}}}(z))=v_{s-1}}}w(z),
+\qquad (v_s,v_{s-1})\in V_s\times V_{s-1}.
+\tag{CIT.6}
+$$
+
+Thus $T_s$ has $t_{i_s}$ rows and $t_{i_{s-1}}$ columns. Put
+$\tau_C=\operatorname{tr}(T_\ell\cdots T_1)$. Then
+
+$$
+\boxed{
+\Omega(B)\le
+\prod_{i\in G}w(P_i)
+\prod_{i\in J}c_i
+\prod_{C\in\mathcal K}\tau_C,
+\qquad
+\tau_C\le\left(\min_{i\in C}t_i\right)\prod_{i\in C}c_i.
+}
+\tag{CIT.7}
+$$
+
+Proof. Local inadmissibility supplies a missing target by the
+definition. Such a target is nonconstant because a constant target
+has a zero-experiment answer. Apply (CIT.2) to it. On any attained
+donor reply, choose a tuple of $B$ having that reply and define the
+decoder to be its target value. The implication makes this value
+independent of the chosen tuple. Every element of $P_{j(i)}$ occurs
+in a tuple of the original $B$, so this defines $d_i$ on the whole
+domain in (CIT.5). Its image equals $V_i$, since every target value
+also occurs in a tuple. Therefore $2\le t_i\le|r_{a_i}(P_{j(i)})|
+\le m$.
+
+If $j(i)=i$, take any $u,v\in P_i$ and tuples of $B$ attaining
+them at coordinate $i$. Equality of their $a_i$ replies forces
+$h_i(u)=h_i(v)$. This is exactly an own-coordinate decoder on $P_i$,
+contradicting the choice of $h_i$. Thus there are no self-loops.
+
+Following outgoing edges in a finite graph either terminates at a
+good vertex or eventually repeats a vertex, giving a directed cycle.
+An edge has the same eventual terminal root or cycle at both ends.
+Consequently this eventual object is the same throughout a weak
+component. There is exactly one such object per component, and a
+cycle has length at least two. The other vertices form directed trees
+feeding it.
+
+Consider the relational relaxation
+
+$$
+H=\left\{x\in\prod_{i=1}^nP_i:
+h_i(x_i)=d_i(r_{a_i}(x_{j(i)}))\text{ for every }i\in I\right\}.
+\tag{CIT.8}
+$$
+
+The decoder domains already proved make every equation meaningful on
+the full product. We have $B\subseteq H$, whence
+$\Omega(B)\le\Omega(H)$ by nonnegativity. No admissibility claim
+is made about $H$, and $H$ is not substituted for an operational
+competitor.
+
+In any remaining directed tree, choose a bad noncycle vertex with no
+remaining incoming edges. Its variable occurs only in its own outgoing
+equation. At fixed values of every other remaining variable, summing
+over this variable is summing one $h_i$-cell, of weight at most $c_i$.
+Remove that variable and equation, replacing its sum by this constant
+upper bound. Repeat until every off-cycle bad vertex has been removed.
+Such a vertex exists whenever an off-cycle tree is nonempty, by taking
+a vertex farthest from its terminal object. Already removed descendants
+have contributed only constant nonnegative upper factors. This step
+uses finite summation, without division or conditional independence.
+A good terminal root then contributes its unrestricted sum $w(P_i)$.
+
+For a surviving cycle put $v_s=h_{i_s}(x_{i_s})$. Its incoming
+equation, from vertex $i_{s-1}$, requires the second condition in
+(CIT.6). At fixed cyclic values $v_1,\ldots,v_\ell$, the sum over
+the coordinate choices equals $\prod_sT_s(v_s,v_{s-1})$. The exact
+remaining cycle sum is therefore
+
+$$
+\sum_{v_\ell\in V_\ell}
+\sum_{v_1\in V_1,\ldots,v_{\ell-1}\in V_{\ell-1}}
+T_\ell(v_\ell,v_{\ell-1})\cdots T_1(v_1,v_\ell)
+=\operatorname{tr}(T_\ell\cdots T_1).
+\tag{CIT.9}
+$$
+
+The product is conformable: $T_2T_1$ has rows $V_2$ and columns
+$V_\ell$, and the full product is square on $V_\ell$. Distinct
+components of $H$ have disjoint variables and constraints. Distributivity
+of finite sums consequently separates their weights. Together with the
+tree elimination this proves the first inequality in (CIT.7), even
+though $B$ itself may have correlations between components.
+
+For fixed $v_s$, every element of its $h_{i_s}$-cell contributes
+to exactly one column of $T_s$: the predecessor decoder is defined
+and takes a value in $V_{s-1}$. Thus each row sum equals the weight
+of this cell and is at most $c_{i_s}$. If nonnegative conformable
+matrices $A,B$ have row sums bounded by $a,b$, respectively, then
+
+$$
+\sum_k(AB)_{ik}
+=\sum_j A_{ij}\sum_kB_{jk}
+\le b\sum_jA_{ij}\le ab.
+\tag{CIT.10}
+$$
+
+The cyclic square product has all row sums at most
+$\prod_{i\in C}c_i$. Its trace is at most its number of rows
+times this bound. The finite sum (CIT.9) is invariant under cyclic
+renaming of its indices. Cutting it at any vertex gives the same
+sum as a trace of order $t_i$, even for unequal state-set sizes.
+Choose the smallest such order. This proves the second inequality.
+$\square$
+

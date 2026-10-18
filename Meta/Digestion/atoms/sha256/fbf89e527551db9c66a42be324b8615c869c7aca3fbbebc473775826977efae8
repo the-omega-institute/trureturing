@@ -1,0 +1,81 @@
+**Proposition 9.1 (The finite face question at $E_{\rm sum}$).**
+In either unchanged nine-bit catalog, feasibility at $E_{\rm sum}$ is
+equivalent to one normalized allocation on complete $Y_{128}$-score-368
+maximizers satisfying every full row. Every positively scored row must
+then be tight. All unscored $A,C,P$ and positive rows remain constraints.
+
+Proof. At this cap the demanded score equals 368 by (5.4). For a normalized
+full feasible allocation,
+
+$$
+0=\sum_D\lambda_D(368-Y_{128}z_D)
+ +\sum_{\text{rows }r}Y_{128}(r)
+       [p_\lambda(\text{event }r)-\text{demand }r].
+\tag{9.1}
+$$
+
+All summands are nonnegative by full support and feasibility. This
+forces maximizing support and tight scored rows. Conversely, one
+allocation of those tables satisfying all rows is feasible.
+The tail is below this cap, so the original realization applies.
+The criterion is separate in $N$ and $O$; their catalogs are not
+identified. $\square$
+
+The explicit law solves this intersection on $181v\ge75u$.
+The eight-prefix bound excludes it when $u>0$ and $117v<11u$.
+For $u>0$ and $11u/117\le v<75u/181$, these arguments do not settle
+the intersection, including $117v=11u$.
+
+A sufficient missing full-$N$ necessary relation for matching the
+complementary upper law would be
+
+$$
+181(e-5\tau)\ge22u\qquad\text{when }181v\le75u.
+\tag{9.2}
+$$
+
+This relation is unproved for the full catalog. Eliminating $x,y$ from
+(4.6) cannot prove it. On $181v<75u$, $U$ remains an explicit upper
+bound. Compact attainment and the available necessary bounds do not
+evaluate either minimum or prove their equality there.
+Falsity of (9.2) would give a full $N$ feasible law below $U$, with
+original realization in this tail regime. It would not alone give an
+improved stopped common law or equality $m_N=m_O$.
+
+The result identity is the relabeling $Q$, its whole-fibre event transfer,
+the unequal one-budget law, the exact attained wedge, the entire-family
+upper bound and the compact tail correspondence. The stronger eight-prefix
+inequality is an application of the existing full $Y_{128}$ score.
+Source arithmetic, closed-cap transport, full score support, all-word
+endpoint proofs and equal-tail attainment retain their cited roles,
+without repeat discovery credit.
+
+The whole-vector framework cited in XVII 303.3 and XVIII 323.2 is
+Blackwell, *Comparison of Experiments*, sections 2–3 and Theorem 2,
+concerning whole attainable loss vectors. The scalar-expectation
+framework cited there is Kaniewski–Lee–de Wolf, *Query complexity in
+expectation*, arXiv:1411.7280v1, Definitions 6 and 8 and Theorem 9.
+Sampling coefficients of mass $M$ and rescaling a scalar output by $M$
+does not furnish a normalized joint output law, equal counterfactual
+schedule masses or increasing first-queried-zero execution.
+These references carry their specified framework roles, without an
+exhaustive literature or priority claim.
+
+The unrestricted signed-budget question of XVII 314.1 and XVIII 323.1
+remains outside these results: for every full unit-$O$ score $y$, find
+one unrestricted full $V\ge0$ and $\theta\in[0,1]$ with
+$\Delta_N(V)+\theta\le1$ and $\sigma_H(Qy-QV)\le\theta$, or supply the
+complete same-profile original separator. Here $Qy$ is the score quotient
+of those sources, distinct from the law $Q$ in 3.4.
+The residual remains signed; nonzero zero-cost $V$ at $\theta=1$ is
+allowed. General $N/O$ replacement or separation, common-map questions
+and acquisition for the unchanged nonatomic targets remain outside this
+fixed marked-target result.
+
+The stopping point is (8.2), its exact wedge, the strict exclusions in
+7.3 and the missing relation (9.2). These are ordinary proofs and
+applications in the selected marked-target model. They assert no kernel
+verification, global originality, physical efficiency, general
+neural-network or empirical-learning consequence, or completion of the
+unrestricted acquisition problem.
+

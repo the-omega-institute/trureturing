@@ -1,0 +1,17 @@
+**数学引文 2.1（既有五态纤维）。** 复用[基础公式卷第四节的数学引文 4.2](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)及[局部时钟核卷 Q1](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)。基础卷按输出标签命名坐标 $2,3,5,25$；这里将它们依次改记为输入支持 $1,2,3,13$，并将均值排列为 $(X,Z,Y)$。在本记号下，所需前置是
+
+$$
+\begin{aligned}
+p_\kappa&=(1-X-Z-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),\\
+\ell&=\max(0,X+Z+Y-1),\qquad u=\min(X,Y).
+\end{aligned}
+$$
+
+对 $b=(X,Z,Y)$，纤维 $\mathcal F_b=\{p\in\mathcal D:P(p)=b\}$ 非空的准确条件是
+
+$$
+Z\ge0,\qquad 0\le X,Y\le1-Z.
+$$
+
+此时 $\mathcal F_b=\{p_\kappa:\ell\le\kappa\le u\}$。宽度为 $u-\ell$；$u>\ell$ 称为非退化纤维，$u=\ell$ 为单点纤维。这里复用的是全部非负约束下的闭区间，不是允许任意实数 $\kappa$ 的仿射直线。
+

@@ -1,0 +1,32 @@
+**Proposition 5.2 (Three-site rank two with changing spectrum).**
+Take $n=3,k=1,i=1,j=3$ and $\lambda_h=1$ for all sites.
+Writing $z=e^{i\theta}$, the coefficient matrix and squared
+Schmidt spectrum are
+
+$$
+A_z=\frac1{\sqrt5}
+\begin{pmatrix}1&1&1\\1&0&z\end{pmatrix},
+\qquad
+\left(\frac{5+\sqrt{9+8\cos\theta}}{10},
+\frac{5-\sqrt{9+8\cos\theta}}{10}\right).
+\tag{5.5}
+$$
+
+Its rank is always two. At $z=1$ the spectrum is
+$(5+\sqrt{17},5-\sqrt{17})/10$; at $z=-1$ it is
+$(3/5,2/5)$ and has strictly greater entropy.
+
+Proof. In the right basis $00,10,01$, the five legal words
+give the displayed matrix. Its reduced state is
+
+$$
+\rho_z=\frac15\begin{pmatrix}3&1+\bar z\\1+z&2\end{pmatrix}.
+\tag{5.6}
+$$
+
+The trace is one and the determinant is
+$(4-2\cos\theta)/25$. Solving the characteristic quadratic
+gives (5.5). The two eigenvalues are positive for every unit
+phase, and Theorem 5.1 gives the strict entropy comparison.
+$\square$
+

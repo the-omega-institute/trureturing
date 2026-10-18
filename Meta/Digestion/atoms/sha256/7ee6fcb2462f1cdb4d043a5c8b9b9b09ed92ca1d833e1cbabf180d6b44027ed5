@@ -1,0 +1,79 @@
+**定理 9.3（任意有限地址及任意回复解码下的尖锐阈值）。** 定义9.1的性质恰满足
+
+$$
+\boxed{\quad\mathsf U(M)\ \Longleftrightarrow\ M\ge4.\quad}
+\tag{SCR.9.7}
+$$
+
+更强地，对 $M=0,2$ 固定正纪元任务 $(n,p)=(1,R)$，对 $M=1,3$ 固定正纪元任务 $(n,p)=(2,RR)$。各自都满足
+
+$$
+\forall q\in\mathcal P\ \forall d:\mathcal A\to\mathcal A\
+\exists u\in\mathcal T,\qquad
+d\bigl(r_{\rho^M u}(q)\bigr)\ne r_{\rho^n u}(p).
+\tag{SCR.9.8}
+$$
+
+证明。充分性及统一有效性由定理9.2给出。必要性使用五棵实际原树
+
+$$
+u_0=\alpha,\quad u_1=\beta,\quad
+u_2=\langle\alpha,\alpha\rangle,\quad
+u_3=\langle\alpha,\beta\rangle,\quad
+u_4=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+\tag{SCR.9.9}
+$$
+
+按这个顺序，两项正纪元目标的值为
+
+$$
+\begin{aligned}
+\bigl(r_{\rho u_i}(R)\bigr)_{i=0}^4
+ &=(\mathsf{absent},\alpha,\beta,\mathsf{branch},\mathsf{branch}),\\
+\bigl(r_{\rho^2u_i}(RR)\bigr)_{i=0}^4
+ &=(\mathsf{absent},\mathsf{absent},\alpha,\beta,\mathsf{branch}).
+\end{aligned}
+\tag{SCR.9.10}
+$$
+
+第二项也等于 $(r_{u_i}(R))_{i=0}^4$，但所请求的目标本身仍是正纪元二的实际字面值。两项都非常量，故零读程序不可能正确。
+
+下表对每一个有限查询地址指定一对来源。在每行，该对来源于实际纪元 $M$ 的 $q$ 回复相同，而其对应的 (SCR.9.10) 目标不同。表中 $s$ 遍历全部有限字；标为 $s\ne\varepsilon$ 的行排除空字，其余允许空字。
+
+| 实际 $M$ | 任意查询 $q$ 的情形 | 碰撞来源对 |
+| --- | --- | --- |
+| $0$ | $q=\varepsilon$ | $(u_2,u_3)$ |
+| $0$ | $q\ne\varepsilon$ | $(u_0,u_1)$ |
+| $1$ | $q=\varepsilon$ 或 $q=Ls$ | $(u_2,u_3)$ |
+| $1$ | $q=R$ | $(u_3,u_4)$ |
+| $1$ | $q=Rs,\ s\ne\varepsilon$ | $(u_0,u_2)$ |
+| $2$ | $q=\varepsilon$ | $(u_0,u_1)$ |
+| $2$ | $q=Ls$ 或 $q=R$ | $(u_2,u_3)$ |
+| $2$ | $q=Rs,\ s\ne\varepsilon$ | $(u_0,u_1)$ |
+| $3$ | $q=\varepsilon$、$q=Ls$ 或 $q=R$ | $(u_2,u_3)$ |
+| $3$ | $q=RLs$ 或 $q=RR$ | $(u_3,u_4)$ |
+| $3$ | $q=RRs,\ s\ne\varepsilon$ | $(u_0,u_2)$ |
+
+逐行相等性如下。$M=0$ 时，两个原分支在根都回复分支；两棵原叶在每个非空地址都缺席。$M=1$ 时，$\rho u_2,\rho u_3$ 的根及整个左子树相同；$\rho u_3,\rho u_4$ 的右孩子都为分支；$\rho u_0=\beta$ 且 $(\rho u_2)|_R=\beta$，所以最后一行涉及的严格后代均缺席。
+
+记 $A_j=\rho^j\alpha$，复用 $A_{j+2}=\langle A_{j+1},A_j\rangle$。$M=2$ 时，$\rho^2u_0=A_2$、$\rho^2u_1=A_3$ 的根都为分支、右孩子分别是叶 $\alpha,\beta$，故这些右孩子的全部严格后代都缺席。$\rho^2u_2,\rho^2u_3$ 的整个左子树相同，右孩子的根都为分支。这证明 $M=2$ 的全部行。
+
+$M=3$ 时，$\rho^3u_2,\rho^3u_3$ 的整个左子树均为 $A_3$，根及右孩子的根均为分支。另有
+
+$$
+\begin{aligned}
+(\rho^3u_3)|_{RL}&=A_3=(\rho^3u_4)|_{RL},\\
+(\rho^3u_3)|_{RR}&=A_2,\qquad
+(\rho^3u_4)|_{RR}=A_3,\\
+(\rho^3u_0)|_R&=\beta,\qquad
+(\rho^3u_2)|_{RR}=\beta.
+\end{aligned}
+\tag{SCR.9.11}
+$$
+
+第一行给整个 $RL$ 锥上的相等性；第二行的两根都为分支；第三行使 $RRs$、$s\ne\varepsilon$ 在 $u_0,u_2$ 上均缺席。这些是完整子树相等或叶下缺席论证，后缀 $s$ 没有长度限制。
+
+任意 $q$ 都落在相应纪元的一行。任意 $d$ 对两个相同实际回复给相同输出，因目标不同，至少在该对来源之一失败。这证明 (SCR.9.8)。共同确定程序在第一次新输入之前不能选择依来源而变的地址，也不能依来源决定是否零读停止，因此该碰撞论证覆盖定义9.1的全部程序。五棵树只是对全称正确性的反证见证，并未把许可来源域改成有限集；地址划分覆盖所有有限字，包括任意深的缺席地址。$\square$
+
+定理9.2–9.3是在本卷及 SLH 定义29.1的准确叶公式上所得的 repo-derived 结论。[Comon 等，*Tree Automata Techniques and Applications*，§1.4，pp.31–32](https://inria.hal.science/hal-03367725v1/document) 的树同态定义在此取两个零元符号和一个二元配对符号，符号像分别为 $\beta,\langle\beta,\alpha\rangle,\langle x_1,x_2\rangle$；这是既有的线性树同态概念。其正规语言闭包结论不指定字面回复、单读解码或最早共同纪元；本节的四及 (SCR.9.8) 依赖显示的具体叶像与存在守卫，不是一般同态闭包的结论。
+

@@ -1,0 +1,49 @@
+**Definition 6.1 (the fixed constructor estimate).** Fix $d\ge2$,
+$k=|W_d|=2^d-1$. Take all reply variables $v=(i,q)$ with domain
+$\mathcal A$. Owner $i$ has the full disjoint scope
+$\{i\}\times W_d$ and potential
+
+$$
+\phi_i(y)=
+\begin{cases}w_i(c_d^{-1}(y)),&y\in H_d,\\0,&y\notin H_d,
+\end{cases}
+\qquad W_i=\sum_{x\in S_d}w_i(x)>0,
+\quad\mu_i=w_i/W_i.
+\tag{INB.21}
+$$
+
+Here $c_d(x)$ is its actual reply array and $H_d=c_d(S_d)$,
+with the bijection of CBN Theorem 2.2. Keep every target-constraint
+occurrence in CBN Definition 4.1: a donor equation contributes for
+each prefix $v\preceq q$ the indicator that its reply belongs to
+the projection of the factor level selected by the donor reply.
+A constant target gives the corresponding unary tests. Coincident
+references are substituted before defining a scope. These indicators
+$\phi_h$ have nonempty scope size $k_h\in\{1,2\}$. Owner zeros
+already impose actual-tree legality; adding redundant constructor
+indicators is allowed but their incidences must then be counted.
+
+The weighted sum is exactly $Z_\Theta(w_1,\ldots,w_n)$ by CBN
+Theorems 4.2 and 6.2. Do not combine target tests or delete their
+declared arguments in this estimate. For every incidence $(f,v)$
+choose a positive $h_{fv}$ and put
+
+$$
+b_f(y)=\phi_f(y)\prod_{v\in I_f}h_{fv}(y_v),\quad
+a_v(z)=\prod_{f:v\in I_f}h_{fv}(z)^{-1},\quad
+M_{fv}(z)=\sum_{y:y_v=z}b_f(y).
+$$
+
+If $m_v$ is the number of incident indicator occurrences then
+$r_v=m_v+1$. Theorem 2.2 gives the sound estimate
+
+$$
+B=\prod_{f,v\in I_f}
+\left[\sum_zM_{fv}(z)^{r_v}a_v(z)^{k_f}\right]^{1/(r_vk_f)}.
+\tag{INB.22}
+$$
+
+This is the constructor class of Definition 2.3, with each entire
+original weight retained once. Every gauge can depend on the full
+template, weights and size, with arbitrary positive real entries.
+

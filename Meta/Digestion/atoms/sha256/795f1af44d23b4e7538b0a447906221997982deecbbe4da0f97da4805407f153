@@ -1,0 +1,147 @@
+**Theorem 6.1 (simultaneous full-output realization).** Every finite
+list in Theorem 5.1, and the lists with varying weights below, has
+whole-fibre TP chronological decoders in Definition 1.2, total encoder
+effect $I_5$, original error $E_*$, sharp acquired cost and the specified
+contrast, simultaneously on all twelve histories. Its full-complex,
+passive-reference and separately labelled Borel maps are (JS.33)--(JS.34).
+
+Proof. For a low label let $K$ be its scaled live matrix and $N_f$
+its attached failure effect. The null determinant identity is
+
+$$
+\det(xD+zT+wS)=h_0h_1h_2x(x^2-\theta z^2-\omega w^2).
+\tag{JS.29}
+$$
+
+It vanishes, while the lower-right minor $\pi\delta h_1h_2$ is
+nonzero. Thus $K$ has rank two, including both ellipse axes. The
+vector $n$ is orthogonal to its kernel in (JS.13), so $N_f$ is
+supported on its row space. Fix an isometry $J$ from $\mathbb C^2$
+onto that space and put
+
+$$
+\begin{gathered}
+Q_K=J^\dagger(K^\dagger K+N_f)J\succ0,\quad
+C_K=Q_K^{1/2}J^\dagger,\quad B_K=KJQ_K^{-1/2},\\
+F_K=Q_K^{-1/2}J^\dagger N_fJQ_K^{-1/2}.
+\end{gathered}
+\tag{JS.30}
+$$
+
+Multiplication using the row-space projection gives
+$B_KC_K=K$, $C_K^\dagger F_KC_K=N_f$ and
+$B_K^\dagger B_K+F_K=I_2$, with $B_K^\dagger B_K\succ0$.
+Thus $0\preceq F_K\prec I_2$ on the entire fibre. Use encoder
+$C_KE^\dagger$ and, on its whole fibre, the no-event matrix and rate
+
+$$
+Z_K(u)=\sqrt{I_2-G_t(u)F_K},\quad
+R_K(u)=g(u)F_K(I_2-G_t(u)F_K)^{-1},\quad G_t(u)=2u/(1+u).
+\tag{JS.31}
+$$
+
+In each original label $\ell$ the current-survivor jump is
+
+$$
+\mathcal J_{K,\ell}(u)(Y)
+=w_\ell g(u)\operatorname{tr}
+(F_KZ_K(u)^{-1}YZ_K(u)^{-1})P_f.
+\tag{JS.32}
+$$
+
+Its total effect is $R_K(u)$. Since $F_K$ commutes with this chosen
+path, $\dot Z_K=-R_KZ_K/2$. Its pulled-back density from the initial
+decoder input is exactly $w_\ell g(u)\operatorname{tr}(F_KY)P_f$.
+At time one apply only to survivors the isometry
+$EB_K(I_2-F_K)^{-1/2}$; its composite live matrix is $EB_K$.
+All inverses here are fixed linear operators with positive denominators,
+not state-dependent normalization.
+
+The integrated jump effect is $F_K$ and the terminal effect is $I_2-F_K$.
+For any intermediate $a\le b$, the no-event propagator is
+$Z_K(b)Z_K(a)^{-1}$; the integrated jump pullback is
+$Z_K(a)^{-1}(Z_K(a)^2-Z_K(b)^2)Z_K(a)^{-1}$, complementary to its
+no-event effect. This proves whole-fibre chronological CP/TP consistency
+at every cut. First absorption is actual in this mathematical process;
+no later positive-carrier operation follows it. Only survivors receive
+the terminal map. There is no singular part or deadline atom.
+If $F_K$ has nonzero eigenvalue $f_K$, the integrated rate norm is
+$-\log(1-f_K)$. By (JS.14),
+$f_K/(1-f_K)=v/c_*(z^2)$. Thus rare saturated labels have activity
+$\log(1+t)$ and pure-live labels have activity zero. All rates have
+integrable norm for each finite $t$. Necessity in Lemma 2.1 did not
+impose this chosen $g$-law or its commutativity.
+
+Add two fair-report high encoders
+$\sqrt{(1-\delta)/2}\,DE^\dagger$ into whole dimension-three fibres,
+with zero rate and live TP decoder $X\mapsto EXE^\dagger$.
+Fix isometries $W_\perp:\mathbb C^2\to V^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. Add two fair-report complement
+encoders $W_\perp^\dagger/\sqrt2$ into counted dimension-two fibres,
+with zero rate and whole-fibre decoder
+$X\mapsto EJ_0XJ_0^\dagger E^\dagger$.
+This is FA75's freely chosen coherent completion, distinct from the
+fixed certain-failure completion CG.142/CA.10.
+
+The exact moment repair gives low coefficient Gram
+$\operatorname{diag}(\delta,1,1)$; adding the high Gram gives $I_3$.
+Consequently total supported live effect is $I_3-M$ at the source
+root. The attached failures sum exactly to $M$, and the complement
+adds $I_5-P$. Hence total encoder effect is $I_5$, with every positive
+branch bounded by it and therefore TNI. All conditional decoders are
+TP on their entire declared fibres. Generate and dephase each actual
+label, permanently discarding every other dilation system before the
+joint cut. Retaining any correlated share would change the fibre count.
+
+For every complex $A\in M_5$, with $A_V=E^\dagger AE$, the forgotten
+maps are exactly
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E[DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger
+ +J_0W_\perp^\dagger AW_\perp J_0^\dagger]E^\dagger,\\
+\Phi_\ell^f(\mathcal B)(A)&=w_\ell\left(\int_{\mathcal B}g(u)du\right)
+ \operatorname{tr}(EME^\dagger A)P_f,
+\qquad\ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{JS.33}
+$$
+
+The second identity holds for every Borel $\mathcal B\subseteq[0,1]$.
+These follow by bilinearity of the exact live Gram and the sum of
+pulled failure effects. They are identities on all complex matrix
+units. Cross-support terms vanish; every within-complement qubit
+coherence is retained. Labels $0$ and $13$ remain separately zero,
+the other three remain separate, and no extra sector is introduced.
+
+Tensor every encoder, jump, survivor and terminal map by $I_R$ for
+any passive reference. The live map is the sum of conjugations by
+$EK E^\dagger\otimes I_R$, $K=D,T,S$, and
+$EJ_0W_\perp^\dagger\otimes I_R$. The failure map is
+
+$$
+w_\ell\left(\int_{\mathcal B}g(u)du\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{JS.34}
+$$
+
+This is the exact conditional reference operator, not an unconditional
+marginal. Thus the full complex/reference/five-Borel identity holds,
+with fixed common metadata preserved. On each supported original
+history (JS.33) is the credited CG.135 simulator. Its original HALF
+full-cq error, with the ideal coherent block and $f_y$, is unchanged:
+$e_5=e_{27}=E_*$ and $e_{16}<71/484<37/250<E_*$ under the supplied
+certificate. A TV deficit is not added to this error.
+
+An actual low-label probability is
+$\operatorname{tr}[(K^\dagger K+N_f)\rho_{y,e,n}]$, including later
+failure. Only the high pair has dimension at least three. Its acquired
+probability on each history is $(1-\delta)A_y$, independent of signs,
+with maximum $(1-\delta)A_{27}=\mathsf C(s)$ on the weak plateau
+by JR34--40. The coherent complement is counted as two and has zero
+probability on the twelve histories. Failures contribute no $01$
+report coordinate, so the reported contrast is precisely (JS.26).
+Appending a report coin while retaining its parent label multiplies
+both height laws by the same kernel and preserves their full TV.
+Everything is fixed before receiving the sole specimen. $\square$
+

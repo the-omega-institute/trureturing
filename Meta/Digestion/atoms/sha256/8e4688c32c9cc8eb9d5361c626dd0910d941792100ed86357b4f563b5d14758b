@@ -1,0 +1,50 @@
+**Definition 1.3 (whitened variables).** Set
+
+$$
+\begin{gathered}
+d_0=11m_1/64,\quad\zeta=\sqrt{m_1m_2}(\sqrt{59}-\sqrt{37})/16>0,\\
+L_f=\sqrt{d_0^2+4\zeta^2},\quad\gamma=(L_f-d_0)/2,\quad
+\Xi=\begin{pmatrix}-d_0&-\zeta\\-\zeta&0\end{pmatrix},\quad\kappa_f=d_0/\zeta,\\
+a_*=\alpha V,\quad b_*=\beta W,\quad\ell=a_*-b_*,\quad A(p)=b_*+\ell p,\\
+x(p)=Vp/A(p),\quad J(p)=A(p)F_c(x(p)),\quad v(p)=\sqrt{p(1-p)},\\
+g(p)=2\zeta v(p)-d_0(1-p),\quad p_z=d_0^2/L_f^2,\quad p_s=(1+d_0/L_f)/2,\\
+C(p)=J(p)+J(1-p),\qquad C(1/2)=C_{\rm end},\quad C(p_s)=C_{\rm sat}.
+\end{gathered}
+\tag{TB.2}
+$$
+
+The failure ratio $\kappa_f$ differs from winding coefficient $\kappa$. For $p>q$ write
+
+$$
+\begin{gathered}
+\Delta_J(p,q)=J_1(p)-J_1(q),\quad B(p,q)=J(p)-J(q)-J_1(q)(p-q),\\
+T(p,q)=g_1(p)B(p,q)-g(p)\Delta_J(p,q),\\
+\eta_2(p)=g_1(p)/\Delta_J(p,1-p),\quad
+c(p)=v(p)T(p,1-p)/\Delta_J(p,1-p).
+\end{gathered}
+\tag{TB.3}
+$$
+
+Here the subscripted functions are explicit algebraic expressions. Set $A_{\det}=D_1N_0-D_0N_1$:
+
+$$
+\begin{aligned}
+F_1(x)&=\frac{(1-1/\sqrt x)D_c(x)}{2N_c(x)}+\frac{(\sqrt x-1)^2A_{\det}}{2N_c(x)^2},\\
+F_2(x)&=\frac{D_c(x)}{4x^{3/2}N_c(x)}+\frac{(1-1/\sqrt x)A_{\det}}{N_c(x)^2}-\frac{(\sqrt x-1)^2N_1A_{\det}}{N_c(x)^3},\\
+J_1(p)&=\ell F_c(x(p))+\frac{Vb_*}{A(p)}F_1(x(p)),\quad
+J_2(p)=\frac{V^2b_*^2}{A(p)^3}F_2(x(p)),\\
+g_1(p)&=d_0+\zeta(1-2p)/v(p),\qquad g_2(p)=-\zeta/(2v(p)^3).
+\end{aligned}
+\tag{TB.4}
+$$
+
+They equal $F_c',F_c'',J',J'',g',g''$ on their interior domains. All radicals are positive roots. Selected equations below use these expressions, not a numerical search or unevaluated maximization.
+
+For the original endpoint offset let $N_{ij}=\operatorname{tr}(K_i\Delta_{\rm hist}K_j^\dagger)$, $(K_0,K_1,K_2)=(D,T,S)$, $G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1)$ and $f=h^TGh$. Then
+
+$$
+H_{\rm live}=(1-\delta)\operatorname{tr}(D^\dagger D\Delta_{\rm hist}),\quad
+S_{\rm corner}=\tfrac14\sum_{\sigma,\tau=\pm1}|f(\sigma,\tau)|,\quad
+T_0=(H_{\rm live}+S_{\rm corner}+L_f)/2,\quad B_0=T_0-\gamma.
+$$
+

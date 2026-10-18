@@ -1,0 +1,49 @@
+**定理 2.2（普适平稳后验缺陷界；由引理 2.1 与 [平稳卷][S] 式（2.5））。** 对每个平稳合法律 $P$，包括具有零柱概率的律，
+
+$$
+c_\star-d(P)\ge\Delta(P):=\mathbb E_P[\mathbf1_{F_0}\operatorname{dist}(q,I)^2].
+\tag{2.2}
+$$
+
+对每个 $r\ge1$，同一左侧还支配
+
+$$
+\Delta_r(P):=\mathbb E_P[\mathbf1_{F_0}\operatorname{dist}(q_r,I)^2],\qquad
+\Delta_r(P)\longrightarrow\Delta(P).
+\tag{2.3}
+$$
+
+证明。取 $n\ge2r+1$，将引理 2.1 用于实际边缘 $\mu=P_n$。设
+
+$$
+\mathcal G_{n,i}=\sigma(X_j:1\le j\le n,\ j\ne i),\quad
+p_{n,i}=\mathbb E_P[X_i\mid\mathcal G_{n,i}].
+$$
+
+当 $r+1\le i\le n-r$ 时，半径 $r$ 的去中心邻域字段 $\mathcal H_{r,i}$ 包含于 $\mathcal G_{n,i}$，且 $F_i\in\mathcal H_{r,i}$。塔性质给出
+
+$$
+q_{r,i}:=\mathbb E_P[X_i\mid\mathcal H_{r,i}]
+=\mathbb E_P[p_{n,i}\mid\mathcal H_{r,i}].
+$$
+
+函数 $z\mapsto\operatorname{dist}(z,I)^2$ 凸。在 $F_i$ 的每个实际纤维上，供应后验 $a_{n,i}$ 属于 $I$。条件 Jensen 不等式因而给出
+
+$$
+\begin{aligned}
+\mathbb E_P[\mathbf1_{F_i}\operatorname{dist}(q_{r,i},I)^2]
+&\le\mathbb E_P[\mathbf1_{F_i}\operatorname{dist}(p_{n,i},I)^2]\\
+&\le\mathbb E_P[(p_{n,i}-a_{n,i})^2].
+\end{aligned}
+\tag{2.4}
+$$
+
+平稳性使左侧等于 $\Delta_r(P)$。对这 $n-2r$ 个内部坐标相加，由（2.1）其余项非负，得到
+
+$$
+(n-2r)\Delta_r(P)\le\kappa_n-\Phi_n(P_n).
+\tag{2.5}
+$$
+
+这里未删除端点贡献，只在下界中不计它们。先固定 $r$，除以 $n$ 后用（1.3）、（1.5）令 $n\to\infty$，得到（2.3）的界。$F_0\in\mathcal F_r$，而平方距离函数在 $[0,1]$ 上 Lipschitz；引理 1.4 给出（2.3）的极限，再令 $r\to\infty$ 得（2.2）。全程只在实际有限边缘上使用供应恒等式，不对无限体积最优律求导。$\square$
+

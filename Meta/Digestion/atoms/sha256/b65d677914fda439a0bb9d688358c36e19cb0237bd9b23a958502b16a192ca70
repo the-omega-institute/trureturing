@@ -1,0 +1,9 @@
+**Theorem 9.2 (matching limit, with its existing proof credited).** Under the supplied bridges,
+
+$$
+\lim_{s\downarrow0}E_s=\min(0,C_{\rm resp}).
+\tag{9.3}
+$$
+
+Proof. This is R Theorem 11.1. Its inference can be stated briefly to make the lower requirement explicit. The upper response construction and actual negativity give $\limsup E_s\le\min(0,C_{\rm resp})$. The lower estimate in (9.1) bounds $E_s$ below. If a lower subsequential limit $L$ were strictly below $\min(0,C_{\rm resp})$, then $L<0$ and $r_s=-E_s/s^6\to\infty$ along that sequence. Negative attainment supplies actual normalized states in $D(S)$. Equivalence (9.2) gives global unit-orbit convergence, so the last implication in (9.1) forces $L\ge C_{\rm resp}$, a contradiction. This is the existing matching argument, not a new matching conclusion from the present strictness proof alone. $\square$
+

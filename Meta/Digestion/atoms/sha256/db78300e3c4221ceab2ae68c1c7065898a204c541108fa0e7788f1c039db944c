@@ -1,0 +1,92 @@
+**定理 8.1（零迹极限的两个必要读数关系）。** Fix any real $Y,z$.
+If complete worlds realizing $H(Y,z)$ have nonnegative rank-one
+trace-one sources with $u_n>0$ and $u_n\to0$, then
+
+$$
+z=\frac{15}{2}Y-408\qquad\hbox{or}\qquad
+z=\frac{15}{8}Y-147.
+\tag{8.1}
+$$
+
+No boundedness of their drifts or gains is assumed. A finite
+nonnegative complete-world solution with $u=0$ must also satisfy
+one of these relations.
+
+For the fixed $H_*=H(48/5,-532/5)$ there are
+$0<\varepsilon\le R<\infty$ such that every compatible
+nonnegative rank-one trace-one source has
+$\varepsilon\le u\le R$. Every corresponding drift and every
+one of the four gain coefficients is bounded by constants depending
+on this fixed history.
+
+**证明。** If $u_n\to0$, then $b_n,c_n\to0$, $v_n\to1$,
+and a subsequence of $a_n$ tends to $a_0\in\{0,1\}$, by
+$bc=a(1-a)$. Instead of dividing a gain sample, treat
+$d$ and $q_1=(24-d)/u$ as independent linear unknowns in the
+last two equations, using $q_0=-d$, $q_2=(48-d)/v$ and
+$q_3=(312/5-d)/(u+v)$. The equations are
+
+$$
+\begin{pmatrix}
+1+T_4(1+6/v-4/(u+v))&4T_4\\
+1+T_5(4+20/v-10/(u+v))&15T_5
+\end{pmatrix}
+\begin{pmatrix}d\\q_1\end{pmatrix}
+=
+\begin{pmatrix}
+Y-T_4(-288/v+(1248/5)/(u+v))\\
+z-T_5(-960/v+624/(u+v))
+\end{pmatrix}.
+\tag{8.2}
+$$
+
+Their limiting coefficient matrices, for $a_0=0$ and $a_0=1$
+respectively, are
+
+$$
+\begin{pmatrix}4&4\\29&30\end{pmatrix},\qquad
+\begin{pmatrix}7&8\\15&15\end{pmatrix},\qquad
+\det=4,\ -15.
+\tag{8.3}
+$$
+
+The right sides converge. Inversion near these nonzero determinants
+bounds both $d_n$ and $q_{1,n}$ before any limit is taken. The
+identity $d_n=24-u_nq_{1,n}$ gives $d_n\to24$. Passing to a
+subsequence for $q_{1,n}\to q$ yields respectively
+
+$$
+\begin{array}{c|cc}
+a_0&Y&z\\ \hline
+0&288/5+4q&24+30q\\
+1&456/5+8q&24+15q
+\end{array}
+\tag{8.4}
+$$
+
+Eliminating $q$ gives (8.1). For a finite solution with $u=0$,
+clock one forces $d=24$. The same interpolation identities use
+$q=g(1)$ without dividing by $u$, and give (8.4) directly.
+
+For $H_*$ the residuals against the infinity line of Theorem 7.2
+and the two zero-trace lines are exactly
+
+$$
+\begin{aligned}
+-532/5-(12(48/5)-288/5)&=-164,\\
+-532/5-((15/2)(48/5)-408)&=1148/5,\\
+-532/5-((15/8)(48/5)-147)&=113/5.
+\end{aligned}
+\tag{8.5}
+$$
+
+They are nonzero. Theorem 7.2 bounds the whole nonnegative source
+projection with $u>0$, and (8.1) excludes a sequence with $u\to0$.
+There are no finite $u=0$ targets either. Thus a common positive
+finite corridor contains every compatible source. Theorem 4.1 now
+bounds the drift and all four gain coefficients on that entire
+corridor. This application uses the global nonvanishing of
+Theorem 2.1, including nonnegative source limits; it is stronger
+than merely bounding the source entries. All bounds here fix the
+six readings. ∎
+

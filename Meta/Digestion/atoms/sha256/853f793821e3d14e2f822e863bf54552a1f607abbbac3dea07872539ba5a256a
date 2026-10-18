@@ -1,0 +1,31 @@
+**Definition 71.1 (the fixed data).** Remove zero weights, and fix a
+finite family indexed by $i=1,\ldots,m$, with $q_i>0$,
+$v_i=(z_i,w_i)^T$, $\eta_i\in\{0,1\}$ satisfying
+$\alpha z_i^2+\beta w_i^2=1$ and
+
+$$
+\sum_iq_i=1,\quad \sum_iq_iv_iv_i^T=I_2,\quad
+\sum_iq_i\eta_iC(h_i)\widehat n_{h_i}\widehat n_{h_i}^T=M_2,
+\quad\sum_iq_i|z_i|\ge\tau.
+\tag{RC.75}
+$$
+
+The family is even under $v\mapsto-v$ but its actual orientation may
+vary. Set
+
+$$
+\begin{aligned}
+a_i&=g_0+g_1z_i^2+g_2w_i^2+2z_Gz_iw_i
+                 +\eta_iC(h_i)f(h_i),\\
+b_i^{\rm odd}&=2(x_Gz_i+y_Gw_i),\\
+m_i&=(|a_i+b_i^{\rm odd}|+|a_i-b_i^{\rm odd}|)/2,\\
+d_i&=(|a_i+b_i^{\rm odd}|-|a_i-b_i^{\rm odd}|)/2,\\
+p_{i,\pm}&=q_i(1\pm\vartheta_i)/2,\qquad
+-1\le\vartheta_i\le1,\qquad \sum_iq_i\vartheta_iv_i=0.
+\end{aligned}
+\tag{RC.76}
+$$
+
+The last equation is precisely the missing live first-moment condition.
+All the even moments, capacity and contrast remain fixed.
+

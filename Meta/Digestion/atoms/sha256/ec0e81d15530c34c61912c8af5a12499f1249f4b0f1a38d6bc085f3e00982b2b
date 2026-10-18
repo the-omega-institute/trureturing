@@ -1,0 +1,21 @@
+**Definition 9.1 (the source-preserving local preparation class).**
+Let $R$ be a passive reference and let a positive normalized joint
+input $X$ satisfy
+
+$$
+X=(P\otimes I_R)X(P\otimes I_R),\qquad P=EE^\dagger,
+\qquad \operatorname{rank}P=3.
+\tag{PC.43}
+$$
+
+Allowed preparations append independent blank ancillas on the specimen
+side and use specimen-local CP maps, classical conditioning and local
+discarding. They do not supply an entangled resource across the
+specimen/reference cut or act jointly with the passive reference.
+For finite-dimensional systems the Schmidt number of a mixed state
+is the least $q$ allowing a convex decomposition into pure states of
+Schmidt rank at most $q$; the same bound is understood under trace-norm
+limits for the admitted convergent constructions. Scalar normalization
+of a nonzero branch does not alter its rank bound and grants no
+postselection permission in the original experiment.
+

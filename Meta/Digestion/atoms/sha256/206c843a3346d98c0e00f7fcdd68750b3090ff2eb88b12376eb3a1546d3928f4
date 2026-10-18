@@ -1,0 +1,63 @@
+**Definition 3.1 (phase guards and terminal support).** With the fixed
+design of §2, define the interval guard
+
+$$
+\begin{aligned}
+G_{\eta,v}(\mathbf n,\boldsymbol\delta;a,b)
+\ \Longleftrightarrow\
+\forall j\in\mathbb N\quad
+ a\le j<b\ \Longrightarrow\
+ \bigwedge_{e\in E_R}
+       \operatorname{Reply}_{\eta,v(e)}(\mathbf n,j,\delta_e).
+\end{aligned}
+\tag{NPS.8}
+$$
+
+All read states occur in this mathematical guard, even if a particular
+execution never visits them. No additional physical reads are implied.
+One original tuple $\mathbf n$ supplies every conjunct and every epoch.
+
+For $h\in E_H$ define
+$\mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta)$ as follows. Take a
+finite disjunction over
+
+$$
+1\le m\le3r+1,\qquad
+v_0,\ldots,v_{m-1}\in\mathcal C^{E_R},\qquad
+x_1,\ldots,x_{m-1}\in E,
+\tag{NPS.9}
+$$
+
+and put $x_0=e_*$. Within each disjunct existentially quantify natural
+$t_0,\ldots,t_m,d_0,\ldots,d_{m-1}$ and impose
+
+$$
+\begin{gathered}
+N=t_0<t_1<\cdots<t_m=J+1,\\
+\bigwedge_{i=0}^{m-1}
+       G_{\eta,v_i}(\mathbf n,\boldsymbol\delta;t_i,t_{i+1}),\\
+\bigwedge_{i=0}^{m-2}
+ \bigl(t_i+d_i=t_{i+1}\ \land\
+       X_{v_i}(x_i,x_{i+1},d_i)\bigr),\\
+t_{m-1}+d_{m-1}=J\ \land\
+       P_{v_{m-1}}(x_{m-1},h,d_{m-1}).
+\end{gathered}
+\tag{NPS.10}
+$$
+
+The conjunction with upper index $m-2$ is empty when $m=1$.
+Define the eventual support
+
+$$
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)
+ \ \Longleftrightarrow\
+ \exists J\in\mathbb N\,
+       \mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta).
+\tag{NPS.11}
+$$
+
+The delimiter $J+1$ makes the terminal epoch part of the last guarded
+interval. It is not an executed update beyond halt. These formulas
+allow arbitrary phase lengths. They need not require adjacent vectors
+to be distinct or phases to be maximal; the exact guards suffice.
+

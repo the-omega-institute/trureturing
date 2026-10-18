@@ -1,0 +1,44 @@
+**Proposition 266.4 (Fibre averaging preserves rows but can create a
+forbidden cubic).** At $L=3$, $b=(1,1,1)$ and $e=1/4$, take
+the equal mixture of $A=O(1,2;1,2,3)$, $R$,
+$O(1,3;1,3,0)$ and $O(2,3;2,3,0)$.
+Its complete word vectors on labels $0,1,2,3$ are
+
+| words | law |
+|---|---|
+| $000,001$ | $(0,3/4,1/4,0)$ |
+| $010$ | $(0,3/4,0,1/4)$ |
+| $011$ | $(1/4,3/4,0,0)$ |
+| $100$ | $(0,0,3/4,1/4)$ |
+| $101$ | $(1/4,0,3/4,0)$ |
+| $110$ | $(1/4,0,0,3/4)$ |
+| $111$ | $(3/4,0,0,1/4)$ |
+
+It satisfies every full cap row. Uniform averaging inside each
+first-zero fibre also preserves every row, but the averaged kernel
+is outside finite $N_3$.
+
+**Proof.** Correct probability is always $3/4$. Every pair event
+has probability at least $3/4$, base demands are $-1/4$, and
+positive base is $3/4$. Thus all 22 independent rows hold.
+The profile is in $H_3$ with $E_b=0$. Any positive monotone
+vanishing tail bounded by $1/4$ gives the original law with exact
+error $1/4$, including a tail tie. The displayed vectors give
+$\rho_1=\rho_2=1/4$, $\mathcal C=1/2$, while the upper
+bound in (266.4) is $3/4$.
+
+Averaging vectors over a first-zero fibre preserves its common
+linear demands. The averaged base coordinate is, however,
+
+$$
+\frac1{16}+\frac1{16}w_1+\frac18w_1w_2
+                       +\frac12w_1w_2w_3.
+\tag{266.9}
+$$
+
+Its cubic coefficient is nonzero, contradicting the degree-two
+necessary condition. This is a finite nonrealizability statement
+for the averaged kernel, not an arbitrary-address original
+nonrealizability certificate. The unaveraged original law itself
+is stopped and cap feasible, so no separator follows. $\square$
+

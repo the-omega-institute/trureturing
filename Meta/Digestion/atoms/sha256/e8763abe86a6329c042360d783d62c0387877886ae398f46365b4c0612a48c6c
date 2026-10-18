@@ -1,0 +1,32 @@
+## 1. The attained upper bound and its scope
+
+Fix an integer $r\ge1$, put $d=2r-1$ and $a=d+1=2r$, and fix real numbers $c>0$ and $0<\alpha<1/2$. The two source shapes are exactly
+
+$$
+F_0(k)=k^d,\qquad F_1(k)=k^d+c k^{d-r}\qquad(k=1,2,\ldots).
+\tag{1.1}
+$$
+
+At known common $q=e^{-s}$, one source-blind finite table must work under either true source. Every persistent configuration and both internally emitted labels count; every actual consecutive bit read through the decision is paid. Immutable real transition probabilities have arbitrary unpriced precision. Section 2 specifies the stationary experiment and observer contract completely.
+
+The construction proves the following sufficient resource bounds. There are source-only constants $\eta\in(0,1)$ and $s_*>0$ and source/risk constants $C_M,C_T>0$, chosen before any cutoff, such that for every $0<s<s_*$ and integer $L\ge1$ with $sL\le\eta$, one common table has
+
+$$
+M(s,L)\le C_M\frac{L+2}{s^r\sqrt{H_L}},\qquad
+\max_{i\in\{0,1\}}\mathbb E_iT\le C_T\frac{s^{-(2r+1)}}{H_L},
+\qquad H_L=\sum_{k=1}^L\frac1k.
+\tag{1.2}
+$$
+
+It meets both risks, both almost-sure stopping conditions and both finite-mean conditions. For each additionally fixed $\theta\in(0,1]$, the cutoff $L=\lfloor\eta s^{-\theta}\rfloor$ gives, on one $\theta$-dependent neighborhood,
+
+$$
+M=O_\theta\!\left(\frac{s^{-(r+\theta)}}{\sqrt{\log(1/s)}}\right),\qquad
+\max_i\mathbb E_iT=O_\theta\!\left(\frac{s^{-(2r+1)}}{\log(1/s)}\right).
+\tag{1.3}
+$$
+
+In particular $\theta=1$ gives the explicit sufficient configuration bound $O(s^{-(r+1)}/\sqrt{\log(1/s)})$. All parameters precede $s$ and table selection. No constants are uniform over changing $r,c,\alpha$ or over $\theta\downarrow0$.
+
+The bridge is a saturated category of actually completed gaps, composed with an unbiased rounded likelihood score on a finite lattice. Its information deficit is comparable to $s^{2r}H_L$. The full evidence/category product is counted, including long-gap overflow and both output labels. The proofs establish finite stopping by drift before taking risk limits, then price the actual history by predictable inclusion. The minimum sufficient state cost and the full critical all-budget frontier remain unresolved.
+

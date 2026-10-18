@@ -1,0 +1,17 @@
+**Lemma 5.2 (projection only along donor-closed parts).** For a chosen
+witness system let $\Pi$ be its connected-component partition. For every
+$C\in\Pi$, $A_C=\pi_C(H)$ is jointly admissible on its coordinates, and
+
+$$
+H\subseteq\prod_{C\in\Pi}A_C.
+\tag{NDR.25}
+$$
+
+**Proof.** Every nonconstant selected donor for a target in $C$ belongs
+to $C$. Its equation on $H$ therefore involves only coordinates in $C$.
+To verify it on $A_C$, lift any projected tuple to $H$ and apply that
+equation. Constant equations and self-donor equations also descend. The
+selected witnesses work on the whole projection. The inclusion follows
+from projection. This does not assert that $H$ is a product, or that any
+arbitrary coordinate projection is admissible. $\square$
+

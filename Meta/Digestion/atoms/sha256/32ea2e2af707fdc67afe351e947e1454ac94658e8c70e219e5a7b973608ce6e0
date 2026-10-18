@@ -1,0 +1,33 @@
+**定理 7.7.1（有限窗维数单调且最终稳定）。**
+
+$$
+d_T\le d_{T+1}\le d_{\mathrm{causal}},
+\qquad
+d_T=d_{\mathrm{causal}}\quad\text{当 }T\ge n.
+$$
+
+**证明。**
+
+增加一个交集项只能缩小空间：
+
+$$
+\mathcal N_{T+1}
+=
+\mathcal N_T\cap\ker(CA^T)
+\subseteq\mathcal N_T.
+$$
+
+所以 $\dim(\mathcal R\cap\mathcal N_T)$ 不增，$d_T$ 不减；显然 $\mathcal N\subseteq\mathcal N_T$，故 $d_T\le d_{\mathrm{causal}}$。
+
+Cayley–Hamilton 表明 $A^k$（$k\ge n$）是前 $n$ 个幂的线性组合，因此
+
+$$
+\bigcap_{0\le k<n}\ker(CA^k)
+=
+\bigcap_{k\ge0}\ker(CA^k)=\mathcal N.
+$$
+
+故 $T\ge n$ 时两者相同。证毕。
+
+<a id="claim-7-7-2"></a>
+

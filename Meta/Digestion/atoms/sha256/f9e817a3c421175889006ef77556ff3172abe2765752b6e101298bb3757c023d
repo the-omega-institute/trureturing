@@ -1,0 +1,100 @@
+**Proposition 54.4 (a later zero and the three-atom cap).** The three-atom
+contrast ceiling is exactly $\tau_3$ in (JR.141). No optimal representation
+by at most three real rank-one null atoms exists at $\tau_3$, or throughout
+some interval $(\tau_3-\eta,1]$, $\eta>0$. The candidate discriminant
+$d_+$ tends to $-\infty$ as $t\uparrow t_3$, so the least zero in
+Theorem 54.3 occurs strictly before $t_3$.
+
+**Proof.** Three nonzero rank-one atoms summing to $I_3$ must be the
+columns of an orthogonal matrix; fewer cannot span $I_3$. Their $01$
+products sum to zero, so their absolute sum is twice the largest absolute
+product. For a unit null vector, writing $Y=f_1^2$ gives
+
+$$
+f_0^2=\frac{\beta+(1-2\beta)Y}{1+\beta},\quad
+f_2^2=\frac{1-AY}{1+\beta},\quad 0\leq Y\leq1/A.
+$$
+
+Since $0<\beta<1/2$, $4f_0^2Y$ is strictly increasing and its maximum
+is $4\alpha/A^2$. The bound $\tau_3=2\sqrt\alpha/A$ is attained.
+At equality the distinguished vector has third coordinate zero.
+Up to column signs and permutations the only cap frames are
+
+$$
+\begin{aligned}
+\mathcal F_+&=\{p,n_-,n_+\},&
+p&=(\sqrt\alpha,1,0)/\sqrt A,&
+n_\pm&=(1,-\sqrt\alpha,\pm\sqrt A)/\sqrt{2A},\\
+\mathcal F_-&=\{q,m_-,m_+\},&
+q&=(\sqrt\alpha,-1,0)/\sqrt A,&
+m_\pm&=(1,\sqrt\alpha,\pm\sqrt A)/\sqrt{2A}.
+\end{aligned}
+\tag{JR.153}
+$$
+
+The remaining two null lines in each orthogonal plane give exactly
+these completions. Source-box substitution shows only $n_-$ is negative
+in $\mathcal F_+$, only $q$ is negative in $\mathcal F_-$, and
+$n_-^TGn_-<-.0009$, $-.0003<q^TGq<-.0001$; all other heights are positive.
+Along $p(k)=(\sqrt{\alpha+\beta k^2},1,k)/\sqrt{D(k)}$ choose the smooth
+null completion near $k=0$. The nonzero traceless compression of $Q$ has
+two simple null lines, so this is a two-sided smooth choice. Differentiating
+orthogonality, norm and nullity gives
+
+$$
+n_-'(0)=p/\sqrt{2A}-\sqrt\alpha\,n_+/(2\beta\sqrt A),\qquad
+(n_-^TGn_-)'(0)=\mathcal R/(A\sqrt A),
+$$
+
+where
+
+$$
+\mathcal R=\sqrt\alpha(g_0-g_1)+\beta x-\sqrt A(\sqrt\alpha y+z)
+-\frac{\sqrt\alpha}{2\beta}(g_0+\alpha g_1-2\sqrt\alpha x-Ag_2).
+\tag{JR.154}
+$$
+
+Outward substitution of (JR.86) gives
+$\mathcal R/(A\sqrt A)>.00405167>.003$.
+For example, the final parenthesis is $<-.0037$, the first three terms
+are $>-.0041$, $\sqrt\alpha/(2\beta)>3.8$, and $A\sqrt A<2.6$;
+these coarser rational inequalities alone imply $>.003$.
+For the second frame vary
+$q(k)=(\sqrt{\alpha+\beta k^2},-1,k)/\sqrt{D(k)}$; then
+$(q^TGq)'(0)=2(\sqrt\alpha y-z)/A>0$.
+Both cap contrasts have derivative zero. If a cap frame optimized the
+original problem, finite dual attainment at the interior $\tau_3<1$
+would make it maximize $J+\lambda h$ over the unconstrained normalized
+null tuples. A two-sided smooth variation would then have zero
+Lagrangian derivative. Here $J'=-2$ times the nonzero negative-height
+derivative, while $h'=0$, a contradiction. The variations need not
+satisfy a fixed contrast lower bound; they satisfy all constraints of
+this unconstrained Lagrangian maximization.
+
+The set of null orthonormal frames with finitely many report/sign
+assignments is compact. If optimal three-atom frames occurred arbitrarily
+close on the left of $\tau_3$, a convergent subsequence and continuity of
+the finite concave $j$ at this interior point would give an optimal cap
+frame. Combining this contradiction with infeasibility above $\tau_3$
+proves the stated left-extended obstruction.
+
+At $t_3$ the frame (JR.140) is $(n_-,p,n_+)$, and
+$\psi'(t_3)>0$ by (JR.154) and $k'(t_3)=\alpha\beta>0$.
+Thus the continued candidate $\lambda=2\psi'/h'$ tends to $+\infty$.
+At the same endpoint
+
+$$
+c_{00}=c_{22}=-\sqrt\alpha/(2A),\quad
+k_+=(\alpha+\beta^2)/(2A\sqrt\alpha),\quad
+c_{00}c_{22}-k_+^2=-\frac{\beta^2(2\alpha+\beta^2)}{4A^2\alpha}<0.
+$$
+
+Therefore $d_+\to-\infty$, whereas $d_+(t_*)>0$, proving the later zero
+needed above. The functions are algebraic on their specified analytic
+branch; their zero sets before $t_3$ are semialgebraic and have no
+accumulation at $t_*$. At the conditional algebraic source point the
+least zero is an exactly specified algebraic number. This identifies no
+first vanishing factor. The divergence describes a continued trial
+frame beyond its certified interval, not the optimal multiplier at the
+interior contrast $\tau_3$. $\square$
+

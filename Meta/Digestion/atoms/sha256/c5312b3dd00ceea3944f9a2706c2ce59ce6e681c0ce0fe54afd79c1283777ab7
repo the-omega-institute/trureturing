@@ -1,0 +1,143 @@
+**Definition 21.1 (additional effective regular description).** Suppose
+a finite total deterministic bottom-up tree automaton $\mathfrak A_f$
+is supplied. Write its leaf states as $q_\alpha,q_\beta$, its binary
+transition as $\delta_f$, and its accepting set as $F_f$; thus
+$q_f(\alpha)=q_\alpha$, $q_f(\beta)=q_\beta$ and
+$q_f(\langle B,C\rangle)=\delta_f(q_f(B),q_f(C))$.
+Require the exact specification
+
+$$
+\forall B\in\mathcal I\text{ with branch root},\qquad
+ f(B)=1\ \Longleftrightarrow\ q_f(B)\in F_f.
+\tag{PCA.48}
+$$
+
+Its ranked signature is exactly $\alpha:0,\beta:0,\langle-,-\rangle:2$.
+The code is still the prescribed $\sigma_f$ of (PCA.12), with the same
+entries and immutable reader. The explicit automaton and equivalence
+are extra finite-description input. Existence of some equivalent
+regular language, or totality of an arbitrary acquired-term program,
+does not supply them or decide their equivalence to that program.
+
+Use one coordinate for each of the six whole class values, not eight
+independent hole values. Write $\mathcal B_I$ for branch images and
+let $\mathcal D(x)$ be the conjunction of all different-class
+disequalities with the following disjunction of eleven coordinate
+conditions:
+
+$$
+\begin{aligned}
+Z_* &: \quad \bigwedge_d x_d\in\mathcal B_I,\\
+Z_d &: \quad x_d=\beta\ \land\!
+                       \bigwedge_{k\ne d}x_k\in\mathcal B_I,\\
+\Pi_j &: \quad x_{b_j}=\alpha\ \land\ x_{\operatorname{partner}(j)}=\beta
+ \ \land\!
+ \bigwedge_{k\notin\{b_j,\operatorname{partner}(j)\}}
+                                      x_k\in\mathcal B_I.
+\end{aligned}
+\tag{PCA.49}
+$$
+
+Here $d$ ranges over the six classes and $j=1,\ldots,4$, with
+partner $a$ for $j=1,2$ and $c$ for $j=3,4$.
+NBP Propositions 9.3 and 15.2 identify this domain exactly with the
+entire original fiber by $x\mapsto\delta(\mathscr S(x))$.
+On it define the Boolean expression
+
+$$
+\widehat\sigma_f(x)=
+ \Pi_3(x)\lor\Pi_4(x)\lor
+ \bigl(Z_{b_3}(x)\land[q_f(x_a)\in F_f]\bigr),
+\tag{PCA.50}
+$$
+
+and on two tuples retain the complete joint bad-pair relation
+
+$$
+\mathcal D(x)\land\mathcal D(y)\land
+       \bigl(\widehat\sigma_f(x)\mathbin{\mathsf{xor}}
+                                  \widehat\sigma_f(y)\bigr).
+\tag{PCA.51}
+$$
+
+**Supplier application 21.2 (ARH productive-prefix saturation with native
+entry fidelity).** Under (PCA.48), the existing productive-prefix test
+of [ARH, Lemma 21.4][ARH] decides whether $\sigma_f$ has a finite
+original-entry preparer on the whole $\mathcal U_*$, and supplies a
+valid finite determining menu and its literal entry labels in the
+positive case. In the negative case it supplies actual finite origin
+pairs with different prescribed entries and identical current replies
+through any requested finite absolute depth. Consequently the existing
+finite tasks of Theorems 12.4 and 14.3 decide every given three-budget
+request on these explicitly described inputs and construct a finite
+mathematical table when feasible. None of these automata is installed
+as a free runtime instrument.
+
+Proof. The image grammar $\mathcal I::=\beta\mid E\mid
+\langle\mathcal I,\mathcal I\rangle$ is a finite regular tree grammar.
+Intersecting it with branch-root type gives $\mathcal B_I$.
+Ground equality, root type and a supplied automaton's coordinate
+acceptance are effective coordinate predicates. Equality of two whole
+coordinates, and its negation, use the padded synchronous convolution
+of ARH Lemma 21.1, taking decoration powers zero. That lemma also
+supplies lifting to larger tuples with correct padding, Boolean
+operations, prefix restrictions and finite witnesses. Combining it
+with the ordinary finite-tree automaton closures gives an effective
+automaton for (PCA.51) on twelve coordinates. It retains the full
+$\mathcal D$ separately in both copies, every one of its disequalities,
+and the single shared value for each repeated class. This is not a
+product relaxation of the native domain.
+
+Apply ARH Lemma 21.4 directly to this bad-pair automaton. Its productive
+state initialization, descending diagonal-prefix sets, effective
+stabilization and finite accepting witnesses are the existing supplier;
+no new pair-state saturation algorithm is needed. Its proof and
+statement use the automaton, productive states and diagonal labels,
+so the instantiation requires exactly the bad relation just constructed.
+For some finite $h$, the positive answer excludes bad pairs whose
+corresponding class replies agree at every relative word of length
+less than $h$. By the original occurrence identity, such tuple agreement
+is exactly current-tree agreement at all absolute words of length
+less than $h+3$: all shorter exterior words are fixed, and each longer
+word enters its unique cut occurrence. Every class has a depth-three
+representative. Thus the actual menu
+
+$$
+M_h=\{p_dw:d\text{ a class},\ |w|<h\},\qquad
+\max_{v\in M_h}|v|\le h+2\quad(h>0)
+\tag{PCA.52}
+$$
+
+determines the original entry. For each attained tuple of replies,
+intersect $\mathcal D$ with its finite coordinate-prefix conditions
+and extract a finite witness by ARH Lemma 21.1. Evaluate (PCA.50)
+on that witness and assign the literal original $e_0$ or $e_1$.
+Absence of Bad proves independence of the witness. Unattained tuples
+can receive either existing entry. If $h=0$ the menu is empty and
+the same argument requires a constant code; the present template's
+two positive code values rule that case out on the nonempty domain.
+
+If the stable accepting intersection is nonempty, ARH Lemma 21.4
+supplies a finite bad tuple pair with arbitrarily long diagonal
+prefix. Apply it, for example, at $h=d+1$ for a requested absolute
+depth $d$. The occurrence identity gives identical current replies
+at every $|v|\le d$. Both tuples satisfy $\mathcal D$, so their
+filled currents have the actual finite inverses
+$u=\delta(\mathscr S(x)),u'=\delta(\mathscr S(y))$. Equation (PCA.48)
+and (PCA.50) make their original prescribed entries different.
+These are actual sources with all sharing and disequalities intact,
+not infinite limit objects. Theorem 3.2 excludes a finite preparer.
+
+In the positive case the supplied menu and assignment are exactly the
+inputs of Theorem 12.4. Its finite attained actual-word task can be
+checked over finitely many tables on a specified finite alphabet;
+stationary path checks stop at a latch or the first repeated running
+state, as Proposition 14.4 states. The same reasoning applies under
+state upper budget $H$ with the two mandated latches and a running
+start. Feasible tables retain the literal entries and use genuine
+absolute native words with the original state, call and literal charges.
+The reader and all five of its whole-row halt outputs remain unchanged.
+Theorem 14.3 supplies its separate executed-literal formulation.
+These are applications of the existing synthesis tasks, not new
+generic finite-search results. $\square$
+

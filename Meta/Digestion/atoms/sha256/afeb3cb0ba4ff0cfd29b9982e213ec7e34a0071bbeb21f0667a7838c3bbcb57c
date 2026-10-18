@@ -1,0 +1,21 @@
+### 66.4 所用定义与适用边界
+
+几何部分复用 `GenealogicalFiberTransport` 的来源／替换／叶词表示；读数、`Positive`、
+`finiteDecision`、`source_foundation`、`acquisition_foundation` 复用
+`ActualTreeReadoutAcquisition`；`Observer`、`Legal`、`ActualPrefix`、`Run`、
+`historyState`、`historyAction`、`actualPrefix_semantics`、`run_from_actualPrefix`、
+`run_deterministic` 和 `subtree_leaf_count` 复用
+`ActualFiniteObserverAbsentElimination`；粗投影复用 `ActualCoarseReadoutHistory`，
+原生 acquisition 载体的定义与适用范围来自 `ActualPureAcquisitionCompiler`，同一
+$h_n^{\mathrm{raw}}$ 的全历史满足者由本节的有限行构造给出。确定性支持命中使用经典证书必须击中
+每个不交敏感块的原则（Buhrman--de Wolf, *Complexity Measures and Decision Tree
+Complexity: A Survey*, §4.2, Definition 2 and Proposition 1）；该文献的 Boolean
+坐标不替代这里的原树可实现性、缓存或动作合同。一般支持命中、既有五叶六地址表、全词静态证书、有限窗重建和原生取得保持原归属。
+同一实际分支前缀下的整个原始纤维刚性、原始续读达到者、全递归粗竞争支持与
+同前缀全历史满足者分别由本节的饱和论证、分支证书、支持递推与有限行构造给出。
+
+（JM.219）、（JM.220）、（JM.223）和（JM.229）均是对原始 $W_n$、实际 $h_n^{\mathrm{raw}}$、
+任意地址、缺席、重复、raw cache 及名义反事实行的证明；不把仅在 $W_n$ 上的
+正确性提升为 `Admissible(N)` 的全 `Allowed(N)` 正确性，也不把 Boolean halt 读作
+$Q$。
+

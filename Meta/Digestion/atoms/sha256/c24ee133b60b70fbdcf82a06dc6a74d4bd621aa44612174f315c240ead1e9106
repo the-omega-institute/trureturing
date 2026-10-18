@@ -1,0 +1,62 @@
+**Theorem 13.1 (nonpositive-height merge and the residual negative cone).**
+Under Assumption 10.1, suppose $R_-\succeq0$. Every saturated
+contact with $\eta_1\le0$ belongs to the same compatible group
+as its pure endpoint, including $\eta_1=0$. Every saturated
+contact that does not share a group with a pure contact instead
+has $\eta_1>0$ and $x^TR_+x<0$. For these residual contacts,
+
+$$
+u\ne0,\qquad 0<v/u<\chi,\qquad L_o(x)\le0.
+\tag{FC.43}
+$$
+
+Moreover the slope negative set
+$\mathcal I_-:=\{z\in\mathbb R:(1,z)R_+(1,z)^T<0\}$ is
+empty or one open interval contained in $(0,\chi)$.
+
+Proof. At a saturated contact take the maximizing report sign
+$\epsilon=\operatorname{sgn}u$. If $\eta_1\le0$, use
+$\sigma=-1$ in its zero test:
+
+$$
+0=D_cF_{0,\epsilon,-}+N_cx^TR_-x.
+\tag{FC.44}
+$$
+
+Both summands are nonnegative and $D_c,N_c>0$. Thus
+$F_{0,\epsilon,-}=0$, which implies $\ell\le0$ by the pure
+absolute-value inequality. The pure endpoint is a contact and
+$\ell\eta_1\ge0$, precisely Definition 3.2's weak-sign pairing.
+This proof uses no strict negativity of the height, so includes
+zero height and singular $R_-$.
+
+If $\eta_1>0$, the corresponding equation is
+$0=D_cF_{0,\epsilon,+}+N_cx^TR_+x$.
+If its quadratic term is nonnegative, both terms vanish;
+$F_{0,\epsilon,+}=0$ implies $\ell\ge0$ and again gives a
+compatible pure endpoint. Therefore a nonmerged saturated contact
+has $x^TR_+x<0$.
+Since $R_+=R_--2t\mathsf F$ and $t>0$, this forces
+$f(x)>0$. Formula (FC.26) says exactly
+$f=u^2z(2e-d_*z)>0$ with $z=v/u$, so $u\ne0$ and
+$0<z<\chi$. Also
+
+$$
+(R_+)_{22}=Q_{22}+td_*
+=(R_-)_{22}+2td_*\ge2td_*>0.
+\tag{FC.45}
+$$
+
+Thus $r_Q(z)=(R_+)_{11}+2(R_+)_{12}z+(R_+)_{22}z^2$
+has empty negative set or one open interval; every such negative
+direction has $f>0$, so that interval lies in $(0,\chi)$.
+
+For the orientation, consider the globally nonnegative positive-height
+signed gap on the saturated sheet
+$S_+(x)=P_y+\mathfrak c Q_y-\ell-t\mathfrak c f-\lambda|u|$.
+All its terms except $L_o(x)$ are even under $x\mapsto-x$.
+At the residual positive-height contact, $S_+(x)=0$; evaluating
+at its distinct antipode gives $S_+(-x)=-2L_o(x)\ge0$.
+This proves $L_o(x)\le0$ without identifying the two labels.
+$\square$
+

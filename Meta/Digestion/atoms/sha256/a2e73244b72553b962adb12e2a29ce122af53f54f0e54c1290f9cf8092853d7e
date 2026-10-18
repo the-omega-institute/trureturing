@@ -1,0 +1,39 @@
+**Theorem 3.2 (effective finite remainder after boundary neighborhoods).**
+Let an eligible anchor have basis $\mathcal K$. For every choice of
+finite depths $e_K$ for $K\in\mathcal K$, the remainder
+
+$$
+X=D_{r_*}\setminus
+\bigcup_{K\in\mathcal K}\{u:u\equiv_{e_K}K\}
+\tag{AAB.11}
+$$
+
+is finite and can be enumerated exactly, with original finite sources.
+When $\mathcal K$ is empty it is the entire finite anchor.
+
+Proof. An infinite remainder contains distinct sources from one piece.
+The coordinate extraction of Theorem 3.1 gives a subsequence converging
+to some $K\in\mathcal K$. It eventually agrees with $K$ through $e_K$,
+contradicting membership in the remainder. This proves finiteness without
+reclassifying a merely sufficient neighborhood list as exhaustive.
+
+For effectiveness translate every finite prefix test in (AAB.11) to
+Presburger conditions on the used ranks. At an atom of rank $q$, split
+into $q=0$, $q=1$ and $q\ge2$. The first two cases have known leaf
+and absent-descendant replies. In the third case a left step gives
+$T_{q-1}$ and a right step gives $T_{q-2}$. Following a supplied finite
+word takes finitely many such splits, represented with natural affine
+auxiliaries when subtraction occurs. Fixed ground and explicit pair
+navigation are computed directly. This is exactly NIC Proposition 5.3's
+atomic-navigation argument. Every $K$ prefix is computable from its
+finite context. Thus each piece's remainder support $S'_b$ is Presburger.
+
+The map from used ranks to $U_b$ is injective: compare any used
+coordinate at one fixed syntactic occurrence address and use atomic
+index injectivity. Hence the finite output remainder implies each
+$S'_b$ is finite. Decide its bounding sentence, find a bound, enumerate
+the bounded ranks exactly, and expand $U_b$. Theorem 2.2 guarantees all
+listed sources and their original retained predicates. Deduplicate finite
+trees by syntactic equality. A piece with no used ranks has at most its
+one ground output. All steps terminate. $\square$
+

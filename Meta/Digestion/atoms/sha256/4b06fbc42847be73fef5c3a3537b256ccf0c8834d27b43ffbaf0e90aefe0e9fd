@@ -1,0 +1,83 @@
+**Theorem 3.2 (A no-worse representative in the real reflected class).**
+Every original complex $T\in\mathfrak C_1$ has a representative
+$S\in\mathcal C_{\mathbb R,J}$ with $e(S)\le e(T)$ and a realization
+with at most $225$ fixed scalar flags. For every
+$S\in\mathcal C_{\mathbb R,J}$,
+
+$$
+e(S)=\max_{J'\in\mathcal J_{15}}
+\|\Pi_{J'}-S^\dagger(\Pi_{J'})\|_{\rm op},\qquad
+\mathcal J_{15}=\{J'\subseteq\mathsf S:1\le|J'|\le2\}.
+\tag{3.2}
+$$
+
+The maximum is attained by a pure input, wait zero, one complete mode
+read, and Stop. Consequently minimizing over $\mathcal C_{\mathbb R,J}$
+preserves exactly the original $\varepsilon_1$.
+
+Proof. Use the credited no-worse stationary reduction
+[QPC, Theorem 3.3](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md)
+with $q=1$, the same $A$, all complex competitors and the same error
+(1.5). It supplies a stationary $S_0\in\mathfrak C_1$ with
+$e(S_0)\le e(T)$. Its averaging is legitimate for this nonnegative-wait
+menu: QPC Lemma 3.1 gives recurrence and equality of every tail supremum,
+and equation (3.4) there identifies a conjugated-design residual with
+the original residual at $t+u$. Thus design conjugation by the actual
+orbit and its compact closure preserves $e$ exactly. Convexity of $e$
+and compact convexity of the rank-one-Kraus class make the mathematical
+average no worse. No future negative wait or readable averaging flag
+is involved in that supplier.
+
+Apply Theorem 2.2 to $S_0$. The resulting $S_1=\mathfrak r(S_0)$ is
+stationary, real measure-and-prepare, and no worse. Directly from the
+displayed $A$ and $J$,
+
+$$
+JAJ=-A,\qquad J\Pi_sJ=\Pi_s,\qquad
+JR_iJ=R_i\quad(i=0,+,-).
+\tag{3.3}
+$$
+
+The last identities also follow because $R_i$ are polynomials in
+$-A^2$. In the adapted vector basis, $J$ acts as
+$(-1,1,-1,1,-1)$: $Jd=-d$, $Ju_\pm=u_\pm$, and
+$Jv_\pm=-v_\pm$. Hence $JG(\theta,\phi)J=G(-\theta,-\phi)$.
+
+Let $S_1^J=\operatorname{Ad}_J S_1\operatorname{Ad}_J$.
+Conjugating its real input and output vectors by $J$ preserves their
+norms, the matrix TP marginal and rank-one Kraus legality. Equation
+(3.3) shows that $S_1^J$ is stationary. For any stationary channel $V$,
+QPC's first-read consequence is
+
+$$
+Q_{J'}(t)-V^\dagger(Q_{J'}(t))
+=O(t)^T[\Pi_{J'}-V^\dagger(\Pi_{J'})]O(t).
+\tag{3.4}
+$$
+
+At zero wait the residual of $S_1^J$ is
+$J[\Pi_{J'}-S_1^\dagger(\Pi_{J'})]J$. Thus (3.4) and norm invariance
+prove $e(S_1^J)=e(S_1)$ for the original menu. Define
+$S=(S_1+S_1^J)/2$. Concatenating scaled real Kraus families proves its
+legality. It is stationary, commutes with $\operatorname{Ad}_J$, and
+convexity gives $e(S)\le e(S_1)$. Theorem 2.2's real-product support
+argument reduces its realization to at most $225$ flags without changing
+this channel.
+
+Equation (3.4) makes every event norm independent of the wait. Since TP
+means $S^\dagger(I)=I$, complementary residuals have opposite signs;
+the empty and full residuals vanish. All events are therefore represented
+by the five singletons and ten pairs, proving (3.2). For a maximizing
+event, take a unit eigenvector of its real symmetric residual with an
+eigenvalue of largest absolute value. The corresponding physical pure
+input is $Dvv^TD^\dagger$. A full read at $t=0$ and Stop gives an
+event probability difference equal to that eigenvalue. Its TV is both
+at least its magnitude and at most (3.2), proving attainment.
+
+The original minimizer exists by QMB Theorem 5.1. Applying this
+replacement to it, and using inclusion of the resulting channels in
+the original class, proves equality of the two minima. The invariance
+used here is the specified $J$ and the actual walk closure. It does not
+require the full $O(5)$ menu invariance refuted by QPC Proposition 9.1.
+$\square$
+

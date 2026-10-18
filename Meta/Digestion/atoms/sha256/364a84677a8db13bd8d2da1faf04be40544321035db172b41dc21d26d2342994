@@ -1,0 +1,19 @@
+**Definition 2.4 (separate charges).** A fixed-width $b$-bit payload has
+at most $2^b$ values, with one empty codeword at $b=0$. Source-independent
+code, public menus and preprocessing, initial acquisition, communication,
+encoder and decoder workspace, local bit/cell work, output storage and
+cleanup have separate costs. Acquisition, transmission and working
+representation of $k$ are also paid; an integer is not one unbounded
+unit-cost cell. For the actual submitted words $p_1,\ldots,p_T$ charge
+
+$$
+T,\qquad A=\sum_{i=1}^T|p_i|,\qquad
+Q_{\mathrm{operand}}=
+\max\bigl(\{0\}\cup\{|p_i|:1\le i\le T\}\bigr)
+\tag{FM.5}
+$$
+
+separately. Repeated submissions count repeatedly. Inaccessible physical
+remnants still have a storage cost. The information-state optimum is
+not an optimum of all these resources.
+

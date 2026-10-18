@@ -1,0 +1,19 @@
+**Definition 7.2 (acquired versus mathematical memory).** The variables
+$\mathbf K,\mathbf b,\boldsymbol\eta$, the original $t$, and the value
+$v$ in Theorem 6.3 are supplied mathematical data for their respective
+algorithms. Extraction from a supplied $(t,\mathbf n)$ does not assert
+that a live observer holds those data. Actual source information still
+comes from materialized original-root $\mathsf{Read}(p)$ operations on
+one continuing source, with forward $\mathsf{ApplyRho}$ and any declared
+halting contract. The raw counts of reads, updates and the sum of actual
+address lengths are distinct from construction, expansion, retained
+memory, authentication and physical time.
+
+A physical implementation of (SFP.21) must justify acquisition of the
+whole needed value or an equally sufficient record, the authentic lag,
+the correspondence of every materialized address, and the identity of
+the continuing source. With independent writers it must also justify
+safety and liveness of the observation protocol. None of these follows
+from equality of finite tree values. Two separate physical objects can
+carry the same value and satisfy every equation in this volume.
+

@@ -1,0 +1,11 @@
+**Definition 26.1 (signed beta-height moments).** For any finite raw word let $\eta=A-B$, and let $h_r$ be its alpha-minus-beta count strictly before a beta occurrence $r$. Define
+
+$$
+\mathsf D=\sum_{\text{beta }r}(2h_r-1),\qquad
+\mathsf E=\sum_{\text{beta }r}(3h_r^2-3h_r+1),\qquad
+M=(\eta,B,\mathsf D,\mathsf E).
+\tag{SC.63}
+$$
+
+These are exact fixed-letter aggregate functions. They require no timestamps or occurrence identities in their supplied values. In a conditional inverse, a fixed retry word is a restriction of the compared family; an operationally supplied retry word must be the actually acquired, priced $U$ of Hypothesis 7.1 or another explicitly sufficient paid record. It is not silently available in $\mathcal B$.
+

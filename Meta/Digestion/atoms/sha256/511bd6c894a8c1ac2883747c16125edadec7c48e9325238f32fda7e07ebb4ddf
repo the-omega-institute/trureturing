@@ -1,0 +1,51 @@
+## 1. Source, carrier, and resource class
+
+The arithmetic source is
+
+$$
+X=\{(r,g): r\text{ is prime},\;g\in\mathbb Z,\;\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},
+\qquad N(r,g)=1+F_rg,
+$$
+
+where $F_0=0$, $F_1=1$, and $F_{k+2}=F_{k+1}+F_k$. Let $p_i$ be the $i$-th prime and put $q_i=[p_i\mid N(r,g)]$. The first absent coordinate is $n=\min\{i:q_i=0\}$. Every source integer has finitely many prime divisors, so this first absence is finite.
+
+For every $j\ge1$, let $B_j$ and $P_j$ each be a Borel copy of $(0,1)$. The full carrier is their Borel disjoint union,
+
+$$
+\Omega=\left(\bigsqcup_{j\ge1}B_j\right)\sqcup\left(\bigsqcup_{j\ge1}P_j\right).
+$$
+
+The unchanged consumer returns unknown on each $B_j$ and proposes $j$ on each $P_j$, without making prime requests. Fix an amplitude sequence $1\ge a_1\ge a_2\ge\cdots>0$ with $a_n\to0$. The separately selected marked target at a first zero $n$ is
+
+$$
+\mu_n=(1-a_n)\,\delta_{\theta_0}+a_n\,\delta_{\theta_n},
+\qquad
+\theta_j=(B_1,1/(j+2)),\qquad j\ge0.
+$$
+
+For an acquisition $A$, define its uniform marked-target error by
+
+$$
+e_a(A)=\sup_{x\in X}\operatorname{TV}\bigl(\mathcal L(A(x)),\mu_{n(x)}\bigr).
+$$
+
+At a positive closed cap $e$, define the finite active horizon
+
+$$
+L_a(e)=\max\bigl(\{n:a_n>e\}\cup\{0\}\bigr).
+$$
+
+Thus an amplitude tied at $a_n=e$ is inactive. Accuracy in this volume is only accuracy to these separately selected marked laws. The original targets on the nonatomic blocks are still present; they have densities on their blocks, whereas each displayed marked law is atomic, so no assertion about their accuracy is transferred here.
+
+The resource class has one source-independent random seed, zero advice, sourcewise almost-sure finite handoff, and at most two actual requests. An $N2$ rule must preselect its whole schedule before any reply and obtain all replies in that schedule; arbitrary addresses, repeated addresses, and ignored replies are allowed, with every actual request counted. An $O2$ schedule preselects an increasing schedule and every counterfactual output before any reply, stops at the first queried zero, and stops by exhaustion if no queried zero occurs. The first and second addresses of an $O2$ schedule are therefore not chosen from replies.
+
+For $i<j$, write
+
+$$
+O(i,j;u,v,z)
+$$
+
+for the complete stopped table that outputs $u$ on the first queried zero, $v$ on the reply pattern $10$, and $z$ on $11$. Its counted $N2$ completion has outputs $(u,u,v,z)$ on the four reply patterns $00,01,10,11$. All counterfactual cells use the same schedule mass; no cell is assigned an independent probability budget.
+
+The source existence and exact stopped-prefix transport used below are the supplied premises DEV297.1--297.4 and DEV309.1--309.3 at fixed source commit `07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d`, file `docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md`, sections 297, 300, 305, and 309. The nested premises named there (including 109.1, 110.2, 280.1, and 280.3) are credited premises rather than reproved claims in this volume.
+

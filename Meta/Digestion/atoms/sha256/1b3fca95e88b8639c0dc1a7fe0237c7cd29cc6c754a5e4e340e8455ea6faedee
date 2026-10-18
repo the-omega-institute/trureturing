@@ -1,0 +1,30 @@
+**Definition 3.1 (fresh-suffix contract).** A fresh-suffix contract measures a
+continuation from the identity meter.  For a legal prefix $u$ with
+$T_u x$ defined and a suffix $v$, the suffix response is evaluated from
+the residual state $T_u x$ with the identity meter
+$e_{\kappa(T_u x)}$ of its target type:
+
+$$
+\operatorname{FreshResp}(x;u,v)=
+\operatorname{Trace}_{e_{\kappa(T_u x)}}(T_u x,v).
+\tag{3.1}
+$$
+
+If a total price is required, a separately declared combination law must state
+how the two typed values are combined.  In a single monoid it may take the
+simple form
+
+$$
+\operatorname{price}_x(uv)=\operatorname{price}_x(u)\oplus
+                         \operatorname{price}_{\rm fresh}(T_u x,v),
+\tag{3.2}
+$$
+
+while a typed family uses an explicitly declared typed combination map in
+place of $\oplus$.  The source subscript matters when the charge depends on
+the actual inherited configuration; no untyped transport is implicit.
+
+The suffix itself does not inherit the prefix meter. This contract is useful
+for comparing independent continuation budgets and for constructing a static
+descriptor table.
+

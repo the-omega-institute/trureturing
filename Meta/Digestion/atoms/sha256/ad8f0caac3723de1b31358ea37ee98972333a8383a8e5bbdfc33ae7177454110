@@ -1,0 +1,36 @@
+**Lemma 13.5 (bounded-family actual-label necessity).** Every correct
+encoder of Definition 13.1 must, on each source whose descriptor is
+$(j,e)$, actually read $p_j$ before terminating. If $p$ is branch, its
+terminal record must contain either $(p,\mathrm{branch})$ or a nonabsent
+reply at a strict descendant of $p$.
+
+Proof. In the leaf case change only that actual leaf label, obtaining
+$t'$. It is still in $\mathcal F_D$: the left alpha, shape and height
+are unchanged, and $p_j$ starts with $R$. The replies of $t,t'$ are
+identical at every finite address except $p_j$. Their ancestors are the
+same branches, every strict descendant of that leaf is absent on both,
+and all other subtrees are identical. If the run on $t$ omitted $p_j$,
+determinism from the common initial state would give the identical
+queries, replies, local decisions, stopping time and complete retained
+state on $t'$. Proposition 13.3 gives different future replies at one
+common authentic count. One passive decoder on this identical input
+cannot be correct for both.
+
+For the branch case, suppose neither stated observation occurred.
+Replace the entire subtree at $p$ by alpha. This reduces height and
+preserves the prescribed initial left child, hence is still allowed.
+The query at $p$ never occurred; every queried strict descendant was
+absent and remains absent; every query elsewhere has the same reply.
+The identical-run argument now contradicts branch versus alpha at
+count zero. Both modifications compare two complete stationary
+executions; neither changes the source within an execution. These are
+the SLH Lemma 43.2 evidence arguments, with their required closure under
+leaf relabeling and subtree pruning checked inside (AAR.73). $\square$
+
+In particular, equal desired codes for two boundary positions do not
+waive label acquisition. In Proposition 13.3's collision the first
+source must be read at $R$ and the second at $RL$: flipping either
+actual leaf changes that source's future. Equality of compressed
+outputs allows erasure after acquisition, not a source-dependent
+initial choice of which information to ignore.
+

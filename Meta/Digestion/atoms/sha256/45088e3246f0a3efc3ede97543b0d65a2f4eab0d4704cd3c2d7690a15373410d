@@ -1,0 +1,102 @@
+**Theorem 7.1 (pointwise total minimum).** In the full original class
+of Definition 1.2,
+
+$$
+\boxed{
+N(s)=\begin{cases}
+6,&0\leq s\leq s_\dagger,\\
+6,&s\in\mathcal E_{\rm abs},\\
+7,&s_\dagger<s\leq s_0,\quad s\notin\mathcal E_{\rm abs},\\
+8,&s_0<s\leq1.
+\end{cases}}
+\tag{TA.39}
+$$
+
+In particular $N(0)=N(s_\dagger)=6$, $N(s_0)=7$, and $N(1)=8$.
+All minima are attained by common full-output instruments of §§8–9.
+
+Proof of the weak lower bounds. The credited actual-low-label theorem
+requires three low live-bearing labels through contact and four above
+it. Height equality in TA.17 places their coefficient rays exactly on
+the credited three plateau/initial rays or four positive-mass RC rays.
+Additional labels can subdivide these masses but cannot introduce a
+different optimal ray. The strictly positive high mass
+$(1-\delta)A_{27}$ requires at least one actual high label. Every
+such label has zero supported later failure by sharp cost.
+
+Lemma 3.1 requires both failure spectral signs to occur and forbids
+their coexistence at one actual label. Through contact neither may
+share a live label, so there are at least $3+1+2=6$ outcomes.
+Above contact negative failure still requires its own failure-only
+outcome. Outside TA.38 positive failure also requires its own, giving
+$4+1+2=7$. On TA.38 the unconditional lower bound is $4+1+1=6$.
+One cannot evade these bounds by extra low labels: their rays are
+still the same and each has one common decoder governed by TA.18.
+A failure-only label of dimension at least three cannot carry
+supported failure, since it would contradict the same sharp-cost
+equality. Complement-only outcomes can add labels but cannot remove
+any of the necessary supported outcomes. At $s=s_0$, Lemma 6.3
+forces seven.
+
+Proof of the strong lower bound. First the real-null argument of
+Lemma 3.2 assigns one ray to each actual low live-bearing label. JR's
+strong equality fixes four distinct positive ray masses, so four
+actual low labels are necessary. This step uses the common decoder,
+not coefficient rank alone. Sharp equality forbids supported high
+later failure; Lemma 6.3 forces both spectral signs into two further
+failure-only labels.
+
+It remains to prove that the two high directions need two **actual**
+labels. Orient the winding sign positively. If $m_\gamma\in[-1,1]$
+is an actual label's mean binary report, then the sharp-cost proof
+has the chain
+
+$$
+s\leq\mathsf V(F)\leq\sum_j|x_j||z_j|
+ \leq\sqrt{u_sv_s}+\sqrt{(1-u_s)(1-v_s)}=s.
+\tag{TA.40}
+$$
+
+The products have coefficients $(x_j,z_j,w_j)$ in order $(D,T,S)$;
+the two Cauchy–Schwarz sums partition them by actual low/high fibre
+membership. The first upper bound includes
+$|m_\gamma\operatorname{Re}(\overline{x_j}z_j)|\leq|x_j||z_j|$
+for products in that label. At equality every nonzero high product has
+
+$$
+|m_\gamma|=1,\qquad
+z_j=m_\gamma q_sx_j,\qquad
+q_s=\sqrt{\frac{1-v_s}{1-u_s}}>0.
+\tag{TA.41}
+$$
+
+Cauchy–Schwarz equality fixes the common ratio; a high product with
+$x_j=0$ must be zero. Its phases align by equality in the real-part
+bound, and its actual mean report is deterministic. These statements
+hold for each product despite arbitrary inaccessible multiplicity.
+The high Gram has total $|x|^2$ mass $1-u_s>0$ and zero cross moment,
+so
+
+$$
+\sum_{m_\gamma=+1,j}|x_j|^2
+ =\sum_{m_\gamma=-1,j}|x_j|^2=(1-u_s)/2>0.
+\tag{TA.42}
+$$
+
+Both report signs must therefore occur on actual high labels. A
+single label with a common report kernel cannot supply both, even
+with a larger fibre or many inaccessible Kraus matrices. Thus the
+total is at least $4+2+2=8$. At $s=s_0$ the high $T$ coefficient
+is zero; TA.41 has $q_s=0$ and does not force two reports. This is
+why that endpoint can have seven labels.
+
+These lower proofs start with an arbitrary original full-output
+optimizer and use only its supported equality consequences. Differing
+full-channel representatives or failure-time measures cannot evade
+them. A countable or admitted integral instrument with a purported
+smaller finite total alphabet has finitely many nonzero CP-mass
+outcomes, to which the same proofs apply. Positive nonatomic acquired
+mass already has infinite alphabet; unacquired integral indices remain
+inaccessible multiplicity. This proves the entire claimed necessity
+scope. The matching upper bounds follow below. $\square$
+

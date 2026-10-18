@@ -1,0 +1,39 @@
+### 33.5. 在未知漂移时选动作的完整证明
+
+两个坏类的判据只需以下对每个声明世界都成立的恒等式：
+
+$$
+\Psi=(\alpha+\beta)(1290j-1680-840b).
+\tag{33.3}
+$$
+
+不能把它用作 F(1)=0 的双向检测器。下面分别证明所有 M 坏纤维使 Psi 为零、所有 J 坏纤维使其非零，然后才证明整个策略单射。
+
+**general statistic expansion.**
+
+Directly expanding the ACTUAL early equations yields Psi=210\*(alpha+4\*beta)\*(1+2\*b)+1290\*(alpha+beta)\*j-1260\*(alpha+2\*beta)\*(1+b)-630\*alpha. Drift cancels since 35+43-63-15=0. The alpha coefficients outside j are 210-1260-630=-1680 and 420-1260=-840 for b; the beta coefficients are 840-2520=-1680 and 1680-2520=-840 for b. Hence the additional independent identity is Psi=(alpha+beta)\*(1290\*j-1680-840\*b). It is an identity for every promised source and gain, obtained without using d in an action.
+
+**all M collisions force zero.**
+
+Every nonsingleton fixed-M fiber was proved to have F(1)=alpha+beta=0. The general identity immediately gives Psi=0. Equivalently, its explicit collision ledger gives drift coefficient zero, alpha constant terms -630+1260-630=0, and alpha\*b terms -1260+1260=0. These are necessary implications for the ENTIRE M obstruction class. Psi=0 is not asserted to imply F(1)=0; the other factor may vanish.
+
+**all J collisions force nonzero.**
+
+For every nonsingleton fixed-J fiber, j_s=kappa\*(1+s),b_s=2\*s,F_s(1)=alpha\*(1+k). Substitution in the general identity gives Psi=alpha\*(1290\*kappa-1680)\*(1+s)\*(1+k). A separate ledger check sets S=s+k,T=s\*k and expands 210\*(1+4\*S+16\*T)+1290\*kappa\*(1+S+T)-1260\*(1+2\*S+4\*T)-630. The non-kappa coefficients of 1,S,T are respectively -1680,-1680,-1680, giving the same factorization. Since 0<kappa<1, 1290\*kappa-1680<-390<0. Since alpha!=0 and s,k>0, this is nonzero over the entire strict family, including either sign of alpha.
+
+**injectivity through clock 6.**
+
+Take any two promised complete worlds sharing the policy's actual record through clock 6. Their common first five readings give a common Psi and fifth action. Their common y6 gives a common d, and hence alpha and all five normalized earlier responses. If Psi=0, their fifth action was J. A different pair in the complete fixed-J fiber would force Psi!=0, contradiction. If Psi!=0, the chosen action was M. A different pair in the complete fixed-M fiber would force F(1)=0 and Psi=0, contradiction. Thus they are the same entire P,g,d. This arbitrary-pair argument proves injectivity on the entire original fiber because both fixed-word classifications exhausted all candidates and all same-q source cases.
+
+**complete inverse necessity.**
+
+A true promised world produces d=y6 and alpha=(a0-d)/42, is in the complete positive even-root list, occurs in its active or zero odd-row source branch, and passes every strict source, whole-gain and physical equation. Thus promised compatible data always leave at least one candidate; this is not merely an at-most-one conclusion.
+
+**complete inverse sufficiency.**
+
+Retain only assignments with 0<r<1,b,c>0,bc=r(1-r),F!=0,g=H\*F,d=a0-42\*alpha, every actual equation in the selected branch and the recorded Psi rule. Such an assignment is itself a complete legal promised world. Deduplicate only identical triples. The injectivity just proved makes this entire retained set a singleton for compatible input; an empty set means incompatible data. The eight-read inverse additionally enforces y7=d. No algebraic candidate is returned without the unused and zero equations.
+
+**read count and stopping.**
+
+The chronological rule chooses fifth J at zero Psi and fifth M otherwise, using only actual history through clock 4. It never normalizes by an unknown drift or decides from a future response. Clock 6 reveals drift and already makes the full promised compatible set a singleton, authorizing an optional stop after initial plus six actions, namely seven TOTAL reads. The displayed seventh J is a real immediate eighth read and its equation y7=d is retained. No global minimality, effective algorithm or robustness follows.
+

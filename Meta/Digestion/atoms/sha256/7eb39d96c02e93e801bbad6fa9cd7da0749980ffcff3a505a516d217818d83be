@@ -1,0 +1,36 @@
+##### 定理 1.7.2： 量子无信号是查询方块的因子化
+
+若对所有联合输入 $\rho,\sigma$，
+
+$$
+\operatorname{Tr}_A\rho=\operatorname{Tr}_A\sigma
+\Longrightarrow
+\mathcal N(\rho)=\mathcal N(\sigma),
+$$
+
+则存在唯一通道 $\mathcal F:B\to C$ 使
+
+$$
+\mathcal N=\mathcal F\circ\operatorname{Tr}_A.
+$$
+
+反过来，若该因子化成立，则对所有查询资源都没有 $A$ 到 $C$ 的无条件信号。
+
+**证明。**
+
+固定一个 $A$ 态 $\omega_A$，定义
+
+$$
+\mathcal F(X)=\mathcal N(\omega_A\otimes X).
+$$
+
+无信号假设给出对任意 $\rho$：
+
+$$
+\mathcal N(\rho)=\mathcal F(\operatorname{Tr}_A\rho).
+$$
+
+偏迹满射保证唯一性。反向代入立即成立。证毕。
+
+<a id="claim-1-7-3"></a>
+

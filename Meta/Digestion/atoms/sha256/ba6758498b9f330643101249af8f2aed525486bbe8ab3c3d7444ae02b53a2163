@@ -1,0 +1,16 @@
+##### 定理 1.6.2： 接口瓶颈定理
+
+若 $\kappa$ 是 $\mathcal Q$ 的接口因子，且目标 $C$ 在某个 $\kappa$ 纤维内取不同值，则 $C$ 在 $\mathcal Q$ 下不可识别。
+
+**证明。**
+
+若 $\kappa(M)=\kappa(N)$，接口因子化给出
+
+$$
+\mathcal R_{\mathcal Q}(M)=\mathcal R_{\mathcal Q}(N).
+$$
+
+但假设 $C(M)\ne C(N)$，违反定理 1.2.3 的核包含条件。证毕。
+
+<a id="claim-1-6-3"></a>
+

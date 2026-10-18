@@ -1,0 +1,20 @@
+**定理 221.16（D 的完整零边判据）。** 在 221.7 的同一实际分解上，令所有 $x_{ij}=0$。存在质量 $s$ 的单点门与空零替换满足全部帽行，当且仅当集外正确需求、全正行 $\rho_{1^L}(0)+s\ge1-e$ 以及下列全部约束成立：
+
+$$
+\begin{aligned}
+\text{C0}:&\quad\sum_{a\in A}\delta_a\le s,\\
+\text{CB}:&\quad\sum_{a\in A\cap Z(w)}\delta_a
+\le s+\rho_w(0)-(1-b_n-e)&& (w\in\Omega_n),\\
+\text{CP}:&\quad\sum_{a\in A\cap Z(w)\setminus\{n\}}\delta_a
+\le s+\rho_w(0)+\rho_w(n)-(1-e)&& (w\in\Omega_n).
+\end{aligned}
+$$
+
+替换恰为 $\sum_a\delta_aO(a;a,0)+(s-\sum_a\delta_a)E_0$。这是 B 的 $x=0$，不另计独立关系。它不要求旧块正坐标被逐字支配。
+
+**证明。** 任一此类块的门质量 $t_a$ 在每个 $\Omega_a$ 贡献正确 $t_a$，所以 $t_a\ge\delta_a$ 必要。其基点是 $s-\sum_{a\in Z}t_a$，并集是 $s-\sum_{a\in Z\setminus\{n\}}t_a$，总门质量不超过 $s$。于是原事件行逐字给 C0、CB、CP 对 $t$ 的上界。它们都是对非负坐标和的上界，故把 $t$ 降为逐坐标最小 $\delta$ 仍成立；正确需求也仍成立。这证明所述条件必要。反向直接取这些最小门质量，空质量由 C0 非负，各帽行正是 CB、CP 与已声明正确、全正行，故充分。空 $A$、$s=0$、负原始正确需求、零缺额与闭等号都包括在同一证明中。
+
+在 B 的公式中，零边给 $m=\sum\delta$、$\Psi=\sum_{Z}\delta$；把第二容量式移去 $\delta_n$ 恰是 CP，故逐项等价。旧条件 $\delta_a\le\min_{w_a=0}\eta_w(a)$ 给逐字正坐标支配，因而足以推出这些帽行，却不是本 iff 的必要条件。$\square$
+
+若允许同时选择 $\kappa\le\lambda$，可直接用同一个完整表变量 $\kappa_D$ 与门变量 $t_a$ 写质量及全部仿射帽行，均为线性约束。固定 $\kappa$ 后最小度证明可消去多余 $t$。这一共同选择不能被各行独立的余项或独立优化的资金代替。
+

@@ -1,0 +1,18 @@
+**Proposition 2.4 (released OUT is also ahead of completion).** In the
+unfused protocol, a mandatory real original OUT gives a Busy cut whose
+actual released-output word is not that of its completed original
+prefix. This occurs both in ARC's publication consumer and on the
+original INITIAL stopping route.
+
+Proof. [ARC] Definition 7.1 specifies the actual receiver print body
+RD(length,5), RD(73,4), OUT(4), MR(73), MR(length), with its terminal
+length test. For example its CoverRef serialization is nonempty and is
+actually printed, not merely represented by Step74. Fix one such OUT
+after a completed prefix $h$, and let its permitted bit be $b$.
+Immediately after the fine OUT but before Finish, completed-row
+erasure is still $h$ while actual output is $O(h)b$. The words differ
+in length. A successor interpretation would instead complete row
+$|h|+1$. The same proof applies to an actual OUT on [ARC] Theorem
+9.2's original target-copy/OUT/ACK/return route, before its real final
+halt CTL. It adds no new historical-service consumer. ∎
+

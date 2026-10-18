@@ -1,0 +1,98 @@
+**Proposition 10.1 (existing actual-state results at their full scopes).** R §§6–11 already supply corrected-core upper recovery, the full original complex-domain lower estimate $q_s^c[F]\ge-Cs^2\|F\|_2^2$, the actual unit-profile lower implication and the matching law
+
+$$
+E_s\longrightarrow\min(0,C_{\rm resp}).
+\tag{10.1}
+$$
+
+P §100 supplies the separate macroscopic upper direction $E_s\le-cs^6$, hence $r_s\ge c>0$. P §105 proves for every prescribed sequence and every actual normalized complex ground-state choice that
+
+$$
+r_{s_n}\to\infty
+\quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)\to0,
+\qquad \mathcal O_c=\{e^{i\theta}p:\theta\in\mathbb R\}.
+\tag{10.2}
+$$
+
+A's actual solvability theorem adds: whenever along such an actual subsequence $E_s\to L$ and $\mathcal U_s\psi_s\rightharpoonup cp$ globally, then
+
+$$
+c(L-C_{\rm resp})=0.
+\tag{10.3}
+$$
+
+These results have the following existing sign-conditional consequences:
+
+$$
+\begin{array}{ll}
+C_{\rm resp}<0:&E_s\to C_{\rm resp},\quad
+\epsilon_c(s)=C_{\rm resp}s^2+o(s^2),\quad
+r_s\sim(-C_{\rm resp})s^{-6}\to\infty;\\[2pt]
+C_{\rm resp}>0:&0<c\le r_s\le B_*<\infty,\quad
+-E_s=\Theta(s^6),\quad-\epsilon_c(s)=\Theta(s^8);\\[2pt]
+C_{\rm resp}=0:&E_s\to0,\quad c\le r_s=o(s^{-6}).
+\end{array}
+\tag{10.4}
+$$
+
+On the negative branch every actual normalized complex choice converges to $\mathcal O_c$ under $\mathcal U_s$. On an actually occurring positive-response datum, A further proves, for every such choice, with $F_s=\mathcal U_s\psi_s$ and $f_s=\mathcal T_sF_s$,
+
+$$
+\begin{gathered}
+F_s\rightharpoonup0,\quad f_s\rightharpoonup0\quad\text{globally in }L^2,
+\qquad F_s,f_s\to0\quad\text{in }L^2(K)\text{ for every compact }K,\\
+\int U_s|F_s|^2\to0,\quad \int V|F_s|^2\to0,\quad
+\|XF_s\|_2^2+\|Y_sF_s\|_2^2\to0,\quad b[f_s]\to0,\\
+\operatorname{dist}(F_s,\mathcal O_c)\to\sqrt2,\qquad
+\operatorname{dist}(f_s,\mathcal O_c)\to\sqrt2,\qquad
+\|F_s\|_2=\|f_s\|_2=1,\\
+\int_{\Xi_s(K)\cap\mathcal C}|\psi_s|^2dY\to0,\quad
+s^5\int W_{s^2}|\psi_s|^2dY\to0,\quad
+s^2(\|S^{1/2}\psi_s\|_2^2+\lambda)\to0.
+\end{gathered}
+\tag{10.5}
+$$
+
+All limits are sequencewise for every prescribed sequence and every actual choice. The weak/local zero limit preserves norm one. A Theorems 10.2 and 11.1 additionally establish, for each prescribed actual sequence and normalized complex ground-state choice, equivalence of microscopic weak zero with the source-centred, full-mass macroscopic Coulomb orbit limit, together with its exact energy and $r_s$ limits. A Corollary 12.1 therefore supplies the positive-response macroscopic coefficient, mass-carrying scale and normalized profile, conditionally on occurrence. It also applies on any actual weak-zero subsequence at response zero, without asserting the existence of such a subsequence. At response zero, (10.3) is vacuous; selection of actual weak-zero subsequences, possible nonzero microscopic core limits and the complete bounded/divergent/mixed $r_s$ and every-choice profile alternatives remain unresolved.
+
+Proof and credit. These are the existing results of P, R and A, rather than new consequences of the projection or cutoff comparison alone. Their essential lower and actual-equation steps are retained as follows. R's recovery uses compact odd approximants of $\Psi$ with each fixed before its $s$-limit. Its lower estimate localizes an arbitrary complex vector, uses the horizontal-energy gap on its complement to $p$, and retains the nonnegative native $C_s$ outside the inner strip. Its actual unit-profile lower implication completes the full complex response square. A hypothetical energy cluster strictly below $\min(0,C_{\rm resp})$ is negative; (10.2) would give a unit profile and that lower implication would contradict the cluster. This is the matching lower argument behind (10.1), not an inference from a trial upper direction.
+
+For the domain bridge in A, the actual energy identity and bounded $U_s$ give $b_s[F_s]\le C$. On the entire native interval $1+\beta_sr=(k-\alpha_\kappa)/d_0$ lies between positive fixed bounds. Equation (1.10) therefore gives $b[f_s]\le\max(1,((u-\alpha_\kappa)/d_0)^2)b_s[F_s]$. Transported native core approximants and zero extension put $f_s$ in $\mathcal Q_E$, with both traces retained. The actual bilinear equation is $\widetilde q_s^c(k,f_s)=s^2E_s\langle k,f_s\rangle$ for native form tests.
+
+To record the checked solvability mechanism, fix a small strip parameter $\delta>0$, then $R=\delta/s$, $u_s=\eta_R f_s$, $\alpha_s=\int Vp u_s/\mu$ and $v_s=u_s-\alpha_sp$, with $\eta_R$ an even cutoff. On a subsequence with weak limit $cp$, $\alpha_s\to c$, $\langle p,u_s\rangle\to c$. Testing the actual equation with $\eta_R^2f_s$ and applying R's supported complement coercivity gives $b[v_s]\le M_\delta s^2$. Both boundary edges in the test $\eta_Rp$ are controlled by
+
+$$
+h(\eta_Rp,f_s)=a\int\eta_R'\{pXf_s-(Xp)f_s\}=o_\delta(s^2),
+\tag{10.6}
+$$
+
+because $\|\eta_R'p\|_2+\|\eta_R'Xp\|_2=o(R^{-2})$, using $rp,rXp\in L^2$. No boundary mass smallness for $f_s$ is required. The complete rational and field expansion gives
+
+$$
+\widetilde q_s^c(\eta_Rp,f_s)
+ =-\beta_s\ell(v_s)+\alpha_s\beta_s^2K_{\rm base}
+ -\chi\lambda s^2\alpha_sT-a\lambda s^2\langle p,u_s\rangle+o_\delta(s^2).
+\tag{10.7}
+$$
+
+For each fixed real odd compact smooth $z$, its actual test gives
+
+$$
+\widetilde q_s^c(\beta_sz,f_s)
+ =\beta_s h(z,v_s)-c\beta_s^2\ell(z)+o_{\delta,z}(s^2).
+\tag{10.8}
+$$
+
+The kinetic remainder on that fixed support is $O_z(s^3)$; higher field and clock terms carry the extra $\beta_s$. Equation (2.6)'s full residual is $o(s^2)$ in (10.7). Complex polarization and parity give $h(z,v_s)-\ell(v_s)=h(z-\Psi,(v_s)_-)$, and hence, after adding the tests and taking $s\to0$ at fixed $\delta,z$,
+
+$$
+\left|c\{L-\nu^2(K_{\rm base}-\ell(z))+\lambda D_{\rm clock}\}\right|
+ \le\nu\sqrt{aM_\delta}\,\|z-\Psi\|_h.
+\tag{10.9}
+$$
+
+Only after this limit let compact odd $z$ approach $\Psi$ in $h$. Continuity $\ell(z)\to D_{\rm resp}$ proves (10.3). No native test $\Psi$, unit microscopic limiting norm, positive $L^2$ gap or uniform-in-$\delta$ limit enters.
+
+For positive response, an unbounded $r_s$ subsequence would give unit-orbit convergence by (10.2) and positive lower unscaled energy by R's unit-profile lower implication, contradicting negativity. This proves the eventual upper bound in (10.4); P's macroscopic direction gives its lower bound. Equation (10.3) forces every weak coefficient $c$ to vanish because every energy cluster is nonpositive. The native local compactness and complete integrated-field convergence then give local mass and potential disappearance. The actual energy identity gives $b_s[F_s]\to0$, and the global form comparison gives $b[f_s]\to0$. The exact unit-vector formula $\operatorname{dist}(F_s,\mathcal O_c)^2=2-2|\langle p,F_s\rangle|$ gives distance $\sqrt2$. These are A's existing actual-equation consequences, with no assertion of positive-response occurrence. $\square$
+

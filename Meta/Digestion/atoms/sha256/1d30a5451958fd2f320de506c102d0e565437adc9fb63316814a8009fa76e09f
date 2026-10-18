@@ -1,0 +1,11 @@
+### 103.6. Primitive arithmetic and the nondegenerate dihedral field
+
+**Proof.** Write a,b,c for the fixed certificate. Reduction modulo p gives a=p k. Primitiveness excludes p|c; otherwise the equation forces p|b as well. It then excludes p|b. Rearrangement yields
+
+ b^2-p k^2=m c^2,
+ gamma gamma_bar=m c^2, gamma_bar=b-k sqrt(p).
+
+The triple (k,b,c) is primitive. The squareclasses p,m,pm are nontrivial and distinct over Q, so [E_i:Q]=4. For any nonzero rational epsilon, neither epsilon gamma nor epsilon gamma_bar is a square in the real field Q(sqrt p): its norm is the negative number epsilon^2 m c^2. Their product has class m, also nonsquare in this real field. All three possible nonzero relations between their two squareclasses are therefore excluded.
+
+The field Q(sqrt p,sqrt(epsilon gamma),sqrt(epsilon gamma_bar)) has degree four over Q(sqrt p). The product of the radicals, divided by epsilon c, is a square root of m, so the field equals E_i(sqrt(epsilon gamma)) and has degree eight over Q. The two independent radical sign changes form C2 x C2; the nontrivial automorphism of Q(sqrt p) lifts to an involution swapping the radicals. The resulting nonabelian semidirect product is D4. Its commutator is the simultaneous sign change, fixing exactly E_i. This proves the degree and maximal-abelian-field claims for each certificate and every rational twist, without a generic nondegeneracy assumption.
+

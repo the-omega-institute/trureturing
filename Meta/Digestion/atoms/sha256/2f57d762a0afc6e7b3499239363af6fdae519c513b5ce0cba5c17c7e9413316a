@@ -1,0 +1,32 @@
+**引理 2.2（重复向量恒等式与切面）。** 所用叉积满足
+
+$$
+\langle u\times v,w\rangle=\langle u,v\times w\rangle,\qquad
+|u\times v|^2=|u|^2|v|^2-\langle u,v\rangle^2,
+$$
+
+并有
+
+$$
+u\times(v\times u)=|u|^2v-\langle u,v\rangle u.
+$$
+
+因此 $K\perp a,b$、$|K|^2=\Delta$，约定2.1的 $L,N$ 公式成立。若 $\Delta>0$，$U_p=\operatorname{span}\{a,b,K\}$ 是闭合三维叉积切面；若 $\Delta=0$，叶生成空间至多一维，内部叉积全为零。
+
+证明。极化范数式得
+
+$$
+\langle u\times v,u\times w\rangle
+=|u|^2\langle v,w\rangle-\langle u,v\rangle\langle u,w\rangle.
+$$
+
+对任意 $z$，循环配对及此式给
+
+$$
+\langle u\times(v\times u),z\rangle
+=\langle z\times u,v\times u\rangle
+=|u|^2\langle z,v\rangle-\langle u,z\rangle\langle u,v\rangle.
+$$
+
+内积非退化给恒等式。垂直性来自交替性与循环配对；范数式给 $|K|^2$。于是 $a\times b=-K$，$K\times a,L$ 和 $K\times b,N$ 均在叶平面内，双线性证明 $U_p$ 闭合。独立时三生成元线性独立；依赖时每个内部节点的叉积为零。
+

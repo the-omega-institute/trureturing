@@ -1,0 +1,124 @@
+## 71. 椭圆轴比与边界对数响应的最佳收缩
+
+**定义 C-71.1（正射线上的边界响应）。** 输入为正向量 $v=(v_0,v_1)$，整体正倍数视为同一射线，用
+
+$$
+x=\log(v_0/v_1)\in\mathbb R
+$$
+
+表示其比例。对 $H=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)>0$，输出向量 $Hv$ 也正，定义输出比例函数
+
+$$
+F_H(x)=\log\frac{ae^x+b}{ce^x+d}.
+\tag{C71.1}
+$$
+
+两个输入正射线的 Hilbert 距离在二维恰为
+
+$$
+d_{\rm Hil}(u,v)
+=\log\frac{\max(u_0/v_0,u_1/v_1)}{\min(u_0/v_0,u_1/v_1)}
+=\left|\log\frac{u_0}{u_1}-\log\frac{v_0}{v_1}\right|.
+\tag{C71.2}
+$$
+
+这是正锥的射影距离，不是欧氏平面中任意两个向量的距离。
+
+**命题 C-71.2（四角椭圆的精确响应含义）。** 对命题 C-67.2 的规范椭圆，若无标记轴比为 $R_{\rm ell}=e^{2|\eta|}$，则该正边界块对对数比例的最小全局 Lipschitz 常数为
+
+$$
+\sup_{x\in\mathbb R}|F_H'(x)|
+=|\rho_*(H)|
+=\tanh(2|\eta(H)|)
+=\frac{R_{\rm ell}^2-1}{R_{\rm ell}^2+1}<1.
+\tag{C71.3}
+$$
+
+若 $ad\ne bc$，导数绝对值在唯一输入
+
+$$
+e^x=\sqrt{\frac{bd}{ac}}
+\tag{C71.4}
+$$
+
+达到最大；若 $ad=bc$，$F_H$ 恒定，最佳常数为零，所有输入都达到该值。
+
+证明中的收缩机制是经典 Birkhoff–Hilbert 正锥结果。Samuel N. Cohen、Eliana Fausti，*Hyperbolic contractivity and the Hilbert metric on probability measures*，[arXiv:2309.02413v2](https://arxiv.org/abs/2309.02413v2)，Theorem 2.4 明确署名 Birkhoff，Proposition 4.1 给非负矩阵的经典系数表达。此处将其二维精确值与已有四角椭圆轴比连接，完整的标量计算如下。
+
+求导得到
+
+$$
+F_H'(x)=\frac{(ad-bc)e^x}{(ae^x+b)(ce^x+d)}.
+\tag{C71.5}
+$$
+
+令 $z=e^x>0$，则导数绝对值为
+
+$$
+\frac{|ad-bc|}{acz+(ad+bc)+bd/z}.
+$$
+
+由
+
+$$
+acz+\frac{bd}{z}-2\sqrt{abcd}
+=\left(\sqrt{acz}-\sqrt{bd/z}\right)^2\ge0,
+$$
+
+分母在 $z=\sqrt{bd/(ac)}$ 取最小，且正格值保证这个输入有限而唯一。如果分子非零，这也给唯一最大导数。最大值为
+
+$$
+\begin{aligned}
+\frac{|ad-bc|}{ad+bc+2\sqrt{abcd}}
+&=\frac{|(\sqrt{ad}-\sqrt{bc})(\sqrt{ad}+\sqrt{bc})|}
+{(\sqrt{ad}+\sqrt{bc})^2}\\
+&=\frac{|\sqrt{ad}-\sqrt{bc}|}{\sqrt{ad}+\sqrt{bc}}
+=|\rho_*|.
+\end{aligned}
+$$
+
+若 $ad=bc$，两行正比例，$(ae^x+b)/(ce^x+d)=a/c=b/d$，所以 $F_H$ 恒定。两种情形下均得到显示的上确界。均值定理使它成为全局 Lipschitz 上界；反过来，任意全局 Lipschitz 常数必须不小于每一点差商的极限 $|F_H'(x)|$，所以它确是最小常数。这里的“达到”首先指导数；不要求两个不同有限输入间的差商也恰等于最大导数。
+
+式 (C67.8) 给 $|\rho_*|=\tanh(|J|/4)=\tanh(2|\eta|)$，再用 $R_{\rm ell}^2=e^{4|\eta|}$ 得式 (C71.3)。与经典直径式也可逐项对照：$F_H(-\infty)=\log(b/d)$，$F_H(+\infty)=\log(a/c)$，且导数符号恒定；所以输出正射线集合的 Hilbert 直径是
+
+$$
+\Delta(H)=\left|\log\frac{a/c}{b/d}\right|=|J(H)|.
+$$
+
+Birkhoff 的 $\tanh(\Delta/4)$ 因此正是当前系数，没有额外乘二或除二。证毕。
+
+**命题 C-71.3（串联上界与不能删除的输出偏置）。** 对定义 C-69.1 的正串联响应，有
+
+$$
+F_{H_1H_2}=F_{H_1}\circ F_{H_2},\qquad
+F_W(x)=x+\log(w_0/w_1),
+\tag{C71.6}
+$$
+
+以及
+
+$$
+|\rho_*(H_1WH_2)|
+\le|\rho_*(H_1)|\,|\rho_*(H_2)|.
+\tag{C71.7}
+$$
+
+这一界约束输入差异传递的幅度，仍不决定输出概率比的绝对位置。
+
+证明。对正向量 $v$，其右边先经 $H_2$ 得到正向量，再经 $H_1$ 得到 $H_1H_2v$。比例不依赖中间向量的整体倍数，所以先读 $F_{H_2}(x)$ 再读 $F_{H_1}$ 等于一次读乘积矩阵，证明第一式。对角矩阵把比值乘以 $w_0/w_1$，证明第二式。链式法则给
+
+$$
+\left|(F_{H_1}\circ F_W\circ F_{H_2})'(x)\right|
+\le\sup|F_{H_1}'|\,\sup|F_{H_2}'|,
+$$
+
+因为 $F_W'=1$。用命题 C-71.2 对整个正乘积矩阵识别左边的上确界，即得式 (C71.7)。这与命题 C-70.3 的直接偏置公式相符；不同输入位置的两个导数峰值一般不能同时达到，不能据两个单块的尖锐性直接声称乘积上界处处可达。
+
+例如左乘 $D_L=\operatorname{diag}(l_0,l_1)$ 给
+
+$$
+F_{D_LH}(x)=F_H(x)+\log(l_0/l_1),
+$$
+
+导数和规范椭圆不变，但每个输出对数比均移动。右乘正对角矩阵则平移输入位置。因此，若要继续拼接或恢复端点律，仍需 C-70.1 的两偏置。圆形的 $\eta=0$ 只意味着输出比例与输入比例无关，输出比例本身可以有任意有限偏好。证毕。
+

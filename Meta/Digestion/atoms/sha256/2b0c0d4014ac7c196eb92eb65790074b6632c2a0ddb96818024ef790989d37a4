@@ -1,0 +1,70 @@
+**Proposition 9.2 (Joint likelihood and weighted information).** Put
+$T_e=p_u+p_v$ and $\Delta_e=\theta_v-\theta_u$. The actual one-sample
+joint probabilities are
+
+$$
+\begin{aligned}
+q_\theta(i,e,\pm)
+ &=\eta_i\left(\frac{T_e}{2}
+       \pm\sqrt{p_up_v}\sin\Delta_e\right),\\
+q_\theta(i,w,\mathrm{blocked})&=\eta_i p_w.
+\end{aligned}
+\tag{9.4}
+$$
+
+At the supplied reference the score vector $s=\nabla_\theta\log q_\theta|_0$
+has values
+
+$$
+s(i,e,\pm)=\pm\frac{2\sqrt{p_up_v}}{T_e}(e_v-e_u),
+\qquad s(i,w,\mathrm{blocked})=0.
+\tag{9.5}
+$$
+
+Define the positive-edge set $E_\eta$ by $\eta_i>0$ at the edge's site,
+and put
+
+$$
+g_e=\eta_i\frac{p_up_v}{p_u+p_v},\qquad
+L_\eta=\sum_{e\in E_\eta}g_e(e_u-e_v)(e_u-e_v)^{\mathsf T}.
+\tag{9.6}
+$$
+
+Then the one-sample Fisher matrix is
+
+$$
+\mathbb E_0s=0,\qquad
+J_\eta=\mathbb E_0ss^{\mathsf T}=4L_\eta.
+\tag{9.7}
+$$
+
+Proof. The density entry is
+$\rho_{uv}=\sqrt{p_up_v}e^{i(\theta_v-\theta_u)}$.
+The resolved probability from Chapter 8 is
+$T_e/2\pm\operatorname{Re}(e^{-i\alpha}\rho_{uv})$; at
+$\alpha=\pi/2$ its second term is the displayed sine. Multiplying by
+the actual setting probability gives (9.4). For any site the disjoint
+pairs and blocked words partition $B_n$, so their probabilities sum
+to $\eta_i$, and summing sites gives one.
+
+For $\eta_i>0$, every retained outcome is strictly positive at the
+reference. Differentiating (9.4) and dividing by $\eta_iT_e/2$ gives
+(9.5). Opposite signs cancel in the score mean. For each pair their
+two second moments add to
+
+$$
+\eta_i T_e\frac{4p_up_v}{T_e^2}
+(e_v-e_u)(e_v-e_u)^{\mathsf T}
+=4g_e(e_u-e_v)(e_u-e_v)^{\mathsf T}.
+$$
+
+Blocked scores contribute zero. A site with $\eta_i=0$ is omitted
+from the sample alphabet; no logarithm or division is taken on its
+zero-budget events. This proves (9.7). $\square$
+
+For uniform $\eta_i=1/n$, $L_\eta=L_p/n$, where $L_p$ is the
+unweighted-site Laplacian of Chapter 8. Thus (9.7) is exactly its
+$J=4L_p/n$, with no change of sample unit. The identity holds at the
+calibrated same-phase reference. Away from it, (9.4) remains the
+likelihood but its Fisher matrix need not equal $4L_\eta$.
+

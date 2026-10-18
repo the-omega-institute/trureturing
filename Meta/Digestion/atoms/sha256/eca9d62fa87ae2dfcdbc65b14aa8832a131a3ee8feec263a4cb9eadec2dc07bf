@@ -1,0 +1,35 @@
+**Definition 276.1 (Equal-mass measure kernels without output restrictions).**
+Let $L\ge3$ and let $\mu_w$ be finite nonnegative Borel measures
+on the full carrier $\Theta$, all of mass $M\ge0$, obtained by
+one measurable nonnegative allocation over complete $N$ or $O$
+tables. Each terminal value may be any point of $\Theta$; no
+support, feasibility, marginal or decomposition restriction is
+imposed. The finite marked catalog is a special case.
+For a total-mass-zero signed measure $\xi$ put
+$\|\xi\|_{\rm TV}=|\xi|(\Theta)/2$.
+Let $E_j=\{\theta_j\}$, disjoint actual Borel events, and define
+
+$$
+\rho_i=\max_{w,v\in\Omega_i}\|\mu_w-\mu_v\|_{\rm TV}\ (i=1,2),
+\qquad f_{ab}(x)=\mu_{(a,b,1-x)},\quad x\in\{0,1\}^{J}.
+\tag{276.1}
+$$
+
+For any such suffix function write
+$\tau(f)=\sum_{j\in J}(f(e_j)(E_j)-f(0)(E_j))$, and put
+$\mathcal T=\tau(f_{11})$.
+With $e_j$ now denoting the suffix unit vector, set
+
+$$
+\begin{gathered}
+c_{jk}=f_{10}(e_j+e_k)-f_{10}(e_j)-f_{10}(e_k)+f_{10}(0),\\
+\kappa=-\tfrac12\sum_{j<k}c_{jk}(E_j\cup E_k),\qquad
+H_i=M-[\mu_{v^i}(E_i)-\mu_+(E_i)]_+\quad(i=1,2).
+\end{gathered}
+\tag{276.2}
+$$
+
+The symbol $[t]_+=\max(t,0)$ in this definition is not applied
+to $\kappa$. Curvature remains signed. These are observables of
+the same measure kernel, independent of a chosen table representation.
+

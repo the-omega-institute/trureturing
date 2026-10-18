@@ -1,0 +1,18 @@
+### 59.1 Model and theorem
+
+Let L=X=Y=C², V|0>=|00>, V|1>=|11>, and J(Z)=VZV*. A logical phase-covariant channel E_(α,β,λ) is specified on matrix units by
+
+    E(00)=α00+(1−α)11,
+    E(11)=(1−β)00+β11,
+    E(01)=λ01, E(10)=conj(λ)10.
+
+Here ij abbreviates |i><j| on the logical system. Its complete positivity and trace preservation are equivalent to 0≤α,β≤1 and |λ|²≤αβ: its input-first Choi matrix has the block [[α,λ],[conj(λ),β]] on |00>,|11> and remaining diagonal entries 1−α,1−β. The parameterization includes every qubit channel covariant under all rotations diag(1,exp(iθ)); covariance forces the displayed matrix-unit form.
+
+Physical competitors are all finite LOSR channels Φ=Σ_b p_b A_b⊗B_b with arbitrary qubit CPTP local maps. Their comparison domain is the logical qubit, via F=Φ∘J, and their output is X⊗Y. Local product ancillas are allowed. Neither code preservation nor phase covariance nor exact basis-state action is imposed on the competitors. The diamond norm is unhalved and includes arbitrary passive references.
+
+Writing c=|λ| and m=min(α,β), the exact optimum is
+
+    inf_Φ ||Φ∘J − J∘E_(α,β,λ)||_diamond = (8/9) max(0,c−m).
+
+One common physical channel attains the optimum on the entire logical operator algebra. At most four product-CPTP branches suffice when the error is zero, and at most three suffice when it is positive. In particular, exact physical implementation is possible if and only if c≤min(α,β). The positive-error lower bound applies to all physical outputs, including leakage outside span{|00>,|11>}.
+

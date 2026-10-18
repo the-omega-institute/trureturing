@@ -1,0 +1,28 @@
+**Boundary 11.4 (Exact scope and proof status).** The displayed tables
+halt on every formal binary input, whereas all universal installed bounds
+retain the larger almost-sure competitor class with its exceptional
+nonreturn and excess-read paths, null cycles and unused rows. Labels
+and rows remain distinct resources: two distinct labels may have many
+duplicate halt rows, and a repeated read literal may occupy different
+rows with different updates. Every actual call remains paid. The
+reported expectations are costs of the displayed tables, without an
+expected-cost optimality claim.
+
+This volume does not determine a $q_3<1$ frontier, a larger paid-read
+optimum, fair or endpoint parameters, or a frontier with another runtime
+memory port. Installed row counts give no physical-storage, code-size,
+write, energy, timing or empirical learning conclusion. Four-state
+classification supplies no Brier theorem and leaves Original, Open
+Problem 6.4, concerning whole-domain harmonic/Brier attainment and
+separation, unchanged. Ordinary proofs are the evidence here; no
+mathematical execution, numerical enumeration, experiment, test, Lean
+verification or digestion result is asserted. The substantive partial
+frontier leaves exactly the quantitative installed budgets six, seven
+and eight as stated in Open Problem 11.3.
+
+[O]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[P]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+[E2]: FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
+[I2]: FIB_TWO_READ_INSTALLED_STATE_RISK_FRONTIER.md
+[E3]: FIB_THREE_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
+

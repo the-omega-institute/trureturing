@@ -1,0 +1,26 @@
+**Theorem 54.1 (a higher-rank center criterion).** Let $\omega$ have rank $3\leq k\leq r\leq9$ and ordered positive eigenvalues $\lambda_1\geq\cdots\geq\lambda_k$. If
+
+$$
+b_5:=2\lambda_1+2\lambda_2+\lambda_3\leq1+\sqrt{1-\beta}=2T,
+\tag{S.28}
+$$
+
+then (S.15) holds at this center for every contraction and every actual encoder of Definition 52.1. In particular it holds at every uniform center $\omega=I_S/k$, $k\geq3$, for all $0<\beta\leq1/2$.
+
+Proof. Choose $X=xI_S$ and $c=0$. Then $m_X=x$. The top five eigenvalues of $\operatorname{diag}(\omega/x,\omega/x,0)$ are $\lambda_1/x$ twice, $\lambda_2/x$ twice and $\lambda_3/x$ once. Hence
+
+$$
+S_5(K_0)+2m_X=\frac{b_5}{x}+2x\geq2\sqrt{2b_5},
+\qquad x=\sqrt{b_5/2}\text{ attains equality}.
+\tag{S.29}
+$$
+
+This scalar arithmetic-geometric mean step is only an intermediate. Condition (S.28) gives $2\sqrt{2b_5}\leq4\sqrt T=4v$, so these weights satisfy (S.14). For uniform centers $b_5=5/k\leq5/3$, and
+
+$$
+\frac53<1+\frac1{\sqrt2}\leq1+\sqrt a.
+\tag{S.30}
+$$
+
+The strict comparison is equivalent to the positive-root comparison $2/3<1/\sqrt2$, proved by $4/9<1/2$. The last inequality uses $a\geq1/2$. $\square$
+

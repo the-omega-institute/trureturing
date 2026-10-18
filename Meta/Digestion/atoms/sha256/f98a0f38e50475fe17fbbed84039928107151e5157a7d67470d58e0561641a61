@@ -1,0 +1,12 @@
+**Hypothesis 16.1 (the supplementary writer and receiver contract).** A coefficient observer, if used, is installed and initialized before the first paid seed Read: $c_\varepsilon=1$ and every other installed coefficient is zero. On an actual returned letter $a$ before the selected latch, it performs
+
+$$
+c_v(ha)=c_v(h)+\mathbf1\{\operatorname{last}(v)=a\}\,c_{v^-}(h),
+\qquad 1\le |v|\le k,
+\tag{SC.38}
+$$
+
+where $v^-$ deletes the last letter and every right side is an old value. Descending-degree updates implement this rule without treating the current Read as multiple positions. The writer includes every rejected/accepted seed letter, return, partial parse and completing letter. The third-marker completing Read updates this table and all prescribed marker fields before the latch. Afterwards every fourth-segment event and the unique original Stop hold this same selected-past record. Counts used for its reconstruction refer to that same past, not to later active totals.
+
+The owner is the actual raw-letter recipient with access to the original phase/control. Installation, addressing, local storage, writes, counter arithmetic, growth, holding and workspace are explicitly supplied and paid. A receiver receives the augmented table or another sufficient record only under an explicit delivery contract, with transmission and output storage charged, as in Hypothesis 7.1. The old bare-snapshot recipient gains no new fields or archive access. The original selected-marker decoder remains unchanged; raw-past reconstruction is the separate local target already declared in §9.
+

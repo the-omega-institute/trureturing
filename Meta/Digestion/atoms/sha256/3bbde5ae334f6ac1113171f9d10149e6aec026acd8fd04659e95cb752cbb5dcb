@@ -1,0 +1,47 @@
+**Example 6.1 (A rational nonconstant-emission residual-native table).** This example establishes a predicate distinction, not a near-optimal witness. Take two disjoint two-label blocks, with parameters $r=9/25$ and $r=19/50$. Inside a block use p and suspended labels $0,1$, put $B=I$, and give every $A$ row the probability vector
+
+$$
+\pi^r=\left(\frac{b-r}{b-a},\frac{r-a}{b-a}\right).
+$$
+
+Set $u_0=a,u_1=b$ and
+
+$$
+d=(r-a)(b-r),\qquad
+v_i=r+\frac{d}{10(1-r)}+\frac{u_i-r}{10}.
+\tag{6.1}
+$$
+
+Use block weights $1/2,1/2$ and retain the block forever. The four suspended emissions, in block order, are
+
+$$
+\frac{143}{400},\quad \frac{437}{1200},\quad
+\frac{291}{775},\quad \frac{1777}{4650}.
+$$
+
+They are all strictly between $a,b$ and are not constant. Globally $B=I$ is not a redraw, and $A$ is a block-diagonal redraw within each class, rather than one row-independent kernel on the whole support.
+
+The actual stationary rows are $\pi=\tau=(3/10,1/5,3/20,7/20)$; (2.2) holds exactly. In each block, $\mathbb E u=r$, $\operatorname{Var}(u)=d$ and
+
+$$
+\mathbb E(1-u)v=r(1-r),\qquad
+\mathbb E(1-u)(1-v)=(1-r)^2.
+$$
+
+Since every $A$ row is $\pi^r$, the class mean generated law solves
+
+$$
+\bar Q^r=r\delta_\alpha+(1-r)^2\delta_{\beta\beta}
++r(1-r)\beta\alpha\bar Q^r.
+$$
+
+Expansion and geometric normalization identify its entire law as $P_{p,r}$. Consequently every $J_y$ in that class is $P_{p,r}$: all acquired residuals are native.
+
+Nevertheless every individual $Q_i$ is nonnative. Its first alpha mass is $u_i\ne r$, while for $j\ge1$ its alpha-completion branch has the form $t_i r\lambda_r^{j-1}$, with $t_i=(1-u_i)v_i>0$. If it had a Borel native representation, comparison of the first three moments on this tail would give $\int_I r'\lambda_{r'}(\lambda_{r'}-\lambda_r)^2\nu(dr')=0$. Positivity and injectivity would force $\nu=\delta_r$, contradicting its first alpha mass. This proves the distinction on complete laws, not only terminal outputs.
+
+To realize the table on the original source, retain the full original $C_0$, use fair synthetic letters before the third latch, and sample the four-label stationary row independently at that latch after the original third record write. Apply precisely the displayed $B,A$ on acquired noncompleting letters and in synthetic generation; completion clears the private label and executes the original matching Stop and delivery. This is a fixed rational finite program on every original seed and held-record fibre. All tags, rational-sampler workspace and original controls are counted; the generator description is finite. Geometric survival retains the complete legal carrier with noncompletion mass zero. Every positive original rejection and return history remains available. No posterior or probability-vector runtime port is used.
+
+An explicit finite sampling service uses the common denominator $D=37200<2^{16}$, which includes all displayed emissions, latch weights and $A$-row weights. Draw a fresh 16-bit candidate, reject it if it is at least $D$, and select a category by its fixed cumulative integer thresholds otherwise. For the p emissions $a,b$ the alpha thresholds are $12400,14880$; for the four suspended emissions they are $13299,13547,13968,14216$. The latch cumulative thresholds are $11160,18600,24180,37200$. The two classwise $A$ rows have first-category thresholds $22320$ and $11160$, respectively, within their retained block. Fair pre-latch synthesis uses one fresh bit and $B$ is deterministic. Acceptance has probability $37200/65536>0$, so rejection returns almost surely and gives each specified rational probability exactly. The candidate, finite bit cursor, thresholds, program selectors and every service state belong to COMPLETE; no rejection counter or retained random tape is used. Internal service states carry the conditional continuation of this same finite program and introduce no actual source-query cut or permission. Streaming synthesis needs no unbounded retained output index. Its total bit, work and output counts have no uniform finite worst-case bound.
+
+Native individual p laws always imply native acquired residuals, by convexity in $J=AQ$. The example disproves the converse. Within the regular-table domain, the residual-native class excluded by Theorem 5.1 strictly contains the native-individual-law class on the same interval $I$. The example also has nonconstant interior suspended emissions, nonzero actual-return law motion, and positive probability of a next-alpha emission decrease on an acquired alpha. Its two different class residuals give positive global successor-law dispersion at that interface. These observations establish predicate distinctions, neither independence from every supplied quantitative conjunction nor a near-optimal table. Under its supported-nonendpoint hypothesis, Theorem 5.1 excludes it from exact or vanishing regular common optima.
+

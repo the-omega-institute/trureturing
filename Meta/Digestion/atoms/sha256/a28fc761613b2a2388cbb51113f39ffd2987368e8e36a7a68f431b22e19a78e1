@@ -1,0 +1,28 @@
+**Convention 9.2 (other source interfaces).** The declaration
+`target_family_minimal_quotient` in [TargetFamilyMinimalQuotient][D5T]
+assumes that every target passively factors through one readout and
+gives the joint-kernel universal property. It supplies no one-probe
+repair geometry. The declaration `compact_observation_factorization`
+in [CompactObservationFactorization][D5C] assumes a nonempty compact
+source, finite discrete observation levels, continuous surjective
+compatible observation maps with fibers forming a topological basis,
+and a continuous finite readout. Its bounded-action conclusion also
+requires a finite action type and continuous actions. Its conclusion
+is finite-level factorization under those hypotheses, not an effective
+native acquisition or pressure-convergence bound.
+
+Under the paid service assumptions, the operational recovery retained
+here is the supplied
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+$$
+
+The inverse recovers the first branch count and alpha-stage flag.
+It does not recover a full source, hidden history, unknown authentic
+age, authentication, or physical space and time. Fixed-menu acquisition
+in AAR §16 has its declared-menu timing; it does not provide the late
+request or the later count before their prescribed stages.
+

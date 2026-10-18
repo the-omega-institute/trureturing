@@ -1,0 +1,54 @@
+**Theorem 73.3 (Every marked output certifies all initial indices).** For
+every $A\in\mathcal A(\lambda^a)$, every $n\ge1$ and every $x\in D_n$,
+almost every seed on which the finite handoff tape is $\theta_n$ has
+requested each of $p_1,\ldots,p_n$. In particular
+
+$$
+\begin{aligned}
+\mathsf P_A\{K_{A,x}\ge n\}&\ge a_n,\\
+\mathsf E_A K_{A,x}&\ge n a_n,\\
+\mathsf E_A S_{c,A,x}&\ge a_n\sum_{i=1}^nc(i).
+\end{aligned}
+\tag{73.7}
+$$
+
+The last inequality is valid for any nonnegative finite charges on indices,
+even without monotonicity.
+
+**Proof.** Fix $A,n,x$ and an index $i\le n$. Partition the measurable event
+of finite handoff with tape $\theta_n$ without any request to $p_i$ by its
+finite set $F$ of queried indices. There are countably many finite subsets
+of $\mathbb N_{>0}$. Each corresponding event $E_F$ is measurable: it is a
+countable union over finite handoff times and finite request/answer words
+with index set $F$, intersected with the measurable tape-output event.
+Every such $F$ omits $i$.
+
+For each $F$ choose one actual comparison source $y_F$, independently of
+the seeds within $E_F$. If $i<n$, prescribe the answers of $x$ on $F$,
+positive answers at $1,\ldots,i-1$, and a negative answer at $i$. These
+constraints are consistent: $x$ has positive answers at all indices below
+$n$, and the one changed coordinate $i$ is not in $F$. Theorem 35.2
+realizes this finite pattern at an actual $y_F$ with $n(y_F)=i\ne n$.
+If $i=n$, prescribe the answers of $x$ on $F$ and positive answers at every
+index $1,\ldots,n$. Again the constraints are consistent, since $n\notin F$.
+An actual realization has $n(y_F)>n$, using its finite prime support.
+
+On the whole event $E_F$, the common seeded rule at $y_F$ follows exactly
+the finite execution at $x$: every requested index is in $F$ and its answer
+agrees. Thus it hands over the same tape $\theta_n$ on all of $E_F$.
+But $n(y_F)\ne n$, and exactness gives
+
+$$
+\mathsf P_A(E_F)\le\lambda^a_{y_F}(\{\theta_n\})=0.
+\tag{73.8}
+$$
+
+The countable union in $F$ is null. Taking the finite union over $i\le n$
+proves that almost every $\theta_n$ output contains every initial request.
+The output event has probability $a_n$. On its nonexceptional part,
+$K_{A,x}\ge n$ and $S_{c,A,x}\ge\sum_{i=1}^nc(i)$, proving (73.7).
+Countability of $X$ also allows a common null union over actual labels for
+each fixed acquisition, if desired. The comparison sources were chosen for
+entire measurable events, never separately for an individual seed.
+$\square$
+

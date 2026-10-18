@@ -1,0 +1,22 @@
+## 246. Hypotheses and precise conclusion
+
+Retain the mixed-flat five-reservoir setting through Section 245, with
+exactly four interacting owners K={tau,rho,eta,xi}, distinct transverse
+labels, shared original edge labels, complete circular normal links,
+and minimum original degree six. Put P={M,Z,U}. The source is
+ tau=(Z,M,C,D,M,C),
+and consider the remaining exceptional family
+ rho=(C,M,Z,U,M,Z).
+Both {M,Z,C} faces of tau pair to rho. Thus rho has two unused actual
+faces {U,M,Z}. Suppose both pair to eta. We prove eta cannot be entirely
+high-labelled (all six of its edge slots labelled in P).
+
+This is a conditional exclusion of one actual double-return branch.
+It does not exclude the other common-return family, a split return to
+two different owners, or a double return to a non-entirely-high owner.
+
+We use the published facts that every face containing two distinct P
+labels pairs inside K, at most one owner is entirely high-labelled
+(Sections 238–240), and no special edge has fixed transverse pair
+contained in P. We count original edge occurrences throughout.
+

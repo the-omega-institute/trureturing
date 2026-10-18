@@ -1,0 +1,18 @@
+**推论 18.7.2（因果接口的三层读法）。** 对一个声明的局部过程，应分别记录：
+
+$$
+\boxed{
+\text{允许的局部替换}
+\quad\longrightarrow\quad
+\text{输入差异的产生}
+\quad\longrightarrow\quad
+\text{通道的相对熵预算}
+\quad\longrightarrow\quad
+\text{目标事件的读出差异}.
+}
+$$
+
+任何一层被省略，都不能由剩余的图形关系自动补回。特别是“有路径”不等于“有可检测因果影响”，“事件概率变化”也不等于“某一次结果被确定”。
+
+<a id="section-18-8"></a>
+

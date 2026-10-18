@@ -1,0 +1,16 @@
+**Definition 3.3 (one causal realization).** One common outcome-retaining
+process, independent of the actual $j,\beta,m$, must have these live targets
+and survival probabilities at every cut, and the exact marked first-failure
+law (CP.9). Every finite checkpoint refinement is a restriction of this same
+process. Its interval operations compose on their actual incoming specimen
+and memory; independently chosen terminal processors are insufficient.
+
+Arbitrary common live-memory updates, extra common ancillas, measurements and
+retained outcome registers are allowed. In a proof dilation all discarded
+environments are retained, with later physical operations acting trivially on
+inaccessible parts. This grants no environment port to the controller.
+Rejections or aborts absent from the target law cannot be hidden by conditioning
+on acceptance. A calibrated implementation of the prescribed joint CP operations,
+waveform generation, blank resources and exact-time/mode recording are explicit
+ideal services, not consequences of geometric transport alone.
+

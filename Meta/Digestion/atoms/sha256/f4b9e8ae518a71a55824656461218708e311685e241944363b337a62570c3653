@@ -1,0 +1,30 @@
+**Definition 8.1 (designated actions and protected state).** Expand the
+finite sequence operations of Definition 2.4 into the finite cell and
+binary-register steps of Definition 2.1. Call these local steps, the
+original Reads and the separate Return the *designated* observer actions.
+A Read includes its immediate receipt into the designated response field;
+subsequent decoding and copying are local steps. This convention does not
+make a multi-cell computation atomic. Invocation initializes the same RA
+state, independently of the source, from the public cut alone.
+
+Write $c$ for this entire RA state. Its protected fields include the cut
+and its scan position; the saved leaf address and label $(g,\ell)$; the
+candidate bytes, framing, ownership and extent; the exterior cursor; both
+hole bases and the relative comparison cursor; the materialized pending
+operand; all pending designated replies; all sequence lengths, heads,
+pair indices and temporary flags; and the instruction continuation,
+including the validation, cleanup and Return stages. Protection means
+preservation of the values decoded as $c$, not an extra retained copy of
+these records. If the records are separately stored, their bytes are
+preserved. If they share a representation with a router, the representation
+must supply a fixed decoding of exactly these fields throughout routing.
+
+A routing extension has an additional finite record $w$ at each event,
+possibly of unbounded extent across different calls. It can insert paid
+local service steps and paid native root Reads between designated actions.
+A routing root Read has its actual reply from the same current source,
+but cannot replace a designated reply or alter any decoded field of $c$.
+The empty address does not identify an event as routing: RA itself makes
+designated root Reads. Event designation is part of the action
+specification, not a retained event log.
+

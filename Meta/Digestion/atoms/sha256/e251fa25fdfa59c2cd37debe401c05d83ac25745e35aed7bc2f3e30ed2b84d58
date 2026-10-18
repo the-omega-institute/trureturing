@@ -1,0 +1,29 @@
+## 131. Actual axial runs and fixed reservoir pairs
+
+Read the fixed axial/transverse role of each occurrence around a complete
+normal circle of an edge e. A maximal consecutive axial run has a constant
+unordered pair of actual reservoir labels.
+
+Indeed, at an axial occurrence with pair {A,B}, either face containing the
+target edge has the other two face-edge labels A,B. If the next target
+occurrence is axial, those two labels are exactly the next frame's reservoir
+pair. The actual face map preserves all three edge labels. This remains
+true when the target label itself equals A or B: the tracked target edge
+slot is fixed, and the two remaining face-edge slots are still transported
+as the complementary two slots.
+
+If the whole star is axial, the same argument gives a constant pair around
+the entire circle. If there are transverse occurrences, their total number
+is even: each tetrahedron containing the target as a reservoir label has
+exactly two such local slots, since its two reservoir labels are distinct.
+Hence a nonempty proper maximal axial run has two distinct transverse
+boundary occurrences. They may lie in the same tetrahedron, but are still
+two different local occurrences in the full edge sum.
+
+At a role change from an axial run with pair {A,B} to a transverse target
+occurrence of label M, provided M,A,B are distinct, the target block has
+reservoir pair {M,C}, where C is one of A,B, and one axial label D is the
+other one. Its other axial label is denoted Z. Thus the same actual paired
+face reads M,C,D on both sides. This is an actual face transport assertion,
+not a choice of unrelated endpoint length data.
+

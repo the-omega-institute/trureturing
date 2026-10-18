@@ -1,0 +1,11 @@
+**定义 91.1（Actual positive archive and unchanged rows）。** Retain [IC, Definitions 1.1–1.3 and Interface 1.4] and Definition 90.1: original matched integer reader, full joint complete-history prior, immutable INITIAL pullback, both free values, independent absorbing bottom, own complete endpoints and full payment for every issued word. Assume
+
+$$
+3\le m,\qquad m+3\le k<2m,\qquad b=k-m\ge3,\qquad T=k+1,\qquad \gcd(m,T)=1.
+\tag{91.1}
+$$
+
+Fix an actually issued word $P$ at index $a$ and its successful positive-difference archive. Its actual support is $A\subseteq\{j:q_{a,P}(j)=1\}\subseteq W_a$, its current scalar is common, its true current tail is $\tau<k$, and one well-defined retained INITIAL label $\lambda(j)$ is given at each $j\in A$. The archive includes its entire paid prefix. These hypotheses exclude no inherited tail, but do exclude an already irreversible merger of unequal labels at one phase. Put $u=am$ and $e=(a+1)m$ modulo $T$.
+
+For $0\le h\le T-1$, an unchanged row list consists of functions $r_i:A\to\mathbb F_2$, $1\le i\le h$, with $r_i(j)=0$ whenever $j\notin W_{a+i}$. Rows may split phases with the same label. A literal realization means one fixed list of $h$ complete words, successful on this actual archive, whose own successive endpoint differences are exactly these rows. No code complementation, added word, intermediate Read or sibling observation is part of this meaning. Write $K(A,\lambda;a+1)$ for exactly the combinatorial minimum in [IC, (27.1)], without importing Chapter 27's $k\ge2m$ fee hypotheses. Empty and homogeneous supports have $K=0$ and stop at their acquired endpoint.
+

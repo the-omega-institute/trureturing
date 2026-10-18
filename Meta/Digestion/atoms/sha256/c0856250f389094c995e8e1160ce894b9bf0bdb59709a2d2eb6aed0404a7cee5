@@ -1,0 +1,15 @@
+**Definition 7.1 (separate mathematical resource quantities).** The
+input size includes every literal exterior constructor and leaf,
+every hole and cut address with its full word length, and a complete
+partition encoding. A partition can be encoded by one class number
+per hole; its semantics still includes all different-class
+disequalities. Expanding (NUE.4) explicitly adds
+$\sum_i\binom{|\mathcal B_i|}{2}$ such disequalities.
+
+The support output $(B,K)$, its local decision workspace, any retained
+input rows, any stored finite original witnesses, and the expanded
+trees at requested epochs are different quantities. An authentic
+given epoch count is additional evidence, separate from a compatible
+count inferred from (NUE.13). A literal query address is ordinary
+data; it is not a compressed pointer to an unknown subtree.
+

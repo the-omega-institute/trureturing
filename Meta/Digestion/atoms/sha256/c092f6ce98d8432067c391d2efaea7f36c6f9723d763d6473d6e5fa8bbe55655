@@ -1,0 +1,24 @@
+**Definition 12.2 (A complete table on the original source).**
+Choose either $\alpha\in\{0,1\}$ as public data, put
+$\beta=1-\alpha$ and $T=v_\alpha$, and use distinct states
+$R,R_0,R_1,R_{00},R_{10},R_{11},Z,P,Q$.
+Initialize constantly at $R$ on the given unchanged seed space.
+Install exactly these rows:
+
+| State | Actual instruction | Successor for reply zero | Successor for reply one |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2T+\alpha)$ | $R_0$ | $R_1$ |
+| $R_0$ | $\operatorname{Read}(2(T+2)+\alpha)$ | $R_{00}$ | $P$ |
+| $R_1$ | $\operatorname{Read}(2(T+2)+\alpha)$ | $R_{10}$ | $R_{11}$ |
+| $R_{00}$ | $\operatorname{Read}(2(T+4)+\alpha)$ | $Z$ | $P$ |
+| $R_{10}$ | $\operatorname{Read}(2(T+1)+\alpha)$ | $Q$ | $P$ |
+| $R_{11}$ | $\operatorname{Read}(2(T-1)+\alpha)$ | $P$ | $Q$ |
+| $Z$ | $\operatorname{Halt}(h_\beta(\sigma))$ | -- | -- |
+| $P$ | $\operatorname{Halt}(h_\alpha(\sigma))$ | -- | -- |
+| $Q$ | $\operatorname{Halt}(h_\alpha(1-\sigma))$ | -- | -- |
+
+The dashes indicate that halt instructions have no update. All read
+updates, including those on source-inconsistent binary histories, are
+specified in the table. Its second rows at the same address are two
+different installed states with different updates.
+

@@ -1,0 +1,15 @@
+**Proposition 56.2 (actual realization, spectrum and minimal rank).** The family (R.298) belongs to the actual original-real class of Definition 1.1 at every simplex boundary. Its actual minimal Kraus rank is three if $v>0$, and two if $v=0$. Its phase-output difference has spectrum $(a,\beta,0,-\beta,-a)$.
+
+**Proof.** The columns within each $K_\alpha$ are orthogonal, and their summed squared norms are $(a+\beta,a+\beta,w+u+v)=(1,1,1)$. Thus $\sum_\alpha K_\alpha^\dagger K_\alpha=I_3$. With $\chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2$ and $f_j^\pm=(b_j\pm ig_j)/\sqrt2$,
+
+$$
+N(|\chi_\pm\rangle\langle\chi_\pm|)
+=a|f_1^\pm\rangle\langle f_1^\pm|
++\beta|f_2^\pm\rangle\langle f_2^\pm|.
+\tag{R.300}
+$$
+
+These four vectors are orthonormal, including when $a=\beta$, proving the spectrum and the membership conditions of Theorem 1.3. For the complement in this Kraus frame, $\tau=\bar\tau=\operatorname{diag}(a,\beta,0)$, with the zero direction omitted in a minimal list when $v=0$.
+
+In a complex relation $c_1K_1+c_2K_2+c_3K_3=0$, the first column forces $c_1=c_2=0$ because $a,\beta>0$ and $b_1\perp b_2$. If $v>0$, the third column then forces $c_3=0$; if $v=0$, $K_3=0$ and $K_1,K_2$ remain independent. The Choi matrix $\sum_\alpha|\operatorname{vec}K_\alpha\rangle\langle\operatorname{vec}K_\alpha|$ therefore has rank three or two respectively. Its rank equals the minimal Kraus number by the standard finite-dimensional Kraus–Choi characterization [Watrous, *The Theory of Quantum Information*, Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). $\square$
+

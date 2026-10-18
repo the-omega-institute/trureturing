@@ -1,0 +1,30 @@
+**Definition 14.2 (finite original-word task at $(H,p,\ell)$).**
+Let
+
+$$
+W_\ell=\{v\in\mathcal W:|v|\le\ell\}.
+\tag{PCA.36}
+$$
+
+Use the actual finite profiles $\Omega_\ell$ of Definition 11.1.
+Every original word in $W_\ell$ has a reply determined by such a
+profile and the exterior: a hole suffix cannot be longer than its
+absolute word. Assume the semantic constancy in (PCA.35), and assign
+to each attained $W_\ell$ reply tuple its original complete entry.
+Equivalently assign $s_\eta$ on $\Omega_\ell$, with equal $W_\ell$
+reply tuples assigned the same entry. This assignment is supplied or
+defined from the original code under the validity assertion; it is
+not assumed computable uniformly from arbitrary program text.
+
+On the prescribed installed preparation alphabet with $H$ states,
+partition, common start and literal latches, choose one word of
+$W_\ell$ for every running state and four successors. For each
+$\eta\in\Omega_\ell$, require its induced path to end at the original
+$\widehat{s_\eta}$, with at most $p$ running visits and sum of absolute
+word lengths at most $\ell$. Every installed state counts; every
+running visit costs one, including a root call of word length zero.
+The fixed reader, including every whole-row halt label, remains exactly
+as supplied. Neither this finite task nor its installed realization
+provides a profile reader, chart decoder, source-dependent selector,
+workspace, runtime address operation or silent visit.
+

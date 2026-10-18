@@ -1,0 +1,90 @@
+## 2. One source, one actual history, and complete laws
+
+Fix $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$ and $m=2,d=1,\ell=2,n=4$. Draw one $K$ before the first Read from a fixed finite or countable prior $\mu$, with $\mu(1),\mu(2)>0$. Conditional on this same $K=k$, all paid seed and payload Reads are independent, with alpha probability
+
+$$
+r_k=F_{k+1}/F_{k+3},\quad r_1=1/3,\quad r_2=2/5,
+\quad r_k\in I_0=[3/8,5/13]\ (k\ge3).
+$$
+
+The original parser rejects equal seed pairs and accepts both unequal seeds. At p, alpha completes marker 0 and beta suspends. At suspension, alpha returns to p and beta completes marker 1. The third record is written before its latch. Keep the entire original finite control $C_0$: seeds, selectors, bare fields, full marker tree, held $B,Q^+,Z$ records, parser, flags, permissions, completion, pendingStop and deliveredStop. Fourth completion enables its matching unique Stop; delivery is once only. Terminal cuts admit no Read. Both seeds, all marker triples, every positive finite paid rejection history and every positive finite return history remain in the domain.
+
+More explicitly, alpha-beta accepts seed 0 and beta-alpha accepts seed 1. On all 16 complete marker words and their prefixes, a completed marker uses the old completed-marker count $t$ and old one-count $j$: the first zero is event $a$ ($e=0,t-j=0$), the second zero is $c$ ($e=0,t-j=1$), the first one is $b$ ($e=1,j=0$), and the second one is $d$ ($e=1,j=1$). For old $t<3$, append a recognized event to the original scopes $S_1^+=\{a,c,d\}$ and $S_2^+=\{b,c\}$ that contain it. Unmatched ordinal events, seed retries, returns, partial parses and completions with old $t\ge3$ hold these relation fields. Write $Z=e$ only at the first marker. At old $t=2$ complete the third record update before latching the original bare snapshot $B$; thereafter $B,Q^+,Z$ hold while the original fourth segment and Stop continue. This is [E1, §2]'s full-tree writer, without restricting to its illustrative accepted $E_1$ cell.
+
+There is no reset, fresh depth, future-$E_1$ condition, extra source observation or controller port. Counts and posterior rows are analysis quantities. Original source and event definitions are supplied by [ST], [E1], [CLIP] and [PAID].
+
+Put $a_r=r(1-r)$ and
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,
+\qquad w_{j,1}=(\beta\alpha)^j\beta\beta.
+$$
+
+The p future carrier contains these completed words and its unique infinite noncompletion word. The suspended carrier contains beta, $\alpha w_{j,b}$ and its infinite noncompletion word. The complete raw source laws are
+
+$$
+P_{p,r}(w_{j,0})=ra_r^j,
+\qquad P_{p,r}(w_{j,1})=(1-r)^2a_r^j,
+$$
+
+$$
+P_{\beta,r}(\beta)=1-r,
+\quad P_{\beta,r}(\alpha w_{j,0})=r^2a_r^j,
+\quad P_{\beta,r}(\alpha w_{j,1})=r(1-r)^2a_r^j.
+\tag{2.1}
+$$
+
+Infinite-word masses are zero. The supplied measurable bijection $I_c$ retains every future Read and inserts its original event blocks, records, control, permissions, completion and Stop. Reading the letters back is its inverse. It preserves TV and commutes with deleting the next operation and its event block. An already acquired suspended beta is not another future Read.
+
+At a positive acquired history $h$, all paid Reads, including rejected and partial pairs, contribute to its likelihood. Its target is
+
+$$
+T_h^\mu=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k},
+\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+{\sum_t\mu(t)r_t^{A(h)}(1-r_t)^{B(h)}}.
+\tag{2.2}
+$$
+
+The denominator is positive. To check the source-law correspondence, induct over the original legal operation list. A Read consumes precisely the next raw letter and performs the original deterministic event block; the unique enabled Stop consumes none, and delivery ends the list. Deleting only Stop from the acquired list therefore gives exactly its ordered finite raw-prefix cylinder. Rejected pairs, accepted seed letters, early payloads, returns and partial parses are retained. Its raw-cylinder likelihood conditional on $K=k$ is $r_k^{A(h)}(1-r_k)^{B(h)}$, and the unread letters are independent with this same parameter. Bayes conditioning of the summable prior gives (2.2), including countable priors. Nothing conditions on eventual completion.
+
+An observer has one fixed finite COMPLETE carrier, source-independent initialization and fixed time-homogeneous source-independent acquired-letter stochastic updates. COMPLETE includes $C_0$, private labels, installed tables and program selectors, numerical representation, workspace, addresses, output indices and persistent randomness. There is no free tape, clock, archive, advice, continuous register, source-correlated seed or readable distribution vector. Each configuration's decoder $D_z$ is exactly its own complete legal generator law: its synthetic emissions use the same acquired-letter update kernels and original event blocks. Its output is a finite description of that law, such as the installed generator and current configuration index; it does not materialize a probability vector or an infinite word table. The configuration row and target posterior are used only to analyze this fixed description. An acquired history conditions on the original operation transcript, without selecting on private observer random bits or a sampled decoder report. Synthesis makes no actual source call.
+
+At the same actual history,
+
+$$
+Q_h=\sum_z\rho_h(z)D_z,
+\quad e_{\mathrm{law}}(h)=\operatorname{TV}(Q_h,T_h^\mu),
+\quad e_{\mathrm{conf}}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+$$
+
+TV is the event supremum, or half the countable $\ell^1$ distance on these fourth carriers. $R_{j,s}$ is the supremum over all positive histories $\mathcal H_s$. Full $\mathcal H_p$ includes arbitrary fourth returns; $\mathcal H_3$ includes only the first p cut. Actual-history-average risk is a different quantifier. The supplied separate full-tail minima are
+
+$$
+\rho_p=1116529/22781250=d_p/2,
+\qquad \rho_\beta=239/6750=d_\beta/2.
+\tag{2.3}
+$$
+
+The terminal values $13/266,9/266$ are not substituted for (2.3). The supplied finite-history witnesses are also retained with their original scopes. In the positive two-depth source, [ST, Theorem 2.1] gives, for each finite competitor and $0<\epsilon<1$, $0<\zeta<1/2$, two positive actual histories on the same control fibre with configuration-row TV at most $\epsilon$ and endpoint posterior errors at most $\zeta$, so
+
+$$
+\min\{R_{\mathrm{law},s},R_{\mathrm{conf},s}\}
+\ge\frac{(1-2\zeta)d_s-\epsilon}{2}.
+$$
+
+For a finite or countable prior with additional depths, [ST, §3.3; PH, Theorem 2.1] supplies full-posterior endpoint exposure and the bound $(d_s-2\zeta-\epsilon)/2$. These are lower-bound witnesses on original paid histories, not uncharged reset experiments. Their small tolerances recover the separate radii; §7 separately spells out the common-row exposure used by the new proof.
+
+The existing actual three-depth endpoint-tag counterexample uses $\mu=(1/10000,1/10000,4999/5000)$ and $h_0=\beta\alpha\mid\beta\beta\alpha\alpha$, with both seeds and all other histories still allowed. Its posterior weights are proportional to $\mu(k)a_{r_k}^3$. At this actual third-latch history the complete word $w_{3,1}$ has target mass above both endpoint masses. Thus the fair persistent endpoint-tag generator fails its claimed p configuration-risk benchmark there [ST, (3.17)–(3.21)]. This is that generator's configuration-risk failure, not a universal arbitrary-kernel lower bound or a marginalized-risk violation. Section 6 uses the supplied pure-target interior excess only after a new joint calibration argument has forced approximate endpoint tags.
+
+Retain the original marginalized defect: if a legal next operation $a$ has $q_h(a)=Q_h([a])>0$, condition on its cylinder, delete the operation and original event block, and set $\delta(h,a)=\operatorname{TV}(\operatorname{res}_aQ_h,Q_{ha})$. At zero predicted probability set the defect to zero without defining a conditional law; the actual successor and its risk remain in the domain. $\Delta_4$ and $\Delta_{\rm all}$ retain their respective original domains. Pending Stop has zero defect and the delivered empty supremum is zero. This article assumes no defect budget and makes no zero-defect recovery claim. Individual generation remains exact.
+
+For (1.2), conditional on $h$, observer randomness and $K$ are independent: their likelihoods factor along its fixed acquired word. More explicitly, at a suspended cut,
+
+$$
+\Pr(K=k,Y_h=y,\text{next actual letter}=\alpha,X_{h\alpha}=x\mid h)
+=\nu_h(k)\rho_h(y)r_kA_h(y,x).
+$$
+
+Divide its sum over $k$ by $\sum_k\nu_h(k)r_k>0$. The actual edge row is exactly $\rho_h(y)A_h(y,x)$, without synthetic emission tilting. Thus (1.2) is expected next-alpha prediction change conditional on the same actual history and its next actual alpha. It does not acquire an additional letter.
+

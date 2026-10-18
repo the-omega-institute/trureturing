@@ -1,0 +1,53 @@
+**Proposition 10.3 (the whole-source correspondence used by the compiler).**
+For an input passing the constraint stage, including all its empty cells,
+
+$$
+\coprod_\eta\{v:X_\eta\to\mathcal T:D_\eta(v)\}
+ \ \longrightarrow\ U,\qquad (\eta,v)\longmapsto W_\eta[v]
+\tag{ARH.10.2}
+$$
+
+is a bijection. Here $U$ is the entire fiber (ARH.1.4). The syntactic
+comparison test gives equivalent predicates and does not change that
+fiber. The feasible tuple set may be arbitrarily coupled.
+
+Proof. Proposition 3.2 already gives the guarded correspondence. To check
+its interface, take a source with old row $R$. Its old class values are
+unique, satisfy every distinct-class inequality, and have unique original
+prefix patterns and frontier subtrees. These recover $\eta,v$; repeated
+old occurrences recover the same subtrees. Conversely filling those
+patterns subject to all old inequalities gives exactly the old outside,
+reached holes and complete partition. Each variable has an occurrence
+at $a_bs$, where $a_b$ is a chosen reached old representative and $|s|=d$.
+Reading that mathematical subtree recovers its valuation, proving
+injectivity as well as surjectivity.
+
+Every variable occurrence is deeper than every literal, relation endpoint
+and new cut address. Navigation to a recorded endpoint either reaches an
+original symbolic subtree, or first encounters a known original leaf.
+In the latter case the remaining navigation takes place in the known
+finite image of that leaf. It decides existence at the recorded epoch;
+absence falsifies either signed record. In the former case the endpoint
+is the iterate of the whole original subtree. Thus normalization (ARH.10.1)
+evaluates to the actual entire endpoint, including born endpoints. Literal
+repetitions and absent replies remain their exact constant cell conditions.
+
+Each successful comparison step is an equivalence: identity, ground
+computation, an unchanged interpreted atom, free-pair cancellation, or
+a clash of explicit constructors. Boolean negation preserves that
+equivalence. Induction through the comparisons therefore replaces every
+predicate by an equivalent one on the same valuations. The conjunction
+includes every old inequality and every acquired record. This proves
+(ARH.10.2) in both directions. Empty-cell removal deletes no source.
+
+The representation consumes the producer/access-cut correspondence of
+Proposition 2.1. For a fixed record schedule, that producer actually pays
+for the old row and endpoint traversals at their epochs, keeps the acquired
+descriptions until comparison is possible, and then cuts access to all
+unstated source-bearing state. Every satisfying source produces the same
+retained input, and every source producing it satisfies these predicates.
+This supplies admissibility of the examples below, not a free endpoint
+comparison port. Acquisition costs can vary without bound across finite
+sources. An adaptive producer still owes the full-state correspondence
+of Assumption 1.3. $\square$
+

@@ -1,0 +1,4 @@
+## 24. A common-stream cut criterion for arbitrary INITIAL targets
+
+This chapter uses every $k\ge2,m\ge1$ in the original reader (1.1)–(1.2). Initial value or rejection is free, later readings are complete-block endpoints, and every block actually issued before stopping is charged. The target is an arbitrary map on the full INITIAL record set. The statements include both original alphabets.
+

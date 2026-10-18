@@ -1,0 +1,288 @@
+## 110. 无附加人口合同的有限端口误差与同源人口泄漏
+
+**定义 C-110.1（整个块端口的泄漏与纯态存活率）。** 设 $d\ge1$、$1\le q\le d$，
+固定 $\mathbb C^d$ 的模式基。$\mathfrak C_q^{(d)}$ 是经过有限经典旗与整个 $M_q$ 块的
+CPTP 编码、解码所实现的通道类；当 $d=5$ 时就是 C-109.1 的原 $\mathfrak C_q$。
+编码分支的 Kraus 算子记为 $B_{fa}:\mathbb C^d\to\mathbb C^q$，解码分支的算子记为
+$R_{fb}:\mathbb C^q\to\mathbb C^d$，满足
+
+$$
+\sum_{f,a}B_{fa}^\dagger B_{fa}=I_d,\qquad
+\sum_bR_{fb}^\dagger R_{fb}=I_q\quad\text{对每个 }f.
+\tag{C110.1}
+$$
+
+所有数据允许为复数，经典旗有限且事先固定，解码在整个块上保迹。
+输入到输出的全部量子路径通过这个 $q$ 维块。对任意 CPTP $T:M_d\to M_d$ 定义
+
+$$
+\begin{aligned}
+m_{rs}(T)&=\langle r|T(\Pi_s)|r\rangle,\qquad \Pi_s=|s\rangle\langle s|,\\
+\ell(T)&=\frac1d\sum_s\sum_{r\ne s}m_{rs}(T),\\
+F_v(T)&=\langle v|T(|v\rangle\langle v|)|v\rangle,\qquad
+p_s=|v_s|^2,\qquad c(v)=\sum_sp_s^2\quad(\|v\|_2=1).
+\end{aligned}
+\tag{C110.2}
+$$
+
+$\ell$ 使用固定原模式基，不要求该基在任意酉变换下保持。$F_v$ 是数学上的同态
+纯态存活率；只有把它对应到一个允许的输入和未来读数之后，才成为实际菜单的误差见证。
+
+**定理 C-110.2（任意复端口的存活率—泄漏界）。** 对每个 $T\in\mathfrak C_q^{(d)}$
+和每个复单位向量 $v$，有 $1/d\le c(v)\le1$、$0\le\ell(T)\le1$，以及
+
+$$
+\boxed{\quad
+\sqrt{F_v(T)}\le\sqrt{q\,c(v)}+
+\sqrt{d(1-c(v))\,\ell(T)}.\quad}
+\tag{C110.3}
+$$
+
+$\ell(T)$ 由通道决定，与选用的 Kraus 族无关。该界不要求 BP、保单位性、协变性、
+实 Kraus 数据或后选择。
+
+证明。沿用 QMB 定理 5.1 的整个块端口到低秩 Kraus 族的方向，直接在给定编码和解码
+上取 $K_{fab}=R_{fb}B_{fa}$。由 (C110.1)，
+
+$$
+T(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger,\qquad
+\operatorname{rank}K_\alpha\le q,\qquad
+\sum_\alpha K_\alpha^\dagger K_\alpha=I_d.
+\tag{C110.4}
+$$
+
+这是同一个通道的一组实际有限分解；不在任意 Kraus 混合后假设各项仍低秩。
+这个成熟对应见 Chruściński–Kossakowski，
+[*On partially entanglement breaking channels*, Theorem 1 的证明](https://arxiv.org/html/quant-ph/0511244v1)，
+以及 Bluhm–Rauber–Wolf，
+[*Quantum compression relative to a set of measurements*, Definition 4.1、Lemma 5.2 的证明](https://arxiv.org/html/1708.04898v4)。
+后者的精确观测保持目标和这里的实际历史 TV 仍是不同合同。
+
+正性、保迹给 $m_{rs}\ge0$、$\sum_rm_{rs}=1$，而
+
+$$
+m_{rs}=\sum_\alpha|K_\alpha(r,s)|^2,\qquad
+\sum_{\alpha,r\ne s}|K_\alpha(r,s)|^2=d\ell(T).
+\tag{C110.5}
+$$
+
+第一式的左端不含 Kraus 选择，因而第二式在任意其他表示下仍是同一数值。
+特别是 $0\le\ell\le1$；$p_s\ge0$、$\sum_sp_s=1$ 和 Cauchy–Schwarz 给
+$1/d\le c\le1$。
+
+令 $P=\operatorname{diag}(p_s)$，按有限 Kraus 指标定义复向量
+
+$$
+a_\alpha=\operatorname{tr}(K_\alpha P)=\sum_sp_sK_\alpha(s,s),\qquad
+b_\alpha=\sum_{r\ne s}\overline{v_r}K_\alpha(r,s)v_s.
+\tag{C110.6}
+$$
+
+于是 $F_v(T)=\sum_\alpha|a_\alpha+b_\alpha|^2$。
+消费 QPC 引理 8.1 使用的成熟复矩阵秩—迹估计
+$|\operatorname{tr}X|^2\le\operatorname{rank}(X)\|X\|_{\rm HS}^2$，
+取 $X=K_\alpha P$，其秩至多 $q$，得到
+
+$$
+\begin{aligned}
+\|a\|_2^2
+&\le q\sum_\alpha\|K_\alpha P\|_{\rm HS}^2\\
+&=q\sum_sp_s^2\sum_{\alpha,r}|K_\alpha(r,s)|^2
+=q\sum_sp_s^2=qc.
+\end{aligned}
+\tag{C110.7}
+$$
+
+这里用的是右乘 $P$ 后的列范数与保迹等式；未使用行范数归一化或 $T(I)=I$。
+上述秩—迹估计对任意复矩阵成立：奇异值分解先界
+$|\operatorname{tr}X|\le\sum_{j=1}^{\operatorname{rank}X}\sigma_j$，再用
+Cauchy–Schwarz；它不要求 $X$ 为正或 Hermitian。
+
+对 (C110.6) 的非对角和用复 Cauchy–Schwarz，得
+
+$$
+\begin{aligned}
+|b_\alpha|^2
+&\le\left(\sum_{r\ne s}|v_r|^2|v_s|^2\right)
+      \sum_{r\ne s}|K_\alpha(r,s)|^2\\
+&=(1-c)\sum_{r\ne s}|K_\alpha(r,s)|^2,\\
+\|b\|_2^2&\le d(1-c)\ell(T).
+\end{aligned}
+\tag{C110.8}
+$$
+
+在同一有限指标空间用三角不等式
+$\sqrt{F_v(T)}=\|a+b\|_2\le\|a\|_2+\|b\|_2$，即得 (C110.3)。
+这里的新关系是把这些成熟矩阵工具用于固定模式基下的通道泄漏；没有把一般 CP、
+Kraus 秩或矩阵范数工具当作新结论。证毕。
+
+**定理 C-110.3（每个原匹配来源的精确人口 TV）。** 保留 C-109.1 的原
+$A\mid B$、$B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$、$J$、$V$ 和 $W$。
+对任意 $C\succeq0$、$C_{ss}=1/5$，令
+$\Gamma_C=JCJ^\dagger$、$\Gamma'_C=(T_A\otimes\mathrm{id})(\Gamma_C)$。
+只在原 $A$ 因子作用同一 $T$，$B$ 不进入端口；$m_{rs}$ 的索引按 $V$ 与原模式对应。
+则对所有模式 $r,s$，
+
+$$
+\begin{aligned}
+\langle r,f(s)|\Gamma'_C|r,f(s)\rangle&=m_{rs}(T)/5,\\
+\langle r,f(s)|\Gamma_C|r,f(s)\rangle&=\delta_{rs}/5,\\
+\operatorname{TV}(P_{\Gamma'_C}^{\rm pop},P_{\Gamma_C}^{\rm pop})
+&=\ell(T)=P_{\Gamma'_C}^{\rm pop}\{(r,f(s)):r\ne s\}.
+\end{aligned}
+\tag{C110.9}
+$$
+
+$P^{\rm pop}$ 是两边立即完整局部模式读数的联合律。因此在 C-108.1 的条件性
+局部完整历史接口下，原来源与变换后来源的最坏历史 TV 至少为 $\ell(T)$。
+这些式子对整个 $\mathfrak D$ 一致成立，因而也覆盖 C-108.3 的每个不可见成员。
+
+证明。将同一份来源展开为
+$\Gamma_C=\sum_{j,k}C_{jk}|j\rangle\langle k|\otimes|f(j)\rangle\langle f(k)|$。
+在第二因子用 $|f(s)\rangle$ 夹取时，由 $f$ 单射只剩 $j=k=s$，故第一式是
+$C_{ss}\langle r|T(\Pi_s)|r\rangle=m_{rs}/5$。这不将 $C$ 的联合权重拆为边缘之积。
+原律只支撑 $r=s$，且 $0\le m_{ss}\le1$，所以
+
+$$
+\operatorname{TV}
+=\frac1{10}\left(\sum_s(1-m_{ss})+\sum_s\sum_{r\ne s}m_{rs}\right)
+=\frac15\sum_s\sum_{r\ne s}m_{rs}=\ell(T).
+\tag{C110.10}
+$$
+
+立即读数使用允许的零等待，然后两边 Stop；未匹配事件只是完整记录的经典分组。
+故它是 C-108.1 中一个真实有限策略，其 TV 给全部策略上确界的下界。
+原标签与行走标签按 (C108.1) 的位置对应，$T_A$ 由 $V$ 搬运；$f$ 是来源配对标签，
+不表示在 $B$ 上另加可执行门。没有独立副本、参考寄存器或参考测量。证毕。
+
+**定理 C-110.4（原单系统实际菜单的误差—泄漏曲线）。** 令
+$v=O(2/3)^Te_N$、$c_0=\sum_s|v_s|^4$，其中 $O$ 与被动坐标
+$D=\operatorname{diag}(1,i,i,i,1)$ 都取自 C-109.7。
+对每个 $q=1,2,3,4$ 和原 $T\in\mathfrak C_q$，其所有复单系统输入上的实际完整历史误差满足
+
+$$
+\begin{aligned}
+e(T)&\ge1-\left(\sqrt{qc_0}+\sqrt{5(1-c_0)\ell(T)}\right)^2,\\
+e(T)&>1-\left(\sqrt{53q/250}+2\sqrt{\ell(T)}\right)^2.
+\end{aligned}
+\tag{C110.11}
+$$
+
+若 $e(T)<1-qc_0$，还可反解第一式为
+
+$$
+\ell(T)\ge
+\frac{\left(\sqrt{1-e(T)}-\sqrt{qc_0}\right)^2}{5(1-c_0)}.
+\tag{C110.12}
+$$
+
+上述误差下界的右端为负时仅为无效的负下界，不断言误差严格为正。
+
+证明。C-109.7 的实际矩阵指数及解析尾界给
+$1/5\le c_0<53/250<1$，而非只给一列有理近似。
+在被动坐标中取 $\widehat T(X)=D^\dagger T(DXD^\dagger)D$。
+该式只改变表示；对同一 Kraus 族作 $K_\alpha\mapsto D^\dagger K_\alpha D$
+保持秩和完备性，且逐项保持 $m_{rs}$，故
+$\widehat T\in\mathfrak C_q$、$\ell(\widehat T)=\ell(T)$。
+这里无需把 $D$ 或 $D^\dagger$ 加入未来菜单。
+
+任意复输入的量词允许制备 $\rho_0=Dvv^\dagger D^\dagger$。
+C-109.7–C-109.8 已给同一实际正等待 $t_0=2/3$ 后
+$U(t_0)Dv=e_N$，所以理想完整模式律是 $N$ 处点质量。
+对替换通道使用完全相同的等待、完整读数和 Stop，$N$ 的概率恰为
+$F_v(\widehat T)$，该历史律的 TV 恰为 $1-F_v(\widehat T)$。
+因此 $e(T)\ge1-F_v(\widehat T)$。把 C-110.2 用于 $\widehat T$ 即得第一式。
+
+由 $c_0\ge1/5$ 得 $\sqrt{5(1-c_0)\ell}\le2\sqrt\ell$，而
+$q>0$、$c_0<53/250$ 给 $\sqrt{qc_0}<\sqrt{53q/250}$。
+两项之和非负，且后一上界严格为正，故平方保持严格比较，得到第二式。
+若 $e(T)<1-qc_0$，则 $\sqrt{1-e(T)}-\sqrt{qc_0}>0$；
+由存活率界移项、平方并除以 $5(1-c_0)>0$ 即得 (C110.12)。
+这条链使用原实际菜单的一个事件，没有把 $e(T)$ 换成 diamond 范数或双边来源误差。证毕。
+
+**推论 C-110.5（达到基准时四个严格正的同源 TV 下界）。** 对每个
+$q\in\{1,2,3,4\}$，设原 $T\in\mathfrak C_q$ 满足
+$e(T)\le u_q=(5-q)/7$。令
+
+$$
+a_q=\frac{q+2}{7},\quad b_q=\frac{53q}{250},\quad
+\delta_q=\frac14\left(\sqrt{a_q}-\sqrt{b_q}\right)^2,\quad
+r_q=\frac{(a_q-b_q)^2}{8(a_q+b_q)}.
+\tag{C110.13}
+$$
+
+则 $\ell(T)>\delta_q>r_q>0$，其中四个精确保守有理下界为
+
+$$
+\begin{array}{c|c|c|c}
+q&a_q&b_q&r_q\\ \hline
+1&3/7&53/250&143641/15694000\\
+2&4/7&53/125&16641/6097000\\
+3&5/7&159/250&18769/33082000\\
+4&6/7&106/125&2/326375
+\end{array}.
+\tag{C110.14}
+$$
+
+同一严格下界同时作用于每个原 $\Gamma_C\in\mathfrak D$ 的 (C110.9) 人口 TV，
+也给 C-108.1 条件性局部历史误差的下界，包含全部不可见成员。
+保留实际 $c_0$ 还给较细的必要条件
+
+$$
+\ell(T)\ge
+\frac{\left(\sqrt{(q+2)/7}-\sqrt{qc_0}\right)^2}{5(1-c_0)}.
+\tag{C110.15}
+$$
+
+证明。精确比较
+$a_q-b_q=(500-121q)/1750>0$，且 $0<b_q<a_q<1$。
+从 (C110.11) 和 $e(T)\le1-a_q$ 得
+$\sqrt{b_q}+2\sqrt\ell>\sqrt{a_q}$；两根之差为正，故
+$\ell>\delta_q>0$。同理，第一式与 $qc_0<b_q<a_q$ 给 (C110.15)。
+
+为获得完全有理的下界，令 $x=\sqrt{a_q}$、$y=\sqrt{b_q}$。
+$x>y>0$ 给 $(x+y)^2<2(a_q+b_q)$，而
+$(x-y)(x+y)=a_q-b_q$，所以
+
+$$
+\delta_q=\frac{(a_q-b_q)^2}{4(x+y)^2}
+>\frac{(a_q-b_q)^2}{8(a_q+b_q)}
+=\frac{(500-121q)^2}{14000(621q+500)}=r_q>0.
+\tag{C110.16}
+$$
+
+逐一代入四个整数并约分即得表中有理数。
+C-110.3 将同一通道数值变成每个实际来源的精确人口 TV，故无需对 $C$ 另作优化。
+QMB 定理 5.1 的达到性和显式 $u_q$ 上界使每个原无约束 minimizer 也满足本推论，
+但此处不求出其误差精确值。证毕。
+
+**命题 C-110.6（零泄漏端点与必要条件的边界）。** 对任意有限维 CPTP $T$，
+$\ell(T)=0$ 当且仅当各基投影固定，也当且仅当 BP 成立。
+此时任意有限 Kraus 表示都逐项对角，且 C-110.2 退为 $F_v(T)\le qc(v)$。
+在原五态菜单中，完全去相干通道给零泄漏但不满足标量端口的 $u_1$ 误差基准；
+重置通道给严格正泄漏但最坏误差仍为一。
+五维恒等端口则同时有零误差与零泄漏。
+
+证明。(C110.5) 是非负有限和，故 $\ell=0$ 等价于所有 Kraus 非对角元为零。
+对角族的完备性使 $T(\Pi_s)=\Pi_s$，也使每个输入的各基人口保持。
+反向若基投影固定或 BP 成立，则 $m_{rs}=\delta_{rs}$，直接有 $\ell=0$。
+这就是 C-109.2 的零平方和论证在任意 $d$ 的同一端点；未给原竞争类额外添加 BP。
+令 $\ell=0$ 代入 (C110.3) 即得所述存活率界。
+
+具体取 $\Delta(X)=\sum_s\Pi_sX\Pi_s$，其五个秩一 Kraus 算子是 $\Pi_s$，
+故 $\Delta\in\mathfrak C_1$、$\ell(\Delta)=0$ 且 $F_v(\Delta)=c(v)$。
+同一个 $t_0$ 事件给 $e(\Delta)\ge1-c_0>197/250>4/7=u_1$。
+另一方面，对 C-108.3 的不可见承诺族，
+$(\Delta_A\otimes\mathrm{id})(\Gamma_C)=S$，C-108.3 证明其全部条件性实际双边历史
+与 $S$ 相同。因此这些承诺来源的精确标量历史模拟，与全部复输入上的通道误差要求不同。
+
+取固定原模式 $j$，$R_j(X)=\operatorname{tr}(X)\Pi_j$ 的有限 Kraus 族是
+$|j\rangle\langle s|$，故 $R_j\in\mathfrak C_1$。
+其 $m_{rs}=\delta_{rj}$ 给 $\ell(R_j)=4/5$。
+输入任一 $\Pi_s$、$s\ne j$，立即完整读数后 Stop 的两律不交，故 $e(R_j)=1$；
+C-110.3 同时给每个匹配来源的人口 TV 恰为 $4/5$。
+因此正泄漏本身不保证准确，C-110.5 的下界不是充分条件或最优常数。
+最后 $\mathrm{id}\in\mathfrak C_5$ 的一个整块实现直接给 $e=\ell=0$，
+故四个严格正下界不延伸到 $q=5$。这些例子既不改变来源切口，
+也不将旗数、环境维数、整个块维数与承诺历史模拟资源混为一项。证毕。
+

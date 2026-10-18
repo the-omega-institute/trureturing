@@ -1,0 +1,31 @@
+**Lemma 6.5 (the two-ingress transfer to the new code).** On
+$\mathcal C_\circ$, basic extraction gives exactly all consumed typed
+reservoirs and $n=|h|$. Counted replay gives exactly $h,W(h)$ and its actual
+constructor/role histories. Selection emits precisely the independently
+defined $M_J(h)$, including partial backing and pending input, with no
+sidecar input.
+
+Proof. The acquired seed/canonical original lineage and meter cases are
+UAS Theorem 3.4 with this initially chosen public code. The two displayed
+readers are unchanged. At each IN one bit enters the designated latch;
+EX adds no consumed bit; WR transfers it to written backing; MR updates
+the extent. The separate length test cannot overwrite the pending bit.
+This proves every table row, including zero length, by induction through
+the literal reader. Complete prior backing is immutable. The 00/01/1
+ordering uniquely interleaves the two site streams. The added suffix has
+no IN or optional branch input, and Ready is moved only to its final
+return, so the same ordering argument applies.
+
+Starting with identical native records and identical next typed input,
+ARC Proposition 6.3's local Step cases give identical successor/event and
+receipt. No case calls the semantics of the program being simulated.
+Induction through $n$ rows gives the actual history and endpoint, even
+through a previous converter or a partial bank/copy. The construction-role
+fold then classifies the exact already represented span actions and raw
+partial cells. The direct basic extraction did not use those spans, so
+this additional fold supplies no input to its own premise. Canonical
+ordering gives exactly Definition 6.1's selection. The converse, equal
+actual history giving equal selected material, follows from the selection's
+actual physical meaning. This transfers the supplied extraction/selection
+methods to $G_\circ$; it is not a new general record/replay theorem. ∎
+

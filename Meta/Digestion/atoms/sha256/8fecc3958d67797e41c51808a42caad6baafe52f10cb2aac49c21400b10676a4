@@ -1,0 +1,39 @@
+**Proposition 328.1 (Only the scale $\tau=1/24$).**
+For $\tau=1/24$, $t>0$ and (324.1), let $b_i=a_i$ for
+$1\le i\le9$. Then $(b,E)\in H_9\cap H_N$, with the same
+mass-one stopped allocation $\lambda^O$ of 325, and for **every**
+full nonnegative score $y$,
+
+$$
+F_{Qy}(b,E)=yh(b,E)\le yG_O\lambda^O\le\Delta_O(y).
+\tag{328.1}
+$$
+
+In particular $\Delta_O(y)\le1$ implies $F_{Qy}(b,E)\le1$.
+For any such score with $\Delta_O(y)\le1$ and any complete $N$
+allocation on this same profile of mass $M\ge1$, there cannot be
+a strict inequality $F_{Qy}(b,E)>M$.
+No hull membership at other scales is asserted.
+
+**Proof.** Use the exact hull
+$H_9=\{1\ge b_1\ge\cdots\ge b_9\ge E\ge0,
+\ b_2=b_3,\ 0\le\sum_{3}^9b_i-10E\le1-b_1\}$.
+Here $b_2=b_3=13/24$; order and $b_9>E$ follow from 324.4.
+The transfer cancels in the sum, so
+
+$$
+\sum_{i=3}^9b_i-10E=\frac14+\frac{9t}{32}>0,\qquad
+b_1+\sum_{i=3}^9b_i-10E
+=\frac{19}{24}+\frac{9t}{32}\le\frac{617}{768}<1.
+\tag{328.2}
+$$
+
+Thus all hull conditions hold. The same stopped allocation satisfies
+every full row and has mass one, proving $H_N$ membership by
+completion. Nonnegative pairing with this actual stopped allocation
+gives (328.1) for every full score, not merely the lower score used
+above. With unit-$O$ excess its value is at most one and hence at
+most any such $M$. This is a regional statement at the specified
+profile, without a restriction on scores or a comparison of separately
+chosen profiles. $\square$
+

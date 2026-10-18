@@ -1,0 +1,5 @@
+source_id = "fib-native-nonreal-quadratic-onset-resource-law"
+path = "docs/develop/theory/FIB_NATIVE_NONREAL_QUADRATIC_ONSET_RESOURCE_LAW.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

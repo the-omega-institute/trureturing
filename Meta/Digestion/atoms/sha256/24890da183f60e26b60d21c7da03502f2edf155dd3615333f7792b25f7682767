@@ -1,0 +1,32 @@
+**定理 84.5（Exact GLOBAL family fee and supported adaptive bounds）。** For Construction 84.4, under both original alphabets,
+
+$$
+\boxed{C_{\rm pre}(f)=C_{\rm pre}(F)=2d,\qquad
+\text{minimum worst GLOBAL emitted bits}=m\,2d.}
+\tag{84.25}
+$$
+
+The same family has the supported adaptive bounds
+
+$$
+\boxed{d+1\le C_{\rm ad}(f)=C_{\rm ad}(F)\le2d,}
+\qquad
+m(d+1)\le\text{minimum worst adaptive emitted bits}\le2md.
+\tag{84.26}
+$$
+
+No exact adaptive optimum is asserted.
+
+证明（the uniform code, the actual common stream and matching lower bounds）。 Distinct joined classes have distinct codes in (84.22)–(84.23). The full phase-code image is exactly $\mathbb F_2^h\setminus\{a\}$. The XOR of the entire $h$-cube is zero, since each coordinate has the even number $2^{h-1}$ of ones. The class codes would therefore XOR to $a$ if each occurred once. The extra occurrences of $\nu$ and $\omega$ give
+
+$$
+\bigoplus_{j=0}^{N}Z(j)=a\oplus\nu\oplus\omega=0.
+\tag{84.27}
+$$
+
+At slot zero the actual two omissions are $N-1,N$ and the root coordinate of $\omega$ is zero. At every slot $1\le t<h$, (84.3) gives exactly $M_t=\{e_t,f_t\}$, and both assigned codes there have coordinate $t$ zero by (84.21). There is no modular wrap in these displayed missed pairs by (84.24). At phases $0,1,2$ the root coordinate is $1,0,1$. Hence every clause of (84.11) holds.
+
+The one stream is explicitly (84.15) with this table. Its root is $110\cdots$, rejecting precisely the two high INITIAL tails and merging all low tails with their labels preserved. Each subsequent consecutive pair has at least $2^{h-2}$ common charged phases: the only missing cube vector $a$ is a unit and has no two adjacent one coordinates. Lemma 84.2 proves every actual seam strict, including any boundary with two adjacent literal one bits. Thus these are actual fully paid complete words, without clearing or repair insertions. The same stream is used on both free values. The own-endpoint decoder (84.18) returns $C$ at code $\omega$; for any other observed code $z$, it returns $A_{i(z)}$ if the free INITIAL value was zero and $D_{\ell(z)}$ if it was one. Initial bottom stops freely; high sources return $R$ after the entire paid root; all low sources stop after the $h$th paid endpoint. Actual joint sources exist for all these branches.
+
+The all-action joined lower bound (84.14) applies to these $N-1$ classes and rules out every shorter GLOBAL protocol, including other lawful roots, arbitrary literal words, paid waits and early stops. This proves (84.25). For the adaptive lower bound, fix either free INITIAL value. Its full low table has $r+1=2^d+1$ labels, all actual. The same compulsory-root and common-tail binary argument, now on that component rather than a joined adaptive target, gives $2^d+1\le2^H$, hence $H\ge d+1$. The common stream is an allowed adaptive protocol and gives $H\le2d$. The supplied record/history factorization establishes both history equalities. Every issued block has exactly $m$ emitted bits, proving the bit bounds. No new-width adaptive suffix theorem is borrowed from Chapter 73. ∎
+

@@ -1,0 +1,12 @@
+**Lemma 3.3 (available next parent).** For $0\le j<24$, the parent of
+$w_{j+1}$ belongs to $P_j$, and $w_{j+1}\notin P_j$. Every $P_j$ is
+prefix-closed.
+
+Proof. The displayed list is a preorder of the target tree. Every
+scaffold parent precedes its children, each bit terminal follows its
+own socket, and the final path 1 has parent $\varepsilon$. All listed
+paths are distinct: scaffold paths have length at most four; a bit
+terminal has length five at its distinct track socket; and path 1 is
+outside the left subtree. Taking any initial segment therefore includes
+all proper prefixes of its members and no later listed position. ∎
+

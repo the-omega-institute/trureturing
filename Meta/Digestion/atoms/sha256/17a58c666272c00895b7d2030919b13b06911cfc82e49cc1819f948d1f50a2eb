@@ -1,0 +1,23 @@
+### 推论 54.5（有效电阻的极限条件）
+
+若均值零子空间上的 Green 算子满足
+
+\[
+A_j^\dagger\to A^\dagger
+\tag{54.12}
+\]
+
+强收敛，且点源差分 \(b_{x_jy_j}\to b_{xy}\)，则
+
+\[
+R_{m_j}(x_j,y_j)
+=
+\langle b_{x_jy_j},A_j^\dagger b_{x_jy_j}\rangle
+\to
+\langle b_{xy},A^\dagger b_{xy}\rangle
+=R_m(x,y).
+\tag{54.13}
+\]
+
+Mosco 收敛、质量非塌缩或谱隙下界单独都不能推出 (54.13)。还必须证明点源识别和 Green 算子收敛。
+

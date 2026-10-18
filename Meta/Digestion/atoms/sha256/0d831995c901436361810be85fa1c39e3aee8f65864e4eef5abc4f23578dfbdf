@@ -1,0 +1,54 @@
+## Face pairings and topology audit
+
+A row `(t,f) -- (u,g) : p0p1p2p3` pairs the face opposite vertex `f` to the
+face opposite `g`, sending source vertex `i` to target vertex `p_i`; reverse
+rows use the inverse permutation.
+
+| source | target | permutation |
+|---|---|---|
+| (0,1) | (8,1) | 0123 |
+| (0,2) | (4,2) | 0123 |
+| (0,3) | (2,3) | 0123 |
+| (1,1) | (9,1) | 0123 |
+| (1,2) | (5,2) | 0123 |
+| (1,3) | (3,3) | 0123 |
+| (2,1) | (10,1) | 0123 |
+| (2,2) | (6,2) | 0123 |
+| (3,1) | (11,1) | 0123 |
+| (3,2) | (7,2) | 0123 |
+| (4,1) | (12,1) | 0123 |
+| (4,3) | (7,3) | 0123 |
+| (5,1) | (13,1) | 0123 |
+| (5,3) | (6,3) | 0123 |
+| (6,1) | (14,1) | 0123 |
+| (7,1) | (15,1) | 0123 |
+| (8,2) | (13,2) | 0123 |
+| (8,3) | (11,3) | 0123 |
+| (9,2) | (12,2) | 0123 |
+| (9,3) | (10,3) | 0123 |
+| (10,2) | (15,2) | 0123 |
+| (11,2) | (14,2) | 0123 |
+| (12,3) | (14,3) | 0123 |
+| (13,3) | (15,3) | 0123 |
+| (0,0) | (3,0) | 0231 |
+| (5,0) | (6,0) | 0312 |
+| (14,0) | (10,0) | 0231 |
+| (13,0) | (12,0) | 0321 |
+| (2,0) | (7,0) | 0231 |
+| (9,0) | (8,0) | 0132 |
+| (15,0) | (4,0) | 0213 |
+| (11,0) | (1,0) | 0321 |
+
+Transitive closure of local edge identifications gives six classes of size 8,
+one of size 10 and one of size 38. The six size-eight classes consist exactly
+of local indices `6*t+0,6*t+1,6*t+2`, so every tetrahedron is the same
+three-star packet. The two other classes are the degree-ten and degree-38
+high edges. Direct incidence enumeration verifies that each degree-ten local
+occurrence has a degree-38 high neighbour and that its opposite edge is
+low. Face completeness, dual connectivity, a coherent orientation, circular
+edge links with no reversed edge, and the two connected orientable vertex
+links are checked by the standalone standard-library verifier accompanying
+this document (`verify_degree10_star.py` and `audit_degree10_bounds.py`); the links have `(F,V,chi)=(16,6,-2)` and `(48,10,-14)`
+(genus 2 and 8). The second verifier uses only exact rational arithmetic for
+all endpoint squares and checks every formula-coordinate stabilizer placement.
+

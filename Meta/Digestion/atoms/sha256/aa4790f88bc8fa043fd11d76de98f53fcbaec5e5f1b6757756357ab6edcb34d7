@@ -1,0 +1,53 @@
+### 83.4. Bilateral stability for arbitrary original-channel perturbations
+
+Fix a section-82 quarter-error equality pair (A_0,B_0), having one rank-two party, and fix one of its marker-aligned transversals in the original labels. For arbitrary original CPTP maps A,B of arbitrary ranks, denote the corresponding Grams by G,H and set
+
+    DeltaG=G-G_0,   DeltaH=H-H_0.
+
+The matrices DeltaG and DeltaH are Hermitian; they need not be positive or trace zero because the perturbed channels may leak. Define the real witness value
+
+    g(A,B)=5/4-(1/8)Tr(G^T H).                      (13)
+
+Equation (1) says delta(A,B)>=max{0,g(A,B)}. From (11), g(A_0,B_0)=1/4. The global best-response witness itself, not merely its optimized norm, satisfies
+
+    g(A,B_0)>=1/4,  g(A_0,B)>=1/4.                 (14)
+
+Indeed Tr(G^T H_0)<=2Tr G<=8, and similarly for the other term. Expanding the bilinear trace gives the exact identity
+
+    g(A,B)=g(A,B_0)+g(A_0,B)-g(A_0,B_0)
+              -(1/8)Tr(DeltaG^T DeltaH).
+
+Therefore
+
+    delta(A,B)>=max{0,
+           1/4-(1/8)Tr(DeltaG^T DeltaH)}.            (15)
+
+The trace in (15) is real but can have either sign. Hilbert--Schmidt Cauchy--Schwarz yields the explicit norm bound
+
+    delta(A,B)>=max{0,
+           1/4-||DeltaG||_F ||DeltaH||_F/8}.          (16)
+
+There is also a channel-intrinsic estimate with no chosen Stinespring alignment. Put
+
+    d_A=||A-A_0||diamond, d_B=||B-B_0||diamond.
+
+Then
+
+    delta(A,B)>=max{0,1/4-d_A d_B}.                  (17)
+
+To prove (17), let E=A-A_0 and F=B-B_0, and apply E tensor F, with the reference unchanged, to the fixed encoded normalized input from section 83.1. Call the resulting Hermitian output Y. Both channel differences are trace-annihilating, so Tr Y=0. The cross term in (13) is precisely
+
+    -2Tr(Q_sigma Y)=-(1/8)Tr(DeltaG^T DeltaH).
+
+For a trace-zero Hermitian Y and a projection Q_sigma,
+
+    |2Tr(Q_sigma Y)|<=||Y||_1.
+
+The diamond-norm composition bound, or applying E and F successively with all other systems as references, gives
+
+    ||Y||_1<=||E tensor F||diamond<=d_A d_B.
+
+Combining this with (15) proves (17). The Gram and channel-distance bounds are both valid; one may use whichever is stronger. They are nontrivial only when their explicit right sides are positive.
+
+Thus arbitrary sufficiently small simultaneous channel perturbations can improve quarter error by at most a product of their local sizes. A unilateral perturbation cannot improve it at all. This is a stability theorem for all original channels, not only calibrated perturbations or fixed-rank paths. It does not prove local minimality under simultaneous changes: a positive bilinear cross term in (15) is not excluded.
+

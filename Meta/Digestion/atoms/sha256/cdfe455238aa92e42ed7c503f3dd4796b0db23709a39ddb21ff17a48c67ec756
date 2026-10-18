@@ -1,0 +1,57 @@
+##### 定理 2.7.2： 记录耦合保留相干整体，同时给出互斥结果接口
+
+有：
+
+$$
+J^\dagger J=I.
+$$
+
+记录 $x$ 的概率为：
+
+$$
+p(x)=\operatorname{Tr}(\rho P_x),
+$$
+
+且：
+
+$$
+\sum_xp(x)=1.
+$$
+
+但对：
+
+$$
+|\psi\rangle=\alpha|L\rangle+\beta|R\rangle,
+\qquad
+\alpha\beta\ne0,
+$$
+
+联合态为：
+
+$$
+\boxed{
+J|\psi\rangle
+=
+\alpha|L\rangle|r_L\rangle
++
+\beta|R\rangle|r_R\rangle,
+}
+$$
+
+并不等于其中任意一个分支。
+
+**证明。**
+
+记录标签正交，故：
+
+$$
+J^\dagger J
+=
+\sum_xP_x^\dagger P_x
+=I.
+$$
+
+对记录投影取迹得到相应概率；完整性给概率和为一。
+
+最后一式由线性性直接得到。由于两个非零分支正交，整个向量不等于单独一个分支。证毕。
+

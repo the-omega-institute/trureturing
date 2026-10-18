@@ -1,0 +1,24 @@
+**定义 73.1（同一实帧的联合域）。** 沿用定义 68.1 的物理顺序 (X.1) 和同一被动实帧。
+以下 $z=z^{\mathrm{ph}}$ 始终是这个顺序中的初始人口，
+$\zeta_1\geq\cdots\geq\zeta_5$ 是其降序排列；另记
+$P=\zeta_1$、$Q=\zeta_1+\zeta_2$、$V=\zeta_4+\zeta_5$。
+这里的 $V$ 对应 (X.3) 的 $U$，不是控制字。
+对 $z_i\geq0$、$\sum_i z_i=1$，定义
+
+$$
+\begin{aligned}
+\mathcal S_z
+ &=\{(a,b):a\geq b\geq0,\ \exists(\rho,\sigma)\in\mathcal E(z),\
+       \operatorname{spec}(\rho-\sigma)=(a,b,0,-b,-a)\},\\
+s&=a+b=D(\rho,\sigma),\\
+H_z(s)&=\sup\{b:(s-b,b)\in\mathcal S_z\}
+       \quad\text{仅在该切片非空时定义}.
+\end{aligned}
+\tag{XI.1}
+$$
+
+每对态的共同实部可以随见证改变；没有固定一个实部矩阵让全部态对共用。
+$\zeta$ 是指定帧的对角人口，$\lambda$ 或 $r$ 将专指实部的特征值，二者不混用。
+本节至第 59 节给出 (X.35) 任意 $D_0=s$ 的联合刻画；
+(X.4) 的自由总距离优化与 (X.21) 的正交边界继续按原量词使用。
+

@@ -1,0 +1,21 @@
+**Definition 7.3 (fully evaluated constants).** Set
+
+$$
+\begin{aligned}
+p_1&=\frac{\beta\sigma_0}{2}
+              \left(1+\frac{1-\alpha}{Z_0}\right),\\
+q_1&=\frac{\beta\sigma_0}{2\alpha}
+              \left(\frac{1-\alpha}{Z_0}-1\right),&
+r_1&=\frac{\beta c_0}{2\sqrt\alpha},\\
+a_{\rm curv}&=\frac{d_{\rm cert}}p=\frac{\alpha A+B}{Z_0},&
+b_{\rm rec}&=-\frac{p_1+q_1}{2s_*},\\
+c_{\rm curv}&=\frac{\lambda\beta}{2}
+              +a_{\rm curv}(l_0p_1-r_1)^2,\\
+D_{\rm onset}&=\frac1{a_{\rm curv}}+\frac{b_{\rm rec}^2}{c_{\rm curv}},&
+K_{\rm onset}&=\frac1{D_{\rm onset}}
+ =\frac{a_{\rm curv}c_{\rm curv}}
+        {c_{\rm curv}+a_{\rm curv}b_{\rm rec}^2}.
+\end{aligned}
+\tag{QO.38}
+$$
+

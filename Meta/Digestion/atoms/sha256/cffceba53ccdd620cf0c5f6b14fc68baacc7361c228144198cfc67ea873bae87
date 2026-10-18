@@ -1,0 +1,43 @@
+**Definition 6.2 (the unresolved existence statements).** Let
+$\mathsf{Cover}(q,\lambda)$ mean the existence of one complete
+cover in Definition 1.2. The four statements
+
+$$
+\mathsf{Cover}(18,1),\qquad \mathsf{Cover}(18,0),\qquad
+\mathsf{Cover}(19,1),\qquad \mathsf{Cover}(19,0)
+\tag{NAGC.6.1}
+$$
+
+remain unresolved here. At eighteen labels, a construction must
+select mutually disjoint members of the complete $\mathcal A_t^{\lambda}$
+families covering all $324$ cells. An exclusion must address all
+defect allocations, both nine-run cases, fused nonmonotone classes
+and their complete zero-containing states, as well as saturated
+and higher-defect classes. The span and moment equations do not
+assert that surviving defect or endpoint data have such a realization.
+
+At nineteen labels, a construction must select a disjoint full
+$361$-cell cover from all $\mathcal P_t^+$ or all $\mathcal P_t^0$,
+as appropriate. An exclusion must cover every remaining gate branch
+and every permitted macro word and integer outer length within it.
+The gap lower bounds leave the ranges $G\ge4$ and $G\ge5$,
+or $G\ge6$ and $G\ge7$ in adjacent branches, to be addressed
+by such an argument. Their feasibility, their sharpness and the
+feasibility of any of the at most $206$ unexcluded gate pairs
+are not established by the counting constraints.
+
+All statements concern lag recovery on the full inherited native
+domain. A two-Read guarantee does not give a uniform address,
+workspace, finite-controller or physical-cost bound. The gap count
+and rank moments are statistics of one proposed cover, not retained
+observer information or an additional source query. These ordinary
+mathematical deductions supply no full-original reconstruction,
+physical realization or assertion of kernel verification.
+
+[NARC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[CLR]: https://arxiv.org/html/2211.03649v2
+[Nowak]: https://arxiv.org/html/0910.4397v5
+[BDDSV]: https://arxiv.org/html/2407.16443v1
+

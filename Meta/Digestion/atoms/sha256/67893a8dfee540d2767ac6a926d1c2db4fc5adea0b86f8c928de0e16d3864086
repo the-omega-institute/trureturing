@@ -1,0 +1,35 @@
+**Definition 10.1 (binary and ternary slot sources).** Retain the whole
+original task of Definition 1.1 and Assumption 1.2, including every
+variable shape in $\mathcal F_D$, all requests $\mathcal P_D$, and every
+subsequently supplied authentic count. For the following restrictions
+only, fix $D\ge1$, put $N=2^{D-1}$, and list the words
+$w_1,\ldots,w_N\in\{L,R\}^{D-1}$ in lexicographic order. Write
+$a_i=Rw_i$, so every $a_i$ is an original permitted request of length
+$D$. Use the two alphabets of actual trees
+
+$$
+Q_2=\{\alpha,\beta\},\qquad
+Q_3=\{\alpha,\beta,C_0\},\qquad C_0=\langle\alpha,\alpha\rangle.
+\tag{RRN.38}
+$$
+
+For $s\in\{2,3\}$ and $x\in Q_s^N$, insert $x_i$ at position $w_i$
+of the perfect ordered height-$(D-1)$ scaffold, obtaining $v_x$, and
+set $t_x=\langle\alpha,v_x\rangle$. For $D=1$ the scaffold is its
+single slot. Every $v_x$ belongs to $S_D$, has height at most $D$,
+and determines $x$ uniquely. Thus
+
+$$
+\mathcal C_{s,D}=\{v_x:x\in Q_s^N\}\subseteq S_D,
+\qquad |\mathcal C_{s,D}|=s^N,
+\qquad t_x\in\mathcal F_D.
+\tag{RRN.39}
+$$
+
+A slice is a set of actual possible sources used to test an original
+competitor. It is not an extra promise, known shape or acquired array
+given to that competitor. All its restricted code fibers may remain
+arbitrarily correlated. When a separate task is explicitly restricted
+to this slice, that restriction is public and the full request menu and
+count timing are retained.
+

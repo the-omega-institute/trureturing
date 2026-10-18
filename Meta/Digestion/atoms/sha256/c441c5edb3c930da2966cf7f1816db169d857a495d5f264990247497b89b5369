@@ -1,0 +1,61 @@
+**Lemma 3.1.** Let ω be any Borel probability distribution of r on the full interval I, and let Z=15r−5 under ω. Put m=E[Z] and
+
+$$
+d(\omega )=E[T(Z)]-\frac{E[(10-Z)S(Z)]}{10-E[Z]}.
+$$
+
+Then
+
+$$
+d(\omega )\ge m(1-m)/16.\tag{3.2}
+$$
+
+**Proof.** Direct expansion of (3.1) gives the exact factorization
+
+$$
+T(z)-S(z)=\frac{z(1-z)R(z)}{239\cdot 1116529},
+$$
+
+$$
+R(z)=17655975+459915z-6931z^2-6931z^3+239z^4.
+$$
+
+On [0,1], R(z)≥17642113, and
+
+$$
+16\cdot 17642113=282273808>266850431=239\cdot 1116529.
+$$
+
+Thus T(z)−S(z)≥z(1−z)/16. This sign is a calculation for the two original stopped-source events; it is not an assumption about arbitrary prediction tasks.
+
+The definition of d also gives
+
+$$
+d(\omega )=E[T(Z)-S(Z)]+\frac{\operatorname{Cov}(Z,S(Z))}{10-m}.\tag{3.3}
+$$
+
+For an independent copy Z′,
+
+$$
+\operatorname{Cov}(Z,S(Z))=\tfrac12E[(Z-Z')(S(Z)-S(Z'))]\ge (225/239)\operatorname{Var}(Z),
+$$
+
+by the derivative bound. Since 10−m≤10, its contribution in (3.3) is at least (45/478)Var(Z), which is greater than Var(Z)/16. Therefore
+
+$$
+d(\omega )\ge [E(Z(1-Z))+\operatorname{Var}(Z)]/16=m(1-m)/16.
+$$
+
+All expectations are of bounded functions; arbitrary Borel mixtures are covered. ∎
+
+The second term in $d$ has an exact source meaning. Define the comparison law and its first-$\beta$ probability by
+
+$$
+N_\omega=\int_I P_{p,r}\,\omega(dr),\qquad
+q_\omega=\int_I(1-r)\,\omega(dr)=\frac{10-m}{15}\ge\frac35.
+$$
+
+Conditioning this comparison law on its first β gives the suspended mixture with weights (1−r)ω(dr)/q_ω. Its normalized E_β score is precisely the second term in d.
+
+The measure ω is an analysis comparison. It is neither the actual source posterior nor a register supplied to the observer. Only this comparison law is likelihood-normalized. Actual configuration rows still move by the installed acquired kernel B.
+

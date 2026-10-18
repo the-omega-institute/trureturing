@@ -1,0 +1,27 @@
+**Lemma 66.5 (calibration mismatch at an actual enlargement).** Put
+
+$$
+\omega_N=\sqrt{\beta_N^2+s_N^2},\qquad
+s_N=1-(1+\beta_N^2)^{-1/2},\qquad
+\omega=\max(\omega_1,\omega_2).
+$$
+
+For either pair prescription, using the same preparation rule and density on both versions,
+
+$$
+\|W_{D,N}-J_{D,N}\|\le\omega_N,\qquad
+\|\mathsf T_{D'D,N}W_{D,N}-W_{D',N}\jmath_{D'D,N}\|
+\le2\omega_N.                                      \tag{66.6}
+$$
+
+When $D'=D$ the second norm is zero. For $0<\delta\le1$, $\omega\le16\sqrt\delta+128\delta\le144\sqrt\delta$.
+
+Proof. Consume Theorem64.6: $W=(J+Q)S$, $Q=E-J$, $\|Q\|\le\beta_N$, $\|S\|\le1$ and $\|S-I\|\le s_N$. Atomic and continuum ranges are orthogonal, so
+
+$$
+\|(W-J)f\|^2=\|J(S-I)f\|^2+\|QSf\|^2
+\le(s_N^2+\beta_N^2)\|f\|^2.
+$$
+
+Insert $\mathsf TJ=J'\jmath$ from (66.1), and use the full isometry of $\mathsf T$ and $\jmath$ to bound the two remaining differences by $\omega_N$ each. An unchanged geometric domain has literally the same measure, form, restriction and unique harmonic minimizer, so $W'=W$ and $\mathsf T=\jmath=I$. The last bound uses the already supplied $\beta_N\le16\sqrt\delta$ and $s_N\le128\delta$ from §64. No minimization, idle operator relation or continuum-mode elimination is re-proved here. $\square$
+

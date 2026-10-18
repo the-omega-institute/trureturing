@@ -1,0 +1,126 @@
+**Theorem 12.6 (exact joint count, joint realization and minimum alphabet).**
+For the entire source family and every public menu of Definition 12.1,
+the minimum attained alphabet size of a sufficient arbitrary retained
+code is
+
+$$
+ \boxed{\quad N(P,D)=n(R^{-1}P).\quad}
+\tag{AAR.68}
+$$
+
+The quantity is independent of a larger admissible $D$ for the same
+fixed menu. The code
+$E_P(\langle\alpha,v\rangle)=e_{R^{-1}P}(v)$ attains it effectively.
+Every one of its labels has a representative in $\mathcal F_D$, and
+different labels require different replies at some common count below
+$H_P$. For any finite effective $E$ on $\mathcal F_D$, the exact
+sufficiency criterion is
+
+$$
+ E(t)=E(t')\ \Longrightarrow\ \Sigma_P(t)=\Sigma_P(t')
+ \qquad(t,t'\in\mathcal F_D).
+\tag{AAR.69}
+$$
+
+In particular the optimum fixed-width binary naming cost is
+$\lceil\log_2 n(R^{-1}P)\rceil$, zero for the empty menu. No total
+storage, computation or acquisition optimum is asserted.
+
+Proof of the spatial count. For a general finite $S$, consider replies
+at its words on every iterate of an arbitrary finite initial subtree.
+Induction on the maximum word length proves that (AAR.67) identifies
+exactly equal such trajectories, has all $n(S)$ labels attained, and
+has representatives of height at most
+$1+\max\{|q|:q\in S\}$ when $S$ is nonempty. The empty-menu case
+has one label, represented by a height-zero alpha.
+
+For a branch source, a root query, if selected, is constantly branch.
+The other queries split exactly into the left and right suffix menus.
+Homomorphism evolves both children with the same supplied count.
+By the induction hypothesis, two branch sources therefore agree
+exactly when their two child codes agree. Conversely, every ordered
+pair of child codes is attained in the single actual tree obtained
+by pairing their representatives. Thus the branch sector has exactly
+$J=n(S_L)n(S_R)$ classes. This product is justified by a common
+native realization, not by multiplying separate coordinate optima.
+
+It remains to classify the two leaf sources and their possible overlap
+with that branch sector. For any address $q$, Theorem 12.3 gives the
+first branch times $s(q)+2$ on alpha and $s(q)+1$ on beta, including
+the root. These differ, so the two leaves have different trajectories
+whenever $S$ is nonempty. Alpha cannot agree with any branch source:
+a root query distinguishes them immediately; for a nonempty query
+$q=dr$, any initial branch has first branch time at most $s(r)+2$,
+by its child and (AAR.57), strictly less than alpha's $s(q)+2$.
+
+Beta also cannot agree with a branch if $\varepsilon\in S$, by the
+initial root reply, or if $L\in S$, since beta gives absent there
+initially and a branch has a present left child. If a selected word is
+$Rr$, beta's first branch time is $s(r)+3$, whereas a branch source's
+is at most $s(r)+2$. These observations exclude overlap whenever
+$\delta(S)=0$.
+
+If $\delta(S)=1$, every selected word is $Lr$ with $r\ne\varepsilon$.
+Reuse $T_{k+1}=\langle T_k,T_{k-1}\rangle$ for $k\ge1$. On the beta
+source, the reply at $Lr$ at count $k\ge1$ is the reply at $r$ in
+$T_k$. It is the same reply on the branch
+$\langle\alpha,\alpha\rangle$. At count zero both replies are
+absent, since $r$ is nonempty. Thus beta agrees with that actual
+branch at every selected word and count. The branch classes are
+already distinct by their child codes, so this is precisely one
+already counted class. It is the branch code specified in (AAR.67).
+There are no other leaf/branch overlaps. Adding the leaf classes
+therefore gives exactly $J+2-\delta(S)$.
+
+The representatives are constructed at this same induction step:
+use alpha, use beta only when it has a separate code, and pair every
+ordered pair of child representatives. For maximum menu length $d$,
+nonempty child menus have maximum length at most $d-1$, so their
+representatives have height at most $d$; empty children use alpha.
+Pairing has height at most $d+1$. This also covers $d=0$, when the
+only nonempty menu is $\{\varepsilon\}$ and the branch representative
+has height one. This proves attainment and the height assertion
+along with both directions of the classification. In particular
+$e_S(r_S(i))=i$ for every code.
+
+Now put $S=R^{-1}P$. For nonempty $P$, its maximum suffix length is
+at most $D-1$. Every representative $r_S(i)$ has height at most $D$,
+so $\langle\alpha,r_S(i)\rangle\in\mathcal F_D$. Homomorphism
+identifies the trajectories at $P$ in this paired source with those
+at $S$ in its right subtree. The classification and Theorem 12.3
+therefore identify exactly the same fibers for $E_P$, $\Sigma_P$ and
+$\mathcal H_P$. Their attained images are mutually recoverable:
+a code gives its representative and hence its statistic, while a
+statistic gives the unique representative code with that statistic.
+The finite grammar computes this inverse without enumerating all
+initial sources. Each pair of distinct representatives is separated
+before $H_P$. Both can be truthfully captured as stationary initial
+sources and then undergo that very same number of actual substitutions;
+the lower bound never switches source during a run.
+
+Proof of sufficiency and optimality. The general factor principle is
+already supplied by
+[`target_family_minimal_quotient`](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean):
+take source $X=\mathcal F_D$, index $(p,k)\in P\times\mathbb N$, and
+target $t\mapsto\operatorname{readout}(p,\rho^k t)$. Sufficiency
+forces the kernel of $E$ to refine the joint-target kernel. The native
+classification above identifies this latter kernel spatially, so it
+is exactly (AAR.69). It forces different code values on all the
+$n(S)$ representatives. This is the generic minimum-target argument
+with the newly calculated native image, not a new general quotient
+principle.
+
+Conversely, (AAR.69) makes the target constant on each attained
+$E$-fiber. Since $\mathcal F_D$ is a finite effectively generable
+family and $E$ is effective with finite labels, these factors can be
+made total computable: compute its finite attained code list and
+assign the common statistic to each label, with a fixed default on
+malformed inputs. This existence argument for arbitrary $E$ is not
+the count construction. The optimal $E_P$ already has (AAR.67):
+decode its index to $r_S(i)$, form its spatial statistic, and evaluate
+(AAR.59). It does not enumerate all sources. Empty $P$ uses the
+constant zero code and returns the empty vector. Finally a fixed-width
+$b$-bit region has at most $2^b$ names, and the consecutive integer
+codes have exactly the size in (AAR.68). This proves the binary-width
+claim. $\square$
+

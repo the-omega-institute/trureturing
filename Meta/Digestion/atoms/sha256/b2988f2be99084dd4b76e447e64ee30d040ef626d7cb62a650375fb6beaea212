@@ -1,0 +1,14 @@
+## 89. Continuous null roofs and the complete rank-two fixed-allocation branch
+
+Let
+
+$$
+\mathcal K_Q=\{B\succeq0:\operatorname{tr}(QB)=0\},\qquad
+\mathcal R_\varphi(B)=\max_{\mu\ge0,\ \int hh^T d\mu=B}\int\varphi(h)d\mu,
+\tag{FA.113}
+$$
+for $\varphi\in C(\mathscr C)$. Every $B\in\mathcal K_Q$ has a null
+representation: apply the zero-diagonal orthogonal-basis argument to
+$B^{1/2}QB^{1/2}$ on its range and pull the basis back by $B^{1/2}$.
+The mass of every representing measure is $B_{00}$, and $\mathscr C$ is compact.
+

@@ -1,0 +1,22 @@
+**Definition 5.1 (same-source mixed history).** Put
+
+$$
+W(y)=\langle\rho^2y,\langle\rho y,y\rangle\rangle.
+\tag{AAB.14}
+$$
+
+Take $P=\{\varepsilon\}$ with its unique reached one-hole full row.
+Retain branch literals $(0,\varepsilon,\mathsf{branch})$,
+$(0,R,\mathsf{branch})$ and $(0,RR,\mathsf{branch})$. Retain precisely
+the signed records
+
+$$
+(0,L,2,RR,=),\qquad
+(0,RL,1,RR,=),\qquad
+(1,RR,0,RR,\ne),
+\tag{AAB.15}
+$$
+
+each with both reached-endpoint guards. Set $Q=\{L,R\}$ and certified
+$N=2$. No additional source-bearing field is inferred from these records.
+

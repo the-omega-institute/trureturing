@@ -1,0 +1,50 @@
+**Convention 15.1 (literature use).** The mechanisms below are existing
+convex, spectral and continuation results. Their stated domains are
+part of their conclusions' scope. The source-specific sector,
+covariance, strict-slack and automatic-seam proofs in §§5–12 do not
+depend on an unproved transfer of a roof theorem. There is no claim
+of exhaustive literature coverage or worldwide priority.
+
+[Uhlmann, *Roofs and Convexity*, arXiv:1108.3218v1][Uhlmann], Proposition 2.1
+(PDF p.4), takes a real continuous $g$ on the entire pure-state set
+$\Omega_{\rm pure}(\mathcal H)$ and a roof extension $G$. It gives
+optimal decompositions of length at most $(\dim\mathcal H)^2+1$
+and existence of minimal and maximal roof extensions. This is not
+a theorem about every constrained subfamily of pure decompositions.
+
+His Proposition 4.1 (PDF p.17, equations 51–53) requires a Hermitian
+**antilinear** operator $\vartheta$ on $\mathcal H$ and the payoff
+
+$$
+g(|\psi\rangle\langle\psi|)=|\langle\psi,\vartheta\psi\rangle|.
+\tag{AC.88}
+$$
+
+For the ordered eigenvalues $\lambda_1\ge\lambda_2\ge\cdots$ of
+$|\sqrt\omega\,\vartheta\sqrt\omega|$, its convex and concave
+roofs are respectively
+
+$$
+g^\cup(\omega)=\max\{0,\lambda_1-\sum_{j>1}\lambda_j\},
+\qquad g^\cap(\omega)=\sum_j\lambda_j;
+\tag{AC.89}
+$$
+
+both roofs are flat. Here $\omega$ is a density operator, unrelated
+to AC.7's scalar $\omega$. Applying this formula would require an
+exact identification of the payoff, the entire decomposition domain,
+and the additional coupled live and physical failure moments.
+A restricted real $Q$-null ellipse with two endpoint sheets and
+rational saturated payoff supplies none of those identifications
+merely by resembling a roof problem. No such transfer is used here.
+
+[Hildebrand, *Concurrence of Lorentz-positive maps*,
+quant-ph/0612064v1][Hildebrand], Theorems 4.4 and 5.1 (PDF pp.7–8), assumes a
+Lorentz-positive map $\Upsilon:\mathbb R^m\to\mathbb R^n$.
+The determinant pencil $\det\Upsilon(x)-\lambda\det x$ has real
+generalized eigenvalues. Concurrence uses its second-largest eigenvalue
+and I-fidelity its smallest in
+$2\sqrt{\det\Upsilon(x)-\lambda\det x}$. Interior Lorentz points
+have optimal decompositions into two boundary points in the indicated
+eigenspace direction. The input cone and map positivity are essential.
+

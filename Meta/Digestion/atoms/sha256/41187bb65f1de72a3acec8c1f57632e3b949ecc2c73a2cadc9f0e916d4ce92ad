@@ -1,0 +1,23 @@
+**Assumption 5.1 (complete access cut after actual acquisition).** Fix a common finite prefix-free public cut menu $P\subseteq\{L,R\}^*$. On an arbitrary unknown $T\in\mathcal T$, the producer performs the actual full root traversal of Definition 2.2 with $C=\square_1$. It reconstructs $T$ solely from its truthful replies. Let
+
+$$
+I_P(T)=P\cap\operatorname{Pos}(T)=\{p_1,\ldots,p_k\},
+$$
+
+listed in address order, and let $C_P(T)$ replace the subtree at each $p_i$ by the once-occurring hole $\square_i$. It retains all outside brackets and labels. Unused menu addresses are guarded by fixed outside leaves: for each $p\in P\setminus I_P(T)$, a strict prefix of $p$ is a concrete leaf of $C_P(T)$.
+
+This is the actual producer of [Sparse Literal History Transport](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md), Definitions 59.1–59.2. That producer computes $(C_P(T),\pi_P(T))$, where $\pi_P(T)$ is the complete equality partition of hole values. Here apply its projection to $C_P(T)$: deliberately retain neither any hole value nor that partition.
+
+The new entry has only an accessible finite decodable encoding of $C=C_P(T)$, common code and $P$, a common initial epoch zero and entry position, and source-independent empty new work and query history. All other accessible source-dependent information must factor through $C$. Old full trees, subtree copies, raw caches, output, archives, comparison tables, counters, timings, allocation lengths, pointers and control locations are inaccessible unless they are functions of this retained $C$. Source authentication preserves the same immutable register and original root; it supplies no distinguishing source identity. The source remains this same $T$ from the producer's first request through completion of reacquisition, including the interval between phases. No substitution, reset, copy, move of the root or hidden service field is allowed.
+
+This is the complete access condition of SLH Assumption 59.3 applied to the projected row, not a deletion operation added to the original observer. The permission boundary and the new common entry are explicit supplied resources, with their implementation and charges separate. If the producer has reached an absorbing halt, the entry is a distinct authorized task invocation, not a transition out of that halt. The cut is a mathematical information/access contract, not a physical erasure assertion.
+
+For every admissible reached $C$, the exact remaining source fiber is
+
+$$
+\{T:C_P(T)=C\}=\mathcal U_C.
+\tag{NDR.9}
+$$
+
+This follows by forgetting the partition in SLH Theorem 59.4. More explicitly, a filling $C[U_1,\ldots,U_k]$ preserves every hole root and every unused-menu leaf guard. Its re-extracted context is $C$, regardless of which $U_i$ happen to be equal. Conversely, every source producing $C$ fills exactly those holes. The union over all actual equality partitions removes both equality and disequality restrictions. Since all accessible fields factor through $C$, neither a source's distinct old run length nor its old acquired history further filters (NDR.9).
+

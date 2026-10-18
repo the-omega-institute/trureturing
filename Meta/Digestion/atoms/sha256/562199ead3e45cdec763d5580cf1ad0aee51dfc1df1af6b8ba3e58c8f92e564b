@@ -1,0 +1,20 @@
+**约定 1.4（Canonical source ownership and bounded novelty）。** The following
+ownership fixes the scope of the results.
+
+| Source | Ingredients used and scope |
+| --- | --- |
+| [Sharp purity–negativity attainable region](FIB_INVISIBLE_FIBER_PURITY_NEGATIVITY_ATTAINABLE_REGION.md), Sections 4, 8, 10 | Owns this seven-plus-three $F$ family, its two perpendicular active planes, spectrum, legal rectangle, purity and original-split negativity formulas, sharp attainable region and dense negativity maximizer. |
+| [Sharp fixed-basis coherence number](FIB_INVISIBLE_FIBER_SHARP_COHERENCE_NUMBER.md), Sections 3–5 | Owns the explicit finite coordinate-cancellation upper construction for the entire skew fiber, its maximum-four attainer, and the positive-on-three-coordinate-subspaces witness. |
+| [Mixed-state capacity and certification](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md), C-106–C-110 | Owns matched support and tensor split, the invisible real-skew fiber, conditional actual-menu/erasure interfaces, finite complex coherence definition, edge/triangle examples, fixed-Schur-channel resource dictionary, and its necessary error/leakage relations. |
+| The same capacity source, latest C-111.1–C-111.7 | Already owns the whole-fiber maximum four and its separate Fourier-coordinate four-support attainer, five-vector realization, and same-spectrum maximal-purity examples with resources two and four. The whole-fiber maximum is already settled. |
+| This volume, Theorems 3.1, 4.1, and 5.2 | Supplies the support-two criterion, both edge kernel/budget arguments, and the matching sparse lists proved in full below. |
+
+The main additional family-specific results are Theorem 3.1 and the two edge
+thresholds, Theorems 4.1 and 5.2. Support one is a supporting consequence of the
+definition. The polygon is a constructive convexity consequence of the edge
+lists. Immediate substitution in the inherited witness gives an inherited
+exclusion and adds no mechanism. Neither the generic coherence framework nor
+the whole-fiber maximum is newly claimed. The deductions use the canonical
+sources above and the explicit proofs in this volume; they make no claim about
+external citations or nested operational suppliers.
+

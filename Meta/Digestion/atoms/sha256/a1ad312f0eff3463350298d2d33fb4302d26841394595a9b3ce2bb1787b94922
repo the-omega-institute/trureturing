@@ -1,0 +1,74 @@
+**Lemma 48.1 (Bounded-band matching sources at the anchor).** Let $S\subset\mathbb P$ be finite and let $H\ge1$ be an integer. There is an actual source $y\in X$ with the same answers as $x_*$ on every prime in $S$ and
+
+$$
+H+1\le\Omega(y)\le H+21.
+\tag{48.1}
+$$
+
+No assertion that every target between these endpoints occurs is made.
+
+**Proof.** Choose $H$ distinct primes $T$ outside $S\cup\{3\}$, and put $A_0=T\cup\{3\}$, $J=\prod_{q\in A_0}q$ and
+
+$$
+M=\prod_{q\in A_0}q^2\prod_{p\in S\setminus\{3\}}p.
+$$
+
+For every sufficiently large prime Fibonacci index $r$, the entry-rank identity (363.13) gives $\gcd(F_r,M)=1$: every prime divisor of this fixed $M$ has rank at least three, and a prime $r$ larger than all those ranks is divisible by none of them. For such $r$ impose
+
+$$
+1+F_rg\equiv q\pmod {q^2}\quad(q\in A_0),
+\qquad g\equiv0\pmod p\quad(p\in S\setminus\{3\}).
+\tag{48.2}
+$$
+
+The CRT gives a residue $a$ modulo $M$. All its representatives $g=a+Mt$ have the anchor answers on $S$, and every $q\in A_0$ divides $N=1+F_rg$ exactly once. The actual Fibonacci window contains $L=F_r/(10M)+O(1)$ consecutive values of $t$. For these values write
+
+$$
+1+F_r(a+Mt)=J(At+C),
+\qquad A=F_rM/J,\qquad C=(1+F_ra)/J.
+\tag{48.3}
+$$
+
+Here $A,C$ are integers and $A>0$. This progression is primitive. A prime dividing $F_r$ does not divide $J$, and $C\equiv J^{-1}\pmod p$ at such a prime. For $p\in S\setminus\{3\}$ the same nonzero congruence follows from $N\equiv1\pmod p$. For $q\in A_0$, division of $N\equiv q\pmod {q^2}$ gives $C\equiv(J/q)^{-1}\pmod q$, which is nonzero; also $q\mid A$. These are all prime divisors of $A$, so $\gcd(A,C)=1$ and every $At+C$ is coprime to $J$.
+
+Use the lower linear sieve in Bordignon, Johnston and Starichkova, [*An explicit version of Chen's theorem and the linear sieve*, arXiv:2207.09452v6, Theorem 6, Table 1 and Lemmas 17--19](https://arxiv.org/html/2207.09452v6). Its sequence weight is one at each of the $L$ positive integers $At+C$ and zero elsewhere. Set $\mathcal P=\{p:p\nmid A\}$ and $g(p)=1/p$ on this sieve-prime set. For every squarefree $d$ composed of primes in $\mathcal P$, invertibility of $A$ modulo $d$ gives one residue class of $t$, hence the count is $L/d+r(d)$ with $|r(d)|\le1$, uniformly in $r$ and $d$.
+
+Here is the full product-condition correspondence. Fix $u_0=10^9+1$, put $Q_0=\prod_{p<u_0}p$, and let $\mathcal Q_r=\{p\in\mathcal P:p<u_0\}$ with product $Q_r\mid Q_0$. For $z>\exp(4000)$ and $u\ge u_0$, Lemma 18 bounds the product with factors $(1-1/(p-1))^{-1}$ by $(1+1.452\cdot10^{-7})\log z/\log u$. The product with factors $(1-1/p)^{-1}$ over the smaller prime set $\mathcal P\setminus\mathcal Q_r$ is no larger. For $1<u<u_0$, use the same estimate starting at $u_0$ and $\log u\le\log u_0$. Thus Theorem 6's product condition holds with $\varepsilon_s=1/74$ for every $1<u<z$. The exceptional primes $\mathcal Q_r$ are omitted only from this product condition; they remain in $\mathcal P$ and are still sieved.
+
+Take
+
+$$
+D=\frac{L}{Q_0(\log L)^3},\qquad z=D^{1/10}.
+$$
+
+For large enough $r$, $z>\exp(4000)$ and $D\ge z^2$. The theorem's remainder sum is over squarefree $d\mid\prod_{p\in\mathcal P,\ p<z}p$ with $d<Q_rD$, so it is at most $Q_0D+1=O(L/(\log L)^3)$. Its main mass is $LV(z)$, where
+
+$$
+V(z)=\prod_{p\in\mathcal P,\ p<z}(1-1/p)
+\ge\prod_{p<z}(1-1/p)\ge\frac{c}{\log z}
+$$
+
+for an absolute $c>0$. The final inequality follows directly from Lemma 17's upper bound on $\sum_{p<z}1/p$ and $\log(1-t)\ge-t-t^2$ for $0\le t\le1/2$, since $\sum_p1/p^2<\infty$.
+
+The sieve parameter is $s=\log D/\log z=10$. Its nonnegative delay-equation functions satisfy $10f(10)\ge3f(3)=2e^\gamma\log2$, so $f(10)>1/10$. Table 1 gives $C_2(1/74)=630$ and the theorem gives $h(10)=3e^{-10}/10$. The subtracted coefficient is
+
+$$
+\frac1{74}\,630e^2h(10)=\frac{189}{74}e^{-8}<\frac1{100}.
+$$
+
+The lower-sieve coefficient is therefore positive. Its main term has order at least $L/\log L$, while the remainder is $O(L/(\log L)^3)$, so a sifted quotient exists for every sufficiently large selected $r$. Any prime dividing $A$ divides none of the quotients; every other prime below $z$ has been sieved. Consequently all prime factors of this quotient are at least $z$.
+
+The largest quotient in the actual window is $O(F_r^2)$, and
+
+$$
+\log z=\tfrac1{10}\big(\log F_r-3\log\log F_r+O(1)\big).
+$$
+
+With $S,H$ fixed, the ratio of its logarithm to $\log z$ has upper limit at most $20$, and is strictly below $21$ for all sufficiently large $r$. Thus the sifted quotient has at most $20$ prime factors even counted with multiplicity. It is coprime to $J$, whose $H+1$ primes occur in $N$ exactly once. Hence
+
+$$
+\Omega(y)=H+1+\omega(At+C)\in[H+1,H+21].
+$$
+
+The endpoint width is independent of $S$, although the index threshold depends on $S,H$. This is a new correspondence of the unchanged Fibonacci window with the cited sieve, not a new general sieve theorem or an exact-target realization claim. $\square$
+

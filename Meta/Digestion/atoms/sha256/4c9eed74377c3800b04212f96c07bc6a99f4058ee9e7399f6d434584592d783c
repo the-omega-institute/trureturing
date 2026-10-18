@@ -1,0 +1,35 @@
+**命题 3.2（非零第五支的非末根消费者）。** The fixed target
+
+$$
+P_*=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+g_*(t)=\frac4{25}t(t^2-53t+202),\qquad \delta_*=0
+                                                               \tag{3.2}
+$$
+
+realizes the whole chronological word $JMMJMJJ$ with the eight
+actual readings
+
+$$
+\left(0,24,48,\frac{312}{5},\frac{48}{5},-\frac{532}{5},
+                         -\frac{1344}{5},-\frac{2352}{5}\right).
+                                                               \tag{3.3}
+$$
+
+It has $g_*(0)=0$, $g_*(7)=-672/5\ne0$, and belongs to the
+nonzero fifth-response branch of Theorem 2.1 at $D_0=0,\lambda=1$.
+
+Proof. The displayed source is strictly positive, rank one and
+trace one. The polynomial is nonzero and cubic. The traces at
+clocks $0,\ldots,7$ along that word, using (2.2), $JQ$ and $Q$, are
+
+$$
+\left(1,1,\frac32,\frac52,\frac52,\frac72,\frac72,\frac72\right).
+                                                               \tag{3.4}
+$$
+
+Multiplying these traces by the corresponding samples of $g_*$
+gives (3.3). In particular $u=T=1$, $r=3/2$ and $a=1/2$ in
+(2.3). The actual ratio is $\rho=84/19$, so (2.14) returns $r=3/2$;
+then (2.14) and (2.15) return $a=1/2$ and $T=1$.
+This is an actual input without a terminal-root promise. ∎
+

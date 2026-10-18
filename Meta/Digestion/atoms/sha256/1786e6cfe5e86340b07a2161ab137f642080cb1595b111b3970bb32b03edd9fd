@@ -1,0 +1,2 @@
+**定义 8.1（实际原始行与条件细化）。** 取第 5 节真实 INITIAL consumer 在检查 SEG-R1 和预期 binding 之后，为 task-output 43 做 Zero allocation 的一条普通 EX。它是实际原始非 IN、非 OUT、非 halt 行。现在只作条件命题：假设一个 OR 型细化对这条 EX 有已建立的 continuing authority、before-image 和 head/stage 不变量；每次只 birth 一个顶点，按 parent-first 连接；各取样 cut 的旧顶点和已出生顶点仍形成有限根 child 树；直到独立 Finish 才完成唯一一个原始 receipt，之前不执行下一原始行。没有声称这个细引擎已经实现。
+

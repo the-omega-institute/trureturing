@@ -1,0 +1,32 @@
+**Definition 1.2 (source, action and observation).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\qquad
+\operatorname{ht}\langle u,v\rangle=1+\max(\operatorname{ht}u,\operatorname{ht}v).
+$$
+
+Pairing is free and ordered. Every finite original-root word in $L,R$,
+including the empty word, is a legal literal Read. Its reply $r_T(a)$ is
+alpha or beta at a leaf, branch at a pair, and absent after traversal
+passes a leaf. The reply alphabet, substitution and source family are
+exactly
+
+$$
+\begin{aligned}
+\mathcal A&=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},\\
+\rho\alpha&=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},
+\qquad D\ge1,\\
+W_D&=\{q:|q|\le D-1\},\qquad \mathcal P_D=\{Rq:q\in W_D\}.
+\end{aligned}
+\tag{OCC.1}
+$$
+
+There is one stationary actual initial source throughout preparation and
+late acquisition. The expression $\rho^kT$ is a prediction target, not
+an update performed during that acquisition.
+

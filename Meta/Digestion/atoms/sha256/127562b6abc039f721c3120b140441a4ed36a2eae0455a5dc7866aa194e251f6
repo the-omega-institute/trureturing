@@ -1,0 +1,34 @@
+**定理 116.2（来源差异的有限叶序支撑）。** 对每个整数 $n\ge0$，存在共同前缀 $C_n$，满足
+
+$$
+C_0=\epsilon,\qquad C_n=W_nC_{n-1}\quad(n\ge1),
+$$
+
+$$
+\begin{array}{c|cc}
+&u_n&v_n\\\hline
+n\text{ 偶}&C_n\beta\alpha&C_n\alpha\beta\\
+n\text{ 奇}&C_n\alpha\beta&C_n\beta\alpha
+\end{array}
+$$
+
+两树组成相同、来源不同；两叶序的汉明距离恰为二，而且
+
+$$
+|W_n|=F_{n+1},\qquad |u_n|=|v_n|=F_{n+3},\qquad
+\frac{d_{\rm Ham}(u_n,v_n)}{F_{n+3}}=\frac2{F_{n+3}}\longrightarrow0.
+$$
+
+证明（116.2）。组成的加法性给 $c(t_n^+)=c(t_n^-)$，亦可直接引用前卷定理106.2的 $M^n(1,1)^T$。叶序部分使用经典 Fibonacci word 的近乎交换关系作为中间步骤：José L. Ramírez、Gustavo N. Rubiano，[*Properties and Generalizations of the Fibonacci Word Fractal*, The Mathematica Journal 16，DOI:10.3888/tmj.16-2，§3](https://www.mathematica-journal.com/2014/02/19/properties-and-generalizations-of-the-fibonacci-word-fractal/)，讨论相邻 Fibonacci words 串接只在末两符号不同。为固定此处的叶标签、索引与奇偶方向，归纳如下。
+
+$n=0$ 时 $u_0=\beta\alpha,v_0=\alpha\beta$，结论成立。对 $n\ge1$，递推给
+
+$$
+u_n=(W_nW_{n-1})W_n=W_nv_{n-1},\qquad
+v_n=W_n(W_nW_{n-1})=W_nu_{n-1}.
+$$
+
+两个旧词的末两标签交换，前面加上共同的 $W_n$，恰使奇偶方向翻转，并给 $C_n=W_nC_{n-1}$。不同叶标签 $\alpha,\beta$ 在这两个尾部位置各不相同，其他位置相同，故汉明距离严格为二。叶序不同推出原树不同，但反向不成立，因为叶序映射忘括号。
+
+长度从初值 $1,1$ 及相同 Fibonacci 递推得到 $|W_n|=F_{n+1}$，再相加得 $F_{n+3}$，所以 $|C_n|=F_{n+3}-2$。$F_j$ 在 $j\ge2$ 正且不减，$F_{j+2}\ge2F_j$，故趋于无穷，所列比例趋零。$\square$
+

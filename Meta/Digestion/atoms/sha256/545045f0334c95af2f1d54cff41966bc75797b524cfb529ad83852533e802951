@@ -1,0 +1,106 @@
+**Theorem 276.2 (Unrestricted necessary curvature and variation bounds).**
+Put $(\gamma_C,a_C)=(1,2)$ for $N$ and $(2,1)$ for $O$.
+Every kernel in Definition 276.1 satisfies
+
+$$
+\begin{aligned}
+\gamma_C|\kappa|&\le\min(H_1,H_2),\\
+|\mathcal T-\kappa|
+&\le\min\left\{
+2\rho_2+\min\{4\rho_1,a_C(H_1-\gamma_C|\kappa|)\},
+2\rho_1+a_C(H_2-\gamma_C|\kappa|)\right\}.
+\end{aligned}
+\tag{276.3}
+$$
+
+All remaining head budgets in parentheses are nonnegative.
+These are necessary conditions, not a characterization of
+realizable kernels or a sufficient signed certificate.
+
+**Proof.** For a fixed seed, the output measure depends on at most
+two distinct bits. Its event evaluations, and hence the measure
+itself by finite Boolean differences, are multilinear of degree
+at most two. Integration preserves these measure equalities.
+A suffix-pair interaction cannot also depend on either early bit,
+since that would require a third queried coordinate. Thus each
+$c_{jk}$ is the same on every prefix fibre.
+
+Write a suffix function as a signed-measure polynomial
+$f(x)=A+\sum_jB_jx_j+\sum_{j<k}C_{jk}x_jx_k$ and put
+$W_j=B_j+\frac12\sum_{k\ne j}C_{jk}$.
+For signs $s_j\in\{-1,1\}$ and $x=(1+s)/2$, expansion gives
+
+$$
+f(x)-f(1-x)=\sum_js_jW_j,\qquad
+\mathbb E_s\sum_js_j(f(x)-f(1-x))(E_j)
+ =\sum_jW_j(E_j)=\tau(f)-\kappa.
+\tag{276.4}
+$$
+
+For any total-mass-zero signed Borel measure $d$, disjointness
+gives $|\sum_js_jd(E_j)|\le\sum_j|d(E_j)|\le2\|d\|_{\rm TV}$.
+If $f$ has diameter at most $\rho$, (276.4) yields
+$|\tau(f)-\kappa|\le2\rho$. Apply this to $f_{10}$ and
+$f_{01}$, of diameters at most $\rho_2$ and $\rho_1$.
+No finite-support approximation of a Borel measure is used.
+
+For any representation let $q_0$ be its mass on two distinct late
+addresses, $q_1$ its mass on $\{1,j\}$ with $j\in J$, and
+$q_2$ its mass on $\{2,j\}$ with $j\in J$.
+A late-pair column has curvature
+
+$$
+\kappa_D=\tfrac12\bigl([v\in E_j\cup E_k]+[s\in E_j\cup E_k]
+                       -[u\in E_j\cup E_k]-[t\in E_j\cup E_k]\bigr).
+\tag{276.5}
+$$
+
+Here membership means membership of its actual terminal tape.
+Other schedules contribute zero. The absolute value is at most
+one in $N$. In $O$, $u=v$, so it is at most one half.
+Consequently $\gamma_C|\kappa|\le q_0$.
+
+The measure function $h=f_{01}-f_{00}$ is affine in $x$, has
+total mass zero, and $\sup_x\|h(x)\|_{\rm TV}\le\rho_1$.
+Apply the affine version of (276.4) to $h(x)-h(1-x)$.
+Its TV norm is at most $2\rho_1$, giving $|\tau(h)|\le4\rho_1$.
+Only schedules $\{2,j\}$ contribute to this trace: unqueried
+selected coordinates cancel, and querying the head alone gives a
+constant suffix function. Each $N$ table contributes a difference
+of two indicator increments, of absolute value at most two.
+For $O$ the head-zero branch has already stopped and is constant,
+so the bound is one. Hence also $|\tau(h)|\le a_Cq_2$.
+
+The mixed prefix difference
+$f_{11}-f_{10}-f_{01}+f_{00}$ is constant in the suffix, again
+by the degree-two bound. Taking traces therefore gives
+$\mathcal T=\tau(f_{10})+\tau(h)$. The preceding estimates imply
+
+$$
+|\mathcal T-\kappa|
+\le2\rho_2+\min(4\rho_1,a_Cq_2),\qquad
+|\mathcal T-\kappa|\le2\rho_1+a_Cq_1.
+\tag{276.6}
+$$
+
+The second inequality uses $f_{01}$ and $f_{10}-f_{00}$ instead;
+it does not identify the targets on different early fibres.
+
+Let $t_i=\mu_{v^i}(E_i)-\mu_+(E_i)$. A table avoiding $i$
+contributes zero, while one querying $i$ contributes at most its
+mass. Thus the mass querying $i$ is at least $[t_i]_+$,
+so $H_i\ge0$ bounds the mass avoiding it.
+The disjoint schedule classes counted by $q_0,q_2$ avoid 1,
+and those counted by $q_0,q_1$ avoid 2. Therefore
+
+$$
+q_0+q_2\le H_1,\qquad q_0+q_1\le H_2.
+\tag{276.7}
+$$
+
+Eliminate them using $q_0\ge\gamma_C|\kappa|$ in (276.6).
+This proves (276.3) for actual Borel measures and every
+representation, with both signs of curvature and every terminal
+tape retained. The finite sign average is a proof operation, not
+another source-dependent or operational seed. $\square$
+

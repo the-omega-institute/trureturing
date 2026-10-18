@@ -1,0 +1,30 @@
+**Lemma 2.1 (Every finite pattern is actual).**
+Every specification of finitely many prime replies has an actual
+witness in $X$. Every actual first absence is finite.
+
+Proof. Modulo a prime $p$, the Fibonacci matrix
+$M=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ is
+invertible and, for $k\ge1$,
+
+$$
+M^k=\begin{pmatrix}F_{k+1}&F_k\\F_k&F_{k-1}\end{pmatrix}.
+$$
+
+Its power is scalar exactly when $p\mid F_k$: the off-diagonal
+entries give one direction and $F_{k+1}=F_k+F_{k-1}$ gives the
+other. Its class in the finite group
+$\operatorname{PGL}_2(\mathbb F_p)$ has order $z(p)\ge3$, since
+$F_1=F_2=1$. Thus $p\mid F_k$ iff $z(p)\mid k$.
+
+For specified primes of product $D$, choose a prime index $r$
+larger than all these ranks, with $F_r\ge10(D+2)$. No rank divides
+$r$, so $F_r$ is invertible modulo $D$. Prescribe
+$g=-F_r^{-1}\pmod p$ at desired ones and $g=0\pmod p$ at zeros.
+CRT gives a residue modulo $D$. The legal interval for $g$ has
+width at least $F_r/10-2\ge D$ and contains a representative.
+This proves every finite pattern, including multiple-zero words,
+positive prefixes and each later first-zero fibre. Every actual
+positive integer $N(x)$ has finite prime support, hence finite first
+absence. A finite positive prefix is not an infinite all-positive
+actual source. $\square$
+

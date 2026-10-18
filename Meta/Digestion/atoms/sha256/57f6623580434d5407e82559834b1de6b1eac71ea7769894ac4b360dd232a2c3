@@ -1,0 +1,13 @@
+**Lemma 6.2 (the $G$ family).** In the $G$ branch, after $n_1=1$ the first
+monomial has a pole at $t=-e$, while
+
+$$
+\frac{(X+1)^{k_2}}{(Y+1)^{m_2}}
+=e^{-m_2}(t+1)^{k_2-m_2}(t+e)^{m_2}.
+$$
+
+At $t=-e$, this ratio has a zero of order $m_2$, whereas $(z+1)^{n_2}$ has
+a pole because $z=X^{k_1}Y^{m_1}$ has a pole there. All factors used here are
+nonzero away from the indicated simple pole. This is a contradiction. Thus no
+positive lift lies on a $G$-branch member of the family.
+

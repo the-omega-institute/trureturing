@@ -1,0 +1,17 @@
+**Convention 8.1 (exact repository interfaces).** The mathematical
+input suppliers in this volume are NCE, ABC, NSF, NIC and PDC with the
+ranges specified in Convention 1.3. Their underlying relevant source
+interfaces have the following narrower meanings.
+
+| Source interface | Exact scope retained here |
+| --- | --- |
+| [NativeCutFibers][CUT] and [its Scribe][CUTS] | `LegalValues` is injective on all appearing classes; `rowFiberEquiv` concerns an actual canonical row. Its inverse `recover` and private `recover_fill`/`fill_injective` establish the same-value filling correspondence. It does not by itself validate arbitrary proposed records. |
+| [ActualCutPartitionDecoder][ROW] and [its Scribe][ROWS] | `literalRecord`, `actualPartition` and `canonicalRow_record_iff` relate the literal exterior and entire addressed partition to canonical rows. The private `eraseClasses_literal` participates in that bridge. Common-suffix recutting is a separate existing result. |
+| [NativeDepthPatterns][DEPTH] and [its Scribe][DEPTHS] | `depthEquiv` retains arbitrary actual frontier subtrees, via private `fill_decompose` and `decompose_fill`. `original_present_transport` requires original presence; `original_prefix_locality` concerns replies. This is not an unknown-epoch signed rank-field representation. |
+| [NativeBirthVectorDecoder][BIRTH] and [its Scribe][BIRTHS] | `birthVector_decompose` and `decodeBirth_patternVector` recover a finite `Pattern`, not the unrestricted frontier values. `birthAt` is a recursive code; its interpretation as least physical presence time is a separate bridge. Decoder acceptance on an arbitrary vector is not an image-membership certificate. |
+| [NativeGroundSolutionSpace][GROUND] and [its Scribe][GROUNDS] | `Ext_sol`, `Ext_restriction`, `restriction_Ext`, `solutionEquiv` and `constrainedEquiv` retain every native free-constructor solution; the last keeps its arbitrary predicate pulled back along `Ext`. The grammar contains no interpreted unknown power of $\rho$. The present output does not use an arbitrary predicate as a solved domain. |
+| [SourceTransportCentralizer][CENTRAL] and [its Scribe][CENTRALS] | `source_transport_centralizer` supplies native iterate injectivity and an inverse on the actual image, with the two Boolean generators and ordered pairing. An image inverse is not a reset operation on a live register. |
+
+The affine construction uses ABC's normal-code correspondence. The
+listed interfaces do not themselves establish Theorem 4.1.
+

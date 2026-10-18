@@ -1,0 +1,62 @@
+**Theorem 5.2 (Finite exact minimum and support bounds).** The set $\mathcal F_K$ is finite and nonempty, and
+
+$$
+\boxed{n_{\rm sens}(K,p)=\min_{z\in\mathcal F_K}\tau(z).}
+\tag{5.4}
+$$
+
+Every member satisfies
+
+$$
+|z_k|\le\left\lfloor\frac{E_K}{k+1}\right\rfloor\quad(k\in K).
+\tag{5.5}
+$$
+
+Writing, as in source (25.8),
+
+$$
+k_0=\min K,\qquad
+g=\gcd\{k-k_0:k\in K\},\qquad
+d=\frac{H-k_0}{g},
+\tag{5.6}
+$$
+
+one has $d\ge2$ and
+
+$$
+n_{\rm sens}(K,p)\le U_K\le H(d-1)<Hd,\qquad E_K\le Hd.
+\tag{5.7}
+$$
+
+The strict comparison with $Hd$ concerns first sensitivity; $Hd$ is the source's sufficient full-orbit separation window, a different target.
+
+**Proof.** For any $a<b<c$ the vector supported on that triple with coordinates
+
+$$
+z_a=\frac{c-b}{g_{abc}},\qquad
+z_b=-\frac{c-a}{g_{abc}},\qquad
+z_c=\frac{b-a}{g_{abc}}
+\tag{5.8}
+$$
+
+is a nonzero integer relation. Its positive and negative degree is $q_{abc}$, its weighted label sum is $bq_{abc}$, and its sign maxima are $c,b$. Thus
+
+$$
+\ell_z=(b+1)q_{abc},\qquad
+\tau(z)=(b+1)(q_{abc}-1).
+\tag{5.9}
+$$
+
+Theorem 5.1 gives $n_{\rm sens}\le U_K$. A triple attaining $U_K$ has $\ell_z=U_K+b+1\le E_K$, so it belongs to $\mathcal F_K$.
+
+For every nonzero relation, the two sign maxima are distinct and only one can be $H$. Hence $B_z\le h$. If $\ell_z>E_K$, then
+
+$$
+\tau(z)=\ell_z-1-B_z>U_K+h-B_z\ge U_K.
+\tag{5.10}
+$$
+
+Such a vector cannot minimize the unrestricted cost. Every minimizing vector therefore lies in $\mathcal F_K$, proving (5.4). On either sign side $\ell_z=\sum_j(j+1)z_j^\pm$. For a coordinate on that side, $(k+1)|z_k|\le\ell_z\le E_K$, proving (5.5). A finite product of these bounded coordinate sets is finite, so $\mathcal F_K$ is finite.
+
+For the uniform estimates, choose any interior label $b$ in the endpoint triple $k_0<b<H$. Its gcd $g_{k_0bH}$ is a multiple of the global $g$, so $q_{k_0bH}\le d$. Also $b+1\le H$, and thus its cost is at most $H(d-1)$. This proves $U_K\le H(d-1)$. There is an interior positive multiple of $g$ strictly less than $H-k_0$, so $d\ge2$. Finally $h+1\le H$, giving $E_K=U_K+h+1\le Hd$. All claims are symbolic bounds for arbitrary supports, not results of a support catalogue or numerical search. $\square$
+

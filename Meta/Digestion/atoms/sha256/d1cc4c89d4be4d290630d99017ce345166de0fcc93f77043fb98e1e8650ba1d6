@@ -1,0 +1,20 @@
+**Definition 2.3 (joint cofinal fibers).** Reindex the used coordinates
+of each piece by $\{1,\ldots,k\}$. For a nonempty subset
+$A\subseteq\{1,\ldots,k\}$ put $F=\{1,\ldots,k\}\setminus A$ and
+define the Presburger set
+
+$$
+E_{b,A}=\left\{\mathbf c\in\mathbb N^F:
+\forall M\ \exists\mathbf v\quad
+S_b(\mathbf v)\ \land\ \mathbf v_F=\mathbf c\ \land\
+\bigwedge_{i\in A}v_i\ge M\right\}.
+\tag{AAB.8}
+$$
+
+An empty coordinate product is the singleton containing the empty tuple.
+In particular $E_{b,\{1,\ldots,k\}}$ is either empty or that singleton.
+For $k=0$ there are no nonempty $A$. The represented finite-basis class
+consists exactly of representations for which every $E_{b,A}$ is finite.
+This condition is tested, rather than supplied as a promise or a list
+of contacts. No restriction is placed on $D_r$ for $r\ne r_*$.
+

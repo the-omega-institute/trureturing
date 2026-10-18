@@ -1,0 +1,20 @@
+**定理 10.8.1（闭环恒等与交换等价）。** 对双射动作，以下等价：
+
+$$
+H_{a,b}=\operatorname{id}_S
+\quad\Longleftrightarrow\quad
+T_bT_a=T_aT_b.
+$$
+
+**证明。**
+
+若 $H_{a,b}=\operatorname{id}$，右复合 $T_a^{-1}T_b^{-1}$ 的等式给
+
+$$
+T_bT_a=T_aT_b.
+$$
+
+反过来，把交换等式左复合 $T_b^{-1}T_a^{-1}$，得到 $H_{a,b}=\operatorname{id}$. 证毕。
+
+<a id="claim-10-8-2"></a>
+

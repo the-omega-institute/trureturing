@@ -1,0 +1,43 @@
+**Theorem 23.1 (exact proper-submodel optimum and at most one bit loss).**
+Allow every proper vertex subset in Definition 20.3, evaluated after
+parity symmetrization by Lemma 21.1, instead of requiring forests.
+Over all its finite rational mixtures and all feasible positive tables,
+the exact optimum for $A>B>0$ is
+
+$$
+U_{\rm rank}
+=2n+(n-1)\log_2\frac{A^{n/(n-1)}+B^{n/(n-1)}}2,
+\qquad 0\le U_{\rm rank}-\log_2 Z_G\le1.
+\tag{GDB.100}
+$$
+
+The same formula and loss bound hold for $A=B>0$.
+
+Proof. Each proper subset has size at most $n-1$, so
+$\sum_v\rho_v\le n-1$. Theorem 21.2, convexity and decrease of $f$
+give $U\ge2n+n f((n-1)/n)$, the stated value. Mix the $n$ subsets
+$V\setminus\{v\}$ equally. Each appearance is $(n-1)/n$, and
+Theorem 21.2's power tables attain the value. Thus the lower bound
+is achieved by finite rational mixture data. The row-rank calculation
+evaluates these parity tables even though selected graphs can contain
+cycles; no assertion that arbitrary cyclic four-bit tables are easy
+is needed.
+
+Put $q=A/(A+B)$, $p=n/(n-1)$, and
+$L=n+n\log_2(A+B)$. Elementary rearrangement and (GDB.84) give
+
+$$
+\begin{aligned}
+U_{\rm rank}&=L+1+(n-1)\log_2[q^p+(1-q)^p]\le L+1,\\
+\log_2 Z_G&=L+\log_2\left[1+
+       \left(\frac{A-B}{A+B}\right)^n\right]\ge L.
+\end{aligned}
+\tag{GDB.101}
+$$
+
+Here $p>1$ and $0\le q\le1$ give $q^p+(1-q)^p\le1$.
+Hölder supplies the other direction $U_{\rm rank}\ge\log_2 Z_G$.
+For $A=B$, the equal-deletion power construction gives exactly
+$2n+n\log_2 A=\log_2 Z_G$; Hölder rules out a smaller value.
+This also verifies the formula at that boundary. $\square$
+

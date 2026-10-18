@@ -1,0 +1,15 @@
+**Convention 8.1 (the relative-completion question).** Sections 8–13
+concern a same-template relative soft-to-hard premise. The additive
+all-template supremum bounds in Theorems 3.3 and 4.2 and the optimized
+semantic bounds in Proposition 5.1 retain their stated meanings. A
+template with a small hard mass need not have a comparably small
+relative soft correction. The example below makes that distinction on
+actual native templates with a connected tree incidence graph.
+
+All repository suppliers cited in these sections designate their
+committed public versions at
+`91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The intended consumer is the
+joint completion/loss question in [COK, Open problem 9.3][SCP-COK] and
+the unchanged all-size obligation in [GDB, Definition 11.1][SCP-GDB].
+The deductions are ordinary mathematics, without Lean certification.
+

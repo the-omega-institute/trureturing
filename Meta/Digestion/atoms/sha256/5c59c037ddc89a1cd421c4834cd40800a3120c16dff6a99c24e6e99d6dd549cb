@@ -1,0 +1,63 @@
+## 120. Consumed relations, native boundaries and evidence ceiling
+
+**Scope C-120.1 (What is and is not transferred from current mathematics).**
+The original-source relation proved here is an operational one: two disjoint
+coherence locations compete for the same input population before an unknown
+persistent label is revealed. Sender information changes the available
+population choice; receiver information does not. Permitting the label to vary
+at every use removes that persistence and admits the finite obstruction above.
+These conclusions use (C116.1)–(C116.4), not an assumed ability to access quantum
+phases through the native observation interface.
+
+The actual carriers of the related results have different domains:
+
+- [Acquisition Resources XVI, Definitions 273.1–273.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md#273-complete-allocations-original-objects-and-signed-coordinates)
+  uses Boolean prime-divisibility replies, one finite conic allocation and signed
+  event-score coordinates. Its $M=1$ kernels are classical probability laws.
+  It supplies no original $M_5(\mathbb C)$ quantum preparation or phase label.
+- `InterleavedWordRecovery.interleaved_word_recovery` in
+  `D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/InterleavedWordRecovery.lean`
+  recovers a promised original Boolean vector encoded into a `Source` tree,
+  using address/depth hypotheses and a native serial program. A decoded Boolean
+  word is not a calibration of the four density operators in (C117.3).
+- [Native critical-cutoff spectral limits, Definition 31.1 and Theorem 32.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md#31-the-original-critical-families-and-scalar-comparison)
+  uses Dirichlet scalar operators, raw measures and native diffusion clocks.
+  Its $L^2$ eigenfunctions/heat kernels are not the normalized output-first Choi
+  states or coding operations here. No finite-dimensional CPTP or resource
+  bridge from that carrier is assumed.
+
+The common-allocation theme is a useful comparison, but no theorem from these
+carriers is used to infer a quantum calibration service. A bridge would have to
+supply actual states, permissible controls and the same uniform reference-error
+contract; matching names, spectra or budget inequalities do not provide it.
+
+For the full $\mathcal K$, $X_0=0$ gives complete dephasing at $\eta=0$ and a
+measure-and-prepare mixture at every $\eta$. Its individual capacity is zero.
+Consequently all three fixed-label guaranteed rates over the full $\mathcal K$
+are zero. This is only a scope boundary; it does not replace the nontrivial
+four-source calculation by a larger family containing a zero-capacity member.
+
+**Literature status C-120.2 (Suppliers and new synthesis).**
+The mature coding ingredients are `literature-attested`: C-116.3's corrected
+compound theorem and the Devetak–Shor supplier already consumed in C-115.2,
+[*The capacity of a quantum channel for simultaneous transmission of classical
+and quantum information*, quant-ph/0311131v3](https://arxiv.org/html/quant-ph/0311131v3),
+§§1–2 and Appendix B, especially its generalized-dephasing discussion and
+single-letter formula (18). C-115.2's exact source-specific Gram function,
+concavity, degradation and complex block bound are reused rather than reproved.
+The entropy-of-mixture inequalities and the pure-target fidelity/trace
+inequalities are standard finite-dimensional tools; the Hoeffding bound only
+illustrates the optional paid header and is not needed for (C117.5).
+
+The compact-$U$ common-population reduction, evaluation on the actual four
+original matrices, complete noisy reference spectra and rate separation, and
+same-set varying-label obstruction are `repo-derived` synthesis in this volume.
+They are not claims of literature novelty or new generic coding theorems.
+The ordinary proofs above consume the explicitly cited mathematical suppliers;
+no formal-grade conclusion or exact Lean capacity certificate is asserted.
+
+The noisy capacity values outside the bounds (C118.2) remain undetermined here;
+no noisy degradability or exact-port threshold is concluded. Native acquisition,
+a physical implementation of the extra channel/coding services, and a common
+unknown-source simulator also remain outside these results.
+

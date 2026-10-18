@@ -1,0 +1,45 @@
+**Definition 1.2 (The fixed port and its actual-menu error).** A future
+protocol consists of nonnegative waits $U(t)$, complete five-outcome
+rank-one Lüders reads $X\mapsto(\Pi_sX\Pi_s)_{s\in\mathsf S}$, and Stop.
+All finite adaptive depths are included. Histories retain outcomes,
+controls and stops. Initial controls and any random control resources
+are independent of the input, and both comparisons use the same policy.
+Grouping a full read's outcomes is classical postprocessing. Independent
+mode phases, arbitrary future unitaries, source copies, resets, probability
+oracles, external quantum side information, readable hidden Kraus records
+and coarse-block Lüders instruments are absent.
+
+A scalar port is one fixed CPTP encoder and fixed whole-block CPTP decoders
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_1,
+\qquad \operatorname{Dec}((y_f)_f)=\sum_f\operatorname{Dec}_f(y_f),
+\qquad \operatorname{Dec}_f:M_1\longrightarrow M_5,
+\tag{1.2}
+$$
+
+where $F$ is finite and the design precedes the input and future policy.
+There is no retained source, entangled assistance or quantum bypass.
+The finite classical flag is free for this dimension criterion, is used
+in decoding, and is not additionally exposed to the later policy.
+Let $\mathfrak C_1$ contain every such complex CPTP composite, and define
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathcal H)}
+\sup_{\pi\text{ actual, finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad \varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+The input is replaced once before the common protocol. TV is half the
+$\ell^1$ difference, with its measure version for random controls.
+CPTP legality includes arbitrary reference extensions; the performance
+criterion uses system histories only. These are exactly QMB Definitions
+1.2–1.3. In
+[Bluhm–Rauber–Wolf, *Quantum compression relative to a set of measurements*, Definition 4.1 and Lemmas 5.2–5.3](https://arxiv.org/html/1708.04898v4),
+the ambient and compressed dimensions correspond to $D=5,d=1$ and the
+classical algebra to $\mathbb C^{|F|}$. Their exact operator-system
+preservation criterion is distinct from the particular approximate norm
+in (1.3).
+

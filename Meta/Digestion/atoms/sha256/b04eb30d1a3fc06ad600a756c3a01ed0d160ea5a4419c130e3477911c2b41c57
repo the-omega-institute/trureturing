@@ -1,0 +1,9 @@
+**Definition 5.3 (B to M).** Parse a nonempty ordered unique prefix-free
+list. Enumerate every prefix of every item and insert it into an ordered
+deduplicated support list. Require that its maximal list is exactly the
+input and that the resulting support passes the full-tree/layout check.
+Apply Definition 5.1's raw component decoder, then precisely Definition
+4.2's selected-material scan. Emit only the eight M lists. The decoded
+complement is temporary derived workspace; it is not an input sidecar
+and it does not become part of the M-body.
+

@@ -1,0 +1,91 @@
+**Theorem 39.2 (supported reference operators and terminal indistinguishability).**
+Let $E,P=EE^\dagger,P_f$ be the original embedding, input projection and
+failure output of GC Definition 2.1. For any positive joint input $X$
+supported on the original input subspace,
+$X=(P\otimes I_R)X(P\otimes I_R)$, and any passive reference $R$,
+the reverse-event failure output after summing the existing failure
+times and five failure components is
+
+$$
+\mathcal F_{\rm rev,R}(X)=P_f\otimes\tau_R,\qquad
+\tau_R=\operatorname{Tr}_5[(EF_{\rm rev}E^\dagger\otimes I_R)X],
+\tag{FC.176}
+$$
+
+and is CP/TNI, with
+
+$$
+0\preceq\tau_R\preceq
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{FC.177}
+$$
+
+This is an upper subeffect statement. For a general original competitor,
+its action on arbitrary $P^\perp$ inputs is not fixed by the common law.
+For the explicit GC Proposition 10.1 constructors, (FC.176) holds on
+all complex ambient inputs because their low encoders contain
+$E^\dagger$.
+
+For two normalized retained-acquisition/stopped-output states
+$\omega,\widetilde\omega$ at the same event interface, with probabilities
+$p,\widetilde p$ of that event,
+
+$$
+\frac12\|\omega-\widetilde\omega\|_1\ge|p-\widetilde p|.
+\tag{FC.178}
+$$
+
+A zero-event benchmark is thus separated by at least $C_y^+$ on each
+plus-sign original history, if such a benchmark is supplied at that
+interface. Existence of an original admissible zero-event benchmark is
+not asserted; (FC.163) excludes one with zero probability on all twelve
+inputs. The retained-event difference implies no positive distance or
+error gap at the original forgotten-label terminal interface.
+
+Proof. The pullback of each actual eventual-failure effect is its term
+in (FC.156). The failure output is the prescribed one-dimensional
+$P_f$, so summing over the selected existing labels gives (FC.176).
+For a positive effect $F$, diagonalization gives Kraus maps
+$\sqrt{\lambda_i}|f\rangle\langle e_i|$ for
+$Y\mapsto\operatorname{tr}(FY)P_f$. Tensor with the passive identity.
+Partial-trace cyclicity on the input factor rewrites $\tau_R$ as the
+partial trace of the positive sandwich by
+$\sqrt{EF_{\rm rev}E^\dagger}\otimes I_R$. Apply the same argument
+to $M-F_{\rm rev}\succeq0$ to obtain (FC.177). Root TP gives
+$EME^\dagger\preceq I_5$, hence TNI. These are mature CP/effect
+facts; a textbook formulation is Watrous, *The Theory of Quantum
+Information*, [Theorem 2.22 and Definition 2.34](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf).
+They supply no reference-uniform positive lower operator bound.
+
+The event and its complement form a binary measurement of the already
+retained labels and failure outcome. Its two probability differences
+are opposite, with HALF $\ell^1$ norm $|p-\widetilde p|$. Contraction
+under this measurement proves (FC.178); see also the same textbook's
+Theorem 3.4 and Proposition 3.5. This comparison reads no inaccessible
+environment or hidden Kraus index.
+
+To prove the terminal obstruction inside the original class, take at
+the same $t\ge3000,s=0$ the $\mathsf W_5^+$ equality law of Theorem
+38.1 and the $y=5$ zero law of Theorem 39.1. Their reverse slopes lie
+in disjoint intervals $(-1.304,-1.303)$ and $(-0.659,-0.658)$.
+The first law has positive probability on $(5,\epsilon,-1)$, while
+the second has zero. In fact the first probability is the positive
+exact expression
+
+$$
+d_1\bigl(-a_f\sqrt{q_5}\,z_*-b_f/\sqrt2\bigr)^2
+=0.0045760430820284554\ldots,
+\tag{FC.179}
+$$
+
+where $d_1,z_*$ are from its equality construction. Yet both laws have
+identical full live Gram $I_3$ and covariance $M$. Realize both with
+the same GC constructor, the same complementary isometries, and its
+same $g(a)=2/(1+a)^2$. Equations (GC.53)–(GC.54) give identical
+forgotten-label live CP maps on all complex inputs, identical five
+separate failure Borel maps, and identical passive-reference conditional
+operators. Their original twelve-input complete stopped-cq HALF errors
+are identical. Thus even exact equality of the terminal channels permits
+this retained-event probability difference. No terminal-error gap or
+new label retention/readout permission follows from (FC.178). $\square$
+

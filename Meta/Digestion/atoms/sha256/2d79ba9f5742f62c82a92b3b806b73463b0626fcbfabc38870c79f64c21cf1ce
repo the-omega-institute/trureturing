@@ -1,0 +1,56 @@
+## 11. 同一 Fibonacci 层上的双重 prime seam
+
+令 \(R_n=F_n\) 为有限整数载体，底部边际计数取 \(A_n=F_a\)、\(B_n=F_b\)，其中 \(0<a,b<n\)。若素数 \(p\) 是 \(F_n\) 的 primitive divisor，则
+
+\[
+p\mid R_n,\qquad
+p\nmid A_nB_n.
+\]
+
+因此连续独立目标
+
+\[
+k_*=\frac{A_nB_n}{R_n}
+\]
+
+在整数格上不可达，至少出现一个 lattice seam。另一方面，令
+
+\[
+z(p)=\min\{m>0:p\mid F_m\}.
+\]
+
+则 \(z(p)=n\)，并且
+
+\[
+M^n\equiv a_p I\pmod p.
+\]
+
+所以同一层同时出现两种不同的 quotient loss：
+
+1. 概率整数载体忘记连续独立点，产生 finite-resolution lattice seam；
+2. \(PGL_2\) 观察者忘记 scalar phase，产生 projective seam。
+
+若 \(p\notin\{2,5\}\) 且 \(n\) 为奇数，则
+
+\[
+a_p^2\equiv-1\pmod p,
+\]
+
+所以 \(\operatorname{ord}(a_p)=4\)，完整线性周期比 projective rank 多出四倍相位。若 \(n\) 为偶数，则 scalar order 为 1 或 2。
+
+可以把第 \(n\) 层的算术缺陷记为
+
+\[
+\mathcal C_n=(Q_n,\sigma_n),
+\]
+
+其中
+
+\[
+Q_n=\frac{F_n}{\gcd(F_n,F_aF_b)}
+\]
+
+是独立目标的最简分母，\(\sigma_n\) 是 Fibonacci 矩阵在 projective closure 后剩余的 scalar phase。这个双缺陷比把素数当成几何坐标更准确，因为它同时记录有限计数可达性和观察商丢失的周期信息。
+
+这里必须保留尺度限制。对于最近整数格点，lattice seam 通常是有限分辨率障碍，随着 \(R\) 增大，KL 残差密度可能趋于零。要得到宏观的非零自由能密度，需要额外的同余约束或使允许纤维距离保持 \(O(R)\)。因此 primitive prime 证明的是 exact independence 不可达，不自动证明物理相变或宏观能垒。
+

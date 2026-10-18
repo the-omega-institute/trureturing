@@ -1,0 +1,28 @@
+**Definition 1.1 (Fixed source and preparation).** Fix $0<Z<1$, and set
+
+$$
+r=1-Z,\qquad H=r/2,\qquad
+p(k)=(k,H-k,Z,H-k,k),\qquad 0<k<H.
+$$
+
+The mode order is $(0,1,2,3,13)$, and the probability tangent is
+$d=(1,-1,0,-1,1)^{\mathsf T}$. Fix any $k_0\in(0,H)$ and any
+preparation phases $\theta_j^{\rm in}$. The native negative phase
+convention and control equations are
+
+$$
+\psi_j=\sqrt{p_j}\,e^{-i\theta_j},\qquad
+\dot p=d\dot k,\qquad
+\dot\theta_j=\frac{d_j}{p_j(k)I(k)}\dot\chi,\qquad
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)}.
+$$
+
+A producing history is a piecewise $C^1$ or absolutely continuous
+native path on a finite compact time interval, with interior height
+throughout and finite phase variation. Its initial real relation phase
+is consistent with $d^{\mathsf T}\theta^{\rm in}$. A queried state is
+the current ray at a finite prefix, without the producing history or a
+retained real lift. There is no common bound on the number of commands,
+their real magnitudes, or the duration of these individually finite
+histories. Put $\mathbb T=\mathbb R/(2\pi\mathbb Z)$.
+

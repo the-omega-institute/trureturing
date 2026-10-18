@@ -1,0 +1,96 @@
+**Proposition 8.3 (Every prescribed path on its full all-times domain).**
+Prescribe integrable velocities $a_c=\dot k,b_c=\dot\chi$ in the
+native regularity class on a finite compact interval $[0,T_{\rm p}]$,
+independently of the starting ray. Define
+
+$$
+\eta(u)=\int_0^u a_c(v)\,dv,\qquad
+\Delta=\eta(T_{\rm p}),\qquad
+L=\int_0^{T_{\rm p}}b_c(u)\,du,\qquad
+C=\int_0^{T_{\rm p}}\eta(u)b_c(u)\,du.
+\tag{8.7}
+$$
+
+Its exact original guard is
+
+$$
+0<k+\eta(u)<H\quad\hbox{for every }u\in[0,T_{\rm p}],
+\tag{8.8}
+$$
+
+equivalently $k+\min\eta>0$ and $k+\max\eta<H$ on that compact
+time interval. On the guard the endpoint is
+
+$$
+k'=k+\Delta,\qquad \alpha'=\alpha+L/2,\qquad
+\beta'=\beta+(1/2-k/r)L-C/r.
+\tag{8.9}
+$$
+
+For either realization of Proposition 8.1 a fixed exact affine
+path map is
+
+$$
+\mathcal W_{\rm p}=e^{iL/2}\mathcal U_\Delta.
+\tag{8.10}
+$$
+
+Every truncation has this same assertion with its own truncated
+integrals and its own full all-times guard. Finite concatenations
+retain exact encoding and the same current-state error at every
+prefix and intermediate time.
+
+Proof. The displacement $\eta$ is absolutely continuous and
+bounded on the compact interval, so its product with integrable
+$b_c$ is integrable. The height trajectory is $k+\eta(u)$.
+Continuity and attained extrema prove exactly (8.8) and its two
+strict extremal inequalities. Endpoint lawfulness alone cannot
+replace this domain. Integrate the phase equations from
+Proposition 1.2. In particular,
+
+$$
+\int_0^{T_{\rm p}}\left(\frac12-\frac{k+\eta(u)}r\right)b_c(u)\,du
+=(1/2-k/r)L-C/r,
+$$
+
+which gives the true beta endpoint, including its mixed term and
+negative sign. This is the source integration of [M, Proposition
+9.1], [Q, Proposition 6.2] and [O, §9 and §11.7]. It uses no
+splitting limit or extra source control.
+
+Substitution of $k',\alpha'$ into (8.1) or (8.4) gives (8.10)
+directly. The beta term in (8.9) is still part of the source;
+only this beta-independent encoder forgets it. All coefficients
+of (8.10) depend just on the fixed model and prescribed path.
+A path with empty domain still has its assigned map. On its
+full lawful domain the identity shows preservation of the actual
+image. Replacing the upper limits in (8.7) by any earlier time
+proves the corresponding identity for every truncation, including
+a lawful truncation of a path whose full extension is unlawful.
+
+Two successive relative paths have combined triple
+
+$$
+(\Delta_1+\Delta_2,\ L_1+L_2,
+ C_1+C_2+\Delta_1L_2).
+\tag{8.11}
+$$
+
+Indeed the displacement during the second piece relative to the
+original start is $\Delta_1+\eta_2$, which contributes
+$C_2+\Delta_1L_2$ to the mixed integral. Substituting this triple
+into (8.9) agrees with successive source application. The combined
+guard is the first full guard and the second full guard from
+height $k+\Delta_1$. For both diagonal and shear maps,
+$\mathcal U_a\mathcal U_b=\mathcal U_{a+b}$ and these maps
+commute with common complex multiplication. Thus (8.10) composes
+by the first two parameters, consistently with the retained
+source mixed term.
+
+Induction from exact initialization proves each finite prefix.
+The truncation identity proves every intermediate point; straight
+legs and all their fractional commands are included. At each
+point apply (8.6) to the exact current encoded ray. No approximate
+decoded output feeds back into an update, so the uniform error
+does not accumulate along the history. $\square$
+

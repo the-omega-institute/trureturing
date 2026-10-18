@@ -1,0 +1,41 @@
+## 2. Quotient operators and finite collision bridges
+
+For a fixed five-read history, define on auxiliary real $2\times2$ matrices
+$$
+\mathcal L(X)_i=\operatorname{tr}(A_iX),\qquad
+(\mathcal I v)_i=iv_i,\qquad
+\mathcal Qv=(v_i-v_0)_{i=1}^4,
+$$
+$$
+\mathsf B=\mathcal Q\mathcal L,\qquad
+\mathsf C=\mathcal Q\mathcal I\mathcal L,\qquad
+\mathsf T_k=\mathsf B+k\mathsf C.
+\tag{2.1}
+$$
+The kernel of $\mathcal Q$ is exactly the constant five-vectors. Consequently
+$$
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1
+\tag{2.2}
+$$
+means that the difference of the two undrifted observation vectors is constant. Its initial value is $\operatorname{tr}(S_0-S_1)$, since $A_0=I$ and the initial gain is one. Thus the whole polynomials
+$$
+D_0(\tau)=0,\qquad D_1(\tau)=\operatorname{tr}(S_0-S_1)
+\tag{2.3}
+$$
+make all five original readings agree. This quotient removes exactly one whole constant drift.
+
+Use determinant polarization
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and
+$Y=(\begin{smallmatrix}P&Q\\R&T\end{smallmatrix})$,
+$$
+\mathfrak b(S,Y)=sP+pT-rQ-qR,
+$$
+$$
+\det(S+\epsilon Y)=\det S+\epsilon\mathfrak b(S,Y)+\epsilon^2\det Y.
+\tag{2.4}
+$$
+Expansion of the two $2\times2$ determinants proves both identities; in particular $\mathfrak b$ is symmetric bilinear.
+

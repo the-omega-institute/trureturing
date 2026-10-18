@@ -1,0 +1,43 @@
+**Definition 3.2 (response Hilbert space and full coefficients).** Polarized forms are conjugate linear in the first slot. Let $\dot{\mathcal H}_-$ be the completion of the real $\sigma$-odd compact smooth core in $\sqrt b$. R Theorems 4.1, 5.1 and 5.3 supply the bounds and response
+
+$$
+\begin{gathered}
+V_1^2\le K_1V,\quad V_2^2\le K_2V,\quad V_{\rm t}^2\le K_{\rm t}V,\qquad
+\int V^{1/2}|u|^2\le\Gamma b[u]\quad(u\in\mathcal Q_E),\\
+h[u]\ge a\theta b[u]\quad\text{if }b(p,u)=0,\qquad \theta>0,\\
+\ell(u)=2a\int r(Yp)(Yu)+\chi\int V_1pu,\qquad
+h(\Psi,u)=\ell(u)\quad(u\in\dot{\mathcal H}_-),\\
+D_{\rm resp}=h[\Psi]=\sup_{0\ne u\text{ odd compact smooth}}\frac{\ell(u)^2}{h[u]}<\infty.
+\end{gathered}
+\tag{3.3}
+$$
+
+The gap is in horizontal energy, not in $L^2$. Reflection invariance of $b$ and evenness of $p$ give $b(p,u)=0$ on the odd core. Hence $a\theta b\le h\le ab$ there, so $h$ is a genuine Hilbert norm on its completion. To make the response pairings explicit, put $S_1=\int(V_1^2/V)p^2\le K_1$. Cauchy–Schwarz and $\int V|u|^2\le C_*b[u]$ give
+
+$$
+|\ell(u)|\le\left(2a\sqrt A+\chi\sqrt{C_*S_1}\right)\sqrt{b[u]},
+\qquad
+D_{\rm resp}\le\frac{(2a\sqrt A+\chi\sqrt{C_*S_1})^2}{a\theta}.
+\tag{3.3a}
+$$
+
+Here $A=\int r^2|Yp|^2$ is finite by (2.9). Thus every response pairing extends continuously. In particular $rp$ is an element of this real completion by parity averaging its canonical core approximants. The abstract vector $\Psi$ has no asserted $L^2$, canonical form-domain or native operator-domain representative.
+
+Set
+
+$$
+\begin{aligned}
+A&=\int r^2|Yp|^2,&B_1&=\int rV_1p^2,&C_2&=\int V_2p^2,&T&=\int V_{\rm t}p^2>0,\\
+K_{\rm base}&=3aA-\chi C_2,&D_{\rm clock}&=a+\chi T,&
+t_0&=2A+(\chi/a)B_1=\ell(rp)/a,\\
+C_{\rm resp}&=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock},\\
+C_{\rm aff}(t)&=\nu^2\{a t^2-(4aA+2\chi B_1)t+K_{\rm base}\}
+                 -\lambda(a+\chi T),\qquad t\in\mathbb R,\\
+C_{108}&=C_{\rm aff}(1)
+ =\nu^2\{a(1-A)-\chi(C_2+2B_1)\}-\lambda(a+\chi T).
+\end{aligned}
+\tag{3.4}
+$$
+
+Every integral is finite by (2.9), (3.2) and (3.3). The $C_2+2B_1$ term is exactly P (108.2)'s integral of $(V_2+2rV_1)p^2$. Thus (3.4) retains the entire rational kinetic correction, raw-source factor, time-weighted field and threshold subtraction. R Theorem 7.1 supplies this affine coefficient and its non-strict comparison with the response. The next sections prove the strict improvement.
+

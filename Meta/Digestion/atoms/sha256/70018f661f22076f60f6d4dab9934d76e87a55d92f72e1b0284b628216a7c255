@@ -1,0 +1,38 @@
+**Convention 7.3 (credited caps and separate attainment resources).**
+[NCM, Theorems 3.3 and 4.1][NCM] already supply $\sigma_2=\log_2(25/17)$:
+their integer weights have total $25$, all-joint cap $17$, and products
+of their $H_\alpha$ attain that mass. [NCE, Theorems 6.1–6.2 and
+Proposition 5.2][NCE] supply weights of total $429$, all-joint cap
+$169$, and mass-attaining products for those chosen weights. Thus
+their normalized vectors have respectively $\beta=17/25$ and
+$\beta=169/429=13/33$. Equality for the latter chosen weight system
+does not identify the minimum in (NPC.26). NCE's heavy-target
+criterion is sufficient; its completeness is not a premise here.
+
+Whenever a finite cover upper or the computed $M_1(D)$ in (NPC.8)
+is used, its actual acquisition is [FMR, Theorems 2.3–2.5][FMR]'s scan
+of every $Rq$, $q\in W_D$, on the stationary source. It uses at most
+$2^D-1$ preparation Reads, maximum literal length $D$, and
+$(D-1)2^D+1$ submitted letters on every source. The acquired boundary
+computes the first-containing-member name; every other source
+distinction is isolated under Assumption 1.2. A minimum cover's names
+are all attained, since an unused member could be deleted.
+
+At $n$ public prefix-free actual block occurrences $Ra_i$ with
+$|a_i|\le H$, [FMR, Lemmas 3.1 and 6.2][FMR] instead gives
+$n(2^d-1)$ Reads, maximum length $H+d$, and at most
+
+$$
+n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr)
+$$
+
+submitted letters, by the actual literals $Ra_iw$, $w\in W_d$.
+Their late queries are actual words at the selected original block.
+The reply-to-factor table yields a predictor of at most
+$\lceil\log_2(2D+1)\rceil+1$ bits for $(b,c)$, separately from
+retained names and count representation. Cover generation, membership
+work, installation, control, allocation, buffers, post-request space,
+proof parameters and proof search remain separate resources.
+Theorems 6.2 and 7.1 construct lower witnesses, not new attaining
+encoders or physical isolation services.
+

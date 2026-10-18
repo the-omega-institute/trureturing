@@ -1,0 +1,64 @@
+**Theorem 12.1 (simultaneous slice resource frontier).** Consider the
+explicitly slice-restricted task, with public $D\ge1$ and
+$s\in\{2,3\}$, and otherwise the preparation, complete export,
+all-request reader and authentic-count requirements of Assumption 1.2.
+Fix an integer menu budget $b\ge0$ and put $c=\max\{N-b,0\}$.
+The minimum complete attained alphabet under $b_e\le b$ at every
+attained name is exactly
+
+$$
+M_{s,b}^{\rm slice}(D)=s^c.
+\tag{RRN.46}
+$$
+
+The minimum worst preparation Read count and letter sum are
+simultaneously $c$ and $Dc$. In fact every admissible procedure pays
+at least these two charges on every execution, and one procedure attains
+both on every execution. Thus, for integer upper budgets $m_0\ge1$,
+$Q,A\ge0$, the three upper bounds on names, preparation Reads and
+letters are jointly feasible exactly when
+
+$$
+m_0\ge s^c,\qquad Q\ge c,\qquad A\ge Dc.
+\tag{RRN.47}
+$$
+
+No bound on installed tables, local work or controller size is included
+in this equivalence.
+
+Proof. Theorem 11.2 applies unchanged to a correct slice reader. Its
+partition bound gives $s^N\le m_0s^b$, together with $m_0\ge1$.
+Its execution bound proves the two acquisition lower bounds.
+
+For simultaneous attainment, before any request Read exactly
+$a_1,\ldots,a_c$ and export their ordered $c$ symbols. Every one of
+the $s^c$ names is attained. The fixed public schedule pays exactly
+$c$ Reads and $Dc$ letters. Retain only the fixed-length symbol word;
+the paid export and isolation service removes all other accessible
+preparation dependence. For $c=0$ the name is constant and preparation
+makes no Read.
+
+After $p=Rq$ arrives, if $|q|<D-1$ its endpoint is a scaffold branch
+and has the constant branch trajectory. Otherwise $p=a_i$ for a unique
+slot. Use its retained symbol when $i\le c$, and otherwise Read the
+one actual word $a_i$ from the same stationary source. The three
+possible root trajectories are
+
+$$
+\begin{array}{c|ccc}
+\text{slot}&k=0&k=1&k\ge2\\\hline
+\alpha&\alpha&\beta&\mathsf{branch}\\
+\beta&\beta&\mathsf{branch}&\mathsf{branch}\\
+C_0&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}.
+\end{array}
+\tag{RRN.48}
+$$
+
+These follow directly from $\rho$; a pair remains a pair under every
+iterate. Equivalently their factors are $(2,1),(1,0),(0,0)$, as in
+Convention 2.1. Output that factor before the authentic count and use
+(RRN.4) afterwards with no more Reads. The menu at every name is
+exactly the $N-c=\min\{b,N\}$ unretained slot words. Its maximum
+late literal length is $D$ when a query occurs. This proves every
+upper assertion and the joint feasibility criterion. $\square$
+

@@ -1,0 +1,60 @@
+**Theorem 4.3 (Native all-finite affine-lift obstruction).** For every
+allowed $Z$, every fixed arbitrary preparation and initial interior height,
+and every finite $n\ge0$, Definition 4.1 has no solution.
+
+**Proof.** Use the common starting interval and displacement family
+
+$$
+I=(H/4,H/2),\qquad S=(0,H/4).
+$$
+
+For each $k\in I$, the canonical straight probability prefix from $k_0$
+to $k$ with $\chi$ fixed is lawful and has zero phase increments. Denote
+its actual current ray by $x_k=(k,0,0)$. For every $s\in S$ the appended
+leg stays in $(H/4,3H/4)$. Thus the same reachable open interval lies in
+every selected action domain, with a positive margin from both fiber ends.
+No limiting zero-support state or infinite history is used.
+
+Put $\delta=\delta_{02}$ and define the fixed linear functional on the
+original ten outputs by
+
+$$
+\ell(y)=\cos\delta\,y_{02,1}+\sin\delta\,y_{02,2}.
+$$
+
+Both $x_k$ and its probability continuation have $\beta=0$. Definition
+2.1 therefore gives, for every $k\in I$ and $s\in S$,
+
+$$
+\ell(y(T_sx_k))=2\sqrt Z\sqrt{k+s}.
+$$
+
+This is a consequence of the required full output, not a replacement task.
+It preserves the original factor of two and works for every fixed
+preparation.
+
+If the contract held, set $e_j(k)=E_j(x_k)$ and let
+
+$$
+W=\operatorname{span}_{\mathbb R}\{1,e_1,\ldots,e_n\}
+$$
+
+as a space of pointwise functions on $I$. Its dimension is at most $n+1$,
+even if every $e_j$ is irregular. For each $s\in S$ the two affine
+identities yield
+
+$$
+2\sqrt Z\sqrt{k+s}
+ =\ell(c)+\ell(D_*b_s)+(\ell D_*M_s)E(x_k).
+$$
+
+All coefficients on the right are constant in $k$. The constant function
+in $W$ accounts for both affine offsets. Since $Z>0$, this puts every
+function $\sqrt{k+s}$, $s\in S$, in $W$.
+
+Choose $n+2$ distinct displacements in the nonempty interval $S$.
+Lemma 4.2 makes their square-root responses linearly independent, whereas
+$\dim W\le n+1$. This contradiction proves the result, including $n=0$.
+The proof never differentiates the encoder or the update coefficients and
+needs no global translation theorem. $\square$
+

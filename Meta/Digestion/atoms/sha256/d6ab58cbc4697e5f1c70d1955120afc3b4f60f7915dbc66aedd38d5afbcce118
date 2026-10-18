@@ -1,0 +1,35 @@
+**定理 23.1（全部无固定一阶模纤维的锐二份偏置）。** 若 $A_1=0$，
+对任意 $s,t\in\mathcal F_R$，令 $d=|s|^2-|t|^2$，则
+
+$$
+\begin{aligned}
+\Omega_{s,2}-\Omega_{t,2}
+ &=d\bigl(|2,4\rangle\langle4,2|+|4,2\rangle\langle2,4|\bigr),\\
+\|\Omega_{s,2}-\Omega_{t,2}\|_1&=2|d|,\\
+b_2(s,t)&=\bigl||s|^2-|t|^2\bigr|,\qquad
+P_{\mathrm{succ}}^{(2)}=\frac{1+\bigl||s|^2-|t|^2\bigr|}{2}.
+\end{aligned}
+\tag{23.1}
+$$
+
+令 $|\psi_\pm\rangle=(|2,4\rangle\pm|4,2\rangle)/\sqrt2$、
+$P_\pm=|\psi_\pm\rangle\langle\psi_\pm|$。
+$d>0$ 时 $P_+$、$d<0$ 时 $P_-$ 达到偏置；
+$d=0$ 时所有二份效果的概率差均零。
+此外，对任意固定背景的实际 $s$，包括 $A_1\ne0$，都有
+
+$$
+\operatorname{Tr}(P_+\Omega_{s,2})=p_2p_4+|s|^2.
+\tag{23.2}
+$$
+
+证明。第一式直接相减 (22.7)。
+差分仅在 $\{|2,4\rangle,|4,2\rangle\}$ 上为
+$\left(\begin{smallmatrix}0&d\\d&0\end{smallmatrix}\right)$，
+其特征值是 $d,-d$，其余为零。
+两个特征 ket 的总电荷均为三，故所列效果允许；
+代入 (22.2) 即得精确归一化。
+式 (23.2) 只使用两个对角元 $p_2p_4$ 与交叉元 $|s|^2$，
+由 (22.3)–(22.5) 得到，不依赖背景其余条目。
+在 $A_1\ne0$ 的一般纤维上，(23.2) 只给一个读数，不声称它达到 $b_2$。证毕。
+

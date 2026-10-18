@@ -1,0 +1,89 @@
+**Definition 11.1 (the supplied root-first observer as a finite program).**
+For $P=\{L,R\}$ use Proposition 7.3 with the first-leaf capture of
+Definitions 3.1–3.2. First materialize $\varepsilon$, Read it and retain
+its constructor $b$. This is the invocation constructor by Assumption 10.1.
+If $b=\alpha$ or $b=\beta$, materialize and save the complete row of
+that one-leaf tree, with both cut addresses blocked at the root and an
+empty partition, and Return it. No capture is needed in this case.
+
+If $b=\mathsf{branch}$, retain that fact and start the full first-leaf
+capture from its own empty record and root stack. In particular, its
+first root Read is paid again; the earlier invocation Read is not silently
+installed as part of a validated traversal. Each stack literal, constructor
+reply, guard, failed-attempt decision and accepted finite tree is an
+actual retained finite record. On acceptance, construct $R_P(T)$ from
+the validated tree $T$, comparing its two full child subtrees structurally.
+Return that row after finite local output preparation. No step asks for
+an update count, a current epoch, subtree equality at the port, or a signal
+that interference has ended.
+
+The complete-row safety is precisely the supplied Proposition 7.3:
+if the invocation tree is $\langle x,y\rangle$, then any accepted tree
+is $T=\langle\rho^k x,\rho^k y\rangle$ for one actual $k\ge0$.
+Theorem 3.3 supplies that equality at its validation Read; homomorphism
+and injectivity from [GFT] and [STC] give
+
+$$
+x=y\quad\Longleftrightarrow\quad \rho^k x=\rho^k y.
+\tag{CNA.20}
+$$
+
+The observer computes the right side from its acquired tree; $k$ is only
+a semantic witness. Thus it returns the original two-hole exterior and
+its full partition, whether the children are equal or unequal.
+The branch case cannot become a leaf. In the leaf case the saved original
+row stays the invocation target even if the source later branches.
+Updates after validation or during Return preparation cannot change that
+target. This is an application of the existing positive construction,
+not another capture primitive or a newly claimed positive theorem.
+
+The finite-interference termination supplier is Theorem 5.2. Every attempt
+finishes; every failed validation charges a distinct actual update; the
+unknown finite update count bounds the number of failures. The observer
+does not wait for a notification or choose an iteration bound from that
+count. The initial Read and the final finite row computation add only
+finite observer work, so the same progress premise suffices.
+
+**Mathematical citation 11.2 (resource specialization of §§3–5).**
+Use the analytical $B,N_B,H_B,A_B,L,M,w_B$ of Definition 5.1 and
+Theorem 5.4, measured from the invocation source of this call.
+They are not supplied to the observer. On the branch case of
+Definition 11.1, $M=2$ and $L=4$. If capture completes $J$ attempts,
+with the actual $N_j,A_j,d_j$ of Definition 5.1, the exact Read and
+submitted-letter bills are
+
+$$
+\operatorname{Reads}=1+\sum_{j=1}^{J}(N_j+1),\qquad
+\operatorname{Letters}=\sum_{j=1}^{J}(A_j+d_j),\qquad J\le B+1.
+\tag{CNA.21}
+$$
+
+The leading Read is the invocation root Read, whose literal has length
+zero. All capture root rereads and leaf validations occur in the sum.
+Theorem 5.3 therefore gives bounds
+$1+(B+1)(N_B+1)$ and $(B+1)(A_B+H_B)$ respectively.
+An update between the invocation root Read and the start of capture
+is included in $B$ even if no failed attempt charges it.
+Every later visited address still belongs to $\operatorname{Pos}(\rho^B u)$,
+so these bounds remain valid without restarting their analytical origin.
+
+Theorem 5.4, with the extra retained constructor and initial operation,
+gives logical work
+$O((B+1)(N_B+A_B+H_B+1)+1)$ and peak storage
+$O(N_B+A_B+1)$ characters and bounded-index cells.
+These bounds include literal construction and delivery, all control,
+retries and discards, traversal and comparison stacks, a retained accepted
+full tree and certificate, optional certificate checking, and complete-row
+output materialization. The two-child partition includes both its true
+and false entries. Conservative bit bounds multiply these expressions
+by $O(w_B)$ as in Theorem 5.4. Dynamically represented indices are paid;
+no source-dependent word size is advice.
+
+The leaf case costs one Read, zero submitted letters and constant work
+and storage for these fixed cuts. The root shortcut costs no Read and
+constant row-output work and storage. Validated trees and certificates
+kept after the call continue to occupy their actual storage. Source-register
+space and the writer's global substitution work remain separate costs.
+These are upper bounds for this supplied implementation, with no claim
+of sharp workspace or optimal bit work.
+

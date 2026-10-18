@@ -1,0 +1,22 @@
+**Theorem 94.1 (the original block at 81).** Put
+
+$$B=B_{81}=L_{81}^2+3=7177905237579946589743592924684179.$$
+
+There are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and
+
+$$B_{81k}=Bc^2.$$
+
+**Proof.** The complete factorization in §89 makes $B$ squarefree, and the descent calculation in §90 gives $\operatorname{rank}E_B(\mathbb Q)=1$. Suppose such a repetition exists. The actual Kummer and primitivity argument of §92 gives $K=mR$ and $a=|m|$ with $a^2>B$. The explicit estimates in the proof of Theorem 93.1 give, for $s=\log B$,
+
+$$a<10^{30}s^{5/2},\qquad \log|\Lambda|\le-\frac{a^2s}{6}, \tag{94.1}$$
+
+where $\Lambda\ne0$ is a principal real logarithm of the multiple on
+
+$$y^2=x^3-8775B^2x-236250B^3.$$
+
+Since $10^{33}<B<10^{34}$ and $\log10<5/2$, one has $40<s<85<100$. Therefore
+
+$$a<10^{35}<M:=10^{40},\qquad \frac{a^2s}{6}>B>10^{33}. \tag{94.2}$$
+
+We will obtain incompatible lower and upper bounds for $|\Lambda|$.
+

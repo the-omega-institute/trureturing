@@ -1,0 +1,43 @@
+**Theorem 6.4 (actual later paid recovery).** Under Assumption 1.3, for
+every accepted selector actually acquired at a reached authentic cover,
+the above finite flight obtains receiver-acquired $c$ and $p$, uses a
+current owner-authorized Call, delivers precisely the selected actual
+old prefix/raw endpoint at73, and completes check, ACK, mailbox and
+invocation return to $R_r$. Any finite sequence of these returning
+flights and returning auxiliary source cycles stays on the same prepared
+source. History service preserves its current $h,K$, source packet,
+historical guards, old handles and parked original client.
+
+Proof. Theorem 5.6 constructs $k$ in the cover interval from the acquired
+selector. Theorem 4.2 gives its exact $I_k$ and endpoint to Issue. Every
+package field, including the full selector, anchor, source/code binding
+and target, is copied to newly sealed backing. ARC Proposition 7.4's
+positioned two-copy induction applies to these concrete serialized words:
+each sender bit equals its mailbox bit and receiver bit, and final seal/
+TOK establishes the actual receiver right. Definition 6.2 retains its
+placement-before-bank-work and F-bounded callback hypotheses. Clearing
+$c,p$ before import ensures the next stage consumes the delivered value.
+Comparison of the whole expected binding precludes changing just its
+offset, occurrence, cover or source while retaining a small numeric id.
+
+Call uses its immutable package, not current source or a newer input
+suffix; Prefix therefore gives the same old endpoint. Its image includes
+old live-token bits only as data. The current phase TOK, not any serialized
+permission or old authentic origin, enables Call and the later receiver
+read. All native serialization, printing and final checks occur at later
+cuts outside the represented old state. The final ACK, M append and token/
+Ready rows are explicit finite work. Definition 6.3 gives the same finite
+return for completed typed rejections.
+
+Theorem 4.2's completed-predecessor induction is now closed: both binders
+consume finite copied words, the source search consumes at most $b$ marks,
+Issue/Call have finite $k$ countdowns, and all channel loops have already
+constructed finite bounds. Earlier services are reconstructed as literal
+rows under the strictly shorter predecessor induction. Annex work changes
+no old private/source writer or original client/verifier/consumer role.
+Closed initial/CaptureCAP imports restore26/28/29 as ARC proves. The real
+source operations may grow or modify it by CAP's genuine cases; the
+history operation itself does neither. Reestablishing the parked entry
+retains actual new meter/bank/head values, rather than undoing paid work.
+Induction over any finite returning cycle list proves the statement. ∎
+

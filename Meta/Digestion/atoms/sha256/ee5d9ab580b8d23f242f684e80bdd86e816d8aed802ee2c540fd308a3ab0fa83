@@ -1,0 +1,63 @@
+**Theorem 78.9 (full joint dynamics on aligned actual inputs).** Fix any $\Psi\in\mathcal X$, any fixed auxiliary Hilbert space and any actual input family
+$u_\varepsilon\in\mathcal P_\varepsilon^{\rm a}\otimes\mathcal F_H\otimes\mathcal A$
+satisfying
+
+$$
+\|\iota_\varepsilon u_\varepsilon-\ell_\varepsilon\Psi\|
+                 \longrightarrow0.
+\tag{78.44}
+$$
+
+No field-number, energy, vacuum or product-input condition is imposed on this fixed vector. For every finite $T\ge0$,
+
+$$
+\sup_{|t|\le T}
+\|\iota_\varepsilon e^{-it\mathsf M_\varepsilon}u_\varepsilon
+       -\ell_\varepsilon e^{-it\mathsf M_D}\Psi\|
+                 \longrightarrow0 .
+\tag{78.45}
+$$
+
+The reference evolves by $e^{-it\Omega h}$ on every field state, including its correlations with particle and auxiliary branches.
+
+**Proof.** First establish the continuous functional calculus actually needed on these varying carriers. For a continuous compactly supported $f$ on $\mathbb R$, restrict to the common spectral half-line $[-L_0,\infty)$ and define
+$g(t)=f(t^{-1}-\sigma)$ for $t>0$, $g(0)=0$, on $[0,b_*]$. It is continuous at zero. Approximate $g$ uniformly by polynomials with zero constant term: subtract the value at zero from any ordinary polynomial approximation. Products of either zero-extended shifted resolvent equal the corresponding lifted powers, because $\iota_\varepsilon^*\iota_\varepsilon=I$ and $\ell_\varepsilon^*\ell_\varepsilon=I$. The norm convergence in(78.29), polynomial telescoping, and uniform approximation therefore prove
+
+$$
+\left\|\iota_\varepsilon f(\mathsf M_\varepsilon)\iota_\varepsilon^*
+       -\ell_\varepsilon f(\mathsf M_D)\ell_\varepsilon^*\right\|
+                       \longrightarrow0 .
+\tag{78.46}
+$$
+
+Only functions vanishing at infinity are used here; assigning the wrong value to the zero complement would invalidate this argument.
+
+Choose continuous $0\le\chi_m\le1$ with compact support and $\chi_m=1$ on $[-m,m]$, tending pointwise to one. The target spectral theorem gives
+$\|(I-\chi_m(\mathsf M_D))\Psi\|\to0$.
+For each fixed $m$, the family
+$f_{m,t}(x)=e^{-itx}\chi_m(x)$, $|t|\le T$, is compact in the uniform norm: it is continuous in $t$ uniformly on its fixed compact support. A finite uniform net, the functional calculus contraction and(78.46) prove its convergence uniformly for $|t|\le T$.
+
+Here is the complete tail passage, retaining the actual input. Write
+$v_\varepsilon=\iota_\varepsilon u_\varepsilon$,
+$d_\varepsilon=\|v_\varepsilon-\ell_\varepsilon\Psi\|$,
+$b_m=\|(I-\chi_m(\mathsf M_D))\Psi\|$,
+and let $\alpha_{\varepsilon,m}$ and $\beta_{\varepsilon,m,T}$ denote the norms in(78.46) for $\chi_m$ and the supremum for $f_{m,t}$. The actual high-energy tail satisfies
+
+$$
+\|\iota_\varepsilon(I-\chi_m(\mathsf M_\varepsilon))u_\varepsilon\|
+       \le2d_\varepsilon+b_m+\alpha_{\varepsilon,m}\|\Psi\|.
+\tag{78.47}
+$$
+
+Indeed subtract $\ell_\varepsilon\Psi$, use the cutoff comparison on that vector, and then add the target tail; the cutoff operator has norm at most one. The low-energy time comparison is at most
+$d_\varepsilon+\beta_{\varepsilon,m,T}\|\Psi\|$.
+Unitarity on the actual carrier preserves the actual tail norm, and target unitarity preserves $b_m$. Therefore the left side of(78.45) is at most
+
+$$
+3d_\varepsilon+2b_m+
+       (\alpha_{\varepsilon,m}+\beta_{\varepsilon,m,T})\|\Psi\|.
+\tag{78.48}
+$$
+
+First let $\varepsilon\downarrow0$ with $m$ fixed, and then $m\to\infty$. This proves(78.45) for every full target joint vector. The cutoffs are proof approximations removed by the last limit, not a changed target, a final cutoff, an input moment promise or a physical control. All arguments are on full tensor spaces, so arbitrary auxiliary and reference correlations are retained. On the reference the couplings and kinetic operator are zero by definition, proving its stated full field evolution. $\square$
+

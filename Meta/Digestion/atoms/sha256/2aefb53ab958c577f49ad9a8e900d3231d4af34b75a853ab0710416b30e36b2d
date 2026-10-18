@@ -1,0 +1,52 @@
+**Theorem 72.2 (Exact intrinsic maximum-charge moments).** Under (71.4), for
+every $x$ and every charge of Definition 72.1,
+
+$$
+\begin{aligned}
+\min_{A\in\mathcal A(\lambda)}\mathsf E_A Z_{c,A,x}
+ &=\sum_{i\ge1}\Delta c(i)r_x(i-1),\\
+\min_{A\in\mathcal A(\lambda)}\sup_x\mathsf E_A Z_{c,A,x}
+ &=\sup_x\sum_{i\ge1}\Delta c(i)r_x(i-1).
+\end{aligned}
+\tag{72.2}
+$$
+
+All sums and expectations are nonnegative extended real numbers. The one
+acquisition $A^+$ of Theorem 71.3 attains these minima for all $x,c$
+simultaneously. For cumulative charges one always has $S_{c,A,x}\ge Z_{c,A,x}$,
+and the same prefix acquisition satisfies the distinct formula
+
+$$
+\mathsf E_{A^+}S_{c,A^+,x}=\sum_{i\ge1}c(i)r_x(i-1).
+\tag{72.3}
+$$
+
+In particular a uniformly finite expected maximum charge exists exactly when
+the second right-hand side of (72.2) is finite. The supremum in that formula
+remains outside the sum; $\sum_i\Delta c(i)\Omega_\lambda(i-1)$ is an upper
+bound, not an asserted equality for a general selected family.
+
+**Proof.** For any $M\in\mathbb N_0\cup\{\infty\}$, telescoping gives
+
+$$
+c(M)=\sum_{i\ge1}\Delta c(i)\mathbf1_{M\ge i}.
+\tag{72.4}
+$$
+
+At $M=\infty$ the identity uses the unboundedness of $c$. Tonelli's theorem
+and (71.5) now give
+
+$$
+\mathsf E_A Z_{c,A,x}
+=\sum_{i\ge1}\Delta c(i)\mathsf P_A\{M_{A,x}>i-1\}
+\ge\sum_{i\ge1}\Delta c(i)r_x(i-1).
+$$
+
+Equation (71.8) gives equality for the same $A^+$ at every source and charge.
+Taking a source supremum after this sourcewise equality proves the second
+line of (72.2), without interchanging a supremum and a sum. At finite handoff
+the largest requested charge is at most the sum of all requested charges;
+the convention makes the inequality true also on nonhandoff. Finally, the
+prefix acquisition requests index $i$ exactly on $\{L_x\ge i\}$, and requests
+it once. A second application of Tonelli and (71.8) proves (72.3). $\square$
+

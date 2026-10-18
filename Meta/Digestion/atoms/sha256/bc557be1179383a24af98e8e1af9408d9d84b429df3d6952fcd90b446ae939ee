@@ -1,0 +1,36 @@
+**Theorem 11.2 (conditional actual scale and profile alternatives).** The following statements concern each fixed original admitted datum satisfying the standing antecedents.
+
+If $C_{\rm resp}<0$, then
+
+$$
+\epsilon_c(s)=C_{\rm resp}s^2+o(s^2),\qquad
+r_s\sim(-C_{\rm resp})s^{-6}\to\infty.
+\tag{11.2}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice, $\operatorname{dist}(F_{s_n},\mathcal O_c)\to0$. Equivalently every such chosen family converges to that orbit as $s\downarrow0$.
+
+If $C_{\rm resp}>0$, there exist fixed-data constants $0<c\le B<\infty$ and $s_0>0$ such that for all $0<s<s_0$,
+
+$$
+c\le r_s\le B,\qquad -\epsilon_c(s)=\Theta(s^8),\qquad -E_s=\Theta(s^6).
+\tag{11.3}
+$$
+
+For every prescribed sequence and every actual normalized complex ground-state choice, every fixed positive-measure compact $K$ gives the strictly positive orbit defect (3.10) with this $B$. Every subsequence has a weakly convergent further subsequence of the form $cp$, whose coefficient satisfies (3.10). Neither the coefficient of the energy on the $s^8$ rescaled scale nor a replacement actual profile is identified.
+
+If $C_{\rm resp}=0$, the established conclusions are
+
+$$
+E_s\to0,\qquad c\le r_s=o(s^{-6}).
+\tag{11.4}
+$$
+
+Bounded, divergent, or mixed subsequential behavior of $r_s$ remains undecided; (3.9) still governs each actual sequence to which it applies.
+
+Proof. A negative response makes (11.1) a strictly negative limit. The identities (3.5) give (11.2), and (3.9) gives convergence for every actual choice.
+
+For positive response, if $r_s$ had no eventual finite upper bound, one could select $s_n\downarrow0$ with $r_{s_n}\to\infty$. Choose any actual ground states on this sequence. Equivalence (3.9) gives the unit orbit, whereas Theorem 10.1 gives $\liminf E_{s_n}\ge C_{\rm resp}>0$, contradicting native negativity. Thus $r_s\le B$ eventually. The independent macroscopic one-sided bound supplies $r_s\ge c>0$, proving (11.3). The actual bounded-$r$ theorem (3.10) gives the stated defect and weak-limit restrictions for every choice. This is an actual lower argument, rather than failure of an affine or corrected trial.
+
+At response zero, (11.1) and (3.5) give (11.4), with the positive lower bound again from (3.8). A vanishing unscaled energy has no implication deciding boundedness versus divergence after division by $s^6$. No occurrence of either nonzero-sign case or of response zero is established merely by listing these alternatives. $\square$
+

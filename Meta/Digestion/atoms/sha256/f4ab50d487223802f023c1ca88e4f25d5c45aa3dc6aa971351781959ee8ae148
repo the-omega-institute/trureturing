@@ -1,0 +1,17 @@
+**Definition 8.16 (Depth in the single-position menu).** A depth-$m$
+setting is a product
+
+$$
+U=R_{i_m}(\beta_m,t_m)\cdots R_{i_1}(\beta_1,t_1),
+\tag{8.33}
+$$
+
+with no intermediate measurement and with a final full word measurement.
+The rightmost factor acts first. Phases, angles and repeated positions
+are arbitrary within this menu. Depth counts sequential pulse calls;
+it does not count simultaneous gates, preparations or settings. A
+coherence $\rho_{uv}$ enters the probability of outcome $w$ with complex
+coefficient $U_{wu}\overline{U_{wv}}$, paired with its conjugate term.
+A nonzero coefficient means a suitable real or imaginary variation of
+that coherence can change that probability.
+

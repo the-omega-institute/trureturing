@@ -1,0 +1,14 @@
+**定义 21.1（Single-label batches with unrestricted coincidences）。** In Definition 19.1 choose a baseline $A\in Y$ and arbitrary subsets $O_t\subseteq K_t$ for $1\le t\le Q$, including empty and full sets. Each nonempty $O_t$ carries one label $B_t\ne A$. Different $B_t$ may coincide, and may equal $D,E,R,L_\bot$. Put
+
+$$
+\lambda(j)=B_t\quad(j\in O_t),\qquad
+\lambda(j)=A\quad(j\in Z\setminus\bigcup_{t=1}^QO_t),
+\qquad \lambda(0)=D\ne E=\lambda(m),
+$$
+$$
+B=\sum_{t=1}^Q|O_t|.
+\tag{21.1}
+$$
+
+The slots are disjoint; in particular every adjacent-window boundary $h_t$ has label $A$. This is a hypothesis about actual phases and INITIAL labels, not merely about the number of nonbaseline labels. The terminal slot $K_Q$ has both the high-end and wrapped low-end parts in (19.5).
+

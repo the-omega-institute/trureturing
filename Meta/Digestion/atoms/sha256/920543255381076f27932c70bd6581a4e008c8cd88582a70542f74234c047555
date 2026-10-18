@@ -1,0 +1,54 @@
+**Theorem 72.1 (prefix and mass-weighted transfer).** Consider a fixed
+finite-depth adaptive instrument with genuine classical prefix records,
+on fixed full intermediate matrix blocks. Let the two implementations
+have stage channels $T_{k,h}$ and $S_{k,h}$ at depth $k$ and prefix
+$h$, each complete and TP on the entire incoming block. Suppose their
+complete reference-safe HALF distances are at most $\varepsilon_{k,h}$.
+Pad stopped paths by identity to a common finite depth $N$. For a
+normalized joint input $X$ let $p_S(h|X)$ be the unnormalized mass of
+prefix $h$ obtained using the $S$ stages before depth $k$. Then
+
+$$
+\begin{aligned}
+d_{\rm ref}(\Phi_T,\Phi_S)
+&\le\sup_{R,X}\sum_{k=1}^N\sum_{h\text{ at }k}
+          p_S(h|X)\varepsilon_{k,h}\\
+&\le\sum_{k=1}^N\max_{h\text{ at }k}\varepsilon_{k,h}.
+\end{aligned}
+\tag{JRH.76}
+$$
+
+For a specified causal-prefix output, the same estimate holds if each
+stage ending or truncated at that cut satisfies its corresponding
+complete bound on the actual prefix output, retaining stopped branches
+and survivors together. A terminal-stage bound alone is not a bound
+on its earlier causal prefixes.
+
+Proof. Replace one depth at a time, with the $S$ prefix, one differing
+stage, and the $T$ continuation. Their difference is the finite
+composition telescoping sum. A genuine prefix record is a classical
+direct sum, so its input is $\bigoplus_hX_h$, where $X_h\succeq0$
+includes the reference and $\operatorname{tr}X_h=p_S(h|X)$.
+Homogeneity of the complete stage bound gives
+
+$$
+\tfrac12\|[(T_{k,h}-S_{k,h})\otimes\operatorname{id}_R](X_h)\|_1
+ \le\varepsilon_{k,h}\operatorname{tr}X_h.
+\tag{JRH.77}
+$$
+
+If the trace is zero, positivity gives $X_h=0$ and this contribution
+is zero. For a positive trace this is just the bound on $X_h$ divided
+by its trace, multiplied back; the construction never postselects or
+physically divides a branch by its mass. The norm of a classical direct
+sum is the sum of its block norms. Every subsequent complete TP
+continuation contracts Hermitian trace norm, including after tensoring
+$I_R$. Summing the hybrid differences yields the first bound in
+(JRH.76). At each depth prefix masses sum to at most one, with stopped
+identity paths contributing zero error, proving the second. For a prefix
+output apply the same argument to the stages ended or truncated at that
+cut, using their assumed prefix bounds and complete survivor/stopped
+interfaces. This does not assert a bound for
+normalized rare-event conditional outputs without a mass lower bound.
+$\square$
+

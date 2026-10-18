@@ -1,0 +1,23 @@
+**Lemma 8.1 (Finite discrepancy controls probability distance).** If $p,r$ are band-compatible on $K=K_m^{a,b}$, then
+
+$$
+\mathcal D_K(p\Vert r)\ge\frac{6^{-4m}}{2m}\|p-r\|_1^2.
+\tag{8.1}
+$$
+
+Proof. Write $t_w=r_w/p_w$ and $\alpha=6^{-m}$. At an insertion edge $u\to v$, its exact contribution to (3.1) is
+
+$$
+\frac{(p_up_v)^2(t_u-t_v)^2}{(p_u+p_v)(r_u+r_v)^2}
+\ge\alpha^4(t_u-t_v)^2,
+\tag{8.2}
+$$
+
+because all compatible masses are at least $\alpha$ and both pair sums are at most one. Any two words can be joined by deleting ones and then inserting ones through $0^m$, in at most $2m$ edges. Removing repetitions gives a simple path. Cauchy–Schwarz on it yields
+
+$$
+(\max_wt_w-\min_wt_w)^2\le\frac{2m}{\alpha^4}\mathcal D_K(p\Vert r).
+$$
+
+Since $\sum_wp_wt_w=1$, the number one lies between the minimum and maximum ratios. Therefore $\|p-r\|_1=\sum_wp_w|1-t_w|\le\max t-\min t$, proving (8.1). If $K$ is a singleton, $p=r$ and the conclusion is immediate. $\square$
+

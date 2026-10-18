@@ -1,0 +1,21 @@
+## 12. Sources, mathematical increment and evidence status
+
+**Source statement 12.1 (Reused results and the source-specific increment).** The supplied mathematical source is [Auric FIB-ATOM: compound communication and calibration](AURIC_FIB_ATOM_HIDDEN_RELATIONS_COMPOUND_COMMUNICATION_AND_CALIBRATION.md). The correspondences are:
+
+| Supplied scope | Reused result and present boundary |
+| --- | --- |
+| C-116.1–C-116.2, C-117.2, C-121.1 | Original coordinates, cut, actual sources, target/Choi correspondence and full-complex program contract; Section 1. |
+| C-121.2–C-121.3 | Fixed six-outcome experiment, actual $D_m$, signed expectations, reference norm and whole-algebra instrument form; Sections 2–3. |
+| C-122–C-123 | Unrestricted contraction converse, zero-noise optimum, boundary values, fixed-diagonal upper bound and bounded-variable estimate; Sections 3, 4 and 7. |
+| C-124 | Fresh-batch tensor law, reused-record failure, shared-calibration service, paid qubit/flag route and five-copy endpoint value; Sections 8–10. |
+| C-120, C-125–C-128 | Preparation, exact-control, native-carrier and verification boundaries; Section 11.2. |
+| N1, Sections 5–6 | Joint-tie probability $R_m$ and scalar-diagonal redistribution with error $[c-K_mD_m]_+$; a lawful construction with at most nine responses. |
+| N2, Section 7 | Simple certificates where N1 is optimal, direct one-copy realization $e_1=3c/5$ and response-specific finite exactness budget. |
+| N3, Section 8 | Five-copy exactness points beyond the fixed-diagonal test for every sufficiently small positive noise; an explicit continuity consequence with credited endpoints. |
+
+The source-specific increment in Propositions 2.3 and 3.1 and Theorem 4.1 is the actual-word first-occurrence bridge, separate conditional diagonal budgets for the two disjoint original pairs, and their simultaneous attainment of the unrestricted converse for every finite copy count and all parameters. Section 11.1 gives the explicit two-copy value and strict gain over N1 throughout its residual region. Corollary 4.2 gives the necessary-and-sufficient exactness test, the exact minimum prescribed-copy threshold and a sufficient finite bound. The Kraus implementation and fresh/shared distinction are applied to these pair-specific responses in Sections 9–10. This is `repo-derived` ordinary mathematical synthesis. The supplied contraction lower bound, zero-noise results, concentration estimate, endpoint values, N1–N3 and block/resource distinctions are credited rather than counted again as new results.
+
+**Method statement 12.2 (Mature methods and evidence ceiling).** Choi positivity, Kraus decomposition, trace-norm contraction, diamond-norm ancillary stability and telescoping are standard finite-dimensional channel tools. The probability identities use finite product laws, multinomial algebra and permutation symmetry. The first-occurrence bridge uses only a deterministic grouping of the same actual words. The bounded-mgf argument is the elementary Hoeffding method, with its constants proved here. Continuity and the intermediate value theorem supply N3. These mature methods are credited, not presented as newly invented generic theorems.
+
+No primary literature or nested source is claimed independently verified here, and no exhaustive originality search or global novelty conclusion is asserted. The mathematical claims rest on the complete ordinary proofs in this volume under its stated supplied-service assumptions. They do not carry a Lean/kernel certificate.
+

@@ -1,0 +1,29 @@
+**Corollary 4.1 (local recovery boundary of the rectangle).** Fix $P,N,r$ as above and any old-target observation $v(D_a)$. Let $z:\mathcal X_{P,N,r}\to Z$ be a supplement. Then the following are the exact restricted conditions.
+
+For an old-target observation alone, augmented by $z$,
+
+$$
+\bigl(v(D_a),z(x)\bigr)=\bigl(v(D_a),z(y)\bigr)
+\Longrightarrow Q(x)=Q(y)
+$$
+
+holds for all $x,y$ in the family if and only if $z$ is injective on all $N2^r$ members. This condition also gives equality of the two restricted kernels.
+
+If the received cover number is already retained, $(v(D_a),c,z)$ is sufficient if and only if, for every fixed $j$, the map $w\mapsto z(x_{j,w})$ is injective. The same fixed-$j$ condition is necessary and sufficient for $(P_A^+,z)$ on this family.
+
+Consequently a fixed-width binary supplement to a target-only observation requires and can attain exactly
+
+$$
+r+\lceil\log_2 N\rceil
+$$
+
+logical bits. If $c$ or $P_A^+$ is already retained, exactly $r$ further logical bits are necessary and sufficient. These are statements about finite realized observations on $\mathcal X_{P,N,r}$, not physical storage minima or initialized acquisition procedures.
+
+Proof. Theorem 3.1 makes $Q$ injective on this explicit family and the target-only observation constant. Thus any collision of $z$ at different family members is precisely a failure of sufficiency. Conversely, injectivity gives the same member whenever augmented observations agree, and therefore its complete original response map agrees. This is the existing fibre criterion, rather than a new general factorization theorem; compare the repository's `realized_image_unique_factorization_iff_reverse_kernel` and pinned mathlib's `Function.factorsThrough_iff` cited in Definition 7.1.
+
+Received $c$ distinguishes different $j$ and is constant within a fixed $j$. The strengthened $P_A^+$ also distinguishes different $j$ by its meter and is constant within a fixed $j$ by Theorem 3.1. Each augmented observation therefore needs exactly an injective supplement on each displayed payload fibre. The actual joint selection $W_r$ supplies such a supplement mathematically. In particular no clock, finite phase, pending-bit or previously acquired-package enrichment alone repairs the fixed-$j$ collision; all are already in $P_A^+$.
+
+For binary width $b$, injectivity on the whole family requires $2^b\ge N2^r$, equivalently $b\ge r+\lceil\log_2N\rceil$. Encode $c-c_*=j-1$ in $\lceil\log_2N\rceil$ bits and concatenate $w$ to attain this width. For $N=1$ the first field is empty. When $c$ or $P_A^+$ is already retained, a fixed fibre still contains $2^r$ different required responses, so $b\ge r$; $W_r$ attains the bound. This is the elementary finite-fibre count already used in AIF and UAS Theorem 5.5. Its application here uses Theorem 3.1's additional same-initialization recovery axis.
+
+Neither $N$ nor this finite comparison code is installed future advice. A decoder on this finite realized image can associate its unique member with that member's $Q$ map. This mathematical inverse asserts no actor implementation, no update descending through the supplement, and no sufficiency on any forward closure of the family. ∎
+

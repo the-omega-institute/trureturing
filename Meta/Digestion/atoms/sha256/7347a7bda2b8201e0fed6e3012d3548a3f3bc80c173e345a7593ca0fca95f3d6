@@ -1,0 +1,55 @@
+**定义 58.1（The pre-zero prefix price and admissibility）。** Fix a free initial value $v$. Choose $q\in\{0,\ldots,p-1\}$. The principal pre-zero path is $q$ words $11$, all with difference zero, so its actual supports are (56.6). Require, for every $0\le t<q$,
+
+$$
+\begin{gathered}
+F_v\text{ nonconstant on }U_t\times[0,h_t),\\
+F_v\text{ constant on }U_t\times[h_t-2,h_t).
+\end{gathered}
+\tag{58.1}
+$$
+
+The second condition decodes the one actual rejection endpoint of that word. Set
+
+$$
+\Delta_v(q)=\max\left(
+\{q\}\cup\{1+\chi_v:q>0\}\cup
+\{t+1+\eta_v(2t+2,t+1):1\le t<q\}
+\right).
+\tag{58.2}
+$$
+
+If any displayed price is infinite, this prefix is inadmissible. For $q=0$ the two extra sets are empty and $\Delta_v(0)=0$. The quantity is absolute depth from the original initial reading, not a sum of sibling fees. The $q$ term includes every pre-zero rejection depth $t+1\le q$.
+
+There are two terminal choices on this principal path.
+
+A **pre-zero stop** is allowed when $F_v$ is constant on $U_q\times[0,h_q)$. Its complete candidate fee is $\Delta_v(q)$. This includes $q=0$ and all successful-fibre zero-fee cases.
+
+A **first-zero parent** is allowed only on a nonconstant $U_q\times[0,h_q)$. Choose $B_q\in\{00,01,10\}$, and put $r=0$ for $00,01$, $r=1$ for $10$. Require
+
+$$
+\begin{aligned}
+&F_v\text{ constant on }U_q\times[h_q-r,h_q),\\
+&F_v(j,s)=F_v(j,0)
+\quad(j\in U_q,\ 0\le s<h_q-r).
+\end{aligned}
+\tag{58.3}
+$$
+
+For $r=0$ the first set is empty and imposes no label. Write $\lambda_v(j)=F_v(j,0)$ on $U_q$, and let
+
+$$
+A=U_q\cap E_q(B_q),\qquad Z=U_q\setminus E_q(B_q),\qquad b=q+1.
+\tag{58.4}
+$$
+
+The successful parent has common tail $\rho=0$ for $00,10$, and $\rho=1$ for $01$. Assign $A$ its exact additional price $\delta(A,B_q)$ in (55.3). Choose one priced literal spine of Definition 57.1 from the actual zero child $(b,Z,\rho,\lambda_v|_Z)$, with absolute price $\Pi$. Its complete candidate fee is
+
+$$
+M=\max\{\Delta_v(q),\ q+1,\ q+1+\delta(A,B_q),\ \Pi\}.
+\tag{58.5}
+$$
+
+If $A$ is empty, its term is just the already included $q+1$, without an execution. If $Z$ is empty, use its vacuous empty spine with $\Pi=q+1$. These conventions do not create observations on an empty source. A parent's bottom child, when nonempty, stops at depth $q+1$ with the common label of its rejected rectangle in the first line of (58.3).
+
+Let $\mathcal C_v$ contain all pre-zero-stop and first-zero-parent candidate fees just defined that are at most $k$. In particular every chosen post-zero spine has $L\le k$, and every priced side completion also ends by $k$. This is a finite set specified by tail-table comparisons, $q$, and one sequence of at most $k-q-1$ literal words. It contains no off-spine adaptive optimization.
+

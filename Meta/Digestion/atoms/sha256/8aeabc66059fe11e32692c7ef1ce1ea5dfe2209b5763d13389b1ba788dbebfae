@@ -1,0 +1,106 @@
+**Theorem 269.2 (The minimum over the entire fibre).**
+For the fibre (269.1),
+
+$$
+\min_{Q(Y)=(\beta;K),\,Y\ge0}\Delta_N(Y)
+=\min_{Q(Y)=(\beta;K),\,Y\ge0}\Delta_O(Y)=\frac{4s}{3}.
+\tag{269.2}
+$$
+
+The score $V_{s,h}$ in the following table attains both minima.
+Multiply the coefficient column by $s$, except that the coefficient
+of $C_{1111100}$ is $h$; all unspecified coefficients are zero.
+
+| Type | Seven-bit word | Coefficient |
+| --- | --- | --- |
+| $A$ | $0101110$ | $2/3$ |
+| $A$ | $0111010$ | $1/3$ |
+| $P$ | $1001101$ | $2/3$ |
+| $P$ | $1011010$ | $1/3$ |
+| $C$ | $1101101$ | $1/3$ |
+| $C$ | $1101110$ | $2/3$ |
+| $A$ | $1110011$ | $1/3$ |
+| $A$ | $1110100$ | $2/3$ |
+| $C$ | $1111010$ | $1$ |
+| $C$ | $1111100$ | $h$ instead of $s$ |
+| $C$ | $1111110$ | $1$ |
+
+**Proof.**
+For a lower bound on every full score, use the one stopped law
+with weight $1/3$ on each of
+$O(1,3;0,3,0)$, $O(2,3;0,3,0)$,
+$O(3,k;0,k,m)$. Put $e^0=1/3$ and set
+$b^0_1=b^0_2=0$, $b^0_3=1$,
+$b^0_k=b^0_m=2/3$, $b^0_\ell=1/3$, all other $b^0_i=0$.
+This is an algebraic row test, without an order or $H_L$ assertion.
+
+On every first-zero-1 or first-zero-2 word, its own early table
+outputs zero. If bit 3 is zero the third table also does; if bit 3
+is one the other early table does. Thus base mass is at least $2/3$
+and no table emits 1 or 2. On class 3 the law is
+$\frac13 e_0+\frac23e_3$. On classes $k,m$ it is respectively
+$\frac23e_0+\frac13e_k$ and $\frac23e_0+\frac13e_m$.
+On every other class after 3, the first two tables output zero,
+so base and union mass are at least $2/3$. The class $\ell$
+has correct demand zero; all other unused correct demands are
+negative. Positive base mass is $2/3$. Hence this single law
+dominates every independent demand at $(b^0,e^0)$, on every suffix.
+For every full $Y\ge0$, weak duality in the coordinates of
+Sections 198–199 therefore gives
+
+$$
+3\Delta_O(Y)\ge
+-3\beta_1-3\beta_2+3\beta_3+2\beta_k+\beta_\ell+2\beta_m-K.
+\tag{269.3}
+$$
+
+Substitution of (269.1) makes the right side $4s$.
+For the displayed template, its $A$ totals are $s$ in classes
+1 and $r$, its $P$ total is $s$ in class 2, and its $C$ totals
+are $s,s,h,s$ in classes $3,k,\ell,m$. Thus its quotient is
+(269.1) and $W=2s$.
+At $s=h=1$, the complete four-cell maxima over all eight labels
+are as follows. The entries are in order $00,01,10,11$.
+
+| Pair | Template $N$ cell maxima |
+| --- | --- |
+| $1,2$ | $(0,1,1,1)$ |
+| $1,3$ | $(2/3,1/3,1,4/3)$ |
+| $1,4$ | $(0,1,1,1)$ |
+| $1,5$ | $(1/3,2/3,1,4/3)$ |
+| $1,6$ | $(0,1,4/3,1)$ |
+| $1,7$ | $(1,0,1,1)$ |
+| $2,3$ | $(2/3,1/3,1,4/3)$ |
+| $2,4$ | $(0,1,1,1)$ |
+| $2,5$ | $(1/3,2/3,1,4/3)$ |
+| $2,6$ | $(2/3,1/3,1,4/3)$ |
+| $2,7$ | $(1/3,2/3,5/3,1/3)$ |
+| $3,4$ | $(0,4/3,1,1)$ |
+| $3,5$ | $(0,4/3,1,1)$ |
+| $3,6$ | $(2/3,2/3,1,1)$ |
+| $3,7$ | $(2/3,2/3,4/3,1/3)$ |
+| $4,5$ | $(1/3,2/3,1,4/3)$ |
+| $4,6$ | $(2/3,1/3,1,4/3)$ |
+| $4,7$ | $(2/3,1/3,4/3,2/3)$ |
+| $5,6$ | $(0,1,4/3,1)$ |
+| $5,7$ | $(1,1/3,4/3,2/3)$ |
+| $6,7$ | $(1,2/3,4/3,1/3)$ |
+
+For a fixed pair $i<j$, each entry is
+$\max_{u\in J_7}\sum_{w:(w_i,w_j)=ab}g_V(w,u)$.
+Every row sum is at most $10/3$. Empty and each singleton support
+are 3. These sums exhaust all complete $N$ tables.
+Decreasing $h$ from $s$ removes nonnegative reward with zero anchor
+contribution, so homogeneity gives $B_N(V_{s,h})\le10s/3$ and
+$\Delta_N(V_{s,h})\le4s/3$. If $s=0$, then $h=0$ and $V=0$.
+The lower bound (269.3), and $O\subset N$, force equality.
+
+After embedding, inactive addresses are constant one on all scored
+words and give only empty or singleton information. Labels outside
+the embedded set have zero reward, while remaining legal outputs.
+Thus the same support proof applies at arbitrary permitted gaps.
+For any full input $y$ in this fibre with $\Delta_O(y)\le1$,
+(269.3) forces $s\le3/4$. The single choice $V=V_{s,h}$,
+$\theta=0$ then has $\Delta_N(V)=4s/3\le1$ and
+$Q(y)-Q(V)=0$. No separate component budget is used. $\square$
+

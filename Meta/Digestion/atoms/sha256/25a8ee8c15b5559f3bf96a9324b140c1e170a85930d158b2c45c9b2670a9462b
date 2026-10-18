@@ -1,0 +1,38 @@
+**开放问题 7.2（完整实际纤维与原根）。** Determine whether
+
+$$
+\exists Y\in\mathbb R:
+L_3(\mathcal F(H_4(Y)),H_4(Y))                                \tag{7.1}
+$$
+
+holds. Any such family needs at least four distinct targets by
+Theorem 3.2. This is a necessary bound on a losing family, not a
+three-target extraction theorem or a bound on the cardinality of a
+complete fiber. A nonconstant fifth function on a larger family can
+retain an actual child of size at least three. The pairs colliding
+under different sixth or seventh actions may differ. Their common
+ancestor constraints remain simultaneous obligations.
+
+At (4.1), determine whether a family with $L_3$ can retain an actual
+fifth-$J$ child with at least three targets and jointly realize the
+opposite fifth arm's losing child. Theorem 5.1 excludes the
+two-target alternative only. It supplies neither recovery of every
+larger child nor a uniform decoder for the entire $C_4(Y)$ fiber.
+The different complementary $JMMJ$ history of V, Definition 5.1,
+including its nonbaseline-drift pairs, remains a separate problem;
+the coordinates and ancestor equations (4.2) do not identify it with
+$MJMMJ$.
+
+Determine the original full-domain alternative
+$n_{\mathrm{det}}(3,0)\ge9$ versus existence of a lawful decoder with
+at most eight total readings. It includes every initial action,
+subsequent actual history and early stop in Definition 1.1. Neither
+(3.2) nor (6.1) supplies a complete original-root failure tree or a
+full-domain decoder. Feasibility of the sixteen-slot local and
+256-slot root systems of IV, Theorems 9.2–9.3, is a separate
+simultaneous realization question. The finite linear-palette
+obstruction of IV, Theorem 10.2, retains its specified readout
+architecture and does not decide nonlinear recovery. The known-family
+conditions in Theorems 3.3 and 6.1 are sufficient conditions, not
+certificates that an unrestricted observed target satisfies them.
+

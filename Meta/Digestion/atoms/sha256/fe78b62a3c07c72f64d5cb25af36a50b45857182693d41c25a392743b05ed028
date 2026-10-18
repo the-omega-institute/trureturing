@@ -1,0 +1,16 @@
+### 477.2 保留 N+1 锚点的有限重构
+
+**定义。** 使用同一个阶乘核
+$\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y$，其中 $y>0$。对 $N\ge1$，记
+
+$$
+\begin{aligned}
+H_N&=\sum_{m=1}^N\frac{\mu(m)}m,&
+L_N&=\sum_{m=1}^N\frac{\mu(m)\log m}m,&
+M_N&=\sum_{m=1}^N\mu(m),\\
+h_N&=H_N-\frac{M_N}{N+1},&
+\ell_N&=L_N-\frac{M_N\log(N+1)}{N+1},\\
+C_N(t)&=\sum_{m=1}^N\mu(m)\eta(t/m)-M_N\eta(t/(N+1)).
+\end{aligned}
+$$
+

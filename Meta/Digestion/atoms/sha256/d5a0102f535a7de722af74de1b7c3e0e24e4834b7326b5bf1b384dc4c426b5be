@@ -1,0 +1,26 @@
+**Corollary 97.4.** No positive-subhalf full-domain calibrated local minimum with one rank-seven side has kernel support on at most two original fibres.
+
+**Proof.** The supports of size at most three on two fibres are excluded in section 96.2. For two complete fibres, Theorem 96.4 leaves only the principal rank pair (h,r)=(3,1), now excluded by the two-full-fibre argument above. The alternative (2,2) was already excluded there by the exact unitary best-response theorem. ∎
+
+Thus at a hypothetical subquarter minimum with one rank-seven side, its kernel support has at least four coordinates, occupies at least three original fibres, and every common supported quotient has rank at least two. Theorem 97.3 applies to any common witness that would have rank one.
+
+For a hypothetical rank-(7,6) subquarter minimum, these facts sharpen to
+
+\[
+ r=2,\qquad h=n-2,\qquad
+ \operatorname{range}P_B=\ker H,\qquad \ker H\subseteq\mathbb C^S.
+                                                                    \tag{33}
+\]
+
+Indeed r≤2 by (3). Since H is PSD, it is a Gram matrix; adding the 8−n records outside S increases span dimension by at most 8−n. Thus h≥6−(8−n)=n−2. Together with h+r≤n and r≥2 this gives equality. The supported complementary stress has rank two, equal to dim ker H, proving the last two assertions. Section 95 excludes full support in this rank pair. Up to fibre permutation, its still-unresolved support patterns are therefore
+
+\[
+ (2,1,1,0),\ (1,1,1,1),\
+ (2,2,1,0),\ (2,1,1,1),\
+ (2,2,2,0),\ (2,2,1,1),\ (2,2,2,1).                         \tag{34}
+\]
+
+This is a necessary reduction, not an exclusion of those seven patterns. Higher-rank quotients, other lower-rank pairs, and the unrestricted original quarter lower bound remain open; the global interval remains [√3−3/2,1/4]. The global calibration comparison may enlarge ranks and does not transfer local minimality from arbitrary leaking channels. No convex extreme-point rank reduction or principal joint-local-minimum assumption has been used.
+
+The dependencies are the exact adaptive norm and common stresses of sections 91–92, the supported quotient of section 95, the sharp complex three-vector theorem of section 93, and the small-support and unitary best-response consumers of section 96. The new mechanism is the reciprocal full completion and its coefficient-level common-witness consequence; the rank-one support exhaustion retains every original fibre constraint.
+

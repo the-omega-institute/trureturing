@@ -1,0 +1,39 @@
+**Explicit elliptic-logarithm parameters.** Apply David's Theorem 2.1 directly, with Ingram's Lemma 10 and equation (9) as a convenient form of the specialization. Take number-field degree $1$, two logarithms $u,\omega$ corresponding to $P,O$, coefficient vector $(0,a,b)$, and auxiliary parameter $E=e$. David explicitly permits logarithms at poles, so the period representing $O$ is allowed. His degree-three projective embedding has canonical-height limit $3\widehat h(P)$; we use that requirement directly rather than the $2\widehat h(P)$ printed in Ingram's specialization. The invariants $g_2=35100D^2$, $g_3=945000D^3$ give exactly the curve height $H$. David's numerical constant satisfies
+
+$$2.9\cdot10^{18}\cdot4^8\cdot3^{38.3}<4\cdot10^{41}.$$
+
+Sufficient parameter conditions are
+
+$$\log V_2\ge\max\{H,3\pi/\operatorname{Im}\tau\},$$
+
+$$\log V_1\ge\max\{3\widehat h,H,
+3\pi|u|^2/(|\omega|^2\operatorname{Im}\tau),\log V_2\},$$
+
+$$\log A\ge\max\{eH,\log a,\log|b|,\log V_1\}.$$
+
+When $b=0$, its coefficient-height term is zero. Since $\Lambda\ne0$, the resulting bound is
+
+$$\log|\Lambda|\ge-4\cdot10^{41}(\log A+1)
+(\log\log A+H+1)^3\log V_1\log V_2. \tag{93.5}$$
+
+Choose
+
+$$\log V_1=\log V_2=100s,\qquad t=\log a,\qquad
+L=\log A=\max\{100s,t\}.$$
+
+Equations (93.2)–(93.3), $3\widehat h\le2s$, $\operatorname{Im}\tau>1$, $|u|\le\omega/2$, $e<3$, $\pi<4$, and $|b|<a$ verify all requirements. In particular $eH<12s<100s$. David's remaining auxiliary-parameter requirement is $E=e\le e\sqrt{\log V_i/A_i}$, where $A_i=3\pi|u_i|^2/(|\omega|^2\operatorname{Im}\tau)$, $u_1=u$ and $u_2=\omega$. It follows from the already checked $\log V_i\ge A_i$. No unspecified Lang-height constant or small-height adjustment enters.
+
+If $t\le100s$, then $L=100s$, $L+1\le101s$, and $\log L+H+1\le8s$. The last estimate follows from $\log(100s)+1\le4s$ for $s\ge40$: it holds at $40$ using $\log4000<12$, and its difference has positive derivative. Combining (93.4)–(93.5) yields
+
+$$a^2<6\cdot4\cdot10^{41}\cdot101\cdot8^3\cdot10000\,s^5<10^{60}s^5. \tag{93.6}$$
+
+If $t>100s$, then $t>4000$, $L+1\le2t$, and $\log L+H+1<2t$, because $H<t/25$ and $\log t+1<t$. Instead the same comparison gives
+
+$$e^{2t}<6\cdot4\cdot10^{41}\cdot2\cdot8\cdot10000\,t^4s<10^{60}t^5.$$
+
+This is impossible for $t\ge4000$: at the endpoint,
+
+$$60\log10+5\log4000<180+60=240<8000,$$
+
+and $2t-60\log10-5\log t$ has positive derivative. Thus (93.6) always holds. In particular the actual multiplier satisfies $a<10^{30}(\log B)^{5/2}$.
+

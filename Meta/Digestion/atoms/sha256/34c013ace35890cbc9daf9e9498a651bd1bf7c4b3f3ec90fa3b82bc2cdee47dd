@@ -1,0 +1,43 @@
+**定理 23.3（正则漂移二十四碰撞的精确区域）。** In the regular stratum, a two-world fiber at drift $24$ is equivalent to the drift-$24$ consistency conditions in Theorem 22.1 together with
+
+$$
+1<\ell<2,\qquad
+\ell<T<(\ell-1)+\frac{\ell^2}{4(\ell-1)}.
+                                                                  \tag{23.11}
+$$
+
+Here $T=\rho\ell$ is common. Let $r_-<r_+$ be the two roots of
+
+$$
+Q(r)=r^2-\ell r+(\ell-1)(T-\ell+1).
+                                                                  \tag{23.12}
+$$
+
+The two sources and their common gain are
+
+$$
+\begin{gathered}
+P_r=\begin{pmatrix}r&\ell-1\\T-r-\ell+1&1-r\end{pmatrix},\\
+g(0)=-24,\qquad g(1)=0,\qquad g(2)=24/\ell,\qquad
+g(3)=(z-24)/T,\qquad \deg g\le3,
+\end{gathered}                                                     \tag{23.13}
+$$
+
+with $\mathcal E(g)\ne0$. Conversely any $\ell,T,z$ satisfying these conditions gives exactly two compatible worlds for the induced eight-read word, at drift $24$. Here $\rho=T/\ell>1$, and each source's first column strictly dominates its second entrywise.
+
+Proof. The reconstruction in (22.14) gives precisely (23.12). Two roots in $(0,1)$ have sum $\ell$, forcing $1<\ell<2$. The endpoint value
+
+$$
+Q(1)=(\ell-1)(T-\ell)>0
+$$
+
+forces $T>\ell$. The discriminant is positive exactly when $T<(\ell-1)+\ell^2/[4(\ell-1)]$. Conversely those bounds give a vertex $\ell/2\in(0,1)$ with negative value, while $Q(0),Q(1)>0$. Thus both distinct roots lie strictly in $(0,1)$. For each root the remaining entry is positive because
+
+$$
+T-r-\ell+1=\frac{r(1-r)}{\ell-1}>0.
+$$
+
+They therefore pass every source filter. The common gain (23.13) and equal traces $\ell,T$ give the full common word; its clock-one reading is $24$ despite the different $j=T-r$, since $g(1)=0$. Regularity and exhaustiveness follow from Theorems 22.1 and 23.1. Finally $r_++r_-=\ell$ and both roots below $1$ imply $r_\pm>\ell-1$; rank one gives the strict column dominance in the second row as well. At either non-strict $T$ boundary a root reaches a zero-entry boundary or the roots coincide. These cases cannot give a distinct legal pair, although a repeated legal root remains one world in Theorem 22.1. ∎
+
+The chambers (23.5) and (23.11) concern regular data and the common interpolants specified above. Their inequalities alone are not consistency tests for arbitrary eight numbers; the full-data equations of Theorem 22.1 remain necessary. In the degenerate gain hyperplane, neither chamber nor the regular two-world bound removes the other ratios retained in (22.4).
+

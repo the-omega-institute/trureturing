@@ -1,0 +1,10 @@
+### High-edge lower faces
+
+For x1=h, the universal lower envelope on [1,2]^6 gives
+
+  phi_1 >= 2*(2-h)/(h+1) > q_D.
+
+Hence alpha_1 < 2*pi/D <= 2*pi/d(e), so the cone angle at every high edge
+is strictly less than 2*pi and K_e > 0. The first strict inequality is exactly
+the choice of delta above.
+

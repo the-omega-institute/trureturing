@@ -1,0 +1,15 @@
+**定义 1.3（实际纤维与失败递归）。** $\mathcal F(H)$ 是实现字面历史 $H$ 全部动作和读数的所有完整目标。对 $K\subseteq\mathcal F(H)$，定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff |K|\ge2,\\
+L_s(K,H)&\iff |K|\ge2\ \land
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:\\
+&\hspace{22mm}L_{s-1}\bigl(K\cap\mathcal F(H,E,z),(H,E,z)\bigr)
+\quad(s\ge1).
+\end{aligned}
+\tag{1.7}
+$$
+
+$s$ 不超过剩余原时钟数。这里每个实际子集来自同一组固定世界；两个动作可有不同响应见证，但共享祖先的读数不能分别拟合。
+

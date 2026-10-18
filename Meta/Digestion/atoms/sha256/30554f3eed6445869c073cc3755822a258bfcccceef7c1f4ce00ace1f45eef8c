@@ -1,0 +1,76 @@
+**Theorem 3.1 (mode and first horizontal derivatives).** Put $c_\infty=\gamma m>0$. The reconstructed mode has continuous horizontal first derivatives and representatives satisfying, for $D=X,Y$,
+
+$$
+\begin{gathered}
+0<p(\xi)\le C(1+d(0,\xi))^{-5},\qquad
+|Dp(\xi)|\le C(1+d(0,\xi))^{-6},\\
+p_R(\xi):=R^5p(\delta_R\xi)\longrightarrow c_\infty\mathcal G(\xi),\qquad
+Dp_R(\xi)\longrightarrow c_\infty D\mathcal G(\xi)
+\end{gathered}
+\tag{3.1}
+$$
+
+uniformly on every compact subset of $\mathbb R^4\setminus\{0\}$ as $R\to\infty$.
+
+Proof. The missing upper comparison between $d$ and $N$ follows directly from their homogeneity. The compact set $\{N=1\}$ avoids zero, and the finite continuous metric has a finite maximum there. Dilating each point gives $d(0,\xi)\le CN(\xi)$. Consequently $V\le C(1+d)^{-5}$.
+
+For $D=X,Y$, smoothness and homogeneity of $\mathcal G$ make $D\mathcal G$ homogeneous of degree $-6$. The proper control unit sphere is compact and avoids the source, so
+
+$$
+|D\mathcal G(\xi)|\le Cd(0,\xi)^{-6},\qquad
+\int_{d<L}\mathcal G\le CL^2,\qquad
+\int_{d<L}|D\mathcal G|\le CL\quad(L>0).
+\tag{3.2}
+$$
+
+The integrals follow by dyadic annuli and ball volume $v_dL^7$. These classical derivatives are also distributional derivatives across zero. Indeed use a smooth cutoff equal to one on a homogeneous ball of radius comparable to $\epsilon$, supported in a ball of radius comparable to $2\epsilon$, with horizontal derivatives $O(\epsilon^{-1})$. Its integration-by-parts error is bounded by $C\epsilon^{-1}\int_{d<C\epsilon}\mathcal G=O(\epsilon)$. The omitted derivative integral is also $O(\epsilon)$. Both vanish. This argument differentiates the already established auxiliary kernel, without differentiating an infinite-time heat integral.
+
+First $p$ is bounded. The bounded-potential Dyson kernel for $e^{-t(\mathcal E-\gamma V)}$ is bounded above by $e^{t\gamma\|V\|_\infty}p_E(t;\eta,\xi)$. Since $p$ is its zero eigenvector,
+
+$$
+p\le e^{\gamma\|V\|_\infty}P_1p,\qquad
+\sup_\xi|(P_1p)(\xi)|\le
+\sup_\xi p_E(2;\xi,\xi)^{1/2}\|p\|_2<\infty.
+\tag{3.3}
+$$
+
+The column identity uses symmetry and the semigroup law. Thus $f=Vp\le C(1+d)^{-5}$, initially, as well as $f\in L^1\cap L^\infty$.
+
+For $R=d(0,\xi)\ge2$, split (2.4)'s convolution into
+
+$$
+\{d(0,\eta)\le R/2\},\qquad
+\{d(0,\eta)>R/2,\ d(\eta,\xi)\le R/2\},\qquad
+\{d(0,\eta)>R/2,\ d(\eta,\xi)>R/2\}.
+\tag{3.4}
+$$
+
+On the first and third pieces the kernel is at most $CR^{-5}$, giving $CmR^{-5}$. On the middle piece the initial bound on $f$ and (3.2), with Haar invariance, give $CR^{-5}R^2=CR^{-3}$. Hence $p\le C(1+d)^{-3}$. This improves the source bound to $f\le C(1+d)^{-8}$. Repeating the same split gives a middle contribution at most $CR^{-6}$ and proves $p\le C(1+d)^{-5}$. In particular
+
+$$
+f\le C(1+d)^{-10}.
+\tag{3.5}
+$$
+
+The derivative side of the convolution is fixed by the actual group law. A left invariant field at $\xi$ differentiates the path $\xi\exp(tD)$, so
+
+$$
+D_\xi\mathcal G(\eta^{-1}\xi)=(D\mathcal G)(\eta^{-1}\xi),\qquad
+Dp(\xi)=\gamma\int(D\mathcal G)(\eta^{-1}\xi)f(\eta)d\eta.
+\tag{3.6}
+$$
+
+For $X$ and $Y$ these paths are respectively right multiplication by $(t,0,0,0)$ and $(0,t,0,0)$, producing precisely the displayed fields in (1.9). There is no change to a right invariant derivative. Formula (3.6) is justified distributionally by compact testing, (3.2), the divergence-free output fields and $f\in L^1\cap L^\infty$. Absolute integrability follows from the locally integrable derivative kernel and its boundedness outside the unit ball. The split (3.4) bounds its first and third contributions by $CmR^{-6}$; the middle contribution is at most $CR^{-10}R=CR^{-9}$. This proves the derivative decay. It also bounds both convolutions at bounded output points.
+
+These convolution representatives are continuous. For output in a fixed compact set, removing an $\epsilon$-ball around the input-output singularity costs at most $C\|f\|_\infty\epsilon^2$ for $\mathcal G$ and $C\|f\|_\infty\epsilon$ for $D\mathcal G$. On its complement, a smooth cutoff of that singularity gives a continuous bounded kernel with an $L^1$ input majorant. Dominated convergence and then $\epsilon\downarrow0$ prove continuity. Positivity follows also by retaining a positive finite heat-time interval in (2.4).
+
+Define $f_R(\eta)=R^7f(\delta_R\eta)$. It has mass $m$, concentrates at zero, and for every fixed $\epsilon>0$,
+
+$$
+\int_{d(0,\eta)>\epsilon}f_R\longrightarrow0,\qquad
+f_R(\eta)\le CR^{-3}d(0,\eta)^{-10}\quad(d(0,\eta)\ge\epsilon).
+\tag{3.7}
+$$
+
+Haar scaling and (2.4), (3.6) give exact scaled convolutions with kernels $\mathcal G,D\mathcal G$ and input $f_R$. Fix a compact output set $K$ avoiding zero. On an input ball about zero of sufficiently small fixed radius the two kernels are uniformly continuous in input, uniformly over $K$, and tend to their values at input zero as that radius shrinks. Near each output singularity, the input stays a fixed distance from zero; (3.7) and the local integrals (3.2) bound that contribution uniformly by $O_K(R^{-3})$. On the remaining set the kernels are uniformly bounded and the input mass away from zero tends to zero. Take $R\to\infty$ first and then shrink the input ball. This proves both compact uniform limits in (3.1), with the complete input tail controlled. The scaling identity $Dp_R=R^6(Dp)\circ\delta_R$ follows from degree one of the fields. No native time or moving-face limit is taken here. $\square$
+

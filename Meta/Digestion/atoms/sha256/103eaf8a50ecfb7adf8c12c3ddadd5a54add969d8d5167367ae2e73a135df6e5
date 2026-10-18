@@ -1,0 +1,10 @@
+**引理 25.2（原叶界允许的增长参数）。** 两叶界及行列式下界所容许的 $(r,s)$ 恰为
+
+$$
+s\ge s_0,\qquad s\le Lr,\qquad r\le L.
+$$
+
+因此 $\min\Gamma=G$，在 $(a,b)=(Le_1,(s_0/L)e_2)$ 达到；$\max\Gamma=(1+2\varphi)\ell$，在两正交叶长均为 $L$ 时达到。
+
+证明。$s^2=\Delta\le|a|^2|b|^2$ 给必要性。每个所列 $(r,s)$ 都由同一正交制备 $((s/r)e_1,re_2)$ 实现。给定 $s$，最小 $r$ 是 $s/L$，于是 $\Gamma\ge\varphi^2\log s-\ell\ge G$；两者等号同时由所列端点达到。另一方面 $r\le L,s\le L^2$，得最大值及其正交达到。
+

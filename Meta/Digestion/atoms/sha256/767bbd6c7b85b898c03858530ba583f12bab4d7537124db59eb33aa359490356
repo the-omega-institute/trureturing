@@ -1,0 +1,24 @@
+**定义 8.2（单孔语境与三项资源）。** 语境仍取 [JM 定义50.1][JM] 的原语法
+
+$$
+C::=\square\mid\rho C\mid(C,c)\mid(c,C),\qquad c\in\mathcal T.
+\tag{NIC.23}
+$$
+
+孔出现一次。每个 $c$ 是完整实例化的实际有限原树，其全部叶出现、左右次序与括号均保留。定义孔路径配对数 $b(C)$、插入材料 $\mu(C)$ 及常数深度上界 $M(C)$：
+
+$$
+\begin{aligned}
+b(\square)&=0,&\mu(\square)&=0,&M(\square)&=0,\\
+b(\rho C)&=b(C),&\mu(\rho C)&=\mu(C),&M(\rho C)&=M(C),\\
+b((C,c))&=b((c,C))=b(C)+1,\\
+\mu((C,c))&=\mu((c,C))=\mu(C)+\ell(c),\\
+M((C,c))&=M((c,C))=\max(M(C),\nu(c)).
+\end{aligned}
+\tag{NIC.24}
+$$
+
+$b$ 不数常数内部的配对，$\mu$ 则数每次插入的完整常数树的全部叶。同一树写在两个常数位置就计两次；没有共享商。$M=0$ 的无常数语境与只有深度零常数的语境可由 $b$ 区分。
+
+在不含一元 $\rho$ 的语境上，$\mu$ 正是 [ActualLeafHistoryRigidity 的 OutputContext.outsideLeaves][ALHR]：孔路径上实际旁支的叶数之和。含 $\rho$ 时，(NIC.24) 只记各常数插入时的材料，不记其后外层替换增加的叶数；它不是最终树的孔外叶数、替换次数、压缩描述长度、地址费用或运算费用。这一定义没有把一元替换定价为免费。
+

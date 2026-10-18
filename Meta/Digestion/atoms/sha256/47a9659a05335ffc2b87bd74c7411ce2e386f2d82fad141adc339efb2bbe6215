@@ -1,0 +1,24 @@
+**Lemma 16.1 (identical protected histories cannot be repaired after merging).**
+Suppose two finite sources $u$ and $\rho u$ give the same complete
+protected transcript to a deterministic observer, through Release or
+protected Return, but $R_P(u)\ne R_P(\rho u)$. That observer cannot solve
+the universal invocation task, regardless of its later adaptive queries,
+finite computation or retained data.
+
+**Proof.** Source-free control and the entire protected replies agree,
+so every retained record and the terminal entry action agree. A protected
+Return already has the same output on two different targets. Otherwise,
+in the history beginning at $u$, perform one global update immediately
+after Release and halt the writer. In the history beginning at $\rho u$,
+perform zero updates. Both respect protection, use their own one actual
+register throughout, and now have the identical register value $\rho u$
+and identical observer state. There is no source replacement.
+
+Give the observers progress with the writers halted. At each subsequent
+local transition the states agree; at each Read the requested literal
+and reply agree; hence all later records and outputs agree by induction.
+Finite-interference termination supplies the common finite Return.
+It cannot equal both invocation targets. An arbitrarily large later
+saved tree, certificate or local calculation does not alter this
+argument. The histories use at most one update in total. $\square$
+

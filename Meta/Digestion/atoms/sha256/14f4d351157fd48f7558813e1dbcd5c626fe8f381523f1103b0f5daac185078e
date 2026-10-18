@@ -1,0 +1,201 @@
+## 124. Fresh batches, shared calibration and paid whole-block communication
+
+**Theorem C-124.1 (Fresh batches preserve the tensor channel contract).**
+Use $n$ independent batches of $m$ copies each, all with the same fixed $X$,
+independent of the entire complex block input and reference. Apply (C121.10)
+once per data factor, with fresh local environments. The resulting map is
+$N_X^{\otimes n}$, including for arbitrary inputs entangled across all $n$
+factors and an arbitrary finite reference. Put
+$\varepsilon_m=[c-sD_m(t,\eta)]_+$. Then
+
+$$
+ \sup_{X\in U_4}\|N_X^{\otimes n}-\Phi_{t,\eta,X}^{\otimes n}\|_\diamond
+ \le\min\{2,n\varepsilon_m\}.
+\tag{C124.1}
+$$
+
+Any common whole-block CPTP encoder and decoder as in (C116.3) can be composed
+with these maps; the trace-norm error on every reference/logical input increases
+by at most the same bound. In particular an ideal code with (C116.4) error
+$\epsilon_n$ has implemented error at most $\epsilon_n+\min(2,n\varepsilon_m)$.
+In the finite-copy exactness regime this is an exact replacement of the supplied
+channel-use service, at cost $nm$ actual source copies, not $m$ copies total.
+At $(t,\eta)=(1,0)$, a sufficient budget for added block error at most $\delta>0$
+is $n(3/5)^m\le\delta$; for $\delta<n$ one may take
+$m\ge\lceil\log(n/\delta)/\log(5/3)\rceil$.
+
+Proof. Conditional on $X$, the initial batch state is
+$\rho_{t,\eta}(X)^{\otimes mn}$, regrouped into $n$ independent batches. The
+joint processor is the tensor product of the specified CPTP maps. Linearity
+on the full input algebra gives exactly $N_X^{\otimes n}$, without a product
+assumption on data or reference. Telescope the difference of tensor powers,
+replacing one factor at a time. CPTP pre- and postcomposition and untouched
+ancillas do not increase diamond distance, so the $n$ terms sum to at most
+$n\varepsilon_m$. Two channels have unhalved diamond distance at most two.
+Further whole-block CPTP composition preserves this estimate. C-122.1 gives
+the coherent-corner budget. No asymptotic rate per source copy follows. QED.
+
+**Proposition C-124.2 (A reused exact one-use record can fail already at two uses).**
+Measuring one batch and reusing its record $z$ on every factor instead gives
+
+$$
+\Psi_X^{(n)}=\sum_z p_X^{\otimes m}(z)\,T_z^{\otimes n},
+\quad\hbox{rather than}\quad
+N_X^{\otimes n}=\left(\sum_zp_X^{\otimes m}(z)T_z\right)^{\otimes n}.
+\tag{C124.2}
+$$
+
+This distinction persists even when the one-use map is exact. For an explicit
+zero-white-noise example take $t=1/2$, $m=5$, $X=X_a$ and (C121.10). Then
+
+$$
+ D_5(1/2,0)=13043/25000>1/2,\qquad r_5=12500/13043<1,
+\tag{C124.3}
+$$
+
+so $N_X=\Phi_{1/2,0,X}$ for all four labels. Nevertheless, on the actual
+complex two-use input
+$|\zeta\rangle=(|1,3\rangle+|3,1\rangle)/\sqrt2$, the reused-record output
+has trace-norm distance at least
+
+$$
+ r_5^2\,\mathbb E_{a,+}h_b^2>0
+\tag{C124.4}
+$$
+
+from the desired tensor output. Thus exact one-use programming is not a license
+to reuse a finite calibration record as independent channel environments.
+
+Proof. For $\eta=0,t=1/2$, $w=1/5,u=1/10$; the opposite-$a$ probabilities are
+$3/10,1/10$ and $1/10,3/10$, with remaining mass $3/5$. Substituting them in
+the finite trinomial sum (C121.6) yields $13043/25000$.
+The inactive-$b$ sign has mean zero, but not zero second moment: the event that
+all five outcomes are $b_+$ alone has probability $(1/5)^5>0$.
+On $E_{13}\otimes E_{31}$, a conditional response has coefficient
+$(ir_5h_b)(-ir_5h_b)=r_5^2h_b^2$. Its average is strictly positive; the target
+tensor channel and $N_X^{\otimes2}$ both annihilate this matrix unit because
+$X_a$ has no $13$ coherence. At zero white noise all sector populations are
+preserved. On the stated balanced input the difference is a Hermitian
+$2\times2$ off-diagonal block of trace norm $r_5^2\mathbb E h_b^2$.
+This proves the claim using a normalized state, not only a non-Hermitian matrix
+unit. Its meaning is classical common-record correlation conditional on the
+same actual source, not label variation between uses. QED.
+
+**Theorem C-124.3 (A useful uniform block bound from one shared calibration batch).**
+There is also a different common processor using just one batch of $m$ copies
+for an entire $n$-use block. For $c>0$ and $m\ge1$, measure (C121.4), and choose the nearest,
+in the maximum norm, of the four mean vectors
+$(2u,0),(-2u,0),(0,2u),(0,-2u)$ to the empirical vector
+$(\bar H_a,\bar H_b)$. Fix ties independently of $X$.
+Call the resulting four-valued record $\widehat X$. Conditioned on it, implement
+$\Phi_{t,\eta,\widehat X}^{\otimes n}$ using fresh local environments.
+The resulting whole-algebra CPTP block processor obeys, uniformly in $n$,
+
+$$
+ \sup_{X\in U_4}\|\widetilde\Psi_X^{(n)}-
+            \Phi_{t,\eta,X}^{\otimes n}\|_\diamond
+ \le2\delta_m,\qquad
+ \delta_m=\min\{1,4\exp(-mc^2/50)\}.
+\tag{C124.5}
+$$
+
+For $m=0$ choose a fixed label and use its tensor channel; the bound is then
+the trivial two. The same bound holds after any common CPTP block encoder and
+decoder and for every finite complex reference. Hence a sufficient batch size for added block
+error at most $0<\delta<2$ is
+$m\ge\lceil50c^{-2}\log(8/\delta)\rceil$, independent of $n$.
+At $c=0$ use no batch and implement the common target directly.
+This shared-record construction has no finite-copy exactness claim for $c>0$.
+
+Proof. Distinct mean vectors are at maximum-norm distance at least $2u$.
+If both empirical coordinates differ from their true means by less than $u$,
+the nearest vector is uniquely correct. Each variable is in $[-1,1]$;
+the two-sided Hoeffding bound and a union bound give
+$\Pr_X(\widehat X\ne X)\le4\exp(-mu^2/2)=4\exp(-mc^2/50)$.
+This probability is independent of the data/reference. On the correct event
+the entire conditional block channel equals the desired tensor channel;
+on the other events its diamond distance is at most two. Convexity gives
+(C124.5), with no factor $n$. Measurement followed by a controlled product of
+CPTP maps defines a CPTP map on every program/block input, by the same
+instrument formula as (C121.10). This proves the whole-block statement rather
+than incorrectly tensoring the averaged one-use map. QED.
+
+**Proposition C-124.4 (Explicit control, transport and decoder costs).**
+Every response in (C121.10) and every conditional target in C-124.3 has a finite
+rank-at-most-two Kraus implementation. There is a lawful separated-party route
+with the following sufficient resources, in addition to the actual programs:
+
+- Each measured copy needs one fixed six-outcome joint projective measurement
+  on its original $25$-dimensional $A\mid B$ carrier. For a one-use fresh batch,
+  the two count differences determine two trits $h_a,h_b$; at most nine
+  calibrated response settings are required. A six-dimensional pointer ancilla
+  suffices for each projective measurement and can be reset between copies.
+  One may retain the raw $m$
+  six-valued outcomes ($3m$ classical bits suffice), or update just the two
+  counts (at most $(2m+1)^2$ states) and discard them after choosing the response.
+  C-124.3 instead retains one four-valued calibration record (two bits).
+- Local controls supply the fixed complex phases in (C121.4), the known numbers
+  $r_m,s,\eta$ or $c$, their required square roots, finite ancillas and the
+  conditional Kraus instrument. Exact real-valued controls are a separate
+  supply obligation. A response needs at most $25$ Kraus branches and an
+  environment of dimension at most $25$ before it is discarded or measured.
+- If the source halves initially reside at separated laboratories $A,B$, put
+  the processor at $A$ and transport the $B$ half of each program copy to $A$
+  through a declared noiseless five-dimensional quantum wire. This costs one
+  such transfer per consumed source copy: $nm$ for fresh batches, $m$ for the
+  shared batch. Joint measurement is then local at $A$. No native local-history
+  measurement or free classical phase revelation substitutes for this transport.
+- For each simulated data use from $A$ to $B$, the route below transmits a
+  two-dimensional quantum port and one flag from an alphabet of at most $25$
+  ($5$ classical bits suffice). For $n$ uses its aggregate port dimension is
+  $2^n$ and flag alphabet is at most $25^n$ ($5n$ bits suffice). These forward
+  quantum and classical links are charged communication resources, with no
+  additional preshared entanglement, return data wire or free forward/feedback
+  side channel.
+  The calibration record need not be sent to $B$ in this implementation.
+
+All decoders are CPTP on their entire port spaces. Composing with a supplied
+C-116 whole-block encoder/decoder is legitimate, but its local block operations
+are additional services. The resulting physical resource bundle is not the
+unassisted channel-use contract used to define the capacities in C-116.
+
+Proof. Write the unnormalized matching matrix for a response as
+
+$$
+ M(v)=sI_5+v_aX_a+v_bX_b.
+\tag{C124.6}
+$$
+
+Its orthonormal eigenvectors are the coefficient-space versions of (C121.4),
+with eigenvalues $s\pm v_a,s\pm v_b,s$. For each of these five vectors $q_\ell$
+and its eigenvalue $\lambda_\ell\ge0$, take the diagonal Kraus matrix
+$K_\ell=\sqrt{\lambda_\ell}\operatorname{diag}(q_\ell)$.
+Their Schur sum is $M(v)\circ Y$. Add the twenty Kraus matrices
+$\sqrt{\eta/5}E_{jk}$ for $j\ne k$. Their sum gives
+$\frac\eta5\sum_{j\ne k}Y_{kk}E_{jj}$.
+Together these are exactly (C121.7); their completeness follows also directly
+from $s+4\eta/5=1$. The five diagonal matrices have rank at most two and the
+other twenty rank one, including vanishing branches at endpoints.
+
+For each branch choose a fixed isometry $V_\ell:\mathbb C^2\to\mathbb C^5$
+whose image contains the range of $K_\ell$. For the four pair branches use the
+corresponding original coordinate pair; for a rank-one branch complete its
+one coordinate with any different fixed original coordinate. These choices do
+not depend on $v$, $z$ or $X$. Put $B_\ell=V_\ell^\dagger K_\ell$.
+Then $\sum_\ell B_\ell^\dagger B_\ell=I_5$, so the sender instrument
+$Y\mapsto B_\ell YB_\ell^\dagger$ with flag $\ell$ is trace preserving when
+all branches are retained. Send its qubit output and flag. The receiver applies
+$Z\mapsto V_\ell ZV_\ell^\dagger$, an isometric CPTP decoder on every qubit
+input. The composite branch is exactly $K_\ell YK_\ell^\dagger$.
+The decoder is common because $V_\ell$ is fixed; all parameter-dependent
+amplitudes reside in the sender instrument. No successful flag is postselected.
+
+For blocks, retain the entire flag string and use the controlled tensor product
+of these isometries, followed by the supplied arbitrary whole-block CPTP decoder.
+This is one whole-block CPTP decoder, including on correlated inputs across
+ports and the reference. The branchwise equality proves the exact channel
+factorization on the full algebra; C-124.1 or C-124.3 then controls simulation
+error. Transporting the program halves is an explicitly paid way to make the
+joint measurement available. Alternatively co-located actual programs can be
+supplied directly, but that is a different declared preparation service. QED.
+

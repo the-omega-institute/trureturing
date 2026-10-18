@@ -1,0 +1,29 @@
+**Definition 177.1 (Prefix event scores in one full catalog).** Fix
+$L\ge3$. For $3\le k\le L$, put $w_t=1^t0^{L-t}$, $0\le t\le k$,
+and define events
+
+$$
+\begin{aligned}
+H_0&=\{0,1\},&H_1&=\{0,2\},\\
+H_t&=\{t+1\} &&(2\le t<k),\\
+H_k&=\begin{cases}\{0,k+1\},&k<L,\\\{0\},&k=L.\end{cases}
+\end{aligned}
+$$
+
+The dependence of $H_t$ on $k,L$ is understood. Set
+
+$$
+\begin{aligned}
+\Psi_k(p)&=\sum_{t=0}^kp_{w_t}(H_t),\\
+f_k(a,\varepsilon)&=\sum_{i=3}^ka_i-(k+1)\varepsilon,\\
+M_k&=\{(i,j;0,r,\ell):2\le i<j\le k,\ i<r\le j,
+          \ \ell=0\text{ or }j<\ell\le\min(k+1,L)\}.
+\end{aligned}
+\tag{177.1}
+$$
+
+All $M_k$ are subsets of the same complete stopped catalog on $J_L$.
+The full-prefix event $H_L$ contains only zero: label $L+1$ is not in
+the catalog. Its row is the finite all-positive base requirement which
+Theorem 110.2 derives from actual tails.
+

@@ -1,0 +1,17 @@
+**Proposition 5.3 (weighted certificates concern common realizations).**
+For every finite skeleton tested in Theorems 5.1 and 5.2, weighted
+feasibility is equivalent to checking $\lambda_qk_t+\lambda_a(n_t-N)+\lambda_\ell L_t\le T$ on
+all nonempty whole-domain path fibers. Even when $b(B)$ is finite, this
+is not equivalent in general to $\lambda\cdot b(B)\le T$.
+
+Proof. Every actual source follows exactly one leaf and has precisely
+(NFO.5) there. NSF supplies a source attaining each nonempty path cost,
+so the maximum of the sums is the supremum (NFO.4). Separate coordinate
+maxima can come from different leaves. JRF Example 8.3 already supplies
+an entire admitted native fiber and a lawful service with sourcewise
+vectors $(1,2,0)$ and $(2,0,1)$: weights $(1,1,1)$ give worst sum $3$,
+whereas the sum of separate maxima is $5$. It is a literal-history fiber,
+hence an allowed special case with empty additional signed history.
+Its redundant updates precede halt and are actual paid actions.
+$\square$
+

@@ -1,0 +1,56 @@
+**Theorem 8.2 (Diagonal, trace and adjoint preservation; precise positivity boundary).** Fix any $H,K,p$ of Definition 2.1 and any phases $\theta,\eta$. For the particular intertwiner of Theorem 3.4, both $L_{\eta,\theta}$ and its inverse preserve every diagonal entry, trace and adjoint:
+
+$$
+DL_{\eta,\theta}=D,\qquad
+\operatorname{Tr}L_{\eta,\theta}(A)=\operatorname{Tr}A,\qquad
+L_{\eta,\theta}(A^*)=L_{\eta,\theta}(A)^*.
+\tag{8.1}
+$$
+
+For this constructed map the following are equivalent: it is positive; its inverse is positive; the reset projectors are equal, $x_\eta x_\eta^*=x_\theta x_\theta^*$. If the projectors agree, this map is the identity. If they differ, $E_{00}$ is a positive semidefinite input whose image under either map is not positive semidefinite. Explicitly, with
+
+$$
+c=Q(T)^{-1}\bigl(x_\eta x_\eta^*-x_\theta x_\theta^*\bigr)\in\mathcal N,
+$$
+
+one has $c\ne0$ and
+
+$$
+L_{\eta,\theta}(E_{00})=E_{00}+c,\qquad
+L_{\eta,\theta}^{-1}(E_{00})=E_{00}-c.
+\tag{8.2}
+$$
+
+Proof. Write $Y=X_\eta-X_\theta$. Its image lies in $\mathcal N$, so $DY=0$. The map and its inverse are $I+YD$ and $I-YD$, giving $DL=D$ for each. Since trace is the sum of diagonal entries, both preserve trace on all complex matrices. This preservation of diagonal entries does not assert that a diagonal input remains diagonal.
+
+The entries of $P$ and of its inverse (3.2) are real. Since $u_\theta$ is Hermitian, $B_\theta(\overline v)=(B_\theta v)^*$. Also $T(n^*)=(Tn)^*$. Applying these identities to each term in (3.4) yields
+
+$$
+X_\theta(\overline v)=(X_\theta v)^*.
+$$
+
+The same holds for $X_\eta$ and hence $Y$. As $D(A^*)=\overline{D(A)}$, both $I+YD$ and $I-YD$ commute with taking adjoints, proving (8.1).
+
+Subtracting the Sylvester equations gives
+
+$$
+YP-TY=B_\eta-B_\theta.
+$$
+
+If the reset projectors are equal, the right side is zero, and uniqueness in Lemma 3.3 gives $Y=0$, so $L$ and its inverse are the identity and are positive. Conversely, if they differ, their difference lies in $\mathcal N$ because their diagonals are both $q$. Proposition 3.5 gives
+
+$$
+Ye_0=Q(T)^{-1}(u_\eta-u_\theta)=c\ne0,
+$$
+
+where nonzero follows from the invertibility of $Q(T)$. This proves (8.2). Both outputs are Hermitian by (8.1), have diagonal $(1,0,\ldots,0)$, and have a nonzero off-diagonal part.
+
+For a positive semidefinite matrix $A$, its two-coordinate principal restriction is positive semidefinite and therefore
+
+$$
+|A_{ij}|^2\le A_{ii}A_{jj}\quad(i\ne j).
+\tag{8.3}
+$$
+
+For completeness, if the diagonal entries of that restriction are $a,b\ge0$ and its upper-right entry is $z$, positivity of its quadratic form gives $b-|z|^2/a\ge0$ when $a>0$ by taking the first coordinate $-z/a$ and the second $1$. When $a=0$, allowing the first coordinate to vary in magnitude and phase forces $z=0$. These two cases give (8.3). For diagonal $(1,0,\ldots,0)$, every right side in (8.3) is zero, so all off-diagonal entries must vanish. Thus the only positive semidefinite matrix with that diagonal is $E_{00}$. Neither output in (8.2) is positive semidefinite, proving failure of positivity for both maps. This proves all the equivalences. $\square$
+

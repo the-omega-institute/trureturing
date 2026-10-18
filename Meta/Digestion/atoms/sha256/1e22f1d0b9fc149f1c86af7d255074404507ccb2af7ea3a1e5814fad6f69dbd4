@@ -1,0 +1,9 @@
+**Comparison 8.3 (what becomes explicit).** CG18 defines
+$\mu_0=\min_{\mathcal K_0}E_c$ over all zero-transfer finite triples and
+$\epsilon_0=\mu_0-E_\star>0$ by compactness and rigidity. Theorem 8.2 gives
+$\epsilon_0\geq\epsilon_{\rm q}>0$. It neither solves that restricted
+minimization nor defines its explicit constant in terms of $\mu_0$.
+The mechanism is exact ascent with derivative $\eta_{1,\star}$ after the
+transfer-block constraints are removed, followed by the explicit quadratic
+correction of the remaining live-support constraint.
+

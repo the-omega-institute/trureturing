@@ -1,0 +1,10 @@
+**定义 11.2.2（合法线性化）。** 一个全序 $\sigma$ 是事件结构的合法线性化，若
+
+$$
+e\prec f\Longrightarrow e<_{\sigma}f.
+$$
+
+所有合法线性化组成偏序的拓扑排序集合 $\operatorname{Lin}(E,\prec)$。偏序本身不选择其中某一个全序。
+
+<a id="section-11-3"></a>
+

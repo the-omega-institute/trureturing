@@ -1,0 +1,28 @@
+## 312. Each of the three selected axes forces a different dominant Z run
+
+Fix one of these three flat owners and its selected X. Its complete
+genuine angle budget is pi, and its only flat X occurrence is its one
+axial pi slot: flat transverse X occurrences are excluded by x>m-2,
+and axial zeros do not occur because every flat selects its axes.
+
+Its entire X circle cannot be axial. Otherwise its fixed pair is
+{C,D}; there are g=degree(X)-1>=5 genuine X occurrences. They have
+distinct owners, since two X axes with x>=1+c+d would be flat.
+The dominant-axis inequality gives 2*theta_X+beta_C+beta_D>pi for each.
+Their actual C/D expense is therefore greater than
+2*g*pi-4*pi>=6*pi, contrary to complete C/D capacity 4*pi.
+
+Thus the maximal axial X run through the selected flat is proper.
+Its two distinct transverse boundary X slots are genuine; their angles
+sum to at most pi, so choose one at most pi/2. Actual face transport
+gives an owner (W,X,A,B,X,A), {A,B}={C,D}. The exact transverse-X
+cosine numerator increases with w and at w0=1+x+a equals
+
+    [a+x*(1+x+a)]*(1+a+b-x)<=0.
+
+Consequently w>=1+x+a>m, because x>m-2 and a>1. The special-edge
+barrier excludes W in S. Among H only Z has value greater than m,
+so W=Z. This owner gives a dominant axial Z run with pair {X,A}.
+For distinct X in {M,U,V}, these fixed pairs are distinct: A belongs
+to {C,D}, disjoint from all three X labels.
+

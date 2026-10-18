@@ -1,0 +1,97 @@
+**Lemma 15.1 (all-word hard targets in the five classes).** In
+classes I–V of Lemma 14.2, respectively choose
+$q=RL,LL,LL,RL,LL$. No own-coordinate experiment at any
+finite word determines this target on its support. The constant
+experiment also fails. The unordered lists of its four target-cell
+masses and their exact squared sums are
+
+$$
+\begin{array}{c|c|r}
+ &\text{cell masses}&\sum_z A_{q,z}(P)^2\\\hline
+\mathrm I&(3282120,3282120,1295994,1295994)&24903824284872\\
+\mathrm {II}&(3285936,3285936,1295146,1295146)&24949557114824\\
+\mathrm {III}&(4481982,2587758,1027662,1027662)&28896832487376\\
+\mathrm {IV}&(4481982,2587334,1029358,1029358)&28901615660208\\
+\mathrm V&(4489614,2587758,1027662,1027662)&28965303708048.
+\end{array}
+\tag{NCE.93}
+$$
+
+All five squared sums are strictly below
+
+$$
+C_{\rm a}^2=83066691212649.
+\tag{NCE.94}
+$$
+
+Proof of hardness. In each row write the chosen target as $sL$,
+where $s$ is the side of the displayed $Q$. Choose
+$u\ne u'$ in $U$ and a fixed $v\in V$. The two child
+states $\langle u,v\rangle,\langle u',v\rangle\in Q$
+have the same branch root reply, but their $L$ factors are
+$\gamma(u)\ne\gamma(u')$, using (NCE.26). In the full
+outer rectangle keep the opposite child fixed and use these two
+states on side $s$. They give equal replies at the outer root,
+at the root of child $s$, and at every word in the opposite
+child cone, but different chosen target factors. This proves
+failure for all those words, and proves nonconstancy.
+
+Every remaining finite word is $sa$ with $a\ne\varepsilon$.
+For classes I and II, the designated child set $T_Q$ contains
+both leaves $A,B$. Take those two child states with the other
+child fixed. Every such $sa$ returns absent on both, whereas
+their target factors are $\Gamma_L(A)=(3,0)$ and
+$\Gamma_L(B)=(2,0)$.
+
+For class III, use the parent state $A$ and a branch with its
+designated left child $B$. Every $La$, $a\ne\varepsilon$,
+is absent on both. Their $LL$ factors are $(4,0)$ and
+$(2,0)$. In class IV the parent $A$ and a branch with
+designated right child $B$ likewise merge at every proper
+right-child word, while their $RL$ factors are $(5,0)$
+and $(2,0)$. For class V use the parent $B$ and a branch
+with left child $B$. Their $LL$ factors are $(3,0)$ and
+$(2,0)$ and again every proper left-child word is absent.
+These cases partition the entire finite-word menu. Nonconstancy
+also excludes the constant experiment.
+
+Proof of the cell arithmetic. On a branch at target $sL$,
+the target value is $\Gamma_L$ of its designated child.
+For each $Q=U\times V$ in (NCE.90), its two first-child
+symbols give two distinct factors, each occurring in exactly
+two members of $Q$. Every member of $\mathcal G$ has the
+same category weight in the outer matrix. This makes the
+listed masses independent of the particular $U,V,g$.
+
+In class I, designated child $A$ and $B$ have masses
+$1024686+9\cdot250826=3282120$ and
+$1347714+9\cdot214934=3282120$. Each of its two $Q$
+cells has mass $2(215358+9\cdot48071)=1295994$.
+Their factors are the two leaf-side factors and two distinct
+members of $\{(2,1),(1,0),(0,0)\}$, so these four cells
+are distinct. Class II instead uses row sums:
+$1024686+9\cdot251250=3285936$,
+$1347714+9\cdot215358=3285936$, and
+$2(214934+9\cdot48071)=1295146$ twice.
+
+For class III the parent $A$ is its own cell of mass
+$4481982$. The designated child $B$ contributes
+$1024686+1347714+215358=2587758$. Each $Q$ cell
+contributes $2(250826+214934+48071)=1027662$.
+For class IV these become the column sums
+$1024686+1347714+214934=2587334$ and
+$2(251250+215358+48071)=1029358$, with the same
+parent cell. The parent factors $(4,0)$ or $(5,0)$
+are distinct from every displayed child factor.
+
+In class V the parent $B$ has $LL$ factor $(3,0)$,
+which equals the factor from designated child $A$. They
+must be combined, giving
+$2959092+(254586+1024686+251250)=4489614$.
+The designated child $B$ contributes $2587758$, and each
+$Q$ cell contributes $1027662$. No other collision occurs
+by (NCE.26)–(NCE.27). Squaring and adding gives (NCE.93).
+This counts temporal factors, including their actual collisions,
+rather than distinct descriptions of blocking positions.
+$\square$
+

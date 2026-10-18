@@ -1,0 +1,31 @@
+**定义 8.1（原来源上的坐标供应）。** 沿用定义1.1的全部非空有限自由有序树、同一个 $\rho$、唯一原始端点 $P(t)$ 及深度 $\nu(t)$。置
+
+$$
+T_j=\rho^j\alpha,\qquad
+e(t)=\mathbf 1_{\{P(t)=\alpha\}},\qquad Q(t)=(\nu(t),e(t)).
+$$
+
+标志一的深度 $j$ 来源恰为实际树 $T_j$；标志零称为非射线来源。使用 [JM §§36、49–50][JM] 的原定义及 [IntrinsicSubstitutionCoordinates 的 all_source_coordinate_law][ISC]，若 $Q(s)=(a,e)$、$Q(t)=(b,f)$，则
+
+$$
+\begin{aligned}
+Q(\rho t)&=(\nu(t)+1,e(t)),\\
+Q((s,t))&=
+\begin{cases}
+(b+2,1),&e=f=1\ \text{且}\ a=b+1,\\
+(\min(a,b),0),&\text{其他情形}.
+\end{cases}
+\end{aligned}
+\tag{NIC.21}
+$$
+
+称第一种配对为例外配对。两个叶的坐标分别为 $(0,1)$、$(1,1)$；标志不是当前叶标签。记 $\ell(t)=N(t)$，并沿用 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。[JM 命题37.4][JM] 的组成运输同时供应
+
+$$
+\ell(T_j)=F_{j+1},\qquad
+\nu(c)=j\Longrightarrow\ell(c)\ge F_{j+1}.
+\tag{NIC.22}
+$$
+
+这些是本节的已有前提，不另立原始射线、配对律或 Fibonacci 增长定理。
+

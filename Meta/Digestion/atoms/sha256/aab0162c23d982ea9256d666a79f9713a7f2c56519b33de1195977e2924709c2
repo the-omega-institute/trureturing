@@ -1,0 +1,66 @@
+**Theorem 4.2 (existential completeness of the canonical choice).**
+For a fixed recognized chart tuple, there are finite chart points with
+one common whole-output prefix at every depth if and only if
+$\mathcal C_K$ holds for at least one scalar face $K$. Consequently the
+canonical all-$\Omega$ choice on unanchored components is complete
+for this existential question, even when other completed solutions have
+additional finite coordinates.
+
+**Proof.** First assume arbitrarily deep joint finite witnesses in this
+fixed tuple. Choose witnesses at increasing depths. The finite product
+of the compact scalar spaces $\mathbb N\cup\{\infty\}$ and compact
+tree completions has a convergent subsequence. This can also be obtained
+by successive finite-coordinate subsequences and a diagonal sequence.
+Continuity of all whole source maps and increasing prefix agreement
+make their completed outputs equal. The equivalent terminal equations
+therefore hold on that limit.
+
+Let $K$ be its divergent original scalar names. The other scalars
+eventually equal one fixed $\mathbf t$. Theorem 3.2 forces every
+finite-anchored residual to the computed $f_K$, with one finite
+$\mathbf q$. Since each such finite tree is isolated, the subsequence
+eventually has those exact values, not merely close prefixes. For any
+$b$, sufficiently late finite witnesses have all $v_i\ge b$ and still
+satisfy every original chart negative and policy. Hence they witness
+$\Phi_K$ at this same $\mathbf t,\mathbf q$, proving (TOS.7).
+
+Some unanchored residuals in the extracted limit may also be finite.
+Removing these additional finite restrictions enlarges the existential
+support. The proof has imposed only the values that every terminal
+solution at this scalar face must have. Assigning $\Omega$ to all
+remaining components still satisfies every terminal equation by Theorem
+3.2. Thus necessity does not assume the extracted limit was canonical;
+it proves that an available contact always permits the canonical choice
+with adequate signed finite support. No negative is extended to a limit.
+
+Conversely suppose (TOS.7) holds, and fix its $\mathbf t,\mathbf q$.
+Theorem 3.2 gives a canonical residual tuple with $f_K$ on $F_K$ and
+$\Omega$ elsewhere. At the scalar face its whole source outputs are
+one common completed tree $W$.
+
+For a requested $h\ge0$ put $b=2h+2$ and choose one $\mathbf v$
+witnessing (TOS.7). Every divergent atomic terminal at these finite
+values has minimum leaf depth at least $h+1$ and agrees with $\Omega$
+through $h$. Finite scalar terminals and forced residuals already have
+their exact canonical values. At these very same ranks every chart's
+full substituted negative conjunction is feasible, by $\Phi_K$.
+
+Apply [SLP, Lemma 2.1][SLP] separately to each alternative source,
+prescribing $p_h(\Omega)$ on its remaining residuals and keeping $f_K$
+exactly fixed. Its premises hold: these residuals range over the full
+Cartesian carrier before the negatives, there is a finite seed at the
+chosen ranks, and the prescribed completion for each unfixed name is
+infinite. The construction uses one prefix context per name and shares
+that context and filling at every repeated occurrence. It returns one
+finite tuple satisfying *all* negatives of that chart together.
+
+Fixed powers are prefix-nonexpanding; pairing and ground evaluation
+preserve the required output prefixes. Induction on each source template
+shows its actual finite output agrees with $W$ through $h$. The chart's
+forward source correspondence puts it in exactly $D_r$, with every
+actual-epoch guard and signed constraint. All outputs therefore have one
+common original prefix. Every step is effective and terminates for this
+requested $h$. The completion $W$ has neither a retained negative nor a
+finite-source partition assigned to it. This proves sufficiency and the
+existential completeness claim. $\square$
+

@@ -1,0 +1,19 @@
+**Definition 1.1 (source and capacity).** Let $\mathcal T$ be the free nonempty
+ordered binary-tree algebra on the distinct leaves $\alpha,\beta$, with pairing
+$\langle s,t\rangle$. Write $\lambda(t)$ for its leaf count. Fix a public integer
+$H\ge1$, put $N=2H-1$, and set $\mathcal T_H=\{t:\lambda(t)\le H\}$.
+The substitution is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+An address is a finite word in $L,R$, including the empty root address.
+The literal response $\operatorname{tag}(p,t)$ is the labelled leaf or branch
+at $p$, and is `absent` if descent encounters a leaf before the word ends.
+All finite addresses are legal. Pairing, order, addresses, substitution, control,
+tapes and permissions are declared additional structures; alphabet minimality
+is not a universality theorem about two relations.
+

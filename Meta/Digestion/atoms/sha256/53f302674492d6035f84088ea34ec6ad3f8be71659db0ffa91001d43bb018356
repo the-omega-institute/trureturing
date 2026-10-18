@@ -1,0 +1,57 @@
+**Definition 4.3 (initialization order).** On entry to $G$, append bank
+sentinels and construct the empty active bank by Definition 2.3. Append
+one F sentinel to each of 70–73. Do not append a second initial F to 69.
+Before any later channel staging, append the following binary fields to
+69 in this fixed order, each with measured Base, length, actual descriptor,
+F and seal:
+
+1. After the existing code field zero, the actual public initialization,
+   mode, $H_0,\xi$, prior, controller table/initial-data bindings and the
+   acquired boot binding.
+2. The finite descriptions of the earlier original graph, its boot and
+   the capture graph $L$, emitted by literal paid Appends.
+3. The actual acquired seed syntax and its actual delivery/local origin.
+4. The closed acquired 28/29 import, with the actual pre-activation
+   input/request dependencies in their prescribed chronological order.
+5. The saved-head table for 26/28/29 and the fixed activation-position
+   description: the first normalized return after acquisition, with no
+   independent late-position choice.
+
+Variable material is obtained by Definitions 3.1–3.5 from actual owned
+backing, then exported by Definition 2.2. In particular the boot binding,
+source identity and seed delivery resolve through their actual local
+references; their remote names alone do not supply these words. The
+original controller table, finite initial configuration, public prior
+program and original boot description are fixed parameters of this
+apparatus. Their canonical literal words are also emitted bit by bit in
+this field, just as the fixed old graph/$L$ descriptions are. Canonical
+original supply requires those same words at their original paid IN
+sites; they are not new source-dependent advice or an unacquired variable
+table. A different public controller or prior program chooses a different
+fixed apparatus, whereas every future capacity is still runtime input.
+Neither earlier graph contains $G$. Actual public variable data are
+acquired data, not substituted compiler literals.
+Imports restore 26/28/29 before proceeding. All the initial field exports
+are complete before ManifestPrefix is entered.
+
+ManifestPrefix is RCA Definition 13.2's full-prefix graph with port
+37 replaced by 69: Home; MR; MR, then BeginField/FieldRead, literal
+bit cons, Reverse, AppendItem, delimiter MR, and finally the manifest
+copy. It imports every field, including empty fields; it omits only the
+initial sentinel. Field zero must parse as $101U(\delta)\Delta(G)$ with
+exhaustion, and its description must pass row/effect/entry validation.
+Only then initialize completed cycles $M$, covers and packages and their
+cursors. Hand the history invocation slot to the outer client by TOK,
+then execute its Ready CTL. This is the first $R_r$.
+
+The importer used to prepare these fields already has an empty initialized
+bank. ManifestPrefix's later register initialization does not erase its
+source fields or require an uninitialized compiler. Initial saved distances
+are bank words from Definition 3.1, and the copied CAP reference fields are
+bank words from Definition 3.3. They can be exported directly in the
+prescribed field; no extra top-level staging field is inserted into this
+initial prefix. After ManifestPrefix, native metadata on 66/67 that must
+enter a bank is first staged on 69 by RCA Definition 13.2's Stage34/Stage35
+relocation, then imported there. No bank assignment reads its own native
+scratch through a head that its rebuild will move.
+

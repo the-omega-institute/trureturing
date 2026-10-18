@@ -1,0 +1,10 @@
+### 9.2 原始三次前缀反转的精确对应
+
+对 $n\ge4$，在 $G=S_n$ 中取 $S=\{r_n,r_{n-1},r_{n-2}\}$，每个前缀反转都是对合。
+若已经构造第 1 节的原始全图 Hamilton 圈，上述引理给出长度恰为 $n!$ 的字，
+每个字母都是这三个原始反转之一，完整乘积为单位元，正前缀 $1,\ldots,n!$ 恰好遍历全部排列。
+这里的 $n!$ 来自排列群的基数，与端口集的大小或某个子域的大小不同。
+`Configuration(n-1)` 是 $\operatorname{Perm}(\operatorname{Fin}n)$；源码对应声明
+`UniformNativeGeneratorControl.actual_ambient_generator_control` 保留 $n\ge4$。
+该原始控制词声明通过实际全圈构造提供这里的圈，不把圈供应者作为它的公开前提；本节的传递引理则明确保留给定圈这一前提。
+

@@ -1,0 +1,12 @@
+**Corollary 13.4 (Exhaustive remaining case).** Every budget-three
+competitor either is already dominated by a radial budget-two model,
+or has finite error, actual hull dimension three, useful rank two,
+and a $\beta$-independent encoder.
+
+**Proof of Corollary 13.4.** Infinite-error competitors are dominated
+by the finite zero witness. Proposition 13.2 handles every deficient
+useful rank and every actual hull of dimension at most two. In the
+remaining dimension-three, rank-two case, either a nonzero beta-fiber
+difference exists and Lemma 13.3 applies, or all such differences
+vanish, which is exactly $\beta$-independence of $E$. $\square$
+

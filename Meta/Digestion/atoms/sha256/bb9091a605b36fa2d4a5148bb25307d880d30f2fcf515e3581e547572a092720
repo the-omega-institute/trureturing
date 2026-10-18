@@ -1,0 +1,52 @@
+**Proposition 206.9 (Chain relocation and its limitation).**
+For every $L\ge6$ and $\mu>2$, take
+$\gamma_1=\gamma_2=\mu/2$, all late $\gamma_j=\mu$,
+$S=\mu$, $t=\mu-1$. Put $P=\mu/2$ at each of
+$v_1^{\rm ch},v_2^{\rm ch}$. A complete choice of correct rows is
+
+$$
+\begin{aligned}
+C_{0111011^{L-6}}&=\mu/2,&C_{v_2^{\rm ch}}&=\mu/2,\\
+C_{1101101^{L-6}}&=\mu,&C_{1110111^{L-6}}&=\mu,\\
+C_{w(\{j\})}&=\mu&& (5\le j\le L),
+\end{aligned}
+\tag{206.27}
+$$
+
+where $w(Z)$ is the length-$L$ word with zero set exactly $Z$.
+All unspecified rows are zero, and $T=\mu-1$. It has
+$\Delta_O=1$, $\Delta_N=\mu+1$, whereas the chain representative
+has both excesses one and the same $Q,W$.
+
+**Proof.** Each numerical label has reward at most $\mu$ in a cell:
+early labels have total $C+P=\mu$, and each late class has total
+$\mu$. The $11$ cell of any pair has no chain pair weight, so its
+zero reward is $\mu-1$; other zero rewards are at most $S=\mu$.
+Thus every $N$ pair has support at most $4\mu$ and every $O$ pair at
+most $3\mu$. For a singleton, its zero cell has every reward at most
+$\mu$, and its positive cell has every reward at most
+$\max(\mu,S+t)=2\mu-1$; its support is therefore less than $3\mu$.
+The empty schedule is bounded by $2\mu-1$ as well.
+The $N$ labels $(0,5,3,4)$ at $(5,6)$ attain four rewards $\mu$,
+and $(1,2;1,2,3)$ attains $3\mu$ in $O$. Since $W=3\mu-1$, the
+claimed excesses follow. The same calculation permits moving the
+class-two correct row to its sole-zero word, including the instance
+$L=6,\mu=3$ with $C_{101111}=3/2$.
+For the representative, $c_0=\mu$, $q=\mu+1$ and $d_0=D=1$ in
+206.7. In fact its quotient already has readings
+$-\mu,-\mu/2,0,(k-2)/(k+1)$ at $o,p,u_k,v_k$, respectively, so
+zero score with $\theta=(L-2)/(L+1)$ certifies it.
+
+Unconditional chain relocation fails on the example owned by 198.6:
+$L=4$, $P_{0101}=P_{1010}=C_{1101}=C_{1110}=1$, with all other
+rows and $T$ zero. Append ones for larger $L$. Its supports are three
+and $W=2$. To collect all four rows a table must query address one
+to distinguish $0101$ from $1101$, and address two to distinguish
+$1010$ from $1110$. The two correct words then share transcript $11$
+and have different rewarded labels, so four cannot be collected.
+A stopped table collects three. Its optimized chain has
+$E=t=0,S=2,M_2=2,c_0=1,q=2,d_0=1,D=2$, attained by
+$(2,3;0,3,4)$. This is the existing limitation of a method, consistent
+with the restricted minimum hypothesis, not a failure of $E_N$.
+$\square$
+

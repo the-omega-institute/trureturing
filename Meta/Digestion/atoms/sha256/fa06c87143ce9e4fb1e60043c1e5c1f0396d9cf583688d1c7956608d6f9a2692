@@ -1,0 +1,23 @@
+**Theorem 70.1 (a ray-pair transition).** There is an algebraic parameter
+
+\[
+ 0.105461989024891<b_*<0.105461989224891
+ \tag{70.1}
+\]
+
+and a reflection-fixed noncanonical unit-entry vector \(w_*\) such that both
+\(w_*/\sqrt6\) and a canonical input vector \(k_*/\sqrt6\) are common-flat
+for \(H_0(b_*)\), and
+
+\[
+ \left|\left\langle w_*/\sqrt6,k_*/\sqrt6\right\rangle\right|^2=1/6.
+ \tag{70.2}
+\]
+
+Moreover a single continuous reflection-fixed common-flat branch exists over
+\([21/200,53/500]=[0.105,0.106]\), contains this isolated algebraic transition,
+and has opposite overlap-minus-six signs at its endpoints. Thus a claim of no
+mutually-unbiased common-flat ray pair cannot hold on the entire open branch.
+This is a boundary of that particular sufficient method for quartet exclusion;
+it does not refute a basis-level no-quartet assertion.
+

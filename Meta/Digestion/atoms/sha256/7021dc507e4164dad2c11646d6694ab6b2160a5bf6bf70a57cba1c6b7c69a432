@@ -1,0 +1,68 @@
+### 97.3. Common-witness curvature at the coefficient level
+
+**Lemma 97.2.** For every fixed D satisfying Theorem 97.1, some (ρ,W)∈𝒜₀ satisfies
+
+\[
+ Q_W(D):=2\operatorname{Tr}[(\overline R\odot D\odot D)W]\ge0.
+                                                                    \tag{12}
+\]
+
+Consequently, on the same fixed G,H,a,R,
+
+\[
+ q_R(D):=-\sum_{\substack{i,j\in S\\
+                         i,j\text{ in different fibres}}}
+       \frac{\overline{a_i}a_j\overline{R_{ij}}}{H_{ij}}D_{ij}^2
+       \ge0.                                                     \tag{13}
+\]
+
+**Proof.** Let 𝒜 be the compact convex set of all norming pairs at (G,H), and set
+
+\[
+ b(W;G',H')=-2\operatorname{Tr}
+       [((G'-G)\odot H+G\odot(H'-H))W].
+                                                                    \tag{14}
+\]
+
+The common-witness subset consists exactly of the members of 𝒜 for which b(W;G′,H′)≥0 for every G′,H′∈𝓔. Fix D first. For M>0 and any such feasible pair, use the paths (10) in the convex mixtures
+
+\[
+ \widehat G_s=(1-Ms^2)G_s+Ms^2G',\qquad
+ \widehat H_s=(1-Ms^2)H_s+Ms^2H'.                              \tag{15}
+\]
+
+They are feasible for sufficiently small s. Although (10) can have a cusp at zero, it converges at rate O(|s|), and its coefficient is exactly quadratic. Thus direct product expansion gives
+
+\[
+ \begin{aligned}
+ T-\widehat G_s\odot\widehat H_s
+   =L+s^2\bigl[\overline R\odot D\odot D
+      -M((G'-G)\odot H+G\odot(H'-H))\bigr]+o(s^2).
+ \end{aligned}                                                   \tag{16}
+\]
+
+For each fixed M,G′,H′, the remainder is uniform against compact 𝓒. The derivative of a compact maximum of affine functionals is the maximum of their derivatives over the norming set. Local minimality at coefficient scale s² therefore gives
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+Mb(W;G',H')]\ge0
+       \quad\text{for every }G',H'\in\mathcal E.                \tag{17}
+\]
+
+There is one member of 𝒜 satisfying all the inequalities inside (17) simultaneously. Otherwise compactness supplies a finite inconsistent subsystem. The affine image of 𝒜 for those inequalities is compact convex and disjoint from the nonnegative orthant. Strict separation gives nonnegative weights, normalized to sum to one; their convex average of the corresponding feasible pairs contradicts (17). This separation uses affine variables with D fixed.
+
+Call the simultaneous pair (ρ_M,W_M). Setting G′=G,H′=H gives Q_(W_M)(D)≥0. The Q values are bounded on 𝒜. Along a convergent subsequence as M→∞, the simultaneous inequalities give b(W_*;G′,H′)≥0 for every fixed feasible pair. The limit belongs to 𝒜₀ and retains Q_(W_*)(D)≥0, proving (12).
+
+Substitution of (2), with the reversed indices in the trace, gives Q_W(D)=α_W q_R(D). The ordered summands in (13) are Hermitian-conjugate pairs. Its cross-fibre quotient coefficients are fixed by G,H; all within-fibre terms vanish. Since α_W>0 for every common witness, (12) implies (13). No single second-order witness for all directions, and no exchange of quadratic minimax quantifiers, has been assumed. ∎
+
+If additionally rank R=dim ker K, (3) gives range((P_B)_S)=ker K. For a Hermitian D, the principal-kernel condition is then equivalent to
+
+\[
+ E_D R=0,\qquad
+ E_D=\operatorname{diag}(\overline{a_S})D
+                                  \operatorname{diag}(a_S).
+                                                                    \tag{18}
+\]
+
+Indeed both conditions are equivalent to D diag(a_S)R=0. This is a sufficient dimension criterion for equality of the relevant spaces, not a converse about all restricted directions.
+

@@ -1,0 +1,126 @@
+**Theorem 10.2 (finite certification is equivalent to all-lag service).**
+Fix any deterministic acquired encoder $e$ in Assumption 9.1 and a
+budget $k\ge0$. Put $Z=q+1$. For each attained class $C_\gamma$, form
+the two full origin-indexed states
+
+$$
+\begin{aligned}
+S_R(\gamma)&=\bigl((Z+a-b,b)\bigr)_{(a,b)\in C_\gamma},\\
+S_L(\gamma)&=\bigl((q+Z-a+b,a)\bigr)_{(a,b)\in C_\gamma}.
+\end{aligned}
+\tag{NARC.10.3}
+$$
+
+For nonnegative lags also form the at most $q$ complete boundary states
+
+$$
+S_0(z)=\bigl((z+a-b,b)\bigr)_
+ {\substack{(a,b)\in C_{e(0,z)}\\b\le z}},
+\qquad 0\le z<q.
+\tag{NARC.10.4}
+$$
+
+For $\lambda=1$, all-lag recovery with at most $k$ actual Reads on
+both visible regions exists exactly when $D_k$ holds on every state
+in (NARC.10.3). For $\lambda=0$, it exists exactly when $D_k$ holds
+on those states and every state in (NARC.10.4). The latter states
+include the entire compatible fibers, not only their zero-age origins.
+The finite menu (NARC.10.1) suffices for every certificate. This menu
+bound is not a bound on the addresses used at unbounded runtime lags.
+
+**Proof, native trees and necessity.** By induction on $j$, Definition
+10.1 is equivalent to target separation by a depth-at-most-$j$ tree
+using its menu. Every state tested here has ages in $[0,3q]$:
+the right reference range is $[2,2q]$, the left reference range is
+$[q+2,3q]$, and the boundary range is $[0,2q-2]$. Every descendant
+inherits this bound. A threshold $t>3q+1$ has constant absence and
+may be deleted. Every finite relative word otherwise has $E/P/S$
+response geometry by Definition 5.3. Replace an $S_t$ node by the
+actual $P_t$ and send replies $(\bot,\alpha,\beta,\mathsf b)$ to
+$(\bot,\beta,\mathsf b,\mathsf b)$ before following its former
+child. This refines its partition with the same call budget. Delete
+root and visible-slot queries by the all-address correspondence of
+Theorem 5.2, and delete any remaining constant nodes. The resulting
+tree uses (NARC.10.1). This argument retains origin indices even if
+two ages coincide, and proves that the finite predicate is exact for
+each tested state.
+
+Every reference state is a genuine whole acquired-input fiber at
+$z=Z$, with its target coordinate determining the required lag by
+subtraction from $Z$. Every boundary state is the complete right-visible
+fiber at the entry $(e(0,z),\mathcal R^R_z)$ for $\lambda=0$;
+it contains origin $(0,z)$ at lag zero. Theorem 5.2 realizes every
+indexed alternative by its own original and legal continuation. An
+all-lag controller restricted to one such entry therefore supplies
+the required native decision tree. This proves necessity.
+
+**Proof, positive translation.** Choose reference witnesses and delete
+their $E$ nodes: every reference age is at least two, so all such
+replies are branch. All remaining query nodes are actual $P_t$ with
+$t\ge2$. At a later entry with normalized clock $z$, restrict the
+appropriate reference tree to its exact fiber in Theorem 5.2. For each
+of its origins the age changes by the same integer
+$\Delta=z-Z$, while its target coordinate does not change. At a
+reference $P_t$ node put $s=t+\Delta$. Its reply on the same origin
+is the following partition of the actual age $n$:
+
+$$
+\widehat P_s(n)=
+\begin{cases}
+\bot,&n<s,\\
+\alpha,&n=s,\\
+\beta,&n=s+1,\\
+\mathsf b,&n\ge s+2.
+\end{cases}
+\tag{NARC.10.5}
+$$
+
+This notation is an algebraic reply to be simulated; it does not add
+an experiment to the native menu. On an actual positive support,
+$n\ge1$, it has the following lawful implementations:
+
+| Shifted threshold | Actual request | Reply supplied to the reference node |
+| --- | --- | --- |
+| $s\ge2$ | $P_s$ | unchanged actual reply |
+| $s=1$ | $P_2$ | $\bot\mapsto\alpha$, $\alpha\mapsto\beta$, $\beta,\mathsf b\mapsto\mathsf b$ |
+| $s=0$ | $E$ | unchanged actual reply |
+| $s\le-1$ | no request | constant $\mathsf b$ |
+
+For $s=1$, the absence cell of actual $P_2$ on positive ages contains
+only $n=1$; its alpha cell is $n=2$, and all higher ages require
+branch at the simulated node. For $s=0$, the only nonbranch positive
+age is $n=1$, giving beta under both $E$ and (NARC.10.5). For
+$s\le-1$, every positive age is at least $s+2$. These observations
+prove all four identities pointwise. Every paid experiment is prefixed
+by the actual hidden-slot address and uses (NARC.5.8). In particular,
+the $s=1$ case requests actual $P_2$, never $P_1$.
+
+Feed the implemented reply into the current reference node before
+selecting its next child. Induction down the finite reference tree
+shows that each actual origin follows exactly its reference transcript
+after these reply maps. A skipped step still descends the finite tree,
+and each paid step replaces at most one reference call. The final
+reference target is therefore valid on the actual restricted fiber,
+with at most $k$ paid Reads. This includes sparse fibers, conflicting
+age indices and adaptive second or subsequent thresholds; if a
+reference witness exists, its terminal target is constant on every
+surviving index.
+
+**Proof, zero boundary and sufficiency.** Left-hidden ages are always
+at least $q$ by Theorem 5.2, so are positive. A right-hidden age equals
+$a+\ell$ and is zero exactly when $a=0$ and $\ell=0$. This requires
+$\lambda=0$, $z=b<q$ and label $e(0,z)$. These conditions are
+recognizable from the acquired $z$, label and public encoder table;
+no hidden-age test is used. On such an entry choose the separately
+certified complete tree (NARC.10.4). All other entries have positive
+hidden support and use the translated reference tree. In either case
+the final target $v$ gives $\ell=z-v$, with the same actual original
+retained as a compatible index throughout the actual replies.
+
+At $n=0,s=1$, actual $P_2$ returns absence, whereas its positive
+reply map would supply alpha instead of the required absence in
+(NARC.10.5). Thus the positive translation cannot justify omission
+of the boundary trees. The finite cases above exhaust that exception;
+the translation proves all remaining, arbitrarily large lags. No
+finite lag window is used as an all-lag inference. $\square$
+

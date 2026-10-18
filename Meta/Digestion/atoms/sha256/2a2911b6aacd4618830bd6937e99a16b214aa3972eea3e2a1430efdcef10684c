@@ -1,0 +1,75 @@
+### 78.3. Completely specified integer seed construction
+
+Henceforth \(b=1/2\), \(R=11/4\), \(B=13/4\), and
+\(G=x+iy\), \(Z=u+iv\), with four real coordinates. Use
+\[
+C=(Z-R\alpha/2)/\beta,\qquad D=(-\bar Z-R\bar\alpha/2)/\beta.
+\tag{78.6}
+\]
+This parametrizes the linear correlation bijectively. The following rules
+fix every scalar and sign used in the certificate tables. For a nonzero
+rational polynomial, \(\operatorname{pp}_+\) clears denominators by their
+positive least common multiple, divides by the positive gcd of all integer
+coefficients, and chooses positive leading coefficient in lexicographic
+order \(x,y,u,v\), omitting absent variables. Set
+\(\operatorname{pp}_-=-\operatorname{pp}_+\). Complex bars in the construction
+fix these real indeterminates and send \(i\) to \(-i\).
+
+Define the following polynomial numerators, before any cancellation:
+\[
+\begin{aligned}
+C_0&=Z-R\alpha/2,&D_0&=-\bar Z-R\bar\alpha/2,&d&=\beta\bar\beta,\\
+A_0&=C_0\bar C_0+D_0\bar D_0,\\
+Y_0&=\bar GC_0\bar\beta+G\bar D_0\beta-A_0+C_0\bar D_0,\\
+T_0&=3(L_qd+NC_0\bar\beta+\bar N\bar D_0\beta)
+       -2iB(\bar Gd+2\bar D_0\beta-\bar C_0\beta),\\
+E_0&=\bar C_0T_0-2iB Y_0\bar\beta,\\
+J_0&=d\Re[18(b+i)G+3L_q+3NG+2iBG]\\
+   &\quad+iB(-C_0\bar\beta+2D_0\bar\beta+\bar C_0\beta-2\bar D_0\beta),\\
+W_0&=G\bar Gd-A_0+2(C_0\bar D_0+\bar C_0D_0+Y_0+\bar Y_0),\\
+U_Y&=(A_0-Rd)T_0\bar T_0+4B^2D_0\bar D_0dW_0,\\
+U_D&=iB(C_0\bar\beta-\bar C_0\beta)T_0\bar T_0
+       +4B^2D_0\bar D_0d(J_0+T_0+\bar T_0).
+\end{aligned}                                                    \tag{78.7}
+\]
+Set \(E_r=\operatorname{pp}_-(\Re E_0)\),
+\(E_i=\operatorname{pp}_-(\Im E_0)\),
+\(P_Y=\operatorname{pp}_-(U_Y)\), and
+\(P_D=\operatorname{pp}_-(U_D)\). Their leading terms in the stated
+lexicographic order are respectively
+\(-6512x^4,-244816x^4,-85571732224x^8,-17011456x^8\).
+Thus (78.7) specifies the four seed polynomials without storing their large
+expanded coefficient lists. All discarded factors are nonzero rational
+scalars or powers of \(\beta\bar\beta\).
+
+Write \(E_r=au+b_0v+c_0\), and put
+\[
+\beta_0=148x^2+264x+148y^2+44y+121=16|\beta|^2.
+\tag{78.8}
+\]
+For a polynomial \(P=\sum_{j=0}^m p_j u^j\), define its full cleared
+substitution \(\mathcal S(P)=\sum_jp_j(-b_0v-c_0)^ja^{m-j}\), where
+\(m=\deg_uP\). Define
+\[
+Q=\operatorname{pp}_-\mathcal S(E_i),\quad
+Y=\operatorname{pp}_+\mathcal S(P_Y),\quad
+D=\operatorname{pp}_+\mathcal S(P_D).
+\tag{78.9}
+\]
+These have \(v\)-degrees \(2,4,3\); no factor independent of \(v\) is
+removed. Write \(Q=q_2v^2+Lv+K\), set
+\(F_8=\operatorname{pp}_+(q_2)\), and verify \(q_2=3328F_8\).
+
+For the exceptional linear stratum, first reduce every coefficient of
+\(Q,Y,D\) modulo \(F_8\) by ordinary division in \(x\) over \(\mathbb Q[y]\),
+and primitive-normalize each whole result with positive leading coefficient.
+Call them \(Q_0=L_0v+K_0,Y_0',D_0'\). For \(P=\sum p_jv^j\) of degree
+\(m\), put \(\mathcal T(P)=\sum_jp_j(-K_0)^jL_0^{m-j}\). Define
+\[
+H_Y=\operatorname{pp}_+\operatorname{rem}_x(\mathcal T(Y_0'),F_8),\quad
+H_D=\operatorname{pp}_+\operatorname{rem}_x(\mathcal T(D_0'),F_8).
+\tag{78.10}
+\]
+Their total degrees are 30 and 23. The reduced \(L_0,K_0\) differ from the
+reductions of \(L,K\) only by the same nonzero rational scalar.
+

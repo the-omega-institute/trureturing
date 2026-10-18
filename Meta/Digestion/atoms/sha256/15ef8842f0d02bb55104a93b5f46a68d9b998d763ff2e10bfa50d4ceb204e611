@@ -1,0 +1,41 @@
+**Example 15.3 (A lawful positive hidden phase character).** There
+are full-hull three-coordinate, finite-error encoders whose third
+coordinate has a nontrivial positive phase character.
+
+**Proof of Example 15.3.** Choose a nonzero rational-linear map
+$\ell:\mathbb R\to\mathbb R$ with $\ell(2\pi)=0$. For example,
+extend $2\pi$ and a rationally independent real number to a
+rational vector-space basis, assign zero to $2\pi$, one to that
+other number, and zero to the other basis elements. It descends
+to an additive map $h:\mathbb T\to\mathbb R$. Choose a circle
+element $\alpha_0$ with $h(\alpha_0)>0$, changing sign if
+necessary. Then $h(n\alpha_0)=nh(\alpha_0)$ and
+$e^{h(n\alpha_0)}\to\infty$.
+
+For fixed $C>0$, set
+
+$$
+E_+(k,\alpha,\beta)=
+(C\cos\alpha,\ C\sin\alpha,\ e^{h(\alpha)}).
+$$
+
+Use the identity update for every $P_s$, and for every real $t$
+use
+
+$$
+(z_1,z_2,z_3)\longmapsto
+\bigl(R_{t/2}(z_1,z_2),\ e^{h(t/2)}z_3\bigr)
+$$
+
+for $Q_t$, with circle arguments in $h$. Direct substitution gives
+the exact source identities on all original domains. The fixed
+decoder is $D((z_1,z_2),0)$. Its error is finite, since its first
+pair has fixed norm $C$ and $y$ is bounded. The affine hull is
+three-dimensional: any affine dependence with a nonzero
+coefficient of $e^{h(\alpha)}$ would bound that unbounded function
+by a combination of $1,\cos\alpha,\sin\alpha$; with that
+coefficient zero, those three functions are linearly independent.
+The homogeneous phase representation has the trivial factor, the
+native conjugate pair, and the positive character $e^h$.
+$\square$
+

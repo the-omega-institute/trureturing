@@ -1,0 +1,29 @@
+**Definition 6.1 (authenticated input, not an acquisition oracle).** An
+application input is one already supplied finite rational period-one
+installation $\mathcal I$. It includes its complete original control,
+source-independent initialization, full emission and update programs,
+finite label sets $X,Y$, rational arrays
+$(\pi,\tau,B,A,u,v)$, representations of the installed numbers, and
+its original record renderer. The authentication requirement is a supplied
+equality between those arrays and this same program at its returned cuts,
+with exactly PAID Definition 2.1's latch and product-update behavior. In
+particular it certifies
+
+$$
+\pi_x,\tau_y>0,\quad \pi B=\tau,\quad \tau A=\pi,\quad
+a\le u_x,v_y\le b,
+\tag{6.1}
+$$
+
+stochasticity and normalization, rather than merely a table with similar
+output statistics. The input also identifies the original fixed prior;
+no prior posterior is made readable. Zero-row labels may first be removed
+only after checking support closure. No inference of these input premises
+from a partial trace, a digest alone, or an unknown program is included.
+
+For a mathematical installation specified by the complete product program
+below, authentication is equality to that specification. For an external
+device it is an additional premise about that device, not evidence furnished
+by this volume. The analysis never replaces the installed program by a
+different table after seeing its risks.
+

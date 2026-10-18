@@ -1,0 +1,106 @@
+**Theorem 11.2 (Vacuum rectangle stability bound).**
+For every full-support phase in Definition 8.1,
+
+$$
+S(\psi_\chi)-S(\psi_+)
+\ge\Delta_2(\chi)
+\ge 2p(\varnothing)\mathcal W(\chi)
+=\frac{2}{Z}\mathcal W(\chi).
+\tag{11.3}
+$$
+
+Moreover, using the canonical phases $a,b$ of (8.4),
+
+$$
+\mathcal W(\chi)
+=\bigl\|\psi_\chi-(D_a\otimes D_b)\psi_+\bigr\|^2.
+\tag{11.4}
+$$
+
+Proof. Expanding the two purities on the same carrier gives
+
+$$
+\Delta_2(\chi)
+=\frac12\sum_{\substack{\ell,\ell',r,r'\\\text{all four corners legal}}}
+a_{\ell r}a_{\ell'r}a_{\ell'r'}a_{\ell r'}
+|1-Q_{\ell\ell';rr'}|^2.
+\tag{11.5}
+$$
+
+Terms with an illegal corner have zero coefficient and can
+be omitted. For the other terms, the reference phase is
+one and the phase-dependent contribution is the real part
+of (11.2); the identity
+$|1-Q|^2=2(1-\operatorname{Re}Q)$ proves (11.5).
+Every summand is nonnegative. This expansion is the
+established four-amplitude purity or SWAP decomposition;
+the anchored estimate below specializes it to the actual
+positive hard-core law.
+
+For a legal nonvacuum pair $(\ell,r)$, retain the rectangle
+with the other left and right corners equal to the vacuum.
+Its coefficient satisfies
+
+$$
+a_{\ell r}a_{0r}a_{00}a_{\ell0}
+=p(\varnothing)p(\ell,r),
+\tag{11.6}
+$$
+
+because the law is the product of the occupied activities,
+restricted to legal configurations and divided by $Z$.
+The four ordered orientations of this rectangle contribute
+$2p(\varnothing)p(\ell,r)|1-\mathfrak h_\chi(\ell,r)|^2$.
+Distinct nonvacuum pairs select disjoint sets of orientations.
+If either side is vacuum, its anchored phase is one and its
+contribution to $\mathcal W$ is zero. Keeping precisely
+these terms of (11.5) proves the second inequality in
+(11.3).
+
+For the first inequality, the symmetric function
+
+$$
+q\longmapsto H(q)+\sum_jq_j^2
+\tag{11.7}
+$$
+
+is Schur-concave on each probability simplex. The usual
+Schur--Ostrowski differential criterion reduces this to,
+for $x>y>0$ with $x+y\le1$,
+
+$$
+\log(x/y)\ge\frac{2(x-y)}{x+y}\ge2(x-y).
+\tag{11.8}
+$$
+
+The first inequality follows by integrating $1/u$ between
+y and x, or by differentiating
+$\log t-2(t-1)/(t+1)$ for $t\ge1$; its derivative is
+$(t-1)^2/[t(t+1)^2]\ge0$. Boundary values follow by
+continuity with $0\log0=0$. Apply (11.7) to the
+majorization of Theorem 8.2. Rearranging gives
+$H(s_\chi)-H(s_+)\ge\sum_js_{+,j}^2-\sum_js_{\chi,j}^2$,
+which is the first inequality in (11.3).
+
+Finally, $\chi(\ell,r)=a(\ell)b(r)
+\mathfrak h_\chi(\ell,r)$ and $|a(\ell)b(r)|=1$.
+Squaring the coefficientwise difference of the two states
+proves (11.4). $\square$
+
+Thus a measured entropy excess at most $\delta$ implies
+squared distance at most $Z\delta/2$ from this canonical
+cut-local phase image. This is an explicit finite-model
+estimate. Its constant depends on the original partition
+function; it is not a bound uniform in chain length or
+activities, and it does not identify the closest image
+under all cut-local unitaries.
+
+Every occupation observable is constant throughout the
+phase fiber. A two-copy SWAP measurement on the selected
+subsystem could supply its purity, if that preparation and
+measurement capability were supplied. The law and phase
+notation alone supply neither copies nor a SWAP apparatus.
+The pure-state partial trace in (11.1) is also not an
+absolute-PPT claim about a mixed bipartite state under all
+global unitary conjugations.
+

@@ -1,0 +1,27 @@
+**定义 15.1（全参数与环境测地路径）。** 在本卷的概率次序 $(0,2,3,5,25)$ 中，令
+
+$$
+\begin{aligned}
+ r&=1-Z, &
+ p&=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),\\
+ u&=(-\dot X-\dot Y-\dot Z+\dot\kappa,\ \dot X-\dot\kappa,\ \dot Z,\ \dot Y-\dot\kappa,\ \dot\kappa).
+\end{aligned}
+$$
+
+参数域为 $0<Z<1$, $0<X,Y<r$ 及
+$\max(0,X+Y-r)<\kappa<\min(X,Y)$。在此开域内，四个速度参数可任取实数；上式是概率重构的完整导数，故 $\sum_i u_i=0$。置
+
+$$
+ q_i=2\sqrt{p_i},\qquad v_i=\frac{u_i}{\sqrt{p_i}},\qquad
+ \omega=\left(\sum_i\frac{u_i^2}{p_i}\right)^{1/2}.
+$$
+
+复用本卷 §10 及 [HIDDEN《隐藏关系、统计、相位与接缝》](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md) 命题 C-4.6 的平方根等距，有 $q\cdot v=2\sum_i u_i=0$、$\lVert q\rVert=2$，且 $\lVert v\rVert^2=\omega^2=g_p(u,u)$。把所声明的环境 Fisher--Levi--Civita 测地律作为路径前提，取 $t=0$ 为初点；当 $\omega>0$ 时
+
+$$
+ q(t)=\cos(\omega t/2)q+\frac{2\sin(\omega t/2)}{\omega}v.
+$$
+
+当 $\omega=0$ 时取 $q(t)=q$。两种情形均令 $p_i(t)=q_i(t)^2/4$。非零速时 $\lVert q(t)\rVert^2=4$、$q'(0)=v$、$q''=-(\omega^2/4)q(t)$；球面切向加速度为零，故确为半径二的 LC 测地，且 $p(0)=p$、$p'(0)=u$、$\sum_i p_i(t)=1$。令 $I$ 为包含 $0$ 的、满足全部 $q_i(t)>0$ 的最大连通开区间，并令
+$\mathcal N^\circ=\{p\in\mathcal D^\circ:p_0p_{25}=p_2p_5\}$。
+

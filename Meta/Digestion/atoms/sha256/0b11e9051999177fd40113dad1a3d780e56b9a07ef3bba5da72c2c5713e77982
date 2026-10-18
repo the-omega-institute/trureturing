@@ -1,0 +1,13 @@
+**Definition 5.1 (a stronger completion interface).** A pooled
+completion starts after the complete export $E(t)$, receives neither
+a target nor a count, and makes charged adaptive original-root Reads
+of that same stationary $t$. It then outputs one complete state $Z$.
+With no further Reads, $Z,D$ and public tables must answer every
+$p\in\mathcal P_D$ and every authentic subsequently supplied
+$k\ge0$. Its only acquired input at entry is $E(t)$; inaccessible
+preparation transcripts remain inaccessible. Address choice, stopping
+and local work are deterministic. All additional workspace and final
+state distinctions are charged separately from the initial alphabet.
+This changes the task by requiring a common acquired answer state
+before the request is known.
+

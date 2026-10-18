@@ -1,0 +1,9 @@
+**Definition 63.1 (The common positive-transfer class).** Keep the entire labeled source (59.1), the original measurable tape carrier, consumer and target family fixed. Use the tape mixture $\sigma$, likelihood sigma algebra $\mathcal G$ and original-tape range $P_{\mathcal G}$ of (59.2). Let $\mathsf M_+(\Theta,\mathcal F)$ be the cone of finite positive countably additive measures, and let $\mathsf M_{\mathbb R}(\Theta,\mathcal F)$ be the real vector space of finite signed measures with variation norm $\|\lambda\|_{\mathrm{var}}=|\lambda|(\Theta)$. A transfer in this section is one map
+
+$$
+T:\mathsf M_+(\Theta,\mathcal F)\longrightarrow\mathsf M_+(\Theta,\mathcal F)
+\tag{63.1}
+$$
+
+which is additive, positively homogeneous for every real scalar $t\ge0$, mass-preserving on every finite positive measure, and target-fixed: $T\mu_y=\mu_y$ for every original label $y$. The same map acts on all measures, rather than being chosen separately by source, cap or cylinder. No idempotence is assumed. This is a mathematical operation on laws; a measurable tape map or a sampling implementation of $T$ is not part of the hypothesis.
+

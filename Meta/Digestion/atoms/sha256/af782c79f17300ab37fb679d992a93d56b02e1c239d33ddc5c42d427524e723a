@@ -1,0 +1,70 @@
+**Theorem 8.1 (all pair compensations reduce to vertex ratios).** For
+the data of Definition 7.3, put
+
+$$
+A_i(a,b)=\Psi_i(a,b)\sqrt{\tau_i(a)\tau_{i-1}(b)}.
+\tag{GCB.21}
+$$
+
+There are positive functions $g_i:\{0,1\}\to(0,\infty)$ and
+positive constants $c_i$ with $\prod_i c_i=1$ such that
+
+$$
+A_i(a,b)=c_{i-1}\Phi(a,b)\frac{g_i(a)}{g_{i-1}(b)}.
+\tag{GCB.22}
+$$
+
+Conversely every choice of these $g_i,c_i$ and positive finite
+$\tau_i$ gives an admissible compensation by solving (GCB.21) for
+$\Psi_i$. Moreover
+
+$$
+\|\Psi_i\|_{K_{2,2};\tau_i,\tau_{i-1}}
+       =\|A_i\|_{K_{2,2}},
+\tag{GCB.23}
+$$
+
+where the last norm uses counting measures. Thus (GCB.22) describes the
+entire optimization in (GCB.19), including vertex-measure choices.
+
+Proof. Each vertex measure is split into a square root on its two
+incident edges, so (GCB.18) becomes
+$\prod_i A_i(s_i,s_{i-1})=\prod_i\Phi(s_i,s_{i-1})$.
+In the fourth-power sum for the counting norm of $A_i$, each replicated
+vertex appears twice. Its two square roots multiply to its one measure
+factor in (GCB.20). This proves (GCB.23) exactly.
+
+Define $r_i(a,b)=\ln(A_i(a,b)/\Phi(a,b))$. Then
+
+$$
+\sum_i r_i(s_i,s_{i-1})=0
+\qquad(s\in\{0,1\}^N).
+\tag{GCB.24}
+$$
+
+Fix all bits except $s_i,s_{i-1}$ and take the alternating mixed
+finite difference in those two bits. Since $N\ge4$, no other edge
+scope contains both, and each other summand cancels. Consequently
+
+$$
+r_i(0,0)+r_i(1,1)-r_i(0,1)-r_i(1,0)=0.
+\tag{GCB.25}
+$$
+
+Explicitly set $u_i(a)=\exp(r_i(a,0))$ and
+$v_i(b)=\exp(r_i(0,b)-r_i(0,0))$. Equation (GCB.25) gives
+$A_i(a,b)/\Phi(a,b)=u_i(a)v_i(b)$ at all four inputs. Regrouping
+the full product identity by vertices now gives
+
+$$
+\prod_j u_j(s_j)v_{j+1}(s_j)=1.
+\tag{GCB.26}
+$$
+
+Varying just $s_j$ shows that $u_j(a)v_{j+1}(a)=c_j$ is constant
+in $a$, and the constants have product one. With $g_j=u_j$, this
+is exactly (GCB.22). Conversely the vertex ratios telescope for every
+assignment, as do the $c_i$. Substitution into (GCB.21) therefore
+recovers (GCB.18). No existence assumption about an optimizer entered
+this characterization. $\square$
+

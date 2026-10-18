@@ -1,0 +1,11 @@
+**Definition 2.1 (actual owner grouping).** In an actual network let
+$O_i$ be the tuple of all seeds owned by block $i$. These tuples
+partition the seed set. Let $I_i$ contain the seeds appearing in block
+$i$ but owned outside it. Partition $I_i$ into $B_{i,1},\ldots,B_{i,k_i}$
+by their actual outside owner block. Thus two incoming seeds with the
+same outside owner are in the same group, even if they enter different
+ports. Every owned seed occurs at its owner port. Consequently at most
+$m_d$ distinct seeds occur locally and $k_i\le m_d$. The tuples
+$B_{i,g}$ are subtuples of the corresponding actual $O_j$; they are
+not independent donors.
+

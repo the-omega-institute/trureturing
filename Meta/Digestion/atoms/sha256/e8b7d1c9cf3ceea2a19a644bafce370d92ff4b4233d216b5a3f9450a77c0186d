@@ -1,0 +1,39 @@
+**Definition 64.1 (the joint source witness and the two pair laws).** Use the actual INITIAL
+$t=\langle\beta,\alpha\rangle$ and the fixed-cap history of Proposition55.6:
+\[
+\operatorname{Read}[BA];\quad \rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad \rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad \operatorname{Stop}.
+\]
+The leaf counts are $2,3,5$; the second candidate is refused and supplies no candidate
+Read. The accepted current domain is, in the ordered basis
+\[
+D=(o,L,R,LL,LR),
+\]
+the same five-site domain of §§55,60,62, with the same source version, labels, reference,
+clock and retained original records. In particular, no source state, event, or later Read is
+created by the calculations below.
+
+The ten unordered H3 pair targets are retained together. The common field law of
+(62.3) gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm c}(p,q)&
+1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16
+\end{array}
+\]
+and direct inversion of the actual $L_D$ gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm k}_D(p,q)&
+9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78 .
+\end{array}
+\]
+Here $G^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle$ is the one common field restricted
+to $D$, whereas $G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle$ is the separately
+solved killed pair law. Both use the same $\phi(p)=2^{-|p|}$ in the one-body term. The
+common field is not replaced by $\phi_D^0$, and neither pair table changes the original
+source or its history.
+

@@ -1,0 +1,5 @@
+source_id = "fib-native-open-domain-affine-approximation-and-finite-attainment"
+path = "docs/develop/theory/FIB_NATIVE_OPEN_DOMAIN_AFFINE_APPROXIMATION_AND_FINITE_ATTAINMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

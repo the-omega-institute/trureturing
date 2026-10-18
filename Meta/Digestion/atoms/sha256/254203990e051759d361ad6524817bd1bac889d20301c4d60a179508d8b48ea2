@@ -1,0 +1,83 @@
+## 132. 独立新输入及其零假设乘积分支
+
+**定义 C-132.1（三种实际输入域）。** 对 $\mathcal F\in\{\mathcal F_{\rm all},\mathcal F_Q\}$，
+$n\ge1$，分别定义
+
+$$
+\begin{aligned}
+\mathcal I_n(\mathcal F)&=\{\rho^{\otimes n}:\rho\in\mathcal F\},\\
+\mathcal P_n(\mathcal F)&=\{\rho_1\otimes\cdots\otimes\rho_n:\rho_i\in\mathcal F\ (\forall i)\},\\
+\mathcal S_n(\mathcal F)&=\operatorname{conv}_{\rm fin}\mathcal P_n(\mathcal F).
+\end{aligned}
+\tag{C132.1}
+$$
+
+它们依次为 iid、独立但可不同分布，以及每个分支的每个因子均属于零假设的乘积混合。
+最后一种允许由混合标签产生关联，不要求无条件独立；其限定是每个分支的全部因子均为零假设。
+$\operatorname{conv}_{\rm fin}\mathcal I_n$ 亦包含在最后一域中。
+
+**定理 C-132.2（独立输入的两条精确前沿）。** 对任意上述四种域
+$\mathcal N=\mathcal I_n(\mathcal F),\operatorname{conv}_{\rm fin}\mathcal I_n(\mathcal F),
+\mathcal P_n(\mathcal F),\mathcal S_n(\mathcal F)$，均有
+
+$$
+\begin{aligned}
+A_{\mathcal N}(\delta)&=\min\{1,\delta/(3/4)^n\}
+&&\text{若 }\mathcal F=\mathcal F_{\rm all},\\
+A_{\mathcal N}(\delta)&=\min\{1,\delta/(2/3)^n\}
+&&\text{若 }\mathcal F=\mathcal F_Q,
+\qquad 0\le\delta\le1.
+\end{aligned}
+\tag{C132.2}
+$$
+
+全域的达到为不限测量效果 $tP^{\otimes n}$。
+承诺域由原生全通过事件 $F_0^{\otimes n}$，再配一个独立最终硬币，以
+$t=\min\{1,\delta/(2/3)^n\}$ 达到。
+逆向上界允许全部集体效果，故也约束原生测量的任意组合。
+
+证明。取 C-131.1 对应的 $c,\sigma$，写 $R=\sigma-cP\succeq0$。
+有限张量展开中，每个非全目标项都是正算子的张量积，故
+
+$$
+\sigma^{\otimes n}=(cP+R)^{\otimes n}\succeq c^nP^{\otimes n}.
+\tag{C132.3}
+$$
+
+这个实际混态属于最小的 iid 零假设域，因此对每个所列域和全部集体效果均有
+$\beta_{\mathcal N}(T)\ge c^n\alpha_n(T)$。
+不需要假设最不利态为纯态，也未将不同最优值冒充同时达到。
+
+反向对每个实际乘积逐项计算
+
+$$
+\operatorname{Tr}\bigl(P^{\otimes n}(\rho_1\otimes\cdots\otimes\rho_n)\bigr)
+=\prod_{i=1}^n\operatorname{Tr}(P\rho_i)\le c^n.
+\tag{C132.4}
+$$
+
+所有因子同时选 $P_{\phi_1}$（全域）或 $P_{u_+}$（承诺域）即达到等号，且已属 iid 域。
+凸混合由线性性保持该上界。故 $tP^{\otimes n}$ 的风险恰为 $tc^n$、目标功效为 $t$，
+给 (C132.2)，包括所有端点。
+
+在承诺域，将同一个 C-130.1 固定字分别作用于每个新输入，记录每次末端比特，
+仅当全部为一时宣告，实际效果就是 $F_0^{\otimes n}$。
+由 (C130.3) 逐因子相乘，其零假设风险恰为 $(2/3)^n$，目标功效为一；
+在乘积混合中仍成立。
+最后只用一个概率 $t$ 的独立硬币决定是否保留整个宣告，才同时乘以 $t$。
+若改为每个输入各用概率 $t$ 的独立硬币再要求全通过，效果是
+$(tF_0)^{\otimes n}=t^nF_0^{\otimes n}$，目标功效变为 $t^n$。证毕。
+
+乘积分支与复合 iid 族的框架见 Berta、Brandão、Hirche，
+*On Composite Quantum Hypothesis Testing*，
+[arXiv:1709.07268v2](https://arxiv.org/html/1709.07268v2)，式 (9)–(15)、Theorem 1.1，
+[Commun. Math. Phys.](https://doi.org/10.1007/s00220-021-04133-8)。
+该定理处理渐近误差指数，并要求每对备择／零假设的支持包含条件 (13)。
+这里零假设含与 $\psi$ 正交的 $e_2$，故不能直接以其定理代替 (C132.3) 的有限 $n$ 逆向证明。
+近期纯目标投影检验的对应见 Simpson、Palias、Jose，
+*Sample Complexity of Composite Quantum Hypothesis Testing*，
+[arXiv:2601.08588v4](https://arxiv.org/html/2601.08588v4)，§II.C 式 (5)–(7)、§III.C.1 Theorem 9／式 (15)。
+其纯目标、紧致 iid 不确定集可取 $\mathcal F_{\rm all}$ 或压缩后的 $\mathcal F_Q$；
+证明中的投影检验给先验权重 $p$ 下的对称错误上界 $(1-p)c^n$。
+该达到机制与 (C132.4) 相符，但不提供本处固定风险的精确逆向界、原生实现或边缘约束结论。
+

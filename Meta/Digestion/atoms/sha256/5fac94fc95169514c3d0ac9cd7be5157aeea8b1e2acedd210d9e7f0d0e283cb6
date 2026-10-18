@@ -1,0 +1,47 @@
+## 11. Norms and the exact six-read stability problem
+
+All stability statements below concern the six-read history (2.1), with $d=1$. They compare two actual compatible targets and their exact data vectors on this history. For vectors use the maximum norm, for matrices use the maximum absolute entry, and for the entire affine drift use
+
+$$
+\|D\|_{\mathrm{coef}}=\max(|\delta_0|,|\delta_1|).
+$$
+
+The full-target distance is
+
+$$
+\max\{\|S_0-S_1\|_{\max},\ |k_0-k_1|,
+\|D_0-D_1\|_{\mathrm{coef}}\}.
+$$
+
+This is a coefficient norm, not a supremum over all real $\tau$; it implies
+
+$$
+|D_0(\tau)-D_1(\tau)|\le(1+|\tau|)\|D_0-D_1\|_{\mathrm{coef}}.
+$$
+
+Use the coordinates of Section 3, write $\Delta$ for endpoint zero minus endpoint one, bars for arithmetic means, and $e=\|\Delta z\|_\infty$. Their observed linear expressions simplify to
+
+$$
+\begin{aligned}
+\zeta&=z_0,&\eta&=z_3-z_2,&u&=3z_2-2z_3-z_0,\\
+W&=z_0-2z_1+z_2,&Y&=z_2-2z_3+z_4,&Z&=2z_2-3z_3+z_5.
+\end{aligned}
+$$
+
+Consequently
+
+$$
+|\Delta\zeta|\le e,\quad |\Delta\eta|\le2e,\quad
+|\Delta u|\le6e,\quad \|\Delta(W,Y,Z)\|_\infty\le6e.
+\tag{11.1}
+$$
+
+On the fixed-$u$ positive domain $\Omega_u$ from (3.2),
+
+$$
+p<u/3,\quad q<u/3,\quad r<u,\quad
+0<t<4u/3,\quad |v|<u/3.
+$$
+
+The stability theorems do not normalize away a source scale or a gain zero.
+

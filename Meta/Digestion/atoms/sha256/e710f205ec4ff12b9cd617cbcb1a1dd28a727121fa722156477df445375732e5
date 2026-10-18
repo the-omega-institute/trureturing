@@ -1,0 +1,4 @@
+**Lemma 2.2 (Universal future-output screening).** Under $J_\theta$, the future outputs $X_{t:\infty}$ are conditionally independent of all hidden and visible coordinates before $t$, given $Q_t$.
+
+Proof. The path factorization (1.2) makes their conditional law given $H_t=i$ and the entire past equal to the future output law from $i$. By (2.1) this law depends only on $Q_t$. Averaging within a class proves the conditional independence first on finite past/future cylinders; bounded monotone-class extension proves it for the half-lines. This screening statement does not imply a general marked Markov quotient: in a nonunifilar model, equality of the $xw$ laws constrains successor mixtures and does not identify their individual successor-class weights. $\square$
+

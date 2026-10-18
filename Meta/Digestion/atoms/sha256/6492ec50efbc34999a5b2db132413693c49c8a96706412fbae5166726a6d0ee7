@@ -1,0 +1,45 @@
+**Definition 2.1 (finite sources, literal replies and image inverse).**
+Reuse NBP Definitions 1.1–1.2 and Proposition 9.3. The sources are all finite
+nonempty ordered terms
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{NRN.1}
+$$
+
+In the native Boolean convention, true and false name alpha and beta;
+false and true address letters name $L$ and $R$. A literal address is any
+finite word in $L,R$, including $\varepsilon$. Its actual reply is the leaf
+label, $\mathsf{branch}$ at a pair, or $\mathsf{absent}$ outside the finite
+tree. Every word is legal, and any nonempty continuation at either leaf is
+absent. At every existing occurrence $p$,
+
+$$
+r_t(pw)=r_{t|_p}(w).
+\tag{NRN.2}
+$$
+
+The supplied disjoint image grammar and inverse are
+
+$$
+\mathcal I=\rho[\mathcal T]::=\beta\mid E\mid
+                  \langle\mathcal I,\mathcal I\rangle,
+\qquad
+\delta(\beta)=\alpha,\quad\delta(E)=\beta,\quad
+\delta\langle y,z\rangle=\langle\delta y,\delta z\rangle
+\quad(y,z\in\mathcal I).
+\tag{NRN.3}
+$$
+
+These finite recursive maps are inverse on their stated domains. In
+particular, $\rho$ is injective, alpha is not an image, and beta is the only
+leaf image. Write $\mathcal B=\mathcal I\setminus\{\beta\}$ for the finite
+branch images. NBP Theorem 3.3 and Proposition 15.2 supply infinitely many
+different members: $T_m=\rho^m\alpha$ for $m\ge2$. Thus any finite list of
+forbidden values can be avoided when choosing branch images. The inverse
+constructs mathematical origins; it is not an available physical action.
+

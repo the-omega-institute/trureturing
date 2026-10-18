@@ -1,0 +1,37 @@
+### 29.2. 实际乘积与奇数插值
+
+证明。对任意矩阵 $A$，源迹为
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r+A_{21}b+A_{12}c.
+\tag{29.2}
+$$
+
+记 $j=b+c$。固定五动作的左乘积及迹完整列为
+
+| 原时钟 | 实际乘积 $Q_i$ | $\operatorname{tr}(Q_iP)$ |
+| --- | --- | --- |
+| $0$ | $\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ | $1$ |
+| $1$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ |
+| $2$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ |
+| $3$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $j+r$ |
+| $4$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ |
+| $5$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $j+2r$ |
+
+所有这些迹严格正。只除已知非零 $H(i)$，定义
+
+$$
+z_i=\frac{y_i-a_0}{H(i)}=F(i)\operatorname{tr}(Q_iP)\quad(1\le i\le6),
+\qquad e(t)=1+\frac b2t,\quad o(t)=j-\frac r2+\frac r2t.
+\tag{29.3}
+$$
+
+第六个 $z_i$ 只在实际选择并取得第六响应后定义；此前两种预测是固定候选的函数。奇数前缀读数满足 $z_i=F(i)o(i)$，偶数满足 $z_i=F(i)e(i)$。由 $z_1,z_3,z_5$ 在三个不同节点插值得唯一次数至多二的 $O$。每个兼容世界的 $Fo$ 次数至多二，故三点一致给整个恒等式
+
+$$
+O(t)=F(t)o(t).
+\tag{29.4}
+$$
+
+$o$ 斜率 $r/2>0$，所以 $F$ 非零常数当且仅当 $\deg O=1$，真一次当且仅当 $\deg O=2$；零或常数 $O$ 不兼容。二次时两因子均为实一次，故两个根均实，允许重根。还因 $o(t)=j+(t-1)r/2>0$ 对 $t\ge1$ 成立，其根 $1-2j/r<1$。这里不除任何奇数样本，零样本仍参加同一次插值。
+

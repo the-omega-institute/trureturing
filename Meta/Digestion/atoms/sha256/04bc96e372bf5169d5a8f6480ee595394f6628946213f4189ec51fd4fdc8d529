@@ -1,0 +1,42 @@
+### 108.2. Character coordinates and the original complete norm
+
+**Proof.** Begin with two calibrated, translation-invariant Grams. Let $\widehat\Gamma$ be the character group, written additively, and let $0$ denote its trivial character. Define
+
+$$
+ (C_\chi)_{xy}=\chi(y-x),\qquad P_\chi=C_\chi/8.
+ \tag{108.2}
+$$
+
+Character orthogonality makes the $P_\chi$ mutually orthogonal rank-one projections summing to the identity. Translation-invariant matrix entries depend only on $y-x$, so these character vectors diagonalize every such matrix. Consequently a translation-invariant positive semidefinite Gram has a unique expansion $G=\sum_\chi g_\chi C_\chi$ with $g_\chi\ge0$.
+
+The two sets
+
+$$
+ E=\{\chi:\chi(h)=1\},\qquad O=\{\chi:\chi(h)=-1\}
+ \tag{108.3}
+$$
+
+have four elements each, and $O$ is a coset of the subgroup $E$. Calibration is equivalent to
+
+$$
+ \sum_{\chi\in E}g_\chi=\sum_{\chi\in O}g_\chi=\tfrac12.
+ \tag{108.4}
+$$
+
+Indeed the total sum is the diagonal coefficient and the difference of these sums is the partner coefficient. Write the coefficients of $H$ as $b_\chi$. Since $C_\chi\odot C_\psi=C_{\chi+\psi}$, the coefficients of $K=G\odot H$ are the convolution $`c=g*b`$, with total mass one half on each of $E,O$.
+
+Let $J_{\rm all}$ denote the all-ones matrix. The target satisfies $T=(J_{\rm all}+I-P_h)/2$. Its character coefficients are $t_0=1/2$, $t_\chi=0$ for $\chi\in E\setminus\{0\}$, and $t_\chi=1/8$ for $\chi\in O$. Thus the eigenvalues of $L=T-K$ are $\ell_\chi=8(t_\chi-c_\chi)$, with sum zero separately in each parity sector.
+
+The exact original calibrated complete norm is
+
+$$
+ \begin{aligned}
+ F(G,H)&=\max\{E_0,O_0\},\\
+ E_0&=2\sum_{\chi\in E}|t_\chi-c_\chi|,
+ &O_0&=2\sum_{\chi\in O}|t_\chi-c_\chi|.
+ \end{aligned}
+ \tag{108.5}
+$$
+
+To verify the normalization, use the complete fibre-block formula (107.7). The original densities $(I+P_h)/8$ and $(I-P_h)/8$ have eigenvalue $1/4$ on their respective character sectors. Taking $W$ equal to one quarter of the corresponding positive spectral projection gives $E_0$ and $O_0$, because each sector's eigenvalue sum is zero. Conversely, $Z=|L|$ dominates $L$ and $-L$. Every original fibre block of $Z$ is $\left(\begin{smallmatrix}d&b\\b&d\end{smallmatrix}\right)$, since character values at $h$ are real signs; its eigenvalues are exactly $E_0,O_0$. Hence $Z_{ff}\le\max(E_0,O_0)I_2$, giving the matching majorant. This proves (108.5) for the original channel norm, including arbitrary references and operator inputs.
+

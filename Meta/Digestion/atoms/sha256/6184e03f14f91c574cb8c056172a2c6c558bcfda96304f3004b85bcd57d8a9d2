@@ -1,0 +1,25 @@
+**Proposition 12.2 (Support diameter obstructs exact diagonal synthesis).**
+Suppose $m\ge2$. Within circuits made exclusively of diagonal occupation
+gates, a target with the outermost mirror phase $z_m\ne1$
+cannot be synthesized, even up to cut-local diagonal phases,
+by gates whose support diameters are all smaller than
+$2m-1$.
+
+Proof. A diagonal gate supported on a set $J$ has
+$\eta(I)=1$ whenever $I\nsubseteq J$. In (8.5), choose
+$i\in I\setminus J$ and pair each subset not containing
+i with its union with i. The gate values are equal and
+the exponents opposite. Multiplicative occupation
+coefficients multiply under composition. Therefore gates
+of the stipulated support cannot create the nontrivial
+coefficient on $I=\{i_m,j_m\}$, whose endpoints are
+$2m-1$ apart. Cut-local phases have no crossing
+coefficient by Theorem 8.4 and cannot repair this deficit.
+$\square$
+
+These bounds price only the stipulated diagonal operation
+class. They do not apply to general non-diagonal circuits,
+ancilla-assisted synthesis, routing, hardware controls or
+preparation work. Classical support, an exact phase target
+and physical acquisition remain different inputs.
+

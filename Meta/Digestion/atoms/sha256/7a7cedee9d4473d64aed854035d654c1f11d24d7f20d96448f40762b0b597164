@@ -1,0 +1,45 @@
+**命题 10.3（All boundary and rank degeneracies）。** The distinguished endpoints
+and joins are as follows. Ranks in the last column are those of the lower
+and upper constructions respectively.
+
+| $s$ | Whole-state purity $p$ | Exact negativity interval | Lower and upper rank |
+| --- | --- | --- | --- |
+| $0$ | $1/5$ | $\{0\}$ | $5,5$ |
+| $1$ | $7/25$ | $[1/5,\sqrt{10}/5]$ | $4,5$ |
+| $10/7$ | $11/35$ | $[(1+\sqrt{3/7})/5,2/\sqrt7]$ | $4,4$ |
+| $2$ | $9/25$ | $[2/5,(\sqrt7+\sqrt3)/5]$ | $3,3$ |
+
+For the lower construction the rank is five for $0\le s<1$, four for
+$1\le s<2$, and three at $s=2$. For the upper construction the rank is five
+for $0\le s<10/7$, four for $10/7\le s<2$, and three at $s=2$.
+
+Proof. For any legal skew parameters $a,b$, the five compressed eigenvalues
+are
+
+$$
+\frac{1+a}{5},\quad\frac{1-a}{5},\quad
+\frac{1+b}{5},\quad\frac{1-b}{5},\quad\frac15.
+\tag{10.2}
+$$
+
+Each parameter equal to one creates exactly one zero eigenvalue; a zero
+parameter gives two positive eigenvalues $1/5$, not new zero eigenvalues.
+The remaining twenty ambient dimensions always have zero eigenvalue.
+
+At $s=0$, the square sum forces $X=0$, so $S$ is the unique state and both
+envelopes vanish. At $s=1$, the lower matrix is $\mathcal D(1,0)$, with
+rank four, whereas the upper matrix is $M(1/\sqrt{10},1/\sqrt{10})$ with
+parameters $\sqrt{7/10},\sqrt{3/10}<1$ and rank five. Their negativity
+values are the second row of the table.
+
+At $s=10/7$, the two upper constructions coincide at
+$M(1/\sqrt7,1/\sqrt7)$ with parameters $1,\sqrt{3/7}$ and rank four.
+The lower matrix is $\mathcal D(1,\sqrt{3/7})$, also rank four, giving the
+listed lower value. At $s=2$, the lower matrix $\mathcal D(1,1)$ has
+$L=2$, while (10.1) has $L=\sqrt7+\sqrt3$. Both have parameters $1,1$
+and rank three. They are different states at the same purity; Section 9
+fills their full negativity interval. Substituting the parameters of
+(5.4) and (8.4) in (10.2) proves all the intervening rank claims. No
+division by a zero parameter or strict-positivity assumption is needed.
+$\square$
+

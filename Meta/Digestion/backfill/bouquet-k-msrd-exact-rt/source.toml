@@ -1,0 +1,5 @@
+source_id = "bouquet-k-msrd-exact-rt"
+path = "docs/develop/theory/BOUQUET_K_MSRD_EXACT_RT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

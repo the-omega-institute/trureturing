@@ -1,0 +1,36 @@
+**Theorem 10.1 (The strict-subcritical matched frontier).** Suppose $a>2r$. There are $s_0>0$, $A_-,A_+>0$ and a finite integer $M_0$, depending only on the fixed $(d,r,c,\alpha)$, such that
+
+$$
+\begin{gathered}
+\forall s\in(0,s_0)\ \forall M\in\mathbb Z,\ M\ge2\ 
+\forall\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\ \forall i\in\{0,1\}:\\
+\mathbb E_i^{\mathcal A}T\ge A_-\Phi(s,M),\\[2mm]
+\forall s\in(0,s_0)\ \forall M\in\mathbb Z,\ M\ge M_0\ 
+\exists\mathcal A_{s,M}\in\mathfrak A_M(e^{-s},\alpha):\\
+\max_{i\in\{0,1\}}\mathbb E_i^{\mathcal A_{s,M}}T\le A_+\Phi(s,M).
+\end{gathered}
+\tag{10.1}
+$$
+
+Both upper means are attained by the same controller at the selected $s,M$.
+
+Proof. Use the lower theorem, and take the constants $\ell_0,K,C_U$ of Sections 8–9, enlarging $K$ to at least one if necessary. Choose an integer $M_0\ge K\ell_0^r$. Select $s_0$ inside both previously chosen neighborhoods with $s_0\le1/\ell_0$. All these choices precede $M$. For every $M\ge M_0$ put
+
+$$
+\lambda=\min\{(M/K)^{1/r},1/s\}.
+\tag{10.2}
+$$
+
+This lies in the whole permitted scale range and gives $K\lambda^r\le M$, including the capped case. It is immutable probability design information; no continuously valued scale register is retained by the observer. With $h=a-2r>0$, the cost bound becomes
+
+$$
+\begin{aligned}
+s^{-(a+1)}\lambda^{-h}
+&=\max\{K^{h/r}s^{-(a+1)}M^{-h/r},\ s^{-(a+1)}s^h\}\\
+&=\max\{K^\kappa s^{-(a+1)}M^{-\kappa},\ s^{-(2r+1)}\}.
+\end{aligned}
+\tag{10.3}
+$$
+
+One source/risk constant absorbs $K^\kappa$. Theorem 9.2 gives all six compliance conditions for this table and its two upper means. This proves (10.1) for every finite sufficient budget, with no budget-dependent shrinkage of $s_0$. $\square$
+

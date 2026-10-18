@@ -1,0 +1,27 @@
+**Definition 1.4 (The original ten outputs).** Keep the ordered edges
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+$$
+
+For $(i,j)\in\mathcal E$ use
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,
+\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+With $\delta_{ij}=\theta_i^{\rm in}-\theta_j^{\rm in}$, their
+expectation pair is
+
+$$
+y_{ij}=2\sqrt{p_ip_j}
+\binom{\cos(\delta_{ij}+h_i-h_j)}
+      {\sin(\delta_{ij}+h_i-h_j)}.
+$$
+
+Concatenation in that edge order defines $y:\mathcal M\to\mathbb R^{10}$.
+All errors use its original Euclidean norm. No pair is normalized,
+whitened or reweighted in the task.
+

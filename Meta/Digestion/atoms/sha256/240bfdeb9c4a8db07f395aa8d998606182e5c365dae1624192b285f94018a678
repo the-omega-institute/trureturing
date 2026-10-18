@@ -1,0 +1,23 @@
+**Definition 394.3 (Signed hull charge and a common certificate).** Retain the hull and signed functional of [IX 207.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md):
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^L b_j,\quad
+ b_1+\sum_{j=3}^L b_j-(L+1)e\le1\},\\
+F_{(\beta,K)}(b,e)&=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad
+\sigma_{H_L}(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\end{aligned}
+\tag{394.7}
+$$
+
+The argument $q$ can be signed; differences of quotients are never replaced by positive parts. A certificate for $q$ is one full $V\ge0$ and one $\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(q-Q(V))\le\theta.
+\tag{394.8}
+$$
+
+The same $V$ and the same $\theta$ are selected before the hull point varies. Both endpoints and nonzero $V$ with $\Delta_N(V)=0$ are allowed. This is the inherited certificate of [VI 199.3–199.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md), with its full event system and literal anchor.
+

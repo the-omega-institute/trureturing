@@ -1,0 +1,88 @@
+**Theorem 29.4 (One iid six-setting experiment and a total estimator).** There are positive constants $c_p,C_p$ depending only on the fixed probabilities such that, for $0<\varepsilon\le1$, $0<v\le1$ and $0<\delta<1/4$,
+
+$$
+N_{33}^{\rm term}(v,\varepsilon,\delta)
+\le\left\lceil C_p v^{-2}\varepsilon^{-2}\log(12/\delta)\right\rceil.
+\tag{29.17}
+$$
+
+The protocol uses exactly six scalar settings, eighteen retained setting/outcome labels, all actual pairs and one fixed iid experiment. It applies uniformly at and off balance. Its same data give an estimate of the unknown complex moment; no externally supplied calibration is used.
+
+**Proof.** For a same-total-count matrix entry $z=\rho[r,t]$, use the spectral measurements of
+
+$$
+X_{r,t}=|r\rangle\langle t|+|t\rangle\langle r|,\qquad
+Y_{r,t}=i|r\rangle\langle t|-i|t\rangle\langle r|.
+\tag{29.18}
+$$
+
+Both have outcomes $o\in\{-1,0,1\}$; direct tracing gives means $2\operatorname{Re}z$ and $2\operatorname{Im}z$ with this sign for $Y$. Choose the two quadratures of $P$, those of $W$, and the quadratures of the second-window $(010,001)$ coefficient, lifted by the identity on the first window. The last two means are $2\operatorname{Re}C,2\operatorname{Im}C$. All six observables commute with total count. Choose a setting $S\in\{1,\ldots,6\}$ uniformly and independently at each trial, and retain $(S,o)$. Their eighteen masses form the iid law. By (29.8), each of their three spectral projectors has positive rank on the actual support and hence strictly positive mass. No conditioning on its count sector or on a nonzero outcome is performed.
+
+For scalar setting $j$, the all-trial score $Z_j=3o\mathbf1_{\{S=j\}}$ has the relevant scalar coefficient as mean and lies in $[-3,3]$. For a centered variable in an interval of length six, the second derivative of its log moment-generating function is its variance under exponential tilting. That variance is at most nine: centering at the midpoint bounds the second moment by nine, and subtracting the squared mean only decreases it. Integration twice gives $\log\mathbb E e^{a(Z_j-\mathbb EZ_j)}\le9a^2/2$. Independence, Markov's inequality and minimization in $a$ imply
+
+$$
+\Pr\bigl[|\overline Z_j-\mathbb EZ_j|>t\bigr]\le2e^{-Nt^2/18}.
+$$
+
+Combining the two scalar scores into each complex estimate and applying a union bound to six scalar errors at tolerance $\tau/\sqrt2$ yields
+
+$$
+\Pr\left[\max\{|widehat P-P|,|\widehat W-W|,|\widehat C-C|\}>\tau\right]
+\le12e^{-N\tau^2/36}.
+\tag{29.19}
+$$
+
+Thus take $\tau=6\sqrt{\log(12/\delta)/N}$. This is a self-contained bounded-summand concentration argument; attribution of that method to Hoeffding does not require or assert retrieval of his original article.
+
+Define $\operatorname{circ}(z)=z/|z|$ when $z\ne0$ and $\operatorname{circ}(0)=1$. Define the estimator on **every** data record by
+
+$$
+\begin{aligned}
+\widehat u_2&=
+\begin{cases}
+1,&|widehat P|<vD/2,\\
+\operatorname{circ}\!\left(\overline{(\widehat W/\widehat P-1)/\eta}\right),&|widehat P|\ge vD/2,
+\end{cases}\\
+\widehat u_1&=\operatorname{circ}\!\left((\widehat C-p_1p_2-B\widehat u_2)/A\right),\\
+\widehat\mu&=\operatorname{proj}_{\{|z|\le1\}}(\widehat P/D).
+\end{aligned}
+\tag{29.20}
+$$
+
+There is never division by zero in the second branch. Disk projection is Euclidean projection and is nonexpansive. For any unit $u$, including $z=0$,
+
+$$
+|\operatorname{circ}(z)-u|\le2|z-u|.
+\tag{29.21}
+$$
+
+For $z\ne0$ this follows from $||z|-1|\le|z-u|$ and the triangle inequality; at $z=0$ its left side is at most two.
+
+On the confidence event in (29.19), if $\tau\le vD/4$, then $|widehat P|\ge3vD/4$ and the first branch is absent. Since $|W/P|=|q|\le1+\eta$,
+
+$$
+\left|\frac{\widehat W}{\widehat P}-q\right|
+\le\frac{|widehat W-W|+|q|\,|widehat P-P|}{|widehat P|}
+\le\frac{2(2+\eta)\tau}{vD}.
+$$
+
+Consequently, with
+
+$$
+k_2=\frac{4(2+\eta)}{D\eta},\qquad
+k_1=\frac2A(1+Bk_2),\qquad
+k=\max\{1,k_1,k_2\},\qquad
+c_p=\min\{D/4,1/k\},
+\tag{29.22}
+$$
+
+the estimates obey
+
+$$
+|widehat u_2-u_2|\le k_2\tau/v,\qquad
+|widehat u_1-u_1|\le k_1\tau/v,\qquad
+|widehat\mu-\mu|\le\tau/D.
+$$
+
+Here $v\le1$ was used to absorb the direct $\widehat C$ error into $\tau/v$. Choosing $\tau\le c_pv\varepsilon$ makes both character errors at most $\varepsilon$, and also ensures the safe margin for $\varepsilon\le1$. Formula (29.17) follows with $C_p=36c_p^{-2}$. Zero numerators are covered by (29.21); no argument of a vanishing coefficient is required. The absolute moment estimate converges on the same confidence event. It estimates only the moment, not the full noise law. $\square$
+

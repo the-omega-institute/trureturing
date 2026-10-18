@@ -1,0 +1,13 @@
+**Definition 3.1 (reply skeleton).** For each donor equation put
+$f_v=h\circ\delta_v:\mathcal A\to\mathcal A$ and draw an arrow
+$v\to p(v)$. A constant port has no outgoing arrow and has the fixed
+reply $h(\zeta_v)$. Every actual solution satisfies
+
+$$
+y_v=f_v(y_{p(v)})
+\tag{RRN.9}
+$$
+
+at its donor ports. The skeleton by itself need not impose all original
+factor equations or actual-tree consistency.
+

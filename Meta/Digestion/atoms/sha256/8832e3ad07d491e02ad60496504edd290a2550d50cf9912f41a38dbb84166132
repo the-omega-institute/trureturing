@@ -1,0 +1,57 @@
+### 104.13. Root intervals and the rejection predicate
+
+Let the ordered axes be $D,p,a$. The rational root before lifting is
+\[
+ \mathcal B_s=
+ \left\langle\frac1{10^{12}},\left(\frac{12499}{25000}\right)^2\right\rangle_s
+ \times\left\langle\frac{56}{131},\frac{31}{32}\right\rangle_s
+ \times\left\langle\frac1{32},\frac{425}{42}\right\rangle_s.          \tag{104.76}
+\]
+Here $a$ is the interval for the positive scalar invariant $a_0$ of (104.56), not a Gram-kernel vector. The symbols $T,\lambda,\Delta,R,J,C,\Gamma,j,B,K$ in this interval calculus enclose respectively $T_0,\lambda,\Delta,R,J_*,\overline C,\Gamma,\overline j,\overline B,K_0$ of §§104.10–104.11. The interval phase coefficients $b_2,b_1,b_0$ correspond to $a_2,a_1,a_0^\prime$ in (104.71). Each box argument consists of three grid intervals contained in $\mathcal B_s$. The widths of the three root intervals, measured in integer grid units, are denoted by $w_D,w_p,w_a$.
+
+Define a rejection predicate $\mathcal R(B)\in\{0,1\}$ through §§104.13–104.16 in their printed order. An empty intersection, an impossible required square root, or a contradiction declared by $\operatorname{pos}$ immediately gives $\mathcal R(B)=1$. Any undefined division, unless its explicitly stated zero-denominator branch below applies, immediately gives $\mathcal R(B)=0$. A stated zero-exclusion or strict-negative-discriminant test also immediately gives value one. If none occurs, §104.16 gives value zero. These are finite mathematical operations on the rational box.
+
+Starting with its intervals $D,p,a$, form
+\[
+\begin{aligned}
+ Q&=1-p^{[2]},\\
+ M&=\operatorname{cut}_{2,457/84}\bigl(\sqrt{4+D a^{[2]}}\bigr),\\
+ H&=p^{[2]}+DQ.
+\end{aligned}                                                     \tag{104.77}
+\]
+Apply $\operatorname{pos}$ to $H-1/4$, then $15/16-H$, then $2-p(a-M)$. Form
+\[
+\begin{aligned}
+ b&=\operatorname{cut}_{1/40,30}\bigl(p(M+a)-2\bigr),\\
+ x&=\operatorname{cut}_{0,27/2}\bigl(p^{[2]}(M+Da)/b\bigr),
+ &g&=x-p,\\
+ V_0&=xM-pDa,&Z_0&=-xa+pM,\\
+ c_N&=M-2p,&d_N&=D(M+2p),&e_N&=Da.
+\end{aligned}                                                     \tag{104.78}
+\]
+The six quadratic coefficients are the following exact interval expressions:
+\[
+\begin{aligned}
+ n_2={}&c_N+d_N+2e_N,\\
+ n_1={}&4\bigl(p(M+Da)-2\bigr)x
+                    -2p\bigl(2Dp(M+a)+4D-1\bigr),\\
+ n_0={}&4(M-2p)x^{[2]}-8Dapx
+                    +4Dp^{[2]}(M+2p)-M,\\
+ b_2={}&(1-D)\bigl(2+p(a+M)\bigr),\\
+ b_1={}&-4(M+Da)x
+           +2(M+a)p\bigl(D(3-p^{[2]})+p^{[2]}\bigr)
+           +4D(p^{[2]}+1)-4p^{[2]},\\
+ b_0={}&4x\bigl(Da+p^{[2]}(M+a)\bigr)
+           -4Mp(D+p^{[2]})-4Dap p^{[2]}
+           +8D(p^{[2]})^{[2]}-16Dp^{[2]}-8(p^{[2]})^{[2]}.
+\end{aligned}                                                     \tag{104.79}
+\]
+Also form
+\[
+\begin{aligned}
+ c_V&=2+p(a-M),&c_Z&=D\bigl(-2+p(a-M)\bigr),\\
+ c_X&=2p(M-Da),&l_V&=-2Hpa,&l_Z&=-2H(2+pM).
+\end{aligned}                                                     \tag{104.80}
+\]
+If the upper endpoint of $n_1^{[2]}-4n_2n_0$ is strictly negative, reject. Otherwise do the same test on $b_1^{[2]}-4b_2b_0$. A zero upper endpoint does not pass either rejection test.
+

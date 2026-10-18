@@ -1,0 +1,46 @@
+**定理 34.1（e3 非零分支的整个二次纤维）。** 本节将完整增益类明确限制为所有非零、次数至多二的实多项式，严格源和任意漂移仍按式 (32.1)。实际六动作是 J,M,J,M,J,M，先取得原时钟 0—6 的七次总读。令 E 是四个偶数节点的至多三次插值，R 是三个奇数节点的至多二次插值：
+
+$$
+E=e_0+e_1t+e_2t^2+e_3t^3,\quad
+R=o_0+o_1t+o_2t^2,\quad S=(t-1)(t-3)(t-5).
+\tag{34.1}
+$$
+
+仅在 e3≠0 分支，整个七读纤维由下述非例外逆和例外三次根列表充要描述，至多四个不同完整世界。e3=0 不在本定理分类范围。
+
+**original and declared domains.**
+
+The original common model is W=(P,g,d), P=[[r,b],[c,1-r]], 0<r<1, b,c>0, bc=r(1-r), one nonzero whole real gain of degree at most three, and arbitrary real constant drift compatible with the initial reading. The theorem explicitly restricts to the ENTIRE degree-at-most-two subclass. It imposes no sign, symmetry, bounded-source, exact-degree, zero-free, simple-root, known-direction or known-drift promise. The target remains the entire triple.
+
+**acquisition.**
+
+J=[[0,1],[1,0]], M=[[0,1],[1,1]], Q0=I, Qi=Ei Q(i-1), yi=d+g(i)tr(Qi P). Initial acquisition counts, so clocks 0,...,6 are seven TOTAL readings after six actions, and clock 7 is the eighth TOTAL reading after exactly one final action. Each separate action is immediately read and retained on one unreset, unreplicated trajectory. Counterfactual final predictions compare fixed worlds and are not observations.
+
+**matrix derivation.**
+
+For a preceding matrix [[A,B],[C,D]], left multiplication by J gives [[C,D],[A,B]], and by M gives [[C,D],[A+C,B+D]]. Starting at I and applying these rules to the time word JMJMJM gives every row below. Applying J or M separately to the SAME attained Q6 gives the two final rows. This retains the actual clock-6 M product; it is not the alternative J revisit from another decoder.
+
+**trace derivation.**
+
+The diagonal entries of AP contribute A11\*r+A12\*c and A21\*b+A22\*(1-r), so tr(AP)=A22+(A11-A22)r+A21\*b+A12\*c. Products of J and M are nonnegative and invertible because each generator has determinant -1. Thus no row of a product vanishes. Pairing any such row with a strictly positive column of P gives a strictly positive number. In particular QP is entrywise positive and every actual trace is positive, independently of the sign or zeros of g. P itself has rank one and is never inverted.
+
+**complete products traces and equations.**
+
+clock: 0 ; Q: [[1,0],[0,1]] ; trace: 1 ; equation: y0=d+g(0)
+
+clock: 1 ; action: J ; Q: [[0,1],[1,0]] ; trace: j=b+c ; equation: y1=d+j\*g(1)
+
+clock: 2 ; action: M ; Q: [[1,0],[1,1]] ; trace: 1+b ; equation: y2=d+(1+b)\*g(2)
+
+clock: 3 ; action: J ; Q: [[1,1],[1,0]] ; trace: j+r ; equation: y3=d+(j+r)\*g(3)
+
+clock: 4 ; action: M ; Q: [[1,0],[2,1]] ; trace: 1+2b ; equation: y4=d+(1+2b)\*g(4)
+
+clock: 5 ; action: J ; Q: [[2,1],[1,0]] ; trace: j+2r ; equation: y5=d+(j+2r)\*g(5)
+
+clock: 6 ; action: M ; Q: [[1,0],[3,1]] ; trace: 1+3b ; equation: y6=d+(1+3b)\*g(6)
+
+clock: 7 ; action: choose J from Q6 ; Q: [[3,1],[1,0]] ; trace: j+3r ; equation: y7J=d+(j+3r)\*g(7)
+
+clock: 7 ; action: choose M from Q6 ; Q: [[3,1],[4,1]] ; trace: 1+2r+4b+c ; equation: y7M=d+(1+2r+4b+c)\*g(7)
+

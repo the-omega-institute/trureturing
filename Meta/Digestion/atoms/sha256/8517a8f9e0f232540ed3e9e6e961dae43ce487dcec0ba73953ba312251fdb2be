@@ -1,0 +1,37 @@
+**Proposition 9.3 (separate event costs on one actual history).** For a
+completed extended RA call, let $T_0,A_0,Q_0$ be the Read count, delivered
+address-letter count and operand peak of its projection in Lemma 8.3.
+Let $D$ be the number of added routing root Reads, and $L_{\rm svc}$ the
+number of added local service steps. Then
+
+$$
+T_{\rm ext}=T_0+D,\qquad
+A_{\rm ext}=A_0,\qquad
+Q_{\rm ext}=Q_0,\qquad
+U_{\rm obs,ext}=U_{\rm obs,0}=0,\qquad
+U_{\rm writer,ext}=U_{\rm writer,0}=b.
+\tag{CWS.13}
+$$
+
+The projected designated local-step sequence is also unchanged;
+$L_{\rm svc}$ is a separate additional count. With $V=\rho^b u$, its
+$N,H$ and $m_*=\max(1,|P|-1)$ as in §4, this gives
+
+$$
+T_0\le(b+1)(H+2+m_*N),\qquad A_0\le HT_0.
+\tag{CWS.14}
+$$
+
+These are same-history relations, not a comparison with RA under a
+different writer schedule.
+
+Proof. The extended observer events partition into the retained
+designated actions and the added service actions. Every added Read
+has operand $\varepsilon$, of length zero; every designated address
+and reply is preserved by Lemma 8.3. RA has at least a root guard Read,
+so adjoining further zero-length operands cannot increase its operand
+peak. Neither observer performs an Update, and every writer update
+survives deletion exactly once. Apply Theorem 4.2 to this projected
+history, using its identical final source, including updates after
+validation. This proves both displays. $\square$
+

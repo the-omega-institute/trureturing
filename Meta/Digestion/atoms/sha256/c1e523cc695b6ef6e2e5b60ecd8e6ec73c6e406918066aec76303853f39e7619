@@ -1,0 +1,18 @@
+**Definition 4.4 (context code).** Let $C$ be any finite full ordered
+binary context with $n\ge2$ leaf slots, each used once. Their distinct
+leaf addresses are $w_1,\ldots,w_n$; they form a prefix-free set.
+For any finite tree $B$, including one that does not match the context
+shape, define
+
+$$
+f_C(B)=\mathbf1_{\{\exists i\in\{1,\ldots,n\}:
+                                  r_B(w_i)=\mathsf{branch}\}},
+\qquad \sigma_C=\sigma_{f_C},
+\qquad \Lambda(C)=3+\sum_{i=1}^{n}(3+|w_i|).
+\tag{PCA.14}
+$$
+
+Absence and both leaf labels at a slot make that slot's test false.
+This is a finite computation on acquired terms. It prescribes exactly
+one function on the whole domain, with the original entry $e_{\sigma_C}$.
+

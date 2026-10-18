@@ -1,0 +1,26 @@
+**命题 2.3（模板尺度、离散基数与 Robin 的同一正读出）。** 在定义 2.1 的条件下，对 $W=dV_n$ 有
+
+$$
+\begin{aligned}
+\lambda_n(W)
+&=\frac{\operatorname{Perimeter}(K_d)}{\operatorname{Perimeter}(K)}
+=\sqrt{\frac{\operatorname{Area}(K_d)}{\operatorname{Area}(K)}}\\
+&=\sqrt{\frac{\operatorname{Surface}(B_d)}{\operatorname{Surface}(B)}}
+=\sqrt[3]{\frac{\operatorname{Volume}(B_d)}{\operatorname{Volume}(B)}}
+=\frac1d.
+\end{aligned}
+$$
+
+对全部合法标签求和，任一项所定义的尺度总和均为 $Z(n)$。因而假设 2.2 等价于
+
+$$
+\mathrm{RH}\iff
+\forall n>5040,\quad
+\sum_{W\in\mathscr L_n}\sqrt{\frac{|W|}{|V_n|}}
+<e^\gamma\log\log n,
+$$
+
+亦等价于对全部带标签相似模板的上述相对尺度求和后作同一比较。
+
+证明。相似映射将曲线长度乘以 $s=1/d$，二维面积乘以 $s^2$，三维体积乘以 $s^3$。边界面积乘以 $s^2$；这是二维面积缩放对边界面积元的应用，或由二维 Hausdorff 测度在相似映射下的缩放得到。所有分母有限且严格为正，故比值、正平方根及正立方根均有定义，并等于 $s$。命题 1.3 给出同一个离散基数尺度。分类中的每个 $d\mid n$ 恰好出现一次，故假设 2.2 给出求和等式。将此等式代入供应的 Robin 判据，得到两个方向的等价；没有新增关于 RH 的估计。证毕。
+

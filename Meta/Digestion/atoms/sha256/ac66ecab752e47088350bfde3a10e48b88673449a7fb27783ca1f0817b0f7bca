@@ -1,0 +1,42 @@
+**Definition 179.1 (Augmented full-row support and common conic cost).**
+Use all $3(2^L-1)+1$ event rows of Definition 164.1. For a
+nonnegative row score $y$, define its reward for output $s$ at word
+$u$ by
+
+$$
+F_s(u)=\sum_{j:w_j=u}y_j\mathbf1_{s\in H_j},
+$$
+
+where $(w_j,H_j)$ runs through those full event rows. Thus
+$y\cdot z_D=\sum_uF_{D(u)}(u)$. Put
+$B_E(y)=\max_{D\in E_L}y\cdot z_D$,
+$\Delta_E(y)=B_E(y)-y\cdot\mathbf r$, and let $A_E$ have columns
+$z_D-\mathbf r$, with $\mathbf r=z_R$ and $R$ the same prefix anchor.
+Define $\rho_E(x)$ by the infimum of $\sum_D\mu_D$ over
+$\mu\ge0$, $A_E\mu\ge h(x)$, with value $+\infty$ if infeasible.
+This uses the same demand vector, common mass and radial domain as
+[Definitions 165.1 and 166.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#165-a-unique-radial-direction-away-from-the-first-two-prefix).
+Because $E_L\subseteq\mathcal D_O$, $\rho_O\le\rho_E$.
+
+For a fixed zero-first schedule $(i,j)$, its exact endpoint support is
+
+$$
+\begin{aligned}
+&\sum_{u_i=0}F_0(u)
+ +\max_{i<r\le j}\sum_{u_i=1,\,u_j=0}F_r(u)\\
+&\hspace{35mm}
+ +\max_{\ell\in\{0,j+1,\ldots,L\}}
+                     \sum_{u_i=u_j=1}F_\ell(u).
+\end{aligned}
+\tag{179.1}
+$$
+
+Indeed the three sums partition the full word set into its stopped
+cells; choosing labels attaining the two maxima makes one legal
+complete endpoint. Taking the maximum of (179.1) over pairs and the
+$T_L$ support gives $B_E(y)$ exactly. This is the complete-cell
+support calculation of Definition 164.3 applied to the restricted
+label sets, rather than independent maximization at each word.
+Every multiple-zero word, the actual-tail base row and the same total
+mass budget remain part of this support.
+

@@ -1,0 +1,176 @@
+**Theorem 79.2 (Sharp positive-error means over all adaptive acquisitions).**
+For every sequence (73.3) and every $0<\varepsilon\le1$,
+
+$$
+\begin{aligned}
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A K_{A,x}
+ &=\left(\sum_{i\ge1}(a_i-\varepsilon)_+-\varepsilon\right)_+=D,\\
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A W_{w,A,x}
+ &=\sum_{i\ge1}w_i d_i.
+\end{aligned}
+\tag{79.3}
+$$
+
+One acquisition attains these minima simultaneously for every allowed
+weight sequence. It also satisfies $K_{A,x},M_{A,x}\le h_\varepsilon$ at
+every source and seed, where $h_\varepsilon$ is the sharp maximum-index
+ceiling of (78.1). In particular the attained optimum for every
+nondecreasing cumulative charge is $\sum_i c(i)d_i$.
+
+**Proof.** If $D=0$, all $d_i$ are zero. If $D>0$, let $h$ be the first
+index with $\sum_{i\le h}u_i\ge D$. Then
+
+$$
+d_i=u_i\ (i<h),\qquad
+0<d_h=D-\sum_{i<h}u_i\le u_h,\qquad
+d_i=0\ (i>h).
+\tag{79.4}
+$$
+
+In either case $(d_i)$ is nonincreasing, $\sum_i d_i=D$, and
+$B=S-D=\min\{S,\varepsilon\}$. When $D=0$ set $h=0$.
+For $D>0$ the condition defining $h$ is
+$S_h(\varepsilon)=S-\sum_{i\le h}u_i\le\varepsilon$ and fails at
+every smaller index. When $D=0$ it already holds at zero. Thus
+$h=h_\varepsilon$ in all cases.
+
+We first prove the universal lower bound for a fixed $w$. Put
+$C_A=\sup_x\mathsf E_A W_{w,A,x}$. If $C_A=\infty$ the finite right
+side of (79.3) is a lower bound. If $D=0$ the desired lower bound is zero.
+Suppose $C_A<\infty$ and $D>0$. Let
+$L=\max\{i:u_i>0\}$, which is finite. For any $\delta>0$, the pointwise
+bound $W_{w,A,x}\ge w_1K_{A,x}$ and Markov's inequality permit a finite
+$k\ge1$ with
+
+$$
+\sup_x\mathsf P_A\{K_{A,x}>k\}
+\le\frac{C_A}{w_1(k+1)}<\delta.
+\tag{79.5}
+$$
+
+Use the common event $J_{A,k,m}$ of (70.3), also written (74.4).
+Its finite-forest property (70.4) uses only the common seeded rule and
+finite binary branching, so applies here without exact output laws.
+Specifically, at a fixed seed the first $k$ requests across all actual
+sources use at most $2^k-1$ query nodes, with a finite maximum address.
+Processing without a further request adds no node. Request-index events
+are measurable unions over finite records, and countability of $X$ makes
+$J_{A,k,m}$ measurable. Hence $J_{A,k,m}\downarrow\varnothing$ and its
+probability tends to zero. Choose $m\ge L$ with
+$\mathsf P_A(J_{A,k,m})<\delta$.
+
+Before using any individual seed, fix one actual $z$ positive through
+index $m$, and, for each $1\le i\le L$, one actual $y_i$ positive through
+$m$ except at $i$. Boundaries, Theorem 35.2 supplies these finite patterns.
+Then $n(y_i)=i$ and $n(z)>m$. At $y_i$ the cap on the singleton
+$\{\theta_i\}$ gives an output probability at least
+$a_i-\varepsilon=u_i$. Restrict this finite-handoff output event to
+$\{K_{A,y_i}\le k\}\setminus J_{A,k,m}$ and call the resulting measurable
+event $E_i$. The two probability losses give
+
+$$
+\mathsf P_A(E_i)\ge u_i-2\delta.
+\tag{79.6}
+$$
+
+Every execution in $E_i$ uses indices at most $m$. Partition this whole
+event by its finite request/answer record and handoff time. If the record
+requests $p_i$, its execution up to the first such request replays at $z$,
+since all preceding requested answers agree. If it never requests $p_i$,
+its complete execution replays at $z$, including output $\theta_i$.
+For the measurable events $Q_i(z)$ of requesting $p_i$ at least once and
+$O_i(z)$ of finite output $\theta_i$, this proves
+
+$$
+E_i\subseteq Q_i(z)\cup O_i(z),\qquad
+\mathsf P_A(Q_i(z))\ge(u_i-v_i)_+-2\delta,\quad v_i=\mathsf P_A(O_i(z)).
+\tag{79.7}
+$$
+
+The finite marked union $F=\{\theta_1,\ldots,\theta_L\}$ has target mass
+zero at $z$, since $n(z)>m\ge L$. Its cap therefore gives the single
+collective constraint
+
+$$
+\sum_{i=1}^L v_i=\widehat\lambda_{A,z}(F)\le\varepsilon.
+\tag{79.8}
+$$
+
+The comparison source $z$ is one fixed actual source for all these events.
+Counting each distinct requested index once in the resource yields
+
+$$
+C_A\ge\mathsf E_A W_{w,A,z}
+\ge\sum_{i=1}^L w_i(u_i-v_i)_+-2\delta\sum_{i=1}^L w_i.
+\tag{79.9}
+$$
+
+For any nonnegative $v_i$ satisfying (79.8), put $t_i=(u_i-v_i)_+$.
+Then $0\le t_i\le u_i$ and
+$\sum_i t_i\ge S-\sum_i v_i\ge D$. The earliest filled vector (79.4)
+minimizes every nondecreasing weighted cost under these conditions.
+To see this without assuming strict weights, subtract its cost and use
+
+$$
+\begin{aligned}
+\sum_{i=1}^L w_i(t_i-d_i)
+={}&w_h\left(\sum_{i=1}^L t_i-D\right)\\
+ &+\sum_{i<h}(w_i-w_h)(t_i-u_i)
+  +\sum_{i>h}(w_i-w_h)t_i\ \ge0.
+\end{aligned}
+\tag{79.10}
+$$
+
+Each term is nonnegative, by monotonicity of $w$ and the stated bounds
+on $t$. Equations (79.9)--(79.10), followed by $\delta\downarrow0$,
+prove $C_A\ge\sum_i w_i d_i$. The finite actual comparison sources may
+change with $\delta$, while the same source supremum $C_A$ remains on
+the left. No infinite source or seed-dependent comparison is used.
+Taking $w_i=1$ gives the count lower bound. Wrong marked outputs are
+accounted for by (79.8), rather than assigned the null probability in
+the exact certificate of Theorem 73.3.
+
+For attainment take a common uniform seed $U\in[0,1)$. Reserve consecutive
+half-open intervals of lengths $b_i$ in $[0,B)$, and immediately emit
+$\theta_i$ on its interval. On $[B,1)$ put $V=U-B$. At an all-positive
+prefix of depth $j$, emit $\theta_0$ if $V\ge d_{j+1}$; otherwise request
+$p_{j+1}$. On a negative answer emit $\theta_{j+1}$, and on a positive
+answer continue. This is the threshold rule of Theorem 73.2 applied to
+the nonincreasing residual amplitudes $d_i$, with a zero next amplitude
+forcing handoff. Since $B\le\varepsilon$ and $d_i\le u_i$, whenever
+$d_i>0$ one has $B+d_i\le\varepsilon+(a_i-\varepsilon)=a_i\le1$.
+Thus the thresholds fit inside the remaining interval.
+
+At every $x\in D_n$ its output law is
+
+$$
+\widehat\lambda_{A,x}
+=(1-B-d_n)\delta_{\theta_0}
+ +\sum_{i\ge1}b_i\delta_{\theta_i}
+ +d_n\delta_{\theta_n}.
+\tag{79.11}
+$$
+
+The coefficients are nonnegative and sum to one. Its mass at $\theta_n$
+is $b_n+d_n=u_n$, and its total mass outside $\theta_0$ is $B+d_n$.
+If $a_n>\varepsilon$, then $B+d_n\le a_n$, and (77.7) gives error
+$a_n-u_n=\varepsilon$. If $a_n\le\varepsilon$, then $b_n=d_n=0$ and
+the error is $\max\{B,a_n\}\le\varepsilon$. Thus the acquisition lies
+in $\mathcal A_\varepsilon(a)$.
+
+All immediate-output intervals and finite-record thresholds are measurable.
+There are finitely many nonzero amplitudes. The rule hands off by the first
+absence or after at most $h$ requests, for every source and seed, using the
+same original tape points and consumer. At $x\in D_n$, request $i$ occurs
+with probability $d_i$ for $i\le n$, and never occurs for $i>n$. Hence
+
+$$
+\mathsf E_A W_{w,A,x}=\sum_{i=1}^{n(x)}w_i d_i.
+\tag{79.12}
+$$
+
+An actual source with $n(x)\ge h$ exists, so the uniform mean equals
+$\sum_i w_i d_i$. The same acquisition and its sourcewise probabilities
+give equality for every weight sequence. Its request and address ceilings
+are $h=h_\varepsilon$, completing the proof. $\square$
+

@@ -1,0 +1,73 @@
+**Theorem 68.2 (every whole-word literal mask and every first restriction).** For every
+$n\ge4$ and every literal mask $\chi$ there exists one $U_\chi\in W_n$ such that
+
+$$
+r(pL,U_\chi)=\chi(p)\quad(p\in P_n),\qquad j=|P_n|=F(n-2).
+\tag{JM.234}
+$$
+
+For every $0\le k\le j$ and every $\sigma\in\{\mathsf{br},\mathsf{abs}\}^k$, one such
+whole-word source satisfies $r(q_i,U)=\sigma_i$ for $1\le i\le k$.
+
+Proof. The structural recurrence $T_n=(T_{n-1},T_{n-2})$ for $n\ge3$ and the position
+facts are supplied by [JM52.2, (JM.153), (JM.156)][JM]. Their exact correspondence is
+$P_2=\varnothing$, $P_3=\{\varepsilon\}$, $P_4=\{L\}$, $P_5=\{LL,R\}$, and
+
+$$
+P_n=LP_{n-1}\mathbin{\dot\cup}RP_{n-2}\quad(n\ge4),
+\qquad |P_n|=F(n-2).
+\tag{JM.235}
+$$
+
+Indeed, for $n\ge4$ the root has more than three leaves, so every $B$ occurrence lies in
+exactly one child. The cardinalities start at one for $n=3,4$ and then obey the
+Fibonacci recurrence. Distinct $B$ occurrences cannot be comparable by prefix: a proper
+subtree has fewer leaves than its enclosing tree, whereas both occurrences have three
+leaves. Thus $P_n$ is an antichain and its distinct address cones are disjoint.
+Appending $L$ preserves distinctness and incomparability, so the $q_i$ are distinct. The
+supplied $B/D$ replacement cube preserves the entire word $bab$ at each hole, but gives
+$\mathsf{br}/\beta$ at $pL$; the following whole-source construction supplies the
+literal absent values.
+
+For $n=4$, the two bases are
+
+$$
+T_4=(B,(\beta,\alpha)),\qquad
+Z_4=(\beta,((\alpha,(\beta,\beta)),\alpha)).
+$$
+
+Both words are $babba$. In $T_4$, $LL$ is the branch $(\beta,\alpha)$; in $Z_4$, $L$ is
+the leaf $\beta$, hence $LL$ is absent. These are exactly the branch and absent sources
+of [JM59.1, (JM.184)–(JM.185)][JM].
+
+For the $n=5$ base inspection, display coordinates $(LLL,RL)$; their original shortlex
+order is $(RL,LLL)$. The four sources are
+
+$$
+\begin{array}{c|c}
+\text{source}&(r(LLL,\cdot),r(RL,\cdot))\\ \hline
+T_5=(T_4,B)&(\mathsf{br},\mathsf{br})\\
+X_5=(Z_4,B)&(\mathsf{abs},\mathsf{br})\\
+Y_5=((B,(\beta,(\alpha,(\beta,\alpha)))),\beta)&(\mathsf{br},\mathsf{abs})\\
+A_5=((\beta,(\alpha,(\beta,(\beta,(\alpha,(\beta,\alpha)))))),\beta)&(\mathsf{abs},\mathsf{abs})
+\end{array}
+$$
+
+Every displayed word is $babbabab$. For $T_5$, $LLL$ is the left branch of $B$ inside
+$T_4$, and $RL$ is the left branch of the right $B$. For $X_5$, $LL$ is a leaf while the
+right $B$ is unchanged. For $Y_5$, $LL=B$ and $R$ is a leaf. For $A_5$, both $LL$ and
+$R$ are leaves. These observations prove every entry, hence all four masks.
+
+For $n\ge6$, restrict $\chi$ along the two components of (JM.235). Both indices $n-1,n-2$
+are at least four, so induction supplies $U_L\in W_{n-1}$ and $U_R\in W_{n-2}$ realizing
+those restrictions. Set $U_\chi=(U_L,U_R)$. Its word is $w(T_{n-1})w(T_{n-2})=w(T_n)$.
+For $p=Ls$ the reply at $pL$ is $r(sL,U_L)$; for $p=Rs$ it is $r(sL,U_R)$. The disjoint
+decomposition covers every original coordinate, proving (JM.234) simultaneously on one
+source. This argument pairs whole components; it requires no observer modification of a
+hole. Finally extend any first $k$ word to a full mask by assigning $\mathsf{br}$ at the
+remaining coordinates and apply (JM.234). The antichain used here concerns actual $B$
+subtrees, rather than overlapping $bab$ fields of the leaf word. The Boolean
+block-sensitivity background in Buhrman–de Wolf, *Complexity Measures and Decision Tree
+Complexity: A Survey*, §4.2 ([original][BdW]), supplies no tree-mask realization.
+$\square$
+

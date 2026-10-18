@@ -1,0 +1,27 @@
+**Corollary 3.3 (policy-uniform quantifier exchange).** For every subset
+$P\subseteq\mathbb N^k$, with the same tuple constructed before $P$,
+
+$$
+\begin{aligned}
+&\forall\mathbf n\in P\ \exists\mathbf z\in\mathcal T^m\
+ D(\mathbf n,\mathbf z)\\
+\Longleftrightarrow\;&
+\exists\mathbf z\in\mathcal T^m\ \forall\mathbf n\in P\
+ D(\mathbf n,\mathbf z)\\
+\Longleftrightarrow\;&
+\forall\mathbf n\in P\ D(\mathbf n,\mathbf z^\star).
+\end{aligned}
+\tag{URR.12}
+$$
+
+Proof. The first statement and (URR.10) give the third at every member
+of $P$. The third gives the second by choosing $\mathbf z^\star$.
+The second gives the first by using its witness at each rank. If $P$
+is empty, the universal statements are true and the existential statement
+is true because $\mathcal T^m$ is nonempty, including $m=0$.
+For $k=0$ the rank space is a singleton, so the same proof applies to
+its two possible policies. If the list is empty, $S=\mathbb N^k$ and
+every displayed assertion has its literal empty-conjunction meaning.
+For $m=0$, equality reflection simply compares residual-free values,
+and the empty tuple supplies all claimed witnesses. $\square$
+

@@ -1,0 +1,42 @@
+**命题 C-107.7（实际独立整份副本的交换读数）。** 若单轮实际输入确为
+$\Gamma_{AB}\otimes\Gamma_{A'B'}$，两份在已对齐的模式识别下具有同一密度矩阵，
+并且允许测量 $W$ 的谱效果 $(I\pm W)/2$，则
+
+$$
+\begin{aligned}
+\langle W\rangle_{\Gamma\otimes\Gamma}
+ &=\operatorname{tr}(\Gamma^2),\\
+\Pr(+)&=\tfrac12(1+\operatorname{tr}\Gamma^2),\qquad
+\Pr(-)=\tfrac12(1-\operatorname{tr}\Gamma^2).
+\end{aligned}
+\tag{C107.13}
+$$
+
+因此在 $\mathfrak D$ 或 $\mathfrak F$ 的精确人口承诺下，
+$\langle W\rangle=1/5$ 当且仅当原 $A\mid B$ 可分离，
+$\langle W\rangle>1/5$ 当且仅当它纠缠。
+
+证明。对于原 $25$ 维空间上的任意矩阵 $G,H$，逐指标计算给
+
+$$
+\operatorname{tr}(W(G\otimes H))
+=\sum_{u,v}G_{vu}H_{uv}=\operatorname{tr}(GH).
+\tag{C107.14}
+$$
+
+在同一个实际输入上取 $G=H=\Gamma$，再对 $W$ 的两个谱效果取迹，得到 (C107.13)；
+C-107.5 完成分类。没有用单纯的 $\operatorname{tr}(G\otimes H)$ 乘法公式替代交换恒等式。证毕。
+
+这是 Ekert–Alves–Oi–Horodecki–Horodecki–Kwek，
+*Direct estimations of linear and nonlinear functionals of a quantum state*，
+[quant-ph/0203016v1](https://arxiv.org/abs/quant-ph/0203016v1)，式 (2)、(4) 的整态参数应用。
+Filip 的预印本 [quant-ph/0108119](https://arxiv.org/abs/quant-ph/0108119)，
+发表为 *Overlap and entanglement-witness measurements*，
+[Phys. Rev. A 65, 062320](https://doi.org/10.1103/PhysRevA.65.062320)，
+式 (12)–(15) 明确区分无相关输入的重叠与一般相关输入的交换读数。
+Brun，*Measuring polynomial functions of states*，
+[quant-ph/0401067](https://arxiv.org/abs/quant-ph/0401067)，将密度矩阵的多项式写为张量幂上的期望；
+该表示与制备、操作的实际可取得性是不同前提。
+C-94–C-101 已使用副本纯度和相关来源边界，本条把载体换回 C-106 的完整 $\Gamma$，
+并消费其特定人口纤维上的完整分类，而不另称交换测纯度为新结果。
+

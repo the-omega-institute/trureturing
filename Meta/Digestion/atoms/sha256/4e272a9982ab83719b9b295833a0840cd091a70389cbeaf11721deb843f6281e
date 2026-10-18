@@ -1,0 +1,74 @@
+**Theorem 17.1 (complete endpoint boxes and necessary near-zero rates).** For either phase let $P_1=P_{s,r_1},P_2=P_{s,r_2}$ on its entire countable carrier, and define
+
+$$
+\begin{aligned}
+l(z)&=\min\{P_1(z),P_2(z)\},&h(z)&=\max\{P_1(z),P_2(z)\},\\
+\mathcal B_s&=\{D':D'\text{ is a normalized law},\ l\le D'\le h\},\\
+a(D)&=\sum_z(l(z)-D(z))_+,&b(D)&=\sum_z(D(z)-h(z))_+.
+\end{aligned}
+\tag{17.1}
+$$
+
+The infinite noncompletion coordinate is included. For every normalized complete law $D$,
+
+$$
+\min_{D'\in\mathcal B_s}\operatorname{TV}(D,D')=\max\{a(D),b(D)\},
+\tag{17.2}
+$$
+
+and a normalized minimizer exists. Now let $M$ be one finite regular stationary table and put $e=\max_s\{R_{{\rm conf},s}(M)-\rho_s\}$. Project each of its complete laws $Q_x,W_y$ to minimizers $Q'_x,W'_y$ in the two boxes. Retain its original $\pi,\tau,B,A$. Then
+
+$$
+E_p:=\sum_x\pi_x\operatorname{TV}(Q_x,Q'_x)\le2e,\qquad
+E_\beta:=\sum_y\tau_y\operatorname{TV}(W_y,W'_y)\le2e.
+\tag{17.3}
+$$
+
+Their two full residual barycenter errors, with the unchanged actual flow, obey
+
+$$
+\begin{aligned}
+d'_B&:=\sum_x\pi_x\operatorname{TV}\left(\operatorname{res}_\beta Q'_x,
+                                     \sum_yB_{xy}W'_y\right)
+       \le\tfrac53E_p+E_\beta\le16e/3,\\
+d'_A&:=\sum_y\tau_y\operatorname{TV}\left(\operatorname{res}_\alpha W'_y,
+                                     \sum_xA_{yx}Q'_x\right)
+       \le3E_\beta+E_p\le8e.
+\end{aligned}
+\tag{17.4}
+$$
+
+The residual deletes the indicated future operation and its original event block. These projections are candidate laws and necessary conditions for a near-zero family. They are not assigned decoders, need not be native mixtures, and do not assert existence of that family.
+
+Proof. Every normalized replacement must add at least $a(D)$ mass on the lower-violation coordinates and remove at least $b(D)$ on the upper-violation coordinates. Its total addition and removal are equal and each equals its TV displacement. Thus (17.2) has the stated lower bound.
+
+For attainment clip coordinatewise to $c(z)=\min\{h(z),\max\{l(z),D(z)\}\}$. Its total mass is $1+a-b$. All relevant sums are finite, since $l,h,c$ are summable. If $a\ge b$, put $\delta=a-b$ and $M_-=\sum_z(c(z)-l(z))$. Since $\sum l\le1$, $M_-\ge\delta$. If $\delta>0$, set
+
+$$
+D'(z)=c(z)-\frac{\delta}{M_-}(c(z)-l(z));
+\tag{17.5}
+$$
+
+if $\delta=0$, take $D'=c$. This countable redistribution is well-defined, remains in the box and has total mass one. No mass is removed from a lower violation because there $c=l$. The initial additions still total $a$, while the removals total $b+\delta=a$. Thus its TV distance is $a$. If $b\ge a$, use $\delta=b-a$, $M_+=\sum_z(h(z)-c(z))\ge\delta$ and
+$D'=c+\delta(h-c)/M_+$ when $\delta>0$. Additions occur only where $c<h$, so no upper-violation removal is undone. Both total changes are $b$. This proves (17.2), including countably many coordinates and the noncompletion atom.
+
+The complete coordinate triangle identity is
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)
+=\operatorname{TV}(P_1,P_2)+a(D)+b(D).
+\tag{17.6}
+$$
+
+It follows by summing the scalar absolute-value identity, as in (12.5); all summands are absolutely summable. The endpoint configuration losses of the same stationary row are each at most $\rho_s+e$ by (2.3). Their sum and $\operatorname{TV}(P_1,P_2)=2\rho_s$ give an expected outside-box mass $\mathbb E(a+b)\le2e$. Formula (17.2) gives (17.3). This is a bound on configuration averages before TV, not an inference from a marginal forecast. The projected infinite mass is zero because both endpoint masses there are zero. Their immediate completion coordinates lie in the endpoint interval, so their emissions are regular and their continuation probabilities are positive.
+
+For completeness, if normalized laws $P,Q$ have positive masses $m,n$ on a continuation event $E$, then
+
+$$
+\max\{m,n\}\operatorname{TV}(P(\cdot\mid E),Q(\cdot\mid E))
+\le\operatorname{TV}(P,Q).
+\tag{17.7}
+$$
+
+If $m\ge n$, write their conditional laws as $p,q$. The variation on $E$ is at least $m\|p-q\|_1-(m-n)$, while that on the complement is at least $m-n$. Add and divide by two. Interchange the laws for $n\ge m$. Deleting a common operation block preserves this estimate. In the old and projected p laws, the p-$\beta$ continuation has mass at least $3/5$, giving the factor $5/3$; in the suspended laws the $\alpha$ continuation has mass at least $1/3$, giving the factor 3. The original own-law equations identify the old residuals as $\sum_yB_{xy}W_y$ and $\sum_xA_{yx}Q_x$. Triangle inequality, mixture convexity, $\pi B=\tau$ and $\tau A=\pi$ now give (17.4). Any construction from these candidate laws still owes exact own-law generation, or a proved regeneration error; the full-measure finite coupling/repair criterion does not remove that obligation. ∎
+

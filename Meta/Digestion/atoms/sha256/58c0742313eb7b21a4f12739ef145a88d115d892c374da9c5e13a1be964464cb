@@ -1,0 +1,24 @@
+**Proposition 5.2 (Exact image, fibers and branch-free decoding).**
+The actual image of $E_2$ is exactly $\mathscr S_2$. Its fibers are
+exactly the $\beta$ circles at fixed $(k,\alpha)$. The functions in
+Definition 5.1 are well-defined on this image and use no angle branch
+or extra input.
+
+**Proof of Proposition 5.2.** The norm of an encoded vector is
+$\exp(k/H)$, which lies strictly between $1$ and $\exp(1)$.
+Conversely, for any $z\in\mathscr S_2$, the height
+$k=H\log\|z\|_2$ is interior and the unit vector $z/\|z\|_2$
+is $U(\alpha)$ for one circle class. Proposition 1.3 realizes that
+height and circle class with every $\beta$. Thus all and only points
+of the annulus occur. Equality of encodings gives equal norms, then
+equal heights and unit directions, hence equal $\alpha$. Conversely
+those two equalities suffice, independently of $\beta$.
+
+The norm is positive and its logarithm gives $0<K(z)<H$. The
+square-root argument in $A(K(z))$ is positive, and division by the
+norm is defined. The readout uses the unit vector itself, not a chosen
+real argument for it. The sole varying input is $z$. In particular
+this is a different coordinate realization of the already known
+quotient $(k,\alpha)$, not a new discovery of that quotient.
+$\square$
+

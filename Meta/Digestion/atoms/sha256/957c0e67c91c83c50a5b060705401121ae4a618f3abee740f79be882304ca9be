@@ -1,0 +1,45 @@
+**Definition 1.2 (Unchanged paid arbitrary-address protocol).** Let
+$(\mathsf U,\mathcal U,\nu)$ be any probability space independent of
+the entire $J_p$ source. Keep this space and its law unchanged. Fixed
+public data may be included as constants; all random public data and
+all internal randomness are part of the same source-independent
+auxiliary variable $u$.
+
+An acquired record is a finite ordered list
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))
+\in(\mathbb Z\times\{0,1\})^n,\qquad n\in\mathbb N_0.
+\tag{1.4}
+$$
+
+A measurable next-event rule, based only on these public data, $u$
+and $r$, either requests an integer address, returns a state
+$A\in\mathcal A$, or continues internally forever without a further
+read or return. Finite events may follow internal waiting. Their
+occurrence, kind, address or output, and finite waiting time are
+measurable functions of exactly those available data. Waiting adds
+no source information.
+
+Each requested address $t$ replies with the actual $X_t$ of (1.1),
+and every actual call costs one read. This includes repeated calls,
+separator zeros, negative and positive addresses, disconnected sets,
+and arbitrarily distant addresses. Ignoring a reply does not refund
+its call. The next address may depend on all acquired replies.
+
+Let $\tau$ be return time, with $\tau=\infty$ on every nonreturn,
+and let $N\in\mathbb N_0\cup\{\infty\}$ count all actual reads.
+Internal nonreturn after finitely many reads, including zero, and
+infinite-read paths are both permitted. A return has finite $N$;
+its output and time depend measurably only on the available data and
+the terminal acquired record. Zero-read returns, one-read early
+returns, and wrong-phase outputs are allowed. Null records and
+versions completed by null sets are included through the usual
+measurable completion.
+
+There is no hidden-state, half-line or tail read, source-dependent
+seed or timing, reset, law switch, endpoint movement, or substitution
+of an erased coordinate. This is Original, Definition 9.1, and Risk,
+Definition 1.2. The contract imposes neither effective computability
+nor a storage bound. All constructions below use only this contract.
+

@@ -1,0 +1,12 @@
+**Definition 3.2 (whole-block box functional).** For a nonnegative
+weight $w$ on the entire $S_{h+3}$ supported in $U_h$, let
+
+$$
+\mathcal R_h(w)=\max_{c\in\{0,1,2,3\}^k}
+                           \sum_{x\in L_c}w(x).
+\tag{JPL.16}
+$$
+
+This is a finite maximum of sums of the original coarse-block weight.
+There is no factorization requirement on $w$.
+

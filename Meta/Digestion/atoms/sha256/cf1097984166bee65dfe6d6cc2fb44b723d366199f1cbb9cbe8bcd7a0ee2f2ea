@@ -1,0 +1,20 @@
+**Definition 3.1 (regular stationary table).** For the rest of Sections 3–5, $\pi,\tau$ are finite probability rows, $B,A$ are row-stochastic kernels satisfying (2.5), and $u_x,v_y\in[a,b]$. From each row the exact complete raw laws satisfy
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+$$
+
+$$
+W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x.
+\tag{3.1}
+$$
+
+Use the original product realization: fair synthetic letters before the third latch, an independent $\pi$ sample after the third write and latch in that same update, $B$ on p-beta, $A$ on suspended-alpha and original terminal updates on completing letters. All original fibres retain their own records. Every return has synthetic survival at most $\lambda=4/15$, so the full laws normalize without conditioning on completion. Legal infinite outcomes remain and have zero mass.
+
+Put
+
+$$
+\varepsilon_s=R_{\mathrm{conf},s}-\rho_s\ge0,
+\qquad e=\max(\varepsilon_p,\varepsilon_\beta).
+$$
+

@@ -1,0 +1,52 @@
+**Proposition 58.5 (a retained hidden phase becomes interaction-visible on one source).** Use the single INITIAL $t=\langle\beta,\alpha\rangle$, its old domain $D=(o,L,R)$ and the actually renewed domain $D'=(o,L,R,LL,LR)$. With $a=1,g=16$ the two expressly prepared unit states
+
+$$
+h=e_L-e_R,\qquad f_\pm=(e_o\pm h)/\sqrt3
+\tag{58.8}
+$$
+
+have energy $-8$, identical energy weights in the complete old spectral decomposition, and identical old root-amplitude functions for every supplied clock value. They are different relative-phase states. Under the transfer and evolution of Definition58.1, their renewed root probabilities differ; their difference has the expansion
+
+$$
+\begin{aligned}
+\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_+\rangle
+-\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_-\rangle
+&=-\frac{2i\tau^3}{3\sqrt3}+O(\tau^4),\\
+\left|\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_+\rangle\right|^2
+-\left|\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_-\rangle\right|^2
+&=-\frac{31}{9}\tau^4+O(\tau^6).
+\end{aligned}
+\tag{58.9}
+$$
+
+At $\tau=1/100$ this probability difference is strictly negative. In the original Process44 port both preparations are attached to the same actual source word
+$\operatorname{Read}_\eta[((1,1),k)];\rho;\operatorname{Read}_\eta[((1,2),a_{\rm axis})];\operatorname{Stop}$, with $k=b_{\rm axis}\times a_{\rm axis}$ and $Ra_{\rm axis}=b_{\rm axis}$, $Rk=a_{\rm axis}$. This port does not observe either amplitude state. For a fixed-cap Clifford history one instead retains exactly §55.6's Read/accept/Read/reject/Read/Stop, with $H=3$; its refused second candidate is not installed. A positive supplied interval on $D'$ may be assigned before the next event or Stop. No effect measurement is thereby inserted into either native word.
+
+Proof. The old matrix is
+$\left(\begin{smallmatrix}-14&-1&-1\\-1&-5&0\\-1&0&-5\end{smallmatrix}\right)$.
+Thus $\mathsf H_Dh=-5h$ and the hidden span is orthogonal to the root's invariant symmetric span. The two states have identical visible coefficients and opposite hidden coefficients; the hidden coefficient's modulus is unchanged. Their old root responses and spectral energy weights therefore coincide. Their root coefficients have the same nonzero sign, so they are not global-phase copies. Direct calculation gives $(-14-10)/3=-8$ for both energies.
+
+The renewed matrix is exactly (55.22) with diagonal $(-14,-5,-5,-1,-1)$, including all inherited exterior seams and the common potential. Direct powers of this full matrix give
+
+$$
+\langle e_o,\mathsf H_{D'}^nJh\rangle
+=(0,0,0,-2,50,-880,13680)\quad(0\le n\le6).
+\tag{58.10}
+$$
+
+The classical Taylor/Krylov criterion in Causal Response13.3.2 and13.5.2 applies with generator $-i\mathsf H_{D'}$, input $Jh$ and output $\langle e_o,\cdot\rangle$. Substitution gives the first line of (58.9). Write $A_o=\langle e_o,e^{-i\tau\mathsf H_{D'}}e_o\rangle$ and $A_h=\langle e_o,e^{-i\tau\mathsf H_{D'}}Jh\rangle$. The probability difference is $\frac43\operatorname{Re}(A_o\overline{A_h})$. Here $A_o=1+14i\tau+O(\tau^2)$ and $A_h=-i\tau^3/3+25\tau^4/12+O(\tau^5)$, which gives $-31/9$. Real matrices and real initial vectors make each probability an even function of $\tau$, giving the stated remainder order.
+
+There is a finite exact certificate away from zero. Truncate each normalized amplitude exponential at order eight at $\tau=1/100$, and let $d_8$ be the difference of the two squared truncated root amplitudes. Fraction arithmetic gives
+
+$$
+ d_8=-\frac{20971415346759163700136246832031}
+ {609638400000000000000000000000000000000},\qquad
+ \left|d(1/100)-d_8\right|
+ <\frac{2357947691}{59062500000000000000}.
+\tag{58.11}
+$$
+
+Indeed $\|\mathsf H_{D'}\|\le22$, so each amplitude remainder is at most $r_8=2(22/100)^9/9!$, using $e^{22/100}<2$. An exact root amplitude has modulus at most one; its truncated counterpart has modulus at most $1+r_8$. The two squared-modulus errors together are at most $4r_8+2r_8^2<6r_8$, which is the bound in (58.11). The upper endpoint $d_8+6r_8$ is negative. In decimal notation the certified interval lies between $-3.444\cdot10^{-8}$ and $-3.435\cdot10^{-8}$; the rational inequalities, not rounding, establish separation.
+
+This example shows that the old root-autonomous hidden subspace need not remain hidden under the actual asymmetric renewal. It does not refute a complete retained state: (58.3) uses the distinguishing signed coefficient. A spectral catalogue or even all spectral energy weights lacks that relative phase. The root effect here requires a separately supplied preparation/effect/clock contract and is not an acquired original Read. □
+

@@ -1,0 +1,21 @@
+**Assumption 9.1 (the acquired-code contract at a general call budget).**
+Keep every source, acquisition, causal export, discard, complete-row,
+original-offset and stationarity premise of Assumption 5.1. Replace only
+its at-most-one-call restriction by at most $k$ fresh chronological Reads,
+where $k\ge0$ is public. After a reply, the next finite literal word or
+halt decision may depend on that reply and the earlier replies. The
+controllers for the two visible regions may be different. Every repeated
+request is another call. All local computation must terminate on a
+promised input; its cost is separate from calls. No restriction to a
+fixed finite Moore controller or uniformly bounded address is imposed.
+
+Write $C_\gamma=e^{-1}(\gamma)$ for an attained class, and $d=a-b$.
+The complete fibers, targets and all-address correspondence are exactly
+Theorem 5.2, used also at later adaptive nodes by restricting its fiber
+to the origins producing the preceding replies. The native $E/P/S$
+law and literal representatives are Definition 5.3. These statements
+and Theorem 7.5 are the published suppliers at
+[revision 45fce68e14e6414d58c1ca396723012fa364aeea](https://github.com/the-omega-institute/trureturing/blob/45fce68e14e6414d58c1ca396723012fa364aeea/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md).
+In particular, an adaptive extension changes neither the information
+in an acquired row nor the meaning of a constructor Read.
+

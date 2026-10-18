@@ -1,0 +1,61 @@
+### 71.5 The 24-real-entry interior matrix and its invariant
+
+The inspected Reply's Lemma 1, printed p. 2, assumes only an order-six
+CHM with more than 22 real entries and concludes equivalence to one of
+its two displayed matrices. The first has fourth-root entries and the
+second sixth-root entries. There is no printed quartet or all-real-row
+hypothesis in that lemma.
+
+At the actual interior parameter \(b=1/2\), put
+
+\[
+u=\frac{\sqrt{55}-10+i(2\sqrt{55}+5)}{20},\qquad
+v=\frac{-\sqrt{55}-10+i(2\sqrt{55}-5)}{20}.
+\tag{71.12}
+\]
+
+The unit-entry matrix is
+
+\[
+M=\begin{pmatrix}
+u&1&1&v&1&1\\1&u&1&1&v&1\\1&1&u&1&1&v\\
+\bar v&1&1&-\bar u&-1&-1\\
+1&\bar v&1&-1&-\bar u&-1\\
+1&1&\bar v&-1&-1&-\bar u
+\end{pmatrix}.
+\tag{71.13}
+\]
+
+Equation (71.4), with \(h=\sqrt{55}/5\), proves \(M^*M=6I\)
+and unit entry moduli. Precisely 24 entries are real. The other twelve
+have nonzero imaginary parts because \(2\sqrt{55}-5>0\).
+
+For a unit-entry matrix \(A\), its Haagerup cross-ratio set is
+
+\[
+\Lambda(A)=\{a_{ij}a_{k\ell}\bar a_{i\ell}\bar a_{kj}:
+             i,j,k,\ell\in\{1,\ldots,6\}\}.
+\tag{71.14}
+\]
+
+Row and column phases cancel, and permutations merely relabel this set.
+It is therefore invariant under monomial equivalence, which is broader
+than permutation equivalence. Transpose preserves it and conjugation
+conjugates it. Fourth-root matrices have cross-ratio real parts in
+\(\{-1,0,1\}\); sixth-root matrices have them in
+\(\{-1,-1/2,1/2,1\}\).
+
+Rows 1,2 and columns 1,2 of (71.13) give \(u^2\in\Lambda(M)\), with
+
+\[
+\operatorname{Re}(u^2)
+=2\left(\frac{\sqrt{55}-10}{20}\right)^2-1
+=-\frac9{40}-\frac{\sqrt{55}}{10}.
+\tag{71.15}
+\]
+
+This is irrational. Consequently \(M\) is not monomial equivalent to
+either representative, even allowing transpose or conjugation. It is an
+exact counterexample to that two-representative classification as printed.
+It does not contradict exclusion of the two representatives themselves.
+

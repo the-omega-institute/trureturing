@@ -1,0 +1,63 @@
+**Corollary 11.5 (the unrestricted critical exact minimum at both caps).**
+Conditional on the displayed SI interfaces, for every choice of the
+original distinct positive positions $s_1<\cdots<s_8$,
+
+$$
+m_{\min}(8,4;\ t\le8,\ J\le W)=20.
+\tag{69}
+$$
+
+Here $m$ counts running states; including the two distinct Boolean
+terminals the corresponding installed total is twenty-two.
+
+**Proof, lower bound.**
+Theorem 9.1 gives $m\ge19$ in the full original graph class.
+If $m=19$, Theorem 10.4 excludes the first equality cut list,
+and Proposition 10.6 identifies the remaining cut list with precisely
+the twelve-state interior excluded by Theorem 11.4.
+Thus $m=19$ is impossible. Since $m$ is an integer, every competitor
+has $m\ge20$.
+
+**Proof, credited complete attaining graph.**
+Reuse exactly the twenty-state ordered grid of Proposition 5.1.
+For completeness its entire fixed graph is given by
+
+$$
+\begin{gathered}
+Q=\{q_{h,z}:0\le h\le3,\ 0\le z\le4\},\qquad
+q_{\rm start}=q_{0,0},\qquad i(q_{h,z})=h+z+1,\\
+\delta(q_{h,z},0)=
+\begin{cases}
+\mathsf0,&z=4,\\
+q_{h,z+1},&z<4,
+\end{cases}
+\qquad
+\delta(q_{h,z},1)=
+\begin{cases}
+\mathsf1,&h=3,\\
+q_{h+1,z},&h<3.
+\end{cases}
+\end{gathered}
+\tag{70}
+$$
+
+There are no other running states, and $\mathsf0,\mathsf1$ are
+distinct terminals. Immediately before $q_{h,z}$, induction gives
+that exactly the first $h+z$ coordinates have been queried, with
+$h$ ones and $z$ zeros. A one edge at $h=3$ certifies four
+ones; a zero edge at $z=4$ certifies five zeros, leaving at most
+three ones. Thus both terminal outputs are correct.
+Every other edge preserves the invariant and increases the exposed
+depth by one. The sole live cell at depth seven is $(3,4)$,
+whose next query terminates. Hence every input terminates correctly
+within eight queries. Each query is at a distinct coordinate,
+so that same run pays at most the original $W$ letters.
+
+The actual input $11100000$ reaches $q_{3,4}$ after its first
+seven replies, queries coordinate eight, and returns zero.
+It pays exactly eight queries and $W$ letters together.
+All twenty installed running states count. This is the credited
+upper, not a new construction. It attains the new lower bound
+without restricting any competing graph to an ordered or read-once
+subclass. $\square$
+

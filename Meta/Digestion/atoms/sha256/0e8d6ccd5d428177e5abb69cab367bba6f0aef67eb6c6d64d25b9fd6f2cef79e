@@ -1,0 +1,59 @@
+**命题 C-72.2（同一个 Fibonacci 响应的规范形变量）。** 对 $m\ge2$，
+
+$$
+H_m=\begin{pmatrix}F_{m+1}&F_m\\F_m&F_{m-1}\end{pmatrix}>0,
+\qquad\det H_m=(-1)^m,
+\tag{C72.2}
+$$
+
+其带标记规范椭圆满足
+
+$$
+\eta_m=\frac18\log\left(1+\frac{(-1)^m}{F_m^2}\right),
+\qquad
+\rho_{*,m}=\frac{(-1)^m}
+{\left(\sqrt{F_m^2+(-1)^m}+F_m\right)^2}.
+\tag{C72.3}
+$$
+
+因而偶数层为正关联，奇数层为负关联，且 $\eta_m\to0$、$\rho_{*,m}\to0$，规范椭圆的无标记轴比趋于一。
+
+证明。这里消费上述路径供应的矩阵幂，参数索引可用递推逐项对照：$A^2=\left(\begin{smallmatrix}2&1\\1&1\end{smallmatrix}\right)$；若式 (C72.2) 在 $m$ 成立，右乘 $A$ 给
+
+$$
+\begin{pmatrix}F_{m+1}+F_m&F_{m+1}\\F_m+F_{m-1}&F_m\end{pmatrix}
+=\begin{pmatrix}F_{m+2}&F_{m+1}\\F_{m+1}&F_m\end{pmatrix}.
+$$
+
+这也核定 $m$ 是边数。$m\ge2$ 时三个相关 Fibonacci 数均正；$m=1$ 的右下角为零，不在本正表椭圆定义域。行列式乘法及 $\det A=-1$ 给
+
+$$
+F_{m+1}F_{m-1}-F_m^2=(-1)^m,
+$$
+
+即这里所用的经典 Cassini 中间式。于是
+
+$$
+\Omega_m=\frac{F_{m+1}F_{m-1}}{F_m^2}
+=1+\frac{(-1)^m}{F_m^2}>0,
+$$
+
+代入式 (C67.5) 即得 $\eta_m$。而式 (C67.8) 给
+
+$$
+\rho_{*,m}=\frac{\sqrt{F_m^2+(-1)^m}-F_m}
+{\sqrt{F_m^2+(-1)^m}+F_m}.
+$$
+
+分子乘共轭并约去得到式 (C72.3)。奇数 $m\ge3$ 时 $F_m\ge2$，所以根号内严格正；偶数情形也显然正。符号由 $(-1)^m$ 给出。
+
+边界 $m=2$ 给 $\Omega_2=2$、$\eta_2=(\log2)/8$、$\rho_{*,2}=(\sqrt2-1)/(\sqrt2+1)=3-2\sqrt2$，没有除零。由递推及 $F_{m+2}\ge2F_m$（$m\ge2$），有 $F_m\to\infty$，所以式 (C72.3) 的对数趋零、分母趋无穷，得两个极限。无标记轴比是 $e^{2|\eta_m|}\to1$。进一步由 $\log(1+t)/t\to1$ 得
+
+$$
+\eta_m=\frac{(-1)^m}{8F_m^2}+O(F_m^{-4}),\qquad
+\rho_{*,m}=\frac{(-1)^m}{4F_m^2}+O(F_m^{-4}).
+\tag{C72.4}
+$$
+
+这些渐近式在当前整数序列上使用 $F_m\to\infty$，没有加入任何素性假设。证毕。
+

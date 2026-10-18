@@ -1,0 +1,47 @@
+### 82.3. Stabilizers, disjointness, and all edges
+
+A transposition fixing a unit-entry ray fixes it literally: its fixed
+coordinate is nonzero and forces projective multiplier one. Hence it
+stabilizes the ray exactly when both channels repeat in the swapped pair.
+A projectively fixing three-cycle makes both channels proportional to the
+same Fourier vector. The complete common-flat classification of this
+stratum in §49 makes the ray canonical. Therefore a ray with a
+three-distinct channel has trivial \(S_3\) stabilizer; an aligned
+noncanonical ray has exactly the order-two stabilizer of its repeated pair.
+Two different transposition stabilizers would generate a three-cycle.
+The orbit sizes are consequently six and three, respectively.
+
+The two \(S_3\) orbits are always disjoint. Otherwise \(w\) would
+be a projective fixed point of \(A=R\Theta\) for some \(R\in S_3\).
+Because \(R\) is real and synchronous, it commutes with \(\Theta\).
+For a transposition, \(A^2=-I\); for an element of odd order \(m=1,3\),
+\(A^{2m}=-I\). But an antiunitary projective fixed point
+\(Aw=\lambda w\), \(|\lambda|=1\), has \(A^2w=w\). Either
+power identity is a contradiction.
+
+Write \(\Theta w=J\bar w\), with
+\[
+ J=\begin{pmatrix}0&-I_3\\I_3&0\end{pmatrix}.
+\]
+For a real symmetric synchronous permutation \(R\), the matrix \(RJ\)
+is skew-symmetric. Thus
+\[
+ w^*R\Theta w=\bar w^{\mathsf T}(RJ)\bar w=0.             \tag{82.4}
+\]
+The identity and the three transpositions are exactly the symmetric
+elements of \(S_3\). These give four universal opposite-orbit edges
+before projective duplicates are identified. Theorem 81.1 excludes
+noncanonical same-orbit transposition edges; §57 excludes same-orbit
+three-cycle edges. Applying \(\Theta\) gives the same exclusions in
+the other orbit. Hence the two parts are independent sets.
+
+For a six-element orbit, the six opposite vertices are distinct.
+Equations (82.1)–(82.3) exclude exactly the two remaining relative
+permutations, proving the four-regular graph. For an aligned orbit,
+let \(H=\{1,\tau\}\) be its stabilizer. Identity and \(\tau\)
+represent the same opposite coset; the other two transpositions represent
+the two remaining cosets, since their quotient is a three-cycle outside
+\(H\). Equation (82.4) therefore reaches all three opposite vertices.
+This proves \(K_{3,3}\) and completes the graph classification within
+one symmetry union.
+

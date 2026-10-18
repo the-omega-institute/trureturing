@@ -1,0 +1,18 @@
+**Definition 1.2 (complete rows).** For any finite public prefix-free
+cut $P$, including the empty and root cuts, set
+$O=P\cap\operatorname{Pos}(u)$. The complete row is
+
+$$
+R_P(u)=(C_P(u),\pi_P(u)),\qquad
+p\sim_{\pi_P(u)}q\ \Longleftrightarrow\ u|_p=u|_q\quad(p,q\in O).
+\tag{AAR.2}
+$$
+
+The exterior is the literal ordered tree with the subtrees at $O$
+replaced by holes carrying their entire addresses. It retains concrete
+blocking leaves for unreached cut words. The partition includes every
+equality and disequality of reached holes. This is the supplied
+`literalRecord` and `canonicalRow_record_iff` of [ACPD]. In particular a
+root cut has one hole and its singleton partition, independently of the
+source. A vector of selected constructor replies is not a complete row.
+

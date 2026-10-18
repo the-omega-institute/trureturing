@@ -1,0 +1,21 @@
+**Assumption 1.2 (the fixed-H entrance).** Fix one finite $H\ge1$, one
+preparation occurrence $\xi$, and one actual acquired $u\in\mathcal T_H$,
+where $\mathcal T$ is the free nonempty ordered alpha/beta tree algebra.
+Use AIF Definition 2.1's actual primitive entrance, canonical padded source
+packet, validation, no-update acquisition, seed delivery and acquisition
+fence $a(u)$. Keep their actual backing, source interval and origins.
+All histories and resource coordinates refer to this one entrance.
+
+Use RCA Definition 11.1's unused-verifier-lane premise: on this original
+five-source-command domain the original paths have no accesses to 32–39.
+Their tokens can actually be transferred as RCA §14 prescribes. This is a
+restriction on the instance, not a conclusion about CAP. In particular the
+CAP verifier is not included in this unused-lane premise.
+
+Use RCA's explicitly added, once-only owner-authorized Install at an original
+post-acquisition Ready, with genuine asset-copy authorities, fresh finite
+control construction and canonical code supply. Replace the prescribed
+new main version by the finite $D_2$ specified below at this installation.
+There is no transition from an already running $D_1$ to $D_2$ in this model.
+No old busy PC admits Install.
+

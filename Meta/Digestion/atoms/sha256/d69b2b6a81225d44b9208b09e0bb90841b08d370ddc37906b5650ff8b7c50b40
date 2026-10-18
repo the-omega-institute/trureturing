@@ -1,0 +1,101 @@
+**Theorem 3.1 (Borel endpoint-recurrence rigidity).** Let a pair belong
+to $\mathfrak C_{\rm box}$. Assume, additionally, that for some finite
+integer $N\ge0$ its averaged marker-one sequence satisfies
+
+$$
+d_{n+2}-(z_a+z_b)d_{n+1}+z_az_b d_n=0
+\qquad(n\ge N).
+\tag{3.1}
+$$
+
+Then for one $\theta\in[0,1]$ both original marginals and both original
+flows are
+
+$$
+\begin{aligned}
+\nu_p&=(1-\theta)\delta_{P_{p,a}}+\theta\delta_{P_{p,b}},\\
+\nu_\beta&=(1-\theta)\delta_{P_{\beta,a}}+\theta\delta_{P_{\beta,b}},\\
+\Gamma_B&=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+             +\theta\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+             +\theta\delta_{(P_{\beta,b},P_{p,b})}.
+\end{aligned}
+\tag{3.2}
+$$
+
+There is no atomicity assumption at either phase. The coefficients of
+the eventual recurrence determine every earlier word and both entire
+flows. The exact recurrence (3.1) remains an added condition.
+
+**Proof.** Because $z_a\ne z_b$, solving the scalar recurrence gives
+real constants $A_0,B_0$ such that
+
+$$
+d_n=A_0z_a^n+B_0z_b^n\qquad(n\ge N).
+\tag{3.3}
+$$
+
+Theorem 2.1 identifies $B_0=c_bm_b$.
+
+We use the native-isolation argument of [PAIR, (19.11)--(19.13)].
+That part of its proof uses only (1.5)--(1.7), not the zero-risk
+budgets or the midpoint means. On a positive p native singleton,
+the B conditional barycentre is its suspended native law. Each of
+that law's complete coordinates is an endpoint of its box, so the
+conditional suspended law must equal that endpoint at every coordinate.
+Countability of the complete carrier gives equality of the entire
+laws simultaneously. Repeating at A gives equal native masses in the
+two phases and no incoming or outgoing nonnative mass.
+In particular, the two native b unit flows occur with exactly mass
+$m_b$, and can be subtracted from the original flows.
+
+If $m_b=1$, their mass already exhausts the pair, giving (3.2).
+Otherwise subtract these two subflows and normalize by $1-m_b$.
+This preserves compatibility and both full boxes. No assertion of
+preserving the midpoint means or the loss budgets is needed here.
+Call the resulting pair the remainder. Its own averaged sequence is
+
+$$
+\widetilde d_n=\frac{A_0}{1-m_b}z_a^n
+\qquad(n\ge N).
+\tag{3.4}
+$$
+
+Apply the definitions $C,L,g$ of (2.3) to this one remainder.
+Its p lower box at $w_{3,1}$ and its regular emissions give
+
+$$
+L^3g\ge c_az_a^3,\qquad g\le c_a,\qquad
+\Delta:=L^3g-z_a^3g\ge z_a^3(c_a-g)\ge0.
+\tag{3.5}
+$$
+
+For any integer $n\ge N$, (3.4) implies
+
+$$
+0=\widetilde d_{n+3}-z_a^3\widetilde d_n
+ =\int L^n\Delta\,d\widetilde\nu_p.
+\tag{3.6}
+$$
+
+Since $L\ge(1/5)C$, positivity gives
+$L^n\Delta\ge(1/5)^n C^n\Delta$. The original unweighted
+stationarity of this remainder therefore yields
+
+$$
+0\ge\left(\frac15\right)^n
+       \int\Delta\,d\widetilde\nu_p\ge0.
+\tag{3.7}
+$$
+
+It follows from (3.5) that $g=c_a$ almost surely. Equality in the
+upper regular bound
+$g=(1-u)B(1-v)\le(1-a)^2$ forces $u=a$ and $v=a$ on B edges.
+The common marginals make these assertions hold almost everywhere at
+both phases. Iterating the full equations gives exactly the native a
+laws on the remainder. All its flows are consequently the native a
+unit flows. Restoring the removed b subflows proves (3.2) with
+$\theta=m_b$ and also
+$A_0=c_a(1-m_b)$. No finite realization or quadrature was used.
+$\square$
+

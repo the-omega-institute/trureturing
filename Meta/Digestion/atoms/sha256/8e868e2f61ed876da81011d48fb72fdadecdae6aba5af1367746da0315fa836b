@@ -1,0 +1,112 @@
+**Theorem 7.2 (Necessary and sufficient geometry for every representative).** Fix any single allowed $p,j,\nu$. Every lawful hard-total-cap-three rule with the full $(u,H_j,O,D,N)$ law of $V_j$ has the following form at almost every seed, after the semantic normalization of Lemma 2.1. The first read and the next read on zero have parity $\psi$ and query the two end edges, in either order, of a consecutive three-edge spin path detached from $q$. Each of their one children returns $a_0$ at its own paid depth. On two zeros the third read has parity $\psi$ and queries the middle bridge, returning $a_1$ on one and $a_0$ on zero. Conversely these geometry and stopping conditions give exactly the full witness law, also under any measurable selection of such trees on the unchanged seed space.
+
+The necessary conclusions concern actual positive-source executions. Numerical finite waits and actions on inconsistent source-null records are not fixed by the law; every such action remains subject to the hard total cap and to any asserted radius. No prefix, record, signature, tree shape or samplewise-preservation premise is imposed on the competitor.
+
+Proof. Begin with an arbitrary competitor, allowing public-$p$ dependence, arbitrary measurable seed use, immediate or wrong-phase returns, internal nonreturn, and every integer address. Normalize it. Lemma 2.2 gives a measurable full-measure set of good seeds at which its entire deterministic source vector equals (7.2). Fix one good seed. Call $\varphi=\psi$ phase $B$ and the other phase $A$. By (1.2), these are the endpoint classes $b$ and $a$, respectively. This identification is used only for mathematical conditioning. Both target spin values have positive probability in either phase.
+
+In phase $A$ the required output, return indicator and count are $(a_0,1,3)$ surely. In phase $B$, (7.2) requires the four positive terminal masses displayed there, conditional on each target value. There is no count-zero or nonreturn mass. The root must therefore read. If its parity were opposite to $\psi$, its phase-$B$ reply would be zero surely. The positive required count-one mass would force a finite return on its zero child. In phase $A$ this root would instead be active, with probability $c>0$ of reply zero. The same action on that zero child would return at count one on a positive phase-$A$ section, contradicting its required count three. Hence the root parity is $\psi$.
+
+The root-zero child is reached surely in phase $A$, so cannot return or internally diverge there. Only the root-one child can supply the positive count-one mass in phase $B$. Its next event, determined at this fixed seed and record, must consequently be a finite $a_0$ return at count one. Call the root edge $E$. The full target law now requires
+
+$$
+J_p(X_E=1\mid\varphi=\psi,S_q=s)=2d
+\qquad(s=0,1).
+\tag{7.4}
+$$
+
+If $E$ contained $q$, the left side would be $\pi_{1-s}$, since its other spin is an independent Bernoulli$(p)$ spin. Equality for both $s$ would force $\pi_0=\pi_1$, contradicting the bias. Thus $E$ is detached from $q$, and its zero cylinder has probability $c$ given either target value.
+
+A second read on root zero is forced by phase $A$'s count three. If that read had parity opposite to $\psi$, its phase-$B$ reply would be zero surely. Since the root-one child already returns, the prescribed positive count-two mass would force a finite return on the second-zero child. In phase $A$ the first read was a separator, imposing no spin condition; the newly active second edge gives reply zero with probability $c>0$ there. The same count-two return would contradict the phase-$A$ law. Hence the second parity is also $\psi$.
+
+Its zero child is reached surely in phase $A$ and must continue to a third read. Its one child is the only possible source of the required count-two mass and must return $a_0$ at count two. Denote this second edge by $F$. Averaging the prescribed full target masses within phase $B$ gives
+
+$$
+J_p(X_E=0,X_F=1\mid\varphi=\psi)=2dc.
+\tag{7.5}
+$$
+
+If $F=E$, this probability is zero. If $E,F$ share one vertex, their zero-one labels require two equal spins and one opposite, giving
+
+$$
+\pi_0^2\pi_1+\pi_1^2\pi_0=d.
+$$
+
+This calculation holds for either shared endpoint and either orientation. But
+
+$$
+0<d<\tfrac14,\qquad c>\tfrac12,\qquad 2dc-d=d(2c-1)>0,
+\tag{7.6}
+$$
+
+so neither possibility gives (7.5). The two edges must be vertex-disjoint. If this disjoint $F$ contained $q$, the detached $E$ would be independent of $F$ and the target. The conditional count-two probability would be $c\pi_{1-s}$, whereas (7.2) requires $2dc$ for both $s$. Division by $c>0$ again contradicts $\pi_0\ne\pi_1$. Thus $F$ also excludes $q$.
+
+Write
+
+$$
+C=\{X_E=0,X_F=0\}.
+$$
+
+The two pairs and the target have disjoint spin supports, so
+
+$$
+J_p(C\mid\varphi=\psi,S_q=s)=c^2\qquad(s=0,1).
+\tag{7.7}
+$$
+
+The third read on this record is forced by phase $A$'s count three. A fourth call is forbidden by the total cap; nonreturn on a positive section is forbidden by $D=1$. If the third parity were opposite to $\psi$, it would be active in phase $A$, where both preceding replies were separators. Its two replies have positive probabilities $c$ and $2d$ there. Both terminal actions would therefore have to return $a_0$ at count three. In phase $B$ the third reply would then be separator zero and would use the same $a_0$ action. Every earlier terminal already returns $a_0$, leaving no possible $a_1$ mass, contrary to the positive $2d^2$ in (7.2). Thus the third parity is $\psi$.
+
+Its zero child, reached surely in phase $A$, returns $a_0$. Its one child must be reachable in phase $B$ and return $a_1$. Let $G$ be its active edge. Equations (7.2) and (7.7) force
+
+$$
+J_p(X_G=1\mid\varphi=\psi,C,S_q=s)
+=\delta,\qquad \delta=\frac{2d^2}{c^2},\qquad s=0,1.
+\tag{7.8}
+$$
+
+This is a full-law consequence at the fixed public bias. The protocol is not permitted to choose different terminal actions according to an unobserved target value.
+
+Under $C$, each of the two disjoint pairs is constant, with common spin Bernoulli$(r)$, where
+
+$$
+r=\frac{p^2}{c},\qquad 1-r=\frac{(1-p)^2}{c}.
+\tag{7.9}
+$$
+
+Their two common spins are independent of each other, of $S_q$, and of all outside spins. Outside spins remain independent Bernoulli$(p)$. Indeed the conditioning indicator is the product of the equality indicators on the two disjoint pairs; dividing each finite iid product by $c^2$ gives precisely these factors. Further conditioning on $S_q=s$ fixes only that independent coordinate.
+
+The following table covers every possible integer-line edge $G$. Here a fresh vertex lies outside $E\cup F\cup\{q\}$; only rows realizable by actual consecutive integer endpoints are available.
+
+| Third edge type | One-probability given $S_q=0,C$ | One-probability given $S_q=1,C$ |
+| --- | --- | --- |
+| repeats $E$ or $F$ | $0$ | $0$ |
+| joins the two conditioned pairs | $2r(1-r)=2d^2/c^2$ | $2r(1-r)=2d^2/c^2$ |
+| joins target to a conditioned pair | $r$ | $1-r$ |
+| joins target to a fresh vertex | $p$ | $1-p$ |
+| joins a conditioned pair to a fresh vertex | $d/c$ | $d/c$ |
+| joins two fresh vertices | $2d$ | $2d$ |
+
+All probabilities in the table are also conditioned on $\varphi=\psi$. A repeat is zero because that pair is already constrained equal. Two different pair constants disagree with probability $2r(1-r)$. A fixed target compared with a pair constant gives $r,1-r$; compared with a fresh spin it gives $p,1-p$. For a pair-to-fresh edge the probability is
+
+$$
+p(1-r)+(1-p)r
+=\frac{p(1-p)^2+(1-p)p^2}{c}=\frac d c.
+\tag{7.10}
+$$
+
+Two fresh spins disagree with probability $2d$.
+
+For exhaustion, the two distinct endpoints of $G$ lie in the first pair, the second pair, the singleton target, or the fresh vertices. Both endpoints in one conditioned pair give exactly its original edge. Endpoints in different pairs can give only their actual joining line edge, if one exists. An endpoint at the target gives exactly one of the two target rows. The remaining combinations are pair-to-fresh and fresh-to-fresh. There is no loop or pair of distinct target vertices on the integer line. Thus negative, remote, repeated, target-touching and disconnected choices are all included; no radius restriction has been used.
+
+At the fixed allowed parameter, $c>2d$ as well as $c>1/2$, and therefore
+
+$$
+0<\delta=\frac{2d^2}{c^2}<\frac d c<2d.
+\tag{7.11}
+$$
+
+The first strict comparison has ratio $2d/c<1$, and the second has ratio $1/(2c)<1$. Also $r\ne1-r$ and $p\ne1-p$. Both target values have positive probability, and (7.8) requires the same $\delta$ for both. Consequently neither target row works, and the repeat, pair-to-fresh and fresh-to-fresh rows fail by (7.11). The third edge must join the two conditioned pairs.
+
+Two disjoint line edges joined by one line edge are the two end edges of a consecutive three-edge path. To see this explicitly, write the left pair as $\{L,L+1\}$. Its nearest vertex to the right pair is $L+1$; a joining edge forces the other pair to begin at $L+2$, so it is $\{L+2,L+3\}$, and the unique bridge is $\{L+1,L+2\}$. Since $q$ is in neither end pair, it is outside all four vertices, including both bridge endpoints. This establishes all asserted geometry, parities and stopping actions from Full alone. Positive-probability nonreturn has been excluded by the required law, not by a restriction of the competitor class. Source-null choices and null seed changes cannot alter these good-seed deductions.
+
+For sufficiency, take any such detached path, querying its two end edges in either order, returning $a_0$ on either of their one replies, and reading the middle edge on two zeros with the stated final outputs. Its end pairs are independent of one another and of $S_q$. The same finite products as in Proposition 7.1 give the four phase-$B$ terminal probabilities $2d,2dc,2d^2,c^2-2d^2$. In phase $A$ all three calls are separators and give $(a_0,1,3)$. Multiplication by $\pi_s/2$ gives every coordinate of (7.2) and no other mass. Every formal branch returns after at most three paid calls. Thus each such deterministic tree has the same vector $w$. Any measurable selection of them using the original seed preserves Full by (2.2); arbitrary lawful exceptional null-seed choices do not change that law. This proves the converse and completes the classification. $\square$
+

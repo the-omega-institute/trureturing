@@ -1,0 +1,54 @@
+### 27.9 完整五环相位允许区间
+
+**命题 C-27.9.1（循环谱与五环正性域）。** 对简单 <span>𝐶<sub>𝑁</sub></span>、<span>𝑁≥3</span>、均匀 <span>𝑟<sub>𝑔</sub>&gt;0</span>，共同环相位为 <span>Φ<sub>𝐺</sub></span> 的候选谱是
+
+<div>
+λ<sub>𝑘</sub>=1+2𝑟<sub>𝑔</sub> cos ((Φ<sub>𝐺</sub>+2π𝑘)/(𝑁)),  𝑘=0,…,𝑁-1.
+</div>
+
+这是 [^GL-R] Theorem 5.1 的单位增益环邻接谱在 <span>𝐺=𝐼+𝑟<sub>𝑔</sub>𝐴<sub>gain</sub></span> 中的应用。对于五环，取代表 <span>-π≤Φ<sub>𝐺</sub>≤π</span>，最小值为
+
+<div>
+λ<sub> min </sub>=1-2𝑟<sub>𝑔</sub> cos ((π-|Φ<sub>𝐺</sub>|)/(5)).
+</div>
+
+所以完整允许域为
+
+<div>
+
+<table><tbody>
+<tr><td>0&lt;𝑟<sub>𝑔</sub>≤((1)/(2)):</td><td>每个环相位均可实现;</td></tr>
+<tr><td>((1)/(2))&lt;𝑟<sub>𝑔</sub>≤φ<sup>-1</sup>:</td><td>|Φ<sub>𝐺</sub>|≤π-5 arccos (((1)/(2𝑟<sub>𝑔</sub>)));</td></tr>
+<tr><td>𝑟<sub>𝑔</sub>&gt;φ<sup>-1</sup>:</td><td>没有可实现相位.</td></tr>
+</tbody></table>
+
+</div>
+
+<span>𝑟<sub>𝑔</sub>=0</span> 时单列为 <span>𝐺=𝐼<sub>5</sub></span>，所有形式相位标签均给同一矩阵，记录环乘积没有辐角。
+
+**证明。** 按 §27.5 的单环分类，可将每个有向条目标为 <span>𝑟<sub>𝑔</sub>𝑒<sup>𝑖Φ<sub>𝐺</sub>/𝑁</sup></span>。取 Fourier 向量 <span>𝑣<sub>𝑗</sub><sup>(𝑘)</sup>=𝑁<sup>-1/2</sup>𝑒<sup>2π𝑖𝑘𝑗/𝑁</sup></span>，<span>𝑗=0,…,𝑁-1</span>。两邻项之和为
+
+<div>
+𝑟<sub>𝑔</sub>𝑒<sup>𝑖Φ<sub>𝐺</sub>/𝑁</sup>𝑣<sub>𝑗+1</sub><sup>(𝑘)</sup>+𝑟<sub>𝑔</sub>𝑒<sup>-𝑖Φ<sub>𝐺</sub>/𝑁</sup>𝑣<sub>𝑗-1</sub><sup>(𝑘)</sup>=2𝑟<sub>𝑔</sub> cos ((Φ<sub>𝐺</sub>+2π𝑘)/(𝑁)) 𝑣<sub>𝑗</sub><sup>(𝑘)</sup>.
+</div>
+
+模 <span>𝑁</span> 端点保持同样等式，完整 Fourier 基给全部谱。五环的等距谱角中，距 <span>π</span> 最近的角距为 <span>(π-|Φ<sub>𝐺</sub>|)/5</span>；它给最小余弦，因而给最小特征值。<span>𝑟<sub>𝑔</sub>≤1/2</span> 时该值始终非负。<span>𝑟<sub>𝑔</sub>&gt;1/2</span> 时余弦在 <span>[0,π/5]</span> 单调，解其非负条件得到所列相位界。允许界非负当且仅当 <span>𝑟<sub>𝑔</sub>≤[2 cos (π/5)]<sup>-1</sup>=φ<sup>-1</sup></span>，故更大模长无解。<span>□</span>
+
+**命题 C-27.9.2（有理相位界与秩分支）。** 在 <span>𝑟<sub>𝑔</sub>=3/5</span>，
+
+<div>
+ det 𝐺<sub>5</sub>=((486 cos Φ<sub>𝐺</sub>-475)/(3125)),   cos Φ<sub>𝐺</sub>≥((475)/(486)).
+</div>
+
+允许端点为
+
+<div>
+θ<sub>*</sub>= arccos ((475)/(486))=π-5 arccos ((5)/(6))≈0.213164936304038 弧度.
+</div>
+
+五环的秩分支如下：<span>0≤𝑟<sub>𝑔</sub>&lt;1/2</span> 全部候选为秩五；<span>𝑟<sub>𝑔</sub>=1/2</span> 除 <span>Φ<sub>𝐺</sub>=π</span> 模 <span>2π</span> 为秩四外均秩五；<span>1/2&lt;𝑟<sub>𝑔</sub>&lt;φ<sup>-1</sup></span> 的允许区间内部秩五、两个端点秩四；黄金端点仅 <span>Φ<sub>𝐺</sub>=0</span>、秩三。
+
+**证明。** 有理值直接代入行列式。此处所有真主块严格正定，所以完整行列式条件连同它们是充分的；亦可在 <span>|𝑐|=𝑟<sub>𝑔</sub></span> 的圆盘式中展开得到同一余弦界。其在 <span>[-π,π]</span> 的解集与完整谱解集相同，证明两个精确角式相等。小数仅为该精确角的近似。秩分支逐项由上一命题的完整谱得到：非临界允许端点恰一个最近谱角给零；<span>Φ<sub>𝐺</sub>=π</span> 的最近角直接为 <span>π</span>；黄金点的两个最近角等距并同时给零。其余特征值严格正。<span>□</span>
+
+相邻重叠强度与整体相位不是可独立指定的两项关系。加强重叠会缩小许可区间；在黄金点，保留的内部关系把闭合相位完全锁定。
+

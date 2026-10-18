@@ -1,0 +1,43 @@
+**定理 200.4（完整目录的加权守卫界）。** 对每个 $L\ge3$ 和全部非负评分
+$y=((A_w,C_w,P_w),T)$，令 $\delta=\Delta_O(y)$。则
+
+$$
+\sigma_H(Q(y))\le\delta+\Gamma(y).
+\tag{200.12}
+$$
+
+不要求饱和评分、共同马尔可夫表示或任何分量预算；$B_O$ 始终取完整目录的支持。
+
+**证明。** $z_{U_k}$ 是完整 $O$ 表事件向量的概率混合，所以
+$y\cdot z_{U_k}\le B_O(y)$。结合 (200.10)，
+
+$$
+F_y(u_k)=y\cdot(d(u_k)-z_{U_k})+y\cdot z_{U_k}-y\cdot\mathbf r
+       \le\Gamma_k(y)+\delta.
+\tag{200.13}
+$$
+
+其余顶点可用既有合法概率核控制。$o$ 由空日程立即输出 $0$ 恰好实现；$p$ 由
+查询地址 $1$、零时输出 $1$、正时输出 $0$ 恰好实现。故 $F_y(o),F_y(p)\le\delta$。
+对 $v_k$，用[定理 87.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#87-unit-leading-plateaus-and-unbounded-address-to-count-ratios)的子集核 $P_{k,2}$：
+在有序标签集 $\{1,\ldots,k,\infty\}$ 中均匀选三个标签，查询前两个最小数值标签，
+遇零时输出该数值标签，否则耗尽后输出第三标签；$\infty$ 解释为 $0$，从不查询。
+这是一族完整的递增停止表，其全行计算也用于
+[定理 168.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#168-closed-auxiliary-boundaries-and-the-original-positive-domain)。
+
+记 $s_k=3/(k+1)=1-e_k$。若 $n\le k$，恰在所选三元子集包含 $n$ 时输出 $n$，
+概率为 $s_k$，不依赖其后的零模式。因此正确行达到需求 $1-e_k$，pair 概率至少
+$s_k$，基概率至少零，满足其可能为负的需求 $-e_k$。若 $n>k$，所有所选数值位
+均为正，输出 $0$ 的概率为 $s_k$，输出 $n$ 的概率为零；此时需求分别为
+
+$$
+1-2e_k,\qquad0,\qquad1-e_k,
+\tag{200.14}
+$$
+
+故基行有余量 $e_k$，正确与 pair 行恰好达到。全正字的基需求是 $1-e_k$，
+同样恰好达到，不能将其与 (200.14) 的基需求混同。由 $y\ge0$ 可得
+$y\cdot d(v_k)\le y\cdot z_{P_{k,2}}\le B_O(y)$，于是 $F_y(v_k)\le\delta$。
+最后 $F_y$ 关于 $b$ 仿射，(200.5) 的全部顶点已受控，取最大值得 (200.12)。
+这只使用合法核给完整支持作下界，不把支持换成受限目录的值。$\square$
+

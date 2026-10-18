@@ -1,0 +1,40 @@
+**Theorem 6.2 (read-only classification on every fair history).**
+For fixed finite prefix-free $P$, there exists an initially source-blind
+deterministic read-only observer that is universally coherently safe
+and terminates on every fair history with unrestricted interference
+if and only if $P=\{\varepsilon\}$.
+For any other cut, every universally safe observer has a fair
+nonterminating actual history. No bounded-memory assumption is imposed
+on the observer.
+
+**Proof.** The root shortcut proves sufficiency.
+Otherwise use $x_P,y_P$ from Theorem 6.1. Run the observer from its
+common control in two actual histories. Before each selected
+$\operatorname{Read}(p)$, allow a finite writer burst of at least
+$2(|p|+1)$ updates in both histories, then perform the Read.
+Both replies are branch. Burst length depends only on the requested
+finite literal, itself determined by the common retained observer record.
+It supplies no source advice to the observer. Every finite source version
+is still finite.
+
+By induction the observer's controls, requests, replies and local
+computations agree in the two histories. A finite return would give
+the same row in both. Coherent safety would put it in both disjoint
+trajectory ranges in (CNA.11), even if its purported instants had
+different epochs, a contradiction.
+
+Thus this common execution does not return. Interleave an extra writer
+step between successive observer local steps whenever necessary.
+Every observer transition and requested Read occurs after a finite
+delay, and an active writer performs infinitely many steps.
+If only finitely many Reads occur and local computation continues
+forever, this interleaving still gives fairness. An observer unable
+to produce its next transition already fails the effective
+progress/termination requirement. Hence this is a fair nonterminating
+history, not just an unbounded family of finite running times.
+
+Every finite prefix can alternatively be extended by halting the writer.
+A return on such a prefix would already violate safety in one of those
+finite-total-interference extensions. The argument never substitutes an
+infinite actual tree for a finite source version. $\square$
+

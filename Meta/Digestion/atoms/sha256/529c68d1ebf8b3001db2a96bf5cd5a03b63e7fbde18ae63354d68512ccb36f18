@@ -1,0 +1,42 @@
+**Lemma 5.3 (A local law and an ordinary exponential modulus).** There
+is a finite real $\gamma$ such that
+
+$$
+|m_s|=e^{\gamma s}\quad(|s|<H),\qquad
+|f(k)|=e^{\gamma(k-H/2)}\quad(0<k<H).
+$$
+
+This conclusion imposes no continuity on $\chi$ or on $f/|f|$.
+
+**Proof of Lemma 5.3.** If $|s|,|t|,|s+t|<H$, the spread of
+$\{0,s,s+t\}$ equals $\max\{|s|,|t|,|s+t|\}<H$. Some $k$
+therefore makes $k,k+s,k+s+t$ all interior. Comparing the two
+lawful consecutive legs with the single summed leg gives
+
+$$
+m_{s+t}=m_tm_s,\qquad m_0=1,\qquad m_{-s}=m_s^{-1}.
+$$
+
+This local law is derived on actual lawful triples. It is not an
+assumed ambient representation.
+
+Boundedness of $a$ and invertibility of $M_*$ bound $|f(k)|$ by
+some finite $K\ge1$: evaluate the representation at $\alpha=0$ and
+apply $M_*^{-1}$ to $a(k,0)-c$. For $|s|<H/2$, using the
+reference height gives $|m_s|=|f(H/2+s)|\le K$. Using $-s$
+and the inverse law gives $|m_s|\ge K^{-1}$.
+Consequently $b(s)=\log|m_s|$ is locally additive on $(-H,H)$
+and $|b(s)|\le\log K$ for $|s|<H/2$.
+
+For any positive integer $N$ and $|s|<H/(2N)$, successive use
+of the local law along $s,2s,\ldots,Ns$ gives
+$|b(s)|=|b(Ns)|/N\le\log K/N$. This proves continuity at zero.
+For each fixed $s\in(-H,H)$, the identity
+$b(s+h)-b(s)=b(h)$ for sufficiently small $h$ proves continuity
+at $s$. Put $a_*=H/4$. Subdivision and finite sums inside
+$(-H,H)$ give $b(qa_*)=q b(a_*)$ for every rational $q$ with
+$|qa_*|<H$, including negative $q$ by oddness. Density and
+continuity yield $b(s)=\gamma s$ throughout that interval, with
+$\gamma=b(a_*)/a_*$. Apply this to $s=k-H/2$ and $f(H/2)=1$.
+$\square$
+

@@ -1,0 +1,22 @@
+**Definition 1.4 (phase costs and determining evidence).** For the finite terminal history of $A\in\mathcal A_C$ on $T$, put
+
+$$
+\begin{aligned}
+d_A(T)&=|\{q:(q,y)\text{ occurs in that history for some }y\}|,\\
+n_A(T)&=\text{the length of that history}.
+\end{aligned}
+\tag{NDR.2}
+$$
+
+Both start at this acquisition entry; $d_A(T)\le n_A(T)$. A repeated raw call increases $n_A$, even when it adds no new phase address. For an empty original history, $d_A$ agrees with the cardinality of `ActualTreeReadoutAcquisition.paid`.
+
+A determining certificate at $T\in\mathcal U_C$ is a finite address set $J$ with truthful replies satisfying
+
+$$
+\forall V\in\mathcal U_C,\qquad
+\bigl(\forall q\in J,\ r_V(q)=r_T(q)\bigr)\Longrightarrow V=T.
+\tag{NDR.3}
+$$
+
+Write $\operatorname{cert}_C(T)$ for its minimum cardinality. A certificate is a mathematical benchmark indexed by the actual source. Its addresses, its replies and its cardinality are not supplied to the common acquisition policy. Suprema and infima of nonnegative costs or ratios are taken in $[0,+\infty]$; individual terminal costs are finite by Assumption 1.3.
+

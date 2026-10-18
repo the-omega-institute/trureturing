@@ -1,0 +1,60 @@
+**Definition 7.1 (positioned publication).** Publish serializes its tagged
+result with Frame/Cat, exports it to a new immutable sender block on 71,
+then executes RCA Definitions 13.2 and 13.4's native three-placement-record
+channel with sender 71, mailbox 72 and receiver 73. Scratch/descriptors/
+staging are respectively 66–67/68/69. Measure each actual Base, allocate
+and initialize its complete length and single F delimiter, prepare its
+full descriptor, and stage the complete sender, mailbox and receiver
+placement records in that order. Immediately after a descriptor is
+created, copy it to its own measured/sealed staging block. Measuring
+that stage uses a dry descriptor-bit count, without changing the source
+descriptor. Count and write the staging block's own descriptor only
+once its payload is complete. No recursive staging of that descriptor
+occurs. Here the delimiter constructor selects the literal F variant
+of Append; its one delimiter is included once in allocation. This is the
+new channel's grammar, not a reinterpretation of CAP's sep/status blocks.
+
+Every result tuple has a common framed prefix containing the active
+service/capture binding and $\xi$; the table below displays its remaining
+kind-specific fields. Bindings are complete encoded reference tuples
+resolved against owned backing, not opaque names granting permission.
+For these new tuples use Definition 2.1's list-of-Frames codec. In order
+its fields are the four-bit kind, the service binding, $\xi$, then the
+displayed kind-specific fields. The service binding is the fixed-arity
+tuple of original/capture/current version tags, the actual code-capture
+placement and captured field zero, and the initial seed's complete delivery
+reference. Its captured bits and seed reference are imported manifest
+fields. The capture placement is the native tuple
+$(A,69,1,2\delta+4,0)$: owner, port, base, length, zero-based descriptor
+ordinal. Construct it by literal cons, unary copies and Cat from field
+zero's parsed $\delta$; Proposition 4.4 identifies these constructed values
+with the actual already sealed capture interval and descriptor. It is
+not a freely supplied pointer. The kind tags
+are CoverRef=0000, PackageRef=0001, Image=0010 and Rejection=0011.
+Their remaining arities are respectively three $(c,a,b)$, four
+$(p,c,k,\varrho)$, five $(p,c,k,\varrho,\text{image})$, and two
+$(\text{reason},\text{raw request})$. Numeric fields use wire $U$;
+the raw request is the actually imported whole history frame. Reasons
+are the fixed four-bit tags, in order: malformed frame 0000, descriptor
+failure 0001, unavailable dependency 0010, no occurrence 0011, invalid
+phase 0100, no cover 0101, no package 0110, description failure 0111,
+binding/range failure 1000. Thus finite rejection also has a unique
+wire serialization rather than an unspecified output symbol.
+
+The latest-three staging invariant holds throughout the native channel.
+Recover sender length from its staged record before each allocation and
+copy; do not reuse a staging-wire length as a payload length. Recover
+both endpoint bases from those actual records and Seek the endpoints.
+Perform the two six-row length-tested payload loops, with distinct data
+and test latches, final seals and TOKs. Append their immutable completion
+records on 71, not 69, so those three placement records remain selected.
+The mailbox's availability token is separately acquired and returned.
+
+After receiver completion, recover its actual base and sender's length
+from the same staged records, reposition them and execute the mandatory
+print loop: RD(length,5); on 1 RD(73,4), OUT(4), MR(73), MR(length),
+repeat; terminal RD(0) exits. ACK is a further actual TOK. Receiver
+payload, sender and mailbox intervals remain distinct and retained.
+Live phase tokens and the reached seal invariant authorize the client
+read; old permission fields printed in an Image do not do so.
+

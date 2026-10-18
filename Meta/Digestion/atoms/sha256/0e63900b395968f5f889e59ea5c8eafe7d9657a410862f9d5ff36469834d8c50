@@ -1,0 +1,26 @@
+**Theorem 294.2 (Unrestricted least total in the seven-coordinate core).**
+Only for $L=7$, $J=(3,4,5,6,7)$, and $\gamma$ satisfying (294.1), the
+least $K$ among all full nonnegative zero-cost scores with late quotient
+$\gamma$ and zero other $\beta$ is $\gamma\cdot r^\star$, both for
+$N$ and for $O$.
+
+**Proof.** The upper bound is 294.1. The stopped law of 295.1 at
+$\tau=1/24$, $a_1=13/24$, has $e=5/24>0$ and $b_J=r^\star e$.
+It satisfies all full rows with one probability allocation. Pair any
+full competing score $Y$ of the stated quotient with that same law:
+
+$$
+e(\gamma\cdot r^\star-K_Y)=F_{Q(Y)}(b,e)
+\le\Delta_O(Y).
+$$
+
+Thus a zero-cost $O$ score has $K_Y\ge\gamma\cdot r^\star$.
+The same law's $N$ completion proves the $N$ bound. This quantifies over
+every full competing score, including early cancellations and arbitrary
+base, correct, pair and positive weights. For a general gap embedding
+294.1 supplies an upper construction and 293.2 supplies necessary
+relations; no unrestricted least-$K$ conclusion is asserted there.
+The seven-coordinate law cannot be pulled back to arbitrary larger
+competing scores without a further intervening-profile argument.
+$\square$
+

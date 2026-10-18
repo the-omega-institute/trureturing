@@ -1,0 +1,37 @@
+**Definition 8.3 (remaining zero-versus-positive problem).** For the fixed
+original prior the common-flow objective remains
+
+$$
+j_c=\min_{\Gamma\in\mathfrak C}J(\Gamma).
+\tag{8.1}
+$$
+
+When an interior depth is supported, (4.6) is a necessary joint inequality
+for arbitrary proposed approximate edges. It supplies neither a pair at
+$J=0$ nor a strictly positive lower bound for $j_c$ alone, because $V$
+need not vanish. Finite exact attainment also requires the relevant
+finite-support and representation premises [PAIR, §11; PAID, §§16–18].
+The unrestricted common-flow alternative, lawful acquisition of the
+analytical inputs and statistical control of their errors remain separate
+mathematical obligations.
+
+[PAIR]: RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[REV]: RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md
+[SEVEN]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_WORD_BRANCHING_NECESSITY.md
+[RISK]: RECURSIVE_RELATIONAL_OBSERVATION_SEVEN_FEATURE_RISK_TOLERANCE.md
+[PAID]: RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+[RETURN]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md
+[WHITEBOX]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[STATIC]: AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md
+[PYRAMID]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[CLOCK]: AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md
+[NATIVE]: ../../../Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.md
+[CONST]: ../../../Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ConstantSuspensionSeparator.md
+[RARE3]: ../../../Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorThreePoint.md
+[RAREABS]: ../../../Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/RarePriorAbsoluteRisk.md
+[EN]: https://arxiv.org/abs/2110.06798v3
+[AWR]: https://arxiv.org/abs/1705.09634v2
+[LV]: https://arxiv.org/abs/1404.0999v3
+[BVP]: https://arxiv.org/abs/2003.05338v1
+

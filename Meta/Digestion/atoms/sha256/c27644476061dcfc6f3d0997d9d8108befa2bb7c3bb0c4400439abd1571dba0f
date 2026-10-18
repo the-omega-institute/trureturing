@@ -1,0 +1,40 @@
+**Convention 53.1 (premises and normalization).** Retain Definition 41.1,
+including its finite/countable scope and only its stipulated measurable
+finite-fibre, integrable-Kraus extension. The isolated source root in CG
+Proposition 13.2, its exact ranks, normalization and original minimax
+identification remain conditional premises. All channel identities below
+are evaluated at that root. Enclosures on its surrounding box certify
+inequalities of derived expressions; they do not make off-root points TP.
+The sharp worst-history acquisition law is the result of JR §§34–40.
+This corrects the allocation of that cost result in Convention 52.1:
+CG supplies the source root, channel and minimax premises, while JR
+§§34–40 supplies the sharp jointly counted resource cost.
+
+Write
+
+$$
+\alpha=1-\chi,\quad\beta=\chi,\quad A=1+\alpha,\quad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\quad
+C=(e_0e_1^T+e_1e_0^T)/2,\quad j(\tau)=J_{s_0\tau}.
+$$
+
+Here $\chi=\omega/\delta$, as in §50, not the different local-curve
+parameter of §48. With $G=LNL$ from (JR.83), the exact original problem is
+(JR.84), its dual is (JR.126), and
+
+$$
+\mathcal T(s_0\tau)=\frac{(1-\delta)\Delta A+L_f+j(\tau)}2,
+\qquad T_{\rm flat}=\frac{(1-\delta)\Delta A+L_f+\operatorname{tr}G}2.
+\tag{JR.130}
+$$
+
+The original binary contrast is an inequality; other effect entries and
+the forgotten complete channel are not prescribed. The supported
+real-null equality face comes from the all-complex error/cost equalities
+of Theorem 42.1 and CA's exposed-face argument, not a restriction to real
+physical processors. Theorem 45.1 supplies the two directions between
+this finite problem and the original optimization. In particular,
+analytic refinement gives only an upper bound on the TV of an arbitrary
+actual record. A new instrument which actually generates the refined
+labels can attain the bound. No discarded environment index is readable.
+

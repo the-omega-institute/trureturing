@@ -1,0 +1,25 @@
+**定义 14.1（允许支撑与实际轴）。** 取 $F_0=0,F_1=1$ 的 Fibonacci 数列，
+$L_0=2,L_1=1$ 的 Lucas 数列。对素数 $p$ 令
+
+$$
+r_p=\min\{r\ge1:p\mid F_r\},\qquad
+\mathcal B_d=\{p\text{ 素数}:r_p=d\},\qquad
+\mathcal P_{\rm sq}=\bigcup_{k\ge2}\mathcal B_{2^k}.
+$$
+
+正最小秩的存在由既有 [rankWitness][RankWitness14] 供应；给定正零点及其最小性后，
+[fibonacci_entry_point][RankEntry14] 供应 $p\mid F_n\iff r_p\mid n$，包括 $n=0$。
+经典出处为 [Lengyel，§3 Theorem A][Lengyel14]，亦见已有 [文献注释][LengyelNote14]。
+$F_1=F_2=1$ 给 $r_p\ge3$；每层是 $F_d$ 的有限素支撑子集，层间不交。
+
+本节的对象是定义 3.1 中所有满足 $\mathcal P(n)\subseteq\mathcal P_{\rm sq}$ 的有限盒
+$\mathcal Q_n$，其中 $n\ge1$，轴仍为同一个实际整数的 $(p,a_p)$，$a_p=v_p(n)$。
+对整数 $K\ge3$，保留其低秩轴所得整数为
+
+$$
+n_{<K}=\prod_{\substack{p\mid n\\r_p<2^K}}p^{a_p},\qquad
+T_K=6\,2^{1-K}\bigl(1+(K+1)\log2\bigr).
+$$
+
+空支撑沿用零维体积 $1$。秩只为已有素数轴分组，重复窗口中的同一个素数只计一次。
+

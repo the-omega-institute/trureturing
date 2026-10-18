@@ -1,0 +1,54 @@
+### theorem 6.1: 定理 3：软到刚的集合嵌套
+
+若：
+
+$$
+0\le\tau_2\le\tau_1\le1,
+$$
+
+则：
+
+$$
+\boxed{
+S_{\gamma,\tau_1}
+\subseteq
+S_{\gamma,\tau_2}.
+}
+$$
+
+#### 证明
+
+对单位方向 $n$，支持函数为：
+
+$$
+h_{S_{\gamma,\tau}}(n)=
+\gamma\left[(1-\tau)h_{P_k}(n)+\tau\rho_k\right].
+$$
+
+由于内切圆盘包含于正多边形：
+
+$$
+h_{P_k}(n)\ge\rho_k.
+$$
+
+因此：
+
+$$
+\frac{\partial}{\partial\tau}
+h_{S_{\gamma,\tau}}(n)=
+\gamma\left(\rho_k-h_{P_k}(n)\right)
+\le0.
+$$
+
+支持函数随 $\tau$ 增大而减小，所以 $\tau$ 越大，形状越小；也就是：
+
+$$
+\tau_1\ge\tau_2
+\quad\Longrightarrow\quad
+S_{\gamma,\tau_1}\subseteq S_{\gamma,\tau_2}.
+$$
+
+证毕。
+
+---
+

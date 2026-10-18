@@ -1,0 +1,17 @@
+**Lemma 3.2 (the exposed real face and rank-many factors).** The exact trace-zero face is
+
+$$
+\{L\in\mathcal C_2:\operatorname{tr}(BL)=0\}
+ =\{L=L^T\text{ real},\ L\succeq0,\ \operatorname{tr}(BL)=0\}.
+\tag{PG.15}
+$$
+
+Every matrix on the right has a decomposition into exactly $\operatorname{rank}L$ nonzero real quadratic-null projectors, or no projectors when $L=0$.
+
+Proof. A nonzero plane atom has $z^\dagger Bz=-\alpha|v|^2-\beta|w|^2<0$. For a quadratic atom with $u\ne0$, trace zero says
+$1=\alpha|v/u|^2+\beta|w/u|^2$ as well as
+$1=\alpha(v/u)^2+\beta(w/u)^2$.
+Equality in the triangle inequality makes both nonzero squared ratios nonnegative real; their ratios themselves are real. Its projector is real after a common phase is removed. Since all atomic traces are nonpositive, trace zero of a sum forces this conclusion for each nonzero atom.
+
+Conversely factor a real $L=RR^T$ with $R$ injective on $\mathbb R^r$, $r=\operatorname{rank}L$. The real symmetric $A=R^TBR$ has trace zero. It has an orthonormal basis of zero-Rayleigh vectors. To prove this by induction, if $A=0$ use any basis; otherwise trace zero supplies a positive and a negative eigenvalue, and a unit linear combination of their eigenvectors has Rayleigh value zero. Restrict to its orthogonal complement; the restricted trace is still zero, so continue. Multiplying this basis by $R$ gives $r$ nonzero vectors $z_j$ with $z_j^TBz_j=0$ and sum of projectors $L$. A nonzero real null vector has $u\ne0$, since $\alpha,\beta>0$. This proves membership and the exact rank count, including singular compressions. This exposed-face mechanism is inherited from CA and the real decomposition from IR. $\square$
+

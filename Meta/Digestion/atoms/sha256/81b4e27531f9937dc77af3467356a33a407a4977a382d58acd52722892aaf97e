@@ -1,0 +1,37 @@
+**Definition 3.3 (selected joint retained memory).** For $h\in\mathcal C$
+let $M_J(h)$ select the following actual material and its actual
+owner/origin/seal/availability relations.
+
+| Selected family | Material included, including its current partial form |
+| --- | --- |
+| Acquired initial source | The actual delivered seed interval on 26 or its designated initial acquired interval, its 28/29 delivery/boot binding and $H_0,\xi$ binding. |
+| Initial code and activation | Actual constructed finite version/bootstrap slots and stage/cursor fields; captured field zero and the constructed part of the initial 69 fields, together with their 68 bindings when present. The immutable initial prefix is distinguished from later staging. |
+| Producer ingress | The chronological 13 header/length/payload backing, its actual 17 local descriptor/origin material, including incomplete current records. |
+| Outer/history ingress | The actual 70 block chain after its one sentinel, with its constructed 68 descriptors. Gate/history classification is recovered from the actual grammar, not from additional stored field-kind tags. |
+| Live reader frontier | Actual version/PC/call site and finite phase/role permutation; existing marked ingress and length heads; the live base/length/counter words on producer 1–12 during 13 ingress, and on 66/67 during 70 ingress; an input latch only during its matched IN-to-WR occupied interval. |
+| Callable material | Actually constructed cover/package/publication backing on 71, acquired receiver bindings on 73, and their present invocation/read/mailbox slots. Partial unavailable records retain that status. |
+| Clock and rights | The actual meter receipt chain and its marks, and the current native token/stage fields determining the selected resources' rights. |
+
+The frontier uses existing words/heads/control, with their actual finite
+role permutation. It adds no prefix-length register, timestamp or phase
+oracle. Its version/PC/stage fields are the existing control fields at
+every selected cut; reader substages are their fixed static interpretation,
+not an independently supplied frontier label. A variable latch contributes
+one bit only from its IN to its
+matching WR; after WR that bit is already in its written backing and
+the stale latch is not a second input. During fixed canonical code supply,
+the current partial store and its actual stage are selected; no partly
+installed code is treated as active. Completed descriptors are used only
+when constructed; a live incomplete field uses its real scratch/frontier.
+
+This is explicitly a joint observation across owners. In particular
+13/17 and producer work words, native latches and the entire meter are
+not A-owned acquired inputs. No root probe, encoded permission or
+mathematical selection grants $A$ those reads. An authentic seed or
+package reference resolves through its actual backing; a reference
+without such backing is not selected as though it contained the payload.
+The selection is not the completed-cycle bank $M$, not a replay tuple,
+and not a full-state complement. The input-completeness proof below does
+not use package contents or $M$ as an input log. All other physical cells
+nevertheless remain on the actual carrier and in its price.
+

@@ -1,0 +1,51 @@
+**Proposition 6.2 (both inclusions and both entire rows).** The entire
+fiber of (GRS.20) is
+
+$$
+U_m=\{u_z=
+ \langle\langle\rho(z),\rho(g)\rangle,\langle z,g\rangle\rangle:
+ z\in\mathcal T\}.
+\tag{GRS.21}
+$$
+
+There is no size, shape or equality restriction on $z$. All three target
+cuts are reached, their concrete outside is
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$, and their
+entire values are
+
+$$
+\rho(\langle z,g\rangle),\quad z,\quad g.
+\tag{GRS.22}
+$$
+
+The first hole is always a singleton class. The two possible full rows
+are consequently indexed by $z=g$: the partitions are respectively
+$\{\{1\},\{2,3\}\}$ and $\{\{1\},\{2\},\{3\}\}$.
+
+Proof. Write an arbitrary admitted source as $F(y)$ by Proposition 2.1.
+Every word $Rw$ of length $m+1$ in $y$ has the required reply $\alpha$.
+Reach of these words forces $y$ to be a branch and its right subtree
+to have every level-$m$ position as an $\alpha$ leaf. All their proper
+prefixes must be branches, and no leaf has a descendant. Thus that
+subtree is exactly $g$, and $y=\langle z,g\rangle$ with arbitrary left
+subtree $z$. Conversely every such $y$ satisfies every displayed literal,
+so (GRS.21) has both inclusions. The graph record's guards exist, and
+the old children remain unequal by the clock, for every such $z$.
+ARH Proposition 2.1's paid producer can acquire this old row, these
+literals and the relation before the stipulated complete cut; no
+uniform pre-cut traversal bound is claimed.
+
+Navigation gives (GRS.22) and the complete displayed exterior. If
+$|t|$ counts all tree nodes, then $|\rho t|\ge|t|$, by induction using
+the two leaf images. Hence
+
+$$
+|\rho(\langle z,g\rangle)|
+ =1+|\rho z|+|\rho g|>|z|,\ |g|.
+\tag{GRS.23}
+$$
+
+The first value cannot equal either other value. The remaining equality
+is precisely $z=g$, and both cases occur. These comparisons account for
+the whole partition, not just an extracted Boolean task. $\square$
+

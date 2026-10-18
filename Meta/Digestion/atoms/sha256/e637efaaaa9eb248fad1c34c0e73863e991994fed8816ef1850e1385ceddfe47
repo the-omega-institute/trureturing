@@ -1,0 +1,14 @@
+#### 17.3.4 Fully quantum inflation
+
+Smith、Wolfe 和 Spekkens 的 [Fully quantum inflation: quantum marginal problem constraints in the service of causal inference](https://arxiv.org/abs/2501.12320)，已在 2026 年发表于 [PRX Quantum](https://journals.aps.org/prxquantum/abstract/10.1103/244y-nh5n)。该方法把 inflation 推广到 quantum marginal problem，并对纯三量子比特态给出 triangle compatibility 的完整分类。
+
+量子 triangle 的载体在 classical probability carrier 之外还需要满足下列条件的密度矩阵：
+
+\[
+\rho\succeq0,
+\qquad
+\operatorname{Tr}\rho=1,
+\]
+
+并把 marginal consistency 写成 partial trace 方程。五态 FIB 概率律不能自动承载 density operator、正半定性和量子边缘约束。
+

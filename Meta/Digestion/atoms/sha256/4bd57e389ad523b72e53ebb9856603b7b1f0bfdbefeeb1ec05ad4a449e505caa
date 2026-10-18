@@ -1,0 +1,67 @@
+**Definition 4.1 (left and right cancellation).** In a possibly
+noncommutative meter operation $\odot$, left cancellation means
+
+$$
+a\odot b=a\odot c\Longrightarrow b=c,
+\tag{4.1}
+$$
+
+and right cancellation means
+
+$$
+b\odot a=c\odot a\Longrightarrow b=c.
+\tag{4.2}
+$$
+
+If a known prefix meter is on the left of a total inherited meter, left
+cancellation recovers a unique unknown suffix charge.  If a known suffix
+meter is on the right, right cancellation recovers the unknown prefix charge.
+In a commutative
+cancellative monoid the distinction disappears algebraically, but the
+prefix/suffix position still matters for the trace and selector.  Cancellation
+recovers a meter value; it does not by itself recover the order of action
+names.
+
+**Finite table 4.2 (max and Boolean-or lose order).**  Consider one state
+$q$, two typed self-actions, and the following complete one-step table.
+
+| word | ordered trace | max meter | Boolean meter |
+| --- | --- | ---: | --- |
+| $\varepsilon$ | empty | $0$ | $0$ |
+| $a$ | $A$ | $2$ | $1$ |
+| $b$ | $B$ | $3$ | $0$ |
+| $ab$ | $AB$ | $3$ | $1$ |
+| $ba$ | $BA$ | $3$ | $1$ |
+
+Both actions return to $q$; the displayed trace is part of the declared
+response.  The words $ab$ and $ba$ are distinct legal histories, but
+their max and Boolean-$\lor$ summaries coincide.  This table demonstrates
+loss of order by a summary; it does not by itself exhibit two distinct hidden
+states.  Max is neither left nor right cancellative: $\max(5,1)=\max(5,4)$.  Boolean-or is likewise
+noncancellative: $1\lor0=1\lor1$.  A boundary retaining only either
+summary merges the two histories and cannot support an ordered continuation
+task.  Even addition, which is cancellative on $\mathbb N$, remains
+commutative and therefore does not encode the order of two return blocks; an
+ordered archive or an order-sensitive action record is still required.
+
+**Finite countermodel 4.3 (equal total max, unequal fresh suffix).**  Let
+$x,y$ have the same type and the same current observations.  The legal words
+from either are exactly $\varepsilon$, $a$ and $ab$, with
+
+$$
+ x\xrightarrow{a/1}u\xrightarrow{b/0}z,
+ \qquad
+ y\xrightarrow{a/1}v\xrightarrow{b/1}z',
+$$
+
+and all other attempts illegal with the same declared label.  Under the
+max-meter total profile, both $x$ and $y$ report $0,1,1$ on
+$\varepsilon,a,ab$.  Their successors $u,v$, however, report fresh suffix
+costs $0$ and $1$ on $b$; thus $b$ is initial-illegal but successor-legal.
+A boundary that stores only the total max profile therefore merges $x,y$ while
+failing to define the next fresh
+resource response.  The same construction works with Boolean-or or a
+saturated counter.  If the action contract exposes the raw charge, or if
+budget legality distinguishes it, the states are already separated; the
+example targets the weaker aggregate-only contract.
+

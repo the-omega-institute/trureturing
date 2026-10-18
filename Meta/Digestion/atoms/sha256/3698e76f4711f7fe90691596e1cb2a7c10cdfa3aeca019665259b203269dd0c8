@@ -1,0 +1,40 @@
+**Lemma 3.1 (one pulse, including its real lift).** Fix $\delta,a>0$ with
+$k_0+\delta<r/2$. In an open interval of length $\ell>0$, traverse the four
+affine legs
+
+$$
+(k_0,\chi_0)\longrightarrow(k_0+\delta,\chi_0)
+\longrightarrow(k_0+\delta,\chi_0\pm a)
+\longrightarrow(k_0,\chi_0\pm a)
+\longrightarrow(k_0,\chi_0),
+\tag{3.1}
+$$
+
+using four equal positive leg durations, and idle outside. This is a strictly
+positive, zero-real-winding original history. Its signed area, residual and
+variations are
+
+$$
+A_\pm=\pm a\delta,\quad
+h_\pm=\mp S b_0,\quad S=a\delta/r,\quad
+\operatorname{TV}(k)=2\delta,\quad
+\operatorname{TV}(\chi)=2a.
+\tag{3.2}
+$$
+
+Both orientations have $\mathcal L=2(\delta+a)$ and
+$\mathcal Q=8(\delta^2+a^2)/\ell$.
+
+Proof. The entire height interval is compactly inside $J(b)$; all five
+probabilities are strictly positive. Finitely many affine legs with constant
+extensions meet continuously, are absolutely continuous and have finite
+phase variation. On the two height legs $\chi'=0$, so the lift is constant.
+On a phase leg $k$ is constant, so (1.1) is affine and obeys the actual law.
+The two phase-leg integrals are $\pm a(k_0+\delta)$ and $\mp ak_0$.
+Their sum is (3.2), with exactly zero total real phase increment. Each moving
+coordinate travels out and back; this gives the variations and length.
+Each height leg contributes $\delta^2/(\ell/4)$ to quadratic energy and
+each phase leg contributes $a^2/(\ell/4)$. The argument also proves directly
+that affine time compression preserves area and variation. No unstated
+time-reparameterization theorem or control permission is required. $\square$
+

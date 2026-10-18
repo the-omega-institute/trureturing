@@ -1,0 +1,20 @@
+**Cheaper radius-two exclusion of the same interval.** Write $W=d(P_0)=D_2(P_0)=\frac1{38}(1372/543+588/247+63/113)$, as proved in [TwoStep, Theorem 3.1][T]. Monotonicity and homogeneity of $h$ applied to the five-word product bounds give
+
+$$
+d(P_t)\le D_2(P_t)\le(1+6t)^5W\le(1+36t)W
+<\frac{1093}{7600}+\frac9{10^6}<\frac{14383}{100000}.
+\tag{5.5}
+$$
+
+Here $W\le1/4$ and $W<1093/7600$ follow respectively from coordinate risk and the bounds $1372/543<25268/10000$, $588/247<23806/10000$, $63/113<5576/10000$; their integer cross-product margins are $524,82,88$.
+
+For a strictly stronger actual comparator, take the legal-pair chain $\widehat Q$ on $(00,01,10)$ with transition rows $(7/10,3/10,0)$, $(0,0,1)$, $(33/50,17/50,0)$ and stationary row $(11/21,5/21,5/21)$. Row sums and direct multiplication verify normalization and stationarity; all legal transitions are positive. Its actual full-word center ratio cancels the same three transition factors as in [TwoStep, Proposition 2.4][T], independently of farther coordinates. Thus its full posterior equals its radius-two posterior, not merely a proxy. The four center-zero five-word masses have numerators $(3773,1617,1617,693)$ and center-one masses $(2178,1122,1122,578)$, all over $21000$, from this one pair law. Consequently
+
+$$
+d(\widehat Q)=\frac1{21000}\left(\frac{8217594}{5951}+\frac{3628548}{2739}+\frac{400554}{1271}\right)
+>\frac{15103}{105000}>\frac{14383}{100000},\qquad d(\widehat Q)\le c_\star.
+\tag{5.6}
+$$
+
+The three summands exceed $13808/10,13247/10,3151/10$, with positive cross-product differences $4532,1947,619$. Equations (5.5)–(5.6) already exclude the entire stated interval, including zero, without response analysis. This rational instantiation supports the overlap comparison, not an optimality or separate novelty claim. The illustration's response carries additional information but is not necessary for its nonattainment or new whole-domain coverage.
+

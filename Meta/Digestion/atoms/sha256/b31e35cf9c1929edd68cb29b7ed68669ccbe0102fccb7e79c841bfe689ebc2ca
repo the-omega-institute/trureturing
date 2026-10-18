@@ -1,0 +1,87 @@
+**Lemma 6.2 (the weighted inequality for all Borel policies).** For every
+policy in Lemma 5.1 and every original estimator, for the same small
+$h>0$,
+
+$$
+\mathcal R_\kappa(\mathcal P,g)
+\ge
+\frac{A_{h,\eta,\kappa}^2}
+{nA_{h,\eta,\kappa}+C_\eta n\sqrt h+C_\eta/h}.
+\tag{6.6}
+$$
+
+Proof. Clip $g$ to $[l,u]$. Regarding it as a function of the enlarged
+data can only permit more estimators. Let $L=a'/a>0$. From (5.5),
+$V_i'/V_i$ is a weighted average, with weights proportional to
+$a(K^z_r)dr$, of $L(K^z_r)r/h$ on the selected interval. Therefore
+
+$$
+0\le\frac{V_i'}{V_i}\le\sup_{r\le h}L(K^z_r),\qquad
+\frac{V_i'^2}{2V_i^2}\le j_\kappa(z)+C M_h.
+\tag{6.7}
+$$
+
+Uniform smoothness of $L$ proves the last inequality; $L$ is bounded
+and $M_h\le d$ on this support. It applies to every adaptive interval
+and to the remaining piece of an interval crossing $s$. Martingale
+score orthogonality yields
+
+$$
+\mathbf E\left[\left(\sum_iU_i\right)^2\middle|P_s,b,z\right]
+\le n\{j_\kappa(z)+C M_h\}.
+\tag{6.8}
+$$
+
+The multiplier (6.1) depends only on height coordinates and the past,
+so it leaves these conditional observation identities unchanged.
+
+Let $p_\nu$ denote the density with respect to the actual law of $P_s$,
+the bridge reference, $dz$, and Lebesgue measure in the $N(P_s)$
+future increments. This is a disjoint union of fixed-dimensional
+fibers. On each fiber fixing the enlarged observation coordinates
+$P_s,b,y$ fixes the estimator, the count and all timestamps. Thus
+$g$ has zero $z$ derivative, even if its dependence on the record is
+only Borel. The compact smooth endpoint cutoff, extended by zero
+outside its interior support, gives zero boundary terms. Integrating
+the derivative of $(g-z)w_\kappa(z)p_\nu$ in $z$ gives
+
+$$
+\int(g-z)\{w_\kappa(z)S+w_\kappa'(z)\}d\nu
+=\int w_\kappa(z)d\nu=A_{h,\eta,\kappa}.
+\tag{6.9}
+$$
+
+Here is the analytic justification at full Borel scope. For each fixed
+record the positive-variance normal product is smooth in $z$ on the
+cutoff neighborhood, because all its integration endpoints are fixed.
+Equation (5.6), the first bound in (6.3), and boundedness of $w,w'$
+give finite integrated absolute derivative of the full density and
+of the product just differentiated. The factor $g-z$ is bounded.
+Fubini therefore permits one-dimensional integration by parts before
+integrating the other coordinates. Zeros of the squared cutoff use
+the density derivative specified after (6.3). No differentiation in
+a history variable, no lower spacing bound and no derivative of a
+survival event are involved. For an original estimator not initially
+bounded, clipping decreases its source risk and suffices for the lower
+bound; infinite-risk estimators also satisfy it.
+
+The conditional means of the $U_i$ vanish. Their cross terms with
+the height-only expression $wS_0+w'$ vanish as well. Consequently,
+using $w^2j=w$, (6.3) and (6.8),
+
+$$
+\begin{aligned}
+\int(wS+w')^2d\nu
+&=\int w^2\mathbf E\left[\left(\sum_iU_i\right)^2
+\middle|P_s,b,z\right]d\nu+\int(wS_0+w')^2d\nu\\
+&\le nA_{h,\eta,\kappa}+C_\eta n\sqrt h+C_\eta/h.
+\end{aligned}
+\tag{6.10}
+$$
+
+Cauchy--Schwarz in (6.9) bounds $\int(g-z)^2d\nu$ from below by
+the right side of (6.6). Domination of $\nu$ by the actual joint
+source and (5.3) give the same bound for every original estimator.
+The constants are independent of policy, seed and parameter.
+$\square$
+

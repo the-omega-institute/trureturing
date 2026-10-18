@@ -1,0 +1,41 @@
+**定义 18.2（齐次 $18\times4$ 支臂矩阵）。** 对每个源令
+
+$$
+\begin{aligned}
+\alpha_4&=1-4/j+6/t-4/n,&\beta_4&=(4/j-12/t)a+4z/n,\\
+\alpha_5&=4-15/j+20/t-10/n,&\beta_5&=(15/j-40/t)a+10z/n,\\
+\alpha_6&=10-36/j+45/t-20/n,&\beta_6&=(36/j-90/t)a+20z/n,\\
+\alpha_7&=20-70/j+84/t-35/n,&\beta_7&=(70/j-168/t)a+35z/n.
+\end{aligned}
+\tag{18.3}
+$$
+
+固定支臂 $F$，在该槽置
+
+$$
+\begin{aligned}
+A_4&=1+u\alpha_4,\quad A_{5,F}=1+s_F\alpha_5,\quad
+S_F=A_4^2+A_{5,F}^2,\\
+B_4&=Y-u\beta_4,\quad B_5=p_F-s_F\beta_5,\\
+\mathscr D&=A_4B_4+A_{5,F}B_5,\quad
+\mathscr R=A_{5,F}B_4-A_4B_5,\\
+\mathscr V_i(\tau)&=(1+\tau\alpha_i)\mathscr D+S_F\tau\beta_i,\qquad i=6,7.
+\end{aligned}
+\tag{18.4}
+$$
+
+$\mathscr D,\mathscr R,\mathscr V$ 都是 $(a,z,Y,p_F)$ 的齐次线性式，而 $S_F$ 只依赖源并由定理 12.1 严格正。令 $K_F$ 是作用于 $(a,z,Y,p_F)^T$ 的十八行矩阵：八个 $\mathscr R$ 行；对每个 $E$ 以槽 $o=(F,E,J,1)$ 为基准，对其余三槽 $i$ 各列
+
+$$
+S_o\mathscr V_{6,i}(\tau_{6,i})-S_i\mathscr V_{6,o}(\tau_{6,o});
+$$
+
+对每个 $(E,G)$ 的两槽再列
+
+$$
+S_1\mathscr V_{7,2}(\tau_{7,G,2})-S_2\mathscr V_{7,1}(\tau_{7,G,1}).
+\tag{18.5}
+$$
+
+此处 $S_i$ 是相应槽的 $S_F$。写 $K_F=[B_F\mid w_F]$，其中 $B_F$ 是 $(a,z,Y)$ 三列，$w_F$ 是该支臂私有的 $p_F$ 列。
+

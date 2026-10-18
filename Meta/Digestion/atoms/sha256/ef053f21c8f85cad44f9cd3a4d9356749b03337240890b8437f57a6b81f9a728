@@ -1,0 +1,35 @@
+**Definition 15.2 (constrained positive generators and the counted cuts).** For each $j$ define a compact convex probability fiber and its cone by
+
+$$
+\mathcal F_j=\left\{f\in\mathbb R_+^{N_p}:
+ \sum_k f_k=1,\quad \sum_k f_kQ_k=\mathcal R_A(W_j)\right\},
+$$
+
+$$
+\mathcal C_j=\left\{g\in\mathbb R_+^{N_p}:
+ \sum_k g_kQ_k=\Bigl(\sum_k g_k\Bigr)\mathcal R_A(W_j)\right\}.
+\tag{15.4}
+$$
+
+Thus $\mathcal C_j=\{sf:s\ge0,f\in\mathcal F_j\}$ and $\mathcal F_j$ is its mass-one slice. Positive generation means nonnegative coefficients with positive mass for each retained generator; it does not require every transition entry to be strictly positive. Zero and unit transition probabilities remain allowed.
+
+Let $I_j=\{i:b_{ij}>0\}$, $R_{ij}=(t_{ijk}/b_{ij})_{k=1}^{N_p}$ for $i\in I_j$, and $M_j=(t_{ijk})_{i,k}$. Define
+
+$$
+\begin{aligned}
+\kappa_j(\Xi)
+&=\min\left\{r:\ \exists f_1,\ldots,f_r\in\mathcal F_j,
+\ \{R_{ij}:i\in I_j\}\subseteq\operatorname{conv}\{f_1,\ldots,f_r\}\right\}\\
+&=\min\left\{r:\ M_j=UV,\ U\in\mathbb R_+^{N_p\times r},
+\ V_{\ell\cdot}\in\mathcal F_j\ (1\le\ell\le r),
+\ \sum_iU_{i\ell}>0\right\}.
+\end{aligned}
+\tag{15.5}
+$$
+
+The equal definitions follow by setting $U_{i\ell}=b_{ij}c_{i\ell}$ for the convex coefficients, and conversely summing a factorization over $k$ to get $\sum_\ell U_{i\ell}=b_{ij}$. A row with $b_{ij}=0$ is identically zero and is never divided by. Unused columns are removed. Equation (15.3) places every $R_{ij}$ in $\mathcal F_j$, so $1\le\kappa_j\le|I_j|$; the integer minimum is attained. No limiting factor or algorithm for unrepresented real data is needed for this existence assertion. Although (15.4) displays countably many coordinate equalities, their coefficient rows span a finite-dimensional subspace of $\mathbb R^{N_p+1}$. Selecting a basis of that row span gives finitely many equivalent affine equations. Thus $\mathcal F_j$ is a polytope, without asserting an effective way to find that basis from unspecified laws.
+
+Fix a reachable original fourth-segment suspended control/record value $c$. Count COMPLETE configurations after the acquired p-beta update and all of its internal service have returned, before the next original Read. For an observer $M$ realizing the individual descriptors, (15.2) and the entire $\Xi$ at every applicable positive original history, let $Y_j(M,c)$ be the union, over all such histories with this $c$, of reachable returned configurations with raw law $W_j$. Refined p labels, refined suspended labels and history-dependent actual rows are unrestricted and finite. A live selector or sampler residue distinguishes COMPLETE configurations even if its current full law agrees. Exact descriptor marginals preclude additional distinct laws of positive probability at these histories, but do not preclude arbitrarily many copies of any prescribed law.
+
+Write $n_j^{\rm abs}(\Xi;c)$ for the minimum of $|Y_j(M,c)|$ in the abstract finite-stochastic-rule domain, and $N^{\rm abs}(\Xi;c)$ for the minimum of their sum in that same domain. Write $n_j^{\rm rep},N^{\rm rep}$ for the corresponding minima over permitted represented observers, assigning $+\infty$ when this class is empty. Different $W_j$ cannot belong to the same complete configuration. Abstract real rule parameters are not claimed to be represented real registers or permitted effective samplers.
+

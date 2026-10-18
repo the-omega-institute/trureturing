@@ -1,0 +1,30 @@
+**Proposition 286.3 (Actual positive-cap sharpness of the slack coefficient).**
+The coefficient one on $s_i$ in (286.4), with the other displayed
+coefficients fixed, cannot be reduced even on actual original
+positive-cap feasible acquisitions. This sharpness is outside $H_L$.
+
+**Proof.** Fix $L\ge6$ and $0<s\le1/2$. Use the one-seed law
+
+$$
+(1-s)R+sN(3,4;0,3,0,0),\qquad e=s,
+\quad a_1=a_2=1-s,\quad a_3=\cdots=a_L=s,
+\quad a_n=\frac{s}{n-L}\ (n>L).
+\tag{286.8}
+$$
+Its entire profile is positive, ordered and vanishing, with
+$a_{L+1}=e$. At an early first zero the correct mass is $1-s$,
+and the extra wrong mass is at most $s$. At first zero three the
+law is either $e_0$ or $(1-s)e_0+se_3$, according to bit four;
+at every later first zero it is $e_0$. Every independent deficit
+is therefore at most $s$ on every multiple-zero word. Positive
+base is one, so every actual tail error is $a_n\le s$.
+One source-independent seed fixes the entire table; $N$ acquires
+both requests and hands off the specified original mark.
+
+Here $\Pi_3=s_3=s$, $t_3=G_3=0$, by direct evaluation of
+$v^3,u^3,+$ and the unary moments in $a_3(D)$.
+Thus any smaller coefficient on $s_3$ fails. The profile has
+$E_b=-3s<0$, so is outside $H_L$ even when the two heads tie
+with the late amplitudes. It supplies no $H_N$ optimality,
+separator, or new sufficient amplitude region. $\square$
+

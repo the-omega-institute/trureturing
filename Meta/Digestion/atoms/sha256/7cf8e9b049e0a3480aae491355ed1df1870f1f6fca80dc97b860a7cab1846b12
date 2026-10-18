@@ -1,0 +1,27 @@
+**Theorem 8.1 (the phase-gain upper family has a matched certificate).** For the actual family (P.11) in the [phase-gain volume](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#4-an-actual-upper-family-and-its-individual-optimum), put $u=\sqrt a$, $p=(1+u)/2$. Then
+
+$$
+g_{N_\beta}^2=p.
+\tag{R.36}
+$$
+
+A matched dual witness in the same fixed output ordering is
+
+$$
+\rho=\operatorname{diag}(1/2,0,1/2),\qquad
+Y=\operatorname{diag}((a+u)/4,\ 0,\ \beta/4,\ 0,\ (1+u)/4).
+\tag{R.37}
+$$
+
+**Proof.** Decoder (P.14) gives $RN=p\,\mathrm{id}+(1-p)\operatorname{Ad}_Z$, $Z=\operatorname{diag}(1,1,-1)$, on every complex matrix. Therefore its squared entanglement fidelity at every input is $p+(1-p)(\operatorname{Tr}\rho Z)^2\geq p$. This lower bound covers all inputs and purifications, with equality at the displayed $\rho$.
+
+For that $\rho$, the columns of $D_\rho$ are $s_0|e_0,0\rangle+s_2|e_4,2\rangle$ and $(\sqrt\beta/2)|e_2,0\rangle$, with $s_0=u/2$, $s_2=1/2$. In $Y\otimes I_3-M_\rho$ the only nontrivial coupled block is
+
+$$
+\operatorname{diag}(s_0(s_0+s_2),s_2(s_0+s_2))
+-(s_0,s_2)(s_0,s_2)^T
+=s_0s_2\begin{pmatrix}1&-1\\-1&1\end{pmatrix}\succeq0.
+$$
+
+The other active scalar is $\beta/4-\beta/4=0$, and all remaining entries are nonnegative diagonal. Thus (R.37) is feasible with trace $p$, matching the recovery lower bound. Both zero and half-weight endpoints remain in the proof. This is the optimum for this specified encoder family, not a class-optimality theorem. $\square$
+

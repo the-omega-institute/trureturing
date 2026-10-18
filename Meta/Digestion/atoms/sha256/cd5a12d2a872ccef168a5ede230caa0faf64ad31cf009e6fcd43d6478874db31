@@ -1,0 +1,95 @@
+**Lemma 5.1 (Uniform occupation bounds).** There are numerical constants
+
+$$
+\lambda=\frac34e^{-10},\qquad B_m=e(m+1)!2^{m+1},
+$$
+
+such that for every integer $J\ge2$, every noncap integer $1\le j<J$, every
+nonnegative integer $m$, and every $s>0$ with $s2^j\le1$,
+
+$$
+\lambda 2^{(m+1)j}\le U_m(s,j)\le B_m2^{(m+1)j},
+$$
+
+while the upper bound holds for every $s>0$ without that last restriction. The
+constants do not depend on $J$.
+
+**Proof.** Fix $J,j,m$ in this scope. Since $j<J$, both $G_j$ and the residence
+endpoint $T_{j+1}$ belong to the proof representation of the actual noncap kernel.
+If $G$ is geometric with success probability $p\in(0,1]$, then
+$(1-p)^{\lfloor x\rfloor}\le e^{-p\lfloor x\rfloor}
+\le e^p e^{-px}\le e e^{-px}$ for $x\ge0$. Tail integration yields, for integer
+$h\ge1$,
+
+$$
+\mathbb E G^h=h\int_0^\infty x^{h-1}\mathsf P(G>x)\,dx
+\le e\,h!\,p^{-h}.
+$$
+
+Let $a_\ell=2^\ell$ and $W=\sum_{\ell=0}^j a_\ell<2^{j+1}$. Weighted convexity gives
+
+$$
+\left(\sum_{\ell=0}^jG_\ell\right)^h
+\le W^h\sum_{\ell=0}^j\frac{a_\ell}{W}
+ \left(\frac{G_\ell}{a_\ell}\right)^h.
+$$
+
+Taking expectations and using $p_\ell^{-1}=a_\ell$ gives
+$\mathbb ET_{j+1}^h\le e h!2^{h(j+1)}$. On each residence interval
+$T_j\le k<T_{j+1}$, at most $T_{j+1}$ terms occur and each is at most
+$T_{j+1}^m$, so
+
+$$
+\sum_{k=T_j}^{T_{j+1}-1}k^me^{-sk}\le T_{j+1}^{m+1}.
+$$
+
+Tonelli with $h=m+1$ proves the upper bound, including all arbitrarily long gaps that
+leak into level $j$.
+
+For the lower bound put $n=2^j\ge2$. Since $\mathbb ET_j=n-1$, Markov gives
+$\mathsf P(T_j\le4n)\ge3/4$. Independently,
+
+$$
+\mathsf P(G_j\ge2n)=(1-1/n)^{2n-1}\ge e^{-4}.
+$$
+
+The last inequality follows from
+$\log(1-x)\ge-2x$ on $0\le x\le1/2$, obtained by integrating
+$1/(1-x)\le2$. On the intersection, the $n$ integers
+$T_j+n,\ldots,T_j+2n-1$ lie in the level-$j$ residence, are at least $n$, and are below
+$6n$. If $sn\le1$, each contributes at least $n^me^{-6}$. Averaging proves the lower
+constant $\lambda$. This includes $m=0$ and $j=1$, where the first residence is the
+deterministic $G_0=1$. No typical-length replacement or finite-support truncation occurs.
+$\square$
+
+For every cap $J$, this correspondence holds for each $1\le j<J$ on every gap
+length, including arbitrarily long gaps. The saturated level has the different event
+$T_J\le k$; its whole mass is treated by normalization in Section 6.
+
+For $1\le j<J$, put
+
+$$
+ b_j(s)=\frac{U_{r-1}(s,j)}{U_{2r-1}(s,j)}.
+$$
+
+Lemma 5.1 gives fixed constants
+
+$$
+ b_-:=\frac{\lambda}{B_{2r-1}},
+\qquad b_+:=\frac{B_{r-1}}{\lambda},
+$$
+
+with $b_-2^{-rj}\le b_j(s)\le b_+2^{-rj}$ whenever $s2^J\le1$. Both moment
+orders $r-1$ and $2r-1$ are nonnegative integers, including $r-1=0$ when $r=1$.
+Define also
+$C_\pi=B_{2r-1}/(z_-(2^{2r}-1))$. Now choose once and for all
+$\eta\in(0,1)$ so that
+
+$$
+G\eta^r\le b_-/2,
+\qquad C_\pi\eta^{2r}\le1/2.
+$$
+
+Finally shrink the source-only interval from Lemma 3.1 to $0<s<s_0$ if necessary.
+This fixes every constant before the permitted caps are selected.
+

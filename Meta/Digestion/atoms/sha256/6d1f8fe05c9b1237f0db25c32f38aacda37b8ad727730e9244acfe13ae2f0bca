@@ -1,0 +1,100 @@
+**Proposition 78.2 (cutoff-matched concentration witnesses).** The
+vectors (78.2) are normalized members of $C_c^\infty(\mathcal C)$,
+hence of $\mathcal Q$. There are fixed $s_0,c_0',C_0>0$ such that
+for $0<s<s_0$,
+
+$$
+T[\psi_s]\le C_0s^{-2},\qquad
+V_{s^2}[\psi_s]\ge c_0's^{-5},\qquad
+\mathfrak e_{g,s^2}[\psi_s]
+       \le aC_0s^{-2}-c_0'gs^{-5}.
+\tag{78.3}
+$$
+
+Proof. The normalization follows from the exact Jacobian, not a
+stationary-height measure. Pulling back $s\varepsilon\partial_k$
+and $s(c_\kappa(k)\cdot\partial_q)$ under (78.1) gives
+$\partial_r$ and $v_s(r)\cdot\partial_{y,z,w}$, respectively, where
+Taylor expansion in the basis $(c_0,c_1,c_2)$ gives
+
+$$
+v_s(r)\longrightarrow(1,r,r^2/2)
+\quad\hbox{in }C^\infty\hbox{ on bounded }r\hbox{ intervals}.
+\tag{78.4}
+$$
+
+The term $r^2/2$ is due to the second derivative in (78.1), whose
+column has not been divided by two. The determinant (76.4) makes
+the change of basis invertible. It follows exactly that
+
+$$
+T[\psi_s]+\lambda
+ =s^{-2}\int\left(|\partial_rf|^2+
+                   |v_s(r)\cdot\partial_{y,z,w}f|^2\right)d\xi
+ \le C_0s^{-2}.
+\tag{78.5}
+$$
+
+The support and smooth extension assertions follow from compact
+support of $f$, the invertible linear phase map and $k_0\in I$.
+The supports avoid the pole. Thus these are native admissible
+microscopic states, rather than merely rescaled measures.
+
+Here the local heat supplier is used only on a finite positive-time
+window. Let $p_{\rm E}$ be the heat kernel relative to $d\xi$ of
+
+$$
+\partial_r^2+
+ \left(\partial_y+r\partial_z+(r^2/2)\partial_w\right)^2
+\quad\hbox{on }\mathbb R^4.
+\tag{78.6}
+$$
+
+Theorem B, (2.8), of Colin de Verdière--Hillairet--Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the
+diagonal, nilpotentization and related results*, Annales Henri
+Lebesgue 4, 897--971,
+[DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf),
+together with its localization Theorem 3.2, gives in this chart
+
+$$
+j_0s^7p_{s^2t}(o,\Xi_s(\xi))
+ \longrightarrow p_{\rm E}(t;0,\xi)
+\quad\hbox{uniformly for }(t,\xi)\in[1,2]\times K.
+\tag{78.7}
+$$
+
+These are the real-cover hypotheses already checked in G (3.2)--(3.5)
+and (32.2)--(32.5): smooth original fields on a larger height
+interval, positive smooth constant raw density, constant flag of
+weights $(1,1,2,3)$ and bounded step three, zero drift and potential
+for $B$, and selfadjoint contraction realizations. The pole is at
+positive distance from both height faces. Theorem 3.2 compares the
+identical expression and density on that interior chart and the
+actual killed realization. The actual cover is already real, so no
+periodic image sum is introduced. The rescaled density is
+$j_0d\xi$ before converting to the Lebesgue kernel in (78.7);
+this explains its factor $j_0$. Multiplication by the threshold
+factor $e^{\lambda s^2t}\to1$ is uniform on this time window.
+
+The two fields in (78.6) and their first two iterated brackets span
+at every point. Their heat kernel is smooth and strictly positive;
+this is the same tangent positivity used in G Theorem 3.1.
+Thus its minimum on $[1,2]\times K$ is positive. With $\tau=s^2$,
+positivity of the full threshold field and (78.7) give
+
+$$
+\begin{aligned}
+W_{s^2}(\Xi_s(\xi))
+ &\ge\int_{s^2}^{2s^2}e^{\lambda t}p_t(o,\Xi_s(\xi))dt\\
+ &\ge c s^{-5}\qquad(\xi\in K).
+\end{aligned}
+\tag{78.8}
+$$
+
+Normalization then gives the potential inequality in (78.3).
+This is a lower bound on the full $W_{s^2}$ from a retained window;
+no infinite-time Green limit follows from, or is required of,
+(78.7). The factor $a$ multiplies the kinetic energy only after this
+same-clock calculation. $\square$
+

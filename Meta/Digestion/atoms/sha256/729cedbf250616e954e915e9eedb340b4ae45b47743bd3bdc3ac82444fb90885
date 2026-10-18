@@ -1,0 +1,44 @@
+**Theorem 7.1 (joint-assistance inequality).** For the twelve histories
+of Theorem 6.1 let $\sigma_{x,\beta,m}$ be any actual normalized complete
+accessible joint input on one common algebra. Include jointly the specimen
+and all readable source-bearing archives, reference shares, programme,
+calibration, clock, controller, selection/update inputs and environments.
+No factorization or phase independence is assumed. Put
+
+$$
+\begin{aligned}
+\Gamma_0&=\tfrac14\sum_{\beta,m}\sigma_{a,\beta,m},\\
+\Gamma_1&=\tfrac18\sum_{\beta,m}
+ (\sigma_{a-h,\beta,m}+\sigma_{a+h,\beta,m}),\\
+\kappa&=\tfrac12\|\Gamma_0-\Gamma_1\|_{1,\rm cq}.
+\end{aligned}
+\tag{AC.25}
+$$
+
+The nuisance sums are over $\beta\in\{0,\pi\}$ and $m\in\{0,1\}$.
+If one common processor achieves complete-output error at most $\epsilon$
+on all twelve source histories, then necessarily
+
+$$
+\boxed{\kappa+2\epsilon\geq D(a,h,d).}
+\tag{AC.26}
+$$
+
+For (AC.20), exact continuation therefore requires $\kappa\geq1/11$.
+This is a necessary relation on an actually realized joint state, not
+a sufficient observer condition, an acquisition protocol or a memory
+dimension bound.
+
+Proof. Contractivity bounds the distance between processed $\Gamma_0$
+and $\Gamma_1$ by $\kappa$. Each processed mixture is within
+$\epsilon$ of its corresponding ideal mixture, by convexity. The
+triangle inequality and (AC.16) give (AC.26).
+If the entire assistance is generated only by one common CPTP acquisition
+from the cut specimen and fixed blanks, linearity of that acquisition and
+(AC.7) give $\Gamma_0=\Gamma_1$ exactly. This includes disturbed
+specimens, coherent tokens, mixed phase-dependent records and correlations
+among all retained outputs. Increasing such internal memory cannot produce
+positive $\kappa$. A separately normalized accepted subset may break the
+identity, but its rejected and failed branches cannot then be omitted from
+the full acquisition state. $\square$
+

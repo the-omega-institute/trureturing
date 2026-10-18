@@ -1,0 +1,58 @@
+## 7. 动作最优、耗散最优和做功最优必须分开
+
+在固定纤维 \([\kappa_-,\kappa_+]\) 内，取 \(T>0\) 和合法端点 \(\kappa(0)=\kappa_0,\ \kappa(T)=\kappa_1\)。可容许路径 \(\kappa:[0,T]\to[\kappa_-,\kappa_+]\) 必须绝对连续；用其几乎处处导数定义扩展非负几何二次作用
+
+\[
+\mathcal A[\kappa]=\frac12\int_0^T\dot\kappa(t)^2\,dt.
+\]
+
+有限作用分支要求 \(\dot\kappa\in L^2([0,T])\)；其余绝对连续路径的作用为 \(+\infty\)。[HilbertSubspaceAction](../../../Blueprint/D5/S3/Observer/HilbertGeometry/HilbertSubspaceAction.md) 定义 1.2、定理 1.6 的绝对连续路径合同，经平移起点和时间缩放，给出这一可容许类中的唯一极小路径，即仿射插值，且
+
+\[
+\mathcal A_{\min}=\frac{(\kappa_1-\kappa_0)^2}{2T}.
+\]
+
+这里绝对连续性给出 \(\kappa_1-\kappa_0=\int_0^T\dot\kappa\,dt\)，Cauchy–Schwarz 给出上述下界；有限分支取等当且仅当导数几乎处处为 \((\kappa_1-\kappa_0)/T\)，再由绝对连续性恢复逐点仿射路径。仿射路径留在同一纤维区间内；连续但非绝对连续的路径不属于此极小问题。
+
+在 \(r>0\) 的固定纤维上，质量作用指数路径的作用量为，令 \(\lambda=\gamma r\ge0\)：
+
+\[
+\mathcal A_{\exp}
+=\frac{(\kappa_0-\kappa_*)^2\lambda}{4}
+\bigl(1-e^{-2\lambda T}\bigr).
+\]
+
+当 \(\lambda>0\) 且 \(\kappa_0\ne\kappa_*\) 时，与同端点 \(\kappa_1=\kappa(T)\) 的仿射极小值相比，比例为
+
+\[
+\frac{\mathcal A_{\exp}}{\mathcal A_{\rm affine}}
+=\frac{\lambda T}{2}
+\coth\frac{\lambda T}{2}\ge1.
+\]
+
+若 \(\lambda=0\) 或 \(\kappa_0=\kappa_*\)，质量作用路径为常值，两种作用量均为零，比例不定义；右侧函数在 \(\lambda T\to0^+\) 时的极限为一，不是零速率下的 \(0/0\) 比值。顶点 \(r=0\) 也只有常值路径，无需定义 \(\kappa_*\) 的商式。
+
+所以质量作用流是详细平衡和熵产生意义下自然的耗散路径，但在这个固定端点、固定时长的纯二次作用量中，通常不是最小动作路径。两种“最优”优化了不同目标。
+
+若要研究真正的跨层几何最优，应给 \(q=(X,Y,Z)\) 增加可控反应，并在指定的度量域内，对固定 \(T>0\) 的绝对连续路径 \(q:[0,T]\to P\) 及沿路径可测的半正定 \(\zeta(q)\) 定义
+
+\[
+\mathcal A_q=\frac12\int_0^T \dot q^{\mathsf T}\zeta(q)\dot q\,dt
+\]
+
+或 Fisher–Rao/摩擦度量。有限作用要求该非负被积函数可积，否则取扩展值 \(+\infty\)；度量奇异边界的可容许提升须另行指定。然后才可以讨论 q 方向的 geodesic、有限时间耗散和边界奇异性。现有 κ 流只给出了隐藏纤维方向的一个可解切片。
+
+因此目前最可靠的目标不是单一总能量，而是保持分量类型的 Pareto 向量，例如
+
+\[
+(\text{unresolved hazard},\
+w_\kappa,\
+D(p\Vert p_*),\
+\text{prime cashflow},\
+\mathcal A_q,\
+\text{acquisition cost}).
+\]
+
+只有选定温度、浴、时间约束和控制变量后，才可以把其中一部分合成一个具体的优化问题。
+
+

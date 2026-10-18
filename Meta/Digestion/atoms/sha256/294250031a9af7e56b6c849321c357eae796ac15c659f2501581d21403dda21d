@@ -1,0 +1,14 @@
+**Definition 178.1 (Suffix coordinates and their common quadratic form).**
+For a first-zero class $n\le L$, fix $b_i=1$ for $i<n$, $b_n=0$,
+and write $v_j=b_j$ for $j>n$. For coefficients $Q_{jk}\ge0$, set
+
+$$
+\mathcal M_n(c)=\min_{v\in\{0,1\}^{L-n}}
+ \left[\sum_{j>n}c_jv_j+\sum_{n<j<k\le L}Q_{jk}v_jv_k\right].
+\tag{178.1}
+$$
+
+At $n=L$ the suffix is empty and $\mathcal M_L=0$.
+Different instances of $\mathcal M_n$ below use the same quadratic
+coefficients from the same endpoint mixture.
+

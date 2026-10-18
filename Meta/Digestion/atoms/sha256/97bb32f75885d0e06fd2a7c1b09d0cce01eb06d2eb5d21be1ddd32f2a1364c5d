@@ -1,0 +1,82 @@
+**定理 6.1（Complete GLOBAL upper certificates at both original deadlines）。** Let $D=C_{\rm pre}(f)$ be exactly the fee in (3.3). Then
+
+$$
+\boxed{
+\begin{array}{ll}
+N+4\le K_{\min}^{\rm GLOBAL}(3;f)\le N+5,
+& |\Lambda[O]|\le2,\\
+N+4\le K_{\min}^{\rm GLOBAL}(4;f)\le N+6,
+& |\Lambda[O]|=3.
+\end{array}}
+\tag{6.1}
+$$
+
+Neither upper endpoint in (6.1) is asserted universally sharp. The lower endpoints are Lemma 5.3.
+
+Proof of the three-block upper certificate. Three occupied pairs in two binary coordinates are three corners of a rectangle. Call the corner adjacent to both others central, and the other two leaves. Deleting a leaf makes one component constant on the two remaining classes. Choose a leaf $S$ such that $|\Lambda[O]\setminus\{S\}|\le1$. Such a leaf exists: if $O$ has two labels, at least one is a leaf; otherwise either leaf works. Write $U=\{j\in J:\Lambda(j)\ne S\}$. Let $i\in\{0,1\}$ be the component for which $S$ is its singleton class, and let $w=1-i$ be the component still nonconstant on $U$.
+
+If $S$ is absent from $H$, take $A_1=J\setminus U$ and $\sigma=0$. If $H$ has label $S$, take $A_1=U$ and $\sigma=1$. Empty $H$ uses the former case. In either case $A_1\subset W_1$ misses $H$, so
+
+$$
+B_1=\mathcal B_1(\widehat A_1^{\,0})
+\tag{6.2}
+$$
+
+begins zero, safely clears all root tails, and has difference $\sigma$ on $U$ and $1-\sigma$ on $S$. This reverse orientation is needed when the selected leaf is the $H$ class; it preserves the original fee and source set.
+
+Choose $Z$ as the $w$-component label on $O\cap U$ when that set is nonempty, and either label of $\lambda_w[U]$ otherwise. Name its other label $E$. Set
+
+$$
+A_2=\{j\in U\cap W_2:\lambda_w(j)=E\},\qquad
+F_2=\begin{cases}
+A_2\cup\{a+1\},&\sigma=1\text{ and }a\in A_2,\\
+A_2,&\text{otherwise},
+\end{cases}
+\qquad B_2=\mathcal B_2(\widehat F_2^{\,m}).
+\tag{6.3}
+$$
+
+When $\sigma=0$, the seam is exactly the proof of (2.3)–(2.4): a final one of $B_1$ removes $a$ with the stopped $S$ class and forces $B_2$ to start zero; a final zero of $B_1$ gives incoming tail zero. When $\sigma=1$, the first interior vertex $a+1$ is not in $U$: it lies in the ambient interval $a+1,\ldots,m-1$, and if actual belongs to the stopped homogeneous $H$ class. Also $m$ is at path position $h+1\ge2$, distinct from $a$ and $a+1$. If $a\in A_2$, (6.3) sets the first two path charges to $1,1$, making the actual first two bits $1,0$. The actual terminal tail of the zero-leading $B_1$ is at most $m-1$; that single leading one reaches at most $m<k$ and the following zero clears it. If $a\notin A_2$, $B_2$ begins zero. In all cases the remaining internal runs are shorter than $k$. The added interior charge and parity donor are absent from the continuing sources. Thus this very $B_2$ is safe and selects $E$ exactly on $U$, including every missed phase with label $Z$. No cleaning or waiting block is added.
+
+Install two roots $a_v$ as in Theorem 5.2 and two first-query rows $b_v$ with word $B_1$. Let $z_i$ denote the single label in $\lambda_i[U]$, put $s_v=S_v$ and $\beta=w\oplus\sigma$, and add just one last-query row $p_2$ with word $B_2$. The scalar updates are
+
+$$
+\begin{aligned}
+V(b_i,i\oplus\sigma)&=H_{z_i},&
+V(b_i,i\oplus(1-\sigma))&=H_{s_i},\\
+V(b_w,w\oplus\sigma)&=p_2,&
+V(b_w,w\oplus(1-\sigma))&=H_{s_w},\\
+V(p_2,\beta)&=H_Z,&V(p_2,1-\beta)&=H_E.
+\end{aligned}
+\tag{6.4}
+$$
+
+Initialize and complete bottom/Halt entries as in §5. All executions emit prefixes of the single installed stream $1^m\mid B_1\mid B_2$. They use five word rows and exactly $N$ Halt rows. In addition to the root and root-zero supports (5.5), the only live later support is
+
+$$
+\Gamma_{p_2}=\{(\lambda_w(j),(\beta,-j+2m,\tau_1)):j\in U\},
+\tag{6.5}
+$$
+
+where $\tau_1$ is the actual terminal tail of (6.2). All original $s<h$ have this same image because $B_1$ starts zero. Use (5.6) for exact Halt supports and ranks $3,2,1,0$ on roots, first queries, last query and Halts. The literal support identities and the proved seams give all-source closure and label correctness. Both labels on $U$ actually occur, so the $w$ component uses the last word; the deadline is the original three blocks.
+
+Proof of the four-block upper certificate. Choose a leaf $S$ absent from homogeneous $H$, which is always possible because there are two leaves. Use exactly the words (2.2), (2.4), (2.5) for the joined table, naming the remaining joined classes $D_0,E_0$. Let $i$ be the singleton component of $S$ and $w=1-i$; the two remaining classes agree in component $i$ and differ in component $w$. At $b_i$ both scalar replies halt with their component labels. At $b_w$, reply $1-w$ returns $H_{S_w}$ and reply $w$ enters $p_2$. Install $B_2$ at $p_2$ and $B_3$ at $p_3$, with
+
+$$
+V(p_2,1-w)=H_{(E_0)_w},\quad V(p_2,w)=p_3,
+\qquad
+V(p_3,1-w)=H_{(E_0)_w},\quad V(p_3,w)=H_{(D_0)_w}.
+\tag{6.6}
+$$
+
+The two roots and their updates are unchanged; the two $b_v$ rows both install $B_1$. Complete every other entry as in §5. This uses six word rows. The actual support at $p_2$ is (6.5) with $\beta=w$, and
+
+$$
+\Gamma_{p_3}=
+\{(\lambda_w(j),(w,-j+3m,\tau_2)):
+j\in U,\ q_2(j)=0\},
+\tag{6.7}
+$$
+
+where $q_2$ and $\tau_2$ are the successful charge and actual terminal tail of the displayed $B_2$. Take ranks $4,3,2,1,0$ and exact Halt images (5.6). Theorem 2.1 proves the safety of these same words, including a nonzero $\tau_1$, possible all-one $B_2$, and its zero-leading $B_3$. The two remaining $O$ classes both continue through the second-zero reply, so some actual sources issue all four paid blocks. Every execution is a prefix of $1^m\mid B_1\mid B_2\mid B_3$. Both attainments satisfy [FC, Theorem 27.2] with the immutable target retained; neither a decoded component nor a calendar position is an external latch. ∎
+

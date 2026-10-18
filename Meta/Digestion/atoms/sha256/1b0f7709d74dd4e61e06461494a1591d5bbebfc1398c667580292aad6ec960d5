@@ -1,0 +1,18 @@
+## 464. Repeated opposite labels close at most four intervals
+
+If Q=M, the unused rho faces have multiset {Z,M,M}. A transported
+Z slot cannot become axial, since that would require two identical
+transverse labels M,M. If transverse it has pair {Z,M}, hence owner
+rho. The tau interval and rho's two Z intervals are closed, so the
+connected Z circle has at most three intervals, impossible.
+
+If Q=Z, the unused faces have multiset {Z,Z,M}. A transported Z slot
+is either axial with pair {Z,M} or transverse with companion M;
+companion Z is forbidden. Both cases return to rho. Its extra axial
+Z interval is included, so tau and rho close at most four original
+Z intervals, again impossible.
+
+Consequently Q is distinct from M,Z,C. Its value still satisfies
+1<q<=m. This conclusion is derived; four-distinctness of rho was
+not an input.
+

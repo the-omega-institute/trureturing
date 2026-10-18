@@ -1,0 +1,11 @@
+**Proposition 21.1 (limited fixed-slope uniqueness).** For every prefix in $\mathscr G$, every legal final word, and every proposed datum, there is at most one actual target in its fibre with $k=0$.
+
+**Proof.** If $\mathsf B=\mathsf T_0$ is invertible, its quotient equation has at most one auxiliary solution. If it is singular, its first three rows have rank three and kernel $\mathbb RN$, so its full kernel is exactly $\mathbb RN$. Starting from an actual solution $S$, every other auxiliary solution is $S+tN$. Since $\det S=\det N=0$, (19.6) gives
+$$
+\det(S+tN)=t\mathfrak b(S,N).
+$$
+With the orientation of Lemma 19.2, the coefficient is strictly positive for this actual $S$. Hence determinant zero forces $t=0$. Once $S$ is fixed, the initial equation fixes the entire constant drift. If there is no actual solution there is no target to compare. This proves the at-most-one statement. ∎
+
+This proposition is only at the common slope zero. It gives neither uniqueness between different slopes nor uniqueness at other singular pencil members. In particular it permits the distinct-slope collision below.
+
+<a id="section17-finite-positive-gain-nonlocal-collision"></a>

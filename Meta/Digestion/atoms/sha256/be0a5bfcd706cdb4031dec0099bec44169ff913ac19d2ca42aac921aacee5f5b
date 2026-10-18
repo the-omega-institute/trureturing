@@ -1,0 +1,45 @@
+**Convention 8.2 (primary literature and its languages).** The following
+are `literature-attested` methodological suppliers or comparisons; the
+native assembly in Lemma 3.3, Theorem 4.1 and their applications is
+`repo-derived`, with no worldwide originality claim.
+
+| Primary source | Mathematical scope and use |
+| --- | --- |
+| Baader–Snyder, *Unification Theory*, Chapter 8, §2.2.4, pp. 450–452, Lemma 2.2, Corollary 2.3, Lemma 2.4, Theorems 2.5–2.6 [BS] | Finite syntactic equations over free constructors have terminating solved-form transformation, an idempotent unifier, and factorization of every unifier. Used solely for the $c,f$ shape equations after collapse splitting. The chapter's §3 distinguishes complete sets modulo a specified equational theory; it does not identify this native interpreted theory with the free one. |
+| Comon–Lescanne, *Equational Problems and Disunification*, §§4.2, 5.2–5.3, Theorems 2–4 [CL] | Equations/disequations and first-order equational problems over specified term algebras, with solved forms and terminating transformations. The finite Herbrand term domain and rational-tree cases are distinguished. These are precedents for complete solution descriptions, not a transfer theorem for unknown powers of the native substitution or its normal subdomain. |
+| Kuncak–Rinard, *On the Theory of Structural Subtyping*, arXiv:cs/0408015v1, Figure 9, Theorem 90 and Corollary 91, §6.6 [KR] | The linked version's term-power quantifier-elimination and decidability results concern the stated four-sort language over a decidable base structure. Section 6.6 treats a selected-leaf/element operation as a different extension and explains why stronger decidability is not automatic. The present finite supplied-shape traversals do not assert definability or quantifier elimination in that ambient language. |
+| Marshall–Meadows–Narendran, *On Unification Modulo One-Sided Distributivity: Algorithms, Variants and Asymmetry*, arXiv:1503.06687v2, §§3, 5 [MMN] | Equational unification under one-sided distributivity; the single-homomorphism case uses a specified two-sort discipline. Its homomorphism paths suggest offset graphs, but its equational signature, substitutions and solution order are different. It supplies no normality, negative-witness or source-preserving theorem for (SFP.1). |
+| Cerna, *Schematic Unification*, arXiv:2306.09152v7, Definitions 5–7, 17, Theorems 6–8 [CERNA] | Indexed substitution schemas ask for unifiability of every instance. Uniformity and the stated infinity-stability condition govern the completeness guarantee. This is not the quantifier pattern of all ground common-source solutions at freely supplied chronological tuples. No native completeness or undecidability claim is borrowed. |
+
+[TPO][TPO] separately identifies the normal-domain obstacle in the
+specified ambient term-power language. This volume handles normality
+by explicit finite traversal of each supplied shape, which is an allowed
+operation of Definition 2.1. It does not assert that this traversal or
+its selected mismatch leaves are definable in TPO's ambient language.
+Nor does the absence of a matching literature theorem prove that no
+other complete representation or decision procedure exists.
+
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[PDC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_POSITIVE_DOMAIN_CORRESPONDENCE.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[CUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[CUTS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.scribe.cs
+[ROW]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[ROWS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.scribe.cs
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[DEPTHS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs
+[BIRTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeBirthVectorDecoder.lean
+[BIRTHS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeBirthVectorDecoder.scribe.cs
+[GROUND]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.lean
+[GROUNDS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.scribe.cs
+[CENTRAL]: ../../../D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[CENTRALS]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.scribe.cs
+[BS]: https://www.cs.bu.edu/fac/snyder/publications/UnifChapter.pdf
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+[KR]: https://arxiv.org/pdf/cs/0408015v1
+[MMN]: https://arxiv.org/pdf/1503.06687v2
+[CERNA]: https://arxiv.org/pdf/2306.09152v7
+

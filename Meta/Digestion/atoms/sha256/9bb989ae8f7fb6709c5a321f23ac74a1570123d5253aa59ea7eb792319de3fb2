@@ -1,0 +1,22 @@
+**Open problem 373.2 (Beyond the seven-coordinate bridge).** With Definitions 368.3–368.4, the unrestricted joint-selection obligation still asks, at every $L\ge8$ and every full $y\ge0$ with $\Delta_O(y)=1$, for one unrestricted full $V\ge0$ and the same $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}\bigl(Q(y)-Q(V)\bigr)\le\theta.
+\tag{373.2}
+$$
+
+Signed residuals, nonzero zero-cost $V$ at $\theta=1$, zero weights and both endpoints remain allowed. Theorem 370.1 uses the specific complete $H_7$ data; Theorem 371.2 does not supply zero-cost generators or universal cell-merger feasibility at larger horizons.
+
+The alternative remains one actual entire profile (368.2), one complete common-seed original $A_N\in\mathcal N_2$ attaining $c=e_a(A_N)$, and a strict uniform lower
+
+$$
+\exists\varepsilon>0\quad\forall A_O\in\mathcal O_2:
+                   e_a(A_O)\ge c+\varepsilon,
+\tag{373.3}
+$$
+
+against all original arbitrary-address and full-carrier competitors at that same profile and entire tail. A fixed-law obstruction, failed merger, absence of a funded gauge or loss of exact-law preservation does not establish (373.3). The inherited $p_*$ explicitly prevents the $p_t$ calibration from being such a separator. The complete radial and Farkas reductions of IV 165–168 and VI 199 retain their own hypotheses and do not by themselves settle either remaining alternative.
+
+The original nonatomic targets and the complete-name paid M1 requirements also remain separate: all-$D$ quantification, late requests, authentic indices, actual paid literals and one common all-count bound are unchanged. Every finite marked construction here is supported on a finite set of $\theta_j$. Any unchanged nonatomic $\mu_x$ gives that set mass zero, so the corresponding TV distance is one. Selected-law accuracy therefore gives no nonatomic-target accuracy or paid M1 conclusion.
+

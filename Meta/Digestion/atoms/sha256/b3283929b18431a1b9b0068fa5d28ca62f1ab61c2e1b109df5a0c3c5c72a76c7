@@ -1,0 +1,18 @@
+**Definition 2.1 (opposite bottom orientations).** Put
+$S_0=c$ and $S_{h+1}=F^S(S_h,S_h)$. For $k\in\mathbb N$ define
+
+$$
+\begin{aligned}
+U^+_{1,k}&=F([k],[k+1]),&
+U^-_{1,k}&=F([k+1],[k]),\\
+U^\pm_{h+1,k}&=F(U^\pm_{h,k},U^\pm_{h,k})&& (h\ge1).
+\end{aligned}
+\tag{TPO.5}
+$$
+
+Both have shape $S_h$. At a leaf of $U^+_{h,k}$ the rank is $k$ when
+the last edge is $L$, and $k+1$ when it is $R$. The two ranks are
+interchanged in $U^-_{h,k}$. A selector word $p$ of length $d<h$
+returns exactly $U^\pm_{h-d,k}$, irrespective of the letters in $p$.
+Let $\overline L=R$ and $\overline R=L$.
+

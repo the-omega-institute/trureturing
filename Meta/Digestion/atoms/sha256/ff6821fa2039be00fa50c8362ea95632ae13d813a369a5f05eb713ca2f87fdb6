@@ -1,0 +1,9 @@
+#### 定理 E：FIB 权重单射
+
+```math
+I\mapsto
+\sum_{i\in I}\operatorname{Fib}_{i+2}
+```
+
+在合法 Fibonacci 窗口上是单射。
+

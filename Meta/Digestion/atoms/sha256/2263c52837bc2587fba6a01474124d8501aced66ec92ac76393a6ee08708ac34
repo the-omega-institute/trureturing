@@ -1,0 +1,11 @@
+**Theorem 93.1.** Let G be any complex Hermitian positive semidefinite 3×3 matrix with diagonal entries one and rank at most two. Put a=G₁₂, b=G₂₃, c=G₃₁, and let u be the positive real cube root of 9. Then
+
+\[
+ E(G):=\left|\frac12-a^2\right|^2+
+        \left|\frac12-b^2\right|^2+
+        \left|\frac12-c^2\right|^2
+ \ \ge\ \frac{21-9u}{16}\ >\ \frac9{64}.                 \tag{1}
+\]
+
+The first inequality is sharp. No reality, phase, kernel-weight, or symmetry assumption is imposed on G.
+

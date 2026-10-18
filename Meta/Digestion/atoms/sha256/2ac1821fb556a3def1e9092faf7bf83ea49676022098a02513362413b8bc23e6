@@ -1,0 +1,26 @@
+**Attribution 8.1 (Inherited content and added result).** The owning
+repository sources and their roles are
+
+| Source | Inherited content |
+| --- | --- |
+| `FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md`, Proposition 2.1 and (2.2) | The original stationary four-state law, iid spins, independent uniform phase and separator clock. |
+| Original, Lemma 3.1, Definition 9.1, Theorems 9.2–10.1 and (9.4)–(9.5) | Complementary products, full paid arbitrary-address contract, actual endpoint indices and finite source-section likelihood method. |
+| Original, Theorems 11.1–11.3 | Zero-record envelope, integrated record-type bound and zero-record mass forced by a return budget. |
+| Original, Theorem 11.4 | The exact almost-sure-return one-read minimum $1-a/2-a^2b$. |
+| `FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md`, §§1–4 | The same law and contract, finite-record interface, zero-return correction and exact one-read envelope, including the overlapping one-read minimum. |
+| `FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md`, Theorem 6.1 | The exact attained almost-sure two-read minimum (7.3), with its complete-competitor reduction and simultaneous two-subtree attainer. |
+
+Both Original §11 and Risk receive credit for the zero-record and
+one-read results. Their selective count-only sharpness is distinct from
+an almost-sure-return optimum. The exact two-read result is inherited,
+not an additional discovery of this volume. The finite-section method
+and elementary complementary-product mechanism are also inherited;
+they are proved here where needed for a self-contained argument.
+
+The added content is precisely the full $q_3=1$ bound, the one-query
+mixed-component and two-zero-prefix comparisons required for it, and
+simultaneous equality in one actually paid three-call policy. Equation
+(7.4) is a consequence of this result and the inherited two-read value.
+The attribution is relative to the supplied source results; it asserts
+no exhaustive literature comparison.
+

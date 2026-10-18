@@ -1,0 +1,54 @@
+**Definition 6.1 (reused results and literature interfaces).** The bearing
+content of Theorems 3.1, 4.1 and 5.1 is the repo-derived application to
+one original common face: occupied reverse and nonparallel anchors
+constrain the same three failure coefficients across every signed
+chart and the same-law target; negative pure contacts and reverse
+contacts occupy strict opposite sides of the reconstructed indefinite
+quadratic; negative-pure orientation excludes all the explicit FC38
+scalar lifts in the stated small-mass range. These are source-specific
+necessary restrictions, not new general interpolation, moment,
+stationarity or symmetry theorems.
+
+The group accounting and all-optima activity are FC Theorems 3.3 and
+4.2; the full covariance is FC Proposition 17.3; the report and pure
+zero exclusions are FC Theorems 12.1, 19.1 and Proposition 20.1.
+Mandatory reverse occupation and strict signs are FC Theorem 25.1,
+Corollary 27.2 and Proposition 28.2. Negative pure existence and the
+negative-paired exclusion are reused from FC Theorem 34.1,
+Proposition 34.2 and Theorem 34.3. GC Propositions 10.1 and 12.2
+supply the original same-law physical dictionary and constructor.
+The quadratic Hermite calculation, tangency at a nonnegative zero,
+antipodal even/odd decomposition and the integration-by-parts identity
+are standard intermediate mathematics within the substantive proofs.
+
+The following literature statements have their indicated mathematical
+interfaces, without a transfer of quadrature nodes into original labels:
+
+- di Dio–Schmüdgen, [*The multidimensional truncated Moment Problem:
+  Atoms, Determinacy, and Core Variety*, Lemma 3 and Proposition 4](https://arxiv.org/html/1703.01497v2):
+  a continuous nonnegative function with zero positive-measure integral
+  vanishes on the support; a finite-dimensional real integrable function
+  space admits an exact finite atomic representative of its integrals.
+  The compact original cylinder and its continuous gap meet the first
+  interface. The second does not preserve the number of original
+  fractional groups or give seven labels.
+- Dette–Melas, [*A note on the de la Garza phenomenon for locally
+  optimal designs*, §3, Theorem 1](https://arxiv.org/html/1105.3575v1):
+  the theorem assumes the interval Chebyshev systems, a distinguished
+  diagonal information entry and the stated Loewner comparison.
+  None of these constitutes a supplied improvement preserving this
+  original rational capacity, exact $K$ and within-label absolute
+  $J_t$. On the pure sheet the last three entries of $\Gamma$ vanish;
+  an eight-function Chebyshev determinant on that sheet is unavailable.
+- Nailwal–Zalar, [*Gaussian Quadratures with prescribed nodes via moment
+  theory*, Theorem 3.1](https://arxiv.org/html/2412.20849v1):
+  full univariate moments through $D=d_1+2d_2-1$, positive definite
+  initial moment matrix, invertible prescribed-node localizing matrix
+  and positive definite generated extension are required. Mandatory
+  negative-pure and reverse groups do not establish these hypotheses.
+  The theorem does not supply a prescribed-node original-law compression.
+
+The indicated general results are literature-attested only in these
+scopes; the source-specific combination proved here is repo-derived.
+No priority or worldwide novelty assertion is attached to it.
+

@@ -1,0 +1,57 @@
+**定义 178.2（三个输出接口与全部记录的配对）。** 令 $\mathcal H_N(0)$ 为全部正概率固定根路径 $h=(0,i_1,\ldots,i_N)$，保持所有自环、支叶访问和次序。定义
+
+$$
+p_h=\prod_{t=1}^{N}P_{i_{t-1}i_t},\qquad
+U_h=U_{i_Ni_{N-1}}\cdots U_{i_1,0},\qquad
+|r_h\rangle=\bigotimes_{t=1}^{N}|i_{t-1}\to i_t\rangle.
+$$
+
+不同 $h$ 的 $r_h$ 正交。零轮只有 $h=(0)$，$p_h=1,U_h=I_2$，记录为空张量的单位标量。未迹掉环境的纯等距输出为
+
+$$
+S_N\psi=\sum_{h\in\mathcal H_N(0)}\sqrt{p_h}\,
+|i_N\rangle\otimes U_h\psi\otimes|r_h\rangle.
+\tag{178.1}
+$$
+
+它是同一 $V_{\rm edge}$ 的新记录迭代，不是独立选取路径权重。$S_N(K)$ 是实际指定准备的二维像；这里没有供应独立的任意 $|h\rangle\otimes\psi$ 输入。
+
+第130章的记录就是有序边张量。若另有实际供应的历史副本 $|h\rangle_H$，如第125章的历史—环境配对，下面的纯像重编码必须同时访问 $H$ 与全部边记录，逐项使用 $|r_h^{\rm all}\rangle=|h\rangle_H\otimes|r_h\rangle$；多个副本同样全部纳入。该规则保持原逐历史配对，不把两个记录副本分别压缩后任意相配。已经读出、复制到不可访问指针或迹掉的记录，不能被当作仍可相干访问。此时应使用实际所得通道，不能用 (178.1) 宣称已撤销读出。
+
+方形正向 $0\to1\to2\to3\to0$ 的电流增量为 $+1$，反向为 $-1$，自环及支边为零。记 $B(h)=(i_N,W(h))$，$\mathcal B_N=B(\mathcal H_N(0))$，并令
+
+$$
+\Pi_N(\beta)=\sum_{h:B(h)=\beta}p_h,\qquad
+T_N(j)=\sum_{h:i_N=j}p_h=(P^N)_{0j}.
+$$
+
+标签写为 $\beta=(j,w)$，区别于 Pauli 原子 $b$。复用 (131.3)，令
+
+$$
+(d_0,d_1,d_2,d_3,d_4)=(0,1,2,3,0),\qquad
+(G_0,G_1,G_2,G_3,G_4)=(I,a,-b,-c,b),
+$$
+
+$$
+\sigma_\beta=(-1)^{(w-d_j)/4},\qquad U_\beta=\sigma_\beta G_j,
+\qquad U_h=U_{B(h)}.
+\tag{178.2}
+$$
+
+指数在可达标签上为整数，负整数同样按奇偶取符号。固定根的实际路径分支算子为 $A_h=\sqrt{p_h}|i_N\rangle\otimes U_h$，且 $A_h^\dagger A_h=p_hI_2$，所以路径概率与任意内部—参考输入无关。按任务或端点归并这些实际分支后，得到两种密度输出：
+
+$$
+\begin{aligned}
+\Phi_{B,N}(A)
+&=\sum_{\beta=(j,w)\in\mathcal B_N}\Pi_N(\beta)
+|\beta\rangle\langle\beta|_B\otimes|j\rangle\langle j|_{\mathcal C}
+\otimes U_\beta A U_\beta^\dagger,\\
+\Phi_{T,N}(A)
+&=\sum_{j:T_N(j)>0}T_N(j)|j\rangle\langle j|_{\mathcal C}
+\otimes G_j A G_j^\dagger.
+\end{aligned}
+\tag{178.3}
+$$
+
+两式的输入域都是整个 $M_2(\mathbb C)$；与 $\operatorname{id}_R$ 张量后给对应参考接口。第一式的 $B$ 是真正经典、对角的任务记录；$\mathcal C$ 是冗余但明确保留的端点，内部密度及其参考关联也保留。它由原历史仪器对实际 $h$ 作经典后处理 $h\mapsto B(h)$ 得到。第二式迹掉全部历史，只保留端点和内部密度；它等于 $\mathcal E^N\circ\iota_0$，$\iota_0(A)=|0\rangle\langle0|\otimes A$，不是输入域为整个 $M_{10}$ 的 $\mathcal E^N$。保留所有纯记录的 $\operatorname{Ad}_{S_N}$ 则是第三个接口，不能与这两个混合输出混为同一问题。
+

@@ -1,0 +1,68 @@
+#### 466.2 原 Robin 的增长权
+
+保持 §§453–455 的全部原对象，对实数 x≥e、s>0，
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad\mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s),
+\qquad b_x(s)=s\mathscr D_x(s).
+\tag{HG.3}
+$$
+
+实际奇来源逐项满足
+μ(n)𝒟_x(n)=[μ(n)/n]b_x(n)。这只是同一完整核的准确换权。
+固定 x，记 ℓ=log x、r=log s、L=log 2，设
+
+$$
+c_x=\ell^{-1}-\log\ell-1,
+\qquad d_x=\ell^{-1}+\ell-1.
+$$
+
+§453 的 DP.9–DP.10 给 s≥x 时
+
+$$
+sP_x^\eta(s)=r\log r+c_xr+d_x-r^{-1}+E_x(r),
+\qquad |E_x(r)|\le2(r^{-1}+r^{-2}).
+\tag{HG.4}
+$$
+
+将 r+L 的同一身份减去一半，使用
+(r+L)log(r+L)=r log r+L log r+L+O(r^(−1))，得
+
+$$
+b_x(s)=\frac12r\log r+\frac12c_xr
+-\frac L2\log r+\frac12d_x-\frac L2(c_x+1)+O_x(r^{-1}).
+\tag{HG.5}
+$$
+
+故 b_x(s)→+∞。§465 非负递减权的完整尾比较不能直接用于这个
+全部远端权；这里需要完整变差。
+
+该变差不从 HG.5 的渐近猜测导数。复用 §453 的 DP.4：
+s>x 时 −(P_x^η)'(s)=G_{η,x}(log s)/s²，且对 v=log(s/x)≥0，
+|ℓG_{η,x}(ℓ+v)|≤v²/2+v+12。
+此 G_{η,x} 为原核变换，区别于 H_o。
+令
+
+$$
+K_x=6+|c_x|+|d_x|,\qquad V_x=3K_x+39.
+$$
+
+r≥ℓ≥1 时 HG.4 给 |P_x^η(s)|≤K_x(1+r)²/s；
+同一个导数界给 |(P_x^η)'(s)|≤13(1+r)²/s²。
+在 2s 使用 1+log(2s)≤2(1+log s)，并对 HG.3 求导，得到
+
+$$
+\boxed{|b_x(s)|\le3K_x(1+\log s)^2,
+\qquad |b'_x(s)|\le V_x\frac{(1+\log s)^2}{s}\quad(s>x).}
+\tag{HG.6}
+$$
+
+这些常数明确允许依赖固定 x。HG.6 依赖同一原核的完整可积性和
+求导身份，不能通过对 HG.5 的渐近余项直接求导得到。
+

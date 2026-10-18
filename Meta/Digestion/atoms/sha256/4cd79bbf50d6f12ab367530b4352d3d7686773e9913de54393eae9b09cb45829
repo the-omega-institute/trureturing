@@ -1,0 +1,77 @@
+**Theorem 8.1 (Separate compact problems equal original attained minima).**
+For $C=N,O$, let $\Delta_C^9$ be the probability simplex of its own
+complete deterministic nine-bit catalog, with all labels $0,\ldots,9$,
+constants and singletons. For $N$, all four cell outputs remain
+independent. Set
+
+$$
+\begin{aligned}
+f_C(\lambda)=\max\bigl(&
+\{1-a_n-p_w(0),\ a_n-p_w(n),\ 1-p_w(0)-p_w(n):
+                           w\in\Omega_n,\ n\le9\}\\
+&\cup\{1-p_+(0)\}\bigr),\qquad
+m_C=\min_{\lambda\in\Delta_C^9} f_C(\lambda).
+\end{aligned}
+\tag{8.1}
+$$
+
+Both minima exist, equal their respective original attained minima,
+and depend only on $a_1,\ldots,a_9$ among all continuations in (1.4).
+For each class its positive closed caps are feasible exactly when $c\ge m_C$.
+Throughout the family,
+
+$$
+\max\{E_{\rm sum},L_8\}\le m_N\le m_O\le U.
+\tag{8.2}
+$$
+
+Proof. Each catalog is finite. The objective is a finite maximum of
+continuous affine functions on a compact simplex, so it has a minimizer
+separately in each class. This proves existence, not an evaluation.
+
+The full core inequality of XVII 312.2 embedded in either catalog gives
+
+$$
+43f_C\ge5a_3+5a_4+4a_5+5a_6+4a_7=215\tau.
+\tag{8.3}
+$$
+
+Thus $m_C\ge5\tau>0$. The explicit common law gives
+$m_C\le U\le331\tau/64\le331/1536<1$.
+
+For any original competitor of error $r<1$, take positive caps
+decreasing to $r$ and apply the own-class correspondence and prefix
+operations of 1.3 to obtain complete nine-bit representatives with
+$f_C\le c$. Hence $m_C\le r$. Active horizons and representatives can
+change; no common limiting law is required. At $r=1$ the same comparison
+follows from $m_C<1$.
+
+Conversely select a finite minimizer by one uniform-seed partition of its
+complete tables. Execute it in its own original class: $N$ obtains the
+whole preselected schedule, and $O$ executes its increasing schedule to
+first queried zero or exhaustion. Emit actual marks. Every seed and
+source hands off finitely and measurably, with zero advice and at most
+two actual requests. Every actual first absence through nine has error
+at most $m_C$ by (8.1). For every actual $n>9$, (1.3) gives
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+=\max\{1-p_+(0),a_n\}\le m_C,
+\tag{8.4}
+$$
+
+because the positive row holds and $a_n\le5\tau\le m_C$.
+This finite minimizer attains original error at most $m_C$.
+The preceding comparison with every original competitor proves equality
+and original attainment, separately for $N$ and $O$.
+
+The definition (8.1) uses only the first nine amplitudes. Equation (8.4)
+works for every allowed continuation, including $a_{10}=5\tau$, so both
+original minima are separately tail independent on exactly this domain.
+Counted completion gives $m_N\le m_O$; (5.4) and Theorem 7.2 give the
+two lower bounds, and the common law gives $U$.
+No equality of the two complementary minima follows from existence.
+The attained minimizer meets every cap at least $m_C$, and the lower
+comparison excludes every smaller positive cap.
+$\square$
+

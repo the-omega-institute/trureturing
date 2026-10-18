@@ -1,0 +1,28 @@
+## 9. Exact classified branches and the precise residual set
+
+Let
+
+$$
+Q_2=\{(a,b)\in[0,A]\times[0,B_0]:
+6a^2\le(1-a)(1-2b)\}.
+\tag{9.1}
+$$
+
+The exact values established by the preceding proofs, always with
+$a=|s|,b=|t|$, are:
+
+| Parameter branch | Exact value and proof |
+| --- | --- |
+| $a=b=0$ | $k=1$, Theorem 3.1. |
+| $Q_2\setminus\{(0,0)\}$ | $k=2$, with a finite list and all-complex necessity in Theorem 3.1. |
+| $P_3\setminus Q_2$ | $k=3$, finite polygon lists and the support-two lower bound. |
+| $b=B_0$, $a_0<a\le A$ | $k=4$, horizontal kernel exclusion and finite universal upper list. |
+| $a=A$, $\beta<b\le B_0$ | $k=4$, vertical budget exclusion and finite universal upper list. |
+| $7a+3b>5\sqrt3/2$ | $k=4$, solely the inherited strict witness and finite universal upper list. |
+
+All branch endpoints stated as closed are included. In particular
+$(a_0,B_0)$ and $(A,\beta)$ have exact value three.
+The support-two region lies in $a\le a_0$ by (3.7).
+Every signed axis and every zero/singular/repeated case is included by
+Sections 2–7.
+

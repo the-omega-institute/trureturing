@@ -1,0 +1,118 @@
+**Theorem 6.1 (full original recut criterion).** Under Assumption 1.3 and
+Definition 4.1, let $(S_0,B,\tau)$ be the exact nonempty description from
+Theorem 5.2. For every allowed $N$, the following are equivalent:
+
+1. A deterministic effective source-total serial service recovers the
+   entire original $R_Q$ with a uniform finite new-read budget.
+2. Such a static service exists at $N$.
+3. $\tau=0$ or $Q$ is complete.
+
+The third condition is effectively decidable from the common input and
+$Q$. In the positive cases one can construct a static consumer and a
+finite read bound independent of $N$, with addresses depending on $N$.
+In the negative case the obstruction holds on the entire given fiber,
+including all additional retained constraints.
+
+Proof. On the whole orbit $\kappa(T_k)=k$. The supplied right-spine reply
+formula in [SLH, §2][SLH] gives, at physical epoch $N$,
+
+$$
+\begin{array}{c|cccc}
+r_{T_{N+k}}(R^a)&\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\
+\hline
+N+k&<2a&2a&2a+1&\ge2a+2.
+\end{array}
+\tag{ARH.6.1}
+$$
+
+For a known candidate $j$, one paid read at
+$R^{\lfloor(N+j)/2\rfloor}$ tests $k=j$: accept just the leaf reply
+$\alpha$ if $N+j$ is even, or $\beta$ if it is odd. Equation (ARH.6.1)
+proves both directions **on the entire orbit fiber**. This is a use of
+the supplied clock, not a new unknown-tree equality port; outside the
+orbit, a clock match would not identify a tree.
+
+If $\tau=0$, $S=S_0$ is finite and nonempty. Test candidates in a fixed
+order except the last. On a match compute and output the complete
+$R_Q(T_j)$; on no match use the last candidate. The exact fiber formula
+proves source-total correctness. A sufficient budget is
+$|S_0|-1$, including zero for a singleton. All missing original $Q$
+addresses and their concrete outside portions are computed from the
+identified original tree. No current recut is substituted for it.
+
+Suppose $\tau=1$ and $Q$ is complete. Define
+
+$$
+B_Q=\max\bigl(\{0\}\cup\{w(q^-)+2:q\in Q,\ q\ne\varepsilon\}\bigr),
+\quad D=\max(B,B_Q),\quad A=S\cap\{0,\ldots,D-1\}.
+\tag{ARH.6.2}
+$$
+
+The finite $A$ is effectively obtained from (ARH.5.1). For every $k\ge D$
+all $Q$ addresses are originally reached. The entire outside is the
+complete finite trie of $Q$, with its leaves replaced by the numbered
+holes. Its complete partition is
+
+$$
+q\sim r\quad\Longleftrightarrow\quad w(q)=w(r).
+\tag{ARH.6.3}
+$$
+
+Indeed the full hole values are $T_{k-w(q)}$ and $T_{k-w(r)}$ and their
+indices are injective. Thus (ARH.6.3) and the trie give one **complete row**
+for every source in the allowed tail, even though their unknown hole values
+are unbounded.
+
+Test every $j\in A$ by (ARH.6.1). A match selects its exact finite-tree
+row; if all reject, the exact source characterization implies $k\ge D$,
+so output the complete tail row. The read budget is at most $|A|$.
+There is no read in the tail branch beyond those finitely many tests and
+no new update. If $Q=\{\varepsilon\}$, its single-hole row is constant
+on all sources and can instead be returned with zero reads. Either
+consumer handles the boundary, without a minimum-budget claim.
+
+For comparison with the existing template interface, the same positive
+construction may test each finite candidate by the delayed whole-tree
+certificate of [SLH, Theorem 55.3][SLH]. Summing its $\ell(T_j)$ costs
+gives another sufficient bound valid even against arbitrary finite
+non-orbit competitors. The smaller displayed bounds here use the actually
+retained orbit consequence. Both methods pay their real raw requests.
+They are consumers of Theorem 5.2, not replacements for its entire-fiber
+proof.
+
+For necessity suppose $\tau=1$ and $Q$ is incomplete. Choose $r$
+incomparable with every $q\in Q$. For all sufficiently large allowed
+$k\ge B$, $r$ is reached, and the whole subtree $T_{k-w(r)}$ is part of
+the **concrete outside** of $R_Q(T_k)$. No $Q$ hole meets that cone. As
+$k$ varies through this tail those subtrees are pairwise distinct, giving
+infinitely many complete target rows on this very $U$. The inherited
+finite-transcript argument in §2 permits at most $4^K$ terminal outputs
+for any uniform $K$-read serial service. Such a service cannot output
+this infinite image.
+
+There is also a direct full-fiber witness to failure of (ARH.2.2).
+For any proposed $h$, choose distinct allowed $k,l$ sufficiently large
+that $k,l\ge2h+2$ and the preceding $r$ is reached. At every original
+address of length at most $h$, both sources reply branch by (ARH.4.3).
+Their full outside subtrees at $r$ differ. They satisfy all retained
+conditions because both belong to the exact tail of (ARH.5.1), yet their
+complete $Q$ rows differ. This witness excludes static and real serial
+services by (ARH.2.3). It does not discard any old disequality.
+
+We have proved $3\Rightarrow2\Rightarrow1\Rightarrow3$. All finite
+candidate construction, row computation and integer/trie work terminate.
+The tests use the same register at $N$. A test for $j$ has physical address
+length $\lfloor(N+j)/2\rfloor$; the length sum is the sum over actual
+tests. Template alternatives have exactly the separately stated address
+costs in [SLH, §55][SLH]. Computation, stored descriptions, installation,
+entry, certification, archives and complete output are additional costs.
+These statements bound new raw calls only, and make no general minimax
+or joint-resource optimality assertion. $\square$
+
+Outputting the row does not create a new access cut that forgets
+$R,H_0,H_{\rm rel}$ or the new actual replies. Subsequent source fibers
+still include every accessible field, as in [SLH, Proposition 68.3 and
+(SLH.72.5)][SLH]. In particular, the positive tail branch is justified by
+the retained relation, not by a fabricated acquisition of its unknown
+whole trees.
+

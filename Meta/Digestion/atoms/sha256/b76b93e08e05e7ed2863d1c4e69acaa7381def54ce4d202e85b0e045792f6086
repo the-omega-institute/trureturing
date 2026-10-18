@@ -1,0 +1,35 @@
+**Proposition 10.1 (a fixed feasible processor).** Define
+
+$$
+g(t)=\frac{f_5(t)+f_{27}(t)}2,
+\qquad (\Phi_0\rho)_{\rm live}=\frac7{11}\rho,\qquad
+(\Phi_0\rho)_i(dt)=w_i g(t)\operatorname{tr}(\rho)P_f\,dt
+                         \quad(i=0,\ldots,4).
+\tag{CG.73}
+$$
+
+There is no other output mass. This is one common CPTP map on all $V$.
+
+Proof. The live branch is a positive scalar multiple of the identity
+channel and every stopped branch is CP trace-and-prepare. The endpoint
+failure masses are $1-s_5=6/11$ and $1-s_{27}=2/11$, so
+
+$$
+\int_0^1g(t)\,dt=\frac4{11},\qquad
+\frac7{11}+\sum_iw_i\int_0^1g(t)\,dt=1.
+\tag{CG.74}
+$$
+
+Thus the joint map is trace preserving. Its constants use only the fixed
+public catalogue, not the actual height or either sign. One ideal
+realization keeps the old specimen live with independent probability
+$7/11$; otherwise it resets that specimen into the absorbing stopped
+state, chooses the original mode with distribution $(w_i)$ and records
+an exact time with normalized density $(11/4)g(t)$. There is no operation
+after failure. This is a specification of a common simulated output law
+in the enlarged class, with the same ideal measurable-time convention
+as (CG.20), not a finite physical sampling or source-actuation theorem.
+It requires no copy, replacement, callback, source parameter, helper or
+new acceptance event. Fixed common metadata are carried identically.
+Both zero-weight original modes remain named. $\square$
+

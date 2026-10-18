@@ -1,0 +1,17 @@
+**Proposition 67.4 (The sufficient test is strictly nonnecessary).** Reuse, without changing or reconstructing it, the attained family of Theorem 57.2. With its published parameters,
+
+$$
+\beta=\frac r{1-1/k},\qquad \alpha=1-\beta,\qquad
+R_\mu=r,\qquad 0<h\le r<1-1/k.
+$$
+
+Every occupied cylinder contains every tag color and sources of arbitrarily large $\Omega$, by its retained coloring property (56.4). The common original-target submeasure is exactly $\alpha\delta_o$: another color gives each tag zero mass, and an actual sufficiently high target gives each fixed proposal tape zero mass. All targets have the same base restriction $\alpha\delta_o$. Therefore
+
+$$
+a_C=\alpha\quad(C\text{ occupied}),\qquad
+\kappa=\alpha,\qquad 1-\kappa=\beta>r=R_\mu.
+\tag{67.13}
+$$
+
+The lawful attainer in Theorem 57.2 still exists. In contrast, Theorem 67.2 excludes proportional containment at coefficient $1-r$, since $1-r>\alpha$. This diagnoses strict nonnecessity even in the retained all-source truthful positive-row class, under every allowed profile. It is a calculation on the published example, not a new example or a classification of unrestricted TV caps.
+

@@ -1,0 +1,45 @@
+**Proposition 12.1 (Transition, upper range and model attainment).**
+For $\tau\ge1$,
+
+$$
+T_4(\tau)=\tau,\qquad
+e_{4,\mathsf C}^{\rm aff}(Z)=2\sqrt{ZH}=\sqrt{2Z(1-Z)}
+\quad\hbox{for all four contracts}.
+$$
+
+The height encoder with zero decoder attains this value throughout
+$2/3\le Z<1$. No lawful state maximizes that witness's error,
+including at the transition.
+
+Proof. Every scalar profile has $J_\tau\ge\tau$ from $x=1$.
+For zero,
+
+$$
+s(x)^2+\tau x-\tau=(1-x)(x-\tau)\le0
+\qquad(0\le x\le1,\ \tau\ge1).
+$$
+
+Its maximum is $\tau$, proving $T_4=\tau$. Multiplying by
+$16H^2$ gives squared value $4ZH$. The height encoder is
+$E_{\rm h}(k,\alpha,\beta)=K=k$, initialized at $K=k_0$,
+with zero decoder. It has exact probability map $K\mapsto K+a$,
+phase map $K\mapsto K$, and path map $K\mapsto K+\Delta$.
+Its straight and full path guards are exactly $0<K+a<H$ and
+$0<K+\eta(u)<H$ at all prescribed times. These formulas also
+give every truncation and finite concatenation. It is the
+inherited witness of [M, Theorems 10.1–10.2] and [O, Proposition
+8.1 and §9], and fits the at-most-four budget in every class.
+
+Its original squared pointwise error is
+
+$$
+16k(H-k)+4Zk=4ZH+4(H-k)(4k-Z)<4ZH
+\qquad(0<k<H,\ Z\ge4H).
+$$
+
+Its supremum is $4ZH$ by interior approach to $H$. At
+$Z=4H$, the difference is exactly $-16(H-k)^2$. Thus the
+model attains its error infimum without a maximizing source
+state, as claimed. This also supplies the upper-range part
+of T3 independently of any divergent spectral limit. $\square$
+

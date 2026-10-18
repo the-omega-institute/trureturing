@@ -1,0 +1,74 @@
+**Definition 1.2 (all twelve inputs and their targets).** Put
+
+$$
+\begin{aligned}
+p_y&=(y/128,(64-y)/128,1/2),& a_y&=(\sqrt{p_{yi}})_i,\\
+U_{e,n}&=\operatorname{diag}(e,n,1),&
+\rho_{y,e,n}&=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\\
+d_y&=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},
+                         \frac y{2(y+6)}\right),&
+B_y^{\rm tar}&=(\sqrt{d_{yi}d_{yj}})_{ij},\\
+s_y&=y/(y+6),& f_y(t)&=6y/(y+6t)^2,\\
+w&=(0,1/4,1/2,1/4,0),&P_f&=|f\rangle\langle f|.
+\end{aligned}
+\tag{QO.4}
+$$
+
+The independent signs satisfy $e=(-1)^{\beta_{\rm hist}/\pi}$,
+$n=e(-1)^m$, and $en=(-1)^m$. The physical input is
+$E\rho_{y,e,n}E^\dagger$. Its ideal live block is
+$EU_{e,n}B_y^{\rm tar}U_{e,n}^\dagger E^\dagger$, and its ideal
+failure measure in each original label $j$ is $w_jf_y(t)dt\,P_f$.
+Labels $1$ and $3$ remain distinct; labels $0$ and mode $13$ remain
+named zero measures. The live trace is $s_y$ and
+$\int_0^1 f_y=1-s_y$.
+
+The source-indexed ideal instrument uses $d_{\rm ramp}=6/256$,
+$c_{\rm wall}=1/4$ and
+
+$$
+\begin{aligned}
+K_x^{\rm tar}&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c_{\rm wall}-x-d_{\rm ramp})}
+ {(x+d_{\rm ramp})(c_{\rm wall}-x)}},
+ \sqrt{\frac{x}{x+d_{\rm ramp}}}\right),\\
+\mathcal I_{x,2}(dt)(A)&=
+ \frac{d_{\rm ramp}x}{(x+d_{\rm ramp}t)^2}
+ |f\rangle\langle2|A|2\rangle\langle f|\,dt,\\
+\mathcal I_{x,j}(dt)(A)&=
+ \frac{c_{\rm wall}}{2(c_{\rm wall}-x)}
+ \frac{d_{\rm ramp}x}{(x+d_{\rm ramp}t)^2}
+ |f\rangle\langle1|A|1\rangle\langle f|\,dt\quad(j=1,3),\\
+\mathcal I_{x,0}&=\mathcal I_{x,4}=0 .
+\end{aligned}
+\tag{QO.5}
+$$
+
+Writing this target family does not install the unknown $x$ in a
+common processor. Available metadata and blanks have one common fixed
+state: no-failure flag, aligned clock, source/preparation/epoch,
+calibration, permissions and controller state. There is no readable
+old height, phase, waveform, generator word, source programme, callback,
+environment port or helper specimen. Independent ancillas, coins,
+computation and finite adaptive operations can be included in one common
+CPTP map on the whole complex algebra.
+
+For complete target $\Omega_{y,e,n}$, the original error remains
+
+$$
+E(\Phi)=\max_{y,e,n}\frac12
+ \|\Omega_{y,e,n}-\Phi(E\rho_{y,e,n}E^\dagger)\|_{1,\rm cq}.
+\tag{QO.6}
+$$
+
+This is HALF the full cq norm on all twelve constraints. It counts
+every live coherence, each separately labelled exact-time measure,
+singular or atomic additions, wrong support, abort, rejection and all
+extra sectors, including those with zero ideal weight. A common
+dominating measure defines the matrix-valued measure norm without bins.
+First executed failure is absorbing, with no later positive-carrier
+action, copy, reset, retry, reversal or replacement. Old stopped
+archives and controller updates remain in their original branches.
+Elapsed $t$ means absolute time $6+t$, and live output occurs at elapsed
+one. No outcome is deleted and no mass is divided by survival or acceptance.
+

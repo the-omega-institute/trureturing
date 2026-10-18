@@ -1,0 +1,50 @@
+## 5. A finite inverse on the whole data image
+
+**Proposition 5.1.** Arbitrary proposed real data at the positions (2.1) have a common-source realization exactly when the following finite procedure has a passing candidate. A passing effective target is unique.
+
+Interpolate $P$ by (3.5), form (3.6), and require $\chi>0$. Consider the distinct real roots of
+
+$$
+H(k)=-(W-\chi k)(1+2k)(1+3k)
++2Y(1+k)(1+3k)-Z(1+k)(1+2k).
+\tag{5.1}
+$$
+
+Its leading coefficient is $6\chi>0$. Thus it is a nonzero cubic, with at most three distinct real roots by successive division at roots, and at least one by continuity and its opposite limits at the two ends of the real line. Repeated roots are considered once. This is an exact finite algebraic prescription.
+
+For a root define
+
+$$
+C_k=\begin{pmatrix}3g_1&2g_1\\2g_2&g_2\\g_3&0\end{pmatrix},\qquad
+b_k=(W-\chi k,Y,Z)^{\mathsf T}.
+$$
+
+At most one of $g_1,g_2,g_3$ vanishes. The pairwise determinants of the unweighted rows $(3,2),(2,1),(1,0)$ are $-1,-2,-1$. Any two surviving rows are independent, so $\operatorname{rank} C_k=2$ for every real $k$. Cofactor expansion gives
+
+$$
+H(k)=\det[C_k^{(1)},C_k^{(2)},b_k].
+\tag{5.2}
+$$
+
+Consequently $H=0$ is exactly consistency of all three equations $C_k(t,v)^{\mathsf T}=b_k$, including the required right-hand side of an erased row.
+
+Define only the available quotients from
+
+$$
+V_1=(W-\chi k)/g_1,\qquad V_2=Y/g_2,\qquad V_3=Z/g_3.
+$$
+
+Use any surviving pair:
+
+| Surviving rows | $t$ | $v$ |
+|---|---|---|
+| $2,3$ | $V_3$ | $V_2-2V_3$ |
+| $1,3$ | $V_3$ | $(V_1-3V_3)/2$ |
+| $1,2$ | $2V_2-V_1$ | $2V_1-3V_2$ |
+
+Equation (5.2) ensures the remaining row. Form $p,q,r$ by (3.2), require them positive, and set $s=qr/p$. Form the single polynomial (3.9). Require $\deg D\le d$ and every original equation (1.1) at every recorded index $0,\ldots,d+4$, including every erased reading. The degree test is automatic here but is included in the image criterion.
+
+**Proof.** For actual data all identities above hold, the true slope is a root, and a surviving pair returns its true $t,v$. Positivity and every original equation pass. Conversely a passing candidate supplies a strictly positive rank-one $S$, one real slope, and one whole polynomial of the required degree. Equations (1.2)–(1.4) realize it on exactly (2.2) with positive unread states and a fixed row. The checked equations produce all proposed data. Section 4 excludes two passing targets. This proves necessity, sufficiency, and the whole-image inverse. ∎
+
+A zero-gain terminal reading still equals $P(i)$ and remains an interpolation datum. At $k=-1,-1/2,-1/3$ one early reduced row is erased and the other two remain independent; (5.2) retains its zero right-hand-side condition. Gain at zero is one. Gain zeros elsewhere, roots between samples, negative gains, arbitrary signs of readings, $k=0$, zero coefficients, lower actual degrees, and complete polynomial cancellation impose no additional restriction. There is no compulsory division by any gain sample or leading polynomial coefficient. Divisors are fixed nonzero integers, selected surviving gains, and the proved-positive entry $p$.
+

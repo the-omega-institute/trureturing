@@ -1,0 +1,18 @@
+**Theorem 6.3 (general-target single-body cycle).** For every target
+in $\mathcal A_{\mathrm{gc}}$, each decoder on its authentic body returns
+exactly $h_k,W(h_k)$. Each arrow terminates and emits the next independent
+view of that same $h_k$. The composite returns the identical initial S
+body. Each accepted canonical body re-encodes identically.
+
+Proof. Lemma 3.3 gives the two shape inverses. Theorem 4.3 supplies
+input completeness for their recovered raw record and the memory
+body, including every general-target frontier. Reselection checks all
+memory fields after replay, so partial callable annotations do not
+justify their own recovery. For T, induction over checked records uses
+their own supplied bits and Lemma 2.6. Lemma 5.3 supplies binding tests
+for this exact acquired target. CYCLE's direct encoders then compute
+the independent definitions, hence the next view and its canonical body.
+Their existing finite path/list traversals and the decreasing replay
+countdown prove termination. Composition gives the stated identity.
+No original-task assertion is used in any of these steps. ∎
+

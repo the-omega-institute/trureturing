@@ -1,0 +1,40 @@
+**Lemma 4.2 (exact motif decoders and failure of an own donor).** The
+relation $B_*$ is jointly admissible for every target in $W_3$ and every
+finite native experiment word. Both projections equal $P$, on which no
+own-coordinate experiment determines the $LL$ target.
+
+**Proof.** The $LL$ factor has four values. Every experiment in $W_3$
+other than $RL$ has at most three replies. The $RL$ reply merges $u_0,u_1$,
+whose $LL$ factors differ. Length-three words are functions of their
+length-two parent replies, and longer words are absent by Supplier 1.5.
+Zero Reads cannot determine a nonconstant factor. This exhausts arbitrary
+finite own-coordinate words.
+
+In $B_*$, $LL$ is recovered from the mate's $RL$ reply using
+
+$$
+\mathsf{absent}\mapsto(3,0),\quad \alpha\mapsto(2,1),\quad
+\beta\mapsto(1,0),\quad\mathsf{branch}\mapsto(2,0).
+\tag{NDR.22}
+$$
+
+The same rule works in both directions because $\tau^2=1$. The complete
+selection rule is
+
+$$
+\begin{array}{c|ccccccc}
+\text{target}&\varepsilon&L&R&LL&LR&RL&RR\\\hline
+\text{donor}&\text{none}&\text{own}&\text{own}&\text{mate}&\text{own}&\text{own}&\text{own}\\
+\text{word}&\text{constant}&L&R&RL&L&RL&R.
+\end{array}
+\tag{NDR.23}
+$$
+
+The root factor is $(0,0)$. For $L,R$, map alpha, beta, branch to
+$(2,1),(1,0),(0,0)$ on attained replies. For $LR$ read $L$ and map
+alpha, beta, branch to $(4,1),(3,1),(2,1)$. For $RL$ read $RL$ and map
+absent, alpha, beta, branch to $(3,0),(2,1),(1,0),(0,0)$. For $RR$ read
+$R$ and map alpha, branch to $(4,1),(2,1)$. The tables verify all seven
+targets in both coordinates. Equation (NDR.4) then gives every authentic
+count, not merely the initial readout. $\square$
+

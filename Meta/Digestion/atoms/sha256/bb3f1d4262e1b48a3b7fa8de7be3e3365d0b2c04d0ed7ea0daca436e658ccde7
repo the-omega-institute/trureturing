@@ -1,0 +1,26 @@
+**Assumption 1.4 (supplier domains).** Mathematical supplier statements
+are read at the immutable revision
+`85caf5d972e524bfd6ea2ce348443b62770f7bff` [SUPPLIER-PIN]. In particular:
+
+- [NIC, Theorems 3.2–3.3 and 4.3][NIC] supplies exact finite mixed covers,
+  preserving the same original source in the completeness direction.
+- [URR, Corollary 3.2 and its scalar-preserving NSF argument][URR]
+  supplies exact existential rank projection. Its fixed residual section
+  applies to a Cartesian negative piece and is not an entire image identity.
+- [NIC, Proposition 5.3][NIC] supplies finite atomic-navigation cases
+  with designated ranks retained. [NSF, Lemma 5.1][NSF] supplies exact
+  fixed observation, guard and complete-row compilation.
+- [NLC, Theorem 6.1][NLC] decides contact of two exact full-row strata
+  at a supplied finite constructor context filled with $\Omega$.
+  YES constructs actual finite sources at every requested depth;
+  NO identifies a stratum and a finite excluded prefix of that context.
+  It imposes no finite-image premise on the other row strata.
+- [NPL, Theorem 5.3][NPL] decides the whole full-row image's finiteness
+  and enumerates precisely all attained rows in the finite case.
+
+These are ordinary theorem suppliers. Reading their statements or their
+related Lean source does not certify this new application in Lean.
+Their distinct domains are retained below rather than treating finite
+feasibility, a rank-support section, or one contact certificate as a
+complete stopping procedure.
+

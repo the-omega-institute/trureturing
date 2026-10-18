@@ -1,0 +1,14 @@
+# Native signed feasibility and bounded observation interfaces
+
+This volume proves an existential decision theorem for the actual finite
+Fibonacci tree algebra. Its application decides fixed original-prefix
+questions and finite read/update/address-length boxes on entire acquired
+signed fibers. Two additional invariance certificates give complete
+bounded-recovery decisions within their stated domains. The unrestricted
+existence-of-prefix and unbounded-physical-word decisions remain separate
+obligations.
+
+All proofs here are ordinary mathematics. No implemented solver, Lean
+compilation, physical execution, complexity guarantee or independent
+approval is asserted.
+

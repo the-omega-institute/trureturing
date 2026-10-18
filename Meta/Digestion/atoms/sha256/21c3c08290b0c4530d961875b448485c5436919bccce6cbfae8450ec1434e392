@@ -1,0 +1,80 @@
+## 9. Result map, source credit and unresolved optimization
+
+The assertions in this volume have the following dependencies and roles.
+
+| Result | Declarations | Role in the strict comparison |
+|---|---|---|
+| Native current-ray and output interface | 1.1–1.4 | Arbitrary preparation, actual reachability, every signed command and the original Gram factors |
+| Literal and stronger model classes | 2.1–2.2 | At-most coordinate budgets, offsets, unrestricted competitors and exact subclass inclusions |
+| Published all-competitor lower interface | 2.3 | [M, Theorem 6.4] and the bounded-observable floor from [A, §§3–4] |
+| Scalar root and exhaustive contacts | 3.1–3.5 | Exact comparator parameters, strict upper corridor and active set exactly $\{0,x_*,1\}$ |
+| Fixed perturbation and compact-gap estimate | 4.1–4.6 | Descent at all contacts, nonempty $K$, positive $d$, uniform Taylor remainder and prescribed $\varepsilon,\mu$ |
+| Actual four-coordinate affine witness | 5.1–5.5 | Image, fibers, full affine hull, original decoder, signed updates, initialization and original-metric error identity |
+| Full guards and prescribed paths | 6.1–6.4 | Exact recovered height, mixed source term, all-times domains, every truncation and finite concatenation |
+| Contract-matched strict inequalities | 7.1–7.2 | One attaining two-coordinate comparator and one improving four-coordinate model in the combined class |
+| Limits and transition | 8.1–8.3 | Scalar endpoints only, fixed-$Z$ positive margin, parameter limits and a separate height-only equality witness |
+
+The native transport, actual-ray identification, original ten-output
+factorization and simultaneous-path mixed term are inherited from the
+suppliers named at the beginning. Their arguments are reconstructed here
+where needed to verify that the witness addresses the original source.
+The bounded-observable floor and exhaustive two-dimensional minimax
+reduction are reused with the exact correspondence in Theorem 2.3.
+The root, lower contact and two-coordinate annulus are from [M, §§7–9];
+their necessary properties are exposed here so that the perturbation
+and the comparison in each stronger class can be checked directly.
+
+Relative to those two mathematical suppliers, the substantive addition
+is the exhaustive three-point active-set argument used for the specified
+signed two-exponential descent, its positive compact-complement gap and
+uniform explicit remainder certificate, and the actual four-coordinate
+realization of that same perturbed radius. The realization includes its
+exact image, full four-dimensional affine hull, radius-based height
+recovery, original decoder and complete path contract. A two-dimensional
+manifold image is compatible with a four-dimensional affine hull; it
+does not turn this model into a two-coordinate affine competitor.
+
+The arguments use elementary real calculus, strict concavity, the
+intermediate value theorem, compact extrema, Taylor's formula, finite
+linear algebra and exact integration. Source credit specifies the
+inherited theorems; publication status or an endorsement is not a
+substitute for a mathematical premise or one of the new proofs. No
+worldwide-originality or exhaustive-literature claim is made.
+
+The remaining boundaries are part of the result:
+
+- For $0<Z<2/3$, the exact value of $e_{4,\mathsf C}^{\rm aff}$,
+  attainment of its own infimum, and the optimal strict margin remain
+  unresolved in each contract. The displayed positive certificate is
+  sufficient, not optimal. Equality between the four four-dimensional
+  capacities is not asserted.
+- The least dimension permitting strict improvement over the
+  two-coordinate optimum remains unresolved. No three-dimensional
+  plateau is a premise or a conclusion, and no dimension-parity law or
+  general larger-dimension classification follows here.
+- Every source state is an actual current ray with $0<k<H$ and
+  $0<Z<1$, with the strict improvement restricted to $0<Z<2/3$.
+  Scalar support limits do not add endpoint states, retained lifts,
+  history inputs or external height. The positive margin is uniform
+  over the full original open source for fixed $Z$, and over all
+  finite lawful histories, not uniformly positive over the entire
+  parameter interval up to the transition.
+- Only the displayed encoders have the specified $\beta$-circle
+  fibers. The inherited erasure theorem concerns bounded affine
+  observables; it does not classify unbounded hidden coordinates or
+  every finite affine factor. No regularity hypothesis is imposed on
+  the competitors in the lower comparison.
+- Noninjectivity and nonphysical decoded vectors are allowed by the
+  contract. Requiring a native physical output, injectivity, a different
+  norm or a restricted command menu would change the problem and would
+  require its own comparison. All preparation rotations and all ten
+  original outputs remain present in the result proved here.
+- The exact constants, initialization, command coefficients and path
+  integrals are real mathematical quantities. No finite-bit storage,
+  conditioning, noise robustness, acquisition, efficient computation,
+  physical implementation, training or empirical machine-learning
+  consequence is supplied. The original finite-hidden-$N$ alternative
+  has no proved identification with this objective and remains
+  unresolved. These are handwritten results, not kernel-verified
+  declarations.
+

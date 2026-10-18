@@ -1,0 +1,26 @@
+**Proposition 3.4 (one attained bit cannot meet the two-call premise).**
+No member of $\mathcal C(T)$ has a singleton attained alphabet. This
+does not assume that both entries are used in advance.
+
+Proof. Reuse NBP Proposition 15.2's movable actual six-source family.
+Choose six distinct branch images $B_d$. On indices
+$0_a,0_c,1,2,3,4$, set $a$ to beta on $\{0_a,1,2\}$ and to
+$B_a$ otherwise; set $c$ to beta on $\{0_c,3,4\}$ and to $B_c$
+otherwise; set $b_j$ to alpha only at $j$ and to $B_{b_j}$ otherwise.
+Every tuple is injective and satisfies Supplier 2.4, so it has an
+actual finite inverse origin. Their five required whole outputs are
+$R_0,R_0,R_1,R_2,R_3,R_4$.
+
+Every finite word has at most two replies on these fixed actual
+sources: exterior words are constant, a partner cone reads one of its
+two fixed trees, and a right cone reads alpha at its index or its one
+fixed branch image elsewhere. Equation (TCR.2) includes all deep and
+absent continuations. If only one bit is attained, all six sources
+start at its one common entry. A deterministic execution tree with
+at most two calls and at most two replies per call has at most four
+terminal leaves. This follows recursively: an initial Halt has one
+leaf, one call has at most two, and two calls at most twice two;
+early stopping cannot increase the count. Each leaf has one fixed
+whole output. It cannot return five different required rows.
+An unused labeled entry changes none of these actual paths. $\square$
+

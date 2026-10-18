@@ -1,0 +1,66 @@
+**Definition 54.1 (a specified algebraic frame).** Keep $t_*,\psi$ of
+§50 and write
+
+$$
+\begin{gathered}
+q(t)=\sqrt{\alpha+\beta t^2},\quad D(t)=A+(1+\beta)t^2,
+\quad t_3=\sqrt{A/\alpha},\\
+\mathcal A(t)=\alpha[\beta-(1+\beta)t^2],\qquad
+\mathcal B(t)=\beta(\alpha t^2-A),\\
+k(t)=\frac{\mathcal B(t)}{t+\sqrt{t^2-\mathcal A(t)\mathcal B(t)}},
+\qquad p(t)=\sqrt{\alpha+\beta k(t)^2},\\
+f_0=\frac{(q(t),-1,-t)^T}{\sqrt{D(t)}},\qquad
+f_1=\frac{(p(t),1,k(t))^T}{\sqrt{D(k(t))}},\qquad f_2=f_0\times f_1.
+\end{gathered}
+\tag{JR.140}
+$$
+
+On $[t_*,t_3]$ these vectors form $F=(f_0,f_1,f_2)\in SO(3)$ and are
+$Q$-null, with positive first coordinates and $01$ product signs $(-,+,-)$.
+Their maximal signed contrast is
+
+$$
+h(t)=2(f_1)_0(f_1)_1=\frac{2p(t)}{D(k(t))},\quad
+h(t_*)=\bar\tau,\quad h(t_3)=\tau_3:=\frac{2\sqrt\alpha}{A}<1.
+\tag{JR.141}
+$$
+
+**Proof.** Orthogonality is the unsquared identity $qp=1+tk$.
+Squaring gives $\mathcal A k^2-2tk+\mathcal B=0$; the rationalized root
+in (JR.140) selects $k<0$ before $t_3$ and $k(t_3)=0$. Its discriminant is
+
+$$
+t^2-\mathcal A\mathcal B=
+\alpha\beta^2A+(1-2\alpha\beta-2\alpha^2\beta^2)t^2
++\alpha^2\beta(1+\beta)t^4>0.
+$$
+
+The three coefficients are positive on (JR.86). Throughout
+$[.85,t_3]$, one has $|k|<.271$, $t_3<1.464$, and hence
+$1+tk>1-1.464\cdot.271>0$; this verifies the unsquared branch.
+For completeness, the bound on $k$ follows from its increasing root:
+
+$$
+k'=(k-q'p)/(q\beta k/p-t)>0,
+$$
+
+whose numerator and denominator are negative, and direct outward
+substitution at $t=.85$ gives $k>-.271$. This differentiation is
+legitimate on the selected smooth root, where both denominators are
+nonzero. The norms and nullity of $f_0,f_1$ follow by substitution.
+Their unit cross product is null since $\operatorname{tr}Q=0$.
+Its numerator is $(t-k,-tp-qk,q+p)$; the bounds above give
+$tp+qk>.85\sqrt{.87770}-.271\sqrt{.87773+.12230(1.464)^2}>.506$.
+This proves the coordinate and product signs. At $t_*$ this is exactly
+the two-null-line completion of $v_*$ in §50. Finally
+
+$$
+\frac{dh}{dk}=
+\frac{2k[\beta^2+2\beta-2-\beta(1+\beta)k^2]}
+{\sqrt{\alpha+\beta k^2}\,D(k)^2}>0\quad(k<0).
+$$
+
+Thus $h'>0$ on $[t_*,t_3)$, while $h'(t_3)=0$ and
+$k'(t_3)=\alpha\beta>0$. All radicals and root denominators remain
+positive on the closed frame interval. $\square$
+

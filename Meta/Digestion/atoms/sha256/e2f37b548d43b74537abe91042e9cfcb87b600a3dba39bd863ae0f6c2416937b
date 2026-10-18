@@ -1,0 +1,34 @@
+**Proposition 12.4 (Quantum correlation of the staggered tangent).**
+For the supplied coherent preparation and parent of Chapter 1,
+put $D=\operatorname{diag}(\sqrt p)$ and $v_S=DS_0$. Then
+
+$$
+\begin{aligned}
+\langle v_S,e^{-tH_{\lambda,\omega}}v_S\rangle&=C(t),\\
+\langle v_S,e^{-itE_0H_{\lambda,\omega}/\hbar}v_S\rangle
+&=\sum_\ell a_\ell e^{-itE_0\ell/\hbar}.
+\end{aligned}
+\tag{12.17}
+$$
+
+Here $E_0>0$ is a supplied physical energy scale. The real-time
+correlation has nonzero spectral weight at excitation energy
+$E_0\gamma$ and angular frequency $E_0\gamma/\hbar$.
+
+Proof. The existing stochastic-matrix-form similarity is
+$H_{\lambda,\omega}=DH_{\rm cl}D^{-1}$, and $D$ is an isometry
+from $L^2(p)$ to the real-amplitude subspace. Apply the same
+finite spectral functional calculus to the two exponential
+functions. Theorem 12.2 gives $a_\gamma>0$. $\square$
+
+The similarity and its spectral correspondence are established
+stochastic-matrix-form mathematics; see [Castelnovo05]. The
+hard-core staggered-overlap theorem supplies the particular
+nonzero spectral weight used here. Imaginary time reproduces
+classical relaxation. Real-time unitary evolution of this finite
+system produces an oscillatory finite sum, so the decay formula
+(12.11) is not a formula for that real-time correlation.
+Equation (12.17) specifies a correlation in the supplied model;
+it supplies neither a measurement protocol, finite-sample error,
+efficient preparation nor control cost.
+

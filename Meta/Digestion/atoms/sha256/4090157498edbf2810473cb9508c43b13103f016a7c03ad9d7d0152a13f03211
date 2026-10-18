@@ -1,0 +1,49 @@
+**Theorem 3.2 (Whole-block CPTP legality).** The explicit maps
+
+$$
+\begin{gathered}
+B_f=\sqrt{c_f}\,b_f^TD^\dagger:\mathbb C^5\longrightarrow\mathbb C,
+\qquad R_f=Da_f:\mathbb C\longrightarrow\mathbb C^5,\\
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,
+\qquad \operatorname{Dec}_f(y)=R_fyR_f^\dagger
+\end{gathered}
+\tag{3.5}
+$$
+
+realize $T_\theta\in\mathfrak C_1$ with fourteen fixed scalar flags.
+Every decoder is CPTP on all of $M_1$, and every composite Kraus matrix
+$R_fB_f$ has rank one.
+
+Proof. The orthogonal sectors make every $b_f$ unit. Every $a_f$ is
+unit since $1176+1681=2857$ and $121+150=271$.
+The quadratic three-point and five-point circle sums give
+
+$$
+\begin{aligned}
+\sum_{k,l}c_{\mathrm A,k,l}b_{\mathrm A,k,l}b_{\mathrm A,k,l}^T
+&=\frac{10}{3}\left(\frac15R_++\frac3{10}R_-\right)
+=\frac23R_++R_-,\\
+\sum_kc_{\mathrm B,k}b_{\mathrm B,k}b_{\mathrm B,k}^T
+&=\frac53\left(\frac35R_0+\frac15R_+\right)
+=R_0+\frac13R_+.
+\end{aligned}
+\tag{3.6}
+$$
+
+Consequently $\sum_fB_f^\dagger B_f=I_5$ and
+$R_f^\dagger R_f=1$ for each flag. Matrix sandwiches remain positive
+after tensoring with the identity at every reference dimension.
+Direct sums prove encoder CP, and sums prove composite CP.
+The normalization identities prove encoder TP and every decoder's TP
+on all complex matrices in its block, rather than just on encountered
+states. The decoded branch is
+$c_fDa_fb_f^TD^\dagger XDb_fa_f^TD^\dagger$; its Kraus matrix is
+nonzero and rank one. All paths traverse the stated scalar block;
+there is no input retention or additional flag supplied to the future.
+
+For each branch, cyclicity of the trace gives
+$\operatorname{tr}(R_fB_fXB_f^\dagger R_f^\dagger)
+=\operatorname{tr}(B_fXB_f^\dagger)$, since $R_f^\dagger R_f=1$.
+The flag probability is therefore unchanged by decoding, and summing
+the branch traces gives $\operatorname{tr}X$. $\square$
+

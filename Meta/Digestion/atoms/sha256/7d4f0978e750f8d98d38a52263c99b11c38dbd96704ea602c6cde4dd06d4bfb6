@@ -1,0 +1,66 @@
+**Proposition 6.2 (The native observable height module fills the hull).**
+Let
+
+$$
+\mathscr M=\operatorname{span}_{\mathbb C}\{\ell A_t:t\in\mathbb R\},
+\qquad q=\dim_{\mathbb C}\mathscr M.
+$$
+
+Then $q=2$. For any basis $\ell_1,\ell_2$ of $\mathscr M$, define
+$w_j(k)=\ell_jF(k,0)$. The affine map from the original actual
+hull to the two complex coordinates
+
+$$
+E(k,\alpha)\longmapsto e^{i\alpha}(w_1(k),w_2(k))
+$$
+
+is a real affine isomorphism. Its height action is an invertible
+complex representation $B_t$ with $w(k+t)=B_tw(k)$ on lawful
+heights. A fixed complex row reads $f(k)$ from $w(k)$.
+
+Proof. The row $\ell$ of Proposition 5.3 annihilates every primary
+block other than $X_\xi$: on another block choose $\delta$ where
+$\chi(\delta)\ne\xi(\delta)$ and invert
+$V_\delta-\xi(\delta)I$ there. Since $A_t$ commutes with every
+phase map and therefore with its polynomial projectors, $\ell A_t$
+has the same support and eigenrow character. Consequently
+$q\le\dim X_\xi\le2$.
+
+If $q>0$, choose a basis of this row module. Its invariance under
+right multiplication by $A_t$ defines an invertible matrix $B_t$
+by
+
+$$
+\ell_jA_t=\sum_h(B_t)_{jh}\ell_h.
+$$
+
+The additive representation law implies the same law for $B_t$;
+the matrices commute. Evaluation on $F$ gives
+$w(k+t)=B_tw(k)$ whenever lawful. All basis rows have character
+$\xi$, so their values at phase $\alpha$ are $e^{i\alpha}w(k)$.
+Writing $\ell$ in this basis gives the fixed scalar row reading
+$f$. Thus $e^{i\alpha}w(k)$, as $2q$ real coordinates, has exact
+lawful height maps $B_a$, phase maps $e^{it/2}I$, and decoder
+$D(f(k)e^{i\alpha},0)$ on its source image. Formula (5.1) and
+Lemma 1.4 show that this decoder's error is at most $\epsilon$.
+If $q=0$ use the zero profile, with the same error comparison.
+
+The vectors $w(k)$ span $\mathbb C^q$. Indeed a linear combination
+of the basis rows vanishing on all $w(k)$ vanishes also at every
+phase, hence on all actual $F$, hence as a row. If $q\le1$, the
+preceding construction would be a literal model with at most two
+real coordinates and error at most $\epsilon<e_2$, contradicting
+Theorem 2.3. Therefore $q=2$.
+
+The two rows in $\mathscr M$, their two conjugate rows of character
+$\xi^{-1}$, and $\lambda_0$ are independent: eigenspaces for
+distinct characters form a direct sum. They exhaust the
+five-dimensional complexified dual. Taking real and imaginary
+parts, the four native rows are independent on the real direction
+space $\ker\lambda_0$. They therefore give a real affine
+isomorphism on the slice $\lambda_0=1$. Its restriction to the
+original actual hull is precisely the displayed coordinate change.
+Thus there is no extra hidden direction beyond the native coordinates.
+This is saturation of the original hull, not merely a lower-error
+quotient. $\square$
+

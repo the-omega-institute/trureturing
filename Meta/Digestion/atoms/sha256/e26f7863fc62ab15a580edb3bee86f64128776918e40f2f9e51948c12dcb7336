@@ -1,0 +1,74 @@
+**Theorem 5.1 (Conditional interior-score balance using old cancellation).**
+Let $P=P_\theta$ be any original stationary legal law satisfying
+$\mathsf Z(P)$, with no band or independent erasure-tail premise required
+for this statement. Suppose distinct words $v,w\in B_L$ have positive
+actual masses and
+$f_C=\alpha\mathbf1_{\{X_C=v\}}-\beta\mathbf1_{\{X_C=w\}}$
+belongs to $\mathcal K_C(P)$, with $\alpha,\beta>0$.
+On their common conditional exterior support,
+
+$$
+\sum_{i\in C}(v_i-q_i(vY))^2
+=\sum_{i\in C}(w_i-q_i(wY))^2
+\quad\text{almost surely}.
+\tag{5.1}
+$$
+
+Here $v_i,w_i$ denote the block coordinates at site $i$; the exterior
+measure can be either of the two equal normalized conditional laws.
+In particular every hypothetical attainer satisfies (5.1) for each such
+pair it possesses. This asserts no positive-pair existence.
+
+Proof. Apply [Two-word, Theorem 2.1][W] directly. It supplies the common
+exterior law $\nu$, the positive balance
+$J=\alpha P(X_C=v)=\beta P(X_C=w)$, and, for every $i\notin C$, equality
+of the original restricted posteriors $q_i(vY)=q_i(wY)$ $\nu$-almost
+surely. The resulting losses agree there too. These are exactly the
+existing cancellation result, including both seam sites; they are not
+reproved here. Its countable conull choice lets us multiply each equality
+by any bounded exterior function, even one involving $X_i$.
+
+Set $B_C(v;y)=\sum_{i\in C}\ell_i(vy)$ and similarly for $w$, and put
+$a(y)=\alpha p_C(v;y)=\beta p_C(w;y)$. Intrinsic nullity gives this last
+identity as an identity of conditional masses, and
+$a\,d\mu_C=J\,d\nu$. Thus $a>0$ on the common positive conditional
+support, up to its null set. No assertion is made on exteriors where
+both conditional masses vanish.
+
+Given any finite exterior-cylinder function $g$, form $h_D=f_Cg$ as in
+(4.4). That tower calculation requires neither (2.1) nor a cocycle, and
+still proves $h_D\in\mathcal K_D(P)$. For every $i\notin C$ the supplied
+posterior restriction gives $\mathbb E_P[h_D\ell_i]=0$. The remaining
+sum is finite, and disintegration yields
+
+$$
+S_P(h_D)=\mathbb E_{\mu_C}[g\,a(B_C(v;Y)-B_C(w;Y))]
+=J\mathbb E_\nu[g(B_C(v;Y)-B_C(w;Y))].
+\tag{5.2}
+$$
+
+Its absolute response sum is at most $LJ\|g\|_\infty$, since each
+conditional loss difference has absolute value at most one. Property
+$\mathsf Z(P)$ makes (5.2) zero for every finite exterior-cylinder
+indicator. The bounded difference $B_C(v;Y)-B_C(w;Y)$ defines a finite
+signed measure against $\nu$. Cylinder uniqueness makes it zero
+$\nu$-almost surely, which is (5.1). Equivalently the weighted contrast
+$a(B_C(v;Y)-B_C(w;Y))$ is zero $\mu_C$-almost surely. Conditional on
+$a>0$ this is the same pointwise equality.
+
+Positive-event conditioning and the common exterior law preserve all
+original $P$-null posterior exceptions, precisely as in the cited theorem.
+There is no need for a zero-block surgery or its integrability here. If
+one selected word has zero mass, intrinsic nullity with positive
+coefficients forces both masses to be zero; then $f_C=0$ almost surely,
+and no conditional pair law or productive witness is obtained. $\square$
+
+The added conclusion is the pointwise interior balance obtained from
+all-length tests. The cancellation itself is reused support. For a pair
+whose interior difference is nonzero on positive $\nu$ probability, the
+same cylinder argument in (5.2) produces a nonzero enlarged-block response
+and contradicts $\mathsf Z(P)$. This is conditional on an actual such
+contrast. [Multiword, Proposition 4.2][M] already exhibits a finite law
+without any positive pair at any length, so pair reasoning does not
+replace the general intrinsic multiword construction.
+

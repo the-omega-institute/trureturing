@@ -1,0 +1,30 @@
+**Theorem 9.1 (failure of total effective selection in the original parameters).** For each fixed order $(j_p,j_\beta)\in\{\mathrm{law},\mathrm{conf}\}^2$, there is no total computable function of $(B,S,b,\epsilon)$ which returns an integer horizon satisfying (2.2) for every observer in the actual published PH37 class $\mathfrak D_\mu(B)$ and every prior in $\mathcal P(S,b)$. This remains false already with fixed
+
+$$
+S=\{1,2\},\quad b=1/2,\quad \mu=(1/2,1/2),\quad
+\epsilon_0=\lambda/8=31/4096,
+\tag{9.1}
+$$
+
+while $B$ varies. The same negative theorem holds for a putative procedure additionally given the observer's effective description and this fixed prior. It concerns universal computation across descriptions; it asserts neither failure for every individual observer nor failure for a separately restricted near-optimal class.
+
+**Proof.** Suppose a total horizon procedure for one fixed order existed. Given an input simple automaton $A_0$ for [GO]'s strict-cutpoint problem, construct Lemma 7.2's $A$ and Proposition 8.1's exact-compatible $M_A$ and sufficient $B_{A_0}$. Run the hypothetical procedure at (9.1) and this budget (or also the description in the stronger hypothetical version). Increase the answer to $H_0\ge7$, which preserves its cap guarantee by monotonicity. Evaluate its original-consumer $\Phi_{H_0}$ exactly by Proposition 8.2.
+
+If no old word has acceptance strictly above $1/2$, Lemma 7.2 gives $V_A\le1/2$. The all-history bound and (6.1) then imply
+
+$$
+\Phi_{H_0}\le C+\lambda/2.
+\tag{9.2}
+$$
+
+If some old word has acceptance strictly above $1/2$, $V_A=1$ and (6.1) gives $\Phi_\infty=C+\lambda$. The assumed original full-tail guarantee therefore implies
+
+$$
+\Phi_{H_0}\ge C+\lambda-\epsilon_0=C+7\lambda/8.
+\tag{9.3}
+$$
+
+Compare the exact rational capped value with $T=C+3\lambda/4$. In the no case it is below $T$ by at least $\lambda/4=31/2048$; in the yes case it is above $T$ by at least $\lambda/8=31/4096$. Both slacks are strictly positive. Equality at the primary cutpoint is in the no case. Neither $V_A=1$ nor $\Phi_\infty$ must be attained. The hypothetical total procedure, finite compilation and terminating finite-cap evaluation would decide [GO]'s verified undecidable strict emptiness problem. Contradiction.
+
+At every query of this constructed family law and conf coincide by (5.3), and its $p$ phase dominates by (5.5). The identical contradiction therefore applies to each of the four orders *separately*, rather than merely preventing a common four-order procedure. Proposition 8.1 proves membership in that very PH37 class, including sequential microsteps, installation, retained random labels, both compatibilities and full original menus; no presentation enlargement is used. The fixed singleton prior set (9.1) satisfies the floor on every supported mass. No disappearing prior mass, arbitrary posterior selection or source-independent mixture replacing a reachable posterior is involved. ∎
+

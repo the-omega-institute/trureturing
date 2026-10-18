@@ -1,0 +1,6 @@
+### 81.5. Attribution, resource interpretation, and boundary
+
+The proof uses standard singular value decomposition, an explicit convex decomposition of a rectangular contraction into isometries, Hilbert--Schmidt projection contraction, the positive-part variational principle, and trace-norm contractivity of pinching; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/) for the matrix and channel background. The new pointwise inequality (3) transfers a common centroid-support witness through the contraction decomposition and, crucially, retains the missing Choi trace in (9)--(10). Section 79 supplies the attaining physical product and its exact arbitrary-reference error. The normalized Choi and Stinespring conventions agree with sections 72 and 74, but no calibration theorem is used here.
+
+The resource d is the dimension of a pure Stinespring environment, or local Kraus rank. A mixed ancilla's purification must be included. Equation (2) is a necessary bound, not a sufficiency statement for arbitrary k,d. At k=4,d=2 the exact value 1/4 is established by the matching construction. The general arbitrary-rank four-fibre optimum remains unresolved; this result does not prove ||G entrywise-multiplied by H-T||_1>=2 when both Gram factors have unrestricted rank.
+

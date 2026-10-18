@@ -1,0 +1,17 @@
+**Counterexample 7.2 (unit signatures disappear at block endpoints).** Take $k=6,m=2,T=7$. The grouped literal continuation
+
+$$
+01\mid11\mid10
+\tag{7.1}
+$$
+
+has identical endpoint archives for the actual sources $W_0=0^{14}$ and $W_3=0^4$. They have the same value zero and actual INITIAL tail zero, but length phases respectively $0$ and $4=-3\pmod7$, hence INITIAL indices zero and three. Each initial history and each continuation in (7.1) is a sequence of complete two-bit blocks, and the longest continuation run is four, below $k=6$.
+
+For $W_0$, the selected continuation positions $1,2,3,4$ are all inactive. For $W_3$, only positions two and three are active, and both lie in the middle complete block $11$, canceling in its endpoint difference. Both archives, including the free initial output, are therefore
+
+$$
+(y_0,y_1,y_2,y_3)=(0,0,0,0).
+$$
+
+A binary target with $B$ at INITIAL indices $3,5$ and $A$ elsewhere assigns these two actual sources different labels. Thus the particular grouped protocol cannot acquire that target. This is a failure of protocol transfer, not target unattainability or a numerical optimum assertion. A wider query must establish actual complete-block separation using the current exclusions, paid position and literal terminal tail; retaining the hidden unit signatures is not legal.
+

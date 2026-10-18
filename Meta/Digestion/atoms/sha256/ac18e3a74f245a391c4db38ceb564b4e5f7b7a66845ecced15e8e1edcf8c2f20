@@ -1,0 +1,58 @@
+**引理 450.1（全部端点预算）。** 写 \(B(v)=\Phi''(v)\)，令
+\(M=\exp(e^{-1})\)。原指数积分身份在每个 \(v>0\) 给
+
+\[
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,
+\quad 0<E_1(v)\le e^{-v}/v,
+\quad \Phi(v)=Cv\exp(E_1(v)),
+\]
+
+\[
+\Phi'(v)=C\exp(E_1(v))(1-e^{-v}),
+\quad
+B(v)=C\exp(E_1(v))e^{-v}\left(1-\frac{1-e^{-v}}v\right).
+\tag{CVP.2}
+\]
+
+对 \(v\ge1\)，整段尾有显式界
+
+\[
+\begin{aligned}
+0<B(v)&\le CM e^{-v},\\
+|\Phi'(v)-C|&\le CM e^{-v}(1+1/v)\le2CM e^{-v},\\
+0<\Phi(v)-Cv&\le CM e^{-v},\\
+v\Phi'(v)-\Phi(v)&=-Cv\exp(E_1(v))e^{-v}.
+\end{aligned}
+\tag{CVP.3}
+\]
+
+在近端，\(0\le\Phi'(v)-1\le v/2\) 对 \(0\le v\le1\) 成立。
+因此 \(B\)、\(vB\)、\(|\log v|B\) 在整个正轴可积，且以下边界
+全部成立：
+
+\[
+\begin{gathered}
+\Phi'(0)=1,\quad\Phi(0)=1,\quad
+\Phi'(v)\longrightarrow C,\quad\Phi(v)-Cv\longrightarrow0,\\
+v(\Phi'(v)-C)\longrightarrow0,\quad
+\log v\,(\Phi'(v)-C)\longrightarrow0,\quad
+v\Phi'(v)-\Phi(v)\longrightarrow0\qquad(v\to\infty),\\
+\log v\,(\Phi'(v)-1)\longrightarrow0\qquad(v\downarrow0).
+\end{gathered}
+\tag{CVP.4}
+\]
+
+**证明。** （CVP.2）的末式是 §444（NS.3）代入同一 Euler 归一化；
+其中 \(0<(1-e^{-v})/v<1\)。当 \(v\ge1\)，有
+\(0<E_1(v)\le e^{-1}\)，从而 \(\exp(E_1(v))\le M\)。再用
+\(e^y-1\le e^y y\)（\(y\ge0\)），得到（CVP.3）的前三行；第四行
+由（CVP.2）准确相减得到，未分别取两个发散项的极限。
+
+近端由 \(\Phi'(v)-1=\int_0^vB(w)\,dw\) 和 \(B\le1/2\) 得界。
+\(\int_0^1|\log v|\,dv=1\) 支付近端对数可积性；远端以
+\(\log v\le v\) 和 \(CM e^{-v}\) 支付。\(vB\) 的近端有界、
+远端由 \(CMve^{-v}\) 支付。（CVP.3）与
+\(v|\log v|\to0\)、\(ve^{-v}\to0\)、\(e^{-v}\log v\to0\) 给
+（CVP.4）。原（CVP.1）的近段有界，远段被 \(2CM e^{-v}/v\) 主导，
+所以两段均绝对收敛。证毕。
+

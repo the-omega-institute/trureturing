@@ -1,0 +1,52 @@
+**Theorem 25.2 (source-specific bounded-alternation recovery).** On $\mathcal H_3^{[d]}(\mu)$ the acquired boundary $\mathcal B$ and whole raw $G_{4d+13}$ are injective. This suffices at unbounded raw lengths for all sixteen seed/marker tags.
+
+Proof. For each finite raw word define the alpha-gap polynomial
+
+$$
+F_h(t)=\sum_{\text{raw alpha positions }r}t^{\#\text{ betas strictly before }r}.
+\tag{SC.60}
+$$
+
+Its coefficient at $t^a$ is the number of alphas in gap $a$ of the word $\alpha^{g_0}\beta\alpha^{g_1}\cdots\beta\alpha^{g_B}$. Thus $F_h$ and $B$ recover $h$. The right-bounded-block supplier used in Theorem 15.1 gives, directly by choosing the preceding betas,
+
+$$
+c_{\beta^i\alpha}(h)=\sum_{a\ge i}\binom ai[t^a]F_h(t)
+=\frac{F_h^{(i)}(1)}{i!}.
+\tag{SC.61}
+$$
+
+Equality of the whole $G_k$ therefore makes $F_h-F_{h'}$ vanish to order at least $k$ at $t=1$. Positions in this counting identity are analysis indices, not supplied occurrence identities or a clock.
+
+The new ingredient is the profile of the actual stopped grammar. Put $q=|u|_Y$, let $y$ run over preceding-$Y$ counts at each $X$ retry, and set
+
+$$
+\begin{aligned}
+d_i&=2q+1+\sum_{r\le i}j_r+2\sum_{r<i}b_r,\\
+E_{1,q}(t)&=t^{2q+1},\qquad
+E_{0,q}(t)=t^{2q}-t^{2q+1}+t^{2q+2},\\
+L_0(t,a)&=t^a-t^{a+1},\qquad
+L_1(t,a)=-t^{a+1}+t^{a+3}.
+\end{aligned}
+$$
+
+Then every actual normal form satisfies
+
+$$
+(1-t)F_h(t)=
+2\sum_{X\text{ retries}}(t^{2y}-t^{2y+1})
++E_{\rho,q}(t)-t^{B+1}+\sum_{i=1}^3L_{b_i}(t,d_i).
+\tag{SC.62}
+$$
+
+To verify it, each rejected $X$ contributes two actual alphas at beta count $2y$, and the accepted seed contributes $t^{2q}$ or $t^{2q+1}$. Assign provisionally one alpha after each payload beta. These terms are $\sum_{a=2q+2}^{B}t^a$, whose product by $1-t$ is $t^{2q+2}-t^{B+1}$, including an empty sum. Every return already agrees with this assignment. A zero completion adds its actual alpha at beta count $d_i$, giving $L_0$; a one completion deletes the two provisionally assigned alphas at $d_i+1,d_i+2$, giving $L_1$. Combining the seed term with the initial endpoint gives $E_{\rho,q}$. This accounts for every retry, seed, return and completing letter, including absent retry kinds and zero-length return stretches.
+
+Compare two histories with the same $\mathcal B$ and $G_k$. Theorem 6.2 gives the same $\rho,b$, and the counts give the same $B$. In
+
+$$
+H(t)=(1-t)(F_h(t)-F_{h'}(t)),
+$$
+
+the endpoints $-t^{B+1}$ cancel. The third completion also cancels, since $d_3=B-2b_3$ is fixed. Grouping retries by their preceding-$Y$ count gives at most $2D(u)+2D(u')$ monomials. The two remaining completion corrections from each word contribute at most eight monomials, and the two seed corrections at most six. Therefore $H$ has at most $4d+14$ distinct nonzero monomials. Coincident exponents and further cancellations only reduce that number.
+
+A nonzero polynomial with $s$ distinct nonnegative monomial exponents has zero multiplicity at most $s-1$ at $1$. Indeed vanishing derivatives of orders $0,\ldots,s-1$ would put its coefficient vector in the kernel of the matrix $((n_j)_i)_{0\le i<s,1\le j\le s}$, where $(n)_i$ is the falling factorial. These monic degree-$i$ polynomials have the nonzero Vandermonde determinant $\prod_{a<b}(n_b-n_a)$ at distinct exponents. This standard finite moment argument is used only as an intermediate step. With $k=4d+13$, cutoff equality makes $H$ vanish to order at least $k+1=4d+14$, impossible unless $H=0$. Hence $F_h=F_{h'}$, and the common $B$ recovers the same raw word. $\square$
+

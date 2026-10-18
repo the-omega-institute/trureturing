@@ -1,0 +1,28 @@
+**对象与常数。** 沿用 §441 的完整实际素数前缀：\(z\ge2\) 为素数，
+\(p\) 为严格大于 \(z\) 的最小素数，两侧统一使用 \(L=\log p\)。仍令
+
+\[
+E_z(s)=\prod_{q\le z}(1-q^{-s}),\qquad C_z=E_z(1)^{-1},\qquad
+F_z(v)=C_zE_z(1+v/L),
+\]
+
+\[
+H_z(v)=F_z(v)(1-e^{-v})-v,\qquad
+J_z(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_z(v)}{v^2}\,dv.
+\]
+
+乘积包含全部 \(q\le z\) 的素数，\(\sigma>0\) 时积分绝对收敛。
+保持 \(C=e^{\gamma_E}>1\)、\(\Phi(v)=\exp(\operatorname{Ein}(v))\)
+以及 \(Q(u)=u\zeta(1+u)\)。常数 \(A,Z_0,Z_1,B_*\) 均为（PX.14）
+中的原常数，特别地
+
+\[
+Z_0=\int_0^1\frac{1/Q(u)-1}{u}\,du,\qquad
+Z_1=\int_1^\infty\frac{du}{u^2\zeta(1+u)},\qquad
+B_*=A+C(Z_0+Z_1).
+\]
+
+以下全部前缀极限均沿实际素数 \(z\to\infty\) 取得。参数
+\(\alpha>0\) 固定，\(t\) 位于固定的正紧区间 \([a,b]\subset(0,\infty)\)。
+各前缀极限式中的 \(o(1)\) 均在该 \(t\) 区间上一致成立。
+

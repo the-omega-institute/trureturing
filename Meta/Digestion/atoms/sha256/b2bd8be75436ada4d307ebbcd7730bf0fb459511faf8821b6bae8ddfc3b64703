@@ -1,0 +1,20 @@
+### 外部数学锚点
+
+离散熵曲率与 Markov 链的研究已经给出另一条成熟的几何路线：有限 Markov 链可用熵沿离散运输度量的凸性定义 Ricci 型下界，并证明曲率界的张量化。该路线可作为本节 \(CD_G\) 证书之后的后续桥接，但不能把两种曲率定义视为同一对象。参考 Erbar--Maas, *Ricci curvature of finite Markov chains via convexity of the entropy*, [arXiv:1111.2687](https://arxiv.org/abs/1111.2687)。
+
+因此，当前文件同时保留两条可检验路线：
+
+\[
+\begin{aligned}
+&\text{有限 }CD_G\text{ 二次型}
+\longrightarrow
+\text{谱隙、热流衰减、有效电阻界};\\
+&\text{离散熵凸性曲率}
+\longrightarrow
+\text{运输度量、熵梯度流、可能的 metric-measure 极限}.
+\end{aligned}
+\]
+
+两条路线的共同输入是有限 Markov/Dirichlet 数据。它们的极限识别、相互等价及其与物理引力的关系，都必须另行证明。
+
+

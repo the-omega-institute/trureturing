@@ -1,0 +1,46 @@
+**Proposition 7.2 (inherited full-family preparation and attained names).**
+For the full-family preparation specified in OCC §7.1, the separate
+preparation account is
+
+$$
+T_{\rm prep}=2^D-1,\qquad Q_{\max}\le D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+$$
+
+The prescribed unrefined complete attained name alphabet on all
+$\mathcal F_D$ has size
+
+$$
+|S_D|-(2^m+1)^\ell+1.
+$$
+
+Replacing the merged name by full phase-vector names instead gives
+$|S_D|-(2^m+1)^\ell+2^\ell$, an addition of $2^\ell-1$ names.
+
+Proof. The inherited preparer Reads all literal $Rq$ with
+$|q|\le D-1$, including initially absent targets, to compute the
+canonicalized right subtree and its complete name. Its claimed
+correctness for every variable-shape source uses Assumption 1.3;
+there is no free boundary array. There are
+$\sum_{j=0}^{D-1}2^j=2^D-1$ words, with maximum length $D$.
+The letter sum is
+
+$$
+\sum_{j=0}^{D-1}(j+1)2^j=(D-1)2^D+1.
+$$
+
+For completeness this identity is $1=1$ at $D=1$; increasing $D$
+by one adds $(D+1)2^D$, transforming its right side to
+$D2^{D+1}+1$, the required next value.
+
+The scaffold map is injective and Lemma 2.3 gives exactly
+$M=(2^m+1)^\ell$ canonical states in its image. Merge those
+$M$ states into one name and give every other canonical state a
+separate name. Every canonical state is attained as an actual right
+subtree, so the entire attained alphabet has $|S_D|-M+1$ elements.
+This count includes names outside the testing support; a fixed-width
+encoding can have unused bit patterns without changing attained
+cardinality. Every phase vector occurs, so replacing that one name by
+its $2^\ell$ phase-vector refinements gives the other count. The
+same already paid scan can compute that refinement. $\square$
+

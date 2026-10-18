@@ -1,0 +1,38 @@
+**定义 C-111.1（同一纤维及固定坐标中的两个矩阵）。** 沿用 C-108.1 的
+条件性实际局部菜单、C-109.1 的原标签、$f,J,V,W$ 与全部复输入合同，记
+
+$$
+\mathcal I=\{C=I_5/5+iA:A\in M_5(\mathbb R),\ A^T=-A,\ C\succeq0\}.
+\tag{C111.1}
+$$
+
+因此 $J\mathcal I J^\dagger$ 恰为 C-108.3 中与 $S$ 具有全部相同实际历史律的
+完整人口纤维。$k(C)$、$\operatorname{SN}_{A\mid B}$、
+$T_C(X)=(5C)\circ X$ 与 $q_{\rm exact}$ 均按 C-109.1–C-109.3 定义；
+稀疏性始终在原系数坐标 $j=0,\ldots,4$ 中计算，依次对应
+$(0,1,2,3,13)$，不在另一个基中重新定义。
+
+令 $\omega=e^{2\pi i/5}$，并在这些原坐标中定义向量和投影
+
+$$
+u_m(j)=\frac{\omega^{mj}}{\sqrt5},\qquad
+P_m=u_mu_m^\dagger,\qquad m,j\in\{0,1,2,3,4\}.
+\tag{C111.2}
+$$
+
+指数按模五解释，负指数取单位圆上的逆。定义
+
+$$
+\begin{aligned}
+C^{\rm F}&=\frac15(P_0+2P_1+2P_2),\\
+C^{\rm E}&=\frac15\bigl[
+(e_0-ie_4)(e_0-ie_4)^\dagger+
+(e_1-ie_3)(e_1-ie_3)^\dagger+e_2e_2^\dagger
+\bigr].
+\end{aligned}
+\tag{C111.3}
+$$
+
+$u_m$ 是指定原坐标中书写矩阵的辅助向量，不增加傅里叶控制、相位门、制备能力
+或读出操作。$C^{\rm E}$ 是 C-108.5 的 $t=1$ 矩阵在同一标签识别下的写法。
+

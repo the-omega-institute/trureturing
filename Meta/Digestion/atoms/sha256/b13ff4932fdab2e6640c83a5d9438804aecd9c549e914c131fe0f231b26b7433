@@ -1,0 +1,15 @@
+**定义 3.2（动态充分边界）。** $q$ 动态充分，指合法域、标签和后继在实际像 $q_i(S_i)$ 上自主且精确地下降。使用 [过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 定理 3.2 的严格响应纤维判据，其具体条件为
+
+$$
+q_i(s)=q_i(t)\Longrightarrow
+\bigl(s\in D_a\iff t\in D_a\bigr),
+$$
+
+且在合法时
+
+$$
+\ell_a(s)=\ell_a(t),\qquad q_j(F_as)=q_j(F_at).
+$$
+
+必要性来自下降映射单值；充分性由 $\overline F_a(q_i(s))=q_j(F_as)$ 与代表元无关而得，并沿有限路径归纳。仅保当前显示值不足以满足该接口。
+

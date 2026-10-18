@@ -1,0 +1,82 @@
+### 87.4. Exact range certificate and minimization
+
+The following algebraic reduction is useful; it is not a physical rotation of the equality disphenoid or a change of the target bit basis. Set ρ=√(1−x²), and form the auxiliary coefficients H_a,g_a by substituting (x,0,ρ) into (13)–(18). They are well-defined rational expressions even though this auxiliary point is outside the classified equality family. Apply
+
+\[
+ Q_x=\begin{bmatrix}1&0&0\\0&z/\rho&y/\rho\\0&-y/\rho&z/\rho\end{bmatrix}
+\]
+
+to each of the three-vector coordinate groups (Im u,Re v,Im v), leaving their scalar coordinates unchanged. On the two free d coordinates use d_x↦d_x and d_y↦−xy d_x/ρ²+z d_y/ρ. Denote this invertible fourteen-dimensional map by L_x. Direct substitution using σ_aσ_b=δ_abI+iε_abcσ_c and x²+y²+z²=1 gives
+
+\[
+ L_x^TH(x,y,z)L_x=H_a(x),\qquad L_x^Tg(x,y,z)=g_a(x).
+                                                               \tag{19}
+\]
+
+This identity includes all fourteen rows and columns. In particular H_a is positive semidefinite by congruence with the physical H; no positivity assumption at an unphysical auxiliary frame is used.
+
+Here is an explicit certificate for the remaining singular quadratic minimization. In the auxiliary coordinates let I=(2,7,12,4,10), namely (Im u_y,Re v_z,d_x,Re v₀,Im v_y), and put a=x². The source restricted to these coordinates, and the constant, are
+
+\[
+ g_I=\begin{bmatrix}
+ -7\rho(4a-1)/(8(7a-1))\\
+ -x\rho(4a^2-a+3)/(8(a+1)(7a-1))\\
+ -3/(8(7a-1))\\ x/2\\ -\rho(a-1)/(4(a+1))
+ \end{bmatrix},
+ \qquad q_0=-{a(7a^2-26a+1)\over8(a+1)(7a-1)}.          \tag{20}
+\]
+
+The principal matrix H_I is block diagonal with blocks
+
+\[
+ \begin{bmatrix}
+ {21a\over4(7a-1)}&{3x(a-1)\over4(7a-1)}&{-7\rho\over8(7a-1)}\\
+ {3x(a-1)\over4(7a-1)}&{3a^3-3a^2+46a-4\over28(a+1)(7a-1)}&
+ {-x\rho(a+5)\over8(a-1)(7a-1)}\\
+ {-7\rho\over8(7a-1)}&{-x\rho(a+5)\over8(a-1)(7a-1)}&
+ {-3\over4(a-1)(7a-1)}
+ \end{bmatrix},
+ \quad
+ \begin{bmatrix}
+ {15a-1\over7(7a-1)}&{x\rho\over7(7a-1)}\\
+ {x\rho\over7(7a-1)}&{a(13a-1)\over7(a+1)(7a-1)}
+ \end{bmatrix}.                                         \tag{21}
+\]
+
+Define the five-vector
+
+\[
+ z_I=\begin{bmatrix}
+ -\rho(a+6)/14\\ x\rho/2\\ a-1\\
+ (5a-1)(5a+1)/(16x^3)\\
+ -\rho(17a^2-14a+1)/(16x^4)
+ \end{bmatrix}.                                         \tag{22}
+\]
+
+Let z be its fourteen-dimensional extension by zero. Substituting (13)–(18) gives the full range identity, including every omitted and every gauge coordinate,
+
+\[
+ H_a z=g_a.                                              \tag{23}
+\]
+
+In particular this is stronger than checking only H_I z_I=g_I. All denominators in (19)–(23) are nonzero for 2/7≤a≤3/7 and for the original physical y,z>0. Equations (19) and (23) can also be checked purely by reducing numerators modulo ρ²−1+x² and z²−1+x²+y²; they are rational identities, not sampled numerical equalities.
+
+Completion of squares is now valid despite the Hessian zero modes:
+
+\[
+ \xi^TH_a\xi+g_a^T\xi+q_0
+   =(\xi+z/2)^TH_a(\xi+z/2)+q_0-g_I^Tz_I/4,
+ \qquad
+ q_0-g_I^Tz_I/4={(1-a)(7a-1)^2\over256a^2}.              \tag{24}
+\]
+
+The first term is nonnegative and vanishes at ξ=−z/2. Transport by L_x and permutation of the axes gives (7). Every minimizing tangent is an actual tangent of the smooth calibrated comparison manifold, so normalized local retractions realize it by a physical path (6).
+
+For the sharp uniform bound, differentiation gives
+
+\[
+ c'(a)={-49a^3+15a-2\over256a^3}.
+\]
+
+The numerator is concave for a>0, and its values at 2/7 and 3/7 are 8/7 and 4/7. It is therefore positive throughout the interval. Thus c increases, with c(2/7)=35/1024 and c(3/7)=7/144. The endpoints occur in allowed disphenoids, proving (8) and sharpness.
+

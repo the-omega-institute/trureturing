@@ -1,0 +1,4 @@
+# Four recorded-clock tests, exhaustive constant-diagonal classification, and finite collisions with affine gain
+
+Two additional necessary determinant equalities strengthen the two credited off-diagonal tests for five-read constant-drift recovery in a specified diagonal endpoint stratum. An infinite family passes both earlier tests and every noninitial erasure-span test but fails the added conditions. The complete regular class satisfying all four equalities is then classified: its endpoints are forced to be the single history $H_3$, whose finite positive-source collision therefore excludes the whole class. The mirrored upper-left stratum has the same classification. The unrestricted constant-drift optimum remains $5\le C_{\mathrm{fix}}(0)\le6$.
+

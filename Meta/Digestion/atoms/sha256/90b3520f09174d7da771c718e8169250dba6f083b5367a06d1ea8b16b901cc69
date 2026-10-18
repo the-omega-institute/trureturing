@@ -1,0 +1,13 @@
+**Lemma 3.3 (Finite interval image forces triviality).** If an abstract
+homomorphism $h:(\mathbb R,+)\to S^1$ has finite image on one nonempty
+open interval, it is identically one.
+
+**Proof of Lemma 3.3.** Suppose at most $M\ge1$ image values occur
+there. Fix any real $y$ and an interior point $a$. For a sufficiently
+large integer $q$, the $M+1$ points $a+jy/q$, $0\le j\le M$,
+all lie in the interval. Two have the same image, so
+$h(y/q)^d=1$ for some $1\le d\le M$. Raising to the $q$th power
+gives $h(y)^d=1$. Thus every image element has exponent dividing
+$M!$. Divisibility now gives
+$h(y)=h(y/M!)^{M!}=1$ for every $y$. $\square$
+

@@ -1,0 +1,13 @@
+**数学引文 0.3（既有来源的所有权）。** 五模式、金字塔、归一化底面参数、关联纤维、行列式和原生回复表均复用既有卷。五份完整仓内来源取固定修订 [b8737c08f592e4df700978f25fb046d5a458f3c8](https://github.com/the-omega-institute/trureturing/tree/b8737c08f592e4df700978f25fb046d5a458f3c8)；二阶卷所用条款取 [671ed2dcaf09d2f97799de233fc38e896911c248](https://github.com/the-omega-institute/trureturing/blob/671ed2dcaf09d2f97799de233fc38e896911c248/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)。下表给出实际消费者，不把重新排列公式计作新结果。
+
+| 既有来源 | 本卷直接使用的内容 |
+| --- | --- |
+| [关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)，定义 1.1、1.3、7.1，定理 1.4 | 有序树、替换、二维组成、数量行、高到低即时读者和实际空窗 |
+| [基础公式与原子关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，§§二–七，定义 11.6、数学引文 11.7、命题 11.8，§十三 | 五模式、占位体、完整关联纤维、指定目标充分性与同源继续回复 |
+| [金字塔关联与原生接续](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)，§§二–四、十 | 五面八棱、非正则度量、正方形截面、纤维宽度、仿射标定与换尺区别 |
+| [行列式与原生守卫](AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)，§§四、九，定义 10.4、命题 10.5–10.6 | 条件关联的尺度、奇偶档案后继续的回复律，以及精确律和单份档案的取得区别 |
+| [双曲几何与相位边界](AURIC_FIB_HYPERBOLIC_GEOMETRY_AND_PHASE_BOUNDARY.md)，§§三、七 | 二维组成矩阵、实际三步窗口贡献、选择模板与表示层边界 |
+| [二阶关系完成](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)，定义 24.1、命题 24.2、定理 25.2，定义 107.1、112.1 | 五模式组成及接缝；附加相干比较和经典通道混合各有独立实现合同 |
+
+## 一、欧氏正多边形的直角分界与总转向
+

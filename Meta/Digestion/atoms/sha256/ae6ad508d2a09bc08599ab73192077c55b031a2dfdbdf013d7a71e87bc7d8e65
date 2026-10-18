@@ -1,0 +1,16 @@
+**推论 78.10（Sharp selector budgets and uniform laws）。** In the selector, every deterministic exact policy satisfies
+
+$$
+\max_a c_P(a)\ge L(n-1),\qquad
+\max_a r_P(a)\ge n-2.
+$$
+
+Both lower bounds are attained by every permutation policy. A common restore budget $R<n-2$ is infeasible; for every integer $R\ge n-2$ the minimum worst read count is $L(n-1)$. Under the uniform law on all $n$ originals, the simultaneous minimum expected counts are
+
+$$
+\min_P\mathbb E[c_P]=\frac{L(n-1)(n+2)}{2n},\qquad
+\min_P\mathbb E[r_P]=\frac{(n-2)(n+1)}{2n}.
+$$
+
+Proof. Domination in 78.8 supplies the maximum bounds. Dividing the two sums in 78.9 by $n$ supplies both expectation bounds. Every permutation policy attains both together. These equalities describe frontier optima, not every policy's costs. More restorations cannot improve a vector below this frontier. For $n=1$, immediate return instead gives $(0,0)$; the displayed $n\ge2$ restore formula is not used there. Combined with 78.5, this proves that $n-2$ is the sharp universal deterministic worst-restoration guarantee. $\square$
+

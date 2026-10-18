@@ -1,0 +1,11 @@
+**定义 101.1（明确的 Pauli 与四元数提升）。** 在 $\mathbb C^2$ 上取
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad a=-iX,\quad b=-iY,\quad c=ba=iZ.
+$$
+
+设 $x=(u,v)\in\mathbb F_2^2$，以 $0,1$ 整数代表指数，固定 $L(x)=b^v a^u$。这些矩阵提升第28章的标准四元数：$i\mapsto a,j\mapsto b,k\mapsto ab=-c$，原生 $\gamma=\langle\beta,\alpha\rangle$ 对应 $c$。
+

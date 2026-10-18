@@ -1,0 +1,76 @@
+**Theorem 65.3 (actual contrast, attained TV and sharp joint cost).**
+The actual generated instrument has
+
+$$
+\mathsf V=s_0\tau(a),\quad
+\mathsf W=(1-\delta)A_{27}=\mathsf C(s_0\tau(a)),\quad
+\operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+})
+=T_{\rm flat}-\frac{g}{2H\mathcal E}.
+\tag{RC.60}
+$$
+
+It has twelve physical acquisition labels for $0\leq a<a_\dagger$
+and eleven at contact. These are construction counts, not universal
+lower bounds for physical-label alphabets.
+
+Proof. The $A$ contacts have $u>0$, hence positive height by JR.133;
+$n^TGn>0$ and $Z^TGZ<0$ by Proposition 60.2. Thus the four low
+height signs in (RC.55) are $(+,+,+,-)$ and their actual reports are
+$(+,+,-,-)$. They are individually aligned with their $01$ products.
+The low contrast moment is
+$\sum r_i(h_i)_0(h_i)_1=2A_{01}=\tau$; high, failure and complement
+reports are fair. JR.136 therefore gives $\mathsf V=s_0\tau$,
+which satisfies exactly the original contrast inequality with equality.
+No other effect entry is imposed.
+
+For coordinate-$0$-one rays $q_i=(1,u_i,v_i)$ write
+$h_i=\sqrt{\pi_i}q_i$. Their exact coefficient weights are
+
+$$
+\pi_+=w_+,\quad\pi_-=w_-,\quad
+\pi_B=-\frac{RD}{2\sigma H},\quad
+\pi_C=\frac{Z_0^2}{2H\mathcal E}.
+\tag{RC.61}
+$$
+
+Their actual Born probabilities on a history are instead
+
+$$
+p(i\mid y,e,n)=\|K_iU_{e,n}a_y\|^2.
+\tag{RC.62}
+$$
+
+The weights satisfy $\sum\pi_i=1$ and are not input priors or
+acquisition probabilities. A unit-vector presentation has outer-product
+weight $\pi_i\|q_i\|^2$, again not a Born probability. At contact the
+three surviving unit-vector weights are $1$; at the contrast endpoint
+the four coordinate-$0$-one weights are $1/4$.
+
+Because these low labels are actually generated and retained, their
+absolute height-difference sum is
+$\operatorname{tr}(GA)+\operatorname{tr}(GB)-\operatorname{tr}(GC_0)
+=j(\tau)$. The two generated high labels contribute
+$(1-\delta)\Delta A$, and the spectral failure readout contributes
+$\|\Xi\|_1=L_f$; complement contributes zero on the supported histories.
+HALF their sum is (RC.60)'s TV. For arbitrary original instruments,
+analytic refinement yields only an upper inequality. In particular the
+endpoint gain relation is
+$T_{\rm instr}-T_0\leq-\mathbb E\mathfrak r$ with $\mathfrak r$
+defined by JR.159;
+equality requires the actually generated refined labels and optimal
+spectral failure readout. It is valid for this construction, not for a
+hidden Kraus index of another realization.
+
+Only the two high fibres have dimension at least three. Their total
+probability is $(1-\delta)A_y$ on every $(y,e,n)$, maximized at $27$.
+JR §§34–40 proves that this is the sharp original worst-history cost,
+not merely the cost within the canonical-channel family. All
+future-accessible input-bearing specimen, memory, quantum controller,
+environment, return systems and entanglement shares count jointly in
+each fibre at this same cut. Unretained dilation systems are permanently
+inaccessible; retaining one would change the resource accounting.
+There are four low, two high, four spectral and two complement labels,
+or one fewer when $h_+=0$. Multi-Kraus physical labels can group
+products, so neither this count nor the four real contact rays proves
+a physical-label minimum. $\square$
+

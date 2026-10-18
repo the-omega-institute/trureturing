@@ -1,0 +1,23 @@
+**Definition 4.1 (the lifted six-atom class).** Let
+$$
+X=S^1\times[0,1],
+$$
+where $(u,v)\in S^1$ is a direction and $\xi$ is the endpoint interpolation parameter. Let $\mathcal Q_6$ be the laws on $X$ represented by at most six atoms. For $(u,v,\xi)$ use the eight lifted columns $\Gamma_\xi$ and the lifted height
+$$
+H_\xi=\ell+t\,c\,\xi f
+$$
+from [OE, Definition 3.1]. Impose the eight moment equations
+$$
+\int_X\Gamma_\xi\,d\mu=B(1000)
+$$
+and the contrast constraint
+$$
+K(\mu)=\int_X|u|\,d\mu\ge\kappa.
+$$
+The objective is
+$$
+J(\mu)=\int_X|H_\xi|\,d\mu.
+$$
+The corresponding HALF objective is $(H_{\rm high}+J(\mu))/2$; the high term is fixed by the retained source interface.
+A zero coefficient is allowed as padding; the class therefore includes all original competitors with at most six supported nonzero low actual labels under Assumption 1.2.
+

@@ -1,0 +1,30 @@
+**References 10.2 (primary literature and scope).** H. Comon and
+P. Lescanne, [*Equational Problems and Disunification*][CL], §3.2
+Proposition 2 and Lemma 1, Appendix B.3, and §6.2 distinguish finite
+and rational free-term algebras from general equational theories.
+Their nontrivial syntactic disequation lemma uses infinite ground sort
+carriers; Appendix B.3 uses the finite, in its one-variable induction
+at-most-one, solution property. Section 6.2 explicitly withholds the
+preceding results for general equational theories. These are
+literature-attested elimination and separation methods. They do not
+justify using a free occurs check on native interpreted $\rho$:
+$\rho\beta=\langle\beta,\alpha\rangle$ is an actual finite solution
+of a feedback equation that such a replacement would mishandle.
+
+This companion uses syntactic unification only after NSF's exact normal
+branch reduction, on its free shape terms, and uses native rank
+translation for its all-depth witnesses. Rational-tree equations such
+as (NLC.25) describe prefix limits, but no rational-tree solution is
+used to assert finite satisfiability of signed native rows. The finite
+sources in (NLC.28) establish that property separately.
+
+The bounded source comparison is the listed native repository
+suppliers, their public and private observer interfaces, pinned
+`FreeMagma` source and the cited primary disunification passages.
+It does not establish literature-wide originality or the nonexistence
+of another unrestricted decision method. Lemmas 3.3–3.4, Theorems
+4.1 and 6.1, and the fixed-row-pair boundary in Theorem 8.4 are classified
+as repo-derived ordinary results. The normal-code correspondence,
+finite feasibility, image classification, fixed-budget decisions and
+paid serial/static equivalence are credited reusable suppliers.
+

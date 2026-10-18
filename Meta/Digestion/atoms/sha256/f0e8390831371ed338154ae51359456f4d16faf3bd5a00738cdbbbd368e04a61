@@ -1,0 +1,62 @@
+#### 定理 2：FIB 单项式构成全部状态函数的基
+
+函数族
+
+```math
+\{x_A:A\in\Sigma_n\}
+```
+
+构成向量空间
+
+```math
+\mathbb R^{\Sigma_n}
+```
+
+的一组基。
+
+##### 证明
+
+首先证明线性无关。假设
+
+```math
+\sum_{A\in\Sigma_n}c_Ax_A=0.
+```
+
+在状态 $s_I$ 上取值，得到
+
+```math
+\sum_{A\subseteq I}c_A=0.
+```
+
+当 $I=\varnothing$ 时，
+
+```math
+c_{\varnothing}=0.
+```
+
+假设所有真子集 $A\subsetneq I$ 的系数都已经为零，则在 $s_I$ 上有
+
+```math
+c_I+\sum_{A\subsetneq I}c_A=0,
+```
+
+因此
+
+```math
+c_I=0.
+```
+
+按 $|I|$ 归纳可得所有 $c_A=0$，所以这些函数线性无关。
+
+另一方面，
+
+```math
+|\Sigma_n|=\dim\mathbb R^{\Sigma_n},
+```
+
+而基函数的个数也是 $|\Sigma_n|$。因此它们构成一组基。
+
+证毕。
+
+---
+

@@ -1,0 +1,60 @@
+**Proposition 261.6 (Sharp finite distance within an original feasible
+profile at every length).** Let $L\ge3$ and
+
+$$
+d=\frac1{4(L-1)},\qquad G=(L-2)d=\frac14-d,\qquad
+0<\eta\le\frac34,
+\qquad a_1=\cdots=a_L=\frac12+d,\quad e=\frac12.
+\tag{261.8}
+$$
+
+Take the complete mixture consisting of mass $d$ on
+$R=O(1,2;1,2,0)$, mass $3/4-\eta$ on $O(1,2;0,2,0)$,
+mass $d$ on each $O(2,j;0,j,1)$ for $3\le j\le L$, and
+mass $\eta$ on $N(1,2;0,1,2,0)$. Then both $p$ and
+$\mathcal T p$ are cap-$1/2$ feasible, with exact error $1/2$, and
+
+$$
+\omega(p)=\eta,\qquad\rho(p)=\frac\eta3.
+\tag{261.9}
+$$
+
+Append any positive monotone vanishing tail with $a_{L+1}\le1/2$.
+These finite laws give original cap-feasible laws. The sharp distance
+in (261.9) is to the finite unrestricted $O_L$ class.
+
+**Proof.** The weights sum to $d+3/4+G=1$.
+In class one the correct mass is at least $d$. When bit two is zero,
+base mass is $3/4+G=1-d$ and correct mass is $d$.
+When bit two is one, base mass is $3/4-\eta$, while correct
+mass is at least $d+\eta$, so the pair mass is at least $3/4+d$.
+In class two the correct mass is $3/4+d$ and base mass $G$.
+In every later class the correct mass is $d$ and base mass $3/4+d$.
+The positive base mass is $3/4+d$. Base demands are $-d$,
+correct demands $d$, and pair demands $1/2$, so every row holds.
+Later classes give exact correct deficit $1/2$.
+
+Only the exceptional component changes. Its three daughters have
+correct masses at least the old required $d$ in every class. In
+class one with bit two zero their pair event retains all of that
+component; with bit two one the pair lower bound remains $3/4+d$.
+In class two its pair mass is at least two thirds of its old mass,
+so the total pair mass is at least $1-\eta/3\ge3/4$.
+Later pair masses decrease by at most $\eta/3$, leaving at least
+$3/4+2d-\eta/3\ge1/2$; their correct mass remains $d$.
+The new positive base is $3/4+d-\eta/3\ge1/2$.
+This proves all converted rows and exact error $1/2$.
+The actual tail formula (251.9) proves the original claim, with ties.
+
+Each of the unchanged components attains four in the utility
+(261.7), whereas the exceptional component attains six.
+Thus $p$ has utility $4+2\eta$. Uniform distance $r$ from an
+$O_L$ law can lower that utility by at most $6r$, proving
+$r\ge\eta/3$. The displayed decomposition and (261.5) give
+the reverse bound and force $\omega(p)=\eta$.
+These amplitudes are already supplied by Section 113.
+They lie outside $H_L$ because $b_2=b_3=1/2+d$ but
+$E=(L-2)(1/2+d)-(L+1)/2<0$.
+No new original feasibility region or arbitrary-address sharpness
+of this particular family follows from its finite utility. $\square$
+

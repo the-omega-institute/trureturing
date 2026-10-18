@@ -1,0 +1,5 @@
+source_id = "kbonacci-fee-three-deadline-four-memory-price"
+path = "docs/develop/theory/KBONACCI_FEE_THREE_DEADLINE_FOUR_MEMORY_PRICE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

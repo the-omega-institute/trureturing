@@ -1,0 +1,54 @@
+**Theorem 3.3 (correctness, present-query invariant and joint attainment).**
+For every $d\ge1$, every finite $u$ and every $|q|\le d$,
+
+$$
+J_d(E_d(u),q,r_u(W_d(E_d(u),q)))=G_q(u).
+\tag{LTR.10}
+$$
+
+The selected word has length at most $d$. On either designated fiber
+$E_d(u)=P_d$ or $E_d(u)=Q_d$, its reply is never absent, for every
+such $q$. Every code in $\mathcal C_d$ is attained by an actual tree
+of height at most $d$, and
+
+$$
+|\mathcal C_d|=2^{2^{d-1}}.
+\tag{LTR.11}
+$$
+
+Proof. Induct simultaneously on $d$. At $d=1$ the root is always
+present. On code $0$ every target queries that root leaf; on code
+$1$ a length-one target queries a present child of a branch. The
+replies and (LTR.3) prove correctness and the invariant. The leaf
+alpha attains $0$ and $\langle\alpha,\alpha\rangle$ attains $1$.
+
+For the induction step the root target is handled directly. Consider
+$q=br$. If $u=\langle u_L,u_R\rangle$, its selected reply equals
+$r_{u_b}(W_d(E_d(u_b),r))$. Usually (LTR.9) invokes the induction
+decoder, yielding $G_r(u_b)=G_q(u)$ by homomorphism. The two special
+absent cases cannot occur on such a branch: at code $(P_d,P_d)$
+the child has code $P_d$, so its selected query is present; likewise
+for $(Q_d,Q_d)$. Thus no branch is incorrectly declared a leaf.
+
+If $u=\alpha$ its code is $(P_d,P_d)$ and every nonempty selected
+word is absent. The first case of (LTR.9) gives exactly $G_q(\alpha)$.
+For $u=\beta$ the second case gives $G_q(\beta)$. This uses absence
+as a guarded distinction between the absorbed root leaf and branch
+sources in the same code, rather than transporting from an absent
+address. The query is chosen without $k$, so (LTR.4) then proves
+correctness for every later count.
+
+The two new cross-pair designated codes contain only branches: they
+differ from both diagonal leaf codes. Their selected child has one
+of the two old designated codes, making its selected reply present.
+Their root query is present as well. This proves the invariant and
+the distinctness of the designated codes at the next depth.
+
+The length bound follows from (LTR.8). For attainment, realize any
+$c_L,c_R\in\mathcal C_d$ by the inductively supplied actual trees,
+and pair those trees. This one tree simultaneously attains the desired
+pair code and has height at most $d+1$. Hence the whole Cartesian
+code alphabet is attained. The recurrence
+$|\mathcal C_1|=2$, $|\mathcal C_{d+1}|=|\mathcal C_d|^2$ gives
+(LTR.11). $\square$
+

@@ -1,0 +1,17 @@
+**定义 A-25.1（秩坐标）。** 对每个素数 $p$，唯一分解
+
+```math
+z(p)=2^{a_2(p)}3^{a_3(p)}5^{a_5(p)}7^{a_7(p)}E(p),
+\qquad \gcd(E(p),210)=1,
+```
+
+其中各 $a_r(p)$ 为非负整数，$E(p)$ 为正整数。定义
+
+```math
+X(p)=a_2(p)+a_7(p),\qquad
+Y(p)=a_5(p)+a_7(p),\qquad
+Z(p)=a_3(p),\qquad \kappa(p)=a_7(p).
+```
+
+此处的 $(X,Y,Z)$ 对应[《Robin 约数尺度几何》§6](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)的 $(u,w,v)$，采用低位、高位、中位的次序。纤维指保持 $(X,Y,Z)$ 相同的素数集合；不要求 $E$ 相同，也不由这些坐标恢复 $E$。
+

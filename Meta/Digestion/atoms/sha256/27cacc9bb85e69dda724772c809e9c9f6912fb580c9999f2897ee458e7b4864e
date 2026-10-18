@@ -1,0 +1,16 @@
+### 七、隐藏 seam 的 Fibonacci 层级
+
+定义 $r$ 阶观测空间
+
+```math
+V_n^{(r)}
+=
+\operatorname{span}
+\left\{
+x_A:
+A\in\Sigma_n,\ |A|\leq r
+\right\}.
+```
+
+它表示所有至多 $r$ 阶联合占据量都可以测量。
+

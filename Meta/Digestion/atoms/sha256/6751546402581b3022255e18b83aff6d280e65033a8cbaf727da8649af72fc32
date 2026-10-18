@@ -1,0 +1,12 @@
+### 93.4. Real and zero-denominator branches
+
+If B=0, then c=−1/λ is real. Whenever c is real, its stationary equation forces a² real. The possibility a²=−q gives one squared error (1/2+q)²>1/4 and is impossible. Hence a²=q, so a,b are real. Since |c|≠1, the determinant condition becomes
+
+\[
+ (1-c)(1+c-2q)=0,\qquad q=\frac{1+c}{2},
+ \qquad
+ E=\left(c^2-\frac14\right)^2+\frac3{16}\ge\frac3{16},       \tag{9}
+\]
+
+again impossible. Thus every minimizing stationary point has B≠0 and Im c≠0. In particular the vanishing-denominator branch has been exhausted rather than canceled.
+

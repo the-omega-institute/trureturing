@@ -1,0 +1,16 @@
+##### 动态路径 seam
+
+```math
+[U_a,U_b]
+=
+U_aU_b-U_bU_a
+```
+
+描述不同局部变化顺序之间的差异。
+
+三态 FIB 中的 $\kappa$ 属于第一类。它不是由于算子不交换造成的，而是由于一阶观测没有记录 $x_1x_3$。
+
+项目中机器核对的 $2\times2$ 矩阵反例正好提醒我们：不能把静态交换结构自动推广为所有动态算子的交换结构。[96e0ba0](https://github.com/the-omega-institute/trureturing/commit/96e0ba0ecebaa879b1e01d4789272761d506186c)
+
+---
+

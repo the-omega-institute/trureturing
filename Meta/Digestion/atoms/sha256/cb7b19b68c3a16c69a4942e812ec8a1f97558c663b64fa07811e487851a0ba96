@@ -1,0 +1,102 @@
+**Theorem 36.2 (Root resolution of the supplied face layers).**
+For $k\ge3$ one has
+
+$$
+E_k(m,t)=
+\sum_{\substack{2\le j\le k-1\\t\ge j,\ m-t\ge j+1}}
+\binom{t-j+k-1}{k-1}
+\binom{m-t-j+k-1}{k}.
+\tag{36.2}
+$$
+
+For $k=2$ the sum is empty and $E_2(m,t)=0$. Let
+
+$$
+\nu=(3;\mathbf1_V),\qquad
+C_{k,b}=\omega_{R_{k,b}}/X^\nu R_{k,b}.
+\tag{36.3}
+$$
+
+Then the complete degree counts are
+
+$$
+\begin{aligned}
+\dim_{\mathbb C}(\omega_{R_{k,b}})_m
+ &=\sum_{t=0}^{m}I_k(m,t)^b,\\
+\dim_{\mathbb C}(X^\nu R_{k,b})_m
+ &=\dim_{\mathbb C}(R_{k,b})_{m-3}
+   =\sum_{t=0}^{m}B_k(m,t)^b,\\
+\dim_{\mathbb C}(C_{k,b})_m
+ &=\sum_{t=0}^{m}\bigl((B_k(m,t)+E_k(m,t))^b-B_k(m,t)^b\bigr).
+\end{aligned}
+\tag{36.4}
+$$
+
+The right sides are zero for $m<0$. For $b=2$ the last summand is
+$2B_k(m,t)E_k(m,t)+E_k(m,t)^2$ at each common root occupancy.
+
+Proof. In the local canonical classification used in Theorem 35.4,
+translation by $\nu_1$ is exactly the range $\delta\ge k-1$.
+It changes the boundary by $(3,1)$, giving the ordinary count $B_k$.
+The remaining exponents are exactly the disjoint free face layers
+
+$$
+p=\nu_j+s_0,\qquad 2\le j\le k-1,\qquad\delta(s_0)=0.
+\tag{36.5}
+$$
+
+These are Miyazaki's Lemma 4.4 layers, with the parameter and shift
+correspondence in Theorem 35.4; their additive face coordinates are
+(31.13)–(31.14). To retain the root, write $s_0=(q,d)$ and put
+
+$$
+\alpha_i=q-d_i-d_{i+1}\ge0,\qquad
+q=\sum_{i=0}^{2k}\alpha_i,\qquad
+d_i=\sum_{r=0}^{k-1}\alpha_{i+1+2r}.
+\tag{36.6}
+$$
+
+All indices are modulo $2k+1$. The two alternating sums for adjacent
+$i$ cover every $\alpha$ except $\alpha_i$, so the edge equations
+hold. Summing the occupancies gives $\sum_i d_i=kq$. Conversely
+these odd-cycle edge equations have unique solution, since a difference
+alternates sign around an odd cycle and must vanish. Thus (36.6)
+is precisely the bijection between the face semigroup and
+$\mathbb N^{2k+1}$ already supplied in §31.3.
+
+At the root, $d_0=\alpha_1+\alpha_3+\cdots+\alpha_{2k-1}$ is the
+sum of exactly $k$ coordinates. The complementary $k+1$ coordinates
+sum to $q-d_0$. In (36.5), therefore,
+
+$$
+q=m-2j-1,\qquad d_0=t-j,\qquad q-d_0=m-t-j-1.
+\tag{36.7}
+$$
+
+These are nonnegative precisely under the restrictions in (36.2).
+Stars and bars for the two specified, disjoint coordinate sets gives
+respectively $\binom{t-j+k-1}{k-1}$ and
+$\binom{m-t-j+k-1}{k}$. The deficit of (36.5) is $k-j$,
+so different layers cannot overlap. This proves (36.2) and its zero
+conventions. For $k=2$ direct translation already exhausts the local
+interior, so there are no layers to count.
+
+A global interior vector is a tuple of local interiors at the same
+$(m,t)$ by Theorem 35.2, giving the first line of (36.4). The vector
+$\nu$ is interior: its coordinates are one, edge slack one and each
+cycle deficit $k-1\ge1$. Since $R_{k,b}$ is a domain, multiplication
+by $X^\nu$ is injective, with boundary shift $(3,1)$. To be in its
+image every local interior must lie in its ordinary translated sector;
+subtracting the same $\nu_1$ in each cycle leaves compatible boundary
+$(m-3,t-1)$ and hence a global semigroup point. This proves the
+second line. The quotient of two monomial spaces has as basis exactly
+the interior exponents outside this image, so subtraction proves the
+last line, with no unproved module splitting.
+
+For two cycles the cross terms count one ordinary and one exceptional
+local sector at this same $(m,t)$, in either labelled order. The term
+$E_k^2$ counts two exceptional sectors. Summing local exceptional
+counts first, or tensoring unrelated root degrees, would lose this
+compatibility. The counts are amplified only by actual compatible
+global exponents. $\square$
+

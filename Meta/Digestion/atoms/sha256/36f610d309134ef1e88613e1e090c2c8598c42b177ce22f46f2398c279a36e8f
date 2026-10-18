@@ -1,0 +1,16 @@
+**Definition 8.2 (two later decoder interfaces).** A row-only decoder
+receives exactly the ordered public cuts, ordered complete rows in
+(CNA.13), and authentic common-root, pure-history and chronological-order
+promises. It receives no $n_i$, source-dependent identity, full trees,
+certificate strings, extra queried addresses, record lengths, retry
+or Read counts, control residue, timing, pointers, archives or further
+source-dependent information. A complete retention cut must make such
+earlier fields inaccessible or functions of the declared row input.
+This is an access and retention hypothesis, not free physical erasure.
+
+A richer decoder may additionally receive retained validated trees $T_i$
+or accepted transcripts reconstructing them. Their storage and retention
+costs are those of §5, summed over the records kept. Syntax checking
+is conditional on authentic transcripts and the common-history promise;
+it does not create authentication.
+

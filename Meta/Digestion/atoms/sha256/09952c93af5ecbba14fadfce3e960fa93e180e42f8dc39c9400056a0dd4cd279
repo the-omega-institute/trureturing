@@ -1,0 +1,43 @@
+**Definition 2.2 (scalar graph and branch conditions).** NSF Lemma 3.2
+leaves scalar equations and whole-block equations of the forms
+
+$$
+r=r'+d,\qquad r=d,\qquad U=V+d,
+\quad d\in\mathbb Z.
+\tag{NPL.6}
+$$
+
+Whole-block addition is pointwise, and both blocks in an equation have
+the same residual shape sort. There is no scalar/block equation and no
+block equation between different sorts. All ranks are natural.
+
+At every explicit primitive cherry impose the noncollapse inequality
+$r_L\ne r_R+1$. An original code disequality with syntactically different
+shape terms remains a disequality of those decorated terms. If the shape
+terms are identical, choose one unequal corresponding scalar or block
+in its finite disjunction. This yields finitely many negative branches,
+with scalar and whole-block offset disequations in addition to (NPL.6).
+Actual solutions with accidentally equal ground shapes of syntactically
+different terms are **not** discarded; their code disequality is still
+retained. Distinct ground shapes will only be used to construct witnesses.
+For all-solution statements a branch still requires normality of every
+entire code. The later marker restrictions give an equisatisfiable witness
+family, not the definition of its original solution set.
+
+Add a scalar vertex $o$ fixed to zero and encode $r=d$ as $r=o+d$.
+The scalar equality graph has one edge with its signed offset for every
+scalar equation. Reject inconsistent offset cycles. In each remaining
+connected component $C$ compute potentials $\delta_r$ such that
+
+$$
+r=b_C+\delta_r.
+\tag{NPL.7}
+$$
+
+The component containing $o$ is **anchored**; its base is fixed by
+$o=0$. Every other component is **free**. Nonnegativity imposes only
+lower bounds on a free base. Scalar disequations, including explicit
+normality, exclude differences of bases; they add no upper bound.
+Block equation components have the analogous potentials of NSF
+Lemma 4.2, separately for each residual sort.
+

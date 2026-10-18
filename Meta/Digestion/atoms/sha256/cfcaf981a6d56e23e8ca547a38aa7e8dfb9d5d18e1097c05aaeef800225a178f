@@ -1,0 +1,14 @@
+**定义 1.3（实际失败及停止守卫）。** 对任意基数 $K\subseteq\mathcal F(H)$，在剩余原时钟内定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff |K|\ge2,\\
+L_{s+1}(K,H)&\iff |K|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists a\in\mathbb R:
+L_s\bigl(K\cap\mathcal F(H,E,a),(H,E,a)\bigr).
+\end{aligned}
+\tag{1.6}
+$$
+
+每层基数条件排除提前停止；空子集不可达，单点可返回完整目标。同历史的包含保持 $L_s$：对 $s$ 归纳，较大族的同一实际响应子集包含原子集，基数和两个动作分句都保持。以下只在实际终端 $L_0$ 叶选择不同目标对，不从非终端大族抽取同深度失败对。
+

@@ -1,0 +1,24 @@
+### 74.1 Uniform fibres and the rank resource law
+
+Let k,d≥2. The uniform collapsed-fibre channel F_(k,d):C^(kd)→C^k has matrix units
+
+    F_(k,d)(|f,i><f,j|)=δ_ij|f><f|,
+    F_(k,d)(|f,i><g,j|)=(1/d)|f><g|  (f≠g).
+
+Use the fixed output MC isometry J_out(|f><g|)=|ff><gg| and write T=J_out F_(k,d). For any CPTP map C:C^(kd)→C^k⊗C^k with Kraus rank at most k(d−1),
+
+    ||C−T||diamond ≥ 2/k.                                (1)
+
+The diamond norm is unhalved. The competitor C need not preserve the output code, calibrate basis outputs, have a product structure, or satisfy any covariance. All coherences, output leakage and reference systems are included.
+
+For a physical finite LOSR implementation L=Σ_t w_t(A_t⊗B_t), with fixed MC input encoding J_in and positive weights, let a_t,b_t be the local Kraus ranks, equivalently the minimal pure Stinespring environment dimensions. Then
+
+    Σ_t a_t b_t ≤ k(d−1)
+      implies ||LJ_in−T||diamond ≥ 2/k.                   (2)
+
+In particular, error strictly below 2/k requires Σ_t a_t b_t≥k(d−1)+1. If r branches all have local Kraus ranks at most a,b, the necessary condition is rab≥k(d−1)+1. This is a joint branch-and-environment budget, not a replacement for the exact shared-weight law of §66.
+
+For k=4,d=2 the optimum over all CPTP competitors of Kraus rank at most four is exactly 1/2. The same exact optimum holds for all single physical product channels whose two local Kraus ranks are at most two. The lower bounds allow arbitrary unequal, nonconjugate local maps and arbitrary output leakage. Section 70's tetrahedral product attains 1/2 with two-dimensional local Stinespring environments. Section 73's three-dimensional local-environment product has error strictly below 1/3. These facts give an actual auxiliary-dimension separation, not merely a separation within the calibrated conjugate-paired class.
+
+The environment dimension in these statements is that of a pure Stinespring dilation. A mixed ancillary implementation must include its purification when translated into this resource; the bare dimension of an unpurified mixed ancilla is not the Kraus rank.
+

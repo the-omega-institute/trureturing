@@ -1,0 +1,15 @@
+### 108.5. Central partner actions of the two nonabelian groups
+
+Let $\Gamma$ now be the dihedral group $D_8$ of order eight or the quaternion group $Q_8$, and let $z$ be its central involution. Label the original coordinates by $\Gamma$, with original fibres $\{x,xz\}$, and write $P_a|x\rangle=|ax\rangle$. Left-translation invariance means $`P_aGP_a^*=G`$ for all $a$, equivalently $G_{xy}=g(x^{-1}y)$. All channel, encoding, leakage and norm conventions of §108.1 are retained.
+
+**Theorem 108.2.** If either correct-output Gram is left-translation-invariant for either of these central partner actions, then
+
+$$
+ \delta(A,B)\ge\tfrac12.
+ \tag{108.13}
+$$
+
+The conclusion also holds after the reciprocal phase changes and original-fibre-preserving relabelings of §107.7. For each group the bound is sharp, with an explicit calibrated physical rank-$(3,3)$ attainer. Its infimum is also $1/2$ in each corresponding calibrated exact-rank class $(7,4)$ and $(7,5)$ with full-support first kernel.
+
+The central-partner condition is substantive. In particular the theorem does not assert the same bound for $D_8$ when a noncentral reflection defines the original partner operation.
+

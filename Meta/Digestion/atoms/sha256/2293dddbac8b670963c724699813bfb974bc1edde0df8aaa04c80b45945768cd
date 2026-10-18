@@ -1,0 +1,134 @@
+**Theorem 2.1 (the native base reduces the fixed free family).** Define
+
+$$
+\begin{aligned}
+(Jv)(k,\alpha,\beta)&=(2\pi)^{-1/2}v(k,\alpha),\\
+(J^*f)(k,\alpha)&=(2\pi)^{-1/2}\int_{\mathbb T}f(k,\alpha,\beta)d\beta,\\
+\Pi f=JJ^*f&=\frac1{2\pi}\int_{\mathbb T}f(k,\alpha,\beta')d\beta'.
+\end{aligned}
+\tag{2.1}
+$$
+
+Here $J:L^2(D,\nu)\to L^2(\Omega,\mu)$ is an isometry, and $\Pi$ is
+its orthogonal range projection. Let
+
+$$
+\overline T[v]=\int_D
+ \left(\varepsilon^2|\partial_kv|^2+\tfrac14|\partial_\alpha v|^2\right)d\nu,
+\qquad
+\overline{\mathcal F}=
+\overline{C_c^\infty(D)}^{(\|\cdot\|_2^2+\overline T)^{1/2}},
+\tag{2.2}
+$$
+
+and let $\overline L$ be its form operator. Then
+
+$$
+\begin{gathered}
+\Pi\mathcal F\subset\mathcal F,\qquad
+\mathcal F\cap\operatorname{Ran}J=J\overline{\mathcal F},\qquad
+T[Jv]=\overline T[v],\\
+D(L)\cap\operatorname{Ran}J=J D(\overline L),\qquad
+LJv=J\overline Lv,\qquad
+H_tJ=J e^{-t\overline L}.
+\end{gathered}
+\tag{2.3}
+$$
+
+The base form domain is the ordinary first Sobolev space with zero height
+trace and periodic angle. In the normalized basis
+
+$$
+e_{jm}(k,\alpha)=\sqrt{2/d}\sin\frac{j\pi(k-l)}d\,
+\frac{e^{im\alpha}}{\sqrt{2\pi}},
+\qquad
+\lambda_{jm}=\varepsilon^2(j\pi/d)^2+m^2/4,
+\tag{2.4}
+$$
+
+where $j\ge1$ and $m\in\mathbb Z$, its form domain is exactly
+$\sum\lambda_{jm}|v_{jm}|^2<\infty$ and its operator domain is exactly
+$\sum\lambda_{jm}^2|v_{jm}|^2<\infty$.
+
+For bounded Borel base observables $b$, without the Hilbert normalization,
+
+$$
+H_t(b\circ\pi)=\left(e^{-t\overline L}b\right)\circ\pi.
+\tag{2.5}
+$$
+
+This includes the same height survival event. It determines all finite-time
+joint laws of base observations of the killed free diffusion, with an
+absorbing cemetery state. Original guarded deterministic commands also act
+on this same base by (1.3)--(1.6). For starting states in $\Omega$,
+adjoining these free base laws to the original bottom-output/refusal task
+therefore leaves its behavioral equivalence exactly equality under $\pi$.
+
+Proof. Hidden translations preserve $\mu$, the smooth core, $P$ and $Q$.
+Averaging them gives $\Pi$ on the core. Differentiation commutes with this
+average, and Jensen gives $T[\Pi f]\le T[f]$. It consequently extends
+continuously to $\mathcal F$. On core functions, integration in $\beta$
+gives
+$T(\Pi f,(1-\Pi)g)=0$. Passing to the closure preserves this orthogonal
+form splitting.
+
+The isometry and the energy identity for $J$ follow by integration over a
+circle of length $2\pi$. If $f=\Pi f\in\mathcal F$, average a core
+sequence converging to $f$. The averaged sequence equals $Jv_n$ for
+$v_n\in C_c^\infty(D)$, and its form convergence is exactly that of
+$v_n$ in (2.2). This proves the equality of form domains in (2.3), including
+the reverse inclusion. Since $\varepsilon$ is fixed and positive, (2.2)
+is equivalent to the usual first Sobolev norm; approximation by periodic
+smooth functions with zero height trace gives the stated Sobolev domain.
+Sine and circle Fourier expansion then gives (2.4), first on a dense smooth
+class and then by closure and Parseval. Diagonal form representation gives
+the displayed operator domain, so no differential-expression-only domain
+identification is being used.
+
+If $v\in D(\overline L)$, test the full form against any
+$w\in\mathcal F$. Form orthogonality eliminates $(1-\Pi)w$, and
+$T(Jv,w)=\langle J\overline Lv,w\rangle$. Thus $Jv\in D(L)$ with the
+claimed operator value. Conversely, if $Jv\in D(L)$, testing against the
+orthogonal form component shows $LJv\in\operatorname{Ran}J$, and testing
+against $J\overline{\mathcal F}$ gives $v\in D(\overline L)$.
+The variational resolvent equation splits in the same way. Uniqueness and
+spectral calculus therefore give the semigroup identity and the fact that
+$\Pi$ reduces $L$. These are applications of closed-form representation
+and reducing-subspace theory, as in Teschl [T, Theorem 2.13 and Lemma 2.24].
+
+For a bounded Borel $b$, finite volume puts $b$ and $b\circ\pi$ in
+their respective $L^2$ spaces. The Hilbert semigroup identity therefore
+already gives (2.5) almost everywhere. For $t>0$ both sides have smooth
+interior representatives, by the supplied full heat smoothing and the base
+series (2.4), so equality holds everywhere. Their positive kernels determine
+the same base transition probabilities. In particular $b=1$ gives the same
+survival probability; the base kernel kills precisely at the height faces.
+Iteration with intermediate bounded base tests proves the finite-time
+joint-law assertion, including the cemetery state. This argument obtains
+the Borel law from the closed-domain identity. Equal base coordinates
+therefore remain sufficient for the enlarged free task; necessity already
+follows from the retained native task in [B, Theorem 10.6].
+
+The corresponding explicit smooth diffusion is
+
+$$
+dK_t=\sqrt2\varepsilon\,dB_t^1,\qquad
+d\alpha_t=2^{-1/2}\,dB_t^2,\qquad
+d\beta_t=\sqrt2c(K_t)\,dB_t^2,
+\tag{2.6}
+$$
+
+with independent real Brownian motions, phases wrapped with period $2\pi$,
+and killing at $\tau_I=\inf\{t:K_t\notin I\}$. Its generator before
+killing is $\varepsilon^2P^2+Q^2$; $Qk=0$ gives zero Itô correction.
+The projection has generator
+$\varepsilon^2\partial_k^2+\tfrac14\partial_\alpha^2$, and its killing
+time is exactly the same $\tau_I$. The smooth coefficients extend past
+$\overline I$, so the stopped stochastic equation is well posed; the
+Dirichlet realization of its symmetric generator is (1.10). This is the
+same killed-process correspondence used in [G, Proposition 6.1], now
+retaining $\alpha$. It gives the explicit killed-process realization of
+the already established identity (2.5). The covariance clock in (2.6) is
+unchanged. Brownian sample paths are not declared admissible
+finite-variation native histories. $\square$
+

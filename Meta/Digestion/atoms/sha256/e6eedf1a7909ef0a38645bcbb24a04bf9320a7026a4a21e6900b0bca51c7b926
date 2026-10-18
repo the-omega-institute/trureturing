@@ -1,0 +1,33 @@
+**Definition 67.2 (activity-constrained original class).** Each decoder
+has a positive absorbing first-event rate $R_\alpha(t)$ on its entire
+joint fibre. Between failures its supplied controls preserve trace; loss
+occurs only through that rate. More precisely its unnormalized survivor
+map $\mathcal S_{\alpha,t}$ and jump densities satisfy the usual
+finite-dimensional CP evolution and trace balance
+
+$$
+-\frac d{dt}\operatorname{tr}\mathcal S_{\alpha,t}(X)
+ =\operatorname{tr}\bigl(R_\alpha(t)\mathcal S_{\alpha,t}(X)\bigr),
+\qquad \mathcal S_{\alpha,0}=\mathrm{id}.
+$$
+
+The positive rate is measurable and has integrable operator norm.
+Hamiltonian and unobserved TP survivor controls are allowed. Terminal
+processing on survivors is TP. There is no forced terminal absorption,
+singular first-event part, or positive-carrier action after a first
+failure. These conditions describe a mathematical control class, not
+permission to enact its operations.
+
+Put $\mathsf A=\max_\alpha\int_0^1\|R_\alpha(t)\|\,dt$; in the
+stipulated countable/integral extension use supremum/essential supremum.
+This is neither an expectation nor an integral of a maximum across
+labels. Let $\mathfrak F_{s,A}$ be the original class satisfying
+$E(\Phi)=E_*$, $\mathsf V(F)\ge s$, $\mathsf W=\mathsf C(s)$ and
+$\mathsf A\le A$. Here $\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa$
+and $\mathsf W$ is the maximum over all twelve histories of the
+probability of acquisition dimension at least three (JR.20).
+When this class is nonempty define $\mathcal T_A(s)$ as its supremum of
+actual-label TV between heights $5,+,+$ and $27,+,+$. Retain the
+unbudgeted optimum $\mathcal T(s)$ of JR.43; empty classes have no
+claimed TV maximum. Budgets below zero are infeasible.
+

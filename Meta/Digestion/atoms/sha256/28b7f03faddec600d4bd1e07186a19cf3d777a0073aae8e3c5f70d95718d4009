@@ -1,0 +1,25 @@
+#### 17.3.3 EJM 的最新精确结果
+
+Gitton 和 Renner 的 [The Elegant Joint Measurement is Non-Classical in the Triangle Network](https://arxiv.org/abs/2510.15143) 给出了 EJM 分布在 triangle network 中 classical-incompatible 的首个证明。该工作结合 inflation、对称约化、Frank–Wolfe 和 exact arithmetic。配套 [Fast Inflation code](https://github.com/vgitton/fast-inflation) 明确区分：
+
+- exact rational separating hyperplane certificate，可证明非局部；
+- floating-point feasible inflation law，只能作为数值候选，不能证明兼容性；
+- inflation size 增大时外逼近收紧，但变量规模大约按 \(n_o^N\) 增长。
+
+指定 inflation 的约束可写为
+\[
+A_Nq=b_N(p),\qquad q\ge0,
+\]
+其中归一化已经包含在矩阵方程中。\(b_N(p)\) 可以包含独立可观测副本对应的乘积项，因而不必对 \(p\) 线性。一个精确 Farkas 证书是有理向量 \(y\)，满足
+\[
+A_N^{\mathsf T}y\ge0,\qquad
+y^{\mathsf T}b_N(p)<0.
+\]
+若可行 \(q\) 存在，则
+\[
+0\le(A_N^{\mathsf T}y)^{\mathsf T}q
+=y^{\mathsf T}A_Nq
+=y^{\mathsf T}b_N(p)<0,
+\]
+矛盾。这样每个向量和矩阵都有固定维度，无须将原分布 \(p\) 和 inflated law \(q\) 当成同一空间中的对象。
+

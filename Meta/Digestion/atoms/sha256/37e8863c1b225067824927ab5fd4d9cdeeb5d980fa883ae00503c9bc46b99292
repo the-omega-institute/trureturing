@@ -1,0 +1,69 @@
+**Theorem 12.4 (explicit factor of the canonical boundary data).**
+For $p\in P$, put
+
+$$
+ x_p=h_t(pR^\infty)=J^c_p(t),\qquad
+ y_p=h_t(aR^\infty)=J^c_a(t)\quad\text{when }p=aL.
+\tag{AAR.62}
+$$
+
+The ray $pR^\infty$ lies in $[pR]$, including when $p$ itself ends
+in $R$; $aR^\infty$ lies in the required parent-right cylinder.
+On the actual attained boundary/readout data, the following function
+is exactly (AAR.58):
+
+$$
+ \begin{aligned}
+ b_p&=\max(0,s(p)+2-x_p),\\
+ c_p&=\begin{cases}
+ \mathbf1_{b_p\ge2},&p\text{ ends with }R,\\
+ \mathbf1_{b_p\ge2\ \mathrm{and}\ y_p>x_p},&p=aL.
+ \end{cases}
+ \end{aligned}
+\tag{AAR.63}
+$$
+
+Any public witness rays in the respective cylinders of Lemma 11.3
+may replace the rays in (AAR.62); (AAR.63) still gives the same
+statistic. For the displayed rays, the function can also be applied
+to the canonical boundary-plus-scale representation by substituting
+
+$$
+ x_p=\log_\varphi\bigl(W(t)f_t(pR^\infty)\bigr),\qquad
+ y_p=\log_\varphi\bigl(W(t)f_t(aR^\infty)\bigr).
+\tag{AAR.64}
+$$
+
+Its attained image is in bijection with the selected complete future
+trajectory image, with the maps given by (AAR.59) and recovery of
+$(b_p,c_p)$ from the first branch and the presence of an alpha stage.
+These are mutually inverse on those images, not recovery of the full
+boundary representation from the task statistic.
+
+Proof. By Lemmas 11.2–11.3, a reply is branch precisely when
+$x_p+k\ge s(p)+2$, giving the first line of (AAR.63). For an
+$R$-ending word, alpha occurs precisely at
+$k=s(p)-x_p\ge0$, equivalent to $b_p\ge2$. For $p=aL$ the same
+candidate time is alpha precisely when
+$y_p+k>s(p)$, or $y_p>x_p$. This proves the second line as well. Lemma 11.3 gives the same
+argument for any allowed witness rays, proving the claimed independence
+of those choices. The exceptional equality case is concrete: a beta leaf at $a$ gives
+$x_p=y_p=s(p)$, hence $(b_p,c_p)=(2,0)$ and an initially absent $p$.
+An actual alpha at $p$ instead has $x_p=s(p)<y_p$, giving $(2,1)$.
+Thus the alpha/absent ambiguity is preserved rather than discarded.
+In fact, on this $L$-ending attained domain, $c_p=1$ can only mean
+an alpha at count zero.
+
+Equation (AAR.64) is exactly the canonical-density identity of
+[NAR, Proposition 12.8], with $q=p$ and $q=a$. The density is its
+canonical locally constant representative. Arbitrary almost-everywhere
+representatives do not support this point evaluation. The logarithms
+here return integer exponents on attained data; this semantic identity
+neither grants an unacquired measure oracle nor claims an effective
+point-evaluation algorithm for arbitrary real-number presentations.
+The finite acquired $J^c$ values implement (AAR.63) without that extra
+interface. Theorem 12.3 supplies the two inverse maps on attained
+images. A finite prefix through $H_P$ already suffices to compute
+both: take the first branch in that prefix and test for an alpha before
+it. $\square$
+

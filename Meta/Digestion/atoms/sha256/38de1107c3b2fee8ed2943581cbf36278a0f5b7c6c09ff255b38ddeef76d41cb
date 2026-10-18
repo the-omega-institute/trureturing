@@ -1,0 +1,11 @@
+**注记 6.2（Exact realization and history simulation are different targets）。**
+The quantity $q_{\rm exact}(T_C)$ specifies one channel on all complex
+inputs under (6.1). It is not the minimum dimension needed merely to
+simulate the histories of sources in the invisible fiber. Under the
+conditional C-108 local-menu contract all those sources have the same
+allowed histories as $S=JI_5J^\dagger/5$; C-109 also gives a scalar
+dephasing simulation of those promised histories. The coherence maximum
+does not reverse that indistinguishability or furnish a new readout.
+The sixty-vector upper bound counts Gram terms. It is not a minimum flag
+count, a physical storage bound or an implementation cost.
+

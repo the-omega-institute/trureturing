@@ -1,0 +1,18 @@
+## Face compatibility and the next threshold
+
+The two packet types cannot mix in a connected triangulation. A three-star
+has one HHH face and three LLH faces. A three-cycle has one LLL face and
+three LHH faces. An affine face pairing preserves the global low/high
+labels, so it preserves the number of low edges in the face. The two sets
+of face signatures are disjoint. Dual-graph connectivity therefore forces
+all tetrahedra to have the same packet type.
+
+In the all-three-star case, every high local edge belongs to one HHH face
+and one LLH face. Its circular edge link consequently alternates the two
+face signatures. Every global high edge then has even degree. In particular,
+a numerical upper-angle estimate for degree 11 in this class would not
+extend the theorem to any new triangulation: degree at least 11 already
+means degree at least 12. The three-cycle case does not have this same
+high-edge parity obstruction. These observations make no general claim
+that threshold 12 is optimal, either for CFMP or for other length boxes.
+

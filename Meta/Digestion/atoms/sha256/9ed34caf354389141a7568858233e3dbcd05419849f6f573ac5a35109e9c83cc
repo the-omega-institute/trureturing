@@ -1,0 +1,48 @@
+**Proposition 209.9 (An attained all-length comparison above marginal stock).**
+Let $m=L-2\ge4$, $1\le a\le2$, $0\le r\le a-1$.
+Give each late word with exactly one one mass $a$, obtaining $\nu$.
+Put
+
+$$
+S=ma,\quad z=(m-1)a,\quad \mu=z+r,\quad
+E=2\mu-S,\quad c_1=c_2=E/2,\quad t=\mu-1,
+\quad\gamma_n=\mu\ (n\in I).
+\tag{209.18}
+$$
+
+Use the early rows of 209.8. Let $Y$ have late correct mass $\mu$
+at every $e_n$, and let $V$ instead use
+$\mu_n=\nu_n+(r/a)(\nu-\nu_n)$ followed by $R_n$.
+Then $Q(Y)=Q(V)$ and
+
+$$
+(\Delta_N(Y),\Delta_O(Y))=((m-2)a+1,1),\qquad
+(\Delta_N(V),\Delta_O(V))=(1,1).
+\tag{209.19}
+$$
+
+The value one is the attained minimum at these fixed totals over all
+allowed suffixes and early allocations. For $r>0$, every retained
+late mass exceeds its marginal stock.
+
+**Proof.** Here $m_j=z,d_{ij}=a,h_{ij}=0$, and $H=\mu\le S$.
+Each $\mu_n$ contains $\nu_n$, is dominated by $\nu$, and has mass
+$\mu$. For $n<j$, $u_{nj}=\mu-a$ and its complementary piece is
+$a$. In an early/late pair with $j<L$, the two remaining maxima are
+$\mu,\mu$, using $t+a/2\le\mu$; its excess is one. At the last
+label it is $a/2\le1$. Late-pair excesses in (209.14) are one for
+$j<L$ and zero for $j=L$, while the head attains $\mu-t=1$.
+
+For $Y$, every late stopped pair has three maxima $\mu,\mu,\mu$,
+and all early pairs have support at most $3\mu$. Every late $N$
+pair has maxima $(S-2a,\mu,\mu,\mu)$. The anchor is $3\mu-1$,
+so (209.19) follows by catalog completion. The head lower bound one
+holds for every competitor at these totals, proving the minimum.
+An atom is reused fully by $m-1$ class measures; no disjoint-allocation
+bound could retain this construction.
+
+This entire quotient family is already in 206.15's clipped-fair region:
+$\mu\ge3$, $E-(\mu-2)=2-a+r\ge0$, and $W=3\mu-1$.
+The strict raw-support decrease establishes no additional quotient
+coverage. $\square$
+

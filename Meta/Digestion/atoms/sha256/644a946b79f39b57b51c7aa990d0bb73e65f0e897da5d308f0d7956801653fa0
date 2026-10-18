@@ -1,0 +1,41 @@
+**Definition 3.5 (immutable target binding).** The binding $b$ is the exact
+tuple of format/layout identifier, $H,\xi$, original initialization and
+acquired seed-origin references, original/installed version and activation
+references, cover/package creation references, target $U(k)$ and the
+target's actual version/raw-table phase. Code/layout equality is literal
+description equality relative to the fixed serializers. Origin equality
+is exact descriptor/creation-chain equality, not a hash-collision premise.
+The binding contains no seed contents, ingress reservoir, raw state or
+replay-key sidecar. An activation reference identifies its actual record;
+it does not provide a missing consumed input word.
+
+Partition these fields into target fields and later-service fields. The
+target's source/preparation, ordinal and actual version/phase are checked
+against the decoded historical prefix. The later service, activation,
+cover/package and publication-origin chain is checked against the current
+immutable registry/installation records. A pre-Install target does not
+contain the later activation or package creation. Those later references
+must not be required to occur in its decoded prefix, nor used as an extra
+old variable-input reservoir. If the target is after activation, its own
+extracted activation must additionally agree with that service chain.
+
+The published view word is the exact five-field tuple
+
+$$
+\operatorname{ViewRef}(q,b,d,v)=[\mathsf{ViewRef},U(q),b,d,v],
+\qquad d\in\{00,01,10,11\}=\{S,B,T,M\}.
+\tag{PVC.5}
+$$
+
+Here $v$ is exactly one body, framed once by the tuple grammar. The format
+tag is the fixed word 00110110. Other new negative result tags are the
+fixed words 00110111, 00111000, 00111001, 00111010, 00111011 for NoImage,
+NoView, InvalidView, UnsupportedVersion, and RegistryFault respectively.
+Their fields are the request identifiers and typed fault code, in that
+order. They inhabit the new result parser; original RCA result arms retain
+their original codec. The selecting registry arm fixes which parser is used:
+an image entry uses the original Image parser and a view entry the new
+ViewRef parser. No global disjointness of these literal words from an
+unspecified old result-tag encoding is assumed. Exact tags, arity and
+field exhaustion are required inside the selected parser.
+

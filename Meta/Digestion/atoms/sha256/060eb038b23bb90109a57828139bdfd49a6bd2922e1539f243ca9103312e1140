@@ -1,0 +1,17 @@
+**定义 C-107.6（四个物理因子与整份交换）。** 将一份原二体系统重命名为
+$A\otimes B=H_5^{(1)}\otimes H_5^{(2)}$，为它准备第二份 $A'\otimes B'$。
+四因子顺序固定为 $A,B,A',B'$，每因子五维。
+$\Gamma$ 的纠缠始终指 $A\mid B$；两副本的分割是
+$(A\otimes B)\mid(A'\otimes B')$，两者不同。
+整份交换 $W$ 定义为
+
+$$
+W|a,b,a',b'\rangle=|a',b',a,b\rangle,
+\qquad W=W^\dagger,\quad W^2=I.
+\tag{C107.12}
+$$
+
+它同时交换 $A\leftrightarrow A'$、$B\leftrightarrow B'$，
+在重排为 $A,A',B,B'$ 后为 $F_{AA'}\otimes F_{BB'}$。
+$W$ 不等于原系统内部交换 $A\leftrightarrow B$，也不等于 C-106 的秩一 $Q$。
+

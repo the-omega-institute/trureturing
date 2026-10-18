@@ -1,0 +1,67 @@
+**Lemma 5.2 (Disjoint zeros: complete final-one table).** Let $E,F$
+be disjoint active zero edges, and consider a third active edge $G$
+with reply one. The complete full-law maxima, and losses from
+$K_0=a^2c\eta$, are bounded as follows:
+
+| Third edge and actual target position | Maximum | Loss from $K_0$ |
+| --- | --- | --- |
+| Repeat of $E$ or $F$ | $0$ | $K_0>g_3$ |
+| Disjoint from both; target in $E\cup F$ | $K_0$ | $0$ |
+| Disjoint from both; target in $G$ | $c^2\eta/2$ | $c\eta d/2\ge g_3$ |
+| Disjoint from all target incidences | $ac^2\eta$ | $ac\eta bd=g_5$ |
+| Extends one pair; target in mixed triple | $ac\eta/2$ | $g_3$ |
+| Extends one pair; target in untouched zero pair | $a^2\eta/2$ | $g_4$ |
+| Extends one pair; target outside both components | $ac\eta/2$ | $g_3$ |
+| Joins the two zero pairs; target internal | $\eta^2/2$ | at least $a^3\eta d\ge g_3$ |
+| Joins the two zero pairs; target external | $a\eta^2$ | $a^3\eta d\ge g_3$ |
+
+Thus the only way to avoid a loss of at least one of $g_3,g_4,g_5$
+is a disjoint $G$ with target in $E\cup F$. Its unique maximizing
+label on this one leaf is $h_\alpha(\sigma)$.
+
+Proof. Each zero pair has constant weights $a^2,b^2$ and total
+$c$. A disjoint final one pair has probability $2\eta$, and its
+two internal target weights are equal to $\eta$. Multiply the
+appropriate target weight, every other component probability and
+the phase factor to get the three disjoint entries. Their losses are
+
+$$
+\begin{aligned}
+K_0-c^2\eta/2&=c\eta(2a^2-c)/2=c\eta d/2,\\
+K_0-ac^2\eta&=ac\eta(a-c)=ac\eta bd.
+\end{aligned}
+\tag{5.2}
+$$
+
+The first is at least $g_3$ since $a<1$. On extension the mixed
+triple has weights $a\eta,b\eta$ and probability $\eta$.
+The untouched zero pair contributes its full factor $c$ when the
+target is in the triple, giving $ac\eta/2$. An exterior target
+contributes its independent majority factor to $c\eta/2$, giving
+the same value. A target in the untouched pair instead contributes
+$a^2\eta/2$. Hence
+
+$$
+K_0-ac\eta/2=ac\eta(a-1/2)=g_3,
+\qquad K_0-a^2\eta/2=a^2\eta(c-1/2)=g_4.
+\tag{5.3}
+$$
+
+A join forces the two constant pairs to opposite orientations. Both
+four-spin completions have weight $a^2b^2=\eta^2$. An internal
+target therefore gives maximum $\eta^2/2$, and an external one
+gives $a\eta^2$, which dominates it. The smaller loss is
+
+$$
+K_0-a\eta^2=a\eta(ac-\eta)=a^3\eta d\ge g_3,
+\tag{5.4}
+$$
+
+where $ac-\eta=a(c-b)=a^2d$ and $2a^2>c$. Repetition
+contradicts the prescribed one; its loss satisfies
+$K_0/g_3=2a/d>1$. The listed line incidences are exhaustive by
+Lemma 4.1. In the zero-loss entry the target's zero pair has weights
+$a^2>b^2$ times common positive factors, proving the unique label.
+Every row uses the same original source; none removes a disjoint
+component's probability. $\square$
+

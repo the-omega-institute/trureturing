@@ -1,0 +1,90 @@
+**Theorem 6.2 (exact polynomial and exponentially approaching zeros).**
+Definition 6.1's hard solution set is exactly $\{C_0^n\}$ and has
+mass $b^n>0$. Let $\Phi_i$ be its actual local potentials from
+(GDB.8). For real or complex $v$, define
+
+$$
+f_n(v)=\sum_{s\in T^n}\prod_i(\Phi_i(s)+v).
+\tag{GDB.26}
+$$
+
+With $D=\operatorname{diag}(a,a,b)$, the three-by-three all-one
+matrix $J$, and the permutation matrix $P$ exchanging the first two
+states, exactly
+
+$$
+f_n(v)=\operatorname{tr}((D+vJ)^nP)
+      =\operatorname{tr}(Q(v)^n)-a^n,
+\qquad Q(v)=\begin{pmatrix}a+2v&v\\2v&b+v\end{pmatrix}.
+\tag{GDB.27}
+$$
+
+For every $n\ge4$, put $t_n=2a(b/a)^n=4/(13\,2^n)$.
+There is a real zero $v_n\in(-t_n,0)$. Consequently the precise
+straight-line all-one interpolation
+
+$$
+P_n(z)=\sum_{s\in T^n}\prod_i[(1-z)+z\Phi_i(s)]
+      =z^nf_n(1/z-1)
+\tag{GDB.28}
+$$
+
+has a real zero in $(1,(1-t_n)^{-1})$, although $P_n(1)=b^n>0$.
+No common disk $|z|<r$ with $r>1$ is zero-free for these nonempty
+actual incidence-two inputs.
+
+Proof. For an arbitrary pair of neighboring seed values, inspect the
+eleven actual states of $S_2$. A leaf root requires the same leaf
+left factor, since the leaf left values $(3,0),(2,0)$ differ from each
+other and from every initially present child factor in $Q_0$.
+A branch root requires a left factor in $Q_0$; among the three
+prescribed left values only $\Gamma_L(C_0)=(2,1)$ qualifies.
+The right factor is already that of its own $u(s_i)$. Thus local
+reconstruction holds exactly when $s_i=\theta_i(s_{i+1})$, and then
+the actual block is $u(s_i)$. The single twist forces the cyclic
+seed to be branch. This proves the hard solution and its mass.
+
+The untwisted local matrix is $D+vJ$ and the twisted one is
+$(D+vJ)P$, since $JP=J$. The trace of their cyclic product is
+the sum in (GDB.26). Both $D$ and $J$ commute with $P$. Its
+antisymmetric line contributes $-a^n$; on vectors $(x,x,y)$ the
+matrix $D+vJ$ acts by $Q(v)$. This proves both equalities in
+(GDB.27), with the same shared seeds and one potential per original
+block. No independent replica or uncharged owner is introduced.
+
+For $t=t_n$ and $n\ge4$, one has
+$t\le\min((a-b)/2,b/4)$. The matrix $Q(-t)$ is similar to
+
+$$
+A_t=\begin{pmatrix}a-2t&-\sqrt2\,t\\-\sqrt2\,t&b-t\end{pmatrix}.
+$$
+
+Its eigenvalues $\ell_-\le\ell_+$ are positive because
+$\ell_-\ge b-(1+\sqrt2)t>0$. Also
+
+$$
+(a-t)I-A_t=
+\begin{pmatrix}t&\sqrt2\,t\\\sqrt2\,t&a-b\end{pmatrix}
+\succeq0,
+$$
+
+as its determinant is $t(a-b)-2t^2\ge0$ and its diagonal entries
+are nonnegative. Hence $\ell_+\le a-t$, while the Rayleigh
+quotient of the second basis vector gives $\ell_-\le b-t\le b$.
+It follows that
+
+$$
+\begin{aligned}
+f_n(-t)&\le(a-t)^n+b^n-a^n\\
+       &\le-t a^{n-1}+b^n=-b^n<0.
+\end{aligned}
+\tag{GDB.29}
+$$
+
+Here $(a-t)^n\le a^n-ta^{n-1}$ follows from
+$(1-t/a)^n\le1-t/a$. Since $f_n(0)=b^n>0$, the intermediate
+value theorem gives $v_n$. Factoring $z$ from each term proves
+(GDB.28) for $z\ne0$, hence as a polynomial identity with its
+continuous value at zero. Substituting $z=(1+v_n)^{-1}$ gives
+the stated interval. Its upper endpoint tends to one. $\square$
+

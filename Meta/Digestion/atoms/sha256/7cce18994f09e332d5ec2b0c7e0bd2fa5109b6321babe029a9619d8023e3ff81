@@ -1,0 +1,45 @@
+**Theorem 3.2 (generation of the same prescribed code).** Under
+Assumption 1.2 and Definitions 2.1–2.2, the following are equivalent:
+
+1. Some finite installed common-start preparer terminates with exactly
+   $\widehat{s(u)}$ on every $u\in\mathcal U$.
+2. Some finite native menu determines $c$ in (PCA.7).
+3. For some integer $d\ge0$, agreement of all actual replies at words
+   of length at most $d$ implies equality of $c$ on $\mathcal U$.
+
+In item 1 it makes no difference whether a uniform call upper bound
+was required in advance or merely termination on each source.
+
+Proof. For 1 implies 2 take the installed menu of Lemma 2.3. Its equal
+reply tuples force equal terminal latches. Recoverability then forces
+equal original codes. This also proves the assertion about termination
+without a predeclared bound.
+
+For 2 implies 1, list a determining menu as $w_1,\ldots,w_m$. For
+$0\le j\le m$ let $T_j\subseteq\mathcal A^j$ be the set of attained
+reply prefixes to these first $j$ words on the entire $\mathcal U$.
+Nonemptiness gives $T_0=\{()\}$. Install one running state for each
+member of $T_j$, $j<m$, querying the fixed literal $w_{j+1}$. An attained
+one-letter extension goes to its next prefix state, or, at level $m$,
+to the latch for its prescribed $s$ value. This last value is
+well-defined by (PCA.7) and (PCA.3). Each unattained extension is assigned
+one fixed existing latch, making the table total on all four replies.
+These off-domain choices affect no actual run. If $m=0$, the code is
+constant and the common start is its one latch.
+
+Induction on $j$ shows that an actual source reaches exactly its
+attained prefix state, and after $m$ calls reaches exactly its original
+entry-code latch. The finite prefix labels are the installed running
+states themselves. They are not a free transcript register, counter,
+selector or address-computation facility. The last transition installs
+the literal entry code; handoff uses inclusion into the already fixed
+reader alphabet, without an extra decoder. This is a finite mathematical
+construction of tables, not an assumed algorithm for discovering
+attainability or the values of an arbitrary $\kappa$.
+
+For 2 implies 3, choose $d$ at least the length of every menu word,
+with $d=0$ for an empty menu. The larger finite observation implies
+agreement on the menu. For 3 implies 2, use the finite menu of all words
+of length at most $d$. Both implications use the original native words
+and replies on the original domain. $\square$
+

@@ -1,0 +1,28 @@
+**Lemma 20.2 (ground-state closure and the transition coupling).** For every complex $u\in\mathcal Q_E$,
+
+$$
+h_0[u]=\int p^2\left|\nabla_H(u/p)\right|^2.
+\tag{20.3}
+$$
+
+For $w=1-\zeta_R$, the particular vectors $wv,w^2v$ are legitimate odd form multipliers in the exterior closure of Lemma 19.2, and $\zeta_Rv\in\mathcal H_R^c$. They obey
+
+$$
+h_0[wv]=e(w^2v)+\int|\nabla_Hw|^2|v|^2,\qquad
+\sqrt{h_0[wv]}\le\sqrt{a_R}+\frac{c_\zeta}{R}T_R^v.
+\tag{20.4}
+$$
+
+Proof. On the compact smooth core, test $\mathcal Ep=\gamma Vp$ with $|u|^2/p$ and expand the two divergence-free horizontal product rules. This proves (20.3). For a general form vector take core approximants. The transformed gradients are Cauchy in $L^2(p^2d\xi)$ by the core identity and form convergence. Smooth strict positivity of $p$ on compact sets identifies their limit with the local distributional gradient of $u/p$; passing to the limit proves (20.3) on the full complex domain.
+
+The bounded multipliers $w,w^2$ have bounded horizontal derivatives, so preserve $\mathcal Q_E$ by its core definition and $v\in L^2$. Multiplying core approximants by $w$ or $w^2$ gives exterior approximants, since both vanish on $\mathbb B_{2R}$. Multiplication by $\zeta_R$ gives compact approximants supported inside $\mathbb B_{3R}$. Oddness is preserved. The product rule in $h_0(v,w^2v)=e(w^2v)$ gives the first identity in (20.4); the transition integral is retained.
+
+Set $x=\sqrt{h_0[wv]}$, $t=\|v\nabla_Hw\|_2$ and $a=\sqrt{a_R}$. By (20.3) and $0\le w\le1$,
+
+$$
+\sqrt{h_0[w^2v]}\le x+t,\qquad
+x^2\le a(x+t)+t^2,\qquad (x-a-t)(x+t)\le0.
+$$
+
+Thus $x\le a+t$, including the case $x+t=0$. Lemma 20.1 bounds $t$ by $c_\zeta T_R^v/R$, proving (20.4). The horizontal identity has been proved on its actual form closure; no Euclidean elliptic ground-state theorem is assumed. $\square$
+

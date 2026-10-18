@@ -1,0 +1,36 @@
+**Definition 1.1 (native objects and literal replies).** A source is a finite
+nonempty ordered tree in the free algebra
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle.
+$$
+
+Equality retains both the ordered brackets and the two different leaf labels.
+In the native Boolean presentation, true is $\alpha$ and false is $\beta$;
+the native address letters false and true are $L$ and $R$, respectively.
+The substitution is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+An address is a finite word in $L,R$, with empty word $\varepsilon$.
+The existing occurrences of $t$ form $\operatorname{Pos}(t)$, and $t|_p$
+is the subtree at an existing occurrence. The native reply $r_t(p)$ is
+$\alpha$ or $\beta$ at that leaf, $\mathsf{branch}$ at a pair, and
+$\mathsf{absent}$ at an address outside $\operatorname{Pos}(t)$.
+Every finite word is legal. In particular, any nonempty continuation
+from either leaf is absent. If $p$ exists, actual descent gives
+
+$$
+r_t(pw)=r_{t|_p}(w)\qquad(w\in\{L,R\}^{*}).
+\tag{NRE.1}
+$$
+
+This identity includes suffixes that cease to exist inside the finite subtree.
+Two equal subtrees at different addresses still have different occurrences.
+These are the objects of *Native cut-birth provenance and literal past-row
+recovery*, Definition 1.1.
+

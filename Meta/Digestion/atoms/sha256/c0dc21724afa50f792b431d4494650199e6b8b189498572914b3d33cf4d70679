@@ -1,0 +1,19 @@
+**Proposition 6.5 (descriptor recovery is a different task).** Exact
+output of every actual phase on every source of the merged canonical
+fiber requires at least $\ell$ Reads on each terminating deterministic
+execution, and $\ell$ actual phase-root Reads suffice. This does not
+impose a $\ell$-Read prerequisite on binary statistical advantage.
+
+Proof. By Lemma 4.2 each queried word enters at most one gadget.
+If an execution never enters gadget $j$, replace that gadget by any
+valid opposite-phase native tuple and leave all other blocks fixed.
+The merged name is unchanged. Every reply along the original execution
+is unchanged, so induction gives the same next word, stopping and
+output on the modified source. Its required full phase descriptor is
+different, a contradiction. Thus each execution must enter all gadgets.
+Proposition 4.3 attains that task with $\ell$ Reads. In contrast,
+Theorem 6.3 gives positive statistical advantage from just two phases,
+and even all phases leave nonzero hypothesis error. The descriptor
+argument is not the statistical converse; that converse is Theorem 5.2.
+$\square$
+

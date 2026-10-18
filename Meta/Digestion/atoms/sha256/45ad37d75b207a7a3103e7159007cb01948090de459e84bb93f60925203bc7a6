@@ -1,0 +1,45 @@
+**Definition 68.1 (unchanged source and complete recursive carrier).** Use exactly Definitions64.5 and67.1–67.3, at fixed commissioned $a,g>0$, $\Omega\ge1$, $0<\delta\le1$ and $\nu=0$ throughout each execution. Fix either complete common or complete killed prescription separately.
+Every actual source retains its labels, brackets, order, distinct equal-valued occurrences, immutable INITIAL, original source-independent actor initialization, fixed cap $H$, complete supplied contexts, whole candidates and guards, accepts/refusals, original numerical Read, absorbing Stop and every actually acquired chronological record.
+No refused candidate Read, source substitute, archive, reset, cloning or exact-limit Read is introduced.
+
+Let $D_0,\ldots,D_n$ be the successive actual versions of a finite accepted Left/Right graft prefix. Intervening original Reads and refusals retain their source and records and do not count as grafts; this recurrence does not insert an accepted whole-rho enlargement.
+The occurrence injection $\iota_j$ is $p\mapsto Rp$ for Left and $p\mapsto Lp$ for Right, on both literal occupation sectors, and identity on the reference.
+Each new parent seam, relocated old-root degree and current-root field $\phi(p)=2^{-|p|}$ is used at its actual version. Put
+
+$$
+\begin{aligned}
+X_j&=\mathcal K_{D_j}\otimes\mathcal F_H\otimes\mathcal A,&
+T_j&=A_{D_j}-g\sum_{p\in D_j}\phi(p)m_p,\\
+H_j&=aK_{D_j}-g\sum_{p\in D_j}\phi(p)n_p,&
+\mathbb M_j&=T_j\otimes I+I\otimes\Omega h_{D_j},\\
+\mathcal E_j&=\operatorname{Dom}(A_{D_j}^{1/2}\otimes I)
+ \cap\operatorname{Dom}(I\otimes\mathsf n^{1/2}),&q_j&=q_{D_j}.
+\end{aligned}
+\tag{68.1}
+$$
+
+Here $q_j$ is precisely the form of (67.5) at zero charge, with auxiliary identities. The particle domain is the full Hilbert-valued trace domain of Definition64.5: all atoms, intervals, atom/cable slices, rectangles and both dissected same-cable triangles, exchange symmetry, exterior killing and every ground/collision trace remain.
+On a singleton the nonzero continuum $N=2$ space remains. The reference has its actual $\Omega h_{D_j}$. Both complete Green inverses and their different field matrices remain the separately declared laws; their pair, linear-coupling and compensation coefficients vanish because $\nu=0$, not by deleting a mode.
+There is one complete bank, with every spectator, excitation and unknown correlation.
+
+Write $W_j=W_{D_j}$, $`P_j=W_jW_j^*`$, $Q_j=I-P_j$ and
+$`V_j=W_{j+1}\iota_jW_j^*`$, tensoring all these particle maps with the same bank
+and auxiliary identities. Define
+
+$$
+\begin{aligned}
+Y_n&=\left(\mathcal K_{D_n}\oplus\bigoplus_{j<n}Q_j\mathcal K_{D_j}\right)
+ \otimes\mathcal F_H\otimes\mathcal A,\\
+\boldsymbol q_0&=q_0,\\
+\boldsymbol q_{j+1}[b,z,\mathbf r]
+ &=q_{j+1}[b]+\boldsymbol q_j[V_j^*b+z,\mathbf r]-q_j[V_j^*b],
+ \qquad z\in Q_jX_j.
+\end{aligned}
+\tag{68.2}
+$$
+
+The bank is factored once, not copied for each reserve. No reserve stiffness,
+scalar offset, alternative diagonal or deleted historical cross term is installed.
+The form intersection in (68.2) is part of its definition, not an assumption of
+native accessibility. The proposed cut is $U_j(x,\mathbf r)=(V_jx,Q_jx,\mathbf r)$.
+

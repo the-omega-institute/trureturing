@@ -1,0 +1,49 @@
+**Theorem 5.1 (An attained strict improvement for the original menu).**
+Under Assumption 1.1 and Definition 1.2, the fourteen-flag port (2.8)
+has exact full-history error
+
+$$
+\boxed{e(T_*)=\alpha<\frac{11}{20}<\frac47.}
+\tag{5.1}
+$$
+
+An actual attaining protocol is a zero wait, one complete five-outcome
+rank-one mode read, and Stop.
+
+Proof. Proposition 3.2 reduces this particular channel to its fifteen
+event residuals. Lemma 4.1 covers all ten pairs and the singleton $25$;
+Lemma 4.2 covers $2,3,5$. All fourteen norms are strictly below
+$27/50$, while Lemma 4.3 gives the remaining norm exactly $\alpha$.
+This proves the full-history upper and the exact maximum in (3.7).
+The rational inequality $11/20<4/7$ follows from $77<80$.
+
+To give the actual input explicitly, set
+
+$$
+b=\frac{9+3r}{340},\qquad
+v=\frac{(\alpha+8/85)e_N+be_{25}}
+{\sqrt{(\alpha+8/85)^2+b^2}},\qquad
+\rho_*=Dvv^\dagger D^\dagger.
+\tag{5.2}
+$$
+
+The vector is well defined and unit, since $b>0$.
+The second row of (4.7) gives $F_Nv=\alpha v$ in that coordinate,
+and the first row follows from $p(\alpha)=0$; thus the full residual
+also has $H_{\{N\}}v=\alpha v$.
+For the prescribed full read at wait $t=0$, the difference in
+probability of the actual recorded outcome $N$ is
+
+$$
+\operatorname{tr}\bigl(\Pi_N(\rho_*-T_*(\rho_*))\bigr)
+=v^\dagger H_{\{N\}}v=\alpha.
+\tag{5.3}
+$$
+
+The full-history TV is at least the absolute difference on this event
+and at most the proved upper $\alpha$, hence equals $\alpha$.
+No limiting wait or independently selected torus angles are needed.
+The first-read identity already used in Proposition 3.2 proves that
+no deeper allowed adaptive protocol increases the bound.
+$\square$
+

@@ -1,0 +1,38 @@
+**推论 452.4（原 RH 临界归一化下的准确成本冲突）。** §449 保持
+\[
+I_\psi(x)=\int_x^\infty[\psi(t)-t]
+\frac{1+\log t}{t^2\log^2t}\,dt,\qquad
+Z_\psi(x)=\sqrt x\log x\,I_\psi(x).
+\]
+同一 \(\mathsf F_m\) 的对数导数读出给 \(I_m,Z_m\)，并已证明
+\[
+Z_m(x)-Z_\psi(x)=\frac m{\sqrt x}
+[\kappa+\epsilon_\beta(x)],\qquad
+\kappa>0,\quad|\epsilon_\beta(x)|\le M_\alpha x^{-\alpha}.
+\tag{IC.13}
+\]
+当 \(m=m(x)\) 时，每个 \(x\) 先固定该整数，在全部 \(t\ge x\) 的
+原完整尾上使用同一个 \(m(x)\)。若固定 \(K>0,r\ge0\) 使充分大 \(x\) 上
+\[
+\|T_{\eta_{m(x)}}\|_{\mathcal X_j\to\mathcal X_j}\le Kx^r,
+\tag{IC.14}
+\]
+**证明。** （IC.8）和正 \(\lambda\) 强迫
+\[
+m(x)\le\frac{\log K+r\log x}{\lambda}=O(\log x),\qquad
+Z_{m(x)}(x)-Z_\psi(x)\longrightarrow0.
+\tag{IC.15}
+\]
+这是**假定统一 operator cost 至多多项式时的必要条件**。反过来，
+若 \(m(x)/\sqrt x\to a_*\) 且 **\(a_*>0\)**，那么新增临界补偿趋于
+\(a_*\kappa>0\)，同时
+\[
+\|T_{\eta_{m(x)}}\|_{\mathcal X_j\to\mathcal X_j}
+\ge\exp(\lambda m(x))
+=\exp[(a_*\lambda+o(1))\sqrt x],
+\tag{IC.16}
+\]
+超过任意固定幂 \(x^r\)。两者是同一 max 因子、同一迭代次数在
+对数导数读出和完整逆运输中的不同真实成本。原 \(I_\psi\) 仍须扣回
+（IC.13）的同一完整补偿；本节没有给该尾新增免费储备。证毕。
+

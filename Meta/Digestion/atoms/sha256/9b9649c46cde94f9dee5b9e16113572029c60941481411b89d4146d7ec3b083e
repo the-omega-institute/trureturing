@@ -1,0 +1,50 @@
+**Lemma 20.2 (Exponential classical Hellinger overlap).**
+Put
+
+$$
+x=\sqrt{(1-p)(1-q)},\quad y=\sqrt{pq},\quad
+\gamma=x+y.
+\tag{20.3}
+$$
+
+Then $0<\gamma<1$ and, for every $n\ge1$,
+
+$$
+0<\mathcal B_n\le\gamma^{\lfloor(n-1)/2\rfloor},\qquad
+0<C_n\le\mathcal B_n.
+\tag{20.4}
+$$
+
+Proof. The two distinct unit vectors
+$(\sqrt{1-p},\sqrt p)$ and $(\sqrt{1-q},\sqrt q)$
+have positive inner product $\gamma<1$. This is the
+strict scalar Cauchy inequality; equality would force
+$p=q$. Entrywise square roots of the two Markov word
+weights give the exact transfer formula
+
+$$
+\mathcal B_n=bK^{n-1}\mathbf1,\qquad
+b=\left(\sqrt{\pi_p(0)\pi_q(0)},
+\sqrt{\pi_p(1)\pi_q(1)}\right),\quad
+K=\begin{pmatrix}x&y\\1&0\end{pmatrix}.
+\tag{20.5}
+$$
+
+No hidden-path sum is placed inside a square root: each
+component is itself a visible first-order Markov law.
+The row b is nonnegative with $b\mathbf1\le1$.
+Coordinatewise,
+
+$$
+K\mathbf1=(\gamma,1)^{\mathsf T}\le\mathbf1,\qquad
+K^2\mathbf1=(x\gamma+y,\gamma)^{\mathsf T}
+\le\gamma\mathbf1.
+\tag{20.6}
+$$
+
+Positivity of K permits iteration of the second inequality;
+for an odd remaining power also use the first. Thus
+$K^{n-1}\mathbf1\le\gamma^{\lfloor(n-1)/2\rfloor}\mathbf1$,
+proving the first bound. The second follows from
+$2\sqrt{a(1-a)}\le1$. $\square$
+

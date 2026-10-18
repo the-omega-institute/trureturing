@@ -1,0 +1,16 @@
+**Proposition 9.2 (zero curvature prevents the stated quadratic estimate).**
+At a smooth isolated endpoint contact with $D''=0$, no positive estimate
+$D\ge c_0\rho^2$ of Theorem 6.1 can hold near that contact if its first
+derivative vanishes. In particular nonnegative isolated quartic contact is
+a genuine local obstruction to omitting the curvature assumption.
+
+Proof. Taylor's formula gives $D(\phi_i+q)=o(q^2)$ when value, first
+derivative and second derivative vanish. For a finite isolated endpoint
+contact set, along that sheet and for sufficiently small $q$ the nearest
+contact is this one and $\rho^2=q^2$. The ratio $D/\rho^2$ tends to zero,
+contradicting every positive $c_0$. The explicit profile
+$(1-\cos q)^2=q^4/4+o(q^4)$ is nonnegative and has an isolated quartic
+zero modulo $2\pi$. It is a local analytic example, without an asserted
+original-source realization. Other growth orders require a different
+estimate. $\square$
+

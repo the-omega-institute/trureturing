@@ -1,0 +1,117 @@
+**Theorem 31.2 (fully paid native chain interface).** For every supplied
+chain of Assumption 31.1 there is, for the same $\sigma_{A,k}$ on
+all of $\mathcal U_*$, a finite preparer with
+
+$$
+\boxed{\ H=nS+4+r,\qquad p\le nb+1,\qquad
+                         \ell\le bW_A+3.\ }
+\tag{PCA.76}
+$$
+
+Here $H$ is the exact installed count of the specified construction;
+the other two expressions are uniform upper bounds, without an
+assertion that a native source traverses all boxes. Every box input,
+scan position, residue and connection is represented in its counted
+states or its fixed four-successor table. It has no additional
+mutable configuration.
+
+Proof. Sinha's Proposition 3.10 supplies the modular scan;
+Lemma 3.16 and Corollary 3.18 describe its classical Boolean
+branching-program connection. The following construction spells out
+and prices the native specialization, rather than treating those
+Boolean nodes or their interconnections as uncharged native services.
+
+For every box $j$, position $1\le i\le n$ and
+$0\le z<q_j$, install a distinct running state $C_{j,i,z}$ with
+literal $a_i$ of (PCA.66). Thus there are exactly $nS$ such
+states. The states $C_{j,1,s}$ are the representations of all input
+positions $s$ of box $j$: they are already in this count, not
+additional free input nodes. A state holds the current residue in
+its identity, not a separate register retaining the input value.
+
+Let $\Lambda(j,z)$ be the following fixed successor name for an
+abstract box output:
+
+$$
+\Lambda(j,z)=
+\begin{cases}
+\widehat e_v,&(j,z)\text{ is a sink with fixed label }v,\\
+C_{j+1,1,s},&M(j,z)=(j+1,s).
+\end{cases}
+\tag{PCA.77}
+$$
+
+For each $\varepsilon\in\{0,1\}$ define the installed names
+
+$$
+G(j,i,z,\varepsilon)=
+\begin{cases}
+C_{j,i+1,(z+\varepsilon)\bmod q_j},&i<n,\\
+\Lambda\bigl(j,(z+\varepsilon)\bmod q_j\bigr),&i=n.
+\end{cases}
+\tag{PCA.78}
+$$
+
+Install $D,T$, the two original-entry latches and all $r$ further
+mandated latches. Start at $D$ with the total four-successor table
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $C_{j_0,1,s_0}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $C_{j,i,z}$ | $a_i$ | $G(j,i,z,0)$ | $G(j,i,z,0)$ | $G(j,i,z,1)$ | $G(j,i,z,0)$ |
+
+There is no separate running output node: the box's final paid
+query takes exactly the edge specified by (PCA.77). In the sink
+case it directly replaces the current running state by its original
+entry latch; all sinks with one label may use that same literal
+latch. In the connection case it directly replaces it by the
+counted first-position state of the next box with the prescribed
+input residue. Thus the abstract connection is included in an
+ordinary installed successor, with its table bytes separately
+priced. There is no silent native transition, extra latch per
+abstract sink, input latch, scan reset state, dispatch state,
+phase register or uncounted residue. Even modulus one has $n$
+installed running states whose $n$ visits are paid. All unreachable
+box states and the $r$ unused latches count.
+
+Fix any actual $u\in Z_{b_3}$ and put
+$\theta_i=\chi(r_{x_a}(w_i))$, $h=\sum_i\theta_i$, as proof
+notation only. For a scan entering box $j$ at $C_{j,1,s}$,
+induction gives the residue before position $i$ as
+$(s+\sum_{v<i}\theta_v)\bmod q_j$. The last query therefore
+takes precisely $\Lambda(j,(s+h)\bmod q_j)$. All subsequent
+scans read the same stationary native replies. Induction along the
+acyclic chain proves that the run reaches the sink label of the
+supplied chain on this same $h$, which is one exactly when $h\ge k$.
+This proves the required (PCA.53) for every finite branch image,
+including arbitrary sizes, shapes and absent selected nodes.
+
+The $D,T$ rows deal with all other profiles exactly as in Theorem
+29.2: $\Pi_3$ and $\Pi_4$ latch one and all other non-scan
+profiles latch zero. Thus correctness holds for every original
+finite inverse origin, with the same prescribed complete entries
+and the fixed whole-row reader. Separation has not been replaced
+by a promise on cube inputs: every integer $h$ arising on an
+arbitrary native source lies in $\{0,\ldots,n\}$, which is
+exactly the supplied chain's entire integer interval.
+
+If the chain on such an $h$ traverses $\nu(h)$ boxes, the native
+execution has exactly
+
+$$
+q_P(u)=1+n\nu(h),\qquad
+\ell_P(u)=3+W_A\nu(h),\qquad 1\le\nu(h)\le b.
+\tag{PCA.79}
+$$
+
+Every selected literal is submitted once per traversed box, at its
+full absolute length; repeated occurrences are charged again.
+Acyclicity bounds the number of traversed boxes by $b$. On the
+other profiles at most two calls and six letters are used, both
+dominated by $nb+1$ and $bW_A+3$ for $n\ge3$, $b\ge1$.
+Counting $nS$ scan states, the two running profile states and all
+$2+r$ latches proves (PCA.76). If a common running start is named
+in advance, label $D$ by that name. No source-dependent
+initialization is needed. $\square$
+

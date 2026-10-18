@@ -1,0 +1,60 @@
+**Theorem 22.2 (stability under approximate preservation of the full
+local laws).** Let $P$ instead have every copied four-point local
+seed law within total variation $\varepsilon\le1/2$ of $p$.
+Define
+
+$$
+v(\varepsilon)=3h_2(\varepsilon)+\varepsilon\log_2 3.
+\tag{COK.113}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\Delta(P)&\ge
+ \bigl(m-\operatorname{cyc}(h)\bigr)I_0-3m v(\varepsilon),\\
+\frac{\Delta(P)}{2m}&\ge
+ \frac14\left(1-\frac{f(h)}m\right)I_0
+                      -\frac32 v(\varepsilon).
+\end{aligned}
+\tag{COK.114}
+$$
+
+Proof. For laws on $r$ outcomes at total variation $t$, the
+finite entropy continuity bound is
+$|H(X)-H(X')|\le h_2(t)+t\log_2(r-1)$ in the ranges used
+here. One direct proof takes a maximal coupling with mismatch
+indicator of probability $t$: given the other outcome and a
+mismatch there are at most $r-1$ choices. Thus each of
+$H(X\mid X')$ and $H(X'\mid X)$ is at most the displayed
+quantity, which bounds their entropy difference. The zero-distance
+case follows by equality.
+
+Marginalization does not increase total variation. Apply this
+bound to two binary marginals and their four-outcome joint law.
+The functions $h_2(t)$ and $h_2(t)+t\log_2 3$ are increasing
+for $0\le t\le1/2$, so every actual local edge information
+satisfies
+
+$$
+|\iota_i-I_0|\le3h_2(\varepsilon)
+                         +\varepsilon\log_2 3=v(\varepsilon).
+$$
+
+Use the same $2m-\operatorname{cyc}(h)$-edge forest as in
+Theorem 22.1. Its information sum is at least that edge count
+times $I_0-v$. In (COK.97) subtract at most $m(I_0+v)$.
+This gives the stronger intermediate bound
+
+$$
+\Delta(P)\ge
+ (m-\operatorname{cyc}(h))I_0
+ -(3m-\operatorname{cyc}(h))v.
+$$
+
+Dropping its favorable $\operatorname{cyc}(h)v$ term proves
+the first line of (COK.114); the same cycle-count inequality
+proves the second. The bounds remain valid when $I_0-v<0$.
+$\square$
+

@@ -1,0 +1,60 @@
+**Lemma 41.1 (product convergence with a rate).** The bounded reconstruction products satisfy
+
+$$
+\|N_s-N_0\|_{2\to2}\le C_ds^{4/7}.
+\tag{41.1}
+$$
+
+Consequently $s^4\|(N_s-N_0)g_4\|_2=O(s^{32/7})$ using only the existing fixed $L^2$ charge $g_4$.
+
+Proof. The field memberships used here are $V,rV\in L^2$, $V\in L^\infty$ and $\sup_{|r|>L/4}V\le CL^{-5}$, from (24.4) and the canonical field bounds. Below time one, contraction and (24.6) bound $(F_s-V)Q_s(t)$ by $Cs$. Above time one the row/column $L^2$ heat estimate gives
+
+$$
+\|M_{F_s-V}Q_s(t)\|_{2\to2}
+\le\|M_{F_s-V}Q_s(t)\|_{\rm HS}
+\le C\|F_s-V\|_2t^{-7/4}.
+\tag{41.2}
+$$
+
+Its integral is $O(s)$. Thus it remains to estimate $V(H_s-G_0)$ as a product. Here $VG_0$ means the operator-norm convergent integral $\int_0^\infty VP_tdt$, $P_t=e^{-t\mathcal E}$: contraction controls the lower end and the Hilbert–Schmidt estimate $C\|V\|_2t^{-7/4}$ controls the upper end. Compact testing and adjointness identify it with $N_0$. No unweighted $G_0$ on arbitrary $L^2$ is used.
+
+On output heights $|r|>L/4$, the native, safe and canonical finite-time products have norm at most $CTL^{-5}=O(s^3)$. On inner output heights, reverse the symmetric heat kernel and retain the event of leaving the safe strip. J (31.6) gives the row supremum $Ct^{-7/2}e^{-cL^2/t}$, while its row mass is bounded. Interpolation gives row $L^2$ norm $Ct^{-7/4}e^{-c'L^2/t}$. Multiplication by $V\in L^2$ and integration in $t$ therefore cost
+
+$$
+C\|V\|_2\int_0^Tt^{-7/4}e^{-c'L^2/t}dt
+\le CL^{-3/2}=O(s^{3/2}).
+\tag{41.3}
+$$
+
+This handles original/safe and canonical/safe deletions, including all input phases and zero-extended outputs. The canonical time tail above $T$ has norm $CT^{-3/4}=O(s^{3/2})$ after multiplication by $V$.
+
+For the inner safe comparison, the first derivative has the row bound
+
+$$
+\|\partial_\theta q_\theta^L(t;\xi,\cdot)\|_2
+ \le Ct^{-7/4}(|r_\xi|+\sqrt t),
+\qquad0\le\theta\le s,\quad0<t\le T.
+\tag{41.4}
+$$
+
+To derive it, differentiate the same common bridge as in (24.9). At first order its positive majorant has row $L^1$ norm $C(|r_\xi|+\sqrt t)$ and row supremum $Ct^{-7/2}(|r_\xi|+\sqrt t)$. The determinant-one $D_A$ change in (24.10) preserves phase volume; the inverse-determinant and supremum moments in (24.12), P (107.5) give these two bounds with the safe indicator retained. Their geometric mean gives (41.4). By symmetry one may use the output height in it. This proves the asserted row bound rather than inferring it from an arbitrary-input threshold derivative.
+
+For $0<\epsilon<1$, integrate (41.4) on $[\epsilon,T]$ after multiplication by $V$. The Hilbert–Schmidt bound is
+
+$$
+Cs\int_\epsilon^Tt^{-7/4}
+       (\|rV\|_2+\sqrt t\|V\|_2)dt
+\le Cs\epsilon^{-3/4}.
+\tag{41.5}
+$$
+
+On $(0,\epsilon)$ contraction costs $C\epsilon$. Equations (41.2)–(41.5) give, uniformly in that range,
+
+$$
+\|N_s-N_0\|\le C\{s+\epsilon+s\epsilon^{-3/4}
+                                      +s^{3/2}+s^3\}.
+\tag{41.6}
+$$
+
+Set $\epsilon=s^{4/7}$ in this uniform inequality to obtain (41.1). The same proof with extra safe killing gives a uniform bound for the safe joint product; all constants are independent of the time split. $\square$
+

@@ -1,0 +1,19 @@
+## 330. Scope of the conditional exclusion
+
+The theorem excludes exactly the actual inventory (322.1) under
+(322.2)–(322.4), including eta's axes M,Z and its bad-eta inequality.
+It does not force that inventory, handle eta with axes Z,U, or treat
+the other source inventory or all remaining source-face configurations.
+In particular it is not a six-edge flat-exclusion theorem or a general
+geometric-realization theorem. Scalar constraints are used only as
+necessary conditions; no scalar assignment is claimed to construct a
+face pairing or complete actual normal circles.
+
+The endpoint comparison changes only a local response for the purpose
+of a lower bound. The complete actual partial M budget and all six
+strict genuine tests are explicit premises. The proof does not replace
+the combined V/D charge by a separate V-only assertion or assume
+S(eta)>pi/2. The maximum-gap result supplies the relevant actual
+upper gap u<z+m+1; no lower gap or missing C,Z,U capacity is used
+to strengthen the scalar implication.
+

@@ -1,0 +1,25 @@
+## 4. An exact law with no reset and no positive pair
+
+Use an auxiliary parameter $0\le s\le10^{-6}$ for estimates, and certify the single exact candidate $t=10^{-100}$. Set
+
+$$
+b=2/3,\quad q=1/3,\quad p=3/10+100s,\quad a=1-p,\quad Z=b+2p,\quad l=(b,p)/Z,
+$$
+
+$$
+B=\begin{pmatrix}a-ps&ps\\b(1-s)&bs\end{pmatrix},\quad
+C_0=\begin{pmatrix}s&1-s\\2s&1-2s\end{pmatrix},\quad D=\operatorname{diag}(p,q),\quad
+R=DC_0,\quad K=B+R=\begin{pmatrix}a&p\\b&q\end{pmatrix}.
+$$
+
+In order free $1$, free $2$, tail $1$, tail $2$, define
+
+$$
+M_0=\begin{pmatrix}B&0\\C_0&0\end{pmatrix},\qquad
+M_1=\begin{pmatrix}0&D\\0&0\end{pmatrix},\qquad
+\lambda=(b,p,bp,pq)/Z=(l,lD),\quad P_s=P_{\theta_s}.
+\tag{4.1}
+$$
+
+Rows sum to one because $B\mathbf1=(a,b)^{\mathsf T}$, $D\mathbf1=(p,q)^{\mathsf T}$ and $C_0\mathbf1=\mathbf1$. The four stationary numerators sum to $Z$ since $b+q=1$. Direct multiplication gives $lK=l$, $\lambda M_0=(l,0)$ and $\lambda M_1=(0,lD)$; hence $\lambda A=\lambda$, while $M_1^2=0$. Thus (4.1) belongs to the original $\Theta_4$, using the joint law of §1. At $s=t$, all entries of $B,C_0$ and both diagonal entries of $D$ are positive. Free states communicate, each reaches its tail, and tails reach both free states; $B_{11}>0$ is a self-loop. A positive path for any legal word uses free $1$ for ordinary zeros, its $p$ event edge for a one and $C_{0,11}=t$ for the following zero. Initial zeros, final ones, all-zero words and legal extensions are included.
+

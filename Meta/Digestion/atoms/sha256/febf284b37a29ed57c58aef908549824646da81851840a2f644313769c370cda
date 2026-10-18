@@ -1,0 +1,37 @@
+**Lemma 68.2 (full domains and the bounded old-branch cross form).** The maps
+$`P_j,Q_j,V_j,V_j^*`$ preserve their corresponding particle/number form intersections.
+The restricted form $q_j$ on $\mathcal E_j\cap Q_jX_j$ is dense in $Q_jX_j$ and
+closed. For $p\in P_j\mathcal E_j$, $z\in Q_j\mathcal E_j$,
+
+$$
+q_j(p,z)=\langle (Q_j\mathcal R_j\otimes I)W_j^*p,z\rangle,
+\qquad \mathcal R_j=T_jW_j-W_jH_j,\qquad
+|q_j(p,z)|\le r\|p\|\|z\|,
+\tag{68.3}
+$$
+
+where the actual residual of Theorem64.7 at $\nu=0$ is
+
+$$
+\begin{aligned}
+\beta_1&=\sqrt{3\delta/2},&
+\beta_2&=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta,\\
+s_N&=1-(1+\beta_N^2)^{-1/2},&
+r_N&=18a\delta\mathbf1_{N=2}+2N(6a+g)s_N+N(6a+2g)\beta_N,\\
+r&=\max(r_1,r_2).&&
+\end{aligned}
+\tag{68.4}
+$$
+
+Proof. Theorem64.6 gives $\|A_DW_D\|\le30a$ and $\|A_D^{1/2}W_D\|\le\sqrt{30a}$, including both populations and the zero particle reference.
+By (67.3), the shifted squared form norm $q_j[x]+(2g+1)\|x\|^2$ is equivalent to $\|A_{D_j}^{1/2}x\|^2+\|\mathsf n^{1/2}x\|^2+\|x\|^2$, with tensor identities understood; the lower and upper field coefficients are $\Omega\lambda$ and $6\Omega$.
+Hence $P$ produces actual operator-domain particle vectors and $\|A_D^{1/2}Qx\|\le\|A_D^{1/2}x\|+\sqrt{30a}\|x\|$.
+Both projections commute with every field operator. Since $\lambda\mathsf n\le h_D\le6\mathsf n$, $\lambda=3-2\sqrt2$, the field form domain is common to all versions on this bank. The calibrated outputs of $`V,V^*`$ therefore satisfy the respective full intersections.
+Subtracting those outputs preserves every Hilbert-valued linear trace equality; no $H^1$ cell-corner trace is assumed. The original dense particle forms tensored with finite-number field vectors and auxiliary vectors give density.
+Projecting this dense domain by $Q$ gives $Q\mathcal E=\mathcal E\cap QX$, dense in $QX$. A Cauchy sequence in its shifted form norm converges in $\mathcal E$ and stays in the Hilbert-closed $QX$; thus the restriction is closed.
+Its operator is defined by form representation, not by an assumed self-adjoint operator compression $QAQ$.
+
+For the cross form, $h_j^{1/2}$ commutes with $P_j,Q_j$, so $\langle h_j^{1/2}p,h_j^{1/2}z\rangle=0$. This is orthogonality on the full tensor space for arbitrary correlated inputs, not a vacuum expectation or a moment cutoff.
+The particle operator relation in64.7 and $Q_jW_j=0$ give (68.3); tensoring a bounded operator with identity preserves its norm. One can first use finite-number vectors and then pass in the full form norm.
+The reference residual is zero. On singleton $N=2$, $P_2=0$, $Q_2=I$, so its entire continuum sector is retained. The cancellation is within one old branch only: it neither equates $h_j$ with $h_{j+1}$ nor removes any actual free-field diagonal. $\square$
+

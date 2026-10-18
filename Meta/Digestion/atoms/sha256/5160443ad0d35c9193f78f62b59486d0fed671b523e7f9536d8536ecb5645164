@@ -1,0 +1,98 @@
+**Proposition 9.1 (fixed-law sector failure does not imply optimized
+failure).** At Definition 5.1's law the graph carrier used here is
+not pressure-maximizing among complete native templates. In fact the
+credited [GDB, Theorem 13.3 and Proposition 13.4][GDB] give
+
+$$
+\sup_{G\in\mathcal G_4} Z_G^{1/|V(G)|}
+=\frac{128}{619}\left[1+\left(\frac{31}{32}\right)^5\right]^{1/5}
+<\frac14<\frac{512}{619}\le\beta_3(\mu).
+\tag{WBF.36}
+$$
+
+Here $\mathcal G_4$ allows all the credited simple 4-regular graph
+templates, including disconnected ones, and $\beta_3$ allows every
+complete original native template at every length.
+
+Proof. The first equality and strict quarter bound are precisely the
+credited graph-sector evaluation. For the last lower witness, the
+one-block template with all internal targets constant branch and all
+terminal targets using their own guarded replies has the full
+sixteen-state perfect-tree solution set. Its mass is
+$(8\cdot63+8)/619=512/619$. This is an actual unrestricted
+competitor absent from that graph sector. Thus the large per-template
+norm residual cannot be read as a loss at an optimizing source law
+or an obstruction to optimizer-cofinality. $\square$
+
+**Open problem 9.2 (original effective soundness and cofinality).**
+For fixed $d$, let $C_\Theta\subseteq S_d^m$ be the full solution
+set of an arbitrary complete native donor/decoder template, with all
+targets specified, arbitrary off-target donors, guards, cycles,
+shared variables and actual-tree compatibility retained. Explicitly,
+at each $(i,q)\in[m]\times W_d$ the template specifies either a
+constant in $G_q=\Gamma_q[S_d]$, or an equation
+$\Gamma_q(x_i)=\delta_{i,q}(r_{x_j}(a))$ with
+$(j,a)\in[m]\times W_d$ and a total table
+$\delta_{i,q}:\mathcal A\to G_q$. All equations hold on the
+same actual tuple. Define
+
+$$
+\begin{aligned}
+A_m(\mu)&=\max_\Theta\sum_{x\in C_\Theta}\prod_{i=1}^m\mu(x_i),\\
+\beta_d(\mu)&=\sup_{m\ge1} A_m(\mu)^{1/m}.
+\end{aligned}
+\tag{WBF.37}
+$$
+
+Let $K_d(m)$ be the minimum number of jointly admissible sets
+covering $S_d^m$, where a set is jointly admissible when some
+complete template holds on all its members. Put
+$\sigma_d=\inf_{m\ge1}m^{-1}\log_2K_d(m)$. The original
+rate is $\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)$,
+whose existence and relation to the $\sigma_d$ are credited to
+[FMR][FMR].
+
+[NPC, Theorems 5.3 and 6.2][NPC] gives the semantic identity
+$\sigma_d=-\log_2\min_\mu\beta_d(\mu)$, with one minimizing
+law valid at all lengths. The still-missing effective bridge of
+[NPC, Section 8][NPC] is a total computable sound predicate
+$V(d,\mu,C,\pi)$ on rational laws, positive rational caps and
+finite certificates,
+whose acceptance implies
+
+$$
+\forall m\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_{i=1}^m\mu(x_i)\le C^m,
+\tag{WBF.38}
+$$
+
+and such that for every rational $\epsilon>0$ there are rational
+$\mu,C$ and a finite $\pi$ with acceptance and
+$-\log_2C>\sigma_d-\epsilon$. Thus its accepted optimized
+endpoints are cofinal at the unchanged $\sigma_d$. An alternative
+sufficient bridge is
+a uniform effective length-error estimate
+
+$$
+\sigma_d\ge\frac1m\log_2 K_d(m)-\eta_d(m),
+\qquad \eta_d(m)\longrightarrow0,
+\tag{WBF.39}
+$$
+
+with effective control. These quantifiers permit arbitrary
+correlated original competitors and arbitrary nonnegative whole-block
+weights with compatibility zeros. The positive special law and
+graph carrier of this volume are not a replacement for that domain.
+
+Theorem 4.2 solves the optimization within one defined per-template
+class; it neither constructs nor disproves (WBF.38)–(WBF.39).
+Any route making that class a mandatory universally tight intermediate
+must change its mechanism or prove a pressure-near-extremizer theorem
+that makes such a requirement sufficient on a smaller justified
+domain. A general cyclic joint-normalizer rule is another possible
+missing relation. The existing proper-syndrome repair already handles
+this parity sector. No general native reduction to that sector,
+uniform completion theorem or optimizer-cofinality theorem is supplied
+here. Finite algebraic checks, more instances, semantic attainment
+and proof enumeration alone do not provide those missing implications.
+

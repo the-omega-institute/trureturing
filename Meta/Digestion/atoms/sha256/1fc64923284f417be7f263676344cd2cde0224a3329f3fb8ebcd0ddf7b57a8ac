@@ -1,0 +1,17 @@
+**定义 14.1（后继预测与完整过去）。** 当前读出为 $R(\omega)$，已声明协议的下一事件为 $Q(\omega)$。定义 1.3 给
+
+$$
+Q=fR\iff
+\bigl(R(\omega)=R(\omega')\Longrightarrow Q(\omega)=Q(\omega')\bigr).
+$$
+
+函数存在不保证可计算或及时取得。若主张同一完整过去和规律允许不同未来，所需条件是存在满足同一规律的 $\omega_0,\omega_1$，使
+
+$$
+\omega_0|_{\mathrm{Past}}=\omega_1|_{\mathrm{Past}},
+\qquad
+\omega_0|_{\mathrm{Future}}\ne\omega_1|_{\mathrm{Future}}.
+$$
+
+此条件不由当前读数不足或暂时计算失败推出。能动性若定义为由理由、目标与控制过程形成行动，须另给控制结构；不可预测性不替代该定义。
+

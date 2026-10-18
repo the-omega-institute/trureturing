@@ -1,0 +1,39 @@
+**Definition 208.1 (Input measures and the unchanged comparison).**
+Use the original source, resources, complete scores, catalogs, quotient
+and one-budget certificate of Definitions 207.1–207.3. In particular,
+$L\ge3$, $A=0$, $P$ is supported on $\Omega_1\cup\Omega_2$, and
+the correct rows are arbitrary. Write
+
+$$
+c_a=\gamma_a,\quad p_a=\sum_{\Omega_a}P_w\quad(a=1,2),\qquad
+E=c_1+c_2,\quad S=p_1+p_2,\quad T=t,\quad W=E+S+t,
+\qquad \delta=\Delta_O(y).
+\tag{208.1}
+$$
+
+The actual late-bit measure, of mass $S$, is
+
+$$
+\nu(x)=P_{00x}+P_{01x}+P_{10x},\qquad
+Z_j=\{x:x_j=0\},\quad m_j=\nu(Z_j),\quad
+d_{ij}=\nu(Z_j\setminus Z_i)\quad(3\le i<j\le L).
+\tag{208.2}
+$$
+
+Thus prefix $00$ is included. The late totals $\gamma_j$ need not
+be ordered, and $t$ may be zero. All finite words, all labels, the
+independent pair row and negative singleton demands remain as in
+(207.3)–(207.4), even when their score coefficients are zero.
+The measures here are nonnegative proof weights. Their normalizations
+are not laws on the original sources or acquisitions.
+
+Fixed-total families below retain their specified correct totals and
+stock variables, while allowing every joint placement consistent with
+the input shape. A replacement may change $\nu$, the early pair split
+and unary correct marginals unless a theorem explicitly fixes them.
+The certificate still consists of one full score and one residual
+charge in (207.9); it does not require preservation of these auxiliary
+coordinates.
+
+### 208.1 Marginal spread of the actual input
+

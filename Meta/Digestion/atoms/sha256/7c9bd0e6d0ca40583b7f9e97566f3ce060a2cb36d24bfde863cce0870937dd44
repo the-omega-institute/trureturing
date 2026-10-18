@@ -1,0 +1,35 @@
+**Proposition 4.2 (The effect map for this port).** For real symmetric
+$E$, put $t_i=\operatorname{tr}(R_iE)$. Then $\mathcal A=S^\dagger$
+is exactly
+
+$$
+\begin{aligned}
+\mathcal A(E)={}&\Lambda_{00}t_0R_0
++\sum_{j=+,-}\frac{\Lambda_{jj}}8(t_jR_j+2R_jER_j)\\
+&+\sum_{i\ne j}\frac{\Lambda_{ij}}{d_id_j}\,t_iR_j\\
+&+\frac{507224}{1271415}(R_0ER_++R_+ER_0)
++\frac{2272374}{5592605}(R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{4.6}
+$$
+
+Both sides extend complex linearly after replacing a matrix by its
+transpose-symmetric part. In particular $\mathcal A(I)=I$.
+
+Proof. The branch adjoint is
+$E\mapsto c_fb_fb_f^T\operatorname{tr}(a_fa_f^TE)$.
+In the exact orbit expression, a plane's fourth moment is
+$(t_jR_j+2R_jER_j)/8$, while different sectors use independent
+second moments. Thus a transfer from input sector $j$ to output
+sector $i$ contributes $\Lambda_{ij}t_iR_j/(d_id_j)$ to the
+adjoint. Cross terms give the two coefficients already computed in
+Proposition 4.1. This is precisely the orientation of QWS Proposition
+4.2 with the new joint populations. Both the branch map and its
+adjoint annihilate transpose-antisymmetric matrices, so the extension
+agrees on all complex matrices.
+
+For $E=I$, $t_i=d_i$ and cross products vanish. The coefficient of
+$R_j$ is $\sum_i\Lambda_{ij}/d_j=1$. Hence
+$\mathcal A(I)=I$. Using $S$ in place of $\mathcal A$ would transpose
+the sector-transfer block and give incorrect residuals. $\square$
+

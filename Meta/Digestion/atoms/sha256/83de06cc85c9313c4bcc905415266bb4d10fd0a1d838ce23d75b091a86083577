@@ -1,0 +1,6 @@
+## 2. Zero-phase gates can route an arbitrary encoded quantum state
+
+Write R_x(t)=exp(-itX), R_y(t)=exp(-itY) on an encoded data qubit. Let C_Z(a,b) denote the five-pulse adjacent CZ from the preceding Theorem 13.1. Every pulse in that construction has beta=0, and every separator returns to zero at the gate boundary. Define on adjacent data qubits
+
+$$C_Y(c,t)=R_{x,t}(-\pi/4)\,C_Z(c,t)\,R_{x,t}(\pi/4). \tag{2.1}$$
+

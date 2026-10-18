@@ -1,0 +1,19 @@
+### Theorem 3.1. Remote rotations and circuit cost
+
+One can implement
+
+$$\boxed{W_{q\to q_*}^{\dagger}R_{y,q_*}(t)W_{q\to q_*}=R_{y,q}(t)} \tag{3.1}$$
+
+with at most 42|q-q_*|+1 pulses and exactly one second-quadrature call, always at native site 2q_*-1. A CZ between data sites a,b costs at most 42(|a-b|-1)+5 pulses, all phase zero, by routing one endpoint next to the other and restoring it.
+
+For a known circuit C written using R_x, R_y and CZ, with G_x R_x gates, Y-rotation locations q_l and CZ pairs (a_e,b_e), there is an explicitly generated native word V_C with
+
+$$V_CJ_m=J_m C,$$
+$$\boxed{L\le G_x+\sum_l[42|q_l-q_*|+1]+\sum_e[42(|a_e-b_e|-1)+5].} \tag{3.2}$$
+
+Thus compilation has O(mG) native-pulse overhead for a G-gate source circuit, linear native-site overhead, and one fixed second-quadrature address. The pulse-list generation has polynomial classical cost. Dense matrix validation is a separate exponential-size calculation and is not part of the compiler's claimed efficiency.
+
+Proof. SWAP conjugates every single-qubit operator on the moved factor to the reference factor. Equation (3.1) and its count follow from Theorem 2.1. For CZ, route over |a-b|-1 neighboring pairs, use the five-pulse adjacent gate, and reverse the route. The resulting intertwiners restore every separator and layout, so induction over the circuit gives (3.2). Euler decomposition gives arbitrary one-qubit SU(2) gates using X-Y-X rotations. CNOT follows by Hadamard conjugation of CZ. General U(2) gates have an explicitly tracked input-independent phase. Known controlled gates must first be decomposed in this source basis; this does not add coherent control to an unknown black box. QED.
+
+The preceding SU(d) result acts on the entire d=F_(n+2) legal space. The efficient compiler here instead acts on the specified 2^m-dimensional code. It does not claim efficient synthesis of a generic unitary on the whole legal space, nor cheap high powers for arbitrary state machines.
+

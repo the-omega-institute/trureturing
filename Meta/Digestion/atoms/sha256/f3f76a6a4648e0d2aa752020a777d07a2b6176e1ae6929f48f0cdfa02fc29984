@@ -1,0 +1,4 @@
+**Lemma 3.4 (stationary paths).** On one fixed source a terminating phase cannot revisit a Read state. Different-source paths may nevertheless have cycles in their union graph.
+
+Proof. The fixed literal at a state has a fixed stationary reply. Returning to that state repeats its entire deterministic future, preventing termination. This fixes the source and says nothing about edges selected by different sources. It is NBP Proposition 12.5 and PCA Lemma 2.3. It requires no unfolding into history states. $\square$
+

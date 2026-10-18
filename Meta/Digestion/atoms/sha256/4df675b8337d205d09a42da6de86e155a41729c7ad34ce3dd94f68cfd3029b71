@@ -1,0 +1,34 @@
+**引理 3.1（全树符号归约及零分支）。** 置
+
+$$
+A=|a|^2,\quad B=|b|^2,\quad C=a\cdot b,\quad
+K=b\times a,\quad U=K\times a=Ca-Ab,\quad V=K\times b=Ba-Cb.
+$$
+
+完整上三角叉积表为
+
+| 左符号 $\times$ | $b$ | $K$ | $U$ | $V$ |
+| --- | --- | --- | --- | --- |
+| $a$ | $-K$ | $-U$ | $AK$ | $CK$ |
+| $b$ | — | $-V$ | $CK$ | $BK$ |
+| $K$ | — | — | $-\Delta a$ | $-\Delta b$ |
+| $U$ | — | — | — | $-\Delta K$ |
+
+同符号乘积为零，反序取负。每棵树可选择一个对所有制备同时有效的描述子：零，或
+
+$$
+\varepsilon A^iB^hC^v\Delta^kZ,
+\qquad \varepsilon\in\{\pm1\},\quad i,h,v,k\in\mathbb N,
+\quad Z\in\{a,b,K,U,V\}.
+$$
+
+证明。前两列由定义和反序得到。代入 $U,V$ 给其余 $a,b$ 行。$K\perp a,b$ 和向量三重积给 $K\times U=-\Delta a$、$K\times V=-\Delta b$；双线性展开给
+
+$$
+(Ca-Ab)\times(Ba-Cb)=-\Delta K.
+$$
+
+叶有描述子 $a,b$；节点处乘子描述子的单项式，查表后仍有此形状。结构归纳不作除法，覆盖 $C=0$ 和 $\Delta=0$。
+
+令 $f_1=e_1,f_2=e_2,f_3=e_2\times e_1=-e_3$，单位标签为 $\chi(t)=E_{(e_1,e_2)}(t)$。表在参考处有 $A=B=\Delta=1,C=0,U=-f_2,V=f_1$，故 $\chi(t)\in\{0,\pm f_1,\pm f_2,\pm f_3\}$；非零恰是所选描述子非零且无正 $C$ 次数。若 $\chi(t)=\sigma f_\nu\ne0$，$\nu\in\{1,2,3\}$，初值可写成 $\sigma A^iB^h\Delta^kZ$，选取正向符号 $Z\in\{a,b,K,-U,V\}$。标签 $f_1,f_2,f_3$ 分别对应 $Z\in\{a,V\},\{b,-U\},\{K\}$。
+

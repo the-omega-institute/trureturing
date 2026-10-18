@@ -1,0 +1,40 @@
+**Proposition 4.2 (necessity for arbitrary original competitors).** Every
+competitor has $H_r\succeq0$, $L_r\in\mathcal C_2$, $Z_r=H_r+L_r$,
+and supported binary failure effect $N$ such that
+
+$$
+\begin{gathered}
+Z_++Z_-=I_3,\qquad
+N=(I_3+s\kappa X_{01})/2-\Theta(Z_+),\quad0\preceq N\preceq M,\\
+\operatorname{Re}(Z_+)_{DT}=s/2,\qquad
+G_{\rm acq}\succeq E\Theta(H_++H_-)E^\dagger.
+\end{gathered}
+\tag{AS.23}
+$$
+
+Proof. Multiply each encoder Kraus matrix by each live-decoder Kraus
+matrix, without declaring these analytic refinements accessible labels.
+Their positive Choi projectors sum to the fixed live Choi of (AS.8).
+A kernel vector has zero squared pairing with each summand, so each
+product lies in the three-column support and equals $EK(z)E^\dagger$.
+Apply the Gram left inverse
+$(\mathcal W^\dagger\mathcal W)^{-1}\mathcal W^\dagger$ of the three
+embedded columns to both sides of their Choi sum to obtain
+$\sum zz^\dagger=I_3$. The independent columns have not been
+normalized. Group these same products by actual report and actual
+fibre dimension. A product through $d_\xi\leq2$ has rank at most two
+and lies in (AS.22); the other products give $H_r$.
+
+The plus and minus supported nonlive effects are $N$ and $M-N$.
+Positivity and $M|0\rangle=0$ kill their first rows and columns.
+For Hermitian $Z$,
+$\Theta(Z)_{01}=h_1bZ_{DT}+h_0a\overline{Z_{DT}}$;
+the prescribed effect therefore gives $\operatorname{Re}Z_{DT}=s/2$.
+Arbitrary report-dependent failure measures are allowed in this argument.
+For each high branch full TP decoding gives live adjoint identity at
+most the whole identity. Pulling it back through that encoder and
+summing proves the last five-mode operator inequality. This includes
+high acquisition later failing, complement and cross-support effects.
+No real, covariant, isometric or wholly-live restriction has been placed
+on a competitor. $\square$
+

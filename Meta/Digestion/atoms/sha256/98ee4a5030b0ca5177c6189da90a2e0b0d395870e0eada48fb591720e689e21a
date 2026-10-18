@@ -1,0 +1,79 @@
+**Theorem 69.2 (improved base certificate).** For $N_0$ of (S.112), the same full-input witness $\rho_\star$ as (R.260) and the following new rational dual satisfy
+
+$$
+\rho_\star=\operatorname{diag}(1/4,1/4,1/2),\qquad
+Y=\frac{M}{64},\qquad
+M=\begin{pmatrix}
+11&0&0&2&5\\
+0&10&-2&0&0\\
+0&-2&8&0&0\\
+2&0&0&8&6\\
+5&0&0&6&15
+\end{pmatrix},\qquad
+Y\succ0,\quad\operatorname{Tr}Y=\frac{13}{16}.
+\tag{S.122}
+$$
+
+Consequently every complex whole-output recovery obeys $F_e(\rho_\star,RN_0)\leq13/16$ and $\delta_{N_0}\geq3/8$.
+
+Proof. In the order $(b_1,g_2,h)\oplus(g_1,b_2)$ the matrix $M$ is $A\oplus B$, where
+
+$$
+\begin{gathered}
+A=\begin{pmatrix}11&2&5\\2&8&6\\5&6&15\end{pmatrix},\quad
+B=\begin{pmatrix}10&-2\\-2&8\end{pmatrix},\\
+A^{-1}=\frac1{28}\begin{pmatrix}3&0&-1\\0&5&-2\\-1&-2&3\end{pmatrix},\qquad
+B^{-1}=\frac1{76}\begin{pmatrix}8&2\\2&10\end{pmatrix}.
+\end{gathered}
+\tag{S.123}
+$$
+
+Their leading principal minors are $(11,84,784)$ and $(10,76)$, respectively. Sylvester's criterion proves positivity, and multiplication verifies the displayed inverses. Let
+
+$$
+\begin{aligned}
+w_1&=|0\rangle b_1+|1\rangle g_1+|2\rangle(b_1+g_2+2h),\\
+w_2&=|0\rangle b_2+|1\rangle g_2+|2\rangle(g_1-b_2),\qquad
+W=[w_1,w_2]/\sqrt{32}.
+\end{aligned}
+\tag{S.124}
+$$
+
+Tensor products in this formula have the logical factor first. Directly from (S.112), $C_{\rho_\star,N_0}=WW^\dagger$. For transparency the two diagonal contractions, including the factor $64/32=2$, are
+
+$$
+\begin{aligned}
+[W^\dagger(I_3\otimes Y^{-1})W]_{11}
+&=2\left(\frac3{28}+\frac8{76}+\frac8{28}\right)=\frac{265}{266},\\
+[W^\dagger(I_3\otimes Y^{-1})W]_{22}
+&=2\left(\frac{10}{76}+\frac5{28}+\frac{14}{76}\right)=\frac{263}{266},\\
+W^\dagger(I_3\otimes Y^{-1})W
+&=\operatorname{diag}(265/266,263/266),\\
+I_2-W^\dagger(I_3\otimes Y^{-1})W
+&=\operatorname{diag}(1/266,3/266)\succ0.
+\end{aligned}
+\tag{S.125}
+$$
+
+The off-diagonal contraction vanishes because corresponding vectors belong to different blocks of (S.123). In the first contraction, $(1,1,2)A^{-1}(1,1,2)^T=8/28$; in the second, $(1,-1)B^{-1}(1,-1)^T=14/76$.
+
+Taking both Schur complements of the same block matrix proves the full inequality:
+
+$$
+\begin{pmatrix}I_3\otimes Y&W\\W^\dagger&I_2\end{pmatrix}\succ0
+\ \Longleftrightarrow\ I_2-W^\dagger(I_3\otimes Y^{-1})W\succ0
+\ \Longleftrightarrow\ I_3\otimes Y-WW^\dagger\succ0.
+\tag{S.126}
+$$
+
+Thus this is a strict fifteen-dimensional certificate, not a test on selected recovery columns. Apply (S.121) at the fixed purification $\frac12|00\rangle+\frac12|11\rangle+\frac1{\sqrt2}|22\rangle$ to obtain
+
+$$
+F_e(\rho_\star,RN_0)\leq\frac{13}{16},\qquad
+\|RN_0-\mathrm{id}_3\|_\diamond\geq\frac38,\qquad
+\delta_{N_0}\geq\frac38.
+\tag{S.127}
+$$
+
+The witness and the encoder are reused from Sections 48–50 of the first volume. Relative to its $83/100$ fidelity upper bound and $17/50$ norm lower bound, the improvements are $7/400$ and $7/200$. Neither the displayed dual nor the witness is asserted optimal. $\square$
+

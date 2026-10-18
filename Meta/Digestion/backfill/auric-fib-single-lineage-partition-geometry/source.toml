@@ -1,0 +1,5 @@
+source_id = "auric-fib-single-lineage-partition-geometry"
+path = "docs/develop/theory/AURIC_FIB_SINGLE_LINEAGE_PARTITION_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

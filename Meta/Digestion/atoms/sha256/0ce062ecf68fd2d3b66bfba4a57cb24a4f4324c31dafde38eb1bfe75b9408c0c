@@ -1,0 +1,39 @@
+**Proposition 8.2 (actual paths and their resources).** Each instance of
+Theorem 8.1 uses actual original controls with both original regularity
+alternatives. To prepare any quantified initial history at $k_H$, choose
+$a=k_L$ in Proposition 2.2. Then
+
+$$
+B_{\beta,m}=\frac{24}{5}\beta-\frac45\pi m.
+\tag{PR.33}
+$$
+
+Append $2n$ unit-time affine horizontal legs with constant relative phase.
+Their common support is at least $1/20$, future duration is $2n$, future
+phase variation and winding are zero, future height speed is $1/8$ on
+each nontrivial leg, and future height variation is $n/4$. The complete
+history has duration $5+2n$ and retains its original real winding $m$.
+
+Proof. Formula (PR.33) is (PR.6) at the rational parameters. Every height
+lies in $[1/8,1/4]$; the smallest of $x,c-x,Z$ is $1/20$. Each future
+leg has height change $1/8$ over one unit and no phase derivative, so its
+transported phase increment is zero. Composition (PR.7) preserves the old
+prefix and actual signed lift and adds these zero increments. Finite
+affine joins satisfy both regularity alternatives. $\square$
+
+Thus $P_n^*(1)=7^{-n}$ reuses the credited unassisted checkpoint product,
+and $P_n^*(0)=1$ reuses fixed-parity controlled action. For $\mu=1/2$
+and $n=1$ the optimum is $4/7$, with one supplied token on one specimen.
+The mathematical limit as $n\to\infty$ is $1-\mu$. This is a limit of
+finite optima, not an executed infinite experiment or a finite-state
+implementation of indefinite exact dynamics. A fixed duration or total
+variation budget does not contain this entire sequence of programmes.
+
+The frontier resembles a mixture of perfectly distinguishing parity
+information of weight $1-\mu$ and an unassisted component of weight $\mu$.
+The exact proof and attaining operations are the Gram construction above.
+Interpreting this resemblance as an actual token-only unambiguous read
+would require that read and its inconclusive live successor to be explicitly
+permitted. No such read, restart or new canonical failure successor is
+needed or granted by the proof.
+

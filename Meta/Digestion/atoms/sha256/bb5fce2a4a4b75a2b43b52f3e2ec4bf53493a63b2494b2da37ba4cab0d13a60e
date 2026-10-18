@@ -1,0 +1,44 @@
+**theorem 4.3 (Exact feasibility and compactness).** For $q=1,2,3,4$ and
+$0\le r\le1$, the following are equivalent:
+
+1. $\exists C\ \mathcal P_q(C,r)$.
+2. Some original legal fixed port has actual-history error at most $r$.
+3. $\varepsilon_q\le r$.
+
+The solution set in $(C,r)$ is nonempty and compact, and minimizing $r$ on
+it gives precisely $\varepsilon_q$.
+
+Proof. Vanishing of all $(q+1)$-minors is exactly complex rank at most $q$.
+TP and the Kraus form give complete positivity and trace preservation. The
+supplied $625$-term representation makes these constraints cover every
+channel in $\mathfrak C_q$, before stationarity is imposed. Equation (4.2)
+identifies the commutator constraints with (3.2). For a Hermitian matrix,
+nonnegative principal minors are equivalent to positive semidefiniteness.
+For completeness, necessity follows by restricting a positive quadratic
+form. Conversely the elementary symmetric polynomials of its real
+eigenvalues are the sums of principal minors of each order. If these are
+nonnegative, $\det(tI+B)$ has nonnegative coefficients and a positive leading
+coefficient, so it cannot vanish for $t>0$. A negative eigenvalue of $B$
+would give such a zero. This proves sufficiency, including singular cases.
+
+Consequently the last constraints in (4.4) are exactly
+$\|H_J(C)\|_{\rm op}\le r$. Theorem 3.3 proves that feasible tuples yield
+legal original ports with $e\le r$. Conversely a legal port with $e\le r$
+has a stationary no-worse design; the supplied support bound represents
+that design by $625$ Kraus matrices satisfying (4.4). The minimum in the
+original class is attained, so conditions 2 and 3 are equivalent even at the
+boundary $r=\varepsilon_q$.
+
+All constraints are closed polynomial conditions. Taking a trace in TP gives
+$\sum_i\|C_i\|_{\rm HS}^2=5$, so the coordinates are bounded; indeed the
+diagonal TP equations imply each entry has modulus at most one. Together
+with $0\le r\le1$ this gives compactness. Nonemptiness follows, for example,
+from the stationary completely depolarizing channel, represented by the
+$25$ rank-one matrices $|a\rangle\langle b|/\sqrt5$, and $r=1$.
+$\square$
+
+Stationarity in (4.4) does not parametrize every original competitor with
+the same channel coefficients. Its validity for minimax comes from the
+proved no-worse map, so the existential threshold predicate still excludes
+or includes the entire original competitor class correctly.
+

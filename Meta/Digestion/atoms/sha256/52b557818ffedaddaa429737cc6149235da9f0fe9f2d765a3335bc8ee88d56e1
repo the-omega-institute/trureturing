@@ -1,0 +1,21 @@
+**Theorem 5.7 (actual selector acquisition, conditional on constructed
+bounds).** Definition 5.6 is one finite native control graph, uniform in
+$a,b,\eta$. It terminates and issues exactly the ordered references in
+(RCA.4) when its actual inputs are those of Theorem 4.4. It creates no
+permission from the reference bits. An absent invocation permission
+remains absent.
+
+Proof. Sequence and looping use PR57.D1's finite expansion. The outer
+graph has one comparison branch, one finite record-copy graph, one fresh
+increment graph and an exit. Its input lengths are tape data, never
+native-state indices. The represented current value starts at $a$ and
+increases by one. For $a\le b$ exactly $b-a+1$ output iterations precede
+the greater result at $b+1$. For $a>b$ there is no output iteration.
+Every copy, comparison, home, seek, framing and append has finite
+constructed bounds. Old versions remain retained. Theorems 4.4 and 5.5
+give correct bound denotations and copied numeral values. Authenticity is
+the input backing's actual provenance followed by these writer/copy
+transitions. The graph changes its own tapes, tokens and meter; it does
+not change any live source or archive permission merely by writing its
+description into $\eta$. ∎
+

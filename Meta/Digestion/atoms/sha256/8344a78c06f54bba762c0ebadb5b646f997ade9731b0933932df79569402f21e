@@ -1,0 +1,12 @@
+**数学引文 5.2（与供应源 §§15–20 的精确交集）。** 本卷不重新宣称实际深度端点范围、三深度同终局不同下一 Read 的碰撞、两相位坐标矩阵、代数先验计数反演、确定性可数端点价格或有限有理支持平均风险。这些分别由 [FR] §§15–20 供应。新结论是定理3.1在同一完整实际域上的全部因果随机有限机器终局值，及其直接控制可数非端点总质量的有限正历史见证；定理2.1另给该供应源没有计算的两深度完整转录价格。§3.3 只证明较大族完整尾下界，并以不同的实际有理先验和完整词事件定位原达到法的失效；它不重述供应源 §16 的终局标量碰撞。一般 Markov 收缩和有限网格覆盖不作为新增内容，所有结论均保留普通证明、先验表示和物理资源的边界。
+
+[FR]: https://github.com/the-omega-institute/trureturing/blob/19aa22f02f9d8bcff26791b643d28f7db96a2904/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[BD]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[SG]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md
+[SO]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_BAYES_SIXTH_ORDER.md
+[KB]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md
+[HC]: https://isl.stanford.edu/~cover/papers/paper018.pdf
+[BOS]: https://arxiv.org/pdf/2005.07445v1
+[Survey]: https://arxiv.org/pdf/2312.15225v1
+

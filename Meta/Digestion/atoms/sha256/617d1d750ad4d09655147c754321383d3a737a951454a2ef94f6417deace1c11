@@ -1,0 +1,29 @@
+**Definition 11.1 (padded tuple representation).** For $k\ge1$, let the
+finite ranked alphabet $\Sigma_k$ consist of vectors in
+$\{\alpha,\beta,\mathsf{branch},\bot\}^k$ other than the all-$\bot$
+vector. A vector has rank two if some coordinate is branch, and rank
+zero otherwise. The symbol $\bot$ represents an absent coordinate.
+The convolution $\operatorname{conv}(t_1,\ldots,t_k)$ has domain the union
+of the finite coordinate domains and carries their reply vector at each
+node. This union is a finite full binary domain, so it is a
+$\Sigma_k$-term.
+
+A valid whole-tuple term has no $\bot$ at its root. At any binary node,
+a branch coordinate has nonabsent labels at both children; a leaf or
+absent coordinate has $\bot$ at both children. At a nullary node no
+coordinate is branch. These local rules imply that a coordinate never
+reappears below its leaf or absence. Denote the resulting language by
+$V_k$. Internal subterms may have absent root coordinates, even though
+roots of $V_k$ do not. No node with all coordinates absent is inserted.
+
+These rules are an effective finite-state check: a bottom-up state can
+store the root vector and a validity flag, check the two child vectors,
+and impose the nonabsent-root condition only at acceptance. Restricting
+a valid term to each coordinate recovers a nonempty finite tree. The
+rules and the exclusion of all-absent nodes show that its domain is
+exactly the union of those recovered domains. Consequently convolution
+and coordinate recovery are inverse bijections between $\mathcal T^k$
+and $V_k$. Padding is determined by the coordinate trees, not chosen
+auxiliary information. Zero-coordinate cells use the convention of
+Definition 10.2 instead of an empty convolution tree.
+

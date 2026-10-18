@@ -1,0 +1,41 @@
+**Convention 7.4 (the inherited maximum on the joint class).** Let
+$\epsilon_{\rm q}=\eta_{1,\star}\tau_{\rm q}/2>0$ be EXACTLY the
+closed algebraic constant defined in ZG.23–ZG.29, with its ascent and
+positivity proof ZG7–8. Let
+$\epsilon_0=\mu_0-E_\star>0$ and
+$\epsilon_2=\mu_2-E_\star>0$ be the finite-test minima and existential
+gaps of CG.170 and CG.192. Every original full channel satisfying
+the simultaneous restriction inherits
+
+$$
+\boxed{
+E(\Phi)\geq E_\star+
+ \max\left\{\epsilon_{\rm q},\frac{\delta_\star^2}{4K^2},
+        \max_{ij\in\{01,10,02,20\}}\frac{\tau_{ij}^2}{K^2}\right\}.}
+\tag{JG.47}
+$$
+
+It also inherits $E(\Phi)\geq E_\star+\max\{\epsilon_0,\epsilon_2\}$.
+If desired all these applicable constants can be put in one maximum.
+None is a new performance constant of this volume.
+
+The justification is direct reuse: a joint map is zero-transfer, so
+ZG8.2 and all four transfer penalties apply; it also belongs to
+$\mathfrak S_2$, so the inherited Schmidt penalty applies. The same
+bounds hold on their corresponding finite feasible sets. Taking their
+minima there gives
+
+$$
+\epsilon_0\geq\max\left\{\epsilon_{\rm q},
+           \max_{ij\in\{01,10,02,20\}}\tau_{ij}^2/K^2\right\},
+\qquad\epsilon_2\geq\delta_\star^2/(4K^2).
+\tag{JG.48}
+$$
+
+Thus an explicit source-dependent penalty is not asserted to dominate
+an unknown restricted gap. No numerical ordering between
+$\epsilon_{\rm q}$ and the CG27 constants has been established here.
+Separate lower bounds give their maximum, not their sum. No strict
+improvement above that maximum, joint restricted optimum, restricted
+optimizer or sharp mass constant follows from intersecting classes.
+

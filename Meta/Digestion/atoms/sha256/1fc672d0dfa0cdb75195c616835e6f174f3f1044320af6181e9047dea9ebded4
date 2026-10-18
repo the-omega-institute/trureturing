@@ -1,0 +1,36 @@
+**Definition 56.5 (existing endpoint and the general-third-column boundary).** At $(w,u,v)=(1,0,0)$ identify $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_2,e_3,e_4)$. Then $(K_1,K_2)$ are precisely $(K_0,K_1)$ of (P.11), whose amplitude parameters are $u_{P}=\sqrt a$, $v_{P}=\sqrt\beta$, not the squared weights $u,v$ here. The whole-output recovery (P.14) and its all-matrix composition (P.15) give $\delta_N=1-\sqrt a$; Theorem 8.1 gives the matching fixed-input fidelity $T_\beta$. These are the existing sharpness results. On the edge $v=0$, $w=1-u$, $0<u\leq a$, the same frame identification gives (R.195); its certificate (R.216) remains available.
+
+For comparison, define the normalized extension by $K_\alpha=(x_\alpha,Jx_\alpha,t_\alpha)$, where $Jb_j=g_j$, $Jg_j=-b_j$, $x_1=\sqrt a\,b_1$, $x_2=\sqrt\beta\,b_2$, $x_\alpha=0$ for $\alpha\geq3$, and the finite real list satisfies
+
+$$
+\sum_\alpha\|t_\alpha\|^2=1,\qquad
+\sqrt a\,\langle b_1,t_1\rangle+\sqrt\beta\,\langle b_2,t_2\rangle=0,
+\qquad
+\sqrt a\,\langle g_1,t_1\rangle+\sqrt\beta\,\langle g_2,t_2\rangle=0.
+\tag{R.310}
+$$
+
+Theorem 1.3 realizes every such list. Its complementary phase state is $\tau=\bar\tau=\operatorname{diag}(a,\beta,0,\ldots)$, so $\lambda:=f(\tau,\bar\tau)=1$ in the root convention of Definition 1.1. At the same fixed input (R.299), the exact expression becomes
+
+$$
+4F_e=\|\sqrt a\,z(b_1)+y(t_1)\|^2
++\|\sqrt\beta\,z(b_2)+y(t_2)\|^2
++\sum_{\alpha\geq3}\|y(t_\alpha)\|^2.
+\tag{R.311}
+$$
+
+The charges in (R.305) enter (R.306) through the particular choices $t_1=\sqrt w\,h$, $t_2=\sqrt u\,b_1$, $t_3=\sqrt v\,b_2$. The summed orthogonality conditions (R.310) do not furnish these same charges for arbitrary $t_\alpha$.
+
+The existing crossblock channel (R.38), Theorem 9.1, gives an exact obstruction to extending this fixed witness: use $(b_1,g_1,b_2,g_2,h)=(e_0,e_1,e_3,e_4,e_2)$ and relabel its $(K_0,K_1)$ as $(K_1,K_2)$. Its columns are precisely $t_1=\sqrt a\,h$, $t_2=\sqrt\beta\,g_1$, with all other $t_\alpha=0$. Both cross conditions in (R.310) vanish termwise and the total squared norm is $a+\beta=1$. For this same already realized channel take
+
+$$
+M_0=|0\rangle\langle b_1|+|2\rangle\langle h|,\quad
+M_1=|0\rangle\langle b_2|+|2\rangle\langle g_1|,\quad
+M_2=|1\rangle\langle g_2|.
+\tag{R.312}
+$$
+
+Their adjoint products sum to $I_5$. On $\operatorname{span}(|0\rangle,|2\rangle)$ the only nonzero composite restrictions are $M_0K_1=\sqrt a\,I$ and $M_1K_2=\sqrt\beta\,I$. Thus this whole-output recovery fixes that subspace exactly and has $F_e(\rho,RN)=1>T_\beta$. This uses the existing crossblock example, rather than a new counterexample family; its worst-case diamond bound from Theorem 9.1 is compatible with this perfect fixed-input recovery.
+
+For the full normalized extension (R.310), a threshold input may therefore have to depend on the actual column list while preceding the choice of recovery; the missing assertion is $\forall(t_\alpha)\ \exists\rho_t\ \forall R:\ F_e(\rho_t,RN)\leq T_\beta$, or another argument giving the original diamond lower bound. No reduction of every $\lambda=1$ channel to the three-weight family (R.298) follows. The arbitrary-rank target (R.243), including remaining channels with $\sqrt a<\lambda<1$, is unchanged. The shared-column composition (R.304)–(R.308) is repo-derived from the stated standard intermediates; it supplies neither this general-third-column bridge nor a global-novelty assertion.
+

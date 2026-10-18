@@ -1,0 +1,21 @@
+**Proposition 54.2 (compensating cutoff dependence).** For any two allowed fixed cutoffs,
+
+$$
+\mathcal C_{\chi_2,s}-\mathcal C_{\chi_1,s}
+ =-\frac{3j_0A_p^2}{\mu C_*}(I_{\chi_2}-I_{\chi_1})s^8+o_{d,\chi_1,\chi_2}(s^8).
+\tag{54.4}
+$$
+
+There are allowed cutoffs with $I_{\chi_2}<I_{\chi_1}$; hence the isolated $I_\chi$ has cutoff dependence and is not a source-invariant selecting coefficient.
+
+Proof. Subtract the two expansions of the same undamped quantity
+$\ell_s+(\ell_s\delta_s+\langle x_s,L^0x_s\rangle)/n_s$ supplied by (52.3). This gives (54.4) directly, without any probe remainder. Since $f(o)>0$, continuity makes $\mathcal T_3f>0$ in a sufficiently small source ball. Choose $\chi_1$ supported in that ball and equal to one on a smaller ball, and choose a nonzero nonnegative smooth bump $\eta$ supported off $o$ in a still smaller interior annulus. Put $\chi_2=\chi_1+\eta$, also supported in the first ball. Both are allowed, and
+
+$$
+I_{\chi_2}-I_{\chi_1}
+ =-\int_{\mathcal C}\eta(Y)\mathcal T_3f(Y)G(o,Y)^2dY<0.
+\tag{54.5}
+$$
+
+Strict positivity of the original killed heat makes $G(o,Y)>0$ on this annulus. The integral is finite because its support avoids $o$. The opposite core change in (54.4) compensates this change exactly to the displayed order in the full baseline. $\square$
+

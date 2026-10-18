@@ -1,0 +1,86 @@
+**Theorem 6.1 (promise-free finite criterion and SOME-code synthesis).**
+For every explicit finite $T$, its fixed distinct labeled entries and
+every $L\in\mathbb N_0$, one has $\mathcal C_L(T)\ne\varnothing$
+if and only if both conditions hold:
+
+$$
+\begin{aligned}
+\mathrm{(A)}\quad&\forall\eta\in\Omega_b,\quad G_\eta\ne\varnothing;\\
+\mathrm{(B)}\quad&\exists\eta_0,\eta_1\in\Omega_b,\quad
+0\in G_{\eta_0},\quad 1\in G_{\eta_1},\quad
+\bigl(\eta_0\ne\eta_1\ \lor\ m_{\eta_0}\ge2\bigr).
+\end{aligned}
+\tag{FCS.22}
+$$
+
+These are finite decidable conditions. When they hold a terminating
+finite mathematical construction specifies a total lawful acquired-term
+code with actual range exactly $\{0,1\}$ for the unchanged table and
+entries, without a supplied compatible code.
+
+Proof of necessity. Let $\sigma\in\mathcal C_L(T)$. Every retained
+cell is actual by Proposition 4.3. At each of its points Lemma 5.2 puts
+$\sigma(u)$ in $G_\eta$, proving (A). Both bits are attained, so
+choose $u_0,u_1$ with values $0,1$. They are different source points.
+Their cells allow the respective bits. If their profiles differ, (B)
+holds by its first alternative. If they agree, that cell contains two
+different points; Theorem 4.4 excludes a closed singleton, proving its
+second alternative. A single source cannot supply both values of a
+function.
+
+Proof of sufficiency and lawfulness. Fix an order of finite patterns
+and select the first passing ordered pair in (B). For different cells,
+Lemma 4.2 supplies one ground tuple $X^0,X^1$ in each. Their profiles
+make them different. For one common live cell use the $k=0,1$ tuples
+from Theorem 4.4. In either case their actual inverse origins
+$u_0,u_1$ are distinct, with $z\in G_{\eta_z}$ for $z=0,1$.
+The inverse origins certify actual attainment; runtime stores their
+six finite current class values, not an origin oracle.
+
+For each retained profile store $a_\eta=\min G_\eta$. On genuinely
+acquired input, extract its six class terms by finite local descent if
+the lossless current tree is supplied. Use the fixed public class
+indexing, and compute
+
+$$
+\widehat\sigma(x)=
+\begin{cases}
+0,&x=X^0,\\
+1,&x=X^1,\\
+a_{\eta_b(x)},&\text{otherwise}.
+\end{cases}
+\tag{FCS.23}
+$$
+
+The two tuple tests are disjoint. Equality of finite ordered terms is
+decided by structural recursion: equal leaf constructors match, pairs
+require both children to match, and different constructors fail. Prefix
+extraction is bounded finite descent with literal leaf stopping; lookup
+uses the finite stored profile table. All these computations terminate
+on finite acquired terms. A representation check and fixed fallback bit
+on malformed or nonretained finite inputs make the program total there
+as well. On every supplied actual input its profile is retained, so
+the fallback is unused. No operation queries an unknown subtree,
+consults a source oracle, reads a denied archive or invokes an equality
+port.
+
+An entire class tuple determines $\mathscr S(x)$ and, by injectivity
+of $\rho$, its unique origin. Thus the exceptions occur exactly at
+$u_0,u_1$, and both original bits are actually attained. At each exception
+the selected bit is good on its cell. Everywhere else the nonempty-set
+default is good. Lemma 5.2 proves correct whole output within $L$ calls
+on every original source from exactly $e_{\widehat\sigma(u)}$.
+Assumption 3.1 supplies the actual export and faithful entry for this
+computed bit. The table, its labels, outputs, states and transitions
+are unchanged.
+
+Finally, (FCS.13) is finite, the pattern recursion is bounded, and
+(FCS.15) and whole-term syntax equality are finite structural tests.
+There are two bounded paths per retained profile and finitely many
+ordered profile pairs. Closed/live multiplicities are read from syntax;
+the ground witness rule and the encoder specification are finite.
+Consequently decision and emission terminate. No initial $\sigma_0$
+was assumed. Agreement between extensional feasibility and lawful
+feasibility is a conclusion of the explicit computation (FCS.23), not
+a replacement of the lawful code class by all functions. $\square$
+

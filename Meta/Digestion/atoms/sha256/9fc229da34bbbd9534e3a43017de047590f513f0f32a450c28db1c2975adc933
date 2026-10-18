@@ -1,0 +1,28 @@
+**Theorem 5.3 (scope of the obstruction).** Theorem 5.2 forbids a
+generic effective transfer from arbitrary finite-output higher-order
+generation plus one whole equality to the decidable unboundedness
+formalism of [Badyl–Parys][BP]. It gives no undecidability result
+for the original fixed-$\rho$ acquired fibers of Definition 1.2.
+
+Proof. A uniform decision for the generic filtered language would
+apply to the supplied order-two schemes and singleton comparison,
+giving the contradiction in Theorem 5.2. In particular,
+[Barguño et al., Theorem 34 and Corollary 35][BCGJV] decide emptiness
+of the standalone finite constraint automaton, not its intersection
+with an arbitrary higher-order finite-output language. An unspecified
+intersection closure cannot supply the forbidden decision.
+Likewise there is no uniform effective construction of a finite
+scheme with exactly that filtered output language: applying the
+Badyl–Parys SUP reflection to its tick letter would decide the
+second predicate of Theorem 5.2. This rules out a generic accepted-
+sublanguage construction as well as a generic direct decision.
+
+The reduction uses freely chosen tile contexts $C_{f(i)},C_{g(i)}$
+as productions. It does not produce an acquired input $I$ whose
+entire original solution family is that PCP language. Nor does it
+produce distinct attained native rows with the required complete
+state contract. In particular no translation of those arbitrary
+tile contexts into the restricted fixed-$\rho$ acquired relations
+has been proved. The native problem can therefore still admit a
+specific transfer theorem exploiting its own relations. $\square$
+

@@ -1,0 +1,81 @@
+**Theorem 9.10 (Quantum bound for a specified phase contrast).** For
+the positive law (9.1), any regular locally unbiased estimator of
+$\tau_\ell$ from a parameter-independent POVM on
+$|\psi_\theta\rangle^{\otimes N}$ satisfies
+
+$$
+\operatorname{Var}_0\widehat\tau_\ell
+\ge \frac1{4N}\sum_u\frac{\ell_u^2}{p_u}.
+\tag{9.32}
+$$
+
+Local unbiasedness is required in all phase directions as in (9.8).
+The measurement may act jointly on the $N$ product copies.
+Regularity here means differentiable dominated likelihoods with
+square-integrable reference scores, differentiation of the relevant
+expectations under the integral, and no omitted first-order mass
+outside the reference score support.
+
+Proof. Suppose first $\ell\ne0$, and set
+$A_\ell=\sum_u\ell_u^2/p_u>0$. Restrict the model to the actual
+one-parameter path
+
+$$
+\theta_u(t)=t\,\ell_u/p_u,\qquad
+G_\ell=\sum_u(\ell_u/p_u)|u\rangle\langle u|.
+\tag{9.33}
+$$
+
+At the reference,
+$\langle G_\ell\rangle=\sum_u\ell_u=0$ and
+$\langle G_\ell^2\rangle=A_\ell$. The horizontal derivative
+$|\dot\psi\rangle=-iG_\ell|\psi_0\rangle$ has squared norm $A_\ell$,
+so the pure-state QFI is $4A_\ell$, using the normalization of
+Chapter 8 and Paris [Paris9], equations (26)–(27).
+The target derivative along the same path is
+$\dot\tau_\ell=A_\ell$, not one.
+
+For the product state the derivative is the sum of the $N$
+single-slot derivatives. Different slots are orthogonal because
+$\langle\psi_0|\dot\psi\rangle=0$, so its squared norm is
+$NA_\ell$ and its QFI is $4NA_\ell$.
+This calculation requires independent product preparations;
+it makes no restriction to separate measurements.
+
+One can check the measurement comparison directly. Represent the
+POVM by a positive density $M(y)$ against a dominating measure.
+For reference product vector $\Psi$ and derivative $\dot\Psi$,
+put $q=\langle\Psi|M|\Psi\rangle$. Positivity gives
+
+$$
+|\langle\Psi|M|\dot\Psi\rangle|^2
+\le q\,\langle\dot\Psi|M|\dot\Psi\rangle.
+$$
+
+Since $\dot q=2\operatorname{Re}\langle\Psi|M|\dot\Psi\rangle$,
+integration over $q>0$ gives classical path information at most
+$4\|\dot\Psi\|^2=4NA_\ell$. At a zero-density event positivity
+forces the cross term to vanish; regular scores omit it rather
+than assign a limiting nonregular information value.
+For continuous outcomes a concrete dominating measure and the
+differentiation conditions are detailed in Proposition 9.16 below.
+
+The scalar score identity for the estimator gives
+$\operatorname{Cov}_0(\widehat\tau_\ell,S_t)=A_\ell$.
+Cauchy–Schwarz therefore yields
+$V F_t\ge A_\ell^2$, and the information upper bound gives
+$V\ge A_\ell/(4N)$. If $F_t=0$, the nonzero covariance requirement
+is impossible. If $\ell=0$, the target is constant zero and the
+bound is simply $V\ge0$, attained by that constant. $\square$
+
+For $\ell=d$, $A_\ell=I_\kappa$. The full-budget endpoint
+estimator (9.29) attains (9.32), so it is optimal even against
+regular collective POVMs on the same product preparations.
+Combining (9.10) and its saturation with (9.32) also gives
+$R_\eta(\ell)\ge A_\ell$ for every component-balanced target in
+this calibrated menu. The reciprocal pair
+$I_\kappa$ for the probability coordinate and $4/I_\kappa$
+for the efficient phase coordinate describes two single-target
+information scales. It does not yet grant their simultaneous
+attainment on the same samples.
+

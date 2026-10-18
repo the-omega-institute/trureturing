@@ -1,0 +1,85 @@
+**Theorem 4.2 (The interior determinant is indispensable).** The functional
+$\Phi$ is nonnegative on $\mathcal K_\partial$, but is negative on
+some full-sector real product atoms. As an instance of (3.6), its
+coefficients satisfy all fifteen sign conditions and all four scalar
+inequalities of Theorem 3.2, while its cubic is strictly negative
+at every strictly positive population.
+
+Proof. For arbitrary real $a,b$, let
+
+$$
+p_i=\|R_ia\|^2,\quad q_i=\|R_ib\|^2,\quad
+x_0=(d^Ta)(d^Tb),\quad x_+=(R_+a)^T(R_+b),\quad
+x_-=(R_-a)^T(R_-b).
+\tag{4.2}
+$$
+
+The normalized basis (1.6) gives
+$n_iM_{ii}(a,b)=p_iq_i$,
+$\eta_+(a,b)=x_0x_+$, $\eta_-(a,b)=x_0x_-$, and
+$\eta_\Delta(a,b)+\eta_\Sigma(a,b)=x_+x_-$.
+For the last identity write the plane coordinates as
+$a_+=(a_1,a_2)$, $a_-=(a_3,a_4)$ and similarly for $b$.
+The two coordinate pairs in (1.6) are
+$(a_1a_3+a_2a_4,a_2a_3-a_1a_4)$ and
+$(a_1a_3-a_2a_4,a_2a_3+a_1a_4)$.
+Half the sum of their pairings with the corresponding $b$ pairs
+is exactly $(a_1b_1+a_2b_2)(a_3b_3+a_4b_4)$.
+Consequently
+
+$$
+\Phi(k(a,b))=\sum_ip_iq_i
+          -\frac32(x_0x_++x_0x_-+x_+x_-),\qquad
+x_i^2\le p_iq_i.
+\tag{4.3}
+$$
+
+If either factor misses sector $i$, both $p_iq_i$ and $x_i$
+vanish. For the other two sectors $j,k$,
+
+$$
+\Phi(k(a,b))\ge x_j^2+x_k^2-\frac32x_jx_k
+\ge\frac14(x_j^2+x_k^2)\ge0.
+\tag{4.4}
+$$
+
+The middle inequality follows from
+$x_jx_k\le(x_j^2+x_k^2)/2$, so arbitrary signs are included.
+If further sectors vanish, the same argument still applies.
+Nonnegative sums prove the assertion on $\mathcal K_\partial$.
+
+For $a_*=b_*=(d+u_++u_-)/\sqrt3$, all $p_i,q_i,x_i$ equal
+$1/3$. Equation (4.3) gives
+$\Phi(k(a_*,b_*))=1/3-1/2=-1/6$.
+
+To see precisely the omitted determinant, take in (3.1)
+
+$$
+C=-\operatorname{diag}(1,2,2),\quad y=0,\quad
+\delta_+=\delta_-=\delta_\Delta=\delta_\Sigma=3/2,
+\quad \delta_{2+}=\delta_{2-}=0.
+\tag{4.5}
+$$
+
+Then $b^T\mathcal B(a)b=\Phi(k(a,b))$. At a canonical preparation,
+
+$$
+\begin{gathered}
+\mathcal R(p)=\operatorname{diag}(\sqrt p)\,
+\begin{pmatrix}1&-3/4&-3/4\\-3/4&1&-3/4\\-3/4&-3/4&1\end{pmatrix}
+\operatorname{diag}(\sqrt p),\qquad
+\mathcal T(p)=\operatorname{diag}(p_+,p_-),\\
+\det\mathcal R(p)=-\frac{49}{32}p_0p_+p_-.
+\end{gathered}
+\tag{4.6}
+$$
+
+The coefficient signs are zero or one. Each radial scalar inequality
+is $3/4\le1$, and the tangent one is $0\le1$.
+Each radial pair minor equals $7p_ip_j/16$. The constant matrix
+in (4.6) has eigenvalues $-1/2,7/4,7/4$, proving its determinant
+$-49/32$. Thus its interior cubic is negative despite every finite
+condition passing. This is a general invariant-functional example;
+no particular positive event-multiplier realization of (4.5) is
+asserted. $\square$
+

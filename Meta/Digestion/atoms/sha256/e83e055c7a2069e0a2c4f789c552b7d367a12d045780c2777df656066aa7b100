@@ -1,0 +1,58 @@
+**Theorem 12.3 (universal two-reply locality).** Let $d\ge1$ and let
+$\varnothing\ne P\subseteq S_d$. Suppose
+
+$$
+|\{r_x(a):x\in P\}|\le2\qquad(a\in W_d).
+\tag{RCE.40}
+$$
+
+For every $q\in W_d$, $\Gamma_q$ is constant on $P$, or there
+are $a\in W_d$ and a total decoder
+$\delta:\mathcal A\to\Gamma_q(S_d)$ such that
+
+$$
+\Gamma_q(x)=\delta(r_x(a))\qquad(x\in P).
+\tag{RCE.41}
+$$
+
+Thus $P$ is locally admissible, with own-coordinate witnesses on its
+entire declared set.
+
+Proof. Fix $q$ and its records. Any three distinct records force
+three replies at one allowed prefix. First suppose their formal depths
+are distinct, $t_1<t_2<t_3$. The middle record is a leaf record,
+so $t_2\le\ell$. At $q_{\le t_2}$, the first record replies
+absent, the middle record replies its leaf label, and the last record
+replies branch. This includes a terminal branch as the last record.
+
+If two depths coincide, the corresponding distinct records must be
+the alpha and beta leaves at that depth $t\le\ell$: there is only
+one terminal-branch record. A third record at a greater depth gives
+the three replies alpha, beta and branch at $q_{\le t}$; a third
+record at a smaller depth gives absent, alpha and beta there. Three
+distinct records cannot all have the same depth. These cases exhaust
+three-record choices. Every prefix used has length at most
+$\ell\le d-1$, contradicting (RCE.40). Therefore at most two
+records occur on all of $P$.
+
+One record makes $\Gamma_q$ constant. For two distinct records at
+equal depth, the prefix at that depth separates their alpha and beta
+replies. For different depths, use the smaller depth. It is a leaf
+depth at most $\ell$, and its leaf reply differs from the branch
+reply of the later record, including when that later record is
+$\mathsf B_q$. Within each record class this chosen reply is fixed.
+It therefore identifies the record class. Map each of its two attained
+replies to that record's factor from (RCE.4), and map unused replies
+to any fixed factor attained on the nonempty $P$. This gives the
+total decoder in (RCE.41). If the two records have equal factors,
+one may instead use a constant witness.
+
+The argument includes a target initially absent because its first
+leaf is strictly before $q$, a leaf exactly at $q$, and a branch
+exactly at $q$. At $q=\varepsilon$, including the only target when
+$d=1$, all distinguishing prefixes used are still permitted. No
+presence assumption is imposed beyond the original prefix replies.
+Make this choice separately for every target on the same $P$;
+weights have not entered the argument, so declared zero-weight states
+are included. $\square$
+

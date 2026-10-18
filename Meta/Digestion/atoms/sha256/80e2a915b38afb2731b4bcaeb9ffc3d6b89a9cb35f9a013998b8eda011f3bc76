@@ -1,0 +1,64 @@
+**定理 2.1（Three labels, homogeneous first missed set, every actual gcd）。** Under Definitions 1.1–1.2, in either original alphabet,
+
+$$
+\boxed{D_{\rm ad}(\lambda)=D_{\rm child\text{-}pre}(\lambda)=
+\begin{cases}
+2,&|\lambda[O]|\le2,\\
+3,&|\lambda[O]|=3.
+\end{cases}}
+\tag{2.1}
+$$
+
+The attainments use one literal suffix shared by all continuing children of this archive. Every finite correct continuation starts its first additional block with zero. The price is additional to the actually emitted root, and is independent of its surviving original tails.
+
+**证明（all literal actions and sharp lower bounds）。** The archive contains all INITIAL tails $0\le s<h$ at every $j\in J$. At three differently labelled phases choose the actual tail $s=h-1$, whose current tail is $k-1$. Any next word starting one sends these sources immediately to the same absorbing bottom, with identical completed endpoint archives and identical future behaviour. It can never recover their labels. This excludes every such literal action at every future horizon, including all ones, a delayed first zero, paid waits with a leading one, and proposed subsequent repairs. Free stopping also fails. Therefore a correct first word starts zero. It clears every incoming tail and succeeds throughout, since every subsequent internal run is shorter than $k$.
+
+This word has two possible successful endpoint differences; three labels cannot finish in one additional block. On each difference child the current value and actual terminal tail are common. The supplied common-tail fact [S10, Lemma 3.2] says a second literal word either succeeds on every candidate of that child or rejects them all. A live child cannot be completed by the latter action, and later absorbing observations cannot repair it.
+
+Every successful second word has charge zero on $O$, regardless of the first response, its literal choice or whether that choice is adaptive. For completion in at most two additional blocks, each set $O\cap q_1^{-1}(e)$ must therefore have a single INITIAL label. This remains necessary if that child stopped after the first word, or is empty. There are only two first-response values. If $|\lambda[O]|=3$, at least one child has two such labels and cannot finish. Thus the all-action adaptive lower bound is three in this case; otherwise it is at least two. These arguments include rejection, endpoint stopping and all paid calendar advances, rather than only a proposed family of favourable words.
+
+**证明（a one-label first child and the actual seam）。** Choose a label $S\in\lambda[J]$ absent from $H$. Such a label exists because $H$ has at most one of the three labels. If $|\lambda[O]|=2$, additionally choose $S\in\lambda[O]$; one of those two labels is absent from $H$. If $|\lambda[O]|\le1$ or equals three, any label absent from $H$ is allowed. Put
+
+$$
+A_1=\{j\in J:\lambda(j)=S\},\qquad
+E_1=\widehat A_1^{\,0},\qquad B_1=\mathcal B_1(E_1).
+\tag{2.2}
+$$
+
+The entire $S$ class lies in $W_1$ because it misses $H$. The excluded zero is a parity donor strictly after the leading vertex $m$. Thus $E_1$ is an even physical support and $B_1$ starts zero. It is safe on every record in (1.2), including current tail $k-1$. Its difference-one child consists precisely of label $S$ and stops. Its difference-zero child has support $U=J\setminus A_1$ and exactly the other two labels; call them $D,E$.
+
+The last bit of this very word, not of an alternative representative, obeys
+
+$$
+(B_1)_{m-1}=\mathbf1_{A_1}(a).
+\tag{2.3}
+$$
+
+If it is zero, every continuing source has actual current tail zero. If it is one, $a\in A_1$ has already stopped with $S$ and is absent from the continuing support $U$. Consequently a following charge prescription on $U$ can set the leading charge at $a$ to zero. This ties the physical terminal bit to the same actual stopped label class; it does not assume that the chosen $B_1$ ends zero.
+
+**证明（two blocks when the second missed set has at most two labels）。** The choice of $S$ makes $\lambda[O\cap U]$ contain at most one label. When that set is nonempty, name its label $D$; otherwise choose either label of $U$ as $D$. Name the other $E$. Set
+
+$$
+A_2=\{j\in U\cap W_2:\lambda(j)=E\},\qquad
+E_2=\widehat A_2^{\,m},\qquad B_2=\mathcal B_2(E_2).
+\tag{2.4}
+$$
+
+The excluded donor $m$ is strictly after $a$, so this is an even full-path support with leading bit $\mathbf1_{A_2}(a)$. If $B_1$ ends zero, its incoming tail is zero and every length-$m$ word, even an all-one inverse, satisfies $0+m<k$. If $B_1$ ends one, (2.3) gives $a\notin U$, so $a\notin A_2$ and $B_2$ begins zero. It clears the actual incoming tail, after which all runs are shorter than $k$. Thus the same $B_1\mid B_2$ seam is safe on every continuing source in both cases.
+
+On $U$, the second difference is one exactly on label $E$: every missed phase in $O\cap U$ has label $D$. Return $E$ on one and $D$ on zero. The earlier difference-one sources already returned $S$. Both labels in $U$ have actual joint sources and must emit $B_2$, so the additional worst fee is exactly two. These are prefixes of one fixed suffix, with no extra cleanup or uncharged wait.
+
+**证明（three blocks when the second missed set has all three labels）。** Keep (2.2) and choose either ordering $D,E$ of the remaining labels. Use precisely (2.4). The seam proof is unchanged: zero terminal bit of $B_1$ gives a safe zero-tail arrival, and terminal bit one excludes $a$ from $U$ and forces the displayed $B_2$ to begin zero. Sources with second difference one all have label $E$ and stop. On the second-zero archive, every candidate inside $W_2$ has label $D$; the only remaining $E$ sources lie in $O$.
+
+Using the physical donor of (1.6), set
+
+$$
+A_3=\{j\in O\cap U:\lambda(j)=E\},\qquad
+E_3=\widehat A_3^{\,d_3},\qquad B_3=\mathcal B_3(E_3).
+\tag{2.5}
+$$
+
+Neither $A_3$ nor $d_3$ contains the leading vertex $c$, and both lie in $W_3$. Hence the inverse is a complete word beginning zero. It clears every incoming tail of the actual $B_2$, including tail $m$ if $B_2$ was all ones. Every later internal run is shorter than $k$, so the actual $B_2\mid B_3$ seam is safe. On every continuing archive its third difference selects exactly label $E$; zero returns $D$. The donor is not a candidate, and no response from a stopped source is used.
+
+Since $O$ originally contained $S,D,E$, its $D$ and $E$ sources both have first difference zero and second difference zero. They require and emit this third whole block. It can be a paid uninformative $B_2$ followed by an informative $B_3$; the displayed stream charges both. The construction and the all-action lower bound prove (2.1), including equality of adaptive and child-preset fees. ∎
+

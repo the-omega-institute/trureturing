@@ -1,0 +1,15 @@
+**Definition 1.1 (source and target).** Let
+$\mathcal T=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle$,
+with the substitution and leaf count of
+[CAP](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md),
+Definitions 1.2–1.4. Fix one finite original preparation $\xi$, initial
+$H_0\ge1$, actual $u\in\mathcal T_{H_0}$ and actual prior
+$D\subseteq\mathcal T_{H_0}$ containing $u$. The source parameters satisfy
+$H_0\le h\le K$ and $\lambda(t)\le h$ at completed source boundaries.
+The initial source packet, contiguous initial interval and single private
+preparation are CAP Definition 2.4's. Later source addresses use its
+$\phi_K$, not an independently prepared packet. The original target is
+$\operatorname{INITIAL}\text{-}q_{H_0}$, with its original proposal,
+verifier, receipt and consumer. An Image below has a separate type and is
+never substituted for that target.
+

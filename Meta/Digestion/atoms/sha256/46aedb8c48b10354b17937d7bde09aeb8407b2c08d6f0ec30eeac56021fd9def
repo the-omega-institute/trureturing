@@ -1,0 +1,2 @@
+**Theorem 76.2 (all-positive-beta infeasibility).** For every $0<\beta\leq1/2$ and every fixed finite positive center rank $k\geq2$, no data of Definition 76.1 satisfy (S.158). Singular directional marginals, a singular common matrix $L$ in the reduction below, and singular leading two-by-two blocks are included. This is an exclusion of the strict relaxation itself. Its proof occupies Sections 77–79; the actual-channel consequence in Section 80 additionally assumes each named inherited interface.
+

@@ -1,0 +1,24 @@
+**命题 37.10（面积素数时的明确环接口）。** 在 $P=A^2+B^2=F_{2m+1}\ge5$ 为素数的域中，$B$ 模 $P$ 可逆。置
+
+$$
+r=-AB^{-1}\pmod P,
+\qquad \pi(x,y)=x+ry\pmod P.
+$$
+
+则 $r^2=-1$，$\ker\pi=\Lambda$，且 $x+iy\mapsto x+ry$ 给环同构
+
+$$
+\mathbb Z[i]/(A+iB)\ \simeq\ \mathbb F_P.
+$$
+
+特别地 $P\equiv1\pmod4$。这比仅声明两个有限集合等势多了明确的加法、乘法及旋转对应。
+
+证明。相邻 Fibonacci 数互素，且 $0<B<P$，所以 $B$ 非零可逆；$A^2+B^2=P$ 给 $r^2=-1$。因一映到一，$\pi$ 满射。两基向量满足
+
+$$
+\pi(A,B)=A+rB=0,\qquad
+\pi(-B,A)=-B+rA=-\frac{A^2+B^2}{B}=0.
+$$
+
+故 $\Lambda\subseteq\ker\pi$。两者在 $\mathbb Z^2$ 中指数同为 $P$，所以相等。在 $\mathbb Z[i]$ 内，理想 $(A+iB)$ 的整数基正是 $A+iB$ 与 $i(A+iB)=-B+iA$；而 $r^2=-1$ 保证代入 $i\mapsto r$ 保持乘法。核及满射给所列环同构。$r$ 在 $\mathbb F_P^\times$ 中阶四，因为 $P$ 奇且 $-1\ne1$，Lagrange 定理给 $4\mid P-1$。证毕。
+

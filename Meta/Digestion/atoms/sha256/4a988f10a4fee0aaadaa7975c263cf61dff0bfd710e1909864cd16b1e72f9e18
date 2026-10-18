@@ -1,0 +1,65 @@
+**Definition 8.1 (original oscillation and unchanged joint excess).** For an arbitrary observer of Definitions 1.1–1.3, without the constancy restriction of Definition 1.4, let $v_M(y)$ be its next synthetic alpha probability at a suspended COMPLETE configuration. On exactly the designated seed-1, marker-100 held-record fibre of (1.5), define
+
+$$
+\omega=\operatorname{osc}(M)
+=\max_{y\in\mathcal Z_\beta^*(M)}v_M(y)
+ -\min_{y\in\mathcal Z_\beta^*(M)}v_M(y).
+\tag{8.1}
+$$
+
+The set $\mathcal Z_\beta^*(M)$ includes every configuration reached with positive probability after any positive finite actual suspended history on that fibre, including transient configurations and configurations whose emission is zero or one. It is nonempty and finite. No stationary-support restriction is made in (8.1).
+
+Throughout this chapter the loss is the original configuration-before-TV loss, with
+
+$$
+\begin{aligned}
+e=e(M)&=\max\left\{R_{\mathrm{conf},p}(M)-\frac{1116529}{22781250},
+ R_{\mathrm{conf},\beta}(M)-\frac{239}{6750}\right\},\\
+R_{\mathrm{conf},s}(M)&=\sup_{h\in\mathcal H_s}
+ \sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+\end{aligned}
+\tag{8.2}
+$$
+
+In particular the supremum contains all original positive finite fourth-segment histories, not only the first p cut. The installed prior is finite or countable with $\mu(1),\mu(2)>0$; additional supported depths are permitted but not required. The actual source draws the same single $K$ as in Definition 1.1. Its paid rejection histories, partial parses, arbitrary finite payload returns, both seeds, all marker records, original permissions, write-before-latch rule and matching Stop remain those of Section 1. Equation (1.3), including its zero-predicted-probability cases, is unchanged. The quantities in (8.2) are neither marginal-law risks nor actual-history averages.
+
+**Mathematical citation 8.2 (conditional original-domain suppliers).** The conclusions below assume the suppliers declared in Mathematical citations 2.1 and 2.3: simultaneous supported-depth configuration-loss bounds on common reachable stationary analysis rows, their original-history extraction, the clipping comparison (2.2), the full complete-law endpoint radii and coordinates (2.5)–(2.8), and the full-record realization of the same-update comparison laws. These are ordinary mathematical premises from [ST, Sections 1–3], [CLIP, Theorem 3.1 and equations (3.6)–(3.10)] and [PAID, Lemmas 14.1 and 2.1.1]. Their truth is not a consequence of the finite algebra below.
+
+More explicitly, retain the extracted acquired kernels $B:X\to Y$, $A:Y\to X$ and the probability rows
+
+$$
+\pi B=\tau,\qquad\tau A=\pi,
+\tag{8.3}
+$$
+
+delete zero-row labels only in this comparison, and clip the synthetic emissions to $[a,b]=[1/3,2/5]$. Write $u_x,v_y$ for the clipped entries and $Q_x,W_y$ for their regenerated complete raw laws (2.3). For every supported depth, expected configuration losses on these same rows obey the supplied bounds. Consequently their endpoint mean laws satisfy (2.4) with
+
+$$
+\epsilon_p=\frac{61}{11}e,\qquad
+\epsilon_\beta=\frac{53}{11}e.
+\tag{8.4}
+$$
+
+Indeed the separate numerators in (2.2) are $41\varepsilon_p+20\varepsilon_\beta$ and $12\varepsilon_p+41\varepsilon_\beta$, and each original excess is between zero and $e$. Convexity of TV is applied only after these configuration-loss comparisons. This is the sole passage from the original configuration risk to endpoint mean-law constraints.
+
+Every positive-row suspended label is originally reachable on the fibre in (8.1). Since clipping is monotone and 1-Lipschitz, the distinct analysis quantity
+
+$$
+t=\max_{y:\tau_y>0}v_y-\min_{y:\tau_y>0}v_y
+\quad\hbox{satisfies}\quad
+0\le t\le\min\{\omega,1/15\}.
+\tag{8.5}
+$$
+
+Transient labels may be absent from this extracted support. They remain in (8.1), in the original history domain and in (8.2). Original zero/one emissions and possible original noncompletion mass are handled by the clipping supplier, not by an extra termination assumption on $M$.
+
+The actual p-return matrix is $BA$, with $\pi BA=\pi$. The weighted transfer is $B\operatorname{diag}(v)A$, and the full synthetic p-survival matrix is
+
+$$
+K_{\mathrm{syn}}=\operatorname{diag}(1-u)B\operatorname{diag}(v)A
+\le\frac4{15}BA
+\tag{8.6}
+$$
+
+entrywise. Thus the clipped generator survives $j$ returns with probability at most $(4/15)^j$. No stationarity of $K_{\mathrm{syn}}$ or of the weighted transfer is assumed. The deterministic original event blocks and Stop are restored by each configuration's renderer $I_c$, which preserves TV. The comparison uses the same source, prior and acquired $B,A$; rows, moments and centered variables used below are analysis coordinates, not installed runtime observations.
+

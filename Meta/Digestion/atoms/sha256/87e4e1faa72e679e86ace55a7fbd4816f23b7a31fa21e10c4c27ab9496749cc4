@@ -1,0 +1,83 @@
+### 31.3 Free face layers and their multiplication in Theorem 31.3
+
+At $\delta=0$, (31.4) becomes the additive bijection
+
+$$
+\mathbb N^n\longrightarrow\{s\in\mathcal S_k:\delta(s)=0\},
+\qquad a\longmapsto(|a|,B(a)).
+\tag{31.13}
+$$
+
+It takes the standard basis vectors to the modes (31.3), so distinct
+monomials in the $y_i$ have distinct semigroup exponents and every
+face monomial is one of them. This proves the polynomial presentation
+of $A_k$, with $\deg y_i=1$. The map $\pi:R_k\to A_k$ that fixes
+face monomials and kills positive-deficit monomials is multiplicative:
+the deficit of a product is zero exactly when both factors have
+deficit zero. Hence $\ker\pi=J_k$ and $R_k/J_k\simeq A_k$.
+
+The image $X^{\nu_1}R_k$ consists exactly of the interior monomials
+of deficit at least $k-1$, by the first case of the generation proof.
+Every remaining interior exponent has a unique deficit $k-j$ with
+$2\le j\le k-1$, and the second case gives its unique form
+
+$$
+p=\nu_j+(|b|,B(b)),\qquad b=a(p)-\mathbf1\in\mathbb N^n.
+\tag{31.14}
+$$
+
+The uniqueness of $j$ comes from deficit and the uniqueness of $b$
+comes from slack. Within a layer the face monomials are independent;
+different layers have different deficits and are independent as well.
+Thus their images give exactly the $A_k$-free direct sum in (31.6).
+Multiplication by the nonzero monomial $X^{\nu_1}$ is injective in
+the domain $R_k$, which proves the displayed exact sequence.
+
+For $s=(m,c)\in\mathcal S_k$ write $d=\delta(s)$. Multiplying $e_j$
+by $X^s$ gives an interior exponent of deficit $k-j+d$.
+It vanishes in the quotient if and only if $k-j+d\ge k-1$,
+equivalently $d\ge j-1$. Otherwise $j-d\ge2$, and
+
+$$
+\nu_j+s-\nu_{j-d}=(m+2d;c+d\mathbf1).
+\tag{31.15}
+$$
+
+This exponent has nonnegative coordinates and degree, slack $a(s)$,
+and deficit
+$k(m+2d)-\sum_i(c_i+d)=d+(2k-n)d=0$.
+It therefore is the face point of (31.13) with exponent $a(s)$,
+and its monomial is $y^{a(s)}$. This proves (31.7) on every basis
+vector, including the precise condition for a nonzero image.
+
+The formula also proves directly that it is an honest algebra action.
+Scalars $y^a$ commute with $N$, $a(s+t)=a(s)+a(t)$ and
+$\delta(s+t)=\delta(s)+\delta(t)$, so
+
+$$
+\rho(X^{s+t})=
+y^{a(s)+a(t)}N^{\delta(s)+\delta(t)}
+=\rho(X^s)\rho(X^t).
+\tag{31.16}
+$$
+
+The same equality covers products that hit the bottom layer, because
+both sides then act by zero. The zero semigroup element gives the
+identity, and extending linearly proves the representation law for
+arbitrary polynomials in $R_k$. It respects ordinary degrees:
+$|a(s)|=m+2d$, so multiplication by $y^{a(s)}N^d$ has degree
+$m+2d-2d=m$. In the full multigrading the lowering map has degree
+$(-2;-\mathbf1)$, while the face coefficient has degree
+$(m+2d;c+d\mathbf1)$, again giving degree $s$.
+
+The successive sums $\bigoplus_{r=2}^jA_ke_r$ are $R_k$-submodules;
+their successive quotients are $A_k(-(2j+1))$ with action through
+$\pi$. This is a filtration, not an assertion that those successive
+quotients split as $R_k$-modules. For $k\ge4$, any mode of size $k-1$
+has deficit one and sends $e_3$ to a nonzero multiple of $e_2$.
+Thus the layer $A_ke_3$ itself is not stable. When $k=3$ there is
+only $e_2$, $N=0$, and (31.6)–(31.7) are exactly the seven-position
+quotient of (29.4), with the change from degree labels $\nu_3,\nu_5$
+there to subscripts $\nu_1,\nu_2$ here. No additional seven-cycle
+classification is needed. This completes the proof. $\square$
+

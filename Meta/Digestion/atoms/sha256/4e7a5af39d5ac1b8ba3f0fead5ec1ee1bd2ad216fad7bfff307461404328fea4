@@ -1,0 +1,37 @@
+**Definition 2.2 (fixed complete channel and binary effects).** With
+$A_V=E^\dagger AE$ and $g(t)=2/(1+t)^2$, fix on every complex $A\in M_5$
+
+$$
+\begin{aligned}
+\widehat\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\widehat\Phi_{*,j}^f(A)(dt)&=g(t)
+ [w_j\operatorname{tr}(MA_V)+\mathbf1_{j=2}\operatorname{tr}(Q_5A)]dt\,P_f.
+\end{aligned}
+\tag{CA.10}
+$$
+
+All extra-sector maps are zero. This completion kills every $V$–$V^\perp$
+cross operator and has no live complementary output. Kraus conjugations,
+positive trace functionals, (CA.9), $\sum_jw_j=1$ and
+$\int_0^1g(t)dt=1$ make it CPTP at every passive reference amplification.
+CG §§13–16 conditionally give
+$\mathcal E(\widehat\Phi_*)=\mathcal E_*=F^{\rm src}(\mathbf x_*)$ with
+$0.14817810291080132013<\mathcal E_*<0.14817810291080132014$.
+This benchmark is inherited, with no whole-channel uniqueness claim.
+
+For public $s\in[0,1]$, require the acquired binary effects
+
+$$
+F_r(s)=\frac{I_5+r s\kappa EX_{01}E^\dagger}{2},\qquad
+X_{01}=|0\rangle\langle1|+|1\rangle\langle0|,\quad r\in\{+1,-1\}.
+\tag{CA.11}
+$$
+
+On a positive $\sigma$, with **unnormalized** $\rho=E^\dagger\sigma E$,
+the record mass is $\operatorname{tr}\sigma/2+r s\kappa\operatorname{Re}\rho_{01}$.
+On an original history it is $1/2+r s\kappa en\sqrt{y(64-y)}/128$.
+Only this binary law and the full forgotten channel are prescribed.
+Interior binary-conditioned live maps and finer label laws may vary.
+Negative coefficient $-s\kappa$ exchanges the two reports. JR §32 supplies
+the ceiling $|\gamma|\leq\kappa$; it is not certain parity readout.
+

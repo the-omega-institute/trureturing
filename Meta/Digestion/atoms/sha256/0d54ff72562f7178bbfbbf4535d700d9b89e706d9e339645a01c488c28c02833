@@ -1,0 +1,44 @@
+**Theorem 8.2 (comparison under global adaptive scheduling).** The
+optimal experiment for every such global policy is
+$E_t^{\otimes n}$, with independence conditional on the common
+hypothesis. A single hypothesis-independent kernel simulates its
+complete global transcript from these $n$ vectors, and fixed actual
+phase-root Reads acquire that experiment.
+
+Proof. Supply an array $Y_1,\ldots,Y_n$, independently drawn from
+$p_t$ under $P$ or from $q_t$ under $Q$. Run the global policy
+with one dictionary and one input-coordinate counter per source.
+A constant query has its public reply. At a first touch of a gadget
+in source $i$, consume the next unused coordinate of $Y_i$, draw
+one full native $K$ tuple with that phase, and cache it in that
+source's dictionary. Repeats use that full cached tuple. Every source
+uses at most $\min\{k,\ell\}=t$ coordinates, even with arbitrary
+switching and stopping. This is a kernel of the input array and
+independent auxiliary variables, without using $\Theta$.
+
+To verify its law, condition on all source mixture modes, all relevant
+common bits and the independent policy tape. Under $P$ all sources
+have independent mode. Under $Q$ these latent modes and bits are
+independent across sources as specified in Definition 8.1. Enlarge the
+history to include the full pair at every touched gadget. Initially,
+in an independent-mode source, untouched pairs are independent fair
+phase/$K$ pairs; in a common-mode source, untouched phases are its
+fixed common bit and untouched tuples are independent corresponding
+$K$ tuples. All unexposed data across sources are independent under
+this conditioning. The choice of the next source and new label is a
+function of the revealed history, so cannot inspect any unexposed pair.
+Revealing that selected pair preserves the same assertions for all
+remaining data. Constant queries, repeats, switches and termination
+use only already revealed data. Induction therefore proves equality
+with the array-driven cache process conditional on these latent
+variables. Averaging them and the tape gives the desired transcript
+identity under each product law with the same kernel.
+
+This proof covers schedules informed by earlier nuisance replies and
+hypothesis evidence; it does not assume a fixed order or replace a
+source's correlated $Q$ phases by independent bits. Conversely,
+Proposition 4.3 applied in each source acquires every $Y_i$ through
+$t$ actual original-root Reads per source. Composition of decisions
+with the common simulator and this attaining construction give equality
+of the optimal testing problems. $\square$
+

@@ -1,0 +1,74 @@
+**Theorem 6.1 ($C^2$ without exponential moments).** Under (1.5)–(1.6), for each real $t$ and almost
+every exterior define
+
+$$
+\pi_C^t(w;y)=\frac{p_C(w;y)e^{t d_C(w;y)}}{\sum_vp_C(v;y)e^{t d_C(v;y)}}
+=\frac{p_C(w;y)e^{t a_C(w;y)}}{\sum_vp_C(v;y)e^{t a_C(v;y)}}.
+\tag{6.1}
+$$
+
+Incompatible words have probability zero; on exceptional exteriors choose $p_C$. These measurable finite
+kernels are unchanged by reference choice. For any bounded $f:B_L\to\mathbb R$ and bounded exterior $g$,
+the function
+
+$$
+\Psi_{C,f,g}(t)=\int g(y)\sum_w f(w)\pi_C^t(w;y)\,d\mu_C(y)
+\tag{6.2}
+$$
+
+is $C^2$ on all of $\mathbb R$, with $|\Psi''(t)|\le2\|f\|_\infty\|g\|_\infty c_L^{-1}K_L^2$. If
+$f\in\mathcal K_C(P)$ and $T_{C,f}=0$, then
+
+$$
+\Psi(0)=\Psi'(0)=0,\qquad \Psi''(0)=\int gR_{C,f}\,d\mu_C.
+\tag{6.3}
+$$
+
+Proof. Subtracting the common $m_C(y)$ cancels in the quotient. All scores are finite on each compatible
+fiber. Define $M(y)=\max_w|a_C(w;y)|$ over that fiber, and set it to zero on the exceptional set.
+Positive support and Theorem 3.1 give the actual integrable bound
+
+$$
+M(y)^2\le c_L^{-1}\sum_wp_C(w;y)a_C(w;y)^2,\qquad
+\int M^2\,d\mu_C\le c_L^{-1}K_L^2.
+\tag{6.4}
+$$
+
+At a fixed exterior let $\bar a_t=\sum_w\pi_C^t(w;y)a_C(w;y)$ and
+$v_t=\sum_w\pi_C^t(w;y)(a_C(w;y)-\bar a_t)^2$. Finite differentiation gives $\bar a_t'=v_t$ and
+
+$$
+(\pi_w^t)'=\pi_w^t(a_w-\bar a_t),\qquad
+(\pi_w^t)''=\pi_w^t\bigl((a_w-\bar a_t)^2-v_t\bigr).
+\tag{6.5}
+$$
+
+In particular, on each compatible word, $\left.\partial_t\log\pi_C^t(w;y)\right|_{t=0}=a_C(w;y)$. Thus
+Theorem 3.1 identifies the normalized logarithmic score with the centered original-loss series.
+
+Since $v_t\le\sum_w\pi_w^ta_w^2\le M^2$, Cauchy–Schwarz and the triangle inequality give bounds
+independent of $t$:
+
+$$
+\sum_w|(\pi_w^t)'|\le\sqrt{v_t}\le M,\qquad
+\sum_w|(\pi_w^t)''|\le2v_t\le2M^2.
+\tag{6.6}
+$$
+
+Multiplication by $\|f\|_\infty\|g\|_\infty$ gives integrable majorants for the first two derivatives of
+the integrand. Its value is bounded by $\|f\|_\infty\|g\|_\infty$. The fundamental theorem of calculus
+for each finite fiber and dominated convergence justify differentiating the integral twice; pointwise
+continuity of (6.5) and the same majorants give continuity of both derivatives. No integral of an
+unnormalized exponential has been assumed finite.
+
+At zero, $\bar a_0=0$. Intrinsic nullity gives $\sum p_Cf=0$, while $T_{C,f}=0$ gives $\sum p_Cfa_C=0$.
+In the second derivative the term $-v_0\sum p_Cf$ vanishes, leaving $\sum p_Cfa_C^2=R_{C,f}$ by Theorem
+3.2. This proves (6.3) and the uniform second-derivative bound. $\square$
+
+If (6.3)'s last integral is nonzero, then $\Psi(t)=\tfrac12t^2\int gR_{C,f}\,d\mu_C+o(t^2)$ is nonzero
+for every sufficiently small nonzero $t$. Thus $\sum_w f(w)\pi_C^t(w;y)$ is nonzero on positive $\mu_C$
+probability: one original intrinsic relation fails. Conversely, zero second derivative for all finite
+exterior-cylinder indicators $g$ forces $R_{C,f}=0$ by signed-measure uniqueness. The theorem gives
+neither higher integrated moments nor preservation of $\mathcal V_C$ beyond first order. Finite-fiber
+analyticity alone supplies no higher dominated differentiation.
+

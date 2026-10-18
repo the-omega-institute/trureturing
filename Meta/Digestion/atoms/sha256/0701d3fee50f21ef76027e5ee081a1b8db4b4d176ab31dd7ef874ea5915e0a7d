@@ -1,0 +1,30 @@
+### 54.2 保留全部相位的中心方程
+
+令 \(\omega=(-1+i\sqrt3)/2\)，则 \(p(0)=q(0)=\omega\)。除去一个公共相位后，写
+\[
+\sqrt6\xi=(x,y),\qquad x=(1,u,v),\qquad y=(g,j,k),\qquad
+|u|=|v|=|g|=|j|=|k|=1.
+\]
+设 \(M=uvgjk\)，在 \(E=\mathbb Q[\omega]/(\omega^2+\omega+1)\) 上取 Laurent 对合 \(\iota\)，它把 \(\omega\) 送至 \(\omega^2\)，并把五个变量各自送至倒数。于实际单位相位上，\(\iota\) 恰为复共轭。定义
+\[
+\Phi=u+v/u+1/v+j/g+k/j+g/k,\qquad X=1+u+v,\quad Y=g+j+k,
+\]
+\[
+U_\ell=X+Y+(\omega-1)(x_\ell+y_\ell),\qquad
+V_\ell=X-Y+(\omega^2-1)(x_\ell-y_\ell),\quad 0\le\ell\le2.
+\tag{54.3}
+\]
+于是 \(6\langle\xi,\mathcal S\xi\rangle=\Phi\)。因 \(\mathcal S^3=I\)，循环三元组正交归一等价于 \(\Phi=0\)。又有 \(H_0\xi=(U,V)/6\)，所以输出平坦性恰给出全部六式 \(U_\ell\iota(U_\ell)=V_\ell\iota(V_\ell)=6\)。令
+\[
+f_0=M\Phi,\quad f_1=M\iota(\Phi),\quad
+f_{2+2\ell}=M\bigl(U_\ell\iota(U_\ell)-6\bigr),\quad
+f_{3+2\ell}=M\bigl(V_\ell\iota(V_\ell)-6\bigr).
+\tag{54.4}
+\]
+乘以 \(M\) 清除所有变量分母，故这些是普通多项式。加入变量 \(t\) 及 \(f_8=tM-1\)；实际输入可取 \(t=M^{-1}\)，其模也为一。以下九个输入多项式均属于 \(E[t,k,j,g,v,u]\)：
+\[
+(g_0,g_1,\ldots,g_8)=(f_0,f_1,2f_2,2f_3,2f_4,2f_5,2f_6,2f_7,f_8).
+\tag{54.5}
+\]
+所以任何实际中心循环三元组都会给出这九式的公共零点。
+

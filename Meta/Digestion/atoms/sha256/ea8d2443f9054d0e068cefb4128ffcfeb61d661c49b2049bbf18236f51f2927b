@@ -1,0 +1,23 @@
+**Example 6.3 (fixed-phase pair is a different theorem).** Instrument
+Boundaries §6.1 credits deterministic conversion for the promised pair
+$\beta=0$, $m=0,1$, at
+$c=3/10$, $Z=2/5$, $k=1/4$, $l=1/8$, if and only if $\mu\leq3/8$.
+That conclusion uses joint input overlap $(4/5)\mu$, target specimen
+overlap $3/10$, and an output environment overlap of modulus at most one.
+It is a C contract on two states with fixed phase.
+
+For the full unknown-phase family at the same source, $u=2/3$, $v=-1/6$.
+At $\mu=3/8$, Theorem 5.1 instead gives
+
+$$
+p_C=p_R=\frac{41}{56}<1.
+\tag{PR.23}
+$$
+
+For C a feasible success Gram entry is $x=3/28$, giving normalized success
+record overlap $6/41$. For R a feasible extra-residue entry is $x=2/7$;
+it has a different meaning and includes the returned-helper factor $\mu$
+in (PR.11). Thus the identical numerical optimum does not equate their
+record outputs. The credited pair threshold is neither contradicted nor
+promoted to a full-family observer threshold.
+

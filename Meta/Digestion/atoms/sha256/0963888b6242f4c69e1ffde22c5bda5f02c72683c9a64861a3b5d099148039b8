@@ -1,0 +1,34 @@
+**Definition 44.1 (Profile and support permissions).** Retain the labeled source, numerical map and target of (36.1), explicitly
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad \Omega(r,g)=\omega(N(r,g)),\qquad \beta_0(y)=0.
+\end{aligned}
+\tag{44.1}
+$$
+
+The common measurable carrier, one common deterministic tape-dependent procedure, finite-record measurability and events are exactly those of Definition 40.1. Source observations consist only of the supplied zero advice and prime-divisibility answers. Literal finite real proposals, finite nonproposals and divergence retain their distinct meanings. In particular every actual target is a positive integer, but no assertion that every positive integer is an attained target is made.
+
+Fix a prescribed nondecreasing function $b:\mathbb N_{>0}\to[0,1)$ and put
+
+$$
+B=\lim_{K\to\infty}b(K)\in[0,1],\qquad
+ e_y\le b(\Omega(y))h_y\quad(y\in X).
+\tag{44.2}
+$$
+
+Fix only the anchor row $(h_{x_*},d_{x_*},z_{x_*})=(h,d,z)\in\mathscr S$, where $x_*=(7,2)$, $N(x_*)=27$ and $\Omega(x_*)=1$. Other source rows are free. As in Definition 43.1, choose one probability reference $\nu$ on the same carrier, fixed independently of the source, and minimize
+
+$$
+\rho_\nu=\sup_{y\in X}\operatorname{TV}(\mu_y,\nu),\qquad
+\operatorname{TV}(\lambda,\kappa)=\sup_{A\in\mathcal F}|\lambda(A)-\kappa(A)|.
+\tag{44.3}
+$$
+
+There is no error or terminal-row condition on $\nu$, and $\nu$ is neither an input nor a law-acquisition or sampling operation. The distinction between a design infimum and the best-reference infimum of a fixed family remains (43.3).
+
+On an arbitrary measurable carrier, a **finitely supported law** means a finite convex combination $\sum_{i=1}^s w_i\delta_{\theta_i}$ of point evaluations, where $w_i\ge0$ and $\sum_iw_i=1$. Here $\delta_\theta(A)=\mathbf1_{\{\theta\in A\}}$ for measurable $A$; measurable singleton sets or a topology are not assumed. This definition concerns finitely many actual tapes, rather than finitely many unspecified measurable atoms. A finite common carrier means that $\Theta$ itself is finite. Requiring each $\mu_y$ to be finitely supported imposes no common finite set or common bound on the support sizes. A common countable carrier with its power-set sigma algebra permits all the constructions below.
+
+Call the profile **strict** when $b(K)<B$ for every finite $K$. For a nondecreasing profile the alternative is that $b(K_0)=B$ at some finite index, after which $b$ is constant. In particular $B=0$ forces $b\equiv0$, whereas $B=1$ always gives a strict profile under (44.2).
+

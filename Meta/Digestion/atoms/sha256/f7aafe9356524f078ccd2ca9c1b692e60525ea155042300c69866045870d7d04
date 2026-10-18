@@ -1,0 +1,29 @@
+### 定理 30.3（有限量子三角分布的归一化）
+
+上式定义合法概率分布：
+
+\[
+P(a,b,c)\ge0,
+\qquad
+\sum_{a,b,c}P(a,b,c)=1.
+\]
+
+#### 证明
+
+所有 POVM 元素和输出状态均正半定，所以每个概率非负。对所有输出求和：
+
+\[
+\sum_{a,b,c}P(a,b,c)
+=
+\operatorname{tr}
+\left[
+(I_{K_A}\otimes I_{K_B}\otimes I_{K_C})\rho_{ABC}
+\right]
+=
+\operatorname{tr}\rho_{ABC}
+=
+1.
+\]
+
+证毕。
+

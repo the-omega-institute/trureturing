@@ -1,0 +1,29 @@
+**Definition 4.1 (open original-row relation).** A serial fine prefix
+$w$ has completed original word $h_c(w)$ and at most one outstanding
+row. A stable interpretation is $\operatorname{At}(W(h_c))$. A Busy
+interpretation is
+
+$$
+\operatorname{Working}(W_-,r,\sigma,k,p,\mathcal R_{\rm stage}),
+$$
+
+where $r$ is the admitted actual raw row with its source/version/PC/
+site and operand binding, $\sigma$ is its bounded retained before-image,
+$k$ is its actual retained stage, $p$ is its already occurred wire
+event or the empty word, and $\mathcal R_{\rm stage}$ is this row's
+actual partial receipt material. The actual partial graph is always
+retained. $W_-=W(h_c)$ is its comparison predecessor, not a second
+stored source. $p$ is determined by actual stage and captured bit;
+it need not be a new permanent event record.
+
+The row footprint contains the original ordered guard/operand and
+effect stencil, all named current/predecessor markers and moved-to
+neighbors, actual finite code/control/token fields used, both meter
+lanes and the old append tail, their specified bounded routes, and
+only this row's designated new occurrences. Repeated probes remain
+repeated. Aliased writes are combined after literal ordered effect
+evaluation. A core-owned continuing permission is bound to precisely
+this row, footprint, captured operands and stage sequence. It is not
+an exported read token, an arbitrary next-row permission or an actor
+lease inferred from old permission bytes.
+

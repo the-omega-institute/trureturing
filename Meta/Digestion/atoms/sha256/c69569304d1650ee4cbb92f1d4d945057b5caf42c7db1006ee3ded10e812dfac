@@ -1,0 +1,29 @@
+**Definition 9.1 (cells, centroids and the tolerance shape).** Work with one period-one regular table of Definition 2.1 on the source and full original operation contract of Definitions 1.1–1.3. Write its positive-row labels as $X,Y$, its rows as $\pi,\tau$, and its complete raw laws as $Q_x,W_y$. Zero-row labels can be deleted: $\pi B=\tau$ and $\tau A=\pi$, with nonnegative entries, exclude transitions from a positive-row label into a zero-row label.
+
+For a rational $0<t\le1$, put
+
+$$
+\lambda=4/15,\qquad
+L=\min\{\ell\ge1:\lambda^\ell\le t/2\},\qquad
+G=\left\lceil\frac{2L+2}{t}\right\rceil,\qquad \xi=1/G,
+\tag{9.1}
+$$
+
+$$
+N_p(t)=(G+1)^{2L+1},\qquad
+N_\beta(t)=(G+1)^{2L+2}.
+\tag{9.2}
+$$
+
+The level-$L$ vectors of Definition 5.1 have $2L+1$ p coordinates and $2L+2$ suspended coordinates, including their residual cell. Partition $X$ into cells $C$ by equality of the coordinatewise vector $\lfloor Gz_x^{p,L}\rfloor$, and partition $Y$ into cells $D$ using $\lfloor Gz_y^{\beta,L}\rfloor$. Let $\mathcal C,\mathcal D$ be the occupied cells. Define their positive weights and analysis-only centroids by
+
+$$
+\bar\pi_C=\sum_{x\in C}\pi_x,\quad
+\bar\tau_D=\sum_{y\in D}\tau_y,\quad
+\bar Q_C=\sum_{x\in C}\frac{\pi_x}{\bar\pi_C}Q_x,\quad
+\bar W_D=\sum_{y\in D}\frac{\tau_y}{\bar\tau_D}W_y.
+\tag{9.3}
+$$
+
+These centroids are not assigned as decoders of a replacement observer. All vectors, bins and rows in this definition are mathematical construction data.
+

@@ -1,0 +1,21 @@
+**Theorem 7.4 (a conditional nine-low obstruction).** Suppose, in
+addition, that every group is a singleton and every set $I$ of
+at most eight endpoint columns for which
+$A_Iw=B$ has a solution strictly positive on $I$ is linearly
+independent. Then $U_8$ is the finite set of vertex contrasts.
+If also $r_-<r_+$, every other contrast in that interval has
+$n_t(r)=9$. These additional hypotheses are a conditional
+obstruction, not an assertion about the original source.
+
+Proof. An edge with at most eight groups would have at most eight
+positive endpoint coordinates in its relative interior, because
+the groups are singletons. Those columns represent $B$ with
+strictly positive weights and are independent by hypothesis.
+Equation (FC.20) would give dimension zero, contrary to its being
+an edge. Thus no edge is retained in $\mathcal H_8$. All vertices
+are retained by Theorem 6.1, giving exactly their finite contrast
+set. A nontrivial interval has points outside that set; (FC.17)
+gives nine low at each such point. Nothing here verifies the
+additional independence or nonconstant-interval hypotheses for
+an actual original attained tuple. $\square$
+

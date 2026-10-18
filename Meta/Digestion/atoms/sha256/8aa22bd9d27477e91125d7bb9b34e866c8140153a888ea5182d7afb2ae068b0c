@@ -1,0 +1,115 @@
+**Definition 11.1 (component count and actual-child condition).**
+For any known $K\subseteq\mathcal F(H)$, with no cardinality
+restriction, its actual children after sixth $M$ and terminal $F$
+are
+
+$$
+K_{M,\sigma;F,\theta}
+ =K\cap\mathcal F(H,M,D_0+\lambda\sigma,
+                         F,D_0+\lambda\theta).
+\tag{11.1}
+$$
+
+Theorem 10.2 bounds their root-seven parts by two for every real
+$\sigma,\theta$ and both $F$. These parts may be empty, singletons
+or pairs. Its new cardinality content concerns the interior drift
+range left after Theorem 6.1's exterior-drift injectivity and the
+credited exceptional-drift inverses in Lemma 7.2. Those stronger
+injections on their respective known classes remain prior results.
+The roots-$\{4,7\}$ size bound used when $d=y$ is likewise
+prior content. At $d=\zeta$, the credited roots-$\{5,7\}$
+size bound already gives the same upper bound, while (10.9) also
+covers that case without dividing by $f(5)$. The additional count
+therefore concerns $0<d<312/5$ outside
+$\{24,48,y,\zeta\}$, although Theorem 10.2 has no such exclusions.
+The uniform quartic count (10.9)–(10.18) controls this remaining
+variable-source, variable-shape component without acquiring either
+label.
+
+The complete actual-child condition remains exactly (1.9).
+A surviving pair can satisfy $L_0$, so the upper bound two does
+not make its terminal child a uniquely recoverable target. The
+ambient child may also contain non-root-seven worlds. Thus the
+component count supplies neither an injective response nor an
+inverse on the ambient fiber. It does not bound the non-root-seven
+part of a mixed child.
+
+In particular the simultaneous feasibility problem (7.13)–(7.16)
+still requires three distinct legal $k_h$ at one common
+$d,y,\zeta$, with the actual $J$ collision pair $\{1,2\}$ and
+actual $M$ collision pair $\{1,3\}$. The latter pair is compatible
+with the cardinality upper bound two; the bound supplies neither
+that pair nor the other pair nor their common realization. Rank
+one, the same fourth and fifth readings, the sign restrictions
+and every actual-child quantifier must hold jointly. Neither
+nonemptiness nor emptiness of this full system follows from the
+quartic root count.
+
+As an inhabited instance within the proof's credited zero-drift
+branch, take normalized data $D_0=0$, $\lambda=1$ and
+
+$$
+P=\begin{pmatrix}2/5&3/5\\2/5&3/5\end{pmatrix},\qquad
+f(T)=T(T-5)(T-7),\qquad d=0.
+\tag{11.2}
+$$
+
+Its source entries are positive, its trace is one, and
+$uv=r(1-r)=6/25$, so it is legal. Its gain coefficient vector
+is $(0,35,-12,1)$. The full actual trace and reading table is
+
+$$
+\begin{array}{c|c|c|c|c}
+i&A_i&\operatorname{tr}(A_iP)&f(i)&
+       d+f(i)\operatorname{tr}(A_iP)\\ \hline
+0&I&1&0&0\\
+1&J&1&24&24\\
+2&L&8/5&30&48\\
+3&J+L&13/5&24&312/5\\
+4&C&12/5&12&144/5\\
+5&Q&19/5&0&0\\
+6&MQ&31/5&-6&-186/5\\
+7&FMQ&\operatorname{tr}(FMQP)>0&0&0.
+\end{array}
+\tag{11.3}
+$$
+
+Every row follows by the matrices (1.4), (1.7), the polynomial
+samples and trace multiplication; the last row holds for either
+$F$. This is one world on $H(144/5,0)$, with sixth-$M$ response
+$-186/5$ and terminal response zero. It demonstrates nonemptiness
+of a component, not sharpness of the bound two or a losing-set
+realization. It is an instance of the already credited zero-drift
+family (10.4), rather than an additional decoder theorem.
+
+The new model-specific deduction is Theorem 10.2 with its
+parameter-uniform positive-root argument. Polynomial interpolation,
+the factor theorem and Viete's formulas are established tools used
+inside that deduction. The relevant permanent correspondences are:
+
+| Mathematical source | Hypotheses and use |
+| --- | --- |
+| [Terminal-Root Decoders and the Simultaneous Core](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md), Lemma 2.1, Theorems 4.1 and 5.1, Sections 8–9 | The interpolation, zero-drift inverse and roots-$\{4,7\}$ size bound are reused through Lemmas 7.1–7.2. Its rational system has extra nonvanishing hypotheses; (10.6) derives the needed identities directly and therefore retains the exceptional drifts. The simultaneous system remains joint. |
+| [IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Theorem 3.1 | The complete compatible fiber is a rational graph over its legal source set. Conditional recovery of gain and drift from a supplied source does not identify that source. The count here concerns variable sources in one actual component, rather than a restatement of conditional rank five. |
+| [Whole-Class Affine Decoders](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md), Sections 4–8; [VIII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md), Theorem 2.1 | Fixed-source, fixed-shape and known-initial-root inverses retain their supplied class labels. None provides such a label for (10.1) or its ambient fiber. The zero-drift branch in (10.4) is credited reuse. |
+| [VII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), Sections 4 and 8–11 | Pair exclusion and the specialized $H_*$ gain-ray and known-band inverses retain their own hypotheses. None of their coefficient arrays, slice certificates or local inverses is a premise of (10.9)–(10.18). The arbitrary late readings in Theorem 10.2 are not restricted to $H_*$. |
+| [Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Sections 4–7 | Its terminal stratum requires $f(7)\ne0$. The nonzero-ratio cancellation and terminal matrix inverse do not apply when $f(7)=0$; they supply no cardinality bound for the component in (10.1). |
+| [Zero-Sixth Root Rigidity and Terminal Collision Geometry](https://github.com/the-omega-institute/trureturing/blob/7a5bd6a6bce1b3213422b7b3a1eca2d6c10ec707/docs/develop/theory/FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorems 2.1, 4.1 and 6.1 | Its repeated-sixth rigidity implies that a world with $f(6)=f(7)=0$ cannot have a repeated root at six. Its three-terminal-coordinate injections require $f(7)\ne0$. Neither result gives the root-seven component count. Equation (10.22) retains a zero sixth gain with $f(7)=0$, including the simple-sixth-root possibilities. |
+| Y. Li, K. Lee and Y. Bresler, [*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1), Theorems 2.8 and 3.3 | Theorem 2.8 separates identification of the first-factor orbit among all compatible pairs from identification of the second factor conditional on the first. Theorem 3.3's BGPC sufficient condition assumes an entrywise nonvanishing gain vector, full row rank of the signal matrix, and a full-column-rank sensing matrix with indecomposable row space. Those hypotheses do not cover arbitrary sampled zeros, the affine drift and the complete-world target here. Neither theorem is a premise for the quartic bound. |
+
+These correspondences distinguish the repository deduction from
+its standard algebraic tools; they assert no external priority or
+exhaustive classification. The uniform count asserts no two-world
+sharpness, numerical stability or computational cost bound.
+
+The original-root problem still quantifies over all legal worlds,
+all deterministic policies and stops, both initial actions and
+every actual history on one unresettable trajectory. A resolution
+would require either a jointly realizable obstruction with the
+original-root and earlier-history bridges, or a lawful complete-target
+decoder on that full domain. No root acquisition, earlier-parent
+gluing, exact losing triple, $L_2$ witness, eight-reading decoder
+or nine-reading upper bound is supplied by the component count.
+The alternative $n_{\mathrm{det}}(3,0)\ge9$ versus an everywhere
+at-most-eight-reading decoder remains unresolved by these deductions.
+

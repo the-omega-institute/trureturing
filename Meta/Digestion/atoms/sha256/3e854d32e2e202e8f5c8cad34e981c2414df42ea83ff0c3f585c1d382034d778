@@ -1,0 +1,86 @@
+**Theorem 92.4.** Under the hypotheses of Theorem 92.2, the active stress support meets at least three original fibres.
+
+**Proof.** Work in the reciprocal gauge (19). If the support meets exactly two fibres, their positive occupancies can only be (1,1), (2,1), (1,2), or (2,2). A two-coordinate support is impossible: its rank-one principal Grams have unit-modulus cross entries, so their product has modulus one and differs from the target 1/2 by at least 1/2, contradicting (10).
+
+For occupancies (2,1), write the common principal Gram and a kernel vector as
+
+\[
+ G_S=H_S=\begin{pmatrix}I_2&g\\g^*&1\end{pmatrix},
+ \qquad a_S=(-g,1),\qquad \|g\|_2=1.                         \tag{28}
+\]
+
+The norm equality follows from positivity and rank two. Both entries of g are nonzero. Put m_i=1/2−g_i², the cross column of the principal error. Its complete restricted diamond norm is exactly ∥m∥₂. Here is a direct adaptive proof, with its normalization retained.
+
+For any feasible witness let w=W_fg be its cross column. Compress ρ,W to any unit vector in the first fibre and the second singleton. Write the compressed ρ diagonals as r,s, the compressed W diagonals as A,B, and its cross entry as z. Then r+s≤1 and positivity of W and ρ−W gives
+
+\[
+ |z|\le\sqrt{AB},\qquad
+ |z|\le\sqrt{(r-A)(s-B)},\qquad
+ 2|z|\le\sqrt{rs}\le\tfrac12.                              \tag{29}
+\]
+
+The middle bound follows by adding the first two and using Cauchy–Schwarz. Taking the supremum over the first-fibre unit vector gives ∥w∥₂≤1/4. The objective is 4 Re(m*w), so it is at most ∥m∥₂. Equality is feasible: for u=m/∥m∥₂ choose ρ=diag(uu*/2,1/2) and W=(u,1)(u,1)*/4; then ρ−W=(u,−1)(u,−1)*/4≥0. The case m=0 is immediate, and here t>0 excludes it. Theorem 92.2 therefore gives t=∥m∥₂, and every norming witness satisfies
+
+\[
+ w=\frac{m}{4t}.                                             \tag{30}
+\]
+
+The positive common stress αa_Sa_S* instead forces 2 conjugate(g_i)w_i=αg_i, hence w_i=βg_i/conjugate(g_i) with β=α/2>0. Combining this with (30) gives
+
+\[
+ \tfrac12=(|g_i|^2+4t\beta)\frac{g_i}{\overline{g_i}}.
+                                                                  \tag{31}
+\]
+
+The coefficient in parentheses is positive and the last factor has modulus one. Thus g_i/conjugate(g_i)=1 and |g_i|²=1/2−4tβ for both entries. Their sum contradicts ∥g∥₂²=1. The reversed occupancy (1,2) is identical after exchanging the fibres.
+
+For occupancies (2,2), write
+
+\[
+ G_S=H_S=\begin{pmatrix}I_2&C\\C^*&I_2\end{pmatrix}.
+                                                                  \tag{32}
+\]
+
+Positivity and rank three say that C has singular values one and a number strictly smaller than one. The kernel is spanned by a_S=(−u,v), where u,v are unit vectors with Cv=u and C*u=v. Every component of u,v and every entry of C is nonzero.
+
+For the purpose of calculating (27), simultaneous diagonal-unitary coordinate changes G_S↦E*G_SE, a_S↦E*a_S, D_S↦E*D_SE preserve each ordered summand and the condition D_Sa_S=0. The phase acquired by D_xy² cancels the inverse phase in its coefficient. This is an algebraic change of coordinates for finding a direction; it does not claim that applying the same phases to both physical channels preserves their product or the target. The direction is returned to the original gauge after the calculation.
+
+Choose these coordinates so that u=(c,d), v=(e,f) have positive real entries. Put u_perp=(−d,c), v_perp=(−f,e). Then
+
+\[
+ c^2+d^2=e^2+f^2=1,\qquad
+ C=uv^T+z\,u_{\perp}v_{\perp}^T,\qquad |z|<1.                \tag{33}
+\]
+
+For any complex w, the Hermitian direction with cross block D_fg=w u_perp v_perp^T and reverse block its adjoint satisfies Da=0. Extend it by zeros outside S. Substitution into (27) gives exactly
+
+\[
+ Q_W(D)=2\alpha\operatorname{Re}(w^2 A),\qquad
+ A=cdef\left(\frac{df}{C_{00}}+\frac{de}{C_{01}}
+                    +\frac{cf}{C_{10}}+\frac{ce}{C_{11}}\right).
+                                                                  \tag{34}
+\]
+
+This coefficient is nonzero for every permitted complex z. Indeed put r=d/c>0 and q=f/e>0. The bracket in (34) equals
+
+\[
+ \begin{split}
+ &\frac{rq}{1+zrq}+\frac{r}{q-zr}
+                  +\frac{q}{r-zq}+\frac{1}{rq+z}\\
+ &\qquad=
+ \frac{rq(1+r^2)(1+q^2)(1-z^2)}
+ {(1+zrq)(q-zr)(r-zq)(rq+z)}.
+ \end{split}                                                   \tag{35}
+\]
+
+The denominator is nonzero because all four entries of C are nonzero, and the numerator is nonzero because |z|<1. Choose the phase of w so that Re(w²A)<0, and return the resulting direction to the original coordinates. Formula (34) is then negative for every common witness, since its only witness-dependent factor is α>0. This contradicts the fixed-direction condition (22), and excludes the last two-fibre case. The theorem follows.
+
+Combining Theorems 92.3 and 92.4 leaves exactly five possible occupancy patterns, up to fibre permutation:
+
+\[
+ (1,1,1,0),\quad (2,1,1,0),\quad (1,1,1,1),\quad
+                 (2,2,1,0),\quad (2,1,1,1).                  \tag{36}
+\]
+
+A zero entry means a whole missing fibre. An entry one means only one retained coordinate of that original two-coordinate fibre. These are different restrictions, and none of the five patterns is excluded here.
+

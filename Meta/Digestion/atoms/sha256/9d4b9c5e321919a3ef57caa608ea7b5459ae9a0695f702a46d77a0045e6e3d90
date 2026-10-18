@@ -1,0 +1,28 @@
+**Proposition 2.3 (a canonical disabled-Advance test for a separate
+scanner).** Consider representations with the same additional fixed
+Ready controller at every original stable record. Suppose the first
+fine reaction for an attempted Advance inspects only that controller,
+the fixed rules and the action name, and no original native fields.
+There is no strict action-by-action refinement that both matches every
+enabled original Advance by a positive finite fragment and has no fine
+successor when that original Advance is disabled.
+
+Proof. Use two consecutive original records on Proposition 2.1's
+canonical path: $W_0$ immediately before the positive length RD and
+$W_1$ immediately after it. Advance is enabled at $W_0$ and disabled
+at $W_1$, where the prescribed action is IN. The extra Ready component
+and supplied action name Advance are identical. Positive matching at
+$W_0$ requires a first fine reaction. Its controller-only test is also
+true at $W_1$, contradicting the strict disabledness requirement there.
+This is already a valid original-source pair; no malformed-code
+reachability claim is needed. ∎
+
+The strict requirement in Proposition 2.3 is, for each fixed attempted
+action, the `none` branch of pinned mathlib's `StateTransition.Respects`.
+An atomic guard-aware admission escapes its controller-only hypothesis.
+A paid preliminary check with explicit refusal cuts can instead use a
+different weak or completed-call interface. It cannot simultaneously be
+called an original executed Advance at $W_1$. A readiness certificate
+is another possible resource, requiring its own truthful initialization
+and updates; Ready alone is not that certificate.
+

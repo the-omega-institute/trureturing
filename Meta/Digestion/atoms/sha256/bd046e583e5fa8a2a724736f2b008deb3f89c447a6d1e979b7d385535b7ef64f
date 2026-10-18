@@ -1,0 +1,50 @@
+**Proposition 5.3 (Five-row simultaneous attainer).** Five rows attain
+$F$ in (4.1), with exactly three read rows and two halt rows.
+
+Proof. Install
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $S$ | $P$ |
+| $S$ | $\operatorname{Read}(2(j+4))$ | $U$ | $P$ |
+| $U$ | $\operatorname{Read}(2(j+6))$ | $Z_H$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+In phase zero the three potentially queried pairs are
+$\{j+2,j+3\}$, $\{j+4,j+5\}$ and $\{j+6,j+7\}$.
+They are mutually disjoint and exterior to actual target $j$. In phase
+one all calls are separators, with actual target $0$. Independence of
+these pairs in the one source proves the complete terminal accounting:
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $ac\eta$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $c^2\eta$ | $ac^2\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+c^3)/2$ | $a/2$ | $3$ |
+
+In the first three rows the first paid one certifies phase zero, while
+the target retains its independent majority probability $a$. In the
+last row only the phase-one majority-target event is correct. The
+additional phase-zero all-zero mass is an error for its fixed output.
+Thus no two phase maxima are added on that leaf.
+
+The source masses sum to one because
+$\eta(1+c+c^2)=(1-c^3)/2$; their correct masses sum to $F$.
+Every formal path halts within three calls, and
+
+$$
+\begin{aligned}
+\mathbb P(N=1)&=\eta,&\mathbb P(N=2)&=c\eta,\\
+\mathbb P(N=3)&=1-\eta(1+c),&
+\mathbb E N&=3-\eta(2+c).
+\end{aligned}
+\tag{5.1}
+$$
+
+The maximum is three. All separators are included in these costs.
+Constant initialization leaves every given seed law unchanged.
+The target labels in (1.2) and the definition of $\sigma$ verify both
+endpoints and both bias directions. $\square$
+

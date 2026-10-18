@@ -1,0 +1,45 @@
+**Corollary 11.3 (an actual $JJ$ decoder on a known union).** For
+any known set
+
+$$
+K\subseteq\bigcup_{d\in\mathcal S}\mathcal Z_6(d),
+\tag{11.9}
+$$
+
+with no cardinality bound, the fixed continuation $JJ$ recovers
+the complete target using at most eight total original-clock
+readings. In particular $\neg L_2(K,H)$.
+
+Proof. Execute sixth $J$ and immediately read raw $w$.
+The sixth-root promise makes $w=\delta$, so for every real $w$
+its actual child is exactly
+
+$$
+K_{J,w}=
+\begin{cases}
+K\cap\mathcal Z_6((w-D_0)/\lambda),&(w-D_0)/\lambda\in\mathcal S,\\
+\varnothing,&(w-D_0)/\lambda\notin\mathcal S.
+\end{cases}
+\tag{11.10}
+$$
+
+Execute seventh $J$ and immediately read raw $v$. Theorem 11.2
+is injective on the whole retained class, so for every real $w,v$
+
+$$
+\left|K_{J,w}\cap\mathcal F(H,J,w,J,v)\right|\le1.
+\tag{11.11}
+$$
+
+At reachable responses membership supplies the unique world, and
+returning it recovers $(P,g,\delta)$. Reconstruction uses the
+unique $k$ in the monotonicity interval and the formulas in the
+proof, or the zero-drift or zero-fifth alternatives of Lemma 11.1.
+All actual ancestor equations and source constraints remain required;
+existence follows from membership, not from arbitrary inverse inputs.
+Singletons may stop earlier; empty responses are unreachable.
+The six ancestor readings plus the two immediate readings total
+eight. The prior sixth-root promise has not been inferred on an
+unrestricted fiber; within that promised class the actual sixth
+read does identify its drift. No unchosen response is acquired. ∎
+

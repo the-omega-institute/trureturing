@@ -1,0 +1,37 @@
+**Theorem 6.4 (Exact arbitrary-encoder radial minimax reduction).**
+For every $0<Z<1$,
+
+$$
+\boxed{
+(e_2^{\rm aff}(Z))^2
+=\inf_{C\ge0,\ \gamma\in\mathbb R}
+\sup_{0<k<H}\{4(Ce^{\gamma k}-A(k))^2+4Zk\}.}
+$$
+
+This is equality of minimax values and domination of every competitor
+in uniform error. It does not classify all affine factors as radial.
+
+**Proof of Theorem 6.4.** Models of infinite error are harmless.
+For a finite-error model Proposition 4.2 is exhaustive. The deficient
+rank case, the constant phase-space case of Lemma 5.1, and the
+unmatched-character case of Lemma 6.2 have error at least the zero
+baseline, which is the radial choice $C=0$. Lemma 6.3 treats every
+remaining case. Thus each competing model is bounded below by the
+error of an allowed radial choice.
+
+Conversely, for any $C>0$ and finite real $\gamma$, use
+
+$$
+E_{C,\gamma}(k,\alpha,\beta)=Ce^{\gamma k}U(\alpha),\qquad
+q=D(E_{C,\gamma},0),
+$$
+
+with updates $z\mapsto e^{\gamma s}z$ and
+$z\mapsto R_{t/2}z$. Substitution proves the exact identities on
+every full lawful domain, for all signed real commands. Lemma 1.5
+gives exactly the objective displayed in the theorem. For $C=0$ use
+the zero model. Both infimum inequalities follow, and nonnegativity
+allows squaring the error infimum. Every sign of $\gamma$ is included.
+No compactness of encoder images, coefficient bound, convergence of
+matrices, or endpoint encoding is used. $\square$
+

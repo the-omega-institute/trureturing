@@ -1,0 +1,29 @@
+**Theorem 2.5 (Inherited four-coordinate strict upper bound).** The set
+$K_Q$ is nonempty and compact, $d_Q,m_Q,\varepsilon_Q$ are positive,
+and
+
+$$
+0<\mu(\tau)<\frac{T_2(\tau)-\tau}{8},\qquad
+\max_{[0,1]}\bigl((R_{\varepsilon_Q}^Q-s)^2+\tau x\bigr)
+\le T_2(\tau)-\mu(\tau).
+$$
+
+This very profile has an actual four-real-coordinate $\mathsf{GP}$
+realization with full affine hull. For all four contracts,
+
+$$
+e_{4,\mathsf C}^{\rm aff}(Z)
+\le4H\sqrt{T_2(\tau)-\mu(\tau)}
+<4H\sqrt{T_2(\tau)}=e_2(Z)=e_3(Z)
+\quad(0<Z<2/3).
+$$
+
+Supplier justification. These are [Q, Lemmas 4.4–4.5, Theorem 4.6
+and Theorem 7.2], with its $T,\mu$ equal to the present
+$T_2(\tau),\mu(\tau)$. Its stored blocks are
+$e^{(\lambda+\varepsilon_Q b_Q)x}e^{i\alpha}$ and
+$e^{(\lambda-1)x}e^{i\alpha}$; [Q, §§5–6] supply their exact
+decoder, guards, initialization and all prescribed paths in the same
+native source and metric. The certificate is parameterwise, exact and
+positive, without claiming it is the optimal improvement. $\square$
+

@@ -1,0 +1,61 @@
+**Proposition 9.2 (nonempty exact domain and leading slopes).** For
+all sufficiently small positive $\epsilon$, (QO.45) is well defined,
+with
+
+$$
+\begin{gathered}
+0<s<1,\quad0<\zeta_\epsilon<1,\quad
+(1-\alpha)c_\epsilon-\beta>0,\quad a_1>0,\quad
+a_1^2-4a_2a_0>0,\\
+0<x_\epsilon<s,\qquad0<P_\epsilon,Q_\epsilon<1,\\
+P_\epsilon Q_\epsilon=R_\epsilon^2+x_\epsilon^2,\qquad
+U_\epsilon V_\epsilon=R_\epsilon^2+v_\epsilon^2,\\
+U_\epsilon-\alpha V_\epsilon=\beta c_\epsilon,\qquad
+2\sqrt\alpha R_\epsilon=\beta\sigma_\epsilon,\\
+x_\epsilon=t_x\epsilon+O(\epsilon^2),\qquad
+\theta_\epsilon-\theta_0=v_\theta\epsilon+O(\epsilon^2).
+\end{gathered}
+\tag{QO.46}
+$$
+
+Proof. Eliminating $P,Q$ from $P+Q=w$,
+$P-\alpha Q=\delta$ gives
+
+$$
+PQ=\frac{\alpha w^2+(1-\alpha)\delta w-\delta^2}{(1+\alpha)^2}.
+\tag{QO.47}
+$$
+
+Substitute $w=1-s^2+2sx$ and subtract $R^2+x^2$.
+The constant, linear and quadratic numerators are respectively
+$a_0,a_1,a_2$. Thus the displayed selected root solves exactly
+$PQ=R^2+x^2$. At $\epsilon=0$ one has $a_0=0$, $a_1>0$,
+and $a_2<0$; indeed
+$a_2=-(1-\alpha)^2-4\alpha(1-s^2)<0$ for $s<1$.
+The rationalized root is the continuous root $x=0$, and its
+denominator equals $2a_1>0$ at the base.
+
+To check its sign without an extraneous squaring branch, use the smooth
+$m=\beta$ coordinates (QO.36) and
+$S(\theta,x)=x+\sqrt{1-P(\theta,x)-Q(\theta,x)+x^2}$.
+At the base $S=s_*$, $S_x=1$, $S_\theta=b_{\rm rec}$.
+The implicit-function theorem produces the unique local solution
+$S(\theta_\epsilon,x)=s$ with
+$x=(1-b_{\rm rec}v_\theta)\epsilon+O(\epsilon^2)
+=t_x\epsilon+O(\epsilon^2)>0$. It solves the polynomial just
+derived and agrees with its selected local root. The derivative
+of $2\arctan\zeta_\epsilon$ is $v_\theta$ at zero, proving the
+angular expansion.
+
+All other strict conditions on the first two lines of (QO.46) follow
+from the base margins by continuity; $x_\epsilon>0$ is supplied
+by its strictly positive derivative. Hence they define a nonempty
+punctured interval, with no numerical radius claimed. Finally the
+definition of $w_\epsilon$ gives
+$1-P_\epsilon-Q_\epsilon+x_\epsilon^2=(s-x_\epsilon)^2$.
+Combine this with $PQ=R^2+x^2$ for the second determinant identity.
+Positive diagonals and $0<x_\epsilon<s$ fix every square-root sign.
+The difference and imaginary identities follow directly from
+(QO.45), so the low radial parameter is exactly $m=\beta$.
+$\square$
+

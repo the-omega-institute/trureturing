@@ -1,0 +1,26 @@
+**Definition 4.1 (analysis transitions and ideal zero-slack coordinates).** On (3.5), the original acquired return induces
+
+$$
+K((r,x),(r',x'))=
+\sum_{y:v_y=r'}B_{xy}A_{yx'}.
+\tag{4.1}
+$$
+
+The row $\zeta$ is stationary for $K$: sum over the old mark and $x$, use $\pi B=\tau$, and recover (3.5). This extends only an analysis coupling; the copied decoded law remains $Q_x$.
+
+Put
+
+$$
+\theta_x=\sum_{y:v_y=b}B_{xy},
+\qquad c_x=c_a+(c_b-c_a)\theta_x,
+\qquad d_x=(1-a)-(b-a)\theta_x,
+$$
+
+$$
+u^*_{r,x}=1-T_r/c_x,
+\qquad g^*_{r,x}=T_rd_x/c_x.
+\tag{4.2}
+$$
+
+These are auxiliary rational functions with positive denominator $c_x\ge c_a$. They are not installed forecasts. The denominator $c_x$ increases with $\theta_x$, so $1-T_r/c_x$ increases as well. For $r=a$ its endpoint values are $a$ and $7183/19683$; for $r=b$ they are $11567/31250$ and $b$. All four belong to $[a,b]$, proving $u^*_{r,x}\in[a,b]$ for every $\theta_x\in[0,1]$.
+

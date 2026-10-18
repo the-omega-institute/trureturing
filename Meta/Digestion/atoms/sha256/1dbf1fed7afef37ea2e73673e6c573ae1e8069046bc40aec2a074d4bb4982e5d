@@ -1,0 +1,67 @@
+### theorem 3.1: 定理 2：FIB 五态的单步代数完备性
+
+有
+
+$$
+\boxed{
+\mathcal A_1=\mathbb R^S.
+}
+$$
+
+#### 证明
+
+取
+
+$$
+U=x+z,
+\qquad
+V=y+z.
+$$
+
+则 $U,V\in\mathcal B$，但
+
+$$
+UV=
+(x+z)(y+z)=
+xy+xz+yz+z^2=
+xy+z.
+$$
+
+因此
+
+$$
+xy=UV-z\in\mathcal A_1.
+$$
+
+而
+
+$$
+\{1,x,y,z,xy\}
+$$
+
+是 $\mathbb R^S$ 的一组基，所以
+
+$$
+\mathcal A_1=\mathbb R^S.
+$$
+
+证毕。
+
+---
+
+这个结果可以写成一个非常简洁的“金字塔跃迁”：
+
+$$
+\boxed{
+\text{线性投影层}
+\quad\longrightarrow\quad
+\text{二阶联合层}
+\quad\longrightarrow\quad
+\text{完整五态层}.
+}
+$$
+
+所以三均值层不是完整结构，而是一个**一次乘法之前的边界层**。
+
+---
+

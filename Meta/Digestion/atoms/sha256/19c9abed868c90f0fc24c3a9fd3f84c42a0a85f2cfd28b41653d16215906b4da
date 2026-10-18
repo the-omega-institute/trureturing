@@ -1,0 +1,92 @@
+**Theorem 6.2 (same-law entropy lower bound on all gauges).** Let $Q$
+be any probability on the positive-weight actual solutions of this
+template. Let $q_i$ be its original block marginals and $\pi_v$ its
+reply marginals. Put
+
+$$
+S_v=\sum_{h:v\in I_h}\frac1{k_h},\qquad
+\delta_v=\frac{S_v-m_v/k}{m_v+1}\ge0.
+$$
+
+With base-two entropy and relative entropy,
+
+$$
+\boxed{\displaystyle
+\log_2\frac B{\prod_iW_i}
+\ge-\sum_iD_2(q_i\|\mu_i)
+       +\sum_v\delta_vH_Q(X_v).}
+\tag{INB.23}
+$$
+
+In particular if every $q_i=\mu_i$, every such $B$ is at least
+$\prod_iW_i$. All marginals in (INB.23) are from this one $Q$;
+separately chosen locally consistent laws do not meet its premise.
+
+Proof. For a finite nonnegative vector $t$ and a probability $p$
+supported where $t>0$, the finite Gibbs inequality is
+
+$$
+\log_2\sum_x t_x\ge\sum_xp_x\log_2t_x+H(p).
+\tag{INB.24}
+$$
+
+Subtracting the right side gives
+$D_2(p\|t/\sum t)\ge0$. This follows, in natural logs, from
+$-\log u\ge1-u$ applied to the ratios of the reference probability
+to $p$ on its positive support; summing gives at least zero because
+the reference mass on that support is at most one. Division by
+$\ln2$ gives the displayed base-two version.
+
+Let $q_f$ denote the marginal of the same $Q$ on scope $I_f$;
+for an owner this is the legal-array image of $q_i$. Conditional
+Gibbs on each positive-probability fiber $y_v=z$ gives
+
+$$
+\mathbb E_{\pi_v}\log_2M_{fv}(X_v)
+\ge\mathbb E_{q_f}\log_2b_f(Y)
+       +H(q_f)-H(\pi_v).
+\tag{INB.25}
+$$
+
+Apply (INB.24) also to the outer sum in (INB.22), with law $\pi_v$:
+
+$$
+\log_2\sum_zM_{fv}(z)^{r_v}a_v(z)^{k_f}
+\ge r_v\mathbb E_{\pi_v}\log_2M_{fv}
+       +k_f\mathbb E_{\pi_v}\log_2a_v+H(\pi_v).
+$$
+
+The support conditions hold because $Q$ uses positive owner weights
+and satisfying indicators, and all gauges are positive. Combine with
+(INB.25), divide by $r_vk_f$, and sum over incidences. The coefficient
+of each factor energy and joint entropy is one, since it has $k_f$
+ports. Each log gauge appears once in that factor energy and once
+with the opposite sign in the incident seed term. All gauge
+expectations cancel. For $t_v=1/k+S_v$ the result is
+
+$$
+\log_2B\ge
+\sum_f\{\mathbb E_Q\log_2\phi_f+H(q_f)\}
+-\sum_v\frac{m_v}{m_v+1}t_vH(\pi_v).
+\tag{INB.26}
+$$
+
+Each owner brace equals $\log_2W_i-D_2(q_i\|\mu_i)$, using the
+bijective legal-array encoding. Each indicator energy is zero on
+$Q$. For an indicator with $k_h$ coordinates, its joint entropy
+is at least each marginal entropy, since conditional entropy of a
+finite law is nonnegative. Averaging these $k_h$ inequalities gives
+$H(q_h)\ge k_h^{-1}\sum_{v\in I_h}H(\pi_v)$. Thus its contribution
+over all indicators is at least $\sum_vS_vH(\pi_v)$. The remaining
+coefficient is
+
+$$
+S_v-\frac{m_v}{m_v+1}(1/k+S_v)
+=\frac{S_v-m_v/k}{m_v+1}=\delta_v.
+$$
+
+Finally $k\ge3$ and $k_h\le2$ imply $S_v\ge m_v/2\ge m_v/k$.
+This proves (INB.23), including $m_v=0$. No Gibbs-law premise on
+$Q$, no local-to-global completion, and no equality between separately
+optimized entropies was used. $\square$
+

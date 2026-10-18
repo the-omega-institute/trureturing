@@ -1,0 +1,148 @@
+**Theorem 8.2 (terminal repetition and the six-read restriction).** For every $d\ge1$, the following legal $d+5$-read history recovers the whole target for every real slope:
+$$
+A_0=I,\quad A_1=L^2,\quad
+A_2=Q_0=\begin{pmatrix}6&1\\5&1\end{pmatrix},\quad
+A_3=T_0=\begin{pmatrix}11&2\\6&1\end{pmatrix},
+$$
+$$
+A_i=B_0=\begin{pmatrix}17&3\\6&1\end{pmatrix}
+\quad(4\le i\le d+4).
+\tag{8.1}
+$$
+It uses seventeen literal atoms, independently of $d$. Consequently
+$$
+C_{\mathrm{fix}}(d)=d+5\quad(d\ge1),\qquad
+5\le C_{\mathrm{fix}}(0)\le6.
+\tag{8.2}
+$$
+
+**Proof.** The nonempty successive multipliers are $L^2,UL^3,UJ,U$. Their chronological atom blocks are
+$$
+(J,M,J,M),\quad
+(J,M,J,M,J,M,M,J),\quad
+(J,M,J),\quad(M,J),
+$$
+of lengths $4,8,3,2$, totaling seventeen. Multiplication gives
+$$
+Q_0=UL^5=(UL^3)L^2,\qquad T_0=UJQ_0,\qquad B_0=UT_0.
+$$
+There are $d$ final empty transitions and no interior reads in those atom blocks. Proposition 1.2 proves actual realization throughout.
+
+Set $a_*=p+s$ and
+$$
+\chi=16p+6q+3r,\qquad t=6p+r,\qquad w=q-p.
+$$
+Their inverse is
+$$
+p=(\chi-3t-6w)/4,\quad
+q=(\chi-3t-2w)/4,\quad
+r=(11t+18w-3\chi)/2,\quad s=qr/p.
+\tag{8.3}
+$$
+For example the first two numerators are $4p,4q$, and substitution in $t-6p$ gives $r$. At fixed $\chi$, positivity of $p,q,r$ defines a convex intersection of three open half-planes in $(t,w)$.
+
+Trace expansion gives
+$$
+\operatorname{tr}(B_0S)=a_*+\chi,
+$$
+$$
+\operatorname{tr}((B_0-I)S)=\chi,\qquad
+\operatorname{tr}((B_0-L^2)S)=(\chi+3t+2w)/2,
+$$
+$$
+\operatorname{tr}((B_0-Q_0)S)=2t+w,\qquad
+\operatorname{tr}((B_0-T_0)S)=t.
+\tag{8.4}
+$$
+The single polynomial
+$$
+P(\tau)=D(\tau)+(a_*+\chi)(1+k\tau)
+$$
+has degree at most $d$ because $d\ge1$. The final $d+1$ readings determine it:
+$$
+P(\tau)=\sum_{j=4}^{d+4}z_j
+\prod_{\substack{4\le h\le d+4\\h\ne j}}\frac{\tau-h}{j-h}.
+\tag{8.5}
+$$
+The denominators are fixed nonzero integers. This polynomial has the prescribed values; uniqueness follows because a nonzero degree-at-most-$d$ polynomial cannot have $d+1$ distinct roots. Sampled gain zeros remain interpolation data.
+
+From the complete data form
+$$
+\chi=P(0)-z_0,\qquad W_*=2(P(1)-z_1)-\chi,\qquad
+Y=P(2)-z_2,\quad Z=P(3)-z_3.
+$$
+Equations (8.4) give the undivided reduced map
+$$
+(W_*,Y,Z)=F_\chi(t,w,k)
+=\bigl((1+k)(3t+2w)+k\chi,\ (1+2k)(2t+w),\ (1+3k)t\bigr).
+\tag{8.6}
+$$
+At fixed $\chi$, with $g_j=1+jk$, its derivative is
+$$
+DF_\chi=
+\begin{pmatrix}
+3g_1&2g_1&3t+2w+\chi\\
+2g_2&g_2&2(2t+w)\\
+g_3&0&3t
+\end{pmatrix}.
+$$
+Expansion gives
+$$
+\mathcal J=\det DF_\chi
+=-(3t+2w+\chi)g_2g_3+4(2t+w)g_1g_3-3tg_1g_2
+$$
+$$
+=(2t+2w-\chi)+(8t+6w-5\chi)k-6\chi k^2.
+$$
+Substituting $\chi,t,w$ gives
+$$
+-\mathcal J=p(96k^2+38k+6)+q(36k^2+24k+4)+r(18k^2+7k+1)
+$$
+$$
+=p\bigl[96(k+19/96)^2+215/96\bigr]
++4q(3k+1)^2+r\bigl[18(k+7/36)^2+23/72\bigr]>0.
+\tag{8.7}
+$$
+The strictly positive $p,r$ terms handle every real $k$, including $k=-1/3$.
+
+Local nonsingularity alone is not the uniqueness argument. For $y=(t,w)$ and two points at fixed $\chi$, the exact identity
+$$
+k_0y_0-k_1y_1=\bar k(y_0-y_1)+\bar y(k_0-k_1)
+$$
+implies
+$$
+F_\chi(y_0,k_0)-F_\chi(y_1,k_1)
+=DF_\chi(\bar y,\bar k)(t_0-t_1,w_0-w_1,k_0-k_1)^{\mathsf T}.
+\tag{8.8}
+$$
+The midpoint has positive $p,q,r$ by (8.3), and its fourth entry is reconstructed as $qr/p$. Equation (8.7) makes the midpoint derivative invertible. Equal reduced outputs force equal $t,w,k$. Equal complete data already give the same $P,\chi$, hence the same $S$, and then the same entire polynomial
+$$
+D(\tau)=P(\tau)-(p+s+\chi)(1+k\tau).
+\tag{8.9}
+$$
+This proves global uniqueness, including all gain-zero and negative-gain cases.
+
+For completeness an exact finite inverse and image criterion are explicit. Interpolate $P$, form $\chi,W_*,Y,Z$, and require $\chi>0$. Consider the distinct real roots of
+$$
+H(k)=-(W_*-\chi k)(1+2k)(1+3k)
++2Y(1+k)(1+3k)-Z(1+k)(1+2k).
+\tag{8.10}
+$$
+Its leading coefficient is $6\chi>0$, so it is a nonzero cubic with at most three distinct real roots; it has a real root by its opposite end limits and continuity. Repeated roots are considered once. For each root solve
+$$
+\begin{pmatrix}3g_1&2g_1\\2g_2&g_2\\g_3&0\end{pmatrix}
+\binom t w=\begin{pmatrix}W_*-\chi k\\Y\\Z\end{pmatrix}.
+\tag{8.11}
+$$
+At most one of $g_1,g_2,g_3$ vanishes. The unweighted row-pair determinants are $-1,-2,-1$, so every surviving pair is independent. The augmented determinant of (8.11) is exactly (8.10), enforcing all rows, including a zero-gain row's zero right-hand side. Explicitly define only the available values
+$$
+V_1=(W_*-\chi k)/g_1,\qquad V_2=Y/g_2,\qquad V_3=Z/g_3.
+$$
+Rows $2,3$ give $(t,w)=(V_3,V_2-2V_3)$; rows $1,3$ give $(V_3,(V_1-3V_3)/2)$; rows $1,2$ give $(2V_2-V_1,2V_1-3V_2)$.
+
+Reconstruct by (8.3), require $p,q,r>0$, put $s=qr/p$, form (8.9), require the declared degree, and check every original equation (1.1) at every recorded index. Actual data supply a passing candidate. Conversely every passing candidate has Proposition 1.2's actual realization on exactly the legal words above, and the checked equations give all proposed readings. Equation (8.8) excludes two passing targets. This proves necessity and sufficiency of the finite common-image criterion as well as recovery. No compulsory division by a gain or a leading drift coefficient occurs.
+
+The lower bound in Theorem 8.1 now proves the positive-degree equality. To obtain the constant-drift upper bound, use (8.1) with declared upper degree one: its endpoints are $I,L^2,Q_0,T_0,B_0,B_0$, at indices $0,\ldots,5$. The two terminal readings determine the affine $P$. The same inverse recovers the true whole $D$; for constant-drift image membership explicitly require (8.9) to be constant and check all six equations. Its restriction is globally injective on that submodel. The lower bound at $d=0$ is five. This proves (8.2). The terminal interpolation proof itself requires $d\ge1$; substituting degree zero into (8.5) would not be valid. ∎
+
+The seventeen-atom number is a directly exhibited upper construction. No shortest-word or unrestricted atom optimum is asserted. These read bounds and the positive-degree equality are credited existing results; the prefix certificates do not improve those read counts.
+

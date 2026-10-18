@@ -1,0 +1,5 @@
+source_id = "higuchi-sudbery-auric-network-closure"
+path = "docs/develop/theory/HIGUCHI_SUDBERY_AURIC_NETWORK_CLOSURE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

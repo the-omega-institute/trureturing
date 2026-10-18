@@ -1,0 +1,14 @@
+**Definition 166.1 (One total conic mass).** For $C=N,O$, let $A_C$ have
+columns $z_D-r$, $D\in\mathcal D_C$, and put $h(x)=d(x)-r$. Define
+
+$$
+\rho_C(x)=\inf\left\{\sum_D\lambda_D:
+               \lambda\ge0,\ A_C\lambda\ge h(x)\right\},
+\tag{166.1}
+$$
+
+with value $+\infty$ if the system is infeasible. The coefficients are
+conic masses, not seed probabilities until their common sum is at most
+one. There is one coefficient vector for all $m$ event rows. The $R$
+column is zero and is included in both catalogs.
+

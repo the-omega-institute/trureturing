@@ -1,0 +1,23 @@
+**Definition 12.1 (Dependency and credit map).** The mathematical roles are as follows.
+
+| Supplier or deduction | Exact role and boundary |
+| --- | --- |
+| Continuation, Definition 23.1, equation (23.3); uniform companion, Definition 2.1 | Fixed rational $H_c$, $\delta,B,a$ and the all-integer envelope in Section 2. The nested envelope proof remains a credited premise. |
+| Continuation, Definition 23.2, equations (23.4)–(23.7); uniform companion, Definition 2.2 | The stationary first wait, independent iid subsequent zero counts, payment convention and moment premises (2.4)–(2.8). |
+| Uniform companion, Definition 3.1 and Lemma 3.2; continuation, Lemma 23.4 | The exact known-common-$q$ retuned class and same-budget normal form in Section 3. The continuation's original full-family fixed-machine quantifiers remain distinct. |
+| Uniform companion, Lemma 4.1 | Common entrywise comparison hypotheses; its coarse elimination exponent is replaced by the positive-forest argument of Sections 4–5. The new argument does not rely on that elimination loss. |
+| Uniform companion, Lemmas 5.1–5.2 | Uniform initial mixture and target-specific short/tail clipping, fully exhibited in Section 6. These are reused suppliers. |
+| Continuation, Lemmas 25.1–25.3; uniform companion, Lemmas 6.1–6.2 and Theorem 7.1 | Actual epochs, stopped telescoping and predictable actual-bit payment. Sections 7–8 retain that interface with the new hitting comparison. |
+| Continuation, Theorem 25.4; uniform companion, Theorem 7.2 | Existing fixed-machine and observer-uniform fixed-budget eleventh-power results. The new Section 9 contribution is simultaneous budget dependence and one neighborhood for all finite budgets. |
+| Continuation, Definition 26.1, Lemmas 26.2–26.3 and Theorem 26.4; uniform companion, Section 8 | Conditional sum-four certificate, sufficient complete state threshold $S_\alpha$ and the source-owned finite upper observer. Its sample count is $n_\alpha$ here, separate from total budget $M$. |
+| Owning source, supplied Definition 22.8 through Definition 22.12; uniform companion, Section 9 | Conditional unrestricted cubic and common-band benchmarks. Their paid length $L$ is $T$ here; nested prefix and upper suppliers remain conditional. |
+| Sections 4–5 and Theorems 8.1, 9.1, 10.1 of this volume | Source-relative derived comparison, strengthened finite-$q$ converse, simultaneous joint lower bound and necessary finite-budget growth. No additional upper construction is supplied. |
+
+The additions are classified as `repo-derived`, meaning deductions relative to the supplied handwritten sources and explicit premises. No external literature search establishes a `suspected-novel` or global-priority claim. Directed forest and matrix-tree methods and column-replacement determinant identities are classical proof inputs. The continuation's references to Flower and Hellman for finite-statistic stochastic updates, and to Marzen and Crutchfield for stationary renewal conventions, remain secondary source attributions; no exact scope of those external papers is independently certified here.
+
+**Open question 12.2 (Sufficiency and sharpness).** The optimal hitting-comparison dependence within the constrained stochastic class, the optimal budget dependence for these renewal observers, and the optimal necessary growth exponent for a cubic mean are unresolved here. A sufficient finite growing budget, a matching construction and a sharp transition would require additional realization and performance proofs. The lower inequality (10.4) alone supplies none of them.
+
+**Open question 12.3 (Small and intermediate complete budgets).** Apart from the two-label impossibility at $M=2$ and the conditional sufficient threshold $S_\alpha$, the minimum nonempty budget and the performance of intermediate budgets remain unclassified. A lower bound on a possibly empty class does not provide an observer.
+
+The conclusions concern complete configurations for one fixed source pair and the specified consecutive paid-read experiment. They do not identify immutable transition-description precision with mutable memory, count growing registers as finitely many states, or treat proof objects as accessible channels. There is no varying-$H$, residual-uniform, general-parity, hidden-state, reset-access, exact-optimizer or sharp-constant conclusion. The supplied producer dimension is a different resource and is unnecessary to the argument for the explicit laws. No physical-storage, neural hidden-dimension, empirical machine-learning, external elapsed-time decision or broader-project conclusion follows. Changing the stationary start, permitting an unpaid archive or clock, or decoding the label from stop time would require a different theorem.
+

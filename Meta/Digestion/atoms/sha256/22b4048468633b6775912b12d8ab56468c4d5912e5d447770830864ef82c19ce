@@ -1,0 +1,74 @@
+### 定理 20.9（严格凸静态截面的极限稳定性）
+
+在定理 20.8 的假设下，令 \(\ell_j\in\mathcal H_j^*\) 是连续线性泛函，并假设其经 \(\iota_j\) 传到共同宿主空间后收敛为 \(\ell\)。定义
+
+\[
+\mathcal F_j(f)
+=
+\frac12\mathcal Q_j(f)-\ell_j(f),
+\qquad
+\mathcal F(f)
+=
+\frac12\mathcal Q(f)-\ell(f).
+\]
+
+若：
+
+1. \(\mathcal F_j\) 的有限能量子水平集在 \(\mathcal H\) 中相对紧；
+2. \(\mathcal Q\) 在其定义域上严格凸；
+3. 每个 \(\mathcal F_j\) 有最小元 \(f_j\)；
+
+则 \(f_j\) 的任意弱聚点都是 \(\mathcal F\) 的唯一最小元。若 (M3) 给出强预紧性，则
+
+\[
+\iota_jf_j\longrightarrow f_*
+\]
+
+强收敛，并且
+
+\[
+\mathcal F_j(f_j)\longrightarrow\mathcal F(f_*).
+\]
+
+#### 证明
+
+取任意弱聚点 \(f\)。由子水平紧性和 (M1)，对最小元序列有
+
+\[
+\mathcal Q(f)
+\le
+\liminf_j\mathcal Q_j(f_j).
+\]
+
+线性项在弱收敛下连续，因此
+
+\[
+\mathcal F(f)
+\le
+\liminf_j\mathcal F_j(f_j).
+\]
+
+对任意 \(g\in D(\mathcal Q)\)，由 (M2) 取恢复序列 \(g_j\)。最小性给出
+
+\[
+\mathcal F_j(f_j)
+\le
+\mathcal F_j(g_j).
+\]
+
+取上极限得到
+
+\[
+\limsup_j\mathcal F_j(f_j)
+\le
+\mathcal F(g).
+\]
+
+合并后得到
+
+\[
+\mathcal F(f)\le\mathcal F(g)
+\]
+
+对所有 \(g\in D(\mathcal Q)\) 成立。因此 \(f\) 是极小元。严格凸性保证极小元唯一，记为 \(f_*\)。所有聚点相同，结合 (M3) 即得强收敛。能量收敛由定理 20.8 和最小性得到。证毕。
+

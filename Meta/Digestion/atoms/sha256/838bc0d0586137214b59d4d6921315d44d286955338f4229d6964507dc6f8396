@@ -1,0 +1,50 @@
+**Definition 5.3 (Explicit polynomials and encoding).** For $m\ge0$ put
+
+$$
+P_m(k)=2\sqrt G\,S_m\left(1-\frac{k(H-k)}G\right),\qquad
+Q_m(k)=2\sqrt{Zb}\,S_m\left(1-\frac kb\right).
+$$
+
+These are real polynomials of degrees at most $2m$ and $m$. Write their
+monomial expansions, allowing zero coefficients, as
+
+$$
+P_m(k)=\sum_{j=0}^{2m}p_{m,j}k^j,\qquad
+Q_m(k)=\sum_{j=0}^m q_{m,j}k^j.
+$$
+
+The recurrence and finite compositions specify all these fixed coefficients.
+Define
+
+$$
+E_m(k,\alpha,\beta)
+ =(K,\mathbf a_0,\ldots,\mathbf a_{2m},
+          \mathbf b_0,\ldots,\mathbf b_m),
+\qquad
+K=k,\quad \mathbf a_j=k^jU(\alpha),\quad
+\mathbf b_j=k^jU(\beta).
+$$
+
+Each bold block has two real coordinates. Thus the stored dimension is
+
+$$
+n_m=1+2(2m+1)+2(m+1)=6m+5.
+$$
+
+Use the single fixed linear decoder, with zero offset,
+
+$$
+L_m(K,(\mathbf a_j),(\mathbf b_j))
+ =D\left(\sum_{j=0}^{2m}p_{m,j}\mathbf a_j,
+         \sum_{j=0}^m q_{m,j}\mathbf b_j\right).
+$$
+
+It ignores $K$. In particular the decoder is a fixed linear matrix on
+stored features, not a nonlinear polynomial evaluation on the height
+coordinate at readout time. Its encoded output is
+
+$$
+\widehat y_m(k,\alpha,\beta)
+ =D(P_m(k)U(\alpha),Q_m(k)U(\beta)).
+$$
+

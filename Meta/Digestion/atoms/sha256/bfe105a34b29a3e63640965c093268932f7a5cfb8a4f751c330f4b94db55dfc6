@@ -1,0 +1,35 @@
+**Example 3.3 (a fixed-visibility rational source).** Take
+
+$$
+b=(2/5,2/5,1/5),\quad r=4/5,\quad k_0=1/10,
+\quad k\in[1/10,1/5].
+\tag{3.4}
+$$
+
+At the two heights the probabilities and weights are
+
+$$
+\begin{aligned}
+p(1/10)&=(1,3,2,3,1)/10,
+&w(1/10)&=(3,-1,0,-1,3)/8,\\
+p(1/5)&=(1,1,1,1,1)/5,
+&w(1/5)&=(1,-1,0,-1,1)/4.
+\end{aligned}
+$$
+
+Every probability throughout the band is at least $1/10$. A pulse with
+$\delta=1/10$ and signed phase height $-8\pi$ has
+$A=-4\pi/5$, $h=\pi b_0$, $\operatorname{TV}(\chi)=16\pi$ and
+$\operatorname{TV}(k)=1/5$. Against the constant history its normalized
+$02$ character is an antipode. Thus on the variation-upper-bound class
+$\operatorname{TV}(\chi)\leq16\pi$ every finite deterministic sampler
+has worst-case normalized-character error at least one, or unnormalized
+response error at least $a_{02}=\sqrt2/5$. Constant and pulse do not have
+equal variation totals; this example uses upper bounds, whereas Theorem
+3.2 uses equal totals.
+
+The same antipodal conclusion covers a strategy with no uniform query cap
+that terminates on the constant history: its particular constant-history
+query set is finite, and the pulse fits in a gap of that set. No termination
+claim on an unrealizable constant transcript is used for this extension.
+

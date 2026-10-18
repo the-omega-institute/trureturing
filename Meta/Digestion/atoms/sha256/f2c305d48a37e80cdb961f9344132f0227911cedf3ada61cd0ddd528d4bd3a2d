@@ -1,0 +1,55 @@
+**Definition 16.3 (original-source dictionary and comparison boxes).** All symbols retain Definition 9.2, with $a_{\rm src},b_{\rm src},c_{\rm src},d_{\rm src}$ reserved for source amplitudes, $a,b$ for the two response derivatives, $\beta$ for the source fraction and $\beta_B$ for a bordered inverse bound. In particular
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a_{\rm src}e_0e_1^T+b_{\rm src}e_1e_0^T,\quad
+S=c_{\rm src}e_0e_2^T+d_{\rm src}e_2e_0^T,\quad
+M=\operatorname{diag}(0,m_1,m_2),\quad
+\Delta_\rho=
+\begin{pmatrix}
+11/64&(\sqrt{999}-\sqrt{295})/128&(\sqrt{27}-\sqrt5)/16\\
+(\sqrt{999}-\sqrt{295})/128&-11/64&(\sqrt{37}-\sqrt{59})/16\\
+(\sqrt{27}-\sqrt5)/16&(\sqrt{37}-\sqrt{59})/16&0
+\end{pmatrix},\\
+(K_0,K_1,K_2)=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta_\rho K_j^T),\quad
+G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1),\\
+\theta=\frac{a_{\rm src}b_{\rm src}}{h_0h_1},\quad
+\omega=\frac{c_{\rm src}d_{\rm src}}{h_0h_2},\quad
+\delta=\theta+\omega=s_0^2,\quad \alpha=\theta/\delta,\quad\beta=\omega/\delta,\\
+u=\cos\phi,\quad v=\sin\phi,\quad z=u/\sqrt\alpha,\quad w=v/\sqrt\beta,\quad
+h=(1,z,w)^T,\quad L_h=s_0D+zT+wS,\quad
+n_h=(0,d_{\rm src}w/h_2,-b_{\rm src}z/h_1)^T,\\
+\ell_h=h^TGh,\quad f_h=n_h^T\Delta_\rho n_h,\quad
+c_h=\frac{h_1^2h_2^2\delta+a_{\rm src}^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+{h_0^2\delta+b_{\rm src}^2z^2+d_{\rm src}^2w^2},\quad
+b_{\rm label}=1000c_h\xi,\\
+\Gamma_\xi=(1,u,v,u^2,uv,\xi c_h,\xi c_hu^2,\xi c_huv),\quad
+H_\xi=\ell_h+1000c_h\xi f_h,\\
+V_f=m_2h_1^2/b_{\rm src}^2,\quad W_f=m_1h_2^2/d_{\rm src}^2,\quad
+\mu=\alpha V_f+\beta W_f,\quad
+B=(1,0,0,\alpha,0,\mu/1000,\alpha V_f/1000,0),\\
+\int\Gamma_\xi\,d\pi=B,\quad K(\pi)=\int|u|\,d\pi\ge\kappa=a_ss,\quad
+J(\pi)=\int|H_\xi|\,d\pi,\quad
+T_{\rm actual}=(H_{\rm high}+J)/2,\quad H_{\rm high}=(1-\delta)N_{00}.
+\end{gathered}
+$$
+
+The matrix $\Delta_\rho$ is GC.28 with the height orientation $27-5$. Coefficient weights, physical acquired probabilities and endpoint/failure-line groups are distinct. The eight displayed moments give both full covariances $\int hh^T\,d\pi=I_3$ and $\int b_{\rm label}n_hn_h^T\,d\pi=M$, including the cross entries; they are never optimized separately.
+
+For every interval comparison the source rectangle is exactly the nine integer endpoint pairs of OE Appendix 12 divided by $2^{224}$, varied independently. It is not the product of the coarser decimal bounds below. The event rectangle is exactly the $22$ rows of OE Appendix 15.1 divided by $2^{150}$. In that order it is
+
+$$
+(x_0,\ldots,x_6,p_0,p_1,p_2,p_3,p_5,p_6,Y_0,\ldots,Y_7,\lambda).
+$$
+
+The omitted event weight is $p_4=0$. Seven inserts this zero and removes $\lambda$; six takes the $O=(0,1,2,3,5,6)$ angle and weight sublists, then $Y$, then unused $x_4$. Full branch centres are OE Appendix 13's exact decimals under these same embeddings. Every angle and weight has radius $10^{-8}$, including the six unused $x_4$ and seven signed $p_4$; every $Y$ has radius $10^{-4}$; $\lambda\in[190.449003333,190.449005333]$. The event existence box, with radii $10^{-10},10^{-7},10^{-6}$, is distinct from its refined event rectangle and from these branch boxes.
+
+The endpoint/height/report/base dictionary is precisely the seven-row table in Definition 9.3: indices $0,1,2,3$ are pure, $4,5,6$ saturated; the signs are $(+,+,-,+,+,-,-)$ for height and $(+,-,-,+,+,-,+)$ for report. Bases are $(0,\pi,\pi,0,0,\pi,3\pi/2)$. Thus the old occupied indices are $0,1,2,3,5,6$, not the first six indices. The original margin weakenings are
+
+$$
+p_*=11/250,\quad h_*=3/1000,\quad u_*=79/100,\quad
+\Delta=29/100,\quad q_B=1/8000,\quad h_{\lambda,0}=9/10^7.
+$$
+

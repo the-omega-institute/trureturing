@@ -1,0 +1,83 @@
+**Theorem 14.1 (projection-based normalization of worst resources).**
+Define the mathematical projection
+
+$$
+ \pi_p(t)=
+ \begin{cases}
+ t_{j,e},&\partial_p(t)=(j,e),\\
+ t_*,&\partial_p(t)=B.
+ \end{cases}
+\tag{AAR.82}
+$$
+
+For every encoder $\mathsf A$ in Definition 13.1 there is a prefix-only
+encoder $\mathsf B$, correct on the same full family, such that for each
+$t\in\mathcal F_D$ and each $c\in\{T,A,Q\}$,
+
+$$
+ c_{\mathsf B}(t)\le c_{\mathsf A}(\pi_p(t)),\qquad
+ \max_{t\in\mathcal F_D}c_{\mathsf B}(t)
+       \le\max_{t\in\mathcal F_D}c_{\mathsf A}(t).
+\tag{AAR.83}
+$$
+
+It may be chosen as an ordered successful-search tree on the $n$ leaf
+positions, with termination on either label at a hit and one additional
+all-branch outcome beyond the last key. These inequalities concern the
+three stated query resources, not local simulation work, installed code
+or memory. They do not assert $c_{\mathsf B}(t)\le c_{\mathsf A}(t)$
+for each unprojected source.
+
+Proof. The projection belongs to the same family and preserves the
+entire target trajectory by Proposition 13.3. Simulate the deterministic
+run of $\mathsf A$ on this one projected source, obtaining its necessary
+responses from actual prefix Reads on $t$. It is unnecessary to acquire
+the whole projection first. The all-word classification supplies each
+simulation step:
+
+- For $w=p_i$, actually query $p_i$ on $t$; its reply equals the
+  projected reply.
+- For the immediate divergent sibling $w=p_{i-1}\overline{p[i]}$,
+  $2\le i\le n$, query $p_{i-1}$. Its branch reply means the simulated
+  sibling reply is alpha; every other reply means absent. The query
+  length is $i-1$, one less than the simulated length $i$.
+- For $w=pL$ or $pR$, query $p$. Branch means the simulated reply is
+  alpha; every other reply means absent. Again the real word is shorter.
+- Every remaining case in Lemma 13.7 is a known constant on the
+  projected family and requires no actual query.
+
+Each real query is on the unchanged actual $t$. Its reply either is the
+projected reply or determines it by the stated map. Induction over the
+simulated execution therefore preserves exactly the run of
+$\mathsf A(\pi_p(t))$, including its control choices and termination.
+Each simulated Read costs at most one real Read and no more letters or
+peak length. Repeated known replies can be supplied from the already
+acquired local state; this describes a different strategy, not a refund
+of the original encoder's repeated calls. If a real prefix query hits a
+leaf, the simulator may immediately retain its descriptor and stop; if
+it obtains branch at $p$, it may stop with $B$. Such early termination
+can only decrease the three coordinates. If neither occurs, the finite
+correct simulated run must eventually supply sufficient evidence by
+Lemma 13.5. The correctness of its final code also follows directly
+from trajectory preservation. This proves the sourcewise inequality
+with $\pi_p(t)$, and membership of the projection proves the worst-case
+inequalities.
+
+After early termination at every actual hit, the only continuing prefix
+replies are absent and branch. They leave respectively a lower and an
+upper interval of still possible leaf positions. Queries outside that
+interval have a known nonterminal reply and can be omitted. Every
+remaining leaf position must occur as a query node on its path, by
+Lemma 13.5. Removing these known queries therefore leaves an ordered
+binary search tree containing exactly the keys $1,\ldots,n$. An empty
+upper interval may terminate with $B$ only on the rightmost path; other
+empty continuations are unattained. The descriptor determines every
+prefix reply, so the same tree is correct on all original sources, not
+just on the representatives. Its whole resource bounds follow from
+the preceding simulation and pruning. $\square$
+
+This normalization is sufficient for worst-case resource comparisons.
+The direct witness proof of Theorem 13.8 needs only Lemma 13.7 and label
+necessity; it does not depend on a universal simulation of off-path
+replies on the unprojected source.
+

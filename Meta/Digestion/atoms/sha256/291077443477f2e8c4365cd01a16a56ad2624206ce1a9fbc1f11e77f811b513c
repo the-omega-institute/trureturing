@@ -1,0 +1,101 @@
+**Theorem 55.3 (joint irregular-domain field, propagation and sufficient negative binding).** For every source/history of Definition55.1, the same realization has the unscreened anchored field
+
+$$
+\phi(p)=2^{-|p|},\qquad L\phi=\mathbf1_o,\qquad
+\|\phi\|_2^2=2,
+\qquad Q(\phi)=1.
+\tag{55.5}
+$$
+
+Its outward flux across every actual $D_j(t)$ is one. Its gradient energy on all seams whose parent has depth at least $R$ is $2^{-R}$. The common heat law has bounded rate and strictly positive propagation between any two actual occurrences. All finite domains and the infinite operator have the uniform normalized lower bound
+
+$$
+\mathcal E_D(f)\ge(a\lambda_*-g)\|f\|_2^2,
+\qquad \langle f,\mathsf Hf\rangle\ge(a\lambda_*-g)\|f\|_2^2,
+\qquad \lambda_*=3-2\sqrt2>0.
+\tag{55.6}
+$$
+
+The escape threshold is $\epsilon_*=a\lambda_*$. If $g>3a/4$, the infinite normalized infimum $m$ is negative, attained, and strictly below $\epsilon_*$. Every source's sufficiently advanced legal finite domain has an attained negative minimum. For $0<g\le a\lambda_*$ there is no negative normalized energy; no sharp coupling threshold or all-positive-coupling negative binding is asserted.
+
+Proof. The field is calculated on the occurrences identified by TM22–23. At a nonroot depth $d$, $3\,2^{-d}-2^{-(d-1)}-2\,2^{-(d+1)}=0$; at the root $2-2(1/2)=1$. There are $2^d$ sites at depth $d$ and $2^{d+1}$ seams to depth $d+1$. Therefore
+
+$$
+\sum_{d\ge0}2^d4^{-d}=2,
+\qquad
+\sum_{d\ge R}2^{d+1}(2^{-d}-2^{-d-1})^2=2^{-R}.
+\tag{55.7}
+$$
+
+This is an isolated unit charge with finite total and far-field gradient energy, without a screening mass. It is not a Euclidean point charge or a claim about an Euclidean dimension. The root value one is fixed by this source and exterior solution, not by an unknown-source calibration. Uniqueness in the declared field space follows from the positive kinetic gap proved below. Decaying real harmonic differences also vanish by the maximum principle: a positive maximum of a nonzero decaying function is attained on a finite set, propagates to all neighbours, and contradicts decay; apply this to both signs and to real and imaginary parts.
+
+Each actual finite full binary domain has $\sum_{p\in\operatorname{Leaf}(t_j)}2^{-|p|}=1$: splitting a leaf replaces its weight by the two half weights. The two outgoing field differences at each leaf are $\phi(p)/2$, so the total flux is one on the actual irregular cut, including a singleton. More precise identities useful for the finite correspondence are
+
+$$
+\begin{aligned}
+Q_{\rm outside\ D}(\phi)&=\sum_{p\in\operatorname{Leaf}(t_j)}\phi(p)^2,\
+Q_{\rm internal\ D}(\phi)&=1-\sum_{p\in\operatorname{Leaf}(t_j)}\phi(p)^2,\
+L_D(\phi|D)&=\mathbf1_o+b_D,
+\qquad b_D(p)=\mathbf1_{\operatorname{Leaf}(t_j)}(p)\phi(p),\
+Q_D(\phi|D)&=1+\sum_{p\in\operatorname{Leaf}(t_j)}\phi(p)^2.
+\end{aligned}
+\tag{55.8}
+$$
+
+Here “outside” includes every seam below a current leaf. The outgoing infinite field subtree rooted at such a leaf has energy $\phi(p)^2$ by the geometric series in (55.7). In the compressed field equation the exterior input is the sum of the two child values, namely $\phi(p)$. The last identity concerns the zero-extended *amplitude* equal to the field on $D$; it is not the energy of the continued common field. This explicitly prevents confusing field exterior data with amplitude killing.
+
+For heat put $P=I-L/3$. Its entries are nonnegative, its row sums are one, and symmetry gives the column sums. In the declared clock,
+
+$$
+K_\tau=e^{-\tau aL}
+=e^{-3a\tau}\sum_{n\ge0}\frac{(3a\tau)^n}{n!}P^n,
+\qquad K_\tau(p,q)\ge e^{-3a\tau}\frac{(a\tau)^r}{r!}>0
+\quad(\tau>0),
+\tag{55.9}
+$$
+
+where $r$ is the length of the actual seam path. This conserves nonnegative $\ell^1$ mass and has rate at most $3a$, hence no explosion. Replacing $L$ by $L_D$ gives a substochastic law, with loss through the two missing-child seams at every current leaf and the same positive path bound inside $D$. Positivity is not finite signal velocity, an original Read or a physical clock.
+
+For the gap, use the classical positive-function graph transform cited in the existing Keller–Pinchover–Pogorzelski note, with $h(p)=2^{-|p|/2}$. Directly on the common seams,
+
+$$
+\frac{Lh}{h}(p)=\lambda_*+(\sqrt2-1)\mathbf1_o(p).
+\tag{55.10}
+$$
+
+The transform expresses $Q(f)-\lambda_*\|f\|^2$ as a sum of nonnegative transformed seam differences and $(\sqrt2-1)|f(o)|^2$, initially for finite support and then by density. The transform's positive $h$ need not be square summable. On $D$, zero extension retains exactly the missing-child terms, so the same inequality applies. Since $0<\phi\le1$, (55.6) follows. The simpler certificate $h=1$ has finite pointwise term $2a\mathbf1_{\operatorname{Leaf}}-g\phi$ and infinite pointwise term $-g\phi$; neither certificate asserts a normalized state merely from positivity.
+
+For the threshold, take normalized radial strings on $n$ consecutive levels of a subtree far from $o$, with level coefficients proportional to $\sin(k\pi/(n+1))$, $1\le k\le n$, and amplitude constant on each level after counting-measure normalization. Their kinetic Rayleigh value is $3-2\sqrt2\cos(\pi/(n+1))$. Moving the subtree deeper and letting $n\to\infty$ gives weakly null unit vectors, kinetic value $\lambda_*$ and potential expectation tending to zero. Together with the global gap this fixes the escape threshold $\epsilon_*$. The adjacent-level operator residual of these strings tends to zero as well, so they are singular Weyl sequences there. The diagonal $M_\phi$ is compact, since truncating it to $B_R$ has norm error at most $2^{-R-1}$. The standard compact-perturbation conclusion, in the precise Weyl scope of Teschl Theorem6.19 cited by the existing Lenz–Stollmann–Wingert note, preserves this essential threshold. Below it only isolated finite-multiplicity eigenvalues can occur. In particular the operator has no global compact resolvent.
+
+The unit vector $\phi/\sqrt2$ gives the explicit common trial
+
+$$
+\frac{\langle\phi,\mathsf H\phi\rangle}{\|\phi\|^2}
+=\frac a2-\frac{2g}{3},
+\qquad \sum_p\phi(p)^3=\sum_{d\ge0}4^{-d}=\frac43.
+\tag{55.11}
+$$
+
+It is negative when $g>3a/4$. Attainment and all-near-minimizer compactness are proved in Theorem55.4, not inferred from finite matrix minimization. Its truncations to the actual $D_j(t)$ converge in norm by (55.2), and boundedness of $\mathsf H$ makes their normalized energies converge to (55.11), proving eventual finite negativity. Finite attained minima themselves follow from the finite unit sphere. If $g\le a\lambda_*$, (55.6) excludes negative values. The intervening positive-coupling range is not classified here; “negative”, “below escape” and “attained” are distinct properties. □
+
+The killed-field comparison is also on these same domains. Positivity of $L_D^{-1}=\int_0^\infty e^{-sL_D}\,ds$, justified by $L_D\ge\lambda_*I$, and (55.8) give $0<\phi_D^0\le\phi|D$. For $D\subset D'$ the restricted $\phi_{D'}^0$ solves the smaller equation with a nonnegative exterior input, so $\phi_D^0\le\phi_{D'}^0|D$. Galerkin convergence for the uniformly positive $L$ gives
+
+$$
+I_D\phi_D^0\longrightarrow\phi\text{ in }\ell^2,
+\qquad \|I_D\phi_D^0-\phi\|_\infty\longrightarrow0
+\tag{55.12}
+$$
+
+along the actual exhaustion. To verify that convergence without a pointwise-to-norm inference, let $w_D$ solve the compressed equation and $w=L^{-1}\mathbf1_o$. The $L$-energy orthogonality to every vector supported in $D$ implies
+$\|w-w_D\|_L\le\inf_{\operatorname{supp}(v)\subseteq D}\|w-v\|_L$; boundedness and the lower gap convert this to norm convergence. The common field (55.5) is this $w$. For any actual $D\supset B_R$, the same estimate gives the uniform source-family bound
+
+$$
+\|I_D\phi_D^0-\phi\|_2
+\le\sqrt{6/\lambda_*}\,\|(I-P_D)\phi\|_2
+\le\sqrt{6/\lambda_*}\,2^{-R/2},
+\qquad \|(I-P_{B_R})\phi\|_2^2=2^{-R}.
+\tag{55.12a}
+$$
+
+Thus using the killed potential raises each finite amplitude energy, but changes its operator by norm at most $g\|\phi|D-\phi_D^0\|_\infty\to0$. The subsequent limit statements also hold for that expressly different family by this norm comparison. No finite claim for the common restriction is attributed to a newly solved field.
+

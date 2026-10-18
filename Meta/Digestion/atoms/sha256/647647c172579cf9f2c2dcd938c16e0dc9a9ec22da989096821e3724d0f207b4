@@ -1,0 +1,102 @@
+## 10. Source correspondence, precision, literature and unresolved bridges
+
+**Resource statement 10.1 (what is and is not minimized).** Theorem 7.5
+minimizes total retained Hilbert dimension for a live state-and-total-guard
+component, allowing arbitrary counted assistance. Theorem 9.3 gives the
+exact block profile capacity of an unassisted endpoint-factorized delayed
+command task. Their superficially similar factors of three have different
+premises; they cannot be multiplied or combined without a new common-task
+proof. Neither is the complete observer minimum of Definition 1.3.
+
+For the lattice, rational $c$ gives a finite description of $h$ and all
+integer request arithmetic. The working label uses
+$\lceil\log_2M\rceil$ bits in a binary implementation; (QC.42)'s
+bit inequality is attained by qutrit blocks when $M$ is a power of two.
+Request indices, counters, policy state, clocks and all variable archives
+are separately included when retained. For each finite delayed catalogue,
+$C_j=j/(N+1)$ has a finite rational description; its source-dependent
+command setting must cross retention through $\mathcal B$. It cannot
+survive for free as an installed phase dial or a timing channel.
+
+The rational examples have finite algebraic descriptions of the support
+basis and compression isometries, and finite symbolic descriptions of
+their phase gates. Exact real calibration, exact clocks, exact gate
+implementation and the canonical exact-time recorder remain declared
+ideal services. An arbitrary real calibration parameter or waveform need
+not have a finite effective description. Programme length, arithmetic
+precision, sensing, preparation, acquisition, waveform generation, gate
+synthesis and physical hardware are distinct resources; none is priced by
+$D$ or the capacity formula. The four-state delayed-source witness has
+duration five, height speed at most $1/16$, phase speed at most $8\pi$,
+phase variation at most $18\pi$ and preparation live probability $1/3$.
+This probability is not a repeat-until-success resource.
+
+All new bounds are exact. No approximate guard, finite-noise programming
+rate, finite effective implementation of an arbitrary real waveform or
+unbounded-horizon error guarantee is derived from exact orthogonality.
+Every finite execution keeps its actual growing archive. A finite live
+component does not imply a forever finite-state predictor.
+
+**Source statement 10.2 (precise suppliers and consumers).** The following
+references specify the source/action/record/continuation correspondence at
+the immutable revision named in Convention 7.1.
+
+| Supplier | Used content and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible` and actual rectangle realization supply the positive original source. The Scribe's all-signed-sector application supplies the real lifts used in Propositions 7.2 and 4.3. A geometric path is not a physical sensor or actuator. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Both original regularity alternatives, finite and zero durations, unchanged prefixes, matching heights, translated real tails and additive integrals. No unknown absolute past lift is supplied to a controller. |
+| [Probability-phase transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §§9.1–9.2 | Actual common relative-command domains and chronological action. Definition 7.3 explicitly adds a total domain classifier; that service does not follow from the partial operation. The requests in §9 are legal at the common known height. |
+| This volume §§2–4; [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§5.2, 9–15 | Exact five-labelled qutrit CP correspondence, the four-state reachable rigidity certificate, canonical survival/absorption and matched joint finite continuation are credited. Theorem 7.5 instead counts simultaneous height separation and output span; Theorem 9.3 prices a received pending command with arbitrary joint encoders. |
+| [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2–9, 11; [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md), §§3, 7–8 | Existing finite-query limits and conditional finite-precision certificates. SCI Proposition 8.4 consumes an actually delivered certificate and an exact matching height, with the full joint boundary retained. The present known-anchor generator supplies its own restricted exact height label; it neither constructs SCI's sampler nor proves its extra joint kernel (SC.23). |
+| [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§3–6 | Actual same-event retention and finite-bin/exact-time distinctions. Their full-archive obstruction remains; a live dimension of $3M$ or a pending-command capacity is not an exact timestamp capacity. |
+| [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), §§3–9 | Its calibrated history-correlated helper is an additional endpoint/checkpoint service. Theorem 7.5 counts all such accessible assistance if present; Theorem 9.3 does not admit that assisted input unless its endpoint factorization is separately established. Return on success gives no unchanged helper on failure. |
+| [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18; [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Same coherent source/common port, aligned acquired records, known nonzero amplitudes and record overlap, actual joint source/epoch image, executable domains/routes, full rejections/failures and compatible updates. Propositions 8.3 and 9.6 preserve supplied joint fields in their restricted tasks. They do not construct the common acquisition image or the individual four-view maps required by these consumers. |
+
+**Literature statement 10.3 (mature ingredients and limits of transfer).**
+
+| Primary source and version | Checked statement and actual use |
+| --- | --- |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | Distinct deterministic exact unitary programmes on arbitrary data require orthogonal programme vectors. Its input is product data/program. That premise alone does not cover Definition 9.2's arbitrary joint encoder; (QC.52)–(QC.54) prove the needed conclusion directly. No programme or data acquisition service is imported. |
+| E. Knill and R. Laflamme, [*A Theory of Quantum Error-Correcting Codes*, quant-ph/9604034v1](https://arxiv.org/html/quant-ph/9604034v1), Theorems 3.1–3.2, Eqs. (19)–(20) | Exact recovery has scalar composite Kraus operators and scalar error products on the code. This is the mature reversibility mechanism in (QC.53)–(QC.54). Here the scalar identities are derived from the rank-one Choi matrices with all encoder branches included; an individual branch is not incorrectly assumed TP. |
+| M. Sedlák et al., [*Storage and retrieval of two unknown unitary channels*, 2410.23376v2](https://arxiv.org/html/2410.23376v2), §II and Proposition 1 | The storage phase has $n$ uses of an unknown unitary from two alternatives; retrieval receives its stored state and fresh data as a tensor product. These are different source/access premises from one retained original specimen and a received classical command. No discrimination, success or acquisition cost from that task is transferred. |
+
+Effect-support separation, Stinespring dilation, pure-output span arguments,
+rank-one Choi positivity, nonorthogonal-state discrimination and controlled
+CP operations are `literature-attested` mature mathematics. The additional
+source-specific content is the joint $3M$ total-guard bound with its actual
+multi-height witness and known-anchor realization, and the sharp
+sum-of-floors capacity with forced nondisturbing command read for arbitrary
+joint encoders on the actual four-state source. These are `repo-derived`
+ordinary deductions, not new kernel certificates or worldwide priority
+claims. The inspected primary sources and committed suppliers do not supply
+the missing joint acquired observer; this bounded comparison proves neither
+its impossibility nor an exhaustive absence in the literature.
+
+**Boundary statement 10.4 (the remaining same-source relation).** An
+arbitrary unknown original past still requires an actually obtained and
+certified joint record of whatever domain, calibration, clock/reference,
+source/epoch, archive and controller information its selector reads.
+Every legal selected operation and recorded update must have its complete
+success/failure successor in the same actual running image. A whole-law
+inverse, equal separate marginals, a supplied helper or an abstract causal
+network representation does not construct that acquisition.
+
+Theorem 7.5 obstructs a proposed finite exact total-domain guard, with its
+extra guard premise explicit. It leaves promised-legal restricted menus
+open. Theorem 9.3 prices retention after actual command reception under
+its unassisted factorization. It leaves history-assisted inputs outside that
+factorization open. The restricted positive constructions use known source
+anchors or already received commands and calibrated ideal gates. They do
+not acquire unknown past height, phase lift, waveform, helper overlap or
+whole probability law. The full canonical event archive is separately
+retained and counted; a terminal pure-family task is not substituted for
+the exact-time/five-mode task.
+
+Full space/time/boundary/memory recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality and the independent fixed-Hamiltonian
+quantum minimax retain their original source and operation obligations.
+No cross-model sensor or resource map from the mixed-state, lattice,
+TwoClock, preparer/reader or static arithmetic models is established here.
+Physical realization, calibration acquisition, approximate delayed
+programming and a fully acquired closed observer remain unresolved.
+

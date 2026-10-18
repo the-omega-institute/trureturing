@@ -1,0 +1,10 @@
+**Convention 9.5 (separate resource coordinates).** These preparations
+replace old acquisition; they do not preserve its cost. Public finite
+table generation, installation, membership work and temporary buffers,
+post-request workspace, submitted address construction, final predictor,
+count representation and all declared access services remain separate
+resources. A factor predictor $(b,c)$ has $0\le b\le2D$ and
+$c\in\{0,1\}$, so $\lceil\log_2(2D+1)\rceil+1$ bits suffice
+for that factor alone. Padding and access isolation do not establish
+physical erasure, timing, authentication or free total efficiency.
+

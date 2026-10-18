@@ -1,0 +1,15 @@
+**16**(2), 285--296 (1966), Theorem 1.2 on page 287 and the
+remarks on page 288, give precisely the natural-number sentence
+decision and the inequality/universal-quantifier conventions
+used in (NRF.15)--(NRF.16).
+This Presburger decision result is literature-attested. Finite
+Boolean distribution, finite-box minimization and the
+finite-dimensional well-quasi-order argument are standard
+methods, included inside the native extraction proof. Their
+effective native application consumes Theorem 4.1's decision
+on every mixed box, including its negative answers.
+The executed-length stopping bridge, the composed complete-state
+frontier and the zero-weight native threshold construction are
+repo-derived ordinary deductions at these hypotheses. They
+assert no literature-wide novelty or priority.
+

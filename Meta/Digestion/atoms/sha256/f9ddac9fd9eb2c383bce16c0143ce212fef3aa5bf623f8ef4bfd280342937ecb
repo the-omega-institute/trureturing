@@ -1,0 +1,82 @@
+**Lemma 43.1 (uniform occupation concentration).** For any entry
+
+$$
+f_\kappa=c_{\kappa,i}c_{\kappa,j}-(M_\kappa)_{ij},
+\qquad \pi(f_\kappa)=0,
+\tag{43.1}
+$$
+
+there is one constant $C$ such that, under either law (41.7), for
+every deterministic interval $[a,a+L_1]\subset[0,\tau]$,
+
+$$
+\mathbb P_{g,\tau}\left(
+\left|\int_a^{a+L_1}f_\kappa(K_r)dr\right|
+>C\sqrt{L_1 x}\right)\le Ce^{-x}\quad(L_1\ge1,\ x\ge1),
+\tag{43.2}
+$$
+
+and $\mathbb E_{g,\tau}|\int_a^{a+L_1}f_\kappa|^2\le C L_1$
+when $L_1\ge1$. When $L_1<1$ the integral is deterministically
+bounded by $F L_1$, with $F$ a common supremum bound on (43.1).
+These assertions hold for $\tau$ sufficiently large as in (41.8),
+uniformly in all the initial states and parameters above.
+
+Proof. First work under Q. Contraction for $t<1$ and (41.3) for
+$t\ge1$ give $\|Q_t f_\kappa\|_\infty\le C e^{-\gamma t}$ for all
+$t\ge0$, increasing $C$ on the first unit of time. Hence
+
+$$
+u_f=\int_0^\infty Q_t f_\kappa\,dt,\qquad
+\|u_f\|_\infty\le U,\qquad
+Q_su_f-u_f=-\int_0^s Q_t f_\kappa\,dt.
+\tag{43.3}
+$$
+
+Absolute integrability justifies moving the semigroup through the
+integral. The process
+$N_t=u_f(K_t)-u_f(K_0)+\int_0^t f_\kappa(K_r)dr$ is a martingale:
+the conditional mean of its increment over $[t,t+s]$ is the last
+identity in (43.3) plus its opposite. This needs no differentiability
+of $u_f$. Any increment over a time span at most one has absolute
+value at most $B=2U+F$.
+
+Here is the bounded-increment estimate used in the proof. If $D$ is
+conditionally centered and lies in $[-B,B]$, the convex chord of
+$e^{\theta x}$ on that interval gives
+$\mathbb E(e^{\theta D}\mid\mathcal F)\le\cosh(\theta B)
+\le e^{\theta^2B^2/2}$. The second inequality follows by integrating
+$\tanh v\le v$ for $v\ge0$ and using symmetry. Iteration over $n$
+martingale increments and Markov's inequality give
+
+$$
+\mathbb P\left(\left|\sum_{j=1}^nD_j\right|>v\right)
+\le2\exp\left[-\frac{v^2}{2nB^2}\right],
+\tag{43.4}
+$$
+
+using $\theta=v/(nB^2)$ on each one-sided tail. The same argument
+works conditionally on the filtration at the start of the interval.
+Subdivide $[a,a+L_1]$ into $n=\lceil L_1\rceil$ parts of length at
+most one. Its occupation integral differs from the martingale sum by
+at most $2U$. For $L_1\ge1$ and $x\ge1$, (43.4) and
+$n\le2L_1$ give (43.2) under Q after increasing $C$.
+
+Under (41.7), split the occupation interval at $\tau-1$. Its part
+before this time is measurable at a prefix with density bounded by
+(41.8). Its remaining part has length at most one and absolute
+integral at most $F$. The early part uses at most $L_1+1\le2L_1$
+martingale increments when $L_1\ge1$, even if that early part itself
+has length below one. Applying (43.4), multiplying its probability
+bound by the prefix-density constant, and absorbing $2U+F$ proves
+(43.2) for both laws. An empty early part is covered by the
+deterministic final-unit bound. No full-horizon density bound is used.
+
+Finally, if $Y$ denotes the integral, integrate
+$\mathbb E|Y|^2=\int_0^\infty2v\mathbb P(|Y|>v)dv$.
+The part $v\le C\sqrt{L_1}$ contributes at most $C^2L_1$; in the
+rest substitute $v=C\sqrt{L_1x}$ in (43.2), obtaining at most
+$C'L_1\int_1^\infty e^{-x}dx$. This proves the second moment.
+For $L_1<1$ boundedness of $f_\kappa$ proves the last assertion.
+$\square$
+

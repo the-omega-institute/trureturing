@@ -1,0 +1,10 @@
+**Definition 1.1 (the original source and observation).** Let $\mathcal T$ be the nonempty finite ordered full binary trees with leaf labels $\alpha,\beta$:
+
+$$
+T ::= \alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+An address is a finite word $q\in\{L,R\}^*$; the empty word $\varepsilon$ addresses the root. Every address is a legal request, including addresses not present in the tree. The truthful reply $r_T(q)$ is $\alpha$ or $\beta$ at a leaf, $\mathsf{branch}$ at a branch, and $\mathsf{absent}$ when navigation leaves the tree. Thus a nonempty suffix below a leaf always gives $\mathsf{absent}$. Write $\operatorname{Leaf}(T)$ and $\operatorname{Pos}(T)$ for its actual leaf and node addresses, and $m(T)=|\operatorname{Leaf}(T)|$.
+
+The source is fixed throughout a run. A request neither changes it nor supplies a coordinate, subtree, leaf count, shape, identity tag or event time. These are the native definitions `Source = FreeMagma Bool` in [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) and `Address`, `Reply`, `readout`, `leaves`, `nodes` in [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean); `true` labels $\alpha$ and `false` labels $\beta$.
+

@@ -1,0 +1,14 @@
+**Proposition 2.5 (Density and all endpoints).** Every stationary visible order-$m$ law, even an auxiliary law with zero cylinders, satisfies
+
+$$
+\begin{aligned}
+\Phi_n(Q_n)&=(n-2m)D_m(Q)+E_n,\quad 0\le E_n\le m/2 &&(n\ge2m+1),\\
+\bigl|\Phi_n(Q_n)-nD_m(Q)\bigr|&\le m/2 &&(n\ge1).
+\end{aligned}
+\tag{2.8}
+$$
+
+For $n\ge2m+1$, $E_n$ is exactly the sum of the original coordinate contributions at $1,\ldots,m,n-m+1,\ldots,n$. In particular $d(Q)=D_m(Q)$ exists and $d(Q)\le c_\star$.
+
+Proof. Lemma 2.4 gives the $n-2m$ interior terms. Lemma 2.3 bounds each remaining term by $1/4$, so $E_n\in[0,m/2]$. Applying that lemma to the central coordinate at length $2m+1$ also gives $D_m(Q)\in[0,1/4]$. Thus $E_n-2mD_m(Q)\in[-m/2,m/2]$. If $n\le2m$, both $\Phi_n(Q_n)$ and $nD_m(Q)$ lie in $[0,n/4]$, giving the same remainder bound. Dividing by $n$ proves existence, including along $n=3N$. Finally $\Phi_n(Q_n)\le\kappa_n$ by (1.2), so the growth limit proves the upper bound. $\square$
+

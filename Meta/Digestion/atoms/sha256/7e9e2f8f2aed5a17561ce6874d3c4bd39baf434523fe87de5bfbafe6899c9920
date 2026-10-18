@@ -1,0 +1,104 @@
+**Theorem 4.3 (A legal thirty-five-flag full-marginal separation).** The
+point
+
+$$
+x_* =3k(a_*,a_*)+k(d,u_+)+k(d,u_-)
+\tag{4.7}
+$$
+
+belongs to $\mathcal F$ and has $\Phi(x_*)=-1/2$. It is realized
+by one fixed legal scalar port with thirty-five nonzero rank-one
+composite branches. In particular,
+
+$$
+\mathcal K_\partial\cap\{M^T\tau=\tau\}
+\ \subsetneq\ \mathcal K\cap\{M^T\tau=\tau\}.
+\tag{4.8}
+$$
+
+Every real-product generator decomposition of $x_*$ contains an
+atom in which both factors have all three populations nonzero.
+
+Proof. Define the joint population matrix
+$\Lambda_{ij}=\sqrt{n_in_j}M_{ij}$. Direct substitution in (1.7)
+gives for (4.7)
+
+$$
+\Lambda_*=
+\begin{pmatrix}
+1/3&4/3&4/3\\
+1/3&1/3&1/3\\
+1/3&1/3&1/3
+\end{pmatrix},\qquad
+\eta_*=(1/3,1/3,1/12,1/12,1/6,1/6).
+\tag{4.9}
+$$
+
+The three column sums of $\Lambda_*$ are $(1,2,2)$, exactly
+$M_*^T\tau=\tau$. More explicitly,
+$(M_*^T\tau)_j=(\sum_i\Lambda_{*ij})/\sqrt{n_j}=\sqrt{n_j}$.
+This is the whole normalized Choi marginal $I_5/5$, not just its
+trace. By Theorem 4.2, the first term in (4.7) has $\Phi=-1/2$;
+the two disjoint-sector terms have $\Phi=0$. Thus $\Phi(x_*)=-1/2$.
+
+Here is a finite original port realizing exactly that point. Put
+$\theta_k=2\pi k/5$ and
+$w_\pm(\theta)=\cos\theta\,u_\pm+\sin\theta\,v_\pm$.
+For the following disjoint flag families use unit preparations
+$a_f$, unit measurements $b_f$ and weights $c_f$:
+
+$$
+\begin{aligned}
+f=(\mathrm A,k,l):\quad
+a_f=b_f&=\frac{d+w_+(\theta_k)+w_-(\theta_l)}{\sqrt3},
+&c_f&=3/25,&0\le k,l&<5,\\
+f=(\mathrm P,k):\quad
+a_f&=d,\quad b_f=w_+(\theta_k),
+&c_f&=1/5,&0\le k&<5,\\
+f=(\mathrm M,l):\quad
+a_f&=d,\quad b_f=w_-(\theta_l),
+&c_f&=1/5,&0\le l&<5.
+\end{aligned}
+\tag{4.10}
+$$
+
+The twenty-five-point rule (2.8) identifies the first family with
+$3k(a_*,a_*)$. The two other families have constant preparation
+projector and a quadratic measurement projector. Their five-point
+circle sums equal their full joint averages, giving $k(d,u_+)$
+and $k(d,u_-)$ respectively. Therefore (4.10) realizes the entire
+same Choi matrix (1.9), not only the population data (4.9).
+In particular it is stationary and reflected on every complex input.
+
+For a direct TP check the measurement sums of the three families are
+
+$$
+\begin{aligned}
+\sum_{k,l}\frac3{25}b_{\mathrm A,k,l}b_{\mathrm A,k,l}^T
+ &=R_0+\tfrac12R_++\tfrac12R_-,\\
+\sum_k\frac15w_+(\theta_k)w_+(\theta_k)^T&=\tfrac12R_+,\\
+\sum_l\frac15w_-(\theta_l)w_-(\theta_l)^T&=\tfrac12R_-.
+\end{aligned}
+\tag{4.11}
+$$
+
+The zero first circle moments remove the cross terms; the second
+moments on each plane are $R_\pm/2$. Their sum in (4.11) is
+$I_5$. Use exactly (2.9) with these thirty-five flags.
+Each $R_f^\dagger R_f=1$ and
+$\sum_fB_f^\dagger B_f=I_5$, proving encoder and whole-block
+decoder TP. Complete positivity holds on all reference extensions
+by the sandwich argument. The composite matrices
+$\sqrt{c_f}Da_fb_f^TD^\dagger$ are all nonzero of rank one.
+No flag is exposed after decoding.
+
+Every legal CPTP channel has $0\preceq S^\dagger(\Pi_J)\preceq I$
+for every event. Hence $-I\preceq H_J(x_*)\preceq I$ for all
+fifteen events. Thus the separated point belongs also to the full
+joint event/marginal feasible problem at threshold $1$.
+No unphysical population relaxation is responsible for (4.8).
+
+If $x_*$ were a sum of only boundary atoms, Theorem 4.2 would
+give $\Phi(x_*)\ge0$. This contradiction proves (4.8) and the
+assertion about every generator decomposition. $\square$
+

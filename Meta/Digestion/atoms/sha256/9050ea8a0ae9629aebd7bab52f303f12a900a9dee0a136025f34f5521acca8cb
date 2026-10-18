@@ -1,0 +1,65 @@
+**Proposition (separation of the two higher-layer phases).** If
+\(k\ge2\) and \(n=q^k\ge16\), then
+\[
+ \tau_{q,k}<3n/4.
+\tag{EL.2}
+\]
+Consequently, for \(t\ge243\),
+\[
+ t<n\le B_t\ \Longrightarrow\ \tau_{q,k}<t,
+ \qquad
+ t\le\tau_{q,k}\le B_t\ \Longrightarrow\ n>B_t.
+\tag{EL.3}
+\]
+On an original selected edge, every higher reference atom in the
+forward kernel is therefore already occupied in that edge's literal
+\(U\); every first-layer reference prime in \((t,B_t]\) is absent
+from \(U\).
+
+*Proof.* Since
+\(S+1=(q^{k+1}-1)/(q-1)<nq/(q-1)\),
+\[
+ r_{q,k}>\frac{k(1-1/q)}{n\log n}.
+\]
+The size restriction gives \(k(1-1/q)\ge8/5\): for \(k\ge4\)
+it is at least 2; for \(k=3\) it excludes \(q=2\); for \(k=2\)
+it forces \(q\ge5\). Also \(n\ge16>(4/3)^6\), whence
+\(6\log(3n/4)>5\log n\). Thus
+\[
+ r_{q,k}>\frac8{5n\log n}
+ >\frac1{(3n/4)\log(3n/4)}=\lambda(3n/4),
+\]
+which proves (EL.2). For \(t\ge3^5\),
+\(H_t\le t/3\) and \(B_t\le4t/3\). These inequalities prove
+both implications in (EL.3), including their strict endpoints.
+Strict occupation in the edge's \(U\) is exactly \(\tau<t\).
+For a prime \(q>t\), (EL.1) gives \(\tau_{q,1}>t\), so its
+first layer is absent. \(\square\)
+
+For the actual atom use
+\[
+ k_t^{\rm str}(x)=k_t(x)+b(t)\mathbf1_{x=t}.
+\]
+This keeps the initially tied actual activation, whereas the reference
+atom at \(t\) has zero weight. Both terminal weights vanish. By (EL.3),
+the two terms of
+\(z_{q,k}(t)=h_q[k_t^{\rm str}(\tau_{q,k})-k_t(q^k)]\)
+cannot both be nonzero for \(t\ge243\). Hence, layer by layer,
+\[
+ (z_{q,k})_-=h_qk_t(q^k),\qquad
+ (z_{q,k})_+=h_qk_t^{\rm str}(\tau_{q,k})\quad(k\ge2).
+\tag{EL.4}
+\]
+These identities concern the parts of each response, not the parts of
+the sum. Integrating over the complete \(S_X\) gives the reference and
+actual higher-layer sums
+\[
+ H_{\rm ref}=\sum_{q,k\ge2}h_q\mathcal W(q^k),\qquad
+ H_{\rm act}=\sum_{q,k\ge2}h_q\mathcal W(\tau_{q,k}).
+\]
+Initial ties form a finite set of centers and have zero integration
+measure. All contributing layers lie in one finite support: if
+\(\tau_{q,k}\le2\mathcal R\), then
+\(q^k\log q<2\mathcal R\log(2\mathcal R)\), since
+\(r_{q,k}<1/(q^k\log q)\).
+

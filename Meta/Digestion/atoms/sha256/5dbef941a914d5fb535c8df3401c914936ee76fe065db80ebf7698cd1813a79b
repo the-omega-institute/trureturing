@@ -1,0 +1,86 @@
+**Lemma 10.2 (sixth-root identities).** Define
+
+$$
+\begin{aligned}
+N_d(k)&=(2160-45d)k^2+(48+11d)k+36d-864,\\
+p_4(k,d)&=\frac{3d-144}{2}k^2+\frac{624-9d}{10}k
+                                      +\frac{48-2d}{5},\\
+p_5(k,d)&=2(d-48)k^2+\frac{216-3d}{5}k+\frac{72-3d}{5},\\
+p_7(k,d)&=6(48-d)k^2+(d-72)k+2d-48.
+\end{aligned}
+\tag{10.3}
+$$
+
+Every world of $\mathcal Z_6(d)$ satisfies
+
+$$
+10d\ell k(k+1)=N_d(k),\qquad
+f(i)=\frac{p_i(k,d)}{\ell k(k+1)}\quad(i=4,5,7).
+\tag{10.4}
+$$
+
+Proof. Its samples at zero through three are
+$-d,(24-d)/(k\ell),(48-d)/\ell,(312/5-d)/((k+1)\ell)$.
+The clock-six row of (7.5) is zero; clearing the positive
+$\ell k(k+1)$ gives the first identity. Subtract respectively
+$1/10,2/5,2$ times that zero row from the rows for clocks four,
+five and seven. Their coefficient rows become respectively
+$(0,2/5,-3/2,2)$, $(0,3/5,-2,2)$ and $(0,-2,6,-5)$.
+Substituting the three samples and collecting powers of $k$ gives
+all three polynomials in (10.3). No degree-exactness assumption or
+sampled-gain cancellation occurs. ∎
+
+**Reused whole-class pair injection and its coordinate inverse.**
+[Zero-Sixth Pairs, Theorem 4.1](FIB_JMMJM_ZERO_SIXTH_PAIR_INJECTIVITY_AND_JOINT_COLLISION_OBSTRUCTIONS.md)
+already proves that both $(A,B)$ and $(A,D)$ are injective on
+the entire $\mathcal Z_6(d)\cap\mathcal F^{\ne0}_7(H)$ for every
+real $d$ and every fixed pair of late readings. These are reused
+results, with no cardinality, common-shape or common-source-sum
+restriction. The following gives the $AB$ inverse explicitly in
+the coordinates (10.2); it is not a new pair-injectivity claim.
+
+Since $A-d=f(7)((k+2)\ell-r)\ne0$, put
+
+$$
+L_*=2A-B-d=f(7)(k+1)\ell\ne0,\qquad
+m_*=(\zeta-d)/(A-d)=f(5)/f(7).
+\tag{10.5}
+$$
+
+Here $B-A=f(7)(\ell-r)$ by the trace of $MJQP$.
+Equations (10.4) give $L_*=p_7/k$, $m_*L_*=p_5/k$.
+The complete coefficient identity is
+
+$$
+3p_5+p_7=\frac{4(72-d)k+d-24}{5}.
+\tag{10.6}
+$$
+
+For $d\ne24$ it gives
+
+$$
+k=\frac{d-24}{5(3m_*+1)L_*-4(72-d)},\qquad
+5(3m_*+1)L_*-4(72-d)=\frac{d-24}{k}\ne0.
+\tag{10.7}
+$$
+
+For $d=24$, use instead $p_7/k=144k-48$, hence
+$k=(L_*+48)/144$. When $d\ne0$, recover
+$\ell=N_d(k)/(10dk(k+1))$, compute $f(7)$ by (10.4), and set
+
+$$
+r=(k+2)\ell-\frac{A-d}{f(7)}.
+\tag{10.8}
+$$
+
+Then recover $u,v$ and interpolate the first four gain samples.
+The $d=0$ stratum is recovered from the ancestor alone by Lemma
+11.1 below. In (10.5) $m_*=0$ is permitted: no division by the
+fifth gain occurs. Neither $d-48$ nor a leading coefficient nor
+a root separation is a divisor. These formulas recover the whole
+$(P,g,\delta)$ through (1.4); on legal inputs all remaining
+ancestor equations and determinant constraints hold by membership.
+They do not assert legality for arbitrary supplied scalar values.
+The pair inverse does not physically acquire both alternative
+terminal coordinates on one trajectory.
+

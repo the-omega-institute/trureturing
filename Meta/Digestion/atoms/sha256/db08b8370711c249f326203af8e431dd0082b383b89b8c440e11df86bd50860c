@@ -1,0 +1,85 @@
+**Theorem 20.3 (sharp reciprocal-unit loss bounds).** For every
+network and common law in Definition 20.1, $L(P)\ge0$ and
+
+$$
+\begin{aligned}
+\Delta(P)&=T(P)+L(P)-\tfrac12J_{\rm out}(P),\\
+\Delta(P)&\ge\tfrac14T(P)+L(P),\\
+\Delta(P)&\ge\tfrac16J_{\rm out}(P)+L(P).
+\end{aligned}
+\tag{COK.99}
+$$
+
+In particular $\Delta(P)=0$ if and only if $P$ factors across
+the reciprocal-pair/singleton units and every reciprocal pair
+satisfies
+
+$$
+I_P(O_i;B_i)=I_P(O_i;O_j)=I_P(O_j;B_j).
+\tag{COK.100}
+$$
+
+Dependence at zero chain loss can therefore remain only within
+reciprocal units, and both actual incoming projections must
+retain it. This characterizes already existing laws, including
+hard-zero supports; it is not a local-law extension theorem.
+
+Proof. On a reciprocal pair, $B_i$ is a projection of $O_j$ and
+$B_j$ a projection of $O_i$. Data processing gives
+$\iota_i,\iota_j\le M_{ij}$. Thus every summand of $L$ is
+nonnegative. Grouping the entropy sum by units gives
+
+$$
+\sum_iH(O_i)-H(s)=T(P)+\sum_{\{i,j\}\text{ reciprocal}}M_{ij}.
+$$
+
+Subtract half of the incoming mutual-information sum to obtain
+the exact identity in (COK.99).
+
+Contract each reciprocal pair in the ownership digraph and
+delete its two internal edges. No external edge enters a pair:
+each member already uses its one allowed outside owner inside
+that pair. A singleton still has indegree at most one. No
+parallel edge can remain: two edges from different members of
+a pair into one singleton would give that singleton two outside
+owners; edges into a pair are already excluded. Two opposite
+edges between singletons would instead have been contracted as
+a reciprocal pair. There are no loops. The underlying simple
+undirected graph is consequently a pseudoforest: in any connected
+component its directed indegree bound gives at most as many
+edges as vertices, hence at most one undirected cycle. Every
+cycle has length at least three.
+
+Keep every bridge, and from each cycle delete one of its edges
+uniformly. This finite auxiliary distribution is on forests;
+each edge is retained with probability at least $2/3$. For a
+nonreciprocal edge $j\to i$, data processing gives
+
+$$
+\iota_i\le I_P(O_{U(i)};O_{U(j)}).
+$$
+
+Apply Lemma 20.2 to each forest, and then average. All edge
+informations are nonnegative, so
+
+$$
+\frac23J_{\rm out}(P)\le T(P).
+\tag{COK.101}
+$$
+
+The exact identity now gives
+$\Delta-L\ge T-3T/4=T/4$ and
+$\Delta-L\ge(2/3)J_{\rm out}-J_{\rm out}/2
+=J_{\rm out}/6$, proving the two bounds.
+
+If $\Delta=0$, the first bound and nonnegativity force $T=L=0$.
+The relative entropy in (COK.96) then makes the units independent.
+Each nonreciprocal edge joins different units, so its $\iota_i$
+is zero. Vanishing of $L$ forces both nonnegative projection
+losses $M_{ij}-\iota_i$ and $M_{ij}-\iota_j$ to vanish on
+each pair, proving (COK.100). Conversely unit independence
+gives $T=J_{\rm out}=0$, and (COK.100) gives $L=0$; the exact
+identity gives $\Delta=0$. Isolated units, empty owned tuples
+and zero-probability assignments require no change to the
+argument. $\square$
+

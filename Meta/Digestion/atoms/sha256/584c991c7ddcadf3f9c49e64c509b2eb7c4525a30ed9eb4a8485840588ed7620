@@ -1,0 +1,11 @@
+**Theorem 28.10 (Constructive rates and safe inverses).** There are $p$-dependent constants $c_p,C_p,\varepsilon _0(p)>0$ such that, for $0<\varepsilon<\varepsilon _0(p)$, the following upper bounds hold.
+
+1. In sparse support, use $\widehat u=\operatorname{circ}((D_0/(p_1R_6))\widehat Z_s/\widehat R_s)$, where $\operatorname{circ}(z)=z/|z|$ for $z\ne0$ and $\operatorname{circ}(0)=1$. If $|\widehat R_s|<vD_0/2$, define $\widehat u=1$ without dividing. On the event (28.10), this branch is absent and $d_{\rm ch}\le\varepsilon$ whenever $\tau\le c_pv\varepsilon$. Hence
+
+$$
+N\le C_pv^{-2}\varepsilon^{-2}\log(C_p/\delta).
+\tag{28.11}
+$$
+
+2. In full unbalanced support, put $\kappa=|\sqrt{p_1p_2p_4}-p_1\sqrt{p_3}|>0$. The exact denominator obeys $|d_2|\ge\kappa$. Estimate $R/Z$, project $((\widehat R/\widehat Z)-1)/\eta$ to the circle, and set $\widehat u_1=\operatorname{circ}((\widehat C_3-p_1p_2-B\widehat u_2)/A)$. If $|\widehat Z|<v\kappa|d_1|/2$, define the projected second coordinate to be $1$ and continue with the same formula. On (28.10), this branch is absent and both chordal errors are at most $\varepsilon$ whenever $\tau\le c_pv\varepsilon$. Thus (28.11) holds for unbalanced full support.
+

@@ -1,0 +1,74 @@
+**Citation 5.1 (source-relative content and supplied mathematics).** The
+repository references below bind the same immutable source snapshot:
+
+- [PAIR](https://github.com/the-omega-institute/trureturing/blob/997e72a221b4754c0a3f96612a3fda0b78bc9593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md),
+  Sections 11, 13 and 18.
+- [REV](https://github.com/the-omega-institute/trureturing/blob/997e72a221b4754c0a3f96612a3fda0b78bc9593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_REVERSIBLE_COMMON_GENERATOR_CONSTRAINTS.md),
+  Sections 15--16, especially (15.13)--(15.20) and (16.21)--(16.26).
+- [PAID](https://github.com/the-omega-institute/trureturing/blob/997e72a221b4754c0a3f96612a3fda0b78bc9593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md),
+  Lemmas 2.1.1 and 14.1.
+- [RETURN](https://github.com/the-omega-institute/trureturing/blob/997e72a221b4754c0a3f96612a3fda0b78bc9593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md),
+  Sections 12--15.
+- [SURVIVAL](https://github.com/the-omega-institute/trureturing/blob/997e72a221b4754c0a3f96612a3fda0b78bc9593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RETURN_SURVIVAL_DISPERSION.md),
+  Proposition 3.3 and Corollary 5.3.
+
+Theorem 2.2 is a source-relative extension of the REV certificate to a
+properly larger, genuinely branching domain. Its additional argument is
+the finite-edge derivation (2.6)--(2.7) and recovery of all untested words
+from the original conditional equations at equality. Proposition 4.1
+shows that finite-feature determinism cannot be identified with full-law
+determinism, even under both complete boxes and represented original
+realization. Its arbitrary delay is unbounded across the family, while
+each member remains finite. These deductions are repo-derived; no global
+priority assertion is made.
+
+The scalar supermodularity, diagonal rational certificate, endpoint
+geometry, positive-word gap, complete-law compactness, common-row extraction
+and exact rational service convention are credited suppliers, not new
+standalone results. Finite-state branching and delayed distinguishability
+are mature constructions; their role here is to satisfy the original
+common-flow, all-coordinate-box and finite-feature equations simultaneously.
+
+The martingale-coupling equivalences of Leskelä--Vihola,
+*Conditional convex orders and measurable martingale couplings*,
+[Theorems 1.2--1.4](https://arxiv.org/html/1404.0999v3), apply to integrable
+finite-dimensional projections and conditional kernels. The bounded
+features in (2.1) meet that integrability premise. Those results do not
+turn positive conditional variance into zero, identify a sampled successor
+with its barycentre, or supply the original two complete-law flows.
+No new general convex-order or coupling theorem is claimed here.
+
+REV16 excludes $d_A+d_B=0$; the new exclusion concerns $V=0$ and includes
+the pairs (4.1)--(4.11) with $d_B>0$. PAIR18 instead assumes finite p
+support and an eventual exact averaged endpoint-root recurrence. No such
+recurrence is assumed here. In fact Proposition 4.1's finite-p full-box
+pairs cannot satisfy that recurrence: PAIR18 would force native endpoint
+descriptors, whereas all their emissions are strictly interior. RETURN15
+minimizes returned-cut configurations for a separately prescribed admissible
+finite triple; the analysis chain (2.5) is not asserted to equal an arbitrary
+such triple. No returned-cut or total-resource optimality follows.
+
+**Open problem 5.2 (the unrestricted original decision).** The question
+$j_c=0$ versus $j_c>0$ remains on all of $\mathfrak C$. A zero pair, if
+one exists, must have $V>0$ in addition to the published SURVIVAL signed
+same-path cancellation requirements. The new statement does not say which
+interface or which of the seven coordinates must have positive variance,
+does not assert that all seven do, and does not give a numerical variance
+floor or a positive unrestricted risk gap.
+
+For general branching, (1.5) gives conditional averages, while (2.6)
+requires the seven variances to vanish. Without that requirement, the
+finite product identity (2.7) is unavailable. Its lost signed correlations
+must coexist with both full boxes, both midpoint means, both depth-3
+configuration losses and both full residual equations on the same phase
+marginals. This is the remaining relation; independently optimized
+variances, marginals or path products do not answer it.
+
+A full compatible zero witness or a full-domain exclusion is still needed.
+PAIR11's finite atomicity criterion and PAIR13's one-sided finite-support
+results retain their own hypotheses. Exact represented attainment
+additionally needs permitted samplers for every resulting primitive.
+Neither the restricted minimum $j_7$ nor the represented family in
+Proposition 4.1 supplies an unrestricted finite attainer, a fixed COMPLETE
+optimum, a universal ML classification or a practical performance claim.
+

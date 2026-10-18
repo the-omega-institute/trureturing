@@ -1,0 +1,70 @@
+**Lemma 4.2 (Actual hull and global extension of lawful height maps).**
+Restrict a literal model to affine coordinates on
+$\mathscr H=\operatorname{aff}E(\mathcal M)$, of dimension $d$.
+Let $F=(1,E)^{\mathsf T}$ and
+$X=\operatorname{span}_{\mathbb R}F(\mathcal M)$, so $\dim X=d+1$.
+Every nonempty height-command domain spans $X$ in homogeneous
+coordinates. Its homogeneous map $T_a$ is invertible on $X$ and
+satisfies the local additive representation law. There is a
+representation $A_t$ of $(\mathbb R,+)$ on $X$ agreeing with $T_t$
+for $|t|<H$ and satisfying
+
+$$
+A_tF(k,\alpha,\beta)=F(k+t,\alpha,\beta)
+\quad(0<k,k+t<H).
+$$
+
+Proof. For the hull restriction choose an affine retraction from the
+ambient space to $\mathscr H$, and compose it after each ambient
+update restricted to $\mathscr H$. On a lawful encoded state the
+update already lands in the image, so the retraction changes no
+identity. Restrict the decoder as well. This is [M, Lemma 13.1]; it
+retains all offsets even if a partial ambient update did not preserve
+the hull on unused vectors.
+
+Homogenization makes each of these affine maps linear. Lemma 4.1,
+with $\sigma=(\alpha,\beta)$, implies that every nonempty open
+height interval spans $X$. For $|a|<H$, the lawful start interval is
+
+$$
+I_a=(\max\{0,-a\},\min\{H,H-a\}).
+$$
+
+The identity $T_{-a}T_aF=F$ holds at all its heights, and hence on
+$X$; the reverse order holds using $I_{-a}$. Thus $T_a^{-1}=T_{-a}$.
+In particular $T_0=I$ on $X$.
+
+If $|a|,|b|,|a+b|<H$, the spread of $\{0,a,a+b\}$ is
+$\max\{|a|,|b|,|a+b|\}<H$. The lawful triple
+$k,k+a,k+a+b$ therefore has a nonempty open interval of starting
+heights. On all those states,
+$T_bT_aF=T_{a+b}F$, so Lemma 4.1 gives the operator identity
+$T_bT_a=T_{a+b}$ on $X$. Interchanging $a,b$ gives commutation in
+the same range.
+
+For real $t$, choose a positive integer $n$ with $|t|/n<H$ and set
+$A_t=T_{t/n}^{\,n}$. To verify independence, let $m$ be another
+admissible subdivision. Repeated local addition inside
+$[-|t|/n,|t|/n]$ gives
+
+$$
+T_{t/n}=T_{t/(nm)}^{\,m},\qquad
+T_{t/m}=T_{t/(nm)}^{\,n}.
+$$
+
+Taking powers shows that both definitions of $A_t$ agree. If
+$|t|<H$, the same repeated local addition proves $A_t=T_t$.
+For arbitrary $t,u$, use a common sufficiently fine subdivision so
+that $t/n,u/n,(t+u)/n$ are in the local range. Their local maps
+commute and obey the sum law, whence
+
+$$
+A_{t+u}=T_{(t+u)/n}^{\,n}
+       =T_{t/n}^{\,n}T_{u/n}^{\,n}=A_tA_u.
+$$
+
+This is an extension of the forced lawful maps. For $|t|\ge H$
+the original probability domain is empty; its original assigned
+ambient map is neither constrained nor identified with $A_t$.
+$\square$
+

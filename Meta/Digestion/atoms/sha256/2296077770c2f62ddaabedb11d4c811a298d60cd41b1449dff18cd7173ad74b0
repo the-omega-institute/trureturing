@@ -1,0 +1,4 @@
+## 8. Complete obstruction for three initial lower-shear reads
+
+The notation $a=3$ below means the number of initial recorded endpoints whose upper-right entry is zero, including the initial read. It is independent of the source trace $a$ used earlier.
+

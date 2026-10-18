@@ -1,0 +1,90 @@
+**Lemma 2.2 (full finite-tree formulas for the graph action).** There are
+effective formulas in ordinary two-valued WS2S for the exact domain $V$
+and every reply in (GRS.7), at fixed epoch numerals and with arbitrary
+suffix-position variables. Source quantifiers range over complete finite
+trees with unrestricted continuations below every queried position.
+
+Proof. Use the infinite binary successor tree as the position universe.
+Encode a tree by three finite sets $Y_\alpha,Y_\beta,Y_{\mathsf b}$.
+Their union $T_Y$ must satisfy these finite-set formulas:
+
+- The sets are pairwise disjoint and $\varepsilon\in T_Y$.
+- Every nonroot member is a child of a member of $Y_{\mathsf b}$.
+- Every member of $Y_{\mathsf b}$ has both children in $T_Y$.
+- A member of $Y_\alpha\cup Y_\beta$ has neither child in $T_Y$.
+
+Call this conjunction $\mathsf{Tree}(Y)$. Following the unique parents
+of a position reaches the root; hence disconnected components are
+excluded. The child requirements give exactly a nonempty finite ordered
+full binary tree. Conversely its three actual label sets satisfy the
+formula. This is a bijective coding, without padding or extra nodes.
+
+For each fixed $k\ge0$, compute the two finite trees $\rho^k\alpha$ and
+$\rho^k\beta$. For $c\in\{\alpha,\beta,\mathsf b\}$ define
+
+$$
+\begin{aligned}
+\mathsf{Rep}_{k,c}(Y,z)\ \Longleftrightarrow\quad&
+ [c=\mathsf b\ \land\ z\in Y_{\mathsf b}]\\
+ &\lor\!\bigvee_{\substack{a\in\{\alpha,\beta\},\ w\in\operatorname{Pos}(\rho^k a)\\
+                          r_{\rho^k a}(w)=c}}
+   \exists v\ (v\in Y_a\land z=vw).
+\end{aligned}
+\tag{GRS.8}
+$$
+
+Every $w$ in this finite disjunction is a fixed literal word. Thus $vw$
+means a fixed composition of successor symbols, not concatenation of
+two variable words. Let $\mathsf{Rep}_{k,\bot}$ be the complement of the
+three nonabsent formulas. Original branch nodes are preserved by $\rho$;
+every other node of $\rho^k y$ lies in the finite image of a unique
+original leaf. These parts are disjoint. It follows that, on
+$\mathsf{Tree}(Y)$, precisely one reply formula is true and it equals
+$r_{\rho^k y}(z)$. This proves both directions, including absent and born
+positions, arbitrary tree shapes, $k=0$ and $z=\varepsilon$.
+
+For a physical address annotation write
+
+$$
+\begin{aligned}
+\mathsf G_{j,c}(Y;\varepsilon)&=[c=\mathsf b],\\
+\mathsf G_{j,c}(Y;L,z)&=\mathsf{Rep}_{j+1,c}(Y,z),\\
+\mathsf G_{j,c}(Y;R,z)&=\mathsf{Rep}_{j,c}(Y,z).
+\end{aligned}
+\tag{GRS.9}
+$$
+
+For any fixed word $p$, the notation $\mathsf G_{j,c}(Y;p)$ uses its
+unique root/first-letter factorization. The exact domain formula is
+
+$$
+\mathsf{Adm}(Y)=\mathsf{Tree}(Y)\land
+  \bigwedge_{(a,p,c)\in H_0}\mathsf G_{a,c}(Y;p).
+\tag{GRS.10}
+$$
+
+By Proposition 2.1 its satisfying assignments are exactly the entire
+original $U$, bijectively. Each retained literal, including a repeated
+or inconsistent one, participates. The old row and guarded acquired
+equality are satisfied by both inclusions of that proposition; they
+have not been relaxed in (GRS.10). There are not separate independently
+quantified left and right sources.
+
+The formula uses no source truncation at the markers. For example, when
+$z$ is an original branch, the whole of both descendant subtrees is
+still in $T_Y$, subject to the same literal conjunction. It can have
+arbitrary finite size. The position variables can also lie outside
+$T_Y$, where the leaf-image disjunction or its complement decides the
+reply. Marker support is not a bound on source support.
+
+The WS2S interfaces just used are finite-set membership, Boolean
+operations, quantification over positions and finite sets, and fixed
+successor compositions. They are precisely those in [MONA, §§7.1–7.2,
+printed pp. 39–40][MONA]. Its decidability theorem therefore applies to
+these formulas and their quantified Boolean combinations. Formula
+(GRS.8) reuses the fixed-epoch reply construction of [SRF, Lemma 1.4][SRF].
+The additional interpretation is (GRS.9)–(GRS.10) on one shared whole
+graph parameter, with the two different exponents forced by actual
+physical copies. No general closure for shifted subtree equality is
+being assumed. $\square$
+

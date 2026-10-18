@@ -1,0 +1,20 @@
+### 81.1. Original-channel theorem, including output leakage
+
+Let k>=2 be an integer and let F_(k,2):C^(2k)->C^k be the uniform qubit-fibre target,
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g| for f!=g.
+
+Fix the MC input and output encodings J_in and J_out. Let A,B:C^(2k)->C^k be arbitrary CPTP maps. If B admits a pure Stinespring environment of dimension d (equivalently, has Kraus rank at most d), then their unhalved, arbitrary-reference diamond error obeys
+
+    delta=||(A tensor B)J_in-J_out F_(k,2)||diamond
+         >= max{0,(k-d^2+1)/k}.                         (1)
+
+Necessarily d>=2: B's Stinespring isometry maps an input of dimension 2k into an output-environment space of dimension kd, so 2k<=kd. The environment dimension and output leakage of A are unrestricted. B need not be fibre-calibrated, either. The same bound holds with the parties exchanged. Consequently an actual local Kraus rank d must satisfy
+
+    d^2 >= k(1-delta)+1.                                (2)
+
+At k=4, the exact minimum over all original physical products with either local Kraus rank at most two is 1/4. The lower bound follows from (1), and the eta=3/4 tetrahedral-marker product of section 79 attains it with local Kraus ranks (4,2). This permits arbitrary nonconjugate local maps and arbitrary output leakage on both sides. Any product with error strictly below 1/4 must therefore have both local Kraus ranks at least three. It remains open whether such a product exists: the unrestricted four-fibre optimum is still only known to lie in [sqrt(3)-3/2,1/4].
+
+The proof below is direct on the original Stinespring records and a normalized reference input. It uses neither calibration nor an error-monotonicity assertion for unitary polar replacement.
+

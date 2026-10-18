@@ -1,0 +1,36 @@
+**Corollary 27.1 (actual transfers and the homogeneous witness).** Under
+the hypothesis of Theorem 26.3, define actual live transfers
+$T_{ij}=\langle i|\Lambda(|j\rangle\langle j|)|i\rangle$ and their
+credited values $\tau_{ij}=\langle ij|J_*|ij\rangle$ for all
+$i,j\in\{0,1,2\}$. In particular, put
+
+$$
+\begin{aligned}
+\tau_{01}&=(Q_*^{01})_{00},&\tau_{10}&=(Q_*^{01})_{11},\\
+\tau_{02}&=(Q_*^{02})_{00},&\tau_{20}&=(Q_*^{02})_{11},\\
+d(\epsilon)&=\max\{\delta_*-2C\sqrt\epsilon,0\}.
+\end{aligned}
+\tag{CG.221}
+$$
+
+All four $\tau_{ij}$ are finite and positive by (CG.165)–(CG.166), and
+
+$$
+\begin{aligned}
+|T_{ij}-\tau_{ij}|&\leq C\sqrt\epsilon
+ &&(i,j\in\{0,1,2\}),\\
+\operatorname{tr}(W_3J)&\geq\delta_*-2C\sqrt\epsilon.
+\end{aligned}
+\tag{CG.222}
+$$
+
+Proof. Every sign conjugation fixes every Choi diagonal entry, so
+$T_{ij}=\langle ij|\overline J|ij\rangle$. Pair the difference in
+(CG.206) with the rank-one projector $|ij\rangle\langle ij|$ of
+operator norm one. This bounds each actual transfer, without identifying
+the unaveraged live map. Also $W_3$ is sign invariant, so its pairing
+with $J$ equals its pairing with $\overline J$. Its eigenvalue on
+$|\Omega\rangle/\sqrt3$ is $1$, and its other eight eigenvalues are
+$-2$; thus $\|W_3\|_{\rm op}=2$. Apply the trace-pairing bound and
+$\operatorname{tr}(W_3J_*)=\delta_*$. $\square$
+

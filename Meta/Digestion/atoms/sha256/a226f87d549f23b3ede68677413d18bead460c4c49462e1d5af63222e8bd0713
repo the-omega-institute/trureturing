@@ -1,0 +1,67 @@
+**Definition 4.2 (exact M record orders and selection algorithm).** The
+eight lists, in order, are acquisition, old ingress, new ingress,
+installation, meter, cover/package, rights, frontier. Each cell record
+is $[U(\mathrm{port}),U(\mathrm{creation\ position}),\mathrm{eight\ tracks}]$.
+The complete body is the eight-field tuple whose field $i=0,\ldots,7$
+is $[U(i),\operatorname{List}(\mathrm{records}_i)]$. Finite stage/type tags
+use their first textual occurrence order in the native routine expansion;
+absent/present alternatives use 0/1 followed by the present framed value.
+Descriptor records retain their full actual fields, backing endpoints,
+creation/origin and seal/availability values. Records are grouped by
+structure, then physical port, then creation position, all in increasing
+order. An absent constructed relation has an explicit empty list, not
+an invented initialized record.
+
+Acquisition records follow the original template/predecessor/fence chain
+and include all backing referenced by its no-update rows in their original
+field order. Old ingress records follow AIF Definition 2.3's actual serial
+creation order. New ingress records follow the actual 38 append chain:
+ignore its initial F; complete binary frame/F blocks precede the current
+written block prefix. Installation records follow RCA Definition 14.2's
+physical field order, with the leading F excluded; partial fields retain
+their raw selected cells and actual construction stage. Its frozen binding
+distinguishes this prefix from later stages. Meter records are all its
+constructed cells in append order, including its current end and head
+tracks. Cover/package records follow their declared archive/bank-copy
+creation chains and include their raw selected partial material, not a
+fictional shorter sealed object. Rights are the existing designated
+token/availability slots with their absent/0/1 values. Frontier fields
+have the declared stage, heads/cursors and optional pending bit order.
+
+On a decoded raw record, implement this selection with ReadList/Nth, finite
+tag tests, Find, unary cancellation, Take and append. Traverse a referenced
+descriptor chain by its actual strictly earlier creation reference;
+deduplicate selected cells by their port/creation pair and finally emit
+them in the declared order. Each template identifies a finite number of
+field roles; repeated descriptors and referenced finite context blocks
+are list traversals, not a fixed-size snapshot. A current partial writer's
+finite PC label identifies which declared fields and cells have already
+been constructed. Reader-stage/marked-length scans delimit written data
+before including it as consumed ingress. Unwritten initialized cells are
+retained when they belong to selected raw backing, but are not consumed
+input bits. Copies preserve origins; their local construction positions
+remain distinct.
+
+These are operations on an acquired representation. They do not read the
+live meter to a moving end or confer a cross-owner graph traversal.
+
+There is an explicit finite way to resolve a selected object's construction
+role even when its descriptor or bank copy is incomplete. First run only
+the basic acquisition/ingress/installation/meter/frontier scans needed for
+PVC.6; they do not need any cover/package record. Replay those data for
+the counted number of rows by Theorem 4.4. Fold its fixed program locations,
+descriptor creations and backing-copy roles to mark the actual selected
+cover/package cells, including an EX-created but not-yet-written current
+cell. For bank backing, only fields designated as cover/package backing
+are selected, with their actual field boundaries and completed or partial
+version stage; unrelated register fields are excluded. Track those finite
+role cases by native textual call site and represented bank field index,
+using word lists for the unbounded marked occurrence set. The same fold
+records seal/copy relations and rights at their actual rows. Project the
+marked cells at the represented endpoint and emit the declared records.
+This fold is a finite algorithm on a derived history, not an added history
+coordinate of M. It compares no current live private state and consults
+no Image block. It removes any need to guess a partial object's meaning
+from unsealed payload bytes. The definition of M remains selection of
+the existing objects and relations by their actual construction roles.
+

@@ -1,0 +1,51 @@
+**Theorem 283.1 (An unrestricted interleaved input class).**
+Let $3<r<k<\ell<z\le L$, $s\ge0$, $0\le h\le79s/21$.
+For every full nonnegative input $y$ with
+
+$$
+\beta_1=-s,\quad\beta_3=s,\quad\beta_r=-s,\quad
+\beta_k=s,\quad\beta_\ell=h,\quad\beta_z=s,
+\qquad \beta_i=0\text{ otherwise},
+\tag{283.1}
+$$
+there is one full $V\ge0$ with
+
+$$
+\Delta_N(V)=0,\quad\sigma_H(Qy-QV)=s,\quad\Delta_O(y)\ge s.
+\tag{283.2}
+$$
+In particular every unit-$O$ input in this class has the single
+certificate $(V,\theta=s)$, including $s=0$ and $\theta=1$.
+For any such unit-$O$ input and the same complete feasible $\lambda$
+at the same $(b,e)\in H_N$
+with mass $M\ge1$, it satisfies $F_y(b,e)\le s\le1\le M$.
+
+**Proof.** Let $J_*=(3,r,k,\ell,z)$, $t=(s+h)/5$ and
+$V=tY^{\rm p}_{J_*}$; the natural realization gives the same payer.
+Every input in (283.1) necessarily has $K\ge\sum_i|\beta_i|=5s+h$,
+by classwise $|C_i-A_i|\le C_i+A_i$. Constant zero has excess
+$-\beta_1-\beta_2=s$ against this input's own anchor, proving
+$\Delta_O(y)\ge s$ without a support restriction.
+For decreasing $x=(b_3,b_r,b_k,b_\ell,b_z)$ the actual residual is
+
+$$
+F_{Qy-QV}=s+s(b_3-b_1)+a\cdot x-(K-46t/5)e,
+\quad a=(-t,-s-t,s-t,h-t,s-t).
+\tag{283.3}
+$$
+The successive sums of $a$ are $-t,-s-2t,-3t,h-4t,0$.
+They are nonpositive since $h\le79s/21<4s$ unless $s=h=0$.
+Abel summation gives $a\cdot x\le0$, and
+
+$$
+K-46t/5\ge\frac{79s-21h}{25}\ge0.
+$$
+Thus (283.3) is at most $s$ on the entire $H_L$. The auxiliary hull
+origin attains $s$, so the support is exactly $s$, with every spare
+$K$ and every weak endpoint included. It is a support test, not an
+original zero-cap positive-tail attainer. By 281.2 the single $V$ has
+zero $N$ cost. Unit-$O$ implies $s\le1$, proving the one-budget
+certificate, allowing nonzero zero-cost $V$ when $\theta=1$.
+Finally (280.2) for this same $V,\lambda$ and (283.3) give
+$F_y\le s$. No marginal or component optimizer is substituted. $\square$
+

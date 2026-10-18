@@ -1,0 +1,46 @@
+**定理 231.3（Sharp original family, all positive vanishing tails）。**
+Let $0<t\le1/2$, and let $a$ be any actual sequence satisfying
+
+$$
+a_1=\cdots=a_7=t,\qquad
+0<a_8\le5t/9,\qquad a_{n+1}\le a_n,\qquad a_n\longrightarrow0.
+$$
+
+For the separately selected marked targets on the original source
+and carrier, both original hard-two resource classes have attained
+optimal uniform TV error exactly $5t/9$. Equivalently, for every
+positive closed cap $\varepsilon$, either class is feasible exactly
+when $\varepsilon\ge5t/9$.
+
+证明。 Use one source-independent seed to select the whole table
+of 231.1 before replies. Its stopped execution observes only the
+first six addresses and outputs only labels $0,\ldots,7$; its $N$
+completion obtains the full selected pair and uses the same seed
+and output. The original interpretation of these labels and resources
+is specified in 236.1–236.3.
+
+Every actual first zero at most seven has the finite word law in
+231.2 and error exactly $5t/9$. Every actual first zero $n\ge8$
+has positive replies on all observed addresses and no possible
+output $n$. Its exact error is therefore
+
+$$
+\max\{1-p_{1^7}(0),a_n\}
+=\max\{5t/9,a_n\}=5t/9.
+$$
+
+This includes every allowed tail and every equality $a_n=5t/9$;
+it neither replaces the tail by zero nor introduces an infinite
+positive source. At this cap the strict active length is exactly
+seven, even though no table needs address seven.
+
+Conversely, every original $N$ or $O$ attainer at a positive cap
+$\varepsilon$ obeys 230.2 with $j_r=r+2$, hence
+$35t\le63\varepsilon$. No error smaller than $5t/9$ is possible:
+such an error would also meet some positive closed cap strictly
+between it and $5t/9$, contradicting that bound. In particular a
+zero-error attainer is excluded. The construction attains the lower
+bound, for each of the two classes, with uniform all-source/all-Borel
+error. No exact-law preservation is required of competing rules.
+$\square$
+

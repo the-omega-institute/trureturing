@@ -1,0 +1,10 @@
+**命题 5.3（数值后继无逆及规范轨道例外）。** 在 $C\ne0,\Delta>0$ 时，树
+
+$$
+t=\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle
+$$
+
+有初值 $CK$、零标签，故 $W_3(t,p)=(CK,0,0)$。零 cherry $\langle\alpha,\alpha\rangle$ 的记录为 $(0,0,0)$；两者经 $G$ 均到零。因此 $G$ 没有实际像上的逆。
+
+另在规范来源 $T_j=\rho^j\alpha$ 上，原结构关系为 $T_{j+2}=\langle T_{j+1},T_j\rangle$，所以对所有 $p$ 有 $E_p(T_{j+2})=E_p(T_{j+1})\times E_p(T_j)$。这个已知规范轨道的二值递推不延伸到全部树；命题5.2给了实际反例。它也没有赋予 Clifford 叶积的逆或六周期。
+

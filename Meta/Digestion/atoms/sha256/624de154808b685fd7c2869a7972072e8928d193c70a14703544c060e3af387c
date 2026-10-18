@@ -1,0 +1,130 @@
+**Proposition 6.2 (lawful exact supplied-table evaluation).** For one
+input $\mathcal I$ of Definition 6.1, the five boxes, $\eta,V,L_\Pi$ and
+the inequality (2.1) have a finite exact rational evaluation, except that
+$\sqrt V$ may be kept as a symbolic square root. When the five boxes hold,
+Theorem 2.1 applies to its actual own-law pair with total variation taken
+separately for each configuration and then averaged over the configuration
+law. No source Read or stochastic sample is required by this offline
+evaluation after the authenticated input has been supplied.
+
+Proof. With column vectors and $D=\operatorname{diag}(1-u)$,
+$Z=\operatorname{diag}(v)$, use the supplied same-update recursions
+
+$$
+H=DBZA,\qquad c=DB(\mathbf1-v),\qquad h_n=H^nc,
+\tag{6.2}
+$$
+
+and
+
+$$
+Q_x(w_{n,0})=(H^nu)_x,\quad Q_x(w_{n,1})=h_n(x),\quad
+W_y(\beta)=1-v_y,\quad W_y(\alpha w_{n,1})=(ZA h_n)_y.
+\tag{6.3}
+$$
+
+The identities $u+c+H\mathbf1=\mathbf1$ and
+$H\mathbf1\le\lambda\mathbf1$ prove normalization by telescoping and
+the geometric tail bounds. In particular there is no conditioning on
+completion. These are PAID's matrix evaluator, reused here.
+
+Push the two actual edge arrays forward as
+
+$$
+\Gamma_B=\sum_{x,y}\pi_xB_{xy}\delta_{(Q_x,W_y)},\qquad
+\Gamma_A=\sum_{y,x}\tau_yA_{yx}\delta_{(W_y,Q_x)}.
+\tag{6.4}
+$$
+
+Equations (6.1) give the common unweighted marginals. The complete
+same-update equations give both residual equations conditioned on the
+whole input descriptor. If multiple labels have the same own law, their
+outgoing mixtures all equal the same residual; grouping them preserves
+the conditional equations. This is the exact finite pushforward of
+[PAIR, §11; PAID, §16], not a new realization theorem.
+
+For the finite calculation form the row feature arrays
+
+$$
+f_x=(h_0(x),h_1(x),h_2(x)),\quad
+g_y=(1-v_y,(ZA h_0)_y,(ZA h_1)_y,(ZA h_2)_y).
+$$
+
+Then all quantities are given by finite sums:
+
+$$
+\begin{aligned}
+V_A&=\sum_{y,x}\tau_yA_{yx}\|f_x-(Af)_y\|^2,\\
+V_B&=\sum_{x,y}\pi_xB_{xy}\|g_y-(Bg)_x\|^2,\\
+m_p&=\pi(h_0+h_1+h_2),\qquad
+m_\beta=\tau(\mathbf1-v+ZA h_0),\\
+L_\Pi&=\frac12\sum_x\pi_x
+ \bigl(|e_x-e_R|+|h_3(x)-z_R|
+       +|e_x+h_3(x)-e_R-z_R|\bigr),
+\end{aligned}
+\tag{6.5}
+$$
+
+where $e=h_0+h_1+h_2$, $e_R=132025/262144$ and
+$z_R=84375/16777216$. The boxes test $h_0,h_2,h_3,ZA h_0,ZA h_1$
+on every positive row. The means give $\eta=|m_p-M_p|+
+\kappa|m_\beta-M_\beta|$. Thus every computation refers to the own laws
+of the same supplied installation. The finite variance identity, for
+example $V_A=\sum_x\pi_x\|f_x\|^2-\sum_y\tau_y\|(Af)_y\|^2$,
+is only a supplied alternative evaluator; the nonnegative formula (6.5)
+avoids subtractive certification issues.
+
+The complete program retains $C_0$ from initialization. Before the third
+latch it uses fair synthetic letters with the original updates. In the
+same update that writes the third record and latches it, it draws $x\sim\pi$
+independently of the source and acquired word, on every seed/record fibre.
+At fourth p it emits alpha with probability $u_x$; acquired or synthetic
+beta uses $B_{xy}$ and the original suspension block. At fourth suspension
+it emits alpha with probability $v_y$; acquired or synthetic alpha uses
+$A_{yx}$ and the original return block. Completing letters clear private
+labels and perform the original pendingStop transition. The sole matching
+Stop delivers; the delivered residual is empty. The same sampler kernels
+and the same original operation blocks are used in both modes. Sampler
+internal states retain conditional continuations of that same program.
+
+At every actual fourth-phase history, induction in (6.1) gives row $\pi$
+or $\tau$. Actual acquired letters do not reweight rows by synthetic
+emissions. At a history $h$ the target is
+$T_h^\mu=(I_{C_0(h)})_\#\sum_k\nu_h(k)P_{s,r_k}$, with $\nu_h$ the
+analysis posterior from all paid letters. The complete decoder is
+$(I_{C_0(h)})_\#Q_x$ or $(I_{C_0(h)})_\#W_y$. This identifies each
+configuration's law before averaging TV. PAID's positive finite
+paid-history approximation of each supported depth supplies
+
+$$
+R_{{\rm conf},p}(\mathcal I)
+ =\max_{k=1,2,3}\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r_k}),\quad
+R_{{\rm conf},\beta}(\mathcal I)
+ =\max_{k=1,2,3}\sum_y\tau_y\operatorname{TV}(W_y,P_{\beta,r_k}).
+\tag{6.6}
+$$
+
+For the upper inequalities use convexity in each common-history target;
+the reverse inequalities are supplied by the positive finite histories
+concentrating the source posterior. The rows are exactly stationary at
+each of those histories. All held records remain in their own renderers.
+The source implementation of the full law is also the interface of
+`NativeInstalledFullLaw.installed_configuration_identity`,
+`installed_first_block_recursion` and `installed_full_law`: an installed
+emitter uses the actual update on the same complete carrier, with lawful
+operations, full-event residuals, deterministic pending Stop and delivered
+law, and configuration-before-TV history transport. Those existing
+declarations are references; no new Lean application is asserted.
+
+Equation (6.5) needs $h_0,h_1,h_2,h_3$ only. Applying $H$ as successive
+$A,Z,B,D$ products avoids dense matrix multiplication. With
+$N=|X|$, $M=|Y|$, a direct implementation uses at most
+$100(NM+N+M)$ rational arithmetic and comparison operations and
+$O(NM+N+M)$ rational storage cells, including its input. Each coordinate
+is a finite expression of the supplied rational entries. Integer bit
+length, arithmetic work, input verification and output storage are charged
+separately; a rational operation is not a unit physical-time assertion.
+For checking (2.1), set $t=\rho_p+\delta_3/2-L_\Pi-C\eta$. If $t\le0$
+the check holds; otherwise it is the rational comparison $t^2\le C^2V$.
+This proves the evaluation claim without sampling. $\square$
+

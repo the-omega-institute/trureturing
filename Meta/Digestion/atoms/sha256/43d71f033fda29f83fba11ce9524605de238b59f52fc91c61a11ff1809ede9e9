@@ -1,0 +1,15 @@
+**定义 91.6（The complete dyadic INITIAL consumer）。** For every integer $d\ge4$, let $N=2^d$, $m=N+1$, $k=N+4$, $T=N+5$, and $A=\{0,3,4,\ldots,m\}$. It has $N$ phases with distinct labels $L_j$, $j\in A$. Choose distinct fresh $C,R$ outside these labels. On both free-value fibres set
+
+$$
+f(v,-j,s)=
+\begin{cases}
+L_j,&s<m,\ j\in A,\\
+C,&s<m,\ j\notin A,\\
+R,&m\le s<k,
+\end{cases}
+\qquad f(\bot)=L_\bot,\qquad F(w)=f(q_{\rm INITIAL}(w)).
+\tag{91.8}
+$$
+
+The independent $L_\bot$ is arbitrary, including possible coincidences. This is a full INITIAL pullback, with every original tail and both values specified. The arithmetic hypotheses hold: $\gcd(m,T)=\gcd(N+1,4)=1$ and $m+3=k<2m$.
+

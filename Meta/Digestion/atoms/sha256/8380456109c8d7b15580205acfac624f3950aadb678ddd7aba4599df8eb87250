@@ -1,0 +1,35 @@
+## 128. 反对易闭路、相干混合与测量次序
+
+本章的参数合同独立于第129章：$p\in[0,1]$、$q=1-p$，故 $p+q=1$，不含 $r$。先去掉支边和自环，考虑四态方形 $0,1,2,3$ 上的酉循环 $S$：
+$$
+ S|0,\psi\rangle=|1,a\psi\rangle,\quad
+ S|1,\psi\rangle=|2,c\psi\rangle,\quad
+ S|2,\psi\rangle=|3,a^\dagger\psi\rangle,\quad
+ S|3,\psi\rangle=|0,c^\dagger\psi\rangle.
+$$
+每个输入位置被送到不同的输出位置，内部算子又都酉，故 $S$ 保持任意输入的内积且满射，确为酉。从根 $0$ 返回的内部算子为 $c^\dagger a^\dagger ca=-I$，其他根的闭路算子与之共轭，故
+$$
+ S^4=-I.\tag{128.1}
+$$
+取 $p\in[0,1]$、$q=1-p$，并令
+$$
+ W_p=\sqrt p\,S+\sqrt q\,S^\dagger .
+$$
+由 $S^{-2}=-S^2$ 和 $p+q=1$，
+$$
+ W_p^\dagger W_p=I+\sqrt{pq}(S^2+S^{-2})=I.\tag{128.2}
+$$
+因此负的中心闭路相位使正振幅的两条交叉路径抵消。若把 (128.1) 改成 $S^4=I$，则一般得到 $I+2\sqrt{pq}\,S^2$，只有 $p=0$ 或 $q=0$ 时仍自动酉。
+
+从位置 $0$ 出发，
+$$
+ W_p^2=2\sqrt{pq}\,I+(p-q)S^2.\tag{128.3}
+$$
+从确定位置单步出发，正、反两个输出位置正交，概率分别为 $p,q$，与内部态无关。不在中间测量时，两步回到原位置的概率为 $4pq$，因为同一内部态的两条回返振幅相干相加。逐步测量使用同一个明确仪器
+$$
+ \mathcal J_j(\varrho)=\Pi_jW_p\varrho W_p^\dagger\Pi_j,
+ \qquad \Pi_j=|j\rangle\langle j|\otimes I_2,
+ \qquad \sum_j\mathcal J_j\text{ 为 CPTP}.
+$$
+每次实际记录位置后，再作用 $W_p$；正后反、反后正两条回返历史各有概率 $pq$，总和为 $2pq$。这项仪器权限和记录保留是新增条件。当 $p=q=\tfrac12$ 时 $W_p^2=I$，但逐步测量的两步回返概率仍为 $\tfrac12$。输出位置 $I$ 与 $S^2$ 不同，故这些概率对任意内部密度态都成立；单步的 $P$ 不决定多时刻相干。量子行走背景为 Mario Szegedy, [“Spectra of Quantized Walks and a $\sqrt{\delta\epsilon}$ rule”](https://arxiv.org/abs/quant-ph/0401053)。该文研究量子化二部行走、谱及相应搜索模型；本章的四态反对易闭路与测量次序结论由上述有限酉计算证明，不援引其搜索加速结论。
+

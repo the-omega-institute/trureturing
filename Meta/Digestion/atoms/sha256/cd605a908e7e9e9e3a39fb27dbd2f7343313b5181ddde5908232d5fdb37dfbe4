@@ -1,0 +1,64 @@
+**Proposition 17.2 (finite component domains).** The following bounded
+component families satisfy their displayed value/entry/count predicates.
+Their scope is local symbol/head or cell-codec interpretation; none is an
+execution of the complete compiled source/consumer graph.
+
+| Finite family | Exact finite result and limit |
+| --- | --- |
+| Two word registers, every binary value of length 0–2, all 18 empty/copy/cons/tail assignments, source/destination heads at L, midpoint or R; two alternating updates per case | 2,646 cases, 5,292 updates and new-descriptor base/length/ordinal comparisons agree, including self aliases, empty tails and nonempty destination arenas. 139,944 Home/Tail/LastBank/copy/Base/descriptor-count helper comparisons agree with their exact recurrences. This fixture checks symbol/head geometry and helper prices; it does not check complete ownership or seal-bit invariants. |
+| Native cell-list codec, ordinary heads at all eight cells of L,0,1,blank,sep,seal,F,R; meter read heads at all five positions, including append R | 760 local opcode cases agree between direct cell updates and framed-list updates; 91 illegal operations leave no executed successor. Sixteen legal cases explicitly place the meter read head on the append R. Boot boundary/control-bit, IN/WR, seal, token, output and ordinary extension cases are included. |
+| All 256 Boolean truth tables on all eight operand triples | 2,048 result-subfield cases agree, giving 2,808 total cell-codec cases with the previous family. Other latch fields are preserved. These are local primitive cases, not whole dynamic gate runs. |
+| Scratch sources 34 and 35, source word $U(n)$ for $0\le n\le12$, backwards offsets 0 and 1, nonempty target and metadata prefixes | All 52 staging cases copy $U(n)$ and construct its actual base/length/ordinal descriptor. Offset shifts caused by Base and ordinal construction are included. |
+| Frame lengths $0\le d\le40$ | All 41 separate-source/destination constructions produce $U(2d+4)$ and have exactly $8d+20$ body occurrences after their two positionings. |
+| Archival/native local codec, 0–3 rows and nine finite field patterns at each row count | All 36 framed row-list round trips recover the same seven-field row words, finite effect bits and initial-control data; their archival framing differs from the installation string. This checks the finite serialization convention, not the full expanded controller. |
+| All 63 binary control words of length 0–5 | All 1,158 post-row checks retain the old active table until DONE, preserve each actual written raw prefix and satisfy $4m+2$ for NEXT/IN/WRITE/ADVANCE/DONE. This checks the declared fresh-version boot schema, not a physical loader implementation. |
+| Channel payload lengths 0–20 and all three endpoint bases 0–2 | All 567 cases recover endpoint base and payload length from the correct staged descriptor; using staging's wire length instead is unequal in every case. Recopy after scratch reuse restores the correct counter. No ownership or complete consumer-run claim follows from this local codec check. |
+| ManifestPrefix, all 0–3-field lists over the 15 binary words of lengths 0–3, at every existing entry head | All 3,616 lists and 45,442 head cases return exactly their declared fields, preserve the source and descriptor bases, finish at R, and satisfy Lemma 13.2a's scalar and separate RD/ML/MR/CTL counts. Empty words and consecutive Fs are included. This checks native reader rows with abstract word-helper effects, not the expanded bank helpers. |
+| Manifest field/code/list wire codec, 63 binary code payloads of lengths 0–5, 31 old-frame lists of lengths 0–2 from the five fixed source tags, and eight empty/nonempty auxiliary-field masks | All 15,624 local cases preserve code field zero, its exact tag/length/payload with empty suffix, old-list order/cardinality, saved-head-table bytes and first descriptor base one. Another 126 code-frame cases, with zero or one old frame, distinguish the one-MR sentinel-reading entry from the specified two-MR entry. Arbitrary code payloads test framing, not canonical row validation or execution of $D_1$. |
+
+Proof. For the register family enumerate the seven words and finite
+assignment alternatives, perform the stated native scans/appends, and
+compare the new payload to the old-value assignment rule. The helper
+identities are the explicit RD/move recurrences; creation offsets are the
+old destination length and payload lengths exclude the new F. For the
+cell family enumerate head locations and native finite alternatives,
+apply Definition 12.4 to the framed cell records, and compare every cell,
+latch, token, finite control, receipt and tick/fee coordinate to its direct
+local rule. Out-of-bound moves and unavailable writes have no event. In
+particular the receipt preserves a meter read mark on the old R after
+converting that R to a receipt. The Boolean comparison selects the same
+one of eight table bits. For staging, the actual scratch-word order is
+that in §13, so the copied source and descriptor fields have the stated
+offsets; checking all displayed words gives their finite equalities. For
+length construction, four literal appends cost 12, each leading source 1
+costs RD, two three-row appends and MR, the terminal read costs 1, and
+0/sep/seal cost 7. Thus $12+8d+1+7=8d+20$, including $d=0$.
+For the codec family, ReadFrame/ReadList remove exactly the written outer
+framing and retain all seven field words and finite tag bits in order.
+For boot, $m$ repetitions of NEXT/IN/WRITE/ADVANCE precede the final
+NEXT/DONE; only WRITE changes the raw prefix and only DONE changes the
+active table. For channel records, cancel the first three unary fields
+of each selected staged descriptor, then decode its fourth as the payload
+length, distinct from the outer staged-frame length. These are precisely
+the stated finite predicates.
+
+For ManifestPrefix enumerate field tuples and actual entry heads on
+$L\mathsf Fw_0\mathsf F\cdots w_{s-1}\mathsf FR$. Execute Home and the
+two moves, then the displayed testing rows and moves; apply the explicit
+cons/reverse/list transformations as local word effects. Clobbering the
+read latch during each word helper leaves the result unchanged because
+FieldRead rereads and bit branches already selected their literal.
+Compare every result to the field tuple, its framed-list round trip and
+the opcode coordinates of Lemma 13.2a. The manifest codec family uses
+the five canonical finite source frames ReadE, Rho, empty-address TagRead,
+Left(alpha) and Right(beta), including the empty old-frame list 0. It
+varies the initialization/origin/head-table word emptiness independently.
+Frame parsing extracts exactly the supplied code word. With only one MR
+after Home the first field read is the sentinel F and emits an extra empty
+word; with two it reads the captured frame's first tag bit 1. This local
+trace applies in particular to $H=1,u=\alpha,j_A=0$, independently of
+the finite actual $\Delta(D_1)$ payload. The canonical code validator's
+success for the actual description is the ordinary argument in
+Proposition 14.3, not an output of these arbitrary-code checks. None of
+these local models executes all compiled helper, permission or seal rows. ∎
+

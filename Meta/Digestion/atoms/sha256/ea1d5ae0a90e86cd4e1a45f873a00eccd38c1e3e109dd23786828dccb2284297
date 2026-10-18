@@ -1,0 +1,17 @@
+**Corollary 3.2 (every late mean is strictly interior).** Every boxed
+compatible pair satisfying the original p midpoint obeys
+
+$$
+c_az_a^n<d_n<c_bz_b^n\qquad(n\ge4).
+\tag{3.3}
+$$
+
+In particular (3.3) holds on the original zero face for every allowed
+finite or countable prior, including a prior supported only at the two
+endpoints.
+
+**Proof.** The boxes give the weak inequalities. Either equality invokes
+Theorem 2.1. But the forced event value is
+$P_{p,a}(E_p)=C+\rho_p$ or $P_{p,b}(E_p)=C-\rho_p$, neither of which
+is $C$. $\square$
+

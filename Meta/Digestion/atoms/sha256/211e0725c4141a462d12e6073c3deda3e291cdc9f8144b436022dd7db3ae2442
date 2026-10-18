@@ -1,0 +1,22 @@
+**定理 10.10.1（结构曲率到观察差异的上界）。** 有
+
+$$
+\boxed{
+\|\pi(C(T_bT_a(s)))-\pi(C(T_aT_b(s)))\|
+\le L_\pi L_C\|\delta(s)\|.
+}
+$$
+
+**证明。**
+
+先由 $C$ 的 Lipschitz 性得到
+
+$$
+\|C(T_bT_a(s))-C(T_aT_b(s))\|
+\le L_C\|\delta(s)\|.
+$$
+
+再对 $\pi$ 使用 Lipschitz 性，合并两式即可。证毕。
+
+<a id="claim-10-10-2"></a>
+

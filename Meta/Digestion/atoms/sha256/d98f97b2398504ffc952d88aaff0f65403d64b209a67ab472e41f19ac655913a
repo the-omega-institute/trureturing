@@ -1,0 +1,29 @@
+**Definition 7.1 (A fixed positive form and its zero face).** Fix one
+triple $\mathfrak d=(C,y,\delta)$ of Definition 3.1 satisfying the
+global conditions of Theorem 3.2. All blocks, coefficients and kernels
+in this section refer to this same triple. Write
+$\Delta_2^\circ=\{p\in\Delta_2:p_0p_+p_->0\}$ and put
+
+$$
+\begin{gathered}
+\ell_{\mathfrak d}(M,\eta)
+=y^TM^T\tau-\langle C,M\rangle-\sum_\nu\delta_\nu\eta_\nu,\\
+\mathcal E_{\mathfrak d}
+=\{x\in\mathcal K:\ell_{\mathfrak d}(x)=0\},\qquad
+\mathcal E_{\mathfrak d,\partial}
+=\mathcal E_{\mathfrak d}\cap\mathcal K_\partial,\\
+\mathcal P_{\mathfrak d}
+=\{p\in\Delta_2^\circ:\mathscr F(p)=0\}.
+\end{gathered}
+\tag{7.1}
+$$
+
+For unit factors, (3.6) gives
+$\ell_{\mathfrak d}(k(a,b))=b^T\mathcal B_{\mathfrak d}(a)b$,
+since $\tau^Th(a)=1$. Thus $\ell_{\mathfrak d}$ is nonnegative
+on the whole cone, and $\mathcal E_{\mathfrak d}$ is its exposed
+zero face. The zero functional is allowed and gives the whole cone.
+No TP or event-multiplier realizability is assumed for an arbitrary
+$\mathfrak d$ here. In the application to Definition 5.1 both must
+be imposed separately.
+

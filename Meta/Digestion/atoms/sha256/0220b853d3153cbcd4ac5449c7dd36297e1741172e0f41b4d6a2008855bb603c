@@ -1,0 +1,4 @@
+**Corollary 3.2 (mirror stratum).** The corresponding theorem holds when every $(A_i)_{11}=1$.
+
+**Proof.** Apply Theorem 3.1 to $A'_i=JA_iJ$ with multipliers $JW_iJ$. A conjugated $J$ is $J$, and a conjugated $M$ is the finite word $JMJ$; an empty word stays empty. Thus this is a legal history with the same recorded indices. Its sequences are $\mathbf x'=\mathbf y$, $\mathbf y'=\mathbf x$, $\mathbf d'=((A_i)_{22}-1)_i$, and its four equalities are (3.2) with these substitutions. Independence of survivors is preserved by conjugation. Transfer any constructed collision back by $S_b=JS'_bJ$, $c_b=Jc'_b$, $\ell_b=\ell'_bJ$, with the same slopes and entire drifts. All factors are positive and fixed in their runs, and $\operatorname{tr}((JA_iJ)S'_b)=\operatorname{tr}(A_iJS'_bJ)$. This is an algebraic correspondence between runs, with no inserted conjugation acquisition. ∎
+

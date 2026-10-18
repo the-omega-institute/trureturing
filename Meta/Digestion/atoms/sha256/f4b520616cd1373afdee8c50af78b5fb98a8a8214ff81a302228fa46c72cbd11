@@ -1,0 +1,20 @@
+**Definition 6.1 (the four actual observations).** On $\Omega$ put
+
+$$
+\begin{aligned}
+S(h)&=\operatorname{Pos}(U_+(Y(h))),\\
+B(h)&=\operatorname{Leaves}(U_+(Y(h))),\\
+T(h)&=\text{the ordered word of actual }\Pi\text{ patch occurrences in }\widehat h,\\
+M(h)&=\text{the actual retained-memory structure of Definition 5.2}.
+\end{aligned}
+\tag{CSA.5}
+$$
+
+$S$ is full spatial support of the sole storage tree, $B$ is its actual
+terminal boundary, $T$ is chronological order on actual operations from
+the foundation, and $M$ is selected retained backing with its frontier
+and rights. $S,B$ recover raw cell values directly from incidence before
+using replay to recover provenance. $T$ includes private preparation,
+installation and all service/copy rows. None is the source-only shape,
+an event tree drawn over unchanged storage or a renamed copy of CSA.4.
+

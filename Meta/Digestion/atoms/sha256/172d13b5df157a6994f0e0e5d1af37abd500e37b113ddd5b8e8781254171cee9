@@ -1,0 +1,14 @@
+**Lemma 3.3 (exact acquired-word correspondence and actual positivity).** The valid first-$p$ histories are precisely
+
+$$
+h(w)=\operatorname{enc}(w)\,\beta\alpha\,\beta\beta\alpha\alpha,
+\qquad w\in(\Gamma\cup\{I\})^*.
+\tag{3.3}
+$$
+
+They have seed 1, marks 100 and the same original record configuration $c_*$; their acquired length is $L|w|+6$, and $A(h)=B(h)=2t|w|+3$. Moreover $A_{h(w)}=p_A(w)$. All other original histories, with every seed and record, remain in the actual domain and have $A_h=0$ at a first-$p$ cut if invalid. All subsequent $p$ cuts have $A_h=0$.
+
+**Proof.** A seed rejection is exactly an equal pair in the original seed parser. The finite checker partitions them into length-$2t$ token blocks. Its valid accepted seed must occur at a block boundary, and the injective codebook then recovers a unique $w$. Its required unequal pair is $\beta\alpha$. After that seed, $\beta\beta$ completes mark 1 in segment 1, $\alpha$ completes mark 0 in segment 2 and $\alpha$ completes mark 0 in segment 3. A strict suffix check admits no hidden extra return. Conversely every (3.3) follows exactly those original transitions. The code blocks do not alter seed or tree records; original $C_0$ has no erased-length counter. Hence $c_*$ is independent of $w$. Balanced counts in (3.2) plus the three alphas and three betas of the suffix give the stated counts and length.
+
+Conditioning on an actual acquired word does not condition on private random updates: given $K$, the source's word probability depends only on $K$ and its letter counts, not on the independent program bits. Thus the joint conditional distribution of $K$ and the sampled label factors into its actual posterior and $\delta_{q_0}M_w$. This proves the claimed $A_h$, without storing or evaluating that probability row. Every finite history (3.3) has probability $\sum_k\mu(k)[r_k(1-r_k)]^{2t|w|+3}>0$. Invalidity neither disables a Read nor modifies an original event, so it removes no other actual history. Discarding the private label on the first fourth Read ensures $A_h=0$ on every return. ∎
+

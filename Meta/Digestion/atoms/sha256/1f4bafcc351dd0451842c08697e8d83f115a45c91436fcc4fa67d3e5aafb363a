@@ -1,0 +1,47 @@
+**Proposition 7.9 (Exact affine operations and saturated guards).**
+For every real $s,t$, define ambient affine maps by
+
+$$
+\mathcal U_s:\quad
+ \xi'=\xi+s,\qquad
+ \mathbf f_j'=\sum_{h=0}^j\binom jh s^{j-h}\mathbf f_h
+ \quad(0\le j\le d),
+$$
+
+$$
+\mathcal V_t:\quad
+ \xi'=\xi,\qquad
+ \mathbf f_j'=R_{t/2}\mathbf f_j
+ \quad(0\le j\le d).
+$$
+
+Their exact source guards are respectively
+$\{z\in\mathscr S_*:a\le\xi+s\le b\}$ and all of $\mathscr S_*$.
+They intertwine $P_s,Q_t$ exactly and preserve $\mathscr S_*$
+whenever lawful.
+
+**Proof.** On an encoded state the binomial theorem gives
+
+$$
+\mathbf f_j'=(k+s)^jU(\alpha).
+$$
+
+Thus the first map is precisely $E_*(P_sx)$; its only affine
+offset is $s$ in the height coordinate. The second map gives
+$k^jU(\alpha+t/2)$, precisely $E_*(Q_tx)$.
+The true simultaneous change in $\beta$ under $Q_t$ is present
+in the native state and is invisible only because $E_*$ forgets it.
+
+A straight probability segment from a band point stays in $[a,b]$
+exactly when its endpoint does, by convexity. Every fixed-height
+phase leg stays in the band. These are exactly the stated guards,
+and they are constant on every encoder fiber. Thus they are
+saturated guards: all actual rays represented by one feature point
+agree on lawfulness. No ambiguity is introduced by forgetting
+$\beta$. Substitution in the image equations proves preservation.
+Zero commands, both signs, and both band endpoints are included.
+For $|s|>\ell$ the probability guard is empty; for $|s|=\ell$
+the appropriate endpoint-to-endpoint leg is included. The ambient
+formulas do not certify arbitrary off-image vectors as native states.
+$\square$
+

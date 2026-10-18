@@ -1,0 +1,47 @@
+**Corollary 358.3 (Literal affine and original-source consumers).** Suppose the input in Theorem 358.2 satisfies prescribed base, correct, union and positive rows. Then its one output $q$ satisfies the same rows with the same demands, even when some demands are negative.
+
+For the canonical full-score consumer, restrict to $L\ge3$. Let $R=O(1,2;1,2,0)$ in stopped-cell order, $\alpha=(1,1,0,\ldots)$, and $r=z_R=d(\alpha,0)$. A mass-$M$ demand means literally
+
+$$
+p_w(E)\ge d_{w,E}(b,e)+(M-1)r_{w,E},
+\tag{358.6}
+$$
+
+for all the independent event rows. If (358.6) holds for $p$, it holds for $q$. Put $h=d-r$ and $G_O=(z_D-r)_D$ over complete deterministic stopped tables. For every full nonnegative score $Y=(A_w,C_w,P_w;T)$, define
+
+$$
+\begin{aligned}
+Q(Y)&=(\beta,K),&
+\beta_n&=\sum_{w:n(w)=n}(C_w-A_w),\\
+K&=\sum_w(A_w+C_w+P_w)+T,&
+\Delta_O(Y)&=\max_D Y(z_D-r),\\
+F_{Q(Y)}(b,e)&=\sum_n\beta_n(b_n-\alpha_n)-Ke=Yh(b,e).
+\end{aligned}
+\tag{358.7}
+$$
+
+The same allocation $\lambda^\sharp$ of mass $M$ gives simultaneously
+
+$$
+F_{Q(Y)}(b,e)\le YG_O\lambda^\sharp\le M\Delta_O(Y).
+\tag{358.8}
+$$
+
+At mass one, for any entire sequence (357.2) and positive cap $e$, set
+$L=\max(\{i:a_i>e\}\cup\{0\})$. A complete feasible finite representative with the theorem's certificate gives an original $O$ rule at that same cap, with its schedule masses unchanged by the replacement.
+
+*Proof.* Equation (358.3) and positive-vector equality transfer every row of (358.6), retaining its literal mass and anchor. Subtracting $Mr$ gives $G_O\lambda^\sharp\ge h$, and nonnegative pairing gives (358.8). This uses one allocation for all words, events and scores. If $M>0$, division would change the profile to $b'=\alpha+(b-\alpha)/M$ and $e'=e/M$; no such division is used. At $M=0$ the premise is $h\le0$, and the same inequality remains valid. No canonical score assertion is made for $L<3$; their finite polynomial and event statements stand separately.
+
+For mass one, partition one uniform seed into the schedule intervals. In each interval use its rescaled coordinate for all terminal-label partitions, refining their intersections into complete deterministic tables before any reply. Select a single table and execute its fixed increasing empty, singleton or pair schedule. This gives zero advice, finite measurable handoff and at most two actual calls. The first zero refers to a queried address, and every executed call is charged. An $N$ completion obtains the ignored second reply as an actual additional call within the same bound. The algebraic lists are not successive source executions. Output the actual mark $\theta_j$ to the unchanged consumer on the same source.
+
+For actual $n\le L$, every possible full low word satisfies all three independent rows. For actual $n>L$ no tail mark is emitted and the low word is $1^L$. For a probability vector $v$ on $J$ the exact identity is
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Lv(j)\delta_{\theta_j},
+                  (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-v(0),a_n\}.
+\tag{358.9}
+$$
+
+The positive row and $a_n\le e$ prove the tail claim, including $a_{L+1}=e$ and all later ties. No summability of the tail is needed. This is the class-feasibility transport of 110.2, rather than arbitrary individual-law preservation. At $L=0$ immediate base output supplies the finite rule. Exact cap zero for a strictly positive entire sequence remains subject to the separate endpoint impossibility of Acquisition Resources 73.3. $\square$
+

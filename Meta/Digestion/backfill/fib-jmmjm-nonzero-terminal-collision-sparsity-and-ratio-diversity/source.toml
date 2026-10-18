@@ -1,0 +1,5 @@
+source_id = "fib-jmmjm-nonzero-terminal-collision-sparsity-and-ratio-diversity"
+path = "docs/develop/theory/FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

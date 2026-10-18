@@ -1,0 +1,23 @@
+**定义 38.2（同一来源—噪声支撑的报告投影）。** 给定允许的来源—噪声关系 $\mathcal W\subseteq\Omega_m\times\mathcal N$，要求每个来源的噪声纤维非空。对 $(\omega,\nu)\in\mathcal W$，令 $\rho_i(\omega,\nu)\in\widehat Y_i$ 是接收端可见的第 $i$ 条报告，包含其载荷或规定的擦除标志；可靠身份保留坐标对应。置
+
+$$
+\mathcal U_S(\omega)=
+\{(\rho_i(\omega,\nu))_{i\in S}:(\omega,\nu)\in\mathcal W\},
+$$
+
+$$
+\mathcal V_{S,m}(z)=
+\bigcup_{\substack{\omega\in\Omega_m\\Z(\omega)=z}}\mathcal U_S(\omega),
+\qquad
+\mathcal Y_{S,m}=\bigcup_{\omega\in\Omega_m}\mathcal U_S(\omega).
+$$
+
+这些集合从一个真实联合支撑投影而来；对 $S\subseteq T$，有 $\mathcal U_S(\omega)=\operatorname{pr}_S\mathcal U_T(\omega)$。禁止用各坐标的边缘支撑乘积替代联合支撑，也不能只为每个目标选一个代表来源：$\mathcal V_{S,m}(z)$ 必须包含该目标的全部候选来源及其允许报告。某条实际报告 $r\in\mathcal Y_{S,m}$ 的相容目标集为
+
+$$
+\mathcal C_{S,m}(r)=
+\{Z(\omega):\omega\in\Omega_m,\ r\in\mathcal U_S(\omega)\}.
+$$
+
+目标相关距离的编码中间接口见 Lenz–Bitar–Wachter-Zeh–Yaakobi, [Function-Correcting Codes，第 II 节 Definition 1](https://arxiv.org/pdf/2102.03094v3)：对二元系统编码 $\operatorname{Enc}(u)=(u,p(u))$ 和至多 $t$ 次替换，不同函数值的每对编码距离要求至少 $2t+1$，同函数值的消息不必彼此恢复。此接口给出只保护目标值的距离原则；这里的混合误读—擦除、共同传递及因果几何由各自合同承担。仓内 [UniqueDecodingRadius 的 unique_decoding_radius](../../../D5/S3/Arith/Coding/UniqueDecodingRadius.lean) 在同字母表、可判等坐标及码集最小距离假设下给附近码字唯一性；[ArbitraryErrorCorrectionCapacity 的 arbitrary_error_correction_capacity_bound](../../../D5/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity.lean) 则在严格递增、至少二且两两互素的模数与非平凡有界消息域下，由余数码球不交推出完整消息的距离和容量界。这些完整码字接口适用于相应完整消息目标，不替代任意目标的全来源量化。
+

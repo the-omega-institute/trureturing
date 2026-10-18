@@ -1,0 +1,43 @@
+### 92.4. Arbitrary generic pairs at these fibres
+
+In algebra (92.1) the radial involution fixes \(\ell\) and sends
+
+\[
+ Y\longmapsto s/(1+\ell^2)-Y
+       =-R/((1+\ell^2)Y),\qquad G\longmapsto-R/\bar G.
+\]
+
+It is defined at every point, including \(\ell=0\). The global
+characteristic-zero identities identifying this with the normalized
+\(\Theta\) action are those proved in §89. On the generic overlap the old
+and new algebras are isomorphic under \(k=1/\ell, X=\ell Y\). The physical
+coordinate \(Y=y\) is the same on both sides. All new construction
+denominators are units above, so those identities extend to \(K_L\).
+No claim that \(\ell\) itself is a unit at \(L=0\) is used.
+
+Evaluate the same all-six-order overlap norm \(N\) of §§79,89 in
+\(\mathcal A^\vee_L\otimes\mathcal A^\vee_L\), with the current \(R\).
+Let \(\rho(a\otimes c)=a\iota(c)\). It is onto, so its kernel has dimension
+380. The already proved field identity \(\rho(N)=0\) transports and
+specializes by the unit argument above. Thus multiplication by \(N\)
+has rank at most 380 in characteristic zero.
+
+In the tensor basis \(Y^r\otimes Y^s\), indexed by \(20r+s\), the leading
+380-by-380 principal minor has residue **17 modulo 97** at \(b=9,i=22\).
+Its exact construction uses the same 508-term integer norm, without a
+restriction on candidate relative order. Irreducibility of \(L\) proves
+the minor nonzero in \(K_L\); hence the rank is exactly 380 and
+
+\[
+ N(\mathcal A^\vee_L\otimes\mathcal A^\vee_L)=\ker\rho.
+\]
+
+In particular \(1+\bar GG'/R\), which lies in \(\ker\rho\), belongs to
+the principal ideal of \(N\). At an arbitrary physical orthogonal pair,
+\(N=0\), so its means are orthogonal. Full lift uniqueness identifies the
+second coefficient point with \(\iota\) of the first. Thus the second ray
+is in \(S_3\Theta\) of the first, up to phase, with all six orders retained.
+The uniform within-union graph theorem excludes an all-generic
+noncanonical orthogonal triple. It is applied separately to the union
+of each edge's endpoints, without a global single-union assumption.
+

@@ -1,0 +1,51 @@
+**引理 231.2（Every word and every independent row）。** On every
+seven-bit word of first zero $n$, the law in 231.1 has
+
+$$
+p_w(n)=4t/9,\qquad p_w(0)\ge1-t,\qquad
+1-p_w(0)-p_w(n)\le5t/9.
+$$
+
+At the positive word $p_{1^7}(0)=1-5t/9$. Its TV error against
+$(1-t)\delta_0+t\delta_n$ on each zero word is exactly $5t/9$.
+
+证明。 Work first with the integer counts $k$ in 231.1, whose total
+is $18$. Write $x=w_2$, $y=w_3$, $z=w_4$, $u=w_5$. Adding the
+fourteen terminal indicators on each actual first-zero fiber gives
+correct count four and the following wrong-positive counts:
+
+$$
+\begin{aligned}
+E_1&=1+3x+3y+2z+2u-2xy-xz-xu-yz-yu-zu,\\
+E_2&=4+y+z+u-yz-yu-zu,\\
+E_3&=5-zu,\qquad E_4=4-u,\qquad
+E_5=3,\quad E_6=1,\quad E_7=1.
+\end{aligned}
+$$
+
+These are terminal-indicator identities, not assumptions on
+unobserved replies. If $x+y=0,1,2$, respectively, $E_1$ becomes
+$1+2z+2u-zu$, $4+z+u-zu$, or $5-zu$, with maxima $4,5,5$.
+For $k=y+z+u\in\{0,1,2,3\}$,
+$E_2=4+k-k(k-1)/2\le5$. All later expressions are at most five.
+The integer base count is $14-E_n$ and the union count $18-E_n$;
+their separate minima on each whole fiber are therefore
+
+| $n$ | Base minimum | Correct count | Union minimum |
+| ---: | ---: | ---: | ---: |
+| 1 | 9 | 4 | 13 |
+| 2 | 9 | 4 | 13 |
+| 3 | 9 | 4 | 13 |
+| 4 | 10 | 4 | 14 |
+| 5 | 11 | 4 | 15 |
+| 6 | 13 | 4 | 17 |
+| 7 | 13 | 4 | 17 |
+
+For general $t$, multiply these counts by $t/9$ and add $1-2t$
+to the base and union coordinates. This gives the three inequalities
+claimed, simultaneously on every word, and hence all $382$ rows
+at $e=5t/9$. The correct discrepancy is exactly
+$t-4t/9=5t/9$, so the TV maximum is equal to that value.
+At the positive word the integer label counts $0,\ldots,7$ are
+$(13,0,0,0,0,0,1,4)$, giving the stated base mass. $\square$
+

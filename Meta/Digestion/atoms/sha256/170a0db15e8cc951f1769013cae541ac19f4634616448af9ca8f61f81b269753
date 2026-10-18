@@ -1,0 +1,37 @@
+**假设 1.1（实际行、完整入口与任意原重切）。** 取[稀疏字面历史运输卷](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)（以下称 SLH）§§1、59–62、74 的来源与操作合同：
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+所有来源都是非空有限自由有序满二叉树；不附加共同形状、大小、深度或模板界。地址是 $\mathcal P=\{L,R\}^{*}$，根为 $\varepsilon$。四值字面回复记为
+
+$$
+r_u(p)\in\mathcal A=
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+每个有限地址，包括根和不存在地址，都可合法读取。$P,Q\subseteq\mathcal P$ 是公共的任意有限前缀无关原切址集，均可为空或含根。$R=(C,\pi)$ 是 SLH 定义59.2的全来源生产者实际取得并按假设59.3保留的 $P$ 行；$C$ 保留孔外的全部有序结构、具体叶及未达到切址的守卫，$\pi$ 是全部达到孔的完整相等分区。不同类确实不等，同类的重复出现保持为同一个未知子树。
+
+在 SLH 假设62.1的完整切点，有限实际字面证据为 $H=((n_i,p_i,c_i))$，允许混合纪元、重复项及缺席回复；全部可访问来源信息恰给出整个非空原纤维
+
+$$
+D=\mathcal U_R(H)
+ =\{u\in\mathcal T:R_P(u)=R,
+          \ \forall i\ r_{\rho^{n_i}u}(p_i)=c_i\}\ne\varnothing.
+\tag{SCR.1.1}
+$$
+
+全部公共安装、权限、任务和完整控制在此纤维上相同。任何可访问的源相关档案、缓存、长度、控制位置或时序必须已计入这个完整切点；不能保留这些额外输入而仍声称来源域是 (SCR.1.1)。生产者的实际取得、遗忘前档案及合法新入口分别付费。同一原根寄存器已实际达到并认证
+
+$$
+N\ge\max(\{0\}\cup\{n_i\}),
+\qquad \text{当前内容为 }\rho^N u.
+$$
+
+消费者须返回原来源的整个 $R_Q(u)$，即具体孔外上下文、达到的新孔及其原地址次序、完整相等分区。缺席的原切址不会因替换后出生而变成原孔。返回的是这个数学值，不要求伪造任何过去的 raw 事件。
+

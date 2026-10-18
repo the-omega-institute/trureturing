@@ -1,0 +1,10 @@
+### 79.4. Exact local ranks and scope
+
+When |eta|<1, the markers a_0,a_1 are linearly independent. For each fixed j, the four qubit vectors u_(f,j) span C^2: their projectors have distinct Bloch vectors and are not a common line. Hence the A-environment records span
+
+    C^2 tensor span{a_0,a_1}=C^4,
+
+while the B-environment records span C^2. In a calibrated Stinespring map (1), the Kraus operators indexed by an environment basis are linearly independent precisely when those records span the environment: a linear combination of the Kraus operators vanishes if and only if its environment covector annihilates every record. Thus the local Kraus ranks are exactly (4,2), in particular at eta=3/4. The construction uses no shared randomness or communication.
+
+The tetrahedral Bloch identity is the same standard qubit geometry used in sections 70 and 73; the marker is an ordinary Stinespring environment record. The norm facts and the Hermiticity-preserving diamond formulation are standard; see [Watrous, The Theory of Quantum Information, section 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The explicit calculation above optimizes this entire complex marker family and gives a common physical implementation attaining 1/4. It supplies an upper bound for the unrestricted problem, not a proof that all original leakage-bearing product channels have error at least 1/4. Sections 72 and 78 retain their stated unrestricted scope.
+

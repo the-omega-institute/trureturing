@@ -1,0 +1,25 @@
+**Definition 8.1 (Lossless current-ray affine action).** Keep the fixed
+source, arbitrary preparation and positive-width band of Definition 7.1.
+For a finite integer $n\ge0$, a lossless current-ray encoding is an
+injective function $E:\mathcal M_{ab}\to\mathbb R^n$. The minimal
+affine-action requirement considered here is a single affine map
+
+$$
+F(z)=Az+c,\qquad E(Q_{4\pi}x)=F(E(x))
+ \quad\hbox{for every }x\in\mathcal M_{ab}.
+$$
+
+There is no decoder, no output requirement and no
+probability-update requirement in this minimal contract.
+No regularity of $E$, boundedness of its image, invertibility of $A$
+or ambient group law is assumed. The coefficients are fixed across
+all current heights and phases and all producing histories.
+
+The domain remains the full native reachable band of
+Proposition 7.2. Deleting update requirements does not restrict
+the original generation process to powers of one command from one
+initial height. The full-menu version would additionally require
+affine representatives of every $P_s$ on its lawful domain and
+every $Q_t$ on the whole band, with arbitrary offsets.
+It contains the minimal contract as a consequence.
+

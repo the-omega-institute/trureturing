@@ -1,0 +1,25 @@
+# 递归关系观察：联合矩纤维的全叶词原生续读与字面行容量
+
+The original ordered sources, exact leaf-word fibers, address readout and cache semantics
+are those of [parent chapters 52–60][JM52]; the actual shortlex branch prefix is that of
+[parent chapter 66][JM]. References below to parent chapters 52–64 and 66 and equations
+(JM.151)–(JM.201), (JM.214)–(JM.229) refer to that parent volume. Chapters 67–69 and
+(JM.230)–(JM.237) are local to this continuation.
+
+The effective-entry initialization of [public parent chapter 65][JMPublic] uses its own actual $(t,h)$ contract.
+The [archival raw-fiber chapter 65][JMOldRaw] corresponds here to parent chapter 66, equations (JM.214)–(JM.229).
+
+The notations $F_t$ and $F(t)$ denote the same Fibonacci sequence,
+$F(0)=0$, $F(1)=1$, $F(t+2)=F(t+1)+F(t)$. The raw symbols
+$\mathsf{br}$ and $\mathsf{abs}$ denote the native `branch` and `absent` replies.
+Chapter 67 uses its eligible Boolean $\operatorname{Pos}$ reader; the observer results in
+chapter 69 use only Hypothesis 69.2. The separate total bit/raw-cache $Q$ consumer of
+[parent chapter 66.2][JM] retains its own task contract.
+
+The native source and word representation is [GenealogicalFiberTransport][Source];
+readout, positivity and the finite Boolean decision are [ActualTreeReadoutAcquisition][Readout].
+Address geometry is [ActualLeafHistoryRigidity][Geometry], and the coarse reply and history
+maps are [ActualCoarseReadoutHistory][Coarse]. The observer, action, cache and actual-prefix
+objects are [ActualFiniteObserverAbsentElimination][Native]; the all-history relation is
+[ActualObserverPairReach][Pair], and nominal cache lifts are [ActualAcquisitionCacheFiber][Cache].
+

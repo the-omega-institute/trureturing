@@ -1,0 +1,60 @@
+**References 6.1 (bounded source and literature comparison).**
+
+| Source | Exact reused interface and limit |
+| --- | --- |
+| [ARH, §§1–3, 10–18][ARH] | Actual acquired whole fiber and access cut; common original-depth charts and source bijection; exact aligned constraint automata; within-chart Bad; determining-prefix decision and witnesses. Its §16.1 supplies the entire consumer fiber, rows and one-read count. Lemmas 1.3–1.4 prove the additional common physical-action interpretation; Proposition 1.5 provides cross-chart terminal labels. |
+| [ABC, Proposition 6.4 and §8.1][ABC] | Same-source nonexpansive cap at $M=\max(N,5)$, cleanup and the stated cofinal parameters. §8.1 specifies the address-before-source quantifier obligation; it does not already decide it for $\mathfrak S$. |
+| [JRF, §§4–7][JRF] | Finite control, finite-length optimization, cofinal/Pareto reasoning and rational same-run minimization, including zero weights. Its literal-only source formulas are replaced by the proved §1 interface, not presumed valid on coupled inputs. |
+| [SCR, §§9–10][SCR] | Epoch-four raw normalization has an additive address bound; no cap-four joint dominance or optimization is claimed here. |
+| [SLH, §§2, 59–62, 69, 74][SLH] | Paid original acquisition, old-row correspondence, aligned suffix coordinates, static decoder and physical locality. Shared suffix coordinates are an existing method; the all-chart action factorization and full-row terminal correspondence here are the added deductions. |
+| [AOF, Assumption 1.1 and §§3–5][AOF] | Exact resources on the actually acquired root-to-proper-descendant certificate family, not on arbitrary $\mathfrak S$ inputs. |
+| [TPO, Definition 1.2, Corollary 4.2 and Proposition 5.2][TPO] | At the pinned snapshot, the ambient Kuncak–Rinard term-power language cannot uniformly define the all-shape native normal domain. That specific obstruction preserves ARH's $\mathfrak S$ and constructor-elimination decisions and the existing resource suppliers. No normal-domain Assumption 7.3 enters this volume. |
+| [Nils Klarlund and Anders Møller, *MONA Version 1.4 User Manual*, January 2001, §§7.1–7.2, printed pp. 39–40][MONA] | Primary `literature-attested` supplier: first-order positions in the infinite binary successor tree, finite-set variables, fixed successor compositions, and WS2S decision by finite bottom-up tree automata, with counterexamples. Page 39 explicitly states that ordinary bottom-up tree automata suffice for validity and counterexamples; page 40 defines their finite transitions via the one-state-space guided special case. It supplies logic decision only after the explicit formulas and run encoding of Lemma 1.4. |
+
+The new `repo-derived` mathematical increment is the all-$\mathfrak S$
+common-word/source correspondence, its exact cross-chart whole-row
+terminal language and the sharp full-fiber address/price consumer.
+The Pareto and weighted procedures use the stated existing finite
+optimization suppliers after that bridge. The MONA citation concerns its
+ordinary WS2S semantics; no restrictions with a third “don't-care” value
+are used. No MONA run, solver implementation, complexity bound or
+unrestricted logical interpretation is asserted.
+
+The TPO exclusion is for its exact four-sort covariant $\{F\}$-term-power
+of relational Presburger arithmetic: terms, shapes, shape-tagged leafsets
+and partial Boolean values, with same-shape pointwise inner formulas,
+guarded selectors and fixed-numeral leafset cardinality predicates.
+Its outer language has no quantifier over leaf addresses or operation
+selecting a rank at a variable leaf. The nondefinability permits any fixed
+finite parameter tuple, but not parameters depending on the varying input.
+This is the source language of TPO Definition 1.2 and Corollary 4.2;
+it is not the binary-position and finite-set language used in Lemma 1.4.
+
+Counterexample 1.6 rules out one direct same-root physical-word encoding;
+it does not refute the $\mathfrak S$ synthesis theorem or prove failure
+of the larger constructor-elimination family $\mathcal E_{\rm CE}$.
+The latter family is outside this volume's synthesis conclusion. Its
+eliminated parameters need not satisfy the common original-frontier
+routing proof without further work. Arbitrary variable left-prefix
+deletion, shifted subtree equality and arbitrary constructor-context
+closure are not supplied by the cited automata decision theorem.
+
+The synthesized finite table is a mathematical effective service under
+the original paid operation contract. It neither refunds acquisition and
+installation nor bounds local work, uniform storage, physical time or
+energy. Pointwise static traversal in a negative case need not have a
+uniform finite resource bound. No assertion about empirical ML training,
+generalization, global originality, kernel verification, independent
+review or publication follows from these results. Finite exact controls
+can test displayed identities and boundary instances; the universal
+conclusions rest on the proofs and their named hypotheses.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[SCR]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[TPO]: https://github.com/the-omega-institute/trureturing/blob/28cc5e33857d4969363b213e6f8c4269fd012972/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[MONA]: https://www.brics.dk/mona/mona14.pdf
+

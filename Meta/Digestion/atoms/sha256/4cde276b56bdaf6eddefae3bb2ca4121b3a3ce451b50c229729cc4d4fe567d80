@@ -1,0 +1,75 @@
+**Definition 13.1 (the fixed states and algebraic variables).** Retain
+Definition 4.2 without changing its input resources, comparison class or
+output norm. Index the basis $(+,-,2)$ by $0,1,2$ only inside the matrices
+in §§13–16; these indices are not the five original failure labels.
+For $0<y<58$ put
+
+$$
+\begin{aligned}
+p_y&=\left(\frac y{128},\frac{64-y}{128},\frac12\right),\\
+d_y&=\left(\frac y{128},
+ \frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),\\
+a_y&=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,
+\qquad \xi_y=(\sqrt{d_{y0}},\sqrt{d_{y1}},\sqrt{d_{y2}})^T,\\
+\rho_y&=a_ya_y^T,\qquad B_y=\xi_y\xi_y^T.
+\end{aligned}
+\tag{CG.111}
+$$
+
+The vectors $p_y,a_y$ are also defined by the same formulas for
+$58\leq y<64$. All radicals are the positive real roots. The input is normalized,
+$\operatorname{tr}B_y=s_y=y/(y+6)$, and
+$\xi_y=\sqrt{s_y}\,a_{y+6}$. For
+$U_{e,n}=\operatorname{diag}(e,n,1)$, $e,n\in\{\pm1\}$, the actual
+inputs and live targets are $U_{e,n}\rho_yU_{e,n}^T$ and
+$U_{e,n}B_yU_{e,n}^T$. Indeed (CG.7) has
+$e=(-1)^{\beta/\pi}$ and $n=e(-1)^m$, which run through all four
+pairs. The five separate failure densities remain $w_\ell f_y(t)P_f$
+with the $w,f_y$ of (CG.50), not functions of $e,n$.
+
+Let $x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ and define
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,
+&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y&=\frac{v_yv_y^T}{v_y^Tv_y},
+&A_5&=\lambda R_5,\qquad A_{27}=(1-\lambda)R_{27},\\
+\zeta&=\left(z,\frac{59\lambda}{128},\frac\lambda2\right),
+&Z_d&=\operatorname{diag}\zeta,\\
+N&=A_5\odot\rho_5+A_{27}\odot\rho_{27},
+&S_0&=Z_d-N.
+\end{aligned}
+\tag{CG.112}
+$$
+
+Here $\odot$ is entrywise multiplication. For $i<j$ set
+
+$$
+S_{ij}=\begin{pmatrix}
+\displaystyle\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{ii}p_{yj}
+&-N_{ij}\\
+-N_{ij}&\displaystyle\zeta_i-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{yi}
+\end{pmatrix}.
+\tag{CG.113}
+$$
+
+The two distinct uses of the letter $\beta$ are separated: $\beta_1,
+\beta_2$ here are algebraic coordinates, not the original history phase
+$\beta\in\{0,\pi\}$. Define
+
+$$
+\begin{aligned}
+F(x)&=\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+       -\sum_i\zeta_i+\frac6{11}\lambda,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}),\\
+\mathcal L(x,\eta)&=F(x)+\sum_{k=0}^2\eta_k g_k(x),\\
+\Psi(x,\eta)&=(\nabla_x\mathcal L,g_0,g_1,g_2).
+\end{aligned}
+\tag{CG.114}
+$$
+
+These nine equations have real algebraic coefficients and rational
+dependence on their nine variables. Their chart denominators are
+$1+\alpha_1^2+\alpha_2^2$ and $1+\beta_1^2+\beta_2^2$, both positive.
+

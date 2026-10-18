@@ -1,0 +1,43 @@
+**定义 60.1（The coprime guarded domain and original tail tables）。** In Chapters 60–64 fix the original reader, whole actual-history prior, costs and alphabets of Chapter 1, with
+
+$$
+m\ge3,\qquad k\ge2m,\qquad T=k+1,\qquad
+\gcd(m,T)=1,\qquad P=\mathbb Z/T\mathbb Z,\qquad
+D=\left\lfloor\frac{k-1}{m}\right\rfloor.
+\tag{60.1}
+$$
+
+The target $f:Q\to Y$ is arbitrary, and $F_v(j,s)=f(v,-j,s)$ always uses the remembered INITIAL value $v$. All integer intervals below contain INITIAL tails, and all phases are reduced modulo $T$ only where indicated. Constancy on an empty set is true; a minimum of an empty set is $+\infty$. Independent initial bottom returns its own label freely. Since $m<k$, both original alphabets contain all $2^m$ literal words, with the same cross-block rejection rule.
+
+At a successful archive after $q$ emitted all-one blocks and no issued zero, put $h_q=k-qm>0$. For its own observed difference string $\beta$, the phase support is
+
+$$
+S=\{j\in P:\mathbf1_{\{tm,(t+1)m\}}(j)=\beta_t\ (0\le t<q)\}.
+\tag{60.2}
+$$
+
+The INITIAL candidates are exactly $S\times[0,h_q)$ on the fixed free-value fibre. Their current records are $(z_q,-j+qm,s+qm)$, where $z_q=v\oplus\bigoplus_{t<q}\beta_t$. These are the supplied actual rectangles of [S1, Lemma 4.2] and (51.17), not a prior chosen independently at the current endpoint.
+
+For a known phase $j$ at such an archive, and $0\le n\le\lfloor(h_q-1)/m\rfloor$, put $H=h_q-nm$ and require
+
+$$
+\mathcal R_v(j,q,n):\quad
+F_v(j,\cdot)\text{ constant on }[h_q-(i+1)m,h_q-im)
+\quad(0\le i<n).
+\tag{60.3}
+$$
+
+Define the finite tail-table price
+
+$$
+\begin{aligned}
+\eta_v(j,q)=\min\Bigl(&\{n:\mathcal R_v(j,q,n),\ F_v(j,\cdot)\text{ constant on }[0,H)\}\\
+&\cup\{n+1:\mathcal R_v(j,q,n),\ \exists r\in\{1,\ldots,\min(m-1,H-1)\},\\
+&\hspace{24mm}F_v(j,\cdot)\text{ constant on }[H-r,H),\quad
+ F_v(j,\cdot)\text{ constant on }[0,H-r)\}\Bigr).
+\end{aligned}
+\tag{60.4}
+$$
+
+The range of $n$ is the one just stated in both sets. An empty range of $r$ contributes no second-set candidate. All comparisons concern the actual original tail table; there is no continuation-cost variable in (60.4).
+

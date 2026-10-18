@@ -1,0 +1,65 @@
+**Corollary 4.1 (testing and honest confidence).** Fix $M,\mu$ as above.
+Let $\varphi\in[0,1]$ be any possibly randomized rejection probability
+computed from the interface of Definition 3.1, even from all of $O^+$.
+If $\mathbb E_0\varphi\le\alpha$, then
+
+$$
+2^{-M}\sum_\xi\mathbb E_\xi\varphi\le\alpha+\varepsilon_M,
+\qquad
+\inf_\xi\mathbb E_\xi\varphi\le\alpha+\varepsilon_M.
+\tag{4.1}
+$$
+
+In particular, simultaneous power at least $1-\beta$ for every
+alternative requires $\alpha+\beta\ge1-\varepsilon_M$.
+
+Apply this either to the residual parameter $e_B$, with null value zero
+and alternative value $d=1/60$, or to the actual configured-law
+parameter $\mathcal D(h)$ of (2.9) at any specified positive original
+p history, with null value zero and alternative value $d=19/1800$.
+If a random confidence set $C$ covers that parameter with probability
+at least $1-\gamma$ under every hypothesis, then
+
+$$
+\Pr_0(\{0,d\}\subset C)\ge1-2\gamma-\varepsilon_M.
+\tag{4.2}
+$$
+
+Thus a confidence interval has diameter at least $d$ with at least that
+null probability. An honest upper bound $U$ obeys
+
+$$
+\Pr_0(U\ge d)\ge1-\gamma-\varepsilon_M.
+\tag{4.3}
+$$
+
+These bounds are uniform over every permitted finite or countable prior.
+For any fixed desired positive error bound in (3.2), a sufficiently
+large *finite* $M$ meets it, while both alternative parameters remain
+fixed and all installations remain finite rational observers.
+
+**Proof.** For a $[0,1]$-valued statistic, its expectation difference is
+at most TV. Theorem 3.2 proves (4.1). For (4.2), coverage at the
+alternatives gives $\overline{\mathsf P}(d\in C)\ge1-\gamma$;
+transfer to the null loses at most $\varepsilon_M$. Intersect with the
+null coverage event $0\in C$ and use the union bound. The same transfer
+for $U\ge d$ proves (4.3).
+
+The configured-law consumer is not an additional inferential assumption:
+for every alternative, every p label and every positive original p
+history, Theorem 2.2 gives the exact relation
+
+$$
+\operatorname{TV}(\widetilde D_{h,i},D^{\mathrm{own}}_{h,i})
+ =(1-u_i)\operatorname{TV}
+    \left(\mathcal R_B(Q_i),\sum_jB^\xi_{ij}W_j\right)
+ =\frac{1-u_i}{60}.
+\tag{4.4}
+$$
+
+The suspended supplied laws are already the actual suspended own laws,
+so no unproved residual-to-own-law bridge is used. Averaging (4.4) in
+the actual row gives $19/1800$ at all those histories. In contrast,
+$\sum_i\pi_iQ_i^\xi=\sum_i\pi_iQ_i=P$, so the error would disappear
+if the laws were averaged before TV. $\square$
+

@@ -1,0 +1,49 @@
+**Corollary 3.2 (feasible finite-neighborhood reconstruction).** Supply
+the finite tuple $f$, a basic scalar neighborhood $U$ of $\lambda$, and
+for each remaining coordinate a valid finite prefix of an infinite
+completion $\eta_i$. Prefix holes of distinct names must be independent,
+and repetitions of one name must use the same prefix and filling. Assume
+the exact feasibility antecedent
+
+$$
+U\cap S_f\ne\varnothing.
+\tag{SLP.12}
+$$
+
+Here $U$ is specified by finite-coordinate equalities and finitely many
+simultaneous lower bounds at divergent coordinates. One can reconstruct a
+finite member of (SLP.1) in that scalar/prefix neighborhood as follows.
+
+1. After inserting the supplied finite $f$, use [URR, Corollary 3.2][URR]
+   to compute the Presburger support $S_f$, conjoined with $P$. Use
+   Presburger witness extraction for $U\cap S_f$ to choose one
+   $\mathbf n$ satisfying every bound at once.
+2. At this same $\mathbf n,f$, finite NSF feasibility supplies a finite
+   residual seed satisfying the full negative conjunction.
+3. Apply Lemma 2.1's context substitution and the single URR hole tuple
+   to reconstruct a finite tuple with every prescribed prefix.
+
+Each step terminates under (SLP.12). The reconstructed tuple satisfies the
+complete normalized piece and every retained native negative. For all
+neighborhoods $U$ of one proposed $\lambda$, the sufficient and necessary
+antecedent is $\lambda\in\overline{S_f}$ by Theorem 3.1. A separately
+supplied finite residual prefix that isolates a finite tree must instead
+be added to $f$ and the support recomputed with that coordinate fixed.
+Inconsistent prescribed replies or extra coupling of frontier variables
+are outside the prefix hypotheses. No sign or partition is inferred at
+$(\lambda,\eta)$, and no unknown $f$ is decided by this statement.
+Conversely any finite witness in the requested neighborhood projects to
+$U\cap S_f$, so (SLP.12) is necessary as well as sufficient under these
+valid independent infinite-prefix hypotheses.
+
+The statement includes the degenerate cases. With $k=0$, the scalar closure
+is the singleton truth value of $S_f\ne\varnothing$. With no remaining
+residuals, $f$ itself is the only possible completion and (SLP.4) is exactly
+the finite feasibility test. With no negatives, the support is the
+Presburger set $P$ and arbitrary finite prefix extensions supply witnesses.
+In particular, when $k=m=0$, $P=\mathsf{true}$ and the only negative is
+$\alpha\ne\alpha$, $S_f=\varnothing$. The scalar space still contains its
+one empty tuple, but (SLP.12) fails even for the whole scalar space; no
+witness is reconstructed. The empty negative conjunction, in contrast,
+does admit that empty tuple.
+

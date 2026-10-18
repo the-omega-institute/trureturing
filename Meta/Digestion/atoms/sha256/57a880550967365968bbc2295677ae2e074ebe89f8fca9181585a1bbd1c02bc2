@@ -1,0 +1,40 @@
+**Table 4.3 (classification and positive-coordinate reduction).**
+
+| branch | isolated before determinant filter | isolated after filter | nonnegative-coefficient entries | arithmetic entries | survivors before function-field proof | family |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| $F$ | 67 | 50 | 35 | 13 | indices 22 and 37 | $q_e$ |
+| $G$ | 28 | 21 | 10 | 10 | index 22 | $q_e$ |
+
+The 35 $F$ and 10 $G$ nonnegative-coefficient entries cannot vanish at a
+positive point. The remaining arithmetic exclusions are as follows.
+
+| indices or type | exact equation at a positive point | reason for exclusion |
+| --- | --- | --- |
+| $F$ indices 0, 1, 26, 28 | $X+1=(Y+1)^2$, $X=Y^2$, $Y=X^2$, or $Y+1=(X+1)^2$ | a pair is multiplicatively dependent |
+| $F$ indices 4, 5, 24, 25 | $X=Y+1+1/Y$, $X=Y-1+1/(Y+1)$, or the exchanged formulas | the displayed rational value is nonintegral for $X,Y>1$ |
+| $F$ indices 18, 23 | $X=Y^2/(2Y+1)$ or $Y=X^2/(2X+1)$ | $\gcd(T^2,2T+1)=1$ |
+| $F$ indices 6, 7 | $X(Y-1)=2$ or $Y(X-1)=2$ | the only point with both coordinates greater than 1 is $(2,2)$ |
+| $F$ index 8 | $XY=1$ | impossible for $X,Y>1$ |
+| $F$ indices 22, 37 | indefinite conics | treated in Section 7 |
+| $G$ entries not in the 21-index list | no $G$ edge compatibility | excluded by the boundary system |
+| $G$ index 22 | $X^2-2XY-Y^2-2Y=0$ | treated in Section 7 |
+
+The normalized 50 $F$ coefficient vectors, in the order
+$(A,B,C,D,E,F_0)$, are:
+
+```text
+(0,0,-1,1,-2,0); (0,0,-1,1,0,0); (0,0,1,1,0,0); (0,0,1,1,2,2);
+(0,1,-1,0,-1,-1); (0,1,-1,1,0,0); (0,1,0,-1,0,-2); (0,1,0,0,-1,-2);
+(0,1,0,0,0,-1); (0,1,0,0,0,1); (0,1,0,0,1,2); (0,1,0,1,0,2);
+(0,1,0,1,1,0); (0,1,0,1,1,2); (0,1,0,1,2,0); (0,1,0,2,1,0);
+(0,1,1,0,1,1); (0,1,1,1,2,2); (0,2,-1,1,0,0); (0,2,0,1,1,2);
+(0,2,1,1,2,0); (0,2,1,1,2,2); (1,-2,-1,0,-2,0); (1,-2,0,0,-1,0);
+(1,-1,0,0,-1,0); (1,-1,0,1,0,1); (1,0,0,0,-1,0); (1,0,0,0,1,0);
+(1,0,0,2,-1,0); (1,0,0,2,1,2); (1,0,1,0,2,0); (1,0,1,1,1,1);
+(1,0,1,2,0,0); (1,1,0,1,0,1); (1,1,0,2,1,2); (1,1,1,1,1,1);
+(1,1,1,2,2,2); (1,2,-1,2,0,0); (1,2,0,2,1,0); (1,2,0,2,1,2);
+(1,3,1,1,1,1); (1,3,1,2,2,2); (1,3,1,3,3,3); (1,3,1,4,4,4);
+(1,4,1,2,2,2); (1,4,1,3,3,3); (1,4,1,4,4,4); (1,5,1,3,3,3);
+(1,5,1,4,4,4); (1,6,1,4,4,4).
+```
+

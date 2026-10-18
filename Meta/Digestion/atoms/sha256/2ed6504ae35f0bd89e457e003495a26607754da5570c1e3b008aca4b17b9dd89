@@ -1,0 +1,8 @@
+**定义 4.1（零联合坐标截面）。** 对按 $(\dot X,\dot Z,\dot Y)$ 排列的 $b'\in\mathbb R^3$，定义
+
+$$
+L(b')=(-\dot X-\dot Z-\dot Y,\ \dot X,\ \dot Z,\ \dot Y,\ 0).
+$$
+
+这是线性映射 $L:\mathbb R^3\to T$，且 $DP\circ L=I_{\mathbb R^3}$。定义水平子空间 $T_{\mathrm{hor}}=\operatorname{im}L\subseteq T$。$\operatorname{im}(DP)=\mathbb R^3$ 是底空间，不能将它当作 $T$ 中的水平源子空间。此处没有指定度量，水平分裂也不声称是正交分裂。
+

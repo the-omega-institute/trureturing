@@ -1,0 +1,73 @@
+### 103.4. The quotient calculation and both balanced signs
+
+Put \(v=-\operatorname{Re}z\) and \(w=-\operatorname{Re}(z\overline u)\). Then
+\[
+z=-v+i\frac{pv-w}{q},\qquad
+C=\frac\alpha{\sqrt2}\operatorname{diag}(1,m)C_0,\qquad
+C_0=\begin{pmatrix}v&(w-pv)/q\\w&(pw-v)/q\end{pmatrix}.
+\tag{10}
+\]
+The actual quotient products, obtained directly from (6), are
+\[
+K_{13}=\frac{A(mr-\overline u)}{2(uv-w)},\qquad
+K_{23}=\frac{Bu(mu-r)}{2(uv-w)},\qquad K=G_S\odot H_S.
+\tag{11}
+\]
+Here \(uv-w=-iqz\ne0\). With \(E\) formed from the two conjugate error columns \(1/2-K_{ij}\), multiplication by \(C^T\) gives
+\[
+EC^T=\frac\alpha2
+\begin{pmatrix}
+v-A & mw-Am(2p-mr)\\
+v-B(2mp-r)&mw-Bm^2
+\end{pmatrix}.
+\tag{12}
+\]
+Hermiticity gives a real \(g\) such that
+\[
+v=mg+2Bmp-Br,\qquad w=g+2Ap-Amr.
+\tag{13}
+\]
+Consequently, with \(\eta=v-A\) and \(\zeta=w/m-B\),
+\[
+\begin{aligned}
+EC^T&=\frac\alpha2\operatorname{diag}(1,m)M\operatorname{diag}(1,m),\\
+M&=\begin{pmatrix}\eta&g\\g&\zeta\end{pmatrix}\succ0,
+\qquad S=\alpha C_0^TM^{-1}C_0.
+\end{aligned}
+\tag{14}
+\]
+The complex row combinations of \(C_0\) are \(-z\) and \(-z\overline u\). Therefore the traceless component of \(S\) obeys the exact identity
+\[
+S_{11}-S_{22}+2iS_{12}
+=\frac{\alpha z^2}{\det M}
+\left(\zeta-2g\overline u+\eta\overline u^2\right).
+\tag{15}
+\]
+For two real symmetric two-by-two matrices, commutation is equivalent to the product of their complex traceless coordinates being real after conjugating one factor. Equations (9) and (15), with \(z\ne0\), \(\det M>0\) and \(h\ne0\), thus imply
+\[
+0=\Im\left[(\zeta-2g\overline u+\eta\overline u^2)
+(A+Bu^2)\right]
+=2q\left[p(B\zeta-A\eta)+dg\right].
+\tag{16}
+\]
+The last equality uses only \(p^2+q^2=1\). Substitution of (13) gives the exact general necessary equation
+\[
+g[dm+p(B-Am^2)]+dmp-2ABp^2(m^2-1)=0.
+\tag{17}
+\]
+No division by its possibly vanishing \(g\) coefficient is made in the general case.
+
+For \(m=1\), since \(d\ne0\) and \(1-p>0\), (17) gives \(g=-p/(1-p)\). Equations (13)–(14) then give
+\[
+\operatorname{Tr}M=2g+2p-r-1
+=-\frac{2p^2}{1-p}-r-1\le0.
+\tag{18}
+\]
+For \(m=-1\), since \(d\ne0\) and \(1+p>0\), (17) instead gives \(g=-p/(1+p)\), and
+\[
+\operatorname{Tr}M=-2g-2p-r-1
+=-\frac{2p^2}{1+p}-r-1\le0.
+\tag{19}
+\]
+Both inequalities use \(r\ge-1\). Each contradicts \(M\succ0\), whose trace is strictly positive. This proves Theorem 103.1, including both scaled-kernel signs and either complex phase sign. Equality in the last scalar inequalities still contradicts strict positivity, so no unhandled limiting trace case remains.
+

@@ -1,0 +1,19 @@
+**Proposition 66.1 (rank-two centers at half beta).** For every positive trace-one center of support rank $k=2$, the strict system (S.59) at $\beta=1/2$ is infeasible, independently of the ambient actual Kraus rank.
+
+Proof. Here $E_Z$ has rank one in dimension six, so its unit range vector is already supported on $\mathbb C^3\otimes K_2$, with $K_2$ the whole center support. No dimension-intersection premise requiring $k\geq3$ is used. The construction (S.68)–(S.71) and the branch-complete proof (S.73)–(S.75) apply with $\epsilon=0$, $t=1-s>0$ and $s\geq1/2$. Thus strict feasibility requires $\Delta>0$ and $f(s,t)<d$. If $s\geq T$, then $\Delta\leq0$, a contradiction. Otherwise $1/2\leq s<T$ and $d<t\leq1/2$.
+
+Use precisely the boundary comparison (S.77), inherited from (R.228)–(R.229) of Theorem 44.2 of the first volume. Its full denominator and sign are
+
+$$
+\begin{aligned}
+\Delta&=4(t-d)(T-t),\\
+f(s,t)-d&=(t-d)\bigl[1-4(T-t)C(s,t)\bigr],\\
+1-4(T-t)C(s,t)&=\frac{4D_0}{s(4s+2h)(4t+2h)},\\
+D_0&=s(4st+2h+h^2)-2(T-t)(4st+h)\\
+&=h-h^2t-4st(h-t)\geq t(1-h^2)=\frac t2>0.
+\end{aligned}
+\tag{S.109}
+$$
+
+All denominator factors are positive. The lower bound uses $s+t=1$, $4st\leq1$ and $h>t$. Hence $f(s,t)>d$, contradicting necessity, including $s=t=1/2$. Singular $L$, directional marginals and $\kappa=1$ remain within the reused argument; only the positive definite matrix $B_0$ of (S.74) is inverted. Ambient zero eigenvalues are removed by taking the exact center support before this construction. Rank-one centers are treated by the actual overlap bound of Theorem 52.3, without rank-five padding. $\square$
+

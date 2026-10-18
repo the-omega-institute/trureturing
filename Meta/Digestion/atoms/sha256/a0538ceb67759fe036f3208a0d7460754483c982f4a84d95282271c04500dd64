@@ -1,0 +1,66 @@
+**Convention 1.3 (the exact AAR factor, reused).** For a word $q$ put
+$s(q)=\#L(q)+2\#R(q)$, and put $e(\alpha)=0$, $e(\beta)=1$.
+Use precisely the factor $\Gamma_q(u)=(b,c)$ of
+[AAR, Definition 12.2, Theorem 12.3 and Proposition 13.3][AAR]. It is
+$(0,0)$ at an original branch endpoint. Otherwise let $a$ be the first
+original leaf on the path toward $q$, with label $\ell$, and write $q=ar$.
+Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{NCE.5}
+$$
+
+The supplied all-count decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{NCE.6}
+$$
+
+On attained factors, $c=1$ implies $b\ge2$. AAR proves that (NCE.6)
+equals $r_{\rho^ku}(q)$ for every $k\ge0$. Its temporal calculation
+uses $T_j=\rho^j\alpha$, with $T_0=\alpha$, $T_1=\beta$ and
+$T_{j+2}=\langle T_{j+1},T_j\rangle$. Traversing $L$ or $R$
+subtracts respectively one or two from the index, and an edge can
+be traversed only while its preceding index is at least two.
+For a nonempty word $r$, these guards have their largest threshold
+at its last edge: $j\ge s(r)$ when that edge is $R$, and
+$j\ge s(r)+1$ when it is $L$. Once reached, its reply is the
+root reply of $T_{j-s(r)}$. Hence an $R$-ending
+word is absent for $j<s(r)$, alpha at $s(r)$, beta at $s(r)+1$, and
+branch thereafter; an $L$-ending word is also absent at $s(r)$, then
+beta at $s(r)+1$ and branch thereafter. The latter word has no alpha
+stage. Transport is applied only at the actually present original
+blocking leaf. This gives (NCE.5), including initially absent targets.
+
+Conversely, the complete trajectory recovers $b$ as its first branch
+count and $c$ as the indicator that an alpha stage occurs. Thus equality
+of these factors is exactly equality of trajectories. Distinct blocking
+positions can have the same factor; they must not be counted as distinct
+target values. At every actually present occurrence $a$ with subtree $u$,
+homomorphic substitution gives
+
+$$
+r_{\rho^kt}(aq)=r_{\rho^ku}(q),
+\qquad
+\Gamma_{Rq}(\langle\alpha,v\rangle)=\Gamma_q(v).
+\tag{NCE.7}
+$$
+
+In the original request family its first branch count satisfies
+$b_{Rq}(\langle\alpha,v\rangle)\le s(q)+2\le2D$.
+Thus the supplied finite predictor can be the pair $(b,c)$;
+its size and the authentic count representation remain separate
+from the optimized retained alphabet.
+

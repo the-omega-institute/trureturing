@@ -1,0 +1,34 @@
+### 104.2. Interior complete-norm reconstruction
+
+First consider a coefficient on the principal original density domain \(F\cup J\) that is fixed by conjugation followed by interchange of 3 and 4. Suppose its \(F\) block and both original singleton diagonal entries vanish. The latter condition is separate: the antiunitary alone only equates those two entries. Put
+\[
+U_J=\frac1{\sqrt2}\begin{pmatrix}1&i\\1&-i\end{pmatrix},
+\qquad U=\operatorname{diag}(I_2,U_J).
+\]
+In these real coordinates write
+\[
+L=\begin{pmatrix}0&E\\E^T&J_0\end{pmatrix},
+\quad E\in M_2(\mathbb R)\text{ invertible},
+\quad J_0=J_0^T,\quad\operatorname{Tr}J_0=0.
+\tag{104.5}
+\]
+Averaging primal and dual variables under the antiunitary retains their feasibility and objective. Thus the fixed primal density and reduced dual may be written
+\[
+\begin{aligned}
+\rho&=\operatorname{diag}(P,\pi I_2),\quad P\succeq0,\quad\pi\ge0,
+\quad\operatorname{Tr}P+2\pi=1,\\
+\kappa(L)&=\min\{t:Z\succeq0,\ Z-2L\succeq0,
+\ Z_{FF}\preceq tI_2,\ \operatorname{Tr}Z_{JJ}\le2t,\ Z=Z^T\}.
+\end{aligned}
+\tag{104.6}
+\]
+The trace inequality is precisely the pair of original singleton inequalities after averaging. The density domain has not been enlarged by treating \(J\) as a whole fibre. Strict primal and dual feasibility give attained equal optima by finite-dimensional semidefinite duality. The general complete-norm SDP framework is standard; see J. Watrous, [Semidefinite Programs for Completely Bounded Norms](https://theoryofcomputing.org/articles/v005a011/), Theory of Computing 5 (2009), 217–238. The explicit two-singleton reconstruction below follows from the displayed complementary equations.
+
+Put \(M_E=E^TE\), \(s_E=\operatorname{Tr}M_E\). Let \(Y_0\) be the unique symmetric solution of
+\[
+M_EY_0+Y_0M_E=J_0,\qquad
+\gamma=\operatorname{Tr}(Y_0M_EY_0)\ge0.
+\tag{104.7}
+\]
+In a basis diagonalizing \(M_E\), each entry of \(Y_0\) is the corresponding entry of \(J_0\) divided by the positive sum of the two eigenvalues.
+

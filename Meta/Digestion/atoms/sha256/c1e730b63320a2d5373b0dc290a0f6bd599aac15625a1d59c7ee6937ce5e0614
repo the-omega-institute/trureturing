@@ -1,0 +1,80 @@
+**Proposition 63.1 (the first vanishing factor).** Use exactly JR.140–.143's
+frame, $h,\psi,d_-,d_+,d_N$ and their scales. Then
+
+$$
+\begin{gathered}
+1.04175447537<t_\dagger<1.04175447539,\\
+.9962433511188<\tau_\dagger<.9962433511192,\\
+d_+(t_\dagger)=0,\quad d_-(t_\dagger)>0,\quad d_N(t_\dagger)>0,
+\quad d_+'(t_\dagger)<0,\\
+.0460291518<\lambda_\dagger<.0460291520,\qquad
+.0081796784563<j(\tau_\dagger)<.0081796784566.
+\end{gathered}
+\tag{RC.37}
+$$
+
+Proof. These refinements require the entire source box, not JR.86 alone.
+For a fully specified interval comparison use the 384 closed cells
+
+$$
+\left[\frac{1700+i}{2000},\frac{1701+i}{2000}\right],
+\quad i=0,\ldots,383,
+\tag{RC.38}
+$$
+
+whose union is $[.85,1.042]$. Substitute JR.140, using its positive
+radicals and rationalized frame root. Write
+$M_{\rm fr}=F^TGF$, $c=F^TCF$, $q=F^TQF$ and evaluate the multiplier
+by the algebraically identical formula
+
+$$
+\lambda(t)=
+\frac{(M_{\rm fr})_{02}/q_{02}-(M_{\rm fr})_{01}/q_{01}}
+{c_{01}/q_{01}-c_{12}/q_{12}}=2\psi'(t)/h'(t).
+\tag{RC.39}
+$$
+
+This avoids numerical differentiation. Form $d_-,d_+,d_N$ by JR.142.
+Propagate the value and exact first derivative by the sum, product,
+quotient rules, with $(\sqrt v)'=v'/(2\sqrt v)$, initializing $t'=1$.
+Use Definition 60.1 for each value/derivative interval. All radicals are
+positive and every divisor excludes zero on every cell. The resulting
+uniform strict comparisons are
+
+$$
+d_->1/2000,\qquad d_N>3\cdot10^{-6},\qquad d_+'<-3/5000.
+\tag{RC.40}
+$$
+
+For example smaller bounds than the respective aggregate lower,
+lower and negative-upper margins are $.00052123$,
+$.0000043166$ and $-.00072074$. The endpoint comparisons are
+
+$$
+\begin{aligned}
+d_+(1.04)&>1.95\cdot10^{-6},&d_+(1.042)&<-2.7\cdot10^{-7},\\
+d_+(1.04175447537)&>10^{-14},&
+d_+(1.04175447539)&<-10^{-14}.
+\end{aligned}
+\tag{RC.41}
+$$
+
+These are direct rational interval substitutions, with the same
+complete $\mathcal B_7$. Thus $d_+$ has precisely one zero on this
+interval, it is simple, and neither other factor vanishes there.
+JR's $t_*\in(.85,.9)$ and its least-zero definition identify that root
+with $t_\dagger$. Substituting the entire narrow $t$ bracket into
+$h$, (RC.39), and $\operatorname{tr}G-2\psi$ gives, respectively,
+
+$$
+\begin{gathered}
+(.9962433511188805,.9962433511191363),\\
+(.04602915183020,.04602915189613),\\
+(.0081796784563517,.0081796784565250),
+\end{gathered}
+$$
+
+which imply (RC.37). This identifies and refines the boundary of the
+already proved initial branch; it does not repeat its optimality proof.
+$\square$
+

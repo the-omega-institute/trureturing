@@ -1,0 +1,42 @@
+**定义 220.7（Joint suffix measures and the domination cone）。**
+Choose $1\le k<L$ and $m=L-k$. For words with $n(w)\le k$ reset
+all prefix bits except the first zero to one, preserving the entire
+suffix $v\in\{0,1\}^m$. Push $A,C,P$ by that same map and sum
+collisions. Tail words and $T$ remain fixed. Call the map $\rho_k$.
+It is linear, idempotent and preserves $Q,W$.
+
+On the pooled score let $u_i(v)=A+P$, $h_i(v)=C+P$ at the word
+with sole prefix zero $i\le k$ and suffix $v$. On all-prefix-one
+words let $z(v)=A+P$, with $z(1^m)=T$. For each $j>k$, let
+$r_j(v)=C+P$ on its tail first-zero class, zero elsewhere, including
+at $1^m$. All these are measures on the same suffix cube. Set
+
+$$
+\begin{gathered}
+ U=\sum_{i\le k}u_i,\quad s_i=|u_i|,\quad S=\sum_i s_i,
+ \quad Z=|z|,\quad R(H)=\max_{j>k}r_j(H),\\
+ d_i=s_i-|h_i|=-\beta_i,\quad D=\sum_i d_i,
+ \quad E=-\beta_1-\beta_2.
+\end{gathered}
+$$
+
+The cone $\mathcal D_k$ consists of inputs whose pooled measures obey
+both families of inequalities:
+
+$$
+\begin{aligned}
+ \mathrm{D1}:&\quad h_i(H_{a,t})\le u_i(H_{a,t})
+       &&(i\le k,\ a>k,\ t=0,1),\\
+ \mathrm{D2}:&\quad h_i(H)\le(U+z)(H)
+       &&(i\le k,\ H\text{ any four-cell suffix pair cell}).
+\end{aligned}\tag{220.5}
+$$
+
+Here $H_{a,t}=\{v:v_a=t\}$; full address subscripts are retained.
+For $m=1$ D2 is empty. D1 gives $0\le d_i\le s_i$.
+For $k\ge2$, $E=d_1+d_2$; for $k=1$, $\beta_2$ is unrestricted
+and $E$ can be negative. There is no pointwise $C\le A$ hypothesis.
+Tail signs, interleavings, cancellations, $P$ and $T$ are unrestricted.
+The conditions must be checked before discarding any $h_i$ or overlap
+data.
+

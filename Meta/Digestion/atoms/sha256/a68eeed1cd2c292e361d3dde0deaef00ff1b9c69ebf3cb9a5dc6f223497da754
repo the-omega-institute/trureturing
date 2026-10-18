@@ -1,0 +1,21 @@
+## 155. Consequence and exact remaining cases
+
+The unique obtuse return owner in the four-reservoir short-return theorem
+must have its other axial label Q in H. The source's complete alternatives
+therefore reduce to:
+
+* (C,Z,M,M,Z,M), retaining the additional axial M slot;
+* (C,Z,M,Z,Z,M), retaining the additional axial Z slot;
+* (C,Z,M,D,Z,M), only if
+  d>(z-m)^2/(c+1)-1>c;
+* (M,Z,C,Z,Z,C), retaining the additional axial Z slot.
+
+These are necessary patterns, not asserted compatible quotients. The
+complete equations for repeated-role H edges can change reservoir pair
+along their stars, so the fixed-pair special-star Jensen argument cannot
+simply be applied to them. No seed or global all-H witness hypothesis is
+added: the needed witnesses and length inequalities came from the same
+actual four-reservoir escape block. No degree upper bound, distinct-owner
+assumption for Q's axes, or prohibition of self-gluing has been imposed.
+
+

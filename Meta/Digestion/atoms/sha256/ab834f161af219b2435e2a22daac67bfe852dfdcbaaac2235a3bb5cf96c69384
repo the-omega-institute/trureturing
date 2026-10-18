@@ -1,0 +1,56 @@
+**Definition 58.2 (coefficient dictionary).** Write the source Kraus
+matrices as
+
+$$
+D_{\rm src}=\operatorname{diag}(h_0,h_1,h_2),\quad
+T_{\rm src}=a_{\rm src}e_0e_1^T+b_{\rm src}e_1e_0^T,\quad
+S_{\rm src}=c_{\rm src}e_0e_2^T+d_{\rm src}e_2e_0^T,
+$$
+
+and $M_f=\operatorname{diag}(0,m_1,m_2)$, as in JR.2. Put
+
+$$
+\begin{gathered}
+\theta=\frac{a_{\rm src}b_{\rm src}}{h_0h_1},\quad
+\omega_{\rm src}=\frac{c_{\rm src}d_{\rm src}}{h_0h_2},\quad
+\delta=\theta+\omega_{\rm src},\quad s_0=\sqrt\delta,\quad
+\beta=\chi=\frac{\omega_{\rm src}}\delta,\quad\alpha=1-\beta,\\
+L=\operatorname{diag}(s_0,1,1),\quad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\quad
+C=(e_0e_1^T+e_1e_0^T)/2,\\
+G=\begin{pmatrix}g_0&x&y\\x&g_1&z\\y&z&g_2\end{pmatrix}=LNL,
+\qquad j(\tau)=J_{s_0\tau}.
+\end{gathered}
+\tag{RC.2}
+$$
+
+Here $N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$,
+$(K_0,K_1,K_2)=(D_{\rm src},T_{\rm src},S_{\rm src})$ and
+$\Delta=\rho_{27,+,+}-\rho_{5,+,+}$. Equivalently, with
+$d_i=p_{27,i}-p_{5,i}$ and
+$q_{ij,y}=\sqrt{p_{yi}p_{yj}}$,
+
+$$
+\begin{aligned}
+\Delta A&=\sum_i h_i^2d_i,&
+g_0&=\delta\Delta A,\\
+g_1&=b_{\rm src}^2d_0+a_{\rm src}^2d_1,&
+g_2&=d_{\rm src}^2d_0+c_{\rm src}^2d_2,\\
+x&=s_0(h_0a_{\rm src}+h_1b_{\rm src})(q_{01,27}-q_{01,5}),\\
+y&=s_0(h_0c_{\rm src}+h_2d_{\rm src})(q_{02,27}-q_{02,5}),\\
+z&=a_{\rm src}c_{\rm src}(q_{12,27}-q_{12,5}).
+\end{aligned}
+\tag{RC.3}
+$$
+
+Define $L_f=\|M_f^{1/2}\Delta M_f^{1/2}\|_1$ and
+$T_{\rm flat}=((1-\delta)\Delta A+L_f+\operatorname{tr}G)/2$,
+as in JR.130. This $T_{\rm flat}$ is not the different strong-regime
+constant with the same historical name in JR.50.
+
+The global parameters $a,k,D$ introduced in §59 are scalar algebraic
+coordinates. They are not $a_{\rm src}$, the CG root coordinates, the
+initial-frame $k(t),D(t)$ of JR.140, or AS's raw transfer parameters.
+In particular the normalized residual $\beta$ is $\omega_{\rm src}/\delta$,
+not the raw AS transfer ratio $\omega_{\rm src}$.
+

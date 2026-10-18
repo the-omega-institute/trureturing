@@ -1,0 +1,38 @@
+### 454.5 与临界预算、完整来源及既有递归的关联
+
+每个固定 \(x\) 的面板 \(\mathcal U_x,\mathcal V_x\) 确实属于全部固定 \(\mathcal X_j\)，但它们的共同 \(x\)-范数并不有界。令 \(n_x=\lfloor4x\rfloor\)，有
+\(\mathcal U_x(n_x)=\mathcal V_x(n_x)=-Q_x^\mathrm{p}\)；
+非零项的下端均大于 \(2x\)。因此由单调 \(W_j\) 和 PNT，
+\[
+\|\mathcal U_x\|_{\mathcal X_j}
+\asymp_j\|\mathcal V_x\|_{\mathcal X_j}
+\asymp_j\frac{\sqrt x}{\ell^{j+1}}
+\quad(x\to\infty,\ j\text{ 先固定}).
+\tag{BC.22}
+\]
+§395 的可测核定理在 \(\eta\) 上给
+\(M_{1/2}(\eta)=\int_0^\infty|\eta(y)|y^{-3/2}dy\le12\)，因此
+\(\|J_x^\eta\|_{\mathcal Y_0}\le144/(\sqrt x\log x)\) 对 \(x\ge e\) 成立。
+这里 \(M_{1/2}(\eta)\) 是核的 Mellin 绝对矩，绝非实际 Mertens 平方根范数。
+对 \(j>0\)，本节只用（BC.8）的固定 \(x,j\) 完整前对偶成员性；不把 \(j=0\) 的共同临界常数推广到带对数权空间。
+
+所以（BC.6）的有界逆与实际 \(1/\ell^2\) 面板响应相容。
+本操作将二倍尺度深度作几何求和；§452 的同 β 最大值递归则反复施加卷积逆幂。
+二者的真实系数不同，算子恢复成本不提供实际联合相位预算。
+完整变换保留总配对，截止与变换不交换时，已经付款的逆范数也不能替代（BC.14）的真实边界。
+
+保持 §453 的同源全补集 \(\mathscr C_x\)，原目标仍精确为
+\[
+I_\psi(x)=\mathscr C_x-\mathcal A_x
+=\mathscr C_x+\mathscr H_x(N_x)+\mathscr T_x(N_x).
+\tag{BC.23}
+\]
+一侧临界下界仍须控制精确 \(\mathscr C_x\ge\mathcal A_x-B/(\sqrt x\log x)\)。
+（BC.18）的任一非零主项归一化后都为 \(\sqrt x/\log x\) 量级；
+省去负尾会改变这个实际面板的符号，却不构成原完整 \(I_\psi\) 的正性证明。
+原单位、原首块补偿和全部窗外来源均由（BC.11）、（BC.23）保留。
+
+**来源与范围。** 先检索并复用 §§395、424、425、427、452、453；固定 \(P=2\) 配对及临界逆范数早已覆盖，未将它们包装成新结论。新承重是（BC.12）–（BC.21）的真实面板截止边界、共同主项及严格符号翻转。解析 \(\gamma_1\) 上界与前段正性估计沿用 §453 已付清的 Laurent 约定、梯形绝对误差和有理对数界。Dirichlet 卷积 Banach 代数沿用 Library/ArithSums/glocknerlucht2011weightedinversion.md 的 Glöckner–Lucht arXiv:1112.0749v2 归属；PNT 沿用 §453 的 Johnston–Yang v2。没有新 RH 判据或全局原创性声明。
+
+本节为解析推导；复用本卷 §§452–453，原有符号临界估计仍未解决。
+

@@ -1,0 +1,49 @@
+### 455.5. 精确校正观测量与完整实际缺口
+
+面板校正读数
+
+\[
+\widehat{\mathscr H}_x(N)=\mathscr H_x(N)-\mathscr E_x(N)=-\mathcal A_x
+\tag{CC.23}
+\]
+
+在全部 \(N\ge\lceil8x\rceil\) 精确保持原面板值。这里保留 **精确 \(\mathcal A_x\)**，不将其 \(C_{\rm pair}/\ell^2+o(\ell^{-2})\) 渐近替换进临界公式。§454 的 \(N\asymp x\) 正前段及负全尾已经表明补偿不能在该尺度省略；（CC.21）进一步证明，即使采用 \(x^{3/2}\log x\) 的截止，省略后仍有非零原临界误差。
+
+为明确完整来源，复用 §453（DP.26）–（DP.27）的自然奇源补集
+
+\[
+\mathscr C_x=\lim_{R\to\infty}
+\sum_{\substack{m\le R,\ m\text{ odd}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m),\qquad
+I_\psi(x)=\mathscr C_x-\mathcal A_x.
+\tag{CC.24}
+\]
+
+这一已有极限保留单位 \(m=1\)、全部其余奇素数、合数、面板两侧及完整远尾；每份奇源包含完整偶倍纤维。它恢复 §424 的同一实际 Mertens 配对，原单位首块与原 \(\beta_d=\log(1-(-q)^d)\)、\(q=(3-\sqrt5)/2\) 的全部纤维及运输补偿均来自已有完整合同。上文估计使用全部高商的实际 \(\eta\)，没有新增任何 \(\beta\) 截断。
+
+因此含完整补集的精确观测量为
+
+\[
+\boxed{\mathscr C_x+\widehat{\mathscr H}_x(N)
+=\mathscr C_x+\mathscr H_x(N)-\mathscr E_x(N)=I_\psi(x).}
+\tag{CC.25}
+\]
+
+如果省略唯一显示的面板截止校正，则同一完整来源读数变成
+
+\[
+\mathscr C_x+\mathscr H_x(N)=I_\psi(x)+\mathscr E_x(N).
+\tag{CC.26}
+\]
+
+故在（CC.20）的截止上，这个错误读数与目标之间的临界归一化差精确趋于 \(F(1/2)/\lambda>0\)。这不是关于真实完整 \(I_\psi(x)\) 符号的推断，而是同一来源上可量化的观测偏差。
+
+原一侧目标所需的剩余供应仍然是：存在固定 \(B\ge0\)，对全部充分大实数 \(x\)，
+
+\[
+\boxed{\mathscr C_x\ge\mathcal A_x-\frac B{\sqrt x\log x}.}
+\tag{CC.27}
+\]
+
+（CC.27）与 \(\sqrt x\log x\,I_\psi(x)\ge-B\) 精确等价。既有无条件 \(\mathscr C_x=\mathcal A_x+O(\ell^{-4})\) 不支付该精度；本稿的有限面板截止律也不提供完整实际 \(M/O\) 的平方根对数范数或全部来源的临界抵消。若进一步把 \(\mathscr C_x\) 改为有限实际补集，必须另外控制那个**同一来源**的完整截断余项，不能用本稿的面板补偿代替。
+

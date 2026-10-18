@@ -1,0 +1,33 @@
+**Definition 209.7 (Simultaneous comparable submeasures).** Let $L\ge3$
+and let $\nu$ be one actual measure on all late coordinates, of mass
+$S>0$. Put $\nu_n=\nu|_{\{x_n=0\}}$,
+$m_j=|\nu_j|$, $d_{ij}=\nu\{x_i=1,x_j=0\}$ and
+$h_{ij}=\nu\{x_i=x_j=1\}$.
+Choose $c_a\ge0$ with $E=c_1+c_2\le S$, and put
+$H=(S+E)/2$, $p_a=H-c_a$, $p_*=\max(p_1,p_2)$.
+For every late $n$ choose
+
+$$
+0\le\mu_n\le\nu,\qquad |\mu_n|=\eta_n,\qquad
+\mu_n\le\nu_n\ \text{or}\ \nu_n\le\mu_n.
+\tag{209.12}
+$$
+
+The last alternative is comparability of measures on the whole cube,
+not just of their total masses. Its direction may depend on $n$.
+There is no condition $\sum_n\mu_n\le\nu$.
+For $n<j$ write $u_{nj}=\mu_n\{x_j=0\}$, and set
+
+$$
+\begin{aligned}
+f_j&=\max(\{\eta_n:n>j\}\cup\{0\}),&\mu&=\max_n\eta_n,\\
+U_j&=\max(\{\eta_j\}\cup\{u_{nj}:n<j\}),&
+Z_j&=\max(\{f_j\}\cup\{\eta_n-u_{nj}:n<j\}),\\
+U_{ij}&=\max(\{\eta_j\}\cup\{u_{nj}:i<n<j\}),&
+Z_{ij}&=\max(\{f_j\}\cup\{\eta_n-u_{nj}:i<n<j\}).
+\end{aligned}
+\tag{209.13}
+$$
+
+All class indices in these expressions lie in $I$.
+

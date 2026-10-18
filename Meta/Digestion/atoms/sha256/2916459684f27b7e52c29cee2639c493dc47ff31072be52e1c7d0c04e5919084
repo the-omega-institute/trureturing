@@ -1,0 +1,9 @@
+**定义 39.3（目标鲁棒充分族）。** 令 $h=2f+e+1$，定义
+
+$$
+\mathscr A^{f,e}_{Z\mid m}
+=\{S\subseteq I:\forall D\in\mathcal D_m,\ |S\cap D|\ge h\}.
+$$
+
+由定理 39.2，它是完整信道合同下的 $\mathscr A^{\mathcal U}_{Z\mid m}$。$\operatorname{Min}\mathscr A^{f,e}_{Z\mid m}$ 表示包含最小的鲁棒充分集。阈值 $h$ 要求在每个目标分离支持内有足够记录，而非只要求所选记录的总数达到 $h$。
+

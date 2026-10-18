@@ -1,0 +1,18 @@
+**Definition 11.2 (native and interpretive boundaries).** The original-coordinate transport remains
+
+$$
+\begin{gathered}
+J_\kappa=\operatorname{diag}(1,1,\kappa),\qquad D=\kappa x,\\
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),\qquad
+g_{\rm orig}=|\kappa|g.
+\end{gathered}
+\tag{11.1}
+$$
+
+The transported long-time tensor is $J_\kappa M J_\kappa^{\mathsf T}$ with its signed cross terms. The amplitude and unit raw-source kernel have different absolute-Jacobian factors. No result is uniform as $\kappa\to0$, on the actual frozen zero leaf, on a wrapped phase cover or torus, or at zero cutoff. The auxiliary $\mathcal G$ in §4 supplies no native cutoff-free realization.
+
+The four canonical coordinates, Engel homogeneous dimension seven, rank-three long-time phase tensor, retained three-coordinate observation and physical Euclidean three-space are distinct notions. Neither physical three-space nor physical $SO(3)$ is selected. Analytic amplitudes and spectral identities supply no native preparation, actuation, lawful transport realization, clock permission, density acquisition or resource bridge. The infinite-fibre and interacting quantum distinctions in P §§92–96 remain in force; no autonomous reduced quantum evolution follows.
+
+This differential-operator spectral energy is distinct from the selected-input quantum acquired-mass quantity with the same symbol in other volumes. There is no full-channel acquisition conclusion, native feasibility, efficiency, impossibility or capacity claim, generic neural-network or empirical machine-learning conclusion, ML implementation migration, or completion of the wider programme. Actual competitors remain unrestricted complex vectors throughout. The original complete-sign, occurrence and finer actual-scale obligations remain exactly those of Definition 10.2.
+

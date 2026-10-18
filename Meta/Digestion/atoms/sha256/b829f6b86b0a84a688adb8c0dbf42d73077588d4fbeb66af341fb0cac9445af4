@@ -1,0 +1,126 @@
+**Theorem 72.1 (eight finite Toeplitz blocks, not a relaxation).** Let
+$0\le s<s_0$, $t=e^A-1\ge0$, $L_0=\operatorname{diag}(\delta,1,1)$,
+$\alpha_0=\theta/\delta$, $\beta_0=\omega/\delta$ and
+
+$$
+\begin{gathered}
+\mathbf c(\phi)=(s_0,\cos\phi/\sqrt{\alpha_0},
+ \sin\phi/\sqrt{\beta_0})^T,\qquad0\le\phi<2\pi,\\
+\mathsf G(\phi)=\mathcal D(\mathbf c(\phi))\mathbf c(\phi)\mathbf c(\phi)^T,
+\qquad\mathsf B(\phi)=\mathcal N(\mathbf c(\phi))
+ n(\mathbf c(\phi))n(\mathbf c(\phi))^T.
+\tag{FA.19}
+\end{gathered}
+$$
+
+For eight nonnegative circle measures $\mu_{r,\epsilon,\eta}$ indexed
+by $(r,\epsilon,\eta)\in\{\pm1\}^2\times\{0,1\}$, define
+
+$$
+\begin{aligned}
+V^{\rm mom}_{s,t}=\max\quad&\sum_{r,\epsilon,\eta}\epsilon\int
+ [\operatorname{tr}(N\mathsf G)+\eta t\operatorname{tr}(\Delta\mathsf B)]
+ d\mu_{r,\epsilon,\eta}\\
+\text{subject to}\quad&\sum_{r,\epsilon,\eta}\int\mathsf G\,d\mu_{r,\epsilon,\eta}=L_0,\\
+&t\sum_{r,\epsilon}\int\mathsf B\,d\mu_{r,\epsilon,1}=M,\\
+&\sum_{r,\epsilon,\eta}r\int\mathsf G_{01}\,d\mu_{r,\epsilon,\eta}\ge s.
+\end{aligned}
+\tag{FA.20}
+$$
+
+Then
+
+$$
+\mathfrak F_{s,A}\ne\varnothing\quad\Longleftrightarrow\quad
+\text{FA.20 is feasible},
+\tag{FA.21}
+$$
+
+and, when nonempty,
+
+$$
+\mathcal T_A(s)=\tfrac12[(1-\delta)\Delta A+V^{\rm mom}_{s,t}].
+\tag{FA.22}
+$$
+
+Each integrand is a trigonometric polynomial of degree at most four.
+With moments $m_k=\int e^{ik\phi}d\mu$, the exact finite condition
+for each of the eight blocks is
+
+$$
+\operatorname{Toep}_5(m)=(m_{j-i})_{0\le i,j\le4}\succeq0,
+\qquad m_{-k}=\overline{m_k}.
+\tag{FA.23}
+$$
+
+The feasible moment set is compact, the maximum is attained, and at most
+forty low labels, together with finitely many high/complement labels,
+suffice. Singular and zero blocks are included. This finite SDP and its
+implicit optimum are not a scalar evaluation of the weak frontier.
+
+**Proof.** Every nonzero real null coefficient vector can have its
+common sign removed and be written $\sqrt p\mathbf c(\phi)$ with
+$p>0$: normalize its nonzero first coordinate to $s_0$ and use the
+ellipse equation. Theorem 69.1 proves this for actual labels, even
+though their starting Kraus representations were arbitrary.
+Its failure effect is $p\beta nn^T$ with
+$0\le\beta\le t\mathcal N/\mathcal D$. For $t>0$ split the
+label, retaining its binary report, into pure-live weight
+$p(1-\beta\mathcal D/(t\mathcal N))$ and saturated weight
+$p\beta\mathcal D/(t\mathcal N)$. The resulting total live Gram,
+failure effect, signed winding coordinate and sharp high effect are
+unchanged. Absolute-value convexity bounds the old TV above by the new
+one. Give each endpoint coefficient weight $p'$ the measure mass
+$p'/\mathcal D$, and assign $\epsilon$ as the sign of its actual
+height difference. This gives exactly FA.20. High branches have only
+$D$ products in the weak regime; their height differences are all
+positive, totaling $(1-\delta)\Delta A$. This proves necessity and
+the upper value bound for every original time law. If $t=0$, FA.8
+forces all supported failure to vanish, contradicting $M\ne0$;
+FA.20 is also infeasible. Thus no division by zero is used.
+
+Conversely a circle atom of mass $a>0$ in block $(r,\epsilon,\eta)$
+gives an actual branch with
+$K=\sqrt{a\mathcal D(\mathbf c)}K(\mathbf c)$ and
+$N_{\rm fail}=a\eta t\mathcal N(\mathbf c)nn^T$.
+It satisfies FA.8, purely live or budget-saturated. Use FA.11–.13,
+retain report $r$, and add the high pair
+$\sqrt{(1-\delta)/2}D$ with fair reports and coherent complement.
+The equations in FA.20 give the original contrast inequality, live
+Gram, failure sum, high effect and complete output of Theorem 75.1.
+The actual absolute-difference sum is at least the signed objective
+chosen by $\epsilon$. No full binary effects or channel were fixed
+in proving the upper bound.
+
+It remains to justify both the finite reduction and attainment rather
+than assuming an arbitrary measure solution can be enacted. Every entry
+of $\mathcal D\mathbf c\mathbf c^T$ and $\mathcal Nnn^T$ has degree
+at most four, so only $m_{-4},\ldots,m_4$ occur linearly. Necessity of
+FA.23 follows by integrating the squared absolute value of a polynomial
+of degree at most four. For sufficiency use the classical Toeplitz
+Vandermonde fact [YX, §II, Theorem 1][YX]. Its finite-dimensional
+argument here also handles all degeneracies: Gram vectors
+$v_0,\ldots,v_4$ for the PSD Toeplitz matrix obey
+$\langle v_{i+1},v_{j+1}\rangle=\langle v_i,v_j\rangle$ for
+$0\le i,j<4$. Thus $v_i\mapsto v_{i+1}$ extends by linearity to a
+well-defined isometry of their spans. Domain and range have equal
+dimension. Extend it to a unitary on the full Gram space of dimension
+at most five, and spectrally decompose that unitary. Since
+$v_j=U^jv_0$, its spectral masses at $v_0$ give at most five positive
+circle atoms with precisely the prescribed moments (choose the phase
+convention to match $m_k$). If $v_0=0$, Toeplitz diagonal equality
+makes every vector zero and the empty measure suffices. Singular Gram
+spaces require no inversion. This proves FA.23's sufficiency and at
+most forty atoms over eight blocks.
+
+On the circle $\operatorname{tr}\mathsf G$ has a strictly positive
+minimum: $\mathcal D>0$, $x=s_0>0$, and the circle is compact.
+The fixed total Gram therefore bounds the sum of all measure masses;
+$|m_k|\le m_0$ bounds all moments. FA.23 and the linear equalities
+and inequality form a closed bounded finite-dimensional set. Its
+continuous objective attains a maximum when feasible. Spectral
+finite realization of a maximizing tuple gives an actual instrument
+with TV at least FA.22; the universal upper direction forbids strict
+excess. This proves value equality and actual finite attainment.
+$\square$
+

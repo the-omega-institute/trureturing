@@ -1,0 +1,84 @@
+**Theorem 73.1 (reference-safe normalized $L^1$ transfer).** Keep the
+SAME finite constructor, acquisition encoders, decoder effects $F_j$,
+live factors and high decoder of Definition 69.1. Replace its common
+density $g$ by any $\widetilde g\in L^1([0,1])$ satisfying
+$\widetilde g\ge0$ almost everywhere and $\int_0^1\widetilde g=1$.
+Let
+
+$$
+\widetilde G(a)=\int_0^a\widetilde g(u)\,du,\qquad
+\widetilde Z_j(a)=\sqrt{I-\widetilde G(a)F_j}.
+\tag{JRH.79}
+$$
+
+Use the existing §66 monitor with these substituted scalar functions,
+interpreting its differential identities almost everywhere, and retain
+the same terminal survivor isometries. This defines a conditional causal
+constructor $\widetilde\Psi$ with the same complete terminal live map,
+terminal survivor effects, integrated failure effects and integrated
+activity on EVERY entire fibre. In particular the original per-fibre
+budget is preserved for this specific change. Moreover
+
+$$
+\boxed{d_{\rm ref}(\widetilde\Psi,\Psi)
+ =\tfrac12\|EME^\dagger\|_{\rm op}\,
+                      \|\widetilde g-g\|_{L^1}
+ =\tfrac12\|M\|_{\rm op}\,\|\widetilde g-g\|_{L^1}}.
+\tag{JRH.80}
+$$
+
+This equality concerns the common complete stopped channels; it also
+holds if their identical acquisition labels are retained. With
+$E(\Psi)=E_*$ supplied separately it gives the corresponding sufficient
+upper bound on the unchanged original $E(\widetilde\Psi)$.
+
+Proof. Each $F_j\prec I$ has a strictly positive spectral gap from
+one, and $0\le\widetilde G\le1$. Functional calculus on this compact
+spectral interval makes $\widetilde Z_j$ absolutely continuous. The
+existing (JRH.54)–(JRH.55) identities therefore apply almost everywhere
+with the substituted functions, and their integrated identities apply
+on every Borel set. This uses the fundamental theorem for absolutely
+continuous functions, without a new Kraus or monitor derivation.
+Nonnegative integrable jump coefficients and those identities give a
+normalized instrument. The endpoint values are still
+$\widetilde G(0)=0$, $\widetilde G(1)=1$. Thus the terminal
+survivor effect and terminal live factor are unchanged. Intermediate
+survivor effects may differ; they are not claimed to be unchanged.
+
+The activity computation in (JRH.56) is the endpoint difference of
+the primitive $-\log(1-fG)$ for the nonzero eigenvalue $f<1$.
+The absolutely continuous chain rule applies to $\widetilde G$,
+including intervals where it is constant, so this endpoint difference
+is still $-\log(1-f)$. Pure pieces retain zero activity and the high
+decoder is unchanged. For the GC factors this is exactly (GC.50),
+on each ENTIRE fibre. No smoothness or strictly positive lower bound
+on $\widetilde g$ is needed for this conditional mathematical
+instrument. Supplying the changed time-dependent coupling and actual
+clock remains a separate apparatus assumption.
+
+Only the failure densities differ. For a normalized joint input $X$
+let
+$T_R=\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$.
+It is positive: cyclicity of partial trace rewrites it with $\sqrt{EME^\dagger}$
+on both sides of $X$. By the existing reference identity (GC.54),
+the norm difference in a failure component is its scalar $L^1$
+difference times the trace of this positive operator. Summing the
+separate five nonnegative weights, whose sum is one, gives exactly
+
+$$
+\tfrac12\|[(\widetilde\Psi-\Psi)\otimes\operatorname{id}_R](X)\|_1
+ =\tfrac12\|\widetilde g-g\|_{L^1}
+              \operatorname{tr}(EME^\dagger X_A).
+\tag{JRH.81}
+$$
+
+Live and all other sectors have zero difference, including both zero
+failure labels separately. If acquisition labels are retained, the
+same calculation uses their positive conditional reference operators;
+their traces sum to this same pairing by $\sum N_j^{\,f}=M$.
+The supremum of the pairing is $\|EME^\dagger\|_{\rm op}$,
+achieved on a maximum-eigenvalue input with trivial reference. Since
+$E$ is isometric, this equals $\|M\|_{\rm op}$. This proves
+(JRH.80), and Theorem 71.2 gives the original-objective upper bound.
+$\square$
+

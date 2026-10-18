@@ -1,0 +1,203 @@
+**Theorem 218.6 (Joint intervals and an unrestricted attained minimum).**
+Let disjoint finite sets I,J satisfy $1,2\in I$, $k=|I|\ge3$,
+$m=|J|\ge3$ and $\max I<\min J\le L$.
+Take $\gamma_j>0$ for $j\in J$ and define
+
+$$
+G=\sum_J\gamma_j,\quad\mu=\max_J\gamma_j,\quad
+\mu_{-j}=\max_{h\in J\setminus\{j\}}\gamma_h,\quad
+\eta=\min_{j\in J}\left(1-\frac{\mu_{-j}}{G-\gamma_j}\right).
+$$
+
+The denominators are positive and $\eta>0$.
+Let $c\ge0$, $S=G+c$, $s_i\ge0$ with $\sum_Is_i=S$,
+$0\le\xi_i\le s_i$, and $E=\xi_1+\xi_2$.
+Require simultaneously
+
+$$
+\begin{gathered}
+s_i+s_h\le S-\mu\quad(i\ne h\text{ in }I),\\
+l_i=\max\left(0,\frac{s_i-c}{G-\mu}\right)
+ \le u_i=\min\left(\eta,\frac{s_i}{G}\right),\qquad
+\sum_Il_i\le1\le\sum_Iu_i.
+\end{gathered}
+\tag{218.21}
+$$
+
+For $\beta_i=-\xi_i$ on I, $\beta_j=\gamma_j$ on J,
+zero elsewhere, and $K=G+S$, one full score with $T=0$ attains
+
+$$
+\min_{Q(V)=(\beta,K)}\Delta_N(V)
+ =\min_{Q(V)=(\beta,K)}\Delta_O(V)=E.
+\tag{218.22}
+$$
+
+These minima range over all full competitors, with arbitrary support,
+cancellations, pair stock, terminal, unaries, baselines and labels.
+The interval conditions are necessary and sufficient only inside the
+constructor below with its fixed row totals s. They are sufficient for
+the unrestricted minimum, not a global necessary criterion.
+
+**Proof.** Choose one vector $\chi$ with $l_i\le\chi_i\le u_i$,
+$\sum\chi_i=1$. An explicit choice, if $\sum u>\sum l$, is
+
+$$
+\chi_i=l_i+a(u_i-l_i),\qquad
+a=\frac{1-\sum l}{\sum u-\sum l}.
+$$
+
+If the denominator is zero, the assumptions force $\sum l=1$;
+take $\chi=l$. Set $t_i=s_i-G\chi_i$.
+The interval inequalities give $t_i\ge0$, $\chi_i\le\eta$,
+$\mu\chi_i+t_i=s_i-(G-\mu)\chi_i\le c$ and $\sum t_i=c$.
+
+Initially put P mass $\chi_i\gamma_j$ at $w(\{i,j\})$ for each
+$i\in I,j\in J$, P mass $t_i$ at $w(\{i\}\cup J)$, and
+C mass $\gamma_j$ at $w(\{j\})$. All A and T are initially zero.
+In guard class i convert fraction $\xi_i/s_i$ of every P atom to A
+on the same word. If $s_i=0$, then $\xi_i=0$ and no division is used.
+Every guard atom has first zero at its guard by the address ordering.
+Conversion leaves the zero reward measure $U=A+P$ unchanged and
+only decreases guard numerical rewards, which are subsets of U.
+Positive labels receive C only. This is one measure with row total $s_i$,
+single-positive column total $\gamma_j$, and all-positive reserve total c.
+
+For two guards i,h, the U cell masses are
+$(0,s_i,s_h,S-s_i-s_h)$; all C atoms are in 11 and their largest
+numerical reward is $\mu$. The guard-pair condition protects that cell.
+For guard i and positive j, in guard/positive order the U cell masses are
+
+$$
+\begin{aligned}
+(&\chi_i\gamma_j+t_i,\ \chi_i(G-\gamma_j),\\
+ &(1-\chi_i)\gamma_j+c-t_i,\ (1-\chi_i)(G-\gamma_j)).
+\end{aligned}
+\tag{218.23}
+$$
+
+Label j has C reward $\gamma_j$ in 10.
+Protecting it for every j is equivalent to $\mu\chi_i+t_i\le c$.
+Other positive labels in 11 have maximum $\mu_{-j}$; protecting all
+of them is exactly $\chi_i\le\eta$.
+Cells with guard bit zero have only guard rewards already dominated by U.
+
+For positive pair j,h, U has cells
+$(c,\gamma_j,\gamma_h,G-\gamma_j-\gamma_h)$.
+Their numerical C rewards are respectively zero, $\gamma_j,\gamma_h$
+and each remaining $\gamma_a$, bounded by the final block sum.
+Thus zero dominates every label in every full cell.
+Inactive bits are one on the support, their numerical labels earn zero,
+and their queries coarsen active pair information. Empty and singleton
+partitions refine to pairs. Every full N support is S; constant zero
+attains S in O, so $B_N=B_O=S$.
+
+The same measure has A total $\sum\xi_i$, P total $S-\sum\xi_i$,
+C total G, T zero, exact quotient as specified and $W=S-E$.
+Both costs are E. For every full competitor of that quotient,
+$W=Z-E$ and constant zero earns Z, giving $\Delta_N,\Delta_O\ge E$.
+This proves the unrestricted minimum.
+
+Conversely, inside this constructor, $\Delta_N=E$ means $B_N=S$.
+Zero already contributes total S on every schedule, so no cell can exceed
+its zero reward. Guard-pair, mixed 10 and mixed 11 cells force exactly
+the three dominance inequalities just listed. With $t_i=s_i-G\chi_i\ge0$
+and $\sum\chi=1$, these are $l_i\le\chi_i\le u_i$ and the
+guard-pair conditions. The interval-sum criterion is equivalent to the
+existence of this one vector by the explicit interpolation.
+It makes no necessity assertion for other full scores. $\square$
+
+A concentrated-debt region has a closed explicit allocation.
+Let $J\subseteq\{4,\ldots,L\}$ have at least four entries,
+arbitrary $\gamma_j>0$ with $G\ge3\mu$, and set
+$I=\{1,2,3\}$, $c=\mu/2$, $S=G+\mu/2$.
+If
+
+$$
+0\le\xi_i\le G/2,\qquad
+\sum_{i=1}^3\max(\mu,\xi_i)\le G+\mu/2,
+\tag{218.24}
+$$
+
+then the unrestricted minima at $K=2G+\mu/2$ are $\xi_1+\xi_2$.
+To construct the rows, set $d_i=\max(\mu,\xi_i)$, $U_0=G/2$.
+The interval filling $d_i\le s_i\le U_0$, $\sum s_i=S$ exists since
+$\sum d_i\le S\le3U_0$. If $3U_0>\sum d_i$, take
+
+$$
+s_i=d_i+\frac{S-\sum d}{3U_0-\sum d}(U_0-d_i);
+$$
+
+otherwise set $s=d$. Put
+$\chi_i=(s_i-\mu/2)/(G-\mu)$ and $t_i=\mu/2-\mu\chi_i$.
+Since $G-\gamma_j\ge2\mu\ge2\mu_{-j}$, $\eta\ge1/2$.
+The row bounds give $0\le\chi_i\le1/2$, $t_i\ge0$,
+$\sum\chi=1$, $\sum t=\mu/2$ and $\mu\chi_i+t_i=c$.
+Also $s_i+s_h=S-s_r\le S-\mu$. These are all joint conditions.
+This includes zero debts, exhausted conversions and equality endpoints.
+The three-positive degeneration with $G\ge3\mu$ forces equal positives;
+it is the existing equal-triple overlap, not another new relation.
+
+Here is a complete unequal four-positive repair at $L=7$:
+$J=\{4,5,6,7\}$, $\gamma=(1,1,3/4,1/2)$, $G=13/4$, $\mu=1$,
+$c=1/2$, $S=15/4$, $s=(17/16,17/16,13/8)$,
+$\chi=(1/4,1/4,1/2)$, $t=(1/4,1/4,0)$ and
+$\xi=(1,0,13/8)$.
+For each $j\in J$, at $w(\{1,j\})$ put
+A=$4\gamma_j/17$, P=$\gamma_j/68$;
+at $w(\{2,j\})$ put P=$\gamma_j/4$;
+at $w(\{3,j\})$ put A=$\gamma_j/2$.
+At $w(\{1\}\cup J)$ put A=$4/17$, P=$1/68$;
+at $w(\{2\}\cup J)$ put P=$1/4$.
+Put C=$\gamma_j$ at each $w(\{j\})$ and all other coefficients zero.
+Its totals and quotient are
+
+$$
+A=21/8,\quad P=9/8,\quad C=13/4,\quad T=0,\quad
+Q=(-1,0,-13/8,1,1,3/4,1/2;7),\quad W=11/4.
+\tag{218.25}
+$$
+
+Both supports are $15/4$, both costs one.
+Absolute stock is $9/8$, while literal stock is $15/4$;
+the one guard measure spends the latter and leaves exactly the former as P.
+
+For $0\le u\le1$, move C mass u from $w(\{4\})$ to $w(\{4,5\})$.
+The full input $Y_u$ has the same Q,W and
+
+$$
+\Delta_O(Y_u)=1,\qquad\Delta_N(Y_u)=1+(u-1/2)_+.
+\tag{218.26}
+$$
+
+Only pairs involving 5 change. At pair 45, old U cells are
+$(1/2,1,1,5/4)$; moved label 4 supplies u in 00 and $1-u$ in 01.
+The N support rises by $(u-1/2)_+$.
+O merges 00,01, whose baseline $3/2$ covers total correct mass one.
+At guard/5, the receiving 10 baseline is
+$\gamma_5+(\mu-\gamma_5)\chi_i=1$, covering u;
+the other affected cell loses label-4 reward.
+At positive pair $5,h$, $h\ne4$, the receiving cell has baseline
+$\gamma_5=1$, again covering u. An inactive query coarsens a singleton.
+All other pairs are unchanged. Constant zero continues to attain $15/4$,
+proving both formulas throughout the closed interval.
+At $u=1$ an actual unit-O input of N cost $3/2$ is repaired to one.
+
+For every actual full unit-O input in (218.22), the unrestricted lower
+bound forces $E\le1$. The constructed V has exact Q and gives (218.4)
+with $\theta=0$, against the same full $\lambda$ in (218.5).
+For other signed targets the sufficient residual test is
+$E+\max(0,\sigma_{H_L}(q-Q(V)))\le1$; it is not automatic.
+The necessary original amplitude inequality from this score is
+
+$$
+\sum_{j\in J}\gamma_ja_j
+ \le\sum_{i\in I}\xi_ia_i+(G+S)\varepsilon.
+\tag{218.27}
+$$
+
+At the example it is
+$a_4+a_5+(3/4)a_6+(1/2)a_7\le a_1+(13/8)a_3+7\varepsilon$.
+This follows by full demand pairing and the support $W+E$,
+with the owning prefix transport of §218.7. It is necessary only.
+

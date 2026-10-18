@@ -1,0 +1,30 @@
+**推论 8.3（互异祖先读数下的负判别式延伸）。** Consider
+$H_{JM}(Y,z)$ with $D_0=0,\lambda=1$. Suppose its six readings
+$0,24,48,312/5,Y,z$ are pairwise distinct and
+
+$$
+\left(\frac{1144}{5}+4Y+z\right)^2
+       -4\cdot832\cdot\frac{11Y}{10}<0.                     \tag{8.14}
+$$
+
+Then proportional gains again force identical complete targets on
+that entire fiber.
+
+Proof. Distinct readings give exactly the same sampled-zero and
+equal-drift argument. In the unequal-drift case, (8.10)–(8.11)
+are unchanged. The final identity for $V$ is
+$z/(4B+11/10)=-208-Y/B$, requiring
+
+$$
+832B^2+\left(\frac{1144}{5}+4Y+z\right)B+\frac{11Y}{10}=0.
+\tag{8.15}
+$$
+
+Its leading coefficient is positive and its discriminant is negative,
+so it has no real solution. At $(Y,z)=(48/5,-532/5)$ the discriminant
+is $-232176/25$, and (8.15) is a positive scalar multiple of the
+quadratic in (8.13). Nonnegative discriminant is not asserted to
+give actual collisions. Neither result supplies the unknown gain
+ray from the readings, or excludes collisions of nonproportional
+gains. ∎
+

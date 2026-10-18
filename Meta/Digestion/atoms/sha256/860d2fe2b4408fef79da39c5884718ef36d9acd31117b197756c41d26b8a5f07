@@ -1,0 +1,42 @@
+**Definition 3.2 (the actual $D_2$ storage and compiler).** Enumerate physical
+finite locations of the primitive mechanism, $D_0,L,D_2$, and their prescribed
+bootstrap/handoff fields, in CSA Definition 2.3's order. Count shared
+physical locations once, distinct retained versions separately. Let $q_2$
+be this finite count. A not-yet-constructed location is absent, not zero.
+
+Use the fixed outer $F_{65}$, SSA's right-spine tape encoding, eight-track
+cell $F_8$ and switches
+
+$$
+g_0=\langle\langle\bullet,\bullet\rangle,\bullet\rangle,
+\qquad g_1=\langle\bullet,\langle\bullet,\bullet\rangle\rangle,
+\tag{PVC.3}
+$$
+
+and CSA's optional-location component
+$F_{q_2}[a(z_1),\ldots,a(z_{q_2})]$, with
+$a(\bot)=\bullet$, $a(0)=g_0$, $a(1)=g_1$.
+Let $U_2(Y)$ be this whole storage tree and $\Gamma_2(Y)$ include the
+marked-head access incidences. $Y$ is a comparison record; no second byte
+store is maintained alongside these incidences.
+
+Construct $\Pi_2$ by CSA Definition 4.1's finite enumeration for precisely
+the primitive mechanism, $D_0,L,D_2$ and the single Install instrument.
+Enumerate absent before 0 before 1, then the literal row/byte/alias order.
+Resolve aliases before assigning target tracks; core creations precede
+receipt creations. A fresh finite bit creates the four ordered roles
+$f,t,v_0,v_1$ and 30 initialized/attached slot assignments, without also
+being an existing four-assignment bit target. DONE alone changes the
+active table. Every ordinary row combines its core and receipt on shared
+meter cells, preserving the just-updated read mark.
+
+This finite enumeration can itself be performed on the captured description
+by word-list loops over its finite fields and their absent/bit patterns.
+Compute its location union by list membership, enumerate pattern words by
+finite lists, discard failed guards, and emit the fixed templates. Its
+template catalogue and bootstrap-location convention are fixed code.
+Neither $\Pi_2$ nor $\Delta(D_2)$ is embedded as its own literal in $D_2$.
+The endowment uses the externally computed finite $\Pi_2$; the converter
+derives the identical description from actually captured code. This
+separates apparatus specification from self-description acquisition.
+

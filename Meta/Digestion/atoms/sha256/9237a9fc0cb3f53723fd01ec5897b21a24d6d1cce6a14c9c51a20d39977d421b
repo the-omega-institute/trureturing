@@ -1,0 +1,37 @@
+**Theorem 3.2 (a different retained coordinate changes the call price).**
+At $H=3,q=4$, with the same source, acquisition, discard, nonnegative-lag
+and future-cut conditions, the causal encoder $E'=a_1$ has exact worst
+fresh-call price one. On one attaining complete-input fiber its exact
+whole-word peak is four. Thus the two-call price for $E=a_0$ is qualified
+by that fixed encoder; it is not a minimum over all four-value encoders.
+
+**Proof.** Compute $a_1=c(T_{4+a_1})-4$ from the genuinely acquired
+original right subtree before the future choice. If the later right
+slot is visible, its normalized clock $z_1=a_1+\ell$ and $E'$ give
+$\ell$ without a new query. If only the left slot is visible, let
+$z_0=a_0+\ell$ be its acquired clock. For fixed $a_1,z_0$, put
+$b'=\max(0,z_0-3)$. Exactly the lags $[b',z_0]$ are realized by
+fixed originals $X_{z_0-\ell,a_1}$, each with current tree
+$\langle T_{z_0},T_{4+a_1+\ell}\rangle$. Their entire row is
+$(\langle T_{z_0},\square_R\rangle,\{\{R\}\})$; the right guard
+is reached and the partition is singleton. The hidden right-age interval
+is $[4+a_1+b',4+a_1+z_0]$, has at most four members, and has positive
+lower endpoint. If it is nontrivial, one actual $P_{l+1}$ query at the
+right slot, where $l=4+a_1+b'$, separates its members: the replies at
+$l,l+1,l+2,l+3$ are absent, alpha, beta and branch. Use the supplied
+shortest literal representative; singleton intervals require no query.
+The empty cut displays both slots. This gives a uniform one-call bound.
+
+For attainment, fix $a_1=0,z_0=3$ and the entire later row
+$(\langle T_3,\square_R\rangle,\{\{R\}\})$. The four fixed
+originals $X_{3-\ell,0}$ at lags $\ell=0,1,2,3$ all give this code
+and row; their current right ages are $4,5,6,7$. Zero calls cannot
+distinguish the lags. Physical $RLRR$ reads relative $LRR=P_5$ and
+gives absent, alpha, beta and branch, attaining one call and peak four.
+For the exact peak lower bound, root and left-cone queries are fixed
+by this acquired input; right-prefixed queries reduce to the interval
+$[4,7]$. The all-address argument of Theorem 2.1 with left and right
+exchanged gives $1+M(4,7)=4$. The encoder's call improvement and this
+fiber's deeper address cost are separate coordinates, not a global
+Pareto-frontier assertion. $\square$
+

@@ -1,0 +1,108 @@
+**定理 461.2（固定正单位的完整三点成本）。** 在引理 461.1 的同一域内，
+对每个 $\varepsilon\ge0$ 有
+$$
+\inf_{\substack{\sigma\text{ finite signed on }[0,\infty)\\
+                  \sigma(\{0\})=a,\ E_h(\sigma)\le\varepsilon}}
+N_-(\sigma)
+=\begin{cases}
+n_a,&0\le\varepsilon\le K_{a,h},\\
+0,&\varepsilon\ge K_{a,h}.
+\end{cases}
+\tag{MU.5}
+$$
+所有最小值都真正达到。在 $0\le\varepsilon\le K_{a,h}$ 时，
+达到测度唯一，并精确为
+$$
+t_{+,a}=-\frac2h\log r_a>0,\qquad
+t_{-,a}=t_{+,a}+\frac{2\log2}{h}>t_{+,a},
+$$
+$$
+\boxed{\quad
+\sigma_{a,\varepsilon}
+=a\delta_0+W_a\delta_{t_{+,a}}-n_a\delta_{t_{-,a}}.
+\quad}
+\tag{MU.6}
+$$
+在 $\varepsilon=K_{a,h}$ 时负部为零。
+在 $\varepsilon>K_{a,h}$ 时不宣称唯一性，且事实上有多个零成本达到测度。
+
+**证明：单位与残余的真实 Jordan 分离。** 如果 $a\ge0$ 且
+$\sigma(\{0\})=a$，真实 Jordan 部在单点处不能同时有正质量；
+故 $\sigma^+(\{0\})=a$、$\sigma^-(\{0\})=0$。
+写
+$$
+\lambda=\sigma-a\delta_0.
+$$
+则 $\lambda(\{0\})=0$，而其两个 Jordan 部在零点都无原子，
+在 $(0,\infty)$ 上与原测度的对应部分相同。因此
+$$
+N_-(\lambda)=N_-(\sigma),\qquad
+L_\lambda(s)=L_\sigma(s)-a.
+\tag{MU.7}
+$$
+反之，任一零点无原子的有限 signed 残余测度加回 $a\delta_0$
+都满足原固定单位约束并保持成本。
+这是对每个候选的精确双射，不是删除原单位或调节它的系数。
+原误差因此恰为残余数据 $u_a,v_a,z_a$ 对 $L_\lambda$ 的三点误差。
+
+**证明：残余对偶下界。** 令 $y=e^{-ht/2}\in(0,1]$，取
+$$
+q_a(t)=y^2(y-r_a)^2,
+\qquad M_a=r_a^4/16.
+$$
+导数 $2y(y-r_a)(2y-r_a)$ 与 MU.4 给
+$0\le q_a\le M_a$，有限谱率的唯一零点为 $y=r_a$，
+唯一最大点为 $y=r_a/2$。
+二次方程和 n 的定义给
+$$
+U_ar_a^2-3V_ar_a+2Z_a=0,
+\qquad Z_a-2r_aV_a+r_a^2U_a=-M_an_a.
+\tag{MU.8}
+$$
+残余误差盒与三个非零系数 $1,-2r_a,r_a^2$ 给
+$$
+\int q_a\,d\lambda
+=L_\lambda(2h)-2r_aL_\lambda(3h/2)+r_a^2L_\lambda(h)
+\le-M_an_a.
+$$
+真实 Jordan 分解则给
+$$
+\int q_a\,d\lambda
+\ge-M_aN_-(\lambda).
+$$
+合成得 $N_-(\sigma)=N_-(\lambda)\ge n_a$。
+所有核在整个非负轴有界，因此这些积分和有限线性组合都真正可积。
+下界甚至适用于不限制零点原子的更大残余类；下面的达到测度位于原受限类。
+
+**证明：达到与唯一性。** 取 MU.6 的残余两原子。
+它们位于严格正且不同的真实有限谱率，$W_a>0$、$n_a\ge0$，
+故与单位原子共同构成真实 Jordan 分解，负质量恰为 $n_a$。
+直接计算
+$$
+\begin{aligned}
+r_a^2(W_a-n_a/4)&=U_a,\\
+r_a^3(W_a-n_a/8)&=V_a,\\
+r_a^4(W_a-n_a/16)&=Z_a.
+\end{aligned}
+\tag{MU.9}
+$$
+第一式由 W 的定义，第二式由 n 的定义，第三式由 MU.8 的二次方程。
+加回单位后原三个读数为 $u+\varepsilon,v-\varepsilon,z+\varepsilon$，
+所以原误差恰为 $\varepsilon$。
+真实有限原子使全部所需积分可积；固定单位系数始终等于 a。
+
+若任一候选成本达到 $n_a$，上下界链全部等号。
+正部的 $\int q_a$ 和负部的 $\int(M_a-q_a)$ 同时为零，
+故残余 Jordan 部分别只能在上述两个有限率上。
+误差盒三个严格非零系数又使读数全部为 $U_a,V_a,Z_a$，
+质量由 MU.9 唯一确定。右端点 $n_a=0$ 同样使负部为零，
+正部仍由唯一有限零点和节点读数唯一确定。
+
+对于 $\varepsilon\ge K_{a,h}$，取已构造的
+$\sigma_{a,K_{a,h}}$ 即得成本零，达到所有更大的容差；
+成本非负说明最小值恰为零。
+若容差严格大于 $K_{a,h}$，可将该测度的残余正质量 W 增加任意充分小正量。
+三个核在非负轴至多 1，故所有节点误差增加不超过该小量，
+仍在较大的误差盒内。位置严格正，单位系数不变，成本仍零，
+因此唯一性确实不能延伸到严格较大的容差。证毕。
+

@@ -1,0 +1,61 @@
+**Definition 2.1 (normalized null circle and physical failure).** Put
+
+$$
+\theta=\frac{ab}{h_0h_1},\quad\omega=\frac{cd}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\quad
+\alpha=\theta/\delta,\quad\beta=\omega/\delta=1-\alpha.
+$$
+
+Let $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$, $(K_0,K_1,K_2)=(D,T,S)$,
+
+$$
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\quad
+H_{\rm high}=(1-\delta)N_{00}>0.
+$$
+
+In particular $\Delta_{11}=-11/64$, $\Delta_{22}=0$ and $\Delta_{12}=(\sqrt{37}-\sqrt{59})/16$. The other entries are $\Delta_{ij}=\sqrt{p_{27,i}p_{27,j}}-\sqrt{p_{5,i}p_{5,j}}$. Writing $G_{00}=g_0$, $G_{11}=g_1$, $G_{22}=g_2$, $G_{01}=g_x$, $G_{02}=g_y$, $G_{12}=g_z$, the explicit coefficient correspondence is
+
+$$
+\begin{aligned}
+N_{00}&=\sum_i h_i^2\Delta_{ii},&g_0&=\delta N_{00},\\
+g_1&=b^2\Delta_{00}+a^2\Delta_{11},&g_2&=d^2\Delta_{00}+c^2\Delta_{22},\\
+g_x&=s_0(h_0a+h_1b)\Delta_{01},&g_y&=s_0(h_0c+h_2d)\Delta_{02},\\
+g_z&=ac\Delta_{12}.&&
+\end{aligned}
+$$
+
+For $u=\cos\phi$, $v=\sin\phi$ put $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$, $h=(1,z,w)^T$ and
+
+$$
+\overline K_h=s_0D+zT+wS,\quad\ell(h)=h^TGh,\quad
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad f(h)=n_h^T\Delta n_h,
+$$
+
+$$
+\operatorname{cap}(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+{h_0^2\delta+b^2z^2+d^2w^2}>0.
+$$
+
+The circle identity $\alpha z^2+\beta w^2=1$ is exactly the rank-two null equation for $\overline K_h$. Both capacity numerator and denominator have positive constant terms. Set
+
+$$
+V=\frac{m_2h_1^2}{b^2},\quad W=\frac{m_1h_2^2}{d^2},\quad
+\mu=\alpha V+\beta W,\quad t=e^A-1.
+$$
+
+The scalar $V$ is a failure moment, distinct from contrast $\mathsf V$ and the height frontier. For $\eta\in\{0,1\}$ define
+
+$$
+\Gamma_\eta(\phi)=(1,u,v,u^2,uv,\eta\operatorname{cap},
+\eta\operatorname{cap}u^2,\eta\operatorname{cap}uv)^T,
+$$
+
+$$
+H_\eta(\phi;t)=\ell+\eta t\operatorname{cap}f,\qquad
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0)^T.
+$$
+
+The selected budget is $t=1000$, $A=\log1001$. The multiplier $\lambda$ below multiplies $|u|$, with physical contrast multiplier $\lambda\sqrt\alpha/s_0$. It is not $\lambda_{\rm CG}$.
+

@@ -1,0 +1,20 @@
+##### 定义 1.1.2： 可执行查询
+
+一个查询实例是四元组
+
+$$
+q=(\iota,\alpha,e,\tau),
+$$
+
+其中 $\iota$ 是允许的准备规则，$\alpha$ 是动作词，$e:Y\to[0,1]$ 是结果效果，$\tau$ 是查询所允许读取的输出时间或记录位置。
+
+查询在实现 $M$ 上产生响应数
+
+$$
+R_M(q)=\mathbb E_{u\sim\mu}\left[e\left(O\left(\operatorname{run}_M(\iota(u),u,\alpha)\right)\right)\right].
+$$
+
+离散结果的完整概率分布可以由所有指示效果恢复。若实验只能访问部分效果，则只保留该部分响应；这正是分辨率的一部分。
+
+<a id="claim-1-1-3"></a>
+

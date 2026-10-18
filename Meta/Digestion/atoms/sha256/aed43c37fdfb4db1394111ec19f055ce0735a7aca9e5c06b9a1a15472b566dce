@@ -1,0 +1,117 @@
+**Theorem 4.1 (native first harmonic and explicit lower control).** Put
+
+$$
+C_1(k)=\int_{\mathbb T^2}\Gamma_o(k,\alpha,\beta)
+                  \cos(\beta-\beta_o)d\alpha d\beta.
+\tag{4.1}
+$$
+
+The integral is absolutely convergent for each $k\in I$, and it is
+precisely the Dirichlet Green kernel $R_1(k_o,k)$ of
+
+$$
+A_1=-\varepsilon^2\frac{d^2}{dk^2}+c(k)^2,
+\qquad D(A_1)=H^2(I)\cap H^1_0(I),
+\tag{4.2}
+$$
+
+relative to ordinary $dk$. This is the zero $\alpha$ mode and first
+$\beta$ Fourier moment, without normalized angular averaging. In
+particular it is strictly positive.
+For $a>0$ let
+
+$$
+R^{(a)}(k_o,k)=
+\frac{
+ \sinh(a(\min(k_o,k)-l)/\varepsilon)
+ \sinh(a(u-\max(k_o,k))/\varepsilon)}
+ {\varepsilon a\sinh(ad/\varepsilon)}.
+\tag{4.3}
+$$
+
+With $c_-=1/2-u/r$ and $c_+=1/2-l/r$, both strictly positive,
+
+$$
+0<R^{(c_+)}(k_o,k)\le C_1(k)
+ \le R^{(c_-)}(k_o,k)\le\varepsilon^{-2}G_I(k_o,k)
+\qquad(k\in I).
+\tag{4.4}
+$$
+
+All constants, domains and scales here use the fixed $\varepsilon$.
+
+Proof. Apply the ordinary circle Fourier decomposition to the closed form
+(1.9). For integers $m,n$, the isometry
+
+$$
+(E_{mn}\varphi)(k,\alpha,\beta)
+ =\frac{\varphi(k)}{2\pi}
+ e^{i[m(\alpha-\alpha_o)+n(\beta-\beta_o)]}
+$$
+
+takes the height form to
+
+$$
+\int_I\left(\varepsilon^2|\varphi'|^2
+       +(m/2+nc(k))^2|\varphi|^2\right)dk,
+\qquad \varphi\in H^1_0(I).
+\tag{4.5}
+$$
+
+To justify the closed-domain statement, the Fourier projection is an
+average of phase translations with a character. It preserves the smooth
+core, is bounded in the form norm, and its complementary sectors are form
+orthogonal. The proof of (2.3) therefore applies sector by sector. In each
+fixed sector the displayed potential is smooth and bounded on $\overline I$.
+The one-dimensional weak equation puts its operator domain in
+$H^2(I)\cap H^1_0(I)$, with the reverse inclusion by integration by parts.
+Thus the sector correspondence is an operator correspondence with the same
+height killing, not only the formal identity $Qe^{i(m\alpha+n\beta)}
+=i(m/2+nc)e^{i(m\alpha+n\beta)}$.
+
+For $m=0,n=1$ or $-1$ it gives (4.2). In particular, for a smooth height
+test $a$,
+
+$$
+H_t\bigl(a(k)\cos(\beta-\beta_o)\bigr)(o)
+ =(e^{-tA_1}a)(k_o).
+\tag{4.6}
+$$
+
+The left side is the integral of $a(k)$ against the phase integral of
+$p_t^\Omega(o,\cdot)\cos(\beta-\beta_o)$. The one-dimensional heat
+kernel $h_t^{A_1}$ therefore equals that phase integral, first by testing
+and then pointwise by smoothness. There is no $2\pi$ factor in (4.6):
+the test character has value one at the original pole. By (3.6) and
+$|\cos|\le1$, absolute integration in time is legitimate at every height.
+Integrating (4.6) gives $C_1=\int_0^\infty h_t^{A_1}dt=R_1$.
+
+For completeness, the elementary positive-resolvent comparison needed here
+can be checked directly in this height problem. For a continuous
+nonnegative potential $V$, solve
+$-\varepsilon^2y''+Vy=0$ with $y(l)=0,y'(l)=1$, and solve the right
+solution with $z(u)=0,z'(u)=-1$. They stay strictly positive in the
+interior: while positive their respective outward derivatives cannot turn
+towards a first zero, by $y''=Vy/\varepsilon^2$ and the reversed version
+for $z$. Their Wronskian gives the Green kernel
+$y(k_<)z(k_>)/(\varepsilon^2(y'z-yz'))$, with positive denominator.
+The Wronskian is constant and at $l$ equals $z(l)>0$. The kernel
+has endpoint zero values and derivative jump $-1/\varepsilon^2$,
+so it is the inverse of the positive Dirichlet operator.
+If $V_1\le V_2$, the resolvent identity reads
+
+$$
+R_{V_1}(a,k)-R_{V_2}(a,k)
+ =\int_I R_{V_1}(a,s)(V_2(s)-V_1(s))R_{V_2}(s,k)ds\ge0.
+\tag{4.7}
+$$
+
+All kernels in this bounded-interval identity are continuous and bounded;
+positivity and the identity can equivalently be obtained from the weak
+Dirichlet equations. For $V=a^2$, solving those equations gives (4.3).
+For $V=0$ it gives $\varepsilon^{-2}G_I$. Apply (4.7) with
+$0\le c_-^2\le c(k)^2\le c_+^2$ to prove (4.4).
+These are standard Sturm--Liouville and resolvent tools; their use here
+identifies a positive, quantitatively controlled harmonic of the original
+native full Green field. $\square$
+

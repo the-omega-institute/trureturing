@@ -1,0 +1,78 @@
+### 98.3. One common form for paired curved tangents
+
+**Theorem 98.2.** Under §98.1, suppose full eight-coordinate Hermitian directions satisfy
+\[
+(D_A)_{ff}=(D_B)_{ff}=0,\quad
+N_GD_AN_G=N_HD_BN_H=0,\quad
+D_A\odot H+G\odot D_B=0. \tag{10}
+\]
+Then some common normer in \(\mathcal A_0\) satisfies
+\[
+-2\operatorname{Tr}[(D_A\odot D_B)W]
++\operatorname{Tr}(P_AD_AG^+D_A)
++\operatorname{Tr}(P_BD_BH^+D_B)\ge0. \tag{11}
+\]
+Moreover \(B_0=P_B/\alpha_W\) is the same matrix for every common normer, and the following fixed real quadratic form is nonnegative for every pair (10):
+\[
+\begin{split}
+q(D_A,D_B)={}&
+\sum_{\substack{i,j\\\text{different original fibres}}}
+\frac{\overline{a_i}a_j}{H_{ij}}(D_A)_{ij}(D_B)_{ij}\\
+&+a^*D_AG^+D_Aa+\operatorname{Tr}(B_0D_BH^+D_B)\ge0.
+\end{split}\tag{12}
+\]
+The sum is ordered and its terms occur in conjugate pairs. These are ordinary complex products, not absolute squares.
+
+**Proof.** Apply Lemma 98.1 to both directions. The full linear cancellation in (10) gives
+\[
+T-G(s)\odot H(s)=L+s^2K_2+O(s^3),\quad
+K_2=-(D_A\odot D_B+C_G\odot H+G\odot C_H). \tag{13}
+\]
+Fix this pair of directions. For fixed \(M>0\) and \(G',H'\in\mathcal E\), mix the two feasible curves with \(G',H'\) at weight \(Ms^2\). The coefficient expansion becomes
+\[
+L+s^2\bigl[K_2-M((G'-G)\odot H+G\odot(H'-H))\bigr]+o(s^2). \tag{14}
+\]
+With \(Q_W=2\operatorname{Tr}(K_2W)\), compactness and the maximum derivative formula imply
+\[
+\max_{(\rho,W)\in\mathcal A}
+\{Q_W+Mb(W;G',H')\}\ge0
+\quad\text{for every feasible pair}. \tag{15}
+\]
+For each \(M\), one normer satisfies all inequalities inside this maximum simultaneously. Otherwise compactness gives a finite inconsistent family; strict separation of its compact convex affine image from the nonnegative orthant gives nonnegative weights. Normalizing those weights and averaging the feasible drift pairs contradicts (15). Only affine drift variables are separated.
+
+For the simultaneous normer, the zero drift gives \(Q_W\ge0\). Letting \(M\) tend to infinity along a convergent subsequence gives a normer satisfying every inequality (2), hence belonging to the complete set \(\mathcal A_0\), and still satisfying \(Q_W\ge0\). This selection is made for the fixed direction; it exchanges no quadratic direction/witness quantifiers.
+
+Since \(C_G,C_H\) have zero fibre blocks, the stress identities give
+\[
+-2\operatorname{Tr}[(C_G\odot H)W]=\operatorname{Tr}(P_AC_G),
+\quad
+-2\operatorname{Tr}[(G\odot C_H)W]=\operatorname{Tr}(P_BC_H). \tag{16}
+\]
+Lemma 98.1 proves (11).
+
+For all common normers, the cross-fibre entries of the normalized second stress are fixed:
+\[
+\frac{(P_B)_{ij}}{\alpha_W}
+=a_i\overline{a_j}\frac{\overline{G_{ij}}}{\overline{H_{ij}}}.
+\tag{17}
+\]
+The remaining blocks are fixed by full complementarity and \(H_{ff}=I_2\):
+\[
+(P_B)_{ff}=-\sum_{g\ne f}(P_B)_{fg}H_{gf}. \tag{18}
+\]
+Thus \(B_0\) is independent of the common normer on every block. Its existence as a normalized stress already proves \(B_0\succeq0\) and \(B_0H=0\); (18) is not an unverified PSD completion. Reversing trace indices in the mixed term of (11) shows that its whole left side is \(\alpha_Wq(D_A,D_B)\). The strictly positive factor in (3) therefore proves (12), even though the selected normer may depend on the fixed direction. \(\square\)
+
+**Corollary 98.3.** Every Hermitian \(D\) with \(D_{ff}=0\) and \(N_HDN_H=0\) supplies an admissible pair by
+\[
+D_B=D,\qquad
+\mathcal R(D)_{ij}:=(D_A)_{ij}=-\frac{G_{ij}}{H_{ij}}D_{ij}
+\quad(f(i)\ne f(j)),\qquad (D_A)_{ff}=0. \tag{19}
+\]
+The real direction space has dimension exactly \(48-k^2\), where \(k=\dim\ker H\), and hence dimension \(44\) when \(\operatorname{rank}H=6\).
+
+**Proof.** Hermiticity, fibre zeros and full product cancellation are immediate. Equation (17), with reversed trace indices, gives
+\[
+a^*\mathcal R(D)a=-\operatorname{Tr}(B_0D)=0, \tag{20}
+\]
+because \(B_0=N_HB_0N_H\). This is exactly the rank-seven kernel-kernel tangent condition. The zero-fibre Hermitian space has dimension \(64-4\cdot4=48\). Its compression to \(\operatorname{Herm}(\ker H)\) is onto: an adjoint obstruction would be a Hermitian \(Z\) supported on \(\ker H\) and fibre-block diagonal. Then \(ZH=0\) and \(H_{ff}=I_2\) force each \(Z_{ff}=0\). Thus no nonzero obstruction exists, and the \(k^2\) real compression equations are independent. \(\square\)
+

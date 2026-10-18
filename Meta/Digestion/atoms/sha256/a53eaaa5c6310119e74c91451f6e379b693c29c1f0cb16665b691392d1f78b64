@@ -1,0 +1,12 @@
+**Remark 7.2 (boundary optimum attribution).** At $k\in\{3,n-2\}$,
+[CP, (CP.21)][CP] already gives
+
+$$
+\min m=3(n-2),\qquad H_{\rm exec}(A,k;r)=3(n-2)+4+r.
+$$
+
+The preceding [Third][Third] body supplies the threshold-three live-depth
+lemma used in Theorem 6.2. Neither the numerical boundary result nor that
+lemma is a new result of this volume. They do not settle the unrestricted
+intermediate target.
+

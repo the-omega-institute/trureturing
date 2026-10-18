@@ -1,0 +1,30 @@
+**Theorem 418.1.** Under all hypotheses of Section 413, the order
+v>=max(c,d) is impossible. We use only the unconditional compensation
+(407.2) in this high-V proof.
+
+Let a be the number of cheap axial-P owners, meaning the residual
+families A(P0)=(P0,V,C,D,V,C) and B(P0)=(P0,V,D,C,V,D), P0 in P.
+Let f count genuine owners with five original P slots, k count those
+with four or five P slots, and g count all genuine original owners.
+The existing role and owner bounds give
+
+    a>=2, 0<=f<=k<=2, g>=6.                     (418.1)
+
+All of these are owner multiplicities, not counts of role vectors.
+The total genuine P degree D is at least 17, componentwise at least
+(5,6,6) in the order M,Z,U. Tau contributes (2,1,0), leaving the
+componentwise post-tau requirement (3,5,6). These three degree
+requirements remain distinct even though the proof uses their sum.
+
+Write P_T and V_T for an owner's actual P and V expenses. The full
+genuine angle capacities are
+
+    sum P_T=5*pi, sum V_T=pi.
+
+Consequently the weighted charge W_T=2*P_T+V_T has total capacity
+
+    sum W_T=11*pi.                               (418.2)
+
+Each original axial slot is counted once; a transverse label has two
+original slots. Self-gluings do not change these angle sums.
+

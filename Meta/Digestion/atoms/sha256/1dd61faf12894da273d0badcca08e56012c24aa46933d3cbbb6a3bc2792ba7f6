@@ -1,0 +1,39 @@
+**Theorem 3.1 (lossless completion on $U_h$).** For every $h\ge0$,
+$n\ge1$ and nonempty admissible $B\subseteq U_h^n$, there exist
+$c_1,\ldots,c_n\in\{0,1,2,3\}^k$ such that
+
+$$
+B\subseteq\prod_{i=1}^n L_{c_i}.
+\tag{JPL.15}
+$$
+
+Every $L_c$ is locally admissible. Neither $B$ nor a weight on a
+coarse block is assumed to factor across modules.
+
+Proof. Every finite literal on a member of $U_h$ either stops above
+the fixed frontier and is constant, or enters one actual $K$ module.
+By (JPL.12) its range on all of $U_h$ has at most three replies.
+
+Fix a coarse coordinate $i$ and one of its modules $j$. Suppose that
+its projection over $B$ contains all four core states. The permitted
+coarse target $a_jLL$ then has all four distinct factors in (JPL.12).
+An admissibility witness would be a constant or the decoding of one
+literal on some coarse coordinate of the same $B$. A constant cannot
+produce four values; every such donor literal has at most three
+attained replies because that coordinate lies in $U_h$. A function of
+these replies also has at most three values. This contradiction
+applies to every donor location, including self donors and donors in
+cycles.
+
+Consequently each module projection omits at least one core state.
+Choose one missing index $c_{ij}$. Every row then belongs to
+$\prod_iL_{c_i}$, proving the containment. This argument selected
+missing values after restricting the same relation; it did not assert
+that its projections are independently attainable fibers.
+
+In $L_c$, each module lies in a proper subset of $K$. Its own witnesses
+in (JPL.12) serve every fine target. Prefix each witness by that
+module's fixed address; targets above the frontier are constants.
+Lemma 2.3 therefore makes $L_c$ locally admissible. Products of these
+local sets are admissible too. $\square$
+

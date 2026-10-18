@@ -1,0 +1,17 @@
+**Corollary 5.3 (countable-record boundary).** Under the same independence
+and exactness premises, a countable classical record can give positive
+exact success at at most countably many distinct heights, even with
+height-independent assistance and free parity for the upper bound.
+
+Proof. Every contributing record has support containing at most two
+heights, by Theorem 3.3 on any three of its candidates. A countable union
+of such finite supports is countable. Positive success at a height
+requires membership in one of those supports. $\square$
+
+This concerns positive exact success on every promised phase at a height.
+It gives no finite-noise lower bound, no uniform lower bound on success
+over an infinite class, and no necessity of literal height identification
+for every possible operation. Two-height reanchoring already shows that
+exact height identification is not necessary for this endpoint consumer
+when the stated parity resource is supplied.
+

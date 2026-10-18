@@ -1,0 +1,19 @@
+**Definition 3.1 (affine rank system).** Let $\mathbf z\in\mathbb N^k$
+be parameters. An affine form has integer coefficients and constant
+term. A rank system has finitely many unknowns $r_v\in\mathbb N$,
+one distinguished vertex $o$ with $r_o=0$, and constraints
+
+$$
+r_u-r_v=a_e(\mathbf z),\qquad
+r_u-r_v\ne b_e(\mathbf z).
+\tag{NCE.6}
+$$
+
+Fixed-rank requirements are edges to $o$. An isolated $o$ is allowed.
+Choose a spanning forest of the undirected equality graph, retaining
+edge orientations as signs. Root the component containing $o$ at $o$.
+Root each other component arbitrarily. Summing signed edge labels along
+tree paths gives affine potentials $\delta_v(\mathbf z)$, with each
+root potential zero and with each forest edge satisfying
+$\delta_u-\delta_v=a_e$ identically.
+

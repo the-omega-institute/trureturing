@@ -1,0 +1,26 @@
+**Theorem 10.3 (entire preparation upper-budget region on a fixed basis).**
+Under Assumption 10.1, restricting every preparation literal to $B_b$
+preserves the entire feasible region in installed states, calls and
+executed literal sum. More precisely, fix any finite installed
+preparation alphabet $\mathcal B=V\sqcup\widehat S$, its partition,
+its literal latch values and its common start $b_0$, including any
+additional required installed latches. If a table on those very states
+generates the original $s(u)$ on every $u\in\mathcal U$ with uniform
+upper budgets $p,\ell$, another table with all literals in $B_b$ does
+so on exactly the same alphabet, partition, latches and start, with
+upper budgets no larger than $p,\ell$. No state is removed or added.
+The original reader and its entire table are unchanged.
+
+Consequently, for every $H,p,\ell$, unrestricted native preparation
+and $B_b$-restricted preparation are equivalent under the same three
+upper budgets. If the fixed reader has separate uniform call and
+literal upper budgets, those bounds remain valid without alteration.
+This last assertion is about separate phase coordinates. A bound on
+the sum of the two phases on each same execution requires Theorem 13.1.
+
+The proof of this theorem is given in §12 after the actual-image
+attainment bridge. It compares the new preparation on $u$ with the
+old preparation on a suitable actual source in the same finite profile.
+It makes no assertion that their paths or costs agree, or improve,
+on each same original $u$.
+

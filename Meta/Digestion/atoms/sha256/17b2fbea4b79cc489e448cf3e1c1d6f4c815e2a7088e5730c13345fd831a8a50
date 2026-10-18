@@ -1,0 +1,36 @@
+**Definition 1.2 (actual trees, every-word observation and time).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle x,y\rangle)=1+\max(h(x),h(y)).
+$$
+
+Pairing is ordered. Every finite word in $L,R$, including
+$\varepsilon$, is a legal original-root literal. Write $r_u(w)$ for
+its reply: alpha or beta at a leaf, branch at a pair, and absent
+beyond a leaf. Define
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+For each public integer $D\ge1$, retain precisely
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},
+\qquad
+W_D=\{q:|q|\le D-1\},
+\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{FMR.1}
+$$
+
+Thus the family includes all variable shapes. One actual initial source
+$t$ remains stationary through preparation and later acquisition.
+The iterates $\rho^kt$ specify the prediction target, not updates to
+that register. There is no subtree, equality, identity, age, reset,
+copying, navigation or free-advice port.
+

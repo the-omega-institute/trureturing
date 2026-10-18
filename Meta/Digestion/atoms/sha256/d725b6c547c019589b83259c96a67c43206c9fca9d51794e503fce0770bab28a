@@ -1,0 +1,42 @@
+### 105.5. Antisymmetric-mode contradiction
+
+Let \(L=(T-G\odot H)_S\), \(E=L_{FJ}\) and \(C=W_{FJ}\). Both \(E\) and \(C\) commute with the two-coordinate swap. The complete-norm complementary equations for the same original \((\rho,W)\) imply
+\[
+EC^*=\tfrac t2\rho_F,
+\tag{105.17}
+\]
+so \(EC^*\) is Hermitian. For clarity, the principal dual is
+\[
+\min\{u:Z\succeq0,\ Z-2L\succeq0,
+\ Z_{FF}\preceq uI_2,\ Z_{33},Z_{44}\le u\}.
+\]
+Strict feasibility gives attained primal and dual optima. Positive definiteness of \(\rho_F\) gives \(Z_{FF}=tI_2\). The products \((Z-2L)W=0\) and \(Z(\rho-W)=0\) imply \(2LW=Z\rho\); its \(F\) block is (105.17), since \(L_{FF}=0\) and \(\rho_{FJ}=0\). This is the finite-dimensional semidefinite norm framework of J. Watrous, [Semidefinite Programs for Completely Bounded Norms](https://theoryofcomputing.org/articles/v005a011/), Theory of Computing 5 (2009), 217–238, applied to the original principal density domain.
+
+The antisymmetric eigenvalues are \(e_-=E_{13}-E_{14}\) and \(c_-=C_{13}-C_{14}\). The target cross block is \(J_2/2\), whose antisymmetric eigenvalue is zero. Equations (105.4) and (105.16) give
+\[
+\begin{aligned}
+e_-&=\frac{c^3v-\sigma s^3\overline v
++z(\sigma c^2s v^3-cs^2\overline v^3)}{\overline r},\\
+c_-&=-\frac{\alpha r|b|^2}{2}
+\left(\frac vc-\frac{\sigma\overline v}s\right).
+\end{aligned}
+\tag{105.18}
+\]
+Using \(c^2+s^2=1\) and \(v^2=p+iq\), direct multiplication yields
+\[
+\begin{aligned}
+\operatorname{Im}(e_-\overline{c_-})
+&=\frac{\alpha|b|^2}{2}(c^2-s^2)q
+\left(\frac\sigma{cs}+2pz\right)\\
+&=\frac{\alpha\sigma|a|^2}{2cs}(c^2-s^2)q\ne0.
+\end{aligned}
+\tag{105.19}
+\]
+For the first equality, multiply the numerator of \(e_-\) by \(\overline v/c-\sigma v/s\). Its imaginary part is
+\[
+-(c^2-s^2)q\left(\frac\sigma{cs}+2pz\right).
+\]
+The negative common-stress factor in \(c_-\) gives the first line of (105.19). The second line is precisely \(\sigma+hz=\sigma|r|^2\), from (105.14). Every final factor is nonzero by (105.4), (105.7) and (105.9), for both values of \(\sigma\) and both signs of \(q\). Yet (105.17), diagonalized in the parity basis, requires \(e_-\overline{c_-}\) to be real. This contradiction proves Theorem 105.1. \(\square\)
+
+The conclusion is restricted to the stated full-domain local-minimum rank and support class. It gives neither a uniform gap nor a quarter bound for every nonstationary complementary-polar pair. Together with Theorem 104.1 it excludes equal and complementary polar angles in that class; general unequal, noncomplementary polar angles and the other remaining rank/support classes are unresolved. The calibration reduction in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md) does not preserve the ranks or local-minimum property used here, so it does not extend this exclusion to arbitrary leaking channels. The unrestricted global optimum remains between \(\sqrt3-3/2\) and \(1/4\).
+

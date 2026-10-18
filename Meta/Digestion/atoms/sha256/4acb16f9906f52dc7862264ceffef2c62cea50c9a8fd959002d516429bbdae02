@@ -1,0 +1,97 @@
+**Lemma 7.2 (the lower chain and strict equality information).** Every
+original finite design obeys, for positive diagonal $\tau$,
+
+$$
+p_H^{\rm acq}(E\tau E^\dagger)\geq p_H^L(E\tau E^\dagger)
+ \geq\operatorname{tr}(G_0(s)\tau).
+\tag{CA.38}
+$$
+
+Consequently its original four-sign mean at height $y$ is at least
+$g_y(s)$. If one such original mean is equal, the actual aggregate high
+coefficient matrix $H=H_++H_-$ has diagonal $(p,q,0)$, and the supported
+compression of $G_H^{\rm acq}-G_H^L$ is zero.
+
+Proof. We recall the credited lower proof to identify exactly its equality
+requirements. Analytically average the actual coefficient pairs under
+$U_{e,n}$, acting by $C_{e,n}=\operatorname{diag}(1,en,e)$ and relabelling
+$r$ to $enr$, and then average with complex conjugation. These operations
+preserve positivity, the full singular cone, coefficient sum and binary
+constraints. Indeed $\Theta(CZC)=U\Theta(Z)U^\dagger$, and the signed
+record effect transforms to the same required one. Conjugation also
+preserves the real polynomial locus and real prescribed effects.
+Diagonal costs and the diagonal of aggregate $H$ are unchanged. This is
+an argument about matrices and inequalities, not physical sign gates or
+a conjugation channel.
+
+The averaged total live matrices and their high parts have the forms
+
+$$
+Z_r^0=\frac12\begin{pmatrix}1&rs&0\\rs&1&0\\0&0&1\end{pmatrix},\qquad
+H_r^{\rm av}=\frac12\begin{pmatrix}P_0&rt_0&0\\rt_0&Q_0&0\\0&0&Z_0\end{pmatrix}.
+\tag{CA.39}
+$$
+
+The remaining sign at fixed $en$ kills $DS,TS$ entries; opposite records
+have equal diagonals, hence $1/2$ in their total matrices. The binary
+$01$ effect fixes their real $DT$ entry because
+$\operatorname{Re}\Theta(Z)_{01}=\kappa\operatorname{Re}Z_{DT}$, and
+failure effects kill coordinate $0$. Positivity of high and low gives
+
+$$
+s\leq F(P_0,Q_0):=\sqrt{P_0Q_0}+\sqrt{(1-P_0)(1-Q_0)},\qquad
+P_0\geq k+\alpha Q_0+\beta Z_0.
+\tag{CA.40}
+$$
+
+The second inequality is the sum of
+$|u|^2\leq\alpha|v|^2+\beta|w|^2$ over the actual low products.
+It is only a necessary budget here; no trace sufficiency is assumed.
+For $A=\operatorname{tr}(D^\dagger D\tau)$,
+$B=\operatorname{tr}(T^\dagger T\tau)$,
+$C=\operatorname{tr}(S^\dagger S\tau)$, the unchanged high live cost is
+$P_0A+Q_0B+Z_0C$. In the weak regime (CA.40) bounds it below by $kA$.
+
+For the strong regime $F(k+\alpha q,q)$ strictly increases from
+$\sqrt\ell$ to $1$ on $[0,q_{\max}]$. To verify this, the angular gap
+$\arcsin\sqrt{k+\alpha q}-\arcsin\sqrt q$ is positive in the interior
+and strictly decreases: its derivative sign is determined by
+
+$$
+(k+\alpha q)(1-k-\alpha q)-\alpha^2q(1-q)
+ =k\ell+\alpha(\beta-k)q>0.
+\tag{CA.41}
+$$
+
+The affine expression is positive at zero and at $q_{\max}$, where it
+is $\beta k(1+\alpha)/(1-\alpha)$. This proves uniqueness in (CA.35).
+For fixed $Q_0$, $F(P_0,Q_0)$ decreases as $P_0$ increases above $Q_0$.
+If $Q_0<q$, then $Q_0<q_{\max}$ and
+$P_0\geq k+\alpha Q_0>Q_0$, so
+$s\leq F(P_0,Q_0)\leq F(k+\alpha Q_0,Q_0)<s$, a contradiction.
+Thus $Q_0\geq q$ and $P_0\geq p$, proving (CA.38).
+For (CA.36), setting $\nu=\sqrt{q/(1-q)}$ in the angular equality yields
+
+$$
+(1-\beta-s^2)\nu^2-2s\sqrt{1-s^2}\nu+s^2-\ell=0.
+\tag{CA.42}
+$$
+
+Rationalizing the root continuous from zero gives (CA.36). Its denominator
+is positive since $\mathscr H_s\geq\beta k>0$, including a vanishing
+leading coefficient in (CA.42). The two roots cannot collide before the
+endpoint, and uniqueness on the angular interval selects this branch.
+Direct endpoint substitution gives the stated $s=1$ values.
+
+For an original height,
+$\tfrac14\sum_{e,n}\rho_{y,e,n}=\tau_y:=\operatorname{diag}(p_y)\succ0$.
+Thus the mean is the acquired cost at $\tau_y$. At this matrix all
+$A,B,C$ are strictly positive. In the weak chain equality forces
+$Q_0=Z_0=0$ and $P_0=k$; in the strong chain it forces
+$P_0=p,Q_0=q,Z_0=0$. The actual aggregate diagonal is unchanged by
+averaging. The positive supported slack from (CA.13) has trace zero
+against $\tau_y\succ0$, so it is zero: conjugate by $\tau_y^{1/2}$ and
+use that a positive trace-zero matrix vanishes. This proves exactly the
+asserted equality prerequisites. Equality on an arbitrary rank-deficient
+test does not supply this conclusion. $\square$
+

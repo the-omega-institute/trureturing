@@ -1,0 +1,32 @@
+**Definition 2.3 (resolved negative and normality instructions).** For
+each negative pair $(v,w)$, compare the supplied $H_v,H_w$.
+If unequal, store the structural disagreement address computed in
+Definition 2.1; no scalar inequality is required for this pair.
+If equal, a mismatch coordinate $\eta_{vw}$ is any leaf of this common
+shape, and generate
+
+$$
+r_{v,\eta_{vw}}-r_{w,\eta_{vw}}\ne0.
+\tag{SFP.8}
+$$
+
+There are finitely many choices for a supplied shape tuple, but no
+uniform bound on the length of a chosen leaf address. All negative
+pairs choose their witnesses jointly. Let $M(\mathbf K)$ denote this
+finite product of choices, with the unique empty tuple when there are
+no negative pairs. Membership in $M(\mathbf K)$ is decided solely by
+shape traversal and leaf-address membership.
+
+For every primitive cherry at address $q$ in every $H_v$, generate
+
+$$
+r_{v,qL}-r_{v,qR}\ne1.
+\tag{SFP.9}
+$$
+
+This includes cherries entirely inside residual shapes and cherries
+formed where a primitive residual meets another child. No fixed
+nonleaf-marker convention is used. Let $D(\mathbf K,\boldsymbol\eta)$
+be the resulting finite list of forbidden rank differences, from both
+(SFP.8) and (SFP.9).
+

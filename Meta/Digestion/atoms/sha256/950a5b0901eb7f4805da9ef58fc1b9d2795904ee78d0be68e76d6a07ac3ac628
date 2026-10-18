@@ -1,0 +1,27 @@
+**Corollary 14.2 (An absent one-read equality gate gives a strict gap).**
+Let $f(q)$ be the universal one-read lower curve in
+[Paid-return, Theorem 4.1, (4.1)--(4.2)][PR]. At an attainable
+$q\in[0,1]$, let $g(q)$ be the required seed-event mass in its (4.3),
+using its lower formula at $q=\eta$. Then
+
+$$
+\mathcal L_{1,\nu}(q)=f(q)
+\quad\Longleftrightarrow\quad
+\exists G\in\mathcal U:\nu(G)=g(q).
+\tag{14.4}
+$$
+
+If that event is absent and $q$ is attainable, then
+$\mathcal L_{1,\nu}(q)>f(q)$. No value or uniform positive lower bound
+for this gap is asserted.
+
+Proof. The quoted theorem already proves the universal inequality
+and the exact necessary and sufficient event condition for equality
+by any protocol, under this same law, target, seed and return-event
+convention. Theorem 14.1 adds that the infimum on every nonempty
+fixed-$q$ slice is attained. Thus equality of the minimum with $f(q)$
+requires, and the quoted equality construction supplies, precisely
+that gate. If it is unavailable, the attained minimum cannot equal
+the lower bound, and must be strictly greater. This does not repeat
+the numerical envelope proof or compute an optimum above it. $\square$
+

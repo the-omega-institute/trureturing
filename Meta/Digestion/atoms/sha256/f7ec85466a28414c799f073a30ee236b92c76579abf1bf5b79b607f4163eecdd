@@ -1,0 +1,101 @@
+**定理 39.4（全部共同观察格及尺度唯一性）。** 对任一满秩子格 $\Lambda\subseteq\mathbb Z^2$，下列条件等价：
+
+$$
+\mathsf R\Lambda=\Lambda,\quad M\Lambda=\Lambda;
+$$
+
+$$
+\Lambda=m\mathbb Z^2\quad\text{或}\quad\Lambda=m\Lambda_5
+\quad\text{对某个 }m\in\mathbb Z_{>0}.
+$$
+
+两种类型互斥，且正整数尺度 $m$ 唯一。所有可能指数恰为 $m^2$ 或 $5m^2$。
+
+证明。先设两个保持条件成立。将 $(U,V)$ 识别为 $U+iV$，$\mathsf R$ 就是乘 $i$。$\Lambda$ 是加法子群，对乘 $i$ 封闭，故对任意 $a+ib\in\mathbb Z[i]$ 与 $z\in\Lambda$ 有
+
+$$
+(a+ib)z=az+b(iz)\in\Lambda.
+$$
+
+所以它是 $\mathbb Z[i]$ 的非零理想；非零性由满秩保证。以下只在当前格的证明内部使用经典 Gaussian 欧氏除法，并说明主生成元为何存在。
+
+非零 Gaussian 整数的平方模为正整数。在 $\Lambda\setminus\{0\}$ 中选平方模最小的 $\alpha$，其存在性来自正整数的良序。对任意 $z\in\Lambda$，$\alpha\ne0$ 使复数商 $z/\alpha$ 有定义。分别将其实部、虚部取最近整数，得 $q\in\mathbb Z[i]$，两坐标的误差绝对值都不超过 $1/2$，因此
+
+$$
+\left|\frac z\alpha-q\right|^2
+\le\left(\frac12\right)^2+\left(\frac12\right)^2=\frac12.
+$$
+
+余数 $r=z-q\alpha$ 属于理想 $\Lambda$，且
+
+$$
+|r|^2=|\alpha|^2\left|\frac z\alpha-q\right|^2
+\le\frac12|\alpha|^2<|\alpha|^2.
+$$
+
+若 $r\ne0$，便与 $\alpha$ 的最小性冲突，所以 $r=0$。这对每个 $z$ 都成立，给 $\Lambda\subseteq\alpha\mathbb Z[i]$；反向包含由理想封闭及 $\alpha\in\Lambda$ 得到。因此 $\Lambda=\alpha\mathbb Z[i]$。
+
+写 $\alpha=A_0+iB_0$，并令
+
+$$
+m=\gcd(|A_0|,|B_0|)>0,
+\qquad
+A_0=ma,\quad B_0=mb,\quad \gcd(|a|,|b|)=1.
+$$
+
+原始格的基矩阵与范数为
+
+$$
+A=\begin{pmatrix}a&-b\\b&a\end{pmatrix},
+\qquad N=a^2+b^2>0,
+\qquad \Lambda=mA\mathbb Z^2.
+$$
+
+$M$ 与整数缩放交换，所以 $M\Lambda=\Lambda$ 等价于 $MA\mathbb Z^2=A\mathbb Z^2$。后者等价于 $B=A^{-1}MA$ 为整数矩阵：保持给出每个像基向量的整数坐标；反向，若 $B$ 整数，其行列式仍为 $\det M=-1$，故伴随矩阵公式给整数逆，$B\mathbb Z^2=\mathbb Z^2$，从而得到相等而非仅包含。
+
+现在把这个整数性条件算到每个矩阵元。由
+
+$$
+A^{-1}=\frac1N\begin{pmatrix}a&b\\-b&a\end{pmatrix},
+\qquad
+MA=\begin{pmatrix}b&a\\a+b&a-b\end{pmatrix},
+$$
+
+得到
+
+$$
+A^{-1}MA
+=\frac1N
+\begin{pmatrix}
+b(2a+b)&a^2+ab-b^2\\
+a^2+ab-b^2&a(a-2b)
+\end{pmatrix}.
+$$
+
+若 $a=0$ 或 $b=0$，互素条件使另一分量的绝对值为一，故 $N=1$。若 $N>1$，则
+
+$$
+\gcd(a,N)=\gcd(b,N)=1.
+$$
+
+具体地，任何同时整除 $a$ 和 $N$ 的素数都整除 $N-a^2=b^2$，从而整除 $b$，违反互素；交换 $a,b$ 得另一式。因此 $a,b$ 在模 $N$ 的环中都是单位，这一步不要求 $N$ 为素数。
+
+矩阵左上元为整数给出 $N\mid b(2a+b)$。约去模 $N$ 的单位 $b$，得 $b=-2a\pmod N$。又 $a^2+b^2=N=0\pmod N$，代入后得到 $5a^2=0\pmod N$。再约去单位 $a^2$，得到 $N\mid5$。结合 $N>0$，所有情形都只有 $N=1$ 或 $N=5$。
+
+当 $N=1$ 时，$A$ 是整数可逆矩阵，原始格为 $\mathbb Z^2$。当 $N=5$ 时，原始格 $A\mathbb Z^2$ 的指数为五，且仍被 $\mathsf R,M$ 保持，定理 38.3 的唯一性使它恰为 $\Lambda_5$。不是每个范数五的 Gaussian 理想都相容：命题 39.3 已展示另一个理想的失败。因此恢复尺度后，只能得到 $m\mathbb Z^2$ 或 $m\Lambda_5$。
+
+反向，$\mathsf R,M$ 是整数自同构，故保持 $\mathbb Z^2$。对 $\Lambda_5=\mathsf C_5\mathbb Z^2$，$\mathsf C_5=2I+\mathsf R$ 与 $\mathsf R$ 交换，故旋转保持；而
+
+$$
+\mathsf C_5^{-1}M\mathsf C_5
+=\frac15\begin{pmatrix}2&1\\-1&2\end{pmatrix}
+\begin{pmatrix}1&2\\3&1\end{pmatrix}
+=\begin{pmatrix}1&1\\1&0\end{pmatrix}
+$$
+
+是行列式负一的整数矩阵，所以 $M$ 也保持。两个操作均与乘正整数 $m$ 交换，故每个所列格都满足两个保持等式。
+
+最后证明表示唯一。定义格的整数尺度为所有格向量坐标所生成的整数理想的正生成元：即所有 $U,V$、$(U,V)\in\Lambda$ 的共同最大正因子。$m\mathbb Z^2$ 的所有坐标都是 $m$ 的倍数，且 $(m,0)$ 的一个坐标为 $m$，所以尺度恰为 $m$。$m\Lambda_5$ 也所有坐标被 $m$ 整除，且包含 $(2m,m)$，所以尺度同样恰为 $m$。因而同一格的两个表示必有相同的 $m$。除去这个尺度后，两种原始格的指数分别为一、五，不能相等，类型也唯一。基矩阵乘 $m$ 使二维行列式乘 $m^2$，所以两类指数分别为 $m^2$、$5m^2$。证毕。
+
+数学引文。上述最近整数余数法是 Gaussian 整数欧氏算法的经典机制，作为当前两个操作的共同格分类中的中间工具使用。Chris Hughes 所写的 mathlib [GaussianInt](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Zsqrtd/GaussianInt.lean) 中，`div_def`、`norm_mod_lt` 及其欧氏环结构给出相应的取整除法与严格范数下降。这里的额外约束是指定 $M$ 的整共轭矩阵；正是其整数性把任意 Gaussian 主理想限制到上述两个原始格。
+

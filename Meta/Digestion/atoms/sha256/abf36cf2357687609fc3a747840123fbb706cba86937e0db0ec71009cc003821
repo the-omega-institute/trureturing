@@ -1,0 +1,36 @@
+### 89.3. An exact common-component-zero gauge slice
+
+For Z∈C^{p×2}, apply the physical B-environment unitary
+
+\[
+ \exp\Omega(Z),\qquad
+ \Omega(Z)=\begin{bmatrix}0&-Z^*\\Z&0\end{bmatrix},       \tag{8}
+\]
+
+identically on each output. Re-form the old polar unitary U′ and new block R′, set x′=(V_A,U′), and let m′ be the analytic m-coordinate of x′. Define the p×2 real-analytic map Φ(Z;x,R)=S_{R′}, where the latter coefficients are extracted relative to m′.
+
+At x=m and R=0, Φ(0;m,0)=0 and
+
+\[
+ d_Z\Phi(0;m,0)[Z]=2Z.                                  \tag{9}
+\]
+
+To see the derivative, the old block has no linear change and the new block is ZU_m. Its correct records are Zb_fi, so L₀=L₁=Z. Changes of m′ make no first-order contribution because R′=0 at the evaluation point. The real-analytic inverse function theorem gives, for every nearby (x,R), a unique small Z producing S_{R′}=0. This is a gauge of the same physical channel and leaves A unchanged. No physical channel transfer or error-monotone polar replacement is asserted.
+
+The construction is equivariant under a residual new-environment unitary V∈U(p). The transformation R↦(I₄⊗V)R leaves U and x unchanged, and sends S_R,D_R to VS_R,VD_R. Moreover Ω(VZ)=diag(I₂,V)Ω(Z)diag(I₂,V)*. Thus Φ(VZ;x,VR)=VΦ(Z;x,R), and uniqueness makes the solved gauge equivariant.
+
+On this exact slice write D=D_R. Its flat part has records
+
+\[
+ r_{f0}=-\tfrac12 D b_{f0},\qquad
+ r_{f1}= \tfrac12 D b_{f1}.                              \tag{10}
+\]
+
+Choose an analytic orthonormal complex frame for the complement of Π_m on the one-new-coordinate space, and use the same frame in every new row. This identifies R_perp with Q∈C^{p×28}, isometrically and U(p)-equivariantly. Hence the gauge-fixed physical tuples have exact analytic coordinates (m,n,D,Q); every sufficiently nearby tuple has such a representation. The residual action is
+
+\[
+ (m,n,D,Q)\longmapsto(m,n,VD,VQ).                         \tag{11}
+\]
+
+Neither the gauge choice nor the frame for Q changes the fixed target bit basis.
+

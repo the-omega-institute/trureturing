@@ -1,0 +1,94 @@
+**Definition 10.1 (Source Section 24 access, restricted to positive $H=3$).** Specialize Definition 2.1 to $H=3$, $K=\{1,2,3\}$ and **fixed known** $p_1,p_2,p_3>0$ with sum one. These probabilities need not be equal. Write
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x_\theta=(c_3,c_2,c_1,0)^{\mathsf T},\qquad
+q_{\mathrm{tail}}=p_2+p_3,\qquad
+\delta=\theta_1-2\theta_2+\theta_3.
+$$
+
+An actual observed outcome $1$ heralds the tick; its normalized posterior is $x_\theta x_\theta^*$, independent of the conditional input density. After this observed tick, Source Definition 24.1 assumes the additional ability to apply repeatedly the same fixed isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle.
+\tag{10.1}
+$$
+
+Its chronological output flags are retained coherently and accessibly. The branch representatives remain stable across uses, and no inaccessible environment retains which-branch records. There are no intermediate memory interventions or terminal memory measurements. A permitted terminal POVM on the $n$ flags has effects commuting with the total count
+
+$$
+N_1^{(n)}=\sum_{r=1}^n |1\rangle\langle1|_r.
+$$
+
+Arbitrary measurements within a count sector are allowed, including the relative complex control needed there; no external reference breaking the count symmetry is supplied. For $K_0=S$, $K_1=J_\theta$ and chronological $K_w=K_{b_n}\cdots K_{b_1}$, put
+
+$$
+\begin{aligned}
+|\Psi_{n,\theta}\rangle&=\sum_{w\in\{0,1\}^n}K_wx_\theta\otimes|w\rangle,\\
+\Omega_{n,\theta}&=\operatorname{Tr}_{\mathbb C^4}|\Psi_{n,\theta}\rangle\langle\Psi_{n,\theta}|,\\
+T_{n,\theta}&=\sum_{m=0}^n P_m^{(n)}\Omega_{n,\theta}P_m^{(n)},
+\end{aligned}
+$$
+
+where $P_m^{(n)}$ projects onto words with $m$ ticks. This count-sector twirl is the complete output datum in the stated access class. It is unrelated to the symbol $T$ for the off-diagonal restriction in Section 3.
+
+**Source interface 10.2 (Credited Theorem 24.2, not a new orbit classification).** Under exactly Definition 10.1, Source proves that the following five data or equivalence conditions separate the same phase orbits: equality of $T_{3,\theta}$; equality of the complex number
+
+$$
+C_\theta=\langle010|\Omega_{3,\theta}|001\rangle
+=p_1p_2+p_2\sqrt{p_1p_3}e^{i\delta};
+\tag{10.2}
+$$
+
+equality of $e^{i\delta}$; memory-unitary equivalence of averaged channels; and memory-unitary equivalence of outcome-labeled instruments. In this supplied family the unitary gauge is precisely an affine phase difference $\theta'_k-\theta_k=a+bk$ modulo $2\pi$ on $k=1,2,3$. This classification is credited to Source, not reproved or extended to all CP realizations here.
+
+For clarity, the complete datum provided there is
+
+$$
+\begin{aligned}
+T_{3,\theta}
+&=p_3|000\rangle\langle000|+p_2|001\rangle\langle001|
++p_1|010\rangle\langle010|\\
+&\quad+C_\theta|010\rangle\langle001|
++\overline{C_\theta}|001\rangle\langle010|.
+\end{aligned}
+\tag{10.3}
+$$
+
+The two interfering words have the same count, so their coherence is accessible under the permitted symmetry. With $A=|001\rangle\langle010|$, the count-preserving observables $X=A+A^*$ and $Y=(A-A^*)/i$ have outcomes $(+1,-1,0)$ and the credited distributions
+
+$$
+\begin{aligned}
+\Pr(X)&=\left(\frac{p_1+p_2}{2}+\operatorname{Re}C_\theta,
+\frac{p_1+p_2}{2}-\operatorname{Re}C_\theta,p_3\right),\\
+\Pr(Y)&=\left(\frac{p_1+p_2}{2}+\operatorname{Im}C_\theta,
+\frac{p_1+p_2}{2}-\operatorname{Im}C_\theta,p_3\right).
+\end{aligned}
+\tag{10.4}
+$$
+
+A fixed random choice of $X$ or $Y$ with probabilities $1/2$, retaining the setting, gives the six-outcome separating distribution of Source Theorem 24.2. At shorter complete post-tick horizons the credited data are
+
+$$
+T_{1,\theta}=|0\rangle\langle0|,\qquad
+T_{2,\theta}=q_{\mathrm{tail}}|00\rangle\langle00|+p_1|01\rangle\langle01|,
+$$
+
+which do not identify the phase orbit. Thus the least complete horizon in **this access class** is three. Source also proves that all $T_{3,\theta}$ have the same support and are strictly positive there. Finite tensor powers retain that common support, so no measurement on finitely many copies perfectly discriminates two distinct orbits. Distributional injectivity is not zero-error recovery of a continuous phase from finitely many samples.
+
+The heralding premise is actual preparation, not a declared reset without observation. Source proves that from every initial density, monitoring reaches a tick in at most four device applications almost surely, including the tick. Three further coherent uses give its separating trial, with at most seven applications. Reheralding is required before each trial. Coherent flag storage, the measurement apparatus, the setting and outcome registers and the preparation controller are additional resources. The minimum generator memory in Source Theorem 23.4 is not a bound on this apparatus, nor are optimal hardware, time or energy costs asserted.
+
+Source Section 24 also supplies a complementary mirror obstruction: phases $(\pi/2,0,0)$ and $(-\pi/2,0,0)$ at fixed positive $p$ have equal stationary-density spectra and equal pairwise trace overlaps of their actual history posteriors, yet belong to different unitary channel orbits. The oriented coherent datum (10.2) separates them. This mirror pair and its invariant calculations are credited source results, distinct from the unequal-purity pair in Section 7.
+
+The additional access in Definition 10.1 cannot be inferred from a classical CP-instrument interface. Source (24.18) explicitly supplies the alternative dilation
+
+$$
+\widetilde V\psi=S\psi\otimes|0\rangle\otimes|r_0\rangle
++J_\theta\psi\otimes|1\rangle\otimes|r_1\rangle,
+\qquad \langle r_0,r_1\rangle=0,
+$$
+
+with a fresh inaccessible record at each use. It gives the same outcome CP maps while loss of those records removes the inter-word coherence, including the $001/010$ entry. Its classical law therefore does not promise access to (10.2). Stable accessible coherent outputs and the stated within-sector measurements are genuine additional assumptions.
+
+Theorems 4.5 and 9.1 show why the law and Jordan data still carry no phase information even in this positive $H=3$ subcase; Source Theorem 24.2 already gives a separating route with the richer access just stated. No unknown-observable-route claim is made for that subcase. The universal Jordan theorem remains valid for every legal $H,K,p$ and phase in Definition 2.1, including cases outside Source Section 24's coherent identification theorem.
+

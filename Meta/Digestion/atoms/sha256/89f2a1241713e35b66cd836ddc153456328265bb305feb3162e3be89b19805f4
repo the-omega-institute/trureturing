@@ -1,0 +1,16 @@
+### 91.1. The finite-exception theorem
+
+Let \(H_*(b)\) be the exact nonzero polynomial specified in §90.5, and
+put
+\[
+ \mathcal E=\{b\in\mathbb R:0<|b|<1,\ H_*(b)=0\}.     \tag{91.1}
+\]
+This is a finite algebraic set, defined by public coefficient arrays and
+finite determinant, resultant and denominator rules. It is not a numerical
+list of suspected exceptions. No assertion that it is empty or minimal is
+made; a guard zero need not correspond to an actual extra ray or basis.
+
+Let \(C(b)\) be the unit-entry canonical **input** matrix of §§62,67:
+\(C(b)^*C(b)=6I_6\), \(|M(b)C(b)|^2=6\) entrywise, where
+\(M(b)=\sqrt6H_0(b)\).
+

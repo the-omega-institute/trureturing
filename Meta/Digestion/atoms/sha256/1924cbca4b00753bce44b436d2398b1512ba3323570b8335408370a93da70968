@@ -1,0 +1,49 @@
+**Theorem 2.1 (actual-owner block deletion).** Let $\mathcal N$ have
+$n$ blocks and let $B\subseteq[n]$. Put
+$H_B=\bigcup_{i\in B}O_i$ and
+$T_{H_B}=\prod_{c\in H_B}T_c$. For every
+$a\in T_{H_B}$, including an assignment that cannot be extended to a
+globally compatible tuple, construct $\mathcal N^{B,a}$ by deleting the
+blocks in $B$, replacing every surviving occurrence of a seed in $H_B$
+by its constant value $B_{i,q}(a_c)$, and deleting those seeds and their
+owner declarations. Keep every other seed, table, guard, and occurrence.
+Then $\mathcal N^{B,a}$ is a valid owned-seed network on $n-|B|$ blocks,
+and its incidences do not increase. For arbitrary nonnegative whole-
+block weights,
+
+$$
+\sum_{s\in\mathcal S}\prod_{i\notin B}\Phi_i^{w_i}(s)
+ =\sum_{a\in T_{H_B}}
+ Z_{\mathcal N^{B,a}}((w_i)_{i\notin B}).
+\tag{SCP.5}
+$$
+
+Moreover,
+
+$$
+|T_{H_B}|\le R_d^{|B|}.
+\tag{SCP.6}
+$$
+
+**Proof.** A substituted value is in the same attained factor range
+$G_q$, and every surviving seed retains its distinct owner and identity
+(SCP.1). A seed owned in a deleted block has no remaining owner and all
+of its surviving occurrences have become constants, so no dangling
+variable remains. RRN's converse therefore supplies a complete native
+template for the residual network, including its actual-tree guards.
+
+Split the finite sum on the left of (SCP.5) according to the values
+$a$ on $H_B$. For fixed $a$, the remaining factor vector in each
+surviving block is exactly the old vector with those seed coordinates
+substituted, hence the inner sum is the residual partition function.
+No compatibility condition on a deleted block is imposed; this is why
+nonextendable $a$ are harmless analytical sections. The owner ports in
+each deleted block are distinct, so their domain product is bounded by
+the root range three and the nonroot ranges four, giving (SCP.6).
+
+If $B=[n]$, every seed is deleted because every seed has an owner and
+the residual empty network has value one. Empty domains, singleton
+domains, zero weights, self-donors, repeated occurrences, and cyclic
+donors obey the same finite distributivity identity. No source subtree
+is physically removed and no seed vector is exposed to a reader. $\square$
+

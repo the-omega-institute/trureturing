@@ -1,0 +1,50 @@
+### 55.3 两个实际输出共同给出的实参数
+
+由式 (55.3)，两个实际未归一化输出为
+\[
+U_j=X+Y+Px_j+Qy_j,\qquad
+V_j=X-Y+\bar Qx_j-\bar Py_j.
+\tag{55.11}
+\]
+归一化输出是 \((U,V)/6\)，故实际平坦性要求全部六个模方等于六。定义
+\[
+\begin{aligned}
+l&=(1+\bar\zeta)P+(1-\bar\zeta)\bar Q
+  =-3+ib+h(b+i)\bar\zeta,\\
+m&=(1+\bar\zeta)Q-(1-\bar\zeta)\bar P
+  =h(i-b)-(3+ib)\bar\zeta,\\
+\lambda&=|l|^2,\qquad \mu=|m|^2,\qquad
+\Sigma=\lambda+\mu=12n>0.
+\end{aligned}
+\tag{55.12}
+\]
+对同一个实际输入直接展开两输出模方之和，得到
+\[
+|U_j|^2+|V_j|^2-12
+=2X\operatorname{Re}(lx_j+my_j)+2X^2n.
+\tag{55.13}
+\]
+所以 \(\operatorname{Re}(lx_j+my_j)=-Xn\)。若 \(m=0\)，因右侧非零，\(l\ne0\)，于是三个互异单位圆点 \(x_j\) 落在一条实仿射直线上，不可能。\(l=0\) 时对 \(y_j\) 同理。因此
+\[
+\lambda\mu>0.
+\]
+将式 (55.8) 代入式 (55.13)，三点线性无关性给出
+\[
+l+mB+\bar m\bar C=0.
+\tag{55.14}
+\]
+结合式 (55.10)，有
+\[
+2\operatorname{Re}(\bar l mB)=\mu-\lambda.
+\]
+于是存在唯一实数 \(\tau\)，使
+\[
+B=\frac{\mu-\lambda+i\tau}{2\bar l m},\qquad
+C=-\frac{\Sigma-i\tau}{2lm},\qquad
+A_0=\frac{\zeta-B-C}{3}.
+\tag{55.15}
+\]
+所有这里出现的变量分母均已证明非零，没有另选符号或独立相位。
+
+也有 \(B\ne0\)：若 \(B=0\)，式 (55.10) 给出 \(|C|=1\)；\(|XA_0+C\bar x_j|=1\) 若 \(A_0\ne0\)，再次把三个互异单位圆点放在一条实仿射直线上。因此 \(A_0=0\)，进而 \(Y=CX\)、\(r=1\)，矛盾。故 \(B,C,l,m,X\) 全非零，且 \(n>0\)。
+

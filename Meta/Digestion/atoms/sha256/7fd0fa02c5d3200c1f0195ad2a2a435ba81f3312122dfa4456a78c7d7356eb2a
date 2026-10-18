@@ -1,0 +1,33 @@
+**Proposition 28.4 (a negative direction at an actual occupied label).**
+Under Assumption 28.1, each occupied reverse saturated contact has
+
+$$
+x^TR_-x<0,\qquad
+R_-=Q+t\mathsf F,\quad
+Q=\begin{pmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{pmatrix},\quad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix}.
+\tag{FC.118}
+$$
+
+At least one such actual low label is occupied in every optimum on
+the supplied face. The direction refers to its actual $(u,v)$,
+not a selected eigenvector unrelated to that law.
+
+Proof. At the saturated contact the negative height in (FC.87) gives
+
+$$
+0=d_1=P_y+\mathfrak c Q_y+\ell+t\mathfrak c f-\lambda|u|
+       =d_0+2\ell+\mathfrak c\,x^TR_-x,
+\tag{FC.119}
+$$
+
+where $Q_y=x^TQx$ and
+$d_0=P_y-\ell-\lambda|u|\ge0$ because $\ell>0$ and the pure
+endpoint is globally feasible. Both $\ell$ and $\mathfrak c$
+are strictly positive. Hence the last quadratic term is strictly
+negative at this very contact. Existence of an occupied contact of
+this kind is Proposition 28.2. Theorem 21.1 already excludes PSD
+remainders in its scope; (FC.118) adds a location tied to a mandatory
+occupied actual direction, not another claim of that old exclusion.
+$\square$
+

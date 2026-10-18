@@ -1,0 +1,22 @@
+**Convention 13.1 (unchanged task and credited machinery).** Retain
+Definitions 1.1–1.4 and Assumption 1.2 in full. In particular the
+source is the entire variable-shape
+$\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\}$, preparation
+is paid and precedes the request, and every permitted late request
+must be served by at most one arbitrary finite original-root Read
+of that same stationary source, before any authentic count. All
+accessible surviving source distinctions count in the export.
+The exact factors and their trajectory equivalence are the credited
+AAR supplier in Convention 1.3. Theorem 2.2 supplies the all-cyclic
+entropy rule; Lemmas 3.2, 8.2 and 8.3 supply separation and necessary
+projection counts. They are reused, rather than new general results
+of the weight calculation below.
+
+Repository citations with suffix `a` in §§13–19 designate the public
+committed source at
+`ce2fe4a685b5a195b8b0a380616daf0151f576cb`. The conclusions are
+ordinary mathematics, without a Lean-certification claim. The
+specific new law permits certain locally insufficient projections
+to exceed its cap. Their hard targets, rather than a bound on their
+total mass, make the same entropy rule applicable.
+

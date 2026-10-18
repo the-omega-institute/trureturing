@@ -1,0 +1,28 @@
+#### 31.3　跨世界耦合的 Frechet 锐区间
+
+固定且仅列出的单世界数据
+
+$$
+p_m=\Pr(M_0=m),
+\qquad
+r_m=\Pr(Y_{1,m}=1),
+\qquad
+\mu_0=\mathbb E[Y_{0,M_0}].
+$$
+
+这些量不包含 $M_0$ 与 $Y_{1,m}$ 的联合。写
+
+$$
+q_m=\Pr(M_0=m,Y_{1,m}=1).
+$$
+
+则
+
+$$
+\mathbb E[R_{1,0}]=q_0+q_1,
+\qquad
+\operatorname{NDE}=q_0+q_1-\mu_0.
+$$
+
+<a id="claim-31-3-1"></a>
+

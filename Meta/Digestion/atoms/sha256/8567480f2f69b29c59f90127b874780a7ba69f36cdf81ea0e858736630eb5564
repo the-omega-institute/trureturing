@@ -1,0 +1,36 @@
+**Proposition 4.2 (Exhaustive rank alternatives at budget two).**
+Consider a finite-error model with $m\le2$ and its affine observable
+$a$ from Proposition 3.5. Let $r_a$ be the rank of the linear part
+of $a$ on the direction space of $\mathscr H_E$.
+
+If $r_a\le1$, the model has error at least $R_0$. If $r_a=2$,
+then $m=2$, $\mathscr H_E=\mathbb R^2$, and $a$ itself can be used
+as a bounded $\beta$-independent two-coordinate encoder with exact
+state-independent affine updates. These cases cover every competitor,
+including degenerate affine hulls and unbounded hidden coordinates.
+
+**Proof of Proposition 4.2.** For $r_a\le1$, the range of $a$ lies
+in a fixed affine line or point. Choose a unit normal $\nu$ and a
+constant $d_0$ with $\nu\cdot a=d_0$. At any fixed height,
+
+$$
+\sup_\alpha\|a(k,\alpha)-A(k)U(\alpha)\|
+\ge\sup_\alpha|d_0-A(k)\nu\cdot U(\alpha)|
+=|d_0|+A(k)\ge A(k).
+$$
+
+Proposition 3.5 then gives error squared at least
+$\sup_k(4A(k)^2+4Zk)=R_0^2$. This makes no assumption about
+coordinates in the kernel of this useful readout.
+
+If $r_a=2$, the inequalities
+$2\le\dim\mathscr H_E\le m\le2$ are all equalities.
+The affine map from $E$ to $a$ is an affine isomorphism of
+$\mathbb R^2$. Conjugating each original affine update by it gives
+the exact affine updates for $a$ on the same lawful domains, including
+their offsets. The fixed projection of bounded $q$ makes $a$ bounded
+on the whole source. Theorem 3.4 makes it $\beta$-independent.
+Boundedness was derived only in this full useful-rank case. Models
+with infinite error cannot improve the finite zero witness.
+$\square$
+

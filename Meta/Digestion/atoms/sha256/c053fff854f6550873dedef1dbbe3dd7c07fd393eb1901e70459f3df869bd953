@@ -1,0 +1,2 @@
+**定义 6.1（匹配实例而非 retrofit）。** GCA 的 $G_{\rm sel}$ 在最初安装时即使用它自己的 $E(L)$、捕获 $101U(\delta_{\rm sel})\Delta(G_{\rm sel})$、$E(G_{\rm sel})$、展开后的 $r_{\rm sel}$ 和 HistoryMode。它不是 ARC 的已运行 $G$ 的免费补丁。参数 $m$ 是实际已取得的旧 CAP unified ordinal，不是 primitive ordinal；$e$ 是该次实际 `01` 分派进入 $F^A$ header/setup 后的 cut，$f$ 是 row ACK/source TOK/最后 idle CTL 后进入 InnerReturn 的 cut。$a,b$ 分别是实际已完成前驱 acquisition 的起止端。
+

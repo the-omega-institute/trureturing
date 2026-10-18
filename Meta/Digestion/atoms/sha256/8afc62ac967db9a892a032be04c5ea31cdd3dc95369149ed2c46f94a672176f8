@@ -1,0 +1,17 @@
+**Problem 7.3 (remaining broad recovery obligation).** For an actual
+retained finite record, characterize and acquire a sufficient boundary
+state for a specified future recovery task while preserving the actual
+read addresses, continuing-source condition, independent-writer safety
+and liveness, and all cost coordinates. Theorem 4.1 represents all
+compatible mathematical alternatives; it does not choose an adaptive
+producer, prove a physical clock, or decide unrestricted stopping.
+
+A sharper representation-theoretic problem is to decide which target
+maps are constant on equivalence classes obtained by forgetting selected
+coordinates of (SFP.12), uniformly over arbitrary residual shapes.
+For a particular map and particular forgotten coordinates this requires
+its own proof or a precisely applicable supplier. General all-source
+inclusion/equality and arbitrary tree-quantifier alternation are not
+established here. Existence, uniqueness, representation, universal
+invariance and actual acquisition are separate obligations.
+

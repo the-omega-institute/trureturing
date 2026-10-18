@@ -1,0 +1,34 @@
+**Theorem 4.1 (formula-dependent eventual indistinguishability).** For
+every well-defined finite unary formula $\varphi(X;\bar a)$ in exactly
+Definition 1.2, with fixed finite parameters as in Definition 1.3,
+there exists an effectively obtainable $H\ge1$ such that
+
+$$
+\forall h\ge H\ \forall k\ge0,\qquad
+\mathfrak A\models\varphi(U^+_{h,k};\bar a)
+\ \Longleftrightarrow\
+\mathfrak A\models\varphi(U^-_{h,k};\bar a).
+\tag{TPO.12}
+$$
+
+Here effectivity uses the cited KR formula transformations and the
+supplied finite parameter values. The same statement holds for any
+finite collection of such formulas by taking the maximum of their
+bounds.
+
+Proof. Apply the finite simplification and outer quantifier-elimination
+supplier of Definition 1.3. Retain all inner base formulas, including
+their quantifiers. The result is an equivalent finite selector formula
+$\psi(X;\bar a)$ with no additional free variables. Close its finite
+expressions under the subexpressions and implicit shapes of Definition
+2.3. Lemma 2.4 computes a suitable $b$. Set $H=2b+3$.
+Theorem 3.1 gives equal truth values of $\psi$ on each displayed pair
+for all $h\ge H,k\ge0$. Equivalence of the original and transformed
+formulas gives (TPO.12).
+
+Each transformation operates on finite syntax. Parameter shapes are
+finite trees; the skeleton reductions terminate by consuming that
+syntax. Thus construction of $H$ has a stopping argument, independent
+of a search through witness heights. This does not eliminate the
+remaining inner rank quantifiers by bounded sampling. $\square$
+

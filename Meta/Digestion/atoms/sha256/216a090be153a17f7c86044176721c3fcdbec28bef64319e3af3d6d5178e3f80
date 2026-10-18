@@ -1,0 +1,37 @@
+**Theorem 8.3 (exact replay fiber and record-only soundness).** For every
+authentic extended prefix from an actual $t_0\in D$, the candidate source
+survivors in $V^+$ are exactly
+
+$$
+F=\{s\in D:\text{the recorded source requests from }s
+\text{ give exactly the recorded typed responses in order}\}.
+$$
+
+The actual $t_0$ survives. Controller-mode checks succeed for an authentic
+prefix produced by the declared terminating controller. Every accepted receipt
+and completed consumer output equals the selected initial target of $t_0$.
+
+**Proof.** PR57.T1's valid-packet enumeration is complete and duplicate-free.
+For a retained candidate, induction over rows keeps its replay tree equal to
+the result of the preceding actual requested operations on that candidate.
+Lemma 2.3 gives exactly its next literal response; PR57.T2's ordinary source
+formulas give exactly ReadE and the whole modification result, including
+unchanged source on reject. Comparing those values is therefore precisely
+membership in the displayed fiber, in both directions. Local and terminal
+rows do not alter this source replay. Theorem 5.3 supplies the actual rows,
+so $t_0$ passes every response comparison.
+
+The copied controller sees the same public inputs and acquired responses as
+at its actual execution. Determinism gives the same request/local/output
+sequence. Each authentic replay segment terminates by its declared finite
+computation, so those checks succeed. For any candidate in $F$, its identical
+reply word gives the same controller behavior. These checks therefore do not
+silently select a different source fiber.
+
+For either target type, nonempty whole-fiber constancy and $t_0\in F$ imply
+$\tau$ is its actual initial target. The receipt's identity and target type
+are copied as part of the same sealed payload; PR57.L4 preserves every bit.
+Complete consumer checks and paid output then yield that same $\tau$.
+No live source query, initial-target oracle or chosen representative is used.
+$\square$
+

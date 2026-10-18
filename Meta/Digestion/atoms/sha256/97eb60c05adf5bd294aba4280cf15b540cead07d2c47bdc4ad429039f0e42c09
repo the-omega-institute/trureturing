@@ -1,0 +1,32 @@
+**Theorem 14.4 (obstruction required by a genuine nine-low point).**
+Retain Assumption 1.1 and the same-root enclosure premises of
+Assumption 10.1. Fix finite $t\ge t_0$ and a request $r$ with
+$n_t(r)=9$. For **every** $\lambda>0$ and
+finite attained globally feasible dual $y$ satisfying (FC.5) for
+which $r\in[r_-(t,\lambda),r_+(t,\lambda)]$, at least one of
+
+$$
+R_-\not\succeq0,\qquad a_o=b_o=0,\qquad
+w_o^TR_+w_o<0
+\tag{FC.51}
+$$
+
+must hold. In particular $R_-$ and $R_+$ cannot both be positive
+semidefinite for any such dual. For a qualifying dual with
+$R_-\succeq0$ and $(a_o,b_o)\ne(0,0)$, the last obstruction
+means the zero line of $L_o$ passes through the open negative cone
+of $R_+$, with slope in $(0,\chi)$.
+
+Proof. If all three alternatives in (FC.51) fail for one qualifying
+dual, (FC.48) holds and Theorem 14.1 gives $n_t(r)\le8$,
+contrary to the premise. Both remainders PSD are excluded by
+Theorem 14.2 even when $L_o=0$. In the last stated scope,
+$w_o^TR_+w_o<0$ is a nonzero direction in the open negative
+cone. Its slope is finite by (FC.45), so $b_o\ne0$; its slope
+is $-a_o/b_o\in\mathcal I_-\subset(0,\chi)$ and
+$L_o(w_o)=0$. This proves the zero-line assertion.
+The contraposition applies separately to every stated multiplier
+and dual. It neither assumes such a dual exists at every request
+nor treats failure of a sufficient condition as proof of nine-low
+necessity. $\square$
+

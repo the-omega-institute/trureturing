@@ -1,0 +1,69 @@
+**Theorem 27.2 (singleton upper with explicit actual acquisition).**
+For every $D\ge1$ and every $p\in\mathcal P_D$ of length $n$,
+
+$$
+M_D(\{p\})\le m(n).
+\tag{GDB.110}
+$$
+
+There is a deterministic source-blind preparation attaining exactly
+$m(n)$ complete names, with exactly $n$ original-root Reads, maximum
+address length $n$ and exactly $n(n+1)/2$ submitted letters on every
+source. Its late reader uses one original-root prefix Read of length
+at most $n$, before every supplied count. The construction serves the
+whole variable-shape $\mathcal F_D$.
+
+Proof. First $0\le r\le m-1$, by the two parity cases in (GDB.104).
+Consequently $0\le a\le\lfloor m/2\rfloor$ and
+$0\le b\le\lfloor(m-1)/2\rfloor$: if $r\le\lfloor m/2\rfloor$
+then $b=0$; otherwise
+$b=r-\lfloor m/2\rfloor\le m-1-\lfloor m/2\rfloor$.
+Thus $2a\le m$ and $2b+1\le m$. These inequalities verify every
+range and injectivity assertion in Definition 27.1, including $n=1$.
+There are $a$ earlier positions, $m$ centers and $b$ later positions.
+
+Preparation submits $p_1,\ldots,p_n$ in that fixed public order,
+even after a leaf has been seen. Such absent Reads remain legal and
+charged. It computes $\partial_p(t)$ from these replies, then exports
+only $i=g_n(\partial_p(t))$. Every $i\in[m]$ is attained by either
+actual center-leaf witness from Lemma 26.3. Hence the complete name
+image has exactly $m$ elements, provided the declared paid isolation
+removes all other acquired distinctions. Use fixed-width name storage,
+a public finite computation schedule and allocation, and Assumption
+1.3's export and isolation to impose precisely that complete interface.
+The acquired array, first-leaf index, label, computation fields and
+transcript do not remain separately accessible.
+
+After the singleton request arrives, name $i$ selects the actual word
+$p_{a+i}$. By (GDB.106), its replies distinguish all descriptors in
+that group:
+
+| Descriptor in group $i$ | Reply at $p_{a+i}$ |
+| --- | --- |
+| $(a+i,0)$ | alpha |
+| $(a+i,1)$ | beta |
+| Its optional earlier descriptor | absent |
+| Its optional later descriptor, or $B$ | branch |
+
+The two optional entries are individually unique by (GDB.109).
+A group cannot contain both a later descriptor and $B$, since the
+later indices use $1,\ldots,2b$ and $B$ uses $2b+1$.
+Thus the one reply and the retained name recover the full descriptor.
+On unused name/reply pairs install any fixed output; they are not
+actual executions. Formula (GDB.107) now gives the factor, and the
+credited decoder gives every subsequently supplied authentic count,
+without another Read. The query is chosen before that reply and any
+count. No query is made on an evolved or copied source.
+
+There are exactly $n$ preparation words, of lengths $1,\ldots,n$.
+This proves their charges and the maximum late length. Grouping and
+factor tables are public and effectively generated from $n,p$;
+no preassigned source colors or actual-source table are supplied.
+A name can use $\lceil\log_2m(n)\rceil$ fixed-width bits; unused bit
+patterns do not enlarge its attained alphabet. Work, storage and the
+paid interface services are separate charges. $\square$
+
+The prefix scan is a sufficient preparation bound. The theorem asserts
+no acquisition optimum, and does not replace the different passive
+fixed-target acquisition optimum in AAR §13.
+

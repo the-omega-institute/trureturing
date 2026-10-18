@@ -1,0 +1,36 @@
+**Definition 3.1 (fixed source and normalization).** At the isolated
+source of Assumption 1.2 put
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\qquad
+T=ae_0e_1^T+be_1e_0^T,\qquad
+S=ce_0e_2^T+de_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\qquad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=\frac{ab}{h_0h_1},\quad
+\omega=\frac{cd}{h_0h_2},\quad
+\delta=\theta+\omega,\quad
+s_0=\sqrt\delta,\quad
+\alpha=\frac{\theta}{\delta},\quad
+\beta=\frac{\omega}{\delta}.
+\end{gathered}
+\tag{GC.6}
+$$
+All displayed source amplitudes, $m_1,m_2,\theta,\omega$ are positive,
+$0<\delta<1$, and $\alpha+\beta=1$. The $e_i$ in these qutrit matrices
+are the standard qutrit vectors. The TP identity is used only at the
+stipulated root.
+
+Define
+$$
+\begin{gathered}
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad
+(K_0,K_1,K_2)=(D,T,S),\quad N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\\
+L=\operatorname{diag}(s_0,1,1),\qquad G=LNL,\qquad
+H_0=(1-\delta)N_{00}>0.
+\end{gathered}
+\tag{GC.7}
+$$
+The real symmetric matrices $N,G$ encode the height difference. $L$
+is a coefficient normalization, not a terminal survivor effect.
+

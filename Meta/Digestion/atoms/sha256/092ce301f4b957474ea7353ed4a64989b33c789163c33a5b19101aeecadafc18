@@ -1,0 +1,34 @@
+**Convention 14.1 (attribution of ingredients and result).** The
+even-comb quantifier separation, exact prescribed refinement count
+and its paid full-family realization in §§9–13 are `repo-derived`
+ordinary deductions. The temporal factor, canonicalization, paid scan,
+reply-range projection argument and median-comb query are credited
+suppliers, as identified above. In particular the range argument of
+RCE Theorem 8.2 and the triple identification of COK Proposition 23.3
+are not asserted as new general methods.
+
+Kowshik and Kumar, *Optimal Function Computation in Directed and
+Undirected Graphs*, [arXiv:1105.0240v2, §III-B, Lemma 2 and
+Example 1][CombKK], give a `literature-attested` zero-error comparison.
+For arbitrary joint support, their cut condition separates two
+assignments in $S$ whenever the same complementary assignment makes
+both positive-probability and their function values different.
+Example 1 on diagonal support explicitly couples the encoders;
+separate average-description minimization is stated with full-support
+probabilities. These support-sensitive feasibility distinctions do
+not implement a paid literal acquisition or exchange the count/query
+quantifiers in (LTR.24).
+
+Garg, He, Li, Papakonstantinou and Yang, *Systematic Data Structure
+Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024v1,
+Definition 2.1][CombQWS], give a `literature-attested` comparison in
+which an input-dependent sketch precedes probes chosen from the
+transcript, and repeated probes count with multiplicity. Our export
+has that sketch role, but must itself be acquired through paid native
+Reads; a native reply is a constrained constructor observation, not
+an arbitrary stored value. No min-entropy lifting theorem or general
+data-structure lower bound is imported. These inspected sources
+supply neither the specific theorem here nor an effective original
+all-size cap. Their scope is bounded documentary comparison, without
+an exhaustive literature or worldwide-originality assertion.
+

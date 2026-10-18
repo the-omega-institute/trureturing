@@ -1,0 +1,46 @@
+**Theorem 3.4 (actual target-blind acquisition and full-family upper).**
+For $D\ge2$, put $d=D-1$ and $N=2^{D-2}$. There is one preparation
+and one reader on all of $\mathcal F_D$ satisfying (LTR.1), with
+complete attained alphabet exactly $2^N$ and preparation costs
+
+$$
+T\le2^{D-1}-1,\qquad Q\le D-1,\qquad
+A\le(D-2)2^{D-1}+1.
+\tag{LTR.12}
+$$
+
+Here $T$ counts all actual preparation calls, $Q$ is their maximum
+submitted word length and $A$ their total submitted letters. The
+later reader submits one word of length at most $D$. Consequently
+$M_1(D)\le2^N$.
+
+Proof. Starting at literal $R$, evaluate (LTR.7) by actual Reads.
+At depth parameter $1$ a node Read decides leaf versus branch.
+At larger parameter a leaf reply selects its prescribed diagonal
+code; a branch reply schedules the two original-root child words,
+each at one smaller parameter. Stationarity and the actual branch
+reply certify those children as present. No source description or
+later target is an input. The recursion terminates, using at most
+$2^d-1$ Reads. At relative depth $j<d$ there are at most $2^j$
+calls, each at submitted length $j+1$, so
+
+$$
+\sum_{j=0}^{d-1}(j+1)2^j=(d-1)2^d+1,
+$$
+
+which proves (LTR.12). Use a fixed public concatenated binary name
+of the pair codes. Its width is $2^{d-1}=N$; fixed output extent
+and all surviving fields depend only on that name and $D$. All
+other acquired labels, operands, stacks, buffers, control and
+allocation distinctions are isolated by the paid service in
+Assumption 1.3. This is an acquired code, not a free preassigned color.
+
+Every code is attained within height $d\le D$ by Theorem 3.3. For
+every late $p=Rq$, the reader computes $W_d(E_d(v),q)$, submits
+the one literal $RW_d(E_d(v),q)$ on the same $t$, and retains the
+factor from $J_d$. Equations (LTR.4), (LTR.5) and (LTR.10) give
+(LTR.1) simultaneously for all sources, targets and counts.
+Preparation workspace, local code arithmetic, installed programs,
+handoff and final predictor representation are separate costs; the
+alphabet bound makes no free-total-efficiency claim. $\square$
+

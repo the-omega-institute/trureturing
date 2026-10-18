@@ -1,0 +1,17 @@
+### 81.1. Statement in the original input convention
+
+Use the actual family
+\[
+ h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ P=\frac{bh-3+i(h+b)}2,\qquad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix}.                \tag{81.1}
+\]
+A common-flat input ray has a representative \(w=(x,y)\) whose six
+entries and the six entries of \(H_0(b)w\) all have modulus one.
+Its normalized vector is \(w/\sqrt6\). Let \(R_0\) swap positions
+\(0,1\) in both three-coordinate channels.
+

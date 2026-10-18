@@ -1,0 +1,47 @@
+**Theorem 3.1 (primitive defect and ray flag).** For every $u\in\mathcal T$
+and $k\in\mathbb N_0$,
+
+$$
+\begin{aligned}
+d(u)&=c(p(u))\ge0,\\
+d(\rho^k u)&=d(u),\\
+e(u)=1&\iff d(u)=0.
+\end{aligned}
+\tag{IDC.3.1}
+$$
+
+The image of $d$ on all of $\mathcal T$ is exactly
+
+$$
+\{0\}\cup\{2,3,4,\ldots\}.
+\tag{IDC.3.2}
+$$
+
+**Proof.** Apply (IDC.2.8) to the existing unique decomposition (IDC.2.2):
+$c(u)=c(p(u))+\nu(u)$. Subtracting proves the first equality and
+nonnegativity. Equations (IDC.2.3) and (IDC.2.8) increase both terms of
+the difference by $k$, proving invariance.
+
+The recurrence for $c$ gives $c(t)=0$ exactly for the leaf $\alpha$,
+and $c(t)=1$ exactly for the leaf $\beta$: every pair has coordinate
+at least two. Hence $c(p(u))=0$ exactly when $p(u)=\alpha$, proving the
+flag equivalence. A primitive tree cannot have coordinate one because
+the only such tree is $\beta=\rho\alpha\in I_1$.
+
+For attainment of every remaining value, define finite trees
+
+$$
+p_0=\alpha,\qquad p_1=\beta,\qquad
+p_m=(\alpha,p_{m-2})\quad(m\ge2).
+\tag{IDC.3.3}
+$$
+
+This is a mathematical witness family, not an installed source construction
+service. Induction gives $c(p_m)=m$. For $m\ge2$, its root pair cannot
+be the special image $(\beta,\alpha)$ since its left child is $\alpha$,
+and cannot be an ordinary image pair because that same child is outside
+$I_1$. Thus $p_m\in\mathcal P$, $\nu(p_m)=0$ and $d(p_m)=m$.
+The primitive $p_0=\alpha$ attains zero; $p_1$ is intentionally not a
+primitive witness. This proves both inclusion and attainment in (IDC.3.2).
+$\square$
+

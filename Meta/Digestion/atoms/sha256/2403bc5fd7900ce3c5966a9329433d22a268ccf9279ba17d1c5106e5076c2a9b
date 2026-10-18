@@ -1,0 +1,22 @@
+**定理 77.1（合并两端预算）。** 在任意真正超理想四面体中，若
+
+$$\boxed{2\theta+a+b+c+d\le\pi,} \tag{77.1}$$
+
+则 $\cosh\ell_{12}<3$。因此每个 $\cosh\ell_{12}\ge3$ 的真正出现都满足
+
+$$\boxed{2\alpha_{12}+\alpha_{13}+\alpha_{14}+\alpha_{24}+\alpha_{23}>\pi.} \tag{77.2}$$
+
+(77.1) 允许某一个端点角和超过 $\pi/2$；目标角必须计两次，对边角不在这个预算内。
+
+**证明。** 令 $W=u+v\le\pi-2\theta$，故 $0<\theta<\pi/2$、$z=\cos\theta>0$。在 $0\le t\le W$ 上，$z+\cos t>0$，且
+
+$$\frac{d^2}{dt^2}\log(z+\cos t)
+=-\frac{1+z\cos t}{(z+\cos t)^2}<0.$$
+
+于是 $\log(z+\cos t)+\log(z+\cos(W-t))$ 是对称凹函数，其最小值位于端点。因此
+
+$$(z+\cos u)(z+\cos v)\ge(z+1)(z+\cos W)$$
+$$\ge(z+1)(z+\cos(\pi-2\theta))=(1-z^2)(2z+1).$$
+
+代入 (76.1)，得到 $\cosh\ell_{12}<1+2/(2z+1)<3$。取逆否命题给出 (77.2)。常数三的尖锐性已经由第 76 节 $m=M=\pi/2$ 的真正角族给出。
+

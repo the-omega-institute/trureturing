@@ -1,0 +1,45 @@
+**Definition 2.3 (entire finite implementation class and resource).** A
+design has a finite actually generated classical label $\xi$, common CP
+encoders $\mathcal C_\xi:M_5\to M_{d_\xi}$, arbitrary positive finite
+integers $d_\xi$, and common full-output CP TP decoders $\mathcal R_\xi$,
+with
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I)=I_5,\qquad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\widehat\Phi_*,\qquad
+\sum_{\xi:r(\xi)=r}\mathcal C_\xi^\dagger(I)=F_r(s).
+\tag{CA.12}
+$$
+
+The channel identity includes all complex matrices, references and every
+labelled Borel time set. Arbitrary finite generated refinements and
+postprocessing coins are allowed. Only the total encoder is TP; its
+branches are CP/TNI. Each decoder is TP on its whole fibre, with merely
+TNI supported-live restriction.
+
+The fibre counts jointly every future-accessible input-dependent quantum
+system: specimen, memory, quantum controller, accessible environment,
+returned systems and retained entanglement shares. A receiver share of
+earlier entanglement is not a later independent blank. Other dilation
+systems are permanently inaccessible before the cut. A passive reference
+may be arbitrary and entangled but neither operation accesses it. There
+is no hidden share, bypass, callback, helper specimen, runtime sensor,
+copy, reset, retry, source prior or postselection. A coherent branch sum
+without a generated classical record is one quantum payload; an algebraic
+Kraus label is not an acquired hardware flag.
+
+High means $d_\xi\geq3$. Let $G_H^{\rm acq}$ be the sum of those encoder
+effects and $G_H^L$ the effect of their supported live output. Full TP of
+the decoders gives
+
+$$
+G_H^{\rm acq}\succeq G_H^L\succeq0,\qquad
+p_H^{\rm acq}(\sigma)=\operatorname{tr}(G_H^{\rm acq}\sigma).
+\tag{CA.13}
+$$
+
+These are unnormalized masses, probabilities only on normalized inputs.
+No acquisition or live probability is divided out. Universal results
+below include this entire finite class, rather than a selected real,
+covariant, pure-encoder or isometric-decoder family.
+

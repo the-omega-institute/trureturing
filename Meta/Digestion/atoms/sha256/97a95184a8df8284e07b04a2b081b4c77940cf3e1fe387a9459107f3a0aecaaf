@@ -1,0 +1,65 @@
+**Theorem 8.2 (necessary section count on actual ternary groups).**
+$B_{L,g}$ is a full complete native solution set with $3^g$ rows.
+Every nonempty full solution set from $\mathfrak N_{1,L}(n)$
+contained in it is a singleton. Consequently its minimum exact
+decomposition in Definition 8.1 has exactly $3^g$ pieces, with
+logarithmic piece count per original block
+
+$$
+\frac{\log_2 3}{L+1}.
+\tag{SIR.42}
+$$
+
+Proof. At $d=1$ there is only the root target, whose factors on
+$\alpha,\beta,C_0$ are respectively $(2,1),(1,0),(0,0)$.
+For every coordinate in a group, query one fixed group root and
+decode these three replies to their root factors. The owner can
+query itself; assign the unused absent entry any attained factor.
+The simultaneous equations force precisely equality within each
+group, with no condition between groups. This gives the asserted
+complete template and $3^g$ distinct actual tuples.
+
+Now consider any nonempty restricted full solution set contained
+in $B_{L,g}$. All its domains are nonempty. Each block has one
+port, and every attained root factor specifies one of the three
+actual $S_1$ roots. Thus every assignment of all its seeds is
+realizable: there is no further multi-port compatibility within a
+block. Different seeds range independently in this particular
+full solution set. Each coordinate is a constant or a function
+of its one assigned seed; the owner identity still holds.
+
+If a group varied, one of its coordinates would be a nonconstant
+function of a seed $c$. Every other coordinate in the group
+must equal it for every seed assignment. It cannot be constant.
+It cannot depend on a different seed, because varying $c$ with
+that other seed fixed would violate equality. It must therefore
+be assigned to the same $c$. This requires incidence at least
+$L+1$, contradicting the restriction. Every group is consequently
+fixed, so the solution set is a singleton. Singletons are constant
+networks and attain a matching decomposition of all $3^g$ rows.
+Divide its logarithm by $n=g(L+1)$ to get (SIR.42).
+
+The comparison with unrestricted covers uses the credited depth-one
+own-root reader, already giving $M_1(1)=1$ in FMR. Its disjoint
+product gives every root its own seed, domain
+$\{\alpha,\beta,\mathsf{branch}\}$, and the bijective root-factor
+table above. All incidences are one and the full solution set is
+$S_1^n$. Thus, as an ingredient fixing the boundary's scope,
+
+$$
+K_{1,L}(n)=K_1(n)=1,\qquad
+A_{1,L,n}(w_1,\ldots,w_n)=\prod_i\sum_{u\in S_1}w_i(u),
+\qquad\beta_{1,L}(w)=\beta_1(w)=\sum_{u\in S_1}w(u).
+\tag{SIR.42a}
+$$
+
+Indeed this one set covers the universe and attains all its
+nonnegative mass; no competitor has greater mass than the universe.
+The exact-decomposition obstruction therefore gives no lower bound
+on optimized pressure, memory, arbitrary recoloring or arbitrary
+certificates. It excludes zero-cost same-solution truncation at the
+stated cut, while a larger full set covers the relation immediately.
+It gives no obstruction to a different lawful recut and does not
+assert optimality of $Q_{d,L,n}$ for pressure or cover approximation.
+$\square$
+

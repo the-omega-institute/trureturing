@@ -1,0 +1,75 @@
+**Theorem 3.3 (every rational same-run weighted minimax value).** For
+$\lambda=(\lambda_q,\lambda_d,\lambda_\ell)\in\mathbb Q_{\ge0}^3$, put
+
+$$
+ W_\lambda(A)=\sup_{u\in U}
+   (\lambda_q q_A(u)+\lambda_d d_A(u)+\lambda_\ell\ell_A(u)),
+ \qquad W_\lambda^*=\inf_A W_\lambda(A).
+\tag{SRF.12}
+$$
+
+If $\lambda_q=\lambda_\ell=0$, the value is zero on every input. If
+$\lambda_q+\lambda_\ell>0$ and the prefix decision is negative, the value
+is infinity. On a positive prefix decision the value is a computable
+finite rational, attained by an actual finite service, with an actual
+source attaining its worst weighted cost. All zero-weight faces remain
+in scope.
+
+Proof. Use the methodology of [JRF, Theorem 7.1][JRF], now with the proved
+source and action interfaces of §2. First, on any input, the static
+historical decoder of [SLH, Theorem 2.2][SLH] can traverse the whole
+original tree: decode its root, recurse on original children only after
+a branch, and stop at its original leaves. This terminates on each finite
+source using only actual reads at epoch $N$. It computes the whole
+original row and uses zero updates. Thus update-only and all-zero prices
+are zero even when no uniform read budget exists. In the negative branch,
+Theorem 3.2's separate unbounded read and length costs make every weighted
+supremum infinite if either coefficient is positive. The pointwise
+static service realizes that extended value.
+
+On the positive branch the static supplier gives
+$B_0=\lambda_qK_0+\lambda_\ell L_0$. If only updates are priced the same
+static supplier suffices, so assume $\lambda_q+\lambda_\ell>0$.
+ABC's cap and cleanup decrease each same source's cost vector; hence they
+do not increase (SRF.12), even when an unpriced coordinate was initially
+unbounded. Updates can be bounded by $U_N$. If $\lambda_q>0$, every
+candidate with value at most $B_0$ has read bound
+$k_\lambda=\lfloor B_0/\lambda_q\rfloor$. If
+$\lambda_q=0<\lambda_\ell$, put
+$L_\lambda=\lfloor B_0/\lambda_\ell\rfloor$ and use cleanup to obtain
+$k_\lambda=L_\lambda+\max(0,2-N)$.
+
+For a threshold $z\in[0,B_0]$ enumerate the finitely many shapes and
+epochs under these bounds and require correctness (SRF.9) and
+
+$$
+ E_t(\mathbf z)\Longrightarrow
+ \lambda_q k_t+\lambda_d d_t+\lambda_\ell L_t(\mathbf z)\le z
+ \quad\text{at every leaf }t.
+\tag{SRF.13}
+$$
+
+The suffix tuple in this display is distinguished from the scalar
+threshold by its boldface. If $\lambda_\ell>0$, each reached word has
+length at most $\lfloor B_0/\lambda_\ell\rfloor$, so enumerate those
+finite literal words and test the numerical inequality only at reachable
+leaves. If $\lambda_\ell=0$, then $\lambda_q>0$ and the left-hand cost
+is independent of suffixes. For every numerically over-budget leaf add
+$\neg E_t(\mathbf z)$ to the WS2S sentence, inside the existential suffix
+quantifiers. This is a decidable unbounded-address test. It requires no
+variable-length comparison in WS2S and never charges an unreachable leaf.
+
+The normalization and unrolling include every original service of value
+at most $B_0$, with no increase of its same-run sum. Conversely each
+passing skeleton executes precisely the costs in (SRF.13) on its actual
+source. These are the two threshold directions. Choose a positive common
+denominator $a$ of the weights. Every finite run sum belongs to
+$a^{-1}\mathbb N$; a bounded nonempty set of such sums has a maximum
+on the same lattice. Test $0,1/a,\ldots,B_0$ in order. The static supplier
+ensures a true test, and the first true threshold is the exact attained
+minimum. Corollary 2.3 gives its worst-source witness.
+
+This procedure does not minimize a weighted sum of the three separate
+coordinate maxima, nor restrict an unpriced, unbounded service class
+without the stated sourcewise domination argument. $\square$
+

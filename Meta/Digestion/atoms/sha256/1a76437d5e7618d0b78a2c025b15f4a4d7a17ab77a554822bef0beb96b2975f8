@@ -1,0 +1,13 @@
+## 240. Exclusion and scope
+
+If two of the four distinct K owners were entirely high-labelled,
+their combined genuine P expense would exceed 3*pi. Each of the other
+two K owners consumes more than pi, so the four owners alone would
+exceed the complete 5*pi budget. This is impossible. Therefore at most
+one actual owner in the quotient is entirely high-labelled.
+
+This excludes every remaining four-core incidence pattern with two
+such owners, independently of loops and parallel face pairings. Patterns
+with zero or one entirely high-labelled owner, the external low-only
+boundary, and five-reservoir realization remain unresolved.
+

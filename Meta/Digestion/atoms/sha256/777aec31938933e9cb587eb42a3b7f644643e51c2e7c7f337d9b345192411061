@@ -1,0 +1,18 @@
+## 2. The exact drift quotient and slope transfer
+
+For this section fix any legal history with $n=d+5$. For a matrix $T$ define its signal vector
+
+$$
+\mathcal L(T)=\bigl(\operatorname{tr}(A_iT)\bigr)_{i=0}^{n-1},
+\qquad
+\mathcal I v=(iv_i)_{i=0}^{n-1}.
+$$
+
+Define the four-component difference map
+
+$$
+(\Lambda v)_j=
+\sum_{h=0}^{d+1}(-1)^{d+1-h}\binom{d+1}{h}v_{j+h},
+\qquad j=0,1,2,3.
+$$
+

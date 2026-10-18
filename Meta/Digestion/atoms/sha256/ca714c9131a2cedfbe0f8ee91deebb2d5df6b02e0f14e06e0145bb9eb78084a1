@@ -1,0 +1,17 @@
+**Theorem 5.4 (global extension preserving the selected runs).**
+Every native comparator for $E_*$ can be extended
+to one globally correct reader for encoder $e_f$ on the whole domain
+of Assumption 1.1, preserving all its native queries and outputs on
+every history in (NTL.11).
+
+**Proof.** The supplied entry is finite and explicit. Test whether
+$S=S_*$, the code is zero and the *whole row* is $V_*$; this is
+local computation on acquired data. On equality execute the selected
+comparator unchanged. On inequality use the globally correct decoder
+from Theorem 2.2. The exact fiber theorem makes the first branch
+correct on every history that can enter it, and the other decoder is
+correct on the remainder. The entry test submits no source queries.
+Thus (NTL.18)--(NTL.19) and the conditional frontier also apply to
+the restrictions of globally correct readers. Their costs on other
+entries are not claimed equal to the selected-entry budgets. $\square$
+

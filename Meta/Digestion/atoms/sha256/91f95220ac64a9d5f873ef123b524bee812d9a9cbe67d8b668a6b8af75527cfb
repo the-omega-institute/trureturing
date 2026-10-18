@@ -1,0 +1,74 @@
+**Theorem 14.2 (pair independence and an extensive higher-order loss).**
+Suppose $G$ is connected and every nonempty edge cut of size at most
+four is the star of a vertex. Under the law (GDB.53), let $Q_G$ be
+the Gibbs law on the actual graph solutions and put $Y=Hs$. Then
+every pair of distinct edge seeds is independent and fair. Every
+proper subset of a vertex star is uniform. Nevertheless,
+
+$$
+\begin{aligned}
+t&=\frac1{64},\qquad a=1-2t=\frac{31}{32},\\
+q_n:=Q_G(Y_v=1)&=\frac{t(1-a^{n-1})}{1+a^n},\\
+\Delta(Q_G)&=\frac{2n}{3}-1+
+              \frac n3 h_2(q_n)-H_{Q_G}(Y).
+\end{aligned}
+\tag{GDB.63}
+$$
+
+Here $Y$ is exactly $n$ iid Bernoulli$(t)$ bits conditioned on
+even total parity. Its entropy may equivalently be evaluated by
+
+$$
+H(Y)=\log_2\frac{1+a^n}{2}
+-n(1-q_n)\log_2(1-t)-nq_n\log_2t.
+\tag{GDB.64}
+$$
+
+For comparison, the uniform law on the zero-syndrome solutions,
+obtained with positive equal even weights and zero odd weights,
+has $H(s)=n+1$ and $\Delta=2n/3-1$.
+
+Proof. The annihilator of $\ker H$ is the cut space
+$\operatorname{im}H^{\mathsf T}$. A projection of $\ker H$ onto a
+coordinate set is full exactly when no nonzero cut vector is
+supported there. There is no such vector on a pair of edges.
+On $\operatorname{star}(v)$ the only supported nonzero cut is
+the entire star: any other cut of size at most four would have to
+be another vertex star, which cannot be a proper subset of this
+four-edge star in a simple 4-regular graph. Thus the star projection
+is precisely the three-dimensional even-parity subspace.
+
+On each feasible fixed syndrome the edge law is uniform on an
+affine translate of $\ker H$, since its product weight depends only
+on that syndrome. Every proper star subset is therefore uniform
+even conditional on $Y$. Every pair is uniform on its four
+possibilities. Mixing syndromes preserves those marginals.
+
+At a vertex, $O_v$ consists of two outgoing bits, and its two
+incoming owner groups are the other two distinct bits. Consequently
+
+$$
+\begin{aligned}
+H(O_v)&=2,\\
+H(O_v\mid B_{v,j})&=2\quad(j=1,2),\\
+H(O_v\mid B_{v,1},B_{v,2})&=1+H(Y_v).
+\end{aligned}
+\tag{GDB.65}
+$$
+
+For the last equality the full star has entropy $3+H(Y_v)$ and
+the incoming pair has entropy two. The coefficients at $k=2$ are
+$1/3,1/6,1/6,1/3$, so its local envelope is
+$5/3+H(Y_v)/3$. Also $H(s\mid Y)=e-n+1=n+1$.
+The syndrome distribution follows from (GDB.56): its mass is
+proportional to $\prod_v(1-t)^{1-y_v}t^{y_v}$ on even total parity.
+The elementary parity probability is $(1+a^n)/2$, yielding the
+displayed $q_n$ and (GDB.64). Substitution into (GDB.62) proves
+(GDB.63). With $Y=0$ all syndrome entropy terms vanish and the
+affine fiber is $\ker H$, giving the final assertion. $\square$
+
+This loss involves high-order shared information under an actual
+common global law. It is distinct from OCB Theorem 6.2's already
+credited imported-entropy versus owner-correlation accounting
+[OCB][ParityOCB]. Pairwise independence does not imply zero COK loss.
+

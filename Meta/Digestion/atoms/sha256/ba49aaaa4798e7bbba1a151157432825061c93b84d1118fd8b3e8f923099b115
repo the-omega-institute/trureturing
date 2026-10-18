@@ -1,0 +1,111 @@
+**Lemma 3.1 (one stationary path and finite product errors).** Set
+$\epsilon=\sqrt V$. There is a stationary analysis path
+
+$$
+W_0\xrightarrow{A}Q_0\xrightarrow{B}W_1
+ \xrightarrow{A}Q_1\xrightarrow{B}W_2\longrightarrow\cdots
+\tag{3.1}
+$$
+
+whose two edge laws are the original $\Gamma_A,\Gamma_B$. Write
+$u_t=u(Q_t)$, $v_t=v(W_t)$, $h_n(t)=Q_t(w_{n,1})$ and $c_t=h_0(t)$.
+Define
+
+$$
+x_t=\frac{v_tc_t}{1-v_t},\qquad
+y_t=\max\{\ell,\min\{L,x_t\}\},\qquad
+\ell=\frac29,\quad L=\frac6{25}.
+\tag{3.2}
+$$
+
+Then, at every time,
+
+$$
+\frac9{50}\le x_t\le\frac8{27}<\frac3{10},\qquad
+\mathbb E|x_t-y_t|\le20\epsilon,
+\tag{3.3}
+$$
+
+and for $n=1,2,3$,
+
+$$
+\mathbb E\left|h_n(t)-c_t\prod_{j=1}^n x_{t+j}\right|\le3\epsilon,
+\qquad
+\mathbb E\left|h_n(t)-c_t\prod_{j=1}^n y_{t+j}\right|\le70\epsilon.
+\tag{3.4}
+$$
+
+Proof. Compact metric spaces admit Borel disintegrations. Starting with
+$W_0\sim\nu_\beta$ and using the two disintegrations gives the path by
+the usual iterated-kernel construction. Both identities (1.4) give its
+stationarity under one complete A-B step. Countably many almost-sure
+conditions can be imposed simultaneously along this forward path.
+This construction supplies neither an inverse nor a reversible kernel.
+
+For $0\le n\le2$ set
+
+$$
+\begin{aligned}
+a_n(t)&=h_n(t)-W_t(\alpha w_{n,1})/v_t,\\
+b_*(t)&=1-v_{t+1}-c_t/(1-u_t),\\
+b_n(t)&=W_{t+1}(\alpha w_{n,1})-h_{n+1}(t)/(1-u_t).
+\end{aligned}
+\tag{3.5}
+$$
+
+Each of these seven errors has expected absolute value at most
+$\epsilon$, by Cauchy–Schwarz and (1.7). They need not vanish and are
+not independent. Put $d_t=1-u_t$ and $k_t=d_tv_{t+1}\le\lambda$.
+The definitions give the exact identities
+
+$$
+\begin{aligned}
+c_t&=d_t(1-v_{t+1})-d_tb_*(t),\\
+h_n(t)&=k_th_{n-1}(t+1)-k_ta_{n-1}(t+1)-d_tb_{n-1}(t),
+ \quad 1\le n\le3,\\
+k_tc_{t+1}-c_tx_{t+1}&=d_tb_*(t)x_{t+1}.
+\end{aligned}
+\tag{3.6}
+$$
+
+The first box and $a\le v_t\le b$ give the pointwise bounds for $x_t$.
+If $r_n(t)=h_n(t)-c_t\prod_{j=1}^n x_{t+j}$, then $r_0=0$ and (3.6)
+implies
+
+$$
+\mathbb E|r_n(t)|
+ \le\lambda\mathbb E|r_{n-1}(t+1)|
+ +\left(\lambda+\frac23+\frac23(3/10)^n\right)\epsilon.
+\tag{3.7}
+$$
+
+Induction gives $\mathbb E|r_n|\le3\epsilon$ for $1\le n\le3$:
+the parenthesis is at most $17/15$ and
+$3\lambda+17/15<3$. This uses only the displayed seven coordinates.
+
+Let $s_n(t)=W_t(\alpha w_{n,1})$. The two suspended boxes give
+$s_0\ge18/125$ and $s_1/s_0\in[\ell,L]$. Also
+
+$$
+\mathbb E|s_0-v_tc_t|\le\frac25\epsilon,\qquad
+\mathbb E|s_1-v_tc_tx_{t+1}|\le\frac85\epsilon.
+\tag{3.8}
+$$
+
+The second bound follows from $s_1=v_t(h_1-a_1)$ and the first bound
+in (3.4). Consequently
+
+$$
+\mathbb E\left|x_{t+1}-\frac{s_1(t)}{s_0(t)}\right|
+ \le\frac{125}{18}\left(\frac85+\frac3{10}\frac25\right)\epsilon
+ \le20\epsilon.
+\tag{3.9}
+$$
+
+Projection onto $[\ell,L]$ reduces distance to this ratio. Stationarity
+gives (3.3), including time zero. Telescoping a product of $n$ factors
+in $[0,3/10]$ bounds its change by the sum of the factor changes.
+Since $c_t\le1$, the additional expected error is at most
+$20n\epsilon\le60\epsilon$. Adding (3.7) proves the second inequality
+in (3.4). $\square$
+

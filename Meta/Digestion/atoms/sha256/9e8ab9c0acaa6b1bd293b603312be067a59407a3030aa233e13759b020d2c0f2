@@ -1,0 +1,9 @@
+### 67.3 Tensor extension with existing real Hadamard orders
+
+If H is a real Hadamard matrix of order h and O is the 9×9 matrix (1), then (H/sqrt(h))⊗O is a balanced orthogonal matrix with 3h row blocks of size three. Indeed both factors are orthogonal, and every resulting column-block squared norm is (1/h)(1/3)=1/(3h). The criterion therefore gives
+
+    minimum branches for F_(9h,2) = 3h,
+    minimum shared entropy = log₂(3h).
+
+In particular h=2^s follows from the classical Sylvester recursion, giving an infinite exact family with 3·2^s branches. This tensor statement assumes a given Hadamard H and does not assert Hadamard existence at arbitrary orders. Nor does the nine-dimensional construction prove that balanced orthogonal frames exist for every integer r.
+

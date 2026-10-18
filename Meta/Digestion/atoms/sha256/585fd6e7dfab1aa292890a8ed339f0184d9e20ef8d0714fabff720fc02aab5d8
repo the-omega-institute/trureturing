@@ -1,0 +1,30 @@
+**定义 1.3（Two physical visibility tests）。** For an eligible $r$ put
+
+$$
+\begin{aligned}
+H&=J\setminus W_1=P\cap\{a+1,\ldots,m-1\},\\
+I_r&=P\cap\{m+1,\ldots,m+r-1\},\\
+K_r&=\begin{cases}P\cap\{m+r\},&r>0,\\\varnothing,&r=0,\end{cases}\\
+O&=J\setminus W_2.
+\end{aligned}
+\tag{1.2}
+$$
+
+Empty intervals and empty-set constancy have their usual meanings. The sets $I_r,K_r$ are subsets of $J\cap W_1$. A binary orientation is a bijection $\eta:\lambda[J]\to\{0,1\}$ when the lower table has exactly two labels; write $e=\eta\circ\lambda$.
+
+The test $\mathsf A_1$ holds if $\lambda$ is constant on $J$, or if such an orientation satisfies
+
+$$
+e=0\text{ on }H\cup I_r,\qquad e=1\text{ on }K_r.
+\tag{1.3}
+$$
+
+The test $\mathsf A_2$ holds if $\lambda$ is constant on $O$, or if an orientation satisfies
+
+$$
+e=0\text{ on }O\cap I_r,\qquad e=1\text{ on }O\cap K_r.
+\tag{1.4}
+$$
+
+When $O$ is empty, $\mathsf A_2$ holds. The orientations in the two tests are separate existential choices. These tests concern the actual subgroup only; a full physical row is nevertheless inverted on the entire path.
+

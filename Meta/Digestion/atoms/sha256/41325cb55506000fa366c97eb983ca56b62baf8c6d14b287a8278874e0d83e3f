@@ -1,0 +1,19 @@
+# FIB two paid reads: selective risk and seed availability
+
+For the original biased XOR source, this volume determines every
+two-read supporting objective for joint endpoint correctness and
+budgeted return mass. A finite family of paid policies gives the exact
+attained envelope when the independent auxiliary probability law may be
+chosen. A particular exposed face has an explicit equation, and equality
+on that face under any specified unchanged auxiliary law is equivalent
+to a four-part measurable partition of its seed space.
+
+These are ordinary mathematical results relative to the supplied texts.
+The original law, finite-record interface, selective count coefficients,
+zero-record bounds and one-read results retain their attribution to
+[Original][Original] and [Risk][Risk]. The almost-sure-return two-read
+slice belongs to [`FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md`][Endpoint], *FIB two paid reads:
+exact almost-sure-return endpoint risk*, §§5–6; it appears here only as an endpoint consequence of the
+support formula. The complete frontier for each specified atomic
+auxiliary law remains a separate question.
+

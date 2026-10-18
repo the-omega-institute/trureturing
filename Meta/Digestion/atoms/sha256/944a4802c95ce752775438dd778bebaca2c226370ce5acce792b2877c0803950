@@ -1,0 +1,36 @@
+**Proposition 1.4 (Independent TV rows and exact later-tail identity).**
+Let $\Omega_n=\{w:w_1=\cdots=w_{n-1}=1,w_n=0\}$ and $+=1^K$.
+For a probability law $p_w$ on labels $0,\ldots,K$, cap-$e$
+feasibility at $w\in\Omega_n$ retains all three rows
+
+$$
+\begin{array}{c|c|c}
+\text{row}&\text{event}&\text{demand}\\\hline
+A&\{0\}&1-b_n-e\\
+C&\{n\}&b_n-e\\
+P&\{0,n\}&1-e
+\end{array}
+\qquad p_+(0)\ge1-e.
+$$
+
+They hold on every word, including all multiple-zero suffixes.
+Negative singleton demands remain literal. If $c_n=p_w(n)$ and
+$D_n=1-p_w(0)-p_w(n)$, exact TV is
+
+$$
+\max\{c_n+D_n-b_n,\ b_n-c_n,\ D_n\}.
+$$
+
+For a law $p$ on labels at most $K$ and an actual $n>K$, put
+$r=1-p(0)$. Then
+
+$$
+\operatorname{TV}(p,(1-a_n)e_0+a_ne_n)
+ =\frac{|a_n-r|+a_n+r}{2}=\max\{r,a_n\}.
+$$
+
+Proof. Split the signed difference at zero, $n$, and the other labels.
+The resulting masses give both formulas. The union deficit is
+independent of the two singleton deficits and must be bounded
+separately. $\square$
+

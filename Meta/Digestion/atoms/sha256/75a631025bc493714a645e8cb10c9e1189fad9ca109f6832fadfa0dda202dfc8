@@ -1,0 +1,51 @@
+### 定义 16.1（三层来源系统）
+
+把本卷对象分为三层。
+
+**Primitive 层。** 原生给定的有限对象为
+\[
+\Sigma=\{0,2,3,5,25\},\qquad
+\mathcal A_0=\mathbb R^\Sigma,\qquad
+\Delta_0=\Delta(\Sigma),
+\]
+五态函数 \(x,y,z\)，可见投影
+\[
+P_0:\Delta_0\to\mathbb R^3,\qquad
+P_0(p)=(X,Y,Z),
+\]
+seam 向量
+\[
+d=(1,-1,0,-1,1),
+\]
+以及每个有限 Fibonacci 支持图的顶点集 \(V_j\)、边集 \(E_j\)、质量边界映射 \(B_j:\mathbb R^{E_j}\to\mathbb R^{V_j}\) 和边读出映射 \(A_j:\mathbb R^{E_j}\to\mathbb R^{m_j}\)。在 \(j=0\) 的五态图上，已有 \(Bf\) 和 \(Af\) 正是这些映射的实例。
+
+**Derived 层。** 只使用 Primitive 层的有限代数、线性代数、凸性和图论定义出的对象，包括
+\[
+p_\kappa,\quad
+\mathcal F_{X,Y,Z},\quad
+\Delta=r\kappa-XY,\quad
+\ker DP_0=\mathbb Rd,
+\]
+Shannon 熵、负熵势
+\[
+\mathcal V_{\mathrm{ent}}(p)=-H(p)=\sum_s p_s\log p_s,
+\]
+以及内部单纯形上的 Fisher 二次型
+\[
+g_{F,p}(u,v)=\sum_s\frac{u_sv_s}{p_s},
+\qquad
+T_p\Delta_0=\{u:\sum_su_s=0\}.
+\]
+图论方面，\(Z_j=\ker B_j\) 是循环载体，\(L_j=B_jB_j^*\) 给出由 incidence 映射导出的非负图二次型
+\[
+Q_j(v)=\langle v,L_jv\rangle=\|B_j^*v\|^2.
+\]
+这些定义不含时间、质量、能量级或量子化假设。
+
+**Bridge 层。** 下列对象不由上述有限结构自动产生，必须由明确桥接公理或构造加入：
+\[
+(M,g),\ E,\ \nabla^A,\ \Phi,\ \rho_\Phi,\ \mathcal E[\Phi],
+\quad E_s,\quad M_{\mathrm{mob}},\quad J,\quad m_\kappa,
+\]
+树场与 FIB 的耦合 \(V_{\mathrm{bridge}}\)，三角网络的独立源提升，以及到 zeta 零点空间的酉映射或正则化行列式。特别地，\(\gamma r\) 只有在声明一个耗散迁移率后才是时间衰减率；\(\hbar\omega\) 只有在声明 cotangent 提升和量子化规则后才是能级。
+

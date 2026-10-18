@@ -1,0 +1,46 @@
+**Corollary 211.7 (A guarded biased-supplier funding region).**
+Suppose the actual input has $\Delta_O(y)\le d\le1$, $\mu\ge2$,
+and a selected set satisfying (211.11). Define
+
+$$
+h=\mu-1,\qquad c_*=\min\{E,h-\sqrt h\},\qquad
+U=\frac{(2h-c_*)^2}{h}.
+\tag{211.20}
+$$
+
+If either $U<a+s$, or
+
+$$
+a+s\le U<\Psi,\qquad m-1>\Pi(s,a,U),
+\tag{211.21}
+$$
+
+then $S>U$ and there is an exact-$Q$, same-$W$ score $V$ with
+$\Delta_N(V)\le1$. Its certificate has $\theta=0$.
+
+**Proof.** If $S\le U$, 211.4 contradicts the first alternative
+and 211.5 contradicts the second. Independently the head bound gives
+$t\ge\mu-d\ge h$. Since $h\ge1$,
+$0\le c_*\le h-\sqrt h\le h$. Split $c_*$ into
+$0\le c_a^*\le c_a$, for example $c_a^*=c_*c_a/E$ if $E>0$,
+and take both zero when $E=0$.
+Use 207.5 with $s_{207}=h$, $d_{207}=1$ and these retained masses.
+Its conditions are $1\le h$, $\gamma_j\le h+1$, $c_*\le h$,
+$(h-c_*)^2\ge h$, $S\ge U$ and $t\ge h$, all verified above.
+
+For clarity its core has product zero probability $h/(2h-c_*)$,
+stock $U$, early lifts $(h-c_a^*)/(2h-c_*)$, early correct mass
+$c_a^*$ at $w(\{a,3,\ldots,L\})$, late singleton weight
+$\min(\gamma_j,h-c_*)$, late absorbing-suffix weight
+$(\gamma_j-h+c_*)_+$, and terminal mass $h$.
+Complete the totals by adding $c_a-c_a^*$ at those early correct
+words, pair mass $S-U$ at $w(\{1,3,\ldots,L\})$, and terminal
+mass $t-h$. Each addition is collected by the anchor, so it increases
+any table by at most the same anchor increase. This is the completion
+already proved in 207.5; it preserves every class total, $S,t,Q,W$.
+The entire resulting score has excess at most one and zero residual.
+At $\mu=2$, $h=1,c_*=0$, so no division or square-root endpoint
+is exceptional. The stock/count conditions are sufficient hypotheses;
+no assertion makes them necessary for $E_N$ or automatically true
+for every unit-$O$ input. $\square$
+

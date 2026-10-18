@@ -1,0 +1,24 @@
+**Definition 6.1 (finite response and bounded entry check).** For
+$\eta\in\Omega_b$, let $v_\eta$ list the truthful replies at every
+installed Read, including unused and duplicate states, as computed
+from its pattern and the exterior. Let $h(\eta)\in\{0,1,2,3,4\}$
+be its target index from (TCR.8). These are finite syntactic data.
+For each $z\in\{0,1\}$ perform the following mathematical bounded
+check on the fixed table and this response vector.
+
+Start at $e_z$ with zero calls. If the state is a Halt, accept
+exactly if its whole output equals $R_{h(\eta)}$. At a Read with
+fewer than two calls used, use that state's coordinate of $v_\eta$,
+take its fixed successor and increment the call count. Check for a
+Halt again, including just after the second call. A Read still
+present after two calls fails. A wrong Halt fails immediately.
+The resulting set of accepted labels is denoted $\Gamma_T(\eta)$.
+Whole-output equality compares finite exteriors, complete partitions,
+canonical names and guards, rather than only a target label.
+
+This check includes an initial Halt, early stopping, wrong outputs,
+self-loops, longer cycles, a still-running second-call successor,
+and behavior from either entry even if that entry is never prescribed
+for a code on this profile. Repeated running visits still pay calls.
+No correctness or termination of an unprescribed entry is assumed.
+

@@ -1,0 +1,10 @@
+**Example 4.1 (The length-eight nodal factor).** On $C_8$ let $v=(1,1,1,1,-1,1,-1,-1)$ and $H_t=\Delta_8+t\operatorname{diag}(v)$. For every real $t$ and each root $\alpha$ of $\alpha^2+2t\alpha-2=0$, the vector
+
+$$
+z=(1,\,0,\,-1,\,\alpha,\,1-\alpha^2,\,-2t,\,1,\,-\alpha)
+$$
+
+satisfies $H_tz=(2+t+\alpha)z$. Consequently $g(\lambda,t)=\lambda^2-4\lambda+2-t^2$ is the nodal factor of Theorem 3.2 at site $1$: it divides both $p$ and $q_1$ in $\mathbb R[t][\lambda]$. Stance: repo-derived; an application of Theorem 3.2 to a potential whose badness is previously known (Remark 4.8).
+
+**Proof.** Write $\lambda=2+t+\alpha$ and $d_i=2+tv_i-\lambda$, so $d_i=-\alpha$ when $v_i=1$ and $d_i=-2t-\alpha$ when $v_i=-1$. The equation at site $i$ is $d_iz_i-z_{i-1}-z_{i+1}=0$. Site 0: $-\alpha-(-\alpha)-0=0$. Site 1: $0-1-(-1)=0$. Site 2: $\alpha-0-\alpha=0$. Site 3: $-\alpha^2+1-(1-\alpha^2)=0$. Site 4 ($v_4=-1$): $(-2t-\alpha)(1-\alpha^2)-\alpha+2t=\alpha^3+2t\alpha^2-2\alpha=\alpha(\alpha^2+2t\alpha-2)=0$. Site 5: $2t\alpha-(1-\alpha^2)-1=\alpha^2+2t\alpha-2=0$. Site 6 ($v_6=-1$): $-2t-\alpha+2t+\alpha=0$. Site 7 ($v_7=-1$): $(-2t-\alpha)(-\alpha)-1-1=\alpha^2+2t\alpha-2=0$. The two roots $\alpha=-t\pm\sqrt{t^2+2}$ give $\lambda=2\pm\sqrt{t^2+2}$, the two roots of $g(\cdot,t)$; both carry eigenvectors vanishing at site 1, so by the nodal step in the proof of Theorem 3.2 both are common roots of $p(\cdot,t)$ and $q_1(\cdot,t)$ for every real $t$. The polynomial $g$ is irreducible in $\mathbb R(t)[\lambda]$, because $t^2+2$ is not a square in $\mathbb R(t)$. Since $\operatorname{Res}_\lambda(g,p)$ vanishes at every real $t$, it is zero, so $g$ and $p$ share a factor in $\mathbb R(t)[\lambda]$, which by irreducibility is $g$; as $g$ is monic, the quotient lies in $\mathbb R[t][\lambda]$. The same argument applies to $q_1$. ∎
+

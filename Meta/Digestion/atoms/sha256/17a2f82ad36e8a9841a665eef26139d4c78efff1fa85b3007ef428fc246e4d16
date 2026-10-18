@@ -1,0 +1,31 @@
+**Definition 2.3 (one legal guided encoder).** First Read $RR$.
+
+* If the reply is `absent`, Read $R$ and return its actual leaf descriptor.
+* If the reply is $\alpha$, use the ordered prefix search tree
+
+  $$
+  S_\alpha=(3,\ (2,\varnothing,\varnothing),\ S[4,8]),
+  \tag{2.5}
+  $$
+  where $S[a,b]$ is the ordinary median ordered tree on keys $a,\ldots,b$.
+* If the reply is $\beta$, use
+
+  $$
+  S_\beta=(5,\ (4,S[2,3],\varnothing),\ (6,\varnothing,S[7,8])).
+  \tag{2.6}
+  $$
+* If the reply is `branch`, use
+
+  $$
+  S_B=(7,\ S[2,6],\ (8,\varnothing,\varnothing)).
+  \tag{2.7}
+  $$
+
+At key $i$, the encoder Reads $p_i$. A leaf reply returns $(i,e)$; a branch
+reply at $p_8=p$ returns $B$; `absent` moves to the lower child and `branch`
+moves to the upper child. A candidate return is accepted only on that actual
+leaf or branch evidence. If the selected tree fails to produce such evidence,
+the encoder discards the candidate and runs the published source-blind
+prefix search of AAR13.4. The fallback has at most
+$h(8)=\lceil\log_2(9)\rceil=4$ Reads.
+

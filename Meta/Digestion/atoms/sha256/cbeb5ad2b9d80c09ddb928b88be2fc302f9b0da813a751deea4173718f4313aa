@@ -1,0 +1,57 @@
+**Theorem 6.1 (original centered-readout compatibility).** Every original observer of Section 2 satisfies
+
+$$
+295e(M)+20\mathcal T_p(M)+52\mathcal T_\beta(M)
+>\frac1{25000}.
+\tag{6.3}
+$$
+
+**Proof.** Extract the common support just described, keeping the two centered state statistics. Their expectations are at most $\mathcal T_p,\mathcal T_\beta$. For each event, changing a law by TV distance $d$ changes its probability by at most $d$, and hence changes its centered absolute readout by at most $d$. Thus the clipped table has
+
+$$
+\widehat t_p\le\mathcal T_p+50e/11,
+\qquad
+\widehat t_\beta\le\mathcal T_\beta+42e/11.
+$$
+
+Apply Theorem 5.3 to that one table. The resulting upper bound for its left side is
+
+$$
+\frac{61+20\cdot50+52\cdot42}{11}e
+ +20\mathcal T_p+52\mathcal T_\beta
+=295e+20\mathcal T_p+52\mathcal T_\beta.
+$$
+
+This proves (6.3). Clipping alters comparison forecasts, while every extracted decoder and diagnostic before clipping belongs to the original common observer. $\square$
+
+**Proof of Theorem 1.1.** On the unmodified extracted table let $\bar f=\pi f$ and $\bar h=\tau h$. The endpoint event values are
+
+$$
+P_{p,a}(E_p)=412/729=C+\rho_p,
+\quad P_{p,b}(E_p)=7299/15625=C-\rho_p,
+$$
+
+$$
+P_{\beta,a}(E_\beta)=22/27=H+\rho_\beta,
+\quad P_{\beta,b}(E_\beta)=93/125=H-\rho_\beta.
+\tag{6.4}
+$$
+
+Projection to the event contracts TV and averaging cannot increase configuration loss. The two endpoint bounds therefore imply
+
+$$
+|\bar f-C|\le e,\qquad |\bar h-H|\le e.
+\tag{6.5}
+$$
+
+Every positive extracted label is reachable on the designated original fibre. The mean $\bar f$ belongs to the convex hull of its reachable p event values, and similarly for $\bar h$. Every reachable event value is consequently within $\mathcal O_p$ of $\bar f$, or $\mathcal O_\beta$ of $\bar h$. This remains true at every actual positive-history row on the fibre, including rows not retained by extraction. Hence
+
+$$
+\mathcal T_p\le\mathcal O_p+e,
+\qquad \mathcal T_\beta\le\mathcal O_\beta+e.
+$$
+
+Substitute these into (6.3), giving $(295+20+52)e=367e$ and proving (1.5). Setting both ranges to zero proves the strict individual bound (1.6); taking an infimum gives its non-strict version. Setting $e=0$ proves (1.7), and taking a liminf proves (1.8). $\square$
+
+This lift is universal over original arbitrary finite kernels. It does not assert that the regular comparison preserves $\Delta_4$, $\Delta_{\rm all}$, a fixed state budget or total charged resources. No such preservation is needed for a necessary inequality on the original observer.
+

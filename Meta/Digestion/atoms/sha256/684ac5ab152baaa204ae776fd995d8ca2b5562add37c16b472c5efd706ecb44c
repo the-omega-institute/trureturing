@@ -1,0 +1,63 @@
+**Theorem 4.1 (B2: algebraic confinement).** Define
+
+$$
+t_a=\frac{\kappa_f+\sqrt{\kappa_f^2-4}}2,\quad
+p_a=\frac{t_a^2}{1+t_a^2}=\frac{1+\sqrt{1-4/\kappa_f^2}}2.
+$$
+
+Let $t_b$ be the unique root of $t^4-\kappa_ft^3+1=0$ in $(3\kappa_f/4,2)$ and put $p_b=t_b^2/(1+t_b^2)$. This root is simple, and
+
+$$
+\tfrac12<p_z<p_a<p_b<\tfrac45<p_1,\qquad p_b<p_s.
+\tag{TB.11}
+$$
+
+One has $c(p)>0$ on $(p_z,p_a]$ and $c(p)<0$ on $[p_b,p_s]$, using the continuous definition at $p_s$. Every zero on $[p_z,p_s]$ lies strictly in $(p_a,p_b)$, and there are finitely many. Their number and orientations are not specified.
+
+Proof. For $q=1-p$, $d_p=p-q$ and $f_J=J''>0$,
+
+$$
+B=\int_q^p(p-t)f_J(t)dt,\qquad\Delta_J=\int_q^pf_J(t)dt,\qquad0<B/\Delta_J<d_p.
+$$
+
+If $p\le p_1$, Theorem 3.1 gives strict decrease of $f_J$ on $[q,p]$. Pairing $q+s$ with $p-s$, $0<s<d_p/2$, proves
+
+$$
+\int_q^p\left(\frac{p+q}2-t\right)f_J(t)dt>0,\qquad B/\Delta_J>d_p/2.
+\tag{TB.12}
+$$
+
+Set $t=\sqrt{p/(1-p)}$. Then $v=t/(1+t^2)$, $g=(2\zeta t-d_0)/(1+t^2)$, $g'=d_0-\zeta(t-1/t)$ and
+
+$$
+\begin{aligned}
+g-(d_p/2)g'&=[\zeta(t+1/t)-d_0]/2,\\
+g-d_pg'&=\frac{\zeta(t^4+1)-d_0t^3}{t(1+t^2)}.
+\end{aligned}
+\tag{TB.13}
+$$
+
+The positive increasing-payoff interval corresponds to $t_z=\kappa_f/2<t<t_s=(\kappa_f+\sqrt{\kappa_f^2+4})/2$. Since $\kappa_f>2$, $t_z>1$ and $t_s>2$. The first expression in (TB.13) is strictly increasing for $t>1$ and vanishes at $t_a$, with $t_z<t_a<t_s$.
+
+For $Q(t)=t^4-\kappa_ft^3+1$,
+
+$$
+Q'=t^2(4t-3\kappa_f),\quad Q(3\kappa_f/4)=1-27\kappa_f^4/256<0,\quad Q(2)=17-8\kappa_f>0.
+$$
+
+Thus the indicated root is unique and simple. Also $Q(t_z)=1-\kappa_f^4/16<0$; the polynomial decreases to its minimum and then increases, so this is its sole root on $[t_z,t_s]$. At $t_a$, $g=(d_p/2)g'$ with $g'>0$, hence $g-d_pg'<0$ and $t_a<t_b$. Together with $t_b<2<t_s$, this proves (TB.11).
+
+For $p\le p_a$, (TB.12) applies and
+
+$$
+c(p)/v(p)=g'B/\Delta_J-g>g'd_p/2-g\ge0.
+$$
+
+For $p_b\le p<p_s$, the universal upper bound instead gives
+
+$$
+c(p)/v(p)<g'd_p-g\le0.
+$$
+
+At $p_s$, $c=-v(p_s)\gamma<0$; at $p_z$, $c>0$ directly. The functions are analytic on a neighborhood of compact $[p_z,p_s]$, with $\Delta_J>0$. The nonzero bands exclude an identically zero function, so zeros cannot accumulate there. They are finite and confined as claimed. $\square$
+

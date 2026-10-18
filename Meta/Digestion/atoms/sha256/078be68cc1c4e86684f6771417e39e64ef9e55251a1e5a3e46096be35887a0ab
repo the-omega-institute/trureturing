@@ -1,0 +1,23 @@
+**Definition 5.2 (exact row strata and supplied contact).** Fix two
+distinct attained full-row labels $r_0,r_1\in R_Q(D)$ and put
+
+$$
+D_i=\{u\in D:R_Q(u)=r_i\}\qquad(i=0,1).
+\tag{NLC.14}
+$$
+
+Their supplied-context contact is
+
+$$
+\operatorname{Contact}(C;r_0,r_1)\quad\Longleftrightarrow\quad
+ K_C\in\overline{D_0}\cap\overline{D_1}.
+\tag{NLC.15}
+$$
+
+All parts of each row label are imposed on the finite sources in
+(NLC.14). No assertion requires $R_Q(K_C)$ to equal either label or
+even defines a service target on $K_C$. Row attainment and distinctness
+are effective preconditions: NSF checks each full-row stratum, while
+the finite labels themselves can be compared directly. No finite
+row-image promise on the rest of $D$ is needed.
+

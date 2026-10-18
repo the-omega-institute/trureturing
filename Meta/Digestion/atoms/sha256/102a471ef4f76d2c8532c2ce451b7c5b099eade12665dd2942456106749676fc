@@ -1,0 +1,25 @@
+**Definition 2.1 (Band and actual erasure summability).** The general
+construction uses the following two explicit hypotheses on this same $P$:
+
+$$
+\begin{aligned}
+\mathsf B(P):&\quad q_i=0\text{ on }F_i^c,\quad
+\tfrac14\le q_i\le\tfrac12\text{ on }F_i,\quad P\text{-almost surely},\\
+p^L_j&=\mathbb E_P[X_0\mid X_{-j},\ldots,X_{-1},X_1,X_2,\ldots],\\
+p^R_j&=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_j],\\
+e_L(j)&=\mathbb E_P(q_0-p^L_j)^2,\qquad
+e_R(j)=\mathbb E_P(q_0-p^R_j)^2,\\
+A_P&:=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr)<\infty.
+\end{aligned}
+\tag{2.1}
+$$
+
+The band is required at every integer site. The entire opposite half-line
+remains in each erasure field, also at $j=0$.
+[Universal, Theorem 3.1][U] supplies $\mathsf B(P)$ as necessary for
+attainment. Square-root summability is an additional hypothesis here;
+this volume supplies no general finite-hidden theorem establishing it.
+It is stronger than $\tau_P(0)<\infty$, where
+$\tau_P(R)=\sum_{j\ge R}(e_L(j)+e_R(j))$. Since the defects lie in $[0,1]$,
+(2.1) implies $\tau_P(0)\le A_P$ and $\tau_P(R)\to0$.
+

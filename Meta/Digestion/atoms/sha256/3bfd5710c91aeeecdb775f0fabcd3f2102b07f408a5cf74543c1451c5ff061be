@@ -1,0 +1,150 @@
+**Theorem 4.2 (P3: quadratic saturation with full-measure necessity).**
+There are source-dependent constants $h_{\rm loc},K>0$ such that
+
+$$
+\boxed{\left|\Phi(C_{\rm sat}-h)-\gamma+K_{\rm sat}h^2\right|
+\le Kh^3\qquad(0<h<h_{\rm loc}).}
+\tag{SC.22}
+$$
+
+In particular $\Phi$ has left derivative zero at $C_{\rm sat}$. The
+neighborhood is existential; no explicit size or projective optimality
+is asserted.
+
+Proof. First rotate the spectral pair simultaneously:
+
+$$
+e_+(\vartheta)=\cos\vartheta\,e_++\sin\vartheta\,e_-,\qquad
+e_-(\vartheta)=-\sin\vartheta\,e_++\cos\vartheta\,e_-.
+\tag{SC.23}
+$$
+
+Use the ellipse points and masses $a_e$ of (SC.16). Their covariance
+is exactly $M$ for every $\vartheta$. For sufficiently small
+$\vartheta$, their expectation signs retain the strict spectral signs,
+so their objective is $\gamma-L_f\sin^2\vartheta$. Their cost is
+$\mathcal C(p(\vartheta))$, where
+
+$$
+p(\vartheta)=\frac{(-\cos\vartheta+u_f\sin\vartheta)^2}{1+u_f^2},
+\qquad p'(0)=-2u_f/(1+u_f^2).
+\tag{SC.24}
+$$
+
+Its cost derivative at zero is $-D_{\rm sat}$. Both physical coordinates
+are nonzero at the two spectral vectors. Hence this cost is analytic
+near zero, and the inverse-function theorem gives
+$\vartheta(h)=h/D_{\rm sat}+O(h^2)>0$ with cost exactly
+$C_{\rm sat}-h$. This admissible family gives, for the optimal deficit,
+
+$$
+0\le\mathfrak d(h):=\gamma-\Phi(C_{\rm sat}-h)
+\le K_{\rm sat}h^2+O(h^3).
+\tag{SC.25}
+$$
+
+A separate argument is needed for sharpness against every measure.
+Use (SC.15) for any covariance-admissible measure, and write its unit
+vectors in the spectral basis as $e=\xi e_++\eta e_-$.
+Partition the circle into $\Omega_+=\{\gamma\xi^2-b_f\eta^2>0\}$
+and $\Omega_-$, assigning the zero boundary to the latter. Write
+
+$$
+\begin{gathered}
+d_+=d(e_+),\quad d_-=d(e_-),\quad
+R(e)=d(e)-d_+\xi^2-d_-\eta^2,\\
+r_+=\left.\frac{d}{dt}d(\cos t\,e_++\sin t\,e_-)\right|_{t=0},\quad
+r_-=\left.\frac{d}{dt}d(\cos t\,e_-+\sin t\,e_+)\right|_{t=0}.
+\end{gathered}
+\tag{SC.26}
+$$
+
+The simultaneous cost derivative proves $r_+-r_-=-D_{\rm sat}$.
+There is a finite source constant $K_0>0$ such that, on the entire unit
+circle, respectively,
+
+$$
+|R(e)-r_+\xi\eta|\le K_0\eta^2,\qquad
+|R(e)-r_-\xi\eta|\le K_0\xi^2.
+\tag{SC.27}
+$$
+
+Here is the global remainder justification. The cost $d(e)$ is even,
+continuous and bounded on the full circle because $a_e>0$ and
+$\mathcal F$ is continuous on $[0,U]$. Near $\pm e_+$ it is analytic:
+neither physical coordinate vanishes there. In the coordinate
+$\eta/\xi$, the first numerator in (SC.27) has zero constant and
+linear terms, so its quotient by $\eta^2$ is bounded locally. Evenness
+handles both antipodes. Near $\pm e_-$, the coordinate $\xi/\eta$
+gives the same statement for the second numerator. Away from those
+respective neighborhoods, the denominators are bounded away from zero
+and continuity on a compact set bounds the quotients. This includes
+both physical axes, where no differentiability is required. At a
+zero-expectation boundary both spectral coordinates are nonzero. Thus
+(SC.27) also permits either boundary assignment without omitting any
+measure or axis mass.
+
+Define
+
+$$
+\mathsf u=\int_{\Omega_-}\xi^2dm,\quad
+\mathsf v=\int_{\Omega_+}\eta^2dm,\quad
+\mathsf m=\int_{\Omega_+}\xi\eta\,dm.
+\tag{SC.28}
+$$
+
+Covariance gives $\int\xi^2=\int\eta^2=1$ and $\int\xi\eta=0$.
+Thus the positive and negative aggregate effects in this basis are
+
+$$
+E_+=\begin{pmatrix}1-\mathsf u&\mathsf m\\\mathsf m&\mathsf v\end{pmatrix}
+\succeq0,\qquad
+E_-=\begin{pmatrix}\mathsf u&-\mathsf m\\-\mathsf m&1-\mathsf v\end{pmatrix}
+\succeq0,\qquad E_++E_-=I_2.
+\tag{SC.29}
+$$
+
+For this measure's deficit $\mathfrak d=\gamma-\int(e^T\Xi e)_+dm$,
+
+$$
+\mathfrak d=\gamma\mathsf u+b_f\mathsf v,\quad
+\mathsf m^2\le(1-\mathsf u)\mathsf v\le\mathsf v,\quad
+\mathsf m^2\le\mathsf u(1-\mathsf v)\le\mathsf u,\quad
+\mathfrak d\ge L_f\mathsf m^2.
+\tag{SC.30}
+$$
+
+Integrate the first remainder on $\Omega_+$ and the second on
+$\Omega_-$. Since $d_++d_-=C_{\rm sat}$, this gives the exact estimate
+
+$$
+C_\nu-C_{\rm sat}=-D_{\rm sat}\mathsf m+\mathcal R,\qquad
+|\mathcal R|\le K_0(\mathsf u+\mathsf v)\le K_1\mathfrak d,
+\quad K_1=K_0/\min(\gamma,b_f)>0.
+\tag{SC.31}
+$$
+
+In particular every measure with cost at most $C_{\rm sat}-h$ satisfies
+
+$$
+h\le D_{\rm sat}\sqrt{\mathfrak d/L_f}+K_1\mathfrak d.
+\tag{SC.32}
+$$
+
+This is a full-measure lower deficit bound, not a stationary-family
+condition. Explicitly, putting $a_0=D_{\rm sat}/\sqrt{L_f}$, it implies
+
+$$
+\mathfrak d\ge
+\left[\frac{2h}{a_0+\sqrt{a_0^2+4K_1h}}\right]^2
+=K_{\rm sat}h^2+O(h^3).
+\tag{SC.33}
+$$
+
+The inequality follows by solving the increasing quadratic in
+$\sqrt{\mathfrak d}\ge0$. Its Taylor remainder has a fixed source
+constant. Apply it to a maximizing measure and combine with (SC.25).
+Both sides now give the uniform two-sided remainder (SC.22). Finally
+$[\Phi(C_{\rm sat})-\Phi(C_{\rm sat}-h)]/h
+=K_{\rm sat}h+O(h^2)\to0$. $\square$
+

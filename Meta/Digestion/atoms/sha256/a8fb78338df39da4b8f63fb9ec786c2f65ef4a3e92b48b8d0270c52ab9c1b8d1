@@ -1,0 +1,23 @@
+## 81. 三射线联合矩映射可逆与显式静态对偶
+
+考虑三个正权重 null atoms 的映射
+
+$$
+\mathscr M:
+(\pi_i,\phi_i)_{i=0}^2
+\longmapsto
+\left(
+\sum_i\pi_i a(\phi_i)a(\phi_i)^T,\
+\sum_i\pi_i|a(\phi_i)_1|
+\right).
+\tag{RC.124}
+$$
+
+其中 $a(\phi)=(1,\cos\phi/\sqrt\alpha,\sin\phi/\sqrt\beta)^T$，局部角度图取在各主射线处。Gram 分量属于五维空间
+
+$$
+\mathscr V_Q=\{X=X^T:\operatorname{tr}(QX)=0\}.
+$$
+
+所以 (RC.124) 的定义域和值域都是六维。
+

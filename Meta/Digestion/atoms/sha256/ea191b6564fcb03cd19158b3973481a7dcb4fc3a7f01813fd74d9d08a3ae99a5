@@ -1,0 +1,15 @@
+**Definition 4.1 (comparison of budget presentations).** Fix $H$ and $k$.
+For $0\le d\le e\le k$, compare $B_{k,d}$ and $B_{k,e}$ on the SAME carrier
+$U_k$. The forgetful map is
+
+$$
+\rho_{e,d}:Q_{k,e}\longrightarrow Q_{k,d},\qquad
+(s,\operatorname{tail}_e(u))\longmapsto(s,\operatorname{tail}_d(u)).
+\tag{4.1}
+$$
+
+These maps compare information about one current prefix under different
+declared budgets. They are not operations that replenish an exhausted
+budget or identify the two operation menus. Recovering an $e$-tail from a
+$d$-summary does not grant permission for $e$ deletions.
+

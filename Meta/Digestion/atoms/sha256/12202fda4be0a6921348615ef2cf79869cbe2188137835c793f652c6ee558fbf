@@ -1,0 +1,43 @@
+**Definition 67.2 (the field generates the complete pair, with its self-energy retained).** On $\mathcal K_D$, let $m_p$ count particle coordinates equal to the mass-one atom $p$, and let it vanish on $r$. On a mixed stratum it counts only the atomic coordinate; on a cell it is zero. Literal hard core gives $m_p^2=m_p$ and $\sum_pm_p\le2$. On $\mathscr H_D$ let $n_p$ be the corresponding occupation multiplier, also zero on $r$. Thus $m_pJ_D=J_Dn_p$. For $\Omega\ge1$, $\nu\ge0$, and the same commissioned $a,g>0$ as before, put $\kappa=\sqrt{\nu\Omega}$ and declare
+
+$$
+\begin{aligned}
+\mathbb M_D={}&A_D\otimes I+I\otimes\Omega h_D
+-g\sum_{p\in D}\phi(p)m_p\otimes I
+-\kappa\sum_{p\in D}m_p\otimes q_p
++\frac\nu2\sum_{p\in D}G_D^\diamond(p,p)m_p\otimes I,\\
+\mathbb M_D^{\rm d}={}&aK_D\otimes I+I\otimes\Omega h_D
+-g\sum_{p\in D}\phi(p)n_p\otimes I
+-\kappa\sum_{p\in D}n_p\otimes q_p
++\frac\nu2\sum_{p\in D}G_D^\diamond(p,p)n_p\otimes I,\\
+\mathbb H_D^0={}&H_D^\diamond\otimes I+I\otimes\Omega h_D,
+\qquad H_D^\diamond=0\oplus H_{D,1}^\diamond\oplus H_{D,2}^\diamond.
+\end{aligned}
+\tag{67.5}
+$$
+
+The reference in all three has precisely $\Omega h_D$; it is stationary only on vacuum. Each generator is tensored with identity on every supplied retained auxiliary factor $\mathcal A$. No off-diagonal pair coefficient is installed as a particle multiplier in $\mathbb M_D$. The extra on-site compensation in (67.5) is indispensable, uses the actual diagonal of the same inverse as the entire pair table, and requires source-owned computation, installation and price. It is not a sector fit or a free Green observation port.
+
+Indeed, at any fixed particle position let $z=(m_p)$, extend it by zero to the bank, and set
+
+$$
+\alpha_z=\sqrt{\frac\nu{2\Omega}}\,(G_D^\diamond z)\oplus0,
+\qquad D(\alpha)=\exp\{b^*(\alpha)-b(\alpha)\}.
+\tag{67.6}
+$$
+
+For this field fibre, $D(\alpha)^*b_pD(\alpha)=b_p+\alpha_p$ and
+
+$$
+\begin{aligned}
+D(\alpha_z)^*\left(\Omega h_D-\kappa\sum_pz_pq_p\right)D(\alpha_z)
+&=\Omega h_D-\frac\nu2z^{\mathsf T}G_D^\diamond z,\\
+-\frac\nu2z^{\mathsf T}G_D^\diamond z+
+\frac\nu2\sum_pG_D^\diamond(p,p)z_p
+&=-\nu\sum_{p<q}G_D^\diamond(p,q)z_pz_q.
+\end{aligned}
+\tag{67.7}
+$$
+
+The ordering in the last sum only enumerates unordered pairs; it adds no statistics sign. On two distinct atoms this is the entire prescribed pair potential, with equal value under exchange. On every mixed stratum, every cell, the one-particle sector and the reference it is zero. In particular all ten entries of both separate tables in Definition64.1, including the common $LL,LR$ entry $3/16$ and killed entry $5/78$, arise from the single corresponding inverse; none is selected for fitting. The common $\phi$ and all kinetic, exterior and collision terms are untouched. This fibre algebra is mature displacement algebra, not a claim that displacement conjugates the full cable kinetic operator on its original domain.
+

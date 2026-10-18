@@ -1,0 +1,19 @@
+**Assumption 1.3 (legal acquisition and the price being measured).**
+The full initial tree can be acquired by a finite traversal during a
+stationary capture. Each later clock can be acquired by following the
+right spine from the materialized original address $w_i$ until its
+terminal leaf, and returning twice that suffix length plus its label
+bit. Each request is an actual literal-address Read with reply
+$\alpha$, $\beta$, branch or absent. No clock or subtree is a primitive
+native reply. A concurrent acquisition may instead use a separately
+justified common-version capture; the mathematical contract still
+requires the resulting operand to come from that version.
+
+After acquisition, the raw trace and every extra distinction are
+removed as in Definition 1.2. All acquiring Reads, their literal
+lengths, descriptor production, source capture, storage, parsing,
+arithmetic and cleanup remain costs. The quantity minimized below is
+only the number of possible early source-summary labels, conditional
+on any explicitly retained old code. It is neither the total memory
+of (SCC.3) nor an acquisition or physical-resource optimum.
+

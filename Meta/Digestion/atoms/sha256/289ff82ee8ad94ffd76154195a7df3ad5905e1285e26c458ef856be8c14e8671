@@ -1,0 +1,14 @@
+**Convention 5.3 (why an eventual old target is insufficient).** Retrieving
+AcquisitionOffset0 from two continuations returns the same acquisition
+prefix; it does not identify their starting cuts. The target in Theorem
+5.2 must be the synchronized starting tally $N$. Likewise, equality of
+only a completed endpoint's meter after variable amounts of work would
+give $n(h)+d_h=n(k)+d_k$, which does not imply equal starting tallies.
+Such an endpoint-only comparison is not the original $Q$: Definition
+1.3 retains the required executed-action successors. It is therefore
+not a counterexample to $Q$ or a substitute experiment language.
+
+The theorem proves equality kernels on its stated domain. It does not
+prove lawful transition transport on a forward-closed domain, nor a
+currently executable actor procedure for recovering every view.
+

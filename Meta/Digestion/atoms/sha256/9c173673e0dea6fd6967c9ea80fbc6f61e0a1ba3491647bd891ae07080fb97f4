@@ -1,0 +1,57 @@
+**Theorem 332.1 (repo-derived).** Let c,d,v,m,z,r be coshes satisfying
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, r>=m.                              (332.1)
+
+Suppose eta=(Z,V,C,R,V,C) is a genuine paired frame with four distinct
+labels and axial coshes z,r. Thus
+
+    L=(v+c)^2-(z-1)*(r-1)>0,
+    J=(z+1)*(r+1)-(v-c)^2>0.                    (332.2)
+
+Then its two axial angles satisfy
+
+    theta_Z(eta)+theta_R(eta)>pi.               (332.3)
+
+In the six-label notation, this includes R=M and R=U when u>m.
+No source-flat product, receiver, maximum-gap inequality or partial
+M-angle budget is a premise of this theorem. The paired formulas use
+the hyper-ideal dihedral-angle convention of Luo–Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+[arXiv:1404.5365v2, Sections 4.1–4.2](https://arxiv.org/html/1404.5365v2).
+The inequality (332.3) is the following deduction from the paired formulas.
+
+**Proof.** Put p=sqrt((z-1)*(r-1)) and q=sqrt((z+1)*(r+1)).
+Every genuine angle belongs to (0,pi), and
+
+    tan(theta_Z/2)^2=(z-1)*J/[(z+1)*L],
+    tan(theta_R/2)^2=(r-1)*J/[(r+1)*L].          (332.4)
+
+If theta_Z+theta_R<=pi, their positive half-angle product is at most
+one, equivalently p*J<=q*L. Expanding and dividing by p+q>0 gives
+
+    p*q<=v^2+c^2+2*v*c*(q-p)/(q+p).             (332.5)
+
+Since z>m and r>=m, monotonicity of (t+1)/(t-1) for t>1 gives
+1<q/p<=(m+1)/(m-1), hence 0<(q-p)/(q+p)<=1/m. Also
+p*q>p^2>=(m-1)*(z-1)>(m-1)*(m+c). Enlarging v to m-2 in the
+right side of (332.5) would therefore require
+
+    (m-1)*(m+c)<=(m-2)^2+c^2+2*c*(m-2)/m.
+
+This is impossible, since the difference of its left and right sides is
+
+    c*(m-c-2)+(3*m-c-4)+4*c/m>0.                (332.6)
+
+Indeed m>1+c+d and d>1 give m-c-2>0 and
+3*m-c-4>2*m-2>0. This proves (332.3). QED.
+
+For an actual owner, (332.3) counts its one Z-axis slot and one R-axis
+slot. Its two V and two C transverse slots are not additional high-axis
+charges. Different actual owners with the same role vector contribute
+separately. In particular, under (332.1), a bad high-axis owner with axes
+Z,U cannot have transverse pair V,C. This statement concerns the source
+companion C; it does not replace C by D without the corresponding order
+z>1+m+d. Axes M,U are covered only if their actual values can satisfy
+the axial bounds of (332.1) after renaming the larger axis.
+

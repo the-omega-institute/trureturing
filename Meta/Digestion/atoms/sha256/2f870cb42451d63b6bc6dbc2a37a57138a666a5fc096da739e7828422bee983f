@@ -1,0 +1,64 @@
+**Theorem 211.6 (One unrestricted-placement asymptotic minimum with positive credit).**
+Fix $s>0$, $c>0$ and $0\le d\le s^2/(s+c)$. For each integer
+$m\ge1$, set $L=m+2$, and let $S_m^O,S_m^N$ be the least pair
+stock in the input family subject, respectively, to $\Delta_O\le d$
+and $\Delta_N\le d$, with fixed data
+
+$$
+c_1=c,\quad c_2=0,\quad\gamma_j=s+c+d\ (j\ge3),\qquad T=s+c.
+\tag{211.17}
+$$
+
+The competitor class allows every correct suffix, every pair projection,
+and every early split including $00$. Both minima are attained, and
+
+$$
+S_m^O\le S_m^N\le S_*:=\frac{(2s+c)^2}{s+c},\qquad
+\lim_{m\to\infty}S_m^O=\lim_{m\to\infty}S_m^N=S_*.
+\tag{211.18}
+$$
+
+This is one asymptotic minimum, not an exact finite-$m$ formula or a
+minimum over arbitrary full or signed representatives.
+
+**Proof.** For every competitor in the $O$ class, 211.4 has
+$g=s+c+d$, $E=c$, $\bar c=c$ and $a=2s+c$.
+For every fixed $\tau<S_*$, the elementary $S\ge a+s$ bound
+rules out $S\le\tau$ when $\tau<a+s$ and $m\ge2$.
+Otherwise 211.5 bounds $m-1$ by a finite number independent of $m$.
+Thus all sufficiently large $m$ force $S_m^O>\tau$.
+
+For the common upper witness apply 207.5 with its parameters
+$s_{207}=s+c$, $d_{207}=d$, retained early masses $(c,0)$,
+$S=S_*$ and $t=s+c$. Its inequalities become
+$c\le s+c$ and $s^2\ge(s+c)d$, with $d\le s+c$ automatic.
+Explicitly let $M=2s+c$, $q=(s+c)/M$, and put
+
+$$
+\nu(x)=S_*\prod_{j=3}^Lq^{\mathbf1_{x_j=0}}
+                             (1-q)^{\mathbf1_{x_j=1}},\qquad
+P_{01x}=\frac{s}{M}\nu(x),\quad
+P_{10x}=\frac{s+c}{M}\nu(x).
+\tag{211.19}
+$$
+
+Put early correct mass $c$ at $w(\{1,3,\ldots,L\})$;
+for each late $j$ put $s$ at $w(\{j\})$ and $c+d$ at
+$w(\{j,j+1,\ldots,L\})$, adding coincidences, and take $T=s+c$.
+This is exactly the biased supplier (207.12)–(207.13) under the
+specified parameter map. Its complete support proof gives both costs
+at most $d$, and the stopped head earns excess
+$\gamma_j-T=d$, proving equality. It also gives
+$m_j=2s+c$, $D_{ij}=s$ and $S=S_*$ for every $m$.
+
+For fixed $m$, restrict each feasible set to $S\le S_*$.
+It is a nonempty closed bounded set of finitely many nonnegative
+coefficients: correct totals and $T$ are fixed, and all complete-table
+inequalities are closed. The continuous stock function attains a minimum
+there, which is also the unrestricted minimum because a feasible point
+with stock $S_*$ exists. Since $O\subseteq N$, the minima are ordered
+as in (211.18). The preceding lower bounds and the common upper bound
+prove both limits. The endpoints $d=0$ and $d=s^2/(s+c)$ are included.
+The zero-credit limit theorem is already 208.3 and is not counted again;
+209.3 and 209.5 instead fix the entire carrier. $\square$
+

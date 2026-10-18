@@ -1,0 +1,27 @@
+**Theorem 14.2 (exact unrestricted encoder-cover equivalence).**
+Under Definition 13.1, a $q=19$ encoder with both-cut two-read
+service exists for $\lambda=1$ if and only if the families
+$\mathcal P_t^+$ have a constrained exact cover. For $\lambda=0$
+the same equivalence holds with $\mathcal P_t^0$.
+
+**Proof.** Theorem 9.2 bounds each of the nineteen nonempty attained
+classes by nineteen. They partition $19^2$ originals, so each has
+exactly nineteen points. Theorems 13.3--13.4 give precisely the
+appropriate class condition. Injectivity of $d$ allows at most one
+diagonal point per class; nineteen diagonal points and nineteen classes
+give exactly one in each. Relabel that class by its anchor $t$.
+This is a bijective relabeling of the attained alphabet, not retention
+of extra source information. It yields the asserted exact cover.
+
+Conversely, an exact cover gives the public table $e(a,b)=t$ for
+the unique selected $C_t$ containing $(a,b)$. The genuinely acquired
+original empty-cut row computes that entry; export only $t$ and discard
+the row and every other source-bearing field. Every label is attained
+at $(t,t)$. The appropriate theorem supplies a reader for each entire
+class, using only its public table, the acquired later row and earlier
+actual replies. Those are exactly the complete fibers of Theorem 5.2.
+Thus the cover defines a lawful encoder under the original native
+contract, for every legal lag, with the two supplied cut controllers.
+No endpoint rule, symmetry or selected family was imposed on an
+arbitrary encoder in the forward direction. $\square$
+

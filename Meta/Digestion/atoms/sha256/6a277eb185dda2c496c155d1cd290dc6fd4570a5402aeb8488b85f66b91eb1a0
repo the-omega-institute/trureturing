@@ -1,0 +1,27 @@
+#### 3.5　`do` 语句的坐标缩放反例
+
+取一维状态 $s\in\mathbb R$，无动作时 $T(s)=s$，位置干预写作
+
+$$
+I_\alpha(s)=\alpha.
+$$
+
+令新坐标为 $z=h(s)=2s$。正确搬运给出
+
+$$
+I'_\alpha(z)=h(I_\alpha(h^{-1}(z)))=2\alpha.
+$$
+
+因此原命题“执行 $\operatorname{do}(s=1)$ 后读出为 $1$”在新坐标中是“执行 $\operatorname{do}(z=2)$ 后读出为 $2$”。
+
+若把同名约束机械地写成 $\operatorname{do}(z=1)$，实际对应的是原模型中的 $\operatorname{do}(s=1/2)$。被动观察没有改变，但干预参数已经变了。
+
+$$
+\boxed{
+\text{同名的坐标约束不等于同一个干预};
+\quad
+\text{动作标签必须随坐标变换一起锚定}.}
+$$
+
+<a id="section-3-6"></a>
+

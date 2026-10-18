@@ -1,0 +1,43 @@
+**Theorem 6.2 (finite mixed parity-only helper criterion).** Let
+$\tau_+,\tau_-$ be calibrated density matrices on a finite-dimensional
+helper, independent of $\beta$ and of $m$ within parity, and representing
+all accessible assistance. For distinct $k,l$, a common CPTP map has the
+exact target specimen marginal on
+$|\psi_{k,\beta,m}\rangle\langle\psi_{k,\beta,m}|\otimes\tau_\epsilon$
+for every $\beta,m$ if and only if
+
+$$
+\operatorname{supp}(\tau_+)\perp\operatorname{supp}(\tau_-).
+\tag{PR.22}
+$$
+
+Under this condition an attaining operation can leave the helper unchanged
+and preserve its correlations with an untouched reference on each promised
+support. For $k=l$ identity works without (PR.22).
+
+Proof. Spectrally decompose both helper states into positive-weight pure
+components. The channel is TP, so every component has a normalized
+specimen output. A convex combination of positive normalized matrices can
+be rank one only if every component has that same rank-one output: its
+expectation on each orthogonal target vector is a sum of nonnegative terms
+equal to zero. This holds for every $\beta$. Hence each plus eigenvector
+and each minus eigenvector define a pure helper pair to which Theorem 6.1
+applies. Their inner product is zero. Their spans are the two supports,
+proving necessity.
+
+Conversely, let $P_\pm$ be the orthogonal support projections. The credited
+fixed-parity unitary $W_\epsilon$ fixes $e_2$ and sends
+$n_\epsilon(k)$ to $n_\epsilon(l)$. Use the controlled unitary
+$\sum_\epsilon W_\epsilon\otimes P_\epsilon$ on these supports and
+identity on their joint orthogonal complement. It transfers every phase
+exactly and acts identically on the helper within its promised support.
+Tensor identity on a reference: any joint helper/reference state supported
+on that support is preserved, conditional on the actual history. No
+measurement, fresh copy or inferred parity label is required. $\square$
+
+Orthogonal supports provide a perfectly readable parity distinction in
+this particular assistance class. The theorem makes no necessity claim
+for phase-dependent helpers, accessible extra correlated archives or other
+source models. Parity still does not identify signed winding, phase or
+past chronology.
+

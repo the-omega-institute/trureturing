@@ -1,0 +1,31 @@
+**Convention 24.3 (finite verification limits).** The two four-block
+readings in (COK.119) have bounded exact in-memory checks on
+all $14641$ actual tuples for each matching, with exact
+rational masses and marginals. The arithmetic in (COK.94)
+uses exactly
+$(63/64)(3/16)+1/64=205/1024$,
+$4\cdot63/(64\cdot16)=252/1024$ and $252-205=47$.
+The depth-fifteen witness uses the specified $1820<2048$
+slots and the exact scan sums in Proposition 23.3. No
+enumeration of the entire $S_{15}$ or computation of its
+conditional-envelope optimization is asserted. The triangle
+in Proposition 20.4 verifies sharpness symbolically. No
+experimental program or data is retained, and none of these
+finite checks implies empirical convergence. The all-size
+claims rest on the proofs in §§18–23.
+
+For an original-source check of Proposition 23.2 at $d=2,m=1$,
+the full $\mathcal F_3$ consists of $1446$ variable-shape
+sources. Their fixed seven-Read boundary scan yields $123$
+canonical states and exactly $120$ complete names, merging
+the four right subtrees
+$\langle\langle a,b\rangle,\langle b,a\rangle\rangle$.
+On that name the three upper targets are branch constants;
+the other four targets select $RLL$ or $RRL$ according to
+(COK.104). All seven requests and authentic counts $0,\ldots,6$
+give $70854$ exact comparisons with direct substitution/readout,
+all agreeing. This checks a finite count range; correctness
+for every subsequent count uses (COK.5) and Proposition 23.2's
+proof, not extrapolation from that range. The scan has seven
+Reads, maximum address three and seventeen submitted letters.
+

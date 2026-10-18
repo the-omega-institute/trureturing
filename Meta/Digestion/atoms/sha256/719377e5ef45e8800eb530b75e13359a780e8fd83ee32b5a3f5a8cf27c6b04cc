@@ -1,0 +1,46 @@
+**Proposition 6.1 (conditional phase-sensitive extraction).** On the
+lift of [UAS] Definition 1.4's canonical acquired domain, suppose a
+deterministic initialized fine program actually establishes the
+before-image, route and receipt invariants of §§4–5 at every stage,
+with constructor identities fixed by actual occurrences and no
+unrecorded scheduling choices.
+Select the actual retained $M_J$ material of [UAS] Definition 3.3,
+together with its actual core phase/snapshot material. If that phase
+also uniquely identifies the stage prefix, this joint selection
+determines the completed original history, outstanding actual input
+and exact fine prefix. The inverse does not give a current actor
+permission or a new original $Q$ equality.
+
+Proof. At stable cuts restrict to $M_J$ and apply [UAS] Theorem 3.4
+on precisely its canonical acquired domain. At Busy, restore only
+the selected old fields and links mathematically and remove only
+this identified constructor/receipt prefix. The assumed invariant
+gives exactly $M_J(h_c)$ and its old completed meter count. The same
+theorem gives $h_c$. The retained admitted site/bit and stage give
+the outstanding prefix; deterministic replay of the actual specified
+fine program from its initialized entrance gives its previous fine
+rows and this partial one. By (OR.1) no accepted input or released
+output is silently omitted. Conversely execution of the exact fine
+prefix gives its actual selected material. These two directions
+yield a conditional fine-history kernel, on this stated domain only.
+They use no current-source complement and no executable rollback. ∎
+
+Spatial support remains the actual rooted child-path support; boundary
+remains the actual terminal-child antichain; process remains actual
+reaction order; retained memory remains a selection of actual backing
+and relations. For an implementation preserving a rooted finite child
+tree, support and boundary recover each other by prefix closure and
+maximality, as already proved in [UAS] Theorem 3.2. Recovering all fine
+nonchild incidences additionally requires the stage/head invariant;
+tree shape alone does not prove it during a handoff.
+
+On Proposition 2.1's pair the actual controller marker changes,
+reaction order gains admission, and selected snapshot material retains
+the accepted bit. These natural fine observations distinguish the
+pair while the original-predecessor pullback $Q(h_c)$ agrees. Thus
+fine-history recovery does not imply the converse kernel direction
+from that pullback to any such fine view. It also does not equip
+the otherwise undefined original task with an interior Busy response.
+No raw/pre-acquisition history inverse follows by replacing actual
+variable input by canonical supply.
+

@@ -1,0 +1,28 @@
+**定义 11.1（三集合来源编码）。** 在无限地址骨架 $\mathcal P$ 上，WS2S 的一阶变量遍历全部有限地址，二阶变量遍历地址的有限集合；两个后继为 $xL,xR$，根为 $\varepsilon$。对三个有限集合 $X=(A,B,C)$，置 $U=A\cup B\cup C$。谓词 $\operatorname{Tree}(X)$ 要求三集合两两不交、$\varepsilon\in U$，并要求
+
+$$
+\begin{aligned}
+&\forall x\in U\setminus\{\varepsilon\},\quad
+\exists z\in C\ (x=zL\ \lor\ x=zR),\\
+&\forall x\in C,\quad xL,xR\in U,\\
+&\forall x\in A\cup B,\quad xL,xR\notin U.
+\end{aligned}
+\tag{SLH.11.1}
+$$
+
+这里的有限集合量词不限制允许来源的最大大小。每个地址仍是实际有序位置，不按同标签或同形子树取商。对任意地址 $q$，四个回复谓词 $\operatorname{Reply}_c(X,q)$ 分别为 $q\in A,q\in B,q\in C,q\notin U$。它们是互斥且穷尽的 WS2S 公式。
+
+定义一步关系 $\operatorname{Step}(X,X')$，其中 $X'=(A',B',C')$，为
+
+$$
+\begin{aligned}
+\forall x\quad
+x\in A'&\iff\exists z\ (z\in B\land x=zR),\\
+\forall x\quad x\in B'&\iff x\in A\ \lor\exists z\ (z\in B\land x=zL),\\
+\forall x\quad x\in C'&\iff x\in C\cup B.
+\end{aligned}
+\tag{SLH.11.2}
+$$
+
+所有缩写均可展开为有限公式；有限集合的并、交、不交和包含用成员关系展开，$x=zL$ 与 $x=zR$ 是原两个后继。公共字 $p_i$ 是从根逐次应用后继的闭项。不使用来源大小谓词、年龄估计、成员 oracle、任意 Boolean 分区或未知答案常量。
+

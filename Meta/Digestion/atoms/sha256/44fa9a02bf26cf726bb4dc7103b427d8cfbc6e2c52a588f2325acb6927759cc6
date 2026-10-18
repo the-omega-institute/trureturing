@@ -1,0 +1,76 @@
+**Assumption 2.1 (Source and phase estimates from [C]).** Use the positive
+constants $s_*,z_-,C_\mu,C_\beta$ of [C, equation (2.3)] and
+$\eta\in(0,1)$, $D_0,D_1,C_1,C_2,V_0>0$ of [C, Theorem 4.1]. Choose
+once $s_0\in(0,1)$ inside the neighborhoods of [C, Theorems 4.1, 5.1
+and 6.1], with
+
+$$
+s_0\le\min\{\eta/2,s_*/2,1/2\}.
+\tag{2.1}
+$$
+
+This choice precedes every cap, budget, precision and calibration choice.
+Throughout the main statements $0<s<s_0$ and $J\ge1$ is any integer with
+$s2^J\le\eta$. Set
+
+$$
+L=2^J,\qquad I=s^{2r}J,\qquad \delta=J/L^r.
+\tag{2.2}
+$$
+
+The phase set is $\mathcal Z_J=\{1,\ldots,J,\dagger\}$. With initial
+phase one, its zero matrix $R$ and reward vector $v$ are exactly [C,
+Definition 3.1]:
+
+$$
+\begin{aligned}
+R(j,j)&=1-2^{-j},& R(j,j+1)&=2^{-j}\quad(1\le j<J),\\
+R(J,J)&=1-2^{-J},&R(J,\dagger)&=2^{-J},&R(\dagger,\dagger)&=1,\\
+v_j&=2^{-rj}\quad(1\le j\le J),&&v_\dagger=0.
+\end{aligned}
+\tag{2.3}
+$$
+
+All unlisted matrix entries are zero. Conditional on the actual gap
+$K=k$, the terminal phase has law $\mathbf e_1R^k$, and $V=v_z$ is its
+one terminal reward. Put
+
+$$
+m_i=\mathbb E_iV
+ =\frac{\sum_{k\ge1}F_i(k)e^{-sk}\mathbf e_1R^kv}{Z_i(e^{-s})},
+\qquad \theta=(m_0+m_1)/2,\qquad \Delta=m_1-m_0.
+\tag{2.4}
+$$
+
+The inherited estimates, for both exact source laws, are
+
+$$
+\begin{gathered}
+Z_i(e^{-s})\ge z_-s^{-2r},\quad
+\mu_i\le C_\mu/s,\quad 1+\beta_i\le C_\beta/s,\\
+D_0I\le\Delta\le D_1I,\quad
+0\le m_i\le C_1s^{2r}L^r,\quad \mathbb E_iV^2\le C_2I,\\
+0\le V,\theta\le2^{-r},\qquad 0<\delta\le1/2.
+\end{gathered}
+\tag{2.5}
+$$
+
+For $x=v_z-\theta$, the ideal adjacent-grid increment $U$ takes
+$\delta\lfloor x/\delta\rfloor$ and
+$\delta(\lfloor x/\delta\rfloor+1)$ with probabilities giving mean $x$.
+The exact source-normalized assertion [C, Theorem 4.1, equations
+(4.3)–(4.4)] is
+
+$$
+\mathbb E_0U=-\Delta/2,\qquad
+\mathbb E_1U=\Delta/2,\qquad
+|U|\le1,\qquad \mathbb E_iU^2\le V_0I.
+\tag{2.6}
+$$
+
+These are premises reused from [C], including its signed normalization
+in equation (4.6) and its coarse-grid noise estimate (4.12). No independent
+per-scale observations or independence of $K$ and $V$ is assumed. The
+phase occupation theorem and the complete-budget converse retain their
+original attribution; they are not additional results asserted here.
+

@@ -1,0 +1,90 @@
+**Theorem 44.2 (Exact design radii and a full-source profile attainer).** In the unrestricted measurable class, and already on a common countable carrier, the radius minimum is always attained and equals
+
+$$
+R=\frac{(1-B)h}{2-B}.
+\tag{44.4}
+$$
+
+For a finite common carrier the attained minimum is $h/2$ for every profile in (44.2), including $B=1$. The unrestricted attainer can be chosen with zero error at every target-one source and with all laws invariant under numerical duplication of labels.
+
+**Proof.** Since $b(\Omega(y))\le B$, the family satisfies the constant-budget hypothesis of Theorem 43.2 with $\delta=B$. Its existing reference-envelope inequality gives
+
+$$
+(1-B)h\le(2-B)\rho_\nu.
+\tag{44.5}
+$$
+
+This is a reuse of the constant-budget necessity, including its trivial lower bound at $B=1$. The new sufficiency must satisfy every prescribed value of $b$, rather than merely its supremum.
+
+If $h=0$, use the common law $d\delta_v+z\delta_u$ on two tapes, with $v$ literally diverging and $u$ returning unknown. Choose the same reference. Every source has zero proposal and error probability and the radius is zero. Suppose henceforth that $h>0$, and set
+
+$$
+q=\frac{h}{2-B},\qquad r=(1-B)q,\qquad q+r=h.
+\tag{44.6}
+$$
+
+On the carrier $\Theta=\{v,u\}\sqcup\{a_j:j\ge1\}$ with its full sigma algebra, tape $a_j$ immediately proposes the integer $j$. Tape $v$ makes an infinite fixed sequence of prime queries without terminating, and tape $u$ immediately returns unknown. These rules apply at every source and on every tape. The index $j$ is a tape parameter, not a hidden source input.
+
+Define a probability law $\lambda$ on the proposal tapes by its tails:
+
+$$
+T_1=1,\qquad T_k=B-b(k)\ (k\ge2),\qquad
+\lambda(\{a_j\})=T_j-T_{j+1}\ (j\ge1).
+\tag{44.7}
+$$
+
+The tails are nonincreasing, lie in $[0,1]$ and tend to zero. Telescoping therefore proves nonnegativity, total mass one and $\lambda(\{a_j:j\ge k\})=T_k$. Zero weights cause no difficulty. For $k\ge2$ write
+
+$$
+E_k=\{a_1,\ldots,a_{k-1}\},\qquad
+f_k=\lambda(E_k)=1-B+b(k).
+\tag{44.8}
+$$
+
+Choose one reference and the anchor-class law by
+
+$$
+\nu=q\lambda+(d+r)\delta_v+z\delta_u,\qquad
+\alpha=h\lambda+d\delta_v+z\delta_u.
+\tag{44.9}
+$$
+
+Both have total mass one by $q+r=h$. Give every label with $N(y)=27$ the law $\alpha$. For every remaining label of target $k=\Omega(y)$, define the law on the entire declared carrier as follows:
+
+$$
+\mu_y=
+\begin{cases}
+\nu,&k=1,\\
+\displaystyle \nu-\frac{r}{f_k}\lambda|_{E_k}+r\delta_{a_k},&k\ge2,\ B<1,\\
+\nu,&k\ge2,\ B=1.
+\end{cases}
+\tag{44.10}
+$$
+
+The notation $\lambda|_{E_k}$ denotes a restricted measure of total mass $f_k$. In the middle case $f_k\ge1-B>0$, and $r/f_k\le q$. Thus the removed mass is available at each affected atom, its total is $r$, and the added mass $r$ lies at the correct proposal $k$. Every law is nonnegative and normalized. The last case avoids division by zero when $B=1$ and $b(k)=0$.
+
+The full rows, including the target-one cases, are
+
+| Actual source class | $h_y$ | $e_y$ | $d_y$ | $z_y$ |
+| --- | --- | --- | --- | --- |
+| $N(y)=27$ | $h$ | $0$ | $d$ | $z$ |
+| $N(y)\ne27$, $\Omega(y)=1$ | $q$ | $0$ | $d+r$ | $z$ |
+| $N(y)\ne27$, $\Omega(y)=k\ge2$ | $q$ | $b(k)q$ | $d+r$ | $z$ |
+
+Indeed every $a_j$ is correct at target one. At $k\ge2$ the false tapes are exactly $E_k$; when $B<1$ their mass is $qf_k-r=b(k)q$, and when $B=1$ it is $qf_k=b(k)q$. The $v$ mass is literal divergence and the $u$ mass is a finite nonproposal. The exact-error expression on the last row is not asserted at target one. For $h=0$ the earlier common law supplies all the zero-proposal rows without defining conditional probabilities.
+
+The law specification covers all labels, including numerical duplicates and target values not distinguished by any finite observation. Its dependence on $N(y)$ and $\Omega(y)$ specifies the stipulated source/law relation; it is not a branch of the deterministic procedure. Every finite record and Borel output restriction is measurable on the declared countable power-set carrier. No claim that all integer targets occur is needed: (44.10) applies to each target that actually occurs.
+
+For the anchor class, $\alpha-\nu=r\lambda-r\delta_v$, so event-TV is exactly $r$. For a middle-case law in (44.10), the negative difference is supported on $E_k$ and has total mass $r$, while the positive difference is $r\delta_{a_k}$. Hence its event-TV is $r$, as seen directly from either of these disjoint events. All other distances are zero. This proves $\rho_\nu=r=R$, also at $B=1$, when $r=0$ and all laws equal $\nu=\alpha$.
+
+For the finite-carrier lower bound, reuse the finite-color argument of Theorem 42.3 and the triangle comparison (43.20). Its argument selects one actual source $y$ matching all the finitely many anchor proposal runs, with target exceeding all their outputs and with no correct proposal on any tape of the finite carrier. Thus $F_y=H_y$ and all anchor proposal tapes lie in $F_y$. The only error-budget step needed there is now
+
+$$
+h_y=e_y\le b(\Omega(y))h_y,
+\tag{44.11}
+$$
+
+which still forces $h_y=0$ because this particular finite target has $b(\Omega(y))<1$. Consequently $\operatorname{TV}(\mu_{x_*},\mu_y)\ge h$ and $\rho_\nu\ge h/2$. No uniform gap from one was used in this finite-color step.
+
+The existing three-tape construction (43.21) attains $h/2$: on tapes proposing $1$, diverging and returning unknown, assign $(h,d,z)$ at every numerical source $27$, assign $(0,d+h,z)$ elsewhere, and choose their midpoint $(h/2,d+h/2,z)$ as reference. All errors are zero, so every profile is satisfied. Both source classes occur, at $(7,2)$ and $(5,1)$ respectively. This is the reused finite-carrier mechanism, with no new source promise. $\square$
+

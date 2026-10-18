@@ -1,0 +1,24 @@
+**Premise 1.2 (Credited optimizer and growth facts).** [Universal, Convention 1.3, Lemma 2.1 and Proposition 7.1][U] supplies the positive finite optimizer $\pi_n$, its insertion band, and
+
+$$
+\begin{gathered}
+\Phi_n(\pi_n)=\kappa_n,\qquad
+\tfrac13\pi_n(u)\le\pi_n(v)\le\pi_n(u)\quad(u\to v\text{ inserts one}),\\
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n},\qquad
+nc_\star\le\kappa_n\le(n+1)c_\star,\qquad
+\frac{\kappa_n}{n+1}\longrightarrow c_\star,\qquad
+c_0:=\frac{1800}{12559}\le c_\star.
+\end{gathered}
+\tag{1.3}
+$$
+
+The ceiling $c_\star\le\bar c:=3-2\sqrt2$ is the interface in [Guarded, Definition 1.1]. If $a_{n,i}$ is the $\pi_n$ posterior given all other $n-1$ bits, and $p_{\nu,n,i}$ is the corresponding posterior under $\nu$, the supplied finite identity is
+
+$$
+\kappa_n-\Phi_n(\nu)=\sum_{i=1}^n
+\mathbb E_\nu(p_{\nu,n,i}-a_{n,i})^2.
+\tag{1.4}
+$$
+
+Forced singleton fibers have posterior zero. A null fiber has zero weight and requires no conditional division. These conventions include $n=1$. The symbol $\pi_n$ always denotes this actual optimizer; it will never denote the comparison marginal constructed below.
+

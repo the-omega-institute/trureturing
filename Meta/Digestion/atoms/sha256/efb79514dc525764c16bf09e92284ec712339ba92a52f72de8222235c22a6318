@@ -1,0 +1,26 @@
+### Proposition 2.2. Spectral stability and the equality set
+
+For 0<=x<=1,
+
+$$g(x)\ge\frac1{12}(x-a)^2(x-b)^2. \tag{2.2}$$
+
+Consequently,
+
+$$\sum_c\left\|(\rho_c-aI_4)(\rho_c-bI_4)\right\|_F^2\le36\ln2\,\Delta, \tag{2.3}$$
+
+$$P-1\le\frac{3\ln2}{-B}\Delta,\qquad \frac5{36}-E\le\frac{3\ln2}{C}\Delta. \tag{2.4}$$
+
+Moreover, Delta=0 if and only if all three marginal spectra equal {1/2,1/6,1/6,1/6}.
+
+Proof. The polynomial p has double contact with -x ln x at a,b. For x>0 away from these two nodes, the Hermite remainder formula on the interval containing x,a,b gives
+
+$$g(x)=\frac{2}{24\xi^3}(x-a)^2(x-b)^2$$
+
+for some 0<xi<=1. This proves (2.2); continuity supplies x=0, and the two contact points have zero gap. Equations (2.3)-(2.4) follow by dropping nonnegative terms in (2.1). If Delta=0, (2.2) forces every eigenvalue to lie in {a,b}. If k of the four eigenvalues equal b, normalization reads 1=(4-k)/6+k/2, hence k=1. The converse follows by evaluating the entropy. QED.
+
+For a basis-free version of the exact spectral conclusion, define Q_c=3rho_c-I_4/2. At equality, Q_c is a rank-one orthogonal projector and rho_c=(I_4+2Q_c)/6. Equation (2.3) also gives
+
+$$\sum_c\|Q_c^2-Q_c\|_F^2\le2916\ln2\,\Delta.$$
+
+This controls distance to projector equations. It is not by itself a bound on distance of the full state to one particular LU orbit.
+

@@ -1,0 +1,62 @@
+**定义 70.1（单位见证矩形的 Ferrers 限制）。** 保持定义 68.1 的完整实际来源 $U_H$、初始目标 $q_H(t)$ 及条件最小值 $A_U(H)$。来源量化每个允许实际叶词的全部有序二叉括号化；总 authentic 标签 $\ell:U_H\to\mathcal L$ 可随叶序和括号变化，并在首次动作前真实配对于同一棵未修改初始树。相同标签使用共同确定性初始化，控制只依公开资料及实际取得的完整历史，历史可任意保留。目标始终是初始 $q_H(t)$。在线恰为 [TM30][TM70] 的当前 `Read`、受固定公开整数 $H$ 守卫的 $\rho$ 和已知实际非空正上下文的左右原子拼接；整候选叶数 $\le H$ 时接受，拒绝不改来源且不返回候选读。没有另一个来源相关初始字段，也没有尺寸、导航、变上限、复位、复制、逆操作、新鲜未知来源或新读口。
+
+固定整数 $H\ge56$，置
+
+$$
+\begin{aligned}
+H&=4h+\delta,\quad 0\le\delta\le3,\qquad
+h=2k+\varepsilon,\quad \varepsilon\in\{0,1\},\\
+h&=\left\lfloor\frac H4\right\rfloor,\qquad
+k=\left\lfloor\frac h2\right\rfloor,\qquad
+R=\left\lfloor\frac{k+1}{2}\right\rfloor,\qquad S=k+1-R,\\
+a&=\left\lfloor\frac{h+3}{2}\right\rfloor=k+1+\varepsilon,\qquad
+z_i=a+i-1\ (1\le i\le R),\\
+w_j&=a+R+j-1\ (1\le j<S).
+\end{aligned}
+\tag{70.1}
+$$
+
+复用引理 68.3、TM51.2 和 [Atomic360.4][Atomic70] 的实际正词
+
+$$
+\omega_{r,s}=
+\alpha^{2r-1}\beta^{2s}\alpha\beta^{2s-1}\alpha^{2r}\beta
+\qquad(r,s\ge1),
+\tag{70.2}
+$$
+
+并给整个叶词取固定左结合括号。矩形中的实际初始树及其资源记为
+
+$$
+\begin{aligned}
+t_{ij}&=
+\begin{cases}
+\omega_{2z_i-w_j,\,w_j-z_i},&j<S,\\
+\omega_{1,\,z_i-1},&j=S,
+\end{cases}\\
+m_i&=4z_i,\qquad
+n(t_{ij})=
+\begin{cases}
+4w_j,&j<S,\\
+4(2z_i-1),&j=S.
+\end{cases}
+\end{aligned}
+\tag{70.3}
+$$
+
+在 TM38 的离线配对表中，有限列记 $n_j=4w_j$，第 $S$ 列记 $\widehat n_S=\infty$，而 $\widehat n_j=n_j$ 对 $j<S$。$\infty$ 只表示原下一替换始终拒绝；实际尺寸仍是 (70.3) 的有限整数。行列指标及组成参数是证明坐标，不是控制器取得的来源字段。
+
+对每个整数 $0\le d<R$，定义
+
+$$
+\begin{aligned}
+C_d&=R+S-d=k+1-d,\\
+F_d&=\{(i,j):1\le i\le R,\ 1\le j\le S,\ i+j\le C_d\},\\
+\mathcal W_d&=\{t_{ij}:(i,j)\in F_d\},\qquad
+N_d=RS-\frac{d(d+1)}2.
+\end{aligned}
+\tag{70.4}
+$$
+
+这些限制仅选取原完整域中的实际树，既不替换运行中的未知来源，也不把完整来源合同缩成显示代表合同。
+

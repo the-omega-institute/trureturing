@@ -1,0 +1,27 @@
+**Definition 24.2 (the same-source coefficient).** Set
+
+$$
+\begin{aligned}
+D_4&=\mathfrak a_4[p]+2\operatorname{Re}\mathfrak a_3(p,v)+\mathfrak a_2[v]\\
+ &=5a\nu^4\int r^4|Yp|^2
+   -8a\nu^3\int r^3(Yp)(Yv)
+   +3a\nu^2\int r^2|Yv|^2\\
+ &\quad-\chi\int\bigl(\mathcal V_4p^2+2\mathcal V_3pv+\mathcal V_2v^2\bigr)
+   -a\lambda\|v\|_2^2,\\
+C_4&=D_4-h[\Upsilon].
+\end{aligned}
+\tag{24.5}
+$$
+
+All kinetic integrals are absolutely finite: their majorants are respectively $|r^2Yp|^2$, $|r^2Yp|\,|rYv|$ and $|rYv|^2$, from (22.6). Boundedness of the fields and $p,v\in L^2$ prove finiteness of the potential and threshold integrals. Thus $C_4$ is a defined real scalar of the same original datum. In particular (23.1)'s $\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$, and the last threshold term in (24.5), are retained.
+
+Real core density and (24.2) give
+
+$$
+\inf_{z\in C_c^\infty(\mathbb R^4;\mathbb R)}
+ \{h[z]+2\mathcal F_2(z)\}=-h[\Upsilon].
+\tag{24.6}
+$$
+
+Indeed the expression equals $h[z-\Upsilon]-h[\Upsilon]$. Approximate $\Upsilon$ in energy by real core vectors. Their possible $p$ coordinates do not affect either $h$ or $\mathcal F_2$; no $L^2$ approximation of $\Upsilon$ is used.
+

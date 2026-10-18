@@ -1,0 +1,16 @@
+**Convention 6.2 (separate resource coordinates).** For Theorem 4.2 the
+complete fixed-width name costs $\lceil\log_2N_{D-1}\rceil$ bits
+when $D\ge2$, and for Theorem 5.1 it costs
+$\lceil\log_2M_1(D)\rceil$ bits. Unused bit strings are not attained
+names. Common codebooks and their generation, installation, membership
+work, recursive control and temporary storage are not bounded by the
+Read estimates. Late address construction and transmission, post-request
+workspace, access isolation, lawful entry, authentication and physical
+time retain their own costs. No free-total-efficiency conclusion is made.
+
+The final factor alone satisfies $0\le b\le2D$, $c\in\{0,1\}$ and
+fits in at most $\lceil\log_2(2D+1)\rceil+1$ bits, as supplied by
+FMR/CBN. The authentic count input and its representation are separate.
+No count is available before the selected late query. All later uses of
+the predictor make zero Reads.
+

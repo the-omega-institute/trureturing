@@ -1,0 +1,21 @@
+**Convention 10.1 (literature correspondence).** The concrete
+closed-flight stopping, source-bound selector application, native unary
+counts and conditional repeated-service criterion are `repo-derived`
+ordinary results. No worldwide novelty claim is made. The primary works
+below supply their indicated established methods and distinctions.
+
+| Primary source | Exact applicability and limit |
+| --- | --- |
+| Chandy and Lamport, *Distributed Snapshots: Determining Global States of Distributed Systems*, ACM TOCS 3(1), [author paper](https://lamport.azurewebsites.net/pubs/chandy.pdf), process/channel model and marker rules | `literature-attested`: cooperating processes record local/channel states under error-free FIFO finite-delay communication. Their recording actions are hypotheses. A consistent distributed snapshot supplies neither an unavailable private-latch read nor this requested old serial primitive cut. |
+| O'Callahan et al., *Engineering Record And Replay For Deployability*, [primary report](https://arxiv.org/abs/1705.05937), §§2.1–2.4 | `literature-attested`: retain external inputs and relevant nondeterminism; serialized threads and event positioning use concrete OS/hardware mechanisms. These are not original PR57 permissions. AIF already supplies the deterministic replay principle used here. |
+| Lamport and Merz, *Auxiliary Variables in TLA+*, [primary paper](https://arxiv.org/abs/1703.05121), §§3.1–3.5 | `literature-attested`: history variables and hiding support refinement. A semantic auxiliary history is not constructed acquired backing; hiding additional work preserves no actual receipt count by itself. |
+| Capsicum authors, [originating project description](https://www.cl.cam.ac.uk/research/security/capsicum/), capabilities and capability mode | `literature-attested`: refined file descriptors have fine-grained rights and capability mode restricts global namespace access. This supports the backing/rights distinction; no theorem from an unavailable paper body, repository archive token, decoder-entry edge or cryptographic provenance theorem is inferred. |
+| Fowler, *Event Sourcing*, [originating exposition](https://martinfowler.com/eaaDev/EventSourcing.html), Complete Rebuild, Temporal Query, External Updates | `literature-attested` operational background: replay an actual retained ordered event prefix and avoid repeating live external effects. Source semantic events alone omit unfinished input and primitive cut position. |
+| Ahamad et al., *Causal memory: definitions, implementation, and programming*, [publisher abstract](https://doi.org/10.1007/BF01784241) | The verified abstract concerns agreement on relative ordering of causally related operations. No theorem from the full body is used. Causal ordering is not acquisition of inaccessible bytes or an exact primitive ordinal. |
+| Bennett, *Logical Reversibility of Computation*, IBM JRD 17, [full text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html), history/output/reversal construction | `literature-attested`: explicit history retention and output copying can support reversible computation. This volume uses forward reconstruction and retained old cells; it proves no physical reversal, erasure or thermodynamic optimum. |
+| Aumayr et al., *Capturing High-level Nondeterminism in Concurrent Programs for Practical Concurrency Model Agnostic Record & Replay*, [primary paper](https://arxiv.org/abs/2103.00031), abstract and record/replay model | `literature-attested`: added nondeterministic event choices must be captured at the appropriate boundary. Its concurrency model does not supply this serial machine's native consumer, exact microcut image or acquisition permissions. |
+
+The literature supports reuse and exposes assumptions. It is not evidence
+that an uninstantiated native realization has been installed. Finite
+source capacity does not make the constructed-tape runtime finite-state.
+

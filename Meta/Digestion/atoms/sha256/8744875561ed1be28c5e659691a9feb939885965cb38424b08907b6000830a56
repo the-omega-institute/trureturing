@@ -1,0 +1,115 @@
+**Theorem 274.2 (One reserve pays full-fibre slacks and late disagreement).**
+For every complete $N$ column let $d_Y(D)=c+1-Y\cdot z_D$.
+Let $I_{\rm late}(D)$ indicate a distinct pair $3\le i<j\le L$
+with $u\ne v$. Then
+
+$$
+\Delta_N(Y)=\Delta_O(Y)=0,\qquad
+d_Y(D)\ge[D(+)\in\{1,2\}]+\tfrac12 I_{\rm late}(D).
+\tag{274.2}
+$$
+
+For every one full feasible $N$ allocation, of any mass, let
+$\eta=\mu_+(1)+\mu_+(2)$ and
+$\Gamma_{\rm late}=\sum_D\lambda_DI_{\rm late}(D)$. Then
+
+$$
+\delta_b=S_Y+\sum_D\lambda_Dd_Y(D)
+\ge S_Y+\eta+\tfrac12\Gamma_{\rm late}.
+\tag{274.3}
+$$
+
+In particular, $\delta_b=0$ forces $\eta=0$, all positive-mass
+late pairs to have $u=v=0$, and
+
+$$
+\mu_w(n)=b_n-e\quad(w\in\Omega_n,\ n\ge3),\qquad
+\mu_+(0)=M-e.
+\tag{274.4}
+$$
+
+Both early pair slacks vanish at every suffix with $\nu(z)>0$.
+These zero-reserve assertions are conditional.
+
+**Proof.** Put $a=c/2-1$. The full reward vectors of an output
+label, in four-cell order, are as follows. Every legal label occurs
+in a listed class.
+
+| Pair | Label | Reward vector |
+| --- | --- | --- |
+| $(1,2)$ | $0$ | $(0,c/2,c/2,1)$ |
+| $(1,2)$ | $1$ | $(0,c/2,0,0)$ |
+| $(1,2)$ | $2$ | $(0,0,c/2,0)$ |
+| $(1,2)$ | $r\in J$ | $(0,0,0,1)$ |
+| $(h,j)$, $h\in\{1,2\},j\in J$ | $0$ | $(1,a,1,c/2)$ |
+| $(h,j)$, $k=3-h$ | $h$ | $(1,a,0,0)$ |
+| $(h,j)$ | $k$ | $(0,0,1,a)$ |
+| $(h,j)$ | $r\in J,r<j$ | $(0,0,1/2,1/2)$ |
+| $(h,j)$ | $r=j$ | $(0,0,1,0)$ |
+| $(h,j)$ | $r>j$ | $(0,0,0,1)$ |
+| $(i,j)$, $3\le i<j$ | $0$ | $(1,1,1,c-2)$ |
+| $(i,j)$ | $r\in\{1,2\}$ | $(1/2,1/2,1/2,(c-3)/2)$ |
+| $(i,j)$ | $3\le r<i$ | $(1/4,1/4,1/4,1/4)$ |
+| $(i,j)$ | $r=i$ | $(1/2,1/2,0,0)$ |
+| $(i,j)$ | $i<r<j$ | $(0,0,1/2,1/2)$ |
+| $(i,j)$ | $r=j$ | $(0,0,1,0)$ |
+| $(i,j)$ | $r>j$ | $(0,0,0,1)$ |
+
+The early pair rows contribute their stated $\nu$ cell masses,
+half to each early numerical label and their sum to zero.
+For a late correct label before both late queries, its fair suffix
+splits into quarters. At the first queried address it splits into
+halves; between the addresses its cells are $10,11$; at the second
+address its cell is $10$; after both its cell is $11$.
+The positive row contributes one only to zero in $11$.
+This derives the table directly from every scored word, including
+earlier and unqueried labels.
+
+The sums of cell maxima are always $c+1$.
+Every shorter function embeds in a distinct pair by ignoring another
+coordinate, preserving its positive output. Thus all columns have
+reward at most $c+1$. The anchor $R$ attains it in $O\subset N$,
+so both costs vanish.
+
+On a late pair, zero is the unique maximizer in each of $00,01$,
+with reward one; every other label earns at most one half.
+If $u\ne v$, at least one of these cells loses at least one half.
+The table $N(i,j;i,0,0,0)$ loses exactly one half.
+Separately, positive output 1 or 2 loses at least one in $11$:
+the head-pair gap is one, the mixed-pair gap is at least one,
+and the late-pair gap is $(c-1)/2\ge1$.
+The cells of these two losses are distinct, so they add.
+Pair embedding proves the positive-output bound for shorter tables.
+This proves (274.2), with columnwise half-gap sharpness only.
+
+Define the actual nonnegative slacks
+
+$$
+\begin{gathered}
+s_c(w)=\mu_w(n)-(b_n-e)\quad(w\in\Omega_n,n\ge3),\\
+r_1(z)=\mu_{01z}(\{0,1\})-M+e,\quad
+r_2(z)=\mu_{10z}(\{0,2\})-M+e,\quad
+s_+=\mu_+(0)-M+e.
+\end{gathered}
+\tag{274.5}
+$$
+
+Their weighted sum is exactly
+
+$$
+S_Y=s_++\sum_{n=3}^L2^{-(L-n)}\sum_v s_c(1^{n-1}0v)
+       +\tfrac12\int(r_1+r_2)\,d\nu.
+\tag{274.6}
+$$
+
+On the same allocation,
+$Y G_N\lambda=F_Y+S_Y=-\delta_b+S_Y
+=-\sum_D\lambda_Dd_Y(D)$.
+This proves the identity and, by summing (274.2), its inequality.
+At zero reserve all nonnegative terms vanish. Every late correct
+row has strictly positive coefficient, giving (274.4) on its
+entire fibre. Zero column deficit forces the unique maximizing
+labels zero in both late first-zero cells. Positive and supported
+early pair slacks give the remaining conclusions. No different
+allocation or independently attained margin was combined. $\square$
+

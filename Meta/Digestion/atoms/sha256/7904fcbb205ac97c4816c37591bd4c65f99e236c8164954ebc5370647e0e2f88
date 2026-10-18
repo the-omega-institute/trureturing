@@ -1,0 +1,16 @@
+**Convention 10.1 (credited vocabulary and its scope).** The direct
+native vocabulary is $S_d$, its replies $r_a$ and targets $\Gamma_q$,
+constant factors, arbitrary single-reply donor factors, one full owned
+potential per original block, and every finite length and topology.
+[CBN, Theorems 2.2, 4.2 and 6.2] give its equality-aware constructor
+presentation; [NDR, Theorems 2.2 and 2.4] give the whole-block template
+and join suppliers. These are reused representations, not additional
+theorems of this volume. The credited parity potential of [CBN,
+Proposition 8.2] has parity-class products sixteen and one, which rules
+out its unary/binary potential factorization. Its Proposition 8.1
+rules out independent replicas of one shared reply. The cyclic motif
+of [NCM, Proposition 6.1] requires off-coordinate donors; [NDR, §7]
+gives the bounded-original-component obstruction, while its §9 gives
+one lawful finer cut. None excludes all finer cuts, global recoloring
+or every effective certificate.
+

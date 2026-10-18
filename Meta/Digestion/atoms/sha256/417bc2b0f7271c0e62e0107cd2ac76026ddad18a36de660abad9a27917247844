@@ -1,0 +1,39 @@
+### 七、动态未来商是局部因果历史的最小记忆
+
+当前项目的动态结果可以完全放在这个非全局时间框架中。
+
+令隐藏 Fibonacci 深度为 $K$，对历史 $h$ 定义：
+
+- 当前 phase：
+  $$
+  \varphi(h);
+  $$
+- 路径上取得的 $\alpha$ 次数：
+  $$
+  A_h;
+  $$
+- 路径上取得的 $\beta$ 次数：
+  $$
+  B_h.
+  $$
+
+隐藏深度后验为：
+
+$$
+\nu_h(k)
+=
+\frac{
+\mu(k)r_k^{A_h}s_k^{B_h}
+}{
+\sum_\ell\mu(\ell)r_\ell^{A_h}s_\ell^{B_h}
+}.
+$$
+
+定义未来等价：
+
+$$
+h\sim_{\mathrm{Fut}}h'
+\Longleftrightarrow
+\mathscr L_h=\mathscr L_{h'}.
+$$
+

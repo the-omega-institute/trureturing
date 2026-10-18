@@ -1,0 +1,93 @@
+**Theorem 4.3 (the full original finite dual certificate).** Define
+
+$$
+\begin{gathered}
+A_p=\begin{pmatrix}a_0&a_1/2&a_2/2\\a_1/2&a_4&a_3/2\\
+a_2/2&a_3/2&0\end{pmatrix},\quad
+K(p)=\sum_j\pi_jk_j(d_j),\quad\tau(p)=\sum_j\pi_j(1+d_j),\\
+W(p)=\tau(p)+pK(p)=a_0+a_4=\operatorname{tr}A_p,\qquad
+\lambda=2/p>0,\qquad Y=G+(2/p)A_p.
+\end{gathered}
+\tag{EP.24}
+$$
+
+For each $(r,\epsilon)\in\{\pm1\}^2$ there is a finite real
+$\nu_{r,\epsilon}$ making the ORIGINAL dual slack
+
+$$
+S_{r,\epsilon}=Y-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q\succeq0.
+\tag{EP.25}
+$$
+
+The unused $S_{+,-}$ can be positive definite. The exact globally
+optimal value at $\tau(p)$ is
+
+$$
+j(\tau(p))=\operatorname{tr}G+2K(p),\qquad
+\mathcal T(s_0\tau(p))=T_{\rm flat}+K(p).
+\tag{EP.26}
+$$
+
+Proof. The moment and contact equations imply the identity for $W$.
+Write $R_{r,\epsilon}=Y-\epsilon G-\lambda rC$ and
+$h=(1,u,v)^T$. Direct substitution, for BOTH $r=\pm1$, gives
+
+$$
+\begin{aligned}
+\frac p2h^TR_{r,+}h
+ &=(P-H_p)+(|u|-ru)+p k,\\
+\frac p2h^TR_{r,-}h
+ &=(P-H_p)+(|u|-ru)+p(k+f).
+\end{aligned}
+\tag{EP.27}
+$$
+
+Every term is nonnegative: $k+f=[f]_+$, and $p>0$. Every nonzero
+$Q$-null vector has nonzero first coordinate, so homogeneous scaling
+covers the whole null cone. These identities also identify ALL null
+zero rays: the two positive-$u$ contacts for $(+,+)$; the contact near
+$(-1,1)$ for $(-,+)$; the contact near $(-1,-1)$ for $(-,-)$; and none
+for $(+,-)$. Lemma 4.2 gives four finite PSD completions, and strict
+completion for the last block. Thus no omitted original block or
+null-cone-only positivity substitutes for full matrix positivity.
+
+For an active contact $h$, zero value and tangency make $R h$
+orthogonal to both $h$ and its ellipse tangent. These span the
+orthogonal complement of $Qh$, so $R h$ is proportional to $Qh$.
+Every admissible active completion must therefore have the explicit value
+
+$$
+\nu=-\frac{(Qh)^TRh}{\|Qh\|^2}.
+\tag{EP.28}
+$$
+
+Its denominator is positive since $Q$ is nonsingular. Completion
+existence proves this value is admissible, also at both contacts in the
+first block. If an exact choice for the unused multiplier is desired,
+$\{\nu:R_{+,-}+\nu Q\succ0\}$ is a nonempty bounded open interval:
+convexity gives an interval and indefiniteness of $Q$ bounds it. Its
+endpoints are adjacent real zeros of the nonzero cubic
+$\det(R_{+,-}+\nu Q)$, with leading coefficient $\det Q\ne0$.
+Their midpoint selects a finite positive definite completion. This is
+a definition by the pencil's positive interval, not an executed search.
+
+For EVERY feasible original tuple with $t(X)\geq\tau(p)$, summing
+its four PSD pairings gives
+
+$$
+\sum_{r,\epsilon}\epsilon\operatorname{tr}(GX_{r,\epsilon})
+\leq\operatorname{tr}Y-\lambda t(X)
+\leq\operatorname{tr}Y-\lambda\tau(p).
+\tag{EP.29}
+$$
+
+The direction uses the original contrast INEQUALITY and $\lambda>0$.
+The four atoms $\pi_jh_jh_j^T$, $h_j=(1,u_j(d_j),v_j(d_j))^T$,
+with report $r=\sigma$ and height signs $(+,+,+,-)$ are feasible
+by EP.20. Their contrast is $\tau(p)$, and all four slack pairings
+vanish. Their objective is $\operatorname{tr}G+2K(p)$, equal to
+$\operatorname{tr}Y-\lambda\tau(p)$ by EP.24. This proves EP.26
+and the global comparison in the entire class via Proposition 2.2.
+Section 8 realizes the matching lower value as one actual instrument.
+Finite completions are asserted for $p>0$ only. $\square$
+

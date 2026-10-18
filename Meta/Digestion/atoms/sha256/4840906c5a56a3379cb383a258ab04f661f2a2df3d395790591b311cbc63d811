@@ -1,0 +1,36 @@
+**定义 C-128.1（固定物理基中的两个来源域）。** 沿用 (C123.1)–(C123.3)、
+(C123.15) 的同一物理五态顺序、能量基、目标及编码，记
+
+$$
+\begin{aligned}
+(e_0,e_1,e_2,e_3,e_4)&=(000,100,010,001,101),\\
+\mathcal B=(b_1,b_2,b_3,b_4,b_5)
+&=\left(\frac{e_0-e_1}{\sqrt2},\frac{e_0+e_1}{\sqrt2},
+\frac{e_4-e_2}{\sqrt2},\frac{e_4+e_2}{\sqrt2},e_3\right),\\
+\psi&=(e_0+e_4)/\sqrt2,\qquad \eta=(e_1+e_3)/\sqrt2,\\
+E&=(\psi,\eta,e_2),\qquad Q=\operatorname{ran}E,\qquad P_Q=EE^\dagger,\\
+P_x&=|x\rangle\langle x|\quad(\|x\|=1),\qquad
+P=P_\psi,\qquad C=\operatorname{span}(e_0,e_1,e_2,e_4),\quad P_C=I-P_{e_3}.
+\end{aligned}
+\tag{C128.1}
+$$
+
+这里 $\mathcal B$ 恰为 (C123.3) 的物理能量基，能量仍为 $(1,-1,3,-3,0)$。
+所有相干数均相对于这一个基，不相对于逻辑列基 $(\psi,\eta,e_2)$。
+令 $\mathsf D(Q)=\{\rho\succeq0:\operatorname{Tr}\rho=1,\rho=P_Q\rho P_Q\}$，并置
+
+$$
+\begin{aligned}
+\mathcal F_{\rm all}
+&=\operatorname{conv}_{\rm fin}\{P_x:\|x\|=1,
+\#\{j:\langle b_j|x\rangle\ne0\}\le3\},\\
+\mathcal F_Q&=\mathcal F_{\rm all}\cap\mathsf D(Q).
+\end{aligned}
+\tag{C128.2}
+$$
+
+$\operatorname{conv}_{\rm fin}$ 指所有有限凸混合，向量振幅允许任意复数，凸权重为非负实数且和为一。
+第一域是 (C123.4) 的整个五维零假设；第二域另有实际输入支持于 $Q$ 的承诺。
+这个 $E$ 来自[原生卷定义 65.1、(IX.7)](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#45-原支持三维输入的精确末次秩二边缘)，
+不同于其定义 55.1 的交替位置编码。给定等距矩阵、给定支持与实际制备该源是不同前提。
+

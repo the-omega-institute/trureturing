@@ -1,0 +1,29 @@
+**定义 9.2.2（正向与反向干预）。** $A$ 是正向干预字母表，$B$ 是明确获准的反向干预
+字母表。每个
+
+$$
+I_a:S_{\mathrm{in}}\to S_{\mathrm{in}},\qquad
+J_b:S_{\mathrm{out}}\to S_{\mathrm{out}}
+$$
+
+都是总映射。对词 $w=a_1\cdots a_k\in A^*$ 和 $z=b_1\cdots b_\ell\in B^*$，约定
+
+$$
+I_w=I_{a_k}\circ\cdots\circ I_{a_1},
+\qquad
+J_z=J_{b_\ell}\circ\cdots\circ J_{b_1},
+$$
+
+空词作用为恒等。生成的变换幺半群记为
+
+$$
+M^+=\langle I_a:a\in A\rangle,
+\qquad
+M^-=\langle J_b:b\in B\rangle.
+$$
+
+“允许执行 $T^{-1}$”只是在权限中加入一个从终端边界回到初始边界的操作；它不自动
+把任意 $T I_aT^{-1}$ 加入 $M^-$。
+
+<a id="claim-9-2-3"></a>
+

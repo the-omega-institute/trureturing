@@ -1,0 +1,46 @@
+**Theorem 5.2 (exact diagonal pullback at every length).** For every
+$h\ge1$, every nonnegative $a$, and every $n\ge1$,
+
+$$
+A_n^{(d)}(w_a)=R(a)^n,\qquad \beta_d(w_a)=R(a).
+\tag{JPL.24}
+$$
+
+In particular $\beta_d(\mu_0)=4/5$ simultaneously against every
+correlated complete native template at every length.
+
+Proof. Map each motif tuple $(u_{s_1},\ldots,u_{s_n})$ to
+$(v_{s_1},\ldots,v_{s_n})$. This is a bijection onto
+$\mathcal Q_h^n$. A coarse target above the frontier is a constant
+branch. Every other coarse target is a fine target in one actual
+module. On this support its factor is exactly the corresponding
+factor of $u_{s_i}$, independently of which occurrence is selected.
+
+Every coarse donor literal is constant above the frontier or enters
+one actual module in one donor block. Its reply is then that motif
+state's literal reply. Because all modules in that block have the
+same value, this is one motif experiment in the same donor coordinate,
+not the joint observation of a vector. Arbitrarily long suffixes reduce
+within that motif block as in Convention 1.3. Thus pulling back a
+coarse admissible relation gives a motif-admissible relation, retaining
+its selected donor coordinates and decoders after this translation.
+
+Conversely, for any motif-admissible relation, implement a chosen motif
+donor in one fixed public module occurrence of its chosen coarse donor
+coordinate. Its original suffix is prefixed by that occurrence's
+address. The same motif witness serves each repeated fine target;
+above-frontier targets are constants. This proves coarse admissibility
+of the image, with every constant, self donor, off-target choice and
+cycle allowed. Both maps concern the same row tuple with equality of
+its repeated modules preserved.
+
+For a coarse competitor of positive mass, first restrict to its
+positive rows in $\mathcal Q_h^n$. The bijection preserves exactly
+one factor $a_{s_i}$ per coarse block. The credited inhomogeneous
+motif theorem of Definition 2.1 therefore bounds the mass by $R(a)^n$.
+Products of a largest local motif set attain this mass; their diagonal
+images are admissible by the converse direction. Zero weights and a
+zero total obey the same two inequalities. Saturation preserves the
+maximum over complete templates, and taking all-length roots gives
+(JPL.24). $\square$
+

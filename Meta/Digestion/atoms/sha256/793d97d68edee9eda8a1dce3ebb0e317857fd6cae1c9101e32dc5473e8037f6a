@@ -1,0 +1,32 @@
+**Proposition 4.4 (the two pending-input intervals are different).**
+On the original port-13 payload path of Proposition 2.1, fine IN
+acceptance before original IN completion and original IN completion
+before its matching original WR are distinct intervals. The correct
+input extraction counts the accepted bit exactly once through both
+and through a partially executed WR.
+
+Proof. Write $I_0$ for the input word before the bit $b$.
+
+| Fine cut | Completed original input | Outstanding accepted input | Original input frontier used for comparison |
+| --- | --- | --- | --- |
+| Before IN admission | $I_0$ | empty | No occupied native input latch |
+| After IN admission, before its Finish | $I_0$ | $(\tau,b)$ | Pre-IN native record; actual fine snapshot holds $b$ |
+| After IN Finish, before WR admission | $I_0(\tau,b)$ | empty | Native latch 5 occupied; destination still pre-WR |
+| During the following WR | $I_0(\tau,b)$ | empty | Mathematical pre-WR frontier, with its one occupied latch |
+| After WR Finish | $I_0(\tau,b)$ | empty | Written payload extent includes $b$; stale latch contributes nothing |
+
+In the second line the completed-row projection's native IN-to-WR
+frontier contributes no bit: original IN has not completed. An early
+physical write to the fine latch still belongs to that outstanding
+row and is not another consumed bit. In the third line the outstanding
+fine row is absent but the original latch is occupied. During WR, restoring
+its old destination/frontier for comparison retains that one original
+occupied latch. Adding both a newly written physical payload bit and
+that restored latch would double count. After WR, [UAS] Theorem 3.4's
+written-extent rule replaces the latch contribution by the written bit;
+MR changes only the frontier. Preallocated payload zeros never count
+as consumed bits before the corresponding WR. This proves every
+table entry and the unique transfer between them. The same reasoning
+applies to ARC's separate 70 IN/EX/WR/MR path, with its actual EX blank
+and different ingress latch/site, not by equating those two sites. ∎
+

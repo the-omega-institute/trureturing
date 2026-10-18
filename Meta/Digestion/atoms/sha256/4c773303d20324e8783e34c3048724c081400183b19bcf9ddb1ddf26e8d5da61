@@ -1,0 +1,42 @@
+**Whole-image inverse.** For arbitrary proposed data compute (9.6)–(9.7) and require $u>0$. Consider the distinct real roots of
+
+$$
+H(k)=-(W-ku)(1+ak)(1+bk)
++mY(1+k)(1+bk)-(m-1)Z(1+k)(1+ak).
+\tag{9.14}
+$$
+
+Its leading coefficient is $abu>0$, so it is a nonzero cubic. It has at most three distinct real roots by successive root factorization, and at least one by continuity and its opposite limits. This finite exact algebraic prescription requires no numerical root approximation.
+
+At each root form
+
+$$
+P_k=\begin{pmatrix}
+g_1&g_1\\mg_a&g_a\\(m+1)g_b&g_b
+\end{pmatrix},\qquad b_k=(W-ku,Y,Z)^{\mathsf T}.
+$$
+
+The coefficient labels $c_1=1,c_2=m,c_3=m+1$ are distinct, as are their clock indices $j_1=1,j_2=a,j_3=b$. At most one gain vanishes. Any two surviving rows have determinant $g_{j_e}g_{j_f}(c_e-c_f)\ne0$, so $P_k$ has rank two at every real slope. Cofactor expansion gives
+
+$$
+H(k)=\det[P_k^{(1)},P_k^{(2)},b_k].
+$$
+
+Consequently $H=0$ is exactly consistency of all three rows, including the right-hand side of an erased row. Select any two surviving row labels $e<f$ and form only their quotients from
+
+$$
+V_1=(W-ku)/g_1,\quad V_2=Y/g_a,\quad V_3=Z/g_b.
+$$
+
+Then
+
+$$
+t=\frac{V_f-V_e}{c_f-c_e},\qquad v=V_e-c_et.
+$$
+
+The selected gains and the positive integer divisor are nonzero. Use (9.4), require $p,q,r>0$, set $s=qr/p$, and form (9.13). Require its degree bound and every original observation equation at all $d+5$ actual positions. A passing candidate is sufficient: (1.2)–(1.4) realize its positive source and fixed row on exactly (9.2), with this one whole polynomial. Actual data necessarily supply a passing candidate, and (9.12) excludes two passing targets.
+
+This proves an exact common-source membership test and inverse on the entire image. A gain zero within the repeated $Q_w$ block still gives the value of $P$ at that node. At a zero of $g_1$, $g_a$, or $g_b$, the determinant and final check retain the erased equation while the other two rows survive. Repeated cubic roots are considered once. Both signs of nonzero gains, $k=0$, lower actual drift degrees, zero polynomial $P$, and arbitrary signs of readings are covered.
+
+At $d=1$, $a=w=4$ and $h=1$; (9.1) is exactly (2.1), with its fifteen atoms. The source coordinates, reduced map, and cubic also coincide. This member is the credited sharp-six result.
+

@@ -1,0 +1,30 @@
+### 定义 20.5（梯度交换的图压缩）
+
+令
+
+\[
+R_j:\mathcal H_{j+1}\longrightarrow\mathcal H_j
+\]
+
+是顶点场的层间压缩，令
+
+\[
+S_j:\mathcal E_{j+1}\longrightarrow\mathcal E_j
+\]
+
+是边梯度的层间压缩。称 \((R_j,S_j)\) 为 Dirichlet 相容，如果
+
+\[
+G_jR_j=S_jG_{j+1},
+\qquad
+\|S_j\|_{\nu_{j+1}\to\nu_j}\le1.
+\]
+
+这一定义直接记录了图梯度在层间投影下如何交换。仅有边界散度交换
+
+\[
+B_jS_j=R_jB_{j+1}
+\]
+
+还不足以推出 Dirichlet 能量单调性，因为二次型使用的是 \(B_j^*=G_j\)。
+

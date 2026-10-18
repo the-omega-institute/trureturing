@@ -1,0 +1,21 @@
+**定理 194.3（整个停止目录的必要得分界）。** 若一个 $S_N$ 或 $W_N$ 配置以质量 $s$ 满足全部帽行，则对每个非负完整行得分 $y$，
+
+$$
+y\cdot h(x)\le s\Delta_O(y),\qquad
+\Delta_O(y)=\max_{D\in\mathcal D_O}
+                    y\cdot(z_D-\mathbf r)\ge0.
+\tag{194.4}
+$$
+
+最大值取原完整有限停止目录，而不是受限目录。
+
+**证明。** 定理 194.1 给同质量可行停止配置 $\mu$。于是
+
+$$
+y\cdot h(x)\le y\cdot A_O\mu
+ =\sum_D\mu_D\,y\cdot(z_D-\mathbf r)
+ \le\Bigl(\sum_D\mu_D\Bigr)\Delta_O(y).
+$$
+
+锚 $R\in\mathcal D_O$ 使 $\Delta_O(y)\ge0$。这包括 $s=0$ 和 $\Delta_O(y)=0$，无须除法。$y$ 可同时给所有多零字、单点、并集和全正行赋权；此证明使用新配置的帽可行性，不声称新旧律之间每种加权正确行得分均增加。$\square$
+

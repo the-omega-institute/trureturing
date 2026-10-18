@@ -1,0 +1,35 @@
+**Theorem 5.1 (functional-input decision and synthesis).** For every
+functional rank-free input of Definition 2.4 there is a guaranteed
+terminating choice between:
+
+- YES, with effective finite sources $u_{r,h}\in D_r$ for every requested
+  $h\ge0$, all sharing one original prefix through $h$;
+- NO, with a finite $H$ for which $\neg J_B(H)$.
+
+The procedure requires no supplied completion point, prescribed-depth
+promise or observation of a plateau.
+
+**Proof.** There are finitely many chart tuples. Check their supplied
+completed-equation certificates and perform Definition 4.1 on every
+nonclash tuple. Theorem 3.1 and the finite native feasibility supplier
+make these finite tests terminate. If any tuple passes, the explicit
+construction in Theorem 4.2 is the YES synthesis algorithm.
+
+If $J_B(h)$ held for every $h$, exact chart completeness would supply
+one chart for each finite source witness. Among finitely many chart
+tuples, at least one would occur at unbounded depths. The converse of
+Theorem 4.2 makes that tuple pass. Therefore failure of every tuple
+proves $\neg\forall h\ J_B(h)$.
+
+Extract a concrete depth by testing $h=0,1,2,\ldots$. Each test is
+terminating: use independent whole-source variables $(u_r)_{r\in B}$,
+impose the entire predicate (FJC.4), exact row $r$ for each, and equality
+of their four replies at every word of length at most $h$.
+[NSF, Lemma 5.1 and Theorem 5.2][NSF] allows any finite number of source
+variables and this finite Boolean native query. Its witnesses are the
+actual finite source tuple; no pairwise surrogate is used.
+The proven $\neg\forall h\ J_B(h)$ guarantees that this search stops
+at a false test, whose $H$ is sound. Merely failing to find a reduction
+or a productive certificate would not justify this search guarantee;
+here the class hypotheses and Theorem 4.2 do. $\square$
+

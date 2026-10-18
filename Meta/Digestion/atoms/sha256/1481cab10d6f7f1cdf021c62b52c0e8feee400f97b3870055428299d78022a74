@@ -1,0 +1,83 @@
+**Theorem 4.1 (configuration excess versus return-weight dispersion).** For every compatible pair with the unchanged objective (2.11),
+
+$$
+19\mathcal J+D>\kappa_0:=\frac9{160000}.
+\tag{4.1}
+$$
+
+The same inequality holds if $\mathcal J$ is replaced by the maximum of the four endpoint configuration excesses. The original three-depth objective remains (2.11); this stronger endpoint-only necessity does not discharge either depth-3 loss condition.
+
+Proof. Write $e=\mathcal J\ge0$. The supplied endpoint events and their TV distances imply
+
+$$
+|P-C|\le e,\qquad |T-H|\le e.
+\tag{4.2}
+$$
+
+For example, $P_{p,a}(E_p)-P\le\mathcal L_p(P_{p,a})\le\rho_p+e$ and $P-P_{p,b}(E_p)\le\rho_p+e$ give the first bound. The suspended bound is identical on its own event and same marginal.
+
+The supplied coordinate triangle identity [CLIP, equation (3.6); PAIR, equation (11.29)] gives
+
+$$
+\int\sum_\omega
+\operatorname{dist}\bigl(Q(\omega),
+ [P_{p,a}(\omega)\wedge P_{p,b}(\omega),
+  P_{p,a}(\omega)\vee P_{p,b}(\omega)]\bigr)\,d\nu_p
+\le2e.
+\tag{4.3}
+$$
+
+This includes the infinite outcome. At $w_{3,1}$ the larger endpoint is $b$, so (4.3) implies $q\le q_*+2e$. Configuration TV is necessary for this rowwise violation bound; a bound only on the averaged law is not its stated premise.
+
+The $x$ coefficients in (3.2) obey
+
+$$
+0\le\partial_xF(c,x)<\frac23,
+\qquad 0\le\partial_xG(c,x)=\frac{c^3}{S(c)}<\frac1{50}.
+$$
+
+Apply Theorem 3.1 and (4.2)–(4.3):
+
+$$
+F(c,C)\le H+\frac53e+2D,
+\qquad
+G(c,C)\le q_*+\frac{101}{50}e+\frac D9.
+\tag{4.4}
+$$
+
+The first function in (4.4) strictly decreases with $c$ on $[1/5,4/15]$, and the second strictly increases. In detail,
+
+$$
+\partial_cF(c,C)
+=-\frac{13}{6}-\frac43c+\frac{15}{2}c^2
+ +\frac52C\frac{1+2c}{S(c)^2}.
+$$
+
+Use $C<13/25$, $S(c)\ge31/25$ and $1+2c\le23/15$. Dropping the negative linear term bounds this derivative above by
+
+$$
+-\frac{13}{6}+\frac{15}{2}\left(\frac4{15}\right)^2
+ +\frac52\frac{13}{25}\frac{23}{15}\left(\frac{25}{31}\right)^2
+=-\frac{1619}{4805}<0.
+\tag{4.5}
+$$
+
+Also $\partial_cG(c,C)=Cc^2(3+2c+c^2)/S(c)^2>0$.
+
+At the single rational cut $c_*=463/2000$, exact substitution gives
+
+$$
+F(c_*,C)-H-\frac1{2000}
+=\frac{240148126954349}{3997150934400000000}>0,
+$$
+
+$$
+G(c_*,C)-q_*-\frac1{160000}
+=\frac{229682039051}{1873664500500000000}>0.
+\tag{4.6}
+$$
+
+If $c\le c_*$, (4.4)–(4.6) imply $(5/3)e+2D>1/2000$, hence $(5/6)e+D>1/4000>9/160000$. If $c\ge c_*$, they imply $(101/50)e+D/9>1/160000$, hence $(909/50)e+D>9/160000$. Since $19>909/50$ and $e\ge0$, both cases give (4.1). They include every boundary value and exhaust (2.8). The proof used only the endpoint loss bounds, proving the last assertion as well. ∎
+
+The numerical cut evaluates a newly derived response obstruction. It is not a retuning of the constant-suspended-emission or conserved-p-emission inequalities. Its dispersion coordinate measures an edge weight, rather than either emission's range or its increment on a return.
+

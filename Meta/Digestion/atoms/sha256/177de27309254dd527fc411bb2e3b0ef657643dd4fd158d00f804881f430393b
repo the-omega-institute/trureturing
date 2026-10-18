@@ -1,0 +1,26 @@
+**定义 7.2.1（可达子空间）。** 允许输入任意有限词，并从零初态开始。定义
+
+$$
+\mathcal R
+=
+\operatorname{span}\bigl(
+\operatorname{im}B,\,
+\operatorname{im}AB,\,
+\operatorname{im}A^2B,\ldots
+\bigr)
+\subseteq X.
+$$
+
+$\mathcal R$ 是所有可由有限次干预产生的状态的线性包络。由于 $X$ 有限维，Cayley–Hamilton 定理给出
+
+$$
+\mathcal R
+=
+\operatorname{span}\bigl(
+\operatorname{im}B,\ldots,\operatorname{im}A^{n-1}B
+\bigr),
+\qquad n=\dim X.
+$$
+
+<a id="claim-7-2-2"></a>
+

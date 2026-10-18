@@ -1,0 +1,30 @@
+## 42. Constant zero advice and the carrier-size boundary
+
+Retain exactly the labeled source $X$, the numerical map $N$, and the target $\Omega$ of (36.1), and put
+
+$$
+\beta_0(y)=0\qquad(y\in X).
+\tag{42.1}
+$$
+
+Thus every source is in the same supplied-advice cell. The prime queries, the literal-divergence convention, and the event notation $(H_y,F_y,D_y,R_y,h_y,e_y,d_y,z_y)$ are those of Definition 40.1. The anchor is
+
+$$
+x_*=(7,2),\qquad N(x_*)=27,\qquad \Omega(x_*)=1,
+\tag{42.2}
+$$
+
+as supplied by Proposition 35.5 and Proposition 39.3. For a row $(h,d,z)$ in the simplex
+
+$$
+\mathscr S=\{(h,d,z)\in[0,1]^3:h+d+z=1\},
+\tag{42.3}
+$$
+
+consider all common measurable tape spaces, deterministic rule families, and source-indexed laws of Definition 40.1 having this row at $x_*$ and satisfying $e_y\le\delta h_y$ for every $y\in X$. The diameter is always the event-supremum quantity
+
+$$
+\Delta=\sup_{u,v\in X}\operatorname{TV}(\mu_u,\mu_v).
+\tag{42.4}
+$$
+

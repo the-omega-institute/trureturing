@@ -1,0 +1,26 @@
+## Auric FIB–ATOM 金字塔的推广：从唯一隐藏缝到 Fibonacci 隐藏层级
+
+这次可以把三态窗口
+
+```math
+F[\mathrm{null}]=\mathrm{null},\qquad
+F[1]=[2],\qquad
+F[2]=[3],\qquad
+F[3]=[5],\qquad
+F[1,3]=[2,5]
+```
+
+看成一个更一般结构的最小实例，而不是孤立的五态例子。
+
+本轮分析只使用可读的状态定义、观测映射、转换算子、显式反例和可验证定理；不把任何绑定登记类信息当作数学事实。项目主页本身也把“定义、假设、可检查证明和开放问题”区分开来。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+目前与这个方向最相关的项目进展有三类：
+
+- [96e0ba0](https://github.com/the-omega-institute/trureturing/commit/96e0ba0ecebaa879b1e01d4789272761d506186c) 给出了一个机器核对的 $2\times2$ 复矩阵反例。这提醒我们：静态的 FIB 单项式代数可以是交换的，但动态转换算子不能默认交换。
+- [4da8b2e](https://github.com/the-omega-institute/trureturing/commit/4da8b2e9c9c6439548fbbc5bea42df65ec2ae2ba) 研究了同一有限观测前缀下仍然不同的完整未来律。它直接支持“有限历史相同，不等于完整因果律相同”。
+- [60ebb51](https://github.com/the-omega-institute/trureturing/commit/60ebb51c87e6496e0cab67c899c3b687ef8fd001) 将静态 FIB seam、输出可分辨的未来商结构和后续延拓放到同一框架中。
+
+下面给出一个可以继续形式化的定理系统。
+
+---
+

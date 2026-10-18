@@ -1,0 +1,12 @@
+**Definition 72.1 (what is counted).** Let
+$\mathscr L(\Phi)=\{\mathbb R(z_j,w_j):j\in\mathcal J_+(\Phi)\}$.
+This counts every supported-nonzero low live projection line, including
+pure-live labels. Supported-zero actual labels in $\mathcal J_0$ have
+no projected line; they remain allowed in this layer and counted in
+its full actual alphabet and whole-fibre activity.
+The vectors $(1,z,w)$ and $(1,-z,-w)$ are distinct live directions but
+have the same projected line. Neither failure-ray count, Hilbert-space
+dimension, hidden Kraus multiplicity nor readable alphabet cardinality
+is this count. Let $\mathcal T_A^{[2]}(s)$ be the supremal original
+height restricted to $|\mathscr L|\le2$.
+

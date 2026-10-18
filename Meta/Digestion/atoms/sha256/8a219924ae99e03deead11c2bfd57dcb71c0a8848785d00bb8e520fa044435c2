@@ -1,0 +1,18 @@
+## 5. Exact actual-child TT interface and finite-set policies
+
+For a known compatible set $G$ at a history $H'$ define, within the
+remaining original-clock horizon,
+
+$$
+\begin{aligned}
+L_0(G,H')&\Longleftrightarrow |G|\ge2,\\
+L_{r+1}(G,H')&\Longleftrightarrow |G|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists w\in\mathbb R:
+L_r(G\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}
+\tag{5.1}
+$$
+
+Every $w$ here is a real raw response. All retained worlds and all
+ancestor equations stay fixed. A zero- or one-world child fails $L_0$.
+

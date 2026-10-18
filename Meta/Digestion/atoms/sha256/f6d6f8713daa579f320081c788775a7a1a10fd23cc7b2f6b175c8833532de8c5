@@ -1,0 +1,71 @@
+**Proposition 74.1 (small channel error does not certify sharp resources).**
+Arbitrarily small complete channel error does not preserve exact output
+rank. Consequently the error estimates above alone imply no exact
+sharp $\mathsf W$, occupied-count, zero-sector, activity-budget or
+$E=E_*$ statement for arbitrary perturbations.
+
+Proof. Let $J:\mathbb C^2\to\mathbb C^3$ be an isometry and define
+
+$$
+\Phi_0(X)=JXJ^\dagger,\qquad
+\Phi_\epsilon(X)=(1-\epsilon)JXJ^\dagger+
+                   \epsilon\operatorname{tr}(X)I_3/3,
+\qquad0<\epsilon<1.
+\tag{JRH.83}
+$$
+
+Both maps are TP/CP. For every normalized input $\Phi_0$ has
+support dimension at most two and $\Phi_\epsilon$ has support
+dimension three. At every reference, their difference is $\epsilon$
+times the difference of two channels, whose HALF output norm is at
+most one. Hence $d_{\rm ref}(\Phi_\epsilon,\Phi_0)\le\epsilon$,
+while the rank jumps for every positive $\epsilon$. The same type
+of positive small addition can populate an exact zero sector. An
+actual label can also be subdivided by an independently generated
+coin without changing a forgotten-label channel, although it changes
+the actual count. If records are retained they must instead be
+compared on their declared common record space; a Kraus refinement
+alone never supplies such a generated record. Thus channel closeness
+is insufficient evidence for the discrete or exact resource claims.
+
+For positivity alone there is a separate useful open condition: if
+$I-F\succeq e^{-A}I$ and a Hermitian effect perturbation satisfies
+$\|\widetilde F-F\|_{\rm op}<e^{-A}$, the eigenvalue inequality
+gives $I-\widetilde F\succ0$. It does not give the original lower
+bound $e^{-A}I$, nor the original activity bound $A$. Likewise
+(JRH.75) transfers only an error inequality. The exact-resource
+statements for Theorem 73.1 hold because the acquisition, $F_j$ and
+endpoint factors were fixed and the budget was separately proved
+invariant; they do not follow from small distance itself. $\square$
+
+Finite adaptive telescoping, isometry norm estimates and $L^1$/variation
+identities are established methods. Their applications here concern the
+original complete stopped channel, conditional reference operators,
+causal prefixes and fixed GC factors. GC's moment/contact stability
+and the [quantitative-output-stability owner §§4–10](FIB_NATIVE_COMPLETE_CONTINUATION_QUANTITATIVE_OUTPUT_STABILITY.md)
+address different moment and height deficits; those estimates are not
+a substitution of a diamond objective for the original HALF objective.
+If a finite alphabet compiler is invoked, Dawson–Nielsen,
+[*The Solovay–Kitaev algorithm*, Definition 1](https://arxiv.org/html/quant-ph/0505030v2),
+requires a specified finite inverse-closed dense alphabet and its
+compilation setup. The continuous ideal native menu, or exact finite
+reachability alone, supplies no calibrated pulse count, duration or
+hardware-clock error bound from that theorem.
+
+The native gap remains the actually supplied common acquisition on the
+one unknown specimen, genuine complete records, all jointly counted
+accessible shares, full-domain TP decoding and irreversible environment
+removal, plus causal absorbing coupling and a real aligned FIRST clock
+with every read, pulse and routing completed before its cut. GC §25's
+extra initialization/Lüders/feedback/routing permissions are conditional
+supplies, never authorizations conferred by theory. No finite
+acquisition dimension certifies a finite exact Borel-time apparatus.
+The original source/root/rank/TP, minimax, separate unaveraged face,
+sharp JOINT and finite/countable/stipulated measurable full-class
+suppliers retain their unverified conditions. The all-budget,
+all-contrast roof, exact optimal actual counts, coefficients,
+orientations, ordering, connected coverage, all boundary gluing and
+joint limits of the original through-2027 programme are unchanged and
+incomplete. Neither a late scalar timestamp nor channel approximation
+silently replaces any of those requirements.
+

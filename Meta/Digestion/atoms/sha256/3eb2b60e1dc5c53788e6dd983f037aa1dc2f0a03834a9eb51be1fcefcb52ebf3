@@ -1,0 +1,26 @@
+**Proposition 8.2 (selector, transfer, working storage and retained
+backing differ).** For one cover of $m=b-a+1$ eligible targets, the
+conditional selector-width lower bound is
+$\lceil\log_2m\rceil$. A unary target has $k+1$ payload bits. Neither
+number equals the payload capacity or physical storage of its callable
+backing. On any actual PR57 implementation cut $z$ the simultaneous
+storage is
+
+$$
+S(z)=S_0+b_{\rm ctl}(z)+8A(z)+8r(z),
+\tag{RCA.9}
+$$
+
+where $A$ counts all constructed ordinary cells and $r$ all actual
+receipts, including installation, decoder work, copies and retired versions.
+
+Proof. Theorem 3.3 counts distinct target choices conditional on common
+backing. Unary representation length is its definition. A callable object
+also needs its actual seed/input backing, permissions and implementation;
+removing those while keeping the pointer leaves no source of its payload.
+PR57's constructors give one eight-bit ordinary cell per ordinary EX and
+one eight-bit receipt per actual primitive. Finite control/token/latch
+bits are counted separately. This is (RCA.9), with sender, mailbox,
+receiver, tally versions and simulation workspace counted together at
+the same cut. Separate-run peak maxima are not added. ∎
+

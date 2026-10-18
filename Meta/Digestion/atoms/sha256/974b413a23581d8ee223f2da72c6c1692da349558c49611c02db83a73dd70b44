@@ -1,0 +1,50 @@
+**Proposition 209.11 (An unordered full-mass relocation family).**
+Let $L=6$, $0\le r,d\le1$, and let $x^{(j)}$ be the late word
+whose only one is at $j$. Put
+
+$$
+\nu=d\left(r\delta_{0000}+2\sum_{j=3}^6\delta_{x^{(j)}}\right),
+\quad (\gamma_3,\gamma_4,\gamma_5,\gamma_6)=(5,4,4,5)d,
+\quad \gamma_1=\gamma_2=d,\quad t=4d.
+\tag{209.24}
+$$
+
+Take $P_{01x}=P_{10x}=\nu(x)/2$ and
+$C_{01x}=C_{10x}=\nu(x)/(8+r)$. Put late correct masses at $v_j$
+to obtain $Y$, and replace them by $(R_j)_*\rho_j$ to obtain $V$,
+where $\rho_j=(g_j/(6+r))\nu_j$, $(g_3,g_4,g_5,g_6)=(5,4,4,5)$.
+Then
+
+$$
+(\Delta_N(Y),\Delta_O(Y))=((2-r)d,d),\qquad
+(\Delta_N(V),\Delta_O(V))=(d,d),\qquad Q(Y)=Q(V).
+\tag{209.25}
+$$
+
+**Proof.** For $d>0$, $S=(8+r)d$, $m_j=(6+r)d$ and each late
+pair has cells $((4+r)d,2d,2d,0)$. All full-mass dominations hold,
+$E=2d\le S$, and $W=(14+r)d$.
+For $Y$, the stopped late maxima are $((6+r)d,4d,5d)$ for $j<6$
+and $((6+r)d,5d,4d)$ for $j=6$, each of excess $d$.
+In $N$, the first two maxima are $(5d,2d)$, instead of their
+merged value $(6+r)d$, adding $(1-r)d$.
+An early/late pair has first-zero total $(10+r)d/2$ and remaining
+maxima $5d,5d$, hence excess $(1-r/2)d\le d$.
+The head excess is $d$, so these bounds and catalog completion give
+the input costs.
+
+For $V$, domination fixes $00,01$ at their pair baselines.
+Intermediate zero rewards are at most
+$5(4+r)d/(6+r)\le4d$, and intermediate one rewards are at most
+$10d/(6+r)\le4d$.
+Thus its late-pair excess is $d$; its early/late maxima are no larger
+than those of $Y$, and its head still attains $d$.
+This proves the output costs. Equivalently (209.21) has
+$D_{\rm late}=d$, $\kappa_{aj}=2d/(8+r)$ and
+$D_{\rm early}\le(1-r/2)d$.
+At $d=0$ all scores vanish directly, without invoking $S>0$.
+The endpoints $r=0,1$ are included; strictness holds for $d>0,r<1$.
+Padding with constant-one inactive coordinates does not increase the
+number of active labels. No exclusion from the whole earlier signed
+or convex closure follows from this strict relocation. $\square$
+

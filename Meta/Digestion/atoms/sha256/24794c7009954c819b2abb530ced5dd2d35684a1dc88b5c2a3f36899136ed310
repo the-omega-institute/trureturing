@@ -1,0 +1,22 @@
+### 54.1 参数、原始基与输出坐标置换
+
+沿用第 46 节的实分支。令 \(C\) 为第一行 \((0,1,0)\) 的三循环矩阵，\(J\) 为三阶全一矩阵，\(\mathcal S=\operatorname{diag}(C,C)\)。对 \(-1<a<1\)，取正平方根并定义
+\[
+p(a)=\frac{a-1}{2}+i\sqrt{1-\frac{(a-1)^2}{4}},\qquad
+q(a)=\frac{-a-1}{2}+i\sqrt{1-\frac{(a+1)^2}{4}},
+\]
+\[
+A_a^{\rm src}=J+(p(a)-1)C,\qquad B_a^{\rm src}=J+(q(a)-1)C,\qquad
+G_a=\frac1{\sqrt6}\begin{pmatrix}A_a^{\rm src}&B_a^{\rm src}\\
+(B_a^{\rm src})^*&-(A_a^{\rm src})^*\end{pmatrix}.
+\tag{54.1}
+\]
+这正是第 46 节显示的归一化种子。该 block construction 来自 Szöllősi 的 [*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，§2](https://arxiv.org/abs/0811.3930)。以下使用同一个、与参数无关的输出行置换
+\[
+L=\operatorname{diag}(C^2,C),\qquad H_a=LG_a
+=\frac1{\sqrt6}\begin{pmatrix}A_a&B_a\\\overline{B_a}&-\overline{A_a}\end{pmatrix},
+\quad A_a=J+(p(a)-1)I_3,\quad B_a=J+(q(a)-1)I_3.
+\tag{54.2}
+\]
+恒等式由 \(C^3=I_3\)、\(CJ=JC=J\) 逐块得到。\(L\) 保持平坦性且与 \(\mathcal S\) 交换；此处没有变换输入相位。由于 \(\Re(p+q)=-1\)，有 \(A_aA_a^*+B_aB_a^*=6I_3\)；两个对称 circulant 块交换且正规，故 \(H_a\) 与 \(G_a\) 都酉。平坦向量指六个坐标模均为 \(1/\sqrt6\) 的归一化向量。
+

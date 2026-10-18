@@ -1,0 +1,59 @@
+## 397. Replacing the two axes by two positive scalars
+
+Define
+
+    z=sqrt((r+1)*(o+1)), y=sqrt((r-1)*(o-1)),
+    h=(z+y)/2, k=(z-y)/2.
+
+These letters z,y are local auxiliary scalars, not the named source
+labels Z or V. The following bounds hold:
+
+    h>=m, 1<=k<=h/m.                                        (397.1)
+
+The first follows from z>=m+1 and y>=m-1. For the second,
+
+    z^2-(y+2)^2
+      =2*(sqrt(r-1)-sqrt(o-1))^2>=0,
+
+so z>=y+2 and k>=1. Finally,
+
+    y/z=sqrt((r-1)/(r+1))*sqrt((o-1)/(o+1))
+       >=(m-1)/(m+1),
+
+which rearranges to k/h<=1/m.
+
+Set
+
+    alpha=(theta_r+theta_o)/2, X=sqrt(L*J)>0,
+    Np=p*(h^2+k^2+q^2-p^2)+2*q*h*k,
+    Nh=h*(p^2+q^2+k^2-h^2)+2*k*p*q.
+
+Because h+k=z and h-k=y, the original factors become
+
+    L=(p+q)^2-(h-k)^2,
+    J=(h+k)^2-(p-q)^2.                                     (397.2)
+
+Both alpha and beta_p lie in (0,pi). The half-angle formulas yield
+
+    cot(alpha)=Nh/(sqrt(h^2-1)*X),
+    cot(beta_p)=Np/(sqrt(p^2-1)*X).                          (397.3)
+
+For completeness, if a_r=sqrt((r-1)/(r+1)) and
+ a_o=sqrt((o-1)/(o+1)), then
+
+    a_r*a_o=(h-k)/(h+k),
+    a_r+a_o=2*sqrt(h^2-1)/(h+k).
+
+Consequently
+
+    cot(alpha)=((h+k)*x^2-(h-k))/(2*sqrt(h^2-1)*x).
+
+Substitution of (397.2) and x^2=L/J gives its expression in (397.3). Similarly,
+
+    Kplus+Kminus=2*sqrt(p^2-1)/(p+q),
+    Kplus*Kminus=(p-q)/(p+q),
+
+and the tangent-addition formula gives the second expression in (397.3).
+These cotangent identities remain valid at right angles, since their
+positive sine denominators never vanish.
+

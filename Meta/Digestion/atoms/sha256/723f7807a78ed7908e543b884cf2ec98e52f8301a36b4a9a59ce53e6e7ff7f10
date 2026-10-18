@@ -1,0 +1,52 @@
+**Definition 1.2 (complete row and retained input).** For a finite
+prefix-free original cut $A$, the complete row $R_A(u)$ comprises
+the reached subset $A\cap\operatorname{Pos}(u)$, the entire concrete
+exterior obtained by putting numbered holes at those reached positions,
+and the full equality partition of their whole subtrees. Hole numbers
+are assigned in the fixed address order. Two different partition classes
+require unequal values. An empty cut retains the whole source.
+
+Fix a complete acquired input $I$. Its predicate $\Theta_I(u)$ is the
+conjunction of its complete old row at $P$, all actual-epoch literal
+records, all signed records, and every retained native guard and
+off-task constraint. A literal $(a,p,c)$ means
+$r_{\rho^a u}(p)=c$, including $c=\mathsf{absent}$ when present in the
+input. A signed record $(a,p,b,q,\bowtie)$ means exactly
+
+$$
+p\in\operatorname{Pos}(\rho^a u)\ \land\
+q\in\operatorname{Pos}(\rho^b u)\ \land\
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q,
+\qquad \bowtie\in\{=,\ne\}.
+$$
+
+An absent endpoint falsifies either sign. All repeated records are
+conjuncts on the same original source. The native guard vocabulary is
+the one of [NSF, Definitions 1.1–1.2 and Lemma 5.1][NSF]: fixed
+navigation and reached tests, finite native expression comparisons,
+complete-row tests, and their specified Boolean combinations. Fixed
+native image conditions, when retained, have the actual semantics in
+Definition 3.2 below. Native rank coordinates introduced by the
+[NIC][NIC] image cover describe these same original conditions; they
+are not additional arbitrary scalar inputs.
+
+Let $D=\{u\in\mathcal T:\Theta_I(u)\}$. At the target cut $Q$ take a
+supplied finite list $B=\{r_1,\ldots,r_m\}$ of distinct attained
+complete rows, where $m\ge2$, and put
+
+$$
+\begin{aligned}
+D_i&=\{u\in D:R_Q(u)=r_i\},\\
+J_B(h)&\iff
+\exists(u_1,\ldots,u_m)\in\prod_{i=1}^mD_i
+\quad\forall i,j\quad u_i\equiv_hu_j.
+\end{aligned}
+$$
+
+The list $B$ need not exhaust the target image. Every $D_i$ is its
+entire stratum; no other row is removed from $D$. These definitions
+reuse the source and row semantics of NSF and NIC, and the joint
+predicate of [SPC, §9][SPCEXT]. The sources indexed by different
+rows are alternative originals. Within one alternative all shared
+occurrences remain identical.
+

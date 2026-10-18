@@ -1,0 +1,35 @@
+**Definition 2.1 (unary bit, optional location and cell).** A socket root
+$r$ alone represents absence. A present bit $b\in\{0,1\}$ has exactly
+one additional occurrence $t$. For $b=0$, join $r.\mathsf L$ to
+$t.\mathsf P$ and leave $r.\mathsf R$ empty; for $b=1$, use
+$r.\mathsf R$ and leave $r.\mathsf L$ empty. The child is terminal.
+All other unused slots are empty. Call the resulting two-occurrence
+component $U_b$. Its terminal child path is respectively 0 or 1; the
+absent component has terminal path $\varepsilon$. Absence is not zero.
+
+Use SSA Definition 3.2's balanced ordered scaffold $F_m$, with $F_1$ one
+socket and recursive consecutive floor/ceiling splits. An eight-track
+cell $c$ is $F_8[U_{c_1},\ldots,U_{c_8}]$ in the actual track order.
+Denote it by $C_U(c)$. It has 23 vertices and eight terminals. Its root
+and all track socket roots retain their constructor occurrences.
+
+For $w=c_1\cdots c_k$, including every actually constructed boundary or
+partial boundary, its tape tree is
+
+$$
+L_U(w)=\langle C_U(c_1),\langle C_U(c_2),\ldots,
+       \langle C_U(c_k),\bullet\rangle\ldots\rangle\rangle,
+\qquad L_U(\varepsilon)=\bullet.
+$$
+
+The 74 tape trees, followed by the optional-location tree
+$F_q[U(z_1),\ldots,U(z_q)]$, occupy $F_{75}$'s ordered sockets.
+The result is $U(W)$. Add the actual origin-to-head links, one for each
+ordinary port and two distinct lanes for the meter, only when that head
+exists. They join the tape origin's $\mathsf O_j$ to the cell root's
+$\mathsf H_j$. Their number is $\ell\le75$, equal to 75 after all heads
+exist. They are determined by the native cursor tracks; there is no
+descriptor-to-block shortcut. Call the linked carrier $\Gamma_U(W)$.
+There is no live byte store beside these incidences. $W$ is a comparison
+record for this definition, not a shadow source.
+

@@ -1,0 +1,22 @@
+## 5. Memory consequence and source ownership
+
+The law $Q_\star$ is normalized, two-sided, stationary, positive on every
+legal cylinder, and has density $c_\star$ by (3.4). If it had finite visible
+Markov order, all hypotheses of [Nonattainment, Theorem 1.5] would hold, and
+that theorem would give $d(Q_\star)<c_\star$, contradicting (3.4). Therefore
+$Q_\star$ has no finite visible Markov order. No ergodicity, uniqueness, hidden
+state, Gibbs, or effective-construction assertion follows.
+
+The only external probability facts used above are the bounded martingale
+convergence theorem for the increasing finite exterior sigma-fields and weak
+compactness of probability measures on a compact metrizable space. Their
+hypotheses are exactly the bounded coordinate variable $X_0\in\{0,1\}$ and
+the compact shift space $X$. All Fibonacci objective identities and all
+insertion inequalities are owned by [Growth, Lemma 3.1 and Theorems 3.2, 5.2]
+and [Positive Unique Optimizer, Theorem 3.1]; the finite-order contradiction is
+owned by [Nonattainment, Theorem 1.5].
+
+[Growth]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[Positive Unique Optimizer]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[Nonattainment]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+

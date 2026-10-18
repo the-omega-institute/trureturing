@@ -1,0 +1,10 @@
+**Definition 1.1 (Calibrated tensor-sign source).** Fix integers $n,L\ge1$, put $\theta=\pi/(4L)$ and let $S_n=\{-1,+1\}^n$. The system is $\mathcal K=(\mathbb C^2)^{\otimes n}$ with labeled factors and signed computational, $X$, $Y$ and $Z$ standards. For $s\in S_n$ define
+
+$$
+U_s=\bigotimes_{i=1}^n\exp(i s_i\theta Z),
+\qquad
+\Lambda_s(\rho)=U_s\rho U_s^\dagger.
+$$
+
+One ordinary source call applies $\Lambda_s$ to this entire $n$-qubit system and the identity to any workspace. The unknown $s$ is selected once. Every subsequent call uses the same memoryless, noiseless channel. The integers $n,L$, the product-unitary promise, factor labels and signed basis standards are public; $s$ is not. Initial workspace data and any private random seed are independent of $s$. In particular, no preparation record containing $s$ is available.
+

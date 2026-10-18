@@ -1,0 +1,121 @@
+### 217.3 B — moving consecutive unequal-triple threshold
+
+Fix $k\ge3$, $L\ge k+3$, and consecutive pivots
+$n=k+1,m=k+2,\ell=k+3$. Let
+$u\ge v\ge w\ge a=u/(k-1)\ge0$, $G=u+v+w$, and
+$B_0=ka+v+w$. Assume $(k-2)B_0\ge ku$. For
+$\beta_n=u,\beta_m=v,\beta_\ell=w$ and all other beta zero, with
+$K=G+B$, $B\ge0$, the exact unrestricted zero-cost threshold is
+
+$$
+\min\Delta_N=\min\Delta_O=0\quad\Longleftrightarrow\quad B\ge B_0.
+\tag{217.5}
+$$
+
+Below threshold every full competitor has
+$\Delta_O\ge(B_0-B)/H$, $H=(2k-1)/(k-1)$; no exact positive-cost formula is
+claimed. More generally let every coordinate outside the three pivots have
+$\beta_j=-\xi_j$, $\xi_j\ge0$; take pivot $\xi_j=0$ in sums.
+Put $D=\sum\xi_j$, $E=\xi_1+\xi_2$, and absolute stock
+$B=K-G-D$. Put $s=B_0/k$ and
+$R_{\rm stock}=\sum_{j=1}^k(s-\xi_j)_+$. If $B\ge R_{\rm stock}$, one score with
+$T=0$ attains
+
+$$
+\min\Delta_N=\min\Delta_O=E.
+\tag{217.6}
+$$
+
+The stock $B$ in (217.6) is absolute; literal stock is $K-G=B+D$.
+
+Proof of (217.5): let $w_i(v)$ have sole guard zero i, pivot bits v and
+ones after $\ell$; $w_0(v)$ has all guards one and the same pivot bits
+and padding. The complete unsigned core is the following table, with every
+unlisted coefficient zero. Each guard has mass $s=B_0/k$.
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $a/k$ | $0$ |
+| $w_i(011)$ | $u/k$ | $0$ |
+| $w_i(100)$ | $(v-a)/k$ | $0$ |
+| $w_i(101)$ | $a/k$ | $0$ |
+| $w_i(110)$ | $w/k$ | $0$ |
+| $w_0(000)$ | $0$ | $a$ |
+| $w_0(011)$ | $0$ | $u-a$ |
+| $w_0(100)$ | $0$ | $v$ |
+| $w_0(110)$ | $0$ | $w$ |
+
+The guard-indexed rows occur for every $1\le i\le k$. Initially A and T
+are zero. Zero dominates all guard labels pointwise.
+For two guards the 11 baseline is $(k-2)s\ge u$; for guard/n, guard/m,
+guard/ell the zero baselines are respectively
+$(u,(k-1)(v+w)/k)$,
+$((k-1)v+u)/k,(k-1)(u+w)/k$,
+and $((k-1)(v+w)/k,u)$, which dominate the corresponding correct labels.
+For the three pivot pairs, the zero-baseline vectors are
+$(a,u,v,w)$, $(a,u,v+w-a,a)$ and $(v,a,w,u)$. The corresponding class-n C vectors are
+$(a,u-a,0,0)$, $(a,u-a,0,0)$ and $(a,0,0,u-a)$; class-m vectors are
+$(0,0,v,0)$, $(0,0,v,0)$ and $(v,0,0,0)$; class-$\ell$ vectors are
+$(0,0,0,w)$, $(0,0,w,0)$ and $(0,0,w,0)$. Each is dominated because
+$v,w\ge a$. In the mixed pairs the competing correct maxima are
+$(u,v)$, $(v,\max(w,u-a))$ and $(v,u-a)$ respectively. The ordering
+and ratio hypotheses imply $(k-1)w\ge v$ and
+$(k-1)(u+w)/k\ge u-a$, so their baselines dominate too.
+Short schedules are coarsenings, and addresses after $\ell$ are constant on
+the core support. Hence every complete N support is $B_0$; cell merging
+preserves zero dominance and every O support is $B_0$ too. At larger unsigned
+stock B, add $B-B_0$ of sole-zero-1 P. This preserves zero dominance and
+proves sufficiency for every $B\ge B_0$ with T still zero.
+
+For necessity use stopped tables $S_j=(j,n;0,n,0)$ with weight $1/(k-1)$
+for $j\le k$ and $J=(n,m;0,m,\ell)$ with weight one. Their total is H.
+On a first-zero guard class let $z\ge1$ count all zero guard bits. If
+the n bit is zero, nonzero output weight is $(k-z)/(k-1)\le1$; if it
+is one, that weight is exactly one. No table emits the guard's first-zero
+label. In class n the correct weight is $k/(k-1)$; in classes m and
+$\ell$ it is one, and all pivot pair weights are H. After $\ell$ and on
+the positive word nonzero weight is one. There are no intervening classes
+between consecutive pivots. This checks every word, not only sole zeros.
+Subtracting $H$ times $Z$ from an arbitrary score, the independent A, C,
+P and positive rows give a lower reward $B_0-A_{out}-P_{out}-T$.
+Here I is the three pivot classes and out is its complement. Using
+$B+D=2A_I+2A_{out}-D+P_I+P_{out}+T$ gives
+$H(\Delta_O-E)\ge B_0-B-D+2A_I+(A_{out}-D)+P_I\ge B_0-B-D$, since
+$A_{out}\ge D$. Constant zero gives $\Delta_O\ge E$, hence (217.5) and the signed lower cut
+$\Delta_O\ge E+(B_0-B-D)_+/H$.
+This last cut remains valid for arbitrary nonnegative u,v,w without the
+constructor's amplitude cone. It uses literal stock $B+D=K-G$, rather
+than substituting absolute B into that stock identity.
+
+For signed construction, convert the fraction
+$\eta_j/s$ of each of the five P masses in guard $j$ to A,
+where $\eta_j=\min(\xi_j,s)$, add sole-zero A of mass $\xi_j-\eta_j$ at
+guard j, add $\xi_j$ of sole-zero A for every $j>\ell$, and put surplus
+$B-R_{\rm stock}$ into sole-zero-1 P. One score
+has $Z=B+D$, $W=B+D-E$ and every complete schedule support equal to $Z$,
+so both excesses are
+$E$. At $s=0$ all $\eta_j=0$ and no division occurs. This covers closed
+endpoints, zero terminal mass, every suffix and every numerical label.
+
+For $u=v=w=g$, replace the n C atoms by $C$ mass $g$ at pivot pattern 001
+and add early A one. The resulting $Y_g$ has
+$\Delta_O=1$ and $\Delta_N=1+(k-2)g/(k-1)$; restoring the C atoms gives
+one same-Q score with both costs one. At $k=4,g=3$, $Q=(-1,0,0,0,3,3,3;20)$,
+$W=10$, and $(B_O,B_N)=(11,13)$ versus the repaired $(11,11)$.
+Only N pairs (n,m) and (m,$\ell$) gain $g-a$ from that relocation.
+Their stopped first-zero cells merge and have baseline $g+a\ge g$;
+the guard and mixed-pair bounds persist. The early A adds at most one to
+every support and adds exactly one in an attaining late pair's 11 cell.
+This proves the whole $g\ge0$ amplitude family, including $g=0$.
+
+An unequal signed example takes $k=4,L=8$, $(u,v,w)=(3,2,1)$,
+$\xi=(3/4,1/4,2,1,0,0,0,3/2)$ and absolute $B=13/4$.
+Then $Q=(-3/4,-1/4,-2,-1,3,2,1,-3/2;59/4)$,
+$W=31/4$, $B_N=B_O=35/4$, and the attained minima are one.
+The guard condition is automatic for $k\ge4$, since $v,w\ge u/(k-1)$
+give $(k-2)B_0\ge(k^2-4)u/(k-1)\ge ku$; at $k=3$ it is exactly
+$v+w\ge3u/2$. The zero profile has $s=0$, $R_{\rm stock}=0$,
+and is handled by sole-zero additions without division. Neither the signed
+plateau condition nor the below-threshold lower cut is asserted to classify
+all signed fibers or their positive-cost minima.
+

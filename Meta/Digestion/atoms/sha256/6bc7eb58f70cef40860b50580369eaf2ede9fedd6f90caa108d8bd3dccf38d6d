@@ -1,0 +1,78 @@
+**Theorem 205.10 (Correlated common measure for arbitrary active profiles).**
+Let $m=|J|\ge4$, with arbitrary original addresses and arbitrary ordering
+of positive $\gamma_j$. Define
+
+$$
+c_m=4-\frac2{\lceil(m+1)/2\rceil},\qquad d\ge0,\qquad
+\mu>0,\quad\mu\ge2d,\qquad s=\mu-d.
+$$
+
+If
+
+$$
+W\ge\max\{(c_m+1)s,\ 3s+\mu\},
+\tag{205.27}
+$$
+
+one explicit score $V$ satisfies
+
+$$
+\Delta_N(V)=\Delta_O(V)=d,\quad V\cdot r=W,\quad K_V=K_y,
+\quad F_{Q(y)-Q(V)}=-\gamma_1(1-b_1)-\gamma_2(1-b_2)\le0.
+\tag{205.28}
+$$
+
+For $d\le1$ this is a unit certificate with $\theta=0$.
+This is a sufficient aggregate region, not an unrestricted stock minimum.
+
+**Proof.** On all $m$ active coordinates, with zero subset $Z\subseteq J$,
+use the following finite measure $\sigma$. If $m=2q-1$, put mass
+$2m/[q\binom mq]$ at each $q$-subset. If $m=2q$, put mass
+$2/\binom mq$ at each $q$-subset and
+$2q/[(q+1)\binom m{q+1}]$ at each $(q+1)$-subset. No terminal address
+is adjoined. These are the subset coefficients of 201.2, now on all
+active coordinates. A uniform $r$-subset contains a fixed coordinate
+with probability $r/m$, and contains one specified coordinate while
+excluding another with probability $r(m-r)/(m(m-1))$. Thus, for odd $m$,
+
+$$
+\sigma(2^J)=\frac{2m}{q}=c_m,\quad
+\sigma(j\in Z)=2,\quad
+\sigma(i\in Z,j\notin Z)=
+\frac{2m}{q}\frac{q(q-1)}{m(m-1)}=1.
+$$
+
+For even $m$, the total is $2+2q/(q+1)=c_m$, the marginal is
+$2(q/m)+[2q/(q+1)]((q+1)/m)=2$, and the directed moment is
+
+$$
+2\frac{q^2}{m(m-1)}+
+\frac{2q}{q+1}\frac{(q+1)(q-1)}{m(m-1)}=1.
+$$
+
+Set $\nu=s\sigma$. Every pair has cells
+$(s,s,s,(c_m-3)s)$, each zero marginal is $2s$, and each directed
+disagreement is $s$. Balanced early lifts have positive-cell mass
+$(c_m-2)s/2$. Since $c_m<4$, its minimum with the late positive
+cells is $\zeta=(c_m-3)s$. Set $\tau=W-c_ms$. Conditions (205.27)
+give $\tau\ge s$ and $\tau+\zeta\ge\mu$. Moreover
+$\gamma_j\le\mu=s+d\le2s$, so all $(\gamma_i-m_i)_+$ vanish,
+the maximum unary deficit is $\mu-s=d$, and every directed term is
+at most $d$. Thus $\kappa=d$ and $(\mu-\tau)_+\le d$.
+Theorem 205.8 proves the exact excess.
+
+For complete reproducibility, place $s\sigma(Z)/2$ at each pair word
+$w(\{a\}\cup Z)$, $a=1,2$. For each active $n$, place
+$\min(\gamma_n,s)$ at $w(\{n\})$ and $(\gamma_n-s)_+$ at
+$w(\{k\in J:k\ge n\})$ as correct weights; put $T=\tau$.
+These are exactly the threshold intervals because every $a_{nk}=s$.
+All other bits are one and coincident words add. Pair plus terminal
+mass is $W$, so $K$ and the anchor agree with the input and the residual
+is (205.28). This transfer of $E$ into $W$ is an alternative to (205.26);
+it has no additional $-Ee$ term. Cases $d=0$, $\mu=2d$ and equality
+in either stock bound are included. If $\mu=0$, the separate construction
+$T_V=W$ applies without division. When $\mu>2d$, both thresholds in
+(205.27) are strictly smaller than $5(\mu-d)$; this compares the
+displayed fair-suffix stock test on equal profiles, not every previous
+construction. $\square$
+

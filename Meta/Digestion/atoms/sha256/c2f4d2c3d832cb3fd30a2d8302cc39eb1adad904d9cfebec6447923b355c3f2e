@@ -1,0 +1,93 @@
+## 116. 底面两因子与共同标签来源
+
+**定义 C-116.1（载体、分割与继承记号）。** 沿用
+[统计、相位与接缝续卷 C-94、C-96](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md#94-五模式混态底面张量结构与完整双副本测量)
+的五模式空间 $\mathcal H_5$、底面投影 $P_{\mathrm b}$ 和等距嵌入 $\iota$：
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+0=00,\quad1=10,\quad3=01,\quad13=11.
+$$
+
+对任意 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，记
+$r=\operatorname{Tr}(P_{\mathrm b}\rho)$。当 $r>0$ 时，
+$\sigma=\iota^\dagger\rho\iota/r$ 是归一化底面态。
+以下在底面公式中省略 $\iota$，将底面恒等记为 $I_{\mathrm b}$；
+嵌回五维后 $I_{\mathrm b}=P_{\mathrm b}$。
+“底面可分离”始终相对于 $\mathbb C_A^2\mid\mathbb C_B^2$，
+不把五维空间本身分解成两个量子位。
+多份来源的“份间可分离”则相对于
+$\mathcal H_5^{(1)}\mid\cdots\mid\mathcal H_5^{(N)}$。
+其中底面 $A\mid B$ 不同于
+[混态容量与认证续卷 C-105–C-115](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md#105-完整-product-plus-omega-菜单中的纠缠盲纤维与参数读口)
+中的完整双份来源分割；本章份间分割在 $N=2$ 时就是
+$\mathcal H_5^{(1)}\mid\mathcal H_5^{(2)}$，
+但来源集合、允许操作及通道任务仍各按其自身定义。
+
+取 $0<r<1$，固定
+
+$$
+\begin{aligned}
+|e_0\rangle&=(|0\rangle+|3\rangle)/\sqrt2=|0\rangle_A|+\rangle_B,\\
+|e_1\rangle&=(|1\rangle-|13\rangle)/\sqrt2=|1\rangle_A|-\rangle_B,\\
+|G_\pm\rangle&=(|e_0\rangle\pm|e_1\rangle)/\sqrt2,\\
+\rho_\pm&=(1-r)|2\rangle\langle2|+r|G_\pm\rangle\langle G_\pm|,\\
+\sigma_0&=(|e_0\rangle\langle e_0|+|e_1\rangle\langle e_1|)/2,\\
+\bar\rho&=(\rho_++\rho_-)/2=(1-r)|2\rangle\langle2|+r\sigma_0.
+\end{aligned}
+\tag{C116.1}
+$$
+
+这里 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。
+$\sigma_0$ 是 C-96.1 在 $\nu=1/2$、$b_0=|+\rangle$、$b_1=|-\rangle$
+和 $\gamma=0$ 的同一状态，而非另设相干族。
+
+**命题 C-116.2（所有份数上的共同标签反例）。** 对每个 $N\ge2$，令
+
+$$
+\Gamma_N=\tfrac12\rho_+^{\otimes N}+\tfrac12\rho_-^{\otimes N}.
+\tag{C116.2}
+$$
+
+这些来源置换不变、在完整五维份间完全可分离，且组成偏迹相容的族。
+每个单份边缘都是 $\bar\rho$，其条件底面 $\sigma_0$ 可分离。
+任取 $k$ 个不同位置，它们同时进入底面的概率都是 $r^k$。
+然而任意两份在 C-94.3 的实际交换测量下满足
+
+$$
+\begin{array}{c|ccc}
+\text{实际两份来源}&q_{--}&q_{-+}&
+\Pr(\text{两份均在底面})\\ \hline
+\Gamma_2&r^2/4&0&r^2\\
+\bar\rho\otimes\bar\rho&r^2/8&r^2/8&r^2
+\end{array}
+\tag{C116.3}
+$$
+
+故相等边缘、可交换性、完整份间可分离性，甚至全部底面选择指示量的乘积律，
+同时成立也不能推出实际来源为 iid 的 $\bar\rho$ 副本。
+
+证明。每个张量幂均为份间乘积态，二项凸混合给完全可分离性；
+置换保持每个张量幂。$\operatorname{Tr}\rho_\pm=1$ 给偏迹相容性和所列边缘。
+两个 $e_j$ 都是底面乘积向量，给 $\sigma_0$ 的可分离分解。
+在每个分支中，任意指定 $k$ 次底面投影的期望为 $r^k$；
+对分支取平均不改变该数。底面与其补的任意指示模式同理有 Bernoulli 乘积律。
+
+$G_\pm$ 的两侧约化态均为 $I_2/2$，底面纯度为一。
+分别对实际乘积来源 $\rho_\pm\otimes\rho_\pm$ 使用 C-94.4，
+给 $q_{--}=r^2/4$、$q_{-+}=0$；再用测量概率对来源的线性性得到第一行。
+$\sigma_0$ 的两个约化态仍为 $I_2/2$，而
+$\operatorname{Tr}\sigma_0^2=1/2$，所以对真正的
+$\bar\rho\otimes\bar\rho$ 使用同一定理得到第二行。
+$r>0$ 时两个测量概率不同，故两个来源不同。证毕。
+
+本命题的来源限定消费 Mintert–Buchleitner，
+*An observable entanglement measure for mixed quantum states*，
+[quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3)，式 (1)–(3)
+及末段明确的实际 $\rho\otimes\rho$ 前提；共同未知参数的区分见 van Enk，
+*Can measuring entanglement be easy?*，
+[quant-ph/0606017v1](https://arxiv.org/abs/quant-ph/0606017v1)，式 (3)–(4)。
+共同参数混合一般不等于平均态的张量幂是成熟前置；
+(C116.1)–(C116.3) 将它接到本库指定的五模式、固定对角及交换事件。
+C-94 与 C-98 的乘积来源条件仍分别保留在其原结论中。
+

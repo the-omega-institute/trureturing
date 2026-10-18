@@ -1,0 +1,14 @@
+**假设 21.1（固定精确读出的可逆线性接口）。** 在第 20 节进一步要求 $T$ 可逆，定义
+
+$$
+\beta_n(s)=(CT^ns,CT^{n+1}s,\ldots).
+$$
+
+采用不变子空间的标准有限维性质：
+
+$$
+\ker\beta_n=T^{-n}N_\infty=N_\infty.
+$$
+
+理由为 $TN_\infty\subseteq N_\infty$，可逆性和有限维给 $\dim TN_\infty=\dim N_\infty$，故包含为等号，继而 $T^{-n}N_\infty=N_\infty$。仅后移起点不会在此类别中产生新的精确永久盲区。
+

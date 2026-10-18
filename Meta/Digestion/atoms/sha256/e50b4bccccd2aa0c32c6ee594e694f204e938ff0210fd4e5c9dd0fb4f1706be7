@@ -1,0 +1,42 @@
+**Definition 2.1 (word notation and its expansion).** A word register is a
+field in RCA Definition 11.1's complete bank, with compiler roles
+32–39 relocated respectively to 64–71. The only assignments are empty,
+copy, literal-bit cons and tail; tests are empty or first-bit tests.
+Reverse, Cat, Length, Equal, Frame, Take, ReadUnary, ReadFrame, ReadList,
+Nth, Replace and AppendItem mean exactly the acyclic expansions of
+[RCA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md),
+Definition 12.1. An internal natural is $1^n$; emitting its wire form
+requires an additional literal zero. A tuple is an explicitly framed list
+of fixed arity. Every numeric field is checked for exhaustion after
+ReadUnary. Failure of a bounded Take, an arity test or an exhaustion test
+has its own finite failure successor.
+
+Unary comparison and subtraction copy the two natural words to distinct
+cursors and tail both while both are nonempty. If only the right cursor
+remains, comparison is less and subtraction fails; joint exhaustion means
+equality; otherwise the remaining left cursor is the exact positive
+difference. Addition is Cat on natural words. Multiplication by four is
+two Cats producing two and then four copies; successor is literal cons 1.
+These are abbreviations for the same assignments/tests, not new leaves.
+List cardinality is a ReadList traversal consing one 1 per item. Every
+range, count, difference and bound test below uses these expansions.
+
+Every assignment expands into RCA Definition 11.3's two-pass bank
+construction: actual Base; dry length count; real field emissions,
+separators and F; bank seal; closed descriptor count; actual descriptor
+write; parity CTL. Its LastBank, Field and LastScratch are Definition
+11.2's literal scans. In particular an assignment is not one native row.
+The source bank is immutable during both passes, and all old versions,
+scratch words and descriptors remain constructed.
+
+Use first-occurrence order for the finitely many registers after hygienic
+inlining. Inline fixed calls and the acyclic macros before numbering native
+rows, in the order of the definitions below, then textual row order.
+Finite alternatives use ascending port/latch order and the symbol order
+$L,R,0,1,\square,\mathsf{sep},\mathsf{seal},\mathsf F$.
+Branches list false before true. While joins its last successor to its
+actual testing row. A join introduces no occurrence unless a CTL is
+explicitly specified. The resulting finite native graph is $G$; its
+register count is a syntactic finite constant, independent of all runtime
+word lengths and capacities.
+

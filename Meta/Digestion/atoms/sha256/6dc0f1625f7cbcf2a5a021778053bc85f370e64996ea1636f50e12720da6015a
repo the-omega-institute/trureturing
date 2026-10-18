@@ -1,0 +1,73 @@
+**Theorem 4.1 (attained upper family, not a universal upper bound).** In the fixed passive output basis define $u=\sqrt a$, $v=\sqrt\beta$ and
+
+$$
+K_0=u(e_0\langle0|+e_1\langle1|)+e_4\langle2|,
+\qquad K_1=v(e_2\langle0|+e_3\langle1|).
+\tag{P.11}
+$$
+
+Its physical channel under (P.1) belongs to $\mathcal R_\beta$, has $\gamma=\beta$, and its optimal all-complex-recovery unhalved diamond error is exactly
+
+$$
+\delta(N_\beta)=U(\beta):=1-\sqrt{1-\beta}.
+\tag{P.12}
+$$
+
+**Proof.** The Kraus TP sum is $I_3$. With $f_1^\pm=(e_0\pm ie_1)/\sqrt2$ and $f_2^\pm=(e_2\pm ie_3)/\sqrt2$,
+
+$$
+N_\beta(\chi_\pm)=a|f_1^\pm\rangle\langle f_1^\pm|
++\beta|f_2^\pm\rangle\langle f_2^\pm|.
+\tag{P.13}
+$$
+
+The four $f$ vectors are orthonormal; the difference has exactly the required spectrum. (P.2) gives the actual physical $\theta$ outputs and Theorem 2.1 applies.
+
+A decoder on the entire output has Kraus matrices
+
+$$
+T_0=|0\rangle\langle e_0|+|1\rangle\langle e_1|+|2\rangle\langle e_4|,
+\qquad T_1=|0\rangle\langle e_2|+|1\rangle\langle e_3|.
+\tag{P.14}
+$$
+
+Their TP sum is $I_5$. Put $P=\operatorname{diag}(1,1,0)$, $Q=I-P$, $Z=P-Q$. Direct composition on every complex matrix gives
+
+$$
+TN_\beta=\frac{1+u}{2}\,\mathrm{id}_3+
+\frac{1-u}{2}\operatorname{Ad}_Z.
+\tag{P.15}
+$$
+
+The diamond distance between $\operatorname{Ad}_Z$ and the identity is two: the difference-of-channels bound gives the upper bound for every reference, and $(|0\rangle+|2\rangle)/\sqrt2$ gives orthogonal outputs and attains it. Thus this decoder has error $1-u$.
+
+For individual optimality take $\eta_\pm=(|0\rangle\pm|2\rangle)/\sqrt2$. Their encoder output difference is $u(|e_0\rangle\langle e_4|+|e_4\rangle\langle e_0|)$, of trace norm $2u$. For any single recovery $R$, contraction and the triangle inequality give
+
+$$
+2\leq\|\eta_+-RN_\beta(\eta_+)\|_1+2u+
+\|RN_\beta(\eta_-)-\eta_-\|_1
+\leq2\|RN_\beta-\mathrm{id}\|_\diamond+2u.
+$$
+
+This proves (P.12). The physical decoder has Kraus matrices $LT_jD^\dagger$. Indeed
+
+$$
+R^{\rm ph}=\operatorname{Ad}_L\circ R\circ\operatorname{Ad}_{D^\dagger},\qquad
+R^{\rm ph}N^{\rm ph}-\mathrm{id}
+=\operatorname{Ad}_L\circ(RN-\mathrm{id})\circ\operatorname{Ad}_{L^\dagger}.
+\tag{P.16}
+$$
+
+This is a bijection on all complex CPTP recoveries, and unitary invariance of the diamond norm, including every reference, gives $\delta(N^{\rm ph})=\delta(N)$. The same input-purification bijection preserves the worst-input root fidelity and hence $g_N$. The corresponding physical contraction tests are $L\eta_\pm$; they do not replace the native $\theta_\pm$ pair.
+
+Explicit native attainers for (P.13) can also be written in the fixed passive coordinates. Let $O$ have rows
+
+$$
+(e_0-e_1)^T/\sqrt2,\quad(e_0+e_1)^T/\sqrt2,\quad
+(e_2-e_3)^T/\sqrt2,\quad-e_4^T,\quad(e_2+e_3)^T/\sqrt2.
+$$
+
+It has determinant one. For $h=0,2$, let $A_h$ be identity off $\operatorname{span}(e_h,e_4)$, with $A_he_4=e_h$ and $A_he_h=-e_4$. Then $J_h=A_hS_{13}A_h^T$ phases only $e_h$. The words $OJ_0$ and $OJ_2J_0$ have absolute contrasts $a$ and one. Every real conjugator is an exact finite zero-phase flip word in physical coordinates. Each $J_h$ uses one forward call; neither $D$ nor an inverse phase is added as a free gate.
+
+All formulas remain CPTP at both endpoints. At zero $K_1=0$, $K_0$ is an isometry, $\delta=0$, and $B_1=B_2=1$. At $\beta=1/2$, $\delta=1-1/\sqrt2$, $B_1=1/2$ and $B_2=1$. No positive-rank residual hypothesis is used at zero. $\square$
+

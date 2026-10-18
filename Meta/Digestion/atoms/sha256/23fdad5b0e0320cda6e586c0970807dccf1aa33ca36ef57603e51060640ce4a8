@@ -1,0 +1,38 @@
+**定理 7.3.1（操作等价的精确核）。** 对 $x,x'\in\mathcal R$，有
+
+$$
+\boxed{
+x\sim_{\mathrm{op}}x'
+\quad\Longleftrightarrow\quad
+x-x'\in\mathcal N.
+}
+$$
+
+**证明。**
+
+令 $z=x-x'$。从两个状态施加同一个未来输入词时，输入项完全抵消，差分状态满足
+
+$$
+z_{t+1}=Az_t,
+\qquad z_t=A^tz.
+$$
+
+所以第 $t$ 个未来读出之差为
+
+$$
+CA^tz.
+$$
+
+若 $z\in\mathcal N$，上述差对所有 $t$ 都为零，故两个状态对任何共同输入词给出同样的输出。
+
+反过来，若两个状态操作等价，取未来输入词为空，便得到
+
+$$
+CA^tz=0
+\qquad\forall t\ge0.
+$$
+
+因此 $z\in\mathcal N$。证毕。
+
+<a id="claim-7-3-2"></a>
+

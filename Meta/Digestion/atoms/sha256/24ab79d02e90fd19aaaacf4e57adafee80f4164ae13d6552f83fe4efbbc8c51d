@@ -1,0 +1,4 @@
+**Boundary 8.3 (Remaining resources and goals).** Address radius is distinct from internal computation, address encoding, precision, persistent state, memory, physical storage, numerical return time, and expected paid-cost optimization; no bounds for these follow. No empirical-learning, neural, kernel, expected-cost-only, unbounded-history, or numerical larger-budget risk-frontier conclusion is asserted. Original Open Problem 6.4 on arbitrary-finite hidden attainment and separation is unchanged. The broader autonomous research objective is not completed by this bounded partial result.
+
+All substantive proofs are ordinary arguments in this source. They rely on the stated finite products, source sections, and measurable integration, without mathematical execution, numerics, enumeration, experiments, or formal certification as evidence.
+

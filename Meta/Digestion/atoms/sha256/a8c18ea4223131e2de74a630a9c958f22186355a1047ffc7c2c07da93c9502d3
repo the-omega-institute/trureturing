@@ -1,0 +1,23 @@
+**Definition 1.3 (actual losing sets).** For a known compatible set
+$K$ at a history $H'$ ending at clock $i$, and within clocks through
+seven, define
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{r+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists w\in\mathbb R:
+L_r(K\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}
+\tag{1.9}
+$$
+
+Here $0\le r<7-i$ in the recursive line. Each child retains the same
+fixed complete worlds and every ancestor equation. An empty or
+singleton child fails $L_0$. At one remaining reading, failure of
+$L_1$ means that a terminal action is injective on the whole child,
+or that a singleton can already be returned. Thus failure of $L_2$
+on the known finite sets below gives one deterministic policy for
+every actual response child. Predictions for unchosen actions are
+functions on candidates, not additional physical acquisitions.
+

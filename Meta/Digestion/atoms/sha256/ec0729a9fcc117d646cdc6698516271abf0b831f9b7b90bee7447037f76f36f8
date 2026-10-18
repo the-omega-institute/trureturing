@@ -1,0 +1,15 @@
+**定义 10.1（零相关截面与正交后继）。** 令 $\mathscr R_0=\mathbb Z[A,B]$，$H$ 将每个系数限制到 $C=0$，$i:\mathscr R_0^3\to\mathscr R^3$ 为系数包含。定义
+
+$$
+\mathfrak h_0(f)=f(B,AB),\qquad
+\Theta(P,Q,T)=(-B\mathfrak h_0(T),\ \mathfrak h_0(P),\ -\mathfrak h_0(Q)).
+$$
+
+准确的关系为
+
+$$
+H\Sigma=\Theta H.
+$$
+
+完整环上的 $\mathfrak h$ 分解为 $\widetilde{\mathfrak h}H$，其中 $\widetilde{\mathfrak h}:\mathscr R_0\to\mathscr R$ 取 $f(A,B)\mapsto f(B,AB-C^2)$；$H\widetilde{\mathfrak h}=\mathfrak h_0$。它不等于直接将 $\mathfrak h_0H$ 包含回完整环，例如 $\mathfrak h(B)=AB-C^2$。
+

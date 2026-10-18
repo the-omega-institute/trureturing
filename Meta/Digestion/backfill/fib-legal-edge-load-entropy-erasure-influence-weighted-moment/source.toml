@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-entropy-erasure-influence-weighted-moment"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

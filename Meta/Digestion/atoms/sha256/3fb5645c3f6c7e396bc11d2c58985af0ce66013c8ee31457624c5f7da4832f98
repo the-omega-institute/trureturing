@@ -1,0 +1,70 @@
+### 94.3. A quartet direction embedded in the original eight coordinates
+
+**Lemma 94.2.** Choose any ordered four distinct coordinates in S, denoted 1,2,3,4, such that the five edges 13,14,23,24,34 join different original fibres. Then
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{23}+h_{24}=0.                     \tag{5}
+\]
+
+There is no requirement that coordinates 1 and 2 lie in the same fibre.
+
+**Proof.** Put
+
+\[
+ A=\frac1{h_{13}}+\frac1{h_{14}},\qquad
+ B=\frac1{h_{23}}+\frac1{h_{24}},\qquad C=\frac1{h_{34}}.     \tag{6}
+\]
+
+For arbitrary x∈C and s∈R, define E on these four coordinates by
+
+\[
+ E=\begin{pmatrix}
+ 0&0&x&-x\\
+ 0&0&-x+is&x-is\\
+ \overline x&-\overline x-is&0&is\\
+ -\overline x&\overline x+is&-is&0
+ \end{pmatrix},                                             \tag{7}
+\]
+
+and set every other entry on S to zero. This matrix is Hermitian and each of its rows sums to zero. Its diagonal entries and its 12 edge vanish. Every potentially nonzero edge lies between different original fibres by hypothesis, even when the deliberately omitted 12 edge is also a cross-fibre edge.
+
+On S set
+
+\[
+ D_S=\operatorname{diag}(1/\overline{a_S})\,E\,
+                         \operatorname{diag}(1/a_S),
+ \qquad D_{ij}=0\ \text{if }i\notin S\text{ or }j\notin S.
+                                                                    \tag{8}
+\]
+
+This defines a Hermitian matrix on all eight original coordinates. All divisions are legitimate, D_ff=0 on every original two-coordinate fibre, and Da=0 because E1_n=0. Since (2) gives the full one-dimensional kernels, both G+εD and H−εD remain PSD for sufficiently small real ε: on a⊥ the unperturbed matrices are positive definite, and D annihilates a. They remain in their exposed support faces and retain every identity fibre block. Also D is supported where G=H, so the exact coefficient error along this feasible opposite-face path is
+
+\[
+ T-(G+\varepsilon D)\odot(H-\varepsilon D)
+       =T-G\odot H+\varepsilon^2(D\odot D).                 \tag{9}
+\]
+
+The bare path by itself only concerns the full norming set. The restriction to common witnesses in this argument is precisely the fixed-direction selection (3), whose second-order drift and compact minimax proof are already established in section 92.5. Nothing stronger is inferred from (9).
+
+Using E_ij²/h_ij=conjugate(a_i)a_jD_ij²/G_ij, and pairing each edge with its Hermitian reverse, equation (3) becomes
+
+\[
+ \begin{aligned}
+ Q_W(D)&=-2\alpha_W\operatorname{Re}\Phi(x,s),\\
+ \Phi(x,s)&=x^2(A+B)-2isxB-s^2(B+C).
+ \end{aligned}                                                 \tag{10}
+\]
+
+Consequently Re Φ(x,s)≤0 for every complex x and real s. Otherwise one fixed choice would make Q_W(D)<0 for every common witness, contradicting (3).
+
+Set s=0. If A+B≠0, choose a complex square root with x²(A+B)=1. This is impossible by (10), so A+B=0. If B≠0, instead set
+
+\[
+ s=1,\qquad x=\frac{i[1+\operatorname{Re}(B+C)]}{2B}.
+                                                                    \tag{11}
+\]
+
+Then −2ixB=1+Re(B+C) and Re Φ(x,1)=1. This again gives the common negative value Q_W(D)=−2α_W. Therefore B=0 and A=0. The denominators in (6) are nonzero, so these equalities are exactly (5).
+
+Applying this lemma to several quartets imposes simultaneous equations only on the same fixed G and a. Each violated equation would separately supply a direction negative for every common witness. The argument never combines independently selected witnesses or exchanges quadratic minimax quantifiers.
+

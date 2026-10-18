@@ -1,0 +1,19 @@
+**Lemma 5.4 (finite local checker and elimination of a general graph store).**
+Given the actual public descriptions, a canonical pre-row record, its
+constructor map and a T record, finite word instructions check exactly the
+canonical patch record, obtain the native successor, and update the map.
+Iterating this procedure from the foundation gives the same incidence
+endpoint as executing its checked patches. A separate arbitrary seven-slot
+graph interpreter is unnecessary on this domain.
+
+Proof. Step has the supplied finite local cases of Definition 5.1. Its
+finite effect list names only bounded local markers/slots, never a runtime
+address. Definition 5.2 uses exactly those role/alias cases and UAS's
+ordered templates. Find/Replace on finite words construct all eleven
+fields; Equal checks them, including unchanged assignments and repeated
+probes. The constructor map update gives exactly the fresh roles and
+retains existing identities. UAS Theorem 2.4's local row square therefore
+gives the same linked carrier for the successor. Induction over checked
+records establishes the assertion. No arbitrary input graph or noncanonical
+patch is assigned a successful native erasure by this lemma. ∎
+

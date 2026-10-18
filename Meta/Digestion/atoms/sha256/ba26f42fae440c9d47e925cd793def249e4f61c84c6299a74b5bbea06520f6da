@@ -1,0 +1,44 @@
+**Proposition 30.1 (a strict subgrid family of full resource points).**
+For every integer $t\ge5$, every supplied $A$ of cardinality
+$n=4t^2$, and the central threshold $k=2t^2$, compare the following
+two preparers for the *same* $\sigma_{A,k}$:
+
+$$
+\begin{aligned}
+\mathcal R_{\mathrm{grid}}
+ &=\bigl(k(n-k+1)+4+r, n+1, 3+W_A\bigr),\\
+\mathcal R_{\mathrm{two}}
+ &=\bigl(n(4t+1)+4+r, 2n+1, 3+2W_A\bigr).
+\end{aligned}
+\tag{PCA.74}
+$$
+
+Each row is one full attainable point with its own exact uniform
+execution maxima. The second row has strictly fewer installed
+states than the first. It has larger call and literal maxima, so
+the assertion is an installed-state improvement with additional
+paid execution, not a coordinatewise improvement of resource points.
+
+Proof. The first row is Theorem 26.1 and the second is Theorem 29.2,
+since $\lceil\sqrt{4t^2}\rceil=2t$. The difference of their
+installed cardinalities is
+
+$$
+\begin{aligned}
+k(n-k+1)-n(4t+1)
+ &=2t^2(2t^2+1)-4t^2(4t+1)\\
+ &=2t^2(2t^2-8t-1)>0.
+\end{aligned}
+\tag{PCA.75}
+$$
+
+For $t\ge5$, $2t^2-8t-1=2t(t-4)-1\ge9$.
+Also $2n+1>n+1$ and $3+2W_A>3+W_A$. Arbitrary finite sets of
+these cardinalities exist, for instance $A=\{1,\ldots,4t^2\}$,
+so this gives a nontrivial infinite central-threshold family on the
+original full source domain. At the enlarged execution budgets of
+$\mathcal R_{\mathrm{two}}$, both tables are allowed and the
+grid's installed count is strictly improvable. No grid-optimality
+premise is required. Neither this comparison nor either table pairs
+the smaller $H$ with the grid's execution minima. $\square$
+

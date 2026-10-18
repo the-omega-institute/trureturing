@@ -1,0 +1,46 @@
+**定义 20.1（耦合源积与响应端点）。** 对
+
+$$
+60\le z\le\frac{1200}{19},\qquad Y\ge z,
+\qquad a=5-\frac{240}{z}\in[1,6/5],\quad
+\delta=Y-z,\quad K_a=\frac{3(a+5)}8,
+\tag{20.1}
+$$
+
+在 $t>1$ 上定义
+
+$$
+\begin{aligned}
+j_a(t)&=\frac{K_at}{t+a},&
+c_a(t)&=j_a(t)-(t-1),\\
+B_a(t)&=(t-1)c_a(t),&
+F_z(t)&=\frac{z(2t-1)(2a-t)}{15t}.
+\end{aligned}
+\tag{20.2}
+$$
+
+$B_a$ 是同一实际源的非对角乘积，不是可独立选择的迹。下述证明表明，方程 $B_a(t)=1/4$ 在整个 $t>1$ 上恰有两个解，记为 $t_-(a),t_+(a)$，且
+
+$$
+\frac54\le t_-<\frac43<2<t_+<\frac52,
+\qquad t_-\!=\frac54\iff a=1.
+\tag{20.3}
+$$
+
+因而这些是带唯一性证明的精确实代数定义。置
+
+$$
+\begin{gathered}
+a_c=\frac{25+\sqrt{65}}{28},\qquad
+z_c=\frac{240}{5-a_c}
+=\frac{6720}{115-\sqrt{65}}
+=\frac{168(115+\sqrt{65})}{329},\\
+L(z)=F_z(t_-),\qquad
+V(z)=\frac z{15}(2\sqrt a-1)^2,\qquad
+R(z)=F_z(t_+).
+\end{gathered}
+\tag{20.4}
+$$
+
+$R$ 仅在 $z\ge z_c$ 时作为非负响应端点使用。
+

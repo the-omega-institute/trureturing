@@ -1,0 +1,86 @@
+**命题 10.2（既有有序交换的低占据因式分解）。** 在可区分的两个五态因子 $a,b$ 上，使用已定义的
+
+$$
+A_{ab}=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad K_{ab}=A_{ab}+A_{ab}^\dagger.
+$$
+
+下标表示张量位置，并对未写因子张量单位算子。令
+
+$$
+B_{ab}=R_aR_b^\dagger+R_a^\dagger R_b,
+\qquad G_{ab}=N_{y,a}+N_{y,b}-2N_{y,a}N_{y,b}.
+$$
+
+则在整个 $\mathcal H_a\otimes\mathcal H_b$ 上
+
+$$
+K_{ab}=B_{ab}G_{ab}=G_{ab}B_{ab}.
+$$
+
+它满足
+
+$$
+[K_{ab},N_{y,a}]=[K_{ab},N_{y,b}]
+=[K_{ab},N_{z,a}]=[K_{ab},N_{z,b}]=0,
+$$
+
+$$
+[K_{ab},N_{x,a}+N_{x,b}]=0,
+\qquad [K_{ab},N_{x,a}]\ne0.
+$$
+
+证明。$R$ 的每个非零矩阵元连接高占据相同、中占据均零的两个标签，所以 $R,R^\dagger$ 与 $N_y,N_z$ 交换。故 $B_{ab}$ 与 $G_{ab}$ 交换。
+
+先在十六个底面有序基上检查。$G_{ab}$ 的本征值为 $y_a+y_b-2y_ay_b$：高标签相反时是一，相同时是零。$B_{ab}$ 在 $x_a=x_b$ 时消去该基向量，在 $x_a\ne x_b$ 时交换两个低标签而保持高标签。两种高标签相反的情况逐项为
+
+$$
+\begin{array}{c|c|c}
+(y_a,y_b)&\text{非零连接}&\text{系数}\\ \hline
+(0,1)&|0,13\rangle\longleftrightarrow|1,3\rangle&1\\
+(1,0)&|3,1\rangle\longleftrightarrow|13,0\rangle&1
+\end{array}
+$$
+
+这四个矩阵单位正是 $A_{ab}+A_{ab}^\dagger$，其余底面基向量均被乘积消去。
+
+再检查含中态的九个有序基向量。只要某个因子为 $|2\rangle$，$B_{ab}$ 的两项均因该因子的 $R$ 或 $R^\dagger$ 而为零；$K_{ab}$ 的四个矩阵单位也均为零。不能声称 $G_{ab}$ 自身排除了中态，例如
+
+$$
+G_{ab}|2,3\rangle=|2,3\rangle,
+\qquad B_{ab}|2,3\rangle=0.
+$$
+
+因此中态保护由跃迁因子负责，高占据不相等的条件由 $G_{ab}$ 负责。两者合用才给整个二十五维上的公式，而不只是活动块上的公式。
+
+高、中占据的各自交换关系由上述保标签性得出。又有
+
+$$
+[N_x,R]=R,\qquad [N_x,R^\dagger]=-R^\dagger,
+$$
+
+故每个 $R_aR_b^\dagger$ 或 $R_a^\dagger R_b$ 与 $N_{x,a}+N_{x,b}$ 交换；$G_{ab}$ 也与此总量交换。个体不守恒的实际作用为
+
+$$
+[K_{ab},N_{x,a}]|1,3\rangle=|0,13\rangle\ne0.
+$$
+
+证毕。
+
+四角仿射关系只约束总占据相同，没有唯一指定谁携带、谁转移。一个不同的例子是高占据升算子
+
+$$
+R_y=|3\rangle\langle0|+|13\rangle\langle1|,
+$$
+
+以及
+
+$$
+K^{(y)}_{ab}=(R_{y,a}R_{y,b}^\dagger+R_{y,a}^\dagger R_{y,b})
+(N_{x,a}+N_{x,b}-2N_{x,a}N_{x,b}).
+$$
+
+同样逐底角求值得到 $|0,13\rangle\leftrightarrow|3,1\rangle$ 和 $|1,3\rangle\leftrightarrow|13,0\rangle$；含中态仍由跃迁因子消去。它保留个体 $x$，转移 $y$，因而与 $K_{ab}$ 不同。这足以排除“静态关系唯一决定有序生成元”的推断。
+
+既有 $K_{ab}$ 虽与双因子交换算子对易，也只对任意输入保证总占据守恒。Circulation §24.4 的两个单边缘均值分别保持使用了相同准备与交换对称性。链中的任意相关态不满足这一额外准备前提；同一生成元的对称性不允许在每次接触时重新假设输入对称。
+

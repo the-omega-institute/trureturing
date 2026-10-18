@@ -1,0 +1,70 @@
+### 88.2. The finite determinant and resultant guard
+
+The symbolic calculation is over \(K=\mathbb Q(b)\). At a fixed real
+parameter satisfying the guard below, take \(K=\mathbb C\) and specialize
+every displayed coefficient; the same finite-dimensional argument applies.
+
+Order all 210 monomials \(t^ak^c\), \(a+c\le19\), by descending
+total degree and then descending \(a\). Set
+\[
+ \mathcal B=\{t^ak^c:a+c\le6\}\cup\{tk^6,k^7\};
+ \qquad |\mathcal B|=30.                              \tag{88.6}
+\]
+For \(j=0,1,2\), form the coefficient rows of \(t^ak^ch_j\), listing
+\(a=0,\ldots,19-n_j\), and then \(c=0,\ldots,19-n_j-a\) for each
+\(a\). There are 78,55,55 rows, in that order. Delete zero-based row
+indices \(1,13,78,183,184,185,186,187\); keep the 180 columns whose
+monomials are outside \(\mathcal B\), in the specified order. Call the
+resulting matrix \(M_*(b)\), and \(m_*(b)=\det M_*(b)\). Direct exact
+reduction gives
+\[
+ m_*(1/2)=560\pmod{1009},\qquad
+ m_*(-1/2)=449\pmod{1009}.                            \tag{88.7}
+\]
+Here \(1/2\) and \(-1/2\) reduce to 505 and 504, respectively.
+
+If \(m_*(b)\ne0\), the selected relations express every non-\(\mathcal B\)
+monomial of degree at most 19 in the span of \(\mathcal B\) modulo
+\((h_0,h_1,h_2)\). Every one-step \(t\)- or \(k\)-multiple of a member
+of \(\mathcal B\) has degree at most eight, hence has such an expression.
+Starting at 1 and multiplying successively proves the full quotient bound
+\[
+ \dim K[k,t]/(h_0,h_1,h_2)\le30.                      \tag{88.8}
+\]
+This is not merely a truncated Macaulay rank or a count at one parameter.
+
+For the vertical chart put
+\(v_j(b,s)=h_j^{\rm hom}(b;0,1,s)\). Read it from terms \(k^at^c\)
+with \(a+c=n_j\), replacing them by \(s^c\). In columns
+\(1,s,\ldots,s^{17}\), use the ten rows \(s^av_0\), \(0\le a\le9\),
+followed by the eight rows \(s^av_1\), \(0\le a\le7\). For this
+\(18\times18\) matrix \(V_*(b)\),
+\[
+ v_*(b)=\det V_*(b),\qquad v_*(\pm1/2)=598\pmod{1009}.
+                                                               \tag{88.9}
+\]
+If \(v_*(b)\ne0\), these rows span 1, so no common vertical point
+exists. The excluded point \([0:0:1]\) is already outside (87.27).
+
+Let \(\ell_i\) be the leading \(k\)-coefficient of \(P_i\), and put
+\[
+ u_i=\operatorname{Res}_k(P_i,D_i),\quad
+ r_{ij}=\operatorname{Res}_k(P_i,P_j),\qquad
+ E_*=m_*v_*\prod_i\ell_i u_i\prod_{i<j}r_{ij}.         \tag{88.10}
+\]
+All resultants use the displayed argument order. These finite definitions
+specify one integer polynomial without expanding a very large determinant.
+At \(b=1/2\), the pairs \((\ell_i,u_i)\) modulo 1009 are
+\[
+ (782,916),(951,933),(99,182),(449,448),(28,249),(1,142).
+                                                               \tag{88.11}
+\]
+The fifteen pair-resultant residues, ordered lexicographically by
+\((i,j)\), are given below. Their nonvanishing proves that \(E_*\) is
+nonzero at the half parameter, hence is a nonzero polynomial with a finite
+real zero set.
+
+```text
+596,497,501,510,709,985,991,267,100,512,674,216,1008,841,503
+```
+

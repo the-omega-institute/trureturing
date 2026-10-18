@@ -1,0 +1,41 @@
+**定义 62.1（A fully priced candidate from the free INITIAL reading）。** Fix $v$. Choose $q\in\{0,\ldots,D\}$. Along the principal path of $q$ successful zero-difference all-one words, require for every $0\le t<q$
+
+$$
+F_v\text{ nonconstant on }U_t\times[0,h_t),\qquad
+F_v\text{ constant on }U_t\times[h_t-m,h_t).
+\tag{62.1}
+$$
+
+Put
+
+$$
+\Delta_v(q)=\max\left(
+\{q\}\cup\{1+\chi_v:q>0\}\cup
+\{t+1+\eta_v((t+1)m,t+1):1\le t<q\}
+\right).
+\tag{62.2}
+$$
+
+For $q=0$ the extra sets are empty and $\Delta_v(0)=0$. Infinite side price excludes the candidate. This is a maximum of absolute branch depths, not a sum of sibling costs. The $q$ term already includes all prior rejection depths.
+
+A **pre-zero stop** is allowed if $F_v$ is constant on $U_q\times[0,h_q)$. Its candidate fee is $\Delta_v(q)$.
+
+Otherwise choose any whole word $B_q$ containing zero, with leading run $r<h_q$, and require (61.2) on $U=U_q$, $h=h_q$. Put
+
+$$
+\lambda_v(j)=F_v(j,0),\quad A=U_q\cap E_q(B_q),\quad
+Z=U_q\setminus E_q(B_q),\quad b=q+1,\quad\rho=\rho(B_q).
+\tag{62.3}
+$$
+
+Choose a certificate of Definition 61.2 from its actual zero child $(b,Z,\rho,\lambda_v|_Z)$, with price $\Pi$. Its complete **first-zero candidate** fee is
+
+$$
+M=\max\{\Delta_v(q),\ b,\ b+K(A,\lambda_v|_A;b),\ \Pi\}.
+\tag{62.4}
+$$
+
+For empty $Z$ use the empty certificate with $\Pi=b$. Empty $A$ has $K=0$ and is not run. A nonempty parent rejection band returns its common original label at depth $b$; an empty band supplies no observed branch.
+
+Let $\mathcal C_v$ contain all these candidate fees at most $T$. Thus all chosen spines have $L\le T$, and every priced side completion ends by $T$. This is a finite specification: tail-table comparisons, the bounded pre-zero index, one actual first-zero word, one sequence of at most $T-b$ literal words, and the finite availability assignments (61.1).
+

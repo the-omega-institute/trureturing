@@ -1,0 +1,39 @@
+**Lemma 4.3 (analytic array reduction).** For the selected Gram (AS.15),
+every competitor bounds below arrays of the form
+
+$$
+\begin{aligned}
+H_r&=\frac12\begin{pmatrix}P&r t-iR&0\cr r t+iR&Q&0\cr0&0&0\end{pmatrix},\\
+L_r&=\frac12\begin{pmatrix}1-P&r(s-t)+iR&0\cr
+r(s-t)-iR&1-Q&0\cr0&0&1\end{pmatrix}\in\mathcal C_2,
+\end{aligned}
+\tag{AS.24}
+$$
+
+with $W=AP+BQ-2\gamma R$ no greater than its actual cost.
+
+Proof. Average coefficient arrays under $J_S=\operatorname{diag}(1,1,-1)$,
+induced by specimen $\operatorname{diag}(-1,-1,1)$, to remove $DS,TS$.
+It preserves $C$, the singular locus, positivity and the full effect
+condition, transforming failure subeffects by the same specimen unitary.
+Then average with
+$(H_r,L_r)\mapsto(J_T\overline{H_{-r}}J_T,
+J_T\overline{L_{-r}}J_T)$, $J_T=\operatorname{diag}(1,-1,1)$.
+For specimen $U_T=\operatorname{diag}(1,-1,1)$, $\Theta$ transforms
+as $U_T\overline{\Theta(\cdot)}U_T$; report reversal compensates
+the sign of $X_{01}$. The new plus failure effect is
+$U_T\overline{(M-N)}U_T\in[0,M]$. Both operations preserve the
+selected trace cost, since $C=J_T\overline C J_T$; they commute.
+They are operations on necessary arrays, not conjugation channels
+applied to an unknown state or a physical normal form.
+
+The report diagonals become $1/2$. The report symmetry and
+$Z_++Z_-=I$ make $(Z_+)_{DT}$ real, and (AS.23) fixes it to $s/2$.
+Consequently $Z_r=(I+r sX_c)/2$ and $N_r=M/2$.
+The separated high $SS$ entry can be moved to the genuine low plane
+atom along $S$. This preserves all totals and low-cone membership and
+decreases the high-live cost by its nonnegative coefficient times
+$C_S>0$. Parametrizing the remaining $DT$ block gives (AS.24).
+This reproduces the QO necessary-array reduction at its stated scope.
+$\square$
+

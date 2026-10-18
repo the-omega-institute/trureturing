@@ -1,0 +1,6 @@
+**Definition 3.1 (fractional native cover).** Let $Z_d(m)$ be the fractional
+cover optimum of $S_d^m$ by all nonempty admissible subsets, with the whole
+joint interface and all donor topologies retained. Finite LP duality gives a
+nonnegative point weight $w$ of total $Z_d(m)$ such that every admissible set
+has $w$-mass at most one.
+

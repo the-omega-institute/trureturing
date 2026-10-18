@@ -1,0 +1,161 @@
+**Theorem 272.3 (The exact original flat-nine optimum).**
+Let $e_*=319/992$. For every entire positive nonincreasing vanishing
+sequence with $a_1=\cdots=a_9=1/2$ and $a_{10}\le e_*$,
+
+$$
+\min_{A\in N_2}e_a(A)=\min_{A\in O_2}e_a(A)=e_*.
+\tag{272.5}
+$$
+
+Both minima are attained. Either class is feasible at a positive
+closed cap $e$ exactly when $e\ge e_*$.
+
+**Proof.**
+The right side of (272.2) on this sequence is $7337/2$.
+Thus $e_a(A)\ge7337/22816=319/992$ for every original competitor.
+
+Here is one stopped attainer. All integer masses in the next table
+have common denominator $D=14880$.
+For a schedule $(i,j)$ the column $q$ is its mass numerator.
+An entry $u:k$ in a terminal-cell column assigns numerator $k$
+to label $u$ in that cell. Each of its three cell sums is $q$.
+All unspecified schedule and label masses are zero.
+
+| Schedule | $q$ | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | --- | --- | --- | --- |
+| $1,2$ | $1400$ | $0:233,\ 1:1167$ | $2:1400$ | $0:565,\ 3:615,\ 4:220$ |
+| $1,3$ | $935$ | $0:935$ | $3:935$ | $0:565,\ 4:370$ |
+| $1,4$ | $565$ | $1:565$ | $4:565$ | $0:565$ |
+| $1,5$ | $565$ | $1:565$ | $5:565$ | $0:565$ |
+| $1,6$ | $358$ | $1:358$ | $6:358$ | $0:358$ |
+| $1,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $2,3$ | $785$ | $0:562,\ 2:223$ | $3:785$ | $0:565,\ 4:220$ |
+| $2,4$ | $715$ | $0:715$ | $4:715$ | $0:565,\ 5:150$ |
+| $2,5$ | $565$ | $2:565$ | $5:565$ | $0:565$ |
+| $2,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $2,7$ | $467$ | $2:467$ | $7:467$ | $0:467$ |
+| $3,4$ | $565$ | $0:245,\ 3:320$ | $4:565$ | $0:565$ |
+| $3,5$ | $565$ | $0:565$ | $5:565$ | $0:565$ |
+| $3,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $3,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $4,5$ | $810$ | $0:810$ | $5:810$ | $0:565,\ 6:55,\ 9:190$ |
+| $4,6$ | $358$ | $0:358$ | $6:358$ | $0:358$ |
+| $4,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $5,6$ | $1168$ | $0:1168$ | $6:1168$ | $0:358,\ 8:500,\ 9:310$ |
+| $5,7$ | $467$ | $0:467$ | $7:467$ | $0:467$ |
+| $6,7$ | $320$ | $0:320$ | $7:320$ | $0:320$ |
+| $6,8$ | $754$ | $0:754$ | $8:754$ | $9:754$ |
+| $7,8$ | $1401$ | $0:1401$ | $8:1401$ | $9:1401$ |
+
+All numerators are nonnegative and $\sum q=14880$.
+Choose one source-independent uniform integer
+$U\in\{0,\ldots,14879\}$ and partition its values, in the displayed
+schedule order, into blocks of sizes $q$. If its chosen block has
+local coordinate $k\in\{0,\ldots,q-1\}$, use that same $k$
+for every terminal cell, ordering that cell's label/count pairs as
+displayed and using their consecutive half-open integer intervals.
+This fixes the entire schedule and all counterfactual outputs before
+any reply. Query $i$; on zero use cell $0$ and stop; otherwise
+query $j$ and use $10$ or $11$.
+Each schedule is increasing, has at most two actual requests, and
+hands off the actual mark $\theta_u$ finitely.
+In particular outputting $\theta_9$ without querying 9 is legal.
+
+For every first-zero class the correct-label numerator is constant
+over the entire suffix. To verify this directly, first-cell numerical
+outputs equal their queried first address, second-zero outputs equal
+their second address, and every numerical exhaustion output is later
+than both addresses. The contributions to each correct label are
+
+| First zero | Correct numerator |
+| --- | --- |
+| $1$ | $1167+565+565+358=2655$ |
+| $2$ | $1400+223+565+467=2655$ |
+| $3$ | $615+935+785+320=2655$ |
+| $4$ | $220+370+220+565+715+565=2655$ |
+| $5$ | $150+565+565+565+810=2655$ |
+| $6$ | $55+358+358+358+358+1168=2655$ |
+| $7$ | $5*467+320=2655$ |
+| $8$ | $500+754+1401=2655$ |
+| $9$ | $190+310+754+1401=2655$ |
+
+Thus $Dp_w(n)=2655$ at every zero word.
+The zero-label contributions of the same tables give, with
+$s=w_1+\cdots+w_5$, $u=w_6$, $v=w_7$,
+
+$$
+\begin{aligned}
+Dp_w(0)={}&10650-1635s-1074u-1401v
+ +565\binom s2\\
+&+358su+467sv+320uv.
+\end{aligned}
+\tag{272.6}
+$$
+
+For example the schedule $1,2$ contributes
+$233(1-w_1)+565w_1w_2$ to this polynomial; summing the
+23 schedule contributions gives (272.6).
+The complete values of (272.6) for $s=0,\ldots,5$ are
+
+| $(u,v)$ | Six values in increasing $s$ |
+| --- | --- |
+| $(0,0)$ | $(10650,9015,7945,7440,7500,8125)$ |
+| $(0,1)$ | $(9249,8081,7478,7440,7967,9059)$ |
+| $(1,0)$ | $(9576,8299,7587,7440,7858,8841)$ |
+| $(1,1)$ | $(8495,7685,7440,7760,8645,10095)$ |
+
+Every value is at least $7440=D/2$. Bits 8 and 9 do not affect
+this base polynomial. Thus, on every zero word,
+$p_w(0)\ge1/2$ and
+$p_w(n)=2655/14880=1/2-e_*$.
+The exact three-deficit TV formula (251.2) now gives error $e_*$:
+the correct deficit is $e_*$, the base deficit is nonpositive,
+and the independent union deficit is at most $e_*$.
+In particular no union row is inferred by adding approximate
+singleton estimates.
+
+For completeness the first-zero minima are
+
+| First zero | $\min Dp_w(0)$ | $Dp_w(n)$ | $\min Dp_w(\{0,n\})$ |
+| --- | --- | --- | --- |
+| $1$ | $7440$ | $2655$ | $10095$ |
+| $2$ | $7440$ | $2655$ | $10095$ |
+| $3$ | $7440$ | $2655$ | $10095$ |
+| $4$ | $7440$ | $2655$ | $10095$ |
+| $5$ | $7500$ | $2655$ | $10155$ |
+| $6$ | $8125$ | $2655$ | $10780$ |
+| $7$ | $8841$ | $2655$ | $11496$ |
+| $8$ | $10095$ | $2655$ | $12750$ |
+| $9$ | $10095$ | $2655$ | $12750$ |
+
+At $1^9$, the full output numerator vector in label order
+$0,\ldots,9$ is
+
+$$
+(10095,0,0,615,810,150,55,0,500,2655).
+\tag{272.7}
+$$
+
+Hence the positive base is $10095/14880=1-e_*$.
+All multiple-zero words and all independent rows have been covered
+by the constant correct masses and the complete base polynomial.
+
+Execute the same one-integer-seed rule on each actual source, with
+zero advice and the unchanged consumer and carrier.
+For actual $n(x)\le9$, finite-pattern realizability and the preceding
+calculation give error $e_*$. For every actual $n(x)>9$, the low
+word is $1^9$, the output has no mass at $\theta_{n(x)}$, and
+Theorem 110.2 gives exact error
+$\max(e_*,a_{n(x)})=e_*$.
+This includes $a_{10}=e_*$ and every later positive amplitude;
+no finite positive word is treated as an infinite positive source.
+The counted $N$ completion uses the same seed and the whole
+preselected schedule, counting the second reply even after an early
+zero, and returns the identical mark law.
+Both hard counts remain at most two. This proves both attained
+original minima. The same law works at every larger closed cap;
+(272.2) excludes every smaller cap. The finite/original transport,
+the dimension operations and counted completion are the suppliers
+of Sections 110, 117 and 90; the additional content is this explicit
+support and its matching flat-nine attainer. $\square$
+

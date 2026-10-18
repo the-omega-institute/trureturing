@@ -1,0 +1,26 @@
+**Definition 3.1 (residual terms).** Use [SLH, Definition 74.2][SLH] with
+
+$$
+d=1+\max\bigl(\{0\}\cup\{|q|:q\in Q\}
+ \cup\{|s|:(a,s,c)\in H_0\}
+ \cup\{|s|,|t|:(a,s,b,t,\bowtie)\in H_{\rm rel}\}\bigr).
+\tag{ARH.3.1}
+$$
+
+For each old class choose its original depth-$d$ prefix pattern $t_b$,
+using one variable at each reached depth-$d$ frontier position, different
+variables for different classes and positions, and the same pattern at
+every occurrence of a repeated class. Put
+
+$$
+W_\eta=C[(t_{[i]})_i],\qquad
+\Delta_\eta=\{t_b\ne t_c:b<c\}.
+\tag{ARH.3.2}
+$$
+
+The finite pattern list and the literal checks are exactly the existing
+construction, including all old disequalities. A residual term is a finite
+ordinary term over $\alpha,\beta,\langle\ ,\ \rangle$ and these variables.
+A morphic expression $\rho^a(A)$ means the actual iterate applied **after**
+a finite-tree valuation of $A$; $\rho$ is not a free new constructor.
+

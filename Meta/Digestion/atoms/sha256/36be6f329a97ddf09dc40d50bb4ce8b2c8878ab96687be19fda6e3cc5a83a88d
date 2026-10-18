@@ -1,0 +1,39 @@
+**Corollary 9.2 (PP exclusion and its finite-set consumer).** A
+common-drift terminal-nonzero $L_2$ triple on $H$ has all three
+sixth gains zero and is TT. In particular the common-drift PP
+system of Proposition 7.2 is impossible without any restriction
+on its future ratios. If a known $K\subseteq\mathcal F^{\ne0}_7(H)$
+has at most three members, common drift, and at least one nonzero
+sixth gain, it has a lawful two-further-reading complete-target policy.
+
+Proof. A PP system supplies the same distinct actual-$J$ pair with
+equal $U,A,B$, contradicting Theorem 9.1. Theorem 5.1 makes any
+common-drift $L_2$ triple with one nonzero sixth gain entirely
+nonzero-sixth and PP; hence only its all-zero TT alternative remains.
+For two worlds $L_2$ would require the same pair to agree in all
+four terminal columns, contrary to Lemma 2.3. Thus the stated known
+$K$ fails $L_2$. When it has at least two members, choose the first
+sixth action $E$ in the order $J,M$ whose every raw-response child
+$K_{E,w}=K\cap\mathcal F(H,E,w)$ fails $L_1$. For each real $w$,
+stop on a singleton, or choose the first terminal action $F_w$ in
+the order $J,M$ injective on the entire nonsingleton child. Negating
+(1.9) supplies these choices. For every real raw $w,v$,
+
+$$
+\left|K_{E,w}\cap\mathcal F(H,E,w,F_w,v)\right|\le1.
+\tag{9.18}
+$$
+
+At a reachable response return its unique complete world. Empty
+children are unreachable and admit arbitrary choices. Each selected
+atom is immediately read; a known singleton may stop at once.
+The total is at most eight readings on the original clocks. ∎
+
+For unequal-drift triples Theorem 9.1 still excludes any PP or PT
+actual-$J$ proper pair whose two drifts agree. It does not exclude
+an unequal-drift pair or a shared-three $J$ child with different
+terminal collision pairs. Theorem 9.1 includes zero sixth gains;
+on that subdomain its $AB$ consequence is already the published
+pair injection cited in Section 10. Its new exclusion here is the
+broader nonzero-sixth, varying-ratio PP case.
+

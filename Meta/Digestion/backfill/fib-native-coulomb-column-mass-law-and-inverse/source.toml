@@ -1,0 +1,5 @@
+source_id = "fib-native-coulomb-column-mass-law-and-inverse"
+path = "docs/develop/theory/FIB_NATIVE_COULOMB_COLUMN_MASS_LAW_AND_INVERSE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

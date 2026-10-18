@@ -1,0 +1,212 @@
+**Construction 306.2 (The raw core and one shared prefix).**
+Write $e_r$ for the label unit vector. In this table a row consists
+of one schedule, its mass $m$, and its three unnormalized terminal
+vectors $f,v,z$ for stopped cells $0,10,11$. Each of these vectors
+has the same mass $m$. A range in a row means a separate schedule
+for every indicated value. All undisplayed vector coordinates are zero.
+
+| Schedule | $m$ | $f$ | $v$ | $z$ |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $8\tau-34\delta$ | $m e_1$ | $m e_2$ | $(4\tau-27\delta)e_0+(2\tau-23\delta)e_3+(\tau-3\delta)e_4+(\tau+5\delta)e_5+14\delta e_6$ |
+| $(h,3)$, $h=1,2$ | $3\tau+11\delta$ | $m e_0$ | $m e_3$ | $m e_0$ |
+| $(h,4)$, $h=1,2$ | $\tau-9\delta$ | $(\tau-38\delta)e_0+29\delta e_h$ | $m e_4$ | $m e_0$ |
+| $(h,5)$, $h=1,2$ | $4\delta$ | $m e_h$ | $m e_5$ | $m e_0$ |
+| $(h,6)$, $h=1,2$ | $4\delta$ | $m e_0$ | $m e_6$ | $m e_0$ |
+| $(3,4)$ | $2\tau+20\delta$ | $m e_0$ | $m e_4$ | $(\tau+16\delta)e_0+(\tau+4\delta)e_5$ |
+| $(3,5),(3,6),(4,5),(4,6)$ | $\tau-9\delta$ | $m e_0$ | $m e_j$ for schedule $(i,j)$ | $m e_0$ |
+| $(5,6)$ | $\tau-5\delta$ | $m e_0$ | $m e_6$ | $(\tau-9\delta)e_0+4\delta e_7$ |
+| $(6,7)$ | $\tau-5\delta$ | $m e_0$ | $m e_7$ | $m e_0$ |
+
+The sixteen schedule masses sum to $24\tau-40\delta$.
+Define
+
+$$
+\begin{gathered}
+\rho=1-24\tau+40\delta,\qquad T_0=4\tau-23\delta,\\
+u=\min\{a_1-13\tau,T_0\},\qquad
+q_1=a_1-13\tau-u,\qquad q_2=a_2-13\tau.
+\end{gathered}
+\tag{306.3}
+$$
+
+In the first cells of $(1,3),(1,4),(1,6)$, move the fraction
+$u/T_0$ of each label-zero mass to label 1. Their combined available
+zero mass is precisely $T_0$. Add just one more schedule $(1,2)$ of
+mass $\rho$, with terminal vectors
+
+$$
+(\rho-q_1)e_0+q_1e_1,\qquad
+(\rho-q_2)e_0+q_2e_2,\qquad \rho e_0.
+\tag{306.4}
+$$
+
+If $\rho=0$ omit this row. Within a positive row of mass $m$,
+one explicit complete-table coupling assigns to
+$O(i,j;r_0,r_{10},r_{11})$ mass
+
+$$
+\frac{f(r_0)v(r_{10})z(r_{11})}{m^2}.
+\tag{306.5}
+$$
+
+Summing over the other two labels recovers the required cell vector,
+and the sum over all three labels is $m$. Zero-mass rows are omitted.
+Thus these are full table weights with one total probability budget.
+Equivalently, on each row interval all three counterfactual labels
+can be fixed by quantile partitions of the same local seed coordinate.
+Neither description requires $q_1+q_2\le\rho$.
+
+**Proof of Theorem 306.1.** The two existing all-competitor cuts
+299.1 give, at the prescribed late amplitudes,
+
+$$
+a_1+92\tau\le1+17e,\qquad
+a_2+211\tau\le1+40e.
+\tag{306.6}
+$$
+
+These are exactly (306.2). Their original closed-cap necessity includes
+arbitrary addresses, full-carrier outputs and inactive selected addresses
+by 297.3. It does not require an active horizon exactly seven.
+
+Assume (306.2). Since $a_2\ge13\tau$, the second condition gives
+$\rho\ge a_2-13\tau\ge0$. Moreover $T_0>0$ and the first
+condition gives
+
+$$
+0\le a_1-13\tau\le T_0+\rho.
+$$
+
+Consequently $0\le u\le T_0$ and $0\le q_1,q_2\le\rho$
+individually. Every displayed raw entry is nonnegative throughout the
+strip; the smallest potentially limiting first-cell entry is
+$\tau-38\delta\ge\tau/20>0$. The other subtractions are
+nonnegative from $\delta\le\tau/40$. Directly adding the entries
+of each vector gives its schedule mass; adding those masses and $\rho$
+gives one. Moving label-zero mass preserves each schedule mass and
+nonnegativity. Formula (306.5) therefore gives a single full normalized
+allocation, including all zero-weight and $\rho=0$ endpoints.
+
+On every first-zero fibre the raw correct masses, in order $1,\ldots,7$,
+are
+
+$$
+(8\tau-\delta,\ 8\tau-\delta,\ 8\tau-\delta,\
+5\tau-\delta,\ 4\tau-\delta,\ 3\tau-\delta,\ \tau-\delta).
+\tag{306.7}
+$$
+
+For example class 1 receives $(8\tau-34\delta)+29\delta+4\delta$;
+class 2 receives the same amount. Class 3 receives twice
+$3\tau+11\delta$ plus $2\tau-23\delta$. Class 4 receives
+twice $\tau-9\delta$, then $2\tau+20\delta$, and
+$\tau-3\delta$. Class 5 receives $8\delta$,
+$\tau+5\delta$, $\tau+4\delta$ and twice
+$\tau-9\delta$. Classes 6 and 7 follow by adding their displayed
+second-cell and exhaustion entries. Earlier bits are one on each
+such fibre, so no later zero changes these totals. The moves in the
+three first cells act only in class 1, within $\{0,1\}$, and add
+$u$ there. The prefix row adds $q_1,q_2$ to classes 1 and 2.
+It follows that for the final law
+
+$$
+p_w(n)=a_n-e\qquad(w\in\Omega_n,\ 1\le n\le7).
+\tag{306.8}
+$$
+
+Here is a complete all-word bound on the mass $D_n$ outside $\{0,n\}$.
+It concerns the raw core; the head moves and prefix row add no such
+mass. Denote that core by $C(\tau,\delta)$ as a family of terminal
+vectors. At $(1,0)$ it is the core of 300.1 with first-cell correct
+mass in $(1,3),(1,4)$ moved to zero. These moves stay inside
+$\{0,1\}$ and occur only in class 1. Thus its wrong masses are
+exactly those already proved in (300.4)–(300.5), all at most five.
+This uses the existing all-suffix proof, not a claim about sole-zero
+words only.
+
+The other algebraic endpoint $C(40,1)$ need not itself be a normalized
+probability law. It is an explicit nonnegative family of equal-mass
+terminal vectors. Set $(h,s,t,u,v,z)=(w_2,w_3,w_4,w_5,w_6,w_7)$.
+Adding its row vectors gives the following exact wrong-mass polynomials:
+
+$$
+\begin{aligned}
+D_1={}&33+137h-131hs-31ht-4hu-4hv+162s-56st\\
+ &-31su-31sv+62t-31tu-31tv+35u-31uv+35v-35vz,\\
+D_2={}&170+31s-56st-31su-31sv+31t-31tu-31tv\\
+ &+31u-31uv+31v-35vz,\\
+D_3={}&174-31tu-31tv+27u-31uv+27v-35vz,\\
+D_4={}&194-4u-31uv-4v-35vz,\\
+D_5={}&178-35v-35vz,\qquad D_6=183,\qquad D_7=197.
+\end{aligned}
+\tag{306.9}
+$$
+
+For each row only coordinates after its first zero are free. The full
+Boolean maxima can be verified without a search assumption. Set $z=0$
+to maximize the first three expressions. For fixed $h,s,t$ in row 1,
+the remaining $u,v$ part is $A(u+v)-31uv$ with
+$A=35-4h-31(s+t)$; its maximum is
+$\max\{0,A,2A-31\}$. Row 2 has $A=31-31(s+t)$;
+row 3 has $A=27-31t$. Substitution gives every value in this table:
+
+| Class | Fixed suffix bits in order | Maximum over the other suffix bits |
+| --- | --- | --- |
+| 1 | $hst=000,001,010,011,100,101,110,111$ | $72,99,199,201,201,201,201,176$ |
+| 2 | $st=00,01,10,11$ | $201,201,201,176$ |
+| 3 | $t=0,1$ | $201,174$ |
+| 4 | $uv=00,01,10,11$ | $194,190,190,155$ |
+| 5 | $v=0,1$ | $178,143$ |
+| 6 | none | $183$ |
+| 7 | none | $197$ |
+
+Rows 4 and 5 follow directly by setting $z=0$; rows 6 and 7 are
+constant. Therefore $D_n\le201$ at this endpoint on every word.
+Every raw vector depends linearly on the parameters, with the exact
+identity
+
+$$
+C(\tau,\delta)=(\tau-40\delta)C(1,0)+\delta C(40,1).
+\tag{306.10}
+$$
+
+Both coefficients are nonnegative. Wrong mass is linear in these
+unnormalized vectors at each fixed word, so the two endpoint bounds
+give
+
+$$
+D_n\le5(\tau-40\delta)+201\delta=5\tau+\delta=e.
+\tag{306.11}
+$$
+
+This proves the entire real strip, not just rational parameter samples.
+Combining (306.8) with $D_n\le e$ verifies separately all three
+deficits in (297.3):
+
+$$
+a_n-p_w(n)=e,\quad
+1-a_n-p_w(0)=D_n-e\le0,\quad
+1-p_w(0)-p_w(n)=D_n\le e.
+\tag{306.12}
+$$
+
+Thus every zero-word TV is exactly $e$. Direct addition in the positive
+word gives nonbase mass
+$(2\tau-23\delta)+(\tau-3\delta)+(\tau+5\delta)
++14\delta+(\tau+4\delta)+4\delta=5\tau+\delta$.
+The head moves are inactive there and the prefix emits zero, so
+$p_+(0)=1-e$.
+
+Implement the full table weights (306.5) by half-open intervals of one
+source-independent uniform seed, fixing the whole schedule and every
+counterfactual label before replies. Execute that increasing schedule
+until its first queried zero or exhaustion and emit its actual original
+mark. Every source and seed hands off finitely, measurably, with zero
+advice and at most two actual requests. Its counted $N$ completion uses
+the same seed and source and has the identical output law. For every
+actual $n>7$, (297.2) gives exact error $\max\{e,a_n\}=e$,
+including $a_8=e$ and every permitted later positive tail. Since
+$a_7=6\tau>e$, actual active length at this cap is exactly seven.
+Finite-pattern actuality is supplied by 297.3. This proves original
+sufficiency and completes the equivalence. $\square$
+

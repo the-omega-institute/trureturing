@@ -1,0 +1,23 @@
+**Corollary 3.3 (attainable finite budgets, without an optimality claim).**
+For a determining menu of $m$ distinct words the construction above has
+
+$$
+\begin{aligned}
+H&=|S|+\sum_{j=0}^{m-1}|T_j|
+ \ \le\ |S|+\sum_{j=0}^{m-1}4^j,\\
+p&=m,\qquad
+\ell_P=\sum_{i=1}^{m}|w_i|.
+\end{aligned}
+\tag{PCA.8}
+$$
+
+Empty sums are zero. Any extra required installed latches are added to
+$H$. The original reader alphabet, entries, outputs and its own budgets
+are unchanged. Under the supplied paid handoff, this gives a two-phase
+apparatus for the same code and the whole target.
+
+Proof. There is one counted state for every installed attained prefix
+and one for every entry-code latch. Every actual run queries each menu
+word once in the chosen order. No further native invocation occurs
+between the latch and the fixed reader entry. $\square$
+

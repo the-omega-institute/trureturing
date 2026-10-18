@@ -1,0 +1,25 @@
+## 344. Global exclusion of the opposite-V exit
+
+Continue under (343.1). Suppose there were an actual owner with fixed frame
+
+    rho=(W,V,D,C,V,D).                            (344.1)
+
+It is not sigma and is genuine; four distinct labels give
+W in {M,Z,U}. The owners tau,rho,eta are distinct: tau has no V label;
+rho has C, while eta does not. Strict genuineness supplies exactly the
+six L/J tests in (333.3). The original M and V capacities give
+
+    2*beta_M(tau)<=pi,
+    2*beta_V(rho)+2*beta_V(eta)<=pi.
+
+All numerical premises of Corollary 340.1 are (341.1). That corollary
+therefore gives (341.3), contradicting (343.1). Equivalently, Theorem 333.2
+charges more than 3*pi to tau's one D slot, rho's two V and two D slots,
+and eta's two V and two D slots, although their capacities are at most
+pi+2*pi. This uses no M slot of eta.
+
+Consequently no owner of type (344.1) exists anywhere under (343.1).
+Again the owner need not meet a source face. The published theorem's
+conditional inventory is applied only after an actual rho is supposed
+to exist; it has not been promoted to a forced receiver claim.
+

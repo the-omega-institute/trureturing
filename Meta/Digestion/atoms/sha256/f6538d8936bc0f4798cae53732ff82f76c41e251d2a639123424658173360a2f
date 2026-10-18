@@ -1,0 +1,21 @@
+**Proposition 19.3 (a strict gap above the width and counting bounds).**
+Take the complete cut whose internal set is
+
+$$
+I=\{R^j:0\leq j\leq9\}\cup\{L,RL,RRL\}.
+\tag{CNA.35}
+$$
+
+It has thirteen internal vertices and four maximal vertices, but $q=5$;
+both lower bounds in (CNA.33) give only four.
+
+**Proof.** A budget-four sequence would have to query exactly the four
+maximal vertices $L,RL,RRL,R^9$, since each needs an endpoint and there
+is no room for any other query. If $R^9$ is first, it adds ten vertices,
+exceeding capacity eight. If it is later, the side endpoints can already
+have covered at most $\varepsilon,R,RR$ on that chain, so it adds at
+least seven vertices, exceeding the remaining capacity, which is at
+most four. Budget four is impossible. The order
+$R^9,L,RL,RRL$ has contributions $(10,1,1,1)$ and cost five, giving
+sufficiency. $\square$
+

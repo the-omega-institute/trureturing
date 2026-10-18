@@ -1,0 +1,23 @@
+**Definition 1.3 (complete fixed-base coherence response).** For the oriented
+edge list
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13))
+$$
+
+write $a_{ij}=2\sqrt{p_i(k_0)p_j(k_0)}>0$ and
+$\delta_{ij}=\theta_i-\theta_j$. The five complex responses, identified with
+ten real responses in Euclidean norm, are
+
+$$
+C_{ij}(H)=a_{ij}\exp\bigl(i(\delta_{ij}+h_i-h_j)\bigr).
+\tag{1.4}
+$$
+
+The positive sign in (1.4) follows from
+$\overline\psi_i\psi_j$ and the negative sign in the state convention.
+On the four bottom edges the residual character is $(-1)^m$; on edge $02$
+it is $\exp(i\beta)$. In particular $a_{02}=2\sqrt{k_0Z}$.
+These are ideal expectation coordinates. They are not acquired detector
+outcomes, an expectation oracle, or a finite-shot discrimination claim.
+

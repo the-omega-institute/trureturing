@@ -1,0 +1,6 @@
+## 84. Qubit-core Schur certificates for joint high-rank products
+
+The theorem below certifies an entire two-sided class of original physical products, allowing arbitrary local Kraus ranks and output leakage. Both channels may change simultaneously. The hypothesis is a qubit-core factorization of either party's correct-output Gram, not a restriction of its actual Kraus rank. The robust bound measures distance from that factorization class. A concrete high-rank path shows that this obstruction is stronger than the section-83 transversal criterion even arbitrarily close to quarter-error equality.
+
+This does not settle the unrestricted optimum or give a complete tangent-cone classification.
+

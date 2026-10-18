@@ -1,0 +1,20 @@
+**Definition 3.3 (fresh and existing control writes).** An existing bit
+uses SSA's four assignments to root L/R and fork/singleton P, including
+unchanged values. To construct bit $b$ at an absent socket root $r$,
+retain $r$ and its parent incidence. Create four occurrences: fork $f$,
+singleton $t$ and fork terminals $v_0,v_1$. Initialize all seven slots of
+each, with $f$'s ordered children $v_0,v_1$ and their inverse P slots.
+Assign $r$'s two child slots to $(f,t)$ for $b=0$ and $(t,f)$ for $b=1$;
+the new vertices' initialized P slots are their matching inverses. Its
+other incidences remain empty. This is precisely $g_b$ on the existing
+root. It creates four vertices and assigns $28+2=30$ slots, before the
+row's control and mandatory receipt effects. Absence is never read as zero.
+The bit is the actual latched boot input or prescribed native one-bit
+constructor value, not a bit chosen by a recovery map.
+
+The pre-existing root is an apparatus socket, not an already constructed
+native bit. Its terminal shape decodes to absence. The native bit's
+creation identity is the actual constructor occurrence that expands it;
+the four new graph roles and that event determine its provenance. No
+future native creation identity is supplied as a stored bit beforehand.
+

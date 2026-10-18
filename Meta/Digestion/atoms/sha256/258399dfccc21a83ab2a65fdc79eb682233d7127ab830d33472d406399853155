@@ -1,0 +1,94 @@
+## 3. κ 纤维上的质量作用动力学
+
+在本节中，p_i 是归一化概率，p_0p_{25} 与 p_2p_5 是确定性 mean-field 质量作用项。因此这里得到的是确定性 detailed-balanced mass-action ODE，不是有限状态 Markov 链；有限粒子主方程需要另行处理跃迁计数和随机熵产。把五个状态标签看作复合状态，定义一条可逆通道
+
+\[
+2+5\rightleftharpoons 0+25.
+\]
+
+反应向量仍为 \(\nu=(1,-1,0,-1,1)\)。令
+
+\[
+a=p_0p_{25},\qquad b=p_2p_5,
+\]
+
+并取对称速率 \(\gamma\ge0\)。反应流写成
+
+\[
+J=\gamma(b-a),\qquad \dot p=J\nu.
+\]
+
+于是
+
+\[
+\dot\kappa=\gamma(b-a)
+=-\gamma(r\kappa-XY).
+\]
+
+四个线性守恒量为
+
+\[
+\ell_0=(1,1,1,1,1),\quad
+\ell_X=(0,1,0,0,1),\quad
+\ell_Y=(0,0,0,1,1),\quad
+\ell_Z=(0,0,1,0,0),
+\]
+
+且 \(\ell\cdot\nu=0\)。因此归一化和 \((X,Y,Z)\) 精确保持。
+
+当 \(r>0\) 时，精确解为
+
+\[
+\kappa(t)=\kappa_*+(\kappa_0-\kappa_*)e^{-\gamma r t},
+\]
+
+并且
+
+\[
+\Delta(t)=\Delta_0e^{-\gamma r t}.
+\]
+
+因为 \(\kappa(t)\) 是 \(\kappa_0\) 与 \(\kappa_*\) 的凸组合，而 \(\kappa_*\) 位于合法区间，所以轨迹始终留在同一条可行纤维内。于是
+
+\[
+\operatorname{TV}(p_t,p_*)=
+\operatorname{TV}(p_0,p_*)e^{-\gamma r t}.
+\]
+
+这里的逃逸速率是隐藏关联的收缩速率 \(\gamma r\)，不是宏观点 \(P_t\) 的移动速率。靠近顶点时，如果沿可行族 \(X=\alpha r,\ Y=\beta r\) 逼近 \(r\to0\)，则
+
+\[
+w_\kappa=r\min\{\alpha,\beta,1-\alpha,1-\beta\}=O(r),
+\]
+
+\[
+|\Delta|\le r^2/4=O(r^2),
+\]
+
+而在 \(\gamma r>0\) 时，绝对松弛时间为
+
+\[
+\tau=(\gamma r)^{-1}
+\]
+
+在固定 \(\gamma>0\)、\(r\to0^+\) 时发散。\(\gamma=0\) 时，任意合法初态的流恒为零，\(p_t=p_0\)，没有有限的松弛时间；\(r=0\) 时只有顶点态，也不使用上述倒数。也就是说，在正速率分支上，顶点附近可藏的绝对信息量变少，隐藏方向的可走长度变短，但相对于归一化后的剩余质量，动力学变慢。这是一个明确的 escape bottleneck，而不是“越靠近顶点越快”。
+
+对内部点，熵导数为
+
+\[
+\dot H_{\ln}
+= \gamma(a-b)\ln\frac{a}{b}
+= \gamma(b-a)\ln\frac{b}{a}\ge0.
+\]
+
+严格不等式恰在 \(\gamma>0\) 且 \(a\ne b\) 时成立；\(\gamma=0\) 时熵导数为零。由已有 KL/条件互信息身份式，
+
+\[
+\frac{d}{dt}D(p_t\Vert p_*)
+=-\gamma(a-b)\ln\frac{a}{b}\le0.
+\]
+
+因此条件互信息和隐藏 KL 储备量单调下降，Shannon 熵单调上升。上述对数公式先在内部点使用；边界按单边极限解释，理想混合熵的导数可能发散，但 ODE 本身仍可有有限的单边速度。当某个侧面使 fiber 退化为单点时，a=b，流恒为零。r=0 的顶点也必须单独处理。
+
+这个结论的语义是：相关结构被转换为可观测 Shannon 熵，而不是在封闭五态系统中自动变成外界热。若需要物理热，必须额外定义浴、reset、measurement 或 chemostat。
+

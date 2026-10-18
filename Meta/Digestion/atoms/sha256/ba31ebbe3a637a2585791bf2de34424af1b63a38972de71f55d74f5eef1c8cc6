@@ -1,0 +1,29 @@
+**命题 4.3（原整数合同的等价尺度与非空实例）。** 置 $r=L-q$。对任意原整数合同，
+
+$$
+\frac rL\le x=\sin\frac{\pi r}{2L}\le\frac{\pi r}{2L}.
+\tag{4.5}
+$$
+
+因此在 $n=3N\to\infty$、$x>0$ 的列上，$nx\to0$ 等价于 $nr/L\to0$，且必有 $L/n\to\infty$。在该区域内，
+
+$$
+\begin{aligned}
+\delta_n(L,q)&=\left(\frac{\pi^2c_\star}{4}+o(1)\right)\frac{nr^2}{L^2},\\
+\varepsilon_n^\star(L,q)&=\left(\frac{\pi^2c_B}{4}+o(1)\right)\frac{nr^2}{L^2},\\
+\beta_n-\beta_n^{\mathrm{mm}}
+ &=\left(\frac{\pi^2(c_\star-c_B)}4+o(1)\right)\frac{nr^2}{L^2}.
+\end{aligned}
+\tag{4.6}
+$$
+
+具体合法参数列为 $n=3N$、$L=n^2$、$q=L-1$。它满足
+
+$$
+0<nx=n\sin\frac\pi{2n^2}\le\frac\pi{2n}\longrightarrow0,
+$$
+
+式（4.6）在此列分别为 $(\pi^2c_\star/4+o(1))n^{-3}$、$(\pi^2c_B/4+o(1))n^{-3}$ 和 $(\pi^2(c_\star-c_B)/4+o(1))n^{-3}$。
+
+**证明。** $2u/\pi\le\sin u\le u$ 对 $0\le u\le\pi/2$ 成立，代入 $u=\pi r/(2L)$ 得式（4.5）。$x>0$ 等价于整数 $r\ge1$；$nr/L\to0$ 蕴含 $n/L\to0$。同时 $r/L\to0$，故 $x/(r/L)\to\pi/2$。把这个比值与定理 4.1 的同列极限相乘，得到式（4.6）。所示实例满足全部整数限制并有 $nr/L=1/n\to0$。每次实验内的校准和来源仍固定；这里比较不同的合法合同。$r=0$ 的精确零端点不参加这些归一化比值。证毕。
+

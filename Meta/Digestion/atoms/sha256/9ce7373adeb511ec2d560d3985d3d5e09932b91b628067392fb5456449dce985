@@ -1,0 +1,41 @@
+**Proposition 2.2 (the inherited trace-zero secants, with explicit endpoints).** For $0\ne\Delta=(\begin{smallmatrix}a&b\\c&-a\end{smallmatrix})$, the condition in Theorem 2.1 is exactly
+
+$$
+a\ne0\quad\text{or}\quad bc<0.
+$$
+
+Proof. Membership in either cone forces both $a\ge0,-a\ge0$ or both reversed, hence $a=0$. The remaining forbidden cases have $b,c$ of the same weak sign. This proves the stated equivalence.
+
+Here is a direct endpoint construction. If $a\ne0$, set
+
+$$
+L_0=1+|b|+|c|,\qquad
+\tau=\frac{a^2+bc+(b+c)L_0}{a},\qquad
+h=\sqrt{\tau^2+4L_0^2},
+$$
+
+$$
+p=\frac{h-\tau}{2},\quad s=\frac{h+\tau}{2},\qquad
+S_0=\begin{pmatrix}p&L_0\\L_0&s\end{pmatrix},\quad
+S_1=\begin{pmatrix}p+a&L_0+b\\L_0+c&s-a\end{pmatrix}.
+$$
+
+Since $h>|\tau|$, $p,s>0$, $ps=L_0^2$ and $s-p=\tau$. The off-diagonal entries of $S_1$ are positive and
+
+$$
+\det S_1=a\tau-a^2-bc-(b+c)L_0=0.
+$$
+
+Thus $(p+a)(s-a)=(L_0+b)(L_0+c)>0$. If $a>0$, $p+a>0$ forces $s-a>0$; if $a<0$, $s-a>0$ forces $p+a>0$. These are positive rank-one endpoints with difference $\Delta$.
+
+If $a=0,b>0>c$, set $h=\sqrt{-2bc}>0$ and
+
+$$
+S_0=\begin{pmatrix}h&b\\-2c&h\end{pmatrix},\qquad
+S_1=\begin{pmatrix}h&2b\\-c&h\end{pmatrix}.
+$$
+
+They are positive, have determinants $h^2+2bc=0$, and have the required difference. If $b<0<c$, apply this construction to $-\Delta$ and exchange the endpoints. ∎
+
+This trace-zero mechanism is the result of §§14–15 of *FIB 自校准关系数学*. The full nonzero-trace classification in Theorem 2.1 extends that mechanism. Neither criterion requires $\det\Delta\ne0$.
+

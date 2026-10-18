@@ -1,0 +1,10 @@
+**Lemma 2.3 (Matching bound).** For every probability vector on $B_n$,
+
+$$
+0\le\Phi_{n,i}(\mu)\le\frac14,\qquad
+0\le\Phi_n(\mu)\le\frac n4.
+\tag{2.4}
+$$
+
+Proof. The edges at a fixed coordinate form a matching: each vertex belongs to at most one such edge. The inequality $h(s,t)\le(s+t)/4$ is equivalent to $(s-t)^2\ge0$. The masses of the matching's endpoints sum to at most one. Summing over coordinates proves the second bound. In particular $0\le c_\star\le1/4$ by (1.2). $\square$
+

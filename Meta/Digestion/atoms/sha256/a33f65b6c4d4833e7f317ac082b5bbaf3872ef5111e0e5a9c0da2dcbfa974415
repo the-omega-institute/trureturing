@@ -1,0 +1,112 @@
+**Proposition 8.1 (Quantitative forcing at a deterministic start).**
+Fix any original installed table and deterministic start with
+$q(r)=1$. If its correct mass $C$ satisfies
+
+$$
+\varepsilon:=S_3-C<\rho,
+\tag{8.1}
+$$
+
+its actual positive-section execution has exactly the following
+necessary pattern. It reads $E$ first, then parity-$\alpha$ edges
+$F,H$ after zero and one respectively, both disjoint from $E$.
+After $00$ it reads parity-$\alpha$ edge $G$ disjoint from
+$E,F$, and $T\in E\cup F$. Its $000,001$ successors halt
+with labels $h_\beta(\sigma),h_\alpha(\sigma)$.
+
+All remaining instructions and positive terminal labels are specified
+by this exhaustive table:
+
+| Target incidence | Prefix $01$ | Prefix $10$ | Prefix $11$ |
+| --- | --- | --- | --- |
+| $T\in E$ | Optional Halt or any last read, always spin $\sigma$ | Required join of $E,H$, with opposite target labels from Lemma 4.3 | Required fresh extension of $E$ outside $E\cup H$, with opposite target labels from Lemma 4.4 |
+| $T\in F\cap H$ | Required join of $E,F$, with opposite target labels from Lemma 4.3 | Optional Halt or any last read, always spin $\sigma$ | Required fresh extension of $H$ outside $E\cup H$, with opposite target labels from Lemma 4.4 |
+| $T\in F\setminus H$ | Required join of $E,F$, with opposite target labels from Lemma 4.3 | Required join of $T$ to zero pair $H$, target spins $\sigma,1-\sigma$ on zero, one | Optional Halt or any last read, with exactly Lemma 4.4's exterior-target label and tie rule |
+
+Every spin in the table means its actual label $h_\alpha(s)$.
+Every required edge is an actual line edge that must exist. Both
+replies at every required third read have positive source mass;
+every positive third-reply successor must immediately Halt. Optional
+calls are also actual paid calls, with the stated labels on every
+positive reply. Null or inconsistent histories retain arbitrary
+instructions and outputs.
+
+Proof. An initial halt loses at least $S_3-a/2\ge K_0>g_3$
+and cannot satisfy (8.1). Thus the root actually reads. Both first
+replies have positive masses $1-\eta,\eta$. Lemmas 6.1–6.2 give
+nonnegative deficits
+
+$$
+0\le Z-C_0\le\varepsilon<\rho,\qquad
+0\le D-C_1\le\varepsilon<\rho.
+\tag{8.2}
+$$
+
+Any first-one halt, second separator, repeat or adjacent edge loses
+$g_1$ by Lemma 6.1. Thus its actual instruction reads a same-parity
+disjoint $H$. Lemma 6.2 excludes a first-zero halt, second parity
+$\beta$, repeated or adjacent same-parity second edge, by the
+losses $g_2,g_3$ or $K_0>g_3$. Its actual instruction must read
+a same-parity disjoint $F$. On $00$, a halt loses $K_0$, and
+a parity-$\beta$ third call loses $g_2$. Hence this actual
+instruction reads a parity-$\alpha$ edge $G$.
+
+At this point the zero-subtree caps for $000,001$, and the whole
+$01$ continuation are respectively $a/2,K_0,K$. They sum to
+$Z$ and each bounds its actual term. Likewise $K,J$ bound the
+$10,11$ continuations and sum to $D$. Every one of these five
+nonnegative deficits is consequently less than $\rho$. Lemma 5.2
+now excludes every repeat, extension, join and wrong target incidence
+at $001$, with losses at least $g_3,g_4$ or $g_5$. Thus $G$
+is disjoint from $E,F$ and $T\in E\cup F$.
+
+Both $G$ replies are positive: in phase $\alpha$ the disjoint
+zero pairs and either completion of the new pair have positive
+product weights. The $000$ section also contains all of phase
+$\beta$. Lemma 2.3 forces actual Halt successors there.
+Lemma 7.2 forces label $h_\beta(\sigma)$ on $000$; any other
+label would make its deficit at least $g_1$. On $001$ the phase
+is certified and the target lies in a zero pair, whose preferred
+spin is uniquely $\sigma$. Lemma 7.1 forces its actual label:
+a nonmaximizer loses at least $\min(g_6,g_7)\ge\rho$.
+
+It remains to force the continuations, with no inference from equal
+scalar caps to instruction identity. On $01$ the zero pair is $E$
+and the one pair is $F$. On $10$ the zero pair is $H$ and the
+one pair is $E$. If the target belongs to a zero pair, Lemma 4.3
+allows an actual halt or any last call, and uniquely requires
+$\sigma$ on every positive terminal section. Otherwise that lemma
+forces the specified actual join: every other instruction loses
+at least $K-ac\eta\ge g_5$. This includes early halts,
+separators, repeats, fresh extensions and all queries among
+nontarget components. The joins' exact heavier completions give
+their stated target labels.
+
+On $11$ both $E,H$ are one pairs. For an internal target,
+Lemma 4.4 forces a fresh extension of its own pair outside their
+union: every other instruction, including a halt or join of the
+two tie pairs, loses $g_1$. Its two heavier mixed triples give
+opposite unique labels. For an exterior target, the same lemma
+lists every permitted actual halt or call and the genuine tie at
+a fresh target-neighbor one reply. It imposes no artificial
+preference on that tie.
+
+For precision, every optional instruction in these cases has scalar
+best sum equal to its continuation cap, by Lemmas 4.3–4.4. The
+required joins and extensions have that same equality. Hence the
+deficit of such a continuation is the sum of its nonnegative
+terminal-label deficits. Lemma 7.1 forces each actual terminal
+label to maximize; a nonmaximizer cannot be compensated on a
+different leaf. This justifies all optional-read labels as well
+as the mandatory ones. All terminal sections other than $000$
+are phase-certified, so Lemmas 7.1–7.2 cover every label case.
+
+Every required prefix and both replies of its required new edge
+have consistent finite spin completions in phase $\alpha$; all
+their assignment factors are positive. Lemma 2.3 consequently
+forces Halt after each actual third call. This proof concerns the
+original rows reached at each prefix, with their fixed instructions;
+no occurrence was substituted for a state. The three target
+incidences exhaust $T\in E\cup F$ because $E,F$ are disjoint
+and $H$ is disjoint from $E$. $\square$
+

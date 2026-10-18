@@ -1,0 +1,43 @@
+**Definition 43.1 (unnormalized height differences).** Set
+
+$$
+\begin{gathered}
+\Delta A=A_{27}-A_5,\quad \Delta B=B_{27}-B_5,\quad
+\Delta C=C_{27}-C_5,\\
+\xi=\kappa(q_{27}-q_5)>0,\quad
+\eta=\kappa_{02}(q_{02,27}-q_{02,5})>0,\quad
+\zeta=ac(q_{12,27}-q_{12,5})<0,\\
+q_y=\sqrt{y(64-y)}/128,\quad q_{02,y}=\sqrt y/16,\quad
+q_{12,y}=\sqrt{64-y}/16,\\
+\Xi=M^{1/2}\Delta M^{1/2}\big|_{\operatorname{span}\{|1\rangle,|2\rangle\}}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\\
+d_f=11m_1/64,\quad
+z_f=\frac{\sqrt{m_1m_2}}{16}(\sqrt{37}-\sqrt{59}),\quad
+L_f=\|\Xi\|_1=\sqrt{d_f^2+4z_f^2}.
+\end{gathered}
+\tag{JR.49}
+$$
+
+These are unnormalized differences, including the failure part.
+In particular $L_f$ is not a conditional-on-failure distance. Put
+
+$$
+\begin{aligned}
+h_\sigma(s)&=\frac{(1-u)\Delta A+(1-v)\Delta B}{2}
+ +\sigma\sqrt{(1-u)(1-v)}\,\xi,\\
+\ell_{\sigma,\tau}(s)&=\frac14\left[
+ u\Delta A+v\Delta B+\Delta C+2\sigma\sqrt{uv}\,\xi
+ +2\tau\sqrt u\,\eta+2\sigma\tau\sqrt v\,\zeta\right],\\
+\mathfrak a&=\theta\Delta A+\Delta B,\qquad
+\mathfrak b=\omega\Delta A+\Delta C,\\
+\mathsf b(v)&=\frac14\left[
+ \mathfrak av+\mathfrak b-2\xi\sqrt{v(\theta v+\omega)}
+ -2\eta\sqrt{\theta v+\omega}+2\zeta\sqrt v\right],\\
+T_{\rm flat}&=(d_f+L_f)/2.
+\end{aligned}
+\tag{JR.50}
+$$
+
+Thus $\mathsf b(v_s)=\ell_{-,-}(s)$; it is a function, distinct from
+the transfer amplitude $b$ in $T$.
+

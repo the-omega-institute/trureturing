@@ -1,0 +1,76 @@
+**Definition 16.1 (installation, source adapter and service costs).** Let
+$m_L=|E(L)|,m_1=|E(D_1)|$ be the actual native installation bit lengths,
+and let $d_1=|\Delta(D_1)|$ be the archival description-frame payload length.
+All include their displayed finite initial control/token data. They are computable lengths
+of the two specified expansions, including ManifestPrefix's actual entry,
+tests and word helpers, not interpreter constants. Their canonical supplied
+code words and all later replay counts use this same expansion. Installation's
+vector consists of one activation CTL; the two ordinary bitwise bootstraps,
+$4(m_L+m_1)+4$ for their tested NEXT, IN, one-bit constructor-WR,
+ADVANCE and final DONE rows, with no ordinary boundary construction;
+$L$'s eight actual port-token TOKs, the one receiver-port handoff TOK and its entire paid
+code-frame acquisition/descriptor/seal; its return-to-bootstrap CTL;
+and the actual source-head saves/restores, sentinel appends, asset copies,
+$j_A$ scan, manifest framing/seals, bank initialization and final token/
+Ready steps. For each item use Definition 11.5 and the explicitly specified
+copy/ingress schemata. Existing ordinary boundary cells are not constructed
+again. New finite control bits contribute their actual encoded bit count
+to $b_{\rm ctl}$; they are not eight-bit ordinary cells. The captured code
+frame's ingress, length and descriptor work is additional to both control
+bootstraps. Its Import runs only after $D_1$ is installed.
+
+Full manifest import is exactly Definition 13.2's ManifestPrefix, entered
+after the native empty-bank construction. Its native scan vector is
+Lemma 13.2a's, with scalar $2h+4+3s+3z+4o$ at the actual head distance
+and actual field values. Add that lemma's ordered word-instruction list
+with Definition 11.5's recurrence at every actual successor. The two
+entrance MRs each have their own receipt/tick/fee; no F is imported for
+the sentinel, and every empty field still incurs BeginField, clear,
+terminator, Reverse, AppendItem and move work. The field-zero tag/length/
+payload/exhaustion checks, row validation and old-list parsing then use
+their explicit word expansions. These are installation-purpose work,
+not free admission, a receipt-position readout or service-frame ingress.
+Its source descriptors are preserved; new bank descriptors and retained
+versions are additional storage and cost. This is a full recurrence for
+this graph, rather than a constant correction to another graph's total:
+the acquired and installed code lengths themselves are lengths of this
+expansion. Later Boundary and Prefix likewise count its actual rows.
+
+The ingress price includes its actual admission TOK, reserve CTL, Base
+and descriptor recipe. Its three
+headers contribute 12 occurrences, its $d+1$ length bits contribute
+$5(d+1)$, its payload loop contributes $6d+1$, and its F/seal contributes
+4. This subtotal is $11d+22$, before admission TOK, reserve, Base, length copy, all
+scratch positioning/seals, $U(2d+4)$ construction, descriptor and Import.
+The acquired frame has $2d+4$ actual INs. Import is its complete native
+RD/test, cons-bank assignment and MR loop plus final Reverse; it is
+not included in that subtotal.
+
+Every original source-frame IN replaced after activation contributes an
+actual RD and MR instead; count the resulting original graph word and
+all its unchanged original source/body rows on this run. The adapter
+has no IN of its own and does not charge the earlier physical ingress
+twice. Original boot/acquisition, old finite completion and activation
+are distinct actual fragments. No discarded AIF offset is revived.
+
+For a word instruction and a service handler, use Definition 11.5's
+recurrence on its finite expanded word program. Thus the costs of
+row lookup, full cell scans, list replacement, code/latch/token update,
+receipt/event serialization, countdown tests, all scratch and descriptor
+records and all bank copies are included. Boundary's loop uses its
+actual represented Ready/frame/activation tests; Prefix's loop uses its
+constructed countdown. Its physical cost generally exceeds the number
+of represented primitives by an unbounded factor.
+
+Archive output uses the Base/dry-count/copy/descriptor recipe of
+Definition 13.4. For each initialized mailbox or receiver, add its full
+Base, actual length preparation, complete Allocate including its single
+delimiter, descriptor and positioning recipe. Its six-row copy then
+contributes $6l+3$; together the two bodies are $12l+6$. These body
+formulas do not include the initialized copies' setup, lengths, descriptors,
+repositioning, the two sealed completion-record constructions of Definition
+13.2, or the mandatory $5l+1$ RD/OUT print loop and its fresh length
+recovery/positioning. The finite token admission,
+acknowledgement, purpose transitions and Ready return are their actual
+TOK/CTL occurrences, in addition to body handoffs already counted.
+

@@ -1,0 +1,74 @@
+**Theorem 7.2 (Ordered minor and determinant).** Cut the six-bit bridge after three bits. Index selected rows by $0u$ and columns by $z0$, with both two-bit label lists in the order
+
+$$
+u,z\in(00,01,10).
+\tag{7.6}
+$$
+
+Thus the selected row words are $(000,001,010)$ and the column words are $(000,010,100)$. Let $H_*$ be this minor of $\mathsf F_3(r_*)$. Then
+
+$$
+H_*=\frac{LR}{Z_6},\qquad
+L=\begin{pmatrix}
+0&ps^2&ct^2\\
+k_1&0&0\\
+0&kp&kc
+\end{pmatrix},\qquad
+R=\begin{pmatrix}
+k_2&k^2&0\\
+as^3&kas&ak_1\\
+bt^3&kbt&bk_1
+\end{pmatrix}.
+\tag{7.7}
+$$
+
+Its strictly positive determinant is
+
+$$
+\Delta_6:=\det H_*
+=\frac{pcab\,k^2k_1^2(b-a)^2(s+t)^2(pa t+cb s)}{Z_6^3}>0.
+\tag{7.8}
+$$
+
+Proof. In the order (7.6), the rows of $L$ are $eM_{0u}$ and the columns of $R$ are $M_{z0}v$. To verify every column, use
+
+$$
+M_0v=(k,as,bt)^{\mathsf T},\qquad
+M_0^2v=(k_1,as^2,bt^2)^{\mathsf T},\qquad M_1=ve.
+\tag{7.9}
+$$
+
+These give respectively $M_0^3v$, $M_0M_1M_0v=kM_0v$, and $M_1M_0^2v=k_1v$, exactly the columns in (7.7). The row computations are $eM_0^3=(0,ps^2,ct^2)$, $eM_0^2M_1=k_1e$, and $eM_0M_1M_0=k eM_0$. Their ordered product is $eM_{0u}M_{z0}v$, so the convention in (7.7) has no transpose or reversed label order.
+
+The row with label $u=01$ and column with label $z=10$ concatenate to the forbidden middle seam $11$. Its entry is retained as zero:
+
+$$
+(k_1,0,0)\,(0,ak_1,bk_1)^{\mathsf T}=0.
+\tag{7.10}
+$$
+
+Every other selected concatenation is compatible and has positive numerator by Proposition 7.1. Thus this really is a minor of the original full probability flattening, rather than of a matrix with its illegal seam removed.
+
+Expand $\det L$ along its second row:
+
+$$
+\det L=-pc\,k k_1(s^2-t^2)
+=-pc\,k k_1(s-t)(s+t).
+\tag{7.11}
+$$
+
+Factor $a,b$ out of the second and third rows of $R$, then expand along its first row to obtain
+
+$$
+\begin{aligned}
+\det R
+&=ab\,k k_1(s-t)\bigl[k_2-k(s^2+st+t^2)\bigr]\\
+&=-ab\,k k_1(s-t)(s+t)(pa t+cb s).
+\end{aligned}
+\tag{7.12}
+$$
+
+For the second equality, expand $k_2=pa s^2+cb t^2$ and $k=pa+cb$; the bracket is
+$-pa(st+t^2)-cb(s^2+st)=-(s+t)(pa t+cb s)$.
+Multiply (7.11) and (7.12), use $s-t=b-a$, and divide by the common probability normalizer $Z_6^3$. Every displayed factor in (7.8) is strictly positive for the fixed member of $\mathcal S$. This proves the sign as well as the exact value. $\square$
+

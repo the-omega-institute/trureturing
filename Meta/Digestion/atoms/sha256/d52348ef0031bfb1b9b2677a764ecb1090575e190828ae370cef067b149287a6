@@ -1,0 +1,18 @@
+**Proposition 6.4 (invalid packets and availability stay distinct).** The
+representation includes genuine invalid source packets and does not infer
+source or receiver availability from a byte string's being complete or
+grammatically valid.
+
+Proof. At $H=1$, the accepted Rho on alpha changes its source token from
+01 to 10 by the original individual bit WRs. After the first changed bit
+the actual two-bit token is 00 or 11, neither a valid one-leaf packet.
+Its cell components are nevertheless defined by Definition 4.1. With beta
+already installed at $H=1$, Rho rejects; its in-place MUX writes retain
+valid beta bytes throughout, while its busy availability token still
+forbids a second semantic call. Thus validity does not imply availability.
+After the final payload WR of a nonempty receiver copy, payload bytes may
+already equal the sender, while the destination remains unavailable until
+its final seal/handoff. The representation stores these distinct finite
+tokens and seal marks, so it distinguishes the cuts even if the payload
+bytes agree. ∎
+

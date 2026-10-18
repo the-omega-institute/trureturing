@@ -1,0 +1,63 @@
+**Assumption 1.1 (mathematical scope and native contract).** The statements
+below are ordinary mathematical deductions, not Lean-kernel-verified
+results. Use [NAR, Assumption 16.1][NAR] with its actual finite ordered
+trees, complete acquired rows, early export and discard, and stationary
+four-reply current port. In particular,
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle,
+\qquad T_n=\rho^n\alpha.
+\tag{NTL.1}
+$$
+
+Fix publicly $m\ge1$, $K\ge0$, a function
+$f:\{0,1\}^m\to\{0,\ldots,K\}$, and an integer $D$ with
+$r=2^D\ge m+1$. Set $H=K+1$, $q=H+1=K+2$, and
+$I=\{0,\ldots,r-1\}$. Write $W_D=(w_j)_{j\in I}$ for the
+lexicographically ordered depth-$D$ words. The entire initial domain is
+
+$$
+\mathcal A=\{0,\ldots,H\}^{I},\qquad
+X_a=\mathcal B_D[(T_{jq+a_j})_{j\in I}].
+\tag{NTL.2}
+$$
+
+All $r$ original ages vary independently on this cube. Slots
+$0,\ldots,m-1$ will carry Boolean coordinates at the selected entry;
+slot $s=m$ is the separate visible reference. Any remaining slots are
+still independent in (NTL.2). Original offsets $jq$ are never renumbered.
+Fix any public nonempty menu $\mathcal M\subseteq2^I\setminus\{\varnothing\}$
+containing $S_* =\{s\}$. Here $S$ denotes the displayed slots, and
+$Q_S=W_D\setminus\{w_i:i\in S\}$ is the actual cut. Thus $S=I$
+allows the empty cut, but no menu member hides every original slot.
+
+The task, menu and encoder rule are fixed before the actual initial
+acquisition and before the future choice of $S$ or lag. The encoder
+receives the genuinely acquired $R_{\varnothing}(X_a)$, exports just
+one finite label $e(a)$, and makes all other source-bearing preparation
+state inaccessible. Public tables are common to every $a$. Fix either
+$\lambda_0=0$ or $\lambda_0=1$ and allow all $\ell\ge\lambda_0$.
+After this same original source's own $\ell$ substitutions, the entire
+later row is acquired from
+
+$$
+Y(a,\ell)=\rho^\ell X_a
+ =\mathcal B_D[(T_{jq+a_j+\ell})_{j\in I}],
+\qquad V_S(a,\ell)=R_{Q_S}(Y(a,\ell)).
+\tag{NTL.3}
+$$
+
+The decoder entry is exactly $(S,e(a),V_S(a,\ell))$, with common
+installed control. A complete row includes its literal exterior, reached
+and absent guards, and equality and disequality of all hidden whole
+subtrees within that row. It contains neither their values nor a hidden
+epoch. Its native extra operation is $\operatorname{Read}_{Y(a,\ell)}(p)$
+for any finite original-root word $p$, returning exactly
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$. The current source
+does not change during these queries. There is no old-source reread,
+subtree, age, free comparison, reroot or stronger query operation.
+

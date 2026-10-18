@@ -1,0 +1,15 @@
+# FIB dense family: partial fixed-basis coherence-support classification
+
+This volume gives a partial pointwise classification for the same actual dense
+two-parameter matrix family in the ordered basis $(0,1,2,3,13)$. It settles
+support one and two on the entire legal rectangle, both outer-edge transitions
+between support three and four, and a sufficient polygon of finite
+three-support realizations. The exact unclassified set $U$ is in Section 9;
+the whole-family classification remains open there.
+
+The evidence is ordinary finite-dimensional proof. This is a theory reference
+source, not a Lean/kernel certificate. Its additional deductions have status
+$\texttt{repo-derived}$ relative to the canonical sources named below; no
+literature-wide originality claim is made. The volume uses the numbered
+generic-v1 source skeleton.
+

@@ -1,0 +1,31 @@
+**Proposition 4.5 (exact carrier counts).** If $K_{\mathrm{cell}}$ is the
+number of all constructed original tape cells at a post-acquisition cut,
+then the storage tree has
+
+$$
+\begin{aligned}
+V&=127+6b+48K_{\mathrm{cell}},\\
+L&=64+3b+24K_{\mathrm{cell}},\\
+E_{\mathrm{tree}}&=V-1,\qquad
+E_{\mathrm{access}}=65.
+\end{aligned}
+\tag{SSA.7}
+$$
+
+The number of occupied endpoint slots is $2V+128$. A cell append adds
+48 vertices, 24 terminals, and 48 tree edges. Changing a bit creates no
+vertex. The finite port capacity is seven slots per vertex. The fixed
+rule apparatus is additional infrastructure, not included in $V$.
+
+Proof. A bit has five vertices and three terminals. $F_8$ contributes
+seven internal vertices, hence a cell has $7+8\cdot5=47$ vertices and
+24 terminals. A $k$-cell right spine contributes $k$ new internal vertices
+and one final terminal, so SSA.4 has $48k+1$ vertices and $24k+1$
+terminals. The register component has $b-1+5b=6b-1$ vertices and $3b$
+terminals. The outer scaffold contributes 64 internal vertices. Summing
+over 64 tapes gives SSA.7. A tree has one fewer edge than vertices; adding
+65 two-ended access links gives $2(V-1)+130=2V+128$ occupied slots.
+All changes in the stated append differences follow by subtraction.
+The empty boot tapes satisfy the same tree formulas with $k=0$; during
+boot the link count is the actual number of installed heads, at most 65. ∎
+

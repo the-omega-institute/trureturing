@@ -1,0 +1,26 @@
+### 65.2 Complete positivity and the unrestricted retained matrix
+
+The only nonzero Choi block of E_Z, on |a_i,0> and |b_j,1>, is
+
+    [[I_m,Z],[Z*,I_n]].
+
+It is positive semidefinite iff ||Z||op≤1, by the Schur complement. Trace preservation is immediate from the matrix units.
+
+For an arbitrary physical competitor define
+
+    Λ_ij=<00|Φ(|a_i a_i><b_j b_j|)|11>.
+
+We claim Λ∈S_(m,n) without any calibration or support assumption. In one local Stinespring representation write U_A|x>=|0>u_(0,x)+|1>u_(1,x), and similarly U_B with vectors v. Let C_A:C^m→H_EA map e_i to u_(0,a_i), and D_A:C^n→H_EA map e_j to u_(1,b_j). Both are contractions, being coordinate projections of an isometry restricted to a subspace. The matrix
+
+    R_ij=<u_(1,b_j),u_(0,a_i)>
+
+is the entrywise conjugate of C_A*D_A, so ||R||op≤1. Likewise the matrix T for the B party is a contraction. The actual product branch has retained matrix R⊙T.
+
+Each row and each column of a contraction has Euclidean norm at most one. Cauchy–Schwarz therefore gives
+
+    Σ_j|R_ij T_ij|≤1,    Σ_i|R_ij T_ij|≤1.
+
+Finite convex mixtures preserve both bounds by the triangle inequality. Thus Λ∈S_(m,n). The proof does not assume that the output-coordinate environment vectors within a fibre are orthogonal or normalized; it uses their column-map contractions. It covers arbitrary local ancillas through Stinespring dilation.
+
+This already proves exact-implementation necessity. It also implies that every W∈S is a contraction: the standard bound ||W||op²≤||W||_(1→1)||W||_(∞→∞) gives ||W||op≤1. Alternatively this follows from the convex decomposition constructed next.
+

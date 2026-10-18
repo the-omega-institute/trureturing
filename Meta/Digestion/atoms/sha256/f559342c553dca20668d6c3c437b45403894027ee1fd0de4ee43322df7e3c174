@@ -1,0 +1,56 @@
+### 定理 34.2（静态状态与能量守恒）
+
+若 \(\rho_\ast\in\mathsf D(H)\) 满足
+
+\[
+[H,\rho_\ast]=0,
+\]
+
+则
+
+\[
+\mathcal U_t(\rho_\ast)=\rho_\ast
+\]
+
+对所有 \(t\) 成立。并且任意 \(\rho\in\mathsf D(H)\) 的能量期望
+
+\[
+E_H(\rho)=\operatorname{tr}(H\rho)
+\]
+
+满足
+
+\[
+E_H(\mathcal U_t(\rho))=E_H(\rho).
+\]
+
+#### 证明
+
+交换关系给出
+
+\[
+e^{-itH}\rho_\ast e^{itH}=\rho_\ast.
+\]
+
+能量守恒由循环迹：
+
+\[
+\begin{aligned}
+E_H(\mathcal U_t(\rho))
+&=
+\operatorname{tr}
+\left(
+He^{-itH}\rho e^{itH}
+\right)\\
+&=
+\operatorname{tr}
+\left(
+e^{itH}He^{-itH}\rho
+\right)\\
+&=
+\operatorname{tr}(H\rho).
+\end{aligned}
+\]
+
+证毕。
+

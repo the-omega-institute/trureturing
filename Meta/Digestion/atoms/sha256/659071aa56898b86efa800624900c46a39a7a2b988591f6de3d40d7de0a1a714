@@ -1,0 +1,21 @@
+**定义 29.1（裁剪、第三锚及非负幂求值）。** 在线性行使用公共域界 $M=\min(L,H)<1$。对任意有限实向量报告 $y_0,y_1,y_2$，令 $P_M$ 为到闭 Euclidean $M$ 球的径向投影，计算
+
+$$
+Y_i=P_M(y_i),\quad W=Y_2\times Y_1,\quad
+Z=P_M\!\left(\operatorname{sgn}(Y_0\cdot W)W\right),\quad
+\widehat u=|Y_1|,\quad\widehat v=|Y_2|.
+$$
+
+$\operatorname{sgn}(0)=0$。对每个请求的 $j\ge3$，用引理26.1的 $a_j,b_j,k_j$ 返回
+
+$$
+\widehat x_j=
+\begin{cases}
+\widehat u^{a_j-1}\widehat v^{b_j}Y_1,&k_j=1,\\
+\widehat u^{a_j}\widehat v^{b_j-1}Y_2,&k_j=2,\\
+\widehat u^{a_j-1}\widehat v^{b_j-1}Z,&k_j=3.
+\end{cases}
+$$
+
+次数0的幂为1。公式对零、非正交、错号及不在实际记录像上的报告都定义；它是保留报告的数值后处理，裁剪不执行源的归一化，也不生成新的制备、读数或动作。
+

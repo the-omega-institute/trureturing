@@ -1,0 +1,44 @@
+**实例 85.2（A four-block adaptive attainment at $d=3$）。** The target is exactly Example 84.6: $(m,k,T,g)=(62,64,65,1)$, with its same phase table and nine full low labels per component. The positive-child omission pairs at actual suffix indices $1,2,3$ are $\{60,61\},\{57,58\},\{54,55\}$. Enumerate each component's eight indices in binary order $000,\ldots,111$. Valid code choices in that order are
+
+$$
+\begin{aligned}
+c^{(0)}&=(000,001,010,101,100,011,110,111),\\
+c^{(1)}&=(011,001,110,000,100,111,010,101).
+\end{aligned}
+\tag{85.23}
+$$
+
+For value zero the constrained label-index pairs are respectively $\{001,101\},\{000,100\},\{010,110\}$, with required coordinates $1,2,3$. For value one the constrained indices are respectively $110,111,011$. The codes in (85.23) obey all those zero requirements.
+
+The actual root and zero-child word are
+
+$$
+\begin{aligned}
+P&=11010101010101010101010101010101010101010101010101010101010101,\\
+U&=00010000000000000000000000000000000000000000000000000000000000.
+\end{aligned}
+\tag{85.24}
+$$
+
+At the actual suffix starts $62,59,56\pmod{65}$, equations (85.16)–(85.17) give
+
+$$
+\begin{aligned}
+B_1^{(0)}&=11100111111111111111111110101010101011111111010101010101001001,\\
+B_2^{(0)}&=11011111000000000000010101011111111111110101010101010110110101,\\
+B_3^{(0)}&=11101011111111111010101000000001010100000001010101111111010101,\\
+B_1^{(1)}&=11111100100001101000101100110011001000011010010110010111111010,\\
+B_2^{(1)}&=10111100101101001110011001001001000111010011100011011000111111,\\
+B_3^{(1)}&=10111100010110011011110101110010001101111001000010111001000010.
+\end{aligned}
+\tag{85.25}
+$$
+
+Every displayed word has exactly 62 bits. The root/first-suffix and subsequent suffix terminal/leading pairs are $(1,3),(1,2),(1,3)$ on value zero and $(1,6),(0,1),(6,1)$ on value one. Their sums are respectively $4,3,4$ and $7,1,7$, all strictly below $k=64$. The respective common-charge counts are $32,16,16$ on each value. Phase-one compensation is $(0,0,0)$ for the row policy and $(0,0,1)$ for the column policy.
+
+The zero child returns $A_{000}$ or $D_{010}$ on pulse difference one and $C$ on zero. The positive child decodes (85.23) from its own three suffix differences. High tails return $R$ only after the whole paid root. Thus the exact adaptive/GLOBAL block pair is $4/6$ and the emitted-bit pair is $248/372$.
+
+Finite literal verification at this target jointly realized and executed all $2\cdot65\cdot64=8320$ successful INITIAL records using the original integer recurrence. The positive, zero and high branches contain respectively $7688,372,260$ records and pay respectively $4,2,1$ blocks in the displayed rule. Across these separate source executions this is $31756$ emitted blocks and $1968872$ emitted bits. Initial bottom was independently realized and stops freely. All 256 Hall subfamilies on each component passed their list cardinality checks.
+
+Additional finite row, inverse, endpoint-decoder and strict-seam checks at $d=4,5,6$ gave positive-child sizes $254,1022,4094$, minimum component multiplicities $14,30,62$ and maximum numbers of required-zero coordinates $2,2,2$. The minimum consecutive suffix common-charge counts across both value policies were respectively $63,254,1022$. These finite results corroborate the ordinary uniform proof; they are not proofs for unbounded $d$, and no program or dataset is part of this delivery.
+

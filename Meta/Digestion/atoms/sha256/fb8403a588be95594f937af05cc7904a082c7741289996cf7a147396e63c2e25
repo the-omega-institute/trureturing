@@ -1,0 +1,43 @@
+## 134. 小任务边界与任意相干全历史的残余代价
+
+固定初始配置 $i_0=0$ 和长度 $N$。对合法路径定义
+$$
+ B(h)=(i_N,W(h)).
+$$
+该摘要不存储未知内部量子态 $\psi$；完整逻辑态仍需另外保留量子载体。令第133章的平稳路径律为
+$$
+ P_N^{\mathrm{stat}}(h)=\frac15\prod_{t=1}^NP_{i_{t-1}i_t},\qquad
+ \ell_{\mathrm{stat}}(h)=\log\frac{P_N^{\mathrm{stat}}(h)}{P_N^{\mathrm{stat}}(h^\leftarrow)}
+ =W(h)\log(p/q).
+$$
+本章只把这个具名的平稳比较量 $\ell_{\mathrm{stat}}$ 限制到固定根历史，不把它改成固定 $\delta_0$ 初始律自身的倒序比值。确切地说
+$P_N^0(h)=\mathbf1_{i_0=0}\prod_tP_{i_{t-1}i_t}$，其自身倒序律在 $h$ 上为 $P_N^0(h^\leftarrow)$。一步见证 $h=(0,1)$ 有正向概率 $p$，倒序路径 $(1,0)$ 在同一 $\delta_0$ 初始律下概率为零；而平稳比较的两权重为 $p/5,q/5$，给出有限 $\ell_{\mathrm{stat}}=\log(p/q)$。两个比较问题必须区分。
+它最多取 $5(2N+1)$ 个值，并可按边更新
+$$
+ (i,w)\longmapsto(j,w+w_{ji}),\qquad
+ \Pi_{n+1}(j,w)=\sum_iP_{ij}\Pi_n(i,w-w_{ji}).\tag{134.1}
+$$
+递推初始化为 $\Pi_0(j,w)=\mathbf1_{j=0}\mathbf1_{w=0}$，$\Pi_n$ 是实际固定根路径摘要的概率分布。给定 $B(h)$，终点配置、后续 Markov 律、(131.3) 的全部内部酉和具名比较量 $\ell_{\mathrm{stat}}(h)$ 都已确定，因为 $k=(W-d_{i_N})/4$；这不读取未知 $\psi$。令实际标签数为 $C_N=|B(\mathcal H_N(0))|$，则
+$$
+ C_N\le5(2N+1),\qquad
+ L_N=\lceil\log_2 C_N\rceil\le\lceil\log_2[5(2N+1)]\rceil.
+$$
+左侧 $C_N$ 是标签数，$L_N$ 才是固定长度二进制编码的比特数，固定模型下 $L_N=O(\log(N+1))$。$N=0$ 时只有历史 $(0)$，$C_0=1,L_0=0$。标签量小不表示时钟、实际边读数和原生读取资源免费，未执行的分支也不能冒充已取得的读数。
+
+考虑更强的任意合法历史寄存器相干域，要求等距作用
+$$
+ |h\rangle\otimes\psi\longmapsto |B(h)\rangle\otimes U_h\psi\otimes|r_h\rangle.\tag{134.2}
+$$
+若 $h\ne k$ 而 $B(h)=B(k)$，则全体 $\psi,\phi$ 的输入正交性给出
+$\langle r_h,r_k\rangle\langle\psi,U_h^\dagger U_k\phi\rangle=0$。对任意单位 $\psi$ 取 $\phi=U_k^\dagger U_h\psi$，第二因子为一，故 $\langle r_h,r_k\rangle=0$。同一纤维的记录遂两两正交；映射的等距性也要求每个 $r_h$ 归一化。因此
+$$
+ \dim R\ \ge\ \max_b|B^{-1}(b)|.\tag{134.3}
+$$
+若声称精确最小值，还需给出每个纤维的正交残差编码上界；这里只使用下界。由 (129.1) 的严格参数域，每个顶点至少有两个正概率后继；长度零有一条路径，每条路径每步至少可作两种不同延长，归纳得从起点 $0$ 的合法路径数至少为 $2^N$。按至多 $5(2N+1)$ 个纤维作抽屉原理，存在纤维大小
+$$
+ \max_b|B^{-1}(b)|\ge
+ \left\lceil\frac{2^N}{5(2N+1)}\right\rceil,\qquad
+ \log_2\dim R\ge N-\log_2(5(2N+1)).\tag{134.4}
+$$
+(134.4) 是任意相干全历史域的残余记录下界；它不适用于只准备好的实际历史像，也不是末端通道 $\mathcal E^N$ 的最小环境维数指数下界。此处 (134.2) 要对整个 $\operatorname{span}\{|h\rangle:h\in\mathcal H_N(0)\}\otimes\mathbb C^2$ 以及其任意叠加保持内积；一组制备好的分支振幅或单个末端通道不提供这个域。把同一终端态映射与保留全部历史当作同一合同，会错误地抹去旧来源与接缝关联。
+

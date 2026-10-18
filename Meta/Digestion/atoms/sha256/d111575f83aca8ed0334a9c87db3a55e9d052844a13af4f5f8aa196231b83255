@@ -1,0 +1,29 @@
+**Corollary 27.2 (mass on actual saturated reversing labels).** Under
+Assumption 23.1, every full-height optimal common law for any feasible
+request $r$ has
+
+$$
+\xi\in\{0,1\}\quad\pi\text{-almost everywhere on }T,
+\qquad
+\pi\{\Psi>0,\xi=1\}>\frac4{5t}.
+\tag{FC.111}
+$$
+
+For finite laws this gives at least one actual positive-coefficient
+low label with $\xi=1$, $\Psi>0$ and the opposite endpoint signs
+of Theorem 25.1. The same existence holds for a countable atomic law.
+For a stipulated integral law the conclusion is positive coefficient
+measure on the saturated reversing set; no atom is required.
+
+Proof. Optimality makes $\Delta_\pi=0$. The nonnegative integrand
+in (FC.107) must vanish almost everywhere on $T$, giving the endpoint
+restriction. Theorem 26.1 forces coefficient mass greater than $4/(5t)$
+on $T^+$ with $\xi>0$; the endpoint restriction makes that mass
+saturated. For a finite or countable atomic law a set of positive
+mass contains a positive-weight atom. A general probability measure
+can give a set positive mass with every singleton of mass zero,
+so only the measure conclusion is made in the integral case.
+These are restrictions on the actual optimal law itself, obtained
+by comparison; they do not declare the comparison labels to have
+been present in the original instrument. $\square$
+

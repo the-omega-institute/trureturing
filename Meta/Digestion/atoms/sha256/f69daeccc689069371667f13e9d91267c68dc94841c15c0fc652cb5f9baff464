@@ -1,0 +1,45 @@
+### 72.4 Zero, negative parameters, and endpoint limits
+
+The expressions (72.2), (72.4), and (72.6) contain no division by \(b\) or
+\(S\). At zero they give
+
+\[
+ h=\sqrt3,\quad c=1,\quad p=q=1/\sqrt2,\quad z=1,\quad
+ \alpha=0,\quad\beta=\pi/4,\quad\xi=1,\quad\delta=-\omega^2.
+ \tag{72.12}
+\]
+
+Here \(A=I_2\), and (72.8) follows directly from
+\(\operatorname{diag}(1,-\omega^2)\operatorname{diag}(1,-1)
+\operatorname{diag}(1,\omega)=I_2\). Therefore (72.10) also holds at zero.
+No cotangent product is asserted at zero, where one factor is undefined;
+the undivided flatness relation is instead identically zero.
+
+For a negative parameter write \(b=-t\), \(t>0\), and set
+
+\[
+ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+
+Interchanging \(P(t)\) and \(Q(t)\) in the original matrix gives
+
+\[
+ H_0(-t)=(Z\otimes I_3)H_0(t)(X\otimes I_3)
+ =\xi(t)(ZD(t)\otimes I_3)\mathcal H(\alpha(t),\beta(t))
+   (\operatorname{diag}(1,\bar z(t))X\otimes I_3).
+ \tag{72.13}
+\]
+
+This supplies explicit outer product-monomial factors while keeping the
+normal-form angles in the stated positive range. It avoids silently moving
+\(\beta\) outside the source convention.
+
+At \(b=1\), one has \(h=1\) and \(\alpha=\beta\), with
+\(\cos2\alpha=1/\sqrt3\). Equation (72.9) is then exactly the
+phase-normalization example of §71.4. All displayed denominators remain
+nonzero; the negative endpoint follows from (72.13). These endpoint identities
+are algebraic limits and do not enlarge the actual open parameter branch.
+The factorization proves neither an exhaustive classification of rank-two
+Hadamard matrices nor a whole-branch no-quartet theorem.
+

@@ -1,0 +1,78 @@
+## 11.6 Polynomial witnesses and the dimension limit
+
+For an integer $b\ge1$, the interior Bernstein construction already proved
+in §7 gives nodes and a polynomial
+$$
+\kappa_j=\frac{H(j+1)}{b+2},\qquad
+P_b(k)=\sum_{j=0}^b A(\kappa_j)
+ \binom bj(k/H)^j(1-k/H)^{b-j},
+$$
+where $A(k)=2\sqrt{k(H-k)}$. Its samples are all interior, and the
+finite moment identities give
+$$
+\sum_jw_j(\kappa_j-k)^2
+ =\frac{H^2}{(b+2)^2}\bigl(bt(1-t)+(1-2t)^2\bigr)
+ \le\frac{H^2}{4b},
+\qquad t=k/H.
+$$
+The square-root estimate for $A$ and two finite Cauchy--Schwarz
+inequalities therefore give
+$$
+|P_b(k)-A(k)|\le\sqrt2\,H b^{-1/4}
+\qquad(0<k<H).
+\tag{11.25}
+$$
+Writing $P_b(k)=\sum_{j=0}^b\pi_jk^j$ and storing
+$$
+K=k,\qquad f_j=k^jU(\alpha)\quad(0\le j\le b)
+$$
+uses exactly $1+2(b+1)=2b+3$ real coordinates. The fixed linear decoder
+$D(\sum_j\pi_jf_j,0)$ and the exact affine updates
+$$
+K'=K+s,\qquad
+f_j'=\sum_{h=0}^j\binom jh s^{j-h}f_h,
+\qquad
+f_j'=R_{t/2}f_j\quad\text{for a phase command}
+$$
+satisfy all real signed commands on their full lawful domains, including
+both affine offsets allowed by Definition 2.1. The preceding volume proves
+that the actual guard is exactly $0<K+s<H$, the phase guard is the whole
+image, and all finite prefixes and intermediate points remain encoded.
+Using the original output metric,
+$$
+e_n^{\mathrm{aff}}(Z)^2
+ \le4ZH+\frac{8H^2}{\sqrt b}
+\quad\text{whenever }2b+3\le n.
+\tag{11.26}
+$$
+In particular, for $n\ge5$ let
+$$
+b=\left\lfloor\frac{n-3}{2}\right\rfloor\ge1.
+$$
+Then
+$$
+e_n^{\mathrm{aff}}(Z)^2
+ \le4ZH+
+ \frac{8H^2}{\sqrt{\lfloor(n-3)/2\rfloor}}.
+\tag{11.27}
+$$
+Below the transition the zero decoder also supplies
+$e_n^{\mathrm{aff}}(Z)\le1-Z/2$ for every $n$ under the literal contract.
+In the guard-recoverable class, the same bound is supplied by the height
+encoder for every $n\ge1$.
+
+The classes $\mathfrak F_{\le n}(Z)$ are nested, so
+$e_{n+1}^{\mathrm{aff}}(Z)\le e_n^{\mathrm{aff}}(Z)$. The universal floor
+$e_n^{\mathrm{aff}}(Z)\ge e_*$ together with (11.26), with $b$ tending to
+infinity, gives
+$$
+\lim_{n\to\infty}e_n^{\mathrm{aff}}(Z)
+ =\inf_{n\ge0}e_n^{\mathrm{aff}}(Z)
+ =e_*.
+\tag{11.28}
+$$
+For $Z<2/3$, (11.1) still leaves a positive gap at every fixed dimension.
+Neither (11.26) nor the implicit certificate gives matching rates,
+attainment for a general positive fixed dimension, or an optimal dimension
+at a prescribed tolerance.
+

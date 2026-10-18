@@ -1,0 +1,24 @@
+**Definition 8.1 (Full-support phase fiber).** Keep the path law,
+tensor order and cut of §§1 and 4. Let $\chi:\Omega_G\to U(1)$
+be arbitrary, and put
+
+$$
+|\psi_\chi\rangle=\sum_S\sqrt{p(S)}\chi(S)|S\rangle.
+\tag{8.1}
+$$
+
+This entire fiber has the same complete occupation law. For an
+internally legal left word $\ell$ and right word $r$ with legal
+concatenation, define the canonical phase rectangle
+
+$$
+\mathfrak h_\chi(\ell,r)
+=\frac{\chi(\ell,r)\chi(0,0)}{\chi(\ell,0)\chi(0,r)}.
+\tag{8.2}
+$$
+
+All four entries are actual legal configurations and every
+denominator is a nonzero unit phase. A cut-local phase has
+the form $\chi(\ell,r)=a(\ell)b(r)$ on all legal
+concatenations, with $|a|=|b|=1$.
+

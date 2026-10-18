@@ -1,0 +1,8 @@
+### Q6：概率保持、固定生成元与可观测性
+
+**适用：第二部分§四线性判据。** 列概率的离散线性更新 $M$ 必须满足 $M_{ij}\ge0$、$\mathbf1^TM=\mathbf1^T$；固定连续 Markov 生成元 $L$ 必须非对角元非负且 $\mathbf1^TL=0$。离散全归一化模型的隐藏方向闭合判据为 $PMd=0$。连续模型中，$PLd$ 首先测试初始可见速度。
+
+在本五态、保质量、一维隐藏切核与固定有限齐次生成元这些条件下，$PLd=0$ 蕴含 $Ld\in T_0\cap\ker P=\operatorname{span}\{d\}$。故 $Ld=\lambda d$，于是 $Pe^{sL}d=e^{s\lambda}Pd=0$ 对所有 $s\ge0$ 成立。若 $PLd\ne0$ 且存在可行非零差 $td$，则 $Pe^{sL}(td)=tsPLd+O(s^2)$，充分小正时间使该差可见。
+
+不能从缺少上述不变子空间／保质量条件的一阶零导数推出永久不可见。一般五维固定线性轨迹恢复检验 $T_0\cap\bigcap_{j=0}^4\ker(PL^j)$，使用完整轨迹及 Cayley–Hamilton 约化；更高维、切换、条件化或非线性系统须另给共同可观测性／实际注入性判据，非线性闭合使用 Q5 的纤维条件。标准参照为 Norris《Markov Chains》与 Sontag《Mathematical Control Theory》，不据矩阵记号认证任何物理演化。
+

@@ -1,0 +1,50 @@
+**Theorem 9.2 (Collective cylinder certificate).** For every $n\ge2$,
+every positive activity vector, and every nonnegative normalized
+site distribution,
+
+$$
+\gamma\le\kappa_*\le U.
+\tag{9.3}
+$$
+
+For any nonempty $T$ and physical-path matching $\mathcal M$,
+$\kappa_T\le D_{\mathcal M}$ is sufficient for
+$\gamma+\Lambda\le1$.
+
+Proof. For any real observable $f$ the insertion-edge Dirichlet form is
+
+$$
+\mathcal E_\omega(f,f)=
+\sum_{\substack{s\in B_n,\ i\in[n]\\
+s_i=0,\ s+e_i\in B_n}}
+p(s)\omega_iq_i\bigl(f(s)-f(s+e_i)\bigr)^2.
+\tag{9.4}
+$$
+
+Each undirected edge is counted once from its empty endpoint.
+Take $f_T=\mathbf1_{A_T}-\alpha_T$. Its variance is
+$\alpha_T(1-\alpha_T)$. An insertion crosses this cut exactly when
+$i\in T$ and the original word has every site in $T\cup N(i)$ empty.
+The empty-side mass of these words is $Z_{T\cup N(i)}/Z$. Thus
+
+$$
+\mathcal E_\omega(f_T,f_T)
+=\frac1Z\sum_{i\in T}\omega_iq_iZ_{T\cup N(i)}.
+\tag{9.5}
+$$
+
+Its Rayleigh quotient is (9.2), giving the first inequality in (9.3).
+For $T=\{i\}$, the centered zero indicator differs by sign from the
+centered occupation $s_i-\rho_i$. Equation (7.10) gives
+$\kappa_{\{i\}}=b_i/(1-\rho_i)$. Taking a minimum over all subsets
+includes these singleton tests, proving $\kappa_*\le U$.
+Finally combine $\gamma\le\kappa_T$ with $\delta\ge D_{\mathcal M}$
+and $\delta=1-\Lambda$. $\square$
+
+The variational use of a cut is established Markov-chain mathematics.
+Blanca--Galvin--Randall--Tetali [BGRT12], Section 4.1 and Theorem 4.1,
+use conductance for hard-core Metropolis dynamics on two-dimensional
+regions. Their rates and lattice conclusions are not imported into
+(9.4). The flux (9.5) is computed here for the stipulated weighted
+heat-bath path, with its original endpoints and activity law.
+

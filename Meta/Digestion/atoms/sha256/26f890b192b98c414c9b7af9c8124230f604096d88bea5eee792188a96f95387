@@ -1,0 +1,35 @@
+**Lemma 2.2 (canonical every-word simulation).** For every such $v$,
+every $q\in W_D$ and every finite relative word $w$,
+
+$$
+\Gamma_q(\pi_D(v))=\Gamma_q(v),
+\tag{FMR.8}
+$$
+
+and
+
+$$
+r_{\pi_D(v)}(w)=
+\begin{cases}
+r_v(w),&|w|\le D-1,\\
+\alpha,&|w|=D, r_v(w^-)=\mathsf{branch},\\
+\mathsf{absent},&|w|=D, r_v(w^-)\ne\mathsf{branch},\\
+\mathsf{absent},&|w|>D,
+\end{cases}
+\tag{FMR.9}
+$$
+
+where $w^-$ removes the last letter. Each canonical reply therefore
+requires at most one actual Read at a word of $W_D$, or no Read.
+For the outer wrapper the replies at $\varepsilon$, $L$, and strict
+extensions of $L$ are respectively branch, alpha and absent.
+
+Proof. The completion preserves every constructor on $W_D$, so it
+preserves each first blocking leaf and label, or branch endpoint,
+needed by (FMR.4). This gives (FMR.8). At depth $D$ its only present
+vertices are the added alpha children of cutoff branches. Such a
+child is present exactly when its parent at depth $D-1$ was branch.
+There are no deeper present vertices. This proves (FMR.9), including
+all words beyond the target menu. The outer wrapper cases follow
+directly from the native definition. $\square$
+

@@ -1,0 +1,34 @@
+**Definition 12.1 (Staggered signal and the heat-bath spectrum).**
+Return to the open path $B_n$, positive activities and positive
+normalized site weights. Let $E_i$ be conditional expectation
+given all sites except $i$, and set on real $L^2(p)$
+
+$$
+P=\sum_i\omega_iE_i,\qquad H_{\rm cl}=I-P.
+\tag{12.1}
+$$
+
+Every $E_i$ is an orthogonal projection. Consequently $P$ is
+self-adjoint with spectrum in $[0,1]$ and $H_{\rm cl}$ has
+spectrum in $[0,1]$. Its Dirichlet form is (9.4). The legal-flip
+graph is connected: remove every occupied site to reach the
+vacuum, then insert the sites of any legal target. Positive rates
+therefore make the zero eigenspace of $H_{\rm cl}$ exactly the
+constants. Write $\gamma>0$ for its smallest positive eigenvalue,
+$\Lambda$ for its largest eigenvalue and $\Pi_\gamma$ for its
+$L^2(p)$ orthogonal gap projection.
+
+Use the particle-hole coordinates and linear signal
+
+$$
+y_i=\begin{cases}s_i,&i\text{ odd},\\1-s_i,&i\text{ even},\end{cases}
+\qquad
+S=\sum_i y_i
+=\lfloor n/2\rfloor+\sum_{i\text{ odd}}s_i-\sum_{i\text{ even}}s_i,
+\qquad S_0=S-\mathbb E_pS.
+\tag{12.2}
+$$
+
+The order is coordinatewise in $y$. Across each physical edge,
+legality is exactly $y_{\rm odd}\le y_{\rm even}$.
+

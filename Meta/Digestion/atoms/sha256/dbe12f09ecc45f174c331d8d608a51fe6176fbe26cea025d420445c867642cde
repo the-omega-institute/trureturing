@@ -1,0 +1,88 @@
+**Theorem 5.2 (both completed directions and the unique synthesized point).**
+Every common point of $\overline{D_0}\cap\overline{D_1}$ is
+
+$$
+\Lambda=W(\Omega,K,K,K,K,K),\qquad
+K=\langle\alpha,\langle\Omega,\rho K\rangle\rangle.
+\tag{CRE.19}
+$$
+
+The unsigned completed equations inherited from the acquired positives and
+both complete-row equality patterns reduce, in both directions, to
+
+$$
+a=\rho a,\qquad y=\langle\alpha,\langle a,\rho y\rangle\rangle.
+\tag{CRE.20}
+$$
+
+They have exactly the one solution $(a,y)=(\Omega,K)$, and every requested
+finite prefix of this solution is computable. No finite tree is a solution
+of (CRE.20). This conclusion alone does not assert that $\Lambda$ is a
+signed contact for a bounded or infeasible support.
+When $m<\infty$, $\Lambda$ replies branch at $q_aL^m$, so the retained
+absent literal itself excludes that point; its exact finite-source rank
+barrier remains (CRE.14).
+
+**Proof.** A common closure point keeps the five-pair outer spine. Name its
+six subtrees $a,x,v,y,z,w$. Whole equality is closed: a discrepancy occurs
+at a finite address and prevents all sufficiently close equal approximants.
+The graphs of $F,G$ are closed by prefix continuity. Thus (CRE.9),
+Theorem 3.3 and both row patterns give
+
+$$
+z=F_a(y),\quad w=G_a(y),\quad x=v=y,\quad x=z,\quad v=w.
+\tag{CRE.21}
+$$
+
+Consequently $y=F_a(y)=G_a(y)$. Cancel the ordered pairs of the last
+equality, including the common $\alpha$ child: its inner left comparison
+is $a=\rho a$. The equality $y=F_a(y)$ supplies the second equation
+of (CRE.20). Conversely (CRE.20) implies $F_a(y)=G_a(y)=y$;
+putting $x=v=z=w=y$ proves every equation in (CRE.21), and reconstructs
+the whole completed source. It also satisfies the completed positive
+feedback record (CRE.13): an all-branch $a$ has left subtree itself.
+Thus no completed source comparison has been silently projected away.
+
+To classify $a=\rho a$, suppose $a$ has a leaf and let $d$ be its
+minimum leaf depth. Under $\rho^2$, either leaf label is replaced by a
+tree with minimum leaf depth one, while every original branch persists.
+Hence the new minimum leaf depth is at least $d+1$. But
+$a=\rho a$ implies $a=\rho^2a$, a contradiction. A tree with no finite
+leaf address is exactly $\Omega$, and $\rho\Omega=\Omega$.
+This excludes finite fixed points without using the finite clock on an
+infinite tree or treating $\rho$ itself as a strict contraction.
+
+With $a=\Omega$ define
+$\Phi(t)=\langle\alpha,\langle\Omega,\rho t\rangle\rangle$.
+The recursive occurrence is below two actual pair nodes. Prefix locality gives
+
+$$
+\delta(\Phi(s),\Phi(t))\ge\delta(s,t)+2.
+\tag{CRE.22}
+$$
+
+Use the guarded prefix argument already employed in SPC Theorem 4.2 and
+FJC Theorem 3.1. Here its two-level estimate is explicit: consecutive
+iterates $\Phi^r(\alpha),\Phi^{r+1}(\alpha)$ differ no earlier than
+depth $2r$. Every finite reply therefore stabilizes, yielding a valid
+native completion $K$. Validity of the stabilized replies follows from
+the finite conditions that both children of a branch are present and
+descendants of a leaf are absent. Continuity gives $\Phi(K)=K$.
+If $K,K'$ are fixed points, iterating (CRE.22) gives
+$\delta(K,K')\ge2r$ for every $r$, so they coincide.
+In particular
+
+$$
+p_h(K)=p_h(\Phi^{h+1}(\alpha)).
+\tag{CRE.23}
+$$
+
+The right side has a terminating finite-prefix evaluation: its recursion
+is iterated finitely many times, $\Omega$ answers branch at every word,
+and each fixed native transform uses only the requested original prefix.
+Thus (CRE.19) is synthesized from the acquired equations, not supplied
+as a productive certificate. Its $K$ is infinite since $K|_{RR}=\rho K$
+and the repeated $RR$ path never ends. The reduction gives no finite
+solution. The pair guards, not bare $\rho$, supply the contraction.
+$\square$
+

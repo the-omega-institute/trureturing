@@ -1,0 +1,21 @@
+## 287. Realization of the original face pairing
+
+Each paired hexagonal face has the same three alternating original
+edge lengths on its two sides, because the metric uses one length for
+each actual global edge. A right-angled hyperbolic hexagon is determined
+by those lengths, so the prescribed face correspondence is realized by
+an isometry. Glue the genuine truncated hyperideal tetrahedra using
+these isometries. The complete original angle sums 2*pi remove all cone
+defects along the glued edges. The truncation faces meet the hexagonal
+faces orthogonally and glue to the boundary surfaces without bending;
+the boundary is totally geodesic. The actual manifold hypothesis ensures
+the prescribed face quotient is N itself, including repeated labels and
+self-gluings. This realizes the original triangulation as claimed.
+
+No two-copy seed, separate genuine-witness premise, dual-girth condition,
+prohibition of parallel face pairs, role balance or tetrahedron-transitive
+action is added. The strict-angle construction and Luo–Yang existence
+step are reused; the new five-reservoir input is the complete flat
+exclusion. No example separating this class from every earlier criterion,
+Lean certification, or unrestricted CFMP conclusion is claimed.
+

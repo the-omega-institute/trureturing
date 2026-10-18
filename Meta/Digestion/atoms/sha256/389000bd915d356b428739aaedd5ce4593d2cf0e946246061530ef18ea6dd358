@@ -1,0 +1,14 @@
+**定理 10.3（有界初值单次恢复的精确风险）。** 共同后续输入全零，$y_s=2^{-s}y_0$。设 $D\ge0$、$\varepsilon\ge0$，$y_0\in I=[a,a+D]\subset(0,1)$，仅取得
+
+$$
+z=2^{-s}y_0+\eta,\qquad|\eta|\le\varepsilon.
+$$
+
+在任意估计器上取最小、在初值与合法误差上取最大，得到
+
+$$
+R_s^*=\min\left(\frac D2,\,2^s\varepsilon\right).
+$$
+
+**证明。** 给定 $z$ 的相容区间为 $I\cap[2^s(z-\varepsilon),2^s(z+\varepsilon)]$，取中点给上界。令 $m$ 为 $I$ 中点、$d=\min(D/2,2^s\varepsilon)$；初值 $m-d,m+d$ 配相反误差，产生同一数据 $2^{-s}m$。任意估计器至少在一端误差为 $d$，故界精确。$\square$
+

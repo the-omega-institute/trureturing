@@ -1,0 +1,24 @@
+### 72.2 Independent local phase twirling
+
+Let Γ=(Z/3Z)^k, ω=exp(2πi/3), D_θ|f,i>=ω^(θ_f)|f,i>, and d_θ|f>=ω^(θ_f)|f>. For each local map set
+
+    A_θ=Ad(d_θ) A Ad(D_θ*),    Abar=|Γ|^(-1)Σ_θ A_θ,
+
+and define Bbar similarly, using independent local phases. The input encoding satisfies
+
+    (Ad(D_θ*)⊗Ad(D_φ*))J_in=J_in Ad(D_(θ+φ)*).
+
+The target is covariant with the corresponding output rotations. Therefore simultaneous conjugation of every branch by the same θ,φ leaves the diamond error of the mixture unchanged. Averaging independently over θ and φ gives Σ_t w_t(Abar_t⊗Bbar_t), whose error is no larger by convexity. This is independent local randomization within each product map, not extra shared branches.
+
+Use input-first Choi matrices. The coordinate |f,i>_in|a>_out has character θ↦ω^(θ_a−θ_f). Zero charge consists of a=f and gives one N×N positive block Q. Each nonzero character e_a−e_f, a≠f, uniquely specifies that ordered pair, and gives a positive d_f×d_f block P_(a,f). Thus the twirled local map is exactly described by
+
+    Q≥0,  P_(a,f)≥0 (a≠f),
+    Q_ff+Σ_(a≠f)P_(a,f)=I_(d_f).
+
+Write P_(f,f)=Q_ff. Its full action is
+
+    Abar(|f,i><f,j|)=Σ_a P_(a,f)[i,j]|a><a|,
+    Abar(|f,i><g,j|)=Q_fg[i,j]|f><g|  (f≠g).             (5)
+
+These conditions are both necessary and sufficient by Choi positivity and the partial-trace condition. They include arbitrary population leakage and all within-fibre input coherences.
+

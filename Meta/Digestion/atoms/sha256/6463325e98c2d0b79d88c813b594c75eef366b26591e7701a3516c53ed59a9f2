@@ -1,0 +1,22 @@
+**Definition 1.2 (the actual entry fiber and local target).** Define
+
+$$
+\mathscr H_\eta=
+\{(a,\ell):a\in\{0,\ldots,H\}^I,\ \ell\ge\lambda_0,
+\ e(a)=c,\ R_{Q_S}(Y(a,\ell))=V\},
+\qquad \tau(a,\ell)=\ell.
+\tag{LQF.2}
+$$
+
+A locally correct controller is one deterministic controller, with this
+entry and the common installation, that terminates with $\tau(h)$ on
+every $h\in\mathscr H_\eta$. Its choices depend only on the acquired
+entry and preceding actual replies. Distinct sources with the same lag
+remain distinct members of the fiber. A terminal set need only have
+constant $\tau$; it need not contain one history.
+
+The principal theorems concern attained entries, meaning
+$\mathscr H_\eta\ne\varnothing$. An empty set is an inconsistent
+entry, not a recovery impossibility on an actual source. Unless stated
+otherwise, all subsequent subsets of $\mathscr H_\eta$ are nonempty.
+

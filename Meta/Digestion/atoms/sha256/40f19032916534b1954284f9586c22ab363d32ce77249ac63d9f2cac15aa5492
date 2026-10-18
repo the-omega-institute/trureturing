@@ -1,0 +1,42 @@
+**Definition 5.1 (Literal straight-command class).** A model of integer
+dimension $d\ge0$ consists of an arbitrary function $E:\mathcal M\to\mathbb R^d$,
+one fixed affine decoder
+
+$$
+q_A(x)=c+LE(x)\in\mathbb R^{10},
+\tag{5.1}
+$$
+
+and, for every real $s,t$, fixed ambient affine maps
+
+$$
+\mathcal U_s(z)=A_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t
+\tag{5.2}
+$$
+
+such that
+
+$$
+E(P_sx)=\mathcal U_s(E(x))\quad(x\in\operatorname{dom}P_s),\qquad
+E(Q_tx)=\mathcal V_t(E(x))\quad(x\in\mathcal M).
+\tag{5.3}
+$$
+
+Both update and decoder offsets are allowed. All coefficients may depend
+on the fixed source, preparation, and model. Update coefficients may also
+depend on the command; the decoder is fixed across all commands.
+No coefficient depends on the current state or its producing history.
+There is no continuity,
+measurability, boundedness, or injectivity requirement on $E$; no
+continuity in the command parameter; and no assumed ambient inverse
+or ambient group law. No sign, magnitude, or positivity restriction is
+placed on model coefficients. Decoded vectors need not be native
+physical outputs.
+
+Identities hold on the entire actual domains (4.6)–(4.7). An empty
+domain imposes no identity. This literal contract imposes source guards
+on the execution, but does not require that their truth be recoverable
+from the encoded point. Guard recovery is a separate restriction in §8.
+No external height selector is supplied to the encoder or decoder.
+

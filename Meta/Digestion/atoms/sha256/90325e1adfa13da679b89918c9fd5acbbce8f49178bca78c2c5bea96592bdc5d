@@ -1,0 +1,14 @@
+**Definition 4.1 (One joint phase).** On the path, for distinct
+sites $i,j$ and $z\in\mathbb C$ with $|z|=1$, let
+
+$$
+U_z|S\rangle=z^{s_is_j}|S\rangle,\qquad
+|\psi_z\rangle=U_z|\psi_+\rangle.
+\tag{4.1}
+$$
+
+Every complete occupation probability remains exactly $p(S)$.
+In particular all classical events, marginals and joint
+occupation moments agree for every $z$. This statement concerns
+the diagonal occupation algebra, not full quantum reduced states.
+

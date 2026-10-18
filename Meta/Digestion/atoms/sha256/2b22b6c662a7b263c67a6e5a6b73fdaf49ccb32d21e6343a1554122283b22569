@@ -1,0 +1,30 @@
+**定理 24.4.1（擦除的流量恒等式）。** 有
+
+$$
+\boxed{
+\alpha=\frac12\sum_a|x_a-y_a|,
+\qquad
+\beta=\sum_ax_a=\sum_ay_a,
+\qquad
+\beta-\alpha=\sum_a\min\{x_a,y_a\}.
+}
+$$
+
+因此 $\alpha\le\beta$。隐藏种子不损失等先验总变差，当且仅当每个动作标签都没有同时出现正向流和反向流：
+
+$$
+x_ay_a=0\qquad\forall a.
+$$
+
+隐藏动作完全抹去二元状态差异，当且仅当 $x_a=y_a$ 对所有 $a$ 成立，也就是 $K_0=K_1$。
+
+**证明。** 每个不一致种子在某个 $x_a$ 中出现一次，也在某个 $y_b$ 中出现一次，故两者总和都为 $\beta$；动作行差为 $x_a-y_a$。代入恒等式
+
+$$
+x_a+y_a-|x_a-y_a|=2\min\{x_a,y_a\}
+$$
+
+即可。证毕。
+
+<a id="section-24-5"></a>
+

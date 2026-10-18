@@ -1,0 +1,36 @@
+**Theorem 44.1 (zero finite part and the actual infimum).** For every fixed datum satisfying exactly Definition 32.1 and $\mathfrak m_d=0$, there are finite constants $C_d,s_d>0$ such that
+
+$$
+-C_ds^{25/8}\le E_s<0\qquad(0<s<s_d).
+\tag{44.1}
+$$
+
+The lower bound is for the actual variational infimum (1.7) on its complete complex form domain. It therefore holds for every actual normalized complex ground-state choice, without a parity, support or reality restriction.
+
+Proof. After fixing the datum, choose one finite constant
+
+$$
+H_0>\frac{\max(B_d,0)+1}{\beta_*}
+\tag{44.2}
+$$
+
+and keep it fixed before $s\downarrow0$. Theorem 43.2 gives $k_d(H_0s^q)<C_*$ for all sufficiently small $s$. For every $f$ in the entire transported complex form domain, (37.4) is the exact identity
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+ =a\|(C_s+h)^{1/2}f\|_2^2-\chi_c\|U_s^{1/2}f\|_2^2,
+\qquad h=H_0s^q.
+\tag{44.3}
+$$
+
+Since $C_s\ge0$ and $h>0$, its positive square root maps that full domain onto $L^2(\Omega_s)$. The bounded factor satisfies
+
+$$
+\|U_s^{1/2}(C_s+h)^{-1/2}\|^2
+ =\|U_s^{1/2}(C_s+h)^{-1}U_s^{1/2}\|
+ =k_d(h)\le C_*=a/\chi_c.
+\tag{44.4}
+$$
+
+Thus the right side of (44.3) is nonnegative for every such complex $f$. Taking its infimum over all unit vectors gives $\epsilon_c(s)\ge-aH_0s^q$. The exact original rescaling in (32.5), $\epsilon_c(s)=s^2E_s$, proves the lower bound with $C_d=aH_0$ and $q-2=25/8$. The strict upper bound is the inherited original negative attainment at each positive coupling; it is not needed in the lower-bound argument. $\square$
+

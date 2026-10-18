@@ -1,0 +1,8 @@
+**Example 8.2 (raw-only normalization changes charged costs).** On the fiber of Theorem 8.1, the one-update one-read service has actual costs $(1,1,1)$. SCR Theorem 3.1's epoch-zero-to-five normalization instead makes five actual updates. Its transported epoch-one probe at $R$ is
+
+$$
+ T(1,5,R)=RZ^{\rm SCR}_R(4)=RLLR,
+$$
+
+using SCR's $Z^{\rm SCR}_R(t)=L^{t-2}R$. Its costs are $(1,5,4)$. Replies and output are preserved, but both new resource coordinates increase. Likewise, directly using the least-index old-class representative in place of a shorter occurrence can increase literal cost, as Lemma 3.4's example shows. Theorem 3.1 here retains the first service's epoch-one decision and does not force an early move to five.
+

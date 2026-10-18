@@ -1,0 +1,44 @@
+**Assumption 10.1 (one oriented geometric equality cover).** Retain
+Assumption 1.1 and the full families of Definition 1.2. For Sections
+10--12, fix one chosen complete positive-lag cover
+$\mathcal C=(C_t)_{t=0}^{18}$ with
+
+$$
+q=19,\qquad G(\mathcal C)=13,\qquad N_9=19.
+\tag{NAGC.10.1}
+$$
+
+Every class is the actual chosen member of $\mathcal P_t^+$, with
+all twenty macro orders, all initial points, the prescribed diagonal
+anchor and all positive integer outer lengths allowed by that family.
+Proposition 8.3 supplies, for this orientation,
+
+$$
+(\Gamma_a,\Gamma_b;N_9,M_9)=(6,7;19,16).
+\tag{NAGC.10.2}
+$$
+
+It also supplies equality in both charge chains (NAGC.7.9), singleton
+intersections of every class with $a=9$, and exactly one four-point
+$AAA$ triple of $C_9$ on $b=9$. Every other class meeting $b=9$
+has a singleton intersection. A nonnegative-lag cover is in this
+positive geometric family; its extra native condition is the original
+first-step condition of [NARC, Theorem 13.4][NARC].
+
+Use the actual projections and gaps of Definition 7.1. Superscripts
+$\xi\in\{a,b\}$ on $\varepsilon_{t,j}^\xi,W_j^\xi,Q_\xi$
+denote the two applications of (NAGC.7.6)--(NAGC.7.8). Write
+$[r,s]_{\mathbb Z}=[r,s]\cap\mathbb Z$. List the ten distinct
+first coordinates of $C_t$ as
+
+$$
+x_{t,0}<x_{t,1}<\cdots<x_{t,9}.
+\tag{NAGC.10.3}
+$$
+
+The supplied normal form [NARC, Theorem 13.3][NARC] makes the
+second, fifth and eighth $A$ changes unit:
+$x_{t,2}-x_{t,1}=x_{t,5}-x_{t,4}=x_{t,8}-x_{t,7}=1$.
+Indices in this projection list run from zero to nine, independently
+of the zero-to-eighteen indices in the complete path.
+

@@ -1,0 +1,47 @@
+**Definition 7.1 (connector and edge blocks).** Let $G$ be a finite
+simple graph with $v$ vertices, $e\ge1$ edges and no isolated vertices.
+Fix a public orientation of each edge and a public cyclic ordering of
+the edges incident to each vertex. For every incidence $(u,a)$ introduce
+a distinct binary seed $s_{u,a}\in\{\alpha,\beta\}$ and an original
+connector block $P_{u,a}$ owning that seed at its actual root. For
+$d\ge2$, prescribe all its factors by
+
+$$
+z_{P_{u,a},L}=\Gamma_L(s_{u,\operatorname{next}(a)}),\qquad
+z_{P_{u,a},q}=\Gamma_q(s_{u,a})\quad(q\in W_d\setminus\{L\}).
+\tag{GDB.32}
+$$
+
+Use the binary root guard of Theorem 4.1. For each oriented edge
+$a=uw$, add an original block $X_a$ with root factor $(0,0)$ and
+
+$$
+z_{X_a,Lr}=\Gamma_r(s_{u,a}),\qquad
+z_{X_a,Rr}=\Gamma_r(s_{w,a})\qquad(Lr,Rr\in W_d).
+\tag{GDB.33}
+$$
+
+Every equation is constant or queries the indicated actual owner root;
+unused decoder entries are completed in the attained range. All original
+targets are specified. There are exactly $2e$ seeds, $2e$ connector
+blocks and $e$ edge blocks: $n=3e$ original weight owners. A seed occurs
+in its own connector, the cyclic predecessor connector and its edge block.
+Its incidence is three at vertices of degree at least two and two at a
+degree-one vertex, hence always at most three.
+
+Fix $t=2^{-10}$ and the single full-support block law on all of $S_d$
+
+$$
+\begin{aligned}
+w_d(\langle\alpha,\alpha\rangle)
+ &=w_d(\langle\beta,\beta\rangle)=t,\\
+w_d(x)&=1\quad\text{at every other }x\in S_d,\\
+W_d^{\rm wt}&=|S_d|-2+2t,\qquad\mu_d=w_d/W_d^{\rm wt}.
+\end{aligned}
+\tag{GDB.34}
+$$
+
+The superscript distinguishes this weight total from the word menu $W_d$.
+At $d=2$ it is $4609/512$; each diagonal probability is $1/9218$
+and each of the other nine probabilities is $512/4609$.
+

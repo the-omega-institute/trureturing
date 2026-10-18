@@ -1,0 +1,18 @@
+### 定义 21.3（Fibonacci 层 Fisher 曲率）
+
+在内部单纯形
+
+\[
+\Delta(\Sigma_n)^\circ
+=
+\{p_I>0:\sum_Ip_I=1\}
+\]
+
+上，对 \(u\in T_p\Delta(\Sigma_n)\) 定义
+
+\[
+\mathcal I_n(p;u)
+=
+\sum_{I\in\Sigma_n}\frac{u_I^2}{p_I}.
+\]
+

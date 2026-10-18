@@ -1,0 +1,61 @@
+**Proposition 100.3 (Two independent missing-boundary examples).** The
+mean and late-mark tests and the existing restricted five-event test do
+not imply the complete hard-two criterion. The seven-event test does
+not replace the six-event test either.
+
+**Proof.** First take
+
+$$
+(u,v,w,z)=(7/10,13/20,2/5,7/20),\qquad
+\varepsilon=7/60,\qquad a_{4+j}=7/(60j)\quad(j\ge1).
+\tag{100.3}
+$$
+
+This is a positive monotone vanishing sequence with $a_5=\varepsilon<z$.
+The mean lower value is $D=91/60\le2$. The late-mark thresholds
+$w/4=1/10$ and $z/3=7/60$ both pass; later amplitudes are at most
+$\varepsilon$. The five-event value is $9/100$, and the seven-event
+value is $23/200$, both below the cap. Nevertheless
+$w+z=3/4>6\varepsilon=7/10$. Here
+$F_A=F_R=1/8$, the tail is below both, and (96.3) gives all three
+attained errors $1/8$. Since $z\le5\varepsilon$, Corollary 100.2
+gives all three hard counts equal three at the stated smaller cap.
+
+Next take
+
+$$
+(u,v,w,z)=(9/10,17/20,3/5,2/5),\qquad
+\varepsilon=9/50,\qquad a_{4+j}=1/(6j)\quad(j\ge1).
+\tag{100.4}
+$$
+
+Again the tail is positive, monotone and vanishing, and
+$a_5=1/6\le\varepsilon<z$. The mean value is $D=37/20\le2$;
+$w/4=3/20$, $(w+z)/6=1/6$ and the late-mark $z/3=2/15$
+pass. The five-event value equals $9/50$, but the seven-event value
+$37/200$ exceeds this cap. The exact attained errors are
+$E_{\mathcal A}(2;a)=1/6$ and
+$E_{\mathcal N}(2;a)=E_{\mathcal O}(2;a)=37/200$.
+For an explicit common-seed realization, use the catalog mixtures
+
+$$
+\begin{aligned}
+\text{adaptive}:\quad&
+ \tfrac14U_2+\tfrac1{20}U_1+\tfrac1{60}U_0
+              +\tfrac7{30}A_7+\tfrac9{20}A_9,\\
+\text{ordered}:\quad&
+ \tfrac{13}{120}P+\tfrac4{15}B_1+\tfrac14U_2
+              +\tfrac18O_{5,\mathrm{lo}}+\tfrac14O_{5,\mathrm{hi}}.
+\end{aligned}
+\tag{100.5}
+$$
+
+Each list has nonnegative weights summing to one. Its weighted
+amplitudes are exactly (100.4), and its weighted error allowances are
+respectively $1/6$ and $37/200$. Proposition 100.1 covers their actual
+tails, including equality $a_5=F_A$. Corollary 100.2 gives counts
+$(2,3,3)$ at $9/50$. In the binding form $h=1/10$, the first-coordinate
+condition $u=1-h$ holds while $v=17/20>1-2h=4/5$ fails. Thus the
+second-coordinate obstruction is distinct from the first-coordinate
+one. $\square$
+

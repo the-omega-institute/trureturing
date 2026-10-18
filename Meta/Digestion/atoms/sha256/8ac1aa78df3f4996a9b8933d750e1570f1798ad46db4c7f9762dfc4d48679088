@@ -1,0 +1,24 @@
+**Proposition 2.2 (whole-row target, with occurrence-sensitive repair).**
+On $\Pi_j$ the target is exactly $R_j$; on every $Z_d,Z_*$ it is exactly
+$R_0$. The five rows are different.
+
+Proof. Apply the inherited inverse and NBP Proposition 9.3's
+occurrence-sensitive predecessor calculation. In a zero case all six
+values are images. Each depth-two block is a pair of images, so its
+predecessor is an old pair with both cut occurrences still present.
+All eight holes remain, and injectivity of $\rho$ preserves their entire
+equality and disequality partition. This gives $R_0$.
+
+On $\Pi_j$ exactly block $q_j$ is $E$. Its predecessor is the concrete
+beta leaf; its two current children are newborn and were absent before
+the update. The other three blocks are pairs of images. Consequently
+exactly those two holes disappear, giving $C_j$ and the restriction of
+$\pi_*$ to the other six occurrences. Injectivity preserves all their
+equalities and disequalities. Reordering those holes and taking their
+first-member positions gives precisely the vectors above. The beta at
+$q_j$ is the strict-prefix guard for the two absent cuts. When the
+partner is repeated, its occurrence in the other block remains an old
+hole, even though its current value is beta. Classwise removal would
+give a different row. Finally the five reached supports are different,
+so the rows are pairwise different. $\square$
+

@@ -1,0 +1,21 @@
+**定义 1.1（不可变原生树与字面读口）。** 令 $\mathcal T$ 为非空有限有序满二叉树的集合：
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+括号、左右次序和每个叶出现都属于来源。记 $n(T)$ 为叶数，$w(T)$ 为从左到右的叶词。地址集为 $\mathcal A=\{L,R\}^{\ast}$，根为 $\varepsilon$。同一不可变来源的读口为
+
+$$
+\begin{aligned}
+r_T(\varepsilon)&=\alpha&&\text{若 }T=\alpha,\\
+r_T(\varepsilon)&=\beta&&\text{若 }T=\beta,\\
+r_{\langle S,U\rangle}(\varepsilon)&=\mathsf{br},\\
+r_{\langle S,U\rangle}(Lv)&=r_S(v),&
+\qquad r_{\langle S,U\rangle}(Rv)&=r_U(v),\\
+r_\alpha(q)&=r_\beta(q)=\mathsf{abs}&&\text{若 }q\ne\varepsilon.
+\end{aligned}
+$$
+
+每个有限地址都允许直接请求，包括缺席地址；不要求先取得祖先。它正是 [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `Address`、`Reply` 和 `readout`，其中 $L,R$ 对应 `false,true`。后文不增加坐标、大小、距离、子集询问或来源索引读口。
+

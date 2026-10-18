@@ -1,0 +1,28 @@
+## 372. Every opposite-V exit is globally impossible
+
+By (370.2), xy>2 and the increasing function (xy-1)/(x+y) satisfies
+
+    (xy-1)/(x+y)>55/171>sqrt(3)-sqrt(2)
+                          >sqrt(1+w^2)-w.               (372.1)
+
+For the middle inequality, sqrt(3)>19/11 and sqrt(2)>7/5 give
+sqrt(3)+sqrt(2)>172/55>171/55; take reciprocals. The last uses
+(371.2) and strict decrease of sqrt(1+w^2)-w.
+
+Since xy>1, atan(x)+atan(y)-pi/2 belongs to (0,pi/2). The other
+comparison angle pi/4-atan(w)/2 also belongs to (0,pi/2). Their
+tangents are the left and final expressions in (372.1). Therefore
+
+    2*atan(w)+4*atan(x)+4*atan(y)>3*pi,
+
+or equivalently
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.                  (372.2)
+
+The actual owners tau,rho,eta are distinct: tau has no V, and rho
+has C while eta does not. The charge in (372.2) is tau's one D-axis
+slot, rho's two V and two D slots, and eta's two V and two D slots.
+Their complete genuine V/D capacity is pi+2*pi. This contradiction
+excludes every owner of type (369.1), globally. No rho existence premise
+was used until its actual existence was supposed for contradiction.
+

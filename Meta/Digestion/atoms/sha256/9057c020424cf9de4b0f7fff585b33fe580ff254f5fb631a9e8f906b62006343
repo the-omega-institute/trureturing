@@ -1,0 +1,9 @@
+**Proposition 5.3 (finite image is only a consequence).** A positive
+(CAR.16) permits effective construction of the finite image $R_Q(D)$.
+Finiteness of this image is not a premise of the decision, and does not
+conversely imply it.
+
+Proof. The finite prefix table in Theorem 5.2 gives the image exactly;
+all its nonempty entries have actual-source witnesses. Proposition 9.1
+below gives a fiber with finite image and negative (CAR.16). $\square$
+

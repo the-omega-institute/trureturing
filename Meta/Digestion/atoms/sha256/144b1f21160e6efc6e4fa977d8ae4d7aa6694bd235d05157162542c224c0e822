@@ -1,0 +1,63 @@
+**Theorem 7.4 (every concurrent interval attempt is paid and finite).**
+For a call of Definition 7.3 starting at $X_{a,r}$, let $b$ be its
+updates through Return, $a_f=a+b$, $N_L=|\operatorname{Pos}(T_{a_f})|$
+and $H_L=\operatorname{height}(T_{a_f})$. The program of Theorem 7.2
+is safe at its final guard, terminates with at most $b$ failures and
+$b+1$ attempts, and each attempt has at most
+
+$$
+N_L+H_L+4\text{ ordinary RA Reads},\qquad h_q\text{ hidden Reads}.
+\tag{CAB.21}
+$$
+
+For $q\ge2$, put
+$D_b=1+\lfloor(a_f+d+q-2)/2\rfloor$. Its hidden operands have length
+at most $D_b$, so all attempts together have at most
+$(b+1)h_q$ hidden Reads and $(b+1)D_bh_q$ hidden letters. Ordinary
+RA letters are at most $(b+1)(H_L+1)(N_L+H_L+4)$.
+
+The row candidate uses at most $4(N_L+6)$ bits. Supplement payload
+uses $\lceil\log_2q\rceil$ bits. Auxiliary paths and all numerical
+control use
+$O(H_L+1+\log(a_f+d+q+2))$ bits. A separate complete operand region
+uses $O(\max(H_L+1,D_b)+1)$ bits. Public $d,q$, framing and the fixed
+code have their actual immutable binary costs. For $q=1$ remove the
+hidden-query and $D_b$ terms. The final first handoff contains only
+the actual full row and $r$; the second row has its own full RA bill.
+
+Proof. The original root remains paired. Every reached left position
+persists in $T_{a_f}$. Even a mixed candidate is a syntactically complete
+tree, and its rightmost leaf was actually read at some relative right
+depth $j$ with bit $e$. All its right ancestors had replied branch
+and persist. Therefore its candidate clock $C=2j+e$ equals the left
+subtree's actual clock at that leaf event. In particular
+$a\le C\le a_f$, including failed attempts. This is an acquired
+bound, not an assumed supplied interval. The final left depth bounds
+the guard; the exterior visits at most the root and $N_L$ left nodes.
+There are no pair comparisons. These facts give (CAB.21) and the
+candidate bound.
+
+Every iteration of the hidden reader reduces $h$, including a reply
+inconsistent with any stationary candidate. Consequently it ends
+within $h_q$ queries even when the source crosses its provisional
+upper endpoint. Its generated operands obey the runtime bound
+$1+\lfloor(C+d+q-2)/2\rfloor\le D_b$. Matching the final leaf
+makes the entire row and hidden reader stationary. Then $C$ is the
+true current common age and $r\in[0,q-1]$ puts the hidden source
+inside that runtime interval. The supplied interval proof yields
+the correct $r$. INVALID or a failed guard therefore requires an
+update after the saved leaf; disjoint attempts charge distinct updates.
+This proves safety, termination and the full failure account.
+
+Only a constant number of binary integers and four reply-map entries
+are maintained. The capacity numbers used before halting are $O(q)$;
+thresholds and provisional ages have $O(\log(a_f+d+q+2))$ bits.
+No interval enumeration or installed $a$-specific literal table is
+needed. The row and paths have the stated left-tree bounds, while
+full hidden operands are independently materialized and cleared.
+Add to RA's local work a scan of the left candidate and, per hidden
+query, $O(D_b+L_b^2)$ bit/cell operations, where
+$L_b=1+\lceil\log_2(N_L+a_f+d+q+8)\rceil$; initialization and
+cleanup cost at most $O((N_L+1)L_b^2+L_b^3)$ more per attempt.
+These are loose finite work bounds, not optimal time claims. $\square$
+

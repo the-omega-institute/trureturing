@@ -1,0 +1,49 @@
+**Theorem 14.3 (Uniform additive degree in the normalized clock).**
+For every $d\ge1$, every $n\ge1$ and all positive activities
+and positive normalized site weights,
+
+$$
+0\le\gamma^{(d)}-\gamma<\frac1{2d+1}.
+\tag{14.12}
+$$
+
+Proof. If $n\le2d$, the maximal legal monomial degree
+$\lceil n/2\rceil$ is at most $d$, so (11.7) gives equality
+of the two gaps. If $n\ge2d+1$, every site has a neighbor.
+Write $\rho_i=\mathbb E_ps_i$. Conditional resampling gives
+$\rho_i=q_i p(s_j=0\text{ for all }j\in N(i))<q_i$:
+a singleton occupied neighbor has positive mass. Formula
+(11.4), or the existing singleton calculation (7.10), gives
+
+$$
+\frac{\mathcal E_\omega(s_i,s_i)}{\operatorname{Var}_p(s_i)}
+=\frac{\omega_i}{(1+\lambda_i)(1-\rho_i)}<\omega_i.
+\tag{14.13}
+$$
+
+Choose a minimum-weight site. The degree-$d$ menu includes it,
+and $\min_i\omega_i\le1/n$, so
+$\gamma^{(d)}<1/n\le1/(2d+1)$. Subtract the positive $\gamma$
+and use the variational lower bound. $\square$
+
+This concerns an optimized probe with fixed additive accuracy
+and the specific normalization $\sum_i\omega_i=1$. It supplies
+neither relative accuracy nor an exact gap eigenfunction of
+uniform degree. It therefore coexists with Theorem 14.2's
+failure for a fixed readout. If an independently established
+margin $1-\Lambda-\gamma\ge\epsilon>0$ is available, any
+$d$ with $1/(2d+1)\le\epsilon$ gives a degree-$d$ witness
+below $1-\Lambda$. No such universal positive margin is
+asserted; the arbitrary-parameter comparison remains unresolved.
+
+The estimates and the positive two-site family are deductions
+for the stipulated normalized path. Their literature priority
+is not claimed. The monomial energy mechanism used above is
+the published insertion-deletion calculation of Miao--Yin
+[MY26], §3.2, equations (13), (21) and (22), with the actual
+site deletion rates $\omega_i/(1+\lambda_i)$ substituted.
+Their quantitative polynomial-approximation theorem requires
+field-dynamics stability and integrability not supplied here.
+
+[MY26]: ../../../Library/StatisticalMechanics/miaoyin2026matchings.md
+

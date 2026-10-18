@@ -1,0 +1,33 @@
+### 98.1. Original domain and common stresses
+
+Keep the original local CPTP maps \(\mathbb C^8\to\mathbb C^4\), four two-coordinate fibres, fixed correlated encodings, arbitrary reference, and unhalved diamond normalization. On the full calibrated domain,
+\[
+\begin{aligned}
+\mathcal E&=\{G\succeq0:G_{ff}=I_2\},\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}[(T-G\odot H)W],\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ is fibre-block diagonal},
+ \ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}\tag{1}
+\]
+Initially assume only that \((G,H)\) is a local minimum on \(\mathcal E^2\), \(\operatorname{rank}G=7\), and \(0<t=F(G,H)<1/2\). Fix a nonzero \(a\) spanning \(\ker G\). Every cross-fibre entry of \(G,H\) is nonzero by the matrix-unit bound.
+
+Let \(\mathcal A\) be the full compact convex set of normers in (1). As in §§92, 95 and 97, define \(\mathcal A_0\) to be the complete set of normers satisfying
+\[
+b(W;G',H')=-2\operatorname{Tr}
+\bigl[((G'-G)\odot H+G\odot(H'-H))W\bigr]\ge0
+\quad\text{for every }(G',H')\in\mathcal E^2. \tag{2}
+\]
+This set is nonempty, compact and convex. Its complementary stresses satisfy
+\[
+\begin{aligned}
+P_A&=-2\overline H\odot W+Y_A=\alpha_Waa^*,&
+P_AG&=0,&\alpha_W&>0,\\
+P_B&=-2\overline G\odot W+Y_B\succeq0,&
+P_BH&=0,\\
+W_{ij}&=-\frac{\alpha_Wa_i\overline{a_j}}{2\overline{H_{ij}}}
+&&\text{on different original fibres},
+\end{aligned}\tag{3}
+\]
+where \(Y_A,Y_B\) are fibre-block diagonal. For a PSD matrix \(K\), write \(N_K\) for the orthogonal projection onto its kernel, \(P_K=I-N_K\), and \(K^+\) for its Moore--Penrose inverse.
+

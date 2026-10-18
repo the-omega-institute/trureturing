@@ -1,0 +1,33 @@
+**Corollary 245.3 (An unequal eight-coordinate continuum).** For
+$0\le x\le1/200$, $9/10\le h\le1$, take
+
+$$
+a=(h,9/10,9/10,9/10-x,9/10-2x,9/10-3x,
+                           9/10-4x,9/10-5x,\ldots).
+$$
+
+For every entire permitted actual tail, the exact attained optimum is
+
+$$
+e_*(x,h)=\max\left\{\frac{319}{540}-\frac{5x}{3},
+                            \frac{22/5+h-15x}{9}\right\},
+\qquad a_9\le e_*(x,h).
+\tag{245.6}
+$$
+
+Proof. Here $q=1/60$, $R=8/135+5x/3$, $H=11/12$,
+$e=319/540-5x/3$, $e_S=3/5-5x/3$, and the eight degrees are
+
+$$
+\left(\frac{61}{270}+\frac{5x}3,
+\frac{61}{270}+\frac{5x}3,\frac{61}{270}+\frac{5x}3,
+\frac{61}{270}+\frac{2x}3,\frac{61}{270}-\frac{x}3,
+\frac{61}{270}-\frac{4x}3,\frac16-4x,\frac14-5x\right).
+\tag{245.7}
+$$
+
+Their sum is $3e$; they are positive and at most $1/4$, while
+$e\ge629/1080>1/2$. Each amplitude floor follows from
+$(n-3)x\le\binom{n-2}{2}/60$. Thus Theorem 244.2 applies,
+including $x=0$, all heads and every actual equality tail. ∎
+

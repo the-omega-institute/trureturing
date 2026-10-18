@@ -1,0 +1,22 @@
+**Proposition 13.4 (why these scopes are different).**
+Theorem 10.3's code-only basis justifies separate uniform phase bounds
+with the reader fixed. It does not supply equality of an unchanged
+reader's replies on $u$ and its padded comparison source. Theorem 13.1
+adds exactly those finite reader observations before making a correlated
+comparison. Theorem 13.3 changes the reader table under the separate
+permission of Definition 13.2 and instead simulates both old phases
+on one padded source.
+
+Proof. A code certificate requires constancy of $c$, not constancy of
+all reader observations. A frontier branch can be $E$ on one source
+and a larger branch image on another. Their root replies agree while
+their right-child replies are alpha and beta or branch, respectively.
+Both are actual image values and can be put into an otherwise injective
+all-image filling of the repeated-partner row by choosing the other
+branch classes different from both. NBP's inverse gives actual sources.
+Thus retaining a root observation alone does not retain that suffix
+observation. The larger depth of Theorem 13.1 retains it; the changed
+reply map of Theorem 13.3 simulates it on the selected padded source.
+No failure of a particular coupling is asserted to refute every possible
+smaller correlated basis. $\square$
+

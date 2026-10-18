@@ -1,0 +1,83 @@
+**Theorem 6.2 (global realizability, replies and exact physical lengths).**
+Every finite physical word has a descriptor. Every descriptor has an
+effectively constructible realizing word of exactly its stated length.
+There are Presburger predicates
+
+$$
+\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta),
+\qquad c\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},
+\tag{CAR.20}
+$$
+
+for arbitrary epochs $j\ge0$, such that any realization $p$ of $\delta$
+satisfies, simultaneously for every chart and all its admitted tuples,
+
+$$
+\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta)
+\quad\Longleftrightarrow\quad
+r_{\rho^j\Theta_\eta(\mathbf n)}(p)=c.
+\tag{CAR.21}
+$$
+
+Thus one descriptor has one reply function on the *entire* chart union
+at every actual epoch. Its realization does not depend on the chart,
+source, index tuple or reply. The descriptor interface preserves sourcewise
+read counts and physical lengths exactly when replacing a read by a
+realizing word.
+
+Proof. Short words are literal descriptors. For $|p|>H$, factor uniquely
+$p=zs$ with $|z|=H$ and $|s|=l>0$; take its actual weight and last edge.
+The first $l-1$ letters have weights between $l-1$ and $2(l-1)$, proving
+(CAR.19). Conversely put
+
+$$
+r=t-\omega(e)-(l-1),\qquad
+s=R^rL^{l-1-r}e.
+\tag{CAR.22}
+$$
+
+The descriptor inequalities say $0\le r\le l-1$. This word has exactly
+the prescribed length, weight and last edge, so $zs$ is a genuine physical
+request of length $H+l$.
+
+Short-word replies are computed by the finite navigation of Lemma 4.1,
+with $j$ a variable added to each rank. Its case guards remain linear.
+This includes the root, reached leaves, branches and absence at short
+addresses, even at epochs zero and one.
+
+For a long descriptor fix a chart. Following the fixed word $z$ through
+its *skeleton*, one reaches a unique skeleton leaf at a prefix $a$ of $z$,
+since every skeleton leaf has depth at most $H$. Write $z=ab$. Let $k$
+be that leaf rank expression, either $n_y+c$ or $c$. This traversal is in
+the finite template only; it does not assert that $z$ is reached in the
+expanded physical tree. The physical suffix after $a$ is $bs$, is
+nonempty, has weight $w(b)+t$, and ends in $e$.
+
+The exact supplied atomic guard [ARH, (4.3)][ARH] gives
+
+$$
+\begin{aligned}
+bs\in\operatorname{Pos}(T_{k+j})
+ &\Longleftrightarrow
+ k+j-w(b)-t\ge2-\omega(e),\\
+T_{k+j}|_{bs}&=T_{k+j-w(b)-t}\quad\text{when reached}.
+\end{aligned}
+\tag{CAR.23}
+$$
+
+All preceding edge weights are positive. Consequently the final-parent
+condition in (CAR.23) ensures every earlier parent was a branch; if it
+fails, the request is absent, including failure before the end of $z$.
+Let $v=k+j-w(b)-t$. The reply is absent when $v<2-\omega(e)$; otherwise
+it is $\alpha$ for $v=0$, $\beta$ for $v=1$, and branch for $v\ge2$.
+The existence guard is retained in the $v=0$ case: a word ending in $L$
+can have residual zero and still be absent. These mutually exclusive
+cases cover all possibilities, and are linear arithmetic formulas.
+
+The same $z,t,l,e$ is used in every chart, although its leaf prefix $a$
+and rank expression can differ. Formula (CAR.23) proves (CAR.21) separately
+in each chart with the same realizing word (CAR.22). It holds for every
+natural $j$ at once, not just for one chosen epoch. No hidden rank or
+chart is used in realizing the word. Actual read count is one and its
+length is precisely the descriptor length. $\square$
+

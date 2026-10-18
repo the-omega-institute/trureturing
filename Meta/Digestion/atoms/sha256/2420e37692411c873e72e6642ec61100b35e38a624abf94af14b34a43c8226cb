@@ -1,0 +1,32 @@
+**Proposition 8.4 (fresh-source prices and stationary-source reuse).**
+For $t\ge2$, fixed acquisition for Theorem 8.3 pays for $n$
+separately drawn, prepared and isolated actual sources, $nt$ online
+Reads and $nt(H+1)$ submitted letters. When the inherited full scan
+is used on each source, the separate total preparation price is
+$n(2^D-1)$ Reads and $n[(D-1)2^D+1]$ submitted letters, with maximum
+word length at most $D$. Early
+mismatch stopping within a source can determine its $C_i$ with
+fewer actual Reads without changing the rule. For $t\le1$, the
+optimal fixed guess needs no online Reads.
+
+Reusing one stationary source does not realize these product laws.
+If instead that one source is allowed a total budget $nk$, its
+optimum is Theorem 6.3 with $t$ replaced by $\min\{nk,\ell\}$.
+
+Proof. Apply Proposition 7.1 separately to each fresh source and add
+the actual words and letters. A mismatch already fixes that source's
+indicator at zero, so early termination preserves all indicators and
+the resulting count. Preparations and isolation are separate services
+on separate actual sources; public common tables, control, workspace,
+decision storage and any competitor randomness retain the accounts of
+§7. The attaining test still needs no randomization.
+
+On one stationary source, repeats return the same tuple's values,
+not independent new native samples. All its data, regardless of how
+one groups the invocations, belong to a single policy of total budget
+$nk$. Theorem 5.2 gives its comparison with
+$E_{\min\{nk,\ell\}}$, and actual root Reads attain the one-source
+formula. In particular its risk saturates after $\ell$ distinct
+phases. This distinguishes fresh source acquisition from repeated
+access to one sample. $\square$
+

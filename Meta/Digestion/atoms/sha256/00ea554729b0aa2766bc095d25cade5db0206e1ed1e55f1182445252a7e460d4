@@ -1,0 +1,52 @@
+##### 定义 2.4.1： 位置是相对于接口的读数
+
+固定有限位置或模式标签集：
+
+$$
+X=\{1,\ldots,d\}.
+$$
+
+单激发空间为：
+
+$$
+\mathcal H_1=\operatorname{span}\{|x\rangle:x\in X\}.
+$$
+
+对区域 $R\subseteq X$，定义位置投影：
+
+$$
+P_R=\sum_{x\in R}|x\rangle\langle x|.
+$$
+
+若当前态为 $\rho$，理想区域检验概率为：
+
+$$
+p(R)=\operatorname{Tr}(\rho P_R).
+$$
+
+这里 $x$ 是已声明的模式或有限探测单元，不是已经取得一个无限精确的连续坐标。
+
+更一般地，一个带钟、探测方式和结果标签的事件 $e$，对应仪器分支：
+
+$$
+\Phi_e(\rho)=\sum_\alpha K_{e,\alpha}\rho K_{e,\alpha}^\dagger,
+$$
+
+以及效果：
+
+$$
+E_e=\sum_\alpha K_{e,\alpha}^\dagger K_{e,\alpha},
+\qquad
+0\preceq E_e\preceq I.
+$$
+
+它的概率为：
+
+$$
+p_\rho(e)=\operatorname{Tr}(\rho E_e).
+$$
+
+这些是标准量子状态与测量的操作定义。
+
+<a id="claim-2-4-2"></a>
+

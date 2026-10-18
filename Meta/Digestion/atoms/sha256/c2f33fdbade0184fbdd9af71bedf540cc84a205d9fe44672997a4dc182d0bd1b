@@ -1,0 +1,46 @@
+**定理 17.2.3（Dobrushin 收缩）。** 对任意分布 $\mu,\nu$，
+
+$$
+\boxed{
+\operatorname{TV}(\mu K,\nu K)
+\le
+\alpha(K)\operatorname{TV}(\mu,\nu).
+}
+$$
+
+**证明。**
+
+令 $h=\mu-\nu$。由推前定义，
+
+$$
+(\mu K-\nu K)(y)
+=
+\sum_xh(x)K(x,y).
+$$
+
+取任意固定 $x_0\in X$。由于 $\sum_xh(x)=0$，
+
+$$
+\mu K-\nu K
+=
+\sum_xh(x)\bigl(K(x,\cdot)-K(x_0,\cdot)\bigr).
+$$
+
+用三角不等式、$h=h_+-h_-$ 和 $\operatorname{TV}(K(x),K(x_0))\le\alpha(K)$，得到
+
+$$
+\begin{aligned}
+\operatorname{TV}(\mu K,\nu K)
+&\le
+\sum_xh_+(x)\alpha(K)
++
+\sum_xh_-(x)\alpha(K)\\
+&=
+\alpha(K)\operatorname{TV}(\mu,\nu).
+\end{aligned}
+$$
+
+证毕。
+
+<a id="claim-17-2-4"></a>
+

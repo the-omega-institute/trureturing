@@ -1,0 +1,23 @@
+**Definition 5.1 (One fixed mixed port).** Put $p=1/50000$ and
+
+$$
+S_{\rm mix}=(1-p)S_Q+p\mathcal B,\qquad
+T_{\rm mix}(X)=DS_{\rm mix}(D^\dagger XD)D^\dagger.
+\tag{5.1}
+$$
+
+Its full list of independent unit-factor atoms is (2.1), with weights
+$(1-p)c_f$, together with the twelve atoms $a=b=v_{ij,\epsilon}$
+of weights $p/3$ and the dark atom $a=b=d$ of weight $p$.
+For any listed atom $(a_f,b_f,w_f)$ use
+
+$$
+\operatorname{Enc}_f(X)=w_fb_f^TD^\dagger XDb_f,\qquad
+\operatorname{Dec}_f(y)=yDa_fa_f^TD^\dagger.
+\tag{5.2}
+$$
+
+All twenty-seven flags and coefficients are fixed before the input
+and future policy. The mixed-port design is separate from the
+fixed-encoder decoder variation in §2.
+

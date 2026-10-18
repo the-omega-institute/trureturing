@@ -1,0 +1,42 @@
+**Definition 11.2 (all-history indices and both directed conflicts).**
+Let $\mathscr H_p$ be the set of distinct actual live run prefixes
+of count cell $p=(h,z)$, ending immediately before a query, and let
+$\mathscr H(q)$ consist of all such prefixes ending at the installed
+state $q$. A prefix records its finite sequence of states, queried
+coordinates and replies, including its ending state. All completing
+inputs that follow that identical prefix define one member, counted
+once. Prefixes with the same ending state are not thereby identified.
+For $H$ put
+
+$$
+A_H=\{i:\text{the exposed value at }i\text{ is }1\},\qquad
+B_H=\{i:\text{the exposed value at }i\text{ is }0\}.
+\tag{SI.61}
+$$
+
+Thus $A_H\cap B_H=\varnothing$, $S_H=A_H\cup B_H$, and
+$|A_H|=h$, $|B_H|=z$. Assign the proof weight
+
+$$
+\omega(H)=\binom{h+z}{h}^{-1},\qquad
+\lambda_p(q)=\sum_{H\in\mathscr H_p\cap\mathscr H(q)}\omega(H),
+\qquad \lambda(q)=\sum_{H\in\mathscr H(q)}\omega(H).
+\tag{SI.62}
+$$
+
+Call $q$ a both-conflict state when for every two distinct members
+$H,H'\in\mathscr H(q)$,
+
+$$
+A_H\cap B_{H'}\ne\varnothing
+\quad\hbox{and}\quad
+A_{H'}\cap B_H\ne\varnothing.
+\tag{SI.63}
+$$
+
+This is a condition on all its actual live prefixes, including different
+prefixes in the same count cell. These weights are neither source
+probabilities nor a distribution on actual inputs. The prefix sets,
+assignments and sums are mathematical indices; no archive, accessible
+history, randomization, counter or extra control is installed.
+

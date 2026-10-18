@@ -1,0 +1,16 @@
+**Corollary 4.4 (Arbitrary encoders of full histories).** The same
+nonexistence holds for an arbitrary finite-dimensional encoder of complete
+producing histories if one fixed affine readout returns their current
+original output and one state-independent affine map for each $s$ appends
+the same lawful probability leg.
+
+**Proof.** Let $H_k$ be the canonical probability history used in Theorem
+4.3, and let $H_k*s$ append the displacement leg. Replace $e_j(k)$ by
+$E_j(H_k)$. The current response of $H_k*s$ under $\ell$ is still
+$2\sqrt Z\sqrt{k+s}$, while the appending contract gives the same
+expression in $\operatorname{span}\{1,e_1,\ldots,e_n\}$. Lemma 4.2
+gives the same contradiction. No histories with the same current ray have
+been identified, so retaining history-dependent features does not evade this
+affine contract. This is not a bound on acquiring or storing histories.
+$\square$
+

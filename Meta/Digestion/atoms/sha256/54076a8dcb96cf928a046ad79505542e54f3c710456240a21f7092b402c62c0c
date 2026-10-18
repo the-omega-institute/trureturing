@@ -1,0 +1,9 @@
+**假设 23.1（明示概率、视界与线性近似）。** 使用定理 17.2 的纯向量共同旋转模型，取有限未来词族 $\mathcal W_h$、正权 $a_w$，定义
+
+$$
+\mathcal R_hx=(\sqrt{a_w}\,CA_wx)_{w\in\mathcal W_h},\qquad
+G_h=\mathcal R_h^{\mathsf T}\mathcal R_h=G_h^{\rm mult}\otimes I_3.
+$$
+
+测试来源 $x$ 的概率律在完整载体上有有限二阶矩，$\mathbb Ex=0,\mathbb E(xx^{\mathsf T})=I$。候选摘要为对称性保持的正交投影 $P=P_M\otimes I_3$，$\operatorname{rank}P_M=s$；评分只比较从原初态恢复这些声明响应的平方损失。维护每个实分量成本 $\lambda>0$，失真权 $\gamma>0$，二者单位相容。
+

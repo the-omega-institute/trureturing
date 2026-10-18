@@ -1,0 +1,15 @@
+### 78.2. The same anchor controls every Schmidt sign-pair
+
+Suppose also that each c_f is presented through local orthonormal pairs as
+
+    c_f=(a_(f,0) tensor b_(f,0)+a_(f,1) tensor b_(f,1))/sqrt(2),
+    d_f=(a_(f,0) tensor b_(f,0)-a_(f,1) tensor b_(f,1))/sqrt(2).
+
+Let Q_star be the rank-three projection onto the product of the two local Schmidt supports of c_star, with its own line removed. The sharp support inequality of section 77 applies to this constructed anchor and every actual pair c_f,d_f. Thus
+
+    sum_f p_f ||(I-Q_star)d_f||^2
+       <=2 sum_f p_f(1-|<c_star,c_f>|)
+       <=2(1-Re<c_star,c_bar>) <=u(epsilon).          (5)
+
+Only the anchor is newly chosen. The vectors d_f remain the original joint records, with their mutual Gram matrix and all phases unchanged. No independent choice of equality frames is made.
+

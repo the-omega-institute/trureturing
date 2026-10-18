@@ -1,0 +1,30 @@
+**Definition 2.1 (Specified reversible class).** Fix
+
+$$
+\pi=(7/10,3/20,3/20),\qquad R=\{2,3\}.
+$$
+
+Let $\mathcal K$ be all entrywise nonnegative $3\times3$ matrices $K$ with
+$K\mathbf1=\mathbf1$, $\pi_iK_{ij}=\pi_jK_{ji}$ for every $i,j$, and
+$K_{13}=3/20$. No rank, strict entry positivity, irreducibility or
+aperiodicity condition is added. Let $J$ be the inclusion of coordinates
+$2,3$, $E=JJ^\mathsf T$ and $D=I_3-E$. In state order $(1,2,3,2',3')$ define
+
+$$
+M_0(K)=\begin{pmatrix}DK&0_{3\times2}\\J^\mathsf TK&0_{2\times2}\end{pmatrix},\qquad
+M_1=\begin{pmatrix}0_{3\times3}&J\\0_{2\times3}&0_{2\times2}\end{pmatrix},
+$$
+
+$$
+b=\pi(R)=3/10,\qquad
+\lambda=\frac{(\pi,\pi J)}{1+b}
+=(7/13,3/26,3/26,3/26,3/26),\qquad
+\theta_K=(\lambda,M_0(K),M_1).
+\tag{2.1}
+$$
+
+Write $P_K=P_{\theta_K}$ for the visible output law. A free state $1$ emits
+$0$ and advances by $K$; a free state in $R$ emits $1$ into its own tail;
+each tail emits $0$ and advances by $K$. Risk is measured per emitted bit,
+with stationary row $\lambda$, rather than per base transition with row $\pi$.
+

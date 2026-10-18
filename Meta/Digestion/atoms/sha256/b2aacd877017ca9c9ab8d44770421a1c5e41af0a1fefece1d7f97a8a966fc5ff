@@ -1,0 +1,71 @@
+### 109.4. An exact family below one half
+
+**Proposition 109.2.** The central half bound of §108 cannot be extended to these noncentral reflection fibres. There are calibrated invariant rank-$(4,4)$ physical pairs with exact original error $23/49<1/2$. An explicit family has minimum $2\sqrt3-3$ within that family. There are also exact-rank-$(7,4)$ and $(7,5)$ examples below one half, with a unique full-support first kernel.
+
+For $0\leq q\leq1$ and real $\theta$, set
+
+$$
+(a_{+,+},a_{-,+},a_{+,-},a_{-,-})
+ =\left(0,0,\frac{1-q}{4},\frac{1-q}{4}\right),\qquad
+M=\frac12\begin{pmatrix}1&\sqrt q e^{i\theta}\\\sqrt q e^{-i\theta}&q\end{pmatrix},
+\quad N=\overline M.
+\tag{109.16}
+$$
+
+Use the same scalar coefficients for $H$. Explicit first-party unit records are
+
+$$
+\mathbf a_x=\left(\sqrt{\frac{1-q}{4}}\chi_{+,-}(x),\
+\sqrt{\frac{1-q}{4}}\chi_{-,-}(x),\
+\frac{U(x)v}{\sqrt2}\right),\qquad
+v=\begin{pmatrix}1\\\sqrt q e^{-i\theta}\end{pmatrix},
+\tag{109.17}
+$$
+
+and second-party records are their complex conjugates. Their partner overlap is $-(1-q)/2+(1-q)/2=0$. Therefore $|x\rangle\mapsto|x\langle s\rangle\rangle\otimes\mathbf a_x$ and the conjugate-record analogue are original Stinespring isometries. For $0<q<1$, two positive scalar blocks and a rank-one two-dimensional coefficient with multiplicity two give both local Kraus ranks four.
+
+Direct multiplication gives
+
+$$
+\begin{aligned}
+c_{+,+}&=\frac{1+q^2}{4},&c_{-,+}&=\frac{(1-q)^2}{4},\\
+c_{+,-}&=\frac{q\sin^2\theta}{2},&c_{-,-}&=\frac{q\cos^2\theta}{2},\\
+S&=\operatorname{diag}\left(\frac{q(1-q)}2,\frac{1-q}2\right).
+\end{aligned}\tag{109.18}
+$$
+
+The error coefficient is diagonal in the parity decomposition, so $L$ commutes with $R_s$. Formula (109.9) becomes
+
+$$
+\begin{aligned}
+E_+&=1-q^2,\\
+E_-&=2\left(\left|\frac18-\frac{q\sin^2\theta}{2}\right|
+ +\left|\frac18-\frac{q\cos^2\theta}{2}\right|
+ +\left|\frac{2q-1}{4}\right|\right).
+\end{aligned}\tag{109.19}
+$$
+
+These two values give the exact full norm. For the upper bound take $Z=|L|$. Its original fibre blocks are $\left(\begin{smallmatrix}d_1&c_1\\c_1&d_1\end{smallmatrix}\right)$ with $d_1=\operatorname{Tr}|L|/8$ and $c_1=\operatorname{Tr}(R_s|L|)/8\in\mathbb R$. Their eigenvalues are $E_+,E_-$. Thus $Z\succeq\pm L$ and $Z_{ff}\preceq\max(E_+,E_-)I_2$. The full original majorant from RT III §91, together with (109.8), proves
+
+$$
+\delta=\max(E_+,E_-).
+\tag{109.20}
+$$
+
+At $\theta=\pi/4$ this is $\max(1-q^2,|2q-1|)$. On $[0,1/2]$ the first term dominates and is at least $3/4$. On $[1/2,1]$ the decreasing first term and increasing second term meet at $q=\sqrt3-1$, giving the stated family minimum $2\sqrt3-3$.
+
+For rational Gaussian Gram entries choose
+
+$$
+q=\frac{36}{49},\qquad e^{i\theta}=\frac{3+4i}{5},\qquad
+M=\begin{pmatrix}1/2&(9+12i)/35\\(9-12i)/35&18/49\end{pmatrix}.
+\tag{109.21}
+$$
+
+Here $c_{+,-}=288/1225$ and $c_{-,-}=162/1225$ both exceed $1/8$, so
+
+$$
+E_+=\frac{1105}{2401}<E_-=\frac{23}{49}<\frac12.
+\tag{109.22}
+$$
+

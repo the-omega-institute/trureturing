@@ -1,0 +1,10 @@
+**引理 1.4（所用条件极限；[Gray][Gray] §5.9，引理 5.9.3–5.9.4）。** $q_r\to q$ 在 $L^2(P)$ 中成立。因此对 $[0,1]$ 上的任意 Lipschitz 函数 $f$，有 $\mathbb E_P|f(q_r)-f(q)|\to0$。
+
+证明。条件期望是 $L^2$ 正交投影。对 $t\ge r$，塔性质及正交性给出
+
+$$
+\|q_t-q_r\|_2^2=\|q_t\|_2^2-\|q_r\|_2^2.
+$$
+
+右侧范数平方单调且至多一，故 $q_r$ 为 Cauchy 列。其极限 $q'$ 属于 $L^2(\mathcal E_0)$。对 $A\in\bigcup_r\mathcal F_r$，条件恒等式在极限给出 $\int_A q'\,dP=\int_A X_0\,dP$。这些事件组成一个生成 $\mathcal E_0$ 的代数；有限有符号测度的唯一性把恒等式扩到整个 $\mathcal E_0$，故 $q'=q$。Lipschitz 界和 Cauchy–Schwarz 给出最后一项。这里 $X_0$ 有界，全部投影属于同一个概率空间。$\square$
+

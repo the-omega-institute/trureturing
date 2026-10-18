@@ -1,0 +1,18 @@
+**命题 68.2（候选有限不等于来源有限，非空不等于需要新读）。** 保持命题68.1的两类行。实际取得零纪元的 $RL=\alpha,RR=\alpha$ 后，有 $L_b(H)=\{\langle\alpha,\alpha\rangle\}$、$L_a(H)=\mathcal T$，故 $D_b=\{\alpha\}$。实际原族仍无限，且新行有两种可能。
+
+另取三类行
+
+$$
+P'=\{LL,RL,RR\},\quad
+C'=\langle\langle\square_a,\alpha\rangle,
+                    \langle\square_b,\square_c\rangle\rangle,
+\quad a,b,c\text{ 两两不同},
+\tag{SLH.68.2}
+$$
+
+仍合并 $q=L$。实际取得零纪元 $RLL=\alpha,RLR=\alpha,RR=\alpha$ 后，$L_b=\{F[\alpha]\}$、$L_c=\{\alpha\}$、$L_a=\mathcal T$，所以 $D_b=\{\alpha\}$、$D_c=\varnothing$，但整个新行零新读即可决定。以上证据允许加入重复项，以及其已确定子树在任意以后纪元的真实字面回复，候选语言与结论不变。
+
+证明。两片孩子叶回复迫使对应原子树恰为 $F[\alpha]$，这也由定理55.3在 $N=0$ 的证书给出。两类情形的剩余条件是 $z_a\ne F[\alpha]$；它允许 $z_a=\alpha$，也允许 $z_a=\beta$ 和任意多棵其他不同形状的树。新孔与外部类相等当且仅当 $z_a=\alpha$，故新行有两种可能而原族无限。
+
+三类情形额外要求 $z_a\ne\alpha$，所以候选 $\alpha\in D_b$ 不能扩张为合法旧类元组。仍有例如 $z_a=\beta$ 及无限多个更大值，实际纤维非空。$F[z_a]=F[\alpha]$ 被单射性排除，$F[z_a]=\alpha$ 被非平凡性排除；因此新孔与两个外部类均不同，整个新行固定。该例说明 (SLH.66.3) 不是逐候选的联合可实现性断言，(SLH.67.1) 不是最优值。重复证据不改变合取；已固定原子树的所有后来值由同源运输确定，实际增加这些真项也不再过滤来源。$\square$
+

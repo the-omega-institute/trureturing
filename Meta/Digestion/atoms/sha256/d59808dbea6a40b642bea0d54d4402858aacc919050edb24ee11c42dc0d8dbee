@@ -1,0 +1,64 @@
+**Theorem 3.8 (Endpoint local factorization).** Embed the legal five modes in
+three binary position factors, ordered low, middle, high, by
+
+$$
+|0\rangle=|000\rangle,\quad |1\rangle=|100\rangle,\quad
+|2\rangle=|010\rangle,\quad |3\rangle=|001\rangle,\quad
+|13\rangle=|101\rangle.
+$$
+
+Thus occupation coordinates $(x,y,z)$ are the low, high, middle coordinates,
+whereas the tensor factors are ordered low, middle, high. Every loop residual
+$h$ of Definition 3.1 induces on this legal subspace a diagonal unitary which
+is the restriction of a product of three position unitaries, up to common
+phase. Explicitly, set
+
+$$
+a=h_1-h_0,\qquad b=h_3-h_0,\qquad c=-h_0.
+$$
+
+Then
+
+$$
+U(h)=e^{ic}\left[
+ e^{-iaN_1}\otimes e^{-icN_2}\otimes e^{-ibN_3}\right]
+\quad\text{on the legal space}.
+$$
+
+Proof. At modes $0,1,2,3$ one has, respectively,
+
+$$
+h_s=ax_s+by_s+cz_s-c.
+$$
+
+For mode $13$, the right side is $h_1+h_3-h_0$. The difference from $h_{13}$
+is $-2\pi m$, by $d^{\mathsf T}h=2\pi m$, so the same formula holds modulo
+$2\pi$. The displayed product has coefficient
+$e^{ic}e^{-i(ax_s+cz_s+by_s)}=e^{-ih_s}$ on each legal basis vector. This
+proves the equality of operators there, with the signs fixed by the negative
+phase convention. $\square$
+
+For any fixed bipartition formed from these three position factors, this
+product is a unitary on one side times a unitary on the other. The coefficient
+matrix of a pure state is transformed by left and right unitaries, so its
+singular values, and hence its Schmidt spectrum, are unchanged. This conclusion
+compares the initial and final states at the same probability law; it makes no
+claim for an unrelated tensor factorization. Intervening probability control
+can change entanglement. For example, the reduced density matrix of the middle
+factor, for real positive initial phases at a given probability, is
+
+$$
+\rho_2=
+\begin{pmatrix}
+r&\sqrt{Zp_0}\\
+\sqrt{Zp_0}&Z
+\end{pmatrix}.
+$$
+
+Only modes $000$ and $010$ have the same outer bit pair and contribute to its
+off-diagonal entry. Its determinant is $Z(r-p_0)$, which varies with $\kappa$
+at fixed means. A pure probability leg with fixed zero phases therefore can
+change its Schmidt spectrum. The endpoint theorem does not say otherwise.
+Local phase unitaries can also change fixed-reference interference readings;
+those readings need not be invariant under the reduced symmetry task.
+

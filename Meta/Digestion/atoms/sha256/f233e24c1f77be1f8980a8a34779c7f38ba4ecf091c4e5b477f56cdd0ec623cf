@@ -1,0 +1,17 @@
+**定义 1.4（全部随机有限完整保持）。** 竞争者使用固定非空有限完整配置集 $M$、来源独立初始化分布 $\eta$、两个固定时间齐次来源独立行随机更新矩阵 $P_\alpha,P_\beta$，以及每个配置的归一化完整残余律解码器 $D_z$。实际控制、记录、许可、工作区、程序选择、输出游标和持久随机性均计入完整配置；所有原操作仍按定义1.2执行。没有免费时钟、档案、建议、精确后验、状态分布向量、连续隐藏寄存器、相关来源种子或持久随机带。
+
+对于实际历史 $h=h_1\cdots h_t$，来源独立更新给出的条件配置分布为 $\rho_h=\eta P_{h_1}\cdots P_{h_t}$。原 Stop 的确定性更新也计入配置。解码器实际只读有限配置；不能读 $\rho_h$。定义
+
+$$
+\begin{aligned}
+\overline D_h&=\sum_z\rho_h(z)D_z,\\
+e_{\rm law}(h)&=\operatorname{TV}(\overline D_h,T_h^\mu),\\
+e_{\rm conf}(h)&=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),\\
+R_j(\mathcal H;M,D)&=\sup_{h\in\mathcal H}e_j(h),
+\qquad j\in\{\mathrm{law},\mathrm{conf}\}.
+\end{aligned}
+\tag{1.5}
+$$
+
+TV 是半 $\ell^1$ 距离。两个次序不同；对真实随机历史再平均又是另一风险。解码器输出可数完整律的有限描述，不要求物化无限概率表。竞争类允许任意归一化预测律，不要求它属于实际 iid 深度模型族；实际来源本身仍完全固定为定义1.2。
+

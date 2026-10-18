@@ -1,0 +1,71 @@
+**定理 28.2（Exact paid later-slot law）。** For every target in Definition 28.1 and both original alphabets,
+
+$$
+C_{\rm ad}(f_3)=C_{\rm pre}(f_3)=L\in\{N+t,N+t+1\}.
+\tag{28.5}
+$$
+
+Proof. The full-source joint realizations are (1.3). A root containing a zero after $a<m$ ones merges, at each phase, the actual INITIAL tails $k-m-1,k-m$: both survive that zero, since $k-m+a<k$. At least one low phase has label different from $R$, because $A,B,C$ are distinct. At such a phase this merger loses a required label difference. A correct root is therefore $1^m$. It rejects precisely the high tails, which return $R$, and leaves actual low archives $H=\{0,m\}$ and $Z=P\setminus H$ as in [S24, Theorem 20.1]. This reasoning does not require $D\ne E$.
+
+For an all-action lower bound choose the three actual phases
+
+$$
+u=\max U,\qquad v=\max V,\qquad z=(t+1)m-g.
+\tag{28.6}
+$$
+
+They have pairwise different labels $B,C,A$ and $z>\nu,v\ge M$. Choose one common free value and INITIAL tail zero for these three whole-history sources. Their only opportunity before absolute emitted position $T+M-1$ is the first-tour block of index $t$. Indeed their first coefficient positions are $j-1,j$, both strictly inside that block; their next coefficient positions are $T+j-1,T+j$. The guard also keeps $z$ strictly inside the same block. Before index $t$ their outputs and tails are identical. Any rejecting action on their shared archive would merge all three distinct labels, so every action on this archive is successful. The index-$t$ endpoint has only two successful output values, hence puts two of these three differently labelled sources on the same chronological child. Their tails are common, and until a second opportunity every later successful response on this child is zero; a rejecting response is common and absorbing. They cannot separate by a total fee $d<L$, since $dm<T+M$ implies that every emitted position is less than $T+M-1$. A deterministic controller cannot return their different labels. This excludes every smaller-fee literal adaptive controller and therefore every smaller-fee preset stream. It uses actual sources and common histories, not the count of labels alone.
+
+We construct one common attaining stream. Interchange the names of the two colour sets if necessary so that $\max U=M<\max V$. The corresponding labels are interchanged too. This is possible because the sets are disjoint and their maxima are different. Thus $U$ is the colour to reactivate, and $V$ is the whole colour retired on the first tour. Put
+
+$$
+h=(t+1)m,\qquad a=tm-r,\qquad c=(t+1)m-r,\qquad v_*=\max V.
+\tag{28.7}
+$$
+
+All $a,c,h,v_*$ are actual phases. The first second-tour window meeting $U$ has block index $Q+t$, starts at the unwrapped residue $a$ and ends at $c$. The next has index $Q+t+1$ and ends at $c+m$. We have $a>0$, $\min U>a$, and $\max(U\cup V)\le h-2g<c+m$. Thus $L=N+t$ if $M\le c$, and $L=N+t+1$ if $M>c$.
+
+All unspecified blocks in the construction are $0^m$ and are issued and paid whenever a source has not stopped. The root is $1^m$. At index $t$ use the even full physical charge set
+
+$$
+E_t=V\cup\bigl(\{h\}\text{ if }|V|\text{ is odd, otherwise }\varnothing\bigr),
+\tag{28.8}
+$$
+
+inverted by (1.5). It starts zero because $V$ lies strictly inside the slot and the left endpoint is uncharged. If $|V|$ is even its terminal tail is zero. If $|V|$ is odd, the positive root-zero child is $V\cup\{h\}$, with labels $C,A$. At index $t+1$ include the pulse $10^{m-1}$ with charge support $\{h,h+1\}$. On this acquired child it selects only $h$, so both labels are returned at this paid endpoint. On the continuing zero archive $h$ is already absent and any actual $h+1$ has label $A$, hence any additional positive child is constant $A$. No phase of $U$ is touched. In the even case every phase of $V$ stops immediately at index $t$. Thus the whole colour $V$ has genuinely stopped before its second tour; its later charges may be used without adding it to a live acquired archive. Nonactual $h+1$, when $g>1$, is never a source.
+
+For $t>1$, at index $Q$ use the endpoint pulse with support $\{T-1,0\}$, namely $0^{r-1}1\,0^{m-r}$. If $t=Q-1$ and $|V|$ is odd, also include the preceding paragraph's repair pulse in this same block: the two words are combined by bitwise XOR, which here means prescribing their symmetric-difference even charge supports and applying the single inverse (1.5). Their one positions are distinct. On $H$ this block selects only phase zero and returns $D,E$; if those labels coincide, $H$ may already have stopped at the root. On $Z$ all extra selected high-end phases have label $A$. At index $Q+t-1$ use the last-position pulse $0^{m-1}1$ with support $\{a-1,a\}$. Their actual members still live in the continuing $Z$ archive are low baseline phases to the left of $U,V$, with label $A$; if $a-1=m$, that endpoint has label $E$ and has already stopped on the $H$ sibling. Its positive $Z$ child is constant and stops. In particular phase $a$ has actually been removed from the zero continuation before index $Q+t$.
+
+For $t=1$, the preparatory pulse and the endpoint return occupy the same index $Q$, so use instead the even support $\{0,a\}$ at that index. If $Q=2$ and $|V|$ is odd, add the repair support $\{Qm,Qm+1\}$ by symmetric difference in the same row. The ordered wrapped path places zero at local vertex $r$ and $a=m-r$ at its right endpoint. Without the optional first-position repair the inverse is $0^r1^{m-r}$. On $H$ it selects zero, hence returns $D,E$. On $Z$ it selects the baseline phase $a$; the optional repair adds only the already selected boundary $h=Qm$ and the baseline actual phase $Qm+1$. The same repair decoder separates $V$ from $h$, and every other positive $Z$ child here has label $A$. Thus $a$ is again genuinely absent from the continuing zero archive. This choice also covers $a=1$, where naively combining two isolated pulses would cancel the endpoint charge at zero.
+
+It remains to query the whole returning colour $U$ on its actual second-tour windows. If $M\le c$, at index $Q+t$ prescribe the even support
+
+$$
+E=U\cup\bigl(\{a\}\text{ if }|U|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.9}
+$$
+
+The phase $a$ has already stopped with label $A$. On the live zero archive the positive child is exactly $U$, hence returns $B$, and the zero child contains only baseline labels $A$. All other low branches have already returned their respective immutable labels. This finishes at fee $N+t=L$, including the case $M=c$ at the window endpoint.
+
+If $M>c$, put $U_-=U\cap[a,c]$ and $U_+=U\cap(c,c+m]$. The latter is nonempty. At index $Q+t$ start with $J=U_-\cup\{c\}$ and use the even support
+
+$$
+E_-=J\cup\bigl(\{a\}\text{ if }|J|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.10}
+$$
+
+On the continuing zero archive this selects $U_-$ and $c$. If $c\in U$, all selected live phases have label $B$. If $c\in V$, it has already stopped. Otherwise $c$ has label $A$ and, if $U_-$ is nonempty, this positive child needs one paid repair; if $U_-$ is empty it stops with $A$. In every case $c$ is absent from the continuing zero archive after this row. Because $v_*=\max V>M>c$ and $v_*<c+m$, the actual phase $v_*$ is available in the next window and has already stopped with colour $C$.
+
+At index $Q+t+1$ start with $J'=U_+\cup\{c\}$ and use
+
+$$
+E_+=J'\cup\bigl(\{v_*\}\text{ if }|J'|\text{ is odd, otherwise }\varnothing\bigr).
+\tag{28.11}
+$$
+
+The added $v_*$ is a genuinely completed phase of the first-tour colour, not an unavailable algebraic mask. On the zero-continuation archive the positive child is exactly $U_+$ and returns $B$, while its zero child returns $A$. On a pending positive child from (28.10), the phases of $U_-\setminus\{c\}$ are outside the new window and have difference zero; the baseline phase $c$ has difference one. That very same complete block therefore repairs this child and returns $B,A$ correctly. The already stopped phase $v_*$ and the removed phase $a$ supply no extra source to either decoder. This is one global literal stream, finishing at fee $N+t+1=L$.
+
+Finally check every physical seam rather than extending the old deadline's safety bound. The first post-root block starts zero: if $t>1$ it is an issued zero block, and if $t=1$ it is (28.8), whose first bit is zero. Every low INITIAL tail, including $k-m-1$, is therefore cleared after the root. The scan word (28.8) contains a zero and has tail at most $m-1$. An immediately following repair has leading run one, or two if it coincides with the endpoint pulse and $r=2$, so the seam is at most $m+1<k$. Each other endpoint pulse starts zero and ends zero; the combined repair/endpoint block still ends zero because $m-r\ge1$. The later preparatory last-position pulse for $t>1$ follows zeros, has leading zero and tail one. For $t=1$ the preparatory endpoint row has terminal tail $a=m-r\le m-2$, including its optional isolated first-bit repair; its leading run is zero or one and is safe after the scan. Therefore the first returning row (28.9) or (28.10), even if it is all-one, has entering tail at most $m-2$ or one and total initial run at most $2m-2<k$.
+
+In the two-window case (28.10) leaves tail at most $m$. The next row starts with charge one at $c$, but its first subsequent charged vertex is $\min U_+$: the compensation vertex $v_*$ lies strictly beyond $M$. Hence its leading one run is $\min U_+-c\le M-c\le r-2g$. Its seam is at most $m+r-2g\le2m-3<k$. The last physical endpoint $c+m$ is uncharged, so (28.11) ends zero. All intervening waits are literal zeros, and every internal run is shorter than $k$ because $m<k$. All branches are safe through their actual stopping point; no cleanup block is omitted. Initial $\bot$ returns $L_\bot$ freely and root rejection returns $R$ at fee one. Each free value decodes its own differences on this same stream. Arbitrary endpoint, high and bottom label coincidences do not change the acquired supports or any of these decoders. The lower bound and actual attainment prove (28.5). ∎
+

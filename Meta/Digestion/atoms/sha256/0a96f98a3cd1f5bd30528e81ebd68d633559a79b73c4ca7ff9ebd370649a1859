@@ -1,0 +1,36 @@
+**定理 C-114.7（锐利的同族状态距离损失）。** 在 C-114.6 的域中，置
+$\rho_*=\rho^{\rm F}_{t,\eta}$、$\rho=\rho_{t,\eta}(X)$。则
+
+$$
+\begin{aligned}
+M_{t,\eta}-D(\rho\Vert R^{\leftarrow}_{t,\eta})
+&=S(\rho)-h_{t,\eta}+b\gamma\bigl(4-\operatorname{tr}(XF)\bigr)\\
+&\ge\frac{\gamma}{8b}\|\rho-\rho_*\|_1^2.
+\end{aligned}
+\tag{C114.18}
+$$
+
+系数 $\gamma/(8b)$ 是对该整个族有效的最大系数。
+等号当且仅当 $X\in\mathcal K_*$ 且 $X-F$ 的谱为
+$\{r,r,0,-r,-r\}$，某个 $r\ge0$；这包括 $X=F$ 和 $X=-F$。
+
+证明。$X-F$ 仍为五维纯虚 Hermitian，谱配对使其秩至多四。
+若其两个非负谱参数为 $u,v$，则
+
+$$
+\begin{aligned}
+\|X-F\|_1^2&=4(u+v)^2\le8(u^2+v^2)=4\|X-F\|_F^2,\\
+\|X-F\|_F^2&=\operatorname{tr}X^2+4-2\operatorname{tr}(XF)
+\le2\bigl(4-\operatorname{tr}(XF)\bigr),
+\end{aligned}
+\tag{C114.19}
+$$
+
+其中 $\operatorname{tr}X^2\le4$。
+等距嵌入给 $\|\rho-\rho_*\|_1=b\|X-F\|_1$；熵亏损非负，代入即得界。
+第一步等号要求 $u=v$，第二步等号要求 $\operatorname{tr}X^2=4$，
+在 $\mathcal K$ 中后者等价于 $X\in\mathcal K_*$，也恰使熵亏损为零。
+因 $b\gamma>0$，这些恰是全部等号条件。
+在 $X=-F$，距离为 $8b$、目标损失为 $8b\gamma$，
+所以任何更大系数都失败。这是同族精确谱推导，不使用 Hellinger 或 Gibbs 见证界。证毕。
+

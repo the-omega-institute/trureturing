@@ -1,0 +1,49 @@
+**Proposition 8.5 (relative memory recovery and the earlier-origin boundary).**
+For one fixed cut, two authentic captured endpoint rows and their known
+actual lag recover all intervening mathematical row values relative to
+the first capture. A retained initial captured tree and known lag also
+recover the entire intervening pure-$\rho$ tree sequence.
+Neither conclusion authenticates a designated earlier origin, the count
+before first capture, births relative to that earlier origin, full event
+placement or physical duration.
+
+**Proof.** Regard the first captured tree $t$ as relative origin.
+Its row $R_P(t)$ computes $b_P(t)$ by [NBP, Theorem 4.2][NBP]:
+already reached cut addresses have birth zero; each other cut address
+is blocked by a concrete exterior leaf, whose label and remaining
+literal suffix determine its future birth. The final captured row
+and this vector, at the known lag $n$, are precisely the relative-origin
+inputs of NBP Theorem 4.3. They recover every $R_P(\rho^j t)$,
+$0\le j\le n$. The lag must have been recovered with the authentic
+shared-history premise, or be independently authenticated; it is not
+silently supplied for disconnected row-only inputs.
+If $t$ itself is retained, direct finite computation of its iterates
+gives the entire tree sequence. Neither method recreates unobserved
+Read events or certifies their occurrence. Captures with different cuts
+require the corresponding additional record conversion before applying
+this fixed-cut theorem.
+
+For the earlier-origin boundary, a first captured tree $t=\rho u$
+and its subsequent evolution
+are compatible with an origin at $t$ and no previous update, or an
+origin at $u$ followed by one previous update. Every subsequent Read
+may agree. Primitive ancestry is computable from an acquired full tree
+by [Intrinsic Substitution Coordinates][ISC], but a designated origin
+need not be primitive, and its authenticity is a separate premise.
+
+Proposition 7.4 exhibits identical successful transcripts with different
+pre-guard update placement and different entry trees.
+Any increasing reassignment of physical delays to the same ordered
+events also leaves every observation in this model unchanged.
+Thus the transcript predicate and row input determine no physical
+duration or full hidden event log.
+
+NBP Theorem 4.3 at an earlier designated origin still requires its own
+authenticated $n$ and birth record. A newly acquired current row alone
+does not supply them. The endpoint reconstruction just proved also
+differs from forward prediction using only the first row: that weaker
+input has the conditional supplements and birth collisions identified
+in [NAR, §§2–4][NAR]. Acquisition, retrospective relative memory,
+forward prediction, earlier-origin recovery and authentication are
+different tasks. $\square$
+

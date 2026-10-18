@@ -1,0 +1,63 @@
+**Theorem 5.2 (fractional gap and strictly positive inward slope).** Define
+$D_\xi=Y\cdot\Gamma_\xi-|H_\xi|-\lambda k$ on $X$. Then
+
+$$
+\begin{gathered}
+D_\xi=(1-\xi)D_0+\xi D_1+\tau_\xi,\\
+\tau_\xi=(1-\xi)|H_0|+\xi|H_1|-
+                  |(1-\xi)H_0+\xi H_1|\ge0.
+\end{gathered}
+\tag{QS.25}
+$$
+
+At contact $i$ set $\varepsilon_i=\operatorname{sgn}H_{\eta_i}(\phi_i)$,
+$c_i=c(h_i)$, $f_i=f(h_i)$ and
+$Q_i=Y_5+Y_6u_i^2+Y_7u_iv_i$. The derivative into the fractional
+interval, with $\zeta=|\xi-\eta_i|$, is
+
+$$
+\begin{aligned}
+\chi_i&=(1-2\eta_i)c_i(Q_i-\varepsilon_i t f_i)\\
+ &=D_{1-\eta_i}(\phi_i)+|H_{1-\eta_i}(\phi_i)|
+                          -\varepsilon_i H_{1-\eta_i}(\phi_i)>0.
+\end{aligned}
+\tag{QS.26}
+$$
+
+Without the nonmerging hypothesis, $\chi_i=0$ is equivalent to a
+same-angle opposite-sheet contact with $H_{\eta_i}H_{1-\eta_i}\ge0$;
+then every fraction at that angle has zero gap. For opposite nonzero
+endpoint heights that are both contacts, $\chi_i=2|H_{1-\eta_i}|>0$.
+
+Proof. Both $\Gamma_\xi$ and $H_\xi$ are affine in $\xi$. Subtracting
+the chord of the endpoint absolute values gives (QS.25), with
+nonnegativity from the triangle inequality, including at zero heights.
+For an inward displacement write
+$\xi=\eta_i+(1-2\eta_i)\zeta$. The nonzero contact height keeps sign
+$\varepsilon_i$ for small $\zeta$. Differentiating the original gap gives
+the first expression in (QS.26); the last three moment coordinates
+contribute $(1-2\eta_i)c_iQ_i$ and the height contributes
+$(1-2\eta_i)\varepsilon_i t c_i f_i$. No factor of $t$ is absorbed into
+$Y$ or $c$.
+
+The contact equality is
+$Y\cdot\Gamma_{\eta_i}-\lambda k_i-
+\varepsilon_iH_{\eta_i}=0$. Affineness therefore also gives
+
+$$
+\chi_i=Y\cdot\Gamma_{1-\eta_i}(\phi_i)-\lambda k_i-
+                                \varepsilon_iH_{1-\eta_i}(\phi_i).
+$$
+
+Adding and subtracting $|H_{1-\eta_i}|$ proves the second expression
+in (QS.26). Both its summands are nonnegative. It vanishes exactly if
+the other endpoint is a contact and
+$\varepsilon_i H_{1-\eta_i}\ge0$, equivalently
+$H_{\eta_i}H_{1-\eta_i}\ge0$. In that case the two heights have the
+same weak sign, so their absolute-value chord is exact at every fraction;
+both endpoint gaps vanish, and (QS.25) gives $D_\xi(\phi_i)=0$ for
+all $\xi$. Conversely a compatible endpoint pair has these properties
+and forces $\chi_i=0$. Assumption 5.1 excludes exactly that case.
+If the other height is nonzero and of opposite sign, the endpoint gap
+is zero and $|H_o|-\varepsilon_iH_o=2|H_o|$. $\square$
+

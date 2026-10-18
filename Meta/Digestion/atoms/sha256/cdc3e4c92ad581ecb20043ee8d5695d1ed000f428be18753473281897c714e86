@@ -1,0 +1,27 @@
+**Definition 43.1 (Common-reference radius at constant zero advice).** Retain the actual labeled source $X$, integer map $N$, and target $\Omega$ from (36.1), the common deterministic tape-dependent rules and measurable events of Definition 40.1, and the constant supplied advice $\beta_0(y)=0$ of (42.1). The anchor remains $x_*=(7,2)$, with $N(x_*)=27$ and $\Omega(x_*)=1$. Fix $0\le\delta,\eta\le1$ and an anchor row $(h,d,z)\in\mathscr S$ as in (42.3). Require
+
+$$
+e_y\le\delta h_y\quad(y\in X),\qquad
+(h_{x_*},d_{x_*},z_{x_*})=(h,d,z).
+\tag{43.1}
+$$
+
+In place of the diameter cap in (40.3), choose one probability measure $\nu$ on the same measurable space $(\Theta,\mathcal F)$ as all the source laws and impose
+
+$$
+\rho_\nu=\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)\le\eta.
+\tag{43.2}
+$$
+
+The reference may be chosen jointly with the procedure and full law family, but the chosen $\nu$ is fixed for all $y$. It is not a source input, an acquired observation, or a sampling operation. Neither (43.1) nor an anchor terminal-row condition is imposed on $\nu$. In particular, the same deterministic rules can have a conditional error greater than $\delta$ under $\nu$ without violating this definition. The optimization ranges over the common procedure, its common carrier, the full source-law family, and this one reference. Proposal probabilities away from the anchor need not equal $h$.
+
+For a fixed procedure and family, distinguish its best reference radius
+
+$$
+\operatorname{rad}(\mu)=\inf_{\nu\in\mathcal P(\Theta,\mathcal F)}
+\sup_{y\in X}\operatorname{TV}(\mu_y,\nu)
+\tag{43.3}
+$$
+
+from the minimum over all admissible procedures and families. An assertion of attainment specifies a reference realizing the radius, not only the infimum in (43.3). The event-supremum TV normalization is (40.2). Its standard finite-space sum formula, triangle inequality and bounded-test dual are given in Levin and Peres, with contributions by Wilmer, *Markov Chains and Mixing Times*, second edition, [Chapter 4, Proposition 4.2, Remark 4.4 and Proposition 4.5, printed pp. 48--49](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf). The measurable-space arguments below use event inequalities directly; the finite-space citation is not an assumption that every carrier is finite.
+

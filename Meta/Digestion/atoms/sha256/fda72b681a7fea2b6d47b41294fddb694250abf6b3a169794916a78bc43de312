@@ -1,0 +1,60 @@
+**Definition 8.1 (finite range encoders with one common completion).**
+Fix any finite nonzero real $Q$-null family $F_j$ with
+$\sum_jF_jF_j^T=I$, and fixed actual reports $r_j$. For the endpoint
+optimum take the four $F_j=\sqrt{\pi_j}h_j$ of EP.30 and
+$r_j=\sigma_j$. Set $c_j=LF_j=(x_j,z_j,w_j)^T$ and
+$K_j=x_jD+z_jT+w_jS$. Nullity gives
+$x_j^2=\theta z_j^2+\omega w_j^2$ and $x_j\ne0$. EP.15 gives
+zero determinant, whereas the rows/columns $1,2$ minor is
+$x_j^2h_1h_2>0$. Each $K_j$ has exactly rank two.
+
+Let $k_{j1},k_{j2}$ be its columns $1,2$. Fix the image isometry by
+
+$$
+v_{j1}=\frac{k_{j1}}{\|k_{j1}\|},\quad
+\widetilde v_{j2}=k_{j2}-v_{j1}(v_{j1}^\dagger k_{j2}),\quad
+v_{j2}=\frac{\widetilde v_{j2}}{\|\widetilde v_{j2}\|},\quad
+V_j=(v_{j1},v_{j2}).
+\tag{EP.49}
+$$
+
+The nonzero minor makes both denominators positive. Thus
+$V_j^\dagger V_j=I_2$ and $V_jV_j^\dagger K_j=K_j$.
+For each actual low label $j$ use encoder $V_j^\dagger K_jE^\dagger$
+and the WHOLE-fibre TP decoder $X\mapsto EV_jXV_j^\dagger E^\dagger$
+in live. Its entire joint fibre has dimension two.
+
+Add the following fixed completion, with fair report $r=\pm1$:
+
+| Actual labels | Encoder | Entire fibre | Whole-fibre decoder |
+| --- | --- | --- | --- |
+| $(H,r)$ | $\sqrt{(1-\delta)/2}\,DE^\dagger$ | $3$ | $X\mapsto EXE^\dagger$ in live |
+| $(f,\epsilon_f,r)$ | $\langle v^{\rm fail}_{\epsilon_f}|M^{1/2}E^\dagger/\sqrt2$ | $1$ | $z\mapsto zw_\ell g(t)dt\,P_f$ in each original label $\ell$ |
+| $(\perp,r)$ | $\mathcal E_{\perp,r}(A)=\operatorname{tr}((I_5-P_V)A)/2$ | $1$ | $z\mapsto zg(t)dt\,P_f$ only at original label $2$ |
+
+Here $g(t)=g_{\rm time}(t)=2/(1+t)^2$, distinct from every ideal $f_y$.
+The spectral vectors are fixed unit eigenvectors
+of $\Xi$ for its two eigenvalues
+$\lambda^{\rm fail}_{\epsilon_f}=(-d_f+\epsilon_fL_f)/2$, with
+opposite strict signs. They can be chosen explicitly on coordinates $1,2$ as
+
+$$
+v^{\rm fail}_{\epsilon_f}=
+\frac{(z_f,\lambda^{\rm fail}_{\epsilon_f}+d_f)^T}
+ {\sqrt{z_f^2+(\lambda^{\rm fail}_{\epsilon_f}+d_f)^2}},\quad
+\Pi_{\epsilon_f}=\frac12\left[I_2+
+ \epsilon_f\frac{2\Xi+d_fI_2}{L_f}\right].
+\tag{EP.50}
+$$
+
+The denominators are positive since $z_f\ne0$, and
+$(2\Xi+d_fI_2)^2=L_f^2I_2$ proves the projector formula.
+Extend these vectors by zero in coordinate $0$. The complement branch
+has two Kraus rows $\langle t_k|/\sqrt2$ for a fixed orthonormal basis
+of $\operatorname{ran}(I_5-P_V)$. This index is discarded multiplicity
+inside ONE actual branch per $r$, and cannot choose a different decoder.
+All matrices, spectral choices, supports and reports precede the unknown
+specimen. For the endpoint branch this gives four low, two high, four
+spectral and two complement labels: twelve in total, with dimensions
+$(2,2,2,2,3,3,1,1,1,1,1,1)$.
+

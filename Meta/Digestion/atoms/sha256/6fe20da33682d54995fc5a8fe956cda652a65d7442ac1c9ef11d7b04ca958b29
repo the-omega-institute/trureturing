@@ -1,0 +1,63 @@
+**Corollary 94.2 (A stable region of unequal amplitudes).** Retain (73.3),
+let $0\le\delta<1/64$, and suppose
+
+$$
+|a_i-A_i|\le\delta\quad(1\le i\le4),\qquad
+(A_1,A_2,A_3,A_4)=(1,3/4,1/2,1/4),\qquad
+a_5\le\varepsilon=1/8+\delta.
+\tag{94.8}
+$$
+
+Then $L=4$ and
+
+$$
+\kappa^{\mathcal A}_\varepsilon(a)=2,
+\qquad
+\kappa^{\mathcal N}_\varepsilon(a)
+ =\kappa^{\mathcal O}_\varepsilon(a)=3.
+\tag{94.9}
+$$
+
+No strict conclusion at $\delta=1/64$ is asserted by these bounds.
+
+**Proof.** Keep exactly the kernel $V$ of (94.3). On a low first-zero
+class $n\le4$, changing the target amplitude from $A_n$ to $a_n$
+changes its two-point law by TV exactly $|a_n-A_n|$. The triangle
+inequality and (94.4) bound the error by $1/8+\delta$ on every such
+word. At a real tail source its output is still
+$(7/8)\delta_{\theta_0}+(1/8)\delta_{\theta_3}$, with error
+$\max\{1/8,a_n\}\le\varepsilon$.
+
+Theorem 91.1 bounds every restricted hard-two error below by
+$3/20-3\delta/5$. Its excess over the proposed cap is
+
+$$
+\frac{3}{20}-\frac{3\delta}{5}
+   -\left(\frac18+\delta\right)
+ =\frac1{40}-\frac{8\delta}{5}>0.
+\tag{94.10}
+$$
+
+Hard one is impossible in the original class because
+$a_2\ge3/4-\delta>3(1/8+\delta)$, contrary to Theorem 85.1
+at $n=2$, $k=1$.
+
+For restricted hard three, query $1,2,3$ increasingly until a zero and
+sample the exact selected law there. On all three positive replies emit
+mark 4 with probability $r=a_4-\varepsilon$ and base otherwise.
+The assumptions give
+
+$$
+a_4\ge1/4-\delta>\varepsilon,
+\qquad a_4\le1/4+\delta\le2\varepsilon,
+\qquad 0<r\le\varepsilon.
+\tag{94.11}
+$$
+
+Its error at first absence 4 is $a_4-r=\varepsilon$ and at every
+later first absence is $\max\{r,a_n\}\le\varepsilon$.
+This gives an $\mathcal O_3$ rule and, by padding, an
+$\mathcal N_3$ rule with the same laws. Equation (94.11) and
+$a_5\le\varepsilon$ also prove $L=4$. Combining these upper bounds
+with the two impossibility bounds proves (94.9). $\square$
+

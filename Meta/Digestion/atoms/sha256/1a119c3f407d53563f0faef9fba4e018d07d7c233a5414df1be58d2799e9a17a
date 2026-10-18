@@ -1,0 +1,20 @@
+**Corollary 11.3 (finite native control and CAR boundedness).**
+On a nonempty cycle-covered fiber the following are equivalent:
+
+1. a successful table of Definition 11.1 exists, with some finite number
+   of states and some finite installation;
+2. the sentences (CAR.16) hold;
+3. a successful entry-static table of Definition 11.1 exists, with some
+   finite number of states and some finite installation.
+
+Proof. Theorem 11.2 makes a table in item 1 a legal bounded-read service
+on the same $D$, so Theorem 5.2 gives item 2. In the other direction,
+Theorem 5.2 constructs a finite actual decoder/read tree and finitely
+many concrete whole-row outputs. Give each actual read vertex a state,
+and give the terminal outputs halt states; use their prescribed response
+edges and the common root as initial state. The construction is finite,
+entry-static and correct on all of $D$, proving item 3. Item 3 implies
+item 1. This is an existence equivalence with unrestricted finite
+installation and state cardinality, not a preservation result for a
+specified state budget. $\square$
+

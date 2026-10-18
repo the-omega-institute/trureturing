@@ -1,0 +1,83 @@
+### 52.3 普通反射分支的正多项式证书
+
+`H0` 与所有同步坐标置换交换，而坐标置换将 `S` 共轭为 `S` 或 `S²`。故普通反射分支只需处理 `y=gamma R01x`。乘公共相位后可设 `x2=1`，并置
+
+```math
+u=\frac{x_0+x_1}{2},\qquad b=|u|^2,\qquad w=\operatorname{Im}u,
+\qquad\gamma=G+iH,\quad G,H\in\mathbb R.
+```
+
+两个 channel 的自相关互为共轭，循环正交使它们之和为零，故 `|1+2u|²=3`。于是
+
+```math
+\operatorname{Re}u=\frac12-b,
+\qquad w^2=2b-b^2-\frac14,
+\qquad 0\le b\le1.
+\tag{52.2}
+```
+
+同时，`<v,R01v>=(4b-1)/3`。前卷第 51 节的严格换位正性因此给出 `b>1/4`。
+
+定义 `Y=aH/h`。固定坐标二上的两个未归一化输出分量为
+
+```math
+z_+=p+2u+\gamma(q+2u),\qquad
+z_-=\overline q+2u-\gamma(\overline p+2u).
+```
+
+令 `E±=|z±|²-6`。代入种子恒等式、`G²+H²=1` 和式 (52.2)，直接展开得到
+
+```math
+E_++E_-=4\bigl(2hw(G-Y)+6b-3\bigr),
+```
+```math
+E_+-E_-=2\bigl((12b+s-3)G-(4b+s-1)Y+4hw\bigr).
+```
+
+实际 flatness 使两式为零。还须保留整个第一输出 channel 的范数。由
+
+```math
+A^\dagger A=(3-a)I+aJ,\quad B^\dagger B=(3+a)I-aJ,
+\quad A^\dagger B=\overline P QI+(3+\overline P+Q)J
+```
+
+以及 `||x||²=|sum x|²=3`，有 `||Ax||²=||BR01x||²=9`。所以 `||Ax+gamma BR01x||²=18` 等价于 `Re(gamma Z)=0`，其中
+
+```math
+Z=\overline P Q(4b-1)+3(3+\overline P+Q)
+=\frac{(s+3)(4b-1)}2+
+\frac{ia}{2h}\bigl((s+3)(4b-1)-6\bigr).
+```
+
+这里用了 `bar(P)Q=(s+3)/2+ia(h+3/h)/2` 和 `3+bar(P)+Q=-ia/h`。合并三个实际方程，得到
+
+```math
+\begin{pmatrix}
+2hw&-2hw&6b-3\\
+12b+s-3&-(4b+s-1)&4hw\\
+(s+3)(4b-1)&6-(s+3)(4b-1)&0
+\end{pmatrix}
+\begin{pmatrix}G\\Y\\1\end{pmatrix}=0.
+\tag{52.3}
+```
+
+但左侧矩阵的行列式恰为 `-24F(b,s)`，其中
+
+```math
+F(b,s)=s b(8b^2-10b+5)+3(b-1)(4b-1)(2b-1).
+```
+
+这个多项式在 `1/4<b<=1,s>1` 上严格为正。首先
+
+```math
+8b^2-10b+5=8(b-5/8)^2+15/8>0.
+```
+
+当 `b<=1/2` 时，`F` 的第一项为正、第二项非负；当 `b>=1/2` 时，使用恒等式
+
+```math
+F(b,s)=(s-1)b(8b^2-10b+5)+8b(1-b)^2+3(2b-1)^3>0.
+```
+
+因此式 (52.3) 不可能湮灭非零向量 `(G,Y,1)`。这排除了所有普通反射分支，并且没有除以 `a`，所以包括 `a=0`。
+

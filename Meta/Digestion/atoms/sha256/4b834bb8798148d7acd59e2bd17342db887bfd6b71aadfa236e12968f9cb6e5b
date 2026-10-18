@@ -1,0 +1,20 @@
+**Lemma 4.3 (The singleton positive-index criterion).** For any singleton
+$s$, $H_{\{s\}}$ has trace zero and at most one positive eigenvalue.
+If nonzero, its norm is its unique positive eigenvalue. The block
+containing $e_s$ has that eigenvalue; the other block is nonpositive.
+In the nonzero case, for $c>0$ the determinant of $cI$ minus the
+containing block is positive exactly when that positive eigenvalue is
+less than $c$.
+
+Proof. $S(\Pi_s)\ge0$ and has trace one by Theorem 3.2.
+The quadratic form of $H_{\{s\}}=\Pi_s-S(\Pi_s)$ is nonpositive
+on $e_s^\perp$. Hence a two-dimensional positive eigenspace is impossible.
+A nonzero trace-zero Hermitian matrix has a positive eigenvalue; the sum
+of all absolute negative eigenvalues equals it. Each individual negative
+eigenvalue therefore has smaller or equal absolute value. The other
+coordinate block is a compression of $-S(\Pi_s)$ and is nonpositive.
+All factors $c-\lambda$ associated with nonpositive eigenvalues of the
+containing block are positive, so its determinant has the sign of
+$c-\lambda_{\rm positive}$. The zero residual case has norm zero and
+positive determinant for every $c>0$. $\square$
+

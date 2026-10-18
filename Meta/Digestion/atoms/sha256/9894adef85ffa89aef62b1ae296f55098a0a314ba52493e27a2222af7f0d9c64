@@ -1,0 +1,20 @@
+**Definition 4.1 (Explicit finite canonical family).** For each of the
+four first-zero choices at the type-$I$ root in Lemma 3.6, pair it
+with that root's adjacent first-one choice. For the type-$D$ root,
+pair each of its two first-one choices with each of its five
+first-zero choices. These are fourteen concrete address trees.
+On each tree include every subset of its four binary reply leaves
+as the acceptance set, with the fixed maximizing outputs specified
+in Lemma 3.6. Make two actual calls on all paths, return on the
+chosen leaves, and continue internally forever on the other leaves.
+Also include immediate return of $h_0(\sigma)$ and immediate
+internal nonreturn. Denote this finite policy family by
+$\mathcal K$. Duplicated or impossible leaf choices cause no
+difficulty; this description uses at most $14\cdot16+2$ policies.
+
+For $k\in\mathcal K$ let $(q_k,C_k)$ be its actual same-source
+pair. This is a finite construction from the displayed addresses,
+outputs and leaf subsets, independent of $\lambda$ and of the
+auxiliary law. In particular it is not an optimization over an
+unspecified class of all protocols.
+

@@ -1,0 +1,14 @@
+**Definition 1.3 (selected joint contact).** Let $B$ be any supplied finite
+set of distinct attained complete original $Q$-rows, $|B|\ge2$. Set
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists (u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\quad u_r\equiv_hu_s.
+\tag{PAC.5}
+$$
+
+The witnesses are alternative finite originals for one common retained
+input, not a single source assigned incompatible labels. All rows in $B$
+share one prefix; separately chosen pairwise witnesses do not suffice.
+

@@ -1,0 +1,35 @@
+**Lemma 4.1 (closure under finite allowed edits).** Fix
+$\sigma_0\in\mathcal C(T)$. Let $V\subseteq\mathcal U_*$ be finite
+and assign $b_v\in G_T(v)$ to each $v\in V$. The function equal to
+$b_v$ at $v$ and equal to $\sigma_0$ elsewhere is a member of
+$\mathcal C(T)$ under the same acquisition and entry contracts.
+
+Proof. Each $v$ has a finite current tree $\rho v$ and its finite
+six-class tuple. Store these finitely many ground terms in the
+pre-cut computation. If its input is the acquired current tree,
+compare it with the stored current trees. If its input is the row
+and acquired values, compare all six values with each stored tuple
+in fixed class order. Equality of finite ordered terms is decided by
+recursion: leaf constructors must agree; for pairs compare both
+children; unequal constructors fail. It terminates because the terms
+are finite. Local extraction at the fixed representatives from an
+already acquired lossless tree is also finite local computation.
+Neither operation queries an unacquired subtree or the native source.
+
+The complete current tuple determines $\mathscr S(x)$, and injectivity
+of $\rho$ makes it determine its unique origin. Thus these comparisons
+identify exactly the specified finite exceptions, including both
+occurrences of each partner. On a match return the selected bit;
+otherwise run the lawful terminating computation for $\sigma_0$.
+This is one terminating finite acquired-term computation on the full
+domain. Its additional producer constants, comparisons and workspace
+have their separate costs; they are not reader states or free queries.
+Assumption 3.1 supplies actual export of its resulting complete bit
+before the cut, complete isolation and lawful entry at the same $e_z$.
+
+At an exception the selected bit belongs to $G_T(v)$, so the original
+fixed table is correct within two calls there. Elsewhere its input
+bit and hence its actual run remain those for $\sigma_0$. The table,
+labels and domain have not changed. This proves compatibility of the
+edited lawful code on every actual origin. $\square$
+

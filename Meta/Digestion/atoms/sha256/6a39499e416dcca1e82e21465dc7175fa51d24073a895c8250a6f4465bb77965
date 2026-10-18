@@ -1,0 +1,34 @@
+## 4. Unrestricted fixed-history bounds
+
+Let $C_{\mathrm{fix}}(d)$ be the smallest uniform read bound over all predetermined finite-composite-word histories in Definition 1.1 that recover the complete target on the whole stated source domain.
+
+[Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md), Theorem 5.1, gives the lower bound $d+5$. It applies directly: its target is the same $(S,\kappa,D)$, with strictly positive rank-one $S$, arbitrary real $\kappa$, and drift of degree at most $d$, on the same counted-initial-read, finite-composite-word clock, including empty-word repeats. Its lower bound concerns all predetermined histories under this contract, including a fixed word list with earlier stopping.
+
+For the upper bound, apply [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md), Theorem 4.1 and Lemma 3.2, at $k=1$. Every target here is in that model by taking $R=S$, $G(t)=1+\kappa t$, and the same $D$. The gain is nonzero and of degree at most one, and the normalized-target correspondence is
+
+$$
+R_0=\frac S{\operatorname{tr}S},\qquad
+H(t)=(\operatorname{tr}S)(1+\kappa t),
+$$
+
+$$
+S=H(0)R_0,\qquad \kappa=\frac{H'(0)}{H(0)},\qquad H(0)>0.
+$$
+
+Thus the cited recovery of $(R_0,H,D)$ recovers exactly $(S,\kappa,D)$ on this positive-intercept affine restriction, without changing the source, the drift, the operations, or the reading clock. The cited read count specializes to
+
+$$
+\max(1,d)+6=\max(d+6,7),
+$$
+
+with a literal nine-atom implementation. The polynomial companion's Corollary 4.2 and Proposition 5.1 provide the division-domain and exact finite-data compatibility conditions; the affine restriction is $H(0)>0$, with the displayed target conversion. All recorded equations remain required, including zero-gain positions and unused surviving samples, and the recovered entire drift must satisfy $\deg D\le d$. The polynomial theorem also permits initial gain zero, which is outside this volume's positive-intercept restriction.
+
+Combining the cited lower and upper bounds with the new six-read constant-drift upper bound of Theorem 2.1 gives
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+The original global target is unchanged: find the sharp uniform read count across all predetermined cumulative $M/J$ histories for every $d\ge0$, together with an actually legal fixed path and a one-source inverse covering all affine-gain zero crossings. For $d=0$ the minimum is still either five or six; for each $d\ge1$ it is still either $d+5$ or $d+6$. No five-read construction or five-read impossibility is established for $d=0$. No universal $d+5$ construction or universal obstruction at $d+5$ is established for $d\ge1$. Theorem 3.3 addresses one particular path and does not resolve the $d=1$ choice between six and seven.
+

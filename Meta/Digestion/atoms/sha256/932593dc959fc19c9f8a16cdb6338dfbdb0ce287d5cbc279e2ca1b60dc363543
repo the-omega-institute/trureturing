@@ -1,0 +1,63 @@
+### 定理 53.3（一般 CPTP 映射下的 SLD Fisher 收缩）
+
+令 \(\Phi:\mathsf L(H)\to\mathsf L(K)\) 为 CPTP 映射，令
+
+\[
+\sigma=\Phi(\rho)\succ0,
+\qquad
+Z=\Phi(X).
+\]
+
+则
+
+\[
+\boxed{
+F_\sigma(Z)
+\le
+F_\rho(X).
+}
+\]
+
+#### 证明
+
+令 \(\Phi^\ast\) 为 Hilbert--Schmidt 伴随。因为 \(\Phi\) CPTP，\(\Phi^\ast\) 是首一完全正映射。对任意 Hermitian \(Y\in\mathsf L(K)\)，由伴随关系有
+
+\[
+\operatorname{Re}\operatorname{tr}(ZY)
+=
+\operatorname{Re}\operatorname{tr}(X\Phi^\ast(Y)),
+\]
+
+以及
+
+\[
+\operatorname{tr}(\sigma Y^2)
+=
+\operatorname{tr}(\rho\Phi^\ast(Y^2)).
+\]
+
+首一完全正映射满足 Kadison 不等式
+
+\[
+\Phi^\ast(Y^2)
+\succeq
+\Phi^\ast(Y)^2.
+\]
+
+因此
+
+\[
+\begin{aligned}
+&2\operatorname{Re}\operatorname{tr}(ZY)
+-\operatorname{tr}(\sigma Y^2)\\
+&\le
+2\operatorname{Re}\operatorname{tr}(X\Phi^\ast(Y))
+-\operatorname{tr}\bigl(\rho\Phi^\ast(Y)^2\bigr)\\
+&\le F_\rho(X),
+\end{aligned}
+\]
+
+其中最后一步使用引理 53.2。对 \(Y\) 取上确界即得结论。证毕。
+
+这个定理将 §29 的经典 Fisher 收缩推广到可以产生非对角量子相干的任意有限 CPTP 网络。它只需要有限矩阵的 Kadison 不等式和 SLD 的变分表示，不需要连续流形或物理测量公理。
+

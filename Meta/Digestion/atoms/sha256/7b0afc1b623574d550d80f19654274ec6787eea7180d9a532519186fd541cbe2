@@ -1,0 +1,110 @@
+**定理 C-112.6（系数证书的环境嵌入障碍及标量通道反例）。** 对任意
+Hermitian 系数矩阵 $H$，令 $\widetilde H=JHJ^\dagger$。
+$\widetilde H$ 在所有原 $A\mid B$ 乘积向量上的期望非负，当且仅当
+$H\succeq0$。特别地 $J\mathsf WJ^\dagger$ 不是环境 Schmidt-number
+三见证，甚至不是环境可分态见证。
+而且存在量子块维数一的有限旗 CPTP 通道，其经同一标签对应的规范 Choi 态
+$\widehat\chi$ 满足
+
+$$
+\operatorname{tr}((J\mathsf WJ^\dagger)\widehat\chi)=-\frac15<0,
+\qquad \operatorname{Tr}_A\widehat\chi
+=\operatorname{Tr}_B\widehat\chi=I_5/5.
+\tag{C112.21}
+$$
+
+证明。设 $z\in\mathbb C^5$ 为任意单位向量，取
+$a=Vu_0$、$b_z=Wz$，则二者均单位，且
+
+$$
+J^\dagger(a\otimes b_z)=z/\sqrt5,\qquad
+\langle a\otimes b_z,\widetilde H(a\otimes b_z)\rangle
+=\frac15 z^\dagger Hz.
+\tag{C112.22}
+$$
+
+所以乘积非负蕴含 $H\succeq0$；逆向由等距嵌入保持 PSD 得到。
+取 $z=u_2$，$z^\dagger\mathsf W z=-1$，便给一个规范乘积态的负值 $-1/5$。
+它的 $A\mid B$ Schmidt 秩是一。
+
+通道反例可同时满足正确的 Choi 边缘合同。
+在五维系数通道坐标中定义
+
+$$
+\Theta(X)=\sum_{\ell=0}^4(u_\ell^\dagger Xu_\ell)P_{\ell+2},
+\qquad \ell+2\text{ 按模五解释}.
+\tag{C112.23}
+$$
+
+Kraus 算子 $|u_{\ell+2}\rangle\langle u_\ell|$ 都秩一，且其
+$K_\ell^\dagger K_\ell$ 之和为 $I_5$。
+显式标量编码为五个经典块 $(u_\ell^\dagger Xu_\ell)_\ell$，
+每个整个 $M_1$ 块的解码是 $y\mapsto yP_{\ell+2}$，故为 CPTP 且 $q=1$。
+取 C-109.1 的固定标签识别 $V e_j=|B_j\rangle_A$、$W e_j=|f(B_j)\rangle_B$。按 C-109.2–C-109.3 的输出在前约定，规范 Choi 态经同一识别后为
+
+$$
+\widehat\chi=\frac15\sum_{\ell=0}^4
+ VP_{\ell+2}V^\dagger\otimes
+ W|\overline{u_\ell}\rangle\langle\overline{u_\ell}|W^\dagger.
+\tag{C112.24}
+$$
+
+每项是规范乘积态，两组因子各自遍历正交归一基，所以两偏迹都是 $I_5/5$。
+每项乘积向量的匹配投影相同：逐原坐标有
+
+$$
+J^\dagger(Vu_{\ell+2}\otimes W\overline{u_\ell})
+ =u_2/\sqrt5,\qquad
+J^\dagger\widehat\chi J=P_2/5.
+\tag{C112.25}
+$$
+
+代入 $\operatorname{tr}(\mathsf WP_2)=-1$ 就得 (C112.21)。
+因此即使限定为真实 CPTP、正确输入边缘、标量块且有限旗的竞争通道，
+“其 Choi 态对 $J\mathsf WJ^\dagger$ 的配对非负”仍是假命题。
+不能将它当作无约束近似通道或 diamond 误差下界的前提。
+失败的关系是：$JJ^\dagger$ 为非局部匹配投影，不能假定它保持 Schmidt 秩。
+这里投影并规范化后的态是 $JP_2J^\dagger$，Schmidt 秩反而为五。
+这不反驳原本只对完全匹配支持态的 C-109.3；(C112.24) 不在该支持内。
+也不排除另行构造合格环境见证或另行证明近似通道界。证毕。
+
+**命题 C-112.7（匹配支持、环境噪声与实际历史读出的边界）。**
+C-112.2 的迹范数球通过 $D\mapsto JDJ^\dagger$ 等距转移到完全匹配支持的密度态，
+并给其原切口 Schmidt number 至少四。
+它不通过该嵌入自动给任意环境密度态相同的 Schmidt-number 球。
+例如对 $0<\eta\le1$ 的环境白噪声
+
+$$
+\Xi_{t,\eta}=(1-\eta)JC_t^{\rm F}J^\dagger+\eta I_{25}/25,
+\qquad
+\operatorname{tr}((I_{25}-JJ^\dagger)\Xi_{t,\eta})=\frac{4\eta}{5}>0,
+\tag{C112.26}
+$$
+
+C-112.2 的完全匹配支持假设不成立。
+在原条件性实际菜单下，同参数的两族仍可由标量去相干精确模拟其承诺来源历史；
+任何同一实际历史的可积统计量都不能同时以无偏期望读出 (C112.18) 的两个不同能量。
+
+证明。等距嵌入只添加零奇异值，故
+$\|J(D-C_t^{\rm F})J^\dagger\|_1=\|D-C_t^{\rm F}\|_1$。
+对完全匹配支持态 C-109.3 的字典成立；对环境态该支持条件不能省略，
+C-112.6 已给出可分态及真实标量通道的反例。
+$JJ^\dagger$ 的秩为五，余投影的秩为二十，故 (C112.26) 的迹为 $20\eta/25$。
+
+对于承诺来源，原基去相干满足
+$(\Delta_A\otimes\mathrm{id})(JCJ^\dagger)=S$；C-108.3 使该族全部允许历史律与
+$S$ 相同。因此 $C_t^{\rm F}$ 与 $C_t^{\rm E}$ 在每个允许协议下有同一历史律。
+同律的任何同一可积统计量期望相同，而 (C112.18) 严格不等，故不可能同时无偏。
+固定参考能量和傅里叶人口的数学存在不提供额外测量、相位控制、来源副本或参考接入。
+C-112.4 的合同指定固定 Schur 通道在每个复输入上的精确作用；
+它在一般匹配输入 $JD J^\dagger$ 上给系数 $(5C)\circ D$，特别保持 $S$，
+不将 $S$ 制备为 $JCJ^\dagger$。
+这些等式均不建立原生循环 refractory FIB 生成到所假设量子来源的制备桥。
+
+(C112.5)–(C112.18) 是在 C-108–C-111 同一来源、基和操作合同内的新增综合推导。
+通用稀疏 Gram 对偶、谱函数演算及 Choi 字典是所引成熟成分；
+[FIB invisible fiber: the sharp fixed-basis coherence number](FIB_INVISIBLE_FIBER_SHARP_COHERENCE_NUMBER.md)
+的 §3、§5 已给完整纤维上界与另一稠密达到点的见证，未被当作本条新增结论。
+这里增加的是 C111 同一傅里叶／边族在正匹配噪声下的定量全复证书、满秩二／四分叉、
+同载体固定参考解释以及环境／通道嵌入反例；不主张全球原创性或锐噪声转变。证毕。
+

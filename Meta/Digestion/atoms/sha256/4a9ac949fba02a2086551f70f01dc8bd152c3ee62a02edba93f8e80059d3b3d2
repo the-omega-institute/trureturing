@@ -1,0 +1,86 @@
+**Theorem 4.1 (uniform exclusion for capped pure endpoints).** Under
+Assumption 1.1, let finite $t\ge\max(t_0,800)$. Consider any collection
+of pure and saturated endpoint columns of (PC.6) whose every pure
+column has $u\le11/25$, with no directional or height-sign restriction
+on saturated columns. In the original nine coordinates $(\Gamma,k)$,
+put
+
+$$
+\zeta=(11/25,-14/25,0,-1,0,28,0,0,0).
+\tag{PC.16}
+$$
+
+Every retained column has nonnegative pairing with $\zeta$, whereas,
+for every real $r$,
+
+$$
+\zeta\cdot(B(t),r)=11/25-\alpha+28\mu/t<-2/125.
+\tag{PC.17}
+$$
+
+Consequently these columns have no nonnegative representation of the
+complete target $(B(t),r)$, or even of $B(t)$ alone. Under Assumption
+2.3 the conclusion applies to any family $Q$ with the stated pure
+cap. It retains negative pure endpoints, every reverse saturated
+singleton, all other saturated endpoints and both coordinates of each
+selected pair. It also excludes all their legal fractional mixtures.
+
+Proof. Set $a_c=11/25$ and
+
+$$
+q(u)=(u+1)(a_c-u)=11/25-(14/25)u-u^2.
+\tag{PC.18}
+$$
+
+This is nonnegative for $-1\le u\le a_c$. On the entire circle,
+
+$$
+q(u)+28/25=(1-u)(u+39/25)\ge0.
+\tag{PC.19}
+$$
+
+For a pure endpoint, (PC.16) pairs to $q(u)\ge0$ by the cap. At
+any saturated endpoint it pairs to
+
+$$
+q(u)+28\mathfrak c(u,v)>-28/25+28/25=0.
+\tag{PC.20}
+$$
+
+This uses only the uniform capacity lower bound, with neither a report
+sign nor a saturated-height restriction. In particular a saturated
+reverse endpoint is retained even if its own pure endpoint is absent.
+If it belongs to a selected pair, its pure endpoint is also retained
+and must satisfy the same pure cap. Both endpoint inequalities then
+hold independently. Affinity gives, for every fraction in that pair,
+
+$$
+\zeta\cdot(\Gamma(u,v,\xi),k(u,v,\xi))
+=(1-\xi)q(u)+\xi\big(q(u)+28\mathfrak c(u,v)\big)\ge0.
+\tag{PC.21}
+$$
+
+No fixed fraction is selected and no column is discarded. The same
+calculation applies to a measure on such segments.
+
+At the single common target all nine coefficients give
+
+$$
+\begin{aligned}
+\zeta\cdot(B(t),r)
+&=\frac{11}{25}-\alpha+\frac{28\mu}{t}\\
+&<\frac{11}{25}-\frac{219}{250}
+                         +\frac{28\cdot12}{800}
+=-\frac2{125}.
+\end{aligned}
+\tag{PC.22}
+$$
+
+The strict source inequalities make the bound strict also at $t=800$.
+A nonnegative representation would pair to a nonnegative sum, contrary
+to (PC.22). The coefficient conjugate to $K$ is exactly zero. Thus
+the exclusion holds at every $K$ request and for $K\ge r$ as well;
+it does not optimize a separate marginal or replace the original
+contrast inequality. For a family $Q$, this is a concrete instance of
+FC Theorem 7.3 using all columns in $I_Q$. $\square$
+

@@ -1,0 +1,53 @@
+**Proposition 1.5 (exact whole-row labels across charts).** If the positive
+branch of [ARH, Theorem 14.1][ARH] supplies an original determining depth
+$H$, one can compute the exact finite image $\mathscr R=R_Q(U)$ and formulas
+$\mathsf{Row}_{\eta,r}(X)$, $r\in\mathscr R$, that partition the feasible
+valuations in each chart by their complete row. Equal rows from different
+charts or different prefixes have the same label.
+
+Proof. List all reply vectors $\theta$ on the finitely many original
+words of length at most $H$. For every chart form
+
+$$
+ C_{\eta,\theta}(X)=D_\eta(X)\ \land\!
+ \bigwedge_{|p|\le H}
+     [r_{W_\eta[X]}(p)=\theta(p)].
+\tag{SRF.4}
+$$
+
+These fixed-word predicates use Lemmas 1.3–1.4 with $e=0$; impossible
+prefix vectors cause no problem. Decide each cell's exact emptiness.
+For a nonempty cell extract a finite tuple witness, or enumerate finite
+tuples until one satisfies the decidable concrete constraints, after
+nonemptiness has been decided. In a zero-coordinate chart test its one
+empty valuation. Fill $W_\eta$ and compute the witness's entire row.
+
+Every feasible valuation belongs to exactly one such prefix vector.
+If two feasible valuations have the same $\theta$, even in different
+charts, their actual sources agree through $H$, so the supplied
+$\operatorname{PrefDet}(U,Q,H)$ makes their entire rows equal. The witness
+row therefore classifies the whole cell. Take all nonempty cell rows,
+compare their finite concrete outside terms, reached positions in order
+and equality partitions, and merge literal-equal whole rows across the
+entire chart list. Their set is $\mathscr R$. Define
+$\mathsf{Row}_{\eta,r}$ as the disjunction of exactly the cells in that
+chart whose computed row is $r$. Every actual source lies in one chart
+by ARH Proposition 10.3, proving both that these labels exhaust $R_Q(U)$
+and that every reported row is attained.
+
+For two charts, full-row equality is now exactly
+
+$$
+ \bigvee_{r\in\mathscr R}
+   \mathsf{Row}_{\eta,r}(X)\land\mathsf{Row}_{\zeta,r}(Y).
+\tag{SRF.5}
+$$
+
+The witnesses certify exact feasible cells; they are not a guessed finite
+source sample. Neither $\eta$ nor $\theta$ is observed by the service.
+Only a terminal label is installed. ARH Proposition 12.1's
+$\mathsf{Bad}_\eta$ compares two valuations within one chart and is used
+by the supplied prefix decision, not as a cross-chart terminal test here.
+In particular, constant rows in individual charts do not justify a common
+root halt unless their labels merge to one row. $\square$
+

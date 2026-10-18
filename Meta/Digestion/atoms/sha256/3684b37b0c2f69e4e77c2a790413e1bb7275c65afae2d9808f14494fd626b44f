@@ -1,0 +1,62 @@
+**Theorem 23.1 (supported unitary-cut obstruction).** Fix any one
+$y\in\{5,16,27\}$. At a cut reached using only native unitary
+words before the permitted terminal read, the joint accessible quantum
+image of the four signed original inputs has dimension at least three.
+This remains true with an independently initialized accessible ancilla
+and with input-independent classical randomization. Thus the literal
+unitary-only acquisition cut has $\mathsf W=1$. It cannot implement
+the low/high acquisition of Theorem 22.1, whose worst-history high
+probability is strictly below one. The comparison with the original
+sharp $\mathsf C(s)$ is at its inherited weak scope.
+
+Proof. Put $v_{\epsilon,\chi}=(\epsilon a_{y0},\chi a_{y1},a_{y2})^T$.
+Then
+
+$$
+\sum_{\epsilon,\chi}\epsilon v_{\epsilon,\chi}=4a_{y0}e_0,
+\quad
+\sum_{\epsilon,\chi}\chi v_{\epsilon,\chi}=4a_{y1}e_1,
+\quad
+\sum_{\epsilon,\chi}v_{\epsilon,\chi}=4a_{y2}e_2.
+\tag{GC.95}
+$$
+
+All coefficients on the right are nonzero, so the COMPLEX span is
+three-dimensional. The isometry $E_N$ and every native word preserve
+that dimension. Appending an independent pure ancilla and applying a
+joint unitary is also an isometry on this span. An independent mixed
+ancilla has support of rank at least one; the joint support initially
+has dimension three times that rank, and a unitary preserves it.
+Every future-accessible input-bearing share is included here; removing
+one by an irreversible channel would leave the stipulated unitary-only
+menu.
+
+If the seed is recorded, each seed label has input effect $p_jI$;
+conditional on any positive-weight seed the joint span is still at
+least three. If the seed is forgotten, the support of a positive
+mixture contains the support of every positive-weight term, so mixing
+cannot turn this into a two-dimensional acquisition fibre. This also
+covers a continuous seed: positivity of the mixture excludes a smaller
+support unless the almost-everywhere images already lie in it. Thus
+no actually generated label at this cut has joint fibre dimension below
+three, and the total high probability is one.
+
+For the §10 weak acquisition only $H$ is high. Its probability is
+$(1-\delta)\sum_i h_i^2p_{yi}$, independent of signs. Root TP gives
+$h_i^2\le1$, and $0<\delta<1$, hence
+
+$$
+\mathsf W_{\rm GC}=(1-\delta)\max_y\sum_i h_i^2p_{yi}<1.
+\tag{GC.96}
+$$
+
+Under the original weak sharp-cost supplier this equals
+$\mathsf C(s)$ for the stated witness requests. $\square$
+
+A terminal bit cannot retroactively create an earlier acquisition cut
+or authorize a later quantum output. This theorem concerns the literal
+menu before that read; it is not a no-go for every conceivable optimizer,
+every stronger measurement interface or the strong boundary. Its joint
+span is essential: the two-dimensional marginal of a larger accessible
+joint carrier does not qualify as a low fibre.
+

@@ -1,0 +1,8 @@
+**约定 7.2（有限状态自适应测试与受约束奇偶查询）。** 把每个完整块作为一个输入符号，令输出函数为 $\lambda(q,B)=o(\delta_Bq)$，即可使用确定 Mealy 机器和初态自适应测试的既有语言。[S1] 第10.2节所引初态识别文献区分 preset 与 adaptive，也区分识别初态、归巢末态及复位查询。这里树中的每条边仍收费一个实际块，实验前的 $o(q_0)$ 免费；不同标签的初始来源可在后继状态中合并，但必须保留它们原始标签的区别。
+
+本费用证明中的相位查询是受约束的循环奇偶查询：（3.4）是折叠位列的相邻循环差分，$g=1$ 时像落在偶数重量超平面；$g\ge2$ 时孤立脉冲在实际 $P$ 上独立。定理3.1额外证明了规定首零前缀、原禁词和完整块宽度之下的实际实现。仅有一个二元线性空间或任意奇偶查询的理想模型，都不能提供这个实际实现桥梁，亦不能处理定理6.1的强制前缀。
+
+Uraz Cengiz Türker、Robert M. Hierons、Mohammad Reza Mousavi、Khaled El-Fakih，*Efficient State Identification for Finite State Machine-Based Testing*，DOI [10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，[作者接受稿](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf)，正文第6–7页（PDF第7–8页）定义11–15、18，提供有界的对应：定义11的 SIP 是从指定状态发出 characterising set 中一个词的路径；定义12的 identification path 从指定初态 $s_1$ 出发，覆盖每个“状态、测试词”对，允许段间 transfer；定义13排除这些额外 transfer；定义14的 minimal 要求每对状态有达到该对最短分隔长度的词前缀；定义15的 O-WSet 同时要求该 minimal 性和 transfer-free 覆盖路径；定义18的 bounded O-WSet 限制 transfer 总长。这里引用的是正文编号，接受稿附录重复条目的编号不用于替换它们。
+
+该文的背景是按规格机器组织一致性测试并验证 characterising set，原文讨论 reset 和 transfer 的费用。指定起点上的覆盖路径、逐对最短分隔前缀，以及避免额外 transfer，均不等同于全未知实际来源上一条自适应路径的最小最坏块数。本文不调用 O-WSet 的存在性或复杂度结果来证明（3.2），也不给控制器引入 reset。以上是所用定义的 `literature-attested` 对应；定理3.1、命题4.1–4.2、定理5.1、6.1是所写合同下的 `repo-derived` 普通推导。
+

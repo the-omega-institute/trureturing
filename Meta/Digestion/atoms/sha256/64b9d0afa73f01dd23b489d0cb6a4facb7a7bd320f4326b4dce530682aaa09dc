@@ -1,0 +1,16 @@
+### 8.3 覆盖证明在提取圈之前完成
+
+父图桥先证明
+
+$$
+\operatorname{supp}\bigl(\operatorname{component}_{\texttt{recursiveFactor}}(F.\texttt{outerR}\,0)\bigr)
+=F.\texttt{domain}.
+$$
+
+从左到右使用递归图边不能离开原始域；从右到左使用原域的实际子域划分。
+原零子域由 `JointData.cover` 与 `JointData.full` 处理，
+每个普通子域由低阶 Hamilton 圈删去真正切口后的连通性与实际外部链处理。
+主端口和普通子域之间也需真正的连接路径。
+当这个集合相等已证明之后，二因子的圈分量定理才提供圈，并把它诱导到 `F.domain`。
+这排除了“连接端口但遗漏另一个原域圈”的证明缺口。
+

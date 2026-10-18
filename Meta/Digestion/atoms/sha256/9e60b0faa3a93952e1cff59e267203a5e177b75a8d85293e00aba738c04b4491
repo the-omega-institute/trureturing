@@ -1,0 +1,56 @@
+**Proposition 21.2 (bordered inverse and full Jacobian Lipschitz constant).** Valid selected bounds are
+
+$$
+\beta_B=2674263171960,\qquad L_B=11399894.7864.
+$$
+
+Consequently the constants of Definition 13.1 have enclosures
+
+$$
+\begin{gathered}
+1.64007994346\cdot10^{-20}\le R_f\le1.64007994347\cdot10^{-20},\\
+11477402472800\le C_{\rm joint}\le11477402472900.
+\end{gathered}
+$$
+
+Proof. For the §24 candidate $R_B$, multiplication against all $441$ off-root interval entries gives
+
+$$
+\|I-R_B\mathbf B_e\|_\infty\le9.29214770243\cdot10^{-9},\qquad
+\|R_B\|_\infty\le127345864148.
+$$
+
+The tighter row-sum comparison specified by the witness, rather than rounding both inputs up before division, gives
+
+$$
+\frac{21\|R_B\|_\infty}{1-\|I-R_B\mathbf B_e\|_\infty}
+<2674263171960.
+$$
+
+Proposition 17.2 supplies the Euclidean inverse bound. It uses neither positivity of an unrestricted Hessian nor an inverse involving a zero-weight seventh angle.
+
+For the uniform Lipschitz bound use the scalar face Lagrangian
+$\mathscr L_f=Y\cdot(\mathcal M-B)-\mathcal J+\lambda(\kappa-\mathcal K)$.
+The system $\Psi$ is its complete $w$ gradient. On the product of the face coordinate box with $|Y_j-Y_{e,j}|\le1$, $|\lambda-\lambda_e|\le1$, the only third derivative families are
+
+$$
+\begin{aligned}
+D^3_{zzz}\mathscr L_f&=\sum_jY_jD^3_z\mathcal M_j-D^3_z\mathcal J-
+\lambda D^3_z\mathcal K,\\
+D^3_{zzY_j}\mathscr L_f&=D^2_z\mathcal M_j,
+\qquad D^3_{zz\lambda}\mathscr L_f=-D^2_z\mathcal K.
+\end{aligned}
+$$
+
+Each mixed family occurs in all three index positions; entries with two multiplier indices vanish. Thus a sufficient, fully off-root bound is
+
+$$
+L_B^2\ge
+\operatorname{maj}\!\left(\sum_jY_jD^3\mathcal M_j-D^3\mathcal J-
+\lambda D^3\mathcal K\right)^2
++3\sum_j\operatorname{maj}(D^2\mathcal M_j)^2
++3\operatorname{maj}(D^2\mathcal K)^2.
+$$
+
+Use $|p_i|\le2$, the entire circle and the normalized jets through order three from §17. The resulting upper bound is at most the selected $11399894.7864$. This covers the required ball of radius $R_{\rm chart}$, since all its multiplier variations are at most $1/2<1$. In particular the multiplier/Hessian terms are not silently dropped. Finally $R_f=1/(2\beta_BL_B)<R_{\rm chart}$ and $C_{\rm joint}=1+C_\mu$ give the two enclosures by exact arithmetic. $\square$
+

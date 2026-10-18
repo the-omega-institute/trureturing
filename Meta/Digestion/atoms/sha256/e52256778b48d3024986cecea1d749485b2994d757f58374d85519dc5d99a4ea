@@ -1,0 +1,45 @@
+**Construction 3.2 (finite branches before parameter evaluation).**
+Distribute $\Phi$ into finitely many conjunctions. Give every declared
+variable and every subexpression a code name, sharing all occurrences
+of any one variable. All subexpression definitions remain positive,
+including those beneath a negative comparison. Use (SFP.4) to obtain
+primitive definitions $X_v=[0],[1]$, shifts
+$X_v=\tau_{a(\mathbf n)}X_w$, and smart pairings
+$X_v=J(X_l,X_r)$, together with the signed comparisons.
+
+For each smart pairing make the two exhaustive choices
+
+$$
+\begin{array}{ll}
+\text{collapse:}&s_l=s_r=s_v=c,\quad
+       r_l-r_r=1,\quad r_v-r_r=2,\\
+\text{ordinary:}&X_v=F(X_l,X_r).
+\end{array}
+\tag{SFP.14}
+$$
+
+The primitive ranks of all three names remain natural. No new independent
+collapse scalar is needed: the rank of the existing right name supplies
+it. The ordinary case requires normality of its output like every other
+name, thereby excluding the collapse case.
+
+Erase ranks. Primitive definitions force shape $c$, shifts and positive
+equalities equate shapes, and ordinary pairing gives
+$s_v=f(s_l,s_r)$. Solve these finite equations over the free signature
+$c,f$ by an idempotent most general unifier, with the finite-tree occurs
+check. A failure discards the branch. A success supplies finite terms
+$S_v$ in residual shape variables $w_1,\ldots,w_s$ and the complete
+factorization of all finite shape solutions. Keep unused names as well.
+This is precisely the free-shape step of NSF Section 3; the classical
+unification supplier is Baader–Snyder §2.2.4, Lemma 2.2, Corollary 2.3, Lemma 2.4 and
+Theorems 2.5–2.6 [BS]. It is applied after native collapse splitting,
+never to $\rho$ as a free unary constructor.
+
+For each successful branch generate the finite scheme:
+primitive definitions give anchors; shifts and positive equalities give
+alignment instructions with their actual affine labels; collapse gives
+its two primitive alignments; ordinary pairing gives a pair instruction.
+Keep every original negative pair for Definition 2.3. No shape inequality
+is asserted merely because two symbolic templates differ. No equality
+of ranks is added merely because two shapes happen to coincide.
+

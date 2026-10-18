@@ -1,0 +1,15 @@
+**Corollary 11.1 (one-coordinate motif size).** Among the 31 nonempty
+subsets of $P$, the maximum size of a one-coordinate jointly admissible
+set is four. On the full $P$, none of the 127 words of length at most
+six determines the $LL$ factor; in fact no finite word does. The factor
+decoders on $B_*$ in Lemma 4.2 give the substitution readouts for both
+coordinates, all seven targets and every $k\ge0$.
+
+**Proof.** There are $2^5-1=31$ nonempty subsets. Lemma 4.2 excludes
+$P$ itself. On $P\setminus\{u_0\}$ the reply at $RL$ takes the four
+distinct values absent, alpha, beta and branch, by (NDR.20). It therefore
+determines every target factor on this four-element set. There are
+$\sum_{l=0}^6 2^l=127$ words in the stated finite range, all included
+in the arbitrary-word exclusion of Lemma 4.2. The all-count assertion
+is (NDR.4) applied to that lemma's exact factor decoders. $\square$
+

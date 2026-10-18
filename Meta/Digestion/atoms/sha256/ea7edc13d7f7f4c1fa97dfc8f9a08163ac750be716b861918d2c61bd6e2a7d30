@@ -1,0 +1,71 @@
+**Theorem 3.1 (exact unit-block law).** Let $m=1$ and $k\ge2$. In a specified free value fiber, let $\lambda:\{0,\ldots,k\}\to Y$ be any phase labeling, independent of INITIAL tail. Put
+
+$$
+A=\lambda(0),\qquad
+J=\max\bigl(\{j\in\{1,\ldots,k\}:\lambda(j)\ne A\}\cup\{0\}\bigr).
+$$
+
+A constant labeling has cost zero. For $k\ge3$ and $J>0$,
+
+$$
+C_v(\lambda)=\max\bigl\{J,\ 2+\mathbf1_{\{\lambda(1)\ne\lambda(2)\}}\bigr\}.
+\tag{3.1}
+$$
+
+For $k=2$, the exact costs are
+
+$$
+C_v(\lambda)=
+\begin{cases}
+0,&J=0,\\
+3,&J=1,\\
+2,&J=2\text{ and }\lambda(1)=\lambda(2),\\
+4,&J=2\text{ and }\lambda(1)\ne\lambda(2).
+\end{cases}
+\tag{3.2}
+$$
+
+Every bit in the proof is one paid complete block.
+
+**Proof.** First suppose $k\ge3$. For $3\le H\le k$, emit the literal stream $0\,1^{H-1}$ and retain all endpoint differences $d_0,\ldots,d_{H-1}$. The full signatures are
+
+$$
+\begin{array}{c|c}
+\text{INITIAL index}&\{t:d_t=1\}\\ \hline
+j=1&\{1\}\\
+1<j<H&\{j-1,j\}\\
+j=H&\{H-1\}\\
+j=0\text{ or }j>H&\varnothing.
+\end{array}
+\tag{3.3}
+$$
+
+The two singleton positions are distinct because $H\ge3$, and every listed pair is distinct from them and from every other pair. These signatures follow directly from the literal active positions; the root at position zero is zero and no wrap occurs. The root clears all actual old tails, and the longest subsequent run is $H-1\le k-1$, so the whole stream is legal.
+
+When $J\ge3$, use $H=J$, return $\lambda(j)$ on each identified nonzero signature, and return $A$ on the zero signature. Every phase beyond $J$ has label $A$, so these are correct INITIAL leaf labels. When $J\le2$ and $\lambda(1)\ne\lambda(2)$, use $H=3$; index three and every later index have label $A$, giving the same correct rule in three blocks. When $J=2$ and $\lambda(1)=\lambda(2)$, emit $01$. Its differences are $(0,1)$ at indices $1,2$ and $(0,0)$ elsewhere; return their common label or $A$, respectively. These protocols prove all upper bounds in (3.1). In particular, taking $H=k$ identifies every phase for $k\ge3$ within this same proof.
+
+For $k=2$, emit $01$ in the equal-pair case. If $J=1$, emit $001$. Its full difference signatures, ordered by INITIAL index, are
+
+$$
+j=0:(0,0,1),\qquad
+j=1:(0,0,0),\qquad
+j=2:(0,0,1).
+$$
+
+Return $\lambda(1)$ on the zero signature and $A=\lambda(2)$ otherwise. If $J=2$ and the pair labels differ, emit $0101$. The full signatures are
+
+$$
+j=0:(0,0,0,1),\qquad
+j=1:(0,1,0,1),\qquad
+j=2:(0,1,0,0).
+\tag{3.4}
+$$
+
+They identify all three INITIAL indices and permit their own labels. All runs after the first zero have length at most one; each displayed stream is legal for every INITIAL tail.
+
+For the adaptive lower bounds, a nonconstant target forces root bit zero by §2. One block therefore yields a constant output and cannot succeed. In a two-block tree, the second bit zero gives no information, and the second bit one splits precisely $\{1,2\}$ from the remaining indices. Both sets must have constant labels to stop. Since $A=\lambda(0)$ and $J$ is the last non-$A$ index, a nonconstant labeling admits two blocks exactly when $J=2$ and $\lambda(1)=\lambda(2)$. This proves the three-block lower bounds for the other small cases. For $J\ge3$, the actual tail-zero pair $0,J$ from §2 proves the additional lower bound $J$. These arguments cover every adaptive tree, not just the displayed stream.
+
+It remains to exclude three blocks for $k=2,J=2,\lambda(1)\ne\lambda(2)$. Following root zero, if the second bit is zero then the third bit one queries $\{0,2\}$, whose labels differ; third bit zero queries nothing. Thus neither third choice succeeds. If the second bit is one, its positive child consists of $\{1,2\}$ with different labels and common terminal tail one. Third bit zero gives no new value difference; third bit one rejects both and merges them permanently. This child cannot finish. The root has no other possible first bit, so all three-block adaptive trees fail. Stream (3.4) attains four, completing (3.2). $\square$
+
+The endpoint stream used in this theorem is available specifically at $m=1$. Its signatures cannot be treated as observations inside a larger complete block; §7 gives an actual failure of such grouping.
+

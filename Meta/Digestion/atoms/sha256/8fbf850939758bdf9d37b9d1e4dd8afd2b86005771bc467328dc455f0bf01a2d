@@ -1,0 +1,13 @@
+**Corollary 4.3 (Exponential entropy-gap supplier).** Suppose the same actual $P$ has constants $C<\infty$ and $0<\alpha<1$ with $0\le a_k\le C\alpha^k$ for every $k\ge0$. Then
+
+$$
+\begin{aligned}
+e_L(r),e_R(r)&\le\frac{C\alpha^r}{2(1-\alpha)},\\
+\tau_P(R)&\le\frac{C\alpha^R}{(1-\alpha)^2},\qquad
+T_P\le\frac{C}{(1-\alpha)^2}.
+\end{aligned}
+\tag{4.4}
+$$
+
+Proof. Sum the geometric tail in (3.1), and use $\sum_{j\ge0}(j+1)\alpha^j=(1-\alpha)^{-2}$ in (4.1). Both one-sided influences are included in the displayed tail constant. $\square$
+

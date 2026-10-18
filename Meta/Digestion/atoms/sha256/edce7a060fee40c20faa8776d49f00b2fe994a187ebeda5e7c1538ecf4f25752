@@ -1,0 +1,17 @@
+**Definition 4.1 (actual ordered scaffold).** Put
+
+$$
+H=\lceil\log_2N\rceil,\qquad K=2^H,\qquad D=H+d.
+$$
+
+At a public ordered frontier of a perfect height-$H$ binary scaffold,
+place the $N$ original blocks and $K-N$ fixed $A$ padding blocks.
+Let $u$ be the resulting right subtree and $T=\langle A,u\rangle$
+the original source. A position $b$ has a public address
+$a_b\in\{L,R\}^H$ within $u$. The source lies in
+$\mathcal F_D=\{\langle A,v\rangle:\operatorname{ht}(v)\le D\}$,
+and $u\in S_D$. Ordered pairing makes the scaffold map injective:
+its ordered frontier subtrees recover the inserted tuple. Consequently
+$P,Q$ on sources are the injective pushforwards of their tuple laws.
+No scaffold constructor or padding block is a new random weight owner.
+

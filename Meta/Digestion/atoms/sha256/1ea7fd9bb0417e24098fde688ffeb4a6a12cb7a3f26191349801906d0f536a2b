@@ -1,0 +1,26 @@
+### 定义 28.5（伴随映射）
+
+相对于 Hilbert--Schmidt 内积
+
+\[
+\langle X,Y\rangle_{\mathrm{HS}}
+=
+\operatorname{tr}(X^\ast Y),
+\]
+
+定义 \(\mathcal E^\ast\) 为满足
+
+\[
+\operatorname{tr}(Y^\ast\mathcal E(X))
+=
+\operatorname{tr}((\mathcal E^\ast(Y))^\ast X)
+\]
+
+的唯一线性映射。若 \(\mathcal E\) 保迹，则
+
+\[
+\mathcal E^\ast(I)=I.
+\]
+
+因此 CPTP 映射的伴随是首一完全正映射。量子网络中的“局部观察”应使用 \(\mathcal E^\ast\) 作用在观察量上，而不是把观察量和状态混为同一类型。
+

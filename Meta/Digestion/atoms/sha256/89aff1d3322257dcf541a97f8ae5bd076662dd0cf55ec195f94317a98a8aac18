@@ -1,0 +1,23 @@
+**Proposition 17.2 (finite inverse verification).** Let $\mathbf C$ enclose an $n$-square matrix $C$ and let $R$ be a displayed rational candidate. Define
+
+$$
+q_R=\max_i\sum_j\sup|\delta_{ij}-(R\mathbf C)_{ij}|,\qquad
+r_R=\max_i\sum_j|R_{ij}|.
+$$
+
+If $q_R<1$, then $C$ is invertible and
+
+$$
+\|C^{-1}\|_\infty\le\frac{r_R}{1-q_R},\qquad
+\|C^{-1}\|_2\le\frac{n r_R}{1-q_R}.
+$$
+
+For a parameter response $Cv=-f$ and any rational trial $v_0$,
+
+$$
+\|v-v_0\|_\infty\le
+\frac{\|R(\mathbf C v_0+\mathbf f)\|_\infty}{1-q_R}.
+$$
+
+Proof. The geometric series in $I-RC$ has infinity norm at most $(1-q_R)^{-1}$, and $(RC)^{-1}R=C^{-1}$. The stated Euclidean bound follows even from the coarser inequality $\|T\|_2\le n\|T\|_\infty$. Applying $(RC)^{-1}$ to $R(Cv_0+f)$ proves the response estimate. This is a finite residual proof, with no significance attached to a candidate's numerical origin. $\square$
+

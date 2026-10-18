@@ -1,0 +1,15 @@
+**Proposition 4.3 (the reduced object and two failed shortcuts).** The
+law is not a bound on actual time, does not generally have period one,
+and does not make the whole output sequence eventually periodic.
+
+Proof. The root-hole bare row holds at every epoch. For the rightmost
+leaf automaton with $Q=\{0,1\}$, $q_\alpha=0,q_\beta=1$,
+$\delta(x,y)=y,F=\{1\}$, (NRF.9) alternates $(0,1)$ and $(1,0)$.
+On the same source $\alpha$, the selected root row holds precisely
+at odd epochs. A constant row-only cap loses this condition.
+If $F=\varnothing$, every selected cut is empty and the output on
+$\alpha$ contains the entire tree $\rho^n\alpha$. These trees are
+pairwise distinct by [NSF, Lemma 9.2][NSF]. Their output sequence is
+not eventually periodic, although equality to each fixed output
+has the law just proved. $\square$
+

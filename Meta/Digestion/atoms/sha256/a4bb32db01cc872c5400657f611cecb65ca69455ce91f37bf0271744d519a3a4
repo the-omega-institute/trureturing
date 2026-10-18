@@ -1,0 +1,34 @@
+## 164. Classification of all owners with reservoir pair {Z,C}
+
+Such an owner is genuine because it contains Z. Its axes must belong
+to H by Section 163. If at least one axis is not Z, its value b is at most
+m, since m>c,d. Write the other axis value as r<=z. The transverse Z
+cosine numerator increases with r, and at r0=1+z+c it equals
+
+    [c+z(1+z+c)]*(1+c+b-z)<0,
+
+because z>1+m+c>=1+b+c. Thus its actual two transverse Z angles are
+obtuse. This owner must be the unique rho.
+
+The only other possible axis pair is (Z,Z), giving a frame
+
+    (Z,Z,C,Z,Z,C).
+
+Its four Z angles are equal. This follows either from its vertex
+symmetries or by the two original cosine formulas: both an axial and
+a transverse Z angle have cosine
+
+    z(c+1)/(2z^2+c-1).
+
+Since z>c+1,
+
+    2z^2+c-1-2z(c+1)
+        =2z(z-c-1)+c-1>0.
+
+Each Z angle therefore exceeds pi/3. These four slots alone contribute
+more than 4*pi/3 to Z. The owner differs from rho, which has an M axis;
+together with rho's two obtuse Z slots they exceed the total 2*pi.
+So this alternative is impossible too. We have established:
+
+    every owner with reservoir pair {Z,C} is rho.  (162.4)
+

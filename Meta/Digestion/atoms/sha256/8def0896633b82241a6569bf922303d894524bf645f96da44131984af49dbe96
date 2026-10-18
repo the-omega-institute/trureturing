@@ -1,0 +1,21 @@
+## 485. The largest high label cannot be transverse in an h=3 owner
+
+Choose an actual largest-valued label X. It belongs to {Z,U}, since both exceed m>=v>c,d. Numerical ties between Z,U are allowed; choose either tied actual label. Write x=x_X.
+
+If an h=3 owner had transverse X, its other transverse value a and low axis b satisfy a,b<=w, while its high axis r<=x. Hence
+
+    J<=(x+1)*(w+1)-(x-w)^2<0.
+
+For the last strict inequality write x=4*w+3+t with t>0; its right side equals
+
+    -5*w^2-10*w-5-(5*w+5)*t-t^2.
+
+This contradicts genuineness.
+
+A five-high-slot owner transverse at X costs more than 4*pi/3. Indeed its high pair p,q contains x, its high axis r<=x, and its low axis t<=s-2. Thus r<p+q+1. The acute-angle calculation in Section 393 applies without any assumed one-sided maximum gap:
+
+    theta_r<pi/2, lambda>8/9>4/5,
+    E_H>pi/2+4*atan(4/5)>4*pi/3.                (485.1)
+
+The numerical inequality r<p+q+1 follows here from actual maximality, even when r repeats X. It is not an application of the four-distinct maximum-gap theorem.
+

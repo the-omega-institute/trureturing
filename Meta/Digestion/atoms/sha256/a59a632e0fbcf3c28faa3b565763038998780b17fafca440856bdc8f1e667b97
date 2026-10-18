@@ -1,0 +1,21 @@
+**恒等式证明。** 原完整有限／无限 FTC 给
+
+\[
+\int_x^\infty e^{-y}\log y\,dy
+ =e^{-x}\log x+E_1(x),\qquad
+\int_x^\infty e^{-y}\,dy=e^{-x}.
+\]
+
+代入 \(h\)，利用准确的 \(k+1=C\)，得到
+
+\[
+\begin{aligned}
+e^x\int_x^\infty e^{-y}h(y)\,dy
+ &=k(\log(x/2)+\gamma_E)+(k+1)e^xE_1(x)\\
+ &=G(x).
+\end{aligned}
+\]
+
+完整平移 \(y=x+v\) 给（EA.1）的第二式。权重质量由完整指数尾
+精确计算为一。这里无须寻找 \(G\) 的全局极小点。证毕。
+

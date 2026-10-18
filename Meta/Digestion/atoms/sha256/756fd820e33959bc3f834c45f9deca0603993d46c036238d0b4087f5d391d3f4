@@ -1,0 +1,17 @@
+**推论 455.4（在该共同范围内的充要截止尺度）。** 仍假设（CC.16）。则补偿项最终严格为正，并有
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N(x))\longrightarrow0
+\quad\Longleftrightarrow\quad
+\frac{N(x)+1}{x^{3/2}\ell}\longrightarrow\infty.}
+\tag{CC.19}
+\]
+
+**证明。** 因 \(F(\alpha)>0\)，对全部充分大 \(x\)，（CC.18）中的中括号介于
+
+\[
+\frac12F(\alpha)\quad\text{与}\quad F(\beta)+\frac12F(\alpha)
+\]
+
+之间。因此它与 \(x^{3/2}\ell/(N+1)\) 具有两个固定正比较常数。（CC.19）及最终正性随即成立。充要条件只在明确的固定正紧区间合同下主张；没有扩张为任意无约束的 \(N(x)\)。证毕。
+

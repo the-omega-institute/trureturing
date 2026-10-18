@@ -1,0 +1,17 @@
+**Theorem 6.2 (uniform resource separation).** A controller satisfying
+(6.2) may have a finite Pareto basis while a chosen weighted objective selects
+a different controller.  A Pareto point need not minimize any strictly
+positive weighted objective: the finite set
+$\{(0,3),(1,2),(2,0)\}$ has middle point Pareto-minimal but unsupported by
+positive weights.  Indeed, support by positive weights would require both
+$\lambda_1+2\lambda_2\le3\lambda_2$ and
+$\lambda_1+2\lambda_2\le2\lambda_1$, hence both
+$\lambda_1\le\lambda_2$ and $2\lambda_2\le\lambda_1$, which is
+impossible.  If zero weights are allowed, a weighted minimizer may also be
+chosen from a non-Pareto tie because the ignored coordinate is not priced.
+
+**Proof sketch.** Varying $\lambda$ changes which tradeoff is preferred, and
+coordinatewise maxima may occur on different runs.  These are the distinctions
+proved operationally in [Serial Joint Resource Frontier §§5 and 7](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md).
+They do not alter the uniform quantifier in (6.2). $\square$
+

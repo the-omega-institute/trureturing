@@ -1,0 +1,9 @@
+**定理 137.5（固定模型内的七倍误差界）。** 假定链的矩阵、量具和标度固定，真实值仍为定理137.4的 $z_i$。若已保存的数 $\widehat z_i=z_i+e_i$ 满足 $|e_i|\le\delta$，$\delta\ge0$，则
+
+$$
+\left|2\widehat z_0+2\widehat z_1-2\widehat z_2-\widehat z_3
+-\operatorname{tr}(KR)\right|\le7\delta.
+$$
+
+证明（137.5）。误差是 $2e_0+2e_1-2e_2-e_3$；三角不等式给 $(2+2+2+1)\delta$。对独立区间误差而言，$e_0=e_1=\delta,e_2=e_3=-\delta$ 达到该界，不要求误差独立随机或零均值。$\square$
+

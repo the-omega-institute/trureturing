@@ -1,0 +1,29 @@
+**Definition 1.5 (credited rates and original-task consumer).** Use
+[FMR, Theorems 3.3 and 6.3–6.4][FMR] and [NPC, Theorems 5.3,
+6.2 and 7.1][NPC]:
+
+$$
+\begin{aligned}
+\sigma_d&=\lim_{n\to\infty}\frac{\log_2 K_d(n)}n
+ =\inf_{n\ge1}\frac{\log_2 K_d(n)}n,\\
+b_d&=2^{-\sigma_d}=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+ =\sup_{d\ge1}2^{-d}\sigma_d,\\
+0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,\qquad 0\le\phi\le1,
+\end{aligned}
+\tag{SIR.8}
+$$
+
+where $U_0=1$, $U_{j+1}=1+U_j^2$ and
+$\phi=\lim_j2^{-j}\log_2U_j$. A probability cap
+$\beta_d(\mu)\le C$, with $C>0$, gives
+
+$$
+|E[\mathcal F_D]|\ge\left\lceil C^{-2^{D-d}}\right\rceil
+\quad(D\ge d),\qquad
+\lambda\ge-2^{-d}\log_2 C
+\tag{SIR.9}
+$$
+
+against every original preparation and reader. All logarithms are base two.
+

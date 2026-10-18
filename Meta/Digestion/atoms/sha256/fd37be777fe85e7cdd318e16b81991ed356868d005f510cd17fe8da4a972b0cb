@@ -1,0 +1,46 @@
+## 4. A paired-emission comparison controlled by the actual alpha edges
+
+On the same source and prior, construct a comparison table with p and suspended labels both $X$, rows both $\pi$, acquired beta kernel $C=BA$, acquired alpha kernel the identity, and both emissions $u$. It has both exact acquired flows. Denote its own generated laws by $\widetilde Q_x,\widetilde W_x$.
+
+This is a finite installed comparison, not an assigned posterior or a pointwise replacement decoder. Its private beta kernel is the fixed matrix product $BA$; it does not perform another source Read. Its actual and synthetic updates use this same kernel. Product realization retains every original field and permission; earlier synthesis is fair, latch sampling follows the third write, completion clears private labels, and only original Stop delivers. No state, program, sampler-workspace or hard-defect budget is preserved.
+
+Set
+
+$$
+J=\sum_{y,x}\tau_yA_{yx}|v_y-u_x|,
+\qquad d=\sum_x\pi_x\operatorname{TV}(Q_x,\widetilde Q_x).
+$$
+
+**Lemma 4.1.** The complete laws satisfy
+
+$$
+d\le10J/11.
+\tag{4.1}
+$$
+
+If $\widetilde a=\pi\widetilde Q(E_p)$ and $\widetilde b=\pi\widetilde W(E_\beta)$, then
+
+$$
+|a-\widetilde a|\le10J/11,
+\qquad |b-\widetilde b|\le15J/11.
+\tag{4.2}
+$$
+
+Proof. Expand the original p continuation by first sampling $y$ through $B$ and $x'$ through $A$. This presampling of $x'$ is a coupling calculation; on a completing beta it is discarded. Its law is still (3.2). At suspension couple the Bernoulli emissions $v_y$ and $u_{x'}$. Their mismatch probability is $|v_y-u_{x'}|$. A matched alpha continues at $x'$ in both generators. The p emissions already agree. For $d_x=\operatorname{TV}(Q_x,\widetilde Q_x)$ this gives
+
+$$
+d_x\le(1-u_x)\sum_{y,x'}B_{xy}A_{yx'}
+\bigl(|v_y-u_{x'}|+u_{x'}d_{x'}\bigr).
+$$
+
+Average by $\pi$. Using (3.1), $1-u\le2/3$, $u\le2/5$ and $\pi C=\pi$ yields $d\le(2/3)J+(4/15)d$, proving (4.1). This couples complete generators through all returns, not just terminal outcomes.
+
+The p event bound follows. Write $g_x=Q_x(w_{0,1})$, $\widetilde g_x=\widetilde Q_x(w_{0,1})$. Then
+
+$$
+b=\sum_{y,x}\tau_yA_{yx}(1-v_y+v_yg_x),
+\quad \widetilde b=\sum_{y,x}\tau_yA_{yx}(1-u_x+u_x\widetilde g_x).
+$$
+
+Their difference is the average of $(u_x-v_y)(1-g_x)+u_x(g_x-\widetilde g_x)$. Since $0\le g_x\le1$, its absolute value is at most $J+(2/5)d\le15J/11$. This proves (4.2). No comparison of the two suspended configuration risks is inferred: averaging through $A$ cannot be reversed using convexity. ∎
+

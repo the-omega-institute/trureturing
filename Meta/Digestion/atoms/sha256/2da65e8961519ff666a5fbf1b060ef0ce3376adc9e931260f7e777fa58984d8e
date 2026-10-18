@@ -1,0 +1,84 @@
+**命题 C-30.8（Fibonacci–Lucas 伙伴的谱、非 SPN 证书与两类记录）。** 对 $m\ge1$，令 $W_m=F_{2m+1}I+F_{2m}C$。它正定且逐项非负，谱为
+
+$$
+L_{2m+1},\quad\phi^{2m}\ (\text{二重}),\quad\phi^{-2m}\ (\text{二重}),
+\qquad\det W_m=L_{2m+1}.
+$$
+
+$W_1$ 是 CP，而所有 $m\ge2$ 的 $W_m$ 非 CP；$W_3$ 同时给 $A_{1/10}$ 的非 SPN 证书。$`M_*=W_3/145`$ 是完整 Cartesian 域的经典概率律，却不属于同潜在概率的条件 iid 二阶模型；$`\Gamma_*=W_3/13`$ 则是五个共同单位记录的相关矩阵。这些对象的归一化和域不同。
+
+证明。五环 Fourier 与 Binet 的具体计算为
+
+用 F_0=0,F_1=1、L_r=F_{r-1}+F_{r+1}，m≥1，定义 W_m=a_m I+b_m C，其中 a_m=F_{2m+1}, b_m=F_{2m}。前四对系数为 $(2,1),(5,3),(13,8),(34,21)$。
+
+若 ζ=e^{2πi/5}，五个 Fourier 向量 $(ζ^{ki})_i$ 的 C 本征值为 ζ^k+ζ^{-k}=2cos(2πk/5)。由五次单位根方程、φ=(1+√5)/2、φ²=φ+1，得到 $2,φ^{-1},φ^{-1},−φ,−φ$。这些向量组成完整正交复基，对实对称矩阵给同一实谱。
+
+令 r=2m 为偶数。Binet 式用 ψ=−φ^{-1}，于是
+
+$$
+F_{r+1}+φ^{-1}F_r=φ^r,\qquad
+F_{r+1}-φ F_r=φ^{-r},\qquad
+F_{r+1}+2F_r=L_{r+1}.
+$$
+
+所以 W_m 的谱是 $L_{2m+1},φ^{2m}(二重),φ^{-2m}(二重)$，全正，$det W_m=L_{2m+1}$；它同时逐项非负。W_3=13I+8C 的最小本征值为 $13−8φ=9−4√5=φ^{-6}$，行和29，行列式29。
+
+按五环顺序，前四个 leading 主块是路径三对角块。其行列式递推 d_0=1,d_1=13,d_k=13d_{k-1}−64d_{k-2} 给 $13,105,533,209$，全五阶用上述完整谱给29；五阶块含闭环边，不能继续把它当路径块。故依次的 leading 主子式为 $13,105,533,209,29$。leading minors 不是所有主子式的清单。
+
+四标签主块与双重非负分离的计算为
+
+SPN 指 S+N，S PSD、N 对称逐项非负，因而充分推出共正。从 A_{1/10} 删任一个标签，余图按原五环剩余路径次序排列，u=(1,−1,1,−1)ᵀ，则
+
+$$
+A_{1/10}|_{4}=uu^\top+\tfrac1{10}11^\top
+ +2(e_1e_4^\top+e_4e_1^\top).
+$$
+
+前两项 PSD，最后逐项非负；路径最近边、距离二及首尾边逐项吻合。五种删除全部由循环对称覆盖，任意重排须同步重排分解。
+
+Frobenius 配对为 ⟨A,W⟩=tr(AᵀW)，对非对角条目两次计数。有
+
+$$
+\langle H,W_3\rangle=5(13-16)=-15,\qquad
+\langle D,W_3\rangle=5(13+16)=145,
+\quad\langle A_{1/10},W_3\rangle=-\tfrac12.
+$$
+
+W_3 PSD 且逐项非负，故对所有 SPN 矩阵配对非负，这个负配对排除 A_{1/10} 的 SPN 分解，同时 定理 C-30.6 的局部极值步骤 已证明其严格共正。它不是反证局部正性，也不把 W_3 称为 CP；CP 和 SPN 是不同锥。
+
+同潜在来源条件 iid 模型的精确参数对应及 $W_m$ 分离为
+
+由 命题 C-30.8 的谱步骤，W_m 都正定逐项非负。配对
+
+$$
+\langle H,W_m\rangle=5(F_{2m+1}-2F_{2m})=-5F_{2m-2}
+$$
+
+使用 Fibonacci 递推最后一步；m≥2 严格负，所以这些 W_m 非 CP。m=1 配对零，另有实际分解
+
+$$
+W_1=2I+C=\sum_{i\bmod5}(e_i+e_{i+1})(e_i+e_{i+1})^\top,
+$$
+
+每个顶点被两条边覆盖，故确为 CP。
+
+条件于一个潜在概率向量 p 后，两次抽样 iid 的二阶矩阵 $M=E[ppᵀ]$ 是 CP 且 1ᵀM1=1。任意分布也成立：p 在紧单纯形内，秩一矩阵有界；积分可由有限简单近似，闭的有限维 CP 锥包含极限，继而有有限分解，或用紧凸包直接作有限混合。无需假设潜在分布有限。
+
+反向若 M CP 且 1ᵀM1=1，写 M=Σb_αb_αᵀ。令 t_α=1ᵀb_α，删去 t_α=0 的零因子，令 p_α=b_α/t_α，w_α=t_α²，则 p_α 是概率，Σw_α=1，M=Σw_αp_αp_αᵀ。故此归一化 CP 正好刻画同一个潜在概率的条件 iid 二阶模型。零矩阵不满足质量一；一维归一化情形只有 $[1]$。对任意概率对 $(p,q)$ 的潜在混合 E[pqᵀ]，没有同样的 CP 必要条件。
+
+具体 $`M*=W_3/145`$ 的总质量为1，边缘均匀1/5，实对称正定且逐项非负，但
+
+$$
+\langle H,M_*\rangle=-15/145=-3/29<0.
+$$
+
+它是完整25格 Cartesian 域上的合法经典联合律，不能属于上述同潜在概率条件 iid 模型。它在本文某些 seam 禁止格有正质量，不能再称为21格 FIB 合法律。非 CP 不等于非经典，也不等于量子纠缠。
+
+对共同单位纯记录，采用 [SecondOrder 定义 109.1、定理 109.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#109-联合记录的正性与最小环境秩) 的 $\Gamma_{hk}=\langle e_k|e_h\rangle$ 约定。$W_3/13$ 实对称正定、对角一，故该既有条目给五个共同单位记录及最小环境秩五。普通 Gram 的 $\langle e_h|e_k\rangle$ 是它的转置／共轭，不能在复数场混索引。两套另供的产品记录 $e_h\otimes f_h$ 给 $\Gamma_E\circ\Gamma_F$；内积乘法及 Schur 正性是这里的中间步骤。通道重复调用还须每轮新准备、与输入及过去环境独立，见本卷 C-29.5；旧环境复用则调用 SecondOrder 定义 110.1、定理 110.2、命题 110.4 的完整历史块和双 CNOT，不能换成通道平方。
+
+作为本接缝目标的参数适配，非负 $T\in\mathbb R^{n\times k}$ 使 $T^{\mathsf T}AT$ 共正，因为 $Tx\ge0$；若 $\mathbf1_n^{\mathsf T}T=\mathbf1_k^{\mathsf T}$，完整单纯形下界 $\delta$ 被保留。零列或 $T=0$ 不保严格余量。五态局部域的三十一个非空坐标面来自 $2^5-1$；奇异驻点须保留实际支撑，不能仅以可逆主块公式排除。此局部分析不自动求解完整联合域。
+
+算术乘积的对象见 [Robin 比例卷 §3.2](AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)：素数 $\ell\ge2$、整数 $a\ge0$ 的 $S_\ell(a)=\sum_{j=0}^a\ell^{-j}>0$，其实际有限乘积为 $\sigma(n)/n$，$n=1$ 为空乘积一。它不是上述有符号 $Q$。二次核到 Robin 的迁移须另有同一目标、余项、尾项、整数预算及素数指数的证明。共同原始 tape 的非线性整理与 cap 取得则完全归于 [KBONACCI SourceCorrelatedLaws §§45–46、50、54、59、63、66](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#66-a-nonlinear-common-order-cap-supplier-on-the-original-nonatomic-tapes)；其原 anchor、共同 monotone rank、真实 source cylinders 和操作合同没有被本 CP 模型替代。
+
+数学引文。Motzkin–Straus，*Maxima for graphs and a new proof of a theorem of Turán*，Canadian Journal of Mathematics 17，533–540，§1 定理 1，DOI [10.4153/CJM-1965-053-6](https://doi.org/10.4153/CJM-1965-053-6)，承担五环合并极值的经典先例。完全正有限分解与 CP–COP 对偶采用 Dutour Sikirić、Schürmann、Vallentin，*A simplex algorithm for rational cp-factorization*，§1，DOI [10.1007/s10107-020-01467-4](https://doi.org/10.1007/s10107-020-01467-4) 的 §1，以及 Shaked-Monderer 等，*New results on the cp-rank and related properties of co(mpletely)positive matrices*，[arXiv:1305.0737v2](https://arxiv.org/abs/1305.0737v2)，§1，DOI [10.1080/03081087.2013.869591](https://doi.org/10.1080/03081087.2013.869591)；它们不被当作逐字陈述本章 tensor 测试的文献。Reams，*The inverse of a symmetric nonnegative matrix can be copositive*，Electronic Journal of Linear Algebra，DOI [10.13001/ela.2023.7927](https://doi.org/10.13001/ela.2023.7927)，p.533，给 Horn exceptional 和 PSD 加逐项非负的背景；上述谱、五种删标签的 SPN 展开和有理分离由本应用计算承担。Dickinson–Dür–Gijben–Hildebrand，*Irreducible elements of the copositive cone*，Linear Algebra and its Applications 439，1605–1626，DOI [10.1016/j.laa.2012.10.014](https://doi.org/10.1016/j.laa.2012.10.014)，只作共正锥文献定位，不引入其详细分类。该 rational CP factorization 文献的算法结果不承担 Horn 极值或本 tensor 充要性的原始归属。
+

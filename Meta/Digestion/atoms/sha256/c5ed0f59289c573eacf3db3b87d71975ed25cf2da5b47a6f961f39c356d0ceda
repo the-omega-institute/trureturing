@@ -1,0 +1,24 @@
+### 104.17. The finite split recursion
+
+For a box $B=\prod_{k=1}^3[l_k,u_k]_s$, choose the smallest index maximizing
+\[
+ \frac{u_k-l_k}{w_k}.                                             \tag{104.92}
+\]
+The ratios are compared exactly as rational numbers. Set $m_k=\lfloor(l_k+u_k)/2\rfloor$. If $l_k<m_k<u_k$, let $B^-$ and $B^+$ replace the chosen coordinate by $[l_k,m_k]_s$ and $[m_k,u_k]_s$, respectively. They are closed and have union $B$. If the midpoint is not interior, designate $B$ unresolved whenever it has not already been rejected.
+
+Define a four-component finite recursion $\mathcal C_n(B)=(v,l,u,h)$, whose components count visited nodes, rejected leaves, unresolved leaves and maximum depth:
+
+- If $\mathcal R(B)=1$, set $\mathcal C_n(B)=(1,1,0,0)$ for every $n\ge0$.
+- If $\mathcal R(B)=0$ and either $n=0$ or the midpoint in (104.92) is not interior, set $\mathcal C_n(B)=(1,0,1,0)$.
+- Otherwise evaluate the upper child first and then the lower child, writing $\mathcal C_{n-1}(B^\pm)=(v_\pm,l_\pm,u_\pm,h_\pm)$, and set
+\[
+ \mathcal C_n(B)=
+ (1+v_++v_-,\ l_++l_-,\ u_++u_-,\ 1+\max(h_+,h_-)).              \tag{104.93}
+\]
+This is a finite mathematical definition by induction on $n$, even without any assumption of a closed feasible set or successful termination of an unbounded search. It uses only the rational root, the integer $s$, formulas (104.72)–(104.91), four scalar contractions and the rational tie rule (104.92).
+
+**Lemma 104.9.** Suppose a set of real parameter tuples is contained in a box $B$ and the full interval (104.81), and every tuple obeys the exact real counterparts of all equations, strict inequalities and interval cuts used in §§104.13–104.16. If the unresolved component of $\mathcal C_n(B)$ is zero, that set is empty.
+
+**Proof.** Formulas (104.72)–(104.75) enclose the real operations, by their signed endpoint extrema and integer-square bounds. Every cut is a superset of the hypothesized value. A strict positive expression has a positive member of its enclosure; a required zero belongs to its enclosure. A real quadratic root makes its discriminant nonnegative, including the degenerate linear and constant cases. The common-root linear elimination preserves any root. At each step (104.83), the segment between a root and the newly chosen midpoint is contained in the current interval, so the derivative enclosure and the scalar mean-value theorem retain that root. Undefined division makes no rejection. Hence $\mathcal R(B)=1$ excludes every such tuple. Induction on $n$, using the exact closed union $B=B^-\cup B^+$, proves the assertion. An unresolved leaf would have been counted rather than rejected. $\square$
+
+

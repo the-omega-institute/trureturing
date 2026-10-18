@@ -1,0 +1,24 @@
+**Theorem 5.6 (exact general selection and name completeness).** At an
+authentic cover, AcquisitionOffset succeeds exactly for
+$0\le t\le b-a$, binding the unique $k=a+t$. For every authentic completed
+auxiliary occurrence $m$, SourceOffset succeeds exactly for
+$0\le t\le f-e$, binding the unique $k=e+t$. Thus every cut in $[a,b]$
+has a finite AcquisitionOffset name, and every cut of the completed
+source fragment has a finite source-relative name. Evaluation requires
+that exact finite name to be actually supplied.
+
+Proof. Paired unary cancellation returns the ordinary nonnegative
+differences, and Cat on the internal naturals returns their sums, by
+their explicit loop invariants. Hence the first range test is equivalent
+to $a\le a+t\le b$; translation is a bijection on the integer intervals.
+Theorem 5.5 gives the same fact for the internally constructed $e,f$.
+For any specified $k\in[a,b]$, choose the finite $t=k-a$; for a specified
+source-fragment cut choose $t=k-e$ and its actual acquired $m$.
+These choices prove name existence and uniqueness of each name's result.
+They do not give an owner those target words without supplying, retaining
+or computing them. Definition 3.1 supplies the actual later acquisition
+of the name, while source resolution and bounded replay compute its
+absolute binding internally. In particular an identical archive with
+two different possible intended offsets does not choose between them;
+CAP Proposition 13.5's intention distinction remains. ∎
+

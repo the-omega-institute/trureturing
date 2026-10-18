@@ -1,0 +1,85 @@
+**Theorem 9.2 (all common maps, clocks and resources).** At each physical selected parameter the following construction is one common original instrument on $M_5(\mathbb C)$, fixed before the unknown history. It realizes all conclusions of Theorem 1.4 simultaneously.
+
+Proof. For every occupied low endpoint use Proposition 9.1, give it report $\operatorname{sgn}z_i=\sigma_i$ and count its entire qubit. Use the same relative-clock functions for all of them,
+
+$$
+g(a)=\frac2{(1+a)^2},\quad G_{\rm time}(a)=\frac{2a}{1+a},\quad
+Z_i(a)=\sqrt{I_2-G_{\rm time}(a)F_i},\quad
+R_i(a)=g(a)F_i[I_2-G_{\rm time}(a)F_i]^{-1}.
+$$
+
+On the current survivor matrix $Y$, the separate CP jump density into original failure label $\ell$ is
+
+$$
+\mathcal J_{i,\ell}(a)(Y)=w_\ell g(a)
+\operatorname{tr}(F_iZ_i(a)^{-1}YZ_i(a)^{-1})P_f.
+$$
+
+The no-jump propagator from $a$ to $b$ is $\operatorname{Ad}_{Z_i(b)Z_i(a)^{-1}}$. Pullback to the initial fibre changes the jump density to $w_\ell g(a)\operatorname{tr}(F_iY)P_f$. The total loss effect is precisely $R_i(a)$, and at every cut the integrated jumps plus survivor effect are
+
+$$
+G_{\rm time}(a)F_i+I_2-G_{\rm time}(a)F_i=I_2.
+$$
+
+All expressions act on the whole qubit, and its survivor effect is at least $I_2/1001$ at every cut. Other survivor controls can be identity TP controls. Terminal survivors alone receive the isometry $EB_i(I_2-F_i)^{-1/2}$; its cumulative live matrix is $EB_i$. The whole-fibre activity is
+
+$$
+\int_0^1\|R_i(a)\|\,da=-\log(1-f_{\max,i})
+=\log(1+b_{{\rm label},i}/c_{h_i})\in\{0,\log1001\}.
+$$
+
+There is no terminal absorption atom, singular first-event mass or positive-carrier operation after failure. The acquired record and failure time are retained; the absolute FIRST clock is $6+a$. The sufficient common density $g$ remains distinct from the ideal history-dependent $f_y$. Necessity did not require competing decoders to use $g$.
+
+For the single high outcome choose fixed isometries $W_\perp:\mathbb C^2\to P^\perp$ and $J_0:\mathbb C^2\to\mathbb C^3$. Its encoder and hidden terminal decoder Kraus operators are
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^*\\W_\perp^*\end{pmatrix}:
+\mathbb C^5\longrightarrow\mathbb C^3\oplus\mathbb C^2,\qquad
+E[I_3\ 0],\quad EJ_0[0\ I_2].
+$$
+
+Give this one outcome report $+$ and rate zero. Both Kraus effects sum to $I_5$ on its entire dimension-five fibre. Its supported-zero complement is included in this same acquired label and dimension; it is neither a free later share nor a second acquired Kraus index.
+
+The same eight moments imply
+
+$$
+\sum_iK_i^*K_i=\delta D^*D+T^*T+S^*S,\qquad\sum_iN_i=M.
+$$
+
+Root TP and $W_\perp W_\perp^*=I_5-P$ therefore give
+
+$$
+\sum_iC_i^*C_i+C_H^*C_H=I_5.
+$$
+
+Every acquisition is CP/TNI, their sum is TP and each full decoder is TP. For every complex $X\in M_5$ the forgotten-acquisition maps of this same construction are
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^*XE)+J_0W_\perp^*XW_\perp J_0^*]E^*,\\
+\Lambda_*(Y)&=DYD^*+TYT^*+SYS^*,\\
+\Phi^f_\ell(\mathcal B)(X)&=w_\ell\left(\int_{\mathcal B}g(a)\,da\right)
+\operatorname{tr}(EME^*X)P_f.
+\end{aligned}
+$$
+
+The live identity follows from the full coefficient Gram, including its cross entries, so retains complex coherences. The failure identity follows from the summed attached effects and holds separately for every Borel set and all five labels, including zero labels $0$ and $13$. Tensoring the composed Kraus operators with the identity gives the passive-reference statement on any joint matrix $X$:
+
+$$
+(\Phi^f_\ell(\mathcal B)\otimes\mathrm{id}_R)(X)=
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes
+\operatorname{Tr}_5[(EME^*\otimes I_R)X].
+$$
+
+This reference operator is conditional on the failure effect; it is not replaced by an unconditional reference marginal. Live maps likewise retain their Kraus amplification.
+
+Every original input lies in $P$, so the complement has zero input mass on all twelve histories. The supported maps are exactly the inherited complete-output attainer: the HALF error is $E_*$ on the eight $y=5,27$ histories and smaller on the four $y=16$ histories, not twelve equal errors. Reports give actual contrast $s_0\sum p_i|z_i|=s_0k/\sqrt\alpha=s$. For each acquired low label, its height difference is $p_i(\ell_i+b_{{\rm label},i}f_i)$; live and eventual failure contributions are added inside that label. Thus its actual acquired TV is exactly the value in §8.
+
+Only the one high fibre has dimension at least three. Its history probability is
+
+$$
+(1-\delta)\sum_jh_j^2p_{yj}>0.
+$$
+
+It is independent of both signs and strictly increases from $y=5$ to $16$ to $27$, because its slope in $y$ is $(1-\delta)(h_0^2-h_1^2)/128>0$. Its worst-history value is the retained sharp weak JOINT cost. All later-accessible input-dependent shares are already in the counted qubits or dimension-five high fibre. This constructs the sole-specimen, no-copy, no-retry, no-postselection witness with positive finite-budget survival, TP controls and no action on a failed carrier. It is an ordinary mathematical instrument existence statement; it supplies no physical access, actuator or permission. $\square$
+

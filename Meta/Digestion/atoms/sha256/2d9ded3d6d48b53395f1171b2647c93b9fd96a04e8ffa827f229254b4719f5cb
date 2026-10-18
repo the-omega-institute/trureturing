@@ -1,0 +1,25 @@
+**Theorem 14.3 (exact original-budget criterion).**
+Original preparation with the fixed reader and original entry is
+feasible at $H,p,\ell$ if and only if (PCA.35) holds and the finite
+original-word task of Definition 14.2 is feasible at those same prices.
+The assertion can also be made on an exact prescribed installed
+alphabet, partition and common start, rather than only its cardinality.
+
+Proof. Necessity of constancy is Theorem 14.1. In a feasible native
+table, any state whose installed word is longer than $\ell$ is never
+visited on any required actual source. Change the word in each such
+state to $\varepsilon$, keeping its successors, partition, identity
+and start. Every original required run is unchanged: by induction it
+never reaches a changed state. Thus all installed words may be put
+in $W_\ell$ without altering any required path or executed cost.
+This operation neither charges unused long words nor removes their
+counted states.
+
+For words in $W_\ell$, each actual reply is determined by the finite
+profile. Every retained profile is actually attained by Theorem 11.2;
+hence the native table's correctness and prices give exactly the
+finite task conditions. Conversely, install any task table literally.
+Every original actual source has one retained profile, and induction
+reproduces that profile's paid path and original complete entry.
+The untouched reader then returns the whole predecessor row. $\square$
+

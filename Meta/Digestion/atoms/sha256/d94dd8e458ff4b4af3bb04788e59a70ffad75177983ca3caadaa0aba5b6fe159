@@ -1,0 +1,113 @@
+**Theorem 239.2 (Full support replacement and exact signed reading).**
+At every parameter in Definition 239.1,
+
+$$
+\begin{gathered}
+Q(Y)=Q(Z)=(\gamma_1,\ldots,\gamma_m,0,\ldots,0;(m+1)d-v),\quad
+W_Y=W_Z=3d,\\
+\Delta_O(Y)=\Delta_N(Z)=\Delta_O(Z)=0,\qquad
+\Delta_N(Y)\ge u-[m=\rho+3]>1,\\
+\sigma_{H_L}(Q(Y))=u-\frac{u+v}{m-1}>1.
+\end{gathered}
+\tag{239.3}
+$$
+
+For every real $c\ge0$, the actual full unit-O input $cY$ therefore
+has the single unrestricted replacement $V=cZ$, $\theta=0$.
+
+Proof. Counting subsets gives (239.2), $\mu(\{0,1\}^m)=s$ and
+
+$$
+\begin{gathered}
+\mu(w_i=0)=d\ (i\le m-2),\quad\mu(w_{m-1}=0)=d+1,\quad
+\mu(w_m=0)=s,\\
+\mu(w_iw_j=10)=u,\quad\mu(w_iw_j=11)=v,\quad
+\mu(w_iw_j=01)=u-[j=m-1]\quad(i<j<m).
+\tag{239.4}
+\end{gathered}
+$$
+
+The removed singleton has first zero one and changes only the indicated
+marginals. Pascal's identity gives $s=d+u+v$,
+$d-u=\sum_{a=1}^{\rho}\binom{m-3}{a}-1\ge0$, and $u\ge v\ge1$.
+Thus $T\ge0$ and every $\gamma_n\ge0$.
+Because $w_n=0$ implies first zero at most $n$,
+$c_n=\mu(w_n=0)-p_n$. Consequently
+$c_n=\gamma_n$ for $n\le m-2$,
+$c_{m-1}=\gamma_{m-1}+1$ and $c_m=s\ge d=\gamma_m$.
+All divisions in the reset constructor have positive denominator and
+density at most one. Resetting preserves mass and gives first zero $n$.
+Every positively scored nonterminal word still has its last bit zero.
+
+Fix any queried $i<j$ and numerical label $n\le i$. Resetting before
+$n$ changes neither queried bit. Within each cell the $C_n$ contribution
+is at most the original $\mu$ mass with first zero below $n$ and
+$w_n=0$. Its $P_n$ contribution uses the disjoint set with first zero
+$n$. Hence their sum is at most the baseline $\mu$ mass of that cell.
+For $i<n\le m$, both contributions have $w_i=1$ and their total mass is
+$p_n+\gamma_n=d$. This proves the required simultaneous control of
+all earlier unqueried as well as queried labels.
+
+For $i<j<m$ the two $w_i=0$ N maxima sum to $d$: zero dominates
+there. The 10 maximum is at most $d$, since its baseline is $u\le d$;
+the 11 baseline is $v+T=d$, also dominating the upper bound $d$ on
+later-label rewards. Thus the sum is at most $3d$.
+For $j=m$ the 01 cell is empty, 11 has only $T$, and, writing
+$d_i=\mu(w_i=0)$, the sum is at most
+
+$$
+d_i+\max(s-d_i,d)+d-v\le3d.
+\tag{239.5}
+$$
+
+If $d_i=d$, this follows from $u\le d$; if $d_i=d+1$, it also
+uses $v\ge1$. Empty and singleton N functions refine to distinct pairs,
+so this bounds the complete N catalog of $Z$.
+
+For $Y$, the O merged zero cell at $i<j<m$ has baseline $d$ and
+every active numerical label has total reward $p_n+\gamma_n=d$;
+padded numerical labels have zero reward.
+Its 10 and 11 maxima are at most $d$ as above. Formula (239.5)
+uses only totals and last-bit-zero support and therefore also bounds
+$Y$ when $j=m$. This bounds all O tables.
+Now $\sum C=md-s$ and the early correct total is
+$\gamma_2=d-u$, so
+
+$$
+W=s+(d-u)+(d-v)=3d,\qquad K=s+(md-s)+(d-v)=(m+1)d-v.
+$$
+
+The anchor attains $W$ and the support bounds prove all zero-cost
+claims and equal quotients.
+
+To see the actual N gap of $Y$, query $i=\rho+1$, $j=\rho+2$.
+Its 00 cell can output $i$, collecting $d$ from its sole $P_i$ atom
+and chain correct atom; 01 can collect baseline $u-[j=m-1]$,
+10 can collect $C_j=d$, and 11 collects $v+T=d$ at zero.
+This is one full legal table. The excess is at least
+$u-[m=\rho+3]>1$, since $u\ge m-2$.
+
+For the exact signed support, put $P_k=\sum_{n\le k}p_n$ and
+$S_k=\sum_{n\le k}\gamma_n$. One has $K-S_m=2d+u$.
+Both $o,p$ read $-\gamma_2$. For $3\le k\le m$, (237.7) gives
+
+$$
+F_q(v_k)=\frac{3(d+u-P_k)}{k+1}\le0,
+\qquad F_q(u_k)=\frac{S_k}{k-1}-\gamma_2.
+\tag{239.6}
+$$
+
+Swapping adjacent bits $n,n+1$ injects first-zero class $n+1$ into
+class $n$ for $n\ge2$. The removed singleton has first zero one,
+so it does not disrupt this injection. Hence $p_n$ is nonincreasing
+for $n\ge2$, $\gamma_2,\ldots,\gamma_m$ are nondecreasing, and
+the displayed prefix averages are maximized at $m$.
+That maximum equals $u-(u+v)/(m-1)$.
+For padded $k>m$ the $u_k$ readings decrease; consecutive $v_k$
+readings decrease by $3K/((k+1)(k+2))$. Finally
+$u-(u+v)/(m-1)\ge(m-2)(m-3)/(m-1)>1$.
+All unused bits are one and their labels have zero reward on this score;
+querying them coarsens one of the checked partitions. Thus padding,
+reversals and repetitions introduce no missing schedules or labels.
+Homogeneity proves the assertion for all $c\ge0$. ∎
+

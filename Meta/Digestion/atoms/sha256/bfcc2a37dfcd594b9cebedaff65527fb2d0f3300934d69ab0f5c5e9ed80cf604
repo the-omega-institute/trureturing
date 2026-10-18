@@ -1,0 +1,58 @@
+**定理 91.3（原两个探测器在全闭区间严格为负）。** 对 (RC.134) 的原探测器，在每个 $r\in I$ 都有
+
+$$
+\boxed{\quad
+\frac{b_+(r)}{z_+}< -\frac3{10000},\qquad
+\frac{b_-(r)}{z_-}< -\frac3{1000}.
+\quad}
+\tag{RC.187}
+$$
+
+证明。仍用 $Z_\epsilon=\mathcal Y-\epsilon G$ 和
+$b_\epsilon=(Z_\epsilon)_{01}z_\epsilon+(Z_\epsilon)_{02}w_\epsilon$，没有换成代理函数。由 (RC.169)、(RC.183)，
+
+$$
+\frac{b_+}{z_+}
+=\frac{2\psi k}{d}(1+c_+r)+\lambda(B_1+c_+B_2).
+$$
+
+$0<c_+<1$、$B_2>0$、$B_1+B_2<0$ 给出 $B_1+c_+B_2<0$。再用 $\lambda\ge0$、$\psi<-1/2000$、$k>.98$、$d<13/4$，可得严格界
+
+$$
+\frac{b_+}{z_+}
+<-\frac{1}{1000}\frac{.98}{13/4}
+=-\frac{49}{162500}
+=-\frac3{10000}-\frac1{650000}.
+\tag{RC.188}
+$$
+
+负谱号的 $Z_-=\mathcal Y+G$，因此
+
+$$
+\frac{b_-}{2z_-}
+=\mathsf x-\frac{\mathsf y}{q_f}
++\frac{\psi k}{d}\left(1-\frac r{q_f}\right)
++\frac\lambda2\left(B_1-\frac{B_2}{q_f}\right).
+$$
+
+最后一项非正，$r/q_f>1$，所以中间 $\psi$ 项为正且必须作上界。由 (RC.168)、(RC.170)、(RC.175)、(RC.186)，
+
+$$
+\mathsf x-\mathsf y/q_f<.00238-.0022/.22=-.00762,
+\qquad r/q_f-1<1.05/.18-1=29/6.
+$$
+
+故
+
+$$
+\begin{aligned}
+\frac{b_-}{z_-}
+&<2\left[-.00762+\frac{.00333(1.01)}{2.68}\frac{29}{6}\right]\\
+&=-\frac{83313}{26800000}
+=-\frac3{1000}-\frac{2913}{26800000}.
+\end{aligned}
+\tag{RC.189}
+$$
+
+这覆盖 $r_\star$、$r_{\rm c}$ 和其间每个实参数；没有从两个端点符号推断内部符号。$\square$
+

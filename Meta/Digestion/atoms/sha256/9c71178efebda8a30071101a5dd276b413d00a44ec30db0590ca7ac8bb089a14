@@ -1,0 +1,6 @@
+**文献与适用边界 44.6。** 共同实际像、来源配对、部分域、单协议转录与有效取得分别复用本卷第 1–3、15、28–37 节；第 38–41 节的噪声支撑与无噪声自适应树保留各自合同。过程几何卷第 1–3、9、39–42 节提供带类型 writer、局部策略可见性、同路径累积量及实际历史的响应交织。本节的综合增量是从同源实际像、重叠物理身份、局部访问与控制、逐字段部分更新、宏相位、真实任务承接和调度合同共同推出保真，而不是另命名一次因子化、知识等价或路径归纳。
+
+Lamport, [Time, Clocks, and the Ordering of Events in a Distributed System，The Partial Ordering 与 Logical Clocks](https://lamport.azurewebsites.net/pubs/time-clocks.pdf)，支持发送—接收依赖及偏序与钟标签的区分；Halpern–Moses, [Knowledge and Common Knowledge in a Distributed Environment，第 3、6 节](https://arxiv.org/abs/cs/0006009)，支持局部视图及分布式知识的联合不可区分语义，其数学联合视图不提供真实的免费汇总者；Lynch–Tuttle, [An Introduction to Input/Output Automata，第 2、3 节](https://groups.csail.mit.edu/tds/papers/Lynch/CWI89.pdf)，提供执行、任务轨迹、公平性与抽象映射的中间语义。该 I/O 自动机模型还采用输入全启用及共享动作即时同步；本卷的部分操作与有费用传递不由这两个假设代替。上述文献不承担这里逐项声明的来源成对、局部访问、重叠资源或任务承接合同。
+
+这些推导是给定操作模型内的纯数学结论，不据此主张已获形式核验、研究原创、意识统一或现实物理时间规律。带噪自适应协议改变后续选择时的实际转录支撑、零错误分离及有效调度保证，仍需在它自身的共同来源—误差合同上建立；固定档案阈值与这里的确定成对依赖并未解决这个问题。
+

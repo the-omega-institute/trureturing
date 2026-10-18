@@ -1,0 +1,33 @@
+**Definition 1.1 (native domain and supplied operations).** Write
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle,\\
+T_j&=\rho^j\alpha\quad(j\in\mathbb N).
+\end{aligned}
+\tag{NUE.1}
+$$
+
+The constructors are free, ordered and literal. Every member of
+$\mathcal T$ is finite and has at least one leaf. Addresses are finite
+$L/R$ words, with root $\varepsilon$. A finite cut $P$ is prefix-free;
+the empty cut and the root singleton are allowed. The complete record
+$R_P(u)$ is precisely [NAR, Definition 1.2][NAR]: the exterior with
+address-marked reached holes and its complete equality partition of
+the hidden whole subtrees. Two different partition classes assert
+disequality. A blocked requested address retains its concrete blocking
+leaf. No comparison between a hidden value and a concrete exterior value,
+and no comparison between different captures, is added to this record.
+
+The all-source injectivity, reached-subtree transport and branch-saturation
+facts are reused from [NSF, Lemma 9.2][NSF]. In particular, for every
+$h\ge0$ and $t\in\mathcal T$, every reply through depth $h$ in
+$\rho^n t$ is branch when $n\ge2(h+1)$. An address reached in a tree
+remains reached, and its subtree after $k$ further updates is the
+$\rho^k$-image of its former value. This statement can be applied with
+any actual capture as its starting tree; it does not transport an
+absent subtree backward through its birth.
+

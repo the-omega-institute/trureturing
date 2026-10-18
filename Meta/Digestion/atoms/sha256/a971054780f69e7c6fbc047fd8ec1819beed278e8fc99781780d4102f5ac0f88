@@ -1,0 +1,51 @@
+**Proposition 4.5 (all rows, malformed states and response legality).**
+The routine conventions admit a total finite composite instruction
+system. It can install every binary valuation of the arrays and the
+thirty-two slots and sixty-four Boolean fields, with all unused bit
+patterns included. On every installed source-response row the actual
+receipt changes at most one composite bit. On every promised run it
+changes exactly one. This statement does not assert that local
+instructions change at most one bit.
+
+Proof. Give unused opcode/PC patterns a source-free ERROR hold. Two other
+distinct fixed PC values are the fixed-output Halt instructions; every
+other PC value is local except for the two issue values described below. Totalize
+bit-loop arithmetic on malformed inputs by fixed-width arithmetic;
+check overflow and bounds in the specified routines before using their
+results on a valid run. A ROM or work head outside its allocated
+interval reads zero, and a write there holds. A movement outside its
+representable interval holds and enters ERROR by a local instruction.
+These conventions introduce neither mutable cells outside the allocation
+nor source observations. They are total rules for invalid configurations,
+not extra available source operations.
+
+Use two distinct fixed interpreter PC values for source issue. At
+the Read PC with zero response flags, its source operand is (4.4) if the
+receiver length is in range, and the empty materialized literal otherwise.
+This last rule fixes a literal for otherwise malformed installed rows;
+it is immaterial to every valid run, which completes the explicit
+bounds scans. The physical operand service remains separately priced
+for these rows too. It is not assigned a constant-time implementation.
+At the Update PC with zero response flags the source instruction is
+the original Update. The armed state is this PC value, not an
+additional uncounted latch. With zero flags, the receipt sets just the typed flag. With
+any nonzero flag the instruction is local continuation or ERROR, so
+there is no new source response requiring a second bit. All other
+source-row fields remain fixed at receipt. Thus every typed installed
+response row is hold/one-bit legal, including unreachable rows.
+
+For an encoding into the no-$11$ word, insert a fixed zero between
+successive mutable bits, as in the displayed map in Cabello, Eppstein
+and Klavžar, Proposition 3.1 [CEK]. Setting a single response bit changes
+one coordinate of this word and cannot create adjacent ones. Multi-bit
+local writes still map between admissible words; their adjacency is
+not claimed. The map's use here needs no isometric embedding theorem.
+
+The native macro successor at receipt is $\delta(w,r)$, which by the
+chosen supplier is itself a hold or one-native-bit change. It is
+represented then by the counted old-node identity and the one set
+flag, rather than by an uncharged retained raw reply. The later LINK
+implements the already selected successor by paid local work. This is
+a stuttering refinement of that immediate macro response, with an
+explicit one-bit **composite** receipt as well. ∎
+

@@ -1,0 +1,23 @@
+**推论 3.1（Identical tables on both free-value fibres, one GLOBAL stream）。** Let $F:J\times[0,h)\to Y$ be in Theorem 2.1's priced class. Enlarge its labels by two distinct fresh labels $R,C\notin F[J\times[0,h)]$, and give initial bottom any independent label $L_\bot$. On the entire original INITIAL record space put
+
+$$
+f^F(v,-j,s)=\begin{cases}
+R,&h\le s<k,\\
+C,&0\le s<h,\ j\in\{0,m\},\\
+F(j,s),&0\le s<h,\ j\in J,
+\end{cases}
+\qquad f^F(\bot)=L_\bot,
+\tag{3.1}
+$$
+
+using exactly the same $F$ for both $v\in\mathbb F_2$. If $D(F)$ denotes Theorem 2.1's additional price, including infinity, then under both original alphabets
+
+$$
+\boxed{C_{\rm ad}(f^F)=C_{\rm pre}(f^F)=1+D(F).}
+\tag{3.2}
+$$
+
+**证明。** Choose any actual $j\in J$. At either free value the INITIAL tails zero and $h$ have unequal labels $F(j,0)$ and fresh $R$. Free stopping is impossible. Every zero-containing root has a leading run $b\le m-1$; both tails survive to its first zero since $h+b\le k-1$, and the credited first-zero principle merges their whole records and archives. No later action can return their unequal INITIAL labels. Hence every correct root on each value fibre is $1^m$, including for a GLOBAL stream.
+
+That root rejects precisely the high tails and returns $R$ at fee one. Its positive-success archive has only the label $C$ and stops there. Its zero-success archive is exactly Definition 1.2 with $F$. Initial bottom stops freely. Theorem 2.1 supplies the all-action lower bound on this actual live archive, including infinite nonexistence. For a constant $F$, every root archive is homogeneous, so the fee is one. Otherwise follow the root by the single literal suffix constructed there. Both free values use the same words and their own remembered baseline and consecutive endpoint differences; the root and positive siblings impose no suffix constraint after they stop. At least one actual zero-success source pays the necessary additional $D$ blocks. Thus this is genuinely one GLOBAL stream with worst actual emitted fee $1+D$, not a maximum of incompatible child optima. ∎
+

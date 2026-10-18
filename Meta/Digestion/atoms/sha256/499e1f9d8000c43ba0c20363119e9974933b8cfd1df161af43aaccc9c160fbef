@@ -1,0 +1,33 @@
+**定义 5.1（Counted control for exactly Definition 3.1）。** Keep the entire contract of Definition 3.1, including both original alphabets, all jointly realized INITIAL sources, every original tail, the arbitrary initial-bottom label, and all cross-table label equalities. The actual record set is
+
+$$
+Q=\{\bot\}\sqcup
+\{(v,-j,s):v\in\mathbb F_2,\ j\in P,\ 0\le s<k\}.
+$$
+
+Every displayed tuple has the whole-history witness (1.4), equivalently [IC, (1.3)]; initial bottom has its rejected-history witness. Put
+
+$$
+U_Y=\lambda_0[J]\cup\lambda_1[J],\qquad r=|U_Y|,\qquad
+N=|f(Q)|=r+2+
+\mathbf1_{\{L_\bot\notin U_Y\cup\{R,C\}\}}.
+\tag{5.1}
+$$
+
+Thus $r\in\{2,3,4\}$ and $4\le N\le7$. In particular $N$ counts actual output labels, not joined pairs or just the cross-table union.
+
+Use the existing complete Moore control of [FC, Definitions 26.1–26.2]:
+
+$$
+c:\{0,1,\bot\}\to K,\qquad
+u:K\to\{0,1\}^m\sqcup\operatorname{Halt}(f(Q)),\qquad
+V:K\times\{0,1,\bot\}\to K.
+\tag{5.2}
+$$
+
+At a word row $x$, perform that whole literal word on the current apparatus record, observe only its completed endpoint, and apply $V(x,o)$. Rejection is a defined absorbing response, and its issued block is charged. At a Halt row return its installed label. Every retained value, difference, endpoint baseline, program position, stopping decision and output belongs to $K$; the apparatus phase and tail are unavailable as inputs. The source witness, support indices and proof rank are also unavailable as inputs. No archive, clock, reset, copy, intermediate observation or separate output latch is supplied.
+
+Let $K_{\min}^{\rm ad}(d;f)$ minimize $|K|$ over these complete controllers correct on all $Q$ within $d$ emitted blocks. Let $K_{\min}^{\rm GLOBAL}(d;f)$ additionally require every actual emitted sequence to be a prefix of one fixed installed stream. Responses can choose stopping, but cannot choose the next word of that stream. Distinct halt outputs require distinct states. Equal-labelled Halt rows can be merged, so an attainment with $e$ word rows and one Halt row per actual label has $N+e$ states. Descriptor bits, word-dictionary bits, expanded-stream bits, installation work and physical operations are separate coordinates; no formula below identifies them with $|K|$ or with emitted-block fee.
+
+For the following controllers, write $H_y$ for the row installing $\operatorname{Halt}(y)$ and set $V(H_y,o)=H_y$ for every response. A specified word row's unused bottom update is $H_R$. This completes the tables without treating an unreachable response as a new runtime input.
+

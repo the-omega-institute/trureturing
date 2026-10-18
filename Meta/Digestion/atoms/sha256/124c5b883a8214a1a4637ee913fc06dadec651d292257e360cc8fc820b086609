@@ -1,0 +1,81 @@
+### 4.5. The pair determinant and an unchanged-marginal comparison
+
+For the reflected law write
+$X=p_1+p_{13}=p_3+p_{13}$, $z=p_2$ and $\kappa=p_{13}$.
+Its pair determinant and unconditional covariance are different:
+
+$$
+\Delta=p_0p_{13}-p_1p_3
+=\frac{c-a^2}{Z^2}
+=(1-z)\kappa-X^2,\qquad
+\operatorname{Cov}_p(n_1,n_3)=\kappa-X^2=\Delta+z\kappa.
+\tag{4.31}
+$$
+
+The determinant is the same diagonal quantity used in the
+conserved two-copy exchange of
+[Circulation and Control, §24.4][CC4], with its $Z$ coordinate
+mapped to $z$ here. This parameter identification does not identify
+the two-copy exchange with one-copy site readout.
+
+Directly from (4.3),
+
+$$
+d-1=
+\frac{\Delta}{(p_0+p_1)(p_1+p_{13})}.
+\tag{4.32}
+$$
+
+Thus the sign of the conditional endpoint relation determines
+which square-sector eigenvalue is smaller. It does not by itself
+select the final active gap: the center-overlap coefficients and
+the comparison (4.20) are still required.
+
+At fixed $X,z$, with $0<X<1-z$, the positive occupation fiber is
+
+$$
+p_\kappa=(1-2X-z+\kappa,\ X-\kappa,\ z,\ X-\kappa,\ \kappa),
+\quad
+\max\{0,2X+z-1\}<\kappa<X.
+\tag{4.33}
+$$
+
+The threshold $\kappa_0=X^2/(1-z)$ lies strictly inside this
+interval. Indeed $\kappa_0<X$,
+$\kappa_0>0$, and
+
+$$
+\kappa_0-(2X+z-1)=\frac{(X-(1-z))^2}{1-z}>0.
+\tag{4.34}
+$$
+
+Consequently identical endpoint and center means permit both
+signs of $\Delta$. For example (4.23) and
+
+$$
+p'=(5,5,1,5,5)/21
+\tag{4.35}
+$$
+
+share $X=10/21$ and $z=1/21$, but have
+$\kappa=1/21$ and $5/21$. The second is the activity law
+$a=1,b=1/5,c=1$, so its optimal center weight exceeds either
+endpoint by Theorem 3.3; the first has the opposite strict
+ordering by Theorem 4.4. The common marginal readings therefore
+do not determine the optimal site distribution.
+
+The pair weight can be interpreted conditionally as
+$c/a^2=e^{-\beta J}$ after supplying a diagonal Gibbs Hamiltonian
+with inverse temperature $\beta>0$. No temperature, physical
+coupling, apparatus or energy scale is supplied by the probability
+law alone. In particular $\Delta$, $\kappa$ and the sampling gap
+are not complex coherence or physical energy.
+
+The entire chapter concerns positive finite laws and real
+reference-phase directions within the fixed recorded-site menu.
+Zero-support restriction, arbitrary quantum measurements,
+longer-chain locality and physical preparation require separate
+arguments.
+
+[CC4]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+

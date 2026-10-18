@@ -1,0 +1,28 @@
+### 定理 61.2（五模式的有限预测几何）
+
+在该明确的 Fin5 source/admissibility 模型中，来源
+[FiveModePredictiveLawGeometry](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/ObserverMemory/Prediction/FiveModePredictiveLawGeometry.md)
+给出的数学陈述为：
+
+1. 对 coherent mixture law，有限 horizon 的总变差距离满足
+   \[
+   \operatorname{TV}_H
+   =
+   |x-z|\bigl(1-\min(a,b)^H\bigr),
+   \]
+   且 profileDistance 等于 \(|x-z|\)；
+2. 不同 pure states 具有统一正分离下界 \(\kappa\)；
+3. startup laws 的距离公式成立，startup length 映射是单射；
+4. cutoff 满足
+   \[
+   N_2=
+   \left\lceil
+   \frac{\log((1-2\varepsilon)/(2\varepsilon))}
+        {|\log\theta|}
+   \right\rceil
+   \]
+   并有指数衰减；
+5. 长度上限 \(L\ge2\) 时 exact predictive classes 有 \(L+5\) 个，加入 empty boundary 后为 \(L+6\)；
+6. postread/initialized predictive-law image 可数且无限；
+7. 总包装定理 five_mode_predictive_geometry 成立。
+

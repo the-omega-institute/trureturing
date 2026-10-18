@@ -1,0 +1,49 @@
+**定义 46.1（固定来源上的有界读误差风险）。** 保持定义45.1的来源不变：
+
+$$
+W=E\oplus\mathbb H,\qquad E=\operatorname{Im}\mathbb H,\qquad
+\mathcal D_2=E\times
+\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{46.1}
+$$
+
+可见初态 $a\in E$ 独立、任意且无界；两个半径是未标记的初始制备层，整个运行
+始终以同一个 INITIAL $x=(a,b)$ 为目标。公开精确供应来源参数、标架、固定单位锚
+$d=e_4$ 和控制身份，致动精确，原菜单仍为
+
+$$
+A_c(a,b)=(c\times a,bc),\quad c\in E,\ |c|\le1,
+\qquad A_d(a,b)=(\operatorname{Im}b,-a).
+\tag{46.2}
+$$
+
+只把精确Read换为定义44.1的同一误差合同：每次实际Read返回 $Cz+e$，其中
+$C=P_E$、$|e|\le\delta$，且不改当前状态。误差可以联合对抗、相关及依赖历史；
+没有独立性、平均、重抽样或按读取次数缩小误差的规则。本节的定量范围是
+$0<\delta\le1$。
+
+控制器共同初始化、确定、因果，每次事件只依赖已经实际取得的有限记录前缀。
+完整记录包含全部实际Read、动作身份及停止信息；每条合法有限或可数记录都须
+给出一个 $W$ 值估计，估计不必属于来源。只有一个被更新覆盖的当前寄存器，不供应
+标签、复位、副本、混合控制、反事实端口、极限Read或后继目标。可数事件按自然数
+排列，不存在无穷事件以后的额外事件。
+
+记控制器的全初态最坏欧氏误差与预算风险为
+
+$$
+\begin{aligned}
+\mathcal E_\pi(\delta)
+ &=\sup_{x\in\mathcal D_2}\sup_{\text{全部合法实际读误差}}
+       |\widehat x_\pi(M)-x|,\\
+R_N(\delta)
+ &=\inf_{\pi\in\mathcal P_N}\mathcal E_\pi(\delta)
+   =\mathcal R_N^2(\delta;1,7,25,4/5),\qquad N\in\mathbb N_0.
+\end{aligned}
+\tag{46.3}
+$$
+
+$\mathcal P_N$ 限制至多 $N$ 次破坏性更新，不另设Read数量上限。以
+$\mathcal P_\infty$ 表示同一事件合同下没有预设有限更新上限的控制器，允许可数
+更新，令 $R_\infty(\delta)=\inf_{\pi\in\mathcal P_\infty}\mathcal E_\pi(\delta)$。
+下确界的记号不预设最优控制器存在。
+

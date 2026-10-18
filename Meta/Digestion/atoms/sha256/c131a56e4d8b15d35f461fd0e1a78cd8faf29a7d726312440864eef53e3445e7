@@ -1,0 +1,120 @@
+**Proposition 10.18 (Why the command and support hypotheses matter).**
+The classification uses a positive-width interval of positive
+support and the full lawful real probability and phase
+commands. The following changes specify different problems.
+
+**Proof and examples.** For a fixed-height closed-loop
+endpoint task, initialize at a positive height $h$ and query
+only histories returning to that height with total relation
+increment $t=2\pi m$, $m\in\mathbb Z$.
+Then the actual endpoint difference is
+$\alpha=\pi m$ modulo $2\pi$, relative to the preparation.
+The endpoint states have coordinates
+$(h,u,v)$ with $\alpha=u-v\in\{0,\pi\}$.
+Every common phase at either parity is attainable by a
+finite two-height rectangle and a phase leg, provided a
+positive-width native interval is available to the producing
+loops.
+
+On this endpoint source use
+
+$$
+E_{\rm loop}(h,u,v)=
+ \bigl(\cos u,\sin u,\varepsilon\bigr),\qquad
+\varepsilon=e^{i(u-v)}\in\{1,-1\}.
+$$
+
+For a prescribed loop with total $t=2\pi m$, zero final
+probability displacement and mixed integral $J$, its native
+first-group increment is the fixed real number
+
+$$
+\gamma=\pi m-\frac{2\pi mh}{r}-\frac Jr.
+$$
+
+The endpoint update is the linear map
+
+$$
+(z,\varepsilon)\longmapsto
+ (R_\gamma z,(-1)^m\varepsilon).
+$$
+
+It retains common phase and both parity values. If all
+producing and continued loops have zero winding, then
+$\alpha=0$ and $U(u)$ alone gives the corresponding
+two-coordinate endpoint realization. These endpoint
+contracts do not require an affine representation of
+every intermediate $P_s$ and $Q_t$ state. Their updates
+therefore do not contradict Theorem 10.12.
+Likewise the reduced relation angle $2(u-v)$ is a different
+read quantity from the full retained difference circle
+$u-v$ on the actual source.
+
+If the band collapses to $a=b=k_*\in(0,H)$, there are no
+two-height rectangles. On the inherited full torus, the
+continuous map
+
+$$
+E_{\rm tor}(u,v)=(\cos u,\sin u,\cos v,\sin v)
+$$
+
+is injective and has phase update
+$R_{(1/2-k_*/r)t}\oplus R_{-k_*t/r}$.
+Only $P_0$ has a nonempty domain. Histories confined from
+the start to that one height can reach a smaller subset
+than this formal full torus; the example does not assert
+full singleton-band reachability.
+
+For probability commands alone on a positive-width band,
+$(k,U(u),U(v))$ is an injective continuous affine factor:
+$P_s$ just adds $s$ to the first coordinate. It supplies
+no full phase-update contract. More generally no
+classification of all reduced real command menus follows
+from the full-menu argument.
+
+For any nondegenerate interval $J\subset(0,H)$ with open,
+closed or half-open endpoint convention, the same factor
+classification applies with guard $k,k+s\in J$.
+To see this, put $a=\inf J$, $b=\sup J$ in the open-strip
+argument. All strip translates and overlaps are interior.
+Add the endpoint step of Lemma 10.3 only for endpoints
+actually in $J$. The two short-rectangle domains still
+cover $J$ with an open overlap. The affine, spectral and
+separating arguments then apply exactly as stated.
+This includes the full open positive fiber $(0,H)$;
+its excluded endpoints are never used as states.
+An extremal displacement has only an endpoint slice when
+both endpoints are included, and otherwise has empty
+domain. Such commands are never promoted to global source
+bijections.
+
+Support assumptions cannot be dropped by endpoint notation.
+At $k=0$ or $k=H$ one group has zero amplitude, so its
+phase circle is no longer recoverable from the ray.
+At $Z=0$ the common bottom phase becomes global phase
+on the remaining support. At $Z=1$ there is no positive
+height interval. The source quotient changes in these
+cases. Generic fixed means, a single wall, and these
+support boundaries have no factor classification proved
+by this appendix.
+
+Finally, a retained-lift source
+$I\times\mathbb R^2$ has different equality of states.
+There the three coordinates $(k,u,v)$ do have affine
+updates
+
+$$
+P_s(k,u,v)=(k+s,u,v),\qquad
+Q_t(k,u,v)=
+ \left(k,u-\frac tr k+\frac t2,v-\frac tr k\right),
+$$
+
+and the integrated path formulas of Proposition 10.9 are
+also affine in those coordinates. But $(k,u+2\pi,v)$
+and $(k,u,v)$ represent the same actual ray and different
+retained-lift coordinates. This is not a current-ray
+factor. In particular a history encoder may retain a
+different lift after a returned ray; the universal
+current-ray equivalences do not automatically apply to
+such history encoders. $\square$
+

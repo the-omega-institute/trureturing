@@ -1,0 +1,19 @@
+**定义 C-136.1（物理粒子数与固定源的记号）。** 保持 (C128.1)–(C128.2)
+的物理五态、能量基 $\mathcal B$、$\psi,\eta,Q,P_Q,P$ 及两个零假设域不变，记
+
+$$
+\begin{aligned}
+\widehat N&=\operatorname{diag}(0,1,1,1,2)_{(e_0,e_1,e_2,e_3,e_4)},\\
+S&=\operatorname{span}(e_0,e_4),\qquad \Pi_S=P_{e_0}+P_{e_4},\\
+\psi_-&=(e_0-e_4)/\sqrt2,\qquad P_-=P_{\psi_-}.
+\end{aligned}
+\tag{C136.1}
+$$
+
+$\widehat N$ 是物理粒子数算符，不是恢复问题中的通道 $N$。
+(C128.1) 的等距矩阵 $E=(\psi,\eta,e_2)$ 在此亦记作 $E_N$；
+它始终是固定嵌入 $\mathbb C^3\to\mathcal K_3$，不是以下联合宣告效果 $\mathsf E$。
+相干数仍按物理能量基 $\mathcal B$ 定义，不按 $\widehat N$ 的本征基定义。
+复振幅、全部有限混态分解及 $\mathcal F_Q=\mathcal F_{\rm all}\cap\mathsf D(Q)$
+的量词均沿用 C-128.1、C-129.1。
+

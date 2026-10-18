@@ -1,0 +1,35 @@
+**Proposition 8.7 (PSD saturation certifies rank one on connected support).**
+Let $\rho$ be any positive semidefinite trace-one matrix, with diagonal
+$p$ and positive support $S$. If $S$ is connected and every edge inside
+$S$ satisfies
+
+$$
+|\rho_{uv}|^2=p_up_v,
+\tag{8.16}
+$$
+
+then $\rho$ has rank one. This gives a purity certificate distinct from
+assuming (8.14).
+
+Proof. Positive semidefiniteness gives a Gram representation of $\rho$ by
+vectors $g_u$ with squared norms $p_u$; choose either inner-product
+convention consistently. The Cauchy–Schwarz inequality gives
+$|\rho_{uv}|^2\le p_up_v$. For two positive norms, equality implies that
+the two Gram vectors are proportional. The equalities (8.16), propagated
+along connected paths, make all $g_u$ with $u\in S$ proportional. If
+$p_u=0$, then $g_u=0$. Equivalently, the two-by-two principal minors give
+$|\rho_{uv}|^2\le p_up_v=0$ for every $v$, so every zero-diagonal row and
+column vanishes. All nonzero Gram vectors therefore span one line and
+the trace-one matrix has rank one. $\square$
+
+For a singleton $S$, the zero-row argument already makes the state its
+single basis projector, with no relative phase; (8.16) is vacuous. The
+support of a trace-one state is never empty. When the support has several
+components, saturation along their internal edges makes each component's
+Gram vectors collinear but does not make different components collinear.
+Thus it does not certify global purity. An edge with a zero endpoint has
+no normalized phase or argument. Experimental saturation with errors
+would need an additional quantitative certificate; the exact statement
+above alone supplies none. Unknown mixed-state purity cannot be inferred
+by silently applying Theorem 8.6.
+

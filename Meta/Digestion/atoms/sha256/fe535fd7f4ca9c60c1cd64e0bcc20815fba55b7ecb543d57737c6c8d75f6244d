@@ -1,0 +1,17 @@
+**定义 34.1（事件域与共同传递族）。** 固定定义 28.1 的非空 $\Omega_m$、接收者起始事件 $q_0$、其后允许的接收事件域 $Q_m$，以及在事件 $e_i$ 形成的指定档案 $R_i$。事件和通道合同在整个候选域中有相同解释；若形成位置、权限或传输时间随来源变化，就把这些变化纳入共同历史及实际协议，而不套用固定事件公式。定义
+
+$$
+\mathscr F_m(q)=
+\{S\subseteq I:\text{存在一份在 }\Omega_m\text{ 上共同合法的传递，}
+\text{于 }q\text{ 保真交付配对档案 }R_S\}.
+$$
+
+一次传递须共同满足准备、权限、寿命、带宽、存储及资源调度约束；不能用对每个 $i$ 分别存在的不同传递代替一份联合可执行的传递。允许忽略不需要的已收到记录，且空传递合法，故 $\varnothing\in\mathscr F_m(q)$。充分原始档案就绪域定义为
+
+$$
+\mathcal R^{\rm raw}_{Z\mid m}
+=\{q\in Q_m:\mathscr F_m(q)\cap\mathscr A_{Z\mid m}\ne\varnothing\}.
+$$
+
+它只表示完整档案具备数学恢复条件，不计译码和验证。事件因果偏序采用定义 6.1；消息发送先于同一消息接收及传递闭包，采用 Lamport, [Time, Clocks, and the Ordering of Events in a Distributed System，The Partial Ordering](https://lamport.azurewebsites.net/pubs/time-clocks.pdf) 的中间接口。消息偏序不单独提供空间距离、带宽或完整档案的可传递性。
+

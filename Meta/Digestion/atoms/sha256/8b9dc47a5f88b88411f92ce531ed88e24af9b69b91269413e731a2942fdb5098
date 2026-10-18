@@ -1,0 +1,48 @@
+**Lemma 43.1 (late two-endpoint collapse).** The function
+
+$$
+W^{\rm late}(Y,Z)=\int_1^\infty K_d(t;Y,Z)dt
+\tag{43.1}
+$$
+
+is globally bounded and jointly smooth in a fixed interior neighborhood of $(o,o)$. It satisfies
+
+$$
+|W^{\rm late}(Y_s\eta,Y_s\xi)-W^{\rm late}(o,o)|
+\le C\min\{1,s(\mathfrak d(\eta)+\mathfrak d(\xi))\}.
+\tag{43.2}
+$$
+
+In the notation (35.5)–(35.6), for each fixed $H>0$, $h=Hs^q$, $b=h/s^2$,
+
+$$
+\begin{aligned}
+x&=Vp+O_{L^1\cap L^2}(s),&m&=\mu+O(s),\\
+d_s&=W_{1,d}(o)s^5+O(s^6),\\
+\langle x,L^hx\rangle
+ &=j_0A_p^2W_{1,d}(o)s^5+O(s^6)+O(s^5\sqrt b).
+\end{aligned}
+\tag{43.3}
+$$
+
+Proof. L Lemma 41.2 bounds $K_d(t;Y,Z)$ by $Ct^{-3/2}$ for $t\ge1$, uniformly in both endpoints; hence (43.1) is bounded. On the interior product space its distribution identity is
+
+$$
+(S_Y+S_Z)W^{\rm late}=2K_d(1;Y,Z).
+\tag{43.4}
+$$
+
+Compact testing justifies integration of the heat equation, and the boundary term at infinity vanishes by the same large-time bound. The sum of the two original bracket-generating systems on the product is bracket generating there. Local hypoelliptic regularity for this sum of squares, with its smooth constant potential $-2\lambda$, makes (43.1) jointly smooth. Thus a local mean value estimate gives (43.2) inside a fixed neighborhood; outside it use the global bound and the positive lower bound of the minimum. This argument requires no large-time endpoint derivative estimate.
+
+By (24.6), (24.13), bounded multiplication and Cauchy–Schwarz, $x-Vp=O(s)$ in $L^1\cap L^2$, $m-\mu=O(s)$ and $\|u_s^2-p^2\|_1=O(s)$. Apply (43.2) to $p^2$ for $d_s$ and to $Vp\otimes Vp$ for the late quadratic scalar. Their first homogeneous moments are finite by (24.4). Replacing either moving $x$ by $Vp$ costs $O(s)$ under the bounded late kernel. The exact kernel scaling is (35.9), so it retains its factor $j_0s^5$.
+
+Finally damping that kernel changes its normalized supremum by at most
+
+$$
+C\int_1^\infty\min(1,bt)t^{-3/2}dt\le C\sqrt b
+\quad(0<b<1).
+\tag{43.5}
+$$
+
+Combining the endpoint, moving-input and damping errors proves (43.3). Each $H$ is fixed; the constants in the undamped $O(s^6)$ errors are independent of it. $\square$
+

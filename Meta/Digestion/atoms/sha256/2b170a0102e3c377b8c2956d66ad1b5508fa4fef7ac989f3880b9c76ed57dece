@@ -1,0 +1,39 @@
+**Theorem 5.3 (slack, contrast overshoot and actual HALF deficit).** Under
+Assumption 5.1 the contact law attains
+
+$$
+R_t(r)=J(\pi^*)=Y\cdot B-\lambda r=:J^*.
+\tag{QS.27}
+$$
+
+For every common feasible law, set $\mathcal E=J^*-J(\pi)$. Then exactly
+
+$$
+\mathcal E=\lambda(\bar k-r)+\int_XD_\xi(\phi)\,d\pi\ge0,
+\qquad 0\le\bar k-r\le\mathcal E/\lambda.
+\tag{QS.28}
+$$
+
+For every original competitor in (QS.5), including one that is not height
+optimal, its law from Theorem 3.1 satisfies
+
+$$
+\mathcal T(s,t)-T_{\rm actual}=\mathcal E/2.
+\tag{QS.29}
+$$
+
+Proof. Integrating the definition of $D$ and using the same moment target
+$B$ gives
+$\int D=Y\cdot B-J-\lambda\bar k$. Rearranging proves (QS.28)
+with $J^*=Y\cdot B-\lambda r$, and (QS.25) makes both terms
+nonnegative. The contact law has $D=0$ on its support and $\bar k=r$,
+so it attains $J^*$. This proves (QS.27) over all coefficient probability
+laws, without a compactness substitute for optimality. This finite law
+has the original realization of Proposition 4.1, whereas Theorem 3.1
+bounds every original competitor by it. Formula (QS.16) therefore holds,
+and subtraction of (QS.10) gives (QS.29). The scalar $\mathcal E$ is
+lost low height. It is distinct from the minimax error $\mathsf E(\Phi)$,
+from diamond distance, from code leakage and from separately optimized
+sheet deficits. The original contrast remains an inequality; the overshoot
+term in (QS.28) is retained. $\square$
+

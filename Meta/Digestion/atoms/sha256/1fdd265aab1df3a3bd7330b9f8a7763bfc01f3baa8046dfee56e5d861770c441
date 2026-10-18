@@ -1,0 +1,44 @@
+**Theorem 71.1 (the exact density criterion in the matching regime).** Fix
+commissioned $a,g>0$ and one separate prescription $\diamond$. Let
+$(n_k,\delta_k,\Omega_k)$ be any sequence with $n_k\in\mathbb N_0$,
+$0<\delta_k\le1$ and $\Omega_k\ge1$. The density and frequency are fixed
+within each individual commission. Say that this sequence has a uniform full
+mathematical floor if a finite constant $L$ bounds
+$\boldsymbol q_{\mathfrak h,n_k}[y]\ge L\|y\|^2$ for every $k$, every separately
+legal history $\mathfrak h\in\mathscr H_{n_k}$ and every full form input.
+
+For all such $a,g$, a sufficient condition is
+
+$$
+\sup_k n_k\delta_k^2<\infty.
+\tag{71.1}
+$$
+
+If $0<g<a(3-2\sqrt2)$, this condition is also necessary for that all-history,
+all-form-input floor. The constants are uniform in $\Omega_k$, caps, sources,
+bank and auxiliary sizes and input field moments. Necessity is not asserted
+outside this matching parameter regime, or for a single selected history
+sequence with a restricted input class.
+
+**Proof.** Put $u_k=n_k\delta_k^2$ and $v_k=\sqrt{n_k\delta_k}$.
+Since $0<\delta_k\le1$,
+
+$$
+u_k\le v_k^2,\qquad
+\min\{u_k,\sqrt{u_k}\}\le M(n_k,\delta_k)\le u_k.
+\tag{71.2}
+$$
+
+Thus bounded $u_k$ gives a common floor
+$-2g-C\sup_k u_k$ by Theorem70.2, even with the actual nonnegative field
+contribution retained. Conversely, unbounded $u_k$ has a subsequence tending
+to infinity; (71.2) makes $M$ tend to infinity on that subsequence. In the
+matching regime Theorem70.3 supplies, at each of these indices, one actual
+INITIAL-$\alpha$ history with fixed cap $n_k+1$ and one normalized full state
+whose energy is at most $6a-cM(n_k,\delta_k)$, tending to minus infinity.
+This contradicts a floor over all those histories and states.
+The argument uses no within-run change of $\delta_k$ and no infinite fixed-cap
+history. In a single fixed-cap run every accepted nonempty graft adds at least
+one leaf, hence $n\le H-\operatorname{leaves}(\mathrm{INITIAL})$ as in
+Theorem68.6; its finite-history floor remains finite. $\square$
+

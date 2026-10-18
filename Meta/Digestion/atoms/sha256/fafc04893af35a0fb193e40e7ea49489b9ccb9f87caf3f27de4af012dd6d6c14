@@ -1,0 +1,21 @@
+**定理 9.8（改变几何基元后的精确校准）。** 以 $\tau$ 作各层基元，重构单位方波 $\operatorname{sgn}(\sin\theta)$ 的奇数外层权重为
+
+$$
+a_n=\frac{\pi}{2\sqrt2}\frac1n
+\prod_{p\mid n}\left(1-\frac{\chi_8(p)}p\right).
+$$
+
+按奇数 $n$ 递增截断时，$\sum a_n\tau(n\theta)$ 在 $L^2$ 中收敛到该方波。
+
+**证明。** 频率 $r$ 的系数为约数卷积 $c_r=\sum_{n\mid r}a_nb_{r/n}$。方波系数为 $4/(\pi r)$；完全乘法函数 $\chi_8(n)/n^2$ 的卷积逆为 $\mu(n)\chi_8(n)/n^2$，反演得公式。
+
+令倍频算子 $\mathcal D_mf(\theta)=f(m\theta)$，并置 $\mathcal T=\sum_{m\ {\rm odd}}b_m\mathcal D_m$。因
+
+$$
+\|\mathcal T/b_1-I\|
+\le\sum_{\substack{m\ge3\\m\ {\rm odd}}}\frac1{m^2}
+=\frac{\pi^2}{8}-1<1,
+$$
+
+$\mathcal T$ 由 Neumann 级数可逆。权重满足 $|a_n|\le c(1+\log n)/n$，因为乘积至多 $\sum_{d\mid n}1/d\le1+\log n$，故 $(a_n)\in\ell^2$。令 $f_N=\sum_{n\le2N-1,\ n\ {\rm odd}}a_n\sin n\theta$，有 $\mathcal Tf_N=\sum a_n\tau(n\theta)$；连续性及逐频率卷积使其极限具有方波的全部 Fourier 系数，因而等于方波。逐层换基元不是整体的同一线性投影，校准权重也不自动保留等相对速度。$\square$
+

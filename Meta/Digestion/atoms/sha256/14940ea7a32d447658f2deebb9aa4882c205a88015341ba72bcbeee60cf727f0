@@ -1,0 +1,42 @@
+## 214. No special edge has any pair contained in P
+
+It remains to exclude pairs {M,Z} and {M,U}. Suppose a special edge e
+has either pair {a,b}, and let q be its cosh value. Here a,b>3 and
+k=a+b>6. Its complete star is genuine: sigma has pair {C,D}.
+Its n>=6 axial occurrences have angles theta_i with sum 2*pi.
+The global genuine budget of the pair is 3*pi. An owner has at most
+two e occurrences; its original transverse pair expense is
+4*B_lambda(theta_i), independent of which of its equal e axes is used.
+Consequently, counting each actual owner once,
+ 3*pi >= pair expense of star owners
+       >=2*sum_i B_lambda(theta_i)
+       >=2*n*B_lambda(2*pi/n)
+       >=12*B_lambda(pi/3).
+Thus lambda^2<=1/3. Since K>8/9, it follows strictly that q<11/5.
+
+Every star owner has P expense greater than pi. To prove this, let r
+be its other axis value. If that axis belongs to P, use the five-slot
+inequality in Section 213, with r as the distinguished axis. Otherwise
+it is C, D, or special. In every such case r<k+1: this follows from
+c,d<m-2 for C,D, and from the fixed-pair barrier for a special axis.
+Use L=k^2-(q-1)*(r-1), J=(q+1)*(r+1)-(a-b)^2. Then
+ K*L-J>(8/9)*L-J
+ > (8/9)*k^2-((17*q+1)/9)*k-2*(q+1)+(a-b)^2
+ > (8/45)*(k-6)*(5*k+6)>0.
+The second line uses r<k+1; the third uses q<11/5 and discards the
+nonnegative square. Hence beta_a+beta_b>pi/2 and the four transverse
+P slots alone have expense greater than pi.
+
+Tau is outside this star because its fixed pair is {M,C}, different
+from both candidate pairs. It reserves more than pi of P's 5*pi.
+There can therefore be at most three distinct star owners, since four
+would have P expense greater than 4*pi. Each owner has at most two e
+occurrences, whereas degree(e)>=6. It follows that there are exactly
+three owners, each with two e axes (and degree(e)=6). For each, the
+other axis is again q, which satisfies q<11/5<k+1. The preceding
+four-transverse-slot argument thus applies to all three: their pair
+expense exceeds 3*pi. This contradicts the complete genuine pair
+budget 3*pi. No special edge with either pair exists.
+Together with the previously proved {Z,U} case, every owner whose
+fixed pair is contained in P has both axes in H.
+

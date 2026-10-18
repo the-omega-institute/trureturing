@@ -1,0 +1,44 @@
+**Proposition 2.4 (paid finite installation of this expansion).** Under
+Assumption 1.2 there is an actual finite installation reaching $D_2$ Ready
+with the stated banks, code, owners and invocation token. Its native source
+prefix through the chosen old Ready is unchanged. Its code and local
+constructors are independent of $u,H$ and every future tape length.
+
+Proof. Apply RCA Proposition 11.4 to the finite word program of Definition
+2.3, not to a $D_1$ bank of the wrong arity. RCA's initial native-bank
+prelude writes both F sentinels, measures Base(A), writes $r_2$ seps and
+F, seals, constructs its full descriptor and selects parity A before
+any assignment. All later updates have complete dry and real emission,
+descriptor count/seal and parity change. Partial versions remain real
+retained cells, and are never active source banks.
+
+Construct the capture controller $L$ first, exactly as RCA Definition
+14.1: its native ingress/descriptor code neither contains nor calls the
+new main program. Supply exactly $E(L)$, the actual capture frame
+$101\,U(|\Delta(D_2)|)\Delta(D_2)$, and $E(D_2)$ in the two genuine
+fresh-version bootstraps. Only DONE enables a completed main table.
+The fixed descriptions of $D_0,L$ can be emitted by finite literal chains;
+$D_2$ does not contain its own description. Its own description is acquired
+by $L$ and subsequently read as actual port-37 data. No self-description
+fixed point is required.
+
+Copy the actual seed, old frames, public $H,\xi$, origins and saved public
+head table with RCA Definition 14.2's real authorities and save/restore
+graphs. The manifest order remains captured frame first, then the declared
+old initialization/description, $L$, seed, old frames/context backing,
+origins and head table. The captured descriptor has base one and creation
+ordinal zero. Initialize uses Home(37); MR(37); MR(37), followed by RCA
+Lemma 13.2a's full-prefix loop. Thus the leading F is not field zero and
+empty fields are retained. Strip field zero's 101, parse its unary length,
+take exactly that payload, require exhaustion and validate its row fields.
+Import ends before any later staging on 37.
+
+Create the extra empty lists by real bank assignments. Finish all actual
+token initialization, receiver handoff, invocation handoff and Ready rows.
+Every scan has an already finite unchanged source end; every bootstrap
+writes one bit at a time. The same finite-termination proof applies with
+$r_2,E(D_2),\Delta(D_2)$ throughout. These are an initial choice of the
+new installation, not a reinterpretation of old $D_1$ banks or packages.
+Before that choice the native source prefix has acquired no additional row.
+After it, clocks and allocation origins are those of the extended run. ∎
+

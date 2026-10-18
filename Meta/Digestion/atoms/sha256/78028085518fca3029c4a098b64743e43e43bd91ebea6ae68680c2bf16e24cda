@@ -1,0 +1,87 @@
+**Theorem 284.2 (Full-catalog law and its necessary inequality).**
+Let $s\ge0$, $0\le\gamma_j\le s$ on the selected late addresses,
+and $G=\sum_j\gamma_j$. Put
+
+$$
+P_{w(\{1\}\cup Z)}=P_{w(\{2\}\cup Z)}=s\nu(Z)/2,
+\qquad T=s,
+$$
+$$
+C_{w(\{\ell:\ell\text{ selected},\ \ell\ge j\})}=\gamma_j
+\quad\text{for each selected }j.
+\tag{284.2}
+$$
+All other coefficients are zero and coincident contributions add.
+This full score has
+
+$$
+\beta=\gamma,\quad K=G+(c+1)s,\quad
+W=B_N=B_O=(c+1)s.
+\tag{284.3}
+$$
+Every complete feasible $N$ allocation, with any finite mass and any
+real profile, consequently satisfies
+
+$$
+\sum_j\gamma_jb_j\le\bigl(G+(5-1/k)s\bigr)e.
+\tag{284.4}
+$$
+Every unrestricted full input with these $\beta$ and actual
+$K\ge G+(5-1/k)s$ has a full nonnegative exact-$Q$ zero-cost
+representative and $\theta=0$. For an entire original sequence the
+same necessary inequality holds, including selected inactive addresses.
+No least-stock or sufficient-feasibility assertion is made.
+
+**Proof.** The unary zero masses on $A,B,\{z\}$ are $2,b,c$.
+For two ordered selected addresses the full four reply masses are
+
+$$
+\begin{array}{c|cccc}
+\text{type}&00&01&10&11\\\hline
+AA&1&1&1&c-3\\
+BB&b/2&b/2&b/2&c-3b/2\\
+AB&2k/(2k-1)&2-2k/(2k-1)&1&c-3\\
+Az&2&0&c-2&0\\
+Bz&b&0&c-b&0.
+\end{array}
+\tag{284.5}
+$$
+For example the $AA$ double-zero probability is
+$2k(2k-1)/((4k-1)(4k-2))$, which multiplied by $c$ is one;
+subtract from unary two for its two mixed cells. The $BB$ double-zero
+mass is $c\,k(k-1)/((2k-1)(2k-2))=b/2$.
+Independence between the blocks gives $AB$ double-zero mass
+$c(2k/(4k-1))(k/(2k-1))=2k/(2k-1)$; subtracting it from
+unaries two and $b$ gives $01,10$. The final vertex is always zero,
+giving the last two lines. These computations also give all $11$ cells
+by subtraction from $c$, with no separately chosen pair marginals.
+Every entry is nonnegative. The required $00,10$ entries are at least
+one: for the last type,
+
+$$
+c-b-1=\frac{2k^2-4k+1}{k(2k-1)}\ge0\quad(k\ge2),
+$$
+and $b/2\ge1$, $c-2\ge1$; the other cases are immediate.
+This includes $k=2$ and its zero $BB$ positive cell.
+
+A threshold correct word in (284.2), observed at selected $i<j$,
+can occur only in $00,10,11$, never $01$. Its own correct reward is
+at most $s$. Zero receives $s\nu_{ij}(00),s\nu_{ij}(10)$ in the
+first two of these cells and at least $T=s$ in $11$.
+Thus zero dominates each late label separately, with its entire
+$C$ mass in its one specified cell. On a head/late pair, correct
+labels at or before the late address occur in $10$, where zero has
+half its unary zero mass, at least $s$. Later correct labels are in
+$11$, paid by $T=s$. On the head pair all correct labels lie in
+$11$, also paid by $T$. Every early numerical label receives only
+its own union rows, a subset of zero's reward; other labels receive
+zero. Hence all labels in all distinct pairs are dominated.
+Inactive coordinates are constantly one on the scored support, and
+shorter, repeated or ignored schedules coarsen these partitions.
+Summing the separate label bounds proves the same conclusion for all
+of them and for $O$ stopping. The row sums give (284.3), and both
+constant zero and $R$ attain it. Equation (280.2) proves (284.4) on
+one complete allocation. Positive-row padding gives the full quotient
+cone. Lemma 280.3 gives the original necessary inequality on arbitrary
+selected addresses. No independent component stock was added. $\square$
+

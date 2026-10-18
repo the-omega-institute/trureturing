@@ -1,0 +1,19 @@
+### 104.18. A finite identity and its original-domain consequence
+
+**Proposition 104.10.** For the integer-grid operations, cuts, root intervals, contractions and tie rule of §§104.12–104.17,
+\[
+\boxed{\mathcal C_{30}(\mathcal B_s)
+=(1186883,\ 593442,\ 0,\ 30).}
+\tag{104.94}
+\]
+
+**Proof.** Evaluate the finite recursion (104.93) with its rational root (104.76). At each node use the ordered operations (104.72)–(104.91), the four contractions (104.84), and the exact comparison (104.92). The resulting counts are 593441 internal binary nodes and 593442 rejected leaves, with no unresolved leaf and maximal depth 30. Their sum is 1186883. All constants, intermediate rounding rules and finite bounds entering this identity are specified in the preceding definitions; the identity requires no unspecified real oracle or additional input. \(\square\)
+
+**Proof of Theorem 104.1.** A hypothetical original local minimum gives the same common positive-density normer by §§104.1–104.4. The legitimate full-coordinate transformations of §104.5 place it in the normalized chart. The quantitative lemmas in §§104.6–104.9 imply every root and intermediate cut in §104.11. Its actual quotient and phase equation, complete scalar normer, positive trace gap, exact norm and original singleton error give all the real counterparts tested in §§104.13–104.16. Neither sign of \(q\) has been removed. By (104.94), the unresolved component of the complete finite recursion is zero. Lemma 104.9 therefore excludes this point from its root, a contradiction. \(\square\)
+
+The implication concerns positive-subquarter local minima on the full calibrated domain with ranks \((7,6)\), the specified support and equal-polar \(H\) records. It does not give a quarter lower bound for every nonstationary equal-polar pair, or a uniform gap above one quarter. The genuinely unequal-polar part of \((2,1,1,0)\) and the six other rank-\((7,6)\) support patterns
+\[
+(1,1,1,1),\ (2,2,1,0),\ (2,1,1,1),\ (2,2,2,0),\ (2,2,1,1),\ (2,2,2,1)
+\]
+remain outside this conclusion, as do other unequal and lower ranks. The calibration reduction in [RT II §72](ARITHMETIC_HOLOGRAPHIC_RT_II.md) can change rank and is not asserted to preserve the local-minimum class here. Thus it does not extend this subclass implication to every leaking channel. The unrestricted global optimum remains in the interval \([\sqrt3-3/2,1/4]\).
+

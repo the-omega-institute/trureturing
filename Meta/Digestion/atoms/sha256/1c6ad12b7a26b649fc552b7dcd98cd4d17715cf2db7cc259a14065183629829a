@@ -1,0 +1,75 @@
+### 490.1. 原积分身份与有限有理夹逼
+
+沿用 §479 的实际对象
+$$
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+I_\psi(x)=\int_x^\infty(\psi(t)-t)w(t)\,dt,\qquad x>1.
+$$
+命题 479.2 给出包括全部素数幂端点的准确公式
+$$
+I_\psi(x)=
+\gamma+\log\log x-P_0(x)+\frac{\psi(x)-x}{x\log x},
+\qquad
+P_0(x)=\sum_{p^k\le x}\frac1{kp^k}.
+\tag{490.1}
+$$
+以下反例使用这个实际身份，不另换截断积分或 Euler 常数。
+
+为明确所有数值比较的误差，若 $r>1$，置
+$$
+z=\frac{r-1}{r+1},\qquad
+\ell_m(r)=2\sum_{j=0}^{m-1}\frac{z^{2j+1}}{2j+1}.
+$$
+积分有限几何展开，或对 $2\operatorname{artanh}z$ 的正项级数求尾，得到
+$$
+0<\log r-\ell_m(r)
+\le\frac{2z^{2m+1}}{(2m+1)(1-z^2)}.
+\tag{490.2}
+$$
+这里 $m$ 为正整数；上界来自把每个尾项的分母换成 $2m+1$。
+
+另记普通调和和 $\mathcal H_M=\sum_{j=1}^M1/j$，避免与前文的 Möbius 加权和混淆。Euler 常数满足
+$$
+\mathcal H_M-\log M-\frac1M
+<\gamma<\mathcal H_M-\log M.
+\tag{490.3}
+$$
+事实上，
+$$
+\mathcal H_M-\log M-\gamma
+=\sum_{k=M}^{\infty}
+\left(\log(1+1/k)-\frac1{k+1}\right),
+$$
+每项严格介于零和 $1/k-1/(k+1)$ 之间；求和给式 (490.3)。特别 $\gamma>0$。
+
+式 (490.2) 的有限项给出以下证书：
+$$
+\frac{842}{1215}=\ell_3(2)<\log2
+<\ell_1(2)+\frac{2(1/3)^3}{3(1-1/9)}
+=\frac{25}{36}<\frac7{10},
+$$
+$$
+\log3\le
+1+\frac1{12}+\frac1{80}+\frac1{336}
+=\frac{923}{840}<\frac{11}{10},
+$$
+$$
+\log(11/5)\le\frac34+\frac9{220}
+=\frac{87}{110}<\frac45.
+\tag{490.4}
+$$
+又由 $\log(1+u)<u$ 及式 (490.2) 的首项，
+$$
+\frac{14}{135}<\log(71/64)<\frac7{64}.
+\tag{490.5}
+$$
+最后，
+$$
+\mathcal H_{16}=\frac{2436559}{720720},\qquad
+\gamma<\mathcal H_{16}-4\log2
+<\frac{2369041}{3891888}<\frac{61}{100}.
+\tag{490.6}
+$$
+最后两个有理数的差为
+$61/100-2369041/3891888=125267/97297200>0$。以上均为有限有理运算及明确正尾界。
+

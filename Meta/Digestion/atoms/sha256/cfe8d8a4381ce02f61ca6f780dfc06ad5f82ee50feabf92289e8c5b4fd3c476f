@@ -1,0 +1,62 @@
+### 94.3. Original reconstruction through the nonreduced model
+
+Put \(R=3-b^2\). First form the full free radial algebra
+\[
+ \mathcal A_{\rm full}=
+ K_Q[k,X]/(f,\ (1+k^2)X^2-t(k)X-R).
+\]
+It has dimension twenty. Then form its quotient
+\[
+ \mathcal A_{\rm red}=
+ K_Q[k,X]/(f_{\rm red},\ (1+k^2)X^2-t(k)X-R),              \tag{94.1}
+\]
+of dimension eighteen. The quotient kernel is square-zero.
+The unit \(1+k^2\) is certified below; the radial discriminant also is a
+unit, so (94.1) is reduced. Necessity places every original generic mean
+in (94.1) before any lift denominator is used.
+
+Set \(x=X,y=kX,G=x+iy\). Construct the original affine-line coefficients
+\(A,D_0,C_0,\sigma=A^2+D_0^2\) and the global linear coefficients
+\(a_Y,\mu_Y,a_D,\mu_D,F_8\) of §87. Use the valid combined pivot
+\[
+ \tau=-\frac{\mu_Y+\mu_D}{a_Y+a_D},\qquad
+ u=\frac{-AC_0-D_0\tau}{\sigma},\quad
+ v=\frac{-D_0C_0+A\tau}{\sigma}.                            \tag{94.2}
+\]
+Both individual linear equations hold generically, so (94.2) agrees there
+with their unique original lift. Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\)
+by the original formulas. Physical input coefficients are
+\(G/\kappa,C/\kappa,D/\kappa\).
+
+The multiplication norms in (94.1), in basis
+\((1,k,\ldots,k^8,X,Xk,\ldots,Xk^8)\), have residues:
+
+~~~text
+1+k^2:88; f_red_prime:57; radial discriminant:109; y:34;
+aY+aD:67; sigma:40; beta:88; barbeta:107;
+C:75; barC:40; D:43; barD:45; Yc:80; barYc:18;
+q:48; e:71; bare:44; F8:69; G:23; barG:74;
+Delta:7; delta:31.
+~~~
+
+The radial discriminant is \(t^2+4R(1+k^2)\).
+The power columns \(1,y,\ldots,y^{17}\) have determinant \(72\bmod113\).
+
+Here the order of the specialization argument matters. A unit modulo a
+nilpotent ideal lifts to a unit, by a finite geometric-series inverse.
+Consequently every original reconstruction denominator certified in (94.1)
+is also a unit in \(\mathcal A_{\rm full}\). The generic source construction
+and all original rational identities therefore specialize first to that
+full twenty-dimensional algebra, with its double source point retained.
+Only afterward are they passed to (94.1). We do not attempt to treat the
+nine-dimensional quotient as a flat generic-parameter family.
+
+In particular both parts of \(E=0\) and \(N_Y=N_D=0\) are characteristic-zero
+identities in (94.1); direct finite-algebra multiplication gives the same equalities.
+The nonzero F8 norm is proved only after universal necessity has placed
+every original generic source point in this algebra. It therefore gives
+noncircular F8 coverage, including all original leading and pivot zeros.
+The complete line uniqueness and original strict reconstruction filters
+retain all six root orders. The unit \(\Delta\) ensures both channels are
+three-distinct. No physical ray count is asserted.
+

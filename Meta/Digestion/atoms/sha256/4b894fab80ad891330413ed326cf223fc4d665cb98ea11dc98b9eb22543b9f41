@@ -1,0 +1,72 @@
+**Proposition 179.2 (Affine suffix identities versus probability laws).**
+For nonnegative endpoint masses $\mu_D$, $D\in E_L$, of total
+$\tau=\sum_D\mu_D$, set
+
+$$
+f_b=\sum_D\mu_D D_b+(1-\tau)R_b.
+\tag{179.2}
+$$
+
+The first-zero-class identities (178.2) still hold for $f$, with
+nonnegative suffix $Q_{jk}$ and $\kappa_{nj}$. Both Boolean minima
+in (178.3) exactly test its affine row inequalities. If $\tau>1$,
+these identities do not guarantee that $f_b$ is nonnegative, and
+$f$ need not be a probability kernel.
+
+Suppose instead $A_E\mu\ge h(b)$ and $\tau\le M$ for some $M\ge1$.
+For $b$ in the radial domain $H_L$, the weights
+
+$$
+\frac{\mu_D}{M},\qquad\text{with additional }R\text{ mass }
+1-\frac{\tau}{M},
+\tag{179.3}
+$$
+
+are an actual common probability allocation for
+$x=\alpha+(b-\alpha)/M$ and satisfy all its closed-cap rows.
+For a positive interior profile, retain every actual tail by the same
+radial scaling. The construction uses one seed and has original
+hard-two $O$ and same-seed $N$ realizations.
+
+**Proof.** The nonnegative sum $\sum_D\mu_DD_b$ has the suffix
+identities proved from endpoint polynomials in Theorem 178.2.
+The prefix $R$ has base indicator $b_1b_2$, and its correct
+probability is constant in each first-zero class. Once a first zero is
+fixed, $b_1b_2$ is either zero or constant; in particular it is never
+a suffix-suffix monomial. Thus the possibly negative $1-\tau$
+changes only constant or unary coefficients and not any suffix
+$Q_{jk}$ or $\kappa_{nj}$. The same algebra and two minima still
+test the affine rows. For a concrete failure of positivity, give
+immediate base mass two and every other endpoint mass zero. Then
+$f_b=2e_0-R_b$, which has correct-label-one mass $-1$ throughout
+the first-zero-one class. Total coordinate sum one is insufficient
+for a probability law.
+
+In (179.3) all weights are nonnegative and their sum is one, including
+the endpoint $\tau=M$. If $R$ already has a coordinate in $\mu$,
+add the padding mass to that coordinate exactly once. The event vector
+of this probability mixture is
+
+$$
+\mathbf r+\frac{A_E\mu}{M}\ge
+\mathbf r+\frac{h(b)}M=d\left(\alpha+\frac{b-\alpha}{M}\right).
+\tag{179.4}
+$$
+
+This last identity is the supplied affine radial identity (165.5),
+with $d(\alpha)=\mathbf r$. It establishes all rows using the same
+weights, with no independent choice of singleton or pair budgets.
+Zero weights are omitted. A finite partition of one source-independent
+seed chooses the entire endpoint before actual prime requests; stopping,
+completion and the full-carrier actual-tail bound are the already
+supplied Theorems 109.1, 110.2 and Proposition 90.2.
+
+For the whole original sequence, at scale $1/M$ the first two
+amplitudes become $1-(1-b_i)/M$, and every $i\ge3$, including each
+actual $i>L$, has amplitude $b_i/M$. The cap is $e_b/M$.
+[Theorem 170.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#170-every-original-tail-under-the-same-radial-law-identity)
+owns this full-sequence target identity. Positivity, order, vanishing
+and each actual tail-cap comparison are retained; original tail marks
+are not discarded in the target identity. The finite all-positive row
+is only the separate transport device. $\square$
+

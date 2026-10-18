@@ -1,0 +1,55 @@
+**Boundary 8.2 (parameter, domain and interpretation limits).** Theorem
+7.2 has the following precise scope.
+
+- It holds for each fixed $\varepsilon>0$ and every $g=\gamma\varepsilon^2$
+  in the original strict range $0<\gamma<(2rC_H)^{-1}$. The source's
+  separate sufficient negative-binding condition is
+
+  $$
+  \varepsilon^2<\frac{\gamma M_od^2}{4\pi^4},\qquad
+  M_o=\int_I G_I(k_o,k)|\phi_1(k)|^2dk>0,
+  \tag{8.3}
+  $$
+
+  as in [Q, Corollary 7.2]. Condition (8.3) is not required anywhere
+  above. In particular the theorem covers positive, zero and negative
+  restricted ground energy.
+- Critical equality $\gamma=(2rC_H)^{-1}$ is excluded: (2.3) then
+  loses the positive coefficient of the free kinetic form. The argument
+  proves neither a critical realization nor a sharp stability threshold.
+  The constant $C_H$ retains its sufficient source meaning.
+- The contract excludes $\varepsilon=0$, $Z=0$ or $1$, a collapsed
+  interval, a pole on a height face and loss of $I\Subset(0,h)$.
+  No limiting operator or conclusion at any of these endpoints is
+  supplied. Both remote sides of the source height are nonempty under
+  the stated assumptions.
+- Ground-state degeneracy is allowed. The proof uses the modulus of
+  any normalized restricted minimizer and does not assume simplicity of
+  either ground eigenspace. Every such choice gives its own certificate.
+- The base minimizer has zero values at the height faces. Its reciprocal
+  is used only on the proved positive remote strip. Positivity at $x_o$
+  is established by Theorem 4.2, but no reciprocal perturbation or
+  differentiability assertion is used at that singular point.
+- The lifted minimizer $f_0$ is used in the full form domain only.
+  Neither $f_0\in D(H_g)$ for the full attractive form operator nor
+  $\Gamma_of_0\in L^2(\Omega)$ is needed or asserted. The proved
+  base membership $v\in D(\overline L)$ is a different statement.
+  In particular no singular unbounded operator is multiplied in blocks.
+- The full field remains (1.7) at the same point $o$, with the same
+  Haar measures, boundaries and clock. The comparison is not between
+  different poles, and no smeared, finite-time, Euclidean or Hardy
+  replacement field enters either full energy or the mixed form.
+- The lower certificate depends on the fixed parameters, the actual
+  normalized $v$, the bump $\chi$, and the inherited finite
+  $B_\varepsilon$. The reciprocal norms and derivatives in $N,K$ are
+  part of this dependence. It is a finite positive mathematical
+  certificate, not an evaluated number or a parameter-only closed
+  formula. The exact-span value $\Delta_\chi$ and the sufficient value
+  $\delta_\chi$ need not be the full gap or optimal over perturbations.
+  No uniform lower bound as $g\downarrow0$, $\varepsilon\downarrow0$,
+  the pole approaches a face, or other parameters vary is proved.
+- These conclusions concern the specified Hilbert-space forms. They
+  supply no physical amplitude-preparation or measurement procedure,
+  finite-bit acquisition guarantee, empirical learning claim or
+  conclusion about the original hidden-dimension problem.
+

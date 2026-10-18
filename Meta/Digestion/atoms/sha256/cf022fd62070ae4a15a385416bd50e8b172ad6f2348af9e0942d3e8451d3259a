@@ -1,0 +1,19 @@
+**Definition 3.1 (actual-owner resampling graph).** Let $R$ be a nonempty
+finite positive-support relation of actual seed solutions, with owner
+partition $(O_i)_{i=1}^n$. A weight $W:R\to(0,\infty)$ can be
+the product in (OCC.8), or any specified positive joint weight. Set
+$Z=\sum_{s\in R}W(s)$ and $P(s)=W(s)/Z$.
+
+For an integer $r\ge1$, the graph $G_r(R)$ has vertex set $R$ and
+joins distinct $s,t$ exactly when
+
+$$
+d_O(s,t):=|\{i:O_i(s)\ne O_i(t)\}|\le r.
+\tag{OCC.11}
+$$
+
+This counts changed actual owner tuples, not changed individual ports,
+all block states, or artificial coordinates. A full conditional on an
+owner subset $U$ means $T(O_U\mid O_{U^c})$, conditioning on every
+outside owner, at every attained outside value.
+

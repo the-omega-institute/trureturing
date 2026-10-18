@@ -1,0 +1,4 @@
+**约定 11.2（D5 与 Scribe 引文）。** `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean` 的 `nativeStep`、`Replay`、`replay_deterministic`、`reached_prefix_replay`、`actual_register_execution` 给原始串行语义和回放；`NativeFullSourceProducer.lean` 的私有 `traverse`、`production_reads`、`stationary` 及公有 `native_source_producer` 给实际完整源取得，不能直接充当 CAP 的 native 权限/价格实现。`NativeSerialEffective.lean` 的 `original_code_service_simulation` 和 `terminalObservation` 使用自己的代码实现和外部 trace 终端读数，不与这里的空终端响应混同。`D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean` 与 `PredictiveMemoryMinimalQuotient.lean` 给带明确 readout/update 前提的抽象核，不能补出 concrete 输入域。
+
+相关叙述见对应 `Blueprint/D5/` 镜像的同名 `.scribe.cs`。上述引用不直接提供这里的匹配 WR/跨辅助调用输入对应；这不是全库不存在性声明。
+

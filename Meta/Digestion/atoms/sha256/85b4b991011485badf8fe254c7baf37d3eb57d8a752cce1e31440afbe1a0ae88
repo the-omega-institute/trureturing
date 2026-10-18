@@ -1,0 +1,92 @@
+**Theorem 46.2 (lawful membership and actual expected charges).**
+The policy of Definition 45.1 has almost surely finitely many paid calls
+and numerical issuances. Every actual held history is a lawful original
+zero-start AC, piecewise $C^1$ history, with
+
+$$
+k+\min a\ge l>0,\qquad k+\max a\le u<H,
+\qquad J=\int a\,db.
+\tag{46.3}
+$$
+
+For the same actual policy, unconditionally,
+
+$$
+\begin{aligned}
+\mathbb EM&\le\mathcal R_\rho(\Lambda),\\
+\mathbb EV^a&\le8N_0+37,&
+\mathbb EV^b&\le6N_0+35,\\
+\mathbb EL&\le14N_0+72,&
+\mathbb EE&\le
+ \frac{196N_0}{c\rho^2(1-4q)}+\frac{5184}{\rho^2}.
+\end{aligned}
+\tag{46.4}
+$$
+
+These bounds include every abort and every terminal or horizon prefix.
+
+Proof. An accepted normal connector has $(A,B)=(2,2)$ in Lemma 34.2,
+so its respective geometric costs are at most $8,6,14$ and its unit-time
+energy at most $196$. The terminal connector has $(A,B)=(5,15)$,
+so the corresponding bounds are $37,35,72,5184$. Both use inward
+rectangles followed by the original phase leg and final height leg.
+The complete extrema, not merely the endpoints, stay in $[l,u]$;
+normal prefixes are interior. A terminal connector reaches its acquired
+boundary only at its endpoint. Suffixes and holds retain these guards.
+They prove (46.3), and the very same numerical history on a different
+starting-height promise still needs exactly (2.4).
+
+If attempt $j$ were executed to completion at its issued velocity,
+its original-clock energy would be
+
+$$
+\frac{1-v_j}{h_j}\int_{v_j}^1|g'(v)|^2dv
+ \le\frac{196}{c\rho^2}4^j.
+\tag{46.5}
+$$
+
+An interrupted prefix costs no more. Conditional reach probabilities
+$q^j$ therefore give at most
+$196/[c\rho^2(1-4q)]$ per started normal service. Its geometric
+costs are bounded by the costs of one traversal, since no prefix is
+repeated. A terminal connector has duration $\rho^2$ and hence energy
+at most $5184/\rho^2$, also for its actual horizon prefix. Tonelli over
+measurable normal starts and Lemma 46.1 prove all resource bounds.
+The squared speeds are those actually issued: there is no revaluation
+of a partial leg and no inverse short horizon remainder.
+
+Waiting Reads are at most $T/d_0+N+1$: the disjoint waiting intervals
+have total length at most $T$, and each waiting phase contributes at
+most one shortened final interval. Conditional on a normal start, the
+expected service Reads are at most
+
+$$
+\sum_{j\ge0}q^j(\Lambda+j)=\frac{\Lambda}{1-q}+\frac{q}{(1-q)^2}.
+\tag{46.6}
+$$
+
+A boundary Read is already one of these waiting or service calls; it
+is not charged again. There are no terminal or post-abort Reads.
+This proves the first line of (46.4), so the actual paid count is finite
+almost surely. Lemma 46.1 similarly makes the actual attempt count
+finite. Every connector has finitely many rectangles, each suffix is
+a numerical finite piecewise linear profile, and there are finitely
+many such issued profiles, with continuous joins. Therefore the actual
+history is AC and piecewise $C^1$, with finite pathwise energy.
+
+There is no finiteness assumption hidden in these calculations: the
+bounds apply to finite initial lists of anchors and attempts and pass
+by monotone convergence. Infinite retry strings and infinitely many
+anchors have probability zero by the same bounds. They establish the
+claimed nonaccumulation and actual membership.
+
+Finally, principal representatives, ceilings in the connector, finite
+concatenation, progress and arclength parametrization are Borel functions
+of the acquired numerical data. All planned next positive polling times
+are chosen before their unseen intervals. A suffix or terminal
+replacement occurs only at a paid Read, and a completion or hold is
+already a clock event in the issued profile. This proves the required
+acquired-filtration and numerical-profile measurability. No action in
+this membership proof uses the analytic durations $\vartheta_p$ or a
+Brownian supremum. $\square$
+

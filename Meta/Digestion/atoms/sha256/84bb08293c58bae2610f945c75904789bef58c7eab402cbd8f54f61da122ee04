@@ -1,0 +1,13 @@
+**Definition 1.4 (recovery metrics).** Every recovery below is an arbitrary complex CPTP map $R:M_5\to M_3$, defined on the whole output algebra. State fidelity is the root convention $f(X,Y)=\|\sqrt X\sqrt Y\|_1$. For channels with the same input let
+
+$$
+F(\mathcal A,\mathcal B)=\min_{\rho\in\mathsf D(\mathbb C^3)}
+f\bigl((\mathcal A\otimes\mathrm{id})(\psi_\rho),
+       (\mathcal B\otimes\mathrm{id})(\psi_\rho)\bigr),
+\quad g_N=\max_R F(RN,\mathrm{id}_3),
+\quad \delta(N)=\inf_R\|RN-\mathrm{id}_3\|_\diamond.
+\tag{P.6}
+$$
+
+Here $\psi_\rho$ is any purification of the input density $\rho$; its choice is immaterial up to a reference isometry. Diamond and trace norms are unhalved. A reference of dimension three suffices: any pure state with a larger finite reference has Schmidt rank at most three and is the image of such a purification by a reference isometry. Trace norm and fidelity are invariant under this isometry. Mixed inputs cannot increase the channel-difference trace-norm supremum by convexity, or decrease the fidelity infimum by joint concavity after decomposition into pure states. Thus arbitrary finite passive references remain included in (P.6), though they are not native controls in Assumption 1.2.
+

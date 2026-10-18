@@ -1,0 +1,45 @@
+**Definition 7.3 (all positive same-pair compensations).** The graph
+has the $N$ bit vertices and exactly the unordered edges $\{i,i-1\}$.
+Choose arbitrary positive finite vertex measures $\tau_i(a)$ and
+positive real pair tables $\Psi_i(a,b)$ on these same edge scopes,
+subject only to the global pointwise identity
+
+$$
+\prod_i\bigl[\Psi_i(s_i,s_{i-1})\tau_i(s_i)\bigr]
+      =\prod_i\Phi(s_i,s_{i-1})
+\qquad(s\in\{0,1\}^N).
+\tag{GCB.18}
+$$
+
+The measures need not be probabilities. The reported upper is one
+application of the Sah--Sawhney--Stoner--Zhao graphical inequality on
+this unchanged graph:
+
+$$
+U(\Psi,\tau)=\prod_i
+ \|\Psi_i\|_{K_{2,2};\tau_i,\tau_{i-1}},
+\tag{GCB.19}
+$$
+
+where the exact convention is
+
+$$
+\begin{aligned}
+\|\Psi_i\|_{K_{2,2};\tau_i,\tau_{i-1}}^4
+={}&\sum_{a,a',b,b'\in\{0,1\}}
+ \Psi_i(a,b)\Psi_i(a,b')\Psi_i(a',b)\Psi_i(a',b')\\
+&\hspace{8mm}\cdot\tau_i(a)\tau_i(a')
+                 \tau_{i-1}(b)\tau_{i-1}(b').
+\end{aligned}
+\tag{GCB.20}
+$$
+
+All pointwise compensations between the pair scopes are allowed;
+separate equality of each compensated table with its original is not
+required. Allowing nonnegative tables would not enlarge this class:
+every pair entry extends to an actual binary assignment with positive
+right side in (GCB.18), so no such entry can vanish. The class contains
+no scope enlargement, clustering, extra variables, residual loop rule,
+higher graphical norm or additional proof leaf. The replicas in
+(GCB.20) are analytical summation variables, not readable source copies.
+

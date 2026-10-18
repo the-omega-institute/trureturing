@@ -1,0 +1,12 @@
+**Construction 3.2 (balanced rejected-pair code and finite checker).** Choose the least integer $t\ge1$ with $\binom{2t}{t}\ge|\Gamma|+1$. Assign each letter of $\Gamma\cup\{I\}$ a distinct length-$2t$ word over the two *tokens* $AA,BB$, with exactly $t$ tokens of each type. A token is the original two-letter rejected pair: $AA=\alpha\alpha$, $BB=\beta\beta$. Expanding one code block uses
+
+$$
+L=4t\ \text{paid Reads},\qquad
+2t\ \alpha\text{s and }2t\ \beta\text{s}.
+\tag{3.2}
+$$
+
+At a seed-pair boundary the private checker retains a proper token prefix of the finite codebook (or its invalid flag) and one sampled $Q$ label initialized to $q_0$. The first letter of a pair stays only in the original half-pair control. Only when its second letter is equal is that rejected token committed to the code prefix; an unequal pair instead performs original seed acceptance. Thus even a codebook omitting a first-letter prefix never rejects a legal seed prematurely. At a completed recognized block it updates that label by its $M_x$, using a fresh fair bit if needed. Unknown complete blocks, noncode token prefixes and acceptance of a seed in a partial block make the additional validity flag permanently false. The original seed parser still executes every Read and accepts either unequal pair normally; validity affects only private reporting labels. At seed acceptance the private checker requires whole blocks and seed 1. During the first three payload segments it requires the exact letter suffix $\beta\beta\alpha\alpha$, with no additional letters. Any other seed, any other mark triple, or any return in those segments makes the flag false. A finite four-letter suffix checker is sufficient. It retains no total length counter or old word.
+
+On the third write-and-latch event keep the label and validity flag until the first actual fourth-segment Read. Define $A_h$ at this first $p$ cut as the conditional probability of a valid accepting label, and define $A_h=0$ at every other $p$ cut. The actual first fourth-segment update will discard these private labels as specified in §4. Codebook, checker and label are charged. Each actual operation first executes the entire original $\delta$ and its event block, with private updates ordered relative to its old and new finite control as required; the third write and then latch precede the first reporting cut.
+

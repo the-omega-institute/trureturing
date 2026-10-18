@@ -1,0 +1,42 @@
+**Theorem 5.2 (alphabet versus fresh-query obstruction).** For any
+complete original code $E$ and any correct pooled completion, let
+
+$$
+B_e=\{x\in S_D:E(\langle\alpha,x\rangle)=e\}.
+$$
+
+For each nonempty canonical fiber let $q_e$ bound its fresh Read
+count. If $m=|E[\mathcal F_D]|$ and $q$ is a common worst bound,
+then
+
+$$
+|B_e|\le4^{q_e},\qquad
+N_D\le\sum_{e:B_e\ne\varnothing}4^{q_e}\le m4^q,
+\qquad
+q\ge\max\!\left\{0,\left\lceil\log_4(N_D/m)\right\rceil\right\}.
+                                                               \tag{SCE.16}
+$$
+
+These bounds allow arbitrary correlated fibers, unbounded submitted
+address lengths, off-target queries and variable stopping.
+
+Proof. The full target-factor vector separates $S_D$: its $k=0$
+readouts give the whole $W_D$ reply array, which reconstructs the
+canonical source by CBN Theorem 2.2. The selected vector also
+separates, by Theorem 2.2. Therefore one pooled state cannot serve
+two distinct canonical sources: some original target already has
+different required replies at count zero.
+
+Fix a name $e$. Each address and each stopping choice is a function
+only of $e,D$, public data and preceding replies. There are four
+possible replies per Read. A decision tree of depth at most $q_e$
+has at most $4^{q_e}$ terminal transcripts, including early stops.
+This follows inductively: a root stop gives one leaf; otherwise sum
+the at most four subtree bounds $4^{q_e-1}$. Determinism makes the
+final state identical for every source at one transcript. The
+separation just proved permits at most one canonical source there,
+giving the fiber bound. Addresses and their lengths cannot add source
+information beyond that transcript because they are functions of its
+prefix. Sum over the unchanged fibers and use their number at most
+$m$. No preparation record is accessible in this argument. $\square$
+

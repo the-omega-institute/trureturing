@@ -1,0 +1,46 @@
+**定理 C-107.2（C-106 纤维上分类完备性恰为受限层析完备性）。** 对上述每个
+有限固定菜单，以下四个条件在 $\mathcal K=\mathfrak D$ 上等价：
+
+1. 菜单在 $\mathcal K$ 上完整分类纠缠。
+2. $\{\Gamma\in\mathcal K:M_{\mathcal A}(\Gamma)=M_{\mathcal A}(S)\}=\{S\}$。
+3. $\ker(L_{\mathcal A}|_V)=\{0\}$。
+4. $M_{\mathcal A}$ 在 $\mathcal K$ 上单射。
+
+在 $\mathcal K=\mathfrak F$ 上，完全相同的四条件等价，但第三条必须换成
+$\ker(L_{\mathcal A}|_{V_Q})=\{0\}$。
+
+证明。C-106.2 说明两个集合中唯一可分离态均为 $S$。
+所以分类函数存在当且仅当没有纠缠态与 $S$ 共用读数，即第一、二条等价。
+若受限核为零，式 (C107.2) 立即给第二条；任意两个状态之差均在相应方向空间中，
+因而也给第四条。第四条蕴含第二条，因为 $S$ 本身属于集合。
+
+反之，若 $0\ne X$ 属于相应受限核，令 $\|X\|_{\rm op}$ 为压缩空间上的算子范数。
+对任何实数 $\varepsilon$ 满足
+
+$$
+0<|\varepsilon|<\frac1{5\|X\|_{\rm op}},\qquad
+I_5/5+\varepsilon X\succeq
+(1/5-|\varepsilon|\|X\|_{\rm op})I_5\succ0,
+\tag{C107.3}
+$$
+
+$\Gamma_\varepsilon=J(I_5/5+\varepsilon X)J^\dagger$ 就是人口仍精确固定的密度态。
+在 $V_Q$ 情形，$\ell_Q(X)=0$ 又保持 $q=1/5$。
+它不等于 $S$，故按 C-106.2 纠缠；线性性给它与 $S$ 的所有菜单期望相同，
+违反第二条。这证明必要性。证毕。
+
+式 (C107.3) 的严格正性只在五维匹配支撑 $\mathcal E$ 内成立。
+$S$ 在整个 $25$ 维空间的秩为五；沿 $\mathcal E^\perp$ 增加任意方向并不合法。
+这里没有使用 $S$ 是全部二体密度态集合的内点，而是使用它是人口纤维在指定仿射空间中的相对内点。
+
+该核与差空间判据复用 Heinosaari–Mazzarella–Wolf，
+*Quantum Tomography under Prior Information*，
+[arXiv:1109.5478](https://arxiv.org/abs/1109.5478)，Proposition 2 及其后自伴期望的 Definition 2；
+其 Proposition 1 区分算子空间维数与 POVM 结果数。
+Carmeli–Heinosaari–Maniscalco–Schultz–Toigo，
+*Determining quantum coherence with minimal resources*，
+[arXiv:1708.05597v1](https://arxiv.org/abs/1708.05597v1)，Theorems 1–2，
+在完整正交基测量模型中用不可见扰动刻画相干检测，并由检测得到全部非对角元。
+本条应用的是 C-106 特定支撑内的唯一可分离点与固定人口，
+并把既知 $Q$ 的额外限制保留；没有将该文关于基测量的设置数结论移作任意菜单的结论。
+

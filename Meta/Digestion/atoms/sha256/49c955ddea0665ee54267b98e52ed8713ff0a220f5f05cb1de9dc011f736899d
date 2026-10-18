@@ -1,0 +1,4 @@
+**定义 6.5.1（共同强 lumpability）。** 分区 $q$ 对动作族 $\mathcal A$ 共同强 lumpable，若它对每个 $K_a$ 都强 lumpable。令相应的商核为 $\overline K_a$。
+
+<a id="claim-6-5-2"></a>
+

@@ -1,0 +1,4 @@
+**whole** compiled equality; it is not the conjunction of child
+disequalities. In particular, the test performs no ordinary unification
+and makes no assumption that an unsupported equality is false.
+

@@ -1,0 +1,9 @@
+# Self-Calibrating Acquisition Resources — Continuation XIII
+
+> This volume is ordinary mathematical reference input. Its definitions,
+> theorems and proofs carry no assertion of Lean/kernel verification.
+> The document uses the `generic-v1` theory convention: existing text is
+> preserved, and additions start after the final append anchor and end
+> with a new anchor. Mathematical truth in the repository is carried by
+> verified Lean declarations, rather than by this prose.
+

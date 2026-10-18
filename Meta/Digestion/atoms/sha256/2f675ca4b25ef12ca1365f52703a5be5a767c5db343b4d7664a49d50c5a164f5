@@ -1,0 +1,11 @@
+**Definition 83.5 (the strict-positive dual boundary).** Let $u=h_N(\rho)$. A positive-definite dual with trace at most $T_\beta$ exists exactly when
+
+$$
+ u<T_\beta
+ \quad\text{or}\quad
+ \bigl[u=T_\beta\ \text{and}\ \mathcal N(\rho)\succ0\bigr].
+\tag{S.200}
+$$
+
+A strict trace gap permits adding a sufficiently small positive multiple of $I_5$ to an optimal dual. At equality, (S.197) prevents such a perturbation when the channel output has deficient support. Therefore (S.200) is a boundary condition for an SPD version of a fixed-input certificate, not a proof of (S.154). In particular, for $\rho_\star=\operatorname{diag}(1/4,1/4,1/2)$, the missing requirement remains the actual estimate $h_N(\rho_\star)\leq T_\beta$, together with the full-output support condition at equality.
+

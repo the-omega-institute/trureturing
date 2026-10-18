@@ -1,0 +1,8 @@
+**Definition 3.3 (the product interface).** For finite interfaces
+$I_1,\ldots,I_m$, their product interface has states
+$\prod_iS_i$, individual targets $g_{i,q}(x_i)$ and individual
+experiments $r_{j,a}(x_j)$, together with a constant. An experiment
+returns exactly one constituent reply. It never returns a vector
+of experiments. Feasible supports in this interface may be arbitrarily
+correlated.
+

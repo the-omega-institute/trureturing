@@ -1,0 +1,11 @@
+**Convention 8.4 (outcome and cut discipline).** An absent literal address is
+an actual legal Read reply. Stop carries the full terminal output and is not a
+Read failure; the native trace's Event type has no Stop constructor. A finite
+evaluator miss is local computation, not an executed external reject. An illegal
+unexecuted operation has no event/successor and is represented by `none`.
+An executed numerical reject is `some(reject,successor)`: the source is unchanged
+but its request ordinal and actual row history advance. Busy cuts admit only
+their prescribed next primitive transition. Whole-call claims are at idle macro
+cuts; a proposed every-cut bridge must retain phase, pending response, cursor,
+token and partial-delivery fields as well.
+

@@ -1,0 +1,22 @@
+**Theorem 34.2 (absolute early fifth-order matching).** Let $\ell_s$ and $u_s$ be the original early principal value and nonnegative unit right vector. Then
+
+$$
+\begin{aligned}
+\ell_s&=C_*+\mathscr A Z_ds^5+o_d(s^5),\\
+\Theta_d(s)&:=\frac{\ell_s-C_*}{s^5}+\mathscr A W_{1,d}(o)
+           \longrightarrow\mathscr A\mathfrak m_d.
+\end{aligned}
+\tag{34.6}
+$$
+
+Proof. In the seed ordered identity (24.26), the return scalar is $\mu\beta_s+o(s^5)$ by (24.27)–(24.28). Its degree-zero field term is $(C_*/\mu)\alpha_s$, since $G_0g_0=C_*p/\mu$. For its remaining field terms $j=1,2,3,4$, divide by their total factor $s^5$. The first omitted field coefficients are $V_4,V_3,V_2,V_1$, respectively, in $L^\infty,L^4,L^4,L^2$. Their little-o remainders follow from J Lemmas 23.2 and 32.1. The required returns lie respectively in $L^2,L^4,L^4,L^\infty$, by J §§31 and 43. Hölder therefore gives the limits $\langle p,V_{5-j}G_jg_0\rangle$. Each is an integrable odd scalar of total degree five, hence zero. Theorem 33.1 yields
+
+$$
+\frac{\langle p,E_{0,s}\rangle}{s^5}
+ \longrightarrow\left(\frac{C_*}{\mu}+\mu j_0a_0^2\right)Z_d
+ =\mathscr A Z_d.
+\tag{34.7}
+$$
+
+Theorem 34.1 removes all other charge projections. The full row has norm $o(s^4)$ by its owning J §§33, 39 and 46 estimates. Lemma 24.4 gives $\|u_s-p\|_2=O(s)$, so changing the fixed test to $u_s$ costs $o(s^5)$. The exact scalar (24.42), with denominator $\langle G_s,u_s\rangle=1+O(s)$, proves (34.6). This uses the full finite charge identity rather than an eigenvalue ansatz. The early vector is only an auxiliary test. $\square$
+

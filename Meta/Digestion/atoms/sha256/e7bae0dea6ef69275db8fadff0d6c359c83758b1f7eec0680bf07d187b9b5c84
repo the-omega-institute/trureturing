@@ -1,0 +1,67 @@
+## 7. Coverage, literature and limits
+
+The nearest published source is the [Adaptive Acquired Reference Frontier](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md),
+whose AAR12--AAR15 sections fix the predictive factor, the native family,
+the all-word acquisition contract, worst-case projection, the pointwise
+off-path obstruction and the remaining recovery limits. In particular,
+AAR13.3 supplies passive future decoding, Theorem 13.4 supplies prefix
+attainment, Lemma 13.5 supplies actual-label evidence, Lemma 13.7 classifies
+every original-root word on the canonical witnesses, Theorem 13.8 gives the
+all-word worst-case price, Theorem 14.1 gives projection normalization, and
+Proposition 14.2 records pointwise off-path non-domination. AAR15.2--AAR15.4
+separate an acquired boundary factor from a full source and the wider
+recovery programme. The present volume adds a source law and an expected
+initial-Read objective; it does not reinterpret the worst-case claims as
+Bayes claims.
+
+Sparse Literal History Transport §§35--43 supplies the first-leaf future
+semantics and the actual-label evidence pattern, while Literal Query Frontier
+§2.3 and Acquired Orbit Resource Frontier §§1--2 supply joint-history and
+finite decision-tree correspondences. Their source domains, menus and
+consumer contracts differ, so none supplies the full-support separation or
+joint-completion theorem here.
+
+The exact source/operation correspondence is also supplied by
+`NativeLiteralPathConstraints.compile_exact`,
+`NativeIndependentExecution.native_history_correspondence` and
+`NativeDepthPatterns.original_present_transport`. Those declarations account
+for one unchanged source, literal four-reply semantics, absence and present
+subtree transport. They do not certify the new ordinary optimization bounds.
+
+Four primary decision-tree sources give methodological correspondences:
+
+* Cicalese, Laber and Saettler, *Diagnosis determination: decision trees
+  optimizing simultaneously worst and expected testing cost*, PMLR 32 (2014),
+  §§1--2, [paper](https://proceedings.mlr.press/v32/cicalese14.pdf).
+  Their DFEP model has a finite object class, tests, a prior, target classes
+  and expected decision-tree cost. Here the objects are $\mathcal F_D$, tests
+  are native words with four replies, and the target classes are the
+  AAR13.3 trajectories. Their generic framework does not supply the native
+  all-word classification or the strict same-boundary separation.
+* Golovin, Krause and Ray, *Near-Optimal Bayesian Active Learning with Noisy
+  Observations*, NIPS 2010, §§2--3,
+  [arXiv](https://arxiv.org/abs/1010.3091). Their hypothesis and response
+  variables form one joint law, including correlated observations. That is
+  the relevant probabilistic interface for (6.3); their approximation
+  theorem is not used as a native exact optimum result.
+* Nowak, *The Geometry of Generalized Binary Search*, IEEE TIT (2011),
+  §§I--II, [arXiv](https://arxiv.org/abs/0910.4397). Its fixed unknown
+  hypothesis and noiseless query partitions explain the search-tree
+  correspondence. Its binary response and coherence assumptions do not
+  supply the native four-reply height-bounded proof.
+* Bruno, De Prisco, De Santis and Vaccaro, *Bounds and Algorithms for
+  Alphabetic Codes and Binary Search Trees*, 2024,
+  [arXiv](https://arxiv.org/abs/2407.16443). Its successful/unsuccessful
+  ordered-search cost is the ordinary structure behind (2.10) and (4.7).
+  The native equality label, branch outcome and arbitrary-word reduction are
+  proved here from AAR13.5--AAR13.7.
+
+The new result is worth retaining as a focused ordinary-theory volume: it
+fills the interface between passive boundary sufficiency and prior-dependent
+active acquisition with a rational full-support native separation, a scalable
+gap, and a law-faithful prefix-reduction theorem. The bounds are not exact
+Bayes optima. A necessary-and-sufficient criterion for boundary-law
+invariance, a total-resource optimum, an all-memory minimum, physical
+spacetime recovery, worldwide originality, kernel certification and
+completion of the broader programme remain open.
+

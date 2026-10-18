@@ -1,0 +1,39 @@
+**Theorem 3.2 (separate raw-record inverses).** For any $h,k\in\mathcal R$,
+
+$$
+S(h)=S(k)\ \Longleftrightarrow\ W(h)=W(k),\qquad
+B(h)=B(k)\ \Longleftrightarrow\ W(h)=W(k).
+$$
+
+The equalities concern physical records with the fixed port/creation-chain
+identity convention. They do not assert history equality on all raw runs
+or recover absolute construction-event names from arbitrary graph renaming.
+
+Proof. The fixed outer socket paths select each tape and finite-location
+component. A right spine gives exactly its finite cell list, including
+partial boot boundaries. At each of its eight fixed track sockets the
+occupied child side gives that bit. At a finite-location socket two
+empty child slots give absence, whereas exactly the left or right child
+gives present 0 or 1. Thus $S$ decodes all raw bytes, controls, inactive
+versions, latches, tokens and cursor tracks, without source validity,
+sealing, an installed main row or a successful request. Cursor tracks
+determine the access incidences. Encoded reference bytes retain their
+actual grammar and origin. This proves $S$ equality implies $W$ equality.
+Conversely the fixed templates construct the same support from equal $W$.
+
+Every position in a finite rooted child tree extends to a terminal:
+follow an existing child while possible; a finite strict descent must
+stop. This argument permits a vertex with exactly one child. Every prefix
+of a terminal is a position, so
+
+$$
+S(h)=\operatorname{Pref}(B(h)),\qquad
+B(h)=\operatorname{Max}_{\preceq}(S(h)).
+$$
+
+Consequently equal $B$ gives equal $S$ and equal $W$; equal $W$ gives the
+same maximal paths and hence equal $B$. In particular the absence code's
+terminal $\varepsilon$ and the unary codes' terminals 0 and 1 are not
+confused. Full binary branching is unnecessary. This proves both
+implications for each geometric view separately. ∎
+

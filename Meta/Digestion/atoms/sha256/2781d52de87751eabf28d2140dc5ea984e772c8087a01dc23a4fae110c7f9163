@@ -1,0 +1,6 @@
+## 5. Proof 2: the bounded phase module and its native coefficient
+
+For §§5–7 fix a strict improver with error $\epsilon<e_2(Z)$.
+By §4 its encoder is beta-independent, and its actual homogeneous
+space has real dimension five. Write $F(k,\alpha)$ for its value.
+

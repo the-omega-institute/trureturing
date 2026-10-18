@@ -1,0 +1,114 @@
+**Theorem 9.1 (Joint budget and endpoint bound).** Fix the exact $H_c$ and all source premises of Section 2. Choose $s_H>0$ from (2.8), depending only on that fixed source, such that
+
+$$
+Z_0(e^{-s})\ge\frac{9!}{2}s^{-10},
+\qquad \mu_0(e^{-s})\ge\frac5s
+\quad(0<s<s_H).
+\tag{9.1}
+$$
+
+For $0<\alpha<1/2$, put
+
+$$
+b=1-2\alpha,
+\qquad s_\alpha=\min\left\{s_H,1,\frac{5b}{8\delta}\right\}.
+\tag{9.2}
+$$
+
+For each finite integer $M\ge2$, set
+
+$$
+n_M=M-2,
+\qquad L_M=\max\left\{1,\left\lceil\frac{2\delta n_M}{b}\right\rceil\right\},
+\qquad S_L=\sum_{k=1}^L k^9.
+\tag{9.3}
+$$
+
+Then simultaneously
+
+$$
+\begin{gathered}
+\forall M\in\mathbb Z,\ M\ge2\quad
+\forall s\in(0,s_\alpha)\quad
+\forall\mathcal A\in\mathfrak A_M(e^{-s},\alpha)\quad
+\forall i\in\{0,1\}:\\
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge\frac{b\,9!}{8B^2S_{L_M}}s^{-11}
+\ge\frac{9!b^{11}}{8B^2\bigl(b+2\delta(M-2)\bigr)^{10}}s^{-11}.
+\end{gathered}
+\tag{9.4}
+$$
+
+In particular, $s_\alpha$ is independent of all finite budgets and all machines. The constants and cutoffs are chosen before the machine. Discontinuous retuning, unbounded immutable description precision and arbitrarily small positive transitions are included.
+
+Proof. The moment premise first selects $s_H$ using only $H_c$. Fixing $\alpha$ then selects $b,s_\alpha$. For any finite $M$, (9.3) selects a finite positive integer cutoff before the observer.
+
+To bound the hitting loss, for $u\ge0$ let $f(u)=(e^u-1)/(e^u+1)$. It satisfies $f(0)=0$ and
+
+$$
+f'(u)=\frac{2e^u}{(e^u+1)^2}\le\frac12,
+\tag{9.5}
+$$
+
+since $(e^u-1)^2\ge0$. Integration gives $f(u)\le u/2$. Also $\log(1+v)\le v$ for $v\ge0$, by integrating $1/(1+v)\le1$. Take $u=n_M\log(1+\delta/(L_M+1))$. Then
+
+$$
+\chi^*_{M,L_M}
+\le\frac{n_M}{2}\log\left(1+\frac\delta{L_M+1}\right)
+\le\frac{n_M\delta}{2(L_M+1)}
+\le\frac b4.
+\tag{9.6}
+$$
+
+When $n_M=0$ the left side is exactly zero. Otherwise the last inequality follows from $L_M\ge2\delta n_M/b$.
+
+For any finite integer $L\ge1$, (2.3), $Z_i\ge Z_0$ and $e^{-sk}\le1$ give
+
+$$
+\pi_i(e^{-s},L)
+\le\frac{BS_L}{Z_0(e^{-s})}
+\le\frac{2BS_L}{9!}s^{10}
+\quad(0<s<s_H).
+\tag{9.7}
+$$
+
+This inequality is valid for every such $L$ on the same neighborhood; it is not a fixed-cutoff asymptotic. It remains an upper bound when its right side exceeds one. It therefore applies to $L=L_M$, including any choices $M=M(s)$ for which the cutoff grows without a bound on $sL_M$. Summing its two instances gives $\pi_0+\pi_1\le(4BS_{L_M}/9!)s^{10}$.
+
+On $0<s<s_\alpha$, the initial comparison obeys
+
+$$
+r_H(e^{-s})\le\frac{2\delta}{\mu_0(e^{-s})}
+\le\frac{2\delta}{5}s\le\frac b4.
+\tag{9.8}
+$$
+
+Thus (8.1), (9.6) and (9.8) leave at least $b/2$ of separation to be paid under each target separately. With $1-e^{-s}\le s$ and (9.7),
+
+$$
+\frac b2
+\le[\pi_0+\pi_1]B(1-e^{-s})\mathbb E_iT
+\le\frac{4B^2S_{L_M}}{9!}s^{11}\mathbb E_iT.
+\tag{9.9}
+$$
+
+Division proves the first bound in (9.4). To expose its budget dependence, each of the $L$ summands in $S_L$ is at most $L^9$, so $S_L\le L^{10}$. The ceiling inequality $\lceil x\rceil\le x+1$ for $x\ge0$, together with the maximum in (9.3), gives
+
+$$
+L_M\le1+\frac{2\delta n_M}{b}
+\quad\text{including }n_M=0.
+\tag{9.10}
+$$
+
+Consequently
+
+$$
+\frac{b\,9!}{8B^2S_{L_M}}
+\ge\frac{b\,9!}{8B^2(1+2\delta n_M/b)^{10}}
+=\frac{9!b^{11}}{8B^2(b+2\delta n_M)^{10}},
+\tag{9.11}
+$$
+
+which proves the second bound. Every estimate used the selected actual observer through the same interface, while every source threshold was independent of its budget. No exchange of a fixed-$M$ limit with $M\to\infty$ occurred. $\square$
+
+The eleventh-power order at each fixed $M$ was already supplied by the uniform companion's Theorem 7.2. Formula (9.4) adds explicit polynomial deterioration with the complete budget and a single endpoint neighborhood for all finite $M$. The short-mass estimate (9.7) is what permits every growing cutoff; imposing a hidden $sL_M$ restriction would not yield this statement.
+

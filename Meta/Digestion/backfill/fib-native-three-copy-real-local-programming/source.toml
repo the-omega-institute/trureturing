@@ -1,0 +1,5 @@
+source_id = "fib-native-three-copy-real-local-programming"
+path = "docs/develop/theory/FIB_NATIVE_THREE_COPY_REAL_LOCAL_PROGRAMMING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

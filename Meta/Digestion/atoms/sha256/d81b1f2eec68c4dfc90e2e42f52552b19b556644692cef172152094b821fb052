@@ -1,0 +1,13 @@
+### 104.6. Bilinearity and the exact opposite-entry law
+
+Bilinearity and the sums in section 104.2 turn (104.7) into (104.1). For distinct i,j put M=-5D/(p_i p_j). For their two-element subset it gives
+
+ H_ii+H_ij+H_ji+H_jj=[(M/p_i)_4]+[(M/p_j)_4].
+
+The known diagonal entries are
+
+ H_ii=[(M/p_i)_4]+[(p_j/p_i)_4],
+ H_jj=[(M/p_j)_4]+[(p_i/p_j)_4].
+
+All individual factors are quadratic residues, so quartic multiplicativity is legitimate. Cancelling the M-terms proves (104.2), and expanding x^T H x gives (104.3). H need not be symmetric; its additive asymmetry is precisely the known mutual quartic matrix.
+

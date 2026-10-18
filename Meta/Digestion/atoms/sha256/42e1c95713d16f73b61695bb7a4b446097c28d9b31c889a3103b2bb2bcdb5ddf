@@ -1,0 +1,21 @@
+**Proposition 70.3 (midpoint fidelity with the tensor shuffle).** Let $\Lambda_\xi=D_\xi N_\xi$. Then
+
+$$
+F_e(I_2/2,\Lambda_\xi)
+=\frac14\|\operatorname{Tr}_{\rm logical}\sqrt{G_\xi}\|_{\rm HS}^2
+\geq\frac{(\operatorname{Tr}\sqrt{G_\xi})^2}{8}
+\geq\frac{7+4\sqrt3}{16}.
+\tag{S.135}
+$$
+
+Proof. Concatenate $F_\xi=[L_1,L_2]$ in Kraus-first order $(\alpha,i)$ and put $G_{\rm KF}=F_\xi^\dagger F_\xi$. Let $\Pi$ be the coordinate shuffle with zero-based order $(0,2,1,3)$, taking Kraus-first to logical-first order. Then
+
+$$
+G_\xi=\Pi G_{\rm KF}\Pi^\dagger,\qquad
+\sqrt{G_\xi}=\Pi\sqrt{G_{\rm KF}}\Pi^\dagger,\qquad
+F_\xi^\dagger H_\xi F_\xi=\sqrt{G_{\rm KF}}.
+\tag{S.136}
+$$
+
+The last identity is the singular-value/polar identity with the support inverse. Its $(\alpha,\gamma)$ block is the composite Kraus matrix $L_\alpha^\dagger H_\xi L_\gamma$. Reset Kraus products vanish since $n_j^\dagger L_\gamma=0$. Taking the logical trace of those blocks therefore produces the two-by-two environment matrix whose squared Hilbert–Schmidt norm divided by four is the midpoint fidelity. In logical-first order this is exactly $\operatorname{Tr}_{\rm logical}\sqrt{G_\xi}$. The shuffle preserves the total trace and makes this partial-trace identification explicit. Cauchy–Schwarz against $I_2$ gives its squared norm at least half its trace squared; (S.134) proves (S.135). The polar and midpoint identities reuse (R.258)–(R.259); their complex-direction estimate here is the extension. $\square$
+

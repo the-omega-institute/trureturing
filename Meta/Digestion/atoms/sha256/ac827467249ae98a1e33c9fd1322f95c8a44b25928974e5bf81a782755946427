@@ -1,0 +1,64 @@
+**Definition 2.2 (companion covers).** For each $r\ne r_\ast$ use the exact
+finite signed cover
+
+$$
+\begin{aligned}
+D_r&=\bigcup_{b\in\mathcal C_r}
+ \{\Theta_{r,b}(\mathbf v,\mathbf z):
+     P_{r,b}(\mathbf v)\land\Delta_{r,b}(\mathbf v,\mathbf z)\},\\
+\Delta_{r,b}&=\bigwedge_\ell A_{r,b,\ell}\ne A'_{r,b,\ell},\\
+A&::=g\mid T_{v_i+a}\mid\rho^e z_j\mid\langle A,A\rangle.
+\end{aligned}
+\tag{PAC.7}
+$$
+
+All exponents and offsets are fixed nonnegative integers; $P_{r,b}$ is
+Presburger. Before the displayed native negatives, the carrier is the
+full Cartesian product $\mathbb N^{k_{r,b}}\times\mathcal T^{m_{r,b}}$.
+There is no residual image, normality, navigation or positive-equation
+filter left outside $P$ and $\Delta$. Repeated names share their entire
+values. The source maps may overlap and may be nonfunctional in the ranks;
+there is no common-skeleton or independent-rank premise.
+
+Here is the actual source reduction for (PAC.7), consuming [NIC,
+Theorems 3.2–3.3, Proposition 3.5 and Theorem 4.3][NIC]. Choose an original
+pattern depth beyond every old and target cut address and every record
+endpoint length. A finite source has its actual pattern, every early leaf,
+and its actual reached-frontier subtrees. Fixed $\rho$ powers preserve
+original branch nodes and expand early leaves into fixed finite trees.
+Navigation to a listed endpoint therefore yields an exact native expression
+or an absent endpoint in each finite case. Either sign is rejected in the
+absent case. A reached case retains the entire native comparison at its
+actual epochs. Each repetition uses the same frontier names.
+
+For each old or target label, retain the reached set and equality of its
+whole mask with the supplied concrete mask; every uncut frontier stays in
+that expression. Together these give exactly the concrete exterior.
+Retain every pair of reached holes as an equality or a disequality according
+to the complete partition, including old classes outside $Q$. Thus each
+case has a whole source term $W(\mathbf x)$ and a finite Boolean native
+formula in its entire declared tuple, with both original-source directions.
+The actual source chooses its actual case and is recovered by filling $W$.
+
+Apply NIC 3.2 to all positive equations in a signed disjunct. Its connected
+block-offset graphs give one minimum-potential native residual per sort;
+all other blocks are its nonnegative fixed translates. Crucially, the
+constructed positive image deliberately permits arbitrary finite native
+residuals. NIC 3.1 proves sound expansion even when an assembled ambient
+code is not normal: expanding a formerly ordinary primitive cherry still
+satisfies the original native pairing equation. This removes canonical
+branch identity only, introducing overlap, not a new native solution.
+Conversely an actual original assignment chooses its genuine canonical
+branch; its actual ranks and its normal minimum block reconstruct every
+name as the same value. No marker replacement is made in that converse.
+
+Pull back every original negative literally by NIC 3.3 and substitute the
+whole-tuple image into $W$. The result is (PAC.7), with fixed powers
+distributed through pairs and ground terms. NIC 3.5 expressly identifies
+its pre-negative carrier as the full Cartesian product. Both inclusions
+therefore retain the entire $D_r$, its exact complete row and every guard;
+no residual restriction is silently discarded. This verifies the domain
+needed by [URR, Theorem 3.1 and Corollary 3.2][URR] and [SLP, §1][SLP]
+for these constructed pieces. An arbitrary differently supplied image
+piece requires its own such correspondence and is not presumed Cartesian.
+

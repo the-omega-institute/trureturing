@@ -1,0 +1,26 @@
+**Definition 9.1 (Unchanged original objective).** Retain the complete open-path words
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}
+$$
+
+and all legal Hamming-one edges of their graph $\Gamma_n$. Endpoint insertion uses $w_0=w_{n+1}=0$; there is no first-to-last constraint. Let
+
+$$
+\begin{aligned}
+g(s,t)&=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\\
+\Phi_n(\mu)&=\sum_{\{w,v\}\in E(\Gamma_n)}g(\mu_w,\mu_v),\\
+\kappa_n&=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_n\kappa_n/n.
+\end{aligned}
+$$
+
+All-zero words, endpoint ones, structural zeros and zero-mass vertices remain. [Stationary, §2][S] supplies
+
+$$
+d(P)=\lim_n\Phi_n(P_n)/n
+=\mathbb E_P(X_0-q)^2\le c_\star
+$$
+
+for every stationary legal $P$. Its full-support stationary attainer does not establish an exact finite hidden presentation.
+

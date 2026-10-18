@@ -1,0 +1,51 @@
+**Proposition 51.2 (admission and compact-family uniformity).** The
+choices in Definition 51.1 can be made for either sign so that all
+$I_b$ are admitted original intervals, with common larger-interval
+probability, pole, determinant and derivative margins. The all-height
+heat estimates of P76 and the two-endpoint band estimates of L41 hold
+with constants uniform for $0<b\le b_{\rm ref}$.
+
+Proof. At $\kappa=0$, the closed union of the intervals lies in
+$[xL_0-\varepsilon b_{\rm ref},(x+1)L_0]\Subset(0,H)$.
+Its lower endpoint is at least $3xL_0/4$ and its upper endpoint is $H/4$.
+Continuity therefore permits a fixed larger interval $(l',u')\Subset(0,H)$
+and a sufficiently small $\delta>0$ such that $|\kappa|=\delta$ and
+$2\delta<\min\{l'/4,(H-u')/2,H/4\}$.
+R Proposition 14.1 applies on $[-2\delta,2\delta]\times[l',u']$.
+In particular every probability is positive, $k-\alpha_\kappa$ stays
+positive, and
+$\det(c_\kappa,c_\kappa',c_\kappa'')
+=-(H^2-\kappa^2)/[2H^3(k-\alpha_\kappa)^3]$ stays away from zero.
+All fixed-order derivatives are bounded there. These are actual
+jointly realized source conditions, not independently prescribed jets.
+
+Translate the height to $z=k-(k_0-\varepsilon b)\in(0,L_0)$.
+The coefficient $c_b(z)=c_\kappa(k_0-\varepsilon b+z)$ extends smoothly
+through $b=0$ on this fixed interval. In G (26.7) the map from a phase
+vector to the quadratic numerator coefficients is invertible: its kernel
+would give a linear combination of $c_b,c_b',c_b''$ equal to zero.
+The translated polynomial coefficient map and its inverse have bounded
+norms on the compact $b$ interval. G (26.8)–(26.12)'s sublevel proof
+therefore gives uniform all-real-frequency coercivity and smoothing.
+The scalar height eigenvalues are unchanged, with gap $3\lambda$.
+Moreover
+
+$$
+M_b=\int_0^{L_0}c_b(z)c_b(z)^{\mathsf T}
+             \frac2{L_0}\sin^2(\pi z/L_0)\,dz
+\quad\hbox{satisfies}\quad m\mathrm{Id}\le M_b\le M\mathrm{Id}.
+\tag{51.2}
+$$
+
+Indeed it is continuous even at $b=0$, and a zero quadratic form
+would make a nonzero linear combination of $c_b$ vanish on an interval,
+contradicting the determinant. Compactness gives the stated constants.
+The bounded-potential perturbation and $H^2$ zero-boundary quotient
+proofs in L36 and L41 now have uniform constants: the potential
+coefficients, the inverse of the height gap and the matrices (51.2)
+are uniformly bounded. Their complementary Riesz projections give the
+same uniform band error including both endpoint factors. The common
+larger interval supplies P76's all-height small-time bound, also
+uniformly. This proves the asserted uniformity by its owning proofs.
+It does not admit a source on the $b=0$ face. $\square$
+

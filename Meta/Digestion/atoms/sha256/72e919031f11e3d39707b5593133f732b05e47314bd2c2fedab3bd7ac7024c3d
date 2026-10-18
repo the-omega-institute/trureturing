@@ -1,0 +1,171 @@
+**Theorem 12.1 (either-interface complete-redraw obstruction).** Let a finite period-one regular table have positive stationary rows, $\pi B=\tau$, $\tau A=\pi$, and all emissions in $[1/3,2/5]$. If either
+
+$$
+A_{yx}=\pi_x\quad\text{for every retained }y
+\tag{12.1}
+$$
+
+or
+
+$$
+B_{xy}=\tau_y\quad\text{for every retained }x,
+\tag{12.2}
+$$
+
+then
+
+$$
+\max\{R_{\rm law,p}-\rho_p,
+       R_{\rm law,\beta}-\rho_\beta\}>\eta.
+\tag{12.3}
+$$
+
+Consequently the same strict bound holds with the two configuration risks in place of the law risks. The assertion is uniform in the finite numbers of labels, in the installed finite or countable prior with $\mu(1),\mu(2)>0$, and in all positive paid histories. All complete noncompletion outcomes remain in the carrier.
+
+**Proof.** Suppose both law excesses are at most $\eta$. The endpoint histories are included in the stationary risk formulas, so
+
+$$
+|\bar Q(E_p)-C|\le\eta,\qquad
+|\bar W(E_\beta)-H|\le\eta.
+\tag{12.4}
+$$
+
+For any complete law $D$ and endpoint laws $P_1,P_2$ whose distance is $2\rho$, the coordinate identity
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-2\rho
+ =\sum_z\operatorname{dist}\!\left(D(z),[P_1(z)\wedge P_2(z),P_1(z)\vee P_2(z)]\right)
+\tag{12.5}
+$$
+
+holds, including the infinite noncompletion atom. Applying it to $\bar Q$ and the p endpoints shows
+
+$$
+\bar Q(w_{3,1})\le U+2\eta.
+\tag{12.6}
+$$
+
+Assume first (12.1). Put
+
+$$
+q=\sum_x\pi_xu_x,\qquad \bar v=\sum_y\tau_yv_y,
+$$
+
+$$
+t=\sum_{x,y}\pi_x(1-u_x)B_{xy}v_y,\qquad g=1-q-t.
+$$
+
+The individual same-update equations and the row-independent $A$ give the complete-law identities
+
+$$
+\bar Q=q\,\delta_\alpha+g\,\delta_{\beta\beta}
+       +t\,\beta\alpha\,\bar Q,
+\qquad
+\bar W=(1-\bar v)\,\delta_\beta+\bar v\,\alpha\bar Q.
+\tag{12.7}
+$$
+
+Thus $\bar Q(E_p)=gS(t)$ and
+
+$$
+\bar W(E_\beta)=1-\bar v+\bar vg=1-\widetilde d,
+\qquad \widetilde d:=\bar v(1-g).
+\tag{12.8}
+$$
+
+The actual edge law $\pi_xB_{xy}$ has marginals $\pi$ and $\tau$. Hence
+
+$$
+t=(1-q)\bar v-\operatorname{Cov}(u(X),v(Y)),
+\tag{12.9}
+$$
+
+where the covariance is under that unweighted edge law. Since $1-q=g+t$,
+
+$$
+\operatorname{Cov}(u(X),v(Y))
+ =\frac{(g+t)\widetilde d}{1-g}-t.
+\tag{12.10}
+$$
+
+Now define $g_0(t)=C/S(t)$ and $f(t)=Ct^3/S(t)$. Equations (12.4), (12.7) and (12.8) give
+$|g-g_0(t)|\le\eta$ and $\widetilde d$ differs from $d:=1-H$ by at most $\eta$. Since $0\le t\le(2/3)(2/5)=4/15$, (12.6) gives $f(t)\le U+3\eta$. The function $f$ is strictly increasing, and the exact comparison at $t_0=23191/100000$ is
+
+$$
+f(t_0)-U
+ =\frac{895013545004856241}{29289676527028125000000}>3\eta.
+\tag{12.11}
+$$
+
+Therefore $t<t_0$. Set
+
+$$
+D_A(t)=d\,\frac{g_0(t)+t}{1-g_0(t)}-t.
+$$
+
+On $[0,4/15]$, $g_0(t)\le C$, with equality at $t=0$ and strict inequality for $t>0$. Because $g_0'(t)<0$ and $d<1-C\le1-g_0(t)$, $D_A$ is strictly decreasing on this entire interval. The exact margin is
+
+$$
+D_A(t_0)-\frac1{900}
+ =\frac{1529494301962866701}{3786740393838075000000}>3\eta.
+\tag{12.12}
+$$
+
+On the interval forced by (12.4), all of $g,g_0$ are below $521/1000$ and all of $\widetilde d,d$ are below $221/1000$. Direct differentiation of the right side of (12.10) bounds the sum of the absolute partial derivatives in $g$ and $\widetilde d$ by
+$1971677/688323<3$. Thus its value differs from $D_A(t)$ by less than $3\eta$, and (12.12) gives
+$|\operatorname{Cov}(u(X),v(Y))|>1/900$.
+
+For a random variable $Z\in[a,b]$, $\mathbb E[(Z-a)(b-Z)]\ge0$ gives
+$\operatorname{Var}(Z)\le(b-a)^2/4$. Cauchy–Schwarz therefore gives
+
+$$
+|\operatorname{Cov}(u(X),v(Y))|\le\frac1{900},
+\tag{12.13}
+$$
+
+because both emission intervals have width $1/15$. This contradiction rules out (12.1).
+
+For (12.2), put
+
+$$
+t=\sum_{y,x}\tau_yv_yA_{yx}(1-u_x),\qquad
+g=(1-q)(1-\bar v).
+$$
+
+The averaged equations are now
+
+$$
+\bar Q=q\,\delta_\alpha+(1-q)\,\beta\bar W,
+\qquad
+\bar W=(1-\bar v)\,\delta_\beta+(\bar v-t)\,\alpha\alpha
+       +t\,\alpha\beta\,\bar W.
+\tag{12.14}
+$$
+
+Consequently $\bar Q(E_p)=gS(t)$ and
+$\bar W(E_\beta)=(1-\bar v)(1+t)$. Writing the latter probability as $h$, the unweighted edge law $\tau_yA_{yx}$ gives
+
+$$
+\operatorname{Cov}(v(Y),u(X))
+ =g\,\frac{1+t-h}{h}-t.
+\tag{12.15}
+$$
+
+The same event bounds imply $|h-H|\le\eta$ and again $t<t_0$. Define
+
+$$
+D_B(t)=g_0(t)\frac{1+t-H}{H}-t.
+$$
+
+It is strictly decreasing because $g_0'<0$ and $C/H<1$, while exact arithmetic gives
+
+$$
+D_B(t_0)-\frac1{900}
+ =\frac{258121825473795701}{4930975622678238900000}>2\eta.
+\tag{12.16}
+$$
+
+Here $h,H>779/1000$, and the sum of the absolute partial derivatives in $g$ and $h$ is at most $164183/95817<2$. The true expression in (12.15) therefore differs from $D_B(t)$ by less than $2\eta$. This again contradicts (12.13), and proves (12.3). The endpoint bounds used only complete events and the full coordinate identity; no tail truncation, completion conditioning, or finite prior-support reduction entered the argument. ∎
+
+The three exact margins in (12.11), (12.12), and (12.16) are the rational certificate. They are strict after cross multiplication; no floating-point inequality is used. The endpoint cells and their midpoint coordinates agree with the full-tail separation calculation in [UNIF, §§3–5]. That source separates a larger constant-parameter mixture family from the endpoint minima. The present theorem concerns a different failure mode: a complete redraw can collapse the continuation relation even when the decoded laws are arbitrary, so it does not republish the mixture-family exclusion.
+

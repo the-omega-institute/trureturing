@@ -1,0 +1,31 @@
+**Theorem 3.2 (public budget and endpoint types).** In the present type
+range, the ordered tail has length exactly $d$, so the budget is recoverable
+from that length. Recording $d$ again does not multiply (3.1) by an
+independent budget factor. If all remaining budgets at one known cut are
+included as distinct public types, their total boundary count is
+
+$$
+\sum_{d=0}^k q^{d+r_A(k,d)+r_F(k)-r}.
+\tag{3.7}
+$$
+
+The endpoint counts at a fixed type are
+
+$$
+\begin{aligned}
+d=0:&\quad |Q_{k,0}|=q^{r_P(k)+r_F(k)-r},\quad |M|_{\min}=1,\\
+d=k:&\quad |Q_{k,k}|=q^{k+r_F(k)-r},\quad |M|_{\min}=q^{k-r_P(k)},\\
+k=n:&\quad |Q_{n,d}|=q^{d+r_A(n,d)-r},\\
+n=0:&\quad k=d=0,\quad |Q_{0,0}|=1.
+\end{aligned}
+\tag{3.8}
+$$
+
+Proof. The tuple in $Q_{k,d}$ lies in $\mathbb F_q^m\times\mathbb F_q^d$
+and its declared length is $d$. Distinct public budget types form a disjoint
+union, giving the sum rather than a product with an independent factor.
+For $d=k$, $H_A$ is empty; for $k=n$, $H_F$ is empty; for $n=0$, $H$ has no
+columns and rank zero. Substitution in Theorem 3.1 gives all four formulas.
+In particular $k=0$ forces $d=0$, and at $k=n,d=0$ the forward state is the
+single zero syndrome although several full codewords can remain. $\square$
+

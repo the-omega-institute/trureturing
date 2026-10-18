@@ -1,0 +1,22 @@
+**Proposition 6.4 (per-attempt budgets do not become total budgets).**
+Even a legal passive retry using independent randomness does not
+preserve a per-attempt distinct-query limit as a bound on the whole
+repeated execution. Repeated acquisitions, numerical reply lengths and
+recovery operations retain their own cumulative charges.
+
+**Proof.** In $X_{2,1}$, let each attempt choose a fair address, read it,
+propose its reply if positive, and otherwise return retry. The original
+source remains unchanged. Each attempt has at most one distinct query.
+At $b$ every attempt returns retry, so the full execution is infinite.
+Its first two addresses are different with probability $1/2$, giving
+total distinct-query charge 2 already on that finite prefix. Its call
+count and response-bit charge grow without bound with the attempt
+count. At a high source each attempt has proposal probability $1/2$;
+repetition eventually finds $n$ almost surely, but it also permits two
+distinct queried addresses. It consequently lies outside the
+one-distinct-query class of Theorem 2.1 and fails its baseline finite
+termination requirement. There is no contradiction to the minimax
+bound. Costs of each actual reset or internal transition add in exactly
+the same way; only repeated addresses can overlap in the distinct-set
+count. $\square$
+

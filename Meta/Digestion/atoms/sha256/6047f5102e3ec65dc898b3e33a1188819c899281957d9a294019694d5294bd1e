@@ -1,0 +1,23 @@
+**Definition 38.1 (The polynomial ring in global independent sets).**
+Let $F_0=0$, $F_1=1$, $F_{r+2}=F_{r+1}+F_r$ be the Fibonacci
+numbers. To distinguish free resolution modules from these integers,
+write $\mathcal F_i$ for the free modules below. Put
+
+$$
+\begin{aligned}
+\mathscr P_{k,b}&=\mathbb C[z_I:I\in\mathcal B_{k,b}],\\
+z_I&\longmapsto X^{\gamma_I},\qquad
+\gamma_I=(1,\mathbf1_I),\\
+D_{k,b}&=|\mathcal B_{k,b}|,\qquad
+\Sigma_{k,b}=\sum_{I\in\mathcal B_{k,b}}\gamma_I.
+\end{aligned}
+\tag{38.1}
+$$
+
+Every global independent set, including the empty set, has one variable.
+The map is onto $R_{k,b}$ by Theorem 35.2. Its kernel is the toric
+relation ideal for these actual modes. Use the shift convention
+$\mathscr P(-d)_m=\mathscr P_{m-d}$, and the analogous convention
+for full exponent degrees. Let $\mathcal G_{k,b,j}$ be the complete
+set of basic exponents at boundary $(2j+1,j)$ in Theorem 35.4.
+

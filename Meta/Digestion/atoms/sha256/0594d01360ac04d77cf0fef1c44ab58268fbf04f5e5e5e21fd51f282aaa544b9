@@ -1,0 +1,24 @@
+**定理 36.3（全部有限原树的唯一原始射线）。** 置 $I_n=\rho^n[\mathcal T]$、$I_0=\mathcal T$，并令 $\mathcal P=\mathcal T\setminus I_1$。每个 $y\in\mathcal T$ 唯一写成
+
+$$
+y=\rho^n p,\qquad p\in\mathcal P,\quad n\in\mathbb N_0.
+$$
+
+因此
+
+$$
+\mathcal P\times\mathbb N_0\longrightarrow\mathcal T,
+\quad(p,n)\longmapsto\rho^n p
+$$
+
+是双射。记其逆坐标为 $p(y),\nu(y)$，则
+
+$$
+\nu(y)=\max\{n:y\in I_n\},\qquad
+\nu(\rho^a y)=\nu(y)+a\quad(a\ge0).
+$$
+
+证明。若前像 $x$ 的组成为 $(a,b)$，原组成律给 $\rho x$ 的组成为 $(b,a+b)$，叶数由 $a+b$ 变为 $a+2b$。当 $b>0$ 时，向后解析严格减少叶数。当 $b=0$ 时，$x$ 是非空全 $\alpha$ 树；它本身不在 $I_1$，因为一个像的 $\beta$ 数等于其非空前像的总叶数，必严格正。故向后链的叶数严格下降，至多在最后一步保持叶数，随后必停止。有限正叶数排除了无限下降，得到一个有限最大可解析次数 $n$ 及不再属于 $I_1$ 的终点 $p$。反向迭代重建 $y=\rho^n p$。
+
+若 $\rho^m p=\rho^n q$ 且 $p,q$ 原始，不妨 $m\le n$。单射消去 $m$ 次后得 $p=\rho^{n-m}q$；$n>m$ 会使 $p\in I_1$，矛盾。故 $m=n,p=q$。若 $y\in I_j$，其向后解析至少可以进行 $j$ 步；上述唯一分解说明最大这样的 $j$ 正是 $n$。对 $\rho^a y=\rho^{n+a}p$ 再用唯一性，得深度更新式。$\square$
+

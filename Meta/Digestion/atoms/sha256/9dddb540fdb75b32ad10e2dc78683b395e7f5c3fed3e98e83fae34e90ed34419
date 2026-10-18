@@ -1,0 +1,77 @@
+**Definition 10.1 (Selected relation coordinates).** Fix $n\ge1$ and identify
+$B_n$ with all independent subsets of the path $[n]$, including $\varnothing$.
+Write $d_n=|B_n|=F_{n+2}$, with $F_0=0,F_1=1$. For every legal $T$ put
+
+$$
+m_T(I)=1_{\{T\subseteq I\}},\qquad
+d_T(I)=(-1)^{|T|-|I|}1_{\{I\subseteq T\}},\qquad
+\mu_T(p)=\sum_{I\in B_n}p_I m_T(I).
+\tag{10.1}
+$$
+
+These are the moment functions and inverse columns supplied by
+[Correlation, §23.2][Correlation10]. Its $\Gamma_n,T',S',D_{T'}$ map to
+$B_n,T,S,d_T$ here; its signed measure $D_{T'}$ is identified with its
+coordinate column on the finite set $B_n$. In particular, for all legal
+$S,T$, including the empty set, its Boolean-interval calculation reads
+
+$$
+\sum_{I\in B_n}m_S(I)d_T(I)=
+\begin{cases}
+\displaystyle\sum_{S\subseteq I\subseteq T}(-1)^{|T|-|I|}
+ =(1-1)^{|T\setminus S|},&S\subseteq T,\\
+0,&S\not\subseteq T,
+\end{cases}
+=\delta_{ST}.
+\tag{10.2}
+$$
+
+Here the zero-exponent value is one. Every subset of a legal $T$ is legal,
+which is the precise Boolean interval needed in this sum; the whole
+independent-set poset need not be a Boolean lattice. The supplier's inverse
+and counting formulas therefore apply without changing the domain:
+
+$$
+p=\sum_{T\in B_n}\mu_T(p)d_T,\qquad
+p_I=\sum_{\substack{T\in B_n\\I\subseteq T}}
+(-1)^{|T|-|I|}\mu_T(p).
+\tag{10.3}
+$$
+
+The counting correspondence sends a legal $a$-tuple
+$i_1<\cdots<i_a$ to $i_j-(j-1)$ in $[n-a+1]$, giving
+$\binom{n-a+1}{a}$ sets of size $a$. Splitting words by the last bit gives
+$d_n=d_{n-1}+d_{n-2}$ with $d_0=1,d_1=2$, hence $F_{n+2}$.
+Taking $S=\varnothing$ in (10.2) shows that every nonempty $d_T$ has
+total mass zero. The empty column has mass one and is excluded from the
+probability perturbations below. For $n=3$, in the order
+$(\varnothing,\{1\},\{2\},\{3\},\{1,3\})$, the column is exactly
+$d_{\{1,3\}}=(1,-1,0,-1,1)^{\mathsf T}$ of Definition 9.7.
+
+Choose $r\ge1$ distinct nonempty legal sets $T_1,\ldots,T_r$, and let
+$D$ be the $d_n\times r$ matrix with columns $d_{T_j}$. Choose one known
+reference probability $p^0$ strictly positive on every $I\in B_n$. Set
+
+$$
+P=\operatorname{diag}(p^0_I),\qquad
+\mathcal U=\{\xi\in\mathbb R^r:p^0+D\xi>0\},\qquad
+p^\xi=p^0+D\xi.
+\tag{10.4}
+$$
+
+The inequality is entrywise. This is an open convex domain containing zero,
+and every $p^\xi$ has total mass one. Formula (10.2) gives, exactly,
+
+$$
+\mu_{T_j}(p^\xi)=\mu_{T_j}(p^0)+\xi_j,\qquad
+\mu_S(p^\xi)=\mu_S(p^0)\quad
+(S\notin\{T_1,\ldots,T_r\}).
+\tag{10.5}
+$$
+
+Thus the selected moments vary independently while every other moment is
+fixed. Indeed, pairing $Dc=0$ with each $m_{T_j}$ gives $c_j=0$.
+Consequently $D$ has full column rank and $r\le d_n-1$. This is exact
+consumption of the existing inverse, not an additional assumption of
+independence for overlapping statistical scores.
+

@@ -1,0 +1,48 @@
+**Assumption 1.2 (exactly the graph input).** The old cut, concrete outside,
+old partition and acquired relation are
+
+$$
+\begin{gathered}
+P=\{L,R\},\qquad C=\langle\square_1,\square_2\rangle,
+\qquad\pi=\{\{1\},\{2\}\},\\
+e_*=(0,L,1,R,=).
+\end{gathered}
+\tag{GRS.2}
+$$
+
+The equality record requires BOTH endpoints to exist and compares their
+whole trees. There is an arbitrary finite list $H_0$ of literal records
+$(a,p,c)$, including repetitions and absent replies. Its epochs are
+nonnegative integers. The target $Q$ is any finite prefix-free set of
+original words. No synchronous, constructor-elimination, orbit or target
+recognizer is an additional premise. The entire logical fiber is
+
+$$
+U=\{u:R_P(u)=(C,\pi),\quad
+        \operatorname{Rel}_{e_*}(u),\quad
+        r_{\rho^a u}(p)=c\text{ for every }(a,p,c)\in H_0\}.
+\tag{GRS.3}
+$$
+
+This is the family of ARH27.1, not a claim about arbitrary extra signed
+relations. In particular its old disequality between the two children is
+retained. The sign in (GRS.2) does not stand for equality of root replies.
+
+Records come from legal paid acquisition, and a complete accessible-state
+cut leaves exactly a recoverable encoding of these records and the common
+parameters. The same actual register, at its original root, has reached a
+certified
+
+$$
+N\ge\max\bigl(\{1\}\cup\operatorname{epochs}(H_0)\bigr).
+\tag{GRS.4}
+$$
+
+The complete-state and paid-acquisition meanings are [ARH, Assumption 1.3
+and Proposition 2.1][ARH]. In particular an accessible description, address,
+length, counter, program position, timing field, permission, archive or
+other source-dependent residue must be included in the state. No forgotten
+traversal survives this cut. Source continuity is not a source identity
+label. Service statements concern $U\ne\varnothing$; logical empty inputs
+are explicitly treated separately.
+

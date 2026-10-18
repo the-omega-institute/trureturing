@@ -1,0 +1,15 @@
+**Convention 10.2 (primary correspondences).**
+
+| Primary source | Exact use and transfer limit |
+| --- | --- |
+| Frank Nielsen, *Revisiting Chernoff Information with Likelihood Ratio Exponential Families*, [arXiv:2207.03745v1, §§1.1 and 2.1][Nielsen] | The affinity $\sum\sqrt{pq}$ and normalization of geometric mixtures are mature definitions. Here the finite positive densities are $q_\pi$ on counting measure over full owner tuples. The mass/slack identity and permutation contraction are proved explicitly; the citation supplies no native cofinality. |
+| Constantinos Daskalakis and Qinxuan Pan, *Square Hellinger Subadditivity for Bayesian Networks and its Applications to Identity Testing*, [arXiv:1612.03164v1, Theorem 2.1 and Corollary 2.4][DP] | Their common-DAG squared-Hellinger upper bound uses neighborhood marginals. An extensive lower defect does not follow in that direction. The uniform conditional-row contraction (OOA.18) is proved here with its own common sequential grouping, rather than imported from that marginal theorem. |
+| Gavinsky, Lovett, Saks and Srinivasan, *A Tail Bound for Read-$k$ Families of Functions*, [arXiv:1205.1478v1, Definition 1 and Theorem 1.1][GLSS] | Its underlying variables are independent, each influencing at most $k$ functions. Actual owners need not satisfy this premise. The only independence used here is the explicitly counted relative permutation orders on disjoint label sets in Theorem 5.1; no read-$k$ tail theorem is transferred. |
+
+These primary statements do not supply the missing arbitrary-native
+optimizer-cofinal cap. The correspondence is bounded to the stated
+definitions and hypotheses, without a claim of nonexistence of other
+literature routes. The all-positive-law raw mixing and fixed-neighborhood
+obstructions of GDB, and SCP's additive softening bounds, likewise do
+not establish or refute the permutation rule's coverage premise.
+

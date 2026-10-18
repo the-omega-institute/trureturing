@@ -1,0 +1,68 @@
+### 38.4. 常数的行列式、全部奇异支与有符号半直线
+
+设 $A=0,L\ne0$，先要求 $D=0$。式 (38.7) 的偶数部分强制 $\mu=0,\lambda\ne0$。比较奇数部分，置
+
+$$
+U=2B=\lambda r,\quad V=2L=\lambda b\ne0,\quad
+W_c=C+U/2=\lambda(j-1).
+\tag{38.10}
+$$
+
+这里 $W_c$ 是常数坐标，不是完整世界。候选整个缩放源及逆为
+
+$$
+R_\lambda=\lambda P=
+\begin{pmatrix}U&V\\\lambda+W_c-V&\lambda-U\end{pmatrix},\qquad
+g(t)=\lambda,\quad d=a_0-\lambda.
+\tag{38.11}
+$$
+
+必要且充分的参数条件是
+
+$$
+\begin{gathered}
+\lambda\ne0,\qquad
+0<U/\lambda<1,\quad V/\lambda>0,\quad
+(\lambda+W_c-V)/\lambda>0,\\
+(U-V)\lambda-U^2-VW_c+V^2=0.
+\end{gathered}
+\tag{38.12}
+$$
+
+必要性：$\det R_\lambda=U(\lambda-U)-V(\lambda+W_c-V)$，展开即最后式；前三不等式恰是 $P$ 四元严格正，其中第一个同时给两个对角元。充分性：过滤后 $P$ 迹一、行列式零、严格正，故秩恰一。由 $j=1+W_c/\lambda,r=U/\lambda,b=V/\lambda$ 得
+
+$$
+E=a_0+(V/2)t,\qquad
+R=a_0+W_c-U/2+(U/2)t.
+\tag{38.13}
+$$
+
+这恰等已取得插值，所以全部七式成立。正性施加于归一化源，允许 $\lambda$ 与辅助 $R_\lambda$ 为负；不同 $\lambda$ 固定不同整个增益及漂移。
+
+全部支为：
+
+| 条件 | 整个参数集 |
+| --- | --- |
+| $D\ne0$ 或本常数支 $L=0$ | 空 |
+| $U=0$ | 严格 $0<U/\lambda<1$ 不可能，空 |
+| $U\ne V$ | 唯一可能 $\lambda=(U^2+VW_c-V^2)/(U-V)$；拒绝零与全部严格条件失败者，空或单点 |
+| $U=V\ne0,W_c\ne0$ | 行列式为非零 $-VW_c$，空 |
+| $U=V\ne0,W_c=0$ | 全部 $0<U/\lambda<1$ |
+
+$V\ne0$ 排除 $U=V=0$；$W_c=0,U\ne V$ 仍在唯一候选支。最后一行令 $p_c=U/\lambda$，源恰为 $\left(\begin{smallmatrix}p_c&p_c\\1-p_c&1-p_c\end{smallmatrix}\right)$，所有严格条件恰化为 $0<p_c<1$。$U>0$ 时整个半直线 $\lambda>U$，$U<0$ 时整个半直线 $\lambda<U$，负支不丢弃。没有除 $U$ 或 $W_c$。
+
+常数的全部实际七读及互择末读账为
+
+$$
+\begin{aligned}
+(y_0,\ldots,y_6)&=(a_0,a_0+W_c,a_0+V,a_0+W_c+U,\ a_0+2V,a_0+W_c+2U,a_0+3V),\\
+f_J&=a_0+W_c+3U=R(7),\\
+f_M&=a_0+\lambda+2U+3V+W_c.
+\end{aligned}
+\tag{38.14}
+$$
+
+逐行用 $\lambda(j-1)=W_c,\lambda r=U,\lambda b=V$ 得到；末 $M$ 另用 $\lambda c=\lambda+W_c-V$ 展开 $a_0-\lambda+\lambda(1+2r+4b+c)$ 即最后一式。因此七祖先和两个实际终端方程都对整个参数集成立。
+
+第 38.2 节排除全部二次并使常数与非恒定仿射不相交。前者只能空、单点或整半直线，后者只能零、一、两个世界。半直线参数单射且是连续统，所以整个零 $e_3$ 纤维基数恰只可能为 $0,1,2$ 或连续统；二世界必为非恒定仿射，连续统必是整个常数半直线。定理 38.1 得证。∎
+

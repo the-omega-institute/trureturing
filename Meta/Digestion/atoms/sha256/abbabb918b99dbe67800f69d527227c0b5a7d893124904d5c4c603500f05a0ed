@@ -1,0 +1,22 @@
+### 72.3 The corrected phase condition on the actual curve
+
+For \(V=V_0\) and \(W=\omega W_0\), direct entrywise multiplication gives
+
+\[
+ 3v_{jk}\bar w_{jk}=
+ \begin{cases}\omega,&j=k,\\\bar\omega,&j\ne k.\end{cases}
+ \tag{72.11}
+\]
+
+Thus every relative phase in (72.11) has cosine \(-1/2\), exactly as
+required by the corrected equation
+\(\cos\varphi=-\cot2\alpha\cot2\beta\) from §71.4.
+The expression with an additional factor \(1/3\) does not hold.
+Dephasing \(V\) and \(W\) gives the two opposite order-three Fourier
+orientations, as in the example in §71.4.
+
+In [Chen--Yu, arXiv:1610.04875v3](https://arxiv.org/pdf/1610.04875v3),
+Lemma 13(ii), this matrix is the displayed normal form
+\(H_2(\alpha,\beta,0,V_0,\omega W_0)\). This identifies the actual
+curve within that formula; it does not import the subsequent exclusion claim.
+

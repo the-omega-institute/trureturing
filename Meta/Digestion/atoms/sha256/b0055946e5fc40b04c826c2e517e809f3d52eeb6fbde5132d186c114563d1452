@@ -1,0 +1,19 @@
+**Definition 1.3 (Diagonal weights and residuals).** All expectations in this definition use the fixed $M_\mu$. Set
+
+$$
+\begin{aligned}
+Z_{pqr}&=\widehat h_p\widehat t_q\widehat\ell_r,\\
+R_{pqr}&=C_{pqr}+2Z_{pqr},\\
+d_{pqr}&=4H_p(1-H_p)T_q(1-T_q)L_r(1-L_r),\\
+\beta(\rho)&=16\rho^3(1-2\rho)^2(1-\rho).
+\end{aligned}                                                   \tag{2}
+$$
+
+For an arbitrary real vector $a=(a_\tau)_{\tau\in\Theta_n}$, define
+
+$$
+F_a=\sum_{\tau\in\Theta_n}a_\tau C_\tau,\qquad
+R_a=\sum_{\tau\in\Theta_n}a_\tau R_\tau,\qquad
+G_{\tau\nu}=\mathbb E_\mu(C_\tau C_\nu).
+$$
+

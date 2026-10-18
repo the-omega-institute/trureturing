@@ -1,0 +1,83 @@
+**定理 448.3（实际 Fibonacci 带权来源也是极值分布）。** 对全部实数
+\(s\ge0\)，有
+
+\[
+0<\mathcal B(s)<b,\qquad
+\mathcal B'(s)\ge
+\frac{187}{1323}\,q^2(\log2)\,2^{-s}>0.
+\tag{PM.9}
+\]
+
+因此 \(\mathsf F\) 在非正半轴补零后是连续分布函数，正半轴有严格正密度
+\(f_{\rm Fib}=\mathsf F'\)。存在与 \(U\) 独立的非负随机变量 \(V\)，满足
+
+\[
+\mathbb P(V\le u)=\mathcal B(1+u)/b\quad(u\ge0),
+\]
+
+从而 \(W=\max(U,V)\) 的分布函数精确为 \(\mathsf F\)。
+\(V\) 在零点有质量 \(\mathcal B(1)/b\)，而 \(W\) 无零点原子。并且
+
+\[
+\boxed{
+\mathbb E\log W-\mathbb E\log U
+=\int_0^\infty \frac{g(u)}u
+\left[1-\frac{\mathcal B(1+u)}b\right]du>0.
+}
+\tag{PM.10}
+\]
+
+**证明：实际带权乘子的非负实轴单调性。** \(\beta_d\) 的指数尾已付全部固定
+阶逐项微分。偶数 \(d\) 的 \(\beta_d\) 为负，奇数 \(d\) 的
+\(\beta_d\) 为正，且
+
+\[
+-\beta_2\ge q^2,\qquad \beta_d\le q^d\quad(d\text{ 为奇数}).
+\]
+
+因 \(d\ge3\) 时 \((\log d)/d\le(\log3)/3\)，对 \(s\ge0\)，
+
+\[
+\begin{aligned}
+\mathcal B'(s)
+&\ge2^{-s}\left[q^2\log2-\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d\right],\\
+\sum_{\substack{d\ge3\\d\ {\rm odd}}}q^d\log d
+&\le\frac{\log3}{3}\frac{q^3(3-q^2)}{(1-q^2)^2}.
+\end{aligned}
+\]
+
+函数 \(q(3-q^2)/(1-q^2)^2\) 的导数为
+\((3+6q^2-q^4)/(1-q^2)^3>0\)，故在 \(0<q<2/5\) 递增。
+又 \(3^5<2^8\) 给 \(\log3/\log2<8/5\)，所以最后尾项与
+\(q^2\log2\) 的比不超过
+
+\[
+\frac8{15}\frac{710}{441}=\frac{1136}{1323}<1.
+\]
+
+这支付（PM.9）的导数界。正性也可直接由
+
+\[
+\mathcal B(s)\ge\log(1+q)-\sum_{j\ge1}|\beta_{2j}|
+\ge\frac{q}{1+q}-\frac{q^2}{(1-q^2)^2}>0
+\]
+
+得到；最后比较使用
+\((1-q^2)^2>q(1+q)\)，在 \(q\le2/5\) 上由
+\(441/625>14/25\) 支付。由于 \(\mathcal B(s)\to b\)，严格递增又给
+\(\mathcal B(s)<b\)。此外，令
+\(S_{\beta,\ge2}=\sum_{d\ge2}|\beta_d|<\infty\)，有
+
+\[
+0<b-\mathcal B(s)\le S_{\beta,\ge2}\,2^{-s}.
+\tag{PM.11}
+\]
+
+于是 \(\mathcal B(1+u)/b\) 是带零点原子的非负变量分布函数。
+独立极值的乘积分布给（PM.1）的原 \(\mathsf F\)，其导数正性来自
+\(\mathcal B,\mathcal B',g,g'>0\)。又 \(0<\mathsf F<g\le u\) 在近端成立，
+远端 \(1-\mathsf F\) 由固定常数乘 \(2^{-u}\) 支付，所以
+\(\mathbb E|\log W|<\infty\)。两个绝对对数矩相减得到（PM.10），
+近端主导为一，远端由（PM.11）支付。其被积函数在全部 \(u>0\)
+严格为正。证毕。
+

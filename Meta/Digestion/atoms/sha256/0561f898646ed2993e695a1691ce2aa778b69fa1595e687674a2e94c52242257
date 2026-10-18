@@ -1,0 +1,16 @@
+## 14. An erased-final-gain mechanism and its actual-source domain
+
+Sections 1–13 give three sufficient prefix mechanisms. The additional mechanism below uses a rank-one prefix kernel whose determinant polar has one strict sign. Its positive tangent section is empty. Instead it uses exact transfer at a sampled gain zero, two coefficient signs at different boundary rays, and a finite determinant correction between actual positive sources. Section 16 proves the coefficient conditions on an entire four-parameter legal family, for every final word. Section 17 proves a strict-one-sign diagnostic delimiting this particular transfer-sign method.
+
+For these additional collision results the drift is constant. Retain precisely
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,\qquad k\in\mathbb R,
+$$
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+\delta,\qquad
+D(\tau)=\delta\quad\text{for every real }\tau,\qquad i=0,1,2,3,4.
+\tag{14.1}
+$$
+The target remains the whole triple $(S,k,D)$. Here $A_0=I$ and $A_{i+1}=W_iA_i$, with each $W_i$ a predetermined finite word in the same $M,J$ as in Definition 1.1, including the empty word. Multiplication acts on the left and executes from right to left. Only scalar reads advance the index; all intermediate atoms in a word are unread. Sampled zero and negative gains remain in the domain.
+

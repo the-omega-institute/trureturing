@@ -1,0 +1,48 @@
+## 11.3 An exact implicit excess certificate
+
+Let $A\in\mathfrak F_{\le n}(Z)$ have finite error
+$\varepsilon=\operatorname{err}(A)$, and put
+$$
+\Delta=\varepsilon^2-4ZH\ge0,\qquad
+\rho_0=\sqrt{\frac{Z}{4H}}.
+$$
+Fix $m\ge0$, $L=2m+1$, and $0<h<H/L$, and set
+$$
+\eta_h=1-\sqrt{1-\frac{Lh}{H}}.
+$$
+Suppose
+$$
+d_{N,m}-\eta_h>\rho_0.
+\tag{11.13}
+$$
+Use the scalar $g$ from (11.3), and sample the lawful chain by
+$$
+v_j=\frac{g(H-jh)}{2\sqrt{Hh}},\qquad 1\le j\le L.
+$$
+The rank factorization (11.8), with one fixed model instead of the varying
+family, gives $v\in\mathcal R_{N,m}$. Dividing (11.3) by
+$2\sqrt{Hhj}$ gives
+$$
+\frac{\left|v_j-\sqrt j\sqrt{1-jh/H}\right|}{\sqrt j}
+ \le
+ \sqrt{\rho_0^2+\frac{\Delta}{16Hhj}}.
+\tag{11.14}
+$$
+Since $jh\le Lh$, $j\ge1$, and $\Delta\ge0$, the triangle inequality gives
+$$
+J_m(v)\le
+\eta_h+\sqrt{\rho_0^2+\frac{\Delta}{16Hh}}.
+\tag{11.15}
+$$
+By minimality, $d_{N,m}\le J_m(v)$. Under (11.13), both sides that are
+squared are nonnegative, and therefore
+$$
+\Delta\ge
+16Hh\left((d_{N,m}-\eta_h)^2-\rho_0^2\right)>0.
+\tag{11.16}
+$$
+This is a lower bound for every native model with dimension at most $n$.
+It is a necessary certificate only: no feasible finite Hankel prefix is
+claimed to be extendible to an infinite prefix or realizable by a native
+model.
+

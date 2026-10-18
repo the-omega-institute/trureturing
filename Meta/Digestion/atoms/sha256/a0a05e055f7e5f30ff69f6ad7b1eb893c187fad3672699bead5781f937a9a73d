@@ -1,0 +1,37 @@
+**Definition 72.1 (fixed data and the extent of the assertion).** Fix an
+actual nonempty finite full binary source $D$, with its actual occurrences,
+inherited seams and two distinct grounded stubs at each current leaf, exactly
+as in Definition64.5 of the
+[first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md).
+Write $n=|D|$. Fix commissioned $a>0$, $0<\delta\le1$, an integer ambient
+dimension $s\ge3$, and a positive number $m_g$ for each distinct grounded
+endpoint $g$. All these data are fixed as $\varepsilon\downarrow0$.
+The number $n$ is source cardinality, not ambient dimension. Put
+
+$$
+ t=\varepsilon^{1/s},\qquad r=t^{s-1}
+   =\varepsilon^{(s-1)/s},\qquad
+ \rho=\omega_{s-1}^{-1/(s-1)},
+ \tag{72.1}
+$$
+
+where $\omega_{s-1}$ is the volume of the unit ball in
+$\mathbb R^{s-1}$. A circular cylinder of radius $\rho\varepsilon$ has
+cross-sectional measure $\varepsilon^{s-1}$. Reference chamber volumes are
+$m_p=1/\delta$ at source ports and the prescribed $m_g$ at ground vertices.
+These are volume-to-cross-section ratios. They are not additional source
+coordinates or a physical apparatus-mass assertion.
+
+The assertion below concerns only the free kinetic operator
+$L:=A_{\delta,D,1}$, associated with $a k_{\delta,1}$, on the entire
+one-particle Hilbert space of Definition64.5. It does not replace that space
+by its harmonic subspace. It constructs Euclidean domains and a generalized
+norm-resolvent relation for fixed nonreal compact spectral sets. The mature
+convergence theorem used is Cherednichenko–Ershova–Kiselev,
+[*Norm-resolvent convergence for Neumann Laplacians on manifolds thinning to
+graphs*, arXiv:2205.04397v4](https://arxiv.org/html/2205.04397v4),
+Section2, Section3 and Theorem4.5. Its ambient dimension $d$ is denoted here
+by $s$. The geometry and the source-specific identifications below are
+ordinary deductions for the present source; the cited convergence theory is
+prior theory, not a new theorem attributed to this construction.
+

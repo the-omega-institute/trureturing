@@ -1,0 +1,29 @@
+**Convention 9.2 (physical singular results already available).** The
+physical singular-Gram volume PG establishes that every nonzero
+physical Gram has rank two or three, and any specimen of rank at
+least two has positive-definite Gram. With
+$r_T=ah_1/(bh_0)$ and $r_S=ch_2/(d_{\rm src}h_0)$, pure
+$\psi=(x,y,z)$ is singular exactly when $x=0$ or
+$x^2=r_Ty^2+r_Sz^2$. It classifies kernels and realizes every
+complex singular coefficient line physically. Its singular pencil
+has the exact polynomial
+$\lambda(d_1+d_2\lambda-\alpha\beta\lambda^2)$ with the stated
+simple-zero/positive-root and real-quadratic double-zero distinctions.
+PG gives a direct real quadratic-singular spectral law, without
+inverting $C$, and the saturated equality/report-split theorem
+upgrading sufficient real lifts to exact maximal initial caps.
+That theorem includes real positive-definite saturated and transition
+cases and all twelve original selected histories; it is not merely
+a singular-limit heuristic. The entire specimen plane $\rho_{00}=0$,
+including complex and mixed tests, has exact $kA$ plateau precisely
+through $s=\sqrt\ell$. Its two real boundary tests have closed
+radical values and caps. Its explicit nonreal singular specimen
+has a strict true-cone versus scalar-relaxation gap at every strength,
+with the scalar relaxation evaluated at zero strength.
+
+Those PG conclusions are credited at their exact domains. Broader
+singular and general-coherence all-strength questions remain open;
+calling every singular question unresolved would discard established
+content. The current positive-definite admitted family does not
+resolve those remaining questions.
+

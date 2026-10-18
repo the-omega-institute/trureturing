@@ -1,0 +1,34 @@
+**Theorem 5.3 (complete effective joint feasible region and attainment).** For every input of Assumption 1.1 an effective algorithm has the following outcome.
+
+If GB fails, $\mathcal F=\varnothing$. If GB holds, it returns a nonempty finite set $\mathcal B\subseteq\mathbb N^3$ with
+
+$$
+ \boxed{\quad
+ \mathcal F=\{b\in\mathbb N^3:\exists v\in\mathcal B,\ v\le b\},
+ \qquad \mathcal B=\operatorname{Min}(\mathcal F).
+ \quad}
+\tag{JRF.5.3}
+$$
+
+For each $v\in\mathcal B$ it returns a finite actual serial service $A_v$ with $b(A_v)=v$ exactly, together with physical addresses, halt outputs, and source witnesses for each coordinate maximum. Its correctness is on the entire original $D$. The algorithm has a proved stopping rule and requires no guessed address or source cutoff.
+
+Proof. Decide GB. Failure excludes finite raw budgets, hence excludes every finite triple. Suppose GB holds and calculate $K,U$ from §§3 and 5. There are finitely many pairs
+
+$$
+ 0\le k\le K,\qquad 0\le d\le U.
+\tag{JRF.5.4}
+$$
+
+For each pair, use the unbounded-address decision of Theorem 4.3 to decide (JRF.4.3). Discard false pairs. For every true pair, extract a finite service and compute its finite worst address cost $L^{\rm wit}_{k,d}$. Use the second decision of Theorem 4.3 over the finite interval $0\le L\le L^{\rm wit}_{k,d}$ to find
+
+$$
+ L_{k,d}=\min\{L\in\mathbb N:(k,d,L)\in\mathcal F\}.
+\tag{JRF.5.5}
+$$
+
+Retain a witness service for each true minimum. The crucial order is the decision of existence with no address bound, followed only in true cases by witness extraction and a bounded integer search. False cases never enter an unbounded witness enumeration. Every invoked logical decision terminates, every true existence has a finite witness, and there are finitely many pairs and finitely many integer tests per pair. This proves effective termination.
+
+Let $\mathcal V$ be the finite set of triples $(k,d,L_{k,d})$ retained. It is nonempty because the static supplier fits the grid. Every element is a feasible upper budget. Conversely, let $b\in\mathcal F$ and choose any service with $b(A)\le b$. Lemma 5.2 supplies a correct service with finite worst vector $(k',d',L')\le b$, where $(k',d')$ lies in (JRF.5.4). That pair is true and $L_{k',d'}\le L'$. Thus some member of $\mathcal V$ is at most $b$. Since a finite set has a minimal member below each of its members, $\mathcal B=\operatorname{Min}(\mathcal V)$ gives the equality of upsets in (JRF.5.3). A minimal member of one of these equal upsets is a minimal member of the other, proving the second equality.
+
+For $v\in\mathcal B$, the retained witness service satisfies $b(A_v)\le v$. Its exact worst vector is itself a feasible budget. A strict inequality in any coordinate would contradict minimality of $v$, so equality holds. Corollary 4.4 supplies all requested maxima and witnesses. The three maximizing sources can be different. $\square$
+

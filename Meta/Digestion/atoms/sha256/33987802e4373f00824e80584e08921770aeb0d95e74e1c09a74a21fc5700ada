@@ -1,0 +1,192 @@
+**Theorem 25.1 (uniform full-circle reversal).** Under Assumption 23.1,
+for every finite $t\ge t_0$ and every $(u,v)\in T$,
+
+$$
+\ell(u,v)>\frac1{20000},\qquad
+\eta_1(u,v)<-\frac1{250}.
+\tag{FC.87}
+$$
+
+This includes all four slope boundaries, both report axes and both
+antipodes on every included slope ray.
+
+Proof. We first bound the saturated height on both slope rays, with
+both choices of directed representative. For $u\ne0$ put $z=v/u$.
+Using $|u|=1/\sqrt{1+z^2}$, $|v|=|z|/\sqrt{1+z^2}$ and
+$\sqrt{1+z^2}\le1+|z|$, (FC.84) gives
+
+$$
+\begin{aligned}
+(1+z^2)\ell
+&\le A_\ell+2a_\ell|z|+B_\ell z^2
+                    +(l_u+l_v|z|)\sqrt{1+z^2}\\
+&<0.01+0.02|z|+0.035z^2.
+\end{aligned}
+\tag{FC.88}
+$$
+
+Indeed the constant, linear and quadratic upper coefficients before
+rounding are $0.00985$, $0.01884$ and $0.033$, respectively.
+The estimate uses magnitudes, so applies separately to both antipodes.
+For the negative ray write $z=-w$ with $w\ge1/10$. Then
+
+$$
+(1+w^2)f=-2ew-d_*w^2<-0.015w-0.02w^2<0.
+\tag{FC.89}
+$$
+
+For the positive ray $z\ge4$,
+
+$$
+(1+z^2)f=2ez-d_*z^2<0.016z-0.02z^2<0.
+\tag{FC.90}
+$$
+
+Multiplication by $t\mathfrak c>10$ makes each negative bound
+strictly more negative. Thus, on the respective rays,
+
+$$
+\begin{aligned}
+(1+w^2)\eta_1&<0.01-0.13w-0.165w^2,\\
+(1+z^2)\eta_1&<0.01+0.18z-0.165z^2.
+\end{aligned}
+\tag{FC.91}
+$$
+
+To compare each with $-0.004(1+z^2)$ it suffices to check
+
+$$
+\begin{gathered}
+q_-(w)=0.014-0.13w-0.161w^2,\quad
+q_-(1/10)=-\frac{61}{100000},\quad
+q_-'(w)=-0.13-0.322w<0\quad(w\ge1/10),\\
+q_+(z)=0.014+0.18z-0.161z^2,\quad
+q_+(4)=-\frac{921}{500},\quad
+q_+'(z)=0.18-0.322z<0\quad(z\ge4).
+\end{gathered}
+\tag{FC.92}
+$$
+
+The strict saturated bound follows on the entire two closed rays.
+At either missing slope-chart axis $u=0$, $v=\pm1$,
+
+$$
+\eta_1=B_\ell\pm l_v-t\mathfrak c d_*
+<0.033-10(0.02)=-0.167<-1/250.
+\tag{FC.93}
+$$
+
+We now prove the positive pure-height bound on all the required arcs.
+For $u\ge0$, rewrite the height as
+
+$$
+\ell=A_\ell+\gamma_\ell v^2+u(l_u-2a_\ell v)+l_vv
+\ge A_\ell-\frac{l_v^2}{4\gamma_\ell}.
+\tag{FC.94}
+$$
+
+Here $l_u>2a_\ell$ makes the discarded term nonnegative. The
+strict rational margin, using (FC.84), is
+
+$$
+0.00456-\frac{0.013^2}{4(0.01015)}-\frac1{20000}
+=\frac{7053}{20300000}>0.
+\tag{FC.95}
+$$
+
+This proves more than needed on the entire right closed semicircle,
+including its antipodes of the left arcs and both report axes.
+
+For the left upper and left lower arcs set, respectively,
+
+$$
+\begin{aligned}
+\phi_+(w)&=A_\ell+\gamma_\ell w^2
+ +(2a_\ell w-l_u)\sqrt{1-w^2}+l_vw,\\
+\phi_-(w)&=A_\ell+\gamma_\ell w^2
+ -(2a_\ell w+l_u)\sqrt{1-w^2}-l_vw,
+\qquad 0\le w\le1.
+\end{aligned}
+\tag{FC.96}
+$$
+
+These are the two actual directed heights
+$\ell(-\sqrt{1-w^2},w)$ and
+$\ell(-\sqrt{1-w^2},-w)$, as in (FC.65), with no identification
+of antipodes. Their useful derivative formulas are
+
+$$
+\begin{aligned}
+\phi_+'(w)&=2\gamma_\ell w+l_v+
+ \frac{l_uw+2a_\ell(1-2w^2)}{\sqrt{1-w^2}}>0,\\
+\phi_-''(w)&=2\gamma_\ell+
+ \frac{l_u+2a_\ell w(3-2w^2)}{(1-w^2)^{3/2}}>0
+ \qquad(0\le w<1).
+\end{aligned}
+\tag{FC.97}
+$$
+
+The first sign uses $1-2w^2\ge-w$ and $l_u>2a_\ell$;
+the second follows from positivity of every displayed term.
+At the upper-left boundary
+$x_U^T=(-1,1/10)/\sqrt{101/100}$, the numerator satisfies
+
+$$
+\begin{aligned}
+\frac{101}{100}\ell(x_U^T)
+&=A_\ell+\frac{a_\ell}{5}+\frac{B_\ell}{100}
+             +(-l_u+l_v/10)\sqrt{101/100}\\
+&>0.00456+\frac{0.01471}{100}
+             +(-0.0052+0.01134/10)\frac{201}{200}\\
+&=\frac{62077}{100000000}.
+\end{aligned}
+\tag{FC.98}
+$$
+
+The multiplier $-l_u+l_v/10$ is negative, since
+$-0.0049+0.013/10<0$, and
+$\sqrt{101/100}<201/200$. The omitted $a_\ell/5$ is positive.
+Subtracting $(101/100)/20000$ leaves the exact positive margin
+$57027/100000000$. The upper-left part of $T$ is precisely
+$w\in[1/\sqrt{101},1]$. Strict increase in (FC.97), followed
+by continuity at $w=1$, therefore proves the bound on that whole arc.
+
+At the lower-left boundary $x_L^T=(-1,-4)/\sqrt{17}$,
+
+$$
+\begin{aligned}
+17\ell(x_L^T)
+&=A_\ell-8a_\ell+16B_\ell-(l_u+4l_v)\sqrt{17}\\
+&>0.00456-8(0.00032)+16(0.01471)
+                  -(0.0052+4(0.013))\frac{33}{8}\\
+&=\frac{141}{100000}.
+\end{aligned}
+\tag{FC.99}
+$$
+
+Here $\sqrt{17}<33/8$ is used with its negative multiplier.
+Subtracting $17/20000$ leaves the exact margin $7/12500$.
+Also $\phi_-(0)=A_\ell-l_u<0$. At
+$w_L=4/\sqrt{17}$, strict convexity gives
+
+$$
+\phi_-'(w_L)\ge
+\frac{\phi_-(w_L)-\phi_-(0)}{w_L}>0.
+\tag{FC.100}
+$$
+
+Its derivative is increasing afterwards, so $\phi_-$ is increasing
+on $[w_L,1)$; continuity handles $w=1$. This is exactly the lower-left
+part of $T$. Thus its positive boundary margin propagates along the
+whole lower-left arc.
+
+The two right arcs, the two left arcs, their four closed slope
+boundaries and the two common axis endpoints exhaust $T$. At the
+report axes one may also read directly
+$\ell=B_\ell\pm l_v>0.01471-0.013>1/20000$.
+The horizontal points, including the omitted affine half-angle point
+$(-1,0)$, are outside $T$ and are not claimed to have these signs.
+In particular no chart omission, genericity assumption, numerical
+sampling or extension of an even-height sign to its antipode is used.
+This proves both inequalities of (FC.87). $\square$
+

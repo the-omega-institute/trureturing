@@ -1,0 +1,19 @@
+**Theorem 16.3 (exact sufficient form of a retained protected transcript).**
+For a realizable finite protected transcript available in full at Release, there is
+a continuation correct on every source realizing it and every allowed
+finite-interference history if and only if either it contains an actual
+leaf reply, or $P$ is complete and the prefix closure of its branch
+queries covers $I$.
+
+**Proof.** Lemmas 15.1 and 15.2 give the two executable continuations.
+If neither condition holds, the transcript is leaf-free and Lemma 16.2
+supplies the paired sources for Lemma 16.1. $\square$
+
+The necessity applies also to a procedure that discards some of its
+transcript: the paired executions have equal full histories, hence equal
+retained states. Sufficiency requires keeping the stated data. This
+result is a condition on correctness over all realizations of a
+transcript, not a claim that every individual later-tree fiber is
+ambiguous. Complete branch coverage permits a later continuation; it
+does not by itself give a protected Return with an unknown partition.
+

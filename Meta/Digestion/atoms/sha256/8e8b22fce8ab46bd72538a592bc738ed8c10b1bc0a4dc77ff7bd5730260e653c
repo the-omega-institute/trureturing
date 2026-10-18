@@ -1,0 +1,73 @@
+**Theorem 74.7 (broader support-range obstruction).** In the separate
+range model, with no further condition on $R_\varepsilon\to0$, put
+
+$$
+ \tau_\varepsilon=\frac{R_\varepsilon^{s-2}}{\varepsilon^{s-1}},
+ \qquad B_p=2^{s+2}a\omega_sN.
+\tag{74.26}
+$$
+
+For every $C$ in (74.2) the full soft discrepancy obeys
+
+$$
+ \Delta_{\varepsilon,C}
+ \ge\frac{b_\varepsilon(R_\varepsilon)^2}
+                  {\sqrt{M^2+1}\,[A_p+B_p\tau_\varepsilon]}.
+\tag{74.27}
+$$
+
+The same bound holds for each hard-ball discrepancy in (74.8) at
+$r=R_\varepsilon$. Consequently, along any subsequence on which
+$\tau_\varepsilon\le T<\infty$, each applicable discrepancy satisfies
+
+$$
+ \liminf\Delta
+ \ge\frac1{\sqrt{M^2+1}\,[A_p+2^{s+2}a\omega_sNT]}>0.
+\tag{74.28}
+$$
+
+**Proof.** Use the radial Lipschitz cutoff, without a scattering
+hypothesis on the actual potential,
+
+$$
+ \chi_R(r)=
+ \begin{cases}
+ 0,&|r|\le R,\\
+ (|r|-R)/R,&R<|r|<2R,\\
+ 1,&|r|\ge2R.
+ \end{cases}
+ \qquad
+ \int_{\mathbb R^s}|\nabla\chi_R|^2
+                      \le2^s\omega_sR^{s-2}.
+\tag{74.29}
+$$
+
+The product $U=G_\varepsilon\chi_R(x-y)$ belongs to the mixed form
+domain and $\int V_\varepsilon|U|^2=0$. Hence it belongs to the exact
+natural sum domain (74.5), regardless of the permitted singularity or
+height of $V_\varepsilon$. The same zero extension proves its hard
+Dirichlet membership. The derivative estimate and (74.24) now give
+
+$$
+ q_{0,\varepsilon}[U]
+ \le\frac{24}{5}akN
+        +4\beta c_\varepsilon^2N\int|\nabla\chi_R|^2
+ \le\frac{24}{5}akN+B_p\tau_\varepsilon.
+\tag{74.30}
+$$
+
+Adding the shifted bounded-potential term gives the denominator of
+(74.27). Lemma74.3 with (74.19), and (74.20) in the hard case, proves
+all three assertions about finite $\varepsilon$ exactly as above.
+On the specified subsequence the overlap loss obeys
+
+$$
+ 1-b_\varepsilon(R_\varepsilon)
+ \le2^s\omega_s\delta\,\tau_\varepsilon R_\varepsilon^2
+ \longrightarrow0.
+$$
+
+Using $\tau_\varepsilon\le T$ in the denominator proves (74.28).
+In particular, this step needs only $R_\varepsilon\to0$ and the
+subsequence bound, not $R_\varepsilon=o(\varepsilon)$. $\square$
+

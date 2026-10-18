@@ -1,0 +1,41 @@
+**Definition 4.1 (leaf-state orbit and epoch cells).** Define
+
+$$
+(a_0,b_0)=(q_\alpha,q_\beta),\qquad
+(a_{k+1},b_{k+1})=(b_k,\delta(b_k,a_k)).
+\tag{NRF.9}
+$$
+
+Following this orbit in the finite set $Q^2$ until its first repeat
+computes $\mu\ge0$ and $\lambda\ge1$ with
+$\mu+\lambda\le |Q|^2$ and
+$(a_{k+\lambda},b_{k+\lambda})=(a_k,b_k)$ for $k\ge\mu$.
+For row-valid $b$ put
+
+$$
+\begin{aligned}
+D&=\max(\{0\}\cup\{|p|:p\in P\}),\\
+b_{\rm row}&=
+ \begin{cases}
+  2(d+1),&C\text{ has a concrete leaf, of least such depth }d,\\
+  2D,&C\text{ has no concrete leaf},
+ \end{cases}\\
+B_0&=\max(2D,b_{\rm row}),\qquad T=B_0+\mu,\\
+\kappa(n)&=
+ \begin{cases}n,&n<T,\\T+((n-T)\bmod\lambda),&n\ge T.
+ \end{cases}
+\end{aligned}
+\tag{NRF.10}
+$$
+
+Let $J=\{0,\ldots,T+\lambda-1\}$ and
+
+$$
+I_r=\{r\}\quad(r<T),\qquad
+I_r=r+\lambda\mathbb N\quad(T\le r<T+\lambda).
+\tag{NRF.11}
+$$
+
+These disjoint sets partition $\mathbb N$, with $\kappa(n)=r$ exactly
+when $n\in I_r$. No minimality is asserted.
+

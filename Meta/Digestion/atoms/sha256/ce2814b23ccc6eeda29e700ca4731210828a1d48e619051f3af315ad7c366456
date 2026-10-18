@@ -1,0 +1,37 @@
+**Theorem 7.2 (area certificate).** Under Definition 7.1, let
+$K_{\max}=1/5$ and compute
+
+$$
+\widetilde A=\sum_{j=0}^{n-1}\widehat k_j
+                     (\widehat x_{j+1}-\widehat x_j)
+\tag{7.1}
+$$
+
+with an additional certified absolute arithmetic error at most $\rho_A$.
+Then $|\widetilde A-A|\leq E_A$, where
+
+$$
+E_A=(Lh_*+d_k)V
+  +d_c\bigl(2K_{\max}+LT+2(n-1)d_k\bigr)+\rho_A.
+\tag{7.2}
+$$
+
+Proof. First compare $A$ with
+$\sum_j\widehat k_j(x(s_{j+1})-x(s_j))$. On cell $j$ the height discrepancy
+is at most $Lh_*+d_k$. Integration against $|\chi'|$ gives the first term.
+Put $e_j=\widehat x_j-x(s_j)$. The remaining sensor contribution has the
+exact summation-by-parts identity
+
+$$
+\sum_{j=0}^{n-1}\widehat k_j(e_{j+1}-e_j)
+=\widehat k_{n-1}e_n-\widehat k_0e_0
+ +\sum_{j=1}^{n-1}(\widehat k_{j-1}-\widehat k_j)e_j.
+\tag{7.3}
+$$
+
+Its modulus is bounded by $d_c$ times the sum of the two endpoint height
+magnitudes and the sampled height variation. Clipping bounds the first two
+by $2K_{\max}$. The actual sampled height variation is at most $LT$;
+the $n-1$ internal differences introduce at most $2(n-1)d_k$. Add the
+arithmetic error. This proves (7.2) without a phase-speed bound. $\square$
+

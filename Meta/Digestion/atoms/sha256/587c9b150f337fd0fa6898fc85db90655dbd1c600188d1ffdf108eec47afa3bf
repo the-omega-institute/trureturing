@@ -1,0 +1,23 @@
+### The half-gamma simplification
+
+The already available strict classical bound \(\gamma>1/2\) and the
+exponential tangent inequality \(e^\gamma\ge1+\gamma\) yield
+\[
+ k=e^\gamma-1\ge\gamma>1/2.
+\]
+Put \(z=(1+k)/(2k)>0\). The logarithmic tangent is used in its lower-bound
+direction, \(\log z\ge1-1/z\), so
+\[
+ \Lambda(k)\ge k\left(2-\frac{2k}{1+k}\right)
+ =\frac{2k}{1+k}>\frac23.
+\]
+This estimate requires neither the location of a minimum of \(G\) nor
+monotonicity or differentiation of \(\Lambda\).
+Because \(k>1/2\), one also has \(2/k<4\), hence
+\[
+ m(k)=3k\delta e^{-2/k}
+ >\frac32\delta e^{-4}.
+\]
+The positivity of \(\delta\) follows from the strict logarithmic tangent
+at \(1/2\), giving \(\log2>1/2\).
+

@@ -1,0 +1,13 @@
+**Theorem 9.2 (coordinatewise least vector among selected minimizers and full-class Pareto status).** At any strength in (RG.78), $V^h$ is coordinatewise least among resource vectors of all original implementations attaining the minimum in coordinate $h$. It is the unique Pareto vector on that minimum-coordinate hyperplane and is globally Pareto against the entire finite complex class of Definition 2.3.
+
+Proof. Theorem 8.4 gives the universal selected minimum $F_y=k\lambda_y-\mu_y$, and the constructed vector has $V^h_h=F_y$. Any original acquired minimizer in that coordinate must have equality in acquired $\ge$ live $\ge F_y$. By Theorem 4.4 its aggregate supported live high coefficient is uniquely $v_hv_h^T$. The full five-mode operator inequality (RG.18) then gives
+
+$$
+G_H^{\rm acq}\succeq E\Theta(v_hv_h^T)E^\dagger.
+\tag{RG.82}
+$$
+
+Taking each original positive-state expectation makes every coordinate at least $V^h$. Since the constructed vector attains these lower values simultaneously, it is least in the selected-minimizer set. Any larger vector in that set is dominated by it; hence it is its only Pareto vector.
+
+If an arbitrary original design weakly lowered every coordinate of $V^h$, its selected coordinate could not fall below $F_y$ and so would still be minimal. Inequality (RG.82) would then forbid any strict decrease in another coordinate. This proves global Pareto status. On the selected pure state a positive acquired-to-live slack need only have expectation zero, and it can raise other coordinates. Thus this proof does not identify all selected-minimizer resource vectors with $V^h$ or identify their entire instruments. $\square$
+

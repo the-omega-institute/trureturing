@@ -1,0 +1,41 @@
+**命题 18.4（加权响应的递推与零阶边界）。**
+定义代数迹序列 $\tau_j=\operatorname{tr}(B^j)$，$j\ge0$。
+它满足
+
+$$
+\begin{gathered}
+\tau_0=3,\qquad \tau_1=1,\qquad \tau_2=1+2uv,\\
+\tau_n=\tau_{n-1}+uv\tau_{n-2}+u(1-v)\tau_{n-3}
+\quad(n\ge3).
+\end{gathered}
+$$
+
+在 $n\ge5$ 时 $\tau_n=Z_n$，所以若只使用铺法定义域，
+$Z$ 的这个三阶递推从 $n\ge8$ 起直接可用。
+也可明确把 $Z_j$ 在 $0\le j\le4$ 代数延拓为 $\tau_j$，
+这时同一递推从 $n=3$ 起成立；其中 $Z_0=3$ 只计三个代数边界状态，
+不定义成空圆周的铺法数。
+
+证明。直接展开得到特征多项式
+
+$$
+\det(\lambda I-B)
+=(\lambda-1)(\lambda^2-uv)-u
+=\lambda^3-\lambda^2-uv\lambda+u(v-1).
+$$
+
+Cayley–Hamilton 恒等式给
+$B^3=B^2+uvB+u(1-v)I$；乘以 $B^{n-3}$ 并取迹，就得到
+$n\ge3$ 的递推。$B^0=I_3$ 的迹为三，$B$ 的迹为一，
+直接乘两矩阵给 $\operatorname{tr}B^2=1+2uv$。
+例如前两步代数递推是
+
+$$
+\tau_3=1+3u,\qquad \tau_4=1+4u+2u^2v^2,
+$$
+
+再一步给 $\tau_5=1+5u+5u^2v$，与 18.3 的独立铺法分层一致。
+三阶关系中的 $u(1-v)$ 可有负系数；它是迹消去式，不是把负概率
+赋给某块砖。每个 $Z_n$ 的非负整数系数仍由原始计数定义保证。
+证毕。
+

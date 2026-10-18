@@ -1,0 +1,22 @@
+**Literature statement 12.2 (primary scope and mature principles).** Real
+observable-span bounds, Cauchy-kernel independence and its determinant,
+finite-dimensional compactness, trace-distance contraction, two-sector
+pinching, and norm-ball volume packing are mature mathematics. Their
+proofs and source correspondence are explicit above. No generic part or
+source-specific synthesis is claimed as worldwide original.
+
+| Primary source | Inspected result and transfer boundary |
+| --- | --- |
+| M. M. Wolf and D. Perez-Garcia, [*Assessing dimensions from evolution*, arXiv:0901.2542v1](https://arxiv.org/pdf/0901.2542v1), §II, Eq. (4), and §V | `literature-attested`: delayed observable spans for fixed $\rho,A$ and one time-homogeneous CPTP $T$, with $\dim\mathcal C+\dim\mathcal V\leq d^2+1$. No time-homogeneous dynamics, sensor, noise data or sample cost is transferred; §§5–7 prove the present one-request map directly. |
+| A. Monràs and A. Winter, [*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, arXiv:1412.3634v1](https://arxiv.org/html/1412.3634v1), Theorem 21 | `literature-attested`: finite CP realization requires a compatible structured SDR mapping cone and common quotient/lifting, with its specified positive initial/final data. Finite linear dimension by itself is not sufficient, and an existing realization is not original-source acquisition. |
+| A. Jenčová, [*Comparison of quantum channels and statistical experiments*, arXiv:1512.07016v2](https://arxiv.org/pdf/1512.07016v2), §4, Theorems 3–4 | `literature-attested`: Theorem 3 is classical. The quantum Theorem 4 uses auxiliary block-diagonal ensembles and one common CPTP randomization, with trace norm at most $2\varepsilon$. This motivates the source-experiment comparison, without supplying its missing handoff or actuator. |
+| M. Hillery, M. Ziman and V. Bužek, [*Approximate programmable quantum processors*, quant-ph/0510161v1](https://arxiv.org/pdf/quant-ph/0510161v1), §V, Eqs. (5.2)–(5.9) | `literature-attested`: the phase programme (5.4) contains the desired $\theta$, or a readable bin programme (5.8) is supplied; accuracy is process fidelity. Neither supplies unknown $x\alpha/r$, a source-bound acquisition law or the present complete stopped metric. |
+| S. Lahiry, [*Classical Sufficiency in Quantum Statistical Experiments*, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), §3.4.2, Definition 7 | Recent scope comparison: restricted classical measurement sufficiency and recovery of a quantum experiment by one channel have different demands. Neither is inferred from one CDF event or a parity score. |
+| Liu and Han, [*Intermediate memory costs of quantum channel synthesis with a protected subsystem*, arXiv:2610.20536v1](https://arxiv.org/html/2610.20536v1), classically controlled synthesis | A readable finite input branch register can be measured and prepared into branch programmes by $\Lambda(X)=\sum_s\langle s\vert X\vert s\rangle\rho_s$. This uses an already supplied register; it does not acquire it from an original unknown past. Its protected-subsystem/graph conditions are not identified with this observer. |
+
+These inspected primary statements supply no verified directly sufficient
+original acquired observer under the specified single-specimen, absorbing
+menu. This is a bounded literature comparison, not an absence theorem or
+an originality argument. No dimension, service or cost is imported merely
+because two models use similar terminology.
+

@@ -1,0 +1,63 @@
+**Lemma 5.1 (early secant).** Define
+
+$$
+\begin{aligned}
+D_1(t)&=tf(1)=-\frac{10d}{21}t+\frac{5C_*}{6}
+                     -\frac{2c}{3}\frac{t}{1+2t},\\
+D_2(t)&=tf(2)=-\frac{10d}{63}t+\frac{10C_*}{9}
+                     -\frac{5c}{9}\frac{t}{1+2t},\\
+a_1&=-\frac{10d}{21}-\frac{2c}{3q},\qquad
+a_2=-\frac{10d}{63}-\frac{5c}{9q}.
+\end{aligned}
+\tag{5.2}
+$$
+
+Then
+
+$$
+\begin{gathered}
+D_i(t_2)-D_i(t_1)=(t_2-t_1)a_i\quad(i=1,2),\\
+\frac{A}{D_1(t)}+\frac{B}{D_2(t)}=1,\\
+\frac{Aa_1}{D_1(t_1)D_1(t_2)}
+ +\frac{Ba_2}{D_2(t_1)D_2(t_2)}=0.
+\end{gathered}
+\tag{5.3}
+$$
+
+If $d\ne0$ and $AB>0$, necessarily
+
+$$
+\frac27<\frac{-c}{d(1+2t_1)(1+2t_2)}<\frac57,
+\qquad dc<0.
+\tag{5.4}
+$$
+
+**Proof.** The first identities use exactly
+
+$$
+\frac{t_2}{1+2t_2}-\frac{t_1}{1+2t_1}
+ =\frac{t_2-t_1}{q}.
+\tag{5.5}
+$$
+
+At either actual world $A/D_1=j/t$ and $B/D_2=\ell/t$,
+so their sum is one. Both gain samples and both $D_i$ are nonzero
+by $AB\ne0$ and the positive trace equations. Subtract the two
+reciprocal identities and cancel only $t_2-t_1\ne0$ to get the
+last line of (5.3). Each denominator product there is positive:
+at fixed $A$ the two $f(1)$ have the same nonzero sign, and likewise
+for fixed $B$ and $f(2)$. If $AB>0$, the weights have a common
+sign, forcing $a_1,a_2$ to have opposite signs, unless both vanish.
+They cannot both vanish when $d\ne0$, because with
+$R=-c/(dq)$ the exact identities are
+
+$$
+a_1=\frac{2d}{3}(R-5/7),\qquad
+a_2=\frac{5d}{9}(R-2/7).
+\tag{5.6}
+$$
+
+The distinct thresholds force exactly (5.4). This is a necessary
+condition for an actual pair, not a construction from arbitrary $t$.
+∎
+

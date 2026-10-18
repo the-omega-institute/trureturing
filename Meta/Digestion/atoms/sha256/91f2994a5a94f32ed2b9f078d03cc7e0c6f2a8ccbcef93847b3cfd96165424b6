@@ -1,0 +1,34 @@
+**Lemma 4.1 (Takagi conventions and independence of the factor).** For a
+complex symmetric $C$ there is a unitary $U$ with
+$C=U\operatorname{diag}(\tau_i)U^T$, where $\tau_i\geq0$ are the
+singular values. If $X=AA^\dagger\succeq0$ with $A$ of full column rank
+$r=\operatorname{rank}X$, the singular values of $A^TB_0A$ depend only
+on $X$, with zeros added when necessary. At $X=0$ use an empty factor.
+
+Proof. This is the mature Takagi factorization; its needed finite proof
+also fixes the transpose convention. Let the antilinear map
+$\mathcal T v=C\overline v$. Symmetry gives
+$\mathcal T^2=CC^\dagger$ and
+$\|\mathcal T v\|^2=v^\dagger CC^\dagger v$. It preserves each eigenspace
+of $CC^\dagger$. On a positive eigenspace of eigenvalue $\lambda$,
+$\mathcal T/\sqrt\lambda$ is a norm-preserving antilinear involution.
+Every vector is the sum of a fixed vector and $i$ times a fixed vector:
+use $(v+\mathcal T v/\sqrt\lambda)/2$ and
+$(v-\mathcal T v/\sqrt\lambda)/(2i)$. Inner products of fixed vectors
+are real. Real Gram–Schmidt therefore gives an orthonormal fixed basis
+whose complex span is the eigenspace. On the zero eigenspace
+$\mathcal T=0$. Combining these bases gives unitary columns $u_i$ with
+$C\overline{u_i}=\tau_i u_i$, and hence the claimed factorization.
+Their squares are the eigenvalues of $CC^\dagger$, so these are precisely
+the singular values, including multiplicities and zeros.
+
+Two minimal factors of the same $X$ have the same range. Write
+$A'=AR$ using a left inverse of $A$; $AA^\dagger=A' A'^\dagger$ gives
+$RR^\dagger=I_r$, and the square matrix $R$ is unitary. Thus
+$C'=R^TCR$ has the same singular values. For a nonminimal factor use
+$A'=AQ$ with $QQ^\dagger=I_r$. Extend the orthonormal rows of $Q$ to a
+unitary matrix. Unitary congruence then identifies $Q^TCQ$ with $C$
+plus a zero block. Consequently a minimal factor and a list padded to
+length three suffice, even if another factor has more columns. No
+physical conjugation operation is invoked. $\square$
+

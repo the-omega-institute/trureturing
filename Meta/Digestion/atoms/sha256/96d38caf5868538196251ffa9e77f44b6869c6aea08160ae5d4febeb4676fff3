@@ -1,0 +1,124 @@
+**Construction 10.4 (uniform prefix retention and complete block readout).**
+From the fully acquired $t$, compute $z=m(t)$ and choose the
+lexicographically first minimizing leaf $p_0$, with $L$ before $R$.
+Equation $2|p_0|+e(t|_{p_0})=2d+e$ forces $|p_0|=d$ and its label to
+be alpha for $e=0$, beta for $e=1$. Put $j=\min(b,d)$ and retain only
+the first $j$ letters of $p_0$ as $E(t)$. Their length is public from
+$(z,b)$, and there are at most $2^j\le2^b$ possible values. Erase all
+other source-dependent state except the retained scalar $z$.
+
+At the later call generate, in public lexicographic order, the block
+
+$$
+B=\{p\in\{L,R\}^d:\operatorname{pref}_j(p)=E(t)\},
+\qquad |B|=2^{d-j}=M.
+\tag{AAR.35}
+$$
+
+Every depth-$d$ address is present in $t$: a leaf at any depth less
+than $d$ would have score at most $2d-1<z$. For such addresses the
+minimum recurrence gives
+
+$$
+m(t)=2d+\min_{|p|=d}m(t|_p).
+$$
+
+Hence $m(t|_p)\ge e$ for every $p\in B$, while $p_0\in B$ has
+$m(t|_{p_0})=e$. In particular
+
+$$
+\min_{p\in B}m(t|_p)=e.
+$$
+
+The right clock from (AAR.4) is the score $2h+f$ of a subtree's
+rightmost leaf, so $c(v)\ge m(v)$ for every finite $v$. At $p_0$ both
+are $e$. Applying present-subtree transport [NDP] and
+[DOR]'s `right_clock_iterate` therefore gives, for every $k\ge0$,
+
+$$
+\begin{aligned}
+(\rho^k t)|_p&=\rho^k(t|_p) &&(p\in B),\\
+\min_{p\in B}c((\rho^k t)|_p)
+ &=\min_{p\in B}\bigl(c(t|_p)+k\bigr)=e+k.
+\end{aligned}
+\tag{AAR.36}
+$$
+
+Thus no equality between the two minima for arbitrary subtrees is
+being assumed; equality here is supplied by the acquired minimizing
+leaf in this particular block.
+
+For each $p\in B$, submit exactly one fully materialized literal
+$pR^e$: use $\operatorname{Read}(p)$ when $e=0$, and
+$\operatorname{Read}(pR)$ when $e=1$. Finish the entire batch before
+returning. The supplied `right_clock_readout` of [DOR], applied at
+this originally present $p$, says for every suffix length $v\ge0$:
+
+$$
+\operatorname{Read}(pR^v)=
+\begin{cases}
+\mathrm{absent},&c(u|_p)<2v,\\
+\mathrm{alpha},&c(u|_p)=2v,\\
+\mathrm{beta},&c(u|_p)=2v+1,\\
+\mathrm{branch},&c(u|_p)\ge2v+2,
+\end{cases}
+\qquad u=\rho^k t.
+\tag{AAR.37}
+$$
+
+For $e=0$, use the following decision after the complete $p$ batch:
+
+- If any reply is alpha, return zero.
+- If none is alpha but some reply is beta, return one.
+- Otherwise apply Construction 4.1 and Theorem 4.2 to the current
+  tree to acquire a certified minimum $m(u)$, and return $m(u)-z$.
+
+Indeed no $p$ is absent, and (AAR.36) has minimum clock $k$.
+The first two reply cases are exactly $k=0$ and $k=1$; all replies
+are branch exactly when $k\ge2$.
+
+For $e=1$, use the following decision after the complete $pR$ batch:
+
+- If any reply is absent, return zero.
+- If none is absent but some reply is alpha, return one.
+- If none is absent or alpha but some reply is beta, return two.
+- Otherwise use the same finite minimum certification and return
+  $m(u)-z$.
+
+Here the minimum clock is $1+k$. With $v=1$, (AAR.37) makes these
+four cases exactly $k=0$, $k=1$, $k=2$ and $k\ge3$. In particular,
+an alpha at one slot alone does not justify returning one: at lag
+zero another slot can still be absent. For example, with $d=1$,
+$b=0$ and $t=\langle\langle\alpha,\alpha\rangle,\beta\rangle$,
+we have $m(t)=3$; the $LR$ query returns alpha and the $RR$ query
+returns absent. The whole-batch priority of absent gives the correct
+zero. A few reply-occurrence flags suffice; no original tree or
+unretained minimizing address is supplied to the later service.
+
+The fallback uses the existing all-source finite minimum procedure,
+not a new clock-acquisition primitive. It terminates on the finite
+quiescent $u$, and Lemma 3.2 gives $m(u)-z=k$. Each batch is finite,
+all of its words are generated effectively, and the fallback is
+finite whenever it is used. Thus this one encoder and service are
+uniformly effective in $z,b$ and correct for every finite source and
+every unknown lag. For a direct batch return designate its final
+Read as the capture; for a fallback return use that supplier's
+accepting Read. Quiescence makes the returned lag valid at the
+chosen actual event, without any extra validation call.
+
+On every run in the slice $k\in\{0,1\}$ the fallback is unused.
+The service makes exactly $M$ Reads, each of full literal length
+$d+e=r$. Therefore its joint suprema are exactly
+
+$$
+(q,a,\ell)=(M,rM,r).
+\tag{AAR.38}
+$$
+
+The block need not be retained as an installed table: its words can
+be enumerated from the retained prefix and public lengths. This
+observation supplies effectiveness, not a free buffer or a workspace
+optimum. First acquisition, encoding, clearing, prefix storage,
+operand materialization, enumeration, arithmetic, local work and
+fallback costs outside the slice retain their separate charges.
+

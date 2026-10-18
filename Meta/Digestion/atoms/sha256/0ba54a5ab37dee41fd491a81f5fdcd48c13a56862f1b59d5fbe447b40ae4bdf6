@@ -1,0 +1,32 @@
+**Definition 285.2 (Explicit nonnegative coefficients).**
+Let $L=m+2$, $J=\{3,\ldots,L\}$, $c=c_m$ and
+$a=(c-3)/2>0$. Use the balanced measure $\nu$ of Definition 274.1.
+Identify its ordered late vertices with $1,\ldots,m$ in (285.1).
+Put $\ell=c$ for odd $m$, $\ell=2$ for even $m$, and
+
+$$
+\zeta=\frac{1+k\sum_{j=k+1}^m t_j}{\ell},\quad
+\Lambda=\max\{mU/a,\zeta\},\quad
+\varepsilon_C=\frac{1-p}{\Lambda}>0.
+\tag{285.6}
+$$
+Start with the sole-zero score
+
+$$
+C_{v^i}(Y)=1\ (i\in J),\qquad
+P_{01Z}(Y)=P_{10Z}(Y)=\nu(Z)/2,\qquad T(Y)=1.
+$$
+Let $\mathcal B$ be the signed union-row vector with half of $u_Z^*$
+on each early lift on the $k$-layer, half of $-v_Z^*$ on each early
+lift on the $(k+1)$-layer, and $-p/2$ on each early lift of the
+all-zero suffix. Let $\mathbf C_w$ denote a unit correct-row vector,
+let $u^i=1^{i-1}0^{L-i+1}$, and put
+
+$$
+\mathcal D=\sum_{i=3}^{L-1}(\mathbf C_{v^i}-\mathbf C_{u^i}),
+\qquad V_m=Y-\mathcal B/\Lambda-(U/\Lambda)\mathcal D.
+\tag{285.7}
+$$
+All coincident row contributions are added. These formulas specify
+every coefficient without choosing an optimizing allocation.
+

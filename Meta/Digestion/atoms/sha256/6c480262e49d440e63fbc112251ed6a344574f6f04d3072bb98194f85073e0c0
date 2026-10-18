@@ -1,0 +1,59 @@
+**Corollary 17.2 (strict rational comparison and finite consequence).**
+The endpoint in (NCE.102) strictly exceeds the credited
+endpoint of Theorem 10.1, because
+
+$$
+7792603\cdot2499-6407\cdot3038031=9050280>0.
+\tag{NCE.103}
+$$
+
+In particular
+
+$$
+M_1(6)\ge1874.
+\tag{NCE.104}
+$$
+
+The new finite ceilings in (NCE.102) at $D=3,4,5,6$
+are respectively $3,7,44,1874$. These are lower bounds;
+the separately credited exact $M_1(3)=4$ is unchanged.
+Combining only with the credited [D3, Theorem 4.1][D3a]
+gives the valid pair of inequalities
+
+$$
+\frac18\log_2\frac{7792603}{3038031}\le\lambda<\frac3{16}.
+\tag{NCE.105}
+$$
+
+Proof. Equation (NCE.103) compares the positive rational
+ratios before taking the strictly increasing logarithm.
+For $n=1,2,4,8$ and $m=3,7,44,1874$, respectively,
+exact integer arithmetic gives
+
+$$
+(m-1)3038031^n<7792603^n\le m3038031^n.
+\tag{NCE.106}
+$$
+
+For example the three integer values in the $n=8$
+comparison, in increasing order, are
+
+$$
+\begin{gathered}
+1873\cdot3038031^8
+=13591750259290010266833908062638819829841612034091638993,\\
+7792603^8
+=13597542057106223423647696914192787498632375868628456161,\\
+1874\cdot3038031^8
+=13599006933213816999491053769025706546248361426528420434.
+\end{gathered}
+\tag{NCE.107}
+$$
+
+This proves the ceilings and (NCE.104). The upper is an
+independent credited construction, not an inference from
+pressure attainment at this law. For orientation only,
+the exact lower expression is approximately
+$0.1698710909863263$. No assertion that these are the
+globally best endpoints is needed. $\square$
+

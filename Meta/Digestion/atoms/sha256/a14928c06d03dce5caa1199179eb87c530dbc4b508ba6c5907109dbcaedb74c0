@@ -1,0 +1,74 @@
+**Definition 5.2 (the recovery and resource boundary of this result).**
+The recovered quantities are the genuinely acquired descriptor, its
+task-specific predictive factor, and the target's replies at authentic
+supplied counts. A full response-vector law is sufficient on each
+fixed finite family, by Theorem 4.3. Theorem 1.3 excludes a uniform
+finite-order substitute for that law across all such families when
+the consumer is optimal mean acquisition.
+
+Passive prediction, finite experimental statistics, acquisition-side
+action selection and complete accessible memory are distinct
+interfaces here. Exploiting $H(z)$ requires acquired joint data and
+local computation; it is not furnished by its low-order marginal
+tables. The strategy in §3 may retain its whole acquired record.
+If only a descriptor is retained, every other accessible distinction
+must be cleared with its separate resource cost. No minimum-memory
+theorem follows from its Read bound.
+
+The constructed target and some literal operands are extremely long.
+No total-efficiency, affordable-installation, short-operand or physical
+clock claim follows. The public count $k$ is not recovered from the
+record. Recovering physical spacetime, arbitrary undeclared targets,
+the complete source, erased history, or all operation permissions is
+outside this theorem. The wider programme of mutual recovery between
+relations, spatial structure, time, boundaries and memory retains
+these additional obligations. Minimal $D$, adjacent-order strictness
+on one fixed task, exact $V$, and a minimum sufficient law interface
+for a specified task are not identified by the present bounds.
+
+**Mathematical citation 5.3 (supplier correspondence and content status).**
+The native correlation-order/acquisition bridge and its cost conclusion
+are ordinary `repo-derived` deductions. They are not Lean verification
+or a claim of worldwide originality. The load-bearing source
+correspondences are:
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [AAR §§12–13][AAR], particularly AAR13.1–13.5 | The unchanged stationary family, complete handoff, descriptor factor, globally correct balanced fallback, and bounded-family actual-label necessity. Retained-alphabet and worst-case results are not mean-price comparisons. |
+| AAR14.1–14.2 | The normalization compares $c_B(t)$ with $c_A(\pi_p(t))$, not $c_A(t)$. Pointwise nondomination alone gives no optimized mean gap. The fixed-bank argument (NCO.21) supplies an actual-law lower bound instead. |
+| AAR15–16, especially AAR16.2–16.4 | Evidence, full-family canonical completions and joint-menu all-word geometry retain their stated tasks. Their projected-source and worst-resource comparisons do not preserve an arbitrary actual prior. The altered bank-family geometry is proved in Theorem 2.3. |
+| [SLH §§35–38 and 43][SLH] | First-leaf future semantics and label-flip evidence. The closure of our bounded family under that flip is checked in Theorem 3.2. |
+| [`Source`, `substitution`][GFT]; [`Reply`, `readout`, `flip`, `source_foundation`][READ] and [their Blueprint supplier][READB] | Boolean leaves encode alpha as true and beta as false; address false means $L$, true means $R$. Readout is address-first and has four replies. The formal module's positive-image task and distinct-address `paid` cost differ from (NCO.2) and actual invocation count. Its optimization results are not imported. |
+| [`original_present_transport`][NDP] and [its Blueprint supplier][NDPB]; [`right_clock_iterate`, `right_clock_readout`][DOR] and [their Blueprint supplier][DORB] | Same-source transport only at present addresses, and the exact right-ray interval table used in (NCO.20). No subtree oracle or originally absent transport premise is supplied. |
+| [Shamir §2][SHA]; [Christiani–Pagh §2.1, Lemma 1][CP]; [Ozarow–Wyner §2][OW] | Classical interpolation privacy, limited independence and coset encoding. Equation (NCO.16) gives the needed finite projection counts directly. Neither a whole field share nor several tree replies become one native call. No asymptotic wiretap bound is used. |
+| [Maurer, Definitions 2–3 and Lemma 4][MAU] | Random-function and adaptive-invocation framework; (NCO.29) proves the bounded native correspondence, including stopping, directly. No fresh-source simulation is allowed. |
+| [Cicalese–Laber–Saettler, §1][CLS] | Finite objects are sources, classes are target future trajectories, tests are native reply functions, and each invocation has unit cost. Their decision-tree/expected-cost framework is background; its approximation results do not provide the native first-hit bound. |
+
+These source versions are the published repository at
+`2cbcc2b15d3ba4b9a5cb4de1bed62edcf6e8849c` and the linked primary
+papers. The orthogonal-array interpretation used above follows from
+the explicit Vandermonde projection proof. [Bush's original
+orthogonal-array paper][BUSH] is a bibliographic antecedent; no
+parameter theorem from it is needed. No numerical or asymptotic
+wiretap bound is transferred. The cited methods do not themselves establish
+native realizability, all-word equality or the global acquisition gap.
+Those are supplied here by (NCO.12)–(NCO.26). This identifies the
+substantive addition without an exhaustive-literature claim or a claim
+that the wider programme is complete.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[GFT]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[READ]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[READB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs
+[NDP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[NDPB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[DORB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.scribe.cs
+[SHA]: https://web.mit.edu/6.857/OldStuff/Fall03/ref/Shamir-HowToShareASecret.pdf
+[CP]: https://arxiv.org/pdf/1408.2157v1
+[OW]: https://link.springer.com/content/pdf/10.1007/3-540-39757-4_5.pdf
+[MAU]: https://crypto.ethz.ch/publications/files/Maurer02.pdf
+[CLS]: https://proceedings.mlr.press/v32/cicalese14.pdf
+[BUSH]: https://doi.org/10.1214/aoms/1177729387
+

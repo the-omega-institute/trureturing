@@ -1,0 +1,35 @@
+**Convention 11.2 (complete resource and recovery boundary).** The
+preparation in Proposition 11.1 is initially source-blind and depends
+only on public $D$ and installed tables; the later request is absent.
+A complete name includes every accessible surviving control, selector,
+buffer, length, allocation and timing distinction. Fixed-width storage
+and common finite control can be arranged, while the separately paid
+handoff and isolation service removes access to the scanned arrays,
+transcripts, intermediate names and other acquired dependence. This is
+exactly the service assumption of §1; it is not physical erasure proved
+from the tree equations.
+
+Finite table generation and installation, preparation work and temporary
+workspace, selection work, post-request workspace, address construction,
+final predictor size, authentic-count representation, lawful entry,
+isolation, continuity, authentication and physical time are separate
+resources. The factor $(b,c)$ alone has $0\le b\le2D$ and
+$c\in\{0,1\}$, so at most
+$\lceil\log_2(2D+1)\rceil+1$ bits suffice for that factor. No
+free total-efficiency conclusion is implied by the alphabet count.
+
+Under those services the boundary observer obtains exactly
+
+$$
+(E(t),D,p,\text{zero or one actual literal reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NCE.80}
+$$
+
+The inverse reads the first branch count and whether an alpha stage
+occurs. It does not supply an unknown age, source identity, whole hidden
+source, free acquired reference, hidden history or physical space-time
+recovery. The source and menu remain those of Definition 1.1, with
+no reset, copying, navigation or equality action.
+

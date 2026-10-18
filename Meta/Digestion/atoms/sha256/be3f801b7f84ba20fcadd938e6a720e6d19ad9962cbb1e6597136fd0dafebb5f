@@ -1,0 +1,129 @@
+**Definition 205.16 (Original-source meaning and unresolved quantifiers).**
+Keep the original actual countable labeled source of 110.1:
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(r,g)=\mathbf1_{p_i\mid N(r,g)},\\
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r.
+\end{aligned}
+$$
+
+The prime replies are static. Every finite Boolean word, including
+multiple-zero words, has an actual source by Boundaries 35.2 as used
+in 110.2. Keep the full original disjoint-union Borel tape carrier
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with blocks copies
+of $(0,1)$, measurable marks $\theta_j=(B_1,1/(j+2))$, unchanged
+consumer and original nonatomic targets. The separately selected laws
+are, for every original sequence,
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+               +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_n\longrightarrow0.
+$$
+
+No condition on the dual $\gamma$ restricts this amplitude universe.
+There is zero advice, one source-independent common seed per class,
+actual sourcewise almost-sure finite handoff, and uniform TV over all
+actual sources and all Borel events. The hard count is at most two
+actual requests, including repetitions and obtained-but-ignored replies.
+$N$ preselects and obtains its entire schedule; $O$ preselects increasing
+addresses and stops at its first queried zero or exhaustion, using only
+the acquired transcript. Arbitrary addresses and full-carrier outputs
+remain admissible. These are exactly Definition 90.1's classes, without
+a source probability law, a mean-count substitution or an address cap.
+
+For $0<\varepsilon\le1$, let
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$. Reuse both directions
+of 110.2: finite $N$ feasibility is equivalent to original $N_2$
+feasibility at this exact closed cap, and feasibility in
+$\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}$ is equivalent to
+original $O_2$ feasibility. The finite system keeps, for every zero
+word of first zero $n$,
+
+$$
+p_w(0)\ge1-a_n-\varepsilon,\qquad
+p_w(n)\ge a_n-\varepsilon,\qquad
+p_w(0)+p_w(n)\ge1-\varepsilon,
+\qquad p_{1^{L_a}}(0)\ge1-\varepsilon.
+$$
+
+The positive row is a separate row; the pair row is not replaced by
+the singleton rows. A genuine finite probability allocation is realized
+by a fixed interval partition of one $U\sim\operatorname{Unif}[0,1)$
+selecting the entire table before any answer, followed by its actual
+class-appropriate requests and an original output mark. Two class
+allocations may use two partitions of the same $U$, with their common
+refinement; equal outputs at each seed are not required. The partial-row
+mixtures in Theorem 205.2 and (205.9) have this lawful whole-table realization,
+but their omitted-row guarantees do not constitute full acquisitions
+at a target cap. The dual scores, measures $\nu$, conditional densities
+and threshold interval lengths are deterministic coefficients, not
+acquisition probabilities, source laws or additional randomness.
+
+For necessity, 110.2 retains full-carrier arbitrary-address competitors:
+projection of output tapes contracts TV, a common seed event controls
+the preselected schedule tail, actual finite-pattern sources and finite
+execution cutoffs give approximate finite feasibility, and compactness
+of the same finite catalog simplex gives the closed endpoint. It does
+not preserve every original law. For sufficiency its finite tables give
+finite actual handoff, and at every actual $n>L_a$ the error is exactly
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\},
+$$
+
+including $a_n=\varepsilon$. All actual tails stay positive, monotone
+and vanishing. The finite positive word is tail bookkeeping, not an
+infinite all-positive source. Immediate base output handles $L_a=0$.
+The auxiliary $H_L$ is used only in the existing radial comparison
+range; an arbitrary original amplitude profile is not presumed to
+belong to it. The normalized stopped-kernel condition $c\ge H(p)$ remains 109.1's
+criterion, with the scalar budget supplied by normalization in 108.4;
+its coefficient vector is distinct from the auxiliary polytope $H_L$.
+
+What is calibrated in this section is the common realization of all
+cells, one joint support budget, the number of rewarded labels that
+must be retained as length grows, and the exact cost of eliminating
+early credit. Nondecreasing active profiles in (205.31) are a genuine
+restriction, whereas (205.27) permits arbitrary profile ordering.
+No fixed-label reduction, additive-budget reduction, all-positive-atom
+assumption or unconditional early deletion is established. The route
+falsifiers delimit those methods, and do not refute the original problem.
+
+The all-$L$ question remains: for every input (205.3) with arbitrary
+$E$, arbitrary late profile and arbitrary low $T$, does $\delta\le1$
+imply the existence of one $V\ge0$, $\theta\in[0,1]$ satisfying
+(205.2)? The union of the sufficient regions above is not proved
+exhaustive. More generally, the universal comparison
+
+$$
+\rho_O(b)\le\max\{1,\rho_N(b)\}\quad(b\in H_N),\qquad
+\rho_C(b)=\min_{\lambda\ge0,\ G_C\lambda\ge h(b)}\sum_D\lambda_D,
+\quad H_N=\{b\in H_L:\rho_N(b)<\infty\},
+$$
+
+and, for every original positive monotone vanishing sequence and every
+positive closed cap,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing
+$$
+
+are unresolved here. A complete falsifier still requires a nonnegative
+input with $\Delta_O\le1$, one $b\in H_L$, and the same complete
+attained allocation $\lambda\ge0$ with $G_N\lambda\ge h(b)$,
+$M=\sum_D\lambda_D\ge1$, and $F_{Q(y)}(b)>M$, followed by the
+applicable original transport. It must give an actual common-seed
+$N_2$ attainer and a uniform lower certificate against every original
+full-carrier arbitrary-address $O_2$ competitor. No such falsifier is
+provided by a partial-row law, a support gap, a failed sufficient test,
+or the exact-law obstruction of 112.2, which permits another stopped
+law at the same cap.
+

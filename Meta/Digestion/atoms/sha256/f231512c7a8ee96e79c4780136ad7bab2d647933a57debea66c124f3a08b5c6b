@@ -1,0 +1,10 @@
+**Theorem 11.1 (actual unscaled energy limit).** On the unchanged original full complex problem and exact critical path,
+
+$$
+\boxed{\displaystyle\lim_{s\downarrow0}E_{s^2}(\chi_cs^3)
+                      =\min(0,C_{\rm resp}).}
+\tag{11.1}
+$$
+
+Proof. Theorem 6.1 and native negativity give $\limsup E_s\le\min(0,C_{\rm resp})$. Theorem 9.1 bounds $E_s$ below by a finite constant. If its liminf were strictly smaller, a sequence could be chosen with $E_s\to L<\min(0,C_{\rm resp})$. In particular $L<0$, so $r_s=-E_s/s^6\to\infty$ there. Choose actual normalized ground states; Proposition 75.2 gives existence and $D(S)$ membership at each positive cutoff. The actual equivalence (3.9), with precisely these hypotheses, supplies global convergence to $\mathcal O_c$. Theorem 10.1 forces $L\ge C_{\rm resp}$, a contradiction. This proves the matching lower direction. No equality of an actual infimum was inferred from an upper construction alone. $\square$
+

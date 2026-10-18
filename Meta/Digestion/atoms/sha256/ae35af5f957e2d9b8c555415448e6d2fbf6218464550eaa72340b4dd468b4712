@@ -1,0 +1,14 @@
+**Convention 11.1 (the same complete paid graph).** Retain every
+source, entry, cost, correctness and simultaneous-cap hypothesis of
+Convention 10.1. In particular the graph is correct on every Boolean
+input, at both $n,W$ caps, and its native consumer has the original
+full-fiber meaning of (SI.5). Common-support cuts, pools and the
+partition $\mathcal L_*,\mathcal A_*$ are exactly those of (SI.59).
+The unrestricted inequality there remains the main unresolved target.
+The condition below is imposed only on the actual live states of
+remaining late-long pools. No order, read-once condition after a
+certificate, or acyclicity of the syntactic union graph is imposed
+on a competitor.
+
+### 11.1 Actual prefixes, their multiplicity and normalized cell mass
+

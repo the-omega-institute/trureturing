@@ -1,0 +1,27 @@
+**定义 30.1（真实全向量与严格分裂配方）。** 取两两不同的原生原型 $F_1,\ldots,F_m$，$m\ge1$，叶数为 $n_i$；此处不要求正成员。对固定读口 $p$ 定义
+
+$$
+a_p(q)=(r_p(q,F_i))_{i=1}^m,\qquad
+\mathcal A_p(F)=\{a_p(q):q\in\{L,R\}^*\}.
+$$
+
+每个向量都包含整个原型族的坐标，包括当前幸存集之外的坐标。只允许真实可实现向量；按先长度再 $L<R$ 的 shortlex 次序，取其第一个真实地址 $q_p(a)$。配方在非单点幸存集 $S$ 选择一个 $a\in\mathcal A_p(F)$，要求 $\{a_i:i\in S\}$ 至少两个值，按非空回复子集递归；单点停止路由，尚未证明未知源就是该原型。置
+
+$$
+\chi_{\rm raw}(\alpha)=\chi_{\rm raw}(\beta)=0,\quad
+\chi_{\rm raw}(\mathsf{br})=\chi_{\rm raw}(\mathsf{abs})=1,
+$$
+
+$$
+\chi_{\rm coarse}(\alpha)=\chi_{\rm coarse}(\beta)=0,\quad
+\chi_{\rm coarse}(\mathsf{none})=1.
+$$
+
+沿原型 $i$ 的路由路径对向量求和，定义有限核心的候选向量
+
+$$
+v_i=n_i+\sum_{a\text{ 在路径 }i}\chi_p(a_i),\qquad
+\mathcal V_p(F)=\{v:\ v\text{ 来自上述某个配方}\}.
+\tag{JM.89}
+$$
+

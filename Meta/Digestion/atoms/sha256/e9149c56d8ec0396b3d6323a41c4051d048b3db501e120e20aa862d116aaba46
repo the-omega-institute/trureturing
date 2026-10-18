@@ -1,0 +1,22 @@
+**Definition 1.1 (sources and epochs).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\end{aligned}
+\tag{NRF.1}
+$$
+
+All trees are nonempty, finite, ordered and fully bracketed. Equality is
+literal constructor equality. Positions are finite words over $L,R$;
+$\varepsilon$ is the root. Write $v|_p$ only when $p$ is present.
+There is no bound on source size, height, position length or epoch.
+The source $u$ is the actual register contents at source-independent
+invocation. The integer $n\ge0$ counts genuine updates through the
+specified validation event, and $j\ge0$ counts genuine updates strictly
+after validation through the separate outer Return. Thus the two
+register contents are $\rho^n u$ and $\rho^{n+j}u$.
+

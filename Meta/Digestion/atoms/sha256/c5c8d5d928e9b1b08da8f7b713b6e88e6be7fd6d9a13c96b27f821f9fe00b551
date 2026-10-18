@@ -1,0 +1,62 @@
+**Lemma 3.1 (spectral failure separation at height equality).** Define
+
+$$
+\lambda_\epsilon=\frac{-d_f+\epsilon L_f}{2},\qquad
+f_\epsilon=\frac{(z_f,\lambda_\epsilon+d_f)^T}
+ {\sqrt{z_f^2+(\lambda_\epsilon+d_f)^2}},\qquad
+b_\epsilon=\langle f_\epsilon|M^{1/2},\quad
+B_\epsilon=b_\epsilon^\dagger b_\epsilon.
+\tag{TA.15}
+$$
+
+Extend each row by zero on input coordinate $0$. Then
+$\lambda_+>0>\lambda_-$, $B_++B_-=M$ and
+$\operatorname{tr}(B_\epsilon\Delta)=\lambda_\epsilon$.
+For every height optimizer, each nonzero supported later-failure effect
+at an actual label is a positive multiple of exactly one $B_\epsilon$.
+Each spectral sign has total multiple one. At a label also carrying live
+mass, its live height difference has the same sign as its failure
+difference, or is zero. One label cannot contain positive masses of
+both spectral signs.
+
+Proof. The two vectors in TA.15 are orthonormal eigenvectors of $\Xi$;
+their denominators are positive because $z_f\ne0$. For arbitrary
+supported later-failure effects $B_\gamma\succeq0$ summing to $M$,
+write $B_\gamma=M^{1/2}E_\gamma M^{1/2}$ on $\operatorname{ran}M$,
+where $E_\gamma\succeq0$ and $\sum E_\gamma=I_2$. Put
+$a_\pm=\langle f_\pm,E_\gamma f_\pm\rangle\geq0$. Then
+
+$$
+|\operatorname{tr}(E_\gamma\Xi)|
+ =|\lambda_+a_++\lambda_-a_-|
+ \leq\lambda_+a_+-\lambda_-a_-
+ =\operatorname{tr}(E_\gamma|\Xi|).
+\tag{TA.16}
+$$
+
+Equality holds precisely when at least one $a_\pm$ is zero. Positivity
+makes a matrix annihilate a vector with zero quadratic form. A nonzero
+equality summand therefore equals a positive multiple of one eigenline
+projector, proving the asserted form of $B_\gamma$.
+
+For weak instruments the credited reduction gives
+
+$$
+2T_{\rm actual}\leq
+ (1-\delta)\Delta A+L_f+\sum_\gamma|f_\gamma^TGf_\gamma|
+ \leq2\mathcal T(s).
+\tag{TA.17}
+$$
+
+The one-ray lemma supplies $f_\gamma$ for each actual low live-bearing
+label; their grouped maximizing-report/sign tuple is feasible because
+the original contrast is at most $s_0\sum|f_{\gamma0}f_{\gamma1}|$.
+The first inequality separates live and failure height differences by
+the triangle inequality and uses TA.16. At height equality both gaps
+are zero. Thus every spectral slack and every live/failure triangle
+slack is zero, giving all the claims. In the strong regime JR's sharp
+height formula is exactly the analogous sum over its fixed low/high
+ray differences and $L_f$. The identical nonnegative-slack argument
+applies. Sums become integrals under the stipulated hypotheses, and
+zero nonnegative integrated slack vanishes almost everywhere. $\square$
+

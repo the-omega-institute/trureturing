@@ -1,0 +1,24 @@
+### 定理四：局部因果时间的最小分辨阶
+
+在固定 $(X,Y,Z)$ 的纤维上，长度为 $n$ 的局部因果历史能够识别 $\kappa$，当且仅当：
+
+```math
+\boxed{
+\operatorname{Curv}_{\Gamma}^{(n)}\neq0.
+}
+```
+
+若对所有：
+
+```math
+1\le j\le n
+```
+
+都有：
+
+```math
+\operatorname{Curv}_{\Gamma}^{(j)}=0,
+```
+
+则任何不超过 $n$ 步的局部时钟历史和输出历史都不能识别 $\kappa$。
+

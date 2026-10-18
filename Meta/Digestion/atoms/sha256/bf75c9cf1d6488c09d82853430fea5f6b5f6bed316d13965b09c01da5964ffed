@@ -1,0 +1,28 @@
+**Corollary 19.2 (optimal yield and required charge).** For finite $C$,
+the smallest conditional error in this class, allowing yield to vary, is
+
+$$
+\inf R_*=\frac{\ell}{1+\ell}=\frac1{1+e^C},
+\qquad P_{\rm opt}=\frac{1+\ell}{2}.
+\tag{PR.73}
+$$
+
+For $0<\delta<1/2$, existence of an acquisition with $R_*\leq\delta$
+therefore requires and is achieved with
+
+$$
+C\geq\log\frac{1-\delta}{\delta}.
+\tag{PR.74}
+$$
+
+Proof. The first branch of the lower boundary (PR.69) decreases with
+$P$, and the second increases. They meet at $(1+\ell)/2$.
+The construction (PR.72) attains their intersection. Solving
+$1/(1+e^C)\leq\delta$ gives (PR.74). At $C=0$ only
+$P=1,B_*=1/2$ occurs. Every finite $C$ has strictly positive
+minimum error. $\square$
+
+All scores refer to the stated binary decision and prior. A smaller
+$R_*$ is not an exact parity certificate, whole-law identification,
+instrument-distance bound or guarantee for every future decision.
+

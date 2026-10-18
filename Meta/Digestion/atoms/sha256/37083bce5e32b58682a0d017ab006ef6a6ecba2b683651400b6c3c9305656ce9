@@ -1,0 +1,17 @@
+**比较 86.5（Two fixed targets, equal counts and different placement prices）。** Let $f,F$ continue to denote the original Construction 84.4 target and its original history pullback. They are distinct from $\widetilde f,\widetilde F$.
+
+| Full low-cycle quantity | Original $f$ | New $\widetilde f$ |
+| --- | --- | --- |
+| Component label counts on each value | $2^d+1$ | $2^d+1$ |
+| Joined class count | $2^{2d}-1$ | $2^{2d}-1$ |
+| Joined multiplicity multiset | two twos; $N-3$ ones | two twos; $N-3$ ones |
+| Doubled joined-class phase sets | $\{1,3\}$ and $\{N-1,N\}$ | $\{0,1\}$ and $\{2,N\}$ |
+| Exact adaptive/GLOBAL block pair | $(d+1,2d)$ | $(d+1,2d+1)$ |
+| Exact adaptive/GLOBAL emitted-bit pair | $(m(d+1),2md)$ | $(m(d+1),m(2d+1))$ |
+
+The original price pair is credited to Theorems 84.5 and 85.1 on their unchanged fixed target. The new GLOBAL price is exactly one block, or $m$ emitted bits, larger. Its excess over its adaptive price is $d$ blocks; the original excess is $d-1$.
+
+The two edits change the INITIAL equality partition. For example phases $N-1,N$ had equal labels in each old component and now have unequal labels. No bijective renaming of labels can produce that change. The edits also relocate which classes are doubled, while preserving their multiset of sizes. They are not a rearrangement of component occurrence counts claimed to be invariant.
+
+There is no contradiction between an old GLOBAL price $2d$ and a new GLOBAL price $2d+1$: their target arguments differ. Lemma 86.2 refutes a GLOBAL bound at most $2d$ for (86.4). It neither refutes nor repairs an answer about the original $f$. The old-target equalities retain their own ordinary proofs and hypotheses, and the new-target equalities require the stream and obstruction proved here.
+

@@ -1,0 +1,58 @@
+### 83.3. A finite rank certificate and every exceptional ratio
+
+Order the row pairs and column pairs of \(M\) as \((01,02,12)\).
+List its nine two-by-two minors in row-pair-first lexicographic order
+as \(m_0,\ldots,m_8\), and put \(m_9=p^2+t^2+b^2-3\).
+Let \(A\) be their coefficient matrix in the six monomials
+\[
+ (1,p,t,p^2,pt,t^2).
+\]
+Rank at most one and the norm equation would imply
+\(A(1,p,t,p^2,pt,t^2)^{\mathsf T}=0\), so every six-row
+minor of \(A\) would vanish. All the following identities are
+ordinary polynomial determinants of the nine printed entries above.
+For a six-row list \(I\), write \(A[I]\) for those rows in that
+order, with all six columns. Define
+\[
+\begin{gathered}
+ V=(3b^2+1)k^2+4bk+b^2+3,\qquad
+ L=b(b^2-1)k+5b^2+3,\\
+ I_0=(0,1,2,3,4,6).
+\end{gathered}
+\]
+Expansion gives
+\[
+ \det A[I_0]=-768bk^3(b-k)(b^2-3)(b^2+3)(k^2+1)^7
+                       (bk-1)LV^2.                    \tag{83.6}
+\]
+The quadratic is positive because
+\[
+ V=(3b^2+1)\left(k+\frac{2b}{3b^2+1}\right)^2
+                   +\frac{3(b^2+1)^2}{3b^2+1}>0.
+\]
+Thus only four finite ratios need further treatment. The three
+nonzero ones have the following exact nonzero minors:
+
+| Ratio | Rows of \(A\) | Determinant |
+| --- | --- | --- |
+| \(k=b\) | \((9,1,2,3,4,6)\) | \(-1152b^3(b^2-1)(b^2-3)(b^2+1)^{10}(b^6+b^4+51b^2+27)\) |
+| \(k=1/b\) | \((0,5,2,3,4,6)\) | \(-24576(b^2-1)(b^2-3)(b^2+1)^7(3b^2+1)(b^4+10b^2+1)^2/b^{20}\) |
+| \(k=(5b^2+3)/[b(1-b^2)]\) | \((7,1,2,3,4,6)\) | \(6144(b^2-3)^2(b^2+1)^{13}(b^2+3)^2(3b^2+1)(5b^2+3)^2(b^4+22b^2+9)^8(b^4+54b^2+9)^2/[b^{21}(b^2-1)^{24}]\) |
+
+At \(k=0\), the minor of \(M\) in rows \(0,1\) and columns
+\(1,2\) is \(2[t^2+bpt+2\rho]\). On the norm circle,
+\[
+ t^2+bpt+2\rho=(t+bp/2)^2+2\rho-b^2p^2/4
+                      \geq\rho(2-b^2/4)>0.             \tag{83.7}
+\]
+At \(k=\infty\), use the leading \(k^2\) coefficient of each
+entry of \(M\). The corresponding determinant on rows \(I_0\)
+is the leading \(k^{24}\) coefficient of (83.6):
+\[
+ 768b^3(b^2-1)(b^2-3)(b^2+3)(3b^2+1)^2\ne0.            \tag{83.8}
+\]
+All failures of the generic minor have now been covered, for either sign
+of \(b\). The phase pole \(v=\infty\) was already retained by
+homogenization. Thus \(\operatorname{rank}M\geq2\) everywhere
+on the physical domain, proving Theorem 83.1.
+

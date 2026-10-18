@@ -1,0 +1,54 @@
+## 51. 从有限自伴能级到广义 RH 的必要门槛
+
+镜像、Fisher Hessian 和局部正算子只能构造 RH 的候选接口。一个可审计的 Hilbert–Pólya 路线至少需要以下对象。
+
+设 \(H_N=H_N^*\) 是有限场谱算子，\(D=D^*\) 是具有紧预解式的极限算子，且 \(D\) 的谱写为 \(\{\gamma_j\}\)。若正规化特征行列式 \(D_N^{\rm reg}(z)\) 在紧集上一致收敛到 \(D^{\rm reg}(z)\)，并存在无零整函数 \(e^{Q(z)}\) 使
+
+\[
+\Xi(z)
+=
+\xi\!\left(\frac12+iz\right)
+=
+C e^{Q(z)}D^{\rm reg}(z),
+\tag{51.1}
+\]
+
+同时已匹配 Gamma 因子、Euler 局部因子、零点重数和增长条件，则 \(D\) 的实谱才会推出 \(\Xi\) 的全部零点位于实 \(z\) 轴，从而推出 RH。
+
+若研究一般完成 \(L\)-函数，则非自对偶扇区必须成对出现。取单位ary 对合
+
+\[
+R:\mathcal H_\pi\to\mathcal H_{\widetilde\pi},
+\qquad
+R^2=I,
+\]
+
+并构造满足
+
+\[
+RDR^{-1}=-D
+\tag{51.2}
+\]
+
+的一阶自伴算子，便得到谱的 \(\pm\gamma\) 配对，对应 \(s\leftrightarrow1-s\) 的功能方程对称。一个抽象模板是
+
+\[
+D=
+\begin{pmatrix}
+0&B^*\\
+B&0
+\end{pmatrix},
+\qquad
+D^2=
+\begin{pmatrix}
+B^*B&0\\
+0&BB^*
+\end{pmatrix}.
+\]
+
+这说明“镜像”首先给出对称配对；实谱仍来自自伴性和正定 Hilbert 结构。仅有有限矩阵实谱、谱间距相似、前若干数值吻合或 \(2\leftrightarrow5\) 的组合对称，都不构成 RH 证据。
+
+等价的迹公式接口需要对测试函数 \(f\) 证明正规化恒等式，其结构必须同时包含恒等项、Archimedean 项、素数及幂次项、扇区对偶项和零点谱项。当前文档中的 Fibonacci 矩阵、模投影和有限 Hessian 只完成 field-side 的有限对象，尚未完成 prime-coded transfer、正则化、完成 \(L\)-函数行列式或全局自伴算子。
+
+---
+

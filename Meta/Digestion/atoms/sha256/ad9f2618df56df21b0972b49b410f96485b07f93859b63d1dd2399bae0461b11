@@ -1,0 +1,31 @@
+**Lemma 2.3 (three separation facts).** For every rank vector:
+
+1. A residual-free subtemplate of the input has mass at most $M$.
+2. A subtemplate containing a residual occurrence has mass at least $G$
+   at $\mathbf z^\star$. If its root is an explicit pair, its mass is
+   at least $G+1$.
+3. For occurring decorations, equality
+   $\rho^a(z_i^\star)=\rho^b(z_j^\star)$ implies $i=j$ and $a=b$.
+
+Proof. In the first assertion, induction on the residual-free syntax
+using (URR.5) bounds its mass by its weight. Subtemplate weights are at
+most the weight of a containing input side, since every pair adds one
+and all weights are nonnegative. Fixed ground trees are included by the
+definition of $w$; their native sizes need not be small.
+
+The code of $C_1=\langle\alpha,\alpha\rangle$ is
+$F([0],[0])$, so $\gamma(C_1)=1$. For $r\ge1$ its successor has a
+positive-mass left child. Equation (URR.5) gives
+$\gamma(C_{r+1})=1+\gamma(C_r)$, and hence $\gamma(C_G)=G$.
+All decorated chosen residuals have mass $G$ by invariance. Moving up
+from any such occurrence never decreases mass. At a pair containing
+such an occurrence, the positive child prevents collapse and contributes
+the strict additional one. This proves the second assertion.
+
+For the third, both trees are iterates of the same $C_G$. Applying
+(URR.6) to their equality gives $b_i+a=b_j+b$. The integer intervals
+$[b_i,b_i+d]$ are pairwise disjoint, because their starting points differ
+by multiples of $d+1$. Since $0\le a,b\le d$, first $i=j$ and then
+$a=b$. Conversely identical labels certainly have identical values.
+This also accounts for every repeated occurrence. $\square$
+

@@ -1,0 +1,26 @@
+**Theorem 62.9 (both actual signed-dyadic evolutions).** Fix a supported maximum $N_*$, public nonnegative rational parameter approximants $\widetilde a,\widetilde g,\widetilde\nu$ with rational bounds $0\le\widetilde a\le\bar a$, $0\le\widetilde g\le\bar g$, $0\le\widetilde\nu\le\bar\nu$, a finite checkpoint list, and public rational intervals $\theta_\ell\ge0$. For an interval put $\delta=\theta/m$, $m\ge1$. One reference product slice consists of the $K$ diagonal phase slots with angles $\delta(\widetilde a d_p-\widetilde g\phi(p))$, the $K-1$ inherited seam slots with angles $\delta\widetilde a$ in §60's three matching colours, and every public unordered bank pair in a fixed order. The pair word is (62.18) with
+
+$$
+\xi_{pq}=-\delta\widetilde\nu\gamma_{pq}
+\quad\hbox{or}\quad
+\xi_{pq}=-\delta\widetilde\nu G^{\rm c}(p,q),
+\qquad \text{enable }x_px_q.
+\tag{62.25}
+$$
+
+All one-body enables remain the authentic $x_p,x_q$ of §60. The pair word's enable multiplies every constituent rotation, including all fixed-angle rotations. There are exactly
+
+$$
+F_*=2K-1+89\binom K2
+\tag{62.26}
+$$
+
+angle blocks per slice. Choose public $k\ge2$ with
+$2^k>2+T(3\bar a+\bar g+6\bar\nu)$, where $T$ bounds the total commissioned comparison time, and put $J=b+k$, $b\ge0$. Compute each fixed $\pi/2,\pi/4$ angle effectively and round it to a signed dyadic within $2^{-b}$. Compute killed rational digits by (62.23), and common digits by the rational (62.3); round each coefficient angle within $2^{-b}$. Every block scans all $J$ magnitude digits. Every enabled digit invokes the already supplied literal $P$ or $B$ catalog matrix of signed angle $\pm2^{j-b}$. A disabled digit invokes its charged identity matrix. The public elementary angle cap is therefore $2^{k-1}$, with enable amplitude in $\{0,1\}$; a common finite run uses the maximum of these caps across its commissioned intervals. This is part of the supplied finite catalog contract, not an inferred physical control-amplitude capability.
+
+Thus both prescriptions have finite actual evolutions from the same original packet and the supplied P/B vocabulary. The matrices executed at finite accuracy are the dyadic products, rather than the real-angle reference in Theorem62.7.
+
+Proof. The width covers the fixed constants, diagonal angles, edge angles and pair angles, since (62.4) gives $G_D^{\rm k}(p,q)\le\lambda^{-1}<6$. The rational quotient from (62.23) supplies the floor of the scaled magnitude. A fixed effective enclosure of $\pi$ follows, for example, from the classical identity $\pi=16\arctan(1/5)-4\arctan(1/239)$ and alternating-series remainders. Its finite rational terms, additions and required digit determination are paid public computation. When an enclosure crosses a digit threshold, a certified overlapping bracket of width below $2^{-b}$ followed by rational rounding still gives the required angle error; no exact equality test on $\pi$ is needed. No catalog entry has an alleged exact-dyadic $\pi$ angle.
+
+Digits of a block use the same generator and hence commute; their product is the exact literal matrix at the written dyadic angle. Negating and reversing a word constructs and executes its inverse by all its actual slots. In particular the last 44 blocks of the pair word are charged, and the same rounded constants can be used in reverse. The private enable affects only its finite local matrix, never its wiring, successor or timing. The central pair sign is the public minus sign even when its magnitude is zero; diagonal signs depend only on public depth and supplied parameters. No computed private zero or sign chooses a catalog row. A zero or inactive pair retains all 89 blocks and all $89J$ digit slots. Public original responses can select the next finite commission, but private flags cannot select a public schedule. The new classical signals have no callable actor, verifier or consumer port. $\square$
+

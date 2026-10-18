@@ -1,0 +1,48 @@
+**推论 54.7（统一的两个修正系数）。** 对所有 $N\in\{3,4,\ldots,\infty\}$，当 $\delta\downarrow0$，统一有
+
+$$
+R_N(\delta)=5\sqrt\delta+\frac{25}{24}\delta
+ +\frac{1201}{5760}\delta^{3/2}+O(\delta^2).
+\tag{54.27}
+$$
+
+$O$ 的常数和正参数邻域均不依赖预算；任意变量整数预算 $N(\delta)\ge3$ 也有同一展开。特别地，
+
+$$
+\lim_{\delta\downarrow0}\ \sup_{N\in\{3,4,\ldots,\infty\}}
+\left|\frac{R_N(\delta)-5\sqrt\delta}{\delta}-\frac{25}{24}\right|=0.
+\tag{54.28}
+$$
+
+证明。置 $z=\sqrt\delta$，取 $\rho_- =z^2/12$。精确代数给
+
+$$
+\frac{B(\rho_-,z^2)}z
+=F(z):=\sqrt{2z^2+
+ \left(\frac{25}{24}z+
+ \frac12\sqrt{100\sqrt{1-z^4/144}+\frac{49}{144}z^2}\right)^2}
+\quad(z>0).
+\tag{54.29}
+$$
+
+右端在包含 $[-1/10,1/10]$ 的开邻域实解析：内层根号的被开方数严格为正，外层括号至少为 $9/2-5/48>0$，且 $F(0)=5$。
+Taylor定理的有界三阶导数给一个不依赖预算的 $O(z^3)$ 余项。
+具体系数由
+
+$$
+\begin{aligned}
+\frac12\sqrt{100\sqrt{1-z^4/144}+\frac{49}{144}z^2}
+ &=5+\frac{49}{5760}z^2+O(z^4),\\
+F(z)&=5+\frac{25}{24}z+
+ \left(\frac{49}{5760}+\frac15\right)z^2+O(z^3)
+ =5+\frac{25}{24}z+\frac{1201}{5760}z^2+O(z^3)
+\end{aligned}
+\tag{54.30}
+$$
+
+给出。乘 $z$ 得到 $B(\rho_-,\delta)$ 的（54.27）展开。
+定理54.6使全部 $R_N$ 与该下端的差同在 $[0,13\delta^2/100]$ 中，故一个共同余项界适用于所有预算及变量预算。
+（54.27）减去 $5\sqrt\delta$ 后除以 $\delta$，其余项统一为
+$(1201/5760)\sqrt\delta+O(\delta)$，给（54.28）。
+这只比较各自合法控制器类的风险下确界，不给任何一条可数历史添加终端事件。证毕。
+

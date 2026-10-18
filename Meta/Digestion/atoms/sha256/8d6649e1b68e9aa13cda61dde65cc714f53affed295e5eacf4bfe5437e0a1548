@@ -1,0 +1,37 @@
+**定义 229.2（Scores, anchor and signed quotient）。** A full score is
+the nonnegative array $y=(A_w,C_w,P_w;T)$, with zero-word reward
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]
+                         +P_w[\ell\in\{0,n(w)\}],
+\qquad g_y(1^L,\ell)=T[\ell=0].
+$$
+
+Here $[\cdot]$ is an indicator. Take the legal anchor
+$R=O(1,2;1,2,0)$ and $\alpha=(1,1,0,\ldots,0;0)$. Put
+
+$$
+\begin{aligned}
+W(y)&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+B_{\mathcal C}(y)&=\max_{D\in\mathcal D_{\mathcal C}}
+                              \sum_wg_y(w,D(w)),\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W(y)\ge0,
+\qquad \mathcal C\in\{N,O\},\\
+\beta_n(y)&=\sum_{\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_w(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta_1,\ldots,\beta_L;K_y).
+\end{aligned}
+$$
+
+For an arbitrary signed $q=(\beta;K)$ define
+$F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke$. The score is nonnegative;
+the difference of two quotients need not be nonnegative. These
+definitions use the complete score coordinates of
+[VI, 198–199](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md#199-完整事件锥的有符号替代零成本闭包与剩余原始比较).
+
+Let $z_D$ be the event vector of a complete table,
+$r=z_R=d(\alpha)$, $h(b,e)=d(b,e)-r$, and
+$G_{\mathcal C}=(z_D-r)_{D\in\mathcal D_{\mathcal C}}$. Then
+$F_{Q(y)}=y\cdot h$ and
+$\Delta_{\mathcal C}(y)=\max_D y\cdot(z_D-r)$.
+

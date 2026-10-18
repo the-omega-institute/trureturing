@@ -1,0 +1,66 @@
+**Proposition 269.3 (A score whose replacement is necessary).**
+At $L=7$, the following full score $Y$ has
+$Q=(-1,0,1,-1,1,1,1;7)$, $W_Y=2$,
+$\Delta_O(Y)=4/3$ and $\Delta_N(Y)=7/3$.
+
+| Type | Word | Coefficient |
+| --- | --- | --- |
+| $A$ | $0101100$ | $5/12$ |
+| $A$ | $0101110$ | $1/4$ |
+| $A$ | $0111001$ | $1/12$ |
+| $A$ | $0111011$ | $1/4$ |
+| $P$ | $1001001$ | $5/12$ |
+| $P$ | $1001011$ | $1/4$ |
+| $P$ | $1011100$ | $1/12$ |
+| $P$ | $1011110$ | $1/4$ |
+| $C$ | $1100011$ | $1/2$ |
+| $C$ | $1100110$ | $1/2$ |
+| $A$ | $1110001$ | $1/3$ |
+| $A$ | $1110100$ | $1/6$ |
+| $A$ | $1110110$ | $1/2$ |
+| $C$ | $1111000$ | $1$ |
+| $C$ | $1111100$ | $1$ |
+| $C$ | $1111110$ | $1$ |
+
+**Proof.**
+Summing by first-zero class gives the asserted $Q$ and $W$.
+Here are all complete pair supports; the $O$ column gives its
+three cell maxima, and the last column gives the sum of the four
+independently maximized $N$ cells.
+
+| Pair | $O$ cell maxima | $N$ support |
+| --- | --- | --- |
+| $1,2$ | $(1,1,1)$ | $3$ |
+| $1,3$ | $(1,1,4/3)$ | $10/3$ |
+| $1,4$ | $(1,1,1)$ | $3$ |
+| $1,5$ | $(1,1,1)$ | $3$ |
+| $1,6$ | $(1,1,1)$ | $3$ |
+| $1,7$ | $(1,1,1)$ | $3$ |
+| $2,3$ | $(1,1,4/3)$ | $10/3$ |
+| $2,4$ | $(1,1,1)$ | $3$ |
+| $2,5$ | $(1,1,4/3)$ | $10/3$ |
+| $2,6$ | $(1,1,1)$ | $3$ |
+| $2,7$ | $(1,4/3,2/3)$ | $3$ |
+| $3,4$ | $(4/3,1,1)$ | $13/3$ |
+| $3,5$ | $(4/3,1,1)$ | $10/3$ |
+| $3,6$ | $(4/3,1,1)$ | $23/6$ |
+| $3,7$ | $(4/3,1,2/3)$ | $3$ |
+| $4,5$ | $(1,1,1)$ | $19/6$ |
+| $4,6$ | $(1,1,1)$ | $7/2$ |
+| $4,7$ | $(1,1,1)$ | $19/6$ |
+| $5,6$ | $(4/3,1,1)$ | $7/2$ |
+| $5,7$ | $(4/3,5/3,0)$ | $4$ |
+| $6,7$ | $(3/2,1,1/2)$ | $10/3$ |
+
+Every maximum includes all labels $0,\ldots,7$; empty and each
+singleton support are 3. The pair $1,3$ attains $10/3$ in $O$,
+and $N(3,4;3,0,0,5)$ has cell rewards $(1,4/3,1,1)$,
+attaining $13/3$. Subtracting $W=2$ proves the excesses.
+Thus $y=3Y/4$ has unit $O$ cost and raw $N$ cost $7/4$,
+whereas $3V_{1,1}/4$ has $N$ cost one and identical quotient.
+This is a dual score replacement; its support maximizer is not a
+cap-feasible primal witness. The complete-score interface and weak
+duality used here remain those of Sections 198–199; the additional
+assertion is the exact minimum over all full scores in (269.1).
+$\square$
+

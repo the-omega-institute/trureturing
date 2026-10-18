@@ -1,0 +1,25 @@
+**Proposition 18.1 (one common bridge, with no fixed-sign second correction).** For $t>0$, at terminal height zero, integrate the original $p_2$ of (3.2) over the last two phase coordinates. With $g_m(y)=(4\pi m)^{-1/2}e^{-y^2/(4m)}$,
+
+$$
+\int_{\mathbb R^2}p_2(t;0,y,z,w)dz\,dw
+ =h_t(0)g_t(y)\left(\frac{y^4}{48t}-\frac t4\right).
+\tag{18.1}
+$$
+
+It is negative for $y^4<12t^2$ and positive for $y^4>12t^2$. In particular positivity of the unperturbed Gaussian cannot imply a fixed sign of this second coefficient.
+
+Proof. On the same bridge used in (3.1), put $A_t=\int_0^tH_vdv$ and $B_t=\int_0^tH_v^2dv$. The first diagonal entry of $M_0$ is $t$; the corresponding entries of the linear and quadratic coefficients of $M(\beta)=M_0-2\beta M_1+3\beta^2M_2+O(\beta^3)$ are $-2A_t$ and $3B_t$. The Gaussian covariance is $2M(\beta)$. Marginalizing a Gaussian, and its displayed matrix derivatives, gives
+
+$$
+h_t(0)\mathbb E_{0,0}^t[3B_t\partial_mg_m+2A_t^2\partial_m^2g_m]_{m=t}.
+\tag{18.2}
+$$
+
+The exchanges retain that common bridge. To justify absolute marginalization, the whitened matrix bounds $\|M_0^{-1/2}M_jM_0^{-1/2}\|\le S_t^j$ bound the absolute differentiated Gaussian marginal by $CS_t^2g_t(y)(1+|y|^4/t^2)$. Conditional Gaussian moments in the other two coordinates give this bound directly. Its bridge expectation is finite. The zero-endpoint bridge has covariance $2(\min(v,v')-vv'/t)$, so direct integration yields
+
+$$
+\mathbb EB_t=t^2/3,\qquad \mathbb EA_t^2=t^3/6.
+$$
+
+Thus (18.2) equals $h_t(0)[t^2\partial_mg_m+(t^3/3)\partial_m^2g_m]_{m=t}$. Differentiating the one-dimensional density proves (18.1). This fixed-time unweighted marginal does not sign the weighted infinite-time integral $C_2=\int V_2p^2$, either complete canonical coefficient, or an actual native energy. $\square$
+

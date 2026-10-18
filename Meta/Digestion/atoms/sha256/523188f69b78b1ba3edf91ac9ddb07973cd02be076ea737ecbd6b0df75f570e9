@@ -1,0 +1,47 @@
+**定理 19.3.1（接受率可行体）。** 令
+
+$$
+F_K(\lambda)
+=
+\sum_{y\in\mathcal Y}\max_{x\in\mathcal X}\lambda_xK_x(y).
+$$
+
+存在某个 $q$ 与某个接受核 $a$，使箭头模型和门模型在每一个 $\operatorname{do}(X=x)$ 下的完整可见 $(S,O)$ 分布相同，当且仅当
+
+$$
+\boxed{F_K(\lambda)\le1.}
+$$
+
+因此可行接受计划的集合
+
+$$
+\Lambda_K=\{\lambda\in[0,1]^{\mathcal X}:F_K(\lambda)\le1\}
+$$
+
+是一个向下封闭的凸分段线性集合。
+
+**证明。** 在箭头模型中，接受且读到 $y$ 的质量为 $\lambda_xK_x(y)$。在门模型中同一质量为 $q(y)a(x,y)$。可见分布相同的必要条件是
+
+$$
+q(y)a(x,y)=\lambda_xK_x(y)
+\qquad\text{对所有 }x,y.
+$$
+
+由于 $a(x,y)\le1$，有 $q(y)\ge\max_x\lambda_xK_x(y)$；对 $y$ 求和即得 $F_K(\lambda)\le1$。
+
+反过来，令 $b(y)=\max_x\lambda_xK_x(y)$。若 $\sum_yb(y)\le1$，选取任意非负余量 $r(y)$ 使 $\sum_yr(y)=1-\sum_yb(y)$，置
+
+$$
+q(y)=b(y)+r(y),
+\qquad
+ a(x,y)=
+\begin{cases}
+\lambda_xK_x(y)/q(y),&q(y)>0,\\
+0,&q(y)=0.
+\end{cases}
+$$
+
+则 $a(x,y)\in[0,1]$，并逐点满足质量等式。两模型的接受质量相同；而总接受质量分别是 $\lambda_x$，所以拒绝质量也相同。最后，$F_K$ 是线性函数的最大值之和，故为凸函数；其非负单调性给出向下封闭性。证毕。
+
+<a id="claim-19-3-2"></a>
+

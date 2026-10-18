@@ -1,0 +1,14 @@
+### 102.4. Direct Hilbert product, all places and all cofactors
+
+Apply Hilbert reciprocity over K to (beta,gamma_p). The product over every finite and infinite place equals 1.
+
+At the real places gamma_p is positive, so the symbols are 1. At the place over 2, beta belongs to 1+4O. The polynomial T^2-T+(1-beta)/4 is etale over the local integer ring, so K_2(sqrt beta) is an unramified quadratic algebra. Gamma_p is a unit because its norm p is odd. Units are norms from an unramified quadratic extension; the local symbol is 1. This holds for every integral norm-p choice, without any claim that F_p is minimally ramified at 2.
+
+At the prime over 5 both entries are units: p>5 and actual B_N is prime to 5. The odd-residue-characteristic unit-unit symbol is 1. At both primes over p, beta is a local square by section 102.2; hence those factors are 1 even where gamma_p has valuation 1.
+
+At any other odd rational prime ell, gamma_p is a unit. The trace beta+beta_bar=-2 forbids simultaneous positive valuations of the two conjugates at a split ell. At an inert ell it forbids any positive beta valuation, because conjugation fixes that prime. For split ell not dividing D, the only possible nonzero valuation is 2v_ell(C), so the symbol is 1. This covers all even-depth primes and all their exponents; no p-splitting hypothesis was used there.
+
+For q|D, actual support splits q in K, and q is different from p,2,5. The beta valuations at its two primes are 0 and 1+2v_q(C). At the unit prime the symbol is 1. At the odd-valuation prime the odd-local formula gives precisely the residue character of gamma_p. The two conjugate residue values of gamma_p multiply to p, which is a square modulo q by hypothesis. Their characters agree and equal chi_p(q). Thus this pair of places contributes chi_p(q), including when q divides C.
+
+All places have been enumerated. The global formula proves product_(q|D) chi_p(q)=1.
+

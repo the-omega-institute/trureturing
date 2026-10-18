@@ -1,0 +1,66 @@
+## 381. Exact boundary of the universal joint H-expense shortcut
+
+Let P={M,Z,U} and H={M,Z,U,V}. In the six-edge unique-flat source
+normal form, the complete genuine H capacity would be 6*pi. The
+following exact example shows that the source scalar conditions,
+both maximum gaps, genuine tests and all source-front partial budgets
+do not imply that each genuine owner spends more than pi on H.
+
+Take
+
+    (m,v,c,d,z,u)=(52,38,2,40,70,80),
+    sigma=(M,C,D,V,C,D),
+    tau=(Z,M,C,D,M,C), rho=(U,V,D,C,V,D).
+
+All six labels are distinct actual labels. Their displayed coshes are
+also distinct here. The source inequalities hold:
+
+    m=52>1+c+d=43, 1<v=38<=m-2=50,
+    z=70>1+m+c=55, u=80>m,
+    (m-1)*(v-1)=1887>1764=(c+d)^2,
+    |z-u|=10<m+1=53.
+
+For the strict paired tests L=(a+b)^2-(r-1)*(o-1) and
+J=(r+1)*(o+1)-(a-b)^2, the two genuine owners have
+
+    (Ltau,Jtau)=(225,411), (Lrho,Jrho)=(6005,239).
+
+Their transverse cosine numerators are
+
+    tau: N_M=5472, N_C=16722,
+    rho: N_V=15326, N_D=3316.
+
+They are all strictly positive, so all four transverse angles are acute.
+The partial source-front budgets, including sigma, are therefore strict:
+M and V each retain two acute genuine slots costing less than pi;
+C has two acute tau slots plus one genuine rho axis, less than 2*pi;
+D has one genuine tau axis plus two acute rho slots, less than 2*pi;
+Z and U each have one genuine axis, less than pi.
+
+Nevertheless rho spends less than pi on H. Its only H slots are its
+one U axis and its two V transverse occurrences. Write theta_U and
+beta_V for their angles. In the standard response formulas,
+
+    Drho(u)=252643, Drho(c)=9127,
+    A_U=233762, N_V=15326,
+    cos(theta_U)=A_U/Drho(u),
+    cos(beta_V)=N_V/sqrt(Drho(u)*Drho(c)).
+
+The exact integer comparison is
+
+    2*N_V^2-Drho(c)*(Drho(u)-A_U)
+      =2*15326^2-9127*18881
+      =297445665>0.
+
+Hence cos(beta_V)^2>sin(theta_U/2)^2. Since cos(beta_V)>0
+and theta_U/2 lies in (0,pi/2), this gives
+
+    beta_V < (pi-theta_U)/2,
+    theta_U+2*beta_V < pi.
+
+The example does not prescribe any face pairing, complete the edge
+angle equations or realize a degree-six quotient. It is not a
+counterexample to six-edge flat exclusion. It refutes only the proposed
+per-owner H expense from these scalar and partial-budget premises.
+A complete-star or joint collection argument remains necessary.
+

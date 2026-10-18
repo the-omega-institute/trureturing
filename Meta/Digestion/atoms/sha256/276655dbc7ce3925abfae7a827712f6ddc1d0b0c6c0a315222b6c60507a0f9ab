@@ -1,0 +1,58 @@
+**定理 232.2（Relative nonimplication and an attained boundary）。**
+For every $L\ge7$, the point
+
+$$
+b_1=\cdots=b_7=1/2,\qquad b_8=\cdots=b_L=e=3/11
+$$
+
+belongs to $H_L$ and satisfies the entire family 232.1, but belongs
+to neither $H_N$ nor $H_O$. On the other hand, for every
+$0<t\le1/2$, the point with first seven entries $t$ and later
+entries $e=5t/9$ belongs to both $H_N$ and $H_O$, with one normalized
+configuration supplied by 231.1 and its same-seed completion.
+
+证明。 At the first point the lower and upper nontrivial hull
+conditions reduce to $8e\le5/2$ and $3-8e=9/11\le1$.
+The new cut reads
+
+$$
+35/2-63(3/11)=7/22>0.
+$$
+
+The zero-excess pairing in 230.3 excludes every complete conic
+configuration at every finite mass, in either class.
+
+To check all weights on the five plateau late coordinates, note
+
+$$
+G=\sum_{k=1}^5k\delta_k,\qquad
+G+\Lambda+\mu=\sum_{k=1}^5(k+c_k+1)\delta_k.
+$$
+
+The maximum of $k/(k+c_k+1)$ over $k=1,\ldots,5$ is $15/28$:
+the five values are $1/4,1/3,3/7,1/2,15/28$.
+Thus $(1/2)G\le(15/56)(G+\Lambda+\mu)$ and
+$15/56<3/11$. For arbitrary weights also on later labels, remove
+the later coordinates first. This cannot increase $\Lambda$ or
+$\mu$, since every layer-set cardinality decreases and $c_k$ is
+nondecreasing. Adding those weights back adds exactly $e$ times
+their sum to the left side, adds that same amount through $G$ on
+the right, and cannot decrease the remaining right-side terms.
+Hence the full weighted family holds, including empty or zero
+weights and arbitrary late supports.
+
+For the attained point, all ordering conditions hold. The lower
+condition is $8e\le5t$; the upper is
+$6t-8e=14t/9\le7/9<1$. For first zeros at most seven, 231.2 gives
+all demands. For later first zeros the law is the positive-word
+law: base $1-e$, correct zero and union $1-e$, which meet
+$1-2e,0,1-e$. The positive row holds too. Thus the same complete
+mass-one stopped law and its $N$ completion provide the witnesses.
+$\square$
+
+The nonimplication is relative to $H_L$ and exactly the entire
+weighted family 201.5. It does not assert independence from every
+older semantic consequence. The first point is outside $H_N$;
+it supplies no original same-realization separation. The cut,
+the sharp family and this relative diagnostic form one subject.
+

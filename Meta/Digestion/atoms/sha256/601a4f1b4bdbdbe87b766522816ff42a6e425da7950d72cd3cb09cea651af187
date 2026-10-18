@@ -1,0 +1,35 @@
+**Theorem 14.3 (exact joint-functional comparison for every whole-block
+weight).** For every nonnegative $w$ on the entire actual $S_2$,
+
+$$
+J_2(w)=M(w).
+\tag{RCE.51}
+$$
+
+Proof. Consider every nonempty feasible $P$ in Definition 2.1,
+without deleting any zero-weight states. If $P$ is local, Proposition
+14.2 gives $\kappa(w,P)=w(P)\le M(w)$. Otherwise it has between
+four and six states and singleton hard cells. Order its weights as
+$u_1\ge\cdots\ge u_m\ge0$, where $4\le m\le6$, and pad
+with zeros through $u_6$. Then
+
+$$
+\sum_{j=4}^6u_j^2\le3u_3^2
+\le2(u_1u_2+u_1u_3+u_2u_3),
+\qquad
+\sum_{j=1}^6u_j^2\le(u_1+u_2+u_3)^2.
+\tag{RCE.52}
+$$
+
+Indeed all three tail entries are at most $u_3$, and each product
+in the parenthesis is at least $u_3^2$. The three actual states
+with largest weights form a local set by Convention 14.1.
+Consequently $u_1+u_2+u_3\le M(w)$, and (RCE.50)–(RCE.52)
+give $\kappa(w,P)\le M(w)$. This includes every feasible support.
+
+Conversely choose one of the finitely many nonempty local sets
+in (RCE.47) attaining $M(w)$. It is feasible and has an empty
+hard vector, with norm exactly $M(w)$. Thus the maximum defining
+$J_2$ equals $M(w)$. The argument also applies to $w=0$, when
+every compared quantity is zero. $\square$
+

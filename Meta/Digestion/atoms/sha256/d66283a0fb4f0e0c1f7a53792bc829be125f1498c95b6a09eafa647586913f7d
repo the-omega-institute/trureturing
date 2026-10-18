@@ -1,0 +1,453 @@
+## 112. 五次根的泄漏证书、正噪声二／四分叉与固定参考能量
+
+**定义 C-112.1（同一载体上的噪声族与证书）。** 保留 C-108.1、C-109.1
+及 C-111.1 的原五坐标顺序 $(0,1,2,3,13)$、原切口
+$J e_s=|s,f(s)\rangle$、条件性实际局部菜单和整个量子块合同。
+以下 $e_j$ 的下标 $j=0,\ldots,4$ 始终是这些原坐标的位置。
+取 C-111.1 的 $u_m,P_m,C^{\rm F},C^{\rm E}$，并定义
+
+$$
+\begin{aligned}
+C_t^{\rm F}&=(1-t)I_5/5+tC^{\rm F},&
+C_t^{\rm E}&=(1-t)I_5/5+tC^{\rm E},&0\le t\le1,\\
+p_m(D)&=u_m^\dagger D u_m,&
+\mathsf W&=\frac43P_0-P_2+21(P_3+P_4),\\
+\delta_t&=\frac{129t-127}{15},&
+r_t&=\frac{129t-127}{165}.&&
+\end{aligned}
+\tag{C112.1}
+$$
+
+$\|\cdot\|_1$ 表示未除以二的矩阵迹范数。$k(D)$ 对任何非零 PSD 系数矩阵
+仍按 C-109.1 定义：允许所有有限项数和所有复向量，各项支撑在原坐标中计算。
+$p_m$ 是数学上的辅助傅里叶人口，并非菜单新增的可读人口。
+$\mathsf W$ 是 Hermitian 线性泛函的系数，不预设其为实际可用效果。
+
+**定理 C-112.2（所有复三稀疏分解的定量泄漏关系）。** 对每个非零 PSD
+$D\in M_5(\mathbb C)$，若 $k(D)\le3$，则
+
+$$
+p_2(D)\le\frac43p_0(D)+21\bigl(p_3(D)+p_4(D)\bigr),
+\qquad \operatorname{tr}(\mathsf W D)\ge0.
+\tag{C112.2}
+$$
+
+对 $127/129<t\le1$，有
+
+$$
+\operatorname{tr}(\mathsf W C_t^{\rm F})=-\delta_t<0.
+\tag{C112.3}
+$$
+
+因而任一迹一 PSD 系数矩阵 $D$ 若满足
+$\|D-C_t^{\rm F}\|_1<r_t$，就有 $k(D)\ge4$。
+等价地，$C_t^{\rm F}$ 到迹一三稀疏复 Gram 锥截面的迹范数距离至少为 $r_t$。
+若同时 $D\in\mathcal I$，则 $k(D)=4$。
+特别在 $t=99/100$，
+
+$$
+\delta_{99/100}=\frac{71}{1500},\qquad
+r_{99/100}=\frac{71}{16500}>0.
+\tag{C112.4}
+$$
+
+证明。先固定任意原坐标支撑至多三的复向量
+$z=\sum_{m=0}^4 c_m u_m$。至少有两个不同零坐标 $r,s$。
+令 $x=\omega^r,y=\omega^s$，则 $x\ne y$ 且二者模为一。
+多项式 $p(v)=\sum_{m=0}^4c_mv^m$ 满足 $p(x)=p(y)=0$，故有
+$p(v)=(v-x)(v-y)(a+bv+dv^2)$。比较系数得
+
+$$
+c_0=xy\bigl(c_2+(x+y)c_3+(x^2+xy+y^2)c_4\bigr).
+\tag{C112.5}
+$$
+
+这一恒等式允许最高系数、商多项式或整个向量为零。
+置 $a_{rs}=x+y,b_{rs}=x^2+xy+y^2$，并令
+$h=x\overline y+y\overline x$。不同五次根之比给
+$h^2+h-1=0$，即 $h=(-1\pm\sqrt5)/2$。
+于是
+
+$$
+\begin{aligned}
+|a_{rs}|^2&=2+h,& |b_{rs}|^2&=(1+h)^2=2+h,\\
+|a_{rs}|^2+|b_{rs}|^2&=3\pm\sqrt5
+\le3+\sqrt5<\frac{21}{4}.
+\end{aligned}
+\tag{C112.6}
+$$
+
+最后的严格比较由 $5<81/16$ 和正平方根给出。
+从 (C112.5)、复 Cauchy–Schwarz 及
+$2ab\le a^2/3+3b^2$（$a,b\ge0$），得到
+
+$$
+\begin{aligned}
+|c_2|^2
+&\le\left(|c_0|+|a_{rs}c_3+b_{rs}c_4|\right)^2\\
+&\le\frac43|c_0|^2+4|a_{rs}c_3+b_{rs}c_4|^2\\
+&\le\frac43|c_0|^2+
+ 4(|a_{rs}|^2+|b_{rs}|^2)(|c_3|^2+|c_4|^2)\\
+&\le\frac43|c_0|^2+21(|c_3|^2+|c_4|^2).
+\end{aligned}
+\tag{C112.7}
+$$
+
+所以每个这样的 $z$ 都满足 $z^\dagger\mathsf W z\ge0$。
+对任意有限复分解 $D=\sum_a z_a z_a^\dagger$ 逐项相加，就得到 (C112.2)。
+没有预定项数、共同支撑、实振幅、等模或相位限制；非负权重可以吸入 $z_a$。
+这是针对五次根位置的定量关系，已不要求每个 $z_a$ 落在
+$\operatorname{span}(u_0,u_1,u_2)$；非零的 $c_3,c_4$ 被显式计入。
+
+由 C-111.1 的谱投影，
+$p_0(C_t^{\rm F})=1/5$，$p_2(C_t^{\rm F})=(1+t)/5$，
+$p_3(C_t^{\rm F})=p_4(C_t^{\rm F})=(1-t)/5$，直接得 (C112.3)。
+$\mathsf W$ 在 $u_0,\ldots,u_4$ 上的特征值为
+$4/3,0,-1,21,21$，故
+
+$$
+\|\mathsf W-10I_5\|_{\rm op}=11.
+\tag{C112.8}
+$$
+
+对迹相同的 Hermitian $D,C_t^{\rm F}$，有限维迹范数对偶给
+
+$$
+\begin{aligned}
+\operatorname{tr}(\mathsf W D)
+&=-\delta_t+
+ \operatorname{tr}\bigl((\mathsf W-10I_5)(D-C_t^{\rm F})\bigr)\\
+&\le-\delta_t+11\|D-C_t^{\rm F}\|_1.
+\end{aligned}
+\tag{C112.9}
+$$
+
+该对偶不等式可直接由 Hermitian 差矩阵的正交谱分解得到：每个单位向量的
+$\mathsf W-10I_5$ 期望绝对值至多十一，再以差矩阵特征值的绝对值求和。
+半径 $r_t=\delta_t/11$ 内的负配对与 (C112.2) 矛盾。
+当 $D\in\mathcal I$ 时 C-111.2 给 $k(D)\le4$，遂取等。
+(C112.4) 为分数代入。此处消费一般局部 PSD／稀疏 Gram 对偶的方向，见
+Johnston–Moein–Pereira–Plosker，
+[*Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix*,
+arXiv:2205.05110v2](https://arxiv.org/html/2205.05110v2)，§2.1–§2.2，
+以及 Ringbauer 等，
+[*Certification and Quantification of Multilevel Quantum Coherence*,
+arXiv:1707.05282v3](https://arxiv.org/html/1707.05282v3)，§I.4、§A.5、§A.8。
+本条所需的五次根消元、全复泄漏界和具体负配对已在上面直接证明。证毕。
+
+**定理 C-112.3（满秩等谱二／四分叉及正匹配噪声邻域）。** 对每个
+$127/129<t<1$，$C_t^{\rm F},C_t^{\rm E}\in\mathcal I$ 均正定，
+共同全谱、秩与纯度为
+
+$$
+\begin{gathered}
+\left\{\frac{1+t}{5},\frac{1+t}{5},\frac15,
+       \frac{1-t}{5},\frac{1-t}{5}\right\},\qquad
+\operatorname{rank}C_t^{\rm F}=\operatorname{rank}C_t^{\rm E}=5,\\
+\operatorname{tr}((C_t^{\rm F})^2)
+=\operatorname{tr}((C_t^{\rm E})^2)=\frac{5+4t^2}{25},\\
+k(C_t^{\rm F})=4,\qquad k(C_t^{\rm E})=2.
+\end{gathered}
+\tag{C112.10}
+$$
+
+原匹配态的全谱均再添二十个零；此处满秩只指五维匹配支持上的正定性，
+不指二十五维环境正定。二者的原 $A\mid B$ Schmidt number 与各自
+$T_C(X)=(5C)\circ X$ 的 $q_{\rm exact}$ 分别为四与二。
+在 C-108.1 的实际菜单合同下，二者与 $S$ 的全部有限自适应双边历史律相同。
+
+更一般地，$127/129<t<1$ 时，对任意迹一 PSD 系数噪声 $N$，
+
+$$
+D_{t,\eta}=(1-\eta)C_t^{\rm F}+\eta N,\qquad
+0\le\eta<\frac{\delta_t}{21+\delta_t}
+\quad\Longrightarrow\quad D_{t,\eta}\succ0,\quad k(D_{t,\eta})\ge4.
+\tag{C112.11}
+$$
+
+若 $N\in\mathcal I$，则 $D_{t,\eta}\in\mathcal I$，其 $k$ 恰为四且全部历史律仍与
+$S$ 相同。C-112.2 的球内成员另在
+$\|D-C_t^{\rm F}\|_1<(1-t)/5$ 时必正定。
+区间 $127/129<t\le1$ 是该证书的充分区间，不是所断言的锐转变位置；
+$t=127/129$ 的零配对本身不提供三稀疏分解。
+
+证明。两条线段的端点已由 C-111.3 证明属于凸集 $\mathcal I$。
+恒等矩阵与任一端点对易，故其五个特征值逐一变成 (C112.10) 的数；
+$t<1$ 时最小值为 $(1-t)/5>0$。平方和为 $(5+4t^2)/25$。
+C-112.2 的负配对给 $k(C_t^{\rm F})\ge4$。
+其实际有限上界可以完全显式写出：沿用 (C111.12) 的五个四稀疏 $z_r$，取
+
+$$
+\left\{\sqrt t\,z_r:0\le r\le4\right\}
+\quad\cup\quad
+\left\{\sqrt{\frac{1-t}{5}}e_j:0\le j\le4\right\}.
+\tag{C112.12}
+$$
+
+十个向量的秩一和恰为 $C_t^{\rm F}$，支撑均至多四。
+对边族置 $g_{04,\pm}=(e_0\mp i e_4)/\sqrt2$、
+$g_{13,\pm}=(e_1\mp i e_3)/\sqrt2$。其五个因子为
+
+$$
+\sqrt{\frac{1+t}{5}}g_{04,+},\quad
+\sqrt{\frac{1-t}{5}}g_{04,-},\quad
+\sqrt{\frac{1+t}{5}}g_{13,+},\quad
+\sqrt{\frac{1-t}{5}}g_{13,-},\quad
+\frac{e_2}{\sqrt5}.
+\tag{C112.13}
+$$
+
+$g_{jk,\pm}$ 在对应二坐标块中正交归一。
+展开这五个秩一项，其对角恒为 $1/5$，$(0,4)$、$(1,3)$ 元为 $it/5$，
+其余非对角元为零，故恰得 $C_t^{\rm E}$。
+$t>0$ 的非零非对角元排除一稀疏分解，因此 $k(C_t^{\rm E})=2$。
+这证明资源二／四并包含 $t=99/100$ 的正噪声例子。
+同源 Schmidt 与通道资源关系直接用 C-109.3；
+历史相等用 C-108.3，不以独立来源假设替代相关匹配源。
+
+对 (C112.11)，$\operatorname{tr}(\mathsf WN)\le21$，故
+$\operatorname{tr}(\mathsf W D_{t,\eta})\le-(1-\eta)\delta_t+21\eta<0$。
+$\eta<1$ 且 $C_t^{\rm F}\succ0$ 保证该混合正定。
+若 $N\in\mathcal I$，凸性及 C-111.2 给余下结论。
+最后 Hermitian 扰动满足
+$D\succeq((1-t)/5-\|D-C_t^{\rm F}\|_{\rm op})I_5$，
+而算子范数不超过迹范数，这给球内正定条件。证毕。
+
+**命题 C-112.4（整个块、有限旗和每个复输入上的实际因子实现）。** 对
+$127/129<t<1$，(C112.12) 给四维块、十旗的 $T_{C_t^{\rm F}}$ 精确实现，
+(C112.13) 给二维块、五旗的 $T_{C_t^{\rm E}}$ 精确实现。
+其最小量子块维数分别恰为四和二；二者的最小无约束 Kraus 数均为五。
+显示旗数是达到方案的计数，不断言其最小性。
+
+证明。对相应的有限 Gram 因子 $v_a$，置
+$K_a=\sqrt5\operatorname{diag}v_a$。对每个原坐标 $j$，
+$\sum_a|v_a(j)|^2=C_{jj}=1/5$，于是
+
+$$
+\sum_aK_a^\dagger K_a=I_5,\qquad
+\sum_aK_aXK_a^\dagger=(5C)\circ X
+\quad(\forall X\in M_5(\mathbb C)).
+\tag{C112.14}
+$$
+
+取 $q=4$ 或 $q=2$，为每个因子固定坐标等距嵌入
+$V_a:\mathbb C^q\to\mathbb C^5$，其像包含 $\operatorname{supp}v_a$；
+小支撑用不同原坐标补齐至 $q$。定义 $B_a=V_a^\dagger K_a$，并取
+
+$$
+\operatorname{Enc}(X)=(B_aXB_a^\dagger)_a,\qquad
+\operatorname{Dec}((Y_a)_a)=\sum_aV_aY_aV_a^\dagger.
+\tag{C112.15}
+$$
+
+$V_a^\dagger V_a=I_q$ 使每个分支解码在整个 $M_q(\mathbb C)$ 上保迹。
+$V_aV_a^\dagger K_a=K_a$ 和 (C112.14) 使总编码保迹；矩形夹乘在任意参考放大下
+保持正性，故编码与解码完全正。复合逐矩阵元等于 (C112.14)，所有量子路径经过
+$q$ 块，旗为有限经典直和，没有量子旁路。这是每个固定 $C$ 各选一组固定编码与解码，
+再对每个复输入成立，不是一组未知 $C$ 的共同可编程实现。
+C-109.3 的逆向量词允许竞争者任意有限旗数、每旗任意有限 Kraus 数、整个块 CPTP
+解码，所以 C-112.3 的下界也排除这些全部竞争者。
+规范归一化 Choi 态的非零谱为 $C$ 的谱，故其秩为五；
+标准 Choi/Kraus 秩定理给无约束最少 Kraus 数五。
+因子、经典旗、量子块与无约束 Kraus 秩分别计数。证毕。
+
+**定理 C-112.5（同一系数载体的固定参考对数能量）。** 固定 $\beta>0$，在
+$H=\mathbb C^5$ 上定义一次且不随 $D,t$ 改变的参考
+
+$$
+\begin{aligned}
+Z_\beta&=e^{-4\beta/3}+1+e^\beta+2e^{-21\beta},\\
+R_\beta&=Z_\beta^{-1}e^{-\beta\mathsf W}\\
+&=Z_\beta^{-1}\bigl(e^{-4\beta/3}P_0+P_1+e^\beta P_2
+                         +e^{-21\beta}(P_3+P_4)\bigr).
+\end{aligned}
+\tag{C112.16}
+$$
+
+它是正定、迹一、$0\prec R_\beta\preceq I_5$ 的有限维迹类参考。
+对任意迹一 PSD 系数矩阵 $D$，定义
+$E_{R_\beta}(D)=\operatorname{tr}(D[-\log R_\beta])$，则
+
+$$
+E_{R_\beta}(D)=\log Z_\beta+\beta\operatorname{tr}(\mathsf W D).
+\tag{C112.17}
+$$
+
+因此 $k(D)\le3$ 蕴含 $E_{R_\beta}(D)\ge\log Z_\beta$，而
+$127/129<t\le1$ 时
+
+$$
+E_{R_\beta}(C_t^{\rm F})=\log Z_\beta-\beta\delta_t
+ <\log Z_\beta\le E_{R_\beta}(C_t^{\rm E}).
+\tag{C112.18}
+$$
+
+两族的自参考谱能量相等，并不使此固定非均匀交叉参考能量相等。
+对任意正定迹一参考 $R$ 与任意两个迹一 PSD 矩阵 $D_1,D_2$，
+交叉能量相等的充要条件是
+$\operatorname{tr}((D_1-D_2)\log R)=0$。
+
+证明。谱投影 $P_m$ 完备正交，各指数系数严格正，和为 $Z_\beta$。
+归一化后每个本征值严格介于零和一之间，这证明参考的全部条件。
+有限维正谱函数演算给
+$-\log R_\beta=\beta\mathsf W+\log Z_\beta I_5$，从而得 (C112.17)。
+这个等式不要求 $D$ 与 $R_\beta$ 对易；迹只取 $D$ 在参考本征基上的对角。
+C-112.2 和 $k(C_t^{\rm E})\le2$ 给 (C112.18)。
+对不同参考 $D$ 本身，自能量是其本征值的 $-\lambda\log\lambda$ 之和。
+由 (C112.10)，两族自能量同为
+
+$$
+-2\frac{1+t}{5}\log\frac{1+t}{5}
+-\frac15\log\frac15
+-2\frac{1-t}{5}\log\frac{1-t}{5},
+\tag{C112.19}
+$$
+
+端点按 $0\log0=0$ 解释。
+一般固定 $R$ 时两迹之差正是
+$-\operatorname{tr}((D_1-D_2)\log R)$，给所述充要条件。
+均匀参考 $I_5/5$ 的能量对所有迹一 $D$ 都是 $\log5$；
+(C112.18) 则是同谱而固定非均匀交叉能量不等的具体例子。
+
+将矩阵视为 $H$ 上的连续线性算子，它们在有限维自动为迹类。
+对应 [LogRegularization](../../../D5/S3/Quantum/Analysis/TraceClass/LogRegularization.lean)
+的 `Reference`，参考参数是 $T=R_\beta$，可变迹类参数是 $\rho=D$；
+`Reference` 本身只要求 $0\preceq T\preceq I$，本条还给出了迹一与严格正性。
+其实际正则化和能量是
+
+$$
+\begin{aligned}
+L_\varepsilon(R_\beta)&=\log(1+\varepsilon)I_5-
+                             \log(R_\beta+\varepsilon I_5),\\
+E_\varepsilon(R_\beta,D)&=\operatorname{tr}(D L_\varepsilon(R_\beta)),
+\qquad\varepsilon>0.
+\end{aligned}
+\tag{C112.20}
+$$
+
+令 $r_m>0$ 为 (C112.16) 的五个本征值，则
+$E_\varepsilon=\sum_m p_m(D)
+ [\log(1+\varepsilon)-\log(r_m+\varepsilon)]$。
+这是非负有限和；$\varepsilon\downarrow0$ 时单调增加到
+$\sum_m p_m(D)(-\log r_m)=E_{R_\beta}(D)$。
+所以在 $\varepsilon=(n+1)^{-1}$ 的网格上取非负扩展实上确界，也得到同一有限值。
+这正对应 [SpectralEnergy](../../../D5/S3/Quantum/Analysis/TraceClass/SpectralEnergy.lean)
+中 `regularizedSupremum T rho`、`spectralEnergy T rho` 的变量朝向及全本征基级数；
+参考正定使零本征值的无穷对数情形不出现。
+该源中 `lowerSemicontinuous_spectralEnergy` 固定 $\rho$ 而变化参考 $T$。
+本条固定 $T=R_\beta$ 而变化 $D$ 的证书来自 (C112.7)、(C112.17)，
+不由参考变量的下半连续性推出。特别地
+$|E_{R_\beta}(D)-E_{R_\beta}(C_t^{\rm F})|
+\le11\beta\|D-C_t^{\rm F}\|_1$ 是 (C112.9) 的同迹对偶估计。
+指数参考是谱函数演算的数学构造，不是原菜单授予的参考读出。证毕。
+
+**定理 C-112.6（系数证书的环境嵌入障碍及标量通道反例）。** 对任意
+Hermitian 系数矩阵 $H$，令 $\widetilde H=JHJ^\dagger$。
+$\widetilde H$ 在所有原 $A\mid B$ 乘积向量上的期望非负，当且仅当
+$H\succeq0$。特别地 $J\mathsf WJ^\dagger$ 不是环境 Schmidt-number
+三见证，甚至不是环境可分态见证。
+而且存在量子块维数一的有限旗 CPTP 通道，其经同一标签对应的规范 Choi 态
+$\widehat\chi$ 满足
+
+$$
+\operatorname{tr}((J\mathsf WJ^\dagger)\widehat\chi)=-\frac15<0,
+\qquad \operatorname{Tr}_A\widehat\chi
+=\operatorname{Tr}_B\widehat\chi=I_5/5.
+\tag{C112.21}
+$$
+
+证明。设 $z\in\mathbb C^5$ 为任意单位向量，取
+$a=Vu_0$、$b_z=Wz$，则二者均单位，且
+
+$$
+J^\dagger(a\otimes b_z)=z/\sqrt5,\qquad
+\langle a\otimes b_z,\widetilde H(a\otimes b_z)\rangle
+=\frac15 z^\dagger Hz.
+\tag{C112.22}
+$$
+
+所以乘积非负蕴含 $H\succeq0$；逆向由等距嵌入保持 PSD 得到。
+取 $z=u_2$，$z^\dagger\mathsf W z=-1$，便给一个规范乘积态的负值 $-1/5$。
+它的 $A\mid B$ Schmidt 秩是一。
+
+通道反例可同时满足正确的 Choi 边缘合同。
+在五维系数通道坐标中定义
+
+$$
+\Theta(X)=\sum_{\ell=0}^4(u_\ell^\dagger Xu_\ell)P_{\ell+2},
+\qquad \ell+2\text{ 按模五解释}.
+\tag{C112.23}
+$$
+
+Kraus 算子 $|u_{\ell+2}\rangle\langle u_\ell|$ 都秩一，且其
+$K_\ell^\dagger K_\ell$ 之和为 $I_5$。
+显式标量编码为五个经典块 $(u_\ell^\dagger Xu_\ell)_\ell$，
+每个整个 $M_1$ 块的解码是 $y\mapsto yP_{\ell+2}$，故为 CPTP 且 $q=1$。
+取 C-109.1 的固定标签识别 $V e_j=|B_j\rangle_A$、$W e_j=|f(B_j)\rangle_B$。按 C-109.2–C-109.3 的输出在前约定，规范 Choi 态经同一识别后为
+
+$$
+\widehat\chi=\frac15\sum_{\ell=0}^4
+ VP_{\ell+2}V^\dagger\otimes
+ W|\overline{u_\ell}\rangle\langle\overline{u_\ell}|W^\dagger.
+\tag{C112.24}
+$$
+
+每项是规范乘积态，两组因子各自遍历正交归一基，所以两偏迹都是 $I_5/5$。
+每项乘积向量的匹配投影相同：逐原坐标有
+
+$$
+J^\dagger(Vu_{\ell+2}\otimes W\overline{u_\ell})
+ =u_2/\sqrt5,\qquad
+J^\dagger\widehat\chi J=P_2/5.
+\tag{C112.25}
+$$
+
+代入 $\operatorname{tr}(\mathsf WP_2)=-1$ 就得 (C112.21)。
+因此即使限定为真实 CPTP、正确输入边缘、标量块且有限旗的竞争通道，
+“其 Choi 态对 $J\mathsf WJ^\dagger$ 的配对非负”仍是假命题。
+不能将它当作无约束近似通道或 diamond 误差下界的前提。
+失败的关系是：$JJ^\dagger$ 为非局部匹配投影，不能假定它保持 Schmidt 秩。
+这里投影并规范化后的态是 $JP_2J^\dagger$，Schmidt 秩反而为五。
+这不反驳原本只对完全匹配支持态的 C-109.3；(C112.24) 不在该支持内。
+也不排除另行构造合格环境见证或另行证明近似通道界。证毕。
+
+**命题 C-112.7（匹配支持、环境噪声与实际历史读出的边界）。**
+C-112.2 的迹范数球通过 $D\mapsto JDJ^\dagger$ 等距转移到完全匹配支持的密度态，
+并给其原切口 Schmidt number 至少四。
+它不通过该嵌入自动给任意环境密度态相同的 Schmidt-number 球。
+例如对 $0<\eta\le1$ 的环境白噪声
+
+$$
+\Xi_{t,\eta}=(1-\eta)JC_t^{\rm F}J^\dagger+\eta I_{25}/25,
+\qquad
+\operatorname{tr}((I_{25}-JJ^\dagger)\Xi_{t,\eta})=\frac{4\eta}{5}>0,
+\tag{C112.26}
+$$
+
+C-112.2 的完全匹配支持假设不成立。
+在原条件性实际菜单下，同参数的两族仍可由标量去相干精确模拟其承诺来源历史；
+任何同一实际历史的可积统计量都不能同时以无偏期望读出 (C112.18) 的两个不同能量。
+
+证明。等距嵌入只添加零奇异值，故
+$\|J(D-C_t^{\rm F})J^\dagger\|_1=\|D-C_t^{\rm F}\|_1$。
+对完全匹配支持态 C-109.3 的字典成立；对环境态该支持条件不能省略，
+C-112.6 已给出可分态及真实标量通道的反例。
+$JJ^\dagger$ 的秩为五，余投影的秩为二十，故 (C112.26) 的迹为 $20\eta/25$。
+
+对于承诺来源，原基去相干满足
+$(\Delta_A\otimes\mathrm{id})(JCJ^\dagger)=S$；C-108.3 使该族全部允许历史律与
+$S$ 相同。因此 $C_t^{\rm F}$ 与 $C_t^{\rm E}$ 在每个允许协议下有同一历史律。
+同律的任何同一可积统计量期望相同，而 (C112.18) 严格不等，故不可能同时无偏。
+固定参考能量和傅里叶人口的数学存在不提供额外测量、相位控制、来源副本或参考接入。
+C-112.4 的合同指定固定 Schur 通道在每个复输入上的精确作用；
+它在一般匹配输入 $JD J^\dagger$ 上给系数 $(5C)\circ D$，特别保持 $S$，
+不将 $S$ 制备为 $JCJ^\dagger$。
+这些等式均不建立原生循环 refractory FIB 生成到所假设量子来源的制备桥。
+
+(C112.5)–(C112.18) 是在 C-108–C-111 同一来源、基和操作合同内的新增综合推导。
+通用稀疏 Gram 对偶、谱函数演算及 Choi 字典是所引成熟成分；
+[FIB invisible fiber: the sharp fixed-basis coherence number](FIB_INVISIBLE_FIBER_SHARP_COHERENCE_NUMBER.md)
+的 §3、§5 已给完整纤维上界与另一稠密达到点的见证，未被当作本条新增结论。
+这里增加的是 C111 同一傅里叶／边族在正匹配噪声下的定量全复证书、满秩二／四分叉、
+同载体固定参考解释以及环境／通道嵌入反例；不主张全球原创性或锐噪声转变。证毕。
+

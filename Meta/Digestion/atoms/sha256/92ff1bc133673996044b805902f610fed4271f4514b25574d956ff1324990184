@@ -1,0 +1,16 @@
+**Example 9.1 (finite projection, infinite original solutions).** Let
+$g=\langle\alpha,\alpha\rangle$ and impose
+
+$$
+x=g,\qquad y\ne x.
+\tag{NPL.24}
+$$
+
+The output $x$ has exactly the one value $g$, while the whole solution
+set is infinite. For example $y=T_{k+2}$ never equals $g$: the latter's
+normal code is $F([0],[0])$, whereas every $T_j$ has a primitive code.
+The rigid output test ignores freedom in $y$ for the image question,
+but retains the disequality when producing its witnesses. Applying the
+finite-domain resource theorem to the whole solution set on the strength
+of this singleton projection would be invalid.
+

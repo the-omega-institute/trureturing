@@ -1,0 +1,27 @@
+**Comparison 7.2 (Strict gain at the unchanged task and resource).**
+The inherited exact result of Two Read, Theorem 6.1, is
+
+$$
+S_2=\frac a2+a\eta+a^2\eta,
+\qquad \varepsilon_2=1-S_2.
+\tag{7.3}
+$$
+
+With the same original source, endpoint, classification loss and
+actual-call budget convention, Theorem 7.1 implies
+
+$$
+\begin{aligned}
+\varepsilon_2-\varepsilon_3
+&=S_3-S_2\\
+&=a^2c\eta+\delta\eta^2>0.
+\end{aligned}
+\tag{7.4}
+$$
+
+Indeed $S_3=Z+D$, $Z-(a/2+a^2\eta)=a^2c\eta$, and
+$D-a\eta=\delta\eta^2$ by (5.3). Both displayed increments are
+strictly positive. The gain is conditional on retaining this exact task
+and paid-read resource; it makes no comparison of other losses or
+resources.
+

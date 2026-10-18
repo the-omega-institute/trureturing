@@ -1,0 +1,24 @@
+**Corollary 6.4 (strict improvements, exact worst-case budget and
+saturation).** For $2\le u\le\ell$,
+
+$$
+R^*(u-1)-R^*(u)=(1-\epsilon)2^{-u}>0.
+$$
+
+Thus attaining the budget-$u$ optimum requires worst-case Read budget
+at least $u$. For $k\ge\ell$ the optimum saturates at
+$\epsilon/2+(1-\epsilon)2^{-\ell}>0$. Already two distinct
+phase-root Reads give success advantage $(1-\epsilon)/4$.
+
+Proof. Subtract the two values in Theorem 6.3, including its
+$R^*(1)=1/2$ value when $u=2$. A policy with smaller worst-case
+budget is bounded by the strictly larger preceding optimum. Conversely
+the attaining list uses exactly $u$ Reads on its all-equal paths.
+Such paths have positive probability under both laws. Once all $\ell$
+phases are available, the entire native tuple has a common conditional
+generation kernel under both hypotheses by Proposition 3.2. Acquiring
+that entire tuple cannot improve testing beyond $E_\ell$, whose
+phases its $x$ roots already reveal. This also proves saturation even
+if arbitrary further Reads are allowed. Substitute $t=2$ for the
+advantage assertion. $\square$
+

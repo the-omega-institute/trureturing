@@ -1,0 +1,13 @@
+**命题 C-12.3（同经典律的乘积与最大纠缠见证）。** 五态均匀律条件底面四概率均 1/4。可以供应
+
+
+```math
+|\psi_0\rangle=(|00\rangle+|01\rangle+|10\rangle+|11\rangle)/2
+=|+\rangle|+\rangle,
+```
+
+
+或 $`|\psi_\pi\rangle=(|00\rangle+|01\rangle+|10\rangle-|11\rangle)/2`$。后者 concurrence 一、两个约化态都是 𝐼/2，前者零。
+
+**证明。** 前者系数外积；后者系数矩阵 $`\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}`$ 与其伴随乘积为 𝐼/2，行列式 -1/2。实际供应的 $`U_\phi=I+(e^{i\phi}-1)|11\rangle\langle11|`$ 可改变该闭路相位而不改占位概率；没有该资源不声称能操作它。经典对角混合 $`\sum(p_{ij}/r)|i\rangle\langle i|\otimes|j\rangle\langle j|`$ 始终可分，所以同概率不证明相干或纠缠。□
+

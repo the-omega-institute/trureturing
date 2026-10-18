@@ -1,0 +1,25 @@
+**定理 43.2（原完整未来消费者的存储阶）。** 对任意固定先验及任一原风险组合，令 $b_\mu^{j_p,j_\beta}(\varepsilon)$ 为数字类实现 $\Delta\le\varepsilon$ 的最小完整位预算。对 $0<\varepsilon<1$，取
+
+$$
+n_\varepsilon=\max\{1,\lceil\log_2(1/\varepsilon)\rceil\}.
+$$
+
+则有精确的充分预算 $\mathcal S(n_\varepsilon)$ 和必要预算(42.2)，因而
+
+$$
+\begin{aligned}
+\frac14\log_2\log_2(1/\varepsilon)-\frac{13}4
+&\le b_\mu^{j_p,j_\beta}(\varepsilon)\\
+&\le\mathcal S(n_\varepsilon),\\
+b_\mu^{j_p,j_\beta}(\varepsilon)
+&=\Theta(\log\log(1/\varepsilon))
+\quad(\varepsilon\downarrow0).
+\end{aligned}
+\tag{43.2}
+$$
+
+两边的阶常数可以统一于全部这些先验和四组合。最小整数预算存在，因为下述家族给非空可行集；不要求算法计算这个最小值。
+
+**证明。** 定理33.1已在全部实际正有限历史上给四组合共同的
+$0\le\Delta(G_n)\le(90/17)2^{-(n+3)}<2^{-n}$。所以 $G_{n_\varepsilon}$ 可行，命题43.1给上界。下界对任意类别成员来自定理42.1。$\gamma(n)\le2\lceil\log_2(n+5)\rceil+1$，而 $n_\varepsilon$ 随 $\log(1/\varepsilon)$ 增长，故得共同的双对数阶。没有从字面族的 $\Omega(\log(1/\varepsilon))$ 下界转移，也没有用安装 $n$ 的描述长本身充当全类必要性。证毕。
+

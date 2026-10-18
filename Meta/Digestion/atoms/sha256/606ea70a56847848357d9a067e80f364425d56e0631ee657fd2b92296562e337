@@ -1,0 +1,9 @@
+L_s^+(\delta_a-\delta_b).
+\]
+更一般地，
+\[
+\frac{d}{ds}g_s(b_1,b_2)
+=
+-b_1^{\mathsf T}L_s^+L_s'L_s^+b_2.
+\]
+

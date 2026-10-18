@@ -1,0 +1,78 @@
+**Theorem 12.3 (spatial classification and the sharp finite horizon).**
+For every finite $u$, address $q$ and $k\ge0$, let $(b,c)=(b_q,c_q)(u)$.
+Then
+
+$$
+ \operatorname{readout}(q,\rho^k u)=
+ \begin{cases}
+ \mathrm{branch},&k\ge b,\\
+ \beta,&b\ge1,\ k=b-1,\\
+ \alpha,&c=1,\ k=b-2,\\
+ \mathrm{absent},&\text{otherwise}.
+ \end{cases}
+\tag{AAR.59}
+$$
+
+On attained inputs $c=1$ implies $b\ge2$, so the alpha case has a
+nonnegative count and is disjoint from the preceding cases. Consequently,
+for $t,t'\in\mathcal F_D$,
+
+$$
+ \Sigma_P(t)=\Sigma_P(t')
+ \quad\Longleftrightarrow\quad
+ \mathcal H_P(t)=\mathcal H_P(t')
+ \quad\Longleftrightarrow\quad
+ \forall\,0\le k<H_P,\ V_P(\rho^k t)=V_P(\rho^k t').
+\tag{AAR.60}
+$$
+
+Every target is branch for $k\ge H_P$, and $H_P\le2D$. For nonempty
+$P$, $H_P$ is the least uniform all-branch count on this family. Empty
+$P$ has one statistic and one trajectory, with $H_P=0$.
+
+Proof. Reuse the guarded atomic reply law of
+[Sparse Literal History Transport, Theorem 6.2 and (SLH.6.1)](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#6-原纪元右射线前缀的准确联合取得),
+also stated as the actual query table in
+[Acquired Orbit Resource Frontier, Definition 8.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#8-stationary-interval-reading-with-a-zero-origin).
+For $T_n=\rho^n\alpha$ and nonempty $r$, an $R$-ending word gives
+absent for $n<s(r)$, alpha at $s(r)$, beta at $s(r)+1$ and branch
+thereafter. An $L$-ending word is absent also at $n=s(r)$, gives beta
+at $s(r)+1$, and is branch thereafter. The last-edge reachability
+guard is essential; an $L$-ending word does not acquire an alpha stage
+merely because the formal residual index is zero. At the root the
+three cases are alpha, beta and branch at indices $0,1,\ge2$.
+
+An originally present branch stays branch. At an original leaf, the
+supplied present-subtree transport gives $T_k$ or $T_{k+1}$ at that
+address. If $q=ar$ is initially absent, transport applies at its
+actually present blocking leaf $a$, giving $T_{k+e(u|_a)}$ there.
+Applying the guarded law to the nonempty suffix $r$ proves (AAR.59)
+and all four cases of (AAR.57). No subtree is transported from an
+originally absent address.
+
+The first count with branch reply is exactly $b$. The trajectory has
+an alpha reply exactly when $c=1$, then only at $b-2$. Thus the whole
+trajectory recovers both numbers, and (AAR.59) reconstructs it from
+them. Taking the joint vector proves both directions of the first
+equivalence in (AAR.60).
+
+For an arbitrary finite $u$ the same formula gives
+$b_q(u)\le s(q)+2$. In $t=\langle\alpha,v\rangle$, every target is
+$Rq$, and its trajectory is the trajectory at $q$ in $v$ by
+homomorphism. Hence
+
+$$
+ b_{Rq}(t)=b_q(v)\le s(q)+2=s(Rq).
+\tag{AAR.61}
+$$
+
+This proves the uniform horizon, including all future counts beyond
+the finite initial height bound. For $t_0=\langle\alpha,\alpha\rangle$
+one has $b_{Rq}(t_0)=s(q)+2$ for every $q$, including $q=\varepsilon$.
+Choose a target of maximum weight. Its reply at $H_P-1$ is beta, so
+no smaller uniform all-branch count works. This source belongs to
+every $\mathcal F_D$ in question. Since the tail from $H_P$ is fixed,
+agreement below $H_P$ is exactly agreement at all counts. Repetitions
+of a count add no distinction; repeating actual observations would
+still incur their own costs. $\square$
+

@@ -1,0 +1,16 @@
+## 288. An eight-tetrahedron example and its exact scope
+
+The following actual finite ideal face pairing has eight tetrahedra, five actual
+global edges of degrees `(16,8,8,8,8)`, and one connected closed orientable
+ideal-vertex link of genus 4. It is a connected orientable compact 3-manifold
+after truncation. Every tetrahedron has a vertex-induced paired frame
+`(R,A,B,O,A,B)`, and every simultaneous choice of paired frames across all eight tetrahedra
+forces the union of their transverse reservoir labels to contain all five actual edges.
+
+Thus this is a concrete strict separation from the paired-frame class with at
+most four transverse reservoirs. Its minimum edge degree is 8, so it also lies
+outside a blanket minimum-degree-at-least-9 hypothesis. No local label appears
+three times, in any vertex frame. This is not a claim of separation from every
+older geometric criterion, nor of minimality among all such triangulations.
+No unrestricted CFMP or public priority claim is made.
+

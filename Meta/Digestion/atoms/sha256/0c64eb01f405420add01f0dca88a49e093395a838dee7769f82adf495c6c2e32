@@ -1,0 +1,21 @@
+### 定义 65.4（有限量子网络与局部生成元）
+
+令
+\[
+\mathcal A=\bigotimes_{v\in V}M_{d_v}(\mathbb C)
+\]
+为有限量子网络代数，令 \(\sigma\succ0\) 为忠实参考态。对每条边给定一个 Schrödinger 表示的量子 Markov 生成元 \(\mathcal L_e\)，满足
+\[
+\mathcal L_e^\ast(I)=0,
+\qquad
+\mathcal L_e(\sigma)=0.
+\]
+令
+\[
+\mathcal L=\sum_{e\in E}\mathcal L_e,
+\qquad
+\rho_t=e^{t\mathcal L}\rho_0.
+\]
+
+每个 \(\mathcal L_e\) 表示一个局部小场对相邻节点的作用。总生成元 \(\mathcal L\) 是静态大场上的局部作用叠加。若进一步要求详细平衡，则可以把 §38、§53 的 GNS Dirichlet 和 SLD Fisher 结构接入同一个量子网络。
+

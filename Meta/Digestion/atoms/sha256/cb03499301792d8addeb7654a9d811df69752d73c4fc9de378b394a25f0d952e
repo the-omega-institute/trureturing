@@ -1,0 +1,30 @@
+**Definition 11.2 (selected scalar cost).** For $0<\varpi<\gamma_f$
+put
+
+$$
+\begin{gathered}
+y_\varpi(x)=\frac{(\varpi+d_fx)^2}{4b_{\rm off}^2x},\qquad
+x_-(\varpi)=\varpi/L_f,\\
+x_+(\varpi)=\frac{2b_{\rm off}^2-d_f\varpi+
+2b_{\rm off}\sqrt{b_{\rm off}^2-d_f\varpi-\varpi^2}}{L_f^2},\\
+\mathcal K(x,y)=(x+y)J\!\left(\frac y{x+y}\right)
+ +(2-x-y)J\!\left(\frac{1-y}{2-x-y}\right),\qquad
+\phi_\varpi(x)=\mathcal K(x,y_\varpi(x)).
+\end{gathered}
+\tag{JS.49}
+$$
+
+The interval is $[x_-(\varpi),x_+(\varpi)]$. Its right endpoint is
+the larger intersection with $x+y=1$; its left endpoint is the
+restriction to positive-line coordinate $p\le p_s$, rather than
+the other triangular intersection. For derivative evaluation put
+$m=x+y$, $p=y/m$, $q=(1-y)/(2-m)$ and $\Delta_J=J'(p)-J'(q)$.
+Then
+
+$$
+\phi_\varpi'(x)=D_J(p,q)-p\Delta_J+
+[D_J(p,q)+(1-p)\Delta_J]
+\frac{d_f^2-\varpi^2/x^2}{4b_{\rm off}^2}.
+\tag{JS.50}
+$$
+

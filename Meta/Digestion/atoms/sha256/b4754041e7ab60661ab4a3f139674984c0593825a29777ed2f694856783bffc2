@@ -1,0 +1,29 @@
+**Lemma 3.3 (parameter-uniform whole-block replacement).** Suppose
+the vertices instead denote natural-valued functions $U_v$ on the
+leaves of a common nonempty finite shape, with equations and
+disequalities $U_u=U_v+a_e(\mathbf z)$ and
+$U_u\ne U_v+b_e(\mathbf z)$. There are no fixed-function constraints
+and no comparisons with individual leaf values. At every parameter
+assignment, existence of such functions on some nonempty finite shape
+is equivalent to existence of constant functions on any prescribed
+nonempty finite shape. The constant values can be obtained by the
+unanchored part of Lemma 3.2.
+
+Proof. In a component the forest equations give
+$U_v=B_C+\delta_v$ pointwise. A cycle with nonzero evaluated sum is
+impossible, because there is at least one leaf at which to evaluate it.
+An internal disequality is false exactly when its offset is forced
+zero, and otherwise holds at every leaf. These are the unanchored
+conditions in (NCE.7). For different components, choosing constant
+bases makes each disequality forbid just one difference of their
+bases; the finite-avoidance construction in (NCE.8) satisfies them
+all and keeps every rank natural. Constant functions give the reverse
+implication immediately. The chosen constants may depend on the
+parameter assignment; the prescribed replacement shape does not.
+
+This is the symbolic-offset extension of [NSF, Lemma 4.2][NSF].
+It is about whole-function inequality, the negation of equality. It
+does not replace arbitrary pointwise predicates, selected positions
+inside an unspecified block, or universal properties of that block.
+$\square$
+

@@ -1,0 +1,47 @@
+## 6. Charged full-family realization in the original model
+
+Fix three left rows `I\subseteq[m]` and three right rows `J\subseteq[m]`, and write
+
+$$
+R_0=\{v_{st}:s\in I,t\in J\}.
+$$
+
+For $H\ge0$, let $n=2^H$ and $D=d+H$. The actual scaffold family $T_H(R_0^n)$ has exactly $9^n$ distinct members of $S_D$. For every original source $t=\langle\alpha,v\rangle$ with $h(v)\le D$, preparation submits every original-root word $Rq$ with $q\in W_D$, including replies that are absent. The canonicalization premise stated in Section 1 says this finite table determines $\pi_D(v)$ and preserves every boundary reply and temporal factor, exactly as in [RCE, Theorem 9.1][RCE] and [JPL, Proposition 8.2][JPL].
+
+Assign one complete name to the whole canonical family `T_H(R_0^n)` and a separate complete name to every other canonical state. Every name is attained by an actual canonical source. The attained alphabet is therefore exactly
+
+$$
+|S_D|-9^{2^H}+1.
+$$
+
+The preparation uses `2^D-1` charged Reads, maximum literal length `D`, and
+
+$$
+\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1
+$$
+
+submitted address letters. The Read count sums the $2^\ell$ words at each level. The letter-sum identity has base $D=1$; replacing $D$ by $D+1$ adds $(D+1)2^D$ to $(D-1)2^D+1$ and gives $D2^{D+1}+1$. The installed tables and padded finite computation schedule depend only on public $D$ and the public construction. The complete exported name is fixed width. All accessible selectors, buffers, controls, operands, lengths, allocation distinctions, counters, handles and timing distinctions are functions of that name and public data under the separately paid handoff and access-isolation service of [RCE, Definition 1.1][RCE]. This is a resource accounting statement under those model assumptions, not a derived physical erasure or storage capability.
+
+After export, the public request is supplied before any authentic count. A singleton name answers from its installed canonical table with no Read. On the merged name, a target stopping in the outer scaffold, product/tag wrappers or inner hash scaffold has branch factor $(0,0)$. A target entering a fixed tag has a constant factor, even if it passes the leaf. Every remaining target enters one variable core module. That side has at most three possible rows and therefore at most three possible core states. Choose its identifying $L$ or $RL$ literal before receiving its reply and before every count. Prefix it by the original root $R$, the height-$H$ scaffold address, the selected outer-child edge, the tag-left edge and the hash-column address. Its length is at most
+
+$$
+1+H+1+1+h+2=D.
+$$
+
+It is one fresh Read of the same stationary source at an actual original-root word. On the canonical merged fiber the queried occurrence is present, and canonicalization preserves the reply and the requested factor for every original source with that name. The factor decoder then answers all later authentic counts, including an initially absent target. Preparation work, temporary storage, common tables, post-request workspace, predictor size, count representation, and physical time remain separate resources. No subtree, identity, equality, copying, reset, age, advice, quantum, or free-navigation port is introduced.
+
+For the lower transport, use the same-source correspondence of [RCE, Corollary 9.2][RCE] and [JPL, Corollary 8.1][JPL] with the new pressure. More explicitly, restrict any correct complete original code at depth $D$ to the actual sources whose right subtrees are $T_H(x_1,\ldots,x_n)$ with $x_i\in R$. Fix one nonempty attained code fiber. Every original-root literal is an outer constant, a scaffold constant, or a function of one boundary reply in one actual block, by the every-word simulation of Section 1. Every block target becomes the legal original request $Ra_iq$, where $a_i$ is its public scaffold address and $q\in W_d$.
+
+For this fixed name and request the reader's zero-Read or one-Read choice is fixed before its reply and every count. Two tuples of the fiber giving the same chosen reply must therefore have the same predicted trajectory for all counts. Correctness and the factor-to-trajectory inverse of Section 1 force their target factors to agree. The factor is consequently a function of that one reply; with zero Reads it is constant. Extend the decoder to unused replies. Thus this same fiber is admissible, with all original donor choices, correlations, repeated donors, cycles and off-target words retained. No fibers are split and no common donor is imposed on different targets.
+
+Under the probability law $\mu^n$, Theorem 3.2 bounds each such fiber by $(9/m^2)^n$. The disjoint restricted fibers have total mass one. Counting unchanged complete names yields, for every original competitor and every $D\ge d$,
+
+$$
+M_1(D)\ge
+\left\lceil\left(\frac{m^2}{9}\right)^{2^{D-d}}\right\rceil,
+\qquad
+\lambda\ge2^{-d}\log_2\left(\frac{m^2}{9}\right).
+$$
+
+The realization is deliberately nonoptimal. These inequalities follow from the credited native correspondence with the proved new pressure; they give neither an exact formula for $M_1(D)$ nor a sharp value of $\lambda$.
+

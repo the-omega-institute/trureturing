@@ -1,0 +1,46 @@
+**Supplier 2.1 (simultaneous cube and all addresses).** Reuse [PCA,
+Lemma 24.1][PCA]. There are actual finite origins
+$u_\theta\in Z_{b_3}$ for every $\theta\in\{0,1\}^n$, all with
+whole target $R_0$, with prescribed bit
+$\mathbf1_{\{|\theta|\ge k\}}$. Every finite word is cube-constant or
+depends injectively on just one bit, precisely at the disjoint sets
+
+$$
+E_i=\{p w_i z:p\in\{LLL,LRL\},\
+                      z\in\{\varepsilon,L,R\}\}.
+\tag{WTF.8}
+$$
+
+At the two occurrence roots the bit replies are beta/branch; at their
+children they are absent/beta, in bit order zero/one. Every $E_i$ word
+has length at least $c_i$, with equality just at the occurrence roots.
+
+For clarity, the supplied actual realization uses
+$G=\langle\beta,\beta\rangle$, $C_0=G$,
+$C_{M+1}=\langle C_M,\beta\rangle$, $M\ge s_n$.
+In $C_M$, replace the beta at $w_i$ by $G$ just when $\theta_i=1$,
+obtaining the branch image $B_\theta$. The selected words are prefix-free.
+Choose fixed pairwise distinct branch images $D_c,D_1,D_2,D_4$ avoiding
+all these finitely many $B_\theta$, and set
+
+$$
+x_a=B_\theta,\quad x_c=D_c,\quad x_{b_3}=\beta,\quad
+x_{b_j}=D_j\ (j=1,2,4),\qquad
+u_\theta=\delta(\mathscr S(x)).
+\tag{WTF.9}
+$$
+
+The image supplier proves actual feasibility, both partner repetitions
+and all six-class disequalities. Replacement changes only the selected
+root and its two children; deeper replies there are absent in both
+cases, and proper prefixes remain branches. The occurrence identity
+
+$$
+r_{\rho u}(p v)=r_{x_{[p]}}(v)\qquad(p\in P,\ v\in\mathcal W)
+\tag{WTF.10}
+$$
+
+of NBP (NBP.9.7) therefore covers every finite word, including all
+unselected cones and leaf extensions. This is a lower-witness family;
+no shape or depth promise is placed on an upper construction.
+

@@ -1,0 +1,75 @@
+**Theorem 7.1 (Equal-probability specialization on $M_4(\mathbb C)$).** Take $H=3$, $K=\{1,2,3\}$ and $p_1=p_2=p_3=1/3$ in Definition 2.1. Let $\alpha_1,\alpha_2,\alpha_3$ be the roots of $g(z)=3z^3+3z^2+2z+1$. These roots are distinct, nonzero and different from $1$. For every phase choice, in particular for the actual Source Proposition 23.3 pair
+
+$$
+\theta^+=(0,0,0),\qquad\theta^-=(\pi,0,0),\qquad
+x_+=\frac{e_0+e_1+e_2}{\sqrt3},\qquad
+x_-=\frac{e_0+e_1-e_2}{\sqrt3},
+$$
+
+the full channel Jordan form is
+
+$$
+\begin{aligned}
+&J_3(0)\oplus J_3(0)\oplus J_2(0)\oplus J_2(0)
+\oplus J_1(0)\oplus J_1(0)\\
+&\hspace{2em}\oplus J_1(1)\oplus J_1(\alpha_1)
+\oplus J_1(\alpha_2)\oplus J_1(\alpha_3).
+\end{aligned}
+\tag{7.1}
+$$
+
+Its minimal polynomial and all power ranks are
+
+$$
+m_{\mathcal E_\theta}(z)=z^3\left(z^4-\frac{z^2+z+1}{3}\right),\qquad
+\operatorname{rank}\mathcal E_\theta^n=
+\begin{cases}16,&n=0,\\10,&n=1,\\6,&n=2,\\4,&n\ge3.\end{cases}
+\tag{7.2}
+$$
+
+Proof. The actual quotient and its polynomial are
+
+$$
+P=\begin{pmatrix}
+0&0&0&1/3\\1&0&0&1/3\\0&1&0&1/3\\0&0&1&0
+\end{pmatrix},\qquad
+f(z)=z^4-\frac{z^2+z+1}{3}=\frac{(z-1)g(z)}3.
+$$
+
+The factorization follows by multiplication: $(z-1)g(z)=3z^4-z^2-z-1$. Since $g(1)=9$ and $g(0)=1$, its roots are neither $1$ nor zero. To exclude a repeated root, suppose $g(\alpha)=g'(\alpha)=0$, where $g'(z)=9z^2+6z+2$. Then
+
+$$
+3g(\alpha)-\alpha g'(\alpha)=3\alpha^2+4\alpha+3=0.
+$$
+
+Subtracting three times this quadratic from $g'(\alpha)=0$ gives $-6\alpha-7=0$, so $\alpha=-7/6$. But
+
+$$
+g'(-7/6)=\frac{49}{4}-7+2=\frac{29}{4}\ne0,
+$$
+
+a contradiction. Thus all four roots of $f$ are simple. Theorem 4.5 applies to these actual channels, giving all the zero blocks, the four scalar nonzero blocks and the minimal polynomial. Substitution of $H=3,d=4$ in (5.1) gives ranks $4+3\cdot4=16$, $4+2\cdot3=10$, $4+1\cdot2=6$, and $4$ thereafter. This proves (7.1)–(7.2) from the full-family splitting and bases, without treating Source's characteristic-polynomial equality as Jordan equality. $\square$
+
+**Source interface 7.2 (Credited purity and minimum memory of this pair).** In the family of Theorem 7.1, Source Proposition 23.3 gives $\mu=3$, stationary diagonal $(1,2,3,3)/9$, and
+
+$$
+\operatorname{Tr}(\rho_\theta^2)=\frac{37+8\cos\delta}{81},
+\qquad \delta=\theta_1-2\theta_2+\theta_3.
+\tag{7.3}
+$$
+
+Its actual stationary pair is
+
+$$
+9\rho_+=\begin{pmatrix}
+1&1&1&0\\1&2&2&1\\1&2&3&2\\0&1&2&3
+\end{pmatrix},\qquad
+9\rho_-=\begin{pmatrix}
+1&1&-1&0\\1&2&0&-1\\-1&0&3&0\\0&-1&0&3
+\end{pmatrix},
+$$
+
+with purities $5/9$ and $29/81$, respectively. The range (7.3) over this stationary family is exactly $[29/81,5/9]$. Faithfulness, stationarity and equality of their entire stationary binary laws are inherited from Source Theorem 23.2. Thus these are states and instruments from the same specified shift/reset construction, not independently selected matrices with matching spectral data.
+
+Source Theorem 23.4 gives minimum complex memory dimension **four** for this law among all **exact finite homogeneous binary CP realizations**. The comparison allows arbitrary Kraus counts and mixed initial densities and assumes neither reset nor stationary initialization in a competitor. It counts all persistent classical, quantum and controller registers influencing future outputs and excludes an uncounted external time-dependent controller. Its stated class and dimension bound are the premise used below; no minimum-memory theorem for arbitrary $H$ is asserted here. Source also proves that $\mathcal E_+$ and $\mathcal E_-$ are not related by memory-unitary conjugation and that the outcome-labeled CP instruments are not unitarily equivalent, even allowing scalar phases on Kraus representatives.
+

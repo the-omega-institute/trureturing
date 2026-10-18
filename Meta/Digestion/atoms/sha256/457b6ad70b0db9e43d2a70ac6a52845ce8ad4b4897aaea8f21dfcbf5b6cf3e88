@@ -1,0 +1,34 @@
+**Theorem 13.2 (existence, self-mapping and uniqueness at fixed contrast).** If
+$|\kappa-k_e|\le R_f/(2\beta_B)$, the system $\Psi(w;\kappa)=0$ has exactly one root in $\overline B(w_e,R_f)$. A globally maximizing law from Theorem 12.2 equals the same-strength six branch whenever, in addition to its localization and activity gates,
+$$
+d<\min\{R_f/(2C_{\rm joint}D_{\rm loc}),R_f/(2C_{\rm br})\}.
+$$
+Equality means the original fractional coefficient law up to permutation, not uniqueness of its full instrument or time law.
+
+Proof. A homogeneous kernel vector $(\dot z,\dot Y,\dot\lambda)$ of $\mathcal B_e$ obeys $A\dot z=0$, $q^T\dot z=0$. Pairing its first equation with $\dot z$ yields $\dot z^TH\dot z=0$. The retained positive Hessian on $\ker A$ (and hence on this proper constrained tangent) gives $\dot z=0$. The independent nine constraint columns then give $\dot Y=\dot\lambda=0$. This proves nonsingularity. Neither the non-tangent seven-minus-six response nor a variable carrying zero weight is put into a positive-tangent argument.
+
+For the frozen-Jacobian map
+$T_\kappa(w)=w-\mathcal B_e^{-1}\Psi(w;\kappa)$, the derivative bound on the closed ball is
+$$
+\|D_wT_\kappa(w)\|_2
+\le\beta_BL_B\|w-w_e\|_2
+\le\beta_BL_BR_f\le1/2.
+$$
+At the center, only the final constraint row changes with $\kappa$, so
+$\|\Psi(w_e;\kappa)\|_2=|\kappa-k_e|=d$ and
+$\|T_\kappa(w_e)-w_e\|_2\le\beta_Bd\le R_f/2$.
+Consequently for every $w$ in the closed ball,
+$$
+\|T_\kappa(w)-w_e\|_2
+ \le\tfrac12\|w-w_e\|_2+\beta_Bd\le R_f.
+$$
+This proves self-mapping as well as contraction; a derivative bound alone would not suffice. The contraction principle gives exactly one fixed point, and invertibility of $\mathcal B_e$ identifies it with exactly one root.
+
+Theorems 12.2–12.3 place any global maximizer on $r=0$. Its KKT multipliers obey the displayed bound, and dropping the inward multipliers gives
+$$
+\|w-w_e\|_2
+ \le(1+C_\mu)\|x-x_e\|_2
+ \le C_{\rm joint}D_{\rm loc}d<R_f/2.
+$$
+The extended six branch satisfies this same fixed-contrast KKT system: its occupied value and derivative equations give stationarity, and its own inverse multiplier gives $K=\kappa$. Theorem 11.3 and its separate gate place it within $R_f/2$ as well. The unique-root conclusion identifies the two. This supplies an explicit replacement for the unnamed implicit-function neighborhood in Theorem 5.3. $\square$
+

@@ -1,0 +1,11 @@
+**Ordinary existence and conditional effective production.** Even an unrepresented or noncomputable $\mu$ defines the finitely many real rows (1.2); their dyadic approximants exist as ordinary mathematics. Once chosen, only finitely many rational constants are installed. This gives no algorithm extracting them from an arbitrary unrepresented prior and no physical procedure installing or sampling such a prior.
+
+A sufficient effective input is certified computability of the finitely many required $Z_\mu(a,d)$ and $Z_\mu(a+1,d)$. Computable masses with an effective depth-tail bound provide this: truncate only the installation computation, bound its omitted likelihood sum by the certified prior tail mass, and approximate the finitely many remaining terms. Since
+
+$$
+Z_\mu(a,d)\ge3^{-(a+d)}>0,
+\tag{3.1}
+$$
+
+certified finite-precision division computes each ratio to any requested error. Compute a ratio approximation with error less than $\delta/4$, round it to the nearest $2^{-b}$ grid point, and clip to $[1/4,1/2]$. The error is less than $3\delta/4$, because the true ratio belongs to that interval; no equality-at-a-tie decision is needed. This constructs the finite table effectively under the stated representation contract, during charged installation. It neither truncates the actual prior/source nor grants runtime access to its sums. Physical source preparation, freshness and fair-bit authenticity remain external premises.
+

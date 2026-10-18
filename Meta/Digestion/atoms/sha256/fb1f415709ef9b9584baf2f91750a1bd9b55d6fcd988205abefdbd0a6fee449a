@@ -1,0 +1,99 @@
+**Definition 212.1 (Complete scores, actual measures and one budget).**
+Retain the source and acquisition contract of 210.1 and 211.14.
+For an integer $L\ge3$, let $\Omega_n\subseteq\{0,1\}^L$ contain
+all words with first zero $n$. Every word, including every multiple-zero
+word and $1^L$, remains in the domain. A score $y$ consists of independent
+nonnegative weights $A_w,C_w,P_w$ at each $w\ne1^L$ and $T\ge0$.
+At label $r\in\{0,\ldots,L\}$ its reward is
+
+$$
+g_y(w,r)=A_w\mathbf1_{r=0}+C_w\mathbf1_{r=n(w)}
+              +P_w\mathbf1_{r\in\{0,n(w)\}},\qquad
+ g_y(1^L,r)=T\mathbf1_{r=0}.
+\tag{212.1}
+$$
+
+Thus $P$ is the independent two-label event weight. For a cell $E$ put
+$m_y(E)=\max_{0\le r\le L}\sum_{w\in E}g_y(w,r)$.
+The full catalogs contain empty schedules, every singleton, and every
+pair $i<j$. The $N$ pair cells are $00,01,10,11$; the $O$ cells are
+$0=\{w_i=0\},10,11$. A label may be earlier than both queried addresses
+and need not be queried. Let $B_N^s,B_O^s$ be the sums of these cell
+maxima and $B_N,B_O$ their maxima over the respective complete catalogs.
+A tuple $(i,j;r_0,r_{10},r_{11})$ denotes a stopped table, and four
+output entries denote a full table in $00,01,10,11$ order.
+
+The anchor is the stopped table $R=(1,2;1,2,0)$, with full completion
+$(1,2;1,1,2,0)$. Write
+
+$$
+\begin{aligned}
+W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W_y\ge0
+                         \quad(\mathcal C=N,O),\\
+Q(y)&=(\beta,K),\qquad
+\beta_n=\sum_{\Omega_n}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{212.2}
+$$
+
+All sums over zero words include zero coefficients. Static reversals
+only exchange cells and repetitions give singleton information; their
+actual requests still count. Every empty or singleton $N$ output
+function has a distinct-pair $N$ representation. Completing an $O$
+schedule gives an $N$ function. These representation facts do not
+embed a last-address singleton in a nonexistent later stopped pair.
+
+The complete event-demand vector $d(b,e)$ has the three independent
+entries $1-b_n-e,b_n-e,1-e$ at every $w\in\Omega_n$, and $1-e$
+at $1^L$. Negative singleton demands are retained. Use the existing
+hull and signed quotient coordinates of 198.5 and 199.1–199.4:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+ \quad b_2=b_3,\\
+ &(L+1)e\le\sum_{n=3}^Lb_n,
+ \quad b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\},\\
+\alpha&=(1,1,0,\ldots,0),\qquad
+ F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke,\qquad
+ \sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{212.3}
+$$
+
+If $z_D$ is the full event-indicator vector of a table, set
+$r=z_R=d(\alpha,0)$, $h=d-r$ and $G_{\mathcal C}=(z_D-r)_D$.
+In particular $F_{Q(y)}=y\cdot h$. The domain of finite full-$N$
+configurations is
+
+$$
+H_N=\{b\in H_L:\exists\lambda\ge0,
+                         \ G_N\lambda\ge h(b)\}.
+\tag{212.4}
+$$
+
+As in 199.2, $q\in E_N$ means that one full score and one number satisfy
+
+$$
+V\ge0,\quad 0\le\theta\le1,\qquad
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(q-Q(V))\le\theta.
+\tag{212.5}
+$$
+
+For the same actual full configuration $\lambda$ at $b\in H_N$,
+with $M=\sum_D\lambda_D$, the existing weak-duality calculation gives
+$F_q(b)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+The residual is signed; at $\theta=1$ the score $V$ can be nonzero
+with zero cost. No class, cell or pair has an additional budget.
+
+Every measure below is an actual finite measure on the indicated
+Boolean cube. Its coordinates are proof weights, not a distribution
+on source labels or an acquisition probability kernel. Unspecified
+weights are zero, coincident atoms add, $x_+=\max(x,0)$, and a maximum
+over an absent family of nonnegative entries contributes zero.
+
+### 212.1 Full-score surplus carriers and coupled moment boxes
+

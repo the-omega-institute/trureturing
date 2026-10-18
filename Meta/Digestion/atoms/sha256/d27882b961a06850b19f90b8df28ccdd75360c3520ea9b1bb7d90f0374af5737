@@ -1,0 +1,22 @@
+**Lemma 3.1 (Two-edge placement and its common root).** Fix $q\in\mathbb Z$ and a first unordered integer-line edge $E$. A tree of active height at most two admits a placement with every edge left endpoint in $[q-2,q+2]$, preserving each terminal's joint mass with $S_q$. Terminals may carry any finite set of tags. The root placement is common to all its second-node alternatives. The following complete table specifies the second edge $F$; numbers are left-endpoint offsets from $q$, and $w$ denotes the endpoint of $E$ other than $q$ when $q\in E$.
+
+| First-edge relation | Second-edge relation | Root left offset | Second left offset |
+| --- | --- | --- | --- |
+| $q\in E$ | $F=E$ | $0$ | $0$ |
+| $q\in E$ | $E\cap F=\{q\}$ | $0$ | $-1$ |
+| $q\in E$ | $E\cap F=\{w\}$ | $0$ | $1$ |
+| $q\in E$ | $E\cap F=\varnothing$ | $0$ | $2$ |
+| $q\notin E$ | $F=E$ | $1$ | $1$ |
+| $q\notin E$ | one shared vertex, $q\in F$ | $1$ | $0$ |
+| $q\notin E$ | one shared vertex, $q\notin F$ | $1$ | $2$ |
+| $q\notin E$ | disjoint, $q\in F$ | $1$ | $-1$ |
+| $q\notin E$ | disjoint, $q\notin F$ | $1$ | $-2$ |
+
+Proof. Two line edges are equal, meet in one vertex, or are disjoint. If the root contains $q$, a shared vertex is $q$ or $w$, and a disjoint child cannot contain $q$. If the root excludes $q$, a meeting or disjoint child either contains $q$ or excludes it. These alternatives exhaust the nine rows, including both orientations and arbitrary integer distances.
+
+For equal edges identify their two endpoints, fixing $q$ if incident and keeping it isolated otherwise. For meeting edges identify the shared vertex and the two edge-labelled outer vertices. The displayed placements put $q$ respectively in the middle, at the root-side end, at the child-side end, or outside that path, exactly as required. For disjoint edges identify each pair separately, fixing $q$ on its incident edge or as an isolated vertex. In the last row the pairs are $\{q+1,q+2\}$ and $\{q-2,q-1\}$, genuinely disjoint and excluding $q$. In the touching-root disjoint row they are $\{q,q+1\}$ and $\{q+2,q+3\}$. Thus each row has the vertex bijection of Lemma 2.3 and preserves $(S_q,X_E,X_F)$.
+
+Use the touching or detached root placement once. For each reading child separately choose its table row. A terminal on root reply $x$ has joint mass $J_p(S_q=s,X_E=x)$; a terminal on the second reply $y$ at child $x$ has mass $J_p(S_q=s,X_E=x,X_{F_x}=y)$. Each is preserved by the relevant marginal identity. The terminal events partition execution, so every terminal-tag mass is preserved. The proof does not require a joint potential-reply identity between the two second-node alternatives. A one-read tree uses the root marginal; a no-read tree is unchanged. All listed left endpoints lie in the asserted interval.
+
+This is Two-read Lemma 3.1 and the one-phase branch argument of its Theorem 3.2, reused with arbitrary tags. The finite-tag extension follows from the same individual terminal masses, without a new probability theorem. $\square$
+

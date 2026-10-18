@@ -1,0 +1,24 @@
+**Proposition 6.4 (what descends at request completion).** On every
+actual compiled run, forgetting the intermediate parent phase and
+mapping completed requests to their virtual replies gives exactly the
+virtual controller run and whole output. This projection does not
+identify full actual raw labels, costs or archive successors with
+those of the virtual run, and has no inverse from the requested
+virtual reply to the raw transcript in the scalar instance of
+Theorem 4.3.
+
+Proof. The completion statement is the induction in Theorem 3.1.
+The extra parent event and possible child event are the actual
+labels counted in (NVC.9) and appended in (NVC.17). A virtual
+one-request event need not have the same address or the same
+number of events. Theorem 4.3 proves the absence of the claimed
+inverse even on a fixed scalar task with three outputs. $\square$
+
+Thus the simulation is a refinement after choosing a task that
+forgets these intermediate events. A task observing every Read and
+its original joint successor cannot declare them invisible merely
+because the requested output agrees. This is exactly the scope
+distinction needed before using [PG, §§34,39,43][PG]. Its
+full-response task retains legality, success/failure labels, original
+successors and archives, beyond a projected controller output.
+

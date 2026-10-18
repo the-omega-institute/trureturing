@@ -1,0 +1,21 @@
+**Lemma 2.4 (two source directions for the code branching).** Every solution
+of a positive native presentation in Definition 2.3 supplies a branch of
+(NAC.9) with an admissible valuation of every slot at the same original
+finite parameters. Conversely every admissible valuation of one branch
+expands to a solution of that native presentation.
+
+**Proof.** Evaluate every displayed native subterm and code it with $B$.
+Use (NAC.7) at every displayed pair. Genuine finite collapses supply their
+natural $q$; all other pairs choose the raw case. Equations and fixed powers
+are respected by (NAC.6). Thus all named subterms, including repeated and
+unused names, have simultaneous admissible codes in one branch.
+
+Conversely expand all slots. A raw pair record is sound by (NAC.5); a
+collapse record is sound by the actual atomic recurrence. A shift record
+is sound because its original positive power is nonnegative, and its inverse
+orientation merely expresses the same code equality. Finite atoms and $O$
+expand as prescribed. Induction through the finite named syntax reconstructs
+every original equality. Dropping normality creates overlapping native
+solutions, not extra nonsolutions. Expansion injectivity is never used.
+$\square$
+

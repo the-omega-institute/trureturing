@@ -1,0 +1,41 @@
+**定理 6.1（Five band labels at width seven）。** For every $Q\ge2$ set $m=7$, $k=7Q$, $a=6$. Give the five phases $1,\ldots,5$ pairwise different low-tail labels $B_1,\ldots,B_5$, all different from $A$; give every other low-tail phase label $A$ and every INITIAL tail $s\ge k-6$ label $R$, different from all low-tail labels. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=2Q+2.
+\tag{6.1}
+$$
+
+A single literal attaining stream is
+
+$$
+1111110\mid
+\underbrace{1010101\mid\cdots\mid1010101}_{Q-1\text{ blocks}}\mid
+0000100\mid
+\underbrace{0000000\mid\cdots\mid0000000}_{Q-1\text{ blocks}}\mid
+0000110\mid1000000.
+\tag{6.2}
+$$
+
+Proof of the lower bound. The forced-root argument in Theorem 2.2 applies with $a=6<m$. Band phases have zero root response and common current tail. Within a hypothetical budget of $2Q+1$, indices range only from zero through $2Q$. The windows are still (3.2). At nonzero residue $b$ and $h=0,1$, their left endpoints are at least $7-h\ge6$, so none contains any of the five band phases. Thus after the root the only potentially informative band endpoints are $Q$ and $2Q$. Uniform rejection cannot distinguish their labels, and two binary endpoints yield at most four label leaves, even with adaptive actions and early stopping. Five distinct band labels require at least one additional emitted block. Therefore $C_{\rm ad}\ge2Q+2$.
+
+For attainment, the first $Q$ blocks of (6.2) are the scan (3.4) with odd width. They reject exactly the high tails and remove every outside phase; every positive successful scan difference returns $A$. The continuing archive has support exactly $\{1,2,3,4,5\}$, with immutable labels $B_j$. The three remaining nonzero query words occur at indices $Q$, $2Q$, and $2Q+1$. Their full-window masks, derived directly by (1.7), are respectively
+
+$$
+\{3,4\},\qquad\{2,4\},\qquad\{5,6\}.
+\tag{6.3}
+$$
+
+Indeed $u_Q=-1$, the one at local position four in $0000100$ has boundary vertices three and four; $u_{2Q}=-2$, the pair of adjacent ones at positions four and five in $0000110$ has boundary vertices two and four; and $u_{2Q+1}=5$, the initial one of $1000000$ has boundary vertices five and six. Phase six is actually absent from the same scan archive. The endpoint differences at these three indices are
+
+| INITIAL phase | Original label | Acquired difference code |
+| --- | --- | --- |
+| $1$ | $B_1$ | $000$ |
+| $2$ | $B_2$ | $010$ |
+| $3$ | $B_3$ | $100$ |
+| $4$ | $B_4$ | $110$ |
+| $5$ | $B_5$ | $001$ |
+
+These five distinct codes return exactly the INITIAL label. Between the first two query words are $Q-1$ paid all-zero complete blocks. After the second query, phase five is a returning frontier: it is the left endpoint of the next window and can be selected using excluded phase six. It does not have to wait to the next common band visit at $3Q$.
+
+The root has leading run six and a zero, so every low tail $s<k-6$ safely clears and every high tail rejects. Each scan word has leading and terminal runs one; all query words end zero. The final word has one leading one, following the zero-ending $0000110$. Every internal run and seam is strictly below $k$, and every displayed block has seven bits. The total is $Q+1+(Q-1)+2=2Q+2$ actual blocks, including all waits. Initial $\bot$ stops free, and both legal initial values use the same stream and difference decoder. This establishes the preset upper bound matching the adaptive lower bound. ∎
+

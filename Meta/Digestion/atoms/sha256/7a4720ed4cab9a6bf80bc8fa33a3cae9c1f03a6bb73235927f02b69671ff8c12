@@ -1,0 +1,38 @@
+## 9. Remaining full-domain obligation and evidence boundaries
+
+**Open problem 9.1 (arbitrary acquired cyclic domains).** Keep arbitrary
+finite $R,H_0,H_{\rm rel},Q,N$ under ARH Assumption 1.3 and
+$D\ne\varnothing$, without the constructor-elimination,
+synchronous or atomic recognizers. Decide whether a finite original
+prefix determines the entire $R_Q$ and, when it does, compute the
+full paid feasibility/frontier and same-source weighted interface
+for all legal native competitors.
+
+The missing general premise is an exact effective treatment of
+the remaining coupled interpreted finite-tree equations and
+disequalities, together with their whole-row prefix boundedness.
+For example a residual equation
+$\rho^a(x)=\langle A,B\rangle$ is not made aligned merely
+by treating $\rho$ as a free constructor or rejecting its cycle:
+$\rho(\beta)=\langle\beta,\alpha\rangle$ is a finite
+solution of the corresponding self-reference. A failed
+$\mathcal E_{\rm CE}$ recognizer is neither a negative
+recovery answer nor an undecidability certificate.
+
+Lemma 2.2 applies when an actual WS2S formula with only finitely
+many free positions has been obtained. It does not create such
+a formula for an arbitrary cyclic signed domain, nor does it
+supply negative stopping for its original-prefix question.
+Theorem 4.2 invokes the already proved ARH22.1 stopping criterion
+before constructing its whole-row labels. Thus no unrestricted
+decision follows from this companion.
+
+ARH §§27–32 separately decide arbitrary cuts and arbitrary finite
+literal refinements on the entire graph
+$F(y)=\langle\rho(y),y\rangle$, including target comparisons
+outside the earlier recognizers. Theorem 30.2 and Corollary 31.1
+supply that recovery boundary and lawful sufficient paid service;
+they are covered suppliers. This companion does not reprove that
+arbitrary-cut theorem or automatically extend its minimum prices
+outside the hypotheses of Definition 1.1.
+

@@ -1,0 +1,21 @@
+**Assumption 1.4 (genuinely acquired complete entry).** On a declared
+source domain $X\subseteq\mathcal T$, an actual source-blind paid
+preparation supplies entry $e(t)\in Q\sqcup H$. Every accessible
+surviving source distinction at entry factors through $e(t)$ and
+public inputs, including controls, buffers, selectors, lengths,
+allocation and accessible timing. The original-root reference,
+permission, continuity, authentication, lawful entry and isolation are
+explicit paid services. Their handles supply no uncounted source
+distinctions. Let
+
+$$
+r=|e[X]|,\qquad K=|Q|+|H|.
+\tag{NVC.5}
+$$
+
+An existence statement for a finite-range function does not acquire it.
+Theorems below require the actual preparation or an explicitly supplied
+paid entry service. Installed code cannot depend on the unknown source.
+A growing accessible event log is not included in the finite carrier
+(NVC.4); if installed, it is additional complete operational state.
+

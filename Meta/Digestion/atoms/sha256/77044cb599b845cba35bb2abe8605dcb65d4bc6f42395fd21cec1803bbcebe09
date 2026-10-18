@@ -1,0 +1,48 @@
+**Corollary 8.2 (classical CP data do not determine this coherent witness).**
+The fixed-$T_4$ functional $\operatorname{Tr}(T_4-K)_+$ in Theorem 8.1
+is not a function of the classical acquisition instrument (PC.35)
+and its readable labels alone. In the original GC class, independent
+phases on all Kraus operators within a fixed classical acquisition
+branch likewise preserve its full CP map and physical outputs.
+
+Proof. To identify what the classical data in (PC.35) retain, first
+use Watrous, Chapter 2, instrument equations (2.258)–(2.262) and the
+Choi/Kraus interfaces of Theorem 2.22 and Corollary 2.27. Summing
+the branches in (PC.35) gives the qubit identity channel. It has the
+single Kraus operator $I_2$, and its nonzero Choi matrix is
+$|\operatorname{vec}I_2\rangle\langle\operatorname{vec}I_2|$, of rank
+one. More generally, for any integer $m\ge1$ choose positive
+$p_1,\ldots,p_m$ with sum one and define
+$\mathcal I_j(X)=p_jX$. These are $m$ nonzero readable branches,
+while their sum is still the identity channel. They require no
+additional input specimen. Proportional subdivision changes this
+readable count without changing the forgotten channel.
+
+Even after fixing the four-label subdivision (PC.35), Theorem 8.1
+gives the two values (PC.41) and (PC.42) for that same instrument.
+More generally replacing every Kraus operator $C_{fj}$
+of a classical branch by $e^{i\vartheta_f}C_{fj}$ cancels the phase
+in each $C_{fj}XC_{fj}^\dagger$. It preserves that CP branch,
+its effect, all passive-reference conditional outputs and every
+subsequent conditional CP operation. In the GC dictionary it therefore
+preserves $\Gamma$, $K$, $J_t$ and all physical outputs. Cross-label
+coherent record inner products need not be invariant under the same
+independent phases, as the example computes.
+
+RT81's $d$ refers to a specified local channel's pure environment
+resource. It is neither the number of readable outcomes in (PC.35)
+nor the count of original GC optimal labels. The subdivision above
+concerns an arbitrary classical instrument; it is not a theorem about
+the minimum count among GC height optimizers. Conversely an
+environment may be discarded and unreadable. A valid count transfer
+must relate the actual jointly accessible original resource to the
+particular channel environment used by RT81. $\square$
+
+The phase variation in Theorem 8.1 changes coherent RT81 channels;
+it is not two Stinespring descriptions of one fixed coherent channel.
+RT81 obtains its relative logical phases from coherent inputs such as
+(PC.34). Those phases are additional data to a classical instrument.
+The example is an obstruction to deriving that fixed-target witness
+from classical branches alone, not an RT81 counterexample or an
+original-source actual-count necessity seed.
+

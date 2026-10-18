@@ -1,0 +1,18 @@
+## 1. Modular inverses and complete rows
+
+Let $n,q$ be positive integers and let $p_0,\ldots,p_{n-1}$ be positive
+integers coprime to $q$. Choose any integer $b_i$ satisfying
+$p_i b_i\equiv1\pmod q$, and define the complete row
+
+$$
+R_k(q,p)=\sum_{i=0}^{n-1}
+\frac{1}{|\sin(\pi p_k b_i/q)|}.
+$$
+
+The diagonal $i=k$ is included. Replacing $b_i$ by $b_i+dq$ changes
+the angle by the integer multiple $p_kd\pi$ and leaves its absolute sine
+unchanged. Thus $b_i$ is a modular inverse, with no real reciprocal
+interpretation. Reducing $p_kb_i$ modulo $q$ also leaves the summand unchanged.
+When $q>1$, the product is a unit and is not zero modulo $q$, so its
+sine denominator is nonzero.
+

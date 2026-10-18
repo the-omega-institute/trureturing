@@ -1,0 +1,15 @@
+**定义 C-149.1（另行扩大的输出域）。** 在 $K^{\otimes n}$ 上另定义
+
+$$
+\begin{aligned}
+\widehat{\mathrm{Marg}}_{N,n}
+&=\{\Omega\in\mathsf D(K^{\otimes n}):\Omega_i\in\mathcal F_N\ (\forall i)\},\\
+\widehat{\mathrm{Marg}}_{N,n}^{=}
+&=\{\Omega\in\widehat{\mathrm{Marg}}_{N,n}:\Omega_1=\cdots=\Omega_n\}.
+\end{aligned}
+\tag{C149.1}
+$$
+
+在这些域上定义 $\widehat f$ 时，风险直接为 $\sup_\Omega\operatorname{Tr}(T\Omega)$，
+目标仍为同一 $\tau_N^{\otimes n}$。它们不是 (C146.1) 的源律定义。
+

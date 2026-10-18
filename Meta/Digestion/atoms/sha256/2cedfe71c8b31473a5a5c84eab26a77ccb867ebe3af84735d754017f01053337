@@ -1,0 +1,21 @@
+**Lemma 3.1 (Actual supports, calendar and useful exits).** In any correct four-row competitor, every initial root installs $L=1^m$, and every mandatory root-zero successor installs the same zero-leading word $B$. Roots and those queries are disjoint rows. Put $q=q_1^B$, $p=q(0)$ and $c=3m\pmod T$. Then
+
+$$
+q(m)=0,\qquad q_2^B(a)=0,\qquad q_2^B(m)=p.
+\tag{3.1}
+$$
+
+The index-two charge of $L$ is $\rho=\mathbf1_{\{a,c\}}$. In particular $\rho(0)=\rho(m)=0$. The actual subgroup has at least five vertices, because $|J|\ge3$; $a,c,-m,-2m$ are actual nonendpoint vertices wherever used below.
+
+Proof. Root forcing and zero-leading query forcing are the irreversible first-zero and maximal surviving-tail arguments of [OWN, Theorems 3.2 and 9.2]. They use actual original tails $0,h$ at the root and $h-1$ on every lower phase, not a favorable tail selection. The translation and all-one charge identities are the physical interface (2.1)–(2.2). The order of $m$ in $P$ is $|P|\ge5$, which gives the vertex distinctions. ∎
+
+After the first $B$, every still-active successful source has the same literal tail $\tau(B)$. Some endpoint archive is still mixed: otherwise $L\mid B$ would acquire the full target in two blocks, contrary to the reused fee theorem. Thus the common next word $D$ must succeed; common-tail semantics then makes it succeed on all active successful sources. A word containing zero is safe on repetition after itself, since $\alpha(D)+\tau(D)\le m-1<k$. A safe $D=L$ rejects on repetition, since $\tau(B)+2m\ge k$. Both alternatives are admitted.
+
+A root's bottom continuation must eventually return $R$, because an actual initial high-tail source has that same row and absorbing bottom successor. It may be shortened to its existing $H_R$ without changing successful-source behavior. A later $C$ or lower source therefore cannot reject at a root. Initial bottom may likewise initialize to its literal Halt. No analogous shortening of a delayed successful $C$ branch is assumed.
+
+At a fixed row, identical current records have identical remaining deterministic executions. Different immutable labels on that same row/current-record pair are therefore impossible. This is the actual-union invariant of [FC, §§26–27]; the label is a proof coordinate, not an input. A spare row with a homogeneous entire actual union can be replaced by its existing Halt and removed. A correct controller with only three word rows would contradict the reused horizon-independent lower bound.
+
+**Proof convention 3.2 (Fixed effective outputs).** When a raw branch has at most one useful final Halt label, its eventual literal return can be denoted by that label. This only abbreviates its fixed installed updates. In particular, a last root cannot return a lower label; a last zero-leading query with one scalar Halt can return only that Halt's label; a repeated zero-containing row with an emitting edge offers at most its other scalar Halt; and a repeated all-one row offers one uniform bottom return. These statements retain actual rejection and charged delays. They do not install an external decoder.
+
+There are exactly four sharing shapes: distinct/shared initial roots crossed with distinct/shared mandatory first queries. The remaining rows can install arbitrary words. Their actual occurrences, rather than nominal program layers, determine the following cases.
+

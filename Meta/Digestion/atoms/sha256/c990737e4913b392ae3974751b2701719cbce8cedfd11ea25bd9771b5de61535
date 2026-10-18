@@ -1,0 +1,33 @@
+**Definition 5.4 (actual retained choice and cut accounting).** To mix
+instruments with weights $a_i\geq0$, $\sum_i a_i=1$, supply encoder
+Kraus matrices $\sqrt{a_i}C_{i,\alpha}$ and retain the actual choice
+$i$ in the generated label $(i,\alpha)$. Keep the whole-fibre TP
+decoder $\mathcal R_{i,\alpha}$. Zero-weight choices may be removed.
+If the choices have the common output RH.36 and high effect RH.42,
+the mixed acquisition still has total effect $I_5$, that output and
+that high effect. Its oriented winding contrast is the affine sum.
+Its TV is also exactly affine, since
+
+$$
+\frac12\sum_{i,\alpha}
+ |a_i p_{27}(\alpha\mid i)-a_i p_5(\alpha\mid i)|
+ =\sum_i a_i\operatorname{TV}_i.
+\tag{RH.44}
+$$
+
+This is an actual generated choice, not a choice of unknown history or a
+combination of separately attainable extrema.
+
+A normalized acquisition dilation may use
+$\sum_{\alpha,k}|\alpha\rangle_C\otimes C_{\alpha k}|\psi\rangle
+\otimes|\alpha,k\rangle_Z$. RH.35 makes it an isometry. Permanently
+discarding $Z$ before the counted cut dephases the actual label and
+leaves exactly the declared fibre. This is environmental copying of
+an instrument label, not copying the specimen. No retained specimen,
+controller, entanglement share or other input-bearing share outside that
+fibre is available to any later execution. If such a share is retained,
+it changes the counted acquisition. Later independent blanks may serve
+the TP decoders; later accessible correlated shares are not blanks.
+These statements specify supplied mathematical operations, not native
+permission to enact a dilation or to access a discarded environment.
+

@@ -1,0 +1,20 @@
+**Definition 3.1 (the payload graph).** A real unary length block $U(d)$
+has its marked head at the first bit. A writable payload interval of $d$
+zeroed cells and one following delimiter has been constructed, and its head
+is at its first cell. The input and length-test latches are distinct. The
+following five native rows are the entire loop:
+
+| Native state | Primitive and successor |
+| --- | --- |
+| test | RD(length,test-latch); if 0 go to exit, otherwise go to input |
+| input | IN(input-latch); go to write |
+| write | WR(payload,input-latch); go to move-payload |
+| move-payload | MR(payload); go to move-length |
+| move-length | MR(length); go to test |
+
+The zero/one successor test is part of the testing RD row permitted by
+PR57.D1. The final MR's control successor is the test state. There is no
+extra uncharged back-edge instruction and no bit-dependent payload branch.
+The exit reached by the final RD(0) is a different phase, before the later
+payload seal, completed-frame parsing or source work.
+

@@ -1,0 +1,47 @@
+**Lemma 64.5a (closed forms and invariant literal hard-core statistics).**
+The forms in (64.7) are densely defined, nonnegative and closed. Operators (64.8)
+are self-adjoint and semibounded. For $N=2$ their full unitary evolution preserves
+$\mathcal K_{D,2}^{\rm hc}$ and its form domain $\mathcal Q_{D,2}$. Thus any
+admissible finite-energy input has zero atomic double occupation and zero
+same-cable collision trace throughout evolution, for every finite clock value.
+
+Proof. For fixed $\delta>0$, the sum of the weighted norm and derivative norm is
+an equivalent direct-sum $H^1$ norm on the finitely many intervals, rectangles
+and triangles, with their atomic coordinates. Endpoint, boundary and diagonal
+trace maps are continuous into their respective finite-dimensional or $L^2$
+trace spaces. All stipulated equalities therefore define a closed subspace.
+For density, first approximate a cell function by a smooth function supported
+away from every boundary, including the diagonal. For prescribed atomic data,
+use linear endpoint bumps of width $h<1/2$ on each incident cable. Lift a pair
+value by the products of its two endpoint bumps. On a same-cable square use
+$u(p,q)[\theta_p(x)\theta_q(y)+\theta_q(x)\theta_p(y)]$; the two endpoint supports
+are disjoint, so its collision trace is zero. Slice traces match these products,
+with zero at collision and ground corners. Their additional slice and cell
+masses tend to zero as $h\to0$, while each positive-width function has finite
+energy. To approximate a slice independently, take its desired function compactly
+supported away from its endpoints, then extend it into each incident cell by an
+endpoint bump in the other coordinate. Choose the bump width smaller than the
+slice's distance from its endpoints; this also avoids the same-cable diagonal.
+The additional cell mass tends to zero. There are finitely many strata, so these
+three constructions approximate arbitrary Hilbert data. Exchange averaging
+preserves the conditions and proves density in the symmetric space. Bounded real $U$ is a bounded self-adjoint perturbation of
+the represented operator, with unchanged form domain and lower bound
+$-M_N$, where
+\[
+M_N=Ng+\binom N2\nu/\lambda,\qquad N=1,2.
+\]
+Here $G_D^\diamond(p,q)\le\lambda^{-1}$ is the supplied same-source bound (62.4).
+The positive form of $\mathcal T+M_N+1$ has domain $\mathcal Q_{D,N}$ and obeys
+\[
+a k_{\delta,N}(F)+\|F\|^2
+\le \| (\mathcal T+M_N+1)^{1/2}F\|^2
+\le a k_{\delta,N}(F)+(2M_N+1)\|F\|^2.
+\]
+Its spectral calculus commutes with the full unitary evolution and preserves
+this square-root norm, proving form-domain invariance even though multiplication
+by the atomic potential need not itself preserve the trace equalities.
+Atomic collision coordinates
+are absent in that space and continuum collision traces vanish in that domain.
+This is invariance of the actual producer state, without deleting any evolved
+output or applying a clean-state projection. $\square$
+

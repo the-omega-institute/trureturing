@@ -1,0 +1,34 @@
+**Lemma 5.2 (real null decomposition and complex lift).** A real PSD
+matrix $T_0$ of $B_0$ trace zero is a sum of
+$\operatorname{rank}T_0$ nonzero real null projectors. Define
+
+$$
+R_\theta=\begin{pmatrix}
+\cos(\theta/2)&-i\sqrt\alpha\sin(\theta/2)&0\\
+-i\sin(\theta/2)/\sqrt\alpha&\cos(\theta/2)&0\\0&0&1
+\end{pmatrix}.
+\tag{QO.29}
+$$
+
+Then $\det R_\theta=1$,
+$R_\theta^TB_0R_\theta=B_0$ and
+$R_\theta X_cR_\theta^\dagger=X_c$.
+
+Proof. Factor $T_0=YY^T$ with $Y$ injective and rank-many columns.
+$Y^TB_0Y$ has trace zero. If a nonzero real symmetric trace-zero
+matrix has eigenvalues $a_+>0>a_-$, the unit vector
+$(\sqrt{-a_-}e_++\sqrt{a_+}e_-)/\sqrt{a_+-a_-}$ has zero
+Rayleigh value. Its orthogonal compression still has trace zero.
+Induction, allowing any basis for a zero compression, produces an
+orthonormal zero-Rayleigh basis. Multiply by $Y$. This gives all
+nonzero null columns and their exact projector sum.
+
+Multiplication of the two-by-two block in (QO.29) proves the three
+identities. Under this Hermitian congruence a real DT block
+$\left(\begin{smallmatrix}u&v\\v&w\end{smallmatrix}\right)$ retains
+its real off-diagonal $v$, its new diagonal difference is
+$\cos\theta(u-\alpha w)$, and its imaginary off-diagonal is
+$\sin\theta(u-\alpha w)/(2\sqrt\alpha)$. Determinants are unchanged.
+These identities will also give the local true-cone decomposition.
+$\square$
+

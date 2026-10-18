@@ -1,0 +1,49 @@
+**Theorem 25.1 (full rank-three output, exact norm and endpoints).** Let $u,v,k$ be real with $u^2+v^2/a+k^2=1$, and $0\leq p\leq1$. Use all three terms
+
+$$
+\begin{aligned}
+K_0&=(\sqrt a e_0,\sqrt a e_1,-\sqrt{\beta/a}v e_1+kh),\\
+K_1&=\sqrt p(\sqrt\beta e_2,\sqrt\beta e_3,u e_0+v e_3),\\
+K_2&=\sqrt{1-p}(\sqrt\beta e_3,-\sqrt\beta e_2,u e_0-v e_2).
+\end{aligned}
+\tag{R.123}
+$$
+
+This is an actual real-Kraus CPTP channel. For $0<p<1$,
+
+$$
+B=\operatorname{diag}(a,0,\beta p,\beta(1-p),0),\quad
+q=1,\quad \operatorname{rank}B=3,\quad
+c_{\rm pl}=a+\beta|2p-1|.
+\tag{R.124}
+$$
+
+In this interior range $\operatorname{rank}C_{\rm out}=3$ if and only if $v\ne0$; in particular $k\ne0$ is not necessary. For the identical $\eta,X_+$ of (R.117),
+
+$$
+\begin{gathered}
+N(X_+)=e_0w_p^T+w_pe_0^T,\qquad
+w_p=\frac{-v e_1+\beta u[pe_2+(1-p)e_3]+\sqrt{a\beta}kh}
+                    {\sqrt{\beta+v^2}},\\
+\frac{\|N(X_+)\|_1^2}{4}
+=\|w_p\|^2
+=\frac{v^2+\beta^2u^2[p^2+(1-p)^2]+a\beta k^2}{\beta+v^2}\\
+=a-\frac{\beta[(a-\beta)+2\beta p(1-p)]u^2}{\beta+v^2}
+\leq a.
+\end{gathered}
+\tag{R.125}
+$$
+
+Consequently (R.95) gives $\delta_N\geq1-\|w_p\|\geq1-\sqrt a$. All formulas have their stated values at $p=0,1$, where $\operatorname{rank}B=2$ instead of three. In the interior, this actual family lies in $c_{\rm pl}>\sqrt a$ exactly when
+
+$$
+|2p-1|>\frac{\sqrt a}{1+\sqrt a}.
+\tag{R.126}
+$$
+
+At half beta, interior $p$ and $u\ne0$, (R.125) is strictly below $a$. Thus the complete third term supplies a strict witness also at that endpoint.
+
+**Proof.** The first two summed column norms are one and their inner product is zero. The $02$ products vanish. The $12$ contributions are $-\sqrt\beta v$, $p\sqrt\beta v$ and $(1-p)\sqrt\beta v$. Their full sum is zero. The third summed squared norm is $\beta v^2/a+k^2+u^2+v^2=1$. This proves TP with no discarded term. The first columns give (R.124); $B+JBJ^T=Q$ gives the required actual phase outputs by (R.103). For interior $p$ these three first columns are independent, so $P_A=I_3$ and $q=1$. Their independence also implies $\operatorname{rank}C_{\rm out}=\operatorname{rank}T$. If $v\ne0$, the $e_3$ and $e_2$ coordinates distinguish $t_1,t_2$, while the nonzero $e_1$ coordinate of $t_0$ is outside their span. Thus rank $T$ is three even when $k=0$ or $u=0$. If $v=0$, the last two third columns are parallel to $e_0$ and the first is parallel to $h$, so rank is at most two. At $p=0,1$ there are only two nonzero first columns, giving the endpoint rank assertion.
+
+Directly $K_1\eta=\sqrt{p\beta}u e_0/d$ and $K_2\eta=\sqrt{(1-p)\beta}u e_0/d$. Their contributions to $N(X_+)$ are respectively $p\beta u(e_2e_0^T+e_0e_2^T)/d$ and $(1-p)\beta u(e_3e_0^T+e_0e_3^T)/d$. The $K_0$ contribution supplies $-v e_1$ and $\sqrt{a\beta}kh$ in $w_p$. This proves the entire output in (R.125); $w_p\perp e_0$ gives eigenvalues $\pm\|w_p\|$. Squaring and using $p^2+(1-p)^2=1-2p(1-p)$ and the stated normalization gives the last equality. Equation (R.95) consumes this one common input pair. Finally (R.105) applied to the diagonal $B$ gives $c_{\rm pl}=a+\beta|2p-1|$. For $b_*=\sqrt a$, $(b_*-a)/\beta=b_* /(1+b_*)$, proving (R.126) and its strictness direction. $\square$
+

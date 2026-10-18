@@ -1,0 +1,39 @@
+**Example 9.3 (a whole coupled signed fiber with exact finite resources).**
+Let $P=\{L,R\}$ and let the acquired old row be the pair context with
+two different classes. Retain the literal record $(0,LL,\mathsf{absent})$
+and the signed record $(1,L,0,R,=)$; take authentic entry $N=1$.
+The entire fiber is exactly
+
+$$
+D=\{u_0,u_1\},\qquad
+u_0=\langle\alpha,\beta\rangle,\qquad
+u_1=\langle\beta,\langle\beta,\alpha\rangle\rangle.
+\tag{NPL.26}
+$$
+
+Indeed the old row writes the original source as $\langle x,y\rangle$
+with $x\ne y$. Both relation endpoints are reached, and the record says
+$y=\rho x$. The literal absence at $LL$ says that $x$ is a leaf, hence
+$x=\alpha$ or $x=\beta$. These yield exactly the two displayed sources,
+and in both cases the old disequality holds. Conversely each displayed
+source satisfies the literal, both guards and the entire old row.
+Thus this is a full fiber equality, not a selected pair from a larger
+source domain. Its signed record is eligible for the paid producer of
+ARH Proposition 2.1.
+
+For $Q=\varnothing$ the target is the entire original source. One actual
+read at $L$ at epoch one gives $\beta$ on $u_0$ and branch on $u_1$.
+Output the corresponding original source and halt. Both runs have exact
+cost $(1,0,1)$.
+
+Every source remains a pair under every update, so every root read is
+branch on both sources at every available epoch. Before the first
+nonroot read, all replies and common control are identical. A correct
+service cannot halt with different sources as outputs there. Thus on
+each of the two sources it must make at least one nonroot actual read,
+giving $q\ge1$ and $\ell\ge1$; always $a\ge0$. Consequently the entire
+Pareto basis is $\{(1,0,1)\}$ and the same-source weighted optimum is
+$\lambda_q+\lambda_\ell$ for every nonnegative rational weight tuple.
+The lower bound covers adaptive updates, early halts and absent reads;
+zero weights do not require a different proof.
+

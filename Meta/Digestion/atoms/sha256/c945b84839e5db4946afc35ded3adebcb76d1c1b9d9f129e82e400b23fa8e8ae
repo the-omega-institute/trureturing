@@ -1,0 +1,83 @@
+**Theorem 4.2 (exact attainable frontier against all literal strategies).**
+For every attained entry, the following finite recursion computes
+precisely the frontier of (LQF.10), with a real locally correct strategy
+attaining every reported vector. For $C\subseteq\mathscr H_\eta$,
+let $C_{p,y}=\{h\in C:r_{Y_h}(p)=y\}$. If $\tau$ is constant on
+$C$, set $\mathcal P(C)=\{(0,0,0)\}$. Otherwise set
+
+$$
+\begin{aligned}
+\mathcal P(C)=\operatorname{Min}\!\bigcup_{
+       p\in\mathcal A_\eta:\ p\text{ splits }C}
+\left\{\left(1+\max_y k_y,\ |p|+\max_y s_y,
+                   \max\bigl(|p|,\max_y m_y\bigr)\right):
+ (k_y,s_y,m_y)\in\mathcal P(C_{p,y})\right\}.
+\end{aligned}
+\tag{LQF.11}
+$$
+
+Only nonempty reply cells occur in this expression. The choices are
+one whole child vector for each such cell, never separate minimizers
+of its coordinates. If some required child set of vectors is empty,
+that product contributes nothing. The minimum of the empty union is
+empty. Then
+
+$$
+\mathcal F_\eta=\uparrow\mathcal P(\mathscr H_\eta).
+\tag{LQF.12}
+$$
+
+If (LQF.8) fails the frontier is empty. Otherwise it is finite and
+nonempty. Its zero vector occurs exactly when the initial entry already
+determines the lag.
+
+Proof. Every recursive child has strictly fewer histories than its
+parent. The menu is finite, so the recursion terminates, including
+states with no correct continuation. A constant-lag state admits the
+zero-call answer, dominating every further querying strategy.
+
+For a splitting query $p$, select an actual child strategy for each
+nonempty cell. On any $h$ exactly one of those strategies executes
+after the one paid $p$. Consequently the count and total length have
+the first two maxima in (LQF.11), and the largest submitted word has
+the third. These are the exact worst coordinates of this one combined
+tree. Conversely any strictly splitting menu tree has just this root
+and child decomposition. Induction therefore enumerates its possible
+minimal worst vectors. Replacing a dominated child by its dominating
+strategy cannot increase any root coordinate; this justifies removing
+dominated vectors at intermediate states. A retained vector has a
+finite tree witness obtained by remembering its choices.
+
+Every such witness is an allowed native controller: submit its actual
+menu words, update the surviving set using each raw reply, and halt
+with the common lag. The actual history remains in that set at every
+step by (LQF.7). Conversely Theorem 3.2 dominates every locally correct
+controller by a tree of this finite family, separately on every actual
+history. Its worst vector is therefore dominated too. These two
+directions prove (LQF.12), rather than merely defining a decision-tree
+optimization problem. Minimal feasible budgets are exact attained
+worst vectors: strict slack in any coordinate would itself give a
+smaller feasible vector.
+
+Theorem 3.2 proves the empty/nonempty alternative. With no calls a
+deterministic controller has only its initial entry, so its output must
+be common to every history; conversely such a lag can be output
+immediately. Finiteness ensures a real history attains each reported
+coordinate maximum, although the three witnesses need not coincide.
+$\square$
+
+The finite-tree method and monotone Pareto combination are reused from
+[AOF §5][AOF], [NPL §8][NPL] and the literature described in §8.
+The three coordinates here are calls, summed length and peak length,
+not calls, updates and summed length. This recursion is a finite exact
+description; it supplies no practical complexity bound.
+
+For nonnegative weights $\lambda$, the different objective
+$\max_h\lambda\mathbin{\cdot}c_A(h)$ must be evaluated by forming
+the weighted cost on each actual path before maximizing. It is not in
+general $\lambda\mathbin{\cdot}b_\eta(A)$. The same-history distinction
+is already explicit in [JRF, Definition 1.3 and §6][JRF]. Theorem 4.2
+does not replace either objective by independently optimized marginal
+coordinates or claim that a weighted worst-run optimum can be recovered
+by scalarizing its frontier.
+

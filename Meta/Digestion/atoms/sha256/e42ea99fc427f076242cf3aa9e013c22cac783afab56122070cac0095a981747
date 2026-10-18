@@ -1,0 +1,63 @@
+**Theorem 4.1 (Actual hitting stability on a finite configuration set).** Let $P,Q$ be stochastic matrices on the same set of at most $M$ vertices, with distinct common absorbing labels $d_0,d_1$. Suppose $\gamma\ge1$ and
+
+$$
+\gamma^{-1}P(x,y)\le Q(x,y)\le\gamma P(x,y)
+\quad\text{for every }x,y.
+\tag{4.1}
+$$
+
+Let $h_P,h_Q$ be actual probabilities of ever hitting $d_1$, including time zero. There is an integer $n\le M-2$ determined by their common support such that
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),\qquad
+|h_Q(x)-h_P(x)|\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.2}
+$$
+
+No absorption from all states or lower bound on a positive exit is required.
+
+Proof. The positive-edge supports coincide. Let $\mathcal Z$ consist of vertices with no positive directed path to $t=d_1$. A countable union over finite paths shows their hitting values are zero under both kernels. Replace their rows in both kernels by identity rows; this leaves hitting probabilities unchanged because $t$ is inaccessible after entering $\mathcal Z$. The comparison survives. The boundary is $\partial=\mathcal Z\cup\{t\}$, and its complement $V$ has $n\le M-2$ vertices since $d_0\in\mathcal Z$.
+
+A forest chooses one non-self successor $\phi(u)$ for each $u\in V$, with no cycle within $V$. Every chosen path then ends in $\partial$. Set
+
+$$
+w_P(\phi)=\prod_{u\in V}P(u,\phi(u)),\qquad
+\mathcal D_P=\sum_\phi w_P(\phi),\qquad
+\mathcal A_P(x)=\sum_{\phi:\ x\text{ ends at }t}w_P(\phi),
+\tag{4.3}
+$$
+
+and let $\mathcal C_P(x)$ be the complementary sum ending in $\mathcal Z$. Use the identical forest family for $Q$. Choosing first edges of shortest paths to $t$ gives a positive forest with every path ending at $t$, so $\mathcal D_P$ and $\mathcal A_P(x)$ are positive for $x\in V$.
+
+For completeness the determinant identities follow directly. Put $L_P=I-P_{VV}$ and $b_P(u)=P(u,t)$. Its row decomposition is
+
+$$
+L_P(u,\cdot)=\sum_{v\ne u}P(u,v)
+\left(e_u^{\mathsf T}-\mathbf1_{\{v\in V\}}e_v^{\mathsf T}\right).
+\tag{4.4}
+$$
+
+Multilinearity chooses one successor per row. If these choices contain an internal cycle, the rows on that cycle sum to zero, and the determinant term vanishes. Otherwise order vertices by path length to the boundary, simultaneously permuting rows and columns. The matrix is triangular with diagonal one; its determinant is one. Thus $\det L_P=\mathcal D_P>0$. Self-loops are accounted for by $1-P(u,u)=\sum_{v\ne u}P(u,v)$ in (4.4).
+
+Replace column $x$ by $b_P$. The same expansion assigns that column the value $\mathbf1_{\{\phi(u)=t\}}$ in row $u$. Cycle rows still sum to zero, including that column. For a forest, let $z_\phi(u)$ indicate that its path ends at $t$. Its successor matrix satisfies $L_\phi z_\phi=b_\phi$ with $b_\phi(u)=\mathbf1_{\{\phi(u)=t\}}$. Expressing the replacement column as a linear combination of the original columns annihilates every term except column $x$, whose coefficient is $z_\phi(x)$. Consequently the replaced determinant is $\mathcal A_P(x)$, with positive sign. Actual first-step hitting equations have the boundary values zero on $\mathcal Z$ and one on $t$, and satisfy $L_Ph_P=b_P$ on $V$. The positive determinant makes this boundary solution unique, giving
+
+$$
+h_P(x)=\frac{\mathcal A_P(x)}{\mathcal D_P}
+=\frac{\mathcal A_P(x)}{\mathcal A_P(x)+\mathcal C_P(x)}.
+\tag{4.5}
+$$
+
+The same reasoning gives this identity for $Q$. Each forest has exactly $n$ edges; its two weights lie within factors $\gamma^{-n},\gamma^n$. Summing proves that comparison for each positive denominator, marked sum and complementary sum. It gives the multiplicative part of (4.2).
+
+If a complementary sum vanishes, it vanishes for both matrices and both hitting values equal one. Otherwise put $z=\mathcal A_P/\mathcal C_P>0$ and $\rho=(\mathcal A_Q/\mathcal A_P)/(\mathcal C_Q/\mathcal C_P)$. Then $\gamma^{-2n}\le\rho\le\gamma^{2n}$. Interchanging $P,Q$ if needed reduces to $\rho\ge1$. The hitting difference is
+
+$$
+\frac{(\rho-1)z}{(1+z)(1+\rho z)}
+\le\frac{\rho-1}{(1+\sqrt\rho)^2}
+=\frac{\sqrt\rho-1}{\sqrt\rho+1}
+\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{4.6}
+$$
+
+The middle bound uses $z^{-1}+\rho z\ge2\sqrt\rho$. Boundary values agree. If $V$ is empty, all vertices are boundary; the empty forest has weight one and the bound is zero. Zero edges, reducible closed classes and arbitrarily small positive weights have all remained in this argument. $\square$
+

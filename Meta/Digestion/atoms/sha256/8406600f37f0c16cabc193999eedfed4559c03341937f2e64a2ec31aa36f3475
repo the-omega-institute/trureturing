@@ -1,0 +1,23 @@
+## Theorem (FQ5: a mod-5 Fermat-quotient balance on the same blocks)
+
+The 3-adic balances above have an independent fixed-prime companion. Keep
+
+\[
+ B_j=L_{2\cdot 3^j}+1=\prod_{p\mid B_j}p^{h_p},\qquad j\ge1,
+\]
+
+with the original Fibonacci depths h_p from TBN.3. For every integer x coprime
+to five, write
+
+\[
+ \lambda_5(x)=\frac{x^4-1}{5}\pmod 5\in\mathbb F_5.
+\]
+
+This is the same Fermat-quotient character as RP.1 in PERIODIC_TREE.md, but it
+is applied here to the even-rank Lucas blocks B_j. It is additive on products:
+
+\[
+ \lambda_5(xy)=\lambda_5(x)+\lambda_5(y),\qquad
+ \lambda_5(x^a)=a\lambda_5(x)\pmod 5.
+\]
+

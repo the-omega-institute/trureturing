@@ -1,0 +1,42 @@
+**Assumption 1.2 (actual acquired input).** Let $R=R_P(u)$ be the complete
+old row acquired from the same original source producer as in [ARH,
+Definition 1.1][ARH]. It contains the complete concrete exterior, reached
+holes in original order, the whole equality partition, repeated occurrences
+of each old class, all cross-class and off-task inequalities, and all old
+existence guards. Let $H_0$ be a finite literal history, with repetitions and
+mixed epochs. Let $H^{-}$ be a finite list of additional guarded negative
+records
+
+$$
+e=(a,s,b,t,\ne),
+$$
+
+where its predicate is
+
+$$
+\operatorname{Neg}_e(u)\;\Longleftrightarrow\;
+ s\in\operatorname{Pos}(\rho^a u)\ \land\
+ t\in\operatorname{Pos}(\rho^b u)\ \land\
+ (\rho^a u)|_s\ne(\rho^b u)|_t .
+\tag{RNL.2}
+$$
+
+An absent endpoint makes (RNL.2) false. It is never converted into a
+successful disequality. The complete retained fiber is
+
+$$
+\begin{aligned}
+D^{-}=\{u\in\mathcal T:\;&R_P(u)=R,\\
+&r_{\rho^c u}(p)=d\quad((c,p,d)\in H_0),\\
+&\operatorname{Neg}_e(u)\quad(e\in H^{-})\}.
+\end{aligned}
+\tag{RNL.3}
+$$
+
+All records constrain this same $u$. We assume $D^{-}\ne\varnothing$.
+
+The original target is the entire $R_Q(u)$: every reached original hole, the
+full concrete exterior and the complete equality partition of all reached
+subtrees. No representative source, sample domain, source-size promise or
+finite output list replaces $D^{-}$.
+

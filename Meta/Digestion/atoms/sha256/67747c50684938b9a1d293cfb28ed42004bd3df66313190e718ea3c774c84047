@@ -1,0 +1,228 @@
+**Theorem 56.1 (uniform exclusion below the feasibility cap).** Put
+
+$$
+I=[996999/1000000,997001/1000000].
+\tag{JR.175}
+$$
+
+For every $\tau\in I$, no optimum of the original problem can have an
+associated optimal representation by at most three real rank-one
+$Q$-null atoms. Equivalently every optimal reduced triple (JR.132)
+has aggregate rank sum at least four. There is an explicit feasible
+four-atom instrument whose TV exceeds the upper value of every
+saturated aligned three-atom candidate by more than $17/5000000$,
+uniformly on $I$. The witness is not asserted to optimize the original
+problem. Aggregate rank, real-null atom count and physical-label count
+are distinct quantities.
+
+**Proof.** If an optimum admitted at most three atoms, normalization
+would make them an orthonormal null frame, as in Proposition 54.4.
+By Lemma 53.2 its reports and objective signs align and its contrast
+is saturated. The three $01$ products sum to zero, so some column
+$h$ has $|h_0h_1|=\tau/2$. Write $Y=h_1^2$, $X=h_0^2$, $Z=h_2^2$.
+The unique possible nonnegative root is
+
+$$
+\begin{gathered}
+Y=\frac{-\beta+\sqrt{\beta^2+(1-2\beta)(1+\beta)\tau^2}}{2(1-2\beta)},\\
+X=\frac{\beta+(1-2\beta)Y}{1+\beta},\qquad
+Z=\frac{1-AY}{1+\beta}.
+\end{gathered}
+\tag{JR.176}
+$$
+
+Indeed $4[\beta Y+(1-2\beta)Y^2]/(1+\beta)=\tau^2$ is strictly
+increasing for $Y\geq0$; its other quadratic root is negative.
+All $X,Y,Z$ are strictly positive on $I$. Up to a global column sign,
+$h=(\sqrt X,\sigma\sqrt Y,\eta\sqrt Z)$ for four sign pairs.
+For each pair define
+
+$$
+\begin{gathered}
+e=(h_1,-h_0,0)/\sqrt{X+Y},\quad k=h\times e,\quad
+m=e^TQe,\quad n=e^TQk,\\
+t=(n+\sqrt{n^2+m^2})/m,\quad
+f=(e+tk)/\sqrt{1+t^2},\quad g=h\times f,\\
+J_{\sigma\eta}(\tau)=|h^TGh|+|f^TGf|+|g^TGg|.
+\end{gathered}
+\tag{JR.177}
+$$
+
+The $Q$ compression to $h^\perp$ is
+$\left(\begin{smallmatrix}m&n\\n&-m\end{smallmatrix}\right)$.
+It is nonzero: a two-dimensional totally null plane would intersect
+$e_0^\perp$, on which $Q$ is strictly negative. On $I$, in fact
+$m>1/10$. Its two distinct null slopes are
+$(n\pm\sqrt{n^2+m^2})/m$, with product $-1$.
+Thus $f,g$ are exactly the two remaining null lines. Choosing the other
+root merely interchanges them up to sign. Column permutations, global
+signs, zero blocks, rank-two aggregates and proportional splittings are
+all covered by selecting a distinguished maximal-product column and
+using these four pairs. Overinclusion of a frame would only strengthen
+the upper bound. No arbitrary trial family is assumed exhaustive.
+
+For a better feasible tuple set, with a different notation from $h$,
+
+$$
+\begin{gathered}
+u=-6/7,\quad v=\sqrt{(1-\alpha u^2)/\beta},\quad
+b=(1,u,v)^T,\quad c=(1,-1,-1)^T,\\
+N=b^Tb,\quad K=3N-(b^Tc)^2>0,\quad r=7/6,\\
+a_q=-rK,\quad b_q=rN-3+r\tau K/2,\quad c_q=1-r\tau N/2,\\
+\mathcal D=b_q^2-4a_qc_q,\quad
+q=\frac{-b_q-\sqrt{\mathcal D}}{2a_q},\quad p=r(\tau/2-q),\\
+B_0=pbb^T,\quad C_0=qcc^T,\quad A_0=I-B_0-C_0,\quad
+\rho=2-pN-3q.
+\end{gathered}
+\tag{JR.178}
+$$
+
+The selected $q$ is the larger root because $a_q<0$.
+Both $b,c$ are exactly null. The determinant lemma gives
+
+$$
+\det A_0=1-pN-3q+pqK=a_qq^2+b_qq+c_q=0,
+\qquad (A_0)_{01}=6p/7+q=\tau/2.
+\tag{JR.179}
+$$
+
+The rank-two matrix $B_0+C_0$ leaves an eigenvalue one in $A_0$;
+the remaining eigenvalues have product zero and sum $\rho$.
+The directed bounds below show $p,q>0$, $\mathcal D>0$, $0<\rho<1$.
+Therefore $A_0$ is PSD of rank two with eigenvalues $(0,\rho,1)$,
+and $B_0,C_0$ are positive rank one. Their $Q$ traces vanish, so this
+is feasible for the unchanged reduced problem at the same $\tau$.
+
+To establish its actual refined signs, let $d=1-pN$ and
+
+$$
+w=c+\frac{p(b^Tc)}d\,b.
+\tag{JR.180}
+$$
+
+The exact identity $A_0w=(\det A_0/d)c=0$ and rank two show
+$\operatorname{ran}A_0=w^\perp$. The bounds below give $d>0$, $w_1<0$,
+$w_0-|w_2|/\sqrt\beta>1.2300$. If a nonzero null vector of this range
+is normalized as $(1,u,v)$ with $u\leq0$, its inner product with $w$
+is at least $w_0-|w_2|/\sqrt\beta>0$, a contradiction. Thus every range
+null atom has $u>0$, so positive height by (JR.133).
+Also $b^TGb>.012046$ and $c^TGc<-.0034916$.
+The rank-supported decomposition splits $A_0$ into exactly two null
+atoms; give these report $+$ and the atoms $\sqrt p\,b,\sqrt q\,c$
+report $-$. Their height signs are $(+,+,+,-)$ and the actual low
+absolute sum and TV are exactly
+
+$$
+J_w=\operatorname{tr}G-2q\,c^TGc,\qquad
+T_w=T_{\rm flat}-q\,c^TGc.
+\tag{JR.181}
+$$
+
+Definition 53.3 gives twelve actual labels, all complex/reference/
+separately labelled Borel identities and the original jointly counted
+cost and $E_*$. In particular this is an attained feasible lower value,
+not an upper certificate for the unrestricted optimum.
+
+Here is a directed-domain arithmetic specification for all strict
+comparisons, including the narrow margin. Use the complete CG box
+$\mathcal B_{\rm CG}$ in Convention 50.1, with every one of its nine
+independent coordinates. Reconstruct $N_{\rm src},S_0,S_{01},S_{02}$ by
+(CG.112)–(CG.113), their adjugates by (CG.116), and their positive-pivot
+factors by (CG.134). Then, without imposing a root identity on the box,
+
+$$
+\begin{gathered}
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad\chi=\omega/\delta,\\
+g_0=\delta\,22(h_0^2-h_1^2)/128,\quad
+g_1=22(b^2-a^2)/128,\quad g_2=22d^2/128,\\
+x=s_0(h_0a+h_1b)(\sqrt{999}-\sqrt{295})/128,\\
+y=s_0(h_0c+h_2d)(\sqrt{27}-\sqrt5)/16,\quad
+z=ac(\sqrt{37}-\sqrt{59})/16.
+\end{gathered}
+\tag{JR.182}
+$$
+
+The source amplitudes $a,b,c,d$ in this display are distinct from the
+witness vectors $b,c$ in (JR.178). The resulting outward rational bounds
+are
+
+| Quantity | Lower endpoint | Upper endpoint |
+| --- | --- | --- |
+| $\chi$ | $.122286669157798516$ | $.122286669157798517$ |
+| $g_0$ | $.001269341241543639$ | $.001269341241543640$ |
+| $g_1$ | $.002922245046832447$ | $.002922245046832448$ |
+| $g_2$ | $.001677196665043113$ | $.001677196665043114$ |
+| $x$ | $.002370558001558581$ | $.002370558001558582$ |
+| $y$ | $.002208011237702434$ | $.002208011237702435$ |
+| $z$ | $-.000101655515601015$ | $-.000101655515601014$ |
+
+For an explicit rational implementation of directed evaluation, use
+$D=2^{224}$ and enclose a rational $a$ by
+$[\lfloor Da\rfloor/D,\lceil Da\rceil/D]$.
+Addition and negation use their exact endpoint formulas. Products and
+quotients use the minimum and maximum of the four endpoint products or
+quotients, rounded outwards to multiples of $1/D$; every divided interval
+excludes zero. For $[a/D,b/D]\geq0$, use square-root endpoints
+$\lfloor\sqrt{aD}\rfloor/D$ and $\lceil\sqrt{bD}\rceil/D$.
+For a square use lower endpoint zero when the interval crosses zero;
+otherwise use the smaller endpoint square, and always the larger for
+the upper endpoint. Absolute values are enclosed in the same way.
+An adjugate entry is its signed transposed minor, with each two-dimensional
+determinant evaluated as $ad-bc$. These rules also give the source signs,
+the cap derivative in (JR.154), and the endpoint coefficient bounds.
+
+For the whole contrast domain, use the 400 closed rational cells
+
+$$
+I_i=\left[\frac{996999}{10^6}+\frac{i}{200\cdot10^6},
+\frac{996999}{10^6}+\frac{i+1}{200\cdot10^6}\right],
+\qquad i=0,\ldots,399.
+\tag{JR.183}
+$$
+
+On each cell evaluate (JR.176)–(JR.180) in their displayed order, using
+the full reconstructed source intervals, retaining all four sign pairs.
+Taking lower minima and upper maxima over these cells gives the following
+strict rational comparisons; all terminating decimals are exact rationals.
+
+| Quantity over the entire $I$ | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $J_{-,-}$ | $0$ | $.006486135$ |
+| $J_{-,+}$ | $0$ | $.006109040$ |
+| $J_{+,-}$ | $0$ | $.008128902$ |
+| $J_{+,+}$ | $0$ | $.007486052$ |
+| $J_w$ | $.008135718$ | $.009$ |
+| $q$ | $.3246208$ | $.3246265$ |
+| $p$ | $.2028518$ | $.2028597$ |
+| $\rho$ | $.0850833$ | $.0851075$ |
+| $\mathcal D$ | $.0009779$ | $.0009905$ |
+| $d=1-pN$ | $.0589484$ | $.0589844$ |
+| $w_1$ | $-1.451188$ | $-1.450895$ |
+| $w_0-|w_2|/\sqrt\beta$ | $1.2300$ | $1.2321$ |
+| $b^TGb$ | $.012046$ | $.012047$ |
+| $c^TGc$ | $-.003492$ | $-.0034916$ |
+
+All radicals, $X,Y,Z$, $X+Y$, $m$, $n^2+m^2$, $1+t^2$,
+$\mathcal D$, and $d$ have positive lower endpoints in this evaluation;
+$m>1/10$ in all four branches. These are evaluations over complete
+closed cells and the entire source box, not midpoint values or a grid
+of samples. The four-frame upper bound and witness lower bound give
+
+$$
+\frac{J_w-\max_{\sigma,\eta}J_{\sigma\eta}}2
+>\frac{.008135718-.008128902}2
+=.000003408>\frac{17}{5000000}.
+\tag{JR.184}
+$$
+
+Since every hypothetical optimal three-atom representation at this
+same saturated $\tau$ occurs in the four-frame list, it has strictly
+smaller possible TV than the feasible actual witness. This contradicts
+optimality. Conversely a reduced triple of rank sum at most three
+admits at most three null atoms by (JR.60), so the rank-sum conclusion
+follows as well. Finally (JR.99)–(JR.112) and the cap formula give
+$\bar\tau<.993781<\inf I<\sup I<.997877<\tau_3$.
+Thus three atoms remain feasible on $I$ but cannot optimize there;
+feasibility and optimality have different boundaries. $\square$
+

@@ -1,0 +1,10 @@
+**Boundary 7.2 (What the equality does not decide).** The result gives neither attainment at a fixed finite order nor the exact numerical value of $c_\star$. It does not prove strict improvement at every memory order or identify an optimal approximation rate. The choices of a finite maximizing payload prior and a sufficiently small positive $\delta$ are existential; no efficient acquisition or transition-table construction is established.
+
+A table on $B_m$ has $|B_m|=F_{m+2}$ context rows and at most two legal outgoing entries per row, where $F_0=0$, $F_1=1$ and $F_{j+2}=F_{j+1}+F_j$. With $B_0$ consisting of the empty word, this count follows by splitting a legal word according to whether it ends in $0$ or $01$, with $|B_0|=1$, $|B_1|=2$. Acquiring and describing its probabilities, and storing its contexts, are separate costs from the density $\Phi_n/n$. The theorem asserts no actual machine-learning benefit, physical or quantum advantage, or kernel-verified statement.
+
+[Growth]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[TwoStep]: https://github.com/the-omega-institute/trureturing/blob/348bfc85a973f021d8e3e79df589b335b5407ee7/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_TWO_STEP_BULK_SEPARATION.md
+[GLT]: https://arxiv.org/html/1107.4353v2
+[MSG]: https://arxiv.org/html/1306.6104v1
+[EV]: https://arxiv.org/html/1001.3122v1
+

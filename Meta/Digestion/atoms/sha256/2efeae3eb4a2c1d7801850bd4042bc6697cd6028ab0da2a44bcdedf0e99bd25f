@@ -1,0 +1,80 @@
+**Theorem 211.5 (Finite packing strictly below the critical stock).**
+With (211.11), for each real $\tau$ in the range
+$a+s\le\tau<\Psi$, define
+
+$$
+\begin{aligned}
+\epsilon_\tau&=s-a+\frac{a^2}{\tau},\\
+n_\tau&=\max\left\{1,
+ \left\lceil\frac{2(\tau-a-s)}{\epsilon_\tau}\right\rceil\right\},\qquad
+w_\tau=\frac{\tau-a-s}{n_\tau},\\
+\Pi(s,a,\tau)&=n_\tau
+ \left\lfloor\frac{s}{\epsilon_\tau-w_\tau}\right\rfloor.
+\end{aligned}
+\tag{211.13}
+$$
+
+Then
+
+$$
+S\le\tau\quad\Longrightarrow\quad m-1\le\Pi(s,a,\tau).
+\tag{211.14}
+$$
+
+The same formula and proof apply with any weaker marginal lower bound
+$a_0\in[2s,a]$, using $a_0$ in place of $a$ and its corresponding
+range. Thus the first-credit bound $a_1=2s+c_1$ is included, rather
+than a second packing result. The parameter $\tau$ has the units of
+pair stock; it is not the normalized parameter of 208.4.
+
+**Proof.** Delete the largest address of $J$. For each of the remaining
+$m-1$ addresses let $A_i=Z_i^c$ and $r_i=\nu(A_i)$.
+The outgoing directed bound to the deleted event and the marginal bound
+give
+
+$$
+s\le r_i\le S-a\le\tau-a,\qquad
+\nu(A_i\cap A_j)=r_i-D_{ij}\le r_i-s\quad(i<j).
+\tag{211.15}
+$$
+
+The notation $A_i$ here denotes an event, not an event-row score.
+Partition the interval $[s,\tau-a]$ into $n_\tau$ bins of width
+$w_\tau$, assigning every shared endpoint to one bin. If the interval
+has zero length, use one singleton bin. In a bin with lower endpoint
+$r$ and $N>0$ events, put $X=\sum_i\mathbf1_{A_i}$.
+All integrals use the one actual measure $\nu$, so
+
+$$
+\int X\ge Nr,\qquad
+\int X^2\le N(r+w_\tau)+N(N-1)(r+w_\tau-s)
+          =N^2(r+w_\tau-s)+Ns.
+\tag{211.16}
+$$
+
+Cauchy–Schwarz, with $S\le\tau$ and $S>0$, gives
+$\int X^2\ge N^2r^2/\tau$. Therefore
+$N(s-r-w_\tau+r^2/\tau)\le s$.
+Here $a\ge2s$ implies $\Psi\le2a$, and $\tau<\Psi$ gives
+$\epsilon_\tau>0$ and $\tau-a<\tau/2$.
+The function $s-r+r^2/\tau$ decreases on $[s,\tau-a]$;
+its value at the right endpoint is $\epsilon_\tau$.
+The choice of $n_\tau$ ensures $0\le w_\tau\le\epsilon_\tau/2$.
+Each bin consequently contains at most
+$\lfloor s/(\epsilon_\tau-w_\tau)\rfloor$ events. Summing proves
+(211.14) for arbitrary real weights. Only numerical marginal masses
+have been binned; the original address order has not changed.
+The argument uses only $m_j\ge a$ and $D_{ij}\ge s$, so it also
+proves the stated weaker-bound substitution.
+
+At $\tau=a+s$ the denominator is positive and the one zero-width
+bin is valid. At $\tau=\Psi$ the positive gap vanishes and no finite
+bound is asserted. Indeed a product measure of mass $\Psi$ with
+independent zero probability $(a-s)/a$ has every marginal $a$ and
+every directed mass $s$, for arbitrarily many coordinates. The next
+result also supplies actual full scores at this equality. The product
+measure alone is not a normalized acquisition. At $\bar c=0$,
+substitution $\tau=s\tau_{208}$ reduces (211.13)–(211.14) to 208.4;
+that case and its $4s$ threshold retain their existing ownership.
+$\square$
+

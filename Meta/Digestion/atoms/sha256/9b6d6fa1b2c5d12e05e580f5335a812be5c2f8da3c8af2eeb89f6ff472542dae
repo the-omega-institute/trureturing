@@ -1,0 +1,38 @@
+**Proposition 11.1 (simultaneous feasibility at a proposed error).** For
+$e\geq0$, there is a common channel in (CG.20) with error at most $e$
+if and only if there is one pair $(J,B)$ of Lemma 8.3 satisfying, for
+every one of the twelve histories $h=(x,\beta,m)$,
+
+$$
+\frac12\left(
+ \left\|\operatorname{Tr}_{\rm in}[(\rho_h^T\otimes I)J]
+                    -s_{256x}\rho_{x+d,\beta,m}\right\|_1
+ +\|\mu_h-\nu_h\|_{\rm TV}\right)\leq e,
+\quad
+\mu_h(A)=\operatorname{tr}(\rho_h^T B(A)).
+\tag{CG.86}
+$$
+
+Here $\nu_h$ has the five separately labelled densities
+$w_i f_{256x}(t)$ and zero other mass; $J\geq0$, $B$ is positive and
+countably additive, and (CG.52) holds.
+
+Proof. Reduce a feasible channel by Proposition 8.2 and apply Lemma 8.3.
+Its full output metric is precisely (CG.58), giving necessity.
+Conversely Lemma 8.3 constructs one normalized CP map from the pair,
+and (CG.86) bounds every prescribed history error, giving sufficiency.
+Separate nearby outputs, separate attaining maps or pairwise distance
+tests do not supply the shared positive pair. $\square$
+
+**Open problem 11.2 (exact minimum and identified minimizing channel).**
+A minimizing common CPTP channel exists in the enlarged class. The exact
+value $E_*$ and an explicitly identified minimizing channel remain
+undetermined. The required result is one pair $(J,B)$ satisfying
+(CG.52) and all twelve inequalities (CG.86) at an identified value,
+together with a matching lower proof for every allowed common pair.
+The displayed $\Phi_0$ attains its own feasible error $M$; it is not
+proved to minimize error. The old constant $L_{\rm full}$ is strictly
+below the minimum, with no explicit positive increment established here.
+Thus existential attainment is settled, while the exact-minimax and
+identified-optimizer obligation of Open problem 7.3 remains.
+

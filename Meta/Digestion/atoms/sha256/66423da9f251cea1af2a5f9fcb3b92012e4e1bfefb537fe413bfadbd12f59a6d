@@ -1,0 +1,21 @@
+**Definition 6.1 (coordinate observations and constants).** For a chart
+write
+
+$$
+\operatorname{coord}(\mathbf n,\mathbf z)
+ =(T_{n_1},\ldots,T_{n_k},z_1,\ldots,z_m).
+\tag{PDC.16}
+$$
+
+Coordinate agreement $\sim_h$ means coordinatewise native four-reply
+agreement of these trees. It is not equality of integer ranks at a
+finite observation depth. Let $d_i$ be the maximum length of the fixed
+representative original addresses of its unbound frontier variables,
+with an empty maximum zero. Let $L_i$ be the maximum rebasing constant
+of its free sinks, again zero for an empty list, and put
+
+$$
+c_i=d_i+\left\lceil L_i/2\right\rceil.
+\tag{PDC.17}
+$$
+

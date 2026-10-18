@@ -1,0 +1,20 @@
+**Proposition 10.3 (The distinct inherited shared-label service).** For $c>0$ and $m\ge1$ there is a different whole-block processor using a single $m$-copy batch with error
+
+$$
+\sup_X\|\widetilde\Psi_X^{(n)}-\Phi_{t,\eta,X}^{\otimes n}\|_\diamond
+ \le2\delta_m,\qquad \delta_m=\min\{1,4\exp(-mc^2/50)\},
+\tag{10.3}
+$$
+
+uniformly in $n$. This is the supplied shared-calibration bound, not a finite-copy exact independent-use assertion.
+
+Proof. On each measured copy retain $G_a,G_b\in\{-1,0,1\}$, the signed one-copy pair outcomes. Their four mean vectors are $(2u,0),(-2u,0),(0,2u),(0,-2u)$; distinct vectors have maximum-norm distance at least $2u$. Choose the nearest mean vector to the empirical vector in maximum norm, with a fixed tie rule, and call its label $\widehat X$. If both empirical coordinates differ by less than $u$ from their true means, the true vector is uniquely closest. The two-sided bounded-variable bound proved in Proposition 7.3, followed by the union bound over both coordinates, gives
+
+$$
+\Pr_X(\widehat X\ne X)\le4\exp(-mu^2/2)=4\exp(-mc^2/50).
+$$
+
+Conditional on the record, use the actual known target $\Phi_{t,\eta,\widehat X}^{\otimes n}$ with fresh local environments. On the correct-record event this is exactly the whole target tensor channel; otherwise its diamond distance from the target is at most two. Program/data independence, convexity and the probability estimate give (10.3), uniformly over every complex block input and reference. Measurement followed by these controlled CPTP maps has the full-algebra instrument form (4.6), with block data in place of one factor; thus it is CPTP on all inputs. Common CPTP block encoding and decoding preserve the bound. At $m=0$, choose any fixed label and use the trivial bound two. At $c=0$ implement the common target with no batch. QED.
+
+This distinct service pays for $m$ program copies and, when separated, $m$ five-dimensional half transfers, plus $n$ forward qubits and their flags if using Section 9's route. It may retain a four-valued calibration record (two bits), after performing the empirical-count measurement. For $0<\delta<2$, $m\ge\lceil50c^{-2}\log(8/\delta)\rceil$ is sufficient for added error at most $\delta$. Neither this error estimate nor exact one-use programming justifies a claim that one finite record gives free independent exact uses. A mathematical channel-use simulation with these charged links is a different resource bundle from an unassisted channel capacity task.
+

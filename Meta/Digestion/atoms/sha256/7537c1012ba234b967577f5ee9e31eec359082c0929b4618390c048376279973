@@ -1,0 +1,9 @@
+**定义 32.1（归一化表示与两个噪声合同）。** $\varphi=(1+\sqrt5)/2$，对称 $M$ 的特征值为 $\varphi,-\varphi^{-1}$，正交投影为 $\Pi_+,\Pi_-$。归一化实表示为
+
+$$
+\widehat M_n=\varphi^{-n}M^n
+=\Pi_++(-1)^n\varphi^{-2n}\Pi_-.
+$$
+
+其精确有限与极限区别直接采用 [观察者相对时空 §§23.1–23.5](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)。本章的实误差合同允许来源为 $\mathbb R^2$，读出为 $\widehat M_nx+e$、$\|e\|\leq\delta$，无额外原态快照、放大或独立平均通道。离散误差合同另取非空组成域 $D\subset\mathbb N^2\setminus\{(0,0)\}$，读主方向标量 $\ell(a,b)=a+\varphi b$ 加任意误差 $|e|\leq\delta$。二者目标都是原初态，但来源与表示不同。
+

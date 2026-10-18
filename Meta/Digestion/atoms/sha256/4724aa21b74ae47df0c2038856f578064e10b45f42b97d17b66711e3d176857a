@@ -1,0 +1,23 @@
+**Definition 7.1 (ordered time and retained memory).** Let $T(h)$ be the
+full chronological word of actual structural patch occurrences from the
+primitive entrance, with original row/operand/outcome occurrences and their
+finite structural effects. It includes preparation and private effects
+mathematically. Erasing the structural refinement leaves the original
+primitive prefix $h$. It is not the publicly released response word or an
+additional installed event archive.
+
+Let $M_{\mathrm{ret}}(h)$ be the actual retained material consisting of
+the immutable acquisition rows and their bound origin chain; chronological
+consumed frame blocks, descriptors and unfinished-frame written prefix;
+the phase-typed current input-latch material; and the actual meter receipt
+chain. Retained backing and actual binding relations are part of this
+object, rather than only printed reference strings. A stale input latch
+contributes no acquired bit outside its occupied phase. These materials
+can lie under different owners. This definition asserts retention, not
+simultaneous receiver possession or callable access.
+
+Both objects have independent meanings: $T$ is order on actual occurrences;
+$M_{\mathrm{ret}}$ is a selected family of retained original material.
+The tuple $K$ is an extraction from the latter, not a fourth physical
+store and not a callable object.
+

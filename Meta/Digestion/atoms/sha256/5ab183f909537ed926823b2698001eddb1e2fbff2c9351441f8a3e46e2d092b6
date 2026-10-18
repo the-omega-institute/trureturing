@@ -1,0 +1,35 @@
+## 4. Score debt and the first paid replacement
+
+Put
+
+$$
+S=b_3+b_4+b_5+b_6+b_7+b_8,
+\qquad
+s=1+44e-b_2-4b_3-5b_4-5b_5-5b_6-4b_7-4b_8.
+$$
+
+For one feasible allocation, the demanded score is
+
+$$
+\begin{aligned}
+&48(1-e)+16(1-e)+4(b_2-e)+16(b_3-e)\\
+&\qquad+20(b_4-e)+20(b_5-e)+20(b_6-e)+16(b_7-e)+16(b_8-e)=68-4s.
+\end{aligned}
+$$
+
+Writing $E_r$ for each scored row event and $d_r$ for its demand, the exact score-debt identity is
+
+$$
+4s=\sum_D\lambda_D\bigl(68-\operatorname{score}(D)\bigr)+\sum_r Z_6(r)\bigl(p(E_r)-d_r\bigr).
+$$
+
+Every term is nonnegative: the first by the complete score certificate and the second by the row constraints, with positive integer coefficients. Hence $s\ge0$. Since every table below $68$ loses at least one score unit, their total mass is at most $\eta=4s$; each scored row slack is at most $\eta$ as well.
+
+Replace every sub-$68$ table by the whole table $R$, preserving its complete counterfactual cells. The resulting normalized allocation $K_0$ has
+
+$$
+\varepsilon_0=2\eta.
+$$
+
+Every scored correct probability, scored union deficit, and positive nonbase mass is within $\varepsilon_0$ of its demand; every unscored correct probability is at least $b_n-e-\varepsilon_0$, and every unscored union deficit is at most $e+\varepsilon_0$. These replacements are proof allocations and need not remain cap-feasible; their changes are paid by the displayed error budget.
+

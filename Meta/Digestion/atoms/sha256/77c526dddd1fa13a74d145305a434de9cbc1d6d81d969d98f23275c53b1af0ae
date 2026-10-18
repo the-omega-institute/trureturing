@@ -1,0 +1,45 @@
+**Definition 4.1 (the jointly counted factorization model).** Reuse the
+model CG21.2–21.3. In its finite form, the retained algebra at the cut is
+$\mathcal B=\bigoplus_{\alpha\in A}M_{d_\alpha}(\mathbb C)$ with
+finite $A$ and finite positive integer dimensions. Common CP encoders
+$\mathcal E_\alpha$ and common full-output CPTP decoders
+$\mathcal R_\alpha$ satisfy, on every complex matrix unit,
+
+$$
+\sum_\alpha\mathcal E_\alpha^\dagger(I_{d_\alpha})=I_3,
+\qquad\Phi=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha,
+\qquad p_\alpha(\rho)=\operatorname{tr}\mathcal E_\alpha(\rho).
+\tag{JG.23}
+$$
+
+Only the encoder sum is TP. Each full decoder is TP; its supported live
+compression is TNI. The same model permits countable $A$ when the CP
+instrument sums converge and have total effect $I_3$. Its specified
+integral version is
+
+$$
+\Phi=\int\mathcal R_\alpha\mathcal E_\alpha\,d\nu(\alpha),
+\qquad\int\mathcal E_\alpha^\dagger(I)\,d\nu(\alpha)=I_3,
+\tag{JG.24}
+$$
+
+with measurable finite integer dimensions, measurable encoder and
+live-decoder Kraus fields, integrable effects and live Choi matrices,
+and full decoders TP almost everywhere. Integral encoder densities
+need not individually be TNI; the integrated instrument has the stated
+budget. Low dimension means $d_\alpha\leq2$ everywhere or almost
+everywhere. No disintegration of arbitrary quantum outputs is assumed.
+
+For an ACTUAL cut, $\alpha$ is an actually generated classical record.
+Every future-accessible quantum specimen, memory, controller part,
+environment, returned system and entanglement share is counted jointly
+in its fibre. A receiver's retained entanglement share is not an
+independent blank. Passive inaccessible references remain allowed and
+all identities tensor by their identity; later independent blanks remain
+allowed. No later callback, helper specimen or uncounted bypass exists.
+A coherent sum of putative branches is a quantum payload until an actual
+classical direct sum is supplied. Neither a Kraus decomposition nor an
+algebraic flag acquires that record. Acquisition duration and placement
+in the aligned clock are implementation obligations, not extra time
+supplied by (JG.23).
+

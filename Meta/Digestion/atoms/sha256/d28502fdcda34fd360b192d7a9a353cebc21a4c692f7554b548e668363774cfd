@@ -1,0 +1,35 @@
+**Proposition 20.2 (both inward orientations and weighted multipliers).** The six event raw inward derivatives $\chi_i$ and actual inward multipliers $\nu_i^e=p_i^e\chi_i$ have the following outward intervals, in old-index order $O$:
+
+| $i$ | $\chi_i$ lower | $\chi_i$ upper | $\nu_i^e$ lower | $\nu_i^e$ upper |
+| --- | --- | --- | --- | --- |
+| $0$ | $4.20961943005$ | $4.20961943006$ | $1.13857262586$ | $1.13857262587$ |
+| $1$ | $7.50977258619$ | $7.50977258620$ | $2.03009156569$ | $2.03009156570$ |
+| $2$ | $5.12142026146$ | $5.12142026147$ | $0.949641731466$ | $0.949641731467$ |
+| $3$ | $7.51922807131$ | $7.51922807132$ | $1.39280806906$ | $1.39280806907$ |
+| $5$ | $2.34997011081$ | $2.34997011082$ | $0.104038333905$ | $0.104038333906$ |
+| $6$ | $2.36005407132$ | $2.36005407133$ | $0.104488083402$ | $0.104488083403$ |
+
+Also $\|y_e\|_2\le301.183623108$ for $y_e=(Y_e,\lambda_e,\nu^e)$. The resulting constants of Definition 12.1 satisfy
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $R_{\rm chart}$ | $2.03105019982\cdot10^{-6}$ | $2.03105019983\cdot10^{-6}$ |
+| $m_\mu$ | $2.07229686535\cdot10^{-63}$ | $2.07229686536\cdot10^{-63}$ |
+| $C_\mu$ | $11477402472800$ | $11477402472900$ |
+| $R_x$ | $9.02772587376\cdot10^{-77}$ | $9.02772587377\cdot10^{-77}$ |
+
+Proof. Use the original inward derivative, including the saturated endpoint's minus sign,
+
+$$
+\chi_i=(1-2\eta_i)c_i
+(Y_{e,5}+Y_{e,6}u_i^2+Y_{e,7}u_iv_i-\epsilon_i1000f_i).
+$$
+
+Equivalently, by the occupied event equality,
+$\chi_i=R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp}$.
+The correction is zero for $\epsilon_iH_i^{\rm opp}\ge0$ and $2|H_i^{\rm opp}|$ for the opposite sign; it includes zero opposite height without a new sign assumption. Interval substitution on the event rectangle yields the table from the raw formula, and multiplication by each actual coefficient weight yields $\nu^e$. All $18$ event stationarity coordinates are those of $Q_ey_e=\nabla\mathcal J(x_e)$, by the contact equations and this inward identity. The norm bound follows by summing the squares of the eight $Y$ coordinates, the contrast multiplier and these six multipliers.
+
+Evaluate $R_{\rm chart}$ from Definition 12.1: its smallest member is $h_* /(2M_{Hx})$. The smaller member in $m_\mu$ is $p_*c_{\rm sh}\Delta^2$, and $C_\mu=2(L_J+L_Q\cdot301.183623108)/\sigma$ is the conservative choice using the selected norm bound. In $R_x$, the smallest member is $m_\mu/(2C_\mu)$. Exact positive rational comparisons and relative square roots give the displayed intervals.
+
+Theorems 12.2–12.3 now apply uniformly to every global maximizing fractional six-law whenever their displayed $d$ gates hold. Their no-split assignment uses one cell per original atom, forces one positive atom in each old cell and no atom in cell $4$, and first controls the overshoot $0\le K-\kappa\le Cd^2/\lambda_e$. Full-matrix LICQ and the positive multipliers then force that overshoot to zero and identify all endpoint constraints. This application does not assume locality, active contrast, or a positive seventh event mass. $\square$
+

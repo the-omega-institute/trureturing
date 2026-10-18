@@ -1,0 +1,16 @@
+# Native terminal span-five strict compensation
+
+The local result is a strict surplus on a consecutive terminal support gap
+$(n-5,n)$ in the original paid stationary threshold model. It holds for
+all original middle-range parameters and costs, without an all-history
+both-conflict hypothesis. The six-pair mechanism of [SI, Section 10][SI]
+is reused; a fourth ambiguous diagonal supplies the additional unit.
+[SI, Section 11][SI] already compensates arbitrary spans under its explicit
+both-conflict condition. [TC, Sections 4--5][TC] already proves the exact
+seven-coordinate Boolean minimum $16$, its stronger central-host and
+collective bounds, and the full-fiber native minimum $20+r$. Those results
+are inherited. The contributions here are the unconditional terminal local
+unit, its exact same-graph consequences, the corresponding terminal-exception
+class and its separating example, and the strict local seven-coordinate
+corollaries. The unrestricted all-parameter aggregate remains an open problem.
+

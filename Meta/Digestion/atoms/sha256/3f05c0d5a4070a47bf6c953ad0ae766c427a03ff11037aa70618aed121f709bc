@@ -1,0 +1,27 @@
+**Definition 9.1 (Finite response contract).** Let
+
+$$
+\mathcal V=\mathbb R^m\otimes\mathbb R^3,
+\qquad
+\mathcal Y=\mathbb R^q,
+$$
+
+and let $\mathscr R:\mathcal V\to\mathcal Y$ be the linear map formed by a
+finite list of declared measurements. A measurement may be one of the finite
+tests from §§4–5 after a three-channel interface has been specified. Put
+
+$$
+G=\mathscr R^{\mathsf T}\mathscr R.
+$$
+
+Assume, as an additional interface hypothesis, that for every
+$Q\in SO(3)$ there is an orthogonal $W_Q$ on $\mathcal Y$ such that
+
+$$
+\mathscr R(I_m\otimes Q)=W_Q\mathscr R.
+\tag{9.1}
+$$
+
+This is an equivariance contract, not a consequence of (1.5)–(1.6),
+$\mathsf Z(P)$, or the finite-cylinder construction.
+

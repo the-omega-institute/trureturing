@@ -1,0 +1,15 @@
+**Theorem 96.4.** Under the positive-subhalf hypotheses of section 96.1, suppose S consists of two complete original fibres. Then
+
+\[
+ \operatorname{rank}H_S=3,\qquad \operatorname{rank}R=1.
+                                                                    \tag{19}
+\]
+
+**Proof.** Equation (4) now has n=4. Since H_S contains I₂, h≥2, so h+r≤4 and hr≥3 leave only (h,r)=(2,2) or (3,1).
+
+If h=2, (12) implies Y is unitary: the eigenvalues of that block Gram are 1 plus or minus the two singular values of Y. Its entries are nonzero by t<1/2. Lemma 96.1 and the exact two-fibre norm make X a global minimizer of ∥J₂/2−X′⊙Y∥op over all contractions X′. Lemma 96.3 forces X to be unitary, hence rank G_S=2. This contradicts rank G_S=|S|−1=3. Therefore (h,r)=(3,1). ∎
+
+Theorem 96.4 is a necessary reduction, not an exclusion of all support on two full fibres. Its remaining rank-one quotient permits a reciprocal gauge with equal principal Grams, but the full opposite kernel may have additional vectors. The earlier affine face directions cannot be used without proving that they annihilate those vectors.
+
+Together, Theorems 96.2 and 96.4 exclude all kernel supports with at most three coordinates at subquarter values and exclude the opposite-principal-rank-two alternative for two complete active fibres. Section 95 separately excludes full-support rank-(7,6) positive-subhalf minima. The remaining smaller-support and lower-rank cases, including the (3,1) principal-rank pair in (19), are open here. These statements concern full-domain calibrated local minima. Calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels; the original unrestricted quarter optimum remains open.
+

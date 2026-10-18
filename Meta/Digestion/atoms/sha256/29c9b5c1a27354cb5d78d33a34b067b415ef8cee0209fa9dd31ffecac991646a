@@ -1,0 +1,135 @@
+**Lemma 7.2 (credited exceptional drifts and late-root size bound).**
+For each fixed $d\in\{0,24,48,c_0\}$, sixth $M$ is injective on
+$\mathcal K_d^7$. Each entire known class
+$\mathcal Z_{a7}=\{W\in\mathcal F(H):f(a)=f(7)=0\}$,
+$a=4,5$, has at most two complete worlds, with arbitrary initial drift.
+
+**Proof of the exceptional drift statement.** Put $k=j/\ell>0$.
+Substitution of the first four readings into (7.1) gives
+
+$$
+20d+70A/j-84B/\ell+35C_* /(j+\ell)=0.
+\tag{7.4}
+$$
+
+For $d=0$, multiplication by $j\ell(j+\ell)$ reduces this to
+$(8k-5)(3k+2)=0$, hence $k=5/8$. Interpolation gives
+$f(T)=cT(T-5)(T-7)$, $c=1/j>0$, $\ell=8j/5$ and
+$v_M=-6c-156/5$, strictly decreasing in $c$.
+For nonzero $d$, (7.4) reads
+
+$$
+20d\ell=84B-70A/k-35C_* /(k+1).
+\tag{7.5}
+$$
+
+Its complete specializations are
+
+$$
+\begin{array}{c|c|c}
+d&\ell&v_M-d\\ \hline
+24&7(3k+1)/(5(k+1))&\frac{24}{7}(9-42k+10/(3k+1))\\
+48&7(7k+10)/(40k(k+1))&\frac{24}{7}(69/7-14/k-480/(7(7k+10)))\\
+c_0&7(20-9k)/(65k)&\frac{312}{7}(-1+12/(20-9k))
+ +\frac{48}{5}(9k+1-8/k)
+\end{array}
+\tag{7.6}
+$$
+
+The last row has $0<k<20/9$ by positivity of $\ell$.
+These are obtained from (7.1), with sixth samples respectively
+$120(1-3k)/(7(3k+1))$, $480(k-2)/(7(7k+10))$ and
+$312(9k-8)/(7(20-9k))$. The simplifications are certified by
+
+$$
+\begin{gathered}
+(1-3k)(42k+19)=(9-42k)(3k+1)+10,\\
+(k-2)(69k+70)-\tfrac{69}{7}k(7k+10)
+ =-14(7k+10)-\tfrac{480}{7}k,\\
+(9k-8)/(20-9k)=-1+12/(20-9k),\\
+(9k-8)(k+1)/k=9k+1-8/k.
+\end{gathered}
+\tag{7.7}
+$$
+
+The row for $24$ strictly decreases; those for $48,c_0$ strictly
+increase on their legal intervals. No sixth sample is divided out,
+so its possible zeros $k=1/3,2,8/9$ are included. Equal responses
+therefore fix $k$, then $\ell,j$ and the first four gain samples,
+then the entire gain. At $d=0$, $f(4)=12c\ne0$ fixes $r$.
+At the other drifts the gain has a root $q\in\{1,2,3\}$, so
+$f(4),f(5)$ cannot both vanish along with $q,7$. A nonzero late
+sample fixes $r$. The complete worlds coincide. The inverse and
+all actual-child negations follow exactly as in (6.4).
+
+**Proof of the late-root size bound.** The reading at $a$ forces
+the common drift $d=y$ for $a=4$, or $d=\zeta$ for $a=5$.
+Factor
+
+$$
+f(T)=(T-a)(T-7)(b+eT),\qquad b=-d/(7a).
+\tag{7.8}
+$$
+
+For $d\notin\{0,24,48,c_0\}$, $b\ne0$ and the first three
+noninitial samples are nonzero. Put $\mu=e/b$. The factors
+$1+\mu,1+2\mu,1+3\mu$ are nonzero. With
+$p_1=1+5\mu+6\mu^2$, $p_2=1+4\mu+3\mu^2$ and
+$p_3=1+3\mu+2\mu^2$, the trace sum $A/f(1)+B/f(2)=C_*/f(3)$
+becomes respectively
+
+$$
+10Ap_1+18Bp_2-45C_*p_3=0\quad(a=4),\qquad
+5Ap_1+8Bp_2-15C_*p_3=0\quad(a=5).
+\tag{7.9}
+$$
+
+The full coefficient triples, constant first, are
+
+$$
+\begin{array}{c|ccc}
+a&1&\mu&\mu^2\\ \hline
+4&17d-1704&13d-3768&-24d-1584\\
+5&2d-432&-12d-672&-24d
+\end{array}
+\tag{7.10}
+$$
+
+Indeed the unsimplified triples are
+$(10A+18B-45C_*,50A+72B-135C_*,60A+54B-90C_*)$ and
+$(5A+8B-15C_*,25A+32B-45C_*,30A+24B-30C_*)$.
+The first polynomial is not identically zero: its quadratic coefficient
+vanishes only at $d=-66$, where its constant is $-2826$.
+The second has nonzero quadratic coefficient. Hence at most two
+$\mu$ values occur. The other late sample is nonzero by Theorem 2.1
+at $(4,5)$, and fixes $r$ after the first two samples fix $j,\ell$.
+Each $\mu$ thus supplies at most one world. Every other legality
+condition and actual fifth equation still apply.
+
+For $d\in\{24,48,c_0\}$ the additional root $q\in\{1,2,3\}$
+forces the unique gain $d(T-a)(T-q)(T-7)/(7aq)$. At the two
+non-root early clocks the traces determine $j,\ell$ (use
+$\ell,j+\ell$ for $q=1$, $j,j+\ell$ for $q=2$, and $j,\ell$
+for $q=3$); the other late sample is nonzero and fixes $r$.
+At most one world results, without division by the root sample.
+
+For $d=0$, $b=0$. If $a=4$, the samples at $1,2,3$ are
+$18e,20e,12e$, requiring $j=4/(3e)$, $\ell=12/(5e)$ and
+$j+\ell=26/(5e)$. The first two sum to $56/(15e)$, not
+$78/(15e)$, a contradiction. If $a=5$, the gain is
+$cT(T-5)(T-7)$, $c>0$, with $j=1/c$, $\ell=8/(5c)$,
+$u=8/(5c)-1$, $v=1-3/(5c)$. Write $A_0=(y-12)/12$.
+Then $r=A_0/c-1$ and the rank-one equation is
+
+$$
+c^2-(3A_0-11/5)c+A_0^2-24/25=0.
+\tag{7.11}
+$$
+
+After multiplying by $c^2$, the two sides $uv$ and $r(1-r)$
+are $(11/5)c-c^2-24/25$ and $3A_0c-2c^2-A_0^2$.
+Thus (7.11) has at most two amplitudes, each fixing a whole world;
+the fifth equation is retained and also requires $\zeta=0$.
+These cases exhaust the drifts and include lower degrees and repeated
+roots. ∎
+

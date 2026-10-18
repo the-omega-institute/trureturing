@@ -1,0 +1,20 @@
+**Definition 4.3 (seven squared residuals on arbitrary edges).** For any
+complete laws on the appropriate carriers put
+
+$$
+\begin{aligned}
+f(Q)&=(Q(w_{0,1}),Q(w_{1,1}),Q(w_{2,1})),\\
+g(W)&=(W(\beta),W(\alpha w_{0,1}),W(\alpha w_{1,1}),W(\alpha w_{2,1})),\\
+V_0&=\int\|f(Q)-f(\mathcal R_A(W))\|_2^2dG_A(W,Q)\\
+&\hspace{12mm}+\int\|g(W)-g(\mathcal R_B(Q))\|_2^2dG_B(Q,W),\\
+H&=8m_\beta+6m_p+\frac{58}{3}D_p+26D_\beta.
+\end{aligned}
+\tag{4.4}
+$$
+
+These are the features of [SEVEN, Definition 2.1]. Outside $\mathfrak C$,
+$V_0$ is a squared residual statistic, not a conditional variance.
+For a compatible pair the residual barycentres are conditional feature
+means, so the same expression is the sum $V$ of seven conditional
+variance integrals.
+

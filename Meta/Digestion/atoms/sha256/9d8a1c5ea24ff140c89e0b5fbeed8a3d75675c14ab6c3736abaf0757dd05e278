@@ -1,0 +1,45 @@
+**Theorem 2.2 (Attainment and upper-edge certificate).** Under
+Definition 1.1,
+
+$$
+\Lambda\le L_{\rm prod},\qquad
+B_{\rm prod}\le W-\Lambda,
+\tag{2.3}
+$$
+
+and the infimum in (2.2) is attained at a strictly positive vector.
+
+Proof. Let $Jf(S)=(-1)^{|S|}f(S)$. Every permitted transition changes
+parity, so $A=JH_{\rm cl}J$ is entrywise nonnegative. Its positive
+off-diagonal entries connect the legal configuration graph, hence
+it is irreducible. It has the same spectrum as $H_{\rm cl}$, and
+Perron–Frobenius supplies positive left and right eigenvectors for
+$\Lambda$. Directly applying $A$ to the product gives
+
+$$
+\frac{(Ag_x)(S)}{g_x(S)}=R_x(S).
+\tag{2.4}
+$$
+
+Indeed, a deletion contributes $d_i/x_i$, an insertion contributes
+$a_ix_i$, and the diagonal supplies the remaining $d_i$ or $a_i$.
+If $R_x(S)\le L$ everywhere, multiplication of $Ag_x\le Lg_x$
+by a positive left Perron vector gives $\Lambda\le L$.
+This is the classical positive-vector bound, used here as an
+ingredient for the graph-dependent obstruction below.
+
+Choose any finite sublevel $\max_SR_x(S)\le C$ that contains a
+candidate. The vacuum and site singleton respectively imply
+
+$$
+a_i(1+x_i)\le C,\qquad d_i(1+x_i^{-1})\le C.
+\tag{2.5}
+$$
+
+Since every $a_i,d_i$ is positive, each coordinate is bounded
+above and bounded away from zero on this sublevel. Its closure
+is therefore a compact subset of the positive orthant. The
+maximum of the finitely many continuous row ratios is continuous.
+A minimizing sequence in one such sublevel has a positive
+limit that attains the infimum. $\square$
+

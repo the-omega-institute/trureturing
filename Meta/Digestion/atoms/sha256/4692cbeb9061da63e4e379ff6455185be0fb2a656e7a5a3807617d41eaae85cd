@@ -1,0 +1,39 @@
+**Example 7.2 (exact finite matrices).** At the rational source of
+Proposition 3.3, take $d=1/32$ and
+
+$$
+(x_1,x_2,x_3)=(1/8,5/32,3/16),\qquad
+(u_1,u_2,u_3)=(1/96,1/48,1/32).
+$$
+
+Then
+
+$$
+C=\begin{pmatrix}
+1/13&1/16&1/19\\
+1/7&2/17&1/10\\
+1/5&1/6&1/7
+\end{pmatrix},\qquad
+\det C=1/164600800,\qquad K(C)=349109.
+\tag{FH.24}
+$$
+
+If $R<3$, (FH.23) gives $1/349109$. For a live $M_3$ algebra,
+choose ten heights $x_j=1/8+(j-1)/144$ and $u_i=i/320$,
+$1\leq i,j\leq10$. Exact inversion and the $1024$ vertices give
+
+$$
+K(C)=\frac{167386139611810804884445674702223217809}{403563009375000}.
+\tag{FH.25}
+$$
+
+Its reciprocal is a valid positive floor when $R<10$. This small constant
+checks the formula; it does not improve the larger specimen-only constants
+of [Acquired Continuation Limits][AC], which concern a different assistance
+contract. The present theorem allows arbitrary earlier-correlated handoffs.
+
+The finite event list is a set of mathematical distinguishability tests
+on the requested output, not a new repeated-shot access menu. An actual
+single event cannot supply all its probabilities. No acquired inversion of
+a noisy CDF or number of required specimens is inferred from $C^{-1}$.
+

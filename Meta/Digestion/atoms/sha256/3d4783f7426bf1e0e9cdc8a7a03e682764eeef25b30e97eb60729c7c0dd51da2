@@ -1,0 +1,46 @@
+**Theorem 5.1 (exact polynomial and multiplicities).** Let $C=C(\rho)$ be nonzero singular, choose a unit kernel vector $n$, and write $\operatorname{adj}C=\gamma nn^\dagger$ with $\gamma>0$. Then
+
+$$
+\det(C-\lambda B)=\lambda(d_1+d_2\lambda-\alpha\beta\lambda^2),\quad
+d_1=-\operatorname{tr}(\operatorname{adj}C\,B)=-\gamma n^\dagger Bn\ge0,\quad
+d_2=\alpha\beta C_{DD}-\beta C_{TT}-\alpha C_{SS}.
+\tag{PG.24}
+$$
+
+If $n^\dagger Bn<0$, zero is simple, there is exactly one positive root
+
+$$
+\lambda_0=\frac{d_2+\sqrt{d_2^2+4\alpha\beta d_1}}{2\alpha\beta},
+\tag{PG.25}
+$$
+
+and one negative root. If the specimen is on the real off-plane quadratic, zero is exactly double, $d_2<0$, the third root is negative, and there is no positive generalized root or triple zero.
+
+Proof. Expand the determinant in the diagonal entries of $\lambda B$. The constant is zero, its linear derivative is $-\operatorname{tr}(\operatorname{adj}C B)$, its quadratic coefficient is the displayed $d_2$, and its cubic coefficient is $-\det B=-\alpha\beta$. The rank-two Gram makes $\gamma$ the positive product of its two positive eigenvalues. For $d_1>0$ the quadratic in brackets has negative leading coefficient and opposite-sign roots, proving (PG.25) and the multiplicities.
+
+For the real off-plane quadratic, split coordinates $D$ and $N=(T,S)$, and put $A_N=\operatorname{diag}(\alpha,\beta)$. The lower principal block $C_N$ is positive definite: otherwise a lower-plane zero-Rayleigh vector for $C\succeq0$ would be a second independent kernel vector. Let $a_0=C_N^{-1}c_{ND}$; the kernel is proportional to $(1,-a_0)$, and $a_0^TA_Na_0=1$. Only this positive lower block is inverted. For $\lambda\ge0$ the Schur function is
+
+$$
+f(\lambda)=c_{DD}-\lambda-c_{DN}(C_N+\lambda A_N)^{-1}c_{ND}.
+$$
+
+It has $f(0)=f'(0)=0$ and
+
+$$
+f''(0)=-2a_0^TA_NC_N^{-1}A_Na_0<0.
+$$
+
+The vector $a_0$ is nonzero. Since
+$\det(C-\lambda B)=\det(C_N+\lambda A_N)f(\lambda)$,
+$d_2=\det(C_N)f''(0)/2<0$, with exactly a double zero. The remaining root is $d_2/(\alpha\beta)<0$. No continuity of a resource value and no inverse of singular $C$ enters. $\square$
+
+For a pure plane specimen, $C=A|D\rangle\langle D|\oplus C_N$ with $A>0$, $\det C_N=0$, and (PG.24) also has the exact factorization
+
+$$
+\det(C-\lambda B)=(A-\lambda)\lambda
+ [\alpha C_{SS}+\beta C_{TT}+\alpha\beta\lambda].
+\tag{PG.26}
+$$
+
+The bracket has positive constant even if one specimen coordinate vanishes. Thus the positive root is $A$, zero is simple, and the other root is negative. For a mixed plane specimen the Gram can instead be positive definite; Section 9 treats both cases without using the singular factorization.
+

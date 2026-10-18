@@ -1,0 +1,26 @@
+**Definition 3.1 (declared residual route lift).** For a coordinate route
+$e:i\rightsquigarrow k$ and an action $a:i\to j$, declare a matched name
+$a^e:k\to\ell$, an output route $e/a:j\rightsquigarrow\ell$ and an invertible
+complete-response dictionary $\Lambda_{e,a}$. The output route need not be
+$e$. Let $C_{e,a}\subseteq U_e$ be the task-required crossing domain.
+On this domain the complete square contract is
+
+$$
+\begin{aligned}
+x\in D_a&\Longleftrightarrow H_ex\in D_{a^e},\\
+T_ax&\in U_{e/a}\quad (x\in C_{e,a}\cap D_a),\\
+H_{e/a}T_ax&=T_{a^e}H_ex,\\
+\ell_{a^e}(H_ex)&=\Lambda_{e,a}(\ell_a(x)).
+\end{aligned}
+\tag{3.1}
+$$
+
+The last equation includes illegality, failures, resources, records and
+selectors, wherever that response is declared. The two composed legal
+routes have exactly the common domain $C_{e,a}\cap D_a$ after restriction
+to $C_{e,a}$. Initial and terminal task observations have their declared
+coordinate dictionaries as well. All crossing domains are saturated for the
+relation through which the square is to descend. Relabeling dictionaries,
+matched actions and residual routes must be representative independent.
+No statement about points outside $C_{e,a}$ is part of this square.
+

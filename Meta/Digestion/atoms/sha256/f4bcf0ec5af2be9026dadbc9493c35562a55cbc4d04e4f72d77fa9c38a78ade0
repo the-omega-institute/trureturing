@@ -1,0 +1,20 @@
+**定理 178.7（末端通道的最小纯环境）。** 指定的固定根末端通道满足
+
+$$
+\min\dim F_T=|\mathcal J_N|=
+\begin{cases}1,&N=0,\\4,&N=1,\\5,&N\ge2.\end{cases}
+\tag{178.9}
+$$
+
+证明（178.7）。取 $F_T$ 中的正交基 $g_j$，定义
+
+$$
+V_{T,N}\psi=\sum_{j\in\mathcal J_N}\sqrt{T_N(j)}
+|j\rangle_{\mathcal C}\otimes G_j\psi\otimes g_j.
+\tag{178.10}
+$$
+
+行质量和一给等距，环境迹给 (178.3) 的第二式。其 Kraus 算子 $A_j=\sqrt{T_N(j)}|j\rangle\otimes G_j$ 因不同输出端点而 Hilbert–Schmidt 正交，向量化后的范数平方为 $2T_N(j)>0$。故 Choi 秩为 $|\mathcal J_N|$，同一纯环境下界达到。用 (178.6) 得三种数值。
+
+中心符号在每个 $U_h A U_h^\dagger$ 中相消，所以同端点的所有历史确可合到这个 Kraus 方向。相消只发生在这个密度通道的历史遗忘中；在 (178.1) 的纯输出中不能删去它。$p=q$ 或其他严格域内的参数等式不使正质量的输出端点或任务标签消失，因此不降低任一上述 Choi 秩。$\square$
+

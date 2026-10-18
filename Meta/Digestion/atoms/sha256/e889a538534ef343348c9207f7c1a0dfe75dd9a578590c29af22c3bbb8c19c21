@@ -1,0 +1,50 @@
+**Theorem 9.1 (relaxed height-decision frontier).** For the two full
+families of Definition 8.1, let a common protocol return $L,H$ or
+inconclusive. Require conclusive probability at least $q$ on every input,
+where $0<q\leq1$. Its worst-input unnormalized wrong-decision probability
+has exact minimum
+
+$$
+E(q)=\begin{cases}q/4,&0<q\leq1/2,\\q/2-1/8,&1/2\leq q\leq1.
+\end{cases}
+\tag{AC.34}
+$$
+
+The exact minimum worst-input conditional error, conditioned only on that
+input's positive conclusive event, is $E(q)/q$. In particular it never
+falls below $1/4$. These optima concern a decision record with unrestricted
+disturbance, not an exact live continuation.
+
+Proof. Any such common finite protocol induces three POVM effects on its
+original input. Average over the four actual nuisance choices and equal
+height priors. Only the effects' diagonals in (AC.32) contribute. The two
+bottom directions have total average mass $1/2$ and cheapest wrong
+fraction $1/4$; the middle direction has average mass $1/2$ and wrong
+fraction $1/2$ for either label. If $s$ is average acceptance and $s_2$
+its middle contribution, then $s_2\geq\max(0,s-1/2)$ and average wrong
+mass is at least $s/4+s_2/4\geq E(s)$.
+
+Since $s\geq q$ and $E$ is increasing, worst wrong mass is at least
+$E(q)$. Worst conditional error is at least the ratio of average wrong
+mass to average acceptance: it is a weighted average of the actual
+conditional errors, with positive acceptance weights. Since $E(s)/s$
+is nondecreasing, that ratio is at least $E(q)/q$.
+
+For $q\leq1/2$ take $E_L=2qP_-$, $E_H=2qP_+$. For $q\geq1/2$
+put $w=2q-1$ and take
+$E_L=P_-+(w/2)P_2$, $E_H=P_++(w/2)P_2$.
+The remaining effect is inconclusive. These effects are positive and sum
+to at most identity. On every pure nuisance input they have acceptance
+exactly $q$ and wrong mass exactly $E(q)$, proving both attainments.
+$\square$
+
+This is a concrete application of mature fixed-inconclusive-rate
+discrimination, not a new general discrimination principle. As a guard
+consumer, the unit upward ramp of displacement $c/2$ has domain $(0,c/2)$:
+it is legal at $a$ and illegal at $b$. An exact total handler would need
+an error-free executed/rejected decision. Theorem 9.1 excludes obtaining
+that decision with positive uniformly guaranteed acceptance from these
+inputs alone. An approximate guess is never permission to execute that
+separating request. The excursions of §8 instead lie in a common promised
+legal menu and need no unknown-height guard.
+

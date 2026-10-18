@@ -1,0 +1,9 @@
+**Definition 5.1 (the exact four-expression interpretation).** All expressions refer to the same selected history and fixed public contract.
+
+| Expression | Mathematical content | Recovery scope |
+| --- | --- | --- |
+| Space | The labelled incidence scopes $S_1,S_2$ and their common event $c$ | Supplied discrete locality; no metric distance |
+| Time | The chronological word $\omega$ and its precedence relation | Order of completed selected markers; no absolute time or duration |
+| Boundary | Frozen $(q,\text{bookmark }3)$ with the supplied source snapshot $B_0$ | Local retained orders; the unaugmented boundary merges $abc,bac$ |
+| Memory | The actually acquired and held relation $z=\mathbf1\{b\prec a\}$ | The missing cross-scope precedence, interpreted with the boundary |
+

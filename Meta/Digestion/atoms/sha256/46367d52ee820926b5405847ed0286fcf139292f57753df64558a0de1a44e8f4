@@ -1,0 +1,25 @@
+**Definition 11.1 (one symmetric master encoder).** For
+$0\le a,b\le16$, put $A=\max(a,b)$ and $B=\min(a,b)$.
+Normally set $e_{17}(a,b)=A$. Replace that value by $c$ exactly on
+the following unordered pairs, including both orientations:
+
+| Label $c$ | Reassigned $(A,B)$ |
+| --- | --- |
+| $0$ | $(16,B)$ for $0\le B\le6$ |
+| $1$ | $(15,B)$ for $0\le B\le5$ |
+| $2$ | $(13,3),(14,0),(14,1)$ |
+| $3$ | $(12,0),(14,3),(14,4)$ |
+| $4$ | $(12,2),(13,2),(14,2)$ |
+| $5$ | $(11,1),(12,1),(13,1)$ |
+| $6$ | $(10,0),(11,0),(13,0)$ |
+
+For $1\le q\le17$, define $e_q$ by restriction to $[0,q-1]^2$.
+The actual original remains $X_{a,b}=\langle T_a,T_{q+b}\rangle$;
+its right offset is $q$, not seventeen. From the genuinely acquired
+initial empty-cut row compute $a=c(T_a)$ and $b=c(T_{q+b})-q$
+using the supplied acquired-literal clock. Export only $e_q(a,b)$
+before the future region and lag are known. Discard the row, the two
+coordinates and every other source-bearing field. The displayed
+encoder table and all later certificate tables are public data common
+to every source; they are not source-dependent surviving selections.
+

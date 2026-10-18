@@ -1,0 +1,51 @@
+**Corollary 10.3 (symbolic strict upper comparison).**
+
+$$
+\boxed{L_{\rm full}<E_*\leq M
+ <\frac{128+\sqrt{32449}}{1408}
+ <\frac{39}{176}<\frac29.}
+\tag{CG.82}
+$$
+
+Proof. For $5\leq y\leq27$ write
+
+$$
+\begin{aligned}
+A_y&=(\sqrt{y+6}-\sqrt y)^2+
+                  (\sqrt{64-y}-\sqrt{58-y})^2,\\
+r_y&=1-\frac{A_y}{256},\\
+A_y&=\frac{36}{(\sqrt{y+6}+\sqrt y)^2}
+        +\frac{36}{(\sqrt{64-y}+\sqrt{58-y})^2}.
+\end{aligned}
+\tag{CG.83}
+$$
+
+These are expansion and rationalization identities. The first denominator
+is greater than $25$, since $\sqrt{11}>3$ and $\sqrt5>2$.
+The second is greater than $121$, since $\sqrt{37}>6$ and
+$\sqrt{31}>5$. Hence
+
+$$
+A_y<\frac{36}{25}+\frac{36}{121}=\frac{5256}{3025}<2,\qquad
+r_y>\frac{127}{128},\qquad 1-r_y^2<\frac{255}{16384}.
+\tag{CG.84}
+$$
+
+At the three catalogue heights,
+$|7/11-s_y|\leq2/11$ and $4(7/11)s_y\leq252/121$. Thus
+
+$$
+N_y^2=(7/11-s_y)^2+4(7/11)s_y(1-r_y^2)
+ <\frac{4+252(255/16384)}{121}
+ =\frac{32449}{4096\cdot121}.
+\tag{CG.85}
+$$
+
+Using $a_y\leq2/11$, each complete error, and therefore their finite
+maximum $M$, is strictly below $(128+\sqrt{32449})/1408$.
+The next comparison follows from $32449<184^2=33856$, giving
+$(128+\sqrt{32449})/1408<312/1408=39/176$.
+Finally $39/176<2/9$ is the integer comparison $351<352$.
+Feasibility gives $E_*\leq M$, and Theorem 9.3 gives the strict lower
+inequality. These are symbolic ordinary inequalities. $\square$
+

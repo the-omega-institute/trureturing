@@ -1,0 +1,26 @@
+### 推论 31.3（与 FIB Dirichlet 形式的相容）
+
+若所有 \(\rho_v\) 都是对角 FIB 状态
+
+\[
+\rho_v=\iota_\Sigma(p_v),
+\]
+
+则
+
+\[
+\|\rho_u-\rho_v\|_1
+=
+\|p_u-p_v\|_1.
+\]
+
+若 \(\mathcal E=\mathcal E_W\) 来自随机核 \(W\)，则
+
+\[
+\mathcal Q_G^{(1)}(Wp)
+\le
+\mathcal Q_G^{(1)}(p).
+\]
+
+因此，FIB 概率场的粗粒化是量子 CPTP Dirichlet 收缩定理在对角扇区的限制。
+

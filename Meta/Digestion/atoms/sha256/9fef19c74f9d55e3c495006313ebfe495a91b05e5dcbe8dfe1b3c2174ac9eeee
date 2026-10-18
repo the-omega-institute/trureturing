@@ -1,0 +1,20 @@
+**Proposition 7.3 (symmetry at every finite cut).** For a fixed finite height
+programme, optimization of the worst final parity survival over arbitrary
+finite protocols reduces to equal survivor probabilities at every cut.
+
+Proof. Use the specimen/helper exchanges of Proposition 4.3 on the initial
+input, and undo the specimen exchange at each required reported checkpoint.
+Before the next internal step undo that output exchange again, so the
+conjugated protocol is the original protocol on the exchanged input. It is
+a common allowed protocol and exchanges the two parity survivor
+probabilities at every cut. Mix it with the original using a retained fair
+coin. At cut $j$ both probabilities are the original average; its final
+value is at least the original worst value. The exact target at every live
+cut is preserved in both coin branches. Purifying the independent coin in
+the upper-bound proof leaves initial overlap $\mu$ unchanged. Conditional
+on success the complete residue includes the coin and any records; it may
+be represented by vectors whose cross overlap is the real part of the
+original cross overlap. Theorem 7.2 therefore bounds the symmetrized
+protocol. Its attainable equal-probability construction proves the reverse
+optimization inclusion. No unknown parity is a controller input. $\square$
+

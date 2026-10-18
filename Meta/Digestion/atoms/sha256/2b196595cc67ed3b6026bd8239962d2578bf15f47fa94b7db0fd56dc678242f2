@@ -1,0 +1,30 @@
+**References 77.11 (mature suppliers and version boundaries).**
+The primary polygon supplier is K. Böröczky, G. Kertész and E. Makai Jr.,
+[*The minimum area of a simple polygon with given side lengths*,
+Periodica Mathematica Hungarica39(1–3), 33–49 (2000),
+DOI10.1023/A:1004830604712](https://doi.org/10.1023/A:1004830604712).
+The body used is the supplied
+[author-homepage PDF](https://www.renyi.hu/~makai/boke.pdf): Theorem1
+on PDF page2, its Euclidean lower-bound and positive-split arguments in
+Section2 on pages5–7, the collinear inserted vertex on page6, and the
+warning against self-intersecting extensions in Remark4.3 on page16.
+The citation metadata identifies the publication; the author file is not
+asserted byte-identical to the publisher version. Only its stated
+Euclidean simple-polygon theorem is imported.
+
+Jordan separation and its crosscut consequence are mature plane topology;
+the primary paper's proof invokes the polygonal Jordan theorem and cites
+W. Hurewicz and H. Wallman, *Dimension Theory*, Princeton University
+Press, in its reference[8]. The applications required here are written
+in77.6. Heron's classical Euclidean triangle formula, also used in the
+primary paper's proof of Proposition3 on PDF page15, is written explicitly
+in(77.13), followed by the complete parity estimate. Convexity, finite
+interval/area packing and Euclidean triangle inequalities provide the
+remaining ordinary methods. The literal source and target suppliers are
+55.1,55.6,64.1 and the unchanged full Definition64.5; the exact offsets
+and fixed-data quantifiers are72.4 and equations72.7–72.8, with the
+spatial question in72.13. Higher-dimensional geometry is consumed only
+in its accepted72.3–72.5 scope. No mathematical priority claim, publisher
+version verification, native authentication or physical verification is
+inferred from these citations or this proof.
+

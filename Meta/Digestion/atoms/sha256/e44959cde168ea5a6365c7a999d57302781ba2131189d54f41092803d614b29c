@@ -1,0 +1,40 @@
+**Definition 29.1 (unchanged native task and static notation).** Fix
+exactly the supplied $A=\{s_1<\cdots<s_n\}$, $n\ge3$, and
+$1\le k\le n$ of Definition 23.1. Throughout §§29–33 the function
+being prepared is literally $\sigma_{A,k}$ of (PCA.53) and (PCA.12),
+on the entire original unbounded $\mathcal U_*$. Retain the source
+algebra, update, actual inverse origins, complete current row and
+all five complete canonical predecessor rows of Definitions 1.1 and
+4.1 and Convention 23.2. In particular both occurrences of $a$ and
+both of $c$, every distinct-class disequality and every strict-prefix
+blocking guard are retained. The finite cube of Lemma 24.1 is not
+an upper-domain promise. Every original finite address remains legal,
+and all four native replies remain in the interface; the finite installed
+menu does not restrict that address universe.
+
+The reader remains Supplier application 4.3's fixed eight-state
+reader with its original complete entries $e_0,e_1$, entry map,
+three running states and five literal whole-row halts. Preparation
+must latch exactly $\widehat e_{\sigma_{A,k}(u)}$; the paid handoff
+enters exactly that complete original entry. The reader's separate
+bounds remain $K=8$, $q_R\le2$, $\ell_R\le6$. Neither its code
+nor its entries nor any of its four successors are design variables.
+
+For notation in finite tables put
+
+$$
+\chi(\mathsf{branch})=1,\qquad
+\chi(\alpha)=\chi(\beta)=\chi(\mathsf{absent})=0,
+\qquad a_i=LLLw_i=LLL L^{s_i}R.
+\tag{PCA.66}
+$$
+
+Thus $|a_i|=s_i+4$ and $\sum_i|a_i|=W_A$. Writing an edge
+using $\chi$ means installing its four specified successors; it
+provides no extra reply operation. On any actual filling the native
+occurrence identity gives $r_{t_u}(a_i)=r_{x_a}(w_i)$, including
+absence and continuations blocked by either leaf. For a branch image
+$B$, write $h(B)=\sum_i\chi(r_B(w_i))$ only as a mathematical
+quantity used in proofs. No acquired value, bit vector or value of
+$h(B)$ is an accessible preparation argument.
+

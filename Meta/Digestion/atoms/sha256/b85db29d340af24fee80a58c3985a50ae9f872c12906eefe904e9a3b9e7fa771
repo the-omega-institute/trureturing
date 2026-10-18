@@ -1,0 +1,20 @@
+**Corollary 7.5 (Arbitrary producing-history features).** The same
+necessary floor holds if the finite encoder is a function of the entire
+producing history, the fixed affine readout is uniformly accurate on
+all allowed histories, and one state-independent affine append map
+implements each required phase command.
+
+**Proof.** If preparation is in the band, let $H_k$ be its phase-free
+probability prefix to $k$. Otherwise first use one phase-free
+positive-fiber entry to $k_*\in[a,b]$ and then the band probability
+prefix to $k$. These histories all have zero phase increments.
+Define $e_j(k)=E_j(H_k)$ and append the same $Q_t$ to every $H_k$.
+The actual response is again $B(k)e^{ic_0(k)t}$, while the affine
+append rule puts its prediction in
+$\operatorname{span}_{\mathbb C}\{1,e_1,\ldots,e_n\}$.
+The bounded-readout subspace, separated packing and norm argument
+of Theorem 7.4 apply verbatim. Iterated affine appending also gives
+the one-command version. No two histories with the same current
+ray are identified in this argument. The outside-band case explicitly
+uses initialization after lawful entry. $\square$
+

@@ -1,0 +1,25 @@
+**Theorem 6.2 (publication lower bound on the actual source family).** At
+the cuts in Theorem 5.2, suppose a receiver has acquired only the common
+already sealed copied journal prefix, common code/metadata and common
+clocks, and has no input-observation channel or authorized backing object
+containing the new request. Its materialized record is identical for all
+$2^r$ choices. It cannot determine the producer's continuation-and-audit
+task at that cut. A repair reaching this receiver must give it at least
+$2^r$ distinguishable acquired records. Under a fixed binary payload
+channel with common metadata and schedule this requires at least $r$
+payload bits.
+
+Proof. The differing bits have occurred only at the ingress owner's IN
+and request work. By hypothesis no varying information has reached the
+receiver. The readable old copied prefix, every legal old-prefix access,
+and its metadata and clocks agree. An unsealed destination has no legal
+read. A function of that common acquired record is constant, whereas the
+common completion/row experiment distinguishes all $x$ by Theorem 5.2.
+Any sufficient received record must therefore distinguish every pair.
+The binary payload count follows from $2^b\ge2^r$.
+
+If timing, names, token choices or some other signal are allowed to vary
+with $x$ at the receiver, they are additional acquired channels and must
+be included in the distinguishable-record count. They cannot invalidate
+that count by being omitted from its premise. ∎
+

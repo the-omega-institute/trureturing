@@ -1,0 +1,43 @@
+**Example 6.3 (the supplied fair matched-endpoint installation).** One
+concrete source-specified instance is the fair matched-endpoint table
+of [SEVEN, (2.4), (3.4)], installed by the preceding PAID product program:
+
+$$
+X=Y=\{a,b\},\quad A=B=I_2,\quad
+\pi=\tau=(1/2,1/2),\quad u=v=(1/3,2/5).
+\tag{6.7}
+$$
+
+This application takes that single complete rational specification as
+its already supplied input. Its authenticated mathematical identity is
+(6.7) together with the initialization and full product program just
+given; there is no assertion that an external physical installation has
+been measured. The copied own laws are exactly $P_{s,a},P_{s,b}$, so both
+full boxes, hence all five local boxes, hold. Direct evaluation gives
+
+$$
+V=0,\qquad \eta=0,\qquad
+L_\Pi=\rho_p+\delta_3/2
+ =\frac{468557036828959}{9555148800000000}.
+\tag{6.8}
+$$
+
+This is equality in (2.1), for every permitted positive-three-depth prior.
+It is not a zero-excess witness: its p depth-3 full risk is at least
+(6.8), strictly above $\rho_p$. The example is a supplied boundary
+consumer, not new table construction or new minimax content.
+
+Under the original exact fair-bit service convention, an exact finite
+representation has the label latch use one
+fair bit. An alpha emission of $1/3$ uses two-bit blocks, rejecting value
+3 and accepting alpha at value 0; an emission of $2/5$ uses three-bit
+blocks, rejecting values 5, 6, 7 and accepting alpha at values 0, 1.
+The independent fresh emission bits are private service bits, not source
+Reads. Each service has finitely many prefix states but unbounded possible
+retries, and its internal states and cursor are charged. Before the latch,
+one fair service bit generates each synthetic letter. Both acquired
+updates in (6.7) retain the label, until completion clears it. This fully
+specifies the rational private service on top of the unchanged original
+control and record program. There is no worst-case random-bit or runtime
+bound from its finite state set.
+

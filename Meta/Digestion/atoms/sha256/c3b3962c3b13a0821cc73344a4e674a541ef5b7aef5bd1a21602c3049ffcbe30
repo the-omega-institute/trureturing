@@ -1,0 +1,19 @@
+**Definition 3.2 (the two typed languages).** The retained pair is
+$\sigma=(\mu,w)$, where $w$ is the entire actually imported history frame.
+If $\mu=0$, call the unchanged legacy parser and ARC §8 binder: successful
+frames are exactly its $111\,U(\ell)\,U(m)U(z)U(s)$ with
+$\ell=|U(m)U(z)U(s)|$ and its existing occurrence/phase/range checks.
+All complete old malformed tags/payloads and old range/occurrence failures
+retain their first-detecting legacy reason and raw-frame interpretation.
+
+If $\mu=1$, require $w=111\,U(\ell)P$, exact $\ell$ payload bits,
+and exhaustion. Parse one literal payload bit. On zero use ReadUnary
+once and require exhaustion: $P=0U(t)$. On one use ReadUnary twice and
+require exhaustion: $P=1U(m)U(t)$. Every unary must terminate. A missing
+field, extra suffix, wrong tag or length mismatch is MalformedRecovery.
+A finite invalid range is binding/range failure; an absent authentic
+source occurrence is NoOccurrence. An unfinished physical length or payload
+remains actual ingress, without an invented completed rejection. No source
+frame bit serves as HistoryMode, and no first history-header bit is removed
+to supply it.
+

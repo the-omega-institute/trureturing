@@ -1,0 +1,19 @@
+**Definition 1.1 (Complete open-path objective).** For integers $n\ge1$, let
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}.
+$$
+
+The graph $\Gamma_n$ contains every vertex of $B_n$ and every legal
+Hamming-one edge. To test an insertion, take $w_0=w_{n+1}=0$; the first and
+last coordinates are not joined. On the entire probability simplex put
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{w,v\}\in E(\Gamma_n)}h(\mu_w,\mu_v),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+Zero masses do not remove vertices or edges. All-zero words, legal endpoint
+ones and all legal edges across any grouping seam remain in this domain.
+

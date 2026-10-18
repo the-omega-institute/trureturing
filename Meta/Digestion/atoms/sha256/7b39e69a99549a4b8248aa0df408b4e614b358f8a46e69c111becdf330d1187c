@@ -1,0 +1,86 @@
+**Lemma 10.2 (Differentiated associativity is incompatible with this loss).** The operation in (10.1) cannot satisfy (10.2) for the value of $s$ in Proposition 8.2.
+
+**Proof.** Put
+
+$$
+B_2=\phi''(0),\qquad D_3=\phi'''(0),\qquad
+\eta(x)=\partial_2H(x,0)=1-\frac{\phi'(x)}{A_1}.
+\tag{10.6}
+$$
+
+The last equality follows by differentiating
+
+$$
+\phi(H(x,y))=\phi(x)+\phi(y)-\phi(x+y)
+\tag{10.7}
+$$
+
+once in $y$ at zero, using $H(x,0)=0$. In particular $\eta(0)=0$, $\eta'(0)=-B_2/A_1$ and $\eta''(0)=-D_3/A_1$.
+
+Differentiating associativity (10.2) in its third variable at zero gives
+
+$$
+\eta(H(x,y))=\eta(x)\eta(y).
+\tag{10.8}
+$$
+
+Twice differentiating (10.7) in $y$ at zero gives
+
+$$
+A_1H_{yy}(x,0)=B_2\bigl(1-\eta(x)^2\bigr)-\phi''(x).
+\tag{10.9}
+$$
+
+The same differentiation of (10.8) gives
+
+$$
+-\frac{D_3}{A_1}\eta(x)^2-\frac{B_2}{A_1}H_{yy}(x,0)
+=-\frac{D_3}{A_1}\eta(x).
+\tag{10.10}
+$$
+
+The required division by $B_2$ is legitimate. To verify it and the contradiction explicitly, write
+
+$$
+F(t)=\log(t^{-1/2}-1),\qquad z=\sqrt t\in(0,1).
+$$
+
+Ordinary differentiation yields
+
+$$
+F'(t)=-\frac1{2z^2(1-z)},\qquad
+F''(t)=\frac{2-3z}{4z^4(1-z)^2}.
+\tag{10.11}
+$$
+
+Since $\phi(x)=F(s+x)-F(s)$ and $\sqrt s<2/3$ by (8.8), one has $B_2=F''(s)>0$. Thus (10.10) becomes
+
+$$
+H_{yy}(x,0)=\frac{D_3}{B_2}\bigl(\eta(x)-\eta(x)^2\bigr).
+\tag{10.12}
+$$
+
+Substitute in (10.9):
+
+$$
+\phi''(x)=B_2-\frac{A_1D_3}{B_2}\eta(x)
++\left(\frac{A_1D_3}{B_2}-B_2\right)\eta(x)^2.
+\tag{10.13}
+$$
+
+Because $\eta(x)$ is affine in $\phi'(x)$, this asserts that $\phi''$ is a polynomial of degree at most two in $\phi'$, with constant coefficients. No nonzero assumption on $D_3$ was used. Hence on an open interval about $s$ there would be constants $a_0,a_1,a_2$ with
+
+$$
+F''(t)=a_0+a_1F'(t)+a_2F'(t)^2.
+\tag{10.14}
+$$
+
+Insert (10.11) and multiply by the positive denominator $4z^4(1-z)^2$. On an open interval in $z$ this gives the polynomial identity
+
+$$
+2-3z=4a_0z^4(1-z)^2-2a_1z^2(1-z)+a_2.
+\tag{10.15}
+$$
+
+Equality on an open interval forces equality of coefficients. The degree-six coefficient first forces $a_0=0$; the degree-three coefficient then forces $a_1=0$. The remaining constant $a_2$ cannot equal $2-3z$ on an interval. This contradiction proves the lemma. $\square$
+

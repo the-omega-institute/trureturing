@@ -1,0 +1,35 @@
+**Definition 2.1 (original path premises).** The original source uses a base
+$b=(X,Y,Z)$, $r=1-Z$, with $0<Z<1$ and $0<X,Y<r$. Its permitted height
+interval, populations and real phase coefficients are
+
+$$
+\begin{aligned}
+J_b&=(\max(0,X+Y-r),\min(X,Y)),\\
+\pi_b(k)&=(r-X-Y+k,X-k,Z,Y-k,k),\\
+\mathbf d&=(1,-1,0,-1,1),\\
+I_b(k)&=\sum_{i\in\{0,1,3,4\}}\pi_b(k)_i^{-1},
+&w_b(k)_i&=\frac{\mathbf d_i}{\pi_b(k)_i I_b(k)}.
+\end{aligned}
+\tag{ZG.2}
+$$
+
+An original history has finite duration $T\geq0$, continuous real coordinates
+$k,\chi$, strict $k(t)\in J_b$ and finite variation of $\chi$. The regularity
+permission is either absolute continuity of both coordinates, or the original
+finite-piecewise-$C^1$ alternative whose derivative rates extend continuously
+on each closed piece. For the common preparation lift $\theta$, its normalized
+live vector has coordinates
+
+$$
+\psi_i(t)=\sqrt{\pi_b(k(t))_i}\,
+ \exp\!\left(-i\left[\theta_i+
+ \int_0^t w_b(k(s))_i\chi'(s)\,ds\right]\right).
+\tag{ZG.3}
+$$
+
+Real phase lifts and signed integer winding
+$\chi(T)-\chi(0)=2\pi m$ are retained. Literal chronological composition does
+not read or reset that lift. These source permissions are credited as in
+CG2; selecting the following catalogue does not modify the original class.
+Original failure index $4$ always names mode $13$.
+

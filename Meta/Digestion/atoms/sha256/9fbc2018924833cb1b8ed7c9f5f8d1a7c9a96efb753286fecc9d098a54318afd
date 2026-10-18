@@ -1,0 +1,71 @@
+**Theorem 27.2 (Actual product preparation and the full-entry bridge).** Every fixed batch in Definition 27.1 can be prepared serially with one five-dimensional source memory, at most five monitored applications per herald, and no success postselection. Averaging every waiting-time record preserves all prior retained flag marginals and prepares the next independent window. Its complete global-count datum has entries
+
+$$
+\mathsf Q_{\mathbf n}[\mathbf w,\mathbf v]
+=\mathbf1_{\sum_j|w_j|_1=\sum_j|v_j|_1}
+\prod_j\Omega_{n_j}[w_j,v_j].
+\tag{27.3}
+$$
+
+Every affine change of internal phases acts on every $\Omega_n$ by the same count rotation, so every $\mathsf Q_{\mathbf n}$ is affine invariant. The products and entries here require actual preparation, not inference of independence from marginals.
+
+Proof. Normalization gives $`S^*S=I-e_4e_4^*`$ and $`J^*J=e_4e_4^*`$ as in (23.11), so $V$ is an isometry and all the window densities have trace one. For any memory operator $M$, the first-herald subchannel after $a$ monitored zeros is, using the actual reset (23.3),
+
+$$
+\mathcal H_a(M)=JS^aM(S^*)^aJ^*
+=xx^*\langle e_{4-a},Me_{4-a}\rangle\quad(0\le a\le4),\qquad
+\sum_{a=0}^4\mathcal H_a(M)=xx^*\operatorname{Tr}M.
+\tag{27.4}
+$$
+
+Indeed $e_4^*S^a=e_{4-a}^*$; $S^5=0$ eliminates every no-herald path of length five. For a density the five mutually exclusive waiting-time probabilities sum to one. All are included, with no selection of an accepted waiting time, and every herald terminates in at most five applications almost surely, counting the tick.
+
+For retained flags $A$ possibly entangled with the memory $M$, expand $\eta_{AM}=\sum_{i,j}\eta_{ij}\otimes|e_i\rangle\langle e_j|$. The identity extension of (27.4) gives the exact replacement
+
+$$
+\left(\operatorname{id}_A\otimes\sum_a\mathcal H_a\right)(\eta_{AM})
+=\operatorname{Tr}_M\eta_{AM}\otimes xx^*.
+\tag{27.5}
+$$
+
+Applying the next $n$ coherent uses to this memory and tracing it gives $\operatorname{Tr}_M\eta_{AM}\otimes\Omega_n$. Iteration, starting with the first herald from any initial density, proves the batch product (27.1). It also applies after previous terminal measurements have changed the memory, conditional on their classical terminal transcript.
+
+If the new waiting time is retained in a classical register $D$, the actual state instead is
+
+$$
+\sum_{a=0}^4\eta_{4-a,4-a}\otimes xx^*\otimes|a\rangle\langle a|_D,
+\qquad \sum_a\eta_{4-a,4-a}=\operatorname{Tr}_M\eta_{AM}.
+\tag{27.6}
+$$
+
+These conditional old-flag operators can differ with $a$. Thus waiting-time records can correlate with old flags, even though averaging them gives (27.5). The defining terminal effects are $E_{\rm flags}\otimes I_D$ for all preparation records, with the final memory traced. Neither conditional independence from $D$ nor record-adaptive lengths follow. Keeping or disposing of those records has an apparatus cost.
+
+For the entry bridge, decompose an actual word of count $m$ as $w=0^{a_1}1\cdots0^{a_m}1\,0^t$ and let $A_k$ be the multiplicity of completed label $k$. Equations (25.13)–(25.14) give $K_wx=c^A S^t x$, where $c^A=\prod_kc_k^{A_k}$. Invalid completed labels give zero; tails beyond four give zero. For a second word $v$ of the same length, count $m'$ and tail $u$, with multiplicities $B$, retaining unequal counts in the actual memory trace gives
+
+$$
+\Omega_n[w,v]=c^A\overline{c^B}
+\sum_{\substack{k,l\in K\\k\ge t,\ l\ge u\\k-t=l-u}}c_k\overline{c_l},\qquad
+n=m+\sum_k kA_k+t=m'+\sum_k kB_k+u.
+\tag{27.7}
+$$
+
+The constraint is equality of the final memory coordinate $4-(k-t)$. Thus this extends the equal-count actual-tail formula (25.15), without an end-memory projection. Each summand has exponent $z=A+\mathbf e_k-B-\mathbf e_l$, satisfying
+
+$$
+\sum_jz_j=m-m',\qquad
+\sum_j jz_j=m'-m,
+$$
+
+because $k-l=t-u$. An affine change $\theta'_k=\theta_k+\lambda+\nu k$ therefore multiplies the entire entry by $e^{i(\lambda-\nu)(m-m')}$:
+
+$$
+\Omega_{n,\theta'}=U_n(\lambda-\nu)\Omega_{n,\theta}U_n(\lambda-\nu)^*.
+\tag{27.8}
+$$
+
+This is the same angle at every length, in agreement with the phase-dependent prepared-vector calculation (25.22). Constant changes of the branch representatives $S,J$ by $e^{i\alpha_0},e^{i\alpha_1}$ likewise give the common count angle $\alpha_1-\alpha_0$, after length-dependent scalar phases cancel. On a batch these changes are conjugations by $e^{itQ_{\rm tot}}$ and disappear under the global twirl.
+
+The entry formula (27.3) follows directly from the actual product and the diagonal total-count projectors. The marginal of $\mathsf Q_{\mathbf n}$ on window $j$ is $T_{n_j}$: in the common-angle integral the other conjugations disappear under partial trace. All permitted effects have the same expectations on $\rho$ and $\mathsf Q$, and arbitrary effects within the blocks determine every block. This is the usual $U(1)$ averaging principle of [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, equations (7)–(10), and §II.C](https://arxiv.org/html/quant-ph/0610030v3), applied to total renewal tick count. It is one common twirl of the tensor product, generally different from a tensor product of separately twirled windows.
+
+The orbit interpretation uses the existing supplied-family classification (24.7)–(24.9), as applied in Theorem 25.2 and Section 26. Here $H=4\ge2$, $S$ is one nilpotent shift block on $\mathbb C^5$, $J=xe_4^*$ has normalized rank-one range, and $c_4\ne0$. Their first four columns make the two Kraus operators independent; the pencil determinant is $u^4vc_4$, with singular lines of distinct ranks four and one. These are exactly the hypotheses of that classification, including when $c_3=0$. It identifies affine differences with averaged-channel and fixed-label instrument equivalence. No classification of arbitrary other realizations is required. The common-source limitation agrees with [Hidden Relations continuation, C-94.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) and [Mixed State Capacity and Certification, C-98.1 and C-100.1–C-100.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md): their actual product-source assumptions cannot be replaced by equal marginals. Their declared two-factor bottom embedding, swaps, purities and five-mode occupation measurement have a different carrier and charge from these flags. $\square$
+

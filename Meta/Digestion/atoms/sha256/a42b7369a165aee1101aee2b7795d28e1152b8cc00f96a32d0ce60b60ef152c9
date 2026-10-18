@@ -1,0 +1,50 @@
+**定理 8.2（下层唯一四环的条件性提升）。** 对每个 $n\ge6$，若下层 $S_{n-1}$ 的完整 $E$—$D$ 关联图有覆盖全部下层 bracelets 的连通选择，且其唯一环长四，则上层 Big-3 图有完整 Hamilton 圈。构造为命题 8.1 的不同影子提升，随后恢复一个核心 $\mathcal T$ 的八边圈。结论不是上层 $E$ 关联唯一四环的存在定理。
+
+证明：将下层唯一四环上的两个 $E$ 顶点分别指定到它们的两个不同公共 $D$ 邻居。以四环为根，对每个树枝上的 $E$ 顶点指定一个子 $D$ 邻居；它有 $n-3\ge3$ 个子邻居，因此总能选出，且所有指定影子不同。命题 8.1 给出上层核心的两个 $\mathcal T$ 开关和树枝。下面直接证明核心的修复，保留实际端点，不能从关联连通性推出最终单圈。
+
+重标核心的两个孤立标签为 $x,y$，其余非零标签依次写成 $A$，长 $n-3\ge3$。下层两个开关为 $(x,[y,A]),(y,[x,A])$，指定影子为 $[x,y,A],[y,x,A]$。设
+
+$$
+g=(0,y,A,x),\qquad h=(0,x,A,y),\qquad
+p=g(bc)^2=(A,0,y,x),\qquad q=h(bc)^2=(A,0,x,y).
+$$
+
+两个上层开关是 $\mathcal T_g,\mathcal T_h$；其支持处于四个互异的 $E$ 陪集中。它们仅在两个上层 bracelets $[0,x,y,A]$ 和 $[0,y,x,A]$ 有共同邻域，逐个插入相应孤立标签即可核对。
+
+第一个共享 bracelet 删去 $\mathcal T_g$ 的 $a$ 边 $(g\delta,ga\delta)$ 和 $\mathcal T_h$ 的 $b$ 边 $(q,qb)$；第二个交换两者角色，删去 $(p,pb)$ 和 $(h\delta,ha\delta)$。短剩余路径分别为
+
+$$
+g\delta\xrightarrow b gbc\xrightarrow a qb,\qquad
+h\delta\xrightarrow b hbc\xrightarrow a pb.
+$$
+
+例如 $g\delta=(0,\operatorname{reverse}(A),y,x)$、$gbc=(y,A,0,x)$、$qb=(x,0,\operatorname{reverse}(A),y)$，可直接核验两条边。每个 bracelet 的另一条剩余路径长 $2n-4$，端点分别为 $(ga\delta,q)$ 和 $(ha\delta,p)$。另外有 $g\delta\xrightarrow c p$、$h\delta\xrightarrow c q$。
+
+令 $O_g$ 为 $(abcb)^2$ 的八边圈。在执行两个 $\mathcal T$ 后，其四条 $b$ 边存在、两条 $a$ 边与两条 $c$ 边缺失，故是当前二因子的交替圈。它完全位于 $\mathcal T_g$ 的两个陪集中，与其他开关支持不交。由命题 5.1 反向使用，切换 $O_g$ 恰将 $\mathcal T_g$ 恢复为两个完整 $E$ 开关，保留 $\mathcal T_h$。
+
+暂删 $O_g$ 的四条现存 $b$ 边 $(g,gb),(ga,gab),(gabc,ga\delta),(gbc,g\delta)$。剩余核心的四条路径端点恰为
+
+$$
+(ga,ga\delta),\quad(gab,gb),\quad(g,gabc),\quad(gbc,g\delta).
+$$
+
+这是实际路径配对，推导如下：
+
+1. 第一条是影子的长链；$\mathcal T_h$ 在该影子星的唯一接触属于第一个共享 bracelet，它已被排除于此长链。
+2. 第二条是未共享的 $gD$ bracelet 在删去其 $a$ 边和所述两条 $b$ 边后的长补路径。
+3. 从 $g$ 沿第一个外层长链到 $pb$，逆走第二个共享 bracelet 的短路到 $h\delta$，沿 $c$ 到 $q$，再走第一个共享 bracelet 的长路；末边 $(gabc,ga\delta)$ 已删，故终止于 $gabc$。
+4. 从 $g\delta$ 沿 $c$ 到 $p$，沿第二个共享 bracelet 长路到 $ha\delta$，沿其影子长链到 $ha$，沿未共享的 $hD$ 长补路到 $h$，沿第二个外层长链到 $qb$，再沿 $a$ 到 $gbc$。
+
+这些片段内部不交，并覆盖核心全部顶点：共享 bracelets 分成上述长短两路，私有 bracelets 只属于一个核心开关，四个陪集支持也互异。在私有邻居保留完整末标签 $0$ 的星，只将相应片段扩为同端点的更长路径。原 $b$ 接线把四条路径合成两圈；修复后的 $a/c$ 接线给出唯一圈，明确次序为
+
+$$
+g\;—\;gabc\xrightarrow c gab\;—\;gb\xrightarrow c gbc\;—\;g\delta
+\xrightarrow a ga\delta\;—\;ga\xrightarrow a g,
+$$
+
+其中每个无标签长连接都是刚证明的那条完整剩余路径，最后的 $ga\xrightarrow a g$ 是实际闭合边。
+
+最后以修复后的核心为根，向外处理所有上层树枝开关。每个开关恰在已合并分量中切一条仍在的边，其余切边在独立未动子 bracelets 中。支持不交保持未来切边存在，所以每次把这些子圈接成一个圈；没有跨接两条核心路径的额外树枝。因此最终覆盖上层全部 $n!$ 顶点。等价地先做这些树枝只会伸长四条同端点路径，修复仍成立。
+
+**不可直接迭代的边界。** 恢复一个 $\mathcal T$ 为两个完整 $E$ 开关，使最终关联图顶点数加一、边数加二，环秩由一变二。单圈结论来自实际端点，而非树判据。定理 8.2 未给出下一阶所需的 $E$ 唯一四环输入；只反复套用此条件定理不能证明全 $n$ 猜想。接下来缺少能再次提升的混合开关或完整端点状态不变量，或全阶下层 $E$ 唯一四环的独立构造。
+

@@ -1,0 +1,33 @@
+**定理 49.1（A binary forced-parent surcharge at every odd order at least five）。** Let $k=m\ge5$ be odd and $1\le u\le(k-3)/2$. Choose $A\ne B$, any label $R$ and any independent bottom label. On both free-value fibres define the full INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+A,&s=0,\ 0\le j\le2u,\\
+B,&s=0,\ 2u<j\le k,\\
+R,&1\le s<k.
+\end{cases}
+\tag{49.1}
+$$
+
+Allow $R=A$ or $R=B$. Then the supplied critical adaptive benchmark and the new GLOBAL preset fee satisfy
+
+$$
+C_{\rm ad}(f)=2,\qquad C_{\rm pre}(f)=3.
+\tag{49.2}
+$$
+
+One optimal preset stream is the literal three-block word
+
+$$
+1^{k-1}0\ \bigm|\ 01\,0^{k-2}\ \bigm|\
+000(10)^u0^{k-3-2u}.
+\tag{49.3}
+$$
+
+Proof. Since both low labels occur, at some actual phase the label at INITIAL tail zero differs from $R$. Any $a<k-1$ leaves tails zero and one surviving together at that phase, so it is ineligible. The unique eligible cut is $a=k-1$, and its unique critical parent is $1^{k-1}0$, with actual mask $E=\{0,k-1\}$. Its endpoint child has two different singleton labels, with $\Sigma_1(E)=\{1\}$. The complementary child has $2u$ phases labelled $A$ and $k-1-2u$ labelled $B$, both positive even numbers, so its one-dimensional spectrum is $\{0\}$. Theorem 48.1 gives preset fee three and rules out every two-block common stream, including attempted rejection and early stopping.
+
+The root rejects exactly positive INITIAL tails, returning their original $R$ at fee one. At paid index one, the isolated pulse at position one in the second word has actual mask $\{0,1\}$ because $u_1=k\equiv-1\pmod T$. It separates the two endpoint phases, and also identifies phase one as $A$ on the complementary child. These archives may stop at fee two. At index two, the pulses at positions $3,5,\ldots,2u+1$ in the third word give the disjoint pairs $\{1,2\},\{3,4\},\ldots,\{2u-1,2u\}$, hence mask $\{1,\ldots,2u\}$. On the remaining complementary archive this separates the remaining $A$ phases from every $B$ phase. Both suffix words begin zero and have isolated ones; all seams are safe. Their lengths are exactly $k$, and all zeros are paid within those blocks. This proves literal attainment with worst fee three.
+
+For adaptive control, [CR46, Theorems 3.2 and 4.1] already give one additional block on each of these actual two-label children, from this same parent's tail zero. They give total fee two. The unique root leaves each child unresolved, so fee one is impossible. This is a comparison with the existing adaptive law, not a new arbitrary adaptive solver. The independent high and bottom labels, including their allowed coincidences, do not change either lower bound. ∎
+

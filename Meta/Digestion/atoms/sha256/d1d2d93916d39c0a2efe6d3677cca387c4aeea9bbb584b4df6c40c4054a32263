@@ -1,0 +1,22 @@
+**Theorem 3.3 (Gram defect is a Laplacian).** For every replica datum, $I-Q^\top Q=L_\Gamma$. Stance: suspected-novel (see §9).
+
+**Proof.** For permutations $g,h$ of $R$, $(M_g^\top M_h)_{r,s}=\sum_u[u=g(r)][u=h(s)]=[s=h^{-1}g(r)]$, so $M_g^\top M_h=M_{h^{-1}g}^\top$ and $M_h^\top M_g=M_{h^{-1}g}$. Hence
+
+$$
+Q^\top Q=\sum_kx_k^2I+\sum_{k<l}x_kx_l\big(M_{\pi_{kl}}^\top+M_{\pi_{kl}}\big),\qquad \pi_{kl}=g_l^{-1}g_k .
+$$
+
+Since $1=(\sum_kx_k)^2=\sum_kx_k^2+2\sum_{k<l}x_kx_l$,
+
+$$
+I-Q^\top Q=\sum_{k<l}x_kx_l\big(2I-M_{\pi_{kl}}-M_{\pi_{kl}}^\top\big).
+$$
+
+For fixed $k<l$ and $\pi=\pi_{kl}$, the edges $(r,k,l)$, $r\in R$, contribute
+
+$$
+\sum_r(\mathbf 1_r-\mathbf 1_{\pi r})(\mathbf 1_r-\mathbf 1_{\pi r})^\top=2I-\sum_r\mathbf 1_r\mathbf 1_{\pi r}^\top-\sum_r\mathbf 1_{\pi r}\mathbf 1_r^\top ,
+$$
+
+because $r\mapsto\pi r$ is a bijection. The $(r,s)$ entry of $\sum_r\mathbf 1_r\mathbf 1_{\pi r}^\top$ is $[s=\pi r]=(M_\pi^\top)_{r,s}$, and the last sum is its transpose. Multiplying by $x_kx_l$ and summing over $k<l$ gives $L_\Gamma$. The identity is algebraic, so loops ($\pi r=r$) need no separate treatment: both sides have a zero contribution there. ∎
+

@@ -1,0 +1,14 @@
+**Corollary 82.6 (lost relation and the actual §81.5 gap).** For $m_\psi(\xi)>0$, define
+$$
+\rho_\psi(w\mid\xi)=\frac{|\psi(\xi,w)|^2}{m_\psi(\xi)},
+$$
+and choose any probability density on fibres where $m_\psi=0$. Then
+$$
+V[\psi]=\int_{\mathbb R^3}m_\psi(\xi)
+ \left(\int_{\mathbb R}\Gamma(\xi,w)\rho_\psi(w\mid\xi)dw\right)d\xi.
+\tag{82.16}
+$$
+The marginal (82.10) integrates against the unweighted Haar fibre measure $dw$; it is not this state-dependent conditional expectation and cannot replace it. In particular $\Gamma$ cannot be $\Gamma_3\circ\pi$: at $c=(0,0,0,w_0)$, $\Gamma(c)$ is finite while $\Gamma_3(\pi(c))=\Gamma_3(0)$ is singular. Equivalently, $\pi(c)=\pi(\delta_2c)=0$ but $\Gamma(\delta_2c)=2^{-3}\Gamma(c)\ne\Gamma(c)$, so the field is not constant on fibres.
+
+This is the missing “same map for field, potential and kinetic law” relation required by §81.5: projected heat data and one kinetic scalar do not recover the interaction expectation. It does not imply that every restricted state class needs global scalar-field descent. A separately declared sufficient conditional statistic, or a restriction making that statistic fixed, could close a different contract, but native admissibility of the states, the legal state class and the source-map are still unproved.
+

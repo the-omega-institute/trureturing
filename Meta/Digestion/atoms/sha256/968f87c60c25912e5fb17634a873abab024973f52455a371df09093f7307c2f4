@@ -1,0 +1,38 @@
+**Theorem 8.4 (the selected mutual-recovery content).** Under the paid
+handoff, source-continuity and authentication assumptions, the
+constructions realize
+
+$$
+(E(t),D,p,\text{at most one actual native reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow
+\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{FMR.46}
+$$
+
+Proof. The first arrow is the native cover reader, whose query is
+chosen only after $p$ and before any supplied $k$. The two inverse
+maps are the reused factor/trajectory correspondence in Convention
+1.4. Its first branch count and alpha-stage flag determine the
+finite predictive pair, and the pair reconstructs all counts.
+$\square$
+
+The inverse arrow recovers that selected temporal factor, not the
+whole source, the complete retained code, an earlier hidden history,
+or physical spacetime. Initially absent targets are included through
+their actual blocking leaves, without a free operation at a born
+address. The factor alone cannot certify authentic $k$ or continuity
+of the register. Those remain the original independent services.
+
+**Open problem 8.5 (sharp evaluation and the general finite optimum).**
+Determine the numerical value of $\lambda$ in (FMR.21), or obtain
+matching constructive and all-competitor lower bounds. Also determine
+$m_D$ for general finite $D$, including the still unresolved value
+$m_3\in\{3,4\}$. The fractional seed rate is an upper construction,
+not a claimed optimum. A missing lower structure must control every
+jointly admissible correlated fiber, including target-dependent
+off-target queries, rather than multiplying individually attainable
+child optima. An improved upper would require another effective
+whole-family native construction. Neither obligation is removed by
+existence of the limit or by a generic finite cover formulation.
+

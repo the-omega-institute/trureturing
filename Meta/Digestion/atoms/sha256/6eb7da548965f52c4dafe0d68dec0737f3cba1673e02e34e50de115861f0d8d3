@@ -1,0 +1,103 @@
+**Convention 10.1 (one original graph and the equality interfaces).**
+Retain the entire model and both simultaneous caps of Sections 1–2 and
+Convention 7.1. In particular there is one stationary finite installed
+graph, with its current state as its sole changing configuration,
+correctness and actual termination on every input, and costs at most
+eight queries and the original distinct-cost sum $`W`$ on each same
+run. All installed states count. Adaptive orders, multiple histories,
+sharing, repeated queries, paid certified traffic and syntactic cycles
+with actual termination remain allowed.
+
+Let $`\mathcal S_p`$ be the family of supports of actual live histories
+at cell $`p`$, and put $`a_p=|\mathcal S_p|`$. The supplied incidence
+interface gives $`1\le a_p\le b_p`$ and one support for each fixed
+cell and host. In addition to $`\mathsf a,\mathsf b,\mathsf c,\mathsf d`$
+from (16), write
+
+$$
+\begin{gathered}
+\mathsf P=(1,2),\quad \mathsf R=(2,1),\quad
+\mathsf M=(2,2),\quad \mathsf N=(2,3),\\
+\mathsf U=(2,4),\quad \mathsf V_6=(3,3),\qquad
+Z_j=(0,j),\quad O_j=(j,0).
+\end{gathered}
+\tag{40}
+$$
+
+These cell names are unrelated to native row classes, coordinate names
+or coordinate costs. Retain
+$`\ell=e_{\mathsf a}+e_{\mathsf b}`$ and
+$`r=e_{\mathsf c}+e_{\mathsf d}`$. For a specified long pool let
+$`A`$ count shared states with an axis endpoint and $`N_{\rm sh}`$
+count those with neither endpoint on an axis. Lemma 7.2 gives
+
+$$
+D_B=A+N_{\rm sh},\qquad
+N_{\rm sh}\le 2+\min(\ell,r).
+\tag{41}
+$$
+
+Its at-most-two-cell statement is essential: a state cannot be counted
+as a non-axis sharing state and also as a sharing state with an
+additional axis endpoint.
+
+For clarity, the full possible partner lists for the five participating
+axis cells, before restricting to a particular pool, are
+
+| Axis cell | All possible distinct partner cells |
+| --- | --- |
+| $`Z_2`$ | $`O_2,O_3`$ |
+| $`Z_3`$ | $`O_2,\mathsf R,O_3,\mathsf c`$ |
+| $`Z_4`$ | $`O_2,\mathsf R,\mathsf M,O_3,\mathsf c,\mathsf d`$ |
+| $`O_2`$ | $`Z_2,Z_3,Z_4`$ |
+| $`O_3`$ | $`Z_2,Z_3,Z_4,\mathsf P,\mathsf a,\mathsf b`$ |
+
+Indeed, a partner of $`Z_j`$ has hits two or three and zeros at most
+$`j-2`$; a partner of $`O_2`$ has zero hits and at least two zeros;
+a partner of $`O_3`$ has hits zero or one and at least two zeros.
+Together with the rectangle bounds these give exactly the displayed
+lists. With no axis endpoint the only pairs are
+$`\mathsf a\mathsf c,\mathsf b\mathsf c,\mathsf b\mathsf d`$,
+as credited in Lemma 7.2.
+
+The following table gives both count children of every candidate pair.
+An entry $`\mathsf C_0`$ means that this occurrence has reached five
+zeros, and $`\mathsf C_1`$ means that it has reached four ones.
+Neither symbol specifies a terminal or deletes any paid continuation.
+When both entries in a child column are live cells, their actual
+occurrences have the same fixed successor of the shared parent state,
+by (15).
+
+| Candidate pair, in displayed order | Zero children | One children |
+| --- | --- | --- |
+| $`Z_2,O_2`$ | $`Z_3,\mathsf R`$ | $`\mathsf P,O_3`$ |
+| $`Z_2,O_3`$ | $`Z_3,\mathsf c`$ | $`\mathsf P,\mathsf C_1`$ |
+| $`Z_3,O_2`$ | $`Z_4,\mathsf R`$ | $`\mathsf a,O_3`$ |
+| $`Z_3,O_3`$ | $`Z_4,\mathsf c`$ | $`\mathsf a,\mathsf C_1`$ |
+| $`Z_4,O_2`$ | $`\mathsf C_0,\mathsf R`$ | $`\mathsf b,O_3`$ |
+| $`Z_4,O_3`$ | $`\mathsf C_0,\mathsf c`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`Z_3,\mathsf R`$ | $`Z_4,\mathsf M`$ | $`\mathsf a,\mathsf c`$ |
+| $`Z_3,\mathsf c`$ | $`Z_4,\mathsf d`$ | $`\mathsf a,\mathsf C_1`$ |
+| $`Z_4,\mathsf R`$ | $`\mathsf C_0,\mathsf M`$ | $`\mathsf b,\mathsf c`$ |
+| $`Z_4,\mathsf M`$ | $`\mathsf C_0,\mathsf N`$ | $`\mathsf b,\mathsf d`$ |
+| $`Z_4,\mathsf c`$ | $`\mathsf C_0,\mathsf d`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`Z_4,\mathsf d`$ | $`\mathsf C_0,\mathsf V_6`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`O_3,\mathsf P`$ | $`\mathsf c,\mathsf a`$ | $`\mathsf C_1,\mathsf M`$ |
+| $`O_3,\mathsf a`$ | $`\mathsf c,\mathsf b`$ | $`\mathsf C_1,\mathsf N`$ |
+| $`O_3,\mathsf b`$ | $`\mathsf c,\mathsf C_0`$ | $`\mathsf C_1,\mathsf U`$ |
+| $`\mathsf a,\mathsf c`$ | $`\mathsf b,\mathsf d`$ | $`\mathsf N,\mathsf C_1`$ |
+| $`\mathsf b,\mathsf c`$ | $`\mathsf C_0,\mathsf d`$ | $`\mathsf U,\mathsf C_1`$ |
+| $`\mathsf b,\mathsf d`$ | $`\mathsf C_0,\mathsf V_6`$ | $`\mathsf U,\mathsf C_1`$ |
+
+The tables are necessary implications for actual occurrences, not
+realizations of abstract pairs. Each live child used below is separately
+realized by fixing the fresh queried bit of its own parent history and
+completing that exposed assignment. Two different parent histories need
+not have compatible assignments or one common completing input.
+
+Theorem 9.1 and Corollary 9.2 supply the already proved lower bound
+nineteen and its necessary equality alternatives (35)–(36). They are
+used only at that stated scope. In particular a nineteen-state
+competitor has $`D_B=E_B+1`$ in its sole long pool,
+$`E_{\rm cut}=u=0`$, and one of the two displayed cut lists.
+

@@ -1,0 +1,64 @@
+**Convention 1.4 (Passive real frame).** Use QWS equations (1.4)–(1.7):
+
+$$
+\begin{gathered}
+r=\sqrt{17},\qquad D=\operatorname{diag}(1,i,i,i,1),\qquad
+A=-iD^\dagger KD,\qquad O(t)=e^{tA}=D^\dagger U(t)D,\\
+B=-A^2,\qquad \mu_\pm=(5\pm r)/2,\qquad \omega_\pm=\sqrt{\mu_\pm},\\
+R_\pm=\frac{B(B-\mu_\mp I)}{\mu_\pm(\mu_\pm-\mu_\mp)},\qquad
+R_0=I-R_+-R_-=dd^T,\qquad d=(e_2-e_5)/\sqrt2,\\
+W_\pm=AR_\pm/\omega_\pm,\qquad
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\qquad
+w_\pm(\alpha)=\cos\alpha\,u_\pm+\sin\alpha\,W_\pm u_\pm.
+\end{gathered}
+\tag{1.4}
+$$
+
+Sector order is $(0,+,-)$ with dimensions $(d_0,d_+,d_-)=(1,2,2)$.
+In the reordered coordinates $L=(N,25)$ and $V=(2,3,5)$, direct
+evaluation of (1.1) gives
+
+$$
+A=\begin{pmatrix}0&C\\-C^T&0\end{pmatrix},\qquad
+C=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+CC^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+\tag{1.5}
+$$
+
+The last matrix has characteristic polynomial $x^2-5x+2$.
+Consequently (1.4) gives mutually orthogonal projections of the stated
+ranks, and $u_\pm,W_\pm u_\pm$ are orthonormal plane bases. The
+explicit matrices needed for every coefficient calculation are
+
+$$
+\begin{aligned}
+R_+|_L&=\begin{pmatrix}(r+1)/(2r)&2/r\\2/r&(r-1)/(2r)\end{pmatrix},\\
+R_+|_V&=\begin{pmatrix}
+(r+3)/(4r)&1/r&(r+3)/(4r)\\
+1/r&(r-3)/(2r)&1/r\\
+(r+3)/(4r)&1/r&(r+3)/(4r)
+\end{pmatrix},\\
+R_0|_L&=0,\qquad
+R_0|_V=\frac12\begin{pmatrix}1&0&-1\\0&0&0\\-1&0&1\end{pmatrix},
+\qquad R_-=I-R_0-R_+.
+\end{aligned}
+\tag{1.6}
+$$
+
+All cross blocks vanish. Define
+
+$$
+\begin{gathered}
+G(\alpha,\beta)=R_0+\cos\alpha R_++\sin\alpha W_+
+                  +\cos\beta R_-+\sin\beta W_-,\\
+\mathsf J=\operatorname{diag}(1,-1,-1,-1,1),\qquad
+Q_J(t)=O(t)^T\Pi_JO(t),\qquad \Pi_J=\sum_{s\in J}\Pi_s.
+\end{gathered}
+\tag{1.7}
+$$
+
+Then $O(t)=G(\omega_+t,\omega_-t)$ and
+$\mathsf J A\mathsf J=-A$. The two mathematical angles and passive
+frame are not extra future controls. Transposes refer to this frame;
+a map dagger denotes its trace-pairing adjoint.
+

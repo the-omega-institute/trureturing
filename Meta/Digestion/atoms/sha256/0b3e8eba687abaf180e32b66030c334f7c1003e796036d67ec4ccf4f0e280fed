@@ -1,0 +1,34 @@
+**定理 234.2（Exact full hull support）。** For every $L\ge m\ge4$,
+
+$$
+\sigma_{H_L}(q_m^L)=m-3.
+\tag{234.2}
+$$
+
+证明。 Write $d=d_m$, $b=b_m$. The quotient prefix sums and
+terminal difference are
+
+$$
+S_k=(k-1)d-m+1\ (3\le k\le m),\qquad
+S_k=S_m\ (k>m),\qquad \kappa=2d+m-2.
+$$
+
+The complete hull readings 229.3 at $o,p$ are both $-b$;
+for $3\le k\le m$ they are
+
+$$
+F(u_k)=m-2-\frac{m-1}{k-1},\qquad
+F(v_k)=-\frac3{k+1}.
+$$
+
+The first sequence increases to $m-3$ at $k=m$. Beyond $m$,
+$S_m>0$ is constant, so the $u_k$ readings decrease. The
+successive differences of the $v_k$ readings are
+$-3K/((k+1)(k+2))<0$. All vertices have therefore been checked,
+and $u_m$ attains the claimed maximum. $\square$
+
+Thus for $m\ge5$, $V=Y_m^L$ and $V=0$ each fail the unit-budget
+test for these inputs, while the actual score $V=Z_m^L$ has zero cost
+and zero residual. These are diagnostics of two choices of
+certificate. They do not obstruct the unrestricted certificate.
+

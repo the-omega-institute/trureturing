@@ -1,0 +1,13 @@
+## 445. 严格 Euler 库存与 Fibonacci 索引的条件相容性
+
+上一节的接触链与 Euler 库存是两条不同的来源假设。
+[严格库存前向窗口](../../../Blueprint/D5/S3/Arith/Robin/EulerLayerPhaseSeparation.md)
+给出正整数 $U$ 的分层整除结论，而 Fibonacci 入口秩性质给出
+
+$$
+q\mid F_m\quad\Longleftrightarrow\quad z(q)\mid m,
+$$
+
+其中 $q$ 为素数、$z(q)$ 是它的最小正 Fibonacci 零指标。把两者放在同一个
+$U=F_m$ 假设下，可以得到一个新的接口，但不能把它误读成无条件的 FIB 来源定理。
+

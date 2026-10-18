@@ -1,0 +1,26 @@
+**Definition 18.2 (the finite one-block mass).** For a nonzero
+nonnegative weight $w$ on the entire $S_d$, put
+
+$$
+\ell_d(w)=A_1(w)
+ =\max_{\Theta\text{ complete on one actual block}}
+       \sum_{x\in C_\Theta}w(x).
+\tag{COK.83}
+$$
+
+Here every target in $W_d$ is prescribed, constants lie in its
+attained $G_q$, and a nonconstant target uses a total decoder of
+one actual own-coordinate reply. This is the $n=1$ instance of
+(COK.10), not a new pressure definition. The finite menu attains
+the maximum; a constant singleton template shows $\ell_d(w)>0$.
+In particular
+
+$$
+0<\ell_d(w)\le\beta_d(w)\le\Omega_d(w).
+\tag{COK.84}
+$$
+
+For rational $w$, $\ell_d(w)$ is rational and exactly computable
+by finite enumeration of these complete templates and their actual
+states. No arbitrary-size cutoff for $\beta_d$ is involved.
+

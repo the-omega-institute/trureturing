@@ -1,0 +1,21 @@
+**Proposition 4.3 (distinctions from image infinitude and separate
+unboundedness).** The all-depth question is different from each of the
+following already decidable or weaker questions.
+
+- The image of $\langle\alpha,z\rangle$, with $z$ unrestricted, is
+  infinite, but its minimum leaf depth is always one.
+- On $\Phi(x,y)=(x=\alpha\lor y=\alpha)$, each coordinate separately
+  has unbounded minimum leaf depth, but $\min(\mu(x),\mu(y))=0$
+  on every solution.
+- On $\Phi(x,y)=(x=\alpha)$ with output tuple $(x,y)$, a barrier of
+  zero bounds the tuple minimum while the size and minimum leaf depth
+  of $y$ are unbounded.
+
+Proof. Pair injectivity gives the infinite image in the first example,
+and (NLC.2) gives depth one. In the second example use
+$(T_{2h+2},\alpha)$ or $(\alpha,T_{2h+2})$ for the separate coordinates;
+Lemma 3.1 gives their unbounded depths, while one coordinate is always
+a leaf. The same atomic sequence proves the third assertion. These
+examples separate the quantifiers of Theorem 4.1; they introduce no
+alternative source interface or recovery task. $\square$
+

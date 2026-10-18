@@ -1,0 +1,31 @@
+**定理 17.3.1（复合收缩系数的次乘法）。**
+
+$$
+\boxed{
+\alpha(K_{1:n})
+\le
+\prod_{i=1}^n\alpha(K_i).
+}
+$$
+
+**证明。**
+
+对任意 $x,x'\in X_0$，反复应用定理 17.2.3：
+
+$$
+\begin{aligned}
+\operatorname{TV}\bigl(K_{1:n}(x,\cdot),K_{1:n}(x',\cdot)\bigr)
+&\le
+\alpha(K_n)
+\operatorname{TV}\bigl(K_{1:n-1}(x,\cdot),K_{1:n-1}(x',\cdot)\bigr)\\
+&\le
+\cdots\\
+&\le
+\prod_{i=1}^n\alpha(K_i).
+\end{aligned}
+$$
+
+对 $x,x'$ 取最大值即得。证毕。
+
+<a id="claim-17-3-2"></a>
+

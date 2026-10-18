@@ -1,0 +1,28 @@
+### 96.3. Pairing convention and conic construction
+
+Shukla and Stoll, The Cassels-Tate pairing on 2-Selmer groups of elliptic curves, arXiv:2302.01640v1, section 3.2, equations (3.9)–(3.10), give the tangent-form product of Hilbert symbols. Theorem 5.6 identifies it with the Cassels–Tate pairing. Their introduction on printed page 2 explicitly places the rational Kummer image inside the image of 4-Selmer, which is the pairing kernel. The pairing is alternating, and rational torsion is in its radical, so it descends to the pure Selmer quotient. These assertions require no finiteness of Sha. See the [primary paper](https://arxiv.org/pdf/2302.01640). Section 79 uses the same convention and formula for two prime factors; the composite places are checked below.
+
+The primary paper uses a short cubic. The rational translation x=X−10D/3 gives roots −10D/3, −25D/3, 35D/3. Their differences, and the three Kummer coordinates x−e_i, agree with those of the original model with roots 0, −5D, 15D. Thus its tangent-form formula applies without a twist or isogeny. The multiplicative pairing sign is obtained from the additive Cassels–Tate value by (-1)^(2 value).
+
+The triple for lambda is (d,1,d). Its covering has conics
+
+ H1: z2^2-d z3^2=20de t^2,
+ H2: z1^2-z3^2=15e t^2,
+ H3: z2^2-d z1^2=5de t^2.
+
+Every conic is locally soluble because lambda is a Selmer class. The conic Hasse principle gives rational a,b with
+
+ a^2-d b^2=5de.
+
+Indeed a rational point on H3 cannot have t=0, since d>1 is squarefree and hence nonsquare; normalize t=1. The tangency points on H3 and H1 are (1,b,a) and (1,2a,2b), respectively. On H2 take (t,z1,z3)=(1,(15e+1)/2,(1-15e)/2). Put
+
+ A0=(15e+1)/2, B0=(1-15e)/2,
+ L2=A0 z1-B0 z3-15e t,
+ L3=a z2-d b z1-5de t.
+
+The triple for mu is (1,d,d), so the multiplicative pairing is
+
+ <lambda,mu>=product_w (L2(P_w)L3(P_w),d)_w.
+
+The first tangent factor is trivial. Dividing a conic equation, or multiplying a tangent form by a nonzero rational scalar, has no effect on this global product by Hilbert reciprocity. Local points are chosen away from the tangent zero loci.
+

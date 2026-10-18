@@ -1,0 +1,19 @@
+### 95.8. Verification boundary
+
+The parameter, two exceptional source points and their original equations
+are checked directly over the degree-sixteen characteristic-zero field.
+The complete source, original lift and Theta identities specialize from
+the earlier characteristic-zero identities through the explicitly
+stated torsion-free localizations. The finite residue calculations only
+certify the required units and rank lower bounds. The two distinct
+rank-upper identities are proved separately in (95.7) and (95.10).
+
+Every calculation is reconstructible from the source border construction,
+the original equations, the two displayed field points and the specified
+multiplication norms. In particular the two 361-dimensional norm matrices
+and the 190-dimensional mixed matrix require no external data file.
+Neither a twenty-point Theta-stable physical census nor an F8-unit
+assumption is made. All other parameter fibres, including remaining
+zeros of the finite guard, retain their previously stated status.
+
+

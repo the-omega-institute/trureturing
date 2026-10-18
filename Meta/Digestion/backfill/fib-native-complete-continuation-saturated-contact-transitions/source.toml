@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-saturated-contact-transitions"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_SATURATED_CONTACT_TRANSITIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,70 @@
+**Theorem 2.2 (scalar feasibility equivalence).** For $t>0$ and
+$0\le s<s_0$, $\mathfrak F_{s,\log(1+t)}$ is nonempty if and only if
+there is a probability measure $\lambda$ on the compact set
+
+$$
+\mathcal K_t=\{(x,v):0\le x\le U,\ 0\le v\le tc_*(x)\}
+\tag{WE.13}
+$$
+
+such that
+
+$$
+\int x\,d\lambda=1,\qquad\int v\,d\lambda=\mu,\qquad
+\int xv\,d\lambda=V,\qquad
+\int\sqrt x\,d\lambda\ge s/s_0.
+\tag{WE.14}
+$$
+
+At most five scalar atoms suffice for feasibility. This is a
+feasibility reduction, with no TV-preserving symmetrization assertion.
+
+Proof. Push the coefficient probability in Lemma 2.1 to
+$(x,v)=(z^2,\upsilon)$. Its support and moments are (WE.13)–(WE.14),
+by (WE.10)–(WE.11).
+
+Conversely first consider a finite law with atoms $(x_i,v_i)$ of
+weights $p_i>0$. For each atom actually generate four sign labels
+$(i,\sigma,\eta)$, setting
+
+$$
+\pi=p_i/4,\quad z=\sigma\sqrt{x_i},\quad
+w=\eta\sqrt{w_2(x_i)},\quad
+K=\sqrt\pi(s_0D+zT+wS),\quad N=\pi v_i nn^T,
+\quad r_{\rm report}=\sigma.
+\tag{WE.15}
+$$
+
+The independent signs kill all three live cross moments and the failure
+$12$ moment. The live Gram is $\operatorname{diag}(\delta,1,1)$.
+The failure diagonal sums are
+
+$$
+\frac{d^2}{h_2^2}\frac{\mu-\alpha V}{\beta}=m_1,\qquad
+\frac{b^2}{h_1^2}V=m_2.
+\tag{WE.16}
+$$
+
+Thus $\sum N=M$, capacity holds, and reports give contrast
+$s_0\int\sqrt x\,d\lambda\ge s$. Section 5 constructs the whole-fibre
+chronological decoders, common high pair and coherent counted
+complement for any such finite list, with all original errors and
+output identities. Axes cause no difficulty: a zero signed coordinate
+may simply keep its duplicate generated coin labels.
+
+For any general $\lambda$, the continuous map
+$(x,v)\mapsto(x,\sqrt x,v,xv)$ has compact image in $\mathbb R^4$.
+Every finite convex combination can be reduced to five points: an
+affine dependence among more points permits moving the weights along
+a nonzero dependence with sum zero until a weight vanishes, preserving
+the barycentre. Repeat. The set of combinations of at most five image
+points is compact, as the image of the product of the compact image
+with the closed five-weight simplex. Hence the convex hull is closed.
+Uniform approximation of the four continuous functions by simple laws
+places their integral vector in this hull. It therefore has an exact
+five-point representation, preserving also the contrast integral.
+Construction (WE.15) uses at most twenty low labels, plus two high and
+two fair complement labels. No general disintegration is used. At
+$t=0$, $\int v=\mu>0$ is impossible, consistently with the original
+class. $\square$
+

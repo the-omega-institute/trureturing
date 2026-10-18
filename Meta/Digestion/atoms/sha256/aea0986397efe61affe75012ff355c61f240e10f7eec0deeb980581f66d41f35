@@ -1,0 +1,28 @@
+**定理 32.4.1（IV 记录只切开合规层）。** 模型 $P,Q$ 的全部观测联合律 $(A,Y)\mid Z$ 相同：
+
+$$
+\begin{array}{c|cc}
+&Z=0&Z=1\\ \hline
+\Pr(A=1\mid Z)&1/3&2/3\\
+\mathbb E[Y\mid Z]&0&1/3
+\end{array}
+$$
+
+所以两模型的 Wald 比值都为 $1$；但
+
+$$
+\operatorname{ATE}(P)=\frac13,
+\qquad
+\operatorname{ATE}(Q)=0.
+$$
+
+**证明。**
+
+在 $Z=0$ 下，complier 取 $A=0,Y_0=0$，always-taker 取 $A=1,Y_1=0$，never-taker 取 $A=0,Y_0=0$；因此处理率为 $1/3$、结果均值为 $0$。在 $Z=1$ 下，complier 取 $A=1,Y_1=1$，always-taker 仍取 $A=1,Y_1=0$，never-taker 仍取 $A=0,Y_0=0$；处理率为 $2/3$、结果均值为 $1/3$。模型 $P,Q$ 只改变 always-taker 在 $A=0$ 时的未观测结果，所以全部观测联合律相同。
+
+模型 $P$ 中三层的处理效应分别为 $1,0,0$，故 ATE 为 $1/3$。模型 $Q$ 中三层的处理效应分别为 $1,-1,0$，三层平均为 $(1-1+0)/3=0$。两模型的 complier 效应都为 $1$，故 Wald 比值相同。证毕。
+
+这不是估计误差，而是响应类型的不可识别纤维：IV 数据把两个模型压在同一个观测点上，却没有规定 always-taker 的反事实 $Y_0$。
+
+<a id="section-32-5"></a>
+

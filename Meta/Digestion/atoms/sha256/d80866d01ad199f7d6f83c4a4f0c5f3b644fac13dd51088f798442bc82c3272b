@@ -1,0 +1,63 @@
+**Theorem 11.2 (signatures, execution cylinders and counting).** For
+all such competitors, every $e\in I_s$ satisfies
+
+$$
+|B_e|\le s^{b_e},\qquad
+s^N\le\sum_{e\in I_s}s^{b_e},\qquad
+\max_{e\in I_s} b_e\ge N-\log_s m.
+\tag{RRN.41}
+$$
+
+On every individual terminating preparation execution on $t_x$ with
+$e=E(t_x)$,
+
+$$
+T(x)\ge\max\{N-b_e,0\},\qquad
+A(x)\ge D\max\{N-b_e,0\}.
+\tag{RRN.42}
+$$
+
+For every integer $b\ge0$, the number of slice sources assigned menus
+of size at most $b$ obeys
+
+$$
+|\{x:b_{E(t_x)}\le b\}|\le m s^b.
+\tag{RRN.43}
+$$
+
+Proof. If $x,y\in B_e$ give the same reply at every word in $J_e$,
+then their reader executions have the same query and reply for every
+request: a query outside $J_e$ is slice-constant, or no query is made.
+Thus their final predictors agree for every request. At $p=a_i$ and
+subsequent count $k=0$, correctness gives the same constructor of
+$x_i$ and $y_i$. The constructor identifies the actual symbol in
+$Q_s$, so $x=y$. The reply-profile map on $B_e$ is injective. Lemma
+10.2 bounds each of its $b_e$ coordinates by $s$ values, proving the
+first inequality. Summing over the partition of $Q_s^N$ gives the
+second; $|I_s|\le m$ gives the third. Summing only fibers with
+$b_e\le b$ proves (RRN.43).
+
+For (RRN.42), fix one complete preparation execution. Let $r$ be the
+number of distinct slots touched by its nonconstant words from Lemma
+10.2. Keep the actual symbols in these $r$ slots fixed and vary every
+other slot freely. Every such input follows exactly the same
+preparation transcript, including termination and its complete exported
+name: induct on the executed actions, since each constant query has
+the same reply and each nonconstant executed query concerns one of the
+fixed slots. Hence this cylinder, of cardinality $s^{N-r}$, lies in
+$B_e$. Compare
+
+$$
+s^{N-r}\le |B_e|\le s^{b_e}.
+\tag{RRN.44}
+$$
+
+It follows that $r\ge N-b_e$. At least $r$ actual Reads, each of
+length at least $D$, were submitted. Constant queries, repeated slots
+and repeated words only increase the two charges. This proves the
+claimed bounds on this execution and therefore on every execution.
+For ternary slots a child test does not reveal the whole symbol; fixing
+that symbol is merely a sufficient condition for following the same
+transcript. No claim that every touched symbol was fully acquired is
+needed. $\square$
+

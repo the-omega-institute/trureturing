@@ -1,0 +1,71 @@
+### 454.4 原核的共同边界主项及解析符号
+
+取同一真实截止 \(N_x=\lceil8x\rceil\)。令
+\[
+q_\eta(v)=\tfrac12\log^2v+\gamma_1,\qquad
+k_2(u)=\int_u^{2u}\frac{q_\eta(v)}{v^2}dv.
+\]
+§453（DP.17）–（DP.19）的证明直接消费 §425.5。在这里对全部
+\(8x\le m\le9x\) 使用同一个 \(U=\log18\)，给
+\[
+\left|x\ell\mathscr D_x(m)-k_2(m/x)\right|
+\le\frac{\mathsf C_\beta(\log18)}{8\ell}
++\frac{\mathsf L_\beta(\log18)+D_{18}/2}{64x},
+\quad D_{18}=\log18+\log^218+2|\gamma_1|.
+\tag{BC.15}
+\]
+付款步骤仍是对 \(m\le n\le2m-1\) 的完整共同误差求和，
+再用 \( |[q_\eta(s/x)/s^2]'|\le D_{18}/s^3\) 支付单位纤维到积分的端点误差。
+这覆盖 \(m=N_x+1\)，其 \(m/x\to8\)，所以
+\[
+x\ell\mathscr D_x(N_x+1)\longrightarrow
+k_2(8)=\frac{1+\gamma_1+2L+L^2}{16}>0.
+\tag{BC.16}
+\]
+正性已由 §453 的解析 \(\gamma_1>-1/8\) 及 \(L>1/2\) 付款。
+既有 PNT 给 \(\ell Q_x^\mathrm{p}/x\to2\)。故定义
+\[
+C_{\rm tail}=2k_2(8)=\frac{1+\gamma_1+2L+L^2}{8},
+\qquad
+C_{\rm pair}=\frac{(1+\gamma_1)L}{2}+\frac{L^2}{4}-\frac{5L^3}{12}>0,
+\tag{BC.17}
+\]
+则（BC.13）–（BC.16）和 §453（DP.24）共同给
+\[
+\ell^2\mathscr T_x(N_x)\to-C_{\rm tail},\qquad
+\ell^2\mathscr H_x(N_x)\to C_{\rm head}:=C_{\rm tail}-C_{\rm pair}.
+\tag{BC.18}
+\]
+
+还须证明 \(C_{\rm head}>0\)，不能用近似数值判断符号。
+§453（DG.3）–（DG.5）的同一**绝对**梯形余项也给反向界
+\[
+\gamma_1\le L/4-L^2/2+(1-L)/32+1/(8e^3)
+<7/40-2/9+1/96+1/64=-61/2880<0.
+\tag{BC.19}
+\]
+这里严格界 \(2/3<L<7/10\)、\(e>2\) 均已在 §453 解析证明。
+由（BC.17）直接展开，
+\[
+C_{\rm head}=(1+\gamma_1)(1/8-L/2)
++L/4-L^2/8+5L^3/12.
+\]
+因为 \(1/8-L/2<0\)、\(1+\gamma_1<1\)，所以
+\[
+\boxed{C_{\rm head}>
+1/8-L/4-L^2/8+5L^3/12
+>1/8-7/40-49/800+10/81
+=791/64800>0.}
+\tag{BC.20}
+\]
+因此对于全部充分大实数 \(x\)，同一个实际面板满足
+\[
+\boxed{\mathscr H_x(\lceil8x\rceil)>0,\qquad
+\mathscr T_x(\lceil8x\rceil)<0,\qquad
+\mathscr H_x(\lceil8x\rceil)+\mathscr T_x(\lceil8x\rceil)
+=-\mathcal A_x<0.}
+\tag{BC.21}
+\]
+负尾的主项严格大于正前段的主项，差值恰是原 \(C_{\rm pair}\)。
+共同边界用了（BC.15），没有将固定 \(x\) 的尾趋零界用于增长 \(N_x,x\)。
+

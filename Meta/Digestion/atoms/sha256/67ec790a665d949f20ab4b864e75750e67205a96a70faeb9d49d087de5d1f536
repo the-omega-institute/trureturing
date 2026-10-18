@@ -1,0 +1,32 @@
+**Definition 3.4 (row and request parsing).** A bit tuple is parsed by
+ReadFrame exactly its stated number of times, followed by exhaustion.
+Use the following finite arities from CAP Definitions 6.2–6.2a.
+
+| Type | Fields and required subordinate grammar |
+| --- | --- |
+| SEG-U1 | Eighteen Frames: version, $\xi$, initial/prior binding, old $m$, unified predecessor, kind, request references, response, one four-component $h,K$ tuple, one four-component layout/policy tuple, one eight-component $q,g,e,j$ tuple, one two-component directory-count tuple, manifest, start fence, response fence, publication option, semantic option, template identity. |
+| SEG-J1 | Fifteen Frames: version, $\xi$, initial occurrence, initial/prior binding, post-$j$, semantic predecessor, kind, requests, response/marker/output, six $q,g,e$ fields, historical $h$, source-layout tuple, template, start fence, response fence. |
+| Request-reference tuple | ReadUnary count followed by exactly that many framed complete references, then exhaustion. |
+| Complete CAP reference | Eight successive Frames, then exhaustion: owner, descriptor-stream port, one-based creation ordinal, payload port, base, length, type, status address. Numeric components must each be one complete $U(n)$; the type is its finite CAP bit tag. |
+| Manifest | ReadUnary $v$; exactly $v$ records, each framed tag and respectively 6, 7 or 5 framed fields for tags 00, 01 or 10; then exhaustion. |
+| Fence | Six Frames: kind, $U(f)$, $U(n)$, $U(2n)$, $\xi$, event/directory binding. |
+| Optional reference | Literal 0 and exhaustion, or literal 1 and the complete reference codec. |
+
+Starting with the acquired boot binding, check successive old unified labels
+$0,1,\ldots$, predecessor references and before/after fields. For a semantic
+event require its actual acquired semantic mate with post-$j$, its separate
+semantic predecessor and all fifteen fields. Maintenance has none. Resolve
+every enumerated request/control/output dependency through Definition 3.3;
+parse the original header, length and payload from their three separate
+binary blocks, excluding their physical seps/status cells. The first five
+source tags and maintenance 101/110 retain CAP Definition 4.6's grammar.
+There is no ninth or implicit source opcode.
+
+Every list traversal is ReadList; every index is Nth with unary cancellation;
+every field comparison is Equal. Fixed-arity products use fixed field
+numbers, never a variable native register. Each outer record iteration
+consumes at least its kind and delimiter; each inner field iteration
+consumes a symbol or returns a finite failure. Thus this is a finite word
+program with an explicit compiler expansion, including all malformed finite
+arguments. It is not a mathematical pointer dereference.
+

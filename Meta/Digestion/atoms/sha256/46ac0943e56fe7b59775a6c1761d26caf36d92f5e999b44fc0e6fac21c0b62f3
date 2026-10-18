@@ -1,0 +1,93 @@
+**Theorem 74.6 (source-normalized scattering-strength obstruction).**
+In the soft scattering model define $S_\varepsilon=S(v_\varepsilon)$
+by (74.10) and put
+
+$$
+ \Gamma_\varepsilon=\frac{S_\varepsilon}{\varepsilon^{s-1}},
+ \qquad b_\varepsilon(r)=
+       \left[1-\frac{2^s\omega_s\delta r^s}
+                          {\varepsilon^{s-1}}\right]_+.
+\tag{74.21}
+$$
+
+For every actual port $p$, every comparator $C$ in (74.2), every
+admissible $v_\varepsilon,W_\varepsilon$, and every sufficiently small
+$\varepsilon$ for which the fixed geometry is defined,
+
+$$
+ \Delta_{\varepsilon,C}
+ \ge\frac{b_\varepsilon(h_\varepsilon)^2}
+ {\sqrt{M^2+1}\,[A_p+4\delta N\Gamma_\varepsilon]}.
+\tag{74.22}
+$$
+
+The identical bound holds for each of
+$\Delta^0_{\varepsilon,C}(h_\varepsilon)$ and
+$\Delta^{\rm a}_{\varepsilon,C}(h_\varepsilon)$ for an ideal hard ball,
+using $S_\varepsilon=S_{\rm hard}(h_\varepsilon)$.
+
+**Proof.** Take the actual physical function
+$U_\varepsilon=G_\varepsilon\chi_{h_\varepsilon}(x-y)$ from
+Lemma74.4. Its correlation is Lipschitz for each $\varepsilon$;
+multiplication and the matched ground traces put it in precisely the
+soft form domain. The elementary derivative inequality
+$|\xi+\eta|^2\le2|\xi|^2+2|\eta|^2$ gives
+
+$$
+\begin{aligned}
+ q_{0,\varepsilon}[G_\varepsilon\chi]
+       +\int v_\varepsilon G_\varepsilon^2\chi^2
+ &\le2q_{0,\varepsilon}[G_\varepsilon]
+       +\int_{\Omega^2}G_\varepsilon^2
+            (4\beta|\nabla\chi(x-y)|^2
+                           +v_\varepsilon(x-y)\chi(x-y)^2)\\
+ &\le\frac{24}{5}akN
+       +2c_\varepsilon^2N
+             \int_{\mathbb R^s}(2\beta|\nabla\chi|^2
+                                      +v_\varepsilon\chi^2)\\
+ &\le\frac{24}{5}akN+4\delta N\Gamma_\varepsilon.
+\end{aligned}
+\tag{74.23}
+$$
+
+In the first line the gradient inside the last integral is the
+relative-variable gradient: the two physical coordinate gradients of
+$\chi(x-y)$ have the same magnitude. For any nonnegative relative
+integrand $e$, the estimate used in the second line is
+
+$$
+ \int_{\Omega^2}F_\varepsilon(x)^2F_\varepsilon(y)^2e(x-y)
+ \le c_\varepsilon^2\|F_\varepsilon\|_2^2
+                                      \int_{\mathbb R^s}e.
+\tag{74.24}
+$$
+
+It follows by fixing $x$, bounding $F_\varepsilon(y)^2$ by
+$c_\varepsilon^2$, and enlarging only that relative integral to
+$\mathbb R^s$. Thus no fixed-domain limit, extension of a Neumann
+state, or trap theorem is implicit in (74.23).
+Since $W_\varepsilon\le M$ and $\|U_\varepsilon\|^2\le N^2$,
+(74.23) implies
+
+$$
+ q_\varepsilon[U_\varepsilon]+(M+1)\|U_\varepsilon\|^2
+                   \le A_p+4\delta N\Gamma_\varepsilon.
+\tag{74.25}
+$$
+
+Apply Lemma74.3 to $z_\varepsilon$ and this trial function, and use
+(74.18)--(74.19). The comparator kills the input, so this proves the
+full norm bound (74.22).
+
+For an ideal hard ball the same function is zero for $|x-y|\le h$,
+and is an $H^1$ zero extension with both grounded traces zero.
+Its allowed restriction therefore belongs to the declared Dirichlet
+form domain (74.7); this proves the required membership directly.
+Use the hard version of (74.12) in (74.23), omitting the potential term.
+On the allowed carrier, Lemma74.3 and (74.20) prove the bound for
+$\Delta^{\rm a}$. On the full carrier, apply the allowed resolvent to
+$\iota_h^*z_\varepsilon$ and extend the output by zero; meanwhile
+$K_{\varepsilon,C}z_\varepsilon=0$ and $\|z_\varepsilon\|=1$.
+The same estimate proves the bound for $\Delta^0$. Both comparisons
+use the actual hard carrier and the same Dirichlet form. $\square$
+

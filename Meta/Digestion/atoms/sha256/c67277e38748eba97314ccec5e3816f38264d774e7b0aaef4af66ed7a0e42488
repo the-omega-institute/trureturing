@@ -1,0 +1,25 @@
+**Proposition 3.3 (optional reversible polynomial specification).** Define
+
+$$
+\begin{gathered}
+L=\frac{w_A(1-\alpha)a_0}\Delta+w_B,\qquad
+N=\frac{w_A(1-\alpha)b_0}\Delta,\quad c=c_s(d),\\
+e_2=c^2-\Delta\beta^2,\qquad r_2=\beta^2-d^2,\\
+\mathcal P(d)=(n^2d^2+L^2r_2)e_2-N^2c^2r_2.
+\end{gathered}
+\tag{AS.20}
+$$
+
+Equivalently $d_s$ is the unique root in $I_s$ satisfying
+
+$$
+\mathcal P(d)^2-4n^2d^2L^2r_2e_2^2=0,\quad
+\mathcal P(d)>0,\quad nd>L\sqrt{r_2}.
+\tag{AS.21}
+$$
+
+The carrier has degree at most eight in $d$. It is algebraic over the
+inherited source and algebraic public parameters; for arbitrary admitted
+real public parameters it is algebraic relative to those parameters.
+No claim that arbitrary real inputs are algebraic numbers is needed.
+

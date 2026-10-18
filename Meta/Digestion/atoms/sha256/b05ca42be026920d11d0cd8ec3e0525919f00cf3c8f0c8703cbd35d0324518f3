@@ -1,0 +1,26 @@
+**Convention 1.1 (source and scope).** Fix the original prior supported
+exactly on $\{1,2,3\}$, with all three masses positive, and the original
+parameters $m=2,d=1,\ell=2,n=4$. The source samples $K$ once before any
+paid Read. Conditional on this same $K$, seed and payload letters have
+alpha probabilities $r_1=a=1/3$, $r_2=b=2/5$, $r_3=3/8$. Equal seed pairs
+remain paid rejections; both accepted unequal seeds remain. A payload
+alpha at p completes marker 0, a beta suspends, and at suspension an alpha
+returns to p while a beta completes marker 1.
+
+The full original control retains the parser, selectors, marker tree,
+bare and held records, write and latch flags, permissions, completion
+and delivery. The third write precedes its latch in the same update.
+Fourth completion enables its matching Stop, and neither terminal permits
+a Read. Every positive finite paid rejection, partial parse and return
+history remains in the risk domain. The current-record renderer retains
+every future letter and its original operation block, including the
+infinite noncompletion outcome. It is the complete-law TV isometry of
+[PAIR, Section 2] and [PAID, Definition 1.2].
+
+Initialization is source-independent. Acquired and synthetic letters use
+identical update kernels. COMPLETE includes the original control,
+installed program and numbers, selectors, addresses, labels, output
+cursors, sampling states, workspace and persistent randomness. No source
+reset, newly sampled depth, clock, posterior port or readable probability
+row is available. All operators and path laws below are analysis objects.
+

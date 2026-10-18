@@ -1,0 +1,31 @@
+**Assumption 1.3 (paid export, request and count timing).** One
+deterministic effective preparation starts source-blind from $D$ and
+common installed tables, receives no later target, terminates on every
+$t$, and acquires all source dependence through charged literal Reads.
+It exports a finite complete name $E(t)$. That name counts every
+accessible surviving source distinction, including selectors, control,
+buffers, operands, lengths, allocation, handles, counters and accessible
+timing. A separately paid handoff and access-isolation service makes all
+other preparation dependence and transcripts inaccessible and supplies
+lawful common entry.
+
+Only after export does a public source-independent $p\in\mathcal P_D$
+arrive. From $E(t),D,p$ and common tables, a deterministic reader chooses
+zero Reads or one fresh Read of the same stationary $t$, at any finite
+original-root word, before its reply and before every supplied count.
+The resulting predictor $Z$ satisfies
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,
+\ \text{every subsequently supplied authentic }k\ge0),
+\tag{OOA.2}
+$$
+
+without further Reads. $M_1(D)$ minimizes the complete attained
+cardinality $|E[\mathcal F_D]|$. Preparation Reads, work/control,
+temporary storage, installed tables, post-request workspace, predictor
+size, submitted addresses and letters, count representation, handoff,
+isolation, authentication, entry and physical time are separate resources.
+The service premises are those of [FMR, §1][FMR] and [NPC, §1][NPC].
+

@@ -1,0 +1,32 @@
+**定理 7.1（Finite three-support lists throughout the sufficient polygon）。**
+Every point of $P_3$ has an actual finite three-support Gram realization.
+The points outside the support-two set have exact value three.
+
+Proof. If two matrices have finite lists $x_\ell$ and $y_h$, their mixture
+with weights $1-\theta,\theta\ge0$ has the concatenated list
+$\sqrt{1-\theta}\,x_\ell,\sqrt\theta\,y_h$. This proves the support bound
+by actual vectors rather than a cone-feasibility assertion.
+
+For $a\le a_0$, take the list (4.6) for $M(a,B_0)$ and its middle-reflected
+list for $M(a,-B_0)$. Multiply the first list by
+$\sqrt{(1+b/B_0)/2}$ and the second by $\sqrt{(1-b/B_0)/2}$,
+then concatenate. Both radicands are nonnegative on $0\le b\le B_0$.
+Affineness of (1.2) gives exactly $M(a,b)$.
+
+For $a_0\le a\le A$, put $\theta=(a-a_0)/(A-a_0)\in[0,1]$.
+Mix the horizontal endpoint list for $M(a_0,B_0)$ with the vertical endpoint
+list for $M(A,\beta)$, with weights $1-\theta,\theta$.
+For this paragraph use $M$ lists throughout: the vertical endpoint is
+obtained from (5.12)–(5.13) by $D^{-1}$, without the factor $1/\sqrt5$.
+Their affine mixture is $M(a,\phi(a))$. Reflect the middles to get a list
+for $M(a,-\phi(a))$. Mix those two lists with weights
+$(1+b/\phi(a))/2,(1-b/\phi(a))/2$. They are nonnegative and give exactly
+$M(a,b)$ for $0\le b\le\phi(a)$.
+
+In both cases divide the final concatenated list by $\sqrt5$ once, omit
+zero terms, and restore original signs by Lemma 2.2. This covers the axes,
+endpoints, chord and their intersections with the support-two region.
+Theorem 3.1 gives the lower bound three outside that region, proving exact
+value three there. Convex interpolation supplies no necessity of the chord.
+$\square$
+

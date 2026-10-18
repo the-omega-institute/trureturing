@@ -1,0 +1,29 @@
+### 91.4. Primal, dual, and exact certificates
+
+If 0≤W≤ρ, then W annihilates kerρ. Inverting √ρ on its support gives W=√ρ E√ρ with 0≤E≤I. Conversely every such E gives a feasible W. Standard positive-part duality therefore gives
+
+\[
+ \max_{0\le W\le\rho}\operatorname{Tr}(LW)
+       =\operatorname{Tr}(\sqrt\rho L\sqrt\rho)_+,
+                                                               \tag{18}
+\]
+
+proving the primal in (7).
+
+The positive-semidefinite multiplier Y for ρ−W≥0 must satisfy Y≥0. Finiteness of the Lagrangian over W≥0 requires Y≥2L, and finiteness over block-diagonal ρ≥0 with trace one requires Y_ff≤tI₂. Thus the dual is exactly the second line of (7). The primal has a relative strictly feasible point ρ=I₈/8, W=I₈/16. The dual is strictly feasible with Y=cI₈, c>2‖L‖op, and t>c. Finite-dimensional semidefinite strong duality applies. The primal feasible set is compact. For the dual, bounded t and Y≥0 bound every diagonal entry and hence every matrix entry, so a bounded minimizing sequence has a feasible convergent subsequence. Both optima are attained.
+
+For any feasible primal and dual tuples the exact gap is
+
+\[
+ \begin{split}
+ t-2\operatorname{Tr}(LW)
+  &=\sum_f\operatorname{Tr}[(tI_2-Y_{ff})\rho_f]\\
+  &\quad+\operatorname{Tr}[Y(\rho-W)]
+       +\operatorname{Tr}[(Y-2L)W].
+ \end{split}                                             \tag{19}
+\]
+
+Each term is nonnegative. Matching feasible values therefore certify the optimum without approximation.
+
+Under calibration, Z=Y−L satisfies Z≥±L and Z_ff=Y_ff, giving (8). This has a direct completely-positive interpretation. The Choi matrix of ℳ_C is the isometric embedding of C on {|f,i〉_reference⊗|f〉_output}, so C≥0 implies ℳ_C is CP. Thus Z±L≥0 make ℳ_Z±ℳ_L CP, and ℳ_Z*(I) has diagonal fibre blocks Z_ffᵀ≤tI₂. For the actual forward-Gram map use Zᵀ,Lᵀ, which preserve these inequalities. For any normalized positive reference/input state its error output X and majorant output Y′ obey −Y′≤X≤Y′ and TrY′≤t. The positive and negative spectral projections of X give ‖X‖₁≤TrY′. The Jordan and dilation argument of (17) then supplies the full diamond upper bound. This interpretation does not turn the calibrated formula (8) into an upper bound for the original leaking maps.
+

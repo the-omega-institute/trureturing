@@ -1,0 +1,13 @@
+**Proposition 4.3 (root shortcut and its limit).** A separate zero-Read
+procedure can return $R_{\{\varepsilon\}}$ under unlimited interference.
+It does not acquire the entire tree or provide a tree certificate.
+If a tree certificate is required, either full-tree procedure applies
+unchanged to the root cut. Accepted transcripts have the respective
+guarantees of Theorems 3.3 and 4.2; under finite total writer interference
+and observer progress, termination and the paid resource bounds follow
+from Theorems 5.2–5.4.
+
+**Proof.** The row always hides the whole nonempty tree with one class.
+Alpha and beta have that same row and different trees, so the constant
+row is not a tree certificate. $\square$
+

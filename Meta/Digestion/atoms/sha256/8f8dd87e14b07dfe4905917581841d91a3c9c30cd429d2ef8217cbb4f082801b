@@ -1,0 +1,26 @@
+**Definition 1.3 (full targets and unchanged error).** Write
+
+$$
+\begin{gathered}
+d_y=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),
+\qquad (B_y^{\rm tar})_{ij}=\sqrt{d_{yi}d_{yj}},\\
+f_y(t)=\frac{6y}{(y+6t)^2},\qquad
+w=(0,1/4,1/2,1/4,0),\qquad P_f=|f\rangle\langle f|,\\
+\Omega_{y,e,n}^L=EU_{e,n}B_y^{\rm tar}U_{e,n}^\dagger E^\dagger,\qquad
+\Omega_{y,e,n,j}^f(dt)=w_j f_y(t)\,dt\,P_f .
+\end{gathered}
+\tag{PG.2}
+$$
+
+The live trace is $y/(y+6)$ and the failure trace is its complement. Failure labels $1,3$ remain separate; $0,13$ remain named zero-density sectors. Elapsed time $t$ is absolute time $6+t$. First executed failure is absorbing, and old stopped archives stay in their own branches.
+
+The processor receives one unknown specimen with common fixed metadata, blanks, calibration, source/epoch identity, permissions, controller state and aligned clock. It receives no history record, waveform, source-dependent installed programme or helper specimen. Its error is
+
+$$
+\mathcal E(\Phi)=\max_{y,e,n}\frac12
+ \|\Phi(E\rho_{y,e,n}E^\dagger)-\Omega_{y,e,n}\|_{1,\rm cq}.
+\tag{PG.3}
+$$
+
+The cq norm counts the full coherent live trace norm and all separately labelled time measures using a dominating measure that also includes atoms and singular parts. Abort, rejection, wrong support and every zero-target extra sector count. Neither acquisition nor survival causes a division.
+

@@ -1,0 +1,51 @@
+**Proposition 16.3 (classical comparisons and evidence boundary).**
+Finite-prefix dependence is classical. Magnus Steinby, Eija Jurvanen
+and Antonio Cano, *Varieties of Unranked Tree Languages*,
+[arXiv:1510.07402v1, §10.2][SJC], define $k$-definite languages by
+membership constant on equal $k$-root segments, with early finite
+leaves retained. This is the relevant background for the semantic
+notion, not a source of the native resource bounds. Their trees are
+unranked and their language definition includes recognizability;
+the present domain is the specific fixed-arity actual inverse fiber,
+with four native replies and no assumed recognizer for arbitrary
+code-program text. Inclusive depth conventions can differ by one.
+
+Randal E. Bryant, *Graph-Based Algorithms for Boolean Function
+Manipulation*, [§2, Definition 1][BRY], requires increasing variable
+indices on each nonterminal edge, hence an acyclic ordered function
+graph. The finite tasks here allow four replies, repeated words at
+different states, unused states, state sharing and cycles in the union
+graph. They preserve the original entry and the actual paid literal
+at each state. Consequently no BDD node count, minimization claim or
+Boolean numerical frontier is transferred. The finite task is not
+an uncharged profile-reading interface.
+
+Turing's [§8][TUR] supplies only the undecidability endpoint in
+Theorem 15.2, whose promise-preserving native reduction is proved
+there. The repository's [Rice background note][RICE] does not by
+itself prove that promised-total, promised-finitely-preparable
+extraction is impossible. No graph, XOR, quantum or spectral numerical
+bound is a premise for the correspondence.
+
+Proof. The stated classical definitions have the described domains
+and do not mention the original native entry, image inverse, complete
+row partition or execution prices. The exact parameter correspondence
+and missing implications are those stated above. The deductions in
+§§10–15 are repository-derived ordinary-paper mathematics relative
+to their attributed suppliers. They carry no claim of current Lean
+kernel verification or worldwide priority. A finite certificate and
+a finite abstract table establish the stated mathematical feasibility
+under Assumption 16.1; they do not establish acquisition, authentication,
+export, isolation, entry or physical finite-control service realization.
+The general continuing relational-fiber goal includes those residual
+operational obligations. $\square$
+
+[LRD]: RECURSIVE_RELATIONAL_OBSERVATION_RETAINED_LITERAL_ROOT_DEPTH.md
+[SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+[NAC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_AMBIENT_CONTACT_DECISION.md
+[NRE]: FIB_PRESCRIBED_CODE_NINE_STATE_ROOT_ESCAPE.md
+[SJC]: https://arxiv.org/html/1510.07402v1#S10.SS2
+[BRY]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+[TUR]: https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf
+[RICE]: ../../../Library/Diagonal/rice1953classes.md
+

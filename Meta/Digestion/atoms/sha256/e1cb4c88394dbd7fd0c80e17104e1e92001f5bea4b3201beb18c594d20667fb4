@@ -1,0 +1,10 @@
+### 72.5 Exact reference norm and finite attainment
+
+For any Hermitian block matrix D with D_ff=0, define Ψ_D(|f,i><g,j|)=D_(fi,gj)|f><g|. The same tagging argument preserves the output error norm for every pure input. Let T_f have columns r_(f,i) and set T=⊕_f T_f, viewing its ranges as mutually orthogonal reference-tag sectors. The tagged output, after identifying each correct output/tag sector with its reference space, is exactly T D T*. Normalization says Σ_f Tr(T_f*T_f)=1. Polar decomposition of each T_f, with harmless reference padding if needed, shows
+
+    ||T D T*||₁=||√ρ D √ρ||₁,    ρ=⊕_f T_f*T_f.
+
+Conversely any block-diagonal density matrix ρ is realized by taking T_f=√ρ_f on orthogonal reference sectors. This proves ||Ψ_D||diamond=ν(D), and the output encoding J_out preserves that norm. Combining this with the repaired Gram masks proves (3)–(4).
+
+Each G∈G has trace N and bounded entries, so G is compact. The diamond norm is continuous in its finite-dimensional map coefficients. Thus the minimum in (3) exists and is physically realized by the finite local Choi factors already constructed. Allowing at most r branches uses the compact probability simplex, with zero-weight branches discarded; it does not require a limit with unbounded shared support.
+

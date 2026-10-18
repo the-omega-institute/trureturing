@@ -1,0 +1,32 @@
+**Lemma 7.2 (spans at most three; SI Theorem 9.4).** If $\beta_B\le3$,
+then $D_B\le E_B$.
+
+Proof. Span one has empty interior. For span two, write
+$X_B=\{x,y\}$. An interior support is $T_a$ plus one of these
+coordinates; its next fixed label must be the other. Different supports
+therefore cannot share a state; equal supports at different cells are
+also excluded. Hence $D_B=0$.
+
+For span three, the last internal layer $a+2$ is exclusive by Lemma
+7.1. A support at $a+1$ and one at $a+2$ are either nested or have
+union $T_b$. In the latter case no label in $T_b$ is fresh for both,
+so cross-depth sharing is impossible too. All sharing is at $d=a+1$.
+For a cell let $\mathcal L(p)$ be its set of live replies. These sets
+are nonempty at this depth. If two hosted cells had a common live
+reply, their fixed successor would share two distinct last-layer cells,
+which is impossible. Thus a shared state has exactly two cells with
+opposite singleton live-reply sets. They can only be
+
+$$
+(d-L+1,L-1),\qquad(K-1,d-K+1).
+\tag{CL.26}
+$$
+
+Invalid cells or pairs failing (CL.3) are omitted. Let $s$ be the
+number of such shared states. Then $D_B=s$. If $s\ge2$, these two
+cells have at least $s$ hosts each, so their excess is at least
+$2s-2\ge s$. If $s=1$, depth $d$ is noncommon and (CL.12) gives
+excess at least one. If $s=0$ there is no deficit. In every case
+$E_B\ge D_B$. Only actual live children were constrained.
+$\square$
+

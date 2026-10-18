@@ -1,0 +1,35 @@
+**lemma 5.1 (Every first-one branch).** For every second instruction,
+including an early halt,
+
+$$
+D_1\le a\eta.
+\tag{5.1}
+$$
+
+Proof. First reply one certifies phase $\alpha$. An early halt, a
+separator second call, or repetition adds no information. The best
+correct mass is $\eta/2$ if $v\in e$, and $a\eta$ otherwise.
+For a distinct adjacent second edge both leaves are mixed triples;
+each has maximum $a\eta/2$ by Lemma 4.1.
+
+For a vertex-disjoint second edge $f$, if $v\in e$, the first-one
+condition leaves equal target masses and independence makes the sum
+over second replies
+$\tfrac12\eta(c+2\eta)=\eta/2$.
+If $v\in f$, the independent first-one factor $2\eta$ multiplied
+by the one-edge total $a$ gives $a\eta$ after the phase factor.
+If $v$ is in neither edge, its independent majority probability
+multiplies the first-one mass to give $a\eta$. These are all
+incidences. Thus the full list is
+
+| Second call in phase $\alpha$ | Target position | Sum of leaf maxima |
+| --- | --- | --- |
+| Separator or repeat | In $e$ | $\eta/2$ |
+| Separator or repeat | Outside $e$ | $a\eta$ |
+| Distinct adjacent edge | Anywhere | $a\eta$ |
+| Disjoint edge $f$ | In $e$ | $\eta/2$ |
+| Disjoint edge $f$ | In $f$ or outside both | $a\eta$ |
+
+Since $a>1/2$, every entry gives (5.1). Null leaves contribute zero.
+$\square$
+

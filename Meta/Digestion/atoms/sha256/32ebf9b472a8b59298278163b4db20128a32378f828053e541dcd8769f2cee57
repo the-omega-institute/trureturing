@@ -1,0 +1,18 @@
+**Lemma 5.3 (Comparison to the actual opponent).** For both target choices,
+
+$$
+\gamma_L^{-1}U_j(x,y)\le W_i(x,y)\le\gamma_LU_j(x,y).
+\tag{5.7}
+$$
+
+Proof. On $k>L$, $t(k)=H(k)/k^9$ lies in $[1,\gamma_L]$. The exact ratio of conditional tail laws is
+
+$$
+\frac{f_1(k)/(1-\pi_1)}{f_0(k)/(1-\pi_0)}
+=\frac{t(k)}{\displaystyle\sum_{\ell>L}
+\frac{f_0(\ell)}{1-\pi_0}t(\ell)}.
+\tag{5.8}
+$$
+
+Its denominator is in the same interval, so both conditional tail laws are comparable by $\gamma_L$ in either direction. Averaging the same nonnegative $K_k(x,y)$ transfers comparison to $V_0^L,V_1^L$. The opponent kernel is $U_j=\pi_jJ_j^L+(1-\pi_j)V_j^L$. Adding its identical nonnegative short term to the two compared tails proves (5.7), including all zero entries. This is the clipping comparison of the uniform companion's Lemma 5.2 and the growing-budget source's Lemma 6.2. The proof kernel keeps the entire opponent short term; it neither deletes an actual gap nor supplies a tail-only source. $\square$
+

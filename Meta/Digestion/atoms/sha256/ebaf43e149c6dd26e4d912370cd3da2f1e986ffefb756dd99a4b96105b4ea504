@@ -1,0 +1,24 @@
+**Definition 1.2 (actual live incidence).** A history is an actual
+prefix ending immediately before a query. Let $S$ be its exposed
+coordinate set and $\eta_S$ its assignment. Write
+$h=|\eta_S^{-1}(1)|$ and $z=|\eta_S^{-1}(0)|$. The history is live
+when both outputs have completions, equivalently when
+
+$$
+(h,z)\in V:=\{0,\ldots,k-1\}\times\{0,\ldots,n-k\}.
+$$
+
+Let $F_{h,z}$ be the installed hosts of actual live histories with
+these counts, and $b_{h,z}=|F_{h,z}|$. Put
+
+$$
+Q_{\mathrm{live}}=\bigcup_{(h,z)\in V}F_{h,z},\qquad
+u=|Q\setminus Q_{\mathrm{live}}|.
+$$
+
+A state visited both live and after certification belongs to
+$Q_{\mathrm{live}}$ once. The number $u$ includes unreachable states
+and states reached only after certification. Histories and their
+assignments are mathematical indices, with no additional running
+register supplied to $P$.
+

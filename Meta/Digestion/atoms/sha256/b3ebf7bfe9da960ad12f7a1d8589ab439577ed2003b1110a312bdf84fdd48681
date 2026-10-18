@@ -1,0 +1,25 @@
+**Convention 2.1 (unchanged source).** Keep the original source parameters $m=2,d=1,\ell=2,n=4$. Let $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. Before any actual Read, draw one $K$ from one installed finite or countable prior $\mu$ with $\mu(1),\mu(2)>0$. Conditional on this same $K=k$, all actual Reads are independent, with alpha probability
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\qquad
+r_1=\frac13,
+\quad r_2=\frac25.
+\tag{2.1}
+$$
+
+Equal seed pairs are paid rejections; alpha-beta accepts seed 0 and beta-alpha accepts seed 1. At p, alpha completes marker 0 and beta suspends; at suspension, alpha returns to p and beta completes marker 1. Keep both accepted seeds, every payload return, the full marker tree, bare fields and held $B,Q^+,Z$ records, parser, selectors, permissions, write and latch flags, fourth completion, matching pendingStop and its unique delivered Stop. The third record is written before its latch. Pending and delivered states permit no Read. All sixteen completed marker words, their prefixes, all positive finite paid rejection histories and all positive finite payload-return histories stay in the domain. The full original writer and event blocks are those of [P-RETURN, Definition 1.1; PAID, Definition 1.1]. No source reset, new depth draw, future-event conditioning or extra actual observation is introduced.
+
+The entire original finite control is denoted by $C_0$. The held record field $B$ and an acquired kernel also named $B$ are distinct objects, distinguished by their indices and roles. Its full-record renderer $I_{C_0(h)}$ inserts the original deterministic operation and record blocks into the remaining raw Read word. It is the supplied measurable bijection preserving TV and residual operation deletion [PAIR, Section 2; PAID, Definition 1.2]. Private predictor labels are included in COMPLETE, but are not additional reported fields of this original transcript. Observing the private update table is a different interface from observing the original transcript.
+
+At p, use the supplied completed words
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,
+\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,
+\qquad j\ge0.
+\tag{2.2}
+$$
+
+The suspended completed words are $\beta$ and $\alpha w_{j,b}$. Each carrier retains its legal infinite noncompletion word. The already acquired suspended beta is not a future Read.
+

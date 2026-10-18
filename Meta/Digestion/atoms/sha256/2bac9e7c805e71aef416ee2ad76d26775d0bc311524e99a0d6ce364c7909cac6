@@ -1,0 +1,15 @@
+**Definition 2.1 (left guard stamp).** Set
+
+$$
+\ell(\alpha)=0,\qquad\ell(\beta)=1,\qquad
+\ell(\langle x,y\rangle)=1+\ell(x).
+\tag{CAB.5}
+$$
+
+For a leftmost leaf at depth $d$ with label bit
+$e=\mathbf1_{\{\beta\}}$, this is $d+e$. Define RA$\ell$ to be RA
+with one change at acceptance: before releasing its left-only guard
+and leaf label, retain the canonical integer $k=d+e$ beside its full
+row. Its validation event remains the final guard Read. Encoding and
+cleanup follow that event and use no source operation.
+

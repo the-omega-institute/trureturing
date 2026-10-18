@@ -1,0 +1,81 @@
+**Proposition 8.8 (Four current coordinates need not update affinely).**
+On the double wall, the exact current response (8.18) does not admit a
+fixed affine update for a nonzero pure probability displacement $s$,
+even on any nonempty open interval of starting heights for which both
+$\kappa$ and $\kappa+s$ belong to $(0,r/2)$.
+
+Proof. Use the same open-loop velocities $\dot\kappa=s$ and
+$\dot\chi=0$ on $[0,1]$ for every starting state in that interval.
+Convexity gives lawful probability paths, and the phases $\alpha,\beta$
+remain fixed. The updated middle pair is
+
+$$
+z_b'=\sqrt{\frac{\kappa+s}{\kappa}}\,z_b.
+\tag{8.29}
+$$
+
+If a fixed affine map on $(z_a,z_b)$ gave this update for every state,
+its middle block would have form $c_b+M z_a+N z_b$. At any fixed
+starting height the two phases vary independently. Averaging over both
+circles forces $c_b=0$, varying $\alpha$ forces $M=0$, and varying
+$\beta$ forces
+$N=\sqrt{(\kappa+s)/\kappa}\,I_2$. This factor is nonconstant on
+every such open interval when $s\ne0$, a contradiction. The updates
+remain completely determined by the current ray and the specified
+legal continuation; the obstruction is to a fixed affine update in
+these four response coordinates. $\square$
+
+**Mathematical correspondence 8.9 (Scope of the source-level advance).**
+Theorems 8.2, 8.4, 8.6 and 8.7 concern one common preparation, the
+original ODE, all of its finite admissible prefixes and the unchanged
+coherence menu. Their new operational content is the exact open source
+domain, its same-source observation map, its fixed affine capacity over
+variable probability, and the visibility of its native commutator.
+The real-span and finite rectangle suppliers are Theorem 3.2 and the
+immutable declaration cited in Theorem 8.2; the connected measurement
+graph is supplied by Theorem 3.12. Neither endpoint result alone states
+these prefix conclusions.
+
+At $\kappa=\kappa_0$, imposing $e^{id^{\mathsf T}h}=1$ recovers exactly
+the original loop phase domains of Theorem 3.3. On the double wall this
+condition is $2(u-v)=0\pmod{2\pi}$, or
+$\alpha\in\{0,\pi\}$. It reduces the two independent prefix phases
+to the old circle and parity. Theorem 4.2 consequently retains its
+closed-loop capacities $6,4,3$. Restricting actual histories further to
+zero winding retains Proposition 4.3's value $2$; even nonzero winding
+can have the same endpoint and is still outside that restricted history
+class. The values $10,6,4$ in (8.11) answer the distinct prefix task.
+No averaging over current probabilities or choice of controller record
+enters their definition.
+
+The
+[observer interface, §10](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md)
+requires a common linear source, calibrated distance and ordered
+response data, together with closure under all declared generators.
+The
+[harmonic interface, §§9 and 12](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md)
+requires, respectively, an additional rotational intertwining and a
+common realization of the specified response family. Those hypotheses
+are not supplied by a three-dimensional nonlinear source manifold or
+by its contact plane field. In particular, Proposition 8.8 separates
+the present current-output factorization from a linear continuation
+contract. The native-loop and source-law obstructions of §§6–7 retain
+their stated endpoint scope.
+
+The character independence and contact-sphere formulas consumed above
+are literature-attested classical tools with their explicit parameter
+correspondences. The results for this fixed five-mode source are
+repo-derived ordinary proofs, not a claim of worldwide originality.
+No Fubini–Study metric theorem is needed for these operational
+conclusions; the metric and quotient assertions of §2 keep their
+original domains.
+
+Within these hypotheses the double wall is exactly the condition for
+three-dimensional current rays. Definition 3.1 keeps the means fixed
+and supplies no law selecting that wall. Connecting this conditional
+source result to a three-axis predictive or physical interface would
+still require a selector of the means and a same-source realization of
+the additional tasks and operations. The present result neither erases
+the unwrapped controller record nor supplies acquisition, memory or
+physical spatial-dimension bounds.
+

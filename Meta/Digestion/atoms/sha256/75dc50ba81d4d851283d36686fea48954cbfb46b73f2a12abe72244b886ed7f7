@@ -1,0 +1,62 @@
+**Example 8.19 (The separated three-bit superposition).** In $\mathcal K_3$,
+take the pure state
+
+$$
+|\psi_\varphi\rangle
+=\frac{|010\rangle+e^{i\varphi}|101\rangle}{\sqrt2}.
+\tag{8.39}
+$$
+
+Its complete diagonal law is $p_2=p_{13}=1/2$, all other masses zero,
+independent of $\varphi$. Every legal-edge coherence is zero because
+neither endpoint pair lies in its two-point support. Those two modes
+have Hamming distance three. Theorem 8.17 therefore makes every final
+probability independent of $\varphi$ for every one- or two-pulse setting
+in Definition 8.16, not only for the two quadrature settings at a site.
+
+A concrete depth-three setting is
+
+$$
+U_\beta
+=R_3(0,\pi/4)R_1(0,\pi/4)R_2(\beta,\pi/2),
+\tag{8.40}
+$$
+
+where the rightmost pulse acts first. Its two amplitudes at the initially
+zero-probability legal mode $000$ are
+
+$$
+(U_\beta)_{000,010}=-\frac{i e^{-i\beta}}2,
+\qquad
+(U_\beta)_{000,101}=-\frac12.
+\tag{8.41}
+$$
+
+Derivation. On $010$, the first pulse deletes the center with factor
+$-i e^{-i\beta}$. To finish at $000$, the next two pulses must keep the
+zero at sites one and three, each with factor $1/\sqrt2$.
+On $101$, the center pulse is blocked by its occupied neighbors and
+acts as the identity. The next pulse deletes site one with factor
+$-i/\sqrt2$, and the final pulse deletes site three with the same
+factor. Each path is the only path producing this final word.
+This proves (8.41), including its signs.
+
+The probability of $000$ is therefore
+
+$$
+P_{000}(\beta)
+=\frac18\left|-i e^{-i\beta}-e^{i\varphi}\right|^2
+=\frac{1+\sin(\varphi+\beta)}4.
+\tag{8.42}
+$$
+
+The two generator settings $\beta=0$ and $\beta=\pi/2$ give
+$\sin\varphi=4P_{000}(0)-1$ and
+$\cos\varphi=4P_{000}(\pi/2)-1$. Together they recover $\varphi$ modulo
+$2\pi$ from exact probabilities. This example has a specified
+one-parameter pure family, so two settings suffice; they are not an
+alternative completeness proof for arbitrary mixed states. It illustrates
+both the sharp lower bound and the permitted use of an initially empty
+legal mode. The phase convention in (8.40) is again $\beta$ of the
+Hamiltonian, with no substitution of a basis angle $\alpha$.
+

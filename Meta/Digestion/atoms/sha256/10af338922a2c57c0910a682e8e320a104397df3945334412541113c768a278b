@@ -1,0 +1,32 @@
+**Convention 2.2 (the supported-nonzero domain).** Partition actual
+low labels into $\mathcal J_+$, those whose restriction
+$X\mapsto\mathcal E_j(EXE^\dagger)$ is nonzero, and
+$\mathcal J_0$, those with zero such restriction. Only labels in
+$\mathcal J_+$ receive positive coefficient weights and ellipse
+coordinates. FA69's arbitrary-complex, arbitrary-Kraus equality
+rigidity gives for them one effective supported live product and
+pulled-back failure effect
+
+$$
+K_j=\sqrt{p_j}K_{h_j},\qquad
+N_j=p_jb_jn_{h_j}n_{h_j}^T,\qquad p_j>0,
+\quad 0\le b_j\le t c(h_j),\quad t=e^A-1.
+\tag{AC.10}
+$$
+
+This is a consequence of the original equality class, not a real or
+single-Kraus restriction on competitors. The full whole-fibre rate
+bound gives the capacity for every admitted time law. In particular
+finite activity excludes any nonzero supported failure-only label.
+
+Nonzero full-$M_5$ labels in $\mathcal J_0$ remain allowed and
+actually counted. For example, take isometries
+$W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The encoder
+$\operatorname{Ad}_{W_\perp^\dagger}$ followed by the rate-zero
+live decoder $\operatorname{Ad}_{EJ_0}$ is nonzero on $M_5$ and
+zero on all twelve specimens. It has no positive-$p$ representation
+in AC.10. It contributes no supported contrast or record TV, but
+adds an actual label if retained separately, and its whole fibre
+still obeys AC.4. No deletion of it from the competitor class is made.
+

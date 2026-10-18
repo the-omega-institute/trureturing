@@ -1,0 +1,13 @@
+**Definition 5.1 (directed arithmetic).** All decimal strings denote exact terminating rational numbers. For the finite comparisons use $D_{150}=2^{150}$ and intervals with integer endpoints divided by $D_{150}$. Embed a rational by floor and ceiling at this scale. Addition and negation use endpoint operations; products use the minimum and maximum of the four endpoint products, rounded outwards. Inversion is allowed only when zero is excluded, with reversed reciprocal endpoints rounded outwards. A square uses zero as lower endpoint when its argument interval crosses zero. For a nonnegative interval $[a/D_{150},b/D_{150}]$, take integer-square-root endpoints $\lfloor\sqrt{aD_{150}}\rfloor$ and $\lceil\sqrt{bD_{150}}\rceil$, again divided by $D_{150}$. Every direction is certified by integer comparisons. The source table has denominator $2^{224}$ and is embedded outwards; the preconditioners in Appendix 14 are exact rationals with denominator $2^{151}$ and need no approximate inverse interpretation.
+
+For each system $F$ of Definition 4.2 and its box $\mathcal B=c+[-r,r]$, formally differentiate the stated equations, retaining every contact derivative as an interval expression. Let $R$ be the corresponding Appendix 14 matrix and
+
+$$
+E_{\rm def}=I-RJ(\mathcal B,I),\quad
+q=\max_i\sum_j\sup|(E_{\rm def})_{ij}|\frac{r_j}{r_i},\quad
+\iota=\max_i\left(\frac{\sup|(RF(c,I))_i|}{r_i}
++\sum_j\sup|(E_{\rm def})_{ij}|\frac{r_j}{r_i}\right).
+$$
+
+There is no external multiplier interval for the event system. For branch center residuals first combine the affine expression $F(c,\lambda_0)+(\lambda-\lambda_0)F_\lambda(c)$, then take its interval range; separately widening its canceling summands is unnecessary. Derivatives, matrix products and coefficient convolutions use their displayed index order. The bounds below can equivalently be established with finer directed dyadic arithmetic.
+

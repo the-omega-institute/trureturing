@@ -1,0 +1,30 @@
+**Definition 8.1 (positive certificate).** The public native model,
+explicit $T$, its original labeled entries and $L$ are the fixed verifier
+input. A positive certificate contains $b$, the entire ordered retained
+profile inventory with shared class terms, the image and whole-term
+syntax-test data, closed/live flags, every installed-state reply vector,
+every complete target row, both bounded entry paths and good sets, and
+a passing ordered pair from (B). It also contains two different ground
+class tuples realizing that pair, their selected good bits, and the
+finite defaults and tuple-exception specification (FCS.23).
+
+The verifier first checks the finite table contract, including its
+state partition, all four successors and distinct original entries.
+It recomputes $b$ from every installed Read. It then regenerates all
+bounded candidate patterns, applies (FCS.16), and requires exact equality
+with the retained inventory. Merely checking that the listed profiles
+are feasible is insufficient: omissions must be detected. It recomputes
+the whole-term negatives for every pair of different classes, all
+installed replies, closed/live flags, complete canonical target rows,
+both bounded paths and (A),(B).
+
+For the two ground tuples it checks finite syntax, every class
+disequality, whole image membership, the selected profiles, distinctness
+and their corresponding good labels. The inverse parser verifies their
+actual finite origins. It can regenerate the specified height-tag
+witnesses directly; alternatively any supplied tuples passing all these
+ground tests suffice. Finally it regenerates the finite default and
+two-exception encoder template. It verifies this canonical specification,
+not arbitrary substituted program text. Requiring a fixed order and
+the first passing pair gives a canonical choice if desired.
+

@@ -1,0 +1,21 @@
+### 14.5 Loss factorization, action factorization, and randomized comparison
+
+For a fixed action label \(c\), the pair of loss functions factors through \(Q\):
+\[
+\ell(w,c)=\bigl(\mathbf1_{c\ne A(w)},\mathbf1_{c\ne B(w)}\bigr)
+=\bar\ell(Q(w),c),\qquad
+\bar\ell((a,b),c)=\bigl(\mathbf1_{c\ne a},\mathbf1_{c\ne b}\bigr).
+\]
+A specified full-word action \(f\) factors literally as \(g\circ Q\) if and only if it is constant on every \(Q\)-fiber: necessity follows from composition, and sufficiency defines \(g(y)\) by the common value on that fiber, arbitrarily off the image. Every word has positive mass for the stated parameter range, so an almost-sure factorization is also a pointwise factorization here. Existence of some optimal quotient replacement is the different condition (14.4); it does not require a specified full-word minimizer to descend.
+
+For any full-word action \(f\), conditional averaging on the actual record gives
+\[
+\pi(c\mid y)=
+\frac{\mu_s\{w:Q(w)=y,\ f(w)=c\}}{\mu_s\{w:Q(w)=y\}}
+\]
+when the denominator is positive. Because both teacher labels are functions of \(y=Q(w)\), the randomized record action \(\pi\) has exactly the same pair \((R_A,R_B)\) as \(f\). This is the finite same-source content of Blackwell-style randomized comparison. It is a randomized consumer and therefore does not define \(V_Q\).
+
+A non-atomic purification theorem (Dvoretzky--Wald--Wolfowitz type) cannot be invoked for this source: \(W^4\) is finite and every atom is positive. The record fibers impose the finite partition condition (14.4), with the exact subset-sum discrepancy (14.6). Conditional averaging preserves the two risks but need not select a single label on each fiber. Equality of marginal risks, an abstract record compatibility, or a randomized kernel does not make \(f\) literally constant on \(Q\)-fibers.
+
+The consumer in (14.8) is one deterministic \(g_\ast\) applied to the original record \(Q\), under the same source law for both risks. No extra read, conditional resampling, external coin, omitted branch, change of source, or separate teacher-wise optimizer is part of this action class. Since \(D>0\) throughout \(0<s\le1/5\), no action has both teacher risks zero; equality at \(s=1/6\) is attainment of the positive full-word minimax value.
+

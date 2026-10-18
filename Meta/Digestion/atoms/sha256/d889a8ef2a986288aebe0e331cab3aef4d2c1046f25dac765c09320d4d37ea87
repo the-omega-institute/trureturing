@@ -1,0 +1,40 @@
+**Lemma 101.3 (negative-cycle bound).**
+For any original calibrated pair, suppose \(H_S\) is real of rank two,
+\(G_S=H_S\odot\overline R\) for a PSD correlation matrix \(R\), and
+\[
+H_{13}H_{14}H_{23}H_{24}<0. \tag{26}
+\]
+Then \(\delta=F(G,H)\ge1/4\).
+No reality of \(G,R\), or any kernel vector is required.
+
+**Proof.**
+On each supported cross-fibre edge, quotient positivity gives
+\[
+\tfrac12-\delta
+\le\operatorname{Re}(G_{ij}H_{ij})
+\le|G_{ij}H_{ij}|
+=|H_{ij}|^2|R_{ij}|
+\le|H_{ij}|^2. \tag{27}
+\]
+If \(\delta<1/4\), all these squared moduli exceed \(1/4\).
+Choose a diagonal sign gauge to make \(H_{13},H_{23},H_{14}\) positive.
+The negative cycle then makes \(H_{24}<0\).
+Apply the same signs to both full eight-coordinate Grams.
+This preserves the original identity blocks, their Hadamard product,
+the objective, and the quotient relation with the same \(R\).
+Since \(H_S\) has rank two and \(H_{FF}=I_2\), its records are now
+\(e_1,e_2,(c,s),(p,-q)\), with all four coordinates positive and each
+singleton a unit vector. Equation (27) gives
+\[
+\tfrac14<c^2,s^2,p^2,q^2<\tfrac34,
+\qquad \tfrac14<cp,sq<\tfrac34.
+\]
+It follows that
+\[
+|H_{34}|=|cp-sq|<\tfrac12, \tag{28}
+\]
+contradicting (27) at edge \(34\).
+If the real four-cycle is zero, one cross entry of \(H\) vanishes and
+the original matrix-unit bound instead gives \(\delta\ge1/2\).
+\(\square\)
+

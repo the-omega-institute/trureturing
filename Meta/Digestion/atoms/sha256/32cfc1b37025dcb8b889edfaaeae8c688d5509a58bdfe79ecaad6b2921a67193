@@ -1,0 +1,22 @@
+**Definition 2.1 (edge calibration and reference components).**
+For $a\in A$ put
+
+$$
+Q_G(a)=(a_j-a_i)_{(i,j)\in G},\qquad
+\Delta_{ij}(a)=(j-i)q+a_j-a_i.
+\tag{SCC.5}
+$$
+
+Let $\mathcal C(G)$ be the components of the underlying undirected
+graph, including isolated vertices. For each component $C$, define
+
+$$
+v_i(a)=a_i-\min_{h\in C}a_h\quad(i\in C),\qquad
+V_G(a)=(v_i(a))_{i\in I}.
+\tag{SCC.6}
+$$
+
+Thus every component has minimum zero. $V_G$ records relative ages,
+not the component's common age. The known slot term $(j-i)q$ is kept
+in $\Delta$ because spatial comparisons use actual clock readings.
+

@@ -1,0 +1,21 @@
+**Corollary 4.4 (formula-dependent finite witnesses, exact image
+conditions).** The algorithm imposes every image lower bound and every
+normality condition needed by its witnesses. It supplies a computable
+native witness-height bound depending on the input formula alone.
+It supplies neither a uniform source bound on its entire solution set
+nor a bound for a sequence of different formulas indexed by an unknown
+prefix depth.
+
+Proof. In an equation $Z=\tau_kX$, all ranks of $X$ are natural and the
+corresponding ranks of $Z$ equal them plus $k$. This is exactly ABC's
+image condition, not an unrestricted inverse translation. Theorem 4.3
+proved normality at every occurrence. Its finite scalar problems have
+effective decisions and witness extraction. Run those terminating
+procedures for the finite template list and take the largest expanded
+height among their chosen witnesses, taking zero when none exist.
+This is a total computable bound and a witness exists under it precisely
+when the formula is satisfiable. The finite template bound is obtained
+before rank solving; ranks and expansion can be large. A formula such
+as $x=x$ still admits every native tree. Nothing identifies a bounded
+witness family with that full domain. $\square$
+

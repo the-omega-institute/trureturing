@@ -1,0 +1,33 @@
+**Proposition 177.4 (Conic mass cuts from the same full-row scores).**
+Use the complete event vector $z_D$, demand vector $d(x)$ and prefix
+$R$ of Sections 164--166. Write $\mathbf r=z_R$,
+$h(x)=d(x)-\mathbf r$, and let $A_C$ have columns $z_D-\mathbf r$.
+For a nonnegative conic allocation satisfying $A_O\lambda\ge h(x)$,
+
+$$
+\sum_{D\in M_k}\lambda_D\ge\max\{0,f_k(x)\}.
+\tag{177.8}
+$$
+
+For both full classes, the common conic costs of Definition 166.1 satisfy
+$\rho_N(x),\rho_O(x)\ge\max\{0,f_k(x)\}$ for every $k$.
+These masses need not be probabilities.
+
+**Proof.** Let $y_k\ge0$ select exactly the event rows in $\Psi_k$.
+Theorem 177.2 gives
+$y_k\cdot\mathbf r=3$, $y_k\cdot h(x)=f_k(x)$, and
+$\Delta_N(y_k)=\Delta_O(y_k)=4-3=1$. Thus
+
+$$
+f_k\le\sum_D\lambda_D(\Psi_k(D)-3)
+     \le\sum_{D\in M_k}\lambda_D
+$$
+
+in the stopped case. For either class, replacing the last sum by the
+total mass gives the same lower bound on any feasible conic allocation,
+and then on the infimum of its mass. The nonnegative lower bound
+also follows from nonnegativity of the coefficients. This is the
+existing conic model of Definition 166.1 applied to these new scores;
+no coefficient is a seed probability before the total mass is made
+into a probability budget. $\square$
+

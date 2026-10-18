@@ -1,0 +1,18 @@
+### 100.5. Every off-diagonal entry and the entire lambda-lambda block
+
+Fix distinct i,j>=1 and ell=p_j. The simultaneous normalization makes alpha=a/c,beta=b/c units at ell. Choose t=1,z1=-beta,z2=alpha. The remaining coordinate satisfies z3^2=beta^2-15e. Since ell divides e, both roots lifting plus or minus beta exist by Hensel's lemma. These points satisfy all three covering conics.
+
+For lambda_j choose z3=-beta modulo ell. Direct reduction gives
+
+ L1=4p b^2/c modulo ell,
+ L3=2p b^2/c modulo ell.
+
+Both are units. Since the second Hilbert argument is ell, the product contributes (8p^2 b^4/c^2/ell)=(2/ell)=1. Together with section 100.4, this proves <lambda_i,lambda_j>=+1 for every distinct pair. The diagonal entries are+1 by alternation. Thus the whole lambda-lambda block is zero in additive notation, for every support size.
+
+For mu_j instead choose z3=beta modulo ell. Then
+
+ L2=-b/c modulo ell,
+ L3=2p b^2/c modulo ell.
+
+The local product has character (-2p b^3/c^2/ell)=(b/ell), because ell=1 modulo 24 and (p/ell)=1. Every other place contributes 1. Thus the off-diagonal mixed entry is exactly H_ij=[(b_i/p_j)]. The primitive numerator b_i, rather than the rational ratio b_i/c_i, is essential; the two denominator factors cancel only in the full tangent product.
+

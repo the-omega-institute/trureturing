@@ -1,0 +1,57 @@
+**引理 89.2（未平方分支和统一几何界）。** 为简化记号，以下写 $k=k_r$、$R=R_r$、$d=d_r$，并令
+
+$$
+\begin{gathered}
+k=\sqrt{\alpha+\beta r^2},\quad d=1+\alpha+(1+\beta)r^2,\quad
+R=\sqrt{\beta^2(1+\alpha)+\alpha^2(1+\beta)r^2},\\
+u=-v_1/u_1=
+\frac{R-\alpha kr}{\beta k+rR}
+=\frac{1-\alpha k^2}{r+kR},\quad
+l=\sqrt{\alpha+\beta u^2},\quad e=1+\alpha+(1+\beta)u^2,\\
+J=\alpha r+\beta u,\qquad
+\Theta=2\alpha-\beta^2+\beta(1+\beta)u^2.
+\end{gathered}
+\tag{RC.174}
+$$
+
+在整个 $I$ 上，
+
+$$
+\begin{gathered}
+kl+ru=1,\quad 1/20<u<1/10,\quad .98<k<1.007,\quad .93<l<.94<k,\\
+2.68<d<13/4,\quad e>0,\quad119/160<J<1,\quad
+17/10<\Theta<177/100,\quad9/10<kl<1.
+\end{gathered}
+\tag{RC.175}
+$$
+
+证明。两个 $u$ 根式的相等由有理化直接得到。第二式分子 $1-\alpha k^2>0$，因为 $\alpha<.88$、$k^2\le1+(1/8)((21/20)^2-1)<1.013$；分母正。平方后的正交式是
+
+$$
+\begin{aligned}
+\mathcal E_{\rm fr}
+&=(\alpha+\beta r^2)(\alpha+\beta u^2)-(1-ru)^2\\
+&=(\beta k^2-r^2)u^2+2ru+\alpha k^2-1=0.
+\end{aligned}
+\tag{RC.176}
+$$
+
+代入有理化式还给出
+
+$$
+1-ru=\frac{kR+\alpha r k^2}{r+kR}>0.
+$$
+
+因此取的确是未平方的正根 $kl+ru=1$，没有引入另一条平方分支。对固定 $r>0$，$u\mapsto k\sqrt{\alpha+\beta u^2}+ru$ 在 $u\ge0$ 严格递增。先由 $k^2=1+\beta(r^2-1)$ 得 $.98<k<1.007$。该函数在 $u=.05$ 的值小于
+$1.007(.939)+1.05(.05)=.998073<1$；在 $u=.1$ 的值大于
+$.98(.936)+.85(.1)=1.00228>1$。所用 $.939,.936$ 是直接平方比较的严格根式界。这证明 $1/20<u<1/10$。其余界由 (RC.168)、$r\in[.85,1.05]$ 逐项代入得到；例如 $J>(7/8)(17/20)=119/160$，$J<(.88)(1.05)+(.125)(.1)<1$，且 $kl=1-ru<1$、$kl>.98(.93)>.9$。
+
+所有实际分母 $r+kR,\beta k+rR,k,l,d,e,J$ 均正。若把几何恒等式改写成多项式，(RC.176) 的 $u^2$ 首项系数为
+
+$$
+\beta k^2-r^2=\alpha[\beta-(1+\beta)r^2]<0
+\tag{RC.177}
+$$
+
+于整个外盒成立，因为 $\beta<1/8$、$1+\beta>28/25$、$r^2\ge289/400$。所以以它作消元的首项因子不会丢掉实际分支；清除 $k$ 的正偶次幂也合法。恒等式的使用始终保留 $\alpha+\beta=1$、根式平方关系和 $1-ru>0$，不把任意平方根当成原分支。$\square$
+

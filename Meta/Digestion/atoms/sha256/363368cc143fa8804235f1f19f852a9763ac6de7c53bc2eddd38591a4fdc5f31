@@ -1,0 +1,56 @@
+**Definition 1.1 (fixed original data).** Fix one arbitrary admissible signed $\kappa\ne0$, the original height interval $I=(l,u)$, an interior pole $k_0\in I$, and $\varepsilon,a>0$. The three phase coordinates $q=(\theta,v,x)$ range over $\mathbb R^3$. All measures are raw $dY=dk\,dq$ unless a change of density is displayed. Retain the original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ of the source problem. It can be specified on the whole interval by its exact rational identity
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,& d_0&=k_0-\alpha_\kappa>0,\\
+c_j&=c_\kappa^{(j)}(k_0)\quad(j=0,1,2),\\
+c_\kappa(k_0+h)&=c_0+h c_1+\frac{h^2}{2(1+h/d_0)}c_2.
+\end{aligned}
+\tag{1.1}
+$$
+
+Here $H$ and the jets are the fixed original data; they are not independently variable replacement coefficients. Formula (1.1) is an equality, rather than a truncated Taylor model. For example the original retained components are
+
+$$
+(A_\kappa(k),B_\kappa(k))
+ =\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k).
+\tag{1.2}
+$$
+
+The original admissibility conditions, including positive probabilities and absence of denominator zeros, remain in force. In particular $k-\alpha_\kappa>0$ on $I$, and the original third component in (1.1) is retained. The determinant is
+
+$$
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ =-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\tag{1.3}
+$$
+
+Let $L=u-l$, $\lambda=\varepsilon^2\pi^2/L^2$ and
+$\phi(k)=(2/L)^{1/2}\sin(\pi(k-l)/L)$. Both actual height endpoints are Dirichlet. The free operator and threshold shift are
+
+$$
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0.
+\tag{1.4}
+$$
+
+Use the unitary Fourier transform in the three real phases, with factor $(2\pi)^{-3/2}$. Put
+$B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2$.
+The entire complex form and operator domains, with underlying $L^2(dY)$ membership understood, are
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\
+ \int_{\mathbb R^3}\!\int_I
+ \bigl(\varepsilon^2|\partial_k\widehat\psi|^2
+       +|\eta\cdot c_\kappa|^2|\widehat\psi|^2\bigr)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\
+ \int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_{L^2(I)}^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{1.5}
+$$
+
+Thus $\mathcal Q=D(S^{1/2})=D(B^{1/2})$. No ordinary phase $H^1$ assumption is imposed. Every real frequency and every complex state in these domains is allowed.
+

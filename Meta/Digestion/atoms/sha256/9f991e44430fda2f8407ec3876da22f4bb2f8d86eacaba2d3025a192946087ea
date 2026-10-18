@@ -1,0 +1,72 @@
+**Theorem 6.1 (arbitrary failing-coefficient mass bound).** Let $C$ be a
+valid zero-transfer CP/TNI live coefficient matrix strictly failing
+$M(C)\succeq0$. Choose the positive $q$ and supported separator $H$
+of Proposition 3.1, and $\delta=-q^TM(C)q>0$. Define
+
+$$
+\beta_j=\frac{\delta^2}
+ {4q_j^2\left(\sum_{k\ne j}q_k\sqrt{d_k}\right)^2},
+\qquad\beta=\min_{j=0,1,2}\beta_j>0.
+\tag{JG.35}
+$$
+
+For ANY full channel with this live map and an ACTUAL fully counted
+factorization (JG.23), or its countable or specified integral version,
+let the high set be $A_{\geq3}=\{\alpha:d_\alpha\geq3\}$, and let
+$p_{\geq3}^{\rm acq}(\rho)$ count its acquisition mass and
+$p_{\geq3}^L(\rho)$ its later supported live mass. For EVERY positive
+possibly subnormalized complex input $\rho$,
+
+$$
+p_{\geq3}^{\rm acq}(\rho)\geq p_{\geq3}^L(\rho)
+                                      \geq\beta\operatorname{tr}\rho.
+\tag{JG.36}
+$$
+
+These are unconditional masses on the received specimen; in particular
+the bound holds on each of the twelve original inputs separately.
+
+Proof. Split the actual live map into low- and high-fibre CP contributions.
+Their positive Choi matrices sum to $SCS^\dagger$. Testing its orthogonal
+complement forces both aggregates to have that support. Hence their
+coefficient matrices satisfy $C=C_L+C_H$, $C_L,C_H\succeq0$.
+The product-rank argument puts $C_L$ in the two-coordinate cone;
+$\operatorname{tr}(HC_L)\geq0$, so
+$\operatorname{tr}(HC_H)\leq-\delta$.
+This support step is essential: $H$ is not a global Schmidt-two witness.
+
+Put $x_i=(C_H)_{ii}$. The high live effect is
+$\operatorname{diag}(x)$, and $0\leq x_i\leq d_i\leq1$.
+For a fixed $j$, the complementary two by two block of $H$ is PSD and
+pairs nonnegatively with the corresponding positive block of $C_H$.
+Positivity also gives $|(C_H)_{jk}|\leq\sqrt{x_jx_k}$. Consequently
+
+$$
+\begin{aligned}
+\operatorname{tr}(HC_H)
+&\geq q_j^2x_j-2q_j\sqrt{x_j}\sum_{k\ne j}q_k\sqrt{x_k}\\
+&\geq-2q_j\sqrt{x_j}\sum_{k\ne j}q_k\sqrt{d_k}.
+\end{aligned}
+\tag{JG.37}
+$$
+
+Combine with its negative upper bound and square nonnegative quantities
+to obtain $x_j\geq\beta_j$. Thus
+$\operatorname{diag}(x)\succeq\beta I$ and
+$p_{\geq3}^L(\rho)=\operatorname{tr}(\operatorname{diag}(x)\rho)
+\geq\beta\operatorname{tr}\rho$, without a real, diagonal, pure or
+unit-trace restriction on $\rho$. Each full TP decoder has a TNI
+supported live part; summing its trace inequalities gives
+$p_{\geq3}^{\rm acq}\geq p_{\geq3}^L$.
+
+All denominators are positive: in the failing CP case every $d_i>0$,
+and a nonnegative negative-quadratic-form $q$ has every coordinate
+positive, as proved after (JG.19). No quotient is assigned at $C=0$
+or a passing singular boundary. In the integral model the dimension
+sets are measurable and all low/high effects and live Choi fields are
+positive and integrable. The support arguments hold almost everywhere,
+the aggregate low cone is closed, and the same trace inequalities can
+be integrated. Countable sums obey the same proof. A closure limit
+without an actual cut has no acquired-probability interpretation.
+$\square$
+

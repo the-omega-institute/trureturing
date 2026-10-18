@@ -1,0 +1,42 @@
+**Lemma 11.2 (closedness, compactness and finite cone representations).**
+Every element of $\mathcal C_2$ is a sum of at most nine singular
+rank-one coefficient matrices. Each bounded-trace part of this cone is
+compact; in particular the cone is closed. The set $\mathcal K_s$ is
+nonempty and compact for every $s\in[0,1]$.
+
+Proof. Intersect the singular polynomial locus in (IR.68) with the unit
+sphere of $\mathbb C^3$, considered as a finite real Euclidean space.
+It is closed and bounded, hence compact. Its projectors $zz^\dagger$
+form a compact set $\mathscr S$ in the trace-one Hermitian affine
+space, whose real dimension is eight. A finite convex combination
+with more than nine nonzero weights has affinely dependent projectors:
+there are real $c_j$, not all zero, with
+$\sum_jc_j=0$ and $\sum_jc_jP_j=0$. Both signs occur among the
+$c_j$. Subtract from the weights $\lambda_j$ the multiple
+$\min_{c_j>0}(\lambda_j/c_j)c_j$. This preserves the represented
+matrix and total weight, keeps all weights nonnegative and removes
+at least one. Repetition yields at most nine projectors.
+
+The convex hull of $\mathscr S$ is consequently the continuous image
+of the compact product of a nine-point simplex and $\mathscr S^9$,
+with zero weights and repeated projectors allowed. It is compact.
+Every nonzero cone element divided by its trace is in that hull,
+since $\operatorname{tr}(zz^\dagger)=\|z\|^2$. Conversely every
+positive multiple of a hull element is in the cone, by absorbing
+weights into singular vectors; the locus is homogeneous. Thus the
+trace-at-most-$T$ part is the compact image
+$[0,T]\times\operatorname{conv}\mathscr S$ under multiplication,
+including zero. A convergent sequence of cone matrices has bounded
+traces, so its limit belongs to such a compact slice. This proves
+closedness and the nine-term representation, with coefficients
+absorbed into vectors. Nonzero represented singular matrices have
+rank two by Lemma 4.2.
+
+Every variable in (IR.69) is positive and bounded above by $I_3$,
+so its trace is at most three and its norm is bounded. Membership in
+the closed cone, the total coefficient identity, and both $N$
+inequalities are closed conditions. The feasible set is therefore
+closed and bounded in a finite real vector space, hence compact.
+The instruments of §7 provide feasible coefficient matrices, proving
+nonemptiness at every strength, including both endpoints. $\square$
+

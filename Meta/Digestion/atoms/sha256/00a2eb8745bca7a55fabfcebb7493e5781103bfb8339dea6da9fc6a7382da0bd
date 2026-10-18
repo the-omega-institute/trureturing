@@ -1,0 +1,38 @@
+**Definition 1.1 (The two fixed rational weights).** Let $D_H=35\cdot10^{24}$. On nonnegative integer gap counts use exactly
+
+$$
+F_0(k)=k^9,
+$$
+
+and
+
+$$
+\begin{aligned}
+F_1(k)=H(k)=k^9+\frac1{D_H}(&55800726477138 k-224986136658885 k^2\\
+&+420664314485485 k^3-540138133491075 k^4\\
+&+518234977000797 k^5-254383031435085 k^6\\
+&+77668004560980 k^7+43377331415040 k^8).
+\end{aligned}
+$$
+
+Write $h_p=[k^p]H(k)$ for its rational monomial coefficients; thus $h_0=0$ and $h_9=1$. For $k\ge1$ set
+
+$$
+\begin{aligned}
+r_k&=\frac{H(k)}{k^9}=1+\frac ak+\sum_{j=2}^8\frac{b_j}{k^j},
+&b_j&=h_{9-j},\\
+a&=h_8=\frac{43377331415040}{35\cdot10^{24}}
+=\frac{9914818609152}{8\cdot10^{24}}>0,
+&\delta&=\frac{2749658638697}{10^{24}}\in(0,1).
+\end{aligned}
+$$
+
+The exact center certificate of the supplier's Theorem 15.5 gives
+
+$$
+1\le r_k\le1+\frac\delta k\quad(k\ge1),
+\qquad r_1=1+\delta.
+$$
+
+In particular both weights are positive at every positive integer and vanish at zero. This is the rational center polynomial of its equation (19.7), not the residual-zero limiting polynomial. Its instrument and that of $F_0$ retain the supplier's existing complex memory dimension six; the block size below is an observer parameter and does not change either producer.
+

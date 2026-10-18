@@ -1,0 +1,55 @@
+**Definition 2.1 (complete paid Boolean table).** A graph $P$ has a
+finite installed running set $Q$, two distinct terminals $0,1$, one
+fixed running start, a coordinate $i(q)\in[n]$ at every $q\in Q$,
+and two fixed successors $\delta(q,0),\delta(q,1)$. On input
+$\theta\in\{0,1\}^n$ it reads $\theta_{i(q)}$, pays one query
+and $c_{i(q)}$ letters, and follows that successor. The sole changing
+configuration is its current state. Put $m=|Q|$, including unused states;
+the Boolean total installed count is $m+2$.
+
+Require correct termination with output $\mathbf1_{\{|\theta|\ge k\}}$
+and both bounds on each input of this same graph:
+
+$$
+t_P(\theta)\le n,\qquad J_P(\theta)\le W
+\quad(\theta\in\{0,1\}^n).
+\tag{IC.7}
+$$
+
+Every actual visit is paid, including repeated coordinates at different
+states and all visits after certification. No order, leveling,
+per-state residual predicate, read-once condition after certification or
+union-acyclicity is assumed. A syntactic path with contradictory replies
+to one coordinate need not be an actual input path.
+
+An actual history ends just before a query. Its exposed coordinate
+support is $S$ and its assignment is $\eta_S$. Let $h$ and $z$ be
+the numbers of exposed ones and zeros. It is live when both outputs
+still have completions, equivalently when
+
+$$
+(h,z)\in V_{\rm count}:=
+\{0,\ldots,k-1\}\times\{0,\ldots,n-k\},
+\qquad G=|V_{\rm count}|=k(n-k+1).
+\tag{IC.8}
+$$
+
+For a cell $v=(h,z)$, let $F_v$ be the installed states reached by
+actual live histories of that cell, and put
+
+$$
+\begin{aligned}
+Q_{\rm live}&=\bigcup_v F_v,& b_v&=|F_v|,&
+u&=|Q\setminus Q_{\rm live}|,\\
+E&=\sum_v(b_v-1),&
+d(q)&=|\{v:q\in F_v\}|,&
+D&=\sum_{q\in Q_{\rm live}}(d(q)-1).
+\end{aligned}
+\tag{IC.9}
+$$
+
+A state live on one history remains in $Q_{\rm live}$ when another
+history reaches it after certification. In particular a paid discriminator
+is not automatically an extra member of $u$. These are incidences on
+one installed graph, not independently allocated physical batches.
+

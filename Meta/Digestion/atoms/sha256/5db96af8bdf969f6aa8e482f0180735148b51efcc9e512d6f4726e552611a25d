@@ -1,0 +1,91 @@
+**Theorem 22.1 (constructor-elimination full-row criterion).** For every
+nonempty acquired input in $\mathcal E_{\rm CE}$, the following are
+equivalent:
+
+1. Every nonempty selected chart satisfies (CE.21.4).
+2. Some finite original prefix determines the entire $R_Q$ on the entire
+   $U=\mathcal U_R(H_0,H_{\rm rel})$.
+3. For every permitted certified $N$, a deterministic effective static
+   service returns that entire row, is total on $U$, and has a uniform
+   finite bound on its new raw calls.
+4. Such a service exists at a permitted $N$ when real paid serial
+   $\mathsf{ApplyRho}$ is allowed.
+
+The criterion is effective. A negative answer constructs, for every
+requested inclusive original depth $b$, two finite sources in $U$ with
+identical replies at $|p|\le b$ and different entire $Q$-rows. The theorem
+does not equate general minimum static and serial prices.
+
+Proof. Construct the chosen finite cover, its elimination schedules and
+its residual automata. Emptiness removes exactly the empty domains.
+For each remaining chart satisfying (CE.21.4), find $h_\eta$ with
+$F^{\rm acc}_\eta\cap Z_{h_\eta}=\varnothing$. Let $s$ be a prefix length
+that contains all questions in the original chart selector, and take
+
+$$
+H=\max\bigl(\{s\}\cup\{A_\eta+h_\eta:\eta\text{ nonempty}\}\bigr).
+\tag{CE.22.1}
+$$
+
+Two sources in $U$ agreeing under $\equiv_H$ choose the same chart.
+By (CE.20.5) their remaining coordinate tuples agree under
+$\equiv_{h_\eta}$. Lemma 21.4 excludes Bad, and Proposition 21.3 gives
+equality of the entire rows. This proves 1 implies 2. There is no
+unobserved normalization branch whose selection is being assumed.
+
+Conversely, if a chart fails, use Lemma 21.4 at $h=b+1$. Its two finite
+assignments satisfy the complete joint domain and Bad. Proposition 20.3
+reconstructs two finite sources in the same original chart of $U$;
+(CE.20.5) gives their original agreement at all $|p|\le b$ and Proposition
+21.3 gives their different full rows. This disproves 2 and proves the
+claimed effective finite negative witnesses.
+
+For the operational implication, let $M$ be the maximum number of
+original literal questions in the chosen finite selector, so $M\le M_0$.
+At static epoch $N$ recover those replies with [SLH, Theorem 2.2][SLH],
+using at most $2M$ actual reads. This selects the actual chart, necessarily
+nonempty. For each surviving $y$, the original node $a_{\eta,y}$ is known
+to exist and its current subtree is $\rho^N(v(y))$. Recover every original
+relative reply with $|p|<h_\eta$ there using the same decoder, prefixing
+every actual query by $a_{\eta,y}$. Its absence guard applies to relative
+addresses as well. A sufficient uniform new raw bound is
+
+$$
+K=2M+\max_{\eta\text{ nonempty}}
+           2|Y_\eta|(2^{h_\eta}-1).
+\tag{CE.22.2}
+$$
+
+Only genuine $N$-epoch addresses and replies are raw events. Decoded
+original facts are logical consequences of those events, not fabricated
+historical acquisitions. The register remains at $N$ throughout.
+
+Intersect the domain automaton for $D_\eta$ with these finite coordinate
+prefix conditions and extract any accepted finite assignment $w$.
+The actual assignment proves nonemptiness. Thus this finite local
+computation terminates. Compute the entire finite
+$R_Q(F_\eta[w])$ and output it. The actual assignment and $w$ have equal
+observed prefixes, so Lemma 21.4 and Proposition 21.3 prove that their
+entire rows coincide. There is no assertion that $F_\eta[w]$ is the actual
+source. Its row is an evaluator of a value proved common to the whole
+conditioned domain. Extra decoder replies need not be matched by $w$:
+the proof already gives the same row on the larger domain selected by
+the decoded facts alone. They remain actual retained evidence if retained.
+This gives 1 implies 3, and 3 implies 4 by inclusion of service classes.
+
+For 4 implies 2 reuse the operational argument of §2 and [SLH, Theorem
+74.4, proof (iii)][SLH] at its exact interface. A source-total deterministic
+service with at most $K$ four-valued reads has finitely many reachable
+reply prefixes. Between successive reads, its deterministic computation,
+real updates and eventual next address or output are fixed by such a
+prefix and must terminate on every source reaching it. Therefore the
+submitted physical addresses on all reachable prefixes form a finite set.
+Let $B$ exceed all their lengths. Original $\equiv_B$ agreement forces the
+same reply at each submitted address at its actual, possibly adaptive,
+epoch, by Lemma 19.2's address locality. Induction gives the same complete
+serial transcript and output. Correctness forces equal entire rows.
+This argument assumes no extra source information from update timing,
+identity, hidden control or retained caches, exactly as Assumption 1.3
+requires. It does not assume a prior uniform work or update bound.
+Thus 4 implies 2 and all four statements are equivalent. $\square$
+

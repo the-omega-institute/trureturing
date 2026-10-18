@@ -1,0 +1,22 @@
+**Definition 6.1 (exact common-decoder coincidence set).** Put
+
+$$
+q_{\rm abs}=\left(1,
+ \frac1{\sqrt{\alpha+\beta t_+^2}},
+ \frac{t_+}{\sqrt{\alpha+\beta t_+^2}}\right)^T
+\tag{TA.37}
+$$
+
+and define a set of original required thresholds
+
+$$
+\mathcal E_{\rm abs}=
+ \{s_0\tau(a):0<a<a_\dagger,\ k=k(a),\ W(a,k)^Tq_{\rm abs}=0\}.
+\tag{TA.38}
+$$
+
+Equivalently retain all real solutions of
+$\mathcal P(a,k)=0$ and $W(a,k)^Tq_{\rm abs}=0$ in
+$0<a<a_\dagger$, $7/20<k<2/5$, and map them by $s=s_0\tau(a)$.
+The selected $k$ is essential; arbitrary polynomial roots are excluded.
+

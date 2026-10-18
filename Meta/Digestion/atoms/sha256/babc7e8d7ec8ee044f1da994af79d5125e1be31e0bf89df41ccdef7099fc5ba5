@@ -1,0 +1,15 @@
+**Corollary 90.3 (word-count lower).** Finite subadditivity at each covered level and Lemma 90.2 give
+
+$$
+K_N\leq\sum_{w\in W}\sum_i\mu(A_i(w))\leq4|W|.
+$$
+
+If every complete word has at most $B$ bits, including all source-dependent program variants, then $|W|\leq2^{B+1}-1$. Thus
+
+$$
+B\geq\log_2(K_N/4+1)-1
+\geq\log_2\log_2N-O_{L,d_0}(1).
+$$
+
+An infinite worst-case length already satisfies the lower. A word failing to produce a required vector cannot cover that source. Granting arbitrary real vectors to every remaining decoder strengthens the lower-bound model. A fixed public phase direction instead has the constant midpoint predictor $u_j/2$ for every amplitude in $[0,1]$; the lower therefore needs the actual joint scale-and-direction bank, not an aligned scalar substitute.
+

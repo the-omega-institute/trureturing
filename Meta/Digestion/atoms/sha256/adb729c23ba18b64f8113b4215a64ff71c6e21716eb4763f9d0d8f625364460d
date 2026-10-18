@@ -1,0 +1,59 @@
+**Theorem 4.2 (integral and fractional cover refinement).** For every
+$d,n,L\ge1$,
+
+$$
+\begin{aligned}
+K_d(n)&\le K_{d,L}(n)\le Q_{d,L,n}K_d(n),\\
+Z_d(n)&\le Z_{d,L}(n)\le Q_{d,L,n}Z_d(n).
+\end{aligned}
+\tag{SIR.21}
+$$
+
+More precisely, each complete cover member $C_e$ is partitioned
+by Theorem 3.2 into disjoint sections $C_{e,a}$, with exactly
+the same union $C_e$. For fractional coefficients $\theta_e\ge0$,
+assign $\theta_e$ to every nonempty section of $C_e$. At every tuple
+the total covering sum is unchanged; the total coefficient is at most
+$\sum_e\theta_e q_{e,L}$.
+
+If an arbitrary encoder has disjoint assigned fibers $B_e\subseteq C_e$,
+then
+
+$$
+B_{e,a}=B_e\cap C_{e,a}
+\tag{SIR.22}
+$$
+
+is an exact partition of that fiber into assigned subsets of these
+restricted full solution sets. Its number of attained refined names is
+
+$$
+\sum_e\left|
+ \{(r_{x_{i_c}}(q_c))_{c\in H_{e,L}}:x\in B_e\}\right|
+\le\sum_e q_{e,L}\le Q_{d,L,n}\,|\{e\}|.
+\tag{SIR.23}
+$$
+
+Proof. First start with complete members and use their exact section
+partitions. A tuple belongs to precisely one section of each parent
+member that contains it. This proves the asserted pointwise equality
+of fractional covering sums, and the integral count bound follows by
+counting nonempty sections. Combining identical sections can only
+reduce the total coefficient or number.
+
+For an arbitrary admissible cover, NDR saturation first enlarges
+members to complete solution sets, without increasing their number
+or total coefficient. This first enlargement can increase coverage;
+the subsequent section replacement preserves that enlarged covering
+sum exactly. Restricted complete sets are themselves original
+admissible sets by RRN's converse, giving the opposite optimum
+inequalities in (SIR.21).
+
+For assigned fibers, intersect the exact parent partition with $B_e$.
+The owner vector recovers its section uniquely, proving (SIR.22)
+and the exact attained-name count (SIR.23). A subset of a section
+inherits all its complete native witnesses; it need not itself be
+a full solution set. Thus the statement neither enlarges an
+encoder's assigned fiber nor supplies an uncounted section selector.
+$\square$
+

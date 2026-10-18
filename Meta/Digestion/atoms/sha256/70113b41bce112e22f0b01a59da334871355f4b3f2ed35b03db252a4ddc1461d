@@ -1,0 +1,12 @@
+**Theorem 104.1.** There is no local minimum satisfying (104.2)–(104.3) and the stated support condition.
+
+The proof keeps the same original common normer throughout. RT III §§95–97 supply the supported quotient, the equality of principal and full complete norms, unrestricted principal one-party best responses, and the rank-one-quotient exclusion. In this occupancy their consequences are
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\quad G_S=H_S\odot\overline{\mathsf R},
+\quad \mathsf R\succeq0,\quad \mathsf R_{ii}=1,
+\quad \mathsf R\operatorname{diag}(\overline a)H_S=0.
+\tag{104.4}
+\]
+Here \(a\) spans the full kernel of \(G\). Section 99 supplies uniqueness of all principal normers, including singular competitors, positive definiteness of the common principal density, and invertibility of the coefficient and witness cross blocks. Sections 101–102 exclude the real-gauge and both-unbiased endpoints. These results concern the full calibrated domain; they do not assert joint local minimality on a principal or fixed-rank domain.
+

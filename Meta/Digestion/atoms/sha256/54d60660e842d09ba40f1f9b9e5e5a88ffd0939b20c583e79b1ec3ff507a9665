@@ -1,0 +1,14 @@
+**Theorem 46.6 (Zero fixed-family infimum and exactness).** For a fixed family on any nonempty measurable carrier, let
+
+$$
+I(\mu)=\inf_{\text{lawful preparations}}
+\sup_{y\in X}\operatorname {TV}(\widehat\mu_y,\mu_y).
+\tag{46.15}
+$$
+
+Then $I(\mu)=0$ if and only if $y\mapsto\mu_y$ is TV-continuous in finite prime observations. On a countable power-set carrier this is also equivalent to exact acquisition. On arbitrary measurable carriers, the family in Proposition 46.5 has zero infimum without exact attainment.
+
+**Proof.** Every prepared family is TV-continuous by Lemma 45.3, and a uniform TV limit of such families is TV-continuous by the triangle inequality. This proves necessity.
+
+Conversely fix $\delta>0$. Call an occupied prefix cylinder $C$ certified if it has a representative $x_C\in C$ with $\sup_{y\in C}\operatorname {TV}(\mu_y,\mu_{x_C})<\delta$. Continuity with radius $\delta/2$ supplies a certified prefix around every actual source. Choose one representative for every certified node and preload, under one source-independent product seed law, tape coordinates $V_C$ of laws $\mu_{x_C}$. Query primes in increasing order and emit $V_C$ at the first certified node. The chosen node depends only on its acquired prefix. Every source reaches such a node after finitely many queries, and the output law there is within $\delta$ of its fixed target law. Finite records and output events are measurable coordinate events. This construction changes only the preparation, with the target family and consumer held fixed. It gives uniform error at most $\delta$ and therefore $I(\mu)=0$. Product-measure existence and the shared-table semantic boundary are exactly those in Theorem 46.4. The countable assertion follows from Theorem 46.3; Proposition 46.5 supplies the failure of general attainment. $\square$
+

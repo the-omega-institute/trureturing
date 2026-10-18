@@ -1,0 +1,14 @@
+### 98.4. All places except q and r
+
+At infinity, qr is positive. At 2, qr=19^2=1 modulo 8 is a square. At 3 it is1 modulo 3, and at 5 it is a square by actual 5-splitting. At s,
+
+ (qr/s)=(q/s)(r/s)=(-1)(-1)=+1,
+
+so qr is a local square there as well. All these contributions are one, even in the presence of certificate denominators.
+
+At any odd prime p not dividing 30qrs, both projected conics H2,H3 are smooth over Z_p with nondegenerate quadratic forms. A primitive local covering point has primitive projections to both: if an entire projected triple vanished modulo p, the other equation would force the fourth coordinate to vanish. The two rational tangency sections are primitive; this is immediate for H2 and follows from gcd(a,b,c)=1 for H3, including primes dividing c. Their tangent forms are primitive.
+
+A primitive tangent to a smooth conic at an integral section has even valuation at any other integral section when its value is nonzero. Explicitly, choose unimodular coordinates sending the tangency section to (1,0,0). The conic has form uXZ+vY^2+wYZ+hZ^2=0, with u,v units, and its tangent is Z=0 up to a unit. Away from the reduced tangency point the evaluation is a unit. Near it, X is a unit and Y,Z are divisible by p, so Z(uX+wY+hZ)=-vY^2 gives an even valuation. This proves the assertion uniformly, including denominator primes. Zero tangent evaluations can be avoided because the smooth locally soluble covering has infinitely many nearby points and each tangent zero set is finite.
+
+Thus both tangent evaluations have even valuation. Since qr is a unit, the odd-prime Hilbert product is one. This accounts for all auxiliary primes without imposing affine integrality on a chosen norm solution.
+

@@ -1,0 +1,30 @@
+**Proposition 4.2 (a supplied nonidentical parity pair serves two heights).**
+Suppose the assistance is the supplied calibrated pure pair
+$\eta_s$, with $\langle\eta_+,\eta_-\rangle=\mu\in[0,1)$, independent
+of height and unknown phase, and coherent access and the endpoint service
+are permitted. On a two-height branch the common exact success probability
+
+$$
+(1-\mu)\frac{1+g_{ab}}2>0
+\tag{RB.17}
+$$
+
+is attainable. This is a lower bound for that helper contract, not a claim
+of its optimum. No such height-independent pair can serve a three-height
+branch with positive exact success under (RB.7).
+
+Proof. Unambiguously discriminate the helper by a conclusive contraction
+$\eta_s\mapsto\sqrt{1-\mu}\,|s\rangle$. The input Gram matrix minus
+the conclusive Gram matrix is
+$\mu\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)\geq0$.
+Thus it has a complete isometric realization with a common inconclusive
+helper vector of norm $\sqrt\mu$. This is the mature two-state
+unambiguous-discrimination construction, not acquisition of a helper.
+On a conclusive label apply Theorem 4.1's pair filter. Retain the label and
+every residue. On inconclusive helper readout, or filter failure, stop the
+specimen and keep its actual quantum residue and the failed stage label.
+The resulting complete instrument has success probability (RB.17) on
+both parities and heights. Theorem 3.3 proves the final assertion.
+For $\mu=1$ the helpers coincide and this construction gives no conclusive
+branch. $\square$
+

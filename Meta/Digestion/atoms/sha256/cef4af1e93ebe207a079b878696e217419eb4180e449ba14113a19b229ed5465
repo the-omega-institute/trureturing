@@ -1,0 +1,17 @@
+**Definition 8.2 (View wire word and stage binding).** Each new publication
+is exactly the seven-field list
+
+$$
+[0100,\mathrm{serviceBinding},\xi,U(j),b,d_j,v_j],
+\quad
+(d_0,d_1,d_2,d_3,d_4)=(00,01,11,10,00).
+$$
+
+Kind 0100 is distinct from ARC's 0000–0011 arms. $j=0,\ldots,4$ is a
+static stage, not a registry object number or an input. $v_j$ is exactly
+one natural body. ServiceBinding retains ARC Definition 7.1's complete
+code-capture/seed-delivery lineage. Check exact tuple arity, all fields,
+current $p,c,k,\varrho$, target phase and expected static stage/kind.
+Actual current sender/mailbox/receiver placement origins authenticate the
+publication; its own future receiver seal is not predicted inside its word.
+

@@ -1,0 +1,222 @@
+**定理 2.1（非零第五响应逆及两支整层恢复）。** For every
+$D_0,Y,z\in\mathbb R$ and $\lambda\ne0$, the following policy
+recovers every complete target in $K_0(Y,z)$, without any restriction
+on the cardinality of this class:
+
+$$
+\begin{array}{c|c|c|c}
+\text{actual fifth response}&\text{sixth atom}&\text{seventh atom}
+                                      &\text{total readings}\\ \hline
+z=D_0&M&\text{stop at clock six}&7\\
+z\ne D_0&J&J&8
+\end{array}                                                     \tag{2.1}
+$$
+
+Each selected atom is immediately read. The nonzero fifth-response
+branch requires no terminal-root promise. The zero branch is the
+application of [V, Theorem 5.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)
+specified below.
+
+Proof. The cumulative matrices at clocks $0,\ldots,5$ are
+
+$$
+\begin{gathered}
+I,\ J,\ L,\ J+L,\ C,\ Q,\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\\
+C=J(J+L)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix}.
+\end{gathered}                                                   \tag{2.2}
+$$
+
+For a member of $K_0(Y,z)$, set
+
+$$
+\begin{gathered}
+u=\operatorname{tr}(JP)>0,\qquad R=P/u,\qquad
+T=\operatorname{tr}R=1/u,\qquad F=ug/\lambda,\\
+r=\operatorname{tr}(LR)>0,\qquad a=R_{11}.
+\end{gathered}                                                   \tag{2.3}
+$$
+
+The complete target is recovered from these coordinates by
+
+$$
+(P,g,\delta)=\left(R/T,\lambda T F,D_0\right).                 \tag{2.4}
+$$
+
+Indeed $\operatorname{tr}(JR)=1$ and
+$\operatorname{tr}(LR)=T+R_{12}=r$, so
+
+$$
+R=\begin{pmatrix}
+a&r-T\\1-r+T&T-a
+\end{pmatrix}.                                                  \tag{2.5}
+$$
+
+Strict positivity and rank one are exactly
+
+$$
+\begin{gathered}
+r>0,\qquad 0<a<T,\qquad r-1<T<r,\\
+a(T-a)=(r-T)(1-r+T).
+\end{gathered}                                                   \tag{2.6}
+$$
+
+In particular, $T>0$. The first four actual readings imply
+
+$$
+F(0)=0,\quad F(1)=24,\quad F(2)=48/r,\quad
+F(3)=\frac{312}{5(1+r)}.                                      \tag{2.7}
+$$
+
+They determine the entire degree-at-most-three polynomial. More
+explicitly, let
+
+$$
+\ell_i(t)=\prod_{\substack{0\le j\le3\\j\ne i}}\frac{t-j}{i-j},
+\qquad
+F_r(t)=24\ell_1(t)+\frac{48}{r}\ell_2(t)
+                         +\frac{312}{5(1+r)}\ell_3(t).
+                                                               \tag{2.8}
+$$
+
+Then $F=F_r$. Evaluating this expression gives
+
+$$
+\begin{aligned}
+F_r(4)&=\frac{96(5r^2+3r-15)}{5r(r+1)},\\
+F_r(5)&=\frac{24(5r-8)(3r+5)}{r(r+1)},\\
+F_r(6)&=\frac{48(18r^2-r-45)}{r(r+1)},\\
+F_r(7)&=\frac{168(5r-8)(2r+3)}{r(r+1)}.
+\end{aligned}                                                   \tag{2.9}
+$$
+
+All denominators $r(r+1)$ are positive. Multiplication in (2.2)
+also gives the four trace identities
+
+$$
+\begin{aligned}
+\operatorname{tr}(CR)&=T+a+1,\\
+\operatorname{tr}(QR)&=1+2r-a,\\
+\operatorname{tr}(JQR)&=2(T+a+1)-r,\\
+\operatorname{tr}(MQR)&=T+2+2r.
+\end{aligned}                                                   \tag{2.10}
+$$
+
+Each trace is strictly positive: the corresponding matrix is nonzero
+and entrywise nonnegative, and $R$ is strictly positive. In these
+coordinates the two remaining ancestor equations are exactly
+
+$$
+y_4=F_r(4)(T+a+1),\qquad y_5=F_r(5)(1+2r-a).                 \tag{2.11}
+$$
+
+Conversely, any $(r,T,a)$ satisfying (2.6) and (2.11), with $R$ as in
+(2.5) and $F=F_r$, gives by (2.4) a legal complete target realizing
+all six readings of $H_{JM}(Y,z)$. Its polynomial is nonzero because
+$F_r(1)=24$. Equations (2.6), (2.8) and (2.11) therefore describe the
+whole class, including the possibility that it is empty.
+
+Suppose first that $z\ne D_0$. Equation (2.11) and positivity force
+$F_r(5)\ne0$, hence $r\ne8/5$. Execute sixth $J$ and read $z_6$;
+execute seventh $J$ and read $z_7$. Their cumulative matrices are
+$JQ$ and $J^2Q=Q$. Thus the already acquired clock-five response and
+the actual clock-seven response give
+
+$$
+\rho=\frac{z_7-D_0}{z-D_0}
+=\frac{F_r(7)}{F_r(5)}
+=\frac{7(2r+3)}{3r+5}.                                      \tag{2.12}
+$$
+
+The cancellation uses only the proved $5r-8\ne0$ and positive
+$r,r+1,3r+5$. For $r>0$, the last function has
+
+$$
+\frac{d\rho}{dr}=\frac7{(3r+5)^2}>0,\qquad
+\frac{21}{5}<\rho<\frac{14}{3},\qquad
+14-3\rho=\frac7{3r+5}>0.
+                                                               \tag{2.13}
+$$
+
+Consequently the actual ratio uniquely determines
+
+$$
+r=\frac{5\rho-21}{14-3\rho},\qquad
+a=1+2r-\frac{y_5}{F_r(5)}.                                  \tag{2.14}
+$$
+
+If $F_r(4)\ne0$, recover
+
+$$
+T=\frac{y_4}{F_r(4)}-a-1.                                   \tag{2.15}
+$$
+
+If $F_r(4)=0$, then $5r^2+3r-15=0$ forces $r>1$, since the left
+side is negative for $0<r\le1$. At this root,
+
+$$
+18r^2-r-45=\frac{45-59r}{5}<0.
+                                                               \tag{2.16}
+$$
+
+Hence $F_r(6)\ne0$. The actual sixth reading, already acquired after
+$J$, instead recovers
+
+$$
+T=\frac12\left(\frac{y_6}{F_r(6)}+r\right)-a-1.              \tag{2.17}
+$$
+
+If $F_r(6)=0$, (2.16) shows that $F_r(4)\ne0$, so (2.15) applies.
+In particular no simultaneous zero of these two gain samples is
+discarded without proof. Equations (2.5), (2.8) and (2.4) now give
+the entire target. The sixth reading is not replaced by the
+counterfactual response to $M$.
+
+Suppose instead that $z=D_0$. Positivity of the clock-five trace and
+(2.9) force $r=8/5$, and (2.8) becomes
+
+$$
+F_r(t)=h(t)=t(t-5)(t-7),\qquad h(4)=12,\quad h(6)=-6.
+                                                               \tag{2.18}
+$$
+
+Thus this branch lies in exactly the baseline-drift, root-seven
+class of V, Theorem 5.2. Apply its sixth-$M$ inverse, using the actual
+response $z_6$ after that atom. In the present coordinates that
+inverse is
+
+$$
+T=-\frac{y_6}{6}-\frac{26}{5},\qquad
+a=\frac{y_4}{12}-T-1,
+                                                               \tag{2.19}
+$$
+
+followed by (2.5) and (2.4). These are precisely V, equation (5.5):
+putting $U=y_4/12$ and $V=-y_6/6$ there gives
+$T=V-26/5$ and $a=U-V+21/5$. The fourth and actual sixth traces
+are those in (2.10), so (2.19) uses only nonzero constant gain
+samples of $h$. This reuses the published zero-response inverse;
+the extension is the nonzero-response branch and the assembly of
+both branches over (1.6).
+
+For either branch, an actual compatible target supplies existence
+and ensures (2.6), including strict positivity and rank one of the
+reconstructed source. Every compatible target producing the same
+selected readings gives the same $r,a,T,F$, so the reconstruction is
+unique on the whole retained class. No division by the leading
+coefficient, a root difference, $F_r(4)$ when it is zero, or $F_r(6)$
+when it is zero occurs. The samples at clocks one, two and three
+are nonzero by (2.7); every other compatible sample zero is handled
+by the branches above. A drop in actual degree or a repeated root
+does not change interpolation or any step of the inverse. The sign
+of $\lambda$ is unrestricted throughout.
+
+There are six ancestor readings. The first branch adds one actual
+atom and stops at clock six; the second adds two and stops at clock
+seven. Their total counts are exactly seven and eight. Empty classes
+have no reachable input; on histories outside the stated classes the
+policy can be completed arbitrarily. No assertion of optimality for
+these counts is required. ∎
+

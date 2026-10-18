@@ -1,0 +1,10 @@
+**定义 56.1（原根分量）。** 对任意已达到的有限混合字面历史 $H$，令 $C_H=\mathcal V(H)\cap\{\alpha,\beta\}$，令 $H_L,H_R$ 分别从 $H$ 取地址首字母为 $L,R$ 的项并删去该首字母，保持原纪元与回复。置
+
+$$
+g_H=\bigwedge_{(n,\varepsilon,c)\in H}[c=\mathsf{branch}],\qquad
+b_H=g_H\wedge[\mathcal V(H_L)\ne\varnothing]\wedge[\mathcal V(H_R)\ne\varnothing].
+\tag{SLH.56.1}
+$$
+
+$b_H$ 为真时令 $A_H=\mathcal V(H_L)$、$B_H=\mathcal V(H_R)$，否则令 $A_H=B_H=\varnothing$。定义可能的相等孩子集合 $D_H=A_H\cap B_H$。此处 $A_H$ 是孩子语言，不是定理30.1的带两个参数的回复集合 $A_H(M,q)$。
+

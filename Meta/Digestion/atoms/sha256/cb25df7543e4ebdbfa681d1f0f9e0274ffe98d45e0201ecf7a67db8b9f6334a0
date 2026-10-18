@@ -1,0 +1,99 @@
+**Corollary 211.8 (A separately guarded fair-supplier funding region).**
+Under the same input hypotheses $\Delta_O(y)\le d\le1$, $\mu\ge2$
+and $s=g-E-d>0$ on $m\ge2$ selected classes, put
+
+$$
+a_1=2s+c_1,\qquad\Psi_1=\frac{a_1^2}{a_1-s},\qquad
+\tau_f=4\mu-5+d-E.
+\tag{211.22}
+$$
+
+If either $\tau_f<a_1+s$, or
+
+$$
+a_1+s\le\tau_f<\Psi_1,\qquad m-1>\Pi(s,a_1,\tau_f),
+\tag{211.23}
+$$
+
+then $W>5(\mu-1)$, and a full score $V$ has
+$\Delta_N(V)=\Delta_O(V)=1$ and
+$\sigma_H(Q(y)-Q(V))=0$. It is a certificate with $\theta=0$,
+although its early correct totals need not equal the input's.
+
+**Proof.** The bound $a_1\le a$ permits the weaker-bound substitution
+in 211.5. If $W\le5(\mu-1)$, then $t\ge\mu-d$ implies
+$S\le4\mu-5+d-E=\tau_f$. This contradicts the corresponding
+stock bound in either alternative, including a negative $\tau_f$.
+Put $h=\mu-1\ge1$. Apply 203.6 with
+$\kappa_f=2h$, terminal $\tau=W-4h>h$, the original late totals
+and zero early correct mass. The second-largest late total is at most
+$\mu=h+1\le2h$, so every hypothesis of that supplier holds.
+Its actual coefficients are
+
+$$
+C^V_{1^{j-1}0v}=\frac{\gamma_j}{2^{L-j}},\qquad
+P^V_{01x}=P^V_{10x}=\frac{2h}{2^{L-2}},\qquad T_V=W-4h,\quad A^V=0.
+\tag{211.24}
+$$
+
+The pair stock is $4h$, the anchor is $W$ and the total quotient
+mass $K$ is unchanged. Formula (203.28) gives the exact cost
+$\max(0,\mu-h,\mu-T_V)=1$. Only the early quotient coordinates
+were removed, so
+
+$$
+F_{Q(y)-Q(V)}(b,e)=c_1(b_1-1)+c_2(b_2-1)\le0.
+\tag{211.25}
+$$
+
+Equality holds, for example, at the hull point
+$(1,1,1,1/4,\ldots,1/4;1/4)$ (also when $L=3$, with no later
+coordinates). Thus the support charge is exactly zero. This is one
+complete score with one budget, not an addition of separately funded
+cells. The construction is the old fair supplier, and the implication
+from the actual input to its affordability is the stated restricted
+consequence of retained credit. $\square$
+
+To compare the strict parameters with 208.5, write $k=c_1/s$ and
+$t_0=\tau_f/s$. Then
+$\Phi(k)=(2+k)^2/(1+k)$ and (211.23) reads
+$3+k\le t_0<\Phi(k)$ with
+
+$$
+\begin{aligned}
+\eta&=\frac{(2+k)^2}{t_0}-1-k,\qquad
+n=\max\{1,\lceil2(t_0-3-k)/\eta\rceil\},\\
+w&=(t_0-3-k)/n,\qquad
+\Pi(s,a_1,\tau_f)=n\lfloor1/(\eta-w)\rfloor.
+\end{aligned}
+\tag{211.26}
+$$
+
+The upper strict condition alone is equivalently
+$4(\mu-g)+3E+5d-5<c_1^2/(g-c_2-d)$.
+It does not remove the lower alternative or finite-count condition.
+It can include the old critical equality
+$4(\mu-g)+3E+5d=5$ when $c_1>0$ and the stated count holds;
+it does not include the new critical equality $t_0=\Phi(k)$.
+The biased and fair funding regions are separate sufficient domains,
+with different retained coordinates; neither is advertised as universal
+or as disjoint from the complete old signed and convex closure.
+
+For exact nonempty examples, $s=c=1,d=1/2$ in 211.6 gives $S_*=9/2$.
+At $\tau=17/4$, (211.13) has
+$\epsilon_\tau=2/17,n_\tau=5,w_\tau=1/20,\Pi=70$;
+thus $m\ge72$ forces stock greater than $17/4$.
+For biased funding, take $c_1=2,c_2=0,\mu=g=5,d=7/8$ and
+$m\ge116$ maximum classes. Then $s=17/8,a=25/4$,
+$\Psi=625/66,h=4,c_*=2,U=9$ and
+$\epsilon_U=31/144,n_U=6,w_U=5/48,\Pi=114$.
+The actual family (211.19) has stock $625/66$, terminal $33/8$
+and both costs $7/8$, so the conditions are not empty.
+For fair funding take $c_1=4/3,c_2=0,d=1/5,\mu=g=43/15$ and
+at least six maximum classes. Now $s=4/3,k=1,t_0=4$,
+$\Phi(k)=9/2$, and (211.26) gives $\Pi=4$.
+The product witness has $S=6,T=8/3,W=10$ and both costs $1/5$;
+its fair comparison has $T_V=38/15$ and both costs one.
+These are applications and endpoint illustrations, not additional
+minimum theorems or amplitude classifications.
+

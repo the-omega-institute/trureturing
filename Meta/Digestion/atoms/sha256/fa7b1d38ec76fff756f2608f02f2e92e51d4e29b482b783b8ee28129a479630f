@@ -1,0 +1,61 @@
+**Definition 10.1 (Native fields, interior domains and added costs).** Fix
+precisely Definition 8.1: one full-support fixed-mean source, one preparation
+with arbitrary fixed phases, and the two controls of Definition 3.1. Put
+$g=4-\mathbf1_{E_-}-\mathbf1_{E_+}$ and use grouped increments $h_a$ on
+$\mathcal M_b=J_b\times(U_b/\Lambda_b)$, not a fixed-height slice. The
+actual representatives remain (8.5), with its negative phase convention.
+The original velocity fields are
+
+$$
+P=\partial_\kappa,\qquad
+Q=\sum_{a=1}^{g}w_a(\kappa)\partial_{h_a},\qquad
+w_a(\kappa)=\frac1{I(\kappa)(\kappa-\lambda_a)}.
+\tag{10.1}
+$$
+
+Here the distinct grouped poles and $I$ are those of §§3.2 and 9.3; group
+multiplicities remain in $I$. A horizontal curve is absolutely continuous
+with $\dot q=v^1P+v^2Q$, $v\in L^1$. A relative command $\gamma=(a,b)$
+starts at zero and has $v^1=\dot a$, $v^2=\dot b$. Its full path guard is
+
+$$
+\kappa(t)=k+a(t)\in J_b\quad\hbox{for every }t.
+\tag{10.2}
+$$
+
+Choose an open connected $\Omega\Subset\mathcal M_b$, and smooth symmetric
+positive definite $A(q)=(a^{ij}(q))$ on a neighbourhood of its closure.
+Declare the horizontal energy and length
+
+$$
+\mathsf E_A(\gamma)=\int_0^T v^{\mathsf T}A(q)^{-1}v\,dt,
+\qquad
+\mathsf L_A(\gamma)=\int_0^T\sqrt{v^{\mathsf T}A(q)^{-1}v}\,dt.
+\tag{10.3}
+$$
+
+Energy may be infinite. The distance $d_A^\Omega$ is the infimum of lengths
+of horizontal curves in $\Omega$ joining the specified states. A density,
+when used, is separately chosen as $d\mu=\rho(\kappa,h)d\kappa\,dh$, with
+$\rho$ smooth and strictly positive near $\overline\Omega$; grouped phases
+have period $2\pi$. Neither structure is supplied by the finite alphabet.
+The original phase variation is
+
+$$
+\mathsf V_\chi(\gamma)=\int_0^T|v^2|\,dt.
+\tag{10.4}
+$$
+
+For a compact height promise $[l,u]\subset J_b$, the exact common-command
+conditions, independent of the initial phases, are
+
+$$
+l+m_\gamma>\kappa_-,\qquad u+M_\gamma<\kappa_+.
+\tag{10.5}
+$$
+
+For an open promise the corresponding inequalities are non-strict. The
+command domain is still $D_\gamma$ in (9.4), and its phase increment is
+$H_\gamma(k)$ in (9.3). An additional requirement to stay in $\Omega$ is a
+restriction of this lawful family, not a replacement for its positivity guard.
+

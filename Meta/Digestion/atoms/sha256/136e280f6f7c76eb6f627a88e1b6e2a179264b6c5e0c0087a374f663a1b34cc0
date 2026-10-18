@@ -1,0 +1,64 @@
+### 57.1 Unrestricted pure-target fidelity support
+
+For u in [1/2,1], let psi_u=sqrt(u)|00>+sqrt(1-u)|11>, and f_r,c(u)=ru+q(1-u)+2c sqrt(u(1-u)). We prove
+
+    sup_Lambda <psi_u|Lambda(rho)|psi_u> = max{u,f_r,c(u)}.
+
+The fidelity convention is the displayed squared overlap. Identity and simultaneous product reset attain the two quantities. The issue is the upper bound for all product CPTP maps, including nonunital maps and outputs outside MC support.
+
+**Reduction to a channel paired with its conjugate.**
+
+For channel A define A_kl,ij=<k|A(|i><j|)|l>, and similarly B. Put rho_00=r, rho_11=q, rho_01=rho_10=c and s_kl=sqrt(u_k u_l), where u_0=u,u_1=1-u. Every weight rho_ij s_kl is nonnegative. The fidelity is
+
+    F(A,B)=sum_{i,j,k,l} rho_ij s_kl A_kl,ij B_kl,ij.
+
+Weighted Cauchy–Schwarz implies F(A,B)<=sqrt(Q(A)Q(B)), where Q(A)=sum rho_ij s_kl |A_kl,ij|^2. Entrywise conjugation of all Kraus matrices produces a CPTP channel conjugate(A) whose coefficients are conjugates of A's, and Q(A)=F(A,conjugate(A)). Compactness therefore gives max_A,B F(A,B)=max_A Q(A). Affinity extends this to finite LOSR mixtures. This reduction concerns fidelity support, not a direct restriction on trace-distance optimizers.
+
+**Balanced-source boundary.**
+
+Fix x in [0,1/sqrt(2)], y=sqrt(1-x^2)>0, k=x/y in [0,1], and u=(1+x)/2. Consider the balanced source r=q=1/2,c=k/2. We prove Q(A)<=u for every qubit CPTP map.
+
+Order the Choi matrix by input index first, then output index, and write
+
+    J_A = [[a, h, s, z],
+           [conj(h), 1-a, v, -s],
+           [conj(s), conj(v), b, l],
+           [conj(z), -conj(s), conj(l), 1-b]].
+
+This is the general Hermitian Choi form after the trace-preserving constraints: a,b are real in [0,1], the diagonal blocks each have trace1, and the off-diagonal block has trace0. Positivity of its 2-by-2 principal minors gives
+
+    |h|^2+|l|^2 <= a(1-a)+b(1-b),
+    |z|^2+|v|^2 <= a(1-b)+(1-a)b,
+    |s|^2 <= min{ab,(1-a)(1-b)}.
+
+Direct substitution in Q, using 2sqrt(u(1-u))=y and ky=x, yields
+
+    2Q = a^2+b^2-(1-x)(a+b)+(1-x)
+         +y(|h|^2+|l|^2)+2k|s|^2+x(|z|^2+|v|^2).
+
+Set S=a+b, V=ab and L=1-y+x-k=(1-y)(1-k)>=0. The principal-minor bounds imply
+
+    2u-2Q >= 2x+(1-2x-y)S-(1-y)S^2
+               +2(1-y+x)V-2k min{V,1-S+V}.
+
+If S<=1, the minimum is V and V>=0. Thus the right side is at least
+
+    2x+(1-2x-y)S-(1-y)S^2
+      =(1-S)[2x+(1-y)S]>=0.
+
+If S>=1, the minimum is 1-S+V and V>=S-1, since (1-a)(1-b)>=0. The coefficient of V after combining terms is 2L>=0. Substitution of V>=S-1 simplifies the lower bound to
+
+    (1-y)(S-1)(2-S)>=0.
+
+Here 0<=S<=2. Both cases prove Q<=u, including all endpoints. Identity also attains u on this boundary because c y=q x. This proof covers every Choi rank and every local environment.
+
+**Convex completion over all source parameters.**
+
+For fixed u<1 write x=2u-1, y=2sqrt(u(1-u))>0, k=x/y. The physical sorted source domain is the closed quarter-disk
+
+    D_source={(r,c): 1/2<=r<=1, c>=0, c^2<=r(1-r)}.
+
+Split it by the line c=k(1-r). On the lower region f_r,c(u)<=u; on the upper region f_r,c(u)>=u. For each fixed product channel, its fidelity is affine in (r,c). On each of the two compact convex regions the proposed upper bound (u or f_r,c(u)) is also affine. It therefore suffices to establish the bound at that region's extreme points.
+
+The boundary consists of a circular arc, the segments r=1/2 and c=0, and the splitting line. An extreme point is consequently either on the circular arc, one of (1/2,0),(1,0), or the intersection (1/2,k/2) when 0<=k<=1. Intersections of the splitting line with the circular arc are already included in the first category; interior points of any straight boundary segment are not additional extreme points. The circular arc consists of pure MC sources, for which the all-output fidelity bound is §53. The classical corners have bound u by separability (and (1,0) has f=u). The only remaining point is exactly the balanced-source boundary proved above. If k>1, this point is outside the domain and is not needed. Thus the bound holds throughout both regions, and hence for every source. At u=1 the bound is simply1 and reset attains it. This proves the support identity.
+

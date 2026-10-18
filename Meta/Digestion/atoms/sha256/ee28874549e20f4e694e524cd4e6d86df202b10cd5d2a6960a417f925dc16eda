@@ -1,0 +1,16 @@
+**Definition 4.3 (prefix optimum).** Let $V_{\rm pref}(q)$ be the minimum
+expected Read count among ordered prefix search trees on keys $1,\ldots,n$
+and the final branch outcome $B$, with key mass
+
+$$
+a_j=q(j,0)+q(j,1).
+\tag{4.7}
+$$
+
+The $B$ outcome follows the rightmost key path and stops at the branch Read
+at $p_n$.
+
+By the ordered pruning in AAR14.1, any prefix-only encoder can be reduced to
+one of these ordered search trees without increasing its Read count. Thus
+$V_{\rm pref}(q)$ is the full prefix-only optimum for this objective.
+

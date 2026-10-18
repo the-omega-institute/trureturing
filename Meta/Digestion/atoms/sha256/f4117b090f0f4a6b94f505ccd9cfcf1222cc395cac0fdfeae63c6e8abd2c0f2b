@@ -1,0 +1,97 @@
+**Theorem 15.7 (a source-realizable two-dimensional consumer with minimum four).** For the laws (15.17), prescribe
+
+$$
+\pi=(1/5,3/10,3/10,1/5),\qquad
+T=\begin{pmatrix}
+1/4&0&3/4&0\\
+1/2&0&0&1/2\\
+0&1/2&1/2&0\\
+0&3/4&0&1/4
+\end{pmatrix},
+\tag{15.23}
+$$
+
+$$
+\Gamma_B=\sum_i\pi_i\delta_{(Q_i,W)},\qquad
+\Gamma_A=\sum_k\pi_k\delta_{(W,Q_k)},\qquad
+\Xi=\sum_{i,k}\pi_iT_{ik}\delta_{(Q_i,W,Q_k)}.
+\tag{15.24}
+$$
+
+Then (15.24) is finite admissible on the unchanged source. At every reachable original suspended control/record fiber $c$ its prescribed-triple minimum is
+
+$$
+\boxed{\quad N^{\rm abs}(\Xi;c)=N^{\rm rep}(\Xi;c)=4>3
+ =\operatorname{rank}(M)=1+\dim\mathcal F,\quad}
+\tag{15.25}
+$$
+
+where the represented equality uses the original finite exact-service convention and $M_{ik}=\pi_iT_{ik}$. This is a comparison with ordinary real matrix rank and affine fiber dimension. It asserts no strict separation from ordinary nonnegative rank.
+
+**Proof of both full flows and admissibility.** The rows of $T$ are exactly the four vertices (15.22), in their displayed order, so they are probability rows of $\mathcal F$. Directly
+
+$$
+\pi T=\pi,
+$$
+
+$$
+\begin{aligned}
+(\pi T)_1&=1/20+3/20=1/5,&
+(\pi T)_2&=3/20+3/20=3/10,\\
+(\pi T)_3&=3/20+3/20=3/10,&
+(\pi T)_4&=3/20+1/20=1/5.
+\end{aligned}
+\tag{15.26}
+$$
+
+Also $\pi\cdot u=c_*$, either by substitution or by averaging $T u=c_*\mathbf1$ using (15.26). Thus $\sum_i\pi_iQ_i=G$. The $B$ full residual equation follows from $\mathcal R_B(Q_i)=W$. The $A$ equation for the second joint flow follows from $\sum_i\pi_iQ_i=G=\mathcal R_A(W)$. At every incoming pair $(Q_i,W)$, the stronger equation is $\sum_kT_{ik}Q_k=G$, proved by Lemma 15.6 on the whole law. The row and column sums give exactly both projections in (15.24), with equal end marginals. This verifies (15.1)–(15.3), not merely a stationary HMM or an arbitrary matrix analogy.
+
+**Proof of the exact count and the two failed proxies.** Every normalized incoming row of $M$ is a different vertex of $\mathcal F$. A convex combination of points of $\mathcal F$ can equal an extreme point only when every positively used point equals that extreme point. Therefore any single collection of generators covering all four incoming rows must contain all four vertices. Equation (15.5) gives $\kappa(\Xi)=4$, and Theorem 15.3 gives the lower bound for every original initialized finite observer, including arbitrary refinements and nonstationary history rows. This is a consumed instance of the characterization, not a separate restriction to identity $B$.
+
+The mass matrix is
+
+$$
+M=\frac1{20}\begin{pmatrix}
+1&0&3&0\\
+3&0&0&3\\
+0&3&3&0\\
+0&3&0&1
+\end{pmatrix}.
+\tag{15.27}
+$$
+
+It kills $(-3,-1,1,3)^{\mathsf T}$, whereas its first three rows and columns have determinant $27/8000\ne0$. Hence its ordinary rank is exactly three. Lemma 15.6 gives $1+\dim\mathcal F=3$. Neither value bounds the simultaneous generator count above. The usual dimension-plus-one representation of one convex combination does not supply a single three-point generating set for all four extreme rows. Positivity is essential to this simultaneous obstruction. It is the mature nested-polytope mechanism reused inside the source-specific fiber.
+
+**Proof of a represented original attainment.** Use p labels $1,\ldots,4$ and four suspended labels $1,\ldots,4$, all of law $W$, with
+
+$$
+B=I_4,\qquad A=T,\qquad \widehat\tau=\pi,
+\qquad u=(1/3,16/45,17/45,2/5),\qquad v=v_*\mathbf1.
+\tag{15.28}
+$$
+
+Thus both unweighted balances are $\pi I_4=\pi$ and $\pi T=\pi$, and the actual tensor is precisely $\pi_iT_{ik}$. Every suspended label is reachable with its positive mass $\pi_i$ at each suspended history. Identity $B$ is chosen solely for this upper witness, and was not used in the lower bound.
+
+Equations (15.19) and $T u=c_*\mathbf1$ prove both full recursions. An explicit all-word check is available: for $a_i=1-u_i$, the return matrix is $L=v_*\operatorname{diag}(a)T$, with
+
+$$
+T a=q_*\mathbf1,\qquad
+L a=t_*a,\qquad L u=v_*c_*a,\qquad
+g=(1-v_*)a.
+\tag{15.29}
+$$
+
+Induction gives $L^nu=v_*c_*t_*^{n-1}a$ for $n\ge1$ and $L^ng=(1-v_*)t_*^na$ for $n\ge0$, exactly (15.18). Suspension gives (15.17). These formulas and (15.20) prove the full tails and zero infinite masses directly, in addition to the uniqueness argument of Theorem 15.3.
+
+All primitive probabilities in (15.28), including the latch row and fair pre-latch emission, have common denominator 180. In units of $1/180$, the p alpha counts are $(60,64,68,72)$, each suspended alpha count is 66, the latch counts are $(36,54,54,36)$, and fairness has count 90. The four alpha-update rows have counts
+
+$$
+(45,0,135,0),\quad(90,0,0,90),\quad
+(0,90,90,0),\quad(0,135,0,45).
+\tag{15.30}
+$$
+
+The beta update is deterministic. Eight fresh private fair bits give candidates in $\{0,\ldots,255\}$; acceptance below 180 has probability $45/64$. Proposition 15.4's finite rejection service therefore implements every row exactly, with independent emission and update bits where needed. The service retains no retry counter. Commit the target and clear every incoming selector, candidate, cursor, flag, temporary field and service mode before the original update returns. At a fixed suspended $c$, just the four retained labels distinguish complete returned configurations. The program, constants and all service microstates remain charged to the total carrier; none is an uncounted persistent random seed. Hence four is attained in the represented count itself.
+
+Install precisely the latch and full-control adapter of Proposition 15.4. It places initialization after the third write and latch in their original update, uses the same acquired and synthetic kernels, retains every source operation, original record and both seeds, and clears labels only on original completion. Its induction gives $\pi,\pi,\pi$ through every acquired return on every original record fiber, for any of the permitted installed priors. No assumption about $\mu(3)$, support finiteness, or source-independent actual letters after marginalizing $K$ has entered: conditional independence at fixed acquired history is exactly what (15.7) uses. This proves all parts of (15.25). ∎
+

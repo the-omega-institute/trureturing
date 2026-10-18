@@ -1,0 +1,87 @@
+### 84.1 完全绑定接触参数
+
+为了使接触公式没有未指定矩阵，以下重列实际使用的 RC 代数量。对 $(a,\varkappa)$  置
+
+$$
+D_a=\alpha(1-2a)+a^2,\quad
+U_a=-\alpha+2a-a^2,\quad
+V_a=\alpha-a^2,
+$$
+
+$$
+n_a=(D_a,U_a,V_a)^T,\qquad \sigma_a=D_aU_a,
+$$
+
+$$
+W_a=D_aCn_a-2\beta a\varkappa Qn_a,
+$$
+
+$$
+H_a=-n_a^TQW_a,\qquad R_a=W_a^TQW_a,
+$$
+
+$$
+Z_a=2H_aW_a+R_an_a,\qquad
+\mathcal E_a=2H_aW_a^TW_a+D_aR_a\sigma_a,
+$$
+
+$$
+g_a=Z_a^TGZ_a,
+$$
+
+$$
+\mathcal P(a,\varkappa)
+=
+a^{-1}\det[D_a^2\sigma_aCZ_a-\mathcal E_aW_a,\ QZ_a,\ GZ_a],
+$$
+
+$$
+\Omega(a,\varkappa)=
+-4D_a\sigma_aH_a\mathcal E_a
+-R_a\mathcal E_a n_a^Tn_a
++D_a\sigma_a Z_a^TZ_a.
+\tag{RC.148}
+$$
+
+取 RC 已选定的唯一共同根
+
+$$
+\mathcal P(a_{\rm c},\varkappa_{\rm c})=0,\qquad
+\Omega(a_{\rm c},\varkappa_{\rm c})=0,
+$$
+
+$$
+.2951251<a_{\rm c}<.2951252,\qquad
+.393637406<\varkappa_{\rm c}<.393637424.
+\tag{RC.149}
+$$
+
+其选择沿 RC 的唯一 $\mathcal P=0$ 分支。这里 $\omega_{\rm RC}(a)=\operatorname{tr}A(a)-1$ 是 RC 的 aggregate eigenvalue，区别于源比率 $\omega$；在接触附近沿选支有 $\omega_{\rm RC}'<-.9$。这些根区间、窄 $r_{\rm c}$ 区间和选择结论作为 RC60–63 的选根前提继承；九坐标源根证书不认证这个接触根，粗 $(a,\varkappa)$ 盒的像也不替代窄区间。以下带下标 ${\rm c}$  的量均在此根取值。定义
+
+$$
+r_{\rm c}=(Z_{\rm c})_2/(Z_{\rm c})_1,
+$$
+
+$$
+\gamma_{\rm c}
+=
+-\frac{2g_{\rm c}}
+{\mathcal E_{\rm c}^2-D_{\rm c}^2\sigma_{\rm c}
+(Z_{\rm c})_0(Z_{\rm c})_1}>0,
+$$
+
+$$
+\lambda_{\rm c}=-\frac{\gamma_{\rm c}D_{\rm c}^2\sigma_{\rm c}}2.
+\tag{RC.150}
+$$
+
+RC 的接触对偶为
+
+$$
+\mathcal Y_{\rm c}
+=G+\lambda_{\rm c}C+\gamma_{\rm c}W_{\rm c}W_{\rm c}^T
+\tag{RC.151}
+$$
+
+模一个 $Q$  倍数。该自由度不改变 null 值、迹或取向判别。
+

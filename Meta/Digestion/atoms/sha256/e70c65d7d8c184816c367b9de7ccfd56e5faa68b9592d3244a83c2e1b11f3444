@@ -1,0 +1,80 @@
+**Theorem 7.3 (normalization, complete effects and full output).**
+Definition 7.2 is one common normalized finite instrument, with
+full TP decoders, exact effects (AS.10), exact channel (AS.8), and
+actual acquired cost $W=V(s)$.
+
+Proof. Each live decoder is an isometry on its entire fibre.
+Each scalar decoder is TP because $\sum_\ell w_\ell=1$ and
+$\int_0^1g=1$. Image reconstruction gives
+$V_zV_z^\dagger K(z)=K(z)$, so compressed branches have unchanged
+effects and decoded products $EK(z)E^\dagger$. The moment identities
+are
+
+$$
+H_r+L_r=(I_3+r sX_c)/2,\quad
+\Theta(I_3)=I_3-M,\quad \Theta(X_c)=\kappa X_{01}.
+\tag{AS.51}
+$$
+
+Adding the supported scalar effect $EME^\dagger/2$ and complement
+effect $Q_5/2$ to the live effect at report $r$ gives exactly
+$(I_5+r s\kappa EX_{01}E^\dagger)/2$. Their total is $I_5$.
+Each individual positive encoder effect is bounded by this total, so
+every encoder is TNI. There is no branch, survival or acceptance
+normalization.
+
+Summing both reports makes the live coefficient moment $I_3$,
+therefore for every complex $A\in M_5$ the forgotten live map is
+the first line of (AS.8). The scalar rows sum to $M$ and the complement
+maps to $Q_5$, giving the second line separately for every original
+label and every Borel time set. The two side labels $1,3$ remain
+distinct; labels $0,4$ (the latter originally mode $13$) remain
+zero. No singular or endpoint atom is added. All cross-support
+operators, complement live outputs and additional sectors have zero
+image, and common fixed metadata remain identical.
+
+For a joint trace-class operator $X_{\rm joint}$ with any passive
+reference, tensor each live product with the reference identity.
+At each report the exact scalar reference factors are
+
+$$
+\begin{aligned}
+R_{f,r}&=\operatorname{Tr}_5[(E(M/2)E^\dagger\otimes I)X_{\rm joint}],\\
+R_{\perp,r}&=\operatorname{Tr}_5[(Q_5/2\otimes I)X_{\rm joint}].
+\end{aligned}
+\tag{AS.52}
+$$
+
+Thus the output in label $\ell$ on Borel $B$ is
+
+$$
+\left(\int_B g(t)dt\right)
+P_f\otimes[w_\ell R_{f,r}+\mathbf1_{\ell=2}R_{\perp,r}].
+\tag{AS.53}
+$$
+
+These are conditional Kraus-row partial traces, not unconditional
+reference marginals. Summing reports proves the full amplification of
+(AS.8). Matrix-unit identities prove every finite amplification;
+trace-class finite-rank approximation gives any stipulated infinite
+passive-reference version. Consequently all twelve original HALF
+complete-cq error constraints retain the conditional value (AS.9),
+including height $16$ and every live coherence and zero sector.
+
+Only the two $H$ labels have fibre dimension at least three. Their
+actual acquired effect is
+
+$$
+G_{\rm acq}=E\Theta(H_++H_-)E^\dagger,\qquad
+\operatorname{tr}(G_{\rm acq}E\rho E^\dagger)
+=AP+BQ-2\gamma R=W.
+\tag{AS.54}
+$$
+
+Their whole decoders happen to be live, as a choice of this attainer.
+The lower argument retained arbitrary high acquisition later failing.
+Thus $E_s\leq V(s)$, while Section 4 gives $E_s\geq V(s)$.
+This establishes equality in value of the outer problem by an actual
+true-cone construction, without claiming all outer points realizable.
+$\square$
+

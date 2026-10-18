@@ -1,0 +1,39 @@
+**Application 26.7 ((ARH.4.3): original-prefix correspondence).** For
+every $j,r\ge0$ and every nonempty original address $p=a s$, define
+
+$$
+\iota_r(a s)=a L^r s.
+\tag{CS.26.21}
+$$
+
+Then
+
+$$
+\begin{aligned}
+r_{\rho^r u_j}(\iota_r(p))&=r_{u_j}(p),\\
+\iota_r(p)\in\operatorname{Pos}(\rho^r u_j)
+ &\Longleftrightarrow p\in\operatorname{Pos}(u_j),\\
+(\rho^r u_j)|_{\iota_r(p)}&=u_j|_p
+                \quad\text{when reached}.
+\end{aligned}
+\tag{CS.26.22}
+$$
+
+The original root reply is already known to be $\mathsf{Pair}$.
+
+Proof. At side $a=L$ put $b=1$, and at side $a=R$ put $b=2$.
+The current subtree there is $T_{j+r+b}$. If $r>0$, (CS.26.8) permits
+$r$ left steps because $j+r+b\ge r+1$, and yields exactly $T_{j+b}$.
+For $r=0$ this is immediate. Thus the current subtree at $aL^r$ is
+exactly the original subtree at $a$. Navigating any suffix $s$ in those
+equal finite trees gives all three statements, including absence below
+their leaves. $\square$
+
+Consequently a complete original prefix through inclusive depth $D$ can
+be recovered at the actual static epoch $r$ by at most
+$2^{D+1}-2$ paid reads, one at $\iota_r(p)$ for each nonempty $|p|\le D$.
+Their lengths are $r+|p|\le r+D$. This is a correspondence proved on the
+entire exact acquired fiber, rather than a reset to an old physical
+version. The raw evidence consists only of those actual epoch-$r$
+replies.
+

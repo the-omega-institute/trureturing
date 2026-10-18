@@ -1,0 +1,86 @@
+**Theorem 91.2.** The original channels (22) have exact error
+
+\[
+ \delta(t)=\max\{D_+(t),\tfrac43|\tfrac32t-1|\},
+                                                               \tag{27}
+\]
+
+where
+
+\[
+ D_+(t)=
+ \begin{cases}
+ (1-t)/(\sqrt2-t),&0\le t\le1/\sqrt2,\\
+ 2t(1-t),&1/\sqrt2\le t\le1.
+ \end{cases}
+                                                               \tag{28}
+\]
+
+Consequently
+
+\[
+ \min_{0\le t\le1}\delta(t)
+      =2\sqrt{2/3}-\tfrac43>\tfrac14,
+ \qquad t_{\min}=\sqrt{2/3}.
+                                                               \tag{29}
+\]
+
+**Proof.** The coefficient map for (26) kills cross-sector input blocks. Each sector has one coordinate for each of the four output labels, so its restriction is a scalar Schur multiplier with kernel M or N. For a positive reference/input state, the two principal sector blocks are positive and their traces sum to one. The triangle inequality bounds the total output error by the larger sector norm, even though their outputs share the same output space. An input wholly in one sector attains its sector norm. The state-to-operator argument in (17) makes this a full diamond-norm reduction.
+
+We compute the plus-sector norm directly. For r,h≥0 the spectrum of M is
+
+\[
+ -r,\ -r,\ r+\sqrt{r^2+3h^2},\ r-\sqrt{r^2+3h^2}.
+                                                               \tag{30}
+\]
+
+In particular M has at most one positive eigenvalue. The needed norm is
+
+\[
+ \|\operatorname{Schur}_M\|_\diamond=
+ \begin{cases}
+ 4r/3,&h\le2r/3,\\
+ 3h^2/(3h-r),&h\ge2r/3,
+ \end{cases}
+                                                               \tag{31}
+\]
+
+with the zero matrix treated separately.
+
+First suppose r>0 and h≤2r/3. Set d=4r/3, v=(1,1,1,3h/(2r))ᵀ and Y=dvv*. Then
+
+\[
+ Y\ge0,\qquad
+ Y-2M=2r(I_3-J_3/3)\oplus(3h^2/r)\ge0.
+                                                               \tag{32}
+\]
+
+The diagonal of Y is (d,d,d,3h²/r), bounded by d precisely because h≤2r/3. Thus Z=Y−M dominates ±M and its diagonal is at most d. The CP argument in section 91.4, with one coordinate per fibre, proves the arbitrary-reference upper bound d. The normalized uniform input on the three outer coordinates has output M_outer/3, with eigenvalues 2r/3,−r/3,−r/3. Its trace norm is d. This includes h=0; the separate r=h=0 case is immediate.
+
+Next suppose h>0 and h≥2r/3. Put d=3h²/(3h−r) and Y=dJ₄. On the outer sum-zero space Y−2M is 2rI. On the outer-uniform and central coordinates it is
+
+\[
+ \begin{bmatrix}
+ 3d-4r&\sqrt3(d-2h)\\
+ \sqrt3(d-2h)&d
+ \end{bmatrix}.
+                                                               \tag{33}
+\]
+
+This matrix has determinant zero and 3d−4r=(3h−2r)²/(3h−r)≥0; since d>0, it is positive semidefinite. Hence Y≥0, Y≥2M, and its diagonal is d. The same CP argument gives the upper bound d.
+
+For a matching input set
+
+\[
+ q=\frac{3h}{2(3h-r)},\qquad
+ p=(q/3,q/3,q/3,1-q),\qquad
+ |\psi_p\rangle=\sum_f\sqrt{p_f}|f\rangle.
+                                                               \tag{34}
+\]
+
+The regime h≥2r/3 ensures 0≤q≤1. At every index with p_f>0 one has (Mp)_f=d/2. Thus (√p_f)_f is an eigenvector of diag(√p)Mdiag(√p) with eigenvalue d/2. Congruence cannot increase its number of positive eigenvalues, and its trace is zero. Its trace norm is therefore d, proving (31), including the common boundary of its regimes.
+
+The minus-sector norm is 4|s|/3: the uniform outer input attains it, and (32) with r=|s| and h=0 gives the upper bound; reversing the sign of a kernel does not change its norm. For t<1 the inequality h≤2r/3 in (26) is equivalent to t≥1/√2. Substitution gives (27)–(28), with t=1 handled by M=0.
+
+On [0,1/√2] the first expression in (28) decreases to √2−1. On [1/√2,1] the plus-sector value 2t(1−t) decreases, whereas the minus-sector value 2t−4/3 increases. They meet at t=√(2/3), with value (29), below √2−1. Finally 2√(2/3)>19/12, as is seen by squaring positive sides, so (29) is strictly larger than 1/4. This proves the theorem.
+

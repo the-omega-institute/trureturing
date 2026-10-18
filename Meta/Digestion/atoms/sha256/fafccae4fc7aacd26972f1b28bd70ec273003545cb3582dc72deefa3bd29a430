@@ -1,0 +1,10 @@
+**Definition 6.1 (One-site loss and gap loss).** For $a,b,n\ge2$ put
+
+$$
+U(a,b)=(1-q(a,b))^2,\qquad
+V(n)=\sum_{j=2}^{n-2}q(j,n-j)^2,
+\tag{6.1}
+$$
+
+where $V(2)=V(3)=0$. At a one with adjacent gaps $a,b$, its loss is $U(a,b)$. The zeros strictly inside a gap of length $n$ have total loss $V(n)$: the neighboring zero positions have posterior zero because they adjoin a retained one. When $n=2$ this is a single zero adjoining both ones, still of loss zero. These forced sites are included through their zero contributions.
+

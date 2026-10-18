@@ -1,0 +1,40 @@
+**Theorem 6.3 (Full, NextCompat, run-full and run-next).** Every actual valid-boot
+history supplies one compatible joint endpoint. For every enabled primitive
+transition its full successor is again in $\mathsf J_H$, and the pair satisfies
+Definition 6.2. Every executed semantic success or reject has its complete
+successor in the same image; an illegal unexecuted action has no such event.
+Consequently these concrete coordinates satisfy the Full and NextCompat
+obligations, including PG.3402-run-full and PG.3402-run-next, for this extended
+runtime and its declared types.
+
+**Proof.** Choose the references and permissions actually carried at the
+endpoint of $h$. They have the required types: `Base` constructs a finite
+existing offset before allocation; allocation appends fresh intervals and
+their complete descriptors; positioning checks their constructed bounds;
+the actual token transitions alone grant each read/write/copy permission.
+At boot the valid packet and empty journals satisfy every compatibility
+condition. For ordinary code/arithmetic/gate steps the local opcode rules
+preserve disjointness, descriptor bounds and ownership, and their actual code
+cursor gives the unfinished-work condition. Busy source writes preserve the
+busy type; their completion satisfies Theorem 4.5. Theorem 5.3 handles event
+commitment, row prefixes, seal and serial copies. Meter preservation is PR57.L2.
+Thus induction on actual primitive transitions proves compatibility jointly,
+including partial work and unavailable receiver states, not just at idle cuts.
+This constructs the Full witness for every $h$.
+
+If its next primitive is enabled, append that occurrence to obtain the actual
+history $h a$. The local rewrite, receipt and any specified commitment change
+are exactly Definition 6.2, and the preceding preservation argument supplies
+the compatible successor witness. Any compatible witness carrying $h$ has
+these actual endpoint references/tokens by definition of compatibility, so the
+same successor works for each such witness. This proves run-next as well as
+the endpoint next relation. Composing the finitely many primitive pairs through
+a legal service fragment gives its full semantic successor by Theorem 4.5;
+on reject the unchanged tree coexists with the new row, work, references and
+meter. No projected successor is substituted. An illegal operation has no
+enabled first primitive or admitted fragment, as required. $\square$
+
+This realizes a joint runtime image. It does not prove that the sealed semantic
+journal alone reconstructs private gate scratch or every raw private write, nor
+that any of its coordinate projections has the exact kernel of a chosen task.
+

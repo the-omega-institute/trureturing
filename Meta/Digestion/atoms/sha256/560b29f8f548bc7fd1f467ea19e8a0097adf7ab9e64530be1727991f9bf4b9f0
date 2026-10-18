@@ -1,0 +1,39 @@
+**Proposition 7.4 (gapped equality and the zero-origin distinction).**
+The feasible code-five class at $q=6$ has row-arm coordinate set
+$B_*=\{0,2,3,5\}$, column-arm coordinate set
+$A_*=\{0,3,4,5\}$, maximum corner $(5,5)$, and differences
+$\{-5,-2,-1,0,2,3,5\}$. Thus neither consecutive differences
+nor consecutive arm endpoints are necessary for all-lag one-call
+service. In contrast, the minimum-corner class
+
+$$
+C_*=(\{0\}\times\{0,1,2,3\})\ \cup\
+     (\{0,1,2,3\}\times\{0\})
+\tag{NARC.7.4}
+$$
+
+fits the large-row equality geometry but cannot recover its
+right-visible nonnegative-lag fiber at $z=3$ with one native call.
+This second statement applies to any source square with $q\ge4$
+containing this class; it is a class obstruction, not a rejection of
+the encoder of Definition 7.1.
+
+**Proof.** Code five's ordered pairs in Theorem 7.3 give its two stated
+arm sets and differences. Its row interior values are two and three;
+its column interior values are three and four. Both satisfy
+(NARC.6.3), while their outer gaps and difference gaps are not all
+one. Theorem 7.3 provides actual one-call service for this entire
+class at every permitted input under both lag conventions.
+
+For $C_*$ and $z=3$, Theorem 5.2 gives all seven pairs as actual
+complete-input alternatives. In increasing hidden-age order their
+ages are $0,1,2,3,4,5,6$, with respective $b$ targets
+$3,2,1,0,0,0,0$. $E$ merges ages two and three, whose targets
+differ. Every $P_t$ with $t\ge2$ merges ages zero and one in its
+absent cell, also with different targets. $S_t$ is coarser and
+cannot help; root and visible words are constant by Theorem 5.2.
+The conceptual $P_1$ partition would separate the targets, but is
+unavailable by Definition 5.3. Hence the large-row converse of
+Theorem 6.1 cannot be extended to all nonnegative-lag fibers from
+arm geometry alone. $\square$
+

@@ -1,0 +1,18 @@
+**Definition 5.1 (bounded-bundle test).** For $P\subseteq S_d$, let
+$\operatorname{Bad}(P)$ be the targets not determined on $P$ by any own
+experiment or by a constant. Fix $b\ge1$. The finite verifier
+$V_b(d,\mu,C,\pi)$ accepts when, for every range-feasible
+$P\subseteq\operatorname{supp}(\mu)$ with $\mu(P)>C$, the certificate lists a
+nonempty $J_P\subseteq\operatorname{Bad}(P)$ with $|J_P|\le b$ and
+
+$$
+\sum_z\left(\sum_{x\in P:Y_{P,J_P}(x)=z}\mu(x)\right)^2\le C^2.
+\tag{JTC.12}
+$$
+
+Here $Y_{P,J}$ is the vector of the selected targets. Exhaustive finite
+checking makes $V_b$ total. Theorem 2.2 proves its soundness for every length
+and every correlated native template: the full hard-target partition refines
+the selected bundle, so its squared cell mass cannot increase; on a light
+support its norm is at most the total mass $\mu(P)\le C$.
+

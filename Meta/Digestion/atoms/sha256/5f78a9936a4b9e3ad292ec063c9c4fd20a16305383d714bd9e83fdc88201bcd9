@@ -1,0 +1,22 @@
+**Definition 1.1 (Positive hard-core law).** Let $G=(V,E)$ be a finite
+simple graph with nonempty vertex set, and let $\Omega_G$ be all its
+independent sets. Fix finite activities $\lambda_i>0$ and site weights
+$w_i>0$. Set
+
+$$
+p(S)=\frac{\prod_{i\in S}\lambda_i}{Z_G(\lambda)},\qquad
+Z_G(\lambda)=\sum_{S\in\Omega_G}\prod_{i\in S}\lambda_i,\qquad
+W=\sum_iw_i.
+\tag{1.1}
+$$
+
+Every legal configuration has positive probability. Write $s_i$ for
+its occupation indicator and $N(i)$ for its open graph neighborhood.
+Define
+
+$$
+q_i=\frac{\lambda_i}{1+\lambda_i},\qquad
+a_i=w_iq_i,\qquad d_i=w_i(1-q_i).
+\tag{1.2}
+$$
+

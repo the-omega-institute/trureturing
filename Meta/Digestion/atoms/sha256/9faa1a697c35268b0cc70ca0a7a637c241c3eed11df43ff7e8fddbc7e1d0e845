@@ -1,0 +1,11 @@
+## 350. F: current-coefficient first-zero face tests
+
+For $k\in\{1,\ldots,L\}$ let $T_kp(w)=p(w_1,\ldots,w_{k-1},1,w_{k+1},\ldots,w_L)$. For a label $r\in J$, define the current-kernel derivative minimum
+
+$$
+\kappa_k(r)=\ell_k(r)+\sum_{i<k}Q_{ik}(r)-\sum_{j>k}(-Q_{kj}(r))_+.
+\tag{350.1}
+$$
+
+After each restriction all coefficients in (350.1) are recomputed; labels and addresses are not renumbered.
+

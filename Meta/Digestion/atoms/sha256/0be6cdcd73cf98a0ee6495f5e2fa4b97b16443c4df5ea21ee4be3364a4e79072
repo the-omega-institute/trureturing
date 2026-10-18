@@ -1,0 +1,63 @@
+**Proposition 72.8 (the doubled correspondence is unitary onto the odd sector).**
+Reflection exchanges $p_+$ with $p_-$ and $e_+$ with $e_-$, and fixes
+each ground vertex $g$. Let $\widehat{\mathcal H}_{\rm odd}$ be its
+negative eigenspace. Define a new map
+$W_{\rm dbl}:\mathcal H_\delta\to\widehat{\mathcal H}_{\rm odd}$ by
+
+$$
+\begin{aligned}
+ (W_{\rm dbl}F)_{e_+}&=\sqrt{\delta/2}\,u_e,
+ &(W_{\rm dbl}F)_{e_-}&=-\sqrt{\delta/2}\,u_e,\\
+ (W_{\rm dbl}F)_{p_+}&=f_p/\sqrt2,
+ &(W_{\rm dbl}F)_{p_-}&=-f_p/\sqrt2,
+ &(W_{\rm dbl}F)_g&=0.
+\end{aligned}
+\tag{72.21}
+$$
+
+The first row specifies edge coordinates; the second specifies atomic
+$\beta$ coordinates. Its adjoint on the full doubled space is
+
+$$
+ (W_{\rm dbl}^*(u,\beta))_e
+       =\frac{u_{e_+}-u_{e_-}}{\sqrt{2\delta}},\qquad
+ (W_{\rm dbl}^*(u,\beta))_p
+       =\frac{\beta_{p_+}-\beta_{p_-}}{\sqrt2}.
+ \tag{72.22}
+$$
+
+The map $W_{\rm dbl}$ maps the entire target operator domain onto
+$\operatorname{Dom}B\cap\widehat{\mathcal H}_{\rm odd}$, and
+
+$$
+ W_{\rm dbl}L=\frac a\delta BW_{\rm dbl},\qquad
+ W_{\rm dbl}^*W_{\rm dbl}=I,\qquad
+ W_{\rm dbl}W_{\rm dbl}^*=\widehat P_{\rm odd}.
+ \tag{72.23}
+$$
+
+This $W_{\rm dbl}$ is different from the harmonic $W_N=E_NS_N$ of
+Theorem64.6. Its domain is all atoms and all cable functions, not a
+finite discrete occupation space; it performs doubling and normalization,
+not harmonic calibration.
+
+**Proof.** The two edge copies in(72.21) have total squared norm
+$\delta\|u_e\|_2^2$ and the atomic copies have total squared norm
+$|f_p|^2$. Conversely any odd vector has opposite source and edge
+coordinates and zero fixed-ground coordinates, so(72.22) recovers it.
+The adjoint uses the cable density $\delta$ in(72.2).
+
+At a source endpoint $\kappa_p=1/\sqrt\delta$, hence
+$\kappa_p\sqrt{\delta/2}u_e(p)=f_p/\sqrt2$ exactly when
+$u_e(p)=f_p$. At a ground vertex oddness forces $\beta_g=0$.
+The domain relation $\beta_g=\sqrt{m_g}u_g$ forces the grounded
+trace $u_g=0$ because $m_g>0$. The two incident edge-inward derivatives
+there are opposite, so the ground output of $B$ is also zero. This is
+a consequence of the odd double, not a new flux condition at an original
+port. The remaining domain conditions are exactly those of(72.3).
+Substitution in(72.18) gives the cable coefficient $a/\delta$ and
+atomic output $-a\sum\partial_{\rm in}u_e$ after(72.21).
+Alternatively the doubled energy is $\delta\sum_e\int|u'_e|^2$;
+multiplication by $a/\delta$ gives(72.2). Both arguments prove(72.23).
+$\square$
+

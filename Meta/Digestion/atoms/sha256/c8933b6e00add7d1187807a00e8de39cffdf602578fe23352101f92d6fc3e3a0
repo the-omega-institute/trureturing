@@ -1,0 +1,64 @@
+**命题 470.2（同一行预算的准确来源下界）。** 对命题 470.1 的 $L,k$ 和每个 $\alpha\ge0$，
+
+$$
+\boxed{
+R_\alpha(k)\ge
+2^{-\alpha}\sum_{d=1}^{L}|\mu(d)|d^{\alpha-1}
+\ge2^{-\alpha}\sum_{\substack{p\le L\\p\ \mathrm{prime}}}
+p^{\alpha-1}.}
+\tag{QO.8}
+$$
+
+完整有限上界仍为
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}
+\le\sum_{d=1}^{k}d^{\alpha-1}.
+\tag{QO.9}
+$$
+
+对每个固定 $\alpha\ge0$，$R_\alpha(k)\to+\infty$，特别是普通行预算 $V_k(1)=R_0(k)$ 不统一有界。于是
+
+$$
+\boxed{
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+\longrightarrow+\infty\quad(N\to\infty).}
+\tag{QO.10}
+$$
+
+**证明。** QO.4–QO.5 给互异的单点坐标，故在完整非负行和中只保留这些坐标，得到
+
+$$
+R_\alpha(k)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}{d}
+\left(\frac{k+1}{q_d+1}\right)^\alpha.
+$$
+
+准确整数商给 $dq_d\le k$，而 $d\le k$，所以
+
+$$
+d(q_d+1)\le k+d\le2(k+1),\qquad
+\frac{k+1}{q_d+1}\ge\frac d2.
+$$
+
+因为 $\alpha\ge0$，提升到该幂次保持不等号，便得 QO.8 的第一个下界。素数 $p$ 满足 $\mu(p)=-1$，只保留素数项给第二个下界。$\alpha=0$ 时因子 $2^{-\alpha}$ 为一，直接得到
+
+$$
+V_k(1)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}d
+\ge\sum_{\substack{p\le L\\p\ \mathrm{prime}}}\frac1p.
+\tag{QO.11}
+$$
+
+为证 QO.9，在每个完整纤维内使用三角不等式，随后对原全部分母求和。WN.1 给 $(k+1)/(\lfloor k/d\rfloor+1)\le d$，因此
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}\frac{|\mu(d)|}d
+\left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha
+\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}.
+$$
+
+$|\mu(d)|\le1$ 给剩余上界，未移除任何实际有限项。
+
+对每个素数 $p$，$p^\alpha\ge1$，故 $p^{\alpha-1}\ge1/p$。经典素数倒数发散定理说明 QO.8 的素数部分和随 $L$ 趋于正无穷。对任给实数 $B$，选 $L\ge1$ 使该下界大于 $B$；然后每个 $k\ge L(L+1)$ 都满足 $R_\alpha(k)>B$。这证明整条序列趋于正无穷，而不只是某个子列无界。
+
+最后，对任意 $N\ge1$，QO.3 的完整行最大值至少为 $R_\alpha(N)$。因此行成本的发散推出 QO.10。此处只是用末行提供下界，没有把准确最大值替换为末行。证毕。
+

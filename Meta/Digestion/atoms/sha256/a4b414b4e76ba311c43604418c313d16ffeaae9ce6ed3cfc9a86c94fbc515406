@@ -1,0 +1,43 @@
+## 11. Literature, reuse and the precise remaining programme
+
+**Literature status 11.1 (primary sources and hypothesis maps).**
+
+| Primary source | Applicable statement and required conditions |
+| --- | --- |
+| Nancy Lynch and Frits Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, Information and Computation 121(2), 1995, 214–233; [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), §3.2, Lemma 3.8 and Theorem 3.10 | `literature-attested`: a forward simulation from $A$ to $B$ requires related initial states and, for every $A$ step and every related $B$ state, a finite $B$ fragment with the same trace and related endpoint. In the finite lifting here, take $A$ to be the Native macro system and $B$ the adapter with its Native trace projection: actual boot supplies the related starts and Theorem 7.2 supplies the matching fragments at its declared entry cuts. Corollary 3.5 separately accounts for implementation micro-observations; those observations are not Native labels. Trace inclusion supplies neither permission, costs, authenticity nor exact task kernels. |
+| J. Nathan Foster, Michael B. Greenwald, Jonathan T. Moore, Benjamin C. Pierce and Alan Schmitt, *Combinators for Bi-Directional Tree Transformations: A Linguistic Approach to the View Update Problem*, ACM TOPLAS 29(3), 2007, Article 17; [author manuscript](https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf), Definitions 3.1–3.3 | `literature-attested`: get/putback laws are partial-definedness laws unless totality is separately supplied. Putback receives the updated abstract view **and the old concrete object**. These laws do not acquire a hidden tree, bind its installed occurrence, authenticate a journal or make ReadE into literal Read. |
+| Martin Fowler, [*Event Sourcing*](https://martinfowler.com/eaaDev/EventSourcing.html), “Complete Rebuild”, “External Queries” and “External Updates” | `literature-attested` operational background: replay requires the external query responses that actually influenced the execution; replayed updates must be distinguished from new live external effects. Here exact TagRead replies are retained in owned rows, and candidate replay in $V^+$ is local acquired computation with no live source port. This article supplies no formal ownership, capacity or resource theorem; those are the explicit model/proofs above. |
+
+The applicable source producer, tree reconstruction, Boolean acquisition,
+gate interpreter, channel copy, finite replay and generic joint-image framework
+are credited suppliers. The repository-derived addition is the producer-side
+literal instrument on the *same* installed private block, its enlarged causal
+observation interface, and the typed actual event/row/pending/copy coupling
+with an extended record consumer. The exact minterm gate count concerns this
+specified implementation. Truth-table synthesis, tree traversal, event replay,
+fiber constancy and lens laws are not claimed as new mathematics. The cited
+literature does not establish global originality of this particular composition;
+no such originality claim is made.
+
+**Open obligation 11.2 (individual four-expression task kernels).** This
+adapter supplies one acquired dynamic source and callable authentic journal,
+not four individually minimal expressions. A next construction must declare
+natural spatial incidence/support, ordered executed events, continuation boundary
+and callable-memory maps on the same actual history image, and a nonempty task
+family with its complete output/record/selector and original successor fields.
+For each map it must prove both sufficiency and nonredundancy, hence equality
+with the task kernel, and lawful transport of enabled choices and success/reject
+successors. PG43's common-kernel inclusion alone is insufficient. Private scratch,
+microcosts, pending events and live-source permissions must be retained whenever
+that task observes them, or excluded by an explicit task contract.
+
+**Open obligation 11.3 (entry, growth and unrestricted effective execution).**
+The authenticated history begins at this actual paid boot; importing a supplied
+old Native trace needs its own provenance contract. The direct producer needs
+no chosen partial-recursive evaluator code, but arbitrary effective-service
+execution still needs its actual installed code, genuine-state correspondence
+and paid history/workspace access. Fixed $H$ realizes precisely the capacity-safe
+Native runs; growth/reinstallation would require a separately priced source
+action and identity/copy proof. A finite construction for every public $H$
+does not establish one actual infinite coherent thread.
+

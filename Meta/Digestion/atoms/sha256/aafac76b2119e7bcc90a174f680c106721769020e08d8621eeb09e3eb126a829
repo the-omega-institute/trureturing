@@ -1,0 +1,66 @@
+**Theorem 5.2 (exact native energy separation).** Both amplitudes in (5.1)
+have norm one, belong to $C_c^\infty(\Omega\setminus\{o\})$, and satisfy
+
+$$
+\begin{aligned}
+J^*f_+=J^*f_-&=\frac{\phi(k)}{\sqrt{2\pi N_a}},
+& b_{f_+}=b_{f_-}&=\frac{\phi(k)}{\sqrt{2\pi}},\\
+m_{f_+}=m_{f_-}&=\frac{|\phi(k)|^2}{2\pi},\\
+T[f_+]=T[f_-]&=
+\varepsilon^2\|\phi'\|_2^2+
+\frac{a^2}{2N_a}\int_I c(k)^2|\phi(k)|^2dk.
+\end{aligned}
+\tag{5.3}
+$$
+
+Against the single fixed field $\Gamma_o$ their difference is
+
+$$
+\begin{aligned}
+\Delta V&:=V_o[f_+]-V_o[f_-]
+ =\frac{a}{\pi^2N_a}\int_I|\phi(k)|^2C_1(k)dk\\
+&\ge\frac{a}{\pi^2N_a}
+ \int_I|\phi(k)|^2R^{(c_+)}(k_o,k)dk>0,\\
+q_g[f_+]-q_g[f_-]&=-g\Delta V<0\qquad(g>0).
+\end{aligned}
+\tag{5.4}
+$$
+
+The energy identity is valid on these tests for every $g>0$; statements
+about the full attractive operator use (3.8). Under that assumption the
+pair lies in $D(H_g^n)$ for every positive integer $n$. Its spectral
+measures for the same $H_g$ are different, as are its sufficiently short
+positive-time attractive return responses:
+
+$$
+\langle e^{-tH_g}f_+,f_+\rangle
+ -\langle e^{-tH_g}f_-,f_-\rangle
+ =t g\Delta V+o(t)\quad(t\downarrow0).
+\tag{5.5}
+$$
+
+Proof. Integrating $1$, $\cos$, $\cos^2$ and $\sin^2$ over a full
+$2\pi$ circle gives $2\pi,0,\pi,\pi$. Hence the norm of each function
+is one and the first three summaries are (5.3). The $P$ derivative acts
+only on $\phi$. The $Q$ derivative is
+$\mp ac(k)\phi(k)\sin(\beta-\beta_o)/(2\pi\sqrt{N_a})$.
+Their squared integrals give the kinetic formula, with no dropped
+cross term. The pointwise probability difference is
+
+$$
+|f_+|^2-|f_-|^2
+ =\frac{a|\phi(k)|^2}{\pi^2N_a}\cos(\beta-\beta_o).
+\tag{5.6}
+$$
+
+The entire support avoids the source height, so $\Gamma_o$ is smooth and
+bounded there. Integrating (5.6), using (4.1) and (4.4), proves (5.4).
+The positive lower integral is finite and strictly positive since
+$\phi$ has norm one and $R^{(c_+)}>0$ at every interior height.
+Definition 3.2 gives the iterated operator-domain statements. For a
+normalized operator-domain vector the first spectral moment is
+$\langle H_gf,f\rangle=q_g[f]$. Thus (5.4) separates the spectral
+measures. Differentiating the bounded semibounded heat semigroup at zero
+on this domain gives (5.5). This compares states at one pole, not spectra
+of operators with different pole positions. $\square$
+

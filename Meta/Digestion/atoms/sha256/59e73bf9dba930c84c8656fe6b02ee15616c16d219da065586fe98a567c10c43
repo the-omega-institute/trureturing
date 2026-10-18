@@ -1,0 +1,31 @@
+**Theorem 55.4 (all near-minimizers and actual-source finite-to-common preservation).** Fix the supplied $a,g$ and root. Whenever $m:=\inf_{\|f\|=1}\langle f,\mathsf Hf\rangle<\epsilon_*$, every normalized sequence whose energies tend to $m$ has a strongly convergent subsequence, and every such limit is a normalized ground state. This includes, in particular, $g>3a/4$, where $m<0$. It is compactness of *all* normalized near-minimizers, not of all bounded-energy amplitudes.
+
+For every fixed original $t$, let $m_j(t)$ be the minimum of (55.4). For all supplied $a,g>0$, $m_j(t)\downarrow m$. Under the strict-gap hypothesis $m<\epsilon_*$, if $f_j$ is any normalized finite state with $\mathcal E_{D_j}(f_j)-m_j(t)\to0$, all its zero extensions are strongly precompact and their cluster points are common normalized ground states. Under that same hypothesis the common ground state is simple and strictly positive up to phase; no phase selection is required for precompactness. The minimum-value bound, which does not require attainment, is
+
+$$
+0\le m_j(t)-m\le m_{B_{\lfloor j/2\rfloor}}-m\longrightarrow0
+\quad\text{uniformly over all finite original }t.
+\tag{55.13}
+$$
+
+Thus arbitrary varying sources have the same minimum-value convergence if their accepted-substitution indices tend to infinity, with all embeddings root fixed as declared; their state compactness and ground-state conclusions additionally require $m<\epsilon_*$. More precisely, for any $t_n$ and indices $j_n\to\infty$, the conclusions apply to $D_{j_n}(t_n)$. Each actual source/history remains separately retained. No varying-source authentication or convergence of their initial syntax is asserted.
+
+Proof. Let $f_n$ be any unit near-minimizing sequence. Extract a weakly convergent subsequence $f_n\rightharpoonup f$ and put $r_n=f_n-f$. Compactness of $M_\phi$ implies $\langle r_n,M_\phi r_n\rangle\to0$. Boundedness of $L$ gives vanishing cross terms, and $\|r_n\|^2\to1-\|f\|^2$. Consequently
+
+$$
+\begin{aligned}
+m&\ge\langle f,\mathsf Hf\rangle+\epsilon_*(1-\|f\|^2)\
+&\ge m\|f\|^2+\epsilon_*(1-\|f\|^2)
+=m+(\epsilon_*-m)(1-\|f\|^2).
+\end{aligned}
+\tag{55.14}
+$$
+
+The strict binding gap forces $\|f\|=1$. Weak convergence and convergence of norms imply strong convergence, and boundedness of $\mathsf H$ gives energy $m$. This proves attainment and the stated subsequence property for every near-minimizer. It also shows precisely where escape would be allowed if the gap vanished. It does not confuse compact probability-law completion with compactness of amplitudes in the common Hilbert norm.
+
+A minimizer satisfies $\mathsf Hf=mf$ by unit-sphere variation. Replacing it by its absolute value can only decrease the seam energy, so there is a nonnegative minimizer. Its eigen-equation, written $(a\deg(p)-g\phi(p)-m)f(p)=a\sum_{q\sim p}f(q)$, shows that a zero forces all neighbouring values zero and hence, by connectivity, the whole vector zero. Thus it is strictly positive. Any ground eigenvector has positive modulus; equality in the absolute-value energy comparison forces the same phase along every seam. If the ground eigenspace had dimension at least two, a nonzero linear combination could vanish at $o$, contradicting that property. This establishes simplicity. Permuting children in the common unlabelled graph commutes with $\mathsf H$ and fixes its positive normalized ground state, so it is radial as a *consequence*, not as a restriction of the minimization problem. This graph symmetry does not permute the retained original source history.
+
+Every finite unit vector has exactly its common energy after zero extension, so $m_j(t)\ge m$ and nested domains give monotonicity. For any $\eta>0$, choose a common unit trial with energy below $m+\eta$ and approximate it by a normalized finite-support vector. Boundedness of $\mathsf H$ preserves this energy approximation, and exhaustion places that support in all sufficiently advanced $D_j(t)$. This gives the reverse limiting inequality without assuming a common ground state. The same reasoning for $B_R$ and (55.2) gives (55.13). Under $m<\epsilon_*$, any finite near-minimizer therefore becomes a common near-minimizer, to which (55.14) applies. The uniform bound also applies to arbitrary $t_j$ with $j\to\infty$. At fixed accepted index no such assertion is made; varying initial domains need separately tend to exhaust the common rooted graph. The killed-field family in (55.12)–(55.12a) has nonnegative, vanishing norm perturbation, so its minimum values have the same limits; under $m<\epsilon_*$ its normalized near-minimizers have the same strong compactness and ground-state conclusions. □
+
+The strict gap is material even at positive coupling: (55.18b) below gives $m=\epsilon_*$ for $0<g\le a/(2+3\sqrt2)$, and the same escaping strings are normalized near-minimizers with weak limit zero. For $g=0$, the same radial escape strings are unit near-minimizers of $aL$ with weak limit zero and energy tending to $a\lambda_*$. No normalized vector attains $a\lambda_*$: equality in (55.10)'s transform forces its root value zero and every transformed seam difference zero, hence the vector zero. This is an explicit gap-boundary failure of strong compactness. For any fixed $g$, far angular states also have bounded energies and disjoint escaping support. Bounded energy alone never proves the compactness in Theorem55.4. With unrestricted amplitude rather than unit normalization, any negative trial can be multiplied to make the quadratic energy tend to $-\infty$. The normalized lower certificate therefore does not assert convexity or amplitude-independent stability.
+

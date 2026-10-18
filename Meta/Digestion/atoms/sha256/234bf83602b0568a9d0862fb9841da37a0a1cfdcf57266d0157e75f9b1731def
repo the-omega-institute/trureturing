@@ -1,0 +1,17 @@
+**Theorem 10.1 (legal entry-cone coverage).** Every legal prefix $I,J,L,A_3$, with
+$$
+A_3=\begin{pmatrix}a&b\\x&e\end{pmatrix},\qquad x\ge3,\quad a\ge2x,
+\tag{10.1}
+$$
+satisfies Theorem 9.1. Every legal final word, including the empty word, therefore has its finite actual-source collision. There is no additional diagonal, survivor-span, word-length, or clock-determinant hypothesis.
+
+**Proof.** Because $A_3$ is a legal left continuation of $L$, its multiplier has a nonnegative integral unimodular matrix $W_2=(\begin{smallmatrix}h&t\\g&f\end{smallmatrix})$, and
+$$
+A_3=W_2L=\begin{pmatrix}h+t&t\\g+f&f\end{pmatrix}.
+$$
+In particular $x\ge e$. From (10.1), $a\ge6$ and $a>e$. If $e=0$, the absolute determinant of $A_3$ is $bx=1$, contrary to $x\ge3$. If $b=0$, its determinant gives $ae=1$, contrary to $a\ge6$. Hence $b,e\ge1$ and $E=b+e-1\ge1$. Also $a>e$ gives $F>E$, so $\lambda>1$. Finally
+$$
+F(x-3)\ge0,\qquad E(a-2x+2)\ge2E>0.
+$$
+Thus $\Delta>0$ and every hypothesis (9.1) holds. The complete singular and nonsingular constructions of Theorem 9.1 apply to every final word. ∎
+

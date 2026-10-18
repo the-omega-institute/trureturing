@@ -1,0 +1,17 @@
+**Definition 9.2 (literature correspondences).** The following primary
+sources supply established methodological distinctions within the new
+derivation, not the native construction or its prices.
+
+| Primary source | Exact relation and limit of transfer |
+| --- | --- |
+| Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*, JCSS38(1),86–124, [primary text](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf), opening definitions | `literature-attested`: old versions can remain accessible; partial persistence allows access to old versions while modifying the newest. Here immutable covers/packages are the corresponding backing. Their pointer-machine bounds do not price unary scans or acquire intended version/authority. |
+| The rr project's [primary exposition](https://rr-project.org/), Background | `literature-attested`: reverse execution can restore an earlier checkpoint and run forward to a desired point. Our finite frozen predecessor is similarly replayed to a separately named point. Live source is not rolled back; the output is a later description. Online checkpoint placement and offline replay scheduling do not replace the acquired target word or native costs, and no checkpoint optimality bound is transferred. |
+| Chandy and Lamport, *Distributed Snapshots: Determining Global States of Distributed Systems*, [primary text](https://lamport.azurewebsites.net/pubs/chandy.pdf), opening global-state discussion | `literature-attested`: processes cooperate by recording their own local states and communication states. Such a global snapshot is not automatically a requested actual serial primitive cut. No snapshot cooperation or busy interrupt is imported here. Same-run causal naming instead uses acquired source origins, a completed item and literal physical transition tests. |
+| Danvy and Nielsen, *Defunctionalization at Work*, [primary text](https://www.brics.dk/RS/01/23/BRICS-RS-01-23.pdf), §1 and its constructor/apply example | `literature-attested`: finite constructors hold the free data of functional values and case dispatch selects their behavior. Here static callbacks and typed selector fields retain actual tape data. This analogy supplies no current invocation token, native stack or unpriced continuation. |
+
+Persistence, checkpoint addressing, causal source naming, snapshot
+cooperation, first-order continuation data and provenance are thus different
+relations. The present proofs combine only the explicitly realized ARC
+relations. No global literature nonexistence, worldwide novelty, independent
+prior or minimum relation-system claim is made.
+

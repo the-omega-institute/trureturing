@@ -1,0 +1,57 @@
+**Definition 32.1 (analytic window, clocks and actual choices).** Use J, P, L and E as in Definition 24.1. Fix one original datum $d=(H,I,k_0,\kappa,\varepsilon,a)$ before any limit. Retain Definitions 1.1–2.1 and 24.1, J Definitions 1.1–3.2, 29.1 and 42.1, and their ordinary analytic antecedents. More explicitly, $I=(l,u)\Subset(0,H)$, $k_0\in I$, $a,\varepsilon>0$, and $\kappa\ne0$ lies in the sufficiently small fixed two-sided window of L Definition 35.1. Retain its larger-interval positive-probability, coefficient, pole and bracket-determinant margins, L Lemma 41.2, P §§76, 87–88, 97 and 104–107, and E Theorem 3.1. These heat hypotheses are additional applicability conditions; general geometric admission alone does not imply them. Throughout §§32–38 assume
+
+$$
+C_{\rm resp}(d)=0,\qquad C_4(d)=0.
+\tag{32.1}
+$$
+
+The original five probabilities are $(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$. With $\alpha_\kappa=\kappa+\kappa^2/H$, the single jointly realized vector is
+
+$$
+c_\kappa(k)=\left(
+\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},
+-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},
+\frac{H+\kappa-k}{H(k-\alpha_\kappa)}\right).
+\tag{32.2}
+$$
+
+All three components, including their signed cross terms and rational denominator, are retained. The real lift remains $x_{\rm lift}=D/\kappa$. The source is the unit point source at $o=(k_0,0)$ in raw $dY=dk\,dq$, $q\in\mathbb R^3$, with no survival or Haar normalization. Put
+
+$$
+\begin{aligned}
+B&=-\varepsilon^2\partial_k^2-(c_\kappa\cdot\partial_q)^2,&
+\lambda&=\varepsilon^2\pi^2/(u-l)^2,&S&=B-\lambda\ge0,\\
+K_d(t;Y,Z)&=e^{\lambda t}p_t^B(Y,Z),&
+W_{\tau,d}(Y)&=\int_\tau^\infty K_d(t;o,Y)dt.
+\end{aligned}
+\tag{32.3}
+$$
+
+Both original height faces are Dirichlet, and every real phase frequency is admitted. The entire complex domains remain (1.5): the fibre form domain is $H_0^1(I)$ with the integrability of $\varepsilon^2|\partial_k\widehat\psi|^2+|\eta\cdot c_\kappa|^2|\widehat\psi|^2$, and the operator domain has fibres $H^2(I)\cap H_0^1(I)$ and $\int\|B_\eta\widehat\psi\|_2^2d\eta<\infty$. Underlying raw $L^2$ membership is required in both cases. No phase $H^1$, reality or parity constraint is added.
+
+Use exactly $\Xi_s,\mathcal U_s,\mathscr L_s,\mathcal T_s$ of Definition 2.1 and J §2. Thus $|\det D\Xi_s|=j_0s^7$, $\det D\mathscr L_s=1$, $Y_s=\Xi_s\circ\mathscr L_s$, and $\mathcal T_sf=f\circ\mathscr L_s$. Suppress tildes only on the sheared operators and multipliers, so that
+
+$$
+\begin{aligned}
+C_s&=s^2(\mathcal T_s\mathcal U_s)S(\mathcal T_s\mathcal U_s)^{-1},&Q_s(t)&=e^{-tC_s},\\
+q_s(t;\eta,\xi)&=j_0s^7K_d(s^2t;Y_s\eta,Y_s\xi),&T&=s^{-2},\\
+F_s&=j_0^{-1}\int_1^Tq_s(t;0,\cdot)dt,&J_s&=s^5W_{1,d}(Y_s\cdot),\\
+U_s&=F_s+J_s,&H_s&=\int_0^TQ_s(t)dt,\\
+N_s&=F_sH_s,&L_s&=H_sF_s.
+\end{aligned}
+\tag{32.4}
+$$
+
+Here $J_s$ is a multiplier, not the source volume J, and $L_s$ is the early operator, not the phase matrix inside $\mathscr L_s$. Restriction to $\Omega_s=I_s\times\mathbb R^3$ and zero extension give common-space operators. Their native domains before extension are exactly $(\mathcal T_s\mathcal U_s)\mathcal Q$ and $(\mathcal T_s\mathcal U_s)D(S)$. The factor $j_0^{-1}$ occurs in the field alone. The heat clock is $B$ independently of $a$; neither $Q_s$ nor $W_\tau$ contains a replacement kinetic clock.
+
+On the original critical path put
+
+$$
+\tau=s^2,\quad g_s=\chi_cs^3,\quad E_s=E_{s^2}(\chi_cs^3),\quad
+\epsilon_c(s)=s^2E_s<0,\quad r_s=-E_s/s^6,
+\quad\gamma=\chi_c/a=C_*^{-1}.
+\tag{32.5}
+$$
+
+An actual choice means any normalized complex ground state $\psi_s\in D(S)$ at this path. All actual-state conclusions below hold along every prescribed sequence $s_n\downarrow0$ and every such choice on it.
+

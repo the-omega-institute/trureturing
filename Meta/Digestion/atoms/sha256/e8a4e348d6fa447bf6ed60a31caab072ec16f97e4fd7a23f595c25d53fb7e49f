@@ -1,0 +1,41 @@
+**Lemma 3.2 (one joint trial law).** For $A>B>0$, set
+
+$$
+T=8(A^2+B^2),\qquad
+r=\frac{A^2-B^2}{A^2+B^2},\qquad
+P=r\,\operatorname{Unif}(K)
+ +(1-r)\,\operatorname{Unif}(\mathbb F_2^E).
+\tag{WBF.13}
+$$
+
+This is one probability law, positive on every actual solution in
+Convention 1.5, whose marginal on every star is
+
+$$
+Q_v(z)=\frac{\Phi_v(z)^2}{T}.
+\tag{WBF.14}
+$$
+
+Every edge marginal under $P$ is fair. With the declared star orders
+the $Q_v$ have the same entropy and the same expectation of
+$\log_2\Phi_v$.
+
+Proof. Since $0<r<1$, (WBF.13) is positive on the entire edge cube.
+The uniform cube has probability $1/16$ on each star pattern, while
+Lemma 3.1 gives probability $1/8$ on every even pattern and zero on
+every odd pattern for the kernel law. The mixture therefore gives
+
+$$
+Q_v(z)=\begin{cases}
+(1+r)/16=A^2/T,&z\text{ even},\\
+(1-r)/16=B^2/T,&z\text{ odd}.
+\end{cases}
+\tag{WBF.15}
+$$
+
+These sixteen probabilities sum to one. Both mixture components have
+fair edge marginals. The actual bijection of Convention 1.5 pushes
+this single law to native tuples without a choice of separate local
+realizations. Parity and the two weights are invariant under the slot
+orders, proving the entropy and expectation assertions. $\square$
+

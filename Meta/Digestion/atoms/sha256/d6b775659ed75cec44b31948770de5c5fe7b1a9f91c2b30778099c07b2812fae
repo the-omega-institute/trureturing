@@ -1,0 +1,11 @@
+**Corollary 3.2 (Fixed rational block normalizers).** For either $i\in\{0,1\}$ the sequence $C_{i,m}(n)$, with its zero values for $0\le n<m$, agrees on all nonnegative integers with a rational polynomial of degree $10m-1$, and
+
+$$
+C_{i,m}(n)=b_m n^{10m-1}+O_{H,m}(n^{10m-2}),
+\qquad b_m=\frac{(9!)^m}{(10m-1)!}.
+$$
+
+Its values are strictly positive for every integer $n\ge m$. These polynomials can be preprocessed exactly from the fixed rational $H$ and integer $m$.
+
+Proof. The $F_0$ assertion is Lemma 3.1 with every exponent nine. Expand the finite product of monomial descriptions of $F_1$ inside its finite composition sum. All exponents lie in $\{1,\ldots,9\}$ because $H(0)=0$. Each resulting term is a rational coefficient times a polynomial from Lemma 3.1. The unique term with every exponent nine has coefficient one and degree $10m-1$; any other exponent tuple has $\sum_j(d_j+1)\le10m-1$ and hence polynomial degree at most $10m-2$. Thus the top coefficient is $b_m$, and the same zero-range agreement holds for every term. Positivity at legal totals follows from the original positive defining sum, regardless of signs in the polynomial's coefficients. The finite construction in the lemma supplies the preprocessing. $\square$
+

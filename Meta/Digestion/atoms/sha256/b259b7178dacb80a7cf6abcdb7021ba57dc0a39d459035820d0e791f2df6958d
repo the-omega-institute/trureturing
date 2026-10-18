@@ -1,0 +1,28 @@
+**Definition 5.2 (the four maps).** On $\mathscr H_{H,J}$ put
+
+$$
+\begin{aligned}
+S(h)&=(\operatorname{Pos}(r_h),e_h,n_h),\\
+T(h)&=\text{the complete ordered primitive event word from the entrance to }h,\\
+B(h)&=(\operatorname{LeafPos}(r_h),e_h,n_h),\\
+M(h)&=(\operatorname{code}(u),n_h;\mathcal I_{H,J}).
+\end{aligned}
+\tag{NCR.4}
+$$
+
+The fixed interpreter $\mathcal I_{H,J}$ has replay and finite indexed recall
+routines. Its description and installation are charged. The code in $M$ is
+the actually acquired seed block, not the private initial source packet.
+$n,e$ denote the constructed receipt coordinates of Definition 2.3, with paid
+numeral materialization when required. $M$ needs no independently supplied
+epoch: replay derives it. An actual-image memory value supplies the seed and
+prefix position, not a stored copy of $T$.
+
+$T$ retains every tape/core occurrence, including installation and evaluator
+work if present, and every actual Native Read/update with its literal
+epoch/address/reply. It retains the declared full public operation, cell,
+ownership/availability, commit/seal/copy and tick/fee labels. Halt is a
+terminal annotation with its full output. A semantic row list or an update
+count is not this temporal expression. Retaining only semantic events would
+erase the distinction between different row-writing microcuts.
+

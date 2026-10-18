@@ -1,0 +1,20 @@
+### 定义 24.5（场产生的轨迹）
+
+令 \(\mathsf M_\Phi\) 是切空间上的正半定 mobility 算子。若 \(\mathcal E\) 在 \(\mathcal C_G^\circ\) 上可微，则定义耗散轨迹
+
+\[
+\dot\Phi_t
+=
+-\mathsf M_{\Phi_t}\nabla\mathcal E(\Phi_t).
+\]
+
+若给定切空间上的反对称算子 \(\mathsf J_\Phi^*=-\mathsf J_\Phi\)，则定义保守轨迹
+
+\[
+\dot\Phi_t
+=
+\mathsf J_{\Phi_t}\nabla\mathcal E(\Phi_t).
+\]
+
+这两种生成元应当分开记账：\(\mathsf M_\Phi\) 负责沿势下降的耗散，\(\mathsf J_\Phi\) 负责不改变一阶能量的相位运动。
+

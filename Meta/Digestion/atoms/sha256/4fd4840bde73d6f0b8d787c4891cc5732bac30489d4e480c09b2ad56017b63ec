@@ -1,0 +1,12 @@
+### 推论 53.8（多参数 Fisher 矩阵的 Loewner 收缩）
+
+若每条边携带参数向量，令 (J_e) 为源态 (omega_e) 的 SLD Fisher 矩阵，令 (J_{mathrm{out}}) 为网络输出态的 SLD Fisher 矩阵，则
+\[
+\boxed{
+J_{\mathrm{out}}
+\preceq
+\operatorname{diag}(J_{AB},J_{BC},J_{CA}).
+}
+\]
+对任意实参数方向 (v)，该不等式的二次型正是定理 53.6 的标量预算；有限维对称矩阵的 Loewner 序由所有实二次型比较刻画，故结论成立。该矩阵形式可直接接到多参数量子 Cramér--Rao 界。
+

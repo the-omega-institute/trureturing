@@ -1,0 +1,54 @@
+### 2.5 Explicit suppression of the finite remainder
+
+At a good $t\in[t_-,1/4]$, (2.8), (2.9), (2.12), and (2.16) imply
+
+$$
+\frac{\left|S(1-t)-P(1-t)/Q(1-t)\right|}{S(1-t)}
+\le64\frac ba\,8^N\sqrt m\,\exp(-mt)t^{1/2-N}.
+\tag{2.17}
+$$
+
+Since $N\ge1$, the exponent $1/2-N$ is negative. The inequalities
+$t\ge m^{-1/2}$ and $mt\ge\sqrt m$ therefore bound the right side by
+
+$$
+64\frac ba\,8^Nm^{N/2+1/4}\exp(-\sqrt m).
+\tag{2.18}
+$$
+
+This quantity is strictly below $1/2$, as the following symbolic
+comparison shows. Twice (2.18) is
+$C8^Nm^{N/2+1/4}\exp(-\sqrt m)$. Using
+$m=2^{2J+4}$, $\sqrt m=2^{J+2}$, and $e>2$, it is at most
+$2^{A_*}$, where
+
+$$
+A_*=\log_2C+3N+(N+\tfrac12)(J+2)-2^{J+2}.
+\tag{2.19}
+$$
+
+The definition of $K$ gives $\log_2C+3N<K$. Together with (2.2),
+this yields
+
+$$
+A_*<J^2+3J-2^{J+2}<0.
+\tag{2.20}
+$$
+
+For the last inequality, $2^J\ge J^2$ for all integers $J\ge4$:
+it is equality at $J=4$, and
+$2J^2-(J+1)^2=(J-1)^2-2>0$ propagates it by induction. Thus
+$2^{J+2}\ge4J^2>J^2+3J$.
+
+Define $R(t)=P(1-t)/Q(1-t)$ at good $t$. This is real, and the
+strict relative error bound gives
+$S(1-t)/2<R(t)<3S(1-t)/2$. In particular,
+
+$$
+0<\frac a{64}t^{-3/2}\le R(t)\le2bt^{-3/2}.
+\tag{2.21}
+$$
+
+The coefficient and root estimates concern the auxiliary polynomial,
+not a lower bound on a native model denominator.
+

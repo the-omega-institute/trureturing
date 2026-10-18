@@ -1,0 +1,94 @@
+**Proposition 7.2 (multiple hidden slots with two exact frontier points).**
+Take $D=2,H=3,q=4$, positive lags and the singleton menu with
+$S=\{3\}$. Install the encoder assigning one label $*$ to precisely
+the following four profiles, and a different individual label to every
+other profile. The rows list their compatible lags and current ages:
+
+$$
+\begin{array}{c|c|c|c}
+\text{history}&a&\ell&(n_0,n_1,n_2,n_3)\\ \hline
+h_1&(0,1,3,3)&2&(2,7,13,17)\\
+h_2&(0,1,2,2)&3&(3,8,13,17)\\
+h_3&(2,1,1,1)&4&(6,9,13,17)\\
+h_4&(2,1,0,0)&5&(7,10,13,17).
+\end{array}
+\tag{LQF.18}
+$$
+
+At code $*$ and complete row with exterior
+$\mathcal B_2[\square_{LL},\square_{LR},\square_{RL},T_{17}]$
+and discrete hidden partition, these are exactly all histories. The
+encoder is globally feasible. The exact local frontier, and the
+frontier of restrictions of globally correct services, is
+
+$$
+\boxed{\mathcal P(\mathscr H_\eta)=\{(1,6,6),(2,8,5)\}.}
+\tag{LQF.19}
+$$
+
+Proof of the source and entry assertions. Construct each original as
+$\mathcal B_2[(T_{4j+a_j})_{j=0}^3]$. Its genuine $\ell$-fold
+homomorphic continuation has exactly the current exponents in the
+table. The three hidden positions remain reached and their values
+are distinct; hence the stated row includes their complete equality
+and disequality information. The displayed equation is $a_3+\ell=5$.
+For each of the four profiles this fixes exactly the listed lag.
+No other profile has the code, so this is the entire entry fiber.
+The encoder is a function of the acquired initial ages and can be
+installed before either the future selection or lag. In its only
+nonsingleton code class all profiles have $a_1=1$. A common translation
+between two of them would therefore have displacement zero and would
+make them identical. All other code classes are singletons, proving
+the encoder condition of Theorem 6.1.
+
+Proof of attainment. One query at slot one with suffix $R^4=P_8$
+is the literal word $LRRRRR$, of length six. On the ages
+$7,8,9,10$ it gives four different replies and hence the four lags.
+This attains $(1,6,6)$. Alternatively query $LLRRR$, the slot-zero
+$P_6$ word of length five. Alpha and beta identify $h_3,h_4$.
+On absence, query $LLR$, of length three, whose alpha and beta
+replies identify $h_1,h_2$. The latter histories spend two calls and
+eight letters; the others spend one call and five letters. The exact
+worst vector is $(2,8,5)$.
+
+Proof against all other literal strategies. By (LQF.13), the shortest
+separator of $h_3,h_4$ has length five: slot zero needs three suffix
+letters and slot one needs four; the other slots are constant. Thus
+peak at most four is impossible. With peak at least six, every correct
+strategy has at least one call and total length at least six, so its
+worst vector is dominated by $(1,6,6)$.
+
+It remains to consider peak five. Every informative query on the full
+fiber has length at least three, since the skeleton and all slot roots
+reply branch. A first separating query for $h_3,h_4$ must have length
+five. If an earlier informative query occurred on their common path,
+that path already costs at least $3+5=8$ letters. If none occurred,
+remove the earlier constant queries for this lower-bound comparison.
+The separating query is then the first informative query on the whole
+fiber. It must be in slot zero; the allowed length-three suffixes
+separating ages six and seven have types $P_5,P_6,S_6$ by (LQF.5).
+All three give absence at both ages two and three. Those latter two
+histories consequently need another query; their shortest separator
+has length three. Some actual path again costs at least eight letters.
+
+There is also no correct one-call strategy at peak five. In slot zero
+no type in (LQF.5) separates all four ages $2,3,6,7$: four distinct
+replies would require its two singleton ages to be the two middle
+values three and six, which are not consecutive. An $S_t$ or $E$
+has fewer than four replies. At slot one a suffix of length at most
+three has weight at most six, and cannot distinguish all of
+$7,8,9,10$; slots two and three are constant. Theorem 2.2 exhausts
+the other words. Therefore every peak-five strategy has count at
+least two and total length at least eight. The attained vector
+$(2,8,5)$ dominates it. This proves exactly (LQF.19), and Theorem
+6.1 gives its global-extension interpretation. $\square$
+
+This finite-entry tradeoff fixes one encoder and one acquired row.
+It neither optimizes the encoder's label alphabet nor takes worst costs
+over every entry or unbounded lag. The common label in Proposition
+7.2 is not a four-label encoding of the entire age cube. The displayed
+table lists actual source histories, not four independently chosen
+slot marginals. The example also distinguishes the peak optimum from
+the call and total-length optima: no one strategy attains all three
+coordinate minima $(1,6,5)$.
+

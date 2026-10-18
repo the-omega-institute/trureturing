@@ -1,0 +1,20 @@
+**References 11.3 (primary-literature scope).** Kuncak and Rinard,
+[*On the Theory of Structural Subtyping*][KR], arXiv:cs/0408015v1,
+§6 and PDF Theorem 90/Corollary 91, supplies quantifier elimination and
+sentence decision for its specified term-power language and a decidable
+base structure. This is literature-attested at that exact interpreted
+language. [TPO Definition 1.2 and Corollary 4.2][TPO] explain
+why the native normal-domain predicate cannot simply be inserted as if
+it were already a formula of that language. No such interpretation is
+assumed here; the projection proof instead uses NSF's finite branch
+reduction and the explicit arguments of §3.
+
+Finite free-term unification, difference-equation graphs, finite
+forbidden-value avoidance and finite decision trees are standard methods.
+The present mathematical increment is their stated native projection
+inference and its source-faithful consumers, classified as repo-derived.
+This bounded comparison does not establish literature-wide novelty,
+priority, absence of another decision method or undecidability of either
+open problem. No external theorem is used to bridge unspecified physical
+addresses to a logical address sort.
+

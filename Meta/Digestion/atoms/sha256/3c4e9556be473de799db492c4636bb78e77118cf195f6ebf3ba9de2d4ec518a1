@@ -1,0 +1,15 @@
+**Definition 1.2 (unchanged original instance).** Fix one actual finite
+preparation $\xi$, original source $u$, initial $H_0$, actual prior and
+initialized original controller as in UAS §1 and ARC §§1–4. Retain the
+same source 16, its creation chain and capacity embedding $\phi_K$.
+Retain the original ownership map, all 74 actual ports, original
+verifier on 32–39, original INITIAL consumer on 40–47, original
+experiments $Q$, and original global halt. A later capacity $J$ is
+runtime input to this same apparatus.
+
+In particular ARC Definition 9.1 provides one fixed instance with
+$u=\beta$, $H_0=h=K=1$ and the truthful INITIAL-Stop client. Its code
+and preparation contain no future capacity maximum or list of Reserve
+values. The present local construction does not replace that instance
+by a new source for each $J$.
+

@@ -1,0 +1,22 @@
+**Definition 2.3 (the chain-rule defect on one law).** For any probability
+law $T$ on actual seed solutions let
+
+$$
+\begin{aligned}
+\gamma_k(J)&=\frac{|J|!(k-|J|)!}{(k+1)!},\\
+\mathcal L(T)&=\sum_i\sum_{J\subseteq[k_i]}
+ \gamma_{k_i}(J)H_T(O_i\mid B_{i,J}),\\
+\Delta(T)&=\mathcal L(T)-H(T)\ge0.
+\end{aligned}
+\tag{OCC.10}
+$$
+
+All logarithms and entropies have base two. The nonnegative difference
+is the permutation-averaged conditional mutual information in [COK,
+Theorem 3.2][COK]: apply the entropy chain rule to the entire owner
+partition and condition each block only on its incoming preceding owner
+groups. This holds for every common law. The stronger COK identity for
+$\log_2Z$ uses specifically the Gibbs law
+$P(s)=Z^{-1}\prod_i\Phi_i(s)$ of that exact sum. It is not an identity
+for an arbitrary compatible completion with matching local marginals.
+

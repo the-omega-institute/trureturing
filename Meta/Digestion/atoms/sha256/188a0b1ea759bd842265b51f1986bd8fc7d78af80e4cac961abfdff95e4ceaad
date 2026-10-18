@@ -1,0 +1,16 @@
+**定义 1.1（Original coordinates and matching）。** Write $e_1,\ldots,e_5$ for
+positions in the ordered orthonormal basis $B=(0,1,2,3,13)$, and put
+$m_j=e_{j+2}$ for $j=0,1,2$, read modulo three. Positions $1,5$ are called the
+outers; positions $2,3,4$ are the middles. For the original factors
+$H^{(1)}=H^{(2)}=\mathbb C^5$, define
+
+$$
+f(0)=13,\quad f(13)=0,\quad f(1)=3,\quad f(3)=1,\quad f(2)=2,
+\qquad J|r\rangle=|r,f(r)\rangle.
+\tag{1.1}
+$$
+
+Thus $J^\dagger J=I_5$. Every Schmidt-number interpretation uses the original
+split $H^{(1)}\mid H^{(2)}$, with no independent copies substituted for these
+factors.
+

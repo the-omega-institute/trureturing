@@ -1,0 +1,31 @@
+**Definition 1.2 (Regularized density and its coefficients).** For $a>0$, $0\le c<1$, and $k=a+c<3$, put
+
+$$
+w_{a,c}(s)=\frac{\sin(\pi(as+c))}{\pi}
+ \left(\frac{s}{1-s}\right)^{as+c},\qquad 0<s<1,
+$$
+
+$$
+\begin{aligned}
+q_0(a,c)&=1,\\
+q_n(a,c)&=\frac1n\sum_{j=1}^n
+ \left(\frac{aj}{j+1}+c\right)q_{n-j}(a,c)\quad(n\ge1),\\
+q_1&=\frac a2+c,\qquad
+q_2=\frac a3+\frac c2+\frac12\left(\frac a2+c\right)^2,\\
+D_{a,c}(t)&=q_1+(q_1-q_2)t\\
+&\quad+e^{-a}\int_0^1 w_{a,c}(s)
+ \bigl(e^{(1-s)t}-1-(1-s)t\bigr)\,ds,\\
+d_n(a,c)&=\sum_{j=0}^n(-1)^j\binom nj q_{j+1}(a,c)\quad(n\ge0).
+\end{aligned}
+$$
+
+Both endpoint subtractions are part of the definition of $D$. The integral is an improper integral of the entire displayed product; the unsubtracted kernel need not be integrable. The associated Laplace density is $\Phi_{a,c}(t)=e^{a-t}D_{a,c}(t)$. These are Krasniqi's equations (3.5)--(3.8), (3.17), and (3.19). The same coefficient sequence has generating function
+
+$$
+\sum_{n=0}^\infty q_n(a,c)z^n
+ =\exp\left(\sum_{j=1}^\infty
+ \left(\frac{a}{j+1}+\frac cj\right)z^j\right),\qquad |z|<1.
+$$
+
+Indeed, differentiating this identity formally and comparing coefficients gives the displayed recurrence and $q_0=1$.
+

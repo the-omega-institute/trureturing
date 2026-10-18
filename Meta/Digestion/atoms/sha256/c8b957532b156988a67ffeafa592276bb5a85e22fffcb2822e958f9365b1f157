@@ -1,0 +1,19 @@
+**临界增长空间。** 固定一个整数 \(j\ge0\)，标量域取 \(\mathbb R\) 或 \(\mathbb C\)。
+序列与算术核使用同一标量域。令 \(\mathcal X_j\) 为满足
+\(f(0)=0\) 且下列范数有限的序列空间：
+\[
+W_j(N)=\sqrt N(1+\log N)^j,\qquad
+\|f\|_{\mathcal X_j}=\sup_{N\ge1}\frac{|f(N)|}{W_j(N)}.
+\tag{IC.5}
+\]
+对算术核 \(v=(v_d)_{d\ge1}\)，定义
+\[
+(T_vf)(N)=\sum_{1\le d\le N}v_df(\lfloor N/d\rfloor),\quad N\ge1,
+\qquad (T_vf)(0)=0,\qquad
+\|v\|_{1,1/2}=\sum_{d\ge1}|v_d|d^{-1/2}.
+\tag{IC.6}
+\]
+所有正商至少为一。有限约数分组给
+\(H_m=T_{a_m}M\)、\(M=T_{\eta_m}H_m\)，不要求实际 \(M,H_m\)
+已经属于 \(\mathcal X_j\)。
+

@@ -1,0 +1,164 @@
+## 11. Three-region rational coercivity
+
+**Proof of Theorem 9.2, lower region $a\le a_1$.** Compare $b$ with $2a$. Both endpoints of this vertical segment satisfy the derivative box and the sum bound. On it,
+
+$$
+\partial_bD\le-\frac{31/25}{d_p}
++\frac{22/81}{(9/25)d_\beta}
+=-\frac{14383223125}{7204961637}<-1.
+\tag{11.1}
+$$
+
+The function $f(a)=D(a,2a)$ satisfies $f(a_1)=0$ and
+
+$$
+f'(a)=-\frac{2(1+2a+3a^2)}{d_p}+\frac2{3d_\beta}
+\le-\frac{2(38/25)}{d_p}+\frac2{3d_\beta}
+=-\frac{5763782250}{266850431}<-1.
+\tag{11.2}
+$$
+
+Integration in $a,b$ yields $D\ge(a_1-a)+(2a-b)\ge0$. Moreover $\delta_1=3(a_1-a)+(2a-b)\le3D$. Thus (10.6) gives $d\le12D\le112F$.
+
+**Proof of Theorem 9.2, middle region $a_1\le a\le a_2$.** Put
+
+$$
+q=\frac{177147}{781250},\qquad
+B(a)=\min\left\{\frac{16}{729a^2},\frac{1944}{390625a^3}\right\}.
+\tag{11.3}
+$$
+
+The first branch applies on $[a_1,q]$, the second on $[q,a_2]$, and the branches agree at $q$. $B$ decreases from $b_1$ to $b_2$ and is 6-Lipschitz: the branch derivatives have magnitudes $2B/a$ and $3B/a$, each at most $3b_1/a_1=6$. On each branch $a+B(a)$ has derivative $1-mB/a<0$, $m=2$ or 3, since $B\ge b_2,a\le a_2$. Thus $3/5\le a+B(a)\le2/3$, and the segment from actual $b$ to $B(a)$ stays in the derivative box. There,
+
+$$
+\partial_bD\le-\frac{103/81}{d_p}
++\frac{(6/25)(31/25)}{(9/25)d_\beta}
+=-\frac{346649715}{266850431}<-1.
+\tag{11.4}
+$$
+
+The exact identities (3.5)–(3.6) supply the sign polynomials. Retaining their coefficients, the quantitative estimate needed here is
+
+$$
+D(a,B(a))\ge\tfrac14\min(a-a_1,a_2-a).
+\tag{11.5}
+$$
+
+Indeed the first branch has
+
+$$
+D(a,16/(729a^2))=
+\frac{-250(9a-2)P(a)}{266850431a^2(729a^3+16)},
+$$
+
+$$
+P(a)=515692089a^4+133957242a^3+22330580a^2-10516000a-1912000.
+\tag{11.6}
+$$
+
+Using $q<227/1000$ in positive terms and $a\ge2/9$ in the negative linear term gives, throughout $[a_1,q]$,
+
+$$
+P(a)\le515692089(227/1000)^4+133957242(227/1000)^3
++22330580(227/1000)^2-10516000(2/9)-1912000
+=-\frac{1458200744339967359}{9000000000000}<-150000.
+\tag{11.7}
+$$
+
+The second branch has
+
+$$
+D(a,1944/(390625a^3))=
+\frac{-162(25a-6)Q(a)}{6671260775a^3(390625a^4+1944)},
+$$
+
+$$
+\begin{aligned}
+Q(a)={}&3693798828125a^6+919180031250a^5+253271520000a^4\\
+&+48234052800a^3-15260544828a^2-3499952328a-677410128.
+\end{aligned}
+\tag{11.8}
+$$
+
+For $L=2267/10000<q$ and $U=6/25$, exact substitution gives
+
+$$
+Q(L)=\frac{2821236205035871506801869}{102400000000000000}>25000000,
+$$
+
+and throughout $[L,U]$,
+
+$$
+\begin{aligned}
+Q'(a)\ge{}&6(3693798828125)L^5+5(919180031250)L^4
++4(253271520000)L^3\\
+&+3(48234052800)L^2-2(15260544828)U-3499952328\\
+&=\frac{6927164613779257879197}{204800000000}>30000000000.
+\end{aligned}
+\tag{11.9}
+$$
+
+Hence $Q(a)>25000000$ on the entire second branch. These are rational enclosures with explicit endpoints, not assertions based on samples. The denominators in (11.6),(11.8) are positive and increasing. Consequently the two branches respectively give
+
+$$
+D(a,B(a))\ge k_1(a-a_1),\qquad
+k_1=\frac{2250(150000)}{266850431a_2^2(729a_2^3+16)}
+=\frac{11444091796875}{13591493002123}>1/4,
+$$
+
+$$
+D(a,B(a))\ge k_2(a_2-a),\qquad
+k_2=\frac{4050(25000000)}{6671260775a_2^3(390625a_2^4+1944)}
+=\frac{2441406250}{7204961637}>1/4.
+\tag{11.10}
+$$
+
+This proves (11.5). For an explicit coefficient verification of the rational identities, let $A_0=412/729,B_0=22/27$ and $c=16/729,m=2$ or $c=1944/390625,m=3$. Clearing the denominator $a^m(a^{m+1}+c)$ in $D(a,c/a^m)$ gives the polynomial
+
+$$
+(A_0/d_p-B_0/d_\beta)a^m(a^{m+1}+c)
+-\frac c{d_p}(1+a+a^2)(a^{m+1}+c)
++\frac c{d_\beta}(1+a)a^m.
+\tag{11.11}
+$$
+
+Multiplying (11.11) by $266850431\cdot729$ in the first case gives $-250(9a-2)P(a)$, and by $6671260775\cdot390625$ in the second gives $-162(25a-6)Q(a)$. Thus all coefficients and signs in the comparison can be reproduced by rational polynomial arithmetic.
+
+Set $t=\min(a-a_1,a_2-a)$, $y=(B(a)-b)_+$ and $z=(b-B(a))_+$. Equations (10.5),(11.4),(11.5) give
+
+$$
+D\ge\tfrac14t+y-100z,\qquad
+D+101z\ge\tfrac14t+y+z\ge0.
+\tag{11.12}
+$$
+
+Choose $i$ with $|a-a_i|=t$. The cap's Lipschitz bound gives
+
+$$
+\delta_i\le7t+y+z\le28(D+101z).
+$$
+
+On the first branch $z=h_2/a^2$, and on the second $z=h_3/a^3$, including $z=0$ in both formulas. As $a\ge a_1$, $z\le125H$. Since $101\cdot125=12625<13000$, $F\ge D+101z\ge0$. Equation (10.6) then gives $d\le112F$ throughout this closed region.
+
+**Proof of Theorem 9.2, upper region $a>a_2$.** Here $b\ge3a/2>b_2$, so $h_3>0$. Monotone products give
+
+$$
+h_3\ge\tfrac32(a^4-a_2^4)\ge6a_2^3(a-a_2),\qquad
+6a_2^3>1/13,
+$$
+
+$$
+h_3\ge a_2^3(b-b_2),\qquad a_2^{-3}<73.
+\tag{11.13}
+$$
+
+Thus $\delta_2\le(13+73)h_3=86h_3$. The straight segment to $(a_2,b_2)$ lies in the derivative box. Since $D(a_2,b_2)=0$, (10.5) yields $D\ge-100\delta_2\ge-8600h_3$. Therefore
+
+$$
+F\ge4400H\ge0,\qquad
+d\le344h_3\le344H\le F\le112F.
+\tag{11.14}
+$$
+
+Together the three regions prove (10.2) on the whole rectangle, including all its boundary points.
+

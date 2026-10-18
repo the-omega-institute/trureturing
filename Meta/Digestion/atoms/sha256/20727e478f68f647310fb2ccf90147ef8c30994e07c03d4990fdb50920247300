@@ -1,0 +1,13 @@
+**适用：第一部分§§三、五、十–十一；第二部分§§四、九–十及两部分物理／生物解释。** 在同一历史域上，只有实际因子化 $M_{\mathrm{next}}=G\circ M_{\mathrm{current}}$ 才保证旧不可区分关系包含于新关系；允许等号，不推出严格损失、熵增长、热力学箭头或物理时间反演。没有射线返回、单步商闭合或正钟本身均不证明该因子化。保留累积记录并新取得依赖旧记录所无区别的记录可细分纤维，单独后处理旧记录不能；若同时丢旧记录，整体细分也不保证。
+
+“生命／逆衰变”的控制解释还需可用感知与反馈动作、取得权限、资源、校准、维护及安全／存活条件；它不是生命定义、生物定理、放射衰变逆转或物理时间不存在的证据。数学标签和经典律可识别性不给射线、热排放或相干探测器实现。
+
+量子恢复须声明 Hilbert 空间、信道、编码／态族和物理允许的 CPTP 恢复。经典集合单射不足：量子比特退极化信道 $\mathcal N(\rho)=\tfrac12\rho+\tfrac12 I/2$ 在密度矩阵上单射，其线性逆却把纯态投影送到特征值 $3/2,-1/2$ 的矩阵，因而没有覆盖全部态的 CPTP 逆。在投影码 $C$ 上，Knill–Laflamme 精确纠错条件为
+
+$$
+C E_i^\dagger E_j C=c_{ij}C.
+$$
+
+Braunstein–Pati 的 no-hiding 结果有局部输出对输入普遍无关及全局幺正／等距延拓等假设；它不保证任意环境的可访问记录或探测恢复，其实验检验也不是本 FIB 探测器／钟模型的证据。成熟参照为 Knill–Laflamme《Theory of quantum error-correcting codes》与 Braunstein–Pati《Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox》。这里未给这些物理实现；它们的缺失不改变本卷作为有具体限定的归属开放参考输入的性质。
+
+<!-- attributed-source-begin -->

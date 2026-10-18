@@ -1,0 +1,20 @@
+**定义 5.1（两个互补父历史）。** Fix $D_0\in\mathbb R$, $\lambda\ne0$ and $0<\varepsilon<1/6$. Set
+
+$$
+\begin{aligned}
+H_J^-&=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5),\\
+H_{MJ}^-&=(D_0-21\lambda,M,D_0,J,D_0+5\lambda(1+\varepsilon),M,D_0),\\
+H_J(Y)&=(H_J^-,J,Y),\qquad
+H_{MJ}(Y)=(H_{MJ}^-,M,Y).
+\end{aligned}                                                     \tag{5.1}
+$$
+
+These retain exactly the preceding literal histories of [IV, Theorems 2.1 and 3.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), with complementary fourth atoms. Define the whole promised classes
+
+$$
+C_J(Y)=\mathcal F(H_J(Y))\cap\{\delta=D_0,g(7)=0\},\qquad
+C_{MJ}(Y)=\mathcal F(H_{MJ}(Y))\cap\{\delta=D_0,g(7)=0\}.        \tag{5.2}
+$$
+
+The baseline $D_0$ in the history is not presumed to equal an unrestricted target's drift.
+

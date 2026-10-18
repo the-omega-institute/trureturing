@@ -1,0 +1,52 @@
+**Proposition 3.6 (An exact rational pair).** Equal signed area does not
+determine a zero-winding endpoint ray at a generic positive base point.
+
+Proof. Take
+
+$$
+X=\frac15,\quad Y=\frac25,\quad Z=\frac15,\qquad
+\kappa_0=\frac1{20},\quad \kappa_1=\frac1{10},\quad
+\kappa_2=\frac3{20}.
+$$
+
+The initial law and the three weights, in the fixed mode order, are
+
+$$
+p_{\kappa_0}=\frac1{20}(5,3,4,7,1),
+$$
+
+$$
+\begin{aligned}
+w(\kappa_0)&=\frac1{176}(21,-35,0,-15,105),\\
+w(\kappa_1)&=\frac1{176}(22,-66,0,-22,66),\\
+w(\kappa_2)&=\frac1{176}(15,-105,0,-21,35).
+\end{aligned}
+$$
+
+These follow by reciprocating the four positive bottom masses and dividing
+by their reciprocal sum. Let the first rectangle use height $\kappa_1$ and
+phase height two, and the second use $\kappa_2$ and phase height one. Both
+signed areas are $1/10$. Their residual difference is
+
+$$
+\begin{aligned}
+h^{(1)}-h^{(2)}
+&=2w(\kappa_1)-w(\kappa_2)-w(\kappa_0)\\
+&=\frac1{22}(1,1,0,-1,-1).
+\end{aligned}
+$$
+
+Its $d$ pairing is zero. Its $p_{\kappa_0}$ pairing is zero because the two
+positive entries have total mass $(5+3)/20=2/5$ and the two negative entries
+have total mass $(7+1)/20=2/5$. It is not a common phase vector. The overlap
+of the two output rays, for the same initial phases, has squared modulus
+
+$$
+\left[\frac15+\frac45\cos\left(\frac1{22}\right)\right]^2<1.
+$$
+
+Indeed the middle contribution is $1/5$ and the two paired masses give the
+two conjugate exponential terms of weight $2/5$. The bracket lies strictly
+between zero and one. Equal area therefore fails to determine full
+interference even though it determines the weighted real phase in Theorem 3.5. $\square$
+

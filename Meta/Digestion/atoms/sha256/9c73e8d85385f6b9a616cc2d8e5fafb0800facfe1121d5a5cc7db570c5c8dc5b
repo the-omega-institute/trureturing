@@ -1,0 +1,17 @@
+## Literature and repository audit
+
+The current CFMP three-edge document records the HHH/LLH alternation and
+high-edge even-degree obstruction, but does not state the center-link
+component count or the `16 | N` consequence. Uemura, arXiv:2609.34108v1
+(September 2026), gives invariant-box and local angle criteria and explicit
+face-pairing families; a full-text search of the primary HTML found no
+three-star center-link divisibility statement. This theorem is a purely
+topological necessary condition and is independent of Uemura's geometric
+criteria.
+
+This obstruction narrows role-homogeneous pure-star searches, but it does not
+rule out a genuinely lowered-threshold construction in which a degree-8
+quotient class occurs in both local roles. In that mixed-role case an LLH face
+may pair to an HHH face, so the center/peripheral separation used above is
+not available. The theorem does not itself establish geometricity or rule
+out the first role-homogeneous admissible case `N=96`.

@@ -1,0 +1,64 @@
+**Theorem 2.3 (terminating exact spectrum compiler).** For every chart $b$
+and every supplied finite original tuple $\mathbf f$, there is a terminating
+construction of a Presburger formula
+$\widehat\Xi_{b,\mathbf f}(\mathbf c)$ such that
+
+$$
+\widehat\Xi_{b,\mathbf f}(\mathbf c)\quad\Longleftrightarrow\quad
+\Xi_b(\mathbf c,\mathbf f).
+\tag{FNS.12}
+$$
+
+The compiler retains $\mathbf f$ as the original finite tuple supplied to the
+chart. It does not enumerate a catalogue of finite trees and does not replace
+the tuple by separator markers.
+
+**Proof.** This is an algebraic compiler on the declared Cartesian chart;
+its acquired-source use requires the separate exact image correspondence in
+Sections 3--4. For the fixed finite tuple $\mathbf f$, expand its finite
+syntax as ground native trees. The resulting negative list is in the mixed
+grammar of [URR, Definition 1.2][URR], with scalar variables
+$(\mathbf c,\mathbf w)$ and Cartesian residual variables $\mathbf z$.
+
+[URR, Theorem 3.1 and Corollary 3.2][URR] construct one finite tuple
+$\mathbf z^\star_{b,\mathbf f}$ such that, for every scalar assignment,
+
+$$
+\exists\mathbf z\;\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)
+\Longleftrightarrow
+\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z^\star_{b,\mathbf f}).
+\tag{FNS.13}
+$$
+
+The conjunction is handled jointly: one tuple breaks every nonidentity
+equality, rather than one residual witness per conjunct. Native mass separates
+residual-containing compounds from residual-free terms, and the native clock
+separates the finitely decorated repeated residual names; interpreted $\rho$
+is never treated as a free unary constructor.
+
+After substitution by $\mathbf z^\star_{b,\mathbf f}$, [URR, Corollary
+3.2] and the scalar-preserving part of [NSF, Theorem 4.3][NSF] give an exact
+Presburger formula $\Psi_{b,\mathbf f}(\mathbf c,\mathbf w)$ for
+
+$$
+P_b(\mathbf c,\mathbf w)\land
+\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z^\star_{b,\mathbf f}).
+\tag{FNS.14}
+$$
+
+Set
+
+$$
+\widehat\Xi_{b,\mathbf f}(\mathbf c):\Longleftrightarrow
+\forall M\;\exists\mathbf w\;
+\left(\Psi_{b,\mathbf f}(\mathbf c,\mathbf w)
+\land\bigwedge_j w_j\ge M\right).
+\tag{FNS.15}
+$$
+
+Presburger quantifier elimination terminates and proves (FNS.12). The
+construction is exact for every supplied finite $\mathbf f$; it is not an
+enumeration of possible $\mathbf f$ and it does not assert that all finite
+profiles have one common arithmetic formula independent of their native
+syntax. $\square$
+

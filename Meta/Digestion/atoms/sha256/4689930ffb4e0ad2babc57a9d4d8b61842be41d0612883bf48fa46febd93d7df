@@ -1,0 +1,10 @@
+# Native regular-frontier selection and exact original-source relations
+
+The results below are ordinary mathematical proofs, not Lean kernel
+certification. The new relation combines a public regular selector with
+an actually acquired complete native tree, while keeping the invocation
+source, validation epoch and subsequent Return offset distinct. Its finite
+presentation retains unbounded languages of actual original subtrees.
+A finite presentation of this relation does not make the whole source
+fiber an ordinary regular tree language.
+

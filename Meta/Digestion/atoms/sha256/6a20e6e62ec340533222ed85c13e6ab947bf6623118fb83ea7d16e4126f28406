@@ -1,0 +1,42 @@
+**Proposition 3.2 (what the loader proves, and the bad-code witness
+condition).** For every $z$ satisfying $\mathsf{Load}_v(z)$, its full
+bootstrap uses exactly $4e_v+2$ original rows and that many original
+receipts, preserving the raw installed bits and using the fixed
+bootstrap until DONE. A bad-code DONE witness requires the additional
+condition $\mathsf{Blocked}_v(z)$. Malformed unary syntax by itself is
+not a proof of either condition.
+
+Proof. At each non-end slot the actual sequence is NEXT, INPUT, WRITE,
+ADVANCE. There are $e_v$ such slots, followed by the final NEXT and
+DONE. The defining guards ensure all are actual rows. Each row has
+one original receipt. Only WRITE installs the selected fresh bit;
+only DONE changes the complete active version. Induction on these
+slots proves the preservation and the count, even for a noncanonical
+$z$ satisfying the guards.
+
+PR57.03 requires seven terminated unary fields per row. All ones in
+a decoder's complete row-field region cannot contain such a complete
+row. But applying this observation to a bootstrap additionally
+requires identifying that region in actual $E(v)$, showing it contains
+all decoder-consumed row fields with no supplied or inherited delimiter
+elsewhere, checking its actual initial PC/effect fields, and proving
+every changed bit survives its real WRITE guards through DONE. Changing
+all of $E(v)$ can also change initial finite-control or token fields;
+it is not the same argument as changing only a row list. A first
+mismatched literal WRITE, if disabled, leaves an executed wrong IN
+followed by a blocked WRITE, rather than a completed bad DONE.
+Conversely, successful loading alone allows an actually enabled
+noncanonical row. It does not imply blockedness. ∎
+
+For the declared raw latched-write schema, absence of an additional
+value test and disjoint bootstrap fields can establish
+$\mathsf{Load}_v(z)$ for every length-$e_v$ word by the same induction.
+That is an explicit schema condition, not a consequence of the phrase
+“wrong supply.” The fixed sources supply canonical $E(L),E(G)$
+completion and the raw/active distinction. They do not display a fully
+expanded literal $E(L)$ or $E(G)$ and its decoded all-ones post-DONE
+entry here. Accordingly no particular all-ones word is asserted here
+to satisfy $\mathsf{Load}_v\land\mathsf{Blocked}_v$. A claimed concrete
+bad-DONE example must discharge exactly that finite predicate. This
+restriction leaves Propositions 2.1–2.4 and 3.4–3.5 unaffected.
+

@@ -1,0 +1,45 @@
+**Definition 2.1 (Achievable tolerance).** A real number $\epsilon\ge0$
+is achievable if there are a finite integer $n\ge0$, an arbitrary
+function $E:\mathcal M\to\mathbb R^n$, one fixed affine decoder
+
+$$
+q(x)=c+LE(x)\in\mathbb R^{10},
+$$
+
+and, for every real $s,t$, fixed ambient affine maps
+
+$$
+\mathcal U_s(z)=A_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t,
+$$
+
+such that
+
+$$
+E(P_sx)=\mathcal U_s(E(x))\quad(x\in\operatorname{dom}P_s),
+\qquad
+E(Q_tx)=\mathcal V_t(E(x))\quad(x\in\mathcal M),
+$$
+
+$$
+\operatorname{err}(E,q):=
+\sup_{x\in\mathcal M}\|q(x)-y(x)\|_2\le\epsilon.
+$$
+
+The coefficients may depend on the fixed source, preparation, model and
+command, but never on the current state or producing history. No
+continuity, measurability, boundedness or injectivity is imposed on $E$.
+No continuity in the command parameter, invertibility of the ambient
+matrices, or ambient group law is assumed. Both decoder and update
+offsets are permitted. Conditions on probability commands apply exactly
+on their lawful partial domains; an empty domain imposes no identity.
+All signs, zero commands and all finite lawful histories are included.
+
+The state remains an actual current ray. An external current-height
+selector, a chosen real lift, a history coordinate or an endpoint state
+is not an extra input. The explicit models below store the height
+internally and implement the exact source guards on their actual images.
+Decoded vectors need not be native physical outputs. Initialization and
+updates mean exact real values; no floating-point assumption is part of
+the contract.
+

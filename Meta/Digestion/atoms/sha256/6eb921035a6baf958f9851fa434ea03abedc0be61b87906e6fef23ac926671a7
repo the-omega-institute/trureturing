@@ -1,0 +1,27 @@
+**Proposition 149.3 (Rational compactness and exact projection).**
+$K_{C,L}$ and $P_{C,L}$ are compact rational polytopes. Their parameter
+projections $\Pi_{C,L}$ and $R_{O,L}$ are compact rational polytopes.
+$U_{O,L}$ is nonempty, closed, convex, rational polyhedral and downward
+closed. It is unbounded and is not a cone.
+
+**Proof.** Every $w_S$ lies in $[0,1]$ and every terminal coordinate lies
+in $[0,w_S]$. All common-mass equations and cap inequalities have rational
+coefficients. Together with bounded closed $D_L$ they give compact
+rational polyhedra. Equalities may be encoded in two inequality directions.
+Coordinate projection preserves rational polyhedrality by Fourier-Motzkin
+elimination, which combines rational rows by rational operations, and
+preserves compactness by continuity. The same applies to the linear event
+image. Nonemptiness follows, for example, from the joint stopped
+strictifier of Proposition 150.2 below.
+
+The difference (149.3) is convex and rational polyhedral, being the
+projection of $v\in R_{O,L}, z\ge0, u=v-z$.
+For direct closedness, if $v_k-z_k\to u$, with $v_k\in R_{O,L}$,
+pass to a subsequence $v_k\to v$ by compactness. Then $z_k\to v-u\ge0$,
+so $u\in U_{O,L}$. Its recession directions include every $-e_j$.
+It is not a cone: the always-base empty schedule gives an event vector
+$v\in R_{O,L}\subseteq U_{O,L}$ whose final all-positive-event coordinate
+is one. Every member of $U_{O,L}$ has that coordinate at most one, so
+$2v\notin U_{O,L}$. Downward closure, rather than homogeneity, is the
+property needed for nonnegative separation. $\square$
+

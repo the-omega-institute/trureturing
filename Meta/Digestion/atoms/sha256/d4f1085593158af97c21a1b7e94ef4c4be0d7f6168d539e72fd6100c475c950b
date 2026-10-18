@@ -1,0 +1,29 @@
+**Proposition 95.1 (a jointly specified sufficient resource profile).** Write $B_{\max}=b_f$ and $\ell$ for the full finite query length. For the endpoint modes, with finite streaming inputs and schoolbook arithmetic, the following resources are charged separately.
+
+| Resource | Sufficient bound or actual charge |
+|---|---|
+| Complete numerical word | Exactly $142+\operatorname{bitlength}(h+1)$ bits in terminal mode; prefix mode adds exactly $2\lfloor\log_2\operatorname{bitlength}(h+1)\rfloor$ |
+| Mandatory evidence and alternate programs | Actual complete widths and wrapper framing from 92.3; no assumed bound |
+| Common interpreter | Actual fixed description, transport if required, and installation |
+| Archive maximum precision and canonical raw returned bits | $B_{\max}=O(h+1)$ and total $O(h+1)$ bits |
+| Archive calls | $O(\log(h+2))$ discovery/final calls |
+| Outgoing two-command frames | $O(\log(h+2))$ bits; actual authentication and other evidence add their widths |
+| Downstream encoder | $O((h+1)^2\log(h+2)+|\mathrm{word}|)$ bit time, $O(h+1)$ arithmetic scratch plus actual reply/evidence buffers |
+| Installed Fibonacci cache | $O((h+1)^2)$ bits, with $O(h+1)$-wide integers |
+| Setup | $O(|\mathrm{word}|+(h+1)^3)$ conservative bit time |
+| Full query parsing | $O(\ell(1+\log(h+2)))$ bit time and $O(\log(h+2))$ streaming state |
+| Head arithmetic | $O((h+1)^3)$ bit time and $O(h+1)$ extra scratch in addition to installation |
+| Tail arithmetic | Constant only after consuming the entire query |
+| Endpoint numerical output and buffer | Fixed finite width, plus actual frame/transport and any evidence output |
+| Source and archive production | Actual construction, precision, storage, action, latency and evidence costs; no bound inferred from word length |
+
+**Proof.** The certified bin makes $h$ differ from $\log_2(1/D)$ by at most a fixed constant when $D\leq1$; $D>1$ gives bounded $h$. The discovery bound in 94.1 and final choice therefore yield $B_{\max}=O(h+1)$. Scheduled precisions sum to less than $2b_c$; including the final request they sum to at most $3B_{\max}$. Reply lengths are linear in precision plus logarithmic framing, so total canonical returned bits are $O(h+1)$. If there are $d$ discovery calls, the exact outgoing charge is $8(d+1)+2\lfloor\log_2(B_{\max}+1)\rfloor+1$, and $d=1+\log_2b_c$. Archive precision state has $O(\log(h+2))$ bits. If every precision is instead independently gamma-coded, the separately safe outgoing bound is $O(\log^2(h+2))$; the improved bound uses the actual two-command grammar. Supplier production and additional padded evidence are excluded from canonical numerical reply bounds, not erased.
+
+There are a fixed number of $O(b)$-wide rational square, cross and dot operations per call. Summing their schoolbook costs and including scale comparisons gives the conservative encoder bound. Exact rational instruments add actual input numerator/denominator widths. Installation has $J=O(h+1)$ Fibonacci entries, each $O(h+1)$ bits, and constructs $2^h$ rather than treating its short exponent description as free storage. The arithmetic grid has $h+30$ fractional bits. A head uses $O(h+1)$ binary-power multiplications on $O(h+1)$-wide integers. These facts give the cache, setup, scratch and conservative time bounds. Query parsing uses the finite saturation recurrence, reads every character and stores only an $O(\log J)$-bit value and finite flags. Output coordinate integers are bounded at the fixed endpoint precision. Discarding the installed list requires paying installation again. $\square$
+
+On the proof stratum this profile has $O(\log N)$ requested precision/raw receiving bits, $\log_2\log_2N+O(1)$ retained numerical bits, $O((\log N)^2)$ installed cache bits and $O((\log N)^3)$ setup/head work. These are sufficient bounds for one profile, not simultaneous optima. Retaining the cache makes resident memory grow as $O(h^2)$; the short word does not bound installed memory by $O(\log h)$.
+
+The narrower maximum-precision lower in [supplier §71.1](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) remains distinct. Along its Family B, with $v_k=e^{-z/d}$, a valid ordinary name may return the unit history whenever $2^{-b}\geq1-v_k$. With fixed public inputs and no source-dependent advice or certificate, a reliable endpoint algorithm cannot stop on a finite all-unit prefix, by the three-point fiber proof. It must request $b>\log_2(1/(1-v_k))=\log_2N_k+O(1)$. Together with the archive upper this gives worst-name maximum precision $\Theta(\log N_k)$ on that bank. Unit-scale canonical positional/gamma replies at that precision have comparable width, but another compressed supplier format can encode unit responses differently. This is neither a format-independent received-bit lower, a retained-bit lower, nor a general acquisition optimum when separately paid advice, certificates or rational instruments are permitted.
+
+If the original tree has counts $(m,n)$, its three literal versions have $m+n$, $m+2n$ and $2m+3n$ leaves. Their literal evaluations use $4m+6n-3$ cross products. Actual tree syntax, scanning, substitution, evaluation stack, preparing $(a,b)$ at the required accuracy, original observation, common-frame binding, archive capture and truthful approximation production, certificate issuance/verification, closure, authentication, output and latency retain their own costs. The cross-product count alone is not a bit-time bound, and it is not an observer count port. Receiving and discarding high-precision digits reduces retention while leaving acquisition work paid.
+

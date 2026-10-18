@@ -1,0 +1,45 @@
+**Definition 1.3 (conditional heat, mode and energy space).** On the same Engel group use
+
+$$
+\begin{aligned}
+(r,y,z,w)(r',y',z',w')
+ &=(r+r',y+y',z+z'+ry',w+w'+rz'+r^2y'/2),\\
+\delta_R(r,y,z,w)&=(Rr,Ry,R^2z,R^3w),\qquad Q_{\rm hom}=7.
+\end{aligned}
+\tag{1.11}
+$$
+
+Unit Lebesgue measure is Haar measure. Let $b[u]=\|Xu\|_2^2+\|Yu\|_2^2$, let $\mathcal Q_E$ be the complex compact smooth core closure in $\|u\|_2^2+b[u]$, and let $\mathcal E=-X^2-Y^2$ be its Friedrichs operator. Retain the conservative, symmetric, positive heat $P_t=e^{-t\mathcal E}$, $k_t=p_E(t;0,\cdot)$, proper continuous homogeneous control metric $d$, and the supplied bounds and mode
+
+$$
+\begin{gathered}
+p_E(t;\eta,\xi)\le Ct^{-7/2}e^{-c d(\eta,\xi)^2/t},\qquad
+N=\max(|r|,|y|,|z|^{1/2},|w|^{1/3}),\qquad d(0,\xi)\ge cN(\xi),\\
+V=j_0^{-1}\int_1^\infty k_tdt>0,\qquad
+\mathcal EV=j_0^{-1}k_1,\qquad V\le C(1+N)^{-5},\\
+C_* =\sup_{0\ne u\in\mathcal Q_E}\frac{\int V|u|^2}{b[u]}\in(0,\infty),\qquad
+\chi=\chi_c=a/C_*,\qquad\gamma=\chi/a,\\
+h[u]=a b[u]-\chi\int V|u|^2\ge0,\qquad h_0=h/a,\qquad
+p=\Phi_c>0,\quad\|p\|_2=1,\quad p\in D(\mathcal E),\\
+\mathcal Ep=\gamma Vp,\qquad\ker(a\mathcal E-\chi V)=\mathbb Cp,\qquad
+p=\gamma\int_0^\infty P_t(Vp)dt\quad\text{in }L^2.
+\end{gathered}
+\tag{1.12}
+$$
+
+The metric has Haar-ball volume $v_d R^7$. The smoothness and hypoellipticity used below are those of the supplied canonical heat and operator. The potential $V$ is smooth and has a positive minimum on every compact set. P §§82–88 own these conditional statements and the compact reconstruction on specified multiplier right sides. They supply no inverse on general $L^2$.
+
+P §106 supplies $rp\in\mathcal Q_E$, $h[rp]=a$, and $\int r^2(p^2+|Xp|^2+|Yp|^2)<\infty$. The involution $\sigma(r,y,z,w)=(-r,y,-z,w)$ fixes $p,V$; $X$ reverses parity and $Y$ preserves it. R §§4–5 supply the homogeneous gap and response. On the completion $\dot{\mathcal H}_-$ of the real odd compact smooth core in $\sqrt b$,
+
+$$
+\begin{gathered}
+a\theta b\le h\le ab,\quad\theta>0,\qquad
+\int V|u|^2\le C_*b[u],\\
+\ell(u)=2a\int r(Yp)(Yu)+\chi\int V_1pu,\qquad
+h(\Psi,u)=\ell(u),\qquad D_{\rm resp}=h[\Psi]<\infty.
+\end{gathered}
+\tag{1.13}
+$$
+
+The response $\Psi$ has only this real homogeneous meaning; no global $L^2$ or native-domain membership is assumed. Polarized forms on complex spaces are conjugate linear in their first slot. The new response arguments below use real vectors.
+

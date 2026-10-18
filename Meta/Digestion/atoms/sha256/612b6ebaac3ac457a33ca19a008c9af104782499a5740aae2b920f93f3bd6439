@@ -1,0 +1,30 @@
+**Example 11.5 (the chart hypotheses cannot be suppressed).**
+The following inhabited native fibers distinguish the other premises.
+
+First, use the root old row and the literal record
+$(0,L,\mathsf{absent})$. Its entire fiber is $\{\alpha,\beta\}$.
+With $Q=\varnothing$ one known-root historical read recovers the
+whole source, although its row is not constant. The one-chart
+presentation $W(x)=x$ has no forward-invariant domain. Its geometry
+and partition conditions are vacuous; without invariance the
+necessity in Theorem 10.3 would be false.
+
+Second, (NSF.26) with the single chart $W(x)=x$ has an invariant
+domain, but for $Q=\{L,R\}$ its reached geometry varies. Its whole
+row is nonconstant and is recovered with one read. Thus fixed
+geometry cannot be deleted from the chart criterion. The global
+criterion instead handles these transient leaves explicitly.
+
+Third, let the old row at $P=\{R\}$ have concrete exterior
+$\langle\alpha,\square\rangle$ and no further records. Its entire
+fiber is $\{\langle\alpha,x\rangle:x\in\mathcal T\}$.
+Take that one chart and $Q=\{L,R\}$. Its geometry is fixed and its
+residual domain invariant. The equality bit is $x=\alpha$,
+which changes when $x=\alpha$ advances to $\beta$. The row is
+nonconstant but is recovered by one historical known-root read
+inside $R$, testing whether its original reply is $\alpha$.
+Preservation and reflection (NSF.22) are therefore essential.
+
+These examples use the whole specified acquired fibers. None
+selects a favorable subfamily as a replacement source domain.
+

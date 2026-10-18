@@ -1,0 +1,23 @@
+**Definition 4.1 (one bit and one cell).** Let $\bullet$ be a terminal, and
+write ordered pairing for incidence only. A bit is stored as
+
+$$
+g_0=\langle\langle\bullet,\bullet\rangle,\bullet\rangle,
+\qquad
+g_1=\langle\bullet,\langle\bullet,\bullet\rangle\rangle.
+\tag{SSA.3}
+$$
+
+Its five actual occurrences are root $r$, fork $f$, singleton terminal
+$t$, and the ordered fork terminals $v_0,v_1$. The fork's children do not
+move. For bit 0 the root targets are $(f,t)$, and for bit 1 they are
+$(t,f)$. Assignment sets both root target slots and both target parent
+slots: $r.\mathsf L,r.\mathsf R,f.\mathsf P,t.\mathsf P$. All four
+assignments occur and are charged even for an unchanged bit.
+
+An eight-track original cell $c=(c_0,\ldots,c_7)$ is the fixed balanced
+$F_8$ with $g_{c_i}$ substituted at socket $i$, in the original track
+order. Denote it $G(c)$. Thus marker symbols, data symbols, all three head
+tracks, seal track, and reserved track are actual incidence distinctions.
+There is no second byte payload alongside $G(c)$.
+

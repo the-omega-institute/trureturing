@@ -1,0 +1,44 @@
+**Theorem 4.2 (row correspondence and completed-predecessor closure).**
+On the canonical initialized instance of Theorem 2.5,
+$\operatorname{Step}_{\rm sel}$ reproduces each actual row, receipt,
+event and successor with its authentic input. At every reached $R_r$ with
+authentic finite completed $M$, Boundary returns its exact $a,b$ in finite
+paid work, and Prefix for $a\le k\le b$ returns precisely that same run's
+length-$k$ prefix and raw endpoint. The assertion includes earlier
+executions of this selector, their interpreters and every partial phase
+of their native expansion.
+
+Proof. ARC Proposition 6.3/RCA Proposition 12.5 supplies the ten local
+cases. The added rows still have precisely those cases: mode IN changes
+one ingress latch; EX, WR and moves have their actual single-cell effects;
+its tests and handoffs name fixed finite CTL/TOK slots. Parser, arithmetic,
+list and binding operations are expanded rows, not new local effects.
+Using the actual finite table and Definition 3.3's additional IN site
+therefore gives the same proof at each added row. In particular the mode
+IN-before-WR successor has its new latch and old70 destination, and an EX
+successor has the actual blank before WR. All partial bank/control/
+descriptor/copy rows keep their full physical projection.
+
+For completion use simultaneous induction on completed outer cycles, as
+in ARC Proposition 6.5 and RCA Lemma 15.1. Zero cycles have Theorem 2.5's
+finite activation prefix. An auxiliary cycle has CAP Lemma 6.7's finite
+original source/row/ACK return, followed by the explicit normalization
+and CaptureCAP. A history cycle freezes a strictly shorter completed
+predecessor. By induction Boundary follows its already finite actual
+prefix; §§5–6 below use only finite acquired words, bounded replay and
+finite channel loops. They therefore finish and append the next cycle.
+Simulating a row that happens to lie inside an earlier interpreter still
+executes one literal RD/WR/etc. It does not recursively ask for the semantic
+result of that earlier Call. Each Step's finite table/cell scans terminate.
+The induction is on completed predecessors, not the size or future outcome
+of the currently executing simulation.
+
+The Boundary conjunction is false at preactivation entries and earlier
+Readies with smaller counts; following the exact prefix reaches the
+intended one. Its tally is consequently $b$. Prefix's $k$ decreasing marks
+give exactly $k$ represented rows and the authentic $I_k$, including a
+last input bit still in its latch. No reservoir suffix affects a prefix
+before its next IN. This proves the claimed finite correspondence under
+the stated actual-supply/local-completion premises; it supplies no live
+permission at the represented old endpoint. ∎
+

@@ -1,0 +1,47 @@
+**Assumption 6.1 (legal sourcewise conditional regeneration).**
+Fix a reference attempt for each original source $x$, with scalar
+probabilities $(h_x,e_x,d_x,r_x)$ as in Definition 5.1. The actual
+controller starts that attempt and stops on its first proposal. After
+every finite nonproposal it uses a strategy of Definition 5.4.
+For every compatible original-source/current-state pair this same
+strategy preserves $x$ and returns legally to a ready configuration
+after finite execution almost surely, without itself issuing a terminal
+proposal. After return it restores the reference scalar law for the
+next attempt, including conditional on acquired recovery information.
+This success condition is required for every compatible pair, not only
+after averaging over unobserved current states. Its working memory and
+all reset operations have the declared access and costs. There are no
+unaccounted finite failures or divergent recoveries.
+
+For each fixed $x$, let $A_j$ be the event of reaching the $j$th attempt,
+and let $\mathcal F_j$ contain the complete actual history just before
+that attempt, including acquisition, prior outcomes and recoveries.
+On $A_j$, conditional on $\mathcal F_j$, its probabilities of the four
+outcome classes $F,H\setminus F,D,R$ are, almost surely,
+
+$$
+(e_x,\ h_x-e_x,\ d_x,\ r_x).
+\tag{6.1}
+$$
+
+Here $A_1$ is certain. The conditional statement can equivalently be
+written as conditional-expectation identities with a factor
+$\mathbf1_{A_j}$, so no conditioning on an individual null history is
+required. The legal uniform recovery requirement is pointwise over
+compatible pairs; (6.1) is a sourcewise probabilistic requirement on
+actual reached histories. Fresh independent attempt randomness and
+restoration of a state with the reference scalar response law are one
+sufficient way to establish (6.1). Fresh randomness alone is not that
+restoration.
+
+The regeneration hypothesis concerns conditional laws at actual cuts.
+[Finite Start Predictive Memory, Assumption 10.1 and Definition 11.1](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md)
+separates one fixed source, authentic calibration and acquired updates
+from supplied forecast coherence. An authentic label must not replace
+the source or trajectory. Likewise
+[Stopped Episode Calibration Unidentifiability, Definition 3.1 and
+Proposition 4.2](RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_EPISODE_CALIBRATION_UNIDENTIFIABILITY.md)
+uses one original episode without reset or post-Stop access; its
+supplied candidate generator is not a source operation. Neither contract
+supplies Assumption 6.1 for a new active system.
+

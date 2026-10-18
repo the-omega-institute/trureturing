@@ -1,0 +1,31 @@
+**Lemma 2.3 (complete-world four-terminal inverse).** If two worlds
+of $\mathcal F^{\ne0}_7(H)$ agree in all of $A,B,C,D$, they are
+the same complete world, even when their drifts were initially
+unrestricted.
+
+Proof. The four scalars determine
+
+$$
+b=B-A,\quad c=C-A,\quad e=D-C-B+A,\quad
+a=bc/e,\quad d=A-a-e.
+\tag{2.9}
+$$
+
+The division is legal because $e=f(7)(QP)_{22}\ne0$ by (1.8) and
+positivity. Rank one gives $a=bc/e$. Next
+
+$$
+Q^{-1}X=f(7)P,\qquad
+f(7)=\operatorname{tr}(Q^{-1}X)\ne0,\qquad
+P=\frac{Q^{-1}X}{\operatorname{tr}(Q^{-1}X)}.
+\tag{2.10}
+$$
+
+These identities recover the source and terminal gain. For that
+same recovered source and drift, the first four equations (1.7),
+whose trace factors are positive, determine $f(0),\ldots,f(3)$.
+Four distinct sample arguments determine the entire polynomial of
+degree at most three. Finally (1.4) recovers $g,\delta$. No leading
+coefficient, sampled ancestor gain or root difference is divided
+out, so degree drops and repeated roots are included. ∎
+

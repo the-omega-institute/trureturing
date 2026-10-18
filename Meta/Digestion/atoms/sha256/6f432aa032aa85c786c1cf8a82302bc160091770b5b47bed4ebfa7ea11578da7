@@ -1,0 +1,15 @@
+**Definition 1.2 (an effectively presented original-source task).** Let
+$\mathbb N=\{0,1,2,\ldots\}$. Supply an effectively encoded class $\mathcal S$
+of finite relational objects, a family $D\subseteq\mathcal S$ of original
+sources, a deterministic effective transport $U:\mathcal S\to\mathcal S$,
+and a common entry epoch $N\in\mathbb N$. Transport need not preserve $D$.
+Supply a finite alphabet $\Sigma$ of address letters and the permitted
+literal address set $\mathcal W\subseteq\Sigma^*$, with effective membership.
+The actual read at $p\in\mathcal W$ on $z\in\mathcal S$ has deterministic
+reply $r_z(p)$ in a fixed nonempty finite ordered alphabet $\mathcal C$. A read
+leaves $z$ unchanged; an update replaces $z$ by $U(z)$ once. Every permitted
+read, including an absent reply, and every update is legal. A more
+restrictive legality convention requires additional exact legality
+predicates; it is not inferred from an absent reply.
+
+Supply an effective map $R:D\to\mathcal Y$ into finite encodings of

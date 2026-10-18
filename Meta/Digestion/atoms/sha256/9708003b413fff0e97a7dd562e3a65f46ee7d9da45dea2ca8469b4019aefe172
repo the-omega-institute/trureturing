@@ -1,0 +1,43 @@
+## 5. Source correspondence and the remaining decision
+
+**Mathematical citation 5.1 (repository suppliers and the new
+implication).** All repository references below use the immutable
+snapshot
+$\mathtt{f022384d6e4a8b9e457f646f377ac2f0398b0c6f}$.
+
+| Source | Exact role and boundary |
+| --- | --- |
+| [PAIR], Section 11 | Supplies the compact descriptor spaces, full-descriptor residual equations, common unweighted flows, zero-face geometry, regeneration and atomicity criteria. No new compactness or quadrature theorem is asserted here. |
+| [PAIR], Section 18 | Proves eventual endpoint-tail rigidity under finite p support. Its finite Perron argument does not supply Theorem 2.1 for arbitrary Borel marginals. Theorem 3.1 removes that support condition while retaining the exact eventual recurrence. |
+| [PAIR], Section 19 | Supplies native singleton isolation and equal native masses between the two phases. Its zero-face equal-a-and-b excision preserves midpoints and budgets. The proof of Theorem 3.1 removes only b to analyze a remainder and makes no midpoint-preservation claim for that operation. |
+| [SEVEN], entire volume | Supplies $V=0$ rigidity, the strict enlargement beyond full residual graphs, and $J=0\Rightarrow V>0$. Theorem 2.1 allows positive $V$ and uses no pathwise replacement of a residual mean by a sampled successor. |
+| [REV], Section 11.6 and Section 16 | Supplies singleton formulas and the deterministic complete-successor chord theorem. The singleton formulas are used only in the boundary counterexample. The Borel tail theorem imposes no deterministic-successor premise. |
+| [SURVIVAL], Section 3 | Supplies the stationary acquired descriptor path and its weighted word recursion. Those identities are reused in operator notation in (2.3)--(2.4). Its signed finite-window charges and free return-weight dispersion are not set to zero here. |
+| [RETURN], Section 15 | Gives the minimum returned suspended-cut count for a prescribed finite admissible triple, subject to its full incoming-pair equations and exact-service conditions. No prescribed triple, cut-count optimum or sampler theorem is inferred from the Borel tail classification. |
+| [PAID], Definitions 1.1--2.1 and Lemma 2.1.1 | Supplies the source/control contract, all-history meaning, and original product realization of a supplied finite table. Analysis kernels in Theorem 2.1 are not installed as observer registers. |
+
+The source-relative mathematical addition is (2.2), its proof by
+the source-specific killing/distortion comparison (2.8)--(2.9), and
+the consequent Borel classification (3.2). The finite residual
+identity (3.5)--(3.7) completes the lower-endpoint step after the
+upper native atom is identified. Proposition 4.1 exhibits the
+boundary-rate behavior that prevents a direct transfer of the
+finite Perron maximum argument to arbitrary marginals.
+These are repo-derived statements; no global priority claim is made.
+
+**Mathematical citation 5.2 (bounded primary comparison).** The
+following primary results delimit the mature tools used in the
+argument.
+
+| Primary source | Correspondence |
+| --- | --- |
+| Ferré, Rousset and Stoltz, *More on the long time stability of Feynman--Kac semigroups*, [arXiv:1807.00390v3](https://arxiv.org/html/1807.00390v3), Section 2, Assumptions 1--3 and Lemma 2 | Positive kernels and multiplication by a positive function are the mature operator frame. Their spectral conclusion uses Lyapunov, minorization/irreducibility and local regularity hypotheses. Those hypotheses are not supplied for the arbitrary disintegrations here, and their spectral theorem is not invoked. Formula (2.6) constructs the needed bounded superharmonic function directly. |
+| Li and Schneider, *Applications of Perron--Frobenius Theory to Population Dynamics*, [arXiv:math/0109008v1](https://arxiv.org/html/math/0109008v1), Theorems 2.1 and 2.3 | Positive left and right Perron vectors apply to finite irreducible matrices; normalized-power convergence in Theorem 2.3 requires primitivity. These are suppliers for finite-matrix comparisons, not a theorem about the arbitrary Borel kernel used here. Proposition 4.1 has upper boundary growth without a native boundary atom. |
+| Leskelä and Vihola, *Conditional convex orders and measurable martingale couplings*, [arXiv:1404.0999v3](https://arxiv.org/html/1404.0999v3), Theorems 1.2--1.4 | Bounded finite-coordinate projections satisfy their first-moment requirement. Conditional barycentric couplings do not turn each successor into its barycentre or supply a stationary law for a synthetically weighted kernel. The proof retains both original full-descriptor equations and constructs its killed analysis kernel explicitly. |
+
+The Markov path construction, conditioning, positive-kernel iteration,
+bounded convergence and the monotone class theorem are standard
+measure-theoretic tools. Their uses are proved at the points where the
+source-specific conclusion depends on them. No new general martingale
+coupling, ergodic theorem or Doob-transform theorem is claimed.
+

@@ -1,0 +1,35 @@
+## 469. The source axial charge and existence of rho
+
+The source inequalities imply m>3, c<m-2 and z>m+2. For any genuine
+axial Z occurrence with fixed pair {M,C}, let theta be the Z angle,
+beta its transverse M angle and t=cot(theta/2)>0. The exact response is
+
+    beta=atan(A*t)+atan(B*t),
+    A=[sqrt(m^2-1)+sqrt(c^2-1)]/(m+c)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m^2-1)-sqrt(c^2-1)]/(m+c)*sqrt((z-1)/(z+1)).
+
+Both coefficients are positive, and
+
+    A+B=2*sqrt(m^2-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+To verify the strict comparison, replacing c by m-2 and z by m
+would give one; the actual c is smaller and z is larger. If beta
+is at least pi/2 then beta>atan(t). Otherwise its positive tangent
+is (A+B)*t/(1-A*B*t^2)>t. In either branch,
+
+    theta+2*beta>pi.                                  (469.1)
+
+No genuine owner of pair {M,C} can have two axial Z slots, since
+its first genuine factor would be
+
+    (m+c)^2-(z-1)^2<=0.
+
+If the whole original Z circle were axial, actual face transport
+would preserve the fixed pair {M,C} through tau around the circle.
+All its intervals would have distinct owners by the preceding factor.
+Summing (469.1) over at least six intervals uses distinct original M/Z
+angles and contradicts their total capacity 3*pi. Thus there is a
+transverse Z occurrence, and rho is the unique owner of all such
+occurrences. Tau is different from rho, since its fixed transverse
+pair is {M,C}, not a pair containing Z.
+

@@ -1,0 +1,83 @@
+### 定理 37.4（离散曲率控制谱隙与 Dirichlet 衰减）
+
+设有限图满足 \(CD_G(K,\infty)\)，且 \(K>0\)。则：
+
+1. 对任意 \(f\)，
+   \[
+   \sum_x\mu_x\Gamma_2(f)(x)
+   =
+   \|Lf\|_\mu^2,
+   \qquad
+   \|Lf\|_\mu^2\ge K\mathcal E(f).
+   \]
+
+2. 令 \(\lambda_1>0\) 为 \(A=-L\) 在常数正交子空间上的最小特征值，则
+   \[
+   \lambda_1\ge K.
+   \]
+
+3. 令 \(P_t=e^{tL}\)。则
+   \[
+   \mathcal E(P_tf)
+   \le
+   e^{-2Kt}\mathcal E(f).
+   \]
+
+#### 证明
+
+由于 \(\sum_x\mu_xLh(x)=0\)，且
+
+\[
+\sum_x\mu_x\Gamma(f,Lf)(x)
+=
+-\langle f,L^2f\rangle_\mu,
+\]
+
+有
+
+\[
+\begin{aligned}
+\sum_x\mu_x\Gamma_2(f)(x)
+&=
+\frac12\sum_x\mu_xL\Gamma(f)(x)
+-
+\sum_x\mu_x\Gamma(f,Lf)(x)\\
+&=
+\langle f,L^2f\rangle_\mu\\
+&=
+\|Lf\|_\mu^2.
+\end{aligned}
+\]
+
+积分 \(CD_G(K,\infty)\) 即得第一项的不等式。
+
+若 \(Af=\lambda f\)，且 \(f\perp_\mu\mathbf1\)，则 \(Lf=-\lambda f\)，从而
+
+\[
+\|Lf\|_\mu^2
+=
+\lambda^2\|f\|_\mu^2,
+\qquad
+\mathcal E(f)
+=
+\lambda\|f\|_\mu^2.
+\]
+
+因此 \(\lambda^2\ge K\lambda\)。对 \(\lambda>0\) 消去一个 \(\lambda\)，得到 \(\lambda\ge K\)。这证明第二项。
+
+令 \(f_t=P_tf\)。由自伴性，
+
+\[
+\frac d{dt}\mathcal E(f_t)
+=
+2\langle Lf_t,-Lf_t\rangle_\mu
+=
+-2\|Lf_t\|_\mu^2
+\le
+-2K\mathcal E(f_t).
+\]
+
+Gronwall 不等式给出第三项。证毕。
+
+这个定理把“场的稳定性”变成了明确的谱估计：\(K\) 是有限图热流的能量衰减率下界。它没有把 \(K\) 解释成物理引力常数。
+

@@ -1,0 +1,105 @@
+**Theorem 5.1 (necessary and sufficient parameters).** Up to the conjugation (4.2), every prefix in $\mathscr G$ whose kernel has four nonzero entries has the following form, and every choice passing the stated filters gives such a prefix.
+
+Choose integers and a sign satisfying
+$$
+x>d\ge1,\qquad \gcd(x,d)=1,\qquad m,n\ge1,\qquad
+\sigma\in\{+1,-1\},\qquad a=x-md\ge1.
+\tag{5.1}
+$$
+Define
+$$
+Q=1+nd,\qquad h=n(x+d)+\sigma,\qquad
+c=x+hd,\qquad b=mc-d,
+\tag{5.2}
+$$
+and require $\gcd(a,b)=1$. These formulas give $b,c,h>0$ and $Q\ge2$. Put
+$$
+f=\binom a{-b},\qquad \ell=(c,-d),\qquad
+r_0=\binom d c,\qquad t=ac+bd=cx-d^2>0.
+$$
+Choose a nonnegative integral unimodular $A_1$ satisfying
+$$
+A_1f=\binom x d.
+\tag{5.3}
+$$
+Then the next two multiplier matrices are exactly
+$$
+K=\begin{pmatrix}1&1\\Q&Q+\sigma\end{pmatrix},\qquad
+H=\begin{pmatrix}0&1\\1&h\end{pmatrix},\qquad
+A_2=KA_1,\qquad A_3=HA_2.
+\tag{5.4}
+$$
+The remaining filter is
+$$
+\operatorname{rank}\mathsf B_{\rm pre}=3.
+\tag{5.5}
+$$
+The first-endpoint condition (5.3), its nonnegative-integral requirement, and (5.5) are part of the necessary-and-sufficient statement. They are not automatic consequences of (5.1)–(5.2).
+
+**Proof of necessity.** Work in the positive branch of Theorem 4.1 and write
+$$
+v_1=(x,y)^{\mathsf T},\qquad
+v_2=v_1+jr_0,\qquad v_3=v_2+hr_0,\qquad j,h\ge1.
+$$
+Here $x>d$, because the first coordinate of $v_1=f+m_1r_0$ is $a+m_1d$. The input second coordinate $y+jc$ of the last transition exceeds $c$. Lemma 4.2 forces that transition to have determinant $-1$ and input second coordinate below $2c$. Thus $j=1$ and $0<y<c$.
+
+For that last transition, (4.4) bounds its positive integer $\lambda$ by
+$$
+c\left(\frac1{y+c}+\frac1{y+(1+h)c}\right)<\frac32,
+$$
+so $\lambda=1$. Formula (4.5), now with input $v_2$, gives the last matrix's upper-left entry as
+$$
+\frac{dc-xy-hdy}{t},\qquad t=cx-dy.
+\tag{5.6}
+$$
+The difference between its denominator and numerator is
+$$
+c(x-d)+xy+(h-1)dy>0.
+$$
+Since the entry is a nonnegative integer, it is zero. Determinant $-1$ then forces both off-diagonal entries to be one. Write the matrix as $(\begin{smallmatrix}0&1\\1&e\end{smallmatrix})$. The first coordinate of $Wr_0=-r_0+v_3$ gives $(v_3)_1=c+d$, while the first coordinate of $Wv_2=v_3$ gives $(v_3)_1=y+c$. Hence $y=d$. The identity $(v_3)_1=x+(1+h)d$ gives $c=x+hd$, and the second coordinate of $Wr_0=-r_0+v_3$ gives $e=h$. This proves the form of $H$. Primitiveness of $v_1=(x,d)^{\mathsf T}$ gives $\gcd(x,d)=1$.
+
+For the preceding transition, its first-coordinate equation is
+$$
+K_{11}x+K_{12}d=x+d.
+$$
+Since $x>d$, $K_{11}$ is zero or one. If zero, unimodularity and nonnegativity force $K_{12}=K_{21}=1$, contradicting the displayed equation. Thus $K_{11}=K_{12}=1$. With $Q=K_{21}$ and $\sigma=\det K$, its remaining entry is $Q+\sigma$, and its second-coordinate equation is
+$$
+Q(x+d)=c+(1-\sigma)d.
+\tag{5.7}
+$$
+Here $Q\ge1$. If $Q=1$ and $\sigma=-1$, (5.7) gives $c=x-d$, contrary to $c>x$. If $Q=1$ and $\sigma=+1$, it gives $c=x+d$, $h=1$, $K=M^2$ and $H=M$. But
+$$
+M^3=2M^2-I
+$$
+would imply $A_3=2A_2-A_1$ and therefore rank at most two for the three prefix differences. Hence $Q\ge2$.
+
+Substitute $c=x+hd$ into (5.7). It becomes
+$$
+(Q-1)x=(h+1-\sigma-Q)d.
+$$
+Coprimality gives $d\mid Q-1$. Write $Q=1+nd$, with $n\ge1$; rearrangement gives $h=n(x+d)+\sigma$. Finally $v_1=f+m_1r_0$ yields $a=x-m_1d$ and $b=m_1c-d$. Set $m=m_1\ge1$. The original primitive $f$ gives $\gcd(a,b)=1$, and the original prefix supplies $A_1$ and the rank-three filter. This proves every necessary condition using the two transitions of the same cumulative history. ∎
+
+**Proof of sufficiency and forward realization.** From (5.1)–(5.2), $h>0$, $c>x>d$, $b>0$, and $\gcd(c,d)=\gcd(x,d)=1$. Also
+$$
+ac+bd=(x-md)c+(mc-d)d=cx-d^2>0.
+$$
+Theorem 2.1 supplies a legal word for every admitted $A_1$. The following are explicit forward word matrices for the next transitions:
+$$
+K=L^QU\quad(\sigma=+1),\qquad
+K=L^{Q-1}UJ\quad(\sigma=-1),\qquad
+H=L^hJ.
+\tag{5.8}
+$$
+All exponents are nonnegative; replace $L,U$ by $MJ,JM$ to obtain literal $M/J$ words. Execute the word for $A_1$, then the displayed words for $K,H$, reading only at their endpoints. Equation (5.7) follows from the parameter definitions, and multiplication gives
+$$
+A_1f=\binom x d=f+mr_0,
+$$
+$$
+A_2f=\binom{x+d}{c+d}=f+(m+1)r_0,
+$$
+$$
+A_3f=\binom{c+d}{d+(h+1)c}=f+(m+1+h)r_0.
+\tag{5.9}
+$$
+All have the same $\ell$ level $t$. Thus $N=f\ell$ annihilates every prefix difference. The retained rank test makes its line the entire kernel. Formula (3.5), now with all coefficients positive, gives the strict fixed polar sign. This constructs a member of $\mathscr G$ on a single legal cumulative history, proving sufficiency. Proposition 1.2 realizes every actual positive source on these very words, with unchanged row and positive unread columns. The signed vectors in (5.9) are algebraic coordinates, not replacements for those sources. The conjugate correspondence of Theorem 4.1 restores the negative branch without extra reads or operations. ∎
+

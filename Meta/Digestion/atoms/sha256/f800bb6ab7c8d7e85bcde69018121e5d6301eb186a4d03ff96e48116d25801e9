@@ -1,0 +1,14 @@
+**推论 8.3（其它充分包络及其限定）。** 以下上界均在 $\mathcal U$、从而两个完整平台上有效，可以只在各自区间取最小值。
+
+| 包络 | 有效噪声区间 | 能承担的结论 |
+| --- | --- | --- |
+| $G_\delta=1/(2\sqrt{1-\eta_\delta^2})$，$\eta_\delta=(\sqrt2\delta+\delta^2)/(1-2\delta)$ | $0<\delta\le1/64$ | 二次阶，单独的系数上界 $1/2$ |
+| $\frac12+\frac{\delta^2}{4}+4\delta^{5/2}+\delta^3$ | $0<\delta\le10^{-6}$ | 系数 $1/4$，充分 $O(\delta^{5/2})$ 余项 |
+| $\max\{f_\delta+\delta^3,\sqrt{f_\delta^2+2e_\delta\delta^2/(1-2e_\delta)}\}$，$e_\delta=32\delta\log(1/\delta)$ | $0<\delta\le2^{-20}$ | 系数 $1/4$，充分 $O(\delta^3\log(1/\delta))$ 余项 |
+
+证明。第一行 $\eta_\delta\ge\sqrt2\delta$，且在所述区间 $\eta_\delta<1$，所以 $G_\delta\ge P_\delta$，由命题 8.2 得到。第二行由定理 2.4 的 $386\delta^3$ 余项推出，因为 $385\sqrt\delta\le385/1000<4$。
+
+第三行在该区间有 $e_\delta\le640/2^{20}<1/64$：$\delta\log(1/\delta)$ 在 $\delta\le2^{-20}$ 上随 $\delta$ 增加，且 $\log2<1$。$\sqrt{f_\delta^2+2e_\delta\delta^2/(1-2e_\delta)}$ 和 $f_\delta$ 都小于 1，故有理化后的增量至少 $e_\delta\delta^2=32\log(1/\delta)\delta^3$。不等式 $\log2\ge2/3$ 可由 $\log x\ge2(x-1)/(x+1)$、$x\ge1$ 的导数检验给出，因此 $32\log(1/\delta)\ge1280/3>385$。第三行便覆盖 $f_\delta+385\delta^3$。这保留各包络的实际区间，不证明其余项必要。定理 2.4 还蕴含较弱的 $o(\delta^2)$ 余项结论；它本身不能把一个只对固定辅助参数成立的余项改成对移动参数统一成立。
+
+因此新三次余项与较大区间的二次包络是不同坐标的改进，没有统一 Pareto 支配的声明。对于未覆盖的噪声区间，保留 $g(\delta)\le R_\delta\le1$ 和命题 8.1；不能从这些包络或风险单调性推断完整曲线。
+

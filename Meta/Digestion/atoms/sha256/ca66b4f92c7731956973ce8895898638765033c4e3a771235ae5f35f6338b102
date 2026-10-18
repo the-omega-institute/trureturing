@@ -1,0 +1,59 @@
+**Definition 1.2 (original sources and paid interface).** Trees form the
+free ordered binary magma
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\quad
+\operatorname{ht}\langle u,v\rangle=1+\max(\operatorname{ht}u,\operatorname{ht}v).
+$$
+
+Every finite original-root word in $L,R$, including the empty word, is
+a legal literal Read. The reply alphabet is
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$; traversal
+beyond a leaf returns absent. Write $r_t(a)$ for the reply. The
+homomorphic substitution and source family are exactly
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle,\qquad
+\mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},
+\quad D\ge1.
+\tag{COK.1}
+$$
+
+One initial source $t$ remains stationary through preparation and later
+acquisition; $\rho^kt$ specifies a prediction target. Preparation is one
+deterministic effective source-blind procedure depending on $D$ and
+common public tables, without the later request. It terminates on every
+$t$ and acquires every source distinction by charged literal Reads.
+Its finite export $E(t)$ counts every accessible surviving source
+distinction, including selectors, control, buffers, lengths, allocation,
+handles and accessible timing. A paid handoff and access-isolation
+service removes access to all other acquired dependence and supplies
+lawful entry. Previous preparation transcripts are inaccessible.
+
+Only after export a source-independent request $p$ is supplied, ranging
+over every $R$-starting word with $1\le |p|\le D$. From $E(t),D,p$ and
+common tables the reader chooses zero Reads or one fresh Read of the
+same stationary source at any finite original-root word. The query
+choice precedes its reply and every supplied count. The resulting
+predictor, with no further Reads, answers
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\qquad\text{for every subsequently supplied authentic }k\ge0,
+\tag{COK.2}
+$$
+
+simultaneously for every $t$ and every request. $M_1(D)$ minimizes the
+complete attained alphabet $|E[\mathcal F_D]|$ over all these procedures.
+There are no subtree, equality, source-identity, age, navigation, reset,
+copying or free-advice ports. Preparation work and Reads, installed
+tables, post-request workspace, predictor size, address lengths and
+letters, count representation and physical time are separate resources.
+These are the [FMR][FMR] and [NPC][NPC] interface premises, not inferred
+physical operations.
+

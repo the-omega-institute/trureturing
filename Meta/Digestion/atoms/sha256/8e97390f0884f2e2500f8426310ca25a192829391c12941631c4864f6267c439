@@ -1,0 +1,25 @@
+**Definition 7.1 (fixed-multiplier branches and tangent certificates).** The six-contact system $F_6(Y_6;t,\lambda)$ has order $Y_6=(x_0,\ldots,x_5,p_0,\ldots,p_5,d_0,\ldots,d_7)$, eight moments and twelve occupied contact equations. The seven-contact system $F_7(Y_7;t,\lambda)$ has order $Y_7=(x_0,\ldots,x_6,p_0,\ldots,p_6,d_0,\ldots,d_7)$, eight moments and fourteen contacts. At the seam embed the selected $X_S$ with $p_6=0$. The matrices $R_6,R_{7S}$ and $R_{7,8}$ in §12 are rational preconditioners for the two seam branch Jacobians and the point response respectively. Their coordinate orders are exactly those just specified; equation order is moments then contact value/derivative pairs.
+
+For $Jv=b$ write $w=Rb$ and $q=\|I-RJ\|_\infty$. If $q<1$, the Neumann series gives
+
+$$
+\|J^{-1}b-w\|_\infty\le\frac{q}{1-q}\|w\|_\infty.
+$$
+
+For $v=\partial_\lambda Y$ the first eight entries of $b$ are zero and each contact pair is $(\sigma_iW_{{\rm num},i},\sigma_iW_{{\rm num},i}')$. This is $-\partial_\lambda F$. For the unused contact on the six-contact branch, track its stationary local-$x$ root near $x_6$ and let $P_{\rm unused}$ denote its cleared gap evaluated there. At the seam,
+
+$$
+\frac{dP_{\rm unused}}{d\lambda}
+=\sum_{k=0}^7\Gamma_{{\rm num},6,k}\frac{dd_k}{d\lambda}
+-\sigma_6W_{{\rm num},6};
+$$
+
+the moving angle contributes zero because its exact first derivative vanishes. If $k=\sum p_i\sigma_iu_i$, then
+
+$$
+\tau_\lambda=\frac1{\sqrt\alpha}\sum_i\sigma_i
+\left((\partial_\lambda p_i)u_i+p_i u_i'(x_i)\partial_\lambda x_i\right).
+$$
+
+These formulas and all rational tangent enclosures are in §15; no finite-difference derivative is substituted.
+

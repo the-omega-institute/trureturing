@@ -1,0 +1,17 @@
+**Definition 6.2 (the remaining bounded-incidence certificate premise).**
+A uniform bounded-incidence cap verifier is a total computable
+predicate $W(d,L,\mu,C_0,\pi)$ on $d,L\ge1$, rational
+probabilities, positive rational caps and finite strings. Soundness
+means that acceptance implies (SIR.30). Optimized coverage means
+that for every $d,L$ and rational $\epsilon>0$, some accepted
+label satisfies
+
+$$
+-\log_2 C_0>\tau_{d,L}-\epsilon.
+\tag{SIR.34}
+$$
+
+This definition still quantifies over every network length and
+arbitrary topology with the full potentials (SIR.11). It does not
+assert that such a predicate has been constructed.
+

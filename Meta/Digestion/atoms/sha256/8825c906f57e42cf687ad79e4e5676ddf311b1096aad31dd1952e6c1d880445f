@@ -1,0 +1,36 @@
+**Definition 3.3 (two early complete-word coordinates).** Set
+
+$$
+g_x=Q_x(w_{0,1}),
+\qquad f_x=Q_x(w_{1,1}),
+\qquad t_x=Q_x(w_{2,1}).
+$$
+
+For $r\in\{a,b\}$ put
+
+$$
+G_r=(1-r)^2,
+\qquad F_r=r(1-r)^3,
+\qquad T_r=r^2(1-r)^4,
+\qquad c_r=rF_r.
+$$
+
+Their values are
+
+| $r$ | $G_r$ | $F_r$ | $T_r$ | $c_r$ |
+| --- | --- | --- | --- | --- |
+| $a$ | $4/9$ | $8/81$ | $16/729$ | $8/243$ |
+| $b$ | $9/25$ | $54/625$ | $324/15625$ | $108/3125$ |
+
+In particular
+
+$$
+F_a>F_b,
+\quad T_a>T_b,
+\quad aF_a<bF_b,
+\quad aT_a<bT_b.
+\tag{3.4}
+$$
+
+The last two inequalities are the reversed order at suspension.
+

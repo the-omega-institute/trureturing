@@ -1,0 +1,40 @@
+**Assumption 4.1 (conditional installed table and complete entry).**
+Keep Assumption 1.1, including its fixed causal encoder $E=a_0$, actual
+acquisition and export before the future cut, discard of the original
+row, same-source pure-$\rho$ continuation, genuine acquisition of the
+entire later row and lawful stationary fresh-Read access. Fix one
+promised acquired input $(a_0,Q=\{L\},Y_z)$, with the whole $Y_z$ of
+(NARC.1.2), not merely its scalar clock. By Theorem 1.2 its complete
+compatible fiber has
+
+$$
+I_0=[l,u]=[a_0+b,a_0+z],\qquad
+b=\max(\lambda_0,z-H),\qquad N=z-b+1.
+\tag{NARC.4.1}
+$$
+
+Use the finite Moore restriction of [AOF, Definition 10.1][AOF], with
+literal whole-tree addresses and fixed complete lag outputs in
+$\mathbb N$. A table has one common initial state on this conditional
+fiber, one fully materialized address per running state, a total
+four-reply transition row, and a fixed numeric output per halt. All
+installed running and halting states count. After entry its current
+state is its entire changing accessible configuration; there is no
+additional retained $a_0,z$, row, reply, history, address or output
+register and no external decoder or mutable table selector.
+
+The public parameters are the declared source family, $H,\lambda_0$
+and cut. The fixed code value $a_0$ and entire $Y_z$ are genuinely
+acquired source-bearing compilation inputs, common only within this
+conditional fiber. A separately supplied finite computation may use
+them to determine $b,I_0$, literal table entries and complete output
+constants, followed by installation and a complete entry cut. It
+cannot use the unknown actual lag to select a table within the fiber.
+The resulting one table must work for every compatible history of
+Theorem 1.2. Input capture, export, access, representation, parsing,
+table construction and installation are separate services and costs;
+none is a free fresh-source or current-age port. Immutable installed
+table and complete-output storage remain separate from state count.
+This is a family indexed by fixed acquired inputs, not a declaration
+that one fixed finite table handles every later input without change.
+

@@ -1,0 +1,43 @@
+**Definition 1.2 (canonical source and the original Coulomb constants).** Retain all conditional heat, integrated-tail, compactness, reconstruction, multiplier, weighted-mode and response antecedents in Source §§1–3, 10, 13 and 17–20, at their stated scopes. In particular, on the canonical Engel space,
+
+$$
+V=j_0^{-1}\int_1^\infty k_TdT>0,\qquad
+p>0,\quad \|p\|_2=1,\quad
+(a\mathcal E-\chi_cV)p=0,\quad
+\chi_c=a/C_*>0,
+$$
+
+where $p\in D(\mathcal E)$ is the simple critical mode, $V\in L^2$ and $k_T$ has unit Haar mass. Thus
+
+$$
+m_{\rm core}=\int Vp\,d\xi\in(0,\infty),\qquad
+Q=\sqrt{j_0\chi_c}\,\phi(k_0)m_{\rm core}>0.
+$$
+
+Indeed Cauchy–Schwarz proves finiteness, and $V,p>0$ and $k_0\in I$ prove strict positivity. This is the raw charge of Source (17.6). Define
+
+$$
+\begin{aligned}
+M&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk>0,
+&J&=\sqrt{\det M},&d(\mathbf z)&=\sqrt{\mathbf z^{\mathsf T}M^{-1}\mathbf z},\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi(k)^3dk}{4\pi J}>0,
+&\varrho&=\frac{\beta_C}{2a},&e_C&=-\frac{\beta_C^2}{4a}=-a\varrho^2,\\
+r_C&=-\chi_c^2e_C=\chi_c^2a\varrho^2,
+&H_0&=-a\nabla\cdot M\nabla,&U_C&=\beta_C/d,\quad H_C=H_0-U_C.
+\end{aligned}
+$$
+
+Here $H_C$ is exactly the original Friedrichs form operator on $H^1(\mathbb R^3)$. Source Proposition 17.2, with the supplied bottom $\inf\sigma(H_C)=e_C$, gives for every fixed $R>r_C$ the unique $L^2$ distributional solution
+
+$$
+(H_C+t)\zeta_R=Q\delta_0,\qquad t=R/\chi_c^2,
+\qquad \zeta_R=Q(I-T_t)^{-1}Y_t,
+$$
+
+$$
+T_t=[(H_0+t)^{-1}U_C]_{\rm ext},\qquad
+Y_t(\mathbf z)=\frac{e^{-\sqrt{t/a}\,d(\mathbf z)}}{4\pi aJd(\mathbf z)}.
+$$
+
+Its proof uses the Hardy multiplier bound, bounded inversion of $I-T_t$ and whole-space distributional uniqueness; it introduces no origin boundary parameter. Its antecedents remain conditional here. The column is an $L^2$ comparison object, not an assertion of native or Coulomb form-domain membership.
+

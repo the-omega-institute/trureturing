@@ -1,0 +1,31 @@
+**Definition 2.1 (Fixed positive shapes and the observed law).** Keep (1.1) fixed independently of $q$, $M$ and the observer, and put $B=1+c$. For every positive integer $k$,
+
+$$
+k^d\le F_i(k)\le Bk^d,\qquad
+\frac{F_1(k)}{F_0(k)}-1=c k^{-r}.
+\tag{2.1}
+$$
+
+For $0<q<1$ define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,&
+f_i(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),& f_i(0)&=0,\\
+S_i(b)&=\sum_{k\ge b}f_i(k)\quad(b\ge0),&
+\mu_i(q)&=\sum_{k\ge1}(k+1)f_i(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_i(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{2.2}
+$$
+
+Draw $\tau$ with $\mathsf P_{i,q}(\tau=b)=S_i(b)/\mu_i(q)$ for $b\ge0$. Independently draw iid $K_1,K_2,\ldots$ with law $f_i$. Put ones at
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{j=1}^n(K_j+1)\quad(n\ge1),
+\tag{2.3}
+$$
+
+and zeros at every other site of $X_0,X_1,\ldots$. The variables $K_j$ count zeros; $K_j+1$ counts a whole post-tick interval through its closing tick. The first wait has its own equilibrium law and is not a draw from $f_i$.
+

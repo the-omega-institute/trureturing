@@ -1,0 +1,32 @@
+**命题 2.1（有限阶乘累计公式）。** 对 $Y\ge1$，令 $n=\lfloor Y\rfloor$，空和取零，则
+
+$$
+C(Y)=\sum_{j=2}^{n}\frac{\log j}{j}
+-\frac{\log(n!)}Y-\frac12(\log Y)^2+\log Y.
+\tag{2.1}
+$$
+
+特别地，$7!=5040$ 给出
+
+$$
+C(7)=\sum_{j=2}^{7}\frac{\log j}{j}
+-\frac{\log5040}{7}-\frac12(\log7)^2+\log7.
+\tag{2.2}
+$$
+
+证明。有限阶乘恒等式
+
+$$
+\log(\lfloor y\rfloor!)=\sum_{j=2}^{n}\log j\,\mathbf1_{[j,Y]}(y)
+\quad(1\le y\le Y)
+$$
+
+允许有限求和与积分交换，因而
+
+$$
+\int_1^Y\frac{\log(\lfloor y\rfloor!)}{y^2}\,dy
+=\sum_{j=2}^{n}\log j\left(\frac1j-\frac1Y\right).
+$$
+
+另外，$\int_1^Y(1-\log y)y^{-1}dy=\log Y-(\log Y)^2/2$，相加即得。$\square$
+

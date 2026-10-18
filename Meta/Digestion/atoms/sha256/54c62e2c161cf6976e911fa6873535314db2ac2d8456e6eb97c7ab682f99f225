@@ -1,0 +1,9 @@
+**Definition 3.1 (Proper stationary renewal law).** A stationary legal law $P$ is proper renewal if ones are unbounded in both directions almost surely, its intensity $\iota=P(X_0=1)$ is positive, and under the Palm probability
+
+$$
+P^1=P(\,\cdot\mid X_0=1)
+\tag{3.1}
+$$
+
+the bi-infinite consecutive one-to-one distances are independent and identically distributed with a probability mass function $f$ on $\{2,3,\ldots\}$. Put $f(1)=0$. Finite supports, missing lengths and supports contained in a proper arithmetic progression are initially allowed. This is a property of the actual visible law, independent of which finite representation is used. The all-zero law is considered separately.
+

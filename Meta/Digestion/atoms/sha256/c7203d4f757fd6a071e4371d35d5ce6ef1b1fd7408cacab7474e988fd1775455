@@ -1,0 +1,20 @@
+**Corollary 11.1 (removing the nonempty-class promise for an explicit
+table).** For a supplied table with at most nine installed states and
+$L=2$, Theorem 6.1 decides and certifies the nonemptiness premise needed
+by TCR's common-normalization theorem. On a positive answer, TCR Theorems
+4.2, 6.3 and 7.1 apply under their original operational contract: one
+table-determined exclusive positive-fiber pair supplies one shared
+nine-state, at-most-four-call representative-root reader with a fixed
+faithful entry map for every code served by the input table.
+
+Proof. The source, five full outputs, acquired-data services, all
+installed-state conventions and fixed labeled entries in §§1–3 match
+TCR Definitions 2.1–3.2 exactly at these restricted parameters. TCR
+Proposition 3.4 proves that every code in its original two-call class
+already attains both bits. Hence that class is precisely
+$\mathcal C_2(T)$, not a class obtained by silently changing an attained
+alphabet. A positive certificate from Theorem 8.3 supplies its required
+nonemptiness. The stated normalization is then the direct cited
+consumer TCR Theorem 7.1 with its own bounds and quantifiers; no root
+normalizer is reproved or generalized here. $\square$
+

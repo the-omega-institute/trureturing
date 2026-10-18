@@ -1,0 +1,56 @@
+### 35.7. 复用、原目标与共同实现的未决边界
+
+母卷第 27 节处理外部已知整条增益线，第 29 节处理声明的含初根公共因子平面，姊妹卷第 31 节处理整个物理仿射平面。已知标签下各自可恢复，不推出其未知并集可恢复。第 32—33 节处理两个明确的已知零平面；第 34—35 节则在整个未知二次类内穷尽各自声明记录的竞争者。例中比例来源曲线与插值、因式、秩一代数均是复用工具，不另计通用方法。
+
+本卷新增连接只使用同一世界的源、整个增益、漂移和全部祖先方程。各充分逆的非空性来自真实合法世界必通过；至多一个结论来自全部竞争者的穷尽；反向通过全部过滤者确为该记录的合法完整世界。一个后续方程只能删世界，不能增加世界。所有局部计数均须按完整三元组去重，不按源投影、增益标签、形式根的重数或读数计数。
+
+**entire quadratic question.**
+
+OPEN: a legal adaptive original-root strategy recovering ALL strict nonzero degree-at-most-two worlds with arbitrary compatible constant drift in at most eight TOTAL original-clock readings, or a jointly realized original-root L7 for that class. The present exact fiber removes one natural six-action prefix from uniform use and locates its quadratic last-step failure. It supplies neither a complete quadratic decoder nor a quadratic original-root failure tree.
+
+**original cubic question.**
+
+OPEN: deterministic adaptive recovery of ALL original strict degree-at-most-three worlds in eight TOTAL readings at clocks 0,...,7, versus n_det(3,0)>=9. There is no root L7 witness, nine-read upper bound, missing-arm completion, unrestricted same-parent L3, forced late-history reachability or full-domain decoder here.
+
+**no promise detector or unknown union inverse.**
+
+The degree identity E=d+e\*g relies on the declared deg(g)<=2 class: its product then has degree at most three and four even nodes determine it. For an unrestricted cubic the product can have degree four, so agreement at those four nodes does not prove that whole identity. Thus e3!=0 does not detect the quadratic promise inside the original cubic model. Separately recoverable classes cannot be united without controlling cross-class competitors. No unknown-direction or unknown-plane detector, mixed-family deletion rule or recovered unknown union follows.
+
+**no true cubic necessity.**
+
+A claim that every unrestricted failure must contain a TRUE cubic gain would need the still missing entire quadratic recovery theorem. The current exact quadratic local obstruction supplies no such necessity. The candidate's already inherited affine result gives only its previously stated degree-at-least-two boundary.
+
+**unchanged full joint contract.**
+
+The original contract remains ALL 256 slots q=(w,epsilon), ALL 254 nonempty action prefixes, the SAME full 1538-by-1024 matrix B(P), and ONE common stacked four-coefficient vector satisfying ALL whole four-component gain guards and all applicable same-source terminal difference guards. Layer row counts remain 254,252,248,240,224,192,128. Every source is strict, every ancestor response and both actions are jointly realized, and every stop retains its guard. Repeated slots identify only entire equal triples. Any quadratic restriction must be imposed simultaneously in every block of that same contract. The local two-world path fiber is neither a solution of this joint contract nor a substitute for it; separate paths, source marginals, smaller matrices or separately chosen guard vectors do not establish it.
+
+**support and failure limits.**
+
+No support floor of five, all-four exclusion, original-root four-world existence, sharp support bound, gain span at least three, unrestricted failure-subfamily extraction, mixed deletion, missing-arm repair or arbitrary-policy forced-prefix result is obtained. A local L1 at the attained Q6 is not a root L7. Unknown unions and general two-dimensional gain spaces remain outside any inherited special-plane inverse.
+
+**initial read and other limits.**
+
+Arbitrary initial reading is retained. The usual full-world normalization only replaces d by d-a0 and subtracts a0 from all actual responses, restoring d on return; it does not make gain, drift or a root known. The results are exact-real set-theoretic reconstructions with no computability, finite-precision, noise, continuity, stability, efficiency, resource, empirical-physics, neural-network, literature-exhaustiveness or priority guarantee. There is no Lean/kernel certification.
+
+**quadratic question.**
+
+Entire-quadratic deterministic recovery within eight TOTAL original-clock readings remains OPEN on this evidence. There is no uniform sixth-J repair, full quadratic all-branches inverse, quadratic original-root L7 or arbitrary-cardinality no-quadratic-L7 proof here. A history-dependent last choice can choose J on A and M on B, but success on all other acquired histories has not been proved or disproved.
+
+**cubic question.**
+
+The original question for ALL nonzero whole real gains of degree<=3, all strict rank-one trace-one sources and arbitrary drift remains OPEN: a deterministic adaptive complete-target inverse using at most eight TOTAL readings at clocks 0 through 7 versus n_det(3,0)>=9. There is no original-root L7, nine-read upper bound, missing-arm realization, unrestricted same-parent L3, forced late-history reachability or settlement of either side. The inherited affine result gives only the existing necessity of a gain of degree at least two in an unrestricted failure family; it does not establish true-cubic necessity.
+
+**unchanged full joint contract.**
+
+All 256 slots q=(w,epsilon), w in {J,M}^7 and epsilon in {0,1}, retain strict sources. All 254 nonempty action prefixes v retain actual left products A_v, lengths i=|v| and descendants D_v. With t_v(P)=tr(A_v P), ell_v(P)=(t_v(P)-1,i t_v(P),i^2 t_v(P),i^3 t_v(P)), the SAME full 1538-by-1024 matrix has rows ell_v(P_q)x_q-ell_v(P_qv)x_qv for q in D_v excluding its representative qv. Layer row counts remain 254,252,248,240,224,192,128. ONE vector in that same common kernel must simultaneously satisfy every whole four-component gain guard G_q x=x_q!=0 and each applicable same-source terminal whole four-component difference guard D_w x=x_(w,0)-x_(w,1)!=0. Entire gains are g_q(t)=sum from j=0 to 3 of x_qj t^j and drifts d_q=a0-x_q0; unequal terminal sources already distinguish complete targets. Every ancestor, both action obligations and every stop guard remain. Any degree<=2 restriction would have to apply simultaneously to every block of this same contract. No new common realization is supplied, and neither local pair substitutes for it. Slots may be identified only when their entire triples agree.
+
+**excluded inferences.**
+
+No deletion from mixed failure families, recovery by union of separately recoverable classes, detector for an unknown gain/root/direction promise in the cubic model, arbitrary nonterminal failure-subfamily extraction, all-four-world exclusion, four-world original-root witness, support floor five or sharpness, separate source/drift marginal claim, gain span at least three, new unrestricted kernel obstruction or true-cubic necessity is established. No neural-network, empirical, noise, continuity, stability, efficiency, resource, computability, finite-precision, external-priority or Lean/kernel claim is made. Support and fiber counts are numbers of different complete worlds, not numbers of readings.
+
+本卷第 32 与第 33 节的整个守卫恒零结论只在各自同一个完整共同核的声明平面交空间成立，恒零身份可随平面和全部来源改变。它们没有替换不受限共同核，没有给出其可行点或恒零守卫；第 34—35 节的局部二次纤维也不替代原树的联合实现。
+
+原目标仍是：对所有严格源、任意非零次数至多三的整个实增益和任意兼容常漂移，是否存在原时钟 0—7、至多八次总读的确定性自适应完整逆，或是否 n_det(3,0)≥9。两支均 OPEN。整个二次类的自适应八读恢复或原根 L7 也 OPEN。仍无九读上界、混合族删除、未知承诺检测器、可恢复未知并集、增益跨度至少三、支持下界五、全部四世界排除、四世界原根存在性或尖锐性、原根失败树、缺失动作臂、不受限同父 L3 或强迫晚期历史。
+
+外部文献未经检索，本卷不作穷尽、原创性或优先权主张。所有陈述均限精确实数的符号数学；没有一般神经网络、经验物理、噪声、连续性、稳定性、效率、可计算性、资源或有限精度保证，也没有算术执行或 kernel 认证。严格零边界源不以极限代替合法世界。
+

@@ -1,0 +1,15 @@
+**定义 60.1（原生概率对比与来源范围）。** 固定 $n\geq3$，沿用假设 55.2 的整个合法链、有限字集 $\mathcal W_n$ 和命题 59.1 的末端二值读口。以下简记
+
+$$
+\begin{aligned}
+d&=F_{n+2},&q&=F_n,&P&=n_1|_{\mathcal K_n},\\
+P_w&=w^\dagger Pw,&p_\rho(w)&=\operatorname{tr}(\rho P_w),\\
+D(\rho,\sigma)&=\tfrac12\|\rho-\sigma\|_1,&
+B_n(\rho,\sigma)&=\sup_{w\in\mathcal W_n}
+                  |p_\rho(w)-p_\sigma(w)|.
+\end{aligned}
+\tag{VIII.1}
+$$
+
+$F_0=0,F_1=1$，故 $2\leq q<d/2$。$B_n$ 比较理想二值概率函数；一次实际读口只返回一个比特，并不返回 $p_\rho(w)$。对既有历史 $h$ 的来源纤维 $X_h$，可将 $\rho,\sigma$ 限于其中的端口态。下述统一常数的尖锐性和设置数下界则在整个 $\mathsf D(\mathcal K_n)$ 上取量词；这一数学定义域不授予任意态的制备权限。受限测量范数与最佳支配常数的研究框架见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*](https://arxiv.org/html/0810.2327v2)，引言及 §1。
+

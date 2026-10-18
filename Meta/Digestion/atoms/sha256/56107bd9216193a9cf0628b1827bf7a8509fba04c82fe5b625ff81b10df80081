@@ -1,0 +1,87 @@
+**Lemma 2.1 (the imported rigidity and capacity in normalized form).**
+For every finite-activity competitor at a weak sharp cost, each actual
+low label nonzero on supported inputs has whole fibre dimension two.
+After removing a common phase its supported composite live matrix and
+pulled-back failure effect have the form
+
+$$
+\begin{gathered}
+K_j=\sqrt{\pi_j}(s_0D+z_jT+w_jS),\qquad \pi_j>0,\\
+\alpha z_j^2+\beta w_j^2=1,\qquad
+n(z,w)=(0,dw/h_2,-bz/h_1)^T,\\
+N_j=\pi_j\upsilon_j n(z_j,w_j)n(z_j,w_j)^T,\qquad
+0\le\upsilon_j\le t c_*(z_j^2).
+\end{gathered}
+\tag{WE.9}
+$$
+
+This describes existing actual labels, with no readable Kraus refinement.
+Their exact coefficient and failure moments are
+
+$$
+\begin{gathered}
+\sum_j\pi_j=\sum_j\pi_jz_j^2=\sum_j\pi_jw_j^2=1,\qquad
+\sum_j\pi_jz_j=\sum_j\pi_jw_j=\sum_j\pi_jz_jw_j=0,\\
+\sum_j\pi_j\upsilon_j=\mu,\quad
+\sum_j\pi_j\upsilon_jz_j^2=V,\quad
+\sum_j\pi_j\upsilon_jw_j^2=W,\quad \sum_jN_j=M.
+\end{gathered}
+\tag{WE.10}
+$$
+
+High labels have zero supported failure and only $D$ live products.
+Their aggregate effect is $(1-\delta)D^\dagger D$. With actual binary
+reports $r_j\in\{\pm1\}$, absorbing their coins into the labels,
+
+$$
+\mathsf V(F)=s_0\left|\sum_j\pi_j r_jz_j\right|
+\le s_0\sum_j\pi_j|z_j|.
+\tag{WE.11}
+$$
+
+Proof. JR Theorem 42.1 gives the supported live map, failure effect $M$,
+zero other effect, zero high failure, low Gram
+$\operatorname{diag}(\delta,1,1)$ and high products proportional to $D$.
+Its complex equality conditions give the real null face
+$x_0^2=\theta z_0^2+\omega w_0^2$; this is not an imposed real or
+static-support competitor class.
+
+Here the use of FA Theorem 69.1 is essential: trace balance implies
+whole-fibre survival at least $e^{-A}I$, so a supported nonzero label
+cannot have zero live map. A nonzero live product has rank two. On a
+low fibre this forces an onto encoder Kraus matrix and an injective
+live-decoder Kraus matrix. The real null products have kernels
+$(1,-bz_0/(h_1x_0),-dw_0/(h_2x_0))$ and adjoint kernels
+$(1,-az_0/(h_1x_0),-cw_0/(h_2x_0))$. A common image or kernel fixes
+both ratios. Injectivity and surjectivity therefore make all encoder
+Kraus matrices proportional, and all live-decoder Kraus matrices
+proportional, on each actual label. This is FA69's double rigidity,
+valid for arbitrary admitted TP survivor paths and terminal processing.
+Normalize the nonzero first coefficient to obtain (WE.9)'s $K_j$.
+
+FA Theorem 69.2 then applies on this very label. Its failure effect
+kills both $e_0$ and $\ker K_j$, so it is a nonnegative multiple of
+$n n^T$, also when $z=0$ or $w=0$. For
+$G_K=K(s_0,z,w)^\dagger K(s_0,z,w)$ its explicit Schur complement is
+
+$$
+G_K-\frac{G_Ke_0e_0^TG_K}{(G_K)_{00}}=c_*(z^2)nn^T.
+\tag{WE.12}
+$$
+
+The necessary whole-fibre bound $L_{\rm dec}\succeq e^{-A}I$ pulls
+back to $N_j\preceq tK_j^\dagger K_j$; (WE.12) gives exactly the
+capacity in (WE.9). FA69 also identifies the admitted prescribed-law
+minimum as $\log(1+\upsilon_j/c_*(z_j^2))$. These are whole-class
+necessities; no time law $g$ or commutativity is assumed here.
+
+The low Gram gives the first six moments. The diagonal entries of
+$\sum N_j=M$ give the $V,W$ moments; multiply the null equation by
+$\pi_j\upsilon_j$ and sum to obtain $\mu$. Full TP decoders make each
+supported encoder effect exactly $K_j^\dagger K_j+N_j$. Failure effects
+kill coordinate zero, so they have no $01$ record contribution. Only
+the $DT$ live term contributes, giving (WE.11), with high contribution
+zero. Labels zero on the supported algebra contribute zero throughout.
+The same sums become integrals under exactly the supplied measurable
+extension. $\square$
+

@@ -1,0 +1,39 @@
+**定义 5.1（固定嵌入与同一实线性流）。** 取正交单位谱基
+
+```math
+v_+=\frac{(1,\varphi)^{\mathsf T}}{\sqrt{1+\varphi^2}},\qquad
+v_-=\frac{(1,\psi)^{\mathsf T}}{\sqrt{1+\psi^2}}.
+```
+
+它们内积为零，因为 $`\varphi\psi=-1`$；分别是 $`M`$ 的 $`\varphi,\psi`$ 特征向量。对整个 $`\mathbb R^2`$，固定实线性映射
+
+```math
+Jc=(\langle v_+,c\rangle,\langle v_-,c\rangle,0).
+```
+
+$`J`$ 单射，其像是固定的 $`Z=0`$ 平面。对 $`\mathbb R^3`$ 的全部初态定义同一流
+
+```math
+\begin{aligned}
+X(t)&=e^{at}X_0,\\
+Y(t)&=e^{-at}\bigl(Y_0\cos(\pi t)-Z_0\sin(\pi t)\bigr),\\
+Z(t)&=e^{-at}\bigl(Y_0\sin(\pi t)+Z_0\cos(\pi t)\bigr).
+\end{aligned}
+```
+
+记此算子为 $`T_3(t)`$，生成元为
+
+```math
+G=\begin{pmatrix}a&0&0\\0&-a&-\pi\\0&\pi&-a\end{pmatrix},\qquad
+T_3(t)=e^{tG}.
+```
+
+指数伸缩与平面旋转的和角公式直接给自治群律。若初态是 $`Jc`$，则每个 $`n\in\mathbb Z`$ 都有
+
+```math
+T_3(n)Jc=\bigl(\varphi^n\langle v_+,c\rangle,
+\psi^n\langle v_-,c\rangle,0\bigr)=JM^nc.
+```
+
+这验证的是整个二维输入的交织，包含负整数；不只是一条特殊轨道。
+

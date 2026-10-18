@@ -1,0 +1,10 @@
+**Definition 14.1 (a target-independent replacement signal).** For a
+nonempty fiber $B_e$ of either slice, a static signal is an arbitrary
+map $H_e:B_e\to\mathcal H_e$, independent of the later request,
+together with a common decoder from $e,D,p,H_e(x)$ to the complete
+factor $\Gamma_p(t_x)$ for every $x\in B_e$ and
+$p\in\mathcal P_D$. Equivalently it may produce a predictor correct
+for every subsequently supplied authentic count. Put
+$c_e=|H_e[B_e]|$. This allows much more than one literal reply and
+therefore relaxes a proposed fixed-probe replacement.
+

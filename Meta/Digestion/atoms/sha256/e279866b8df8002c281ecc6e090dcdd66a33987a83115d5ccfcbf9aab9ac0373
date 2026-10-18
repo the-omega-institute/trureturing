@@ -1,0 +1,22 @@
+#### 25.6　类型可见性与公共分歧
+
+令类型 $\Theta\in\{0,1\}$ 决定私有状态分布 $\nu_0,\nu_1$。隐藏动作输出分布为
+
+$$
+P_\theta^A(a)=\sum_h\nu_\theta(h)p_h(a).
+$$
+
+公共种子输出为 $(U,A)$，其分布为
+
+$$
+P_\theta^{U,A}(u,a)=\mu(u)\sum_h\nu_\theta(h)\mathbf1\{f(h,u)=a\}.
+$$
+
+对每个种子值定义该值上的状态分组推前
+
+$$
+Q_{\theta,u}(a)=\sum_h\nu_\theta(h)\mathbf1\{f(h,u)=a\}.
+$$
+
+<a id="claim-25-6-1"></a>
+

@@ -1,0 +1,45 @@
+**Theorem 6.2 (bidirectional actual-service and sourcewise cost correspondence).**
+Every permitted native controller has a permitted opaque coded controller,
+and conversely, with the same accessible initial state. On corresponding
+sources $u\leftrightarrow B(u)$, they have identical sequences of actual
+updates, submitted physical words, returned labels, accessible control
+states, outputs and genuine halt. Source-totality and correctness for the
+entire original $R_Q$ are equivalent. In particular
+
+$$
+(q_A(u),a_A(u),\ell_A(u))
+ =(q_{A^\#}(B(u)),a_{A^\#}(B(u)),\ell_{A^\#}(B(u))).
+\tag{ABC.6.1}
+$$
+
+Proof. Use the same effective control rules, local data representation
+and initial accessible state. Relate hidden register states by
+$Y=B(t)$, initially $t=\rho^N u$. If the next action is an update,
+Theorem 2.3 relates the resulting states. It is one actual forward action
+in each presentation. If the action is a read, the equal accessible states
+choose the same finite word $p$. Theorem 3.2 proves equal replies, so the
+accessible continuations agree. A local computation uses only that equal
+state and has the same next control result. At halt both controllers
+have the same output and neither has a source-action continuation.
+
+Induction through any finite run proves these assertions. The same
+argument in the reverse presentation applies to every coded controller
+because Definition 6.1 prohibits inspection of the hidden coordinates.
+It executes its existing port requests on the native register and needs
+no computation of $B(u)$ or $E(X)$ at entry. There is no restriction to
+finite tables or to programs with a known uniform bound: any sourcewise
+finite run is covered. A terminating run corresponds to a terminating
+run, and a failure to terminate cannot acquire an unmatched halt.
+Theorem 4.2 identifies the required target. Theorem 5.2 covers every and
+only admitted source. Thus correctness and source-totality transfer in
+both directions against all allowed adaptive competitors.
+
+The actual action sequences are identical, including repeated calls,
+epochs zero and one, reads of absent addresses, updates before any read,
+and halt without a read. Each read contributes one to $q$ and the length
+of that same submitted word to $\ell$; each actual update contributes one
+to $a$. Summing proves (ABC.6.1). No acquisition event or update is added
+by the mathematical state relation. This establishes no equivalence or
+saving for expansion work, storage, installation, retention, authentication
+or physical elapsed time. $\square$
+

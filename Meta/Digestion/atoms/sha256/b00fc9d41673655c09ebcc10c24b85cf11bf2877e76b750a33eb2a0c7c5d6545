@@ -1,0 +1,52 @@
+**引理 80.2（Simultaneous physical codes with accumulated label restrictions）。** Suppose (80.1)–(80.2) hold and $D\notin\{\lambda(0),\lambda(1)\}$. For $1\le t\le d-1$ put
+
+$$
+e_t=m+1-2t,\qquad s_t=e_t+1=m+2-2t.
+\tag{80.4}
+$$
+
+There is a bijection $c:L\cup\{C\}\to\{0,1\}^d$, with coordinates $0,\ldots,d-1$, satisfying all of
+
+$$
+\begin{aligned}
+c(D)&=0,& c_0(C)&=0,&c_0(\lambda(0))&=c_0(\lambda(1))=1,\\
+c_t(\lambda(e_t))&=0&&&&(1\le t\le d-1),\\
+c_{t-1}(\lambda(s_t))c_t(\lambda(s_t))&=0&&&&(1\le t\le d-1).
+\end{aligned}
+\tag{80.5}
+$$
+
+Repeated labels collect every indicated restriction, including restrictions involving the root coordinate.
+
+**证明。** The inequality $N\ge2d+2$ holds at $d=3$ and is preserved on increasing $d$: $2^{d+1}\ge4d+4\ge2(d+1)+2$. Consequently
+
+$$
+e_{d-1}\ge N+2-2d\ge4.
+\tag{80.6}
+$$
+
+All $e_t,s_t$ are low phases in $A$, separate from $0,1,z$; the $e_t$ are distinct and so are the $s_t$. Their labels may coincide. In particular $C$ owns none of the last two lines of (80.5). Reserve the zero vector for $D$, whose remaining clauses are automatically satisfied. Let $V=\{0,1\}^d\setminus\{0\}$. For each of the other $N-1$ labels take its list in $V$ specified by (80.5). Call a label positive when it belongs to $K=\{\lambda(0),\lambda(1)\}$; there are at most two positive labels, neither $C$ nor $D$.
+
+The clauses, counted as occurrences before labels are identified, consist of at most two positive conditions $y_0=1$, the condition $y_0=0$ on $C$, one coordinate-zero condition for each $t\ge1$, and one adjacent-pair condition for each $t\ge1$. Thus at most $2d+1$ labels have any condition. Each coordinate-zero occurrence has at most one owner, and each adjacent-pair occurrence has at most one owner. Repetition can accumulate conditions on a list but cannot increase these occurrence counts.
+
+We verify every finite Hall inequality. A subfamily containing a list equal to $V$ has union size $N-1$, at least its number of labels. Otherwise its size $q$ is at most $2d+1$. Write $u_i$ for the unit vector in coordinate $i$. Every non-$C$ list contains $u_0$: it satisfies a positive condition when present, every coordinate-zero condition with index at least one, and every adjacent-pair condition. The $C$ list is exactly the nonzero half cube $y_0=0$, of size $N/2-1\ge3$.
+
+For $q=0$ the inequality is empty, and for $q=1$ these observations give a representative. For $q=2$, if $C$ occurs, its vector $u_1$ and the other list's $u_0$ suffice. Otherwise consider coordinate two, which exists since $d\ge3$. For a nonpositive list use $u_2$, and for a positive list use $u_0+u_2$. Each respective vector satisfies all its conditions except possibly the single coordinate-two zero condition. That occurrence cannot belong to both labels. At least one of these vectors is in the union and differs from $u_0$, proving the inequality.
+
+For $q=3$, inclusion of $C$ already gives three vectors. If $C$ is absent and at most one label is positive, there are at least two nonpositive lists. For each $i=1,2$, the vector $u_i$ fails on such a list only if that label owns the single coordinate-$i$ zero condition. Hence $u_1,u_2$ both belong to the union, as does $u_0$.
+
+The remaining $q=3$ case has two positive labels and one nonpositive label $E$. Among the two positive lists at least one contains $u_0+u_2$, because this vector can fail there only at the single coordinate-two zero condition. If $E$ permits either $u_1$ or $u_2$, that vector, $u_0$ and $u_0+u_2$ are three distinct members of the union. Otherwise $E$ owns both coordinate-one and coordinate-two zero conditions. Neither positive list then owns either of those conditions. The vector $u_0+u_1$ can fail on a positive list only at the single pair condition for coordinates zero and one. At least one positive list permits it. Thus $u_0,u_0+u_1,u_0+u_2$ belong to the union, again proving the inequality.
+
+For every $q\ge4$, all unit vectors belong to the union. The vector $u_0$ is forbidden only by $C$; any $u_i$ with $i\ge1$ is forbidden on at most two positive labels and the one owner of its coordinate-zero condition, hence on at most three labels. Also every $u_0+u_i$, $i\ge1$, belongs to the union: it can violate the $C$ condition, one coordinate-zero condition, and, only when $i=1$, one adjacent-pair condition. Again there are at most three forbidden labels. These are $2d-1$ distinct nonzero vectors, proving all inequalities with $4\le q\le2d-1$.
+
+It remains to consider $q=2d$ or $2d+1$, so $q\ge6$. Every weight-two vector with coordinate zero equal to zero can violate at most two positive conditions, two coordinate-zero conditions and one adjacent-pair condition, on at most five labels. A weight-two vector with coordinate zero equal to one violates at most the three conditions just counted for $u_0+u_i$. Therefore every weight-one or weight-two vector belongs to the union. For $d\ge4$ their number satisfies
+
+$$
+d+\binom d2\ge2d+1\ge q;
+\tag{80.7}
+$$
+
+the first inequality holds at $d=4$ and its difference increases with $d$. For $d=3$ these vectors number six, enough for $q=6$. For $q=7$ the remaining vector $111$ can violate only the $C$ condition, the two coordinate-zero conditions and the two pair conditions: at most five labels. It also belongs to the union, giving all seven nonzero vectors. This completes the Hall inequalities for every possible accumulated-clause pattern.
+
+Apply the existing finite Hall distinct-representative theorem [H] to these $N-1$ lists. It gives an injective choice in $V$, necessarily using all of $V$. Add $c(D)=0$ to obtain the required bijection. The finite matching theorem is credited reuse; the occurrence bounds and list inequalities here arrange the root, unavailable coordinates and every seam of this reader in the presence of arbitrary repeated labels. ∎
+

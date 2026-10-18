@@ -1,0 +1,85 @@
+**Lemma 3.2 (Complete all-label support data).**
+For pair $i<j$ and cell $ab$, maximize the sum of rewards on
+$\{w:(w_i,w_j)=ab\}$ over all labels independently. In the next
+table $B$ is the label-zero quadruple, $H$ maximizes over labels
+$3,\ldots,8$, and $M$ is the full maximum over all nine labels.
+Cell order is $00,01,10,11$.
+
+| Pair | $B$ | $H$ | $M$ |
+| --- | --- | --- | --- |
+| $12$ | $(3,32,37,27)$ | $(0,0,0,27)$ | $(3,32,40,27)$ |
+| $13$ | $(24,11,24,40)$ | $(0,0,27,27)$ | $(24,11,27,40)$ |
+| $14$ | $(21,14,24,40)$ | $(0,0,27,27)$ | $(21,14,27,40)$ |
+| $15$ | $(24,11,24,40)$ | $(0,0,27,25)$ | $(24,11,27,40)$ |
+| $16$ | $(22,13,32,32)$ | $(0,0,25,24)$ | $(22,13,32,32)$ |
+| $17$ | $(30,5,24,40)$ | $(0,0,24,24)$ | $(30,5,24,40)$ |
+| $18$ | $(35,0,39,25)$ | $(0,0,26,4)$ | $(35,0,39,25)$ |
+| $23$ | $(24,16,24,35)$ | $(0,0,27,27)$ | $(24,16,27,35)$ |
+| $24$ | $(21,19,24,35)$ | $(0,0,27,27)$ | $(21,19,27,35)$ |
+| $25$ | $(24,16,24,35)$ | $(0,0,27,25)$ | $(24,16,27,35)$ |
+| $26$ | $(32,8,22,37)$ | $(0,0,25,24)$ | $(32,8,25,37)$ |
+| $27$ | $(24,16,30,29)$ | $(0,0,24,24)$ | $(24,16,30,29)$ |
+| $28$ | $(39,1,35,24)$ | $(0,0,26,4)$ | $(39,1,35,24)$ |
+| $34$ | $(21,27,24,27)$ | $(21,6,27,27)$ | $(21,27,27,27)$ |
+| $35$ | $(24,24,24,27)$ | $(18,9,27,25)$ | $(24,24,27,27)$ |
+| $36$ | $(32,16,22,29)$ | $(25,2,25,24)$ | $(32,16,25,29)$ |
+| $37$ | $(33,15,21,30)$ | $(24,3,24,24)$ | $(33,15,24,30)$ |
+| $38$ | $(47,1,27,24)$ | $(26,1,26,4)$ | $(47,1,27,24)$ |
+| $45$ | $(24,21,24,30)$ | $(24,3,27,25)$ | $(24,21,27,30)$ |
+| $46$ | $(32,13,22,32)$ | $(25,2,25,24)$ | $(32,13,25,32)$ |
+| $47$ | $(33,12,21,33)$ | $(24,3,24,24)$ | $(33,12,24,33)$ |
+| $48$ | $(45,0,29,25)$ | $(26,1,24,4)$ | $(45,1,29,25)$ |
+| $56$ | $(32,16,22,29)$ | $(24,3,25,24)$ | $(32,16,25,29)$ |
+| $57$ | $(33,15,21,30)$ | $(24,3,24,24)$ | $(33,15,24,30)$ |
+| $58$ | $(47,1,27,24)$ | $(24,4,24,1)$ | $(47,4,27,24)$ |
+| $67$ | $(33,21,21,24)$ | $(24,3,24,24)$ | $(33,21,24,24)$ |
+| $68$ | $(53,1,21,24)$ | $(24,1,24,3)$ | $(53,1,24,24)$ |
+| $78$ | $(53,1,21,24)$ | $(24,1,24,3)$ | $(53,1,24,24)$ |
+
+Every full quadruple sums to at most $102$. Exact singleton maxima,
+in address order, are $(35,64),(40,59),(48,51),(45,54),(48,51),
+(54,45),(54,45),(74,25)$, each totaling $99$. The constant maximum
+is $99$.
+
+Proof. The $P$ class totals are $(35,37,0,3,0,0,0,0)$, summing
+to $75$; the $C$ totals are $(0,3,27,24,27,25,24,24)$, summing
+to $154$; $T=24$. In any cell, label zero earns its $P$ sum plus
+$T$ if it contains the positive word, and label $n>0$ earns the
+$P+C$ sum of class $n$. This gives all the displayed columns.
+
+More explicitly, the $P$-positive one-bit totals are
+$(40,35,27,30,27,21,21,1)$. For their pair-positive totals $t_{ij}$,
+
+$$
+B_{ij}=(75-t_i-t_j+t_{ij},\ t_j-t_{ij},\ t_i-t_{ij},\ t_{ij}+24).
+$$
+
+In the printed pair order, the $t_{ij}$ are
+$(3,16,16,16,8,16,1,11,11,11,13,5,0,3,3,5,6,0,
+6,8,9,1,5,6,0,0,0,0)$.
+For $H$, the class-three reward group is $(18,1,2,3,3)$ on its
+five words; the class-four group is $(22,2,1,2)$ on its four words,
+with $22=19+3$ including $P$. The remaining groups are $(23,1,3)$,
+$(24,1)$, $(24)$, $(24)$ on classes five through eight. Splitting
+these explicitly specified groups by each pair gives $H$.
+Label one is a subset of the base $P$ reward. Label two has its
+class-two $P$ group plus $3$ at $10110000$; splitting it by each
+pair is base-dominated except at pair $12$, cell $10$, where $40$
+exceeds $37$. These facts give $M$ and cover every label.
+For example, pair $27$ has $t_2=35,t_7=21,t_{27}=5$, giving
+$B_{27}=(24,16,30,29)$, already the full maximum there.
+
+For singletons, base rewards are $(75-t_i,t_i+24)$. The label-two
+splits are $(0,40),(40,0),(24,16),(21,19),(24,16),(32,8),
+(24,16),(39,1)$; maxima over labels three through eight are
+$(0,27),(0,27),(27,27),(27,27),(27,25),(25,24),(24,24),(26,4)$.
+All are base-dominated. The constant base reward is $99$, larger
+than every constant nonbase reward.
+
+The anchor $R=O(1,2;1,2,0)$ earns $75+24+3=102$.
+Four-cell independence proves full $N$ support from the table.
+Constants, singletons and repeats coarsen pair partitions; reversal
+permutes cells. Stopped tables are included by counted completion.
+Thus $B_N=B_O=W=102$, with both excesses zero, as in the credited
+DEV XVIII 336 theorem. $\square$
+

@@ -1,0 +1,68 @@
+**Lemma 15.2 (Native blocks have multiplicity one in the full hull).**
+The set $\Lambda$ contains the trivial character, with
+$\dim X_1\ge1$. If a native pair $\xi,\xi^{-1}$ is used by the
+bounded useful readout, then
+
+$$
+\dim_{\mathbb C}X_\xi=
+\dim_{\mathbb C}X_{\xi^{-1}}=1.
+\tag{15.2}
+$$
+
+On these lines $V_\delta$ acts as multiplication by
+$\xi(\delta)$ and $\xi(\delta)^{-1}$ respectively, without a
+Jordan part. Their vectors have homogeneous coordinate zero.
+
+**Proof of Lemma 15.2.** For a nontrivial $\lambda$, choose
+$\delta$ with $\lambda(\delta)\ne1$. On $X_\lambda$, the
+operator $V_\delta-I$ is invertible because its only eigenvalue
+is $\lambda(\delta)-1$. The invariant covector satisfies
+$\lambda_0(V_\delta-I)=0$, so it annihilates $X_\lambda$.
+If there were no trivial block, it would annihilate all of
+$X_{\mathbb C}$, contrary to $\lambda_0F=1$. This proves the
+trivial-block assertion using a covector, without producing a
+fixed vector.
+
+A nonzero native eigencovector $\ell$ in $W$ obeys
+$\ell V_\delta=\xi(\delta)\ell$. For $\lambda\ne\xi$,
+choose $\delta$ with $\lambda(\delta)\ne\xi(\delta)$.
+The operator $V_\delta-\xi(\delta)I$ is invertible on
+$X_\lambda$, so $\ell$ annihilates that block. It cannot
+annihilate every block. Hence $X_\xi\ne0$. Reality of the
+representation gives
+$\overline{X_\xi}=X_{\xi^{-1}}$ with equal dimension. If that
+dimension were at least two, the two distinct conjugate blocks
+would consume at least four dimensions, and the trivial block
+would consume a fifth. This contradicts $\dim X_{\mathbb C}\le4$.
+They are therefore lines, proving (15.2). The first part of the
+proof also shows that $\lambda_0$ annihilates both lines.
+$\square$
+
+In this native case the real residual module has dimension at most
+two and contains a trivial composition factor. If it has two
+dimensions, it can contain a separate nontrivial real character,
+or two trivial factors with a nontrivial unipotent extension. A
+real character takes positive values, since
+$\lambda(\delta)=\lambda(\delta/2)^2>0$. A second nonreal pair,
+or an extra generalized dimension in either native block, would
+exceed the dimension budget. The residual action need not be
+trivial.
+
+For clarity, this count does not hide a boundedness assertion.
+Every eigenrow in $W$ is unitary and annihilates full primary
+blocks with a different character by the invertibility argument
+above. Moreover $W$ is stable under each $\Pi_\lambda$, since
+(15.1) is a finite combination of phase maps. In the native case,
+put
+
+$$
+\Pi_{\rm res}=I-\Pi_\xi-\Pi_{\xi^{-1}}.
+$$
+
+For the complex readout row $\ell_1+i\ell_2$, its product with
+$\Pi_{\rm res}$ is a row in $W$ whose native components vanish.
+Lemma 14.2 makes it a trivial-character row. Its evaluation is
+therefore independent of $\alpha$, but may depend on $k$.
+Nonunitary hidden primary blocks and hidden Jordan directions
+have not been declared bounded or absent.
+

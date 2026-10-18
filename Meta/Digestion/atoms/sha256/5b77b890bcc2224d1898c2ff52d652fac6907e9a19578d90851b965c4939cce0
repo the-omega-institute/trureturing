@@ -1,0 +1,41 @@
+**第四 J 臂：V 14.2 与 15.1 的精确依赖。** 使用 [V，定义 13.1–14.1、定理 14.2、15.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的完整构造，特别是其中指定的有理中心 $x_0$、矩阵 $C$、半径 $10^{-8}$ 的闭盒 $X$、逐项区间运算和导数规则。这里的 $x_0,C,X$ 专指该规范构造，不用四舍五入数据替换。为固定目标身份，重述其函数接口：
+
+$$
+\begin{gathered}
+P(\alpha,\beta)=\frac1{1+\alpha\beta}
+\begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\quad
+\alpha,\beta>0,\quad a=\frac1{1+\alpha\beta},\\
+j=\frac{\alpha+\beta}{1+\alpha\beta},\quad
+\ell=1+\frac\beta{1+\alpha\beta},\quad
+\tau=(1,j,\ell,j+\ell),\quad b=(0,24,48,312/5),\\
+q_i=(b_i-d)/\tau_i,\qquad
+f(T)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le m\le3\\m\ne i}}\frac{T-m}{i-m}.
+\end{gathered}
+\tag{10.3}
+$$
+
+此处 $d$ 是该目标的漂移。后续样本由同一个多项式给出：
+
+$$
+\begin{pmatrix}f_4\\f_5\\f_6\\f_7\end{pmatrix}
+=\begin{pmatrix}-1&4&-6&4\\-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35\end{pmatrix}
+\begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.
+\tag{10.4}
+$$
+
+令 $A=1+a+j$、$B=j+2\ell-a$，并定义
+
+$$
+Y=d+f_4A,\quad Z=d+f_5B,\quad V_0=d+f_6(A+B),\quad
+R_0=d+f_7(2A+j),\quad S_0=d+f_7(A+2B).
+\tag{10.5}
+$$
+
+对三组坐标 $x=(\alpha_1,\beta_1,d_1,\alpha_2,\beta_2,d_2,\alpha_3,\beta_3,d_3)$，V 的九维函数是
+
+$$
+F(x)=(Z_1,Z_2,Z_3,Y_1-Y_2,Y_1-Y_3,V_{0,1}-V_{0,2},V_{0,1}-V_{0,3},R_{0,1}-R_{0,2},S_{0,1}-S_{0,3})^{\mathsf T}.
+\tag{10.6}
+$$
+

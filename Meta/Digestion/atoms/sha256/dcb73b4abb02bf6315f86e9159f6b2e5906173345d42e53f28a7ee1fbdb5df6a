@@ -1,0 +1,37 @@
+**Theorem 5.1 (sharp complete-label/probe frontier).** Let $M\ge1$ and
+$q\ge0$ be integers. A receiver with an authentic complete initial label of at
+most $M$ attained values, no other initial source-dependent access, and at most
+$q$ literal probes can recover every initial $U_x$ only if
+
+$$
+2^m\le M2^q,
+\qquad
+q\ge\max\{0,m-\lfloor\log_2 M\rfloor\}.
+\tag{DAF.6}
+$$
+
+The necessity holds despite all comparison operations and all numerical/archive
+services above. Over choices of truthful labels it is sharp when acquisition
+can begin on the unmodified source. For $M\le2^b$ it implies $b+q\ge m$.
+
+Proof. Fix an attained label. Between literal replies all accessible data and
+choices are determined by that label and the acquired prefix, by Theorem 4.2.
+Theorem 3.3 gives at most two reply branches at the next literal node. Terminal
+reply paths are prefix-free: if one stopped path were a proper prefix of another,
+common deterministic control and the same intervening observations would force
+the other execution to stop there too. A binary tree of maximum query depth $q$
+has at most $2^q$ terminal leaves, by induction on $q$, including early stops.
+One correct output leaf can serve at most one $x$. Summing over at most $M$
+labels gives (DAF.6). Taking integer ceilings yields the displayed logarithmic
+form; no assumption that $M$ is a power of two is made.
+
+For sufficiency put $k=\max\{m-q,0\}$. The inequality gives $2^k\le M$.
+The producer supplies the first $k$ actual bracket bits. Before any modification,
+the receiver queries $p_iL$ for each remaining bit and reconstructs $U_x$ with
+the public scaffold. These are $m-k\le q$ genuine literal calls. The complete
+label has at most $2^k$ attained values. Label acquisition/export/source binding,
+program installation and all storage/runtime remain separate services and costs.
+The original TM57 observer has no private-source complement-export port; this
+attainment is conditional on the stated label channel. At $b=0$, the $m$-probe
+algorithm is a genuine native controller on this promised family.
+

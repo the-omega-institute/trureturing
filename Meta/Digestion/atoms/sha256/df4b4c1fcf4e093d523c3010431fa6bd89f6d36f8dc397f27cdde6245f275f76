@@ -1,0 +1,110 @@
+**Convention 9.1 (attribution and extent of the composition).** The
+interval-cover theorem and its complete consumers are repo-derived
+ordinary-paper deductions. Their new composition is (IC.19)'s attainable
+cheap interval selection with two differently oriented private-cost
+exclusions, yielding (IC.17) on the whole graph without a monotone
+weight transversal. Theorems 5.1–8.1 give an original-model consumer
+with actual overload and unbounded late span outside every SI12–SI14
+reblocking as well as SI11's qualified capacity classes. They do not
+assert containment of the whole SI13 or SI14 class.
+
+SI Theorems 2.2 and 5.2 own actual incidence and its accounting identity.
+PE Theorem 3.1(1),(2), PE Lemma 4.1 and PCA Theorem 35.1 own all
+local private-cost and support exclusions. SI12–SI14 supply the
+actual-representative realization method, fixed-label depth separation,
+full parent-tree and deleted-subtree count templates. Their binomial
+normalization and PE's paid old-marker AND/OR motifs are reused.
+WTF Theorem 4.1 owns the native resource correspondence, and PCA/WTF
+own the original profiles, actual cube supplier and complete reader.
+Neither the exponential table template nor the $+4+r$, $+1$, $+3$
+overheads are additional mathematical discoveries here. TC Sections
+1–9, the strict-short-block results and TS compensation remain applicable
+at their stated scopes; they are not graph classes excluded by this
+construction and are not reproved by the interval argument.
+
+For the set-system comparison, [Király–Nagy–Pálvölgyi–Visontai,
+Definition 1.1][KNPV] requires fixed set sizes, disjoint diagonal pairs,
+and at least one of the two directed cross intersections for each pair.
+It does not require both. [Scott–Wilmer, Theorem 4.2][SW] requires
+every ordered off-diagonal intersection for the reciprocal-binomial
+capacity used in SI11. Their Corollary 4.6 permits a specified skew
+direction only together with nondecreasing first-set sizes and
+nonincreasing second-set sizes. These are literature-attested suppliers
+and applicability boundaries. An abstract weak or skew set family
+supplies neither actual fixed successors nor an original all-input cost
+or installed-state bridge. The proof of Theorem 3.2 instead uses the
+explicit two PE implications on actual histories. Bounded comparison
+with these sources implies no worldwide priority or absence result.
+
+**Open problem 9.2 (the original collective target).** The class
+hypotheses of Definition 3.1 are not proved for arbitrary original
+competitors. In the general range $\min(k,n-k+1)\ge4$, retain both
+unrestricted alternatives: prove the original collective grid lower
+bound at both caps on every complete correct graph, or construct one
+complete correct strict-subgrid graph at both caps.
+
+In the notation of SI Sections 9–11, let $E_B,D_B$ be the actual
+cell-incidence excess and duplication in the common-support pool $B$,
+let $E_{\rm cut}$ be cut excess, and let
+$\mathcal A_*=\mathcal B\setminus\mathcal L_*$. The exact
+remaining general inequality is SI.59,
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+
+           \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{IC.37}
+$$
+
+Equivalently, with
+
+$$
+O_*=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}(\lambda(q)-1)_+,
+\qquad
+S_*=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}(1-\lambda(q))_+,
+$$
+
+the unresolved SI.83 target is
+
+$$
+O_*\le S_*+E_{\rm cut}+u+
+              \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{IC.38}
+$$
+
+These are collective inequalities on one graph. Separate compensation
+in each remaining late gap would be stronger than required. Neither
+strict overload (IC.31) nor an interval-cover hole proves a deficit
+violating them. No marginal-flow lift, independently selected optimum,
+free residual entry or state-count-cell allocation is substituted for
+the actual joint table.
+
+The equivalent [TC, Theorem 9.1][TC] target still needs a proof that
+every correct $n$-query table with fewer than $G$ installed running
+states has a nonzero actual-full-length-run cost obstruction. TC's
+sparse alternative for each fixed table already exists; its universal
+shortage implication is not supplied here. No state-nonincreasing
+transformation into Definition 3.1 is established.
+
+In particular $P_g$ has $M_g>G$ and no state-saving claim. The
+unrestricted $n=8,k=4$ interval remains
+$17\le m_{\rm exec}\le20$. The unrestricted-budget native
+$H_{\min}$, without the two sharp execution caps, is a separate
+unresolved optimum. Attainment for every fixed nonconstant mode function
+in Definition 3.1 is also not asserted. The original whole fiber,
+pointwise code, literal entries and service prices remain fixed in all
+these questions. No operation, numerical state bound, source access,
+acquisition service, time precision or storage permission is transferred
+from a quantum, calibration, stochastic, analytic or expanded-storage
+contract. The mathematical tables give no physical acquisition, memory,
+energy or total-runtime conclusion.
+
+[SI]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SUPPORT_INCIDENCE_AND_COUNT_RELAXATION.md
+[PE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PRIVATE_EXCHANGE.md
+[PCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md
+[WTF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHTED_THRESHOLD_FRONTIER.md
+[TC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_THRESHOLD_COST_CERTIFICATES.md
+[TS]: FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md
+[KNPV]: https://domotorp.web.elte.hu/cikkek/setpairs.pdf
+[SW]: https://people.maths.ox.ac.uk/scott/Papers/twofamilies.pdf
+

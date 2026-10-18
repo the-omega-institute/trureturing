@@ -1,0 +1,9 @@
+**Definition 6.1 (Probability flattening).** For a probability $r$ on $K_m^{a,b}$ extend it by zero to every binary word of length $m$. Its cut at $1\le k<m$ is the matrix
+
+$$
+\mathsf F_k(r)(s,t)=r(st),\qquad
+s\in\{0,1\}^k,\quad t\in\{0,1\}^{m-k}.
+$$
+
+Every forbidden internal or boundary seam has its zero entry. Nonnegative rank $\operatorname{rank}_+$ is the least number of nonnegative rank-one summands.
+

@@ -1,0 +1,47 @@
+**Lemma 7.1 (Certified-label margins, including ties).** On a positive
+terminal acquired cylinder supported in one certified phase, with
+$n\le3$ actual calls, a nonmaximizing same-phase label loses at
+least $g_6$ in correct mass. A wrong-phase label loses at least
+$g_7$. If the two actual target-spin masses are tied, either
+same-phase spin label is maximizing and no preference is imposed.
+
+Proof. Adjoin the target singleton if necessary. Let its component
+have $v$ vertices and the other constrained components have $w$
+vertices in total. Every call introduces at most two vertices, so
+
+$$
+v+w\le2n+1\le7.
+\tag{7.1}
+$$
+
+The two target-spin masses are $1/2$ times a common product of
+the other component probabilities times two complementary monomials.
+If unequal, their heavier and lighter products have the form
+$(ab)^\ell a^s$ and $(ab)^\ell b^s$, where $s\ge1$ and
+$2\ell+s=v$. Their difference is at least $db^{v-1}$, since
+
+$$
+a^s-b^s=d\sum_{i=0}^{s-1}a^{s-1-i}b^i\ge db^{s-1},
+\qquad (ab)^\ell\ge b^{2\ell}.
+\tag{7.2}
+$$
+
+Each other consistent component has probability at least one
+assignment product, hence at least $b$ to the power of its number
+of vertices. Therefore the unequal full-law target-state difference
+is at least
+
+$$
+\frac{db^{v+w-1}}2\ge\frac{db^6}2=g_6.
+\tag{7.3}
+$$
+
+A positive best-state mass is at least one joint assignment weight,
+so is at least $b^{v+w}/2\ge b^7/2=g_7$. A wrong-phase
+answer has zero correct mass on this certified cylinder. Equal
+complementary products are actual target-spin ties; this reasoning
+does not break them. These are absolute joint masses of the original
+source, rather than normalized posterior margins. Separators,
+repeats and negative or distant placements obey the same vertex
+bound. $\square$
+

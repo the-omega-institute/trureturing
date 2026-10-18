@@ -1,0 +1,21 @@
+**Definition 11.1 (same-object hypotheses and notation).** Retain Definitions 1.1–1.3, including the single originally sampled positive integer $K$, the fixed finite or countable prior, both seeds, every paid rejection and partial parse, the full $m=2,d=1,\ell=2,n=4$ control $C_0$, all markers and held records, third-write-before-latch, every finite fourth-segment return, completion and its matching Stop. A regular stationary table means Definition 2.2 on positive finite supports, with its actual acquired kernels $B,A$, rows $\pi,\tau$, emissions $u,v$ and its own complete laws $Q,W$. All quantities below belong to this one table. Write
+
+$$
+\begin{gathered}
+a=\frac13,\quad b=\frac25,\quad
+\chi=\frac{1116529}{806625},\quad
+\zeta_0=-\frac{151298}{268875},\\
+T_a=\frac{16}{729},\quad q_*=\frac{1944}{390625},\quad
+f_x=Q_x(E_p),\quad h_y=W_y(E_\beta),\\
+J=\pi[(u-a)(b-u)],\qquad
+V_\pi=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}|u_x-u_{x'}|.
+\end{gathered}
+\tag{11.1}
+$$
+
+Products inside $\pi[\,\cdot\,]$ are coordinatewise. The functional $\mathcal C$ is exactly (10.1). The risk hypotheses, when imposed, are the simultaneous configuration-before-TV bounds (2.4) on these same laws and rows, with nonnegative slacks $\epsilon_p,\epsilon_\beta$ and $\epsilon=\max\{\epsilon_p,\epsilon_\beta\}$. Endpoint-only hypotheses suffice for Corollary 11.3; Proposition 11.4 and Theorem 11.5 also retain every supported-depth bound and a supported nonendpoint.
+
+The local citations **PAID42**, **CLIP42** and **PAIRED42** denote respectively [Effective paid-history certificates](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md), [Risk-controlled emission moment feasibility](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md), and [Paired calibration observability](https://github.com/the-omega-institute/trureturing/blob/b58f2009bfa2e7c2f5d084e7f0b5616ffa1fac08/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) at that fixed source. The potential, joint stationary cancellation and stopped-product restoration used below are the structure of Theorem 10.2. The following sharpening concerns their numerical estimates.
+
+### 11.1 The sharper stationary estimate
+

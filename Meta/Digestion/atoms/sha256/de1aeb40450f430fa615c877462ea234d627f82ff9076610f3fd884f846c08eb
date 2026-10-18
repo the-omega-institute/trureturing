@@ -1,0 +1,11 @@
+**Example 219.7 (Strict decrease under the retraction).**
+Take $I=\{1,2,3\}$, $J=\{4,5,6\}$.
+For each guard $i$, put $A$ mass $1/3$ on each suffix $000,100,110$,
+using guard bits one before $i$ and zero from $i$ onward.
+Put $C$ mass one on each of these suffixes with guards 111, in its
+corresponding first-zero class. Here $D=G=3$, $E=2$.
+Before retraction $B_N=B_O=5$; afterwards both equal $10/3$.
+These values follow by (219.15) on each guard, mixed and positive pair.
+Thus nonexpansion can be strict. This dual-score example asserts neither
+an original cap attainer nor equality of the two minima in general.
+

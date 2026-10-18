@@ -1,0 +1,31 @@
+**Definition 7.1 (Cone separation and optimization thresholds).** Let
+$\mathcal P$ consist of tuples $x$ in (1.6) with $Z(x)\succeq0$
+and $M^T\tau=\tau$. They are automatically PPT. Let
+$\mathcal F=\{x\in\mathcal K:M^T\tau=\tau\}$.
+The supplied no-worse reduction gives
+
+$$
+\varepsilon_1=\min_{x\in\mathcal F}
+\max_{J\in\mathcal J_{15}}\|\mathcal H_J(x)\|_{\rm op},
+\qquad \mathcal F\subsetneq\mathcal P.
+\tag{7.1}
+$$
+
+The strict inclusion follows from Theorems 4.2 and 5.1. It persists
+with the same all-event inequalities at threshold $2/3$ for the
+singular example and at $17/25$ for the full-rank example. In
+contrast, minimizing over $\mathcal P$ gives only a necessary
+relaxation value
+
+$$
+\min_{x\in\mathcal P}\max_J\|\mathcal H_J(x)\|_{\rm op}
+\ \le\ \varepsilon_1.
+\tag{7.2}
+$$
+
+Strict cone inclusion alone gives no strict inequality in (7.2):
+the two minima could occur at a common scalar point. In particular
+no example in §§4–6 is a legal scalar upper, an endpoint improvement,
+or evidence of a strict optimum gap near the current interval.
+The actual losses in (6.5) and (6.7) lie above that interval.
+

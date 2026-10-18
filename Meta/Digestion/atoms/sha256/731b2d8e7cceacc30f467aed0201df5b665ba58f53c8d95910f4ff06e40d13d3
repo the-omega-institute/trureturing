@@ -1,0 +1,15 @@
+**Definition 2.3 (Recoverable guards).** The guard subclass additionally
+requires, for every real $s$, a function
+
+$$
+g_s:E(\mathcal M)\to\{0,1\},\qquad
+g_s(E(k,\alpha,\beta))=1
+\ \Longleftrightarrow\ 0<k+s<H.
+$$
+
+Its capacity and finite tolerance set are denoted
+$e_{n,g}^{\rm arb}(Z)$ and $\mathcal A_{n,g}^{\rm arb}(Z)$.
+No regularity is required of the predicates. The phase guard is always
+true. Literal intertwining on a lawful domain does not itself require
+the encoding to determine membership in that domain.
+

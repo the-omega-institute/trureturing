@@ -1,0 +1,22 @@
+**定义 7.1（来源求值与旋转）。** 沿用自由有序树和替换
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+在 $\mathcal A$ 中令 $a=(0,e_1)=\mathbf i$、$b=(0,e_2)=\mathbf j$，$c=b\odot a=(0,-e_3)=-\mathbf k$，并以既有 §28 的有序乘法求值定义
+
+$$
+Q(\alpha)=a,\quad Q(\beta)=b,\quad
+Q(\langle s,t\rangle)=Q(s)\odot Q(t).
+$$
+
+这里的 $c$ 是方向元素；原生组成另外记为 $c_{\rm src}(t)\in\mathbb N^2$。数量是 $q_{\rm nat}=(2,3)c_{\rm src}$，不把两种 $c$ 或两种读出混同。标量固定的旋转取
+
+$$
+R(s,x,y,z)=(s,-z,x,-y),\qquad
+R_V=\begin{pmatrix}0&0&-1\\1&0&0\\0&-1&0\end{pmatrix}.
+$$
+

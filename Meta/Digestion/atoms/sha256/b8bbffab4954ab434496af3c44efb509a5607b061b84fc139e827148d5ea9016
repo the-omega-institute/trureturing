@@ -1,0 +1,89 @@
+**Definition 10.1 (fixed native family and retained contract).** Retain
+[N]'s negative amplitude convention, arbitrary fixed preparation phases,
+and two original controls. Fix $0<Z<1$, $H=(1-Z)/2$,
+$I=(l,u)\Subset(0,H)$, $k_0\in I$, and $\varepsilon>0$.
+For an immutable parameter $\kappa$ put $X=Y=H+\kappa$. In mode order
+$(0,1,2,3,13)$ the probabilities and phase weights are exactly
+
+$$
+p_\kappa=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\qquad
+w_s=\frac{d_s}{p_{\kappa,s}\mathcal I_\kappa},\quad
+d=(1,-1,0,-1,1),\quad
+\mathcal I_\kappa=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}.
+\tag{10.1}
+$$
+
+Increments satisfy $h_2=0$, $h_1=h_3=v$. Use
+$\theta=[h_{13}]$, $D=[h_0-h_{13}]$, and the declared observation
+$q=(k,\theta,[v])$. All three angular periods are $2\pi$.
+This is the unimodular phase change of [G, Definition 12.1], and its
+nearby full leaf has dimension four. The preparation phases are translated,
+not equated. The original full read menu is not replaced by $q$.
+
+Write $s_\kappa=H+\kappa$, $a_\kappa=\kappa s_\kappa/H$, and
+
+$$
+\begin{aligned}
+A_\kappa&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-a_\kappa)},&
+B_\kappa&=-\frac{k(k-2\kappa)}{2H(k-a_\kappa)},\\
+C_\kappa&=\frac{\kappa(s_\kappa-k)}{H(k-a_\kappa)},&
+b_\kappa&=A_\kappa-B_\kappa
+ =\frac{s_\kappa(k-2\kappa)}{2H(k-a_\kappa)}.
+\end{aligned}
+\tag{10.2}
+$$
+
+These are the original coefficients of [G, Calculation 12.2]. Thus
+
+$$
+P=\partial_k,\qquad
+Q_\kappa=A_\kappa\partial_\theta+B_\kappa\partial_v
+                  +C_\kappa\partial_D,\qquad
+R_\kappa=A_\kappa\partial_\theta+B_\kappa\partial_v.
+\tag{10.3}
+$$
+
+Choose one closed two-sided parameter interval $K=[-\kappa_1,\kappa_1]$
+small enough that all probabilities are positive on a common larger height
+interval $I'\Supset\overline I$, with $\overline{I'}\subset(0,H)$,
+and $s_\kappa>\sup I'$, $b_\kappa>0$ there. Such a choice follows,
+for example, by first enlarging $I$ and then decreasing
+$\min(l/4,(H-u)/2,H/4)$. All constants below are chosen on this one
+compact parameter set; $Z,I,k_0,\varepsilon$ remain fixed.
+
+For $\kappa\ne0$ the full analytic cylinder, measure and free form are
+
+$$
+\Omega=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad d\mu=dk\,d\theta\,dv\,dD,\qquad
+T_\kappa[f]=\int_\Omega
+ (\varepsilon^2|Pf|^2+|Q_\kappa f|^2)d\mu.
+\tag{10.4}
+$$
+
+Its domain is the compact smooth height-core completion; its operator
+$L_\kappa$ is the horizontal Friedrichs form operator. The full field
+$\Gamma_{\kappa,o}$ is its killed free unit point-source Green field
+at $o=(k_0,0,0,0)$. Density one, covariance
+$\operatorname{diag}(\varepsilon^2,1)$, clock $e^{-tL_\kappa}$,
+periodic phases and Dirichlet height killing are unchanged.
+
+On $B=I\times\mathbb T^2$, with $d\nu=dk\,d\theta\,dv$, set
+
+$$
+\begin{aligned}
+\mathcal E_\kappa[z]&=\int_B
+ (\varepsilon^2|\partial_kz|^2+|R_\kappa z|^2)d\nu,\qquad
+\mathcal F_\kappa^B=
+ \overline{C_c^\infty(B)}^{(\|\cdot\|_2^2+\mathcal E_\kappa)^{1/2}},\\
+(Jz)(q,D)&=(2\pi)^{-1/2}z(q).
+\end{aligned}
+\tag{10.5}
+$$
+
+Here $J$ is the actual isometry into $L^2(\Omega,\mu)$.
+The notation $\mathcal E_\kappa$ avoids confusing a function with the
+phase coordinate $v$. At $\kappa=0$, (10.5) is defined directly on the
+native three-coordinate double-wall leaf. No four-dimensional smooth
+point-Green density at $\kappa=0$ is postulated.
+

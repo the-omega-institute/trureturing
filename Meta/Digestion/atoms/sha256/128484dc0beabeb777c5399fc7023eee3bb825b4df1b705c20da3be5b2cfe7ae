@@ -1,0 +1,39 @@
+**Theorem 3.1 (uniform cyclic certificate).** In the interface of §1
+let $C>0$ and $c\ge0$. Assume that every locally admissible subset
+has weight at most $C$, and that every nonempty range-feasible locally
+inadmissible subset has at least one missing target whose every cell
+has weight at most $c$. No deficient-reply-capacity hypothesis is
+imposed on these subsets. For every nonempty jointly admissible
+$B\subseteq S^n$, choose such targets and any of their actual joint
+witnesses. If $g,b$ are the numbers of good and bad projections and
+$\kappa$ is the number of cycles of the resulting graph, then
+
+$$
+\Omega(B)\le C^g c^b m^\kappa
+\le C^g(\sqrt m\,c)^b
+\le\max\{C,\sqrt m\,c\}^{\,n}.
+\tag{CIT.11}
+$$
+
+In particular $\sqrt m\,c\le C$ suffices for
+$\Omega(B)\le C^n$ for every $n\ge1$ and every joint fiber.
+
+Proof. Every target on each exact projection of $B$ has at most
+$m$ values: it is constant or factors through one of the allowed
+replies on $B$. Thus every projection is range feasible and the
+stipulated missing targets can be selected. Theorem 2.1 gives the
+first bound because $c_i\le c$ and $\min_{i\in C}t_i\le m$.
+Cycles are vertex-disjoint and use at least two bad coordinates each,
+so $2\kappa\le b$. For $c>0$ this gives the remaining inequalities
+directly, since $g+b=n$. If $c=0$ and $b>0$, all cells of a selected
+target on a bad projection have weight zero. Their finite union is the
+whole projection, hence $\Omega(B)=0$. If $b=0$, the empty
+$c$-product equals one. This also proves (CIT.11) at $c=0$ without
+division or an ambiguous power. Empty fibers again have weight zero.
+$\square$
+
+The criterion is sufficient only. NCM Theorem 2.2 instead forces each
+bad donor edge directly to a good projection by a reply-capacity
+separation and can use $c\le C$. Failure of either sufficient
+criterion supplies no impossibility theorem for other certificates.
+

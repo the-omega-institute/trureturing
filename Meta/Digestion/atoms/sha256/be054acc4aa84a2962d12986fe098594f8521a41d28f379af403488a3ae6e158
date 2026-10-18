@@ -1,0 +1,4 @@
+**假设 9.1（完整记录合同）。** 固定初始载体 $H$、初始状态标签和已知操作模型。令 $\mathcal W$ 包含空词、合同中的全部合法有限操作词，以及需要时的合法观察依赖策略。每个 $w\in\mathcal W$ 指定共同记录空间 $(E_w,\mathcal E_w)$，及从初态 $s_I$ 出发的完整记录概率律 $\Gamma_{w,I}$。记录保留实际输出、分支概率及合同要求的等待、拒绝、停止和未完成标记；不能只保留终点。
+
+合法性须对同一比较域有共同意义。可采用在全部可能状态上共同启用的动作，或将拒绝明确编码为输出的总化合同。观察依赖策略在同一已取得历史上选择同一动作，不能按未观测真态选择不同动作。不同长度的记录若声称属于同一过程，须有截断投影及相容性。此处消费[局部时钟核卷 Q6、Q9–Q10](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)及[层级卷 Q11](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md)的合同。
+

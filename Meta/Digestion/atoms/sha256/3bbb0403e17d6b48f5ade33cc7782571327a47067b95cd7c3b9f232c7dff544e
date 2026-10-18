@@ -1,0 +1,79 @@
+#### 证明
+
+先证明必要性。
+
+如果：
+
+```math
+\delta(u,v)=\Phi(v)-\Phi(u),
+```
+
+那么对任意回路：
+
+```math
+\begin{aligned}
+\oint_C\delta
+&=
+\sum_{i=0}^{n-1}
+\bigl(\Phi(v_{i+1})-\Phi(v_i)\bigr)
+\\
+&=0,
+\end{aligned}
+```
+
+因为中间项全部抵消。
+
+再证明充分性。
+
+选定一个根节点 $v_\ast$，令：
+
+```math
+\Phi(v_\ast)=0.
+```
+
+对任意节点 $v$，选一条从 $v_\ast$ 到 $v$ 的路径 $p$，定义：
+
+```math
+\Phi(v)=\sum_{e\in p}\delta(e).
+```
+
+如果选择另一条路径 $q$，那么 $p$ 与 $q$ 拼成一条闭合回路。由假设：
+
+```math
+\oint_{p\cup\bar q}\delta=0,
+```
+
+所以：
+
+```math
+\sum_{e\in p}\delta(e)
+=
+\sum_{e\in q}\delta(e).
+```
+
+因此 $\Phi(v)$ 与路径选择无关。
+
+对于任意边 $u\to v$，取根到 $u$ 的路径再接上该边，就得到：
+
+```math
+\Phi(v)=\Phi(u)+\delta(u,v),
+```
+
+所以：
+
+```math
+\delta(u,v)=\Phi(v)-\Phi(u).
+```
+
+唯一性方面，若 $\Phi_1,\Phi_2$ 都表示同一个变化，则：
+
+```math
+(\Phi_1-\Phi_2)(v)
+```
+
+沿每条边都不变。因为图连通，它只能是整体常数。
+
+证毕。
+
+---
+

@@ -1,0 +1,44 @@
+## 443. A reusable direct four-high exclusion theorem
+
+Assume a finite actual face-paired tetrahedral quotient with exactly
+six distinct actual labels M,V,Z,U,C,D. Each original owner has a
+fixed vertex-induced paired frame with four distinct actual labels.
+Assume one common positive length field with coshes satisfying (435.4),
+and complete original angle sums 2*pi at every actual edge.
+
+Assume sigma=(M,C,D,V,C,D) is the unique flat owner, with angle pi
+at its M,V axes and zero at its four transverse slots. Every other
+owner is genuine, with strict L,J>0 and the usual paired response
+angles. As for genuine hyperideal paired tetrahedra throughout the
+published theory, each genuine owner's six-slot total is less than
+2*pi. This follows by adding its two vertex-link inequalities
+theta_r+beta_p+beta_q<pi and theta_o+beta_p+beta_q<pi.
+
+**Theorem 443.1.** No such quotient and length field exist.
+
+Proof. Let g be the number of genuine original owners. The six complete
+angle sums total 12*pi, and sigma contributes 2*pi. Therefore
+
+    10*pi=sum_genuine total_six_slot_angle<2*pi*g,
+    g>=6.                                               (443.1)
+
+The four actual H labels have total angle capacity 8*pi. Sigma
+contributes pi at each of M,V and nothing at Z,U. Thus
+
+    sum_genuine expense_H=6*pi.                          (443.2)
+
+The exhaustive role partition proves expense_H>pi for every genuine
+owner. Hence (443.1)-(443.2) give
+
+    6*pi=sum_genuine expense_H>g*pi>=6*pi,
+
+a contradiction.
+
+Once this unique-flat normal form is given, the direct contradiction
+does not use the near-maximal inequality, a named source tau, either
+maximum gap, an original degree lower bound, or connected-circle
+topology. Those hypotheses are needed
+by the earlier reductions supplying the normal form, not by this last
+strict-capacity argument. The scalar hypotheses here permit numerical
+ties such as m=v and z=u; actual labels remain distinct.
+

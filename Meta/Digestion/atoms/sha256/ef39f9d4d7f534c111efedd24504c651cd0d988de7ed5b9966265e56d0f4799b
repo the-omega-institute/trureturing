@@ -1,0 +1,67 @@
+**Definition 4.1 (Splitting events and the common certificate).** Set
+
+$$
+\begin{aligned}
+\mathcal J_{\rm split}={}&\{\{2\},\{5\},\{N,2\},\{N,5\},
+\{2,3\},\{3,5\},\{2,25\},\{5,25\}\},\\
+\mathcal J_{\rm keep}={}&\{\{N\},\{3\},\{25\},\{N,3\},
+\{N,25\},\{3,25\},\{2,5\}\}.
+\end{aligned}
+\tag{4.1}
+$$
+
+Exactly $\mathcal J_{\rm keep}$ commutes with $R_0$.
+Use the same real PSD event multipliers as QJM Convention 6.3:
+
+$$
+\sum_J\operatorname{tr}(A_J^++A_J^-)=1,\qquad
+Z_J=A_J^+-A_J^-,\qquad
+\beta=\sum_J\operatorname{tr}(Z_J\Pi_J).
+\tag{4.2}
+$$
+
+All sums range over $\mathcal J_{15}$. Put $H_i=R_i/\sqrt{d_i}$,
+$\tau=(1,\sqrt2,\sqrt2)^T$, and keep all three marginal multipliers
+$y\in\mathbb R^3$, with $Y_y=\sum_i y_iH_i$. An equivalent orbit
+expression for QJM's homogeneous real-product form is
+
+$$
+\begin{gathered}
+\Gamma_{a,b}(X)=\int_{\mathcal G}gaa^Tg^T
+\operatorname{tr}(gbb^Tg^TX)\,dg,\\
+B_y(a)=\|a\|^2Y_y
+-\sum_J\int_{\mathcal G}
+(a^Tg^T\Pi_Jga)\,g^TZ_Jg\,dg,
+\qquad c_{\rm cert}=\beta-\tau^Ty.
+\end{gathered}
+\tag{4.3}
+$$
+
+The factors $a,b$ are independent real vectors. This notation is the
+QRC product-atom twirl and QJM form, not a new dual formulation:
+
+$$
+b^TB_y(a)b=\|a\|^2b^TY_yb
+-\sum_J\operatorname{tr}(Z_J\Gamma_{a,b}^\dagger(\Pi_J)).
+\tag{4.4}
+$$
+
+For a selected stationary reflected real-product channel
+$S=\sum_fw_f\Gamma_{a_f,b_f}$ with unit factors and the full TP
+marginal, its atom slack is
+
+$$
+\sum_fw_fb_f^TB_y(a_f)b_f
+=\tau^Ty-\sum_J\operatorname{tr}(Z_JS^\dagger(\Pi_J)).
+\tag{4.5}
+$$
+
+Indeed $Y_y$ is group invariant, and TP gives
+$\sum_fw_f\int gb_fb_f^Tg^T\,dg=I$, hence its pairing with $Y_y$
+is $\operatorname{tr}Y_y=\tau^Ty$. Combining (4.5) with event slacks
+gives exactly QJM's identity. Global positivity means
+$B_y(a)\succeq0$ for every real $a$, not just for displayed support
+vectors. It yields $c_{\rm cert}\le e(S)$ on the whole selected class
+and, by the credited QRC no-worse replacement, on every original
+complex scalar port. That replacement is allowed to change the channel.
+

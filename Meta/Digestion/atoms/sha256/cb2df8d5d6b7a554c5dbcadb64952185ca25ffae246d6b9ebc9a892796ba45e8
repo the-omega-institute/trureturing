@@ -1,0 +1,4 @@
+## 8. Credited read bounds with complete support
+
+Let $C_{\mathrm{fix}}(d)$ be the minimum uniform number of exact reads over all legal predetermined histories recovering the whole target in (1.1).
+

@@ -1,0 +1,31 @@
+**Definition 292.10 (Ten nonnegative full scores).**
+For $j=3,\ldots,7$ define
+
+$$
+U_j^+=\kappa_{j-2}Z-H_j,\qquad U_j^-=\kappa_{j-2}Z+H_j.
+\tag{292.2}
+$$
+
+Both signs in (292.2) are nonnegative coefficientwise. Their full
+quotients and support are
+
+$$
+\begin{aligned}
+\beta(U_j^\pm)&=B_{j-2}\mathbf1_J\pm e_j,\\
+K(U_j^\pm)&=(46/5)B_{j-2}\pm r^\star_{j-2},\\
+W(U_j^\pm)&=(63/5)\kappa_{j-2}\pm(r^\star_{j-2}-1),\\
+B_N(U_j^\pm)&=B_O(U_j^\pm)=W(U_j^\pm).
+\end{aligned}
+\tag{292.3}
+$$
+
+**Proof.** Since $\kappa_{j-2}=\max(k_j,c_j)$, the row bounds give
+nonnegativity, and the cell bounds give
+$U_{ij,c}^\pm(0)-U_{ij,c}^\pm(\ell)\ge0$ for every label and cell.
+Thus constant zero maximizes each cell. Every empty or singleton
+partition coarsens an active pair; the stopped partition merges
+$00,01$. Summing the inequalities covers all these partitions. Both
+constant zero and $R$ earn every $P,T$ row and no late correct row, so
+their reward equals the anchor $W$. The row sums in 292.9 give (292.3).
+In particular all ten scores have $\Delta_N=\Delta_O=0$. $\square$
+

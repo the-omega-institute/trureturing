@@ -1,0 +1,17 @@
+**Corollary 44.3 (strict actual failure-record gain).** For each
+$s\in[s_0,1]$, compare Definition 44.1 with the H/L instrument of
+Definition 38.1, keeping every label of both instruments. At the same
+contrast, worst-history cost and forgotten complete channel, the former
+has full acquired height TV larger by
+
+$$
+\frac{L_f-d_f}{2}>0.
+\tag{JR.57}
+$$
+
+Proof. In the coordinate failure readout of (JR.40), the $j=1$ height
+difference is $-d_f$ in total and the $j=2$ difference is zero.
+The spectral readout instead gives $L_f$, and $z_f\ne0$ implies
+$L_f>d_f$. The live labels agree. This comparison enacts a different
+measurement and does not recover a discarded label. $\square$
+

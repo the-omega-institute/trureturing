@@ -1,0 +1,74 @@
+**Definition 13.1 (the finite consumer program).** All structured fields
+below are encoded lists and Frames of Definition 12.1. The persistent
+registers are manifest, completed-frames, covers, cursors and packages.
+Finite temporaries used by the displayed macros and Step are registers
+of the same compiler. Their number is the finite syntactic number after
+inlining, independent of $H$, source, ordinals and number of calls.
+
+The manifest contains the original public initialization, $H,\xi$, the
+actual acquired seed and its delivery origin, original graph/boot version,
+new graph/boot description, activation record of §14, and the corresponding
+actual copy origins. A cover record contains the manifest binding, frozen
+complete predecessor-frame word, $U(a)$ and $U(b)$. Its cursor is a separate
+versioned register item. A package contains manifest, selected consumed
+frame-input prefix, fixed $U(k)$, and the immutable cover/creation binding.
+The actual archive on port 39 contains the corresponding sealed records.
+The package list in the banks is another owned, copied physical backing,
+not a pointer whose width stands for the payload. Both are counted.
+
+Here is the full finite handler flow. Lookup is Nth on the corresponding
+list; replacing a cursor is Replace. AppendItem updates a persistent list.
+Ordinal creation is its actual list cardinality in unary. Parse failures
+have an explicit finite exit; they do not enter Step with forged code.
+
+| Entry | Word algorithm and complete result |
+| --- | --- |
+| Initialize | After the native empty-bank construction, run ManifestPrefix(37) of Definition 13.2 and use its ordered field list as the actual manifest. Clear the three record lists and cursors, and import the old completed frame word from its prescribed field. Validate finite tuple syntax and native-row fields. Require tag 101 in field zero, strip those three bits, ReadUnary its actual length and Take exactly its $\Delta(D_1)$ payload; require field exhaustion before row validation. Initialize the actual frame reader; then enter Ready. |
+| Cover, tag 101 | Require empty payload. Freeze the present completed-frames word $J$; Boundary($J$) below constructs $a,b$. Append the immutable cover with its constructed creation number $c$, append cursor $a$, and Publish(CoverRef,$c,a,b$). |
+| Next, tag 110 payload $0U(c)$ | Lookup cover $c$ or Publish(NoCover). Let $k$ be its actual cursor. If $k>b$, Publish(End,$c$). Otherwise execute Issue($c,k$), then replace that cursor by consing 1 to its unary natural. No other cover's cursor changes. |
+| Select, tag 110 payload $1U(c)U(k)$ | Lookup the actual cover or Publish(NoCover). Cancel unary ones to test $a\le k\le b$. If false, Publish(CutIndexReject,$c,k$). If true, Issue($c,k$); do not change a cursor. |
+| Call, tag 111 payload $U(p)$ | Lookup the actual package or Publish(NoPackage). Run Prefix on its own frozen input and fixed target. Encode HistoricalImage with the returned complete native history/state and its binding; Publish(Image,$p,k,\text{image}$). |
+| Source tags 000–100 | Run the original source-handler path of Definition 13.3 on the acquired frame; perform its mandatory original row/delivery/acknowledgement, then the common frame return. |
+| Complete noncanonical service payload | Publish(MalformedServiceFrame); do not reinterpret it as a source reply or grant a record. This raw branch is outside the lawful canonical-service domain. |
+
+Issue runs Prefix on the selected immutable cover and $k$. It obtains
+exactly the consumed frame-input prefix $I_k$ at that stop. It constructs
+a new package with that fixed $k,I_k$, copies its full record to port 39,
+seals it, appends its actual backing to the packages list, and publishes
+its creation number and immutable reference. It does not read latest-cover.
+
+Boundary begins with the canonical irreducible virtual state, reconstructs
+the original padded private packet from the actual seed, and supplies the
+manifest's fixed public boot material. It scans the frozen complete-frame
+word, constructing its actual frame count. It executes Step until the
+corresponding post-acknowledgement Ready, after activation if the manifest
+has an activation at that completed-frame position. It records the
+acquisition tally on its acquisition fence, and outputs the resulting
+actual unary $a,b$. It tests represented PC/phase, consumed frame count
+and activation-completed flag together; input exhaustion during a frame
+is not its stop condition. The completed-frame count increments in simulator
+bookkeeping only at the known final Ready row; these rows have an explicit
+finite annotation. Equivalently the stop test is installed Ready, empty
+frozen frame reservoir and activation completed. The old Ready at activation
+position is taken through Install before that final test can succeed.
+
+Prefix starts at the same virtual entrance. It copies the actual unary
+natural $k$ to a countdown. While that word is nonempty, it executes Step
+and tails that word once. It stops before executing any next row. It
+returns the represented native history, state and consumed frame-input
+prefix. On the actual image the supplied input suffices. No Call or Cover
+semantic opcode exists in Step: a represented service handler is its
+ordinary compiled native rows. The acquisition and final tallies are
+word data, never loop bounds supplied by a mathematical address.
+
+Unary comparison cancels a copy of each leading-1 word until one is empty;
+joint empty is equality. Seed conversion is also finite word work: scan
+its prefix tree code, append PAIR for 0, alpha for 11 and beta for 10,
+using a unary open-slot counter; PAIR replaces one slot by two and a leaf
+removes one. Stop at the constructed zero slot count and pad to $N$ tokens.
+Compute $N=2H-1$ by two unary copies of $H$ and one tail, using Cat. This
+is conversion of the acquired seed, not a new read of the private source.
+The bootstrap parser consumes its actual finite code bits. Incomplete or
+invalid manifest data produces a distinct internal-description failure;
+authentic installation never takes it.
+

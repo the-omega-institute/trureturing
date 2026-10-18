@@ -1,0 +1,120 @@
+**Theorem 11.2 (exact criterion and nonnegative whole-singleton pivot).**
+In Definition 11.1, $\det\mathcal R=0$ if and only if there is a
+nonzero signed change of just those eight endpoint masses preserving
+all eight $\Gamma$ moments, achieved $K$ and attained $J_t$.
+If $a=(a_0,a_1,a_2)^T\ne0$ is in $\ker\mathcal R$, put
+
+$$
+\begin{gathered}
+A(z)=a_0+a_1z+a_2z^2,\qquad
+\delta\rho_i=\frac{A(z_i)}{P_8'(z_i)},\qquad
+\delta p_i=(1+z_i^2)d_i\delta\rho_i,\\
+\tau_* =\min_{\delta\rho_i<0}
+                  \frac{\rho_i}{-\delta\rho_i}>0.
+\end{gathered}
+\tag{IC.49}
+$$
+
+For $0\le\tau\le\tau_*$ the changed masses are nonnegative and
+retain all those joint data. At $\tau_*$ at least one selected
+entire singleton group has zero mass and is omitted. Simultaneous
+zeros are permitted; every remaining positive mass is finite and
+strictly positive. Other groups and all fixed original coordinates,
+capacities and heights stay fixed.
+
+Proof. Let $\mathbb P_j$ denote polynomials of degree at most $j$.
+Multiplying the original augmented column $(\Gamma(x_i,1),|u_i|)$
+by the positive factor $(1+z_i^2)d_i$ gives, in original row order,
+
+$$
+\big((1+z_i^2)d_i,\ \epsilon_i\mathcal W_i,
+ \epsilon_i z_i\mathcal W_i,\ d_i,\ z_i d_i,
+ (1+z_i^2)n_i,\ n_i,\ z_i n_i,\ \mathcal W_i\big)^T.
+\tag{IC.50}
+$$
+
+The six polynomial rows span $d_c\mathbb P_2+n_c\mathbb P_2$.
+This equals $\mathbb P_4$ here: the nonzero determinant
+$D_uN_v-D_vN_u$, supplied by Theorem 10.1, makes $d_c,n_c$
+span $1,z^2$; their multiples by $z$ and $z^2$ then span all
+five monomials through degree four. If that determinant were zero
+without the original source-enclosure premise, the span would instead
+have dimension three. The necessity argument below would then require
+that explicit nondegeneracy premise. Sufficiency does not require it.
+
+Reuse the distinct-node leading-coefficient identity in Carl de Boor,
+[*Divided Differences*, Example 9, (41)](https://arxiv.org/html/math/0502036v1):
+$\sum_i F(z_i)/P_8'(z_i)=0$ for $\deg F\le6$.
+Thus each vector $A(z_i)/P_8'(z_i)$ with $\deg A\le2$
+annihilates all rows in $\mathbb P_4$. These vectors are three
+independent directions, since a nonzero quadratic cannot vanish at
+eight distinct nodes. The five-row Vandermonde matrix has rank five,
+so they exhaust its kernel. This is standard barycentric interpolation
+used inside the original tagged problem, not a new interpolation theorem.
+
+The contact equation is indispensable for the remaining rows. With
+the actual original failure polynomial
+
+$$
+q(z)=(y_5+y_6)+y_7z+y_5z^2,\qquad
+L_c(z)=d_c(z)p_y(z)+n_c(z)q(z)\in\mathbb P_4,
+$$
+
+the saturated contact equality, after the same positive scaling, is
+
+$$
+L_c(z_i)+\epsilon_i\mathcal W_i(y_1+y_2z_i)
+                         -\sigma_iH_i-\lambda\mathcal W_i=0.
+\tag{IC.51}
+$$
+
+There is no missing $t$ in (IC.50): its failure intensity is
+$\zeta=b_x/t=\mathfrak c$; the height in (IC.51) uses
+$\ell+t\mathfrak c f$. No fitted external quadratic replaces $q$.
+
+For the barycentric change, the first two rows of $\mathcal R a=0$
+preserve the directed first moments. Its third row preserves $J_t$,
+since the scaled absolute height is $\sigma_iH_i$.
+Summing (IC.51) against $\delta\rho$ gives
+$\delta J_t+\lambda\delta K=0$ because the polynomial and first
+two tagged sums vanish. As $\lambda>0$, $\delta K=0$ too. This
+proves sufficiency for all nine rows and height. Conversely a nonzero
+fixed-support change preserving the nine rows annihilates
+$\mathbb P_4$, so it has exactly the barycentric form. The first
+two tagged sums vanish. Contact equality and preserved $K$ force
+the height sum to vanish, giving $\mathcal R a=0$. This proves
+necessity without assuming independence of any other original rows.
+
+The direction is nonzero and preserves the mass row. All scale
+factors are positive, so it has both signs. Hence the finite minimum
+in (IC.49) exists and is strictly positive. At its value all masses
+remain nonnegative and at least one is zero. Because each selected
+group is a singleton, that zero deletes a whole group. Contact equality
+preserves optimality at the original achieved $K$. Omission of a zero
+coefficient is before the unknown-input experiment, not postselection.
+$\square$
+
+For a common maximizing height sign $\sigma$, the algebraic identity
+$\mathcal V\in\mathbb P_4$ would give
+
+$$
+\mathcal L_r(\sigma H)=
+\sigma l_u\mathcal L_r(\epsilon\mathcal W)
++\sigma l_v\mathcal L_r(\epsilon z\mathcal W),
+\tag{IC.52}
+$$
+
+and thus a singular matrix. But FC Theorems 12.1 and 12.3 allow at
+most three saturated contacts per report/height tag, hence at most six
+admitting any one common maximizing height sign. Eight such contacts
+with a common height sign have no instance in this original source
+class. Weak-zero double descriptions do not evade that cap. An eligible
+eight-point configuration must have mixed height signs. In that case
+$\mathcal L_r(\sigma\mathcal V)$ need not vanish: multiplication
+by varying $\sigma_i$ prevents the polynomial annihilation used in
+(IC.52). No mixed-sign singularity or original attained eight-point
+instance satisfying $\det\mathcal R=0$ is supplied. The theorem is
+a criterion on fixed occupied support, not a universal removal theorem.
+An antipodal pair has equal slope and is outside its distinct-slope
+hypothesis while remaining two admitted labels in the full problem.
+

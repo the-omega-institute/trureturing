@@ -1,0 +1,25 @@
+**定义 52.1（实际位置、比较族与字面支持）。** 取定义28.1、约定36.1的全部非空有限有序树 $\mathcal T=\operatorname{FreeMagma}\{\alpha,\beta\}$，保持原替换
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=(\beta,\alpha),\qquad
+\rho(s,t)=(\rho s,\rho t),\qquad T_n=\rho^n\alpha.
+\tag{JM.151}
+$$
+
+地址属于 $\mathcal A=\{L,R\}^{*}$，含根 $\varepsilon$。$t|_p$ 是地址 $p$ 的子树，缺席时无值。$r(q,t)$ 是原始四值读数；$\kappa r(q,t)$ 是原粗投影，只有 $\mathsf{br},\mathsf{abs}$ 被合并为 $\mathsf{none}$。地址无需先取得祖先，任意缺席地址仍可查询。定义
+
+$$
+\begin{aligned}
+B&=T_3=((\beta,\alpha),\beta),&
+D&=(\beta,(\alpha,\beta)),\\
+P_n&=\{p\in\mathcal A:T_n|_p=B\},&
+S_p&=\{pL,pR,pLL,pLR,pRL,pRR\},\\
+W_n&=\{U\in\mathcal T:w(U)=w(T_n)\}.&&
+\end{aligned}
+\tag{JM.152}
+$$
+
+对每个 $n\ge3$ 和 $A\subseteq P_n$，$V_A$ 表示在 $T_n$ 中恰把这些位置的整个 $B$ 子树改取为 $D$ 的数学比较输入；其他位置保持原树。其无歧义性由下述反链结论保证。此定义比较不可变输入，不供应观察者的替换、旋转或重置动作。
+
+深度 $\nu$ 与原始端点 $p(t)$ 仍取定理36.3，$Q(t)=(\nu(t),\mathbf1_{p(t)=\alpha})$ 仍取定义49.1。$\operatorname{Pos}(t)$ 仍表示 $t\in\rho^3[\mathcal T]$。这些任务是同一实际树的不同函数。
+

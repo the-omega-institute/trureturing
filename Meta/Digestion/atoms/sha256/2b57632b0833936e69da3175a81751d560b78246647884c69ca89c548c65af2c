@@ -1,0 +1,9 @@
+## 3. The P8 finite certificate with no constant allowance
+
+For a stationary law satisfying Theorem 2.1, put $F=\max(\alpha,\beta)$ and retain precisely the finite response of [Conditional Response, equation (4.1)][R]:
+
+$$
+T_{L,r}(P,f)=\sum_{i=1}^L\mathbb E_P[f_C(X_i-q_{r,i})^2].
+\tag{3.1}
+$$
+

@@ -1,0 +1,24 @@
+**Open problem 5.2 (the unrestricted original decision).** The question
+$j_c=0$ versus $j_c>0$ remains on all of $\mathfrak C$. A zero pair, if
+one exists, must have $V>0$ in addition to the published SURVIVAL signed
+same-path cancellation requirements. The new statement does not say which
+interface or which of the seven coordinates must have positive variance,
+does not assert that all seven do, and does not give a numerical variance
+floor or a positive unrestricted risk gap.
+
+For general branching, (1.5) gives conditional averages, while (2.6)
+requires the seven variances to vanish. Without that requirement, the
+finite product identity (2.7) is unavailable. Its lost signed correlations
+must coexist with both full boxes, both midpoint means, both depth-3
+configuration losses and both full residual equations on the same phase
+marginals. This is the remaining relation; independently optimized
+variances, marginals or path products do not answer it.
+
+A full compatible zero witness or a full-domain exclusion is still needed.
+PAIR11's finite atomicity criterion and PAIR13's one-sided finite-support
+results retain their own hypotheses. Exact represented attainment
+additionally needs permitted samplers for every resulting primitive.
+Neither the restricted minimum $j_7$ nor the represented family in
+Proposition 4.1 supplies an unrestricted finite attainer, a fixed COMPLETE
+optimum, a universal ML classification or a practical performance claim.
+

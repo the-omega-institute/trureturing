@@ -1,0 +1,63 @@
+**Definition 3.2 (same binary law and resource).** Fix a public
+$s\in[0,1]$ before the specimen arrives. With
+$X_{01}=|0\rangle\langle1|+|1\rangle\langle0|$, the required effects
+on the complete five-mode input are
+
+$$
+F_r(s)=\frac{I_5+r s\kappa E X_{01}E^\dagger}{2}.
+\tag{RE.15}
+$$
+
+Thus the scalar record functional on a general complex matrix is
+
+$$
+\operatorname{tr}(F_r(s)A)=\frac{\operatorname{tr}A}{2}
++\frac{r s\kappa}{2}\bigl((A_V)_{01}+(A_V)_{10}\bigr).
+\tag{RE.16}
+$$
+
+For positive $A$ its second term is
+$r s\kappa\operatorname{Re}(A_V)_{01}$. On the normalized original
+states it is the probability
+
+$$
+\Pr_{y,e,n}(r)=\frac12+r s\kappa en\,q_y,
+\qquad q_y=\frac{\sqrt{y(64-y)}}{128}.
+\tag{RE.17}
+$$
+
+There is no history prior in this formula. Binary relabeling realizes
+$\gamma=-s\kappa$; in particular the two ceilings $\gamma=\pm\kappa$
+are equivalent. JR Theorem 32.2 rules out $|\gamma|>\kappa$ for this
+fixed channel. This is a compatibility ceiling, not certain winding
+readout: the opposite-parity binary laws at a height have variation
+$2s\kappa q_y<1/8$.
+
+For any positive input $\sigma$, define
+
+$$
+\begin{aligned}
+p_H^{\rm acq}(\sigma;\mathfrak F)
+ &=\sum_{d_\alpha\geq3}\operatorname{tr}\mathcal C_\alpha(\sigma),\\
+p_H^L(\sigma;\mathfrak F)
+ &=\sum_{d_\alpha\geq3}
+\operatorname{tr}\bigl(\mathcal R_\alpha^L\mathcal C_\alpha(\sigma)\bigr).
+\end{aligned}
+\tag{RE.18}
+$$
+
+They are probabilities for normalized inputs and homogeneous masses
+otherwise. TP of the full decoder and TNI of its supported live part give
+
+$$
+p_H^{\rm acq}(\sigma;\mathfrak F)\geq
+p_H^L(\sigma;\mathfrak F)\geq0.
+\tag{RE.19}
+$$
+
+For a supported $\rho\in M_3$, the notation $p_H(\rho)$ means
+$p_H(E\rho E^\dagger)$; equivalently, use the encoders restricted by $E$.
+Inequality (RE.19) is also an inequality of input effects. No acceptance
+denominator appears. The displayed constructions will have equality between these
+two quantities, but arbitrary factorizations need not.
+

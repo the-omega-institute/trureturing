@@ -1,0 +1,14 @@
+**定理 29.3（Unbounded finite preset excess from competing value fibres）。** Keep (28.1)–(28.2). Choose labels $A\ne B$ and $D\ne E$, with arbitrary cross coincidences, high label $R$ and initial bottom label. In free-value fibre zero put $B$ on low outside phases $U$ and $A$ on every other low outside phase. In free-value fibre one put $B$ on $V$ and $A$ elsewhere. In both fibres give low endpoints $0,m$ labels $D,E$ and high tails label $R$. Then
+
+$$
+C_{\rm ad}(f)=N,\qquad C_{\rm pre}(f)=L,
+\qquad C_{\rm pre}(f)-C_{\rm ad}(f)\in\{t,t+1\}.
+\tag{29.3}
+$$
+
+Proof. Each individual fibre is precisely [S24, Definition 21.1] with its sole nonempty batch in the nonterminal slot $t$. Since $Q\ge2$, another batch is empty. [S24, Theorem 21.2] therefore gives exact preset and adaptive fee $N$ in each fibre, under all gcds and all allowed label coincidences. The supplied free-value fibre convention [S1, (2.2) and Theorem 5.2; S24, Definition 1.3] lets the freely observed initial value select its own controller, so the full adaptive fee is the maximum $N$, with the same lower bound obtained in either fibre. This is reused fibre maximization, not a new adaptive solver.
+
+The joined low outside labels are $(A,A)$ off $U\cup V$, $(B,A)$ on $U$ and $(A,B)$ on $V$. They are pairwise distinct. The joined endpoint labels are $(D,D),(E,E)$, the high label is $(R,R)$ and the bottom pair is independent. Thus $\Gamma$ is exactly a target in Definition 28.1. Theorem 28.2 and then Theorem 29.2 give its exact common-stream fee $L$ and the asserted difference.
+
+For an explicit unbounded family fix $m=5,r=2$, take arbitrary $Q\ge2$, $t=Q-1$, $U=\{5t+1\}$ and $V=\{5t+2\}$. Here $g=1$, the guard holds, $M=5t+1$ and $L=N+t$. The excess is $Q-1$, which is unbounded. These finite costs apply to the complete original INITIAL target, with full tail ranges and free values, not to an isolated already acquired phase table. ∎
+

@@ -1,0 +1,143 @@
+### 104.10. Reciprocal invariants and the complete necessary system
+
+Use the scalar \(a_0\), distinct from the full kernel vector, to define
+\[
+D=d^2,\quad a_0=(m-1/m)/d,\quad M=m+1/m=\sqrt{4+Da_0^2},
+\quad Q=1-p^2,\quad H=p^2+DQ=|h|^2.
+\tag{104.56}
+\]
+The square root is positive. The inverse is \(d=\sqrt D\),
+\(m=(M+\sqrt D\,a_0)/2\), so this reparametrizes \((d,m)\) injectively on the normalized chart. It neither recovers nor identifies the two original signs \(q=\pm\sqrt Q\); the necessary equations below hold separately for each sign.
+Dividing (104.22) only by positive \(d,m\) gives
+\[
+x:=g+p=\frac{p^2(M+Da_0)}{p(M+a_0)-2}>0,
+\qquad p(M+a_0)-2=2\xi>1/40.
+\tag{104.57}
+\]
+Define
+\[
+\begin{aligned}
+V&=xM-pDa_0-r,&Z&=-xa_0+pM-r,\\
+T_0&=V-1,&\lambda&=Z+1,&g&=x-p,\\
+\Delta&=(T_0^2-D\lambda^2)/4-g^2,&K_0&=T_0-2pg.
+\end{aligned}
+\tag{104.58}
+\]
+These agree with the quantities in (104.25). In particular
+\[
+g=p(T_0-\lambda)/2,\quad
+\eta=(T_0-d\lambda)/2,\quad\zeta=(T_0+d\lambda)/2,
+\quad v=(V-dZ)/2,\quad w=m(V+dZ)/2.
+\tag{104.59}
+\]
+The quotient unit-norm and actual phase equations become
+\[
+\begin{aligned}
+N={}&(M-2p)V^2+D(M+2p)Z^2+2Da_0VZ-M+2pr=0,\\
+P={}&-2H[(2+pM)Z+pa_0V]+2(V^2-DZ^2)\\
+&+p[(a_0-M)(V^2+DZ^2)+2(M-Da_0)VZ]=0.
+\end{aligned}
+\tag{104.60}
+\]
+For an explicit check of the phase convention, put
+\[
+P_H=H[pv-w+m(v-pw)]+2[dvw+Bpw^2-Apv^2].
+\]
+Expansion gives
+\(P_H=qH\Im[z(1+m\overline u)+z^2/\overline h]\)
+and \(P=4P_H/(dm)\). Thus the correct conjugated denominator and both nonzero \(q\) signs are retained.
+
+On the actual unit-norm data put
+\[
+\begin{aligned}
+R&=(M-2pr)/(4Q)=|z|^2/m,\\
+J_*&=\frac{(2p-p^2M-DQa_0)V^2-D(2p+p^2M+DQa_0)Z^2
+-2D(QM+p^2a_0)VZ}{4QH},\\
+\overline C&=(MT_0+Da_0\lambda)/4,\\
+\Gamma&=(M-Da_0)/4-R-J_*/2,\qquad\overline j=\overline C+\Gamma=j/m.
+\end{aligned}
+\tag{104.61}
+\]
+Here \(R\) is a scalar, distinct from the correlation \(\mathsf R\). Substitution of (104.59) into the actual complex expression shows
+\(J_*=\Re(z^2/\overline h)/m\) and
+\(\overline j=-R+(MV+Da_0Z)/4-J_*/2\), proving these identities without a free choice of singleton coefficient.
+
+Define the positive-square expression
+\[
+\begin{aligned}
+U_0&=T_0/2-pg,\\
+\overline B&=M[U_0+Da_0\lambda/(2M)]^2
++D\lambda^2/M+MQg^2,\qquad s_E=\overline B/(2QR).
+\end{aligned}
+\tag{104.62}
+\]
+Indeed \(\overline B=\operatorname{Tr}(F_0^TF_0)/m\). Expanding the weighted squared errors first gives
+\[
+\overline B=M[(T_0^2+D\lambda^2)/4-pgT_0+g^2]
++Da_0\lambda(T_0/2-pg),
+\]
+and completing the square, using \(M^2-Da_0^2=4\), gives (104.62).
+Set
+\[
+\begin{aligned}
+P_+&=-p^2QT_0^2+2Q(D+p^2)T_0\lambda
++p^2(D+p^2)\lambda^2,\\
+P_-&=Q^2T_0^2+2p^2QT_0\lambda+(DQ+p^4+p^2)\lambda^2,\\
+B_*&=-(MP_++Da_0P_-)/4.
+\end{aligned}
+\tag{104.63}
+\]
+This \(B_*\) is \(\operatorname{Tr}(F_0^TF_0\mathsf H)/m\), with
+\(\mathsf H=\begin{pmatrix}\Re h&\Im h\\\Im h&-\Re h\end{pmatrix}\).
+To verify it, write the trace as \(H_1/m+mH_2\), where
+\[
+\begin{aligned}
+H_1&=[Q\eta^2-(g-p\eta)^2]\Re h+4BpQ\eta(g-p\eta),\\
+H_2&=[Qg^2-(\zeta-pg)^2]\Re h+4BpQg(\zeta-pg).
+\end{aligned}
+\]
+Equation (104.59) gives \(H_1+H_2=-P_+/2\) and
+\((H_2-H_1)/d=-P_-/2\), proving (104.63).
+
+The complete scalar equations (104.30) are exactly
+\[
+\begin{aligned}
+2R\Delta B_*-\overline j\lambda H^2\overline B&=0,\\
+4Q\Delta H\overline j^{\,2}
+-\overline B[\overline jK_0H+2R\Delta]&=0.
+\end{aligned}
+\tag{104.64}
+\]
+For the first, use
+\(\operatorname{Tr}(M_EQ_0)=-\operatorname{Tr}(F_0^TF_0\mathsf H)/(4q^2H)\),
+multiply \(\mathcal F_1\) by \(2q^2|z|^2\Delta H\), and divide by \(m^2\). For the second multiply \(\mathcal F_2\) by \(4q^2\Delta H\) and divide by \(m^2\). Every removed denominator is positive. The case \(\lambda=0\) remains included.
+The same norm (104.17) is
+\[
+t^{-2}=\frac{RK_0}{\Delta\overline j}
++\frac{\lambda^2H^2}{4\Delta^2}
++\frac{R^2}{H\overline j^{\,2}}>16.
+\tag{104.65}
+\]
+
+There are two additional strict consequences of the complete normer:
+\[
+\overline j>\overline C>0,\qquad\overline B<QR/4.
+\tag{104.66}
+\]
+For the first, \(Y_0=-kI/2+2Q_0/j\) and \(\operatorname{Tr}J_0=0\) give
+\[
+\operatorname{Tr}(J_0Q_0)
+=(j/2)\operatorname{Tr}(J_0Y_0)
+=j\operatorname{Tr}(Y_0M_EY_0)>0.
+\]
+The inequality is strict because \(M_E\succ0\) and the nonzero traceless part \(2Q_0/j\) makes \(Y_0\ne0\). Apply (104.32) and divide by \(m\); also \(\overline C=(\eta+m^2\zeta)/(2m)>0\).
+For the second, Lemma 104.2 gives \(s_E=(2-\gamma)t^2<1/8\), which is equivalent to (104.66).
+Finally (104.29), together with
+\(D_0/m=-dp\lambda(a_0+M)/(4q)\), gives the actual 34 bound
+\[
+R^2-16H\left[(\overline C-\overline j)^2
++\frac{Dp^2\lambda^2(a_0+M)^2}{16Q}\right]>0.
+\tag{104.67}
+\]
+Its modulus is unchanged by the real coefficient rotation. This is precisely the original matrix-unit inequality \(|1/2-K_{34}|<1/4\).
+

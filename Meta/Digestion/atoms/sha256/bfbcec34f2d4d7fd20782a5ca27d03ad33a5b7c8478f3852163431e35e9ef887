@@ -1,0 +1,56 @@
+**Definition 8.2 (charged digital realization of the certificate).** A finite
+implementation requires finite descriptions of public parameters and
+calibration bounds. For the rational source (3.4), one sufficient setting
+has a rationally specified duration $T$, rational upper bounds for $L,V$
+and errors, a rational grid controller, and certified interval algorithms
+for $\pi$, square roots and trigonometric evaluation. A nonrational duration
+instead needs an effective clock/mesh certificate sufficient for (7.2).
+An arbitrary exact real parameter is not a free finite-bit input.
+
+For example choose integers $D_k,D_c$ with $10\mid D_k$. Store height
+values on the grid $j/D_k$ in $[1/10,1/5]$ and centered lift values on a
+rational grid of step $1/D_c$ in $[-V_*,V_*]$, where
+$V_*=\lceil VD_c\rceil/D_c$. Both grid endpoints are encoded grid values
+and $[-V,V]\subseteq[-V_*,V_*]$. Clipping to the respective grid interval
+is nonexpansive relative to the true value. Rounding contributes at most
+half a grid step; add these contributions to the actual sensor errors to
+obtain $d_k,d_c$. The required value widths can be bounded by
+
+$$
+b_k=\left\lceil\log_2(\lceil D_k/10\rceil+2)\right\rceil,
+\qquad
+b_c=\left\lceil\log_2(\lceil2VD_c\rceil+3)\right\rceil.
+\tag{8.2}
+$$
+
+A stored row also charges its encoded timestamp, status and event fields.
+Writing their widths as $b_t,b_e$, keeping the whole acquired record uses
+at most
+
+$$
+(n+1)(b_k+b_c+b_t+b_e)+B_{\rm meta}+B_{\rm failure}
+\tag{8.3}
+$$
+
+bits for the declared bounded encodings, in addition to numerical workspace
+and programme storage. $B_{\rm meta}$ includes source, preparation,
+reference, units, permissions, grid/controller description and calibration
+certificates. $B_{\rm failure}$ charges all additional retained failure
+payloads; it is not silently set to zero for a failed attempt. Grid indices
+may encode nominal timestamps together with the certified actual-time
+uncertainty. An actual measured timestamp, when supplied, is separately
+encoded and paid for. No minimum-storage claim is made.
+
+On these rational grids, (7.1) can be accumulated exactly with common
+denominator $D_kD_c$, so $\rho_A=0$ is possible for the arithmetic part.
+If $V$ is a grid endpoint, the signed numerator magnitude is at most
+$2nD_kD_cK_{\max}V$; otherwise replace $V$ here by $V+1/D_c$.
+Thus one sign bit plus
+$\lceil\log_2(1+2nD_kD_cK_{\max}(V+1/D_c))\rceil$ bits suffices for that
+accumulator. There are $n$ multiplications and a linear number of
+subtractions/additions, at these charged widths. If a different fixed
+precision arithmetic is used, its proved roundoff bound is $\rho_A$.
+Winding rounding, evaluation of (7.5) and the decoder each have their
+own certified arithmetic budgets. Sensor-pair count is $n+1$; it is not
+a shot count, a wall-clock cost, or the price of validating $L,V$.
+

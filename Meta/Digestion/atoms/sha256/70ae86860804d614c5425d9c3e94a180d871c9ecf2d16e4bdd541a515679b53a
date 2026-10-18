@@ -1,0 +1,48 @@
+**Definition 51.1 (applicability and physical kernels).** Throughout §§51–55 fix one original datum satisfying exactly Definition 45.1. In particular retain Definition 32.1's jointly realized rational vector (32.2), the larger-interval positive-probability, coefficient, pole and bracket margins of L Definition 35.1, L Lemma 41.2, P §§76, 87–88, 97, 104–107 and E Theorem 3.1. No equality $C_{\rm resp}=0$, $C_4=0$ or $\mathfrak m_d=0$ is assumed. General geometric admission alone is insufficient. Every cutoff below is separately fixed, and every finite $M\ge M_{0,d}$ is separately fixed before $s\downarrow0$.
+
+All physical kernels use raw $dY=dk\,dq$ on $\mathcal C=I\times\mathbb R^3$, both original Dirichlet faces and the original clock
+
+$$
+K(t;A,Y)=e^{\lambda t}p_t^B(A,Y),\qquad
+G(A,Y)=\int_0^1K(t;A,Y)dt,\qquad
+\Lambda(A,Y)=\int_1^\infty K(t;A,Y)dt,\quad f(Y)=\Lambda(o,Y)=W_1(Y).
+\tag{51.1}
+$$
+
+The kinetic coefficient $a$ does not enter this clock. Let $\delta_s^E$ be the Engel dilation with coordinate weights $(1,1,2,3)$, and define the fixed algebraic chart
+
+$$
+\Phi=\Xi_1\circ\mathscr L_1,\qquad
+\mathcal D=\Phi^{-1}\mathcal C,\qquad
+r(Y)=d_E(0,\Phi^{-1}Y),\qquad
+Y_s=\Phi\circ\delta_s^E.
+\tag{51.2}
+$$
+
+Here $\Xi_1,\mathscr L_1$ mean the algebraic maps (2.1)–(2.2), without any requirement that $s=1$ be in the asymptotic regime. Indeed $L_1\operatorname{diag}(s,s^2,s^3)=\operatorname{diag}(s,s^2,s^3)L_s$; hence (51.2) is exactly the original sheared chart. Its absolute Jacobian is $j_0s^7$, $|\det D\Phi|=j_0$, and $r(Y_s\xi)=s\rho(\xi)$. Physical volume is $j_0$ times Engel Haar volume in this fixed chart. Restricting that volume to $\mathcal D$ only decreases upper bounds from full Engel balls.
+
+Use the exact transported dictionary (32.4), with restriction to $\Omega_s$ and zero extension:
+
+$$
+\begin{aligned}
+C_s&=s^2(\mathcal T_s\mathcal U_s)S(\mathcal T_s\mathcal U_s)^{-1},&
+Q_s(t)&=e^{-tC_s},&T&=s^{-2},\\
+q_s(t;\eta,\xi)&=j_0s^7K(s^2t;Y_s\eta,Y_s\xi),\\
+F_s(\xi)&=j_0^{-1}\int_1^Tq_s(t;0,\xi)dt,&
+H_s&=\int_0^TQ_s(t)dt,\\
+J_s(\xi)&=s^5f(Y_s\xi),&U_s&=F_s+J_s.
+\end{aligned}
+\tag{51.2a}
+$$
+
+Take $u_s,x_s,\ell_s,\delta_s,n_s$ exactly from (45.1). In particular $H_sF_su_s=\ell_su_s$, $x_s=F_su_s$, $u_s\ge0$ and $\|u_s\|_2=1$. Here $U_s$ is a multiplier, distinct from the unsheared unitary $\mathcal U_s$. Define
+
+$$
+A_s=\int x_s(\xi)d\xi,\quad A_p=\int Vp>0,\quad
+w_s(Y)=s^{-5}u_s(Y_s^{-1}Y),\quad
+v_s(Y)=\frac{x_s(Y_s^{-1}Y)}{j_0s^7},\quad d\nu_s(Y)=v_s(Y)dY.
+\tag{51.3}
+$$
+
+Thus $\nu_s$ is the complete physical pushforward of $x_s(\xi)d\xi$, not a probability measure. Regard it also as a measure on $\mathbb R^4$ by zero extension outside $\mathcal C$. Pointwise statements use the representative $u_s=\ell_s^{-1}H_sx_s$ defined by the heat-kernel integral and $x_s=F_su_s$ with that representative; the integral is finite at every interior output by (45.3), (45.5) and local kernel integrability.
+

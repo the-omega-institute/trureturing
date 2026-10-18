@@ -1,0 +1,13 @@
+## 133. 稳定块、平稳熵与严格路径箭头
+
+以均匀初始分布 $\pi_i=1/5$ 按定义130.1的初始化启动 (129.1) 的边仪器，每轮使用新记录并实际取得边标签。双随机性使每步配置分布仍为均匀分布。令 $h^\leftarrow$ 为路径倒序，定义长度 $N$ 的路径箭头
+$\Sigma_N=D_{\rm KL}(P_N\Vert P_N^\leftarrow)$。正方形边的正、反概率分别为 $p,q$，每个分支边和自环在倒序中相互抵消，因而
+$$
+ \log\frac{\Pr(h)}{\Pr(h^\leftarrow)}=W(h)\log\frac pq,\qquad
+ \Sigma_N=N\,\frac45(p-q)\log\frac pq.\tag{133.1}
+$$
+平稳时单步绕行增量的期望为 $\mathbb E w=4(p-q)/5$；相加 $N$ 步，(133.1) 即由路径对数比的期望得到。四条方形无向边各贡献 $\frac15(p-q)\log(p/q)$，故 (133.1) 在 $N\ge1$、$p\ne q$ 时严格为正；$N=0$ 时为零，平衡情形 $p=q$ 也为零。
+
+由于列和为一，完整可见载体上的
+$\varrho_* =I_{10}/10$ 是固定态，且其 von Neumann 熵恒为 $\log10$。因此同一明确操作可以同时保持逻辑 Pauli 关系、保持该可见固定态的熵，并具有严格的记录路径箭头。这里的倒序是路径分布的比较，不是包含全部微观自由度、热浴或局部详细平衡的物理时间反演；故 (133.1) 不单独等同于热力学熵产生。中心相位特征 $(-1)^{k(h)}$ 在 $p=q$ 时仍可非平凡，概率特征 $(p/q)^{4k}$ 则在平衡时为一；交换 $p,q$ 只反转后者的方向。Joel L. Lebowitz、Herbert Spohn, [“A Gallavotti-Cohen Type Symmetry in the Large Deviation Functional for Stochastic Dynamics”](https://arxiv.org/abs/cond-mat/9811220) 研究 Markov 过程的涨落对称，并在局部详细平衡条件下联系熵产生；本章有限离散路径公式由直接相乘证明，不从该文借入未供应的热浴条件。
+

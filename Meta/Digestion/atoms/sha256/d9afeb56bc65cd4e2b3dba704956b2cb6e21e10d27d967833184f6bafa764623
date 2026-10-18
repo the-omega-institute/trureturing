@@ -1,0 +1,58 @@
+**Definition 2.1 (heat, mode and horizontal energy).** Use the Engel product, dilation and Haar measure
+
+$$
+\begin{aligned}
+(r,y,z,w)(r',y',z',w')
+ &=(r+r',y+y',z+z'+ry',w+w'+rz'+r^2y'/2),\\
+\delta_R(r,y,z,w)&=(Rr,Ry,R^2z,R^3w),&d\xi&=dr\,dy\,dz\,dw.
+\end{aligned}
+\tag{2.1}
+$$
+
+Its homogeneous dimension is seven. Let $b[u]=\|Xu\|_2^2+\|Yu\|_2^2$, let $\mathcal Q_E$ be the complex compact smooth core closure in $\|u\|_2^2+b[u]$, and let $\mathcal E=-X^2-Y^2$ be its Friedrichs operator. P §§82–88 supply conservative, symmetric, positive continuous heat $P_t=e^{-t\mathcal E}$, $k_t(\xi)=p_E(t;0,\xi)$, a proper continuous homogeneous control distance $d$, and
+
+$$
+\begin{gathered}
+p_E(t;\eta,\xi)\le Ct^{-7/2}e^{-c d(\eta,\xi)^2/t},\quad
+N=\max(|r|,|y|,|z|^{1/2},|w|^{1/3}),\quad d(0,\xi)\ge cN(\xi),\\
+V=j_0^{-1}\int_1^\infty k_tdt>0,\quad
+\mathcal EV=j_0^{-1}k_1,\quad V\le C(1+N)^{-5},\\
+C_*=\sup_{0\ne u\in\mathcal Q_E}\frac{\int V|u|^2}{b[u]}\in(0,\infty),\quad
+\chi=\chi_c=a/C_*,\quad\gamma=\chi/a,\\
+h_0[u]=b[u]-\gamma\int V|u|^2\ge0,\quad h=a h_0,\quad
+p=\Phi_c>0,\quad\|p\|_2=1,\quad p\in D(\mathcal E),\\
+\mathcal Ep=\gamma Vp,\quad\ker(a\mathcal E-\chi V)=\mathbb Cp,\quad
+p=\gamma\int_0^\infty P_t(Vp)dt\quad\text{in }L^2.
+\end{gathered}
+\tag{2.2}
+$$
+
+Haar balls have volume $v_d R^7$. Smoothness, hypoellipticity, compact zero-energy reconstruction on the specified multiplier right sides, local form compactness, native supported-strip approximation and complete native heat/field tail assertions retain exactly their supplied conditional scopes. In particular a local positive-time heat limit is not used as an infinite-time interchange. No external heat or localization supplier is newly authenticated here.
+
+P §106 supplies
+
+$$
+rp\in\mathcal Q_E,\quad h_0[rp]=1,\quad
+\int r^2(p^2+|Xp|^2+|Yp|^2)d\xi<\infty,\quad
+\sigma(r,y,z,w)=(-r,y,-z,w),\quad p\circ\sigma=p,\quad V\circ\sigma=V.
+\tag{2.3}
+$$
+
+The involution reverses $X$ and preserves $Y$. R §§4–5 supply the potential form bound and compact horizontal-energy gap
+
+$$
+\int V|u|^2\le C_*b[u],\qquad
+h_0[v]\ge\theta b[v]\quad\text{if }b(p,v)=0,\qquad\theta>0.
+\tag{2.4}
+$$
+
+Polarized forms are conjugate linear in their first argument. Let $\dot{\mathcal H}_-$ be the completion of the real $\sigma$-odd compact smooth core in $\sqrt b$. On it $\theta b\le h_0\le b$. The real response functional and its unique Riesz representative are
+
+$$
+\mathcal L(u)=\ell(u)/a=2\int r(Yp)(Yu)+\gamma\int V_1pu,
+\quad h_0(\Psi,u)=\mathcal L(u),\quad D_{\rm resp}=a h_0[\Psi].
+\tag{2.5}
+$$
+
+The functional is extended complex linearly when needed. The homogeneous completion gives local representatives and global horizontal derivative vectors, using (2.4) and the positive minimum of $V$ on compact sets. No global $L^2$ or native membership of $\Psi$ is assumed. The gap is in horizontal energy, with no positive $L^2$ spectral gap or inverse on all $L^2$.
+

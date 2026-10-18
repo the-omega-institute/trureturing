@@ -1,0 +1,52 @@
+**Proposition 6.3 (infinite fixed-parameter family and finite signed
+witnesses).** For every fixed $c\ge0$, the two full strata of (PAC.20)
+have the common accumulation contact
+
+$$
+K_c=W(\Omega,T_{c+2},\Omega).
+\tag{PAC.21}
+$$
+
+All $K_c$ are distinct, and each has actual finite signed witnesses at every
+requested inclusive depth. Their contact construction retains $m=c$
+through all depths, the shared residual, and the entire acquired input.
+
+Proof. For supplied $h$ put
+
+$$
+m=c,\qquad n=\max(c+3,2h+2),\qquad
+Z_0=\alpha,\quad Z_{d+1}=\langle Z_d,Z_d\rangle,
+\tag{PAC.22}
+$$
+
+and choose the actual finite sources
+
+$$
+u_h^0=U_0(n,c),\qquad u_h^1=U_1(n,c,Z_{h+1}).
+\tag{PAC.23}
+$$
+
+The first uses the same atomic $T_n$ in both copied positions. The second
+uses the same finite $Z_{h+1}$ in both positions. The tree
+$Z_1=\langle\alpha,\alpha\rangle$ has mass one; positive mass propagates
+through its iterated pairs. Thus $Z_{h+1}$ is non-atomic and differs from
+every $T_j$, including all six ranks in (PAC.20). Since $n\ge c+3$, all
+rank exclusions hold too. Proposition 6.2 gives membership in the two
+entire strata, with the exact complete rows, every sign, both guards and
+all old classes. This also proves their attainment.
+
+Both $T_n$ and $Z_{h+1}$ branch through depth $h$ by (PAC.8) and the
+perfect-tree definition. The finite $T_{c+2}$ is unchanged. Hence both
+sources agree with $K_c$ through $h$, including absent replies in its
+finite component, and they share one original prefix. Increasing $h$
+gives a sequence approaching $K_c$ in each stratum. At address $RL$,
+$K_c$ has the entire finite subtree $T_{c+2}$; injective atomic indices
+make the contacts distinct for distinct $c$.
+
+Thus infinitely many fixed finite parameters survive, with a correlated
+rank difference and repeated companion residual rather than a finite
+contact list. These explicit witnesses consume existing atomicity, mass
+and depth facts; the new uniform theorem handles the whole parameter family,
+not just this chosen section. No negative or row is assigned to $K_c$.
+$\square$
+

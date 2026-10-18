@@ -1,0 +1,20 @@
+**Open problem 9.3 (Joint states, precision and paid time).** The joint
+$(M,B,T)$ frontier, least sufficient or necessary transition precision,
+least midpoint and parameter-input precision, sharp leading constants,
+minimum nonempty budget and exact finite-budget optimum remain
+unsettled here. Theorems 5.1 and 6.2 give sufficient allowances;
+Theorems 8.2–8.3 diagnose two particular prescriptions. They do not
+give a universal necessary precision rate. The exponent $r$ of the
+full-cap count remains sufficient, and the inherited eventual criterion
+permits every fixed positive polynomial budget exponent when the paid
+constant may depend on it.
+
+**Open problem 9.4 (Effective and additional observation models).**
+Uniform offline bit-operation bounds, finite effective designs for
+arbitrary noncomputable parameters, adaptation to unknown $q$, one
+$q$-independent table and empirical calibration sample complexity are
+not supplied. The fixed-$J$ input lemma controls only the stated
+midpoint perturbation with fixed exact $c$ and budgets expressed using
+true $s$. Any serial fair-coin, retained-buffer, hardware or learning
+model needs its own complete-configuration and acquisition-cost bridge.
+

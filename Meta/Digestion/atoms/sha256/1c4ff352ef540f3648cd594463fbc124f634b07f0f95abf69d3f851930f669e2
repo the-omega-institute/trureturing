@@ -1,0 +1,39 @@
+**Definition 7.4 (whole execution, without a price claim).** On one
+actual evolving run of a system satisfying the stated local premises,
+let $g_i^*$ be (OR.4) evaluated at each actual row fragment, and use
+the actual prefix counts for an unfinished fragment $\eta$. In
+particular define
+
+$$
+g^*(\eta)=4N_\eta+P_\eta+3B_\eta+9V_\eta
+             +3R_\eta+2A_\eta+E_\eta;
+$$
+
+the completed-fragment relation $N^*=2+B+V+R+A+E$ is not imposed
+on an unfinished prefix. Then
+
+$$
+G^*=g_0+\rho_\mu+\sum_{i=1}^{n}g_i^*+g^*(\eta).
+\tag{OR.6}
+$$
+
+Keep the original coordinates $(n,2n)$, fine reaction count, probes,
+assignments, births, retained/peak material, site-typed input and
+actual released output separately. No $2N$ native fee or permanent
+original-format receipt per fine event is inferred.
+
+The sum begins at the irreducible entrance, including original
+preparation/acquisition, original controller writes, twenty new
+boundary constructors, every actual bootstrap bit, capture and
+activation, raw input successors and blocked prefixes, all bank and
+descriptor work, genuine Reserve/Raise/source work, unchanged
+assignments, both lane handoffs, sender/mailbox/receiver copies,
+print/check/ACK/TOK, original verifier and INITIAL consumer, and final
+halt. [ARC] Definitions 10.1–10.2 give their original opcode/purpose
+partition. A partial wrong-code path pays its actual executed prefix;
+it is not billed as a completed canonical flight. No independently
+optimal subtotal from another run may replace any term. Matching
+apparatus installation and an actor-callable completion driver, if
+required, need their actual additional resource relations. Neither
+a numerical whole bill nor global resource superiority is obtained.
+

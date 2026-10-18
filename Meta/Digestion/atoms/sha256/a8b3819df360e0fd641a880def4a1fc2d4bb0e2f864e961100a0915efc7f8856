@@ -1,0 +1,126 @@
+**Theorem 10.2 (verification separation under totality, attainment and
+finite-preparability promises).** There is no effective procedure that,
+on every acquired-term code program promised total, BOTH-bit-attained
+and finitely preparable on $\mathcal U_*$, decides whether that program
+belongs to $\mathcal C_2(T)$ for the one fixed table in Definition
+10.1. Here finite preparability means generation of its original bit
+and literal entry code under a separately supplied paid common-start
+native-preparation permission. It does not promise that this reader
+correctly recovers the whole row for an incompatible code.
+
+Proof. First define the lawful baseline
+
+$$
+\sigma^{\mathrm{base}}(u)=
+\begin{cases}
+1,&u\in\Pi_3\cup\Pi_4,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{FCS.27}
+$$
+
+Roots of acquired finite terms determine this bit. The table verifies
+it on every actual case: from $e_0$, $\Pi_1$ reaches $H_1$ and
+$\Pi_2$ reaches $H_2$; every zero profile reaches $H_0$, including
+beta at $b_1$ or $b_2$. From $e_1$, $\Pi_3$ reads alpha at $b_3$
+and reaches $H_3$, while $\Pi_4$ reads branch there and reaches
+$H_4$. These cases exhaust the prescribed entry choices. All outputs
+are the complete required rows and all runs use at most two calls.
+Both bits are attained.
+
+Let $e$ be any finite deterministic machine description with specified
+initial configuration. Use PCA Definition 15.1's stage convention:
+the first halt stage $\tau$, if it exists, is at least one and stage
+one includes the initial-Halt check. For a finite tree $B$, let $h(B)$
+be its maximum leaf depth. Define a program equal to the baseline
+except on $\Pi_1$, where it computes
+
+$$
+\sigma_e(u)=
+\mathbf1_{\{e\text{ halts within }h(x_c)\text{ stages}\}}
+\qquad(u\in\Pi_1).
+\tag{FCS.28}
+$$
+
+The program is described effectively from $e$. Finite root inspection
+determines the case, structural recursion computes the acquired term's
+finite height, and the simulation is bounded by that height. Thus it
+terminates on every acquired finite input, with a fallback on malformed
+representations. There is no decision of eventual halting inside this
+code. On $\Pi_2$ its bit is always zero and on $\Pi_3$ always one,
+so every program in this family attains both values.
+
+If $e$ never halts, $\sigma_e$ is exactly the compatible baseline.
+If it halts first at $\tau$, take the explicit class values
+
+$$
+x_a=\beta,\quad x_{b_1}=\alpha,\quad
+x_c=B_\tau,\quad x_{b_2}=B_{\tau+1},\quad
+x_{b_3}=B_{\tau+2},\quad x_{b_4}=B_{\tau+3}.
+\tag{FCS.29}
+$$
+
+Since $\tau\ge1$, the four latter values are distinct finite branch
+images, different from both leaves. Both partner occurrences repeat
+their one class value. This is an injective $\Pi_1$ image filling,
+so (FCS.7) gives an actual finite origin in the original full fiber.
+It has $h(x_c)=\tau$ and hence bit one under (FCS.28). From $e_1$
+the actual reply at $b_3$ is branch, so the table returns the entire
+$R_4$ after one call. The required row is the different $R_1$.
+Therefore
+
+$$
+\sigma_e\in\mathcal C_2(T)
+\quad\Longleftrightarrow\quad e\text{ never halts}.
+\tag{FCS.30}
+$$
+
+Every one of these original codes is also finitely preparable, by
+cases. In the nonhalting case the six class roots determine the
+baseline. In the halting case (FCS.28) is the predicate
+$h(x_c)\ge\tau$ on $\Pi_1$. For a finite tree this holds exactly
+when some word of length $\tau$ has nonabsent reply: a longest
+root-to-leaf path has a node at that level if and only if its length
+is at least $\tau$. Thus the finite menu
+
+$$
+\{p_d:d\in D\}\ \cup\
+\{p_cw:|w|=\tau\}
+\tag{FCS.31}
+$$
+
+determines the original code in the halting case, with actual absent,
+leaf and branch replies interpreted literally. One occurrence of $c$
+suffices because both occurrences contain the same term.
+
+For completeness, the generation part of PCA Theorem 3.2's finite
+prefix/latch construction applies independently of subsequent reader
+correctness. Order a determining menu as $w_1,\ldots,w_m$. For every
+attained reply prefix of length $j<m$, install a running state that
+queries the fixed word $w_{j+1}$. An attained extension enters its next
+prefix state, or at length $m$ the latch for the determined literal
+entry $e_0$ or $e_1$. Every unattained extension is sent to one fixed
+existing latch. The common start is the empty-prefix state; an empty
+menu instead starts at its constant latch. This specifies every
+four-reply successor. Induction gives the exact original code on every
+source after finitely many calls. The prefix identities are counted
+states, not a free history register or computed-address facility. The
+last transition replaces control by the complete code latch, and the
+separately paid handoff enters exactly that original $e_z$ with all
+preparation material inaccessible.
+
+This proves finite preparability for both cases, including when the
+reader fails for the generated bit. It makes no uniform choice between
+halting and nonhalting, and extracts no $\tau$, determining menu,
+halting-time bound or preparer from the input program. All native
+permissions, paid calls, latch storage, isolation and entry remain
+separate supplied conditions.
+
+A purported compatibility decider on the promised programs can now
+be applied to the effectively described $\sigma_e$. Every such input
+satisfies all three promises. By (FCS.30) complementing its answer
+decides eventual halting of arbitrary finite descriptions, contradicting
+the halting endpoint used in PCA Theorem 15.2. This is a direct native
+reduction with actual large-height $\Pi_1$ witnesses, rather than an
+appeal to a generic program-verification slogan. $\square$
+

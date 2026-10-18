@@ -1,0 +1,58 @@
+**Proposition 8.8 (Linear kernel and density-matrix ambiguity).** For the
+full edge menu of Proposition 8.5, the real linear observation space on
+Hermitian $D_n\times D_n$ matrices has dimension $D_n+2E_n$. Its kernel
+has real dimension
+
+$$
+D_n^2-D_n-2E_n.
+\tag{8.17}
+$$
+
+The kernel consists precisely of Hermitian matrices with zero diagonal
+and zero entries on every legal edge. Every such matrix is traceless.
+
+Proof. A Hermitian matrix has $D_n$ independent real diagonal entries and
+one independent complex entry for each unordered pair of distinct
+vertices, giving real dimension $D_n^2$. Formula (8.10) supplies the real
+and imaginary coordinates of every edge independently. Conversely all
+measured probabilities are linear combinations of these coordinates
+and the diagonals, including blocked-vertex outcomes. The diagonal
+coordinate forms and the two forms per edge are independent, since they
+occupy disjoint matrix entries. Rank-nullity proves (8.17); zero diagonal
+implies zero trace. On trace-one matrices the observed affine dimension
+is $D_n-1+2E_n$, while the blind tangent dimension is unchanged.
+$\square$
+
+The supplier counts (8.3) give the following concrete sizes:
+
+| $n$ | $D_n$ | $E_n$ | Blind real dimension |
+| --- | --- | --- | --- |
+| $3$ | $5$ | $5$ | $10$ |
+| $6$ | $21$ | $38$ | $344$ |
+| $9$ | $89$ | $235$ | $7362$ |
+
+These values follow directly from the displayed formulas, rather than
+from a sample or an asymptotic inference. They also have a genuine PSD
+meaning. If $u,v$ are a nonedge, take
+$A=|u\rangle\langle v|+|v\rangle\langle u|$. It is Hermitian,
+traceless, belongs to the observation kernel and has operator norm one.
+For $0<\delta<1/D_n$,
+
+$$
+\rho_\pm=\frac{I}{D_n}\pm\delta A
+\tag{8.18}
+$$
+
+are distinct strictly positive density matrices with identical diagonal
+and edge measurements: their two affected eigenvalues are
+$1/D_n\pm\delta$, and the others are $1/D_n$. In the five-word window
+one may use the nonedge $010,101$. Thus the mixed ambiguity is not merely
+an abstract signed direction outside the physical state set.
+
+At $n=1$, $D_1=2$ and $E_1=1$, so the kernel dimension is zero; the two
+quadratures and diagonal are complete qubit tomography. Already at
+$n=2$ there is the nonedge $10,01$ and a two-real-dimensional kernel.
+Pure connected-support recovery, a rank-one saturation certificate and
+arbitrary mixed-state tomography are different tasks. The first two
+can hold when the third fails.
+

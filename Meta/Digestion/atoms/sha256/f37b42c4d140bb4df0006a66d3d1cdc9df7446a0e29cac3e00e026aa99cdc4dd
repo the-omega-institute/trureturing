@@ -1,0 +1,26 @@
+**Remark 228.5 (Numerical corrections without an additional theorem).** For
+$q=(0,0,-3,3,1/2;0)$, the readings at
+$o,p,u_3,v_3,u_4,v_4,u_5,v_5$ are
+$0,0,-3/2,-17/8,0,1/5,1/8,1/2$; in particular the $u_3$ value is
+$-3/2$. The selected-mask $19/20$ comparison concerns $Y/10$, where
+$A_{10000}=5,P_{10000}=7,A_{11000}=6,C_{01100}=6,P_{11100}=1,
+C_{11110}=5,A_{01101}=4,P_{01111}=3$. This existing example has
+$W_Y=23$, $Q(Y)=(2,-5,-6,0,5;37)$ and $B_N=B_O=33$.
+Its sharp unrestricted and single-$T_{\{3,4,5\}}$ objectives are both
+$1/2$ after scaling by ten. These are corrections to that comparison;
+they assert no further erasure-family theorem.
+
+**Open boundary 228.6 (Original universal question).** The positive route
+still requires, for EVERY actual full $y\ge0$ with $\Delta_O(y)\le1$,
+ONE unrestricted full $V\ge0$ and ONE jointly paid signed residual
+$\theta\in[0,1]$ with $\Delta_N(V)+\theta\le1$ and
+$\sigma_H(Q(y)-Q(V))\le\theta$, together with the original positive
+vanishing sequences, positive closed caps and source/resource correspondence.
+The negative route still requires the SAME actual $b\in H_N$, one
+complete full feasible $\lambda$ of mass $M\ge1$ at that point, and an
+actual unit-$O$ score $y$ with the STRICT inequality $F_{Q(y)}(b)>M$,
+plus an original common-seed $N_2$ attainer and a uniform lower bound
+against EVERY arbitrary-address, full-carrier $O_2$ competitor.
+Both routes remain open. Constructor failure, a detector-only hull point,
+exact-law failure or finite checking does not establish original separation.
+

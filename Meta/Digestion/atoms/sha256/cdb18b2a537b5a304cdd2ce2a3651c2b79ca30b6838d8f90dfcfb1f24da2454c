@@ -1,0 +1,53 @@
+**Lemma 9.2 (two preserved bases into three live dimensions).** Let
+$\Psi:M(W)\to M(V)$ be CP and trace preserving, with
+$\dim W=2$ and $\dim V=3$. Let $e_+,e_-$ be an orthonormal basis and
+
+$$
+f_+=\alpha e_++\beta e_-,\qquad
+f_-=-\beta e_++\alpha e_-,\qquad
+\alpha,\beta\in\mathbb R,\quad \alpha^2+\beta^2=1,\quad\alpha\beta\ne0.
+\tag{CG.61}
+$$
+
+If the two outputs within each of these bases have orthogonal supports,
+then $\Psi(\rho)=T_0\rho T_0^\dagger$ for an isometry $T_0:W\to V$.
+
+Proof. A spectral factorization of the positive Choi matrix supplies
+finite Kraus operators for $\Psi$. Trace preservation makes their Kraus
+dilation an isometry $T:W\to V\otimes\mathcal E$. Put $u=Te_+$,
+$v=Te_-$. Orthogonality of their reduced live supports implies
+$u\in S_+\otimes\mathcal E$ and $v\in S_-\otimes\mathcal E$ with
+$S_+\perp S_-$. Hence for every environment operator $R$ both cross
+matrix elements $\langle u,(I\otimes R)v\rangle$ and
+$\langle v,(I\otimes R)u\rangle$ vanish. The second preserved basis
+likewise gives
+
+$$
+\begin{aligned}
+0&=\langle\alpha u+\beta v,
+                    (I\otimes R)(-\beta u+\alpha v)\rangle\\
+ &=\alpha\beta\bigl(\langle v,(I\otimes R)v\rangle
+                         -\langle u,(I\otimes R)u\rangle\bigr).
+\end{aligned}
+\tag{CG.62}
+$$
+
+Thus the two environment marginals are the same density matrix $\sigma$.
+In a common eigenbasis for its positive eigenvalues $\lambda_r$, write
+
+$$
+u=\sum_r\sqrt{\lambda_r}\,a_r\otimes r,\qquad
+v=\sum_r\sqrt{\lambda_r}\,b_r\otimes r.
+\tag{CG.63}
+$$
+
+Both families $a_r$ and $b_r$ are orthonormal, as follows by evaluating
+the matrix entries of the common environment marginal. Moreover every
+$a_r$ is orthogonal to every $b_s$ since $S_+\perp S_-$. Therefore
+$2\operatorname{rank}\sigma\leq3$. Since $\operatorname{tr}\sigma=1$,
+its rank is one. The two dilation vectors share a single environment
+factor. Sending $e_+,e_-$ to their respective orthonormal live factors
+defines $T_0$, and linearity, including the cross operators, gives the
+asserted channel on every $\rho$. This uses complete positivity and the
+three-dimensional output hypothesis. $\square$
+

@@ -1,0 +1,26 @@
+**定义 3.1（贪心彩色截止检验）。** $d=0$ 接受且仅接受常值表。$1\le d\le h$ 时先要求所有 $j>dm$ 带 $A$，并以 $\rho=1$ 开始。每个窗口使用 (2.1) 的实际集合；$|\Gamma_t|>1$ 立即不接受。在非终窗 $t<d-1$，更新为
+
+$$
+\rho'=\begin{cases}
+0,&\rho=0,\\
+1-(n_t\bmod2),&\rho=1, n_t>0,\\
+1,&\rho=1, n_t=0, t=0, m=1,\\
+0,&\rho=1, n_t=0\text{ 且非上一情形}.
+\end{cases}
+\tag{3.1}
+$$
+
+终窗 $a=(d-1)m,b=dm$ 的兼容条件为
+
+$$
+\begin{array}{c|c}
+\text{终窗状态}&\text{接受条件}\\ \hline
+\rho=1, n_t=0&\lambda(b)=A\\
+\rho=1, n_t>0\text{ 偶数}&\lambda(b)=A\\
+\rho=1, n_t\text{ 奇数},\ \Gamma_t=\{L\}&\lambda(b)=L\\
+\rho=0, n_t=0&\text{无额外条件}\\
+\rho=0, n_t>0,\ \Gamma_t=\{L\}&\lambda(b)\in\{A,L\}.
+\end{array}
+\tag{3.2}
+$$
+

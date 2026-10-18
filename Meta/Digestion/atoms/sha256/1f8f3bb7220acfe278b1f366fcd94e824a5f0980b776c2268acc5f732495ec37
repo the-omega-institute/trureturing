@@ -1,0 +1,28 @@
+**Corollary 316.3 (One allowance for three positive residuals).**
+For these same ordered addresses put
+
+$$
+s_J=1+40e-b_2-4b_{j_1}-5b_{j_2}-5b_{j_3}-5b_{j_4}-4b_{j_5}.
+$$
+
+On the same complete feasible allocation in either class,
+
+$$
+4\bigl[(b_{j_6}-e)_++(b_{j_7}-e)_++(b_{j_8}-e)_+\bigr]\le s_J.
+\tag{316.4}
+$$
+
+It holds with $b=a$ at every positive original closed cap.
+
+**Proof.** Reuse the $Y_2$ inequality 299.1 for the empty subset,
+305.2 for each singleton and 310.2 for each pair of
+$\{j_6,j_7,j_8\}$. Together with (316.2), these give, on this
+one profile and allocation, all eight inequalities
+$s_J\ge4\sum_{k\in S}(b_{j_k}-e)$, $S\subseteq\{6,7,8\}$.
+The maximum of the eight subset sums is exactly
+$\sum_{k=6}^8(b_{j_k}-e)_+$: include precisely the positive terms.
+This takes the maximum of necessary inequalities about one witness;
+it does not add budgets from different laws. Only the score subset
+is chosen, and no original demand is clipped. The correspondence
+315.3 proves the original assertion, retaining closed ties. $\square$
+

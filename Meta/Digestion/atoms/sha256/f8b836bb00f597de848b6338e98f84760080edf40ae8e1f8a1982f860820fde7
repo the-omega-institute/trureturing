@@ -1,0 +1,170 @@
+**Theorem 270.2 (Three all-competitor inequalities and two sharp endpoints).**
+The kernel $P_t$ is an original $N_2$ acquisition of error $c$,
+and $(4c,4c,4c;c)\in H_3\cap H_N$, with one full feasible
+allocation of mass one. Every original $O_2$ competitor, with arbitrary
+addresses and full-carrier outputs, satisfies
+
+$$
+\begin{aligned}
+\rho(Z)&\ge t/3,\\
+2\rho(Z)+4(\epsilon(Z)-c)&\ge t,\\
+5\rho(Z)+2(\epsilon(Z)-c)&\ge2t.
+\end{aligned}
+\tag{270.1}
+$$
+
+The following minima are attained:
+
+$$
+\begin{aligned}
+\min_{Z\in O_2}\rho(Z)&=t/3,\\
+\min_{\substack{Z\in O_2\\\rho(Z)=t/3}}\epsilon(Z)&=c+t/6
+        &&\text{by }S_t,\\
+\min_{\substack{Z\in O_2\\\epsilon(Z)\le c}}\rho(Z)&=t/2
+        &&\text{by }Q_t.
+\end{aligned}
+\tag{270.2}
+$$
+
+These statements include $t=1/5$ and $a_4=c$. At $t=0$ the
+displayed allocations and weak inequalities extend, with the strict
+distance distinction disappearing.
+
+**Proof.**
+All weights are nonnegative because $c\ge t$, and each allocation
+sums to $4c+t=1$. Summing complete table cells gives exactly the
+eight laws in Definition 270.1. At cap $c$, the three independent
+zero-word demands are base at least $t-c$, correct at least $3c$,
+and union at least $3c+t=1-c$. The base demand is nonpositive.
+The laws of $P_t,Q_t$ have minimum correct mass $3c$, minimum
+union mass $3c+t$, and positive base $3c+t$. They satisfy all
+22 independent rows. Their tight correct rows give error $c$.
+For $S_t$ at cap $c+t/6$, the base demand is
+$5t/6-c\le0$, and minimum correct mass is $3c-t/6$.
+Its early multiple-zero union masses are $1-c$; at $110$ the
+union mass is $1-t/3\ge1-c-t/6$; all remaining zero-word union
+masses are one. Its positive base is $1-c-t/6$.
+Thus all rows hold at that cap and the positive row is exact.
+
+For the hard hull, $b_1=b_2=b_3=4c\le1$,
+$4e=b_3$ and $b_1+b_3-4e=4c=1-t\le1$.
+The one allocation defining $P_t$ has mass one and satisfies every
+row, so it also establishes $G_N\lambda\ge h$ at this same point.
+No normalization or separate realization enters that assertion.
+
+For the lower bounds, define the following three sums of event
+probabilities. An event label set $J$ means the Borel set
+$\{\theta_j:j\in J\}$; every other carrier output has reward zero.
+
+| Sum | Word and rewarded label set |
+| --- | --- |
+| $I_3$ | $(000,\{0,2,3\}),\ (011,\{1\}),\ (111,\{0,3\})$ |
+| $I_6$ | $(001,\{0,2\}),\ (011,\{1,2,3\}),\ (111,\{0\}),\ (010,\{0,1\}),\ (100,\{0,2\}),\ (110,\{3\})$ |
+| $I_7$ | $(000,\{0\}),\ (001,\{0,2,3\}),\ (010,\{1\}),\ (011,\{1,3\}),\ (101,\{2\}),\ (110,\{3\}),\ (111,\{0\})$ |
+
+The complete stopped supports are
+
+| Schedule | $I_3$ | $I_6$ | $I_7$ |
+| --- | --- | --- | --- |
+| empty | $2$ | $4$ | $3$ |
+| $1$ | $2$ | $4$ | $3$ |
+| $2$ | $2$ | $4$ | $4$ |
+| $3$ | $2$ | $4$ | $3$ |
+| $1,2$ | $2$ | $4$ | $4$ |
+| $1,3$ | $2$ | $4$ | $4$ |
+| $2,3$ | $2$ | $4$ | $4$ |
+
+Indeed, for $I_3$, a table querying 1 merges $000$ with $011$
+on its first queried zero; those rewarded sets are disjoint. A table
+not querying 1 merges $011$ with $111$, again with disjoint
+rewarded sets. At least one reward is lost. For each of $I_6,I_7$,
+each increasing pair has three stopped-cell maxima $(2,1,1)$,
+obtained by counting the displayed event memberships within that cell.
+Empty and singleton maxima are the direct label counts in the table.
+This accounts for all terminal labels and all complete schedules.
+Mixing on one common seed gives $I_3\le2$, $I_6\le4$, $I_7\le4$.
+
+Write $\epsilon=c+u$ temporarily. First $I_3(P_t)=2+t$;
+the three event changes are each at most $\rho$, giving
+$3\rho\ge t$. For $I_6$, its first two readings at $P_t$ sum
+to $4c+2t=1+t$. Its last four readings are the positive base,
+two independent union rows, and the correct row at $110$.
+Their lower demands sum to
+$3(1-\epsilon)+(4c-\epsilon)=3-4u$.
+Consequently $I_6(Z)\ge4+t-2\rho-4u$, proving the second
+inequality. The first five $I_7$ readings at $P_t$ sum to
+$10c+5t$; its last two lower demands are
+$(4c-\epsilon)+(1-\epsilon)$.
+Hence $I_7(Z)\ge4+2t-5\rho-2u$, proving the third.
+These computations combine distance and risk of one law $Z$.
+
+To obtain the same inequalities against every original competitor,
+use the common-seed and actual-witness argument of Theorem 110.2,
+rather than assuming any arbitrary law-preserving transport.
+Countability of $X$ gives a common conull set of lawful finite
+handoffs and hard-two executions. Its preselected schedule has a
+finite measurable maximum address $M(U)$ almost surely. Put
+$\gamma_m=\Pr(M(U)>m)\to0$.
+For each $m\ge4$ fix, before seeds, eight actual sources with
+low words $w$ and replies $q_4=\cdots=q_m=1$.
+Theorem 35.2 supplies them under its entry-rank hypotheses.
+Low zero words have the specified first absence; the source with
+low word $111$ has actual first absence beyond $m$.
+
+On the common event $M(U)\le m$, all fixed high replies are one.
+Whole-transcript dependence contracts these fixed observations and
+information-redundant repetitions to one stopped low table for the
+eight sources. This contraction evaluates a proof score; actual
+requests are still counted. Terminal values may be arbitrary original
+tapes. Therefore the three source sums are at most
+$2+\gamma_m$, $4+2\gamma_m$, $4+3\gamma_m$.
+On the actual $111$ source the base demand is
+$1-\epsilon-a_{m+1}$, since its target may retain that much
+nonbase mass. The preceding algebra consequently gives
+
+$$
+\begin{aligned}
+3\rho&\ge t-\gamma_m,\\
+2\rho+4(\epsilon-c)&\ge t-a_{m+1}-2\gamma_m,\\
+5\rho+2(\epsilon-c)&\ge2t-a_{m+1}-3\gamma_m.
+\end{aligned}
+\tag{270.3}
+$$
+
+Both error and distance are uniform over actual sources, so sources
+may vary with $m$. Letting $m\to\infty$ proves (270.1).
+No infinite all-positive source or source distribution was used.
+
+At every low word, the law table gives
+$\operatorname{TV}(P_t,Q_t)\le t/2$, with equality somewhere,
+and $\operatorname{TV}(P_t,S_t)=t/3$.
+At $110,111$ the latter difference has coordinates
+$(-t/6,t/3,0,-t/6)$; at each other word exactly $t/3$
+moves between two coordinates.
+For any actual $n>3$, these same positive laws give the distance
+bounds, and the exact tail formula of Theorem 110.2 gives error
+$\max(c,a_n)=c$ for $P_t,Q_t$ and
+$\max(c+t/6,a_n)=c+t/6$ for $S_t$.
+This covers every positive vanishing tail, including $a_4=c$.
+
+Realize each allocation by partitioning one source-independent
+$U\in[0,1)$ into its whole-table intervals. It fixes the schedule
+and all counterfactual labels before replies. $Q_t,S_t$ execute the
+preselected increasing schedule and stop at first queried zero.
+Their $N$ completions use that same seed, obtain the complete
+schedule, and count ignored replies. Every displayed handoff is
+finite, with zero advice and at most two actual requests.
+The lower bound $\rho\ge t/3$ is attained by $S_t$.
+At $\rho=t/3$, the third inequality forces
+$\epsilon\ge c+t/6$; $S_t$ attains it.
+At $\epsilon\le c$, the second forces $\rho\ge t/2$;
+$Q_t$ attains it. This proves (270.2).
+
+The new assertions concern joint distance and risk at actual
+$H_3$ points. Three-active amplitude feasibility and the earlier
+unrestricted one-third conversion remain the suppliers of Sections
+113 and 261–262. Neither all intermediate distance-risk endpoints
+nor a new amplitude-feasibility region follows from (270.1)–(270.2).
+The same-cap stopped law $Q_t$ also prevents this point from being
+a feasibility separator. $\square$
+

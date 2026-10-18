@@ -1,0 +1,14 @@
+**Definition 167.1 (Endpoint convention).** For $q\in[0,+\infty]$ set
+
+$$
+\tau(q)=
+\begin{cases}
+1,&q=0,\\
+\min\{1,1/q\},&0<q<\infty,\\
+0,&q=\infty.
+\end{cases}
+\tag{167.1}
+$$
+
+No division by zero is made in this definition.
+

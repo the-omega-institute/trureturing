@@ -1,0 +1,25 @@
+**Corollary 12.2 (what changes at the seam).** The unique aggregate
+supported law in ordered local weight/angle coordinates is constant
+on the platform and analytic on the active side. It is continuous but
+not differentiable across the seam: on the right
+$dk/ds=1/s_0$, whereas on the left $k$ is constant. Its available
+contrast $s_0k$ is $s_c$ on the platform and the request $s$ on the
+active side. Section 13's deterministic sign-report realization attains
+that available contrast. Other legal platform reports may attenuate
+actual contrast while satisfying $\mathsf V(F)\ge s$; after the seam,
+every optimizer has $\mathsf V(F)=s$ by Theorem 8.1.
+The value is $C^1$ although that law is not. Aggregate uniqueness
+does not imply uniqueness of the whole instrument, binary report,
+time laws, hidden Kraus representation or its supported-zero completion.
+Optimizers may split labels or retain extra $\mathcal J_0$ outcomes;
+the five/six statements are minima, not counts of every implementation.
+
+Indeed, keep the entire acquisition record and all its CP maps fixed.
+If $F_{\rm sign}$ is the full plus effect of the sign report, the legal
+report kernel that changes a minus report to plus with probability
+$1-q$ has plus effect $qF_{\rm sign}+(1-q)I_5$. On the platform its
+actual contrast is $qs_c$, so every $q\in[s/s_c,1]$ meets the request.
+At $s=0$, $q=0$ is the deterministic all-plus report. These report
+choices preserve acquisition-record TV and every quantum/resource
+interface; they need not attain the available contrast.
+

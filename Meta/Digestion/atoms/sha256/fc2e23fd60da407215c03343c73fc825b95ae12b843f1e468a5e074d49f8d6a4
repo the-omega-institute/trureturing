@@ -1,0 +1,33 @@
+**Corollary 15.2 (nonempty actual critical-orbit regime and occurrence dictionary).**
+Retain all standing antecedents and set $Q=G_{\rm resp}/\overline D$.
+For any dataset in Propositions 14.1–15.1, $R>Q$ gives $C_{\rm resp}<0$
+and hence every actual normalized complex ground-state choice converges
+under the original $\mathcal U_s$ to $\mathcal O_c$ as $s\downarrow0$.
+For every fixed admitted nonzero signed $\kappa$ in the explicit window,
+this regime is nonempty even with $H,k_0,a,\varepsilon$ fixed: replace
+$I$ by any sufficiently narrow fixed symmetric interval about $k_0$.
+For each open image $(A,B)$ in (14.1) or (14.2), negative, positive and
+zero response occur respectively exactly when $B>Q$, $A<Q$ and
+$A<Q<B$. Across the distinct datasets of Proposition 15.1, negative
+response always occurs for each sign; positive and zero response each
+occur if and only if $G_{\rm resp}>0$.
+
+Proof. Equation (12.3) gives the exact identity
+$C_{\rm resp}=a\nu^2\overline D(Q-R)$, with positive prefactor.
+For the symmetric interval $(k_0-h,k_0+h)\subset I$, the same explicit
+radius remains admissible, while $R=\pi^2d_0^2/(4h^2)\to\infty$
+as $h\downarrow0$. Fix any sufficiently small $h>0$ with $R>Q$
+before taking $s\downarrow0$; Theorem 11.2 gives the asserted actual
+orbit convergence and $r_s\sim(-C_{\rm resp})s^{-6}$.
+The open-image assertions follow by intersection with $(Q,\infty)$,
+$(0,Q)$ and $\{Q\}$ respectively; Proposition 15.1 gives the full
+positive-axis image. For positive response the actual bounded-$r_s$
+scale and orbit defect are exactly Theorem 11.2, not an identified
+replacement profile. At zero response only (11.4) and the sequencewise
+criterion (3.9) apply; the actual $r_s$ decision remains unresolved.
+These are `repo-derived` parameter and actual-state consequences, with
+no evaluation of the canonical constants or sign for an arbitrary
+fixed datum. They assert no preparation of analytic amplitudes, positive
+$L^2$ spectral gap, $L^2$ response vector, finer coefficient, physical
+dimension or kernel verification. $\square$
+

@@ -1,0 +1,25 @@
+**定义 33.1（A single joined chronological certificate）。** For an eligible cut $a=qm+r$, a depth $d\ge q+1$ is admitted by a common-cut certificate if one matrix
+
+$$
+(x_t(j))_{0\le t<d,\ j\in P}
+\tag{33.1}
+$$
+
+has all of the following properties. Its rows for $t<q$ equal $I_t$. Its row at $q$ belongs to the actual first-zero cube (31.9), with zero entries off $W_q$. For every $t>q$, its entries are arbitrary on $P\cap W_t$ and zero outside. Its full columns separate different joined low-tail labels:
+
+$$
+\Lambda(j)\ne\Lambda(j')\quad\Longrightarrow\quad x_{<d}(j)\ne x_{<d}(j').
+\tag{33.2}
+$$
+
+A same-label phase pair may have different columns. Every phase retains its own column, including one that is currently silent, previously identified, or later reactivated. Earlier all-one rows and the actual parent row are part of these columns, rather than an uncharged preliminary code. There is only one matrix for all successful archives and both INITIAL values.
+
+Let $\mathcal A(f)$ be the set of all depths satisfying (31.6). Let $\mathcal Z(f)$ be the set of depths admitted by (33.1)–(33.2) for some eligible cut, restricted to
+
+$$
+q+1\le d\le D+p.
+\tag{33.3}
+$$
+
+Both sets are finite. The target's table has finitely many entries; only their equality relations enter these conditions. No evaluation-time bound is implicit in the definition.
+

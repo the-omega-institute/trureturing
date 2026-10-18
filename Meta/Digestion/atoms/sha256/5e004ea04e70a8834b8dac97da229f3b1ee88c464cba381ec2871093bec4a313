@@ -1,0 +1,130 @@
+**Theorem 13.1 (High-activity box with nearly uniform site weights).**
+For every $n\ge7$, suppose there exists $L\ge100$ such that
+
+$$
+L\le\lambda_i\le\frac{11L}{10}\quad(1\le i\le n),\qquad
+\omega_i>0,\qquad\sum_i\omega_i=1,\qquad
+\frac{\max_i\omega_i}{\min_i\omega_i}\le\frac{11}{10}.
+\tag{13.1}
+$$
+
+Activities and weights can vary independently at every site.
+For these original-path parameters,
+
+$$
+\gamma<1-\Lambda.
+\tag{13.2}
+$$
+
+Proof. Put $m=\lfloor n/2\rfloor$, $T=\{1,3,5,\ldots\}\cap[n]$,
+$a=\min_i\omega_i$, $b=\max_i\omega_i$, $U=11L/10$, and use
+the matching $\mathcal M=\{(1,2),(3,4),\ldots,(2m-1,2m)\}$.
+For each matched pair, monotonicity of $xy/(x+y)$ gives
+$\omega_i\omega_j/(\omega_i+\omega_j)\ge a/2$.
+Also $1+U\le111L/100$ and
+
+$$
+1-q_iq_j\ge1-\left(\frac{U}{1+U}\right)^2
+\ge\frac{2U}{(1+U)^2}
+\ge\frac{22000}{12321L}>\frac7{4L}.
+\tag{13.3}
+$$
+
+Consequently Corollary 9.3 supplies
+
+$$
+\sum_{ij\in\mathcal M}r_{ij}\ge\frac{7ma}{8L}.
+\tag{13.4}
+$$
+
+Conditioned on $A_T$, all even sites are independent with
+their original activities, because every edge has an odd
+endpoint fixed empty. This is conditional independence under
+the original law, not unconditional independence of occupations.
+Thus with $R=Z/Z_T>1$ the exact cylinder quotient is
+
+$$
+\kappa_T=\frac{R}{R-1}\bar h_T,\qquad
+\bar h_T=\sum_{i\in T}\omega_iq_i
+\prod_{j\in N(i)}(1+\lambda_j)^{-1}.
+\tag{13.5}
+$$
+
+Summing first over the occupied odd subset also gives the exact
+positive-term expansion
+
+$$
+R=\sum_{I\subseteq T}\lambda_I
+\prod_{j\in N(I)}(1+\lambda_j)^{-1}.
+\tag{13.6}
+$$
+
+Every subset of $T$ is legal. The empty subset contributes one;
+other terms below are retained lower bounds on this same sum.
+
+For odd $n=2m+1$, there are two odd endpoints of degree one and
+$m-1$ odd sites of degree two. Hence
+
+$$
+\frac{L\bar h_T}{a}
+\le\frac{11}{10}\left(2+\frac{m-1}{100}\right).
+\tag{13.7}
+$$
+
+At $n=7$, the full odd-set term in (13.6) yields
+$R\ge L^4/(1+U)^3\ge100(100/111)^3>50$.
+Therefore $R/(R-1)<10/9$, and
+
+$$
+\frac{L\kappa_T}{a}
+<\frac{1111}{450}<\frac{21}{8}=\frac{7m}{8}.
+\tag{13.8}
+$$
+
+For odd $n$ with $m\ge4$, retain the two singleton odd-endpoint
+terms in (13.6). Each is at least $L/(1+U)\ge100/111$.
+Thus $R/(R-1)\le311/200$ and
+
+$$
+\frac{L\kappa_T}{a}
+\le\frac{3421(m+199)}{200000}<\frac{7m}{8}.
+\tag{13.9}
+$$
+
+The last comparison holds at $m=4$, since $694463<700000$,
+and its right side grows faster as $m$ increases.
+
+For even $n=2m\ge8$, there is one odd endpoint of degree one
+and $m-1$ odd sites of degree two. The endpoint singleton term
+gives $R/(R-1)\le211/100$, so
+
+$$
+\frac{L\kappa_T}{a}
+\le\frac{2321(m+99)}{100000}<\frac{7m}{8}.
+\tag{13.10}
+$$
+
+At $m=4$, $239063<350000$; once again the right side has
+larger slope. Equations (13.8)--(13.10), (13.4) and Chapter 9
+give
+
+$$
+\gamma\le\kappa_T
+<\sum_{ij\in\mathcal M}r_{ij}
+\le D_{\mathcal M}\le1-\Lambda.
+\tag{13.11}
+$$
+
+All endpoint counts use the original open path. $\square$
+
+This certificate extends the homogeneous-activity parity family
+in §9.3 to a box with genuinely independent site parameters.
+It does not settle $\gamma\le1-\Lambda$ for arbitrary positive
+activity and weight vectors at lengths at least seven. Its
+proof is a repository-derived cylinder-and-matching comparison;
+no literature-priority claim is made.
+
+[Nacu03]: ../../../Library/StatisticalMechanics/nacu2003monotone.md
+
+[Castelnovo05]: ../../../Library/StatisticalMechanics/castelnovo2005stochasticmatrixform.md
+

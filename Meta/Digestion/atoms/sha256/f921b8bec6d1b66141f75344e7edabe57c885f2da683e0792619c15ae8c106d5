@@ -1,0 +1,70 @@
+**Definition 78.1 (source-preserving geometric length variants).** Equal ground-stub
+lengths force opposite planar circle intersections; unequal lengths need not. The
+strict height band and unit inherited seams below support a small-source width
+argument. The unrestricted width-or-area obstruction77.3 supplies a different
+witness and weaker hypotheses. Here the common-length range and the unequal
+leaf-width boundary are specified separately.
+
+An admissible source is an authentic nonempty finite ordered full binary
+$\alpha/\beta$ tree under the original source contracts55.1,60.1,66.1 and67.1 in
+the [first continuation](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md). Its
+leaves carry their actual labels; an internal node is the ordered bracket of its two
+children. Positions are the actual occurrence addresses $p\in\{L,R\}^*$ relative to
+the current root $o$, not equivalence classes of equal subtrees. Every label,
+bracket, left/right order and occurrence is retained. In particular, repeated
+expressions at different addresses are different source vertices. Put
+
+$$
+n=\#D,\qquad \ell(D)=\#\operatorname{Leaf}(D),\qquad
+h(D)=\max_{p\in D}|p|,
+\tag{78.1}
+$$
+
+where $|p|$ is the number of inherited seams from the current root. The half
+skeleton consists of exactly those parent-child seams and exactly two ground stubs
+at every current leaf. Each stub has its own ground tip; all tips are distinct.
+There are no further edges or identifications. If there are $i$ internal vertices,
+counting parent-child edges gives $2i=n-1$ and $n=i+\ell(D)$, hence $n=2\ell(D)-1$.
+There are $n-1$ inherited seams, $2\ell(D)=n+1$ stubs and $2n$ half-skeleton edges.
+The root has incidence two, including when it is a singleton; every nonroot source
+vertex has incidence three, and every ground tip has incidence one.
+
+For each leaf $p$ prescribe two positive geometric lengths $r_{p,1}$ and $r_{p,2}$.
+Write $E_s(D;r)$ for the following spatial contract in $\mathbb R^{s-1}\times\mathbb
+R$, with last coordinate the height $y$. The placement of all source vertices and
+ground tips is injective. Every source vertex satisfies $1/4<y_p<3/4$. Every
+inherited seam is a straight Euclidean segment of length exactly one. Stub $j$ at
+$p$ is a straight segment of length exactly $r_{p,j}$ from $p$ to its own tip in
+$\{y=0\}$. Segments meet only at images of their prescribed common graph endpoints,
+and no vertex lies on a nonincident segment. There are positive minimum incident-ray
+angles and positive clearances between nonincident compact segments and vertices,
+allowed to depend on this finite source, these lengths and this placement.
+
+The common-length contract $E_s^\lambda(D)$ means $E_s(D;r)$ with
+$r_{p,1}=r_{p,2}=\lambda$ at every leaf. It changes only the declared Euclidean
+ground-stub length in76.1; inherited seams remain unit. Thus $E_s^1(D)=E_s(D)$
+of76.1. An unequal near-unit contract instead prescribes each
+$r_{p,j}\in[1-\delta,1+\delta]$, without requiring equality. Here $\delta$ is a
+geometric tolerance, independent of any cable density parameter appearing in the
+analytic carrier.
+
+Admissibility retains one immutable INITIAL, one predeclared fixed cap $H$,
+source-independent actor initialization, the original complete contexts and
+candidates, their whole-candidate guards, every acceptance or refusal, numerical
+Read, absorbing Stop and actual chronological records. In particular the original
+whole substitution is
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+\tag{78.2}
+$$
+
+A candidate is accepted only under its original guard $\ell\le H$; refusal retains
+the current source and supplies no candidate Read. Reads retain their original
+functions and source version, and there is no event after Stop. A mathematical
+family of separately legal finite commissions raises no cap and continues no stopped
+history. All existence statements below mean that each legal finite current source
+has its own placement, with the source semantics retained. They give no simultaneous
+apparatus or source- or cap-uniform margin.
+

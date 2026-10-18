@@ -1,0 +1,64 @@
+**Proposition 206.5 (The pairwise-cylinder moment application).**
+For any full nonnegative score, independently for each event type
+$R\in\{A,C,P\}$ and each actual first-zero class $n$, its suffix
+measure can be replaced by a nonnegative measure supported on at most
+
+$$
+D_{L-n}=1+(L-n)+\binom{L-n}{2}
+\tag{206.17}
+$$
+
+words from its original support. Keep $T$ unchanged. The replacement
+preserves every individual schedule-cell-label reward in both catalogs,
+hence $B_N,B_O,W,Q,\Delta_N,\Delta_O$. Thus at most
+
+$$
+3\sum_{d=0}^{L-1}\left(1+d+\binom d2\right)+1
+ =\frac{L^3+5L}{2}+1
+\tag{206.18}
+$$
+
+nonzero event-row atoms suffice. This is an upper bound; it does not
+assert minimal support, boundedly many active labels, or sparsity of
+an acquisition law.
+
+**Proof.** On a fixed $(R,n)$ write $w=1^{n-1}0x$ with $d=L-n$ and use
+$\Phi_d(x)=(1,x_i,x_ix_j\ (i<j))\in\mathbb R^{D_d}$.
+If the positive support of $\sum_xm_x\delta_x$ has more than $D_d$
+points, choose a nonzero dependence $\sum_xa_x\Phi_d(x)=0$ on that
+support. Its constant coordinate gives $\sum_xa_x=0$, so the
+coefficients have both signs. Let
+$\lambda=\min_{a_x>0}m_x/a_x>0$ and replace $m_x$ by
+$m_x-\lambda a_x$. All coefficients stay nonnegative, at least one
+vanishes, no new point is introduced, and the whole moment vector is
+unchanged. Repeat until at most $D_d$ points remain. Zero measures
+need no elimination; for $d=0$ there is just one possible suffix.
+This is the finite conic Carathéodory/Tchakaloff argument applied to
+these Boolean features; see Bayer–Teichmann as cited in 206.23.
+
+Within a fixed first-zero class, the indicator of any $N$ cell is a
+product of at most two factors $x_i$ or $1-x_i$ after substituting the
+fixed prefix. Empty and single cells have lower degree. An $O$ cell
+has indicator $1-w_i$, $w_i(1-w_j)$ or $w_iw_j$, and its restriction
+has the same degree bound. Repeated coordinates reduce by $x_i^2=x_i$.
+Every such indicator is therefore a multilinear polynomial of degree
+at most two. Its integral is preserved by the elimination.
+
+For a fixed cell and label, the event contribution is this integral
+times, respectively, $\mathbf1_{\ell=0}$, $\mathbf1_{\ell=n}$ or
+$\mathbf1_{\ell\in\{0,n\}}$. First-zero classes and event types are
+never mixed. Summing them and the unchanged positive-word contribution
+preserves the label reward before any maximum. It follows that all
+cell maxima, schedule supports and both $B$ values agree. Constant
+moments preserve every row total, so (206.5)–(206.6) preserve $W,Q$
+and both excesses. Finally
+$\sum_{d=0}^{L-1}D_d=L+\binom L2+\binom L3=(L^3+5L)/6$,
+which proves (206.18).
+
+Applying the reduction separately to an input and a certificate leaves
+the same residual and the same budget. In a full separator
+$(b,y,\lambda)$, leave the attained full-row $\lambda$, $b$ and the
+matrix unchanged; $Q(y)$ and $\Delta_O(y)$ stay identical.
+Consequently this moment application reduces representation without
+establishing any new cap-feasible region. $\square$
+

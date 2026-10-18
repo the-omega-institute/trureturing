@@ -1,0 +1,61 @@
+**定理 44.1（四数据临界分类）。** 对每个定义 42.1 的 $s$，存在包含 $\lambda_s$ 的开邻域 $V_s\subset\mathbb R^4$、包含 $1/2$ 的闭区间 $I\subset(0,1)$，以及光滑函数 $\beta(r,\lambda),\kappa(r,\lambda)$ 和 $\Psi_s(\lambda)$，使全部相容世界唯一由
+
+$$
+b=\beta(r,\lambda),\quad k=\kappa(r,\lambda),\quad
+\phi(r,\lambda)=F_1(r,\beta(r,\lambda),\kappa(r,\lambda);\lambda)=0,
+\quad r\in\operatorname{int}I
+\tag{44.1}
+$$
+
+重建。全积 $I\times V_s$ 上 $\phi_{rr}<0$，两端的 $\phi$ 为负，每个数据有唯一内点最大值 $\Psi_s(\lambda)$，且
+
+$$
+|\Omega(\lambda)|=
+\begin{cases}
+0,&\Psi_s(\lambda)<0,\\
+1,&\Psi_s(\lambda)=0,\\
+2,&\Psi_s(\lambda)>0.
+\end{cases}
+\tag{44.2}
+$$
+
+证明。先证 $C_s\ne0$，以确定可以解的子系统。在中心 $r=1/2,c=1/(4b)$ 上
+
+$$
+x=\frac nu=\frac12+\frac1{4b(1+2b)}.
+\tag{44.3}
+$$
+
+由 $35<\sqrt{1241}<36$，低中心 $0<b_-<1/4$，所以 $x>7/6$；高中心 $b_+>1$，所以 $x<7/12$。而 $C=0$ 必须有 $2/3<x<6/7$，见引理 43.1。两者均不可能，所以 $C_s\ne0$。
+
+在中心 $q_s=(1/2,b_s,0)$，$a=e=\omega=k=0$。式 (35.5) 给
+
+$$
+D_{(b,k)}(F_2,F_3)=
+\begin{pmatrix}2s&B_s\\0&C_s\end{pmatrix},\qquad
+\det=2sC_s\ne0.
+\tag{44.4}
+$$
+
+标准参数隐函数定理给唯一光滑 $b=\beta(r,\lambda),k=\kappa(r,\lambda)$，解出 $F_2=F_3=0$。在中心数据，对所有充分接近 $1/2$ 的 $r$，$b=b_s,k=0$ 已是此子系统的解；局部唯一性故给恒等式 $\beta(r,\lambda_s)=b_s,\kappa(r,\lambda_s)=0$。代入 $F_1$，利用 $c=r(1-r)/b_s$，得到精确式
+
+$$
+\phi(r,\lambda_s)=-\frac{4s}{b_s}(r-1/2)^2,
+\qquad \phi_r(1/2,\lambda_s)=0,\qquad
+\phi_{rr}(1/2,\lambda_s)=-\frac{8s}{b_s}<0.
+\tag{44.5}
+$$
+
+这是约化图上的导数，包含源约束和子系统的总变化；中心有 $\beta_r=\kappa_r=\beta_{rr}=\kappa_{rr}=0$、$c_r=0,c_{rr}=-2/b_s$。保持 $c$ 不变求偏导不会得到这个曲率。
+
+取关于 $1/2$ 对称的充分小闭区间 $I$，完全在上述子系统图内。在中心数据，$\phi$ 两端严格负，$\phi_r$ 左正右负，全区间 $\phi_{rr}<0$。连续性和紧性使这些严格不等式在缩小后的 $I\times V_s$ 上一致保持，且整个图中 $0<r<1,b,c>0$、$g(0)=k-z\ne0$。定理 43.2 允许再缩小 $V_s$，使每个相容世界的 $(r,b,k)$ 都落在子系统的唯一性邻域且 $r\in\operatorname{int}I$。所以此图没有遗漏任何额外世界；反过来，每个 $\phi$ 的根都由命题 42.2 重建为合法完整世界。
+
+$\phi_r$ 在 $I$ 严格递减且端点异号，故有唯一内点零点 $\rho(\lambda)$。因 $\phi_{rr}\ne0$，隐函数定理使 $\rho$ 光滑。定义
+
+$$
+\Psi_s(\lambda)=\phi(\rho(\lambda),\lambda).
+\tag{44.6}
+$$
+
+$\phi$ 在最大点左侧严格递增、右侧严格递减。若最大值负，无根；等于零，唯一根是最大点；大于零，两边各由介值定理得一个根且严格单调保证唯一。两个不同 $r$ 给不同源及不同完整目标。所有根都在端点内部，整个纤维均已覆盖，故得式 (44.2)。∎
+

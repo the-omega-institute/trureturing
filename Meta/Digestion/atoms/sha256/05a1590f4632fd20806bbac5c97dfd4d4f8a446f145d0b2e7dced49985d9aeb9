@@ -1,0 +1,31 @@
+#### 动态未来读数
+
+未来输出词对 $\kappa$ 敏感，当且仅当存在合法 $\omega$ 和末端测试 $g$，使：
+
+~~~math
+\boxed{
+dM_\omega g\neq0.
+}
+~~~
+
+因此：
+
+~~~math
+\boxed{
+\begin{aligned}
+\text{静态可见性}
+&\Longleftrightarrow J(f)\neq0,\\[2mm]
+\text{联合关系可见性}
+&\Longleftrightarrow J(fg)\neq0,\\[2mm]
+\text{局部时间可见性}
+&\Longleftrightarrow \operatorname{Curv}_K\neq0,\\[2mm]
+\text{未来可见性}
+&\Longleftrightarrow dM_\omega g\neq0.
+\end{aligned}
+}
+~~~
+
+这四个条件描述的是同一个隐藏方向在四种观察层中的表现。
+
+---
+

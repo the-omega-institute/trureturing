@@ -1,0 +1,24 @@
+**References 13.2 (formal-source correspondence).** The native source
+identification is $\alpha=\mathtt{of\ true}$,
+$\beta=\mathtt{of\ false}$, pairing $\mathtt{FreeMagma.mul}$ and
+$\rho=\mathtt{substitution}$. Source inspection includes public and
+private/local declarations; it is not fresh kernel evidence.
+
+| Source declaration | Supplied interface and its limit |
+| --- | --- |
+| [SourceTransportCentralizer, source_transport_centralizer][D5-CENTRAL] | Atomic stability classification, commuting pairing-preserving maps, injectivity and the inverse on the actual image. Its local classification, orbit and injectivity arguments are not a signed constraint solver. |
+| [NativeDepthPatterns, depthEquiv, original_present_transport, original_prefix_locality][D5-DEPTH] | Exact finite-prefix decomposition and forward original-address locality. Its History is a list of numeral epoch/address/reply triples. |
+| [NativeGroundSeparation, simultaneous_ground_separation][D5-GROUND] | Ordinary native term disequalities, with private count_length, evaluated_length, compound_mass_ne and bounded_eval_injective providing equal-mass separation. No interpreted $\rho$-equation solver is contained in this type. |
+| [NativeCutFibers, rowFiberEquiv][D5-CUT] | Whole old-row filling with injective old-class valuations. The private recover_fill and fill_injective identify both source directions. |
+| [NativeHistoryCells, cell_feasibility_exact and historyCellEquiv][D5-HISTORY] | Exact literal-history cells, all old-class disequalities and symbolic recutting. Its private syntax_iff_ground uses ordinary term separation. It does not assert arbitrary signed whole-subtree feasibility. |
+| [NativeSymbolicRecutting, symbolic_recut_exact][D5-RECUT] | Reached order, concrete exterior and every equality pair when all residual variables are beyond the supplied cut depth; private termAt_fill and exterior_commute carry its structural identities. |
+| [Pinned mathlib, Algebra/Free.lean][FREE] | FreeMagma's two constructors, lift, map, hom_ext and positive leaf length. Free constructors are used for shape unification only after the native collapse choices. |
+
+The pinned mathlib revision is
+db584cd6d46c92f209a44c0f1c829460d327499d.
+The comparisons above do not claim exhaustive absence in every library
+or compiled specialization of any new result. External-stream restart
+and scanner-runtime results require their own probabilistic and runtime
+hypotheses; none supplies a deterministic finite-tree constraint
+decision by changing the name of its state.
+

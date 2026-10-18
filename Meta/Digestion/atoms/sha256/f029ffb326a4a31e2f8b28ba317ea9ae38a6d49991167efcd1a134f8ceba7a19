@@ -1,0 +1,47 @@
+**定理 24.2（Exact common-cut criterion）。** For arbitrary $f:Q\to Y$ on the full INITIAL record set, $C_{\rm pre}(f)<\infty$ if and only if there exists one integer $a\in\{0,\ldots,k-1\}$, written
+
+$$
+a=qm+r,\qquad q\ge0,\quad 0\le r<m,
+\tag{24.3}
+$$
+
+such that all the following conditions hold for each $v\in\mathbb F_2$. For every $t<q$ and every $\beta\in\mathbb F_2^t$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):\theta\in S_t(\beta),\ k-(t+1)m\le s<k-tm\}.
+\tag{24.4}
+$$
+
+With $h=k-qm$, for every $\beta\in\mathbb F_2^q$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):\theta\in S_q(\beta),\ h-r\le s<h\},
+\tag{24.5}
+$$
+
+and, separately for every $\theta\in S_q(\beta)$,
+
+$$
+\operatorname{Const}\{f(v,\theta,s):0\le s<h-r\}.
+\tag{24.6}
+$$
+
+The quantifier over $a$ precedes the value and archive quantifiers. The $r=0$ rejection band in (24.5) is empty. The independent label $f(\bot)$ is returned free. This criterion concerns existence of a finite preset stream, without asserting its optimal fee.
+
+**证明。** Until its first zero, a literal stream consists of ones. A source survives $u$ such bits precisely when $s+u<k$. Before absorption, its endpoint value changes are the $I_t(\theta)$, independent of its old tail. Consequently a raw successful archive at depth $t$ has exactly the product in Definition 24.1. If this archive stopped earlier, its entire earlier candidate set had one target label; every raw subgroup obtained by hypothetically continuing that archive is a subset of that set and also has one label. Such hypothetical continuation is used only to inspect sets, never as an emitted action or a charge.
+
+First suppose the common stream has its first zero after $a<k$ ones. In each preceding all-one block, the rejected INITIAL tails are $k-(t+1)m\le s<k-tm$. At its endpoint, rejection discards the phase and intermediate value, retaining only the previous successful archive. If the archive is live, correctness forces that whole rejected band to have one label; if it already stopped, the subset argument gives the same condition. This proves (24.4).
+
+In the block containing the zero, the $r$ leading ones reject precisely $h-r\le s<h$, with previous phase archive $S_q(\beta)$. The same argument proves (24.5). All lower tails at any one fixed phase survive those leading ones and have identical intermediate values. The first zero merges their tails, hence their complete current records. Every remaining bit and later endpoint is common. Correctness therefore forces (24.6), whether this archive is live or previously stopped. This is the actual first-zero loss of [S1, Lemmas 4.2–4.3]; no tail marginals from different histories have been combined.
+
+A finite correct stream need not emit a zero at all. If its first zero is at or beyond $k$, or if all sources stop before any zero, normalize the existence argument to $a=k-1$. Extend an already unused all-one prefix only as a set calculation. Conditions (24.4) hold as above. In the block crossing the $k$th one, every still-live candidate in $S_q(\beta)\times\{0,\ldots,h-1\}$ would reject to one endpoint archive, so that whole set must have one label. If it had already stopped, the same constancy follows from its stopping leaf. This stronger condition implies (24.5)–(24.6) at $a=k-1$. It establishes an eligible normalized cut, without asserting that a stopped source actually executes the inserted zero.
+
+Conversely, given an eligible cut, issue the one common literal prefix
+
+$$
+(1^m)^q\mid1^r0^{m-r}.
+\tag{24.7}
+$$
+
+Every rejection archive returns the common label in (24.4) or (24.5). Surviving sources finish with tail zero; (24.6) makes the target constant on each fixed INITIAL phase among those sources. Apply the safe preset phase-recovery protocol [S1, Theorem 3.1], using the newly observed value as its increment baseline. Its current phase lies in $P$; subtract the known issued displacement $(q+1)m$ to recover the INITIAL phase and return its label. The all-one blocks have $m<k$ whenever $q>0$, and the mixed block has $r<k$, so they are internally legal. The mixed block ends zero and all phase probes have the supplied safe seams. Stop any constant archive earlier. Each remaining source follows this same stream; all emitted prefix and recovery blocks are paid. This proves sufficiency for both alphabets. ∎
+

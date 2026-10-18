@@ -1,0 +1,35 @@
+**Theorem 4.1 (infeasibility of the original 155-coefficient family).**
+For every $r_\star\in I$, the rational system [PAIR, (16.18)--(16.22)]
+has no solution. The same conclusion holds if its coefficients and
+thresholds are allowed to be real. In particular it holds with the
+original $155$-coefficient $\ell^1$ budget at most one, six nonnegative
+risk weights, and rational thresholds with positive sum.
+
+**Proof.** Let a proposed tuple have the original potentials, multipliers,
+event terms and nonnegative risk weights. Evaluate its B expression at
+$(\pi_5Q_B,\pi_5W_B)$ and its A expression at
+$(\pi_5W_A,\pi_5Q_A)$. Theorem 3.1 cancels all potential terms and
+annihilates all residual and centered event terms. Hence the sum is exactly
+
+$$
+\begin{aligned}
+&G_B(\pi_5Q_B,\pi_5W_B)+G_A(\pi_5W_A,\pi_5Q_A)\\
+&\quad=\sum_{r\in\{a,b,r_\star\}}
+ \bigl[\lambda_{p,r}\ell_{p,r}(Q_B)
+       +\lambda_{\beta,r}\ell_{\beta,r}(W_A)\bigr]\le0,
+\end{aligned}
+\tag{4.1}
+$$
+
+by Lemma 3.2. Both product nodes belong to their original outer domains,
+including their boundary faces and complete tails. The two universal
+inequalities would instead make (4.1) at least
+$\delta_B+\delta_A>0$. This is impossible.
+
+The argument bounds no coefficient and discards no coefficient: the
+original norm restriction is simply unnecessary for this obstruction.
+It applies to the absolute-value expressions themselves. If those
+expressions are represented by all nonempty closed TV sign cells, each
+node belongs to such a cell, and the same contradiction holds on that
+representation, including all ties and boundary faces. $\square$
+

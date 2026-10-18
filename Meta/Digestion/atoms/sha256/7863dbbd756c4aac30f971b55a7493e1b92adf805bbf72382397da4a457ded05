@@ -1,0 +1,40 @@
+**Definition 8.1 (parameters and actual-history representatives).** Fix
+$M\ge2$, $n=3M+5$, $k=M+4$, and partition the coordinate set as
+
+$$
+[n]=\{t\}\sqcup X\sqcup Y\sqcup R
+\sqcup\{u_1,\ldots,u_M,v_1,\ldots,v_M\},
+$$
+
+where $X=\{x,x'\}$, $Y=\{y,y'\}$, $R=\{r_1,\ldots,r_M\}$.
+Set $U_j=\{u_{M-j+1},\ldots,u_M\}$ and
+$I_j=[n]\setminus(X\cup Y\cup U_j)$ for $1\le j\le M$.
+Choose original distinct positive positions and costs satisfying
+
+$$
+c_t\le c_{x'},\qquad c_t\le c_{y'},\qquad
+c_x+c_t\le C_Y,\qquad c_y+c_t\le C_X.
+\tag{8.1}
+$$
+
+A permitted choice is $c_i=5\,3^{i-1}$, $s_i=c_i-4$, with
+$t,x,y,x',y'$ the first five indices and the remaining indices in displayed
+$R,u,v$ order. The first five costs are $5,15,45,135,405$, satisfying
+(8.1), and all positions are positive and increasing. This is one allowed
+input choice; no general nonresonance hypothesis is imposed.
+
+A representative system chooses for each $p\in V$ an actual live history
+with that count pair, ending before a running invocation. Its state map is
+$f:V\to Q$. The histories, not just their marginal count labels, are part
+of the choice. A collision is a pair of distinct cells with the same
+representative state. A family is cell-disjoint if no cell is used twice.
+For two fixed incoming histories in the notation of Lemma 2.3, an allowed
+cross-fill retains each history's own old values on $I$, uses old $S$
+values on $X$ and old $T$ values on $Y$ on both completions, and chooses
+one common assignment on $U$ in (2.5). Its first separator is the first
+common-suffix state with different replies. In the examples below
+$\lambda=V'=1$. Its three-state first-exposure pack consists of this
+separator, the state first exposing the new zero completing the negative
+certificate, and the state first exposing the new one completing the
+positive certificate. This fixes the pack before any charging assertion.
+

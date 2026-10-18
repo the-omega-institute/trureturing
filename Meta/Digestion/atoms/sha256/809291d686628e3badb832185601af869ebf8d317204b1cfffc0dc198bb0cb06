@@ -1,0 +1,11 @@
+**Lemma 5.3 (the prior gradient-rank consequence).** Let
+$G=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_\star}$, a real $6$ by $3$
+matrix. Then $G^TG\succ0$ and $\nabla F(x_\star)=-G\eta_\star$.
+
+Proof. Stationarity is part of $\Psi(u_\star)=0$. The bordered Jacobian is
+$\left(\begin{smallmatrix}A&G\\G^T&0\end{smallmatrix}\right)$.
+If $Gc=0$, it annihilates $(0,c)^T$; its nonsingularity therefore gives
+$c=0$. This is exactly the already extracted consequence CG.164, recalled
+to expose the dependence of the inverse used next. For every nonzero real
+$c$, $c^TG^TGc=\|Gc\|^2>0$. $\square$
+

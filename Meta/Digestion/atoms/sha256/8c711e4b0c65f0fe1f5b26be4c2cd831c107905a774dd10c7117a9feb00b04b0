@@ -1,0 +1,33 @@
+**Lemma 47.1 (one event controlling every actual polling gap).**
+Let $G_{\rho,\Lambda}$ be the event that, throughout each actual waiting gap,
+all three true local coordinates (44.4) from its starting time are at
+most $\rho/16$, and, throughout each actual polling gap of attempt $j$,
+they are at most $\epsilon_j/16$. Then
+
+$$
+\mathbb P(G_{\rho,\Lambda}^c)
+ \le10e^{-b_0\Lambda}\mathcal R_\rho(\Lambda)\le\delta.
+\tag{47.1}
+$$
+
+Proof. A waiting gap has duration at most $d_0=c\rho^2/\Lambda$.
+An attempt-$j$ polling gap has duration at most $h_j/(\Lambda+j)$.
+Lemma 44.2 with the respective radii gives conditional probabilities
+at most $10e^{-b_0\Lambda}$ and $10e^{-b_0(\Lambda+j)}$.
+Indeed for the latter gap
+$(\epsilon_j/16)^2/[16(1+\nu^2)h_j/(\Lambda+j)]
+=b_0(\Lambda+j)$; the first-level exponent is no smaller.
+The waiting exponents are larger. The drift conditions hold since
+$1024c|\lambda|\rho\le1/2$.
+
+Sum these conditional bounds over actual issued gaps, using their
+start-measurable selection. The waiting charge from Theorem 46.2 is
+$T\Lambda/(c\rho^2)+N_0+1$. For service use
+$N_0\sum_jq^j(\Lambda+j)e^{-b_0(\Lambda+j)}$ and discard the extra factors
+$e^{-b_0j}\le1$. This gives precisely (47.1).
+The count and reach bounds used here were unconditional and did not
+assume $G_{\rho,\Lambda}$. Thus the estimate is not circular, nor does it
+condition the original source law on successful tracking. The event
+itself is a probability-estimate device, never an acquired observation.
+$\square$
+

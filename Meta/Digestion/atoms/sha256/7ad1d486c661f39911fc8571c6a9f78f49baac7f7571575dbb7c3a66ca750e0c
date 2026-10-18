@@ -1,0 +1,29 @@
+**Theorem 13.1 (all binary orders embed in one legal third-latch slice).** For every fixed $\mu$ of Definition 6.1, define $\delta(0)=\alpha\alpha$, $\delta(1)=\beta\beta$ and
+
+$$
+\iota(u)=\delta(u)\,\tau,\qquad
+\tau=\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad u\in\{0,1\}^{*}.
+\tag{SC.26}
+$$
+
+This is an injection into the actual $R=1$, marker-$100$, zero-return slice, with the same $w=1,Q^+=(ac,bc),Z=1$ and original bare/control fields. For every $k\ge1$ and all $u,v$,
+
+$$
+G_k(\iota(u))=G_k(\iota(v))
+\quad\Longleftrightarrow\quad G_k(u)=G_k(v),
+\tag{SC.27}
+$$
+
+where the right side uses the same scattered-count convention on letters $0,1$. For distinct $u,v$, their first separating degree is also preserved. The from-zero raw counts are
+
+$$
+A(\iota(u))=2|u|_0+3,\qquad
+B(\iota(u))=2|u|_1+3,\qquad N(\iota(u))=2|u|+6.
+\tag{SC.28}
+$$
+
+Proof. Every doubled input letter is an equal pair rejected by the actual seed extractor. The next pair $\beta\alpha$ first accepts seed 1; $\beta\beta$, $\alpha$, $\alpha$ then complete exactly the three markers $100$, without returns. Theorem 6.3 therefore supplies positivity, unique parsing and injection, for every such prior, rather than an instruction to force an execution. Its count formula gives (SC.28). The vertical stroke in (SC.26) is a parser-derived delimiter, not an added source event.
+
+The Magnus polynomial of $\delta(u)$ is obtained by substitution $x_0\mapsto2x_\alpha+x_\alpha^2$, $x_1\mapsto2x_\beta+x_\beta^2$. If $\mathcal P(u)-\mathcal P(v)$ first has a nonzero homogeneous component in degree $r$, the corresponding substituted component is $2^r$ times that component with renamed letters. It remains nonzero over $\mathbb Z$, and all lower components remain zero. Multiplication on the right by $\mathcal P(\tau)$ leaves this first component unchanged because its constant term is 1. A first separating degree exists for distinct finite words: different lengths are separated in degree one, and at a common length the top word coefficient separates them. These reused coefficient facts prove both directions of (SC.27) and the stronger first-degree assertion. This ordinary calculation is the general literal-doubling mechanism also present in LiteralPowerSubstitution's private coefficient supplier; its public endpoint for `positivePairWords` has a narrower telescope and is not invoked as a theorem about an unrelated recursion. $\square$
+

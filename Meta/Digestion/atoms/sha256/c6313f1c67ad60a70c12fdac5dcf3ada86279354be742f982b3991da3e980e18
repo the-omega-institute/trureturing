@@ -1,0 +1,9 @@
+**Definition 1.4 (successful work-history target).** The additional work
+interface below has histories $(t,w)$, where $t\in\mathcal F_D$ and $w$
+is the ordered word of successful work commits. The recovery target is the
+pair $(t,w)$ itself, including its empty-word case. Two such histories are
+equivalent precisely when both coordinates agree. This target excludes
+preparation transactions and their Read transcripts. It is different from
+the original prediction equivalence, which identifies sources agreeing in
+every value (ER.3), and asks for no actual update word.
+

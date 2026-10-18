@@ -1,0 +1,77 @@
+**Definition 1.1 (calibrated paths and the old cut).** For
+$b=(X,Y,Z)$ let $0<Z<1$, $r_b=1-Z$ and $0<X,Y<r_b$. Define
+
+$$
+\begin{aligned}
+J_b&=(\max(0,X+Y-r_b),\min(X,Y)),\\
+\pi_b(k)&=(r_b-X-Y+k,X-k,Z,Y-k,k),\\
+\mathbf d&=(1,-1,0,-1,1),\qquad
+I_b(k)=\sum_{i\in\{0,1,3,4\}}\pi_b(k)_i^{-1},\\
+w_b(k)_i&=\mathbf d_i/(\pi_b(k)_iI_b(k)).
+\end{aligned}
+\tag{QO.1}
+$$
+
+The conditional original control contract requires a finite duration
+$T\geq0$, continuous real coordinates $k,\vartheta$, strict
+$k(t)\in J_b$, finite phase variation, and either absolute continuity
+of both coordinates or a finite piecewise-$C^1$ presentation with rates
+continuous on each closed piece. Its live lift has components
+
+$$
+\sqrt{\pi_b(k(t))_i}\exp\left(-i\left[\theta_i+
+ \int_0^t w_b(k(v))_i\vartheta'(v)\,dv\right]\right).
+\tag{QO.2}
+$$
+
+Signed real phase lifts, integer winding and chronological composition
+are literal data. Zero duration allows only zero matching displacement.
+Known denial or mismatch remains an unexecuted rejection with its
+controller update. These path conditions do not construct an actuator
+on an unknown quantum input.
+
+Here $b=(1/4,1/4,1/2)$ and
+$\pi_b(k)=(k,1/4-k,1/2,1/4-k,k)$. Five-mode indices are
+$0,1,2,3,4$, with mode $4$ retaining its original name mode $13$.
+Set
+
+$$
+E=\left((e_0+e_4)/\sqrt2,(e_1+e_3)/\sqrt2,e_2\right),\qquad
+P_5=EE^\dagger,\quad Q_5=I_5-P_5,\quad V=\operatorname{ran}E.
+\tag{QO.3}
+$$
+
+Supported coordinates $0,1,2$ refer to $(+,-,2)$, without renaming
+the stopped labels. The original catalogue has $y\in\{5,16,27\}$,
+$x=y/256$, $\beta_{\rm hist}\in\{0,\pi\}$ and $m\in\{0,1\}$.
+Starting from the common height $1/8$ and zero phase, its six unit
+legs use $B_{\rm hist}=8\beta_{\rm hist}-4\pi m$:
+
+| Leg | Height | Real phase lift |
+| --- | --- | --- |
+| 1 | $1/8$ | $0\to2\pi m$ |
+| 2 | $1/8\to1/16$ | $2\pi m$ |
+| 3 | $1/16$ | $2\pi m\to2\pi m+B_{\rm hist}$ |
+| 4 | $1/16\to1/8$ | $2\pi m+B_{\rm hist}$ |
+| 5 | $1/8$ | $2\pi m+B_{\rm hist}\to2\pi m$ |
+| 6 | $1/8\to x$ | $2\pi m$ |
+
+Indeed $w_b(1/8)=(1/4,-1/4,0,-1/4,1/4)$ and
+$w_b(1/16)-w_b(1/8)=(1/8,1/8,0,1/8,1/8)$.
+The residual phases are
+$(\beta_{\rm hist},\beta_{\rm hist}-\pi m,0,
+\beta_{\rm hist}-\pi m,\beta_{\rm hist})$.
+The earlier reach masses $32/177,2/9,32/111$ are not source priors
+or weights in the present resource.
+
+At absolute time six, one already reached normalized sole specimen is
+received. The common continuation keeps the phase fixed and uses
+$k(t)=x+6t/256$, $0\leq t\leq1$, on the strict common relative domain
+$(0,58/256)$. Terminal heights are $11/256,22/256,33/256$.
+For a relative increment $A(t)$ and original height interval
+$(\ell_b,u_b)$, legal starting heights form
+$(\ell_b-\min A,u_b-\max A)$; this is not a domain sensor.
+The six-leg paths have populations at least $5/256$, height speed
+at most $27/256$, phase speed at most $8\pi$ and total phase variation
+at most $16\pi$. No limiting wall or infinite winding is used.
+

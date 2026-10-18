@@ -1,0 +1,17 @@
+**Definition 386.1 (The fixed profile and blind stock).** Put
+
+$$
+b^*=\frac1{64}(43,34,34,29,27,25,22,20),\qquad
+c=\frac{2867}{11856},\qquad E=\frac{421}{1728}.
+\tag{386.1}
+$$
+
+The unrestricted original $N$ and $O$ optimum $c$ at this prefix, for every entire positive ordered vanishing tail with $a_9\le c$, is the inherited result [XXIV 375–379](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIV.md#375-the-eight-active-profiles). For a complete $L=8$ stopped allocation of finite mass $M$, define
+
+$$
+g_8(p)=\sum_{s:\,8\notin s}X_{s,+}(8),
+\tag{386.2}
+$$
+
+where $+$ is the cell of $s$ visited by $1^8$. At mass one this is the probability on that word of outputting label $8$ with no query to address $8$.
+

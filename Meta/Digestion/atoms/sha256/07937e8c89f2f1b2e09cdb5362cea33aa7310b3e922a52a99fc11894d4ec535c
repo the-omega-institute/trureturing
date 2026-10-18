@@ -1,0 +1,25 @@
+**Convention 4.3 (the exact replay key).** Suppress the fixed public boot,
+interpreter, descriptor convention and preparation binding in the notation,
+and put
+
+$$
+K(h)=\bigl(\operatorname{code}(u),I(h),n(h)\bigr).
+\tag{AIF.5}
+$$
+
+This is a mathematical code of actually acquired finite material and an
+actual primitive position. It is not a promise that all fields are already
+simultaneously readable by any chosen receiver. In the source-only serial
+domain, AIF.4 gives the alternative sufficient code
+
+$$
+\bigl(\operatorname{code}(u),A_P(h),P(h),D(h),n(h)\bigr),
+\tag{AIF.6}
+$$
+
+including the actual material backing request references. The code in
+AIF.5 works as well for an explicitly extended dispatcher with additional
+input frames. AIF.6 does not silently omit such choices: a Fetch frame,
+for example, need not occur in the old source semantic word and must be
+retained separately if that extended interface is used.
+

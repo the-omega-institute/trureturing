@@ -1,0 +1,22 @@
+**定理 10.4（independent coarse-error autonomous law）。** For either unit plateau, all source sizes, and $E=1/2+\tau$ with $\tau>0$, a uniform finite numerical autonomous peak
+$O(1+\log_+(1/\tau))$ suffices. Its all-size optimum has order
+$\Theta(1+\log(1/\tau))$ as $\tau\downarrow0$. This is independent of the strict-error law and uses its own acquisition/selection contract. For $E\ge1$ the constant zero output suffices.
+
+**证明。** Reuse PCR §§76.6,83's rational quaternion/reflection construction at its exact scope. Source-aware selection may choose a dyadic positive excess $\tau_0\le\min(\tau,1/8)$ within a factor two of that minimum. Lawful initialization supplies that finite excess with its true lower-excess promise; its compact presentation and resulting arithmetic have $O(1+\log_+(1/\tau))$ bits. Arbitrary unreduced rational presentations pay their actual additional widths. The construction below writes $\tau$ for this represented excess. For $0<\tau\le1/8$, let $Q=\lceil32/\tau\rceil$. Round a unit quaternion multiplied by $Q$ to an integer quadruple; its normalized direction differs by at most $2/Q$, and the quadratic rotation map gives unit-column error at most $8/Q\le\tau/4$. Enumerate nonzero quadruples in $[-Q-1,Q+1]^4$ and both third-column reflections in a fixed finite order. Their matrices have rational quadratic numerators and denominator the sum of four squares; all fields have $O(1+\log(1/\tau))$ bits. No installed orientation table or real-normalization operation is required.
+
+The actual future of each phase is on the segment from zero to its first-phase anchor, whose norm is at most one. Half the nearby orthonormal column has distance at most $1/2+\tau/8$ from both segment endpoints. Choose finite output precision $p$ with $2^{-p}\le\tau/32$ and request the paid archive at $b=2p+32$. The approximate heads are $Z$, $[\,\|y_2\|^2\,]_0^1y_1$ and $[\,\|y_1\|^2\,]_0^1[\,\|y_2\|^2\,]_0^1y_2$. Their errors are at most $9\sqrt e,4e,7e$, respectively: telescope each product, using clipped factors at most one and squared-norm error at most $3e$. All are less than $\tau/32$ at this precision. Accept the first enumerated orientation whose half-columns have squared distances at most $(1/2+\tau/2)^2$ from those approximate anchors. A candidate exists by the net bound. Any accepted candidate has distance at most $1/2+17\tau/32$ from the true heads and exactly $1/2$ from zero; convexity bounds every later phase point. Coordinate rounding adds less than $\tau/32$. Retain mode $10111000$, gamma$(p)$, the reflection bit as a gamma field and four signed quaternion integers, with EOF; a counted internal residue selects the three finite outputs under identical NEXT requests.
+
+Enumeration uses four $O(\log(1/\tau))$-bit counters and a constant number of rational arithmetic registers, so its peak, installation and full outputs have that same order. Its conservative time is
+$O(\tau^{-4}\operatorname{polylog}(1/\tau))$ and its canonical preclosure precision/returned bits are $O(1+\log(1/\tau))$. For larger $\tau$ use the $\tau=1/8$ construction. This is the single orientation pipeline, with its own enumeration cost; it does not borrow cheaper acquisition from a different half-anchor implementation.
+
+For the lower, use recurrent colors in the all-size actual contracting families as in Lemma 10.2. For unit vectors with angle $\theta$, the minimum radius of a ball containing $0,u,v$ is
+
+$$
+\begin{cases}
+1/(2\cos(\theta/2)),&0\le\theta\le\pi/2,\\
+\sin(\theta/2),&\pi/2\le\theta\le\pi .
+\end{cases}
+$$
+
+The acute case is the circumcenter on the bisector; in the obtuse case the midpoint of the longest edge includes zero and attains half that edge length. If $E=1/2+\tau<\sqrt2/2$, the obtuse branch is excluded, and the acute expression bounds each color's chordal diameter by $O(\sqrt\tau)$. Its directions lie in a cap of area $O(\tau)$. Covering the sphere needs at least $c/\tau$ colors, hence at least $\log_2(1/\tau)-O(1)$ complete bits. This all-size lower does not assert a uniform lower at each fixed finite $N$.
+

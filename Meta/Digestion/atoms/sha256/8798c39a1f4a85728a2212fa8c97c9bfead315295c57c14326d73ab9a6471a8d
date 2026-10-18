@@ -1,0 +1,32 @@
+**Lemma 5.3 (splitting actual modules after fixed-value conditioning).**
+Suppose an admissible $A\subseteq S_5^C$ is restricted so every coordinate
+has the actual four-module form
+
+$$
+\langle\langle z_{LL},z_{LR}\rangle,
+              \langle z_{RL},z_{RR}\rangle\rangle,
+\qquad z_w\in P.
+\tag{NDR.26}
+$$
+
+Fix any collection of those modules to specified values. The relation
+$T$ on all remaining $r$ module positions induced by the restricted set
+is empty or jointly admissible in $P^r$. It need not be a product. In
+particular $|T|\le4^r$; for $r=0$ there is at most one tuple.
+
+**Proof.** Empty relations and $r=0$ satisfy the size bound directly.
+Otherwise restriction preserves every witness equation on $A$. Each
+target $q\in W_3$ in a remaining module at port $w$ is the permitted
+parent target $wq\in W_5$, because $|wq|\le4$. Its selected experiment
+in a parent coordinate either ends above the module frontier, giving
+constant branch, or enters exactly one module. If that module is fixed,
+its reply is a mathematical constant on the restricted set. Otherwise it
+is one native experiment in one remaining module; its suffix has length
+at most two for a normalized parent experiment. Thus its equation induces
+an allowed constant, self or other-module witness on $T$. For arbitrary
+finite parent experiments the same argument and Supplier 1.5 reduce the
+suffix in its original module. Every required module target is covered.
+Apply Lemma 4.3. The fixed module values are used only in this analytical
+conditioning argument; no reader is supplied these values as free advice.
+$\square$
+

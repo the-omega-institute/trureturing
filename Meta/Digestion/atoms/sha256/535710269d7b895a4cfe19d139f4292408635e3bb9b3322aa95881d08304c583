@@ -1,0 +1,41 @@
+**Proposition 47.5 (separately stipulated stopped phases).** If
+$q_t^{\rm stop}=q_{t\wedge\zeta}$ under the original law, then
+
+$$
+W_1\left(\mathcal L\bigl((q_{Ts}^{\rm stop}-q_0)/\sqrt T
+\bigr)_{0\le s\le b},\delta_0\right)\le C/\sqrt T.
+\tag{47.6}
+$$
+
+For each fixed parameter the normalized stopped path also tends
+almost surely uniformly to zero. This assertion attaches no
+terminal-height equilibrium target to the stopped path.
+
+Proof. The supplied exit-time identity is
+$\mathbb E_k\zeta=(k-l)(u-k)/(2\varepsilon^2)\le L^2/(8\varepsilon^2)$.
+For completeness the martingale maximal bound used here follows as
+follows. If $M_t$ is a continuous square-integrable vector martingale
+on a finite interval and $U=\sup_t|M_t|$, conditional Jensen and
+stopping at the first hit of a level $a$ give
+$a\mathbb P(U\ge a)\le\mathbb E[|M_{\rm end}|\mathbf1_{\{U\ge a\}}]$.
+First use truncated $U$ and bounded stopping times, then integrate
+in $a$ and pass by monotone convergence. The identity for second
+moments yields
+$\mathbb E U^2\le2\mathbb E[|M_{\rm end}|U]
+\le2(\mathbb E|M_{\rm end}|^2)^{1/2}(\mathbb E U^2)^{1/2}$,
+so $\mathbb E U^2\le4\mathbb E|M_{\rm end}|^2$.
+
+Apply this to the phase stochastic integral stopped at
+$\zeta\wedge n$. Its terminal second moment, by the stochastic
+integral isometry, is at most $2C_c^2\mathbb E\zeta$.
+Let $n\to\infty$. The bounded expected quadratic variation gives
+a continuous stopped extension at $\zeta$, and the supremum over
+all times has second moment at most $8C_c^2\mathbb E\zeta$.
+Coupling the normalized stopped path to the deterministic zero path
+and applying Cauchy--Schwarz proves (47.6), uniformly in the fixed
+parameter family and initial height. Since $\zeta<\infty$ almost
+surely, each such stopped path has a finite unscaled supremum;
+division by $\sqrt T$ proves the almost-sure assertion for each
+fixed parameter. It does not identify sample paths across different
+parameters. $\square$
+

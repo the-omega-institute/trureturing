@@ -1,0 +1,40 @@
+**Theorem 206.10 (Balanced dense early-credit support).**
+Choose arbitrary $\eta_j\ge0$ for $3\le j\le L$, and write
+$\mu=\max_j\eta_j$ within this theorem. Let
+
+$$
+0\le c_1,c_2\le\mu,\qquad W'\ge2\mu,\qquad
+p_a=\mu-c_a,\qquad \tau=W'-2\mu.
+\tag{206.28}
+$$
+
+The score $V=\mathcal V(c,p,\eta,\tau)$ has anchor $W'$, quotient
+$((c_1,c_2,\eta),\sum_j\eta_j+W')$, and exact excess
+
+$$
+\Delta_N(V)=\Delta_O(V)=D
+ =\max\left\{0,3\mu-W',\frac{\mu-\min(c_1,c_2)}2\right\}.
+\tag{206.29}
+$$
+
+**Proof.** Both early totals $f_a=c_a+p_a$ equal $\mu$.
+The $(1,2)$ support is $2\mu+\max(\mu,\tau)$, with excess
+$(\mu-\tau)_+$. For $(a,j)$, (206.15) bounds the stopped maxima
+by $\mu,\mu,\max(\mu,p_b/2+\tau)$. Its excess is therefore at
+most $\max(\mu-\tau,p_b/2)$.
+For a late pair, $S'=p_1+p_2\le2\mu$; (206.16) bounds the first
+two stopped maxima by $\mu,\mu$, and the last by
+$\max(\mu,S'/4+\tau)$. The excess is at most
+$\max(\mu-\tau,S'/4)$, and
+$S'/4\le\max(p_1,p_2)/2$.
+The complete cell equalities in 206.4 transfer these bounds to $N$;
+the pair embedding covers all shorter functions.
+
+The anchor attains zero. For any $j_*$ with $\eta_{j_*}=\mu$,
+$(a,j_*;a,j_*,0)$ collects
+$\mu+\mu+p_b/2+\tau$, giving excess $p_b/2$.
+Together with $(1,2)$ these attain every term of (206.29).
+At $\mu=0$, all $c,p,\eta$ vanish and the anchor collects $T=W'$,
+so the excess is zero without division. All equalities and zero
+coefficients in (206.28) are included. $\square$
+

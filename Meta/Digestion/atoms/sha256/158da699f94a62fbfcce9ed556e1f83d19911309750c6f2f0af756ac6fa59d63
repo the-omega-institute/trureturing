@@ -1,0 +1,32 @@
+**Lemma 4.3 (the complete zero-origin contribution).** In a
+nineteen-label cover under $\lambda=0$, the class $C_0$ has
+$g_0\ge1$. If $g_0=1$, its only missing difference is $-9$.
+If $C_0$ omits both $-1$ and $1$, then $g_0\ge3$.
+If $C_0$ contains either extreme corner, then $g_0\ge9$.
+
+**Proof.** [NARC, Theorem 14.3][NARC] forces $C_0$ to be the
+$B^9A^9$ path with minimum corner $(0,0)$. Its first point has
+first coordinate zero. The exact saturated zero-origin theorem
+[NARC, Theorem 13.4][NARC] therefore makes its first $B$ length
+at least two. Formula (NAGC.4.1) gives $g_0\ge1$.
+
+If $g_0=1$, the first length is two and every other length is one.
+The path starts at $(0,10)$, follows the $b$ values
+$10,8,7,\ldots,0$, and then the $a$ values $1,\ldots,9$.
+Its difference span is $[-10,9]$ and its sole omitted integer is
+$-9$. In particular it omits neither adjacent difference.
+
+On this L path, omitting $-1$ requires its final $B$ length to
+be at least two, and omitting $1$ requires its first $A$ length
+to be at least two. These are distinct from each other and from
+the first $B$ edge, since there are nine $B$ edges. Omitting
+both therefore supplies three separate units of excess.
+
+If $C_0$ contains $(0,18)$, its $B$ span is eighteen, while its
+nine $A$ changes have total length at least nine. Formula
+(NAGC.4.1) then gives $g_0\ge18+9-18=9$. If it contains
+$(18,0)$, its $A$ span is eighteen and the analogous argument
+uses the nine $B$ changes. This proof uses the zero theorem only
+on a saturated class and its inherited complete-fiber contract.
+$\square$
+

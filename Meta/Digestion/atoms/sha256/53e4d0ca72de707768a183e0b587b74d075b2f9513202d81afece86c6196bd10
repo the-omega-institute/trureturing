@@ -1,0 +1,85 @@
+### 定理 23.2（仿射纤维逆极限至多唯一）
+
+设 \((F_j,f_j)_{j\ge0}\) 是仿射 FIB 纤维系统。假设对某个固定 \(j\)，有
+
+\[
+\operatorname{diam}(F_n)
+\prod_{k=j}^{n-1}|a_k|
+\longrightarrow0
+\qquad(n\to\infty).
+\]
+
+则任意两个逆极限元素
+
+\[
+(\kappa_m)_{m\ge0},
+\qquad
+(\kappa'_m)_{m\ge0}
+\]
+
+满足
+
+\[
+\kappa_j=\kappa'_j.
+\]
+
+若该条件对所有 \(j\) 成立，则
+
+\[
+\varprojlim_j(F_j,f_j)
+\]
+
+至多含有一个元素。
+
+#### 证明
+
+由逆极限相容性，
+
+\[
+\kappa_j=f_j(\kappa_{j+1}),
+\qquad
+\kappa'_j=f_j(\kappa'_{j+1}).
+\]
+
+仿射性给出
+
+\[
+\kappa_j-\kappa'_j
+=
+a_j(\kappa_{j+1}-\kappa'_{j+1}).
+\]
+
+迭代 \(n-j\) 次得到
+
+\[
+\kappa_j-\kappa'_j
+=
+\left(\prod_{k=j}^{n-1}a_k\right)
+(\kappa_n-\kappa'_n).
+\]
+
+由于两点都属于 \(F_n\)，
+
+\[
+|\kappa_n-\kappa'_n|
+\le
+\operatorname{diam}(F_n).
+\]
+
+所以
+
+\[
+|\kappa_j-\kappa'_j|
+\le
+\operatorname{diam}(F_n)
+\prod_{k=j}^{n-1}|a_k|.
+\]
+
+令 \(n\to\infty\)，由假设得到
+
+\[
+|\kappa_j-\kappa'_j|=0.
+\]
+
+这证明第 \(j\) 个坐标唯一。若条件对所有 \(j\) 成立，则两个逆极限元素的每个坐标都相同，故逆极限至多含有一个元素。证毕。
+

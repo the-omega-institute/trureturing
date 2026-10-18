@@ -1,0 +1,18 @@
+**Definition 7.1 (public skew window, unknown common age).** Fix public
+integers $d\ge1$ and $q\ge1$. The source domain is
+
+$$
+X_{a,r}=\langle T_a,T_{a+d+r}\rangle,
+\qquad a\ge0\text{ unknown},\qquad 0\le r<q.
+\tag{CAB.18}
+$$
+
+The first cut is $\{R\}$; the second is $\{L\}$. All later lags are
+allowed. Updates increase $a$ and preserve $r$. The first producer
+must export the full row and a supplement; the second exports only
+the full row. The public variation restricts sources, not programs:
+competitors may read anywhere, retain arbitrary paid intermediate
+state and use any finite source-independent installation. No interval
+endpoint depending on $a$ is input advice. A hidden Read means any
+actual first-call Read whose whole-root address begins with $R$.
+

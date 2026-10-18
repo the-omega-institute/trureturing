@@ -1,0 +1,5 @@
+## 3. Two continuation contracts for resources
+
+The same symbol “continuation cost” can mean two different interfaces. They
+must be declared before a quotient or a cancellation statement is used.
+

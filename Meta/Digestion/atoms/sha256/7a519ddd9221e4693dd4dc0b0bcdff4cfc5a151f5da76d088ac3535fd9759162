@@ -1,0 +1,58 @@
+**Proposition 15.3 (one explicit finite conditional parameter choice).**
+Under the same isolated-source enclosure of Definition 6.1, the
+construction of Theorem 15.2 is valid with
+$t=10^6$, $a_0=1/100$ and pure axial total mass $\eta=1/100$.
+The following bounds specify sufficient conditional constants. Every
+endpoint integer in the table is divided by $10^{12}$.
+
+| Expression | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $N_{00}$ | $80796697284$ | $80796697285$ |
+| $\ell_*$ | $27612835160$ | $27612835161$ |
+| $f_*$ | $-20930231667$ | $-20930231666$ |
+| $\mathfrak c(h_*)$ | $64355091074$ | $64355091075$ |
+| $H_s(h_*)$ at $t=10^6$ | $-1346939352248332$ | $-1346939352248331$ |
+| Total saturated axial coefficient mass $s_a$ | $155387$ | $155388$ |
+| Total saturated four-sign coefficient mass $s_c$ | $88404744$ | $88404745$ |
+| Remaining pure $r_0$ after subtracting $\eta$ | $989911439867$ | $989911439868$ |
+| Remaining pure $r_1$ after subtracting $\eta$ | $999936056547$ | $999936056548$ |
+| Remaining pure $r_2$ after subtracting $\eta$ | $917959691100$ | $917959691101$ |
+
+Proof. These are enclosures of the following explicit expressions,
+with the rational outward operations and square-root rule (GC.27)
+on the source rows of Definition 6.1. Put
+$$
+\begin{gathered}
+z_c^2=\frac V{\mu-a_0},\qquad
+w_c^2=\frac{\beta W-a_0}{\beta(\mu-a_0)},\qquad
+c_c=\mathfrak c(1,\sqrt{z_c^2},\sqrt{w_c^2}),\\
+s_a=\frac{a_0}{10^6\mathfrak c(h_*)},\qquad
+s_c=\frac{\mu-a_0}{10^6c_c},\\
+r_0=1-s_a-s_c-\eta,\quad r_1=1-s_cz_c^2,\quad
+r_2=1-s_a/\beta-s_cw_c^2-\eta/\beta.
+\end{gathered}
+\tag{GC.73}
+$$
+The source rows also imply the coarse rational bounds
+$13/1000<\theta<15/1000$, $1/1000<\omega<3/1000$ and
+$30<W<40$, directly by multiplication and reciprocal endpoint
+bounds in (GC.6) and (GC.12). Hence
+$\beta W=\omega W/(\theta+\omega)>5/3>1/100$.
+Proposition 6.2 gives $t_0<265<10^6$. Thus all denominators in
+(GC.71) and (GC.73) are positive and both circle squares are interior.
+Use (GC.28) to form $N$, then (GC.69), the capacity formula and
+(GC.73); outward enclosure and rounding to the displayed denominator
+give the table. In particular $H_p>0>H_s$, $s_a,s_c>0$ and
+$r_0,r_1,r_2>0$. These strict inequalities justify the chosen
+positive $\eta$ and the four-sign residual (GC.72), so the exact
+common-law identities follow from Theorem 15.2. The resulting finite
+example has positive pure and saturated masses at $h_*$ and strictly
+positive merge loss.
+
+These constants are conditional source-enclosure bounds. They do
+not isolate the original root or assert TP at unrelated off-root
+points of its rectangular enclosure. The general proof for all
+eligible finite $t$ is the small-mass argument of Theorem 15.2;
+this single parameter choice makes no universal count or optimality
+claim. $\square$
+

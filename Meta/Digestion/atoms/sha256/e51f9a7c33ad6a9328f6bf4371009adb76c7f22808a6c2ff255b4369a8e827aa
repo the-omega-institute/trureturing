@@ -1,0 +1,268 @@
+**Theorem 55.2 (quantitative endpoint law).** Under Convention 53.1,
+for every $0<\varepsilon\leq10^{-8}$,
+
+$$
+\boxed{T_0+\Gamma\sqrt\varepsilon-15\varepsilon
+\leq\mathcal T(s_0(1-\varepsilon))
+\leq T_0+\Gamma\sqrt\varepsilon+11\varepsilon.}
+\tag{JR.156}
+$$
+
+The lower bound is attained as a lower value by one twelve-label finite
+common instrument. It is asymptotically optimal and is not asserted to
+be a pointwise optimizer at any nonzero $\varepsilon$.
+
+**Proof.** Decompose the real-null matrices as in (JR.60) and write the
+atoms as $\sqrt\pi(1,u,v)$. Their exact moment conditions are
+
+$$
+\alpha u^2+\beta v^2=1,\quad
+\mathbb E1=1,\quad\mathbb Eu=\mathbb Ev=\mathbb Euv=0,\quad
+\mathbb Eu^2=\mathbb Ev^2=1.
+\tag{JR.157}
+$$
+
+These expectations are coefficient sums, not averages over unknown
+histories. For arbitrary feasible reports, let
+$e=1-\mathbb E|u|$. The original inequality gives $0\leq e\leq\varepsilon$.
+With $d=|u|-1$ there are exact identities
+
+$$
+\mathbb Ed=-e,\qquad \mathbb Ed^2=2e.
+\tag{JR.158}
+$$
+
+At $e=0$ they force $|u|=|v|=1$, and the three zero mixed moments
+force weight $1/4$ at each of the four corners.
+
+Put $B=f_G(-1,-1)=-(R_1+R_2)=4b(1)<0$ and
+$m=2(\gamma R_2-R_1)$. Define
+
+$$
+P(u,v)=\frac B4(1-u)(1-v)+\frac m8(u^2-1),\qquad
+\mathfrak r(u,v)=\min\{f_G(u,v),0\}-P(u,v).
+\tag{JR.159}
+$$
+
+By (JR.157), $\mathbb EP=B/4$. Equations (JR.130), (JR.139) and
+$|f_G|=f_G-2\min(f_G,0)$ therefore give the universal necessity direction
+
+$$
+\boxed{T_{\rm instr}-T_0\leq-\mathbb E\mathfrak r.}
+\tag{JR.160}
+$$
+
+Equality holds for Definition 53.3 with its actually generated atom
+labels and optimal spectral failure readout. It does not hold for an
+arbitrary original realization. For instance coordinate failure rows
+preserve the forgotten complete channel but contribute $d_f$ instead of
+$L_f$, losing $(L_f-d_f)/2>0$ when the off-diagonal failure difference
+$z_f\ne0$. An analytic refinement used for this upper bound is not free
+physical information.
+
+We prove a remainder over the ENTIRE null ellipse. Assign signs
+$\sigma,\eta\in\{\pm1\}$ to $u,v$, choosing either sign at a zero, and write
+
+$$
+u=\sigma(1+d),\quad v=\eta\varphi(d),\quad
+\varphi(d)=\sqrt{1-2\gamma d-\gamma d^2},\quad
+-1\leq d\leq\sqrt{1+1/\gamma}-1.
+\tag{JR.161}
+$$
+
+Direct differentiation at $d=0$ gives
+$\mathfrak r=0$ and derivative $\ell_{\sigma\eta}=b_{\sigma\eta}/2$.
+The following bound includes the axes, the extreme $d$ values, and the
+zeros of $f_G$:
+
+$$
+|\mathfrak r(\sigma(1+d),\eta\varphi(d))-
+\ell_{\sigma\eta}d|\leq3d^2.
+\tag{JR.162}
+$$
+
+To see this with explicit constants, the exact radical identity is
+
+$$
+\varphi(d)-(1-\gamma d)=
+-\frac{\gamma(\gamma+1)d^2}{\varphi(d)+1-\gamma d}.
+\tag{JR.163}
+$$
+
+Its denominator is minimized at the upper endpoint: its derivative
+is $-\gamma(1+d)/\varphi-\gamma<0$ in the interior, so it is at least
+$\gamma+1-\sqrt{\gamma(\gamma+1)}>1/2$.
+The coarse source bounds give
+$1<\gamma<8$, $|u|<2$, $|d|\leq1$,
+$|g_1|<.003$, $|g_2|<.002$, $|x|,|y|<.003$, $|z|<1/8000$.
+Consequently $|\varphi-(1-\gamma d)|\leq144d^2$.
+The remainder of $f_G$ from its corner tangent is at most
+
+$$
+[.003+8(.002)+2(.003)(144)+2(1/8000)(8+2\cdot144)]d^2
+=.957d^2.
+$$
+
+Its corner tangent coefficient has absolute value at most
+$.006+.032+.006+.048+.00175=.09375<.1$.
+All four corner $|f_G|$ exceed $.003$, and only the negative-negative
+corner has negative height. For $a\ne0$, the elementary kink estimate
+
+$$
+|\min(a+Ad,0)-\min(a,0)-\mathbf1_{a<0}Ad|
+\leq A^2d^2/(4|a|)
+$$
+
+follows by maximizing $(|A||d|-|a|)/d^2$ in the crossing case;
+otherwise the left side is zero. Since the minimum function is
+1-Lipschitz, the remainder of $\min(f_G,0)$ is at most
+$(.957+5/6)d^2<2d^2$. Also $|B|<.004$, $|m|<1/40$.
+Expanding $(1-u)(1-v)$ using (JR.163), its remainder coefficient
+is at most $8+3\cdot144=440$. Hence the remainder of $P$ is at most
+$(.004\cdot440/4+1/320)d^2=.443125d^2<d^2/2$.
+The two remainder bounds prove (JR.162).
+
+Let $\pi_{\sigma\eta}$ be total coefficient weight in a sign sector.
+Writing $S=\operatorname{sgn}u$, $H=\operatorname{sgn}v$, (JR.157),
+(JR.158) and (JR.163) give
+
+$$
+\begin{aligned}
+|\mathbb ES|&\leq\sqrt{2e},\\
+|\mathbb EH|&\leq\gamma\sqrt{2e}+288e,\\
+|\mathbb ESH|&\leq(\gamma-1)\sqrt{2e}+(2\gamma+576)e.
+\end{aligned}
+$$
+
+Fourier inversion on the four signs therefore yields
+
+$$
+|\pi_{\sigma\eta}-1/4|\leq\gamma\sqrt{2e}/2+220e,
+\tag{JR.164}
+$$
+
+because $(864+2\gamma)/4<220$. Since
+$\sum\ell_{\sigma\eta}^2=2\Gamma^2$, Cauchy–Schwarz, (JR.160) and
+(JR.162) imply, for arbitrary actual records,
+
+$$
+\begin{aligned}
+T_{\rm instr}-T_0
+&\leq-\mathbb E(\ell d)+6e\\
+&\leq\Gamma\sqrt e+(6+\gamma\sqrt2\,\Gamma)e+440\Gamma e^{3/2}\\
+&\leq\Gamma\sqrt e+11e\leq\Gamma\sqrt\varepsilon+11\varepsilon.
+\end{aligned}
+\tag{JR.165}
+$$
+
+Here $\sqrt{1+a}\leq1+a/2$ bounds the sector-weight factor in
+$\mathbb E\ell^2$, and $e\leq10^{-8}$ makes the coefficient strictly
+less than $11$ using $\Gamma<.009$, $\gamma<8$. This proves the upper
+bound with the universal inequality, without an ungenerated readout.
+
+For the matching lower coefficient put $d_j^\circ=-b_j/\Gamma$, in corner
+order $(++),(+-),(-+),(--)$. Then
+$\sum d_j^\circ=0$, $\sum(d_j^\circ)^2=8$, $|d_j^\circ|<3$.
+For $0<h\leq10^{-4}$ and $|c|\leq2048h^2$, set
+
+$$
+\begin{gathered}
+d_j=hd_j^\circ+c,\quad u_j=\sigma_j(1+d_j),\quad
+v_j=\eta_j\varphi(d_j),\\
+\mathscr M(h,c)=\begin{pmatrix}
+1&1&1&1\\u_{++}&u_{+-}&u_{-+}&u_{--}\\
+v_{++}&v_{+-}&v_{-+}&v_{--}\\
+u_{++}v_{++}&u_{+-}v_{+-}&u_{-+}v_{-+}&u_{--}v_{--}
+\end{pmatrix},\qquad
+\pi(h,c)=\mathscr M(h,c)^{-1}(1,0,0,0)^T.
+\end{gathered}
+\tag{JR.166}
+$$
+
+All entries in the fourth row are $u_jv_j$. Let $c$ be the least root
+in this closed interval of
+
+$$
+F(h,c):=\sum_j\pi_j(h,c)u_j(h,c)^2-1=0.
+\tag{JR.167}
+$$
+
+We establish existence and exact moments, not just formal expansions.
+Let $r=\max|d_j|<4h\leq1/2500$. The radicals stay positive and
+$|\varphi-1|<9r$, $|uv-\sigma\eta|<19r$.
+At $h=c=0$, $\mathscr M=H_4$ is a Hadamard matrix with
+$\|H_4^{-1}\|_\infty=1$. Throughout the entire rectangle,
+$\|\mathscr M-H_4\|_\infty\leq76r<1$; the Neumann estimate gives
+
+$$
+\|\pi-\tfrac14\mathbf1\|_\infty
+\leq\frac{19r}{1-76r}<22r\leq.0088<1/4.
+\tag{JR.168}
+$$
+
+Thus all weights are positive and the inverse is continuous throughout.
+The first row makes their sum one. Since
+$\sum_j|d_j^\circ|<12$ and $\sum d_j^\circ=0$,
+
+$$
+|F(h,c)-2c|\leq2h(22r)12+r^2\leq2128h^2.
+$$
+
+At $c=\pm2048h^2$, $2c=\pm4096h^2$, so the signs differ.
+The intermediate value theorem gives a nonempty compact root set;
+its least element exists. No uniqueness or continuous selection of
+roots is required. Rows $1,u,v,uv$ and (JR.167) give all moments in
+(JR.157), with $\mathbb Ev^2=1$ following from the null equation.
+
+Write $\varepsilon_h=1-\sum_j\pi_j|u_j|$.
+Expanding the second moment and using (JR.168) gives
+
+$$
+\left|\sum_j\pi_jd_j^2-2h^2\right|
+\leq704h^3+8519680h^4<1600h^3,\qquad
+|\varepsilon_h-h^2|\leq800h^3.
+\tag{JR.169}
+$$
+
+Indeed the first coefficient is $22\cdot4\cdot8$, and the fourth-order
+coefficient is $2\cdot2048\cdot22\cdot4\cdot12+2048^2$.
+The uniform-weight linear term in $-\mathbb E\ell d$ is $\Gamma h$.
+The weight perturbation contributes at most $352\Gamma h^2$;
+the common shift contributes at most
+$2\sqrt2\cdot2048\cdot88\Gamma h^3<54.0672\Gamma h^2$.
+The remainder in (JR.162) contributes at most
+$6\varepsilon_h\leq6.48h^2<13h^2/2$.
+For the actual spectral construction, where (JR.160) is equality,
+
+$$
+T_{\rm can}(h)\geq T_0+\Gamma h-(407\Gamma+13/2)h^2
+\geq T_0+\Gamma h-11h^2.
+\tag{JR.170}
+$$
+
+For a prescribed $0<\varepsilon\leq10^{-8}$ choose
+
+$$
+h=\frac{\sqrt\varepsilon}{1+400\sqrt\varepsilon}.
+\tag{JR.171}
+$$
+
+Then $\varepsilon_h\leq h^2(1+800h)\leq\varepsilon$ and
+$h\geq\sqrt\varepsilon-400\varepsilon$.
+Definition 53.3 on these four atoms, with reports $r_j=\sigma_j$, has
+$\mathsf V=s_0(1-\varepsilon_h)\geq s_0(1-\varepsilon)$,
+all twelve original error constraints and the sharp common cost.
+Thus $T_{\rm can}\geq T_0+\Gamma\sqrt\varepsilon-15\varepsilon$ since
+$400\Gamma+11<15$. Its twelve generated labels comprise four two-dimensional,
+two three-dimensional and six scalar fibres. If exact rather than lower-
+bounded contrast is desired, the fixed kernel
+
+$$
+\Pr(F=f\mid r)=\tfrac12\left[1+fr\frac{1-\varepsilon}{1-\varepsilon_h}\right]
+$$
+
+retains the old label and report, adds $F$, and preserves TV. Its ratio
+is in $[0,1]$; at most twenty-four labels suffice. The original inequality
+needs only twelve. This completes both bounds with the full original
+instrument correspondence. $\square$
+

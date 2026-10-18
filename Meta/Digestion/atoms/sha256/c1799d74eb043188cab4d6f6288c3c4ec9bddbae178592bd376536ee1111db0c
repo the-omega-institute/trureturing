@@ -1,0 +1,59 @@
+**Theorem 10.1 (A necessary finite-budget growth rate).** Keep one exact source pair from Section 2 and one fixed $0<\alpha<1/2$. Suppose that for every sufficiently small $s>0$ there is a finite integer budget $M(s)$ and an observer
+
+$$
+\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha).
+\tag{10.1}
+$$
+
+Thus both selected risks, both almost-sure stops and both finite pointwise paid means hold at each $s$. Suppose in addition that for one fixed target $i_\star\in\{0,1\}$ there is a constant $0<C_T<\infty$, independent of $s$, with
+
+$$
+\mathbb E_{i_\star,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}
+\quad\text{for all sufficiently small }s.
+\tag{10.2}
+$$
+
+Define
+
+$$
+A_T=\left(\frac{9!b^{11}}{8B^2C_T}\right)^{1/10}>0,
+\qquad b=1-2\alpha.
+\tag{10.3}
+$$
+
+Then, throughout a sufficiently small neighborhood,
+
+$$
+M(s)\ge2+\frac{A_Ts^{-4/5}-b}{2\delta}.
+\tag{10.4}
+$$
+
+In particular $M(s)=\Omega_{H_c,\alpha,C_T}(s^{-4/5})$. The cubic upper bound need hold only under the fixed target; the opponent retains all its compliance conditions.
+
+Proof. Apply Theorem 9.1 at each selected $s$ in its common neighborhood, taking $M=M(s)$ and using the actual $\mathcal A_s$. Comparing its target lower bound with (10.2) gives
+
+$$
+C_Ts^{-3}
+\ge\frac{9!b^{11}}{8B^2\bigl(b+2\delta(M(s)-2)\bigr)^{10}}s^{-11}.
+\tag{10.5}
+$$
+
+All divided factors are strictly positive. Hence
+
+$$
+\bigl(b+2\delta(M(s)-2)\bigr)^{10}
+\ge\frac{9!b^{11}}{8B^2C_T}s^{-8}.
+\tag{10.6}
+$$
+
+The increasing tenth root on nonnegative numbers gives $b+2\delta(M(s)-2)\ge A_Ts^{-4/5}$. Division by $2\delta>0$ proves (10.4). Once $A_Ts^{-4/5}\ge2b$, it also gives
+
+$$
+M(s)-2\ge\frac{A_T}{4\delta}s^{-4/5},
+\tag{10.7}
+$$
+
+with a positive constant independent of $s$. This proves the stated order. The exponent is the ratio $8/10$ in (10.6). No cubic lower or upper supplier is used in this implication; (10.2) is simply an additional hypothesis about the proposed family. $\square$
+
+The theorem excludes $M(s)=o(s^{-4/5})$ for such a family. It neither supplies an observer with $M(s)$ proportional to $s^{-4/5}$ nor proves that the exponent is sharp. Pointwise finite means alone do not imply the uniform cubic upper constant in (10.2). Allowing $\alpha$ to vary with $s$, allowing a changing polynomial, or dropping the opposing risk or mean would change the hypotheses. The budget counts all possible persistent configurations at the selected parameter; it is not an expected or typical-history memory measure.
+

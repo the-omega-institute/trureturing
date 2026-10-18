@@ -1,0 +1,42 @@
+**Assumption 1.3 (paid preparation and complete retained alphabet).**
+One deterministic effective preparation starts source-blind, with public
+$D$ and common installed tables, and terminates on every
+$t\in\mathcal F_D$. It does not receive the later request. Every source
+distinction it acquires comes through charged original-root literal
+Reads. It exports a finite code $E(t)$ before the request. The code
+includes every accessible surviving source distinction: selectors,
+control, buffers, operands, lengths, allocation, handles, counters and
+accessible timing distinctions. Every other accessible field is a fixed
+function of that code and public data. A separately paid handoff and
+isolation service makes earlier preparation transcripts and all other
+acquired descriptions inaccessible and supplies lawful reader entry.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. A common deterministic effective reader receives $E(t),D,p$
+and the installed tables. It makes at most one fresh Read of the same
+stationary source, at any finite word chosen from these inputs, and
+exports a predictor $Z$. Zero-Read branches are permitted. For every
+subsequently supplied authentic $k\ge0$, with no further Reads, it must
+satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0).
+\tag{NCM.3}
+$$
+
+Neither $k$ nor a source-dependent request is supplied before the query.
+Define
+
+$$
+M_1(D)=\min |E[\mathcal F_D]|.
+\tag{NCM.4}
+$$
+
+Only this complete attained alphabet is optimized. Preparation work and
+control, temporary storage, installed tables, post-request workspace,
+final predictor size, literal length and submitted letters, authentic
+count representation, handoff, isolation, entry, authentication, source
+continuity and physical time are separate resources. These services
+are assumptions, not inferred physical operations.
+

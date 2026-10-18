@@ -1,0 +1,48 @@
+**定义 54.3（恰三更新四Read的全报告输出）。** 对定义54.1的 $\delta$，只按公开参数取 $\rho=\rho_+$，并置
+
+$$
+\begin{aligned}
+K&=K(\rho),\quad \alpha=\frac35K-\frac45\rho,\quad
+\nu=\frac45K+\frac35\rho,\quad q=\alpha+\nu i,\\
+c_1&=j,\quad c_2=-\alpha j+\nu k,\quad c_1c_2=q,\quad
+h=\frac{7K+24\rho}{25},\quad T=\frac{7+25h}{2}.
+\end{aligned}
+\tag{54.12}
+$$
+
+两个内部控制均为单位纯虚元，实际事件恰为
+
+$$
+\operatorname{Read}(y_0);\ A_{c_1};\ \operatorname{Read}(y_1);\
+ A_{c_2};\ \operatorname{Read}(y_2);\ A_d;\
+ \operatorname{Read}(y_3);\ \operatorname{Stop}.
+\tag{54.13}
+$$
+
+全部四个实际报告、有序精确动作和Stop完整保留。
+对任意 $(y_0,y_1,y_2,y_3)\in E^4$，令 $r=|y_3|$，取
+$R=7$ 当 $r\le T$，否则取 $R=25$，并定义
+
+$$
+\begin{aligned}
+d_R^-&=\min\{R,\max(0,r-\delta)\},&
+d_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(d_R^+)^2},&
+u_R&=\sqrt{R^2-(d_R^-)^2},\\
+\widehat s&=
+\begin{cases}
+(\ell_R+u_R)/2,&\ell_R>R\rho,\\
+(u_R-R\rho)/2,&\ell_R\le R\rho,
+\end{cases}&
+\widehat w&=P_R(y_3),\\
+\widehat x&=\left(y_0,(\widehat s+\widehat w)q^{-1}\right).&&
+\end{aligned}
+\tag{54.14}
+$$
+
+$P_R$ 是（46.17）的闭球投影，零报告用第一分支。
+两个径向端点均在 $[0,R]$ 且有序，所以平方根、分支及输出在整个 $E^4$ 上有定义。
+这里 $u_R$ 是径向实部上端点，与（54.12）的公共方向参数 $\nu$ 不同。
+输出使用已得报告和公开常数；不增设符号标签。它不声称在全报告空间连续。
+两个中间Read的数值不参与输出计算，但仍实际执行并保留。
+

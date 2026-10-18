@@ -1,0 +1,5 @@
+source_id = "fib-polynomial-gain-shear-calibration-and-erasure-recovery"
+path = "docs/develop/theory/FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

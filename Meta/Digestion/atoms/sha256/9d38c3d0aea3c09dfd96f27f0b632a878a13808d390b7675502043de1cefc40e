@@ -1,0 +1,48 @@
+**Theorem 9.2 (exact endpoint fidelity on the whole qutrit).** For (R.38) at $\beta=1/2$,
+
+$$
+g_N^2=\frac{3+2\sqrt2}{8},\qquad
+\delta_N\geq\frac{5-2\sqrt2}{4}.
+\tag{R.40}
+$$
+
+In particular a universal replacement of the kernel loss $\lambda_2/2$ in the phase-gain lower-bound proof by $\lambda_2$ is false on an actual admissible channel.
+
+**Proof.** Put $Q=\operatorname{span}(|1\rangle,|2\rangle)$. On $Q$ the complement is
+
+$$
+\Lambda\begin{pmatrix}x&z\\\bar z&y\end{pmatrix}
+=\tfrac12\begin{pmatrix}x+y&z\\\bar z&x+y\end{pmatrix},
+$$
+
+with Bloch coefficients $(1/2,1/2,0)$ and Pauli probabilities $(1/2,1/4,1/4,0)$. On the rest of the full input space, $\Gamma(|0\rangle\langle0|)=I_2/2$ and all $0$–$Q$ cross terms vanish, by the full matrix-unit identities in Theorem 9.1.
+
+Take the full sixteen-element Pauli group on $Q$, including phases $\pm1,\pm i$, and extend each element $A$ to $U_A=1\oplus A$ on the qutrit. With the matching environment Pauli $W_A$, $\Gamma(U_A XU_A^\dagger)=W_A\Gamma(X)W_A^\dagger$ on the full matrix algebra. On $Q$ this is the covariance of the diagonal Bloch action; on $|0\rangle$ and the cross terms it follows from the preceding identities. These are mathematical symmetries, not additional native controls.
+
+The worst-input root-fidelity function $h(\omega)$ is concave in $\omega$, as proved in Theorem 7.3, and covariance makes it invariant under these environment conjugations. Averaging sends every $\omega$ to $I_2/2$ and cannot lower $h$. Thus that single center is optimal across all inputs.
+
+For fixed channels and input $\rho$, Uhlmann's contraction formula gives
+
+$$
+F_\rho(\mathcal A,\mathcal B)=
+\max_{\|T\|\leq1}\operatorname{Re}\operatorname{Tr}
+[\rho V_{\mathcal A}^\dagger(I\otimes T)V_{\mathcal B}],
+$$
+
+padding environment spaces if necessary. It is a maximum of real affine functions of $\rho$, hence convex. At center $I_2/2$, covariance makes it invariant under the full input group. Averaging can therefore only decrease it. The full group average of any input is
+
+$$
+\rho_p=p|0\rangle\langle0|+(1-p)I_Q/2.
+$$
+
+The scalar phases in the sixteen-element group remove all $0$–$Q$ coherences; averaging only the four representatives $I,X,Y,Z$ would not justify that removal.
+
+For a purification of $\rho_p$, both compared states are block diagonal in the corresponding reference split. Root fidelity adds across these blocks. The $|0\rangle$ block contributes $p$. In the $Q$ block the normalized Choi state $J_\Lambda/2$ has eigenvalues $1/2,1/4,1/4,0$ while the constant comparison state is $I_4/4$, so its root fidelity is
+
+$$
+c=\tfrac12(\sqrt{1/2}+\sqrt{1/4}+\sqrt{1/4})
+=\frac{2+\sqrt2}{4}.
+$$
+
+Thus $F_{\rho_p}=p+(1-p)c$, whose minimum is $c$ at $p=0$. Input convexity proves no untwirled input has a lower value, and center concavity proves no other center has a higher worst-input value. Duality yields $g_N^2=c^2$ and the pure-target norm conversion gives (R.40). At this optimal center $\lambda_2=1/2$, while $c^2>1-\lambda_2=1/2$, refuting the stronger proposed kernel bound. This does not determine the exact diamond optimum or refute the class benchmark; indeed $c^2<(1+1/\sqrt2)/2$. $\square$
+

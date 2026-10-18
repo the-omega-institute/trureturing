@@ -1,0 +1,6 @@
+### 93.1. Exact parameter field
+
+Let \(P(B)=\sum_{j=0}^{98}p_jB^j\) be the primitive integer polynomial
+whose complete ascending coefficient list is in §93.7. Put
+\(Q(b)=P(b^2)\).
+

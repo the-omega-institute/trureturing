@@ -1,0 +1,15 @@
+**命题 78.13（Exact selector response representation）。** For $|u|=d<L$, define
+
+$$
+H_{a,u}=\{v\in\{0,1\}^{L-d}:\sigma(uv)=a\}.
+$$
+
+The minimum active response-state count of the selector is
+
+$$
+K_\sigma=\sum_{d=0}^{L-1}
+\left|\{H_{a,u}:a\in A,\ |u|=d\}\right|\ge n.
+$$
+
+Proof. At the same depth, words shorter than $L-d$ report active; a word of that length reports hit exactly on $H_{a,u}$; longer words truncate at the same stop. Thus two such states are equivalent precisely when their $H$ sets agree. Different depths are inequivalent: a word just long enough to stop the state with shorter remaining depth leaves the other active. These are exactly all equivalence classes, and 78.4 attains the count. At depth zero the $n$ nonempty disjoint preimages of the onto map are distinct. All states are reachable, so there is no unreachable-state subtraction. The acquisition formulas depend only on $n,L$ for every surjection, while the residual-predicate count can depend on $\sigma$. $\square$
+

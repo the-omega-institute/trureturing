@@ -1,0 +1,6 @@
+### 66.6 Attribution and mathematical boundary
+
+The orthogonal traceless-subspace description and the classical MUB bound k≤d+1 are standard; see Boykin, Sitharam, Tiep and Wocjan, Mutually Unbiased Bases and Orthogonal Decompositions of Lie Algebras, https://arxiv.org/abs/quant-ph/0506089 . Pauli/generalized-spin constructions of MUBs are established; see Pittenger and Rubin, Mutually Unbiased Bases, Generalized Spin Matrices and Separability, https://arxiv.org/abs/quant-ph/0308142 . The Hadamard recursion is classical, and its elementary verification is included above. PIO/zero-communication background remains Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These ingredients are not claimed new.
+
+The channel statement extends §65's saturated two-fibre contractions to a single common implementation for all fibres. Its physical equality analysis identifies the exact weighted-basis resource, gives a branch and entropy obstruction for arbitrary product CPTP factors, and supplies sharp finite families. It is an exact-implementation resource theorem, not a positive-error diamond optimum or a classification of arbitrary RT channels. Equality of the prescribed linear maps includes all reference extensions; no global-priority claim is made.
+

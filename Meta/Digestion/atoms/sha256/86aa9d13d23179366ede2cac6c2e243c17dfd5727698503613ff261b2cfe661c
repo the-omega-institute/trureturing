@@ -1,0 +1,53 @@
+**定理 42.5（球帽逆裕量与完整因果记录的精度分界）。** 对 $\tau\ge0$，置 $\kappa=\sqrt{1-\tau^2}>0$。
+
+1. 若一个非零前缀的 $\alpha>\kappa$，则 $m=m(\alpha,\tau)>0$。球帽隐藏初态对归一化首锚读 $w$ 的最小全局逆Lipschitz常数恰为 $1/m$，对实际读 $\lambda w$ 则恰为 $1/(\lambda m)$。该常数是固定实际投影的几何逆常数，不是全部历史控制器的精确噪声minimax值。
+2. 对严格预算 $g_N>\kappa$，令 $m_N=\tau g_N-\kappa\sqrt{1-g_N^2}>0$。有全初态风险界
+
+   $$
+   \delta\le\mathcal R_N^{\rm cap}(\delta)
+   \le\delta\sqrt{1+m_N^{-2}}\qquad(\delta>0).
+   \tag{42.11}
+   $$
+
+   上界由单位控制的有限历史达到，只需至多3次更新、至多4次Read并保留其全部动作／读数／停止记录；下界只主张线性阶，未声称匹配裕量常数。
+3. 若 $g_N=\kappa$，精确恢复仍成立，但对所有控制器有
+
+   $$
+   \sqrt{R\delta}\le\mathcal R_N^{\rm cap}(\delta)
+   \le\sqrt{2\delta^2+2R\delta}
+   \le\sqrt{3R\delta},
+   \qquad 0<\delta\le\frac{R(1-\tau)}2.
+   \tag{42.12}
+   $$
+
+   中间上界在全部 $\delta>0$ 有效，由同样的有限历史达到。临界固定投影的逆在实际像上有指数 $1/2$ 的Hölder界，没有Lipschitz界，也没有任何指数大于 $1/2$ 的统一Hölder界。
+4. 若 $g_N<\kappa$，所有 $\delta>0$ 均有
+
+   $$
+   \mathcal R_N^{\rm cap}(\delta)
+   \ge\frac R2\bigl(\sqrt{1-g_N^2}-\tau\bigr)>0.
+   \tag{42.13}
+   $$
+
+   因而在 $\tau>0$ 时，统一最坏误差为 $O(\delta)$ 的最小更新预算恰为 $\min\{N\ge1:g_N>\kappa\}$；此处 $O(\delta)$ 的常数可依赖声明来源与预算，但不能依赖 $\delta$。$\tau=0$ 时任何有限预算都没有这种线性精度保证。若 $\tau<0$，对任何有限预算均有 $\mathcal R_N^{\rm cap}(\delta)\ge-R\tau/2>0$。
+
+证明。**逆的几何及尖锐性。** 记 $H=\tau\nu+\kappa\alpha$，则 $m^2+H^2=1$。式 (42.6) 给 $s\ge Rm$。因此所有合法 $w$ 均在闭球 $|w|\le RH$ 内，平方根图
+
+$$
+ f(w)=(\epsilon\sqrt{R^2-|w|^2}+w)\widehat p^{-1}
+\tag{42.14}
+$$
+
+在此球上的微分范数为 $R/\sqrt{R^2-|w|^2}\le1/m$。线段留在该球，积分微分界得全局Lipschitz上界。这里导数的三个奇异值为 $1,1,R/s$，因为旋转之前的Gram矩阵为 $I+ww^{\mathsf T}/s^2$。
+
+为检验常数确实最小，$\nu>0$ 时取上文的 $t$，$\nu=0$ 时任取单位 $t\perp\ell$。帽边缘点与进入帽内的单位切向量为
+
+$$
+ b_*=R(m\ell+Ht),\qquad z=H\ell-mt,
+ \qquad \langle n,b_*\rangle=R\tau,
+ \quad \langle n,z\rangle=\kappa>0.
+\tag{42.15}
+$$
+
+由于 $\tau<1$，$\kappa>0$。曲线 $b(\theta)=b_*\cos\theta+Rz\sin\theta$ 在充分小的 $\theta>0$ 仍在帽内；其初态速度长度为 $R$，投影速度长度为 $Rm$。两点逆比趋于 $1/m$，证明尖锐性；实际读数再乘 $\lambda$，给 $1/(\lambda m)$。该证明也包括 $\alpha=1$，此时 $m=\tau>0$、$H=\kappa$。
+

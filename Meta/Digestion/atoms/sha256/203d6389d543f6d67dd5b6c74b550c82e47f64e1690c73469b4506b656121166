@@ -1,0 +1,34 @@
+**Definition 1.2 (The unchanged scalar-port problem).** A legal scalar
+port is one fixed composite $T=\operatorname{Dec}\circ\operatorname{Enc}$,
+where $F$ is finite and
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_1,
+\qquad \operatorname{Dec}((y_f)_f)=\sum_f\operatorname{Dec}_f(y_f),
+\qquad \operatorname{Dec}_f:M_1\longrightarrow M_5
+\tag{1.2}
+$$
+
+are CPTP, with every decoder TP on its whole scalar block. The design
+precedes the input and the future policy. Every quantum path traverses
+the port; no original input, entangled assistance or bypass is retained.
+Finite classical flags are free for this quantum dimension criterion,
+are used in decoding, and are not additionally exposed to the later
+policy. Let $\mathfrak C_1$ contain all such complex channels, and set
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathbb C^5)}
+\sup_{\pi\ {\rm actual,finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad \varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+Replacement occurs once before the common protocol. TV is half the
+$\ell^1$ difference, with its probability-measure version for random
+controls. CPTP legality includes all reference extensions; the
+performance criterion tests system histories only. No trace-distance
+or diamond-norm objective replaces (1.3). No reality, covariance,
+unitality, self-adjointness or projector restriction is imposed on the
+original competitors.
+

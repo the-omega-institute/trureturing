@@ -1,0 +1,20 @@
+**定义 C-150.1（所保留的观察及完整恢复范数）。** $\mathcal O(N)$ 只包含
+相位增益 $\beta$，以及 (C146.1) 六个具名源域和 (C149.1) 两个另行具名输出域的
+所有优化单目标前沿数值，指标为全部 $n\ge1$、$\delta\in[0,1]$。
+域名指各通道自身的上述精确源像或另行输出域，不将两个通道的输出态集合认作相同。
+该签名不保存全部原始目标统计、全部效果或每个有限区分任务。
+按相位恢复卷定义 1.4，记
+
+$$
+\Delta_N=\inf_{\substack{\mathcal R:M_5\to M_3\\\mathcal R\ {\rm complex\ CPTP}}}
+\|\mathcal R\circ N-\mathrm{id}_3\|_\diamond,
+\quad
+\|\Phi\|_\diamond=
+\sup_{\substack{R\ {\rm finite}\\\rho\in\mathsf D(H\otimes R)}}
+\|(\Phi\otimes\mathrm{id}_R)(\rho)\|_1
+\tag{C150.1}
+$$
+
+（后一式用于这里的通道差）。迹范数与 diamond 范数均不除以二；
+一个共同恢复作用于整个复输入代数，包含全部有限参考，不按输入或系综另选恢复。
+

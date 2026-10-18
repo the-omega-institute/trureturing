@@ -1,0 +1,71 @@
+**Definition 6.1 (finite coefficient formula).** All sums in this
+section run over the four signs in the fixed order of Definition 3.1.
+Define
+
+$$
+\begin{aligned}
+R_1&=x-g_1-z+\alpha(x+y-g_0),&
+R_2&=y-z-g_2+\beta(x+y-g_0),\\
+B&=-(R_1+R_2)=f(-1,-1),&m&=2(\gamma R_2-R_1),\\
+b_{++}&=R_1-\gamma R_2,&b_{+-}&=-(1+\gamma)R_2,\\
+b_{-+}&=(1+\gamma)R_1,&
+b_{--}&=-(\gamma+2)R_1+(2\gamma+1)R_2,\\
+\ell_j&=b_j/2,&\Gamma&=\sqrt{\frac18\sum_jb_j^2}.
+\end{aligned}
+\tag{EP.31}
+$$
+
+The $b_j,\Gamma$ are exactly the credited JR.155 quantities. Their sum
+is zero. EP.18 gives $x+y-g_0>0$, $y-z-g_2>0$, hence $R_2>0$ and
+$\Gamma>0$. Put
+
+$$
+S_\sigma=\sum_j\sigma_j\ell_j,\quad
+S_\eta=\sum_j\eta_j\ell_j,\quad
+S_{\sigma\eta}=\sum_j\sigma_j\eta_j\ell_j,\qquad
+w_{\sigma,\eta}=
+\frac{\sigma S_\sigma-\gamma\eta S_\eta+
+ (1-\gamma)\sigma\eta S_{\sigma\eta}}{16}.
+\tag{EP.32}
+$$
+
+Define four further explicit scalars
+
+$$
+\begin{aligned}
+D_{\sigma,\eta}={}&\mathbf1_{\sigma=\eta=-1}
+ [2g_1-2\gamma g_2-2\gamma(\gamma+1)\eta y
+                  -2\gamma(\gamma+3)\sigma\eta z]\\
+&-\frac{B\gamma\eta}{4}[(\gamma+1)(1-\sigma)-2\sigma]-\frac m4.
+\end{aligned}
+\tag{EP.33}
+$$
+
+Here $D_j$ is a scalar, not the original diagonal Kraus matrix $D$;
+$w_j$ is not an original failure weight. Finally set
+
+$$
+v_2=\frac18\sum_j\ell_j^2=\frac{\Gamma^2}{4}>0,\qquad
+v_3=\frac12\sum_jw_j\ell_j^2-\frac18\sum_jD_j\ell_j^2,
+\tag{EP.34}
+$$
+
+and
+
+$$
+\boxed{K_1=\frac{v_3}{v_2}
+ =\frac1{2\Gamma^2}\sum_j(4w_j-D_j)\ell_j^2.}
+\tag{EP.35}
+$$
+
+This is a finite algebraic value in the source constants; it contains
+no optimizer, unknown derivative or unevaluated auxiliary root. Its
+exact value is the formula, with no numerical value or sign inequality
+asserted for $K_1$. The endpoint constant is
+$T_0=T_{\rm flat}-B/4$. Here $B=4\mathsf b(1)$ in JR notation;
+it is distinct from $\beta$, the $b_j$, $b_K$ and the scalar resource
+$B_y$. It is also RC.47's $f_-$; RC.47's $\mathcal D$ is $R_1$.
+RC64 identifies the same $T_0$ and $\Gamma$, but supplies no evaluated
+coefficient of $\varepsilon$ or constant multiplier correction. EP.35
+is the additional endpoint information here.
+

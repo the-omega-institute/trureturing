@@ -1,0 +1,25 @@
+**Proposition 7.4 (the count cannot be silently removed).** For every
+nonempty $P\subseteq A_D$, no passive deterministic decoder receiving
+only initial source-dependent state and public $D,P$ recovers all
+future $P$-vectors without a count or other new source-bearing input,
+even if it retains the whole initial tree.
+
+Proof, retaining [PRIOR, Proposition 9.4]'s menu-specific witness.
+Use the one initial source $t_0=\langle\alpha,\alpha\rangle$ and any
+$q\in S$. Put $b=s(q)+2$. The two authentic continuations with
+counts $b-1$ and $b$ give beta and branch at $Rq$, by Citation 3.1.
+The entire passive input is identical because the original source is
+the same and neither count nor another new distinction is supplied.
+A deterministic function cannot output both required vectors.
+The empty menu is excluded because it always returns the empty vector.
+$\square$
+
+Saturation allows the supplied count to be replaced by
+$\min(k,B(S))$ for value prediction [DEV, Theorem 12.9]. It does not
+reveal when that threshold was reached. Every count at least $B(S)$
+gives the same all-branch vector. By contrast an exact count, or an
+exact rebased nonempty ray table, has unboundedly many values; even
+for one fixed source the tables at $0\le k\le K$ require $K+1$
+different lossless names [DEV, Proposition 11.10]. These are distinct
+storage and recovery objectives.
+

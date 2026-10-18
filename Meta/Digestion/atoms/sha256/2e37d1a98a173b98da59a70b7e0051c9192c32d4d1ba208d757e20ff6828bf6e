@@ -1,0 +1,41 @@
+**定义 18.2（粗控制前缀完整表）。** 对每个 $d\ge0$，令
+
+$$
+C_j=[(p_0,\mathsf{branch}),\ldots,(p_{j-1},\mathsf{branch})],\qquad C_0=[],
+$$
+
+$$
+E=\{Q_j:0\le j\le d\}\ \sqcup\
+\{H_{j,x}:0\le j\le d,\ x\in\{\alpha,\beta\}\}\ \sqcup\
+\{H_{\mathsf{branch}}\},\qquad e_0=Q_0.
+\tag{SLH.18.2}
+$$
+
+这些符号是不同完整行，数目为 $(d+1)+2(d+1)+1=3d+4$。全部动作与解码为
+
+$$
+\begin{aligned}
+a(Q_j)&=\operatorname{Query}(p_j),&c(Q_j)&=C_j,\\
+a(H_{j,x})&=
+\begin{cases}\operatorname{Halt}(\mathsf{absent}),&j<d,\\
+\operatorname{Halt}(x),&j=d,\end{cases}
+&c(H_{j,x})&=C_j\mathbin{+\!+}[(p_j,x)],\\
+a(H_{\mathsf{branch}})&=\operatorname{Halt}(\mathsf{branch}),&
+c(H_{\mathsf{branch}})&=C_{d+1}.
+\end{aligned}
+\tag{SLH.18.3}
+$$
+
+查询行对全部四种回复的转移为
+
+$$
+\begin{aligned}
+\delta(Q_j,\alpha)&=H_{j,\alpha},\qquad\delta(Q_j,\beta)=H_{j,\beta},\\
+\delta(Q_j,\mathsf{branch})&=\delta(Q_j,\mathsf{absent})=
+\begin{cases}Q_{j+1},&j<d,\\H_{\mathsf{branch}},&j=d.\end{cases}
+\end{aligned}
+\tag{SLH.18.4}
+$$
+
+每个停止行对四种回复都转移到自身；没有错误行、免费后备、外部游标或未定义表项。每个解码列表仅含长度不同的路径前缀，故全部名义行地址无重复。$C_{d+1}$ 只是最后一行的解码记号，不是额外查询行。
+

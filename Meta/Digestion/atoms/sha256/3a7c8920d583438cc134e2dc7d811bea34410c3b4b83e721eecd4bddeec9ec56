@@ -1,0 +1,30 @@
+**Theorem 8.1 (uniform optimal endpoint-query asymptotic).** Under exactly
+Definition 1.1 and the full class in Definition 2.1,
+
+$$
+\sup_{\kappa\in\mathcal K}
+\left|nR^*_{n,\kappa}-C_\kappa\right|\longrightarrow0,
+\qquad
+C_\kappa=\int_I\frac{B_\kappa(k)^2}{2B_\kappa'(k)^2}\pi(dk).
+\tag{8.1}
+$$
+
+The same limit holds for the actual finite wrapped-query sequence
+of Definition 4.1. Also $R^*_{n,\kappa}=R^{=}_{n,\kappa}>0$ for every
+finite $n$, with the uniform lower bound (7.2). All uniform assertions
+allow arbitrary parameter sequences in the full fixed two-sided
+family, including actual zero values and approaches through either sign.
+
+Proof. Theorem 7.1 gives a uniform lower error tending to zero for the
+infimum. Theorem 4.2 gives a uniform upper error tending to zero with
+an actual lawful pair for each $n$. Since its risk bounds $R^*$ from
+above, these inequalities prove (8.1). The asserted attaining-sequence
+limit is (4.3), and equality of budget infima and positivity are
+Lemmas 2.2 and Theorem 7.1. Proposition 3.2 supplies the explicit
+coefficient and its actual-zero value. No nonzero-coordinate inverse
+or extra phase was used at any parameter. $\square$
+
+The average in (8.1) is the average of inverse local information.
+It is not obtained by inverting $\int j_\kappa d\pi$. The weight
+$w_\kappa$ in (6.9)--(6.10) is what yields that particular coefficient.
+

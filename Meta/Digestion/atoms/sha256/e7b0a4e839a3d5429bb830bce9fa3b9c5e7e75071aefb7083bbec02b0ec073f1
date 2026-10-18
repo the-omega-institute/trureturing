@@ -1,0 +1,29 @@
+### 51.8 可证伪审计与来源分工
+
+以下检查针对普遍量词，任一失败都推翻相应证明步骤；有限例子通过不能替代这些义务。
+
+- 中央间隙必须在整个 $J$ 对每个 $k\le m$ 成立；外侧的尾区间比较及第三名间隙必须涵盖所有 $k\ge1$ 和区间端点。任何漏掉的深度或被遗漏的分母质量都否定(51.9)。不允许把 prior-tail 小直接当作 posterior-tail 小。
+- 原 $q=A/(A+B)$ 的每个计数对必须落入短、中央或外侧分类；外侧最高两项必须是真实支持中的同侧相邻参数。(51.13)必须包含最近外邻、另一侧和累积极限，不能只测有限头部。
+- 每个纯射线、整数对数网点和中央代表必须是非负整数原 count-grid 点；原完整表执行必须到达同一个 $C_0(g)$，并允许同一个原 $v$。只匹配相位、只覆盖概率单纯形或插入一个不存在的动作都会否定转移。
+- 对数网须先有不依赖低计数阈值的 $W'$，然后才选 $N_{ij}$ 与坐标下界；有理依赖分支的素指数判定和无理分支的严格小步长证书均须终止。若包络随所选阈值反向变化，非循环性尚未建立。
+- 全记录检查涵盖两种种子、全标记树、裸字段、选择器、第三次 write-before-latch、holding、完成与 delivery、原菜单和终端禁止 Read；未来转录必须使用同一个全记录 $I_c$，不能拼接不同原历史的记录。
+- 私有 Dobrushin 条件只能作用于同纤维行；law 要核对混合律的 TV 收缩，conf 要核对逐配置距离和 $[0,1]$ 期望界；两项相容性(51.3)、(51.4)分别承担。用 law 的平均等式代替 conf 或边缘相容性会留下缺口。
+- 名字的总性以正性、归一化、认证误差/尾合同及有效 COMPLETE 对应为前提；删除支持、缺少两侧锚点或未认证正 floor 时，必须重新检查51.7的条件，不能把承诺外输入当成反例或已处理实例。共享尾模量本身不能绕过51.6的质量延迟。
+
+| 供应或方法 | 本节使用及边界 |
+| --- | --- |
+| 本卷定义1.2–1.5、20.1、37.1–37.2、45.1；§§47、49 | 唯一共同来源、全部实际历史、原菜单/记录、两项相容性、COMPLETE 账户和原四消费者；有限端点质量反例是既有结果，51.6另给全支持且共享尾模量的认证衰减族。 |
+| [CF51] 定义3.1、引理3.2、4.1–4.2、5.3、6.1；定理6.2与§7 | 复用私有行收缩、完整原整数网格、整数对数网和双损失连续性。有限源的后验覆盖及取得定理只按原假设使用；51.3–51.5承担新的可数完整目标覆盖/转移。 |
+| [EM51] 命题5.3 | 复用有效 Fibonacci 累积与完整目标 TV 常数；不把其未来 moment 截断当作 acquired-history 截止。 |
+| [FR51] 定理24.1、§25、推论32.1 | 后验逆模失败、指定历史的前向求值及非线性/线性/位存储分离是已有边界；51.2将孤立点射线用于承诺全支持的目标网审计。 |
+| [EF51] 定理8.2；[EH51] 定理9.1 | 有限支持且全 floor 时的有限存在与整个 COMPLETE 类的有效选择障碍仍保留；新证书限制消费者，未推翻全类负结论。 |
+| [SC51] 定理6.2–6.3、8.2–8.3、9.2–9.3 | 全记录正常形、同计数不同年代及未来不补回旧顺序；本节没有取得该卷额外年代档案。 |
+| Dobrushin 行直径、抽屉原理、唯一素因子分解、严格凹性及 TV 连续性 | 成熟数学工具，相关具体证明与文献供应已在 CF 逐项承担；本节仅给 PH 可数同安装的源特定综合，不作外部文献优先权或原创性主张。 |
+
+[CF51]: https://github.com/the-omega-institute/trureturing/blob/3031ca0f03784e99dcd0ca57c5b13d8840955d4d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CERTIFIED_FADING_MEMORY_ACQUISITION.md
+[EM51]: RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md
+[FR51]: RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[EF51]: RECURSIVE_RELATIONAL_OBSERVATION_ENDPOINT_FLOOR_HISTORY_LOCALIZATION.md
+[EH51]: RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_ACQUISITION_HORIZON.md
+[SC51]: RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md
+

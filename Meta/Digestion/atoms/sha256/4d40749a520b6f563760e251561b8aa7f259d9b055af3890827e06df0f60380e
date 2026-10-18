@@ -1,0 +1,44 @@
+**Lemma 10.2 (the first literal and a lawful one-update comparison).**
+Let $P\ne\{\varepsilon\}$. Any invocation solver under Assumption 10.1
+must reach a first Read after finitely many source-free steps. Its first
+literal is one fixed finite word $a$, independent of the source.
+If there is $u\in\mathcal T$ such that
+
+$$
+r_u(a)=r_{\rho u}(a),\qquad R_P(u)\ne R_P(\rho u),
+\tag{CNA.16}
+$$
+
+then no such solver exists. More generally, the comparison excludes any
+observer with this first literal that is correct on all histories with
+at most one later update and terminates on quiescent inputs.
+
+**Proof.** Prefix freedom and $P\ne\{\varepsilon\}$ imply
+$\varepsilon\notin P$. Thus $R_P(\alpha)$ and $R_P(\beta)$ have distinct
+concrete root labels, empty reached sets and empty partitions.
+A source-blind return without any Read has the same output on these
+two quiescent sources and cannot be correct on both. An infinite
+source-free computation before any Read violates quiescent termination.
+The finite initial computation therefore selects a fixed literal $a$.
+Its materialization and every continuation are actual observer work.
+
+Given (CNA.16), run two calls with invocation sources $u$ and $\rho u$.
+Their first Reads precede every writer update and have the same reply.
+Immediately after that Read, let the first call's writer perform exactly
+one update and halt. Let the second call's writer perform no update.
+The two registers now contain exactly $\rho u$, while observer control,
+retained records and the next selected operation agree. Both calls keep
+their own original register and root throughout; neither history replaces,
+resets or reroots a source.
+
+Continue both calls with the same observer transitions and no further
+writer events. At each local transition the records agree; at each Read
+the selected finite literal and the source agree, hence the replies agree.
+This is induction on the actual events, including address construction,
+rereads, output preparation and Return. The quiescent call starting at
+$\rho u$ terminates, so the paired call terminates with the same output.
+Their required invocation rows differ. Both histories are finite and
+observer-progressing, with respective update totals one and zero.
+A separate Return leaves a legal update position even if the observer
+returns immediately after its first Read. $\square$
+

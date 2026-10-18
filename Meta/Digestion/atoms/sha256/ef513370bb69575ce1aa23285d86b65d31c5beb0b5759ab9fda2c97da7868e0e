@@ -1,0 +1,35 @@
+**Theorem 25.4 (The fixed finite-state paid-mean converse).** Fix the exact sources of Definitions 23.1–23.2 and $0<\alpha<1/2$. For every one fixed finite-state stochastic observer $\mathcal A$ satisfying Definition 23.3 and all of (23.8), there exist $c_{\mathcal A}>0$ and $s_{\mathcal A}>0$ such that
+
+$$
+\mathbb E_{i,e^{-s}}T\ge c_{\mathcal A}s^{-11}
+\quad\text{for both }i=0,1\text{ and every }0<s<s_{\mathcal A}.
+\tag{25.12}
+$$
+
+The constants and the neighborhood may depend on the entire fixed machine, including its transition probabilities and initialization, as well as on $H$ and $\alpha$.
+
+Proof. Let $b_\alpha=1-2\alpha>0$. The two separate uniform risk bounds permit the particular comparison of $\mathsf P_{0,q}$ with $\mathsf P_{1,q}$, and give $p_1(q)-p_0(q)\ge b_\alpha$. This selected pair is allowed within the two nuisance families; the experiment does not promise that their unknown parameters are equal.
+
+Apply Lemmas 25.1–25.3 and (24.7), separately with $i=0$ and $i=1$. Since $1-e^{-s}\le s$,
+
+$$
+\begin{aligned}
+b_\alpha
+&\le r(e^{-s})+\varepsilon(e^{-s})\mathbb E_{i,e^{-s}}N\\
+&\le C_Rs^2+BC_Us^{10}(1-e^{-s})\mathbb E_{i,e^{-s}}T\\
+&\le C_Rs^2+BC_Us^{11}\mathbb E_{i,e^{-s}}T.
+\end{aligned}
+\tag{25.13}
+$$
+
+Choose $s_{\mathcal A}\le s_*$ small enough that $C_Rs^2\le b_\alpha/2$ throughout that interval, and take
+
+$$
+c_{\mathcal A}=\frac{b_\alpha}{2BC_U}>0.
+\tag{25.14}
+$$
+
+This proves (25.12) under each family. A positive $C_U$ can always be chosen as an upper-bound constant; no division by the actual value of $\varepsilon(q)$ is involved.
+
+The initial interval enters through its exact kernel, and its actual reads remain in $T$. A terminal gap interrupted by stopping contributes only its observed prefix to (25.11). Thus no full expected gap length has been charged to an interrupted gap. The only truncations in the argument were the finite sums in (25.5), whose limits were justified using the pointwise finite mean. $\square$
+

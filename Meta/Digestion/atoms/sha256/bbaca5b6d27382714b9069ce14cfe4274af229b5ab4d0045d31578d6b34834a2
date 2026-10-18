@@ -1,0 +1,39 @@
+### 52.5 Two actual unit sources and one exact spectral distinction
+
+Use the actual eight-leaf unit word from [Transport Memory, Lemma 58.2 in §58.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), its displayed $\omega_{1,1}$:
+
+$$
+\omega=\alpha\beta\beta\alpha\beta\alpha\alpha\beta.
+\tag{52.19}
+$$
+
+Let $t_{\mathrm{bal}}$ be the complete depth-three balanced bracketing of this word, and let $t_{\mathrm{comb}}$ be its left-associated bracketing. Explicitly,
+
+$$
+\begin{aligned}
+t_{\mathrm{bal}}&=\left\langle
+ \langle\langle\alpha,\beta\rangle,\langle\beta,\alpha\rangle\rangle,
+ \langle\langle\beta,\alpha\rangle,\langle\alpha,\beta\rangle\rangle
+ \right\rangle,\\
+t_{\mathrm{comb}}&=\langle\langle\langle\langle\langle\langle
+ \langle\alpha,\beta\rangle,\beta\rangle,\alpha\rangle,
+ \beta\rangle,\alpha\rangle,\alpha\rangle,\beta\rangle.
+\end{aligned}
+\tag{52.20}
+$$
+
+Both have 15 actual occurrence nodes, composition $(4,4)$, and the original three Clifford windows $(E_0,E_1,E_2)=(1,1,1)$. This is the existing full unit-family source law, not a substituted abstract unit state. In the fixed oriented cross-product preparation of Process44 both have $q=0$; directly, the balanced tree has parallel opposite-axis cherries and the comb obtains zero at its first repeated-axis ancestor. Substitution rotates zero to zero, and grafts keep zero zero. The unit Clifford preparation and the Euclidean cross-product preparation are different declared numerical representations of these same two literal trees; they are not identified as one physical sensor.
+
+The fixed orthogonal preparation is material to this additional cross-product-port assertion. With a separately supplied nonorthogonal preparation $q\alpha=e_1$, $q\beta=e_1+e_2$, the same bracketed trees instead give $q(t_{\mathrm{bal}})=0$ and $q(t_{\mathrm{comb}})=-e_3$ by direct nested products. That different numerical port can distinguish them on its initial Read. It is a different preparation/read contract with its own calibration and acquisition costs, not an exception to the fixed Process44 contract or a distinction available in the unchanged Clifford records.
+
+Supply $a=g=1$ and the closed initial spectral target
+
+$$
+F_{\mathrm{spec}}(t)
+:=\langle\mathbf1_r,(\mathcal H_t^{(0)}+2I)^{-1}\mathbf1_r\rangle,
+\qquad\mathcal H_t^{(0)}=L_t^{\mathrm N}-I.
+\tag{52.21}
+$$
+
+This is a fixed function of the *unmodified initial* occurrence tree and its declared field/kinetic realization. Since $\mathcal H_t^{(0)}+2I=L_t^{\mathrm N}+I>0$, no spectral pole or indefinite stationary-value issue enters this particular target. A source function is not thereby an acquired Read.
+

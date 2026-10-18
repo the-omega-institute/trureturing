@@ -1,0 +1,18 @@
+**Theorem 1.4 (Finite visible memory completeness).** For every permitted law $Q$ the limit
+
+$$
+d(Q)=\lim_{n\to\infty}\frac{\Phi_n(Q_n)}n
+\tag{1.3}
+$$
+
+exists. On exactly the graphs of Definition 1.1,
+
+$$
+c_\star=\sup_{\substack{m\ge1\text{ finite}\\Q\text{ permitted of order at most }m}}d(Q).
+\tag{1.4}
+$$
+
+For each $\epsilon>0$, §§3–5 specify one finite $m$ and one normalized stationary full-support law $Q$, used at every length, with $d(Q)>c_\star-\epsilon$. Both limits also hold on $n=3N$, $N\ge1$.
+
+The proof is ordinary mathematics. This source carries no Lean kernel verification. The additional conclusion over the owned suppliers is (1.4), with its visible-memory and full-support bridges; the finite-probability, conditional-risk and delimiter tools are supporting machinery.
+

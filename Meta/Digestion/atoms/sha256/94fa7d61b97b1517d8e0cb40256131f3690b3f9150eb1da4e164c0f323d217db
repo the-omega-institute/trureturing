@@ -1,0 +1,24 @@
+**Theorem 3.4 (Replica-three multi-entropy as a sum over coarse partitions).** For every $\mathtt q\ge2$ the assignment $\{t,-t\}\mapsto\pi_t$ is a well-defined bijection from the set of pairs $\{t,-t\}$ with $0\ne t\in(\mathbb Z/3)^{\mathtt q-1}$ onto $\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)$. Consequently
+
+$$
+\frac{3^{\mathtt q-1}-1}{2}=S(\mathtt q,2)+S(\mathtt q,3),
+$$
+
+and for every normalized pure qubit stabilizer state, every graph form $\Gamma$ of it and every colouring,
+
+$$
+S_3^{(\mathtt q)}=\frac{\log2}{2\cdot3^{\mathtt q-2}}\sum_{\pi\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)}r(\pi).
+$$
+
+Stance: suspected-novel (§6).
+
+**Proof.** The fibres of $f_{-t}=-f_t$ coincide with those of $f_t$, since negation is a bijection of $\mathbb Z/3$; so $\pi_{-t}=\pi_t$ and the map is well defined. If $t\ne0$, some $c<\mathtt q$ has $f_t(c)\ne0=f_t(\mathtt q)$, so $\pi_t$ has at least two blocks, and it has at most three since $f_t$ takes values in $\mathbb Z/3$. Conversely, the vectors $t$ correspond bijectively to the functions $f:[\mathtt q]\to\mathbb Z/3$ with $f(\mathtt q)=0$, through $t_c=f(c)$. Fix $\pi\in\Pi_k(\mathtt q)$ with $k\in\{2,3\}$. A function $f$ with $f(\mathtt q)=0$ has fibre partition $\pi$ exactly when $f$ is constant on blocks, takes the value $0$ on the block containing $\mathtt q$, and takes pairwise distinct nonzero values on the remaining $k-1$ blocks. For $k=2$ the remaining block receives $1$ or $2$; for $k=3$ the two remaining blocks receive $1$ and $2$ in one of two orders. In both cases there are exactly two such functions, and they are negatives of each other because negation exchanges $1$ and $2$. Hence the preimage of $\pi$ is exactly one pair $\{t,-t\}$, which proves the bijection.
+
+The number of pairs is $(3^{\mathtt q-1}-1)/2$, which gives the counting identity. By the cited replica rank formula and $Z_1^{(\mathtt q)}=1$,
+
+$$
+S_3^{(\mathtt q)}=\frac{1}{1-3}\cdot\frac{1}{3^{\mathtt q-2}}\cdot\log2^{-\sum_{t\in P}\operatorname{rank}C_t}=\frac{\log2}{2\cdot3^{\mathtt q-2}}\sum_{t\in P}\operatorname{rank}C_t.
+$$
+
+For every $t$, $C_t=\Gamma^{\pi_t}$: for qubits $u,v$ the condition $t\cdot\delta_{\mathrm{col}(u)}\ne t\cdot\delta_{\mathrm{col}(v)}$ reads $f_t(\mathrm{col}(u))\ne f_t(\mathrm{col}(v))$, which holds exactly when $\mathrm{col}(u)$ and $\mathrm{col}(v)$ lie in different blocks of $\pi_t$. Hence $\operatorname{rank}C_t=r(\pi_t)$, and by the bijection each $\pi\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)$ occurs for exactly one $t\in P$. ∎
+

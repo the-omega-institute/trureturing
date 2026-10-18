@@ -1,0 +1,13 @@
+**Definition 11.1 (a separate conditional-update contract).** Retain the literal source, parameter family, authentic calibration supply and common observer of Assumption 10.1. In particular one true $\vartheta=(p,q,r)$ stays fixed, $p,q,r>0$ and $p+q+r<1$, the hidden prior is uniform, and there is no probability prior on $\Theta$. Write $Q_z=D(z)$ and let $\mathcal R$ be the set of configurations reached by a positive history at which a query is allowed. For every $z\in\mathcal R$, every report $y\in\mathcal A$, every finite $H\ge0$ and $w\in\mathcal A^H$, impose the additional identity
+
+$$
+Q_z^{H+1}(yw)=Q_z^1(y)\,Q_{U(z,y)}^H(w).
+\tag{11.1}
+$$
+
+The update $U$ is total and deterministic. Every $Q_z$ is nonnegative, normalized and coherent under deletion of final symbols, including $Q_z^0(\varnothing)=1$. Accuracy is still (10.1) on every actual positive finite history and every finite horizon. With empty queries, $c(\gamma(\vartheta))$ is also in $\mathcal R$; with post-read-only queries an initialized configuration is charged but has no pre-read accuracy obligation. Equation (11.1) is required only at actual reachable query configurations. The global row-product condition of Definition 1.3 is a sufficient stronger realization, and its treatment of hypothetical generated configurations is a separate size convention.
+
+If $Q_z^1(y)=0$, prefix marginalization and nonnegativity force $Q_z^{H+1}(yw)=0$ for every $H,w$. Equation (11.1) then says $0=0$, without defining a conditional law by division or prescribing $Q_{U(z,y)}$ on that null branch. An actual report $y$ still passes through the total $U$. Whenever $M_\vartheta(hy)>0$, the successor is still queried and must be accurate, even if its preceding forecast assigned $y$ probability zero. No inclusion of actual support in forecast support is assumed.
+
+Theorem 10.3 concerns prefix coherence alone and retains its radius $1-1/m$ and its six/seven-state finite-cell construction. The equation above adds a relation between different decoded configurations; it is an additional contract, rather than an interpretation of that earlier theorem.
+

@@ -1,0 +1,14 @@
+**定义 221.12（同块的非负模下包络）。** 保持 221.7 的实际 $\lambda=\kappa+\eta$、同一 $\rho,s,\delta$。对每个正标签 $a$，在其整个零面要求
+
+$$
+\eta_w(a)\ge u_a+\sum_{i<a}c_{ia}w_i\qquad(w_a=0),
+\quad u_a\ge0,\quad c_{ia}\ge0.
+$$
+
+所有包络是同一个实际块的逐字界。全零字同时给出 $U=\sum_au_a\le s$。令
+
+$$
+R_0=s-U,\qquad d_a=(\delta_a-u_a)_+,
+\qquad C_i(J)=\sum_{a\in J,\ a>i}c_{ia},\quad d(J)=\sum_{a\in J}d_a.
+$$
+

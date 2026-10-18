@@ -1,0 +1,19 @@
+**Definition 5.1 (the raw uniform premise classes).** For fixed
+$d\ge2,L\ge2$, a probability $\mu$ and $\delta>0$, let
+$\mathsf U_\delta(\mu)$ assert that every nonempty network in
+$\mathfrak N_{d,L}(n)$, for every $n\ge1$, has nonzero partition
+function under all perturbations (GDB.20). Empty solution sets are
+excluded from this premise.
+
+Define a direct zero-free cap method to have the following mandatory
+condition for every accepted nontrivial label $(d,L,\mu,C)$: $\mu$
+is a strictly positive rational probability and a sound finite witness
+establishes $\mathsf U_\delta(\mu)$ for some rational $\delta>0$.
+Its only other branch may accept $C\ge1$. Define direct spectral and
+coupling variants by replacing this mandatory premise with a finite
+size-independent bound, respectively, on (GDB.22)'s largest eigenvalue
+or on the free-set Hamming Wasserstein distance under opposite one-seed
+pinnings, for every positive-mass native network in the same class.
+These definitions constrain the propositions witnessed, without imposing
+a particular internal proof language for their sound witnesses.
+

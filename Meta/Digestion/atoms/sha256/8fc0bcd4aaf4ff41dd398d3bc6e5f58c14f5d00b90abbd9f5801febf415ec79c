@@ -1,0 +1,10 @@
+**数学引文 66.6（通用有限载体的供应条件）。** [ActualExactTraceCompiler](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean) 的 `exactObserver`、`firstRaw` 和 `exact_all_history_factorization`
+与这里的有限粗控制、原始首次出现缓存及停止吸收构造有通用重叠：该接口取含空历史的有限粗历史集和粗策略，
+全历史因子化属于该构造；同一个 shortlex 前缀上的 $W_n$ 有限行、实际缓存真值和前沿重建仍由57.2及66.3供应。
+[ActualObserverFiniteTable.bounded_table_representation](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverFiniteTable.lean) 对一个已给完整有限原 `Observer`，
+要求每个名义行的全部请求及解码缓存地址均在 $Q_N$，然后按整个载体的双射给忠实表；不要求正确性或来源终止，也不产生实际可达性。
+`ActualExactTraceCompiler.strategy_exact_run`、`strategy_admissible` 仍要求原 `Strategy` 对所有原来源全局正确并有限终止、$1\le N$、原策略的全历史粗因子化；运行对应的来源仍须满足 `Allowed N`。
+[ActualExactSupportPruning.exact_competitor_table_coverage](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.lean) 仍以原 `Admissible N` 和 `ExactTraces N` 为前提，保留整个 `Allowed N` 域与完整名义载体。
+[ActualCompletionPhaseReplay.phase_replay_contract](https://github.com/the-omega-institute/trureturing/blob/1d46c8c01a8197d8ec786853ad532da21f640a47/D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionPhaseReplay.lean) 仍要求原 `Strategy`、$1\le N$ 及准确的 `compileRaw`／`controllerPolicy` 策略等式，实际前缀结论限于 `Allowed N`。
+这些供应不把仅在 $W_n$ 上的合同提升为较大域准入，不供应这里的字面行容量或观察者取得；本章的具体来源与前缀结论由上述普通数学推导承担。
+

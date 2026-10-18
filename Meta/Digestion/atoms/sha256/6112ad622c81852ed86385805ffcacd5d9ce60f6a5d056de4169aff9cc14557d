@@ -1,0 +1,6 @@
+**Theorem 422.1.** Under all hypotheses of Section 413, neither strict
+middle order is possible. The proof uses both compensation bounds:
+the unconditional four-theta estimate (407.2), and the conditional
+three-theta estimate (407.1) only after proving the relevant axial
+angles are at most pi/3.
+

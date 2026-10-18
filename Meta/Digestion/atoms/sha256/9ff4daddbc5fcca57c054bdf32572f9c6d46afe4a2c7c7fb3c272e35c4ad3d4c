@@ -1,0 +1,35 @@
+**Proposition 6.1 (row-only handoff).** With the explicit cleanup and access
+restriction of Theorem 4.4, later observation receives only the public cut,
+the row and source-independent code/control. It receives no validation guard,
+comparison paths, Read count, attempt count, transcript, timestamp or
+allocation residue. Finitely many authentic chronological calls on one
+same-root pure-$\rho$ register therefore supply exactly the row-value inputs
+of [CNA, Definitions 8.1–8.2 and Theorem 8.3][CNA].
+
+Proof. Each accepted call gives a row at its named actual validation event.
+Counting intervening genuine updates supplies semantic epoch witnesses,
+not an extra input. Cleanup leaves exactly the declared row encoding and
+public data. The existing overlap criterion and its necessity now apply
+with their original quantifiers. Every finite chronological row family
+allowed there is still attainable: choose its finite source and pause the
+writer during each finite RA call, inserting the required finite bursts
+between calls. Acquisition therefore excludes none of its collision inputs.
+$\square$
+
+This uses the existing row-only connected-overlap criterion; it is not a new
+relative-time theorem. If a certificate, full tree, transcript, retry counter,
+source-dependent pointer or guard is retained, the input changes and the
+row-only necessity cannot be imported. [CNA, §8][CNA] gives the richer-tree
+counterexample using [DOR] `right_clock_iterate` and its private `clock_step`:
+retained trees can recover lags even when root rows are constant.
+
+A success is certified operationally by the authentic guard observations,
+but RA retains no independently replayable proof certificate. Retaining a
+transcript for later checking requires separate storage and changes the
+handoff. Literal output does not authenticate the register, common root,
+writer law or designated origin. Fixed-cut intermediate-row recovery from
+endpoint rows and authenticated lag remains exactly [CNA, Proposition 8.5][CNA]
+and its native birth-provenance supplier; no such lag is silently supplied
+when the row-only overlap hypotheses fail. Event placement and physical
+duration are not recovered by these mathematical update counts.
+

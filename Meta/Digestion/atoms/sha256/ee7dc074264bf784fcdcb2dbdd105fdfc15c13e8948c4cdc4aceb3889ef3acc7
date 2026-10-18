@@ -1,0 +1,44 @@
+**Theorem 6.2 (matching first-acquisition traffic on a hidden-age family).**
+Let a deterministic source-blind first producer, correct on all sources,
+retain a complete $\{R\}$ row and a supplement sufficient with a later
+row-only $\{L\}$ handoff. It may query arbitrary addresses, recompute,
+reread, and use any finite source-independent immutable installation.
+For each analysis integer $h\ge1$, test its quiescent first calls on
+
+$$
+X_k=\langle\alpha,T_k\rangle,\qquad 2h\le k\le4h.
+\tag{CAB.16}
+$$
+
+At least $2h+1$ first supplementary values are necessary. On some one
+call it makes at least $q_h=\lceil\log_4(2h+1)\rceil$ Reads of length
+at least $h+1$. Thus its worst-case $T,A,Q$ are at least
+$q_h,(h+1)q_h,h+1$ respectively. The all-source procedure of §5
+attains worst-case orders $\Theta(\log(h+2))$ Reads,
+$\Theta(h\log(h+2))$ letters and $\Theta(h)$ operand peak, a seven-cell
+first row and $O(\log(h+2))$ supplemental bits on this family.
+
+Proof. The first rows are all $\langle\alpha,H_R\rangle$. After
+$4h+1-k$ genuine updates the later rows are all
+$\langle H_L,T_{4h+1}\rangle$. These are lawful strictly positive
+lags on each original root. Since no second supplement is permitted,
+the first supplements must distinguish every $k$.
+
+Every whole-root word of length at most $h$ has the same reply across
+the family. Outside the right cone this follows from the fixed root
+and left leaf. Inside it the suffix has length at most $h-1$, and
+native saturation gives branch since
+$k-2(h-1)\ge2$. Contract constant-reply nodes in the induced decision
+tree as in Theorem 4.5. Its $2h+1$ distinguishable leaves force a path
+with $q_h$ informative Reads, each at length at least $h+1$. This
+proves all three lower bounds on an allowed arbitrary-address program.
+
+The first left guard is depth one, and the row body reads just the
+root and its alpha child. The only unbounded search is the hidden
+right-clock search, with $O(\log(h+2))$ queries of length $O(h)$.
+The candidate uses one branch, one alpha, one three-cell hole and
+two terminators: seven cells. The calibration $k+1$ has the stated
+binary size. Its mutable operand implementation occupies $O(h)$
+bits; the lower bound does not prohibit immutable operand competitors.
+$\square$
+

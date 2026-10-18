@@ -1,0 +1,35 @@
+**Definition 2.4 (actual rows, target and risk orders).** Let $\mathcal H_p,\mathcal H_\beta$ contain all positive finite original fourth-segment histories at their respective phases, including every return after the third latch. At history $h$, let $\rho_h$ be its actual conditional private row. Its target is
+
+$$
+T_h^\mu=(I_{C_0(h)})_*T_{s,h}^{\rm raw},\qquad
+T_{s,h}^{\rm raw}=\sum_k\nu_h(k)P_{s,r_k},\qquad
+\nu_h(k)=\frac{\mu(k)r_k^{a(h)}(1-r_k)^{b(h)}}
+ {\sum_t\mu(t)r_t^{a(h)}(1-r_t)^{b(h)}}.
+\tag{2.7}
+$$
+
+The counts $a(h),b(h)$ include every paid seed rejection, accepted seed, payload and partial parse. They and $\nu_h$ are analysis objects. The fixed-depth complete masses, supplied by [ST, Section 2.1], are
+
+$$
+\begin{aligned}
+P_{p,r}(w_{j,0})&=r[r(1-r)]^j,&
+P_{p,r}(w_{j,1})&=(1-r)^2[r(1-r)]^j,\\
+P_{\beta,r}(\beta)&=1-r,&
+P_{\beta,r}(\alpha w_{j,c})&=rP_{p,r}(w_{j,c}).
+\end{aligned}
+\tag{2.8}
+$$
+
+Their legal infinite outcomes have mass zero. Write $D_{h,i}=(I_{C_0(h)})_*Q_i$ at p, and use $W_i$ at suspension. On the same full transcript carrier define
+
+$$
+\begin{aligned}
+e_{{\rm conf},s}(h)&=\sum_i\rho_h(i)\operatorname{TV}(D_{h,i},T_h^\mu),\\
+e_{{\rm law},s}(h)&=\operatorname{TV}\left(\sum_i\rho_h(i)D_{h,i},T_h^\mu\right),\\
+R_{j,s}&=\sup_{h\in\mathcal H_s}e_{j,s}(h).
+\end{aligned}
+\tag{2.9}
+$$
+
+TV is the event-supremum convention, equivalently half $\ell^1$ on the raw countable carriers. The configuration average of TV, the TV of a configuration-averaged law, an average over actual histories and a supremum over positive histories are distinct operations. No hard marginalized conditioning-defect budget is imposed.
+

@@ -1,0 +1,7 @@
+**1 推出 3。** 若 $q(s)=q(s')$，定义 6.2.3 正好给出
+
+$$
+q_*(\delta_sK_a)(z)=\sum_{t\in B_z}K_a(s,t)
+=\sum_{t\in B_z}K_a(s',t).
+$$
+

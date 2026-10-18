@@ -1,0 +1,15 @@
+**Corollary 6.2 (finite-cap upper consumer).** For $H\ge7$ let
+
+$$
+v_H(\mathcal A)=\max_{w\in\Gamma^*,\ |w|\le H}p_{\mathcal A}(w).
+$$
+
+This is a terminating exact rational calculation, and all four original objectives obey
+
+$$
+\Phi_H\le e+\Delta v_H(\mathcal A).
+\tag{6.4}
+$$
+
+**Proof.** Enumerate the finite words up to $H$, multiply finite rational matrices and compare rational acceptances. A gate with paid length at most $H$ decodes at most $H$ data letters, by (4.1); every other cut has baseline phase score at most $e$ or $f<e$. Apply (6.2) for the chosen risk order in each phase and take the finite original supremum. This does not evaluate or approximate the future loss by a first-letter loss: (6.2) already proves the full unbounded-tail bound. It needs no exact-TV or semantic-admissibility oracle. $\square$
+

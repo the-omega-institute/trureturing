@@ -1,0 +1,54 @@
+**Proposition 3.3 (necessity for every original finite competitor).**
+Every competitor induces arrays $H_r\succeq0$, $L_r\in\mathcal C_2$ with
+
+$$
+\begin{gathered}
+\sum_r(H_r+L_r)=I_3,\qquad H=H_++H_-,\quad0\preceq H\preceq I_3,\\
+N=\frac{I_3+s\kappa X_{01}}2-\Theta(H_++L_+),\quad0\preceq N\preceq M,\\
+\operatorname{Re}(H_++L_+)_{DT}=s/2,\qquad
+G_{\rm acq}\succeq E\Theta(H)E^\dagger.
+\end{gathered}
+\tag{NP.19}
+$$
+
+The supported-live high cost is $\operatorname{tr}(C(\rho)H)$.
+
+Proof. Multiply every encoder Kraus matrix by every Kraus matrix of its
+supported-live decoder. Their positive vectorized projectors sum to the
+live Choi matrix of (NP.11). Testing the kernel of that positive sum
+forces every summand into its three-column support. Thus every product
+is uniquely $EK(z)E^\dagger$, vanishes on the complement, and has zero
+cross-support action. If $\mathcal W$ denotes these embedded Choi
+columns, the left inverse
+$(\mathcal W^\dagger\mathcal W)^{-1}\mathcal W^\dagger$ applied on
+both sides of their Choi sum gives $\sum zz^\dagger=I_3$. This does
+not replace the column Gram matrix by identity.
+
+Group those products by report and by the ACTUAL acquired fibre's high
+or low dimension. A product through $d_\xi\leq2$ has rank at most two,
+so its coefficient belongs to (NP.17). This analytic refinement produces
+$H_r,L_r$ and does not grant a new observed flag to an old dilation.
+The plus report's supported failure effect is exactly $N$; the minus
+failure effect is $M-N$. Positivity gives their stated bounds without
+fixing either conditioned live map or the binary time split. Because
+$M$ kills coordinate zero, positivity kills row and column zero of
+both $N$ and $M-N$: each off-diagonal entry obeys its positive two by
+two minor bound. For Hermitian $Z$, multiplication gives
+
+$$
+\Theta(Z)_{01}=h_0a\,\overline{Z_{DT}}+h_1b\,Z_{DT},
+\qquad\operatorname{Re}\Theta(Z)_{01}=\kappa\operatorname{Re}Z_{DT}.
+\tag{NP.20}
+$$
+
+No other coefficient pair contributes to this entry. The zero failure
+entry and (NP.13) give the real record equality in (NP.19).
+
+Finally, the live part of each full TP decoder is TNI, so its adjoint
+identity is at most the full identity. Pulling back through each high
+encoder and summing proves the FULL five-mode operator inequality.
+It includes high acquisition later failing and any complement or
+cross-support contribution in its acquired effect. Evaluating it on
+any positive input proves acquired mass at least supported-live high
+mass before any normalization or averaging. $\square$
+

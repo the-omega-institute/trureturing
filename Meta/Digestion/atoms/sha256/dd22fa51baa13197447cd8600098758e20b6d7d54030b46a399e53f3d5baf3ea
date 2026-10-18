@@ -1,0 +1,26 @@
+**Lemma 16.2 (the minimal finite realization of a leaf-free transcript).**
+Let $\tau$ be any realizable finite protected transcript whose replies
+are only branch and absent. Let $B$ be the prefix closure, including the
+queried vertices, of its branch-query addresses. There is a finite full
+tree $u_B$ having exactly $B$ as its internal vertices and $\alpha$ at
+every leaf. Both $u_B$ and $\rho u_B$ realize $\tau$. If $P$ is incomplete,
+or if $P$ is complete but $I\nsubseteq B$, their complete $P$-rows differ.
+
+**Proof.** A finite prefix-closed internal set determines a finite full
+shape: its leaves are the children of $B$ outside $B$, or just the root
+when $B$ is empty. Every branch address in $\tau$ is internal in that
+shape. Moreover its present-address set is contained in the present set
+of every realization of $\tau$, since every child of a certified branch
+must be present. Thus any address absent in a realization remains absent
+in $u_B$. Relabeling all its leaves $\alpha\mapsto\beta$ changes no
+shape, and is exactly $\rho u_B$. It preserves every branch and absent
+reply, including repeats and deep queries.
+
+If $P$ is incomplete, follow an uncovered infinite ray until its first
+leaf in this finite tree. That leaf is exposed in $C_P$, and changes
+label. If $P$ is complete and some vertex of $I$ is outside $B$, choose
+such a vertex with no shorter missing prefix. It is a leaf of $u_B$,
+and no cut word prefixes it. Again the concrete exterior changes from
+$\alpha$ to $\beta$ there. These are full-row differences regardless of
+the hidden partition. $\square$
+

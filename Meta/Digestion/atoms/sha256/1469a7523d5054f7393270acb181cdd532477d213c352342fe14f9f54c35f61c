@@ -1,0 +1,8 @@
+### 99.4. Uniqueness of every principal normer
+
+Fix one common pair and any principal optimal dual \(Z\), and define
+\[
+J=L_S^{-1}(Z-L_S)=2W_S\rho_S^{-1}-I.\tag{12}
+\]
+The singleton entry \(W_{34}\ne0\) by (2).
+

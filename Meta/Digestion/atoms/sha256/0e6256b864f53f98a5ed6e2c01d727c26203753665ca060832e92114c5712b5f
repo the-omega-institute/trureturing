@@ -1,0 +1,68 @@
+**Definition 11.1 (The exact law $Q_8$).**
+Start with the genuine $P^\star$ of 3.2, make exactly the 53-count
+label-nine-to-eight transfer of 3.4, fix its ninth input to zero,
+and project every output label nine to zero. This defines a new
+eight-bit law $Q_8$; fixing a finite input in its definition gives
+the acquisition no observation of the actual ninth reply.
+The 26 pair tables below, and the constant-zero table of count 17,
+are its complete deterministic allocation. Each count is divided
+by 3072. The columns $f,m,z$ are the outputs on stopped cells
+$0,10,11$; its counted completion has outputs $f,f,m,z$ on
+$00,01,10,11$.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 4 | 0 | 4 | 0 | 110 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 5 | 0 | 5 | 0 | 132 |
+| 3 | 6 | 0 | 6 | 0 | 125 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 117 |
+| 4 | 6 | 0 | 6 | 0 | 110 |
+| 5 | 6 | 0 | 6 | 0 | 127 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+| 1 | 2 | 1 | 2 | 0 | 463 |
+| 1 | 2 | 1 | 2 | 3 | 220 |
+| 1 | 2 | 1 | 2 | 4 | 162 |
+| 1 | 2 | 1 | 2 | 5 | 99 |
+| 2 | 3 | 0 | 3 | 0 | 333 |
+| 2 | 3 | 2 | 3 | 0 | 58 |
+| 3 | 4 | 0 | 4 | 0 | 148 |
+| 3 | 4 | 0 | 4 | 5 | 88 |
+| 6 | 7 | 0 | 7 | 0 | 17 |
+| 6 | 7 | 0 | 7 | 8 | 57 |
+| 6 | 8 | 0 | 8 | 0 | 53 |
+
+The constant-zero table makes no requests. In the restriction of
+$P^\star$, its former $O(8,9;0,9,0)$ branch of count 17 is
+constant zero. The $(6,8)$ exhaustion vector becomes $53e_0$,
+and the $(6,7)$ exhaustion vector is $17e_0+57e_8$.
+The other mixed rows split exactly as in 3.2.
+The original deterministic and mixed schedule counts were 1374 and
+1698, with single total 3072. Restriction, label projection and
+splitting preserve that total. These are weights on complete tables;
+counterfactual cell masses are counted once per schedule.
+
+For completeness, when a schedule of mass $\mu>0$ is specified by
+three equal-mass cell vectors, partition $[0,1)$ in each cell into
+increasing-label half-open intervals $I_0(f),I_{10}(m),I_{11}(z)$,
+whose lengths are the respective entries divided by $\mu$.
+Its complete-table weight is
+
+$$
+\mu\,|I_0(f)\cap I_{10}(m)\cap I_{11}(z)|.
+\tag{11.1}
+$$
+
+The intersections partition one interval and recover all cell
+marginals with total mass $\mu$. Every mixed row used here has only
+one nonconstant cell, so the displayed splitting is also immediate.
+One local coordinate of the same seed fixes all counterfactual
+labels before any reply. Zero-mass intervals are omitted.
+

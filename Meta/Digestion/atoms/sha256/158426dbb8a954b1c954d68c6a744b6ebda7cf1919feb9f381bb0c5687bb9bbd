@@ -1,0 +1,33 @@
+**Definition 1.5 (the complete groups, with both paired coordinates).**
+Put $\eta_0=\ell$, $\eta_1=\ell+t\mathfrak c f$ and
+$\mathscr D_j(x)=\mathscr D(x,j)$. The complete inventory is
+$Z=\{(x,j):j\in\{0,1\},\ \mathscr D_j(x)=0\}$, including unused
+contacts. At a fixed directed $x$, pair the two endpoint coordinates
+exactly when both are contacts and $\eta_0\eta_1\ge0$; otherwise
+keep each present endpoint as its own singleton group. Denote this
+partition by $\mathscr G$. Zero saturated heights retain both height
+signs in their signed descriptions. They are deduplicated only as
+one point of their sheet, not across sheets or across antipodes.
+
+FC Theorem 3.3 supplies the exact group interpretation. For a paired
+group, endpoint masses $a_0,a_1\ge0$ merge to one label of mass
+$p=a_0+a_1$ and fraction $\xi=a_1/p$ when $p>0$. Both columns remain
+independently available. Conversely that label splits into endpoint
+masses $p(1-\xi),p\xi$ within its same group. This preserves
+$(\Gamma,K,J_t)$ because the endpoint signs are weakly compatible.
+For opposite heights and two positive endpoint masses, the merge
+loses
+
+$$
+a_0|\eta_0|+a_1|\eta_1|-|a_0\eta_0+a_1\eta_1|
+=2\min(a_0|\eta_0|,a_1|\eta_1|)>0.
+$$
+
+This is the credited FC (FC.9)/GC Theorem 15.1 identity; its physical
+TV defect has the HALF factor. General endpoint splitting preserves
+moments and $K$ but can increase both height and the number of actual
+labels. Only the compatible-group mechanism preserves height and
+group count. Endpoint count, angular-node count, coefficient mass,
+Kraus rank and environment dimension are not definitions of original
+actual-label count.
+

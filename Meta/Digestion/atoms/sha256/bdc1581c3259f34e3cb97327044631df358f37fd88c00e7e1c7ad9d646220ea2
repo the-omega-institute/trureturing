@@ -1,0 +1,15 @@
+**Definition 3.2 (partial carrier).** For $0\le j\le24$ set
+$P_j=\{\varepsilon,w_1,\ldots,w_j\}$. Let $C_j(h)$ be the actual
+original graph at $h$, replacing the subtree rooted at $z$ by this
+partial tree. Every child and parent endpoint agrees, all four O/H
+slots in this local component are empty, and the external attachment
+of $z$ is unchanged. Every other incidence, owner binding, native
+field, head, meter cell and input reservoir is exactly the old one.
+
+The $j$ new occurrences are the first $j$ actual attachment births,
+named by their template roles. Absolute execution names come from the
+actual occurrence relation. Arbitrary fresh-name renaming does not
+alter the relative theorem and does not change an original origin.
+These are 25 real partial construction states. They are not all
+complete UAS byte/tape records, and need not be valid source trees.
+

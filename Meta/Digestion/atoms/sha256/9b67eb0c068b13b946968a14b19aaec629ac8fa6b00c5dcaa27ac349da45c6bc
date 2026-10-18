@@ -1,0 +1,44 @@
+**Proposition 1.3 (Inherited stationary source and its paid acquisition).** Theorems 11.5, 15.3 and 17.4 of the supplier identify the actual stationary law, under each $i,q$, by
+
+$$
+\begin{aligned}
+\mathsf P_{i,q}(0^a1\,0^{g_1}1\cdots0^{g_r}1\,0^b)
+&=\frac{S_{i,q}(a)S_{i,q}(b)}{\mu_i(q)}
+\prod_{v=1}^r f_{i,q}(g_v),\\
+\mathsf P_{i,q}(0^W)
+&=\frac1{\mu_i(q)}\sum_{k\ge W}(k-W+1)f_{i,q}(k).
+\end{aligned}
+$$
+
+Here $r\ge0$, all run lengths are nonnegative integers, and an empty product is one. If $X_0,X_1,\ldots$ is this one actual history and
+
+$$
+\tau=\min\{t\ge0:X_t=1\},
+$$
+
+then $\tau$ is finite almost surely, $\mathbb E_{i,q}\tau=\beta_i(q)$, and the complete gaps $K_1,K_2,\ldots$ following that observed tick are iid with law $f_{i,q}$ and independent of $\tau$. The initial acquisition costs $\tau+1$ reads. A gap of $k$ zeros costs $k+1$ additional reads, including its closing tick. For either label,
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),\qquad
+\mu_i(e^{-s})=\frac{10}{s}+O_H(1),\qquad
+\beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+$$
+
+Proof. The actual instrument construction and its own faithful stationary initializer are the credited premises. Their displayed cylinders, at a final closing tick with $b=0$, give exactly
+
+$$
+\mathsf P_{i,q}(\tau=t,K_1=k_1,\ldots,K_N=k_N)
+=\frac{S_{i,q}(t)}{\mu_i(q)}\prod_{v=1}^Nf_{i,q}(k_v).
+$$
+
+Nonnegative summation gives $\sum_{t\ge0}S_{i,q}(t)=\mu_i(q)$ and
+
+$$
+\sum_{t\ge0}tS_{i,q}(t)
+=\sum_{k\ge1}\frac{k(k+1)}2f_{i,q}(k).
+$$
+
+These identities prove the asserted normalization, independence and mean wait. The gap index counts zeros, so each subsequent closing one adds one read. The supplier's fixed-degree power-sum estimate, also proved in Lemma 6.1 below, gives the displayed near-one formulas: the leading moment numerators for $K$ and $K(K+1)$ are respectively $10!s^{-11}$ and $11!s^{-12}$, while the leading normalizer is $9!s^{-10}$. Thus $\mathbb EK=10/s+O_H(1)$, $\mathbb E[K(K+1)]=110/s^2+O_H(s^{-1})$, and the formula for $\beta_i$ follows. These are the acquisition and moment interfaces already used in the supplier's equations (20.29) and (22.20). $\square$
+
+The observer's only source actions are consecutive read-next-bit and stop. Every initial zero, closing tick, rejected statistic, partial gap and unfinished block is paid. There is no free conditional draw, omitted interval, reset, second source, hidden age, probability oracle or alteration of a stationary initializer. Rational $0<\alpha<1/2$ is supplied as finite binary numerator-denominator data; a prescribed positive real tolerance can instead be met using a supplied smaller positive rational allowance. The unknown true nuisance needs no representation.
+

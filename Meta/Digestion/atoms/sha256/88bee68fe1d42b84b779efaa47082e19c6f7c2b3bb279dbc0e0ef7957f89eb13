@@ -1,0 +1,24 @@
+## 3. Four necessary recorded-clock equalities
+
+Assume the exact endpoint stratum
+
+$$
+(A_i)_{22}=1\qquad(0\le i\le4).
+\tag{3.1}
+$$
+
+Define five-vectors and coordinatewise products
+
+$$
+\mathbf1=(1,1,1,1,1)^{\mathsf T},\quad
+\mathbf t=(0,1,2,3,4)^{\mathsf T},\quad
+\mathbf x=((A_i)_{21})_i,\quad
+\mathbf y=((A_i)_{12})_i,\quad
+\mathbf d=((A_i)_{11}-1)_i,
+$$
+
+$$
+\mathbf t\mathbf x=(ix_i)_i,\qquad
+\mathbf t\mathbf y=(iy_i)_i.
+$$
+

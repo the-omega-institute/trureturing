@@ -1,0 +1,31 @@
+## 1. Model and target
+
+Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+Matrix products act on the left, so a displayed product is executed from right to left. The initial relation is
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad p,q,r,s>0,\qquad ps=qr.
+$$
+
+There are fixed numbers $\alpha>0$ and $\beta\in\mathbb R$, and an unknown real polynomial $D$ of degree at most a known integer $d\ge0$. At recorded scalar-reading index $i$ the exact reading is
+
+$$
+z_i=(1+\kappa i)\operatorname{tr}(A_iS)+D(i),
+\qquad \kappa=\frac\beta\alpha.
+$$
+
+Here $S=\alpha R$ for the original positive rank-one relation $R$. Every read, including an empty-word repeat at the unchanged initial state, advances $i$ by one; an unread atomic operation does not. There is one forward history, one fixed row instrument during a run, and no reset, copy, inverse operation, second source, or combination of unexecuted histories. The recovery target is $(S,\kappa,D)$, with the positive scale fibre described below.
+
+Put
+
+$$
+B=\max(d+1,2).
+$$
+

@@ -1,0 +1,40 @@
+**Proposition 22.1 (all eight finite gates).** Using the outward selections above in the conservative recipe, the eight members of the minimum in Definition 14.1 have the following enclosures:
+
+| Member | Lower | Upper |
+| --- | --- | --- |
+| $1$ | $1$ | $1$ |
+| $k_e/2$ | $0.467927492346$ | $0.467927492347$ |
+| $d_{\rm branch}$ | $9.69103505306\cdot10^{-59}$ | $9.69123536949\cdot10^{-59}$ |
+| $p_* /(2A_w)$ | $1.77751795454\cdot10^{-43}$ | $1.77752943628\cdot10^{-43}$ |
+| $R_x/D_{\rm loc}$ | $1.84384149527\cdot10^{-152}$ | $1.84386531564\cdot10^{-152}$ |
+| $R_f/(2C_{\rm joint}D_{\rm loc})$ | $1.45927328554\cdot10^{-109}$ | $1.45929213772\cdot10^{-109}$ |
+| $R_f/(2C_{\rm br})$ | $1.12114371729\cdot10^{-42}$ | $1.12115820122\cdot10^{-42}$ |
+| $R_f/(2\beta_B)$ | $3.06641463088\cdot10^{-33}$ | $3.06641463089\cdot10^{-33}$ |
+
+The minimum is $R_x/D_{\rm loc}$. For the resulting recipe constants,
+
+| Output | Lower | Upper |
+| --- | --- | --- |
+| $d_*$ | $1.84384149527\cdot10^{-152}$ | $1.84386531564\cdot10^{-152}$ |
+| $\varepsilon_{\rm recipe}=d_* /a_s$ | $2.46683231115\cdot10^{-153}$ | $2.46686417986\cdot10^{-153}$ |
+| $c_{-,\rm recipe}$ | $394256134925$ | $394259192598$ |
+| $c_{+,\rm recipe}$ | $657227911192$ | $657236404565$ |
+
+Proof. Substitute the exact fractional expressions from §§18–21, not a point selected from each displayed interval. Interval minima take the minimum of lower endpoints and the minimum of upper endpoints; positive ratios use lower numerator/upper denominator and upper numerator/lower denominator. Relative square roots as in Definition 17.1 retain positivity through $R_x$ and $d_*$. These operations applied to the displayed defining formulas yield the enclosures above. In particular compare the upper endpoint of $R_x/D_{\rm loc}$ with the lower endpoint of each of the other seven members; all seven comparisons are strict.
+
+For the loss coefficients retain the exact conversion
+
+$$
+c_{-,\rm recipe}=\frac{\alpha}{4s_0^2}\left(\frac1{u_6}-\frac1{l_7}\right),\qquad
+c_{+,\rm recipe}=\frac{\alpha}{4s_0^2}\left(\frac1{l_6}-\frac1{u_7}\right).
+$$
+
+The response numerator pairs in Proposition 19.2 and the original source rectangle suffice for these exact fractional calculations; $u_6<l_7$ proves positivity. Rounding the first interval down and the second up is essential. Explicitly
+
+$$
+394256130000<394256134925\le c_{-,\rm recipe},\qquad
+c_{+,\rm recipe}\le657236404565<657236410000.
+$$
+
+The factor $\alpha/(4s_0^2)$ contains both the original HALF factor and the factor from twice integrating the curvature; it is not replaced by $\alpha/(2s_0^2)$. $\square$
+

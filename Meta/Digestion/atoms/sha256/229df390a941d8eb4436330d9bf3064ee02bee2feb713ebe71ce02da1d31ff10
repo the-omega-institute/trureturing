@@ -1,0 +1,82 @@
+### 定理 20.4（相容粗粒化下的 Fisher 单调性）
+
+设 \(q_j\) 由定义 20.1 的条件权重给出，令
+
+\[
+p_j=q_jp_{j+1},
+\qquad
+u_j=Dq_j\,u_{j+1}.
+\]
+
+则
+
+\[
+\boxed{
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}).
+}
+\]
+
+如果 \((p_j,u_j)_j\) 是相容族，则
+
+\[
+\mathcal I_0\le\mathcal I_1\le\mathcal I_2\le\cdots.
+\]
+
+#### 证明
+
+固定 \(v\in V_j\) 和 \(s\in\Sigma\)。记
+
+\[
+p_{j,v,s}
+=
+\sum_{\pi_j(w)=v}a_j(w\mid v)p_{j+1,w,s},
+\]
+
+\[
+u_{j,v,s}
+=
+\sum_{\pi_j(w)=v}a_j(w\mid v)u_{j+1,w,s}.
+\]
+
+加权 Cauchy–Schwarz 不等式给出
+
+\[
+\frac{u_{j,v,s}^{\,2}}{p_{j,v,s}}
+\le
+\sum_{\pi_j(w)=v}
+a_j(w\mid v)
+\frac{u_{j+1,w,s}^{\,2}}{p_{j+1,w,s}}.
+\]
+
+乘以 \(\mu_j(v)\)，对 \(v,s\) 求和，并使用
+
+\[
+\mu_j(v)a_j(w\mid v)=\mu_{j+1}(w),
+\]
+
+得到
+
+\[
+\mathcal I_j(p_j;u_j)
+\le
+\mathcal I_{j+1}(p_{j+1};u_{j+1}).
+\]
+
+证毕。
+
+特别地，如果每层的隐藏方向由
+
+\[
+u_{j,v,\cdot}=d
+\]
+
+给出，并且 \(q_jd=d\)，则 FIB seam 曲率沿细化方向单调不减。等号当且仅当每个状态 \(s\) 的 score
+
+\[
+\frac{u_{j+1,w,s}}{p_{j+1,w,s}}
+\]
+
+在每个聚合纤维 \(\pi_j^{-1}(v)\) 上几乎处处为常数。这是 Cauchy–Schwarz 等号条件的直接展开。
+

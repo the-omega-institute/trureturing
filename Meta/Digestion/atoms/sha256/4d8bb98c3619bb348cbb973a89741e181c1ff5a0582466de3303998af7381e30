@@ -1,0 +1,58 @@
+**Proposition 4.3 (A rational joint-population normalization of the same
+seed).** At $\xi=1/2$, a second full-TP normalization is
+
+$$
+L=\sqrt2R_0+R_++R_-,\qquad
+Z_{\rm rat}=\frac17(L\otimes I)Z_{1/2}(L\otimes I).
+\tag{4.10}
+$$
+
+It has coordinates (2.1) with
+
+$$
+\Lambda_{\rm rat}=\frac17\begin{pmatrix}2&2&8\\4&4&2\\1&8&4\end{pmatrix},
+\quad
+t=(\sqrt{2/7},2/\sqrt7,2/\sqrt7)^T,\quad\Gamma=tt^T,
+\tag{4.11}
+$$
+
+and
+$\eta=(2\sqrt2/7,2\sqrt2/7,1/7,1/7,2/7,2/7)$.
+It is PPT of rank $13$, with full input marginal $I_5$ before
+division by five, but has no scalar realization. In particular, if
+$H=\sum_it_iR_i$ and $W_H=(I\otimes H^{-1})W(I\otimes H^{-1})$,
+then $W_H$ is complex-product-positive and
+
+$$
+\operatorname{tr}(W_HZ_{\rm rat})=-3/2,\qquad
+\operatorname{tr}(W_HZ_{\rm rat}/5)=-3/10.
+\tag{4.12}
+$$
+
+Proof. The unfiltered joint populations of $Z_{1/2}$ are
+$\left(\begin{smallmatrix}1&1&4\\4&4&2\\1&8&4\end{smallmatrix}\right)$.
+The output congruence multiplies its dark row by two and its other
+rows by one, then divides every entry by seven. This gives (4.11),
+whose column sums are $(1,2,2)$. The cross coefficients scale
+as products of the sector factors, giving the displayed $\eta$
+and $\Gamma$. Positivity, rank and separate transpose invariance
+are preserved by this real invertible congruence. The cycle is
+$\sigma=(2\cdot2\cdot1)/(4\cdot8\cdot8)=1/64$.
+
+The witness form is the same globally positive form (4.7), with
+its input vector replaced by $H^{-1}b$. Its pairing is
+
+$$
+\sum_i\frac{\Lambda_{ii}}{t_i^2}
+ +\frac{\Lambda_{0+}}{t_+^2}
+ +\frac{\Lambda_{+-}}{t_-^2}
+ +\frac{\Lambda_{-0}}{t_0^2}
+ -2\sum_{i<j}\frac{\Gamma_{ij}}{t_it_j}
+=3+\frac32-6=-\frac32.
+\tag{4.13}
+$$
+
+Division by five proves the normalized value. These are two
+normalizations of one cyclic mechanism; their witness scalings
+and pairings are not interchangeable. $\square$
+

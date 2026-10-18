@@ -1,0 +1,9 @@
+**定义 9.1（同一律的尺度响应）。** 对固定同一 $`p\in\Delta_4`$，定义
+
+```math
+m_n(p)=\mathbb{\text{𝔼}}_p[qM^nD]
+=qM^n\begin{pmatrix}U\\V\end{pmatrix}\qquad(n\ge0).
+```
+
+这是同一来源在组成表示中的原子尺度响应，不声明每个响应均已通过实际操作取得；如果每次变换来源律，便不是本定义。
+

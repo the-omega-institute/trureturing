@@ -1,0 +1,5 @@
+source_id = "fib-three-paid-read-almost-sure-endpoint-risk"
+path = "docs/develop/theory/FIB_THREE_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,101 @@
+## 2. 插值与条件源图
+
+记
+
+$$
+\gamma_0=-d,\quad\gamma_1=(24-d)/u,\quad
+\gamma_2=(48-d)/v,\quad\gamma_3=(312/5-d)/(u+v).
+\tag{2.1}
+$$
+
+分母都是正迹。四个 Lagrange 基及其按幂递增的完整系数行为
+
+$$
+\begin{array}{c|c|c}
+j&\ell_j(T)&([T^0],[T^1],[T^2],[T^3])\\\hline
+0&-(T-1)(T-2)(T-3)/6&(1,-11/6,1,-1/6)\\
+1&T(T-2)(T-3)/2&(0,3,-5/2,1/2)\\
+2&-T(T-1)(T-3)/2&(0,-3/2,2,-1/2)\\
+3&T(T-1)(T-2)/6&(0,1/3,-1/2,1/6).
+\end{array}
+\tag{2.2}
+$$
+
+展开乘积给出所列系数，且 $\ell_j(k)=\mathbf1_{j=k}$，$k=0,1,2,3$。因此
+
+$$
+\begin{aligned}
+f&=\sum_{j=0}^3\gamma_j\ell_j,\\
+[f]&=\bigl(\gamma_0,-11\gamma_0/6+3\gamma_1-3\gamma_2/2+\gamma_3/3,\\
+&\hspace{20mm}\gamma_0-5\gamma_1/2+2\gamma_2-\gamma_3/2,
+ -\gamma_0/6+\gamma_1/2-\gamma_2/2+\gamma_3/6\bigr),\\
+\begin{pmatrix}f(4)\\f(5)\\f(6)\\f(7)\end{pmatrix}
+&=\begin{pmatrix}
+-1&4&-6&4\\-4&15&-20&10\\-10&36&-45&20\\-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}\gamma_0\\\gamma_1\\\gamma_2\\\gamma_3\end{pmatrix}.
+\end{aligned}
+\tag{2.3}
+$$
+
+最后十六个系数由 (2.2) 逐项代入得到。两个次数至多三的多项式若在四节点相同，其差有四个相异根，故相等；这也证明唯一性并覆盖全部降次。
+
+为精确保留整个源问题，定义辅助域
+
+$$
+\mathcal N=\{P:0\le s\le1,\ p,q\ge0,\ u=p+q>0\},\qquad
+\mathcal N_1=\{P\in\mathcal N:pq=s(1-s)\}.
+\tag{2.4}
+$$
+
+$\mathcal N$ 不要求秩一。两域内仍有六个正迹，因为 $v\ge1$、$t_4\ge1+u$、$t_5\ge1+u$。置
+
+$$
+\begin{aligned}
+V_P&=\sum_{j=0}^3\ell_j/t_j,&U_P&=\sum_{j=0}^3c_j\ell_j/t_j,\\
+\alpha_i&=1-t_iV_P(i),&\beta_i&=c_i-t_iU_P(i)\quad(i=4,5),\\
+\Delta&=\alpha_4^2+\alpha_5^2,&\mathcal C&=\alpha_4\beta_5-\alpha_5\beta_4.
+\end{aligned}
+\tag{2.5}
+$$
+
+B §2、式 (2.6) 采用的 IX 非消失接口在整个 $\mathcal N$ 上为
+
+$$
+\alpha_4=0\Longrightarrow
+ V_P(5)>V_P(3)=1/t_3\ge1/t_5,\quad\alpha_5<0;
+\qquad\Delta>0.
+\tag{2.6}
+$$
+
+这是继承接口，不在本文重新证明其外部证书。参数桥梁就是 (1.5) 的相同六矩阵和 (2.4) 的相同域；此非消失性不依赖秩一。由此定义
+
+$$
+d_P=\frac{\alpha_4\beta_4+\alpha_5\beta_5}{\Delta},\qquad
+f_P=U_P-d_PV_P.
+\tag{2.7}
+$$
+
+前四实际方程强制 $f=U_P-dV_P$，后两个实际方程恰是 $\alpha_i d=\beta_i$。直接相减得
+
+$$
+\begin{pmatrix}\beta_4\\\beta_5\end{pmatrix}
+-d_P\begin{pmatrix}\alpha_4\\\alpha_5\end{pmatrix}
+=\frac{\mathcal C}{\Delta}\begin{pmatrix}-\alpha_5\\\alpha_4\end{pmatrix}.
+\tag{2.8}
+$$
+
+故相容性等价于 $\mathcal C=0$，相容时漂移和增益由已给源唯一确定，无须除以可能为零的单个 $\alpha_i$。这也给出 B §2 的精确双射
+
+$$
+\begin{gathered}
+\mathcal Z_{\mathbf c,d}=\{P\text{ 合法}:\mathcal C(P;\mathbf c)=0,
+ d_P=d,\ f_P(6)=0,\ f_P(7)\ne0\},\\
+\mathcal Z_{\mathbf c,d}\longleftrightarrow\mathcal K_{\mathbf c,d},
+\qquad P\longmapsto(P,\lambda f_P,D_0+\lambda d).
+\end{gathered}
+\tag{2.9}
+$$
+
+必要性来自插值和实际后两式；充分性来自 (2.8) 与两个未来承诺。增益不会恒零，因为读数零和 24 不同。不同完整世界因而有不同源。这是“源已经给出”时的条件恢复，不能当作祖先已辨识未知源。
+

@@ -1,0 +1,42 @@
+**proposition 9.2 (The simultaneous four-row plateau attainer).** Four
+installed rows attain $T=a/2+a\eta(1+c)$ with $q_2=1$.
+
+Proof. Initialize at $R$ and install precisely
+
+| Row | Instruction | Reply zero | Reply one |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $R_0$ | $P$ |
+| $R_0$ | $\operatorname{Read}(2(j+4))$ | $Z$ | $P$ |
+| $Z$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+
+In phase zero the two possible calls use the disjoint spin pairs
+$\{j+2,j+3\}$ and $\{j+4,j+5\}$, both disjoint from the actual
+target $S_j$. In phase one both addresses are separators. The
+terminal sections, all from this one table on this one source, are
+
+| Record | Output | Source mass | Correct mass |
+| --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ |
+| $01$ | $h_0(\sigma)$ | $c\eta$ | $ac\eta$ |
+| $00$ | $h_1(\sigma)$ | $(1+c^2)/2$ | $a/2$ |
+
+Indeed the first line has phase-zero mass $\tfrac12(2\eta)$,
+and multiplying by the independent target-majority factor gives
+its correct mass. The second line has phase-zero mass
+$\tfrac12c(2\eta)$, again with independent target factor $a$.
+The last line contains all of phase one, and the phase-zero event
+of two disjoint zero edges, giving $(1+c^2)/2$. Its output is
+correct exactly in phase one with $S_0=\sigma$, of mass $a/2$;
+phase-zero realizations on the same leaf are errors.
+
+The source masses sum to one:
+$\eta+c\eta+(1+c^2)/2=1$ by $2\eta=1-c$.
+The correct masses sum to $T$. Every formal binary input path
+halts after one or two paid calls. Both read instructions and
+both fixed output distinctions are included in the four rows.
+Thus the bound is attained simultaneously, rather than by adding
+best masses from incompatible hypothetical policies. The same
+four-row table is legal at budget five because the constraint is
+$|K|\le m$. $\square$
+

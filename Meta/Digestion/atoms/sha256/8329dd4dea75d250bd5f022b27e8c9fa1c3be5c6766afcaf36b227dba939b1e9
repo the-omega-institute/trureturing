@@ -1,0 +1,41 @@
+**Lemma 7.2 (finite-domain physical menus).** Suppose the classification
+has returned the exact nonempty set $D=\{u_1,\ldots,u_d\}$, with duplicates
+removed. Put
+
+$$
+M=\max(N,5),\qquad U=M-N,\qquad
+\mathcal P_n=\bigcup_{i=1}^d\operatorname{Pos}(\rho^n u_i)
+\quad(N\le n\le M),
+\qquad
+H=\max_{N\le n\le M,\ p\in\mathcal P_n}|p|.
+\tag{NPL.17}
+$$
+
+These are effectively computable finite data. At epoch $n$, every word
+outside $\mathcal P_n$ gives absent on every source. The table
+$r_{\rho^n u_i}(p)$ for $p\in\mathcal P_n$ describes each retained physical
+read on every original source, including absence on some sources.
+
+At epoch $N$ this finite menu separates all different sources. Therefore
+for any target cut $Q$ a static finite service can recover the full row
+with at most $d-1$ reads.
+
+Proof. Compute the finitely many finite iterates; list their positions
+and literal replies. The root belongs to every position set, so the
+maximum defining $H$ exists. A word not in the union is absent on every
+listed tree and these are all sources.
+
+Injectivity of $\rho^N$ makes its images of different $u_i$ different.
+Two different finite free trees have a different literal reply somewhere
+in the union of their positions, by comparison from the first differing
+node. Start with the possible-source set $S=D$. If all its full rows
+agree, halt with that row. Otherwise two candidates have different rows,
+hence different current trees, so some menu word gives different replies
+on $S$. Read that word physically and keep just the candidates with the
+actual reply. Every nonempty reply subset is a proper subset of $S$.
+After at most $d-1$ strict decreases a constant-row set is reached.
+This gives a common effective controller using actual reads, with no
+update and no assumed identity of the source. The candidates are all
+computed from retained input; only actual replies select among them.
+$\square$
+

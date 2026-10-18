@@ -1,0 +1,22 @@
+**Assumption 2.1 (entire atomic-output anchor).** For some $r_\ast\in B$
+supply an exact finite cover
+
+$$
+D_{r_\ast}=\bigcup_{b\in\mathcal A}
+ \{U_b(\mathbf n):\mathbf n\in\mathbb N^{k_b},\ S_b(\mathbf n)\},
+\qquad
+U::=g\mid T_{n_i+a}\mid\langle U,U\rangle.
+\tag{PAC.6}
+$$
+
+Here $g\in\mathcal T$ and $a\ge0$ are fixed finite data, and $S_b$ is
+an effective Presburger formula. Repeated coordinates are shared, and
+$S_b$ may correlate all ranks. There is no residual tree in the source
+output $U_b$. Invisible coordinates may have been projected away only by
+an exact support projection. Both source directions are required: every
+admitted image is in the whole $D_{r_\ast}$, and every source of that
+stratum is reconstructed as itself by one piece. Coordinates need not be
+unique. Neither a finite source image nor a finite accumulation set is
+assumed. Recognition of an undiscovered anchor is not a premise supplied
+by calling a stratum atomic.
+

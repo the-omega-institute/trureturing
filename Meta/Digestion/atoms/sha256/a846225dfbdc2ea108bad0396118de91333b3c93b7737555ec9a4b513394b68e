@@ -1,0 +1,51 @@
+**Definition 1.2 (the actual double-wall source).** Fix
+
+$$
+0<Z<1,
+\qquad r=1-Z,
+\qquad c=r/2,
+\qquad b=(c,c,Z).
+\tag{QC.1}
+$$
+
+Mode order is $(0,1,2,3,13)$; index $4$ denotes mode $13$. The strict
+probability coordinate is $0<k<c$, and the supplied probabilities and signed
+weights become
+
+$$
+\begin{aligned}
+p(k)&=(k,c-k,Z,c-k,k),\\
+w(k)&=\left(\frac12-\frac{k}{r},-\frac{k}{r},0,
+                 -\frac{k}{r},\frac12-\frac{k}{r}\right).
+\end{aligned}
+\tag{QC.2}
+$$
+
+An original control has finite duration $T\geq0$, continuous real $k,\chi$
+on $[0,T]$, strict $k(t)\in(0,c)$, finite variation of $\chi$, and either
+absolute continuity of both coordinates or the supplier's finite piecewise
+$C^1$ alternative. In the latter alternative both derivative rates extend
+continuously to each closed partition piece. The supplied fundamental
+theorem argument makes both coordinates absolutely continuous on the full
+interval. Repeated partition times are allowed. These are the original two
+regularity alternatives, not an extra common speed assumption.
+
+Fix calibrated initial phases $\theta_i\in\mathbb R$, with $\theta_2=0$,
+and a fixed positive preparation. The actual phase increment on a prescribed
+control is
+
+$$
+H_i(t)=\int_0^t w_i(k(u))\chi'(u)\,du.
+\tag{QC.3}
+$$
+
+Real lifts are retained. For a based loop, the real increment of $\chi$ is
+$2\pi m$ for an arbitrary signed $m\in\mathbb Z$. Reduction of an endpoint
+phase modulo $2\pi$ does not remove a source history or its integer winding.
+At a chronological join the actual tail has lift
+$\chi(T)+\chi_{\rm tail}(u)-\chi_{\rm tail}(0)$, and the probability
+endpoints match. The cited composition declaration preserves the old prefix
+pointwise, identifies this literal tail, and adds all the weighted integrals.
+It includes zero duration. Translation of a tail does not give the controller
+the unknown actual past lift.
+

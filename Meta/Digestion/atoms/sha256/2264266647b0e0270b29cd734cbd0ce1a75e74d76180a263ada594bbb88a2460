@@ -1,0 +1,60 @@
+**Theorem 5.2 (two full fiber inclusions and a unique original realization).**
+There are effective mutually inverse correspondences
+
+$$
+\coprod_\eta\Omega_\eta^\#\ \longleftrightarrow\ D
+\ \longleftrightarrow\ B[D],
+\qquad
+(\eta,\mathbf X)\longmapsto E(W_\eta^\#(\mathbf X))
+\longmapsto W_\eta^\#(\mathbf X).
+\tag{ABC.5.1}
+$$
+
+No independently selected component, representative source or marginal
+solution replaces any fiber in (ABC.5.1). The complete original target on
+each cell is the row of Theorem 4.2 at $W_\eta^\#(\mathbf X)$.
+
+Proof. First, induction on $A$ using Theorem 2.2 gives the commuting
+evaluation identity
+
+$$
+A^\#(\mathbf X)=B(A[E\mathbf X]),
+\qquad
+\tau_a A^\#(\mathbf X)=B(\rho^a(A[E\mathbf X])).
+\tag{ABC.5.2}
+$$
+
+Thus every ordinary or morphic equality, and every disequality between
+reached endpoints, has exactly the same truth value before and after
+coding. Theorem 3.2 gives the same fact for literals and their guards.
+For the concrete leaf-sector endpoints in ARH's cells, its guard and
+whole-tree supplier are unchanged and (ABC.5.2) codes their resulting
+$T_j$ as $[j]$.
+
+Given $u\in D$, ARH Proposition 3.2 supplies its unique cell and its
+unique valuation $v$ of the original frontier subtrees. Assign
+$\mathbf X(x)=B(v(x))$ at every frontier variable. Equation (ABC.5.2)
+preserves all the cell constraints, hence
+$\mathbf X\in\Omega_\eta^\#$ and $W_\eta^\#(\mathbf X)=B(u)$.
+This proves that every admitted source is represented.
+
+Conversely, let $\mathbf X\in\Omega_\eta^\#$ and set $v=E\mathbf X$.
+Every conjunct is true for that one valuation by (ABC.5.2) and the guarded
+navigation correspondence. In particular all $t_b[v]\ne t_c[v]$ hold,
+including pairs involving classes unused by the new cuts; every repeated
+occurrence uses the same variable assignment. ARH Proposition 3.2 therefore
+gives $W_\eta[v]\in D$. It enforces the whole old context and its absent
+cut guards as well as every literal and additional relation. Theorem 2.2
+gives $B(W_\eta[v])=W_\eta^\#(\mathbf X)$. This proves the reverse
+inclusion without a product relaxation.
+
+ARH's inverse reads a representative occurrence of each old class and
+its pattern frontier from the concrete original source. It is unique;
+Theorem 2.2 then recovers precisely $\mathbf X$. Distinct cells remain
+disjoint even though some expressions can collapse to atomic codes.
+These finite constructions prove effectivity of both directions when
+the concrete argument is supplied. They do not give the actual observer
+that argument. The target assertion follows from Theorem 4.2 and ARH's
+full target correspondence (ARH.3.4), including residual variables in
+the outside context. $\square$
+

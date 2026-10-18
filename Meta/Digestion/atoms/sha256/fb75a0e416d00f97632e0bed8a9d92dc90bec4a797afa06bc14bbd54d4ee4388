@@ -1,0 +1,52 @@
+**Definition 1.1 (unchanged original family).** Fix any one original admissible signed $\kappa\ne0$, $a>0$, $\varepsilon>0$, height interval $I=(l,u)$ and interior pole $k_0\in I$. Retain all original probability, interval and denominator restrictions and the original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$, including its third component. Its jets are jointly realized, rather than independent parameters. Write
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,& d_0&=k_0-\alpha_\kappa>0,& \nu&=\varepsilon/d_0,\\
+c_j&=c_\kappa^{(j)}(k_0)\quad(j=0,1,2),&
+j_0&=\varepsilon^4|\det(c_0,c_1,c_2)|>0,\\
+c_\kappa(k_0+h)&=c_0+h c_1+\frac{h^2}{2(1+h/d_0)}c_2.
+\end{aligned}
+\tag{1.1}
+$$
+
+The last equality is exact on the original interval. In particular $k-\alpha_\kappa>0$ there. The retained components and determinant are
+
+$$
+\begin{aligned}
+(A_\kappa(k),B_\kappa(k))
+ &=\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k),\\
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ &=-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\end{aligned}
+\tag{1.2}
+$$
+
+The constants and jets in these identities retain their original admissibility conditions. The three phases $q=(\theta,v,x)$ range over $\mathbb R^3$, with raw measure $dY=dk\,dq$. Put $L=u-l$,
+
+$$
+\lambda=\frac{\varepsilon^2\pi^2}{L^2},\qquad
+\phi(k)=\sqrt{2/L}\sin\frac{\pi(k-l)}L,\qquad
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0.
+\tag{1.3}
+$$
+
+Both actual height faces are Dirichlet. For the unitary phase Fourier transform with factor $(2\pi)^{-3/2}$, let $B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2$. Including underlying complex $L^2(dY)$ membership, the complete domains are
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\!\int_I
+  \left(\varepsilon^2|\partial_k\widehat\psi|^2
+       +|\eta\cdot c_\kappa|^2|\widehat\psi|^2\right)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_{L^2(I)}^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{1.4}
+$$
+
+Thus $\mathcal Q=D(S^{1/2})=D(B^{1/2})$. Every real phase frequency is retained. Actual competitors are unrestricted complex vectors in these domains; no real, odd, symmetric or isotropic phase-$H^1$ class is imposed.
+

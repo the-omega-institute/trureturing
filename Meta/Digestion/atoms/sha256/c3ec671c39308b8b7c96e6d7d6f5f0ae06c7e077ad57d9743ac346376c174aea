@@ -1,0 +1,11 @@
+**定义 5.1（Sparse-support witness）。** Set
+
+$$
+T=G+K=F(1,1),\qquad H=I_5-\frac{iT}{\sqrt3}.
+\tag{5.1}
+$$
+
+Every upper entry of $T$ is $+1$ or $-1$, and $H$ is Hermitian. The matrix
+$H$ is a mathematical separating witness; it is not asserted to be an
+available menu effect.
+

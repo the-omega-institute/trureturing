@@ -1,0 +1,34 @@
+**Definition 10.2 (homogeneous source matrices).** Write
+$x=(u,v)^T$, $u^2+v^2=1$, and keep $c_{\rm src}$ for the source
+amplitude in $S$, distinct from capacity $\mathfrak c$. Homogenize
+constant even terms using $u^2+v^2=1$. Then
+
+$$
+\begin{gathered}
+\ell(h)=x^TE_\ell x+l_u u+l_v v,\qquad
+E_\ell=\begin{pmatrix}
+G_{00}+G_{11}/\alpha&G_{12}/\sqrt{\alpha\beta}\\
+G_{12}/\sqrt{\alpha\beta}&G_{00}+G_{22}/\beta
+\end{pmatrix},\\
+l_u=2G_{01}/\sqrt\alpha,\qquad l_v=2G_{02}/\sqrt\beta,\\
+D_c(x)=D_u u^2+D_v v^2,\qquad
+D_u=h_0^2\delta+b^2/\alpha,\quad
+D_v=h_0^2\delta+d^2/\beta,\\
+N_c(x)=N_u u^2+N_v v^2,\qquad
+N_u=h_1^2h_2^2\delta+a^2h_2^2/\alpha,\quad
+N_v=h_1^2h_2^2\delta+c_{\rm src}^2h_1^2/\beta,\\
+\mathfrak c(h)=N_c(x)/D_c(x),\qquad D_c(x),N_c(x)>0,\\
+f(h)=x^T\mathsf F x=2euv-d_*v^2,\qquad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\\
+e=-\frac{bd\Delta_{12}}{h_1h_2\sqrt{\alpha\beta}}>0,\qquad
+ d_*=\frac{11d^2}{64\beta h_2^2}>0,\qquad \chi=2e/d_*.
+\end{gathered}
+\tag{FC.26}
+$$
+
+Here $d_*$ is a scalar, whereas $d(x)$ in (FC.5) is the dual gap.
+The expressions $D_c,N_c$ in (FC.26) agree on the circle with
+(FC.7), and will also denote their homogeneous binary quadratics
+off the circle. No independent coordinates of a source box are
+substituted for the root in these definitions.
+

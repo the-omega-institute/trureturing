@@ -1,0 +1,86 @@
+**Theorem 5.2 (positive pure-contact cap).** Under Assumptions 1.1 and
+2.3, if finite $t\ge\max(t_0,800)$, then
+
+$$
+N_R+N_L\le3.
+\tag{PC.24}
+$$
+
+This is a bound on the complete inventory of each supplied jointly
+attained finite positive-multiplier dual, rather than only on its
+occupied pure atoms. It makes no assumption about the number or signs
+of its saturated contacts.
+
+Proof. Since $N_R,N_L\le2$, the only case to exclude is
+$N_R=N_L=2$. Reuse FC Theorem 12.1's maximal-zero square reduction:
+a nonnegative nonzero degree-two trigonometric polynomial with two
+distinct directed zeros has the real-square form
+
+$$
+F_{0,\epsilon,+}=(v_\epsilon\cdot x+C_\epsilon)^2,
+\qquad x=(u,v)^T.
+\tag{PC.25}
+$$
+
+The two zeros are in one open $u$ hemisphere. Consequently
+$v_\epsilon\ne0$, $C_\epsilon\ne0$, and
+$0<|C_\epsilon|<\|v_\epsilon\|$. A zero constant would give
+antipodal zeros, equality of magnitudes at most one zero, and a larger
+constant no zero.
+
+The even part of the two tests is the same function on the circle,
+namely the even part of $P_y-\ell$. Its homogeneous quadratic
+matrix is therefore, for either sign,
+
+$$
+H=v_\epsilon v_\epsilon^T+C_\epsilon^2I_2.
+\tag{PC.26}
+$$
+
+Equality as quadratic functions on the unit circle implies equality
+of the symmetric matrices by homogeneity and polarization. The
+eigenvalues of $H$ are $C_\epsilon^2$ and
+$C_\epsilon^2+\|v_\epsilon\|^2$, which are distinct. They determine
+the same constant magnitude, vector magnitude and top eigenline for
+both signs. Hence their nonzero odd vectors
+$2C_\epsilon v_\epsilon$ are either equal or opposite. Their
+difference, with the plus report first, is $-2\lambda(1,0)^T$.
+Because $\lambda>0$, they are opposite and parallel to the $u$ axis.
+The signed difference fixes their orientation. For some $A_d,B_d>0$,
+
+$$
+\begin{gathered}
+F_{0,+,+}=(A_du-B_d)^2,\qquad
+F_{0,-,+}=(A_du+B_d)^2,\\
+\lambda=2A_dB_d,\qquad a_r=B_d/A_d\in(0,1),\qquad
+b_r=\sqrt{1-a_r^2}>0.
+\end{gathered}
+\tag{PC.27}
+$$
+
+Their complete zeros are the four distinct rectangle points
+$(a_r,\pm b_r)$ and $(-a_r,\pm b_r)$. At a zero of either
+positive-height test, entire-circle feasibility of the opposite
+height test forces $\ell\ge0$; FC Proposition 20.1 excludes equality.
+In particular $\ell(-a_r,-b_r)>0$. Lemma 3.2 gives $a_r<11/25$.
+
+Every right pure contact is positive-height and therefore a zero of
+$F_{0,+,+}$, so its $u$ coordinate equals $a_r$. The left positive
+contacts are exactly the other two displayed points. Every other pure
+contact is negative-height with $u<0$. Thus every pure column of the
+complete inventory satisfies $u\le11/25$.
+
+Apply Theorem 4.1 to the entire group family $Q=\mathscr G$.
+All saturated coordinates are retained, without restricting their
+directions, their heights, their reverse status or their pairing.
+Both coordinates of every compatible pair are retained. Yet no
+nonnegative representation of $B(t)$ by these columns exists.
+
+On the other hand the jointly attaining law in (PC.8) has zero
+integrated nonnegative gap. FC Theorems 3.3 and 4.2 split and collect
+it into exactly such a nonnegative complete-endpoint representation
+of $B(t)$, preserving its $K$ and $J_t$. This holds also for the
+admitted integral laws because the complete group inventory is finite.
+The contradiction excludes $N_R=N_L=2$ and proves (PC.24).
+$\square$
+

@@ -1,0 +1,25 @@
+### High-edge upper faces
+
+Put x1=c and lower the opposite low coordinate to a. Select two high
+neighbours and increase them to c; increase the other two neighbours to 2.
+Monotonicity permits this relaxation even if there are additional high
+neighbours. There are six choices of the selected positions:
+
+| selected high positions | endpoint cosine |
+|---|---|
+| {2,3}, {5,6} | 281/332 |
+| {2,5}, {3,6} | 5965/6972 |
+| {2,6}, {3,5} | 145*sqrt(91273)/52156 |
+
+All values are positive. With Q=5965/6972, the exact square comparisons are
+
+  Q^2 - (281/332)^2 = 47464/3038049 > 0,
+  Q^2 - (145*sqrt(91273)/52156)^2
+      = 1051170700/39613120911 > 0,
+  3/4 - Q^2 = 875363/48608784 > 0.
+
+Thus phi_1 <= Q < sqrt(3)/2 = cos(pi/6). Every high-edge occurrence
+has alpha_1 > pi/6. Since d(e) >= 12, the cone angle is strictly greater
+than 2*pi and K_e < 0. Some of the six relaxed choices cannot occur in
+one allowed packet; including them only weakens this sufficient bound.
+

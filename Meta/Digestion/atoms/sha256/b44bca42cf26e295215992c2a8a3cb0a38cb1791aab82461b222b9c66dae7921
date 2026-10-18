@@ -1,0 +1,52 @@
+**Theorem 168.1 (The closed radial criterion preserves the original
+remaining obligation).** For a fixed $L\ge3$, failure of
+$\Pi_N\cap Q_L\subseteq\Pi_O$ implies an original positive-cap profile
+of actual active length $L$ with a complete $N_2$ attainer and no
+original $O_2$ attainer, on the actual source and full carrier.
+Conversely any original separator not already covered by the residual
+construction belongs to $Q_L$. Consequently, when quantified over the
+remaining lengths, (167.3) is equivalent to the remaining original
+closed-cap comparison, including its auxiliary boundary points.
+
+**Proof.** For an original active prefix, put
+$D_3=S-(L-2)e$. The already proved Theorem 113.3 supplies an $O$ rule
+when $D_3\le3e$, including equality. In the remaining case
+$S>(L+1)e$, and the necessary Theorem 113.2 gives
+$S-(L+1)e\le1-a_1$. These are the two additional inequalities of $Q_L$.
+Lengths at most two are covered by the same residual supplier.
+
+To handle a failure at a closed auxiliary point, the full finite $O$
+probability projection is closed: for convergent feasible profiles take
+a convergent subsequence of their weights in the finite catalog simplex
+and pass all finitely many inequalities to the limit.
+Put $c=1/2$ and take
+
+$$
+q=(c,\ldots,c;e_q),\qquad
+ e_q=\frac{c(L-2)}{L+1}>0.
+\tag{168.1}
+$$
+
+Then all amplitudes exceed $e_q$, $S=(L-2)c=(L+1)e_q$, and the head
+bound holds with $a_1=c<1$. Thus $q\in Q_L$ and
+$D_3(q,e_q)=3e_q$. It has a complete stopped probability allocation:
+use mass $c$ of the supplied subset rule $P_{L,2}$ of Theorem 87.1 and
+mass $1-c$ of immediate base emission. At every first zero its marked
+mass is $3c/(L+1)=c-e_q$, its outside-pair mass is at most $e_q$,
+and its base mass is at least $1-c$. These inequalities verify all
+three rows; at the positive word its base deficit is exactly $e_q$.
+This also follows from Theorem 113.3's residual synthesis, whose sole
+nonzero subset-family weight at this profile is $c$.
+
+If $x\in\Pi_N\cap Q_L\setminus\Pi_O$, put
+$x_\delta=(1-\delta)x+\delta q$ and mix the whole $N$ allocations.
+For $0<\delta<1$ this stays in $\Pi_N\cap Q_L$, has positive cap,
+all $a_i>e$ and $a_1<1$. Closedness of $\Pi_O$ ensures that it remains
+outside $\Pi_O$ for every sufficiently small positive $\delta$.
+Append any positive nonincreasing vanishing tail below its cap.
+The sufficient $N$ direction and necessary $O$ direction of the already
+proved Theorem 110.2 give the original attainer and exclusion at that
+same cap. Neither the actual source nor the tail is replaced in this
+step. This uses existing exact transport and a closed-boundary bridge;
+it supplies no particular failing point. $\square$
+

@@ -1,0 +1,103 @@
+**Theorem 17.2 (qualified native minimum and supplied PE8 lift).**
+Let an original preparer on all of Convention 17.1's domain have
+$H_P$ installed preparation states and both uniform caps
+$n+1,W+3$. If its particular projection of WTF Theorem 4.1
+belongs to $\mathfrak I$, with projected never-live count $u_P$,
+then
+
+$$
+H_P\ge G+4+r+u_P.
+\tag{SI.147}
+$$
+
+The minimum within this projection-qualified class is exactly
+$G+4+r$. For every $M\ge3$, Proposition 16.1's supplied complete
+PE8 graph has its full-fiber native lift with exactly $G+M+6+r$
+preparation states and both caps $n+1,W+3$, attained together
+on one actual source. Its particular projection has the same actual
+live histories as the consumer of Proposition 16.1, and belongs
+to $\mathfrak I$. The native table retains all installed rows.
+
+Proof. Reuse the exact simultaneous feasibility correspondence
+(SI.5) of WTF Theorem 4.1. Its particular projection retains reached
+selected states on the supplied actual cube, bypasses only the
+cube-constant chains, and fills unrealized edges without making
+them actual. It is complete and correct on every Boolean input,
+with $m\le H_P-4-r$ and both caps $n,W$ on each input.
+Theorem 15.2 applies by the displayed class hypothesis, giving
+$m\ge G+u_P$ and hence (SI.147). The $u_P$ here is solely
+the projected Boolean never-live count; it is not identified with
+a different native history index or a native unused-state count.
+
+The supplied grid belongs to $\mathfrak I$ by Corollary 15.4.
+Its supplied full-fiber lift has $G+4+r$ preparation states and
+both native caps. Its WTF projection is the original grid, proving
+the attained projection-class minimum. This does not establish
+membership for an arbitrary native competitor.
+
+For the explicit PE8 consumer, write $P_B$ for Proposition 16.1's
+Boolean table and $\widetilde P$ for its lift. Lift every
+coordinate-$i$ row, including unused retained rows, to its literal
+$a_i$. If its Boolean successors are $(\delta_0,\delta_1)$,
+install four successors
+
+$$
+(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+\longmapsto(\delta_0,\delta_0,\delta_1,\delta_0),
+\tag{SI.148}
+$$
+
+replacing $\mathsf0,\mathsf1$ by $L_0,L_1$. Add exactly two
+distinct profile rows, with sole native start $D$:
+
+| Native state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | $R_{0,0}$ | $T$ | $L_0$ |
+| $T$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+Install all $r$ further mandated distinct latches. The two Boolean
+terminals have become the two original latches, not two additional
+states beyond them. Thus the running count $G+M+2$ gives
+$G+M+6+r$ preparation states. All installed states count even
+when unused; equal queried words do not identify different states.
+
+On every actual $Z_{b_3}$ source, $D$ returns beta. Its arbitrary
+finite branch image $x_a$ defines one static indicator vector.
+The all-address occurrence identity (WTF.10) makes every selected
+visit (SI.148) exactly its Boolean query on this same vector, including
+noncomb interiors and absent selected addresses. Consequently its
+actual complete preparation bills are exactly
+
+$$
+q_{\widetilde P}(u)=1+t_{P_B}(\theta(x_a)),\qquad
+\ell_{\widetilde P}(u)=3+J_{P_B}(\theta(x_a)).
+\tag{SI.149}
+$$
+
+Every repeat at $B_X,B_Y,J$ and every certified visit is included.
+The projection follows exactly those same selected histories; removing
+unused rows or filling unrealized edges changes none of them and hence
+none of their support families. It therefore lies in $\mathfrak I$.
+The Boolean all-input proof yields both native caps on each such source; it
+needs no independence assumption for arbitrary branch interiors.
+
+On the other ten profiles the front is exhaustive: alpha at $D$
+is $\Pi_3$ and returns one; branch at $D$ leads to $T$, whose
+alpha reply is $\Pi_4$ and returns one. The other profiles return
+zero and require zero. They cost at most two calls and six letters,
+dominated by $n+1,W+3$. All four successors, including unreachable
+absence edges at these profile roots, remain installed. Correctness
+and actual termination therefore hold on the entire original fiber,
+not just a cube promise.
+
+WTF Supplier 2.1 realizes the input $A^*$ of (SI.144) by an actual
+finite $u_{A^*}\in Z_{b_3}$ with the original repetitions and
+six-class disequalities. Its Boolean route pays $n,W$ together;
+(SI.149) gives $n+1,W+3$ together on that one source. The cube
+witnesses attainment and the projection; it does not restrict the
+upper's domain. On every source the latch is the prescribed
+$\widehat e_{\sigma_{A,k}(u)}$, and handoff enters literally the
+complete reader state in Convention 17.1. Its separate eight states
+and fresh bills return the entire original predecessor row.
+$\square$
+

@@ -1,0 +1,36 @@
+**命题 477.3（原平滑核的缩放矩表示）。** $S$ 的全部正缩放的线性包络恰为 $V$，
+且实际锚定测度满足
+
+$$
+\mathbf v(at)=R(a)\mathbf v(t),\qquad
+R(a)R(b)=R(ab),\qquad R(1)=I,
+$$
+
+$$
+\int R(a)\,d\nu_N(a)
+=\begin{pmatrix}h_N&-\ell_N\\0&h_N\end{pmatrix},\qquad
+\int S(at)\,d\nu_N(a)=t\log t\,h_N-t(h_N+\ell_N).
+$$
+
+因此对 $0<t\le N+1$，命题 477.1 等价地写成
+
+$$
+C_N(t)=\psi(t)-t\log t\,h_N+t(h_N+\ell_N).
+$$
+
+若另有 $h_N\to0$ 与 $\ell_N\to-1$，则平均矩阵趋向 $J$，
+对每个固定 $t>0$ 有 $C_N(t)\to\psi(t)-t$。
+
+**证明。** 由 $\log(at)=\log a+\log t$，有
+$S(at)=aS(t)+a\log a\,t$，所以缩放包络包含于 $V$。
+若 $c\,t\log t+d\,t=0$ 对全部 $t>0$ 成立，取 $t=1$ 得 $d=0$，再取 $t=e$ 得 $c=0$。
+此外 $S(et)/e-S(t)=t$，故两种独立模式均在缩放包络内，维数恰为二。
+
+函数值的矩阵恒等式直接来自对数乘法公式；同一公式给出矩阵乘法关系。
+$\det R(a)=a^2>0$，所以 $R(a)^{-1}=R(1/a)$。
+对实际 $\nu_N$ 逐项积分，并使用 $\int a\,d\nu_N=h_N$ 与
+$\int a\log a\,d\nu_N=-\ell_N$，得到平均矩阵。
+左乘行向量 $(1,-1)$ 再作用于 $\mathbf v(t)$，即得 $S$ 的积分式。
+最后使用命题 477.1；固定 $t$ 时最终有 $t\le N+1$，所以两个矩的假设极限给出所示极限。
+这一步仅是逐点极限，未交换无穷积分。$\square$
+

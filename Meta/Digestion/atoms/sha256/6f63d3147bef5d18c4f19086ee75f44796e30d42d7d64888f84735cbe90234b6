@@ -1,0 +1,6 @@
+# FIB harmonic-edge load: optimizer anchor response and reset-variance density
+
+The full finite optimizer admits a reset-slice Euler equation whose boundary terms are the responses of the two occupied anchors. Its mean and covariance identities characterize exactly when the reset-conditioned center posterior is constant. Nonnegative probes of specified exterior coordinates give a quantitative lower certificate for the same optimizer's reset variance. A separate symbolic insertion comparison gives a strict per-site ceiling and rules out the variance threshold test at every length through $98$.
+
+All posteriors, exterior masses, means, responses and probes in the finite arguments belong to one actual optimizer $\pi_n$ at the indicated length. The response shortfalls needed for a positive density certificate, a crossing of the threshold, and the original finite-hidden attainment alternative remain unproved. The results are ordinary mathematical statements with handwritten proofs; no kernel-verification claim is made.
+

@@ -1,0 +1,63 @@
+**定理 24.5（负相位约定下的有限交换）。** 设初态为两次独立准备的 $|\psi\rangle\otimes|\psi\rangle$，并令
+
+$$
+U(u)=e^{-iuV},\qquad u\in\mathbb R,
+\qquad a=\psi_0\psi_{13},\quad b=\psi_1\psi_3,
+\qquad \Delta=|a|^2-|b|^2=p_0p_{13}-p_1p_3.
+$$
+
+两个约化态相同；它们在标签基中的概率均为
+
+$$
+p'=p+\delta\kappa\,d,\qquad
+\delta\kappa=-\Delta\sin^2u+\operatorname{Im}(\overline a b)\sin2u.
+$$
+
+当四底角概率均正时，等价写为
+
+$$
+\delta\kappa=-\bigl((1-Z)\kappa-XY\bigr)\sin^2u
++R\sin\chi\sin2u.
+$$
+
+所有 $u$ 都精确保留每个边缘的 $X,Y,Z$；归一化和非负性成立，包括零振幅边界。
+
+证明。每个活动块上 $V^2=I$，故指数是 $I\cos u-iV\sin u$。初始两块的振幅列均为 $(a,b)^{\mathsf T}$，所以两块分别变成
+
+$$
+a'=a\cos u-ib\sin u,\qquad b'=b\cos u-ia\sin u.
+$$
+
+其余二十一个有序基振幅不变。这一陈述针对振幅；活动项与非活动项之间的密度矩阵交叉元一般会变化，不能据此说所有其他联合矩阵元不变。直接展开得到
+
+$$
+\begin{aligned}
+|a'|^2&=|a|^2\cos^2u+|b|^2\sin^2u
++2\cos u\sin u\,\operatorname{Im}(\overline a b),\\
+|b'|^2&=|b|^2\cos^2u+|a|^2\sin^2u
+-2\cos u\sin u\,\operatorname{Im}(\overline a b).
+\end{aligned}
+$$
+
+例如第一式的交叉项为 $2\operatorname{Re}(-i\overline a b)\cos u\sin u$，其符号是正的虚部。负相位约定给
+
+$$
+\overline a b=\overline M=Re^{i\chi},\qquad
+\operatorname{Im}(\overline a b)=R\sin\chi.
+$$
+
+第一边缘的 $p_0$ 只有列 $(0,13)$ 的概率变化，增加 $|a'|^2-|a|^2$；$p_{13}$ 从 $(13,0)$ 增加同样的量。$p_1,p_3$ 分别从 $(1,3),(3,1)$ 减少此量，$p_2$ 不动。这正是所述 $d$ 方向，没有因两个有序块而再给单个边缘乘二。初态及 $U$ 都与系统交换相容，终态保持交换对称，故两边缘相同；也可逐列作同样求和得到第二边缘的式子。
+
+将定义 24.1 的概率反演代入，
+
+$$
+\begin{aligned}
+\Delta&=\kappa(1-X-Y-Z+\kappa)-(X-\kappa)(Y-\kappa)\\
+&=(1-Z)\kappa-XY.
+\end{aligned}
+$$
+
+由 $Wd=0$，更新保持质量及三个均值。更直接地，$U$ 幺正，联合密度态正且迹一，偏迹仍正且迹一，所以每个 $p_s'$ 非负，$\kappa'$ 仍在同一可行闭区间。使用 $\operatorname{Im}(\overline a b)$ 的式子不需要相位存在，故包含所有边界。证毕。
+
+任意双系统输入都因 $[U,Q_a]=0$ 保持总占位；每个边缘各自保持则在本定理中使用了相同准备与交换对称性。对任意不对称输入，不能从总量保持推出两边各自保持。
+

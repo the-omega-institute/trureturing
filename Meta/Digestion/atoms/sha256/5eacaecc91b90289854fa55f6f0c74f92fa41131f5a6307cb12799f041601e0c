@@ -1,0 +1,35 @@
+**Theorem 9.1 (two-coordinate separation at a shared original state).**
+Suppose two actual live histories at one original installed selected
+state have different pairs of exposed hit and zero counts. Orient their
+hits as $h<g$. This orientation is always possible, and necessarily
+
+$$
+g-h\ge2,\qquad z_S-z_T\ge2.
+\tag{WTF.32}
+$$
+
+Proof. Different pairs cannot have both equal supports and equal hits.
+Equal supports with different hits are excluded by PCA Theorem 35.1;
+different supports with equal hits and all properly nested supports
+are excluded by PE Lemma 4.1. Thus they have incomparable supports and
+different hits, and Notation 6.2 applies after orientation.
+
+If $\delta>0$, the first inequality of (WTF.24) and
+$\lambda+v+1=b+u-\Delta+2$ give
+
+$$
+\Delta\ge2+\max(0,b-a).
+\tag{WTF.33}
+$$
+
+Therefore $\Delta\ge2$ and
+$z_S-z_T=\Delta+a-b\ge2$.
+
+If $\delta=0$, (WTF.21) gives $\Delta=b,\xi=0,\eta=b$.
+Both one-sided hypotheses of PE Theorem 3.1 now apply to this very
+collision, forcing $a=b$ and $C_X=C_Y$. Their nonempty disjoint
+private sets cannot both be singletons, because original selected
+positions have distinct individual costs. Hence $a=b=\Delta\ge2$,
+and the zero-count difference is the same $\Delta$. This proves both
+inequalities without a subset-sum nonresonance assumption. $\square$
+

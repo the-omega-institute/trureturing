@@ -1,0 +1,18 @@
+**Definition 1.4 (actual preparation transcript).** Write
+
+$$
+\tau_A(t)=((w_1,r_t(w_1)),\ldots,(w_n,r_t(w_n))),\qquad
+\mathcal H_A(D)=\{\tau_A(t):t\in\mathcal F_D\}.
+\tag{NPH.3}
+$$
+
+The order is execution order; repeated, empty, constant and absent
+Reads are included. This target specifies address/reply content, not
+physical timestamps, intervening computation steps, external events or
+signed receipts. The transcript is a mathematical function of the
+actual run. A callable archive of it is a further storage/access
+service. Preparation pays $n$ calls, $\sum_j|w_j|$ submitted letters
+and $\max(\{0\}\cup\{|w_j|\})$ peak submitted length. Distinct
+addresses and actual invocations are different charges.
+The history task's equivalence is exactly equality of $\tau_A(t)$.
+

@@ -1,0 +1,16 @@
+**Definition 74.1 (the full lambda-one normal form).** In this section return to arbitrary $0<\beta\leq1/2$, $a=1-\beta$, and every original-real actual encoder of Definition 52.1 with $\lambda=f(\tau,\bar\tau)=1$. Unit-trace fidelity one gives $\tau=\bar\tau$. It is real symmetric, so a real orthogonal environment change diagonalizes it to $\operatorname{diag}(a,\beta,0,\ldots,0)$. The real and imaginary parts of the two nonzero orthogonal phase Kraus vectors, together with their orthogonal conjugate partners, then give a real output frame as in (R.7). In those coordinates the first two column lists and all third columns are
+
+$$
+\begin{gathered}
+E_0=[\sqrt a\,b_1,\sqrt\beta\,b_2,0,\ldots,0],\qquad
+E_1=[\sqrt a\,g_1,\sqrt\beta\,g_2,0,\ldots,0],\qquad
+\mathsf T=[t_1,\ldots,t_r],\\
+K_\alpha=[(E_0)_\alpha,(E_1)_\alpha,t_\alpha],\qquad
+\|\mathsf T\|_{\rm HS}^2=1,\qquad
+\operatorname{Tr}(E_0^\dagger\mathsf T)=\operatorname{Tr}(E_1^\dagger\mathsf T)=0.
+\end{gathered}
+\tag{S.147}
+$$
+
+This uses coordinate changes of the same actual channel, retaining $r\leq9$ and every admissible real third column, including columns at indices greater than two. It is not a two-Kraus restriction. Environmental conjugation and all actual blocks transform with the coordinates as required in Definition 58.1. No normal form for $\sqrt a<\lambda<1$ is inferred here.
+

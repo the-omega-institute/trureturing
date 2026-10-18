@@ -1,0 +1,4 @@
+### 8.2 Five-mode quotient
+
+Formalize the finite carrier \(\Sigma\), the map \(p\mapsto(X,Y,Z,\kappa)\), the reconstruction (2.2), the interval (2.3), and the fiber-blind identity (2.8). This can reuse the existing probability and convex-geometry interfaces. The conditional-independence equation (2.5) should be a separate theorem with its own hypotheses \(Z<1\).
+

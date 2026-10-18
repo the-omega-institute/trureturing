@@ -1,0 +1,46 @@
+**Definition 19.1 (One fixed stationary mixture on the original no11 shift).**
+For $0<r<1$ let $P_r$ be the stationary binary Markov law
+with transition and stationary row
+
+$$
+T_r=
+\begin{pmatrix}1-r&r\\1&0\end{pmatrix},\qquad
+\pi_r=\frac{(1,r)}{1+r}.
+\tag{19.1}
+$$
+
+Fix once and for all $0<p<q<1$ and $0<a<1$, and put
+$P=aP_p+(1-a)P_q$. These parameters do not depend on
+window length or desired rank. For every finite window,
+let $P_n$ be its actual marginal and prescribe the positive
+coherent representative
+
+$$
+|\Psi_n\rangle=\sum_{w\in B_n}\sqrt{P_n(w)}|w\rangle.
+\tag{19.2}
+$$
+
+The classical law is one stationary law on the whole
+no11 shift. Equation (19.2) specifies separate finite-window
+pure-state embeddings; it does not assert that they are
+compatible reduced states of one infinite quantum pure state.
+
+The two-state edge-emission matrices of each component are
+
+$$
+E_0(r)=\begin{pmatrix}1-r&0\\1&0\end{pmatrix},\qquad
+E_1(r)=\begin{pmatrix}0&r\\0&0\end{pmatrix}.
+\tag{19.3}
+$$
+
+Use the four-state matrices
+$M_x=E_x(p)\oplus E_x(q)$ and initial stationary row
+$(a\pi_p,(1-a)\pi_q)$. They are nonnegative,
+$M_0+M_1$ is stochastic, the displayed row is stationary,
+and $M_1^2=0$. Their cylinder formula is exactly $P_n$.
+Thus they belong to the entire four-state domain of the
+[uniform renewal and three-state separation source](https://github.com/the-omega-institute/trureturing/blob/f0babd0c3289992dff4b7704c6465bfeda6bef07/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md),
+Definition 1.2, including its permission for reducible
+presentations. This mixture is not the source's irreducible
+four-state example of §12.
+

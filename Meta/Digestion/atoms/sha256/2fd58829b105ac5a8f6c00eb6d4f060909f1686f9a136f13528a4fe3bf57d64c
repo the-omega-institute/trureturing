@@ -1,0 +1,12 @@
+#### 3.9　位置事件需要区域校准
+
+令位置标签集为有限集 $X$，区域 $R\subseteq X$ 的事件接口为 $E_R:S\to[0,1]$。在连续坐标变换下，若位置区域实际由状态集合 $\mathcal R\subseteq S$ 定义，则正确搬运是
+
+$$
+\mathcal R'=h(\mathcal R),
+\qquad
+E'_R(z)=E_R(h^{-1}(z)).
+$$
+
+<a id="claim-3-9-1"></a>
+

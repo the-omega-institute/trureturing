@@ -1,0 +1,23 @@
+**原对象与既有供应。** 保持 §§384–385、414、448–449 的同一实际来源
+\[
+q=\varphi_{\rm gold}^{-2}\in(0,2/5),\quad
+\beta_d=\log(1-(-q)^d),\quad b=\beta_1=\log(1+q),\quad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\quad \gamma=\beta^{-1},
+\]
+\[
+\delta_\beta=b-\sum_{d\ge2}|\beta_d|>0,\qquad
+\sum_{d\ge1}|\gamma_d|\le1/\delta_\beta.
+\tag{IC.1}
+\]
+这里 \(\gamma\) 是 Dirichlet 卷积逆，不是 Euler 常数；
+\(\delta_\beta\) 不与 §451 的肩项常数混用。卷积单位为
+\(\varepsilon_1=1,\varepsilon_n=0\)（\(n>1\)）。§448 给全部实数 \(s\ge0\) 上
+\[
+0<\mathcal B(s)<b,\quad
+\mathcal B'(s)\ge c_*q^2(\log2)2^{-s},\quad
+c_*=\frac{187}{1323},\quad
+\mathcal B(s)\longrightarrow b\quad(s\to\infty).
+\tag{IC.2}
+\]
+以下不假定原 Mertens 函数的临界界，也不假定 RH。
+

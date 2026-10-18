@@ -1,0 +1,4 @@
+## 5. The exact stationary control memory of the five-label fee-four family
+
+The consumer is exactly Example 3.2 extended by Corollary 3.1, with five pairwise distinct labels and initial bottom labelled $R$. The paid four-block fee is reused. The additional resource here is the complete stationary controller of [Continuation II, Definitions 26.1–26.2 and Theorem 27.2][CM]: its program positions, remembered endpoint values and stopping outputs are counted together. A proof's issued index or hidden apparatus coordinate is not an input to that controller.
+

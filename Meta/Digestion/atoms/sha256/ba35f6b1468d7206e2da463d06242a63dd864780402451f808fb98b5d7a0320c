@@ -1,0 +1,62 @@
+**命题 1.2（局部接缝响应到几何读出的保任务桥）。** 取有限个双端响应矩阵 $H_1,\ldots,H_m$，$m\ge1$；每个矩阵元在自己的 $[0,1]^{d_\ell}$ 参数块上逐方向仿射，各块参数独立、不重复使用同一坐标。以矩阵乘法识别共享接缝，并以固定端点向量 $\alpha,\beta$ 或迹作整体读出，则所得
+
+$$
+\Gamma=\alpha H_1\cdots H_m\beta
+\quad\text{或}\quad\Gamma=\operatorname{tr}(H_1\cdots H_m)
+$$
+
+仍是所有参数上的逐方向仿射响应。局部角点矩阵连同这个共享接缝规则，唯一恢复整体 $\Gamma$，并且
+
+$$
+\int\Gamma=\alpha\overline H_1\cdots\overline H_m\beta
+\quad\text{或}\quad\int\Gamma=\operatorname{tr}(\overline H_1\cdots\overline H_m),
+\qquad
+\overline H_\ell=2^{-d_\ell}\sum_{\varepsilon_\ell\in\{0,1\}^{d_\ell}}
+H_\ell(\varepsilon_\ell).
+$$
+
+这里积分在各参数块的乘积上进行。所消费的局部角点恢复式是：
+
+$$
+f(t)=\sum_{\varepsilon\in\{0,1\}^d}
+f(\varepsilon)\prod_{j=1}^d
+t_j^{\varepsilon_j}(1-t_j)^{1-\varepsilon_j},
+\qquad
+\int_{[0,1]^d}f=2^{-d}\sum_\varepsilon f(\varepsilon).
+$$
+
+因此两个端点、四个角点、八个角点分别足够恢复指定的线段、方形、立方体响应。若在体积为 $V$ 的长方体上采用相同的仿射坐标，积分式右端乘以 $V$。在一个非退化 $d$ 维单纯形 $K=\operatorname{conv}(v_0,\ldots,v_d)$ 上，若延拓模型改为仿射，则相应读出为
+
+$$
+f(x)=\sum_{j=0}^d\lambda_j(x)f(v_j),\qquad
+\int_K f=\frac{\operatorname{Vol}_d(K)}{d+1}\sum_{j=0}^d f(v_j).
+$$
+
+在半径 $R>0$ 的 $d$ 维球上，若延拓模型改为 $r$ 次齐次多项式，$r\in\mathbb Z_{\ge0}$，则球面响应给出
+
+$$
+\int_{B_R}f=\frac{R}{d+r}\int_{\partial B_R}f\,dS.
+$$
+
+这些是各自模型的恢复接口，不能跨模型省略延拓假设。
+
+**证明。** 使用经典多重仿射插值作为局部供应：独立符号立方体上的唯一多重线性表示见 [O'Donnell，Theorem 1.1](../../../Library/Fourier/odonnell2014boolean.md)；代换 $s_j=1-2t_j$ 将它接到当前角点模型。具体地，一维仿射性给
+
+$$
+f(t_1,\ldots)=(1-t_1)f(0,\ldots)+t_1f(1,\ldots).
+$$
+
+对 $d$ 归纳，把右端两个函数继续沿下一个坐标展开，直到没有自由坐标，便得到所述乘积式。每个一维因子的积分为 $1/2$；有限求和与乘积积分交换给积分式。若两个响应角点相同，对其差应用该式即得处处为零，故这是整个模型内的唯一恢复。
+
+展开矩阵乘积，每个共享接缝指标求和项为各局部矩阵元的乘积。参数块不交，任意一个坐标在每个项中只出现于一个因子，因此整体仍逐方向仿射；局部插值式代入即恢复整体。各因子连续且定义在紧长方体上，有限求和与 Fubini 给逐块积分，得到 $\overline H_1\cdots\overline H_m$；端点收缩和迹都是线性的，故与积分交换。这没有先把共享接缝拆成独立边缘。若重复同一参数，局部至多一次并不保证整体至多一次，例如后文 $K(t,t,t)_{01}=t+t^2$；独立参数条件不能删除。长方体的仿射换元带来 Jacobian $V$。
+
+单纯形情形用重心坐标，仿射函数恰为 $\sum_j\lambda_jf(v_j)$。从标准单纯形到 $K$ 的仿射换元具有常 Jacobian；标准单纯形的顶点置换保持体积，各 $\lambda_j$ 积分相同，而 $\sum_j\lambda_j=1$，故每项为 $\operatorname{Vol}_d(K)/(d+1)$。三角形用三个顶点，四面体用四个顶点。指定剖分上的逐片仿射响应，可以逐块应用并求和；剖分和新增节点值都是模型数据。
+
+球体情形写 $x=ty$，$y\in\partial B_R$，$0\le t\le1$。径向换元的体积元为 $Rt^{d-1}dt\,dS_y$，齐次性贡献 $t^r$，因而径向积分为 $R\int_0^1t^{d+r-1}dt=R/(d+r)$。取 $f=1$，在 $d=2,3$ 分别得到圆面积与周长、球体积与表面积的关系
+
+$$
+A=\tfrac12RL,\qquad V=\tfrac13RS.
+$$
+
+这几种经典插值、重心与径向公式在此承担的是响应模型到积分任务的桥，不是无模型的边界定理。证毕。
+

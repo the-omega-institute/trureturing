@@ -1,0 +1,62 @@
+**Corollary 5.2 (An explicit anisotropic source witness).** The positive source
+
+$$
+p=(p_0,p_1,p_2,p_3,p_{13})=(1,2,3,4,5)/15
+\tag{5.9}
+$$
+
+is in the original fiber domain: it has
+
+$$
+(X,Y,Z)=(7/15,9/15,3/15),\qquad
+\kappa=5/15,
+\qquad \kappa_-=4/15<5/15<7/15=\kappa_+,
+\tag{5.10}
+$$
+
+and lies on neither symmetry wall. Its latent Gram eigenvalues are
+
+$$
+(\lambda_\alpha,\lambda_\beta,\lambda_\gamma)
+   =(44/225,\ 6/225,\ 28/225),
+\tag{5.11}
+$$
+
+all distinct. Therefore the nonzero spectrum of the actual ten-output
+covariance has multiplicities $2,2,2$, together with four zeros. A
+six-dimensional triplet response would have latent Gram of the form
+$A\otimes I_3$, whose nonzero eigenvalue multiplicities are multiples of
+three. The source witness cannot be orthogonally equivalent to such a triplet
+Gram, nor can padding by the four output null directions change its nonzero
+multiplicities. This is a source-realized obstruction to inferring triplet
+isotropy from the coherence menu. It supplies neither a physical spatial
+metric nor a native $SO(3)$ action.
+
+**Proof.** The domain inequalities and endpoint bounds are the displayed
+computations. Applying (5.6) gives
+
+$$
+2(2+20)/225=44/225,\qquad 2(3)/225=6/225,\qquad
+2(4+10)/225=28/225.
+$$
+
+The singular-value identity transfers these values from $G_{\mathrm{lat}}$ to
+$C_{\mathrm{out}}$, and orthogonal changes preserve multiplicities. $\square$
+
+The affine predictive terminology is compatible with the source-specific
+notion of a state represented by fixed linear readouts of future tests in
+Littman, Sutton and Singh, [*Predictive Representations of State*](https://proceedings.neurips.cc/paper/2001/hash/1e4d36177d71bbb3558e43af9577d70e-Abstract.html), NIPS 14
+(2001), pp. 1555--1561. The present theorem is narrower: its tests are the five
+specified coherence edges, its source is the fixed five-mode FIB fiber, its
+controls are Definition 3.1 loops, and its decoder is affine with fixed
+coefficients. No predictive-state result is used to infer a dimension here.
+
+This result leaves the physical bridge explicit. The coherence task has an
+exact affine capacity and an exact response spectrum under its stated endpoint
+law. A physical three-dimensional interpretation would still require a
+separate common rotation action, metric identification, and lawful control
+realization such as the additional interface hypotheses of Section 9 of
+[FIB harmonic-edge load](FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md).
+Neither a torus, a character count, a response rank, nor the Gram calculation
+supplies those hypotheses.
+

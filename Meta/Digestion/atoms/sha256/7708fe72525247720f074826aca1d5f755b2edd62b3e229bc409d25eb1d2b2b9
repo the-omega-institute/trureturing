@@ -1,0 +1,37 @@
+**Convention 11.1 (immutable source map).** The following suppliers all
+refer to `5094da88f161741b61de3b6b16dbc3a115a83d63`. Paths identify
+reused statements, not a compilation claim for this volume.
+
+| Supplier | Actual contribution and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), `ValidBase`, `probability`, `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`, and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | The exact positive signed source and all-sector original controls. Its double-wall weight gives (SC.2), hence the real phases (SC.15). No physical waveform sampler or actuator follows. The Scribe's all-sector applications are distinct from the scope of the rectangle declaration alone. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/OriginalControlComposition.lean), `OriginalControl`, `FiniteC1Control`, `concatenate_original`, and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Both original regularity alternatives, zero and arbitrary finite durations, literal unchanged prefix, matching heights, translated relative tail and added weighted integrals. Used in polygon admissibility and lawful continuation, without revealing old lifts. |
+| Instrument Boundaries §§4–5.2, 9–15 | The specified canonical optimal stopped instrument, signed source family, nonnegative rates, exact first time/mode output, classification, actual witnesses and joint finite continuation are credited. Lemma 9.2 applies its existing survival factors. No optimum or classification is redelivered. |
+| Instrument Stability §§1, 3–5, especially IS.7 and IS.26–29 | Supplies the target complete metric, oscillation and low-survival boundaries and sufficient strong-data route. The acquired-record map supplies those data; direct mode-rate comparison gives (SC.20) without an artificial inverse-survival factor. |
+| Quantum Carrier Minimum §§2–4, 6 | Reuse of the exact five-labelled live qutrit plus absorbing sector, preserving supplied joint archives. Its unassisted coding minimum has different inputs from its archive-preserving upper. Neither is a waveform sensor or a finite archive bound. |
+| Record Acquisition §§2, 5–9, 11–12 | Credited query restrictions, conditional simultaneous samples, paid area/winding certificate, arithmetic and failure conventions. Proposition 5.2 reuses its signed rounding theorem; §9 here concerns a different complete-instrument target with a new BV-velocity promise. |
+| Transport-Memory Completion §§2.9–2.12, 2.18 | Same coherent source, actual common port, aligned stable readings, known nonzero amplitudes and known nonzero record overlap remain required. Numerical control quadrature constructs none of these and cannot divide out an unknown overlap. |
+| Process Geometry §34, especially PG.3400b-full and PG.3400c; Atlas Stable Core Holonomy §§1–3 | The actual joint source image, reachable domains, routes, permissions, complete rejections/failures, references, selector and update inputs remain separate obligations. Section 8 retains them as joint fields; it does not construct their actual acquisition or full closure. |
+| `D5/S3/ObserverMemory/Dynamics/TwoClockKrylovClosure.lean`, `two_clock_span_eq_krylov` | Its exact finite-dimensional mixed-power span identity is not used as a sampler, conditioning estimate or acquired-record map. No cross-model theorem is transferred. |
+
+**Literature statement 11.2 (precise attribution).** Averaging in BV,
+piecewise-linear interpolation, summation by parts, nonnegative scalar
+hazard equations, trace-class ideal inequalities, two-point minimax arguments
+and finite CP composition are mature mathematics. The source-specific
+finite timed-record certificate in Theorem 7.1 and the realized
+sample/noise comparison in Theorem 9.4 are `repo-derived` ordinary deductions.
+No worldwide originality or exhaustive literature-search claim is made.
+Bounded searches of the pinned original-control/fiber sources did not find
+this BV-velocity-to-complete-instrument certificate or its noise lower.
+
+| Accessible primary text | Verified scope and use |
+| --- | --- |
+| N. S. Hoang and A. G. Ramm, [*On stable numerical differentiation*, arXiv:0711.4403v3](https://arxiv.org/html/0711.4403v3), §1 and §2.1, Eqs. (1), (3)–(5), Theorem 1 | `literature-attested`: differentiation of noisy values is ill-posed; their Volterra regularization uses $\alpha(\delta)\to0$ and $\delta/\alpha(\delta)\to0$ for the stated convergence. This credits the resolution/noise issue. No BV constant, source-specific instrument rate or sampler premise is imported; those are proved here. |
+| L. Bouten, R. van Handel and M. R. James, [*A discrete invitation to quantum filtering and feedback control*, arXiv:math/0606118v2](https://arxiv.org/html/math/0606118v2), §§7.2–7.3, especially Lemma 7.66 and the controlled-filter construction | `literature-attested`: feedback is adapted to actual past observations with specified controlled coefficients; self-nondemolition/nondemolition is required for the conditional-state interpretation. No field-measurement channel or filter is supplied for the present absorbing source by citing it. This supports the boundary distinction in §8, not an imported acquisition theorem. |
+
+The DOI texts for the Kuramochi erratum `10.1063/1.4961516`,
+Ramm–Smirnova `10.1090/S0025-5718-01-01307-2` and Chartrand
+`10.5402/2011/164564` were unavailable in the supplied primary-access
+boundary. They are bibliographic leads only; no unseen theorem from them
+supplies a premise. The elementary arguments above stand independently.
+

@@ -1,0 +1,28 @@
+### 63.7 与 Hilbert–Pólya 的 Cayley 连接
+
+如果 \(D=D^*\) 是候选自伴算子，定义
+
+\[
+U=(D-iI)(D+iI)^{-1}.
+\]
+
+则 \(U\) 是 unitary。若 \(D\phi_\gamma=\gamma\phi_\gamma\)，则
+
+\[
+U\phi_\gamma
+=
+\frac{\gamma-i}{\gamma+i}\phi_\gamma.
+\]
+
+当 \(\rho=\frac12+i\gamma/2\) 时，
+
+\[
+z_\rho=1-\frac1\rho
+=
+\frac{2\gamma+i}{2\gamma-i},
+\]
+
+它与上述 Cayley 谱互为倒数，仍位于单位圆。于是 RH 的“零点在临界线”可以被转译成“Cayley 谱位于单位圆”，而 Li/Weil 正性可以转译成 unitary 谱的 Toeplitz/Gram 正性。
+
+这仍然需要一个全局 \(D\)、正则化迹和完成 zeta 行列式。四维 Fisher 切空间只提供有限场的载体，不能自动产生这个 \(D\)。
+

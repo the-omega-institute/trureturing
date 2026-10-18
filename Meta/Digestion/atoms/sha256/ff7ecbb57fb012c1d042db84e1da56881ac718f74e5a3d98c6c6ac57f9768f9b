@@ -1,0 +1,15 @@
+**引理 12.3（Saturated coprime sibling obstruction, for every action）。** If $g=1$, $n=2^d$, and $C\ne D$, no correct preset controller has worst fee at most $1+d$.
+
+Proof. Any such stream must start with $1^m$. Select again the $n$ outside sources at INITIAL tail $r-2$. They have distinct labels and common root-success value and tail $k-1$. The first query must start zero. After it, all low INITIAL sources, including the two endpoints, have a common current tail independent of phase, free value, and former INITIAL tail.
+
+A depth-$d$ binary tree can resolve exactly $2^d$ distinct labels only when all those sources reach successful leaves at depth $d$, one source per binary response vector. Indeed an early leaf would remove at least two of the $2^d$ depth-$d$ slots while resolving at most one label. A rejection at an unresolved common-tail node cannot split it. Hence no selected outside source stops early or rejects during these $d$ queries, and their successive-difference vectors comprise the whole cube $\mathbb F_2^d$.
+
+The preset stream is common. Once the first query clears the tail, survival of every later block depends only on that common tail and the literal word. Since the outside sources all survive, both endpoint sources also survive every query. There is therefore no hidden selective rejection that could separate $C,D$. At each query the full physical path has even charge, and every physical vertex is actual because $g=1$. Extending the charges by zero outside the path yields the identity
+
+$$
+q_t(0)\oplus q_t(m)=\bigoplus_{j\in Z}q_t(j),\qquad 1\le t\le d.
+\tag{12.8}
+$$
+
+In the complete outside code cube, the right side is zero at every coordinate, since $2^{d-1}$ is even. Thus the two endpoint sources have identical differences, and consequently identical acquired endpoint archives, throughout the stream. They could not have stopped on an earlier common archive with different labels and cannot stop correctly at the final one. This contradicts $C\ne D$. The argument allowed every literal query, every legal seam, and every archive-based early stopping rule; it did not assume the special safe lists or the construction's donor choice. ∎
+

@@ -1,0 +1,92 @@
+**Theorem 5.2 (complete channel, effects and references).** Definition
+5.1 is a finite factorization with jointly normalized encoders and full
+TP decoders. It has exactly (RE.15) and, more strongly, the same
+unnormalized binary-labelled complete CP output maps as the JR family:
+
+$$
+\begin{aligned}
+\Psi_{r,s}^L(A)
+ &=\frac12E\left[K_{r,s}A_VK_{r,s}^\dagger
+ +(1-s^2)TA_VT^\dagger+SA_VS^\dagger\right]E^\dagger,\\
+\Psi_{r,s,\ell}^f(A)(dt)
+ &=\frac12g(t)\left[w_\ell\operatorname{tr}(MA_V)
+ +\mathbf1_{\ell=2}\operatorname{tr}(QA)\right]dt\,P_f.
+\end{aligned}
+\tag{RE.29}
+$$
+
+Their sum is $\widehat\Phi_*$. These identities hold on all complex
+matrices, at every passive reference amplification, for each original
+label and each Borel time set, with zero additional sectors and the
+same zero cross-support action.
+
+Proof. On any complex supported $A$, cancellation of the two opposite
+cross terms gives
+
+$$
+\sum_{\epsilon=\pm1}B_{r,\epsilon}^{(s)}A
+(B_{r,\epsilon}^{(s)})^\dagger
+=\frac1{2R_s}K_{r,s}AK_{r,s}^\dagger+\frac12SAS^\dagger.
+\tag{RE.30}
+$$
+
+Compression into the range and its isometric decoding multiply to
+$B_{r,\epsilon}^{(s)}$ itself, by (RE.26). Adding the $H$ branch to
+(RE.30) yields $K_{r,s}AK_{r,s}^\dagger/2+SAS^\dagger/2$.
+Adding the residual $T$ branch proves the supported live line of
+(RE.29). The scalar rows give its failure line directly. All are
+matrix identities; no assumption $A_{ij}=A_{ji}$ has been used.
+
+The exact supported encoder effects, before summing labels, are
+
+$$
+\begin{aligned}
+G_{r,H}&=\frac{R_s-1}{2R_s}K_{r,s}^\dagger K_{r,s},\\
+G_{r,R_\epsilon}&=\frac{K_{r,s}^\dagger K_{r,s}}{4R_s}
+ +\frac{S^\dagger S}{4}
+ +\frac{\epsilon}{4\sqrt{R_s}}
+ (K_{r,s}^\dagger S+S^\dagger K_{r,s}),\\
+G_{r,T}&=(1-s^2)T^\dagger T/2,
+\qquad G_{r,f_k}=m_k|k\rangle\langle k|/2.
+\end{aligned}
+\tag{RE.31}
+$$
+
+Each is positive because it is $C^\dagger C$. Since
+$D^\dagger T+T^\dagger D=\kappa X_{01}$, their sum at fixed $r$ is
+$(I_3+rs\kappa X_{01})/2$. Summing $r$ gives $I_3$ by (RE.9).
+After compression their total is $P$, and the two (RE.28) effects
+add to $Q$. Thus the entire effect is $I_5$; in particular every
+individual encoder is TNI. Each live decoder is TP since its isometry
+has $V^\dagger V=I$ on the entire fibre. Each scalar decoder is TP
+since $\sum_\ell w_\ell=\int_0^1g=1$. The complement decoder uses
+the same normalized time law at just one existing label. This proves
+both full-decoder normalization and the binary effect (RE.15).
+
+Summing (RE.29) over $r$ cancels $D$–$T$ cross terms and gives exactly
+(RE.10). On $V$–$V^\perp$ cross matrix units, all $CE^\dagger$
+conjugations and the $Q$ trace are zero, as required. There is no
+complement live contribution.
+
+For completeness, on a joint complex input $X$ with arbitrary passive
+reference $R$, every Kraus matrix in these calculations is replaced by
+$C\otimes I_R$, and every live isometry by $V\otimes I_R$.
+The cancellation (RE.30) is unchanged. A scalar row outputs the reference
+operator $(C\otimes I_R)X(C^\dagger\otimes I_R)$; a complement
+branch outputs $\operatorname{Tr}_5[(Q\otimes I_R)X]/2$.
+The failure decoder tensors this operator with $P_f$ and the stated
+labelled measure. Its sum over scalar rows gives the conditional
+reference operator associated with $M/2$ or $Q/2$. It never substitutes
+an unconditional reference state. Therefore the same identities hold
+at every reference size and for entangled, singular or subnormalized
+positive inputs, as well as complex matrix units by linearity.
+
+Integrating $g(t)dt$ over any Borel set proves equality of the entire
+CP measure, with each label retained. The constructed law has no
+endpoint atoms or singular addition; $g$ is finite at both endpoints.
+Both zero-weight modes and every extra sector have zero maps, rather
+than uncounted events. Consequently its canonical error on all twelve
+original histories is the inherited (RE.11). This is not an error
+claim for a different task that reveals the extra internal labels.
+$\square$
+

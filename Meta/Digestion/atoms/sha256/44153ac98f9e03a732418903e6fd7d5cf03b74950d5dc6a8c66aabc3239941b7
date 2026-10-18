@@ -1,0 +1,27 @@
+**Proposition 89.1 (Zero error and original-target boundaries).** For the
+strictly positive sequence (73.3), $\kappa_0=\infty$, although exact
+lawful acquisitions exist. At $\varepsilon=1$, and more generally whenever
+$L=0$ in (83.2), $\kappa_\varepsilon=0$. Every finite marked acquisition
+constructed in Sections 83, 86 and 87 has TV distance one from each
+unchanged original nonatomic target $\mu_x$ of Theorem 67.5, and the
+unchanged consumer returns unknown on its handed tapes.
+
+**Proof.** If an exact acquisition had a finite hard bound $k$, choose
+any actual $x\in D_{k+1}$. The exact certificate (73.7), Theorem 73.3,
+would give
+$\mathsf P_A\{K_{A,x}\ge k+1\}\ge a_{k+1}>0$, a contradiction.
+Theorem 73.2 already supplies exact lawful acquisitions with sourcewise
+finite handoff, so this is an obstruction to a uniform hard count, not to
+exact acquisition. If $L=0$, every $a_n\le\varepsilon$ and immediate
+$\theta_0$ has error $a_{n(x)}\le\varepsilon$ at each source. This
+includes $\varepsilon=1$.
+
+Every constructed finite scheme outputs only the original marked points
+in $B_1$. The countable Borel set $H=\{\theta_j:j\ge0\}$ has full
+mass under each of these output laws and zero mass under every nonatomic
+$\mu_x$. The same event argument as Theorems 76.1 and 82.1 gives TV
+one. The consumer's definition on $B_1$ gives its unknown output.
+Thus these selected-law attainers supply no cap below one for the original
+nonatomic targets and do not supply their positive-proposal row.
+$\square$
+

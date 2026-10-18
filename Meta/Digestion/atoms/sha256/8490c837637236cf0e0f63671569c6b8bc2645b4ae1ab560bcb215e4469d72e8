@@ -1,0 +1,25 @@
+**Theorem 100.1.** If \(\gamma_++\gamma_->0\), the exact algebraic minimum is
+\[
+\min_{\substack{\eta d=\eta Qd=0\\\eta h=b}}
+ 2\max\{\|\eta P_+\|^2,\|\eta P_-\|^2\}
+=\frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}. \tag{11}
+\]
+**Proof.** Equation (10) gives the lower bound. Set \(s=\sqrt{\gamma_+}+\sqrt{\gamma_-}>0\). A minimizing original row is
+\[
+\ell_0=\frac b s
+ \sum_{\sigma:\gamma_\sigma>0}
+ \frac{h_\sigma^*K^{1/2}}{\sqrt{\gamma_\sigma}}. \tag{12}
+\]
+It has both zeros, \(\ell_0\widetilde r=b\), and every nonzero spectral component
+of \(\ell_0K^{-1/2}\) has norm \(|b|/s\). This proves equality in (11).
+If one residual vanishes, omit that term. If both vanish, the constraints are
+infeasible for \(b\ne0\), and have minimum zero for \(b=0\).
+For \(b=0\) in every case the zero row attains the zero value.
+
+Combining (7) and (11), the physical principal data obey
+\[
+\boxed{t^2\ge \frac{2|b|^2}{(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2}.} \tag{13}
+\]
+The same result holds for singleton 4 by original-fibre relabeling. The minimizer
+certifies only this algebraic relaxation, not a physical outside extension. \(\square\)
+

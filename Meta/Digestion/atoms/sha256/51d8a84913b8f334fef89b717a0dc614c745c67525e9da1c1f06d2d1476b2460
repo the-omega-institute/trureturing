@@ -1,0 +1,14 @@
+**Corollary 8.2 (finite position reduction for a strict saving).** For
+fixed admissible $n,k$, a correct graph with $m<G$ exists at both
+caps for some original $A$ if and only if one exists with
+$s_n\le n^n-4$. At $n=7$ the witness bounds are
+$c_7\le823543$ and $s_7\le823539$; Corollary 4.2 independently
+excludes a strict saving in that slice.
+
+Proof. Apply Theorem 8.1 to any purported strict-subgrid graph; its
+installed count does not change. The converse is immediate since the
+bounded positions are admissible original positions. The numerical
+values are $7^7$ and $7^7-4$. The bound is a finite reduction,
+not a bound on a practical running time for finding or excluding such
+a graph. $\square$
+

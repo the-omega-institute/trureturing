@@ -1,0 +1,44 @@
+**Proposition 12.3 (Retained lower-budget and limiting facts).** The
+source comparisons used here leave the following inherited results
+intact. At budgets zero and one the literal and path capacities
+are the zero-readout baseline
+
+$$
+R_0=\begin{cases}
+1-Z/2,&0<Z<2/3,\\
+2\sqrt{ZH},&2/3\le Z<1.
+\end{cases}
+$$
+
+The guarded zero-dimensional class is empty; at budget one the
+height/zero-decoder model attains $R_0$ in both guarded classes.
+At budgets two and three Theorem 2.3 gives the complete common
+value and attained tolerance endpoint. In the subtransition
+range the inherited scalar limits are
+
+| Parameter limit | $T_2(\tau)$ | $\lambda_{T_2(\tau)}$ | $x_*$ | $e_2=e_3$ |
+|---|---|---|---|---|
+| $\tau\downarrow0$ | $1/16$ | $0$ | $1/2$ | $1/2$ |
+| $\tau\uparrow1$ | $1$ | $-\infty$ | $1$ | $2/3$ |
+
+No strictly positive additive improvement of $e_4$ over $e_2$
+is uniform over the whole interval $0<Z<2/3$.
+
+Supplier justification and consequence. The lower-budget
+statements are [M, Theorem 10.1 and Corollary 10.3], and the
+limits are [M, Proposition 10.4], transferred to dimension three
+by [M, §18]. The inherited four-coordinate comparison has the
+same parameterwise limitation [Q, Proposition 8.2]. Directly,
+the universal floor and (12.1) give
+
+$$
+0<e_2-e_4\le4H\bigl(\sqrt{T_2(\tau)}-\sqrt\tau\bigr)
+\longrightarrow0\qquad(\tau\uparrow1).
+$$
+
+This uses the displayed inherited scalar limits and does not
+evaluate $T_4$ at any subtransition parameter. The limits
+$Z\to0,1$ do not add their support-degenerate ray spaces; at
+$Z=0$ the positive middle reference is lost, and at $Z=1$
+there is no open height interval. $\square$
+

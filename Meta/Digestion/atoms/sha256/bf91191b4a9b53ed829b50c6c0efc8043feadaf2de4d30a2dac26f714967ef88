@@ -1,0 +1,26 @@
+**Lemma 2.3 (Normalization and stationarity).** All sums and polynomial moments in (2.1) are finite for every $s>0$. The first-wait law is normalized, the process (2.2) is stationary, and
+
+$$
+S_i(0)=S_i(1)=1,\qquad \sum_{b\ge0}S_i(b)=\mu_i,\qquad \mathbb E_i\tau=\beta_i.
+\tag{2.4}
+$$
+
+Proof. Polynomial growth times $e^{-sk}$ is summable with any fixed polynomial weight. Thus $Z_i$ is finite and strictly positive, and $f_i$ is a probability law with the asserted support. Its mass at $k$ occurs in $S_i(b)$ for exactly $b=0,\ldots,k$. Interchanging nonnegative sums gives
+
+$$
+\sum_{b\ge0}S_i(b)=\sum_{k\ge1}(k+1)f_i(k),\qquad
+\sum_{b\ge0}bS_i(b)=\frac12\sum_{k\ge1}k(k+1)f_i(k).
+\tag{2.5}
+$$
+
+Dividing by $\mu_i$ proves normalization and the mean identity, including the positive mass at $\tau=0$.
+
+For stationarity introduce a countdown chain only on the proof probability space. From a positive value $b$ it moves to $b-1$; from zero it draws a fresh $K$ with law $f_i$. The normalized mass $\pi_i(b)=S_i(b)/\mu_i$ has incoming mass at every $b\ge0$
+
+$$
+\pi_i(b+1)+\pi_i(0)f_i(b)=\frac{S_i(b+1)+f_i(b)}{\mu_i}=\pi_i(b).
+\tag{2.6}
+$$
+
+At $b=0$, use $f_i(0)=0$ and $S_i(0)=S_i(1)$. Start the chain with $\pi_i$ and output one exactly at countdown zero. Its first tick is at the initial countdown $\tau$, and later zero counts are independent draws of $K$. Its output is (2.2), so that bit process is stationary. The countdown is not an observer input or state. $\square$
+

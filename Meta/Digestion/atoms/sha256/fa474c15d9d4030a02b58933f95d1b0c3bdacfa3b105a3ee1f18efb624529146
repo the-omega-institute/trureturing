@@ -1,0 +1,28 @@
+**Definition 2.2 (original relative histories).** An original relative
+command $(a,b):[0,T]\to\mathbb R^2$ starts at zero and is absolutely
+continuous or piecewise $C^1$, as in N, Definitions 3.1 and 9.1. It has
+finite variation. It means $\kappa=k+a$ and
+$\chi=\chi_*+b$, with the actual consistent initial relation lift
+$\chi_*$. Put
+
+$$
+J(t)=\int_0^t a(s)\,db(s),\qquad
+m=\min_{[0,T]}a,\qquad M=\max_{[0,T]}a.
+\tag{2.3}
+$$
+
+The integral is an ordinary integral against an absolutely continuous
+integrator. Its exact native domain is
+
+$$
+D_{a,b}=(-m,H-M),\qquad
+k\in D_{a,b}\ \Longleftrightarrow\ k+m>0\text{ and }k+M<H.
+\tag{2.4}
+$$
+
+For every starting height in a compact promise $[k_-,k_+]$, the same
+numerical command is lawful precisely when
+$k_-+m>0$ and $k_++M<H$. This is a whole-path condition. An endpoint
+inside the source is insufficient. Neither a signature nor a stochastic
+limit supplies permission to execute a command outside this domain.
+

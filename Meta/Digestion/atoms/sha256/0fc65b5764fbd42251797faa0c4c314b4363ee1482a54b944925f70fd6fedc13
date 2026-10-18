@@ -1,0 +1,197 @@
+**Theorem 29.1 (Sharp no-tick Kraus rank, with arbitrary mixed memory).**
+Consider finite-dimensional, time-homogeneous quantum
+instruments with visible labels zero and one. Require
+one initial density to reproduce every cylinder of
+the stationary SNS law (22.1). The minimum Kraus rank
+of the zero branch is two. It is attained with
+memory dimension two, simultaneously the minimum
+memory dimension. No stationarity of a competing
+hidden density, pure conditional trajectory, reset
+property or rank bound on its one branch is required
+for the lower bound.
+
+Proof. Suppose first that the zero branch has one
+Kraus operator A, so that
+$`\mathcal E_0(\rho)=A\rho A^*`$.
+Let $\rho$ be its specified initial density and put
+
+$$
+\nu=\operatorname{Tr}\mathcal E_1(\rho)=P(1)>0,
+\qquad
+\tau=\mathcal E_1(\rho)/\nu,
+\qquad F=\mathcal E_1^*(I)\ge0.
+\tag{29.1}
+$$
+
+Here the star on a branch is its trace-dual map,
+and the star on an operator is its Hilbert-space
+adjoint. Equality of complete cylinders, beginning
+with a one, implies
+
+$$
+\begin{aligned}
+\gamma_k
+&=\frac{P(1\,0^k\,1)}{P(1)}
+ =\operatorname{Tr}\!\left(F A^k\tau(A^*)^k\right)\\
+&=\left\|\sqrt F\,A^k\sqrt\tau\right\|_{\mathrm{HS}}^2
+ =\frac{k}{2^{k+1}},\qquad k\ge0.
+\end{aligned}
+\tag{29.2}
+$$
+
+The conditional density $\tau$ is the actual state
+following that recorded initial one. It need not be
+pure or a reset state on any other history.
+After conditioning on the initial one, the final
+one branch enters only through its positive effect F. Cayley–Hamilton for A shows that the
+finite-dimensional complex vector sequence
+$V_k=\sqrt F\,A^k\sqrt\tau$, viewed in matrix space
+with the Hilbert–Schmidt norm, satisfies a finite
+constant-coefficient recurrence.
+
+The following extension of the argument in Lemma
+28.2 applies to this actual vector sequence.
+For any such vector recurrence, suppose its eventual
+squared norm is $p(k)q^k$, with q positive and p a
+nonzero real polynomial of positive leading
+coefficient. Then the degree of p is even.
+Indeed, apply the exponential-polynomial recurrence
+representation coordinatewise, using
+[Stanley, *Enumerative Combinatorics*, Volume 1,
+Theorem 4.1.1, equation (4.3), and Proposition
+4.2.2](https://math.mit.edu/~rstan/ec/ec1.pdf).
+Discard finitely many initial terms, combine equal
+nonzero roots and omit zero vector coefficients.
+One obtains
+
+$$
+V_k=\sum_j P_j(k)\lambda_j^k,
+\tag{29.3}
+$$
+
+where the $P_j$ are nonzero vector polynomials and
+the roots are distinct. The assumed norm identity
+ensures that this sequence is not eventually zero.
+Take the largest root modulus $R>0$, then the
+largest vector-polynomial degree e among terms on
+that radius. If $a_j$ are the nonzero leading
+vectors of those terms and $\omega_j=\lambda_j/R$,
+then
+
+$$
+\frac{V_k}{R^k k^e}=T_k+o(1),\qquad
+T_k=\sum_{j\in J}a_j\omega_j^k,
+\qquad |\omega_j|=1.
+\tag{29.4}
+$$
+
+All omitted terms vanish after this normalization.
+Distinct roots give distinct unit phases.
+Expanding the squared Hilbert norm and averaging
+the finite geometric sums gives
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{k=1}^N\|T_k\|^2
+=\sum_{j\in J}\|a_j\|^2>0.
+\tag{29.5}
+$$
+
+No orthogonality between the $a_j$ is assumed:
+the off-diagonal inner products are multiplied by
+nonconstant unit phases, whose Cesàro means vanish.
+Both sides of (29.4) are bounded. Their squared
+norms differ by a sequence tending to zero, so
+have the same positive Cesàro mean. The proposed
+norm identity makes the normalized squared norm
+
+$$
+\frac{p(k)}{k^{2e}}\left(\frac q{R^2}\right)^k.
+\tag{29.6}
+$$
+
+For $q<R^2$ this tends to zero, contradicting
+(29.5); for $q>R^2$ it diverges, contradicting
+boundedness. With $q=R^2$, the same alternatives
+exclude every degree except $2e$. Thus the degree
+must be even. Applied to (29.2), the polynomial
+$p(k)=k/2$ has odd degree, giving the contradiction.
+A zero branch of rank zero is also excluded by
+$\gamma_1>0$.
+
+For the matching construction, on $\mathbb C^2$ set
+
+$$
+K_{0,s}=\frac I{\sqrt2},\qquad
+K_{0,a}=\frac {E_{10}}{\sqrt2},\qquad
+K_1=\frac {E_{01}}{\sqrt2},
+\tag{29.7}
+$$
+
+and let $\mathcal G_0$ sum the first two Kraus
+terms, while $\mathcal G_1$ uses the last.
+Their adjoint products sum to I. For an arbitrary
+matrix $\rho$, the branches and total map are
+
+$$
+\begin{aligned}
+\mathcal G_0(\rho)&=\frac12
+ \begin{pmatrix}\rho_{00}&\rho_{01}\\
+ \rho_{10}&\rho_{11}+\rho_{00}\end{pmatrix},\\
+\mathcal G_1(\rho)&=\frac12
+ \begin{pmatrix}\rho_{11}&0\\0&0\end{pmatrix},\\
+(\mathcal G_0+\mathcal G_1)(\rho)&=\frac12
+ \begin{pmatrix}\operatorname{Tr}\rho&\rho_{01}\\
+ \rho_{10}&\operatorname{Tr}\rho\end{pmatrix}.
+\end{aligned}
+\tag{29.8}
+$$
+
+In particular $I/2$ is stationary. On diagonal
+states these branches are exactly (28.2), hence
+induction on complete words proves equality of
+all SNS cylinders. Their direct iteration is
+
+$$
+\mathcal G_0^k(\rho)=2^{-k}
+ \begin{pmatrix}\rho_{00}&\rho_{01}\\
+ \rho_{10}&\rho_{11}+k\rho_{00}\end{pmatrix},
+\qquad
+\mathcal G_1\mathcal G_0^k(E_{00})
+ =\frac{k}{2^{k+1}}E_{00}.
+\tag{29.9}
+$$
+
+The two zero Kraus matrices are linearly independent,
+so this branch has Kraus rank two. The dimension-one
+iid obstruction in Theorem 27.2 applies because
+SNS has $P(1)>0$ but $P(11)=0$. This completes
+both minima. $\square$
+
+The upper construction is the two-state,
+advance-probability-one-half specialization of the
+Erlang ladder instrument in
+[Olamaei et al., *Least Variable Quantum Counting
+Processes*, arXiv:2608.26240v1, §IV A,
+equations (38)–(40)](https://arxiv.org/abs/2608.26240v1).
+The step correspondence is $L=k+1$: the final tick
+occupies one step. This construction is an existing
+counting model, not a new invention here. The
+law-specific lower bound is (29.1)–(29.6), which
+removes the pure-reset and single-one-Kraus premises
+from Corollary 28.3.
+
+Kraus rank measures unresolved alternatives within
+a visible branch. It is invariant under changes of
+Kraus representation of that CP map; it is not
+memory dimension or the number of visible labels.
+The two zero alternatives in (29.7) are summed,
+not coherently added as one Kraus matrix.
+Unlike (28.1), the total map in (29.8) retains
+half of each off-diagonal entry; it is not the
+replacement map $\rho\mapsto I\operatorname{Tr}\rho/2$.
+The argument requires finite memory and homogeneous
+branches, and does not rule out infinite memory,
+external time dependence or a different visible law.
+It supplies neither coherent-output preparation nor
+an optimal memory entropy, work cost or parent energy.
+

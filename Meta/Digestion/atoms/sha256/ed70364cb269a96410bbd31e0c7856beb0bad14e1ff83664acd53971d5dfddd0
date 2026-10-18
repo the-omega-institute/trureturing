@@ -1,0 +1,55 @@
+**Theorem 3.1 (unrestricted recurrent pair-core rigidity).** For any observer of Definition 1.3 satisfying its uniform guarantee with $\epsilon<1$, every closed irreducible class of the actual synchronized source–observer pair chain has source-exact emissions and source-exact complete profiles. Such a class projects onto all five source modes. Consequently at least five distinct actually reachable configurations decode exactly $F_0,\ldots,F_4$.
+
+**Proof (3.1).** Let $S$ be the pairs $(i,z(h))$ reached by positive actual histories containing a singleton, with current posterior $e_i$. The index $i$ is a proof coordinate, not an observer input. The set is finite, nonempty, and closed under every positive source transition. Unifilarity gives a unique successor $\tau(i,y)$ for each positive visible symbol $y$ from mode $i$. The pair transition has probability $v_i(y)$ and successor $(\tau(i,y),U(z,y))$. This defines a finite stochastic matrix $K$ on $S$. A finite directed stochastic graph has a closed irreducible class: choose a terminal strongly connected component in its finite component graph.
+
+Fix any such class $C$. On it define the nonnegative affinity matrix
+
+$$
+A(t,t')=\sum_{\substack{y:v_i(y)>0\\
+t'=(\tau(i,y),U(z,y))}}\sqrt{v_i(y)e_z(y)},\qquad t=(i,z).
+$$
+
+Every source-positive successor stays in $C$. Its row sum satisfies the exact identity
+
+$$
+1-(A\mathbf1)(i,z)
+=\frac12\sum_{y\in\mathcal A}
+\bigl(\sqrt{v_i(y)}-\sqrt{e_z(y)}\bigr)^2\ge0.
+$$
+
+Thus $A$ is substochastic, with row sum one exactly when $e_z=v_i$ on the full alphabet, including zero coordinates. On a row with equality, its weights agree with those of $K$.
+
+Suppose some row is deficient. From every $t\in C$ choose a positive $K$-path to a deficient row, stopping at the first deficient row. All preceding rows have equality, so the path has positive $A$-weight. Its product times the terminal row deficit is a positive amount of lost mass after the path and one additional step. More explicitly, for a path of length $\ell$ ending at $t'$, the identity
+
+$$
+\mathbf1-A^{\ell+1}\mathbf1
+=(\mathbf1-A^\ell\mathbf1)+A^\ell(\mathbf1-A\mathbf1)
+$$
+
+bounds the loss from below by that path product times the deficit at $t'$. Since $A$ is substochastic, $A^n\mathbf1$ decreases componentwise. Finitely many paths therefore give an integer $L\ge1$ and $\eta>0$ such that
+
+$$
+A^L\mathbf1\le(1-\eta)\mathbf1,\qquad
+A^H\mathbf1\le(1-\eta)^{\lfloor H/L\rfloor}\mathbf1.
+$$
+
+For a known source mode and retained configuration, every source-positive visible word determines one source path and one observer path. Multiplying geometric means of their probabilities and summing words yields the exact finite-word identity
+
+$$
+\sum_{w\in\mathcal A^H}\sqrt{F_i^H(w)D_z^H(w)}
+=(A^H\mathbf1)(i,z),\qquad(i,z)\in C.
+$$
+
+Generated words outside the source support contribute zero; no generated-only state is removed and no likelihood division is used. Since $\min(x,y)\le\sqrt{xy}$,
+
+$$
+\operatorname{TV}(F_i^H,D_z^H)
+\ge1-(A^H\mathbf1)(i,z)\longrightarrow1.
+$$
+
+Every pair in $C$ is reached by a positive finite synchronized history, so this contradicts its guaranteed distance at most $\epsilon<1$. All rows on $C$ must therefore be exact. Its generated positive symbols are now exactly its source-positive symbols. Closure and induction on word length imply $D_z^H=F_i^H$ for every $H$ on $C$.
+
+Finally the source graph is strongly connected: its positive square edges connect $0,1,2,3$, and its positive leaf edges connect $0,4$. A positive source path from a pair in $C$ to any desired mode lifts inside $C$. Its projection is therefore all five modes. Choose one pair for each mode. The corresponding configurations are distinct because their complete profiles are distinct by Proposition 2.1. $\square$
+
+The affinity recursion is a classical Markov-path tool; a readable primary version is Daskalakis–Dikkala–Gravin, Lemma 3.1, attributed there to Kazakos. Here unifilarity establishes its use for visible words, and substochastic leakage accounts for generated support outside the source. The theorem forces exactness on synchronized recurrent classes; it does not assert that every configuration has exact emissions or that these classes have a unique five-state presentation.
+

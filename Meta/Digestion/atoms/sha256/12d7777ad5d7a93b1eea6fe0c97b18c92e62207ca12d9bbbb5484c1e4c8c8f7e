@@ -1,0 +1,49 @@
+**Lemma 7.2 (State and row cyclicity give minimal scalar coefficients).**
+Before any continuity conclusion, the native coefficient has either
+the form
+
+$$
+f(k)=a_1e^{\gamma_1k}\chi_1(k)
+     +a_2e^{\gamma_2k}\chi_2(k),\qquad a_1a_2\ne0,
+\tag{7.3}
+$$
+
+or
+
+$$
+f(k)=(a_0+a_1k)e^{\gamma k}\chi(k),\qquad a_1\ne0.
+\tag{7.4}
+$$
+
+The state encoder itself is affinely isomorphic to the corresponding
+two-character state orbit, not just its scalar readout.
+
+Proof. Fix an interior reference height $k_*$. The lawful height
+identity gives $w(k)=B_{k-k_*}w(k_*)$ for every interior $k$.
+Absorb the invertible $B_{-k_*}$ into a reference vector $v$;
+then $w(k)=B_kv$ on that interval.
+
+In the diagonal case write $v=(v_1,v_2)$. State spanning forces
+$v_1,v_2\ne0$. Otherwise all actual $w(k)$ would lie in one
+coordinate line. Write the scalar readout as a row $(d_1,d_2)$.
+Its translates under $B_t$ span the whole two-dimensional dual,
+because their pullbacks are exactly the cyclic row module
+$\mathscr M$. Therefore $d_1,d_2\ne0$ as well. The products
+$a_j=d_jv_j$ are nonzero, proving (7.3). Rescaling coordinates
+by $v_j$ normalizes the state orbit to $(\sigma_1(k),\sigma_2(k))$.
+The two characters are distinct because one representation member
+has distinct eigenvalues. Their restrictions to an open interval
+cannot be proportional: a constant ratio there makes the ratio
+character one on a neighborhood of zero, and subdivision makes
+it one on all of $\mathbb R$.
+
+In the nilpotent case $v,Nv$ must be independent. If $Nv=0$ the
+state orbit is a line; if they are dependent, nilpotence again
+forces $Nv=0$. In the basis $(v,Nv)$ the state orbit is
+$e^{\gamma k}\chi(k)(1,k)$. If $d$ is its scalar row, row
+cyclicity forces $dN\ne0$. Since $v,Nv$ are a basis, this is
+equivalent to $dNv\ne0$. The scalar coefficient of $k$ is
+therefore nonzero, proving (7.4). All changes used here are fixed
+complex linear maps after the affine real isomorphism of §6.
+They preserve the original fibers. $\square$
+

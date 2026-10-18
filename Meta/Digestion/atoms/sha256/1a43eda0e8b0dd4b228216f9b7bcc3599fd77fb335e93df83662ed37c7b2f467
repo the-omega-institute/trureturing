@@ -1,0 +1,37 @@
+**Theorem 5.1 (Common first and second placements for every third alternative).** In one fixed phase, let $q$ be the distinguished target vertex and let the first unordered edge $E$ contain $q$. Write $w$ for its other endpoint. For every second integer-line edge $F$, there is a placement of $E,F$ such that every possible third integer-line edge $G$ individually has a placement preserving their finite labelled unordered graph with distinguished $q$. The first placement is always $E'=\{q,q+1\}$; the same second placement works for all alternatives $G$. Every placed left endpoint lies in $[q-3,q+3]$.
+
+All numbers in the table are left-endpoint offsets from $q$. A repeated $G=E$ or $G=F$ always uses its already placed edge. A bridge means an actual line edge with one endpoint in each of two disjoint queried pairs; a fresh endpoint is outside $E\cup F$.
+
+| Second-edge configuration | Second offset | Nonrepeated third-edge configuration and offset |
+| --- | --- | --- |
+| $F=E$ | $0$ | meets only $q$: $-1$; meets only $w$: $1$; disjoint from $E$: $2$ |
+| $E\cap F=\{q\}$ | $-1$ | extends the outer $F$ endpoint: $-2$; extends at $w$: $1$; disjoint from both: $2$ |
+| $E\cap F=\{w\}$ | $1$ | extends at $q$: $-1$; extends the outer $F$ endpoint: $2$; disjoint from both: $-3$ |
+| $E,F$ disjoint, bridge incident to $q$ | $-2$ | bridge: $-1$; fresh extension at $w$: $1$; fresh extension of $F$: $-3$; disjoint from both: $2$ |
+| $E,F$ disjoint, bridge incident to $w$ | $2$ | bridge: $1$; fresh extension at $q$: $-1$; fresh extension of $F$: $3$; disjoint from both: $-3$ |
+| $E,F$ disjoint, no bridge | $3$ | fresh extension at $q$: $-1$; at $w$: $1$; at either $F$ endpoint: $2$; disjoint from both: $-3$ |
+
+Proof. First prove exhaustion and then verify the common placements. Two line edges are equal, meet in one vertex, or are disjoint. For a root containing $q$, the shared vertex is $q$ or $w$. In the first three rows their union is a one-edge or two-edge path. A further edge repeats an existing edge, extends an outer endpoint, or is vertex-disjoint from that path. There is no new edge attaching at an internal vertex: its two incident line edges are already in the path.
+
+In the first row the placed pair is just $\{q,q+1\}$ twice. Its endpoint extensions have offsets $-1,1$, and $\{q+2,q+3\}$ is disjoint. In the second row the placed path has vertices $q-1,q,q+1$, with $q$ in the middle. Its extensions have offsets $-2,1$, and $\{q+2,q+3\}$ is disjoint. In the third row the path has vertices $q,q+1,q+2$, with $q$ at its root-side end. Its extensions have offsets $-1,2$, and $\{q-3,q-2\}$ is disjoint. The edge labels distinguish the two path ends where necessary. These placements retain the distinguished target position and all specified edge intersections.
+
+Now suppose $E,F$ are disjoint. An edge $G$ either repeats one of them, joins them, meets exactly one of them with its other endpoint fresh, or meets neither. A joining edge exists precisely when the nearest vertices of the two pairs are consecutive integers. It is then unique, and its endpoint on $E$ is $q$ or $w$. Otherwise no bridge exists. This proves exhaustion of the last three rows and their third-edge alternatives.
+
+If the old bridge is incident to $q$, place $F$ at $\{q-2,q-1\}$. The bridge is $\{q-1,q\}$. The available fresh extensions are $\{q+1,q+2\}$ at $w$ and $\{q-3,q-2\}$ at the outer $F$ endpoint; $\{q+2,q+3\}$ is disjoint from both original pairs. There is no omitted fresh extension at $q$: its only non-$E$ incident edge is the bridge. Likewise, the inner $F$ endpoint has only its $F$ edge and the bridge, so the listed outer extension is the only fresh one there.
+
+If the old bridge is incident to $w$, place $F$ at $\{q+2,q+3\}$. Its bridge is $\{q+1,q+2\}$, its fresh extension is $\{q+3,q+4\}$, and the root's available fresh extension is $\{q-1,q\}$. The pair $\{q-3,q-2\}$ is disjoint from both. The bridge occupies the only non-$E$ incident edge at $w$ and the only non-$F$ incident edge at its inner endpoint, so no further fresh extension case exists.
+
+If there is no old bridge, place $F$ at $\{q+3,q+4\}$. Both root extensions $\{q-1,q\}$ and $\{q+1,q+2\}$ have fresh endpoints outside $F$. Represent a fresh extension at either old endpoint of $F$ by $\{q+2,q+3\}$. For that particular third-edge identity, map the old attaching endpoint of $F$ to $q+3$ and its other endpoint to $q+4$. This can interchange the endpoints of $F$ between two proof bijections; $F$ is unordered, disjoint from $E$, and excludes $q$, so its already placed edge is unchanged. The pair $\{q-3,q-2\}$ represents a third component disjoint from both. Any extra adjacency across an unqueried gap imposes no equality on the distinct iid spins.
+
+In each case the indicated map is a bijection on occupied vertices, fixing $q$ and carrying all labelled edges $E,F,G$ to their specified replacements. On a connected path the shared vertices and labelled outer vertices determine the map. On a detached component its endpoints can be interchanged as just described. Repeated edges retain their two vertices. Lemma 2.3 consequently proves
+
+$$
+\operatorname{Law}(S_q,X_E,X_F,X_G)
+=\operatorname{Law}(S_q,X_{E'},X_{F'},X_{G'}),
+\tag{5.1}
+$$
+
+and its shorter marginals, for every allowed $p$ in the fixed phase. The actual $E',F'$ are common to all alternatives; only the proof bijection can vary. Therefore each identity is a genuine marginal identity for one set of actual earlier placements. No joint potential-reply identity between incompatible third alternatives is claimed. Every displayed left endpoint is between $q-3$ and $q+3$, including $F$ at $q+3$ and its extension at $q+2$ in the final row. This proves the theorem. $\square$
+
+The extra information used to choose the second placement is whether and where a future bridge can exist. The two-edge law alone does not record that information. The theorem uses the target-touching hypothesis; it supplies no such placement theorem for detached first edges.
+

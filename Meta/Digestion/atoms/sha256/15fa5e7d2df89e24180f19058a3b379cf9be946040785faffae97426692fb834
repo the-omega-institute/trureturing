@@ -1,0 +1,75 @@
+**Proposition 10.9 (Native finite-volume and killed-domain limits).** With
+the explicitly chosen constant density $d\mu_0=d\kappa\,dh$, the whole
+positive source has
+
+$$
+\mu_0(\mathcal M_b)=(\kappa_+-\kappa_-)(2\pi)^g<\infty.
+\tag{10.27}
+$$
+
+Consequently its metric balls cannot satisfy a positive lower bound
+$cR^{Q_{\rm vol}}$ for every $R>0$. This is a limitation for this density,
+not for arbitrary densities with singular endpoint growth.
+
+For the double-wall identity-covariance Dirichlet realization in Theorem 10.7,
+let $\Gamma_q(q')=\int_0^\infty p_t^\Omega(q,q')\,dt$. Its full integral is
+positive, finite and smooth for $q'\ne q$, is infinite at $q'=q$, and obeys
+
+$$
+\int_\Omega\Gamma_q(q')\,d\mu(q')
+=\frac{(k-l)(u-k)}2\le\frac{(u-l)^2}{8},\qquad q=(k,\alpha,\beta).
+\tag{10.28}
+$$
+
+**Proof.** Integrate the constant density over the finite interval and the
+$g$ phase circles to get (10.27). Every ball is a subset of this finite
+measure space, whereas $cR^{Q_{\rm vol}}\to\infty$, proving the global
+volume obstruction. On each $\Omega\Subset\mathcal M_b$, any smooth
+positive density defined near its closure also has finite total mass by
+boundedness and compactness. These facts preclude importing all-scale
+homogeneous volume growth from the local chart.
+
+In the double-wall cylinder, apply the one-dimensional Dirichlet Poincaré
+inequality at each $(\alpha,\beta)$ and then integrate over the torus:
+
+$$
+\|f\|_{L^2(\mu)}^2\le\frac{(u-l)^2}{\pi^2}\|Pf\|_{L^2(\mu)}^2
+\le\frac{(u-l)^2}{\pi^2}\mathsf T_{I_2}[f],\qquad
+\mathcal L_{I_2,\Omega}\ge\lambda_D:=\frac{\pi^2}{(u-l)^2}>0.
+\tag{10.29}
+$$
+
+The estimate passes from $C_c^\infty(\Omega)$ to the closed form domain.
+Symmetry and the semigroup law therefore give, for $t\ge1$,
+
+$$
+0\le p_t^\Omega(q,q')\le e^{-\lambda_D(t-1)}
+\sqrt{p_1^\Omega(q,q)p_1^\Omega(q',q')}.
+\tag{10.30}
+$$
+
+Indeed each time-$1/2$ kernel row has squared $L^2$ norm equal to the
+corresponding diagonal time-one kernel; the intervening operator has norm
+at most $e^{-\lambda_D(t-1)}$. For $q'\ne q$, the off-diagonal
+flatness at $t=0$ in the cited heat paper §3.2.1 gives $O(t^N)$ on compact
+sets for every $N$. These small- and large-time bounds make $\Gamma_q$
+finite off $q$. Integrating the heat equation against compactly supported
+tests gives $\mathcal L_{I_2,\Omega}\Gamma_q=\delta_q$ in distributions;
+hypoellipticity then gives smoothness off $q$. Positivity follows from the
+positive interior heat density. At $q'=q$, (10.20) has power $t^{-2}$,
+whose integral at zero diverges.
+
+For spatial integrability and (10.28), the kernel row mass is exactly
+$\mathbb P_q(\tau_I>t)$, by the killed representation (10.21).
+The bounded nonnegative function $v(k)=(k-l)(u-k)/2$ has $v''=-1$ and
+zero boundary values. Itô's formula at $t\wedge\tau_I$ gives
+$\mathbb E v(K_{t\wedge\tau_I})=v(k)-\mathbb E(t\wedge\tau_I)$.
+Nonnegativity first implies $\mathbb E\tau_I\le v(k)<\infty$; bounded
+convergence then gives equality. Tonelli's theorem yields (10.28), including
+integrability despite the single-point infinite value. This also justifies
+the distributional heat integration above, with the terminal contribution
+zero by the spectral gap and smoothing. None of these killed-domain facts
+asserts an all-scale unscreened field on the original source, an attractive
+interaction, an attained binding state or a physical spatial realization.
+$\square$
+

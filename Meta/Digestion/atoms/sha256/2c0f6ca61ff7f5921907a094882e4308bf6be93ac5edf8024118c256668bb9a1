@@ -1,0 +1,31 @@
+**Definition 12.2 (oriented four-port family).** Let $G=(V,E)$ be a
+finite nonempty simple 4-regular undirected graph. Write $n=|V|$ and
+$e=|E|=2n$. Orient an Euler tour in each connected component. Every
+vertex then has two outgoing and two incoming edges. Fix a public order
+of the outgoing edges and of the incoming edges at each vertex, and
+assign these four slots, respectively, to $LL,LR,RL,RR$.
+
+Use $d=3$, $W_3=\{\varepsilon,L,R,LL,LR,RL,RR\}$ and the entire
+$S_3$, of cardinality $123$. For each edge $a$, introduce one seed
+$s_a\in\{0,1\}$, identified with the actual replies alpha and beta,
+respectively. Its owner is the terminal slot for $a$ at its tail.
+Owners are distinct. At a vertex $v$ prescribe
+
+$$
+z_{v,\varepsilon}=z_{v,L}=z_{v,R}=(0,0),\qquad
+z_{v,q}=
+\begin{cases}
+(2,1),&s_a=0,\\
+(1,0),&s_a=1,
+\end{cases}
+\quad(q\text{ is the slot of }a\text{ at }v).
+\tag{GDB.51}
+$$
+
+Every terminal equation reads that edge's actual owner slot, including
+a self Read at an owner. Extend its decoder to branch and absent by
+the value $(2,1)$. At an owner these extensions have reply alpha,
+different from either excluded input, so they implement the actual
+binary owner guard. All seven native targets are specified by total
+tables in their attained factor ranges.
+

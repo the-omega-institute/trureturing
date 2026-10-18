@@ -1,0 +1,25 @@
+**Literature statement 10.2.** The following accessible primary texts support
+the mature mechanisms or delimit a tempting transfer. The exact source
+formulas, return constraint and excursion deductions are `repo-derived`
+ordinary consequences proved here. No worldwide priority is asserted.
+
+| Primary source | Precise statement and use |
+| --- | --- |
+| Chefles, Jozsa and Winter, [On the existence of physical transformations between sets of quantum states, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: pure-family transformations have positive environment Gram factors; probabilistic outcomes have positive Gram contributions, with a positive remainder for omitted failure. This is the mature mechanism in Theorem 4.2. Our actual continuous-phase reduction, two blocks and sharp scalar optimization are proved explicitly rather than attributed to a generic finite-family theorem. |
+| Nielsen and Chuang, [Programmable quantum gate arrays, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | `literature-attested`: distinct exact deterministic unitary programmes on arbitrary data require orthogonal programme states. Our correlated phase/parity subfamilies are not arbitrary data for two unitary programmes. Theorem 6.1 supplies four actual source inputs and does not import that missing premise. |
+| Chefles and Barnett, [Quantum State Separation, Unambiguous Discrimination and Exact Cloning, quant-ph/9808018v1](https://arxiv.org/html/quant-ph/9808018v1), separation bound and Eq. (18) | `literature-attested`: optimal unambiguous discrimination of a known equiprobable pure pair has conclusive probability $1-|\langle\eta_+,\eta_-\rangle|$. This credits the familiar distinguishability interpretation of $1-\mu$. It does not create the source-owned helper or prove our repeated original-control upper bound. |
+
+Stinespring dilation, positivity of Gram matrices, two-by-two matrix
+positivity, interval intersection, spectral decomposition and controlled
+unitaries are mature mathematics. They are not claimed as new principles.
+The source-specific delta is (PR.10)–(PR.14), the actual full-phase/pair
+distinction, the complete finite memory criterion (PR.25), and the sharp
+realized excursion frontier (PR.27), with their stated assistance contracts.
+Bounded searches of the immutable original-control and fiber suppliers do
+not establish an exhaustive absence or a worldwide novelty claim.
+
+The bibliographic leads DOI `10.1063/1.4961516`,
+`10.1090/S0025-5718-01-01307-2` and `10.5402/2011/164564` have no verified
+primary text in this source's evidence boundary. No theorem premise is
+imported from them. The proofs above do not depend on those leads.
+

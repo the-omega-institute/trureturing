@@ -1,0 +1,26 @@
+**Definition 10.1 (a separate scale experiment).** For an integer $m\ge1$
+let $K\sim\pi$ and, conditionally on $K$, let
+$X_1,\ldots,X_m$ be independent $N(0,a_\kappa(K))$ variables.
+Denote its Bayes squared risk by $r_{m,\kappa}$ and put
+$r_{0,\kappa}=\operatorname{Var}_\pi(K)$. This is a comparison
+experiment, not a supply of repeated same-time native increments.
+The statistic $S=m^{-1}\sum_iX_i^2$ is sufficient and its posterior
+mean is
+
+$$
+g_{m,\kappa}(s)=
+\frac{\int_I k\,a_\kappa(k)^{-m/2}
+ e^{-ms/(2a_\kappa(k))}\pi(dk)}
+{\int_I a_\kappa(k)^{-m/2}
+ e^{-ms/(2a_\kappa(k))}\pi(dk)},\qquad s\ge0.
+\tag{10.1}
+$$
+
+Its denominator is positive. For each fixed $m$ this is a bounded
+continuous function, uniformly Lipschitz in $s$ over the full parameter
+family: differentiating the ratio gives
+$g_{m,\kappa}'(s)=-(m/2)\operatorname{Cov}_s(K,1/a_\kappa(K))$,
+whose absolute value has a common finite bound for fixed $m$.
+The displayed posterior and sufficiency follow directly by factoring
+the product normal density.
+

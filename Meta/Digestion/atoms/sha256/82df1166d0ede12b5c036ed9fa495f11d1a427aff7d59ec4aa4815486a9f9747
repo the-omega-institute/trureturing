@@ -1,0 +1,41 @@
+**推论 220.23（Positive vanishing marked-law family with attained closed cap）。**
+For every $0<t\le1$, multiply all six amplitudes in (220.18) and
+its cap by $t$. Mix each of the padded $N$ and gated $O$ laws with
+empty zero of mass $1-t$. Each is one mass-one law and one complete
+allocation. Use the original marked amplitude sequence
+
+$$
+ a_n(t)=
+ \begin{cases}
+ t b_n,&n\le6,\\
+ (6t/25)2^{-(n-7)},&n\ge7.
+ \end{cases}
+ \qquad \varepsilon(t)=6t/25.\tag{220.21}
+$$
+
+This sequence is positive, nonincreasing and vanishes. Both classes
+have actual hard-two acquisitions satisfying the closed cap on every
+source, with equality at an actual first-zero-seven source.
+
+**证明。** The hull tail equality scales and the other expression
+is $12t/25\le1$. Mixing with all-base mass $1-t$ scales each correct
+row by $t$, sends base to $1-t+t p(0)$ and pair to $1-t+t p(\{0,n\})$.
+Thus all finite cap demands remain satisfied by the same allocation.
+The scaled code-only deficit is $4t/25>t/25$; whole-block constants
+still miss the positive row by $3t/25$.
+On the finite positive word $N$ base is $1-6t/25$ and $O$ base is
+$1-t/5$. At each actual $n>6$, the exact marked-law errors are
+
+$$
+ \max(6t/25,a_n(t))\quad\text{and}\quad
+ \max(t/5,a_n(t)),\tag{220.22}
+$$
+
+respectively. Since $a_7(t)=\varepsilon(t)$ and the later terms
+halve, both satisfy the cap and both attain it at first zero seven.
+The actual-source and same-seed construction below realizes these
+finite laws on the unchanged carrier. This proves a family of
+attainers, not a sharp universal cost or full amplitude classification.
+The algebraic $t=0$ degeneration is not in this positive family.
+$\square$
+

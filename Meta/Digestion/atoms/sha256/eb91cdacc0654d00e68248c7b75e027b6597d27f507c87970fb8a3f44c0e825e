@@ -1,0 +1,24 @@
+**Corollary 30.4 (actual finite separations).** At $D=3$,
+
+$$
+H_3(1)=2,\qquad M_1(3)=4,\qquad M_1(3)/H_3(1)=2.
+\tag{GDB.124}
+$$
+
+Consequently cardinality-preserving maximum-of-singletons restoration
+fails on the original family. Its least multiplier in the numerical
+inequality at this depth is exactly two. At $D=6$,
+
+$$
+H_6(1)=4,\qquad M_1(6)\ge1874,\qquad
+M_1(6)/H_6(1)\ge937/2.
+\tag{GDB.125}
+$$
+
+Proof. Apply Theorem 28.1 for the singleton maxima, the credited
+[D3, Theorem 2.3][D3] for the exact full-menu depth-three value,
+and [NCE, Corollary 17.2][NCE] for the depth-six lower. These compare
+the same original source families, action alphabets and late timing.
+The depth-three ratio compares attained optimum values; it is not a
+procedure transforming every prescribed singleton export. $\square$
+

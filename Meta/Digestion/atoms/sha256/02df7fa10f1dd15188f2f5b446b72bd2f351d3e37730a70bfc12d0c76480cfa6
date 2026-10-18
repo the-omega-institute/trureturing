@@ -1,0 +1,72 @@
+**Theorem 4.1 (all-source affine native representation).** From any
+finite input of Definition 3.1 one can construct a finite list of schemes
+of Definition 2.2, independently of all numerical parameters, such that
+
+$$
+\{(\mathbf x,\mathbf n):G(\mathbf n)\land\Phi(\mathbf n,\mathbf x)\}
+=
+\{\operatorname{Decode}(a):a\text{ satisfies (SFP.12)}\}.
+\tag{SFP.15}
+$$
+
+Every admitted coordinate decodes to its designated original native
+values at its identical parameter tuple. From any supplied solution
+$(\mathbf x,\mathbf n)$ one can effectively extract admitted coordinates
+$a$ with $\operatorname{Decode}(a)=(\mathbf x,\mathbf n)$.
+No search through source trees, fixed shape list, size bound or numerical
+epoch bound is used. Coordinates need not be unique.
+
+Proof. Construction 3.2 is finite: Boolean branching and smart-pairing
+choices range over a finite expression graph; each free-shape unification
+terminates; successful unifiers and edge-instruction lists are finite.
+These operations inspect syntax and affine forms, not numerical epochs.
+The generic operations of Section 2 are fixed finite recursive algorithms
+on the subsequently supplied finite shape tuple. This constructs the
+claimed finite description before either kind of parameter is supplied.
+
+For soundness, let $a$ be admitted. Lemma 3.3 makes every named code
+normal and supplies every branch definition and comparison. A primitive
+definition expands to the correct native constant. A shift expands to
+its actual natural iterate by ABC. In a collapse branch the right
+primitive rank is a natural $r$ and the other ranks are $r+1,r+2$, so
+(SFP.4) verifies exactly that smart pairing. In an ordinary branch the
+normality of the output excludes a primitive collapsing cherry. Thus
+induction up the original expression graph identifies each decoded name
+with its native subexpression at the decoded original variable values.
+This induction reuses one value at every repeated occurrence.
+The positive and negative atoms of the chosen conjunction hold on those
+same values, so $\Phi$ holds. The retained guard is $G$, and decoding
+never changes $\mathbf n$.
+
+For completeness, evaluate every named native subexpression in the given
+actual solution and apply $B$ to all of them. Choose a true Boolean
+conjunction and each actual smart-pairing case. These choices give a
+solution of the finite positive shape equations. Their unifier therefore
+succeeds. Choose residual variables among the remaining original shape
+variables of the idempotent unifier; read their actual ground values.
+The factorization identity gives
+
+$$
+\operatorname{sh}(B(\text{value of name }v))=S_v[\mathbf K]
+\quad\text{for every }v.
+\tag{SFP.16}
+$$
+
+This is an effective restriction and substitution on a finite unifier;
+it neither enumerates shapes nor replaces any actual shape. Retain the
+actual rank at every vertex in (SFP.7). For each negative pair with equal
+ground shapes, take its first differing leaf; different shapes supply
+the structural certificate. Such witnesses exist because the actual
+normal codes are unequal. All cherries are normal in these very codes.
+
+Take $b_C$ to be the actual rank at the chosen root of each free equality
+component. Lemma 3.3 proves admission and reconstructs exactly every
+original rank. Consequently all decoded codes are the originally
+computed $B$ codes, not just codes of the same shape. ABC's identity
+$E(B(x_j))=x_j$ recovers each original variable unchanged. Extraction
+uses finite expression evaluation, coding, shape restriction, finite
+traversals and integer arithmetic, and terminates on each supplied
+finite solution. Repeated possible mismatch witnesses or Boolean
+branches explain why no uniqueness claim for coordinates is made.
+$\square$
+

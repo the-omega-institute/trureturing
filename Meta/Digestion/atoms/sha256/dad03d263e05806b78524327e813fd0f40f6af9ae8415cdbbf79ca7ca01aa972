@@ -1,0 +1,51 @@
+**定理 199.5（零成本有序闭包）。** 对 $C=N,O$，有精确恒等式
+$$
+D_C(0)+P_H
+=\{q:F_q(b)\le0\ \text{对所有 }b\in H_C\}.
+\tag{199.10}
+$$
+特别地，
+$$
+D_O(0)\subseteq D_N(0)+P_H
+\quad\Longleftrightarrow\quad H_N\subseteq H_O.
+\tag{199.11}
+$$
+由于 $O$ 是 $N$ 的子类而 $H_O\subseteq H_N$，(199.11) 等价于
+$H_N=H_O$，也等价于
+$D_O(0)+P_H=D_N(0)+P_H$。这里不需要、也不声称
+$D_O(0)=D_N(0)$，更不声称两个原始商集严格不同。
+
+**证明。** 先取 $q=Q(V_0)+p$，其中 $V_0\ge0$、$\Delta_C(V_0)=0$、$p\in P_H$。
+若 $b\in H_C$，取有限配置 $\lambda\ge0$ 使 $G_C\lambda\ge h(b)$，则
+$$
+F_q(b)\le V_0\!\cdot h(b)
+ \le V_0\!\cdot G_C\lambda
+ =\sum_D\lambda_D(a_D\!\cdot V_0)\le0.
+$$
+反向设 $F_q\le0$ 在 $H_C$ 上成立。要求 $V_0\ge0$ 同时满足
+$$
+ a_D\!\cdot V_0\le0\ (D\in\mathcal D_C),
+ \qquad -h(v^j)\!\cdot V_0\le-F_q(v^j)\ (1\le j\le m).
+\tag{199.12}
+$$
+若该系统不可行，应用同一 Farkas 替代，得到 $\lambda_D,\mu_j\ge0$ 且
+$$
+G_C\lambda\ge\sum_j\mu_jh(v^j),\qquad
+\sum_j\mu_jF_q(v^j)>0.
+$$
+此时 $u=\sum_j\mu_j>0$，否则严格式不可能成立。以 $u$ 归一的仿射重心
+$b=\sum_j\mu_jv^j/u$ 属于 $H$，且
+$G_C(\lambda/u)\ge h(b)$、$F_q(b)>0$，所以 $b\in H_C$，与假设矛盾。
+因此 (199.12) 有解；其第一组给 $\Delta_C(V_0)=0$，第二组给
+$q-Q(V_0)\in P_H$，从而得到 (199.10)。
+
+若 (199.11) 左侧成立，任取 $b\in H_N$ 和任意
+$Q(y_0)\in D_O(0)$。由 (199.10) 的 $N$ 侧恒等式，
+$F_{Q(y_0)}(b)\le0$。定理 166.2 证明中以“Cone feasibility is”开头的段落
+对一般 $C$ 给出极性可行性判据：取 $C=O$，上述所有零成本非负评分的不等式
+恰保证存在 $\lambda\ge0$ 使 $G_O\lambda\ge h(b)$，所以
+$\rho_O(b)<\infty$，即 $b\in H_O$。反之若 $H_N\subseteq H_O$，任取
+$q\in D_O(0)$，由 $O$ 侧 (199.10) 得 $F_q\le0$ 在 $H_O$ 上，因而也在
+$H_N$ 上；再用 $N$ 侧 (199.10) 得 $q\in D_N(0)+P_H$。这证明 (199.11) 及其等价形式。
+$\square$
+

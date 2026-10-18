@@ -1,0 +1,63 @@
+**Definition 11.1 (finite initial family and complete retained input).**
+Use the actual trees, substitution, four-valued literal port and resource
+convention of Definitions 1.1–1.4. Give leaves height zero and give a
+branch height one plus the maximum child height. Fix public $D\ge1$ and
+
+$$
+\begin{aligned}
+\mathcal F_D
+ &=\{\langle\alpha,v\rangle:\operatorname{height}
+          (\langle\alpha,v\rangle)\le D+1\},\\
+A_D&=\{p\in\{L,R\}^*:1\le |p|\le D,
+                          \ p\text{ starts with }R\},\qquad P\subseteq A_D.
+\end{aligned}
+\tag{AAR.41}
+$$
+
+The set $P$ is a finite public menu, possibly empty; its words, if any,
+are nonempty. No prefix-free assumption is imposed on it. The known
+phase-sensitive source minimum is $m(t)=2$ for every $t\in\mathcal F_D$:
+the actual leaf $L$ is alpha, and every other leaf has depth at least
+one. This is $m$ from Definition 3.1, not the weighted minimum from
+Definition 3.5.
+
+Let $\Omega=\{L,R\}^{\mathbb N}$, let $[b]$ denote the rays beginning
+with $b$, and let $Q$ be a finite public set of distinct eventually-right
+rays. Write each $\omega\in Q$ by a fixed finite descriptor
+$q_\omega$ with $\omega=q_\omega R^\infty$. Different descriptors of
+the same ray do not count as different samples. For any finite tree $u$,
+there is one actual leaf $a$ on $\omega$; set
+
+$$
+ h_u(\omega)=s(a)+e(u|_a),\qquad
+ s(a)=\#_L(a)+2\#_R(a),\qquad e(\alpha)=0,\quad e(\beta)=1,
+ \qquad Z_Q(u)=(h_u(\omega))_{\omega\in Q}.
+\tag{AAR.42}
+$$
+
+The ordered table $Z_Q(t)$ has been truthfully acquired at a first
+capture $v$, with $t=U_v\in\mathcal F_D$. After handoff the entire
+accessible source-dependent retained state is exactly this table, or a
+fixed lossless encoding of it. All other accessible state is a fixed
+function of the table and public $D,P,Q$. This includes outputs,
+control, buffers, lengths, capacities, allocation identities, logs and
+pointers as in Definition 1.3; an extra source-bearing distinction
+changes the interface. The table centered by the known constant two,
+$Z_Q(t)-2\mathbf1$, is an equivalent encoding, not extra memory.
+
+The passive consumer receives an exact nonnegative update count $k$
+for a specified authentic continuation $U_w=\rho^k t$ on the same root
+and register. The requested value is
+
+$$
+ V_P(U_w)=\bigl(\operatorname{readout}(p,U_w)\bigr)_{p\in P}.
+\tag{AAR.43}
+$$
+
+This consumer gets no fresh Read, source name, hidden subtree, global
+boundary object, clock or history log. The genuine-history premise
+authenticates the meaning of the supplied count; the table does not
+authenticate that premise. Acquisition of an unknown count is a separate
+paid operation in Proposition 11.8 below. Public menus and descriptors
+are source-independent but their installation and use still cost bytes.
+

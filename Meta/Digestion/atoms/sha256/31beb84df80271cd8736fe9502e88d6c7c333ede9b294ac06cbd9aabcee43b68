@@ -1,0 +1,31 @@
+**Lemma 2.1 (Acquired-record source sections).** At a fixed auxiliary
+value $u$, a finite record compatible with the successive next-event
+choices has source section
+
+$$
+C(r)=\bigcap_{i=1}^n\{X_{t_i}=x_i\}.
+\tag{2.1}
+$$
+
+A record incompatible with those choices has empty section. On a
+compatible return section the output is fixed.
+
+Proof. The empty record imposes no source condition. At a fixed seed and
+prefix, the next action and its waiting time are fixed. A read at $t$
+with reply $x$ intersects the old section with $\{X_t=x\}$. A finite
+return imposes no further source condition. Indefinite internal
+continuation occurs on that whole prefix section. Induction proves
+(2.1), including adaptive addresses and contradictory repeated replies,
+the latter giving empty cylinders. $\square$
+
+For any source event $C$ define
+
+$$
+m(C)=\max_{h\in\mathcal A}J_p(C,H_j=h).
+\tag{2.2}
+$$
+
+Every single output on that section has correct mass at most $m(C)$.
+This is a maximum of four joint masses. It never adds different-phase
+answers on the same leaf.
+

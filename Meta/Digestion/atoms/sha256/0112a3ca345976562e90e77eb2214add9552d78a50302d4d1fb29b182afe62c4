@@ -1,0 +1,14 @@
+**Theorem 2.1 (phase observability).** For every actual $N^{\rm ph}\in\mathcal C_\beta$, under Assumption 1.2,
+
+$$
+B_0=0,\qquad B_1=1-\beta,\qquad B_k=1\ (k\geq2),
+\qquad \gamma:=B_2-B_1=\beta.
+\tag{P.7}
+$$
+
+Each maximum is attained by a finite original-menu word. Saturation first occurs at one call for $\beta=0$ and at two calls for $\beta>0$.
+
+**Proof.** The actual passive states lie in the owner's $\mathcal E(z)$: both are PSD of trace one, with their common actual diagonal and entrywise real part. Their weights are precisely $a_1=a,a_2=\beta$, with total trace distance $a+\beta=1$. [Owner Theorem 79.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#59-同一安装与固定末端事件的完整消费者), using Theorem 67.2, applies with $d=5$, phase rank $p=1$ and readout rank $r=2$. Its dimension condition is $d-2\min(r,d-r)=1=p$. It gives $B_k=\sum_{j\leq\min(k,2)}a_j$, including zero weights, which is (P.7).
+
+More explicitly, in a real skew-normal basis of the actual $\Delta$, let its two planes be $(u_j,v_j)$ and weights $a_j$. A real rank-two projection onto $(u_j+v_j)/\sqrt2$ is an $SO(5)$ conjugate of $n_1$. Conjugating the one installed $S_{13}$ by a real rotation can phase $u_1$, or then $u_2$, by $+i$. With one call the resulting read effect selects one skew eigenvector and gives absolute contrast $a$; with two it selects both and gives $a+\beta$. The unused fifth direction corrects every orientation sign. Each real rotation and its transpose has an exact finite flip word by owner (IX.1), without a phase call. Since $D$ commutes with $S_{13}$ and $n_1$, returning to physical coordinates preserves the count. The matching upper bound is the owner's call-rank bound, not an inference from unlimited-budget controllability. Zero-phase effects are real symmetric, whose trace pairing with $iA_0$ vanishes. The omitted positive second weight explains the minimal saturation budget. $\square$
+

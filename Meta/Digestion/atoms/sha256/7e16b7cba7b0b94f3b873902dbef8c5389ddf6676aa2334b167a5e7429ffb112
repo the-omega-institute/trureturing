@@ -1,0 +1,6 @@
+**Corollary 7.3 (actual small instruments).** In the open interval $0\le s<s_{\max}$, (PG.38) has two rank-one high matrices, two rank-two low matrices and two rank-two supported failure effects. Their rank-many real null decompositions and Theorem 3.4 give exactly twelve generated five-mode labels: per report one high, two low, two scalar failure and one scalar complement. At $s=s_{\max}<1$, at least one norm/weight cap is active. At least one high weight, low eigenvalue or supported failure eigenvalue vanishes; deleting zero branches gives at most eleven labels. These are counts of the displayed instruments, not universal minimum label counts.
+
+Proof. On $v^\perp$, $Q$ is its identity; all three inequalities are strict below the minimum, so the ranks stated follow. Each high product is genuinely rank three since
+$\det K(v)=h_0h_1h_2v_D(v^TBv)=h_0h_1h_2v_Dk\ne0$.
+At the endpoint a finite cap is active because the endpoint is less than one. A zero eigenvalue or weight removes a branch in the rank-many construction. The scalar complement multiplicity remains discarded and adds one label per report. $\square$
+

@@ -1,0 +1,84 @@
+**Proposition 3.2 (Explicit data for all fifteen residuals).** Put
+$\Pi_J=\sum_{s\in J}\Pi_s$ and $H_J=\Pi_J-S(\Pi_J)$.
+For the ordered splitting
+$L=(N,25)$, $V=(2,3,5)$, define
+
+$$
+2720S(\Pi_s)
+=
+\begin{pmatrix}a_s&b_s\\b_s&c_s\end{pmatrix}_{L}
+\oplus
+\begin{pmatrix}d_s&e_s&f_s\\e_s&g_s&h_s\\f_s&h_s&k_s\end{pmatrix}_{V}.
+\tag{3.5}
+$$
+
+Here scalar entries $e_s$ in the table are unrelated to basis vectors.
+All entries are the following affine expressions in $r$:
+
+| $s$ | $a_s$ | $b_s$ | $c_s$ | $d_s$ | $e_s$ | $f_s$ | $g_s$ | $h_s$ | $k_s$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $N$ | $1308-12r$ | $-72-24r$ | $256$ | $348+4r$ | $-12-4r$ | $76-12r$ | $460+4r$ | $-12-4r$ | $348+4r$ |
+| $2$ | $348+4r$ | $-36+28r$ | $366-10r$ | $1107+63r$ | $-54+42r$ | $-117-9r$ | $336-24r$ | $-54-22r$ | $563-33r$ |
+| $3$ | $460+4r$ | $72-8r$ | $424+8r$ | $336-24r$ | $108-12r$ | $64+24r$ | $1164+36r$ | $108-12r$ | $336-24r$ |
+| $5$ | $348+4r$ | $-36+28r$ | $366-10r$ | $563-33r$ | $-54-22r$ | $-117-9r$ | $336-24r$ | $-54+42r$ | $1107+63r$ |
+| $25$ | $256$ | $72-24r$ | $1308+12r$ | $366-10r$ | $12-4r$ | $94+6r$ | $424+8r$ | $12-4r$ | $366-10r$ |
+
+For every singleton or pair $J$, its full residual is exactly
+
+$$
+H_J=\Pi_J-\frac1{2720}\sum_{s\in J}
+\left[
+\begin{pmatrix}a_s&b_s\\b_s&c_s\end{pmatrix}_{L}
+\oplus
+\begin{pmatrix}d_s&e_s&f_s\\e_s&g_s&h_s\\f_s&h_s&k_s\end{pmatrix}_{V}
+\right].
+\tag{3.6}
+$$
+
+Moreover
+
+$$
+e(T_*)=\max_{1\le|J|\le2}\|H_J\|_{\rm op}.
+\tag{3.7}
+$$
+
+Proof. The projections needed to substitute into (3.1) have blocks
+
+$$
+\begin{aligned}
+R_+|_L&=\begin{pmatrix}(r+1)/(2r)&2/r\\2/r&(r-1)/(2r)\end{pmatrix},\\
+R_+|_V&=\begin{pmatrix}
+(r+3)/(4r)&1/r&(r+3)/(4r)\\
+1/r&(r-3)/(2r)&1/r\\
+(r+3)/(4r)&1/r&(r+3)/(4r)
+\end{pmatrix},\\
+R_0|_L&=0,\qquad
+R_0|_V=\frac12\begin{pmatrix}1&0&-1\\0&0&0\\-1&0&1\end{pmatrix},
+\qquad R_-=I-R_0-R_+.
+\end{aligned}
+\tag{3.8}
+$$
+
+These follow from (1.5).
+For each $s$ use $t_j=(R_j)_{ss}$ and
+$R_i\Pi_sR_j=(R_ie_s)(R_je_s)^T$ in (3.1).
+For example the $L$ block for $s=N$ becomes
+$\left(\begin{smallmatrix}327-3r&-18-6r\\-18-6r&64\end{smallmatrix}\right)/680$.
+The same substitutions, with $r^2=17$, give all nine entries per row
+in (3.5). Thus (3.5) is a coefficient identity, and linearity gives
+(3.6).
+
+For (3.7) use the credited first-read identity of QMB Theorem 2.1:
+writing $Q_J(t)=O(t)^T\Pi_JO(t)$, it gives
+$e(T_*)=\sup_{t\ge0}\max_J\|Q_J(t)-S^\dagger(Q_J(t))\|_{\rm op}$.
+Proposition 3.1 and self-adjointness identify this residual with
+$O(t)^TH_JO(t)$, so its norm is independent of the actual nonnegative
+wait. Finally $S(I)=I$ by (2.6); complementary residuals are opposites.
+The empty and full events vanish, leaving precisely five singletons
+and ten pairs. This is the stationary fifteen-event identity already
+supplied by QPC Theorem 3.3, applied to this particular channel.
+It retains all complex density inputs: the norm of a Hermitian
+matrix is the supremum of its absolute expectation over complex
+density matrices. The first-read identity retains every finite
+adaptive depth and source-independent randomized policy. $\square$
+

@@ -1,0 +1,61 @@
+**Theorem 7.2 (execution bounds do not give threshold correctness).**
+The graph of Definition 7.1 has $2n-2$ installed running states.
+For any positive costs $c_1,\ldots,c_n$, every input terminates
+with at most $n$ queries and $W=\sum_i c_i$ letters. One input
+attains both maxima. Nevertheless, for $n=6$, $K=3$, $L=4$, the
+graph does not compute threshold three. With the original positions
+$s_i=i$ it has the complete table
+
+| Running state | Coordinate | Reply zero | Reply one |
+| --- | --- | --- | --- |
+| $q_{0,0}$ | $1$ | $q_{1,0}$ | $q_{1,1}$ |
+| $q_{1,0}$ | $2$ | $q_{2,0}$ | $q_{2,1}$ |
+| $q_{1,1}$ | $2$ | $q_{2,1}$ | $q_{2,0}$ |
+| $q_{2,0}$ | $3$ | $q_{3,0}$ | $q_{3,1}$ |
+| $q_{2,1}$ | $3$ | $q_{3,1}$ | $q_{3,0}$ |
+| $q_{3,0}$ | $4$ | $q_{4,0}$ | $q_{4,1}$ |
+| $q_{3,1}$ | $4$ | $q_{4,1}$ | $q_{4,0}$ |
+| $q_{4,0}$ | $5$ | $q_{5,0}$ | $\mathsf1$ |
+| $q_{4,1}$ | $5$ | $\mathsf0$ | $q_{5,0}$ |
+| $q_{5,0}$ | $6$ | $\mathsf0$ | $\mathsf1$ |
+
+On $\theta=000011$ it returns $\mathsf1$ after five queries and
+$35$ letters, although $|\theta|=2<3$.
+
+Proof. The state count is Theorem 6.2. Every running edge increases
+$d$ by one, and the coordinate at that state is $d+1$. Thus every
+actual run queries a prefix of $1,\ldots,n$, without repetition,
+and then terminates. Its two charges are at most $n,W$.
+
+Take an input whose first $n-1$ replies contain $K-1$ ones and
+$L-1$ zeros. All these proper count prefixes lie in $V$.
+Equation (SI.20) follows them to $q_{n-1,(K-1)\bmod2}$, which
+queries coordinate $n$ and then terminates. Hence this input pays
+exactly $n$ queries and $W$ letters.
+
+For the six-coordinate instance the displayed table is the direct
+evaluation of (SI.25). The false-positive run is
+
+$$
+q_{0,0}\xrightarrow{0}q_{1,0}
+\xrightarrow{0}q_{2,0}\xrightarrow{0}q_{3,0}
+\xrightarrow{0}q_{4,0}\xrightarrow{1}\mathsf1.
+\tag{SI.26}
+$$
+
+The charges are $5$ and $5+6+7+8+9=35$; the last input bit is
+not read. After its fourth zero the actual history already has a
+negative certificate, but its label $q_{4,0}$ was retained because
+the live cell $(2,2)$ has that label. The abstract live transition
+constraints therefore do not determine the correct continuation
+for this certified history. This is precisely an obligation omitted
+by Definition 6.1.
+
+The graph also violates the actual-support exclusions before either
+certificate: reply prefixes $00$ and $11$ both reach $q_{2,0}$,
+have the same exposed support $\{1,2\}$ and unequal hits $0,2$,
+and are both live for threshold three on six coordinates. They meet
+the two-gap count rule but violate the equal-support conclusion of
+PCA Theorem 35.1. Hence the graph is not a witness satisfying all
+the stronger supplied necessary conditions. $\square$
+

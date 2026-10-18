@@ -1,0 +1,10 @@
+**Openproblem 12.6 (Existence of a guarded scalar minimizer).** For each
+$0<\tau<1$, decide whether the set of all global minimizers
+contains at least one of the three good spectral types in
+Theorem 11.3. Neither guarded attainment nor guarded
+nonattainment throughout that interval follows from the present
+criterion. To prove nonattainment one must exclude every good
+global minimizer, not merely exhibit one bad optimum. Scalar
+attainment alone and the guarded approximation sequence do not
+answer this existential question.
+

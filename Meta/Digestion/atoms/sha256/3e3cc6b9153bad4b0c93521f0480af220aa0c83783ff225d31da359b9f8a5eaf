@@ -1,0 +1,25 @@
+**References 9.1 (repository mathematical correspondence).** The
+native identification in the cited Lean sources is
+$\alpha=\mathtt{FreeMagma.of\ true}$,
+$\beta=\mathtt{FreeMagma.of\ false}$, pairing
+$=\mathtt{FreeMagma.mul}$ and
+$\rho=\mathtt{GenealogicalFiberTransport.substitution}$.
+The normal-code and fixed-power existential suppliers are the ordinary
+theorems of ABC and NSF; they are not attributed to a newly compiled
+Lean solver. The following declarations delimit additional reuse.
+
+| Source and corresponding Scribe | Supplied statement and boundary |
+| --- | --- |
+| [NativeCutFibers][CUT], [Scribe][CUT-S] | `rowFiberEquiv` identifies legal entire class valuations with the complete actual row fiber. NUE applies it to finitely validated proposed rows. |
+| [ActualCutPartitionDecoder][ROW], [Scribe][ROW-S] | `canonicalRow_record_iff` equates canonical-row equality with addressed exterior and full partition equality; it does not eliminate epoch variables. |
+| [NativeHistoryCells][CELL], [Scribe][CELL-S] | `cell_feasibility_exact`, using private `syntax_iff_ground`, tests fixed literal-history cells and every old-class inequality. Its depth guard and fixed histories are not a parametric morphism-power interface. |
+| [NativePredecessorRowRecovery][BACK], [Scribe][BACK-S] | Private `delta_sigma` proves opaque parsing after one substitution; the public recovery theorem retains actual old occurrences, including born/old distinctions. It is one-step recovery, not unknown-epoch support. |
+| [IntrinsicSubstitutionCoordinates][INTR], [Scribe][INTR-S] | `intrinsic_coordinates` gives the maximum legal predecessor depth and unique primitive endpoint on every finite tree. It supplies faithful source coordinates, not independently assignable clocks for unrelated endpoints. |
+
+The substantive additional content is Theorem 4.2's uniform extension,
+the exact signed consumer in Theorem 5.1, and the uniqueness and lag
+consumers. The complete-row compilation, fixed-shift normal machinery,
+root-certificate classification, and cap obstruction retain their
+existing suppliers. Reading a declaration and its Scribe is not a
+new kernel verification of its application.
+

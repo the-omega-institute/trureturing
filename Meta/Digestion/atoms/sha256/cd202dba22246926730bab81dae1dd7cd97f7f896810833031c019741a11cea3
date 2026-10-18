@@ -1,0 +1,18 @@
+### 定义 38.2（量子二阶型曲率证书）
+
+给定 \(K\in\mathbb R\)，称 \((\mathcal L,\sigma)\) 满足 \(QCD(K)\)，如果对所有满足
+
+\[
+\langle I,A\rangle_\sigma=0
+\]
+
+的 \(A\) 都有
+
+\[
+\langle\mathcal L A,\mathcal L A\rangle_\sigma
+\ge
+K\mathcal E_\sigma(A).
+\]
+
+左侧是生成元的二阶 Hilbert 型，右侧是一阶 Dirichlet 型。这个定义是有限矩阵不等式。它不宣称已经得到一般意义的非交换 Bakry–Émery \(\Gamma_2\)。
+

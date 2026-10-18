@@ -1,0 +1,20 @@
+**Theorem 5.2 (all-positive-law failure of those mandatory premises).**
+For every $d\ge2$, every $L\ge2$, and every probability $\mu$
+with $\mu(\alpha),\mu(\beta)>0$, no $\delta>0$ satisfies
+$\mathsf U_\delta(\mu)$, and neither raw influence nor raw coupling
+has a finite size-independent bound. Hence the methods in Definition
+5.1 accept no nontrivial label at any strictly positive law. With only
+the stated trivial branch, all their block lower endpoints
+$-\log_2C$ are at most zero. At $d=2$ they are not optimizer-cofinal,
+since the credited $\sigma_2=\log_2(25/17)>0$.
+
+Proof. Every such law satisfies Theorem 4.1's hypotheses. Choose its
+even cycle sufficiently large in Theorem 4.2. It is nonempty, has
+incidence two and contradicts any proposed radius or finite bound.
+This applies simultaneously to every positive rational optimizer
+candidate. Soundness forbids a witness for the false mandatory premise.
+The remaining branch and [NCM, Theorem 4.1][NCM] give the endpoint
+conclusion. The same depth-two pressure is attained by local products,
+so the argument also cannot be repaired by replacing the unrestricted
+depth-two pressure with its incidence-$L$ version. $\square$
+

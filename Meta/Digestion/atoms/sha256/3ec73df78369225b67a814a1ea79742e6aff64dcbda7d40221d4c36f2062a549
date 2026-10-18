@@ -1,0 +1,241 @@
+### 218.7 Original source, whole tables and exact closed tails
+
+The arithmetic and acquisition suppliers remain
+[Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows),
+[Acquisition Resources 73.1 and 90.1–90.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md),
+[Continuation 109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md)
+and [Continuation IX 207.20](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+Here are the explicit object and resource correspondences used by this
+section. Their reuse supplies no additional mathematical increment.
+
+The actual labeled source is
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,\
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+N(r,g)&=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N(x)},\quad
+n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+\tag{218.32}
+$$
+
+where $p_1<p_2<\cdots$ are the primes. Source observations are static
+divisibility replies. No source prior, label, N value, first-zero index
+or extra observation is provided to an acquisition. Every actual integer
+has finite prime support; a positive finite word does not posit an
+infinite all-positive source.
+
+For any finite set of addresses, the entry-rank supplier in 35.2 permits
+a prime r larger than their Fibonacci entry ranks, so $F_r$ is invertible
+modulo every indicated prime. Impose $g=-F_r^{-1}$ modulo each
+positive-answer prime and $g=0$ modulo each negative-answer prime.
+The Chinese remainder theorem gives one residue modulo their product.
+Choose r large enough that the original g window contains a full interval
+of that modulus; its least representative above the lower endpoint
+is still below the upper endpoint. This supplies every finite pattern
+on arbitrary finite addresses, including all multiple-zero words and
+a prescribed zero after a positive prefix. The witnesses are fixed
+before seeds. This is the existing window construction, with no
+random choice of source or new entry-rank claim.
+
+The full original Borel tape carrier and consumer are
+
+$$
+\Theta=\bigsqcup_{j\ge1}B_j\ \sqcup\ \bigsqcup_{j\ge1}P_j,
+\qquad B_j\cong(0,1),\quad P_j\cong(0,1).
+$$
+
+The consumer returns unknown on every $B_j$ and proposes j on $P_j$.
+Its original nonatomic target remains the family specified in
+[Source-Correlated Laws 67.5](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#67-original-target-proportional-containment-and-unavoidable-nonatomic-ranges):
+with its fixed $h_0\in(0,1)$, $\pi_j$ uniform on $P_j$,
+
+$$
+t(x)=\sum_{i\ge1}3^{-i}q_i(x),\quad
+Z_t=\int_0^1e^{tu}\,du,\quad
+\nu_x(du)=\frac{e^{t(x)u}}{Z_{t(x)}}\,du\text{ on }B_{n(x)},\quad
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}.
+$$
+
+Here $\Omega(x)$ is the number of distinct prime divisors of $N(x)$,
+as in that owning target specification. The integral normalization also
+handles $t=0$ without division by zero. Component labels on a tape
+supply no source observation.
+
+Separately selected marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+give, for every sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero,
+the selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                 +a_{n(x)}\delta_{\theta_{n(x)}}.
+\tag{218.33}
+$$
+
+The comparison concerns these marked laws. They do not replace $\mu_x$,
+alter the consumer or claim an atomic approximation of its nonatomic
+target. Numerical labels in a finite table mean actual original marks.
+All Borel output events, including events outside the selected marks,
+remain allowed for original competitors.
+
+A normalized finite table distribution is implemented by one
+source-independent $U\sim\mathrm{Unif}[0,1)$. Its fixed interval partition
+selects the entire schedule and every possible output before any reply.
+N obtains the full preselected schedule. O uses an increasing preselected
+schedule and stops at its first queried zero or exhaustion.
+The N completion of an O table uses the same U, table and schedule,
+acquires later scheduled replies and ignores them when O would stop.
+Empty, singleton and pair tables make at most two actual requests and
+hand off finitely on every source and seed. Repeated requests and ignored
+replies remain charged by Definition 90.1. This is zero advice and one
+inherited seed, with no resetting, conditioning or discarded failures.
+Different reconstructed distributions may use different partitions of
+the same U, or their finite common refinement; their outputs need not agree
+seed by seed. Score weights, quadratic block masses and guard measures
+are never executed as source sampling laws.
+
+For a concrete full configuration, take $H=7$ or 8 and use the four
+quarter intervals of this one U to choose respectively
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0).
+\tag{218.34}
+$$
+
+Each is an O table of mass $1/4$. Their N completions have the four
+outputs $(a,a,c,d)$ for an O table $(i,j;a,c,d)$. Thus this is one
+complete $\lambda$ of mass one in either representation, with identical
+laws on every word. It is feasible at
+
+$$
+b^\star=v_3=(1,1,1,1/4,\ldots,1/4;1/4)\in H_H.
+$$
+
+The hull equalities are
+$\sum_{j\ge3}b^\star_j=(H+1)/4=(H+1)e$ and
+$b^\star_1+\sum_{j\ge3}b^\star_j-(H+1)e=1$.
+On every first-zero-1 or first-zero-2 word the correct reading is $3/4$,
+the base is zero or $1/4$, and the pair is $3/4$ or one.
+The negative base demand $-1/4$ is retained.
+Class 3 has base, correct, pair readings $(1/4,3/4,1)$;
+each later class has $(3/4,0,3/4)$; and the positive base is $3/4$.
+Consequently every base, correct, independent pair and positive row
+holds on the entire Boolean cube, with every multiple-zero suffix.
+This establishes $b^\star\in H_N$ using the same full $\lambda$.
+
+Extend the actual amplitudes by
+$a_1=a_2=a_3=1$, $a_4=\cdots=a_H=1/4$ and
+$a_{H+r}=2^{-r}/4$ for $r\ge1$.
+Their active length at the closed cap $1/4$ is 3.
+For every actual first zero beyond 3 the law in (218.34) is its positive
+low-word law, with zero mass at that actual new label and base mass $3/4$.
+For any probability p supported on labels through a finite prefix and
+any actual new label n, the reused exact identity is
+
+$$
+\operatorname{TV}\left(\sum_jp(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p(0),a_n\}.
+\tag{218.35}
+$$
+
+Indeed the absolute masses at zero, the old nonzero marks and the new
+mark sum to $|a_n-(1-p(0))|+(1-p(0))+a_n$.
+Halving gives this identity; it concerns all Borel events.
+Every actual tail error of (218.34) is therefore exactly $1/4$,
+including $a_4=\cdots=a_H=1/4$.
+Early errors also equal $1/4$, so N and O attain the uniform closed cap.
+
+These same laws give an actual common-budget diagnostic for the
+printed scores. At $b^\star$, the A quotient in (218.9) reads $1/6$,
+the D quotient in (218.25) reads $-41/16$, and the E input in
+(218.31) reads $-115/8$. For E, its single changed-Q V has
+$\Delta_N(V)=0$, $\theta=0$, and residual support zero;
+at this same point $F_{Q(V)}=-75/8$ and
+$F_{Q(y)-Q(V)}=-5$. Thus its one-budget inequality is
+$-115/8=-75/8-5\le0\le M=1$.
+No separately optimized row, new seed or second residual allowance is used.
+These are explicit diagnostic pairings, not negative separators.
+
+For a possibly signed affine allocation of mass M, the existing radial
+filling chooses $0\le\tau\le1/\max(1,M)$ and executes probabilities
+$\tau\lambda_D$ together with anchor mass $1-\tau M$.
+After B's stopped conversion use $\tau\mu_D$ and the same anchor filling.
+The event vector is $r+\tau G_{\mathcal C}\lambda$, so feasibility gives
+the full target rows at
+$a'=\alpha+\tau(b-\alpha)$ and $\varepsilon'=\tau e$.
+This is one budget, not execution of a signed vector.
+If b denotes a whole positive nonincreasing vanishing sequence and
+$\tau>0$, its first two amplitudes become
+$1-\tau(1-b_i)$ and all later amplitudes become $\tau b_i$;
+the entire actual tail is scaled too.
+At $\tau=0$, zero later amplitudes, or zero auxiliary cap,
+no positive original-tail attainment is asserted.
+
+Theorem 109.1 is a criterion for normalized probability-vector kernels;
+it does not convert an arbitrary score or signed affine vector into a law.
+The exact original class-feasibility bridge remains Theorem 110.2.
+Its necessity allows arbitrary addresses and full-carrier outputs:
+a measurable projection fixes the low marks and sends other tapes to zero;
+countability of the actual source gives one conull seed event of finite
+handoff and hard count; the maximum address of the entire preselected
+schedule has a vanishing probability tail. Actual finite-word witnesses
+are fixed before seeds, and sourcewise finite handoff gives a transition
+cutoff for each finite family. Same-class finite simulations approximate
+all low-word laws, and compactness of one finite catalog simplex yields
+one common allocation at the exact closed cap. It imposes no uniform
+runtime or address bound. Its sufficiency executes the whole finite
+table law and applies (218.35) on every actual positive tail.
+The affine-family extraction in §218.4 additionally retains its fixed
+projected low-word law; unrestricted necessity asserts feasibility,
+not preservation of every arbitrary competitor's law.
+The alternative stopped cap law in 112.2 remains available.
+
+For a score horizon H different from the actual active length
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$, use the existing
+207.20 correspondence. If $H<L_a$, fix the extra finite replies to zero
+and project labels above H to zero in the transported representation.
+The same low-word base, correct, pair and positive rows survive.
+This is a finite algebraic comparison restriction. It is not an uncounted
+source observation or a full cap attainer on omitted active tails.
+One can instead retain the full active horizon.
+If $H>L_a$, extend the kernel by ignoring new coordinates and retaining
+its labels through $L_a$. All old first-zero rows are unchanged for every
+later pattern; a new first zero has $a_n\le\varepsilon$ and the old
+positive-word law. Its zero mass is at least $1-\varepsilon$, and
+(218.35) proves the exact closed-tail bound. This includes $L_a=0$
+and $a_n=\varepsilon$. At $H=L_a$ no adjustment is needed.
+Auxiliary hull endpoints with $e=0$ are not relabeled original positive
+closed-cap realizations.
+
+Finally, for any full score Y of length H, demand pairing with one
+normalized configuration of cost bound c gives
+
+$$
+\sum_{j\le H}\beta_j(Y)(a_j-\alpha_j)-K_Y\varepsilon\le c.
+\tag{218.36}
+$$
+
+The target event reward is $W_Y+F_{Q(Y)}(a,\varepsilon)$ and the
+complete support is $W_Y+c$. This proves (218.10) and (218.27)
+at either original class's cap by the owning horizon maps.
+For every E cone input, its same-budget certificate bounds
+$F_{Q(y)}(b,e)$ on $H_N$ by (218.5), rather than assuming
+$(a,\varepsilon)\in H_H$. At $\varepsilon\ge1$,
+$K_Y\ge\sum|\beta_j|$ and $a_j,\alpha_j\in[0,1]$ make
+(218.36) automatic with $c\ge0$.
+These score inequalities are necessary conditions only; no sufficient
+original cap classification follows.
+
+The catalog regression remains literal: at 0100 the N table
+$(3,4;1,0,0,0)$ gives base, correct and pair readings $(0,1,1)$.
+Changing its earlier unqueried label 1 to zero gives $(1,0,1)$.
+The constructions in this section use dominance on their own supports,
+and the erasure proof compares a subset of tables to the original maximum.
+Neither operation prunes labels from an arbitrary input catalog.
+The original source $(r,g)=(19,436)$ gives $N=1822917$ and replies
+0100, so the diagnostic is not an unrealizable finite word.
+

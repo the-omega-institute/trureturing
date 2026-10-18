@@ -1,0 +1,36 @@
+**Lemma 4.4 (constructive integral comparison).** Let
+$H_N=\sum_{j=1}^N1/j$. Then
+
+$$
+z_D\le m_D\le H_{N_D}z_D,
+\qquad
+N_1=3,\quad N_{D+1}=2+N_D^2.
+\tag{FMR.20}
+$$
+
+For any supplied rational fractional cover of weight $x$, the same
+argument gives an effectively acquired code with at most $H_{N_D}x$
+attained values, interpreted as an integer bound.
+
+Proof. An integral cover is a fractional cover. For the reverse
+comparison enumerate admissible sets and repeatedly choose a set
+containing the most currently uncovered vertices, resolving ties by
+a fixed public order. Charge each of its $r$ newly covered vertices
+$1/r$. Total charge is the number of chosen sets.
+
+Fix an admissible set $J$. If $j$ of its vertices remain uncovered
+when a greedy choice is made, that choice covers at least $j$
+vertices, since choosing $J$ was available. If it covers $k$ vertices
+of $J$ at that step, their total charge is at most $k/j$, which is
+at most $\sum_{i=j-k+1}^j1/i$. Summing over the steps gives total
+charge on $J$ at most $H_{|J|}\le H_{N_D}$. For any fractional
+cover, multiply this inequality by each weight and sum. Each vertex
+has total covering weight at least one, so the total charge is at
+most $H_{N_D}\sum_Jw_J$.
+
+Thus greedy constructs the stated cover. Theorem 2.5 implements its
+first-containing-set index by paid actual boundary acquisition and
+the common native reader. All enumeration and greedy choices depend
+only on public finite tables, not on the unknown actual source.
+$\square$
+

@@ -1,0 +1,44 @@
+**定理 13.2.4（有限时间 Dyson 泄漏界）。** 对任意有限维 $G$、任意 $A,B$ 和 $t\ge0$，有
+
+$$
+\Lambda_{A\to B}(t)
+\le
+\sum_{n=0}^{\infty}\frac{t^n}{n!}\,\|P_BG^nP_A\|
+\le
+e^{t\|G\|}.
+$$
+
+若 $G$ 的范围为 $r_0$，且 $\ell=d(A,B)$，令
+
+$$
+m=\left\lceil\frac{\ell}{r_0}\right\rceil.
+$$
+
+则 $P_BG^nP_A=0$ 对所有 $n<m$ 成立，并且
+
+$$
+\boxed{
+\Lambda_{A\to B}(t)
+\le
+\sum_{n=m}^{\infty}\frac{(t\|G\|)^n}{n!}
+\le
+e^{t\|G\|}\frac{(t\|G\|)^m}{m!}.
+}
+$$
+
+**证明。** 有限维指数级数绝对收敛，故
+
+$$
+P_BT_tP_A=\sum_{n=0}^{\infty}\frac{t^n}{n!}P_BG^nP_A.
+$$
+
+取范数并用三角不等式得到第一界，再用 $\|P_BG^nP_A\|\le\|G\|^n$ 得第二界。若 $n<m$，一条长度 $n$ 的非零块乘积至多跨过 $nr_0<\ell$，所以块必为零。最后，对 $k\ge0$ 使用
+
+$$
+\frac{x^{m+k}}{(m+k)!}\le\frac{x^m}{m!}\frac{x^k}{k!}
+$$
+
+并求和即可。证毕。
+
+<a id="claim-13-2-5"></a>
+

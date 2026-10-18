@@ -1,0 +1,20 @@
+**Lemma 5.3 (failure loss exceeds all available live height).** Put
+
+$$
+J_{\rm b}=\operatorname{tr}G+2(x_G+y_G+|z_G|).
+\tag{AC.30}
+$$
+
+Every full live Gram satisfies $\int|\ell|dp\le J_{\rm b}$, and
+at the conditional source $d_f>J_{\rm b}$.
+
+Proof. The diagonal moments are all one. Termwise triangle inequality
+and Cauchy–Schwarz give $\int|z|dp,\int|w|dp,\int|zw|dp\le1$,
+proving the height bound. AC.21 gives
+$J_{\rm b}<15235/10^6<1/50$. At the root, trace preservation and
+$\operatorname{tr}\Delta=0$ give
+$d_f=N_{00}+g_1+g_2$, while $g_0=\delta N_{00}$.
+The inherited source enclosure $s_0<13/100$ therefore yields
+$d_f>1269/16900>7/100>J_{\rm b}$. The TP identity in this step is
+used only at the source root. $\square$
+

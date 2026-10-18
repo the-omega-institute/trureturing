@@ -1,0 +1,23 @@
+**Definition 20.1 (Overlap and a coherent sum of the two components).**
+Retain the single fixed stationary mixture of Definition 19.1.
+All vectors below have nonnegative real coefficients. Define
+
+$$
+\mathcal B_n=\langle\psi_{p,n},\psi_{q,n}\rangle
+=\sum_{w\in B_n}\sqrt{P_{p,n}(w)P_{q,n}(w)},\qquad
+C_n=2\sqrt{a(1-a)}\,\mathcal B_n,
+\tag{20.1}
+$$
+
+and prescribe another pure state
+
+$$
+v_n=\sqrt a\,\psi_{p,n}+\sqrt{1-a}\,\psi_{q,n},\qquad
+\Phi_n=\frac{v_n}{\sqrt{1+C_n}}.
+\tag{20.2}
+$$
+
+Unlike the mixed state $\sigma_n$, the state $\Phi_n$ is a
+coherent sum. Its occupation law need not equal $P_n$.
+It is used only as an approximation to $\Psi_n$.
+

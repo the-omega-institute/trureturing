@@ -1,0 +1,30 @@
+**Definition 2.1 (canonical paid entrance).** Fix public $H,\xi$, a finite
+installed interpreter and dispatcher, its literal boot encoding, tape-port
+assignments, descriptor conventions and native rule numbering. They are
+source uniform. Install a valid source $u\in\mathcal T_H$ by PR57.D5's exact
+canonical padded packet and fixed validation. There is no additional
+source-dependent installer residue. Allocation uses the deterministic Base,
+Allocate and descriptor routines, or the explicit port-local construction
+of Definition 3.2; references name their actual creation occurrences, with
+no arbitrary renaming.
+
+Execute the supplied no-update producer on this source, materialize its
+lossless seed code, and complete its paid delivery to the declared controller
+owner. The traversal's return is a subroutine return: the surrounding
+dispatcher continues after its output handoff. All return, output, seal and
+token operations are included in this common installed preparation. A native
+Stop internal to the producer is not interpreted as a globally stopped
+dispatcher. Denote the resulting acquisition fence by $a(u)$. It need not
+have a source-independent ordinal. The source at this fence is still $u$.
+
+Let $\mathcal R_H$ consist of every subsequent primitive prefix of every
+finite legal sequence of the source requests in Definition 2.4 under the
+serial dispatcher below, with their canonical frames from Definition 2.2.
+This is the full lawful canonical-frame domain, not the set of all raw-input
+runs. It includes incomplete input, generation, private gates and source
+writes, counter preparation, pending events, row prefixes,
+both communication stages and acknowledgement. The absolute ordinal $n(h)$
+counts all actual primitives from the original irreducible meter entrance,
+including preparation and acquisition. No pre-acquisition inverse theorem is
+claimed.
+

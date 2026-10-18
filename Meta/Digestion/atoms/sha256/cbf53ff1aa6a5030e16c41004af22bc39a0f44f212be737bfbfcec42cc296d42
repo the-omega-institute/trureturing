@@ -1,0 +1,32 @@
+**Theorem 88.2 (source-side persistence certificate).** For a
+terminal-recognized \((I,B)\), exactly one of the following alternatives is
+returned by the finite procedure:
+
+1. Some face has \(\mathcal C_K\) true. The procedure then constructs, for
+   every requested \(h\), actual finite originals in every row of \(B\) whose
+   complete outputs share one prefix of depth \(h\).
+2. Every face has \(\mathcal C_K\) false. The procedure then returns a finite
+   \(H\) with \(\neg J_B(H)\).
+
+This is a source-level theorem. The first alternative says that the acquired
+contract admits fresh finite witnesses at every requested depth; the second
+says that this selected joint set is separated at a finite depth. Neither
+alternative supplies a metric realization or a physical signal law.
+
+**Proof.** The complete mixed covers are finite, and terminal recognition
+reduces each nonclash tuple to finitely many scalar faces. The DEV cofinal
+support theorem is necessary and sufficient for one fixed tuple to have
+witnesses at all depths. If one face is true, its finite-prefix lifting
+constructs the required sources at each requested depth. If all faces are
+false, each chart tuple fails at some finite depth; the maximum of those
+finitely many failures excludes the whole finite cover. The fixed-depth
+source query then finds the first exclusion depth. The construction retains
+the complete old row, all signed endpoint conditions, repeated occurrences,
+and the common-source contract throughout. \(\square\)
+
+The theorem improves the boundary calculation in a precise way. It replaces
+an unproved phrase such as “the two rows remain indistinguishable forever” by
+one of two finite certificates: a uniform construction parameterized by the
+requested depth, or a finite separating depth. It does not turn source rank
+into radius.
+

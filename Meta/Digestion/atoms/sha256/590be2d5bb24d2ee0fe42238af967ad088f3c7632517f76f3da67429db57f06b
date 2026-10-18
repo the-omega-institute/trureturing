@@ -1,0 +1,26 @@
+**Corollary 9.4 (The attained-law square contrasts vanish).** Under Theorem 1.5's hypotheses, for every $C$ and almost every exterior $y$,
+
+$$
+d_C(w;y):=\Delta_P(wy,0^Ly)=0
+\quad\text{for every compatible }w.
+\tag{9.6}
+$$
+
+Consequently the square contrast and normalized cocycle tilt of [Second-order, Theorems 3.2 and 6.1][S] satisfy
+
+$$
+\begin{aligned}
+R_{C,f}(y)&:=\sum_wp_C(w;y)f(w)d_C(w;y)^2=0,\\
+\pi_C^t(w;y)&:=\frac{p_C(w;y)e^{td_C(w;y)}}{\sum_vp_C(v;y)e^{td_C(v;y)}}
+=p_C(w;y)\quad(t\in\mathbb R).
+\end{aligned}
+\tag{9.7}
+$$
+
+In the square-contrast notation $f$ may in particular be any intrinsic-null block direction, meaning $\mathbb E_P[f(X_C)\mid\mathcal H_C]=0$.
+
+**Proof.** Finite disintegration of the conull $\Omega_0$ gives
+$\sum_wp_C(w;y)\mathbf1_{\{wy\notin\Omega_0\}}=0$ for almost every $y$. Every compatible mass is positive by (2.5), so every compatible completion, including zero, lies in $\Omega_0$. Equation (8.5) proves (9.6) simultaneously over those finitely many words. Substitution proves both formulas in (9.7); the denominator of the tilt is one. Countably many intervals allow a simultaneous choice of exterior conull sets. $\square$
+
+This conclusion uses actual attainment. It does not prove square cancellation or strong zero from only $\mathsf B(P)$, $A_P<\infty$ and the weaker first-order property $\mathsf Z(P)$, which requires zero response only for intrinsic-null block-word directions. The arbitrary exterior-centered cylinder tests in Theorem 7.1 are the additional separation supplied by the finite-optimizer comparison.
+

@@ -1,0 +1,16 @@
+# Recursive relational observation: stability of the original-control instrument
+
+This volume studies approximation for exactly the canonical optimal
+double-wall instrument (OC.19)–(OC.19b) in
+[Original-Control Instrument Boundaries](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md#52-ideal-all-prefix-limit).
+That immutable supplier owns the instrument, its optimality and chronological
+completion. The results here concern a conditional inverse estimate and two
+explicit stability obstructions. They are ordinary mathematical proofs,
+without new Lean verification or a physical implementation claim.
+
+The same prescribed operation, positive source, clock and initial input are
+compared throughout. A whole marked probability law, a complete quantum
+instrument and one acquired stopped record are different data. None of the
+estimates supplies access to a whole law. This source does not classify
+terminal instruments or propose a minimum observer memory.
+

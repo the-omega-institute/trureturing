@@ -1,0 +1,126 @@
+## Reproducible topology certificate
+
+The following Python 3 standard-library checker reads the actual pairing
+table above from this document. Save it as `verify_packet.py` and run
+`python verify_packet.py CFMP_EIGHT_TRIANGLE_CLUSTERS.md`. It verifies face
+completeness, dual connectivity, a coherent orientation, global edge classes,
+local stars, circular edge links without reversal, and the vertex-link data.
+The link-surface justification is included in the code comments; Euler
+characteristics alone would not suffice.
+
+```python
+import itertools
+import re
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+text = Path(sys.argv[1]).read_text()
+rows = re.findall(r"\| \((\d+),(\d+)\) \| \((\d+),(\d+)\) \| ([0-3]{4}) \|", text)
+n = 16
+V = range(4)
+edges = list(itertools.combinations(V, 2))
+edge_index = {e: i for i, e in enumerate(edges)}
+
+class DSU:
+    def __init__(self, size):
+        self.p = list(range(size))
+    def find(self, x):
+        while self.p[x] != x:
+            self.p[x] = self.p[self.p[x]]
+            x = self.p[x]
+        return x
+    def union(self, x, y):
+        self.p[self.find(x)] = self.find(y)
+    def classes(self):
+        out = defaultdict(list)
+        for x in range(len(self.p)):
+            out[self.find(x)].append(x)
+        return list(out.values())
+
+edge = DSU(6*n)
+directed = DSU(12*n)
+vertex = DSU(4*n)
+tetrahedron = DSU(n)
+pair = {}
+orientation = [(-1)**((t >> 1).bit_count()) for t in range(n)]
+assert len(rows) == 2*n
+for ts, fs, us, gs, ps in rows:
+    t, f, u, g = map(int, (ts, fs, us, gs))
+    p = tuple(map(int, ps))
+    assert 0 <= t < n and 0 <= u < n and sorted(p) == list(V)
+    assert p[f] == g and (t, f) != (u, g)
+    assert (t, f) not in pair and (u, g) not in pair
+    sign = (-1)**sum(p[i] > p[j] for i in V for j in V if i < j)
+    assert sign == -orientation[t]*orientation[u]
+    inverse = tuple(p.index(i) for i in V)
+    pair[t, f] = (u, p)
+    pair[u, g] = (t, inverse)
+    tetrahedron.union(t, u)
+    for v in V:
+        if v != f:
+            vertex.union(4*t+v, 4*u+p[v])
+    for i, (a, b) in enumerate(edges):
+        if f not in (a, b):
+            c, d = p[a], p[b]
+            j = edge_index[tuple(sorted((c, d)))]
+            edge.union(6*t+i, 6*u+j)
+            reverse = int(c > d)
+            for end in (0, 1):
+                directed.union(12*t+2*i+end, 12*u+2*j+(end ^ reverse))
+assert len(pair) == 4*n and len(tetrahedron.classes()) == 1
+classes = edge.classes()
+degrees = sorted(map(len, classes))
+assert degrees == [8, 8, 8, 8, 8, 8, 12, 36]
+low = {e for block in classes if len(block) == 8 for e in block}
+for t in range(n):
+    assert {i for i in range(6) if 6*t+i in low} == {0, 1, 2}
+
+# Each equivalence class is exactly one edge-link circle, with no reversal.
+for block in classes:
+    assert all(directed.find(2*k) != directed.find(2*k+1) for k in block)
+    t, i = divmod(min(block), 6)
+    ab = edges[i]
+    f = min(set(V)-set(ab))
+    start = (t, ab, f)
+    state = start
+    cycle = []
+    while True:
+        t, ab, f = state
+        cycle.append(6*t+edge_index[tuple(sorted(ab))])
+        u, p = pair[t, f]
+        cd = tuple(p[v] for v in ab)
+        ff = next(v for v in V if v not in cd and v != p[f])
+        state = (u, cd, ff)
+        if (u, set(cd), ff) == (start[0], set(start[1]), start[2]):
+            break
+        assert len(cycle) <= len(block)
+    assert state == start and sorted(cycle) == sorted(block)
+
+# Vertex equivalence is precisely adjacency-connectivity of link triangles.
+# Edge-link circles give disc neighborhoods at every link vertex; together
+# with the paired link edges this verifies closed surfaces, not just Euler data.
+links = []
+for block in vertex.classes():
+    link_vertices = set()
+    for tv in block:
+        t, v = divmod(tv, 4)
+        for i, (a, b) in enumerate(edges):
+            if v in (a, b):
+                link_vertices.add(directed.find(12*t+2*i+int(v == b)))
+    F, W = len(block), len(link_vertices)
+    assert (3*F) % 2 == 0
+    links.append((F, W, W-F//2))
+assert sorted(links) == [(16, 6, -2), (48, 10, -14)]
+print('PASS: connected oriented manifold, no reversed edges, circular edge links')
+print('degrees =', degrees)
+print('vertex links (F,V,chi) =', sorted(links))
+```
+
+Expected output (verified on the table above):
+
+```text
+PASS: connected oriented manifold, no reversed edges, circular edge links
+degrees = [8, 8, 8, 8, 8, 8, 12, 36]
+vertex links (F,V,chi) = [(16, 6, -2), (48, 10, -14)]
+```

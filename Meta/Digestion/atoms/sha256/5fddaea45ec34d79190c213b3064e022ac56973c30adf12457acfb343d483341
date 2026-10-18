@@ -1,0 +1,21 @@
+**Lemma 7.1 (credited actual-tree injectivity and literal separation).**
+Substitution is injective on $\mathcal T$; inserting its argument once into a
+fixed ordered context is injective. Distinct finite trees differ at some finite
+literal address. Consequently, along one common acquired branch, any composite
+of accepted substitutions and fixed-context grafts, Reads and rejected attempts
+is injective as a map of the initial source to the current source.
+
+Proof. These are existing suppliers, including `GenealogicalFiberTransport.result`
+and the ordinary recursive decoder in Process Geometry Theorem 44.6. Explicitly,
+no substitution image is the leaf alpha. The image beta comes only from alpha.
+The image $\langle\beta,\alpha\rangle$ comes only from beta, because an
+internal-node image cannot have right child alpha. Any other node on the actual
+image decodes both children recursively. This gives a left inverse on the actual
+image and proves injectivity. Constructor injectivity, inducting along the one
+hole path, gives the context claim. For literal separation compare roots; if
+equal leaf labels, the trees are equal; if both branches, a differing child has
+a distinguishing suffix by induction, prefixed by its side. Reads and rejects
+are source identities. On a common branch the action sequence and complete
+actual contexts are fixed, so these injective maps compose. The decoder does
+not authorize an inverse physical operation or a reroot.
+

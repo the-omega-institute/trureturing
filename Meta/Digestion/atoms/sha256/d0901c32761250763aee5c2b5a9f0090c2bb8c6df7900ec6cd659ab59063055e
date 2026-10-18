@@ -1,0 +1,60 @@
+**Theorem 4.2 (one support-ambiguous cell cannot produce a saving).**
+Suppose at most one cell $e\in V$ has $a_e>1$. Then the sets
+$F_p$, $p\in V$, are pairwise disjoint and
+
+$$
+m\ge\sum_{p\in V}b_p\ge\sum_{p\in V}a_p\ge G.
+\tag{SI.15}
+$$
+
+If there is exactly one such cell, write $e=(h_e,z_e)$ and put
+$d=h_e+z_e$. There are sets $T_-\subset T_+\subseteq[n]$,
+$|T_-|=d-1$, $|T_+|=d+1$, and distinct $x,y$ with
+$T_+\setminus T_-=\{x,y\}$, such that
+
+$$
+\mathcal S_e=\{T_-\cup\{x\},T_-\cup\{y\}\}.
+\tag{SI.16}
+$$
+
+Every support at depth $d$ is one of these two sets. A live host
+with support $T_-\cup\{x\}$ tests $y$, and one with support
+$T_-\cup\{y\}$ tests $x$.
+
+Proof. The case with no exceptional cell is Theorem 4.1. Otherwise
+$d\ge1$, since the empty history has only the empty support.
+Every depth $t\ne d$ has singleton support families at all its
+cells. The diagonal argument in Theorem 4.1 supplies its common
+support $T_t$. Where neither of two consecutive depths is exceptional,
+(SI.8) gives $T_t\subsetneq T_{t+1}$.
+
+Every actual history at depth $d$ has an actual live predecessor,
+so its support $S$ contains $T_-:=T_{d-1}$. If $d<n-1$, it also has
+at least one live child, whose support is $T_+:=T_{d+1}$, and hence
+$S\subset T_+$. If $d=n-1$, put $T_+=[n]$ instead. In either case
+
+$$
+T_-\subset S\subset T_+,\qquad
+|T_-|=d-1,\quad |S|=d,\quad |T_+|=d+1.
+\tag{SI.17}
+$$
+
+Thus there are only the two intermediate sets displayed in (SI.16).
+The exceptional family contains both because it is not a singleton.
+
+When $d<n-1$, a live child of a history with support $S$ has support
+$T_+$, so its next query must be the unique element of $T_+\setminus S$.
+When $d=n-1$, freshness gives the same conclusion with $T_+=[n]$.
+The two intermediate supports consequently demand different fixed
+query labels. They cannot occur at the same installed state, even
+when their count cells differ.
+
+For two cells at depth $d$, equal supports and unequal hits are
+excluded at a common state by PCA Theorem 35.1; different supports
+are separated by the preceding fixed-label argument. At any other
+one depth, supports coincide and unequal hits exclude sharing.
+Across different depths, all supports are properly nested: before
+depth $d$ they lie in the chain ending at $T_-$, and after that depth
+they lie in the chain beginning at $T_+$. PE Lemma 4.1 therefore
+excludes every remaining common host. This proves (SI.15). $\square$
+

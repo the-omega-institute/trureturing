@@ -1,0 +1,19 @@
+### 97.3. Norm certificate, dyadic normalization and tangent forms
+
+The triple of lambda is (l,1,l). Its three conics are
+
+ H1: z2^2-l z3^2=20de t^2,
+ H2: z1^2-z3^2=3eta e t^2,
+ H3: z2^2-l z1^2=5de t^2.
+
+They are everywhere locally soluble because lambda is a Selmer class. The conic Hasse principle supplies a rational point on H3. Its t coordinate cannot vanish, since l>1 is squarefree and nonsquare. Thus the affine conic alpha^2-l beta^2=5de has a rational point.
+
+For epsilon=0, d=1 mod8 and e=3 mod8, so -5e=1 mod8. For epsilon=1, d=5 mod8 and e=7 mod8, so -e=1 mod8. In either case there is a 2-adic point alpha=0, beta=sqrt(-eta e). Choose the root beta=3 mod4. A conic with a rational point is rational: lines through that point give a rational parametrization and its inverse away from a single point. Density of Q in Q_2 therefore provides rational affine points arbitrarily close to this chosen 2-adic point. Choose one with v_2(alpha)>=3 and beta=3 mod4. Clear denominators and divide the common gcd, choosing c>0. Then alpha=a/c, beta=b/c, gcd(a,b,c)=1, and c is odd, proving the promised certificate existence. This is a local normalization of a rational conic point, not an assertion that its primitive denominator has an arbitrarily prescribed character modulo5.
+
+Put h=3eta e and K=5de. Tangency points on H3 and H1 are (t,z1,z2)=(c,b,a) and (t,z2,z3)=(c,2a,2b). On H2 take (1,(h+1)/2,(1-h)/2). With A0=(h+1)/2 and B0=(1-h)/2 choose
+
+ L2=A0 z1-B0 z3-h t,
+ L3=a z2-l b z1-K c t.
+
+The triple of mu is (1,d,d), so the pairing is product_w (L2(P_w)L3(P_w),d)_w. Rational tangent scalings have global product one by reciprocity. Scaling a local projective point multiplies the product by a square.
+

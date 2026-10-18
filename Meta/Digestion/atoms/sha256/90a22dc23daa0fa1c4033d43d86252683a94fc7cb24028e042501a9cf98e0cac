@@ -1,0 +1,24 @@
+### Theorem 9.4. Quantitative global rigidity
+
+Define the exact constants
+
+$$c=6\sqrt2\,\mu+(12+\sqrt6)\gamma,\qquad k=\sqrt2\,\mu+2c.$$
+
+For 0<=Delta<Delta_0,
+
+$$\boxed{d(\psi,\mathcal M)\le\min\{\sqrt2,\ c\sqrt\Delta+\sqrt{k}\,\Delta^{1/4}\}.} \tag{9.5}$$
+
+Indeed Lemma 9.2 gives e=c sqrt(Delta), Lemma 9.3 gives distance at most sqrt(sqrt(2)m+2e), and the triangle inequality proves (9.5). The cap sqrt(2) is the universal distance between unit rays after phase minimization.
+
+For every normalized pure state, without a small-deficit hypothesis,
+
+$$\boxed{d(\psi,\mathcal M)\le K\Delta^{1/4},\qquad K=\max\left\{\sqrt2\Delta_0^{-1/4},\ c\Delta_0^{1/4}+\sqrt{k}\right\}.} \tag{9.6}$$
+
+For Delta<Delta_0, absorb sqrt(Delta)<=Delta_0^{1/4}Delta^{1/4} in (9.5); for Delta>=Delta_0, use the universal cap. Numerically gamma=10.5966902..., mu=1.65367464..., c=167.148661..., k=336.635971..., and K=39.3100978... . The displayed formulas, not these decimal locators, define the constants. They are conservative and not optimized.
+
+With fidelity defined as the squared overlap with a pure reference, the same argument yields
+
+$$\max_{s,U}|\langle UH_s|\psi\rangle|^2\ge\max\{0,1-K^2\sqrt\Delta\}. \tag{9.7}$$
+
+This follows from 1-|<u|v>|^2<=min_theta ||u-e^{i theta}v||_2^2. Equations (9.5)-(9.7) control the full pure state up to local unitaries and the unavoidable conjugate branch. They strengthen the earlier estimates on marginal spectra alone, but do not choose a branch from entropy alone.
+

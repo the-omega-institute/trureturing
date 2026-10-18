@@ -1,0 +1,75 @@
+## 160. The companion-M return requires d>z-m-1>c
+
+Put h=z-m-1>c. Suppose d<=h and the return has companion M,
+so it has frame
+
+    rho=(C,Z,M,Q,Z,M).
+
+The source's H-return alternatives imply Q is M or Z; Q=D would already
+require
+
+    d>(z-m)^2/(c+1)-1 > z-m-1=h,
+
+since z-m>c+1. The two faces of rho used by tau are the faces containing
+its shared C axis. Its other two faces have labels {Z,M,Q}.
+
+First classify any genuine owner with fixed reservoir pair {Z,M}.
+Its axes cannot be special, by Section 159. If both axes belong to {M,Z},
+all its labels belong to {M,Z}, contrary to Section 158. Hence at least
+one axis is C or D, with numerical value b<=h.
+
+Such an owner has obtuse transverse Z angles. In fact write its frame
+as (B,Z,M,R,Z,M), with b<=h and r<=z. The transverse Z cosine numerator
+as a function of r is
+
+    N(r)=m(r+b)+z(rb+m^2-z^2+1),
+
+with positive denominator and positive coefficient m+zb. At r0=1+z+m,
+
+    N(r0)=[m+z(1+z+m)]*(1+m+b-z)<=0,
+
+because z=1+m+h>=1+m+b. Since r<=z<r0 and N is strictly
+increasing, N(r)<0.
+Thus both Z angles exceed pi/2. Only one actual owner in the complete
+Z star can have this property: two such owners would give more than
+2*pi to Z. This owner is rho. We have shown:
+
+    every owner with reservoir pair {Z,M} is rho.  (156.4)
+
+Now follow the actual complete normal circle of Z. Tau's two Z faces
+lead to rho, by the one-block-return theorem. At either unused return
+face, the face labels are {Z,M,M} if Q=M, or {Z,Z,M} if Q=Z.
+
+Across a {Z,M,M} face, track the chosen Z edge slot. In the next owner
+it cannot be axial: its complementary pair would be {M,M}, forbidden
+by distinct reservoir labels. If it is transverse, the other two face
+slots force companion M and an axial M slot. Thus its fixed reservoir
+pair is {Z,M}.
+
+Across a {Z,Z,M} face, keep the transported Z slot fixed even though the
+face contains another Z slot. If the target is axial, its complementary
+pair is {Z,M}. If it is transverse, its companion cannot also be Z;
+therefore its companion is M and the other Z is axial. Again its fixed
+reservoir pair is {Z,M}. This argument is about slots, not a choice of
+which equal label to ignore.
+
+By (156.4), either next owner is again rho. This also covers the extra axial
+Z slot of rho when Q=Z: its incident faces are precisely these unused
+return faces. The shared-C faces go to tau. Therefore every occurrence
+reachable in the complete connected Z circle belongs to tau or rho.
+There is only one Z slot in tau and at most three in rho. It follows that
+
+    degree(Z)<=4,
+
+contradicting the original minimum degree six. Self-pairing of unused
+faces cannot escape this conclusion; it changes adjacency among these
+same finite slots, not their number.
+
+We conclude that a companion-M return necessarily satisfies
+
+    d>z-m-1>c.
+
+Equivalently, if d<=z-m-1 the only remaining return frame is
+
+    (M,Z,C,Z,Z,C).                                 (156.5)
+

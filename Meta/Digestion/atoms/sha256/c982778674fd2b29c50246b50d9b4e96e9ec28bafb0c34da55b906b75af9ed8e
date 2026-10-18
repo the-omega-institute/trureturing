@@ -1,0 +1,37 @@
+## 2. The supplied original-domain reduction and endpoint consequences
+
+**Mathematical citation 2.1 (common actual circulation and clipping).** [PAID, Lemma 14.1] supplies, for every original finite observer, finite p and suspended carriers $X,Y$, actual noncompleting kernels $B:X\to Y$, $A:Y\to X$ and probability rows $\pi,\tau$ on the fibre (1.5), with
+
+$$
+\pi B=\tau,\qquad \tau A=\pi.
+\tag{2.1}
+$$
+
+Positive-row configurations are reachable original configurations on that fibre. Their complete raw decoders are the original decoders pulled back through their own $I_c$. For every supported depth, their configuration losses on these common rows are bounded by the corresponding original phase risks. These are stationary analysis rows, obtained from positive paid histories and Cesaro averaging; the original process itself need not be stationary or irreducible. Transient labels can disappear from the extracted support, without being removed from the original history domain.
+
+Delete zero-row labels; nonnegativity in (2.1) excludes transitions into them from positive-row labels. Clip both synthetic emission vectors to $[a,b]$, retain $B,A,\pi,\tau$ and regenerate their complete laws. The source-specific coupling of [CLIP, Theorem 3.1] supplies one finite regular stationary comparison table with
+
+$$
+\widehat\varepsilon_p\le\frac{41\varepsilon_p+20\varepsilon_\beta}{11},\qquad
+\widehat\varepsilon_\beta\le\frac{12\varepsilon_p+41\varepsilon_\beta}{11},
+$$
+
+$$
+\widehat e\le\frac{61}{11}e(M).
+\tag{2.2}
+$$
+
+The clipping theorem can be applied on the extracted closed support directly. Its endpoint coordinate identity bounds
+
+$$
+\sum_x\pi_x|u_x-[u_x]_{[a,b]}|\le2\varepsilon_p,
+\qquad
+\sum_y\tau_y|v_y-[v_y]_{[a,b]}|\le2\varepsilon_\beta.
+$$
+
+The regenerated clipped return kernel is entrywise at most $(4/15)BA$. Since $\pi BA=\pi$, the supplied same-update coupling bounds the configuration-average change of entire p laws by $(30\varepsilon_p+20\varepsilon_\beta)/11$, and that of suspended laws by $(12\varepsilon_p+30\varepsilon_\beta)/11$ [CLIP, equations (3.6)–(3.10)]. Adding the original phase bounds yields (2.2). These are averages of complete-law distances on the same rows; they require neither pointwise minimax centering nor a posterior variance identity.
+
+These comparisons include original zero/one emissions and possible original noncompletion mass. The regular table has the original-domain product realization and exact individual generation [PAID, Lemma 2.1.1]. It need not preserve a fixed resource budget or a hard defect bound. No new source experiment, runtime row or posterior is installed.
+
+If Definition 1.4 holds, every positive extracted suspended label has emission $s_0$, and every clipped suspended emission is the same $s=[s_0]_{[a,b]}$. Thus this supplied reduction preserves the property needed below.
+

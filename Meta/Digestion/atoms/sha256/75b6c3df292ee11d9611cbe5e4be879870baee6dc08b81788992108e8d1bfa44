@@ -1,0 +1,23 @@
+**Proposition 212.1.** There are at most two genuine owners with fixed pair
+{Z,U} in the entire quotient.
+
+By Section 211 all their axes lie in H. If an axis lies in P, the five-slot
+argument at the end of Section 210 gives P expense >pi. If both axes lie
+in {C,D}, put a=max(z,u), b=min(z,u)>m>3 and let their axis values be
+r,o. Then r<=b,o<=a and
+
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0.
+
+Together with K>8/9, this shows beta_Z+beta_U>pi/2, so again the four
+transverse P slots consume more than pi. The two distinct reserved
+owners of Section 210 have other fixed pairs and consume more than 2*pi.
+Three pair-{Z,U} owners would therefore exceed P's genuine capacity
+5*pi. At most two can exist.
+
+The result bounds the actual high-pair core, not merely its number of
+labels, and Section 209 uses the entire opposite source star. It leaves
+owners where just one high reservoir is transverse and another is axial,
+and both relative orderings of Z and U, for further analysis. It does
+not exclude the remaining five-reservoir configurations.
+

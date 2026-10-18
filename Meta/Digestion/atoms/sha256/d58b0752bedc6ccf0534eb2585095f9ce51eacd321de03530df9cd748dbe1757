@@ -1,0 +1,83 @@
+## 3. A directional calibration cone on both acquired flows
+
+Take finite p and suspended label sets X,Y with positive probability rows $\pi,\tau$, row-stochastic actual kernels $B:X\to Y,A:Y\to X$, and emissions $u_x,v_y\in[1/3,2/5]$. Require both unweighted acquired flows
+
+$$
+\pi B=\tau,\qquad \tau A=\pi,\qquad C=BA.
+\tag{3.1}
+$$
+
+Their product realization retains the full original $C_0$, uses fair synthesis before the third latch, and samples $\pi$ source-independently after the third write and latch in that same update. B acts on p-beta, A on suspended-alpha; completing letters clear private labels and retain the matching original Stop. All original record fibres use this same rule, retaining their own records. Projection to $C_0$ preserves every event and enabled menu by induction. All labels and samplers are charged. The $\pi$-initializer is part of the installed table, with a finite exact sampler when its entries are rational; arbitrary real rows here describe abstract stochastic rules only. Actual fourth rows are $\pi,\tau$ after every history, since actual letters do not tilt the private rows by synthetic probabilities [PAID, Lemma 2.1.1].
+
+The exact individual raw decoder laws satisfy
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+\qquad W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_zA_{yz}Q_z.
+\tag{3.2}
+$$
+
+A return has synthetic survival at most $\lambda=4/15$. Finite-word expansion and vanishing residual mass determine normalized complete laws. Infinite outcomes remain with zero mass; no law is conditioned on completion. Earlier seed and payload survivals are geometric as well. Pending and delivered laws are the original unique Stop and empty future.
+
+The all-positive-history risks equal the supported pure-target suprema on these fixed rows [CLIP, Proposition 2.3]. For the upper direction use countable target convexity in (2.2). For the lower direction, positive paid rejection histories expose each supported depth while the installed row stays fixed; the target converges in TV. This correspondence concerns full $\mathcal H_s$, not only $\mathcal H_3$.
+
+Define
+
+$$
+J_+=\sum_{y,z}\tau_yA_{yz}(v_y-u_z)_+,
+\quad J_-=\sum_{y,z}\tau_yA_{yz}(u_z-v_y)_+,
+$$
+
+$$
+Z_x=15u_x-5,\qquad
+\mathcal E_C=\frac12\sum_{x,z}\pi_xC_{xz}(u_x-u_z)^2.
+\tag{3.3}
+$$
+
+$J_+$ measures decreases on the alpha update; $J_-$ measures increases. Set
+
+$$
+h=\frac{1586793150}{266850431},\quad
+K=\frac{7613443125}{266850431},\quad
+c=\frac{502947375}{266850431}>0.
+\tag{3.4}
+$$
+
+**Theorem 3.1.** For every such table, on every allowed installed prior, with $\varepsilon_s=R_{\rm conf,s}-\rho_s$,
+
+$$
+\frac{\mathbb E_\pi[Z(1-Z)]}{16}+h\mathcal E_C+cJ_-
+\le\frac{\varepsilon_p}{d_p}+\frac{\varepsilon_\beta}{d_\beta}+KJ_+.
+\tag{3.5}
+$$
+
+Only positive endpoint masses are needed for (3.5). A supported nonendpoint will enter in Section 5. The new term $cJ_-$ gives a positive calibration cost to the opposite direction, rather than charging both directions identically.
+
+Use the supplied endpoint-positive complete events
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Their endpoint probabilities are $412/729,7299/15625$ and $22/27,93/125$, with midpoints $C_p=11758471/22781250$, $C_\beta=5261/6750$. If $a=\pi Q(E_p),b=\tau W(E_\beta)$, the endpoint configuration-risk bounds, projected to these events, give
+
+$$
+|a-C_p|\le\varepsilon_p,\quad |b-C_\beta|\le\varepsilon_\beta,
+\quad D:=\frac{412/729-a}{d_p}-\frac{22/27-b}{d_\beta}
+\le\frac{\varepsilon_p}{d_p}+\frac{\varepsilon_\beta}{d_\beta}.
+\tag{3.6}
+$$
+
+This uses a necessary event consequence of the configuration losses; it does not replace them by law-order losses.
+
+We use one explicit published input. For the **paired** table with p and suspended labels X, row $\pi$ in both phases, beta kernel C, alpha kernel identity, and both emissions u, denote its event means by $a^*,b^*$. The supplied stationary calibration-energy inequality [ALPHA, Section 5] states
+
+$$
+D^*:=\frac{412/729-a^*}{d_p}-\frac{22/27-b^*}{d_\beta}
+\ge\mathbb E_\pi[Z(1-Z)]/16+h\mathcal E_C.
+\tag{3.7}
+$$
+
+Its hypotheses are exactly finite stationarity and regular emissions; neither reversibility, irreducibility nor a native-mixture premise is required. This is a reused result, not a new energy theorem. The new proof must relate D to D* directionally; the absolute comparison in ALPHA does not do that.
+

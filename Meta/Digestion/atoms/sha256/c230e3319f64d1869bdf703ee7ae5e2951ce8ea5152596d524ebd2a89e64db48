@@ -1,0 +1,45 @@
+**Attribution 6.6 (The specific increment and established tools).**
+The full tangent Fisher algebra in Chapter 5 consumes
+[FSIC5]. The five-state increment is the all-positive,
+all-weight extremal-eigenvalue inequality (5.10) and its
+complete optimizer transfer. The larger-state increment
+is the fixed-menu rare-vacuum separation of Theorem 6.2
+and its exact positive comparison (6.13). The elementary
+connectivity and path inequalities inside these proofs
+are supporting methods, not new graph or congestion
+principles.
+
+Huang--Preskill--Soleimanifar, [arXiv:2404.07281v1][HPS6],
+equations (19)--(25) and Proposition 3, already use the
+same heat-bath transition weights and diagonal
+symmetrization in quantum-state certification. At level
+one and zero reference phase, their support-restricted
+transition operator corresponds to
+$I-D^{-1}H_{\bar\omega}D$, with
+$D=\operatorname{diag}(\sqrt p)$. Their Appendix D.2,
+equation (42) and Proposition 12, gives the classical
+length-weighted canonical-path gap bound and attributes
+it to Sinclair. Equation (6.16) is the elementary
+variance proof of that method for the selected tree;
+the tree and its exact loads are the instance-specific
+data.
+
+Mao--Chen--Huang--Preskill--Zhou,
+[arXiv:2608.01617v1][MCHPZ6], Appendix C, Definition S4,
+Theorem S5 and equations (C.1)--(C.3), provide a close
+multiparameter antecedent using the same heat-bath
+operator. Their single-qubit setting is randomly chosen
+from $X,Y,Z$, with $Z$ on the other qubits; their full
+Fisher guarantee uses the chain's relaxation time.
+That broader menu includes the real-edge observations
+absent from (6.19). Its guarantee is not substituted
+for the exact narrower-menu comparison here.
+
+No literature priority is claimed for these specific
+conclusions. In particular, (6.1) provides neither a
+local activity realization nor an attainment statement
+for the original finite-producer optimization problem.
+
+[HPS6]: https://arxiv.org/abs/2404.07281v1
+[MCHPZ6]: https://arxiv.org/abs/2608.01617v1
+

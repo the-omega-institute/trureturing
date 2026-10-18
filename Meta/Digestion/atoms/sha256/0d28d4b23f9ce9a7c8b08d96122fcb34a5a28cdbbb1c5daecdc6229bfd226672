@@ -1,0 +1,53 @@
+**Theorem 48.1 (full residual variance).** Keep the exact full quotient $\mathcal Q_s=\langle z_s,\mathscr K_s(h)z_s\rangle$ of (35.13), at a separately fixed probe (46.2). Then
+
+$$
+\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2
+ =\frac{B_{\log}}{\mu}s^8\log(1/b)
+       +o_{d,M}(s^8\log(1/b)).
+\tag{48.1}
+$$
+
+In addition the complete component estimates are
+
+$$
+\begin{aligned}
+\|U_s^{1/2}Dx_s\|_2^2&\le Ch^2s^{-1},\\
+\|F_s^{1/2}Lx_s\|_2^2&\le Cs^8,\\
+\|U_s^{1/2}R y_s\|_2^2&\le Cs^{10}.
+\end{aligned}
+\tag{48.2}
+$$
+
+Proof. Use the exact original-domain residual (35.15), with no omitted term,
+
+$$
+e_s=-Dx_s+Lx_s+Ry_s,\qquad
+(\mathscr K_s(h)-\ell_s)z_s=U_s^{1/2}e_s/\sqrt{n_s}.
+\tag{48.3}
+$$
+
+The first bound of (48.2) is (35.11) and bounded $U_s$. The uniform late kernel gives $\|Lx_s\|_\infty\le Cs^5$, and raw killed mass gives $\int F_s\le CT=Cs^{-2}$, proving its second bound. The last uses (35.17), bounded $k_d(h)$ from Theorem 35.1, and the full self estimate (46.3):
+
+$$
+\|U_s^{1/2}Ry_s\|_2^2\le k_d(h)\langle y_s,Ry_s\rangle\le Cs^{10}.
+\tag{48.4}
+$$
+
+As $U_s=F_s+J_s$, the square of the middle term is exactly the sum of its two weighted squares. The $J_s$ square is (47.8), while the $F_s$ square is $O(s^8)=o(s^8\log(1/b))$. The other two full weighted squares are $O(M^2s^{15})$ and $O(s^{10})$, respectively. Cauchy–Schwarz shows that every cross term among the three vectors in (48.3) is $o(s^8\log(1/b))$. This accounts for both multiplier pieces also in the mixed terms, since their sum is the full $U_s$ norm. Thus
+
+$$
+\|U_s^{1/2}e_s\|_2^2
+ =B_{\log}s^8\log(1/b)+o_{d,M}(s^8\log(1/b)).
+\tag{48.5}
+$$
+
+The exact quotient (35.13), (35.11), (43.3) and (46.3) give $\mathcal Q_s-\ell_s=O_{d,M}(s^5)$. For a unit vector, subtracting its exact quotient satisfies the identity
+
+$$
+\|(\mathscr K_s(h)-\mathcal Q_s)z_s\|_2^2
+ =n_s^{-1}\|U_s^{1/2}e_s\|_2^2-(\mathcal Q_s-\ell_s)^2.
+\tag{48.6}
+$$
+
+The subtracted square is $O(s^{10})$ and $n_s\to\mu$, proving (48.1). This is a full variance asymptotic, not a first-Born or restricted-annulus lower bound. $\square$
+

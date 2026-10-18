@@ -1,0 +1,15 @@
+**Corollary 8.2 (individual four-expression requirement).** Any one acquired
+spatial, chronological, boundary or callable-memory expression sufficient for a
+task retaining these structural distinctions must acquire or lawfully access
+them subject to the corresponding bounds above. Mutual recovery among four
+expressions plus task sufficiency does not prove individual task minimality.
+
+Proof. Restriction of a sufficient expression to the bracket family must separate
+every literal-task class, by Proposition 8.1; local completion on the balanced
+fiber must satisfy Theorem 7.3. For the second assertion reuse Process Geometry
+43.1: mutual recoveries give a common kernel $N$ and sufficiency gives only
+$N\subseteq K_{\mathcal V}$. Exactness additionally requires
+$K_{\mathcal V}\subseteq N$, the no-redundancy direction. Four renamed copies
+of full histories or numerically equal coordinates do not supply this condition
+or a natural four-expression construction.
+

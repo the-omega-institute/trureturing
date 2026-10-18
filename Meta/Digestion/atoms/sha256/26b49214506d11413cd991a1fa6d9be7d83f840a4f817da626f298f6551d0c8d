@@ -1,0 +1,101 @@
+**Theorem 9.19 (Randomized and integer allocations).** For every
+integer $N\ge1$ and every real $0<t<1$, choose the settings
+independently on all $N$ preparations with the recorded law
+of Proposition 9.18. Let $s_t(Y)$ be the two-component
+one-sample score evaluated at $(\kappa_0,0)$ and held fixed.
+Then
+
+$$
+\begin{pmatrix}\widehat\kappa\\\widehat\chi\end{pmatrix}
+=\begin{pmatrix}\kappa_0\\0\end{pmatrix}
+ +F_t^{-1}\frac1N\sum_{r=1}^Ns_t(Y_r)
+\tag{9.62}
+$$
+
+satisfies the complete two-parameter gradient (9.57), and
+
+$$
+\operatorname{Cov}_0
+\begin{pmatrix}\widehat\kappa\\\widehat\chi\end{pmatrix}
+=\frac1N F_t^{-1},\qquad
+V_\kappa=\frac1{NtI_0},\quad
+V_\chi=\frac{I_0}{4N(1-t)}.
+\tag{9.63}
+$$
+
+A deterministic allocation has these same formulas when
+$m=Nt$ is an integer with $1\le m\le N-1$, using $m$
+full mode samples and $N-m$ endpoint samples.
+The product minimum $1/N^2$ is attained by randomized
+$t=1/2$ for every $N\ge1$, and by deterministic equal
+allocation when $N$ is even.
+
+Proof. For the recorded single-sample experiment,
+$\mathbb E_0s_t=0$,
+$\mathbb E_0s_ts_t^{\mathsf T}=F_t$, and the expectation
+Jacobian of the fixed score is $F_t$.
+Independence therefore makes the mean of (9.62) the reference,
+its Jacobian $F_t^{-1}F_t=I_2$, and its covariance
+$F_t^{-1}F_tF_t^{-1}/N=F_t^{-1}/N$.
+This is an exact finite-sum argument, not an asymptotic
+normality or a parameter-free efficient-estimation assertion.
+
+More explicitly, let $U=d_s/\bar p_s$ on a full mode outcome
+$s$, and let $V$ be the endpoint $\chi$ score from (9.61).
+The scores in the mixed experiment are
+$(U,0)$ when setting $A$ is drawn and $(0,V)$ when $B$
+is drawn. Equation (9.62) is therefore
+
+$$
+\widehat\kappa
+=\kappa_0+\frac{\sum_{r:A_r}U_r}{NtI_0},
+\qquad
+\widehat\chi
+=\frac{I_0\sum_{r:B_r}V_r}{4N(1-t)}.
+\tag{9.64}
+$$
+
+The denominators use the fixed design probabilities and
+total $N$, not the random numbers of draws of each setting.
+An empty sum is zero. In particular the events that all
+samples use $A$, or all samples use $B$, have probabilities
+$t^N$ and $(1-t)^N$ and are retained. On them one reported
+coordinate equals its reference value. Their contributions
+are included in the expectation, gradient and variance
+calculations above; no division by zero observed counts
+or postselection is needed. This covers $N=1$ as well.
+
+For a deterministic schedule, use instead
+
+$$
+\widehat\kappa
+=\kappa_0+\frac1{mI_0}\sum_{r=1}^{m}U_r,\qquad
+\widehat\chi
+=\frac{I_0}{4(N-m)}\sum_{r=1}^{N-m}V_r.
+\tag{9.65}
+$$
+
+The first set of scores has variance $I_0$ and expectation
+gradient $(I_0,0)$; the second has variance $4/I_0$ and
+gradient $(0,4/I_0)$. The two sets are independent. Thus
+(9.65) has Jacobian $I_2$ and variances
+$1/(mI_0)$ and $I_0/[4(N-m)]$, exactly (9.63) for
+$t=m/N$. A deterministic sample count cannot realize an
+arbitrary real $Nt$. In particular $N=1$ has no
+deterministic schedule using both settings.
+
+Finally the product in (9.63) is
+$1/[4N^2t(1-t)]$, minimized at $t=1/2$ with value $1/N^2$.
+The reciprocal inequality (9.58) is an equality for every
+$0<t<1$. $\square$
+
+For $t=0$ the $\kappa$ score is zero and for $t=1$ the
+$\chi$ score is zero. In either case (9.59) rules out
+joint local unbiasedness with finite variances. Individual
+single-target tasks remain available. The retained
+$(X,Y,Z)$ are fixed in this joint model; (9.57) makes no
+claim that a $\kappa$ estimator is unbiased in additional
+unspecified probability nuisance directions.
+The phase count estimator (9.29), by contrast, already
+has its full phase gradient in the larger fixed-$p$ model.
+

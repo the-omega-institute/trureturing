@@ -1,0 +1,14 @@
+**Definition 23.1 (one original Kraus list and its output blocks).** Retain Definition 1.1, the physical/passive correspondence (P.1)–(P.2), and the full complex recovery and finite-reference conventions (P.6), (P.16). Fix $0<\beta\leq1/2$, $a=1-\beta$, and any finite original real Kraus list from (R.8)–(R.9), of length $n$. In the real output frame $(b_1,g_1,b_2,g_2,h)$ extend $J$ by $Jh=0$. Thus $J^T=-J$ and $J^2=-I$ on the active four-space $U=h^\perp$. Define, from this same list,
+
+$$
+\begin{gathered}
+A=[x_\alpha]\in M_{5\times n}(\mathbb R),\qquad
+T=[t_\alpha]\in M_{5\times n}(\mathbb R),\\
+B=AA^T,\qquad C_{\rm out}=AT^T,\qquad D=TT^T,\qquad
+Q=\operatorname{diag}(a,a,\beta,\beta,0).
+\end{gathered}
+\tag{R.99}
+$$
+
+Here $C_{\rm out}$ is an output-space matrix; it is not the complementary environment block $C$ of (R.3), (R.79). The $D$ in (R.99) is the actual output $N(E_{22})$, not the physical coordinate matrix of (P.1). The positive matrix $D_\perp$ below is an index-space projection residual and is not the complementary Schur residual $S$ of (R.4), (R.80). No Kraus terms or third-column components are omitted in these definitions.
+

@@ -1,0 +1,38 @@
+**Definition 172.1 (Actual targets and the hard-two classes).** Retain
+[Definition 110.1 and Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+and [Acquisition Resources, Definition 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions).
+Thus the actual labeled source is
+
+$$
+X=\{(s,g):s\text{ prime},\ g\in\mathbb Z,
+       \lceil F_s/10\rceil\le g\le\lfloor F_s/5\rfloor\},\qquad
+N(s,g)=1+F_sg,
+$$
+
+with static answers $b_i(x)=\mathbf1_{p_i\mid N(x)}$ and finite actual
+first absence $n(x)=\min\{i:b_i(x)=0\}$. The original Fibonacci numbers
+and ordered primes have the meanings in (110.1). Every finite answer
+pattern has an actual witness, as supplied there by Boundaries,
+Theorem 35.2. The original measurable carrier, consumer and nonatomic
+targets remain those of Acquisition Resources, Definition 73.1.
+The distinct original marks are $\theta_j=(B_1,1/(j+2))$, $j\ge0$.
+For an entire sequence
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_i\longrightarrow0,
+$$
+
+the separately selected targets are
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$.
+Error is the uniform supremum of TV over $X$.
+
+There is zero advice and one source-independent common seed, with
+actual sourcewise almost-sure finite handoff. An $N_2$ rule preselects
+at most two actual requests and obtains their replies, including
+repeated requests. An $O_2$ rule preselects an increasing schedule of
+at most two actual requests and stops at its first queried zero or
+exhaustion. Original competitors retain arbitrary addresses and may
+output any tape in the full carrier. No probability law on sources or
+additional source observation is included. The selected marked targets
+are distinct from the unchanged original nonatomic targets.
+

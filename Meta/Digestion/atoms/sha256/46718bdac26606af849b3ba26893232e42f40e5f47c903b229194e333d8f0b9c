@@ -1,0 +1,19 @@
+**Corollary 4.5 (Exact obstruction on every positive closed band).** Fix
+$0<a<b<H$ and restrict the current source to
+$\mathcal M_{ab}=[a,b]\times\mathbb T^2$. Require the exact contract only
+for all straight probability legs contained in that band. It still has no
+finite-dimensional solution.
+
+**Proof.** Write $w=b-a>0$ and use
+$I=(a+w/4,a+w/2)$ and $S=(0,w/4)$. The canonical zero-increment rays
+are reachable from the original preparation, and every appended segment
+stays in the band. The scalar response, both-offset finite-span calculation
+and independence proof of Theorem 4.3 apply without change. $\square$
+
+The parent's Proposition 8.8 rules out one nonzero affine probability update
+in its particular four response coordinates. Theorem 4.3 addresses the
+strictly broader question of an arbitrary finite encoding and the full
+lawful displacement family. Neither claim contradicts the exact nonlinear
+maps in §3. The proof also does not settle an arbitrary prescribed finite
+menu with its full composition domains merely by naming that menu finite.
+

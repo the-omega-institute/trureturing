@@ -1,0 +1,97 @@
+**Theorem 16.1 (every final word after a rank-one fixed-sign prefix family).** For all positive integers $h,u,b$, all integers $a\ge2h+1$, and every predetermined finite legal word $W$, including empty, the endpoints
+$$
+A_0=I,\qquad A_1=L^hU^u,\qquad
+A_2=L^{h+a}U^u,\qquad
+A_3=U^bL^{h+a}U^u,\qquad A_4=WA_3
+\tag{16.1}
+$$
+have the finite actual-target collisions of Theorem 15.1. All four coefficient tests hold uniformly throughout the stated parameter range, with no remaining test on $W$.
+
+**Proof: legal words and exact prefix inverse.** Put $c=h+a$. Since $U=JM$ and $L=MJ$, successive prefix multipliers can be $L^hU^u$, $L^a$, $U^b$. Chronologically the first block is $u$ repetitions of $(M,J)$ followed by $h$ repetitions of $(J,M)$; the next is $a$ repetitions of $(J,M)$; the next is $b$ repetitions of $(M,J)$. The final block is exactly $W$. These are finite forward words, with no reads inside their blocks. Empty $W$ still supplies the distinct scalar read at index four. Direct multiplication gives
+$$
+A_1=\begin{pmatrix}1&u\\h&1+hu\end{pmatrix},\quad
+A_2=\begin{pmatrix}1&u\\c&1+cu\end{pmatrix},\quad
+A_3=\begin{pmatrix}1+bc&u+b(1+cu)\\c&1+cu\end{pmatrix}.
+\tag{16.2}
+$$
+For an arbitrary auxiliary full matrix $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, introduce $x=p+s$ and $y=q+us$. Its four prefix traces are
+$$
+f_0=x,\qquad f_1=x+hy+ur,\qquad
+f_2=x+cy+ur,\qquad
+f_3=f_2+b\bigl[cp+(1+cu)r\bigr].
+\tag{16.3}
+$$
+They have the exact linear inverse
+$$
+\begin{aligned}
+x&=f_0,& y&=(f_2-f_1)/a,&
+r&=(f_1-x-hy)/u,\\
+p&=\bigl((f_3-f_2)/b-(1+cu)r\bigr)/c,&
+s&=x-p,&q&=y-us.
+\end{aligned}
+\tag{16.4}
+$$
+Each divisor is a fixed positive integer. The first two differences in (16.3), when all three prefix differences vanish, give $ay=0$ and $ur=0$. The third gives $bcp=0$. Therefore
+$$
+\ker\mathsf B_{\rm pre}=\mathbb RN,\qquad
+N=\begin{pmatrix}0&-u\\0&1\end{pmatrix}.
+\tag{16.5}
+$$
+Conversely this $N$ makes all three differences zero, so the kernel assertion is exact. This nonzero $N$ has rank one, trace one, and
+$$
+\mathfrak b(S,N)=p+ur>0
+\tag{16.6}
+$$
+on every actual positive source. Thus the family has precisely the required strict fixed-polar-sign geometry. In particular there is no positive source with $\mathfrak b(S,N)=0$.
+
+**Proof: the first two coefficient tests.** Apply (16.4) to $\mathbf d=(1,4/3,2,4)^{\mathsf T}$. Define
+$$
+Y_\star=\frac2{3a},\qquad
+R_\star=\frac{a-2h}{3au},\qquad
+P_\star=\frac{2/b-(1+cu)R_\star}{c},\qquad
+Q_\star=Y_\star-u+uP_\star.
+$$
+The result is
+$$
+X_\star=\begin{pmatrix}P_\star&Q_\star\\
+R_\star&1-P_\star\end{pmatrix}.
+\tag{16.7}
+$$
+The parameter restrictions give $a\ge3$, $c=h+a\ge4$, and $R_\star>0$. Hence
+$$
+P_\star<\frac2{bc}\le\frac12,\qquad
+Y_\star\le\frac29,
+$$
+$$
+Q_\star<\frac29-\frac u2\le-\frac5{18}<0.
+\tag{16.8}
+$$
+Thus $(X_\star)_{21}>0$ and $(X_\star)_{12}<0$, stronger than the first two required weak inequalities. No lower bound on $P_\star$ is needed.
+
+**Proof: the last two coefficient tests.** The prefix trace vector of $E_{12}$ is $(0,h,c,c)^{\mathsf T}$. After multiplication by $\operatorname{diag}(\mathbf d)$ it is $(0,4h/3,2c,4c)^{\mathsf T}$. Formula (16.4) then gives
+$$
+y=\frac{2c-4h/3}{a}=2+\frac{2h}{3a},\qquad
+(\mathsf P E_{12})_{21}
+=\frac{4h/3-hy}{u}
+=-\frac{2hc}{3au}<0.
+\tag{16.9}
+$$
+The prefix trace vector of $E_{21}$ is $(0,u,u,u+b(1+cu))^{\mathsf T}$. Its scaled vector is $(0,4u/3,2u,4u+4b(1+cu))^{\mathsf T}$. Its inverse has
+$$
+x=0,\qquad y=\frac{2u}{3a}>0,\qquad
+r=\rho=\frac43-\frac{2h}{3a},
+$$
+$$
+p=\frac{2u}{bc}+\frac{(1+cu)(4-\rho)}c>0,
+\qquad 4-\rho=\frac{8a+2h}{3a}>0.
+$$
+Since $s=-p$, its remaining off-diagonal entry is
+$$
+(\mathsf P E_{21})_{12}=y+up>0.
+\tag{16.10}
+$$
+Equations (16.8)–(16.10) prove all four tests for every allowed tuple, independently of the final word. The complete finite construction, all five equations, entire drifts, and original positive realizations now follow from Theorem 15.1. The final word is fixed before constructing the sources; the construction may depend on it. ∎
+
+Both diagonals vary during this prefix: $(A_1)_{22}=1+hu>1$ and $(A_3)_{11}=1+bc>1$. Hence neither the lower-right-one hypothesis of Theorem 3.1 nor its upper-left-one mirror holds throughout the prefix. The concrete earlier families and Theorem 5.1 start with $L^n$ or, in their mirrors, $U^n$, whereas (16.2) has both off-diagonal entries positive and trace $2+hu>2$. The permutation-first mechanism starts with $J$, which also differs from (16.2). These are comparisons with the literal earlier hypotheses, not an exhaustive classification of other possible collision proofs.
+
+<a id="strict-one-sign-method-boundary"></a>

@@ -1,0 +1,18 @@
+**Lemma 6.1 (real trace-zero null decomposition).** Every real symmetric $L\succeq0$ with $\operatorname{tr}(BL)=0$ admits
+
+$$
+L=\sum_{j=1}^m z_jz_j^T,\quad m\le3,\quad z_j\in\mathbb R^3\setminus\{0\},\quad z_j^TBz_j=0.
+\tag{RG.42}
+$$
+
+Each $K(z_j)$ has rank exactly two and nonzero $D$ coefficient. This is the real-face decomposition of CA Theorem 5.1, with its construction recorded for use in the instruments.
+
+Proof. A real spectral square root supplies $L=RR^T$ with $r=\operatorname{rank}L\le3$ columns. The real symmetric $A=R^TBR$ has trace zero. It has an orthonormal basis with all Rayleigh diagonal values zero. To construct one, if $A=0$ use any orthonormal basis. Otherwise trace zero gives eigenvalues $\lambda_+>0>\lambda_-$ with real orthonormal eigenvectors $f_+,f_-$. The vector
+
+$$
+f=\frac{\sqrt{-\lambda_-}f_++\sqrt{\lambda_+}f_-}{\sqrt{\lambda_+-\lambda_-}}
+\tag{RG.43}
+$$
+
+is unit with $f^TAf=0$. Compression to $f^\perp$ still has trace zero. Induction constructs the remaining basis, including a zero compression. If $O$ is its orthogonal column matrix, the columns of $RO$ have projector sum $L$ and zero $B$ quadratic value. Delete zero columns; when $L=0$ use no atoms. For a nonzero real null vector, $u=0$ would imply $\alpha v^2+\beta w^2=0$, hence $z=0$. Thus $u\ne0$ and (RG.17) gives rank two, with columns $1,2$ independent. This places every constructed $L_r$ in the actual full singular cone, not only its trace relaxation. $\square$
+

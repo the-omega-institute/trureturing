@@ -1,0 +1,26 @@
+**Definition 1.2 (One actual finite producer).** For $N\ge1$, use the entire
+domain of [Universal, Definition 4.1 and Proposition 4.2][U]:
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,
+\ M_0,M_1\ge0,\ A=M_0+M_1,\ A\mathbf1=\mathbf1,
+\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+$$
+
+$\lambda$ is a row and the matrices are $N\times N$. Write
+$M_w=M_{w_1}\cdots M_{w_{|w|}}$, with $M_\varepsilon=I$. The supplier's
+coherent two-sided stationary joint law is
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\qquad
+P_\theta([w])=\lambda M_w\mathbf1.
+$$
+
+$[w]$ denotes the cylinder at $[1,|w|]$; stationarity permits translation.
+All objects below use this same $J_\theta$ and its visible marginal
+$P=P_\theta$. Zero stationary masses, structural zeros, reducibility,
+periodicity and noncontractive presentations remain allowed. The no11
+condition is an actual cylinder condition; it need not imply entrywise
+$M_1^2=0$ in an untrimmed presentation. Seams use ordered joint products.
+

@@ -1,0 +1,4 @@
+**命题 3.3（来源单射与解释损失分开）。** 原树替换 $\rho$ 单射；这不赋予 $F$、数值记录或实际源逆动作。
+
+证明。复用 [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean) 的原树接口与替换单射结论。其解码依据是：没有 $\rho$ 像为叶 $\alpha$；叶 $\beta$ 只来自 $\alpha$；$\langle\beta,\alpha\rangle$ 只来自 $\beta$，不能来自内部树，因为内部像的右孩子不可能为 $\alpha$。其它内部像分别对有序孩子递归解码，有限树归纳给单射。该解码是实际像上的数学恢复，与定理3.2的参数纤维不同。
+

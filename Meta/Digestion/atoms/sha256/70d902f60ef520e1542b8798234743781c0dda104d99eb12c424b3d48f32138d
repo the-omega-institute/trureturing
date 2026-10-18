@@ -1,0 +1,21 @@
+**定理 63.3（实际缓存像的全参数精确计数）。** 置 $r=|R|,v=|V|$、$m=|K\setminus(R\cup V)|$。则
+
+$$
+\begin{aligned}
+|J_{n,S;R,V}|&=F_{n-1}+r+v,\\
+\operatorname{noneCount}(g_{n,S;R,V})&=k+r,\\
+|\operatorname{CompatCache}(g_{n,S;R,V})|&=2^{k+r},\\
+|\operatorname{ActCache}_{n,S;R,V}|&=2^m,\qquad
+|\mathcal F_{n,S;R,V}|\ge2^m.
+\end{aligned}
+\tag{JM.196}
+$$
+
+更精确地，实际像中的全部缓存恰为以下 $2^m$ 个记录：地址次序为 $A_{R,V}$；原有叶回复和新增 $pLLR$ 回复全与 $T_n$ 相同；每个新增 $pL$ 的原始回复为 $\mathsf{br}$；旧 hidden $pLL$ 在 $p\in R\cup V$ 时必为 $\mathsf{br}$，在其余 $m$ 处任意独立取 $\mathsf{br}$ 或 $\mathsf{abs}$。其中全取 $\mathsf{br}$ 的缓存只由 $T_n$ 实现；它的原始来源纤维是单点。$m=0$ 时粗来源纤维本身也为 $\{T_n\}$。
+
+证明上界及准确像描述。初始叶回复的粗原像均为同一个叶标签，旧 hidden none 只有分支／缺席两种原像。62.1的同源存在论证对每个任意匹配 $U\in W_n$ 成立，故新增 $pL$ 必为实际分支，并强制相应旧 $pLL$ 为分支；新增 $pLLR=\alpha$ 也强制该旧地址为分支。于是除了未细化的 $m$ 个旧 hidden 位置之外，没有任何可变原始回复，实际像至多 $2^m$。
+
+证明同时实现。给定任意 $B\subseteq K\setminus(R\cup V)$，从 $T_n$ 在且仅在这些槽位把 $Y$ 换为 $Z$。各槽位为完整叶反链上的不同锥，替换保持每个五叶词 $babba$，因此同时得到一个实际来源 $U_B\in W_n$。被细化槽位保持 $Y$，旧 visible 和 $X$ 块也不变；未细化槽位的 $LL$ 只从分支改为缺席，$RR$ 标签保持 $\alpha$。所以 $U_B\in\mathcal F_{n,S;R,V}$，其合法实际前缀缓存在且仅在 $B$ 的旧 $pLL$ 处取 $\mathsf{abs}$。不同 $B$ 给不同缓存，恰实现上述全部候选，与上界合得准确像及 $2^m$。这些 $U_B$ 两两不同，因而只供应实际来源数的下界；没有把该子族当成整个 $\mathcal F$。全分支缓存匹配61.1的原始证书，故来源只为 $T_n$；所有槽位细化时每个粗匹配来源都给该缓存，来源纤维也单点。
+
+地址计数来自无重复列表：初始大小 $F_{n-1}$，新增 parent 和 child 地址互异，即使 $R,V$ 重叠也仍为两个不同地址。粗 none 恰有 $k$ 个旧 hidden 地址和 $r$ 个新增 parent 地址。全部名义原始提升的计数直接复用 `ActualAcquisitionCacheFiber.compatible_cache_card`；它仍允许新增 parent 为缺席、已细化旧地址为缺席等不可能名义行，既不删这些行，也不把它们计为实际来源。$\square$
+

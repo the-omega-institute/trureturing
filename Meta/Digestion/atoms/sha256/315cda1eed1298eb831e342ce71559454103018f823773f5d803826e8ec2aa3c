@@ -1,0 +1,12 @@
+**Corollary 3.2 (strict finite feasibility bound).** Every feasible
+finite weak budget satisfies $tq>C_{\rm end}$.
+
+Proof. Equations (JS.11) and (JS.15) give $tq\ge te\ge C_{\rm end}$.
+Equality would force the scalar pushforward of $\nu$ to
+$\mu\delta_r$. The positive measure $tP-\nu/c_*$ would then have
+zero $H$ integral and be supported on $z^2=1$. The scalar law of $P$
+would be
+$(\mu/(tc_*(r)))\delta_r+(1-\mu/(tc_*(r)))\delta_1$.
+Its first moment is strictly below one since $r<1$, contradicting
+(JS.10). Thus equality is impossible. $\square$
+

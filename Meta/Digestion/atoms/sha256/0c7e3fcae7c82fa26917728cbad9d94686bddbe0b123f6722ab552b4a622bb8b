@@ -1,0 +1,42 @@
+**Theorem 5.2 (exact norm of the horizontal forcing tail).** Put
+
+$$
+K_{\rm tail}=\frac23c_\infty^2C_{\mathcal G}t_\infty(8-t_\infty)>0,
+\quad
+M_R^2=\int_{|r|>R}(|g_X|^2+|g_Y|^2)d\xi,
+\quad
+N_R^2=\int_{|r|>R}|rk|^2d\xi.
+\tag{5.3}
+$$
+
+Then
+
+$$
+M_R^2=K_{\rm tail}R^{-3}+o(R^{-3}),\qquad N_R^2=O(R^{-9}).
+\tag{5.4}
+$$
+
+The constant is an explicit upper-bound constant for the response gain; it is not asserted to be the optimal gain constant.
+
+Proof. At positive height $r$, dilate the entire phase slice and use Lemma 4.2 and its uniform majorants. With $t=t_\infty$, the scaled $g_X,g_Y$ tend respectively to $-c_\infty t(\mathcal G+X\mathcal G)$ and $c_\infty(2-t)Y\mathcal G$ at height one. Therefore
+
+$$
+\begin{aligned}
+r^4\int(|g_X|^2+|g_Y|^2)d\mathbf z
+ &\longrightarrow c_\infty^2\{t^2(E_{\mathcal G}-3C_{\mathcal G})+(2-t)^2D_{\mathcal G}\}\\
+ &=c_\infty^2C_{\mathcal G}t(8-t).
+\end{aligned}
+\tag{5.5}
+$$
+
+Here $\int(\mathcal G+X\mathcal G)^2=E_{\mathcal G}-3C_{\mathcal G}$ because $\int\mathcal G X\mathcal G=-2C_{\mathcal G}$. Inserting $D_{\mathcal G}=2tC_{\mathcal G}$ and $E_{\mathcal G}=(10-2t)C_{\mathcal G}$ gives the last equality. To specify the domination, after phase dilation the $g_X$ expression is $-(F_*(r)/r)Xp_r(1,\mathbf z)-q_*(r)p_r(1,\mathbf z)$, and the $g_Y$ expression is $(2-F_*(r)/r)Yp_r(1,\mathbf z)$. Their coefficients are bounded and their squared mode/derivative majorants are integrable. Thus every cross term in (5.5) is controlled.
+
+The squared slice is even under $\sigma$. The uniformly valid tail asymptotic in (5.5) integrates over both half-lines with $\int_{|r|>R}|r|^{-4}dr=2/(3R^3)$, proving the first part of (5.4). For $|r|\ge1$, $V\le C|r|^{-5}$, $|V_1|\le C|r|^{-4}$ and $|F_*|\le C|r|$, so $|k|\le C|r|^{-4}p$. Consequently
+
+$$
+N_R^2\le C\int_{|r|>R}|r|^{-6}\rho(r)dr=O(R^{-9}).
+\tag{5.6}
+$$
+
+This bounds both potential terms quantitatively; neither has been removed by a parity assertion. $\square$
+

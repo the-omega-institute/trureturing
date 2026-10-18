@@ -1,0 +1,2 @@
+**Remark 3.5 (Relation to symmetric mechanisms).** Lemma 3.2 of Lindblad and Guerrero produces bad potentials from a shared orthogonal symmetry $O\ne I$ with $O^2\ne I$ or with $Oe_j=e_j$. Corollary 3.3 shows that every bad potential, symmetric or not, is detected by a nodal factor $g$ at some vertex. The examples below are bad potentials whose nodal factor exists although the shared commutant is trivial. Stance: repo-derived.
+

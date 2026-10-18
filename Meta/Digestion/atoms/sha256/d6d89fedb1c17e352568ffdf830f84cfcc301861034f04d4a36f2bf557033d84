@@ -1,0 +1,51 @@
+**命题 C-61.2（固定外部时的局部不变量与有效五律）。** 固定外部活动 $\lambda_j$，$j\notin\{L,C,R\}$，则
+
+$$
+\Omega_i=\frac{H_{00}H_{11}}{H_{10}H_{01}}
+\tag{C61.2}
+$$
+
+在任意三个正局部活动 $\lambda_L,\lambda_C,\lambda_R$ 的变化下不变。取
+
+$$
+u=\frac{p_1}{p_0}=\lambda_L\frac{H_{10}}{H_{00}},\quad
+v=\frac{p_3}{p_0}=\lambda_R\frac{H_{01}}{H_{00}},\quad
+w=\frac{p_2}{p_0}=\lambda_C,
+$$
+
+则完整五律精确为
+
+$$
+p=\frac{(1,u,w,v,uv\exp\mathscr J_i)}
+{1+u+w+v+uv\exp\mathscr J_i}.
+\tag{C61.3}
+$$
+
+在这个表示中，$u,v$ 包含外部消息，不能当成裸端点活动。$\mathscr J_i=0$ 恰等价于底面条件独立；非零 $\mathscr J_i$ 是外部消元后仍需保留的联合因子。
+
+证明。将式 (C60.3) 代入四角比，$\mathcal Z^2$ 及两端活动精确消去，得到式 (C61.2)。除全部五项以 $p_0$，最后一项等于 $uv\Omega_i$，归一化便给式 (C61.3)。在五个合法三位上，未归一化因子可写为
+
+$$
+u^xw^zv^y\exp(\mathscr J_i xy),\qquad xz=zy=0.
+$$
+
+当 $z=0$，四格表独立当且仅当交叉乘积相等，即 $\Omega_i=1$；这复用 C-3.2 和上述行列式供应的推导 5.1。若 $\mathscr J_i\ne0$，常数、单端项的对数四角差均为零，不能表示这个非零联合项。证毕。
+
+残差 $\Delta_i$ 没有同样的局部不变性。例如固定两端及外部活动，令中心活动为 $t>0$，记
+
+$$
+A=H_{00}+\lambda_LH_{10}+\lambda_RH_{01}
++\lambda_L\lambda_RH_{11},\quad
+N=\lambda_L\lambda_R\det H_i\ne0.
+$$
+
+于是 $\mathcal Z=A+tH_{00}$，
+
+$$
+\Delta_i(t)=\frac{N}{(A+tH_{00})^2},\qquad
+\frac{d\Delta_i}{dt}=-\frac{2NH_{00}}{(A+tH_{00})^3}\ne0.
+\tag{C61.4}
+$$
+
+中位均值 $Z(t)=tH_{00}/(A+tH_{00})$ 的导数为 $AH_{00}/(A+tH_{00})^2>0$。故同一个外部 $\Omega_i$ 可对应不同边缘及不同 $\Delta_i$。这也明确了变化时固定的是外部参数，并未同时固定均值纤维。
+

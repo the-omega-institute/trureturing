@@ -1,0 +1,24 @@
+**定理 14.5（Complete remaining deadline-four classification）。** For every $r=2$ target of Convention 13.1,
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=
+\begin{cases}
+N+4,&\mathsf R,\\
+N+5,&\neg\mathsf R\text{ and either one diagonal pair occurs or }
+\mathsf P\text{ or }\mathsf Q,\\
+N+6,&\neg\mathsf R,\text{ both diagonal pairs occur, and }
+\neg\mathsf P\land\neg\mathsf Q.
+\end{cases}}
+\tag{14.6}
+$$
+
+Proof of the five-row necessity when both diagonal pairs occur. Lemmas 14.1–14.2 force distinct roots and distinct first queries. Choose the original mixed $O$ path $b_w\to X\to F$. The final row cannot be a root or $b_w$.
+
+If $F=b_i$, its mandatory first occurrence directly returns its binary table, giving $G$ and (13.2). The charge-one or charge-zero whole class $M_i$ is the mixed child of $b_w$. If $X$ is a root, the same actual-support comparison as in Theorem 14.3 gives $\mathsf R$, even if a fifth row is present elsewhere. Otherwise $X$ is the fifth row, with its arbitrary actual index-two word $D$ and $V(X,e)=b_i$. The full actual seam is (13.2). Its charge-zero child necessarily returns (13.3) at the repeated last $B$. The other child either enters $b_i$, giving (13.4), or is homogeneous. To see the latter conclusion without presuming early stopping, its last row can only return a lower label at $b_w$'s one possible scalar Halt, or at a direct Halt of $X$: roots install $1^m$, whereas the actual last GLOBAL word is the zero-leading $B$; a self-edge of $X$ has no scalar Halt at its last occurrence. The other first-query row has an emitting mixed edge and at most its one other Halt, with one fixed literal output. A delayed homogeneous last step can therefore be replaced by that already correct literal Halt on this child. No mixed child is removed. This is exactly the constancy alternative in $\mathsf P$.
+
+If $F$ is the fifth row, the intermediate can only be $b_i$. A root-zero edge would make $F$ a first query, and a root-positive edge would send a mandatory $C$ source to the lower-label final row at index one. Hence $V(b_w,e)=b_i$ and $V(b_i,e)=F$. An actual early $b_i$ source enters $F$ at index two. The words at indices one, two and three are therefore the same zero-leading $B$.
+
+Only the raw-$1-e$ updates remain. A root cannot be used at either later index, because its all-one word differs from $B$. A self-edge of either query repeats on an actual $O$ source with unchanged scalar and leaves a last query with both exits emitting. A direct Halt there must be a literal lower label, because each raw child contains an actual $O$ lower source. The remaining options are the final row or the other query. Both complementary edges cannot cross: an actual early $O$ source would cross again at index two and reach a last query whose two scalar successors still emit. Thus there are exactly the eight marker patterns (13.5). Reading their actual raw updates gives every row of Definition 13.3's return table, including its undefined last-block cases. Correctness on the full $J$ support is exactly $\mathsf Q$.
+
+This exhaustion used the original sources, unbounded literal-word alphabets and fixed actual raw updates. It includes root/query sharing before excluding it by actual conflicts, repeated words and control cycles, delayed $C,R$ and lower stops, homogeneous rejection and every paid wait. It does not infer all-controller exclusion from a finite search or from a selected family of words. Theorem 14.3 gives the four-row equivalence. Section 15 supplies complete five-row attainments for $\mathsf P$, $\mathsf Q$ and the one-diagonal-pair case. When neither five-row condition holds in the two-diagonal case, the just-proved exhaustion excludes five rows, and the existing six-row certificate of Theorem 6.1 attains six. Lemma 5.3 excludes fewer than four throughout, proving (14.6). ∎
+

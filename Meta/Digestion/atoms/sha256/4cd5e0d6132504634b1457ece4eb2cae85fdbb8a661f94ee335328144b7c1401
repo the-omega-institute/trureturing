@@ -1,0 +1,37 @@
+### 85.5. Exact derivative and the flat new-environment directions
+
+We now evaluate (13). For each fibre let B_f=[b_f0^0,b_f1^0] be the unitary base frame. In the auxiliary physical path (12), the derivative of the old correct-output column (f,i) is
+
+    -(1/2)B_f D_ff e_i.
+
+This follows from calibration of V_0: input components in any other fibre have an orthogonal output label. Let E_i be the 2-by-4 matrix with columns B_f D_ff e_i. The derivative of the bit-i correct-output Gram is then
+
+    dot H_i=R_i^*R_i-(1/2)(B_i^*E_i+E_i^*B_i).       (14)
+
+Using B_i B_i^*=2I_2 and <b_fi^0,B_f D_ff e_i>=D_(fi,fi), one obtains
+
+    Tr(H_i^0 dot H_i)
+       =Tr(H_i^0 R_i^*R_i)-2 sum_f D_(fi,fi).
+
+Equations (8)--(9), with the forward-Gram identity (G_i^0)^T=H_i^0, therefore give
+
+    d_B f[Psi_R]
+       =-(1/16)sum_i Tr(H_i^0 dot H_i)
+       =[2||R||_F^2-sum_i Tr(H_i^0 R_i^*R_i)]/16
+       =[||R_wrong||_F^2
+                     +sum_i||R_i(I_4-P_i)||_F^2]/8
+       =c(R).                                      (15)
+
+All traces here are real. Orthogonality of the correct/wrong output projections on each column gives ||R||_F^2=||R_wrong||_F^2+sum_i||R_i||_F^2; H_i^0=2P_i then gives the last equality. This calculation independently exhibits the nonnegativity required by the physical tangent argument.
+
+The exact zero-coefficient condition is
+
+    c(R)=0 iff R_wrong=0 and R_i=R_iP_i for i=0,1.   (16)
+
+Equivalently, there must be two common, bit-dependent linear maps L_i:C^2->E_new such that
+
+    r_fi=L_i b_fi^0 for every f,
+    L_i=(1/2)R_i B_i^*.                             (17)
+
+Indeed R_iP_i=R_i is equivalent to R_i=(R_i B_i^*/2)B_i. These are conditions on the first-order new-environment amplitude only. They neither impose a full finite-t qubit-core factorization nor classify the possible higher-order path. No conclusion that all flat directions are harmless is made.
+

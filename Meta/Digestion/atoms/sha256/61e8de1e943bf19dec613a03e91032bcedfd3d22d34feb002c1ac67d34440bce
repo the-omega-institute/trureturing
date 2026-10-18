@@ -1,0 +1,21 @@
+## 427. All remaining original face types
+
+A fixed paired frame (R,A,B,O,A,B) has exactly two original faces
+with edge-label triple {R,A,B} and two with triple {O,A,B}.
+All three labels on each face are distinct. In the remaining inventory
+the possibilities are therefore precisely:
+
+| Owner | Its two face triples, each occurring twice |
+|---|---|
+| sigma | MCD, VCD |
+| tau | ZMC, DMC |
+| cheap A(P0) | P0VC, VCD |
+| cheap B(P0) | P0VD, VCD |
+| extra C(P0), if present | CP0V, DP0V |
+| five-slot owner, high axis H, low axis L | MZU, L(P minus H) |
+
+There are no other owners in either inventory. Here L is one of the
+three actual low labels V,C,D. The table describes actual labels,
+not merely cosh values, so numerical ties cannot create another face
+match. Repeated rows and self-gluings have not been removed.
+

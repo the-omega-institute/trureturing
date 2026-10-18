@@ -1,0 +1,33 @@
+**Proposition 10.1 (bounded corroboration).** Exact in-memory checks cover
+$m=1,2,3,4$, epochs $e=0,1,2,3,4$, and the four outer contexts
+
+$$
+\square,\quad\langle\alpha,\square\rangle,\quad
+\langle\square,\langle\beta,\alpha\rangle\rangle,\quad
+\langle\langle\beta,\square\rangle,\alpha\rangle.
+$$
+
+For each source family every address through one level beyond the maximum
+current height was checked. All $25{,}264$ resulting response functions have
+at most one sensitive initial bit and at most two attained replies. Formula
+(DAF.4), source distinctness and the initial optimal query lengths were checked;
+the balanced split scaffolds give sums $1,4,8,12$ for these four $m$ values.
+
+All balanced words were independently multiplied using (DAF.11) at
+$s=1,2,3,4$. Their actual $E_0,E_1$ normal coordinates agree with (DAF.13)–(DAF.15),
+the image sizes and both rational second moments agree with Theorems 6.2 and
+Lemma 6.3, and the following counts result. The final column is the integer
+lower bound from $4^R\ge K_s$ at $b=0$, not an exact query optimum.
+
+| $s$ | Two-window image size | Largest word fiber | Largest tree fiber | $K_s$ | Finite lower bound on $R$ |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 4 | 3 | 15 | 8 | 2 |
+| 2 | 9 | 16 | 6,864 | 3,337 | 6 |
+| 3 | 16 | 168 | 9,876,048 | 3,394,892 | 11 |
+| 4 | 25 | 1,744 | 16,907,809,680 | 4,990,906,206 | 17 |
+
+Every desired beta sign pattern was also checked against construction (DAF.14)
+for $s=1,\ldots,6$. All assertions returned exit code 0. These are exact bounded
+arithmetic checks with no retained experiment, not proofs of the universal
+claims or an implementation of a same-source hybrid runtime.
+

@@ -1,0 +1,20 @@
+**Domain verification.** The head gap is $1-24\tau\ge0$, and the
+five middle amplitudes are ordered. The remaining relevant gaps are
+
+$$
+a_7-a_8=\tau-t-\delta\ge0,\qquad
+a_8-a_9=2\delta\ge0,\qquad
+a_9-E=\frac{53t}{64}-\delta\ge\frac{53t}{128}.
+\tag{324.4}
+$$
+
+Thus the sequence is positive, ordered and bounded by one, including
+all head or tail ties. Also
+$0<E\le331/1536<1$. If $t>0$, (324.4) and $a_{10}\le E$
+give exactly nine active coordinates; if $t=0$, $a_8=a_9=E$
+and $a_7=6\tau>E$. These arguments include $\tau=1/24$,
+$t=\tau$ (where $\delta=0$), the order boundary
+$\delta=\tau-t$, and exhaustion of the donor at
+$\delta=53t/128$. The algebraic zero-scale point is not an
+original positive-sequence assertion.
+

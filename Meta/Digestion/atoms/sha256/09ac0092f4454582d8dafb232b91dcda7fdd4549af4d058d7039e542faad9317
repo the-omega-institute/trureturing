@@ -1,0 +1,49 @@
+**Lemma 3.2 (uniform elimination of all scalar ranks).** The parameter
+support of (NCE.6) is exactly the following finite conjunction
+$Q(\mathbf z)$:
+
+$$
+\begin{array}{ll}
+\delta_u-\delta_v=a_e&\text{for every equality edge},\\
+\delta_v\ge0&\text{for every vertex in the component of }o,\\
+\delta_u-\delta_v\ne b_e&\text{for every disequality inside one
+ equality component}.
+\end{array}
+\tag{NCE.7}
+$$
+
+All potentials and conditions are constructed before any parameter
+assignment. For an accepted assignment one can construct all ranks by
+a finite arithmetic procedure. If $D$ is the total number of disequalities
+and $K=\max_v|\delta_v(\mathbf z)|$, the construction can choose
+$0\le r_v\le2K+D$ for every vertex.
+
+Proof. Fix an arbitrary parameter assignment. Following the forest
+edges in any solution gives $r_v=B_C+\delta_v$ in each component $C$.
+The anchored component has $B_C=0$. Every remaining equality yields
+the first line of (NCE.7), natural ranks in the anchored component
+give the second, and same-component disequalities give the third.
+Thus all three lines are necessary, including evaluated cycle sums.
+
+For sufficiency first assign $r_v=\delta_v$ in the anchored component.
+For each other component, in any fixed order, put
+
+$$
+L_C=\max\bigl(\{0\}\cup\{-\delta_v:v\in C\}\bigr).
+\tag{NCE.8}
+$$
+
+Each disequality to a previously assigned component excludes at most
+one value of $B_C$. There are at most $D$ such values. Choose the
+first permissible integer among $L_C,L_C+1,\ldots,L_C+D$ and set
+$r_v=B_C+\delta_v$ in this component. Its ranks are nonnegative.
+Its equalities and internal disequalities hold by (NCE.7); its
+disequalities to earlier components hold by the choice. Every
+cross-component disequality is handled when its later component is
+assigned. This constructs a solution after finitely many choices.
+Since $L_C\le K$, every free rank is at most $2K+D$; the anchored
+ranks are at most $K$. The argument applies to every assignment of
+$\mathbf z$ with the same forest and the same formula. In particular,
+a symbolic cycle label such as $z_1-z_2$ is retained as the condition
+$z_1-z_2=0$, not rejected for being a nonzero polynomial. $\square$
+

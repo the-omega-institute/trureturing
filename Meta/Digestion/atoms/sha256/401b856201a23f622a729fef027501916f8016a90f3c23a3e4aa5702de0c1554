@@ -1,0 +1,25 @@
+**Convention 2.2 (distinct resource promises).** The following classes are
+separate. Constants established for one are not transferred to another.
+
+| Class | Additional promise on the actual past | Access used |
+| --- | --- | --- |
+| Fixed variation | Fixed total variations, without a common speed bound | Ideal finite samples |
+| Two bounded speeds | $|k'|\leq v_k$, $|\chi'|\leq v_\chi$ almost everywhere | Ideal finite samples, even with exact aggregate costs |
+| One rate and variation | $\operatorname{Lip}(k)\leq L$, $\operatorname{TV}(\chi)\leq V$ | Ideal finite samples |
+| Certified finite precision | The preceding rate/variation promises, plus simultaneous, calibrated unwrapped samples and finite arithmetic | The explicit contract in Section 7 |
+
+Total variation means ordinary real total variation on $[0,T]$. When used,
+the added identity-metric length and quadratic energy are
+
+$$
+\mathcal L=\int_0^T\sqrt{k'(t)^2+\chi'(t)^2}\,dt,
+\qquad
+\mathcal Q=\int_0^T(k'(t)^2+\chi'(t)^2)\,dt.
+\tag{2.1}
+$$
+
+These are defined mathematical costs in chosen units. The source law does
+not identify $\mathcal Q$ with physical energy. Sample count, elapsed time,
+variation, these costs, acquired bits and arithmetic work are different
+resources.
+

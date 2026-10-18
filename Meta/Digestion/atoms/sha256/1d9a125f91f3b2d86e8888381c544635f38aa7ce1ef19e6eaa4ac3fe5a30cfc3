@@ -1,0 +1,39 @@
+**定义 4.4（恰七方程与全部过滤）。** 接受测试恰含下列七个标量多项式方程：
+
+$$
+\begin{gathered}
+b_1c_0-b_0c_1=0,\qquad b_2c_0-b_0c_2=0,\\
+\bigl(R(\mathsf T)\mathbf e_0\bigr)_0=0,\quad
+\bigl(R(\mathsf T)\mathbf e_0\bigr)_1=0,\quad
+\bigl(R(\mathsf T)\mathbf e_0\bigr)_2=0,\\
+\mathcal J_2=0,\qquad \mathcal J_3=0.
+\end{gathered}
+\tag{4.7}
+$$
+
+同时要求以下全部过滤：$d\notin S,s_3>0,w=b_0/c_0\ne0$；
+
+$$
+\delta\ne0,\qquad u_2v_2\ne0,\qquad p_uv_2-p_vu_2\ne0.
+\tag{4.8}
+$$
+
+在这些非零域上定义
+
+$$
+\lambda=\frac{p_u}{u_2},\qquad \kappa=\frac{p_v}{v_2},\qquad
+\alpha=s_1+\lambda,\quad \beta=s_1+\kappa,\quad
+\gamma=-s_1-\lambda-\kappa.
+\tag{4.9}
+$$
+
+要求 $\alpha,\beta,\gamma$ 两两不同且各自大于一；在三个显式值的每一个 $t\in\{\gamma,\beta,\alpha\}$，要求
+
+$$
+I(t)\ne0,\quad H(t)\ne0,\quad Q_5(t)\ne0,\quad K_6(t)\ne0,\qquad
+0<\frac{70D(t)L_s(t)}{H(t)I(t)}<1,\qquad \frac{E_s(t)}{I(t)}>0.
+\tag{4.10}
+$$
+
+于是 $b=t-1>0$。这里没有另外选择根、源、边、$m$、$w$ 或增益；所有定义都是代入规则，不是增加独立未知量或第八方程。过滤为有限有理等式或严格不等式；在显式非零分母域，$f/g>0$ 等价于 $fg>0$，所以也可写成有限多项式过滤。不施加额外漂移区间、增益首项、增益判别式或第六符号。
+

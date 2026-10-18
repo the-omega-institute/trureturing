@@ -1,0 +1,10 @@
+**Theorem 6.1 (same-strength optimum with six supported low labels).** Under Assumption 1.2, for some $\varepsilon>0$ and every $s_e-\varepsilon<s<s_e$, the original maximum among instruments with at most six supported nonzero low actual labels equals the positive extended six branch at that same strength:
+$$
+\mathcal T_A^{(\le6\ {\rm supported\ low})}(s)=V_6(s).
+$$
+The contrast constraint is active.
+
+**Proof.** Every original competitor in this class has the same-law representation of [OE, Proposition 3.2]. Its eight moments, capacity-attached failure effect, complex coherences, arbitrary admissible time law and actual-label height are represented by a law in $\mathcal Q_6$; the endpoint convexity inequality used in Theorem 4.3 is valid for each existing fractional actual label. Hence Theorem 5.3 is an upper bound for the entire original class.
+
+Conversely, the continued six law has nonnegative old weights, exactly the eight moments, active contrast and capacities $b_{\rm label}=0$ or $1000c_h$. The common constructor of [OE, Theorem 9.2] realizes it as one original complex CP/TP chronological instrument. It uses six low qubit fibres and one compulsory high fibre, the same source minimax error $E_*$, sharp JOINT cost $\mathsf C(s)$, deterministic reports, all five Borel/passive-reference maps, whole-fibre activity at most $\log1001$, and the absolute FIRST clock $6+a$. Thus the compact upper bound is attained at the same strength. $\square$
+

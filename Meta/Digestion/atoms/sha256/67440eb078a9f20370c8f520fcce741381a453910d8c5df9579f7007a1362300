@@ -1,0 +1,68 @@
+**定理 C-114.3（任意环境复参考的完整最坏散度剖面）。** 若 $R$ 不支持该族，
+则 $\mathcal V_{t,\eta}(R)=+\infty$。若支持，令 $L=\log R$ 为支持内对数
+在核上任取零的延拓，并定义
+
+$$
+K=J^\dagger L J,\qquad Y=(K-\overline K)/2.
+\tag{C114.6}
+$$
+
+$Y$ 是纯虚 Hermitian 矩阵，其谱记为 $0,\pm\kappa_1,\pm\kappa_2$，
+$\kappa_1,\kappa_2\ge0$。精确公式为
+
+$$
+\boxed{\quad
+\mathcal V_{t,\eta}(R)
+=-h_{t,\eta}-\operatorname{tr}(\Omega_\eta L)+b\|Y\|_1,
+\qquad \|Y\|_1=2(\kappa_1+\kappa_2).
+\quad}
+\tag{C114.7}
+$$
+
+若 $b>0$，全部最坏来源恰由下列两个条件刻画：
+
+$$
+X\in\mathcal K_*,\qquad
+Xv=-\operatorname{sign}(\lambda)v
+\quad\text{对每个 }Yv=\lambda v,\ \lambda\ne0.
+\tag{C114.8}
+$$
+
+在 $\ker Y$ 上选择任何与这两个条件相容的纯虚 Hermitian 延拓即可。
+若 $Y$ 秩四，该来源唯一；若 $Y=0$，所有 $\mathcal K_*$ 都是最坏来源。
+$b=0$ 时 (C114.7) 退化为 $D(\Omega_\eta\Vert R)$。
+公式使用 $J^\dagger(\log R)J$，一般不能换成 $\log(J^\dagger R J)$；
+未匹配块、交叉块及支持外的参考质量都会通过这个对数和常数项参与。
+
+证明。不支持时族内的 $\Omega_\eta$ 已有无限散度。
+支持时每个族成员的支持都在 $\operatorname{supp}\Omega_\eta$ 内，故散度有限。
+$K$ Hermitian，其实部为实对称，虚部为实反对称。
+C-108.7 的迹正交性给 $\operatorname{tr}(XK)=\operatorname{tr}(XY)$。
+对任意 Hermitian 收缩 $X$，在 $Y$ 的本征基中逐项估计得到
+
+$$
+-\operatorname{tr}(XY)\le\sum_\lambda|\lambda|=\|Y\|_1.
+\tag{C114.9}
+$$
+
+等号要求每个非零 $\lambda$ 的本征向量满足 (C114.8)：
+若单位向量上 $\langle v,Xv\rangle=\pm1$，则正算子 $I\mp X$
+在该向量上二次型为零，因而 $Xv=\pm v$。
+
+这个等号可由同一个合法的饱和 $X$ 实现，而不牺牲熵下端。
+为明确该可实现性，写 $Y=iT$、$T$ 实反对称。
+对 $-T^2$ 的正本征值 $\kappa^2$ 选实单位向量 $v$，
+取 $w=Tv/\kappa$；$v,w$ 正交，$Tv=\kappa w$、$Tw=-\kappa v$。
+其正交补仍被 $T$ 保持，重复即给两个实正交二维块和一个零方向；
+零本征值或重根均可如此分块。
+在非零块上选 $X=-\operatorname{sign}Y$，在剩下的实核内补足二维单位反对称块，
+直至 $X$ 的谱为 $1,1,0,-1,-1$。核的维数是 $1,3$ 或 $5$，总能补足。
+所得 $X$ 仍纯虚 Hermitian，恰在 $\mathcal K_*$。
+于是它同时达到 (C114.9) 及熵下端。
+
+展开散度为
+$-S(\rho_{t,\eta}(X))-\operatorname{tr}(\Omega_\eta L)-b\operatorname{tr}(XY)$，
+得到 (C114.7)。当 $b>0$，两个非负亏损之和为零，当且仅当它们各为零，
+这给全部等号。秩四时唯一未规定的实核维数为一，其反对称块只能为零。
+整个证明在原复态上进行；没有假定 $R$ 与来源对易。证毕。
+

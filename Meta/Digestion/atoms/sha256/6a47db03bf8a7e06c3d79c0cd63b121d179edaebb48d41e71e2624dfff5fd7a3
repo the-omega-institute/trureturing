@@ -1,0 +1,48 @@
+**Definition 4.1 (parameters and redirected prefixes).** For every
+integer $g\ge8$, put
+
+$$
+\begin{gathered}
+p=2g,\qquad n=2p+4=4g+4,\qquad k=p+1=2g+1,
+\qquad s_i=i,\quad c_i=i+4,\\
+\mathsf I=(1,6,7,\ldots,p+4),\quad
+\mathsf X=(4,5),\quad \mathsf Y=(2,3),\quad
+\mathsf U=(p+5,p+6,\ldots,2p+4),\quad \mathsf V=\varnothing.
+\end{gathered}
+\tag{IC.21}
+$$
+
+Thus $|\mathsf I|=|\mathsf U|=p$, $b=2$,
+$C_{\mathsf X}=17$, $C_{\mathsf Y}=13$ and $c_1=5$.
+The symbol $x_1$ denotes coordinate $4$, and $y_2$ coordinate $3$.
+Define the weight set and descriptive mode function by
+
+$$
+\mathcal E_g=\{0,g-2,g-1,p\}
+\cup\{a:2\le a\le g-4,\ a\text{ even}\},
+\qquad
+f(\eta)=
+\begin{cases}
+X,&\operatorname{wt}(\eta)\in\mathcal E_g,\\
+Y,&\operatorname{wt}(\eta)\notin\mathcal E_g.
+\end{cases}
+\tag{IC.22}
+$$
+
+Use exactly the permutations (IC.14). At depth $d_0=p+2$ specify
+two collections of reply prefixes. Here $\eta(1)$ is the value at
+the first coordinate of $\mathsf I$, and two-bit words follow the
+displayed internal block orders:
+
+| Collection | First-coordinate value | $\mathsf I$ weight | Early block replies | Mode |
+| --- | --- | --- | --- | --- |
+| $L$ | $\eta(1)=0$ | $g-1$ | $\mathsf X=10$ | $X$ |
+| $L$ | $\eta(1)=0$ | $g-2$ | $\mathsf X=11$ | $X$ |
+| $H$ | $\eta(1)=1$ | $p-1$ | $\mathsf Y=01$ | $Y$ |
+| $H$ | $\eta(1)=1$ | $p-2$ | $\mathsf Y=11$ | $Y$ |
+
+Write $\mathcal C_g$ for all their literal length-$d_0$ reply words,
+with no identifications. Every $L$ prefix has counts $(g,g+2)$ and
+old $x_1=1$; every $H$ prefix has counts $(p,2)$ and old $y_2=1$.
+The old value at coordinate $1$ is respectively zero and one.
+

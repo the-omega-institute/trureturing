@@ -1,0 +1,35 @@
+**Lemma 2.2 (the two distinct supplier guarantees).** The finite branch
+list has the following properties.
+
+1. Every original solution extends to at least one branch and factors
+   through its shape unifier. Its actual scalar ranks and actual block
+   functions satisfy that branch's equations, selected negative
+   conditions and normality of every full named code.
+2. Each branch's feasibility is effectively decidable. For a feasible
+   branch, NSF supplies a scalar solution and a witness assignment in
+   which each residual sort is a fixed nonleaf shape marker and every
+   block is constant on its marker's leaves. These witnesses expand to
+   complete original assignments satisfying all constraints.
+
+The second guarantee does not parametrize the assignments in the first.
+
+Proof. These are [NSF, Lemmas 2.3, 3.2, 4.1–4.2 and Theorem 4.3][NSF],
+with the distinction made explicit in [NPL, Lemma 2.3][NPL]. For the
+first direction, evaluate all names in the actual source, choose the
+actual collapse cases, factor its ground shapes through the most
+general unifier, and choose a genuinely differing scalar or block in
+each identical-shape disequality. A syntactically different-shape
+negative is still its original negative, whether its actual ground
+shapes coincide or not. Normality is the normality of the actual codes.
+
+For the witness direction, nonzero offset cycles, impossible forced
+ranks and forced-equal negative comparisons are rejected. All other
+base constraints have lower bounds and finitely many forbidden
+differences. NSF's finite potential procedure chooses bases. Its
+pairwise distinct equal-mass nonleaf shape markers separate every
+listed syntactic shape inequality. Constant ranks make internal marker
+cherries normal; nonleaf roots prevent new primitive cherries at
+insertion boundaries; explicit cherry inequalities handle the rest.
+The equations then reassemble every named native expression and every
+sign. These are the supplied witness conditions used below. $\square$
+

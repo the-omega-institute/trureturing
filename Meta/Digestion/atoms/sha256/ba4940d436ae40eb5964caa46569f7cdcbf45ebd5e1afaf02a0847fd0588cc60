@@ -1,0 +1,24 @@
+**定义 20.2.2（基线策略与选择后先验）。** 令 $q\in\Delta(\mathcal X)$ 为一个满支撑基线输入策略，并记
+
+$$
+\ell_q(u)=\sum_{x\in\mathcal X}q(x)s_x(u),
+\qquad
+L_q=\sum_u\pi(u)\ell_q(u),
+\qquad
+L_x=\sum_u\pi(u)s_x(u).
+$$
+
+选择事件发生后，基线策略下的潜变量后验为
+
+$$
+\pi_{q,z}(u)=\frac{\pi(u)\ell_q(u)}{L_q},
+$$
+
+而固定输入 $x$ 后的后验为
+
+$$
+\pi_{x,z}(u)=\frac{\pi(u)s_x(u)}{L_x}.
+$$
+
+<a id="claim-20-2-3"></a>
+

@@ -1,0 +1,52 @@
+**Proposition 3.1 (Pair-specific full-algebra responses).** For $q_a,q_b,q_o\in[0,1]$ and real $v_a,v_b$ with $|v_a|\le q_a$, $|v_b|\le q_b$, put
+
+$$
+d_0=d_4=q_a,\qquad d_1=d_3=q_b,\qquad d_2=q_o,
+$$
+
+and define on all $M_5(\mathbb C)$
+
+$$
+\mathsf S(q_a,q_b,q_o;v_a,v_b)(Y)
+ =\sum_j d_jY_{jj}E_{jj}
+ +\frac14\sum_{j\ne k}(1-d_k)Y_{kk}E_{jj}
+ +v_a(X_a\circ Y)+v_b(X_b\circ Y).
+\tag{3.1}
+$$
+
+This map is CPTP, including all singular endpoints. The wrong-coordinate transition coefficient is indexed by the input coordinate $k$.
+
+Proof. With the unnormalized output-first convention $C(S)=\sum_{j,k}S(E_{jk})\otimes E_{jk}$, the matching subspace $\operatorname{span}\{|j,j\rangle\}$ has matrix
+
+$$
+A=\operatorname{diag}(d_j)+v_aX_a+v_bX_b.
+$$
+
+Its two disjoint pair blocks are
+
+$$
+\begin{pmatrix}q_a&iv_a\\-iv_a&q_a\end{pmatrix},\qquad
+\begin{pmatrix}q_b&iv_b\\-iv_b&q_b\end{pmatrix},
+$$
+
+and its singleton is $q_o$. The matching eigenvalues are $q_a\pm v_a$, $q_b\pm v_b$, $q_o$. Every unmatched basis vector $|j,k\rangle$, $j\ne k$, is an isolated diagonal block with eigenvalue $(1-d_k)/4$. There are no other entries. All $25$ eigenvalues are nonnegative, so the Choi criterion proves CP on the whole complex algebra. Both pair coherences can be present simultaneously because their Choi blocks are disjoint.
+
+For each input coordinate $k$, the output diagonal sums to $d_k+4(1-d_k)/4=1$. Every matching off-diagonal term $|j,j\rangle\langle k,k|$, $j\ne k$, has zero output partial trace. Thus $\operatorname{tr}_{\rm out}C(S)=I_5$, proving TP. These computations require no inverse or positive lower bound on a Choi eigenvalue. QED.
+
+For the useful scalar-diagonal subfamily write
+
+$$
+S(q,v_a,v_b)=\mathsf S(q,q,q;v_a,v_b).
+$$
+
+Put
+
+$$
+T_\eta(v_a,v_b)(Y)=S(s,v_a,v_b)(Y)
+ =(1-\eta)\sum_jY_{jj}E_{jj}+\eta\operatorname{tr}(Y)I_5/5
+   +v_a(X_a\circ Y)+v_b(X_b\circ Y),
+\tag{3.2}
+$$
+
+This notation is used only with $|v_a|,|v_b|\le s$. The targets are $T_\eta(\sigma c,0)$ and $T_\eta(0,\sigma c)$.
+

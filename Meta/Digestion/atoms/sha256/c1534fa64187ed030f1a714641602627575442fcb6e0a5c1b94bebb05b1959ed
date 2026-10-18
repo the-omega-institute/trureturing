@@ -1,0 +1,69 @@
+**Lemma 82.2 (native intrinsic estimate and source-centred tails).**
+There are fixed $C,c,\delta>0$ such that the native control distance
+$d$ for $\varepsilon\partial_k,c_\kappa\cdot\partial_q$ satisfies
+
+$$
+p_t(Y,Z)\le Ct^{-7/2}\exp[-c d(Y,Z)^2/t]\quad(t>0),
+\tag{82.6}
+$$
+
+and, whenever $sR\le\delta$ and $R\ge1$,
+
+$$
+\sup_{\substack{\xi\in\Omega_s\\N(\xi)>R}}U_s(\xi)
+ \le CR^{-5}+Cs^5.
+\tag{82.7}
+$$
+
+Both constants are independent of the height of $Y,Z$, including
+heights approaching either absorbing face.
+
+Proof. The all-height diagonal estimate (76.1) gives $Ct^{-7/2}$
+for $t\le1$. Its killed large-time line also gives this power for
+$t\ge1$, because $t^2e^{-\lambda t}$ is bounded. Thus the all-time
+diagonal premise of Coulhon--Sikora Theorem 4.1 holds for $B$ on
+$(\mathcal C,d,dk\,dq)$, again with $D=7$. The operator is nonnegative
+selfadjoint with a smooth interior kernel. Complex-time kernel
+continuity, if used in that theorem, follows by factoring the
+analytic semigroup between two positive-time smoothing factors.
+The calculation (82.5) applies with the native two fields: bounded
+multiplication preserves both Dirichlet traces, and the carré du
+champ is exactly
+$\varepsilon^2|\partial_kh|^2+|c_\kappa\cdot\partial_qh|^2$.
+It proves precisely the Davies--Gaffney hypothesis in the native
+control distance. This proves (82.6). It does not assume that
+$e^{-tS}$ is sub-Markov in raw measure.
+
+Here is the geometric comparison needed for the expanding charts.
+For a native path from $o$ of length $L$ smaller than a fixed
+$\delta_1>0$, $|k-k_0|\le\varepsilon L$, so it stays in a fixed
+interior height interval. Taylor expansion in the fixed basis
+$(c_0,c_1,c_2)$ gives the three coefficient functions
+
+$$
+1+O(h^3),\qquad h+O(h^3),\qquad h^2/2+O(h^3),\quad h=k-k_0.
+\tag{82.8}
+$$
+
+Integrating them against the second control, whose absolute
+integral is at most $L$, bounds the three phase coefficients by
+$CL,C\varepsilon L^2,C\varepsilon^2L^3$, respectively.
+Together with the height bound and (78.1), this yields
+$N(\Xi_s^{-1}(Y))\le CL/s$ when $d(o,Y)<\delta_1$.
+For larger distances retain $d(o,Y)\ge\delta_1$. Consequently, after
+fixing a smaller $\delta$, points with $N(\xi)>R$ and $sR\le\delta$
+satisfy $d(o,\Xi_s\xi)/s\ge cR$.
+
+For $s^2t\le1$, (82.6) therefore bounds the integrand in (81.5)
+by $Ct^{-7/2}e^{-cR^2/t}$, including its bounded threshold factor
+$e^{\lambda s^2t}$. Its integral over $1\le t\le s^{-2}$ is at most
+$CR^{-5}$. The remaining part is
+
+$$
+s^5\int_1^\infty e^{\lambda u}p_u(o,\Xi_s\xi)du\le Cs^5
+\tag{82.9}
+$$
+
+by (76.1). This proves (82.7). Both moving faces were retained in
+the killed heat and in its all-height diagonal bound. $\square$
+

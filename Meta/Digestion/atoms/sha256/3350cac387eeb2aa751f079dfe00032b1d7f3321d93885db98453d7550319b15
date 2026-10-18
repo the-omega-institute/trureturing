@@ -1,0 +1,42 @@
+**定理 33.2（两种读出的全树等变）。** 对每一棵完整树 $t$，若 $c(t)=(a,b)$，则
+
+$$
+g(t)=a+b\phi>0,\qquad
+g(\rho t)=\phi g(t),\qquad
+h(\rho t)=\omega h(t).
+$$
+
+因此 $g(\rho^nt)=\phi^ng(t)$、$h(\rho^nt)=\omega^nh(t)$，特别 $h(\rho^3t)=h(t)$。这些读出等式不把三步后的树认作原树。
+
+证明（33.2）。先对组成式与正性作结构归纳。两片叶分别给 $1=1+0\phi>0$ 和 $\phi=0+1\phi>0$；若式对 $s,t$ 成立，则组成相加与 $g$ 的相加给节点式，且两个正数之和为正。故对全部非空树成立。
+
+等变也须在完整树上归纳，而不能仅检查单起点轨道。对叶 $\alpha$，
+
+$$
+g(\rho\alpha)=g(\beta)=\phi=\phi g(\alpha),\qquad
+h(\rho\alpha)=h(\beta)=\omega=\omega h(\alpha).
+$$
+
+对叶 $\beta$，$\rho\beta=\langle\beta,\alpha\rangle$，所以
+
+$$
+g(\rho\beta)=\phi+1=\phi^2=\phi g(\beta),
+\qquad
+h(\rho\beta)=-\omega-1=\omega^2=\omega h(\beta).
+$$
+
+设两种等变式都对 $s,t$ 成立。替换保持有序配对，于是
+
+$$
+\begin{aligned}
+g(\rho\langle s,t\rangle)
+&=g(\rho s)+g(\rho t)
+=\phi g(s)+\phi g(t)=\phi g(\langle s,t\rangle),\\
+h(\rho\langle s,t\rangle)
+&=-h(\rho s)-h(\rho t)
+=-\omega h(s)-\omega h(t)=\omega h(\langle s,t\rangle).
+\end{aligned}
+$$
+
+这完成全部构造子的结构归纳。对推进次数再作归纳给迭代式，$\omega^3=1$ 给三步相位相同。$g>0$ 与 $\phi>1$ 使增长值沿任何树轨道严格增长，也直接排除来源三周期；第二十一章的叶数论证仍适用。$\square$
+

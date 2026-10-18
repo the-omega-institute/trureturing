@@ -1,0 +1,48 @@
+**Definition 9.3 (remaining relational targets and boundaries).**
+The broad target is a parsimonious generation structure expressing
+spatial cuts, internal relative time, boundary responses and memory,
+with exact conditions for mutual recovery.
+Here a cut row expresses a literal exterior and hidden relational
+partition; update counts give internal relative time; boundary comparison
+gives overlap clock factors; retained acquired relations determine
+the later decoder interface. Theorems 3.3–8.3 connect these expressions
+only under their declared acquisition, continuity, progress and retention
+premises.
+
+Remaining mathematical targets include cut-specific acquisition with
+sharp memory and bit-work bounds; characterization of all sound finite
+acquisition transcripts rather than two sufficient certificate languages;
+progress under bounded-rate or prescribed-window interference;
+randomized guarantees with declared error and scheduler quantifiers;
+entry recovery for general covering cuts with no pre-first-Read updates;
+and exact recoverability under richer retained-certificate interfaces.
+A bound per Read gap is not a total interference budget. The deterministic
+all-fair-history obstruction does not settle those different domains.
+
+Authentic handoffs, designated origins, birth-record acquisition and
+physical service realization remain additional obligations.
+Neither the full-tree upper construction nor the overlap criterion
+establishes a smallest relational structure or minimal cut-memory
+acquisition. No identification with physical space or duration, or
+completion of the broad mutual-recovery target, follows.
+
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[NBP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[IDC]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_INTRINSIC_DEPTH_CALIBRATION.md
+[PG]: RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[TM]: RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[SLD]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_LITERAL_DELIVERY.md
+[SLC]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT_CONTINUATION.md
+[GFT]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[ACQ]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ACPD]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[NFSP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[NWRS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowService.lean
+[NSM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean
+[NSE]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean
+[NDP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[STC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[ISC]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+

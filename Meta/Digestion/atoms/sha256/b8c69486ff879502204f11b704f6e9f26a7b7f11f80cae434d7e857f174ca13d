@@ -1,0 +1,35 @@
+**Definition 64.1 (the common system and its spectral consumer).** Use the supported center, $T_a,d_a,v_a$, and $H_a$ of (S.57)–(S.59) and (S.67). For $k\geq2$, stack the same normalized matrices as $Z=(Z_0;Z_1;Z_2)$, so that
+
+$$
+E_Z=ZZ^\dagger=\overline D,\qquad Z^\dagger Z=I_{3k-5},\qquad
+\widehat P=I-E_Z,\qquad\operatorname{rank}\widehat P=5.
+\tag{S.89}
+$$
+
+Here $E_Z$ is the conjugated defect projection. The input compression remains $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$, with the transpose row $\psi^T$, as in (S.71). Thus $C_\psi E_ZC_\psi^\dagger=Z_\psi Z_\psi^\dagger$ uses the same complex $\psi$ as (S.56). A strict solution means one center and one triple satisfying $H_a(M_\psi)>v_a$ for every complex unit phase direction simultaneously, together with $q_2<d_a$.
+
+For diagonal $X>0$ in this center basis and $c\geq0$, retain the spectral quantities of (S.13):
+
+$$
+A=\omega X^{-1},\qquad m_X=a\lambda_1(X)+\beta\lambda_2(X),\qquad
+K_c=\operatorname{diag}(A,A,c\omega),\qquad
+J_c(X)=S_5(K_c)+2m_X-cT_a.
+\tag{S.90}
+$$
+
+The two eigenvalues of $X$ in $m_X$ are decreasingly ordered. The variational and rank-five argument (S.16)–(S.24) applies directly to the relaxed maximum (S.58): for every feasible $Q$ there, $\operatorname{Tr}(QX)\leq m_X$, so $H_a(M)\leq[m_X+\operatorname{Tr}(MX^{-1})]/2$. Consequently a strict solution obeys
+
+$$
+\begin{aligned}
+\operatorname{Tr}[A((E_Z)_{00}+(E_Z)_{11})]
+&<2(m_X+\operatorname{Tr}A-2v_a),\\
+2\operatorname{Tr}A+c-S_5(K_c)
+&\leq\operatorname{Tr}(K_cE_Z)
+<2(m_X+\operatorname{Tr}A-2v_a)+cd_a,\\
+J_c(X)&>4v_a.
+\end{aligned}
+\tag{S.91}
+$$
+
+The lower bound uses this same $\widehat P$ in (S.22); the upper bound uses $q_2<d_a$. At $c=0$ the strict basis inequalities still supply strictness. Thus $J_c(X)\leq4v_a$ excludes the strict relaxation itself. This is an application of the existing spectral-budget argument, without an actual lifting or optimizer-location premise.
+

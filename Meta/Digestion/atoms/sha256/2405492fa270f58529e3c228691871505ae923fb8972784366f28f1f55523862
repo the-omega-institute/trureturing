@@ -1,0 +1,50 @@
+**Theorem 10.2 (quantitative event gap, including both axes).** Define
+$$
+\mathfrak d(\phi,\xi)^2
+ =\min_{0\le i\le6}
+       \{d_{\mathbb T}(\phi,\phi_i^e)^2+|\xi-\eta_i|\},\qquad
+D_e(\phi,\xi)
+ =Y_e\cdot\Gamma_\xi-|H_\xi|-\lambda_e|\cos\phi|.
+$$
+Under the retained event factors and the finite bounds in Definition 10.1,
+$$
+D_e(\phi,\xi)\ge c_e\mathfrak d(\phi,\xi)^2
+                       \qquad((\phi,\xi)\in X).
+$$
+
+Proof. At a contact in its report chart, differentiate $P/d_\eta$ twice in angle. Since $P=P_x=0$, its normalized angular curvature is
+$$
+\frac{2Q(c_i)\prod_{j\ne i}(c_i-c_j)^2}{d_\eta(c_i)}
+                    \left(\frac{dx}{d\phi}\right)^2.
+$$
+Within a report half-circle $d\phi/dx=2/(1+x^2)\le2$, so
+$|dx/d\phi|\ge1/2$. Chord separation gives
+$|c_i-c_j|\ge\Delta/2$, because the chord distance in a common chart is at most $2|c_i-c_j|$. There is at most one other factor. With no other factor the empty product is one and also exceeds $\Delta^2/4$. Thus the curvature is at least $\gamma_*$. The $\rho$ gates keep report and occupied-height signs fixed along the entire angular $\rho$-arc: $|u-u_i|\le\rho$ and $|H_\eta-H_\eta(\phi_i^e)|\le M_H\rho$. The third-derivative gate then gives $D_\eta^{e\prime\prime}\ge\gamma_*/2$ there, and Taylor's integral formula gives
+$D_\eta^e\ge(\gamma_*/4)d_{\mathbb T}(\phi,\phi_i^e)^2$.
+
+Outside all same-sheet $\rho$-arcs every removed factor obeys
+$|x-c_j|\ge\rho/2$ in its report chart, since shortest angular distance is at most $2|x-c_j|$. The product of at most two squared factors is at least $(\rho/2)^4$; this also holds for the rootless cases because $\rho/2\le1$. Each signed normalized polynomial is therefore at least $d_{\rm off}$ there. For the actual report sign,
+$D_\eta^e=\min_{\epsilon=\pm1}P_{\eta,\epsilon,\sigma}/d_\eta$.
+This remains true at a height zero, and the two report charts agree at a report axis. Hence the off-arc estimate covers these points as well. If
+$d_\eta(\phi)=\min_{i:\eta_i=\eta}d_{\mathbb T}(\phi,\phi_i^e)$, the local and off-arc estimates, with $d_\eta^2\le\pi^2<10$, give
+$$
+D_\eta^e(\phi)\ge c_{\rm sh}d_\eta(\phi)^2
+                                    \quad(\eta=0,1).
+$$
+
+The disjoint sheet inventories and angular/chord separation imply
+$d_0+d_1\ge\Delta$. Put $S=(1-\xi)d_0^2+\xi d_1^2$.
+For $\xi\le1/2$ and $d_0\le\Delta/2$,
+$S\ge d_0^2/2+\xi\Delta^2/4$.
+For $\xi\le1/2$ and $d_0>\Delta/2$, $S\ge\Delta^2/8$.
+Since
+$\mathfrak d^2=\min(d_0^2+\xi,d_1^2+1-\xi)\le\pi^2+1<11$
+and $0<\Delta<1$, both cases yield
+$S\ge\Delta^2\mathfrak d^2/88$. Exchange sheets for $\xi\ge1/2$.
+Finally the exact affine/chord identity of QS Theorem 5.2 is
+$$
+D_e=(1-\xi)D_0^e+\xi D_1^e+
+ (1-\xi)|H_0|+\xi|H_1|-|(1-\xi)H_0+\xi H_1|.
+$$
+Its last three terms are nonnegative everywhere, including all height zeros. Combining the inequalities proves the claim on the entire cylinder. No sign is imposed on the opposite endpoint height. $\square$
+

@@ -1,0 +1,37 @@
+### 四、一阶观测为什么在三态时第一次失效
+
+设概率分布为
+
+```math
+p=(p_I)_{I\in\Sigma_n}.
+```
+
+定义一阶占据均值
+
+```math
+\mu_i
+=
+\mathbb E_p[x_i]
+=
+\sum_{I\in\Sigma_n}p_Ix_i(s_I).
+```
+
+一阶观测映射为
+
+```math
+T_1(p)
+=
+\left(
+1,\mu_1,\ldots,\mu_n
+\right).
+```
+
+定义一阶观测空间
+
+```math
+V_n^{(1)}
+=
+\operatorname{span}
+\{1,x_1,\ldots,x_n\}.
+```
+

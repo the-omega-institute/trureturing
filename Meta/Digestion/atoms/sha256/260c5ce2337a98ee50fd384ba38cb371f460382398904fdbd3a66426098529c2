@@ -1,0 +1,21 @@
+**Assumption 30.1 (the inherited event, not a new event certificate).**
+Use only the published event premises in
+[the output-extinction curvature source](FIB_NATIVE_COMPLETE_CONTINUATION_OUTPUT_EXTINCTION_CURVATURE.md)
+at revision `7dbe02037f0eec80969d662160637480497c83c7`, and its
+pinned [local output-extinction source](FIB_NATIVE_COMPLETE_CONTINUATION_LOCAL_OUTPUT_EXTINCTION.md)
+at revision `321589a8be98de4fe179f99f6e593d8784952db1`.
+Call the latter LOE here. Retain its source and original operational
+suppliers, Definition 4.1's directed charts and sheet/sign dictionary,
+Theorem 6.3's entire-circle feasibility and complete seven-contact
+inventory, Proposition 7.1's positive old weights and separation, and
+Appendix 15.1's exact event intervals. These are inherited event
+assumptions, not a new isolation, global-zero or minimum-count proof.
+
+In particular $t=1000$, $\lambda_e>0$, the occupied indices are
+$O=\{0,1,2,3,5,6\}$, and $p_4=0$. Indices $0,1,2,3$ are pure;
+$5,6$ are saturated; contact $4$ is a saturated zero with zero event
+weight. The inventory includes that unused contact and excludes any
+additional occupied saturated endpoint. There are six positive
+supported low labels and one compulsory high, hence seven TOTAL;
+seven contacts are not seven positive low labels at the event.
+

@@ -1,0 +1,113 @@
+**Theorem 98.1 (a uniform lower error and explicit critical recovery).**
+Let $q_s^c[F]=a b_s[F]-\chi_c\int U_s|F|^2
+-a\lambda s^2\|F\|_2^2$ on exactly $\mathcal Q_s$.
+There are constants $C,s_0>0$ such that, for every $0<s<s_0$ and
+every complex $F\in\mathcal Q_s$,
+
+$$
+q_s^c[F]\ge-Cs^{2/3}\|F\|_2^2.
+\tag{98.1}
+$$
+
+There are normalized $Z_s\in\mathcal Q_s$, defined for every
+sufficiently small $s$ without a diagonal parameter choice, such that
+
+$$
+|q_s^c[Z_s]|\le Cs^{2/3},\qquad
+\int U_s|Z_s|^2\longrightarrow\mu_c,\qquad
+\|Z_s-\Phi_c\|_2\longrightarrow0.
+\tag{98.2}
+$$
+
+In particular the critical infimum of (91.1) obeys
+$|\epsilon_s^c|\le Cs^{2/3}$.
+
+Proof. Work first in (97.1), writing $f=\mathcal T_sF$. Choose fixed
+smooth real functions $\eta,\zeta$ on the height line with
+$\eta^2+\zeta^2=1$, $\eta=1$ on $[-1,1]$, $\eta=0$ outside
+$[-2,2]$, and bounded derivatives. Such a smooth quadratic partition
+is obtained as $\eta=\cos\vartheta$, $\zeta=\sin\vartheta$, where
+$\vartheta$ is zero on the smaller interval and $\pi/2$ outside the
+larger interval. Put $\eta_R(r)=\eta(r/R)$ and likewise $\zeta_R$.
+Since $Y$ does not differentiate these cutoffs, the exact quadratic
+partition identity is
+
+$$
+\widetilde q_s^c[f]
+ =\widetilde q_s^c[\eta_R f]+\widetilde q_s^c[\zeta_R f]
+ -a\int(|\eta_R'|^2+|\zeta_R'|^2)|f|^2,
+\quad \widetilde q_s^c=q_s^c\circ\mathcal T_s^{-1}.
+\tag{98.3}
+$$
+
+It holds by core approximation for the entire complex closed domain.
+For $sR$ small, $\eta_R f$ belongs to $\mathcal Q_E$ after zero
+extension. On its support, (97.2) gives
+$\widetilde b_s[\eta_R f]\ge(1-C sR)b[\eta_R f]$.
+This domain assertion follows as well by cutting off native core
+approximants and using the two equivalent horizontal norms on the
+height strip; no separate phase derivative is introduced.
+Nonnegativity of $h_c$ from (84.3), boundedness of $V$, and (97.5)
+therefore give
+
+$$
+\widetilde q_s^c[\eta_R f]
+ \ge-C(sR+s^{5/6}+s^2)\|\eta_R f\|_2^2.
+\tag{98.4}
+$$
+
+Indeed subtract $(1-C sR)h_c[\eta_R f]$ and bound the remaining
+potential multipliers in supremum norm. On the support of
+$\zeta_R f$ one has $|r|\ge R$. The height-only tail proved in
+Lemma 97.2 and the nonnegative native kinetic form give
+
+$$
+\widetilde q_s^c[\zeta_R f]
+ \ge-C(R^{-5}+s^5+s^2)\|\zeta_R f\|_2^2.
+\tag{98.5}
+$$
+
+The last integral in (98.3) is at most $CR^{-2}\|f\|_2^2$.
+Set $R=R_s=s^{-1/3}$. The support $|r|\le2R_s$ lies between the
+original moving faces for all small $s$. Equations (98.3)--(98.5),
+$\|\eta_R f\|_2^2+\|\zeta_R f\|_2^2=\|f\|_2^2$ and unitarity
+prove (98.1), independently of the vector's kinetic size.
+
+For recovery use the attained positive critical mode of Theorem 88.1,
+and define
+
+$$
+f_s=\frac{\eta_{R_s}\Phi_c}{\|\eta_{R_s}\Phi_c\|_2},
+\qquad Z_s=\mathcal T_s^{-1}f_s.
+\tag{98.6}
+$$
+
+The denominator tends to one and is bounded below for all small $s$.
+The cutoff mode belongs to the native form domain: first approximate
+$\Phi_c$ in the canonical horizontal form core, multiply by the height
+cutoff, and use (97.2) on the resulting fixed height strip. This
+also proves its original Dirichlet admissibility, while allowing
+unbounded phase support in the final limit.
+Testing $H_c\Phi_c=0$ with $\eta_{R_s}^2\Phi_c$ gives the exact identity
+
+$$
+h_c[\eta_{R_s}\Phi_c]
+ =a\int |\eta_{R_s}'|^2|\Phi_c|^2\le CR_s^{-2}.
+\tag{98.7}
+$$
+
+The test belongs to $\mathcal Q_E$, and the weak eigen-equation and
+product rule justify this identity; it is not an assumed tail rate
+for $\Phi_c$. Also $b[\eta_{R_s}\Phi_c]\le C$ by the product rule.
+Thus (97.2), (97.5), (98.7) and normalization give
+$|q_s^c[Z_s]|\le C(R_s^{-2}+sR_s+s^{5/6}+s^2)
+\le Cs^{2/3}$. Boundedness of $V$ and dominated convergence give
+$v[f_s]\to v[\Phi_c]=\mu_c$; (97.5) gives the potential assertion
+in (98.2). Finally $f_s\to\Phi_c$ in $L^2$, and the unitary phase
+shears $\mathcal T_s^{-1}$ converge strongly to the identity.
+The latter follows first on compact continuous functions from
+$L_s\to\mathrm{Id}$ and then on all $L^2$ by density and unitarity.
+It proves the last assertion. Taking the infimum in (98.1) and
+testing on (98.6) proves the two-sided bound on $\epsilon_s^c$.
+$\square$
+

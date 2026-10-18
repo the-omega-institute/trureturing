@@ -1,0 +1,35 @@
+**Corollary 23.2 (a fixed rational point strictly beyond activation).**
+At $t=1000$ choose the exact rational request
+$s_+=0.1242167167887866$. Then
+
+$$
+\begin{gathered}
+0.12421671678878638487626873539472489<s_c(1000)
+ <0.12421671678878651209298880874023137,\\
+8\cdot10^{-17}<s_+-s_c(1000)<2.2\cdot10^{-16},\\
+5\cdot10^{-22}<\lambda_+<6\cdot10^{-13},\\
+6\cdot10^{-38}<T_c(1000)-\mathcal T_{\log1001}(s_+)
+ <4\cdot10^{-28},\\
+0.10283536503869052<\mathcal T_{\log1001}(s_+)
+ <0.10283536503869072.
+\end{gathered}
+\tag{AC.128}
+$$
+
+Proof. Use the same centre and $R$ with radius $10^{-16}$ in all
+eighteen coordinates at $t=1000$, as specified in FA94–96. Its
+zero-multiplier contraction is $<10^{-12}$ and its self-map ratio
+is $<1/200$; it lies inside $\mathcal B_X$ and selects the same root.
+Substituting this seed box and the full source box in
+$C_s\sum p_i\sigma_i u_i$ gives the first strict enclosure.
+Exact rational subtraction gives the next line, within AC.120.
+Integrating $ds/d\lambda=C_s\chi$ with
+$1/8<C_s<4/25$ and AC.112 gives the multiplier bounds.
+AC.126 applied to the rational gap bounds gives the strict loss bounds.
+Finally FA93's seed TV enclosure
+$(0.10283536503869052157453180203846052,
+0.10283536503869071116976210460262283)$ retains the last, relaxed
+interval after subtracting the loss. Strict decrease is proved by
+the loss bound, not by subtracting the wider decimal value endpoints.
+$\square$
+

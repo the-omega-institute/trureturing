@@ -1,0 +1,4 @@
+# FIB harmonic-edge load: renewal reset-variance blindness and minimal hidden dimension
+
+One stationary three-state renewal law has zero two-anchor reset variance at every finite length, yet its discrepancy from every single global rank-two candidate grows linearly. A six-bit conditional bridge supplies the positive determinant, the discrepancy constant and the proof that three hidden states are necessary. The same law satisfies the posterior band and square-root erasure summability, and its actual radius-one risk proves strict nonattainment. These conclusions concern its stationary marginals, not the finite optimizers of the original harmonic-edge objective.
+

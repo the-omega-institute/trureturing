@@ -1,0 +1,31 @@
+**Proposition 6.3 (Closed boundaries and all degeneracies).**
+At $v=v_0$ the mixture is $A$; at $v=v_W$ it is $B$, which also
+equals the old wedge law there. At $u=0$, necessarily $v=0$;
+use 4.1 with $\kappa=0$, without dividing by $u$. At $\tau=1/24$
+the anchor vanishes. At $u=\tau$ the stock
+$\tau-216\kappa$ remains strictly positive. Head ties, $a_8=a_7$,
+$a_{10}=5\tau$, later ties and zero branch weights are all included.
+The algebraic $\tau=0$ point is outside the positive original domain.
+
+Proof. The endpoint values follow from $\theta$. At the wedge
+boundary, $y=0$ and $x=12(u+75u/181)=3072u/181$, so complete
+allocations agree. The other cases follow from the explicit
+nonnegative stocks and omission of zero-mass rows; no sampler or
+weight formula divides by a vanishing mass.
+
+Under the active convention $a_i>c$, the low optimum with $u>0$
+has horizon eight, since $a_8-E=229u/253>0$ and $a_9\le E$.
+The equality $a_9=E$ at $v_0$ is inactive. At $u=v=0$ the optimum
+has horizon seven. In the open intermediate sector,
+
+$$
+v-H(u,v)=\frac{53(253v-24u)}{14631}>0,
+$$
+
+so the constructed cap has horizon nine. The old wedge with $u>0$
+also has horizon nine because
+$a_9-(5\tau+d_{\rm sum})=(117v-11u)/128>0$ there.
+Every later amplitude is inactive at all the constructed caps.
+These statements use actual amplitudes and retain closed ties.
+$\square$
+

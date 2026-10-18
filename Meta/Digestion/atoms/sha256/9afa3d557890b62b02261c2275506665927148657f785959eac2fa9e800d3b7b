@@ -1,0 +1,139 @@
+**Theorem 35.2 (Common-root realization and its canonical interior).**
+Every point of $\mathcal S_{k,b}$ is the observation of $m$ actual
+global independent sets. Restriction gives an addition-preserving
+bijection
+
+$$
+\mathcal S_{k,b}\longleftrightarrow
+\{(p_1,\ldots,p_b)\in\mathcal S_k^b:
+             \deg_{(m,t)}p_1=\cdots=\deg_{(m,t)}p_b\}.
+\tag{35.2}
+$$
+
+Consequently there is an isomorphism of boundary-bigraded algebras
+
+$$
+R_{k,b}\simeq
+\bigoplus_{m\ge0}\ \bigoplus_{0\le t\le m}
+ (R_k)_{(m,t)}\otimes_{\mathbb C}\cdots\otimes_{\mathbb C}
+ (R_k)_{(m,t)},
+\tag{35.3}
+$$
+
+with $b$ tensor factors. The ring is a normal standard graded
+Cohen–Macaulay domain of dimension $2kb+2$. In its full exponent
+lattice its canonical module is the ideal with monomial basis
+
+$$
+\omega_{R_{k,b}}=
+\operatorname{span}_{\mathbb C}\{X^p:p\in\mathcal S_{k,b}^{\circ}\},
+\qquad
+\mathcal S_{k,b}^{\circ}=
+\{(m,c):c_v\ge1,\ c_u+c_v\le m-1,\ \delta_a(m,c)\ge1\}.
+\tag{35.4}
+$$
+
+In particular $p$ is interior if and only if all its cycle
+restrictions are interior with the same $(m,t)$.
+
+Proof. The single-cycle integer decomposition of Theorem 28.2 applies
+to each $p_a$, including the five-cycle. Choose $m$ local independent
+sets realizing it. Exactly $t$ of its rows contain the root. Permute
+the rows separately in each cycle so that these are precisely rows
+$1,\ldots,t$. In each row take the union of the local independent
+sets, identifying their root vertices. All root choices now agree.
+An edge is entirely in a single cycle, where that row is independent;
+there is no cross edge. The rowwise union is therefore a global
+independent set, and its occupancies are exactly $c$. For $m=0$ this
+is the empty array. Conversely any global array restricts to such
+local arrays and satisfies every inequality in (35.1).
+
+The supplied local decomposition is more than local real feasibility:
+it uses exactly $m$ rows and exactly $t$ root-one rows. This is why the
+permutations establish a simultaneous realization. The bijection
+(35.2) itself is between exponent vectors, not between chosen arrays:
+the nonroot coordinates and the common root reconstruct $c$ uniquely.
+Restriction and reconstruction both commute with addition.
+
+Map a pure tensor of monomials in (35.3) to the reconstructed global
+monomial. The monomial tensor bases and (35.2) make this a linear
+bijection. Multiplication is explicitly
+
+$$
+(X^{p_1}\otimes\cdots\otimes X^{p_b})
+(X^{s_1}\otimes\cdots\otimes X^{s_b})
+=X^{p_1+s_1}\otimes\cdots\otimes X^{p_b+s_b}.
+\tag{35.5}
+$$
+
+Its boundary degree is $(m+q,t+u)$ when the two factors have boundary
+degrees $(m,t)$ and $(q,u)$. Equation (35.2) identifies (35.5) with
+$X^{p+s}$, proving the algebra assertion. This is the specified
+bigraded Segre-style diagonal, not an ordinary product of local
+ungraded spaces or an independent product of their degree counts.
+
+For the real geometry, let $P$ be the polyhedron in degree one defined
+by the nonnegativity, edge and cycle inequalities in (35.1). It is
+bounded since each vertex has a neighbor and hence $0\le c_v\le1$.
+It contains the convex hull of the global independent-set indicators.
+For any rational point of $P$, multiply by a positive common denominator
+$m$ and apply the row construction; division by $m$ expresses the
+point as an average of global indicators. Rational points are dense
+in this rational polytope, and that convex hull is closed. Thus $P$
+is exactly the stable-set polytope of $G_{k,b}$. Its homogenized real
+cone $K_{k,b}$ is exactly the cone given by (35.1) over the reals:
+at degree zero the edge bounds force every coordinate to be zero.
+
+The degree-one empty set gives $(1,0)$, and subtracting it from the
+degree-one singleton at $v$ gives $(0,e_v)$. These generate the full
+group lattice $\mathbb Z^{2kb+2}$. At degree one a sufficiently small
+constant positive occupancy has every edge sum less than one and
+every cycle sum less than $k$. Together with $m>0$ these strict
+inequalities exhibit a full-dimensional neighborhood in the cone.
+Thus $\dim K_{k,b}=2kb+2$. The cone is rational and pointed, and
+
+$$
+\mathcal S_{k,b}=K_{k,b}\cap\mathbb Z^{2kb+2}.
+\tag{35.6}
+$$
+
+The row decomposition also proves finite generation by the degree-one
+indicators. Equation (35.6) proves saturation in the full group lattice,
+hence normality. The ring is a domain by its monomial embedding into
+$\mathbb C[z_0,(z_v)_{v\in V}]$ and is standard graded by that same
+degree-one generation.
+
+Every linear inequality used here is a nonzero supporting form of this
+full-dimensional cone. If one is an equality, its supporting hyperplane
+prevents an ambient open ball. If they are all strict, finitely many
+positive margins give such a ball. Therefore their simultaneous
+strictness describes the interior, even without assuming a minimal
+facet list. For integral points this is precisely (35.4); the coordinate
+and edge strictness already force $m\ge3$. Adding a semigroup point
+preserves all strict inequalities, so their monomials form an ideal.
+
+Hochster's theorem gives Cohen–Macaulayness for this normal affine
+monoid ring. The Danilov–Stanley formula in Barile–Bruns,
+*$\mathbb Z^r$-graded rings and their canonical modules*,
+[§5 and Theorem 5.1][BB35], identifies its canonical module with the
+interior ideal. In that theorem take the coefficient field to be
+$\mathbb C$, the monoid to be $\mathcal S_{k,b}$ and
+$r=2kb+2$; finite generation, normality, full group and full cone
+dimension have just been established. These are the same classical
+inputs used in §§29.2 and 31.2, now for the global cone.
+
+There is also an exact literature correspondence for the gluing step.
+Matsuda–Ohsugi–Shibata, *Toric rings and ideals of stable set polytopes*,
+[Proposition 1.3][MOS35], states that for a clique sum the stable-set
+toric ideal is a toric fiber product, and that its ring is normal if
+and only if both constituent rings are normal. Here the intersection
+is the singleton clique $\{o\}$, and the edge set is exactly the union
+of the two edge sets at each successive gluing. The two singleton-clique
+states, root absent and root present, have multiplicities $m-t$ and $t$;
+these determine and are determined by $(m,t)$. Thus its fiber grading
+matches (35.2). The proposition is a precedent for this specific
+clique sum, whereas (35.2)–(35.5) give the actual maps used here.
+The ordinary Segre product for disconnected graphs in their Example 1.2
+has a different boundary condition. Neither result by itself proves
+the synchronized interior subtraction below. $\square$
+

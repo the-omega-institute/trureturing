@@ -1,0 +1,89 @@
+**Theorem 87.2 (whole-domain sharp same-field estimate and a closed comparison).** For every nonzero $\psi\in\mathcal E_2$,
+
+$$
+0<V[\psi]<\frac18\sqrt{T[\psi]D_2[\psi]}.
+\tag{87.3}
+$$
+
+The optimal non-strict constant on this whole domain, and already on $\mathcal D_0$, is $C_\star=1/8$. For every $\sigma\ge2$ and $\psi\in\mathcal E_\sigma$,
+
+$$
+V[\psi]\le\frac18\sqrt{T[\psi]}D_\sigma[\psi]^{1/\sigma}
+ \|\psi\|_2^{1-2/\sigma}.
+\tag{87.4}
+$$
+
+For nonzero states the estimate is strict; the constant in (87.4) is only asserted sharp at $\sigma=2$.
+
+Proof. The mature trace-Hardy ingredient is Alvino--Ferone--Volpicelli, *Sharp Hardy inequalities in the half space with trace remainder term*, [arXiv:1105.0335v1](https://arxiv.org/abs/1105.0335v1), Theorem 1.1 and (8), with $n=4$, $\beta=2$. Each halfspace has constant $2/\pi$, so on both halfspaces
+
+$$
+A[f]+C[f]\ge\frac4\pi J[f],\qquad
+A[f]=\|\nabla_\xi f\|_2^2,\quad C[f]=\|\partial_t f\|_2^2,
+\quad J[f]=\int\frac{|\operatorname{Tr}f(\xi,0)|^2}{|\xi|}d\xi.
+\tag{87.5}
+$$
+
+Here the trace belongs to its weighted space for every $f\in H^1(\mathbb R^4)$. The following representation also supplies the closure needed by the actual critical client. Write $r=|\xi|$, $\rho=(r^2+t^2)^{1/2}$ and $\Omega_*=\mathbb R^4\setminus\{0\}$. The auxiliary positive profile is
+
+$$
+\Phi(\xi,t)=\frac2{\pi r}\arctan\frac r{|t|},\qquad
+\Phi(\xi,0)=\frac1r,\quad \Phi(0,t)=\frac2{\pi|t|},\qquad
+\frac2{\pi\rho}\le\Phi\le\frac1\rho.
+\tag{87.6}
+$$
+
+This is the $n=4$ integral in AFV (12), with its boundary value normalized. It is harmonic on each open halfspace, and $\partial_t\Phi(\xi,0^\pm)=\mp2/(\pi r^2)$. On $\mathscr C=C_c^\infty(\Omega_*;\mathbb C)$, expansion of $f=\Phi v$ and integration by parts in both halfspaces give
+
+$$
+\mathfrak t_0[f]:=A[f]+C[f]-\frac4\pi J[f]
+ =\int\Phi^2|\nabla(f/\Phi)|^2.
+\tag{87.7}
+$$
+
+Indeed the two outward normal derivatives contribute $4/(\pi r^2)$, multiplied by $|f(\xi,0)|^2/\Phi(\xi,0)$; the support avoids the origin, so no puncture boundary survives. This is the usual ground-state representation, with the singular interface term computed explicitly rather than treated as an ordinary bounded potential.
+
+The densely defined operator $B_0f=\Phi\nabla(f/\Phi)$ from $L^2$ to $L^2(\mathbb R^4;\mathbb C^4)$ is closable. On every compact subset of $\Omega_*$, $\Phi,\Phi^{-1}$ are bounded and locally Lipschitz. If $f_n\to0$ and $B_0f_n\to F$ in their $L^2$ spaces, then $f_n/\Phi\to0$ locally and its gradients converge to $F/\Phi$. Closedness of distributional derivatives forces $F=0$. Consequently the closure $\mathfrak t$ has domain $\mathcal Q_\delta=D(\overline B_0)$ and
+
+$$
+\mathfrak t[f]=\|\overline B_0f\|_2^2
+ =\int\Phi^2|\nabla(f/\Phi)|^2,\qquad f\in\mathcal Q_\delta.
+\tag{87.8}
+$$
+
+The last equality follows by local distributional limits of graph approximants. The punctured smooth core is dense in $H^1(\mathbb R^4)$: a cutoff about the point costs $O(\varepsilon^2)$ for a fixed compact smooth function. Since $0\le\mathfrak t_0[h]\le\|\nabla h\|_2^2$, this density and (87.5) put every $H^1$ function in $\mathcal Q_\delta$, and give (87.7) on $H^1$ with the actual trace. No difference of infinite integrals defines (87.8). If $\mathfrak t[f]=0$, then $f/\Phi$ is constant on the connected $\Omega_*$. But $\Phi\notin L^2$ at infinity, since its lower bound in (87.6) gives $\int_1^\infty\rho^3\rho^{-2}d\rho=\infty$. Thus
+
+$$
+\{f\in\mathcal Q_\delta:\mathfrak t[f]=0\}=\{0\}.
+\tag{87.9}
+$$
+
+For nonzero $f\in H^1$, apply (87.5) strictly to $k^{-1/2}f(\xi,t/k)$ and minimize $kA+C/k$. This yields $J[f]<(\pi/2)\sqrt{A[f]C[f]}$. Neither derivative can vanish for a nonzero $L^2$ function.
+
+Now take the actual state $\psi\in\mathcal E_2$, put $U=\mathcal F_s^{-1}|b|$, and use the actual covariant derivatives
+
+$$
+\mathsf D^\lambda b=
+ (\partial_xb-i\lambda yb/2,\ \partial_yb+i\lambda xb/2,\ \partial_zb).
+\tag{87.10}
+$$
+
+The weak modulus chain rule gives $|\partial_i|b||\le|\mathsf D_i^\lambda b|$: away from zero take the real part of $\overline b\mathsf D_i^\lambda b/|b|$, whose magnetic term is imaginary, and use a regularized modulus at zero. Plancherel therefore gives $A[U]\le T[\psi]$, $C[U]=D_2[\psi]$ and $\|U\|_2=\|\psi\|_2$, so $U\in H^1$. On almost every central fibre the transform is in $L^1$ by its weighted $L^2$ norm with weight $1+\lambda^2$. Fourier inversion and triangle inequality give $|\Psi(\xi,s)|\le U(\xi,0)$, where this positive value agrees with the Sobolev trace. Apply the actual nonnegative $\mathcal G(\xi,s)=\Gamma(\xi,s+xy/2)$ and its actual marginal:
+
+$$
+V[\psi]\le\frac1{4\pi}J[U]
+ <\frac18\sqrt{A[U]C[U]}\le\frac18\sqrt{TD_2}.
+\tag{87.11}
+$$
+
+This is a comparison, not substitution of a marginal for the full multiplier. It proves finiteness on the whole intersection domain. Positivity of $\Gamma$ gives strict positive $V$ for a nonzero state.
+
+For $\sigma>2$, Hölder in the genuine measure $|b|^2d\xi d\lambda$ gives
+
+$$
+D_2\le D_\sigma^{2/\sigma}\|\psi\|_2^{2-4/\sigma}.
+\tag{87.12}
+$$
+
+Thus $\mathcal E_\sigma\subset\mathcal E_2$, and (87.11) gives (87.4), including its zero convention. The same-state sharpness of (87.3) is established next. $\square$
+

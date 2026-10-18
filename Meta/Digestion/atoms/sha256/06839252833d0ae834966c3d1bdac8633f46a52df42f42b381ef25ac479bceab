@@ -1,0 +1,16 @@
+## 4. Phase rigidity and one shared Gram feasibility argument
+
+Put $u=t_k$, $v=t_l$, so $|u|,|v|<1$, and let
+$G(z)=\left(\begin{smallmatrix}1&z\\\bar z&1\end{smallmatrix}\right)$.
+Use input generators
+
+$$
+A_\epsilon=e_2\otimes\eta_\epsilon,\qquad
+B_\epsilon=n_\epsilon(k)\otimes\eta_\epsilon.
+\tag{PR.9}
+$$
+
+In order $(A_+,A_-,B_+,B_-)$ their Gram matrix is
+$G(\mu)\oplus G(\mu u)$. The actual input is
+$\sqrt Z A_\epsilon+z\sqrt r B_\epsilon$, $z=e^{-i\beta}$.
+

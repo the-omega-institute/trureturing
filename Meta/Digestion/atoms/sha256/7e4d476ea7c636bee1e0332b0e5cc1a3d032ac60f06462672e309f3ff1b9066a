@@ -1,0 +1,38 @@
+**定义 C-146.1（源律与其精确像）。** 对每个整数 $n\ge1$，定义
+
+$$
+\begin{aligned}
+\mathrm{IID}_n&=\{\rho^{\otimes n}:\rho\in\mathcal F_p\},&
+\mathrm{cIID}_n&=\operatorname{conv}_{\rm fin}\mathrm{IID}_n,\\
+\mathrm{Prod}_n&=\{\rho_1\otimes\cdots\otimes\rho_n:\rho_i\in\mathcal F_p\},&
+\mathrm{cProd}_n&=\operatorname{conv}_{\rm fin}\mathrm{Prod}_n,\\
+\mathrm{Marg}_n&=\{\omega\in\mathsf D(H^{\otimes n}):\omega_i\in\mathcal F_p\ (\forall i)\},&
+\mathrm{Marg}_n^{=}&=\{\omega\in\mathrm{Marg}_n:\omega_1=\cdots=\omega_n\}.
+\end{aligned}
+\tag{C146.1}
+$$
+
+$\omega_i$ 是第 $i$ 个偏迹边缘，所有联合态允许任意复数及纠缠。
+IID 中的单份 $\rho$ 可以是混态；乘积混合中每个分支的每个因子均须为零假设。
+对每个所列域 $\mathcal D_n$，实际输出域精确取
+$\mathcal D_{N,n}=N^{\otimes n}(\mathcal D_n)$。
+给定同一个复集体效果 $0\preceq T\preceq I_{K^{\otimes n}}$，定义
+
+$$
+\begin{aligned}
+r_{N,\mathcal D_n}(T)
+&=\sup_{\omega\in\mathcal D_n}\operatorname{Tr}\!\left[TN^{\otimes n}(\omega)\right],\\
+p_{N,n}(T)&=\operatorname{Tr}(T\tau_N^{\otimes n}),\\
+f_{N,\mathcal D_n}(\delta)
+&=\sup_{\substack{0\preceq T\preceq I\\r_{N,\mathcal D_n}(T)\le\delta}}
+p_{N,n}(T),\qquad0\le\delta\le1.
+\end{aligned}
+\tag{C146.2}
+$$
+
+风险与功效消费同一 $N^{\otimes n}$、同一已声明的源律及同一个无条件效果。
+目标输入为 $P_0^{\otimes n}$，输出是实际混态 $\tau_N^{\otimes n}$。
+这里不把不同通道、不同分支的独立最优值拼成共同实现。
+所供效果是不限复测量的数学资源，未继承 C-136.3 的守恒限制，
+也未扩充原生翻转／相位／末端 $n_1$ 菜单。
+

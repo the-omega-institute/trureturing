@@ -1,0 +1,36 @@
+## 9. Unresolved quantitative and original attainment questions
+
+**Open Question 9.1 (Actual-optimizer response and threshold).** Does some $n\ge99$ satisfy $V_2(n)>\tau$? In particular, do the actual responses $H_i$ admit probes for which the sum in (7.16) crosses its stated threshold, or a family meeting the positive-density premise of Corollary 7.5?
+
+No positive shortfall $d_i(f)$, no positive variance at a specified length $n\ge7$, and no uniform density of either are established here. The equations characterize the quantities to be controlled, but do not construct or evaluate an optimizer. The fixed-exterior comparison in §3 is an upper bound and cannot be used as a lower bound. The event floor in Lemma 7.3 supplies only event frequency. The mean and covariance identities supply neither independently prescribable anchor data nor an obstruction to every possible future growth proof.
+
+[Global/local rank compatibility, Theorems 4.4 and 5.1][R] exhibits one coherent comparison process whose independently fitted fixed-block defects vanish while its global rank-two discrepancy grows. Those results concern that process's marginals, not $\pi_n$. They warn against deducing accumulated defects from finite positivity. They do not answer this actual-optimizer question, prove a bulk limit for $\pi_n$, or disprove the global relaxation on $\pi_n$.
+
+**Open Question 9.2 (Attainment versus the extra endpoint premises).** [Universal, Theorem 3.1][U] makes the band necessary for any stationary attainer. It remains unproved here that every hypothetical finite-hidden attainer has $A_P<\infty$, or that attainment or its first-order balances imply the strong pathwise property $\mathsf Z_\Delta(P)$.
+
+Neither structural zeros, zero stationary masses, reducibility nor periodicity is removed to obtain a generic forgetting assertion. An exclusion of the three-premise endpoint becomes a nonattainment theorem only after these missing bridges, or after a different complete exclusion argument. The implication in (8.10) is from the three premises to attainment; reversing it is not justified.
+
+**Open Question 9.3 (The original whole-domain finite-attainment alternative).** On the entire exact-real $\Theta_N$ in (8.1), define
+
+$$
+\begin{aligned}
+D_r(P)&=\mathbb E_P\left(X_0-
+\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,\ldots,X_r]\right)^2,\\
+C_N&=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad r\ge1.
+\end{aligned}
+\tag{9.1}
+$$
+
+Still decide whether some finite $N$ and $\theta\in\Theta_N$ attain $d(P_\theta)=c_\star$, or whether $C_N<c_\star$ for every finite $N$. [Universal, Theorem 6.2][U] supplies attainment of each $C_N$, the identity $C_N=\inf_rU_{N,r}$, and the equivalence of the negative alternative with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{9.2}
+$$
+
+The compact domain includes the zero-mass and reducible presentations; it is not restricted to full-support parameters. An attained visible law has full support by the supplied attained-law theorem. Padding by zero-mass hidden states preserves the law, so the finite-budget existence quantifier is unchanged.
+
+The response-density route here addresses a sufficient test at dimension two and supplies no all-$N$ separation pairs. No actual finite attaining $J_\theta/P_\theta$ is constructed. Even a future dimension-two endpoint exclusion would leave (9.2) unpaid. At $N=1$ scalar legality forces $M_1=0$, so the visible law is all zero and fails the free-site band; this boundary observation does not settle arbitrary finite $N$.
+

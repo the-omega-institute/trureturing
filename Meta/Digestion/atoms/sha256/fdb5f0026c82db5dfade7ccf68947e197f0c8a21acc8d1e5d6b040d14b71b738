@@ -1,0 +1,39 @@
+**Theorem 4.2 (the two residual identities).** At every primitive cut in
+$\mathcal R_H$,
+
+$$
+\begin{aligned}
+I(h)&=L(h)\mathbin{+\!+}Q(h),& |Q(h)|&\le1,\\
+I(h)&=F\bigl(A_P(h)\mathbin{+\!+}P(h)\bigr)
+       \mathbin{+\!+}D(h),& |P(h)|&\le1.
+\end{aligned}
+\tag{AIF.4}
+$$
+
+The bound on $P$ imposes no bound on $|D|$.
+
+Proof. At the acquisition fence all these relative input words are empty.
+An IN appends one actual bit to $I$ and puts it in $Q$. No further IN is
+enabled before its WR. Intermediate EX, tests or positioning preserve that
+bit. Its input WR appends it to $L$ and makes $Q$ empty by phase. Moving
+heads, parsing or executing the source does not acquire another external
+bit. Retention preserves all earlier material. This proves the first
+identity by induction, including the header's IN-to-EX-to-WR interval.
+
+Before the current source event commits, exactly its consumed frame prefix
+is appended to $D$ at each IN. Source work changes neither $I$ nor that
+prefix. Commitment is enabled only after the full canonical frame has been
+received and parsed. At commitment its entire frame passes from the logical
+$D$ part to $F(E)$; thus their concatenation is unchanged. The committed
+event enters $P$ with its actual request and result. Row-prefix writes
+preserve the words. Its row seal moves that event from $P$ to $A_P$, as in
+the supplied journal invariant, and again preserves the concatenation.
+Copying and acknowledgement change physical state and receipts without
+acquiring new input. Serial admission precludes two unfinished frames or
+two committed unsealed events. Deterministic markers have empty $F$
+contribution. This proves the second identity at every phase.
+
+A single TagRead address may have arbitrarily many supplied bits before
+any source event commits. The examples in Theorem 5.2 below make $|D|$
+arbitrarily large with $P$ empty. ∎
+

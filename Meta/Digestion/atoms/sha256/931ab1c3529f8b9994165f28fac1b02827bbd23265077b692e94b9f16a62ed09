@@ -1,0 +1,10 @@
+**定义 4.1（明确增加的复二级接口）。** 另给 $\mathcal H=\mathbb C^2$，取标准 Pauli 矩阵
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+这里 $X,Y,Z$ 仍表示第3节的概率均值，Pauli 算子使用 $\sigma$ 下标以免混淆。对 $n\in S^2$ 记 $P_n=(I+n\cdot\sigma)/2$。这是新增表示合同，不是从五个位串自动推出的载体或原生操作。
+

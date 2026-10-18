@@ -1,0 +1,16 @@
+**定义 7.2（当前类型质量和地址熵）。** 第 $n$ 层的叶长度为 $p_{n,q}>0$，其和为一。置
+
+$$
+b_n=\sum_{q:\,\operatorname{label}(q)=\beta}p_{n,q},\qquad
+H_n=-\sum_q p_{n,q}\log_2 p_{n,q},\qquad
+h_2(s)=-s\log_2s-(1-s)\log_2(1-s).
+$$
+
+$H_n$ 是假设7.1下的当前叶地址 Shannon 熵，不是实际已经取得的记录量或物理总熵。给定当前叶，转移矩阵按 $(\beta,\alpha)$ 为
+
+$$
+P_s=\begin{pmatrix}s&1-s\\1&0\end{pmatrix}.
+$$
+
+其条件律由子区间与父区间的长度比给出，不要求一个新独立随机源逐步供给选择。
+

@@ -1,0 +1,17 @@
+**Definition 1.4 (joint contact of alternative originals).** Supply a
+finite set $B$ of distinct attained complete target rows, $|B|\ge2$.
+Set
+
+$$
+J_B(h)\iff
+\exists(u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\quad u_r\equiv_h u_s.
+\tag{TOS.4}
+$$
+
+Each $u_r$ is a different possible original satisfying one whole common
+producer contract. Different target labels are not assigned to one
+realization. One jointly shared prefix is required; unrelated pairwise
+witnesses do not suffice. Fresh finite witnesses may be used at each
+depth. This is [SJM, Definition 3.1][SJM]'s fixed-set question.
+

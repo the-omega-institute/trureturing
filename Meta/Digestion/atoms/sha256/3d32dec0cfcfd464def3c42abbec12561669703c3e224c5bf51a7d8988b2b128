@@ -1,0 +1,45 @@
+### 56.2 精确反射与正分母种子化简
+
+四个原多项式满足全多项式恒等式
+\[
+P_R(h,-b,-s,t,-\tau)=\epsilon_R P_R(h,b,s,t,\tau),
+\quad (\epsilon_I,\epsilon_H,\epsilon_G,\epsilon_L)=(1,-1,1,-1).
+\tag{56.3}
+\]
+它可直接由式 (55.24)–(55.25) 展开验证；等价地，每个非零单项式的 \(b,s,\tau\) 指数之和，对 \(I,G\) 为偶数，对 \(H,L\) 为奇数。该恒等式不需要先施加种子关系。因为 \(\sigma=12(1+s^2+t^2)\) 在此反射下不变，有限图在 \((b,s,v)\mapsto(-b,-s,-v)\) 下乘以 \(\epsilon_R\)，倒数图则乘以 \((-1)^{d_R}\epsilon_R=1\)。所以只需证明非负半区间 \(0\le b\le1/2\) 上两个图都无公共零点。
+
+写
+\[
+P_R=\sum c_{\alpha,k,i,j,m}\,h^\alpha b^k s^i t^j\tau^m,
+\qquad c_{\alpha,k,i,j,m}\in\mathbb Q,
+\]
+并固定
+\[
+(\kappa_I,\kappa_H,\kappa_G,\kappa_L)=(3,3,4,3),
+\quad (d_I,d_H,d_G,d_L)=(2,1,2,1).
+\]
+各 \(\kappa_R\) 等于该行非零项中 \(\lfloor\alpha/2\rfloor\) 的最大值。对图 \(c\in\{F,Q\}\)，定义
+\[
+e_F(m)=m,\qquad e_Q(m)=d_R-m,
+\]
+\[
+\begin{aligned}
+\widetilde P_{R,c}
+={}&\sum c_{\alpha,k,i,j,m}\,h^{\alpha\bmod2}b^k s^i t^j
+ (3-b^2)^{\lfloor\alpha/2\rfloor}
+ (1+b^2)^{\kappa_R-\lfloor\alpha/2\rfloor}
+ \sigma^m v^{e_c(m)}\\
+={}&A_{R,c}(b,s,t,v)+hB_{R,c}(b,s,t,v).
+\end{aligned}
+\tag{56.4}
+\]
+这完整指定了两个有理系数多项式 \(A_{R,c},B_{R,c}\)。由
+\(h^2=(3-b^2)/(1+b^2)\)，逐单项式得到
+\[
+\widetilde P_{R,F}=(1+b^2)^{\kappa_R}F_R,
+\qquad
+\widetilde P_{R,Q}=(1+b^2)^{\kappa_R}Q_R.
+\tag{56.5}
+\]
+所乘因子严格为正。没有除以新的变量、剩余式或最高项系数。
+

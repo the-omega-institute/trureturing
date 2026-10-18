@@ -1,0 +1,21 @@
+**定义 3.1（组成层、欧氏尺子与反射）。** 原生自由树为
+
+```math
+T::=\alpha\mid\beta\mid\langle T,T\rangle,
+\qquad \rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+```
+
+组成是叶数列向量，$`c(\alpha)=(1,0)^{\mathsf T}`$、$`c(\beta)=(0,1)^{\mathsf T}`$，对子加法。供应的组成桥为
+
+```math
+c(\rho T)=Mc(T),\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+```
+
+来源的左右次序、括号和记录仍在树层；$`M`$ 只推进组成。在扩展的 $`\mathbb R^2`$ 上采用标准欧氏内积及标准定向，令
+
+```math
+S=\frac{2M-I}{\sqrt5}
+=\frac1{\sqrt5}\begin{pmatrix}-1&2\\2&1\end{pmatrix}.
+```
+

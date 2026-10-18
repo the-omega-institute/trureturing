@@ -1,0 +1,22 @@
+**Definition 5.1 (all-length product mass).** For $w:S\to[0,\infty)$
+put
+
+$$
+\begin{aligned}
+\Omega_w(B)&=\sum_{x\in B}\prod_{i=1}^nw(x_i),\\
+A_n(w)&=\max_{B\in\mathcal B_n}\Omega_w(B),\qquad A_0(w)=1,\\
+\beta_N(w)&=\max_{1\le n\le N}A_n(w)^{1/n},\qquad
+\beta(w)=\sup_{n\ge1}A_n(w)^{1/n}.
+\end{aligned}
+\tag{NPC.15}
+$$
+
+For $w>0$, $P_d(w)=\log_2\beta(w)$ is precisely [NDR, Proposition
+3.3][NDR]'s unrestricted pressure. Singletons and the full ambient
+mass give
+
+$$
+\max_xw(x)\le\beta_N(w)\le\beta(w)\le\sum_xw(x).
+\tag{NPC.16}
+$$
+

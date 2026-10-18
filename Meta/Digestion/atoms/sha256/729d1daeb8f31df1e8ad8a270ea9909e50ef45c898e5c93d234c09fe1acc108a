@@ -1,0 +1,18 @@
+**开放问题 5.4（词长、限制操作与实际资源）。** 一般 $n$ 的 $\kappa_n$ 由式（1.2）有限图问题精确表征，但没有给出其 Fibonacci 闭式；只有完整 $B_3$ 得到式（2.6）–（2.7）的解析解。增长 $n$ 的一致估计、全局最优有限 $q$ 准备、所有局部或 LOCC 类的最优值、稳健性和完整物理资源价格均未解决。固定词长的 $O_n$ 首项结论不能替代这些问题的答案。
+
+[Recovery]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[Whitebox]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[Native]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/D5/S3/Arith/FibonacciAtomic/FixedScalarFiberDiscovery.lean
+[KBonacci]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/docs/develop/theory/KBONACCI_FOUR_LABEL_ROOT_ZERO_INTERSECTION_PRICE.md
+[MontanaroNote]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/Library/Quantum/montanaro2007distinguishability.md
+[CSAQ]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md
+[ActiveSet]: https://github.com/the-omega-institute/trureturing/blob/7772839e6bdae1ed339d9a35f2932f300081c7f1/D5/S3/Quantum/Measurement/EquiprobablePgmActiveSetRefutation.lean
+[EF]: https://arxiv.org/abs/quant-ph/0005132
+[Ambainis]: https://arxiv.org/abs/quant-ph/0002066
+[Tyson]: https://arxiv.org/abs/0907.1884v1
+[DSK]: https://arxiv.org/abs/quant-ph/0504048v5
+[Montanaro]: https://arxiv.org/abs/quant-ph/0607011v2
+[MathConvex]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Topology.lean
+[MathPosDef]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/PosDef.lean
+[MathCFC]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Matrix/HermitianFunctionalCalculus.lean
+

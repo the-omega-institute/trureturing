@@ -1,0 +1,55 @@
+**Proposition 7.8 (Actual feature image, fibers and sharp error).**
+The exact encoded image is
+
+$$
+\mathscr S_*=
+ \left\{(\xi,\mathbf f_0,\ldots,\mathbf f_d):
+ a\le\xi\le b,\quad \|\mathbf f_0\|_2=1,\quad
+ \mathbf f_j=\xi^j\mathbf f_0\ (1\le j\le d)\right\}.
+$$
+
+The fibers of this particular encoder consist exactly of the full
+$\beta$ circle at fixed $(k,\alpha)$. Its uniform original-output
+error is exactly $2\sqrt{Zb}$.
+
+**Proof.** The equations hold for every encoded ray. Conversely
+$\mathbf f_0=U(\alpha)$ for a unique circle class, and $k=\xi$;
+Proposition 7.2 realizes these values with every $\beta$.
+This proves both the image characterization and the fiber statement.
+The encoder is bounded, since
+
+$$
+\|E_*(k,\alpha,\beta)\|_2^2
+ =k^2+\sum_{j=0}^d k^{2j}
+ \le b^2+\sum_{j=0}^d b^{2j}.
+$$
+
+This is a property of the construction, not a hypothesis in
+Theorem 7.4. On the source,
+$M(E_*(x))=\Pi_m(k)U(\alpha)$.
+By the original metric of Lemma 7.3,
+
+$$
+\begin{aligned}
+\|L_*E_*(x)-y(x)\|_2^2
+ &=4(\Pi_m(k)-A(k))^2+B(k)^2\\
+ &\le4\zeta^2(b-k)^2+4Zk\\
+ &\le4Z(b-k)+4Zk=4Zb.
+\end{aligned}
+$$
+
+The last inequality uses $0\le b-k\le\ell$ and $\zeta^2\ell\le Z$.
+At $k=b$, the first term is zero and the second is $4Zb$,
+for every $\alpha,\beta$. Thus the bound is attained, not merely
+approached.
+
+All omitted $\beta$ values remain distinct actual rays in the error
+supremum. Their $02$ outputs form a circle of radius $B(k)$ and
+diameter $2B(k)$; the decoder uses its center. The zero decoded
+$02$ pair is not an output of any positive-support native ray.
+Noninjective encoding and approximate outputs outside the native
+output image are permissions of Definition 7.1. Adding injectivity
+or physical realizability of every decoded vector would remove
+this upper witness, while preserving the necessary bound.
+$\square$
+

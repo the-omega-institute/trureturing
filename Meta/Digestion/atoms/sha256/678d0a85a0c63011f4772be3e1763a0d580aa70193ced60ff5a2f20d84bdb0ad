@@ -1,0 +1,122 @@
+**Proposition 3.1 (contrast gap on every hypothetical rank-one face).**
+Under the hypotheses of Proposition 2.1 every common multiplier
+optimizer, including each endpoint representation of it, satisfies
+
+$$
+K<\sqrt\alpha-\frac1{24000}.
+\tag{RB.11}
+$$
+
+Proof. Use the endpoint projection FC.110. It preserves every
+$\Gamma$ coordinate and $K$. For an optimizer, FC Theorems 3.3
+and 4.2 put each strict fraction in its compatible contact group,
+so this projection also preserves $J_t$. In particular both columns
+of every paired group remain separately available. No reversal is
+merged across opposite height signs and no singleton is omitted.
+Write the endpoint law as $\pi_{\rm end}=\rho_0\otimes\delta_0+
+\rho_1\otimes\delta_1$, and set $S=\rho_1(S^1)$. From the same
+failure moments and (RB.5),
+
+$$
+\frac{\mu}{t}=\int c\,d\rho_1>\frac{S}{25},\qquad
+S<\frac{300}{t}\le\frac1{100}.
+\tag{RB.12}
+$$
+
+The saturated measure is nonzero because $\mu>0$, which justifies
+the strict integrated capacity bound. It includes the saturated
+coordinate of $G_*$ and every mandatory or additional reverse group.
+
+Put $a=\sqrt\alpha$, $b=\sqrt\beta$, and define
+
+$$
+H(u,v)=\frac14(1+u/a)(1+v/b),\qquad
+d_a(u,v)=\big||u|-a\big|,\qquad
+D_a=\int_{S^1}d_a^2\,d(\rho_0+\rho_1).
+\tag{RB.13}
+$$
+
+The full live moments, including the first and mixed moments, give
+
+$$
+\int H\,d(\rho_0+\rho_1)=\frac14,\qquad
+D_a=2a(a-K).
+\tag{RB.14}
+$$
+
+Indeed the second identity expands
+$\int(u^2-2a|u|+a^2)=\alpha-2aK+\alpha$ on the mass-one law.
+
+For each point snap to $z=(\operatorname{sgn}(u)a,
+\operatorname{sgn}(v)b)$, assigning the negative sign at zero.
+On this four-point rectangle, $H(z)$ equals one at $(a,b)$ and
+zero at the other three points. The circle identity gives
+
+$$
+\big||v|-b\big|=
+\frac{|u^2-a^2|}{|v|+b}\le\frac{2d_a}{b}.
+\tag{RB.15}
+$$
+
+Coordinatewise interpolation in the rectangle $[-1,1]^2$ and the
+two partial derivatives of $H$ therefore yield
+
+$$
+|H(x)-H(z)|\le C d_a,\qquad
+C=\frac{1+1/b}{4a}+\frac{2(1+1/a)}{4b^2}
+<\frac{269725}{26877}<11.
+\tag{RB.16}
+$$
+
+The strict comparison uses $a>93/100$ and $b>17/50$, which follow
+by squaring these rationals in (RB.5).
+
+If $x\in Y$ snaps to $(a,b)$, then $u,v>0$, and membership in
+$Y$ requires $f(x)\le0$. Consequently $v/u\ge\chi>18/25$, so
+
+$$
+u^2<\frac{625}{949}<\frac{25}{36},\qquad
+d_a>a-\frac56>\frac{29}{300}>\frac9{100}.
+\tag{RB.17}
+$$
+
+Thus in this case $H(z)=1<(100/9)d_a$. In every other snapping
+case $H(z)=0$. Combining both cases with (RB.16) proves
+$H(x)\le24d_a(x)$ throughout $Y$. The whole circle also satisfies
+
+$$
+H(x)\le\frac14(1+1/a)(1+1/b)
+<\frac{12931}{6324}<3.
+\tag{RB.18}
+$$
+
+Neither inequality assumes $H\ge0$; negative values cause no change
+to the upper bounds.
+
+Proposition 2.1 confines the pure endpoint measure to $Y$, whereas
+the saturated measure is unrestricted. Cauchy–Schwarz on the pure
+part and (RB.12)–(RB.18) give
+
+$$
+\frac14
+\le24\int d_a\,d\rho_0+3S
+\le24\sqrt{D_a}+3S
+<24\sqrt{D_a}+\frac3{100}.
+\tag{RB.19}
+$$
+
+It follows that
+
+$$
+D_a>\left(\frac{11}{1200}\right)^2
+=\frac{121}{1440000}>\frac1{12000},\qquad
+a-K=\frac{D_a}{2a}>\frac1{24000},
+\tag{RB.20}
+$$
+
+where $a<1$. Projection preserved the original $K$, proving
+(RB.11) for every optimizer. This argument uses the common full
+law, not independently chosen angular and failure marginals. It
+does not preserve or bound actual label count under projection.
+$\square$
+

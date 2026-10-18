@@ -1,0 +1,44 @@
+**Proposition 7.2 (strict separations of the comparison contracts).**
+Scalar attempt-law recovery does not imply full future-law recovery;
+full future-law recovery does not imply same-tape transport; and
+same-tape transport of every allowed future does not imply a legal
+literal restoration.
+
+**Proof.** For the first assertion, take target 1 and one permitted
+terminal action. At the reference configuration it outputs 1, and at
+the current configuration it outputs 2. Both are certain finite
+correct proposals with $(h,e,d,r)=(1,0,0,0)$, but their real-output laws
+differ. Source identity, permissions and the unit action cost are the
+same.
+
+For the second assertion, use a fair tape bit $U\in\{0,1\}$ and let
+the sole terminal action output $1+U$ at one configuration and $2-U$ at
+the other. The complete observable future in each case is one legal
+unit-cost action with a uniformly distributed proposal in $\{1,2\}$.
+Those laws agree, but the outputs differ on each common tape. The
+complementary-tape coupling is not the asserted identical-tape
+comparison.
+
+For the third assertion, take states $z_0,z_1$ with the same immutable
+source and a single action Read. In either state it returns zero at
+unit cost and leaves that state fixed. Give the controller identical
+retained information and permissions at both states. Every allowed
+finite or infinite sequence, and every source-independent adaptive
+choice of when to stop, has identical observable records, stopping and
+costs on the same tape. Yet no legal action takes $z_1$ to $z_0$.
+The full-future interface here excludes the hidden literal state label;
+if that label is itself a required observable output, this example no
+longer has full future-law equality. $\square$
+
+The fresh-suffix result
+[FreshServiceRestart, `first_acceptance_restart`](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FreshServiceRestart.lean)
+states that for iid coordinates and a positive-probability measurable
+acceptance set, first acceptance leaves an independent untouched suffix
+with its original product law. This supplies fresh service randomness,
+not restoration of an actively changed source configuration or
+permission. The iid cycle-pair assumption in
+[Random Services, Renewal Reward Processes, Preliminaries](https://www.randomservices.org/random/renewal/Reward.html)
+is likewise a substantive hypothesis; no renewal-reward theorem is
+needed for (6.2), and no such theorem authorizes replacement of the
+fixed latent source in Proposition 5.3.
+

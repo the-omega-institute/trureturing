@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-probability-phase-transport-and-holonomy"
+path = "docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

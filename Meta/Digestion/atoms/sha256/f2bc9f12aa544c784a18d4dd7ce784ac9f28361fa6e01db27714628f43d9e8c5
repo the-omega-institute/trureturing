@@ -1,0 +1,23 @@
+**Theorem 3.1 (retain early actions, cap later actual updates).** Put
+
+$$
+ M=\max(N,5),\qquad U=M-N.
+\tag{JRF.3.1}
+$$
+
+For every $A\in\mathcal C(D,N,Q)$ one can effectively construct $A^c\in\mathcal C(D,N,Q)$ such that, on each $u\in D$,
+
+$$
+ \operatorname{out}_{A^c}(u)=\operatorname{out}_A(u),\quad
+ q_{A^c}(u)=q_A(u),\quad
+ d_{A^c}(u)=\min(d_A(u),U),\quad
+ \ell_{A^c}(u)\le\ell_A(u).
+\tag{JRF.3.2}
+$$
+
+Every actual epoch of $A^c$ lies in $[N,M]$. Every read and update of the simulated run before it would exceed $M$ is performed at its original epoch and address. In particular, all reply-dependent decisions at epochs zero through four, including halt before the first update, are retained. Pointwise termination is preserved without assuming a uniform bound on $A$'s original actions or local work.
+
+Proof. Keep the acquired entry and separate actual and simulated records. Simulate $A$ from epoch $N$; let $n$ be its simulated epoch. Maintain the actual epoch as $\min(n,M)$. A simulated update is performed on the actual register if $n<M$, and otherwise changes only the local simulated state. A simulated read at $p$ is performed at $p$ if $n\le M$; if $n>M$, actually read $S(n,M,p)$. Lemma 2.2 makes the returned literal value exactly the one $A$ would obtain on the same $u$. Induction on the finite original execution therefore preserves its simulated control, successive replies, choices, and output.
+
+Each simulated read produces exactly one actual read. Before the cap the address length is unchanged, and after it Lemma 2.2 makes the length no larger. Actual updates are exactly the first $\min(d_A(u),U)$ updates. Each simulated step and each address transformation takes finite local work, so a finite run of $A$ yields a finite run of $A^c$. The program halts when the simulation halts and has no outgoing source action afterward. Its actual receipts record only its actual epochs and physical addresses. A simulated late update is neither an actual update nor an authenticated receipt. $\square$
+

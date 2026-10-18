@@ -1,0 +1,52 @@
+##### 定理 2.4.2： 事件排除与事件确定的精确判据
+
+设 $\rho$ 为密度矩阵，$0\preceq E\preceq I$。则：
+
+$$
+\boxed{
+\operatorname{Tr}(\rho E)=0
+\iff
+\operatorname{supp}\rho\subseteq\ker E,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\operatorname{Tr}(\rho E)=1
+\iff
+\operatorname{supp}\rho\subseteq\ker(I-E).
+}
+$$
+
+**证明。**
+
+因为：
+
+$$
+\operatorname{Tr}(\rho E)
+=
+\operatorname{Tr}(\sqrt\rho E\sqrt\rho)
+=
+\|\sqrt E\sqrt\rho\|_{\mathrm{HS}}^2,
+$$
+
+其为零，当且仅当：
+
+$$
+\sqrt E\sqrt\rho=0.
+$$
+
+$\sqrt\rho$ 的像空间是 $\operatorname{supp}\rho$，而 $\sqrt E$ 与 $E$ 核相同，因此得到第一式。
+
+又因为：
+
+$$
+1-\operatorname{Tr}(\rho E)
+=
+\operatorname{Tr}[\rho(I-E)],
+$$
+
+对 $I-E$ 应用第一式即可得到第二式。证毕。
+

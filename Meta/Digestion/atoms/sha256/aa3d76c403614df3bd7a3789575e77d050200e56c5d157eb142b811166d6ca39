@@ -1,0 +1,45 @@
+**Definition 2.1 (the exact owned-seed carrier).** Use exactly
+[RRN, Definition 5.1][RRN]. A network $\mathcal N$ has a finite seed
+set $J$, domains $T_c\subseteq\mathcal A$, and distinct actual
+owner ports $o_c\in V$. A port $v=(i,q)$ is prescribed either a
+constant $z_v=\zeta_v\in G_q$ or a value
+$z_v=B_v(s_c)$ from one seed, with $B_v:T_c\to G_q$.
+The owner $o_c$ is assigned to $c$ and satisfies
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{SIR.10}
+$$
+
+Repeated occurrences use the same variable. With
+$\mathcal S=\prod_{c\in J}T_c$, define
+
+$$
+\begin{aligned}
+\mathcal X_i(s)&=\{u\in S_d:
+          \Gamma_q(u)=z_{(i,q)}(s)\ \text{for all }q\in W_d\},\\
+\mathcal S_{\rm real}&=\{s\in\mathcal S:
+                         \mathcal X_i(s)\ne\varnothing\ \text{for all }i\},\\
+\Phi_i(s)&=\sum_{u\in S_d}w_i(u)
+              \prod_{q\in W_d}\mathbf1_{\{\Gamma_q(u)=z_{(i,q)}(s)\}},\\
+Z(\mathcal N;w_1,\ldots,w_n)&=\sum_{s\in\mathcal S}\prod_i\Phi_i(s).
+\end{aligned}
+\tag{SIR.11}
+$$
+
+Every $\mathcal X_i(s)$ is empty or a singleton. Let
+$C_{\mathcal N}$ be the reconstructed actual tuples for
+$s\in\mathcal S_{\rm real}$. Each original $w_i$ occurs once,
+in $\Phi_i$. Incompatible seed assignments have zero contribution;
+they are never declared jointly realizable.
+
+[RRN, Theorems 4.2 and 5.2][RRN] give both correspondences:
+every complete template has exactly the solution set of such a
+network, and every such network translates back to a complete
+native template on the same $n$ blocks. Actual owner replies
+recover the seeds, so both correspondences count each tuple once
+and preserve (SIR.7). Domains may be empty, singleton or have four
+members. With no seeds, the empty assignment contributes one
+constant tuple or none. Analytical seed variables are not acquired
+or exported readings.
+

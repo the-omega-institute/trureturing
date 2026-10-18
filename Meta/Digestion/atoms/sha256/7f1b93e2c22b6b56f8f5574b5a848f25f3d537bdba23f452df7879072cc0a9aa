@@ -1,0 +1,16 @@
+定义热时间或熵时间
+\[
+\tau(t)
+=
+D(\rho_0\Vert\sigma)-D(\rho_t\Vert\sigma)
+=
+\int_0^t\Sigma(\rho_s)\,ds.
+\]
+则
+\[
+\tau(t)\ge0,
+\qquad
+\frac{d\tau}{dt}=\Sigma(\rho_t)\ge0.
+\]
+如果 \(\Sigma(\rho_t)>0\) 在几乎处处成立，则 \(\tau\) 严格递增，可以反解 \(t=t(\tau)\)。如果 \(\Sigma\equiv0\)，则热时间不推进，即网络处于相对熵守恒的可逆或平衡轨道。
+

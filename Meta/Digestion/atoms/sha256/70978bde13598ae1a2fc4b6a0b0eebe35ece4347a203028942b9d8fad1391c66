@@ -1,0 +1,12 @@
+## Provenance and scope
+
+The abstract invariant-box method is prior art: Uemura, arXiv:2609.34108v1,
+Theorem 3.2, https://arxiv.org/html/2609.34108v1#S3.Thmtheorem2.
+This note supplies the exact packet-specific degree-(8,9) certificate; it
+does not claim a new variational method. The repository's pure-cycle
+degree-(8,10) packet in PR #11648 has a different degree class. Zhao's
+unrestricted minimum-nine theorem does not directly apply here because the
+prescribed triangulation has degree-eight edges. No exhaustive literature
+priority claim is made.
+
+

@@ -1,0 +1,72 @@
+**定理 84.1（实际接触处的明确系数）。** 在约定 78.1 及本节选定根前提下，在实际接触处，两个最优谱取向仍唯一为 $o=+1$，而且
+
+$$
+\boxed{
+K(s_{\rm c})
+=
+\nu_-\ell(h_-)
++
+\frac{\gamma_{\rm c}}2
+\sum_{\epsilon=\pm1}
+\nu_\epsilon(W_{\rm c}^Th_\epsilon)^2.
+}
+\tag{RC.152}
+$$
+
+这是由源参数、两个物理谱效应和选定 RC 根确定的系数值。
+
+证明。由 (RC.148) 直接展开，
+
+$$
+\begin{aligned}
+b_+
+={}&\gamma\beta^2a\varkappa D_a
+\bigl[
+-(V_a^2+4\alpha a\varkappa U_a)z_+\\
+&\hspace{43mm}
++(U_a-4\beta a\varkappa)V_aw_+
+\bigr].
+\end{aligned}
+\tag{RC.153}
+$$
+
+这里
+
+$$
+V_a^2+4\alpha a\varkappa U_a
+>.79^2-4(.296)(.4)>0,
+$$
+
+而第二个括号系数为负，故 $b_+<0$。对负谱方向，
+
+$$
+\frac{b_-}{z_-}
+=
+2\mathsf x-\frac{2\mathsf y}{q_f}
++\frac{\lambda_{\rm c}}2
++\gamma_{\rm c}(W_{\rm c})_0
+\left((W_{\rm c})_1-\frac{(W_{\rm c})_2}{q_f}\right).
+\tag{RC.154}
+$$
+
+由 RC60–63 的选定接触盒及继承的源界得到保守界
+
+$$
+-(W_{\rm c})_0>.09,\quad
+(W_{\rm c})_1>.0868,\quad
+(W_{\rm c})_2<.0029,
+$$
+
+$$
+(W_{\rm c})_1-(W_{\rm c})_2/q_f>.07,\qquad
+\gamma_{\rm c}>2.5,\qquad \lambda_{\rm c}/2<.024.
+$$
+
+因此
+
+$$
+b_-/z_-<-.01524+.024-2.5(.09)(.07)<0.
+$$
+
+在这两个取向上 $h^TCh=|z|=z$，故 (RC.151) 的对比度项抵消，得到 (RC.152)。 $\square$
+

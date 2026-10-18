@@ -1,0 +1,48 @@
+**Lemma 21.4 (productive finite-prefix test).** Let $S_\eta,F^{\rm acc}_\eta$
+be the state and final-state sets of $\mathcal A_\eta$. A convolution label
+is diagonal when each corresponding $v,w$ symbol agrees, including
+padding. Put $Z_0$ equal to the productive states and set
+
+$$
+Z_{j+1}=\{s:\text{a diagonal nullary transition yields }s\}
+ \cup\{s:\text{a diagonal binary transition from }s_L,s_R\in Z_j
+                         \text{ yields }s\}.
+\tag{CE.21.3}
+$$
+
+The sequence decreases and stabilizes effectively. Its stable set is
+$Z_\infty$. There is a finite $h$ with no admissible bad pair
+$v\equiv_h w$ exactly when
+
+$$
+F^{\rm acc}_\eta\cap Z_\infty=\varnothing.
+\tag{CE.21.4}
+$$
+
+If (CE.21.4) fails, for each given $h$ one can construct a finite
+admissible bad pair satisfying $v\equiv_h w$.
+
+Proof. Induct on $j$: $s\in Z_j$ exactly when a finite convolution-shaped
+input has a run to $s$ and all its labels at depths less than $j$ are
+diagonal. At zero this is productivity. At the next level a diagonal
+nullary root terminates, or a diagonal binary root joins two finite
+witnesses from the preceding level. This proves both directions of the
+induction. Intermediate witnesses need not have valid coordinate roots;
+validity is enforced at acceptance by $\mathcal A_\eta$.
+
+In particular $Z_1\subseteq Z_0$. Monotonicity of the displayed operation
+then gives $Z_{j+1}\subseteq Z_j$. There are at most $|S_\eta|$ strict
+decreases; after equality, further iterations are equal. On a valid
+accepted convolution, diagonal labels through $j$ levels are exactly
+$v\equiv_j w$. Addresses outside the union domain are absent in both
+copies and cause no missing comparison. Hence a final state in $Z_j$
+is precisely a finite bad pair with that prefix agreement.
+
+If the stable intersection is empty, the finite stabilization computation
+finds such a $j$. If it is nonempty, for any requested $j$ retain transition
+witnesses for its $j$ recurrences and attach productive finite completions
+at level $j$. This is a finite construction even for a state participating
+in cycles. Acceptance supplies valid finite trees and the full Bad
+predicate. No infinite tree, arbitrary unproductive state or compactness
+limit substitutes for these witnesses. $\square$
+

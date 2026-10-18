@@ -1,0 +1,39 @@
+**Definition 2.3 (finite positive completed presentations).** A presentation
+has finitely many declared completed variables, positive equalities, and
+finite displayed terms using fixed finite grounds, $\Omega$, pairing,
+fixed numeral powers of $\rho$, and atoms $T_{a(p)}$. Here $p$ is a finite
+natural tuple and each $a$ is an affine integer expression with an explicit
+nonnegativity guard. Include every declared variable, even if unused.
+Image conditions $X\in\rho^e(\widehat{\mathcal T})$, if present, mean
+$X=\rho^eY$ with an additional declared completion variable $Y$. This is
+an existential image statement, not a finite-preimage condition.
+
+Flatten just the displayed finite syntax. Distribute fixed powers through
+displayed pairs and atoms if necessary, and expand finite grounds into their
+finite native syntax. Each subterm has a slot in a fixed finite set $S$;
+repeated names reuse a slot. Every displayed pair supplies a record
+$Z=\langle X,Y\rangle$ with its existing children $X,Y\in S$.
+
+For each such record choose one of two cases:
+
+$$
+Z=F(X,Y),\qquad\text{or}\qquad
+X=[q+1],\ Y=[q],\ Z=[q+2],\quad q\in\mathbb N.
+\tag{NAC.9}
+$$
+
+There are finitely many choices. In a case, the remaining records have the
+forms
+
+$$
+C_s=\sigma^d C_t,\quad
+C_s=F(C_l,C_r),\quad
+C_s=[a_s(p,q)],\quad C_s=O.
+\tag{NAC.10}
+$$
+
+All equality offsets $d$ are fixed integers. All finite rank expressions
+are affine in the finite parameters $(p,q)$. There is no normality or
+noncollapse guard on a raw pair record. No original negative is translated
+into ambient code inequality.
+

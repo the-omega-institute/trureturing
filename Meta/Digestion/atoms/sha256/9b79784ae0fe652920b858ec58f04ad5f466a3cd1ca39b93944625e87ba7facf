@@ -1,0 +1,12 @@
+### 100.6. Every diagonal mixed entry
+
+At p=p_i, primitiveness forces p not dividing c. Otherwise the norm equation gives p|a and then p|b modulo p^2, a contradiction. With c a unit, the opposite valuation parities of a^2 and p b^2 force p|a and b a unit. Therefore beta^2=-5e modulo p, proving that the diagonal quartic symbol is defined.
+
+Use t=1,z1=-beta,z2=alpha and a Hensel root z3=-2beta modulo p of z3^2=beta^2-15e. The exact L3 is 2p b^2/c. The reduction of L2 is beta(3beta+1)^2/2. If that reduction vanishes, choose the root z3=2beta instead, which gives -3beta(beta-1)^2/2 and is a unit in the exceptional case because p>3. Since p=1 modulo 24, (-1/p)=(2/p)=(-3/p)=1. The selected L2 has character (beta/p). For L3, whose valuation is one,
+
+ (L3,p)_p=(-1/p)(2b^2/c/p)=(c/p).
+
+The product is(b/p)=(c/p)(-5e/p)_4.
+
+To remove the remaining primitive denominator character, let ell be an odd prime dividing c and not dividing 5p. Reducing the norm equation modulo ell shows (p/ell)=1: a nonsquare p would force ell|a,b, contradicting primitiveness. At ell=5 the same conclusion follows from actual 5-splitting. The prime p does not divide c, and (2/p)=1. Quadratic reciprocity for p=1 modulo4, with every prime multiplicity in c retained, gives (c/p)=1. Therefore <lambda_i,mu_i>=(-5e/p)_4. The all-place argument of section 100.4 accounts for every other factor. This proves all diagonal entries for arbitrary e, without a two-prime or unique-cut assumption.
+

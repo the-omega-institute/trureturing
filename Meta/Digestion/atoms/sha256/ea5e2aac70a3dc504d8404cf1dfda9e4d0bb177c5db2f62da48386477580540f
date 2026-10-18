@@ -1,0 +1,29 @@
+**命题 10.4（扇区不变性与交换限制）。** $\mathcal I_3$ 对 $K_{AB},K_{BC}$ 及其任意实参数指数不变，而且
+
+$$
+K_{AB}E=Eh_{AB},\qquad K_{BC}E=Eh_{BC},
+$$
+
+$$
+h_{AB}=R_AL_B+L_AR_B,\qquad
+h_{BC}=R_BL_C+L_BR_C.
+$$
+
+证明。命题 10.2 的逐点 $N_y,N_z$ 交换关系使它们的共同特征空间不变，该共同空间正是 $\mathcal I_3$。其两条边的高标签都相反，故 $G=I$；又因 $E_j^\dagger R_jE_j=|1\rangle\langle0|$，得上述限制。对幂逐次应用交织式，再对收敛的指数级数求和，得到
+
+$$
+e^{-iuK_{AB}}E=Ee^{-iuh_{AB}},\qquad
+e^{-ivK_{BC}}E=Ee^{-ivh_{BC}}.
+$$
+
+这证明了八维计算在完整五态三复制中的嵌入，而不是仅另外假设一个三比特模型。证毕。
+
+本章另行允许两条边的动作 $e^{-iuh_{AB}}$、$e^{-ivh_{BC}}$ 独立选择任意 $u,v\in\mathbb R$，并允许任意有限次顺序组合。不在这一定义中加入中间测量、输出反馈、任意三点门或独立相位动作。准备集合为
+
+$$
+\mathcal D_3=\{\rho\in\operatorname{Herm}(8):\rho\succeq0,
+\ \operatorname{Tr}\rho=1\}.
+$$
+
+实际五态密度矩阵为 $E\rho E^\dagger$，其余正交方向为零。此域没有纯态、乘积态、Gaussian 态或固定总激发数的限制。生成元保持 $n_A+n_B+n_C$，但守恒并不等于这个初值在所有准备之间相同。
+

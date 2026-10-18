@@ -1,0 +1,93 @@
+## 3. No three sampled ancestor gain zeros
+
+**Theorem 3.1.** Every legal world in the entire actual fiber (1.1)
+has at most two distinct gain zeros among original clocks
+$0,1,2,3,4,5$. Equivalently, at least four ancestor gain samples are
+nonzero. This holds uniformly in $D_0,\lambda,Y,z$.
+
+**Proof.** A nonzero polynomial of degree at most three has at most
+three distinct real roots: successive factorization at distinct roots
+would otherwise give more linear factors than its degree. Suppose
+there are three sampled roots. At each of them (1.3) gives $c_i=d$.
+The readings $0,24,48,312/5$ are pairwise distinct, so at most one of
+clocks zero through three is a root. The three roots must therefore
+be exactly $j,4,5$ for some $j\in\{0,1,2,3\}$. In particular
+
+$$
+d=c_j=\widehat Y=\widehat z,\qquad
+f(T)=a(T-j)(T-4)(T-5),\qquad a\ne0.                              \tag{3.1}
+$$
+
+Three distinct roots force degree three and the displayed
+factorization, with no further degree or multiplicity case.
+
+Write
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix}.
+$$
+
+Strict positivity and rank one give
+$0<r<1$, $b,c>0$ and $bc=r(1-r)\le1/4$. Direct multiplication gives
+
+$$
+t_J=\operatorname{tr}(JP)=b+c,\qquad
+t_L=\operatorname{tr}(LP)=1+b,\qquad
+\operatorname{tr}((J+L)P)=t_J+t_L .
+$$
+
+The clock-zero equation is $f(0)=-d$. We now exclude all four
+possibilities in (3.1).
+
+If $j=0$, then $d=0$ and
+$f(1)=12a$, $f(2)=12a$, $f(3)=6a$.
+The next three readings require
+
+$$
+t_J=2/a,\qquad t_L=4/a,\qquad t_J+t_L=52/(5a).
+$$
+
+The first two instead give $t_J+t_L=6/a$, which, since $a\ne0$,
+would require $30=52$.
+
+If $j=1$, then $d=24$. The equation $-20a=-24$ gives $a=6/5$.
+The clock-two and clock-three gain values are $36/5$ and $24/5$,
+so
+
+$$
+t_L=\frac{48-24}{36/5}=\frac{10}3,\qquad
+t_J+t_L=\frac{312/5-24}{24/5}=8.
+$$
+
+Thus $t_J=14/3$, $b=7/3$, $c=7/3$ and
+$bc=49/9>1/4$, a contradiction.
+
+If $j=2$, then $d=48$ and $-40a=-48$, so $a=6/5$.
+Now $f(1)=-72/5$ and $f(3)=12/5$, yielding
+
+$$
+t_J=\frac{24-48}{-72/5}=\frac53,\qquad
+t_J+t_L=\frac{312/5-48}{12/5}=6.
+$$
+
+Consequently $t_L=13/3$, $b=10/3$ and
+$c=5/3-10/3=-5/3$, contrary to positivity.
+
+If $j=3$, then $d=312/5$ and $-60a=-312/5$, so $a=26/25$.
+Here $f(1)=-624/25$ and $f(2)=-156/25$, giving
+
+$$
+t_J=\frac{24-312/5}{-624/25}=\frac{20}{13},\qquad
+t_L=\frac{48-312/5}{-156/25}=\frac{30}{13}.
+$$
+
+It follows that $b=17/13$, $c=3/13$ and
+$bc=51/169>1/4$, since $204>169$.
+
+All possible three-root patterns are impossible. Throughout, the
+fourth and fifth readings are retained: a vanishing gain at either
+clock makes that actual reading equal to the same $d$. No
+baseline-drift promise has been introduced. The conclusion leaves
+every legal zero-, one- or two-root ancestor pattern, lower degree,
+sign and repeated-root possibility available. ∎
+

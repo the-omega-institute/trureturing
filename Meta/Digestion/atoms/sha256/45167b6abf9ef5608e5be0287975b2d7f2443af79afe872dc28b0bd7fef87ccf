@@ -1,0 +1,41 @@
+**Source interface 2.2 (Credited Theorem 23.2).** For Definition 2.1 the averaged channel is trace preserving, and its unique faithful mixed stationary density is
+
+$$
+R_\theta=\sum_{j=0}^H S^j x_\theta x_\theta^*(S^*)^j,
+\qquad \rho_\theta=R_\theta/\mu,
+\qquad (\rho_\theta)_{ii}=t(H-i)/\mu.
+$$
+
+The stronger full-complex fixed-space identity, Source (23.13), is part of the premise:
+
+$$
+\mathcal E_\theta(A)=A
+\quad\Longrightarrow\quad
+A=A_{HH}R_\theta\qquad(A\in M_d(\mathbb C)),
+\qquad \operatorname{Tr}R_\theta=\mu.
+\tag{2.1}
+$$
+
+Every word effect is diagonal and independent of $\theta$. For initial densities $\sigma,\omega$ and phases $\theta,\eta$ with the same $H,K,p$, equality of all word probabilities is equivalent to $\sigma_{ii}=\omega_{ii}$ for all $i$. In stationarity the common law is $\mathbb P_p$, with, for an integer $m\ge1$ and nonnegative integers $a,b,g_1,\ldots,g_{m-1},N,k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(0^a1\,0^{g_1}1\cdots0^{g_{m-1}}1\,0^b)
+&=\frac{t(a)t(b)}{\mu}\prod_{j=1}^{m-1}p_{g_j},\\
+\mathbb P_p(0^N)&=\frac1\mu\sum_{k\ge N}(k-N+1)p_k\quad(N\ge0),\\
+\mathbb P_p(1)&=\mu^{-1},\qquad
+p_k=\frac{\mathbb P_p(10^k1)}{\mathbb P_p(1)}\quad(k\ge0).
+\end{aligned}
+\tag{2.2}
+$$
+
+The empty product in the first line is one. The second line includes the empty word. Source also gives
+
+$$
+\chi_{\mathcal E_\theta}(z)=z^{d^2-d}f(z),\qquad
+f(z)=z^{H+1}-\sum_{k=1}^H p_k z^{H-k}.
+\tag{2.3}
+$$
+
+These stationary and characteristic-polynomial assertions are reused from Source, not reproved as new claims. A characteristic polynomial specifies eigenvalues and algebraic multiplicities; it does not in general specify Jordan block sizes. Sections 3–5 supply the missing structural proof for the actual operators of Definition 2.1.
+

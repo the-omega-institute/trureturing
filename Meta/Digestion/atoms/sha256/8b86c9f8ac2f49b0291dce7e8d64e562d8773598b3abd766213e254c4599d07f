@@ -1,0 +1,65 @@
+**Theorem 57.10 (exact low-macro-leaf regimes, with all-negative-correct implementations).** At every $h\ge H$,
+
+| Exact initial composition | Uniform positive worst paid cost |
+| --- | --- |
+| $n=1$, or $n=2$ and $ab=0$ | $A$ |
+| $n=2$, $a=b=1$; or $n=3$, $ab=0$ | $A+1$ |
+| $n=3$, $ab>0$; or $n=4$, $ab=0$ | $A+2$ |
+
+Each equality holds for every $d=3k$, $k\ge1$. The following explicit diagnostic tables followed by the actual alpha-frontier completion of Theorem57.7 attain them. Every omitted reply edge rejects, every repeated request is suppressed, and every final alpha request is actually acquired and checked. Thus none of these implementations classifies merely a positive enumeration.
+
+For a singleton family use no diagnostic queries and check its alpha frontier. For the mixed two-leaf candidates $(X_d,X_{d+1})$ and $(X_{d+1},X_d)$, query $Lz_d$: its replies are respectively $\alpha,\beta$. This identifies them with at most one non-alpha reply.
+
+For three homogeneous macro leaves put $Z=X_t$, where $t=d$ for initial alpha and $t=d+1$ for initial beta. Query $Lz_t$. The right-associated tree $(Z,(Z,Z))$ replies alpha and the left-associated tree $((Z,Z),Z)$ replies beta. Its maximum diagnostic weight is one.
+
+For $(a,b)=(2,1)$ enumerate the six macro trees in this order, with $x=\alpha,y=\beta$ before substitution:
+
+$$
+(x,(x,y)),\ (x,(y,x)),\ (y,(x,x)),\
+((x,x),y),\ ((x,y),x),\ ((y,x),x).
+\tag{57.21}
+$$
+
+Their positive indices are $0,1,\ldots,5$. The entire diagnostic is specified by this table; a candidate-set row is the set reaching that node, and a singleton reply is the identified index.
+
+| Reaching indices | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $0,1,2,3,4,5$ | $z_d$ | $\beta:\{0,1\}$; $\mathsf{br}:\{2,3,4,5\}$ |
+| $0,1$ | $Rz_d$ | $\beta:0$; $\mathsf{br}:1$ |
+| $2,3,4,5$ | $Lz_{d+1}$ | $\beta:5$; $\alpha:\{2,3,4\}$ |
+| $2,3,4$ | $LRz_{d-1}$ | $\alpha:2$; $\beta:3$; $\mathsf{br}:4$ |
+
+The first query spends one non-alpha unit on every positive. In the beta branch only one more query is used. In the branch branch, a beta terminates with the second unit; an alpha keeps indices $2,3,4$ and their final query spends at most the second unit. Thus the worst diagnostic weight is exactly two, with at most three actual diagnostic calls.
+
+For $(a,b)=(1,2)$ enumerate instead
+
+$$
+(x,(y,y)),\ (y,(x,y)),\ (y,(y,x)),\
+((x,y),y),\ ((y,x),y),\ ((y,y),x).
+\tag{57.22}
+$$
+
+Use the following complete positive diagnostic, retaining every absent reply as a paid query result.
+
+| Reaching indices | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $0,1,2,3,4,5$ | $z_d$ | $\beta:0$; $\mathsf{br}:\{1,2,3,4,5\}$ |
+| $1,2,3,4,5$ | $RRz_{d-1}$ | $\mathsf{br}:1$; $\beta:2$; $\alpha:\{3,4\}$; $\varnothing:5$ |
+| $3,4$ | $Lz_d$ | $\beta:3$; $\mathsf{br}:4$ |
+
+The first query spends one unit. Every non-alpha second reply identifies its source with the second unit, whereas an alpha second reply leaves the pair resolved with one more non-alpha unit. There are at most three diagnostic calls. The longest query in (57.21) has depth $d+1$, and every query in (57.22) has depth at most $d$. They obey the feasible mixed-three cap $H=d+2$.
+
+For four homogeneous macro leaves use (57.20), $Z=X_t$. The table is
+
+| Reaching candidates | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $S_1,S_2,S_3,S_4,S_5$ | $Lz_t$ | $\mathsf{br}:S_1$; $\beta:\{S_2,S_3\}$; $\alpha:\{S_4,S_5\}$ |
+| $S_2,S_3$ | $Rz_t$ | $\alpha:S_2$; $\beta:S_3$ |
+| $S_4,S_5$ | $RLz_t$ | $\beta:S_4$; $\alpha:S_5$ |
+
+Its maximum diagnostic weight is two, attained at $S_3$. Its addresses have depth at most $t+1$, below $H=t+2$. The table supplies an ordinary proof of the homogeneous-four upper bound in addition to the independent core lower bound; this regime is not left to positive-only numerical evidence.
+
+Proof of all table entries and minima. Apply (57.5) after the displayed macro prefix. For example $r_{X_d}(z_d)=\alpha$, $r_{X_{d+1}}(z_d)=\beta$, and removing the initial $L$ from $z_d$ leaves weight $d-1$, which yields beta in $X_d$ and branch in $X_{d+1}$. In (57.21), $Lz_{d+1}$ leaves weight $d+1$ in a sole left $X_{d+1}$ but weight $d$ after the two left macro edges in a pair; this yields the stated three-alpha/one-beta split. The query $LRz_{d-1}$ leaves respectively weight $d+1$ in the sole left $X_{d+1}$, weight $d-1$ in a right $X_d$ of the left pair, and weight $d-1$ in its right $X_{d+1}$; these replies are alpha, beta, branch. In (57.22), $RRz_{d-1}$ reads within a right pair at weight $d-1$, giving branch for its $X_{d+1}$ and beta for its $X_d$; within a sole right block its remaining weight is $d+1$, giving alpha for $X_{d+1}$ and absent for $X_d$. The other entries follow by the same literal one- or two-edge calculation, including $d=3$ where $z_{d-1}=R$.
+
+Alpha completion makes the paid positive cost $A$ plus the diagnostic non-alpha weight, rather than $A$ plus the number of diagnostic calls. Its already queried alpha endpoints are retained and not bought again. A singleton cannot improve on $A$. Theorem57.5 gives the $A+1$ lower bound for every nonsingleton; Lemma57.9 gives the $A+2$ lower bound in the final row. All the upper costs are below $B$, since $B-A\ge n$, so the weighted bridge also matches these minima. The final actual frontier check proves negative correctness, even for replies compatible with a diagnostic positive leaf. □
+

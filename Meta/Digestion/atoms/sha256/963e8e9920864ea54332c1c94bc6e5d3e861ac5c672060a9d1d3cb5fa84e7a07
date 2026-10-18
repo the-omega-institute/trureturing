@@ -1,0 +1,17 @@
+**Lemma 3.3 (likelihood separation of neighborhoods).** For $t,r\in I$ let
+
+$$
+D(t\Vert r)=t\log(t/r)+(1-t)\log((1-t)/(1-r)).
+$$
+
+Then
+
+$$
+2(t-r)^2\le D(t\Vert r)\le(9/4)(t-r)^2.
+\tag{3.2}
+$$
+
+Consequently $|r-t|>\delta$ and $|v-t|\le\delta/4$ imply $D(t\Vert r)-D(t\Vert v)\ge\delta^2$.
+
+**Proof.** As a function of its first argument $x$, $D(x\Vert r)$ has value and first derivative zero at $x=r$, and second derivative $1/(x(1-x))$. On the interval between $t$ and $r$, this derivative lies in $[4,9/2]$. Twice integrating gives (3.2). The difference is at least $(2-9/64)\delta^2>\delta^2$. This is ordinary Bernoulli likelihood calculus; the new source use is in the following paid-history bound. ∎
+

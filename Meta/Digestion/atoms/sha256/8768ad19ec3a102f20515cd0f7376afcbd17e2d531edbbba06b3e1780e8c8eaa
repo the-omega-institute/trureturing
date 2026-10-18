@@ -1,0 +1,198 @@
+## 8. Source correspondence, literature and the remaining mathematical decision
+
+**Mathematical citation 8.1 (covered supplies and the actual increment).** Repository sources below are taken at the immutable revision `a58c24900650d4a0b6022c5e2cf76f5f6f2f8271`. [PAIR, Section 11] supplies the normalized compact carriers, descriptor-conditioned residual equations, common marginals, all-shape regeneration, original infimum comparison, finite atomicity and represented-sampler boundary. [ST; CLIP; PAID] supply the original laws, current-record renderer, radii, endpoint events and coordinate identity, positive paid-history exposure, clipping and original product realization. These are credited suppliers, not new phase minima or new realization theorems.
+
+The increment is Theorem 3.1's joint complete-word response controlled by dispersion of the actual edge's synthetic return weight, its evaluated separator in Theorem 4.1, the exact signed alternative in Corollary 5.3, and the clipped-span transfer in Theorem 6.2. The proof keeps the actual ratio $U_1/U_0$ until stationary Jensen and combines it with the exact identity $\mathbb E g_0=m-c$. It does not optimize an independent suspended marginal, normalize a killed kernel into a different actual source, or condition the original source on future completion. The rational example separates the resulting class from the published restrictions. The constants are sufficient and no sharpness claim is made.
+
+[HET] assumes one constant suspended emission and retains arbitrary acquired kernels; its proof reduces to products of p emission complements. Here both emissions can vary, and the flat case fixes their product on the actual $B$ edge. [RETURN, Sections 9–10] controls p-emission changes across an actual full return; (2.7) instead concerns the p and suspended emissions on the first half of that return. The example has positive values of both supplied motion and emission-change statistics while its return-weight dispersion is zero. The two restrictions have different consumers and neither is substituted for the other.
+
+[RETURN, Proposition 11.9, equations (11.34)–(11.37)] supplies a sharper distinction: two represented tables have identical full directional law flows and all-target phase configuration losses, but different actual three-stage law measures $\Xi$ and different return motion. Their conditionally independent descriptor join equals one of those measures and not the other. Here $c,D$ are statistics of $\Gamma_B$ itself; the signed charges are statistics of the specific alternating descriptor chain. Equality of the two descriptor flows determines these diagnostics and the complete-word recursion used here. It does not identify an original hidden-label $\Xi$, preserve its return motion, or provide a runtime observation of the diagnostics. Theorem 6.2 instead transfers only the clipped first-half edge products through the original reachability inclusion and unchanged extracted kernels.
+
+[PAIR, Theorem 12.2 and Corollary 12.3] classify and exclude the synchronized four-coordinate endpoint-chord fibre. Proposition 12.4 supplies separately full-risk-feasible nonnative marginals that admit no common flow. [PAIR, Section 14] additionally supplies a quantitative complete-loss stability theorem and a necessary risk–four-moment-defect relation on this same compatible-pair domain. These are credited compatibility and quantitative obstruction results. The two event midpoint means in this volume are not the four synchronized emission/short-word coordinates of those theorems. Citation 8.1a gives their exact diagnostic and consumer; the return-weight response (3.3), signed alternative (5.4) and original clipped-span bound (6.2) have the different inputs and conclusions specified above.
+
+**Mathematical citation 8.1a (the supplied quantitative four-moment obstruction).** On precisely the compatible Borel pair of Definition 2.2, retain the following [PAIR, Standing assumptions 12.1 and 14.1] diagnostics:
+
+$$
+\begin{aligned}
+m_p&=\int u\,d\nu_p,&m_\beta&=\int v\,d\nu_\beta,\\
+q_{\rm PAIR}&=\int Q(\beta\beta)\,d\nu_p,&
+z_{\rm PAIR}&=\int W(\alpha\alpha)\,d\nu_\beta,\\
+J_p^{\rm PAIR}&=\int(u-a)(b-u)\,d\nu_p,&
+J_\beta^{\rm PAIR}&=\int(v-a)(b-v)\,d\nu_\beta,\\
+M_B&=\int(u(Q)-v(W))^2\,d\Gamma_B,&
+M_A&=\int(v(W)-u(Q))^2\,d\Gamma_A.
+\end{aligned}
+$$
+
+In particular $q_{\rm PAIR}$ is the mean probability of $w_{0,1}=\beta\beta$; it is not this volume's $q$, the mean probability of $w_{3,1}$. The source's two directional affine defects and their sum are
+
+$$
+\begin{aligned}
+D_B^{\rm PAIR}
+ &=\frac{26}{15}-\frac{19}{15}(m_p+m_\beta)-2q_{\rm PAIR}
+   =J_p^{\rm PAIR}+J_\beta^{\rm PAIR}+M_B,\\
+D_A^{\rm PAIR}
+ &=\frac{11}{15}(m_p+m_\beta)-\frac4{15}-2z_{\rm PAIR}
+   =J_p^{\rm PAIR}+J_\beta^{\rm PAIR}+M_A,\\
+S_{\rm PAIR}
+ &=D_B^{\rm PAIR}+D_A^{\rm PAIR}
+   =2J_p^{\rm PAIR}+2J_\beta^{\rm PAIR}+M_B+M_A\\
+ &=\frac{22}{15}-\frac8{15}(m_p+m_\beta)-2q_{\rm PAIR}-2z_{\rm PAIR}\ge0.
+\end{aligned}
+$$
+
+These exact identities are [PAIR, equations (12.6)–(12.7) and (14.1)]. They use both unweighted phase marginals and the respective descriptor-conditioned residual equations. The symbol $D$ in (2.7) remains the mean absolute deviation of $(1-u)v$ on $\Gamma_B$; neither directional defect nor $S_{\rm PAIR}$ is substituted for it.
+
+[PAIR, Theorem 14.2] states that one weight
+
+$$
+\theta=\nu_p\{Q:u(Q)>(a+b)/2\}
+$$
+
+works for both phases and every normalized complete target. With
+
+$$
+H_{s,\theta}(T)
+ =(1-\theta)\operatorname{TV}(P_{s,a},T)
+   +\theta\operatorname{TV}(P_{s,b},T),
+$$
+
+its all-target bounds are
+
+$$
+|\mathcal L_p(T)-H_{p,\theta}(T)|\le\frac{540}{11}S_{\rm PAIR},
+\qquad
+|\mathcal L_\beta(T)-H_{\beta,\theta}(T)|\le\frac{1395}{22}S_{\rm PAIR}.
+$$
+
+Targets may put positive mass on infinite noncompletion. The descriptors remain the original normalized complete laws with their supplied tail control. No finite law marginal is assumed. The common weight is independent of the target; the comparison keeps TV inside each descriptor integral. At $S_{\rm PAIR}=0$, both flows and both marginals are exactly the synchronized native endpoint pair of [PAIR, Theorem 12.2], with common endpoint weight $\theta$, including $0$ and $1$.
+
+[PAIR, Corollary 14.3] transports this comparison through the same original full-record renderer to every posterior target from a positive paid history under the once-sampled $K$. For an original stationary product the comparison integral is its original history configuration loss. For a general Borel pair it remains a mathematical integral, without asserting an installed observer. This stationary-product interpretation does not replace Theorem 6.2's initialized extraction, support closure, clipping and reachable-edge argument for an arbitrary original finite observer. Neither the common comparison weight nor the two law flows identifies the hidden three-stage return measure $\Xi$ or its variation. No posterior, clock, endpoint tag or continuous descriptor is added to the runtime interface.
+
+For positive endpoint masses and any supported $k\ge3$, [PAIR, Corollary 14.4] gives
+
+$$
+\mathcal J+\frac{540}{11}S_{\rm PAIR}\ge\frac\eta4,
+\qquad
+\eta=\frac{14219478376}{318644812890625}.
+$$
+
+The present fixed positive support $\{1,2,3\}$ meets these hypotheses. In particular the simultaneous inequalities
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},
+\qquad
+S_{\rm PAIR}<\frac{19551782767}{172068198960937500}
+$$
+
+are excluded. The same corollary also excludes the same risk threshold together with
+
+$$
+\|\mathbf c_{\rm PAIR}-\mathbf c_{\rm PAIR}(\theta_0)\|_\infty
+ <\frac{19551782767}{871812208068750000}
+\quad\text{for some }\theta_0\in[0,1]
+$$
+
+is excluded, where
+
+$$
+\begin{aligned}
+\mathbf c_{\rm PAIR}&=(m_p,m_\beta,q_{\rm PAIR},z_{\rm PAIR}),\\
+\mathbf c_{\rm PAIR}(\theta_0)
+ &=\bigl(a+(b-a)\theta_0,\ a+(b-a)\theta_0,\\
+ &\hspace{1.2cm}(1-\theta_0)(1-a)^2+\theta_0(1-b)^2,
+                 (1-\theta_0)a^2+\theta_0b^2\bigr).
+\end{aligned}
+$$
+
+The coordinate exclusion consumes the displayed affine formula for $S_{\rm PAIR}$, whose coefficient absolute sum is $76/15$. These are the supplied evaluated chord-neighborhood thresholds, not an evaluated optimizer or an unrestricted positive risk-only gap. Away from this neighborhood $S_{\rm PAIR}$ is free. With only depths 1 and 2 supported, the fair native endpoint pair instead has $\mathcal J=S_{\rm PAIR}=0$; this does not meet the present three-depth hypotheses.
+
+The zero predicates of the two diagnostics can be separated by the existing supplied examples, without selecting a different coupling. For the actual two positive $B$ edges of Proposition 7.1, $D=0$, while direct substitution in the definitions above gives
+
+$$
+J_p^{\rm PAIR}=0,\quad
+J_\beta^{\rm PAIR}=\frac{47}{64800},\quad
+M_B=\frac{13}{64800},\quad
+M_A=\frac{181}{64800},\quad
+S_{\rm PAIR}=\frac1{225}>0.
+$$
+
+Conversely, the fair native endpoint pair has $S_{\rm PAIR}=0$. Its two $B$-edge weights are $2/9$ and $6/25$, each of mass $1/2$, so
+
+$$
+c=\frac{52}{225},\qquad D=\frac2{225}>0.
+$$
+
+The latter pair is compatible on the same complete carriers, but is not a zero-level witness for the three-depth objective. These calculations distinguish the diagnostic zero sets; they assert no general quantitative dominance relation or feasibility criterion. The supplied PAIR theorem already establishes a necessary risk-defect relation and uniform complete-loss comparison. This volume's particular increment is the joint $F(c,P),G(c,P)$ response, signed same-path balances and clipped first-half-edge span consumer, rather than the general theme of a quantitative compatibility obstruction.
+
+[REV, Chapter 14, Theorem 14.1] gives an exact all-word endpoint-box criterion for a three-label periodic reversible table with $A=I$ and $B$ a swap plus a fixed point. Its rational table satisfies the complete boxes, suspended midpoint, both interior costs and the retained decline and squared-return necessities, yet misses the p midpoint and fails the p-a risk bound. Its fixed-N companion inequality is conditional on a positive complementary p defect; the displayed table has the opposite sign. This does not supply a zero pair or an unrestricted separating certificate. Its linear chord defect, energy and decline functionals are different from the mean absolute deviation $D$ in (2.7). The periodic criterion and the failed sufficiency bridge are suppliers under their own hypotheses, rather than instances or replacements of (3.3)–(3.11).
+
+[AURIC, Section 15] supplies future-response criteria for one specified finite output-resolved instrument. It does not recover an unknown instrument from these two means, provide an emission port or settle this common-flow feasibility problem. [SPARSE, Sections 10–15] supplies exact deterministic unit-call minimax for static finite ordered-tree history tasks, with its joint original-tree image and arbitrary-depth query coverage. Sections 20–24 additionally treat complete finite nominal installations, exact first-occurrence caches, vector-valued historical targets, unbounded literal addresses and a WS2S capacity criterion. They distinguish exact representation of a given installation from existence of a bounded-address replacement; the latter need not preserve that installation's sourcewise traces or costs. Proposition 23.3's reached-row replay requires the same deterministic installed table, static tree service and never-forgetting raw cache. The binary stopped source here has stochastic paid Reads under one sampled $K$, not that service. No bridge transports their capacity criterion, address bound, replay or unit-call optimum into this common-flow problem or its COMPLETE account.
+
+**Mathematical citation 8.2 (one-sided exact realization and its preservation boundary).** [PAIR, Theorem 13.2] supplies a stronger conditional realization interface than requiring both input marginals to be finite. If a supplied compatible pair has $N$ distinct positive p-law atoms, it keeps that entire p marginal and gives a finite regular same-update table with at most $N^2+2N+q-1$ suspended labels. It may preserve any specified $q$ bounded Borel integrals on the suspended marginal and any Borel full-measure suspended constraint. The symmetric result exchanges phases. The construction matches unweighted moments to retain actual circulation and weighted residual moments to close both complete-law equations. The complete descriptors are the regenerated table's own laws, not finite-horizon fits.
+
+For an actually supplied zero pair at the fixed support $\{1,2,3\}$ with finite p marginal, choose
+
+$$
+G=\{W:\text{every complete suspended coordinate lies in its endpoint box}\},
+\qquad f_1(W)=W(E_\beta),\qquad
+f_2(W)=\operatorname{TV}(W,P_{\beta,3/8}).
+$$
+
+Here $q=2$. The retained p marginal keeps its whole box, midpoint and all three configuration losses. The selected suspended laws remain in the whole box; matching $f_1$ keeps its midpoint and hence both endpoint losses, while matching $f_2$ keeps its depth-3 loss. Thus [PAIR, Corollary 13.4] gives a possibly different abstract finite zero table with
+
+$$
+|X|=N,\qquad |Y|\le N^2+2N+1.
+$$
+
+The exchanged map uses the p box, $Q(E_p)$ and $\operatorname{TV}(Q,P_{p,3/8})$. Consequently the existence of an abstract finite original common attainer is equivalent to the existence of some zero pair with either one finite law marginal. Both input marginals need not be finite. This is a conditional realization statement; this volume supplies no such zero pair.
+
+For a chosen one-sided support cap $N$, [PAIR, Theorem 13.5] matches all three opposite target losses and equates the attained minimum on that branch to the attained table minimum with opposite label cap $N^2+2N+2$. It evaluates neither minimum and gives no $N$ known to contain an unrestricted optimizer. If $j_c=0$ and no abstract finite attainer exists, both law marginals of every zero pair are infinite, and both distinct-law counts tend to infinity along any regular vanishing-excess sequence. Absence only of a permitted effective sampler does not imply that abstract nonattainment condition.
+
+Theorem 13.2 may replace the opposite marginal and both joint flows. Preservation of the retained marginal and selected opposite moments does not establish preservation of the old $\Gamma_B,\Gamma_A$, dispersion $D$, the collection of signed path charges in (3.10), or hidden actual return coupling. The diagnostics in this volume must be evaluated on the resulting pair's own flows and chain. Theorem 4.1 and Corollary 5.3 then apply to that resulting pair by their stated hypotheses. [PAIR, Theorem 11.8] realizes a pair with both finite marginals while preserving its two descriptor flows; [RETURN, Proposition 11.9] still prevents interpreting that two-flow preservation as hidden-return preservation.
+
+[PAIR, Proposition 13.3] restores the full original histories, same-update kernels and source-independent latch sampler. It preserves the retained side's losses against every posterior target and the specified opposite pure-target losses. Opposite losses at each posterior mixture need not equal their old values; the full-history phase suprema are the supported pure-target suprema, which is the relevant risk correspondence. For arbitrary real nodes, weights and entries, permitted finitely represented exact samplers for the latch, both acquired kernels and emissions remain separate obligations. All numerical descriptions, active and service states, program, workspace, fresh bits, computation, acquired Reads, synthesis and output are charged. The label bounds preserve no fixed COMPLETE, hard-defect or worst-case work budget. Proposition 7.2 discharges representation only for its explicit rational nonattaining example.
+
+[PAIR, Theorem 13.6] concerns a different countably infinite installed-support branch: a one-sided finite zero pair and strictly positive opposite accumulation-target slack imply abstract finite all-supported attainment. Saturated accumulation loss remains outside that theorem. Neither its support nor its strict-slack premise is substituted for the fixed three-depth question here.
+
+**Mathematical citation 8.2a (bounded FIB supplier correspondence).** The comparison with [FIB-CHANGE; FIB-READOUT; FIB-FIELD; FIB-CLOCK; FIB-OCCLUSION; FIB-SYMMETRIC] concerns their listed mathematical constructions and governing applicability clauses. Graph integrability, calibrated static projections, output-resolved observation closure, quotient sufficiency and finite-dimensional stabilization are credited existing methods. The source-specific claims of Sections 3–7 do not acquire novelty from restating those methods.
+
+There is an actual shared paired-recursion supplier. [FIB-OCCLUSION, Section 九 and Q4] and [FIB-FIELD, Q12] explicitly attribute to [PAIR, Sections 2–4] the finite-table equations
+
+$$
+\begin{aligned}
+Q_x&=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,\\
+W_y&=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x,\\
+L&=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,
+\qquad g=\operatorname{diag}(1-u)B(1-v),\\
+f&=g+Lg+L^2g,
+\qquad h=1-v+\operatorname{diag}(v)Ag.
+\end{aligned}
+$$
+
+Here $f_x=Q_x(E_p)$ and $h_y=W_y(E_\beta)$ are the entire configuration-indexed event arrays. The inverse fixes the same finite $A,B$, positive rows $\pi,\tau$ with $\pi B=\tau$, $\tau A=\pi$, regular emissions, and arrays satisfying the unprojected compatibility equations. It is an offline inverse within that known-kernel domain. This volume's $P=\pi f$ and $T=\tau h$ are only two scalar averages; neither the cited inverse nor a static second projection turns them into the full arrays, unknown acquired kernels or a compatible common-flow witness. The recursions are already the suppliers of (3.4), not an additional new result here.
+
+The other correspondences and their missing maps are as follows.
+
+| Supplier and exact compared clauses | Mathematical object supplied | Boundary for this complete stopped-flow problem |
+| --- | --- | --- |
+| FIB-CHANGE, 变化—场可积定理 and Q1–Q2, Q6–Q9 | A potential for abelian group increments on a connected underlying graph exists when every signed closed-walk increment sums to zero; calibrated five-state differences require common operator types and normalized feasible fibres. | An additive edge increment is not a probability residual barycentre. Formal reverse traversal supplies no legal reverse Read or waiting process. The compared statements give no map from their increments or static direction to the two residual equations, complete losses and acquired circulation in Definition 2.2. |
+| FIB-READOUT, 未来输出闭包判据 and Q2–Q7 | For a fixed common linear instrument and the declared legal output words and tests, a feasible initial-law difference is invisible precisely when it annihilates the generated future-test space. Output branch masses and complete records are retained. | The fixed-initial-law seam direction and an acquired-kernel parameter change are different objects. Its Q7 retains the missing source, initial-state, kernel, test and word map; a larger block representation does not identify that map with the original five-state direction or preserve the present risk and resources. |
+| FIB-FIELD, Q5–Q6, Q8–Q12 | Task-relative lumpability, fixed-generator observability, the attributed native Fibonacci phase/count future equivalence, and fixed-kernel indexed paired calibration. | Q8 retains the one sampled depth, every paid count, original renderer and legal active/pending/delivered domains. Its semantic phase/count summary is not a finite COMPLETE implementation. Q9 exhibits equal static and depth marginals with different joint future laws; separate marginals cannot supply this volume's joint flows. |
+| FIB-CLOCK, 局部时钟核, 输出分辨未来闭包判据 and Q1–Q2, Q5–Q11, Q16 | A fixed known waiting-law mixture on five states, its signed four-corner response, and future closure under complete output-resolved marked subkernels. | Its survival variable belongs to a state-conditioned waiting law, not the discrete synthetic pair weight $Z=(1-u)v$. Waiting, output and successor require one joint marked kernel; separately specified marginals do not determine it. No waiting-law observation is present in the original stopped source or installed observer. |
+| FIB-OCCLUSION, Section 九 and Q3–Q4 | The displayed PAIR recursions and an attributed inverse from both complete indexed arrays under fixed acquired kernels. | Q3 retains once-sampled $K$, positive paid histories, full records and matching Stop. Q4 limits the static/dynamic comparison to an analogy without a source/action/target/error/resource isomorphism. Compatibility of proposed arrays and a runtime readout are separate obligations. |
+| FIB-SYMMETRIC, the finite-prefix blind-direction comparison and Q6, Q11–Q13 | Symmetric mixed differences, order defects, and fixed-carrier future visibility under a full legal observation contract. A block-diagonal comparison can encode two known models on a larger carrier. | Its Q6 distinguishes growing private-label dimension and acquired-kernel variation from one fixed five-state initial-law direction. Q11 preserves all outputs, records, Stop and consistent cylinder laws; Q12 distinguishes additive clock increments from probability kernels. These statements provide no native stopped-flow map or lawful resource-preserving replacement for the present observer. |
+
+In the fixed five-state statements, the seam direction $d=(1,-1,0,-1,1)$ is a zero-total-mass initial-law direction. It is not this volume's dispersion $D$, the hidden depth $K$, or an unknown residual flow. Nonzero response along that direction requires feasible distinct initial laws and a fixed calibrated instrument; it does not itself generate a new observation permitted by Definition 2.1. The supplied native future equivalence likewise concerns semantic complete conditional laws on its own legal domain, rather than access to the depth, posterior or unbounded counts as finite runtime state.
+
+These compared sections give no source/action/risk/resource map that would transfer their static seam, additive potential, waiting-law or fixed-dimensional closure statements into a zero pair or a universal exclusion in $\mathfrak C$. This is the scope of the comparison, not a theorem that such a map is impossible or a catalogue of all FIB results. It leaves the original once-sampled source, acquired/synthetic update identity, configuration-before-TV order, exact-sampler conditions and COMPLETE accounting exactly as in Definitions 2.1–2.4 and Citation 8.2. No detector, clock, causal or practical-performance conclusion is imported.
+
+**Mathematical citation 8.3 (bounded primary-literature comparison).** The comparison is bounded to the stated primary versions and their relevant definitions and results; it supports attribution and method correspondence, not global originality. The source-specific response, signed cancellation condition and clipped original consumer are repository-local mathematical synthesis; generic coupling, quadrature, convexity and sampling remain credited tools.
+
+- Leskela and Vihola [LV, Theorems 1.2–1.3] give convex-order/martingale-coupling equivalences for finite-first-moment vectors and measurable parameterized kernels. Finite complete-word projections here are bounded vectors, so their finite-dimensional hypotheses can be met. This mature coupling supplier does not itself establish two full descriptor-conditioned flows with these common marginals or the evaluated inequalities (3.3).
+- Monras and Winter [MW, Section 2, Definition 5] study positive realizations of a prescribed stationary output process by nonnegative symbol matrices with stochastic sum and a stationary initial row. A positive realization alone does not impose this separate unweighted acquired circulation or configuration-before-TV endpoint losses. No positive-realization existence theorem is used to install a missing common-flow witness.
+- Ferre, Rousset and Stoltz [FRS, Section 2, Assumptions 1–3] analyze long-time Feynman–Kac stability using a Lyapunov condition, minorization/irreducibility and local regularity. The killed-versus-unweighted distinction is a mature frame for (3.4). Their convergence hypotheses are not supplied for arbitrary $BA$ here, and no conclusion requiring them is borrowed. Our finite-word bounds use no actual-chain mixing.
+- Chen and Kiefer [CK, Corollary 8] approximate TV for a given pair of labelled Markov-chain laws. That is a comparison of supplied laws, not synthesis or minimization over this unbounded collection of common finite carriers.
+- Bayer and Teichmann [BT, Corollary 2] give positive finite quadrature on a specified measurable full set for an integrable finite-dimensional measurable feature map. This supplies the finite node selection used in [PAIR, Theorem 13.2], not the source-specific full-law closure or any survival-dispersion inequality. Its finite real nodes and weights are not a represented-sampler theorem.
+- Zhao [Z, Sections 1.2–1.4] considers common row-stochastic controlled realizations of response menus, with multiple roots and one terminal effect, and distinguishes local, static and chronological realizations. Its finite-menu and rank-tight compiled-family hypotheses do not furnish the original stopped-source conditional residual equations or the required complete configuration losses. Its chronological-consistency distinction is relevant context; no additional control letter, root choice or compiler is imported.
+

@@ -1,0 +1,27 @@
+**Corollary 287.2 (Full zero-cost score existence on this cone).**
+With $K_D=m+c_m+1-\varepsilon_D$, there is a full nonnegative score
+of quotient $(1_J;K_D)$ and zero $N$ cost. Positive-row padding and
+scaling give one exact-$Q$ zero-cost representative for every full
+input with quotient $(t1_J;K)$, $t\ge0$, $K\ge tK_D$.
+
+**Proof.** Apply the valid-inequality multiplier theorem to the nonempty
+finite cone
+$\{(u,e,\lambda):G_N\lambda-\mathcal H u+e\mathbf1\ge0,
+ e\ge0,\lambda\ge0,u\text{ free}\}$, where $u=b-\alpha$ and
+$h=\mathcal H u-e\mathbf1$. It contains zero and (287.2) is valid
+for every real $u$ on it. In the notation of Kaibel,
+[*Basic Polyhedral Theory*, Theorem 12, arXiv:1001.2161v1](https://arxiv.org/html/1001.2161v1),
+a valid inequality on a nonempty finite real polyhedron is a
+nonnegative combination of its defining inequalities, with the same
+linear coefficients and no greater constant. Coefficient matching here
+gives an original-row vector $V\ge0$ with
+$\mathcal H^TV=1_J$, $G_N^TV\le0$, $\sum V\le K_D$.
+These signs follow from writing the first constraint as
+$-G_N\lambda+\mathcal H u-e\mathbf1\le0$ and including
+$-e\le0,-\lambda\le0$. Add $K_D-\sum V$ to $T$.
+Its excess entries are $[D(+)=0]-1\le0$, so the resulting exact
+quotient still has zero cost, attained at $R$.
+Scale and pad for the asserted cone. This consumes the same standard
+multiplier argument as 278.3; it makes no separate discovery claim or
+explicit row selector outside the specified cone. $\square$
+

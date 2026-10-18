@@ -1,0 +1,39 @@
+**命题 469.1（同一实际 $T_d$ 的完整范数）。** 对 $N\ge1$ 及正整数 $d$，
+
+$$
+\|T_d\|_{\alpha,N}
+=\begin{cases}
+0,&N<d,\\
+\displaystyle\max_{d\le k\le N}
+ \left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha,&N\ge d,
+\end{cases}
+\tag{WN.2}
+$$
+
+并有准确闭式
+
+$$
+\boxed{
+\|T_d\|_{\alpha,N}
+=\begin{cases}
+0,&N<d,\\
+((N+1)/2)^\alpha,&d\le N<2d-1,\\
+d^\alpha,&N\ge2d-1.
+\end{cases}}
+\tag{WN.3}
+$$
+
+所以对 $p\ge2$，
+
+$$
+\|A_p\|_{\alpha,N}=p^{-1}\|T_p\|_{\alpha,N}
+\le p^{\alpha-1}<1.
+\tag{WN.4}
+$$
+
+**证明。** 若 $N<d$，所有商为零，算子为零。其余情形的上界由 WN.1 的坐标估计给出。对任一最大行 $k$，令 $q=\lfloor k/d\rfloor\ge1$，取仅在 $q$ 非零的向量 $f(q)=(q+1)^{-\alpha}$。其范数为一，且输出在 $k$ 处达到该行权比，证明 WN.2 的准确等号。
+
+当 $d\le N<2d-1$ 时，唯一非零商为一，最大权比在 $k=N$ 处为 $(N+1)/2$。当 $N\ge2d-1$ 时，取 $k=2d-1$，商为一且权比为 $d$，达到 WN.1 的上界。这给 WN.3。$d=1$ 时中间区间为空，且 $T_1=I$。$\alpha=0$ 时每个非零情形的范数均为一，零算子的情形仍为零。
+
+标量乘法给 $\|A_p\|=p^{-1}\|T_p\|$。因为 $p>1$ 且 $\alpha-1<0$，有 $p^{\alpha-1}<1$，得到 WN.4。若 $p>N$，则 $A_p=0$。证毕。
+

@@ -1,0 +1,41 @@
+**Theorem 43.4 (Exact attained finite-carrier radius).** When the common carrier is finite, the minimum and cap region are
+
+$$
+\rho_{\mathrm{fin}}^{\min}(\delta;h,d,z)
+=\begin{cases}h/2,&0\le\delta<1,\\0,&\delta=1,\end{cases}
+\tag{43.18}
+$$
+
+$$
+\mathcal C_{\mathrm{fin}}(\delta,\eta)
+=\begin{cases}
+\{(h,d,z)\in\mathscr S:h\le2\eta\},&0\le\delta<1,\\
+\mathscr S,&\delta=1.
+\end{cases}
+\tag{43.19}
+$$
+
+Both minima are attained on a three-point common carrier.
+
+**Proof.** For any reference on any common measurable space, event-TV gives the triangle bound
+
+$$
+\operatorname{TV}(\mu_u,\mu_v)
+\le\operatorname{TV}(\mu_u,\nu)+\operatorname{TV}(\nu,\mu_v),
+\qquad \Delta\le2\rho_\nu.
+\tag{43.20}
+$$
+
+If the carrier is finite and $\delta<1$, Theorem 42.3 gives $\Delta\ge\sup_yh_y\ge h$, so (43.20) implies $\rho_\nu\ge h/2$. This invokes the finite-color persistent-source necessity of that theorem, which applies to every finite cardinality, rather than assuming that two extreme laws describe every family.
+
+For attainment reuse exactly its three-tape procedure: $a$ proposes $1$, $b$ diverges literally, and $c$ returns unknown. Give every source with $N(y)=27$ the law $\alpha=(h,d,z)$ and every other source the law $\gamma=(0,d+h,z)$. The anchor row is the prescribed one; away from $27$ there are no proposals, so all-source error is zero. Choose the midpoint reference
+
+$$
+\nu_{\mathrm{mid}}=(\alpha+\gamma)/2=(h/2,d+h/2,z).
+\tag{43.21}
+$$
+
+Each law differs from it by moving mass $h/2$ between $a$ and $b$, so both TV distances are $h/2$. Both source classes are occupied, for example by $(7,2)$ and $(5,1)$, respectively. This proves an attained minimum for $\delta<1$, also when $h=0$.
+
+At $\delta=1$ use the same procedure and the common law $\alpha$ at every source, with reference $\alpha$. The error is at most $h_y$ at every source and the radius is zero. Finite-record measurability and invariance under numerical duplication are immediate for these finite laws and common tape rules. Imposing the cap proves (43.19). $\square$
+

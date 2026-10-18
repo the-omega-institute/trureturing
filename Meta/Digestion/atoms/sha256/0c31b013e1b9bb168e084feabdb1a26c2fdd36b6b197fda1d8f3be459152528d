@@ -1,0 +1,16 @@
+**引理 3.2（合法性、区别及单一世界恒等式）。** 两个目标均属于 $\mathcal W_3$ 且不同。对任意原时钟、任意动作字及 $j\in\{a,b\}$，恒有
+
+$$
+g_j(i)\operatorname{tr}(A_iP_j)+D_0
+ =D_0+\lambda h(i)\operatorname{tr}(A_iR_j).                \tag{3.3}
+$$
+
+证明。源条目全部严格为正，且
+
+$$
+12\cdot57=19\cdot36=684,\qquad
+28\cdot25=35\cdot20=700.
+$$
+
+两个非零源矩阵因而秩一；分子的迹为 $69,53$，故所示归一化源迹一。$\operatorname{tr}R_a=69/55$、$\operatorname{tr}R_b=53/55$。$\lambda\ne0$ 使两个增益都是非零三次多项式，漂移均为固定的 $D_0$。源比值 $(P_a)_{21}/(P_a)_{11}=3$、$(P_b)_{21}/(P_b)_{11}=5/7$ 不同，故完整目标不同。代入 $P_j=R_j/\operatorname{tr}R_j$、$g_j=\lambda(\operatorname{tr}R_j)h$ 即得 (3.3)。此式对所有时钟成立，源、增益和漂移不随节点更换。∎
+

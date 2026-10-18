@@ -1,0 +1,45 @@
+**Proposition 11.7 (translation, restriction and the task-relative boundary).**
+For a table $z$, put $\tau_k z=z+k\mathbf1$, and let $d_{P,Q}$ be the
+rule (AAR.45) on current table values. On all attained inputs satisfying
+(AAR.47),
+
+$$
+\begin{aligned}
+\mathsf D_{P,Q}(Z_Q(t),k)&=d_{P,Q}(\tau_k Z_Q(t)),\\
+d_{P,Q}(\tau_h\tau_k Z_Q(t))&=V_P(\rho^{k+h}t),\\
+\tau_h\tau_k z&=\tau_{h+k}z.
+\end{aligned}
+\tag{AAR.51}
+$$
+
+If $P'\subseteq P$ and $Q'\subseteq Q$ still satisfies (AAR.47) for
+$P'$, then, with the ordinary coordinate restrictions,
+
+$$
+ \operatorname{res}_{P'}d_{P,Q}(\tau_k Z_Q(t))
+ =d_{P',Q'}\bigl(\tau_k\operatorname{res}_{Q'} Z_Q(t)\bigr).
+\tag{AAR.52}
+$$
+
+Proof. Equation (AAR.44) gives $Z_Q(\rho^k t)=\tau_k Z_Q(t)$;
+addition of actual update counts composes the same-source continuation.
+Lemma 11.3 identifies both sides of (AAR.52) with the same actual
+replies. Coordinate restriction commutes with adding $k$. These facts
+prove the statements, including independence of the public witness-ray
+choices. A rebased table is associated with its actual capture; a future
+increment must be counted from that capture. Discarding the old count
+discards its old time origin. $\square$
+
+The compatibility does not put a well-defined update operation on every
+selected-reply vector alone. For example, at $P=\{RL\}$ the sources
+$\langle\alpha,\alpha\rangle$ and $\langle\alpha,\beta\rangle$
+both give absent initially. After one update their replies at $RL$
+are respectively absent and beta. The sufficient table retains a
+distinction that this selected-reply vector discards. Nor does one
+recovered vector recover its table or the count. For $t\in\mathcal F_D$
+and $k\ge2D$, §3 gives
+$\mu(\rho^k t)=1+\lfloor k/2\rfloor>D$; hence every target in $A_D$
+is branch at every such count. All those different epochs give the
+same selected replies. The table-to-reply recovery is task-relative,
+not an equivalence of all spatial, temporal and memory descriptions.
+

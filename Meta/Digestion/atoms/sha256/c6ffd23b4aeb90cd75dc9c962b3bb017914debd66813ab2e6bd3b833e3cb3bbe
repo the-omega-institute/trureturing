@@ -1,0 +1,49 @@
+**Assumption 1.1 (the entire acquired task).** Fix the finite acquired
+input of [CAR, Assumption 1.1 and Definition 3.1][CAR]. Its entire fiber
+$D$ is nonempty and cycle-covered. Sources are all the nonempty finite
+ordered free trees satisfying that input, in the native algebra
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\end{aligned}
+\tag{NRF.1}
+$$
+
+More explicitly, for the given old cut $P$, old complete row $R$,
+literal history $H_0$ and signed history $H_{\rm rel}$, the domain is
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{NRF.2}
+$$
+
+A signed record $(a,p,b,s,\bowtie)$ imposes
+
+$$
+p\in\operatorname{Pos}(\rho^a u)\ \land\
+s\in\operatorname{Pos}(\rho^b u)\ \land\
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_s,
+\qquad \bowtie\in\{=,\ne\}.
+\tag{NRF.3}
+$$
+
+Both endpoint guards are mandatory for either sign. The whole old
+exterior, repeated occurrences of each old class, all distinct-class
+inequalities, every literal and every relation outside the target
+remain imposed jointly. Entry is the same original-root register
+$\rho^N u$ at the common authenticated epoch $N$, at least every
+acquired epoch. The acquisition, payment, retention, authentication
+and complete accessible-state cut are precisely CAR's hypotheses.
+They supply no additional source-dependent timing, cache or selector.
+
+The target is the original complete $R_Q(u)$ for the given finite
+prefix-free original cut $Q$: the entire concrete marked exterior,
+the originally reached holes in canonical address order, and their
+complete whole-subtree equality partition. A target address absent
+at epoch zero does not become a target hole through later growth.
+No representative-per-output domain replaces (NRF.2).
+

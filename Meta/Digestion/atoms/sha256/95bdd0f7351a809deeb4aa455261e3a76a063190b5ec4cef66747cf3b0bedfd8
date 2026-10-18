@@ -1,0 +1,27 @@
+**Definition 6.1 (tariff and fixed guard bill).** Keep separate coordinates
+for fine commitments $N$, endpoint probes $P$, designated assignments
+$W$, births $A$ and bounded table evaluations $E$. Charge unit prices
+to the first four and a declared price $\theta\ge0$ per bounded
+evaluation. Its fixed mechanism/description price $\rho_C$ is additional.
+This is a structural tariff, not a physical duration/energy theorem.
+Finite evaluation is an explicit priced ideal operation, with no
+unrepresented runtime interpreter.
+
+Let $d_{16}=|\pi_{16}|$, $d_{\mathfrak m}=|\pi_{\mathfrak m}|$, and
+$d_z=d_{16}+3$. On an eligible entry all required finite guard bits
+are present. Definition 4.1's steps 1–3 cost exactly
+
+$$
+G_h=\sum_{f\in\mathcal F_\kappa}(|\pi_f|+5)
+                         +(d_{16}+73)+(d_{\mathfrak m}+75).
+$$
+
+For step 2 the additional counts after the origin route are one
+O-link, one H-backlink, 68 byte-inspection probes and three P,R,P
+probes. Step 3 has those same 73 probes plus two trailing vacancy
+probes. A 23-vertex cell inspection has $2\cdot23+22=68$ probes.
+An independently routed unary finite-bit inspection has five.
+Repeated routes, including aliases of their scaffolds, are not
+deduplicated. The guard and all its route lengths are unchanged at
+every $C_j(h)$; no old-graph whole-tape scan occurs.
+

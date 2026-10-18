@@ -1,0 +1,42 @@
+**Corollary 3.3 (all-competitor preservation and the incidence boundary).**
+After the credited RRN reply-star normalization, restricting unrestricted
+native witnesses to the terminal witnesses of Theorem 3.2 preserves
+the collection of all complete solution sets at fixed $d,n$. It therefore
+preserves integral and fractional covers, every nonnegative mass maximum
+and $\beta_d$, with original normalization $n$.
+
+For a contracted component $K$, if assigned occurrences are retained in
+the incidence accounting, its phase incidence is exactly
+
+$$
+\nu_{\rm new}(K)=\left|\bigcup_{c\in K} I_c\right|
+ \le\min\left(n,\sum_{c\in K}\nu_{\rm old}(c)\right)
+ \le\min(n,L|K|)
+\tag{GDB.16}
+$$
+
+when the original incidence is at most $L$. The number of distinct
+variables occurring in any original block cannot increase. The same
+bounded-incidence class need not be preserved: §4 attains new incidence
+$n$ from old incidence two. For a restricted input class, exactness is
+therefore an equality with its quotient image retaining the original
+owners and provenance, not an equality with $\mathfrak N_{d,L}(n)$.
+
+Proof. Every original template has an exact RRN witness, and Theorem
+3.2 produces a terminal witness with the identical solution set.
+Conversely every resulting witness is a lawful native witness by that
+theorem and RRN's converse. These two containments give equality of the
+collections and both directions of every mass and cover comparison.
+Each occurrence of a seed in $K$ becomes an occurrence of its phase in
+the same original block and no new occurrence is added. This gives the
+union identity, its bounds and the per-block assertion. Even a now
+constant assigned table is retained in this stated accounting; removing
+it can only reduce incidence. The example below proves sharp growth.
+$\square$
+
+The selected edges belong to the graph of actual temporal compatibility
+left by RRN. They are not the directed reply-dependence skeleton that
+RRN already eliminates. Spanning-tree propagation and finite bijection
+consistency are mature ingredients; the additional statements here are
+the native same-tuple, owner, weight, query and incidence correspondences.
+

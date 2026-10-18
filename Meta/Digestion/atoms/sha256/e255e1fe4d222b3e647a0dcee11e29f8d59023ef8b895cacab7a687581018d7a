@@ -1,0 +1,33 @@
+**定理 66.1（An attained infinite family with a strict availability surcharge）。** For every odd $m\ge3$, put $k=m+1$ and $T=m+2$, so $\gcd(m,T)=1$. Choose pairwise distinct labels $L,M,C,R$. On both free-value fibres define the entire INITIAL target by
+
+$$
+f_m(v,-j,s)=
+\begin{cases}
+R,&s=m,\\
+L,&s<m,\ j\in\{m-2,m\},\\
+M,&s<m,\ j\in\{0,\ldots,m\}\setminus\{m-2,m\},\\
+C,&s<m,\ j=m+1,
+\end{cases}
+\qquad f_m(\bot)=L_\bot,
+\tag{66.1}
+$$
+
+where $L_\bot$ is arbitrary and independent. The actual root $101\cdots01$ has positive child $A=W_0$ with tail one and the exceptional table $\mathsf E$. This child's additional adaptive and child-preset fees are exactly two, although its availability-code minimum $K(A,\lambda;1)$ of Definition 27.1 is one. That definition is used solely as a combinatorial code predicate; Chapter 27's guarded fee laws are not applied. The single literal stream
+
+$$
+101\cdots01\mid0^m\mid110^{m-2}
+\tag{66.2}
+$$
+
+is a GLOBAL preset controller for the full target, shared by both free-value fibres, with actual worst fee three. Consequently $C_{\rm ad}(f_m)\le C_{\rm pre}(f_m)\le3$. No full-target lower bound three for every odd $m$ is included in this statement.
+
+**证明。** The alternating root has leading run one, so it rejects exactly INITIAL tail $s=m$, labelled $R$. Every surviving fixed-phase INITIAL fibre $s=0,\ldots,m-1$ has one label in (66.1), so its actual first-zero merger preserves that label. The rejected band is also homogeneous. These are the actual INITIAL-fibre conditions from [S1, Lemma 4.3; S15, Proposition 4.2], not merely an internal legality check.
+
+The root's full path charge is one on $W_0=\{0,\ldots,m\}$. Its positive child therefore has exactly that support, common tail one, and $L$ class $\{m-2,m\}=\{m,2m\}\pmod T$. The zero child is phase $m+1$, labelled $C$, and stops at its first endpoint. Rejection stops there with $R$. The positive child is $\mathsf E$, so Theorem 65.2 gives the exact additional fee two and the last two words of (66.2).
+
+For its availability predicate the next window is $W_1$, and its only unavailable phase in $A$ is $m-1$, of label $M$. Assign the one-bit code one to $L$ and zero to $M$. The $L$ phases are both available; all unavailable entries are zero; different labels have different codes. Thus $K\le1$, and nonconstancy gives $K\ne0$. The strict surcharge $D_{\rm ad}=D_{\rm child\text{-}pre}=K+1=2$ is attained on an actual child of this full INITIAL target, rather than on an unrelated support or an unacquired favourable tail.
+
+All source records used here have the single joint history (1.3): for the desired $(v,-j,s)$ choose $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, $\ell\ge s+2$ and $d=\bigoplus_{i=\ell-s}^{\ell-1}c_i$, and use $(v\oplus d)0^{\ell-s-1}1^s$. Coprimality supplies such $\ell$. This one legal word has exactly the prescribed value, phase and actual tail together and splits into complete source blocks under either alphabet. Appending (66.2) to that word gives precisely the root rejection or its own successful difference archive just calculated. INITIAL labels never change with the tail updates. An all-one complete-block history of length at least $k$ separately realizes initial bottom, which is freely observed and stops with $L_\bot$.
+
+The root rejects only its stated band; the surviving root seam satisfies $s+1\le m<k$. The clearing word begins zero. The final word begins with two ones from tail zero, below $k=m+1$, and all later bits are zero. Only the positive child continues beyond the first endpoint. On it both labels occur on actual histories and require the third endpoint; those histories emit all three paid words, including the clearing block. On the final difference one return $L$, and on zero return $M$. Successive endpoint differences of each source's own outputs implement the same decoder on both INITIAL values. This proves the GLOBAL attainment and its actual maximum three, without a general minimization claim for the entire infinite family. ∎
+

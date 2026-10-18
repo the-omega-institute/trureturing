@@ -1,0 +1,17 @@
+**分支 $L_{\rm pair}=0$。** 定义漂移分母 $L_{\rm pair}=v-\rho D$；本卷在第 5–10 节式子中简写 $L=L_{\rm pair}$，区别于第 2 节的矩阵 $MJ$。原始关系 $\rho(X-d)D=(C-d)v$ 给
+
+$$
+dL=Cv-\rho XD.
+$$
+
+若 $L=0$，即 $v=\rho D$，右端为 $(C-X)v\ne0$，矛盾。因此
+
+$$
+L\ne0,\qquad
+d=\frac{Cv-\rho XD}{L}=X-\frac{(X-C)v}L,\qquad
+\omega=\frac{X-C}L.
+\tag{5.6}
+$$
+
+至此 $h,\beta,\lambda,z,\sigma,\pi,u,v,D,E,d,\omega$ 都由一个 $\rho$ 唯一确定，所有五个异常分母分支均已单独处理。
+

@@ -1,0 +1,99 @@
+**Lemma 7.2 (one-axis residue charge).** Let
+$S_0,\ldots,S_{18}\subseteq\{0,\ldots,18\}$ be any nineteen
+sets of cardinality ten. Define
+
+$$
+n_i=\#\{t:i\in S_t\},\qquad
+\gamma_t=\max S_t-\min S_t-9,\qquad
+\Gamma=\sum_{t=0}^{18}\gamma_t.
+\tag{NAGC.7.4}
+$$
+
+Suppose $n_i\equiv1\pmod3$ for every $0\le i\le18$, and put
+$\eta=19-n_9$. Then $\eta\in\{0,3,6,9,12,15,18\}$ and
+
+$$
+\Gamma\ge\max\left\{\eta,\ 6+\frac{\eta}{3}\right\}.
+\tag{NAGC.7.5}
+$$
+
+No path structure or independent covering assumption is needed for
+these sets.
+
+**Proof.** For $0\le j\le9$ write
+
+$$
+\varepsilon_{t,j}
+=\#\{x\in S_t:x\equiv j\pmod{10}\}-1,
+\qquad x_+=\max(x,0).
+\tag{NAGC.7.6}
+$$
+
+Each $S_t$ has ten elements, so
+$\sum_{j=0}^{9}\varepsilon_{t,j}=0$. Within $\{0,\ldots,18\}$
+a residue has at most two representatives. A positive
+$\varepsilon_{t,j}$ is therefore exactly one and occurs precisely
+when $0\le j\le8$ and $j,j+10\in S_t$. For $s_t=\min S_t$
+and $u_t=\max S_t$, such a duplicate requires
+$s_t\le j\le u_t-10$. Since $u_t-s_t\ge9$, this interval
+contains $u_t-s_t-9=\gamma_t$ integers, including zero integers
+when the span is nine. Consequently
+
+$$
+\sum_{j=0}^{9}(\varepsilon_{t,j})_+\le\gamma_t.
+\tag{NAGC.7.7}
+$$
+
+Thus every duplicated residue in a set is charged to that set's
+actual coordinate span gap. Define the aggregate imbalance and its
+positive part by
+
+$$
+W_j=\sum_{t=0}^{18}\varepsilon_{t,j},\qquad
+Q=\sum_{j=0}^{9}(W_j)_+.
+\tag{NAGC.7.8}
+$$
+
+Taking positive parts after summation cannot increase their total.
+Summing (NAGC.7.7) therefore gives the entire charge chain
+
+$$
+\Gamma\ge\sum_{t=0}^{18}\sum_{j=0}^{9}
+ (\varepsilon_{t,j})_+\ge Q.
+\tag{NAGC.7.9}
+$$
+
+For $0\le j\le8$ there are two possible representatives of
+residue $j$, whereas residue nine has only the representative nine.
+Hence
+
+$$
+\begin{aligned}
+W_j&=n_j+n_{j+10}-19\equiv1\pmod3 &&(0\le j\le8),\\
+W_9&=n_9-19=-\eta\le0,&
+\sum_{j=0}^{8}W_j&=\eta.
+\end{aligned}
+\tag{NAGC.7.10}
+$$
+
+The sum identity follows from $\sum_jW_j=0$. Also
+$0\le n_9\le19$ and $n_9\equiv1\pmod3$, so
+$n_9\in\{1,4,7,10,13,16,19\}$, proving the stated range of
+$\eta$.
+
+Let $k$ be the number of positive entries among $W_0,\ldots,W_8$.
+None of these nine entries is zero. Every positive one is at least
+one and every negative one is at most minus two. Their positive
+sum is $Q$, because $W_9\le0$, and their negative magnitudes
+sum to $Q-\eta$. It follows that
+
+$$
+Q\ge k,\qquad
+Q-\eta\ge2(9-k)\ge18-2Q,\qquad Q-\eta\ge0.
+\tag{NAGC.7.11}
+$$
+
+The middle inequality gives $Q\ge6+\eta/3$, and the last gives
+$Q\ge\eta$. Together with (NAGC.7.9) these prove (NAGC.7.5).
+$\square$
+

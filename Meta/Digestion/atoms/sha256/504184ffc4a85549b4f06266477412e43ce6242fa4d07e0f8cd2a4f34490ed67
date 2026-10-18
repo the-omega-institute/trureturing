@@ -1,0 +1,21 @@
+### 90.3. A normalized coherent input gives error one half
+
+Let the fixed logical input encoding be |f,i〉↦|f,i〉_A⊗|f,i〉_B, and let the target output encoding be |f〉↦|ff〉. The original product and target are calibrated into that output code. For a coefficient matrix C define the logical map
+
+\[
+ \mathcal M_C(|f,i\rangle\langle g,j|)
+      =C_{fi,gj}|f\rangle\langle g|.                      \tag{9}
+\]
+
+Because the product Gram (3) is real symmetric, the original encoded channel difference is exactly −M_L followed by the output encoding. The usual forward-Gram transpose therefore causes no convention change here.
+
+The normalized no-reference input
+
+\[
+ |\psi_0\rangle=\frac12
+ (|1,0\rangle+|1,1\rangle+|4,0\rangle+|4,1\rangle)
+                                                               \tag{10}
+\]
+
+has output difference −(|1〉〈4|+|4〉〈1|)/4, and hence unhalved trace norm 1/2. The output encoding preserves this norm. Thus δ(A,B)≥1/2 already, despite both inequalities in (8).
+

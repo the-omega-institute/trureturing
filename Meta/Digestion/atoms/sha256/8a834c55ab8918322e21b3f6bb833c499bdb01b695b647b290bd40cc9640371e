@@ -1,0 +1,37 @@
+**Theorem 1.3 (necessary suspended emission interiority).** Every finite COMPLETE observer on every prior of Definition 1.1 satisfies
+
+$$
+61e(M)+15\mathcal I(M)
+>\frac{11\eta}{300000}>0.
+\tag{1.4}
+$$
+
+In particular, in the entire class with no reachable suspended emission strictly between $a$ and $b$,
+
+$$
+\inf_M e(M)\ge\frac{11\eta}{18300000}.
+\tag{1.5}
+$$
+
+Exact common conf/conf attainment requires
+
+$$
+\mathcal I(M)>\frac{11\eta}{4500000}.
+\tag{1.6}
+$$
+
+If a sequence has both configuration excesses tending to zero, then
+
+$$
+\liminf_n\mathcal I(M_n)\ge\frac{11\eta}{4500000}.
+\tag{1.7}
+$$
+
+State counts, kernels and supported priors may vary along this sequence, provided each member obeys the same source contract and has a supported nonendpoint.
+
+The new ingredient is the short-word forcing and stationary balance proved in Sections 3–5. The two suspended coordinates $\alpha w_{1,1}$ and $\alpha w_{2,1}$ have the opposite endpoint order from their p residual coordinates. When the suspended emission equals an endpoint, this forces its actual alpha successors toward the corresponding p endpoint coordinates. Both unweighted acquired flows then give a switching balance incompatible with simultaneous endpoint event calibration, unless the full p laws approach the fair native endpoint tags. The supplied interior loss rules out that last possibility.
+
+The new inequality is specific to conf/conf. No analogous new restriction is proved for law/law, law/conf or conf/law; their supplied attainments [MIXED; SWITCH] retain their original scopes. The proof requires both configuration-before-TV bounds.
+
+The theorem gives no unrestricted positive gap: $\mathcal I$ is free in the original model class. It constructs no exact common attainer or vanishing-excess family, and gives no fixed-resource optimum.
+

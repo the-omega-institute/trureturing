@@ -1,0 +1,70 @@
+**Theorem 22.3 (Minimal classical hidden dimension does not bound positive coherent rank).**
+The single law (22.1) has minimal nonnegative classical
+edge-emission dimension two. For every $m\ge1$,
+
+$$
+\operatorname{SR}_{m+2\,|\,m+2}\Psi_{2m+4}(P)\ge m.
+\tag{22.6}
+$$
+
+Consequently even fixed minimal classical hidden dimension
+two, irreducibility, aperiodicity, renewal structure and
+full legal support do not bound the exact bond dimension
+of these prescribed positive coherent embeddings.
+
+Proof. Put $L=m+2$ and select actual complete half-words
+
+$$
+u_i=0^{L-1-i}1\,0^i,\qquad
+v_j=0^j1\,0^{L-1-j},\qquad 1\le i,j\le m.
+\tag{22.7}
+$$
+
+Each starts and ends in zero. Formula (22.3) gives
+
+$$
+P(u_iv_j)=\frac{(L-i)(L-j)(i+j)}{2^{2L+1}}.
+\tag{22.8}
+$$
+
+The corresponding positive coherent submatrix is
+
+$$
+2^{-(2L+1)/2}
+\operatorname{diag}(\sqrt{L-i})\,
+[\sqrt{i+j}]_{i,j=1}^m\,
+\operatorname{diag}(\sqrt{L-j}).
+\tag{22.9}
+$$
+
+All displayed diagonal factors are positive. Invoke the
+existing additive-kernel theorem of
+[Jain, *Hadamard powers of some positive matrices*,
+arXiv:1803.06803v1, Theorem 2.2, equation (2.3)](https://arxiv.org/abs/1803.06803v1).
+For two strictly increasing positive coordinate lists,
+$[(q_i+p_j)^r]$ is strictly sign regular, hence nonsingular,
+when $r\ge0$ avoids $0,\ldots,m-2$.
+Here $p_j=j$, $q_i=i$, $r=1/2$ satisfy those hypotheses;
+$m=1$ is immediate. Thus (22.9) has rank m and is an
+actual minor of the full coefficient matrix. This proves
+(22.6) and the exact MPS consequence.
+
+The two-state representation is (22.1). A one-state
+nonnegative stochastic edge-emission model has scalar
+$M_1\ge0$; the no11 condition forces $M_1^2=0$, hence
+$M_1=0$. It cannot give positive probability to the word
+one. Therefore no one-state presentation realizes P.
+$\square$
+
+A two-state visible first-order no11 Markov chain still
+has coherent rank exactly two at every proper cut, by
+Proposition 19.3. The SNS is a two-state generating model
+with a different predictive structure. Equality of minimal
+classical hidden dimensions therefore does not identify
+their coherent ranks. This strengthens the fixed-producer
+application of §19 without relying on reducibility or a
+latent branch kept forever. It remains an application of
+existing SNS and entrywise-power results, with no claim of
+literature priority, quantum memory advantage, preparation
+protocol or harmonic-edge optimality.
+

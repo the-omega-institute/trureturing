@@ -1,0 +1,82 @@
+**命题 201.7（全长度冲突评分的零成本吸收）。** 对任意 $L\ge4$、$m=L-2$ 和
+$\lambda>0$，令 $y_L$ 在每个单零字 $w(\{j\})$、$3\le j\le L$ 的正确行放
+$\lambda$。对 $a=1,2$，在零集 $\{a\}\cup\{k,\ldots,L\}$ 的字上放 pair 权重
+$\lambda$（$k=3$）或 $\lambda/2$（$4\le k\le L$），并取 $T=\lambda$。
+则
+
+$$
+\begin{aligned}
+S&=(m+1)\lambda,&G&=m\lambda,&\mu&=\lambda,&B&=(m+2)\lambda,\\
+\Delta_O(y_L)&=0,&\Delta_N(y_L)&=\lambda,&
+\Gamma(y_L)&=\frac{\lambda m}{m+1}.
+\end{aligned}
+\tag{201.29}
+$$
+
+其非零商有定理 201.3 给出的明确非负代表 $V_L$，且
+
+$$
+Q(V_L)=Q(y_L),\qquad V_L\cdot\mathbf r=y_L\cdot\mathbf r=(m+2)\lambda,
+\qquad\Delta_N(V_L)=0.
+\tag{201.30}
+$$
+
+因而这些零预算射线可按定理 199.6 加入任何既有完整证书而不增加其预算。
+
+**证明。** 总质量如 (201.29)。查询两个晚期地址 $3\le i<j\le L$ 时，pair
+质量在 $00,01,10,11$ 依次为
+
+$$
+(i-1)\lambda,\quad0,\quad(j-i)\lambda,\quad(L-j)\lambda.
+\tag{201.31}
+$$
+
+单零正确标签 $i$ 在 $01$ 得 $\lambda$，标签 $j$ 在 $10$ 得 $\lambda$，
+其余正确标签在 $11$ 各得 $\lambda$；正字在 $11$ 给零标签 $\lambda$。
+$O$ 首停胞把 $00,01$ 合并，零标签的 $(i-1)\lambda\ge2\lambda$ 覆盖
+该胞每个正确奖励；$10$ 的 $(j-i)\lambda\ge\lambda$ 和 $11$ 的
+$(L-j+1)\lambda\ge\lambda$ 也覆盖全部标签。因此该停止日程的支持为
+$L\lambda=(m+2)\lambda$。$N$ 分开首两胞，额外恰得 $\lambda$，支持为
+$(L+1)\lambda$。
+
+查询早期地址 $a$ 与晚期 $j$ 时，早期零分支的 pair 总量为 $S/2$，没有晚期
+正确奖励；早期一分支的零胞 pair 质量为 $(j-1)\lambda/2\ge\lambda$，正胞
+的 pair 加正字质量为 $(L-j)\lambda/2+\lambda\ge\lambda$。
+这些质量逐标签覆盖正确行，故 $N$ 与 $O$ 都恰得 $S+\lambda=L\lambda$。
+查询 $1,2$ 也恰得 $S+\lambda$。常数输出零得 $S+\lambda$，任何常数标签均
+不超过它；单询早期地址的两胞值之和为 $S/2+(S/2+\lambda)$，单询晚期 $j$
+的两胞值之和为 $(j-1)\lambda+(L-j+1)\lambda$。所以完整空、单、双目录的
+支持都已覆盖，得到两个超额。
+
+按定义 200.2，$j=3$ 时选择守卫一或二的成本都是 $\lambda$。
+$j\ge4$ 时，早期守卫的成本为 $(j-1)\lambda/2\ge\lambda$，晚期守卫
+$3\le i<j$ 的成本为 $(j-i)\lambda$，在 $i=j-1$ 达到 $\lambda$。
+因此每个 $c_j(y_L)=\lambda$，而
+
+$$
+\Gamma(y_L)=\max_{3\le k\le L}\frac{(k-2)\lambda}{k-1}
+            =\frac{m\lambda}{m+1}>0.
+$$
+
+等权层只有 $J=\{3,\ldots,L\}$，所以构造明确为
+$V_L=\lambda W_J$ 再加 $T_{V_L}=(m+2-c_m)\lambda$。
+由 $c_m\le m+1$，有 $T_{V_L}\ge\lambda=\mu$，故定理 201.3 给
+(201.30)。非零性来自正的正确总量。若 $(V_*,\theta)$ 已证实某个商 $q$，则对
+$s\ge0$ 取 $V_*+sV_L$，由定理 199.6 保留
+$\Delta_N\le1-\theta$ 及原残差界，仍是同一预算证书。
+
+本族的商读数为
+
+$$
+F_{y_L}(b)=\lambda\sum_{j=3}^Lb_j-(2L-2)\lambda e,
+\qquad F_{y_L}(u_L)=\frac{\lambda m}{m+1}>0.
+\tag{201.32}
+$$
+
+零成本代表使任何 $b\in H_N$ 必满足
+$\sum_{j=3}^Lb_j\le(2L-2)e$；它也使 $\rho_N(u_L)=\infty$，因为有限配置
+会与 (201.32) 的严格正值矛盾。因此正 $\Gamma$ 和 $\Delta_N(y_L)>0$ 并未产生
+完整证书失败。$L=4$ 的帽比较和相应幅界沿用
+[定理 96.2、推论 96.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#96-the-analytic-hard-two-boundary-for-four-active-amplitudes)，
+其范围仍由这些既有结论给定。$\square$
+

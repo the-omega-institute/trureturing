@@ -1,0 +1,30 @@
+## 166. Exact hypotheses and inherited data
+
+Use the actual finite ideal face pairing, complete circular edge links,
+minimum degree six, fixed paired frames with two distinct reservoir labels,
+and one common positive generalized length field satisfying every original
+2*pi edge equation. There are exactly four actual reservoir labels
+H={M,C,D,Z}; special labels can only occur axially and have their fixed
+reservoir pair. Frames are in order (12,13,14,34,24,23).
+Assume a flat exists. Use Sections 137--165, including the core-capacity and smaller-companion
+exclusions proved above:
+
+ m>1+c+d,   z>1+m+c,   d>z-m-1>c>1.
+
+Here lower-case values are cosh of the shared positive original lengths.
+The complete genuine M budget is pi; every Z occurrence is genuine and
+the complete Z budget is 2*pi. There are distinct actual genuine owners
+
+ tau=(Z,M,C,D,M,C),     rho=(C,Z,M,Q,Z,M), Q in {M,Z,D}.
+
+Tau's one axial Z angle theta and its two transverse M angles beta obey
+ theta+2 beta>pi.
+Rho's two transverse Z angles gamma obey 2 gamma>pi. Tau's two Z faces
+are paired to rho's two faces containing its C axis. The unique dominant
+axial Z run consists of tau. There is no all-M/Z owner. There is no
+special edge with fixed reservoir pair {Z,M}. These statements count
+actual slots, including any repeated axes and distinct-face self-gluings.
+In particular m>3, z>m+2 and c,d<m-2.
+
+We prove that these inherited consequences are contradictory.
+

@@ -1,0 +1,34 @@
+**Corollary 37.1 (ground coincidence never extends to the full low spectrum).**
+At the unique $b_*$ in (34.2), the unit critical families have equal
+limiting full and actual-zero-leaf ground energies and equal limiting
+ground probabilities after the measure embedding $D=0$. Nevertheless,
+for every fixed $N\ge2$,
+
+$$
+\begin{aligned}
+\lim_{\kappa\to0}\Lambda_{{\rm unit},N}(\kappa,\tau_{b_*})
+ &=e(gc_0),\\
+\lim_{\kappa\to0}\Lambda^0_{{\rm unit},N}(\tau_{b_*})
+ &=\zeta_N(gc_0)\ge e(gc_0)+\Gamma(gc_0)>e(gc_0).
+\end{aligned}
+\tag{37.1}
+$$
+
+The limiting full lowest gap is zero and the actual-zero-leaf lowest
+gap tends to $\Gamma(gc_0)>0$ at this same parameter. For $b\ne b_*$
+their limiting ground energies already differ. For every finite $b>0$
+and every fixed $N$, the full unit $N$th eigenvalue has a limit strictly
+below the limiting sector ground energy. In the raw family, every fixed
+full eigenvalue has a limit strictly below the limiting ground energies
+of both comparisons.
+
+Proof. At $b_*$ the full value in (36.7) is $e(gc_0)$ for every $N$,
+while the simple base ground and (36.3) give (37.1).
+The other full-versus-zero ground comparisons and ground-probability
+coincidence are exactly Theorem 34.1. For the sector comparison use
+$G_{\beta b}(0)>1/(2\pi)$ at every finite $b$ and strict decrease of
+$e$ in (34.6). In the raw family use $c_sg>0$ and
+$\zeta_1(0)=e(0)=\lambda$. These strict limiting inequalities also
+hold between the corresponding actual eigenvalues for all sufficiently
+small $|\kappa|$, separately for each fixed $N$. $\square$
+

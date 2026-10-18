@@ -1,0 +1,33 @@
+**命题 6.1（自然所有权的成对阈值）。**
+For the promised pure-record pair (OC.22), a deterministic exact conversion
+exists if and only if
+
+$$
+|\mu|\le\frac38.
+\tag{OC.24}
+$$
+
+**证明。** Necessity follows from $|\nu|\le1$ in (OC.23).  If (OC.24)
+holds, choose two normalized environment vectors with overlap
+$\nu=(8/3)\mu$.  The two output vectors
+$\Psi_{k_1}(h^{(i)})\otimes\xi_i$ then have the same Gram matrix as the two
+joint input vectors.  The Gram isometry on their two-dimensional span extends
+to a channel on the whole input space.  $\square$
+
+The threshold is a source-record condition.  Two-dimensional record and
+environment spaces suffice: any $z$ with $|z|\le1$ is the overlap of the
+normalized vectors $(1,0)$ and $(z,\sqrt{1-|z|^2})$ in the convention
+linear in the second argument.  The two joint inputs are linearly
+independent since their overlap has modulus at most $4/5$, so their Gram
+isometry extends after padding the environment if necessary.  Exact knowledge
+of the record states and a calibrated joint operation is an additional
+implementation premise.  Arbitrary mixed-record sufficiency is not asserted.
+
+A record produced afterwards by an endpoint-only operation preserving both
+original pure endpoints cannot provide this missing distinction.  Its pure
+dilation has the form $V\Psi_i=\Psi_i\otimes\xi_i$, so
+$(4/5)=(4/5)\langle\xi_0,\xi_1\rangle$ and the total output record is the
+same.  Every accessible marginal record is therefore identical.  The useful
+record must come from an earlier source/control interaction or another
+explicit joint input; its overlap is not inferred from the command name.
+

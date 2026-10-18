@@ -1,0 +1,12 @@
+**Definition 16.1 (multiplier face).** For fixed finite feasible weak
+$t$ and $\lambda\ge0$ define
+$$
+C_t(\lambda)=\max_{\sum p\Gamma=B(t)}
+                    \sum p(g_t+\lambda k).
+\tag{GC.74}
+$$
+Its optimal face consists of common laws attaining this value.
+Let $r_-(t,\lambda)$ and $r_+(t,\lambda)$ be the minimum and
+maximum achieved $K$ on that face. A law on the face need not be
+optimal for an arbitrary larger requested contrast.
+

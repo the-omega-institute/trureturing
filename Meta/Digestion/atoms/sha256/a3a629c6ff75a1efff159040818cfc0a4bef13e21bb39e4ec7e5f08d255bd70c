@@ -1,0 +1,18 @@
+**Attribution 6.2 (Prior interfaces and the quantitative increment).**
+The owning sources and their exact roles are as follows.
+
+| Source | Reused content and boundary |
+| --- | --- |
+| [Original, Proposition 2.1, (2.2), Definition 9.1 and (9.4)][Original] | The one stationary law, paid-read contract, original clock, and actual target table. |
+| [Original, Theorems 12.2--12.3][Original] | Complete whole-tree slot signature, its law sufficiency, general finite representative existence, and measurable same-given-seed representation. The interfaces in Section 2 and the measurable lift in Section 4 are included with their ordinary arguments; these existence conclusions are not counted as new. |
+| [Original, Sections 13--14][Original] | Exact seed-partition image, compact attainment, and the budgeted-return projection. These remain existing conclusions; no new compactness or numerical optimum is claimed. |
+| [Paid-return, Definitions 1.2--1.3 and Section 6][Paid-return] | The unchanged acquisition contract, distinction between total cost and return-restricted quantities, and resource boundaries. Its risk bounds supply no address-packing proof. |
+| Lemmas 3.1--3.2 and the quantitative part of Theorem 4.1 | `repo-derived`: the component capacities, injective packing fixing the actual target, and the explicit bias-independent window $W_{k,j}$. |
+| Theorem 5.2 | `repo-derived`: the exact universal whole-signature radius and its law-only limitation, with the explicit lawful witness. |
+
+The relative mathematical increment is precisely quantitative packing
+and signature sharpness. Finite iid products, elementary path geometry,
+and product-measure integration retain their usual mathematical meaning.
+This comparison is with the supplied owning sources; it asserts no
+external-literature absence or global priority.
+

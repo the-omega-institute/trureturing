@@ -1,0 +1,24 @@
+**Definition 4.1 (The full affine probability-continuation contract).** Fix
+the source and preparation above. For a finite integer $n\ge0$, allow an
+arbitrary function $E:\mathcal M\to\mathbb R^n$, a fixed linear map
+$D_*:\mathbb R^n\to\mathbb R^{10}$ and a fixed $c\in\mathbb R^{10}$.
+For every $s\in(-H,H)$ allow a fixed matrix $M_s\in\mathbb R^{n\times n}$
+and vector $b_s\in\mathbb R^n$. Require
+
+$$
+y(x)=c+D_*E(x)\qquad(x\in\mathcal M),
+$$
+
+$$
+E(T_sx)=M_sE(x)+b_s
+\quad\hbox{whenever }x=(k,\alpha,\beta)\in\mathcal M,
+\quad 0<k+s<H.
+$$
+
+The coefficients may depend on the fixed source, preparation and displacement
+$s$, but not on the current state or producing history. There is no encoder
+regularity or injectivity assumption, no regularity in $s$, no global matrix
+group law, and no obligation outside the lawful partial domains. The actual
+action is exactly the straight leg of Proposition 3.1. These quantifiers
+allow both the readout offset and the update offset.
+

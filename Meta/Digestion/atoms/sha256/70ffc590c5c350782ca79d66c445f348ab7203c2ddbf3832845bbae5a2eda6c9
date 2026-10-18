@@ -1,0 +1,58 @@
+**Theorem 23.1 (quadratic loss and regularity).** On AC.120 put
+$v_*=dB-\lambda k_u$. Then
+
+$$
+\partial_\lambda v_*=-\lambda\chi,\qquad
+\frac{dv_*}{dk_u}=-\lambda,\qquad
+\partial_s\mathcal T_A(s)=-\frac{\lambda\sqrt\alpha}{2s_0}.
+\tag{AC.124}
+$$
+
+For each $t\in I$ the right expansion at its first seam is
+
+$$
+\mathcal T_A(s)=T_c(t)
+ -\frac{\alpha}{4s_0^2\chi(t,0)}(s-s_c)^2
+ +O((s-s_c)^3),
+\tag{AC.125}
+$$
+
+and throughout the explicitly covered strict right interval,
+
+$$
+10^{-5}(s-s_c)^2<T_c(t)-\mathcal T_A(s)
+<7000(s-s_c)^2.
+\tag{AC.126}
+$$
+
+The value is $C^1$ and not $C^2$ at this seam: its left second
+derivative is zero and its right second derivative is
+$-\alpha/(2s_0^2\chi(t,0))<0$.
+
+Proof. Differentiating the matched signed Lagrangian on the fixed
+moment level eliminates changes of weights, angles and multipliers
+by their exact stationarity and moment equations. Only the report
+term remains, giving $\partial_\lambda v_*=-\lambda\partial_\lambda k_u$.
+Analyticity and AC.112 give local inversion; use $s=C_sk_u$ and
+$T=(H_0+v_*)/2$ to obtain AC.124–AC.125. In particular the coefficient
+is an exact selected-root expression, not a numerical value of $\chi$.
+It can also be written without choosing $N_T$ as
+
+$$
+\chi=-\frac{\nabla_Xk_u^T\operatorname{adj}(D_X\mathcal F)
+                  \partial_\lambda\mathcal F}
+                 {\det(D_X\mathcal F)}.
+\tag{AC.127}
+$$
+
+The denominator is nonzero by AC.101. No extremization is hidden in
+either AC.114 or AC.127. Along the entire branch
+$10<\alpha/(4s_0^2)<20$ and $3/1000<\chi<10^6$.
+Since $d\lambda/ds=1/(C_s\chi)$, integration of AC.124 bounds
+the loss between coefficients $10/10^6=10^{-5}$ and
+$20/(3/1000)<7000$, proving AC.126 without an unspecified
+neighborhood remainder. The platform is constant, so its first
+derivative joins the zero right derivative, while its second derivative
+cannot join the strictly negative right value. This is finite-budget
+gluing, not a joint asymptotic limit. $\square$
+

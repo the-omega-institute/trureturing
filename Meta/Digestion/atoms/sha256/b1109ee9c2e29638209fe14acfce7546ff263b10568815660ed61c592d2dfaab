@@ -1,0 +1,35 @@
+**Definition 11.1 (the common two-label table).** On the original source, control and complete future of Definitions 1.1–1.3, use a period-one table with $X=Y=\{0,1\}$ and
+
+$$
+\begin{gathered}
+D=300000000,\qquad b=\frac{22306}{D},\qquad
+\pi=\tau=(1/2,1/2),\\
+B=\begin{pmatrix}1-b&b\\b&1-b\end{pmatrix},\qquad
+A=\begin{pmatrix}1&0\\0&1\end{pmatrix},\\
+u=\frac1D\begin{pmatrix}100003966\\119995354\end{pmatrix},\qquad
+v=\frac1D\begin{pmatrix}100005451\\119995552\end{pmatrix}.
+\end{gathered}
+\tag{11.1}
+$$
+
+Before the third latch retain the full original $C_0$ and use fair synthetic letters. The original third-completion update first writes the whole record and latches it, then independently samples the fair private label. After an acquired p-$\beta$ apply $B$; after an acquired suspended-$\alpha$ apply $A$. Synthetic generation uses the same two update kernels with the emissions $u,v$. Completing letters clear the private label and retain the original pendingStop and all held records. Only the original matching Stop and delivery follow. The table is fixed independently of the prior, source depth, acquired word, seed and record fiber.
+
+Put $U=\operatorname{diag}(1-u)$, $V=\operatorname{diag}(v)$,
+
+$$
+H=UBV,\qquad g=UB(\mathbf1-v).
+\tag{11.2}
+$$
+
+For $j\ge0$ the raw complete decoded laws are
+
+$$
+\begin{aligned}
+Q_i(w_{j,0})&=(H^ju)_i,& Q_i(w_{j,1})&=(H^jg)_i,\\
+W_i(\beta)&=1-v_i,& W_i(\alpha w_{j,c})&=v_iQ_i(w_{j,c}).
+\end{aligned}
+\tag{11.3}
+$$
+
+Both carriers retain their legal infinite noncompletion outcome. Each full configuration uses its own current-record map $I_c$ to insert the complete original event blocks. No acquired suspended letter is inserted a second time into its future.
+

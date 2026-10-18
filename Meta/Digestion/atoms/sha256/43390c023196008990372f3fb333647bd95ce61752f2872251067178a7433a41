@@ -1,0 +1,37 @@
+### 98.5. Coupled elimination of outside entries
+
+Now impose the additional rank-\((7,6)\), subquarter hypotheses of §97. Put \(n=|S|\), \(K=H_S\), and \(m_f=|S\cap f|\). The delivered frontier gives
+\[
+\operatorname{rank}K=n-2,\qquad
+\ker H\subseteq\mathbb C^S,\qquad
+\operatorname{range}B_0=\ker H,\qquad
+\operatorname{rank}B_0=2. \tag{27}
+\]
+Let \(\mathcal V\) be the full direction space of Corollary 98.3, and define
+\[
+\mathcal V_S=\{X=X^*:X_{ff}=0\text{ on }S\cap f,\ N_KXN_K=0\},
+\qquad
+\mathcal Z=\{D\in\mathcal V:D_S=0\}. \tag{28}
+\]
+Restriction \(\mathcal V\to\mathcal V_S\) is onto by zero extension, since the full opposite kernel is supported on \(S\).
+
+Consider the real-linear map
+\[
+\mathcal L(D)=
+\bigl((G^+)^{1/2}\mathcal R(D)a,\,
+      (H^+)^{1/2}DB_0^{1/2}\bigr). \tag{29}
+\]
+Its codomain has the real part of the usual vector/Frobenius inner product. Let \(\Pi\) be the orthogonal projection onto the **real** subspace \(\mathcal L(\mathcal Z)\). For \(X\in\mathcal V_S\), let \(X^0\) denote its full zero extension.
+
+**Theorem 98.5.** The exact effective quadratic form is
+\[
+q_{\mathrm{eff}}(X)
+=m(X)+\|(I-\Pi)\mathcal L(X^0)\|^2
+=\min_{\substack{D\in\mathcal V\\D_S=X}}q(D). \tag{30}
+\]
+The minimum is attained. Thus \(q\ge0\) on \(\mathcal V\) if and only if \(q_{\mathrm{eff}}\ge0\) on \(\mathcal V_S\).
+
+**Proof.** Every extension is \(X^0+Z\) with \(Z\in\mathcal Z\), and its mixed term is the same \(m(X)\). Minimizing the sum of the two squared costs is exactly orthogonal projection onto the finite-dimensional closed real subspace \(\mathcal L(\mathcal Z)\). This proves the formula, attainment and equivalence. \(\square\)
+
+In particular an exact negative value of \(q_{\mathrm{eff}}\) produces an actual full eight-coordinate paired tangent contradicting Theorem 98.2. The map \(\mathcal L\) retains the full reciprocal ratios and full pseudoinverses. The minimization couples the two costs; it neither minimizes them independently nor replaces them by principal pseudoinverses. The coefficients of \(q_{\mathrm{eff}}\) may depend on every outside Gram entry.
+

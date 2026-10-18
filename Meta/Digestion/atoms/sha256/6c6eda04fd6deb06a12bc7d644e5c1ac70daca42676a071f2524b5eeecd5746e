@@ -1,0 +1,6 @@
+### 74.5 Attribution and boundary of the conclusion
+
+Kraus rank, Choi rank and minimal pure Stinespring environment dimension are standard equivalent channel resources; see [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The general obstruction to strong channel approximation by much smaller Kraus rank is established background: [Lancien and Winter, Approximating quantum channels by completely positive maps with small Kraus rank, Quantum 8,1320 (2024), §2](https://quantum-journal.org/papers/q-2024-04-30-1320/) explicitly distinguishes diamond approximation from unreferenced output-state approximation and notes the Choi-rank obstruction. The present argument uses the uniform fibre target's support and an adapted normalized reference input to obtain the explicit 2/k bound and the sharp four-fibre resource threshold. It does not claim that the general rank-obstruction principle is new.
+
+Unlike §72's calibration reduction, which preserves shared weights but may enlarge local environments, this proof acts directly on the original effective Choi matrix. It therefore supports the stated dimension-restricted conclusion even for leakage-bearing and nonconjugate competitors. The unrestricted one-product optimum with no environment bound remains open.
+

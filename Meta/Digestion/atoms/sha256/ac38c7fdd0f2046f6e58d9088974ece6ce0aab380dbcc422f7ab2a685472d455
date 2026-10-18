@@ -1,0 +1,128 @@
+**定理 C-123.2（实际秩二读口的全空间阈值）。** 对每个五维复密度矩阵，令
+$\lambda=\langle e_3|\rho|e_3\rangle$。则实际拉回效应及第一矩为
+
+$$
+\begin{aligned}
+F(t)&=W_{\rm ph}(t)^\dagger n_1W_{\rm ph}(t)
+=D\bigl[R(t)^T|\psi\rangle\langle\psi|R(t)+P_3\bigr]D^\dagger,\\
+M_1(p_\rho)&=\frac{1+3\lambda}{4}\ge\frac14.
+\end{aligned}
+\tag{C123.6}
+$$
+
+若 (C123.4) 成立，则
+
+$$
+R_3(p_\rho)\le
+\frac{16\lambda^3-12\lambda^2+12\lambda+T(1-\lambda)^3}{(1+3\lambda)^2}
+\le T.
+\tag{C123.7}
+$$
+
+因而 $R_3(p_\rho)>T$ 排除整个五维基 $\mathcal B$ 中的三相干 ensemble，
+无需承诺 $\rho$ 支持于 $C$。结论限定于 (C123.2) 的实际协议。
+
+证明。$O$ 把一组正交归一基送到另一组；
+$(\psi,z,e_1,e_2,e_3)$ 与 $(e_1,e_0,e_2,e_3,-e_4)$ 的定向均为正，
+所以 $O\in SO(5)$。读扇区 $\operatorname{span}(e_1,e_4)$ 的原像为
+$\operatorname{span}(\psi,e_3)$，故 $O^Tn_1O=|\psi\rangle\langle\psi|+P_3$。
+又 $R(t)$ 固定 $e_3$ 且保持 $C$，得到 (C123.6) 的效应式。
+它在全载体上始终秩二，对 $C\oplus\mathbb Ce_3$ 分块对角；
+跨块相干的实部、虚部均不进入迹配对。这是算符恒等式，不是对实际态执行去相干。
+
+设 $\lambda<1$，置
+
+$$
+\sigma=D^\dagger\rho D,\qquad
+\sigma_C=\frac{P_C\sigma P_C}{1-\lambda},\qquad
+s(t)=\operatorname{Tr}\bigl(|\psi\rangle\langle\psi|R(t)\sigma_CR(t)^T\bigr).
+\tag{C123.8}
+$$
+
+压缩正性与迹一给 $\sigma_C\in\mathsf D(C)$，而效应式给
+
+$$
+p_\rho(t)=\lambda+(1-\lambda)s(t),\qquad 0\le s(t)\le1.
+\tag{C123.9}
+$$
+
+四个主动能量互异，$\langle v_{j\pm}|\psi\rangle=1/2$，
+周期平均消去主动块的非对角项，所以 $M_1(s)=\operatorname{Tr}(\sigma_C)/4=1/4$。
+这证明 (C123.6) 的均值式，未限制 $\rho$ 的复相干。
+
+现在假设 (C123.4)。令 $u_a=P_CD^\dagger\phi_a$、$b_a=\|u_a\|^2$。
+舍弃 $b_a=0$ 的项后有有限归一分解
+
+$$
+\sigma_C=\sum_{a:b_a>0}\frac{q_ab_a}{1-\lambda}
+\left|\frac{u_a}{\sqrt{b_a}}\right\rangle
+\left\langle\frac{u_a}{\sqrt{b_a}}\right|,
+\qquad\sum_aq_ab_a=1-\lambda.
+\tag{C123.10}
+$$
+
+$D^\dagger$ 将物理能量基运到被动能量基， inactive 坐标仅多一个相位；
+$P_C$ 只删除该坐标。每个保留向量仍在同一四能量基中至多三稀疏，
+每个范数为一，权重非负且和一。
+在所引最大元定理中取 $d=4$、此有限 ensemble、
+$n=(1,-1,3,-3)$、$\chi=(1/2,1/2,1/2,1/2)$，
+则 `mixedSignal` 恰为 $s$，读出归一且第一矩 $1/4>0$。
+因此 $M_3(s)\le T/16$。这个投影和重新加权仅用于证明，不要求物理后选择权限。
+
+所需 $4/3<T<2$ 可直接由供应阈值和有理估计得到。
+三个能量 $0,1,2$、输入与读出均为 $(1,1,1)/\sqrt3$ 的单项 ensemble 可容许；
+$(1+x+x^2)^3$ 的系数为 $(1,3,6,7,6,3,1)$，平方和为 $141$。
+故它有 $M_1=1/3$、$M_3=141/729=47/243$、$R_3=47/27$，给 $T\ge47/27>4/3$。
+另一方面 $123/100<\alpha<31/25$，正参数上的两个多项式
+$N=\operatorname{thresholdN}$、$D_{\rm poly}=\operatorname{thresholdD}$ 各自正且严格递增。
+于是
+
+$$
+T<\frac{N(31/25)}{D_{\rm poly}(123/100)}<2,
+\qquad
+2D_{\rm poly}(123/100)-N(31/25)
+=\frac{12274038070201}{500000000000}>0.
+\tag{C123.11}
+$$
+
+此处不需要假设比值 $N/D_{\rm poly}$ 单调。
+
+由 $M_2(s)\le M_1(s)=1/4$ 展开 (C123.9)，得到
+
+$$
+\begin{aligned}
+M_3(p_\rho)
+&=\lambda^3+\tfrac34\lambda^2(1-\lambda)
+ +3\lambda(1-\lambda)^2M_2(s)+(1-\lambda)^3M_3(s)\\
+&\le\lambda^3+\tfrac34\lambda(1-\lambda)+\tfrac T{16}(1-\lambda)^3.
+\end{aligned}
+\tag{C123.12}
+$$
+
+除以 $((1+3\lambda)/4)^2$ 即为 (C123.7) 第一界。
+第二界的分子差为
+
+$$
+\begin{aligned}
+&T(1+3\lambda)^2-\bigl[16\lambda^3-12\lambda^2+12\lambda+T(1-\lambda)^3\bigr]\\
+&\qquad=\lambda\bigl[(9T-12)+(6T+12)\lambda+(T-16)\lambda^2\bigr].
+\end{aligned}
+\tag{C123.13}
+$$
+
+方括号关于 $\lambda$ 凹，在 $0,1$ 的值分别为 $9T-12$、$16(T-1)$，均非负。
+因此在 $[0,1]$ 上非负。
+若 $\lambda=1$，其余对角元皆为零；正性给
+$|\rho_{jk}|^2\le\rho_{jj}\rho_{kk}$，迫使 $\rho=P_3$。
+此时 $p_\rho=1$、$M_1=M_3=R_3=1\le T$，直接满足两界，无须除以 $1-\lambda$。
+
+背景组合也可用成熟的透视凸性解释。对 $x\ge0,y>0$，
+$\Phi(x,y)=x^3/y^2$ 的 Hessian 在方向 $(u,v)$ 上的二次型为
+$6x(yu-xv)^2/y^4\ge0$。
+对连续非负周期信号 $f,g$、各自正均值 $m_f,m_g$ 及 $0\le a\le1$，在
+$(f(t),m_f),(g(t),m_g)$ 应用凸性再平均，得到
+$R_3(af+(1-a)g)\le aR_3(f)+(1-a)R_3(g)$。
+代入 $f=1,g=s,a=\lambda$，即有
+$R_3(p_\rho)\le\lambda+(1-\lambda)T\le T$。
+这是同一固定协议的另一条中间推导；粗矩展开所用 $4/3$ 不是恒亮背景组合的必要门槛。证毕。
+

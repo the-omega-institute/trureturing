@@ -1,0 +1,137 @@
+### 217.2 A — joint Boolean carrier and signed zero-terminal plateau
+
+Let $q=(\beta,K)$ satisfy $K\ge\sum_j|\beta_j|$. Let
+$J=\{j\ge3:\beta_j>0\}=\{j_1<\cdots<j_m\}$ be the entire positive
+late support, with $m\ge3$,
+let $G\subseteq\{1,\ldots,\min J-1\}$ have $k\ge3$ guards, and put
+$\gamma_i=\beta_{j_i}>0$, $\mu=\max_i\gamma_i$,
+$\xi_a=(-\beta_a)_+$, $D_G=\sum_{a\in G}\xi_a$,
+$D_e=(-\beta_1)_++(-\beta_2)_+$,
+$B=K-\sum_j|\beta_j|$, and $S=B+D_G$.
+Let
+$c_m=m(m+1)/\lfloor(m+1)^2/4\rfloor$ and
+$c_{m,k}=\max(c_m,3+1/(k-1))$. For every $\rho\ge0$ with
+
+$$
+S\ge c_{m,k}\rho,\qquad k\xi_a\le S\quad(a\in G),
+\tag{217.2}
+$$
+
+there is one full score with $Q(V)=q$, $T=0$ and
+
+$$
+\Delta_N(V)\le D_e+\sum_{i=1}^3(\gamma_{(i)}-\rho)_+,
+\tag{217.3}
+$$
+
+where $\gamma_{(1)},\gamma_{(2)},\gamma_{(3)}$ are the three largest positive
+late coefficients. Taking $\rho=S/c_{m,k}$ gives the displayed strongest bound;
+if $S\ge c_{m,k}\mu$, the unrestricted minima satisfy
+
+$$
+\min_{Q(V)=q}\Delta_N(V)=\min_{Q(V)=q}\Delta_O(V)=D_e.
+\tag{217.4}
+$$
+
+The lower bound is unconditional: replace the legal stopped anchor's output by
+zero on classes $j=1,2$ with $\beta_j<0$. This changes reward by
+$-\beta_j$ and leaves $P$ and every other class fixed, so every competitor has
+$\Delta_O\ge D_e$ and hence $\Delta_N\ge D_e$.
+
+For the upper bound, take one measure $\nu$ on $\{0,1\}^m$ of mass $S$ such
+that every zero marginal is at least $k\rho/(k-1)$, every directed $10$ cell
+has mass at least $\rho$, and every $11$ pair has mass at least $\rho$.
+Such a measure exists exactly when $S\ge c_{m,k}\rho$. Necessity follows by
+fixing a pair, which gives $S\ge(3+1/(k-1))\rho$, and by summing the directed
+and $11$ conditions:
+$\int z(m-z)\ge m(m-1)\rho$ and
+$\int z(z-1)\ge m(m-1)\rho$. Since
+$mz(m-z)+z(z-1)\le(m-1)\lfloor(m+1)^2/4\rfloor$, integration gives
+$S\ge c_m\rho$. Indeed adding m times the first summed inequality to the
+second gives $m(m-1)(m+1)\rho$ below the integrated quadratic upper bound.
+For attainment, if $m=2h-1$ put mass $c_m\rho$ uniformly
+on words with $h$ ones. If $m=2h$, put mass $2\rho$ uniformly on the $h$-one
+words and $2h\rho/(h+1)$ uniformly on the $(h+1)$-one words. Add the remaining
+mass at $0^m$. Counting incidences gives one marginal $2\rho$, zero marginal
+$S-2\rho$, and pair cells $(S-3\rho,\rho,\rho,\rho)$ in order
+$00,01,10,11$. Thus every directed $10$ or $01$ mass and every $11$ mass
+is $\rho$. To see the incidence count explicitly, both layer choices give
+$\int z=2m\rho$ and $\int z(z-1)=m(m-1)\rho$; permutation symmetry then
+gives the one and pair marginals. The extra zero atom changes only the 00
+cells and zero marginals. The guard inequality is exactly
+$S-2\rho\ge k\rho/(k-1)$. When $\rho=0$, use
+$\nu=S\delta_{0^m}$; all inequalities are closed. The equivalent scalar
+constant is $c_m=4-2/(\lfloor m/2\rfloor+1)$.
+
+For each guard $a$ and atom $x$ of $\nu$, let $w(a,x)$ have zero $a$, selected
+bits $x$, and all other bits one. Put $P_{w(a,x)}=\nu(x)/k$. Put
+$C_{w(\{j_i\})}=\gamma_i$ and initially $A=T=0$. The complete N cell maxima
+of this unsigned core are, in order $00,01,10,11$,
+
+$$
+0,\quad S/k,\quad S/k,\quad \max((k-2)S/k,\mu)
+$$
+
+for two guards;
+$((S-2\rho)/k,2\rho/k,\max((k-1)(S-2\rho)/k,\gamma_i),
+\max(2\rho(k-1)/k,\mu_{-i}))$ for a guard and $j_i$; and
+$(S-3\rho,\max(\rho,\gamma_i),\max(\rho,\gamma_j),
+\max(\rho,\mu_{-i,-j}))$ for two selected positives. Here
+$\mu_{-i}$ and $\mu_{-i,-j}$ omit the indicated coefficients. The conditions
+in (217.2) give $(k-2)S/k\ge\rho$,
+$(k-1)(S-2\rho)/k\ge\rho$ and $2\rho(k-1)/k\ge\rho$.
+Thus each competing correct reward can contribute no more than its
+$(\gamma_i-\rho)_+$ deficit. For a selected pair the excess is exactly
+the sum of the two queried deficits and the largest remaining deficit.
+Querying the two largest coefficients attains the sum of the three largest
+deficits; guard pairs and mixed pairs have no larger sum. Schedules involving
+inactive coordinates reduce to singleton or constant information on this
+unsigned core. Empty, singleton and repeated schedules are coarsenings of
+distinct-pair information, and O is contained in N. This bounds O without
+turning a last-address stopped singleton into an unavailable larger pair.
+
+For signed conversion, at guard $a$ set $A_{w(a,x)}=(\xi_a/S)\nu(x)$ and
+$P_{w(a,x)}=(1/k-\xi_a/S)\nu(x)$ (equivalently, convert fraction
+$k\xi_a/S$ of that guard's P mass) at the same words. Add sole-zero A
+mass $(-\beta_j)_+$ outside the guard set and add early positive C masses. The conversion is valid exactly under
+$k\xi_a\le S$, preserves every zero reward and decreases only guard labels.
+If $S=0$, (217.2) forces all guard $\xi_a=0$, and all guard coefficients
+are zero without division. An early guard conversion lowers W by $\xi_a$;
+a late guard conversion leaves W unchanged. A late sole-zero A addition or
+an early C addition raises W by its entire mass and raises any table reward
+by at most that mass, so cannot increase excess. Early A outside G costs at
+most its mass. This proves the early charge $D_e$ in (217.3), even with
+negative positions between or after positives and positive early credits.
+It spends the negative guard stock once. The resulting totals are
+$A=\sum(-\beta_j)_+$, $C=\sum(\beta_j)_+$, $P=B$, $T=0$, so the quotient is
+exact and (217.3) follows. At $\rho=\mu$ its upper bound matches the
+unrestricted modified-anchor lower bound, proving (217.4) against all full
+competitors, including arbitrary terminal mass and cancellations. The sharp
+iff concerns the displayed carrier protection conditions. Plateau entry is
+only sufficient for the unrestricted fiber; outside it (217.3) is an upper
+bound rather than a claimed minimum.
+
+A concrete unequal repair is $L=8$, $G=\{1,2,3\}$,
+$J=\{4,5,7\}$,
+$\beta=(-1/2,-1/2,-1,2,3/2,-1,1,-1)$ and $K=27/2$. Then
+$B=5,D_G=2,S=7,D_e=1$, and $c_{3,3}=7/2$. The measure has masses
+$\nu(000)=1$ and $\nu(011)=\nu(101)=\nu(110)=2$. The converted score has
+$A_{w(a,x)}=\nu(x)/14,P_{w(a,x)}=11\nu(x)/42$ for $a=1,2$,
+$A_{w(3,x)}=\nu(x)/7,P_{w(3,x)}=4\nu(x)/21$, plus
+$A_{w(\{6\})}=A_{w(\{8\})}=1$ and
+$C_{w(\{4\})}=2$, $C_{w(\{5\})}=3/2$, $C_{w(\{7\})}=1$.
+It has $W=8$ and $B_N=B_O=9$. Moving the C mass two at class 4 to
+$w(\{4,5\})$ preserves $Q,W$ and gives an input with
+$(\Delta_N,\Delta_O)=(2,1)$; the repaired score has both costs one. This
+illustrates score replacement, not an original separator. Its totals are
+$A=4$, $P=5$, $C=9/2$ and $T=0$. For the moved score, before the two
+late A additions, pair (4,5) has N maxima $(2,2,2,2)$, while its stopped
+maxima are $(3,2,2)$. At (5,7), the earlier unqueried label 4 earns two in
+01 and is covered by that cell's baseline two. At a guard/5 pair the
+receiving baseline is $(2/3)(7-4)=2$. The other pair types keep the bound.
+Both late A atoms lie in pair-(4,5) cell 11, giving final N maxima
+$(2,2,2,4)$ and support ten. They raise any O support by at most two;
+constant zero attains nine. The actual N table $(4,5;4,0,0,0)$ attains ten,
+and constant zero attains the repaired support nine. Those are support
+detectors, not claims of feasibility at an arbitrary selected cap.
+

@@ -1,0 +1,16 @@
+**Supplier ledger C-125.6.** The three new correspondences have the following
+scopes:
+
+| Required service for C-121–C-124 | Fresh result that bears on it | Status in this volume |
+| --- | --- | --- |
+| Native/physical preparation of $\rho_{t,\eta}(X)^{\otimes m}$ | C-116/C-122 source contracts; native §§8–12 | Not supplied; premises remain external |
+| Exact phase and amplitude calibration | Assumption 45.1 and Proposition 45 with the added phase gate | Approximate controllability only; exact calibration remains open |
+| Approximate controllability | Proposition 45 Lie closures on $\mathcal H_F$ | Single-carrier mathematical approximation only; no uniform resource bound |
+| Source certification | C-121.1–C-122.2 histories, PVM and iid contracts | Available only under those stated source and measurement assumptions |
+| Actual tensor-copy supply and paid transport | C-124.4 | Not supplied by any of the three results |
+
+No row converts a reachable closure, a classical controller state, or a
+certification record into an exact finite operation or resource budget. In
+particular, these suppliers do not close the remaining quantum preparation gap
+unless their stronger physical conditions are separately established.
+

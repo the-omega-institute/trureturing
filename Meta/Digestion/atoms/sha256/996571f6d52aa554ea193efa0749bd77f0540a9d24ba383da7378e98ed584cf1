@@ -1,0 +1,26 @@
+**Definition 3.1 (Order-at-most-two scalar family).** Let $\mathcal E_2$
+be the complex-valued functions of a real variable of either form
+
+$$
+R(x)=c_1e^{\lambda_1x}+c_2e^{\lambda_2x},\qquad
+R(x)=(c_0+c_1x)e^{\lambda x},
+$$
+
+with arbitrary complex coefficients and exponents. Zero, single-mode,
+coincident-root and vanishing-coefficient cases are included. The
+minimal order is the least degree of a nonzero constant-coefficient
+polynomial $p$ with $p(\partial_x)R=0$: it is zero for $R=0$, one
+for a nonzero single exponential, and two for either a distinct pair
+with both coefficients nonzero or a confluent profile with $c_1\ne0$.
+For $\tau>0$ define
+
+$$
+J_\tau(R)=\max_{0\le x\le1}
+\left(|R(x)-s(x)|^2+\tau x\right),\qquad
+T_4(\tau)=\inf_{R\in\mathcal E_2}J_\tau(R).
+$$
+
+The functions in this definition are explicit continuous functions on
+the closed scalar interval. The definition does not assert that an
+arbitrary competing native encoder is continuous.
+

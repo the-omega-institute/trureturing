@@ -1,0 +1,26 @@
+**Proposition 6.2 (One seed and hard two actual requests).**
+All complete laws in 4–6 have original stopped executions and counted
+$N$ completions with identical output laws, zero advice and finite
+measurable handoff for every seed and source.
+
+Proof. Partition one source-independent uniform seed in $[0,1)$
+into the finitely many complete-table intervals. For $\Lambda$ one
+may first select its endpoint branch and then its complete table,
+using the corresponding rescaled coordinate of that same seed.
+Half-open intervals specify endpoints and zero intervals are omitted.
+Before replies, the seed fixes the whole schedule and all
+counterfactual terminal labels. The product weights in 4.1 and 5.1
+are explicit finite complete-table probabilities.
+
+In $O$, execute the selected increasing pair to its first queried
+zero or exhaustion, emit its actual $\theta_j$, and hand it to
+the unchanged consumer. In $N$, acquire both actual addresses on
+that same source and seed and reconstruct the stopped output on
+$00,01,10,11$. An ignored second reply counts as an actual request.
+Constants and singletons use their declared calls. Every execution is
+finite and measurable, with at most two actual calls and zero advice.
+Only the selected schedule's replies are observed; the proof's
+actual witnesses give no free source label or full word.
+This couples these constructed rules without replacing an arbitrary
+competing $N$ law by a stopped one. $\square$
+

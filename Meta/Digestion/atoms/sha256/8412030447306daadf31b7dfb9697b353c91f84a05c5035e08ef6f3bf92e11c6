@@ -1,0 +1,16 @@
+**Definition 4.1 (adjacent native ages and coordinate prices).** At
+$E_*$ put
+
+$$
+n_i=iq+K+\lambda_0,\qquad
+p_i=w_iR^{\lfloor n_i/2\rfloor},\qquad
+d_i=|p_i|=D+\left\lfloor\frac{iq+K+\lambda_0}{2}\right\rfloor
+\quad(0\le i<m).
+\tag{NTL.15}
+$$
+
+The exponent notation denotes a literal string of that many $R$
+letters, with its whole original-root prefix. These are the prices
+induced by the fixed depth, original offsets and adjacent-age
+realization. They are not arbitrary user-prescribed weights.
+

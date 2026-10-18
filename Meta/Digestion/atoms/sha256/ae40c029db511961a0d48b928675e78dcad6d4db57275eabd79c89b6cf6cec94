@@ -1,0 +1,42 @@
+**Lemma 11.2 (four actual classes on the lower boundary).** Under
+Assumption 10.1, if $C_t$ meets $b=0$ and $\gamma_t^b=0$,
+then
+
+$$
+S_t^b=[0,9]_{\mathbb Z},\qquad t\in\{0,3,6,9\}.
+\tag{NAGC.11.2}
+$$
+
+At most one class meeting $b=0$ has $\gamma_t^b>0$, and
+
+$$
+M_0=4.
+\tag{NAGC.11.3}
+$$
+
+In particular, if $C_3,C_6,C_9$ all have second-coordinate
+projection $[0,9]_{\mathbb Z}$, the classes meeting $b=0$
+are exactly $C_0,C_3,C_6,C_9$.
+
+**Proof.** A class meeting $b=0$ has $\min S_t^b=0$.
+If its gap is zero, its ten coordinates occupy all of
+$[0,9]_{\mathbb Z}$. The anchor's second coordinate $t$ is
+then its own zero-based rank. Lemma 11.1 restricts that rank to
+$0,3,6,9$, proving (NAGC.11.2).
+
+If instead $\gamma_t^b>0$, Lemma 10.2 requires both zero and
+ten in $S_t^b$. Thus this class duplicates residue zero. That
+lemma allows only one duplicating class per residue on an axis,
+so there is at most one such positive-gap boundary class. There
+are at most four zero-gap boundary classes, by their distinct
+labels in (NAGC.11.2). Consequently $M_0\le4+1=5$.
+
+The incidence supplier (NAGC.7.3), equivalently [NARC, Theorem
+14.3, part 3][NARC], applies to this complete saturated cover.
+It gives both $M_0\ge4$ and $M_0\equiv1\pmod3$. The only
+integers between four and five are four and five; five has residue
+two modulo three. Thus these three conditions force $M_0=4$.
+Finally $C_0$ always meets $b=0$ at its anchor. Under the stated
+additional hypothesis, $C_3,C_6,C_9$ do also. These are four
+distinct classes and exhaust the incidence count. $\square$
+

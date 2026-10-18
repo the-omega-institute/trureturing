@@ -1,0 +1,25 @@
+**Corollary 4.5 (A four-site weighted rank-three witness).** For
+$n=4,k=2,i=1,j=4$, the left orders $00,10,01$ and right
+orders $00,10,01$ give
+
+$$
+A_z=\frac1{\sqrt Z}
+\begin{pmatrix}
+1&\sqrt{\lambda_3}&\sqrt{\lambda_4}\\
+\sqrt{\lambda_1}&\sqrt{\lambda_1\lambda_3}
+&z\sqrt{\lambda_1\lambda_4}\\
+\sqrt{\lambda_2}&0&\sqrt{\lambda_2\lambda_4}
+\end{pmatrix},
+\qquad
+\det A_z=(z-1)\frac{\sqrt{\lambda_1\lambda_2\lambda_3\lambda_4}}
+{Z^{3/2}}.
+\tag{4.10}
+$$
+
+In particular its rank is three for every nontrivial unit phase
+and every strictly positive activity vector.
+
+Proof. The three-by-three matrix lists every internally legal
+word on each side. Expanding its determinant gives (4.10),
+whose activity prefactor is positive. $\square$
+

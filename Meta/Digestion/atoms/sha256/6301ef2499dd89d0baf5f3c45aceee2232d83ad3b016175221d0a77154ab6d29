@@ -1,0 +1,36 @@
+**Theorem 11.4 (classical capacity for all actual live histories).**
+If $q\in Q_{\mathrm{live}}$ satisfies (SI.63), then
+
+$$
+\lambda(q)\le1.
+\tag{SI.65}
+$$
+
+Proof. Use the classical nonuniform Bollobás set-pairs inequality in
+[O'Neill and Verstraëte, Theorem 1, page 1][OV]: for a finite indexed
+family of finite set pairs with disjoint diagonals and
+$A_i\cap B_j\ne\varnothing$ whenever $i\ne j$,
+
+$$
+\sum_i\binom{|A_i|+|B_i|}{|A_i|}^{-1}\le1.
+$$
+
+Index the pairs by the actual members of $\mathscr H(q)$, rather
+than by inputs, endpoints, or a representative chosen at each cell.
+Lemma 11.3 gives a finite family and removes duplicate set pairs.
+Equation (SI.61) gives every disjoint diagonal. Condition (SI.63)
+gives every ordered off-diagonal intersection: the two directions
+are both required, even when the two sizes or the two depths differ.
+The denominator is exactly that in (SI.62), by live freshness.
+Every hypothesis of the cited inequality is therefore matched.
+
+A singleton family has weight at most one directly. This includes an
+empty history, where $\binom00=1$, and an axis history, where the
+weight is also one. If a pair in a both-conflict family has an empty
+one set or empty zero set, it cannot have a second member, since one
+required cross intersection would be empty. Thus these cases require
+no implicit nonempty-set assumption on the classical supplier. The
+empty live family, when considered, has mass zero. The proof uses no
+probability law on the source and realizes no additional graph path.
+$\square$
+

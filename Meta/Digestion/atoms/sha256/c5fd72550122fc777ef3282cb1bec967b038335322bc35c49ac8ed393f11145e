@@ -1,0 +1,28 @@
+**Definition 6.1 (disjoint request grammar).** Preserve outer frames
+`tag U(d) payload` and all original source tags 000–100, Cover 101 and
+Next/Select 110. Under tag 111 accept either old Call payload $U(p)$ or
+
+$$
+01\,s\,U(r)\,dd,
+\qquad s\in\{0,1\},\quad dd\in\{00,01,10,11\}.
+\tag{PVC.7}
+$$
+
+For $s=0$, $r$ is an acquired package number selecting its latest completed
+Call image. For $s=1$, $r$ is a completed view number. $dd$ is the
+requested destination. The Convert payload length is $r+6$; a nonempty
+unary Call payload beginning 0 consists of that single 0, whereas PVC.7
+begins 01. Thus exact exhaustive parsing cannot confuse them. Destination
+bits are fixed-width two-bit words, not wire naturals.
+
+Every bit uses RCA Definition 13.2's actual port-38 reader with latch 6
+retained until WR and tests in latch 5. Installed Ready first executes
+the client-to-handler TOK and reserve CTL. Ingress measures Base, writes
+the frame/F, seals, constructs measured length $U(2d+4)$ on a distinct
+scratch, full descriptor and native import. No register receives a
+mathematical body without these rows. Unknown complete identifiers produce
+NoImage or NoView; unsupported layout/version produces UnsupportedVersion.
+Other complete noncanonical service payloads use the paid
+MalformedServiceFrame arm. Malformed source payloads keep RCA's separate
+InvalidSourceFrame exit; they never become service or source success.
+

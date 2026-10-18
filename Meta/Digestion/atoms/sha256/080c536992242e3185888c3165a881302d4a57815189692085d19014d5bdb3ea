@@ -1,0 +1,25 @@
+**Definition 45.1 (fixed analytic data and the two spatial scales).** Fix one original datum $d$ satisfying exactly the analytic applicability conditions of Definition 32.1: the jointly realized rational vector (32.2), the larger-interval positive-probability, pole and bracket margins of L Definition 35.1, L Lemma 41.2, P §§76, 87–88, 97 and 104–107, and E Theorem 3.1. The equalities (32.1) are not assumptions in §§45–49. General geometric admission without these analytic antecedents is insufficient. Retain the unit raw $dk\,dq$ source, $j_0$, both original Dirichlet faces, all real phases, the $B$-clock independent of $a$, and the full complex form and operator domains (1.5). Use the sheared chart $Y_s=\Xi_s\circ\mathscr L_s$ and zero extensions in (32.4), with $T=s^{-2}$. All constants below may depend on this separately fixed datum.
+
+Use the positive unit early vector and the exact split of Theorem 35.1, writing
+
+$$
+\begin{aligned}
+H_sF_su_s&=\ell_su_s,&u_s&\ge0,&\|u_s\|_2&=1,\\
+x_s&=F_su_s,&y_s&=J_su_s,&m_s&=\int F_su_s^2,\\
+\delta_s&=\int J_su_s^2,&n_s&=m_s+\delta_s,&
+z_s&=U_s^{1/2}u_s/\sqrt{n_s}.
+\end{aligned}
+\tag{45.1}
+$$
+
+Thus $x_s\to Vp$ in $L^1\cap L^2$, $u_s\to p$ in $L^2$, $m_s\to\mu$, and $\ell_s\to C_*$. The vector $u_s$ is an auxiliary early eigenvector, not an actual ground state of the native Hamiltonian. Write $\rho(\xi)=d_E(0,\xi)$ for the ambient Engel distance, whose balls have volume $v_E R^7$. Physical phase radius will instead mean
+
+$$
+\mathsf M=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk,
+\qquad \Delta=\det\mathsf M>0,
+\qquad \mathfrak r(q)=(q^{\mathsf T}\mathsf M^{-1}q)^{1/2}.
+\tag{45.2}
+$$
+
+These are the original tensor and raw density of L Theorem 36.1. Put $\phi_0=\phi(k_0)$, $I_3=\int_I\phi^3dk$, and $A_p=\int Vp>0$ as in (32.6). A finite spectral probe constant $M$ is distinct from $\mathsf M$.
+

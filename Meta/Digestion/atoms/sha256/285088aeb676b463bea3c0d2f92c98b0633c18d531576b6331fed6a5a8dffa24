@@ -1,0 +1,18 @@
+**Proposition 290.2 (Relation to named sufficient domains).**
+The nonpositive-tail domain of
+[218.9](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XII.md)
+already includes $h\le-s$ in this pattern. The old five-address
+applications in 277 and 283 cover their stated ranges $47s/13$ and
+$79s/21$ for nonnegative $h$; the named detector and domination cones
+in 219.3, 219.13 and 220.10 retain their intersections with this family.
+Theorem 290.1 is a sufficient payment for the entire real parameter
+line; it makes no least-cost claim among unrestricted payers.
+
+**Proof.** The cumulative late tail after address $3$ has successive
+values $-s,0,h,s+h$, all nonpositive when $h\le-s$. This is the stated
+218.9 hypothesis. The two positive thresholds are the hypotheses of
+277.1 and 283.1. Their constructions and the other named sufficient
+cones remain available wherever their own hypotheses hold. Nothing in
+the proof of 290.1 asserts that these are all earlier possible
+constructions or combinations. $\square$
+

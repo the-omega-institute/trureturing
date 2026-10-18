@@ -1,0 +1,20 @@
+**Theorem 11.4 (Full-original-domain three-state separation).** On exactly the domains (1.3),
+
+$$
+C_1=0,\qquad C_2\le C_3<c_\star.
+\tag{11.10}
+$$
+
+For each $N\in\{1,2,3\}$ there exist finite integers $r,m\ge1$ satisfying
+
+$$
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{11.11}
+$$
+
+**Proof.** Let $Q$ be a nonnegative square-zero matrix on a class of size $d\le3$. Let $S$ be its nonzero-row indices and $T$ its nonzero-column indices. If $j\in S\cap T$, some $Q_{ij}>0$ and $Q_{jk}>0$, so $(Q^2)_{ik}\ge Q_{ij}Q_{jk}>0$, a contradiction. Thus $S\cap T=\varnothing$, and every nonzero entry lies in $S\times T$. If $Q\ne0$, both sets are nonempty and $|S|+|T|\le d\le3$, whence $\min(|S|,|T|)\le1$. Its rank is at most this minimum and at least one, so it is rank one with the nonnegative factorization (3.5).
+
+Apply this to $Q=M_1^C$ in each positive hidden class of an arbitrary $\theta\in\Theta_N$ with $N\le3$, using Lemma 11.1. If $Q=0$, that component emits only zeros. If $Q\ne0$, it is rank one and Proposition 3.4 makes its actual visible law proper renewal. Proposition 11.2 consequently excludes attainment for every parameter in each entire $\Theta_N$, $N\le3$. Reducible and periodic presentations and zero-mass states are still included.
+
+Proposition 11.3 now turns this pointwise exclusion into $C_N<c_\star$: an attained maximum equal to $c_\star$ would contradict that exclusion. Its finite separation equivalence gives (11.11). For $N=1$, normalization makes $\lambda=1$ and scalar legality is $M_1^2=0$, so $M_1=0$ and every law is all-zero. Hence $C_1=0$. Finally the zero-mass padding described in Proposition 11.3 embeds $\Theta_2$ into $\Theta_3$ without changing any visible probability, proving $C_2\le C_3$. No separation pair or numerical gap value is specified. $\square$
+

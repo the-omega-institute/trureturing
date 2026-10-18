@@ -1,0 +1,26 @@
+**Definition 13.1 (exact reuse and the parameter-uniform increment).**
+The following supplier map fixes the mathematical scope of the appendix.
+
+| Supplier | Exact use and nontransferred condition |
+| --- | --- |
+| [N, Theorems 8.2, 8.4 and §§8.5,10.2--10.3]; [G, Definition 12.1 and Calculation 12.2] | Original probabilities, arbitrary preparation translation, negative phases, actual circle periods, full prefix rays, the declared $q,D$ change and the rational coefficients (10.2). Reachability does not prepare analytic amplitudes. The full nearby dimension is four; its retained base is three. |
+| This volume, Theorems 2.1 and 3.1; [Native free diffusion quotient rigidity](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md), Theorem 3.1 | Averaged-core form reduction, variational operator reduction, killed free observation laws, point-Green marginal and normalized source smearing. The abstract identities are reused inside (10.7) and (12.1), not counted as new quotient results. The older bottom-output base is two-dimensional and elliptic; it is not the present $B$. |
+| [G, Propositions 4.2--4.3 and Theorem 5.1] | Fixed double-wall Heisenberg normalization and strict Green stability supply the limit interpretation. They do not supply a common nearby parameter window or singular-form convergence. In (10.11), $m_0=\varepsilon^2/(4H)=\varepsilon^2/(2r)$ exactly recovers their Haar factor. |
+| [G, Theorem 3.1] | Full point-source collapse at every nonzero single-wall parameter. The point source, state class and coupling are those of (10.4); the collapse remains in force. |
+| [J] D. S. Jerison and A. Sánchez-Calle, *Estimates for the Heat Kernel for a Sum of Squares of Vector Fields*, Indiana Univ. Math. J. 35 (1986), 835--854, [primary text](https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1986/35/35043/pdf), Proposition 3 and Theorem 2, §§3--4 | The upper bound is $C\mu(B(x,\sqrt t))^{-1}e^{-cd(x,y)^2/t}$ for smooth Hörmander fields on a compact manifold. The contact extension, common charts, bounded parametrix coefficients, common subelliptic constants and volume exponent four are checked in the proof of Theorem 10.2; Dirichlet domain domination returns to the actual cylinder. No full four-coordinate uniform heat bound is imported. |
+| [H], Theorems 3.2, 3.5 and B.1 | Uniform strong Hörmander generation, smooth parameter dependence, positive smooth density and uniform semigroup bounds are required. They hold for the retained free family by (10.10), not for the degenerate four-coordinate limit. Free kernel localization and positive-time convergence do not by themselves prove convergence of the singular attractive forms. |
+| [R], Corollary 3.2 | The unweighted inequality uses $p=2$, $\alpha=1$, $Q=4$ and the Lebesgue Heisenberg fields $U,V$ with gauge (10.12). The local density factor and the varying horizontal coefficient are explicitly retained in (10.11). It is an intermediate estimate, not a replacement potential. |
+| [T], Theorem 2.13, Lemma 2.24, Theorem 6.24 and the positive-eigenvector argument of Theorem 10.11 | Closed-form representation, reduction, strict relative-form perturbation and simplicity. The perturbation bound here is $gA/(2\pi)<1/2$; compactness and the critical lower limit are proved separately. The positivity argument is on $L^2(B)$ and uses restricted heat operators only. |
+| Arendt--Dier--Ouhabaz, [arXiv:1303.1167v1](https://arxiv.org/pdf/1303.1167v1), Theorem 2.2 | Its closed-form convex-set criterion assumes projection preserves the form domain and the cross-form inequality. Free Haar averaging meets those conditions by (10.7). It supplies no invariant class for the original singular multiplier; (12.5)--(12.6) give a direct checked-core obstruction. |
+| Gouasmi--Parish--Duraisamy [M], §2.1; the present volume, §6 | Projection, initial hidden data and subsequent feedback are distinct. Formal elimination is not a semibounded full-source evolution, and the older compressed-semigroup calculation is not applied across its failed stability hypothesis. |
+| Pinned Mathlib $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$, `Analysis/FunctionalSpaces/SobolevInequality` and `Analysis/Distribution/Sobolev`; native `Quantum/Fibers/FiniteRectangleTransport`, including private leg and polygon proofs | The Mathlib results concern Euclidean derivative Sobolev estimates and Bessel-potential spaces, not this horizontal point-Green singular family. The native private proofs supply lawful finite legs and probability/phase compatibility, not (10.6) or (11.3). No compiled application or new Lean result is asserted. |
+
+The Gaussian, Hardy, representation and projection tools are
+`literature-attested`. The added `repo-derived` result is their native
+fixed-window combination: the exact varying contact chart and Fourier
+tightness, uniform same-point Green control, the critical cutoff
+lower-limit argument, and the resulting actual minimum and ground-state
+limit with its source factor. No general projection identity or rewritten
+fixed-wall theorem is counted as new content. This correspondence makes
+no exhaustive-search or global originality claim.
+

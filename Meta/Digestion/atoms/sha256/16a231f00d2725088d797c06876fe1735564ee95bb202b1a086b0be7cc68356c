@@ -1,0 +1,14 @@
+**定理 8.6（饱和系统无共同复根）。** 式 (8.11) 的 $\overline P,\overline A$ 在 $\mathbb C$ 中没有共同根。
+
+证明。令 $\widetilde P(a)=\overline P(a+1)$、$\widetilde A(a)=\overline A(a+1)$。平移是可逆的整数代数同构，逆为 $a=\rho-1$，保持次数、首项、公共因子和本原内容。第 8.3 节给出其完整模七约化为 $f,5(a+1)zw$，而且两个九次首项分别为四和五。
+
+反设在 $\mathbb Q[a]$ 有正次数公共因子，取它的本原整数代表 $G$。Gauss 引理使一个本原整数多项式若在 $\mathbb Q[a]$ 整除整数多项式，就在 $\mathbb Z[a]$ 整除，包含原多项式的整数内容。因此存在整数多项式 $H,J$ 使
+
+$$
+\widetilde P=GH,\qquad\widetilde A=GJ.
+$$
+
+$\operatorname{lc}(\widetilde P)\equiv4\pmod7$ 非零；由首项乘积 $\operatorname{lc}(\widetilde P)=\operatorname{lc}(G)\operatorname{lc}(H)$，两因子首项都不被七整除。故 $G$ 模七后仍保留原来的正次数。约化这两个整数等式就得到 $f$ 与 $5(a+1)zw$ 的正次数公因子，与引理 8.5 矛盾。仅有本原性不足以排除模七降次；这里非零首项正是保次数的依据。
+
+所以原来的 $\overline P,\overline A$ 在 $\mathbb Q[\rho]$ 互素。若有共同复根，它因非零整数多项式 $\overline P$ 而为代数数；其在 $\mathbb Q$ 上的最小多项式将整除两者，仍矛盾。平移可逆，故不存在任何共同复根，尤其没有实根。由已证 $Z\ne0$ 及式 (8.12)，实际配对的 $P=F_0=0$ 正好强迫这个不可能的饱和系统；被剥去的 $Z=0$ 分支已经单独排除。∎
+

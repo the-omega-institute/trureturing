@@ -1,0 +1,4 @@
+**定义 5.1（乘法格与所需响应）。** 对算术函数 $f:\mathbb N_{>0}\to\mathbb R$，令 $F(n)=\sum_{d\mid n}f(d)$。若 $n=\prod_{i=1}^rp_i^{a_i}$，各 $p_i$ 不同且素，$a_i\ge1$，其约数唯一对应指数盒 $0\le b_i\le a_i$，权重是 $w_{\mathbf b}=f(\prod_i p_i^{b_i})$。这里沿整除关系累计，不沿整数通常大小顺序累计。
+
+经典算术 Möbius 函数取 $\mu(d)=0$ 当 $d$ 含素数平方，平方自由的 $k$ 素数乘积取 $\mu(d)=(-1)^k$，包括 $\mu(1)=1$。其反演式及下一节所需 Dirichlet 域见 [DLMF 直接消费文献注](../../../Library/Factorization/dlmf2026atomicboundary.md)，其中 [27.5.3](https://dlmf.nist.gov/27.5#E3) 给出精确累计逆式。供应卷已有 Boolean 子集符号与平方自由约数的对应；本节将那个符号作用到固定 $n$ 的累计 $F$，目标改为提取 $f(n)$。
+

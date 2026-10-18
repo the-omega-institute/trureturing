@@ -1,0 +1,22 @@
+### `InstrumentClosure.lean`
+
+定义：
+
+$$
+M_{a,o},
+\qquad
+V_0,
+\qquad
+V_{n+1},
+\qquad
+V_\infty.
+$$
+
+证明：
+
+$$
+dV_\infty=0
+$$
+
+当且仅当所有未来输出记录都无法更新 $\kappa$。
+

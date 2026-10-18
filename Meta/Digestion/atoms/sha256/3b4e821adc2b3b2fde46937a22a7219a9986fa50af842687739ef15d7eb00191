@@ -1,0 +1,9 @@
+**定义 38.1（稀疏核心与核心森林）。** 取下层维度 $m\ge8$，供应互异的完整 $E$ 与标准 $\mathcal T$ 两供应表示，并保留全部下层 $D$ 节点。稀疏图 $H$ 保留每个完整 $E$ 的全部关联及每个 $\mathcal T$ 的两个核心关联。记 $\mathcal C$ 为 $H$ 的图论二核，即反复删除度至多一的节点后留下的子图；记 $F$ 为全部 $D,\mathcal T$ 节点及仅有的 $\mathcal T$ 核心边构成的图。假设
+
+$$
+F\text{ 是森林},\qquad
+\deg_{\mathcal C}(E)\le3\quad\text{对每个 }E\in\mathcal C.
+$$
+
+下层 $D$、完整 $E$、$\mathcal T$ 的数目记为 $K,e,t$，完整关联图记为 $G$。
+

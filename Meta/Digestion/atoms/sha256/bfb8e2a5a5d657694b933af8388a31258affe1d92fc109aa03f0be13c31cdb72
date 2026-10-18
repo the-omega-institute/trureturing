@@ -1,0 +1,90 @@
+**Theorem 7.1 (sharp exterior power).** Let
+
+$$
+\mathfrak G(R)=\sup_{u\in\dot{\mathscr E}_R^{\mathbb C}}
+ \{2\operatorname{Re}e(u)-h_0[u]\}.
+\tag{7.1}
+$$
+
+There is a fixed real odd nonzero compact smooth $\varphi$, supported in $\{|r|>1\}$, for which
+
+$$
+\begin{gathered}
+u_R=R^{-4}\varphi\circ\delta_{1/R},\quad
+\frac{e(u_R)^2}{h_0[u_R]}=k_\varphi R^{-3}+o(R^{-3}),\quad k_\varphi>0,\\
+0<\liminf_{R\to\infty}R^3\mathfrak G(R)
+\le\limsup_{R\to\infty}R^3\mathfrak G(R)\le K_{\rm tail}.
+\end{gathered}
+\tag{7.2}
+$$
+
+Consequently $\mathfrak G(R)=\Theta(R^{-3})$. Neither an exact optimal leading constant nor attainment by an exterior compact test is asserted.
+
+Proof and correspondence. This is E Theorem 5.2's lower witness, placed beyond height one and checked in the present units. Put $t=t_\infty$ and
+
+$$
+Z=-2rY^2\mathcal G+2tX\mathcal G\quad(r\ne0).
+\tag{7.3}
+$$
+
+It is smooth, odd and homogeneous of degree $-6$. It is nonzero on $r>0$. Otherwise harmonicity gives $r\partial_r^2\mathcal G+t\partial_r\mathcal G=0$. At any fixed nonzero phase triple, the positive smooth function of $r>0$ is bounded as $r\downarrow0$ and tends to zero as $r\to\infty$. The complete solutions of this equation are $A+B r^{1-t}$ for $t\ne1$, and $A+B\log r$ for $t=1$. If $t<1$, decay at infinity forces $B=A=0$; if $t=1$, logarithmic growth and then decay do the same; if $t>1$, decay forces $A=0$ and boundedness at zero forces $B=0$. Each contradicts positivity.
+
+Homogeneity moves a nonzero point to $r>1$. Choose a nonnegative compact smooth bump near that point, supported in $r>1$, and add its $\sigma$ reflection to get $\chi_0$. Set
+
+$$
+\varphi=\chi_0Z,\qquad L_\varphi=\int\chi_0Z^2>0,\qquad
+k_\varphi=\frac{c_\infty^2L_\varphi^2}{b[\varphi]}.
+\tag{7.4}
+$$
+
+The test is real odd, smooth and compact beyond both excluded heights. If $b[\varphi]=0$, then $X\varphi=Y\varphi=0$; their successive brackets span all four coordinate derivatives. The compactly supported constant would be zero, a contradiction. Thus $k_\varphi>0$.
+
+Exact Haar and horizontal scaling gives
+
+$$
+R^3h_0[u_R]=b[\varphi]-\gamma R^2\int V(\delta_R\xi)\varphi^2d\xi\longrightarrow b[\varphi].
+\tag{7.5}
+$$
+
+Here $V(\delta_R\xi)=O(R^{-5})$ uniformly on the fixed support. Let $U_R=R^4(pF_*)\circ\delta_R$. Lemmas 4.1–4.2 and the local derivative rules give, uniformly on that support,
+
+$$
+\begin{aligned}
+U_R&\to c_\infty t r\mathcal G,\\
+XU_R&\to c_\infty t(\mathcal G+rX\mathcal G),&
+YU_R&\to c_\infty t rY\mathcal G.
+\end{aligned}
+\tag{7.6}
+$$
+
+Indeed $U_R=p_R F_*(Rr)/R$, $XU_R=(Xp_R)F_*(Rr)/R+p_Rq_*(Rr)$, and $YU_R=(Yp_R)F_*(Rr)/R$. The height support stays away from zero on both tails. No second derivative of $F_*$ is assumed.
+
+Scale each complete functional separately:
+
+$$
+\begin{aligned}
+R^3\mathcal L(u_R)
+ &=2\int r(Yp_R)(Y\varphi)+\gamma R\int V_1(\delta_R\xi)p_R\varphi,\\
+R^3h_0(U_h,u_R)
+ &=b(U_R,\varphi)-\gamma R^2\int V(\delta_R\xi)U_R\varphi.
+\end{aligned}
+\tag{7.7}
+$$
+
+The first potential term is $O(R^{-3})$ by $|V_1(\delta_R\xi)|=O(R^{-4})$. The second is $O(R^{-3})$ by the $V$ bound. Thus both potential contributions are retained and bounded. Compact integration by parts, $Yr=0$ and $\mathcal E\mathcal G=0$ on the support yield
+
+$$
+b(r\mathcal G,\varphi)=-2\int X\mathcal G\,\varphi,\qquad
+\int r(Y\mathcal G)(Y\varphi)=-\int rY^2\mathcal G\,\varphi.
+\tag{7.8}
+$$
+
+There is no phase-infinity boundary because $\varphi$ is compact. Passing to the limits in (7.7) gives
+
+$$
+R^3e(u_R)\longrightarrow c_\infty\int Z\varphi=c_\infty L_\varphi>0.
+\tag{7.9}
+$$
+
+Combine (7.5) and (7.9) to obtain the quotient asymptotic in (7.2). The multiple $[e(u_R)/h_0[u_R]]u_R$ realizes this quotient as a gain along its line and still belongs to the exterior core. Theorem 6.2 gives the matching uniform upper power. This reuses E's positive witness; the new inference is its comparison with a uniform bound on the entire exterior class. $\square$
+

@@ -1,0 +1,23 @@
+**Theorem 4.2 (the actual intersection with an AAR fixed-$z$ fiber).**
+For every $a\in\mathcal A$,
+
+$$
+z(a)=m(X_a)=2D+a_0.
+\tag{SCC.15}
+$$
+
+Consequently the intersection of this family with AAR's
+$\mathcal T_z=\{u:m(u)=z\}$ is empty unless
+$c=z-2D\in\{0,\ldots,H\}$. When it is nonempty it is precisely
+
+$$
+A_c=\{a\in\mathcal A:a_0=c\}.
+\tag{SCC.16}
+$$
+
+Proof. Applying the minimum recurrence through the complete skeleton
+gives $m(X_a)=2D+\min_i(iq+a_i)$. At $i=0$ the candidate is
+$a_0\le H$. Every $i\ge1$ has $iq+a_i\ge H+1>a_0$. Hence the
+minimum is $a_0$. The formula also holds at $D=0$, where there is
+only that slot. The fiber description follows. $\square$
+

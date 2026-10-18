@@ -1,0 +1,38 @@
+**适用边界 C-127.3（证书对象与尚未确定的量）。** C-123–C-126 的组合仅认证
+固定物理能量基 $\mathcal B$ 中的混态相干数。
+它不将原生秩二传感器任意更换为别的秩二读出，不给任意秩二传感器的通用阈值定理。
+与 C-121 的历史条件、随机设置及三结果 PVM 不同，C-126 使用固定 iid 源、固定设置与末端二值读口；
+两套假设不能互相替代。C-116.2 的共同标签反例仍排除以相同边缘或可交换性代替 iid。
+精确矩、脉冲模板存在、模型内误报控制均不证明源独立性、实际校准、物理安装或本体解释。
+数值 $L$、脉冲数和时长最优值、一般算法的最小设置数、最优样本数均未在此确定。
+[相位增益与 qutrit 恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+的正 $\beta$ 全实编码器类尖锐恢复曲线仍是另一未解决问题。
+
+**数学引文 C-127.4（供应结果与中间工具的范围）。**
+三相干阈值复用
+[ThreeCoherenceRamseyThreshold.result](../../../D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold.lean)
+及其 [Blueprint](../../../Blueprint/D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold.md)、
+[文献注](../../../Library/QuantumBounds/dive2020multilevelcoherence.md) 的显式有限 ensemble 量词。
+Dive、Koukoulekidis、Mousafeiris、Mintert，
+*Characterisation of multi-level quantum coherence without ideal measurements*，
+[arXiv:1901.08599v3](https://arxiv.org/abs/1901.08599v3)，§II、式 (1)–(4)、Table I、Appendix A，
+[Phys. Rev. Research 2, 013220](https://doi.org/10.1103/PhysRevResearch.2.013220)，
+供应固定共同 Hamiltonian、归一秩一读出和混态矩比凸性的背景。
+该文 $C_k$ 符号在定义与阈值表的操作读法间需区分，故这里以 (C123.4) 为准；
+精确代数最大值引用仓内结果，不归给该文的解析上界或数值表。
+实际秩二读口的适用性由 (C123.6)–(C123.13) 的全空间分解承担。
+
+有限 Fourier 正交性及周期梯形求积为成熟工具，见 Trefethen–Weideman，
+*The Exponentially Convergent Trapezoidal Rule*，
+[SIAM Review 56(3), 385–458](https://doi.org/10.1137/130932132)，Corollary 3.3，印刷页 398：
+次数 $d$ 的三角多项式在节点数 $N>d$ 时由等距周期梯形规则精确积分。
+C-125.1 直接证明所需有限正交式；C-125.2 另用实际正密度的六系数开放球守住其普遍量词。
+
+Bernoulli 尾界属于 Hoeffding，
+*Probability Inequalities for Sums of Bounded Random Variables*，
+[JASA 58(301), 13–30](https://doi.org/10.1080/01621459.1963.10500830) 的有界变量浓缩框架。
+这里使用的精确常数和全部概率步骤由 (C126.4)–(C126.6) 自包含证明，不依赖该文定理编号。
+透视凸性、Fourier 求积及浓缩不等式均为中间工具；
+本章的 repo-derived 综合是将其接到同一个实际原生字、全五维复源、指定能量基及明确新增供应的统计协议，
+不作这些工具或该综合的全域新颖性、优先权主张。
+

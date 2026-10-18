@@ -1,0 +1,38 @@
+**Mathematical citation 3.2 (endpoint box slack).** The supplied coordinate triangle identity [CLIP, equation (3.6)] gives
+
+$$
+\sum_x\pi_x\sum_w
+\operatorname{dist}\bigl(Q_x(w),[P_{p,a}(w)\wedge P_{p,b}(w),
+                                    P_{p,a}(w)\vee P_{p,b}(w)]\bigr)
+\le2\varepsilon_p.
+\tag{3.2}
+$$
+
+The suspended analogue has bound $2\varepsilon_\beta$. Include the infinite outcome in both sums. This is a consequence of the two configuration losses, not an assumption of pointwise preservation.
+
+The positive-difference events and their endpoint masses are supplied:
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},
+\quad
+P_{p,a}(E_p)=412/729,
+\quad P_{p,b}(E_p)=7299/15625,
+$$
+
+$$
+E_\beta=\{\beta,\alpha w_{0,1}\},
+\quad
+P_{\beta,a}(E_\beta)=22/27,
+\quad P_{\beta,b}(E_\beta)=93/125.
+$$
+
+If $C_s$ is the midpoint of these two masses, the endpoint configuration bounds imply
+
+$$
+|\pi Q(E_p)-C_p|\le\varepsilon_p,
+\qquad |\tau W(E_\beta)-C_\beta|\le\varepsilon_\beta.
+\tag{3.3}
+$$
+
+Indeed projection to the event contracts TV, and averaging before the event difference can only decrease configuration loss.
+

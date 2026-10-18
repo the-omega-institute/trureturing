@@ -1,0 +1,143 @@
+**Theorem 3.1 (one atom per supported actual low label).** Under Assumption
+1.1, every member of (QS.5), with arbitrary complex encoder and decoder
+Kraus multiplicities, gives one fractional atom of (QS.7) for each existing
+supported nonzero low acquisition label. It obeys (QS.8), and its unchanged
+actual record satisfies
+
+$$
+T_{\rm actual}=\frac{H_{\rm high}+J(\pi)}2.
+\tag{QS.10}
+$$
+
+A supported-zero full encoder gives no atom, no contrast and no supported
+height, while remaining counted if generated. This reduction assumes no
+height optimality and introduces no readable Kraus index, endpoint
+splitting, new report, or replacement acquisition effect.
+
+Proof. The argument applies [FA, Theorems 69.1–69.2 and 87.2][FA] to the
+exact error/cost face of JR42. The following details identify its use for
+the present competitors.
+
+For any positive input $Y$ to an entire decoder fibre let
+$p(a)=\operatorname{tr}\mathcal S_a(Y)$. Trace balance and positivity give
+$p'(a)\ge-\|R(a)\|p(a)$ almost everywhere. Multiplication by
+$\exp(\int_0^a\|R(b)\|\,db)$ and integration show
+$p(1)\ge e^{-A}\operatorname{tr}Y$. Terminal TP preserves this mass, so
+
+$$
+L_{\rm dec}\succeq e^{-A}I
+\tag{QS.11}
+$$
+
+on the entire fibre. In particular a supported nonzero encoder has a
+nonzero live composite. No assertion about a supported-zero encoder has
+been used here.
+
+Apply the separately assumed unaveraged JR42 face to this very instrument.
+Every nonzero supported low product is a phase multiple of
+$K(x,z,w)=xD+zT+wS$ with real coefficients and
+$x^2=\theta z^2+\omega w^2$, $x\ne0$. Its determinant is
+$h_0h_1h_2x(x^2-\theta z^2-\omega w^2)=0$, while its lower diagonal
+$2\times2$ minor is $h_1h_2x^2\ne0$. Thus its rank is exactly two,
+including both axes. A supported nonzero low fibre, whose dimension is
+below three, must have dimension two.
+
+Write its arbitrary supported encoder and live-decoder Kraus matrices as
+$C_j:\mathbb C^3\to\mathbb C^2$ and
+$B_i:\mathbb C^2\to\mathbb C^3$. Choose a nonzero product
+$B_{i_0}C_{j_0}$. Rank two makes $C_{j_0}$ onto and $B_{i_0}$ injective.
+For every real-null product,
+
+$$
+\begin{aligned}
+\ker K(x,z,w)&=\mathbb C(1,-bz/(h_1x),-dw/(h_2x))^T,\\
+\ker K(x,z,w)^\dagger&=
+ \mathbb C(1,-az/(h_1x),-c_{\rm src}w/(h_2x))^T.
+\end{aligned}
+\tag{QS.12}
+$$
+
+Positive source amplitudes make either the kernel or image determine
+$z/x,w/x$ uniquely. For fixed $B_{i_0}$, every nonzero $B_{i_0}C_j$
+has rank two and the image of $B_{i_0}$, hence is proportional to the
+chosen product. Injectivity makes the corresponding $C_j$ proportional
+to $C_{j_0}$. For fixed onto $C_{j_0}$, every nonzero $B_iC_{j_0}$ has
+its kernel, hence is proportional, and surjectivity makes $B_i$
+proportional to $B_{i_0}$. A zero product with either fixed full-rank
+factor forces its other factor to be zero. Absorbing the sums of squared
+proportionality constants gives one effective encoder and live decoder
+for this same acquired label. This is double rigidity within an existing
+label, not an operational refinement.
+
+Remove its common phase and normalize its coefficient vector to
+$\sqrt{p_j}(s_0,z_j,w_j)$, $p_j>0$. The null identity becomes
+$\alpha z_j^2+\beta w_j^2=1$ and its live product is
+$K_j=\sqrt{p_j}K_{h_j}$. Let $N_j$ be its total pulled-back supported
+failure effect. It is positive, dominated by $M$, and kills
+$\ker K_j=\ker C_j$. Positivity and $M e_0=0$ also give $N_je_0=0$.
+These independent null vectors leave exactly the line
+$n_{h_j}=(0,dw_j/h_2,-bz_j/h_1)^T$, which is nonzero at either axis.
+Consequently
+
+$$
+N_j=p_jb_j n_{h_j}n_{h_j}^T,\qquad b_j\ge0.
+\tag{QS.13}
+$$
+
+Summing failure times, components or hidden failure Kraus operators changes
+$b_j$, not the number of actual labels.
+
+The zero-other-effect part of JR42 lifts through the onto encoder to zero
+on the entire low fibre: every positive fibre input is $C_jXC_j^\dagger$
+for some positive supported $X$. Full-output TP therefore yields
+$L_{\rm dec}+F_{\rm dec}=I$. From (QS.11),
+$F_{\rm dec}\preceq t L_{\rm dec}$; pullback gives
+$N_j\preceq t p_jK_{h_j}^\dagger K_{h_j}$. For
+$G_h=K_h^\dagger K_h$, the physical Schur identity of
+[FA, (FA.10)][FA] is
+
+$$
+(G_h)_{00}=h_0^2\delta+b^2z^2+d^2w^2>0,\qquad
+G_h-\frac{G_he_0e_0^TG_h}{(G_h)_{00}}=c(h)n_hn_h^T.
+\tag{QS.14}
+$$
+
+The Schur complement of the positive $00$ pivot in $tG_h-b_jn_hn_h^T$
+is $(tc(h)-b_j)n_hn_h^T$. Thus (QS.13) obeys exactly
+$0\le b_j\le tc(h_j)$, without choosing a time density for the competitor.
+
+The complete low coefficient Gram in (QS.1) gives
+$\sum_jp_jh_jh_j^T=I_3$. The full failure effect gives
+$\sum_jp_jb_jn_{h_j}n_{h_j}^T=M$. Hence
+$\xi_j=b_j/[tc(h_j)]\in[0,1]$ defines exactly one original fractional
+atom per supported nonzero low label, with $\int\Gamma=B$ by Proposition
+2.3. If $m_j\in[-1,1]$ are the existing report coefficients, then
+
+$$
+\mathsf V(F)=s_0\left|\sum_jp_jm_jz_j\right|
+ \le s_0\sum_jp_j|z_j|=\frac{s_0}{\sqrt\alpha}\bar k.
+\tag{QS.15}
+$$
+
+The report used by this competitor is retained. Its original contrast
+inequality implies $\bar k\ge r$; it need not be an equality.
+
+Full decoder TP identifies the actual supported acquisition effect of
+label $j$ as $p_jK_{h_j}^\dagger K_{h_j}+N_j$. Its signed height mass is
+therefore $p_j[\ell(h_j)+b_jf(h_j)]$. Live and eventual failure signed
+masses are added inside the label before taking an absolute value.
+Every supported high live product is proportional to $D$, with no supported
+failure. All high signed masses are nonnegative, and their complete Gram
+makes their sum $H_{\rm high}$. This proves (QS.10) for the same actual
+record and all its original effects.
+
+Finally, if a full encoder vanishes on the support, positivity makes each
+supported encoder Kraus matrix zero: for every supported vector the sum
+of their squared norms is zero. Its supported live and failure maps,
+contrast and height all vanish. Such full labels remain admitted and
+counted, but supply no atom. Thus fewer than $m$ actual low labels implies
+fewer than $m$ supported nonzero low atoms. The arguments apply termwise
+in convergent countable classes and almost everywhere in the stipulated
+measurable extension; no larger disintegration class is inferred.
+$\square$
+

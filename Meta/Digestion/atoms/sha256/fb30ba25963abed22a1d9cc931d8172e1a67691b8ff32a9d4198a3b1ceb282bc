@@ -1,0 +1,23 @@
+**命题 73.1（无限边缘候选被一个旧类联合排空）。** 取四个不同旧类 $a,d,b,c$，令
+
+$$
+P=\{LL,LR,RL,RR\},\quad
+C=\langle\langle\square_a,\square_d\rangle,
+               \langle\square_b,\square_c\rangle\rangle,
+\quad q=L,
+\quad H=((0,RLL,\alpha),(0,RR,\alpha)).
+\tag{SLH.73.1}
+$$
+
+则 $L_a=L_d=\mathcal T$、$L_b=\{\langle\alpha,t\rangle:t\in\mathcal T\}$、$L_c=\{\alpha\}$。未施加完整扩张的复合候选 $(\alpha,t)$ 有无限多个，即使再要求内部两类不同仍无限；但 $E_b=E_c=\varnothing$。实际原族 $D$ 无限，而整个 $Q=\{L,RL,RR\}$ 行在 $D$ 上恒定，故由定理72.2可零新读恢复。
+
+证明。零纪元 $RLL=\alpha$ 迫使原 $b$ 为左叶 $\alpha$ 的分支，$RR=\alpha$ 固定原 $c$，其他类没有字面约束。新值 $\langle z_a,z_d\rangle=z_b$ 要求 $z_a=\alpha=z_c$，违反完整旧分区；新值也不能等于叶 $z_c$。这给两个空投影及新旧孔全部不相等，外部两个旧类仍不同，所以完整新行固定。实际见证为
+
+$$
+\left\langle\langle\beta,\langle\beta,\beta\rangle\rangle,
+                  \langle\langle\alpha,\beta\rangle,\alpha\rangle\right\rangle.
+\tag{SLH.73.2}
+$$
+
+更一般令 $t_0=\beta$、$t_{j+1}=\langle\beta,t_j\rangle$，在此见证中把 $z_d$ 换为 $t_j$、$j\ge1$，固定其余三个值，即给无限互異原来源：$t_j$ 非叶，且左孩子为 $\beta$，不会等于 $z_b=\langle\alpha,\beta\rangle$。全部来源实际满足 (SLH.73.1)，定理59.4、62.2供应其取得行和读记录。故不能把 §67 的二语言候选无限性直接换成未过滤多孔元组无限性；本命题不改变 §67 的单孔陈述。$\square$
+

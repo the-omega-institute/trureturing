@@ -1,0 +1,19 @@
+**Definition 1.5 (legal policy and risk).** A legal policy terminates
+with a decision $\widehat\Theta$ after at most $k$ charged Reads. Each
+chosen finite word, stopping and decision depend only on public data,
+previous replies and accessible internal state. A private random tape
+independent of both $\Theta$ and the whole source may be allowed as a
+separately declared and paid service. The attaining policies below are
+deterministic. The transcript includes submitted words, replies,
+stopping, accessible state and decision. Its equal-prior error is
+
+$$
+R(\pi)=\frac12\Pr_P(\widehat\Theta=Q)
+       +\frac12\Pr_Q(\widehat\Theta=P),
+\qquad R^*(k)=\inf_{\pi}R(\pi).
+$$
+
+There is no computation bound beyond the interface and Read budget.
+Thus the converse also covers arbitrary source-independent private
+computation and arbitrary finite word lengths.
+

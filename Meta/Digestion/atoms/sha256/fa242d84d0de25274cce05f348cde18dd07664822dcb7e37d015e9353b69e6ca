@@ -1,0 +1,8 @@
+**Corollary 87.2 (integral points at growing relative indices).** Under the hypotheses and notation of Theorem 85.1, any affine integral point $K\ne\pm R$ with $\delta(K)=(5,D,5D)$ has $X(K)=5D B_{Nk}$, where
+
+$$\gcd(k,210)=1,\qquad P^-(k)>\frac{N-1}{40},\qquad Nk>\frac{N(N-1)}{40}.$$
+
+**Proof.** Theorem 85.1 supplies the positive odd multiplier $k>1$, $3\nmid k$, and the same-kernel equation. Apply Theorems 86.1 and 87.1. ∎
+
+The constraint grows with the original ternary index and requires no elliptic-rank or Selmer premise. The constants are sufficient and deliberately coarse. The theorem asserts neither existence of repeated kernels nor exclusion of prime factors growing beyond its bound; it gives no complete index classification, prime-support infinitude, or universal WSS exclusion.
+

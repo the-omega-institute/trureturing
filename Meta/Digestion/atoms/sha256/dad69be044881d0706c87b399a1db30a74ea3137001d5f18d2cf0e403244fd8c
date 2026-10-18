@@ -1,0 +1,43 @@
+## 390. A stronger charge for two transverse P labels
+
+Retain the six-edge source-normal-form scalar conditions
+
+    c,d,v>1, m>1+c+d, v<=m-2, z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.                              (390.1)
+
+The labels M,V,C,D,Z,U are distinct actual labels; equal numerical
+coshes at different labels are allowed. Every owner has its fixed
+four-distinct paired frame (R,A,B,O,A,B), with edge order
+(12,13,14,34,24,23). Put P={M,Z,U} and low={V,C,D}.
+
+For a genuine owner with axes r,o and pair a,b, use its original slots
+and the paired formulas
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0,
+    K=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+    S=beta_a+beta_b=2*atan(K*sqrt(L/J)),
+    tan(theta_r/2)=sqrt((r-1)/(r+1))*sqrt(J/L).     (390.2)
+
+Every genuine angle is in (0,pi). P expense counts each original
+transverse occurrence twice and each axial occurrence once.
+
+**Theorem 390.1.** Every genuine owner whose two transverse labels both
+belong to P spends more than 4*pi/3 on P. Such an owner has either
+four or five original P slots. The four-slot case needs no upper gap;
+the five-slot case uses the two gaps exactly through
+
+    each high value < the sum of the other two high values + 1.
+
+**Corollary 390.2.** Also assume the unique flat source sigma has
+frame (M,C,D,V,C,D), the genuine source tau has frame
+(Z,M,C,D,M,C), and complete actual angle sums give genuine P capacity
+5*pi. Then at most two genuine owners have both transverse labels in
+P. The scalar theorem itself assumes no normal-circle topology.
+
+The one-sided gaps in a full quotient are supplied only by the
+complete-star maximum-gap theorem of published Sections 318–321 under
+all its original hypotheses. This refinement does not assert either
+gap from the remaining scalar conditions alone.
+

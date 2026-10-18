@@ -1,0 +1,11 @@
+**定义 59.4（实际阈值计算）。** CUT 的固定程序从 $u=D=B=0$ 开始，按字面次序 $j=1,\ldots,Q$ 执行
+
+$$
+u\leftarrow u+a,\qquad c\leftarrow\mathrm{LE}(u,b),\qquad
+D\leftarrow\mathrm{SEL}(c,j,D),\qquad
+B\leftarrow\mathrm{SEL}(c,\lceil j/2\rceil,B).
+\tag{59.4}
+$$
+
+各 $\lceil j/2\rceil$ 为付费公共字面常量。归纳 $u=ja$，所选最后一个合格 $j$ 恰为 (58.3)；无合格 $j$ 时仍为零。EXACT 选择 $Q,L$。两候选及模式选择均展开，无未表示的实阈值查询。
+

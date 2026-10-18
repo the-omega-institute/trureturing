@@ -1,0 +1,45 @@
+**Theorem 8.2 (exact conditional chronology ambiguity).** Every nonempty
+$Z$-fiber determines $u$ and has exactly
+
+$$
+F(\mathbf m)=\frac{N!}{b!\prod_{i=1}^d m_i!}
+\tag{NCR.11}
+$$
+
+different complete executed command histories. If the task includes paid
+indexed lookup of the ordered command rows, an exact supplement to $Z$ must
+have at least $F(\mathbf m)$ values in that fiber. Conditional fixed-width
+data length is therefore at least
+$\lceil\log_2F(\mathbf m)\rceil$ bits, and this width is attainable.
+
+Even after adding the complete unordered multiset of actual
+$(\text{epoch},\text{address},\text{reply})$ Read rows, a fiber with $n_j$
+distinct-address Reads at each epoch $2+j$, $0\le j\le b$, contains exactly
+$\prod_{j=0}^{b}n_j!$ histories. Repeated indistinguishable reads within an
+epoch instead give the corresponding multinomial factor.
+
+Proof. The histogram fixes $b$. The shape in $Z$ is
+$C(\rho^bu)$, so the already supplied inverse $D$, followed by $I^b$, recovers
+$u$. Thus no missing source shape or predecessor accounts for this ambiguity.
+Every ordering of the command multiset is executable: Native updates are
+unconditional and each finite address has a defined four-valued reply.
+At a Read in epoch $2+j$, the response is exactly
+$\operatorname{Read}(p_i,\rho^{2+j}u)$. Different command words give different
+ordered event words, since erasing replies and epochs recovers their command
+tags and literal addresses. Position counting gives NCR.11, and every counted
+word is realized on this same actual seed.
+
+Two different words first differ at some row. A paid indexed Fetch at that
+row returns different request tags or addresses, regardless of whether their
+replies happen to agree. A supplement that identifies those two words cannot
+answer that allowed task correctly on both. Pigeonhole counting proves the
+alphabet and fixed-width lower bounds.
+
+If all epoch-tagged unordered rows are fixed, each Read is already assigned
+to a specific update interval. The $b$ updates have their one chronological
+order, and the remaining freedom is to permute the $n_j$ distinct-address
+rows within each interval independently. Their exact count is
+$\prod_j n_j!$; equal rows divide by the respective multiplicity factorials.
+Every such permutation again executes on the same source and has the
+specified records. ∎
+

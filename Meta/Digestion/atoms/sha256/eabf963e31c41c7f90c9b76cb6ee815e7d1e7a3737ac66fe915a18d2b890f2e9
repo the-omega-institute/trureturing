@@ -1,0 +1,39 @@
+**Definition 1.4 (source and physical dictionary).** Use the same positive source amplitudes
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a|0\rangle\langle1|+b|1\rangle\langle0|,\quad
+S=c|0\rangle\langle2|+d|2\rangle\langle0|,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=\frac{ab}{h_0h_1},\quad\omega=\frac{cd}{h_0h_2},\quad
+\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\quad
+\alpha=\theta/\delta,\quad\beta=\omega/\delta=1-\alpha.
+\end{gathered}
+$$
+
+The dictionary at the CG root is $D=K_0$, $T=K_{01}$, $S=K_{02}$ of CG.134, so $a,b$ are the two entries of $b^{01}$ and $c,d$ those of $b^{02}$. Put $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$. For $(K_0,K_1,K_2)=(D,T,S)$ let $N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$, and
+
+$$
+G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1)
+=\begin{pmatrix}g_0&x_G&y_G\\x_G&g_1&z_G\\y_G&z_G&g_2\end{pmatrix},
+\quad H_{\rm high}=(1-\delta)N_{00}.
+$$
+
+The symbol $x_G$ is a fixed source coefficient, not a contact coordinate. For $u=\cos\phi$, $v=\sin\phi$, set
+
+$$
+\begin{gathered}
+z=u/\sqrt\alpha,\quad w=v/\sqrt\beta,\quad h=(1,z,w)^T,\quad
+\ell(h)=h^TGh,\quad n_h=(0,dw/h_2,-bz/h_1)^T,\\
+f(h)=n_h^T\Delta n_h
+=-\frac{11}{64}(dw/h_2)^2-2\Delta_{12}\frac{dbzw}{h_1h_2},
+\quad\Delta_{12}=(\sqrt{37}-\sqrt{59})/16,\\
+\operatorname{cap}(h)=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+{h_0^2\delta+b^2z^2+d^2w^2}>0,\\
+V_0=m_2h_1^2/b^2,\quad W_0=m_1h_2^2/d^2,\quad\mu=\alpha V_0+\beta W_0.
+\end{gathered}
+$$
+
+Thus $\alpha z^2+\beta w^2=1$. The letter $c$ in $S$ is an amplitude; $\operatorname{cap}$ is a physical rank-one failure capacity. The scalar constants $V_0,W_0$ are not the report contrast $\mathsf V$.
+

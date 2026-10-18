@@ -1,0 +1,34 @@
+**Convention 2.3 (all-comparator unrolling and universal cleanup).** The
+unrolling used in NSF Theorem 7.3 also applies when only $K,A$ are fixed.
+After any reachable reply prefix, the next computation/update segment
+and next read or halt are fixed by the common accessible state. A source
+realizing that prefix certifies the segment is finite by source-totality.
+At most $K$ replies give finitely many reachable prefixes. Unreachable
+children become halts, and updates after the last read are deleted.
+This yields a finite skeleton of depth at most $K$, with epochs in
+$[N,N+A]$, preserving each source's reads and lengths and weakly reducing
+its updates. There is no claim of extracting this unrolling by deciding
+termination of arbitrary code.
+
+The all-source normalization supplies, independently of $K,A$,
+
+$$
+M=\max(N,5),\qquad U=M-N,\qquad s_N=\max(0,2-N).
+\tag{NFO.6}
+$$
+
+After capping, the same-source output is unchanged and
+$q^c=q$, $a^c=\min(a,U)$, $\ell^c\le\ell$. Further cleanup only reduces
+costs and gives
+
+$$
+q'(u)\le\ell'(u)+s_N .
+\tag{NFO.7}
+$$
+
+The root can supply a new nonconstant reply only at epochs zero and one;
+repeated same-epoch requests can use their acquired value locally.
+Early decisions and genuine early halts remain legal. These are reused
+sourcewise facts, not claims that the normalized receipt list equals the
+original list. Deleted or simulated events create no actual receipts.
+

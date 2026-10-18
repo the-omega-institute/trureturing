@@ -1,0 +1,28 @@
+**定义 9.1（正方形轨道及对角读出）。** 在 $[-\pi,\pi]$ 上令
+
+$$
+h(\theta)=1-\frac{2|\theta|}{\pi},
+$$
+
+并作 $2\pi$ 周期延拓。置 $k(\theta)=h(\theta-\pi/2)$，
+
+$$
+\Gamma(\theta)=(h(\theta)-k(\theta),\,h(\theta)+k(\theta)).
+$$
+
+这是从右上角出发的单位正方形轨道。对 $N\ge1$ 令
+
+$$
+P_N(\theta)=(X_N,Y_N)=
+\sum_{\substack{1\le n\le2N-1\\n\ {\rm odd}}}\frac{\Gamma(n\theta)}n,
+$$
+
+$$
+U_N=\frac{X_N+Y_N}{2}
+=\sum_{n\ {\rm odd}}\frac{h(n\theta)}n,\qquad
+V_N=\frac{Y_N-X_N}{2}
+=\sum_{n\ {\rm odd}}\frac{k(n\theta)}n.
+$$
+
+有限求和均以 $2N-1$ 为上界。每层半边长为 $1/n$、周期为 $T/n$ 时，相对移动中心的周界速度为 $(8/n)(n/T)=8/T$；这不约束叠加末端的传播速度。
+

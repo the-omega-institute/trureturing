@@ -1,0 +1,31 @@
+**Lemma 5.1 (local product and derivative bridge).** The local representative of $U_h$ has distributional horizontal derivatives
+
+$$
+XU_h=F_*Xp+p q_*,\qquad YU_h=F_*Yp.
+\tag{5.1}
+$$
+
+For $U_R(\xi)=R^4(pF_*)(\delta_R\xi)$, all three quantities $U_R,XU_R,YU_R$ converge uniformly on any compact set with $|r|$ bounded away from zero to, respectively,
+
+$$
+c_\infty t_\infty r\mathcal G,\qquad
+c_\infty t_\infty(\mathcal G+rX\mathcal G),\qquad
+c_\infty t_\infty rY\mathcal G.
+\tag{5.2}
+$$
+
+Proof. H's derivative-range theorem supplies odd compact height functions $F_n$ with $F_n'\to q_*$ in $L^2(\rho dr)$ and $F_n\to F_*$ uniformly on bounded height intervals. Its isometry and the odd energy gap make $pF_n$ Cauchy in horizontal energy. The potential bound in (1.13), together with the positive minimum of $V$ on compact sets, identifies its unique local $L^2$ limit. Uniform height convergence identifies that limit as $pF_*$. Compact distributional testing identifies the global $L^2$ limits of its horizontal derivatives. The local product rule then gives (5.1): $F_*$ is locally absolutely continuous, $q_*\in L^2_{\rm loc}(dr)$, $F_*$ is locally bounded, and $p$ is bounded by Theorem 3.1. All displayed product terms are locally square integrable. In fact $q_*$ is continuous by Definition 2.1.
+
+The exact local identities are
+
+$$
+\begin{aligned}
+U_R&=p_R\,F_*(Rr)/R,\\
+XU_R&=(Xp_R)F_*(Rr)/R+p_Rq_*(Rr),\\
+YU_R&=(Yp_R)F_*(Rr)/R.
+\end{aligned}
+\tag{5.3}
+$$
+
+On the stated compact sets, (4.3) gives uniform convergence of $F_*(Rr)/R$ to $t_\infty r$ and of $q_*(Rr)$ to $t_\infty$. Theorem 3.1 proves (5.2). No second derivative of $F_*$ or representative of $\Psi$ is used. $\square$
+

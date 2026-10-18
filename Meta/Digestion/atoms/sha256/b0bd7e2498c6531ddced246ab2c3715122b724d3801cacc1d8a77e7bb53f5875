@@ -1,0 +1,15 @@
+**Proposition 3.1 (the missing busy-admission edge).** The original menu
+does not admit immediate recovery or fence registration at every lawful
+primitive cut.
+
+Proof. Use a nonempty AIF payload reader immediately after a payload IN.
+Its actual input bit is in the designated latch, its payload cell has not
+yet been written, and its PC is the reader's write row. The unique enabled
+non-IN successor is the prescribed WR. RecoverAt, Fetch and a new CTL
+fence are different rows. LJA Definitions 4.1 and 4.4 give them no
+transition there. Inserting one changes the enabled-transition relation;
+describing its absence as an executed reject also changes that relation.
+The same prescribed-successor argument applies during source overwrite
+and receiver copying. The assertion is an enabling obstruction, not an
+information-theoretic impossibility of later reconstruction. ∎
+

@@ -1,0 +1,9 @@
+**定义 8.1（有限证据闭包）。** 给初始证据集 $I$ 和有限前提规则 $P\Rightarrow e$。令
+
+$$
+C_0=I,\qquad
+C_{n+1}=C_n\cup\{e:\exists(P\Rightarrow e),\ P\subseteq C_n\}.
+$$
+
+有限取得指 $e\in\bigcup_nC_n$。该闭包接口可用有限合法推导树表示：由层数归纳可构树，由树高归纳可入层；有限前提保证存在共同有限层。单有 $p\Rightarrow q$、$q\Rightarrow p$ 而 $I=\varnothing$ 时，各层为空，自洽依赖不产生取得。
+

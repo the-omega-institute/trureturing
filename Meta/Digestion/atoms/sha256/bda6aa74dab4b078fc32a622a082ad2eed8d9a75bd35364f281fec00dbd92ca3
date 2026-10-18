@@ -1,0 +1,65 @@
+**Convention 66.1 (precise continuation).** The new source-specific
+relations are the selected complete post-contact curve (RC.8)–(RC.33),
+its four original matching dual blocks, the identified simple first
+$d_+$ zero with quantitative gluing, and the exact positive four-contact
+weights with no later interior transition. In combination with JR.144,
+the residual value is now specified throughout by
+
+$$
+j(\tau)=
+\begin{cases}
+\operatorname{tr}G-2\psi(t),&\tau=h(t),\quad t_*\leq t\leq t_\dagger,\\
+\operatorname{tr}G-g/(H\mathcal E),&\tau=\tau(a),\quad0\leq a\leq a_\dagger.
+\end{cases}
+\tag{RC.63}
+$$
+
+The plateau and strong-regime branches retain JR §§43,50–51's exact
+hypotheses and values. JR §§53–57's initial optimality, endpoint
+square-root estimates, every-multiplier bounds and pre-cap obstruction
+are reused, not supplied anew. The root-specific ranks, source
+normalization and minimax identification remain CG antecedents; the
+sharp joint-cost attribution remains JR §§34–40. The real-face and
+image-decoder mechanisms are CA Theorem 5.1 and IR Lemma 4.2.
+The equality S-lemma [SLEM] supplies only the fourth-slack completion,
+under the explicit sign-changing quadratic hypotheses used in §61.
+Bernstein positivity, inertia, conic contact independence and finite
+Kraus bilinearity are intermediate classical tools. No generic moment
+quadrature or extremal-POVM rank bound supplies the source-specific
+optimum; in particular a full-arc Chebyshev hypothesis would fail for
+a system containing $|u|-u$, which vanishes on an open half arc.
+The source-specific synthesis is repository-derived; no literature-wide
+priority or new classical S-lemma claim is made.
+
+The [AS all-strength selected-input law][AS] fixes a complete channel and
+complete binary effects and minimizes acquired mass on an admitted
+selected input. Here the objective is height-record TV at sharp
+worst-history cost over all original error optimizers, with only a
+contrast inequality. The [critical-energy response][CE] concerns a
+full complex differential-operator domain and its same-realization
+energy coefficient, not acquired payload probability. No value,
+optimizer, exponent, control or resource conclusion transfers among
+these objectives without an established correspondence. Their own
+remaining questions retain their original domains.
+
+All conclusions here are ordinary conditional mathematics, not
+Lean/kernel certification or native execution. Lawful access to the sole
+unknown specimen, D/T/S calibration, coherent storage of all jointly
+accessible shares, controlled decoding, one aligned clock, actual FIRST
+absorbing failure with no subsequent positive-carrier action, terminal
+live output, archive/controller/permission semantics and actual joint
+resource accounting remain unresolved native bridges. OriginalControl
+is geometric, not an actuator. Noncommuting probability-phase controls
+do not justify an exhaustive Schur control menu. The unchanged
+quantum-first through-2027 programme, including its native and
+joint-height/clock questions, remains active; the finite conditional
+residual/contact theorem does not establish programme completion.
+
+[JR]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
+[IR]: FIB_NATIVE_INTERIOR_RECORD_RESOURCE_REDUCTION.md
+[CA]: FIB_NATIVE_COMPLEX_ATOMIC_CONE_AND_OPTIMAL_RESOURCE_FACES.md
+[AS]: FIB_NATIVE_NONREAL_ALL_STRENGTH_ACQUISITION_RESOURCE_LAW.md
+[CE]: FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md
+[SLEM]: https://arxiv.org/pdf/1403.2816v3
+

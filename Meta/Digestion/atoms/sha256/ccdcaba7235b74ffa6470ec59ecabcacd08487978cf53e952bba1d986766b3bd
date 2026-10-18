@@ -1,0 +1,40 @@
+**Theorem 42.2 (full-horizon joint path and joint endpoint bounds).**
+Fix $b>0$ and all data in Definition 41.1. There exist $C_b,T_0$
+such that for $T\ge T_0$, $\kappa\in\mathcal K$, arbitrary initial
+phase $q_0$, and every initial height $k\in I$, under each of the
+two exact laws (41.7), with $\tau=Tb$,
+
+$$
+W_1\bigl(\mathcal L_{g,\tau}(X_T,K_\tau),
+\mathcal W_{\kappa,b}\otimes\nu_g\bigr)
+\le C_b\left[\frac{\log(e+T)^2}{\sqrt T}+e^{-\gamma Tb}\right],
+\tag{42.3}
+$$
+
+and
+
+$$
+\left\|\mathcal L_{g,\tau}(X_T(b),K_\tau)
+-\Gamma_{\kappa,b}(z)dz\otimes\nu_g\right\|_{{\rm var},1}
+\le C_b\left[T^{-1}+e^{-\gamma Tb}\right].
+\tag{42.4}
+$$
+
+Joint endpoint $W_1$ and bounded-Lipschitz errors are therefore at
+most $C_b[T^{-1}+e^{-\gamma Tb}]$. For fixed $b$ the right sides
+of (42.3) and (42.4) are respectively bounded by
+$C'_b\log(e+T)^2/\sqrt T$ and $C'_b/T$.
+
+The constants depend only on fixed $b$, fixed interval and noise,
+and the common bounds in (41.3)--(41.4). Thus they include the
+stipulated initial-height scope $k\in K\Subset I$, and are uniform
+in initial phase and both parameter signs. Every target uses the
+same current $\kappa$ as its process. No uniformity as $b$, the
+height interval or noise intensity degenerates is claimed.
+
+Proof. The estimates of §§43--45 prove (42.3); §46 proves (42.4)
+and the endpoint transport assertion. Those proofs construct
+couplings of actual continuous paths and bounds on joint signed
+measures, respectively, so they also justify the supremum over all
+joint Lipschitz tests. $\square$
+

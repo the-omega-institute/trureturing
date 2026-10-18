@@ -1,0 +1,73 @@
+**Theorem 3.3 (Exact compact holonomy group).** Map real residuals
+componentwise modulo $2\pi$, retaining the middle-fixed gauge. The reachable
+group is abelian and is isomorphic to
+
+$$
+\mathcal H_b\cong
+\begin{cases}
+\mathbb T^3,&\text{neither }E_-\text{ nor }E_+,\\
+\mathbb T^2,&\text{exactly one of }E_-,E_+,\\
+\mathbb T\times\mathbb Z_2,&\text{both }E_-,E_+.
+\end{cases}
+$$
+
+The image of $V_b$ is the identity component. These are exact reachable
+subgroups, not merely their topological closures.
+
+Proof. Let group $a$ contain $m_a$ modes with their common sign
+$\varepsilon_a\in\{1,-1\}$. Its common phase is $\phi_a\in\mathbb T$.
+Every real reachable vector belongs to $U_b$ and has $d^{\mathsf T}h\in2\pi\mathbb Z$.
+Consequently every reachable phase is in the character kernel
+
+$$
+\sum_{a=1}^g c_a\phi_a=0\pmod{2\pi},
+\qquad c_a=m_a\varepsilon_a.
+$$
+
+We prove sufficiency constructively. For any point in this kernel, choose one
+real representative $v_a$ of each group phase and copy it to each mode of that
+group, setting $v_2=0$. The kernel condition gives
+$\sum_a c_av_a=2\pi n$ for an integer $n$. Therefore
+
+$$
+v-2\pi n w(\kappa_0)\in V_b.
+$$
+
+The all-sector construction of §3.2 realizes this vector after $n$ fixed-height
+circles, hence realizes the original phase class exactly. This proves every
+candidate is reachable, including nonidentity components.
+
+To determine the identity component, let $q=\gcd(c_1,\ldots,c_g)>0$. Changing
+the grouped real representatives by $2\pi\ell_a$ changes $n$ by
+$\sum_a c_a\ell_a$, whose possible values are exactly $q\mathbb Z$ by
+Bézout's identity. Thus the residue of $n$ modulo $q$ labels the components.
+A class has a representative in $V_b$ exactly when this residue is zero:
+choose integers $\ell_a$ with $\sum c_a\ell_a=-n$, then the changed
+representatives have relation sum zero and are reached by rectangles alone.
+
+For completeness, the elementary integer-character structure follows from
+the Euclidean algorithm: integer column operations reduce the coefficient
+row $c$ to $(q,0,\ldots,0)$ by a unimodular matrix. The induced invertible
+map of $\mathbb T^g$ turns its kernel into
+$\{\phi_1:q\phi_1=0\}\times\mathbb T^{g-1}$, namely
+$\mathbb Z_q\times\mathbb T^{g-1}$. Its identity component is the image of
+the real hyperplane $\sum c_av_a=0$, as also shown constructively above.
+
+In general position the coefficient row is $(1,-1,-1,1)$, with $g=4,q=1$.
+For one collision it is $(2,-1,-1)$ up to reordering or overall sign, with
+$g=3,q=1$. Both kernels are connected, so zero winding alone reaches their
+whole compact group. In double symmetry it is $(2,-2)$, with $g=2,q=2$:
+
+$$
+2(\phi_+-\phi_-)=0\pmod{2\pi}.
+$$
+
+The two components have $\phi_+-\phi_-=0$ or $\pi$. At any fixed height,
+$w_+-w_-=1/2$, so one circle lands in the second component and every integer
+winding realizes its parity label.
+
+Concatenation adds the residuals because the coefficients depend only on
+$\kappa$, not on the accumulated phase; reversal negates them. All phase
+operators are diagonal and commute. This proves the group assertion and its
+abelian character. $\square$
+

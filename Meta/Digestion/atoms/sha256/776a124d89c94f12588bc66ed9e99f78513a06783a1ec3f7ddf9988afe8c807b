@@ -1,0 +1,16 @@
+## 466. Exact six-edge consequence and what is still missing
+
+Retain the paired-framework hypotheses of Section 130 of the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md)
+in its inherited manifold class: a connected orientable compact
+3-manifold with nonempty boundary consisting of closed surfaces of
+genus at least two, given by an actual finite ideal tetrahedron pairing.
+The face pairing is a fixed-point-free involution on original face
+occurrences, each actual edge normal link is one connected circle,
+and every original edge degree is at least six. Take H=E with exactly
+six actual global edge labels and no special labels. Each original
+owner has a fixed vertex-induced frame (R,A,B,O,A,B), with A!=B;
+repetitions among R,A,B,O are permitted. Use one common positive
+generalized length field satisfying all original angle equations 2*pi,
+and suppose that its flat set is nonempty.
+

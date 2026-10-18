@@ -1,0 +1,86 @@
+**Lemma 83.1 (varying-domain local compactness and the lost mass).**
+Suppose $s_n\downarrow0$, $f_n\in\mathcal Q_{s_n}$, and
+
+$$
+\sup_n(\|f_n\|_2^2+b_{s_n}[f_n])<\infty.
+\tag{83.1}
+$$
+
+After a subsequence, their zero extensions converge weakly in
+$L^2(\mathbb R^4)$ and strongly in $L^2$ on every compact set to a
+vector $f\in\mathcal Q_E$. They satisfy
+
+$$
+\begin{aligned}
+\|f\|_2&\le\liminf_n\|f_n\|_2,&
+b[f]&\le\liminf_n b_{s_n}[f_n],\\
+\|U_{s_n}^{1/2}f_n-V^{1/2}f\|_2&\longrightarrow0,&
+\int U_{s_n}|f_n|^2&\longrightarrow\int V|f|^2.
+\end{aligned}
+\tag{83.2}
+$$
+
+There is no assumption of tightness in (83.1).
+
+Proof. On every fixed coordinate box, $Y_s\to Y$ in $C^\infty$
+by (78.4). The determinant of the four fields
+$X,Y_s,[X,Y_s],[X,[X,Y_s]]$ converges uniformly there to one.
+Thus these fields have one uniform strong Hörmander bound of step
+three on a slightly larger fixed box. The parameter-uniform local
+subelliptic estimate of Colin de Verdière--Hillairet--Trélat,
+Appendix B, Theorem B.1, pp.953--955, applies to $-A_s$ there: its
+coefficient derivatives are uniformly bounded, its drift and
+potential vanish, and its density is unit Lebesgue. In particular,
+for nested compact cutoffs $\eta,\eta'$ with $\eta'=1$ near
+$\operatorname{supp}\eta$, there are $\sigma>0$ and $C$ independent
+of small $s$ such that
+
+$$
+\|\eta u\|_{H^\sigma}
+ \le C\bigl(\|\eta'A_su\|_2+\|\eta'u\|_2\bigr).
+\tag{83.3}
+$$
+
+We use this operator estimate to obtain form compactness, rather
+than assuming an ordinary Sobolev norm for a form-domain vector.
+For a fixed $d>0$ set $u_{n,d}=(1+dA_{s_n})^{-1}f_n$. The spectral
+theorem and (83.1) give
+
+$$
+\|u_{n,d}\|_2\le C,\qquad
+\|A_{s_n}u_{n,d}\|_2\le C/d,\qquad
+\|f_n-u_{n,d}\|_2^2\le d\,b_{s_n}[f_n].
+\tag{83.4}
+$$
+
+The local estimate (83.3) applies to these resolvents by its closed
+distributional extension; equivalently approximate their right
+sides in $L^2$ and use (83.3). Both moving faces lie outside each
+fixed box eventually. Hence, at fixed $d$, Rellich compactness
+makes $\eta u_{n,d}$ precompact in $L^2$. Letting $d\downarrow0$
+in the last bound of (83.4) makes $\eta f_n$ precompact too.
+A compact exhaustion and the global $L^2$ bound give a subsequence
+with the asserted local strong and global weak convergence.
+
+Extend $Xf_n$ and $Y_{s_n}f_n$ by zero as $L^2$ vectors and take
+weakly convergent subsequences. Testing on fixed compact sets,
+using $Y_s\to Y$ and their zero divergences, identifies the limits
+as $Xf$ and $Yf$. Lower semicontinuity of their joint squared norm
+proves the energy inequality in (83.2).
+To check membership in the specified Friedrichs form domain, a
+vector with these two distributional derivatives in $L^2$ can be
+cut off by $\eta_R(\xi)=\eta_1(\delta_{1/R}\xi)$, where $\eta_1$
+is compactly supported and one near zero. Its two horizontal
+derivatives are bounded by $C/R$, and dominated convergence shows
+$\eta_R f\to f$ in horizontal form norm. Smooth group approximate
+identities applied to these compactly supported vectors then
+converge in the same norm, since the horizontal derivatives are
+left invariant. Thus $f\in\mathcal Q_E$, with no boundary condition
+at a fictitious finite rescaled height.
+
+Finally (82.10) gives
+$\|U_{s_n}^{1/2}-V^{1/2}\|_\infty\to0$. On a fixed compact set use
+local strong convergence; on its complement use the vanishing
+supremum of $V$ from (82.4) and the uniform $L^2$ bounds. This proves
+the last two assertions of (83.2). $\square$
+

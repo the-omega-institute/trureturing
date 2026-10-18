@@ -1,0 +1,18 @@
+**Definition 3.1 (the selected complete entry).** Put $z_*=K+\lambda_0$.
+Let $V_*$ have the depth-$D$ exterior with the entire literal
+$T_{sq+z_*}$ displayed at $w_s$, and an address-named hole at every
+other original slot. All these holes are reached; their equality
+partition consists of singleton classes, with all cross-class
+disequalities. Define
+
+$$
+E_*=(S_*,0,V_*),\qquad
+\ell_b=\lambda_0+f(b),\qquad
+Y_b=\mathcal B_D[(T_{jq+z_*+v(b)_j})_{j\in I}].
+\tag{NTL.10}
+$$
+
+The row description in this definition is justified by actual sources
+in the next theorem. It is not permission to install a chosen hidden
+partition or substitute a model tree for an actual continuation.
+

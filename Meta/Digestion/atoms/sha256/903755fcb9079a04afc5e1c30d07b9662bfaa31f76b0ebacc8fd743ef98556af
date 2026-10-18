@@ -1,0 +1,21 @@
+**Theorem 3.3 (unique selected real zeros).** Under Assumption 1.3's source enclosures, both boxes in Definition 3.2 contain a unique real zero. Their Jacobians are nonsingular. At the seam $p_0,\ldots,p_5>0$ and $p_6=0$ exactly; at the point all seven weights are positive.
+
+Proof. The exact rational preconditioners $R_S,R_8$ in §12 and the interval data in §13 use the common grid $2^{-300}$. For a rational $q$, embed it with endpoints $\lfloor2^{300}q\rfloor$, $\lceil2^{300}q\rceil$; addition and negation are exact, multiplication encloses all four endpoint products with outward floor/ceiling, division uses a nonzero interval reciprocal, and square roots use integer-square-root floor/ceiling. Source intervals have denominator $2^{224}$. Thus every evaluation encloses the expressions for the assumed original source. Let $r_*=10^{-12}$, $c$ be the displayed centre and $J$ the Jacobian on its whole box. The row bounds in §13 enclose
+
+$$
+q_i=\sum_j\sup|(I-RJ)_{ij}|,\quad
+RF(c),\quad q_i+\frac{\sup|(RF(c))_i|}{r_*}.
+$$
+
+They give respectively
+
+$$
+\begin{array}{c|cc}
+&\max_iq_i&\max_i(q_i+\sup|(RF(c))_i|/r_*)\\
+S&<7.889\cdot10^{-8}&<2.375\cdot10^{-6}\\
+8&<6.132\cdot10^{-9}&<3.724\cdot10^{-7}.
+\end{array}
+$$
+
+These are strict rational comparisons of the full table entries. For $\Psi(X)=X-RF(X)$, the mean-value formula yields $\|D\Psi\|_\infty<1$ and, coordinate by coordinate, $|\Psi_i(X)-c_i|<r_*$. Banach's contraction theorem therefore gives a unique fixed point in each closed box. Since $\|I-RJ\|<1$, the Neumann series makes $RJ$ invertible; for square matrices this implies both $R$ and $J$ invertible. A fixed point satisfies $RF(X)=0$, hence $F(X)=0$. Conversely every zero is a fixed point, proving uniqueness as a zero. This proof selects no other roots outside the boxes. Positivity of the occupied weights follows directly from their centre-radius intervals; the seam's seventh weight is excluded from its variables and is exactly zero. Source identities are used at the stipulated root only; no off-root TP assertion enters the contraction argument. $\square$
+

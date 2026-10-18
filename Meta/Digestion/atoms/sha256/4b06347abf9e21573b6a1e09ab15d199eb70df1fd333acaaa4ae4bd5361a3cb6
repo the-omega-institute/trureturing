@@ -1,0 +1,21 @@
+**Corollary 63.10 (recursive groundspace retention for both ideal prescriptions).** Assume $m_N<B_N$, and let $P_0$ be the full common ground projection. Write
+
+$$
+\gamma_N=\inf\sigma(H_N|_{\operatorname{ran}(I-P_0)})-m_N>0.
+\tag{63.28}
+$$
+
+Consider any finite legal whole-rho history with the ideal same-occupation transfer and between-checkpoint finite generators already supplied in §§60,62. At original Reads and refusals there is no actuator change. Use consistently either the common or the killed pair prescription. If the initial supplied unit state has finite energy $E_0^\diamond$, then its actual ideal states $u(\tau)$, zero extended by their same addresses, obey throughout every supplied finite clock interval
+
+$$
+\|(I-P_0)u(\tau)\|^2\le\frac{E_0^\diamond-m_N}{\gamma_N},
+\qquad
+\operatorname{dist}\bigl(u(\tau),\{v\in\operatorname{ran}P_0:\|v\|=1\}\bigr)
+\le\sqrt{\frac{2(E_0^\diamond-m_N)}{\gamma_N}}.
+\tag{63.29}
+$$
+
+Proof. For the common prescription its finite energy is unchanged through every switch, by (62.7). For the killed prescription (62.8) makes every old pair coefficient increase, so its compression on old occupations decreases as a quadratic form. Thus its finite energy can only decrease at a renewal. Each between-event ideal unitary preserves its currently installed energy. At every cut the common energy of the zero extension is at most the current killed energy by (63.22). In either case $q_N(u(\tau))\le E_0^\diamond$. Apply the spectral inequality $H_N-m_NI\ge\gamma_N(I-P_0)$. Normalizing $P_0u$ and the identity $2(1-\|P_0u\|)\le2(1-\|P_0u\|^2)$ give the second bound; if the projection is zero, any unit ground vector has distance $\sqrt2$ and the same inequality still holds. $\square$
+
+Expressly supplied finite ground states, or states satisfying (63.21), make this bound tend to zero along the actual-prefix families of Theorem63.7. The result is a bound on distance to the entire groundspace, for arbitrary finite duration and renewal count under the ideal law. It is not a full-phase dynamical intertwining theorem. Digital-gate checkpoints retain §62.10's accumulated state-error budget, which can be added to the distance bound when its preparation, parameter, hold and clock conditions are actually supplied. Energy monotonicity does not price physical work or prepare an unknown ground state.
+

@@ -1,0 +1,35 @@
+### 10.16 来源映射与数学适用边界
+
+本章把经典方法用于一个具体有序五态模型：受控交换因式分解、三体混合见证及其精确顺序响应、指定链菜单的观察空间及全准备域最小性，由章内证明相互连接。一般 Jordan–Wigner 方法、CAR 二次闭合、单粒子矩阵演化、Givens 消元及观察空间方法保留其文献归属。
+
+| 来源 | 本章的精确消费 | 不随引用转入的结论 |
+| --- | --- | --- |
+| [Circulation §§24.1–24.4][C10-circulation] | 标签、$W,d$、负相位；定理 24.3 的 $A,V$ 精确对应 $A_{ab},K_{ab}$ | 相同乘积准备或交换对称输入不作为每次链接触的新假设 |
+| [Symplectic §§35.8–35.9][C10-symplectic] | $J_f$ 的目标系数、$\theta^{\rm old}=-\theta$、$\Phi^{\rm old}=-\chi$、非线性四次 Hamilton 背景 | 四次单份流不被识别为有序张量对线性 $K$ |
+| [Correlation §23.2、定理 26.15、§26.7][C10-correlation] | 单窗矩基；孤立位置、外部零、每步固定全部真子集计数的复制下界及其实际四份例子 | 不约束允许中间低阶关系变化的任意链协议 |
+| [Output-resolved §15 与编者限定][C10-output] | 终端测试经逐分支拉回闭合的原则；本章用迹对偶给出量子应用 | 不直接供应量子操作许可、反馈闭包维数或样本复杂度 |
+| [Walck–Lyons，Main Result][C10-walck] | 纯态由全部 $(n-1)$ 点边缘确定性的 GHZ 分类背景 | 不作为秩二混合 $\rho_\pm$ 的正性或两体边缘证明 |
+| [Pereira–Mueller，§II A–B、式 (1)–(11)][C10-pereira] | XX/Jordan–Wigner 方法，因子二、$Z^{\rm sf}=-\sigma^z$ 和相关矩阵指标对应 | 不使用其螺旋乘积准备、无穷链极限或式 (9) 的未换算自旋字符串 |
+| [D’Alessandro，§2、Theorem 1][C10-observation] | 共轭轨道、交换子稳定空间与 Hilbert–Schmidt 不可分辨方向的方法 | 不把本文的七维或链维数说成其直接定理结论 |
+| [Frerix–Bruna，§§2–3][C10-givens] | Givens 二维旋转与有限矩阵分解的经典背景 | 不用低因子数近似或 Lie 稠密性替代本章相邻菜单的精确消元 |
+| [Taranto 等，Definition 2、Theorem 4][C10-markov] | 相对于指定记忆仪器的量子 Markov 阶；其条件化历史与未来统计的范围 | 不提供本章线性坐标维数公式，也不把无中间仪器的词任务称为一般 Markov 阶定理 |
+
+D’Alessandro 的 *On Quantum State Observability and Measurement* 在 §2 以 $iS$ 及其反复交换子定义反 Hermitian 观察空间，Theorem 1 将相同受控终端期望与对该空间的迹配对相同联系。本章使用 Hermitian 记法，生成元为 $i[h,\cdot]$，并将多个终端占据和 $I$ 一起纳入。因此本章定理 10.10 的双包含及定理 10.11 的全正基点分离是该方法在明示菜单、明示准备域上的具体计算。
+
+Taranto、Pollock、Milz、Tomamichel、Modi 的 *Quantum Markov Order*（PRL 122, 140401）在 Definition 2 中固定记忆块的仪器族，历史与未来仪器仍任意；其 Theorem 4 排除非 Markov 过程对所有仪器都具有有限 Markov 阶。这是“仪器选择属于任务合同”的背景。它没有把记忆长度、观察空间维数、比特数和末端读数数目等同。
+
+相关书目还包括 Reck、Zeilinger、Bernstein、Bertani，*Experimental realization of any discrete unitary operator*，PRL 73, 58，DOI [10.1103/PhysRevLett.73.58][C10-reck]。此条只作书目背景，不作为本章的定理输入；有限可达性由定理 10.16、10.18 中逐列、相邻、正枢轴的完整构造承担，不作光学器件到本模型的移植。
+
+所有最小性均是“全部所声明归一化正半定准备、所有菜单内有限动作词、最终单点占据期望”这一合同内的实线性坐标最小性。它允许任意非 Gaussian、相关及跨激发数准备，既不假定固定激发数，也不承诺任意准备可免费获得。中间测量、反馈、新增动作、受限角度、资源预算或不同终端测试会改变合同，需要重新闭合和重新分离。
+
+[C10-circulation]: https://github.com/the-omega-institute/trureturing/blob/ed6e098014aa3914eaf3450cde7c07f0dbbab6da/docs/develop/theory/AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md
+[C10-symplectic]: https://github.com/the-omega-institute/trureturing/blob/9cc2ff145de5d4a6ad7357b22025b00b0557f630/docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md
+[C10-correlation]: https://github.com/the-omega-institute/trureturing/blob/f80965d4f7d8cade37c2ae23809730c6c030a2cc/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[C10-output]: https://github.com/the-omega-institute/trureturing/blob/9cc2ff145de5d4a6ad7357b22025b00b0557f630/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md
+[C10-walck]: https://arxiv.org/abs/0707.4428v2
+[C10-pereira]: https://arxiv.org/html/2110.05972v3
+[C10-observation]: https://arxiv.org/abs/quant-ph/0307127
+[C10-givens]: https://arxiv.org/abs/1905.05796
+[C10-markov]: https://arxiv.org/abs/1805.11341
+[C10-reck]: https://doi.org/10.1103/PhysRevLett.73.58
+

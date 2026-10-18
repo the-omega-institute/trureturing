@@ -1,0 +1,36 @@
+**Proposition 20.2 (conditional whole-complex construction).** If the
+services of Definition 20.1 are supplied with their stated complete
+operations, they realize the common CPTP law (CG.135) and its five-mode
+extension (CG.142). Their canonical output performance is $E_*$.
+The exact random timestamp has inverse CDF
+
+$$
+H_0(t)=\int_0^t\frac2{(1+s)^2}ds=\frac{2t}{1+t},\qquad
+H_0^{-1}(u)=\frac{u}{2-u}\quad(0\leq u\leq1).
+\tag{CG.178}
+$$
+
+Proof. On each live branch the composite Kraus operator is $D_0=K_0$
+or $U_{0j}D_{0j}=K_{0j}$ by (CG.173). Summing these unnormalized
+branches gives exactly $\Lambda_*$. The complementary precursor and
+absorbing trace-and-prepare router compose to the CP density
+$w_\ell h_0(t)\operatorname{tr}(MA)dt\,P_f$.
+At reference amplification its reference factor is
+$\operatorname{Tr}_V[(M\otimes I_R)X]$, so the construction preserves
+the entire stipulated joint operation, not just scalar probabilities.
+The complementary five-mode branch adds precisely the second term in
+(CG.177). Completeness is (CG.173) plus the complementary support effect,
+and no branch mass is divided by its probability. These operator
+identities hold for every complex matrix unit and therefore every
+complex input, including all actual coherences. The performance statement
+reuses Theorem 16.1 on the same canonical complete outputs.
+
+Integration and inversion give (CG.178); $2-u\geq1$ throughout the
+unit interval. This specifies a measurable random variable with the
+required density. It proves neither finite-bit exact time storage nor
+that a device emits its first absorbing failure at that time. The latter
+claim depends on the additional physical timing service explicitly
+required in Definition 20.1. A time-bin approximation or a timestamp
+written after another failure would change the output contract.
+$\square$
+

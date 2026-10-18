@@ -1,0 +1,11 @@
+**开放问题 8.3（Unchanged general objective）。** The exact minimum worst-branch actual emitted-block cost for every arbitrary attainable immutable INITIAL target, for all original $k\ge2,m\ge1$, remains unresolved. This volume settles the displayed full-block threshold families at $k=Qm$, with unrestricted binary band layouts, a complete $Q+2$ multilabel boundary, injective bands of every width $m\ge3$, and independent labels at both root endpoints. It does not settle arbitrary later multilabel layouts, competing admissible INITIAL parents, general mixed-tail partitions, nonmultiple $k/m$, or the $m=2$ degeneration. The lower bound $Q+3$ in Theorem 4.1 is not an exact later fee. A general all-width law and actual optimal protocols still require source-specific composition beyond these conditions.
+
+[S1]: https://raw.githubusercontent.com/the-omega-institute/trureturing/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md
+[S2]: https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md
+[S10]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md
+[S11]: https://raw.githubusercontent.com/the-omega-institute/trureturing/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md
+[S13]: https://raw.githubusercontent.com/the-omega-institute/trureturing/6850a89acdb12d4f17af57dacee2d67e0b514be4/docs/develop/theory/KBONACCI_MULTILABEL_PREFIX_AND_TERMINAL_COST.md
+[S15]: https://raw.githubusercontent.com/the-omega-institute/trureturing/3541b57c0d31a89f11fb8b86c75b7b1555e49e6f/docs/develop/theory/KBONACCI_JOINT_RESPONSE_AND_SEAM_COST.md
+[S16]: https://raw.githubusercontent.com/the-omega-institute/trureturing/5c531690b4ee33e642757c8485297e94aba5d9a1/docs/develop/theory/KBONACCI_INITIAL_CALENDAR_CAPACITY.md
+[S17]: https://raw.githubusercontent.com/the-omega-institute/trureturing/799d8549ae4d270122eb9a2a42024fdbbbe69459/docs/develop/theory/KBONACCI_FORCED_PREFIX_PARITY_COST.md
+

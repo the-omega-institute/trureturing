@@ -1,0 +1,31 @@
+**Theorem 6.2 (one attained distribution for all lengths and competitors).**
+Let $b_d=2^{-\sigma_d}$. Then
+
+$$
+\boxed{\displaystyle b_d=\min_{\mu\in\Delta(S)}\beta(\mu).}
+\tag{NPC.26}
+$$
+
+There is a probability $\mu_d$ such that, simultaneously,
+
+$$
+\forall n\ge1\ \forall B\in\mathcal B_n,\qquad
+\sum_{x\in B}\prod_i\mu_d(x_i)\le b_d^n.
+\tag{NPC.27}
+$$
+
+Its coordinates may vanish. Moreover $1/s\le b_d\le1$.
+
+Proof. Homogeneity gives
+$\beta(cw)=c\beta(w)$. Normalize (NPC.21) to obtain
+$\sigma_d=-\log_2\inf_{\mu>0,\,\sum\mu=1}\beta(\mu)$.
+Theorem 6.1 makes $\beta$ continuous on the closed simplex.
+Its strictly positive part is dense, and compactness attains the
+same infimum on the closed simplex. By (NPC.16), every probability
+satisfies $\beta(\mu)\ge\max_x\mu(x)\ge1/s$, so taking logarithms
+is legitimate. This proves (NPC.26). By definition of $\beta$,
+$A_n(\mu_d)^{1/n}\le b_d$ for every $n$, which proves (NPC.27).
+Thus a single distribution works on every joint length and every
+native relation; it is not a separate sequence of finite-length
+dual optimizers. $\square$
+

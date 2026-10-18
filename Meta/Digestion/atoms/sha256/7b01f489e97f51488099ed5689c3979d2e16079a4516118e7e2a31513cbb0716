@@ -1,0 +1,29 @@
+**定义 3.1（公共基梳及替代来源）。** 固定整数 $k\ge2$，令 $m=k+1$。定义全 $\alpha$ 右梳
+
+$$
+R_1=\alpha,
+\qquad R_{j+1}=\langle\alpha,R_j\rangle.
+$$
+
+$R_k$ 的 $k$ 个叶地址按中序从零编号为
+
+$$
+p_i=R^iL\quad(0\le i\le k-2),
+\qquad p_{k-1}=R^{k-1}.
+$$
+
+令 $T_i$ 是在 $R_k$ 的第 $i$ 个叶出现处放入 $\langle\alpha,\alpha\rangle$ 得到的有限原生树，且
+
+$$
+\mathcal F_k=\{T_0,\ldots,T_{k-1}\},
+\qquad d_i=|p_i|.
+$$
+
+这些是备选的不可变来源，不是运行时允许对未知来源作叶展开。每个来源具有同一已取得词 $w(T_i)=\alpha^{k+1}$。公共地址深度为
+
+$$
+(d_0,\ldots,d_{k-1})=(1,2,\ldots,k-1,k-1).
+$$
+
+右梳及路径补全构造沿用 [Sparse Literal History Transport](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md) 定理37.1证明中的 $K(p,z)$。后文不将这个已知构造本身认作新增结果。
+

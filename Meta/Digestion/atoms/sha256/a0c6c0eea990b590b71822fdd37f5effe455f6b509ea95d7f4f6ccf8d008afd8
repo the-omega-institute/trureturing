@@ -1,0 +1,48 @@
+**Proposition 7.5 (conditional exact source formulas and fixed-prefix decision).**
+Under Assumption 7.3 one can construct a finite ambient formula
+$\mathsf{Adm}(X)$ whose solutions are exactly $B[D]$. For every supplied
+$h\ge0$ one can then decide exactly
+
+$$
+\begin{aligned}
+\forall X,Y\quad
+ [\mathsf{Adm}(X)\land\mathsf{Adm}(Y)\land
+       \bigwedge_{|p|\le h}\lambda(\nu_p(X))=\lambda(\nu_p(Y))]
+ \Longrightarrow\operatorname{Same}_Q(X,Y).
+\end{aligned}
+\tag{ABC.7.4}
+$$
+
+A true decision with this supplied $h$ gives a permitted static full-row
+service by the inherited ARH existence bridge. Searching $h=0,1,\ldots$
+under the assumption semidecides positive bounded recovery. It does not
+supply a stopping rule when every test is false.
+
+Proof. For every cell in §5 quantify a code variable for each of its
+shared frontier variables and conjoin $\mathsf{Normal}$ for each.
+Conjoin the formulas of Theorem 7.2 for its complete guarded constraints
+and $X=W_\eta^\#(\mathbf X)$. Take the finite disjunction over cells,
+and conjoin $\mathsf{Normal}(X)$. The two directions of Theorem 5.2 give
+exactly $B[D]$. No empty-cell decision or independent optimization is
+needed to form the disjunction.
+
+There are $2^{h+1}-1$ words with length at most $h$. Equality of two
+literal replies is the finite disjunction over their four labels. Expand
+these finitely many predicates and $\operatorname{Same}_Q$ by Theorem
+7.2. With (ABC.7.3), this is a sentence of the cited language; Kuncak–Rinard
+Corollary 57 decides it. Theorems 3.2, 4.2 and 5.2 make it exactly
+$\operatorname{PrefDet}(D,Q,h)$ of [ARH, Definition 2.2][ARH].
+
+For a true test use [ARH, (2.3) and its proof][ARH]: at the actual epoch
+$N$, its supplied historical literal decoder acquires the indicated
+original prefix with at most $2(2^{h+1}-1)$ actual new reads. Enumerate
+concrete finite candidate sources until one satisfies the entire retained
+input and recovered prefix. Concrete membership is decidable and the
+actual source guarantees a witness. The prefix criterion makes the
+witness's complete row equal to the actual row. Only the actual current
+reads are receipts; hypothetical candidates supply local computations.
+This reuses the paid existence construction, with no new equality port.
+Finally a search over $h$ terminates if some test is true. Neither the
+formula decision nor this argument bounds how many false tests precede a
+true one, or detects that none will ever be true. $\square$
+

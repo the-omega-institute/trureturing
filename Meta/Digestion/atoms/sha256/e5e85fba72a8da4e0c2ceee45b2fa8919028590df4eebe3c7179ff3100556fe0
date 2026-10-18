@@ -1,0 +1,2 @@
+**Convention 2.5 (Bipartitions).** A bipartition of the parties $\{1,\dots,\mathtt q\}$ is an unordered pair $\{S,S^c\}$ of nonempty complementary sets; it is labelled by the side $S$ not containing $\mathtt q$, so the bipartitions correspond to the $2^{\mathtt q-1}-1$ nonempty subsets $S\subseteq\{1,\dots,\mathtt q-1\}$. Its weight is $p_S=\sum_{k\in S}x_k$.
+

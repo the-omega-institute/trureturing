@@ -1,0 +1,22 @@
+**定义2.1。** 对所有上述 $(h,x)$，定义
+
+$$
+\delta(h,x)=
+\begin{cases}
+\operatorname{TV}(\operatorname{res}_x Q_h,Q_{hx}),&q_h(x)>0,\\
+0,&q_h(x)=0.
+\end{cases}
+\tag{2.1}
+$$
+
+在零预测概率处不选择一个虚构条件律，也不声称条件等式；0 是“无正预测事件可条件化”的约定。实际更新仍须对该实际合法输入定义，历史及其风险仍在原域内。定义全历史缺陷和第四段缺陷为
+
+$$
+\Delta_{\rm all}=\sup_{h\in\mathcal H^+,\ x\ {
+\rm legal}}\delta(h,x),\qquad
+\Delta_4=\sup_{h\in\mathcal H_p\cup\mathcal H_\beta,\ x\in\{\alpha,\beta\}}\delta(h,x).
+\tag{2.2}
+$$
+
+显然 $0\le\Delta_4\le\Delta_{\rm all}\le1$。pending 的唯一 Stop 后继以及 delivered 的空残余也属于原完整域；它们的条件比较为零，delivered 无下一操作，取空上确界为0。这是全正历史的最坏缺陷，不是平均、有限样本或长度截断。
+

@@ -1,0 +1,12 @@
+**定义 7.1（preclosure archive, distinct from later access）。** The original three Reads may additionally capture a separately paid immutable archive of those same values in the same frame and historical versions. Before acquisition closure it accepts finite precision requests. At $b\ge1$, a canonical reply consists of mode $11001001$, gamma$(b)$ and exactly nine signed-numerator fields, then end-of-frame, with $|n_{ik}|\le2^{b+1}$. It represents $y_i=n_i2^{-b}$ and promises, simultaneously,
+
+$$
+\|y_i-x_i\|\le2^{-b},\qquad \|x_i\|\le1,\qquad i=0,1,2.
+$$
+
+The encoder's accuracy input is a finite gamma-coded $K\ge1$ with the promise $2^{-K}\le E$. Its actual input and storage are charged. Selection of the least such $K$ in the source-aware upper is mathematical existence; lawful initialization needs this finite accuracy input or a separately represented tolerance from which it can be computed. No comparison with an unrepresented real $E$ is an interpreter operation.
+
+The same actual history is used at every precision; errors may be arbitrarily correlated. Replies may be nonorthogonal, off the source image, and have the wrong computed orientation. The parser rejects wrong precision, truncation and trailing data, but cannot verify the semantic promise.
+
+The archive's discovery request is the fixed eight-bit token $01011010$. Its separately charged precision state begins at one and doubles after each such request. A final request is the fixed token $01011011$ followed by gamma$(b_f)$. Thus only the final arbitrary precision is explicitly transmitted. Each finite request has a finite response; supplier latency, storage, precision production, source/version binding and authenticity are paid and have no bound inferred from the number of returned bits. After final compression all name capabilities close. This contract supplies no new source Read, reset or re-preparation and is not implied by an older once-only receipt.
+

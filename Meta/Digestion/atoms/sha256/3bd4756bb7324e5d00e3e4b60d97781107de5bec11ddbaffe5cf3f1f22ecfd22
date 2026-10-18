@@ -1,0 +1,35 @@
+**Proposition 6.4 (an unbounded signed mismatch within linked rows).**
+Let $h\ge1$ and let $K_h$ be the perfect full shape of height $h$.
+Let $U_h$ label all its leaves by zero, and let $V_h$ have the same labels
+except for rank $2$ at $R^h$. Put $u_h=E(U_h)$ and $v_h=E(V_h)$.
+For every $d\ge1$, set
+
+$$
+t_{h,d}=\langle\langle u_h,\rho^d u_h\rangle,
+                    \langle v_h,\rho^d v_h\rangle\rangle.
+\tag{SFP.22}
+$$
+
+At epochs $0,d$ the cut $\{LL,LR,RL,RR\}$ has four distinct classes
+and the same full pair-of-pairs exterior. The two positive links
+$(0,LR)=(1,LL)$ and $(0,RR)=(1,RL)$ hold. The negative between the
+values at $(0,LL)$ and $(0,RL)$ has identical normal shape on its two
+sides and exactly one possible unequal leaf, at depth $h$.
+
+Proof. All primitive-cherry differences in $U_h,V_h$ lie in
+$\{-2,0,2\}$, so both codes are normal. Their ranks differ exactly at
+$R^h$. Translating preserves their normality and their nonconstant
+versus constant field distinction. At any fixed $d>0$, the four code
+fields $U_h,\tau_dU_h,V_h,\tau_dV_h$ are pairwise different:
+the first two are distinct constants; the last two are distinct
+nonconstant fields; and a constant cannot equal a nonconstant field.
+Applying $\tau_d$ gives the same conclusion at the second epoch.
+All these codes are $F$-rooted, so assembling (SFP.22) introduces no
+collapsing primitive cherry. Pair preservation proves the links.
+The last assertion follows from the unique differing label and
+normal-code injectivity. Thus any implementation that merges rank
+fields from shape equality, or bounds negative witnesses at a fixed
+code depth independent of residual shapes, fails this native family.
+This is a falsifier for those shortcuts, not an impossibility result
+for the representation in Section 2. $\square$
+

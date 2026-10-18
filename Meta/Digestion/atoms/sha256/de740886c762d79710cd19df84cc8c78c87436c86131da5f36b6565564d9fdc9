@@ -1,0 +1,30 @@
+**Definition 2.1 (finite output semantics and types).** A finite
+higher-order recursion scheme is understood in the simply typed
+$\lambda Y$ presentation used by [Badyl–Parys, §2][BP]. Its ground
+type $o$ is the output-tree type. Use finitely many ranked terminals,
+including nullary $\alpha,\beta$, binary $\mathsf p$, binary
+$\mathsf{nd}$, and unary $\mathsf{tick}$. Other terminals encode a
+fixed finite payload layout, always with arity at most two.
+
+For the possibly infinite generated tree $T_{\mathcal G}$, let
+$\mathcal L(\mathcal G)$ consist of the finite trees obtained by
+finitely many operations replacing an $\mathsf{nd}$ node by one of
+its children, with no $\mathsf{nd}$ or $\mathsf{nd}_{\bot}$ left.
+This is precisely [Badyl–Parys, §4][BP] finite-language semantics.
+An infinite unfinished choice is not a finite output. Ordinary nodes
+cannot be discarded by this operation.
+
+The order convention is
+$\operatorname{ord}(o)=0$ and
+$\operatorname{ord}(\sigma\to\tau)
+=\max(\operatorname{ord}(\sigma)+1,\operatorname{ord}(\tau))$.
+Define
+
+$$
+V=o\to o\to o,\qquad
+K_m=\underbrace{V\to\cdots\to V}_{m\text{ arguments}}\to o,
+\qquad D_m=K_m\to o.
+$$
+
+Their orders are respectively $1,2,3$.
+

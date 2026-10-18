@@ -1,0 +1,17 @@
+### 92.1. Statement and exact parameter field
+
+Use the original input convention and actual family of §§75,
+87–91. Let
+
+\[
+\begin{aligned}
+L(b)={}&2556b^{32}-71245b^{30}+763943b^{28}-4277291b^{26}
++14167798b^{24}-18831888b^{22}-32607612b^{20}\\
+&+183118968b^{18}-105937551b^{16}-660151053b^{14}
++1236698199b^{12}-1481126067b^{10}+1141299072b^8\\
+&-17045478b^6-207970578b^4-33657930b^2-1594323.
+\end{aligned}
+\]
+
+The decic \(F(b,k)\) in §88 has leading coefficient \(3L(b)\).
+

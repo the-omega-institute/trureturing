@@ -1,0 +1,29 @@
+**Lemma 11.2 (Height-fiber criterion for the original guards).** For
+any encoder on the present source, recovering every straight
+probability guard requires height to be constant on encoder
+fibers. Conversely, if height is constant on fibers, every
+straight and every prescribed-path full guard is recoverable.
+
+Proof. If rays at $k_1<k_2$ have equal encodings, use the
+original signed displacement
+
+$$
+a=H-(k_1+k_2)/2.
+$$
+
+Then $k_1+a=H-(k_2-k_1)/2$ is strictly between zero and $H$,
+whereas $k_2+a=H+(k_2-k_1)/2>H$. Equal encodings would need
+different answers to this one straight guard. Thus its domain
+is not saturated.
+
+Conversely, constancy defines a well-defined height function
+$\kappa$ on the actual image. The inverse images of
+$0<\kappa+a<H$ are exactly the original straight probability
+domains, and phase domains are full. For a prescribed path use
+$0<\kappa+\eta(u)<H$ at every time. Proposition 8.3 identifies
+its inverse image with precisely the all-times source domain.
+Only these guard subsets are being asserted here; an arbitrary
+encoder's affine path updates do not follow from height recovery
+alone. For the spectral realizations those updates have already
+been constructed. $\square$
+

@@ -1,0 +1,44 @@
+**Definition 1.1 (actual sources, literals and requests).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle x,y\rangle)=1+\max\{h(x),h(y)\}.
+$$
+
+Pairing is ordered. For every finite word $w$ in $L,R$, including
+$\varepsilon$, the literal reply $r_t(w)$ is alpha or beta at a leaf,
+branch at a pair, and absent beyond a leaf. Every such word is legal.
+Define the homomorphism
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{D3.1}
+$$
+
+For each public integer $D\ge1$, use exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},
+\qquad W_D=\{q:|q|\le D-1\},
+\qquad\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{D3.2}
+$$
+
+One actual initial source remains stationary throughout acquisition;
+$\rho^kt$ is a prediction target. There is no subtree, equality,
+source-identity, age, reset, copying, navigation or free-advice port.
+Child notation denotes a mathematical component, never an additional
+operational input. These are the source and task of
+[LTR, Definitions 1.2–1.4](RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_ONE_READ_MEMORY.md).
+In
+[`GenealogicalFiberTransport`](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+`Source` is `FreeMagma Bool`, true labels alpha, false labels beta,
+and `substitution` is (D3.1). In
+[`ActualTreeReadoutAcquisition`](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+`Address` is `List Bool`, false means $L$, true means $R$, and
+`Reply` and `readout` give precisely these four replies on every finite
+word. Its separate recognition objective is not the prediction task.
+

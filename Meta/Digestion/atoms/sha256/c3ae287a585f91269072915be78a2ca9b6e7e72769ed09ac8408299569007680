@@ -1,0 +1,14 @@
+**来源与复用。** 下表将普通证明使用的前置和新增部分分开，不把阅读既有 Lean 源码说成重新编译，也不将已有通用证明包装为新数学结果。
+
+| 供给 | 本批消费的准确内容 | 新增部分及运输边界 |
+| --- | --- | --- |
+| 原子关系生成卷定理3.2；本卷36.2–36.3 | 同一个 $\rho$、像语法、Fibonacci 树递推、有限唯一逆链 | 三个五叶同词原始竞争者及其完整地址支持；不赋予未知源改写或祖先 oracle |
+| `ActualImageAddressCertificate` 的 `AlphaCovered`、私有 `structural`、`result` 内局部 `upper`；53.2的（JM.161） | 第二像每个分支有 $\alpha$ 后代；全部 $\alpha$ 地址匹配加同组成强制原树相等 | 全词域下界改用保完整词的块竞争者，未使用换标签组成见证；上界完全复用 |
+| `ActualLeafHistoryRigidity.actual_address_geometry`；52.2 | 原始四值地址语义、原像局部禁形、三叶支持及反链 | 五叶三个支持没有共同命中点；加权叶块给准确 $F_{n-1}$ |
+| `ActualFiniteObserverAbsentElimination` 的 `queryReply_eq_readout`、`actualPrefix_semantics`、`run_from_actualPrefix`、`run_deterministic`；`ActualObserverBoundedLowerBounds` 私有 `run_replay` | 精确缓存命中、完整首次出现记录、同初态实际重放和停止吸收 | 逐块剩余见证数 $L_n$、尖锐前缀类、$m_0=0$ 的无界新增取得；不另认领一般重放定理 |
+| `ActualPureAcquisitionCompiler` 的 `pure_acquisition_run`、`pure_actual_prefix_cache`、`pure_all_history_factorization`、`pure_admissible`；`ActualObserverFiniteChecks.sourceCheck_iff` | 原叶数域上的有限取得、实际前缀缓存、全部四值名义提升与全历史控制检查 | 参考树快速证书分支及不删旧缓存的续接；本节有限地址窗是普通有限实现，不声称给出新的编译结果或调用过现有机器检查 |
+| 第53章引用的 Buhrman–de Wolf §4.1–4.2；第51章引用的 Loday §1、§2.8 | 证书／支持命中方法、有序保叶序括号比较 | 实际树见证、原始性、两个读口的全支持及取得合同由56–59章另证；文献的 Boolean 坐标或旋转关系不供应原生操作权限 |
+| [Future Response Sufficiency](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) §§34–37；[祖先立方体卷](AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md) §§3、7–10 | 原未来律／活计数恢复的任务边界；旧三叶缺陷子族及实际取得余额 | 此处是不可变有序树、完整固定词许诺和原地址缓存；不运输随机解析器、物理时间或只在缺陷子族上的最优性 |
+
+本批的文献表态为 `repo-derived`：新内容是这些已声明来源上的保词五叶见证、准确全词证书、真实前缀余额与读口分离。没有全球新颖性或文献优先性主张；经典命中方法、已有上界和一般取得／重放均保留原归属。
+

@@ -1,0 +1,49 @@
+**Definition 4.2 (literal and positive installation).** For each atomic
+role $A_j$ retain the literal $(0,p_{A_j},\mathsf{branch})$ and the
+positive record
+
+$$
+(1,p_{A_j}L,\ 0,p_{A_j},\ =).
+\tag{URR.14}
+$$
+
+For a payload $E_t$, traverse its finite template syntax at the original
+representative $p_{V_t}$. At every explicit pair position $q$, retain the
+literal $(0,p_{V_t}q,\mathsf{branch})$. At a ground token $g$, retain
+the exact finite constructor/leaf description of $g$ at that position:
+read every node of $g$, with its branch, $\alpha$ or $\beta$ reply.
+At a token $\rho^a(z_i)$ retain the positive link
+
+$$
+(0,p_{V_t}q,\ a,p_{Z_i},\ =),
+\tag{URR.15}
+$$
+
+and at a token $T_{n_j+c}$ retain
+
+$$
+(0,p_{V_t}q,\ c,p_{A_j}R,\ =).
+\tag{URR.16}
+$$
+
+All are actual history coordinates on the same original source. Template
+tokens are merely the public rule for choosing those finite coordinates;
+they are not semantic replies. The endpoint predicates include reach
+on both sides of every link. If a token is at the payload root, $q$ is
+empty. Copies of a role have the same entire value by the old partition,
+so installing at the representative also fixes every copy.
+
+Introduce the mathematical reconstruction
+
+$$
+\begin{aligned}
+F_{A_j}(\mathbf n,\mathbf z)&=\langle T_{n_j+1},T_{n_j}\rangle=T_{n_j+2},\\
+F_{Z_i}(\mathbf n,\mathbf z)&=z_i,\\
+F_{V_t}(\mathbf n,\mathbf z)&=E_t(\mathbf n,\mathbf z),\\
+\Theta(\mathbf n,\mathbf z)&=C[(F_H(\mathbf n,\mathbf z))_{H\in\mathcal H}].
+\end{aligned}
+\tag{URR.17}
+$$
+
+Every occurrence of one role in $C$ uses that same $F_H$.
+

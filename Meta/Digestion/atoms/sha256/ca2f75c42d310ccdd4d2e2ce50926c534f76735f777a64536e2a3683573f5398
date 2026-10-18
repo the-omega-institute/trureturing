@@ -1,0 +1,46 @@
+**Theorem 7.1 (affine response comparison).** For every fixed $t\in\mathbb R$, the normalized native trial obtained from
+$f_s^t=\eta_{R_s}(1+t\beta_sr)p$, $R_s=s^{-1/2}$, has coefficient
+
+$$
+C_{\rm aff}(t)=\nu^2\{a t^2-(4aA+2\chi B_1)t+3aA-\chi C_2\}
+                       -\lambda(a+\chi T).
+\tag{7.1}
+$$
+
+At $t=1$ this is exactly the entire coefficient in source (108.3):
+
+$$
+C_{108}=\nu^2\{a(1-A)-\chi(C_2+2B_1)\}-\lambda(a+\chi T).
+\tag{7.2}
+$$
+
+With $t_0=2A+(\chi/a)B_1$,
+
+$$
+\begin{gathered}
+\min_{t\in\mathbb R}C_{\rm aff}(t)=C_{108}-a\nu^2(t_0-1)^2,\qquad
+D_{\rm resp}\ge a t_0^2,\\
+C_{\rm resp}\le\min_t C_{\rm aff}(t)\le C_{108},\qquad
+C_{108}-C_{\rm resp}=\nu^2h[\Psi-rp]\ge0.
+\end{gathered}
+\tag{7.3}
+$$
+
+Proof. The cutoff strip is native admissible, $sR_s\to0$, and $rp\in L^2$ gives $\|f_s^t\|_2\to1$. The product identity and parity give
+
+$$
+h[f_s^t]
+ =a\int|\eta_{R_s}'|^2p^2
+  +a t^2\beta_s^2\int|\eta_{R_s}+r\eta_{R_s}'|^2p^2
+ =a t^2\beta_s^2+o(s^2).
+\tag{7.4}
+$$
+
+The term linear in $t\beta_s$ is odd. The second multiplier is bounded and tends pointwise to one. Rational expansion of
+$((1+\beta_sr)^{-2}-1)(1+t\beta_sr)^2$ gives the even quadratic coefficient $(3-4t)\beta_s^2r^2$. Its cubic remainder is bounded, on the support, by $C_t|\beta_s|^3R_s r^2$, and its linear term is odd. Thus the kinetic difference from $b$ is $a(3-4t)\beta_s^2A+o(s^2)$.
+
+For the complete potential, the $V_1$ term contributes $2t\beta_s^2B_1$; its base and cubic terms are odd. The $V_2$ term contributes $\beta_s^2C_2$, its linear cross term is odd, and its quadratic amplitude correction is $O(s^4)\int r^2p^2$. The clock field similarly contributes $\lambda s^2T$, with vanishing odd cross term and an $O(s^4)$ weighted correction. The uniform remainder costs $O(s^{5/2})\|f_s^t\|_2^2$. Retain $-a\lambda s^2\|f_s^t\|_2^2$ and normalize. This proves (7.1), including all rational kinetic, $V_2+2rV_1$, raw-source and clock terms.
+
+The minimum of the scalar quadratic occurs at $t_0$. Moreover $h[rp]=a$ and $\ell(rp)=2aA+\chi B_1=a t_0$, so the Riesz supremum gives $D_{\rm resp}\ge a t_0^2$. The exact square identity
+$h[\Psi-rp]=D_{\rm resp}+a-2\ell(rp)$ proves the final equality and all comparisons in (7.3). Neither comparison evaluates a sign. $\square$
+

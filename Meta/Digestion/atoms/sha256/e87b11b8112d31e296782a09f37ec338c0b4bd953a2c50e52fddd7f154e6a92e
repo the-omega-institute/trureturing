@@ -1,0 +1,15 @@
+## 7. References
+
+- **ST:** [Randomized stopped-tail minimax](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md), Sections 1–3.
+- **CLIP:** [Risk-controlled emission moment feasibility](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RISK_CONTROLLED_EMISSION_MOMENT_FEASIBILITY.md), Sections 1–3.
+- **PH:** [Phase-coherent full-tail minimax](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md), Sections 14–20.
+- **PAID:** [Effective paid-history certificates](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md), Sections 2, 5, 9–15.
+- **INTERIOR:** [Suspended-emission interiority](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_INTERIORITY.md).
+- **ALPHA:** [Acquired-alpha calibration compatibility](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/AURIC_FIB_ATOM_ACQUIRED_ALPHA_CALIBRATION_COMPATIBILITY.md).
+- **DIRECTION:** [Directional alpha calibration](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/AURIC_FIB_ATOM_DIRECTIONAL_ALPHA_CALIBRATION.md).
+- **MOTION:** [Actual-return forecast motion](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_RETURN_FORECAST_MOTION.md).
+- **JM:** [Joint moment fibres](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md), Sections 61–64.
+- **HIST:** [Historical survivor transport and rational search](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/Blueprint/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.md), with its [formal source](https://github.com/the-omega-institute/trureturing/blob/eefbcdeb4026909f0fcdfa7ad7f4bcdb402c3441/D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/EffectiveRationalTransportTail.lean).
+- **MW:** Alex Monràs and Andreas Winter, *Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, [arXiv:1412.3634v1](https://arxiv.org/html/1412.3634v1), Section 2.
+- **CK:** Taolue Chen and Stefan Kiefer, *On the Total Variation Distance of Labelled Markov Chains*, [arXiv:1405.2852v1](https://arxiv.org/html/1405.2852v1), DOI [10.1145/2603088.2603099](https://doi.org/10.1145/2603088.2603099).
+

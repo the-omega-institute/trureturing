@@ -1,0 +1,25 @@
+### 108.3. Exact original orders and the actual Selmer input
+
+The identity 5F_243^2=B_243+1 gives (5/p)=1 for each certified p|B_243. The Fibonacci recurrence modulo each p gives F_1458=0 and F_1459=1. Its following two residues are nonzero:
+
+| p | F_486 modulo p | F_729 modulo p |
+|---|---|---|
+| p0 | 883 | 425 |
+| p1 | 2904 | 46850 |
+| p2 | 119531222675559162 | 51394769882147228846 |
+| p3 | 56877369221439794888688788101320967243013036213729766600109733973139287127 | 64642456533364216165903082069994000232476292686056395579268240592639061137 |
+
+To see that these finite residues establish minimality, let alpha,beta be the distinct roots of X^2-X-1 in F_p; they exist because (5/p)=1 and p>5. Both roots are nonzero and
+
+ F_k=(alpha^k-beta^k)/(alpha-beta).
+
+Hence F_k=0 precisely when (alpha/beta)^k=1. Its least positive zero therefore divides any zero index. Since 1458=2*3^6, any proper divisor of 1458 divides either 729 or 486. The table and F_1458=0 thus prove rho(p)=1458.
+
+For M=[[1,1],[1,0]], the identity M^k=[[F_(k+1),F_k],[F_k,F_(k-1)]] and (F_1458,F_1459)=(0,1) show M^1458=I. A smaller matrix order would give a smaller positive Fibonacci zero. Thus tau_p=1458, and M^2 has order 1458/gcd(1458,2)=729. The squared eigenvalues alpha^2,beta^2 are reciprocal because alpha beta=-1, so each squared golden root has that same order 729.
+
+Euler's criterion at these certified primes gives the matrix A in Proposition 108.1. Its equations imply successively x2=x0, x3=x0, and x1=x0; hence ker A=<1111>. It is symmetric, so its left kernel is the same. The sign and dyadic vectors are
+
+ delta=(1,0,0,0),  t=(1,0,1,1).
+
+The only kernel vector vanishing in the p0-coordinate is zero; hence U4=U0=U24={0}. Thus dim ker A=r+1=1, and the already established local formulas give dim Sel_2=1+dim ker A+dim ker A^T=3 and dim Sel_2/E[2]=2r+1=1.
+

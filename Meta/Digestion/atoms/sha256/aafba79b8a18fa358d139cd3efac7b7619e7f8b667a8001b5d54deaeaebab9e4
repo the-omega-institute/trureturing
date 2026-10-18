@@ -1,0 +1,46 @@
+### 命题 446.1（平方库存的指数二择一）
+
+令 $U=F_m>0$ 满足命题 445.1 的严格库存律。则
+
+$$
+ \boxed{P_t\mid m.}
+ \tag{446.1}
+$$
+
+从而有精确的对数账本
+
+$$
+ \boxed{
+ \log m\ge
+ \sum_{q\in\mathcal I_t\setminus\mathcal W_t}\log q
+ =\theta(\sqrt B)-\theta(\sqrt t)
+  -\sum_{q\in\mathcal W_t}\log q .
+ }
+ \tag{446.2}
+$$
+
+这里 $\theta(x)=\sum_{q\le x}\log q$；端点可取任一与
+$t<q^2\le B$ 一致的整数约定。
+
+**证明。** 对 $q\in\mathcal I_t$，取 $k=2$ 应用严格库存，得到
+
+$$
+ q^2\mid U=F_m.
+$$
+
+特别地 $q\mid F_m$，由 Fibonacci 入口判据得 $z(q)\mid m$。已有的
+Fibonacci 赋值提升公式给出
+
+$$
+ v_q(F_m)=e_q+v_q\!\left(m/z(q)\right)
+ \qquad(z(q)\mid m).
+$$
+
+又有秩界 $z(q)\mid q-(5/q)$ 或 $z(q)\mid q+(5/q)$，故
+$q\nmid z(q)$。若 $q\notin\mathcal W_t$，则 $e_q=1$；而
+$q^2\mid F_m$ 要求右端至少为 $2$，于是
+$q\mid m/z(q)$，进而 $q\mid m$。不同 $q$ 互异，故其乘积 $P_t\mid m$。
+
+最后，$\mathcal I_t$ 正好是素数区间
+$(\sqrt t,\sqrt B]$，对数求和给出（446.2）。$\square$
+

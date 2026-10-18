@@ -1,0 +1,103 @@
+**Definition 74.2 (the two interaction models and Dirichlet exclusion).**
+In the soft scattering model let $h_\varepsilon\ge0$ satisfy
+$h_\varepsilon=o(\varepsilon)$. Let
+$v_\varepsilon:\mathbb R^s\to[0,\infty)$ be radial, measurable,
+supported in $\{|r|\le h_\varepsilon\}$ and bounded for each individual
+$\varepsilon$; its bound may grow without restriction. Let
+$W_\varepsilon(x,y)$ be real, exchange symmetric and
+$\|W_\varepsilon\|_\infty\le M$. The physical operator
+$\mathsf H_\varepsilon$ is represented by exactly
+
+$$
+q_\varepsilon[U]=q_{0,\varepsilon}[U]
+ +\int_{\Omega^2}(v_\varepsilon(x-y)+W_\varepsilon(x,y))|U|^2,
+ \qquad U\in\mathcal Q_{\rm mix,\varepsilon}.
+\tag{74.4}
+$$
+
+There is no additional form restriction. For the separate support-range
+model take any $R_\varepsilon\to0$ and any nonnegative measurable
+exchange-symmetric $V_\varepsilon(x,y)$ supported in
+$|x-y|\le R_\varepsilon$. Its form is (74.4) with $v_\varepsilon(x-y)$
+replaced by $V_\varepsilon$, on the natural sum domain
+
+$$
+\mathcal Q_{V,\varepsilon}
+ =\left\{U\in\mathcal Q_{\rm mix,\varepsilon}:
+                    \int V_\varepsilon|U|^2<\infty\right\}.
+\tag{74.5}
+$$
+
+The stipulated model requires this natural sum form to be densely
+defined on $\mathcal P_\varepsilon$. Its closedness follows by taking
+limits in both the mixed $H^1$ form norm and the closed multiplication
+norm $\|\sqrt{V_\varepsilon}U\|_2$. No other form restriction is
+permitted. In particular there is no radiality, height bound or
+$R_\varepsilon=o(\varepsilon)$ hypothesis in this model. Dense definition
+is a stated domain requirement, not an inference from measurability
+alone. Bounded $W_\varepsilon$ leaves both form domains unchanged.
+Both represented operators are self-adjoint and bounded below by $-M$.
+For either soft model define the discrepancy
+
+$$
+\Delta_{\varepsilon,C}
+ =\| (\mathsf H_\varepsilon-i)^{-1}-K_{\varepsilon,C}\|
+                      _{\mathcal B(\mathcal P_\varepsilon)}.
+\tag{74.6}
+$$
+
+An ideal hard ball of radius $r>0$ has a different Hilbert carrier. Put
+
+$$
+\begin{aligned}
+ G_{\varepsilon,r}&=\{(x,y)\in\Omega^2:|x-y|>r\},
+ &\mathcal P_{\varepsilon,r}&=L^2_{\rm sym}(G_{\varepsilon,r}),\\
+ \iota_r&:\mathcal P_{\varepsilon,r}\longrightarrow\mathcal P_\varepsilon,
+ &\iota_r U&=\text{zero extension},\\
+ \mathcal Q_{\varepsilon,r}^{\rm D}
+ &=\{U\in\mathcal P_{\varepsilon,r}:
+                     \iota_rU\in\mathcal Q_{\rm mix,\varepsilon}\}.
+\end{aligned}
+\tag{74.7}
+$$
+
+The hard-ball form is $q_{0,\varepsilon}[\iota_rU]
++\int_{G_{\varepsilon,r}}W_\varepsilon|U|^2$ on this domain.
+This is the declared Dirichlet exclusion: the zero extension is $H^1$
+across the inner wall, so its inner trace is zero wherever that wall has
+a trace chart. The original exterior walls retain the mixed-ground form.
+The domain is closed, since its zero extensions form the closed subspace
+$\{U\in\mathcal Q_{\rm mix,\varepsilon}:U=0\text{ a.e. on }|x-y|\le r\}$.
+It is dense in the allowed carrier: smooth functions compactly supported
+in the open set $G_{\varepsilon,r}$ are $L^2$-dense, their zero extensions
+belong to the domain, and exchange averaging proves the symmetric
+assertion. This specifies a closed Dirichlet form without assuming an
+identification with another boundary-core closure. Denote its
+self-adjoint operator by $\mathsf H_{\varepsilon,r}^{\rm D}\ge-M$.
+The two hard-ball discrepancies are
+
+$$
+\begin{aligned}
+ \Delta^0_{\varepsilon,C}(r)
+ &=\|\iota_r(\mathsf H_{\varepsilon,r}^{\rm D}-i)^{-1}\iota_r^*
+                                 -K_{\varepsilon,C}\|_{\mathcal B(\mathcal P_\varepsilon)},\\
+ \Delta^{\rm a}_{\varepsilon,C}(r)
+ &=\|(\mathsf H_{\varepsilon,r}^{\rm D}-i)^{-1}
+                    -\iota_r^*K_{\varepsilon,C}\iota_r\|
+                                  _{\mathcal B(\mathcal P_{\varepsilon,r})}.
+\end{aligned}
+\tag{74.8}
+$$
+
+The first physical term is a zero-extended resolvent, not the resolvent
+of a densely defined self-adjoint operator on the full product.
+The allowed-carrier comparator is exactly the compression in (74.8).
+Although $\iota_r$ is an isometry, the restricted target lift
+$\iota_r^*J_{\varepsilon,2}E$ is only a contraction and is not assumed
+isometric.
+
+Zero support radius means a zero multiplier almost everywhere. At zero
+radius use the correlation $\chi=1$ and strength $S=0$; the hard model
+has Chapter73's zero-radius carrier and mixed form. The assertions below
+include these cases with zero overlap loss and zero range quotient.
+

@@ -1,0 +1,17 @@
+**Definition 36.1 (the crossblock family and two different centers).** Retain Definition 1.1, the actual encoder (R.38), the root convention, and the unrestricted complex recovery and finite-reference domains. Write
+
+$$
+A_z:=\begin{pmatrix}a&\sqrt{a\beta}\,z\\
+\sqrt{a\beta}\,\bar z&\beta\end{pmatrix},\qquad |z|\leq\tfrac12 .
+\tag{R.170}
+$$
+
+The coordinate $z$ is the input coherence $\rho_{12}$, so the off-diagonal output radius is $\sqrt{a\beta}/2$. The complete marginal image of (R.38) is exactly $\{A_z:|z|\leq1/2\}$. Let
+
+$$
+F_{\rm marg}:=\max_{\omega\in\mathsf D(\mathbb C^2)}\min_{|z|\leq1/2}f(A_z,\omega).
+\tag{R.171}
+$$
+
+This has one common environment center before the input minimum. It is a marginal quantity and is not the full-reference value $g_N$ in (R.27).
+

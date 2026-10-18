@@ -1,0 +1,57 @@
+**Theorem 14.2 (Common-law boundary-vacancy stability).**
+There is an actual anchor pair $u\in L_0,v\in R_0$ such
+that
+
+$$
+W_{u,v}\le\frac{2\Delta_2(\chi)}{B_{00}}.
+\tag{14.4}
+$$
+
+Consequently,
+
+$$
+S(\psi_\chi)-S(\psi_+)
+\ge\Delta_2(\chi)
+\ge\frac{B_{00}}2\delta_{\mathrm{local}}(\chi).
+\tag{14.5}
+$$
+
+Proof. Keep in (11.5) only ordered rectangles whose second
+left and right corners satisfy $\ell'=u\in L_0$ and
+$r'=v\in R_0$. For every legal $(\ell,r)$ all four
+corners are legal, and product activity weights give
+
+$$
+a_{\ell r}a_{ur}a_{uv}a_{\ell v}
+=p(\ell,r)p(u,v).
+\tag{14.6}
+$$
+
+Unlike the four-orientation vacuum estimate, this selection
+keeps exactly one ordered-position condition. It is a subset
+of the full nonnegative rectangle sum, even when other
+corners are themselves boundary-vacant. Therefore
+
+$$
+\Delta_2(\chi)
+\ge\frac12\sum_{u\in L_0,v\in R_0}p(u,v)W_{u,v}.
+\tag{14.7}
+$$
+
+These anchor weights sum to $B_{00}$. The minimum of the
+finite nonempty family $W_{u,v}$ is no larger than its
+weighted average. Hence some actual pair satisfies (14.4).
+Its phases in (14.2) give
+$W_{u,v}=\|\psi_\chi-(D_{a_{u,v}}\otimes D_{b_{u,v}})
+\psi_+\|^2$, by the same coefficientwise calculation as
+(11.4). The infimum in (14.3) is at most this distance.
+Rearranging (14.4) and applying Theorem 11.2 proves (14.5).
+$\square$
+
+The anchor probabilities, phase increments and reduced
+purity belong to the same actual state family and law.
+No independently attainable local optimum is treated as
+jointly attainable, and no anchor phase is inferred from
+occupation data. The existence of a good anchor does not
+supply a measurement procedure for finding it.
+

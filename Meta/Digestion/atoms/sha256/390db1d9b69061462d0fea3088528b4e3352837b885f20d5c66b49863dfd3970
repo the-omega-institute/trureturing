@@ -1,0 +1,69 @@
+**Definition 23.2 (height coefficients and the closed reversal region).**
+Keep the source-to-matrix dictionary (FC.55)–(FC.58), writing
+$d_{\rm src}=d_s=d$ and $b_{\rm src}=b_s=b$ for source amplitudes.
+Thus $d_*$ is the scalar failure coefficient, distinct from both
+$d_{\rm src}$ and the dual gap $d(x)$. Put
+
+$$
+\begin{gathered}
+A_\ell=\delta N_{00}+N_{11}/\alpha,\qquad
+B_\ell=\delta N_{00}+N_{22}/\beta,\qquad
+\gamma_\ell=B_\ell-A_\ell,\qquad
+a_\ell=-N_{12}/\sqrt{\alpha\beta},\\
+\ell(u,v)=A_\ell u^2-2a_\ell uv+B_\ell v^2+l_u u+l_v v,\\
+l_u=2\sqrt{\delta/\alpha}\,N_{01},\qquad
+l_v=2\sqrt{\delta/\beta}\,N_{02},\\
+e=-\frac{b_{\rm src}d_{\rm src}\Delta_{12}}
+           {h_1h_2\sqrt{\alpha\beta}},\qquad
+d_*=\frac{11d_{\rm src}^2}{64\beta h_2^2},\qquad
+f(u,v)=2euv-d_*v^2,\\
+\eta_0(u,v)=\ell(u,v),\qquad
+\eta_1(u,v)=\ell(u,v)+t\mathfrak c(u,v)f(u,v).
+\end{gathered}
+\tag{FC.81}
+$$
+
+The quantities $N,\Delta,\mathfrak c,V,W,\mu,t_0$ are exactly those
+in (FC.55)–(FC.58) and (FC.2); in particular
+$\Delta=\rho_{27,+,+}-\rho_{5,+,+}$, with the sign as written.
+For clarity the capacity evaluated on this circle is
+
+$$
+\mathfrak c=\frac{N_c}{D_c},\quad
+D_c=h_0^2\delta+\frac{b_{\rm src}^2}{\alpha}u^2
+                       +\frac{d_{\rm src}^2}{\beta}v^2,\quad
+N_c=h_1^2h_2^2\delta+\frac{a^2h_2^2}{\alpha}u^2
+                       +\frac{c_{\rm src}^2h_1^2}{\beta}v^2.
+\tag{FC.82}
+$$
+
+Define one homogeneous quadratic and two circle subsets:
+
+$$
+\begin{gathered}
+\Psi(u,v)=(v+u/10)(v-4u)
+       =v^2-\frac{39}{10}uv-\frac25u^2,\\
+T=\{(u,v)\in S^1:\Psi(u,v)\ge0\},\qquad
+T^+=\{(u,v)\in S^1:\Psi(u,v)>0\}.
+\end{gathered}
+\tag{FC.83}
+$$
+
+When integrated over $X$, these symbols denote the inverse images under
+$(u,v,\xi)\mapsto(u,v)$. For $u\ne0$ and $z=v/u$,
+$T$ is exactly the two slope rays $z\le-1/10$ and $z\ge4$;
+$T^+$ uses strict inequalities. Both points $(0,1),(0,-1)$ belong
+to $T^+$, with $\Psi=1$. The four slope-boundary points at
+$z=-1/10,4$ belong to $T\setminus T^+$. The horizontal points
+$(1,0),(-1,0)$ have $\Psi=-2/5$ and are outside $T$.
+Although $\Psi(-u,-v)=\Psi(u,v)$, antipodes are distinct directed
+labels and the odd terms in $\ell$ change sign there.
+
+The purpose of this region is a joint conditional application:
+its endpoint heights have uniformly opposite strict signs, its
+quadratic has positive integral against the same law's failure
+intensity, and its moment coefficients give an exact separating vector.
+The non-PSD conclusion of Theorem 21.1 is already available; the new
+application concerns the mass and actual directions that every optimum
+must occupy, and the complete group families thereby excluded.
+

@@ -1,0 +1,56 @@
+**Definition 6.1 (the exact logic and its finite types).** Use the full
+WMSO+$\mathsf U_{\mathrm{tup}}$ of [Badyl–Parys, §3][BP] on
+possibly infinite binary labeled trees. Its set variables range over
+finite node sets. Its atomic predicates are label tests on sets,
+subset, and left/right child relations on singletons. It allows
+conjunction, negation, finite-set existential quantification and
+arbitrarily nested tuple unbounding:
+
+$$
+T,\nu\models\mathsf U(X_1,\ldots,X_k).\psi
+\iff
+\forall n\in\mathbb N\ \exists X_1,\ldots,X_k\text{ finite}
+\quad
+\bigl(\forall i\ |X_i|\ge n\bigr)\land
+T,\nu[\mathbf X\mapsto\mathbf X]\models\psi.
+$$
+
+Here $k$ is fixed by the formula; the notation allows $k=0$ as in
+that syntax. There is one jointly satisfying tuple for each $n$.
+First-order variables are shorthand for singleton finite sets.
+There are no unrestricted infinite-set or infinite-path quantifiers
+and no atomic whole-subtree equality.
+
+The same §3 assigns a finite set $\operatorname{Typ}_\phi$ to
+every formula, a truth function on these types, and a compositional
+function determining the parent type from its label, free-variable
+memberships at the root, and two child types. These are Facts 3–4
+and Proposition 5, used here as literature premises, including
+their full tuple-unbounding case.
+
+In that case, if $\phi=\mathsf U(X_1,\ldots,X_k).\psi$, its type
+has one component for each $A\subseteq\{1,\ldots,k\}$:
+
+$$
+\left\{\tau\in\operatorname{Typ}_\psi:
+\forall n\ \exists\mathbf X\text{ finite}\quad
+\llbracket T\rrbracket_\psi^{\nu[\mathbf X\mapsto\mathbf X]}=\tau
+\ \land\ \forall i\in A\ |X_i|\ge n\right\}.
+$$
+
+Thus potential types lie in the finite set
+$\mathcal P(\operatorname{Typ}_\psi)^{2^k}$. Their parent
+composition takes unions of the growing index sets contributed
+by the two children, with a fixed root-membership pattern. For
+necessity, along unbounded witnesses pass to an infinite subsequence
+with fixed root bits, child types and, for each required coordinate,
+the child containing the larger part of its set. Witnesses of size
+at least $2n+1$ then give size at least $n$ in that child. For
+sufficiency, choose the two child witness tuples at the requested
+bound, combine their finite sets and add the prescribed root bits.
+For finite existential quantification the type is the finite set
+of realizable subformula types. Negation retains the subformula
+type, and conjunction takes a product. This is why the finite
+compositional type premise applies also with negation, finite
+auxiliary sets and nested tuple unbounding on infinite carriers.
+

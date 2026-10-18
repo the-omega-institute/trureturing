@@ -1,0 +1,12 @@
+## 9. 支撑文献与引用边界
+
+[CK] Taolue Chen、Stefan Kiefer，*On the Total Variation Distance of Labelled Markov Chains*，[arXiv:1405.2852v1](https://arxiv.org/html/1405.2852v1)。Section 2 给出有限标记边模型、全部柱集等价及 Proposition 3；Section 4 定义公共等价子分布并证明传播与上下证书，Theorem 7 给出极限一致；Appendix A 给出有限线性检验论证。有理项约束服务其复杂度结论。本卷对实项与不等成本质量的结论由相应直接证明承担，不将其极限定理当作指数率。
+
+[KS] Stefan Kiefer、A. Prasad Sistla，*Distinguishing Hidden Markov Chains*，[arXiv:1507.02314v2](https://arxiv.org/html/1507.02314v2)。Section 4.1 的 profile、Section 5 的有限检验与支撑限制说明正分离的结构；其可辨识假设下的指数监测结论见 Theorem 4.7。该监测定理未用于这里可能重叠的初始状态律。本卷从最大剥离后的不相容闭面直接证明亲和递推。
+
+[RW] Mark D. Reid、Robert C. Williamson，*Information, Divergence and Risk for Binary Experiments*，[arXiv:0901.0356v1](https://arxiv.org/html/0901.0356v1)。Section 2.3 的 Corollary 3 与 Section 5.2 的 Theorem 14 给出积分核与成本帐篷。本卷显式证明单坐标权重 $dt/t$ 的端点恒等式，不给该文归属任何有限标记产生器的率定理。
+
+[EWM] [实际擦除影响的加权熵矩接口](FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md)。所复用结论是同一实际双侧平稳二进制律上的 $e_L(r),e_R(r)\leq R_r/2$ 及其加权尾求和。条件信息、Bernoulli KL 与投影极限是其支撑；本卷新增的是通过指数终端信息为每条原始有限呈现支付该熵矩。
+
+[MW] [多字响应稳定性与消失尾证书](FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md)，Theorem 3.1。仅作为同律确定性实际尾的消费者；它的条件零性、取得条件、有限边缘信息与生产性响应义务没有由尾率代替。
+

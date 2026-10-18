@@ -1,0 +1,32 @@
+## 403. Dependencies of every role charge
+
+The first row is impossible by the published unique-C/D-pair theorem:
+the transverse C,D pair occurs only at sigma. It is not a role deletion
+based on a choice of face pairing or on a numerical search.
+
+Rows four through six use the published P-expense classification in
+Sections 376-377, including the separately established receiver-free
+two-high-axis cases. In particular, row five does not silently assume
+that a desired receiver exists. Row three uses the exact transverse
+P/V lemma of Section 380.
+
+Rows seven and nine use the double-P-pair refinement, Sections 390-394.
+The four-slot case in row seven needs no maximum gap. The five-slot
+case in row nine needs no gap when its high axis is M, needs
+z<u+m+1 when its high axis is Z, and needs u<z+m+1 when its high axis
+is U. These requirements are retained in the full hypotheses above.
+
+Row eight uses Theorem 395.1:
+for m>3, r,p,o>=m, 1<q<=m-2 and strict genuine factors L,J>0,
+
+    theta_r+theta_o+2*beta_p
+      >4*pi/3+3/(m+2)-4/m^2>4*pi/3.
+
+The source hypotheses imply m>2+sqrt(5)>3, all P coshes are at least
+m, and all Q coshes are at most m-2. Thus the theorem applies to each
+owner of row eight, including ties among different labels' coshes.
+
+These dependencies are mathematical premises of this counting
+corollary. This file does not replace their proofs or narrow their
+topological assumptions.
+

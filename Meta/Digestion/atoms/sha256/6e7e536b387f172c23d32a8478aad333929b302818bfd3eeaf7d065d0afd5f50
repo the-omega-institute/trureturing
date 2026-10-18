@@ -1,0 +1,99 @@
+**定理 20.2（标记间隙供应到熵率增长的对应）。**
+在 $0\le k<s$ 且 $n\ge3s-k$ 时，
+
+$$
+A_n(s,k)=\frac ns\binom sk\binom{n-2s-1}{s-k-1}.
+\tag{20.2}
+$$
+
+另外 $A_n(0,0)=1$；当 $n=2s,k=s>0$ 时 $A_n(s,s)=2$；
+其余参数若不属于这三类则计数为零。
+若可行整数序列满足 $s_n/n\to t,\ k_n/n\to\kappa$ 且
+$(t,\kappa)\in\mathcal U$，则
+
+$$
+\frac1n\log A_n(s_n,k_n)\longrightarrow h_2(t,\kappa).
+\tag{20.3}
+$$
+
+更准确地，对每个紧集 $\mathcal K\subset\mathcal U$，存在常数
+$C_{\mathcal K}$，使所有 $(s/n,k/n)\in\mathcal K$ 的整数参数满足
+
+$$
+\left|\log A_n(s,k)-n\left[
+\frac sn H_b\!\left(\frac ks\right)
++\left(1-\frac{2s}n\right)
+H_b\!\left(\frac{s-k}{n-2s}\right)\right]\right|
+\le C_{\mathcal K}\log n.
+\tag{20.4}
+$$
+
+证明。式 (20.2) 直接消费 [接缝与闭路卷定理 18.2][SM-SC]
+的实际标记间隙双重计数。该供应的 $\mathcal B_n,s,k,A_n,u,v$
+在此保持相同含义，$u,v$ 仅分别记录 domino 数与短零间隙数；
+密度对应为 $t=s/n,\kappa=k/n$。
+为把它接到渐近式，完整保留所需的计数映射。
+
+当 $s>0$ 时，在一个占据格上加标记，从该格沿规定朝向读出
+$s$ 段非空零间隙 $g_1,\ldots,g_s$，总和为 $n-s$。
+距离二的占据对恰对应 $g_j=1$；若 $s=1$，因 $n\ge5$，
+唯一间隙长 $n-1\ge4$，也符合 $k=0$。
+先选恰 $k$ 个短间隙有 $\binom sk$ 种，
+其余 $\ell=s-k\ge1$ 段写为 $2+h_j$，$h_j\ge0$，则
+
+$$
+\sum_{j=1}^{\ell}h_j=n-3s+k=:h.
+$$
+
+非负弱组合存在当且仅当 $h\ge0$，数目为
+$\binom{h+\ell-1}{\ell-1}$：在 $h$ 个单位和 $\ell-1$ 个分隔符的
+排列中选分隔符位置，允许空段。
+选择标记的绝对格号有 $n$ 种。由标记及有序间隙，依次放置一和零，
+恰好走满 $n$ 格并闭合，唯一恢复原标号字及其标记。
+反向每个字有恰 $s$ 个可标记占据格，所以
+
+$$
+sA_n(s,k)=n\binom sk\binom{h+\ell-1}{\ell-1},
+$$
+
+给出 (20.2)。即使字有非平凡旋转对称，该标记计数仍为 $s$，
+无需假定原始周期为 $n$，也不能把 $n/s$ 解释为旋转轨道大小。
+若 $s=0$，只有全零字；若 $k=s>0$，全部零间隙为一，
+强迫 $n=2s$，且恰有两个交替相位。这时没有长间隙，
+不能将 $s-k-1=-1$ 代入弱组合公式。
+
+现在令 $M=n-2s$、$r=s-k$。在严格内部有 $0<k<s$ 和 $0<r<M$。
+先消去不方便的减一指标：
+
+$$
+\binom{M-1}{r-1}=\frac rM\binom Mr,
+\qquad
+A_n(s,k)=\frac ns\frac rM\binom sk\binom Mr.
+\tag{20.5}
+$$
+
+在固定紧集 $\mathcal K$ 内，
+$s,k,s-k,M,M-r$ 都介于某个正的 $\mathcal K$ 依赖常数乘 $n$
+与 $n$ 之间；这里 $M-r=n-3s+k$。
+$n/s$ 与 $r/M$ 也一致地远离零且有界。
+使用 [DLMF §5.11(i)–(ii)][SM-ST] 在正实轴上的 Stirling 公式
+
+$$
+\log(m!)=(m+\tfrac12)\log m-m+\tfrac12\log(2\pi)+O(1/m),
+$$
+
+对上述各正整数阶乘逐项代入。正实轴的截断余项受首个遗漏项控制，
+所以当 $N,j,N-j$ 均以 $n$ 的正比例增长时，一致有
+
+$$
+\log\binom Nj=NH_b(j/N)+O_{\mathcal K}(\log n).
+$$
+
+将它用于 (20.5) 的两个二项式，并加上有界的前因子对数，
+便得到 (20.4)。括号内正是
+$t_nH_b(\beta_n)+(1-2t_n)H_b(\alpha_n)$，
+其中 $t_n=s/n,\kappa_n=k/n$，而 $\alpha_n,\beta_n$ 按 (18.1) 定义。
+任何趋于 $\mathcal U$ 内点的序列最终落在某个这样的紧集内；
+以 $\log n/n\to0$ 及 $h_2$ 的连续性得到 (20.3)。
+边界上比例远离零的条件失效，不能沿用此紧集的一致余项常数。证毕。
+

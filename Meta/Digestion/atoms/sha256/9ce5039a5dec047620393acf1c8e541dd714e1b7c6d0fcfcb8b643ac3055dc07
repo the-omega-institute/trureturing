@@ -1,0 +1,73 @@
+### 89.2. Original coordinates, unit witnesses and one physical branch
+
+Evaluate the coefficient polynomials of §87 at \((x,y)=(X,Y)\), and put
+\[
+ \tau=-\mu_Y/a_Y,\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma.                             \tag{89.4}
+\]
+Then construct \(C,D,Y_c,q,e\) from (87.2)–(87.3), and set
+\[
+ \epsilon=\bar e,\quad \Delta=D\bar D-C\bar C,\quad
+ \delta=q^2[3-4(e+\epsilon)]+6q-1.                    \tag{89.5}
+\]
+All inversions are legitimate in the field and regular at the half
+parameter. The following multiplication norms in the exact degree-twenty
+half algebra, reduced modulo 97 with \(i=22\), certify this in order:
+
+```text
+1+k^2:18; F_k:49; radial discriminant:11;
+X:52; F8:60; aY:17; sigma:65;
+G:92; barG:82; beta:89; barbeta:80;
+C:25; barC:64; D:80; barD:46;
+Yc:39; barYc:55; q:62; e:12; epsilon:3;
+Delta:75; delta:53.
+```
+
+Here the radial discriminant is \(t^2+4R(1+k^2)\). Each norm is the
+determinant of multiplication by the named element, in the monic \(f\)
+quotient with basis \(1,y,\ldots,y^{19}\). Polynomial inverses are
+computed by the adjugate of their multiplication matrix. Thus (87.2),
+(87.13)–(87.14), (89.3)–(89.5), and §78.A reconstruct every entry of
+these small certificates. The determinant of the \(\mathcal B_{20}\)
+columns expressed in the \(Y\)-power basis is \(79\pmod{97}\).
+
+The exact half specialization of (89.4) equals the original \(u,v\)
+from §78.A over \(\mathbb Q(i)\). To see this without relying on a
+modular equality, those RUR coordinates satisfy all original equations
+identically. The exact remainder identities give
+\(a_Y\tau+\mu_Y=0\); since \(a_Y,\sigma\) are units there, the
+coordinates are uniquely (89.4). All other coordinates use the same
+original definitions. The nonzero modular norms are unit certificates,
+not substitutes for this characteristic-zero identification.
+
+At one of the six strict physical half points of §78.6, \(F_k\ne0\).
+The real implicit function theorem continues its \(k\)-root analytically
+near \(1/2\). The radial discriminant is strictly positive; (89.4)
+and the original coordinates therefore continue analytically too.
+All strict tests (87.3) persist on some open interval. The cubic roots
+are simple and may be ordered analytically locally. Equation (87.4)
+then gives an actual analytic common-flat ray \(w(b)\).
+
+The centered lower-channel map is real-linear with determinant
+\(|C|^2-|D|^2=-\Delta\ne0\), so the lower channel is also
+three-distinct locally. Its mean is nonzero. The actual \(\Theta w\)
+therefore admits the same selected-channel normalization; its scaled mean
+is
+\[
+ -|\kappa|^2/\bar G=-R/\bar G=\iota(G).               \tag{89.6}
+\]
+The transformed \(F_8\) and \(a_Y\) are units, since \(\iota\)
+preserves units. Uniqueness of the line lift identifies its full
+coefficient point with \(\iota\) applied to the first. Arbitrary common
+phase and all six root orders are retained in this identification.
+
+We will use a simple field identity principle. If an element of a finite
+field extension of \(\mathbb Q(i)(b)\) vanishes on an actual analytic
+solution branch on an open parameter interval, it is zero in the field.
+Otherwise write its inverse in the fixed finite basis with rational-function
+coefficients. Away from finitely many parameter poles both evaluate on
+the branch and their product is 1, contradicting the vanishing. The proved
+field property is essential; one branch in a reducible algebra would not
+suffice.
+

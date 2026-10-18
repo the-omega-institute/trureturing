@@ -1,0 +1,31 @@
+**Convention 7.2 (unclosed objectives and attribution).** The deductions
+in this volume are the owner deletion identity, its normalized and floor
+perturbation bounds, and the complementary defect-fugacity inequality.
+The native correspondence, incidence approximation, semantic minimum,
+and paid transport are credited respectively to RRN/CBN, SIR, NPC, and
+FMR/NPC. The literature sources below are search boundaries, not
+transferred native theorems. No total positive verifier, effective
+length modulus, sharp general $M_1(D)$, or full mutual recovery is
+claimed. The credited numerical interval remains
+
+$$
+\frac18\log_2\frac{33}{13}\le\lambda<\frac3{16},\qquad M_1(3)=4.
+\tag{SCP.25}
+$$
+
+No new endpoint is asserted. In particular, bounded incidence and
+strict positivity do not imply bounded width, hyperfiniteness, mixing,
+or a finite optimizer cutoff.
+
+[SIR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[RCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[BS]: https://arxiv.org/abs/1406.1771v3
+[BCKL]: https://arxiv.org/abs/1002.0115v1
+[HLS]: https://arxiv.org/abs/1205.4356v2
+[CLV]: https://arxiv.org/abs/2106.03366v3
+

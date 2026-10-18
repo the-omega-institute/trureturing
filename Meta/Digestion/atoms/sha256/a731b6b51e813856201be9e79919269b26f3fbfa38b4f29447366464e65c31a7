@@ -1,0 +1,11 @@
+**定义 4.1（固定边发射隐藏维数）。** 对整数 $N\ge1$，记 $\mathbf1$ 为 $N$ 维全一列向量。$\Theta_N$ 包含全部实参数 $\theta=(\lambda,M_0,M_1)$，满足
+
+$$
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\quad
+A:=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\quad
+\lambda M_1M_1\mathbf1=0.
+\tag{4.1}
+$$
+
+$\lambda$ 为行向量。结构零、零质量状态、可约性、周期性及任意精确实数条目都允许。$M_w=M_{w_1}\cdots M_{w_n}$，空词矩阵为单位阵。此定义是有限随机过程表示的非负矩阵约定；其实际律由下述构造确定，而非由独立指定的条件表确定。
+

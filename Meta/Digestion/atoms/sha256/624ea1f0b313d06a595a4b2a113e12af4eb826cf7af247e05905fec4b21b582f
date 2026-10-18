@@ -1,0 +1,57 @@
+**引理 2.1（同漂移五读差的完整线性核）。** 两个类内世界有相同 $a_0,D$，并在 $JMJM$ 及所选第五动作 $F$ 后同读。置
+
+$$
+X=a_1P_1-a_2P_2=\begin{pmatrix}x_0&x_1\\x_2&x_3\end{pmatrix},\qquad
+\mathsf Y=D(P_1-P_2)=\begin{pmatrix}v_0&v_1\\v_2&-v_0\end{pmatrix}.
+\tag{2.1}
+$$
+
+对坐标列 $(x_0,x_1,x_2,x_3,v_0,v_1,v_2)$，五个响应差等式的全部解如下：
+
+$$
+\begin{array}{c|ccccc}
+F&x_0&x_1&x_2&x_3&v_0\\ \hline
+M&-(5v_1+4v_2)/168&0&(v_1+v_2)/42&(7v_1+4v_2)/168&-7v_1/4-v_2\\
+J&0&0&(v_1+v_2)/42&v_1/84&2(v_1+v_2).
+\end{array}
+\tag{2.2}
+$$
+
+$v_1,v_2$ 自由；特别地，两种动作均给
+$a_1-a_2=\operatorname{tr}X=v_1/84$。
+
+证明。由式 (1.6)，同漂移第 $i$ 个读数之差在 $1\le i\le5$ 恰为
+
+$$
+(i-6)(i-7)\left(i\operatorname{tr}(Q_iX)-\frac1{42}\operatorname{tr}(Q_i\mathsf Y)\right).
+$$
+
+这里 $(i-6)(i-7)\ne0$ 是固定节点因子，并未除以任何未知增益样本。因此完整行系统为 $42i\operatorname{tr}(Q_iX)=\operatorname{tr}(Q_i\mathsf Y)$。前四行及各自第五行是
+
+$$
+\begin{pmatrix}
+0&42&42&0&0&-1&-1\\
+84&84&0&84&0&-1&0\\
+126&126&126&0&-1&-1&-1\\
+168&336&0&168&0&-2&0
+\end{pmatrix},
+\quad
+\begin{cases}
+(420,630,210,210,-1,-3,-1),&F=M,\\
+(420,210,210,0,-2,-1,-1),&F=J.
+\end{cases}
+\tag{2.3}
+$$
+
+可直接消元而不假设任何坐标非零：第二行给
+$x_1=v_1/84-(x_0+x_3)$；第一行随后给
+$x_2=(v_1+v_2)/42-x_1$。将第四行减第二行的两倍，得 $168x_1=0$，于是
+$x_1=0$、$x_0+x_3=v_1/84$ 及所示 $x_2$。第三行给
+$126x_0=v_0-2(v_1+v_2)$。第五 $J$ 行给
+$420x_0=2v_0-4(v_1+v_2)$，两式合用给 $x_0=0$ 和 $v_0=2(v_1+v_2)$。第五 $M$ 行则给
+$210x_0=v_0-9v_1/2-4v_2$；与第三行合用给
+$v_0=-7v_1/4-v_2$，再依次给表内 $x_0,x_3$。
+反向代入五行均为零，故式 (2.2) 既必要又充分，完整保留两个自由坐标。这里的充分性只是线性差方程的充分性，实际世界还须满足式 (1.1)。
+
+将双线性逆问题提升为线性测量，再与可实现差集相交，是成熟方法，参见 Kech–Krahmer，[《Optimal Injectivity Conditions for Bilinear Inverse Problems with Applications to Identifiability of Deconvolution Problems》](https://arxiv.org/html/1603.07316)，§II、命题 IV.3。此处只使用显式实矩阵差方程；该文的通用复测量、尺度商及稳定单射结论不作为本模型的前提。∎
+

@@ -1,0 +1,21 @@
+### 106.5. Explicit rational three-isogeny
+
+Translate x=X+3M. The equation becomes
+
+ E^*_M: y^2=X^3+9M(X+M)^2=X^3+M(3X+3M)^2.
+
+Over Q(sqrt M), T=(0,3M sqrt M) on this translated model has order 3. On F_M its coordinates are (3M,3M sqrt M), its tangent slope is 3 sqrt M, and the tangent formula gives 2T=-T. As y(T)!=0, T is neither the identity nor a point of order 2. The subgroup {O,T,-T} is Galois invariant, although neither nonzero kernel point is rational because M is nonsquare.
+
+An explicit quotient is
+
+ Ehat_M: Y^2=U^3-27M(U-M)^2,
+
+with map phi:E^*_M -> Ehat_M given away from X=0 by
+
+ U=(X^3+12M X^2+36M^2 X+36M^3)/X^2,
+ Y=y(X^3-36M^2 X-72M^3)/X^3.
+
+The target discriminant is 2^4*3^10*M^6, also nonzero. Substitution in the two equations verifies this map exactly. It extends over the smooth projective curves; the inverse image of infinity consists of O,T,-T, each with local degree one. At X=0, X is a local parameter at T and -T and U has a pole of order two; at O, U has a pole of order two as well. Therefore its degree is 3. The standard identity-preserving-morphism theorem, [Milne, Elliptic Curves, II, Proposition 1.5](https://www.jmilne.org/math/Books/EC2.pdf), now makes this degree-three map a homomorphism. Hence it is the required rational three-isogeny with the stated geometric kernel.
+
+This is the specialization D=M, a=3, b=3M of the established formulas in [Cohen–Pazuki, Elementary 3-descent with a 3-isogeny, Definition 1.3 and Proposition 1.4](https://arxiv.org/pdf/0903.4963). Here M is a fundamental discriminant and 3M is cubefree; thus the normalization hypotheses in their Lemma 1.2 hold. The formula above and the kernel verification do not require assuming that either original E_D and E_(D') is isogenous to the other.
+

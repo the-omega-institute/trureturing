@@ -1,0 +1,23 @@
+**Assumption 10.1 (same-root positive-multiplier entry).** Retain
+Assumptions 1.1 and 2.2, Definitions 1.2–3.2 and the entire common-law
+problem (FC.3)–(FC.5). In particular $t\ge t_0>0$ is finite,
+$\lambda>0$, and the finite vector $y\in\mathbb R^8$ is globally
+feasible on the entire fractional cylinder and attains
+$y\cdot B(t)=C_t(\lambda)$. The source is the same consistent
+isolated root stipulated in GC Assumption 1.2, with membership in
+GC Definition 6.1's dyadic source enclosures. Root existence, isolation,
+Jacobian, ranks and root TP, the original stopped-cq minimax, sharp
+joint cost, JR's separate unaveraged equality face, and FA's full-complex
+multi-Kraus necessity and constructor are inherited premises.
+No extension of finite-dual attainment is included in this assumption.
+
+The owning GC source supplies (GC.6)–(GC.9), (GC.28), (GC.56),
+Propositions 10.1 and 12.2, Theorem 15.1, and §§16–17. The owning
+RC source supplies §§67–70 and Proposition 75.1. Their source objects
+are fixed at revision `321589a8be98de4fe179f99f6e593d8784952db1`;
+ST Definition 10.1 supplies the same dyadic source rows as GC
+Definition 6.1. The notation and strongest complete group/face results
+used here are this volume's Theorems 3.3, 4.2, 5.2, 6.1 and 8.1.
+The deductions below concern additional structure of the original
+height and capacity, rather than new polytope, rank or Farkas proofs.
+

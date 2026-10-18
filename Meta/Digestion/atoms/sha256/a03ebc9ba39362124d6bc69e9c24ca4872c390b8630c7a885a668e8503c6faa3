@@ -1,0 +1,26 @@
+**Definition 1.1 (Parameters and mathematical correspondence).** Fix an
+integer $r\ge1$, a real $c>0$ and $0<\alpha<1/2$. All constants below may
+depend on this fixed triple. The common parameter $q=e^{-s}$ is known,
+with $s>0$, and the two promised positive shapes are exactly
+
+$$
+F_0(k)=k^{2r-1},\qquad F_1(k)=k^{2r-1}+c k^{r-1}\quad(k\ge1).
+\tag{1.1}
+$$
+
+Write [C] for
+[RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_RENEWAL_LOGARITHMIC_FRONTIER.md][C].
+Its Definitions 1.1–1.3 specify this same pair and resource contract;
+Definition 3.1 supplies the capped phase reader, Theorem 4.1 its normalized
+one-gap estimates, and Definition 5.1 its phase/evidence table. Its
+Theorems 5.1, 6.1 and 7.1 already give the counted controller, complete
+finite-budget order and eventual budget-growth criterion with unrestricted
+real transition probabilities. The result here is a quantitative bridge
+to finite dyadic rows and controlled midpoint calibration, retaining the
+same listed configurations. The complete-budget frontier is used at its
+existing scope, with its existing converse attribution.
+
+Logarithms without a subscript are natural; $\mathrm e=\exp(1)$.
+All claims concern the exact positive pair (1.1), rather than a tail
+envelope or a class obtained by changing its normalizers.
+

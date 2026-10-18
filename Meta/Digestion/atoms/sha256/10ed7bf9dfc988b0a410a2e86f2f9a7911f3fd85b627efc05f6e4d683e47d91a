@@ -1,0 +1,16 @@
+**Definition 5.1 (the diagonal scaffold support).** For $h\ge1$ set
+$k=2^h$, $d=h+3$, and
+
+$$
+v_s=T_h(u_s,\ldots,u_s),\qquad
+\mathcal Q_h=\{v_s:0\le s<5\}\subseteq S_d.
+\tag{JPL.23}
+$$
+
+For $a=(a_0,\ldots,a_4)\in[0,\infty)^5$ define the whole-block
+weight $w_a(v_s)=a_s$ and $w_a=0$ on every other state of $S_d$.
+Write $R(a)=\sum_sa_s-\min_{s<4}a_s$ and
+$\mu_0=w_{(1,1,1,1,1)}/5$. All $k$ modules in one state $v_s$
+are actual occurrences of the same motif value. This is a joint
+support condition, not $k$ independent replicas or observations.
+

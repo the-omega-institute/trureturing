@@ -1,0 +1,95 @@
+**Lemma 2.3 (An exact complementary spectral gap).** With
+$\gamma=1/25000$,
+
+$$
+P\succeq\gamma(I_{25}-K_{\rm ker}).
+\tag{2.8}
+$$
+
+Proof. The QEC block decomposition can be read directly from (2.2)–(2.4).
+On a plane's symmetric traceless tensors, $F_j$ is the identity and
+$E_j$ vanishes, giving eigenvalue $\ell_j-2\kappa_j+t_j=0$.
+On its antisymmetric line, $F_j=-I$ and $E_j=0$, giving eigenvalue
+$2(\ell_j-\kappa_j)$. On the trace directions
+$\eta_j/\sqrt{d_j}$, the matrix is $D_dND_d$, where
+$D_d=\operatorname{diag}(1,\sqrt2,\sqrt2)$ and
+
+$$
+N=\begin{pmatrix}
+11/400&2829/100000-9r/544&-251/6250+9r/544\\
+2829/100000-9r/544&55839/1360000+9r/2176&-8663/212500\\
+-251/6250+9r/544&-8663/212500&62231/1360000-9r/2176
+\end{pmatrix}.
+\tag{2.9}
+$$
+
+For each $j<k$, the two ordered cross-sector tensors give $d_jd_k$
+copies of
+
+$$
+D_{jk}=\begin{pmatrix}
+\ell_k-b_{jk}&u_{jk}-b_{jk}\\
+u_{jk}-b_{jk}&\ell_j-b_{jk}
+\end{pmatrix}.
+\tag{2.10}
+$$
+
+Thus the dimensions of the trace, kernel, antisymmetric and cross blocks
+are $3,4,2,16$, totaling $25$. This is a decomposition of the witness,
+with no restriction on a competitor's Kraus family.
+
+Subtracting the right side of (2.8) leaves zero on the kernel. On the
+trace block it leaves a matrix congruent to
+
+$$
+N_\gamma=N-\gamma\operatorname{diag}(1,1/2,1/2),
+\qquad
+D_dN_\gamma D_d=D_dND_d-\gamma I_3.
+\tag{2.11}
+$$
+
+The next table supplies every required shifted determinant. The first
+three are leading principal minors of $N_\gamma$, not of its congruent
+trace block. Every displayed expression is exact in $\mathbb Q(r)$.
+
+| Determinant | Exact value | Lower bound, denominator $10^{15}$ |
+| --- | --- | --- |
+| $\det(N_\gamma)_1$ | $1373/50000$ | $27460000000000/10^{15}$ |
+| $\det(N_\gamma)_2$ | $-1470993437/340000000000+(114201/108800000)r$ | $>1331670138/10^{15}$ |
+| $\det N_\gamma$ | $-2084432137027/231200000000000000+(161776143/73984000000000)r$ | $>24889/10^{15}$ |
+| $\det(D_{0+}-\gamma I_2)$ | $78033119/1000000000-(102951/5440000)r$ | $>4102959007/10^{15}$ |
+| $\det(D_{0-}-\gamma I_2)$ | $208680609/2000000000+(91053/5440000)r$ | $>173351542832592/10^{15}$ |
+| $\det(D_{+-}-\gamma I_2)$ | $369953/21250000000$ | $>17409552941/10^{15}$ |
+
+For a fully rational sign certificate, integer squaring gives
+
+$$
+\left(\frac{4123105625617}{10^{12}}\right)^2<17
+<\left(\frac{4123105625618}{10^{12}}\right)^2.
+\tag{2.12}
+$$
+
+Reduce each determinant using $r^2=17$. For $v\ge0$, bound $u+vr$
+below by inserting the left endpoint of (2.12); for $v<0$, insert the
+right endpoint. These substitutions give the last column. The identities
+in the middle column follow by the two-dimensional determinant formula
+and
+
+$$
+\det\begin{pmatrix}x&u&v\\u&y&w\\v&w&z\end{pmatrix}
+=xyz+2uvw-xw^2-yv^2-zu^2.
+\tag{2.13}
+$$
+
+Hence Sylvester's criterion gives $N_\gamma\succ0$.
+Every $\ell_j>2/5$ and $0<b_{jk}<1/5$, so the leading diagonals of
+$D_{jk}-\gamma I_2$ exceed $1/5-\gamma>0$. Together with their
+positive determinants this proves positive definiteness. Finally
+$\kappa_j<1/6$, directly from (2.3) and (2.12), so
+$2(\ell_j-\kappa_j)-\gamma>2(2/5-1/6)-\gamma>0$ for the two
+antisymmetric lines. This proves (2.8) on all orthogonal blocks.
+The matrices are real symmetric; their positivity on real vectors implies
+positivity on complex vectors by splitting a vector into real and
+imaginary parts. In particular the kernel is exactly the four-dimensional
+range of $K_{\rm ker}$. $\square$
+

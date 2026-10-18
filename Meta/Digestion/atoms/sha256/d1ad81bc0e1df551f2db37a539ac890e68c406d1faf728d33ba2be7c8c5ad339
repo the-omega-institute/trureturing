@@ -1,0 +1,33 @@
+**Theorem 36.3 (exact marginal center for every beta).** For $0\leq\beta\leq1/2$, with $a=1-\beta$,
+
+$$
+F_{\rm marg}^{\,2}=\frac{1+\sqrt{1-a\beta}}2,
+\qquad
+ t_{\rm marg}=\frac12\left(1+\frac{a-\beta}{\sqrt{1-a\beta}}\right).
+\tag{R.174}
+$$
+
+An optimal center is $\omega_{t_{\rm marg}}=\operatorname{diag}(t_{\rm marg},1-t_{\rm marg})$. Every complex $z$ in (R.170) is reachable: take the input density supported on $|1\rangle,|2\rangle$ with diagonal entries $1/2$ and off-diagonal entry $z$. Singular input marginals and singular centers at $\beta=0$ are included.
+
+**Proof.** The standard two-by-two identity
+$f(A,B)^2=\operatorname{Tr}(AB)+2\sqrt{\det A\det B}$, valid for arbitrary positive semidefinite two-by-two operands, gives for $\omega=\left(\begin{smallmatrix}t&c\\\bar c&1-t\end{smallmatrix}\right)$
+
+$$
+ f(A_z,\omega)^2=at+\beta(1-t)+2\sqrt{a\beta}\,\Re(\bar zc)
+ +2\sqrt{a\beta(1-|z|^2)}\sqrt{t(1-t)-|c|^2}.
+\tag{R.175}
+$$
+
+This identity is the two-dimensional specialization of the root-fidelity formulas attributed in Section 10 to Watrous, Chapter 3; it is used here also at singular operands by continuity. For fixed $\omega$, the minimum over the disk takes $|z|=1/2$ and the phase opposite to $c$ (with arbitrary phase when $c=0$): both the linear term and the square-root term then decrease. The pointwise minimum of the jointly concave fidelity is concave in $\omega$, and the disk is covariant under $\operatorname{diag}(e^{i\phi},1)$. Twirling therefore cannot lower the minimum, so an optimal center is diagonal. This argument includes every complex marginal and every center, rather than a real slice.
+
+For a diagonal center, (R.175) becomes
+
+$$
+\min_{|z|\leq1/2}f(A_z,\omega_t)^2
+ =at+\beta(1-t)+\sqrt{3a\beta\,t(1-t)}.
+\tag{R.176}
+$$
+
+Maximizing the right side on $[0,1]$ gives (R.174), since
+$(a-\beta)^2+3a\beta=1-a\beta$; the displayed $t_{\rm marg}$ is feasible. At $\beta=0$, it is $t=1$ and the image is the single state $|0\rangle\langle0|$. At $\beta=1/2$, it is $t=1/2$.$\quad\square$
+

@@ -1,0 +1,30 @@
+**Definition 1.2 (costs and optimization).** On a source $u$, let
+
+$$
+c_A(u)=(q_A(u),a_A(u),\ell_A(u)),\qquad
+\ell_A(u)=\sum_{\text{actual Read calls at }p}|p|.
+\tag{CRF.3}
+$$
+
+Here $q$ counts every actual raw Read call, including repetitions and
+absent replies; $a$ counts actual post-entry updates. Halt adds no
+read or update. Define the coordinatewise worst vector and the
+same-source weighted objective separately:
+
+$$
+\begin{aligned}
+b(A)&=(\sup_Dq_A,\sup_Da_A,\sup_D\ell_A),\\
+\mathcal F&=\{b\in\mathbb N^3:\exists A\text{ legal},\ b(A)\le b\},\\
+W_\lambda(A)&=\sup_{u\in D}
+ [\lambda_q q_A(u)+\lambda_a a_A(u)+\lambda_\ell\ell_A(u)],
+\qquad W_\lambda^*=\inf_A W_\lambda(A),
+\quad \lambda\in\mathbb Q_{\ge0}^3.
+\end{aligned}
+\tag{CRF.4}
+$$
+
+All three summands in $W_\lambda$ concern one run on one source before
+the supremum. Installation, computation, address generation, memory,
+pre-cut acquisition, authentication, retention, physical time and
+energy remain separate. No result below bounds those resources.
+

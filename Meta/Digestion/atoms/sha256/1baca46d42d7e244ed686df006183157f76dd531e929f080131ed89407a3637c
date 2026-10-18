@@ -1,0 +1,127 @@
+**Proposition 9.16 (Direct complex-tangent bound).** In the fixed family
+(9.44), take $N$ independent identical preparations and any
+parameter-independent POVM on their full product space.
+Suppose its local likelihood and scores satisfy the regularity
+conditions of Theorem 9.10. Let $F$ be its classical Fisher matrix
+at $(\kappa_0,0)$. Then
+
+$$
+\frac{F_{\kappa\kappa}}{NI_0}
++\frac{I_0F_{\chi\chi}}{4N}\le1.
+\tag{9.50}
+$$
+
+This includes nonseparable collective measurements and regular
+continuous outcome spaces.
+
+Proof. Start with one copy and define the unit horizontal vector
+$e=2u/\sqrt{I_0}$. Then
+
+$$
+\partial_\kappa\psi=\frac{\sqrt{I_0}}2e,\qquad
+\partial_\chi\psi=-\frac{i}{\sqrt{I_0}}e,\qquad
+\langle\psi|e\rangle=0.
+\tag{9.51}
+$$
+
+For a discrete positive effect $M$ put
+$q=\langle\psi|M|\psi\rangle$ and
+$z=\langle\psi|M|e\rangle$. The derivative identities are
+
+$$
+\partial_\kappa q=\sqrt{I_0}\operatorname{Re}z,\qquad
+\partial_\chi q=\frac2{\sqrt{I_0}}\operatorname{Im}z.
+\tag{9.52}
+$$
+
+The sign in the second equation follows from
+$\operatorname{Re}(-iz)=\operatorname{Im}z$ and the negative
+state-phase convention. Positivity of the two-dimensional
+compression of $M$ gives
+
+$$
+|z|^2\le q\,\langle e|M|e\rangle.
+\tag{9.53}
+$$
+
+On $q>0$, the sum of its normalized Fisher contributions is
+$(\operatorname{Re}z)^2/q+(\operatorname{Im}z)^2/q=|z|^2/q$.
+Summing (9.53) over the POVM and using $\sum M=I$ gives one.
+
+For an arbitrary outcome measurable space, write its POVM as
+$M(A)$ and take the finite scalar measure
+$\mu(A)=\operatorname{tr}M(A)$ on the finite-dimensional
+Hilbert space. Every matrix entry has a Radon–Nikodym density;
+these entries form a positive matrix $m(y)$ almost everywhere,
+with $\int m(y)\,d\mu(y)=I$.
+Set $q(y)=\langle\psi|m(y)|\psi\rangle$ and
+$z(y)=\langle\psi|m(y)|e\rangle$.
+The same formulas hold almost everywhere and the sums become
+integrals. The regular score is $(\partial_aq)/q$ on
+$\{q>0\}$, with
+
+$$
+F_{ab}=\int_{\{q>0\}}
+\frac{(\partial_aq)(\partial_bq)}q\,d\mu.
+\tag{9.54}
+$$
+
+At $q=0$, positivity implies $m(y)^{1/2}\psi=0$ and hence
+$z=0$; such points contribute no reference score term.
+Equations (9.52)–(9.53) give integrability of the information
+terms and the same upper bound. For use in Cramér–Rao
+identities we additionally require differentiation under the
+likelihood and estimator integrals and square-integrable
+scores, as stated. A zero outcome whose probability emerges
+only to second order does not receive an extra
+direction-dependent limiting Fisher value. Nonregular
+procedures using such limits are not covered by this local
+score claim.
+
+For $N$ copies put $\Psi=\psi^{\otimes N}$ and define
+
+$$
+e_N=\frac1{\sqrt N}\sum_{r=1}^N
+\psi^{\otimes(r-1)}\otimes e\otimes\psi^{\otimes(N-r)}.
+\tag{9.55}
+$$
+
+Each summand has norm one, and two distinct summands have inner
+product zero because $\langle\psi|e\rangle=0$.
+Also each is orthogonal to $\Psi$. Therefore $e_N$ is unit and
+horizontal, while direct product differentiation gives
+
+$$
+\partial_\kappa\Psi=\frac{\sqrt{NI_0}}2e_N,\qquad
+\partial_\chi\Psi=-i\sqrt{\frac N{I_0}}e_N
+=-\frac{2i}{I_0}\partial_\kappa\Psi.
+\tag{9.56}
+$$
+
+For any joint effect, now acting on the entire product space,
+set $q=\langle\Psi|M|\Psi\rangle$ and
+$z=\langle\Psi|M|e_N\rangle$.
+Its two derivatives are
+$\sqrt{NI_0}\operatorname{Re}z$ and
+$2\sqrt{N/I_0}\operatorname{Im}z$.
+Consequently the two normalized contributions in (9.50)
+again sum to $|z|^2/q$, bounded by
+$\langle e_N|M|e_N\rangle$. Integration gives one.
+This proves (9.50) for the full joint POVM, without factoring
+it into one-copy measurements. $\square$
+
+The relevant geometric fact is one complex horizontal tangent
+line, with the two real parameter derivatives related by (9.56).
+The ambient one-copy state space here has dimension five.
+Gill–Massar [GM9], Theorem I, equation (27), gives the
+pure-state bound $\operatorname{tr}(H^{-1}I^N)\le N(D-1)$
+for a $D$-dimensional system, including collective measurements.
+Their §V.A–B develops rank-one refinement and product-copy
+derivatives. That theorem at ambient $D=5$ does not by itself
+give the right-hand side one in (9.50). Nor can a single-copy
+statement with an asserted ambient $D=2$ stand in for the
+joint proof. Here (9.51)–(9.56) establish exactly the required
+two-real-dimensional tangent relation and its persistence on
+all $N$ product copies. The general information tradeoff
+retains its classical quantum-estimation attribution.
+

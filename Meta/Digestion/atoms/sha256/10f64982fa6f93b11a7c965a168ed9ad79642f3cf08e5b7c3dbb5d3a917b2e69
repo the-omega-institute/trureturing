@@ -1,0 +1,139 @@
+**Proposition 24.1 (bounds sufficient for the reversal application).**
+Under the source premises of Assumption 23.1, the following strict
+bounds hold simultaneously:
+
+$$
+\begin{gathered}
+0.00456<A_\ell<0.00465,\quad \gamma_\ell>0.01015,\quad
+0<a_\ell<0.00032,\\
+0.0049<l_u<0.0052,\quad 0.01134<l_v<0.013,\quad
+0.01471<B_\ell<0.02,\\
+0.0075<e<0.008,\quad d_*>0.02,\quad
+\frac1{25}<\mathfrak c(u,v)<\frac14\quad((u,v)\in S^1),\\
+m_u:=\alpha V>6,\quad m_v:=\beta W,\quad
+\mathcal R:=m_v/m_u>\frac12,\quad t_0>250.
+\end{gathered}
+\tag{FC.84}
+$$
+
+Consequently, for every finite $t\ge t_0$ and every circle direction,
+$t\mathfrak c>10$, and
+$m_v-(2/5)m_u=m_u(\mathcal R-2/5)>3/5$.
+
+Proof. The height dictionary and literal traces are (FC.55)–(FC.57),
+not independent fitted coefficients. In particular
+$N_{00}=(11/64)(h_0^2-h_1^2)$,
+$N_{11}=(11/64)(b_{\rm src}^2-a^2)$,
+$N_{22}=(11/64)d_{\rm src}^2$,
+$N_{12}=ac_{\rm src}\Delta_{12}$,
+$N_{01}=(h_0a+h_1b_{\rm src})\Delta_{01}$ and
+$N_{02}=(h_0c_{\rm src}+h_2d_{\rm src})\Delta_{02}$.
+The six radicals in these entries are the exact radicals of (FC.55).
+The original nine dyadic intervals are strictly inside the coarse
+amplitude intervals of Proposition 18.1, together with
+$0.49<m_1<0.51$ and $0.34<m_2<0.35$.
+The upper endpoint $0.51$ here is deliberately wider than the $0.50$
+used in §18, so the coarse moment bounds below need not coincide
+with its narrower ones.
+
+All displayed decimals are terminating rationals. The following tables
+give strict outward rational enclosures for the source expressions.
+The capacity row encloses the expression for every circle direction.
+The symbols $\mathfrak c_f,t_0$ retain the evaluation at
+$z^2=u_F=V/\mu$, $w^2=v_F=W/\mu$, with
+$\mathfrak c_f=\mathfrak c(1,\sqrt{u_F},\sqrt{v_F})$ and
+$t_0=W/\mathfrak c_f$. The ratio $\mathcal R$ and the moment
+surplus are computed from the same source, not from an optimized
+marginal law.
+
+| Expression | Coarse rectangle: strict rational outer interval |
+| --- | --- |
+| $\alpha$ | $(\frac{876520533289}{1000000000000},\frac{878719191903}{1000000000000})$ |
+| $\beta$ | $(\frac{121280808097}{1000000000000},\frac{123479466711}{1000000000000})$ |
+| $\delta$ | $(\frac{7824394627}{500000000000},\frac{15755169391}{1000000000000})$ |
+| $A_\ell$ | $(\frac{4579190981}{1000000000000},\frac{4619265951}{1000000000000})$ |
+| $B_\ell$ | $(\frac{14819612551}{1000000000000},\frac{7569580979}{500000000000})$ |
+| $\gamma_\ell$ | $(\frac{10200346601}{1000000000000},\frac{329999093}{31250000000})$ |
+| $-a_\ell$ | $(\frac{-31403193}{100000000000},\frac{-76595467}{250000000000})$ |
+| $l_u$ | $(\frac{5042004017}{1000000000000},\frac{5079100333}{1000000000000})$ |
+| $l_v$ | $(\frac{12513805577}{1000000000000},\frac{12732663987}{1000000000000})$ |
+| $e$ | $(\frac{3813085259}{500000000000},\frac{1550269207}{200000000000})$ |
+| $d_*$ | $(\frac{20667228141}{1000000000000},\frac{5294880681}{250000000000})$ |
+| $\mathfrak c\ (S^1)$ | $(\frac{7898832019}{125000000000},\frac{53317719851}{250000000000})$ |
+| $\mu$ | $(\frac{533958682}{48828125},\frac{1146313190469}{100000000000})$ |
+| $m_u$ | $(\frac{6959050395873}{1000000000000},\frac{1444363136361}{200000000000})$ |
+| $m_v$ | $(\frac{3976423411487}{1000000000000},\frac{848263244577}{200000000000})$ |
+| $\mathcal R$ | $(\frac{275306348617}{500000000000},\frac{609467668951}{1000000000000})$ |
+| $\mathfrak c_f$ | $(\frac{2978884211}{25000000000},\frac{33230706983}{250000000000})$ |
+| $t_0$ | $(\frac{123330636276493}{500000000000},\frac{288265251810047}{1000000000000})$ |
+| $m_v-(2/5)m_u$ | $(\frac{217539427753}{200000000000},\frac{291539212907}{200000000000})$ |
+
+| Expression | Original nine dyadic rows: strict rational outer interval |
+| --- | --- |
+| $\alpha$ | $(\frac{438856665421}{500000000000},\frac{877713330843}{1000000000000})$ |
+| $\beta$ | $(\frac{122286669157}{1000000000000},\frac{61143334579}{500000000000})$ |
+| $\delta$ | $(\frac{15710310993}{1000000000000},\frac{7855155497}{500000000000})$ |
+| $A_\ell$ | $(\frac{4598725613}{1000000000000},\frac{2299362807}{500000000000})$ |
+| $B_\ell$ | $(\frac{7492313717}{500000000000},\frac{2996925487}{200000000000})$ |
+| $\gamma_\ell$ | $(\frac{519295091}{50000000000},\frac{10385901821}{1000000000000})$ |
+| $-a_\ell$ | $(\frac{-62057609}{200000000000},\frac{-77572011}{250000000000})$ |
+| $l_u$ | $(\frac{316289119}{62500000000},\frac{1012125181}{200000000000})$ |
+| $l_v$ | $(\frac{6314103863}{500000000000},\frac{12628207727}{1000000000000})$ |
+| $e$ | $(\frac{7691619447}{1000000000000},\frac{961452431}{125000000000})$ |
+| $d_*$ | $(\frac{10465115833}{500000000000},\frac{20930231667}{1000000000000})$ |
+| $\mathfrak c\ (S^1)$ | $(\frac{32177545537}{500000000000},\frac{211477040591}{1000000000000})$ |
+| $\mu$ | $(\frac{11156300845207}{1000000000000},\frac{1394537605651}{125000000000})$ |
+| $m_u$ | $(\frac{7076262919311}{1000000000000},\frac{442266432457}{62500000000})$ |
+| $m_v$ | $(\frac{816007585179}{200000000000},\frac{510004740737}{125000000000})$ |
+| $\mathcal R$ | $(\frac{1153161767}{2000000000},\frac{576580883501}{1000000000000})$ |
+| $\mathfrak c_f$ | $(\frac{62997352129}{500000000000},\frac{125994704259}{1000000000000})$ |
+| $t_0$ | $(\frac{264809031388577}{1000000000000},\frac{132404515694289}{500000000000})$ |
+| $m_v-(2/5)m_u$ | $(\frac{1249532758171}{1000000000000},\frac{312383189543}{250000000000})$ |
+
+The table operations are addition and subtraction with outward endpoints,
+minimum/maximum of the four products, and division only by positive
+intervals. An entirely rational radical enclosure is obtained by setting
+$Q_{\rm rad}=2^{256}$ and
+
+$$
+k(l)=\operatorname{isqrt}(\lfloor lQ_{\rm rad}^2\rfloor),\qquad
+\sqrt{[l,h]}\subseteq
+\left[\frac{k(l)}{Q_{\rm rad}},\frac{k(h)+1}{Q_{\rm rad}}\right].
+\tag{FC.85}
+$$
+
+The defining integer square inequalities give the two outward
+directions. Use the cancelled source ratio
+$r_s=c_{\rm src}d_{\rm src}h_1/(ab_{\rm src}h_2)$,
+$\alpha=(1+r_s)^{-1}$, $\beta=1-\alpha$ and
+$\delta=ab_{\rm src}/(h_0h_1)+c_{\rm src}d_{\rm src}/(h_0h_2)$,
+then form (FC.81) and (FC.82). For the uniform capacity row, the
+homogeneous expressions of (FC.57) give the sufficient bounds
+
+$$
+\frac{\min(N_u,N_v)}{\max(D_u,D_v)}
+\le\mathfrak c(u,v)\le
+\frac{\max(N_u,N_v)}{\min(D_u,D_v)}.
+\tag{FC.86}
+$$
+
+Use outward lower numerator and upper denominator endpoints on the
+left, and the reverse on the right. Compute $V,W,\mu,m_u,m_v$ and
+$\mathfrak c_f,t_0$ by their positive-denominator formulas. Every
+comparison of a table endpoint with a shorter rational bound is a
+cross multiplication of positive integers. No source coordinate is
+fixed at a centre or corner in these operations.
+
+In particular the coarse interval for $t_0$ is
+$(246.661272552986,288.265251810047)$ and straddles $250$.
+It does not prove $t_0>250$. The original nine dyadic rows give
+$(264.809031388577,264.809031388578)$, which does prove that strict
+inequality. The coarse rows suffice for the other bounds of (FC.84),
+including $\mathfrak c>1/25$, $m_u>6$ and $\mathcal R>1/2$.
+Combining the dyadic $t_0$ with the coarse uniform capacity gives
+$t\mathfrak c>250/25=10$ for every finite $t\ge t_0$.
+Combining the two moment inequalities gives the stated $3/5$ surplus.
+These are expression enclosures; the consistent root is still the
+single source at which the TP and physical suppliers are assumed.
+$\square$
+

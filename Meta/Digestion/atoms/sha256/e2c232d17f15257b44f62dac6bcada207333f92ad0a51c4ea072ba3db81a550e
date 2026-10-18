@@ -1,0 +1,29 @@
+**Definition 4.2 (tapes and access incidence).** For a finite tape word
+$w=c_1\cdots c_k$, including its actual boundary cells, set
+
+$$
+\mathcal L(w)=
+\langle G(c_1),\langle G(c_2),\ldots,
+    \langle G(c_k),\bullet\rangle\ldots\rangle\rangle,
+\qquad\mathcal L(\varepsilon)=\bullet.
+\tag{SSA.4}
+$$
+
+The tape origin is this component's root, a fixed outer socket occurrence.
+Before its boot construction a tape can have the empty word; partial boot
+words are represented literally. Post-acquisition every tape has its
+original constructed interval and marked heads. The finite-register
+component is $F_b[g_{r_1},\ldots,g_{r_b}]$. Substitute the 64 tape
+components and this register component into $F_{65}$, obtaining the full
+ordered storage tree $U(W)$.
+
+For each ordinary tape add one origin-to-head link, and for the meter add
+its two distinct origin-to-head links. They join the appropriate
+$\mathsf O_j$ at the tape origin to $\mathsf H_j$ at the root of its
+marked cell $G(c)$. Before a particular head exists its link is absent.
+These 65 links at a post-acquisition cut are genuine additional maintained
+incidences. They are uniquely determined by the original mark tracks.
+They supply local access, not descriptor-based random access to arbitrary
+cells. Let $\Gamma(W)$ be the tree with these links. No descriptor-to-block
+shortcut is added.
+

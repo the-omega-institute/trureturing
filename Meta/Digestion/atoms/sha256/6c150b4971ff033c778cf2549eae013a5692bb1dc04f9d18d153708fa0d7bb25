@@ -1,0 +1,105 @@
+**Proposition 11.4 (endpoint repair with its actual mean emission error).** Suppose the regular table satisfies (2.4) for every supported depth and the prior supports a nonendpoint. Round $u_x$ to its nearest endpoint $r_x$, with a tie rounded to $a$, and let $M=\pi|u-r|$. There is one finite regular conserved-return comparison table, with at most $2|Y|$ suspended labels, whose own generated complete laws satisfy, for every complete target simultaneously,
+
+$$
+D_p\le\frac{15M+4\delta}{11},\qquad
+D_\beta\le\frac{6M+6\delta}{11},\qquad
+\delta\le15V_\pi+30M.
+\tag{11.14}
+$$
+
+Here $\delta$ is the original acquired crossing mass between the two endpoint classes, and $D_p,D_\beta$ are configurationwise complete-law comparisons on the rows specified below. In particular,
+
+$$
+\frac{2901611\epsilon+4519890V_\pi}{11}
+>g=\frac{\eta}{400000},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{11.15}
+$$
+
+Proof. Let $\mathscr C$ be the occupied classes $C=\{x:r_x=a\}$ and $C=\{x:r_x=b\}$. Define
+
+$$
+\delta=\sum_{x,y,x':r_x\ne r_{x'}}\pi_xB_{xy}A_{yx'}.
+$$
+
+Since $|r_x-r_{x'}|=(1/15)\mathbf1_{\{r_x\ne r_{x'}\}}$, stationarity of the two p marginals gives
+
+$$
+\frac{\delta}{15}
+\le\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+\bigl(|u_x-u_{x'}|+|u_x-r_x|+|u_{x'}-r_{x'}|\bigr)
+=V_\pi+2M.
+\tag{11.16}
+$$
+
+Use exactly the directed repair of (9.7)–(9.13), now on these two classes. Retain only pairs $(y,C)$ with positive mass
+
+$$
+\tau^c_{y,C}=\sum_{x\in C}\pi_xB_{xy},\qquad
+B^c_{x,(y,C)}=\mathbf1_{\{x\in C\}}B_{xy},\qquad
+u_x^c=r_x,\quad v^c_{y,C}=v_y.
+\tag{11.17}
+$$
+
+Then $\pi B^c=\tau^c$ and $\sum_C\tau^c_{y,C}=\tau_y$. For $x'\in C$ set
+
+$$
+d^C_{x'}=\pi_{x'}-\sum_y\tau^c_{y,C}A_{yx'}\ge0,\quad
+D_C=\sum_{x'\in C}d^C_{x'},\quad
+m_{y,C}=\sum_{x'\notin C}A_{yx'}.
+$$
+
+The nonnegativity follows from $\tau^c_{y,C}\le\tau_y$ and $\tau A=\pi$. Direct summation gives
+
+$$
+D_C=\sum_y\tau^c_{y,C}m_{y,C},\qquad \sum_CD_C=\delta.
+\tag{11.18}
+$$
+
+If $D_C>0$, set $A^c_{(y,C),x'}=A_{yx'}+m_{y,C}d^C_{x'}/D_C$ for $x'\in C$, and zero outside $C$. If $D_C=0$, (11.18) gives $m_{y,C}=0$ on every retained row; keep its inside-$C$ entries without division. Every row is nonnegative and sums to one. Its incoming mass at $x'\in C$ equals the old inside-class influx plus $d^C_{x'}$, hence $\tau^cA^c=\pi$. All positive repaired returns stay in $C$ and conserve $u^c$. Moreover,
+
+$$
+\operatorname{TV}(A_{y,\cdot},A^c_{(y,C),\cdot})=m_{y,C}.
+\tag{11.19}
+$$
+
+These are balance identities, without a reversibility or mixing premise.
+
+Generate $Q_x^c,W_{y,C}^c$ from the two repaired phase equations (2.3), using exactly the repaired acquired kernels. Their return survival, like that of the old table, is at most $4/15$; their entire laws normalize with infinite outcomes retained at mass zero. Set
+
+$$
+p_x=\operatorname{TV}(Q_x,Q_x^c),\quad
+b_{y,C}=\operatorname{TV}(W_y,W_{y,C}^c),\quad
+D_p=\sum_x\pi_xp_x,\quad
+D_\beta=\sum_{y,C}\tau^c_{y,C}b_{y,C}.
+$$
+
+The same complete-law coupling as (9.14)–(9.15), retaining the actual emission error rather than a bin width, gives
+
+$$
+p_x\le|u_x-r_x|+\frac23\sum_yB_{xy}b_{y,C(x)},\qquad
+b_{y,C}\le\frac25\left(m_{y,C}+\sum_{x'}A^c_{(y,C),x'}p_{x'}\right).
+\tag{11.20}
+$$
+
+For the first inequality, couple the two Bernoulli emissions, then use their identical $B$ transitions on matched beta. For the second, the suspended emissions agree; a change of successor row costs its TV in (11.19), and a common successor costs $p_{x'}$. Convexity contracts each law mixture. The inequalities hold on finite prefixes and pass to the complete laws by the geometric survival bound, including the infinite outcome. Averaging with the exact new flows gives
+
+$$
+D_p\le M+\frac23D_\beta,\qquad
+D_\beta\le\frac25(\delta+D_p).
+$$
+
+Solving these inequalities gives (11.14). For every normalized target $T_p$ the reverse triangle inequality bounds the absolute change of its configuration loss by $D_p$. At suspension the same argument uses the split row and $\sum_C\tau^c_{y,C}=\tau_y$, giving $D_\beta$. This proves simultaneous comparison for every supported target and every posterior mixture, without replacing configuration risk by marginal-law risk.
+
+By (11.16), both law comparisons are at most $(186M+90V_\pi)/11$: the p bound is at most $(135M+60V_\pi)/11$ and the suspended bound at most $(186M+90V_\pi)/11$. The conserved comparison thus has common supported-depth slack bounded by
+
+$$
+\epsilon+\frac{186M+90V_\pi}{11}
+\le\frac{2901611\epsilon+4519890V_\pi}{11},
+\tag{11.21}
+$$
+
+where (11.12) was used in the last step. Theorem 5.1 applies to this one comparison table and requires its common slack to exceed $g$, proving (11.15). Empty endpoint classes and zero deficits were included above.
+
+The comparison is algebraic for real table data. Rational data give rational deficits, rows and repaired entries, so the finite exact-sampling convention of PAID42, Lemma 2.1.1 and Proposition 11.3, applies when a represented comparison is needed. No exact-real sampler follows from the algebraic construction. Neither a prescribed COMPLETE budget nor a hard marginalized-defect budget is preserved. $\square$
+

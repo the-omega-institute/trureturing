@@ -1,0 +1,10 @@
+### 102.5. Unique odd-depth support makes the quadratic premise automatic
+
+Suppose D=Q is prime. Actual support gives Q=19 modulo 120, in particular Q=3 modulo 4. From Q C^2=3 modulo p and p not dividing C,
+
+ (Q/p)=(3/p)=(-1/p),
+
+because (-3/p)=1. Quadratic reciprocity with Q=3 modulo 4 gives (p/Q)=(Q/p)(-1/p)=1. Thus the product theorem applies without an additional assumption and yields chi_p(Q)=1.
+
+The prime Q is unramified in F_p: over K, square roots of p and gamma_p can ramify only over 2 or p; K itself ramifies only at 5. Actual Q is distinct from these. Since Q splits in K and in Q(sqrt p), and its remaining character is 1, Q splits completely in F_p. This proves the claim for each earlier support prime, and therefore in every finite compositum of such fields. Even-depth primes of the current block remain unrestricted by the quadratic premise.
+

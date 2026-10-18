@@ -1,0 +1,18 @@
+**Definition 2.4 (lawful completed reductions and class).** The allowed
+steps for (FJC.11) are Boolean and equation rearrangement, finite ground
+evaluation, native distribution and composition of fixed powers,
+ordered-pair cancellation, fresh definitions and nonrecursive variable
+substitution with retained extension/projection maps. Leaf-label and
+leaf/pair clashes are valid. All are identities or equivalences on
+$\widehat{\mathcal T}$. No finite occurs-check is allowed, and a failure
+to reduce is never called a clash. Additional reduction rules require a
+proved completed-domain equivalence and effectively checkable side
+conditions; they are not assumed by the class.
+
+A functional rank-free input is the entire native input, a finite $B$,
+and certificates of Definitions 2.1–2.4 for every chart tuple. These
+certificates describe finite source strata and equation presentations,
+not a supplied completed solution. Theorems below apply to every such
+input and every finite supplied $B$ satisfying these premises. Membership
+of arbitrary uncatalogued native input in this class is not asserted.
+

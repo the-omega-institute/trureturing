@@ -1,0 +1,75 @@
+**Theorem 4.2 (exact native representative normal form).** For every
+$d,n\ge1$ and every complete native template $\Theta$, one can
+effectively construct a complete native template $\Theta^{\mathrm{rep}}$
+on exactly the same $n$ blocks and the same port set $V$ such that
+
+$$
+C_{\Theta^{\mathrm{rep}}}=C_\Theta.
+\tag{RRN.13}
+$$
+
+The new template has representative-reply form. Its centers are
+existing cycle ports of the original skeleton. Constant-sink components
+and cyclic components with exactly one fixed reply become constants.
+An empty fixed-reply set is represented by a center guard with no
+fixed reply. No block is duplicated, projected or independently chosen.
+
+Proof. Work separately on the components of Definition 3.1. In a
+constant-sink component, Lemma 3.2 determines all replies. Assign the
+sink its original full constant factor. At every other port assign
+the constant $\delta_v(y_{p(v)})$. Each assigned factor belongs to
+the correct $G_q$, and its $h$-image is the propagated reply. Replace
+every equation in this component by that full factor constant.
+
+For a cyclic component use $c,T,a_v,b_v$ from Lemma 3.2. If $T$
+has one member $a_0$, replace each equation by the constant
+$z_v=b_v(a_0)$. Otherwise, for each $v$ choose a total table
+$\widehat\delta_v:\mathcal A\to G_{q_v}$ which on $T$ equals
+$b_v$. Off $T$, noncenter tables can be filled with any value in
+$G_{q_v}$. At the center require
+
+$$
+h(\widehat\delta_c(a))\ne a\qquad(a\notin T).
+\tag{RRN.14}
+$$
+
+Lemma 2.4 supplies each of these entries. On $T$, the center table
+already satisfies $h(\widehat\delta_c(a))=a$. Replace the component
+by
+
+$$
+z_v=\widehat\delta_v(y_c)
+\quad\text{for all its ports }v,
+\tag{RRN.15}
+$$
+
+including $v=c$. These are valid native donor equations at the existing
+port $c$. If $T=\varnothing$, (RRN.14) is imposed at all four
+arguments and the center equation is unsatisfiable. If $T=\mathcal A$,
+there are no off-domain guard entries. No separate condition about
+the attainability of absent at a root is needed.
+
+To prove the forward inclusion in (RRN.13), let $x$ solve $\Theta$.
+Its replies solve the skeleton. On a constant-sink component they
+are the uniquely propagated replies and its full factors are the
+specified constants. On a cyclic component, $y_c(x)\in T$ and
+uniqueness in Lemma 3.2 gives
+$y_v(x)=a_v(y_c(x))$ and $z_v(x)=b_v(y_c(x))$.
+Thus all replacement equations hold, including singleton constants.
+
+Conversely let $x$ solve the replacement. For a star center, applying
+$h$ to its equation and using (RRN.14) forces $y_c(x)\in T$.
+All its factors are therefore $b_v(y_c(x))$, and applying $h$
+gives $y_v(x)=a_v(y_c(x))$. Equation (RRN.12) then gives every
+original donor equation. In a singleton component the replacement
+constants give these same replies and equations at its sole allowed
+seed. In a constant-sink component their $h$-images are the propagated
+replies; the original constant and donor equations follow from their
+construction. This proves the reverse inclusion. Both inclusions were
+proved on the original actual tuple $x$, so any remaining incompatibility
+between components inside a block is preserved exactly.
+
+Everything is finite: enumerate the components, compose maps on four
+symbols, test their fixed points, propagate tables and choose guard
+values from finite $G_q$. This proves effectivity. $\square$
+

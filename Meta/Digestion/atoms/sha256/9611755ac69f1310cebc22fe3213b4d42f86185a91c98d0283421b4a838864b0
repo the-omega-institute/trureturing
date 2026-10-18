@@ -1,0 +1,43 @@
+**Theorem 34.1 (mandatory negative pure endpoint mass).** Under
+Assumption 32.1, every height-optimal law with $S\le1/100$ satisfies
+
+$$
+H_-(\pi)>\frac1{30000},\qquad
+\rho_0\{\ell<0\}>\frac1{600}.
+\tag{FC.144}
+$$
+
+On a supplied complete positive-multiplier face for which every
+representation has $S\le1/100$, define
+
+$$
+\mathscr G_-^{\rm pure}
+=\{G\in\mathscr G:G\text{ contains a pure endpoint with }\ell<0\}.
+\tag{FC.145}
+$$
+
+Every optimal representation has positive pure-coordinate mass in this
+family. Every selection $Q\subseteq\mathscr G$ disjoint from it has
+$\mathcal P_Q=\varnothing$, even if $Q$ retains reverse groups from
+$\mathscr G_{\rm rev}$. The conclusion is independent of $|Q|$ and of
+$r\in[r_-,r_+]$. Occupying such a group only at its saturated coordinate
+is insufficient.
+
+Proof. Optimality makes $\Delta_\pi=0$ in (FC.133), forcing
+$H_->\varepsilon_0$. The source bounds show $E_\ell\succ0$:
+its diagonals exceed $0.00457,0.01481$ and
+$0.00457\cdot0.01481-0.00032^2>0$. Also $l_u+l_v<0.02$.
+Thus $\ell_-<0.02$ on the circle, giving the second strict inequality
+of (FC.144). On a supplied face, Theorems 3.3 and 4.2 collect every
+optimal law into the complete finite group data. In a merged group
+of mass $p$ and fraction $\xi$, its pure contribution to $H_-$ is
+$p(1-\xi)\ell_-$. This quantity is preserved by splitting and
+compatible merging. Every $w\in\mathcal P$ is multiplier optimal and
+is height optimal at its achieved $K$, by Theorem 4.2. A representation
+using no negative pure coordinate would have $H_-=0$, contradicting
+(FC.144). This excludes the whole coordinate face before choosing
+$r$. Positive group occupancy alone says nothing about its pure
+coordinate. In particular (FC.144) is not generally mass of actual
+$\xi=0$ labels: a compatible strict fractional label can supply it.
+It is neither acquisition nor failure probability. $\square$
+

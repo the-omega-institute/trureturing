@@ -1,0 +1,20 @@
+**Definition 5.1 (two relation closures).** In this section all operations
+$T_a:X\to X$ are total on one carrier, and $H$ is a group of bijections of
+$X$. Empty words act identically. For an equivalence $K$ define
+
+$$
+\begin{aligned}
+\operatorname{Core}_A(K)
+ &=\{(x,y):\ \forall u\in A^{\ast},\ (T_ux,T_uy)\in K\},\\
+\operatorname{Sat}_H(K)
+ &=\{(x,y):\ \forall h\in H,\ (hx,hy)\in K\}.
+\end{aligned}
+\tag{5.1}
+$$
+
+Here $\operatorname{Sat}_H$ means an intersection of transported relations,
+so it is a *refinement* of $K$, not the union of its gauge orbits. It enforces
+representation compatibility. Group bijections in this definition are not
+necessarily executable probes. If they are executable, their full response
+contract must additionally be retained.
+

@@ -1,0 +1,70 @@
+**Definition 3.1 (One common dual form and its coefficients).** Let
+$C\in M_3(\mathbb R)$, $y\in\mathbb R^3$ and
+$(\delta_\nu)_{\nu\in\mathcal N}\in\mathbb R^6$ be arbitrary.
+In the event application of §5 these are obtained from one common
+event-multiplier tuple and all three TP multipliers. Define
+
+$$
+\mathcal B_{C,y,\delta}(a)=
+\sum_j\left(\|a\|^2y_j-\sum_iC_{ij}h_i(a)\right)H_j
+-\frac12\sum_\nu\delta_\nu\sum_{k=1}^2z_{\nu k}(a)F_{\nu k}.
+\tag{3.1}
+$$
+
+The notation $\mathcal B$ distinguishes this five-by-five quadratic
+matrix form from the spectral matrix $B=-A^2$. For $p_i\ge0$, set
+
+$$
+\begin{gathered}
+\ell_j(p)=\frac{y_j\sum_ip_i-\sum_iC_{ij}p_i/\sqrt{n_i}}
+                 {\sqrt{n_j}},\qquad
+L_{jk}=\frac{y_j}{\sqrt{n_j}}-\frac{C_{kj}}{\sqrt{n_kn_j}},\\
+A_0(p)=\ell_0(p),\quad
+A_+(p)=\ell_+(p)-\delta_{2+}p_+/4,\quad
+A_-(p)=\ell_-(p)-\delta_{2-}p_-/4,\\
+B_+(p)=\ell_+(p)+\delta_{2+}p_+/4,\qquad
+B_-(p)=\ell_-(p)+\delta_{2-}p_-/4,\\
+A_i(p)=\sum_k\alpha_{ik}p_k,\quad B_j(p)=\sum_k\beta_{jk}p_k,\\
+\alpha_{0k}=L_{0k},\quad
+\alpha_{+k}=L_{+k}-\tfrac14\delta_{2+}\mathbf1_{k=+},\quad
+\alpha_{-k}=L_{-k}-\tfrac14\delta_{2-}\mathbf1_{k=-},\\
+\beta_{+k}=L_{+k}+\tfrac14\delta_{2+}\mathbf1_{k=+},\qquad
+\beta_{-k}=L_{-k}+\tfrac14\delta_{2-}\mathbf1_{k=-}.
+\end{gathered}
+\tag{3.2}
+$$
+
+Use the signed scalars
+
+$$
+u=\delta_+/2,\qquad v=\delta_-/2,\qquad
+w=(\delta_\Delta+\delta_\Sigma)/4,\qquad
+t=(\delta_\Delta-\delta_\Sigma)/4,
+\tag{3.3}
+$$
+
+and write $c_{0+}=u,c_{0-}=v,c_{+-}=w$. In ordered bases
+$(d,u_+,u_-)$ and $(v_+,v_-)$ define
+
+$$
+\begin{aligned}
+\mathcal R(p)&=\begin{pmatrix}
+A_0&-u\sqrt{p_0p_+}&-v\sqrt{p_0p_-}\\
+-u\sqrt{p_0p_+}&A_+&-w\sqrt{p_+p_-}\\
+-v\sqrt{p_0p_-}&-w\sqrt{p_+p_-}&A_-
+\end{pmatrix},\\
+\mathcal T(p)&=\begin{pmatrix}
+B_+&-t\sqrt{p_+p_-}\\
+-t\sqrt{p_+p_-}&B_-
+\end{pmatrix},\\
+\mathscr F(p)&=A_0A_+A_-
+ -A_0w^2p_+p_--A_+v^2p_0p_--A_-u^2p_0p_+
+ -2uvw\,p_0p_+p_-.
+\end{aligned}
+\tag{3.4}
+$$
+
+All $A_i,B_j$ in (3.4) are evaluated at that same $p$.
+$\mathscr F$ is a homogeneous ternary cubic. No sign is assumed
+for $u,v,w,t$.
+

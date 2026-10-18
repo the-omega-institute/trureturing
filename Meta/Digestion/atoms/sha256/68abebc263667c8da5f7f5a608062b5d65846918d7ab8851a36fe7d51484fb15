@@ -1,0 +1,30 @@
+## 275. A uniform low-only axial-slot inequality
+
+Consider any genuine owner with fixed transverse pair {a,b}, where
+a>=b>1, a chosen axial value 1<r<b, and opposite value 1<o<1+a+b.
+Write theta for its r-axis angle and s_angle=beta_a+beta_b. We prove
+ s_angle>theta.                                  (275.1)
+Set
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b).
+The exact paired response gives
+ tan(theta/2)^2=(r-1)/(r+1)*J/L,
+ tan(theta/2)*tan(s_angle/2)=kappa*sqrt((r-1)/(r+1)).
+Both theta and s_angle lie in (0,pi). Thus (275.1) is equivalent to
+ sqrt((r-1)/(r+1))*J/L<kappa.
+
+The expression on the left strictly increases in each of r,o wherever
+J,L>0: the square-root factor increases in r, J increases in each
+variable, and L decreases in each variable. Increase to r=b and
+ o=1+a+b. Along that rectangle J remains positive and L remains
+positive, since its minimum at the final corner is (a+b)*(a+1)>0.
+It suffices to show the corner expression is at most kappa.
+At that corner J=(b+1)*(a+b+2)-(a-b)^2 and L=(a+b)*(a+1).
+After multiplication by positive factors, the corner comparison is
+ 2*b+1-a<=sqrt((a^2-1)*(b+1)/(b-1)).
+The left side is at most b+1, and the right side is at least b+1,
+because a>=b. Equality is possible only at a=b. Since the actual
+r and o are strictly below the corner, the actual comparison is strict.
+This proves (275.1), including possible repeated axial labels.
+

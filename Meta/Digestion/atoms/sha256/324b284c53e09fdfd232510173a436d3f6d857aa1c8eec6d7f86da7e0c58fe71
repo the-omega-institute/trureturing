@@ -1,0 +1,13 @@
+**数学引文 44.2（直接原文与本消费者对应）。** 以下成熟供应的原文和精确假设直接对应本章使用：
+
+- Mateusz Skomra，[*Optimal bounds for bit-sizes of stationary distributions in finite Markov chains*][PHDBSK]，arXiv:2109.04976v1，Theorems1.1、1.3。前者要求不可约有理随机矩阵，给平稳行共同分母界；后者对有理有限链的暂态到全部常返类吸收概率给共同分母界。引理38.1–38.2给较松的 Cramer/Hadamard 普通证明；不可约假设只用在每个闭类，不能加在整个输入机器上。原文PDF SHA256为 `85fa0c52776333e59e69cf2fd11c2d5ff2466e5d51a573c588e831ebefabae56`。
+- Richard Weber，[*Markov Chains*][MC]，§§9.2–9.3，Lemmas9.5–9.6、Theorem9.8。Theorem9.8的全步收敛要求不可约、非周期、正常返；这里仅应用于有限闭类的循环子类 $p$ 步链。暂态和余数的拼接由(38.3)证明，不能声称任意周期原链全步收敛。原文PDF SHA256为 `32a31595a3a0c6b298d7be0566ee762e2229b87b525a1826e797490464ef7b1a`。
+- Emil Jeřábek，[*Root finding with threshold circuits*][JBIT]，§2、Definition4.2、Theorem4.5、Corollary4.6。原文明确给 DLOGTIME uniformity、精确 floor 的末位方向修正，以及固定代数数、**一元**位位置输入的精确位结果。命题43.1复用已给§31的虚拟一元输入和已收费串行电路求值，把它接到两个 PH17 核，不能把定理直接当作二进制输入长度的多项式时间或免费求位服务。作者原文PDF SHA256为 `4a64ee83a8dccdfb79ded439d4e4f35aaa15eb4e68e64def8610664a8f457e03`。
+- Taolue Chen、Stefan Kiefer，[*On the Total Variation Distance of Labelled Markov Chains*][PHDBCK]，Proposition12。其有理标记链可有无理 TV，故这里分离的是(40.1)的显式有理事件证书，不声称风险有理或使用通用精确 TV 求值。原文PDF SHA256为 `7e710dc23ca3a4881f7b40134defdcc28a7af1e31f6892cf661f603c9f59c331`。
+
+本章的来源特定新增桥是收费微状态到全部 PH21 端点极限行的共同算术界，以及原三完成事件到四风险数字必要性；成熟吸收、周期收敛、resultant、有理根定理和均值定理都是证明内供应，不主张文献原创优先权。§24–29已给字面表示刚性与费用，§30–36已给逐位上界，均不重新计作新增形式化。
+
+在源快照 `e36230b266eb5e9e1c05ee5a99778e4854d6bf9c`，`FourthSegmentStoppedLaw.lean` 的 `legalRead`、`legalStop`、`first_completion_normal_form`、`noncompletion_fiber`、`actual_noncompletion_mass_zero`、`actual_fourth_segment_stopped_word_law` 提供固定 $r$ 的原完成词和非完成原始载体，对应本章的 $\alpha=0,\beta=1$。其 Bernoulli 源定理不单独证明共同隐藏 $K$ 的已取得后验、全标记树、停止层新鲜性或 $I_c$ 的记录桥；这些仍消费本卷§1、§10、§21和[ST]的普通源证明。这里只读取形式源码，没有 Lean 编译或新的 kernel 证据。
+
+相邻的 `ActualFiniteObserverAbsentElimination` 与 `ActualObserverPairReach` 保留实际前缀、原来源与全 raw-history/coarse 因子化；`ActualControlSlots.result` 给其读槽图及控制容量。这些使用另一来源动作和正确性合同，没有到当前公平位完整尾消费者的操作、概率损失及位编码对应，故不拿它们的状态下界替代(42.1)。同样，已发布的[原深度混合表示障碍][PHDBNM]使用同更新返回核、来源混合子类和配置风险，且允许非零实际边缘条件缺陷。其混合限制及子类价格不代替这里对两项精确相容数字类的全预算界；本章不要求解码是原深度混合。
+

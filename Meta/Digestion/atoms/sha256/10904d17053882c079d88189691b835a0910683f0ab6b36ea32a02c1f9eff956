@@ -1,0 +1,22 @@
+**Theorem 82.4 (strict four-label endpoint obstruction).** There is a
+constant $\tau_4^{\rm ub}<1$ such that every finite-budget weak
+instrument with at most four actual low labels has available normalized
+contrast at most $\tau_4^{\rm ub}$. This is a uniform strict upper
+bound, not an evaluated sharp four-label frontier.
+
+**Proof.** Pad to four slots and use compact variables
+$(p_j,q_j=p_jb_j,\mathbf c_j)$ with
+$\sum p_j=1$, $\sum q_j=\mu_f$. In the closure allow
+$p_j=0,q_j>0$; this is essential when the budget tends to infinity.
+Keep the live and failure moments FA.37, but drop the capacity inequality.
+This closed set is compact. If its contrast were one, equality in
+$\sum p_j|z_j|\le\sqrt{\sum p_jz_j^2}=1$ would force
+$|z|=|w|=1$ on every positive-live slot. The three zero cross
+moments force all four distinct corners to carry mass $1/4$.
+All four slots are therefore occupied by positive live mass, leaving
+no zero-live slot for a different failure line. Each corner has
+$z^2=w^2=1$, so its failure combinations force $V_f=W_f$, contrary
+to the source comparison above. Thus one is absent from this compact
+set's contrast range, whose maximum defines $\tau_4^{\rm ub}<1$.
+Every original finite-budget competitor maps into this set. $\square$
+

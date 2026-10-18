@@ -1,0 +1,17 @@
+**Definition 5.1 (the deliberately coarser recorder).** Fix any finite
+strict partition
+
+$$
+\Pi:\quad 0=t_0<t_1<\cdots<t_N=1,\qquad N\geq1.
+\tag{EM.16}
+$$
+
+Its recorder keeps terminal success with its quantum successor, or the
+failure bin $j$, original mode $i$ and absorbing successor $f$. It omits
+the subcell timestamp. This is a changed recording interface. All common
+pre-existing reference fields are retained. An additional log identifying
+which programme ran, or any separately supplied subcell clock or
+source-sensitive meter, is not an input to the coarse-only comparison.
+If such a field is actually retained, it must be included and the following
+equality need not hold for that richer joint record.
+

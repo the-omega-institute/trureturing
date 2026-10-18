@@ -1,0 +1,31 @@
+## 329. The tangent branch and the original-slot contradiction
+
+We have x>2, y>9/10 and w>sqrt(3). Therefore xy>1. The ratio
+R=(xy-1)/(x+y) increases strictly with either positive variable:
+its derivatives are (y^2+1)/(x+y)^2 and (x^2+1)/(x+y)^2. Hence
+
+    R>8/29>2-sqrt(3)>sqrt(1+w^2)-w.               (329.1)
+
+The middle comparison follows from sqrt(3)>50/29, equivalently
+2523>2500. The last uses strict decrease of sqrt(1+w^2)-w.
+
+Since xy>1, atan(x)+atan(y) lies in (pi/2,pi), and
+
+    tan(atan(x)+atan(y)-pi/2)=R,
+    tan(pi/4-atan(w)/2)=sqrt(1+w^2)-w.
+
+Both arguments compared here lie in (0,pi/2). Thus (329.1) proves
+atan(x)+atan(y)>3*pi/4-atan(w)/2, equivalently
+
+    2*atan(w)+4*atan(x)+4*atan(y)>3*pi.
+
+This is (322.5) at the endpoint. The original u has a strictly larger
+rho transverse sum by Section 323, so (322.5) holds there as well.
+
+Its actual charge consists of one axial D slot of tau, two V and two
+D slots of rho, and two V and two D slots of eta. The owners are
+distinct, and the paired repetitions are distinct original occurrences.
+Thus the charge is a subset of the full genuine V/D sum, at most
+pi+2*pi. Additional owners cannot decrease it. This contradiction
+proves the theorem.
+

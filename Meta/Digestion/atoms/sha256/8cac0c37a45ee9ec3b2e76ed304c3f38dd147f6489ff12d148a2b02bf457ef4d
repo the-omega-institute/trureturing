@@ -1,0 +1,22 @@
+**Proposition 3.5 (the acquired CAP-to-word join).** At a completed CAP row
+ACK followed by source-token/idle return, importing closed 28 and 29 and
+applying Definitions 3.3–3.4 returns exactly the actor's complete delivered
+rows and enumerated dependencies, with their actual origins and event order.
+It restores those two native heads. For the acquired seed/boot material on 26 the initial importer uses its
+actual delivery descriptor, complete kind/status/origin and the copied 26
+symbol word. This initial word is retained in the immutable manifest;
+later cycle parsing need not reread a seed tape through a changed head.
+
+Proof. CAP Definition 6.3 requires these payloads, local descriptors,
+statuses and joined checks before the row ACK. Its Theorem 6.4 gives
+immutable payload equality and origin preservation. During this importer
+no CAP writer extends either source tape. Proposition 3.2 therefore copies
+their exact physical symbols. The ten-field/seal parser consumes their
+actual grammar, with the correct one-based descriptor ordinal. Base
+cancellation and length Take extract precisely the local interval,
+including its distinct following sep and status test. The row field
+counts and predecessor checks are the supplied CAP codecs, so field
+inversion identifies the same rows and dependencies. All raw source
+states reconstructed later come from replay, not from asserting that
+archive 28 is a private-source snapshot. ∎
+

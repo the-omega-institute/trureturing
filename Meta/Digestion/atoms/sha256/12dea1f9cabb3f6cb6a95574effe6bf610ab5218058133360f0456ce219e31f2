@@ -1,0 +1,13 @@
+### 98.4. The reciprocal phase radical
+
+Write \(q(D)=q(\mathcal R(D),D)\). Its two positive terms are squared norms, and its mixed term uses only \(S=\operatorname{supp}a\):
+\[
+\begin{aligned}
+q(D)&=m(D_S)+\| (G^+)^{1/2}\mathcal R(D)a\|^2
+ +\|(H^+)^{1/2}DB_0^{1/2}\|_{\mathrm F}^2,\\
+m(X)&=-\sum_{\substack{i,j\in S\\f(i)\ne f(j)}}
+\frac{\overline{a_i}a_jG_{ij}}{H_{ij}^2}X_{ij}^{\,2}.
+\end{aligned}\tag{21}
+\]
+All square roots of PSD matrices are the positive ones.
+

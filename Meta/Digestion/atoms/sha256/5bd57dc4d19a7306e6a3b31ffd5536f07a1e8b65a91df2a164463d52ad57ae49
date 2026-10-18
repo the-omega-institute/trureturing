@@ -1,0 +1,22 @@
+**Theorem 20.3 (compact exhaustion and matching full loss).** For all sufficiently large $R$, with $L=3R/c_r$,
+
+$$
+\boxed{\quad
+\mathfrak G(L)\le\delta_h-\delta_R=h_0[v-v_R]
+ \le\operatorname{Err}_R=O(R^{-3}),\qquad
+\delta_R\uparrow\delta_h,\quad \delta_h-\delta_R=\Theta(R^{-3}).\quad}
+\tag{20.5}
+$$
+
+Here $\mathfrak G$ is exactly the height-exterior gain of Exterior response gain, Theorem 7.1.
+
+Proof. Equation (19.1) makes $v_R$ the $h_0$ orthogonal projection of $v$. Pythagoras proves the loss equality. Its best-approximation property and $\zeta_Rv\in\mathcal H_R^c$ give
+
+$$
+\delta_h-\delta_R\le h_0[v-\zeta_Rv]=h_0[wv]\le\operatorname{Err}_R.
+$$
+
+Lemmas 19.2 and 20.1 give the asserted upper power. The spaces $\mathcal H_R^c$ are nested and their union contains every real odd compact core vector. Thus the projections converge in energy and $\delta_R\uparrow\delta_h$.
+
+Every core test supported in $|r|>L$ has disjoint support from $\mathbb B_{3R}$, since $\mathfrak d\ge c_r|r|$. Locality and closure give $h_0(v_R,u)=0$, hence $e(u)=h_0(v-v_R,u)$. Cauchy–Schwarz bounds $e(u)^2/h_0[u]$ by the loss. Supremizing and using line optimization, together with the real/complex exterior equivalence in the cited theorem, gives $\mathfrak G(L)\le\delta_h-\delta_R$. That theorem supplies $\mathfrak G(L)=\Theta(L^{-3})$ and the matching lower power follows. This compares the full compact-domain loss with the existing exterior gain; it asserts neither $\delta_h=\delta_R+\mathfrak G(L)$ nor an optimal leading constant. $\square$
+

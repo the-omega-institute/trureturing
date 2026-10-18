@@ -1,0 +1,27 @@
+**引理 10.1（The third missed-set class forces safe later words and separates first queries）。** Under the full Definitions 3.1 and 5.1, assume $|\Lambda[O]|=3$. In every correct deadline-four GLOBAL controller, the first suffix charge $q_1$ is nonconstant on $O$. There are $w,d\in\mathbb F_2$ such that
+
+$$
+M=\{j\in O:q_1(j)=d\}
+\quad\text{contains both labels of }\lambda_w.
+\tag{10.1}
+$$
+
+The words at absolute indices two and three succeed on every still-active successful $C$/lower-label source. If $r\ge3$, the mandatory root-zero first-query rows $b_0,b_1$ are distinct, regardless of the controller's other row count or root sharing.
+
+Proof. The root is $1^m$ and the first common suffix $B$ begins zero, by the same mandatory maximal-tail argument as in Theorem 9.2. Hence every active successful $C$/lower source has tail $\tau(B)$. Every literal word at index two has charge zero on $O$, by the full physical window (1.5).
+
+If $q_1$ were constant on $O$, both component tables, which are nonconstant on $O$, would retain a mixed common-tail support after $B$. Its index-two word cannot reject or distinguish it. The index-three word must also succeed on a mixed support. The only further successful distinction on $O$ would be its single binary charge at index three, allowing at most two joined classes. A phase could not evade this argument by stopping earlier: the common earlier responses give the same stopping decision to every phase in that value fibre. Thus $q_1$ is nonconstant. If every $q_1$ fibre on $O$ were homogeneous in both components, the join would again have at most two classes. This proves (10.1).
+
+Its actual sources share one raw scalar $e=w\oplus d$, one control successor after $B$, and the tail $\tau(B)$. Their next word cannot reject them, and its charge zero on $O$ leaves them mixed. They therefore issue index three, whose word cannot reject them either. Safety depends only on the common literal word and incoming tail, not on phase or value. Since GLOBAL uses these same words for every active source, all active successful $C$/lower sources succeed at both indices. After a safe all-one word the tail is the common incoming tail plus $m$; after a safe word containing zero it is the literal terminal tail. This establishes common tails and safety without excluding either kind of word. Homogeneous rejection is allowed in the competitor model; it cannot occur on these active sources at these two indices.
+
+Suppose $b_0=b_1=b$. At an $O$ phase $j$, the raw response after $B$ is $v\oplus q_1(j)$, and the next response is that same scalar. Subsequent control is therefore a function of this raw bit. For each $e,t\in\mathbb F_2$ write $D_e(t)$ for its output when the index-three difference is $t$; if it stopped earlier, extend its actual output constantly. This merely names the fixed control updates and includes delayed stops. Writing $q_3$ for the common last charge, correctness gives
+
+$$
+\Lambda(j)=
+\bigl(D_{q_1(j)}(q_3(j)),D_{1\oplus q_1(j)}(q_3(j))\bigr)
+\quad(j\in O).
+\tag{10.2}
+$$
+
+For a fixed $t$, this pair is one of the two orientations of $(D_0(t),D_1(t))$. Put $U_v=\lambda_v[J]$. If both orientations belong to $U_0\times U_1$, both entries belong to $U_0\cap U_1$. For $r\ge3$ this intersection has at most one label, so the two orientations are identical. Each $t$ can consequently contribute at most one admissible ordered pair, giving $|\Lambda[O]|\le2$, a contradiction. This excludes shared first queries for $r=3,4$. For $r=2$ the orientation argument does not give that conclusion: two orientation families can contain three pairs. ∎
+

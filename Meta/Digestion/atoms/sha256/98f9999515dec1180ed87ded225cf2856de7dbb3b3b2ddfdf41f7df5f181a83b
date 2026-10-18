@@ -1,0 +1,146 @@
+**Theorem 277.1 (All coefficient totals and one residual).**
+Fix $L\ge7$, $3<r<k<\ell<m\le L$, $s\ge0$ and
+$0\le h\le47s/13$. Let $y$ be any full nonnegative score with
+
+$$
+\beta_1=-s,\quad\beta_3=s,\quad\beta_r=-s,\quad
+\beta_k=s,\quad\beta_\ell=h,\quad\beta_m=s,
+\qquad\beta_i=0\text{ otherwise}.
+\tag{277.1}
+$$
+
+Here $m$ is the final selected address, rather than the suffix
+cardinality $L-2$ used in the surrounding sections.
+There is no restriction on its word support, event placements,
+$A/C$ cancellations, $P$, $T$, baseline or actual total $K$.
+Necessarily $K\ge5s+h$. One explicit full $V\ge0$ satisfies
+
+$$
+\Delta_N(V)=0,\qquad\sigma_H(Qy-QV)=s,
+\qquad\Delta_O(y)\ge s.
+\tag{277.2}
+$$
+
+Consequently every unit-$O$ input in this entire class admits the
+single jointly paid certificate $(V,\theta=s)$, with
+$\Delta_N(V)+\theta=s\le1$.
+For every same $(b,e)\in H_N$ and every same complete feasible
+$\lambda$ of mass $M\ge1$, a unit-$O$ input in this class has
+$F_y(b,e)\le s\le1\le M$, and hence cannot be a strict separator.
+
+**Proof.** Put $J_*=(3,r,k,\ell,m)$, and for a zero set $Z$
+let $w(Z)$ be the full $L$-word with precisely those zeros.
+Use the existing five-coordinate zero-cost ray from the balanced
+capacity construction of Sections 201.2 and 204.2:
+
+$$
+C_{w(\{j\})}(Y_*)=1\ (j\in J_*),\qquad
+P_{w(\{a\}\cup Z)}(Y_*)=1/6
+\ (a\in\{1,2\},\ Z\subset J_*,\ |Z|=3),\qquad T(Y_*)=1.
+\tag{277.3}
+$$
+
+All unspecified scores are zero. Giving each three-subset of five
+coordinates weight $1/3$ has total $10/3$, zero marginals two,
+and pair cells $(1,1,1,1/3)$: there are respectively
+$10,6,3,3,3,1$ subsets for the total, a fixed zero, and the four
+pair conditions. Thus
+$QY_*=(1_{J_*};28/3)$ and $W_{Y_*}=13/3$.
+
+To consume the zero-cost ray on the complete catalog, zero
+dominates each label separately on every cell. On $(1,2)$ its
+nonempty-cell rewards are $5/3,5/3,1$; early labels earn subsets
+of these pair rewards, and each late correct label earns at most
+one in $11$. On an early/selected-late pair its four rewards are
+$1,2/3,1,5/3$. The queried late correct label earns one in $10$,
+and each other selected late correct label earns one in $11$.
+On two selected late coordinates the zero rewards are
+$1,1,1,4/3$; the two queried correct labels occupy $01,10$,
+and all other correct labels occupy $11$, each with reward one.
+Other numerical labels earn zero, while remaining legal.
+An inactive coordinate is one on every scored word. A query there,
+or a shorter, repeated or ignored schedule, gives a coarsening of
+these partitions. Summing the label inequalities over merged cells
+preserves domination, also under $O$ stopping.
+Constant zero earns $13/3$, so
+$B_N(Y_*)=B_O(Y_*)=W_{Y_*}=13/3$.
+This is an application of that existing ray, not an additional
+standalone capacity result.
+
+Let $t=(s+h)/5$ and choose the single score $V=tY_*$.
+For every full input, $K\ge\sum_i|\beta_i|=5s+h$ by summing
+$|C_i-A_i|\le C_i+A_i$ over its class totals.
+Constant zero minus the input's own baseline is
+$-\beta_1-\beta_2=s$, giving $\Delta_O(y)\ge s$.
+
+For $(b,e)\in H_L$, let $x=(b_3,b_r,b_k,b_\ell,b_m)$, a
+decreasing nonnegative vector. The actual signed residual is
+
+$$
+F_{Qy-QV}=s+s(b_3-b_1)+\sum_{i=1}^5a_ix_i-(K-28t/3)e,
+\quad a=(-t,-s-t,s-t,h-t,s-t).
+\tag{277.4}
+$$
+
+Its five coefficient prefix sums are
+$-t,-s-2t,-3t,h-4t,0$.
+They are nonpositive: $h\le47s/13<4s$ unless $s=h=0$,
+and $h-4t=(h-4s)/5$.
+Abel summation, with $x_6=0$, gives
+$\sum_ia_ix_i=\sum_{j=1}^5(\sum_{i\le j}a_i)(x_j-x_{j+1})\le0$.
+Also
+
+$$
+K-28t/3\ge5s+h-\frac{28(s+h)}{15}
+              =\frac{47s-13h}{15}\ge0.
+\tag{277.5}
+$$
+
+Since $b_3\le b_1$ and $e\ge0$, (277.4) is at most $s$.
+The auxiliary hull origin attains $s$, so its support is exactly
+$s$, including $s=h=0$, $h=47s/13$ and all spare $K$.
+That origin evaluates closed-hull support; it is not an original
+positive-tail attainer.
+
+For unit-$O$ input the constant-zero lower bound implies
+$0\le s\le1$. Set $\theta=s$; the one score $V$ has zero
+$N$ cost and its one signed residual has support $s$.
+At $\theta=1$, nonzero zero-cost $V$ remains allowed.
+For the same full feasible $\lambda$,
+
+$$
+F_{Y_*}(b,e)\le Y_*G_N\lambda
+ =\sum_D\lambda_D(Y_*z_D-W_{Y_*})\le0.
+\tag{277.6}
+$$
+
+Add the residual estimate to obtain $F_y\le s$.
+All rows belong to this one allocation; no normalization or
+independent component minimum was used. $\square$
+
+**Mathematical scope 277.2 (Reuse and the sufficient threshold).**
+The old five-coordinate ray receives no additional capacity content
+from (277.3). The assertion is its explicit use with one signed
+residual for every full input (277.1), every actual $K\ge5s+h$
+and the stated larger $h$ interval. In particular the exact-$Q$
+fibre $K=6s+h$, $0\le h\le s$ of Section 269 is already covered
+with budget $s$, without requiring $Q(V)=Q(y)$ or its displayed
+exact-$Q$ price $4s/3$.
+The number $47/13$ is sufficient for this payer; no optimal
+threshold, exact-$Q$ minimum or universal input reduction is claimed.
+For example the published score $y=3Y/4$ of Proposition 269.3
+has $s=h=3/4$, $\Delta_O(y)=1$ and raw $\Delta_N(y)=7/4$.
+The present choice has $\Delta_N(V)=0$ and $\theta=3/4$,
+whereas its published exact-$Q$ replacement has cost one.
+This consumes that example to compare the two certificate budgets;
+its support-maximizing $N$ column is not a cap-feasible primal
+attainer.
+All original competitor words, labels, independent union rows and
+positive rows remain in (277.6). Fixing unused bits on the support
+of a dual score does not restrict source words or competitor
+addresses. $V$ is a dual score, not an acquisition probability law.
+Original applications use the exact feasibility suppliers and actual
+tails of Mathematical scope 273.3, with the displayed addresses
+inside the finite theorem's length range. No stopped primal
+attainer for every profile follows from this scoped input theorem.
+

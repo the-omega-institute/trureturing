@@ -1,0 +1,36 @@
+**Definition 9.2 (two query/output contracts).** Call the original
+contract of Definition 1.4 $\mathsf U$. For each complete attained
+code $e$ and later public target $p$, it selects zero Reads or one
+word $w(e,D,p)$ before receiving any count. After that observation
+it must answer every subsequently supplied authentic $k\ge0$.
+
+Define a relaxed comparison task $\mathsf P$ with exactly the same
+source, preparation, handoff and code accounting. After export it
+receives the pair $(p,k)$, with $p\in\mathcal P_D$ and authentic
+$k\ge0$. It selects zero Reads or one word $w(e,D,p,k)$ and need
+output only $r_{\rho^k t}(p)$ for that supplied count. It need not
+leave a predictor correct at other counts. Both tasks require one
+common preparation, independent of both $p$ and $k$, correct for
+every $t\in\mathcal F_D$ and every allowed later input. Neither
+permits access to the preparation transcript.
+
+For a fixed fiber and target, the relevant distinction is
+
+$$
+\begin{aligned}
+\mathsf U &: \quad \exists w\ \forall k\ge0\ \exists\delta_k
+ \ \forall t\text{ in the fiber},\quad
+ \delta_k(r_t(w))=r_{\rho^k t}(p),\\
+\mathsf P &: \quad \forall k\ge0\ \exists w_k\ \exists\delta_k
+ \ \forall t\text{ in the fiber},\quad
+ \delta_k(r_t(w_k))=r_{\rho^k t}(p).
+\end{aligned}
+\tag{LTR.24}
+$$
+
+Here a constant experiment represents zero Reads. In $\mathsf U$
+the decoder family has the effective factor realization (LTR.4);
+the query itself cannot depend on $k$. Revealing a count early while
+still requiring the resulting predictor to work for all counts does
+not change the common-query requirement.
+

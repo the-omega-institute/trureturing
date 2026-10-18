@@ -1,0 +1,28 @@
+**Theorem 2.2 (native validation facts within the concurrent model).**
+For an originally present $p$, its subtree after $k$ updates is
+$\rho^k(u|_p)$. Present addresses persist, as do branch replies.
+If $r_u(p)=\ell\in\{\alpha,\beta\}$, then
+
+$$
+r_{\rho^k u}(p)=\ell\quad\Longleftrightarrow\quad k=0.
+\tag{CNA.3}
+$$
+
+Two authentic equal leaf replies at the same literal therefore enclose
+zero global updates, including updates during intervening local work.
+Equal branch or equal absent replies have no such implication.
+
+**Proof.** The subtree statement is the supplied
+[NativeDepthPatterns][NDP] *original_present_transport*.
+Homomorphism preserves ancestors and every pairing. At a reached alpha
+leaf successive root replies are alpha, beta, then branch forever;
+at a reached beta leaf they are beta, then branch forever.
+This proves (CNA.3). A joint-history segment is exactly an iterate,
+whose exponent counts all global updates in it, independently of their
+actor. No exponent need be decoded to infer that it is zero.
+For the negative claims, the root of $\langle\alpha,\alpha\rangle$
+stays branch after one update; $L$ is absent both at alpha and its
+one-step beta successor. These are consequences of native transport
+and constructor evolution; the concurrent certificate is their consumer.
+$\square$
+

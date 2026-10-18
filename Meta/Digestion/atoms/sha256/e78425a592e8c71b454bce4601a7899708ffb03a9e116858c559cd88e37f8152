@@ -1,0 +1,29 @@
+**Lemma 25.1 (An exact bond-two legal projector).**
+On n occupation bits let
+
+$$
+Q_n=\sum_{w\in B_n}|w\rangle\langle w|,
+\quad
+A_0=\begin{pmatrix}1&0\\1&0\end{pmatrix},\quad
+A_1=\begin{pmatrix}0&1\\0&0\end{pmatrix},\quad
+L=(1,0),\quad R=(1,1)^{\mathsf T}.
+\tag{25.1}
+$$
+
+Then $LA_{w_1}\cdots A_{w_n}R$ is one for a
+legal word and zero for an illegal word. Hence $Q_n$
+is a diagonal matrix-product operator of bond at most
+two. Applied to an MPS of bond at most D, it gives
+an MPS of bond at most 2D.
+
+Proof. Before rejection, the row state is $(1,0)$
+if the preceding bit is zero or absent, and $(0,1)$
+if it is one. A zero sends either row to $(1,0)$;
+a one sends the first to $(0,1)$ and the second to
+zero. Zero remains zero, and R accepts either
+unrejected row. This proves the indicator identity
+for every word length. The diagonal MPO uses these
+matrices with equal input/output bit labels. Its
+product with the MPS uses tensor-product virtual
+indices, of size at most 2D. $\square$
+

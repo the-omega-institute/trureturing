@@ -1,0 +1,33 @@
+**Definition 1.2 (Boolean execution model).** A graph $P$ has a finite
+set $Q$ of installed running states, two distinct output terminals
+$\mathsf0,\mathsf1$, a fixed running start, a fixed coordinate
+$i(q)\in[n]$ at each $q\in Q$, and two fixed successors
+$\delta(q,0),\delta(q,1)$. Its entire changing configuration is its
+current state. On $\theta\in\{0,1\}^n$, a visit to $q$ reads
+$\theta_{i(q)}$, costs one query and $c_{i(q)}$ letters, and follows
+the indicated successor. Set $m=|Q|$; even unused installed states count.
+
+Unless explicitly called a relaxation, $P$ must terminate on every
+input with output $\mathbf1_{\{|\theta|\ge k\}}$, and must satisfy
+simultaneously
+
+$$
+t_P(\theta)\le n,\qquad J_P(\theta)\le W
+\quad(\theta\in\{0,1\}^n).
+\tag{SI.3}
+$$
+
+Arbitrary coordinate orders, sharing, repeated queries, paid queries
+after certification and syntactic cycles are allowed. Only actual runs
+must terminate. A path assigning two different replies to the same
+coordinate need not be an actual run. No counter, clock, history,
+computed-address register or other changing configuration is supplied.
+
+Write
+
+$$
+K=k,\qquad L=n-k+1,\qquad
+V=\{0,\ldots,K-1\}\times\{0,\ldots,L-1\},\qquad G=KL.
+\tag{SI.4}
+$$
+

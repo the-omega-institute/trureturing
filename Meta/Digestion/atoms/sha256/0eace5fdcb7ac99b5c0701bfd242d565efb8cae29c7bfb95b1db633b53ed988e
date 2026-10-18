@@ -1,0 +1,16 @@
+**Definition 8.2 (whole-fiber receipt and consumer).** Fix one of the two target
+types `INITIAL-SYNTAX+` or `INITIAL-qH+`, with target functions respectively
+$s\mapsto s$ and the unchanged $s\mapsto q_H(s)$ of PR57.02. From the surviving
+initial sources $F$, accept a proposed $\tau$ exactly if structural/controller
+checks for the chosen mode succeed, $F\ne\varnothing$, and every $s\in F$
+has that target value $\tau$. Empty or ambiguous fibers refuse.
+
+The receipt contains the extended model/type, immutable preparation identity,
+initial-target type, complete $\tau$, frozen-prefix end, prior description,
+verification occurrence and actual snapshot reference. Copy the receipt and
+any required source serialization through newly allocated mailbox and consumer
+destination. The consumer checks its exact type, identity, prior and snapshot
+references and complete payload before sealing/serially outputting $\tau$.
+These are distinct extended receipts; the unchanged PR57.D8 parser/consumer
+is not asserted to recognize TagRead or syntax receipts.
+

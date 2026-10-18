@@ -1,0 +1,9 @@
+# Acquired calibration of intrinsic depth on every native tree
+
+> This volume is reference input with ordinary mathematical proofs. Lean
+> declarations and their accepted axiom closures remain the mathematical
+> source of truth in the repository. The locator convention is `generic-v1`.
+> After integration, existing bytes are preserved; corrections and extensions
+> belong after the final append anchor. The results here have not been
+> checked by the Lean kernel.
+

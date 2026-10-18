@@ -1,0 +1,43 @@
+**Theorem 14.1 (real three-Kraus family and its joint complement).** In the fixed original passive output basis $e_0,\ldots,e_4$, let $0\leq w\leq1$, $0\leq\theta\leq\pi/4$ and $0\leq\beta\leq1/2$. Define
+
+$$
+\begin{aligned}
+K_0={}&\sqrt a\cos\theta(e_0\langle0|+e_1\langle1|)
+       +\sqrt w\,e_4\langle2|,\\
+K_1={}&\sqrt\beta(e_2\langle0|+e_3\langle1|)
+       +\sqrt{1-w}\,e_0\langle2|,\\
+K_2={}&\sqrt a\sin\theta(-e_1\langle0|+e_0\langle1|).
+\end{aligned}
+\tag{R.55}
+$$
+
+These define an actual original-class CPTP encoder. In its real environment basis $\epsilon_0,\epsilon_1,\epsilon_2$, put $z_\theta=\cos\theta\,\epsilon_0+i\sin\theta\,\epsilon_2$. Its joint data are
+
+$$
+\begin{aligned}
+\tau&=a|z_\theta\rangle\langle z_\theta|+\beta|\epsilon_1\rangle\langle\epsilon_1|,\\
+C&=\sqrt{a(1-w)/2}\,|z_\theta\rangle\langle\epsilon_1|,\\
+\sigma&=w|\epsilon_0\rangle\langle\epsilon_0|+(1-w)|\epsilon_1\rangle\langle\epsilon_1|,\\
+S&=w|\epsilon_0\rangle\langle\epsilon_0|,\qquad
+f(\tau,\bar\tau)=a\cos(2\theta)+\beta=1-2a\sin^2\theta.
+\end{aligned}
+\tag{R.56}
+$$
+
+**Proof.** Different columns of each $K_\alpha$ are orthogonal. Their summed squared norms are $a\cos^2\theta+\beta+a\sin^2\theta=1$ for each of the first two inputs and $w+1-w=1$ for the third. Thus $\sum_\alpha K_\alpha^TK_\alpha=I_3$ on the whole input space.
+
+For $u_\pm=(e_0\pm ie_1)/\sqrt2$ and $v_\pm=(e_2\pm ie_3)/\sqrt2$, the three phase images are respectively $\sqrt a\cos\theta\,u_\pm$, $\sqrt\beta\,v_\pm$ and $\pm i\sqrt a\sin\theta\,u_\pm$. Therefore
+
+$$
+N(\chi_\pm)=a|u_\pm\rangle\langle u_\pm|+\beta|v_\pm\rangle\langle v_\pm|,
+$$
+
+with difference spectrum $(a,\beta,0,-\beta,-a)$. The zero weight is simply omitted at beta zero. In the same dilation,
+
+$$
+V\chi_+=\sqrt a\,u_+\otimes z_\theta+\sqrt\beta\,v_+\otimes\epsilon_1,
+\quad V|2\rangle=\sqrt w\,e_4\otimes\epsilon_0+\sqrt{1-w}\,e_0\otimes\epsilon_1.
+$$
+
+Taking the two partial traces gives the first three blocks in (R.56). On the support of $\tau$, $C^\dagger\tau^+C=(1-w)|\epsilon_1\rangle\langle\epsilon_1|/2$; its conjugate is identical, also at beta zero. This gives $S$. Root fidelity adds on the two orthogonal environment blocks and $\langle z_\theta,\bar z_\theta\rangle=\cos2\theta\geq0$, giving the last formula. The three-Kraus list constructs this family; it is not a parameterization or rank restriction of the full original class. $\square$
+

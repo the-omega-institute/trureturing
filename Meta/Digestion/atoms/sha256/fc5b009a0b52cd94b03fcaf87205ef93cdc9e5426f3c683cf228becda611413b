@@ -1,0 +1,2 @@
+**假设 27.3（共同实现的桥接义务）。** 将回流核、最小边界、路径钟及信号锥组合为同一物理模型，须同时指定：补充坐标的实际取得程序；内部传播和可控操作；噪声、档案与误差的联合来源；目标和概率律；钟校准及跨观察者转换。记忆核的数值识别可参考 [Data-driven learning for the Mori–Zwanzig formalism: a generalization of the Koopman learning framework](https://arxiv.org/abs/2101.05873)，但拟合既有序列不代替全部声称保留操作上的充分性。
+

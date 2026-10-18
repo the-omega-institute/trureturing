@@ -1,0 +1,19 @@
+**Theorem 3.2 (Credited positive-forest comparison).** Let $P,Q$ be stochastic matrices on the same set of at most $M$ states, with distinct common absorbing labels $d_0,d_1$. If $G\ge1$ and
+
+$$
+G^{-1}P(x,y)\le Q(x,y)\le GP(x,y)\quad(x,y\in\mathcal S),
+\tag{3.3}
+$$
+
+their actual eventual $d_1$-hitting functions satisfy
+
+$$
+\|h_P-h_Q\|_\infty
+\le\frac{G^{M-2}-1}{G^{M-2}+1}.
+\tag{3.4}
+$$
+
+No global absorption, irreducibility or positive-edge lower bound is required.
+
+This is G, Theorem 5.1. Its mechanism is the positive directed-forest representation after making every state with no path to $d_1$ a zero boundary. Every forest has $n\le M-2$ edges. Both the marked forest sum and its complementary sum are multiplied by factors in $[G^{-n},G^n]$. Their odds therefore change by at most $G^{2n}$; maximizing the difference of the corresponding two probabilities gives $(G^n-1)/(G^n+1)$. Zero marked complements, boundary states and $n=0$ are included in that theorem. This is a supplied comparison theorem, with no new forest-optimality assertion.
+

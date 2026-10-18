@@ -1,0 +1,39 @@
+**Definition 1.3 (complete targets and error).** Put
+
+$$
+\begin{aligned}
+\varsigma_y&=y/(y+6),& f_y(t)&=6y/(y+6t)^2,\\
+d_y&=\left(y/128,\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),&
+(B_y)_{ij}&=\sqrt{d_{yi}d_{yj}},\\
+w&=(0,1/4,1/2,1/4,0),&P_f&=|f\rangle\langle f|.
+\end{aligned}
+\tag{CA.5}
+$$
+
+The target $\Omega_{y,e,n}$ has live block
+$EU_{e,n}B_yU_{e,n}^\dagger E^\dagger$ and, separately at each original
+label $j$, the measure $w_j f_y(t)dt\,P_f$. Exact time is elapsed
+$t\in[0,1]$, equivalently absolute time $6+t$. Labels $1,3$ stay distinct;
+$0,13$ stay named zero-density sectors. The target has live trace
+$\varsigma_y$ and failure trace $1-\varsigma_y$.
+
+The original common processor receives only the sole specimen and fixed
+common metadata/blanks, calibration, source/epoch identity, permissions,
+controller and aligned clock. There is no readable history, waveform,
+source-dependent installed programme or extra specimen. Its original
+objective remains
+
+$$
+\mathcal E(\Phi)=\max_{y,e,n}\frac12
+ \|\Phi(E\rho_{y,e,n}E^\dagger)-\Omega_{y,e,n}\|_{1,\mathrm{cq}},
+\qquad \mathcal E_* =\inf_{\Phi\ \mathrm{common\ CPTP}}\mathcal E(\Phi).
+\tag{CA.6}
+$$
+
+The norm adds the coherent live trace norm and the variation trace norms
+in all separately labelled time sectors. A common dominating scalar
+measure includes atoms and singular continuous parts. Abort, rejection,
+wrong support and all zero-target extra outcomes remain counted. First
+executed failure is absorbing and old stopped archives remain in their
+own branches. No new acquisition event is conditioned upon.
+

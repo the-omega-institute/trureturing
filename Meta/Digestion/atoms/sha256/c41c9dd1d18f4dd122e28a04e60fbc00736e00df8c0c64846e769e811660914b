@@ -1,0 +1,43 @@
+**Lemma 15.1 (one acquired leaf calibrates the invocation origin).**
+For every finite cut $P$, an authentic protected record
+$\operatorname{Read}(a)=\ell\in\{\alpha,\beta\}$, with the complete
+literal $a$ and its label retained, suffices for an effective continuation
+recovering the entire invocation tree, hence its complete row, under
+Assumption 14.1.
+
+**Proof.** After Release run the existing first-leaf full-tree acquisition
+of Definitions 3.1–3.2 from its own fresh stack and transcript. Theorems
+3.3 and 5.2 give a retained actual tree $T=\rho^n u$ at its validation
+Read and finite-interference termination. Here $n\geq0$ is initially
+unknown. Original-present transport, Theorem 2.2, gives
+$T|_a=\rho^n\ell$ because the protected record was acquired at invocation.
+Use the already supplied right clock (CNA.15), with
+$\eta(\alpha)=0$ and $\eta(\beta)=1$, to compute
+
+$$
+n=c(T|_a)-\eta(\ell).
+\tag{CNA.25}
+$$
+
+Both operands are computed from retained finite data. This is the actual
+invocation-to-validation update count; it is not a timestamp, a scheduler
+observation or an extra port. The original leaf address stays present.
+
+For executable inversion reuse the finite parser *delta* and its private
+*delta_sigma* proof in [NativePredecessorRowRecovery][NPR], specialized to
+rows with no hole markers. On plain trees it sends $\beta$ to $\alpha$,
+rejects $\alpha$, sends $\langle\beta,\alpha\rangle$ to $\beta$, and
+otherwise recursively pairs two successfully parsed children. The special
+pair case is disjoint from a pair of images because a root $\alpha$ is
+not in the image. Its actual-image law is $\delta(\rho t)=t$; the image
+alternatives are also supplied by [ISC] *pair_image*. Apply this parser
+$n$ times to the saved $T$. Every application succeeds and the result is
+$u$. This is local computation on records, not a reverse update of the
+register. Extract $C_P(u)$, all reached hole addresses, every blocking
+leaf, and the complete equality/disequality partition by structural
+comparison of the recovered subtrees, as in Definition 1.2.
+
+Subsequent writer updates, including updates during parsing and before
+Return, change neither the saved $T$ nor the recovered $u$. No update
+count or finite interference bound is an input to the program. $\square$
+

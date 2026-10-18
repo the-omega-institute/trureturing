@@ -1,0 +1,17 @@
+**Definition 3.1 (Candidate subtree masses).** Put
+
+$$
+\begin{aligned}
+\mathcal R&=\{0,2\eta^2,\eta/2,\eta c,\eta\},\\
+\mathcal S&=\{0,\eta/2,\eta c,\eta,c,v,w,z\}.
+\end{aligned}
+\tag{3.1}
+$$
+
+For root type $\rho\in\{I,D\}$, let $U_\rho(r)$ be the
+largest correct mass available from its first-one subtree when that
+subtree returns source mass $r$. Define $V_\rho(s)$ analogously
+on first zero. The upper bounds apply to every root of the stated
+type. Section 4 realizes all their entries at a common specified
+root of that type.
+

@@ -1,0 +1,22 @@
+**Definition 7.1 (positive-input functionals).** For $\rho\succeq0$
+in $M_3$ define real scalars
+
+$$
+\begin{aligned}
+A_r(\rho)&=\operatorname{tr}(K_r^\dagger K_r\rho),&
+C(\rho)&=\operatorname{tr}(S^\dagger S\rho),&
+U_r(\rho)&=\operatorname{Re}\operatorname{tr}(K_r^\dagger S\rho),\\
+\eta(x)&=\frac{R-1}{2(R-x^2)},&
+I_R&=[-1/\sqrt R,1/\sqrt R],\\
+b_r(\rho)&=\min_{x\in I_R}\eta(x)
+\bigl(A_r(\rho)+C(\rho)x^2-2U_r(\rho)x\bigr),&
+B(\rho)&=b_+(\rho)+b_-(\rho).
+\end{aligned}
+\tag{RE.42}
+$$
+
+The denominator is positive on this closed interval since $R>1$.
+For $\rho=0$ set $B(0)=0$, consistent with the displayed minimum.
+The letter $B$ in this scalar envelope is distinct from the target
+matrices $B_y$.
+

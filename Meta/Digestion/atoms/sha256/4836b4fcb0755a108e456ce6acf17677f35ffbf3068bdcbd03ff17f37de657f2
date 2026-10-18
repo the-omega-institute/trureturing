@@ -1,0 +1,4 @@
+**Corollary 12.3 (The envelope does not determine the frontier).** If $a>2r$, the common upper bounds $k^d\le F_i(k)\le Bk^d$ and $0\le F_1/F_0-1\le c k^{-r}$ do not imply the persistent pair's matched frontier.
+
+Proof. Both (1.1) and (12.1) obey those bounds. For the persistent pair, a finite growing budget of order $s^{-r}$ attains paid order $s^{-(2r+1)}$ under both sources. For the sparse pair, every compliant finite budget pays at least a positive multiple of $s^{-(a+1)}$. Since $a+1>2r+1$, these orders differ strictly. The exact persistent equality and its differentiated quotient contrast were used in Lemma 8.1; (12.2) provides neither. This is an obstruction to an envelope-only inference, and preserves all hypotheses of the persistent-pair theorem. $\square$
+

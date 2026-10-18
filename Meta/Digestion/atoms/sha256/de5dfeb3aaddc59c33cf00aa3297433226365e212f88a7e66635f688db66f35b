@@ -1,0 +1,20 @@
+**Lemma 11.2 (a demanded cell has two internal live children).** If
+$\Gamma_v$ contains an edge, both $v_0=(g,z+1)$ and $v_1=(g+1,z)$,
+where $v=(g,z)$, are distinct live cells in $V_B$.
+
+Proof. An edge has an eligible witness from Section 5. For its gaps
+$r,s$ put $\ell=n-b$. By (CL.14)–(CL.15),
+
+$$
+r,s\ge\max(2,\ell+1),\qquad g+r\le K,\quad z+s\le L.
+\tag{CL.44}
+$$
+
+Thus $g\le K-2,z\le L-2$, so both children are live. Furthermore
+$d(v)=g+z\le n+1-r-s$. If $\ell=0$, this is at most
+$n-3=b-3$. If $\ell\ge1$, it is at most
+$n-2\ell-1=b-\ell-1\le b-2$. In both cases $d(v)+1<b$.
+Their depths are above $a$ because $v$ is interior. This also covers
+the formal endpoint $b=n$. No such conclusion is asserted merely from
+an edgeless demand graph. $\square$
+

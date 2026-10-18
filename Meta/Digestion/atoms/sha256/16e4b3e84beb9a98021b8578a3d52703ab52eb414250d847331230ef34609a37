@@ -1,0 +1,41 @@
+## Proposition 9. Finite additive companion elimination
+
+Let \(A\) be an additive commutative group, \(J:A\to A\) an additive
+endomorphism, and \(q>0\). Define \(L_J:A^q\to A^q\) by
+\[
+(L_Jv)_0=v_0+J\left(\sum_{i=0}^{q-1}v_i\right),
+\qquad (L_Jv)_j=v_j+v_{j-1}\quad(1\le j<q).
+\]
+Set
+\[
+K_q=\{j:1\le j<q,\ q-j\text{ odd}\},\qquad
+s_q=\begin{cases}0&q\text{ even},\\1&q\text{ odd}.\end{cases}
+\]
+There are separate additive domain and codomain equivalences
+\(D,C:A^q\longrightarrow A\times A^{q-1}\), given by
+\[
+D(v)=\bigl(v_0,(v_j+v_{j-1})_{1\le j<q}\bigr),\qquad
+C(y)=\left(y_0-J\left(\sum_{j\in K_q}y_j\right),
+                  (y_j)_{1\le j<q}\right),
+\]
+such that
+\[
+C L_J D^{-1}(a,t)=\bigl(a+J(s_q a),t\bigr).
+\]
+No involutivity of \(J\) is required.
+
+Proof. The inverse of \(D\) is the recurrence
+\(v_0=a\), \(v_j=t_j-v_{j-1}\). The inverse of \(C\) adds
+\(J(\sum_{j\in K_q}t_j)\) to the initial coordinate and retains every
+tail coordinate. The adjacent pairs indexed by \(K_q\) partition all
+coordinates when \(q\) is even, and all except coordinate zero when
+\(q\) is odd. Hence
+\[
+\sum_{i=0}^{q-1}v_i=s_q v_0+
+       \sum_{j\in K_q}(v_j+v_{j-1}).
+\]
+Apply additivity of \(J\) and cancel the tail sum in the codomain shear.
+The tail equations are unchanged. These are separately defined domain and
+codomain equivalences, so this calculation asserts equivalence of an operator's
+domain and codomain, without a conjugacy conclusion.
+

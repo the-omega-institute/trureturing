@@ -1,0 +1,12 @@
+## 四、FIB 的末端边界：窗口语言、接缝与收敛盘
+
+供应卷的组成观察使用
+
+$$
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad M^2=M+I.
+$$
+
+这个 $M$ 更新原子组成；以下窗口计数矩阵更新语言的接缝状态，二者不是同一个数量更新任务。标准 $F_0=0,F_1=1$ 与 Fibonacci 矩阵的经典材料见 [Koshy 文献注](../../../Library/notes/koshy2001fibonacci.md)。
+

@@ -1,0 +1,58 @@
+**Convention 7.2 (primary literature and limits of transfer).** The
+following primary interfaces are credited at their stated scope.
+
+| Primary source | Correspondence and mathematical limit |
+| --- | --- |
+| Anna Gál and Peter Bro Miltersen, *The Cell Probe Complexity of Succinct Data Structures*, BRICS RS-03-44, introductory systematic model, [primary report](https://www.brics.dk/RS/03/44/BRICS-RS-03-44.pdf) | Systematic storage preserves input and adds an index. Here the stationary native source plays the preserved-input role and $E$ the index role. The native constructor array has grammar-constrained support and four-valued cells; all retained advice is available to the reader. Their bit-probe numerical bounds and query families are not transferred. |
+| Sumegha Garg, Songhua He, Yuanzhi Li, Periklis A. Papakonstantinou and Xin Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024v1](https://arxiv.org/html/2609.18024v1), Definition 2.1 and Lemma 2.5 | The code corresponds to a sketch supplied before input-coordinate probes. Here every request has its own target, all use the same acquired sketch, and the one probe is a native constructor reply. Their conditional joint min-entropy lemma has additional hypotheses after partial assignments. No such entropy premise or matrix-powering bound is imported. |
+| Tomasz Gogacz and Szymon Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, [arXiv:1512.01808v1](https://arxiv.org/html/1512.01808v1), Theorem 1 and Corollary 1 | A fixed schema's functional dependencies become zero conditional-entropy constraints on a common relation; the almost-entropic cone and its Shannon relaxation have distinct roles. Here the witness dependencies vary with the attained code, target and block length. Theorem 2.2 bounds their weighted native relations directly. The database theorem does not provide its reply-capacity hypothesis or a native uniform block error. |
+| Ali Makhdoumi, Shao-Lun Huang, Muriel Médard and Yury Polyanskiy, *On Locally Decodable Source Coding*, [arXiv:1308.5239v2](https://arxiv.org/html/1308.5239v2), §II, Definition 1 | Their local decoder reads a bounded subset of a compressed bit string, with distributional block-error criteria. Here the complete retained code is available and the sole later probe reads the original stationary tree, with correctness for every source. Their locality-rate converses are not native converses. |
+| Nicolas Charpenay, Maël Le Treust and Aline Roumy, *On the Linearization of Optimal Rates for Independent Zero-Error Source and Channel Problems*, [arXiv:2407.02281v2](https://arxiv.org/html/2407.02281v2), introduction and graph-product discussion | Their pair-confusability graphs, AND products and additivity hypotheses belong to their zero-error source/channel problems. FMR §7 shows that all pairs can be admissible in the native model while a larger fiber is not. No such graph product replaces (NCM.8). |
+
+Finite fractional covering and harmonic rounding are established
+methods. The local $25/17$ primal and dual are credited to FMR
+Theorem 5.1. Theorems 2.2, 3.3, 4.1 and 5.1 and Propositions 6.1–6.2
+give repository-derived ordinary deductions with explicit native
+assumptions. They assert no worldwide novelty. The added relation is
+the forced ownership of a four-valued missing target by a projection
+with sufficient native reply capacity; at depth two such a projection
+is locally admissible. The two-target constraints $L$ and $R$ are used
+together in (NCM.17). They are never bundled into a demand for one
+reply recovering an entire target vector. A ceiling for a scalar
+single-target method would therefore be a separate boundary, without
+contradicting this multi-target proof.
+
+**Open problem 7.3 (the unchanged sharp rate and a convergent lower
+hierarchy).** Determine the exact original $\lambda$, or effective
+all-competitor lower endpoints tending to it with a certified gap to
+the computable upper endpoints. Theorem 4.1 settles one regularized
+depth and supplies $\eta_2(n)\to0$ only at that depth. It does not
+prove errors $\eta_d(n)\to0$ for all $d$ or convergence of this
+sufficient certificate class. The native cycle in §6 identifies the
+missing extension of its local-capacity hypothesis. A positive bridge
+at greater depth must bound the weighted masses of the actual joint
+fibers even when deficient local recovery is supported by mutually
+dependent inadmissible projections. It may use different hypotheses;
+the cycle proves no noncomputability or impossibility of that goal.
+
+**Open problem 7.4 (general finite memory and wider recovery).**
+Determine $M_1(D)$ for general finite $D$, including the credited
+unresolved $M_1(3)\in\{3,4\}$. Exact joint fractional values and
+vanishing normalized rounding loss do not determine general finite
+integral optima. The selected operational recovery remains
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow
+\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{NCM.32}
+$$
+
+The inverse arrow recovers that temporal factor, not the full source,
+an authentic unknown age, hidden history, or physical space and time.
+Additional recovery relations and their legal operations and resources
+remain necessary for the original minimal-relations/internal-observer
+programme. The strict lower advance does not replace its completion
+criterion or resolve the whole programme.
+

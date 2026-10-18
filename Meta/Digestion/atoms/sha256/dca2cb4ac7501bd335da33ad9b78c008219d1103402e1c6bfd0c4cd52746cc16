@@ -1,0 +1,88 @@
+**Corollary 219.11 (A continuous concentrated-debt face).**
+Let $L\ge8$, $I=\{1,2,3,4\}$, $J=\{5,6,7,8\}$,
+$g>0$, $0\le v\le g/3$, $\gamma=(2g,g,g,g)$ and $c=g$.
+Then $G=5g$, $S=6g$, $K=11g$.
+In column order $5,6,7,8$, choose
+
+$$
+\begin{aligned}
+x_1=x_2=x_3&=(4g/9,g/9,g/9,g/9),
+ &t_1=t_2=t_3&=(g-v)/3,\\
+x_4&=(2g/3,2g/3,2g/3,2g/3),&t_4&=v.
+\end{aligned}
+\tag{219.31}
+$$
+
+The row totals are $s_1=s_2=s_3=10g/9-v/3$,
+$s_4=8g/3+v$. For every $0\le\xi_i\le s_i$, the resulting quotient
+$\beta=-\xi$ on $I$, $\beta=\gamma$ on $J$, zero elsewhere,
+has both unrestricted minima equal to $E=\xi_1+\xi_2$.
+All inactive addresses through $L$ remain allowed in the catalogs.
+
+**Proof.** The columns sum to $(2g,g,g,g)$ and the reserves sum to $g$.
+For every column, $G-\gamma_j-\mu_{-j}=2g$.
+In row 4, $s_4-t_4-x_{4j}=2g$; in a small row it is $g/3$ for
+column 5 and $2g/3$ for the others.
+The largest $x_{ij}+t_i$ is $7g/9-v/3\le g$ in a small row,
+and $2g/3+v\le g$ in row 4.
+A large/small guard pair has sum $34g/9+2v/3\le4g=S-\mu$;
+two small rows have sum at most $20g/9<4g$.
+Thus (219.24) holds throughout the closed real interval.
+Theorem 219.9 supplies one attainer and its independent unrestricted
+constant-zero lower bound. ∎
+
+The row ceiling $s_4\le3g$ holds inside this four-guard constructor:
+summing its three inequalities $s_4+s_i\le4g$ gives
+$2s_4+6g\le12g$. It is attained at $v=g/3$.
+This ceiling is not a bound on all full scores.
+
+The proportional-column constructor of XII 218.6 has
+$x_{ij}=\chi_i\gamma_j$. At these parameters its complement condition
+forces $\chi_4\le1/2$, and its other mixed condition gives
+$2g\chi_4+t_4\le g$. Therefore
+
+$$
+s_4=5g\chi_4+t_4\le g+3g\chi_4\le5g/2.
+\tag{219.32}
+$$
+
+Every proportional allocation is a special case of Theorem 219.9 by
+substitution, whereas debts $5g/2<\xi_4\le8g/3+v$ are attained here.
+This is a strict extension of that constructor, without an exclusion
+of all earlier signed or convex assemblies.
+
+Move correct mass $u$ from $w(\{5\})$ to $w(\{5,6\})$, where
+$0\le u\le4g/3-v$, and call the result $Y_u$.
+It has the same $Q$ and $W$ and satisfies
+
+$$
+(\Delta_N(Y_u),\Delta_O(Y_u))=(E+(u-g)_+,E).
+\tag{219.33}
+$$
+
+To verify the full range, only pairs observing 6 change.
+On pair $(5,6)$ the zero masses are $(g,2g,g,2g)$.
+The moved label 5 creates exactly $(u-g)_+$ excess in 00;
+the stopped merge has zero mass $3g$ against total label-5 mass $2g$.
+For guard/6 pairs, the receiving 10 zero mass is
+$14g/9+v/3$ in a small row and $4g/3-v$ in row 4, each at least $u$.
+Their 11 cells only lose a correct competitor.
+For pairs $(6,h)$, $h=7,8$, the receiving 01 zero mass is $g$,
+giving the same possible N excess; the O merged mass is $2g\ge u$.
+An inactive query reduces to singleton 6, whose zero-bit baseline
+$2g$ covers $u$. All other pairs are unchanged and short schedules
+are bounded by refinements. Constant zero gives O support $S$, and
+pair $(5,6)$ gives N support $S+(u-g)_+$.
+
+At $g=1$, $v=0$, $\xi=(1,0,0,8/3)$, $u=4/3$,
+
+$$
+Q=((-1,0,0,-8/3,2,1,1,1),11),\quad W=5,\quad
+B_O(Y)=6,\quad B_N(Y)=19/3.
+\tag{219.34}
+$$
+
+The input costs $(4/3,1)$ are repaired to $(1,1)$ by the base score.
+Splitting total early debt one between guards 1 and 2 within their
+capacities gives the same conclusion with three nonzero debts.
+

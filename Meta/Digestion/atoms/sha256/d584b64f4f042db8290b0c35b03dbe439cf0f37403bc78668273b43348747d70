@@ -1,0 +1,30 @@
+**Definition 172.2 (A finite non-strict auxiliary core).** For an integer
+$m\ge2$, write $B_m=\{0,1\}^m$ and $J_m=\{0,\ldots,m\}$.
+Let $e_j$ denote the unit probability vector at label $j$.
+A core consists of numbers and a stopped probability-vector kernel
+
+$$
+1\ge A_1\ge\cdots\ge A_m\ge e_0>0,\qquad q\in\mathscr O_m,
+$$
+
+where $e_0$ in this inequality is a scalar cap, distinguished from the
+unit vector $e_0$ by context. For every word $b\in B_m$ whose first
+zero is $n$, require all three inequalities
+
+$$
+\begin{aligned}
+q_b(0)&\ge1-A_n-e_0,\\
+q_b(n)&\ge A_n-e_0,\\
+q_b(0)+q_b(n)&\ge1-e_0,
+\end{aligned}
+\qquad q_{1^m}(0)\ge1-e_0.
+\tag{172.1}
+$$
+
+Here $\mathscr O_m$ is the complete finite stopped class of Definition
+108.1, equivalently the coefficient region of Theorem 109.1. The rows
+are the supplied two-point TV criterion (110.6). The core may have
+$A_m=e_0$, need not attain its cap, and need not be the active prefix
+of an infinite target sequence. In particular the scalar $e_0$ is not
+an assertion of optimality for $q$.
+

@@ -1,0 +1,39 @@
+### 定义 15.5（FIB 耗散谱与 FIB 振动能级）
+
+质量作用动力学取为
+
+\[
+\dot\kappa=-\gamma\Delta
+=-\gamma r(\kappa-\kappa_*)
+\]
+
+在 \(\Delta E=0\) 的平衡附近，其线性衰减率为
+
+\[
+\lambda_\kappa=\gamma r.
+\]
+
+该量是耗散谱，不是量子能量。若引入隐藏坐标的共轭动量 \(\pi_\kappa\)，定义局部 cotangent Hamiltonian
+
+\[
+H_\kappa
+=\frac{\pi_\kappa^2}{2m_\kappa}
++\frac12\bigl(\beta^{-1}\mathcal I_*\bigr)
+(\kappa-\kappa_*)^2,
+\]
+
+则辛线性化频率为
+
+\[
+\omega_\kappa
+=\sqrt{\frac{\beta^{-1}\mathcal I_*}{m_\kappa}},
+\]
+
+形式量子化后才得到
+
+\[
+E_n=\hbar\omega_\kappa\left(n+\tfrac12\right).
+\]
+
+因此，统一理论中必须同时记录 \(\eta_\kappa\)、\(\lambda_\kappa\)、\(\omega_\kappa\) 三个量，不能用 \(\gamma r\) 直接替代能级。
+

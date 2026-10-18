@@ -1,0 +1,27 @@
+**Definition 8.1 (reuse and primary statements).** The fixed-source
+obstructions, open-row binding and exact word/receipt equations here
+are `repo-derived`. Standard simulation and before-image methods
+are used with the following precise boundaries.
+
+| Source | Statement used and boundary |
+| --- | --- |
+| [UAS] 2.2–2.4, 3.3–3.4, 4.1–4.2, 8.3; [SSA] 13.6 | Actual unary cells, local walks, raw row/effect/alias specification, canonical acquired extraction and explicit below-patch gap. Their complete atomic patch is not a fine execution primitive here. |
+| [ARC] 4.1–4.3, 5.3, 6.1–6.3; [RCA] 12.2 and 14.1; [CSA] 2.2 and 3.3 | Actual inlined input-site identity, raw/active code distinction, latched/literal control-write variants and canonical versus raw domains. Successful canonical activation does not certify a proposed malformed raw DONE. |
+| [AIF] 2.2–2.7; [CAP] 4.6; [TMC] PR57.D1 and PR57.03 | The two actual raw IN bits, lawful task domain, original Supply/Advance menu, complete successor, payload setup and one original receipt. These supply the concrete input and disabled-Advance pair. |
+| [ARC] 7.1–7.4 and 9.1–9.4 | Actual OUT, invocation TOK, acquired reference callbacks, original INITIAL verification/output and final halt. No new terminal audit or fine-cut read capability is inferred. |
+| [NativeSerialMachine] `nativeStep`, `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`; owning Scribe | Exact one-source chronological execution and conditional replay at its abstract instruction level; controls may be unbounded. It does not install the physical ARC matcher or receipt/authority interface. |
+| [NativeFullSourceProducer] `sourceControl`, `native_source_producer`, private `traverse`, `production_reads`, `stationary`; owning Scribe | Stationary actual-source acquisition. The private theorem's subtree parameters are proof parameters, not actor operands. |
+| [NativeSerialEffective] `OriginalCodeRealization`, private evaluator/prefix helpers and `original_code_service_simulation`; owning Scribe | Actual code plus its realization equation and same-register trace simulation. Its trace-valued `terminalObservation` is not the original terminal $Q$ readout, and evaluator steps do not supply ARC tokens. |
+| [TypedFiniteViewKernel] `typed_finite_view_kernel`; [PredictiveMemoryMinimalQuotient] `predictive_memory_minimal_quotient`; owning Scribes | Independently specified partial edge/readout behavior and readout/update factorization. These require the concrete lawful operations being related; they cannot manufacture the missing Busy interface. |
+| [FIB] §§2, 9–10 and “FIB 观察商、任务充分性与信息几何边界” §295 | Two-leaf syntax, additional pairing/execution structure, and fibre-constant legality/update criteria. A syntax interpretation or finite table is not initialized execution. |
+| [Pinned StateTransition] `Respects`, `tr_reaches`, `tr_eval` | `literature-attested`: an enabled source step requires a positive related fragment; a source `none` requires the related target's immediate `none`. Proposition 2.3 uses that strict boundary, without claiming a compiled application. |
+| [CompCert] v3.16 `fsim_properties`, `forward_simulation_plus` | `literature-attested`: related initial/final states and same-trace positive fragments or controlled stuttering are explicit hypotheses. Already occurred input is not an empty trace. No concrete authority or tariff is supplied by this framework. |
+| [Bennett], history/copy/reverse construction | `literature-attested`: overwritten information can be retained using extra storage/work, with output copying before reversal. This supplies neither a free rollback nor current historical permission. |
+
+`NativeWholeRowPlan`'s frontier/term plans and its owning description
+concern query histories and unification, not this owned storage row.
+The pinned upstream is mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`. No admissible ecosystem
+implementation or primary result is used as an unproved native bridge;
+no exhaustive absence or worldwide-originality conclusion is asserted.
+

@@ -1,0 +1,37 @@
+**Definition 1.2 (The fixed scalar-port optimization).** Let
+$\mathfrak C_1$ consist of composites of fixed CPTP maps
+
+$$
+\operatorname{Enc}:M_5(\mathbb C)\longrightarrow
+\bigoplus_{f\in F}M_1(\mathbb C),\qquad
+\operatorname{Dec}((y_f)_f)=\sum_f\operatorname{Dec}_f(y_f),
+\qquad \operatorname{Dec}_f:M_1(\mathbb C)\longrightarrow M_5(\mathbb C),
+\tag{1.2}
+$$
+
+where $F$ is finite and every decoder is CPTP on its whole scalar block.
+The design precedes the input and the choice of future policy. All quantum
+information traverses this port, with no original-input retention,
+entangled assistance or bypass. Finite classical flags are free for this
+criterion, are used during decoding, and are not additionally exposed to
+the later policy. All complex CPTP competitors are included.
+
+For the full-history law $P_\rho^\pi$, define
+
+$$
+e(T)=\sup_{\rho\ge0,\ \operatorname{tr}\rho=1}
+\sup_{\pi\ {\rm actual,\ finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad \varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+The replacement occurs once, before the common future protocol. TV is
+half the $\ell^1$ distance, with its measure version for random controls.
+CPTP legality includes arbitrary reference extensions; the performance
+test measures only the system's actual histories. This is exactly QMB
+Definitions 1.2–1.3 with $q=1$, and corresponds to ambient dimension
+$D=5$, compressed dimension $d=1$, and finite classical blocks in
+[Bluhm–Rauber–Wolf, Definition 4.1 and Lemmas 5.2–5.3](https://arxiv.org/html/1708.04898v4).
+Their exact observable-preservation problem does not replace (1.3).
+

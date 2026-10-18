@@ -1,0 +1,41 @@
+**定义 28.1（Two colours in a guarded nonterminal strict slot）。** Retain all original source, target and fee conventions of Chapter 1. Let
+
+$$
+Q\ge2,\quad m\ge3,\quad 2\le r<m,\quad T=Qm+r,\quad k=T-1,\quad
+ g=\gcd(m,r),\quad P=g\mathbb Z/T\mathbb Z,\quad N=Q+1.
+\tag{28.1}
+$$
+
+Choose $1\le t<Q$ and disjoint nonempty actual sets
+
+$$
+U,V\subseteq P\cap[tm+g,(t+1)m-2g].
+\tag{28.2}
+$$
+
+The interval has $m/g-2$ actual vertices, so these assumptions imply $m/g\ge4$. Let $A,B,C$ be pairwise distinct. Give low phases $0,m,U,V$ labels $D,E,B,C$, respectively, and every other actual low phase label $A$. Here $D,E,R,L_\bot$ are arbitrary, including $D=E$ and every coincidence with $A,B,C$. The complete target is
+
+$$
+f_3(v,-j,s)=
+\begin{cases}
+R,&k-m\le s<k,\\
+D,&s<k-m,\ j=0,\\
+E,&s<k-m,\ j=m,\\
+B,&s<k-m,\ j\in U,\\
+C,&s<k-m,\ j\in V,\\
+A,&s<k-m,\ j\notin\{0,m\}\cup U\cup V,
+\end{cases}
+\qquad f_3(\bot)=L_\bot,
+\tag{28.3}
+$$
+
+on both free-value fibres. Set
+
+$$
+M=\min(\max U,\max V),\qquad
+L=\left\lceil\frac{T+M}{m}\right\rceil.
+\tag{28.4}
+$$
+
+Maxima refer to the displayed ordinary representatives, not cyclic order.
+

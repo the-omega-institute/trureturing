@@ -1,0 +1,211 @@
+### 217.8 Original source, one-seed laws and owning transport
+
+The original countable labeled source is
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\qquad q_i(x)=1_{p_i\mid N(r,g)},
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and the $p_i$ are increasing
+primes. Each N has finite prime support, so $n(x)=\min\{i:q_i(x)=0\}$
+is finite. There is no prior over X. The CRT/window proof of
+[Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows)
+supplies every finite pattern on arbitrary finite prime addresses, with actual
+witnesses fixed before seeds. Thus every multiple-zero word is an actual
+source pattern; a positive finite word represents a tail source, not an
+infinite all-positive source. Source labels, N and n are not extra observations.
+For the earlier-label example, $(r,g)=(19,436)$ is an actual source with
+$N=1822917$ and first four prime replies 0100.
+
+For concrete witnesses on the first seven primes, use $r=47$,
+$F_{47}=2971215073$, $Q_0=9699690$, and prescribe a zero at 19.
+For each prescribed positive bit require $g=-F_{47}^{-1}\pmod p$;
+for each zero require $g=0\pmod p$. If c is the CRT residue, take
+$g=c+Q_0\lceil(297121508-c)/Q_0\rceil$. The window
+$[297121508,594243014]$ is longer than $Q_0$, so every representative
+lies in it. Words 0000000 and 1111111 give respectively
+$g=300690390,N=893415819074248471$ and
+$g=305860043,N=908775969990028140$; the latter's actual first zero is eight.
+On eight bits one can instead use $r=101$,
+$F_{101}=573147844013817084101$ and the first-nine-prime product
+$223092870$, prescribing zero at 23 and taking the least representative
+above $\lceil F_{101}/10\rceil$. The all-one eight-bit word gives
+$g=57314784401451390769$ and
+$N=32849845109808618286359388848718688063670$, with first zero nine.
+These finite witnesses corroborate source transcription; the arbitrary-address
+statement is supplied by 35.2, not by checking finitely many integers.
+
+The full original carrier is the disjoint-union Borel space
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each block
+an interval copy of $(0,1)$. Its unchanged consumer returns unknown on
+$B_j$ and proposes j on $P_j$. The original nonatomic targets of
+Definition 213.22 remain
+$\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with fixed $h_0\in(0,1)$,
+$\Omega(x)$ the number of distinct prime divisors, $\pi_j$ uniform on
+$P_j$, and $\nu_x$ on $B_{n(x)}$ having density proportional to
+$\exp(t(x)u)$, $t(x)=\sum_i3^{-i}q_i(x)$. The distinct marks
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$, support separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+$$
+
+These laws do not replace the nonatomic originals. A finitely supported
+marked law has TV distance one from each $\mu_x$, as its finite Borel
+support has mass one under that law and zero under $\mu_x$. The companion
+caps below concern the selected marked laws. Original competitors still
+may output anywhere on the full carrier, not merely the marks.
+
+The resources are exactly Definition 90.1: zero advice, one source-independent
+common seed, sourcewise almost-sure finite handoff, uniform TV over every
+actual source and Borel event, and at most two actual requests. Repeated
+requests and requests with ignored replies count. N preselects its schedule
+and obtains all its replies; O preselects an increasing schedule and stops
+at its first queried zero or exhaustion. No source average, address, depth,
+runtime, mean count or adaptive second address replaces these conditions.
+Choose each finite whole table and every output label before replies by
+partitioning one $U\sim\mathrm{Uniform}[0,1)$ into its full-table weights.
+Its N completion uses the same U, schedule and output, acquiring both replies
+even when the second is ignored. All displayed finite rules hand off on
+every source and seed. Different finite partitions can use a common
+refinement of this same U. Score coefficients, carrier weights and suffix
+laws are deterministic proof measures, not additional acquisition seeds,
+source distributions or separately funded resource allowances.
+
+Here are the normalized common-law suppliers and their full row content.
+Reuse the four-table law (213.30), with weight $1/4$ on each of
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0).
+$$
+
+At first-zero classes 1,2 the correct mass is $3/4$ and pair mass at
+least $3/4$; the base demand $-1/4$ is retained. At class 3 its
+(base,correct,pair) masses are $(1/4,3/4,1)$; after 3 they are
+$(3/4,0,3/4)$, and positive-word base is $3/4$. Thus one mass-one full
+$\lambda$ is feasible at
+$b^*=(1,1,1,1/4,\ldots,1/4;e=1/4)\in H_N$.
+For $a_1=a_2=a_3=1$, $a_4=\cdots=a_H=1/4$ and
+$a_{H+t}=2^{1-t}/4$ for $t\ge1$, both executions attain cap $1/4$.
+Every actual tail after 3 has error $\max(1/4,a_n)=1/4$, including
+the first tail equality. For the displayed C quotient,
+$F_q(b^*)=-53/16\le1$; this realized shared allocation is not a separator.
+
+The subset supplier 87.1 gives a second common law: select uniformly a
+three-subset $\{i<j<h\}$ of $\{1,\ldots,H,\star\}$, with star last.
+Query i then j, emitting i on the first zero, j on 10 and h on 11;
+star means output zero and is never queried. The N completion is
+$(i,j;i,i,j,h)$ on the identical seed. On every word of first zero n,
+output n occurs exactly when the selected subset contains n, so its
+probability is $3/(H+1)$ independently of later zeros. Positive-word
+base has that same probability. For $a_1=\cdots=a_H=1$,
+$\varepsilon=(H-2)/(H+1)$ and
+$a_{H+t}=\varepsilon2^{1-t}$, all base, correct, independent pair and
+positive rows hold, including negative base demands, and every actual tail
+has TV $\max(\varepsilon,a_n)=\varepsilon$.
+At H=6 this is one 35-table mass-one allocation at $v_6\in H_N$,
+with cap $4/7$; at the D example $F_q(v_6)=-27/7$.
+At H=8 it is one 84-table allocation at $v_8\in H_N$ with cap $2/3$;
+at the E example $F_q(v_8)=-6$. For these hull points,
+$(H+1)e=\sum_{j\ge3}b_j=H-2$ and
+$b_1+\sum_{j\ge3}b_j-(H+1)e=1$.
+These are common full allocations, not independently selected event optima.
+
+For the B/F lower bundle, normalization assigns probability $1/(2k-1)$
+to each $(i,n;0,n,0)$ and $(k-1)/(2k-1)$ to $(n,m;0,m,\ell)$.
+Put $\varepsilon_0=(k-1)/(2k-1)$,
+$a_1=\cdots=a_\ell=\varepsilon_0$ and
+$a_{\ell+t}=\varepsilon_0 2^{1-t}$ for $t\ge1$.
+On a guard first-zero word correct probability is zero and base probability
+at least $1-\varepsilon_0$, so TV is $\varepsilon_0$.
+At n, the base and correct probabilities are
+$(\varepsilon_0,1-\varepsilon_0)$ and TV is $1/(2k-1)$.
+At m and $\ell$ the selected targets are reproduced exactly.
+At every actual tail after $\ell$, the law is
+$(1-\varepsilon_0)\delta_{\theta_0}+\varepsilon_0\delta_{\theta_\ell}$
+and TV is $\max(\varepsilon_0,a_n)=\varepsilon_0$, including the first
+tail equality. Its all-positive finite base is $1-\varepsilon_0$.
+The word counts in the lower proof therefore give every independent cap
+row for one law, including multiple zeros. The C lower detector likewise
+has a one-seed realization with fifth weights $(1,1,1,2)/5$.
+These detector executions alone confer no arbitrary prescribed cap;
+the specific amplitude families just supplied establish their caps.
+
+The owning transport is
+[110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+It gives same-class feasibility at exact closed caps, not preservation of
+an arbitrary competitor's law. Its necessity projects full-carrier outputs,
+uses source countability for one conull handoff event, and controls the whole
+preselected schedule by the single event that its maximum address exceeds
+a cutoff. That event's seed probability vanishes. Actual finite low/fixed-high
+witnesses and the measurable finite-execution supplier then give one common
+catalog approximation; finite-simplex compactness retains the closed cap.
+This requires measurable source-independent scheduling and readout, lawful
+reachable reads and sourcewise conull finite handoff. The same-class
+scheduled-witness interface supplies replay under those hypotheses; it does
+not supply N-to-O conversion or arithmetic witnesses. Theorem 109.1 is
+separately the $c\ge H^{\rm ker}$ criterion for a normalized probability-vector
+kernel, not a condition on a dual quotient. The exact-law obstruction 112.2
+has another O law at the same cap and remains distinct from cap separation.
+
+For $0<\varepsilon\le1$, let the strict active length be
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$, and let H be the
+horizon of a score above. Transport first supplies one normalized complete
+configuration at $L_a$. Use the existing prefix argument of Continuation
+VII 202.13, 207.20 and §215.7, with the following two directions.
+If $H<L_a$, restrict inputs to $(w,0,\ldots,0)$ and project labels above
+H to zero only in the finite comparison. A zero in w retains its target;
+a positive w has fixed next zero $H+1$, whose target projects to zero.
+Fold the fixed higher replies into each terminal table and delete their
+observations. At most two low preselected queries remain. In O all higher
+addresses follow the low ones: a low zero stops before them, and otherwise
+the fixed high continuation folds into exhaustion. This is a finite
+representation restriction, not a free source observation or an original
+cap attainer on removed active tails $H<n\le L_a$. Alternatively, pad the
+score to $L_a$ by constant-one suffixes.
+
+If $H>L_a$, extend the kernel by ignoring new coordinates and retaining
+its labels through $L_a$. Low first-zero rows remain unchanged for every
+later pattern. A new first zero n has $a_n\le\varepsilon$ and law equal
+to the old positive-word law $p_+$, with no mass at n. Since
+$p_+(0)\ge1-\varepsilon$, all its rows follow from the exact identity
+
+$$
+\operatorname{TV}(p_+,(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n})
+ =\max\{1-p_+(0),a_n\}\le\varepsilon.
+$$
+
+The positive row stays unchanged. This includes $L_a=0$, every multiple-zero
+suffix and $a_n=\varepsilon$. At $H=L_a$ no change is needed. In the
+actual realization at $L_a$, every tail $n>L_a$ has exactly this max-tail
+error; the same holds after extension for $n>H$. A shorter restricted
+comparison is not substituted for that original full-tail realization.
+
+Finally pair all independent demands with the single score and this one
+normalized configuration. If its complete cost bound is c, the necessary
+original inequality for either N or O is
+
+$$
+\sum_{j\le H}\beta_j(a_j-\alpha_j)-K\varepsilon\le c.
+$$
+
+It uses no assertion that $(a,\varepsilon)$ belongs to the auxiliary hull.
+For A take $c=D_e+\sum_{i=1}^3(\gamma_{(i)}-\rho)_+$; for B,D,E on
+their plateaus take their stated early debt; for C take $E+\delta$; for
+F take $E+\Phi_k$. In particular A's numerical example yields
+$2a_4+(3/2)a_5+a_7\le(a_1+a_2)/2+a_3+a_6+a_8+(27/2)\varepsilon$.
+B and D give $\sum\beta_ja_j\le K\varepsilon$; C gives
+$a a_4+b a_5+c a_6-\sum\xi_ja_j\le\delta+K\varepsilon$;
+E gives $\sum\beta_ja_j\le E_++K\varepsilon$, including
+$3(a_5+a_6+a_7)\le a_1+a_8+21\varepsilon$ in its example;
+F gives $g(a_n+a_m+a_\ell)-\sum_{i\le k}\xi_i a_i
+\le\Phi_k+(3g+R)\varepsilon$.
+For $\varepsilon\ge1$ the general inequality follows directly from
+$a_j\in[0,1]$ and $K\ge\sum|\beta_j|$. All these inequalities are
+necessary only, retaining arbitrary addresses, all Borel events and the
+entire actual positive tail; none is a sufficient original cap classification.
+

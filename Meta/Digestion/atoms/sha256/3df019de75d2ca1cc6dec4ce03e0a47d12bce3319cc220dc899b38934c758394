@@ -1,0 +1,8 @@
+**结构规范化。** 原件把第二个标题直接接在第一部分末句之后，即“近似坐标表达。# FIB-ATOM 因果纤维动力学”；此处拆成段尾、空行与第二部分标题。两个原题分别加上“第一部分”“第二部分”归属；原编号节、定义／定理／情形、证明／分项依层级调整 Markdown 标题深度，标题文字及局部编号保留。行内数学分隔符 `\(...\)` 改为 `$...$`，块级 `\[...\]` 改为独占行的 `$$`；既有 `$$` 与公式内容保留。三个不可访问的 sandbox 引文目标替换为同名的仓内相对路径，并移除三个 `:chatgpt-content-reference{index="…"}` 包装，保留链接文字：
+
+| 原 sandbox 文件名 | 仓内对应来源 |
+| --- | --- |
+| `AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md` | [FIB-ATOM 基础公式与隐藏关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) |
+| `AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md` | [动态未来商](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md) |
+| `RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md` | [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) |
+

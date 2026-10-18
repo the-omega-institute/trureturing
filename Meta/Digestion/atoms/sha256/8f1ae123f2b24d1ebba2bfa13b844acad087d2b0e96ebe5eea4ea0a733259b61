@@ -1,0 +1,17 @@
+## 297. Transverse zero occurrences are impossible
+
+Consider a flat owner with reservoir pair {U,A}. If it selects A,A,
+the transverse-flat inequality of Lemma 111.1 requires
+
+    a-u >= sqrt((r+1)*(o+1)) > 2.
+
+Since A is selected, a<=m; whereas u>m-2. This is impossible.
+If the owner instead selects its axes, each selected H axis has shifted
+value at most m-1<u+1<u+a. Each selected special axis has shifted value
+strictly below u+a by the fixed-pair special-edge barrier, Theorem112.1.
+The product of the two shifted axis values is therefore strictly less
+than (u+a)^2, contrary to the axial-flat condition of Section130.
+Thus the only possible flat selection is the transverse U,U pair.
+This proves the first assertion without any bound on |H|, including
+u>m, when selecting U itself is also impossible by maximality of M.
+

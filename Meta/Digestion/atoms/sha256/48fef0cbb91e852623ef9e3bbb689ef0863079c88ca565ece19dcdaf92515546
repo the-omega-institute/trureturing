@@ -1,0 +1,40 @@
+**Proposition 7.1 (native avoidance and the Cartesian hypothesis).**
+For the one-pair list formed from the two sides of
+
+$$
+\rho^2(z)=\langle\rho(z),z\rangle
+\tag{URR.27}
+$$
+
+Definition 2.2 supplies a witness to its disequality although the
+corresponding equation has infinitely many finite native solutions.
+For the list $(z,\beta)$, adding either $z=\alpha$ or the requirement
+that the original left child of $z$ be absent gives a feasible constrained
+problem whose solutions exclude the tuple from Definition 2.2.
+Consequently the full Cartesian residual domain in Theorem 3.1 and the
+independent positive correspondence in Lemma 4.5 cannot be omitted.
+
+Proof. For (URR.27), the input weights give $M=1$, $G=2$, and the single
+residual is $z^\star=C_2$. Its mass is two by Lemma 2.3. The supplied
+mass identities [CAR, Definition 2.1 and Theorem 2.2 proof][CAR] give
+masses two and five for the two sides, so they differ at this tuple.
+In contrast, the supplied atomic recurrence and injectivity [ABC,
+Theorems 2.2–2.3][ABC] give equality at every $z=T_j$, with all these
+finite trees distinct. More generally positive mass $\gamma(z)$ gives
+masses $\gamma(z)$ and $1+2\gamma(z)$, so equality is impossible there; in particular $C_1$ refutes the equation.
+The native solution $\rho(\beta)=\langle\beta,\alpha\rangle$ also
+satisfies the interpreted feedback equation used in Lemma 4.5.
+These credited native identities provide the transfer boundary for the
+construction: syntactic one-variable finite-exception arguments and a
+free occurs-check on interpreted $\rho$ do not justify its separation.
+
+For $(z,\beta)$, the weights give $M=0$, $G=1$ and $z^\star=C_1$.
+The assignment $z=\alpha$ satisfies $z\ne\beta$ and each of the two
+stated extra restrictions. But $C_1=\langle\alpha,\alpha\rangle$ is
+neither $\alpha$ nor a tree with an absent original left child.
+Thus the common tuple for the unrestricted negative need not satisfy
+an added positive residual equation or a reach restriction. An exact
+positive correspondence must eliminate such a restriction with proof
+or retain it in its domain; it cannot classify it as rank-only merely
+by choosing coordinates. $\square$
+

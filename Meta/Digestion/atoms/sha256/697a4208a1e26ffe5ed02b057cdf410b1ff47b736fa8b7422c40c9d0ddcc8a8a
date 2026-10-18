@@ -1,0 +1,17 @@
+**Definition 8.1 (a public cut menu).** For a finite public list of $m\ge1$
+cuts, put $D=\max(\{0\}\cup\{|p|:p\in P_i\})$ and
+
+$$
+S_i=\{w\in\{L,R\}^D:\text{no }p\in P_i\text{ is a prefix of }w\}.
+\tag{CAB.22}
+$$
+
+Join $i,j$ when $S_i\cap S_j\ne\varnothing$. Let $\mathcal C$ be the
+components, $c_0$ their number, $C_*=C(0)$, and $r_C$ the least index
+in component $C$. [NAR, Theorem 12.3][NAR] supplies row-only recovery of
+$n_i-n_{r_{C(i)}}$ by exposed $J_w$ factors along a spanning forest.
+Its whole-row collision theorem supplies a fiber of
+$2^{c_0-1}$ different chronological epoch vectors. These results concern
+complete rows with the actual history promise; neither assumed equality
+links nor a supplied hidden boundary replaces that input.
+

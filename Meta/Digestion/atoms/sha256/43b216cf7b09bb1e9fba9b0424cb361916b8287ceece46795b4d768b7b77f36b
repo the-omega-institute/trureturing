@@ -1,0 +1,36 @@
+**Theorem 2.1 (Inherited bounded-observable and projection interface).**
+For every finite literal model, any fixed affine scalar observable of
+$E$ that is bounded on each fixed-height phase torus is independent
+of $\beta$. For a finite-error decoder $q=\mathcal D\circ E$, write
+
+$$
+\binom ab=(D^{\mathsf T}D)^{-1}D^{\mathsf T}q,\qquad
+w=q-D(a,b),\qquad w\perp\operatorname{im}D.
+$$
+
+These are bounded affine observables of $E$, independent of $\beta$.
+At every interior $k$ and every $\alpha$,
+
+$$
+\max_{\beta}\|q-y\|_2^2
+=\|w\|_2^2+4|a-A(k)e^{i\alpha}|^2+(|b|+B(k))^2.
+$$
+
+Consequently replacement of the decoder by $D(a,0)$ does not increase
+error, and every finite-dimensional literal model has error at least
+
+$$
+e_*=2\sqrt{ZH}=\sqrt{2Z(1-Z)}.
+$$
+
+Supplier justification. These are [M, Theorem 3.4 and Proposition 3.5]
+and [O, Theorem 3.3 and Proposition 4.1], with $q$ equal to the present
+composed decoder. Their hypotheses are exactly Definition 1.5: arbitrary
+current-ray encoders, both offsets, every signed command, and no latent
+bound. The proof bounds a finite-dimensional space of observable
+functions, not the hidden encoder. The worst-phase identity uses
+Lemma 1.4 and actual independent reachability of the two phase circles.
+The floor takes the supremum of $4Zk$ through interior heights. It
+does not require a state at $H$. These supplier theorems are used as
+handwritten premises here. $\square$
+

@@ -1,0 +1,25 @@
+**定理 178.6（经典任务通道的最小纯环境）。** 对 (178.3) 指定的整个任务输出接口，最小纯初始环境维数恰为 $C_N$。其占用输出空间为 $2C_N$ 维，嵌入明确保留的 $B\otimes\mathcal C\otimes K$ 后下界和达到仍相同。这与仅写一个具有相同经典概率的相干输出不同。
+
+证明（178.6）。令 $F_B$ 有正交基 $f_\beta$，定义
+
+$$
+V_{B,N}\psi=
+\sum_{\beta=(j,w)\in\mathcal B_N}\sqrt{\Pi_N(\beta)}
+|\beta\rangle_B\otimes|j\rangle_{\mathcal C}\otimes
+U_\beta\psi\otimes f_\beta.
+\tag{178.8}
+$$
+
+因 $U_\beta$ 酉且质量和为一，$V_{B,N}^\dagger V_{B,N}=I_2$。迹掉 $F_B$ 正好得到 (178.3) 的第一式，故有 $C_N$ 维达到。相同等式与 $I_R$ 张量，保留全部未知内部—参考输入。
+
+下界应用标准有限维 Kraus/Choi/Stinespring 供应结果，具体形式为 Watrous 的定理2.22、推论2.27。这里的矩形 Kraus 算子为
+
+$$
+A_\beta=\sqrt{\Pi_N(\beta)}\,|\beta\rangle_B\otimes|j\rangle_{\mathcal C}\otimes U_\beta,
+\qquad
+J(\Phi_{B,N})=\sum_\beta|\operatorname{vec}A_\beta\rangle
+\langle\operatorname{vec}A_\beta|.
+$$
+
+不同 $\beta$ 的向量因保留的经典输出标签而正交，每个范数平方为 $2\Pi_N(\beta)>0$。因此 Choi 秩恰为 $C_N$。任何纯环境维数 $m$ 的实现最多有 $m$ 个环境基分量作为 Kraus 算子，故 $m\ge\operatorname{rank}J=C_N$。这是同一个已指定通道的下界，允许任意内部态和参考，并非针对某个输入态的输出秩估计。$N=0$ 时它给一维环境；此时通道只是固定标签附加到未知内部态上。$\square$
+

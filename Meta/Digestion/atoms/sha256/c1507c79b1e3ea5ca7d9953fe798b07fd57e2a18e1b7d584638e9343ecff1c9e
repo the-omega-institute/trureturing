@@ -1,0 +1,30 @@
+**Proposition 9.1 (existing ratio images and admitted occurrence).** R14 already proves, at fixed admitted $H,I,\kappa$, the exact interior-pole image
+
+$$
+\mathscr R\in\left(\frac{\pi^2(l-\alpha_\kappa)^2}{L_I^2},
+                       \frac{\pi^2(u-\alpha_\kappa)^2}{L_I^2}\right).
+\tag{9.1}
+$$
+
+For $0<H<1/2$, $0<l<u<H$ and a fixed radius $0<b<\min\{l/4,(H-u)/2,H/4\}$, the pole and positive or negative signed-window images are respectively
+
+$$
+\begin{aligned}
+\mathscr R_+&=\left(\frac{\pi^2(l-b-b^2/H)^2}{L_I^2},\frac{\pi^2u^2}{L_I^2}\right),\\
+\mathscr R_-&=\left(\frac{\pi^2l^2}{L_I^2},\frac{\pi^2(u+b-b^2/H)^2}{L_I^2}\right).
+\end{aligned}
+\tag{9.2}
+$$
+
+Every interior value is attained and endpoints are excluded. At fixed pole the images are
+
+$$
+\left[\frac{\pi^2(k_0-b-b^2/H)^2}{L_I^2},\frac{\pi^2k_0^2}{L_I^2}\right),\qquad
+\left(\frac{\pi^2k_0^2}{L_I^2},\frac{\pi^2(k_0+b-b^2/H)^2}{L_I^2}\right].
+\tag{9.3}
+$$
+
+The included endpoints use $\kappa=b,-b$; excluded endpoints require zero parameter. R14 supplies the enlarged admitted parameter-height neighbourhood, including positive margins of the original five probabilities, denominator and determinant margins, bounded derivatives and scalar-fibre invertibility. Its original means are $X=Y=H+\kappa$, $Z=1-2H$ and its original third component is retained.
+
+R15 proves that across distinct fixed admitted datasets in this window, at fixed $H,a,\varepsilon$ and for each sign of $\kappa$, the ratio image is exactly $(0,\infty)$. Thus negative response and negative $C_{108}$ already occur for each sign. With $Q_X=G_X/\overline D$, each coefficient is $C_X=a\nu^2\overline D(Q_X-\mathscr R)$. On an available open image $(A_0,B_0)$, negative, positive and zero $C_X$ occur exactly when $B_0>Q_X$, $A_0<Q_X$ and $A_0<Q_X<B_0$. Across the full image, positive and zero response each occur if and only if $G_{\rm resp}>0$; positive and zero $C_{108}$ each occur if and only if $G_{108}>0$. Narrowing one admitted symmetric interval about a fixed pole makes its ratio arbitrarily large; choosing a sufficiently narrow fixed interval already gives actual negative-response unit-orbit selection. Each datum is fixed before its own $s$-limit. These are credited R14–15 results, with their proofs and conditional analytic admission scope, rather than new occurrence claims from an exterior estimate.
+

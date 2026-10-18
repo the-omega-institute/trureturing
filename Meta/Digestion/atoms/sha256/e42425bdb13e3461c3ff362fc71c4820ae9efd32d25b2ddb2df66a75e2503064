@@ -1,0 +1,30 @@
+## 256. The double return and its scalar domain
+
+It remains that both unused rho faces pair to eta. The complete public
+exclusion and classification in Sections 246–253 give
+ eta=(M,U,Z,B,U,Z), xi=(Z,U,B,Q,U,B),
+where B,Q independently lie in {C,D}. Both remaining eta faces pair to
+xi. All four owners tau,rho,eta,xi are distinct and genuine. The two xi
+exit faces may meet the low external region; no extra equation on them
+is assumed here. This classification includes B=Q and B different from Q.
+
+For a genuine frame (r,a,b,o,a,b), put
+ L=(a+b)^2-(r-1)(o-1), J=(r+1)(o+1)-(a-b)^2.
+Both quantities are strictly positive. Thus the exact four choices
+(b,q)=(c,c),(c,d),(d,c),(d,d) satisfy all eight inequalities
+ L_tau=(m+c)^2-(z-1)(d-1)>0,
+ J_tau=(z+1)(d+1)-(m-c)^2>0,
+ L_rho=(m+z)^2-(c-1)(u-1)>0,
+ J_rho=(c+1)(u+1)-(z-m)^2>0,
+ L_eta=(u+z)^2-(m-1)(b-1)>0,
+ J_eta=(m+1)(b+1)-(u-z)^2>0,
+ L_xi=(u+b)^2-(z-1)(q-1)>0,
+ J_xi=(z+1)(q+1)-(u-b)^2>0.
+
+Since u>b and q<z, J_xi>0 implies
+ 0<u-b<sqrt((z+1)(q+1))<z+1.
+Consequently m<u<m+z-1. The next scalar lemma only needs
+ c>1, m>c+2, z>m+c+1, b<m-2, m<u<m+z-1.
+We prove the strict inequality
+ J_rho/(4*m*z)+J_eta/(4*u*z)<1/4.
+

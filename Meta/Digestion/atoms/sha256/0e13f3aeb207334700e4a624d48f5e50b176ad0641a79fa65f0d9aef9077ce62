@@ -1,0 +1,97 @@
+**Theorem 57.2 (a nonlinear common-projection necessary system).** Fix one $V,\omega,U,P$ of Theorem 52.3 with $k\geq2$, and set $n=3k-5$. Factor the same defect projection as $D=WW^\dagger$, $W^\dagger W=I_n$, write $W_i:\mathbb C^n\to F$ for its three $k\times n$ block rows, and put $Z_i=\overline{W_i}$ in the paired center coordinates. Then
+
+$$
+\sum_{i=0}^2Z_i^\dagger Z_i=I_n,
+\qquad \operatorname{rank}D=n,
+\qquad \sum_{j=0}^2D_{ij}D_{jl}=D_{il}.
+\tag{S.55}
+$$
+
+For every complex unit $\psi=(\psi_0,\psi_1)\in\mathcal C$ define
+
+$$
+\begin{aligned}
+Z_\psi&=\psi_0Z_0+\psi_1Z_1,\\
+M_\psi&=\omega-\sqrt\omega Z_\psi Z_\psi^\dagger\sqrt\omega,
+& q_2&=\operatorname{Tr}(\omega Z_2Z_2^\dagger).
+\end{aligned}
+\tag{S.56}
+$$
+
+These are the marginal and charge of the same $P$ in (S.10) and (S.21). For $M\succeq0$ on $S$, let $b=\operatorname{Tr}M$, $\ell=\lambda_{\max}(M)$ and define
+
+$$
+H_a(M)=
+\begin{cases}
+0,&b=0,\\
+\sqrt b,&b>0,\ \ell\leq ab,\\
+\sqrt{a\ell}+\sqrt{\beta(b-\ell)},&b>0,\ \ell>ab.
+\end{cases}
+\tag{S.57}
+$$
+
+For $k\geq2$ this is the exact relaxed marginal maximum
+
+$$
+H_a(M)=\max_{\substack{0\preceq Q\preceq aI_S\\\operatorname{Tr}Q\leq1}}f(Q,M).
+\tag{S.58}
+$$
+
+If all real overlaps in (S.15) exceed $v$, the following joint system is necessary:
+
+$$
+\begin{gathered}
+\sum_{i=0}^2Z_i^\dagger Z_i=I_{3k-5},\qquad
+0\preceq M_\psi\preceq\omega,\\
+H_a(M_\psi)>v
+\quad\text{for every complex unit }\psi\in\mathcal C,\\
+\operatorname{Tr}(\omega Z_2Z_2^\dagger)<d.
+\end{gathered}
+\tag{S.59}
+$$
+
+The same three $Z_i$ occur in every direction, including every relative complex phase.
+
+Proof. Isometric factorization of a rank-$n$ projection gives $W$. Conjugating $W^\dagger W=I_n$ proves the first identity of (S.55); rank and idempotence give the other two. Also
+
+$$
+D_\psi=\sum_{i,j=0}^1\bar\psi_i\psi_jW_iW_j^\dagger,
+\qquad
+D_\psi^T=\sum_{i,j=0}^1\bar\psi_i\psi_j\overline{W_j}W_i^T
+=Z_\psi Z_\psi^\dagger.
+\tag{S.60}
+$$
+
+Substitution in (S.10) proves (S.56). The third-input identity is $D_{22}^T=Z_2Z_2^\dagger$, and the diagonal real $\omega$ gives $\operatorname{Tr}(\omega D_{22})=\operatorname{Tr}(\omega Z_2Z_2^\dagger)$. Compressing $0\preceq D\preceq I$ also proves $0\preceq M_\psi\preceq\omega$.
+
+To evaluate (S.58), pinch $Q$ in an eigenbasis of $M$. This preserves the operator and trace constraints. Fidelity concavity in $Q$ and invariance under the diagonal sign unitaries fixing $M$ show that pinching cannot decrease its value. The required PSD concavity follows from [Watrous, Chapter 3, Theorem 3.25, (3.165)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf) and homogeneity; its normalized-state version is Corollary 3.26. Thus the maximum is
+
+$$
+\max\left\{\sum_{i=1}^k\sqrt{\mu_iq_i}:
+0\leq q_i\leq a,\ \sum_iq_i\leq1\right\},
+\quad \mu_1=\ell\geq\cdots\geq\mu_k\geq0,
+\quad \sum_i\mu_i=b.
+\tag{S.61}
+$$
+
+For $b=0$ the value is zero. For $b>0$ and $\ell\leq ab$, Cauchy–Schwarz bounds the sum by $\sqrt b$, attained by $q_i=\mu_i/b\leq a$. This includes the branch boundary $\ell=ab$.
+
+If $\ell>ab$ and $b>\ell$, then, for fixed $q_1\leq a$, Cauchy–Schwarz on the remaining coordinates gives
+
+$$
+\sum_i\sqrt{\mu_iq_i}
+\leq\sqrt{\ell q_1}+\sqrt{(b-\ell)(1-q_1)}.
+\tag{S.62}
+$$
+
+The right side is increasing on $0\leq q_1\leq a$: its unconstrained maximum is at $q_1=\ell/b>a$, and its derivative is positive for $0<q_1<\ell/b$, by squaring the positive comparison of its derivative terms. Its value at $a$ is the third branch of (S.57), attained by
+
+$$
+q_1=a,\qquad q_i=\frac{\beta\mu_i}{b-\ell}\quad(i\geq2).
+\tag{S.63}
+$$
+
+These remaining entries sum to $\beta$ and each is at most $\beta\leq a$. If $b=\ell>0$, $M$ has rank one and $q_1=a$, all other entries zero, attains $\sqrt{a\ell}$; unused trace is allowed. The two nonzero branches agree at $\ell=ab$, since $\sqrt{a^2b}+\sqrt{\beta^2b}=\sqrt b$. This proves (S.58), including all singular ranks and boundaries.
+
+Finally, for the actual marginals, $r_\psi\leq f(Q_\psi,M_\psi)\leq H_a(M_\psi)$ by (S.8) and the purification overlap bound. Thus $r_\psi>v$ forces the full complex-direction family in (S.59). Its last inequality is (S.21). The maximization (S.58) relaxes actual marginals from one $V,\omega,U,P$; it does not select a different actual channel for each direction. $\square$
+

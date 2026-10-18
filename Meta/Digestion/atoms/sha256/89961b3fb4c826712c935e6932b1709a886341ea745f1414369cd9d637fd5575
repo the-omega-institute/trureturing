@@ -1,0 +1,32 @@
+**Assumption 1.2 (the entire acquired fiber).** Service applications use
+exactly [ARH, Assumption 1.3][ARH] and [NSF, Assumption 1.2][NSF]. For
+finite prefix-free original cuts $P,Q$, an acquired complete old row $R$,
+finite literal history $H_0$ and finite signed relation history
+$H_{\rm rel}$, the common retained input has the entire nonempty fiber
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{NPL.3}
+$$
+
+A record $(a,p,b,q,\bowtie)$ requires both endpoints to exist and
+compares the **whole** subtrees $(\rho^a u)|_p$ and $(\rho^b u)|_q$,
+with $\bowtie$ equal to $=$ or $\ne$. Absence invalidates either sign.
+Every record refers to the same original $u$. All old repetitions,
+cross-class and off-task disequalities, concrete exterior and guards
+remain imposed. There is no size, depth or template promise on $D$.
+
+Entry is the actual same-root register $\rho^N u$, with authentic $N$
+at least every acquired epoch. The complete accessible state is a fixed
+function of the retained input and common parameters. Every accessible
+source-bearing cache, address, count, length, control position, timing
+field, reference, permission and archive is included in that input.
+ARH Proposition 2.1 supplies a paid source-total acquisition procedure
+conditional on this complete-state contract; its cost can be unbounded
+across sources. No such cost is refunded here.
+
+The full target $R_Q(u)$ includes the reached original cut addresses,
+numbered-hole concrete exterior and complete equality partition of the
+reached whole subtrees. Empty $Q$ asks for the original source itself;
+$Q=\{\varepsilon\}$ has a single fixed hole row.
+

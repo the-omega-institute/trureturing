@@ -1,0 +1,21 @@
+**命题 22.14.1（吞吐地板恢复统一上界）。** 对二元公共旗标，若两类型的旗标概率满足
+
+$$
+\eta\le\Pr_\theta(F=1)\le1-\eta,
+\qquad 0<\eta\le\frac12,
+$$
+
+则
+
+$$
+\boxed{
+\Delta(F)\le2\log\frac{1-\eta}{\eta},
+\qquad
+\tanh(\Delta(F)/4)\le1-2\eta.
+}
+$$
+
+端点概率 $(\eta,1-\eta)$ 或其交换达到等号。稀有生存反例恰好通过令 $\Pr_\theta(F=1)=q_\theta^N\to0$ 越过这一吞吐地板。
+
+<a id="section-22-15"></a>
+

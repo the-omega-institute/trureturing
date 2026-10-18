@@ -1,0 +1,17 @@
+**Theorem 5.5 (restricted supplement bound and its scope).** Any fixed-width
+binary supplement to the constant $P_A^+$ that is sufficient for original
+$Q$ on this fixed family requires at least $r_{\rm len}$ bits. Selecting
+the actual written $w$ attains that many logical bits on the family.
+This is not a new general memory lower bound or an A-readable extractor.
+
+Proof. Theorem 5.2 supplies $2^{r_{\rm len}}$ different required responses
+over one owner-view value. A supplement must be injective on them, so
+$2^b\ge2^{r_{\rm len}}$. The actual 13 prefix returns $w$ itself,
+and Theorem 5.3 supplies sufficiency there. This is the elementary
+finite-fibre argument already used by AIF's unfinished-address results.
+The instance-specific addition is its maximal A-owned ARC74 projection,
+including old acquired history packages, after all finite latches/phase
+and the clock have been made equal. It excludes repair by a clock,
+phase or pending-bit supplement alone, without claiming a total-storage
+minimum or a forward-closed small-memory interface. ∎
+

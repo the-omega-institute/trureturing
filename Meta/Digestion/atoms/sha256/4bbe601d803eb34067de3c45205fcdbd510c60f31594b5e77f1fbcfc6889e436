@@ -1,0 +1,37 @@
+**Theorem 4.1 (Unbounded fixed-radius tail suprema).** For every $R\ge0$ and every $N\ge4$,
+
+$$
+\sup_{\theta\in\Theta_N}\tau_{P_\theta}(R)=+\infty.
+\tag{4.1}
+$$
+
+Every member of the closed curve $(P_p)_{0\le p\le1}$ nevertheless has a finite tail. More precisely, for every fixed $r,R$,
+
+$$
+\lim_{\substack{p\to1/2\\p\ne1/2}}e_{L,P_p}(r)
+=\lim_{\substack{p\to1/2\\p\ne1/2}}e_{R,P_p}(r)=1/8,\qquad
+\lim_{\substack{p\to1/2\\p\ne1/2}}\tau_{P_p}(R)=+\infty,
+\tag{4.2}
+$$
+
+although both defects and every tail are zero at $p=1/2$. On this curve the supremum of either side defect at every fixed $r$ is exactly $1/8$.
+
+Proof. For $K\ge1$ choose $\varepsilon_K=1/[16(K+1)]$ and $p_K=1/2+\varepsilon_K$. Put $t=(1+2\varepsilon_K)/(1-2\varepsilon_K)$. A complementary $(m+1)$-spin pair with $k$ ones in one completion has likelihood ratio $t^{2k-(m+1)}$. Its endpoint-spin odds therefore lie between $t^{-(m+1)}$ and $t^{m+1}$. For $0\le\varepsilon\le1/4$,
+
+$$
+\frac{d}{d\varepsilon}\log\frac{1+2\varepsilon}{1-2\varepsilon}
+=\frac4{1-4\varepsilon^2}\le\frac{16}3<8.
+$$
+
+Consequently $m\le K$ implies $(m+1)\log t\le1/2<\log2$. On every parity atom the endpoint posterior lies in $[1/3,2/3]$, so its variance is at least $2/9$. Thus $v_m(p_K)\ge2/9$ for $m\le K$, and (3.2) gives
+
+$$
+e_{L,P_{p_K}}(r)+e_{R,P_{p_K}}(r)\ge2/9\quad(0\le r\le2K+1),\qquad
+\tau_{P_{p_K}}(R)\ge\tfrac29(2K+2-R)\quad(R\le2K+1).
+\tag{4.3}
+$$
+
+Sending $K\to\infty$ proves (4.1) for $N=4$, even in any neighborhood of fairness. For $N>4$, pad $\lambda$ with zeros, $M_0$ with a deterministic-zero identity block and $M_1$ with a zero block. This is in $\Theta_N$ and preserves every actual visible quantity.
+
+Continuity of each $v_m$ at fairness proves the fixed-$r$ limits in (4.2). For any prescribed finite lower bound and fixed $R$, choose a sufficiently long finite tail segment. Its punctured parameter limit has $1/4$ per offset, so its sum eventually exceeds that bound for every sufficiently close biased parameter. Nonnegativity of the remaining terms proves the actual tail limit, without using a divergent upper estimate as a lower bound. Finally a Bernoulli conditional variance is at most $1/4$; (3.2), its punctured limit and (3.4) give the stated side-defect supremum. $\square$
+

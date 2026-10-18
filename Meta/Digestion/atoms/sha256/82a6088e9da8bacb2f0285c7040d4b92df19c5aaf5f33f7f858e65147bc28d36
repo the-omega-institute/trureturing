@@ -1,0 +1,93 @@
+**Theorem 27.5 (All-position elliptic quotient realization from a minimal
+resolution).** Fix $n\ge2$ and $m\ge0$. Choose a minimal multigraded
+resolution of $R_n$ over $S_n$ and forget only its occupancy grading.
+Write its summands as $S_n(-j)^{\beta_{i,j}}$ and set
+$E^{-i}=\widetilde F_i(m)$ on $X_n=\mathbb {CP}^{D_n-1}$.
+Totalize its Dolbeault resolution with the sign (26.8), include all
+negative total degrees, and use any smooth Hermitian metrics.
+Then $D^+:H^1(X_n,\mathscr E^+)\to L^2(X_n,\mathscr E^-)$ is elliptic
+Fredholm and
+
+$$
+\ker D^+\simeq(R_n)_m,\qquad \ker D^-=0,
+\qquad\operatorname{ind}D^+=N_n(m).
+\tag{27.11}
+$$
+
+Let
+
+$$
+B_n(t)=\sum_{i,j}(-1)^i\beta_{i,j}t^j
+=(1-t)^{c_n}h_n^*(t).
+\tag{27.12}
+$$
+
+The index has the two equal coefficient expressions
+
+$$
+\begin{aligned}
+N_n(m)
+&=[h^{D_n-1}]\ e^{mh}B_n(e^{-h})
+ \left(\frac h{1-e^{-h}}\right)^{D_n}\\
+&=[h^n]\ e^{mh}h_n^*(e^{-h})
+ \left(\frac h{1-e^{-h}}\right)^{n+1}.
+\end{aligned}
+\tag{27.13}
+$$
+
+Proof. All ordinary shifts in a minimal resolution are nonnegative:
+start with $F_0=S_n$, and choose homogeneous generators of each kernel
+inside the preceding positively graded free module. A nonzero
+homogeneous element cannot have negative ordinary degree.
+By (27.5), each occurring shift $j$ pairs with
+$D_n-3-j$, which is also nonnegative. Therefore
+
+$$
+0\le j\le D_n-3.
+$$
+
+Every line-bundle twist in the sheaf complex is thus at least
+$m-(D_n-3)\ge-(D_n-3)>-D_n$.
+On $\mathbb P^{D_n-1}$, Stacks 01XT therefore gives vanishing in all
+positive sheaf degrees. Serre GAGA and the Dolbeault resolution identify
+the analytic total cohomology with the degree $m$ strand of the chosen
+exact resolution. Its sole cohomology is $(R_n)_m$ in degree zero.
+The principal symbol is the parity-shifted sum of Dolbeault symbols;
+all relation maps are order zero. Compact elliptic Hodge theory and the
+same Sobolev/formal-adjoint regularity argument as in Theorem 25.3 prove
+(27.11). For $n=2$ the complex consists just of $\mathcal O(m)$ on
+$\mathbb P^2$, exactly as the trivial resolution requires.
+
+The Hilbert-series alternating sum of the resolution is
+$B_n(t)/(1-t)^{D_n}$; comparison with the supplied Ehrhart series proves
+(27.12). The first expression in (27.13) is the classical index formula
+for its virtual sum of line bundles on $X_n$.
+Substituting (27.12) and using $D_n-c_n=n+1$ gives formally
+
+$$
+(1-e^{-h})^{c_n}\left(\frac h{1-e^{-h}}\right)^{D_n}
+=h^{c_n}\left(\frac h{1-e^{-h}}\right)^{n+1}.
+$$
+
+Since $D_n-1-c_n=n$, coefficient extraction proves the second
+expression. All series are used only through the finite cohomological
+degree in question; the factor $h/(1-e^{-h})$ has a regular formal
+power series at zero. This equality neither identifies $X_n$ with
+$\mathbb P^n$ nor compresses its relation matrices or state spaces to
+$n$ dimensions. $\square$
+
+The specified construction gives actual integer maps in the four-position
+case and an existence construction by minimal homogeneous syzygies for
+general $n$. It does not claim explicit matrices in every length.
+The classical path and canonical-module results supply their own general
+claims; the application here connects their precise shifts to this mode
+algebra, its resolution parity and its analytic quotient kernel.
+The wrong-map example in Proposition 26.6 remains the reason an index
+alone is insufficient to certify any of these kernel identifications.
+
+[PA27]: https://arxiv.org/html/2607.22008
+[ST27]: https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf
+[CA27]: https://arxiv.org/html/0812.0823
+[AB27]: https://stacks.math.columbia.edu/tag/090U
+[BE77]: https://eisenbud.github.io/papers/pdfs/1977-002.pdf
+

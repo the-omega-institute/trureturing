@@ -1,0 +1,5 @@
+source_id = "fib-native-nonreal-maximal-plateau-resource-law"
+path = "docs/develop/theory/FIB_NATIVE_NONREAL_MAXIMAL_PLATEAU_RESOURCE_LAW.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

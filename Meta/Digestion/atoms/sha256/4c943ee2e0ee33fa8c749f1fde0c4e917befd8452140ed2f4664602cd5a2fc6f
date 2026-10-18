@@ -1,0 +1,80 @@
+**Lemma 7.2 (exact tangent and uniform Taylor remainders).** Let
+
+$$
+P=\frac{\operatorname{adj}S}{\operatorname{tr}(\operatorname{adj}S)},
+\qquad Q=I_3-P.
+\tag{ZG.32}
+$$
+
+Then $P$ is the rank-one orthogonal kernel projection of $S$,
+$PKP=0$, $S\succeq\gamma Q$, and throughout $0\leq r\leq\tau_{\rm q}$,
+
+$$
+\begin{aligned}
+\|S_0(x(r))-S-rK\|_{\rm op}&\leq Mr^2,\\
+F(x(r))&\geq F(x_\star)+\eta_{1,\star}r-Mr^2.
+\end{aligned}
+\tag{ZG.33}
+$$
+
+Proof. Rank-two positivity gives
+$\operatorname{adj}S=\sigma_1\sigma_2P$. The zero $g_0$ derivative in
+(ZG.25) is $1000\operatorname{tr}((\operatorname{adj}S)K)=0$.
+Thus $\operatorname{tr}(PK)=0$, and rank one implies $PKP=0$.
+The eigenvalue bound in Lemma 7.1 gives $S\succeq\gamma Q$.
+
+For the remainder estimates, along either chart vector write
+$v(r)=v(0)+rw$, with last coordinate fixed at $-1$ or $1$,
+$h(r)=\|v(r)\|\geq1$, $q=\|w\|$ and $u=v/h$. Direct differentiation gives
+
+$$
+\begin{aligned}
+u'&=(I-uu^T)w/h,\\
+u''&=-\frac{2w(v^Tw)}{h^3}
+      -\frac{v\|w\|^2}{h^3}
+      +\frac{3v(v^Tw)^2}{h^5}.
+\end{aligned}
+\tag{ZG.34}
+$$
+
+Consequently $\|u'\|\leq q$ and $\|u''\|\leq6q^2$: the three terms in the
+second line have bounds $2q^2/h^2,q^2/h^2,3q^2/h^2$. Differentiating
+$R=uu^T$ now yields
+
+$$
+\|R'\|_{\rm op}\leq2q,\qquad
+\|R''\|_{\rm op}\leq14q^2.
+\tag{ZG.35}
+$$
+
+The second bound uses $2\|u''\|+2\|u'\|^2$. As $\lambda(r)\in(0,1)$,
+
+$$
+\begin{aligned}
+A_5''&=2\ell R'_5+\lambda(r)R''_5,\\
+A_{27}''&=-2\ell R'_{27}+(1-\lambda(r))R''_{27},\\
+\|A_5''\|_{\rm op}+\|A_{27}''\|_{\rm op}
+&\leq4|\ell|(q_5+q_{27})+14(q_5^2+q_{27}^2)=2M.
+\end{aligned}
+\tag{ZG.36}
+$$
+
+For any Hermitian $X$, entrywise multiplication satisfies
+$X\odot\rho_y=\operatorname{diag}(a_y)X\operatorname{diag}(a_y)$, and hence
+$\|X\odot\rho_y\|_{\rm op}\leq\|X\|_{\rm op}$ because every $p_{yi}\leq1$.
+Also $B_y\succeq0$ and $\operatorname{tr}B_y=s_y\leq1$, so
+$|\operatorname{tr}(XB_y)|\leq\|X\|_{\rm op}$. The matrix $Z_d(x(r))$ and
+the scalar $\lambda(r)$ are affine. Equations (ZG.18), (ZG.20) and
+(ZG.36) therefore give
+
+$$
+\|S_0''(x(r))\|_{\rm op}\leq2M,\qquad
+\left|\frac{d^2}{dr^2}F(x(r))\right|\leq2M.
+\tag{ZG.37}
+$$
+
+The integral Taylor remainder is the integral of $(r-s)$ times the second
+derivative over $0\leq s\leq r$. Its norm, or absolute value, is at most
+$Mr^2$. Use (ZG.25) for the first derivative of $F$ to obtain (ZG.33).
+$\square$
+

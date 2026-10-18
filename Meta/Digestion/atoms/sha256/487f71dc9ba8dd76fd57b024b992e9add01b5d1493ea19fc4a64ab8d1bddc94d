@@ -1,0 +1,33 @@
+**Corollary 8.12 (Null directions and the existing trace maximum).**
+On the positive support $S$, the kernel of $J_p$ consists exactly of
+functions constant on each connected component of $\Gamma_n[S]$.
+If coordinates are indexed by all of $B_n$, add arbitrary values at
+zero-amplitude vertices. In the same fixed coordinate basis,
+
+$$
+\Phi_n(p)=\frac n8\operatorname{tr}J_p,
+\qquad
+\max_{p\in\mathcal P(B_n)}\operatorname{tr}J_p
+=\frac8n\kappa_n.
+\tag{8.23}
+$$
+
+Proof. Every summand of the quadratic form is nonnegative and has
+positive weight precisely when both endpoints lie in $S$. Its sum
+vanishes precisely when all such endpoint values agree. Connected paths
+then give the component constants, while every edge at a zero-amplitude
+coordinate has weight zero. The trace equality is (8.22), and maximizing
+it uses exactly the existing objective and domain of Definition 1.1.
+For existence, $0\le h(s,t)\le(s+t)/4$ makes $h$ continuous even at
+$(0,0)$; its finite sum is continuous on the compact simplex. $\square$
+
+The all-constant direction is the global phase gauge. On $S$ the other
+component constants are the local version of the global ambiguity of
+Theorem 8.6 for the static diagonal-and-edge menu. Arbitrary phase
+coordinates on zero amplitudes have no physical state variation. This
+agreement of kernels does not constrain what longer coherent controls
+can read. The trace in (8.23) uses the specified Euclidean coordinates
+$e_u$; it changes under general reparametrization. Maximizing it is not
+maximizing the weakest direction, a spectral gap or information over
+all quantum experiments.
+

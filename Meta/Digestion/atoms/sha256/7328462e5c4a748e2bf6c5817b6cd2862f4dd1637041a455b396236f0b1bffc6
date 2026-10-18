@@ -1,0 +1,33 @@
+**Assumption 1.3 (stationary native apparatus and separate services).**
+A native preparer has one source-independent running start, one fixed
+absolute word and four fixed successors at each running state, the two
+original-entry latches, and all $r$ additional mandated distinct latches.
+Its counted current state is its entire changing configuration. Every
+installed running, output, unused and latch state counts. Every running
+visit costs one invocation and its literal word length, including
+constant, root, absent, repeated and postcertificate visits. Actual runs
+must terminate correctly on every source in (IC.3); arbitrary fixed
+successors, sharing and syntactic union cycles remain permitted.
+
+The original binding of origin, authenticated update and current
+register, genuine acquisition of same-version row and code arguments,
+version authentication, lawful pre-cut native permission, actual
+same-source export, complete access isolation, code-only handoff, lawful
+complete entry and stationary truthful service continuity are separate
+supplied services, with their original prices. The current register stays
+that same $\rho u$ throughout preparation, handoff and reading.
+An acquired finite-data description specifies (IC.6); its archive is
+inaccessible to the paid common-start preparer. No later epoch, old
+source, archive, code reread or fresh binding is supplied by a table.
+
+There is no additional source copy, history, selector, counter, phase,
+cursor, clock, reset, rerooting, computed address, equality, inverse,
+provenance or source-identity port, or extra work/control register.
+Representation of the installed table and connections, address bytes,
+initialization, original entry contents, whole-output storage, local
+acquired-term work, handoff and service/isolation storage retain separate
+costs. Installed control, exported alphabet, finite code length,
+microsteps, physical time, memory and energy are distinct quantities.
+These are the unchanged premises of [PCA, Assumptions 1.2 and 33.2][PCA]
+and [WTF, Assumption 1.5][WTF].
+

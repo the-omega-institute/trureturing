@@ -1,0 +1,42 @@
+### 99.6. An intrinsic quantitative partner inequality
+
+Take \(j=3\), and express the two singleton \(H\)-records in the orthonormal complete-fibre basis:
+\[
+\psi=(x,y)^T,\qquad \phi=(z,w)^T,\qquad
+|x|^2+|y|^2=|z|^2+|w|^2=1,\qquad
+\Delta=xw-yz\ne0.\tag{22}
+\]
+All four entries are nonzero, as is \(H_{34}=\overline xz+\overline yw\). Set \(I=(1,2,4)\). The projection of the actual missing-partner record onto this two-dimensional span is orthogonal to \(\psi\), so
+\[
+H_{oI}=\beta(-y,x,\Delta),\qquad \beta\ne0.\tag{23}
+\]
+Its orthogonal component is unrestricted. Nonzero cross entries \(H_{o1},H_{o2}\) force \(\beta\ne0\).
+
+Put \(g_i=G_{oi}\). Since \(a\) is the full kernel vector, supported on \(S\), and \(G_{o3}=0\),
+\[
+\sum_{i\in I}g_i a_i=0,\qquad
+\ell_i=\tfrac12-g_iH_{oi}\quad(i\in I).\tag{24}
+\]
+Substitution cancels the unknown \(\beta\). Define columns
+\[
+r=\begin{pmatrix}-a_1/y\\a_2/x\\a_4/\Delta\end{pmatrix},
+\qquad
+q=\begin{pmatrix}a_1/\overline x\\a_2/\overline y\\a_4/H_{34}\end{pmatrix},
+\qquad b=\tfrac12(r_1+r_2+r_3).\tag{25}
+\]
+Equations (21), (23) and (24) give the two bilinear constraints
+\[
+r^T\ell_I^T=b,\qquad q^T\ell_I^T=0.\tag{26}
+\]
+The columns \(r,q\) are independent: equality of their first-two-entry ratios would say \(-\overline x/y=\overline y/x\), and hence \(-|x|^2=|y|^2\).
+
+Set
+\[
+\begin{aligned}
+P&=\bigl[(\widehat K^{-1})_{II}\bigr]^{-1}
+ =\widehat K_{II}-\widehat K_{I3}\widehat K_{3I}\succ0,\\
+\gamma&=r^*Pr-\frac{|r^*Pq|^2}{q^*Pq}>0.
+\end{aligned}\tag{27}
+\]
+The Schur formula uses \(\widehat K_{33}=1\). Strict positivity of \(\gamma\) follows from strict Cauchy--Schwarz for the already independent \(r,q\) in the positive definite \(P\)-metric.
+

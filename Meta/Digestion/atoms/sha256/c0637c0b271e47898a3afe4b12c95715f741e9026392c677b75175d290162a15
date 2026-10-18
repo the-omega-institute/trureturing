@@ -1,0 +1,4 @@
+**Lemma 2.3 (Unordered spin-graph identity).** Fix one phase and its target spin index $q$. A bijection of finite occupied spin vertices fixing $q$ and carrying each labelled queried unordered edge to its replacement preserves the joint law of $S_q$ and those edge XORs.
+
+Proof. Include $q$ as an isolated occupied vertex if necessary. For a spin assignment $s$ on the occupied vertices $V$, its probability is $\prod_{v\in V}\pi_{s(v)}$. Transporting $s$ along the bijection preserves this product, the target value and every labelled XOR. Sum over assignments. XOR is symmetric in its two endpoints, so reversal of an unordered edge is allowed. Distances and unqueried adjacencies between distinct vertices impose no spin equality and need not be retained. The identity holds at each $p$. Different incompatible continuation branches may use different proof bijections, provided the actual addresses at their common earlier nodes are identical. $\square$
+

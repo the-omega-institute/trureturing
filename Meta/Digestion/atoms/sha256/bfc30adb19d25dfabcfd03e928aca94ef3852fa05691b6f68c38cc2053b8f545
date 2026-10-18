@@ -1,0 +1,128 @@
+**Theorem 5.2 (exact chronology ambiguity and acquired archive).** For
+every $D,m,r\ge0$ and every $t\in\mathcal F_D$, all
+$\binom{m+r}{m}$ distinct histories $w\in\mathcal W_{m,r}$ are legal and
+have the identical complete work-tree endpoint
+
+$$
+X_{m,r}(t,w)=G_{T_r}^{\,m}(\rho^r(t)).
+\tag{ER.15}
+$$
+
+Conditional on this endpoint and the public totals $m,r$, an auxiliary
+terminal record permitting recovery of the actual work word needs at
+least $\binom{m+r}{m}$ attained values, even when $t$ and any initial
+source reference $E(t)$ are also given. This bound is attained on exactly
+this family by an archive acquired online from actual successful commits.
+The endpoint and archive together also recover $t$ without another
+original-source Read.
+
+With the explicit counters and archive described below, every actual
+prefix has a jointly attained state closed under its legal successors,
+and that state recovers the initial tree and executed prefix. At the
+terminal cut the counters are public constants. If the complete retained
+name consists only of the endpoint and this archive, its all-source
+attained alphabet has exactly
+
+$$
+Q_D\binom{m+r}{m}
+\tag{ER.16}
+$$
+
+values, with the fixed fields of Assumption 2.1 understood. In particular
+the binomial count alone is a conditional supplement, not total memory.
+Its minimum conditional fixed-width bits are
+$\lceil\log_2\binom{m+r}{m}\rceil$.
+
+Proof of the endpoint. At a prefix with $a$ grafts and $j$
+substitutions, induction gives the invariant
+
+$$
+x=G_{T_j}^{\,a}(\rho^j(t)).
+\tag{ER.17}
+$$
+
+It holds at the empty prefix. A graft inserts one more outer $T_j$.
+A substitution sends every outer $T_j$ to $T_{j+1}$ and the inner
+tree to $\rho^{j+1}(t)$, by homomorphism. These are exactly the two
+successor cases. Every prefix respects the bounded counters, and each
+constant is separately prepared, so every word is legal. At $a=m,j=r$
+the invariant is (ER.15). Counting the choices of the $m$ graft positions
+gives $\binom{m+r}{m}$ distinct ordered histories.
+
+Proof of necessity. Fix this same actual $t$. Both the endpoint and
+$E(t)$ are now fixed, as are the work totals. If two different words
+give the same complete auxiliary record, the decoder receives identical
+inputs and cannot output both words. Thus that record must distinguish
+all $\binom{m+r}{m}$ possibilities. Any surviving script, preparation
+stock, control, timing or identity distinctions are part of this record;
+putting them outside a displayed archive does not evade the bound.
+
+Proof of online attainment. Order the binary words lexicographically with
+$\mathsf G<\mathsf S$. Use the classical enumerative-ranking method
+already supplied by [SC, §19][SC], with an explicit commit update here.
+Initially set
+
+$$
+g=m,\qquad b=r,\qquad R=0.
+\tag{ER.18}
+$$
+
+Here $g,b$ are remaining graft and substitution counts. On a successful
+graft, set $g\leftarrow g-1$ and hold $b,R$. On a successful
+substitution, first set
+
+$$
+R\longleftarrow
+\begin{cases}
+R+\binom{g+b-1}{g-1},&g>0,\\
+R,&g=0,
+\end{cases}
+\qquad b\longleftarrow b-1,
+\tag{ER.19}
+$$
+
+using the old $g,b$ on the right. Both work and record updates commit
+together. The legal guards are $g>0$ for graft and $b>0$ for
+substitution; no output or successor is assigned to an action failing its
+guard. Public exact arithmetic, counters and transient workspace are
+additional charged resources.
+
+For a fixed executed prefix, its possible complete extensions form a
+lexicographic interval. Inductively its lower endpoint is $R$ and its
+length is $\binom{g+b}{g}$. A graft selects the initial block, of length
+$\binom{g+b-1}{g-1}$; a substitution skips exactly that block and
+selects the subsequent block. When one count is zero there is only one
+choice. This proves the interval invariant, including the boundary cases
+$m=0$ or $r=0$. At the terminal cut its length is one, so $R$ is
+exactly the word's rank, ranging over all integers
+$0,\ldots,\binom{m+r}{m}-1$.
+
+The inverse uses the same block sizes: compare a rank with the graft
+block size, choose that first letter if it is smaller, otherwise subtract
+the block size and choose substitution. Repeating with the reduced
+counts recovers the word and hence every $T_j$ graft label. This inverse
+is computation on the acquired record, not physical reverse execution.
+Replaying the recovered word from the recovered initial tree reconstructs
+all intermediate work trees and full declared successful outputs.
+
+For completeness at a nonterminal prefix, the counters give
+$a=m-g$, $j=r-b$ and prefix length $a+j$. Unranking the lower endpoint
+$R$ gives a completion whose first $a+j$ letters are exactly that prefix,
+by the interval invariant. In (ER.17), remove the $a$ known outer
+$T_j$ grafts and use the supplied parser $\delta$ exactly $j$ times;
+this recovers $t$. Thus $(x,g,b,R)$ recovers the entire actual prefix
+target. Its legal transitions use this same $j$, prepare the required
+constant, implement (ER.17) and update (ER.18)–(ER.19), so their
+successors remain in the joint attained image of these executions.
+This establishes closure by construction, not by separately realizing
+the tree, counters and archive.
+
+At termination, removing the $m$ known outer grafts and parsing $r$
+times recovers $t$. The map $t\mapsto G_{T_r}^m(\rho^r(t))$ is
+injective, by ordered-pair cancellation and substitution injectivity.
+Every source and every rank is attained by the specified paid execution;
+hence their terminal joint range has the product size (ER.16). At this
+cut $g=b=0$; all other fields must be isolated or functions of this
+code, as Assumption 1.3 requires. The lower and upper alphabet bounds
+also give the bit assertion. $\square$
+

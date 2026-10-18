@@ -1,0 +1,27 @@
+**数学引文 78.3（Finite separation used in the acquisition proof）。** Let $K$ be the number of $\sim$-classes in $Q$. Every inequivalent active pair has a separating word of length at most $K-1\le N-1$. The bound $N-1$ is sharp for $N\ge2$.
+
+Proof. For proof notation only, extend the table to $X=Q\sqcup T$ by making every terminal self-loop on both bits. Give all active states one colour and each terminal its own distinct colour. This extension grants no post-stop action. Let $E_0$ be equality of colours and recursively put
+
+$$
+xE_{k+1}y
+\quad\Longleftrightarrow\quad
+xE_ky\quad\text{and}\quad
+\delta(x,b)E_k\delta(y,b)\text{ for both }b\in\{0,1\}.
+$$
+
+These are refining equivalence relations. Induction shows that $E_k$ means equality of the resulting colours after every word of length at most $k$: the empty word supplies the initial colour, and a word $bv$ supplies the successor condition for $b$ and $v$. Conversely agreement on all such words gives both the shorter-word condition and the two successor conditions.
+
+For active starts, these colour conditions are equivalent to equal first-stop responses for every word of length at most $k$. The colours at all successive prefixes determine the first terminal, its first depth, or the active word end. Comparing all prefixes preserves differences of stopping depth even when terminal colours agree.
+
+If $E_{k+1}=E_k$, successor compatibility makes every later refinement equal. Terminal classes are singletons from $E_0$ and never split; only the initial active block splits. Each strict refinement increases the number of active blocks, so there are at most $N-1$ strict stages, and more precisely at most $K-1$ before the final $K$ active blocks. An equality cannot precede a later strict stage. The stable relation consequently agrees with responses to all finite words, proving the bounds and identifying its active restriction with $\sim$.
+
+For sharpness take $Q=\{q_0,\ldots,q_{N-1}\}$ and one terminal $t$, with
+
+$$
+\delta(q_0,0)=t,\qquad
+\delta(q_i,0)=q_{i-1}\ (i>0),\qquad
+\delta(q_i,1)=q_i\ (0\le i<N).
+$$
+
+Every word of length at most $N-2$ leaves both $q_{N-2}$ and $q_{N-1}$ active. The word $0^{N-1}$ stops the former on its last bit and leaves the latter active. Both transitions exist at every state. When $N=1$ there is no inequivalent active pair. $\square$
+

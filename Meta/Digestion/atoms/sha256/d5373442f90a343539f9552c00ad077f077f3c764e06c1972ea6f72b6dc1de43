@@ -1,0 +1,41 @@
+**Theorem 28.12 (Sharp fixed-risk minimax rates).** Let $N_\star$ denote either $N_{\rm all}$ or $N_{\rm term}$ from Definition 28.8, for the uniform orbit loss in Definition 28.1. Fix any $\delta _0\in(0,1/4)$. For sufficiently small $\varepsilon>0$, uniformly for $0<\delta\le\delta _0$,
+
+$$
+N_\star\ge c_{p,\delta _0}v^{-2}\varepsilon^{-2}
+$$
+
+for sparse and unbalanced full support, while balanced full support obeys
+
+$$
+N_\star\ge c_{p,\delta _0}v^{-2}\varepsilon^{-4}.
+$$
+
+Together with (28.11)–(28.12), the upper bounds are $O_p(v^{-2}\varepsilon^{-2}\log(C_p/\delta))$ in the first two cases and $O_p(v^{-2}\varepsilon^{-4}\log(C_p/\delta))$ in the balanced case. The lower constants are uniform over all smaller $\delta$; the logarithm is retained explicitly in the constructive upper bounds. At each fixed risk $\delta\in(0,1/4)$, both measurement classes therefore have $\Theta_{p,\delta}(v^{-2}\varepsilon^{-2})$ cost in the sparse and unbalanced cases, and $\Theta_{p,\delta}(v^{-2}\varepsilon^{-4})$ worst-case cost at balance.
+
+**Proof.** Every displayed nuisance value has modulus $v$ and is realizable as the first moment of a relative-angle law on the circle (a two-point law suffices); an independent common angle can be added without changing it. For balanced full support choose, for small $t>0$,
+
+$$
+\phi _2^+=\pi+t,\quad \phi _2^-=\pi-t,\quad
+\sin\alpha(t)=\frac BA\sin t,\quad
+\phi _1^+=\alpha(t),\quad\phi _1^-=-\alpha(t).
+$$
+
+Then $C_3^+=C_3^-$. With $q_+=1-e^{-it}$, $q_-=1-e^{it}$, choose $\mu _+=v$ and $\mu _-=-ve^{-it}=v q_+/q_-$. The full blocks (28.4) agree except for $R$, and
+
+$$
+|R_+-R_-|=v|d_1|^2(2-2\cos t)|1+e^{-it}|=O_p(vt^2).
+$$
+
+The orbit separation is at least $c_pt$. Lemma 28.11 and nearest-orbit decoding therefore give $N=\Omega_{p,\delta _0}(v^{-2}t^{-4})$ . Take $t=3\varepsilon$ with a $p$-dependent cutoff ensuring the arcsine branch is defined and $2\sin t>2\varepsilon$. This proves the balanced lower bound, including $v=1$.
+
+For unbalanced full support set $\phi _2^+=t,\phi _2^-=-t$, choose $\phi _1^+=-\arcsin((B/A)\sin t)$, $\phi _1^-=+\arcsin((B/A)\sin t)$, and put
+
+$$
+q_\pm=1+\eta e^{\mp it},\qquad
+\mu _+=v,\qquad \mu _-=v q_+/q_- .
+$$
+
+The two $C_3$'s and $Z$'s agree, while $R_+-R_-=O_p(vt)$; the orbit separation is $c_pt$. Lemma 28.11 gives the stated $v^{-2}\varepsilon^{-2}$ lower bound.
+
+For sparse support use $\phi ^+=t,\phi ^-=-t$ and the same $\mu=v$. The $R_s$'s agree and $Z_s^+-Z_s^-=2ivp_1R_6\sin t$, while (28.5)–(28.6) show that all other entries are fixed or conjugate copies. Again $\|\Delta\|_2=O_p(vt)$, and the testing-to-estimation reduction gives the lower bound. Any estimator with failure at most $\delta _0$ would test two orbit points separated by more than $2\varepsilon$ with error at most $\delta _0$, contradicting Lemma 28.11 below the displayed sample orders. $\square$
+

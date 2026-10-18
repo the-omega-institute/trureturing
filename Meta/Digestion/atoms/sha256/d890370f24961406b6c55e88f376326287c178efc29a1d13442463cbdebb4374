@@ -1,0 +1,16 @@
+**Proposition 8.2 (uninstalled target information cannot be guessed).**
+Replacing $c_R$ by an arbitrary runtime byte without supplying its
+actual remaining target information does not yield a self-dispatching
+variable-byte constructor from the partial tree alone.
+
+Proof. Consider the displayed preorder with two intended bytes that
+agree before track $i$ and disagree on $b_i$. Just before the
+terminal child at that track is born, their local partial trees are
+identical: all earlier bit choices and all scaffold vertices so far
+are the same. Their required next child sides differ. A selector
+factoring only through that identical local tree must choose the
+same side for both and fails at least one target. A rule immediate
+for the fixed $c_R$ avoids this missing input. A variable target
+needs actual acquired or retained operand material and its priced
+reads, not a proof-side target parameter. ∎
+

@@ -1,0 +1,17 @@
+**Proposition 5.2 (why positive or internally mixed equations are outside).**
+The proof of Lemma 3.1 uses one variable in ordinary constructor terms and one
+uniform outer $\rho$ power per side. URR’s equation (RNL.12) has infinitely
+many native finite solutions, so the finite-forbidden replacement step is
+invalid there. Likewise, a positive retained equation can force a coupled
+residual set that is not preserved by changing one coordinate. The arbitrary
+signed target therefore remains open even though this negative family is
+decided.
+
+The same boundary prevents importing URR’s common rank-independent residual
+tuple as a source selector: [URR, Theorems 3.1, 4.6 and 5.1][URR] provide a
+specified residual correspondence and a common completion on their Cartesian
+and feedback/packing families, but no determining-prefix theorem for the
+entire original fiber and no complete original-row selector here. Their
+mixed-interior-power method is complementary to, and not duplicated by, the
+finite-forbidden lemma.
+

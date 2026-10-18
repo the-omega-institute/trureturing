@@ -1,0 +1,68 @@
+**Theorem 6.2 (all-source calibrated readout).** Under Assumption 4.1,
+with $d(u)$ prepared and retained, for every actual $u\in\mathcal T$
+and every unknown $k\ge0$, Definition 6.1 terminates on $y=\rho^k u$
+and returns exactly
+
+$$
+\widehat\nu=\nu(y)=c(y)-d(u),\qquad
+\widehat Q=Q(y)=(\nu(y),\mathbf1_{\{d(u)=0\}}).
+\tag{IDC.6.2}
+$$
+
+Let $K=c(y)$ and $L_K=\lceil\log_2(K+2)\rceil$. Its actual raw read
+count $q$, maximum submitted address length and total submitted length
+satisfy
+
+$$
+q\le2L_K+3,\qquad
+\max_{\text{actual reads}}|R^j|\le K+2,\qquad
+\sum_{\text{actual reads}}|R^j|\le(K+2)(2L_K+3).
+\tag{IDC.6.3}
+$$
+
+It performs no source update. These are upper bounds for this consumer,
+not a minimum-query theorem or a total-computation bound.
+
+**Proof.** Put $h=\lfloor K/2\rfloor$ and $b_*=K-2h\in\{0,1\}$.
+The existing raw formula (IDC.2.9) says that the right-spine replies
+are branch precisely for $j<h$, the leaf of bit $b_*$ at $j=h$,
+and absent precisely for $j>h$. Thus the initial leaf case obtains $K$
+exactly and uses one raw call.
+
+In the branch case $h\ge1$. Let $t$ be the least nonnegative integer
+such that $2^t\ge h$; it exists for this finite $h$. Exponential search
+has exactly the $t+1$ indices $1,2,\ldots,2^t$ before its first
+nonbranch reply. If $2^t=h$, that reply is the required leaf. Otherwise
+$2^t>h$, $t\ge1$, and the preceding branch at $a=2^{t-1}$ and the
+absent upper index $b=2^t$ give
+
+$$
+a<h<b.
+\tag{IDC.6.4}
+$$
+
+Every nonleaf midpoint update preserves this strict bracket. Its width
+becomes at most the ceiling of half the preceding width. Starting from
+$2^{t-1}$, after at most $t-1$ nonleaf updates the width would be at
+most one, which is impossible for a bracket containing the integer
+$h$ strictly. Consequently a leaf is reached in at most $t$ midpoint
+reads. Equivalently, a width-two bracket has its unique integer midpoint
+at $h$ and must give a leaf. No unqueried leaf label is inferred for
+free. Every actual search is therefore finite and obtains $K=2h+b_*$.
+
+Since $h\ge1$ and $t=\lceil\log_2 h\rceil$, $t\le L_K$.
+The root, exponential probes and at most $t$ midpoint probes give
+$q\le1+(t+1)+t=2t+2\le2L_K+3$. The immediate-leaf branches satisfy
+the same bound. Minimality of $t$ gives $2^t\le2h$ (also for $t=0$).
+Every midpoint index is at most this exponential endpoint, so every
+submitted word has length at most $2h\le K$, in particular at most
+$K+2$. The root cases satisfy the stated bound too. Multiplying the
+number of calls by the maximum literal length proves the total-length
+upper bound, counting each actual request in its chronological place.
+
+Finally Theorem 3.1 gives $d(y)=d(u)$ and
+$c(y)-d(y)=\nu(y)\ge0$, while its flag equivalence gives
+$e(y)=\mathbf1_{\{d(u)=0\}}$. These prove both outputs. The program
+never needs $K$ as an input; $K$ only indexes the analysis of its actual
+finite run. $\square$
+

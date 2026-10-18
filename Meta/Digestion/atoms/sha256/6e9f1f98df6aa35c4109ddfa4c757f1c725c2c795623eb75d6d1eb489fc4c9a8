@@ -1,0 +1,9 @@
+**定义 2.1（带参照的格点累计）。** 固定 $r\ge1$、盒 $B=\prod_{i=1}^r\{0,\ldots,a_i\}$ 和实权重 $w_{\mathbf b}$。令
+
+$$
+F(\mathbf t)=\sum_{\substack{\mathbf b\in B\\b_i\le t_i\ (1\le i\le r)}}w_{\mathbf b}.
+$$
+
+任一 $t_i<0$ 时规定 $F(\mathbf t)=0$。方向差为
+$D_iF(\mathbf t)=F(\mathbf t)-F(\mathbf t-\mathbf e_i)$；低端零延拓是实际的起始条件。
+

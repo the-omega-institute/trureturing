@@ -1,0 +1,45 @@
+**Corollary 12.7 (the prescribed-return analytic inequality consumed by Proposition 11.4).** Fix the original finite or countable prior with $\mu(1),\mu(2)>0$ and at least one supported $k\ge3$. Let $\Xi$ be any admissible return measure satisfying, for every depth supported by this same prior,
+
+$$
+\mathcal L_p^\Xi(P_{p,r_k})\le\rho_p+\epsilon_p,\qquad
+\mathcal L_\beta^\Xi(P_{\beta,r_k})\le\rho_\beta+\epsilon_\beta,
+\qquad
+\epsilon_p,\epsilon_\beta\ge0,\quad
+\epsilon=\max\{\epsilon_p,\epsilon_\beta\}.
+\tag{12.33}
+$$
+
+Then
+
+$$
+\frac{2901611\epsilon+4519890V_\Xi}{11}
+ \ge \frac{\eta}{400000},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{12.34}
+$$
+
+This is a nonstrict joint loss–return-variation inequality on the prescribed measure. It assumes the same supported-depth bounds as (2.4), not just endpoint bounds.
+
+**Proof.** Use the rational tables of Corollary 12.5, all generated with their own same acquired and synthetic updates. For each $h$ their losses satisfy (2.4), with the nonnegative slacks
+
+$$
+\epsilon_p^h=\epsilon_p+C_ph,\qquad
+\epsilon_\beta^h=\epsilon_\beta+C_\beta h,\qquad
+\epsilon^h=\max\{\epsilon_p^h,\epsilon_\beta^h\}
+ \le\epsilon+C_\beta h.
+\tag{12.35}
+$$
+
+Uniformity over targets ensures that these are bounds for every depth in the one fixed installed support. Each is a regular finite table, so Proposition 11.4, with its supported-nonendpoint hypothesis, gives
+
+$$
+\frac{2901611\epsilon^h+4519890V_{\Xi_{F_h^r}}}{11}
+ >\frac{\eta}{400000}.
+$$
+
+By (12.30) the variation tends to the prescribed $V_\Xi$, and (12.35) gives $\epsilon^h\to\epsilon$. Passing to the limit proves (12.34), with $\ge$; strictness of each finite-table inequality need not survive the limit. No sampler premise is needed for this algebraic application of Proposition 11.4. Where the original sampling bridge of Proposition 12.6 holds, these same rational tables also have its original-history realization.
+
+The quantity $J$ in (11.1) and (11.12) is the endpoint moment $\int(u-a)(b-u)\,d\nu_p$, rather than the supported-depth loss slack in (12.33). The substitution above uses precisely the $\epsilon$ of (2.4) and (11.15), and does not identify these two quantities. The prior's supported nonendpoint is indispensable to invoking the conserved-class gap inside Proposition 11.4; no endpoint-only version of that positive right-hand side is asserted.
+
+This consumer leaves $V_\Xi$ free and supplies no unrestricted positive risk-only gap. It asserts neither existence of a zero-level admissible $\Xi$ nor an optimizer, attainment or resource optimum. $\square$
+

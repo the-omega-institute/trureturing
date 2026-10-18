@@ -1,0 +1,30 @@
+**Proposition 209.4 (Early zero-zero inputs and the schedule boundary).**
+For every $L\ge5$, take the actual product measure of mass $15/2$
+and late zero probability $4/5$, so that
+$(a,d,d,h)=(24/5,6/5,6/5,3/10)$. Put
+$g_j=31/5,c_1=c_2=12/5,\tau=27/5$ in 209.2.
+Both excesses equal $9/10$. Replacing its pair lifts by
+$P_{00x}=\nu(x)/100$ and
+$P_{01x}=P_{10x}=99\nu(x)/200$ gives an input with the same $Q,W$
+and $\Delta_O\le39/40$.
+At $L=6$, instead put $g_3=32/5$ and $g_4=g_5=g_6=6$, leaving
+the original balanced lifts and other parameters fixed. Both global
+excesses equal one, while the particular pair $(4,5)$ has $N$ excess
+$7/10$ and $O$ excess $3/10$.
+
+**Proof.** In the first case (209.2) gives $I_j=17/20$ before the
+last label, $I_L=4/5$, and $J_{ij}=9/10$ when $j<L$, $2/5$
+when $j=L$. Moving mass $S/100=3/40$ between the indicated early
+prefixes changes the reward of any fixed table by at most $3/40$;
+maximization preserves that bound. Class totals and the anchor do not
+change. This gives $9/10+3/40=39/40$.
+
+For the second case $W_V=177/10$ and (209.2) gives $D_F=1$.
+At $(4,5)$ the $N$ maxima are $(26/5,6/5,6,6)$, sum $92/5$;
+the earlier unqueried label 3 wins $00$. The stopped maxima are
+$(6,6,6)$, sum $18$. Subtracting $177/10$ gives the two stated
+excesses. A different stopped table attains the global value one.
+The first quotient family is already covered by 206.15:
+$E\ge\mu-2$ and $W\ge3\mu-1$. These examples concern support
+and row fidelity, not a new quotient region. $\square$
+

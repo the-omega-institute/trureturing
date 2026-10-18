@@ -1,0 +1,65 @@
+**Theorem 6.1 (Interpolation with the actual ninth amplitude).**
+For $u>0$, put
+
+$$
+v_0=\frac{24u}{253},\qquad v_W=\frac{75u}{181},\qquad
+v_0\le v\le v_W,\qquad
+\theta=\frac{181(253v-24u)}{14631u}.
+$$
+
+Let $A$ be exactly Construction 4.1, regarding it as a nine-bit law
+that ignores input nine, and let $B=\mathcal B(3072u/181,0)$ from
+5.3. Define one complete-table allocation by
+
+$$
+\Lambda_D=(1-\theta)A_D+\theta B_D,\qquad
+H(u,v)=\frac{1272u+1222v}{14631}.
+$$
+
+Every table weight is specified by 4.1, 5.1 and this formula; unlisted
+weights are zero and coincident weights add. This is a nonnegative
+normalized law with original realizations in both classes and exact
+original error
+
+$$
+e_a(\Lambda)=5\tau+H(u,v)
+$$
+
+for every entire continuation in 1.2. It is an attained upper bound;
+its optimality on the open intermediate interval is not established.
+
+Proof. Since $v_W-v_0=14631u/(181\cdot253)>0$,
+$\theta=(v-v_0)/(v_W-v_0)\in[0,1]$.
+At the first endpoint, 4.4 gives cap $5\tau+d_0$ with actual
+ninth amplitude $5\tau+v_0$. At the second, 5.3 gives cap
+$5\tau+22u/181$ with actual ninth amplitude $5\tau+v_W$.
+The endpoint targets have the same actual full head, the same
+$a_3,\ldots,a_8$, and any fixed continuation from ten onward.
+
+Their same affine combination has actual ninth amplitude
+$5\tau+(1-\theta)v_0+\theta v_W=5\tau+v$, with every other
+amplitude unchanged. For each fixed word and each independent event
+$A,C,P$, both its probability and its demand are affine in these
+same weights. The complete endpoint inequalities therefore prove
+every row, including every multiple-zero suffix, for this one
+$\Lambda$. The positive row also interpolates. The same complete
+law combination preserves normalization; different events and cells
+never receive different budgets.
+
+The mixed cap increment is
+
+$$
+(1-\theta)\frac{24u}{253}+\theta\frac{22u}{181}
+ =\frac{1272u+1222v}{14631}=H(u,v).
+$$
+
+Both endpoint positive nonbase masses equal their caps. Both
+class-two correct masses are $1-16\tau$ minus their respective cap
+increments, constantly on the whole fibre. Hence the mixed positive
+nonbase mass and class-two correct deficit both equal $5\tau+H$.
+An actual class-two source attains that value. Every actual
+$n>9$ has exact error $5\tau+H$ by 1.4, since no label $n$
+is emitted and $a_n\le5\tau$. All actual first zeros through nine
+are covered by their complete rows. This proves the exact original
+error with the unchanged actual continuation. $\square$
+

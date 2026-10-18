@@ -1,0 +1,69 @@
+**Proposition 1.2 (Exact ray coordinates and signed commands).** The
+actual reachable current-ray space is
+
+$$
+\mathcal M=(0,H)\times\mathbb T^2.
+$$
+
+Writing phase increments as $(u,v,0,v,u)$, its circle coordinates are
+$\alpha=u-v$ and $\beta=u$. For every real displacement $a$ and real
+phase command $t$,
+
+$$
+\begin{aligned}
+P_a(k,\alpha,\beta)&=(k+a,\alpha,\beta),\\
+\operatorname{dom}P_a
+ &=\{(k,\alpha,\beta)\in\mathcal M:0<k+a<H\},\\
+Q_t(k,\alpha,\beta)
+ &=\left(k,\alpha+t/2,\beta+(1/2-k/r)t\right),\\
+\operatorname{dom}Q_t&=\mathcal M.
+\end{aligned}
+$$
+
+The phase input $t$ remains a signed real number. Only the resulting
+state coordinates are reduced on their circles.
+
+Proof. The positive phase rates are $(H-k)/r=1/2-k/r$, the negative
+rates are $-k/r$, and the middle rate is zero. Hence
+
+$$
+du=(1/2-k/r)d\chi,\qquad dv=-(k/r)d\chi,\qquad
+d\alpha=d\chi/2,\qquad d\beta=(1/2-k/r)d\chi.
+$$
+
+Equal increments within each group follow from equal rates and zero
+initial increments, with no equality assumption on the preparation
+phases. The inverse change is $u=\beta$, $v=\beta-\alpha$; both
+changes have integer coefficients and are inverse on the two circles.
+With $\zeta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$, use the ray
+representative
+
+$$
+\left(\sqrt{k}e^{-i(\zeta_0+u)},
+\sqrt{H-k}e^{-i(\zeta_1+v)},\sqrt Z,
+\sqrt{H-k}e^{-i(\zeta_3+v)},
+\sqrt{k}e^{-i(\zeta_{13}+u)}\right).
+$$
+
+Its positive middle entry fixes the common ray scalar. Equality of
+representatives determines $k$ from the moduli and $u,v$ modulo $2\pi$
+from the positive group amplitudes. Conversely those coordinates
+determine the representative. Thus there is no further ray quotient.
+
+Integration on the two straight legs gives $P_a,Q_t$. The whole
+probability segment is interior exactly when its two endpoints are
+interior. For reachability choose $k_1\ne k_0$ in $(0,H)$ and write
+$b=k_1-k_0$. The chronological rectangle
+$P_b,Q_t,P_{-b},Q_{-t}$ fixes $\alpha$ and adds $-bt/r$ to $\beta$.
+Given target real representatives $\alpha_*,\beta_*$, choose
+
+$$
+L=2\alpha_*,\qquad
+q=\beta_*-(1/2-k_0/r)L,\qquad t=-rq/b.
+$$
+
+That rectangle, then $Q_L$ at $k_0$, then $P_{k-k_0}$ reaches the
+target. Each leg is finite and lawful. This reconstructs the native
+interface of [M, §§1–2], [Q, Proposition 1.2] and [O, §1] using only
+the original two controls. $\square$
+

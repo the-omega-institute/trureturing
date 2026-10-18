@@ -1,0 +1,22 @@
+**Theorem 4.4 (native coordinates and finite progress).** On the same
+actual occurrence word, native tick and fee coordinates remain $n$ and
+$2n$. All ARC Definition 10.1 opcode/purpose/input/constructed-storage
+recurrences and original CAP event-counter interpretations remain valid.
+Replacing the native tariff uses $G_U+\rho_U$; imposing it additionally
+uses $2n+G_U+\rho_U$. Each finite completed flight in ARC's stated
+supply/local-completion domain has finite such coordinates. No finite
+total data, minimum role count, physical duration/energy or guaranteed
+infinite progress follows.
+
+Proof. Theorem 2.4 has precisely one patch per native occurrence and
+preserves its input kind, opcode, purpose, constructor and receipt.
+Thus it changes neither the event partition nor any native creation
+count. In particular both ordinary/F receipts and all dead banks,
+captures, versions, sender/mailbox/receiver copies coexist. ARC's vector
+recurrence evaluated at these same successors therefore applies without
+an independently optimized subtotal. Its finite source/recovery
+completion supplies finitely many rows, each with a finite stencil.
+The two tariff conventions differ by the original $2n$. Infinite
+continuation would require continuing actual supply and pointwise local
+completion, with unbounded receipts and potentially unbounded data. ∎
+

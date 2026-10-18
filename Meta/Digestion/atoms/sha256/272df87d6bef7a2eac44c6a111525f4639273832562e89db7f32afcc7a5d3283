@@ -1,0 +1,76 @@
+### 453.3 奇数前缀与固定 \(x\) 的截止末项
+
+定义 \(O(y)=\sum_{1\le m\le y,\ m\text{ 奇}}\mu(m)\)（\(y\ge0\)，空和为零）。实际恒等式 \(\mu(2m)=-\mu(m)\) 对奇数 \(m\) 成立，而 \(4\mid r\) 时 \(\mu(r)=0\)。因此
+
+\[
+M(n)=O(n)-O(n/2)
+=\sum_{n/2<m\le n,\ m\text{ 奇}}\mu(m).
+\tag{DP.6}
+\]
+
+递归展开并在正指标终止，给 \(y\ge1\) 的有限恒等式
+
+\[
+O(y)=\sum_{\substack{a\ge0\\2^a\le y}}M(\lfloor y/2^a\rfloor).
+\tag{DP.7}
+\]
+
+这不消费零指标的 Mertens 估计。若 \(y\ge4\)，令 \(a_0=\lfloor\tfrac12\log_2y\rfloor\)。对于 \(a\le a_0\)，
+
+\[
+\lfloor y/2^a\rfloor\ge\frac{\sqrt y}{2},\qquad
+1+\log\lfloor y/2^a\rfloor\ge\tfrac12\log y,
+\]
+
+第二式使用 \(1>\log2\)。用既有 Mertens 供应及几何和，得到
+
+\[
+\sum_{a\le a_0}|M(\lfloor y/2^a\rfloor)|
+\le\frac{32C_My}{\log^4y}.
+\]
+
+余下部分用 \( |M(k)|\le k\)，其总量不超过
+
+\[
+\sum_{a>a_0}y/2^a=y/2^{a_0}<2\sqrt y.
+\]
+
+因为 \(\log^4y/\sqrt y\to0\)，并可用 \( |O(y)|\le y\) 吸收有限头，故存在有限常数 \(C_O\) 使
+
+\[
+|O(y)|\le C_O\frac{y}{(1+\log y)^4}\qquad(y\ge1).
+\tag{DP.8}
+\]
+
+还要独立控制 \(P_x^\eta\) 的原子截止。固定 \(x\ge e\)，写 \(\ell=\log x\)、\(r=\log s\)。对于 \(s\ge x\)，低商 \(x\le t\le s\) 上有 \(\eta(t/s)=(t/s)[1-\log(t/s)]\)，从而直接积分得
+
+\[
+\begin{aligned}
+P_{x,\mathrm{low}}^\eta(s)
+&=\frac1s\int_\ell^r\left[\frac{1+r}{u^2}+\frac r u-1\right]du\\
+&=\frac1s\left[r\log r+
+  (\ell^{-1}-\log\ell-1)r+
+  (\ell^{-1}+\ell-1)-r^{-1}\right].
+\end{aligned}
+\tag{DP.9}
+\]
+
+高商 \(t\ge s\) 换元 \(t=sy\)，由 \(\int_1^\infty(1+\log y)y^{-2}dy=2\) 给
+
+\[
+|P_{x,\mathrm{high}}^\eta(s)|
+\le\frac2s(r^{-1}+r^{-2}).
+\tag{DP.10}
+\]
+
+所以（DP.4）、（DP.9）–（DP.10）共同支付
+
+\[
+|P_x^\eta(s)|=O_x\!\left(\frac{(1+\log s)^2}s\right),\qquad
+|(P_x^\eta)'(s)|=O_x\!\left(\frac{(1+\log s)^2}{s^2}\right)
+\quad(s>x).
+\tag{DP.11}
+\]
+
+常数允许依赖这个固定 \(x\)；此处没有增长 \(x\) 的统一截止账。
+

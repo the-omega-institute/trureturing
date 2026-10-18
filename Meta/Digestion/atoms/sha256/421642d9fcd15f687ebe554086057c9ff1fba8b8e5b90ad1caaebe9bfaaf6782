@@ -1,0 +1,39 @@
+**Definition 7.1 (the unchanged acquired consumer).** Retain precisely
+ARH Proposition 23.2:
+
+$$
+\begin{gathered}
+P=\{LL,LR,R\},\qquad
+C=\langle\langle\square_1,\square_2\rangle,\square_3\rangle,
+\qquad \pi=\{\{1\},\{2\},\{3\}\},\\
+H_0=\{(0,RLR,\alpha),(0,RRR,\beta)\},\\
+H_{\rm rel}=
+\{(1,LL,0,RLL,=),(2,LR,0,RRL,=),\\
+\hspace{32mm}
+ (0,LL,2,LR,\ne),(0,LR,1,LL,\ne),(1,LL,2,LR,\ne)\},\\
+Q=\{LL,LR,RLL,RLR,RRL,RRR\},\qquad N\ge2.
+\end{gathered}
+\tag{CRF.19}
+$$
+
+The supplied exact fiber, including every guard and old inequality,
+is $\{u(x,y):D_6(x,y)\}$, where
+
+$$
+\begin{aligned}
+u(x,y)&=\left\langle\langle x,y\rangle,
+ \left\langle\langle\rho(x),\alpha\rangle,
+                   \langle\rho^2(y),\beta\rangle\right\rangle
+                                      \right\rangle,\\
+D_6(x,y)&\Longleftrightarrow
+ x\ne y\ \land\ x\ne\rho^2(y)\ \land\ y\ne\rho(x)
+                      \ \land\ \rho(x)\ne\rho^2(y),
+\qquad x,y\in\mathcal T.
+\end{aligned}
+\tag{CRF.20}
+$$
+
+Both coordinates remain arbitrary complete finite trees subject
+only to $D_6$. This is the entire acquired fiber, not a selected
+family. Set $d_N=2+\lceil N/2\rceil$.
+

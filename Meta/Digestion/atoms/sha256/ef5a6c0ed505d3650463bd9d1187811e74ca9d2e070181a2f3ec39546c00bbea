@@ -1,0 +1,93 @@
+### 70.2 Rational coordinates and original equations
+
+Use real coordinates \(X=(T,G,S,c,h)\) and the real parameter \(b\). Set
+
+\[
+ \chi(q)={1-q^2+2iq\over1+q^2},\quad
+ t=\chi(T),\quad g=\chi(G),\quad s=\chi(S),\quad
+ w=(1,1,t,g,g,s).
+ \tag{70.3}
+\]
+
+All denominators \(1+q^2\) are positive on the real line, and every entry of
+\(w\) has modulus one. It is fixed by the synchronous transposition of
+coordinates zero and one in each channel. Define
+
+\[
+ P=(bh-3+i(h+b))/2,\qquad Q=(-bh-3+i(h-b))/2,
+\]
+
+\[
+ M=\begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix},\qquad
+ D=(1+b^2)h^2-3+b^2.
+ \tag{70.4}
+\]
+
+Direct multiplication gives the exact identities
+
+\[
+ M^*M-6I_6={D\over2}I_6,\qquad
+ |1+P|^2=|1+Q|^2=1+D/4.
+ \tag{70.5}
+\]
+
+Thus, when \(D=0\), \(-1<b<1\), and \(h>0\), \(M/\sqrt6\) is exactly
+\(H_0(b)\): \(h=\sqrt{(3-b^2)/(1+b^2)}\). It is both unitary and Hadamard.
+
+Write \(S_x=2+t\), \(S_y=2g+s\), and
+
+\[
+ U_0=S_x+S_y+P+Qg,\quad U_2=S_x+S_y+Pt+Qs,\quad
+ V_0=S_x-S_y+\bar Q-\bar Pg.
+\]
+
+Our five rational equations are
+
+\[
+ F(X,b)=\bigl(|U_0|^2-6,\ |U_2|^2-6,\ |V_0|^2-6,
+               c^2-1-b^2,\ D\bigr)=0.
+ \tag{70.6}
+\]
+
+The first and second upper outputs are both \(U_0\); the first and second
+lower outputs are both \(V_0\). Consequently the first three equations of
+(70.6) set five of the six output squared moduli to six. Equation (70.5), \(D=0\),
+and \(\|w\|^2=6\) set their total to 36, so the remaining output also has
+squared modulus six. This reconstructs all original flatness equations, rather
+than only a subset without a converse.
+
+The boxes below have \(c,h>0\), so (70.6) also fixes \(c=\sqrt{1+b^2}\).
+Let \(\omega=(-1+i\sqrt3)/2\), \(f=(1,\omega,\omega^2)\), and define
+
+\[
+ g_1=(b+i)/c,\qquad k=(f,-g_1f).
+ \tag{70.7}
+\]
+
+This is a unit-entry canonical common-flat vector. For completeness,
+\(J_3f=0\), \(|P|^2+|Q|^2=6+D/2\), and
+\(\Re(P\bar Q(b-i))=-bD/4\). Since \(|g_1|=1\), the squared moduli of
+the two output channel factors \(P-Qg_1\) and \(\bar Q+\bar Pg_1\) are
+respectively \(6+(D/2)(1+b/c)\) and \(6+(D/2)(1-b/c)\), both six at a
+solution of (70.6).
+
+The raw overlap with (70.3) is
+
+\[
+ k^*w=\omega\bigl[(t-1)-(b-i)(s-g)/c\bigr].
+\]
+
+Define the rational numerator
+
+\[
+ N(X,b)=|c(t-1)-(b-i)(s-g)|^2-6c^2.
+ \tag{70.8}
+\]
+
+Then \(|k^*w|^2-6=N/c^2\). Thus \(N=0\) is exactly (70.2); its endpoint
+signs are also the signs of the raw overlap-minus-six. Throughout the uniform
+box, \(T>0\), so \(t\ne1\). A canonical vector with equal first two upper
+coordinates must have Fourier mode zero and all three upper coordinates equal.
+Therefore every \(w\) in this branch is noncanonical.
+

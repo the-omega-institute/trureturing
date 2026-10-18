@@ -1,0 +1,68 @@
+**Theorem 5.1 (resource-matched adaptive lower bound).** Fix $v_k,v_\chi,T>0$
+with
+
+$$
+k_0+v_kT/4<r/2,\qquad
+C=\frac{v_kv_\chi T^2}{16r}\leq\pi/4.
+\tag{5.1}
+$$
+
+Consider zero-winding original based loops with
+$|k'|\leq v_k$, $|\chi'|\leq v_\chi$ almost everywhere. For every
+deterministic strategy using at most $N$ interior samples there are two
+actual histories with the same complete transcript and exactly the same
+resource tuple
+
+$$
+\begin{aligned}
+\operatorname{TV}(k)&=v_kT/2,&
+\operatorname{TV}(\chi)&=v_\chi T/2,\\
+\mathcal L&=(v_k+v_\chi)T/2,&
+\mathcal Q&=(v_k^2+v_\chi^2)T/2.
+\end{aligned}
+\tag{5.2}
+$$
+
+Even if (5.2) is supplied exactly before sampling, every numerical
+predictor has worst-case complete-response error at least
+
+$$
+2\sqrt{k_0Z}\sin\!\left(\frac{C}{N+1}\right)
+\tag{5.3}
+$$
+
+at every common prescribed future test.
+
+Proof. Follow constant-value sample replies, supplying the tuple (5.2).
+Sort the distinct query times and adjoin $0,T$. The positive gaps have
+lengths $\ell_1,\ldots,\ell_J$, with $J\leq N+1$ and sum $T$. In gap $j$
+use Lemma 3.1 with four equal leg times and
+
+$$
+\delta_j=v_k\ell_j/4,\qquad a_j=v_\chi\ell_j/4.
+$$
+
+Use the same orientation in all gaps. The controls return to the baseline
+at every queried time, so both fixed histories give the prescribed adaptive
+transcript. On height legs the slope magnitude is exactly $v_k$ and the
+phase slope is zero; on phase legs it is exactly $v_\chi$ and the height
+slope is zero. Condition (5.1) keeps every height strictly inside the
+positive fiber. Summing the actual leg variations, lengths and quadratic
+energies gives (5.2), independent of the gaps and orientation. The same
+construction on every finite query prefix justifies the side-information
+transcript, including its stopping rule.
+
+The signed areas and residuals are
+
+$$
+A_\pm=\pm\frac{v_kv_\chi}{16}\sum_j\ell_j^2,
+\qquad h_\pm=\mp S b_0,\qquad
+S=\frac{v_kv_\chi}{16r}\sum_j\ell_j^2.
+$$
+
+Cauchy--Schwarz gives $\sum_j\ell_j^2\geq T^2/J\geq T^2/(N+1)$;
+positivity and $\sum_j\ell_j=T$ give $\sum_j\ell_j^2\leq T^2$.
+Thus $C/(N+1)\leq S\leq C\leq\pi/4$. Theorem 3.2's chord argument and
+monotonicity of sine on this interval give (5.3), including the whole future
+family and common legality. $\square$
+

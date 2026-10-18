@@ -1,0 +1,48 @@
+**Theorem 3.5 (constraint-automaton presentation of the signed tests).**
+On payloads already certified to have faithful slots, the complete
+old/target row tests, fixed-coordinate literals, reached endpoint
+tests and whole-subtree signs have an effective finite tree-automaton
+presentation with global syntactic equality and disequality. The
+same holds with the fixed regular image tests of Definition 3.2.
+This assertion concerns the signed tests on faithful payloads; it
+does not assert that slot faithfulness or arbitrary correlated
+variable-rank constraints have such a presentation.
+
+Proof. Give each endpoint occurrence used in a comparison its own
+whole-view slot. A fixed path inside that slot determines the endpoint.
+Its reachability, an absent literal, any reached label and a fixed
+ground exterior are finite-state tests: only finitely many specified
+paths and ground trees must be tracked. At a target or old hole,
+accept every native filling while checking all the other nodes of
+the concrete context. Fixed image conditions use the finite grammar
+in Definition 3.2. Finite-state products conjoin these tests.
+
+For each comparison give its first and second endpoints fresh states
+$q_e,q'_e$. The finite-state part requires exactly one occurrence of
+each, at its designated reached position, and forbids them elsewhere.
+Distinct view slots make these two payload positions distinct even
+when the original endpoints coincide. Descendants of a marked root
+carry unmarked native states, so state marking changes no compared
+subtree. Add $q_e\approx q'_e$ for a positive sign or
+$q_e\not\approx q'_e$ for a negative sign. For a complete partition,
+add one such test for every pair of reached holes, using separate
+endpoint copies whenever necessary. If an endpoint is absent the
+finite-state part rejects before the global test is considered.
+
+In [Barguño et al., §3][BCGJV], these global atoms universally
+compare subtrees at different positions carrying the indicated
+states. With exactly one occurrence of each state here, they mean
+exactly the intended whole comparison. Their equational theory is
+empty, so equality is syntactic native-tree equality. Both positive
+and negative atoms are available; a negative atom is not the
+Boolean negation of a universal positive atom in general. The
+singleton construction avoids that distinction and vacuity.
+If a finite-state product splits an endpoint marker into finitely
+many state variants, impose its global comparison on every pair of
+variants. The regular part still requires exactly one marked position
+per endpoint in total. Exactly one variant pair is then nonvacuous,
+and it enforces the intended sign. This keeps the construction valid
+with simultaneous literal, exterior and image-state information.
+All state and transition sets are finite and effectively obtained
+from the retained paths and contexts. $\square$
+

@@ -1,0 +1,122 @@
+**Theorem 5.2 (simultaneous CP/Borel/reference/error/resource/FIRST attainment).** At either selected root, one common original instrument attains Theorem 5.1 at strength $s$ from Definition 3.4. It has $\mathsf A=\log1001$, $\mathsf V=s$, $\mathsf W=\mathsf C(s)$, all twelve original errors, and the minimum counts stated in §6. Hence $\mathcal T_A(s)=\mathcal V$ at the two selected points.
+
+Proof. For each occupied contact let
+
+$$
+K_i=\sqrt{p_i}\overline K_{h_i},\quad
+N_i=p_i\eta_it\operatorname{cap}_i n_in_i^T.
+$$
+
+The rank-two property follows directly as well: the last two rows of $\overline K$ are $R_1=(zb,s_0h_1,0)$, $R_2=(wd,0,s_0h_2)$ and are independent. Row zero is $v_1R_1+v_2R_2$ with $v=(az/(s_0h_1),cw/(s_0h_2))$, by the circle equation. Thus $n=R^Tq$ for $q=(dw/(s_0h_1h_2),-bz/(s_0h_1h_2))$. On its row space,
+
+$$
+n^T(\overline K^\dagger\overline K)^+n
+=q^T(I+vv^T)^{-1}q
+=q^Tq-\frac{(q^Tv)^2}{1+v^Tv}
+=\frac1{\operatorname{cap}(h)}.
+$$
+
+For the final equality expand the numerator and use $ab h_2z^2+cd h_1w^2=h_0h_1h_2\delta$. This is the row-space form of FA69's capacity identity, reused at these selected parameters.
+
+Choose an isometry $J_i:\mathbb C^2\to\operatorname{ran}K_i^\dagger$ and set
+
+$$
+Q_i=J_i^\dagger(K_i^\dagger K_i+N_i)J_i,\quad
+C_i=Q_i^{1/2}J_i^\dagger E^\dagger,\quad
+B_i=K_iJ_iQ_i^{-1/2},\quad
+F_i=Q_i^{-1/2}J_i^\dagger N_iJ_iQ_i^{-1/2}.
+$$
+
+Here $Q_i\succ0$, $B_i^\dagger B_i+F_i=I_2$, $I_2-F_i\succ0$, $B_iC_i=K_iE^\dagger$ and $C_i^\dagger F_iC_i=EN_iE^\dagger$. For a general ratio $b$, the one nonzero failure eigenvalue is $b/(\operatorname{cap}+b)$, because the preceding inverse metric gives the rank-one generalized eigenvalue $b/\operatorname{cap}$ of $(N,K^\dagger K)$ and normalization replaces it by $r/(1+r)$. Consequently a saturated label has $\lambda_{\max}(F_i)=t/(1+t)$; a pure label has $F_i=0$.
+
+Use the FA70 first-event construction with
+
+$$
+g(a)=\frac2{(1+a)^2},\quad G_{\rm time}(a)=\frac{2a}{1+a},\quad
+Z_i(a)=\sqrt{I-G_{\rm time}(a)F_i},\quad
+R_i(a)=g(a)F_i(I-G_{\rm time}(a)F_i)^{-1}.
+$$
+
+On current survivor input $Y$, component $\ell$ has CP density
+
+$$
+\mathcal J_{i,\ell}(a)(Y)=w_\ell g(a)
+\operatorname{tr}(F_iZ_i(a)^{-1}YZ_i(a)^{-1})P_f.
+$$
+
+Precomposition with $\operatorname{Ad}_{Z_i(a)}$ gives the initial-input density $w_\ell g(a)\operatorname{tr}(F_iY)P_f$. The survivor effect is $I-G_{\rm time}(a)F_i$ and the accumulated first-jump effect is $G_{\rm time}(a)F_i$, so every cut is TP on the whole fibre. Between cuts $Z_i(a)Z_i(b)^{-1}$ is contractive for $a\ge b$, and splitting the jump integral proves chronological consistency. At the terminal time apply to survivors only the isometry $EB_i(I-F_i)^{-1/2}$. Its effect is $I_2$ and the terminal live matrix after the no-jump path is $EB_i$. The prescribed terminal live CP map is therefore $\operatorname{Ad}_{EB_i}$, with whole-fibre effect $I_2-F_i$ before that final normalization. No absorbed carrier is acted on again; no terminal failure atom is present.
+
+Since $F_i$ commutes with the path,
+
+$$
+\int_0^1\|R_i(a)\|\,da
+=-\log(1-\lambda_{\max}(F_i))
+=\begin{cases}0&\eta_i=0,\\\log(1+t)&\eta_i=1.\end{cases}
+$$
+
+The minimum terminal survivor eigenvalue on each saturated entire fibre is $1/(1+t)=1/1001$. These are entire-fibre statements. For general prescribed noncommuting laws the separate FA68 requirement is $\mathcal L_{\rm dec}^\dagger(I)=I-\int B(a)\,da\succ0$, and its minimum is the integral of $\|S(a)^{-1/2}B(a)S(a)^{-1/2}\|$. Endpoint coercivity alone does not replace that path requirement. The chosen $g$ here is one sufficiency witness, not a restriction on competing laws.
+
+Choose typed isometries $W_\perp:\mathbb C^2\to P^\perp$ and $J_0:\mathbb C^2\to\mathbb C^3$. Use one high encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}DE^\dagger\\W_\perp^\dagger\end{pmatrix}
+:\mathbb C^5\to\mathbb C^3\oplus\mathbb C^2.
+$$
+
+Its entire dimension-five fibre is counted. Its rate is zero, report is $+1$, and its terminal Kraus matrices are $E[I_3\ 0]$ and $EJ_0[0\ I_2]$. Their effects add to $I_5$ on that fibre. These indices are discarded, not two readable acquisition outcomes. This is the allowed original JR coherent complement completion, explicitly different from fixed CA10 certain-failure completion.
+
+By Theorem 5.1,
+
+$$
+\sum_iK_i^\dagger K_i=\delta D^\dagger D+T^\dagger T+S^\dagger S,\quad
+\sum_iN_i=M.
+$$
+
+The source-root TP identity consequently gives
+
+$$
+\sum_iC_i^\dagger C_i+C_H^\dagger C_H
+=E(D^\dagger D+T^\dagger T+S^\dagger S+M)E^\dagger
++W_\perp W_\perp^\dagger=I_5.
+$$
+
+All acquisition branches are CP/TNI; every entire decoder is TP. The full coefficient Gram, including mixed terms, gives for every complex $X\in M_5$ the forgotten-label identities
+
+$$
+\Phi^L(X)=E[\Lambda_*(E^\dagger XE)+J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,
+$$
+
+$$
+\Phi^f_\ell(B)(X)=w_\ell\left(\int_Bg(a)\,da\right)
+\operatorname{tr}(EME^\dagger X)P_f,
+\qquad \ell\in\{0,1,2,3,13\}.
+$$
+
+Tensoring the live Kraus matrices with $I_R$ gives the live identity for every passive reference. Each failure component becomes exactly
+
+$$
+w_\ell\left(\int_Bg(a)\,da\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+$$
+
+This is equality of full CP/Borel components and their conditional reference operators, not just effects. Both zero measures remain separately labelled. The five failure components and actual acquisition labels are different coordinates of the output.
+
+All twelve original inputs are supported on $P$, so the complement changes none of their outputs or errors. Under the inherited complete-output minimax identification,
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*
+\quad(e,n\in\{\pm1\}).
+$$
+
+They are not all equal to $E_*$. For this constructed family the HALF error is the original expression $\tfrac12[\|\Lambda_*(a_ya_y^T)-\mathsf B_{y,+,+}\|_1+\int_0^1|q_yg(a)-f_y(a)|\,da]$, where $q_y=\operatorname{tr}(Ma_ya_y^T)$, with sign covariance for the other histories. Its minimax value is a supplier premise, not inferred anew from the moment equations.
+
+Give low label $i$ report $\sigma_i=\operatorname{sgn}z_i$. Since $N_i$ kills coordinate zero, it changes no $01$ entry. The moment $\sum p_iz_i=0$ implies $\sum_{z_i>0}p_iz_i=\tfrac12\sum p_i|z_i|$, while $(K_i^\dagger K_i)_{01}=p_is_0\kappa z_i$. Thus the actual report effect gives $\mathsf V=s_0\sum p_i|z_i|=s$. Only the high fibre has dimension at least three. Its probability on history $y$ is $(1-\delta)A_y$, with
+
+$$
+A_y=h_0^2y/128+h_1^2(64-y)/128+h_2^2/2.
+$$
+
+The worst history is $27$, and the inherited sharp weak cost is $\mathsf C(s)=(1-\delta)A_{27}$. Acquired low effects are $K_i^\dagger K_i+N_i$, so every later-failure mass is counted before survival; there is no survival division. The original FIRST clock is $6+a$ throughout. All operations and reports are fixed before the sole unknown input, and the declared fibres omit no accessible share.
+
+Finally each occupied contact has its verified height sign, so its equality equation gives $|H_i|=\mathbf d^T\Gamma_i-\lambda|u_i|$. Summing with the same weights yields $\sum p_i|H_i|=\mathbf d^TB-\lambda k$. The constructed actual TV is precisely $\mathcal V$, matching the universal bound at its own strength. This proves selected global optimality within the full original conditional class, not only within the seven-contact ansatz. $\square$
+

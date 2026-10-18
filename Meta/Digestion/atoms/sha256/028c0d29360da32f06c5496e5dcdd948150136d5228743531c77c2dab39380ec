@@ -1,0 +1,22 @@
+**Definition 3.1 (Decreasing field and propagation profile).**
+For $\theta\in(0,1]$, multiply every activity by $\theta$.
+A positive pinning conditions on $\tau\subseteq S$ for a
+legal $\tau$. Write $p_\theta^\tau$ for the resulting law on
+the unpinned coordinates, omitting forced-zero coordinates.
+Set
+
+$$
+q_i(\theta)=\frac{\theta\lambda_i}{1+\theta\lambda_i},
+\qquad M=\max_i\lambda_i,
+\tag{3.1}
+$$
+
+$$
+F_\lambda(\theta)=\max_i\left[
+\sum_{j<i}\prod_{h=j}^{i-1}q_h(\theta)
++\sum_{j>i}\prod_{h=i+1}^{j}q_h(\theta)\right].
+\tag{3.2}
+$$
+
+The profile has the continuous extension $F_\lambda(0)=0$.
+

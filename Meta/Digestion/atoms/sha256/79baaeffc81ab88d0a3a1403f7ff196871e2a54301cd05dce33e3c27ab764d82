@@ -1,0 +1,22 @@
+**Definition 45.1 (Preparation, handoff and acquisition error).** Retain the labeled source $X$, the maps $N$ and $\Omega$, the zero supplied advice $\beta_0$, and the prime-only consumer contract of Definition 44.1. A lawful preparation consists of one probability space $(S,\mathcal A,\mathsf P)$, common to every $y\in X$, and one deterministic source procedure. At source $y$, with seed $s$, it may use only $s$, the value $0$, and answers to queries $p\mid N(y)$. Its finite preparation records are measurable, and at every fixed $y$ its preparation terminates after finitely many transitions with probability one. The terminal record declares a consumer tape in the same measurable carrier $(\Theta,\mathcal F)$ used by the consumer. No source label, numerical value, target value, magnitude promise, law on $X$, restart, rejection conditioning or extra probe is supplied.
+
+Write $T_y\subseteq S$ for the measurable full-probability termination event and $\phi_y:T_y\to\Theta$ for the measurable terminal-tape map; output-event measurability is part of the preparation contract. Fix one tape $\theta_0$ and extend $\phi_y$ to $S$ by setting it equal to $\theta _0$ on $S\setminus T_y$. The prepared law and its uniform acquisition error are
+
+$$
+\widehat\mu_y=(\phi_y)_*\mathsf P,
+\qquad
+\varepsilon=\sup_{y\in X}\operatorname {TV}(\widehat\mu_y,\mu_y),
+\qquad
+\operatorname {TV}(\lambda,\kappa)=\sup_{A\in\mathcal F}|\lambda(A)-\kappa(A)|.
+\tag{45.1}
+$$
+
+The extension changes no probability because $\mathsf P(T_y)=1$. After the handoff the original consumer runs on the same read-only source and on the declared tape; the preparation record is not a second consumer input. The profile requirement remains
+
+$$
+ e_y\le b(\Omega(y))h_y,
+\qquad b:\mathbb N_{>0}\to[0,1)\text{ nondecreasing},
+\qquad B=\lim_{k\to\infty}b(k).
+\tag{45.2}
+$$
+

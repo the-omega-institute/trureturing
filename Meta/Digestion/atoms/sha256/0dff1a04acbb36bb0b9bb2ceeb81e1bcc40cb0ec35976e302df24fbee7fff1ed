@@ -1,0 +1,19 @@
+**Definition 8.1 (the quantitative slice).** For the remainder of §§8–10 fix the acquired seed $R=1$ and marker triple $100$, at the third latch before any fourth Read. This is a retrospective analysis of positive acquired histories under the one fixed prior of Definition 6.1, not the event $E_1$ and not a conditional source sampler. Write $\mathcal F_{A,B}$ for the raw histories on this slice with from-zero counts $(A,B)$. This symbol denotes a finite fiber, not the acquired filtration.
+
+For $a=A-3$, $b=B-3$, put
+
+$$
+\mathcal S_{A,B}
+=\{s\in\mathbb N:s\le\min(a,b),\
+a-s\in2\mathbb N,\ b-s\in2\mathbb N\},
+\quad p_s=(a-s)/2,\quad q_s=(b-s)/2.
+\tag{SC.6}
+$$
+
+Negative $a$ or $b$ makes this set empty. Distinguish raw $\beta$ count $B$, marker weight $w=1$, the original bare snapshot, and the following ordered-pair count:
+
+$$
+C(h)=\#\{i<j:h_i=\alpha,\ h_j=\beta\}.
+\tag{SC.7}
+$$
+

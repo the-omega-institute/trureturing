@@ -1,0 +1,49 @@
+**Assumption 1.3 (finite disjoint charts and whole-row equality).** Supply a
+finite chart index set $\mathcal A$, dimensions $d_\eta\in\mathbb N$, effective
+Presburger formulas $\operatorname{Adm}_\eta(\mathbf n)$, and effective
+maps
+
+$$
+\Theta_\eta:\{\mathbf n\in\mathbb N^{d_\eta}:
+                     \operatorname{Adm}_\eta(\mathbf n)\}\longrightarrow D
+$$
+
+such that the disjoint-union map
+
+$$
+\Theta:\coprod_{\eta\in\mathcal A}\operatorname{Adm}_\eta
+           \longrightarrow D,
+\qquad (\eta,\mathbf n)\longmapsto\Theta_\eta(\mathbf n)
+\tag{UDB.1}
+$$
+
+is a bijection. Thus no original source is omitted, and one coordinate
+tuple is not an independently refillable phase source. A zero-dimensional
+chart contains at most its unique empty tuple. Empty charts and $D=\varnothing$
+are allowed. Chart parameters can encode relations between components;
+admission is jointly Presburger in the entire tuple, not merely in each
+marginal coordinate.
+
+For each $\eta,\theta\in\mathcal A$, supply an effective Presburger formula
+$\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)$, jointly in both
+whole tuples, satisfying
+
+$$
+\begin{aligned}
+\forall\mathbf n\in\mathbb N^{d_\eta}\;
+\forall\mathbf m\in\mathbb N^{d_\theta}\quad
+&\operatorname{Adm}_\eta(\mathbf n)\land
+ \operatorname{Adm}_\theta(\mathbf m)\ \Longrightarrow\\
+&\left(\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)
+\ \Longleftrightarrow\
+R(\Theta_\eta(\mathbf n))=R(\Theta_\theta(\mathbf m))\right).
+\end{aligned}
+\tag{UDB.2}
+$$
+
+Effective construction of $\Theta_\eta(\mathbf n)$ and of its complete row
+is part of the assumption. Decidability of row equality alone would not
+provide output literals. A chart tag or coordinate is mathematical source
+context; the controller receives no chart-selector or unknown-coordinate
+port.
+

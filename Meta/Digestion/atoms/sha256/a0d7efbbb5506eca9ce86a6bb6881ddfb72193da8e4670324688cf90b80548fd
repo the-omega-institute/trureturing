@@ -1,0 +1,23 @@
+**约定 2.1（完整拼接律）。** Auric 定理170.2及定义170.3给出左、右摘要 $(q,A,\mathbf m)$、$(r,B,\mathbf n)$ 的共同参照拼接：
+
+$$
+q_{\rm tot}=q+r,\qquad A_{\rm tot}=A+B+\frac{\det(q,r)}2,
+$$
+
+$$
+\mathbf m_{\rm tot}=\mathbf m+\mathbf n+
+\frac{Bq-Ar}{2}+\frac{\det(q,r)}{12}(q-r).
+$$
+
+具体对 $(u,v,D,E,F_m)$ 和 $(p,t,H,I,J)$，记 $c=ut-vp$，整数坐标为
+
+$$
+\begin{aligned}
+G(wz)=\bigl(&u+p,v+t,D+H+c,\\
+&E+I+3(Hu-Dp)+c(u-p),\\
+&F_m+J+3(Hv-Dt)+c(v-t)\bigr).
+\end{aligned}
+$$
+
+此处引用既有完整拼接证明，不另证明通用签名或群结构。其两个直接用途是：端点和 $D$ 相同的片段在固定拼接环境中具有相同的接缝修正；端点沿正对角线且面积为零的片段，其拼接面积仍为零、矩逐项相加。前一种性质也适用于中间接缝面积不为零的计算。
+

@@ -1,0 +1,48 @@
+**Theorem 11.2 (forced slopes for normalized necessary arrays).**
+Let $\epsilon\downarrow0$ along any sequence of original designs whose
+actual selected costs equal
+$F+K_{\rm onset}\epsilon^2+o(\epsilon^2)$.
+Apply precisely the averages and high-SS reassignment of Proposition
+6.1, and form the coordinates of §7. Then
+
+$$
+\frac{\eta}{\epsilon^2}\longrightarrow0,\qquad
+\frac{x}{\epsilon}\longrightarrow t_x,\qquad
+\frac{\theta-\theta_0}{\epsilon}\longrightarrow v_\theta<0.
+\tag{QO.58}
+$$
+
+Also $(A_{\rm act}-W)/\epsilon^2\to0$.
+This is a direction statement about those analytic necessary arrays,
+not uniqueness of a whole physical instrument.
+
+Proof. Localization and the rate bounds (QO.41) apply to the sequence.
+Any subsequential limits $e,x_0,u_0$ of
+$\eta/\epsilon^2,x/\epsilon,u/\epsilon$ satisfy
+$e\geq0$, $x_0+b_{\rm rec}u_0\geq1$, and
+
+$$
+K_{\rm onset}\geq
+\lambda e+a_{\rm curv}x_0^2+c_{\rm curv}u_0^2 .
+\tag{QO.59}
+$$
+
+Weighted Cauchy--Schwarz gives a lower bound $K_{\rm onset}$ for
+the quadratic under that linear constraint. Equality has the unique
+point $(x_0,u_0)=(t_x,v_\theta)$: its equality vectors are proportional
+to $(1/a_{\rm curv},b_{\rm rec}/c_{\rm curv})$, and the active linear
+constraint fixes the proportionality factor $1/D_{\rm onset}$.
+The extra nonnegative radial term forces $e=0$. Every subsequence
+has these limits, proving (QO.58). The same quadratic lower bound
+and $W\leq A_{\rm act}$ force the acquisition/reassignment gap to
+be $o(\epsilon^2)$.
+
+If instead the old tilt is held fixed in these normalized arrays and
+the cost is $F+O(\epsilon^2)$, then $u=0$ and (QO.42) forces
+$x/\epsilon\geq1-o(1)$. Its leading excess is at least
+$a_{\rm curv}\epsilon^2$, strictly above
+$K_{\rm onset}\epsilon^2$. The negative angular slope is therefore
+necessary for this reduced asymptotic optimum. It imposes no
+unknown-state conjugation, no unique Kraus realization, and no claim
+about designs away from the local regime. $\square$
+

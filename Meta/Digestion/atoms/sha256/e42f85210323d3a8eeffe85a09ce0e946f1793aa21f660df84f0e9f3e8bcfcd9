@@ -1,0 +1,115 @@
+**Theorem 8.3 (Fixed-length stability across a disappearing vacuum).**
+Fix $n\ge4$, $0<r<1$, positive $\omega,\eta$, and
+$c,d>0$ with $c^2+d^2=1$. Put $M=|B_n|-1$ and choose
+$0<\delta\le1/\sqrt M$. Let $\mathcal U_\delta$ be the
+pure rays with
+
+$$
+|z_s|\ge\delta\quad(s\ne0),
+\tag{8.7}
+$$
+
+allowing $z_0=0$. For each ray choose the normalized
+representative whose singleton-$1$ coordinate is
+positive real. Let $q(z)$ be its full recorded
+observation-law vector in the quadrature/real menu.
+Define
+
+$$
+\begin{aligned}
+a&=r\min_i\omega_i>0,\qquad
+b=(1-r)\min_i\eta_i>0,\\
+C&=\frac1a+
+\frac{2/b+(M+1)|c^2-d^2|/a}{4cd},\\
+K_0&=\frac1{2\delta a},\qquad
+K_{j+1}=\frac{C+K_j}{\delta}.
+\end{aligned}
+\tag{8.8}
+$$
+
+Then the map is injective on $\mathcal U_\delta$, and
+for any two of its chosen representatives,
+
+$$
+\|z-z'\|_2\le\sqrt{M+1}\,K_M
+\|q(z)-q(z')\|_\infty.
+\tag{8.9}
+$$
+
+In particular, neither the inverse nor this bound
+divides by $|z_0|$.
+
+Proof. The nonvacuum graph is connected by the graph
+argument in Theorem 6.2. Choose a spanning tree on it,
+rooted at singleton $1$, and attach the vacuum as a
+leaf to that singleton. All parents in this augmented
+tree are nonvacuum vertices. Its maximum depth is at
+most $M$.
+
+Recover the nonvacuum diagonals from blocked outputs
+as in Theorem 8.2. Root amplitude is $z_{\{1\}}$
+equal to the positive square root of its diagonal.
+On a tree edge with recovered parent $s$ and child $t$,
+use
+
+$$
+z_t=\frac{\overline{\rho_{st}}}{\overline{z_s}}.
+\tag{8.10}
+$$
+
+If the stored orientation is reversed, use the
+conjugate coherence first. For the vacuum leaf use
+$z_0=\rho_{0,\{1\}}/\overline{z_{\{1\}}}$.
+The same formulas are valid at $z_0=0$. Thus every
+coordinate is recovered without a zero denominator,
+proving injection.
+
+Put $h=\|q(z)-q(z')\|_\infty$. A chosen blocked output
+gives $|p_s-p'_s|\le h/a$ for $s\ne0$. Normalization
+gives $|p_0-p'_0|\le Mh/a$. Dividing the two outcomes
+in (8.6) by their fixed setting probabilities gives
+
+$$
+\begin{aligned}
+|\operatorname{Im}(\rho_{st}-\rho'_{st})|&\le h/a,\\
+|\operatorname{Re}(\rho_{st}-\rho'_{st})|
+&\le\frac{2/b+(M+1)|c^2-d^2|/a}{4cd}\,h.
+\end{aligned}
+\tag{8.11}
+$$
+
+The bound $M+1$ covers an edge incident to the vacuum;
+two nonvacuum diagonals require only 2. Consequently
+$|\rho_{st}-\rho'_{st}|\le Ch$ for every legal edge.
+At the root,
+
+$$
+|z_{\{1\}}-z'_{\{1\}}|
+\le\frac{|p_{\{1\}}-p'_{\{1\}}|}
+{|z_{\{1\}}|+|z'_{\{1\}}|}\le K_0h.
+\tag{8.12}
+$$
+
+For every child step, $\rho_{st}=z_s\overline{z_t}$,
+$|z_s|,|z'_s|\ge\delta$ and $|z'_t|\le1$ give
+
+$$
+|z_t-z'_t|
+\le\frac{|\rho_{st}-\rho'_{st}|+|z_s-z'_s|}{\delta}.
+\tag{8.13}
+$$
+
+This holds also for the vacuum child. Induction along
+the tree bounds a coordinate at depth $j$ by $K_jh$.
+Since $\delta\le1$ the constants in (8.8) are
+nondecreasing, so all coordinates are bounded by
+$K_Mh$. Summing their squared errors proves (8.9).
+$\square$
+
+The bound is for compatible pure-state observation
+laws and a fixed finite length. It is not a guarantee
+for an estimator applied to arbitrary noisy vectors,
+and no uniform constant as $n\to\infty$ is asserted.
+The nonvacuum amplitude lower bound and both positive
+setting budgets are explicit premises.
+

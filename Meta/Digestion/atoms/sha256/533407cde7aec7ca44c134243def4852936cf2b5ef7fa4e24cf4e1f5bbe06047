@@ -1,0 +1,54 @@
+**Corollary 4.2 (explicit finite witnesses on original source fibers).**
+For every $k\in I\setminus\{k_o\}$ take the two original source points
+
+$$
+q_+=(k,\alpha_o,\beta_o),\qquad
+q_-=(k,\alpha_o,\beta_o+\pi).
+$$
+
+They have the same base coordinate, are distinct on the original $2\pi$
+hidden circle, and have finite fields with
+
+$$
+\Gamma_o(q_+)-\Gamma_o(q_-)
+ \ge \frac{C_1(k)}{\pi^2}
+ \ge \frac{R^{(c_+)}(k_o,k)}{\pi^2}>0.
+\tag{4.8}
+$$
+
+In particular the full point field does not factor through (1.5), even
+on an off-pole height slice. One definite choice is $k=(l+k_o)/2$.
+
+Proof. Let $R_{mn}(k_o,k)$ be the Dirichlet Green kernel of the height
+operator in (4.5). Its potential $(m/2+nc)^2$ is nonnegative, so the
+Wronskian proof in Theorem 4.1 gives $R_{mn}>0$. Testing the heat
+semigroup against the corresponding character, exactly as in (4.6), gives
+
+$$
+\int_{\mathbb T^2}\Gamma_o(k,\alpha,\beta)
+ e^{-i[m(\alpha-\alpha_o)+n(\beta-\beta_o)]}d\alpha d\beta
+ =R_{mn}(k_o,k).
+$$
+
+Here reversing both indices leaves the height operator unchanged, so the
+minus sign in the Fourier convention changes no coefficient. Absolute
+interchange follows again from (3.6). When $k\ne k_o$, the field on the
+entire phase torus is smooth. Its Fourier series is therefore absolutely
+convergent, for example by integrating $(1-\partial_\alpha^2-
+\partial_\beta^2)^2\Gamma_o$ against each character. Consequently
+
+$$
+\begin{aligned}
+\Gamma_o(q_+)-\Gamma_o(q_-)
+ &=\frac1{4\pi^2}\sum_{m,n\in\mathbb Z}
+       (1-(-1)^n)R_{mn}(k_o,k)\\
+ &\ge\frac{2R_{0,1}(k_o,k)+2R_{0,-1}(k_o,k)}{4\pi^2}
+ =\frac{C_1(k)}{\pi^2}.
+\end{aligned}
+$$
+
+Every summand is nonnegative, and $R_{0,1}=R_{0,-1}=C_1$.
+Both points are off the pole and are reachable native rays by [N,
+Theorem 8.2]. The point source used to evaluate their fields has not moved.
+$\square$
+

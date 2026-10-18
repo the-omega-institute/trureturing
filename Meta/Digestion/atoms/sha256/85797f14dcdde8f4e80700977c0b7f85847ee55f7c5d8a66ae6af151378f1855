@@ -1,0 +1,4 @@
+**命题 24.5（Unequal-offset obstruction and stopped-boundary case）。** At $k=9,m=4$, thresholds $a_0=1,a_1=2$ and the same $L\ne H$ on both fibres give $C_{\rm ad}=1$ and $C_{\rm pre}=+\infty$. At $k=4,m=2,a_0=a_1=2$, both fees are one and the complete word $11$ attains them without emitting a zero.
+
+Proof. In the first case $1000$ and $1100$ are the adaptive threshold words, and the respective same-phase pairs of INITIAL tails $(7,8)$ and $(6,7)$ force incompatible first-zero positions in any common stream. In the second case $11$ rejects exactly INITIAL tails $2,3$ and preserves tails $0,1$; all phases return the appropriate threshold label at that endpoint. The lower-bound pairs in Theorem 24.4 exclude fee zero in both cases. ∎
+

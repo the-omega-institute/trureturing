@@ -1,0 +1,69 @@
+**Theorem 3.1 (three fixed transfer coordinates).** Fix any legal prefix $A_0=I,A_1,A_2,A_3$ whose lower-right entries are one. Write
+$$
+A_i=\begin{pmatrix}a_i&b_i\\c_i&1\end{pmatrix}\quad(1\le i\le3),
+$$
+and form
+$$
+V=\begin{pmatrix}
+a_1-1&c_1&b_1\\
+a_2-1&c_2&b_2\\
+a_3-1&c_3&b_3
+\end{pmatrix},\qquad
+F=\begin{pmatrix}
+a_1&c_1&b_1&1\\
+2a_2&2c_2&2b_2&2\\
+3a_3&3c_3&3b_3&3
+\end{pmatrix}.
+$$
+Assume $\det V\ne0$ and put $K=V^{-1}F$. Label the output rows of $K$ by $P,Q,R$ and its input columns by $p,q,r,s$. Suppose
+$$
+K_{Q,r}=0,\qquad
+\gamma=K_{P,r}-K_{Q,s}>0,\qquad
+K_{R,q}>0\ \text{or}\ K_{P,s}<0.
+\tag{3.1}
+$$
+Then every legal fifth endpoint $A_4=WA_3$ with $(A_4)_{22}\ne1$ has a finite actual-source collision. The sources and slopes are distinct, the slopes can be $0,\epsilon$ for arbitrarily small $\epsilon>0$, the drifts are (2.3), and every sampled gain is positive.
+
+**Proof.** In source-entry order $(p,q,r,s)$, the first three rows of $\mathsf B$ are $[V,0]$, while the last $s$ coefficient is $(A_4)_{22}-1$. Hence
+$$
+\det\mathsf B=((A_4)_{22}-1)\det V\ne0.
+\tag{3.2}
+$$
+Put $\mathsf H=\mathsf B^{-1}\mathsf C$. If
+$\mathsf H X=(\begin{smallmatrix}P&Q\\R&T\end{smallmatrix})$, its first three equations give
+$$
+V(P,Q,R)^{\mathsf T}=F(p,q,r,s)^{\mathsf T}.
+$$
+Thus $P,Q,R$ are fixed by the prefix alone. Only $T$ depends on the final endpoint.
+
+Consider the actual positive rank-one source
+$$
+S_+(t)=\begin{pmatrix}t^2&t^3\\1&t\end{pmatrix},\qquad t>0.
+$$
+In $\mathfrak b(S_+(t),\mathsf H S_+(t))$, the constant coefficient is $-K_{Q,r}=0$. The coefficient of $t$ is $K_{P,r}-K_{Q,s}=\gamma$: it comes from $sP-rQ$, while $pT$ and $-qR$ have order at least two. Thus this polynomial is
+$$
+\gamma t+\sum_{j=2}^6a_jt^j.
+\tag{3.3}
+$$
+If $K_{R,q}>0$, take
+$$
+S_-(t)=\begin{pmatrix}t&1\\t^2&t\end{pmatrix}.
+$$
+Its limiting value at $t=0$ is $E_{12}$, and the constant coefficient of its transfer form is $-K_{R,q}<0$. If instead $K_{P,s}<0$, take
+$$
+S_-(t)=\begin{pmatrix}t^2&t\\t&1\end{pmatrix};
+$$
+its constant coefficient is $\mathfrak b(E_{22},\mathsf H E_{22})=K_{P,s}<0$. Both displayed sources have positive entries and zero determinant for every $t>0$. Write the chosen negative polynomial as
+$$
+-\zeta+\sum_{j=1}^4d_jt^j,\qquad \zeta>0.
+$$
+All degree bounds follow from linearity of $\mathsf H$ and bilinearity of $\mathfrak b$.
+
+For explicit finite strict signs, put $A=\sum_{j=2}^6|a_j|$, $E=\sum_{j=1}^4|d_j|$, and choose
+$$
+t=\min\{1/2,\gamma/[4(1+A)],\zeta/[4(1+E)]\}>0.
+$$
+Then (3.3) is at least $\gamma t-At^2\ge3\gamma t/4>0$, and the negative polynomial is at most $-\zeta+Et\le-3\zeta/4<0$. No assumption on the fourth row of $\mathsf H$ entered either sign choice. Boundary matrices served only to identify coefficients; all signed sources are strictly positive.
+
+Apply Lemma 2.2 with $a=0$, imposing also $\epsilon<1/8$. Its polynomial path, root choice, positivity bound, determinant identity, constant drifts, and Proposition 1.2 give the claimed finite collisions on the entire actual history. The sources may depend on the fixed final word: the quantifier is that each history has a collision, not that one source pair works for all histories. ∎
+

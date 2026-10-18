@@ -1,0 +1,21 @@
+## 7. Attribution and proof limits
+
+Future-output equivalence, synchronization, square-root/Hellinger discrimination, conditional expectation as orthogonal projection and finite-state Markov theory are established methods. [Travers–Crutchfield, Exact Synchronization][TCe], Theorem 1 and Proposition 1, treat strongly connected finite unifilar probabilistically distinct sources with exact synchronization. Their [Asymptotic Synchronization][TCa], §VI Theorem 1 and §VII.1 Proposition 3, treat the nonexact case and include periodic chains. These are current-state uncertainty results, distinct from ordinary next-symbol entropy and from the actual P8 erased-center fields.
+
+On a strongly connected quotient, their bound $H_{\rm bits}(Q_{\rm final}\mid\text{word})\le C\alpha^r$ is an alternative classical supplier: $1-\max_a p_a\le H_{\rm nats}(p)=(\ln2)H_{\rm bits}(p)$, and Theorem 2.3 then gives $e_L,e_R\le(\ln2)C\alpha^r$. The direct proof in §3 supplies the stated reducible and periodic scope without imposing strong connectivity or using ordinary prediction entropy as an erasure proxy.
+
+[Shuval–Tal][ST], §X-A/B, supplies the exact arrival-observation convention and Condition K used in §5. Its conditional hidden-endpoint forgetting theorem is an additional-hypothesis mechanism, not a general finite-hidden erasure theorem. Positive-rectangle projective contraction is classical Birkhoff theory; see [Lemmens–Nussbaum][LN], §2.1, Theorem 2.9. Those older word-contraction mechanisms and the finite response certificate are credited rather than reauthored.
+
+[Universal][U] owns the complete producer domain, actual-law construction, component interface and compact separation criterion. [Renewal][R] owns same-law trimming. [Conditional Response][P8] owns the actual one-sided fields, attained-law boundary budget and null-response theorem. [Multiword][MW] owns the vanishing-tail finite consumer. Relative to these supplied interfaces, the present ordinary synthesis is the explicit two-orientation task-loss comparison, its independent restricted allowance and the supported-word law-invariant strict-scope witness. Packaging or repeating a mature rate is not a further discovery.
+
+This is a scoped comparison, without global novelty, hidden or six-state/support minimality, efficient radii, empirical machine-learning gain, general nonunifilar completion or kernel-verification claims. The original objective and response interfaces are reused under their supplied hypotheses; the tail and guard proofs themselves need no attainment premise. No mathematical program, numerical or finite-enumeration evidence is a premise of these proofs.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[P8]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[MW]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[TCe]: https://arxiv.org/html/1008.4182v3 "Nicholas F. Travers and James P. Crutchfield, Exact Synchronization for Finite-State Sources"
+[TCa]: https://arxiv.org/html/1011.1581v2 "Nicholas F. Travers and James P. Crutchfield, Asymptotic Synchronization for Finite-State Sources"
+[ST]: https://arxiv.org/html/1811.05727v4 "Boaz Shuval and Ido Tal, Universal Polarization for Processes with Memory"
+[LN]: https://arxiv.org/html/1304.7921v1 "Bas Lemmens and Roger Nussbaum, Birkhoff's version of Hilbert's metric and its applications in analysis"
+

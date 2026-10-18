@@ -1,0 +1,12 @@
+**Definition 8.1 (the attained joint relation).** For an arrangement $A$ of preparer literals with its fixed graph data, define
+
+$$
+\mathcal J_A=
+\left\{\left(
+ (r_{t_u}(a_P(q)))_{q\in Q_P},
+ (r_{t_u}(a_T(q)))_{q\in Q_T},F(u)\right):u\in\mathcal U_*\right\}.
+\tag{BPS.21}
+$$
+
+Both vectors are indexed by installed states, not by a deduplicated menu or by visited states. They include replies at unused states and from both serving entries. They are mathematical relation coordinates, never a tuple supplied to runtime.
+

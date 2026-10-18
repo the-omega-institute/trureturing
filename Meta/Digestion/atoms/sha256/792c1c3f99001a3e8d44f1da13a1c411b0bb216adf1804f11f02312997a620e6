@@ -1,0 +1,28 @@
+### 104.2 五模式的两个边界
+
+取 AURIC 五态标签
+
+$$
+B=\{0,1,2,3,13\},\qquad H=\mathbb C^5.
+$$
+
+若 probe 菜单只有计算基投影
+
+$$
+\{P_s=|s\rangle\langle s|:s\in B\}
+$$
+
+及其 product 菜单 \(\{P_s\otimes P_t\}\)，每个非正交分量都是单例，因而最大的 product 分量维数为 \(1\)。在这个菜单上，二份概率可以由五乘五个经典 flag 保持；这不要求一个四维量子相干端口。
+
+加入相干 rank-one effect
+
+$$
+Q_{--}=|\Omega\rangle\langle\Omega|,\qquad
+|\Omega\rangle=\frac12\bigl(
+|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle\bigr)
+$$
+
+后，\(\Omega\) 与四个计算基 product vector 都有非零重叠。该连通分量由五个向量生成，但 \(\Omega\) 已在四个向量的张成内，所以其实际分量维数为 \(4\)。在一个对所有二份密度输入保持这些 probe 概率的有限 flagged port 模型中，product 菜单给出 \(q\ge1\)，而加入 \(Q_{--}\) 后给出 \(q\ge4\)；相应的正交嵌入达到 \(q=4\) 仍需在 Lean 中补齐。
+
+这两个数值不能压缩成 \(q=f(p_{13})\)。前者只测计算基的联合占据，后者测到四个标签之间的相干方向；相同的 \(p_{13}\) 可以对应不同的相干端口成本。
+

@@ -1,0 +1,18 @@
+**推论 13.2（Unbounded exact adaptive and preset fees with a terminal surcharge）。** For every odd integer $d\ge3$, take
+
+$$
+m=2^d-1,\qquad r=3,\qquad k=2^d+1.
+\tag{13.2}
+$$
+
+For every injective $Z$ table and arbitrary high and initial-bottom labels, if $C\ne D$ then
+
+$$
+C_{\rm ad}(f)=d+1,\qquad C_{\rm pre}(f)=d+2.
+\tag{13.3}
+$$
+
+If $C=D$, both fees instead equal $d+1$.
+
+Proof. For odd $d$, $2^d-1\equiv1\pmod3$, so $g=1$ and $n=m+1=2^d$. The guard is $2^d-1\ge3d-2$, equivalently $2^d\ge3d-1$, valid for $d\ge3$. Thus Theorem 12.5 gives (13.3), with all low INITIAL tails $0,1$ and all high INITIAL tails $2,\ldots,k-1$ still included. The exact fees increase without bound; these are larger-fee laws rather than a depth-two table. ∎
+

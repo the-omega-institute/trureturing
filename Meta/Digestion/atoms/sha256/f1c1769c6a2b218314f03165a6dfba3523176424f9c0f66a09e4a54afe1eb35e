@@ -1,0 +1,29 @@
+**Corollary 13.4 (explicit finite multiplier loss).** For rational
+matching laws and every admissible denominator $m$,
+
+$$
+\begin{aligned}
+m\mathcal B_{\mathcal N}(p;\boldsymbol w)-r(p)\log_2(m+1)
+&\le\log_2\mathbb E_\sigma Z_p(\mathcal N^\sigma;\boldsymbol w)\\
+&\le m\mathcal B_{\mathcal N}(p;\boldsymbol w)+t(p)\log_2(m+1).
+\end{aligned}
+\tag{COK.67}
+$$
+
+Proof. For a probability type on $s$ supported symbols, the finite
+method-of-types estimate used in [NPC, (NPC.19)][NPCbase] is
+
+$$
+(m+1)^{-s}2^{mH(p)}\le\operatorname{Mult}(m,p)\le2^{mH(p)}.
+\tag{COK.68}
+$$
+
+For completeness, under iid $p$ the type $mp$ is a modal type:
+comparing any type to it gives a product of factorial ratios at
+most one. There are at most $(m+1)^s$ types. Its probability is
+therefore at least $(m+1)^{-s}$ and at most one, while every word
+of this type has probability $2^{-mH(p)}$. This proves (COK.68).
+Apply its lower numerator and upper denominator bounds to (COK.65),
+then its upper numerator and lower denominator bounds for the other
+direction. The fixed energy term supplies (COK.67). $\square$
+

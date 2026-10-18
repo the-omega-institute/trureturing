@@ -1,0 +1,27 @@
+**定理 69.3（A fully specified forced-root INITIAL consumer with one GLOBAL stream）。** For any $\lambda:J\to Y$ with $|\lambda[J]|\le2$ under (69.1), choose an extended label set $Y^*\supseteq Y$ containing distinct fresh $R,C\notin Y$ and any independent $L_\bot$. On both free-value fibres define the entire immutable INITIAL target $f^\lambda:Q\to Y^*$ by
+
+$$
+f^\lambda(v,-j,s)=\begin{cases}
+R,&h\le s<k,\\
+C,&0\le s<h,\ j\in\{0,m\},\\
+\lambda(j),&0\le s<h,\ j\in J,
+\end{cases}
+\qquad f^\lambda(\bot)=L_\bot.
+\tag{69.7}
+$$
+
+If $d(\lambda)$ denotes the right side of (69.4), its exact whole-source fees are
+
+$$
+\boxed{C_{\rm ad}(f^\lambda)=C_{\rm pre}(f^\lambda)=1+d(\lambda).}
+\tag{69.8}
+$$
+
+Thus the actual fees are one, two or three in precisely the three cases of (69.4), with the third case possible only when $h\ge2$.
+
+**证明（root forcing and the shared lawful stream）。** Fix either free initial value and a phase $j\in J$. Its actual INITIAL tails zero and $h$ have unequal labels $\lambda(j)$ and fresh $R$, so free stopping is impossible. For any root containing zero, let $b\le m-1$ be its leading run. Both tails survive to that first zero because $h+b\le k-1<k$. They have the same scalar and phase there; the zero merges their whole records. The remaining bits are internally safe since $m<k$, so they acquire identical root endpoint archives. No future action or stopping decision can return their unequal INITIAL labels. This excludes every zero-containing root, with any later depth, separately on both free-value fibres. Hence every correct full controller must issue $1^m$.
+
+That forced root rejects exactly $s\ge h$, all labelled $R$, and stops that branch at fee one. Its successful positive child has $j\in\{0,m\}$ and label $C$, stopping there too. Its successful zero child is exactly Definition 69.1 with the supplied $\lambda$ on both values. Initial bottom returns $L_\bot$ freely. Every full controller therefore pays the root and obeys the local all-action lower bound $d(\lambda)$. For the upper bound use the single GLOBAL stream $1^m$, followed by no suffix when $d=0$, by $B_1$ when $d=1$, or by $B_1\mid B_2$ when $d=2$. These literal words are identical for both free values; each source decodes its own differences and stops as proved above. The nonempty live zero archives contain actual histories paying all required words. Their root seams satisfy $s+m<k$, and the suffix seams were checked in Theorem 69.2. Thus the actual worst emitted fee is $1+d$, proving (69.8) without an arbitrary-sibling maximum assertion.
+
+All three values occur already at $m=4,k=6,T=7,h=2$, where $J=\{1,2,3,5,6\}$ and $H=\{2,3\}$. With distinct $A,B$, a constant $A$ table gives stream $1111$ and fee one. Giving only phase one label $B$ and all others $A$ gives $1111\mid0001$ and fee two. Giving only phase two label $B$ gives $1111\mid0000\mid0110$ and fee three. The last stream pays its uninformative clearing block; the final charge $\{2,4\}$ selects phase two and compensates at the already excluded phase four. These are complete targets (69.7) with their proved minima. An all-one complete-block source history of length at least $k$ separately realizes initial bottom. Every successful record in these consumers has the joint witness used in Theorem 69.2, including the high-tail records used for forcing. ∎
+

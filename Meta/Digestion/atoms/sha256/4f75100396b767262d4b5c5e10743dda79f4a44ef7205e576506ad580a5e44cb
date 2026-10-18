@@ -1,0 +1,13 @@
+**定理 7.1（非退化五态纤维上的单读口分离）。** 固定可行 $b$、固定已知 $K$，并假设 $u>\ell$。则 $p\mapsto\tau_K(p)$ 在整条 $\mathcal F_b$ 上单射，当且仅当 $\Delta_{13}K\ne0$。取任意可行基点 $\kappa_0\in[\ell,u]$，此时
+
+$$
+\tau_K(p_\kappa)=\tau_K(p_{\kappa_0})+(\kappa-\kappa_0)\Delta_{13}K,
+$$
+
+$$
+\kappa=\kappa_0+
+\frac{\tau_K(p_\kappa)-\tau_K(p_{\kappa_0})}{\Delta_{13}K}.
+$$
+
+证明。使用数学引文 2.2 的差分和四角配对。非零斜率分离任意两个不同 $\kappa$；零斜率则整条非退化纤维恒值。使用可行基点避免把可能不可行的 $\kappa=0$ 对应物误认作概率制备。此为[局部时钟核卷 Q1–Q4](AURIC_FIB_ATOM_LOCAL_CLOCK_KERNEL_AND_OUTPUT_RESOLVED_SEAM_VISIBILITY.md)的固定核逆式在标量读口上的应用。∎
+

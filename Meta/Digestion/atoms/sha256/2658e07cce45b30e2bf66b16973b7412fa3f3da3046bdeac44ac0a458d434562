@@ -1,0 +1,22 @@
+**Proposition 30.4 (Trace-excess difference and the canonical face).**
+Let $E(m)=E_7(m)$ for $m\ge0$, and set $E(m)=0$ for negative integers.
+Then for every $m\ge3$,
+
+$$
+L^\circ(m)-L(m-3)
+=E(m-3)-E(m-5)
+=\operatorname{ind}D^+_{\omega_R,m}
+ -\operatorname{ind}D^+_{R,m-3}
+=\binom{m+1}{6}.
+\tag{30.16}
+$$
+
+Proof. Formula (28.13) gives
+$(1-t^2)\sum_{r\ge0}E(r)t^r=t^2/(1-t)^7$.
+The coefficient at $t^{m-3}$ is
+$E(m-3)-E(m-5)=\binom{m+1}{6}$ when $m\ge5$ and is zero at $m=3,4$.
+The other equalities are (29.5) and (30.5).
+The difference identity consumes the already identified local-trace
+excess; it does not equate that excess itself to the canonical defect
+in the same degree. $\square$
+

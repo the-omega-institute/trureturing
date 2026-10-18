@@ -1,0 +1,21 @@
+**Convention 11.2 (primary literature and the operational correspondence).**
+The standard ingredients below are `literature-attested` intermediate
+methods. The coupling in Theorems 4.4, 6.2, 7.2–7.3 and 8.3, for this
+actual original source/task and the declared patch basis, is `repo-derived`.
+No claim of a newly discovered general graph compiler, prefix-closure
+theorem, behavioral quotient principle, or worldwide novelty is made.
+
+| Primary source | Precisely applicable ingredient and retained boundary |
+| --- | --- |
+| Pablo Arrighi and Gilles Dowek, *Causal Graph Dynamics*, arXiv:1202.1098v3, §§2–3, especially Definitions 1–5; [primary version](https://arxiv.org/pdf/1202.1098v3) | Finite ports, incidence neighbors, and renaming/freshness distinctions give a precise vocabulary for local evolving graphs. That theory's synchronous local-to-global characterization is not applied to this serial privileged-root machine. Neither its vertex-name universe nor locality theorem supplies constructed descriptors, owner permissions or prices. |
+| Luidnel Maignan and Antoine Spicher, *Causal Graph Dynamics and Kan Extensions*, LMCS 22(1:16), DOI 10.46298/LMCS-22(1:16)2026, Definitions 1.1, 1.4–1.6 and Proposition 1.7; [primary text](https://arxiv.org/pdf/2403.13393) | Nonintersecting port endpoints, bounded local output, consistency, and conjugate renaming are distinct conditions. A globally consistent union of local outputs is extra structure in that model; the present finite serial stencil proves its own footprint and naming result directly. It does not infer a free observation boundary or graph-wire implementation from the Kan-extension description. |
+| Nancy Lynch and Frits Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, Information and Computation 121(2), 1995, §3.2, Lemma 3.8 and Theorem 3.10; [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf) | A source step must be matched by a finite fragment from every related target state; soundness gives trace inclusion. Such a fragment may have additional cuts. SSA.9 proves the stronger one-for-one actual-image correspondence here from explicit rows and the atomic hypothesis, rather than inferring inverse cuts, equal clocks or costs from trace inclusion. |
+| Martin Hofmann, Benjamin Pierce and Daniel Wagner, *Symmetric Lenses*, author manuscript version 2010-07-16, §2 and its positional-alignment discussion, published at POPL 2011; [author manuscript](https://www.cis.upenn.edu/~bcpierce/papers/symmetric.pdf) | A complement retains distinctions erased by a projection; round-trip laws concern supplied structures. Retention, alignment and acquisition are separate obligations. The retained input/acquisition material here is real backing, and no lens law is treated as a private read, global snapshot, or authorized oldcut protocol. |
+
+The structural bit switches are an explicit finite incidence representation,
+whose local algebra is proved here; the use of finite shapes to store a
+finite alphabet is not asserted as a new general coding principle. The
+new runtime statement is its use as the one actual storage, with the
+declared finite primitive compilation, actual terminal-boundary inverse,
+retained provenance, and separate original task kernels.
+

@@ -1,0 +1,71 @@
+### 55.4 从同一组实际相位导出四个必要剩余式
+
+令
+\[
+\eta=\bar\chi/X,\quad
+T=\bar A_0B+A_0\bar C+B\bar C,\quad d=\bar P Q,
+\]
+\[
+K=P(1+\bar\zeta+\bar Q\bar A_0)
+   +QB(1+\bar\zeta)+\bar Q\bar C(1+\zeta+P).
+\]
+对输入 \((E,F,G)=(XA_0,B,C)\) 应用式 (55.9)，将复系数除以 \(X\)、实系数乘以 \(n\)，分别得到
+\[
+\mathcal I_1=T+\eta\bar BC=0,\qquad
+\mathcal I=6|A_0|^2+2n|B|^2
+             -12\operatorname{Re}(\bar\eta B\bar C)=0.
+\tag{55.16}
+\]
+对同一个实际上输出，令
+\[
+e=1+\zeta+QA_0,\quad f=P+QB,\quad g=QC.
+\]
+其仿射系数是 \((Xe,f,g)\)。式 (55.9) 同样给出
+\[
+\begin{aligned}
+\mathcal O_1&=\bar ef+e\bar g+f\bar g+\eta\bar f g=0,\\
+\mathcal O_0&=6|e|^2+n(|f|^2+|g|^2-6)
+              -12\operatorname{Re}(\bar\eta f\bar g)=0.
+\end{aligned}
+\tag{55.17}
+\]
+定义
+\[
+\begin{aligned}
+I&=6|A_0|^2+2n|B|^2+12\operatorname{Re}T,\\
+J_1&=\bar BK-dT,\\
+L_1&=3|1+\zeta|^2+6\operatorname{Re}((1+\bar\zeta)QA_0)
+      +n\operatorname{Re}(dB)+6\operatorname{Re}K,\\
+H_1&=\operatorname{Re}(\bar mJ_1),\qquad
+G_1=\operatorname{Im}(\bar mJ_1).
+\end{aligned}
+\tag{55.18}
+\]
+这里下标一是名称的一部分，不表示 \(\tau\) 的一次项系数。逐项展开有
+\[
+I-\mathcal I=12\operatorname{Re}\mathcal I_1,
+\qquad \mathcal O_1-|Q|^2\mathcal I_1=K+d\eta C,
+\]
+\[
+J_1=\bar B(\mathcal O_1-|Q|^2\mathcal I_1)-d\mathcal I_1,
+\]
+\[
+\begin{aligned}
+\mathcal O_0-|Q|^2\mathcal I-2L_1
+ +12\operatorname{Re}(\mathcal O_1-|Q|^2\mathcal I_1)
+ ={}&n(|P|^2+|Q|^2-6)\\
+ &+n|Q|^2(|C|^2-|B|^2-1)=0.
+\end{aligned}
+\tag{55.19}
+\]
+因此每个实际三元组必满足
+\[
+I=H_1=G_1=L_1=0.
+\tag{55.20}
+\]
+这些恒等式没有给输入、两个输出或不同剩余式分配不相干的相位。
+
+实际点还满足 \(6|\eta|^2=n\)，且单位根判别式给出
+\(4+12n-3n^2-32\operatorname{Re}\eta<0\)：事实上式 (55.6) 的判别式为
+\(\chi^2[X^4+18X^2-27-8X^3\operatorname{Re}\chi]\)，方括号是三个单位根 Vandermonde 模方的负值；代入式 (55.8) 后正比例因子为 \(9/n^2\)。下面仅排除必要方程 (55.20) 的较大零集，不需要这些额外范数或严格判别式限制。
+

@@ -1,0 +1,32 @@
+**Theorem 3.1 (joint-path continuity).** On $[0,T]$, let continuous
+triples $z_n=(a_n,b_n,J_n)$, starting at zero, converge uniformly to
+$z=(a,b,J)$. For finite-stage original commands require
+$J_n=\int a_n\,db_n$; the limiting $J$ is specified jointly and is not
+defined by an unasserted ordinary integral. With fixed $q_0$, the real
+paths (2.5) converge uniformly, as do their wrapped paths wherever those
+paths are in the native domain. In particular,
+
+$$
+\begin{aligned}
+\|\kappa_n-\kappa\|_\infty&=\|a_n-a\|_\infty,\\
+\|\widetilde\alpha_n-\widetilde\alpha\|_\infty
+ &=\tfrac12\|b_n-b\|_\infty,\\
+\|\widetilde\beta_n-\widetilde\beta\|_\infty
+ &\le |c_0|\|b_n-b\|_\infty+r^{-1}\|J_n-J\|_\infty.
+\end{aligned}
+\tag{3.1}
+$$
+
+For random triples the same map carries weak convergence in
+$C([0,T],\mathbb R^3)$ with its uniform topology to weak convergence
+of continuous state paths. It also preserves convergence in probability
+or almost surely under a common coupling. No rough-path continuity
+theorem is required for this affine native equation.
+
+Proof. The estimates are immediate from (2.5). Circle projection is
+1-Lipschitz for the circle distance. Weak convergence follows by composing
+bounded continuous tests with this continuous map. If the limiting height
+stays in a compact subinterval of $(0,H)$, uniform convergence also
+ensures the whole native guard for all sufficiently large $n$.
+Otherwise lawfulness must be checked separately. $\square$
+

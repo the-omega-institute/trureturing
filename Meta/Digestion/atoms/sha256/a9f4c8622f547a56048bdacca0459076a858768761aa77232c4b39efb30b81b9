@@ -1,0 +1,14 @@
+**Definition 1.1 (unchanged source and histories).** Put $m=2,d=1,\ell=2,n=4$, $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$, and
+
+$$
+r_k=F_{k+1}/F_{k+3},\qquad a=r_1=1/3,\qquad b=r_2=2/5.
+$$
+
+Install one finite or countable prior $\mu$ on positive integers, with $\mu(1),\mu(2)>0$. Draw one $K$ before the first actual Read. Conditional on that same $K=k$, every seed and payload letter is independent, with alpha probability $r_k$. For $k\ge3$, $r_k\in[3/8,5/13]$.
+
+The paid seed parser rejects equal pairs, accepts alpha-beta as seed 0 and beta-alpha as seed 1. Every payload starts at p: alpha completes marker 0 and beta suspends; at suspension, alpha returns to p and beta completes marker 1. Keep the complete original finite control $C_0$, parser, selectors, bare fields, four-marker tree, held $B,Q^+,Z$ records, write and latch flags, permissions, completion and Stop delivery. The third record write precedes its latch. Fourth completion enters its matching pendingStop; its unique original Stop enters deliveredStop. Neither terminal permits Read.
+
+On all sixteen completed marker words and their prefixes, let $t$ be the old completed-marker count and $j$ the old one-count. A completed marker $e$ recognizes the first zero as event $a$ ($e=0,t-j=0$), the second zero as $c$ ($e=0,t-j=1$), the first one as $b$ ($e=1,j=0$), and the second one as $d$ ($e=1,j=1$). For old $t<3$, append a recognized event to each original relation scope $S_1^+=\{a,c,d\}$ and $S_2^+=\{b,c\}$ containing it. Unmatched ordinal events, rejected pairs, returns, partial parses and completions with old $t\ge3$ hold these relation fields. Write $Z=e$ only at the first marker. At old $t=2$, complete the third record update before latching the original bare snapshot $B$; thereafter the held $B,Q^+,Z$ fields remain while the fourth segment and Stop continue. This is the full-tree writer supplied in [ALPHA, Section 2], retaining the original bare fields and selectors as part of $C_0$.
+
+Both seeds, all marker triples, every positive finite paid rejection history and every positive finite payload-return history stay in the domain. There is no source reset, fresh depth, future-event conditioning, new observation or controller port. $\mathcal H_p,\mathcal H_\beta$ are all positive finite fourth-segment p and suspended histories after the third latch, including arbitrarily many returns. $\mathcal H_3$ is only the first p cut and is not substituted for $\mathcal H_p$. These are the contracts of [ST, Sections 1–3; CLIP, Section 1; PAID, Section 1].
+

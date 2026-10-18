@@ -1,0 +1,31 @@
+对固定零和源 \(b\ne0\)，令
+\[
+R_s[b]=b^{\mathsf T}L_s^+b.
+\]
+定义响应曲率
+\[
+\kappa_s[b]
+=
+-\frac{d}{ds}\log R_s[b]
+=
+\frac{
+\sum_ec_e'(s)(q_e^{\mathsf T}\phi_s)^2
+}{
+R_s[b]
+}.
+\]
+
+若容量变化服从
+\[
+c_e'(s)=-\alpha_e\sigma_e(s),
+\qquad
+\alpha_e\ge0,\quad \sigma_e(s)\ge0,
+\]
+则
+\[
+\kappa_s[b]\le0,
+\]
+即边容量因局部耗散下降时，响应电阻沿该源方向增加。若 \(c_e'(s)=+\alpha_e\sigma_e(s)\)，则响应电阻沿该源方向收缩。
+
+这里的 \(\kappa_s[b]\) 是有限网络的响应曲率候选。它控制静态源扰动如何改变网络几何响应，但尚未被证明等于 Ricci 曲率、Einstein 张量或任何连续时空曲率。要得到后者，仍需 §54 的 metric-measure/Mosco 极限、局部性和曲率稳定性条件。
+

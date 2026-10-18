@@ -1,0 +1,63 @@
+### 60.6 Rigidity, transports, and the orthogonality component
+
+**Proof of Proposition 60.1.** For \(0<|b|<1\), let \(Cz\) be any
+actual common-flat vector orthogonal to \(c_1^+\). Every generator in
+(60.5) vanishes, so (60.12) gives \(X(z)^*G X(z)=0\).
+Lemma 60.2 implies that every mixed cubic monomial vanishes.
+If two coordinates \(z_i,z_j\) were nonzero, then \(z_i^2z_j\ne0\),
+a contradiction. Hence precisely one canonical coordinate is nonzero.
+Conversely, each of the other five canonical rays is common-flat and
+orthogonal to the selected member. This treats every missing-mode,
+repeated-coordinate and singular candidate without division by a
+candidate coordinate.
+
+At \(b=0\), the conclusion is Proposition 59.1; since \(a=bd/c\),
+this is exactly the case \(a=0\), not a limiting argument.
+For the remaining nonzero-mode choices, synchronous reflection
+\(R(x,y)=(R_3x,R_3y)\), \((R_3x)_j=x_{-j}\), commutes with \(M\)
+because its blocks are linear combinations of \(I,J_3\).
+It exchanges modes 1 and 2 and preserves all original flatness equations.
+The antiunitary
+
+\[
+ \Theta(x,y)=(-\bar y,\bar x)
+\]
+
+satisfies \(M\Theta=-\Theta M\) by block multiplication, preserves
+coordinate moduli and orthogonality, and obeys
+
+\[
+ \Theta c_l^\epsilon
+   =(-\epsilon\bar g_l)c_{-l}^{-\epsilon}.
+\tag{60.13}
+\]
+
+Thus \(R\Theta\) flips the canonical sign at a fixed nonzero mode.
+Reflection and this antiunitary prove all four nonzero-mode cases.
+Proposition 58.1 supplies both zero-mode cases throughout the open branch.
+Finally the common unitary map \(w\mapsto H_0w\) gives the column-ray
+statement, with canonical rays \(H_0c_l^\epsilon\). \(\square\)
+
+**Corollary 60.4.** For a fixed \(|b|<1\), define a graph whose vertices
+are all actual common-flat input projective rays, with an edge between
+two distinct vertices exactly when the rays are orthogonal. The six
+canonical rays form a connected component isomorphic to \(K_6\).
+Any orthonormal common-flat input basis containing one canonical ray
+is exactly the canonical basis. The unitary image graph on common-
+unbiased column rays for \((I,H_0)\) has the same properties.
+
+**Proof.** The canonical rays are pairwise orthogonal. Proposition 60.1
+says that every neighbor of a canonical vertex is one of the other five
+canonical vertices, so no edge joins this \(K_6\) to a noncanonical
+vertex. In an orthonormal basis containing one canonical member, the
+other five rays must therefore be five distinct members of the remaining
+canonical set. The unitary transport preserves every edge. \(\square\)
+
+This is a connected-component statement about the orthogonality graph.
+It does not assert topological isolation in the common-flat ray space,
+or that every common-flat orthonormal basis intersects the canonical set.
+The genuine noncanonical endpoint ray in §59.4 shows why the restriction
+\(|b|<1\) cannot simply be replaced by \(|b|\le1\); no limiting
+interior existence claim follows from that example. The general
+fourth-basis problem remains outside Proposition 60.1.
+

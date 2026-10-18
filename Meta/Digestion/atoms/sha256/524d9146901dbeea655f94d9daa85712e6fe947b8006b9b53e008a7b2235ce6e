@@ -1,0 +1,32 @@
+**Definition 9.1 (supplier and increment map).** The following ownership
+is part of the scope of the statements, with the complete supplied current
+SI Sections 9--10 included in the comparison.
+
+| content used here | credited supplier and retained scope |
+| --- | --- |
+| image/inverse, eleven complete-row profiles, original reader and native model | WTF Section 1; no bounded source-domain substitution |
+| simultaneous cube, all-address $E_i$, same-run charges and exact native feasibility | WTF Supplier 2.1, Lemma 2.2 and Theorem 4.1; ordinary proof in Section 1 above |
+| saturation, private exchanges, support exclusions and two gaps | PE Theorem 3.1 and Lemma 4.1; WTF Convention 6.1 and Theorems 7.1, 9.1; the arguments are recorded in Section 2 |
+| actual host/support incidence and diagonal common support | SI Theorems 2.2 and 4.1 |
+| exact $m-G=E-D+\nu$ | SI Theorem 5.2, (SI.19) |
+| cuts, support envelopes and compatible block decomposition | current SI Lemma 9.2 and Theorem 9.3, which additionally partition the unchanged installed multiplicity vector by coordinate blocks |
+| nonnegative compensation for spacing at most three; qualified minima; exact remaining sum | current SI Theorem 9.4, Corollary 9.5 and Proposition 9.6 |
+| last-layer exclusivity, right-cut separation and early-ending no-sharing | current SI Lemma 10.2; Lemma 5.2 gives the full actual-extension proof |
+| six-cell span-four classification and compensation | current SI Lemma 10.3 and Theorem 10.4; Lemma 5.3 and Theorem 5.4 reproduce the ordinary proof |
+| terminal span-four margin, enlarged qualified minima and genuine class enlargement | current SI Corollaries 10.5--10.6 and Proposition 10.7; Corollary 5.5 and Theorems 5.6, 7.3, Proposition 5.7 reuse them |
+| actual-prefix inheritance and conditional residual numerical grid constraint | current SI Theorem 10.8 with CP Theorem 5.1; Theorem 6.4 retains this on the same installed vector |
+| late-span-at-least-five necessity and exact surviving global sum | current SI Proposition 10.9; equations (5.15)--(5.16) retain this frontier |
+| strict $E_B-D_B\ge1$ for each nonempty maximal block with $|B|\le2$ and explicit short-block slack | Theorems 4.1--5.1 here; obtained by retaining ambiguity excess on every interior depth of the credited classification |
+| short-block units in the current global sum and qualifying residual/native bounds | Theorems 5.6, 6.4 and 7.3 combine Section 4 with credited SI10 on each same actual graph; no extra independent-state allocation |
+| boundary live-depth lemma and fixed-prefix restriction | Third Lemma 7.1 and CP Theorem 5.1; Theorem 6.2 here is their same-prefix application |
+| boundary numerical optimum | CP (CP.21), not a new value here |
+| weighted retained-$t$ construction and representative obstructions | complete current WTF Section 11, specifically Definitions 11.1--11.2, Theorems 11.3--11.4, Propositions 11.5--11.6 and Theorem 11.7 |
+
+The separately named PCA, NBP and TMC volumes inside these suppliers are
+unopened nested references, not separately supplied bodies. Only the
+interfaces and deductions actually exposed in WTF, PE, CP, SI and Third are
+used; no unseen stronger premise is imported. In particular SI's original
+fixed-vector bookkeeping is credited rather than replaced by independent
+counts from hypothetical block tables. All proofs here are ordinary analytic
+arguments, without a kernel-certification claim or a worldwide priority claim.
+

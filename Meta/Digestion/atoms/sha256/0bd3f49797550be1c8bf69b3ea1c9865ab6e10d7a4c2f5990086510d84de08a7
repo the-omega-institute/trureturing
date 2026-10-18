@@ -1,0 +1,18 @@
+**定理 20.1（平坦运输的静态标量化与动态份额）。** 在定义 19.1 的连通网络上，若全部根闭走法运输为 $I$，则存在 $Q_v\in SO(3)$ 使
+
+$$
+U_{wv}=Q_wQ_v^{\mathsf T},\qquad
+\mathcal Q^{\mathsf T}L_U\mathcal Q=L_{\rm sc}\otimes I_3,
+\qquad \mathcal Q=\operatorname{diag}(Q_v).
+$$
+
+边界／内部节点划分中若内部标量块 $D$ 可逆，Schur 消元后仍有
+
+$$
+S_U=\mathcal Q_\partial(S_{\rm sc}\otimes I_3)\mathcal Q_\partial^{\mathsf T}.
+$$
+
+这使三个方向具有同一静态标量响应，不限制时间预测只需一份向量；第十八章的三节点链就是平坦、零静态 Schur、却需三份预测向量的实例。
+
+证明。沿根到 $v$ 的路径置 $Q_v$，平坦性使路径无关，并使边运输等于 $Q_wQ_v^{\mathsf T}$。令 $y_v=Q_v^{\mathsf T}x_v$，每条边误差范数变为 $\|y_w-y_v\|$，给二次型与矩阵同型。分块后将正交换基及 $(D\otimes I_3)^{-1}=D^{-1}\otimes I_3$ 代入 Schur 式，便得边界公式。连续分批消元只在相应逆存在时复用 [SchurComplementAssociativity 的 `schur_complement_associativity`](../../../D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean)；不能把“平坦”当成内部可逆性的代替。树上取所有 $U=I$ 自动平坦，而定理 18.4 已给九维下界。换基后的共同旋转符合定理 17.2；有固定外部标架或非等变读出时须重新核对，不能把任意非平坦网络也写成该纯向量模型。证毕。
+

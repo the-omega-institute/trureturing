@@ -1,0 +1,11 @@
+**Definition 13.2 (both tables as design variables, original entry fixed).**
+Keep the original acquired-term code $c$, its attained literal values,
+the same complete injective entry map $\iota$, the reader alphabet and
+running/halt partition, and the whole-row output assigned to every
+halt. Keep the preparation alphabet, its partition, latches and start.
+Allow both graphs' running literals and four-successor functions to
+be chosen. Acquisition, authentication, paid handoff, access isolation
+and same-register continuity remain the supplied services of §1.
+In particular this permission to redesign the reader is stronger than
+Assumption 10.1 and is stated separately.
+

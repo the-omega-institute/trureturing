@@ -1,0 +1,41 @@
+**Theorem 23.1 (four bits cannot recover the whole fiber).** Under
+Assumption 21.1, for every finite integer $k\ge0$ and every
+$1\le d\le4$, $\mathfrak W(k,d)=\varnothing$. More strongly,
+no such controller can terminate correctly on all fifteen sources
+even if only eventual termination, with no common Read cap, is required.
+
+**Proof.** The complete legal set at length four is
+
+$$
+\{0000,0001,0010,0100,0101,1000,1001,1010\}.
+\tag{NARC.23.1}
+$$
+
+These are binary words. Appending trailing zeros embeds every shorter
+legal-word set into this set, so there are at most eight available
+complete configurations at any $d\le4$.
+The seven distinct required full integers in (NARC.21.2) need at least
+seven distinct installed halting words: one fixed halt word has one
+fixed complete output. Therefore at most one word is running. Duplicate
+output halts, unused installations or additional halt labels can only
+consume more of the same eight-word capacity.
+
+The common initial word must run because the target is not constant
+on $C$. Fix one actual stationary source. At that sole running word
+the entire accessible configuration fixes its literal. The source fixes
+the reply, and the immutable response row fixes its successor. If that
+successor is the same running word, the same configuration, source,
+literal, reply and successor repeat forever. There is no retained
+count, clock, reply or writing phase to make a later visit different.
+Consequently every correctly terminating source must reach a halt
+directly after its first Read. Four replies can reach at most four
+distinct complete outputs, contradicting the required seven.
+
+This uses no restriction on the literal beyond the four-valued native
+interface. It covers all finite addresses, every installed subset,
+output duplication, early halts, constant or repeated Reads, shared
+control and cycles. Its stationary repetition argument is per actual
+source, not a prohibition on union-support cycles. It is an ordinary
+universal exclusion proof, independent of controller enumeration.
+$\square$
+

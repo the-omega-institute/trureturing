@@ -1,0 +1,89 @@
+**Definition 5.1 (common finite realization).** Fix before receipt of the
+specimen any finite family of nonzero real $Q$-null vectors $f_j$ with
+$\sum_jf_jf_j^T=I$. This includes every frame below, the four endpoint
+vectors, and the null decomposition of the four slots in RH.11.
+Set $c_j=Lf_j=(x_j,z_j,w_j)^T$ and $K_j=x_jD+z_jT+w_jS$.
+Nullity gives $x_j^2=\theta z_j^2+\omega w_j^2$ and $x_j\ne0$.
+RH.13 gives zero determinant, while the rows/columns $1,2$ minor is
+$x_j^2h_1h_2>0$. Thus every $K_j$ has exactly rank two.
+
+Here is a fixed range isometry with no singular normalization. Let
+$k_{j1},k_{j2}$ be columns $1,2$ of $K_j$ and set
+
+$$
+\begin{gathered}
+v_{j1}=k_{j1}/\|k_{j1}\|,\qquad
+\widetilde v_{j2}=k_{j2}-v_{j1}(v_{j1}^\dagger k_{j2}),\qquad
+v_{j2}=\widetilde v_{j2}/\|\widetilde v_{j2}\|,\qquad
+V_j=(v_{j1},v_{j2}).
+\end{gathered}
+\tag{RH.27}
+$$
+
+The same nonzero minor proves column independence, so both denominators
+are strictly positive, including at both closed frame endpoints.
+Consequently $V_j^\dagger V_j=I_2$ and $V_jV_j^\dagger K_j=K_j$.
+Supply the actual encoder and full-fibre decoder
+
+$$
+C_j=V_j^\dagger K_jE^\dagger:\mathbb C^5\to\mathbb C^2,
+\qquad\mathcal R_j(Z)=EV_jZV_j^\dagger E^\dagger
+\quad\text{in live}.
+\tag{RH.28}
+$$
+
+Retain its generated label $j$ and chosen report $r_j$.
+Add two high encoders
+
+$$
+C_{H,r}=\sqrt{(1-\delta)/2}\,DE^\dagger,\qquad r=\pm1,
+\qquad\mathcal R_{H,r}(Z)=EZE^\dagger\quad\text{in live}.
+\tag{RH.29}
+$$
+
+Their full fibres have dimension three. For failure, the eigenvalues of
+$\Xi$ are $\lambda_\epsilon=(-d_f+\epsilon L_f)/2$, with opposite
+strict signs. One explicit fixed real unit eigenvector is
+
+$$
+f_\epsilon^{\rm fail}
+ =\frac{(z_f,\lambda_\epsilon+d_f)^T}
+        {\sqrt{z_f^2+(\lambda_\epsilon+d_f)^2}},\qquad\epsilon=\pm1.
+\tag{RH.30}
+$$
+
+Its denominator is positive because $z_f\ne0$. The projections satisfy
+
+$$
+\Pi_\epsilon=\frac12\left[I_2+
+              \epsilon\frac{2\Xi+d_fI_2}{L_f}\right],\qquad
+(2\Xi+d_fI_2)^2=L_f^2I_2.
+\tag{RH.31}
+$$
+
+Extend the eigenvectors by zero in coordinate $0$. For each
+$\epsilon,r=\pm1$ use the scalar encoder row
+
+$$
+C_{f,\epsilon,r}=\frac1{\sqrt2}
+ \langle f_\epsilon^{\rm fail}|M^{1/2}E^\dagger.
+\tag{RH.32}
+$$
+
+Its whole scalar-fibre decoder sends $z$ to
+$z w_\ell g(t)dt\,P_f$ separately in each original label
+$\ell\in\{0,1,2,3,13\}$, where $g(t)=g_{\rm time}(t)=2/(1+t)^2$.
+Finally choose once an orthonormal basis $t_1,t_2$ of
+$\operatorname{ran}(I_5-P_V)$. For each $r=\pm1$ add one actual scalar
+complement branch with Kraus rows $\langle t_k|/\sqrt2$, $k=1,2$:
+
+$$
+\mathcal E_{\perp,r}(A)=\frac12\operatorname{tr}((I_5-P_V)A).
+\tag{RH.33}
+$$
+
+Its full decoder sends $z$ to $zg(t)dt\,P_f$ only at original label
+$2$. The two rows are inaccessible Kraus multiplicity, not two retained
+quantum shares or decoder-controlling labels. All scalar and high
+branches retain the displayed fair report $r$.
+

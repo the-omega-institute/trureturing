@@ -1,0 +1,25 @@
+**Convention 7.2 (Finner attribution and the exact transfer).**
+Lubetzky–Zhao, *On replica symmetry of large deviations in random
+graphs*, [arXiv:1210.7013v2, Theorem 3.1 and its proof][LZ],
+states the generalized Hölder inequality attributed there to Finner:
+on a product probability space, functions with scopes $S_i$ and
+$p_i\ge1$ satisfy the product-of-$L^{p_i}$ upper bound if each
+coordinate has $\sum_{i:a\in S_i}1/p_i\le1$. The mapping here
+is an independent analytical coordinate for each actual shared
+edge-bit index, scope $S_i=\operatorname{st}(v)$ and
+$1/p_i=\theta_v$. The global inequality (WBF.7), before
+integration, supplies the bridge from the actual weighted count to
+that probability base. This mapping does not replace a repeated
+edge by independent copies, or assert that the true source law is
+product. Exponent zero is handled directly by the maximum argument
+in Lemma 2.2. That lemma also provides a self-contained finite proof
+of precisely the inequality used here.
+
+The inspected source is an attributed restatement and proof of Finner,
+not the original Finner paper. The original article, H. Finner,
+*A generalization of Hölder's inequality and some probability
+inequalities*, *Annals of Probability* 20(4), 1893–1901, is credited
+as the origin of the inequality; its original text is not an inspected
+premise here. No stability, reverse-Sidorenko or graph-cover theorem
+is imported as an all-native pressure bound.
+

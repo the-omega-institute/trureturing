@@ -1,0 +1,42 @@
+**定义 33.2（四个角图与十一组根数据）。** 置 $\epsilon=1/64$。在四个角图中用坐标 $(v,k)$，定义
+
+$$
+\begin{array}{c|cc|c}
+\chi&r&b&0\le k\le k_\chi\\ \hline
+O_A&v&kv&1\\
+O_B&kv&v&1\\
+T_A&1-v&kv&2\\
+T_B&1-kv&v&1/2
+\end{array}
+\qquad 0\le v\le\epsilon.
+\tag{33.4}
+$$
+
+对 $p=R,E,H$，令 $p^\chi(v,k)=p(r(v,k),b(v,k))$，并定义多项式
+
+$$
+\widehat R_\chi=R^\chi/v^3,\qquad
+\widehat E_\chi=E^\chi/v^2,\qquad
+\widehat H_\chi=H^\chi/v^3,\qquad
+\widehat Z_\chi=-\widehat H_\chi\widehat E_\chi.
+\tag{33.5}
+$$
+
+这里除掉的是精确公因子，所得多项式也在 $v=0$ 取值；不将 $v=0$ 除法代入原响应。由式 (32.2)–(32.5) 展开，每图中三个最低 $v$ 幂恰为 $3,2,3$。在 $O_A,T_A$ 中三个商的双次数依次是 $(4,7),(4,6),(4,7)$，在 $O_B,T_B$ 中依次是 $(4,6),(4,4),(4,6)$。
+
+式 (33.1)–(33.3) 的十一组根数据如下。$\varnothing$ 表示无护栏；第十、十一行的列表次序不可交换。
+
+| 组 | 根盒，按第一、第二坐标 | 护栏 | 有序符号列表 | $d_*$ |
+| --- | --- | --- | --- | --- |
+| $1$ | $[0,1]\times[5/4,5/4]$ | $\varnothing$ | $(R,+)$ | $24$ |
+| $2$ | $[0,1]\times[1/2,5/4]$ | $\varnothing$ | $(R,+)$ | $24$ |
+| $3$ | $[0,1]\times[5/4,8/5]$ | $\varnothing$ | $(E,-)$ | $24$ |
+| $4$ | $[0,1]\times[5/4,8/5]$ | $R$ | $(R_b,-)$ | $24$ |
+| $5$ | $[0,1]\times[5/4,8/5]$ | $R$ | $(Q_*,-)$ | $24$ |
+| $6$ | $[0,\epsilon]\times[0,1]$ | $\varnothing$ | $(\widehat R_{O_A},+)$ | $18$ |
+| $7$ | $[0,\epsilon]\times[0,1]$ | $\varnothing$ | $(\widehat R_{O_B},+)$ | $18$ |
+| $8$ | $[0,\epsilon]\times[0,2]$ | $\widehat R_{T_A}$ | $(\widehat Z_{T_A},+)$ | $22$ |
+| $9$ | $[0,\epsilon]\times[0,1/2]$ | $\widehat R_{T_B}$ | $(\widehat Z_{T_B},+)$ | $22$ |
+| $10$ | $[0,1]\times[\epsilon,1/2]$ | $R$ | $(Z_4,+),(Z_5,+)$ | $24$ |
+| $11$ | $[\epsilon,1-\epsilon]\times[0,\epsilon]$ | $R$ | $(Z_4,+),(Z_5,+)$ | $24$ |
+

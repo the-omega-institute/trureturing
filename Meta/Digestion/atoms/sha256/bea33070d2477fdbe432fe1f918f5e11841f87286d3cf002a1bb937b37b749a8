@@ -1,0 +1,156 @@
+### Theorem 2.1 (uniform recovery with nine atomic operations)
+
+For every $d\ge0$, a predetermined finite-composite-word path recovers $(S,\kappa,D)$ from $B+5=\max(d+6,7)$ exact reads. It uses nine atomic $M/J$ operations and is valid for every real $\kappa$, including all zero crossings of $1+\kappa i$.
+
+The cumulative matrices at the recorded positions are
+
+$$
+A_i=I\quad(0\le i<B),
+$$
+
+followed by
+
+$$
+A_B=U,\quad A_{B+1}=U^2,
+$$
+
+$$
+A_{B+2}=F=M^2U^2=\begin{pmatrix}1&3\\1&4\end{pmatrix},\quad
+A_{B+3}=G=JM^2U^2=\begin{pmatrix}1&4\\1&3\end{pmatrix},
+$$
+
+and
+
+$$
+A_{B+4}=H=UJM^2U^2=\begin{pmatrix}2&7\\1&3\end{pmatrix}.
+$$
+
+The operation blocks after the last initial read, written as left-multiplying matrix products, are respectively $JM$, $JM$, $MM$, $J$, and $JM$, so their lengths are $2,2,2,1,2$.
+
+#### Proof
+
+Write $a=p+s=\operatorname{tr}(S)$ and define
+
+$$
+P(t)=D(t)+a(1+\kappa t).
+$$
+
+Its degree is at most $\max(d,1)=B-1$. At each of the first $B$ positions the cumulative matrix is $I$, hence
+
+$$
+z_i=P(i)\qquad(0\le i<B).
+$$
+
+The $B$ distinct values determine $P$ uniquely. Explicitly,
+
+$$
+P(t)=\sum_{j=0}^{B-1}z_j
+\prod_{\substack{0\le h<B\\h\ne j}}
+\frac{t-h}{j-h},
+$$
+
+whose denominators are fixed nonzero integers.
+
+Direct multiplication gives
+
+$$
+\operatorname{tr}(US)=a+r,\qquad
+\operatorname{tr}(U^2S)=a+2r.
+$$
+
+Define
+
+$$
+v_0=z_B-P(B),\qquad
+v_1=\frac{z_{B+1}-P(B+1)}2.
+$$
+
+Then
+
+$$
+v_0=r(1+\kappa B),\qquad
+v_1=r(1+\kappa(B+1)).
+$$
+
+Consequently, with
+
+$$
+\eta=v_1-v_0,\qquad r_* =v_0-B\eta,
+$$
+
+we have $\eta=\kappa r$, $r_*=r>0$, and
+
+$$
+\kappa_* =\frac\eta{r_*}=\kappa.
+$$
+
+No division by a gain is used, so either shear reading may itself have zero gain.
+
+For the last three positions, write $g_i=1+\kappa i$. The affine function $g_i$ is not identically zero and has at most one zero. Whenever $g_i\ne0$, set
+
+$$
+V_i=\frac{z_i-P(i)}{g_i}=\operatorname{tr}(A_iS)-a.
+$$
+
+A zero gain simply makes that position unavailable for this division.
+
+Expanding the three final matrices gives
+
+$$
+V_{B+2}=q+3r+3s,\qquad
+V_{B+3}=q+4r+2s,\qquad
+V_{B+4}=p+q+7r+2s.
+$$
+
+Thus define, at every available position,
+
+$$
+X=V_{B+2}-3r=q+3s,\qquad
+Y=V_{B+3}-4r=q+2s,\qquad
+Z=V_{B+4}-7r=p+q+2s.
+$$
+
+At least two of $X,Y,Z$ are available. Each available one is positive on the declared source domain.
+
+If $X,Y$ are available, then
+
+$$
+s=X-Y,\qquad q=Y-2s,\qquad p=\frac{qr}{s}.
+$$
+
+The denominator is $s>0$.
+
+If $Y,Z$ are available, then
+
+$$
+p=Z-Y,\qquad s=\frac{rY}{p+2r},\qquad q=\frac{ps}{r}.
+$$
+
+Here $p>0$ and $p+2r>0$ on the source domain. Indeed, $Z-Y=p$ and $Y=q+2s=s(p/r+2)$.
+
+If $X,Z$ are available, put $h=Z-X$ and $b=h+3r$. Since $h=p-s$ and $X=(p/r+3)s$, the entry $s$ satisfies
+
+$$
+s^2+bs-rX=0.
+$$
+
+The product of the two roots is $-rX<0$, so exactly one root is positive. It is
+
+$$
+s=\frac{2rX}{\sqrt{b^2+4rX}+b},
+$$
+
+because the denominator is positive: $\sqrt{b^2+4rX}>|b|$. Then $p=s+h$ and $q=ps/r$. Thus this pair also has a unique positive inverse, including $b=0$ and either sign of $h$.
+
+Use any available pair, with the first pair preferred when all three are available. The pair calculations recover the same true $S$; an extra available value is redundant. Finally set
+
+$$
+D(t)=P(t)-a(1+\kappa t),\qquad a=p+s.
+$$
+
+This is the original polynomial for every real $t$. When $d=0$, $P$ was allowed to be affine, but its linear coefficient is exactly $a\kappa$, so the subtraction leaves a constant. Hence the declared degree bound is preserved.
+
+For injectivity, suppose two actual common-source realizations give the same $B+5$ readings. The initial block gives the same $P$. The two shear equations give the same positive $r$ and the same $\kappa$, hence the same gain-zero positions. At least one of the three final pairs is common and available, and its positive inverse gives the same $S$. The displayed formula then gives the same entire $D$. Therefore the target is recovered globally.
+
+All matrices above are reached on one legal forward history: $U$ is obtained by $M$ then $J$, $U^2$ by another $M$ then $J$, $F$ by two $M$ operations, $G$ by $J$, and $H$ by $U$. The instrument row is never acted on. If $S=c\ell$ with $c,\ell$ strictly positive, then $M$ and $J$ send positive columns to positive columns, so every recorded state has the same one-source, fixed-instrument realization. ∎
+

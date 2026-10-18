@@ -1,0 +1,223 @@
+**Theorem 70.3 (Exact original-input cap versus actual query-tail frontier).**
+Fix any $h\in(0,1)$ and allowed profile $b$, and take exactly the source,
+carrier, consumer and target laws (67.15)--(67.18) of Theorem 67.5. Let
+$\mathcal A_\eta$ consist of all lawful preparations of Definition 45.1
+whose prepared laws $\lambda_x$ satisfy
+$\sup_x\operatorname{TV}(\lambda_x,\mu_x)\le\eta$.
+No target-row, support, density, likelihood-algebra or proportional-containment
+condition is imposed on these prepared laws. Then $\mathcal A_\eta$ is empty
+for $0\le\eta<h$, and for every $\eta\in[h,1]$ and finite $k\ge0$
+
+$$
+\boxed{\min_{A\in\mathcal A_\eta}\ \sup_{x\in X}
+                  \mathsf P\{K_{A,x}>k\}=1-\eta.}
+\tag{70.11}
+$$
+
+For each $\eta$ one preparation attains (70.11) simultaneously at every
+finite horizon. More quantitatively, for every $A\in\mathcal A_\eta$,
+$k\ge0$, integer $r\ge2$ and $\delta>0$, there are $r$ actual sources
+$x_j\in D_{n_j}$, with distinct $n_j>m$ for some finite $m$, all having
+positive answers on the first $m$ primes, such that
+
+$$
+\boxed{\max_{1\le j\le r}\mathsf P\{K_{A,x_j}>k\}
+       \ge1-\frac{r\eta}{r-1}-\delta.}
+\tag{70.12}
+$$
+
+One may use any $m$ with $\mathsf P(J_{A,k,m})<\delta$, then any distinct
+$n_j>m$ and actual representatives of their occupied $D_{n_j}$.
+For every lawful cap-$\eta$ family its intrinsic modulus also satisfies
+
+$$
+\Omega_\lambda(m)\ge1-\eta\qquad(m\in\mathbb N_0).
+\tag{70.13}
+$$
+
+When $\eta<1$, every $A\in\mathcal A_\eta$ has
+$\sup_x\mathbb E[K_{A,x}]=\infty$. An attainer $A_\eta$ can nevertheless
+have finite expectations separately at every actual source, with
+
+$$
+(1-\eta)n(x)\le\mathbb E[K_{A_\eta,x}]
+\le(1-\eta)\left(n(x)+\frac32\,3^{-n(x)}\right)<\infty.
+\tag{70.14}
+$$
+
+At $\eta=1$ this attainer uses zero requests. The minimization and the
+universal lower bounds count actual adaptive requests, including repetitions;
+they do not require competitors to query a sequential prefix.
+For this attainer equality holds in (70.13) at every depth.
+
+**Proof.** First extend the whole-event argument in the last part of
+Theorem 67.5 to an arbitrary cap $\eta$. Fix $x\in D_n$. For every
+$\ell\ge n$, Theorem 35.2 supplies an actual
+$y_\ell\in C_\ell(x)$ with $j_\ell=\Omega(y_\ell)>\ell$.
+Lemma 45.3 gives $\lambda_{y_\ell}\to\lambda_x$ in TV.
+Since the original target at $y_\ell$ assigns mass one to
+$B_n\sqcup P_{j_\ell}$, the cap gives
+
+$$
+\lambda_{y_\ell}(B_n)+\lambda_{y_\ell}(P_{j_\ell})\ge1-\eta.
+\tag{70.15}
+$$
+
+For the fixed probability $\lambda_x$, disjointness of the $P_j$ implies
+$\lambda_x(P_j)\to0$ as $j\to\infty$. The TV comparison therefore makes
+the second term of (70.15) tend to zero and gives
+
+$$
+\lambda_x(B_{n(x)})\ge1-\eta\qquad(x\in X).
+\tag{70.16}
+$$
+
+This argument compares measurable events and finite-record submeasures only;
+it includes singular prepared laws. Testing the separate event $P_{j_\ell}$
+also gives $\lambda_{y_\ell}(P_{j_\ell})\ge h-\eta$. Its limit zero forces
+$\eta\ge h$, in agreement with the original $R_\mu=h$ of Theorem 67.5.
+Thus smaller caps are infeasible without any change of input or consumer.
+
+For the finite-source bound fix $A,k,r,\delta$ and choose $m$ by (70.4).
+Let $C$ be the actual cylinder with its first $m$ answers positive.
+Choose distinct $n_1,\ldots,n_r>m$ and actual $x_j\in D_{n_j}$ by
+Theorem 35.2; each belongs to $C$. On $J_{A,k,m}^c$, induction over
+the common execution shows that all these sources either hand off within
+$k$ requests with the same tape or all fail to hand off within $k$ requests.
+In the former case the entire finite record uses only $P_m$.
+Let $E$ be this common handoff event intersected with $J_{A,k,m}^c$, and
+let $\rho$ be its output submeasure of mass $p=\mathsf P(E)$.
+It is dominated by every $\lambda_{x_j}$, as in (70.7). By (70.16),
+
+$$
+\rho(\Theta\setminus B_{n_j})\le\eta\quad(1\le j\le r),
+\qquad
+(r-1)p\le\sum_{j=1}^r\rho(\Theta\setminus B_{n_j})\le r\eta.
+\tag{70.17}
+$$
+
+The middle inequality holds because the disjoint $B_{n_j}$ contain any tape
+at most once. For each $j$, handoff within $k$ on $J_{A,k,m}^c$ has mass
+$p$, so
+
+$$
+\mathsf P\{K_{A,x_j}>k\}\ge1-p-\mathsf P(J_{A,k,m})
+\ge1-\frac{r\eta}{r-1}-\delta.
+$$
+
+This proves (70.12), using only finitely many actual comparison sources.
+Let $r\to\infty$ and $\delta\downarrow0$ in the supremal bound to obtain
+$T_A(k)\ge1-\eta$ for each finite $k$. No source was chosen after
+observing an individual seed.
+
+The same finite sum applies to the intrinsic meet $\ell_C^\lambda$ on
+the first-$m$-positive cylinder, using the chosen actual sources for every
+$r\ge2$. It gives $a_C^\lambda\le r\eta/(r-1)$ for all $r$, hence
+$a_C^\lambda\le\eta$. This proves (70.13). In particular no cap below one
+permits uniform order calibration. It is also consistent with (70.5):
+fixing $k$ and letting $m\to\infty$ there recovers the same cost lower
+bound. The finite-event proof above additionally gives the actual witnesses
+and quantitative estimate (70.12).
+
+For attainment, use the original nonproposal block laws $\nu_x$ from
+(67.17)--(67.18), without reading the infinite parameter $t(x)$ as input.
+Let $a_C^\nu$ be their intrinsic common masses. If $m<n(x)$, the
+cylinder $C_m(x)$ has only positive prefix answers and contains actual
+sources in two distinct $D_n$. Their $\nu$ laws lie on disjoint original
+blocks, so $a_{C_m(x)}^\nu=0$. If $m\ge n(x)$, that block is fixed and
+(67.19)--(67.20) give
+
+$$
+a_{C_m(x)}^\nu\ge e^{-3^{-m}},\qquad
+1-a_{C_m(x)}^\nu\le1-e^{-3^{-m}}\le3^{-m}.
+\tag{70.18}
+$$
+
+Thus these masses exhaust one at each actual source. The positive-increment
+preparation of Theorem 46.4, with the tail identity recalled in (70.6),
+acquires $\nu_x$ exactly. Write $L_x$ for its number of actual prefix
+requests. It has $\mathsf P\{L_x>m\}=1$ for $m<n(x)$ and the bound
+(70.18) thereafter. For each finite $k$, an actual source in $D_{k+1}$
+has $\mathsf P\{L_x>k\}=1$, and hence
+
+$$
+\sup_x\mathsf P\{L_x>k\}=1,\qquad
+n(x)\le\mathbb E[L_x]\le
+n(x)+\sum_{m\ge n(x)}3^{-m}
+=n(x)+\frac32\,3^{-n(x)}.
+\tag{70.19}
+$$
+
+The expectation bounds use Tonelli's tail-sum identity, not an interchange
+of supremum and infinite sum.
+
+Choose one fixed original tape $\theta_0\in B_1$ and extend the same
+product seed by one independent uniform coordinate $V\in(0,1)$.
+For $V<\eta$ hand over $\theta_0$ immediately; otherwise use the preceding
+exact acquisition of $\nu_x$. This is one seed and one common rule at
+every actual source. Its law is
+
+$$
+\lambda_x^\eta=(1-\eta)\nu_x+\eta\delta_{\theta_0}.
+\tag{70.20}
+$$
+
+For $\eta\ge h$, subtract the common measure $(1-\eta)\nu_x$ from
+both (70.20) and the original target
+$\mu_x=(1-h)\nu_x+h\pi_{\Omega(x)}$. The remaining positive measures
+are $\eta\delta_{\theta_0}$ and
+$(\eta-h)\nu_x+h\pi_{\Omega(x)}$, each of mass $\eta$.
+Their discrepancy on every event is at most $\eta$. On the measurable
+singleton $\{\theta_0\}$ it equals $\eta$, since all original targets
+and $\nu_x$ are nonatomic. Consequently the cap is exactly $\eta$.
+This also exhibits a lawful singular competitor: for $\eta>0$ its atom
+has positive mass, while the original-target mixture gives that singleton
+mass zero. Original-mixture domination was neither assumed nor manufactured.
+
+The atom $\delta_{\theta_0}$ is singular to every $\nu_x$, so its cylinder
+common measures are
+$\ell_C^{\lambda^\eta}=\eta\delta_{\theta_0}+(1-\eta)\ell_C^\nu$.
+Indeed the common atom has that mass in every law, and the remaining
+nonatomic part must be dominated by every $(1-\eta)\nu_x$.
+By independence and (70.19), the request tail and intrinsic modulus are
+
+$$
+\mathsf P\{K_{A_\eta,x}>k\}=(1-\eta)\mathsf P\{L_x>k\},
+\qquad
+T_{A_\eta}(k)=\Omega_{\lambda^\eta}(k)=1-\eta\quad(k\ge0).
+\tag{70.21}
+$$
+
+This proves the attained minimum at all horizons simultaneously, and
+(70.19) proves (70.14). At $\eta=1$ only the zero-query branch has mass.
+Every positive-mass tape coordinate in the other branch is an original-tape
+increment law from Theorem 46.4. Its finite records and output-event
+preimages are measurable; adjoining the independent interval event in $V$
+preserves this property. Handoff is finite almost surely separately at
+every actual source. The unchanged consumer receives only that original
+tape and runs on the unchanged static source. No $n(x)$, $t(x)$,
+$\Omega(x)$, source label, magnitude promise, source sampling, restart or
+failure conditioning is supplied to the preparation.
+
+Finally, for every $A\in\mathcal A_\eta$ and finite $k$, the universal
+lower bound and the elementary nonnegative-cost inequality give
+
+$$
+\sup_x\mathbb E[K_{A,x}]\ge(k+1)\sup_x\mathsf P\{K_{A,x}>k\}
+\ge(k+1)(1-\eta).
+\tag{70.22}
+$$
+
+When $\eta<1$ this diverges as $k\to\infty$, proving the asserted
+infinite supremal mean even though (70.14) is finite at every fixed source.
+The cap/count synthesis (70.11)--(70.22) and the adaptive/intrinsic
+correspondence use the exact previously specified input and the mature
+common-measure, finite-branching and tail-sum steps cited above. They are
+repository-relative deductions, not a literature-priority claim. The
+source-specific likelihood specification and sharp cap are reused from
+Theorem 67.5, not introduced as another example. Neither these cost
+identities nor their measurable common-seed realizations settle Question
+62.1 for unrestricted original measurable inputs, or assert an effective
+sampler, a computable modulus or a bound on all preparation transitions.
+$\square$
+

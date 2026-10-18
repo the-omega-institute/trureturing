@@ -1,0 +1,55 @@
+**Definition 394.2 (Independent row weights, full scores and anchor).** Use the separately weighted event coordinates and literal affine convention of [XXIII 368.3–368.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md#368-original-resources-complete-cells-and-signed-scores). At a zero word the three coordinates are
+
+$$
+z_{A,w}(p)=p_w(0),\qquad z_{C,w}(p)=p_w(n(w)),\qquad
+z_{P,w}(p)=p_w(0)+p_w(n(w)),
+\qquad z_T(p)=p_{1^L}(0).
+\tag{394.2}
+$$
+
+Thus there are $3(2^L-1)+1$ separately imposed rows, with independent score coefficients; this is not a claim of linear independence of the event functionals. For a profile $b$ and cap $e$, set
+
+$$
+d_{A,w}=1-b_{n(w)}-e,\qquad d_{C,w}=b_{n(w)}-e,\qquad
+d_{P,w}=d_T=1-e.
+\tag{394.3}
+$$
+
+Let $R=O(1,2;1,2,0)$ in stopped-cell order, $\alpha=(1,1,0,\ldots,0)$ and $r=z(R)=d(\alpha,0)$. At mass $M$ the convention is literally
+
+$$
+z(p)\ge d(b,e)+(M-1)r,
+\qquad z(p)-Mr\ge d(b,e)-r.
+\tag{394.4}
+$$
+
+No singleton demand is clipped to zero, no union row is deduced from the singleton rows, and no normalization by $M$ is made, including at $M=0$.
+
+A full score $y=(A_w,C_w,P_w;T)\ge0$ has a coefficient at every row, including the rows whose coefficients are zero. Its reward is
+
+$$
+\begin{aligned}
+g_y(w,\ell)&=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+                 +P_w\mathbf1_{\ell\in\{0,n(w)\}}\quad(w\ne1^L),\\
+g_y(1^L,\ell)&=T\mathbf1_{\ell=0}.
+\end{aligned}
+\tag{394.5}
+$$
+
+For each schedule, sum rewards within each of its complete cells, maximize over every $\ell\in J_L$ separately in that cell, then sum the maxima. Write $B_N(y),B_O(y)$ for the maxima over their entire catalogs. Set
+
+$$
+\begin{aligned}
+W_y&=y\cdot r
+ =\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W_y\ge0
+                       \quad(\mathcal C=N,O),\\
+Q(y)&=(\beta,K),\qquad
+\beta_j=\sum_{n(w)=j}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{394.6}
+$$
+
+The sums over $w$ range over all zero words. Completing a stopped table duplicates its first-cell label into $00,01$, so $B_O\le B_N$ and $\Delta_O\le\Delta_N$.
+

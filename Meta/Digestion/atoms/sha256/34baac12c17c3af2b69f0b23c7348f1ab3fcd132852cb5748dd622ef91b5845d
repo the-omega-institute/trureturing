@@ -1,0 +1,101 @@
+**Theorem 53.1 (common-center variational and Ky Fan certificate).** Fix Section 52 with $k\geq2$. Let $X>0$ commute with $\omega$ on $S$. In a common eigenbasis write $X=\operatorname{diag}(x_i)$ and let $x_{(1)}\geq x_{(2)}$ be its largest two eigenvalues. Define
+
+$$
+A=\omega X^{-1},\qquad m_X=ax_{(1)}+\beta x_{(2)},\qquad
+K_c=\operatorname{diag}(A,A,c\omega),\qquad c\geq0.
+\tag{S.13}
+$$
+
+For a Hermitian matrix of order at least five let $S_5$ denote its five largest eigenvalues' sum, with multiplicities. If
+
+$$
+S_5(K_c)+2m_X\leq4v+cT,
+\tag{S.14}
+$$
+
+then, for every contraction $U$, with the same actual $V$ and center $\omega$,
+
+$$
+\min\left\{\min_{\substack{\psi\in\mathcal C\\\|\psi\|=1}}r_\psi,\ r_{|2\rangle}\right\}\leq v.
+\tag{S.15}
+$$
+
+Proof. For positive semidefinite operands and a positive definite weight, the variational-fidelity inequality is
+
+$$
+f(Q,M)\leq\frac12\bigl(\operatorname{Tr}(QX)+\operatorname{Tr}(MX^{-1})\bigr).
+\tag{S.16}
+$$
+
+This is the upper direction of [Watrous, *The Theory of Quantum Information*, Theorem 3.19, (3.115)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf), including singular operands. Directly, write $f(Q,M)=\max_{W\ {\rm unitary}}|\operatorname{Tr}(\sqrt Q\sqrt M W)|$ and apply Hilbert–Schmidt Cauchy–Schwarz to $X^{1/2}\sqrt Q$ and $X^{-1/2}\sqrt M W$, followed by $2ab\leq a^2+b^2$. Their squared norms are $\operatorname{Tr}(QX)$ and $\operatorname{Tr}(MX^{-1})$. Neither $Q$ nor $M$ is inverted. Purification overlap is at most root fidelity, including subnormalized marginals.
+
+In an ordered eigenbasis of $X$, the diagonal entries $q_i$ of $Q_\psi$ satisfy $0\leq q_i\leq a$ and $\sum_iq_i\leq1$. Therefore
+
+$$
+\begin{aligned}
+\operatorname{Tr}(Q_\psi X)
+&\leq x_{(1)}q_1+x_{(2)}\sum_{i\geq2}q_i\\
+&\leq x_{(2)}+(x_{(1)}-x_{(2)})q_1
+\leq ax_{(1)}+\beta x_{(2)}=m_X.
+\end{aligned}
+\tag{S.17}
+$$
+
+This relaxed maximum is attained at $q_1=a,q_2=\beta$, all others zero, since $\beta\leq a$. In the common diagonal basis, (S.10) gives
+
+$$
+\operatorname{Tr}(M_\psi X^{-1})
+=\operatorname{Tr}(AH_\psi^T)=\operatorname{Tr}(AH_\psi)
+=\operatorname{Tr}A-\operatorname{Tr}(AD_\psi).
+\tag{S.18}
+$$
+
+Combining these inequalities yields, for every complex phase direction,
+
+$$
+2r_\psi\leq m_X+\operatorname{Tr}A-\operatorname{Tr}(AD_\psi).
+\tag{S.19}
+$$
+
+Suppose all overlaps in (S.15) exceed $v$. Let $D_{ij}=(\langle i|\otimes I)D(|j\rangle\otimes I)$ in the original input basis. Testing $|0\rangle,|1\rangle$ gives
+
+$$
+\operatorname{Tr}[A(D_{00}+D_{11})]
+<2(m_X+\operatorname{Tr}A-2v).
+\tag{S.20}
+$$
+
+The actual contracted third-input vector has norm at most one. Its projected target has squared norm $1-\operatorname{Tr}(\omega D_{22})$, so Cauchy–Schwarz and $r_2>v$ imply
+
+$$
+q_2:=\operatorname{Tr}(\omega D_{22})<1-v^2=d.
+\tag{S.21}
+$$
+
+These inequalities concern the same $V,\omega,U,P$.
+
+The standard Ky Fan eigenvalue-sum principle ([Fan, *On a Theorem of Weyl Concerning Eigenvalues of Linear Transformations I*, PNAS 35, 652–655](https://doi.org/10.1073/pnas.35.11.652)) has the exact projection form needed here:
+
+$$
+S_5(K)=\max_{\substack{P'=P'^\dagger=P'^2\\\operatorname{rank}P'=5}}\operatorname{Tr}(KP').
+\tag{S.22}
+$$
+
+For the needed finite-dimensional proof, diagonalize $K$ with $\kappa_1\geq\cdots\geq\kappa_{3k}$. The diagonal entries $p_j$ of a rank-five projection lie in $[0,1]$ and sum to five. Hence $\sum_j\kappa_jp_j\leq\sum_{j=1}^5\kappa_j$, attained by the top-five eigenspace. Thus this step retains rank five exactly. Applying it to our one $P$ gives
+
+$$
+\operatorname{Tr}(K_cD)
+=2\operatorname{Tr}A+c-\operatorname{Tr}(K_cP)
+\geq2\operatorname{Tr}A+c-S_5(K_c).
+\tag{S.23}
+$$
+
+But (S.20)–(S.21) also give
+
+$$
+\operatorname{Tr}(K_cD)<2(m_X+\operatorname{Tr}A-2v)+cd.
+\tag{S.24}
+$$
+
+Strictness persists at $c=0$ because (S.20) is strict. Comparing the bounds gives $S_5(K_c)+2m_X>4v+c(1-d)=4v+cT$, contradicting (S.14). Singular $K_c$ and $c=0$ are fully included. $\square$
+

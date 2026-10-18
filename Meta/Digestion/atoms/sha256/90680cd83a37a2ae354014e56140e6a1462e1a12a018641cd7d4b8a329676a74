@@ -1,0 +1,18 @@
+## 462. 原实际曲率的完整指数底座与原 A 的严格正储备
+
+保持同一原函数与完整常数
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\quad B(v)=\Phi''(v),\quad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{EFA.1}
+$$
+
+本节从原曲率的完整指数底座推导同一原 A 的严格正下界。
+

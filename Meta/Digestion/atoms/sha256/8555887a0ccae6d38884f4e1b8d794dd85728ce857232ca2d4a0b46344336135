@@ -1,0 +1,24 @@
+**Corollary 2.4 (exact analytical grouping).** For $m\ge1$, use the finite
+interface $S_d^m$ with targets $(i,q)\mapsto\Gamma_q(x_i)$ and experiments
+$(j,a)\mapsto r_{x_j}(a)$, including a constant. Each experiment still
+returns one constituent reply. Enumerate every nonempty range-feasible
+$P\subseteq\operatorname{supp}(\mu^{\otimes m})$ in this interface. If
+
+$$
+\kappa_{\mu^{\otimes m}}(P)^2\le C^{2m}
+\quad\text{for every such }P,
+$$
+
+then $\beta_d(\mu)\le C$. Taking $m$ as a finite certificate parameter
+gives another total sound verifier.
+
+**Proof.** For any original admissible $B\subseteq S_d^N$, take its
+$m$-fold Cartesian product and regroup its $mN$ indexed coordinates into
+$N$ consecutive $m$-tuples. Each old target and its single donor retain
+their indices within a supercoordinate; this is a bijective regrouping of
+the same tuples, with no equality forgotten and no new experiment. The
+mass is $\Omega_\mu(B)^m$. Theorem 2.2 bounds it by $C^{mN}$.
+Taking the $m$-th root proves the claim for every $N$. Products here are
+analytical relations, not copying of an actual source or a supplied cut
+descriptor. No cofinality of these grouped certificates is proved. $\square$
+

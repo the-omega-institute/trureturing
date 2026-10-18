@@ -1,0 +1,28 @@
+### 92.5. Complete aligned coverage and mixed exclusion
+
+Use the literal quintic \(Q_5\), Cramer formulas, shape polynomials \(U,V\),
+and retained exceptional scalars of §90. Their construction is unchanged.
+At \(b=9\bmod97\), the specialized quintic has degree five, and the
+cofactor resultants \(r_0,r_2\), its leading coefficient and the actual
+Cayley-pole factor are all nonzero. Their exact residues are respectively 27, 7, 13 and 53, reconstructed
+from the literal formulas of §90. This proves their nonvanishing at all roots of \(L\), including
+both real signs. The zero-angle, constant-channel and finite rank strata
+remain covered by the uniform original analysis of §90. No actual pole
+occurs on these fibres.
+
+In the monic quintic algebra, the exact norm residues are
+
+```text
+d:38; V:39; K_a:60; J_a:88; F_a:58;
+(2-id)^2+K_a:19; (2+id)^2+K_a:3.
+```
+
+Thus every finite aligned ray has the same rational shape lift
+\(\theta=U/V\), with both signs of the square root of \(K_a\), all three
+positions and all phase choices. Constant channels are included whenever
+the original strict chart permits them.
+
+Construct the mixed norm of §90.4 in the 200-dimensional algebra
+\(\mathcal A^\vee_L\otimes K_L[d,S]/(Q_5,S^2-K_a)\), using the original
+input normalization and basis \(S^\epsilon Y^id^j\) indexed by
+\(100\epsilon+5i+j\). The full multiplication determinant has residue

@@ -1,0 +1,29 @@
+**Proposition 4.3 (a concrete source certificate).** At
+$Z=1/2$, $c=1/4$, $k=1/8$, $a=1/16$, the four states in (QC.23) have
+Gram matrix
+
+$$
+G=\begin{pmatrix}
+1&0&1/2&1/2\\
+0&1&1/2&1/2\\
+1/2&1/2&1&0\\
+1/2&1/2&0&1
+\end{pmatrix},
+\qquad \operatorname{rank}G=3.
+\tag{QC.34}
+$$
+
+Their four rectangle coefficients (QC.24) are $0,8\pi,0,8\pi$,
+respectively. The common support margin is $1/16$, and the common
+canonical preparation's live probability is $1/3$.
+
+Proof. Here $4k-2c=0$ and $2Z-1=0$, giving (QC.34) directly.
+Its leading three-by-three minor has determinant $1/2$; its rows satisfy
+$G_1+G_2=G_3+G_4$, so its rank is exactly three. Substitution in
+(QC.24) gives $B_{\beta,m}=8\beta-4\pi m$ and the listed coefficients.
+The minimum in (QC.26) is $1/16$. The probability descent from $1/8$ to
+$1/16$ contributes survival $2/3$, the return contributes $1/2$, and all
+constant-height legs contribute one under (QC.7). Their product is $1/3$.
+These are the supplier's survival factors used as reachability evidence;
+no new survival optimum is claimed. $\square$
+

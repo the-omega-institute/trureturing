@@ -1,0 +1,30 @@
+**命题 33.2（固定 J 的充要分类）。** 对固定词 JMJMJJJ，所有非单点完整纤维恰是下述 kappa 来源曲线的两个不同正参数作因子交换；不存在其他来源或增益分支。
+
+**per candidate inverse.**
+
+Define o(t)=j-r/2+(r/2)\*t. The actual fifth-J odd equations at i=1,3,5 are z_i=F(i)\*o(i), with source rows (1,0),(1,1),(1,2) in (j,r). Nonzero affine F has at most one distinct root; at least two rows are active. With active rows 1,3 set T1=z1/F(1), T3=z3/F(3), r=T3-T1,j=T1. With active rows 1,5 set r=(T5-T1)/2,j=T1. With active rows 3,5 set r=T5-T3,j=2\*T3-T5. In each case c=j-b. One may consistently choose the earliest two active rows. All unused equations, including the zero row, stay imposed. Every division is by a proved nonzero F sample or by 2. Each q gives at most one strict whole world, so a full fixed-J record after the drift read has at most two.
+
+**whole odd identity.**
+
+Interpolate O of degree at most two from (1,z1),(3,z3),(5,z5). On every compatible world the degree-at-most-two polynomial F\*o agrees at three distinct nodes, so O=F\*o identically. This remains valid with any zero sample. Since r>0, o has genuine positive slope.
+
+**necessity of exchange family.**
+
+Any different pair in that fiber must use different positive q roots s,k. The preceding even lemma applies. Cancel nonzero alpha in the common O identity to obtain (1+k\*t)\*o_s=(1+s\*t)\*o_k. Evaluate at t=-1/k; 1-s/k is nonzero, forcing o_k to have that root. Thus o_k=K\*(1+k\*t), and polynomial cancellation gives o_s=K\*(1+s\*t). The coefficient K is common, and o_s(1)=j_s>0 and 1+s>0 force K>0. Comparing coefficients yields r_v=2\*K\*v,j_v=K\*(1+v),b_v=2\*v,c_v=K+(K-2)\*v for v=s,k. There is no other factor allocation or same-q source freedom.
+
+**rank and strictness.**
+
+For either v, bc-r(1-r)=2\*v^2\*(2\*K^2+K-2). Since v>0, rank one forces 2\*K^2+K-2=0. Its sole positive root is kappa=(sqrt(17)-1)/4; the other root is negative and contradicts K>0. Equivalently kappa^2+kappa/2=1, so 0<kappa<1 and kappa-2=-2\*kappa^2. Consequently P_v=[[2\*kappa\*v,2\*v],[kappa\*(1-2\*kappa\*v),1-2\*kappa\*v]]. All entries are strictly positive exactly when 0<v<1/(2\*kappa). Trace is one and bc=2\*kappa\*v\*(1-2\*kappa\*v)=r\*(1-r), so the matrix is nonzero of rank one. The derived parameter interval is a collision classification, not a box on arbitrary sources.
+
+**exact classification.**
+
+For arbitrary d, alpha!=0 and different s,k in (0,1/(2\*kappa)), the worlds (P_s,H\*alpha\*(1+k\*t),d) and (P_k,H\*alpha\*(1+s\*t),d) are precisely all possible nonsingleton fixed-J final fibers. Here fixed-J refers to the counterfactual acquisition word JMJMJJJ without the adaptive rule. The initial read is d+42\*alpha. Every compatible nonempty other fiber is a singleton; incompatible records are empty. Bounds refer to distinct complete triples.
+
+**converse and all eight equations.**
+
+Let B(t)=(1+s\*t)\*(1+k\*t). For each constructed source e_v=1+v\*t and o_v=kappa\*e_v. The common eight-read fixed-J ledger is (d+42\*alpha, d+30\*alpha\*kappa\*B(1), d+20\*alpha\*B(2), d+12\*alpha\*kappa\*B(3), d+6\*alpha\*B(4), d+2\*alpha\*kappa\*B(5), d, d). These are exactly the physical equations at each actual original clock. Both worlds are strict and their whole gains nonzero; distinct b values distinguish targets. Both pass every equation. The per-q source uniqueness and two-root bound exclude a third world, proving the entire fiber equality and sufficiency.
+
+**physical M separation.**
+
+For these worlds n_s=kappa\*(1+3\*s) and n_k=kappa\*(1+3\*k). The independently checked general M gap below reduces to alpha\*(k-s)\*(1+2\*kappa) in normalized clock-5 response and therefore 2\*alpha\*(k-s)\*(1+2\*kappa) physically. It is nonzero for either sign of alpha. This is a lawful alternative fifth choice at their common clock-4 prefix. Changing an action only at 6 or 7 cannot separate the fixed-J pair, because both gain samples are zero.
+

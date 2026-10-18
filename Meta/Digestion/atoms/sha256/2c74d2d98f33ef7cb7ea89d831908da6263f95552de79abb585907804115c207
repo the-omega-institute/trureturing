@@ -1,0 +1,82 @@
+## Exact face-sign certificates
+
+A direct audit of every local occurrence, with all vertex relabellings that
+send the target edge to coordinate 1, gives the following conservative
+endpoint bounds. For degree ten the upper row uses the actual incidence fact
+that each of the ten occurrences has the two low neighbours and two high
+neighbours, at least one of degree at least 38, in the coordinate placement
+shown. The other high coordinate is conservatively relaxed to the larger degree-10
+upper endpoint 71/50; the four stabilizer placements give the same value.
+
+| global degree | lower-face cosine bound | upper-face cosine bound |
+|---:|---:|---:|
+| 8 | `143/200` | `35941/50941` |
+| 10 | `6/7` | `19195*sqrt(880915135)/704732108` |
+| 38 | `1982/2009` | `4489*sqrt(8216635)/13146616` |
+
+The degree-eight lower row is `phi(11/8,11/8,11/8,71/50,1,1)`; the
+upper row is `phi(2,2,2,1,71/50,71/50)`. The degree-ten upper row is
+`phi(71/50,2,71/50,11/8,21/20,2)`. For a degree-38 target in a three-star, the two actual formula-coordinate
+patterns put the high neighbours in positions `{3,5}` or `{2,6}`. In either
+case monotonicity relaxes to one of
+`phi(21/20,2,71/50,11/8,71/50,2)` and
+`phi(21/20,71/50,2,11/8,2,71/50)`; both equal
+`4489*sqrt(8216635)/13146616`. Lower faces of degrees 10 and 38 use the
+universal envelope at `u=11/10` and `u=1009/1000`, respectively.
+
+The strict comparisons are exact:
+
+```
+(143/200)^2 - 1/2 = 449/40000 > 0
+1/2 - (35941/50941)^2 = 11474519/5189970962 > 0
+
+cos(pi/5) < 5/6 < 6/7
+```
+
+For the degree-ten upper row, its squared cosine is
+`1842240125/2818928432`. Put
+`r = 785141963/352366054 = 8*q^2 - 3`; then
+
+```
+5 - r^2 = 4361277994161211/124161836011530916 > 0,
+```
+
+so `q^2 < (3+sqrt(5))/8 = cos(pi/5)^2`.
+
+For the degree-38 lower face, let `t=pi/19`. Since `pi>157/50`,
+`t>157/950`; the Taylor upper polynomial
+`T4(s)=1-s^2/2+s^4/24` is decreasing on `(0,1)`, and
+`cos t <= T4(t)`, so
+
+```
+cos(pi/19) < 1-(157/950)^2/2+(157/950)^4/24
+             < 1982/2009,
+```
+
+with exact final difference
+`7279213469191/39272233350000000`. For the degree-38 upper row,
+`q=4489*sqrt(8216635)/13146616` and
+`q^2=100755605/105172928`. Since `pi<22/7`,
+
+```
+cos(pi/19) > 1-(22/133)^2/2 = 17447/17689,
+```
+
+and the squared comparison has positive difference
+`69701057146221/4701240714411584`.
+
+Therefore every degree-eight lower/upper occurrence has angle respectively
+less/greater than `pi/4`; every degree-ten occurrence has angle respectively
+less/greater than `pi/5`; and every degree-38 occurrence has angle
+respectively less/greater than `pi/19`. Summing over 8, 10 and 38 occurrences
+puts the lower faces at positive curvature and upper faces at negative
+curvature.
+
+Let `H` be the shared-edge Luo--Yang co-volume minus `2*pi*sum l_e` on the
+compact product box after `x_e=cosh l_e`. Its derivative is
+`partial H/partial l_e = -K_e`. Every lower face has `K_e>0`, and every upper
+face has `K_e<0`; an inward coordinate direction strictly decreases `H` at
+every boundary point. A minimizer is interior, where all `K_e=0`. Shared
+lengths make paired hexagonal faces isometric, so the resulting metric is the
+claimed nondegenerate realization.
+

@@ -1,0 +1,31 @@
+**引理 233.3（Simultaneous all-label cell domination）。** Fix any
+pair $i<j\le m$. For every numerical label $n\le i$ and every
+one of its four cells $E$, the actual score $Z_m$ satisfies
+
+$$
+C_n(E)+P_n(E)\le\mu_m(E).
+\tag{233.1}
+$$
+
+For every $n>i$, its complete numerical reward is supported on
+$w_i=1$ and its total mass is $\gamma_n+p_n=d$.
+
+证明。 If $\gamma_n=0$, the correct contribution is zero and
+$P_n(E)\le\mu_m(E)$ directly, with no division by $c_n$.
+For $\gamma_n>0$ and $n\le i$, resetting the bits strictly before $n$
+changes neither queried bit. Thus
+
+$$
+C_n(E)=\frac{\gamma_n}{c_n}\mu_m(E\cap E_n)
+\le\mu_m(E\cap E_n),\qquad
+P_n(E)=\mu_m(E\cap\Omega_n).
+$$
+
+The two subsets on the right are disjoint, because their first
+zeros are respectively before $n$ and at $n$. This proves (233.1)
+for every cell and every such label at once, including earlier
+unqueried labels. If $n>i$, both the unchanged $P_n$ words and
+the reset $C_n$ words have $w_i=1$. Their class totals give
+$\gamma_n+p_n=d$, also for $n=2,3$. No equality of marginal
+laws has been substituted for this common realization. $\square$
+

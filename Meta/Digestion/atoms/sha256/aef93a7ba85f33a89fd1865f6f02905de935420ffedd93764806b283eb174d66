@@ -1,0 +1,89 @@
+**Theorem 10.16 (Alternating-target obstruction and efficiency).**
+Let $n=2k$, $k\ge1$, with uniform $p_I=1/d_n$, and retain the two
+alternating maximum sets
+$T_0=\{2,4,\ldots,2k\}$ and $T_k=\{1,3,\ldots,2k-1\}$.
+They are disjoint, so no site budget attains the two quantum target
+variances simultaneously, and hence none attains the whole $k+1$-target
+maximum-set chain simultaneously. Put $I_\star=d_n2^k$ and
+$f_T=P^{-1}d_T$ for either target. Define
+
+$$
+\epsilon_i(T)=\frac{f_T^{\mathsf T}L_if_T}{I_\star},\qquad
+\epsilon_\eta(T)=\sum_i\eta_i\epsilon_i(T).
+\tag{10.58}
+$$
+
+Then
+
+$$
+\epsilon_i(T)=
+\begin{cases}
+1,&i\in T,\\
+1/4,&i\notin T,\ i\in\{1,2k\},\\
+1/8,&i\notin T,\ 1<i<2k.
+\end{cases}
+\tag{10.59}
+$$
+
+The last case has an empty range when $k=1$.
+Every budget obeys
+$\epsilon_\eta(T_0)+\epsilon_\eta(T_k)\le5/4$.
+If both targets have finite-variance full-gradient estimators in
+the same menu experiment, at least one satisfies
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac85\,\frac{I_\star}{4N}.
+\tag{10.60}
+$$
+
+If either target fails component balance, it has no such estimator;
+its extended target resistance is infinite.
+
+Proof. Disjointness and Theorem 10.15 prove the first assertion.
+Each $f_T$ equals $d_n d_T$, and
+$d_T^{\mathsf T}P^{-1}d_T=d_n2^k=I_\star$.
+For $i\in T$, Theorem 10.14 gives
+$f_T^{\mathsf T}L_if_T=I_\star$.
+For $i\notin T$, let $b$ be the number of neighbors of $i$ lying in $T$.
+An edge with exactly one supported endpoint has that endpoint
+$J\subseteq T$, with all $b$ neighbors omitted, and its other endpoint
+is $J\cup\{i\}$. These are all legal and are all the nonzero
+energy-contributing site-$i$ edges. There are $2^{k-b}$ choices of $J$.
+On each edge the conductance is $1/(2d_n)$ and the potential difference
+has squared magnitude $d_n^2$, contributing $d_n/2$.
+All other pairs have both potentials zero. A supported but blocked
+word has no edge contribution at this site. Hence
+
+$$
+f_T^{\mathsf T}L_if_T
+=\frac{d_n}{2}\,2^{k-b},\qquad
+\epsilon_i(T)=2^{-b-1}.
+\tag{10.61}
+$$
+
+For an alternating target, an outside endpoint has $b=1$ and an
+outside interior site has $b=2$. This proves (10.59), including
+$n=2$, which has only endpoints.
+
+Every site belongs to exactly one of $T_0,T_k$. Thus the sum of
+its two efficiencies is $1+1/4=5/4$ at an endpoint, and
+$1+1/8=9/8$ in the interior. Averaging with $\eta$ proves the
+sum bound; consequently at least one of the two efficiencies is
+at most $5/8$. Along that target's actual subpath $\theta=tf_T$
+the derivative of $\Phi_T$ is $I_\star$, and its Fisher information
+is $4NI_\star\epsilon_\eta(T)$. Applying the scalar score inequality
+gives
+
+$$
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac{I_\star}{4N\epsilon_\eta(T)}
+\ge\frac85\,\frac{I_\star}{4N}.
+\tag{10.62}
+$$
+
+This argument applies to every estimator with the full target gradient
+when it exists. When a component is unbalanced, the component-shift
+invariance of the observed likelihood gives nonexistence instead,
+as specified in Theorem 9.4. $\square$
+

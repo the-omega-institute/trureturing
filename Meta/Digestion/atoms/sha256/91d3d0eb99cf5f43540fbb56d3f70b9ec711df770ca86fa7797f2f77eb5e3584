@@ -1,0 +1,55 @@
+**Definition 21.2 (actual tagged acquisition factorization).** An
+acquisition cut lies after receiving the sole normalized specimen and
+before later execution. Its placement in the original aligned clock and
+the duration of acquisition are obligations of the implementation; this
+definition grants no extra execution time. In the finite version its entire retained
+input-dependent quantum payload and an actual classical record have algebra
+
+$$
+\mathcal B=\bigoplus_{\alpha\in A}M_{d_\alpha}(\mathbb C),
+\qquad |A|<\infty,\quad 1\leq d_\alpha<\infty.
+\tag{CG.181}
+$$
+
+The implementation supplies common CP maps $\mathcal E_\alpha$ and
+common full-output CPTP maps $\mathcal R_\alpha$ such that
+
+$$
+\begin{aligned}
+\mathcal E_\alpha &:M_3\longrightarrow M_{d_\alpha},
+&\sum_\alpha\mathcal E_\alpha^\dagger(I_{d_\alpha})&=I_3,\\
+\Phi&=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha,
+&p_\alpha(\rho)&=\operatorname{tr}\mathcal E_\alpha(\rho).
+\end{aligned}
+\tag{CG.182}
+$$
+
+These are identities on ALL complex matrix units, not a fit only to
+twelve densities. The actual five-mode implementation must restrict to
+(CG.182); its action outside $V$ retains its own full TP contract.
+Only the sum of encoder branches is TP. Each branch is CP/TNI, including
+branches destined for failure or abort. Every decoder includes all its
+outcomes and is TP; its live compression $\mathcal R_\alpha^L$ is TNI.
+The record $\alpha$ is generated in the implementation from this input,
+and may be kept internally or discarded by the canonical interpretation.
+It is not an unknown source label granted to the implementation.
+
+The block $M_{d_\alpha}$ counts JOINTLY every quantum system accessible
+to later execution that can influence its output: the specimen if retained,
+quantum memory and controller parts, accessible environment, returned
+systems, and any retained entanglement share. There is no later source
+callback, helper specimen, copy, retry, source-dependent timing port or
+uncounted quantum bypass. A passive inaccessible reference is allowed,
+but neither operation can use it. All identities tensor by its identity.
+Independent local ancillary states can be absorbed into the encoder and
+decoder. Independent blank ancillas introduced later remain free. A
+receiver's share of entanglement with an encoder system is not such a
+blank and must be counted in the joint payload. Fixed common classical
+metadata and actually acquired classical records remain available.
+
+An algebraic Kraus decomposition, Choi decomposition or sign average
+does not by itself supply this classical record, an observable hardware
+flag, encoding access or later controlled operations. A coherent sum of
+putative branch subspaces is one quantum payload until a classical
+direct-sum factorization is actually supplied.
+

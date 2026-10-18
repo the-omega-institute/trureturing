@@ -1,0 +1,142 @@
+**Theorem 3.1 (Fixed-cut KL supplier with its invisible slack).** Let $J$ be any actual finite stationary marked producer over a finite alphabet, $Z$ its output, and $U=H_0$ its hidden state at the initial cut. Put
+
+$$
+\mathcal F_n=\sigma(Z_0,\ldots,Z_{n-1}),\qquad
+\mathcal F_\infty=\sigma(Z_j:j\ge0),
+$$
+
+$$
+p_n(i)=\Pr_J(U=i\mid\mathcal F_n),\qquad
+p_\infty(i)=\Pr_J(U=i\mid\mathcal F_\infty),\qquad
+\ell_n=H_J(U\mid\mathcal F_n)-H_J(U\mid\mathcal F_\infty).
+$$
+
+The terminal posterior concerns the same initial state $U$ for every $n$, rather than the moving state $H_n$. Then
+
+$$
+\begin{aligned}
+\ell_n&=\mathbb E_J D_{\mathrm{KL}}(p_\infty\Vert p_n),\\
+\ell_n&=R_n^Z+I_J(U;Z_{n:\infty}\mid Z_{-\infty:n-1}),\\
+0&\le R_n^Z\le\ell_n,\qquad
+T_Z\le\sum_{n\ge0}\ell_n.
+\end{aligned}
+\tag{3.1}
+$$
+
+The conditioning notation $Z_{-\infty:n-1}$ includes the whole past and the prefix. Permanent hidden ambiguity $H_J(U\mid\mathcal F_\infty)$ is subtracted. The slack is nonnegative and can remain relevant when observations are sufficient for prediction but do not resolve hidden information.
+
+Apply this construction separately to each actual primitive block joint in (2.10), with its initial cut state $U_c$, and write $\ell_{c,n}$ for its residual. Under the separate hypothesis
+
+$$
+\sum_{n\ge0}\ell_{c,n}<\infty\qquad\text{for every }c\text{ with }w_c>0,
+\tag{3.2}
+$$
+
+the original erased-site quantities have the allowance, for $K=\lfloor R/D\rfloor$,
+
+$$
+\begin{aligned}
+\tau_X(R)&\le\eta_X(R),\\
+\eta_X(R)&:=D\left[\sum_cw_c\sum_{n\ge K}\ell_{c,n}
++\sum_{n\ge K}(b_n-b_\infty)\right]<\infty,\\
+\eta_X(R)&\longrightarrow0\qquad(R\to\infty).
+\end{aligned}
+\tag{3.3}
+$$
+
+Here $b_n=H(C\mid Y_0,\ldots,Y_{n-1})$ uses the actual class-and-phase mixture of $Y$, and $b_\infty$ uses its whole future. Its label contribution is proved summable by Theorem 2.1, independently of (3.2). In particular,
+
+$$
+\sum_{n\ge K}(b_n-b_\infty)
+\le A_{\mathrm{lab}}\rho^K\left(\frac{K+1}{1-\rho}+\frac{\rho}{(1-\rho)^2}\right).
+\tag{3.4}
+$$
+
+Neither the proof of (3.1) nor the reduction supplies (3.2) universally.
+
+For its conditional multiword application, fix $C_0=[1,L]$, $f_{C_0}=f(X_{C_0})$, $F=\max|f|<\infty$, under the original $P=P_\theta$, with
+
+$$
+\mathbb E_P[f_{C_0}\mid\sigma(X_j:j\notin C_0)]=0.
+$$
+
+Let $q_i$ be the full erased-site posterior at $i$ and $q_{r,i}$ its radius-$r$ counterpart under this same $P$, retaining all other sites in $[i-r,i+r]$. Define
+
+$$
+I_R=[1-R,L+R],\qquad
+U_{R,r}(P,f)=\sum_{i\in I_R}\mathbb E_P[f_{C_0}(X_i-q_{r,i})^2],\qquad
+S_P(f)=\sum_{i\in\mathbb Z}\mathbb E_P[f_{C_0}(X_i-q_i)^2].
+$$
+
+Under (3.2), the complete response is absolutely convergent. If this same law attains $c_\star$ of Definition 5.2, [MW, Theorem 3.1] gives
+
+$$
+|U_{R,r}(P,f)|\le F\eta_X(R)+2(L+2R)F\sqrt{\frac{c_\star}{r+1}}.
+\tag{3.5}
+$$
+
+Proof. Set $\mathcal B=\sigma(Z_j:j<0)$ and $\mathcal V_n=\sigma(Z_j:j\ge n)$. The hidden cut screens $\mathcal B$ from $(\mathcal F_n,\mathcal V_n)$ given $U$. The standard finite-cut entropy bound [CT] therefore gives
+
+$$
+E_Z:=I_J(\mathcal B;\mathcal F_\infty)
+=\sum_{k\ge0}a_k^Z\le H_J(U)<\infty.
+\tag{3.6}
+$$
+
+For each finite $n$, the entropy chain rule and stationarity give $H(Z_{0:n-1}\mid\mathcal B)=nh(Z)$, so
+
+$$
+I_J(\mathcal B;\mathcal F_n)=H_n(Z)-nh(Z)=\sum_{k<n}a_k^Z.
+$$
+
+Increasing-field limits of mutual information give
+
+$$
+R_n^Z=I_J(\mathcal B;\mathcal V_n\mid\mathcal F_n).
+\tag{3.7}
+$$
+
+Screening persists after conditioning on $\mathcal F_n$, and two expansions of $I_J(U,\mathcal B;\mathcal V_n\mid\mathcal F_n)$ yield
+
+$$
+\begin{aligned}
+I_J(U;\mathcal V_n\mid\mathcal F_n)
+&=I_J(\mathcal B;\mathcal V_n\mid\mathcal F_n)
++I_J(U;\mathcal V_n\mid\mathcal B,\mathcal F_n)\\
+&=R_n^Z+I_J(U;\mathcal V_n\mid\mathcal B,\mathcal F_n).
+\end{aligned}
+\tag{3.8}
+$$
+
+The left side is exactly $\ell_n$. Each term is finite and nonnegative; finite-block chain rules followed by increasing-field limits justify the whole-half-line formula.
+
+For the KL identity, $\mathbb E_J[p_\infty(i)\mid\mathcal F_n]=p_n(i)$. On an atom where $p_n(i)=0$, this forces $p_\infty(i)=0$ almost surely. Use $0\log0=0$ and the usual KL support convention. Conditional averaging gives
+
+$$
+\begin{aligned}
+\mathbb E_J\sum_i p_\infty(i)(-\ln p_n(i))
+&=\mathbb E_J\sum_i p_n(i)(-\ln p_n(i))=H_J(U\mid\mathcal F_n),\\
+\mathbb E_J\sum_i p_\infty(i)(-\ln p_\infty(i))
+&=H_J(U\mid\mathcal F_\infty).
+\end{aligned}
+$$
+
+Nonnegative truncation justifies the cross-entropy identity at null coordinates. Both expectations are finite because $U$ is finite. Their difference proves (3.1); it is the standard conditional logarithmic-score/KL identity [CT], used here for the fixed initial cut. Summing (3.7)–(3.8) gives the moment bound.
+
+To transfer to the original clock, write $R=DK+s$, $0\le s<D$. For every original gap index $j\ge R$, putting $k=\lfloor j/D\rfloor$ gives
+
+$$
+j-R+1\le D(k-K+1).
+$$
+
+Consequently (2.3) and nonnegativity imply
+
+$$
+\eta_X^{\mathrm{ent}}(R)\le D\eta_Y^{\mathrm{ent}}(K)
+=D\left[\sum_cw_c\eta_{Q_c}^{\mathrm{ent}}(K)+\sum_{n\ge K}(b_n-b_\infty)\right].
+$$
+
+For each actual component, (3.1) gives $\eta_{Q_c}^{\mathrm{ent}}(K)\le\sum_{n\ge K}\ell_{c,n}$. Apply (1.5) to the original binary $X$, rather than to a phase posterior or block-erasure surrogate. This proves (3.3). Equation (3.4) sums (2.2). Finitely many integrable component residuals and the proved label cost have tails tending to zero.
+
+The allowance is proved independently of attainment and concerns exactly the actual defects in [MW, equation (2.1)]. That source's exterior projection lemma gives absolute convergence of $S_P(f)$. Substituting (3.3) into its Theorem 3.1 gives (3.5). All expectations, full-posterior losses and finite posteriors belong to the same original-bit law. $\square$
+

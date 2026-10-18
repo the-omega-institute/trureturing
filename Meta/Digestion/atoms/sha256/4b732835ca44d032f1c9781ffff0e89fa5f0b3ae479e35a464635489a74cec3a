@@ -1,0 +1,24 @@
+**Assumption 1.1 (source, retained information, and actual entry).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+Every source is a nonempty finite ordered free tree. There is no supplied common source shape, size, depth, template, or execution cutoff. Every word in $\mathcal P=\{L,R\}^{*}$ is a legal physical read address, including $\varepsilon$ and absent addresses. The literal reply $r_u(p)$ belongs to $\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+
+Use the complete entry of [SERIAL_COMPLETE_ROW_PRICE](RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md), abbreviated SCR, Assumption 1.1. In particular, $P,Q$ are arbitrary finite prefix-free original cut sets, allowed to be empty or to contain the root. The full old row $R=(C,\pi)$ was acquired by the all-source producer of [SPARSE_LITERAL_HISTORY_TRANSPORT](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md), abbreviated SLH, Definition 59.2. Its concrete exterior, original existence guards, repeated occurrences of each old class, and every disequality between different old classes are retained. A finite actual mixed-epoch literal history $H=((n_i,p_i,c_i))$ and the complete accessible control determine precisely
+
+$$
+D=\mathcal U_R(H)
+ =\{u\in\mathcal T:R_P(u)=R,\quad
+                 r_{\rho^{n_i}u}(p_i)=c_i\text{ for every }i\}
+ \ne\varnothing.
+\tag{JRF.1.1}
+$$
+
+The same original-root register has actually reached authenticated epoch $N\ge\max(\{0\}\cup\{n_i\})$. Its content is $\rho^N u$. Public installation, permissions, task, and accessible initial control are common on $D$. Any source-dependent cache, archive, allocation length, timing information, or other accessible field must already be represented in this entry; retaining an additional distinction changes the fiber. The target is the whole original $R_Q(u)$: concrete exterior, reached holes in original address order, and their full equality partition. It is neither a prescribed trace nor a finer tuple of selected literal answers.
+

@@ -1,0 +1,28 @@
+**Definition 1.3 (the particular complete channel).** For every complex
+$A\in M_5$, write $A_V=E^\dagger AE$ and $g(t)=2/(1+t)^2$. Fix
+
+$$
+\begin{aligned}
+\Phi_*^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi_{*,j}^f(A)(B)&=\left(\int_Bg(t)dt\right)
+ [w_j\operatorname{tr}(MA_V)+\mathbf1_{j=2}\operatorname{tr}(Q_5A)]P_f
+\end{aligned}
+\tag{AS.8}
+$$
+
+for each original label and each Borel $B\subseteq[0,1]$. Cross-support
+maps, complement live output and additional sectors are zero; common
+fixed metadata are carried identically. The normalization in (AS.7),
+$\sum_jw_j=1$ and $\int_0^1g=1$ give TP. The conditional CG minimax
+premise is
+
+$$
+E(\Phi_*)=E_*=F^{\rm src}(\mathbf x_*)\in
+(0.14817810291080132013,0.14817810291080132014).
+\tag{AS.9}
+$$
+
+The actual density $g$ is not an ideal $f_y$. Fixing (AS.8) retains
+the inherited error; it does not assert that all original optimizers
+have this entire channel or these individual failure measures.
+

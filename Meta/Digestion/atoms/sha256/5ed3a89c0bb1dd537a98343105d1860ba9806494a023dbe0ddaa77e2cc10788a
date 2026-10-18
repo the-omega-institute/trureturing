@@ -1,0 +1,6 @@
+### Proposition 12.1 (a final phase and at most three initial lower-shear readings)
+
+Under (10.1) with $K=E_{22}$, the normal form of Theorem 11.2 has a nonempty final phase and $1\le a\le3$.
+
+**Proof.** An all-$D$ list has span at most two. Without a final phase, any other list lies in $\operatorname{span}\{I,E_{21},P,Q\}$. Full span requires a nonzero $D_h$, a $P$, and a $Q$. Each of these three categories must occur at least twice among the noninitial reads: deleting its sole occurrence leaves span at most three, contrary to the deletion condition preceding Theorem 11.1. Together with $I$ this would require at least seven reads, whereas there are six. Thus a final phase is necessary. If $a\ge4$, at most two positive-upper-right endpoints remain. Delete one of these noninitial endpoints. The surviving $D$ matrices span at most two dimensions, and at most one other endpoint remains, so the surviving span is at most three. This again contradicts the deletion condition. ∎
+

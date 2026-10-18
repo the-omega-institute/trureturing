@@ -1,0 +1,59 @@
+**Proposition 6.1 (elementary mode-conditional law postprocessing).** Fix
+one completely known prescribed canonical programme $\gamma$, with
+the same $b,a,T$ and calibrated operations as in Definition 2.2. Put
+
+$$
+w_i(E)=\frac{F_i(E)}{p_i(a)},\qquad
+W_i=w_i((0,T]),\qquad
+\nu_i(E)=w_i(E)/W_i\quad(W_i>0),
+\tag{EM.27}
+$$
+
+where $F_i(E)=\int_E f_i(t)\,dt$. Retain success unchanged and only
+the failure mode on failed branches. If a separate exact sampler for
+each actual programme-dependent $\nu_i$ is supplied, drawing and
+attaching its new time reproduces the full terminal CP instrument,
+also with every common initial reference. Modes with $W_i=0$ are
+unused and require no division.
+
+**Proof.** The mode-only failure operation on a common joint input is
+$W_i|f\rangle\langle f|\otimes\rho_{ii}^R$. Its postprocessed
+operation for a time event $E$ is
+
+$$
+\nu_i(E)W_i|f\rangle\langle f|\otimes\rho_{ii}^R
+ =w_i(E)|f\rangle\langle f|\otimes\rho_{ii}^R,
+\tag{EM.28}
+$$
+
+which is exactly (EM.4). Success is not modified. Multiplication and
+countable additivity prove equality on every event and reference block.
+This is ordinary classical Markov postprocessing of a CP-valued measure,
+not a new sufficiency or acquisition theorem. $\square$
+
+An exact programme-dependent sampler consumes the actual conditional
+law, exact continuous randomness and calibrated output. A public finite
+description that permits this sampling is an extra premise. Arbitrary
+original real waveforms need not have finite effective descriptions.
+The proposition does not infer an unknown programme from a single mode
+outcome, acquire its densities or grant repeated same-history preparations.
+
+For (EM.6), $\nu_i$ is uniform for each positive-mass mode. A fresh
+uniform draw after retaining only that mode therefore reproduces the
+correct terminal law. It is independent of the actual earlier uniform
+time conditional on that mode, so equality of the two times has
+probability zero. Its same-event joint-TV error is one conditional on
+failure, although its time marginal is exactly correct. Corollary 4.4
+extends this obstruction to every code through fixed finite accessible
+memory, not just independent resampling.
+
+Thus three different tasks have different inputs and conclusions:
+unknown-programme inference from coarse outputs is limited by §5;
+retention of the actual event is limited by §4 even for a known programme;
+known-programme terminal law regeneration is the conditional elementary
+postprocessing above. A regenerated time cannot restore its old relation
+to a contemporaneous external log or retroactively implement a feedback
+decision already made at that old event. Such a log or accessible controller
+state belongs in the joint assistance count. No live original continuation
+after failure is used in any of these statements.
+

@@ -1,0 +1,54 @@
+**Definition 1.2 (original path and calibration premises).** For a base
+$b=(X,Y,Z)$, put $r=1-Z$, with $0<Z<1$ and $0<X,Y<r$, and define
+
+$$
+\begin{aligned}
+J_b&=(\max(0,X+Y-r),\min(X,Y)),\\
+\pi_b(k)&=(r-X-Y+k,X-k,Z,Y-k,k),\\
+\mathbf d&=(1,-1,0,-1,1),\qquad
+I_b(k)=\sum_{i\in\{0,1,3,4\}}\pi_b(k)_i^{-1},\\
+w_b(k)_i&=\frac{\mathbf d_i}{\pi_b(k)_i I_b(k)}.
+\end{aligned}
+\tag{JG.1}
+$$
+
+The original histories have finite duration $T\geq0$, continuous real
+coordinates $k,\chi$, strict $k(t)\in J_b$, finite phase variation, and
+either absolute continuity of both coordinates or the stated finite
+piecewise-$C^1$ alternative with rates continuous on each closed piece.
+Their calibrated normalized live vectors are
+
+$$
+\psi_i(t)=\sqrt{\pi_b(k(t))_i}\exp\left(-i\left[\theta_i+
+  \int_0^t w_b(k(s))_i\chi'(s)\,ds\right]\right).
+\tag{JG.2}
+$$
+
+Real lifts, signed integer winding $\chi(T)-\chi(0)=2\pi m$, and literal
+chronological composition are part of these premises. They are the
+source laws credited in CG2–4 and ZG2–3; their nested control and
+instrument suppliers are not additional hypotheses proved here.
+
+In the fixed experiment,
+
+$$
+c=\frac14,\quad Z=\frac12,\quad b=(c,c,Z),\quad
+ a=\frac1{16},\quad h=\frac{11}{256},\quad d=\frac6{256},\quad L=1.
+\tag{JG.3}
+$$
+
+Thus $J_b=(0,c)$, $\pi_b(k)=(k,c-k,Z,c-k,k)$, and
+$w_b(k)=((c-k)/(2c),-k/(2c),0,-k/(2c),(c-k)/(2c))$.
+The calibrated isometry $\iota:\mathbb C^3\to\mathbb C^5$ has columns
+
+$$
+|+\rangle=(e_0+e_4)/\sqrt2,\qquad
+|-\rangle=(e_1+e_3)/\sqrt2,\qquad |2\rangle=e_2.
+\tag{JG.4}
+$$
+
+Write $V=\operatorname{range}\iota$ and $\Pi=\iota\iota^\dagger$.
+Within three-dimensional matrices, indices $0,1,2$ mean $(+,-,2)$;
+$P_i=|i\rangle\langle i|$. They never rename the five stopped labels,
+whose index $4$ retains the original name mode $13$.
+

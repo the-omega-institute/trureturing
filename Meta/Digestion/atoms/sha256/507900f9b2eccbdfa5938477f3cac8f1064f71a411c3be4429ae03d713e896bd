@@ -1,0 +1,4 @@
+**Corollary 6.2 (matching exact strata).** If $N_1\le J+1$, then $N_{\mathrm{gen}}=6+N_1$. If $K_{\mathrm{tail}}=J<N_1$, then $N_{\mathrm{gen}}=7+J$. In particular every gap-one case $N_1=N_2+1$ is exact, and so is every tied gap-two case $\delta_{N_2}=2\epsilon$, $N_1=N_2+2$, with value $6+N_1$.
+
+**Proof (6.2).** In the first case the lower in Theorem 6.1 equals its reused upper. In the second case the lower is $7+J$, the tail upper is $7+J$, and the reused upper is no smaller. Apply $J=N_2$ or $N_2+1$ in the stated special cases. Non-strict ties at $\delta_{N_1}=\epsilon$ and $\delta_{K_{\mathrm{tail}}}=C_{\mathrm{tail}}\epsilon$ are included. $\square$
+

@@ -1,0 +1,19 @@
+**Supplier 3.3 (the canonical per-code obstruction).** NRN Theorem 6.1
+states that a lawful prescribed binary code admitting an arbitrary-literal
+reader with at most nine installed states and at most two calls on the
+entire original domain is constant on some entire $\Pi_j$. Apply it to
+any $\sigma\in\mathcal C(T)$. Its source and whole outputs are
+Definitions 2.1–2.3, its full domain is (TCR.5), its acquired/exported
+services are Assumption 3.1, and its fixed-code state-only table is
+Definition 3.2. Thus
+
+$$
+\forall\sigma\in\mathcal C(T)\quad
+\exists j\in J\ \exists z\in\{0,1\}\quad
+\forall u\in\Pi_j,\quad\sigma(u)=z.
+\tag{TCR.11}
+$$
+
+Only this numbered inherited theorem supplies (TCR.11). Its quantifiers
+alone do not choose a common pair across different codes.
+

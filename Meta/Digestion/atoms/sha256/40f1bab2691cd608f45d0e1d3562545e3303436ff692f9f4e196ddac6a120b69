@@ -1,0 +1,17 @@
+**Lemma 7.1 (last-layer exclusivity and early endpoints).** A host at
+depth $b-1$ cannot host another count cell in $V_B$. If
+$b\le\max(K,L)$, then $D_B=0$.
+
+Proof. At depth $b-1$, (CL.9) implies
+$S=T_b\setminus\{i(q)\}$. Every other live occurrence of $q$ in
+the pool has support contained in that set, because its label is fresh.
+At an earlier depth it is a proper subset; at the same depth it is
+equal. Nested-support and equal-support/unequal-hit exclusions give
+the first assertion. It also holds for $b=n$.
+
+For the second assertion use (CL.14): a shared pair would require
+$r,s\ge n-b+1\ge\min(K,L)$. One of the hit or zero ranges has
+diameter $\min(K,L)-1$, making this impossible. This recovers the
+early-endpoint consequence of SI Lemma 10.2 using the stronger union
+bound. $\square$
+

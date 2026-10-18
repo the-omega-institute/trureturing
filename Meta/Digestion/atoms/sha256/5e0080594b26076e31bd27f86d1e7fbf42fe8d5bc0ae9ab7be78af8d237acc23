@@ -1,0 +1,18 @@
+### Proposition 2.1. Deficit identity
+
+For every normalized four-qubit pure state,
+
+$$\boxed{3\ln2\,\Delta=\sum_{c,j}g(\lambda_{c,j})+(-B)(P-1)+C\left(\frac5{36}-E\right).} \tag{2.1}$$
+
+All three terms on the right are nonnegative.
+
+Proof. For a normalized four-entry spectrum v, Newton's identity gives
+
+$$\sum_jv_j^3=\frac{3\sum_jv_j^2-1}{2}+3e_3(v).$$
+
+Substitution in the displayed cubic gives sum_j p(v_j)=A+B sum_j v_j^2+C e_3(v). Summing over the three cuts, subtracting their actual entropies, and using
+
+$$3A+B+\frac5{36}C=3\ln2+\frac32\ln3$$
+
+gives (2.1). Nonnegativity uses the actual scalar majorant and the two coupled bounds from Section 1. No independently chosen or incompatible marginal spectra are introduced. QED.
+

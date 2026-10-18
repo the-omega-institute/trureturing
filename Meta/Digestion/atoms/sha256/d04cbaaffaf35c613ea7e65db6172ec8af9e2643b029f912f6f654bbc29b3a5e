@@ -1,0 +1,35 @@
+**Convention 8.4 (reuse of the latest depth and contact supply).**
+[NLC, Theorem 4.1][NLC] already decides simultaneous minimum native
+leaf-depth growth of any fixed finite native QF system and nonempty
+designated output tuple. It returns EMPTY, a universal barrier, or
+finite original witnesses at every requested depth. Apply it to the
+original compiled predicate and actual designated expressions when
+that is the required question; no new proof or replacement by a fixed
+URR tuple is needed.
+
+For a supplied finite constructor context $C$ and two supplied distinct
+attained full rows $r,s$, [NLC, Lemma 5.4 and Theorem 6.1][NLC] apply
+to the exact two-source predicate
+
+$$
+C[\mathbf x]\in D,\ R_Q(C[\mathbf x])=r,\qquad
+C[\mathbf y]\in D,\ R_Q(C[\mathbf y])=s.
+\tag{PDC.24}
+$$
+
+Their simultaneous-depth decision gives exact contact at
+$C[\Omega,\ldots,\Omega]$, with original finite pairs at every depth,
+or exclusion of a stratum at a finite depth. Every resulting original
+pair has parameters in the complete relations (PDC.21) by
+Proposition 8.2. This consumes the existing contact result without
+claiming its contexts exhaust (PDC.23).
+
+[NLC, Theorem 8.4][NLC] supplies an anchored-comb common limit outside
+this context language for its specified row pair. Its Proposition 8.5
+also supplies another pair in the same fiber that does have a context
+certificate. Accordingly that example proves neither whole-fiber
+evasion nor completeness of regular limits. Distinct finite row labels
+can coalesce in the infinite limit; they must stay attached to their
+finite approximants. No limit partition supplies the labels in
+(PDC.21).
+

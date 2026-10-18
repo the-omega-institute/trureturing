@@ -1,0 +1,19 @@
+**Theorem 10.3 (All four infima agree).** For every $0<Z<1$,
+
+$$
+e_{4,\mathsf L}^{\rm aff}
+=e_{4,\mathsf G}^{\rm aff}
+=e_{4,\mathsf P}^{\rm aff}
+=e_{4,\mathsf{GP}}^{\rm aff}
+=4H\sqrt{T_4(\tau)}.
+$$
+
+Proof. Apply Proposition 10.2 to the scalar minimizer from
+Theorem 9.4. Every tolerance strictly above the literal optimum
+is achieved in $\mathsf{GP}$, so
+$e_{4,\mathsf{GP}}^{\rm aff}\le e_{4,\mathsf L}^{\rm aff}$.
+The reverse inequality and both intermediate equalities follow
+from the two class-inclusion chains in Definition 1.5. This
+proves equality of infima while keeping guard attainment
+separate. $\square$
+

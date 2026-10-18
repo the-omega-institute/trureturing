@@ -1,0 +1,56 @@
+**Proposition 20.2 (joint resources and separate service costs).**
+For the same eleven-state, six-bit controller the actual sourcewise
+vector $(\text{Reads},\text{response writes},\text{peak},\text{sum})$
+is
+
+$$
+\begin{cases}
+(2,2,15,24),&n\in D_L,\\
+(1,1,15,15),&n=27,28,\\
+(2,2,16,31),&n\in D_U.
+\end{cases}
+\tag{NARC.20.4}
+$$
+
+The three independently stored addresses contain forty letters in
+this table representation. This is table accounting, not a storage
+optimum. Response writes exclude initialization. Mutable word length,
+installed states, immutable table/output/address storage and submitted
+address lengths remain different resources.
+
+**Proof.** Proposition 19.2 gives every first-halt trace and exactly
+one response flip per Read. Lower traces submit lengths $15,9$;
+root singleton traces submit length $15$; upper traces submit
+$15,16$. Taking maximum and sum on that same actual trace gives
+(NARC.20.4). In particular each individual upper origin simultaneously
+attains two Reads, two writes, peak sixteen and sum thirty-one with
+the same installed table. No coordinate comes from another source
+or another controller. The independent literal storage total is
+$15+9+16=40$; shared representations could have a different charge.
+
+Following [FIB, Definition 45.2][FIB-RW], let costs be separately
+supplied nonnegative scalars or resource vectors. For a trace with
+$m$ Reads and complete halt output $\ell$, one service account is
+
+$$
+\begin{aligned}
+\mathcal C={}&C_{\rm initial\ capture}+C_{\rm encode/export}
+ +C_{\rm continuation}+C_{\rm later\ capture/parse}
+ +C_{\rm compile/install}+C_{\rm init}+C_{\rm immutable}\!\\
+&+\sum_{t<m}\left(C_{\rm table}(w_t)
+ +C_{\rm submit}(p_t)+C_{\rm Read}(p_t,Y_{a,b})
+ +C_{\rm response\ write}(w_t,o_t)\right)\\
+&+C_{\rm table}(w_m)+C_{\rm output}(\ell).
+\end{aligned}
+\tag{NARC.20.5}
+$$
+
+Choose these accounts without double counting any shared service;
+none is made free by the finite state proof. Initialization writes
+belong to $C_{\rm init}$, and the fixed literal/output representation
+belongs to the installation and immutable accounts. Equation
+(NARC.20.5) provides no numerical physical cost unless those
+services and costs are actually supplied. Six mutable recovery bits
+therefore imply neither six bits of total physical storage nor any
+physical latency, energy or acquisition bound. $\square$
+

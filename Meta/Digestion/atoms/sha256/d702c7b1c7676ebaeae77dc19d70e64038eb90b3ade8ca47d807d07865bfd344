@@ -1,0 +1,52 @@
+**Proposition 4.3 (nonemptiness, positive margins and algebraicity).**
+These are normalized positive definite physical states with
+$C=C(\rho)>0$ genuinely nonreal. For every positive $\tau$ there is
+an explicit admitted interval. Namely
+
+$$
+\begin{aligned}
+T_0&=2\beta+\frac{\beta^2(1+\alpha)}{\alpha k},&
+G_0&=4A\sqrt\alpha+
+       \frac{\beta(B+2\alpha A)}{\sqrt\alpha k},\\
+\xi_0&=\min\left\{\frac14,\sqrt{\frac{\ell}{2T_0}},
+ \sqrt{\frac{k}{4(1-\alpha)}},
+ \sqrt{\frac{A\alpha k^2}{2B\beta^2}},
+ \frac{\chi\sqrt{\tau_0\tau_1}}{2G_0}\right\}>0 .
+\end{aligned}
+\tag{QO.24}
+$$
+
+Every $0<\xi\leq\xi_0$ is admitted. For every admitted $\xi$,
+$p>k$, $q>0$, $pq=r_0^2$, and $0<s_*<\sqrt\ell$.
+
+Proof. From (QO.21),
+$p-\alpha q=\delta_0=k+\beta(1-c_0)\geq k$ and $pq=r_0^2>0$.
+All defining radicals and denominators are positive. Admission makes
+$\lambda,d_{\rm cert},\gamma$ positive. The leading state determinant
+is $\tau_0\tau_1-(\gamma/\chi)^2>0$, so $\rho>0$ with trace one.
+Multiplication gives
+$C_{DT}=h_0a\rho_{10}+h_1b\rho_{01}=i\gamma$;
+the other off-diagonal entries vanish. Independence of $D,T,S$ and
+$\rho>0$ imply $\operatorname{tr}(K(z)^\dagger K(z)\rho)>0$
+for nonzero $z$, so $C>0$.
+
+For $0<\xi\leq\xi_0$ one has $c_0>1/2$, $\sigma_0\leq2\xi$,
+$1-c_0\leq2\xi^2$, $p\geq k$ and
+$q=r_0^2/p\leq\beta^2\xi^2/(\alpha k)$. Consequently
+
+$$
+p+q\leq k+T_0\xi^2\leq1-\ell/2,\qquad
+k_{\rm tilt}\geq k/2,\qquad Ap-Bq\geq Ak/2.
+\tag{QO.25}
+$$
+
+Moreover $\lambda\leq A/c_0\leq2A$ and
+$\sqrt{q/p}\leq\beta\xi/(\sqrt\alpha k)$.
+Thus $\gamma\leq G_0\xi\leq\chi\sqrt{\tau_0\tau_1}/2$.
+Each required inequality is strict even at $\xi_0$.
+The choice $\tau=(1/3,1/3,1/3)$, $\xi=\xi_0/2$ is a concrete
+member without a search. Algebraic $\tau,\xi$ give algebraic matrices
+and constants; angles are only auxiliary coordinates.
+Finally $p+q=\delta_0+(1+\alpha)q>k$, giving the endpoint bounds.
+$\square$
+

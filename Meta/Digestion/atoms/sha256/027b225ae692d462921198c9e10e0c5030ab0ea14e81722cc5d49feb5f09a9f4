@@ -1,0 +1,35 @@
+## 272. A special flat opposite axis forces a disjoint excess
+
+Suppose O is special. Its connected actual normal circle propagates
+fixed transverse pair {C,D}, because O occurs only axially. The unique
+flat owner supplies exactly one O slot of angle pi. Every other O slot
+is genuine. There are h=degree(O)-1>=5 such original slots, with angles
+phi_j in (0,pi) satisfying sum_j phi_j=pi.
+
+No genuine O owner is A1 or A2: one containing M and O with fixed pair
+{C,D} has exactly the same six shared lengths as sigma, so would be
+flat. Thus the genuine O-star owners are disjoint from A1,A2.
+An owner may have two O axes. Charging 2*b_lambda_O(phi_j) for each
+original O slot counts its transverse sum once per axial occurrence,
+hence at most twice, which its actual four C/D transverse slots pay.
+Repeated visits to an owner do not introduce extra charges.
+
+The total genuine transverse C/D expense of these O owners is at least
+ 2*sum_j b_lambda_O(phi_j)
+ >=2*h*b_lambda_O(pi/h)
+ >=10*b_lambda_O(pi/5).
+The last inequality follows since x*b_lambda_O(pi/x) increases in x:
+its derivative is b_lambda_O(v)-v*b_lambda_O'(v)>0.
+Since lambda_O>1/sqrt(7) and
+ cot(pi/10)^2=5+2*sqrt(5)>7,
+we have b_lambda_O(pi/5)>pi/4. The O owners therefore consume more
+than 5*pi/2 of C/D angle. Together with the disjoint A1,A2 expense,
+the actual genuine C/D cost exceeds 2*pi+5*pi/2>4*pi, contradicting
+the combined original C and D budgets.
+
+Thus O cannot be special. In the no-extra-core-M case, the flat opposite
+label must be C or D, the low values must be balanced by Section 267,
+and at least one R_i must be special by Section 268. All remaining
+special-axis stars still need their complete original equations; no
+closure of the five-reservoir family is asserted.
+

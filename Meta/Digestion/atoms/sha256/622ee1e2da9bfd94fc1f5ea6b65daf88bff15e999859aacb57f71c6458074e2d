@@ -1,0 +1,55 @@
+**Theorem 3.4 (support-complete exact tensorization).** For every
+choice of finite interfaces as in Definition 2.1 and nonnegative
+constituent weights,
+
+$$
+\boxed{
+J_{I_1\times\cdots\times I_m}(w_1\otimes\cdots\otimes w_m)
+=\prod_iJ_{I_i}(w_i).}
+\tag{RCE.16}
+$$
+
+Proof. If one weight is zero both sides vanish. Otherwise, by Lemma
+2.2, consider any feasible product-interface support $P$ on which
+the product weight is positive. Write $P_i=\pi_iP$ and
+$U_i=U_{P_i}(X_i)$. Let $Y_i$ consist of the targets at constituent
+$i$ that are hard on $P$ in the product interface. An own experiment
+working on $P_i$ works on $P$, so $Y_i$ is a subvector of $U_i$.
+For every component of $U_i$ outside $Y_i$, a single product
+experiment determines it on $P$. Its donor cannot be $i$, since
+that would determine this hard target on $P_i$. Nor can it be a
+constant, since the projection has the same target range. It is
+therefore a function of some $X_j$, $j\ne i$.
+
+Choose a maximizing full-support law in (RCE.15) for the joint
+hard vector $Y=(Y_i)_i$ and weight $\prod_iw_i$. Every $P_i$ is
+range-feasible. Lemma 3.1 and the one-constituent Gibbs inequalities
+give
+
+$$
+\begin{aligned}
+\log_2\kappa_{\mathrm{prod}}(\otimes_iw_i,P)
+ &=H(X)+\sum_i\mathbb E\log_2w_i(X_i)-\frac12H(Y)\\
+ &\le\sum_i\left[H(X_i)+\mathbb E\log_2w_i(X_i)
+                                      -\frac12H(U_i)\right]\\
+ &\le\sum_i\log_2\kappa_{I_i}(w_i,P_i)
+ \le\sum_i\log_2J_{I_i}(w_i).
+\end{aligned}
+$$
+
+This proves the upper inequality for every correlated support.
+
+For the other inequality choose maximizing positive supports $P_i$
+and take their Cartesian product. A hard constituent target is
+nonconstant there, and an experiment in another constituent cannot
+determine it: fix that constituent and vary the target constituent.
+The hard vector of the product is consequently exactly the tuple of
+the constituent hard vectors. Its cell masses multiply, so finite
+distributivity gives
+$\kappa_{\mathrm{prod}}(\otimes_iw_i,\prod_iP_i)=
+\prod_i\kappa_{I_i}(w_i,P_i)$.
+This is a feasible attaining support, proving equality. This product
+is an analytical witness for the reverse inequality; no competing
+support was required to factor and no actual source was copied.
+$\square$
+

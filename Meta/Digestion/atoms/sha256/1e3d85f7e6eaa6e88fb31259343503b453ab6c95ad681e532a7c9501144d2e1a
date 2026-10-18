@@ -1,0 +1,41 @@
+**推论 472.2（对每个固定原核的 HG.9 实例）。** 在定理 472.1 的同一来源合同下，固定任意实数 $x\ge e$，取任意自然数 $D\ge D_0$ 且 $D>x$。严格保持 HG.3 的原对象
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad\mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s),
+\qquad b_x(s)=s\mathscr D_x(s).
+$$
+
+消费 §§453、466 对这些完整积分的可积性、求导与 HG.6 增长及变差合同，$V_x$ 取 HG.6 的同一固定 $x$ 常数。令 $c=c_{\mathrm o}$、$z_0=(\log(D+1))^{1/3}$，$J_j(c,z_0)$ 严格取 HG.8 的完整积分。则同一实际奇来源的自然截止尾存在，并满足 HG.9 的准确实例
+
+$$
+\begin{aligned}
+\mathscr T_{D,\infty}(x)
+&:=\lim_{M\to\infty}
+  \sum_{\substack{D<n\le M\\n\text{ 奇}}}\mu(n)\mathscr D_x(n)\\
+&=-b_x(D+1)H_{\mathrm o}(D)
+ -\sum_{n=D+1}^{\infty}[b_x(n+1)-b_x(n)]H_{\mathrm o}(n),\\
+|\mathscr T_{D,\infty}(x)|
+&\le |b_x(D+1)|\,|H_{\mathrm o}(D)|
+ +3C_{\mathrm o}V_xe^c
+  [J_2(c,z_0)+2J_5(c,z_0)+J_8(c,z_0)].
+\end{aligned}
+\tag{OH.11}
+$$
+
+**证明。** 每个自然数 $n\ge D$ 都满足 $n\ge D_0$，故定理 472.1 以同一 $C_{\mathrm o},c_{\mathrm o}$ 提供命题 466.2 的全部 HG.7 输入。$D>x$ 与同核 HG.6 保持其余假设。直接应用命题 466.2 即得 OH.11；其有限式 HG.10 的末项 $b_x(M)H_{\mathrm o}(M)$ 保留到自然截止极限，并由 HG.6 与 OH.3 趋零，锚 $-b_x(D+1)H_{\mathrm o}(D)$ 保留。证毕。
+
+OH.11 只支付这一固定 $x$ 的尾合同。回接 §453 的原累计 Mertens 配对时，DP.13 的 $P_x^\eta(\min\{2m,N+1\})$ 截止，以及 DP.14 的完整差项
+
+$$
+E_N(x)=\sum_{\substack{N/2<m\le N\\m\text{ 奇}}}
+\mu(m)[P_x^\eta(2m)-P_x^\eta(N+1)]
+$$
+
+仍按 DP.14–DP.15 的同核、同截止合同处理；不能因 OH.3 或 OH.11 将其有限值设为零，也不能据此进行独立的无限素数—合数拆分。
+

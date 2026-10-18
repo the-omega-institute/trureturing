@@ -1,0 +1,85 @@
+**Proposition 6.2 (the explicit complex lift).** Put
+
+$$
+\begin{aligned}
+a_h&=1/\sqrt{1+\xi^2},& b_h&=\xi/\sqrt{1+\xi^2},\\
+R&=\begin{pmatrix}a_h&-i\sqrt\alpha\,b_h&0\\
+ -ib_h/\sqrt\alpha&a_h&0\\0&0&1\end{pmatrix},\\
+u_L&=\frac{1-p+\alpha(1-q)+\beta}{2},&
+v_L&=\frac{1-p+\alpha(1-q)-\beta}{2\alpha}.
+\end{aligned}
+\tag{NP.41}
+$$
+
+Then
+
+$$
+\begin{gathered}
+R^TB_0R=B_0,\qquad RX_cR^\dagger=X_c,\qquad
+I-H_*=R\operatorname{diag}(u_L,v_L,1)R^\dagger,\\
+u_L,v_L>0,\qquad u_L-\alpha v_L=\beta,\qquad u_Lv_L=s_*^2.
+\end{gathered}
+\tag{NP.42}
+$$
+
+For $r=\pm1$ and $0\leq s\leq s_*$ take
+
+$$
+\begin{aligned}
+H_r&=H_*/2,& L_r&=(I-H_*+r sX_c)/2,&N_r&=M/2,\\
+T_r&=\frac12\begin{pmatrix}u_L&r s&0\\r s&v_L&0\\0&0&1\end{pmatrix},
+&&L_r=RT_rR^\dagger.
+\end{aligned}
+\tag{NP.43}
+$$
+
+Each $L_r$ belongs to the TRUE cone $\mathcal C_2$. It has three nonzero
+rank-two atoms for $s<s_*$ and two at $s=s_*$.
+
+Proof. The $DT$ determinant of $R$ is $a_h^2+b_h^2=1$, so $R$ is
+invertible. Bilinear multiplication cancels its off-diagonal terms and
+gives $R^TB_0R=B_0$; Hermitian multiplication gives $RX_cR^\dagger=X_c$.
+In the claimed diagonal congruence its $DT$ off-diagonal entry is
+$i a_hb_h(u_L/\sqrt\alpha-\sqrt\alpha v_L)=i r_0$.
+If its diagonal entries are $d_0,d_1$, they obey
+
+$$
+d_0+\alpha d_1=u_L+\alpha v_L=1-p+\alpha(1-q),\quad
+ d_0-\alpha d_1=c_\xi(u_L-\alpha v_L)=\beta c_\xi.
+\tag{NP.44}
+$$
+
+By (NP.32), these are also the sum and difference for $1-p,1-q$.
+This proves the congruence. Since $I-H_*>0$, invertible congruence makes
+$u_L,v_L>0$. Its $DT$ determinant gives
+$u_Lv_L=(1-p)(1-q)-r_0^2=1-p-q=s_*^2$.
+
+The $DT$ determinant in $T_r$ is $(s_*^2-s^2)/4$; its other entry is
+$1/2$. Thus $T_r\succeq0$ exactly for this interval, with rank three in
+the interior and rank two at the endpoint. Moreover
+$\operatorname{tr}(B_0T_r)=(u_L-\alpha v_L-\beta)/2=0$.
+Apply Lemma 6.1 and transform its real columns by $z_j=Ry_j$.
+Their projectors sum to $L_r$, and $z_j^TB_0z_j=0$. A nonzero real
+null $y_j$ has $(y_j)_D\ne0$, since $\alpha,\beta>0$.
+Hence $\operatorname{Re}(z_j)_D=a_h(y_j)_D\ne0$. Equation (NP.18)
+now proves that EACH transformed matrix $K(z_j)$ has rank exactly two.
+This gives the claimed exact numbers of nonzero atoms.
+
+This transformation is only a construction on quadratic-null vectors.
+It is not an automorphism of the full plane-plus-quadratic cone: for
+example $R(0,1,0)=(-i\sqrt\alpha b_h,a_h,0)$ has quadratic value
+$-\alpha$ and nonzero first coordinate, so its $K$ is invertible when
+$\xi>0$. No arbitrary cone normal form is used.
+
+Finally $H_r+L_r=(I+r sX_c)/2$, and
+$\Theta(I)=I-M$, $\Theta(X_c)=\kappa X_{01}$. Thus
+
+$$
+\Theta(H_r+L_r)+M/2=(I+r s\kappa X_{01})/2.
+\tag{NP.45}
+$$
+
+Summing the two reports gives coefficient identity and exact supported
+record normalization. These are upper-construction choices only;
+Proposition 3.3 continues to allow all conditioned live maps. $\square$
+

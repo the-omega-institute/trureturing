@@ -1,0 +1,45 @@
+## 13. Predecessors and the scope of the phase continuation
+
+The multiplicative coordinates in §8 use ordinary incidence
+algebra on Boolean intervals. Rota, *On the Foundations of
+Combinatorial Theory I. Theory of Möbius Functions*,
+[DOI:10.1007/BF00531932](https://doi.org/10.1007/BF00531932),
+is the classical source of that framework. The restricted
+inclusion-matrix factorization in (9.5) belongs to established
+meet-matrix methods; Altınışık, Sagan and Tuğlu, *GCD
+Matrices, Posets, and Nonintersecting Paths*,
+[DOI:10.1080/03081080500054612](https://doi.org/10.1080/03081080500054612),
+provides a nearby general treatment. These are attribution
+boundaries for known ingredients. Equations (8.7) and (9.5)
+provide the complete finite calculations used here; the
+original Wilf and Lindström full texts are not treated as
+verified theorem inputs.
+
+Zhang, Grover and Vishwanath, *Entanglement Entropy of
+Critical Spin Liquids*,
+[arXiv:1102.0350v2](https://arxiv.org/abs/1102.0350v2),
+equations (2)–(3) and the following sign-trick decomposition,
+write purity using two-copy subsystem SWAP and separate
+amplitude and phase contributions. Grover and Fisher,
+*Entanglement and the Sign Structure of Quantum States*,
+[arXiv:1412.3534v1](https://arxiv.org/abs/1412.3534v1),
+equations (11)–(12), gives the related second-Rényi sign
+and modulus decomposition, explicitly discussing the
+complex-wavefunction continuation. These primary formulas
+supply the established four-amplitude framework of (11.5).
+They are not attributed the arbitrary-phase rank-two
+von Neumann equality theorem or the vacuum-weight bound
+(11.3).
+
+The full-support path application combines its unchanged
+legal Gibbs carrier, a rank-two positive reference, actual
+vacuum rectangles and incidence compression. The mirror
+construction also stays within the established class of
+matrix-product states enhanced by commuting pair phases
+cited in §7. The model-specific deductions are the complete
+entropy-minimizing orbit, the active-run Fibonacci rank
+stratification, the anchored purity estimate and the stated
+restricted diagonal resource bounds. No literature-priority
+claim is made for these deductions or their ingredients.
+The unrestricted spectral comparison remains unresolved.
+

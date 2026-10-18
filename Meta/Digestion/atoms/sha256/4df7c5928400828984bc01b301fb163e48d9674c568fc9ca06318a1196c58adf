@@ -1,0 +1,52 @@
+**Corollary 86.2 (Equal leading amplitudes and strict resource separations).**
+If $a_1=a_2=s\in(0,1]$ and $a_3\le\varepsilon$, then
+
+$$
+\begin{aligned}
+\kappa_\varepsilon&=
+\begin{cases}
+0,&\varepsilon\ge2s/3,\\
+1,&s/3\le\varepsilon<2s/3,\\
+2,&0<\varepsilon<s/3,
+\end{cases}\\
+h_\varepsilon&=
+\begin{cases}
+0,&\varepsilon\ge2s/3,\\
+1,&s/2\le\varepsilon<2s/3,\\
+2,&0<\varepsilon<s/2.
+\end{cases}
+\end{aligned}
+\tag{86.6}
+$$
+
+An unequal-amplitude example is
+
+$$
+a_1=1,\quad a_2=3/4,\quad
+ a_n=\frac1{4(n-2)}\ (n\ge3),\quad\varepsilon=1/4:
+\qquad\kappa_\varepsilon=1<h_\varepsilon=2.
+\tag{86.7}
+$$
+
+A separate example distinguishes the hard count from the ceiling of the
+optimal uniform mean:
+
+$$
+a_1=a_2=3/4,\quad
+ a_n=\frac1{5(n-2)}\ (n\ge3),\quad\varepsilon=1/5:
+\qquad D=9/10,\quad\lceil D\rceil=1<\kappa_\varepsilon=2.
+\tag{86.8}
+$$
+
+**Proof.** If $\varepsilon<s$, (86.1) holds and (86.6) is the
+specialization of Theorem 86.1. If $\varepsilon\ge s$, immediate
+$\theta_0$ has error at most $s$, so both hard optima are zero as in
+the displayed formulas. In (86.7), $L=2$, $a_2=3\varepsilon$ and
+$a_2>2\varepsilon$, while $a_1+a_2>3\varepsilon$, proving its two
+values. In (86.8), $L=2$ and $a_2>3\varepsilon$, so Theorem 86.1
+forces hard count two. The mean formula is exactly the supplier (79.3):
+its only positive residuals are $a_1-\varepsilon=a_2-\varepsilon=11/20$,
+whence $D=2(11/20)-1/5=9/10$. Thus neither the supplied address optimum
+nor integer rounding of the supplied mean optimum identifies the hard
+request count. $\square$
+

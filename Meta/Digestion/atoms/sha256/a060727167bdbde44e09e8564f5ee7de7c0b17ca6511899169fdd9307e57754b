@@ -1,0 +1,72 @@
+**Proposition 51.2 (normalization, complete channel and all labelled
+measures).**
+
+**Proof.** The frame identity gives
+
+$$
+\sum_{f\in\{v_*,u_*,w_*\}}c_fc_f^T=L_0,\qquad
+\sum_fK_f^\dagger K_f=\delta D^\dagger D+T^\dagger T+S^\dagger S.
+\tag{JR.119}
+$$
+
+Adding (JR.117) and the failure rows gives $I_3$, by the inherited
+identity $D^\dagger D+T^\dagger T+S^\dagger S+M=I_3$.
+On five modes the complement effects add $I_5-P$, so the encoder effects
+sum to $I_5$. The range isometries and the scalar decoders are TP on
+their complete declared fibres, since
+
+$$
+\int_0^1{2\over(1+t)^2}\,dt=1,\qquad
+\sum_{\ell=0}^4w_\ell=1.
+\tag{JR.120}
+$$
+
+For every $A\in M_5(\mathbb C)$, write $A_V=E^\dagger AE$. Forgetting
+all acquisition labels gives
+
+$$
+\Phi^L(A)=E\bigl(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger\bigr)E^\dagger,
+\tag{JR.121}
+$$
+
+and for every Borel $B\subseteq[0,1]$,
+
+$$
+\Phi^f_\ell(A)(B)=\left(\int_Bg(t)\,dt\right)
+\left[w_\ell\operatorname{tr}(EME^\dagger A)
++\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]P_f.
+\tag{JR.122}
+$$
+
+These are equalities on every complex matrix unit, hence on every complex
+input. Tensoring each encoder and decoder by a passive reference identity
+proves the same identity with the two conditional reference operators
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$ and
+$\operatorname{Tr}_5[((I_5-P)\otimes I_R)X]$. Equation (JR.122) is therefore
+valid separately for all five original labels and all Borel time sets.
+It preserves the original $`E_*`$, including every live coherence and every
+full HALF complete-cq norm term, conditional on the inherited CG
+certificate. The density $g$ is the actual common output density; it is
+not substituted for the ideal $f_y$.
+
+Only the two high labels have fibre dimension at least three, so their
+maximum twelve-history mass is $(1-\delta)A_{27}=\mathsf C(s)$ throughout
+the weak plateau. No prior, postselection, acceptance division, helper,
+copy, reset, retry, readable history or free bypass is introduced.
+
+For $0\le s\le\bar s$, the base raw report has contrast $\bar s$. An
+input-independent report kernel
+
+$$
+\Pr(F=f\mid r)={1+fr\,s/\bar s\over2},\qquad f,r=\pm1,
+\tag{JR.123}
+$$
+
+retains the original branch label and raw report and adds $F$. It gives
+$\mathsf V(F)=s$; summing over $F$ on each retained branch leaves its
+height absolute difference unchanged. Thus the exact lower-contrast
+instrument has 22 retained branches (each of the 11 base branches split
+by $F$); at $s=\bar s$ it has 11. If only the inequality
+$\mathsf V(F)\ge s$ is requested, the 11-branch raw instrument already
+suffices.
+

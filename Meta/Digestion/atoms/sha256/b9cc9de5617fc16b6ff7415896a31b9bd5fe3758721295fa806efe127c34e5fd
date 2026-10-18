@@ -1,0 +1,17 @@
+**Definition 3.2 (output anchor set).** On a feasible branch $b$, let
+$A_b$ be the finite set of explicit primitive occurrences in all the
+designated output templates whose scalar belongs to the anchored
+component. For an occurrence $e\in A_b$, let $p_e$ be its address
+within its output code and let $r_e$ be its forced natural rank. If
+$A_b\ne\varnothing$, put
+
+$$
+C_b=\min_{e\in A_b}
+ \left(|p_e|+\left\lfloor\frac{r_e}{2}\right\rfloor\right).
+\tag{NLC.10}
+$$
+
+These occurrences and their ranks are effective finite branch data.
+The absence of an anchor elsewhere is not required. In particular
+names used only by the constraints can have fixed primitive ranks.
+

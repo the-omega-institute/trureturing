@@ -1,0 +1,67 @@
+**Theorem 16.6 (exact closure of the native residual states).** Starting
+with $K$ whose terminals are open, every informative prefix Read leaves
+an obligation forest of Definition 16.5. If it queries $x$ in one
+component $T$, its conditional families are exactly these:
+
+| Actual reply | Unresolved obligations in that component |
+| --- | --- |
+| branch | All components $\mathscr F_T(x)$, with inherited terminal marks |
+| alpha or beta | Only components hanging off the strict ancestor path of $x$; its label is acquired and its entire cone is resolved |
+| absent, $x$ nonroot | $T_x^-$ with parent$(x)$ capped, and inherited marks outside the deleted cone |
+
+Root absence is impossible. An internal $x$ has a feasible branch
+reply. At an open terminal all three nonabsent replies are feasible;
+at a capped terminal only the two label replies are feasible. For
+every nonroot $x$, absence is feasible. Every allowed combination of
+residual component boundaries, including all unread labels and caps,
+is realizable in one original stationary source of $\mathcal F_D$.
+
+Proof. Branch at $x$ certifies the entire path $A_T(x)$ as branches.
+Every remaining component root is a child of one of those certified
+branches, so it is present. No further relation is imposed between
+its independent child cones. A leaf at $x$ instead certifies only its
+strict ancestors as branches, fixes its own actual label and makes
+all strict descendants absent. Removing its cone as well as the
+ancestor path leaves the stated side components.
+
+The full-binary source law gives, for any nonroot address in a
+known-present component,
+
+$$
+ x\text{ is absent}\quad\Longleftrightarrow\quad
+       \operatorname{parent}(x)\text{ is not a branch}.
+\tag{AAR.93}
+$$
+
+The parent may be a leaf or may itself be absent. Either alternative
+makes every strict descendant of that parent absent, including the
+sibling direction of $x$. Conversely this condition makes $x$ absent.
+If the parent is reached it must now be a leaf, which is precisely the
+cap in (AAR.92). An earlier leaf is still allowed. Deleting only $x$'s
+cone would leave a false sibling freedom; declaring its parent present
+would discard actual sources. Descendant targets are not abandoned:
+their future replies will be computed from the actual labelled blocker
+when the remaining boundary is acquired.
+
+These implications are sufficient, not only necessary. To realize an
+allowed residual boundary, fill each component by Theorem 16.3's
+canonical construction, forbidding a branch at a reached cap. Glue
+these subtrees below the fixed certified branch paths; preserve acquired
+labels and fill omitted children by alpha. After an absent reply,
+expanding the deleted cone is unnecessary: if its new cap is reached,
+put its chosen leaf label there, and otherwise its earlier leaf already
+makes that cone absent. This gives exactly the original conditional
+boundaries for every row of the table.
+
+All branch vertices used in this construction belong to the original
+$K$. Added children lie at most one level farther, so the right-subtree
+height is at most $\max\operatorname{depth}(K)+1\le D$. Combining
+components uses the maximum of their embedded depths, not a sum of
+heights. Thus all their choices coexist on one native source. Terminal
+marks persist until resolved or removed; an absent step only adds a
+terminal mark after deleting that parent's children. Hence there is no
+hidden internal cap. By induction this describes the exact family after
+any informative adaptive prefix transcript. Queries at already resolved
+vertices have known replies and can be omitted by a new strategy; their
+calls in a competing strategy remain charged. $\square$
+

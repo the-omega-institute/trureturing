@@ -1,0 +1,29 @@
+**命题 6.2（校准组合使来源读出可结合且有精确范数预算）。** 定义 6.1 的单位为 $1$，乘法结合，$N(x\odot y)=N(x)N(y)$。若 $x\ne0$，则
+
+$$
+\bar x=(s,-u),\qquad x^{-1}=\bar x/N(x)
+$$
+
+是双侧逆；单位范数元素组成乘法群。只保 $C$ 则不能得到同样的结合来源读出。
+
+证明。以下是所消费四元数结构的完整局部实现计算，不独立宣称四元数为新理论。选正向正交基，取 Pauli 矩阵
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+\Phi(s,u)=sI-\mathrm i(u_1X+u_2Y+u_3Z).
+$$
+
+直接相乘得 $X^2=Y^2=Z^2=I$，$XY=\mathrm iZ$、$YZ=\mathrm iX$、$ZX=\mathrm iY$，反序各换号。因此
+
+$$
+(u\cdot\boldsymbol\sigma)(v\cdot\boldsymbol\sigma)
+=g(u,v)I+\mathrm i(C(u,v)\cdot\boldsymbol\sigma),
+$$
+
+代入给 $\Phi(x\odot y)=\Phi(x)\Phi(y)$。矩阵的对角元为 $s\mp\mathrm i u_3$，非对角元为 $-u_2-\mathrm i u_1$ 与 $u_2-\mathrm i u_1$，所以 $\Phi$ 实线性单射。矩阵结合律因此传回乘法。其行列式恰为 $s^2+u_1^2+u_2^2+u_3^2=N(x)$，行列式乘法性给范数预算。
+
+单位律由定义直接得到；$x\odot\bar x=\bar x\odot x=(N(x),0)$。正定性使非零 $x$ 的 $N(x)>0$，故除以它给双侧逆；范数一时逆仍范数一。最后 $(e_1\times e_1)\times e_2=0$，而 $e_1\times(e_1\times e_2)=-e_2$，故纯方向乘法不结合。保留 $-g(u,v)$ 的标量项正是避免丢掉同向平方 $e_1^2=-1$ 的条件。∎
+

@@ -1,0 +1,25 @@
+**Proposition 8.4 (meter construction is a different join).** The
+$M_J$ part of $M_C$ is unchanged because this construction modifies
+only source 16. Constructing a meter cell modifies the very chain
+from which UAS extracts the completed-row ordinal. A full-looking
+but uncommitted receipt, or only its unfinished byte, must not be
+counted as a completed original row. The source-specific pruning
+argument does not by itself settle the pending/completed receipt
+distinction for a meter-cell construction.
+The parent join needs actual phase material and both meter heads.
+
+Proof. Definition 2.4 changes only the pending source subtree, which
+Definition 5.1 excludes from $M_J$; hence that selected memory is
+fixed throughout this fragment. A meter-cell construction instead
+changes the retained receipt chain used to recover the old history
+in Theorem 5.3. Its proof's unchanged-$M_J$ premise therefore no
+longer holds. Moreover, Definitions 4.2 and 6.6 distinguish the
+birth or completion of a data component from an original completed
+row: the latter also requires the parent control and receipt effects
+listed in Proposition 4.3. An unfinished or merely full-looking
+receipt does not establish those effects. The parent join must
+therefore identify its pending/completed phase in actual retained
+material and preserve the distinct read and append lanes specified
+in Definition 4.1. This does not preclude a different inverse for
+a separately specified meter protocol. ∎
+

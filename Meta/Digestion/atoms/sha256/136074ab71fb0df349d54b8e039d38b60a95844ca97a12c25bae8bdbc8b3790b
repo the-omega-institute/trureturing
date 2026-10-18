@@ -1,0 +1,82 @@
+**Lemma 3.1 (Finite composition polynomial on its complete integer domain).** Let $m\ge1$ and $d=(d_1,\ldots,d_m)$ be a tuple of positive integers, and define
+
+$$
+D=\sum_{j=1}^m(d_j+1),\qquad
+P_d(n)=\sum_{\substack{k_1+\cdots+k_m=n\\k_j\ge1}}
+\prod_{j=1}^m k_j^{d_j}\quad(n\in\mathbb Z_{\ge0}).
+$$
+
+An empty composition set has sum zero, so $P_d(n)=0$ for every integer $0\le n<m$. There is a rational polynomial $\mathcal P_d(x)$ agreeing with $P_d(n)$ at every nonnegative integer, including that zero range, and
+
+$$
+\deg\mathcal P_d=D-1,\qquad
+[x^{D-1}]\mathcal P_d=\frac{\prod_jd_j!}{(D-1)!}>0.
+$$
+
+In particular
+
+$$
+P_d(n)=\frac{\prod_jd_j!}{(D-1)!}n^{D-1}+O_d(n^{D-2})
+\quad(n\to\infty).
+$$
+
+The polynomial is constructible by finitely many exact rational coefficient operations from $d$.
+
+Proof. We prove polynomiality, agreement on all $n\ge0$, and the initial zero range together by induction on the number of parts. For $m=1$ take $\mathcal P_{(d_1)}(x)=x^{d_1}$. It is zero at zero because $d_1\ge1$, and at every positive integer it is the sole composition weight. Here $D=d_1+1$, giving the claimed degree and coefficient.
+
+For the induction step let $m\ge2$, let $d'=(d_1,\ldots,d_{m-1})$, and define
+
+$$
+D'=\sum_{j=1}^{m-1}(d_j+1),\qquad d_*=d_m,
+\qquad D=D'+d_*+1.
+$$
+
+The induction hypothesis gives a rational polynomial
+
+$$
+\mathcal P_{d'}(x)=\sum_{h=0}^{D'-1}c_hx^h,
+\qquad \mathcal P_{d'}(0)=c_0=0,
+\qquad c_{D'-1}=\frac{\prod_{j<m}d_j!}{(D'-1)!}.
+$$
+
+For any nonnegative integer $v$, let $Q_v(x)$ be the rational power-sum polynomial with $Q_v(n)=\sum_{k=0}^{n-1}k^v$ for all $n\ge0$. One finite construction, writing $\Delta f(t)=f(t+1)-f(t)$, is
+
+$$
+Q_v(x)=\sum_{r=0}^{v}\bigl(\Delta^r(t^v)\bigr)\big|_{t=0}
+\binom{x}{r+1}.
+$$
+
+For $v=0$ the polynomial $t^0$ is the constant one. The binomial polynomials form a basis, and $\Delta\binom{x}{r+1}=\binom{x}{r}$; the Newton expansion therefore gives $\Delta Q_v(x)=x^v$ and $Q_v(0)=0$. Telescoping proves its values at every $n\ge0$. This also proves $\deg Q_v=v+1$ and gives a finite rational construction, without assuming a formula only on a tail of the integers.
+
+Define the next polynomial by
+
+$$
+\mathcal P_d(x)=\sum_{h=0}^{D'-1}c_h
+\sum_{r=0}^{h}(-1)^r\binom hr x^{h-r}Q_{d_*+r}(x).
+$$
+
+For every integer $n\ge1$, its value is
+
+$$
+\sum_{k=0}^{n-1}k^{d_*}\mathcal P_{d'}(n-k)
+=\sum_{k=1}^{n-1}k^{d_*}P_{d'}(n-k)
+=P_d(n).
+$$
+
+The term at $k=0$ is zero because $d_*\ge1$. All other arguments $n-k$ are nonnegative integers, so the full-domain induction hypothesis applies, including arguments smaller than $m-1$. Those smaller arguments have value zero. Thus if $1\le n<m$, every term vanishes, exactly as the empty composition definition requires. At $n=0$, every term in the defining polynomial contains $Q_{d_*+r}(0)=0$, so $\mathcal P_d(0)=0$ as well. This proves the necessary initial zeros and makes every invocation at a small argument legal.
+
+Each polynomial summand has degree at most $(h-r)+(d_*+r+1)=h+d_*+1$, at most $D'+d_*=D-1$. To identify the top coefficient set $b'=c_{D'-1}>0$. The leading contribution for large positive $n$ is
+
+$$
+b'\sum_{k=1}^{n-1}k^{d_*}(n-k)^{D'-1}.
+$$
+
+All lower powers in $\mathcal P_{d'}$ contribute $O_d(n^{D'+d_*-1})$: each has at most $n$ terms bounded by a constant times $n^{d_*+D'-2}$. The normalized leading sum is a mesh-$1/n$ sum for $f(x)=x^{d_*}(1-x)^{D'-1}$ on $[0,1]$. Since $d_*\ge1$ and $D'-1\ge1$, both endpoints vanish and its derivative is integrable. Summing the error on each mesh interval bounds the difference from the integral by $n^{-1}\int_0^1|f'(x)|\,dx$. Repeated integration by parts gives
+
+$$
+\int_0^1x^{d_*}(1-x)^{D'-1}\,dx
+=\frac{d_*!(D'-1)!}{(D'+d_*)!}.
+$$
+
+Therefore the coefficient of $n^{D-1}$ is $b'd_*!(D'-1)!/(D'+d_*)!=\prod_jd_j!/(D-1)!$, which is positive, proving the exact degree and remainder. Every composition, including endpoint compositions, remained in the recurrence. All operations specifying the polynomial were finite rational operations. $\square$
+

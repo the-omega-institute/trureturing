@@ -1,0 +1,50 @@
+**Proposition 68.2 (an original endpoint-equivalent pair).** There are
+two prescribed-time decoders on the same actual original acquisition,
+with identical terminal live map, identical integrated maps in each
+original failure label, identical supported outputs on all complex
+matrices, original errors, contrast and sharp cost, but different minimum
+uniform activities. Their high fibre is jointly counted as dimension
+five, including a coherent two-dimensional complement.
+
+**Proof.** Take the attained strong instrument of Theorem 71.1 below at
+$s^\dagger,A_\dagger$, whose two high matrices are the invertible
+$H_\pm=(\sqrt{1-u^\dagger}D\pm\sqrt{1-v^\dagger}T)/\sqrt2$.
+Choose an isometry $W:\mathbb C^2\to V^\perp$ and replace the $H_+$
+encoder and the separate complementary branch by the single encoder
+$\widetilde C_H\psi=(H_+E^\dagger\psi)\oplus W^\dagger\psi$.
+Its whole fibre is $\mathbb C^3\oplus\mathbb C^2$; cross-support
+coherences enter that fibre coherently. Its encoder effect is
+$EH_+^\dagger H_+E^\dagger+WW^\dagger$, so total acquisition
+normalization remains $I_5$. Complement has probability zero on all
+twelve original inputs and changes none of their costs.
+
+For $0<\ell<1$ use terminal live matrix
+$[E\ W](I_3\oplus\sqrt\ell I_2)$ on that fibre. Write $P_3,P_4$ for
+its two complementary coordinate projections. Prescribe respectively
+$B_\parallel(t)=(1-\ell)(P_3+P_4)$ and
+$B_{\rm seq}(t)=2(1-\ell)P_3$ for $t<1/2$,
+$2(1-\ell)P_4$ for $t\ge1/2$. In each label prescribe density
+$Y\mapsto w_\ell\operatorname{tr}(B(t)Y)P_f$, where the subscript on
+$w$ denotes a label and the standalone $\ell$ denotes attenuation.
+Their common endpoint effect is $I_3\oplus\ell I_2$ and their
+integrated failure maps agree. On supported inputs these decoders are
+identity in the first three coordinates, with no failure. FA.2 gives
+
+$$
+\mathfrak a_\parallel=-\log\ell,\qquad
+\mathfrak a_{\rm seq}=-2\log\ell.
+\tag{FA.4}
+$$
+
+Indeed each simultaneous scalar loss contributes the same hazard, whose
+maximum integrates to $-\log\ell$; the two sequential losses occupy
+disjoint half intervals and add. The normalized terminal map here is an
+isometry, so both minima are attained. Choose $-\log\ell>A_\dagger$;
+all other decoder minima are at most $A_\dagger$, hence the two
+minimum uniform budgets differ. This is a statement for the supplied
+actual acquisition and prescribed laws. It does not optimize over a
+changed acquisition. It refutes endpoint-only path sufficiency inside
+the original supported task, on the same clock, without a helper or an
+uncounted bypass. Its free completion differs from fixed CA.10.
+$\square$
+

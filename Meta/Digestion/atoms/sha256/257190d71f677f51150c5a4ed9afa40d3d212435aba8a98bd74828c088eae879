@@ -1,0 +1,73 @@
+**Lemma 5.2 (Credited all-word endpoint bounds).**
+On each whole core fibre $n\le7$, the correct counts of $P^0$ are
+$(11,8,8,5,4,3,1)/24$ and its outside mass is at most $5/24$.
+The correct counts of $P^\star,Q$ are
+$(1081,1002,1002,618,490,362,106)/3072$, with outside mass at most
+$662/3072$. Positive nonbase counts are $5$ and $662$ in the
+respective denominators. On the entire later fibres their exact
+$3072$-scaled correct and nonbase counts are
+
+$$
+\begin{array}{c|rrrr}
+\text{law}&c_8&c_9&Z_8&Z_9\\\hline
+P^\star&106&106&728&679\\
+Q&159&53&728&679.
+\end{array}
+$$
+
+Proof. For $P^0$, use $B_0,H_0$ from 4.3 with
+$(s,t,x,y,z)=(w_3,w_4,w_5,w_6,w_7)$. Its outside counts are
+$B_0+w_2H_0$, $B_0+H_0$,
+$2+2(1-t)+t(2-x-y)+x(1-y)+y(1-z)$,
+$5-xy-yz$, $5-y-yz$, $5$, $5$.
+The suffix bounds in 4.3 give at most five. Correct counts follow
+from the same tables. At a positive seven-prefix the law is
+$(19e_0+2e_3+e_4+2e_5)/24$.
+
+For $P^\star$, sum each first nonbase count times $(1-w_i)$,
+middle nonbase count times $w_i(1-w_j)$ and exhaustion nonbase
+count times $w_iw_j$. Its common nonbase polynomial is
+
+$$
+\begin{aligned}
+Z={}&J+Lw_6+D(w_7+w_8)
+       -17(w_6w_7+w_6w_8+w_7w_8+w_8w_9),\\
+L={}&127-125w_3-110w_4-127w_5,\qquad D=17-15w_3-17w_5,\\
+J={}&1139+391w_1+470w_2+523w_3+227w_4+161w_5\\
+ &-463w_1w_2-391w_1w_3-110w_1w_4-27w_1w_5\\
+ &-391w_2w_3-110w_2w_4-27w_2w_5
+       -148w_3w_4-132w_3w_5-117w_4w_5.
+\end{aligned}
+$$
+
+At fixed $w_1,\ldots,w_5$, its suffix maximum is
+$J+\max\{0,L,D\}$. Indeed $D\le17$, take $w_9=0$; at $w_6=0$
+the remaining maximum is $\max\{0,D,2D-17\}=\max\{0,D\}$,
+while at $w_6=1$ further coefficients are nonpositive, giving $L$.
+Subtracting the constant correct count and substituting lexicographic
+free assignments through bit five gives all the credited grouped
+outside maxima:
+
+| First zero | Grouped maxima |
+| --- | --- |
+| 1 | $185,219,302,329,583,610,662,572,655,662,662,662,662,662,631,514$ |
+| 2 | $655,662,662,662,662,662,631,514$ |
+| 3 | $662,642,559,532$ |
+| 4 | $662,635$ |
+| 5 | $649$ |
+
+For classes six and seven the restricted polynomials are
+$995-15(w_7+w_8)-17(w_7w_8+w_8w_9)$ and
+$760-32w_8-17w_8w_9$. Subtracting correct counts $362,106$ gives
+outside maxima $633,654$. In classes eight and nine the nonbase
+counts are constantly $728,679$; at the positive word it is $662$.
+
+Correct counts are constant because nonzero first and middle outputs
+are queried labels and nonzero exhaustion outputs are later than
+both queries. The transfer defining $Q$ preserves every core
+$A,C,P$ event and every base probability on all words. Both later
+fibres have $w_6=w_7=1$, giving the displayed correct-count changes.
+This is the credited complete endpoint calculation of DEV XVIII
+319–320 and the $Q$ transfer, retaining all multiple-zero suffixes.
+$\square$
+

@@ -1,0 +1,38 @@
+**Definition 272.6 (The unrestricted comparison still required).**
+With the original entire sequences, closed positive caps, complete
+rows and resources of Definition 268.1, the unrestricted positive
+condition remains: for every $L\ge3$ and every full $y\ge0$ with
+$\Delta_O(y)\le1$, there exist one unrestricted full $V\ge0$ and
+$\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{272.11}
+$$
+
+Residual coordinates may have either sign. At $\theta=1$ a nonzero
+score with $\Delta_N(V)=0$ remains admissible.
+The alternative strict witness requires the same actual
+$(b,e)\in H_N$, one complete $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ and $M=\sum_D\lambda_D\ge1$, and one
+full unit-$O$ score $y$ satisfying $F_y(b,e)>M$, together with its
+original $N_2$ attainer and a uniform lower certificate against
+every original arbitrary-address, full-carrier $O_2$ competitor.
+No fixed law, unary, anchor, quotient, repair, canonical class or
+restricted support replaces these quantifiers.
+
+The trace relation (268.4) is necessary; the exact fibre (269.1)
+is a proper input cone; (270.1)–(270.2) specify joint endpoints;
+(271.3) retains charges on one allocation; and (272.9) uses only
+$\mathcal S$. None asserts (272.11) for every input.
+The earlier-label reading of Proposition 267.1 is retained:
+the actual source $(r,g)=(19,436)$ has $F_{19}=4181$,
+$N=1822917$ and first four replies $0100$.
+The legal table $N(3,4;1,0,0,0)$ emits the earlier unqueried
+label 1 there; its endpoint repair emits 0, with changed mass 1
+and counting defect 2. This reading rules out pruning that label
+or treating its changed cell as free. All statements concern the
+selected marked laws, whose finite support has TV distance one
+from the unchanged original nonatomic targets.
+

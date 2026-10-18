@@ -1,0 +1,29 @@
+**Proposition 2.2 (Normalization, support and stationary windows).** For every $n\ge1$, $\mu_n$ is a probability vector with $\mu_n(b)>0$ for every $b\in B_n$. Its all-zero mass is $29/38$ for $n=1$ and
+
+$$
+\mu_n(0^n)=\frac{10}{19}\left(\frac7{10}\right)^{n-2}\quad(n\ge2).
+\tag{2.4}
+$$
+
+For every $1\le m\le n$, every $1\le a\le n-m+1$ and every $w\in B_m$,
+
+$$
+\Pr_{\mu_n}\{(b_a,\ldots,b_{a+m-1})=w\}=\mu_m(w).
+\tag{2.5}
+$$
+
+**Proof.** Each row of $P$ sums to one. Its positive entries are exactly the transitions $(x,y)\longrightarrow(y,z)$ with $xy=yz=0$. Every legal initial pair has positive $\pi$-mass, so every legal word has positive mass in (2.2). Also $\sum_{s\in\mathcal S}\pi_s=1$ and
+
+$$
+\pi P=\left(
+\frac{10}{19}\frac7{10}+\frac9{38}\frac23,
+\frac{10}{19}\frac3{10}+\frac9{38}\frac13,
+\frac9{38}\right)
+=\left(\frac{10}{19},\frac9{38},\frac9{38}\right)=\pi.
+\tag{2.6}
+$$
+
+Summing over the last bit in (2.2) removes its last transition factor. Repeating gives total mass one for every $n\ge2$. The first-bit marginal of $\pi$ is $(29/38,9/38)$, agreeing with (2.3); its second-bit marginal is the same. Thus normalization and prefix consistency hold also at length one. Formula (2.4) follows by retaining only the transitions $00\longrightarrow00$.
+
+For $m\ge2$, summing the suffix beyond a specified window uses row sums equal to one, and summing its prefix gives the initial pair distribution $\pi P^{a-1}=\pi$. The remaining product is exactly (2.2) for $w$. For $m=1$ use the bit marginals just computed. This proves (2.5). Every transition at every cut of the word remains present; there are no additional restrictions at such cuts. $\square$
+

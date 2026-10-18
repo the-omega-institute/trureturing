@@ -1,0 +1,51 @@
+### 480.1. 嵌套最优者的质量间隔
+
+沿用第 98、112 节的完整正整数压力与严格正层最优整数 $n_x$，记
+
+$$
+E(n)=\log n,\quad W(n)=\log\frac{\sigma(n)}n,\quad
+h(x)=\gamma+\log\log x,\quad \lambda_x=\frac1{x\log x},
+$$
+
+$$
+M(\lambda)=\max_{n\ge1}\{W(n)-\lambda E(n)\},\quad
+\Delta(x)=h(x)-\lambda_xx-M(\lambda_x),\quad F(x)=\log n_x.
+$$
+
+这里并列的零收益层全部省略。
+若 $1<s<t$，严格活跃层集从 $s$ 到 $t$ 只增不减，故逐素数指数不减，得到
+
+$$
+n_s\mid n_t.
+$$
+
+若两整数不同，整除商为整数 $r\ge2$，因此
+
+$$
+\log n_t-\log n_s=\log r\ge\log2.
+$$
+
+这是实际嵌套层集的算术间隔。任意两个不同整数的对数并没有这个间隔，
+例如 $\log(N+1)-\log N\to0$。
+
+取一个已经证明对 $F$ 不变的区间 $[a,b]\subset(1,\infty)$，
+从 $x_0\in[a,b]$ 开始递归 $x_{j+1}=F(x_j)$。
+第 112 节已给出方向单调性及有限停机。
+从 $j=1$ 起，每个状态都是实际最优整数的对数，故每次非恒定更新满足
+
+$$
+|x_{j+1}-x_j|\ge\log2.
+$$
+
+若第一次固定的指标为 $K\ge1$，单调望远镜求和给出
+
+$$
+(K-1)\log2\le|x_K-x_1|\le b-a,
+\qquad
+\boxed{K\le1+\left\lfloor\frac{b-a}{\log2}\right\rfloor.}
+$$
+
+同一个估计也直接排除无穷多次非恒定更新，而无需枚举整个激活层集。
+任意实数初值到 $x_1$ 的第一步未计入质量间隔；
+也没有断言第一个最优整数与提供该初值的任意整数之间存在整除关系。
+

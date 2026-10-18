@@ -1,0 +1,18 @@
+**Definition 2.4 (Two-anchor reset variance).** For a positive band-compatible $\nu$ on $B_n$, let $p_{\nu,n,i}$ condition on all the other coordinates in $[1,n]$. For $n\ge5$ put
+
+$$
+E_i=\{W_{i-2}=W_{i+2}=1\},\qquad
+V_2(\nu;n)=\sum_{i=3}^{n-2}\nu(E_i)
+\operatorname{Var}_\nu(p_{\nu,n,i}\mid E_i).
+\tag{2.8}
+$$
+
+Set $V_2(\nu;n)=0$ when $n<5$. This is [Global-local, Theorem 2.3]'s detector, with interface
+
+$$
+\mathscr R_{2,n}(\nu)\ge V_2(\nu;n).
+\tag{2.9}
+$$
+
+To recall why this is only a lower bound, fix one positive all-cut rank-two candidate $r$. At a cut after $j<n$ bits, rows ending in one vanish on columns beginning in one. Every legal row ending in one is nonzero, since its all-zero-suffix entry is positive. A legal row ending in zero has a positive entry in column $10^{n-j-1}$. Therefore the legal rows ending in one span exactly one dimension: a two-dimensional span there would force total rank at least three. Illegal-prefix rows remain zero and do not affect the span. Normalizing the nonzero proportional rows shows that their suffix laws agree. At a visible one, the left and right strings are thus conditionally independent. Apply this at both anchors in $E_i$: the masses of $\ell\,10x01\,t$ factor as $A(\ell)H_xB(t)$, so $r_i$ is constant on that event. Empty outer strings are allowed. Least squares against this constant bounds the site's discrepancy below by the corresponding term of (2.8). Sum over distinct sites, then minimize over this one global $r$, to obtain (2.9); the empty-family case is immediate. The forthcoming law shows that equality to zero in this particular detector does not imply a zero or sublinear global discrepancy.
+

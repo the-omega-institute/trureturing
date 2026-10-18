@@ -1,0 +1,73 @@
+**Proposition 267.1 (Legal earlier labels on an actual source).**
+The original source $(r,g)=(19,436)$ has $F_{19}=4181$,
+$N=1822917$ and first four replies $0100$.
+The legal nonstopped rule $N(3,4;1,0,0,0)$ emits the earlier
+unqueried label one there. Endpoint repair changes this output to
+zero. Its changed mass is one and its counting defect is two.
+The three-daughter rule instead has law $(2e_1+e_0)/3$ there.
+
+**Proof.** The recurrence gives $F_{19}=4181$ and
+$1+4181\cdot436=1822917$.
+The window is $419\le g\le836$, so the source is admissible;
+19 is prime. The integer is odd, divisible by three, and is
+congruent to two modulo five and five modulo seven. Thus its
+replies at $2,3,5,7$ are exactly $0100$.
+Both queried replies of the rule are zero, so its $00$ terminal
+label is one. Endpoint repair uses the old $01$ label zero.
+In the counting formula of Definition 251.3,
+$[v=3]=[s=4]=0$ and $[t=0\text{ or unqueried}]=1$,
+giving defect $3-0-0-1=2$. Formula (261.3) gives the final law.
+No constraint that a terminal label be queried or later is imposed
+on the full catalogs. Pruning this rule would change the problem.
+$\square$
+
+**Mathematical scope 267.2 (Original objects and reuse).**
+All original applications retain the prime-index Fibonacci window
+source (251.8), static prime-divisibility replies, the full disjoint
+Borel carrier, the unchanged consumer and the original nonatomic
+targets of Definitions 71.1 and 73.1. The approximation profiles
+here are the separately selected two-mark laws $\lambda_x^a$.
+A finite marked law has full-Borel TV one from each unchanged
+nonatomic target; no approximation of those targets is implied.
+Actual finite-word witnesses use Theorem 35.2 with its entry-rank
+supplier. One source-independent seed selects complete schedules,
+all counterfactual outputs and any daughters before replies, with
+zero advice and actual sourcewise almost-sure finite handoff.
+The hard budget counts every actual request, including repeated
+or ignored replies. There is no source distribution, finite-address
+restriction on competitors, expected-request substitution or runtime
+bound. Uniform TV always takes the supremum over all sources and
+all Borel events. Positive vanishing tails and closed-cap ties are
+included through (251.9).
+
+The shared conversion (261.1) is one mathematical construction.
+Its minorization, radius and signed loss are consequences of that
+construction. The factor-four exposure bound, endpoint and midpoint
+repairs, normalization formula, finite/original transport and generic
+certificate criterion are the results already owned by Sections
+110, 198–199, 248–255. They are used at their stated scopes.
+The amplitude suppliers of Sections 113, 161, 173–174 and 187,
+the complete-table coupling of 176, and the suffix-polynomial method
+of 178 remain existing suppliers and methods. The canonical-face
+criterion, probe-cone certificate and invariant subclass above do
+not assert additional unrestricted amplitude coverage. Scalar
+summaries, preservation conditions, reserve constraints and probe
+scores are auxiliary mathematical domains; none restricts the
+original competitor class.
+
+**Mathematical citation 267.3 (Literal polynomials and joint normalization).**
+Kaniewski, Lee and de Wolf, *Query complexity in expectation*,
+[arXiv:1411.7280v1](https://arxiv.org/html/1411.7280v1),
+Definition 8 and Theorem 9 with proof, characterize the randomized
+query complexity of a nonnegative scalar function in expectation
+by its nonnegative literal degree. The cost is worst-path query
+depth; the expectation is of the scalar output. Its reverse
+construction samples a monomial and emits a rescaled nonnegative
+scalar. It does not give a jointly normalized probability-vector
+representation or impose increasing first-zero stopping. The
+forward polynomial observation used in Section 266 is elementary
+and proved there directly. The simultaneous whole-kernel,
+canonical-reserve and signed-slack deductions here are ordinary
+repo-derived mathematics. No literature-priority or exhaustive
+novelty conclusion is asserted.
+

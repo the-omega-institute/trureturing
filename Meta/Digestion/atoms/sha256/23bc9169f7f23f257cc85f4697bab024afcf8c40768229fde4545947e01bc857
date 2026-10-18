@@ -1,0 +1,11 @@
+**定义 11.5（来源身份与有限结果的边界）。** 本卷的 `repo-derived` 内容是将不预设反对称的输入接到既有校准几何、结合读出、原生来源和有类型网络的条件链。下列 `literature-attested` 数据只作为该链的中间供应，不承担全局新颖性：
+
+| 直接供应 | 本卷消费的确切内容与范围 |
+| --- | --- |
+| [Darpö 与 Baez 的既有来源注](../../../Library/Geometry/darpo2009vectorproduct.md) | 向量积定义、经典四元数工具、七维叉积及 $G_2$；不代替本卷全 $SO$ 输入证明 |
+| [现有 Griess/VOA 注](../../../Library/VertexAlgebra/griess1981monsterlocalcompletion.md) 与 [Höhn–Seysen v1](../../../Library/VertexAlgebra/hohnseysen2025monsterautomorphisms.md) | 实际月光首层构造和保不变形式的完整自同构识别；不是任意高维张量识别 |
+| [Biamonte–Bergholm §2.3](../../../Library/GraphInvariants/biamontebergholm2017tensornetworks.md) | 有类型多线性收缩的标准操作；不供应来源相容性、相干仪器或一般高效算法 |
+| [Singer–Wu 的既有注](../../../Library/Geometry/singerwu2011vectordiffusion.md) | 互易正交边运输背景；本卷不采用未供应的流形采样极限 |
+
+精确有限数据包含九个完整坐标约束域、511 个有序词及不截回的替换像、明确十元素集上的全部 1000 个有序三元组和另外 100 个二元组；其中还保留有符号校准、原生数量与非平凡回路实例。所有决定使用整数或有理数。一般结论由正文条件证明承担，有限数据不认证全部来源、物理三维、实际相干仪器、Monster 系数、RH 或全局原创。未供应的物理桥是：真实局部位移和观察是否实现了非零、三线性、完整旋转无偏且可持续取得的共同响应。这仍是待证明的条件，不由关系语言本身消失。
+

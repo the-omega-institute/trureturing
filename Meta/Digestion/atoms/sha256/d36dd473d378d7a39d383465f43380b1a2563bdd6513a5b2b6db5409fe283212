@@ -1,0 +1,46 @@
+**定理 27.2（原规范树的实际单位平台下界）。** 两个平台行的每个 $\varepsilon>0$ 都有 $\Omega(\varepsilon)\ge1$。在 $L>1,d_0<D_{\rm crit},H=1$ 行，下界可完全由每个成员都严格收缩的实际来源对给出，包含 $1<d_0<D_{\rm crit}$。
+
+证明。若 $L=1,H\ge1$，用同一树 $\alpha$，分别供应 $(e_1,e_2)$ 与 $(\lambda e_1,\lambda e_2)$，$\lambda<1$ 趋于1且 $\lambda^4\ge d_0$。两者全部联合限制成立，记录距离 $1-\lambda^2\to0$。前者每个幅度为1，后者的规范幅度为 $\lambda^{F_{j+1}}\to0$，方向相同，故全时间差上确界为1。
+
+以下取第二个平台行。选择
+
+$$
+\max(1,s_0)<s_*<L^{1/\varphi^2},\quad
+A_*=s_*^{\varphi^2},\quad r_*=s_*^{-\varphi},\quad
+p_*=(A_*e_1,r_*e_2),\quad C_*=\log A_*>0.
+$$
+
+$A_*,r_*<L$，$\Delta_*=s_*^2>d_0$，且 $\Gamma(p_*)=0$。原规范树 $T_l=\rho^l\alpha$ 的方向循环为 $e_1,e_2,e_2\times e_1$，幅度的准确对数为 $C_*\psi^l$。其原始组成与叶数是
+
+$$
+\nu(T_l)=(F_{l-1},F_l)\ (l\ge1),\qquad
+N_l=\#\text{叶}(T_l)=F_{l+1}\ (l\ge0).
+$$
+
+两个初始树都恰一叶，结构递推给 $N_{l+2}=N_{l+1}+N_l$；组成则按原 $M$ 递推，证明上述索引。因而同乘原叶以 $e^{-\tau}$ 的准确缩放因子是 $e^{-\tau F_{l+1}}$。
+
+令 $k\to\infty$ 只取正的12倍数，定义
+
+$$
+\tau_s=\frac{2(1+C_*)\varphi^{-k}}{F_{k+1}},\qquad
+\tau_f=\varphi^{k/2}\tau_s.
+$$
+
+比较同一实际树 $T_k$ 在两个固定制备 $e^{-\tau_s}p_*$ 和 $e^{-\tau_f}p_*$ 下的历史。两种叶缩放均不增加叶范数；$\tau_f\to0$ 使两行列式 $\Delta_*e^{-4\tau}$ 最终都至少 $d_0$。对取得偏移 $h=0,1,2$，其六个准确对数为
+
+$$
+C_*\psi^{k+h}-\tau F_{k+h+1},\qquad \tau\in\{\tau_s,\tau_f\}.
+$$
+
+正项至多 $C_*\varphi^{-k}$；即使较小的减项也至少 $2(1+C_*)\varphi^{-k}$。所以六个读数范数都不超过1。固定 $h$ 时这些对数趋于0，且 $k\equiv0\pmod3$ 固定共同三轴相位，因此 $d_3\to0$。
+
+取相对预测时刻 $j_k=3k/4\equiv0\pmod3$。Binet 公式给 $F_{k+j_k+1}/F_{k+1}\asymp\varphi^{j_k}$，从而
+
+$$
+\tau_sF_{k+j_k+1}\to0,\qquad
+\tau_fF_{k+j_k+1}\to+\infty,\qquad
+C_*\psi^{k+j_k}\to0.
+$$
+
+两幅度在同一轴上分别趋于1和0。给定任意固定正 $\varepsilon$，最终记录距离不超过它，未来距离可任意接近1，故 $\Omega(\varepsilon)\ge1$。每个成员却有 $\Gamma=-(1+2\varphi)\tau<0$，确实逐个收缩。若 $d_0>1$，任意允许非零历史都必须收缩：三读界给 $\log q_1,\log q_2\le0$，故 $\Gamma\le0$；等号会迫使 $q_1=q_2=1$。组成矩阵的行列式 $m^2+mn-n^2\ne0$（定理6.4的整数／无理根论证）继而迫使 $r=s=1$，与 $\Delta\ge d_0>1$ 矛盾。因此此子制度没有中性来源，下界仍成立。
+

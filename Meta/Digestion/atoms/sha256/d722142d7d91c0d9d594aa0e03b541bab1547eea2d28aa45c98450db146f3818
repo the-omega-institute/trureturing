@@ -1,0 +1,60 @@
+**Corollary 6.1 (the actual same-register consumer).** Under Assumption
+1.3, a positive outcome for any attained $B$ of size at least two
+excludes a uniform finite-new-read service recovering the whole $R_Q$
+on $D$, even with lawful serial forward updates. A negative outcome
+excludes only this selected joint set $B$ at the returned depth.
+
+If the entire attained row image is finite, and every distinct pair in
+that image is recognized, the pair decisions give a complete choice
+between a persistent different-row pair and a determining original
+depth. In the latter case there is a lawful static whole-row service
+at authentic $N$, with the sufficient post-entry bounds
+
+$$
+q\le2(2^{H+1}-1),\qquad a=0,\qquad
+\ell\le2(2^{H+1}-1)(H+\lceil N/2\rceil).
+\tag{TOS.12}
+$$
+
+**Proof.** A joint positive outcome supplies a different-row pair at
+every depth. Thus no depth determines the whole row. Apply [ARH,
+(ARH.2.3)][ARH] on precisely its complete-state and action premises to
+exclude every uniformly bounded serial or static new-read service.
+This uses actual finite counterpairs, not a signed infinite source.
+
+For positive recovery, first obtain the *entire* finite attained row
+list and actual realizing originals from [NPL, Theorem 5.3][NPL].
+Apply Theorem 4.3 to every distinct pair. A positive pair gives the
+preceding exclusion. Otherwise take the maximum $H$ of every pair's
+exclusion depth, zero if there are no pairs. Downward closure and the
+full row list show that equal $p_H$ implies equal complete row on all
+$D$. An exclusion for one larger selected $B$ alone would not prove
+this implication.
+
+At the actual register $\rho^N u$, use the supplied original decoder
+to obtain every original reply $|p|\le H$, with at most two paid
+current reads of length at most $H+\lceil N/2\rceil$ per original
+word. Then finite whole-source feasibility, or source enumeration on
+the entire conditioned $D$, returns a matching original whose whole
+row is the constant correct output on that conditioned fiber. The
+actual source proves that this local search terminates. [NSF, Theorem
+6.1][NSF] gives (TOS.12). No mathematical chart parameter was read.
+$\square$
+
+If NPL returns an infinite whole-row image, the existing finite-reply
+argument already excludes uniformly bounded whole-row reads. If a pair
+is not recognized, this volume leaves its all-depth decision unresolved.
+The merged [SJM, Theorem 3.2][SJM] may use fixed-set choices for all
+required subsets to determine its conditional field cardinality; that
+is its exact source boundary, not a new minimum-memory theorem here.
+
+Paid full traversal of the actual finite current tree, followed by local
+normal-code inversion at its authentic $N$, still gives sourcewise
+finite recovery. This does not imply a uniform new-call, literal-word,
+local-computation, preparation, memory or retention bound. Pre-cut
+acquisition, uniform new reads, actual submitted words, forward updates,
+local work, installation, working memory and retained descriptions are
+separate charges. Neither finite inverse mathematics nor the offline
+witness construction is a runtime old-version read or a free source
+selector. No optimal budget or physical spacetime reconstruction follows.
+

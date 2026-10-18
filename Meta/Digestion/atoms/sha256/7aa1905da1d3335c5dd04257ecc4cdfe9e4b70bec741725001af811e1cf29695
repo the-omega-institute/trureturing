@@ -1,0 +1,37 @@
+**Theorem 6.2 (N5, every minimizer is good near $\tau=1$).** If
+
+$$
+1-\varepsilon_0\le\tau<1,
+\tag{6.1}
+$$
+
+then every global minimizer over the entire complex $\mathcal E_2$ is good.
+Consequently, for every allowed preparation, both $\mathsf G$ and
+$\mathsf{GP}$ attain their common infimum whenever
+
+$$
+\frac{2(1-\varepsilon_0)}{3-2\varepsilon_0}\le Z<\frac23.
+\tag{6.2}
+$$
+
+**Proof.** Let $a=1-\tau$. Then $0<a\le\varepsilon_0<1/4$ and Theorem
+5.3 applies. Since $\varepsilon_0=144/(65536\pi^2)$,
+
+$$
+T_4(\tau)\le\tau+\frac{a^7}{144}
+\le\tau+\frac{a^6}{65536\pi^2}.
+\tag{6.3}
+$$
+
+Theorem 1.5 supplies a global minimizer and says that every one is minimal
+order two. If a minimizer were bad, Theorem 4.1 would give the strict
+opposite inequality to (6.3), a contradiction. Hence every minimizer is
+good. At $a=\varepsilon_0$ the two comparison bounds tie, but the
+individual bad-profile lower bound is strict, so the lower window endpoint
+is included. Theorem 1.5 now supplies an attained $\mathsf{GP}$ optimum and
+therefore an attained $\mathsf G$ optimum with value
+$4H\sqrt{T_4(\tau)}$. The trial value is not substituted for $T_4$.
+The map $Z=2\tau/(1+2\tau)$ is strictly increasing, and gives exactly
+(6.2). All original preparations, signed commands, offsets, finite
+histories, and full all-times path guards remain in force. $\square$
+

@@ -1,0 +1,34 @@
+**Definition 1.1 (the original source and observation).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,\qquad
+h(\langle u,v\rangle)=1+\max\{h(u),h(v)\}.
+$$
+
+Pairing is free and ordered. Every finite word over $L,R$, including
+$\varepsilon$, is a legal original-root literal. Write $r_t(a)$ for
+its reply in $\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$;
+traversal past a leaf gives absent. The homomorphic substitution is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For each public integer $D\ge1$ put
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+W_D=\{q:|q|\le D-1\},\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{NPC.1}
+$$
+
+One actual initial source remains stationary throughout preparation and
+late acquisition. The iterates $\rho^kt$ specify prediction targets.
+There is no subtree, equality, identity, age, copying, reset, navigation
+or advice port. These are the carriers of [NDR, Definition 1.1][NDR]
+and [FMR, Definition 1.2][FMR].
+

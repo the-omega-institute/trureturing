@@ -1,0 +1,173 @@
+## 9. 层间径向捕获与层内关联耗散
+
+要让轨迹真正从金字塔底部走向顶点，定义一个额外的径向捕获生成元。取非负可测速率 \(\mu,\gamma:[0,\infty)\to[0,\infty)\)，并要求二者局部可积，即对每个有限 \(T>0\)，
+
+\[
+\int_0^T\mu(s)\,ds<\infty,\qquad
+\int_0^T\gamma(s)\,ds<\infty.
+\]
+
+积分均为 Lebesgue 积分。给定任意五态概率初值 \(p(0)=p^{\mathrm{in}}\)，初值解要求在每个 \([0,T]\) 上绝对连续且取值于概率单纯形；以下带点导数及 ODE 等式均在几乎处处的时间成立，等价地使用其积分形式，不要求可测速率下的逐点经典导数。底部四态统一向 apex 3 泄漏：
+
+\[
+\dot p_i=J\nu_i-\mu p_i
+\quad (i\in\{0,2,5,25\}),
+\]
+
+\[
+\dot p_3=\mu r,
+\]
+
+其中
+
+\[
+J=\gamma(p_2p_5-p_0p_{25}).
+\]
+
+这个生成元保持归一化，并给出
+
+\[
+\dot r=-\mu r,
+\qquad
+\dot X=-\mu X,
+\qquad
+\dot Y=-\mu Y,
+\qquad
+\dot Z=\mu r.
+\]
+
+若 \(r_0=0\)，概率初值只能是 \(\delta_3\)。径向标量方程的积分因子给出 \(r(t)=0\)，非负性使底部四态全为零，故唯一概率值初值解是吸收态 \(p(t)=\delta_3\)。此分支不定义 \(q,\alpha,\beta,\eta\)。
+
+以下归一化公式均取 \(r_0>0\)。令 \(M(t)=\int_0^t\mu(s)\,ds\)。绝对连续标量方程的积分因子给出 \(r(t)=r_0e^{-M(t)}\)；局部可积性保证在每个有限 \([0,T]\) 上 \(r(t)\ge r_0e^{-M(T)}>0\)。因此 \(\alpha=X/r,\beta=Y/r,\eta=p_{25}/r\) 和底部条件律 \(q_i=p_i/r\) 均有定义且绝对连续，商法则几乎处处给出
+
+\[
+\dot\alpha=0,\qquad
+\dot\beta=0.
+\]
+
+宏观轨迹是一条固定 ray：
+
+\[
+X(t)=r(t)\alpha_0,\qquad
+Y(t)=r(t)\beta_0,\qquad
+Z(t)=1-r(t).
+\]
+
+同时，隐藏坐标满足
+
+\[
+\dot\eta=-\gamma r(\eta-\alpha_0\beta_0).
+\]
+
+因此两个过程在归一化坐标中分离：
+
+\[
+r(t)
+=
+r_0\exp\left(-\int_0^t\mu(s)\,ds\right),
+\]
+
+\[
+\eta(t)-\alpha_0\beta_0
+=
+(\eta_0-\alpha_0\beta_0)
+\exp\left(-\int_0^t\gamma(s)r(s)\,ds\right).
+\]
+
+定义有效热化 exposure
+
+\[
+G(t)=\int_0^t\gamma(s)r(s)\,ds.
+\]
+
+因为 \(0<r(s)\le1\)，每个有限时间的 \(G(t)\) 也有限。\(M,G\) 在每个有限区间上绝对连续，且 \(M'=\mu,G'=\gamma r\) 几乎处处成立；指数的链式法则使上述解绝对连续并在 \(t=0\) 恢复初值。为验证可行性及唯一性，初值的边际满足 \(0\le\alpha_0,\beta_0\le1\)，且
+
+\[
+\eta_0\in I(\alpha_0,\beta_0)
+=\bigl[\max(0,\alpha_0+\beta_0-1),\min(\alpha_0,\beta_0)\bigr].
+\]
+
+独立点 \(\alpha_0\beta_0\) 也在此 Fréchet 区间内：它非负、不超过两个边际，且 \((1-\alpha_0)(1-\beta_0)\ge0\)。令 \(w(t)=e^{-G(t)}\in(0,1]\)，则 \(\eta(t)=w(t)\eta_0+(1-w(t))\alpha_0\beta_0\)，因而始终在同一区间内。四格重构为
+
+\[
+q_t=(1-\alpha_0-\beta_0+\eta(t),\alpha_0-\eta(t),
+\beta_0-\eta(t),\eta(t))
+=w(t)q_0+(1-w(t))q_*,
+\]
+
+\[
+q_*=\bigl((1-\alpha_0)(1-\beta_0),\alpha_0(1-\beta_0),
+(1-\alpha_0)\beta_0,\alpha_0\beta_0\bigr).
+\]
+
+两份条件律均非负且和为一，允许初始零格和退化边际。完整重构 \(p_t=(r q_{t,0},r q_{t,2},1-r,r q_{t,5},r q_{t,25})\) 因 \(0<r\le1\) 保持非负与归一化；乘积法则和 \(J=\gamma r^2(\alpha_0\beta_0-\eta)\) 验证原 ODE 几乎处处成立。反过来，任何概率值绝对连续解都由径向方程、固定边际和 \(\eta\) 的标量方程恢复这些式子，故唯一性也涵盖条件边界初值。
+
+局部可积性只约束有限时间：当 \(r_0>0\) 时，\(r(t)\to0\) 当且仅当 \(M(\infty)=\infty\)；若 \(M(\infty)<\infty\)，则 \(r(t)\to r_0e^{-M(\infty)}>0\)。因此从正底部质量出发不能在有限时间到达 apex，但可在无限时间被完全捕获。
+
+热化 exposure 给出一个非平凡的两时间尺度判据：
+
+\[
+G(\infty)=\infty
+\quad\Longrightarrow\quad
+\eta(t)\to\alpha_0\beta_0,
+\]
+
+而
+
+\[
+G(\infty)<\infty
+\quad\Longrightarrow\quad
+\text{归一化条件关联可能残留}.
+\]
+
+有限总 exposure 时，残留的精确极限为 \((\eta_0-\alpha_0\beta_0)e^{-G(\infty)}\)，初始关联非零才有非零残留。即使 \(r(t)\to0\)，这也是正底面分支的条件极限，不在 apex 上定义条件坐标。
+
+特别地，当 \(\mu,\gamma\) 为常数且 \(\mu>0\) 时，
+
+\[
+r(t)=r_0e^{-\mu t},
+\qquad
+G(\infty)=\frac{\gamma r_0}{\mu}<\infty.
+\]
+
+在此 \(\mu>0\) 分支且 \(r_0>0\) 时，系统渐近趋向 apex；若初始条件关联非零，有限的总 exposure 使归一化关联仍有残留。这是动力学和热力学之间的实际 tradeoff，不是单纯的几何类比。
+
+常数 \(\mu=0\) 时则保留另一分支：
+
+\[
+r(t)=r_0,\qquad G(t)=\gamma r_0t,\qquad
+G(\infty)=
+\begin{cases}
+\infty,&\gamma r_0>0,\\
+0,&\gamma r_0=0.
+\end{cases}
+\]
+
+因此零径向速率不产生向 apex 的运动；当 \(\gamma r_0=0\) 时 exposure 恒为零，不使用 \(\gamma r_0/\mu\)。
+
+定义隐藏残差
+
+\[
+D_{\mathrm h}(t)=r(t)I(q_t).
+\]
+
+在吸收的 apex 分支单独取 \(D_{\mathrm h}=0\)，不使用条件律。在底部条件四格均为正的开时间区间内，使用对数平均 mobility \(\Lambda\) 时，几乎处处有
+
+\[
+\dot D_{\mathrm h}
+=
+-\mu D_{\mathrm h}
+-\gamma r^2\Lambda A^2
+\le0,
+\]
+
+其中
+
+\[
+A=\ln\frac{q_0q_{25}}{q_2q_5}.
+\]
+
+第一项来自底部质量被径向捕获，第二项来自同一层内部的关联耗散。Shannon 熵本身在径向开放流下不必单调，因此这里应使用 \(D_{\mathrm h}\) 或指定的 excess free energy 作为 Lyapunov 量。
+
+零格边界不使用有限对数梯度；概率流仍由上述重构定义。固定边际下 \(I(q)=D(q\Vert q_*)\)，任意较晚时刻的条件律又是较早条件律与 \(q_*\) 的凸组合，KL 的凸性和 \(r\) 的非增性给出边界上的 \(D_{\mathrm h}\) 非增结论。
+

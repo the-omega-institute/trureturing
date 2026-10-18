@@ -1,0 +1,5 @@
+source_id = "fib-native-complete-continuation-quantitative-output-stability"
+path = "docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_QUANTITATIVE_OUTPUT_STABILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,106 @@
+**Theorem 65.6 (strictly positive relative-response floors uniform in calibration).**
+For an authentic domain with at least two sites, define the full-table relative
+error of (65.5) by
+
+$$
+E_D^\diamond=\max_{\{p,q\}\subset D}
+\left|\frac{\widehat G_D(p,q)}{G_D^\diamond(p,q)}-1\right|.
+\tag{65.16}
+$$
+
+Coincident modeled sites give $E_D^\diamond=+\infty$. On $D=B_3$, every
+positive $\kappa,\ell$ and every finite configuration in $\mathbb H^3_\ell$
+satisfy both the eight-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},8}
+:=1-\sqrt{\frac{847}{848}}>0,\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},8}
+:=1-\sqrt{\frac{10609}{10616}}>0,
+\tag{65.17}
+$$
+
+and the stronger five-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},5}
+:=1-\sqrt{\frac{484}{485}}>\frac1{970},\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},5}
+:=1-\sqrt{\frac{42436}{42485}}>\frac{49}{84970}.
+\tag{65.18}
+$$
+
+The respective restriction errors on the eight terminals or on $\mathcal S_5$
+already obey the displayed bound. These are certified uniform lower bounds,
+not identified optimal minimax errors.
+
+Proof. For the function $f$ in Theorem65.4, put $u=\sqrt{1+z}>1$.
+Then $f(z)=(u-1)^2/(2u)$ and
+
+$$
+\frac{zf'(z)}{f(z)}
+=\frac{(1+(1+z)^{-1/2})^2}{2}\le2\qquad(z>0).
+\tag{65.19}
+$$
+
+Integrating this logarithmic derivative gives, for $t\ge1$,
+$f(tz)\le t^2f(z)$. If $g_{\min}$ and $g_{\max}$ are the smallest and
+largest coefficients on the complete terminal table, set
+$a_{\max}=f(\kappa/g_{\min})$ and
+$a_{\min}=f(\kappa/g_{\max})$. Thus
+
+$$
+\frac{a_{\min}}{a_{\max}}
+\ge\left(\frac{g_{\min}}{g_{\max}}\right)^2.
+\tag{65.20}
+$$
+
+This controls the relative negative margin even when $\kappa$ tends to zero
+or to infinity; a fixed-parameter rank argument alone would not give this
+uniform response bound.
+
+Consider a restriction to $m\ge5$ terminals. Let $E$ be its relative-response
+error. For $E\ge1$ all the claimed bounds hold. If $E<1$, every pair satisfies
+$(1-E)g\le\widehat g\le(1+E)g$. Applying (65.19) to
+$f(\kappa/\widehat g)$ and $f(\kappa/g)$ yields
+
+$$
+\left|f(\kappa/\widehat g)-f(\kappa/g)\right|
+\le a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.21}
+$$
+
+For the lower endpoint use
+$f(\kappa/\widehat g)\ge(1+E)^{-2}f(\kappa/g)$ and
+$1-(1+E)^{-2}\le(1-E)^{-2}-1$; the upper endpoint uses
+$(1-E)^{-2}$. The modeled Gram $\widehat C$ and the prescribed $C$ have
+the same diagonal one. The symmetric row-sum bound therefore gives
+
+$$
+\|\widehat C-C\|_{\rm op}
+\le(m-1)a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.22}
+$$
+
+If the right side were smaller than $a_{\min}$, (65.13) would make
+$\widehat C$ strictly negative on the $(m-1)$-dimensional zero-sum subspace.
+The classical variational perturbation argument is immediate here:
+$z^\mathsf T\widehat Cz\le
+[-a_{\min}+\|\widehat C-C\|_{\rm op}]\|z\|^2$ on that subspace.
+Since a hyperbolic-three Gram has at most three negative eigenvalues, this is
+impossible. Equations (65.20)–(65.22) consequently imply
+
+$$
+E\ge1-\left[1+\frac{(g_{\min}/g_{\max})^2}{m-1}\right]^{-1/2}.
+\tag{65.23}
+$$
+
+The depth-three ratios are $1/11$ and $7/103$. With $m=8$, (65.23) gives
+(65.17); with $m=5$ and the actual subset (65.15), it gives (65.18).
+That subset includes a sibling pair and a pair separated at the root, so both
+terminal extremes are retained. Its negative margin follows from the same
+restricted cluster identity, without fitting only five chosen response entries.
+The bounds apply to all its ten pairs and hence to the full 105 pairs.
+Finally $1-\sqrt{1-x}=x/(1+\sqrt{1-x})>x/2$ for $0<x<1$
+proves the rational strict lower bounds in (65.18). $\square$
+

@@ -1,0 +1,23 @@
+### 57.2 A uniform punctured endpoint cube
+
+
+Use the exact polynomials of published (55.24)–(55.27), and let
+\(A_{R,c}+hB_{R,c}\) be their positive-factor seed reductions (56.4),
+for \(R\in\{I,H,G,L\}\) and \(c\in\{F,Q\}\). Thus
+\((\kappa_I,\kappa_H,\kappa_G,\kappa_L)=(3,3,4,3)\), and the proper
+chart degrees are \((d_I,d_H,d_G,d_L)=(2,1,2,1)\).
+
+**Lemma 57.2.** Put
+\[
+\rho=1/16,\quad e=1-b,\quad x=s+1/5,\quad y=t+2/5,
+\quad h=\sqrt{(3-b^2)/(1+b^2)}.
+\]
+In either proper chart, the four necessary rows have no common zero on
+\[
+0\le e\le\rho,\qquad |x|,|y|\le\rho,\qquad |v|\le1,
+\qquad e^2+x^2+y^2>0.                                      \tag{57.10}
+\]
+All chart endpoints and reciprocal infinity are retained. The transverse
+origin is excluded from this assertion: it is the polynomial
+zero stratum \(b=h=1,\ s=-1/5,t=-2/5,m=0\), for every \(v\).
+

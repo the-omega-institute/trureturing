@@ -1,0 +1,49 @@
+**Definition 14.1 (same-source endpoint Gram and canonical joint columns).**
+Retain the complete source and comparison premises of Assumption 1.1,
+with the quantities of Definitions 1.2–1.3. For any nonnegative common
+law with moments $B(t)$, let $\rho_0,\rho_1$ be its pure and saturated
+endpoint measures, respectively:
+
+$$
+\begin{gathered}
+d\rho_0(x)=\int(1-\xi)\,d\pi(x,\xi),\qquad
+d\rho_1(x)=\int\xi\,d\pi(x,\xi),\qquad S=\int1\,d\rho_1,\\
+a(x)=(1,u,v)^T,\quad D_3=\operatorname{diag}(1,\alpha,\beta),\quad
+M_j=\int a(x)a(x)^T\,d\rho_j(x),\quad M_0+M_1=D_3,\\
+c_{\min}=\min\{N_u/D_u,N_v/D_v\}>0,\quad
+T_3=\frac{\mu+\max(V,W)}{c_{\min}},\quad
+C=\frac{\mu}{tc_{\min}},\quad m=\min(\alpha,\beta)>0.
+\end{gathered}
+\tag{IC.57}
+$$
+
+The measure notation denotes integration against the indicated endpoint
+projections; no disintegration hypothesis is added. On an endpoint law
+these are its actual sheet measures. The rank of $M_0$ concerns directed
+pure coordinates, not physical state purity, Kraus multiplicity or actual
+label count. The exact capacity minimum is FC Proposition 34.2's
+positive-denominator weighted mean of the two axial ratios.
+
+When Assumption 1.4 is also supplied, retain the entire inventory and
+partition of Definition 1.5 and the polytope of (IC.31). For an endpoint
+column indexed by $i$, write
+
+$$
+H_i=\begin{pmatrix}\Gamma_i\\\kappa_i\end{pmatrix},\qquad
+H=\begin{pmatrix}A\\\kappa^T\end{pmatrix},\qquad
+\kappa_i=|u_i|.
+\tag{IC.58}
+$$
+
+Here $A$ has eight rows; $H$ has nine. The notation $H$ in this
+section is a moment matrix, distinct from the signed heights $H_i$
+in §11. An index set $I$ is called canonical here only when it has
+nine strictly positive coordinates in nine distinct complete groups
+and $H_I$ is invertible, as supplied by FC Theorem 6.1 for its
+nonconstant critical edge. No occupied pure coordinate has an occupied
+saturated companion in such a support. Its companion remains available
+if the complete group is a pair. For $j=7,8$, $U_j$ has FC Definition
+5.1's complete vertex/edge meaning, equivalently the union of contrast
+images of coordinate faces using at most $j$ complete groups by FC
+Theorem 5.2; thus $U_7$ agrees with (IC.32).
+

@@ -1,0 +1,82 @@
+**Proposition 4.1 (Orthogonal decomposition and the floor).** Every
+finite-error decoder has a unique decomposition
+
+$$
+q(k,\alpha,\beta)=D(a(k,\alpha),b(k,\alpha))+w(k,\alpha),
+\qquad w\perp\operatorname{im}D,
+$$
+
+where $a,b\in\mathbb R^2$. At each fixed $k,\alpha$, its exact
+worst squared error over the full $\beta$ circle is
+
+$$
+\|w\|_2^2+4\|a-A(k)U(\alpha)\|_2^2+
+\bigl(\|b\|_2+B(k)\bigr)^2.
+\tag{4.1}
+$$
+
+Every achievable tolerance obeys $\epsilon\ge e_0$. At tolerance
+$e_0$, the complete necessary residual inequality is
+
+$$
+\|w\|_2^2+4\|a-A(k)U(\alpha)\|_2^2+
+\|b\|_2^2+2B(k)\|b\|_2\le4Z(H-k).
+\tag{4.2}
+$$
+
+**Proof.** Since $D^{\mathsf T}D$ is invertible, define
+
+$$
+\binom ab=(D^{\mathsf T}D)^{-1}D^{\mathsf T}q,
+\qquad w=q-D(a,b).
+$$
+
+Then $D^{\mathsf T}w=0$. This is the unique orthogonal decomposition,
+and all its entries are fixed affine scalar functionals of $E$.
+Theorem 3.3 makes them independent of $\beta$. Orthogonality and
+Lemma 1.3 give
+
+$$
+\|q-y\|_2^2
+=\|w\|_2^2+4\|a-A(k)U(\alpha)\|_2^2+
+\|b-B(k)U(\beta)\|_2^2.
+$$
+
+If $b\ne0$, choosing $U(\beta)=-b/\|b\|_2$ maximizes the last
+term, with value $(\|b\|_2+B(k))^2$. If $b=0$, every $\beta$
+gives that value. Every such phase is an actual reachable ray by
+Proposition 1.2, so this is the exact maximum for the original task.
+It proves (4.1), including the output-complement term.
+
+In particular,
+
+$$
+\epsilon^2\ge4\|a-A(k)U(\alpha)\|_2^2+4Zk
+\quad(0<k<H).
+$$
+
+Taking the real supremum over the interior heights gives
+$\epsilon^2\ge4ZH$. This is a supremum of values on lawful states;
+it does not evaluate an encoder at $k=H$. If $\epsilon=e_0$,
+expanding the last square in (4.1) and moving $B(k)^2=4Zk$ to the
+right gives exactly (4.2). $\square$
+
+Fix $\alpha=\beta=0$ and let $g(k)$ be the first component of
+$a(k,0)$. Because the projection above is fixed, there is a single real
+row $\ell$ with
+
+$$
+g(k)=\ell F(k,0,0).
+$$
+
+Dropping only nonnegative terms from (4.2) gives, for every $0<x<H$,
+
+$$
+\left|g(H-x)-2\sqrt{(H-x)x}\right|\le\sqrt{Zx}.
+\tag{4.3}
+$$
+
+The row $\ell$ is independent of $k$. This feature of the original
+fixed affine decoder will constrain finite probability histories near
+the upper end of the open interval.
+

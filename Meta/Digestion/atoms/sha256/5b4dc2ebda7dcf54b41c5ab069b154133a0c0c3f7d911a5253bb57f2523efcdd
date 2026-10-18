@@ -1,0 +1,18 @@
+**Proposition 3.1 (branch value derivative).** On either analytic branch,
+$$
+2V_b-H_{\rm high}=J_b=Y_b\cdot B(1000)-\lambda k_b,
+\qquad
+J_b'=-\lambda k_b',
+$$
+and therefore
+$$
+\frac{dV_b}{ds}=-\frac{\lambda\sqrt\alpha}{2s_0},
+\qquad
+\frac{d^2V_b}{ds^2}
+=-\frac{\alpha}{2s_0^2k_b'}.
+$$
+
+**Proof.** At occupied contacts the dual gap vanishes, so the endpoint height contribution equals the contact dual value. Summing against the eight moments gives the first identity. Differentiating the occupied moment and stationarity equations, multiplying the survivor stationarity by the survivor velocity, and using the vanishing gap of the disappearing atom on the seven branch gives $Y_b'\cdot B(1000)=k_b$. Hence $J_b'=-\lambda k_b'$.
+
+Since $s=s_0k/\sqrt\alpha$, inversion is legitimate on both sides by Theorem 2.3. Differentiating $2V_b'=-\lambda k_b'$ with respect to $s$ gives the stated first and second derivatives. The event value, dual vector and first derivative agree because the two sections are the exact embeddings of the same event law. $\square$
+

@@ -1,0 +1,17 @@
+**Definition 6.1 (clipped edge span on the actual held-record fibre).** Use the original seed-1, marker-100 fibre of [PAIR, equations (1.3)–(1.4)]. Let $\mathcal E_B^*(M)$ contain every original p-to-suspended edge $(x,y)$ with positive acquired-beta transition probability from a p configuration reachable after a positive finite actual history on that fibre. The successor is also reachable, since the actual beta probability is positive at every supported depth. Write the original next-alpha emissions as $u_x,v_y$, and define
+
+$$
+\widehat u_x=[u_x]_{[a,b]},\qquad
+\widehat v_y=[v_y]_{[a,b]},\qquad
+\widehat z_{xy}=(1-\widehat u_x)\widehat v_y,
+$$
+
+$$
+\mathcal S(M)=
+\max_{(x,y)\in\mathcal E_B^*(M)}\widehat z_{xy}
+-\min_{(x,y)\in\mathcal E_B^*(M)}\widehat z_{xy}.
+\tag{6.1}
+$$
+
+The finite nonempty edge set is a semantic analysis set; it is not a new acquisition or controller port. Clipping in (6.1) is part of the definition. A claim about the span of the unmodified products would require another argument.
+

@@ -1,0 +1,57 @@
+**Theorem 2.2 (complete native experiment and length characterization).**
+On any attained $\eta$, every original-root query has exactly one of
+the following geometric descriptions.
+
+1. If $|p|<D$, its reply is constantly branch.
+2. Otherwise write uniquely $p=w_jv$. Its reply on history $h$ is
+   $E(n_j(h))$, $P_t(n_j(h))$ or $S_t(n_j(h))$ according to
+   Definition 2.1. If $j\in S$ this is already determined by the
+   acquired literal exterior. If $j\notin S$ its actual cells are
+   exactly the inverse images of (LQF.5) under $h\mapsto n_j(h)$.
+
+For a fixed slot the complete literal length possibilities for these
+types are
+
+$$
+\begin{array}{c|c|c}
+\text{type}&\text{whole-word lengths}&\text{a shortest suffix}\\ \hline
+E& D&\varepsilon\\
+P_{2s},\ s\ge1&D+s,\ldots,D+2s-1&R^s\\
+P_{2s+1},\ s\ge1&D+s+1,\ldots,D+2s&LR^s\\
+S_{2s},\ s\ge1&D+s,\ldots,D+2s-1&R^{s-1}L\\
+S_{2s+1},\ s\ge1&D+s+1,\ldots,D+2s&R^{s-1}LL.
+\end{array}
+\tag{LQF.6}
+$$
+
+Every listed length is realized by a literal word of that type on every
+atomic age, and there are no other lengths for that type. Together with
+the constant shallow and displayed queries, restricting this list to
+$\mathscr H_\eta$ characterizes all legal labeled reply partitions
+with their full lengths. Different types or slots can coincide after
+restriction; their costs are still those of their submitted words.
+There is no physical $P_1$.
+
+Proof. The complete skeleton contains every word through depth $D$;
+its nodes at lesser depths are branches. At depth $D$ its unique slot
+prefix is reached on every history. The suffix is then read in the
+actual $T_{n_j(h)}$. Apply the supplied guarded formula (LQF.5).
+For a displayed slot this is a computation on the acquired literal
+tree, including all absent replies beyond its leaves. This exhausts
+whole-tree addresses, without moving the root or observing two slots
+in a single query.
+
+For an $R$-ending suffix of weight $t$, let $b\ge1$ be its number
+of $R$ letters and $a\ge0$ its number of $L$ letters. Then
+$a+2b=t$ and $|v|=t-b$, so precisely
+$\lceil t/2\rceil\le|v|\le t-1$ are possible. For each integer
+in that range choose these counts and arrange the last letter as $R$.
+For an $L$-ending suffix realizing $S_t$, one has $a\ge1$,
+$b\ge0$, $a+2b=t-1$ and $|v|=t-1-b$. The same length interval
+results, and arranging one $L$ last realizes every value. The displayed
+shortest words are the already supplied representatives; this counting
+also identifies their nonshortest competitors. Prefixing costs exactly
+$D$ letters. An $R$-ending word has weight at least two; the weight-one
+word $L$ gives $S_2$, not $P_1$. Restriction forms the actual reply
+cells on the same histories and adds no new experiment. $\square$
+

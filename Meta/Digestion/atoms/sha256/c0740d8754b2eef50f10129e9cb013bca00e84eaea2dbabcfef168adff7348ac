@@ -1,0 +1,31 @@
+**Lemma 4.2 (compactness and finite representation).** The maximum in
+(JS.20) exists. Every feasible measure can be replaced by at most five
+atoms preserving covariance, cost and objective. Feasibility holds
+exactly for $\lambda\ge C_{\rm end}$, and $\Phi(C_{\rm end})=0$.
+
+Proof. Covariance is equivalent to mass $\mu$, $z^2$ moment $V$ and
+$zw$ moment zero; the $w^2$ moment follows from the ellipse. All
+relevant functions are continuous on a fixed compact set. Measures
+of this fixed mass have weakly convergent subsequences, preserving
+all these integrals. One elementary compactness justification takes
+a countable uniformly dense family in the continuous functions,
+selects a diagonal subsequence of their bounded integrals, and extends
+the limit by the uniform norm; the resulting positive functional of
+mass $\mu$ is integration against a measure on the compact ellipse.
+Thus the closed cost slice is compact and its continuous objective
+attains a maximum.
+
+There is also a finite-dimensional representation proof. Apply the
+continuous map $(z,w)\mapsto(z^2,zw,F_c(z^2),k_+)$ into $\mathbb R^4$.
+An affine dependence among more than five image points permits changing
+weights, keeping the barycentre fixed, until a weight vanishes.
+Repeating reduces any finite convex combination to five points.
+Such five-point combinations form a compact set, as the continuous
+image of the compact five-weight simplex and five copies of the image.
+Approximation of the four continuous integrals by finite simple laws
+therefore puts their barycentre in this same closed hull. Multiplying
+by $\mu$ gives the asserted exact representation, including zero
+weights and axes. Lemma 3.1 and $\nu_0$ prove the feasibility domain;
+its equality directions have $k_+=0$, proving the endpoint value.
+$\square$
+

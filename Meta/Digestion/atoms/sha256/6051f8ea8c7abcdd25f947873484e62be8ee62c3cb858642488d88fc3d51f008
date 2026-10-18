@@ -1,0 +1,30 @@
+### 98.2. The nonsymmetric matrix and the actual Selmer directions
+
+**Proof.**
+
+The source convention of Theorem 95.1 has off-diagonal A_ij=[q_j/q_i] and zero row sums. In the order (q,r,s), the character hypotheses give
+
+ A=[[0,0,0],[1,1,0],[1,1,0]],
+ A^T=[[0,1,1],[0,1,1],[0,0,0]].
+
+Both matrices have rank one. With 1=(1,1,1), write
+
+ v=(1,1,0), w=(0,1,1).
+
+Then ker A=span{1,v} and ker A^T=span{1,w}. These spaces differ: the right cut qr is not a left direction, and the left direction rs is not a right cut. Indeed A^T v=(1,1,0) and Aw=(0,1,1) are nonzero.
+
+All three primes have delta_i=[-1/q_i]=1 and t_i=[2/q_i]=1. Theorem 95.1 parametrizes the full Selmer group by (y0,x,y) in F_2 x ker A^T x ker A, with
+
+ b1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b2=5^y0 product q_i^y_i,
+ a=y0, epsilon=y0+delta^T x,
+ x0=y0+t^T x+delta^T y.
+
+The choices (0,w,0) and (0,0,v) therefore give precisely
+
+ lambda=(rs,1), mu=(1,qr)
+
+in the Kummer pair order (X,X+5D). Both sign and five-exponent vanish because each chosen direction contains two primes. These are the genuine extra directions; using the same indicator in both slots would fail Selmer membership.
+
+The actual golden class S=(-15,5) and the two rational torsion generators have parameter vectors (1,0,0),(0,1,0),(1,0,1). Together with (0,w,0),(0,0,v), they form a basis of the full five-dimensional Selmer space. Thus S,lambda,mu form a basis of its three-dimensional quotient by rational torsion. Theorem 85.1 supplies exact rational torsion E_D[2] and the actual non-torsion original point; no extra Selmer class is assumed to be a rational point.
+

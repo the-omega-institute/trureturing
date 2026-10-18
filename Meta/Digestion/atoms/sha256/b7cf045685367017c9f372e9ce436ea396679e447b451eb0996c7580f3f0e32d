@@ -1,0 +1,24 @@
+## 421. The strict high-V six-owner contradiction
+
+Each of the k=2 heavy owners has P expense greater than 4*pi/3,
+and hence W expense greater than 8*pi/3.
+
+Every genuine owner that is neither cheap nor heavy spends more than
+2*pi on W. For all such roles except the transverse P/V class, its
+P expense is already greater than pi. For the transverse P/V class,
+the exact estimates of Section 380 are
+
+    P_T>2*atan(2), P_T+V_T>4*atan(2).
+
+Thus W_T=P_T+(P_T+V_T)>6*atan(2)>2*pi, because
+atan(2)>atan(sqrt(3))=pi/3.
+
+Since g>=6 and the two cheap owners and two heavy owners are disjoint,
+there are at least two further genuine owners of this latter class.
+Counting only those six original owners gives
+
+    sum W_T>2*pi+2*(8*pi/3)+2*(2*pi)
+            =34*pi/3>11*pi,
+
+contradicting (418.2). This proves the high-V exclusion.
+

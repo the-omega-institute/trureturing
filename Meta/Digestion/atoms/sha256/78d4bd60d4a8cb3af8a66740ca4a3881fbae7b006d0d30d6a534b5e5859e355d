@@ -1,0 +1,22 @@
+**推导 3.3（圆与双曲线的不同平方关系）。** 同一指数级数对
+
+```math
+K=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad K^2=-I
+```
+
+给 $`e^{\theta K}=\cos\theta\,I+\sin\theta\,K`$；对 $`S^2=I`$ 则给上述双曲式。前者在欧氏平面旋转，后者在谱坐标中作互逆伸缩。于是
+
+```math
+2\sinh a=1,\qquad 2\cosh a=\sqrt5,\qquad
+(\sqrt5)^2=1^2+2^2.
+```
+
+这是双曲恒等式 $`\cosh^2a-\sinh^2a=1`$ 的标量标定，可用 $`1,2,\sqrt5`$ 直角三角形表示；它不为来源额外供应尺子。经典 Binet 式分奇偶为
+
+```math
+F_{2k}=\frac2{\sqrt5}\sinh(2ka),\qquad
+F_{2k+1}=\frac2{\sqrt5}\cosh((2k+1)a),\qquad k\in\mathbb Z.
+```
+
+证明：偶指数时 $`\psi^{2k}=e^{-2ka}`$，奇指数时 $`\psi^{2k+1}=-e^{-(2k+1)a}`$，代入第一节即可。复双曲读出借选定相位把这两个整数分支装入同一表达式。
+

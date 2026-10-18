@@ -1,0 +1,15 @@
+**Definition 5.5 (limits of the inverse).** On a fixed exterior, local
+geometry recovers only the construction phase and local data. It
+does not recover that exterior's source, original inputs or current
+permission. The stronger history statement needs the whole-support
+or specified joint-memory observation and the canonical acquired
+domain in Theorem 5.3. It is not asserted before acquisition, for
+noncanonical preparation/code, or for a previous history already
+containing unspecified serially refined rows.
+
+Fine-history equality is distinct from raw-state equality in general,
+and from original $Q$ equality. The new fine cuts are not original
+ARC ordinals $n_0+5r+s$, not already installed HistoricalImage
+selectors, and not a paid source read or decoder input for $A$.
+No original terminal-history collision is removed.
+

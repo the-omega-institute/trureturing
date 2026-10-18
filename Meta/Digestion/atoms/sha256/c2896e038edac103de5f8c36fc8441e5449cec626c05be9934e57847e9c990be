@@ -1,0 +1,78 @@
+**Theorem 5.1 (Evaluated residual-native regular-class gap).** If a regular table has native acquired residuals and the installed prior has a supported nonendpoint, then the p-conf/suspended-law table excess of (2.4) satisfies
+
+$$
+e\ge\frac{\eta}{9456}>\frac{\eta}{10000}.
+\tag{5.3}
+$$
+
+The same bound holds for the larger excess obtained by replacing suspended-law with suspended-conf. It is uniform over all finite label counts, arbitrary stochastic entries and all allowed finite or countable priors satisfying the stated support condition.
+
+Proof. Write $d(r)=(r-a)(b-r)$. From (2.7), (4.1) and $\kappa<3/4$,
+
+$$
+\sum_c\omega_cd(r_c)\le10(1+\kappa)e\le\frac{35}{2}e.
+\tag{5.4}
+$$
+
+Round each $r_c$ to its nearest endpoint $\widehat r_c$. Then
+
+$$
+|r_c-\widehat r_c|\le\frac{2d(r_c)}{b-a}=30d(r_c).
+\tag{5.5}
+$$
+
+Native complete p laws satisfy $\operatorname{TV}(P_{p,r},P_{p,t})\le3|r-t|$ on $I$. Couple successive source letters by common uniforms until the first disagreement. The expected number of letters to completion under either native law is at most $2/(1-6/25)=50/19<3$; summing the disagreement probability $|r-t|$ over the still-matching prefixes proves the bound. Infinite outcomes remain in the carrier and have mass zero. Thus
+
+$$
+L:=\sum_c\omega_c\operatorname{TV}(P_{p,r_c},P_{p,\widehat r_c})
+\le1575e.
+\tag{5.6}
+$$
+
+Classwise convexity and (3.3), for every supported $t$, give
+
+$$
+\sum_c\omega_c\operatorname{TV}(P_{p,r_c},P_{p,t})\le\mathcal R_p.
+\tag{5.7}
+$$
+
+Let $\alpha$ be the total rounded weight at $a$ and $\beta=1-\alpha$ that at $b$. Apply (5.6)–(5.7) at both endpoints. Since the endpoint distance is $\delta_p$,
+
+$$
+\alpha,\beta\ge\frac12-\frac{e+L}{\delta_p}
+\ge\frac12-\frac{1576e}{\delta_p}.
+\tag{5.8}
+$$
+
+Choose any supported nonendpoint $r_0$. Equations (5.2), (5.6)–(5.8) imply
+
+$$
+\mathcal R_p
+\ge\left(\frac12-\frac{1576e}{\delta_p}\right)(\delta_p+\eta)-1575e.
+\tag{5.9}
+$$
+
+If the bracket is nonnegative, multiply (5.2) by it and use the two weight bounds. If it is negative, the rounded risk is nonnegative and hence still at least that negative right-hand term. This justifies (5.9) in both cases.
+
+The rational constants satisfy $0<\eta<\delta_p$. Since $\mathcal R_p\le\rho_p+e$ and $\rho_p=\delta_p/2$, (5.9) gives
+
+$$
+e\ge\eta/2-3152e-1575e,\qquad
+4728e\ge\eta/2.
+$$
+
+This proves (5.3). The rounding and coupling estimates are only proof steps; the new exclusion is of the residual-native class, rather than a new oscillation neighborhood or a coefficient revision of a supplied class. $\square$
+
+Proof of Theorem 1.3. Apply the exact original-domain common row of Citation 2.1. For any probability law $D$ and two endpoint laws $P_a,P_b$ on the complete countable carrier,
+
+$$
+\operatorname{TV}(D,P_a)+\operatorname{TV}(D,P_b)
+-\operatorname{TV}(P_a,P_b)
+=\sum_w\operatorname{dist}\bigl(D(w),[P_a(w)\wedge P_b(w),P_a(w)\vee P_b(w)]\bigr).
+\tag{5.10}
+$$
+
+Apply (5.10) configuration by configuration and average on the same stationary row. Each endpoint configuration loss is at most its exact radius by (1.7), (2.3). Every nonnegative coordinate slack on positive support is therefore zero, at both phases. In particular, $Q_x(\alpha)=u_x\in[a,b]$ and $W_y(\beta)=1-v_y\in[1-b,1-a]$. The original extracted support is consequently regular, without changing any emission, kernel or decoder. Its original noncompletion mass is also zero by the zero endpoint coordinate.
+
+If every retained $J_y$ were native, Theorem 5.1 would give positive excess, whereas (2.3) and convexity give $e=0$. This contradiction proves (1.8). Reachability is part of Citation 2.1. All original positive histories, transient states and possible zero/unit emissions outside this stationary support remain in the original domain; the argument uses an inclusion of reachable states, not a replacement of that domain. $\square$
+

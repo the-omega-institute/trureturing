@@ -1,0 +1,17 @@
+**定义 221.4（收集器及同余项缺额）。** 对非空 $F\subseteq A$，$|F|\le3$，定义 $C_F$：一个候选时直接输出它；两个候选 $a<b$ 时查询 $a$，零时输出 $a$，正时猜 $b$；三个候选 $a<b<c$ 时用 $O(a,b;a,b,c)$。每张表的所有标签与日程在回答前选定。它总输出数值标签，且在每个 $\Omega_a$ 上恰当且仅当 $a\in F$ 时输出 $a$。
+
+对非空 $A$，集外正确行要求 $\rho_w(n)\ge b_n-e$，$w\in\Omega_n,n\notin A$。定义
+
+$$
+\begin{aligned}
+\ell=\max\bigl(&0,\ 1-e-\rho_{1^L}(0),
+\max_{n,w\in\Omega_n}(1-b_n-e-\rho_w(0)),\\
+&\max_{n\notin A,w\in\Omega_n}(1-e-\rho_w(0)-\rho_w(n))\bigr),\\
+u_a&=\max\{0,b_a-e-\min_{\Omega_a}\rho_w(a)\},\\
+v_a&=1-e-\min_{\Omega_a}(\rho_w(0)+\rho_w(a)),\quad
+\delta_a(c)=\max\{u_a,v_a-c\}.
+\end{aligned}
+$$
+
+空指标最大值从 $\ell$ 中省略。并集缺额直接取并集读数的最小值，不能拼接两条单点的独立极小值。
+

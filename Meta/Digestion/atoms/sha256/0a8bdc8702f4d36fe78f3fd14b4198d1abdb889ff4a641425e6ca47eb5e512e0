@@ -1,0 +1,65 @@
+**Definition 4.2 (all states, labels and successors of $P_g$).** For
+binary words, $|w|$ is length and $\operatorname{wt}(w)$ is weight.
+Install precisely the following distinct running states, together with
+the two distinct terminals $0,1$.
+
+The retained parent states are
+
+$$
+\{q_w:w\in\{0,1\}^{<n},\
+       \text{no }c\in\mathcal C_g\text{ is a prefix of }w\}.
+\tag{IC.23}
+$$
+
+The unique start is $q_\varepsilon$. If $|w|<p$, its coordinate
+is $\mathsf I_{|w|+1}$. If $|w|\ge p$, its first $p$ replies
+are the assignment $\eta$ on $\mathsf I$, and its coordinate is
+$\pi_{f(\eta)}(|w|+1)$. For each reply $e\in\{0,1\}$ set
+
+$$
+\delta(q_w,e)=
+\begin{cases}
+R_\varepsilon,&|w|+1=d_0\text{ and }we\in\mathcal C_g,\\
+q_{we},&|w|+1<n\text{ and the first case does not hold},\\
+\mathbf1_{\{\operatorname{wt}(w)+e\ge k\}},&|w|+1=n.
+\end{cases}
+\tag{IC.24}
+$$
+
+Install all scan states
+
+$$
+\{R_v:v\in\{0,1\}^{<p}\}.
+\tag{IC.25}
+$$
+
+State $R_v$ queries coordinate $\mathsf U_{|v|+1}$. If
+$|v|+1<p$, its reply-$e$ successor is $R_{ve}$. If $|v|+1=p$,
+let $j=\operatorname{wt}(ve)$ and use the following fixed successor:
+
+| Weight $j$ of the completed $\mathsf U$ word | Successor |
+| --- | --- |
+| $0$ | $A_1$ |
+| $1\le j\le g-2$ | $J$ |
+| $g-1$ | $B_1$ |
+| $g$ | $C_1$ |
+| $g+1\le j\le p$ | $1$ |
+
+Finally install exactly six exit states:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $A_1$ | $4$ | $A_2$ | $J$ |
+| $A_2$ | $5$ | $0$ | $1$ |
+| $B_1$ | $2$ | $J$ | $B_2$ |
+| $B_2$ | $3$ | $0$ | $1$ |
+| $C_1$ | $2$ | $B_2$ | $1$ |
+| $J$ | $1$ | $0$ | $1$ |
+
+The parent states, scan states, six exits and two terminals are pairwise
+different. There are no other installed Boolean states. Word indices,
+their weights and $f$ specify the fixed labels and fixed edges of each
+separate installed state. They are not online calculations or additional
+accessible configuration coordinates. In particular all word-indexed
+states are charged individually.
+

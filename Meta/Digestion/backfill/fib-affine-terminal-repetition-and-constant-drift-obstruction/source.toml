@@ -1,0 +1,5 @@
+source_id = "fib-affine-terminal-repetition-and-constant-drift-obstruction"
+path = "docs/develop/theory/FIB_AFFINE_TERMINAL_REPETITION_AND_CONSTANT_DRIFT_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

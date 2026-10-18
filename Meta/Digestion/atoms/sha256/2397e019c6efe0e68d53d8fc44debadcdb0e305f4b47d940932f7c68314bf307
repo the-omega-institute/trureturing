@@ -1,0 +1,74 @@
+**Lemma 15.1 (Primary projectors are finite combinations of phase maps).**
+For the representation (14.1), there are finitely many distinct
+abstract characters $\lambda:\mathbb T\to\mathbb C^\times$
+and a direct sum
+
+$$
+X_{\mathbb C}=\bigoplus_{\lambda\in\Lambda}X_\lambda
+$$
+
+of invariant primary subspaces. On $X_\lambda$ every $V_\delta$
+has sole eigenvalue $\lambda(\delta)$. The projector
+$\Pi_\lambda$ onto $X_\lambda$ along the other primary subspaces
+has a finite expression
+
+$$
+\Pi_\lambda=\sum_{j=1}^{J_\lambda}
+ c_{\lambda,j}V_{\delta_{\lambda,j}},
+\qquad c_{\lambda,j}\in\mathbb C,\quad
+\delta_{\lambda,j}\in\mathbb T.
+\tag{15.1}
+$$
+
+Neither unitarity nor diagonalizability of the representation on
+$X_{\mathbb C}$ is assumed.
+
+**Proof of Lemma 15.1.** First simultaneously triangularize the
+commuting complex family. A common eigenvector exists by a finite
+dimension descent: in a nonzero common invariant subspace, if every
+operator is scalar choose any nonzero vector; otherwise take a
+nonzero proper eigenspace of a nonscalar operator. All other
+operators preserve it by commutation. Repeat until a common
+eigenline is obtained. Induction on the quotient by that line
+produces a common invariant flag and a simultaneous triangular
+basis. The diagonal functions $\lambda_j(\delta)$ are nonzero,
+and the representation law makes each a character. There are
+only finitely many distinct such functions; call their set
+$\Lambda$.
+
+Choose finitely many circle elements $\delta_1,\ldots,\delta_b$
+so that their evaluations distinguish each pair of distinct
+characters in $\Lambda$. For each selected $V_{\delta_h}$,
+factor its characteristic polynomial into powers of distinct
+linear factors. Bezout identities for those relatively prime
+powers, together with Cayley–Hamilton, give polynomial projectors
+onto its generalized eigenspaces: for eigenvalue $\omega$, choose
+a polynomial congruent to one modulo the factor for $\omega$
+and to zero modulo each other factor. Evaluating it at
+$V_{\delta_h}$ gives the required projector. All these projectors
+commute, since the phase operators commute.
+
+For $\lambda\in\Lambda$, multiply the selected projectors for
+the eigenvalues $\lambda(\delta_h)$. The resulting idempotent
+$\Pi_\lambda$ selects their joint generalized eigenspace. To see
+that these are exactly all nonzero joint pieces, use the common
+triangular flag. The diagonal of a joint projector is one at a
+flag position precisely when its tuple of selected eigenvalues
+matches that position's character, and zero otherwise. An
+idempotent has rank equal to the number of ones on this diagonal.
+Every nonzero joint piece therefore matches some character in
+$\Lambda$, and the selected tuples distinguish those characters.
+The projectors are pairwise disjoint and sum to the identity.
+Their images inherit the common flag, with precisely the diagonal
+positions belonging to $\lambda$, so each $V_\delta$ has sole
+eigenvalue $\lambda(\delta)$ on $X_\lambda$.
+
+Finally the complex linear span of all $V_\delta$ is an algebra:
+it contains $I=V_0$, and a product $V_\delta V_\epsilon$ equals
+$V_{\delta+\epsilon}$. Each polynomial projector and each finite
+product of such projectors belongs to that algebra. Expansion is
+therefore a finite linear combination as in (15.1). If there is
+only one character, the projector is simply $I$. This proof
+selects complete generalized blocks, including any Jordan parts,
+and does not use an average over infinitely many phases. $\square$
+

@@ -1,0 +1,46 @@
+### 63.4 Five persistent edges and local triple isolation
+
+For every real synchronous permutation \(R=\operatorname{diag}(R_3,R_3)\),
+where \(R_3\) permutes three coordinates, the actual family obeys
+\(RH_0=H_0R\). Also \(H_0\Theta=-\Theta H_0\), with
+\(\Theta(x,y)=(-\bar y,\bar x)\). Both operations preserve the
+common-flat ray locus. If \(R\) is symmetric, then for every vector
+\(w=(x,y)\),
+
+\[
+ w^*\Theta w=0,\qquad
+ w^*R\Theta w=-\bar x^TR_3\bar y+\bar y^TR_3\bar x=0.
+\tag{63.7}
+\]
+
+Choose the transposition interchanging coordinates zero and one in both
+channels. From (61.3),
+
+\[
+ Ru_0=u_0,\qquad Ru_1=\omega u_2,\qquad Ru_2=\omega^2u_1.
+\]
+
+Uniqueness of the unrestricted single-ray continuations transports these
+projective relations to small \(b\): \(R\) fixes ray 0 and interchanges
+rays 1 and 2. The same uniqueness argument identifies the \(\Theta\)
+partners as \(0\leftrightarrow3\), \(1\leftrightarrow4\),
+\(2\leftrightarrow5\).
+
+Consequently (63.7) preserves edges \((0,3),(1,4),(2,5)\) through
+\(\Theta\), and edges \((1,5),(2,4)\) through \(R\Theta\).
+They are precisely the five edges not removed by (63.6). This proves
+the exact graph (63.1), which has no triangle.
+
+At the central parameter, each of the six neighborhoods contains only
+its displayed ray. Hence any one of the twenty central three-column
+subsets is the only triple at \(b=0\) in its matched neighborhoods;
+at a sufficiently small nonzero parameter, no triple is possible there.
+This proves the joint local-isolation assertion in Theorem 63.1.
+
+The theorem is local to the six displayed ray neighborhoods. It neither
+enumerates other central rays nor excludes triples using rays outside
+their union. Its symmetry identities transport certificates and the
+uniquely continued rays; they do not restrict arbitrary candidates to
+a covariance ansatz. No exhaustive census or general noncanonical
+orthogonal-triple exclusion follows.
+

@@ -1,0 +1,19 @@
+**Definition 9.1 (certificate result, without discarded failures).** An
+acquisition attempt returns either a certified record meeting Section 7 or
+an executed-failure record containing its reason, actual partial samples,
+timestamps, calibration flags and any declared successor/stop state.
+Missing permission or an illegal request is a distinct unexecuted rejection.
+A failed sensor, missing lift calibration, violated rate/variation promise,
+unknown source identity, ambiguous winding test, overflow or exhausted
+error budget cannot yield a certified answer by omitting the failed data.
+Its result is retained as inconclusive for the claimed precision. Further
+attempts, if authorized, have their own acquisition and storage costs.
+
+The deterministic sensor inequalities are promises, not tests that can in
+general be proved solely from the same noisy data. Unflagged violation of
+such a promise lies outside the certificate theorem; no failure detector
+for all model violations has been constructed. With a joint statistical
+certificate the complementary event of probability at most $\alpha$
+remains an explicit failure exposure. These distinctions retain the
+illegal/success/executed-failure separation of Process Geometry §34.
+

@@ -1,0 +1,42 @@
+### 3.5 两种目标的严格分离与 Bayes 刚性
+
+复用式（1.1）的最优均匀 Bayes 展开，从式（2.2）相减得到式（2.4）；§3.1 的严格系数差使其在充分小正 $x$ 上严格为正，证明 (C)。
+
+未旋转 SRM 对应 $D=A/2$、$K=0$，式（3.11）使其逐源错误为 $(d_b/4)x^2+O_n(x^3)$，最大度数为 $n$，故最坏错误首项为 $n/4$。§3.4 的接收器在 $x^2$ 阶严格改善这一最坏分数。但以下刚性更强：这个度数错误轮廓属于每个 Bayes 首项最优族，而不只是 SRM。
+
+取任意这样的协议族，沿用 §3.2 的最终条件概率记号，令 $E=\sum_b\eta_b$。定义 1.6 给出
+
+$$
+E=\frac e2x^2+o_n(x^2).
+\tag{3.13}
+$$
+
+非负性使 $\delta\le E=O_n(x^2)$，充分小的正 $x$ 满足 $x-\delta>0$。令 $R_{\mathrm{non}}$ 为所有 $c\ne b$ 且 $c\not\sim b$ 的有序非边上 $T_{c\leftarrow b}^2$ 之和。逐边使用两平方的和差恒等式，得到精确等式
+
+$$
+\begin{aligned}
+E-\frac e2(x-\delta)^2
+&=R_{\mathrm{non}}\\
+&\quad+\frac12\sum_{\{b,c\}\in E_n}
+\left[(T_{c\leftarrow b}+T_{b\leftarrow c})^2-(x-\delta)^2\right]\\
+&\quad+\frac12\sum_{\{b,c\}\in E_n}
+(T_{c\leftarrow b}-T_{b\leftarrow c})^2.
+\end{aligned}
+\tag{3.14}
+$$
+
+由式（3.4），右边每一项非负。式（3.13）与 $\delta=O_n(x^2)$ 使左边为 $o_n(x^2)$。因此 $R_{\mathrm{non}}=o_n(x^2)$，每条边的和为 $x+o_n(x)$、差为 $o_n(x)$，所以
+
+$$
+T_{c\leftarrow b}=\frac x2+o_n(x)
+\quad\text{对每条有向合法边成立}.
+$$
+
+对每个固定来源将平方相加，非边总量至多为 $R_{\mathrm{non}}$，得到
+
+$$
+\eta_b=\frac{d_b}{4}x^2+o_n(x^2).
+$$
+
+固定 $n$ 的顶点数有限，最大度数为 $n$，故最坏错误为 $(n/4)x^2+o_n(x^2)$。式（2.3）给出 $\kappa_n<n/4$，从而不可能同时首项最优，证明 (D)。该论证直接作用于随机化后的共同概率律，允许任意变化的探针和有限参考。
+

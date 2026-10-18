@@ -1,0 +1,27 @@
+## 5. Source correspondence and the remaining decision
+
+**Mathematical citation 5.1 (repository suppliers and the new
+implication).** All repository references below use the immutable
+snapshot
+$\mathtt{f022384d6e4a8b9e457f646f377ac2f0398b0c6f}$.
+
+| Source | Exact role and boundary |
+| --- | --- |
+| [PAIR], Section 11 | Supplies the compact descriptor spaces, full-descriptor residual equations, common unweighted flows, zero-face geometry, regeneration and atomicity criteria. No new compactness or quadrature theorem is asserted here. |
+| [PAIR], Section 18 | Proves eventual endpoint-tail rigidity under finite p support. Its finite Perron argument does not supply Theorem 2.1 for arbitrary Borel marginals. Theorem 3.1 removes that support condition while retaining the exact eventual recurrence. |
+| [PAIR], Section 19 | Supplies native singleton isolation and equal native masses between the two phases. Its zero-face equal-a-and-b excision preserves midpoints and budgets. The proof of Theorem 3.1 removes only b to analyze a remainder and makes no midpoint-preservation claim for that operation. |
+| [SEVEN], entire volume | Supplies $V=0$ rigidity, the strict enlargement beyond full residual graphs, and $J=0\Rightarrow V>0$. Theorem 2.1 allows positive $V$ and uses no pathwise replacement of a residual mean by a sampled successor. |
+| [REV], Section 11.6 and Section 16 | Supplies singleton formulas and the deterministic complete-successor chord theorem. The singleton formulas are used only in the boundary counterexample. The Borel tail theorem imposes no deterministic-successor premise. |
+| [SURVIVAL], Section 3 | Supplies the stationary acquired descriptor path and its weighted word recursion. Those identities are reused in operator notation in (2.3)--(2.4). Its signed finite-window charges and free return-weight dispersion are not set to zero here. |
+| [RETURN], Section 15 | Gives the minimum returned suspended-cut count for a prescribed finite admissible triple, subject to its full incoming-pair equations and exact-service conditions. No prescribed triple, cut-count optimum or sampler theorem is inferred from the Borel tail classification. |
+| [PAID], Definitions 1.1--2.1 and Lemma 2.1.1 | Supplies the source/control contract, all-history meaning, and original product realization of a supplied finite table. Analysis kernels in Theorem 2.1 are not installed as observer registers. |
+
+The source-relative mathematical addition is (2.2), its proof by
+the source-specific killing/distortion comparison (2.8)--(2.9), and
+the consequent Borel classification (3.2). The finite residual
+identity (3.5)--(3.7) completes the lower-endpoint step after the
+upper native atom is identified. Proposition 4.1 exhibits the
+boundary-rate behavior that prevents a direct transfer of the
+finite Perron maximum argument to arbitrary marginals.
+These are repo-derived statements; no global priority claim is made.
+

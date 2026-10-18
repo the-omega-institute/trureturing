@@ -1,0 +1,106 @@
+**Theorem 11.4 (full finite sufficiency and legitimate reassignment).**
+Every feasible point of $\mathcal K_s$ has an actual finite common
+realization of the complete fixed channel and binary law. It can be
+realized with acquired high effect exactly $E\Theta(H_++H_-)E^\dagger$
+using at most thirty branches and fibres of dimensions at most three.
+Alternatively every singular high atom can be reassigned to low,
+weakly lowering that effect. After reassignment there is a realization
+with the same branch bound and only genuinely rank-three high branches.
+
+Proof. Factor each $H_r$ spectrally as a sum of at most three vectors
+$h_{rj}h_{rj}^\dagger$. For each nonzero vector supply encoder matrix
+$K(h_{rj})$ into a declared three-dimensional fibre and live TP decoder
+$X\mapsto EXE^\dagger$. This realizes its exact coefficient atom and
+counts its entire acquisition effect as high. This literal realization
+is permitted even if a matrix happens to be singular: the prescribed
+carrier is three-dimensional. No assertion of minimal carrier dimension
+for that individual branch is made. The compression variant below
+removes all such unnecessary high dimensions.
+
+Decompose each $L_r$ into at most nine singular atoms using Lemma 11.2.
+Every nonzero atom gives a rank-two matrix $K(z)$, even for a complex
+plane direction. Supply encoder $U_{K(z)}^\dagger K(z)$ into its
+fixed two-dimensional range and full TP live decoder by $EU_{K(z)}$.
+Formula (IR.22) supplies these isometries for $u\ne0$, for $u=0,v\ne0$,
+and for $u=v=0,w\ne0$, so no singular direction is omitted. The
+products and effects are exactly $EK(z)$ and $K(z)^\dagger K(z)$.
+All displayed labels are outputs of these specified encoders.
+
+Let $N_+=N$ and $N_-=M-N$. Positivity and domination by $M$ make
+both effects kill $|0\rangle$; each has rank at most two. For each
+of its at most two positive spectral eigenvalues $\lambda_{rj}$ and
+unit eigenvectors $v_{rj}$, supply scalar row
+$\sqrt{\lambda_{rj}}\langle v_{rj}|$ with label $(r,f,j)$.
+Its full TP decoder sends scalar $z$ to
+$zw_\ell g(t)dt\,P_f$ in the five original sectors. On five-mode
+inputs precompose all supported encoders with $E^\dagger$. Add one
+scalar complement encoder $A\mapsto\operatorname{tr}(Q_5A)/2$ per
+record, decoded to $zg(t)dt\,P_f$ at original label $2$. It is one
+acquired scalar branch, although its inaccessible Kraus multiplicity
+can have two rows.
+
+The supported effect sum at record $r$ is
+$\Theta(H_r+L_r)+N_r$. For plus this is the required supported
+$F_+(s)$ by (IR.69). Subtracting it from
+$\Theta(I)+M=I_3$ gives the required minus effect. After adding the
+complement halves the binary law is (IR.13). Total encoder normalization
+is exactly
+
+$$
+E\bigl[\Theta(H_++H_-+L_++L_-)+N_++N_-\bigr]E^\dagger+Q_5
+ =E[\Theta(I)+M]E^\dagger+Q_5=I_5.
+\tag{IR.72}
+$$
+
+Every encoder is CP/TNI because its positive effect is bounded by this
+joint sum. Every live decoder is isometric and TP on its entire
+carrier. Every scalar decoder is TP by (IR.26). The coefficient sum
+gives the fixed live channel; the two failure effects sum to $M$ and
+the complement halves to $Q_5$, giving exactly (IR.10). The chosen
+binary failure density is $w_\ell g(t)N_r$, which is sufficient;
+necessity never asserted that all compatible designs use this split.
+
+At passive reference amplification the scalar rows sum to
+$\operatorname{Tr}_5[(EN_rE^\dagger\otimes I)X]$ in record $r$,
+and the complement branch retains
+$\operatorname{Tr}_5[(Q_5\otimes I)X]/2$. Multiplication by each
+$w_\ell\int_Bg(t)dt\,P_f$, or by the label-$2$ complement measure,
+gives equality on every original labelled Borel set. Tensoring each
+live Kraus and range isometry with identity proves the complex live
+identity. Both constructions kill cross-support input operators,
+introduce no endpoint atoms or singular addition, retain both named
+zero-weight labels with zero maps and introduce no extra-sector map.
+These statements prove the complete joint operation, including
+entangled references, rather than only scalar effects. All high
+decoders are wholly live, so the literal acquired effect is exactly the
+objective coefficient effect.
+
+For reassignment, take any singular nonzero high spectral atom
+$zz^\dagger$. Replace $H_r$ by $H_r-zz^\dagger$ and $L_r$ by
+$L_r+zz^\dagger$. Both remain positive, the new $L_r$ is in the
+cone, and $H_r+L_r$, all $N$ constraints and the complete channel are
+unchanged. Its high effect decreases by $K(z)^\dagger K(z)\succeq0$.
+Remove all singular atoms of the chosen spectral high decompositions,
+then decompose the resulting low matrix afresh into at most nine atoms.
+The remaining high atoms are genuinely rank three. At most three high
+atoms remain per record; deleting others does not increase that count.
+This is a change of specified encoders and acquired labels to a new
+lawful design, not an assumption that an original high hardware flag
+was already a low one.
+
+In either version there are per record at most three high live branches,
+nine low live branches, two scalar supported-failure branches and one
+scalar complement branch. Thus the full five-mode instrument has at
+most
+
+$$
+2(3+9+2+1)=30
+\tag{IR.73}
+$$
+
+actual acquisition branches. Zero atoms and zero eigenvalues are
+omitted. Every retained fibre has dimension $3,2$ or $1$; other dilation
+systems are permanently inaccessible. The branch count does not count
+original failure times as a finite alphabet: each scalar decoder still
+outputs the entire prescribed continuous-time measure. $\square$
+

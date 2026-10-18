@@ -1,0 +1,121 @@
+**Theorem 18.1 (forced queries at every finite state budget).**
+Every table in $\mathfrak M_2$ has distinct reached running states
+$R,A,B$ with hidden-relative response functions respectively
+$P_{27},P_{16},P_{30}$. The first absence and branch successors
+are $A$ and $B$. Its actual support contains
+
+$$
+A-R-B,\qquad
+\deg_{G_{\mathcal K}}(A)\ge4,\qquad
+\deg_{G_{\mathcal K}}(B)\ge5.
+\tag{NARC.18.1}
+$$
+
+These requirements hold over all finite literal addresses, all
+installed-state budgets, shared successor configurations, early
+halts and installed states with empty support.
+
+**Proof, all-address correspondence.** Every original-root word is
+$\varepsilon$, $Rp$ or $Lp$. The first is constantly branch on
+$\langle T_n,T_{33}\rangle$; $Rp$ is evaluated on the same
+$T_{33}$ throughout the fiber, including when its reply is absence.
+The reply at $Lp$ is precisely the native relative reply at $p$ on
+that origin's actual $T_n$.
+
+Apply Definition 5.3 and [AOF, Definition 8.2][AOF-RW], including
+their proper-prefix reach guard. For completeness of the parameter
+correspondence, give $L$ weight one and $R$ weight two. If $p$
+is nonempty, traversal is possible exactly when
+$n\ge w(p^-)+2$, where $p^-$ deletes the last letter. All earlier
+pre-edge branch guards are weaker because prefix weights increase.
+When traversal is possible its filling is $T_{n-w(p)}$. A final
+$R$ gives $t=w(p)\ge2$ and response $P_t$; a final $L$ gives
+$t=w(p)+1\ge2$ and response $S_t$. An empty suffix gives $E$.
+Their supplied functions are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+E&\text{never}&n=0&n=1&n\ge2\\
+P_t&n<t&n=t&n=t+1&n\ge t+2\\
+S_t&n<t&\text{never}&n=t&n\ge t+1.
+\end{array}
+\tag{NARC.18.2}
+$$
+
+Thus every arbitrary relative literal is accounted for. In particular
+there is no $P_1$: the weight-one word $L$ gives $S_2$.
+$E$ is constant on $D$. The proof has not replaced a literal Read
+by an age or subtree oracle, nor limited the length of allowed words.
+
+**Proof, one remaining Read and the lower tail.** At a running state
+entered after the first Read, every supported successor after its
+Read must halt; otherwise that source would issue a third Read.
+Equal actual replies have one fixed successor and one fixed complete
+output. Its whole arriving support must therefore be target-constant
+in each reply cell, and can contain at most four distinct targets.
+Merged arrivals strengthen this condition; extra installed states
+do not create extra replies or another allowed phase.
+
+On $D_L$, a $P_s$ with $s\le15$ gives branch at both ages
+$17,18$, whose targets are $1,0$. A $P_s$ with $s\ge17$ gives
+absence at both ages $2,16$, whose targets are $15,1$. Consequently
+only $P_{16}$ can work. It does work, with targets
+$(15,1,1,0)$ in the four reply cells. For $S_s$, separating
+$17,18$ requires $s\ge17$, while separating $2,16$ requires
+$s\le16$, an impossibility. Constants, including $E$, fail as well.
+This forces the response function, without requiring a unique literal
+spelling of it.
+
+**Proof, the initial query.** Seven distinct lags prevent an initial
+halt. A constant first query leaves seven targets for one remaining
+Read and fails. For first function $P_t$ with $t\le26$, its branch
+cell contains ages $28,29,30,31,32$ with five distinct targets
+$4,3,2,1,0$. For $t\ge29$, its absence cell contains
+$2,16,18,27,28$ with five distinct targets $15,1,0,5,4$.
+Neither cell can be served by a halt or one four-valued Read.
+At $t=28$, its absence cell contains $D_L$ and age $27$.
+A remaining solver must solve $D_L$, so must use $P_{16}$;
+but that query merges $18,27$ in branch with targets $0,5$.
+Thus only $P_{27}$ survives.
+
+For first function $S_t$, $t\le27$ puts the same five upper targets
+in branch, $t\ge29$ puts the same five lower targets in absence,
+and $t=28$ has the same failed $D_L$-plus-$27$ absence cell.
+These cases exhaust all $S_t$, including thresholds larger than
+every supported age. Along with the constant queries already
+excluded, they exhaust every original-root literal.
+
+**Proof, the upper tail and distinct states.** $P_{27}$ partitions
+the actual ages into $D_L,\{27\},\{28\},D_U$ in reply order.
+Both tails are target-nonconstant, so their destinations $A,B$ run.
+$A$ must have function $P_{16}$. On $D_U$ the four targets
+$3,2,1,0$ are distinct, so constants and all $S_s$, which have
+at most three realized replies, fail. A $P_s$ with $s\le29$
+merges $31,32$ in branch; a $P_s$ with $s\ge31$ merges $29,30$
+in absence. Hence $B$ must have function $P_{30}$, which works.
+One fixed literal has one function from (NARC.18.2); its necessary
+parameters on these supports are different. Therefore $R,A,B$ are
+pairwise distinct. Equivalently, merging $A,B$ would ask one
+remaining four-valued query to serve the five targets in
+$D_L\cup D_U$.
+
+**Proof, actual neighborhoods and stationarity.** Actual lower and
+upper origins witness edges $R-A$ and $R-B$ of the same installed
+table. $A$'s second Read must enter at least three distinct halts,
+for complete lags $2,16,17$. These halts are disjoint from running
+$R$, so $A$ has at least four distinct neighbors. $B$ must enter
+four distinct halts, for $14,15,16,17$, and has $R$ as a fifth
+distinct neighbor. Halt duplication cannot decrease either count.
+Root singleton origins may use extra states or halt early without
+removing any of these actual edges.
+
+If any one stationary source revisits the same complete running
+state, determinism repeats its entire future query, reply and
+successor sequence. It cannot subsequently have a first halt.
+Thus self updates or reachable repeated-state cycles cannot supply
+an uncounted phase or clock. This does not require the undirected
+union of edges from different source runs to be a tree. Extra or
+unreachable states remain counted but cannot weaken the forced
+path or its neighborhoods. $\square$
+

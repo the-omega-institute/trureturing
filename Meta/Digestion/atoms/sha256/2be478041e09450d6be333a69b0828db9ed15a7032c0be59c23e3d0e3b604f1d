@@ -1,0 +1,25 @@
+**命题 73.3（两个新复合共享变量时的有限预算非迁移）。** 取
+
+$$
+P=\{LL,LR,RL\},\quad
+C=\langle\langle\square_a,\square_b\rangle,
+               \langle\square_a,\alpha\rangle\rangle,
+\quad a\ne b,\quad H=\varnothing,
+\quad Q=\{L,R\}.
+\tag{SLH.73.4}
+$$
+
+在整个旧行原族中，两个新孔相等当且仅当 $z_b=\alpha$。其正内部元组族 $\{(t,\alpha):t\in\mathcal T,\ t\ne\alpha\}$ 无限，但在每个认证 $N\ge0$，一个付费原叶证书即用一次当前 raw 读决定整个 $R_Q(u)$。因此将定理72.2的“每个正元组投影有限”作为任意同时多个新复合的必要条件是假的。
+
+证明。自由配对消去给
+
+$$
+\langle z_a,z_b\rangle=\langle z_a,\alpha\rangle
+\quad\Longleftrightarrow\quad z_b=\alpha.
+\tag{SLH.73.5}
+$$
+
+此时旧相异条件只要求 $z_a\ne\alpha$，所以正元组无限，且每个元组填成原域中的真实树。新上下文为两个根孩子孔，完整行仅缺这一个相等位。由定理60.2及引理55.2，在当前原孔 $LR$ 下读地址 $LRR^{\lfloor N/2\rfloor}$，回复为 $\alpha$（偶 $N$）或 $\beta$（奇 $N$）当且仅当原 $z_b=\alpha$，对所有其他原形均拒绝。该模板是公开常量原叶；实际读仍付费，不预先供应未知 $z_a$ 或 $z_b$。
+
+这里两个新值共享同一个原参数 $z_a$。把其中一个新值独立换成另一来源的值，不是允许对一个外部旧类坐标作替换；它会破坏两个出现对同一 $z_a$ 的共同依赖。因此引理72.1的 $b\notin A$ 对应不适用，(SLH.73.5) 的消去恰使无限共同参数无需取得。所用消去和延迟原叶证书分别是自由原树结构与 §55 的既有结论；本例界定的是单祖先、一个新复合与独立存活旧类之间的必要性边界，不给一般同时变动切址或一般混合关系记录的预算分类。$\square$
+

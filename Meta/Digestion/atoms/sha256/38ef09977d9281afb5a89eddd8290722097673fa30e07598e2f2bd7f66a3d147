@@ -1,0 +1,54 @@
+**Lemma 34.2 (opposite-code comparisons on both sides).** For every
+cube vector $\theta$ of weight $k-1$, there is an actual origin
+$u^-_\theta\in\Pi_3$ of prescribed bit one such that every word
+distinguishing it from $u_\theta$ belongs to
+
+$$
+\mathcal C_c\cup\{RLR\},\qquad
+\mathcal C_c=RLL\mathcal W\ \cup\ RRL\mathcal W.
+\tag{PCA.84}
+$$
+
+For every cube vector $\eta$ of weight $k$, there is an actual
+origin $u^+_\eta\in Z_*$ of prescribed bit zero such that every
+word distinguishing it from $u_\eta$ belongs to
+$\mathcal C_3=RLR\mathcal W$. Both distinguishing sets contain
+$RLR$, and their intersection is exactly $\{RLR\}$. Every correct
+run on either of these cube vectors therefore has a distinguishing
+invocation outside $\bigcup_iE_i$, of length at least three.
+
+Proof. Keep $x_a=B_\theta$ and $x_{b_j}=D_j$ for $j=1,2,4$
+in (PCA.56), and replace $x_c$ by beta and $x_{b_3}$ by alpha,
+as in Theorem 25.2. All six values remain different. NBP Proposition
+9.3 gives a genuine finite inverse in $\Pi_3$, with its complete
+predecessor row $R_3$. Only the two $c$ cones and the $b_3$
+cone can change. In the latter cone the old beta and new alpha
+are leaves, so every nonempty suffix gives absent on both. Thus
+only its root $RLR$ can distinguish them there. The required bits
+are zero on $u_\theta$ and one on this comparison origin.
+
+For the positive side choose a branch image $D_3$ different from
+every $B_\eta$ in the finite cube and from $D_c,D_1,D_2,D_4$.
+The infinite branch-image supply of NBP Proposition 15.2 allows
+this choice. In (PCA.56), with vector $\eta$, replace only the
+beta $x_{b_3}$ by $D_3$. All six values are now distinct branch
+images. NBP Proposition 9.3 supplies an actual inverse in $Z_*$,
+whose prescribed bit is zero by (PCA.12), whereas $u_\eta$ has
+bit one. Only the $b_3$ cone changes.
+
+The every-address occurrence identity (NBP.9.7) proves these
+statements for all finite suffixes, including traversal past leaves.
+Words shorter than three remain exterior branches. The $c$ and
+$b_3$ cones are disjoint from every $E_i$ and from one another.
+At $RLR$ the respective reply pairs are beta/alpha and beta/branch,
+so that word belongs to both distinguishing sets and is their only
+common member. All repeated occurrences use the same whole value;
+all different-class disequalities and the full current row persist.
+
+Finally, if a cube run had no distinguishing invocation, the comparison
+source would follow its identical finite path to the identical literal
+entry latch. This contradicts the opposite prescribed bit and the
+injectivity of the original entry map. The required extra invocation
+is therefore on that same cube run, not on a separately maximized
+execution. $\square$
+

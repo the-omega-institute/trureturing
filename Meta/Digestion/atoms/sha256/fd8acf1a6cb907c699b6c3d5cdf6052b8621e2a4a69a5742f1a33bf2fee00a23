@@ -1,0 +1,53 @@
+### 定理 30.4（经典 triangle-local 是量子网络的对角子类）
+
+假设每个边源都是共享经典寄存器的对角状态，例如
+
+\[
+\omega_{AB}
+=
+\sum_{\alpha}\mu_{AB}(\alpha)
+|\alpha\rangle\langle\alpha|_A
+\otimes
+|\alpha\rangle\langle\alpha|_B,
+\]
+
+其余两条边类似。假设节点信道在这些对角输入上先进行经典读取，再输出对角状态。则存在随机核
+
+\[
+A(a\mid\beta,\gamma),\quad
+B(b\mid\gamma,\alpha),\quad
+C(c\mid\alpha,\beta)
+\]
+
+使
+
+\[
+P(a,b,c)
+=
+\sum_{\alpha,\beta,\gamma}
+\mu_{AB}(\alpha)
+\mu_{BC}(\beta)
+\mu_{CA}(\gamma)
+A(a\mid\gamma,\alpha)
+B(b\mid\alpha,\beta)
+C(c\mid\beta,\gamma).
+\]
+
+#### 证明
+
+把三个对角源状态代入张量积，得到
+
+\[
+\Omega
+=
+\sum_{\alpha,\beta,\gamma}
+\mu_{AB}(\alpha)\mu_{BC}(\beta)\mu_{CA}(\gamma)
+|\alpha,\beta,\gamma\rangle\langle\alpha,\beta,\gamma|.
+\]
+
+对角节点信道在每个输入三元组上给出一个合法输出分布。节点独立作用使输出条件概率分解为三个局部核的乘积。对 \(\alpha,\beta,\gamma\) 求和即可得到公式。证毕。
+
+该定理只证明经典 triangle-local 分布嵌入量子网络的一个对角子类。一般纠缠源的量子三角分布不能由这一定理自动降为经典 triangle-local 分布。
+
+---
+

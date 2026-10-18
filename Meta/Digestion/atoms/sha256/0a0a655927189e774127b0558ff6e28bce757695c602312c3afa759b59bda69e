@@ -1,0 +1,35 @@
+**Convention 5.1 (BRW hypotheses and their precise consumer).** Bluhm,
+Rauber and Wolf, *Quantum Compression Relative to a Set of Measurements*,
+[arXiv:1708.04898v4](https://arxiv.org/pdf/1708.04898v4), Definition 4.1
+(PDF p. 6), consider CPTP encoding $M_D\to M_d\otimes\mathbb C^n$
+and decoding back to $M_D$, with $n\in\mathbb N$. Their constraints
+preserve specified measurement statistics for every input density matrix.
+The allowed classical alphabet has arbitrary finite size. The model does
+not include a pre-supplied input label, an accessible correlated archive or
+an uncounted quantum bypass.
+
+Lemma 5.2 (PDF pp. 7–8) preserves the composite channel using
+$n_0\leq D^4$ classical blocks, starting from finite $n$. In its proof the
+projected branch maps $T_i$ are CP, explicitly not necessarily TP. Their
+Kraus operators factor through a $d$-dimensional space. This is exactly
+the mature rank mechanism used in (QC.32)–(QC.33), without assigning TP
+to an individual encoder branch or to a normalized postselected map.
+The paper's §9.4, Definition 9.1 (PDF p. 27), also specifies state-family
+compression by requiring all Hermitian expectations on each allowed state,
+which is equality of that state's output density.
+
+The original source supplies only the family (QC.19), not the all-density
+input premise in Definition 4.1. The bridge is (QC.24)–(QC.30): actual
+reachability, connected nonzero overlaps and a full three-dimensional span
+force (QC.31). Only after this bridge is the composite the identity on all
+$M_3$. BRW's all-input observable task can then be invoked on this live
+space. Neither its Definition 4.1 nor Lemma 5.2 states an overlap-graph
+dimension formula; the displayed source calculations are essential.
+
+The number $D^4=81$ for $D=3$ bounds a possible classical factorization of
+one composite channel in that lemma. It does not bound an original-control
+observer's archive, failure-time precision, programme storage, or required
+record labels. The lemma preserves the composite after intermediate labels
+are ignored, whereas Theorem 3.1 retains the actual labelled operations and
+their full joint output. These are different preservation obligations.
+

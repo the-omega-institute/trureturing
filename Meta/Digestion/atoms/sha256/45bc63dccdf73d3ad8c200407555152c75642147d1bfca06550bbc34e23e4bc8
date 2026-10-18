@@ -1,0 +1,73 @@
+**Lemma 5.2 (late secant, including zero samples).** Put
+
+$$
+\begin{aligned}
+K_4(t)&=(1+2t)f(4)
+ =\frac{2d}{21}t+\frac d{21}+\frac{4C_*}{3}
+                    +\frac{2C_*}{3t}+\frac{2c}{3},\\
+K_5(t)&=(1+2t)f(5)
+ =\frac{4d}{63}t+\frac{2d}{63}+\frac{5C_*}{9}
+                    +\frac{5C_*}{18t}+\frac{10c}{9},\\
+b_4&=\frac2{21}\left(d-\frac{7C_*}{p}\right),\qquad
+b_5=\frac4{63}\left(d-\frac{35C_*}{8p}\right).
+\end{aligned}
+\tag{5.7}
+$$
+
+For $i=4,5$ the exact identity is
+$K_i(t_2)-K_i(t_1)=(t_2-t_1)b_i$. If $Y_*Z_*\ne0$, both late
+samples are nonzero in both worlds and
+
+$$
+\frac{Y_*}{K_4(t)}+\frac{Z_*}{K_5(t)}=1,\qquad
+\frac{Y_*b_4}{K_4(t_1)K_4(t_2)}
+ +\frac{Z_*b_5}{K_5(t_1)K_5(t_2)}=0.
+\tag{5.8}
+$$
+
+If $Y_*=0$, then $f_1(4)=f_2(4)=0$ and $b_4=0$.
+If $Z_*=0$, then $f_1(5)=f_2(5)=0$ and $b_5=0$.
+In particular neither zero case occurs for a distinct pair when
+$dC_*<0$.
+
+If $d\ne0$ and $Y_*Z_*>0$, necessarily
+
+$$
+dC_*>0,\qquad
+\frac{35}{8}\frac{C_*}{d}<t_1t_2<7\frac{C_*}{d},
+\qquad 0<d<273/5.
+\tag{5.9}
+$$
+
+**Proof.** Expand (4.4) after multiplication by $1+2t$ to get
+(5.7). Its differences use $1/t_2-1/t_1=-(t_2-t_1)/p$.
+The two actual late trace factors sum exactly to
+
+$$
+(1+r+j)+(j+2\ell-r)=1+2t.
+\tag{5.10}
+$$
+
+Dividing their original equations by the nonzero $K_i$ therefore
+proves the first line of (5.8); subtraction proves its secant as
+before. The denominator products are positive by positivity of the
+late traces and the common nonzero readings $Y_*,Z_*$.
+
+When a late residual is zero, the corresponding positive trace forces
+both samples zero. Their two $K_i$ values vanish, so their secant
+forces $b_i=0$ before any gain division. If $dC_*<0$, both
+$d-7C_*/p$ and $d-35C_*/(8p)$ have the same nonzero sign as $d$;
+thus neither $b_i$ is zero. Both late residuals cannot vanish even
+in other drift ranges, by Theorem 2.1 at roots $4,5,7$.
+
+If $Y_*Z_*>0$, the two terms of the secant have weights of one
+sign. Thus $b_4,b_5$ have opposite signs or both vanish. Both
+vanishing would imply $d=7C_*/p=35C_*/(8p)$, hence $C_*=d=0$,
+inconsistent with $C_*=c_0-d$ and $c_0>0$. Opposite signs first
+force $dC_*>0$. Because $C_*=c_0-d$, this means $0<d<c_0$.
+The zero thresholds in (5.7) then give exactly the strict product
+bounds in (5.9). Since $p>1$, its upper bound requires
+$1<7(c_0-d)/d$, or $8d<7c_0$, giving $d<273/5$.
+The fourth and fifth readings belong to the same worlds throughout;
+separate marginal estimates have not been combined. ∎
+

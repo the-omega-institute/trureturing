@@ -1,0 +1,16 @@
+**Theorem 2.2 (exact internal updating and the two start conventions).** The exact quotient of Theorem 2.1 admits a legal autonomous update. At $a=b$ the minimum initialized exact observer has seven configurations when the empty boundary is queryable; if queries occur only after reads, a complete six-configuration observer exists. At $a\ne b$ there is no finite exact observer or uniformly bounded exact retained-word alphabet. For a recording-length cap $L\ge2$, the unequal case has $L+5$ exact post-read classes, or $L+6$ with empty history. At a single externally specified length $L\ge2$ there are only six post-read classes.
+
+**Proof (2.2).** Use labels $I$, $R_0,\ldots,R_4$ and $A_k$ for $k\ge0$. Decode them by $F_*,F_i,F_{\mu_k}$. Every singleton input $j$ sends every label to $R_j$. On $B$ use
+
+$$
+I\mapsto A_0,\quad A_k\mapsto A_{k+1},\quad
+R_0\mapsto R_4,\quad R_1,R_3\mapsto R_2,
+\quad R_2\mapsto R_2,\quad R_4\mapsto R_4.
+$$
+
+These rules are total and use only the retained label and the new read. The invariant proved in Theorem 2.1 verifies them on every actual prefix. At $a=b$ replace all $A_k$ by one label $A$ with a $B$ self-loop. Keeping $I$ gives seven exact configurations. If no empty query is made, initialize directly in $A$: the first $B$ stays at the required half-mixture and a first singleton resets correctly. The six distinct post-read laws establish minimality there; the distinct empty law establishes seven when it is queried.
+
+At $a\ne b$, the infinite distinct orbit forces infinitely many words by any common exact decoder. Each individual $k$ is finite and can be retained as a tagged integer, but its worst-case size is unbounded. For lengths at most $L$, exactly $k=0,\ldots,L-1$ occur and all pure states have appeared by length two. Adding the empty class gives the stated cap counts. At fixed length $L$ only $\mu_{L-1}$ is mixed; all five pure states occur by padding the exhibited histories with positive self-loops. A six-entry decoder depending on that externally supplied $L$ does not give one internal decoder across all lengths.
+
+Update compatibility is also the familiar positive-conditioning principle of the repository's `ObserverMemory.ContextUpdates.PredictiveStateUnifilarUpdate` declarations at revision ad512afaf86ab2258ef58a78089f247e190866f4: equality of complete laws gives equal next-symbol masses, and division of equal extended-word probabilities on any positive symbol gives equal successor laws. The concrete update above additionally computes the actual reachable classes and their start costs. $\square$
+

@@ -1,0 +1,22 @@
+**命题 4.3（Four is a pre-readout record cost, not the whole cost of the fixed edge channel）。** Let $\Phi_4=\operatorname{Tr}_{E_4}\operatorname{Ad}_{V_4}$ and let $\Delta_{\mathcal C}$ dephase the successor configuration. Then
+
+$$
+(\Delta_{\mathcal C}\otimes\operatorname{id}_K)\circ\Phi_4
+=\mathcal E_{\mathrm{edge}}.
+\tag{4.8}
+$$
+
+There is a staged pure-environment construction of this unread fixed channel with the carrier $E_4\otimes D_5$, of dimension twenty and with fifteen occupied orthogonal directions. Any pure construction of the same fixed channel, including the added dephasing, still has total environment dimension at least fifteen.
+
+**证明。** Expanding $V_4\rho V_4^\dagger$ and dephasing keeps only equal successor indices. At an equal successor, (4.2)–(4.3) make different source colors orthogonal, so tracing $E_4$ also keeps only equal source indices. The remaining terms are precisely $K_{ji}\rho K_{ji}^\dagger$, proving (4.8).
+
+To supply dephasing by a pure dilation, append a fresh $D_5$ and use the isometry that copies the actual configuration basis label,
+
+$$
+|j\rangle\psi\longmapsto|j\rangle\psi\otimes d_j,
+\qquad \langle d_j,d_k\rangle=\delta_{jk}.
+\tag{4.9}
+$$
+
+After $V_4$, the total edge record is $g_{\kappa(i)}\otimes d_j$. Different positive edges have different pairs $(\kappa(i),j)$ by injectivity on $I_j$. These fifteen vectors are orthogonal in a twenty-dimensional carrier. Tracing both carriers gives (4.8). An isometric identification of their occupied span with $\mathbb C^{15}$ recovers the pure-record size of (4.7); this is a mathematical recoding, not a free physical operation. The lower bound on every pure realization of the fixed channel is Theorem 4.2's Choi bound. $\square$
+

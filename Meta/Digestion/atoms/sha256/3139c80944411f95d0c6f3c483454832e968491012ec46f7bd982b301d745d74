@@ -1,0 +1,22 @@
+**Corollary 71.3 (persistent gap and exact large-budget coefficient).**
+There are the signs $d_{--}<0$ and $d_{++},d_{+-},d_{-+}>0$.
+Let $d_{\min}=\min\{d_{+-},d_{-+}\}>0$. For
+$r\ge\max\{2,d_{\min}/g_-\}$,
+
+$$
+\mathcal T(s^\dagger)-\mathcal T_A(s^\dagger)
+ =\gamma_f+\frac{\nu_\dagger d_{\min}}{2(e^A-1)}.
+\tag{FA.18}
+$$
+
+**Proof.** The three positive signs follow from JR43 over its entire
+strong interval. Its decreasing $\mathsf b(v)$ is negative already at
+$v=1/5$, by Proposition 74.1; $v^\dagger>1/5$ gives the fourth sign.
+In the $\kappa=+$ pair the negative ray has zero $k$ and capacity
+at least $1/2$ for $r\ge2$, so $D_+=0$. In the other pair
+$k_{-,1}=d_{\min}/r$ under the stated saturation condition, whence
+$D_-=d_{\min}/(2r)$. Substitute in FA.16. Thus the coefficient of
+$e^{-A}$ beyond the persistent $\gamma_f$ is exactly
+$\nu_\dagger d_{\min}/2$. Neither gap is an error term in $E_*$.
+$\square$
+

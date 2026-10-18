@@ -1,0 +1,22 @@
+**Corollary 5.2 (a positive evaluated gap on a closed subfamily).** Put
+
+$$
+\mathfrak C_d=\{(\Gamma_B,\Gamma_A)\in\mathfrak C:D\le d\},\qquad
+j_d=\min_{\mathfrak C_d}\mathcal J\quad(d\ge0).
+$$
+
+These domains are nonempty and compact. They satisfy
+
+$$
+j_d\ge\max\left\{0,\frac{\kappa_0-d}{19}\right\},
+\qquad
+j_0\ge\frac9{3040000}>0.
+\tag{5.3}
+$$
+
+Proof. On the compact law products, $Z$ is continuous and bounded. Under weak convergence of $\Gamma_B$, its mean $c$ converges. The uniform bound $\bigl||Z-c_n|-|Z-c|\bigr|\le|c_n-c|$ then proves continuity of $D$. Hence $\mathfrak C_d$ is closed in the compact domain supplied by [PAIR, Lemma 11.3]. A singleton generator with $u=v=a$ belongs to every $\mathfrak C_d$, proving nonemptiness. The same supplied lower semicontinuity of $\mathcal J$ gives the minimum. Equation (5.3) follows from Theorem 4.1 and nonnegativity. ∎
+
+This class allows arbitrary nonconstant suspended emissions. Its condition is a restriction on the predictor's actual edge flow. It changes neither the source nor the risk objective. It is nevertheless a proper restricted observer problem: a positive $j_0$ does not prove $j_c>0$ on all of $\mathfrak C$.
+
+In particular, constancy separately on recurrent components is not constancy on the entire positive edge support. The fair native endpoint-tag observer already has different return weights $2/9$ and $6/25$ on its two components. The corollary does not exclude that supplied two-depth attainer, and does not prove a separator for the componentwise-constant class.
+

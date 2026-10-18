@@ -1,0 +1,46 @@
+**Proposition 12.2 (lag recovery leaves a different reconstruction task).**
+Theorem 11.6 recovers the lag and the initial coordinate of the
+subsequently visible slot. It does not require its two-read transcript
+to identify the hidden initial coordinate or the full original tree.
+For the stronger target of reconstructing the entire original pair,
+exactly $q$ labels and $k$ native calls on both cuts necessarily satisfy
+
+$$
+q\le3\cdot2^k-2.
+\tag{NARC.12.2}
+$$
+
+In particular, two-call original-profile reconstruction cannot hold
+at $q=17$ with that alphabet, even though lag recovery does.
+
+**Proof.** At $q=17$ take originals $(a,b)=(0,16)$ and $(1,16)$
+at lag one. Both export label zero and have the same complete
+right-visible row with exterior $T_{34}$, the reached left hole and
+its singleton partition. Their normalized clock is $z=17$.
+The certified class-zero tree first requests $P_{28}$ in the
+hidden slot, the whole word $LR^{14}$, and after absence requests
+$P_{17}$ there, the whole word $LLR^8$. Both actual hidden ages,
+one and two, return absence on both requests. Their common terminal
+target is $b=16$ and both outputs are $17-16=1$, but their initial
+left trees and their current hidden trees differ. An additional Read
+at the slot word $L$ gives beta versus branch. Thus the lag-constant
+leaf really can retain a hidden spatial distinction.
+
+For the stronger general target, use a full reference entry of
+Theorem 9.2. Same-age conflicting originals cannot be separated;
+otherwise its ordered-leaf argument bounds a class's nonempty leaves
+by $L_k=3\cdot2^k-2$. Every successful reconstruction leaf must
+contain a single original, rather than merely a common target
+coordinate. Hence $|C_\gamma|\le L_k$, and summing over $q$
+labels gives (NARC.12.2). At two calls it requires $q\le10$.
+This is a necessary reconstruction bound, not an exact reconstruction
+frontier under either convention.
+
+The lost distinction is specific to the declared task transcript.
+For the constructed code, difference injectivity means that code plus
+both entire current ages identifies the original pair and lag. The
+finite current-recovery supplier [NAR, Theorem 16.5][NAR] can acquire
+the missing hidden-age information with additional native requests.
+The two-read result neither denies that later recovery nor restores
+an arbitrary original cut row without it. $\square$
+

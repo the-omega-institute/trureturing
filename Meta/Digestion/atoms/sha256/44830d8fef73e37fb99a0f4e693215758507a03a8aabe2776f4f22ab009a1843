@@ -1,0 +1,12 @@
+**Proposition 2.3 (soundness with zero exponents).** Every certificate
+of Definition 2.1 satisfies $Z_G\le F$.
+
+Proof. Sum the pointwise inequality (WBF.7) over all common assignments
+to obtain $Z_G\le c\mathbb E_\nu\prod_v f_v$. Every edge is in
+exactly its two endpoint scopes, so the incidence hypothesis of
+Lemma 2.2 is precisely $\theta_u+\theta_v\le1$. Each positive
+$\theta_v$ is at most one because its star is nonempty. The lemma,
+including its maximum convention, gives (WBF.8). Positivity of every
+$\nu_a$ means the maximum is over all sixteen star patterns, with
+no hidden null-support exception. $\square$
+

@@ -1,0 +1,8 @@
+### 101.3. Primary reciprocity and all admissibility conditions
+
+Write R(a,b,c)=(-1)^[a,b,c] for Stevenhagen's multiplicative Rédei symbol. Use arXiv:1806.06250v3, Corollary 5.2, Definitions 7.5–7.8, Theorem 7.9 and equations (45)–(48): https://arxiv.org/pdf/1806.06250 . Its conditions are all pairwise Hilbert symbols equal to 1 at every place and gcd(Delta(a),Delta(b),Delta(c))=1. Infinite places and the minimal dyadic condition are retained.
+
+Apply it to (5,-D,19). The pair (5,-D) is everywhere split because beta is an explicit rational norm representative of -D. The pair (5,19) is everywhere split because gamma=8+3sqrt5 has norm 19. For (-D,19), the odd factors at p|D are (19/p)=1 by assumption. At 19 the factor is (-D/19)=1, because D C²=3 modulo 19 and -3=16 is a square. At 2 both arguments are odd and -D=1 modulo 4, so the odd-unit Hilbert formula gives1. At infinity the positive argument 19 gives1. All other odd primes have unit arguments and factor1. Thus the third pair is also everywhere split.
+
+The discriminants are 5,-D,76, respectively: D is squarefree and 3 modulo 4, while 19 is 3 modulo 4. Their three-way gcd is 1. No pairwise-discriminant-coprimality assumption is made or needed. The symbols R(5,-D,19) and R(5,19,-D) are therefore defined and equal by Theorem 7.9.
+

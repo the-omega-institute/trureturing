@@ -1,0 +1,31 @@
+**Theorem 5.1 (Law-level positive-rectangle obstruction).** Let $P$ be a stationary no11 law with every legal cylinder positive and with $\mathbb E_P[X_0\mid\mathcal E_0]=X_0$ almost surely. In every stationary finite marked presentation of $P$, no word $w$ with $P([w])>0$ has a nonzero product $T=M_w$ whose support is exactly a positive rectangle $I\times J$.
+
+Because $P$ has full legal support, this excludes every legal word in every such presentation. Equivalently, after the proved positive-mass trimming, there is no nonzero positive-rectangle word product. If $P$ is ergodic, the exclusion also holds within each positive-weight closed irreducible component of every alternative stationary finite presentation.
+
+Proof. Suppose $T$ has strictly positive entries on nonempty $I\times J$ and zero entries elsewhere, for a positive-probability word $w$. This word is legal. Both protected words $w0x0w$, $x=0,1$, are legal, including when $w$ begins or ends with one. Full support gives
+
+$$
+\lambda T B_xT\mathbf1>0,\qquad B_x=M_0M_xM_0.
+$$
+
+Thus $s_x=\sum_{j\in J,i\in I}(B_x)_{ji}>0$ for both $x$. The exterior guard $G=\{w0\,[\text{erased center}]\,0w\}$ has positive probability.
+
+On any positive finite farther completion of $G$, the two center masses are $\alpha TB_xT\beta$, with nonnegative actual farther messages $\alpha,\beta$. Both $\alpha T$ and $T\beta$ are nonzero. Normalize them to a probability row $l$ on $J$ and a probability column $v$ on $I$. Put
+
+$$
+u=\min_{i\in I,j\in J}\frac{T_{ij}}{\sum_{k\in J}T_{ik}}>0,\qquad
+v_*=\min_{i\in I,j\in J}\frac{T_{ij}}{\sum_{k\in I}T_{kj}}>0.
+$$
+
+Each $l_j$ is a convex combination of normalized positive rows of $T$, so $l_j\ge u$. Each $v_i$ is a convex combination of normalized positive columns, so $v_i\ge v_*$. These bounds depend only on $T$ and hold uniformly over all compatible farther completions. Therefore
+
+$$
+lB_xv\ge uv_*s_x=:m_x>0.
+$$
+
+The nonnegative matrix $B_0+B_1=M_0AM_0$ is row-substochastic, so $l(B_0+B_1)v\le1$. The common scaling factors cancel from the center posterior. Both that posterior and its complement are bounded below by $m_1,m_0$, respectively. Set $\delta=\min(1/4,m_0,m_1)>0$. Every positive finite erased-center atom refining $G$ has posterior in $[\delta,1-\delta]$; zero-total atoms require no normalization.
+
+Increasing finite exterior fields generate $\mathcal E_0$. Conditional projections converge in $L^2(P)$, and $G$ belongs to all sufficiently large fields. The closed interval bound therefore survives for the actual full posterior on $G$. This contradicts $q=X_0\in\{0,1\}$ on a positive event. The argument applies to any presentation, using only the stated properties of the same output law.
+
+Lemma 1.3 shows that any nonzero trimmed word has positive probability and is legal, proving the equivalent trimmed formulation. For the component assertion, a finite stationary hidden chain decomposes on its positive support into closed irreducible classes. Each positive-weight class gives a stationary ergodic visible law, also when the class is periodic. If their finite mixture equals an ergodic $P$, each component is $P$: almost-sure cylinder frequencies under $P$ hold under every component by absolute continuity, and ergodicity identifies those frequencies with its own cylinder probabilities. Apply the preceding guard argument within each component. $\square$
+

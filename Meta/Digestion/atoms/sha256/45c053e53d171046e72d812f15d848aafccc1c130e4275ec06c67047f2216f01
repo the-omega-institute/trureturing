@@ -1,0 +1,10 @@
+**定义 16.1（恢复时间结构）。** 固定观察者、事件位置及实际接口 $\sigma$，定义
+
+$$
+\mathfrak T_{\mathcal O,\sigma}
+=\left(\prec_{\mathcal O},\,\tau_{\mathcal O},
+\,\Omega_C,\,D_{\mathcal O},\,\ker\beta_\sigma\right).
+$$
+
+分量分别为因果依赖、路径钟、相容来源、有限取证深度及永久行为不可区分关系。该对象不将发散、盲区、不可预测或证明完成定义成时间。
+

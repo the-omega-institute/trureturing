@@ -1,0 +1,99 @@
+**Definition 12.4 (one simulated primitive).** The following finite table
+is the complete instruction selection for `Step`. Every field operation,
+list traversal, fixed-bit selection and update in the table has exactly
+the word expansion just given. Finite cases over 64 ports, eight symbols,
+eight latches and 256 Boolean tables are unrolled. The old state is copied
+to a working word before its updates, so old-value dependencies are not
+lost. At its end it appends the event and meter update below.
+
+| Native opcode | Word transformation before the common receipt stage |
+| --- | --- |
+| RD($i,j$) | Find the ordinary marked cell of port $i$ (read-marked cell on the meter); copy its three symbol bits into latch $j$. Test equality of that newly read symbol to the row's immediate; choose its specified successor PC. |
+| WR($i,s$) | Check the represented writer token and writable current cell; select the literal symbol or the represented latched bit by the finite row variant; replace only the symbol bits. Choose the equal successor. |
+| ML/MR($i$) | Check the represented enabled boundary and token conditions; clear the old ordinary mark (meter read mark on the meter) and set
+  that same track at the appropriate existing adjacent cell. The old R/L crossing failure is simulated-illegal. |
+| EX($i$) | On an ordinary port require ordinary-marked R; replace its symbol by blank, retaining the ordinary mark there; append a fresh R with zero ordinary mark. The old R's creation identity is retained. |
+| BF($f$) | Read operand subfields 0–2, select one of the eight literal bits of truth table $f$, and replace result subfield 3. No physical source latch or private port is used. |
+| IN($i$) | Pop the next bit from the appropriate retained typed reservoir; replace the represented input latch only. No represented cell write or head move occurs. |
+| OUT($j$) | Read the represented latch bit and append that bit to the represented public-output event; transmit no live bit at this stage. |
+| TOK($a,b$) | Check and replace exactly the represented finite token bits prescribed by that row. Do not execute a physical TOK from these data. |
+| CTL | Perform its literal finite local-effect tag, including any designated seal/head mark, finite phase/purpose bits or halt, then its testing or equal PC successor. |
+| Boot EX/WR variants | Construct the designated one boundary cell or write the one designated finite-control bit; advance the represented finite installation cursor by its encoded finite local rule. |
+
+For all rows, keep all other finite bits and cells. If there is no test,
+$q_0=q_1$. Ordinary native reading of its already installed row is the
+finite PC mechanism of PR57.D1; ordinary dynamic code fetch remains a
+represented RD and its surrounding rows. Step does not insert a virtual
+dynamic fetch on top of a native row.
+
+The common receipt stage replaces the meter append R by the selected
+ordinary or F receipt, moves its append mark to one newly constructed R,
+and preserves its read mark at its current cell. This applies when the
+core row is a meter RD or read-head move. None of the expanded controller
+rows performs a core EX or WR on the meter; those variants are not an
+admitted way to alter its append track. Its only extensions are receipts. A receipt at the old append R
+retains that cell's creation identity. Append one 1 to the represented
+primitive tally and append the complete native event, including its actual
+port/cell operand identities and newly read, written, supplied or emitted
+symbol, to the represented history. Tick/fee are 1 and 2 for this event;
+their cumulative represented wire values can be built by unary copy or
+doubling. At the distinguished acquisition fence copy the tally to its
+retained acquisition register. Complete marks, finite-control bits and
+receipt contents use the owning graph's bit convention, not just their
+mathematical counts.
+
+The HistoricalImage wire codec is this complete physical-state tuple,
+its complete encoded native event list and its source/version/cut binding.
+The target-version field is the represented active version/installation
+phase at the stop, not the later consumer version. Thus an old target
+before Install has $v_0$ in (RCA.1); a target inside a bootstrap retains
+that actual bootstrap/raw-table phase. The package separately binds the
+later $D_1$ service and the complete activation chain. These tags do not
+identify two versions' different clocks.
+Reservoir cursors, loop counters, the virtual event accumulator and tally
+are simulator bookkeeping, separate from the physical-state projection.
+They do not invent extra cells in the represented old endpoint. Their
+actual current implementations are cells of the later consumer's banks,
+and are counted there. Only the represented port cells, actual finite
+control stores, heads, latches and live-token bits project to $X(h)$.
+Logical event words and pending/busy interpretation have the following
+explicit redundant-field construction. The finite row annotations distinguish
+original request admission, original response commitment and original row
+seal from service reserve, output seal and Ready. During a represented
+frame ingress accumulate precisely its IN bits, parse its complete frame
+with ReadUnary/Take and the finite tag cases, and retain that actual request.
+Do not accumulate the source clone's subsequent RD(38) as another external
+frame. An original response-commit annotation identifies its actual public
+response block by the supplier's stored port/base/length fields. Extract
+that virtual block by Nth on the virtual port, cancellation of the unary
+base and Take over its cell symbols; parse its exact response codec. These
+are virtual list operations on acquired replay data, not a live private read.
+
+At this commit append the parsed request/response pair to $E$ and set
+$P$ to its singleton. At the corresponding original row seal append that
+same pair to $A_P$ and clear $P$. Until commit the request remains only
+in the current-frame/busy record. Service frames never append to $E$.
+The initial lists are empty at the original entrance; acquisition TagReads
+are handled by their same source-commit rows. Generation and attempt
+fields come from their represented actual counter cells, by the same
+block extraction; their increments are not inferred from service counts.
+Original reply variants alpha/beta/branch/absent, numerical ReadE,
+accept and reject have distinct finite codec tags. Invalid raw packets
+are never passed to the tree-response decoder. At an unfinished response
+or row, its actual raw cells and stage remain in the physical tuple;
+only a committed pair enters the semantic list. The pending data thus
+satisfy the original $E=A_P\mathbin{+\!+}P$ convention by an explicit
+word fold, with actual provenance fields copied from the represented
+rows and descriptors. Readable-prefix status is the represented final
+seal/token case, not equality of payload bytes. These word computations
+and their output appends are paid. An old invalid source
+packet is always encoded as its raw cell list, with its unavailable phase.
+No decoder silently replaces it with an old or candidate valid tree.
+
+The next IN reservoir is determined by represented phase: the canonical
+private installation packet reconstructed from the acquired seed; fixed
+public initialization and native-description bits in the actual manifest;
+or the chronological retained frame stream. A represented control-boot
+IN is thus distinct from a frame IN. Exhaustion before a requested IN is
+an explicit incomplete-reservoir result, never guessed to be an idle cut.
+

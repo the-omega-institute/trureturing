@@ -1,0 +1,15 @@
+**Definition 12.3 (source transport and interpretive limits).** With $J_\kappa=\operatorname{diag}(1,1,\kappa)$ and original real lift $D=\kappa x$, retain
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),\qquad
+g_{\rm orig}=|\kappa|g.
+\tag{12.1}
+$$
+
+The long-time tensor $M=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0$ transports to $J_\kappa M J_\kappa^{\mathsf T}$ with signed cross terms. Wavefunctions and raw unit-source kernels have different absolute-Jacobian factors. All results fix signed $\kappa\ne0$ and retain positive native cutoffs. No uniform $\kappa\to0$, actual frozen zero leaf, wrapped cover, torus or cutoff-free native theorem follows. The auxiliary canonical $\alpha$ comparison changes no native datum, path or $B$ heat clock.
+
+The homogeneous response and height projection have only their proved energy/local meanings, without global $L^2$ or native membership of $\Psi$, $U_h$ or $pF_*$. Four canonical coordinates, homogeneous dimension seven, three real phases, rank-three long-time tensor, retained coordinate counts and physical Euclidean space are distinct predicates. No physical dimension or physical $SO(3)$ is selected. Pairing weights, spectral energy and actual source charges remain distinct.
+
+Analytic amplitudes supply no native execution, preparation, actuator, lawful transport, density acquisition, resource or clock bridge. The spectral $E_s$ differs from acquired mass and ML error. No full-channel acquisition, autonomous reduced quantum evolution, generic neural-network, empirical machine-learning, implementation migration, native efficiency/capacity/impossibility or wider-programme completion claim is made. The entire original decision target remains Definition 12.1.
+

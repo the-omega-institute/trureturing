@@ -1,0 +1,58 @@
+**Definition 1.2 (actual acquisition and original objective).** Competitors
+are every original complex, coherent, potentially noncovariant optimal
+common processor, with actual CP acquisition maps $\mathcal E_\alpha$
+and full-output TP decoders $\mathcal R_\alpha$ on their entire declared
+fibres:
+
+$$
+\Phi=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha,
+\qquad \sum_\alpha\mathcal E_\alpha^\dagger(I)=I_5,
+\qquad E(\Phi)=E_*.
+\tag{RH.4}
+$$
+
+The sum also denotes the countable convergent instruments and precisely
+the stipulated integrals of CG Convention 21.3 as specified in JR
+Definition 41.1: measurable finite fibre dimensions, measurable encoder
+and live-decoder Kraus fields, integrable effects and live Choi matrices,
+and full-output TP decoders almost everywhere. Integral encoder densities
+are CP and need not be individually TNI relative to the reference measure.
+Only the restriction of a decoder to supported live output is TNI.
+
+The dimension $d_\alpha$ counts jointly every future-accessible
+input-dependent quantum share at this acquisition cut: retained specimen,
+memory, controller, accessible environment and entanglement shares.
+All other dilation systems are permanently inaccessible before the cut.
+Let $Q_H$ be the total acquired effect of $d_\alpha\geq3$ and
+$\mathsf W=\max_{y,e,n}\operatorname{tr}(Q_HE\rho_{y,e,n}E^\dagger)$.
+High acquisition is charged even if execution later fails. A binary
+report is a common classical processing of the actual acquired label;
+its supported plus effect is $F$. The original winding contrast is
+
+$$
+\Gamma_y(F)=\frac14\sum_{e,n}en\operatorname{tr}(F\rho_{y,e,n}),
+\qquad \mathsf V(F)=\frac{|\Gamma_y(F)|}{\kappa q_y}
+                  =\frac{2|\operatorname{Re}F_{01}|}{\kappa},
+\qquad q_y=\frac{\sqrt{y(64-y)}}{128}.
+\tag{RH.5}
+$$
+
+The Fourier sum is a deterministic comparison of four conditional laws,
+not a source prior. For the sharp original cost $\mathsf C(s)$, the
+height objective is
+
+$$
+\mathcal T(s)=\sup\left\{
+ \operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+}):
+ E(\Phi)=E_*,\ \mathsf W=\mathsf C(s),\ \mathsf V(F)\geq s\right\},
+\quad \operatorname{TV}(P,Q)=\frac12\int|dP-dQ|.
+\tag{RH.6}
+$$
+
+Here $R$ is the entire actually generated record. An inaccessible Kraus
+index is not part of $R$. No other entry of $F$ is prescribed, and no
+particular forgotten complete channel is imposed on competitors.
+There is no prior, helper, copy, readable old history, callback, reset,
+retry, bypass, postselection, survival division or extra execution time.
+Every matrix, choice probability and decoder is fixed before the specimen.
+

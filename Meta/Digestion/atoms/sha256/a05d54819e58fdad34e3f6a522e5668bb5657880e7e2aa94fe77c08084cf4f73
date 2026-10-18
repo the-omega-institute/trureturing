@@ -1,0 +1,43 @@
+**Definition 5.1 (joint masks and completed contact presentation).** Choose
+one chart $b_r$ for each $r\in B$. Choose a subset $K_r$ of its original
+scalar coordinates to diverge. Let $c_r$ be the natural values of the
+complement, and write $\lambda_r=(c_r,\infty_{K_r})$. Extend the source map
+by replacing $T_{n_j+d}$ with $\Omega$ for $j\in K_r$, and by its literal
+finite atom for $j\notin K_r$. The justified limit is $T_n\to\Omega$:
+if $m(n)$ is the minimum leaf depth, $m(0)=m(1)=0$ and
+$m(n+2)=1+\min(m(n+1),m(n))$, so $m(n)=\lfloor n/2\rfloor$.
+
+Introduce one common completion variable $W$ and all original chart
+residual variables $\eta_{r,i}$. Form the single positive presentation
+
+$$
+\widehat U_{r,b_r}(\lambda_r,\eta_r)=W\qquad(r\in B).
+\tag{NAC.18}
+$$
+
+Different rows initially have separately named scalar and residual tuples.
+Every occurrence within one row keeps its name. Apply Corollary 4.4 to
+this whole presentation. A branch $\tau$ gives a guard $A_\tau(p)$,
+a selected contact, a set $F_{r,\tau}$ of finite original residuals,
+and templates $f_{r,\tau}(p)$. The tuple $p$ contains all original finite
+$c_r$, collapse ranks, and the natural leaf-rank auxiliaries of Theorem 4.3.
+All of these are fixed before a depth or lower bound is requested.
+
+Let $w_r$ contain all original scalar coordinates in $K_r$, including
+ones absent from the displayed source map. Restore the original rank
+vector as $n_r(c_r,w_r)$. In the *finite* chart substitute just
+$f_{r,\tau}(p)$ on $F_{r,\tau}$, leaving its other original residuals as
+unrestricted finite variables $z'_r$. Define the entire support
+
+$$
+\Psi_{r,\tau}(p,w_r)\quad\Longleftrightarrow\quad
+P_{r,b_r}(n_r(c_r,w_r))\ \land\
+\exists z'_r\in\mathcal T^{\overline F_{r,\tau}}\quad
+\Delta_{r,b_r}(n_r(c_r,w_r),f_{r,\tau}(p),z'_r).
+\tag{NAC.19}
+$$
+
+The cross-row completed equalities (NAC.18) are not added to (NAC.19).
+They select the prefixes toward which finite witnesses are lifted; finite
+originals need only agree through the requested depth.
+

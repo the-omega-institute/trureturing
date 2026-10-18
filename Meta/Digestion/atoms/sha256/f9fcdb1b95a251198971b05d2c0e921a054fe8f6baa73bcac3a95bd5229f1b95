@@ -1,0 +1,31 @@
+**Theorem 8.2 (Minor bound and its additive consumer).** Let $p$ be band-compatible on $K_m^{a,b}$. Select any $(N+1)\times(N+1)$ minor $A_p$ of an internal-cut flattening, retaining forbidden entries as zeros. Then
+
+$$
+\delta_{N,m}^{a,b}(p)\ge
+\frac{6^{-4m}}{2m(N!)^2}|\det A_p|^2.
+\tag{8.3}
+$$
+
+Consequently, for disjoint length-$m$ intervals as in Theorem 7.1, choose such a cut and minor for each supported complement, and obtain
+
+$$
+\mathcal R_{N,n}\ge\frac{6^{-4m}}{2m(N!)^2}
+\sum_{j=1}^J\mathbb E_{\pi_n}|\det A_{p_j^\eta}|^2.
+\tag{8.4}
+$$
+
+A selection may depend on the finite complement. A cut too small for the specified minor supplies no determinant contribution.
+
+Proof. For $r\in\mathscr F_{N,m}^{a,b}$ the corresponding minor $A_r$ has determinant zero, since ordinary rank is at most nonnegative rank. In the permutation formula, telescope each difference of products of $N+1$ entries. All entries lie in $[0,1]$, so that product difference is bounded by the sum of its entry differences. Each matrix entry appears in $N!$ permutations. Hence
+
+$$
+|\det A_p|=|\det A_p-\det A_r|
+\le N!\sum_{\text{minor entries}}|p-r|
+\le N!\|p-r\|_1.
+\tag{8.5}
+$$
+
+The selected entries correspond to distinct words in the flattening; forbidden entries are zero for both probabilities. Combine (8.5) with (8.1) and minimize over $r$. Empty families satisfy (8.3) by the infinite-minimum convention. Applying this pointwise in (7.1) proves (8.4). $\square$
+
+A nonzero selected minor is sufficient to force a positive discrepancy. Vanishing of all these minors only bounds ordinary rank: nonnegative rank can be larger. Thus determinants do not characterize membership in $\mathscr F$, let alone actual stationary realizability. No minor value or conditional expectation is asserted here without its displayed hypothesis.
+

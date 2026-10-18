@@ -1,0 +1,82 @@
+**Theorem 10.2 (response-uniform transfer despite writer updates).**
+Begin in $\operatorname{ready}(d,z)$ with a nonhalting instruction.
+Let $r$ be its actual typed response and put $t=\delta(z,r)$.
+After its immediate flag-setting response, the actual installed
+controller reaches $\operatorname{ready}(1-d,t)$ in exactly
+
+$$
+m_d(z,r)=|z|+|t|+
+\begin{cases}
+4,&d=0,\\
+6,&d=1
+\end{cases}
+\tag{CWS.15}
+$$
+
+additional root Reads, under observer progress and arbitrary legal
+independent-writer interleavings. Every one of these root Reads follows
+the installed successor for its own actual response. They cause no
+source update, but all interleaved writer updates remain in the history.
+The designated original operation and its response agree with the
+concurrent finite-table execution obtained by deleting these routing
+Reads and retaining every writer event.
+
+Proof. The installed ready row has exactly the original instruction.
+Its actual response sets the corresponding single flag, with the old
+active bank unchanged. This statement covers a Read at its actual
+source and an Update followed by its constant acknowledgement; an
+Update changes the source once before routing.
+
+For $d=0$, the flagged phase-000 rows keep $z,r$ fixed and fill bank B
+towards $t$. The inactive bank initially is empty. Each installed
+toward step flips the least differing bit and reduces
+$|B\mathbin{\triangle}t|$ by one, giving exactly $|t|$ root Reads.
+One more advances to phase 001. Then $|z|$ root Reads erase bank A,
+one enters phase 011, one clears the flag, and one enters phase 010.
+The resulting word is $\operatorname{ready}(1,t)$.
+For $d=1$ the corresponding fill and erase phases are 010, 110 and
+111. After clearing the flag, three phase changes, through 101 and
+100 to 000, finish the transfer. This gives $|t|+|z|+6$.
+
+These are precisely the paths counted by typed_transfer, whose
+Routing edges satisfy the stronger row equality
+$\operatorname{installed}(w)=\operatorname{root}(w')$:
+the installed instruction is a root Read and its successor is $w'$
+for every raw response. Thus the counted path is forced, not merely
+one selectable finite route. Writer updates preserve the word, the
+old-bank/flag selector during filling and the target bank during
+erasure. Induction along these edges therefore gives the same next
+word for every actual root reply, even when consecutive root replies
+differ. The remaining number of edges is a finite episode measure
+unchanged by writers and decreased by every routing Read. Observer
+progress completes all its edges.
+
+There is also an explicit decoding during the transfer. In a flagged
+filling phase 000 decode $\delta(A,r)$, and in phases 001 and 011
+decode B. In a flagged filling phase 010 decode $\delta(B,r)$,
+and in phases 110, 111, 101 and 100 decode A. In the ready phases
+decode the active bank. At a fill-to-erase change the filled bank
+equals the target; erasure never touches that bank. Clearing the flag
+does not change this decoding. Thus every routing edge preserves the
+decoded successor $t$, including the part where the old bank is being
+destroyed. The decoding is a mathematical function of the installed
+word, not another stored bank or retained raw response. Together with
+the finite edge measure it supplies the protected-control and
+all-response progress clauses of Assumption 8.2 for this table.
+
+At the next ready row the control is exactly the original successor
+$t$. Induct over transfers and writer events: deleting routing Reads
+preserves the source; retaining a writer event applies the same $\rho$;
+and a ready instruction reads the same source at the same retained
+position or performs the same single observer Update. This proves the
+claimed actual-response correspondence.
+
+The source state's semantic exponent is the total of both kinds of
+genuine updates. In particular, a writer update during routing is not
+absorbed into a source-preserving observer step. The serial supplier
+native_transfer counts the same observer operations in its own
+Execution relation; that relation has no independent-writer event.
+The response-uniform row argument above is the additional concurrent
+application, rather than an invocation of that serial relation on a
+history it does not represent. $\square$
+

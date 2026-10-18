@@ -1,0 +1,36 @@
+**Lemma 74.3 (the form estimate at the specified nonreal parameter).**
+Let $H\ge-M$ be self-adjoint on a Hilbert space, with closed form $q$.
+If $\|z\|\le1$ and $u$ is in its form domain, then
+
+$$
+ \|(H-i)^{-1}z\|
+ \ge\frac{|\langle z,u\rangle|^2}
+ {\sqrt{M^2+1}\,[q[u]+(M+1)\|u\|^2]}.
+\tag{74.9}
+$$
+
+The quotient is taken only for $u\ne0$; a zero lower bound is automatic.
+Indeed put $T=H+M+1\ge1$. For $\lambda\ge-M$,
+
+$$
+ \frac{\sqrt{\lambda^2+1}}{\lambda+M+1}\le\sqrt{M^2+1}.
+$$
+
+Writing $t=\lambda+M\ge0$, the difference between the squares of the
+right and left denominators after cross multiplication is
+$M^2t^2+2(M^2+M+1)t\ge0$. Spectral calculus and form Cauchy--Schwarz give
+
+$$
+\begin{aligned}
+ \langle z,T^{-1}z\rangle
+ &\le\|z\|\,\|T^{-1}z\|
+ \le\sqrt{M^2+1}\,\|(H-i)^{-1}z\|,\\
+ |\langle z,u\rangle|^2
+ &\le\langle z,T^{-1}z\rangle\,\|T^{1/2}u\|^2.
+\end{aligned}
+$$
+
+Their combination proves (74.9). In particular, if a comparison
+operator annihilates $z$, (74.9) is a lower bound for its full operator
+norm discrepancy from the physical resolvent. $\square$
+

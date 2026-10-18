@@ -1,0 +1,45 @@
+**Definition 7.1 (weak and strong live matrices).** Fix $s$ and all
+following operations before the specimen arrives. In the weak regime
+$0\leq s\leq\sqrt\ell$, for each $r=\pm1$ prescribe
+
+$$
+A_r=\sqrt{k/2}\,D,\qquad
+B_{r,\epsilon,\zeta}=
+\sqrt{\frac{1+r\epsilon s/\sqrt\ell}{8}}
+ (\sqrt\ell D+\epsilon T+\zeta S),
+\quad \epsilon,\zeta\in\{+1,-1\}.
+\tag{IR.42}
+$$
+
+In the strong regime $\sqrt\ell\leq s\leq1$, prescribe
+
+$$
+A_r=\frac{\sqrt{p_s}D+r\sqrt{q_s}T}{\sqrt2},\qquad
+B_{r,\epsilon}=
+\frac{\sqrt{1-p_s}D+r\sqrt{1-q_s}T+\epsilon S}{2},
+\quad\epsilon\in\{+1,-1\}.
+\tag{IR.43}
+$$
+
+Use the continuous threshold values in (IR.43). Delete zero matrices
+in (IR.42) before receiving any input. For each high label $(r,H)$,
+use encoder $A_r$ into a three-dimensional fibre and decoder
+$X\mapsto EXE^\dagger$ into live. For every nonzero displayed $B$,
+use its own actually generated low label, encoder $U_B^\dagger B$
+into a two-dimensional fibre, and full TP decoder
+$X\mapsto EU_BXU_B^\dagger E^\dagger$, where (IR.22) fixes $U_B$.
+For these $B$ matrices the $D$ coefficient is nonzero, so columns $1,2$
+always give that formula.
+
+For each $r$ and $j=1,2$, add scalar encoder
+$\sqrt{m_j/2}\langle j|$ and decode a scalar $z$ to the entire
+five-sector failure law $zw_\ell g(t)dt\,P_f$. On five modes compose
+every supported encoder with $E^\dagger$. Add one scalar CP encoder
+$A\mapsto\operatorname{tr}(Q_5A)/2$ for each $r$, decoded to
+$zg(t)dt\,P_f$ at label $2$ only. This complement encoder may use the
+two rows $\langle(e_0-e_4)/\sqrt2|/\sqrt2$ and
+$\langle(e_1-e_3)/\sqrt2|/\sqrt2$ into a single scalar output;
+its Kraus multiplicity is permanently inaccessible. No other quantum
+system crosses the cut. The stated labels are acquired by enacting
+these CP maps, and every other dilation system is discarded permanently.
+

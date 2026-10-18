@@ -1,0 +1,91 @@
+### 29.2 Interior translation inside the proof of Theorem 29.2
+
+The cyclic polytope description and integer decomposition are those
+proved in Theorem 28.2. Its cone has full group lattice: the zero mode
+and singleton modes generate $(1,0)$ and, by subtraction, every
+$(0,e_i)$. It is full dimensional, since at scale one a constant vector
+with sufficiently small positive entries satisfies all inequalities
+strictly. The semigroup is the intersection of this rational cone with
+its group lattice, hence saturated and normal. The semigroup dimension
+is its group rank, eight.
+
+The facets for an even cycle of length at least four are the coordinate
+and edge inequalities. For an odd cycle of length $2k+1\ge5$, add the
+global facet $\sum x_i\le k$. A coordinate facet has a point with that
+coordinate zero and all other coordinates small positive. An edge facet
+has its endpoints equal to $1/2$ and all other coordinates sufficiently
+small positive; all other inequalities are strict. For the global
+facet, the edge slacks $a_i=1-x_i-x_{i+1}$ satisfy $\sum a_i=1$ and
+
+$$
+x_i=\sum_{r=0}^{k-1}a_{i+1+2r}.
+\tag{29.8}
+$$
+
+This is an affine bijection from the simplex $a_i\ge0$, $\sum a_i=1$
+onto that face: the adjacent sums are $1-a_i$, and summing the
+coordinates gives $k$. Uniqueness uses the odd-cycle linear equations
+as in (28.12). Its dimension is $n-1$, proving the facet assertion.
+Thus the strict inequalities used in (29.1) describe precisely the
+interior integer points, rather than a smaller selected subset.
+
+This also specifies exactly where the path translation of Theorem 27.2
+survives closing a seam. For an even cycle and $m\ge3$, its interior
+integer points are
+
+$$
+\mathbf1+\bigl((m-3)Q_n\cap\mathbb Z^n\bigr).
+\tag{29.9}
+$$
+
+For $n=2k+1\ge5$, subtracting $\mathbf1$ from the strict inequalities
+gives instead
+
+$$
+\operatorname{int}(mQ_n)\cap\mathbb Z^n
+=\mathbf1+
+\left\{b\in\mathbb Z_{\ge0}^n:
+ b_i+b_{i+1}\le m-3,\quad
+ \sum b_i\le k(m-3)+(k-2)\right\}.
+\tag{29.10}
+$$
+
+Indeed $c_i\ge1$ and $c_i+c_{i+1}\le m-1$ become the first two
+conditions, and $\sum c_i\le km-1$ becomes the last one. This proves
+both formulas directly. At $k=2$, (29.10) has exactly the same
+three-degree translation as the path. For $k\ge3$, take
+
+$$
+m=2k-1,\qquad c=(k-1)\mathbf1.
+\tag{29.11}
+$$
+
+All coordinates are positive, each edge sum is $m-1$, and the total
+is $km-1$, so this is interior. After subtracting $(3;\mathbf1)$,
+the remaining degree is $2k-4$ and the remaining total exceeds
+$k(2k-4)$ by $k-2>0$. It is not a semigroup point.
+For the triangle, the polytope is the simplex
+$x_i\ge0$, $\sum x_i\le1$; the edge inequalities are redundant.
+The strict integer conditions give the four-degree shift
+$(4;1,1,1)$ instead. The one-position open interval has the separate
+two-degree shift already specified in chapter 27.
+
+Hochster's theorem and the Danilov–Stanley interior-monomial formula,
+with the exact normal-semigroup hypotheses used in Theorem 27.2 and
+its source [Brennan–Dupont–Villarreal, (1.2), (3.2), §3][CA27], now give
+Cohen–Macaulayness and identify the interior ideal with the canonical
+module. Thus (29.9) and the $k=2$ instance of (29.10) give principal
+canonical modules; the triangle does too with its distinct shift.
+For odd length at least seven the only degree-three interior point is
+$\mathbf1$, since its edge sums must be at most two. There is no
+interior point in smaller degree. If the canonical module were
+principal, its homogeneous generator would therefore be a scalar
+multiple of $X^{(3;\mathbf1)}$. Point (29.11) prevents this.
+This recovers precisely the known Gorenstein boundary used here:
+open paths with $n\ge2$, even rings, and the five-ring have shift three;
+the triangle has shift four; odd rings of length at least seven are
+not Gorenstein. The even-cycle precedent is Ohsugi–Hibi,
+Theorem 2.1(b), and the odd-cycle precedent is Hibi–Tsuchiya,
+Theorem 1, as identified in [Miyazaki, introduction and §2][MI28].
+They enter only to delimit the inherited path-duality argument.
+

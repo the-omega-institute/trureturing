@@ -1,0 +1,84 @@
+**Theorem 7.2 (sharp acquired-window bridge).** On the domain (CAB.18):
+
+1. The minimum attained supplementary alphabet is exactly $q$;
+   fixed-width payload is $\lceil\log_2q\rceil$ bits.
+2. For a fixed quiescent common age $a$, put $M=a+d$, $U=M+q-1$ and
+
+$$
+h_q=\min\{h\ge0:q\le3\cdot2^h-2\}.
+\tag{CAB.19}
+$$
+
+   For $q\ge2$, the minimum worst-case hidden Read count over
+   $0\le r<q$ is exactly $h_q$, and the minimum worst-case peak
+   length of a hidden whole-root operand is exactly
+
+$$
+D_q=1+\left\lfloor\frac{M+q-2}{2}\right\rfloor.
+\tag{CAB.20}
+$$
+
+   One uniform initially source-blind program attains both, using
+   endpoints computed from its acquired first row. For $q=1$ it
+   makes no hidden Reads and has no supplementary payload bit.
+3. For $q\ge2$, with $D_0=1+\lfloor M/2\rfloor$, every such exact first producer
+   has some quiescent run with at least $h_q$ informative hidden
+   Reads, all of length at least $D_0$. Consequently its worst-case
+   hidden letter traffic is at least $D_0h_q$. The attaining program
+   uses at most $D_qh_q$ hidden letters on every quiescent run.
+
+The exact interval formulas in parts 2–3 use [AOF, Theorems 8.3,
+9.1–9.3][AOF]. The additional assertions here concern acquired endpoints,
+whole-root arbitrary-address competitors, actual lag consumers and
+concurrent completion, not a new interval-search formula.
+
+Proof. At a first validation age $a_v$, retain
+$r=c(T_{a_v+d+r})-c(T_{a_v})-d$. A later visible right tree has clock
+$a_v+d+r+n$, while the first visible left tree has clock $a_v$;
+their difference minus $d+r$ gives $n$. To force $q$ records, fix
+$a$ and use the lawful positive lags $q-r$. All complete first rows
+are $\langle T_a,H_R\rangle$ and all complete later rows are
+$\langle H_L,T_{a+d+q}\rangle$. Their singleton partitions coincide.
+The distinct lags force distinct first supplements. Retaining $r$
+attains the alphabet. This is also Theorem 6.1 for
+$S=\{1+d,\ldots,d+q\}$.
+
+For the acquisition lower bound fix $a$. The root and every address
+outside the $R$ cone have a reply independent of $r$. Contract such
+queries and any other constant-reply nodes of the finite induced
+decision tree. Distinct first records still identify every actual
+hidden age in $[M,U]$. Each remaining query is $R p$ for an arbitrary
+native suffix $p$. By [AOF, Definition 8.2][AOF] every suffix has one of
+the actual $E,P_t,S_t$ response functions, rather than an arbitrary
+partition of the interval. Its capacity after $h$ informative tests
+is at most $3\cdot2^h-2$, since the nonsingleton cells are at most
+two interval tails and the other two cells are singletons. Root and
+$S_t$ queries have no larger capacity. Thus some path has at least
+$h_q$ informative hidden queries. Giving a competitor $a$ for the
+purpose of this lower-bound reduction can only help it; the original
+program need not know $a$.
+
+If every hidden suffix had length less than
+$\lfloor(U-1)/2\rfloor$, the two ages $U-1,U$ would reply branch
+identically at every such suffix. Root and left-side queries cannot
+separate them either. Deterministic induction then contradicts the
+required different first records. Adding the mandatory leading $R$
+proves (CAB.20)'s lower bound. Furthermore every suffix shorter than
+$\lfloor M/2\rfloor$ replies branch throughout the hidden interval.
+Each informative hidden query costs at least $D_0$ letters. The
+capacity argument applies to the tree of informative queries itself,
+so $D_0h_q$ is a same-run bound, not a product of unrelated maxima.
+
+For attainment, perform RA's left guard and complete first-row body.
+The paid literal left candidate has a computable right clock $C$.
+Form the provisional interval $[C+d,C+d+q-1]$ by local arithmetic.
+Apply the native joint-optimal interval reader of [AOF, Theorem 9.2][AOF]
+below the reached base $R$, then validate the original left guard.
+The explicit finite control and treatment of mixed replies are given
+in Definition 7.3. On a quiescent call $C=a$, so the interval is
+correct, the hidden queries identify $a+d+r$ in at most $h_q$ calls,
+and every suffix has length at most $\lfloor(U-1)/2\rfloor$.
+Subtracting $C+d$ gives $r$. This attains both minima and the claimed
+letter upper bound. Theorem 7.4 proves that this same program is
+safe and terminates under the full concurrent model. $\square$
+

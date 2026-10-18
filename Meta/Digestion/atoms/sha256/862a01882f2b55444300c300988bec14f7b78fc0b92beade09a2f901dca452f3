@@ -1,0 +1,13 @@
+**命题 59.5（守卫与保留字段的不可省略性）。** 取 $P=\{LL,R\}$。来源 $u=\langle\alpha,\beta\rangle$ 产生 $C=\langle\alpha,\square_1\rangle$，只有 $R$ 孔；该行的全部来源是 $\{\langle\alpha,t\rangle:t\in\mathcal T\}$。在纪元二，原先缺席的公共地址 $LL$ 已经出现，却不成为新的原孔。另取 $P=\{L,R\}$，来源
+
+$$
+\langle\alpha,\alpha\rangle,
+\qquad
+\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle
+\tag{SLH.59.3}
+$$
+
+产生同一个双孔单类行，取得记录的长度却分别为三和七。因此把遗忘前记录长度留作可访问字段，会严格细化该行纤维。
+
+证明。第一式的原左孩子为具体 $\alpha$，阻断 $LL$；填充右孔不改变它。$\rho^2\alpha=\langle\beta,\alpha\rangle$ 给纪元二的 $LL$ 出现，仍属具体左叶的替换像。第二对来源左右子树分别相等，挖掉两孩子后留下相同上下文和分区；命题53.2的逐节点取得计数给三、七。该计数字段若保留，就可区分二者。$\square$
+

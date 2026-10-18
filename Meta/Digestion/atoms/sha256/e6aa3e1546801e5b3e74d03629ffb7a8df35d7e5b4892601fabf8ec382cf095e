@@ -1,0 +1,41 @@
+**Theorem 48.1 (one joint attained order statement).**
+For each fixed $0<\delta<1/4$, as $\eta\downarrow0$,
+
+$$
+V(\eta,\delta)=\Theta(\eta^{-2}\log(1/\eta)).
+\tag{48.1}
+$$
+
+A single family in precisely $\mathcal C(\eta,\delta)$, on the same
+persistent source and original clock, jointly attains
+
+$$
+\begin{aligned}
+\mathbb EM&=O\!\left(\eta^{-2}\log\frac{e}{\eta\delta}\right),\\
+\mathbb EV^a,\ \mathbb EV^b,\ \mathbb EL&=O(\eta^{-2}),\\
+\mathbb EE&=O(\eta^{-4}).
+\end{aligned}
+\tag{48.2}
+$$
+
+The constants in the resource upper bounds are independent of
+$\delta\in(0,1/4)$. Each resource infimum over this same chance class
+has the respective matching power, $\Theta(\eta^{-2})$ for the two
+variations and length, and $\Theta(\eta^{-4})$ for unhalved energy.
+These are joint order assertions, not sharp leading constants or an
+assertion that an infimum is attained exactly.
+
+Proof. Choose $\Lambda$ as in (44.7) and use Definition 45.1, without changing
+the source as either parameter changes. Theorems 46.2 and 47.2 give its
+actual membership, probability and unconditional joint costs. For small
+$\eta$, $\rho=\eta/A_0$, so (44.6)–(44.7) yield (48.2).
+Theorem 42.2 supplies the Read lower bound; Theorem 43.1 supplies each
+resource lower bound in the actual chance class. A separate scalar
+optimum or an ideal-history controller was not combined with an
+unrelated actuator. The logarithm prices the polling precision; retry
+service durations remain $h_j=c\rho^2 4^{-j}$ and do not shrink by
+that logarithm. Their geometric reach probabilities pay for accelerated
+suffix energy. This is why all coordinates in (48.2) belong to the same
+implementation. Theorem 41.2 still rules out the original almost-sure
+hard tube. $\square$
+

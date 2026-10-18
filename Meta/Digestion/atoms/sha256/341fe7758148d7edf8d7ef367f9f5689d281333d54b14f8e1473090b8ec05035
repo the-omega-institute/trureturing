@@ -1,0 +1,130 @@
+**Theorem 275.2 (Column potential and its full-allocation consequence).**
+Every deterministic complete $N$ table satisfies
+
+$$
+g_D\ge0,\qquad H_D\le\ell_D+2(g_D+x_D).
+\tag{275.4}
+$$
+
+The coefficient two is sharp at column level. Every one full feasible
+allocation, at any real $b$ and $e\ge0$ and any mass, satisfies
+
+$$
+\begin{aligned}
+H_\lambda+\sum_{3\le i<j\le L}s_{ij}
+ &\le\sum_{i=3}^L(L-i)s_i+2(G+X),\\
+0\le\Gamma_{\rm late}\le H_\lambda&\le(L-3)\delta_b.
+\end{aligned}
+\tag{275.5}
+$$
+
+At $\delta_b=0$, every positive-mass late pair has the whole-table
+form $N(i,j;0,0,s,0)$ with $s\in\{0,j\}$. All $s_{ij}$ vanish,
+and every entire late correct fibre has the value in (274.4).
+No monotonicity, head equality, fixed unary law or normalization
+is needed for (275.4)–(275.5).
+
+**Proof.** Write $E=\{1,2\}$. If no late bit is queried then
+$t_D=\ell_D=0$ and $g_D=a_D\ge0$.
+For a late singleton at $j$ with zero/one outputs $s,t$,
+
+$$
+g_D=2[s\in J]+(c-2)[t\in J]-[s=j]+[t=j].
+\tag{275.6}
+$$
+
+For a mixed pair $(h,j)$, $h\in E$, its four outputs give
+
+$$
+g_D=[u\in J]+[s\in J]-[s=j]
+          +\tfrac{c-2}{2}([v\in J]+[t\in J])+[t=j].
+\tag{275.7}
+$$
+
+Both are nonnegative. In either of these schedule types,
+$\ell_D=[t\in J,t<j]-[s\in J,s<j]$.
+Its only negative term, if present, contributes at least one to
+$g_D$. Hence $\ell_D+g_D\ge0$, which proves (275.4) there
+because $H_D=0$ and $x_D\ge0$. Empty and early singleton
+tables were included in the no-late case.
+
+For a late pair $D=N(a,b;u,v,s,t)$, $3\le a<b\le L$, direct
+evaluation of the sole-zero, double-zero and positive words gives
+
+$$
+\begin{aligned}
+g_D={}&[u\in J]+[v\in J]-[v=a]+[s\in J]-[s=b]\\
+ &+(c-3)[t\in J]+[t\in\{a,b\}],\\
+2x_D={}&[u\in E]+[v\in E]+[s\in E]+(c-3)[t\in E],\\
+\ell_D={}&[v=a]-[u=a]+2[t\in J,t<a]
+             -[v\in J,v<a]-[s\in J,s<a]\\
+ &+[t\in J,a<t<b]-[s\in J,a<s<b].
+\end{aligned}
+\tag{275.8}
+$$
+
+The first line is a sum of nonnegative grouped terms.
+To see the last formula, a correct label below $a$ can change
+only when the added zero is at $a$ or $b$, giving the two
+$t$-to-$v,s$ differences. Between $a$ and $b$ only the added
+zero at $b$ matters. At $a$ the change is $v$ to $u$.
+At or above $b$ there is no later queried bit. This exhausts
+every term in $\ell_D$, including earlier unqueried labels.
+
+Group $\ell_D+2g_D+2x_D$ by the four actual outputs. Its terms are
+
+$$
+\begin{aligned}
+U={}&-[u=a]+2[u\in J]+[u\in E]\ge[u\ne0],\\
+V={}&2[v\in J]-[v=a]-[v\in J,v<a]+[v\in E]\ge[v\ne0],\\
+S={}&2[s\in J]-2[s=b]-[s\in J,s<a]
+                   -[s\in J,a<s<b]+[s\in E]\ge0,\\
+T'={}&2[t\in J,t<a]+[t\in J,a<t<b]+2(c-3)[t\in J]\\
+ &+2[t\in\{a,b\}]+(c-3)[t\in E]\ge0.
+\end{aligned}
+\tag{275.9}
+$$
+
+For $S$, the values are zero at $0,b$, one at a late label below
+$b$ other than $a$, two at $a$ or above $b$, and one at an early
+label. Thus no label case is omitted. The sum proves (275.4).
+The column $N(3,4;1,0,0,0)$ has
+$(H_D,\ell_D,g_D,x_D)=(1,0,0,1/2)$, so no smaller coefficient
+than two works. This is column sharpness, not feasible-law
+sharpness at a hard-hull profile.
+
+Linearity under the one allocation gives exactly
+
+$$
+\sum_D\lambda_D\ell_D
+=\sum_{3\le i<j\le L}(\mu_{v^i}(i)-\mu_{v^{ij}}(i))
+=\sum_{i=3}^L(L-i)s_i-\sum_{3\le i<j\le L}s_{ij}.
+\tag{275.10}
+$$
+
+Integrate (275.4) and substitute this equality to obtain the first
+line of (275.5). A late pair with $u\ne v$ has at least one
+nonzero first-cell label, so $\Gamma_{\rm late}\le H_\lambda$.
+In (275.3) all terms are nonnegative. Since $L\ge6$,
+$L-i\le L-3$ and $2\le L-3$; dropping the double-zero slacks
+therefore gives the final bound.
+
+At zero reserve all charges vanish, hence every positive-mass
+table has $g_D=x_D=0$, and every late pair has $u=v=0$.
+In (275.8), $c-3>0$ excludes late $t$, and $x_D=0$ excludes
+early $s,t$. The remaining possibility is $t=0$, $s\in\{0,b\}$.
+The allocation inequality also forces all $s_{ij}=0$.
+
+One can check the entire-fibre statement directly. A table with
+no late query is constant on each late first-zero fibre. Formula
+(275.6) excludes late outputs from a zero-charge late singleton.
+In a mixed pair, (275.7) allows a late label on the early-11
+fibre only as its queried label $j$ in cell $10$; that cell is
+reached on every first-zero-$j$ word. A late pair now can emit
+only its second address $b$ in $10$, reached on every
+first-zero-$b$ word. Thus for every positive-mass table,
+$[D(w)=n]=[D(v^n)=n]$ whenever $n(w)=n\ge3$.
+Integrate and use $s_n=0$. These are conditional equalities;
+Section 278 excludes this zero-reserve boundary at positive caps
+for $L\ge6$. $\square$
+

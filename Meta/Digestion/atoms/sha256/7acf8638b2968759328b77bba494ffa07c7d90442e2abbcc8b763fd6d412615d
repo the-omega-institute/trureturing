@@ -1,0 +1,12 @@
+**命题 78.3（有限活动排除 supported 非零 failure-only 标签）。** 对整个 fibre 上的任意正输入 $X$，FA68 的 survivor coercivity 给出
+
+$$
+\operatorname{tr}\mathcal S_{\gamma,1}(X)
+\ge e^{-A}\operatorname{tr}X.
+\tag{RC.106}
+$$
+
+因而原支持上非零的 encoder 不能有零 composite live map。静态 JR/TA 中可独立生成的 certain-failure spectral rows 不能直接充当有限 $A$ acquisition labels。结合约定 78.1 的 sharp-cost 实等号面，每个 supported failure 必须按 FA69 容量附着于一个非零 low live 产品。
+
+证明。正吸收和 TP survivor controls 给出 $d\operatorname{tr}X_u/du\ge-\|R_\gamma(u)\|\operatorname{tr}X_u$；积分得 (RC.106)，终端 TP 保持 surviving trace。对任一使 supported encoder 输出非零的正输入，该下界严格正，故 composite live 不可能为零。实等号面和双重秩刚性再给出 §79 的一射线表示。这不排除原支持上为零、全 $M_5$ 上非零的 encoder；这些标签仍须计入实际字母表和整个 fibre 活动量，但不为它们虚构正 $p_j$ 或 null 射线。$\square$
+

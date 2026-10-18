@@ -1,0 +1,30 @@
+**Lemma 3.2 (existence, local uniqueness and positive masses).**
+EP.20–21 defines a unique real analytic germ. Its four masses are
+positive, all radical arguments remain positive, and its four contact
+rays remain distinct near $p=0$.
+
+Proof. At zero,
+
+$$
+m_j=(1,\sigma,\eta,\sigma\eta,1),\qquad
+m_j'=(0,\sigma,-\gamma\eta,(1-\gamma)\sigma\eta,2).
+\tag{EP.22}
+$$
+
+In a homogeneous linearization at fixed $p=0$, the four contact
+equations give $\delta a\cdot m_j=0$, since the base value derivatives
+agree. Four-sign Hadamard inversion gives
+$\delta a_1=\delta a_2=\delta a_3=0$ and
+$\delta a_0=-\delta a_4$. The base difference
+$P_{a(0)}-(1+d)=d^2/2$ makes the tangency equations
+$\delta d_j+2\delta a_4=0$. Subtracting the first moment equation from
+the fifth gives $(1/2)\sum_j\delta d_j=0$. Thus $\delta a_4=0$,
+every $\delta d_j=0$, and the first four moment equations force every
+$\delta\pi_j=0$, again by Hadamard inversion. This square Jacobian
+has trivial kernel and is invertible. The real analytic implicit-function
+theorem applies. Positivity and distinctness persist by continuity.
+For algebraic source constants the germ is algebraic analytic after
+adjoining the positive-root polynomial equations; no elimination or
+root computation is required. The Jacobian here concerns EP.20, not
+the separate conditional CG root. $\square$
+

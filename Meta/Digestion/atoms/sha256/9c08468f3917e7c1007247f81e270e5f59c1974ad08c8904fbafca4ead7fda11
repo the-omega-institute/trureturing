@@ -1,0 +1,21 @@
+**Definition 12.3 (row lookup, cell lookup and replacement).** To obtain
+the current row, traverse the complete finite row list. Decode each of its
+seven Frame/unary fields; compare its state field to the stored PC with
+Equal; retain the unique matching row. Decode its effect tag as a finite
+case. The installed-description validator rejects absent or duplicate
+state numbers, invalid successors and malformed finite tags before entry.
+It does not assume a native-code random access instruction.
+
+To read a virtual port, use Nth on the 64-port list with the decoded unary
+port field. To locate its head, traverse the whole cell list, testing the
+appropriate mark bit by fixed tuple/bit positions; retain the marked item,
+its actual preceding-item unary count, and its predecessor/successor items.
+At a legal reached state there is precisely one appropriate mark. To change
+one cell or latch use Replace. To append a cell use AppendItem. To move
+between adjacent existing cells, construct the selected index's successor
+by cons 1, or its predecessor by tail, on the nonzero branch. An absent
+neighbor or disabled token gives a typed simulated-illegal result; it is
+never treated as a source reject. Each of these instructions expands into
+Definition 12.1 and then Definition 11.3. No scan stops at an address whose
+numeral was never constructed.
+

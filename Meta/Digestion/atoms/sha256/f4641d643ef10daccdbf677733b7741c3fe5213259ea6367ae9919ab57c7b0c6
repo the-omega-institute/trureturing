@@ -1,0 +1,38 @@
+**Definition 1.4 (strict stable coupling and actual infima).** Fix
+
+$$
+g=\gamma\varepsilon^2,\qquad
+0<\gamma<(2rC_H)^{-1},\qquad
+\theta=2rC_H\gamma<1.
+\tag{1.13}
+$$
+
+On precisely the domains in (1.4) define
+
+$$
+\begin{aligned}
+q_g(f,z)&=T(f,z)-g\int_\Omega\Gamma_of\overline z\,d\mu,
+&q_g[f]&=q_g(f,f),\\
+\overline q_g(v,z)&=\overline T(v,z)-g\int_D Wv\overline z\,d\nu,
+&\overline q_g[v]&=\overline q_g(v,v),\\
+E_{\rm full}&=\inf_{f\in\mathcal F,\ \|f\|_2=1}q_g[f],
+&E_{\rm base}&=\inf_{v\in\overline{\mathcal F},\ \|v\|_2=1}
+                  \overline q_g[v].
+\end{aligned}
+\tag{1.14}
+$$
+
+Tonelli, (1.6) and (1.10) give
+
+$$
+V_o[Jv]=\int_D W|v|^2d\nu,\qquad
+q_g[Jv]=\overline q_g[v].
+\tag{1.15}
+$$
+
+Weighted Cauchy--Schwarz and (1.12) give the sesquilinear identities as
+well. Thus $E_{\rm base}$ is the restriction of the very same fixed-pole
+form. The factor $1/(2\pi)$ in $W$ is forced by the isometric lift.
+The full problem continues to contain $\Gamma_o$, not $W\circ\pi$.
+No negative-binding inequality is imposed.
+

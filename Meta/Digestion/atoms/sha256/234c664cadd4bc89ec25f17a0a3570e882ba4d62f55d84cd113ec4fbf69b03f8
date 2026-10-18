@@ -1,0 +1,49 @@
+**Definition 21.1 (binary slots and a positive nonproduct law).** Fix
+$d\ge2$, let $s_d=|S_d|$ and $b=s_d+2$, and put
+
+$$
+\mu(\langle\alpha,\alpha\rangle)
+ =\mu(\langle\beta,\beta\rangle)=\frac2b,
+\qquad \mu(x)=\frac1b\quad\text{for every other }x\in S_d.
+\tag{COK.103}
+$$
+
+The total raw weight is $s_d+2$, so this is a strictly positive
+rational probability on the entire unchanged canonical alphabet.
+Its binary-pair weight minor is
+$b^{-1}\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$,
+with determinant $3/b^2>0$; it is not a product of two leaf weights.
+The binary matrix and conditional rows below are credited to
+Theorem 8.1 and [OOA, §7][COKOoaJoint]. The full-support scaling
+keeps their local calculation on the actual binary slots.
+
+Start with two reciprocal blocks, each owning one binary seed
+at its actual $L$ port. An $m$-sheet whole-group cover has two
+perfect matchings. Relabel sheets so one matching is the identity;
+write $h\in\operatorname{Sym}([m])$ for the relative matching
+on the other. Write the blocks as $A_i,B_i$, their owned seeds
+as $a_i,b_i\in\{\alpha,\beta\}$, and prescribe every target by
+
+$$
+\begin{array}{lll}
+z_{A_i,\varepsilon}=(0,0),&
+z_{A_i,Lr}=\Gamma_r(a_i),&
+z_{A_i,Rr}=\Gamma_r(b_i),\\
+z_{B_i,\varepsilon}=(0,0),&
+z_{B_i,Lr}=\Gamma_r(b_i),&
+z_{B_i,Rr}=\Gamma_r(a_{h(i)}),
+\end{array}
+\quad Lr,Rr\in W_d.
+\tag{COK.104}
+$$
+
+An occurrence of $a_i$ queries the actual $L$ port of $A_i$,
+and an occurrence of $b_i$ that of $B_i$. For each nonconstant
+table send both excluded replies branch and absent to the
+corresponding full alpha-leaf factor. At an owner port this
+factor has reply alpha, different from either excluded input.
+These are total native tables with the actual binary guards,
+not an extra domain observation. All factors are in the original
+attained ranges. In particular a suffix below a leaf still has
+its entire temporal factor prescribed.
+

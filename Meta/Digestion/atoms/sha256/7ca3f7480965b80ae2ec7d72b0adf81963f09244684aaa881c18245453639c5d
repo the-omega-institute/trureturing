@@ -1,0 +1,25 @@
+**Proposition 8.6 (calibration is not a globally least partition).** For
+paired first sources, retaining
+$\nu(y)-\nu(x)$, where $\nu$ is the supplied intrinsic inverse depth,
+also suffices with the complementary rows to recover the lag.
+Consequently §5's right-clock calibration does not define a coarsest
+necessary all-source retained partition.
+
+Proof. [IDC, Reuse 2.2][IDC] gives
+$\nu(\rho^n y)=\nu(y)+n$ and an effective computation of $\nu$
+from a full literal tree. The first row exposes $x$ and the second
+exposes $\rho^n y$, so their intrinsic depths minus the retained
+difference recover $n$. For an initially atomic root, the row
+already gives the whole initial tree and the §5 clock formula handles
+its continuation, so this alternative extends to an all-source
+scheme with a row-determined branch.
+
+Take $x=\alpha$ and $y$ either alpha or
+$\langle\alpha,\alpha\rangle$. Both hidden trees have intrinsic
+depth zero by the image grammar. This alternative merges their
+first supplementary values, while (CAB.13)'s calibrations are one
+and three. Hence the latter distinction is not forced in every
+sufficient representation. Computing the alternative from a hidden
+tree has its own acquisition cost; no cost dominance follows.
+$\square$
+

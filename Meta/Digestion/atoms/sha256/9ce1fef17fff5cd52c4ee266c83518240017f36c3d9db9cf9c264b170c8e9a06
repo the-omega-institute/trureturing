@@ -1,0 +1,58 @@
+**Theorem 16.1 (the recovered original cut row and saturated residual).**
+For any successful class reader above, the output recovers the complete
+original row at the same selected cut. For right visibility this row
+is
+
+$$
+R_{\{L\}}(X_{a,b})=
+\bigl(\langle\square_L,T_{q+b}\rangle,\{\{L\}\}\bigr),
+\tag{NARC.16.1}
+$$
+
+and for left visibility it is
+
+$$
+R_{\{R\}}(X_{a,b})=
+\bigl(\langle T_a,\square_R\rangle,\{\{R\}\}\bigr).
+\tag{NARC.16.2}
+$$
+
+This does not reconstruct the hidden original filling. More sharply,
+at a full reference entry of a saturated class, every correct two-read
+lag controller has a truthful terminal transcript compatible with at
+least four different originals, all with the same recovered lag and
+selected original cut row. Full original reconstruction with the same
+alphabet and two-read budget is impossible at $q=18$ or $q=19$,
+by the stronger-task bound of Proposition 12.2.
+
+**Proof.** The certified terminal target is the initial coordinate of
+the visible slot. Theorem 5.2 identifies that target as $b$ on the
+right and $a$ on the left, with the acquired normalized clock minus
+the target giving the actual lag. Substituting the recovered origin
+in the original family yields (NARC.16.1) or (NARC.16.2), including
+the same reached guard and full singleton partition. This is a
+reconstruction from the acquired entry and actual replies; it is not
+another acquisition or recovery of a previously unknown cut.
+
+At a saturated full reference entry, Theorem 13.2 forces every
+successful reader's ten leaves to be exactly its ten coordinate runs.
+Six are singleton runs. Each other run has size $1+3j$: its interior
+edges are whole opposite-coordinate triples. Across these four runs
+the corresponding four nonnegative integers sum to three, since
+the class has nineteen points. Hence one has size at least four.
+Its origins have the same visible coordinate and, at this common
+clock, the same lag; their hidden coordinates differ. They share the
+received label, entire later row and actual terminal transcript, but
+their hidden original trees are distinct. This proves a real residual
+source ambiguity for every two-read lag controller on that entry.
+
+Proposition 12.2 already proves that universal two-read full-original
+reconstruction with exactly $q$ labels requires $q\le10$. Applying
+that existing result to $q=18,19$ makes the stronger task impossible,
+irrespective of whether their lag-recovery covers exist. Extra native
+information can change that task: [NAR, Theorem 16.5][NAR] supplies
+finite current recovery, and a $d$-injective public class together with
+both current ages determines its original pair and lag. Such additional
+acquisition or calls are not supplied by the two-read transcript.
+$\square$
+

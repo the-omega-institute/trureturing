@@ -1,0 +1,31 @@
+**定理 459.6（全实率没有无支持约束的正负质量下界）。**
+对于任意上述固定严格凹三点，存在有限两原子 signed 测度序列精确拟合
+$u,v,z$，且其原始负质量和中点加权负质量均趋于零。
+
+**证明。** 记 $\Delta=v^2-uz>0$。对充分大 $R>0$，置
+$$
+A_R=u e^{\delta R}+z e^{-\delta R}-2v>0,
+\qquad n_R=\Delta/A_R,
+$$
+$$
+U_R=u+n_Re^{-\delta R},\quad Z_R=z+n_Re^{\delta R},
+\quad t_R=\frac{\log(U_R/Z_R)}{2\delta}.
+$$
+线性代数精确给 $U_RZ_R=(v+n_R)^2$。因此
+$$
+\sigma_R=(v+n_R)e^{mt_R}\delta_{t_R}
+          -n_Re^{-mR}\delta_{-R}
+\tag{SNC.28}
+$$
+在三个节点均精确拟合。这里
+$t_R\to\log(u/v)/\delta>0$，故充分大时两个原子不同，负部确为后一项。
+由 $n_R\sim(\Delta/u)e^{-\delta R}$，有
+$$
+\int e^{-mt}d\sigma_R^-=n_R\to0,
+\qquad N_-(\sigma_R)=n_Re^{-mR}
+\sim(\Delta/u)e^{-bR}\to0.
+$$
+每个测度都只有两个有限实位置，故所有所需核真正可积。
+（SNC.24）的加权核预算仍成立，因为逃逸原子上的核足够大。
+这说明非负率假设在原始负质量问题中承担实际内容。证毕。
+

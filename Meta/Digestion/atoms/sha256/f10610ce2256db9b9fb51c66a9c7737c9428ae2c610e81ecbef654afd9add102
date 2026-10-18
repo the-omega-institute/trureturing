@@ -1,0 +1,85 @@
+**Lemma 4.3 (All independent union rows on every word).**
+For $A$, the mass outside $\{0,n\}$ is at most $E$ on every
+entire first-zero fibre through eight.
+
+Proof. Write $C(\tau,\kappa)$ for the unnormalized core vectors.
+They obey the wordwise vector identity
+
+$$
+C(\tau,\kappa)=(\tau-253\kappa)C(1,0)+\kappa C(253,1).
+$$
+
+Both coefficients are nonnegative. These endpoint cores are measures,
+without probability normalization at an unchanged target.
+The following credited endpoint calculation retains all free suffixes.
+Put $(h,s,t,x,y,z,b)=(w_2,w_3,w_4,w_5,w_6,w_7,w_8)$.
+For $C(1,0)$ define
+
+$$
+B_0=2s(1-t)+st+(s+t)(2-x-y)+x(1-y)+y(1-z),\qquad
+H_0=3(1-s)+(1-t).
+$$
+
+The exact outside masses are
+$D_1=B_0+hH_0$, $D_2=B_0+H_0$,
+$D_3=2+2(1-t)+t(2-x-y)+x(1-y)+y(1-z)$,
+$D_4=5-xy-yz$, $D_5=5-y-yz$, and $D_6=D_7=D_8=5$.
+For $q=s+t$, the suffix maximum of
+$q(2-x-y)+x(1-y)+y(1-z)$ is $\max\{2q,q+1,1\}$.
+For $st=00,01,10,11$, the maxima of $B_0$ are $1,2,4,5$
+and $H_0$ is $4,3,1,0$, so $D_1,D_2\le5$.
+In class three $t=0$ gives at most five and $t=1$ at most four.
+All other displayed expressions are at most five.
+
+For $C(253,1)$ put
+
+$$
+\begin{aligned}
+B={}&491s(1-t)+206st+245[(s+t)(2-x-y)+x(1-y)]\\
+ &+21(s+t+x)(1-z)+166y(1-z)+129yz
+       +79y(1-b)+21z(1-b),\\
+H={}&757(1-s)+266(1-t)+21(1-x).
+\end{aligned}
+$$
+
+Direct addition of the same complete vectors gives
+
+$$
+\begin{aligned}
+D_1&=B+hH+61(1-h),&D_2&=B+H,\\
+D_3&=468+532(1-t)+42(1-x)+B(0,t,x,y,z,b),\\
+D_4&=245+42(1-x)+B(1,0,x,y,z,b),\\
+D_5&=8+B(1,1,0,y,z,b),\\
+D_6&=1223-42z-21zb,&D_7&=1239-79b,&D_8&=1160.
+\end{aligned}
+$$
+
+Substitutions into $B$ are literal substitutions in its six arguments.
+Its $b$ coefficient is $-79y-21z\le0$, so its maximum has $b=0$.
+The resulting $z$ coefficient is $21-21(s+t+x)-37y$; eliminating
+$z$ adds its positive part. The complete sixteen maxima of $B$
+at fixed $s,t,x,y$ are
+
+| $st$ | $xy=00$ | $xy=01$ | $xy=10$ | $xy=11$ |
+| --- | ---: | ---: | ---: | ---: |
+| $00$ | 21 | 245 | 266 | 266 |
+| $01$ | 511 | 511 | 532 | 287 |
+| $10$ | 1002 | 1002 | 1023 | 778 |
+| $11$ | 1228 | 983 | 1004 | 514 |
+
+The maxima of $B+H$ by $st$ are $1289,1289,1289,1249$;
+those of $B$ are $266,532,1023,1228$.
+Since $H\ge0$, $D_1\le\max\{B+H,B+61\}\le1289$ and
+$D_2\le1289$. The two $t$ cases of $D_3$ give $1287,1021$;
+the two $x$ cases of $D_4$ give $1289,1268$; the two $y$ cases
+of $D_5$ give $1236,991$. The last three formulas give maxima
+$1223,1239,1160$. Thus all endpoint outside masses are at most
+$1289$.
+
+Outside mass is linear in the vectors for each fixed word. Hence it
+is at most $5(\tau-253\kappa)+1289\kappa=5\tau+24\kappa=E$.
+The anchor has no outside-$\{0,n\}$ mass on any first-zero fibre.
+This proves every independent union row, including all multiple-zero
+suffixes. The endpoint calculation is credited to DEV XVIII 338.
+$\square$
+

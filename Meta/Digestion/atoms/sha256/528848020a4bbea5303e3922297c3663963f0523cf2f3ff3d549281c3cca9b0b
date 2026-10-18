@@ -1,0 +1,43 @@
+**Proposition 9.3 (The precise distinction from affine-readout
+nonattainment).** The floor $e_*$ in Theorem 4.1 is a constraint
+imposed by exact finite affine dynamics even with arbitrary readout.
+The annular readout attains that floor using a scalar output component
+that is not an affine functional of its latent coordinates. Thus the
+fixed-affine-readout premise used in [A]'s full-open nonattainment
+and fixed-dimension gap proofs is absent here.
+
+**Proof of Proposition 9.3.** Theorem 4.1 used equal encodings and
+the resulting equality of two deterministic predictions, without any
+linearity of the prediction. This establishes the asserted dynamical
+constraint.
+
+For the second assertion undo $D$ on its image and take the first
+component of the predicted $\alpha$ pair. On the annulus it is
+
+$$
+g(z)=A(H\log\|z\|_2)\frac{z_1}{\|z\|_2}.
+$$
+
+If $g$ were a fixed affine scalar function $c+\ell_1z_1+\ell_2z_2$
+on this image, evaluating at $z=\exp(k/H)U(\alpha)$ for all
+$\alpha$ at a fixed height would force $c=0$, $\ell_2=0$ and
+$\ell_1=A(k)\exp(-k/H)$. For example opposite directions remove
+$c$, the directions with first coordinate zero remove $\ell_2$,
+and $\alpha=0$ gives the last identity. This last positive quantity
+cannot be constant over all interior heights: it tends to zero as
+$k\downarrow0$ through interior values and is positive at $k=H/2$.
+Only the explicit function $A(k)\exp(-k/H)$ is used in that scalar
+comparison. Therefore $g$ is not affine on the image.
+
+In [A], a single fixed affine scalar readout evaluated along repeated
+probability commands factors the corresponding scalar arrays through
+the finite homogeneous latent dimension. That premise supports its
+finite-rank nonattainment and uniform fixed-dimension gap arguments.
+The displayed $g$ does not satisfy the premise. Below $Z=2/3$ the
+annular witness therefore attains a floor which the affine-readout
+class cannot attain in any finite dimension. The numerical floor
+itself agrees in the two classes. At and above the transition,
+constant zero readout already suffices, as in [A, §11.5]. No prior
+affine-readout theorem is contradicted or extended to arbitrary
+observables by this comparison. $\square$
+

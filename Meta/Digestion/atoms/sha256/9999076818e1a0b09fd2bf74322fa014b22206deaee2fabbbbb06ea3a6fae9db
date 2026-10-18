@@ -1,0 +1,59 @@
+## 4. 把“能量最优”写成详细平衡，而不是口号
+
+对正向和反向速率分别取 \(k_f,k_r>0\)：
+
+\[
+J=k_f p_2p_5-k_r p_0p_{25},\qquad \dot p=J\nu.
+\]
+
+设状态能量为 \(E_i\)、逆温度 \(\beta>0\)，并满足详细平衡比值
+
+\[
+\frac{k_f}{k_r}=e^{-\beta\Delta E},\qquad
+\Delta E=E_0+E_{25}-E_2-E_5.
+\]
+
+定义
+
+\[
+F(p)=\sum_iE_ip_i-\beta^{-1}H_{\ln}(p).
+\]
+
+在底部四格均为正的内部，
+
+\[
+\dot F
+=-\beta^{-1}J
+\ln\frac{k_fp_2p_5}{k_rp_0p_{25}}
+\le0,
+\]
+
+并且反应熵产生为
+
+\[
+\sigma
+=J\ln\frac{k_fp_2p_5}{k_rp_0p_{25}}\ge0.
+\]
+
+这是固定 \((X,Y,Z)\) 化学计量类上的 free-energy Lyapunov 定理。对称正速率情形 \(k_f=k_r=\gamma>0\) 等价于 \(\Delta E=0\)，所以平衡点正是最大熵完成 \(p_*\)。若 \(\Delta E\ne0\)，平衡 κ 会移动，不能继续使用 \(XY/r\) 作为平衡坐标。
+
+对 \(a,b>0\)，定义对数平均 mobility；非对角时使用商式，沿对角线作连续延拓：
+
+\[
+L(a,b)=
+\begin{cases}
+\dfrac{a-b}{\ln a-\ln b},&a\ne b,\\
+a,&a=b,
+\end{cases}
+\qquad L(a,b)>0.
+\]
+
+对角值由 \(\ln\) 的导数或商式极限得到。底部四格均为正时，把对称流写成
+
+\[
+\dot\kappa=-\gamma L(a,b)\,\partial_\kappa
+\bigl[-H_{\ln}(p)\bigr].
+\]
+
+这说明它是固定纤维上的 Onsager 梯度流。\(a=b>0\) 时，熵梯度和流都为零，mobility 仍为 \(a\)。零概率边界不使用对数商或有限熵梯度；若作单边延拓，需同时指定 mobility 与梯度乘积的极限，ODE 的通量仍按原概率多项式定义。它严格表达了“热力学耗散最优”的一部分，但没有给出有限时间的唯一动作最优，也没有自动包含外界做功。
+

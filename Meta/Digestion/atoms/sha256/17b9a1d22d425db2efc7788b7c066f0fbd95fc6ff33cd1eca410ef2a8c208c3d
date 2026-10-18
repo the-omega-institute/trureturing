@@ -1,0 +1,54 @@
+**Theorem 6.3 (no fixed separated whole-equality or depth validator).**
+There is no full WMSO+$\mathsf U_{\mathrm{tup}}$ formula $E(X,Y)$
+on the separated carrier such that for all $s,t\in\mathcal T$,
+under their canonical selection valuation,
+
+$$
+E(S_s,S_t)\iff s=t.
+$$
+
+On the carrier with the separate clock there is likewise no formula
+$A(H,X,Y)$ satisfying for every $h\in\mathbb N$ and
+$s,t\in\mathcal T$,
+
+$$
+A(H_h,S_s,S_t)\iff s\equiv_h t.
+$$
+
+The claim permits arbitrary finite auxiliary-set quantifiers,
+negation and nested tuple unbounding in the formula.
+
+Proof. Fix a proposed formula $\phi$ and let
+$M=|\operatorname{Typ}_\phi|$. Define finite combs
+
+$$
+c_0=\beta,\qquad c_{j+1}=\langle\alpha,c_j\rangle.
+$$
+
+At the second candidate subtree consider its $M+1$ local valuations
+with $Y=S_{c_j}$, for $0\le j\le M$, and all other free tracks
+empty or the fixed prescribed tracks there. Two indices
+$i<j\le M$ have the same $\phi$-type. The first candidate valuation
+can now be fixed to $X=S_{c_i}$. Every other context membership
+and subtree valuation is the same in the two comparisons.
+Proposition 5 of Badyl–Parys propagates the equality of the second
+candidate's types through the finitely many ancestors of that
+occurrence. Fact 4 therefore gives the same truth value on
+$(c_i,c_i)$ and $(c_i,c_j)$. These combs are different, contradicting
+the required whole-equality specification.
+
+For the depth specification make the collision with the local
+$H$ track empty in the second candidate occurrence, as it always
+is. After the collision fix the separate clock to $H_i$ and the
+first candidate to $c_i$. These choices do not change either of
+the colliding local types. The first discrepancy between $c_i$
+and $c_j$ is exactly at $R^i$, of depth $i$: there $c_i$ has label
+$\beta$, while $c_j$ is still a branch. All strict prefixes and
+their left subtrees agree. Thus $c_i\equiv_i c_i$ but
+$c_i\not\equiv_i c_j$. Type propagation again gives equal truth
+values, a contradiction. The clock can be chosen after the collision
+because it is in a different subtree. Bound auxiliary variables
+and all their possible choices are already represented in the full
+formula type; no restriction to a finite payload or to MSO has
+been used. $\square$
+

@@ -1,0 +1,95 @@
+**Proposition 8.1 (Diagonal and confluent real-coordinate realizations).**
+For each $R\in\mathcal E_2$ there is a literal and prescribed-path
+model using at most four real coordinates, with exact initialization,
+whose squared error is $16H^2J_\tau(R)$.
+
+Proof. For a distinct pair, or any two-term representation, store
+the real and imaginary parts of
+
+$$
+z_1=e^{\lambda_1x}e^{i\alpha},\qquad
+z_2=e^{\lambda_2x}e^{i\alpha},\qquad x=k/H,
+\tag{8.1}
+$$
+
+and use the one fixed real-linear decoder
+
+$$
+\mathcal D_R(z_1,z_2)=D(2H(c_1z_1+c_2z_2),0).
+\tag{8.2}
+$$
+
+Complex coefficients here act by their real two-by-two multiplication
+matrices. Thus neither the encoder dimension nor the affine readout
+permission has been enlarged. For every real $a,t$ assign
+
+$$
+\mathcal U_a(z_1,z_2)
+ =(e^{\lambda_1a/H}z_1,e^{\lambda_2a/H}z_2),\qquad
+\mathcal V_t(z_1,z_2)=e^{it/2}(z_1,z_2).
+\tag{8.3}
+$$
+
+They are fixed real-linear ambient maps. Substitution of $P_a$
+and $Q_t$ from Proposition 1.2 proves exact intertwining on every
+lawful domain. Negative and zero parameters are included. For
+$|a|\ge H$ the source domain is empty, but (8.3) still assigns a
+map. A single nonzero mode uses only one complex coordinate;
+a zero profile may use zero coordinates in $\mathsf L$ or
+$\mathsf P$.
+
+For $R(x)=(c_0+c_1x)e^{\lambda x}$ use instead
+
+$$
+z_0=e^{\lambda x}e^{i\alpha},\qquad
+z_1=xe^{\lambda x}e^{i\alpha},\qquad
+\mathcal D_R(z_0,z_1)=D(2H(c_0z_0+c_1z_1),0),
+\tag{8.4}
+$$
+
+with maps
+
+$$
+\mathcal U_a(z_0,z_1)
+=e^{\lambda a/H}(z_0,z_1+(a/H)z_0),\qquad
+\mathcal V_t(z_0,z_1)=e^{it/2}(z_0,z_1).
+\tag{8.5}
+$$
+
+Again these are exactly four real coordinates and real-linear
+maps. The identity
+$(x+a/H)e^{\lambda(x+a/H)}
+=e^{\lambda a/H}(xe^{\lambda x}+(a/H)e^{\lambda x})$
+proves the probability update. The phase update follows directly.
+All affine offsets in these witnesses are zero, as permitted;
+offsets in arbitrary competing models were retained in the lower
+argument.
+
+At the arbitrary original preparation $x_0=k_0/H$, the diagonal
+initial value is $(e^{\lambda_1x_0},e^{\lambda_2x_0})$, and the
+confluent initial value is $(e^{\lambda x_0},x_0e^{\lambda x_0})$.
+Their real and imaginary parts are the stored real coordinates.
+The preparation increments have $\alpha=\beta=0$, while every
+original preparation phase remains in $D$. Any actual current ray
+can likewise be initialized by the displayed encoder formula.
+
+For either realization the decoded value on the source is
+$D(2HR(x)e^{i\alpha},0)$. The original Gram identity gives
+
+$$
+\begin{aligned}
+\|\mathcal D_R(E_R(k,\alpha,\beta))-y(k,\alpha,\beta)\|_2^2
+ &=4|2HR(x)-A(k)|^2+4Zk\\
+ &=16H^2\bigl(|R(x)-s(x)|^2+\tau x\bigr).
+\end{aligned}
+\tag{8.6}
+$$
+
+This identity includes complex-valued $R$ and all ten original
+outputs. The function on the right is continuous on $[0,1]$.
+Its supremum over the actual interval $(0,1)$ equals its maximum
+on $[0,1]$, by taking interior sequences to either endpoint.
+No endpoint source ray or encoder extension is needed. This proves
+the claimed error identity. The prescribed-path obligation is
+verified in Proposition 8.3. $\square$
+

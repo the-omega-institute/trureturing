@@ -1,0 +1,70 @@
+**Theorem 2.2 (bounded reads and updates, with unbounded addresses).** For
+every legally acquired nonempty $\mathfrak S$ input and every $q,d\in\mathbb N$,
+it is decidable whether a legal source-total service satisfies
+$\sup_Uq_A\le q$ and $\sup_Ud_A\le d$. A positive decision constructs one.
+The decision covers arbitrary original physical addresses, arbitrary
+pointwise finite local work, adaptive updates and variable absorbing halt.
+
+Proof. First apply ARH Theorem 14.1. If no determining prefix exists,
+ARH equation (2.3) excludes every uniform finite read service, so the
+answer is no. This includes the negative inputs without attempting to
+construct finite whole-row labels there.
+
+On the positive branch construct $\mathscr R$ and its formulas by
+Proposition 1.5. Enumerate the finitely many skeleton shapes, epoch
+annotations, routing forms and leaf labels of Definition 2.1. For each,
+decide the following WS2S sentence:
+
+$$
+ \exists(z_v)_v\quad
+ \bigwedge_\eta\ \forall X\quad
+ \left[D_\eta(X)\Longrightarrow
+   \bigwedge_t\bigl(
+     \mathsf{Path}_{\eta,t}(X;\mathbf z)
+       \Longrightarrow\mathsf{Row}_{\eta,r_t}(X)\bigr)\right].
+\tag{SRF.9}
+$$
+
+There is a quantifier only for a node having a suffix. All its suffixes
+are chosen before every chart's universal source quantifier; sharing the
+same variable at one control prefix is essential. The source quantifiers
+range over complete finite trees of arbitrary size. The logical
+decidability in Lemma 1.4 supplies a negative stopping rule, independently
+of any address menu or length bound. A positive sentence has a finite
+suffix tuple: extract it from a model or enumerate finite tuples and
+decide the remaining fixed-tuple sentence until a witness is found.
+Enumeration is used only after a positive decision. For $q=0$, (SRF.9)
+requires one label valid on every feasible chart, exactly the zero-read
+whole-row condition.
+
+For sufficiency, install those physical words, epochs and full labels.
+Every actual source has exactly one feasible chart valuation. Lemma 1.3
+and (SRF.3) imply, by induction on actual replies, that its physical run
+satisfies the corresponding path formula. It therefore halts with its
+whole row by (SRF.9). This is a finite effective source-total program
+within the two budgets. It executes no chart or prefix oracle, and its
+cost at a reached leaf is exactly $(k_t,d_t,L_t)$.
+
+For necessity, take any permitted comparator within the two budgets.
+At a reachable reply prefix, its common control and previous replies
+fix all subsequent local computation and actual updates until its next
+read or output. That segment is finite because some actual source reaches
+it and the comparator is source-total. There are at most
+$1+4+\cdots+4^q$ reply prefixes. Unroll these segments, retain every
+reachable read with its actual physical word and epoch, retain each early
+halt, and put an immediate halt at every unreachable child. Delete
+updates after the last read: they yield no information under the service
+contract and the same output can be computed before them. This decreases
+only the update cost. No claim of extracting this tree effectively from
+arbitrary source-total code is needed for necessity.
+
+Factor each of the finitely many actual words by (SRF.2). All fit the
+finite routing forms with their exact original lengths, regardless of
+which charts reach them. Correctness makes every reachable halt's
+output one member of $\mathscr R$. Choose that label, and any member
+for an unreachable halt; $U\ne\varnothing$ makes $\mathscr R$ nonempty.
+The resulting skeleton is among the enumerated ones and satisfies
+(SRF.9) on all feasible chart valuations. Thus every original comparator
+is included. This argument assumes no uniform prior bound on local work,
+source size or address lengths. $\square$
+

@@ -1,0 +1,23 @@
+**引理 14.1（A shared root with distinct first queries requires at least six word rows）。** Under Convention 13.1, in every correct deadline-four GLOBAL controller whose initial root is shared and whose two mandatory first-query rows are distinct, at least six word rows are necessary.
+
+Proof. Reuse Lemma 10.1. The first suffix is one zero-leading word $B$, with charge nonconstant on $O$. Choose $w,d$ and a mixed $O$ fibre as in (10.1), put $e=w\oplus d$, and let its index-two row be $X$ and its index-three row be $F$. Then $V(b_w,e)=X$, $V(X,e)=F$, and both scalar updates of $F$ halt with the two distinct labels of $\lambda_w$. Every active successful $C$/lower source is safe at both later indices. A shared root $a$ has scalar successors $b_0,b_1$, each with $C$ and its two lower labels. Thus neither a root nor a first query can be $F$; every first-query scalar child contains an actual $O$ lower source, so neither query can have a direct scalar Halt exit $C$.
+
+Four word rows leave only $a,b_0,b_1,F$, none with a possible successful $C$ exit. At five rows there is just one other row $Y$. The mixed intermediate $X$ cannot be $a$ (its scalar successor would be a first query), $F$, or $b_w$ (the fixed edge would repeat on the zero-charge $O$ fibre). It is therefore $b_i$, $i=1-w$, or $Y$.
+
+If $X=b_i$, then $V(b_i,e)=F$. The actual phase-$m$ $C$ source in the mandatory first support of $b_i$ has raw response $i$, so $e\ne i$: otherwise it enters $F$ and returns a lower label. Hence $e=w$. Write $p=q_1^B(0)$. The actual phase-zero $C$ source in that same support forces $p=0$, since $p=1$ would give raw response $w=e$ and again enter $F$. GLOBAL now repeats $B$ at index two. The phase-$m$ $C$ source in $b_w$ enters $b_i$ with scalar $w$, and its next charge is $q_2^B(m)=q_1^B(0)=0$. It consequently enters $F$ at index three and incorrectly returns a lower label. This excludes $X=b_i$ without deleting the other delayed $C$ paths.
+
+Suppose $X=Y$. All successful $C$ exits must be at $Y$, so its other scalar edge is $V(Y,1-e)=H_C$, while $V(Y,e)=F$. If $p=1$, both scalar children of each first query contain actual $C$ sources, at phases zero and $m$. Every query scalar edge then emits and cannot enter $F$ at index two. An actual $O$ lower source with raw response $1-e$ cannot enter $Y$ at index two, because its next charge is zero and $Y$ would return $C$. It cannot finish via a root, which leaves a query as the last row with both scalar edges emitting. Nor can it finish via a query: its unchanged index-two response would have to enter $F$, a fixed edge already forbidden by a mandatory first-occurrence $C$ source. No remaining row exists. Thus $p=0$.
+
+For $p=0$, the phase-zero and phase-$m$ $C$ sources both have raw response $y$ at $b_y$. Its fixed $C$ edge can be neither a Halt, $F$, nor a root: the last option leaves a query with no direct $C$ exit. It cannot be a self-edge, since GLOBAL would repeat $B$ and $q_2^B(m)=p=0$ would repeat that edge through the last query. Therefore each $C$ edge goes to $Y$ or to the other query.
+
+If $d=0$, then $e=w$ and $b_w$'s $C$ edge already goes to $Y$. Sending $b_i$'s $C$ edge directly to $Y$ would put the complementary scalars $w,i$ at the same word, only one of which can use its sole $C$ exit. Its edge must instead go to $b_w$. This forces $Y$'s index-two word to be $B$. But $q_2^B(m)=0$ sends the phase-$m$ $C$ source from $b_w$ along $Y$'s emitting edge to $F$, a contradiction.
+
+If $d=1$, then $e=i$. The two $C$ edges cannot both go directly to $Y$, for the same complementary-scalar reason. A cross-query edge therefore forces the index-two word at $Y$ to be $B$, with $q_2^B(m)=0$. A direct $C$ entry to $Y$ can now be correct only with scalar $w=1-e$, so $b_i$'s $C$ edge must go to $b_w$. If $b_w$'s $C$ edge goes to $b_i$, correct last-block $C$ stopping forces $b_i$'s other scalar edge to $Y$. The two phase-$m$ $C$ sources then enter $Y$ at index three with complementary scalars; its one $C$ exit cannot return both. Otherwise $b_w$'s $C$ edge goes directly to $Y$. Returning the phase-$m$ $C$ source from $b_i$, which enters $Y$ at index three with scalar $i$, requires
+
+$$
+q_3^B(m)=q_1^B(-m)=1.
+\tag{14.1}
+$$
+
+The phase-zero $C$ source from $b_w$ enters $Y$ at index two with scalar $w$, but $q_2^B(0)=q_1^B(-m)=1$ now sends it to $F$, again returning a lower label. These are actual endpoint-phase sources on the same literal repeated word. They exhaust both values of $d$ and all five-row placements of $X$. Delayed $R$ and homogeneous rejection cannot add an exit for these successful sources. ∎
+

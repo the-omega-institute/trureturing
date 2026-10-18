@@ -1,0 +1,4 @@
+**边界 4.2（Divisibility and nontrivial gcd）。** If $m\mid T$, then $N=T/m$, the final informative block index is $T/m-1$, and $z=m-1$. Its pulse is the last bit of that complete block. A possible final tail one is legal and requires no additional fee. The argument never assumes $g=1$ or uses phases outside $P$ as sources. Both indispensable phases $0,m$ are actual for every allowed gcd.
+
+An empty outside branch occurs, for example, throughout $k=2m-1$, $m\ge2$. Then $T=2m$, $g=m$, $P=\{0,m\}$, and the exact fee is two. The outside label $A$ has no low-tail source, but the two low endpoint labels and the high-tail label remain defined as in (2.1). Arbitrary coincidences of the high label with an endpoint label still force the root by choosing the other endpoint.
+

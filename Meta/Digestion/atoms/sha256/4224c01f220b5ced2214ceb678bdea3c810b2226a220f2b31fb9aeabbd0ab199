@@ -1,0 +1,11 @@
+**Proposition 3.4 (state squares do not determine resource squares).**
+Singleton states and trivial holonomy can satisfy the successor square while
+violating (3.1).
+
+**Proof.** Take singleton source and target charts, identity coordinate
+transport, and matched total identity actions $a,b$. Both emit zero, but
+$a$ costs one and $b$ costs two in the same fixed resource unit. The successor
+maps and all coordinate loops are identities. The declared identity response
+dictionary cannot identify the unequal costs. Thus their full square fails.
+$\square$
+

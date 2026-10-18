@@ -1,0 +1,17 @@
+### 100.3. Exact two-face constrained minimum
+
+Put \(e=e_j,\ d=K^{1/2}e,\ h=K^{1/2}\widetilde r\).
+Here \(d^*d=1\) and \(d^*Qd=D_{jj}=0\). Thus
+\[
+v_\pm=\sqrt2P_\pm d \tag{8}
+\]
+are unit vectors in orthogonal eigenspaces. The two zeros in (2) say
+\(\eta d=\eta Qd=0\), equivalently \(\eta v_+=\eta v_-=0\). Define
+\[
+h_\pm=(P_\pm-v_\pm v_\pm^*)h,\qquad \gamma_\pm=\|h_\pm\|^2\ge0. \tag{9}
+\]
+Each residual lies in a one-dimensional space. Every feasible row satisfies
+\[
+|b|=|\eta h|
+ \le\|\eta P_+\|\sqrt{\gamma_+}+\|\eta P_-\|\sqrt{\gamma_-}. \tag{10}
+\]

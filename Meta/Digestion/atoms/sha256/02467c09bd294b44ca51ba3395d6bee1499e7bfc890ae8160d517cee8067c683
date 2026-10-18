@@ -1,0 +1,81 @@
+**Proposition 11.8 (actual acquisition and an unknown-lag consumer).**
+A finite ray table can be acquired by native literal Reads on a
+stationary first source in $\mathcal F_D$. A valid equal-alpha guard at
+$L$ can certify the common version. Subsequently, the same acquired
+initial alpha at $L$ permits a paid native service to acquire an unknown
+lag $k_w$ and then compute $V_P(U_w)$ under (AAR.47), even with finite
+interference in that later service.
+
+Proof and costs. To acquire one table entry, submit successive complete
+prefixes of its public ray from the root until a leaf reply is actually
+obtained. Use its actual address and label in (AAR.42). There is no
+infinite operand or navigation port. On a stationary first tree of
+height at most $D+1$, this takes at most $D+2$ Reads per ray, each
+operand of length at most $D+1$. Read $L$ as alpha before the table
+body and reread $L$ as alpha afterwards. The supplied leaf-rigidity
+law excludes every update between these two observations. The final
+Read is a joint validation of the acquired entries and the initial
+anchor. Without prefix sharing, the successful stationary procedure
+has the explicit bounds
+
+$$
+ T\le |Q|(D+2)+2,\qquad
+ A\le |Q|\frac{(D+1)(D+2)}2+2,\qquad Q_{\mathrm{operand}}\le D+1.
+\tag{AAR.53}
+$$
+
+All submitted literals, local work, table storage, guards and failed
+attempts are charged separately as in §5. Export entries in public order
+into fixed regions with canonical extents determined by the encoded
+table. Clear and retract the acquired leaf descriptors, reply latches,
+operand buffers, temporary counters and nonpublic control state before
+handoff. This realizes the complete interface of Definition 11.1 only
+when the host exposes no additional acquisition transcript or allocation
+distinction; inaccessible residual storage still has its storage cost.
+The conditional procedure
+does not guarantee capturing an $\mathcal F_D$ version after an
+unprotected writer has already changed its left alpha. Failure of a
+guard supplies no table with the stated initial-family premise.
+
+For the later service submit $L,LR,LR^2,\ldots$, extending only after
+a branch reply, until an actual leaf with label bit $f$ is acquired at
+$LR^j$. Let that event be $w$. Present-subtree transport gives
+$U_w|_L=T_{k_w}$, because the validated initial subtree at $L$ was
+alpha. Proposition 2.3, or the exact right-clock readout supplier,
+therefore gives
+
+$$
+ k_w=2j+f.
+\tag{AAR.54}
+$$
+
+Branch persistence excludes absence along this expanding search.
+After finitely many updates the final finite tree has finite right
+depth, so under the fairness convention the search reaches a leaf.
+Earlier search steps and local calculations may have been interleaved
+with updates. The formula concerns their actual terminal leaf Read,
+not invocation or Return. Its query list has exactly $j+1$ Reads,
+total literal length $(j+1)(j+2)/2$ and maximum length $j+1$.
+For a quiescent lag $k$, $j=\lfloor k/2\rfloor$; none of these prices
+is uniformly bounded over unknown lags.
+
+Use this acquired $k_w$ in Theorem 11.4 with the original retained
+table. It computes the menu values of the one actual version $U_w$,
+even if the source advances during computation. Formula (AAR.54)
+reuses the already acquired local calibration of §2; the new consumer
+is the finite spatial-reply decoder, not a new clock-subtraction law.
+The family promise and the first actual guard make $L$ a legitimate
+known reference; a mere promise $m(t)=2$ on arbitrary sources would
+not identify that address. $\square$
+
+Computing a value in (AAR.43) creates no $\operatorname{Read}(p)$ event
+at $w$. A later submission of $p$ is a new paid event and may occur on
+a different version. If the task requires actual observations of the
+menu at one common version, it must acquire and validate that separate
+body, for example by an unchanged acquired leaf guard with charged
+retries. Theorems about paid transcripts or complete rows cannot count
+these predictions as acquired replies. Likewise, without a supplied
+count or a new source observation, even a fully known initial tree
+cannot distinguish a later quiescent lag zero from lag one: the entire
+passive input before that observation is identical.
+

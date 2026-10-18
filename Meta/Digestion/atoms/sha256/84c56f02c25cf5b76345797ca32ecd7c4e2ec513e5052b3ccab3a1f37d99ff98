@@ -1,0 +1,50 @@
+**Definition 15.1 (time-separated canonical acquisition).** Set the actual
+rational source parameters to (PR.26), writing $H=1/4$, $L=1/8$ and
+$v=H-L=1/8$, with zero fixed preparation phases. Start at a live
+$\psi_{H,\beta,m}$ cut and emit (PR.49). For a public integer $n\geq1$,
+the source installs and executes a prescribed acquisition of duration $6n$.
+For $j=0,\ldots,n-1$, write $t=6j+s$, $0\leq s\leq6$, and set
+
+$$
+k_g(6j+s)=
+\begin{cases}
+H,&0\leq s\leq3g,\\
+H-v(s-3g),&3g\leq s\leq3g+1,\\
+L+v(s-3g-1),&3g+1\leq s\leq3g+2,\\
+H,&3g+2\leq s\leq6.
+\end{cases}
+\qquad \chi_g(t)=\chi_g(0).
+\tag{PR.54}
+$$
+
+Execute exactly the canonical instrument (OC.19)–(OC.19b), stopping at
+its first failure. Thus, with $p(x)=(x,c-x,Z,c-x,x)$,
+
+$$
+\begin{aligned}
+\lambda_g&=(k_g')_+/k_g+(-k_g')_+/(c-k_g),&
+S_g(t)&=e^{-\int_0^t\lambda_g},\\
+K_g(t)&=\operatorname{diag}_i
+ \sqrt{S_g(t)p_i(k_g(t))/p_i(H)},&
+\gamma_{g,i}&=\lambda_g-(\log p_i(k_g))',\\
+J_{g,i}(t)&=\sqrt{\gamma_{g,i}(t)}|f\rangle\langle i|K_g(t).
+\end{aligned}
+\tag{PR.55}
+$$
+
+There is no current phase increment, so the relative phase factors in
+$K_g$ are one. Actual failure output is $(\tau,i,f)$ with CP density
+$J_{g,i}(\tau)\rho J_{g,i}(\tau)^\dagger$; success retains the live
+specimen, latch and no-failure record. Tensor identity on actual unread
+reference/archive fields. All five mode names and exact timestamps remain.
+
+This is source-owned **programme execution**, under the already declared
+ideal canonical service, before the common continuation. It does not ask
+an observer to choose an unknown $g$-dependent waveform. The source has
+$g$ and its installed programme; the observer receives neither. During this
+prescribed acquisition there is no extra waveform/height read, intermediate
+specimen intervention, command-name leak or source callback. Such an added
+port could reveal $g$ on live branches and would change (PR.50). The
+one-bit latch and the source-owned schedule are explicit parts of the joint
+source, rather than secretly inferred services of the original transport law.
+

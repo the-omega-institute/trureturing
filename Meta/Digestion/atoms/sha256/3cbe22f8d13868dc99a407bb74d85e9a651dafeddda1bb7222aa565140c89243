@@ -1,0 +1,22 @@
+**约定 C-27.1.2（调用共同 Gram 判据）。** 使用命题 [C-9.6](#9-共同记录的圆盘与参考递归) 证明中的共同 Gram 必要性、谱平方根实现与秩最小性，以及固定源 [^GL-Q] §109.2 的任意有限标签版本：共同单位纯记录实现一个给定 <span>𝐺</span> 当且仅当
+
+<div>
+𝐺=𝐺<sup>†</sup>,  𝐺≽0,  𝐺<sub>𝑖𝑖</sub>=1.
+</div>
+
+存在时，最小复记录张成空间维数为 <span> rank 𝐺</span>；若预先固定载体 <span>ℂ<sup>𝑑</sup></span>，还必须且只须 <span> rank 𝐺≤𝑑</span>。该共同证明以 <span>𝑎<sup>†</sup>𝐺𝑎=‖∑<sub>𝑖</sub>𝑎<sub>𝑖</sub>𝑒<sub>𝑖</sub>‖<sup>2</sup></span> 给必要性，以 <span>𝐺=𝐸<sup>†</sup>𝐸</span> 的谱因子列给反向实现，以 <span> rank (𝐸<sup>†</sup>𝐸)= rank 𝐸</span> 给最小性；以下所有专门实现均调用这一个结果。
+
+固定源的通道矩阵定义为 <span>Γ<sub>ℎ𝑘</sub>=⟨𝑒<sub>𝑘</sub>,𝑒<sub>ℎ</sub>⟩</span>，故
+
+<div>
+Γ=𝐺<sup>𝖳</sup>=conj(𝐺).
+</div>
+
+对于任意 <span>𝑎</span>，
+
+<div>
+𝑎<sup>†</sup>conj(𝐺)𝑎=conj((conj(𝑎))<sup>†</sup>𝐺 conj(𝑎))≥0 当 𝐺≽0.
+</div>
+
+共轭反向也成立；谱、行列式和秩相同。沿同一取向的 <span>Γ</span> 环乘积是 <span>𝐺</span> 环乘积的共轭，因而相位反号。实际通道的密度非对角因子仍使用其原有 <span>Γ</span> 索引，本章使用标准 <span>𝐺</span>，不将两者条目次序混用。[^GL-Q] §§109.1–109.3。
+

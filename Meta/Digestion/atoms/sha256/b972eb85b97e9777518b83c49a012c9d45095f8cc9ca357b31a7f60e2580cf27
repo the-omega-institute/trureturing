@@ -1,0 +1,24 @@
+**Assumption 1.3 (charged native preparers).** A preparer is any finite
+stationary table of [PCA, Definition 2.2 and Convention 23.2][PCA], with
+a source-independent running start, one fixed absolute word and four
+fixed successors per running state, sourcewise termination on all of
+$\mathcal U_*$, and the two original-entry latches. If $r\ge0$ further
+distinct latches are mandated, they too are installed and counted. Write
+$H$ for the number of all installed preparation states, including unused
+running states and latches. A running visit is exactly one paid native
+invocation, and its letter charge is its absolute word length. Assume on
+every original source
+
+$$
+q_P(u)\le n+1,\qquad \ell_P(u)\le3+W.                 \tag{PE.1}
+$$
+
+There is no order, read-once or union-acyclic assumption. Repeated
+words, shared successors, union cycles and unused states are allowed.
+Root, constant, absent and post-certification invocations are paid.
+The current counted state is the entire changing preparation
+configuration; there is no second counter, phase coordinate, computed
+address, transcript register, stored source or later code/archive access.
+The reader states are charged separately, including every whole-output
+state.
+

@@ -1,0 +1,24 @@
+**Definition 8.3 (anchored comb).** Let $K$ be the infinite tree with
+branch nodes at every $R^j$ and an $\alpha$ leaf at every $R^jL$,
+for $j\ge0$, and no other reached positions. Equivalently it is the
+unique finite-or-infinite tree solving
+
+$$
+K=F(K)=\langle\alpha,K\rangle.
+\tag{NLC.25}
+$$
+
+Let $y_0=\beta$ and $y_{n+1}=F(y_n)$. These are finite original trees.
+For $n\ge1$ they have $\mu(y_n)=1$, despite unbounded maximum depth.
+Set
+
+$$
+L^*=\langle K,\langle K,K\rangle\rangle.
+\tag{NLC.26}
+$$
+
+Uniqueness in (NLC.25) follows by successively inspecting the right
+child and its left leaf; every finite address is either one of those
+specified positions or extends such a leaf. No finite tree solves it,
+by the leaf-count argument in Lemma 8.2.
+

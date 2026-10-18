@@ -1,0 +1,17 @@
+**Definition 1.1 (native trees).** Throughout,
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle x,y\rangle&=\langle\rho x,\rho y\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{URR.1}
+$$
+
+Trees are nonempty, finite, ordered and free as binary trees. The operation
+$\rho$ has the displayed interpreted constant laws. It is not an extra
+free unary constructor. All finite trees are allowed; there is no common
+size, depth or rank bound.
+

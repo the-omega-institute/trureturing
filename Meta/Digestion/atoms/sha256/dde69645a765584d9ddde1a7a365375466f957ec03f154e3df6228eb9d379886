@@ -1,0 +1,27 @@
+**Definition 1.2 (entire cut row).** Fix any public finite prefix-free
+$P\subseteq\{L,R\}^{*}$. Reuse exactly [NAR, Definition 1.2][NAR]:
+$O=I_P(u)=P\cap\operatorname{Pos}(u)$;
+$C_P(u)$ is the literal ordered exterior obtained by replacing every
+$u|_p$, $p\in O$, by the address-marked hole $\square_p$; and
+
+$$
+R_P(u)=(C_P(u),\pi_P(u)),\qquad
+p\sim_{\pi_P(u)}q\ \Longleftrightarrow\ u|_p=u|_q
+\quad(p,q\in O).
+\tag{CNA.2}
+$$
+
+The partition is complete: different classes assert disequality.
+Every $p\in P\setminus O$ is blocked by a concrete strict-prefix leaf of
+the exterior. These labels, brackets, reached addresses and blocked guards
+are all retained information. Classes may be named by canonical ordinals
+in lexicographic hole order. This is the supplied *literalRecord* /
+*canonicalRow_record_iff* equivalence in [ActualCutPartitionDecoder][ACPD],
+not a vector of replies at $P$.
+
+Empty cuts, root cuts, unreached addresses and mixed depths are allowed.
+$R_\varnothing(u)$ contains the entire tree $u$ and the empty partition.
+$R_{\{\varepsilon\}}(u)$ is the constant single root hole with its singleton
+partition. An empty reached set for a nonroot cut still retains the concrete
+tree and its blocking guards.
+

@@ -1,0 +1,111 @@
+**Theorem 9.2 (strict common-realization gap at the cap).** In the full
+unchanged original class,
+
+$$
+\mathcal T(s_0\tau_3)>T_{3,\rm cap}.
+\tag{RH.79}
+$$
+
+One finite retained-choice instrument witnesses this strict inequality,
+with the common complete output, sharp cost, and exact contrast
+$s_0\tau_3$. This constructive actual-label statement uses the cap
+geometry already present in JR54.4; it does not rediscover that
+section's real-atom nonoptimality result.
+
+Proof. Use a small real parameter $z_0$ distinct from $G_{12}=z$, and set
+
+$$
+A(z_0)=\frac{\alpha-(1-2\beta)z_0^2}{d},\qquad
+B(z_0)=\frac{1-(1+\beta)z_0^2}{d},\qquad
+U(z_0)=(\sqrt{A(z_0)},\sqrt{B(z_0)},-z_0)^T,
+\qquad \tau(z_0)=2\sqrt{A(z_0)B(z_0)}.
+\tag{RH.80}
+$$
+
+The completion in RH.46 extends analytically through $z_0=0$ by using
+$\beta_0=d\sqrt{AB}\,z_0/(A+B)$ there. Its other denominator contains
+$\alpha_0>0$, so remains positive. At zero the frame is
+
+$$
+U=\frac{(r,1,0)^T}{\sqrt d},\qquad
+f=\frac{(1,-r,-\sqrt d)^T}{\sqrt{2d}},\qquad
+w=\frac{(1,-r,\sqrt d)^T}{\sqrt{2d}},\qquad r=\sqrt\alpha.
+\tag{RH.81}
+$$
+
+Only $f$ has negative $G$ value by RH.77. The signs persist locally,
+so its attained height TV is $T_{\rm flat}-\phi(z_0)$, where
+$\phi=f^TGf$. At zero, direct products give
+$U'=(f-w)/\sqrt2$, $f^TQU=U^TQw=r/\sqrt2$, $f^TQw=\beta$.
+Differentiating orthonormality and nullity therefore yields
+
+$$
+f'=-U/\sqrt2+\frac r{2\beta}w,\qquad
+\dot\phi=-\sqrt2 f^TGU+\frac r\beta f^TGw,
+\tag{RH.82}
+$$
+
+where the dot is the $z_0$ derivative at zero. Expanding these two
+bilinear products gives
+
+$$
+2\beta d\dot\phi=
+ r[(1-2\beta)g_0+(1+\beta)g_1-dg_2]
+ -2(\beta^2+\alpha)x
+ +2\beta\sqrt d(ry+z).
+\tag{RH.83}
+$$
+
+The bracket has positive upper bound
+$.76(.001270)+1.13(.00293)-1.87(.00167)$; this also bounds its product
+with $0<r<1$, even if the bracket is negative. Since $z<0$, RH.76 and
+$.12<\beta<.13$ give the strict rational bound
+
+$$
+2\beta d\dot\phi<
+.76(.001270)+1.13(.00293)-1.87(.00167)
+-2(.87)(.002370)+2(.13)(1.4)(.002209)<-.002.
+\tag{RH.84}
+$$
+
+Also $0<2\beta d<.5$, so $\dot\phi<-.004$.
+The contrast and attained value have expansions
+
+$$
+\begin{aligned}
+\tau_3-\tau(z_0)
+ &=\frac{\alpha(1+\beta)+(1-2\beta)}{d\sqrt\alpha}z_0^2+O(z_0^4),\\
+T_3(\tau(z_0))&=T_{3,\rm cap}-\dot\phi z_0+O(z_0^2).
+\end{aligned}
+\tag{RH.85}
+$$
+
+The first coefficient is strictly positive. Fix any sufficiently small
+positive rational $z_0$, before receipt of the unknown specimen.
+Retain an actual choice between this frame instrument and the
+contrast-one endpoint instrument, with frame weight
+
+$$
+a_3=\frac{1-\tau_3}{1-\tau(z_0)}\in(0,1).
+\tag{RH.86}
+$$
+
+The two instruments have the same full complex/reference/labelled-time
+output RH.36–39, whole-fibre TP decoders, and the same high effect
+RH.42. Definition 5.4 proves normalization and exact affine oriented
+contrast $\tau_3$. Its actual height TV is
+
+$$
+\begin{aligned}
+M(\tau_3)&=a_3 T_3(\tau(z_0))+(1-a_3)T_{\rm end}\\
+&=T_{3,\rm cap}-\dot\phi z_0+O(z_0^2)>T_{3,\rm cap},
+\end{aligned}
+\tag{RH.87}
+$$
+
+because $a_3=1+O(z_0^2)$ and $-\dot\phi>0$. This is one common
+finite instrument, not the juxtaposition of separately attainable
+maxima. A nontrivial mixture uses at most twenty-three total labels and
+seven low live-bearing labels; it proves no four-label optimal-height
+sufficiency. $\square$
+

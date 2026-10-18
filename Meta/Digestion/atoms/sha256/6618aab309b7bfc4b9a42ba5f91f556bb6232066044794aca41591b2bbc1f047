@@ -1,0 +1,41 @@
+**Theorem 7.3 (retained-record birth budget).** Under Definitions
+7.1–7.2, at every declared cut,
+
+$$
+a\,r(m)+D(m)\le R_0+A(m).
+$$
+
+With the bounded-backlog premise,
+
+$$
+D(m)\le R_0+aL+\sum_{i=1}^m(\beta_i-a).
+$$
+
+If also $\beta_i\le B$ for every executing event, this implies
+
+$$
+D(m)\le R_0+aL+(B-a)m.
+$$
+
+For $B<a$ necessarily
+$m\le\lfloor(R_0+aL)/(a-B)\rfloor$; for $B=a$ necessarily
+$D(m)\le R_0+aL$. For $B>a$ a demanded size $D$ requires at least
+
+$$
+m\ge
+\left\lceil\frac{\max(0,D-R_0-aL)}{B-a}\right\rceil ,
+$$
+
+as a necessary production condition only.
+
+Proof. The retained completed receipt blocks and the $D(m)$
+nonreceipt occurrences form disjoint subsets of the current carrier.
+The current carrier has at most $R_0+A(m)$ vertices, because every
+current occurrence is initial or born at a counted event. Deleting
+or retiring an occurrence cannot increase that bound. This proves
+the first inequality. Since $r(m)\ge m-L$, even when $m<L$,
+substitution and rearrangement give the prefix-sum inequality.
+Summing $\beta_i\le B$ gives the uniform bound. Nonnegativity of
+$D(m)$ proves the $B<a$ event limit; the zero-slope and positive-slope
+cases follow by the indicated rearrangements and integrality. ∎
+

@@ -1,0 +1,37 @@
+## 5. Four schedule charges and three output charges
+
+In $K_0$, the following four differences are the masses of the indicated schedules:
+
+$$
+\begin{aligned}
+D_1(01100001)-D_1(01100010)&=\operatorname{mass}(3,7),\\
+D_1(01010001)-D_1(01010010)&=\operatorname{mass}(4,7),\\
+D_2(10001000)-D_2(10001010)&=\operatorname{mass}(5,7),\\
+D_2(10001000)-D_2(10001001)&=\operatorname{mass}(5,8).
+\end{aligned}
+$$
+
+All eight words are scored $P$ rows. The first two comparisons have first zero at $1$ with $w_2=1$; the latter two have first zero at $2$. In each case every other stopped cell agrees or is already stopped, while the displayed second cell changes from a nonzero label to exhaustion label $0$. This remains true for every allowed counterfactual label and earlier unqueried output. Each mass is at most $2\varepsilon_0$. Replace all four schedule groups by $R$ and set
+
+$$
+\varepsilon_1=9\varepsilon_0.
+$$
+
+Let $u_2=10111111$, $u_4=11101111$, and $u_7=11111101$. In $K_1$ the complete support gives
+
+$$
+\begin{aligned}
+p_{10110000}(2)-p_{u_2}(2)&=\operatorname{mass}\{(1,6):\text{ second output }2\},\\
+p_{11100000}(4)-p_{u_4}(4)&=\operatorname{mass}\{(1,6),(2,6),(3,6):\text{ second output }4\},\\
+p_{11111100}(7)-p_{u_7}(7)&=\operatorname{mass}\{(6,8):\text{ second output }7\}.
+\end{aligned}
+$$
+
+The shared terms are, respectively, the prefix second cell and the first outputs from schedules beginning at $2$; prefix exhaustion $4$, both head-to-$4$ second cells and the $(3,4)$ second cell; and the $(6,7)$ second cell together with exhaustion $7$ on $(5,6)$. The remaining contributions vanish or agree. The first word in each difference is a scored $C$ row, while its sole-zero row supplies the lower bound. Hence each nonnegative group has mass at most $2\varepsilon_1$. Replace their union by $R$ and put
+
+$$
+\varepsilon_2=7\varepsilon_1=126\eta.
+$$
+
+Thus labels $2,4,7$ were allowed by the initial complete catalog and removed only through explicit paid comparisons.
+

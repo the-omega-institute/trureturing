@@ -1,0 +1,167 @@
+**Theorem 107.2 (uniform complete-field remainder).** All expectations
+and integrals in (107.2) converge absolutely. There are constants
+$C,s_0>0$ depending only on the fixed original data such that
+
+$$
+\left\|\widetilde U_s-V-\beta_sV_1-\beta_s^2V_2
+                 -\lambda s^2V_{\rm t}\right\|_\infty
+ \le Cs^{5/2}\qquad(0<s<s_0).
+\tag{107.3}
+$$
+
+Here $\widetilde U_s$ has exactly the zero extension of (97.1).
+In particular (107.3) is uniform in all real phases, including the
+expanding original domain and its complement. Moreover
+
+$$
+|V_1(r,z)|\le C(1+|r|)^{-4},\qquad
+|V_2(r,z)|+V_{\rm t}(r,z)\le C(1+|r|)^{-3},\qquad V_{\rm t}>0,
+\tag{107.4}
+$$
+
+and $V_j\circ\sigma=(-1)^jV_j$, $V_{\rm t}\circ\sigma=V_{\rm t}$.
+
+Proof. We first justify the differentiated inverse moments; no
+infinite-time exchange is taken from a compact heat expansion.
+For every fixed integer $m\ge0$, every $t>0$, $r\in\mathbb R$
+and $L\ge0$,
+
+$$
+h_t(r)\mathbb E_{0,r}^t[
+ (\det M_0)^{-1/2}S_t^m\mathbf1_{\{S_t>L\}}]
+ \le C_m t^{(m-7)/2}e^{-c_m L^2/t}.
+\tag{107.5}
+$$
+
+For $m=0$ and $|r|\le L/2$, the left side is $(4\pi)^{3/2}$
+times the difference at zero phase between the full canonical
+kernel and the kernel additionally killed at $\pm L$.
+The Gaussian-mixture identification, including finiteness at zero
+phase, is the one proved in (97.6)--(97.8). The canonical part of
+(97.9), whose Markov/reflection proof works for every $t>0$,
+bounds this difference by $Ct^{-7/2}e^{-cL^2/t}$.
+For $|r|>L/2$ simply bound by the full zero-phase kernel and use
+(82.3) with $d_E(0,(r,0))\ge|r|$. This proves the $m=0$
+assertion for all endpoints. For $m>0$, layer-cake integration
+of that assertion gives
+
+$$
+L^mCt^{-7/2}e^{-cL^2/t}
+ +Cmt^{-7/2}\int_L^\infty v^{m-1}e^{-cv^2/t}dv
+ \le C_m t^{(m-7)/2}e^{-c_mL^2/t},
+$$
+
+after absorbing the polynomial factor into a weaker Gaussian.
+The case $L=0$ follows by the same integral and the full kernel
+bound. This proves (107.5), rather than assuming additional
+inverse-determinant moments. Since $S_t\ge|r|$, it also bounds
+the full moment by
+$C_m t^{(m-7)/2}e^{-c_mr^2/t}$, using $L=|r|/2$.
+
+On a path with $S_t<L$ set
+$M(\beta)=\int_0^t(1+\beta H_v)^{-2}u(H_v)u(H_v)^{\mathsf T}dv$.
+When $|\beta|L\le1/4$, $M(\beta)$ is comparable to $M_0$ in
+matrix order, and
+
+$$
+\|M_0^{-1/2}M^{(j)}(\beta)M_0^{-1/2}\|
+ \le C_j S_t^j\quad(1\le j\le3).
+\tag{107.6}
+$$
+
+These inequalities follow directly by differentiating the scalar
+factor $(1+\beta H_v)^{-2}$ under the finite path integral.
+Conjugating by $M_0^{-1/2}$ in the Gaussian, its first three
+$\beta$ derivatives are bounded, uniformly over all $z$, by
+$C_jS_t^j(\det M_0)^{-1/2}$.
+Indeed matrix differentiation produces a polynomial of bounded
+degree in $M_0^{-1/2}z$, times $e^{-c|M_0^{-1/2}z|^2}$;
+(107.6) bounds every coefficient. Taylor's theorem therefore gives
+
+$$
+\left|\gamma_{M(\beta)}-\gamma_{M_0}
+ +2\beta D\gamma_{M_0}[M_1]
+ -\beta^2\{3D\gamma_{M_0}[M_2]+2D^2\gamma_{M_0}[M_1,M_1]\}\right|
+ \le C|\beta|^3S_t^3(\det M_0)^{-1/2}.
+\tag{107.7}
+$$
+
+The derivatives at zero in this calculation use
+$M'(0)=-2M_1$, $M''(0)=6M_2$; hence their coefficients are
+exactly (107.2). By (107.5) the averaged remainder is at most
+$C|\beta|^3t^{-2}$. The same argument at zero gives
+
+$$
+|p_j(t;r,z)|\le Ct^{(j-7)/2}e^{-cr^2/t}\quad(j=0,1,2).
+\tag{107.8}
+$$
+
+This proves absolute convergence, boundedness and (107.4) by
+integration on $t\ge1$. Positivity of $V_{\rm t}$ follows from
+(82.3). Reflection of the same bridge by $H\mapsto-H$ sends
+$M_j$ to $(-1)^jJM_jJ$, where $J=\operatorname{diag}(1,-1,1)$.
+Changing $z$ to $Jz$ in (107.2) proves all the asserted parities.
+
+We now compare to the original native field, retaining its faces.
+Put $T=s^{-2}$ and $L=s^{-1/2}$. For small $s$, the extra strip
+$(-L,L)$ lies inside $I_s$, and $|\beta_s|L\le1/4$.
+Let $p_j^L$ denote (107.2)'s bridge expectations with the common
+indicator $S_t<L$. The exact native strip kernel uses $M(\beta_s)$
+on this same event, by (97.6). Thus (107.7) gives its expansion.
+For $1\le t\le T$, multiply by the actual threshold factor.
+The bounds $|e^{\lambda s^2t}-1|\le Cs^2t$ and
+$|e^{\lambda s^2t}-1-\lambda s^2t|\le Cs^4t^2$, together with
+(107.8), show that its integrated difference from
+
+$$
+p_0^L+\beta_sp_1^L+\beta_s^2p_2^L+\lambda s^2t p_0^L
+$$
+
+has supremum norm at most $Cs^3$. For clarity, the integrated
+Taylor remainder is bounded by $Cs^3\int_1^Tt^{-2}dt$;
+the exponential remainder by $Cs^4\int_1^Tt^{-3/2}dt$;
+and the cross terms by
+$Cs^3\int_1^Tt^{-2}dt+Cs^4\int_1^Tt^{-3/2}dt$.
+These bounds are uniform in the terminal point.
+
+On $|r|\le L/2$, removing the extra native strip killing costs
+at most $CL^{-5}$ after integration on $[1,T]$, by (97.9).
+For the canonical coefficients, (107.5)--(107.7) give
+
+$$
+\int_1^\infty|p_j-p_j^L|dt\le CL^{j-5}\quad(j=0,1,2),\qquad
+\int_1^\infty t|p_0-p_0^L|dt\le CL^{-3}.
+\tag{107.9}
+$$
+
+Indeed integrate $t^{(j-7)/2}e^{-cL^2/t}$ and substitute
+$t=L^2v$; the resulting integrals are finite for $j\le2$.
+Also (107.8) bounds the canonical tails past $T$ by
+$Cs^{5-j}$ and the time-weighted tail by $Cs^3$.
+The unchanged native integral past $T$ is $Cs^5$ by (82.9).
+Keeping the common factor $1/j_0$, these estimates bound the
+remainder on $|r|\le L/2$ by
+
+$$
+C\{L^{-5}+sL^{-4}+s^2L^{-3}+s^3+s^5\}\le Cs^{5/2}.
+\tag{107.10}
+$$
+
+On $|r|>L/2$, the native height tail established in the proof
+of Lemma 97.2 is $CL^{-5}+Cs^5$, also after zero extension.
+The canonical height tail in that proof bounds $V$ by $CL^{-5}$.
+Equation (107.4) bounds the other terms by
+$CsL^{-4}+Cs^2L^{-3}$. This proves (107.3) on the entire space.
+The two original faces were used in the native kernel and its
+long-time bound; the strip served only to estimate that kernel.
+
+The local higher-order supplier, Colin de Verdière--Hillairet--Trélat,
+[Theorem A, pp.902--903](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf),
+has compact positive-time and endpoint quantifiers. The smooth
+rational fields, zero drift, constant density, interior pole and
+step-three flag checked in §104 meet those local hypotheses.
+The global remainder (107.3) instead follows from the explicit
+same-bridge estimates above, not an extension of that local scope.
+Its raw density factor, signed fixed $\kappa\ne0$ and $B$ clock
+remain exactly (81.5), (97.1)--(97.3). $\square$
+

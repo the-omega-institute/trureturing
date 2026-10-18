@@ -1,0 +1,56 @@
+### Theorem 11.2 (all chains in the $E_{22}$ hyperplane)
+
+Put
+
+$$
+D_h=L^h=\begin{pmatrix}1&0\\h&1\end{pmatrix}\quad(h\ge0).
+$$
+
+A legal recorded chain starting at $I$ and satisfying $(A_i)_{22}=1$ has the following exact description. If every upper-right entry is zero, it is a nondecreasing list of $D_h$ starting at $D_0=I$. Otherwise choose an integer $w$ and sign $\sigma\in\{1,-1\}$ with
+
+$$
+w\ge0\quad(\sigma=1),\qquad w\ge1\quad(\sigma=-1),\qquad
+m=\min(w,w+\sigma),
+$$
+
+and define
+
+$$
+P=\begin{pmatrix}w+\sigma&1\\w&1\end{pmatrix},\qquad
+Q=JP=\begin{pmatrix}w&1\\w+\sigma&1\end{pmatrix},
+$$
+
+$$
+T_\nu=\begin{pmatrix}\nu w+\sigma&\nu\\w&1\end{pmatrix}
+=U^{\nu-1}P\quad(\nu\ge1).
+\tag{11.2}
+$$
+
+There is an initial phase of $a\ge1$ readings
+
+$$
+D_{h_0},\ldots,D_{h_{a-1}},\qquad
+h_0=0,\quad0\le h_0\le\cdots\le h_{a-1}\le m,
+$$
+
+then a possibly empty phase consisting of $P,Q$ in any order with repetitions, then a possibly empty final phase of $T_\nu$ with $\nu\ge2$ nondecreasing, with repetitions. At least one of the last two phases is nonempty. Conversely every such list is a legal chain in this hyperplane. Without a final phase the orientation of the pair need not be unique; no uniqueness of that choice is required.
+
+**Proof.** Write an endpoint as $A=(\begin{smallmatrix}u&v\\w&1\end{smallmatrix})$ with $u-vw=\pm1$. If $v=0$, then $u=1$, so $A=D_w$. The multiplier from $D_h$ to $D_g$ is $L^{g-h}$; nonnegativity forces $g\ge h$. Once $v>0$, a later endpoint cannot have upper-right entry zero, because that entry is $V_{11}v+V_{12}$ and the first row of the nonnegative invertible multiplier $V$ is nonzero.
+
+Suppose $v=1$ and a later endpoint still has upper-right entry one. The bottom-right equation is $V_{21}+V_{22}=1$. If the bottom row is $(0,1)$, unimodularity gives $V_{11}=1$, and the upper-right equation gives $V_{12}=0$, hence $V=I$. If it is $(1,0)$, unimodularity gives $V_{12}=1$ and the upper-right equation gives $V_{11}=0$, hence $V=J$. Therefore the entire $v=1$ phase consists of just one pair of row swaps $P,Q$, with arbitrary swaps and repetitions.
+
+If $v\ge2$, the later bottom-right equation $V_{21}v+V_{22}=1$ forces $V_{21}=0$, $V_{22}=1$. Unimodularity gives $V_{11}=1$, so $V=U^c$ for an integer $c\ge0$. Thereafter the bottom row $(w,1)$ and determinant sign $\sigma$ stay fixed. The endpoints are precisely $T_\nu$, with nondecreasing $\nu\ge2$. Nonnegativity gives the stated restrictions on $w,\sigma$. The earlier $v=1$ pair, if present, must be $P=T_1,Q=JP$. To see this explicitly, write its last endpoint as $A=(\begin{smallmatrix}x&1\\y&1\end{smallmatrix})$. In the first transition to a final endpoint with upper-right entry $\nu\ge2$, the multiplier bottom row is $(0,1)$ or $(1,0)$ because its entries sum to one. In the first case unimodularity gives the top row $(1,\nu-1)$, so the old endpoint is $P$ for the new bottom row and determinant sign, and the new endpoint is $U^{\nu-1}P$. In the second case the top row is $(\nu-1,1)$, the old endpoint is $Q$, and the new endpoint is $U^{\nu-1}JQ=U^{\nu-1}P$. All earlier $v=1$ endpoints differ from it by $I$ or $J$. If there is no final phase, take either member of the $v=1$ pair as $P$; nonnegative entries again give the stated restrictions.
+
+From an initial $D_h$ to a first endpoint $T_\nu$, the existing multiplier is
+
+$$
+T_\nu D_h^{-1}
+=\begin{pmatrix}\nu(w-h)+\sigma&\nu\\w-h&1\end{pmatrix}.
+$$
+
+Its nonnegativity is exactly $h\le m$: for $\sigma=1$ this is $h\le w$; for $\sigma=-1$, $w-h=0$ would make the top-left entry negative, so $h\le w-1$. A first $Q$ gives the same condition by swapping the two $v=1$ rows. All earlier $h$ obey it by their monotonicity. This proves necessity, including a first positive upper-right entry greater than one.
+
+Conversely $D_h\to D_g$ uses $L^{g-h}$. From $D_h$ to $P$ use the actual left multiplier $UL^{w-h}$ for $\sigma=1$, and $ML^{w-h-1}$ for $\sigma=-1$. These exponents are nonnegative by $h\le m$. Prepend $J$ to reach $Q$, or prepend $U^{\nu-1}$ to reach $T_\nu$. Within the pair phase use $I$ or $J$; from $P$ to $T_\nu$ use $U^{\nu-1}$, from $Q$ use $U^{\nu-1}J$, and within the final phase use $U^{\nu'-\nu}$. The all-$D$ case uses the first rule alone. Since $U=JM$ and $L=MJ$, every multiplier is a finite $M/J$ word, with empty words for repetitions and no extra reads inside a word. These words preserve positivity at every unread state. This proves sufficiency. ∎
+
+This theorem is a legality and hyperplane equivalence. It does not assert rank three or recovery for every listed chain.
+

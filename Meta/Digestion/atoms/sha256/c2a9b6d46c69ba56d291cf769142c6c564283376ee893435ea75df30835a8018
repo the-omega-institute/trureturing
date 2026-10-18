@@ -1,0 +1,22 @@
+**Definition 2.3 (entire finite common class).** An implementation has a finite actually generated label $\xi$, common CP encoders $\mathcal C_\xi:M_5\to M_{d_\xi}$, arbitrary positive finite integer fibre dimensions, and common full-output CP TP decoders $\mathcal R_\xi$. Require
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I)=I_5,\qquad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\Phi_*,\qquad
+\sum_{\xi:r(\xi)=r}\mathcal C_\xi^\dagger(I)=F_r(s).
+\tag{RG.12}
+$$
+
+All finite generated refinements and postprocessing coins are permitted. The encoder branches are CP/TNI; only their total is TP. A decoder is TP on its entire declared fibre; its supported live restriction is TNI. The quantum dimension counts jointly every future-accessible input-dependent system: specimen, memory, controller, accessible environment, returned systems and retained entanglement shares. An earlier receiver share is not a later independent blank. All other dilation systems are permanently inaccessible before the cut. Arbitrary passive references remain inaccessible to both operations.
+
+There is no uncounted bypass, hidden share, callback, helper, extra specimen, history-dependent programme, runtime sensor, source prior, copying, resetting, retry, postselection or acceptance division. A coherent sum without a generated classical label is one quantum payload. An analytic Kraus index is not an already acquired hardware flag.
+
+High means $d_\xi\ge3$. Let $G_H^{\rm acq}$ be the sum of the effects of these actual encoders and $G_H^L$ the effect of their supported live output. For positive $\sigma$ define $p_H^{\rm acq}(\sigma)=\operatorname{tr}(G_H^{\rm acq}\sigma)$ and similarly $p_H^L$. Full decoder TP gives
+
+$$
+G_H^{\rm acq}\succeq G_H^L\succeq0.
+\tag{RG.13}
+$$
+
+These are unnormalized acquired masses, probabilities on normalized specimens. For supported $\rho\succeq0$ let $\mathsf E_s(\rho)$ denote the infimum of acquired high mass on $E\rho E^\dagger$ over the entire class (RG.12). It is distinct from the error $\mathcal E_*$. When the evaluated formula below applies, a finite attainer makes this infimum a minimum. The quantifier is: for each public test input and permitted strength there exists one fixed common instrument, valid on every unknown runtime input. This does not mean one design minimizes every test input simultaneously.
+

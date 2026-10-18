@@ -1,0 +1,43 @@
+### 63.3 RH 零点的单位圆坐标
+
+对零点 \(\rho\) 定义
+
+\[
+z_\rho=1-\frac1\rho.
+\]
+
+功能方程反射 \(\rho\mapsto1-\overline\rho\) 对应
+
+\[
+z_\rho\mapsto\frac1{\overline{z_\rho}},
+\]
+
+而共轭对应 \(z_\rho\mapsto\overline{z_\rho}\)。写
+
+\[
+z_\rho=e^{u_\rho+i\theta_\rho},
+\qquad
+u_\rho=\log|z_\rho|.
+\]
+
+则
+
+\[
+\operatorname{Re}\rho=\frac12
+\quad\Longleftrightarrow\quad
+|z_\rho|=1
+\quad\Longleftrightarrow\quad
+u_\rho=0.
+\tag{63.7}
+\]
+
+因此 RH 的几何意义是：所有零点的像都落在反射固定的单位圆上，\(u_\rho\) 是法向偏离量。这个结构与 (63.2) 同型：
+
+\[
+\eta\longleftrightarrow u_\rho,
+\qquad
+\tau:\eta\mapsto-\eta
+\longleftrightarrow
+u_\rho\mapsto-u_\rho.
+\]
+

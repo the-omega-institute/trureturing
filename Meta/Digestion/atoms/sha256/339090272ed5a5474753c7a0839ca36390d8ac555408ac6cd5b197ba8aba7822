@@ -1,0 +1,70 @@
+### 454.2 已付款的逆运输、对偶空间与全来源
+
+在 \(f(0)=0\) 的序列上，保持
+\[
+(T_2f)(n)=f(\lfloor n/2\rfloor),\qquad
+(B_2k)(n)=k(2n)+k(2n+1).
+\]
+对于固定整数 \(j\ge0\)，§452 的
+\(W_j(n)=\sqrt n(1+\log n)^j\)、
+\(\mathcal X_j=\ell^\infty(W_j^{-1})\)
+与自然配对的前对偶
+\[
+\mathcal Y_j=\left\{k:\ \|k\|_{\mathcal Y_j}
+=\sum_{n\ge1}W_j(n)|k(n)|<\infty\right\}
+\]
+满足 \(\mathcal X_j=(\mathcal Y_j)^*\)。\(\mathcal Y_j\) 不被宣称为 \(\mathcal X_j\) 的整个 Banach 对偶。
+完整商纤维给
+\(\langle T_2f,k\rangle=\langle f,B_2k\rangle\)；
+\(r=1\) 的零商乘 \(f(0)=0\)，其余纤维恰为 \(r=2n,2n+1\)。
+§452 的精确系数范数直接给
+\[
+\|T_2\|=\|B_2\|=2^{-1/2},\qquad
+G=(I-T_2)^{-1}=\sum_{a\ge0}T_{2^a},\qquad
+\|G\|=2+\sqrt2.
+\tag{BC.6}
+\]
+算术系数是 \(g_d=\mathbf1_{d=2^a,\ a\ge0}\)，其完整临界系数和为
+\(\sum_a2^{-a/2}=2+\sqrt2\)；每个整数输入点的逆和因零商而局部终止。
+相应前对偶逆 \(\sum_aB_2^a\) 在算子范数中收敛，范数相同。
+这是加权 Dirichlet 卷积单位群的既有算子表示及经典 Neumann 逆应用。
+
+定义原核的完整前对偶变换
+\[
+\mathcal L_x(n)=(I-B_2)J_x^\eta(n)
+=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1)
+=\mathscr D_x(n)-\mathscr D_x(n+1).
+\tag{BC.7}
+\]
+§424.12 的完整积分范数界给
+\(Q_x^\eta(n)\le C'_x(1+\log n)^2/n^2\)，故每个固定 \(x\) 与 \(j\) 上
+\[
+\sum_{n\ge1}W_j(n)Q_x^\eta(n)<\infty,\qquad
+J_x^\eta,\mathcal L_x\in\mathcal Y_j.
+\tag{BC.8}
+\]
+因为 \(\mathcal U_x\) 有界，面板配对还具有直接的积分前绝对账：
+\[
+\sum_{n\ge1}|\mathcal U_x(n)|
+\int_x^\infty|\eta_2(t/n)-\eta_2(t/(n+1))|w(t)dt
+\le Q_x^\mathrm{p}\sum_{n\ge1}
+[Q_x^\eta(n)+Q_x^\eta(2n)+Q_x^\eta(2n+1)]<\infty,
+\tag{BC.9}
+\]
+其中固定 \(\eta_2(y)=\eta(y)-\eta(y/2)\)。因此（BC.5）的完整前对偶运输绝对合法：
+\[
+\boxed{\sum_{n\ge1}\mathcal U_x(n)\mathcal L_x(n)
+=\sum_{n\ge1}\mathcal V_x(n)J_x^\eta(n)
+=-\mathcal A_x.}
+\tag{BC.10}
+\]
+
+对全实际来源 \(O(n)=\sum_{m\le n,\ m\text{ 奇}}\mu(m)\)，已有 §427（GP.1）–（GP.3）取固定 \(P=2\) 正好给
+\[
+I_\psi(x)=\sum_{n\ge1}O(n)\mathcal L_x(n),\qquad
+\sum_n|O(n)|Q_x^{\eta_2}(n)<\infty.
+\tag{BC.11}
+\]
+这里 \(O(1)=1\)、\(\theta_{2,1}=\beta_1\)，原首块补偿及全部纤维均保留。
+这份完整实际预算来自无条件 \(O(n)=O(n/(1+\log n)^4)\) 和固定过滤器账，未假设全实际 \(M,O\in\mathcal X_j\)。RH 的全部 \(N^{1/2+\varepsilon}\) 供应不能被当成某个固定平方根对数范数的免费输入。
+

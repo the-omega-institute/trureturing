@@ -1,0 +1,15 @@
+**Corollary 11.4 (Tolerance endpoints and the logical scope of the obstruction).**
+Below the transition, both guarded classes achieve every finite
+tolerance strictly larger than $4H\sqrt{T_4(\tau)}$. Their
+finite tolerance sets are either the closed ray starting at
+this value, or the open ray, according to Theorem 11.3. A
+minimizer with an excluded imaginary spectrum proves failure
+of guard recovery for that minimal realization only.
+
+Proof. Proposition 10.2 supplies every strictly larger tolerance,
+and Theorem 10.3 excludes smaller tolerances. Theorem 11.3
+decides precisely whether the endpoint belongs. Its condition
+is existence of at least one good global minimizer. Consequently
+nonattainment would require exclusion of every good minimizer;
+the presence of one bad minimizer is insufficient. $\square$
+

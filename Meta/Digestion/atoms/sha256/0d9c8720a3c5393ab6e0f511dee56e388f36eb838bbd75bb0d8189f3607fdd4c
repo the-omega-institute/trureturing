@@ -1,0 +1,25 @@
+**Theorem 28.6 (Exact inversion and all phase/noise degeneracies).** For full-support inversion, assume $\mu\ne0$. If $Z\ne0$, the full-support affine orbit is recovered from $C_3,Z,R$ by
+
+$$
+\frac RZ=\overline{\frac{d_2}{d_1}}=1+\eta e^{i\phi _2},\qquad
+e^{i\phi _2}=\frac{(R/Z)-1}{\eta},\qquad
+e^{i\phi _1}=\frac{C_3-p_1p_2-B e^{i\phi _2}}A .
+\tag{28.7}
+$$
+
+If $Z=0$ under the same nonzero-moment assumption, then $d_2=0$; this occurs exactly in the balanced case $\eta=1$ and $e^{i\phi _2}=-1$, and the second formula is replaced by that known value while the last formula remains valid. When $d_2\ne0$, $\mu=R/|d_2|^2$ is also recovered; at $d_2=0$ the orbit is identified but $\mu$ is not.
+
+In sparse support, for every $\mu\ne0$,
+
+$$
+e^{i\phi}=\frac{D_0}{p_1R_6}\frac{Z_s}{R_s},\qquad
+\mu=\frac{R_s}{D_0}.
+\tag{28.8}
+$$
+
+The nuisance value in (28.7)–(28.8) need not be the same at two compared realization points.
+
+**Proof.** Equation (28.2) gives $d_2/d_1=1+\eta e^{-i\phi _2}$, so $R/Z=\overline{d_2/d_1}$. Substitution into $C_3$ gives the first orbit coordinate. Because $d_1\ne0$ and $\mu\ne0$, the identity $Z=\mu d_2\overline{d_1}$ gives $Z=0$ exactly when $d_2=0$. This case then follows from the minimum modulus of $1+\eta e^{-i\phi _2}$. Equation (28.3) gives (28.8) because $d,e,D_0,R_6$ never vanish for positive $p$. $\square$
+
+When $\mu=0$, (28.1) kills every cross-window entry with $\Delta m_1\ne 0$. In full support the result is the product of the separately count-twirled local marginals, retaining the within-second-window coefficient $C_3$. At uniform $p_k=1/4$, the character pairs $(e^{i\phi _1},e^{i\phi _2})=(1,i)$ and $(i,1)$ have the same $C_3=(2+i)/16$ and are distinct affine orbits. Some individual full points remain separable by $C_3$, so no pointwise all-failure statement is made. In sparse support every phase-bearing entry in (28.5)–(28.6) is killed, so the whole pair is phase blind. These are fixed-batch statements and do not extend to longer windows.
+

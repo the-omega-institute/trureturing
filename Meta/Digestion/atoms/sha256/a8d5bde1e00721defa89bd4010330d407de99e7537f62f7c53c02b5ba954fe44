@@ -1,0 +1,29 @@
+**Theorem 6.2 (unconditional terminal mass surplus and exact residual mass
+target).** Define, on each pool,
+
+$$
+O_I=\sum_{q\in Q_I}(\lambda(q)-1)_+,\qquad
+S_I=\sum_{q\in Q_I}(1-\lambda(q))_+,\qquad x_+=\max(x,0).
+$$
+
+Then $D_I-E_I=O_I-S_I$. If $\rho=1$,
+
+$$
+S_{I_5}-O_{I_5}=1+\eta_5\ge1.
+\tag{TS.27}
+$$
+
+Let $O_{\rm rem},S_{\rm rem}$ sum over
+$\mathcal L_*\setminus\{I_5\}$. The original universal comparison on
+this graph is exactly
+
+$$
+O_{\rm rem}\le S_{\rm rem}+R+\rho+\eta_5.
+\tag{TS.28}
+$$
+
+Proof. Split positive and negative parts in (TS.26), then apply
+Theorems 4.1 and 5.2. This is SI11's collective balance with one actual
+terminal contribution extracted; it neither assumes pointwise capacity
+nor requires separate compensation of all other late gaps. $\square$
+

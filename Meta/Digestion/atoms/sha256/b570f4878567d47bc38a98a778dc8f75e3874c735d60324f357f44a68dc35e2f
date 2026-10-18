@@ -1,0 +1,14 @@
+**数据 7.1（Exact finite scopes）。** Finite checks use chronological original transitions (1.2), preserve INITIAL labels across updates, and include both free values and every legal tail and phase in each stated parameter pair. Their role is falsification and regression evidence for the ordinary proofs, not independent mathematical review or a universal proof.
+
+| Check family | Exact scope | Results |
+| --- | --- | --- |
+| Binary preset attainment | $Q\in\{2,3,4\}$, $3\le m\le8$; every nonconstant map $I\to\{0,1\}$; $A=0,1$, or fresh $2$ | 2,160 streams; every final output archive has one INITIAL label |
+| Independent root-endpoint labels | Same $Q,m$ and binary layouts; fresh $A$ and separate $D,E,R$ | 720 common streams, with both root children checked |
+| Three-label frontier attainment | $Q\in\{2,3,4\}$, $4\le m\le8$; every nonconstant binary layout on $J$, a third label at $H$; $A$ equal to each of the three labels or fresh | 1,368 streams; all four coincidence cases pass |
+| Injective symbolic fee | $Q\in\{2,3,4,5\}$, every $3\le m\le24$ | 88 streams of length (5.3), including saturated widths $4,7,12,21$ and widths $3,6,11,20$ immediately below them, with the $(2,3)$ exception checked |
+| Joint histories and literal rows | $Q\in\{2,3\}$, every $3\le m\le6$, all $v,j,s$, every $m$-bit action | 2,416 joint original-history witnesses; 95,552 source/action rows |
+
+The four stream families total 4,336 streams, 5,075,216 record executions, and 348,824,892 chronological continuation-bit updates. Each stream's literal length equals its asserted fee. Final archives retain all earlier endpoint outputs, so continued execution of an already-decoded source cannot erase the decoding evidence. High-tail sources stop at the first rejecting endpoint; the finite full-stream comparison may extend their absorbing outputs without charging such formal extensions to the actual protocol.
+
+Joint witness checks independently compute the integer weights by their original recurrence, construct (1.5), split its actual bits into complete blocks, and verify its value, phase, and tail together. These witnesses contain 109,346 bits in total. For every stated source/action row, direct bit execution checks rejection or the successful scalar increment against the matched original-weight coefficients. The continuation tests execute literal words, rather than treating an even response span as an action. Eight additional rejected-history witnesses, one per tested $(Q,m)$ pair, are the actual $Q$-block histories $(1^m)^Q$, with 90 bits in total. All 240 ensuing literal action checks preserve absorbing rejection. Their free initial output selects the prescribed bottom label immediately, with zero emitted continuation blocks.
+

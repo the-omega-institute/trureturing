@@ -1,0 +1,27 @@
+**Definition 4.1 (finite family descriptions).** Choose $k,m,s\ge0$ and
+the following finite data.
+
+- A finite ordered binary context $C$ with a fixed concrete exterior.
+  Its hole occurrences have role labels
+  $\mathcal H=\{A_1,\ldots,A_k,Z_1,\ldots,Z_m,V_1,\ldots,V_s\}$.
+  Every role occurs at least once; a role may occur arbitrarily many
+  times. Number actual holes in address order. The intended old partition
+  puts two occurrences in the same class exactly when their role labels
+  agree. Fix one original representative address $p_H$ for each role.
+- For each payload role $V_t$, a mixed template $E_t$ of (URR.2), using
+  only the rank generators $n_j$ and residual generators $z_i$.
+  Different payloads may share any of these generators and may contain
+  any finite number of their repeated decorated occurrences.
+- The mandatory finite literals and positive links in Definition 4.2,
+  any finite list of the rank-only refinements in Definition 4.4, and
+  any finite list of whole negative records at the structural endpoints
+  in Definition 4.3. These lists, including all repetitions, are the
+  complete retained history for this family.
+
+The old original cut $A$ is exactly the hole-address set of $C$; it is
+finite and prefix-free. The old row $R=(C,\pi)$ includes its entire
+concrete exterior, numbered holes and the complete role partition $\pi$.
+If there are no roles, $C$ is a supplied finite ground tree and $A$ is
+empty. The context may otherwise be a single root hole. Nothing permits
+dropping an old class because it is irrelevant to a later task.
+

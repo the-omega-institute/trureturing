@@ -1,0 +1,9 @@
+**约定 9.2（原论文的比较范围）。** 以下均为 `literature-attested` 方法接口，本文的截止及回绕费用是 `repo-derived` 普通推导。文献不提供本文未证明的最坏实际费用，也不承担文献缺失或优先权判断。
+
+| 原论文 | 具体对应及不能省掉的桥梁 |
+| --- | --- |
+| Petra van den Bos、Frits Vaandrager，[State Identification for Labeled Transition Systems with Inputs and Outputs，arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，定义11、图3 | 自适应识别图与不可逆状态合并的根动作障碍。图3在 $a$ 后合并状态1、2，在 $b$ 后合并2、3。本文的退休窗口与收费日历还需实际系数和共同尾证明。 |
+| Anastasiya Chistopolskaya、Vladimir V. Podolskii，[Parity Decision Tree Complexity is Greater Than Granularity，arXiv:1810.08668v1](https://arxiv.org/html/1810.08668v1)，引言、第2.2节 | 同一个未知布尔输入的任意子集奇偶查询与查询数。相位的 one-hot 编码不赠送任意子集动作；本文只用移动窗口中一个实际字面词的掩码。 |
+| Michał Szyfelbein、Dariusz Dereniowski，[Precedence-Constrained Decision Trees and Coverings，arXiv:2602.21312v1](https://arxiv.org/html/2602.21312v1)，第2、3.1节 | 静态测试前驱偏序及最坏树高。前驱偏序不能替代循环位移、真实排除集合与终端尾合法性；未建立成本保持的全问题归约。 |
+| Uraz Cengiz Türker、Robert M. Hierons、Mohammad Reza Mousavi、Khaled El-Fakih，[Efficient State Identification for Finite State Machine-Based Testing，accepted manuscript](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf)，[DOI 10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，定义11–15、18 | 确有无需额外转移串的识别路径；定义12–13覆盖每个状态／刻画词对，定义14要求成对最短区分前缀，定义15及18给 ordered／bounded characterising sets。其指定起点覆盖及成对最短性不等于一个未知 INITIAL 标签的最坏实际分支最小化。 |
+

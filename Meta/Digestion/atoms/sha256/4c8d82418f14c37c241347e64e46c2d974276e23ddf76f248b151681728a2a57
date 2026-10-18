@@ -1,0 +1,26 @@
+## 201. Statement and dependencies
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths, original 2*pi edge
+equations, exactly five reservoir labels, and a nonempty flat set. Choose
+M maximal among pi-selected reservoir labels, its source flat and escape
+ tau=(Z,M,C,D,M,C), H={M,C,D,Z,U}.
+Use cosh lengths m,z,c,d,u. The established five-witness and upper-gap
+theorems give
+ m>3, z>m+2, u>T>m-2,
+where T=2*sqrt(m^2-1)*sqrt((z-1)/(z+1))-m.
+All five reservoir labels have genuine witnesses; every flat selects its axes.
+
+Use Proposition 197.1: if u<=m, the
+complete Z circle contains an actual genuine owner
+ eta=(M,Z,U,Q,Z,U),
+whose axial M angle theta and transverse Z angle gamma obey
+ theta+2*gamma<pi.
+That result uses the distinct tau/rho M/Z expenditures and the complete
+residual circle, not a seed or a distinct-owner assumption.
+
+**Proposition 201.1.** Necessarily u>m. Consequently U is not pi-selected and
+has no flat occurrence; its complete genuine angle budget is 2*pi.
+The source's opposite axis cannot be U. This excludes only the lower
+fifth-reservoir branch; it does not prove five-reservoir realization.
+

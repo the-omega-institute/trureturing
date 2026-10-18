@@ -1,0 +1,157 @@
+**Definition 94.1 (source and contact dictionary).** Use exactly (FA.87)--(FA.88), (FA.103) and RC58:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad T=ae_0e_1^T+be_1e_0^T,
+\quad S=ce_0e_2^T+de_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad\delta=\theta+\omega,
+\quad s_0=\sqrt\delta,\quad\alpha=\theta/\delta,\quad\beta=\omega/\delta,\\
+L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad(K_0,K_1,K_2)=(D,T,S),\\
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad H_0=(1-\delta)N_{00},\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad\mu=\alpha V+\beta W.
+\end{gathered}
+$$
+
+Here $u_f=V/\mu$, $c_f=c_*(u_f)$, $\nu=\mu/c_f$ and $t_0=W/c_f$. The inherited scalar $\nu$ and any fixed-strength $\nu_*$ retain their original meanings. Limiting selection in JS does not imply finite optimality.
+
+Put $u=\cos\phi$, $v=\sin\phi$, $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$, $h=(1,z,w)^T$ and
+
+$$
+\ell=h^TGh,\quad n=(0,dw/h_2,-bz/h_1)^T,\quad f=n^T\Delta n,
+\quad c=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+ {h_0^2\delta+b^2z^2+d^2w^2}.
+$$
+
+The source amplitude c_src in this capacity is the c in S; the capacity function c is a different object. Below c always denotes this capacity when it is a function. Define
+
+$$
+\Gamma_\eta=(1,u,v,u^2,uv,\eta c,\eta cu^2,\eta cuv),\quad
+H_\eta=\ell+\eta tcf,\quad
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0).
+\tag{FA.122}
+$$
+
+The five contacts have sheet indices $\eta=(0,0,0,1,1)$, height signs $\epsilon=(+,+,-,+,-)$, and angular chart bases $b_{\rm chart}=(0,\pi,\pi,0,3\pi/2)$. Their local coordinates satisfy $\phi_i=b_{{\rm chart},i}+2\arctan x_i$. The unknown vector is
+
+$$
+X=(x_0,\ldots,x_4,p_0,\ldots,p_4,d_0,\ldots,d_7)\in\mathbb R^{18}.
+$$
+
+The equations, ordered with the eight moment equations first and then the value/derivative pair for each contact in increasing index, are
+
+$$
+\sum_i p_i\Gamma_{\eta_i}(\phi_i)=B(t),\qquad
+P_i(x_i)=0,\qquad P_i'(x_i)=0\quad(i=0,\ldots,4). \tag{FA.123}
+$$
+
+The cleared numerator $P_i$ of $d\cdot\Gamma_{\eta_i}-\epsilon_iH_{\eta_i}$ is defined as follows. In any chosen chart let $r=1+x^2$, and let $(U,V)$ be $(1-x^2,2x)$ for base $0$, $(-1+x^2,-2x)$ for base $\pi$, and $(2x,-1+x^2)$ for base $3\pi/2$. In these polynomial displays $V$ is a chart numerator, distinct from the scalar source moment $V=m_2h_1^2/b^2$. Set $Z=U/\sqrt\alpha$, $W_n=V/\sqrt\beta$; write $d_{\rm src}$ for the source amplitude when it could be confused with the multiplier vector. Define
+
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r^2+b^2Z^2+d_{\rm src}^2W_n^2,\\
+N_c&=h_1^2h_2^2\delta r^2+a^2h_2^2Z^2+c_{\rm src}^2h_1^2W_n^2,\\
+L_c&=(r,Z,W_n)^TG(r,Z,W_n),\\
+F_c&=\Delta_{11}(d_{\rm src}W_n/h_2)^2
+ -2\Delta_{12}d_{\rm src}bZW_n/(h_1h_2).
+\end{aligned}
+$$
+
+$\Delta_{22}=0$ exactly. Pure numerators for $\Gamma$ are
+
+$$
+(r^2,rU,rV,U^2,UV,0,0,0),\quad D_0=r^2,\quad H_0^{\rm num}=L_c.
+$$
+
+Saturated numerators are
+
+$$
+(D_cr^2,D_crU,D_crV,D_cU^2,D_cUV,N_cr^2,N_cU^2,N_cUV),
+\quad D_1=D_cr^2,\quad H_1^{\rm num}=D_cL_c+tN_cF_c.
+$$
+
+For either sheet $P=d\cdot\Gamma^{\rm num}-\epsilon H^{\rm num}$. The denominators $D_\eta$ are positive everywhere. Derivatives in (FA.123) are polynomial derivatives in the local coordinate. At a zero the value and stationarity equations are exactly those of the original gap; denominator clearing introduces no branch or extra root. Pure degrees are four and saturated degrees eight.
+
+The exact rational decimal centre of X at t=1000 is listed below. It defines an enclosing box, not an assertion that the decimal centre solves the equations.
+
+| coordinate | exact rational decimal centre |
+|---|---|
+| x0 | 0.0239983886642378607964294310901679274398090903664722197137187518454914256245 |
+| x1 | -0.295345657849378476306024301450483432304865657374456698646986628268886428144 |
+| x2 | 0.127640893565866832951084082477176300214962315541575619037141303345451632888 |
+| x3 | 0.151088636285802408169627202014237321102259249309113798503448321432425648207 |
+| x4 | 0.251237409581127356717457548926907910867475688233491094351221514230825083392 |
+| p0 | 0.40356105912434429587028385796306861440267440303930150136389554751929146834 |
+| p1 | 0.183968107565001260784005926671856498076335410359553001589052683256527679673 |
+| p2 | 0.320043755240561323971427131511530770797419136045901918140238020651677504285 |
+| p3 | 0.0361481337929972639565176638271383531983401158115725409751968219643484098342 |
+| p4 | 0.0562789442770958554177654200264057635252309347436710379316169266081549378682 |
+| d0 | 0.0244863499508953549551714115254785990455229653352660072423427775163528545274 |
+| d1 | 0.00358535399816408539814614897471262212522535275458846005404812615848843507412 |
+| d2 | 0.00715283156818416310756463367571142082407236735174105388329649684474543316655 |
+| d3 | -0.0183927422338048386671395313708612800603754221994926300815476732972939276256 |
+| d4 | 0.00403186188336576407517441402354141469657869331844789615857271955201630579117 |
+| d5 | 21.7811418184010051130038082491418452870010839274827565904191911611069497405 |
+| d6 | -17.6924448925415546973374521319795072232789713541765300081920400162650964287 |
+| d7 | -11.0558270043314784681815861874335551388404582163945740457886311004049481113 |
+
+For the seed use radius 10^(-16) in each of these 18 coordinates. For the whole $t$ strip use the same centre and the eighteen exact radii in §95. These boxes specify the selected root.
+
+The original source box used in every interval calculation has the following nine exact decimal centres, each with radius 10^(-24):
+
+- lambda_CG: .479508042205945691075728241615
+- alpha1: 1.412018697539825943102823246594
+- alpha2: 1.185897402486986028204155873343
+- beta1: .413330945620125544606320492846
+- beta2: .809647491041060318009094562763
+- z_CG: .066998926272600209516864472757
+- eta0: .279795267654829218213193898783
+- eta1: .199570407911600478528148253443
+- eta2: .091392615490799158339482855657
+
+The source expressions are (RC.5), (CG.112)--(CG.113), (CG.134).
+With the source-box coordinates in the displayed order, form
+
+$$
+\begin{gathered}
+v_5=(\alpha_1,\alpha_2,-1)^T,\qquad
+v_{27}=(\beta_1,\beta_2,1)^T,\\
+A_5=\lambda_{\rm CG}\frac{v_5v_5^T}{v_5^Tv_5},\qquad
+A_{27}=(1-\lambda_{\rm CG})\frac{v_{27}v_{27}^T}{v_{27}^Tv_{27}},\\
+\mathcal N=\sum_{y\in\{5,27\}}A_y\odot(a_ya_y^T),\quad
+\zeta=(z_{\rm CG},59\lambda_{\rm CG}/128,\lambda_{\rm CG}/2),\\
+S_0=\operatorname{diag}(\zeta)-\mathcal N,\quad
+H=1000\eta_0\operatorname{adj}S_0,\quad
+Q^{0j}=\eta_j\operatorname{adj}S_{0j},\\
+(h_0,h_1,h_2)^T=He_0/\sqrt{H_{00}},\quad
+(a,b)^T=Q^{01}e_0/\sqrt{Q^{01}_{00}},\quad
+(c_{\rm src},d_{\rm src})^T=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1=1-h_1^2-a^2,\qquad m_2=1-h_2^2-c_{\rm src}^2.
+\end{gathered}
+$$
+
+No singular matrix is inverted. All nine coordinates vary, including all
+three $\eta_j$. Off-root these define comparison expressions only;
+source-root TP, ranks and original optimality identification remain
+Assumption 93.1.
+
+For completeness, write $a_y=(\sqrt{y/128},\sqrt{(64-y)/128},1/\sqrt2)^T$
+and distinguish the source matrix $\mathcal N=\sum_y A_y\odot(a_ya_y^T)$
+from the height matrix $N$ in the first display of this section. Then
+
+$$
+S_{0j}=\begin{pmatrix}
+\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{00}p_{yj}&-\mathcal N_{0j}\\
+-\mathcal N_{0j}&\zeta_0-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{y0}
+\end{pmatrix},\quad j=1,2.
+$$
+
+All radicals denote positive roots. In interval evaluations one can use
+(RC.3) for $G$: its diagonal is
+$\delta\sum h_i^2\Delta_{ii}$, $b^2\Delta_{00}+a^2\Delta_{11}$,
+$d^2\Delta_{00}+c_{\rm src}^2\Delta_{22}$, and its off-diagonal entries are
+$s_0(h_0a+h_1b)\Delta_{01}$, $s_0(h_0c_{\rm src}+h_2d_{\rm src})\Delta_{02}$,
+$a c_{\rm src}\Delta_{12}$. This is algebraically the same $LNL$.
+The gauge $Y_{22}=0$ is fixed throughout; at report multiplier zero the
+two report-sign rows coincide and are included only once.
+

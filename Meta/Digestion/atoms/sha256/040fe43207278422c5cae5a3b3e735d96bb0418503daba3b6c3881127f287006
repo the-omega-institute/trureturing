@@ -1,0 +1,72 @@
+**Theorem 13.2 (finite obstruction to a sparse-port compilation).**
+For every $D\ge11$, let $\mathfrak S_D$ be the class of otherwise
+unrestricted correct original procedures for which, on the ternary
+slice,
+
+$$
+b_e\le3\,2^{D-3}\qquad(e\in I_3).
+\tag{RRN.52}
+$$
+
+Every procedure in $\mathfrak S_D$ has strictly more complete retained
+names than one existing paid correct procedure on the whole original
+$\mathcal F_D$. Consequently no compiler can send every original
+competitor to $\mathfrak S_D$ without increasing its complete attained
+alphabet. The compiler may change all fibers, recolor globally and
+replace preparation; those allowances do not remove the obstruction.
+
+Proof. Theorem 11.2 forces each member of $\mathfrak S_D$ to have
+
+$$
+m\ge3^{\,2^{D-3}}.
+\tag{RRN.53}
+$$
+
+For the comparison use precisely [D3, Theorem 4.1][D3Menu]'s paid
+full-family construction. With $N_D=|S_D|$, it supplies an alphabet of
+at most $H_{N_D}u_D$ names, where
+
+$$
+u_3=760/289,\qquad u_{D+1}=u_D^2+1,\qquad
+N_D+1\le2^{2^D},\qquad
+u_6=\frac{197235044275447727251205}{48661191875666868481}.
+\tag{RRN.54}
+$$
+
+The exact positive-integer comparison $u_6+1<2^{12}$ is D3's
+(D3.39). Since $u_D\ge1$,
+$u_{D+1}+1\le(u_D+1)^2$. For $D\ge6$ this gives
+$u_D<2^{3\,2^{D-4}}$. Also
+$H_{N_D}\le1+\ln N_D<2^{D+1}$. Thus that paid construction uses
+strictly fewer than
+
+$$
+2^{D+1+3\,2^{D-4}}
+\tag{RRN.55}
+$$
+
+names. Finally $3^{16}=43046721>33554432=2^{25}$, and
+$2^{D-7}\ge D+1$ for $D\ge11$: it holds at eleven and persists
+on doubling the left side. Hence
+
+$$
+3^{2^{D-3}}>2^{25\,2^{D-7}}
+\ge2^{D+1+24\,2^{D-7}}
+=2^{D+1+3\,2^{D-4}}.
+\tag{RRN.56}
+$$
+
+This strictly separates (RRN.53) from the actual competitor. Its paid
+preparation has (RRN.50)'s bounds and its one late literal has length
+at most $D$, by the same D3 theorem. There is therefore a lawful
+full-family compiler input that no output in the defined class can
+match in alphabet size. Every such output is itself an original
+competitor and satisfies the lower regardless of its new fibers.
+$\square$
+
+In particular a request-independent common probe, or a fixed menu of
+at most $3\,2^{D-3}$ actual port alternatives per name, belongs to this
+excluded class. The count in (RRN.52) is weaker than the total address
+range, because slice-constant alternatives are discarded. No assertion
+that a published supplier requires this restriction is made.
+

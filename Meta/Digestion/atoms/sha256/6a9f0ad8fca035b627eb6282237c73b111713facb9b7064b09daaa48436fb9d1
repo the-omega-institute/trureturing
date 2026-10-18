@@ -1,0 +1,15 @@
+### 定义 12.12（一般三角桥接数据及其边界）
+
+对任意三个源集合 $\Lambda_\alpha,\Lambda_\beta,\Lambda_\gamma$，记 $\mathsf M(\Lambda)$ 为相应测度空间，$\mathbb B=\{0,1\}$。一般三角桥接数据仅由下列三个对象组成：
+
+$$
+\begin{aligned}
+S&:\mathsf M(\Lambda_\alpha)\to\mathsf M(\Lambda_\beta)\to\mathsf M(\Lambda_\gamma)
+\to\mathsf M(\Lambda_\alpha\times\Lambda_\beta\times\Lambda_\gamma),\\
+H&:\Lambda_\beta\times\Lambda_\gamma\to\mathsf M(\mathbb B),\\
+L&\subseteq\mathcal L.
+\end{aligned}
+$$
+
+$L$ 表示关于五态实函数的谓词。这些数据没有附加 $S(\mu_\alpha)(\mu_\beta)(\mu_\gamma)=\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma$、$H$ 为概率核或 $L$ 与 $S,H$ 相容的条件。测度记号所需的可测结构也须给定，仅三个源集合并未指定它们。因而不能仅据此推出第 9 节的独立源分解或某个律属于 $L$；其有限概率版本见第 14 节。
+

@@ -1,0 +1,106 @@
+**Theorem 28.1 (actual mass from the fixed principal deficit).** Fix the data in Definition 27.1 in their stated order. Write
+
+$$
+\begin{aligned}
+H_s&=M_bs^8,&k_s&=k_b(H_s),&\delta_s&=C_*-k_s,&
+\gamma&=\chi_c/a=1/C_*,\\
+\epsilon_{c,b}(s)&=s^2E_{b,s},&
+\eta_s&=-\epsilon_{c,b}(s)/a,&
+r_b(s)&=-E_{b,s}/s^6,\\
+F_s&=\mathcal U_{b,s}\psi_{b,s},&
+f_s&=\mathcal T_sF_s,&
+m_s&=\int_{\Omega_{s,b}}\widetilde U_{b,s}|f_s|^2d\xi.
+\end{aligned}
+\tag{28.1}
+$$
+
+Here $H_s$ is the scalar probe, not the time-integrated operator denoted by $H_s$ in (24.2), and $m_s$ denotes potential mass. There is $s_b>0$, depending only on the fixed datum and $b,M_b$, such that for $0<s<s_b$ and every actual normalized complex choice,
+
+$$
+\begin{gathered}
+\delta_s\ge d_bs^5>0,\qquad 0<\eta_s\le H_s,\\
+0\le m_s\le\frac{C_*k_s(H_s-\eta_s)}{\delta_s}
+       \le\frac{C_*^2M_b}{d_b}s^3,\\
+0\le\|(C^{\rm sh}_{b,s})^{1/2}f_s\|_2^2
+       \le\frac{\gamma C_*^2M_b}{d_b}s^3,\\
+m_s=s^5\int_{I_b\times\mathbb R^3}
+                 W_{b,s^2}|\psi_{b,s}|^2dk\,dq.
+\end{gathered}
+\tag{28.2}
+$$
+
+These bounds are independent of the actual ground-state choice at each $s$.
+
+Proof. Theorem 25.2 supplies the finite-$M_b$ inequality (25.19) and $\Lambda_b<-1$, with its full-field norm. Since $\Lambda_b=-2d_b$, the definition of limsup gives
+
+$$
+\frac{k_b(M_bs^8)-C_*}{s^5}\le-d_b
+\tag{28.3}
+$$
+
+for all sufficiently small $s$. This proves the deficit in (28.2). The same theorem's (25.16), together with negative attainment, gives $0<\eta_s\le H_s$. This uses the finite-probe statement itself; no asymptotic at $s^6$ or $s^7$ is extended to $M_bs^8$.
+
+We use the positive-shift form factorization of J (56.3) on the entire complex domain, displaying its application here. Fix such an $s$ and abbreviate $C=C^{\rm sh}_{b,s}$ and $U=\widetilde U_{b,s}$. The operator $C$ is nonnegative selfadjoint and $U$ is bounded and nonnegative at this fixed $s$. Since $H_s>0$, the bounded operator
+
+$$
+\mathcal B_s=U^{1/2}(C+H_s)^{-1/2}
+\quad\hbox{satisfies}\quad
+\mathcal B_s\mathcal B_s^*
+     =U^{1/2}(C+H_s)^{-1}U^{1/2}=\mathscr K_b(H_s),
+\qquad \|\mathcal B_s\|^2=k_s.
+\tag{28.4}
+$$
+
+Functional calculus makes $(C+H_s)^{1/2}$ a map from $D(C^{1/2})$ onto $\mathcal H_{s,b}$, with inverse $(C+H_s)^{-1/2}$. Applying (28.4) to $(C+H_s)^{1/2}f$, for any complex $f\in D(C^{1/2})$, proves
+
+$$
+\int U|f|^2d\xi
+ \le k_s\|(C+H_s)^{1/2}f\|_2^2
+ =k_s\bigl(\|C^{1/2}f\|_2^2+H_s\|f\|_2^2\bigr).
+\tag{28.5}
+$$
+
+This argument uses neither a zero-energy inverse nor a positive $L^2$ spectral gap, and makes no support, sign or symmetry restriction on $f$.
+
+For the actual state, boundedness of the original multiplier and (27.5) give its operator equation on exactly $D(S_b)$. The unitaries (27.7), the coupling $g_s=\chi_cs^3$ and the factor $s^2$ transport it to
+
+$$
+(aC-\chi_cU)f_s=\epsilon_{c,b}(s)f_s=-a\eta_sf_s,
+\qquad f_s\in D(C),\qquad\|f_s\|_2=1.
+\tag{28.6}
+$$
+
+Taking its Hermitian inner product with $f_s$ gives the real equality
+
+$$
+\|C^{1/2}f_s\|_2^2=\gamma m_s-\eta_s.
+\tag{28.7}
+$$
+
+Apply (28.5) and substitute (28.7). The result is
+
+$$
+m_s\le k_s(\gamma m_s+H_s-\eta_s),
+\qquad
+\frac{\delta_s}{C_*}m_s\le k_s(H_s-\eta_s).
+\tag{28.8}
+$$
+
+Division is legitimate because $\delta_s\ge d_bs^5>0$. Also $0\le H_s-\eta_s\le H_s$ and $0\le k_s<C_*$. Thus (28.8) proves the mass bound in (28.2), and (28.7) bounds the nonnegative kinetic form by $\gamma m_s$.
+
+Finally change variables first by the determinant-one shear and then by the raw chart of Jacobian $j_0s^7$. The unitary amplitude cancels that Jacobian, yielding
+
+$$
+\begin{aligned}
+\int_{\Omega_{s,b}}\widetilde U_{b,s}|f_s|^2d\xi
+ &=\int_{\Omega_{s,b}}s^5W_{b,s^2}(\Xi_s\xi)
+                  |\mathcal U_{b,s}\psi_{b,s}(\xi)|^2d\xi\\
+ &=s^5\int W_{b,s^2}|\psi_{b,s}|^2dk\,dq.
+\end{aligned}
+\tag{28.9}
+$$
+
+Every step used the actual equation and constants independent of its normalized eigenvector. This proves all assertions. $\square$
+
+The kinetic quantity in (28.2) is the threshold-shifted form (27.8). The unshifted horizontal form equals this quantity plus $\lambda s^2$, since the state has norm one. Likewise (28.9) controls a rescaled expectation: it gives only an $O_{b}(s^{-2})$ upper bound for the raw expectation, and does not assert that the latter vanishes.
+

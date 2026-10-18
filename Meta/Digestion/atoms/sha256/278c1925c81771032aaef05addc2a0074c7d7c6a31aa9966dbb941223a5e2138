@@ -1,0 +1,26 @@
+**定理 149.3（增长率与窗口尺度的条件对应）。** 对上述统一全历史恢复方案，有
+
+$$
+B_n^{\rm bits}\ge3n\log_2\phi-O(1),\qquad
+3\log_2\phi\approx2.083.
+$$
+
+这个系数是每个窗口的全域容量增长率；只有一事件一窗口时才能称每事件的该增长率。它与第147章的区间主体项同含 $\phi^3$，但容量结论不要求区间模型，也不自动成为 Shannon 熵或热力学界。
+
+证明（149.3）。经典 Binet 公式作为中间工具，取钉版 Mathlib [NumberTheory/Real/GoldenRatio.lean，`Real.coe_fib_eq`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Real/GoldenRatio.lean)：对 $m\in\mathbb N$，$F_0=0,F_1=1$，令 $\psi=(1-\sqrt5)/2=-\phi^{-1}$，有
+
+$$
+F_m=\frac{\phi^m-\psi^m}{\sqrt5}
+=\frac{\phi^m}{\sqrt5}\left(1-(-\phi^{-2})^m\right).
+$$
+
+本节 $m=3n+2\ge2$，故括号至少为固定正数 $1-\phi^{-4}$，至多为 $1+\phi^{-4}$。因此
+
+$$
+\log_2F_{3n+2}\ge
+3n\log_2\phi+2\log_2\phi-\tfrac12\log_2 5
++\log_2(1-\phi^{-4}).
+$$
+
+这给不依赖 $n$ 的常数修正；同样的上界说明其增长率恰为 $3\log_2\phi$。接入定理149.2即可。区间主体项则由 $A$ 的正长度兼容合同推得，两者是同一个守卫矩阵的两种用途；参考概率律、期望长度、物理时间和热浴条件都没有在此证明中供应。$\square$
+

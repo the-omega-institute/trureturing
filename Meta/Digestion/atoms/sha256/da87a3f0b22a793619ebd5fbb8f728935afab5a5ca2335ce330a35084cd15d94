@@ -1,0 +1,10 @@
+### 定义 12.13（RH 缺陷传送数据）
+
+对任意输入集合 $C$，此类数据包括一个集合 $\mathcal Z$、映射 $m:C\to\mathcal Z$、函数 $\delta_F:C\to\mathbb R$ 和 $\delta_C:\mathcal Z\to\mathbb R$，以及条件
+
+$$
+\forall c\in C,\qquad \delta_F(c)=\delta_C(m(c)).
+$$
+
+该条件只规定给定数据的缺陷传送；$\mathcal Z$ 尚未被识别为 zeta 零点空间，$\delta_F,\delta_C$ 也尚未被识别为实际的 FIB、Cayley 缺陷。第 10 节的对应、穷尽性及等距或酉条件仍须另外证明。定义 12.11–12.13 均不断言所需桥接数据存在。
+

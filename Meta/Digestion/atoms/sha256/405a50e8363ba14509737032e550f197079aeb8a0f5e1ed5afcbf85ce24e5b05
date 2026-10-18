@@ -1,0 +1,32 @@
+**Convention 1.1 (scope).** The observer below has one actual evolving ordered
+tree, one source-uniform deterministic installed controller, actual paid
+acquisition, and owned callable records. Its four expressions are current
+unlabelled ordered support, actual ordered events, current leaf boundary, and
+acquired seed-and-replay memory, each with the explicitly specified clock
+information. Their individual kernels equal the kernel of one continuation and
+audit task. This result concerns that closed controller, including its busy
+tape cuts. Independent command ingress is a different interface, treated in
+Section 8. Neither interface changes the original stationary task.
+
+The following sources are used at the common public revision
+`b7d37ca0fee9638f28af45d4a63f7f0eb974c972`. Paths in this table identify their
+owning declarations and narrative sources, rather than a new compilation.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [NativeSerialMachine.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean), `Op`, `Event`, `nativeStep`, `Run`, `Replay`, `replay_deterministic`, `operational_replay`, `reached_prefix_replay`, `actual_register_execution`; [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs) | One register, source-free control, literal address replies, actual substitution and chronological appending. The last theorem assumes a certified entry iterate and arbitrary supplied old trace; it does not authenticate that old trace. Here the native trace starts empty at a declared entrance. |
+| [NativeFullSourceProducer.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean), `Frame`, `Control`, `sourceControl`, `initialControl`, `productionTrace`, `native_source_producer`; [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs) | The stronger existing actual producer returns the entire input tree under common control, with one literal Read per actual node and two producer local actions per branch. This supplies acquisition directly. Its unbounded semantic workspace is expanded into paid tape work below. |
+| [ActualTreeReadoutAcquisition.lean](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean), `acquisitionTrace`, `restore`, `acquisition_foundation`, `source_foundation`; [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs) | The producer's read projection is the existing truthful preorder. `restore` and the reconstruction inside `acquisition_foundation` already supply reconstruction; that theorem's original terminal result is the third-image-membership Boolean, which is not renamed as the present output. |
+| [AtomicPrefixParser.lean](../../../D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.lean), `code`, `parse`, `decode`, `result`; [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.scribe.cs) | Literal leaf code `[true,b]` and branch code `false::left++right`, with exact remainder, injectivity and complete decoding. This is an acquired/source-supply representation, not an access port. |
+| [Atomic Boundary Trichotomy, Theorem 12.1 and equation ABT.39](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md) | The effective bijection $C(t)=\operatorname{sh}(\rho^2t)$ onto the explicit shape grammar, and its forward transport $\Theta$. These permit genuinely unlabelled spatial and boundary expressions after two updates. |
+| [Process Geometry, Theorem 44.6](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md); [GenealogicalFiberTransport.lean](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean), `fiberMap`, `result`, and [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs); [IntrinsicSubstitutionCoordinates.lean](../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean), `intrinsic_coordinates`, and [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs) | Actual substitution injectivity and inverse recognition are existing tools. `result` exports injectivity of the composition-fiber maps; its global injectivity proof is local, and the coordinate module's corresponding lemma is private. No new public raw-inverse declaration is asserted. Executed epoch is distinct from intrinsic ancestry depth. |
+| [NativeSerialEffective.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean), `OriginalState`, `OriginalCodeRealization`, `original_code_service_simulation`, and [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.scribe.cs) | Acquired history and effective selectors already exist. General effective-code simulation requires supplied code and the genuine-state realization equation. The present explicit finite routines need no arbitrary-selector oracle. Bounded evaluator `none` is local work, not an executed external failure. |
+| [Transport Memory Completion, Section 57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), PR57.D1–D3, D7, L1, L2, L4 | Constructed tapes, a receipt per primitive, closed-cut clock readout, finite scans, append/seal and owned copying. Only these runtime components are reused. Its source `Read` returns Clifford $E$, and its source modifications have a whole-candidate capacity guard. Neither is identified with the Native literal Read or unconditional update. |
+| [Process Geometry, Sections 34, 39 and 43](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md); [TypedFiniteViewKernel.lean](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean), `typed_finite_view_kernel`, and [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs) | Actual joint images, complete response/successor fields, selector descent and the separate nonredundancy inclusion. Generic kernel factorization and typed finite-path closure are credited tools. |
+
+The additional mathematical work is the particular acquired, clocked joint-state
+reconstruction and its individual task-kernel proofs, plus the conditional
+chronology fiber and its causally acquired complement. Acquisition, substitution
+recognition, deterministic replay as a general idea, and enumerative coding are
+not claimed as discoveries.
+

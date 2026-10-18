@@ -1,0 +1,59 @@
+**Definition 3.2 (inherited-meter contract).** In an inherited-meter
+contract, the meter is part of the same actual joint source.  If
+$m_0(\omega)\in M_{\kappa(s(\omega))}$ is its initialized value, define
+
+$$
+\widehat s_0(\omega)=(s(\omega),m_0(\omega)),
+\qquad
+\widehat X_0=\operatorname{im}(\widehat s_0)\cap
+\{(x,m):x\in X_{\rm reach},\ m\in M_{\kappa(x)}\}.
+$$
+
+Let $\widehat X_{\rm reach}$ be the least subset containing
+$\widehat X_0$ and closed under every declared inherited transition on
+actual legal trajectories, including legal-failure successors.  Thus every updated meter remains tied to the same
+source trajectory, while an arbitrary Cartesian product of independently
+chosen meters is not admitted.  The resource carrier in this contract is
+$\widehat X_{\rm reach}$.
+Lift the type map by $\widehat\kappa(x,m)=\kappa(x)$, and write
+$\widehat D_a\subseteq\widehat X_{\rm reach}$ for the actual inherited
+legal domain; it may depend on $m$.
+All typed action and selector statements on the inherited carrier use
+$\widehat\kappa$ and these lifted domains.
+The boundary state contains the current meter $m$, and a typed action
+updates it in place:
+
+$$
+(x,m)\xrightarrow{u}\bigl(T_u x,\tau_u(m)\oplus_{j(u)}c_{x,m}(u)\bigr),
+\tag{3.3}
+$$
+
+where $T_u$, $\tau_u$ and $c_{x,m}(u)$ denote the composition of the declared
+one-step inherited transitions.  For a typed family, the transports are
+coherent:
+
+$$
+\tau_\varepsilon=\mathrm{id},\qquad
+\tau_{uv}=\tau_v\circ\tau_u,
+$$
+
+with the corresponding typed composition law for the charges.  In a single
+monoid, $\tau_u$ is the identity.  Later legality, selector choices or
+outputs may depend on the inherited value.  The resource-aware profile for
+this contract is therefore formed on $\widehat X_{\rm reach}$, not merely on
+$X$.
+
+For this inherited carrier, define the contract trace by
+
+$$
+\widehat{\operatorname{Trace}}((x,m),u):=\operatorname{Trace}_m(x,u).
+$$
+
+Thus the current meter is read from the actual joint state and is not reset
+to the identity.  For a fresh-suffix carrier, the contract trace is the
+identity-meter trace from Definition 1.2.  From this point on, every
+unmarked profile, kernel or view is interpreted using the contract trace
+appropriate to $X_{\mathsf C}$; in particular, inherited occurrences of
+$\operatorname{Trace}(x,u)$ mean
+$\widehat{\operatorname{Trace}}((x,m),u)$.
+

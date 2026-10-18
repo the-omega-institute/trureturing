@@ -1,0 +1,57 @@
+**Definition 2.1 (exact mixed covers).** A chart has natural coordinates
+$\mathbf n$, residual coordinates $\mathbf z$, one whole source map $U$,
+and predicate
+
+$$
+\begin{aligned}
+A&::=g\mid T_{n_i+c}\mid\rho^a z_j\mid\langle A,A\rangle,\\
+C(\mathbf n,\mathbf z)&=P(\mathbf n)\land\Delta(\mathbf n,\mathbf z),
+\qquad \Delta=\bigwedge_\ell A_\ell\ne A'_\ell,\\
+D_r&=\bigcup_c\{U_{r,c}(\mathbf n,\mathbf z):C_{r,c}(\mathbf n,\mathbf z)\}.
+\end{aligned}
+\tag{TOS.5}
+$$
+
+Here $g$ is a fixed finite tree, $a,c\ge0$ are fixed, and $P$ is
+Presburger. Before the complete negative conjunction the residual domain
+is the entire Cartesian product $\mathcal T^m$. Repeated names inside
+one chart share their values, including occurrences in negatives and
+auxiliaries. Different alternative sources have separately renamed
+coordinates. Zero-dimensional products contain their empty tuple.
+
+Both inclusions in (TOS.5) concern the same original source: a chart point
+has every guard, record, old-row constraint and exactly row $r$; every
+$u\in D_r$ is reconstructed as that very $u$. A support section or a
+witness subset is not a replacement for (TOS.5).
+
+The covers are computed from $I,B$. The general route is [NIC, Theorems
+3.2–3.3 and 4.3][NIC]. In its fixed-navigation step, enumerate original
+prefix patterns strictly deeper than every fixed endpoint and cut word.
+Their actual frontier subtrees reconstruct each source. Navigation at
+the stipulated epochs decides every guard and literal, including born
+and absent addresses. Masks with the reached sets impose each complete
+exterior, and all reached-hole pairs impose each full partition. Keep
+every frontier and auxiliary in the declared tuple.
+
+NIC then flattens the positive equations, branches over atomic-code
+collapses, solves the finite free *shape* equations, and connects the
+offset blocks of each residual sort. A minimum-potential block gives one
+native residual with nonnegative decorations. Its assembled codes may
+be nonnormal, but expansion is sound for every residual in $\mathcal T$.
+Conversely the actual normal blocks and ranks of an admitted source give
+that same source in one branch. This is NIC's reason the pre-negative
+domain is actually Cartesian. Pull back the original native negatives
+after expansion; ambient code inequality is never a signed predicate.
+These supplier steps give both whole-source directions of (TOS.5), not
+merely exact scalar support. Fix any effective choices of branch order
+and most general unifiers; recognition below need not be invariant under
+all equivalent presentations.
+
+There is also the finite structural source reduction in §5. It applies
+when its displayed public acquired pattern matches, and constructs the
+entire covers there directly. Use that route for this pattern and NIC
+otherwise. Thus the input is always $I,B$, without a supplied cover,
+functional system, finite barrier or completed point. In either route,
+discard an empty chart only by the exact URR support test conjoined with
+$P$; this preserves the whole union.
+

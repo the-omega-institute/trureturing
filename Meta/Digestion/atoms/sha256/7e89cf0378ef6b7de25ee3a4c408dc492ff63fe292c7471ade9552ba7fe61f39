@@ -1,0 +1,30 @@
+**Theorem 57.3 (complete one-colour certificates, rigidity and actual histories).** For $V\in\mathcal P$ write $\mathcal A(V),\mathcal B(V)$ for its actual $\alpha,\beta$ address sets. A finite set $Q$ is a sound positive certificate at $V$ on the exact competitor domain $\mathcal T_C$ if and only if
+
+$$
+\mathcal A(V)\subseteq Q\quad\text{or}\quad\mathcal B(V)\subseteq Q.
+\tag{57.7}
+$$
+
+Here sound means that *every* $U\in\mathcal T_C$ agreeing with $V$ at all requested endpoints in $Q$ is positive. In fact either complete colour frontier uniquely determines $V$ within $\mathcal T_C$. Moreover
+
+$$
+B-A=F_{d-2}a+F_{d-1}b\ge n>0.
+\tag{57.8}
+$$
+
+The minimum static cost is $A$, and its unique minimum set is $\mathcal A(V)$. Every correct uniform policy's actual terminal paid set at a positive $V$ satisfies (57.7). If that actual cost is less than $B$, it contains *all* $\mathcal A(V)$, and
+
+$$
+|Q(T_\pi(V))|
+=A+|Q(T_\pi(V))\setminus\mathcal A(V)|.
+\tag{57.9}
+$$
+
+Proof. Reuse the static minimum, unique-optimum and sensitive-swap mechanisms supplied by `ActualImageAddressCertificate.result` and `rigidity`, as ordinary mathematical prerequisites. Their relevant literal structure can also be checked directly: every twice-substituted tree is assembled from $(\beta,\alpha)$ and $((\beta,\alpha),\beta)$ blocks. Every branch has both an $\alpha$ descendant and a $\beta$ descendant; every $\alpha$ is the right leaf of a $(\beta,\alpha)$ cherry. No $\alpha$ is a left leaf, and no terminal cherry is $(\beta,\beta)$. Further substitution preserves membership in the twice-image.
+
+For sufficiency there is a useful symmetric reconstruction argument. Take either colour $c$, its full address frontier in $V$, and the finite trie consisting of all prefixes of these addresses. Every branch of $V$ lies in this trie because it has a $c$ descendant. Its missing child slots are therefore precisely opposite-coloured single leaves in $V$. A complete competitor agreeing at all these $c$ endpoints must contain the same trie. Its exact number of $c$ leaves is already exhausted there. Each missing slot must contain a nonempty all-opposite-colour subtree. The exact total leaf count is the minimum completion count already attained by $V$, so every slot must contain just one leaf. Hence the competitor equals $V$. This argument also proves the $\beta$-frontier sufficiency, without a height assumption on the competitor.
+
+For necessity suppose that $x\in\mathcal A(V)$ and $y\in\mathcal B(V)$ both escape $Q$. Exchange just their leaf labels, retaining the entire shape. The resulting complete tree $W$ has composition $C$, and every endpoint except $x,y$ has exactly its former reply, including branches and absent endpoints. Let $x=rR$ and let $rL$ be its $\beta$ sibling. If $y=rL$, the new left leaf is $\alpha$, which is forbidden in an image. Otherwise the old cherry at $r$ becomes $(\beta,\beta)$, also forbidden. Thus $W$ is a same-composition negative agreeing on $Q$, proving necessity. Equation (57.8) is the Fibonacci difference in (57.2), with both coefficients at least one. The static statements follow immediately from (57.7).
+
+Finally let a uniform policy actually accept $V$, after its own paid transcript. Any competitor agreeing on that paid set reproduces the *whole chronological history*: at each step the deterministic selector sees the same prefix and requests the same next address, with the same reply, including repetitions. It therefore takes the same finite return. Correctness makes the paid set sound. This is a causal proof about one actual transcript, rather than a replacement of acquisition by an existential static set. Below $B$, (57.7) forces the alpha frontier and yields (57.9). □
+

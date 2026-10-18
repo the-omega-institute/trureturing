@@ -1,0 +1,32 @@
+## 484. Exactly five multi-high owners and six intermediate profiles
+
+Let n=n_3+n_4+n_5+n_6. Tau is an h=3 owner and has E_H>pi. Every owner counted by n costs more than pi, so H capacity 6*pi gives n<=5.
+
+The genuine H degree is at least 22. If n<=4, the largest possible high-slot count, using tau's three slots, is
+
+    3+6*(n-1)+epsilon<=22.
+
+It reaches 22 only if n=4, epsilon=1, and the three owners other than tau all have h=6. Their expense, together with tau, is greater than
+
+    pi+3*(11*pi/6)>6*pi,
+
+which is impossible. Therefore n=5.
+
+The degree and expense inequalities give
+
+    n_4+2*n_5+3*n_6+epsilon>=7,
+    n_4+2*n_6+2*epsilon<3,                     (484.1)
+
+where the second uses the weaker h=6 bound 5*pi/3 and the strict exceptional charge 2*pi/3. Along with n_3>=1 and sum n_j=5, these exhaust to six possible intermediate profiles:
+
+| epsilon | n_3 | n_4 | n_5 | n_6 |
+|---|---|---|---|---|
+| 1 | 2 | 0 | 3 | 0 |
+| 1 | 1 | 0 | 4 | 0 |
+| 0 | 2 | 0 | 2 | 1 |
+| 0 | 1 | 0 | 3 | 1 |
+| 0 | 1 | 0 | 4 | 0 |
+| 0 | 1 | 1 | 3 | 0 |
+
+These integer inequalities are necessary only. No scalar sampling enters them.
+

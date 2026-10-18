@@ -1,0 +1,54 @@
+### 96.1. Statement and parameter fields
+
+Define
+\[
+\begin{split}
+Q_{10}(b)&=2b^{10}+33b^8+90b^6+4b^2-1,\\
+Q_{14}(b)&=9b^{14}+181b^{12}+140b^{10}-4254b^8+1537b^6
+ +30305b^4-58758b^2+24696.
+\end{split}
+\tag{96.1}
+\]
+**Theorem 96.1.** For every real \(0<|b|<1\) satisfying
+\(Q_{10}(b)Q_{14}(b)=0\), there is no orthogonal triple of noncanonical
+original common-flat rays. The canonical input basis is the only
+common-flat basis up to phases and permutations, and the fixed pair
+\((I_6,H_0(b))\) cannot belong to a quartet. There are exactly four
+parameters in this statement, two roots of each polynomial.
+
+Writing \(Q_{10}=P_5(b^2)\), \(Q_{14}=P_7(b^2)\), the monic reductions
+of \(P_5\) modulo 3 and \(P_7\) modulo 19 are respectively
+\[
+ B^5-B+1,\qquad B^7-B^6+5B^5-4B^4+4B^3+B+8.
+\]
+Both are irreducible. The exact
+Rabin certificates check the Frobenius powers \(3^5,19^7\), respectively,
+and the degree-one Frobenius gcds. The norm of the root of \(P_5\) is
+\(1/2\), which is not a rational square. The norm of the root of \(P_7\)
+is \(-2744\), also not a rational square. Therefore those roots are
+not squares in their respective fields, and the even polynomials in
+(96.1) are irreducible of degrees ten and fourteen over \(\mathbb Q\).
+Both fields have real embeddings, so they remain irreducible over
+\(\mathbb Q(i)\).
+
+The polynomial \(P_5\) is strictly increasing on \([0,1]\), and its
+unique zero lies in \((3/20,4/25)\). Exact Sturm division gives precisely
+one positive punctured root of \(Q_{14}\), in
+\[
+ (6110/7847,\ 63003/80914).
+\]
+Using the signed primitive Sturm convention of §95.1, the variation
+counts for Q14 at 0, 1, 6110/7847 and 63003/80914 are 7, 6, 7 and 6.
+Evenness gives the two signed roots of each polynomial, and their gcd
+is one. Work separately over \(K_j=\mathbb Q(i)[b]/(Q_j)\).
+The good maps are
+\[
+ (p,b,i)=(137,64,37)\quad(j=10),\qquad
+ (p,b,i)=(149,10,44)\quad(j=14).
+\tag{96.2}
+\]
+Every nonzero residue below certifies a nonzero element of its irreducible
+characteristic-zero field, hence nonvanishing at both real embeddings in
+the puncture. The matrices and norms are defined over these fields by
+original formulas and adjugate inverses, not by interpolation from a prime.
+

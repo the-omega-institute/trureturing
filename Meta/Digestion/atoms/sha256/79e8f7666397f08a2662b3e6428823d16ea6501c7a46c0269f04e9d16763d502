@@ -1,0 +1,20 @@
+### Theorem 3.1. Exact intertwining without knowledge of the individual phases
+
+For a monomial U as in (2.2), assume a supplied implementation of its entrywise conjugate bar U in the specified word basis. Define D|s>=|s>|s>, an isometry into two registers. Then
+
+$$\boxed{(U\otimes\overline U)D=D P_\tau.} \tag{3.1}$$
+
+Consequently (U^k tensor bar U^k)D=D P_tau^k for every nonnegative integer k. The cycle length measured on this diagonal code is exactly the classical cycle length, with no return-phase offset.
+
+Proof. The two factors on |s,s> contribute e^{i gamma_s} and e^{-i gamma_s}, which cancel, leaving |tau(s),tau(s)>. Linear extension proves the isometry identity and its preservation of coherence for arbitrary code inputs, including reference-entangled inputs. Induction gives the powers. QED.
+
+D is basis copying: it sends sum_s a_s|s> to sum_s a_s|s,s>. This is generally entangled and differs from copying an unknown quantum state into two product copies. It can be obtained from a known computational encoding and a blank register; those register operations are additional to the original single-position pulse menu.
+
+For the supplied pulses, entrywise conjugation has an explicit formula:
+
+$$\overline{R_i(\beta,t)}=R_i(-\beta,-t). \tag{3.2}$$
+
+It follows by conjugating the Hamiltonian and exponential. A known gate word therefore supplies a mathematical conjugate word. This is not an oracle for conjugating an arbitrary unknown unitary. Nor does (3.1) hold for arbitrary nonmonomial gates: for the Hadamard matrix H, (H tensor H)|00>=|++>, which is outside span{|00>,|11>}.
+
+Constructing controlled paired powers still requires the control and power resources described in Section 5. Equation (3.1) cancels amplitude phases; it does not make exponentially long gate words cheap.
+

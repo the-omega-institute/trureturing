@@ -1,0 +1,27 @@
+**Definition 2.1 (Unchanged coherence output).** Keep the ordered edge menu
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+$$
+
+For $e=(i,j)$ let $\delta_e=\theta_i^{\rm in}-\theta_j^{\rm in}$.
+The edge observables are
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,
+\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+Their original doubled expectation pair is
+
+$$
+y_e=2\sqrt{p_ip_j}
+  \bigl(\cos(\delta_e+h_i-h_j),\sin(\delta_e+h_i-h_j)\bigr).
+$$
+
+Concatenate these five pairs to obtain $y:\mathcal M\to\mathbb R^{10}$.
+All errors below use the original Euclidean norm $\|\cdot\|_2$ on these
+ten coordinates. No output is whitened, divided by its radius, or rescaled
+in the task definition.
+

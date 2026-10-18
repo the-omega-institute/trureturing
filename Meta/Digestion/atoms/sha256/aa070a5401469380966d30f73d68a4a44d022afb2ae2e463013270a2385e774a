@@ -1,0 +1,69 @@
+**Lemma 10.3 (an $`\mathsf a\mathsf c`$ host forces both last-layer
+ambiguities when the outer supports are unique).**
+Suppose a state hosts both $`\mathsf a=(1,3)`$ and
+$`\mathsf c=(3,1)`$, and
+
+$$
+a_{\mathsf b}=a_{\mathsf d}=1.
+$$
+
+Then
+
+$$
+a_{\mathsf N}\ge2,\qquad
+a_{\mathsf U}\ge2,\qquad a_{\mathsf V_6}\ge2,\qquad e_6\ge2.
+\tag{43}
+$$
+
+The hypothesis concerns unique supports; unique hosts at
+$`\mathsf b,\mathsf d`$ are sufficient but are not required.
+
+**Proof.** Let $`q`$ be the shared $`\mathsf a,\mathsf c`$ state,
+and let $`B_*,D_*`$ be the unique supports at $`\mathsf b,\mathsf d`$.
+The fixed zero successor $`q_0=\delta(q,0)`$ hosts both these cells.
+Their supports have size five, and equal-support unequal-hit exclusion
+gives $`B_*\ne D_*`$. Its fixed query $`w=i(q_0)`$ is fresh at
+both occurrences, so
+
+$$
+w\notin B_*\cup D_*.
+\tag{44}
+$$
+
+The $`\mathsf a`$ occurrence at $`q`$, followed by reply one,
+reaches $`\mathsf N`$ with support $`B_*`$: its zero sibling at
+$`\mathsf b`$ has exactly that support, and the two children of one
+history expose the same set. Independently choose any actual live
+history at $`\mathsf M`$, which exists by the incidence interface.
+Its one child at $`\mathsf d`$ has support $`D_*`$ by uniqueness,
+so its zero child at $`\mathsf N`$ has support $`D_*`$ as well.
+These children are all live. Thus $`\mathsf N`$ has the two distinct
+size-five supports $`B_*,D_*`$.
+
+Suppose first that $`\mathsf U`$ had one support $`T`$.
+Every $`\mathsf N`$ occurrence has a live zero child at $`\mathsf U`$;
+hence $`B_*,D_*\subset T`$, with $`|T|=6`$. If
+$`|B_*\cup D_*|>6`$, this containment is already impossible.
+Otherwise the distinct size-five sets have union of size at least
+six, so their union must equal $`T`$. But the $`\mathsf b`$
+occurrence at $`q_0`$ has its actual live one child at $`\mathsf U`$,
+with support $`B_*\cup\{w\}`$. It follows that $`w\in T`$,
+contradicting (44) and $`T=B_*\cup D_*`$.
+Therefore $`a_{\mathsf U}\ge2`$.
+
+Now suppose that $`\mathsf V_6`$ had one support $`T'`$.
+Every $`\mathsf N`$ occurrence has a live one child at $`\mathsf V_6`$,
+so $`B_*,D_*\subset T'`$, with $`|T'|=6`$.
+A union of size greater than six is again immediately impossible;
+otherwise $`T'=B_*\cup D_*`$. The $`\mathsf d`$ occurrence
+at $`q_0`$ has its actual live zero child at $`\mathsf V_6`$,
+with support $`D_*\cup\{w\}`$. This forces $`w\in T'`$,
+again contrary to (44). Thus $`a_{\mathsf V_6}\ge2`$.
+
+These are the two cells of depth six. Since $`b_p\ge a_p`$,
+each contributes at least one excess, giving $`e_6\ge2`$.
+The proof uses both actual live successors of $`\mathsf N`$, and the
+one and zero successors of the two occurrences at the same installed
+$`\mathsf b,\mathsf d`$ host. No new child host is chosen in place
+of a fixed successor. $`\square`$
+

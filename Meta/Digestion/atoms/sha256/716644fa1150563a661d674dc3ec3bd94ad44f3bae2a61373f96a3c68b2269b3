@@ -1,0 +1,31 @@
+**Convention 7.1 (precise current JR credit).** Current [JR, Sections 34–40][JR] already owns the diagonal, common-attainer, original sign-average and worst-history laws. The exact dictionary is
+
+$$
+\alpha=\theta_{\rm JR},\quad \beta=\omega_{\rm JR},\quad
+\ell=\delta_{\rm JR},\quad k=k_{\rm JR},\quad
+p_s=1-\beta-\alpha v_s^{\rm JR},\quad q_s=1-v_s^{\rm JR}.
+\tag{RG.54}
+$$
+
+For supported diagonal $\tau\succeq0$, the known resource effect is $G_0(s)=p_sD^\dagger D+q_sT^\dagger T$. Its coefficients have $p_s=k,q_s=0$ for $0\le s\le\sqrt\ell$. For $\sqrt\ell<s\le1$, $p_s=k+\alpha q_s$ and the unique $0<q_s\le k/(1-\alpha)$ satisfies
+
+$$
+s=\sqrt{p_sq_s}+\sqrt{(1-p_s)(1-q_s)}.
+\tag{RG.55}
+$$
+
+The known sharp four-sign mean at original height $y$ is
+
+$$
+g_y(s)=p_sA_y+q_sB_y,
+\quad A_y=\operatorname{tr}(D^\dagger D\operatorname{diag}p_y),
+\quad B_y=\operatorname{tr}(T^\dagger T\operatorname{diag}p_y).
+\tag{RG.56}
+$$
+
+The known worst-history optimum is $g_{27}(s)$, and one common finite design attains all these diagonal minima and means. The sign mean uses the exact identity $\sum_{e,n}\rho_{y,e,n}/4=\operatorname{diag}p_y$ as a proof operation, not a prior on the unknown histories.
+
+Current JR proves its averaged and worst-history conclusions over the broader all-error-optimizer class and its specified countable/integral factorizations. Record-preserving sign averaging relabels $r$ to $enr$ and fixes the averaged live Choi matrix and total failure effect. It does not identify each optimizer's entire forgotten channel or labelled failure-time law. The individual certificates in this volume concern the fixed full channel (RG.9), without extending them to every other error optimizer.
+
+The integrated [IR companion][IR] supplies interior binary-live freedom, perturbation/nonleast results and the compact exact full complex reduction. Its reuse of this diagonal package is credited to the full current JR, rather than only JR Sections 29–33. The cone sequel supplies the six-atom/twenty-four-branch improvement and sharp-average equality classification: a weak/threshold singleton and, at finitely many nonempty exceptional strong interior strengths, closed segments instead of singletons. Equality at one positive definite original sign average kills supported acquired-to-live slack; equality on an arbitrary pure test need not. Those equality resource vectors do not classify other frontier points or complete implementations. Section 9 below constructs points outside all three equality faces, while reusing their sharp means.
+

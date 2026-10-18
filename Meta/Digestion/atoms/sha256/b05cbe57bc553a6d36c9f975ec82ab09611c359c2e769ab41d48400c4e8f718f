@@ -1,0 +1,10 @@
+### 97.4. Every place away from the primes dividing d and from 2
+
+At infinity d>0. At3, d=1 mod3. At5, actual5-splitting gives (d/5)=1. At every p|e the cut gives (d/p)=1. Thus d is a local square at all these places, so their contributions are one even if the norm point has denominators there.
+
+Let p be an odd prime not dividing30de. Choose a primitive integral local projective covering point. The projections onto H2 and H3 are both primitive: if the three coordinates of either projection vanished modulo p, the remaining conic equation would force the fourth coordinate to vanish too. The H2 tangency point is integral and primitive at p. So is (c,b,a) on H3, since gcd(a,b,c)=1. Both conics are smooth over Z_p and the tangent coefficient vectors are primitive, since their quadratic forms are nondegenerate modulo p.
+
+For a smooth conic over Z_p, p odd, the tangent line at an integral section restricts to a divisor twice that section. Accordingly its evaluation at another integral section, in primitive projective coordinates, has even valuation when nonzero: away from the reduced tangency point the evaluation is a unit; near it, a local parameter gives a unit times its square. This applies to both L2 and L3, including p|c. One can avoid their finitely many zero points on the smooth locally soluble covering. Hence each tangent evaluation has even valuation. Since d is a unit, the Hilbert product is one, whether d is a square unit or a nonsquare unit.
+
+This projective argument is necessary for epsilon=1: at a denominator prime, l may be a local square even when d is not. The affine integrality argument used in section 96 would not justify dropping those primes. Primitive normalization of L3 has retained their global scaling effect.
+

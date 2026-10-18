@@ -1,0 +1,13 @@
+**Proposition 7.6 (The constant probe has the wrong sign).** For every reset site,
+
+$$
+d_i(1)=0.
+\tag{7.19}
+$$
+
+Every nonnegative constant probe, including a probe of a bit fixed under $E_i$, also has zero shortfall.
+
+Proof. Theorem 6.1 says $1-2c_i-\langle H_i\rangle_i\le0$. Take its positive part, or multiply it by any nonnegative constant first. $\square$
+
+The nearest exterior coordinates that can vary under a reset are $i-4$ and $i+4$, when present: the intervening anchor and its neighboring sites are fixed. Their availability does not prove a positive probe. Strictly positive word probabilities, a positive mean excess in (6.1), or one finite nonzero $v_i$ do not supply the quantitative premise of Corollary 7.5. The one-coordinate probes are sufficient detectors; failure of these detectors is not a proof that the variance threshold can never be crossed.
+

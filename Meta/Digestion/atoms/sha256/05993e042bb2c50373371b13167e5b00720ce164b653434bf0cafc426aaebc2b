@@ -1,0 +1,13 @@
+### 463.12 来源与证明范围
+
+原曲率、原 A、完整矩和指数底座复用 §§444、450、462 及
+PrimePrefixPhiCurvature、PrimePrefixOriginalA、PrimePrefixCurvatureMoments。
+Gamma 对数积分保持 §462 所述 Mertens.Gamma、PrimeNumberTheoremAnd
+端口及 Mathlib Gamma 导数定理的来源。FTC、有限 Fubini、DCT、
+严格 log 切线、log 凹性、Taylor 积分余项和阶乘界是经典工具。
+
+本节由同一原曲率的正系数积分表示与三角域算子结构导出
+严格递增的完整对数矩下界及明确无穷尾误差。
+本节的局部新推导不作全球文献首创声明。
+上述递归关系、严格改进及误差界均由同一实际曲率的完整积分导出。
+

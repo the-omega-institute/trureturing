@@ -1,0 +1,25 @@
+**命题 20.6.2（对称门的交换缺口）。** 对 $0\le\varepsilon\le1$，基线策略下先条件化再固定 $X=0$ 给出
+
+$$
+\Pr(U=0\mid Z=1)=\frac12,
+$$
+
+而先固定 $X=0$ 再条件化给出
+
+$$
+\Pr(U=0\mid\operatorname{do}(X=0),Z=1)=\frac1{1+\varepsilon}.
+$$
+
+因此
+
+$$
+\boxed{
+\Gamma_{q,z,0}(\operatorname{id})
+=\frac{1-\varepsilon}{2(1+\varepsilon)}.
+}
+$$
+
+对 $X=1$，偏差方向相反而距离相同。交换在且仅在 $\varepsilon=1$ 时成立；此时选择矩阵为秩一。$\varepsilon=0$ 给出最大缺口 $1/2$，但每个相关条件事件仍有正概率。
+
+<a id="claim-20-6-3"></a>
+

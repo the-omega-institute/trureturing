@@ -1,0 +1,41 @@
+**Definition 6.1 (Attainable regions and unresolved optima).** For the
+fixed $p,j$ and unchanged auxiliary law $\nu$, the budget-$k$ attainable
+region consists of all pairs $(q_k,L_k)$ from Definition 1.2. Its lower
+risk at a specified attainable mass $q$ is
+
+$$
+\mathcal L_{k,\nu}(q)
+=\inf\{L_k:\text{an admissible protocol has }q_k=q\}.
+\tag{6.1}
+$$
+
+Theorem 3.1 supplies a universal lower bound. For $k=1$, Theorem 4.1
+gives a sharp universal envelope and characterizes exactly when a
+protocol reaches that envelope under the given seed law. It does not
+settle the attainable region or the value of (6.1) above $f$ at attainable
+masses whose equality gate is absent in a specified atomic space. For
+$k\ge2$, the optimal return-mass frontier and sharpness of $F_k$ remain
+unsettled. Theorem 5.1 supplies an explicit upper family; it does not
+determine minimum expected paid cost, optimal adaptive stopping, or the
+complete larger-budget attainable region.
+
+The budget in these statements is the number of actual visible reads.
+Return time, internal computation, address size, persistent state, and
+physical storage are different resources and receive no complexity or
+bounded-memory conclusion here. In particular small error with a finite
+paid budget is not zero error on a positive finite-return event; the
+existing positivity result of Original Theorem 9.2 still applies. The
+joint, unconditional, and return-conditioned classification risks in
+Theorem 5.1 coincide because its return probability is one, not because
+classification risk equals Brier risk.
+
+The original arbitrary-finite attainment/separation question in
+[Original, Open Problem 6.4][Original] remains unchanged and unsettled.
+No conclusion about neural training, generalization, empirical learning,
+or the whole-domain attainment problem follows from these acquisition
+bounds. The attribution throughout is relative to the exact original
+source and its stated finite-product mechanisms, with no claim of
+global originality.
+
+[Original]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+

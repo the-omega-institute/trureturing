@@ -1,0 +1,15 @@
+### 结论的文献归属与证据范围
+
+| 直接消费的来源 | 版本、条款及精确边界 |
+| --- | --- |
+| Richard P. Stanley，[*Two Poset Polytopes*](https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf)，Discrete & Computational Geometry 1，9–23；[既有 Library 注](../../../Library/Words/stanley1986posetpolytopes.md) | `literature-attested`：定义 2.1、定理 2.2、Example 4.3 的 chain polytope 与反链指示顶点；仅消费三元偏序占位对应，不据此宣称原生接缝或概率取得 |
+| Stephen Boyd、Lieven Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，§2.6.1，式 (2.19)，印刷页 51–53 | `literature-attested`：采用非负内积的对偶锥和支撑法向符号；本文负极锥明确换号，二维互补角宽由第二节自证 |
+| Komei Fukuda，[*What is a dual of a convex polytope?*](https://people.inf.ethz.ch/fukudak/polyfaq/node7.html)，Theorem 1 | `literature-attested`：反序面格意义的组合对偶，原点内点下的极性构造和顶点测试；不把极性与欧氏等距认同 |
+| Alathea Jensen，[*Self-polar polytopes*](https://arxiv.org/abs/1902.00784v1)，arXiv:1902.00784v1，§§2.4–2.6，Lemmas 2.1–2.4，§3 | `literature-attested`：阈值一极性、双极、逆转置运输及面格对偶；其 self-polar 要求正交像，非正交的本卷 $`L`$ 不冒领该性质 |
+| Daniel Grieser，[*Scales, blow-up and quasimode constructions*](https://arxiv.org/abs/1607.04171v2)，arXiv:1607.04171v2 | `literature-attested`：§§2.3.1–2.3.2、式 (2.9)、Remark 2.12 的实定向吹起和方向球；Definition 2.14 的严格变换区别。只消费这些几何条款，不消费谱论、PDE、概率恢复或物理解释 |
+| Thomas F. Banchoff，[*Beyond the Third Dimension*，Chapter 5: Duals of Regular Polyhedra](https://www.math.brown.edu/tbanchof/Beyond3d.new/chapter5/s5_3.html) | `literature-attested`：四面体自对偶、立方体—八面体及十二面体—二十面体的经典接续说明 |
+| Douglas Dunham，[*Hyperbolic Patterns*，§3: Repeating Patterns and Regular Tessellations](https://www.d.umn.edu/~ddunham/isis4/section3.html) | `literature-attested`：标准 $`\{p,q\}`$ 铺砌的三种几何分界与经典实例；欧氏面角和曲面实际面角按第三节分别使用 |
+| 约定 0.3 的既有仓内卷 | `repo-derived`：五模式、占位体、归一化参数、联合纤维、行列式缩放、原生回复表与组成桥保留原所有权；本卷增加这些原料在明确极性、方向展开和同源任务中的普通推导 |
+
+本卷的全域结论由各节带假设的普通证明承担。有限精确核对范围为：指定整数角度配对、五点标定与极体顶点、双极不等式、$`L`$ 的顶点像与关联数、四底角在 $`\varepsilon=1/4`$ 的横切、有限有理来源中的纤维及支撑余量、实际继续回复碰撞、数量预算与组成探针矩阵身份。有限样本不替代无限域证明，也不认证全部未来、物理实现或 Lean。来源使用限于实际供应条款和所引公开正文；不以缺失附件、未读章节或过去运行次数承担结论。
+

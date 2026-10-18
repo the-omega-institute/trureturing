@@ -1,0 +1,4 @@
+**定义 1.2（实际地址与四值读数）。** 地址是 $\{L,R\}$ 上的任意有限词，空词 $\varepsilon$ 表示根，词长表示深度。$r_U(u)$ 是同一棵固定树 $U$ 的端点读数：端点为相应叶时返回 $\alpha$ 或 $\beta$，为分支时返回 $\mathsf{br}$，穿过任何叶时返回 $\varnothing$。非空词在分支选择对应子树；非空词在叶上直接返回 $\varnothing$。
+
+给定 $h\in\mathbb N\cup\{\infty\}$，任意 $|u|\le h$ 的原地址请求均合法，不要求先查询祖先。该读数采用 [ActualTreeReadoutAcquisition.readout、Address、Reply](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)。这是地址端口，没有额外导航、重置或探针操作。
+

@@ -1,0 +1,29 @@
+**Definition 1.4 (future tests and actual legality).** A future command is a
+public prescribed original based loop at this same $b,k_0$, described by its
+actual real controls, duration and relative phase increment. A test is any
+finite chronological sequence of these commands, with the full ten responses
+queried at any declared completed prefix. The empty sequence is allowed.
+Every integer winding of each command is retained. A fixed permission menu
+may restrict these commands; it is fixed independently of the unknown past.
+The mathematical over-menu consists of all such original loops. It is not
+permission to execute, reverse, repeat, copy, reset, or prepare a source.
+
+In this conditional action contract a command is enabled exactly when it is
+in the permission menu and satisfies the original-control and endpoint
+conditions. These conditions use the same source and its actual controls.
+They do not inspect an unknown residual phase. The relative future $\chi$
+is translated by the past terminal $\chi$; no absolute lift is erased.
+The supplied `concatenate_original` keeps the entire chronological prefix,
+has precisely that shifted tail, and adds every continuous scalar weighted
+integral. Therefore it supplies the actual joined history, not just an
+addition rule for invented endpoint labels.
+
+For the same enabled command, its duration and any declared waveform costs
+are identical for the histories compared here. Those costs concern the
+additional prescribed waveform; they are not a reconstruction of past costs.
+This source/action contract has no extra history-dependent guards or
+execution-failure mechanism. An operational enlargement with such fields
+must retain their actual values and prove their dependence separately. The
+claims below do not drop executed failures or postselect a physical process.
+Section 9 specifies how acquisition failures are retained.
+

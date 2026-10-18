@@ -1,0 +1,170 @@
+**Theorem 104.1 (A universal hard-three ordered inequality).** For every
+sequence satisfying (73.3) and every original $O\in\mathcal O_3$,
+with arbitrary seed-selected addresses and full-carrier outputs,
+
+$$
+16e_a(O)\ge a_3+2a_4+2a_5+2a_6+a_7-1.
+\tag{104.1}
+$$
+
+In particular the base sequence forces $e_a(O)\ge7/40$. No tail
+size hypothesis is needed for this lower bound.
+
+**Proof.** First consider one deterministic increasing stopped schedule
+$S=(i_1,\ldots,i_r)\subseteq\{1,\ldots,7\}$, $r\le3$, with any
+terminal labels in $\{0,\ldots,7\}$. Its cells are
+
+$$
+C_t(S)=\{b:b_{i_1}=\cdots=b_{i_{t-1}}=1,\ b_{i_t}=0\}
+\quad(1\le t\le r),\qquad
+C_*(S)=\{b:b_{i_1}=\cdots=b_{i_r}=1\}.
+\tag{104.2}
+$$
+
+One output label is constant on each cell. Use these eighteen weighted
+rows; the two rows at each repeated word are different events.
+
+| Low word $b$ | Labels $H$ | Weight $v$ |
+|---|---|---:|
+| 0101010 | 0,1 | 1 |
+| 0101101 | 0,1 | 1 |
+| 0110011 | 0,1 | 1 |
+| 0110100 | 0,1 | 1 |
+| 0111000 | 0,1 | 1 |
+| 1001011 | 0,2 | 1 |
+| 1001101 | 0,2 | 1 |
+| 1010010 | 0,2 | 1 |
+| 1010100 | 0,2 | 1 |
+| 1011001 | 0,2 | 1 |
+| 1100000 | 3 | 2 |
+| 1100000 | 0,3 | 2 |
+| 1110101 | 4 | 4 |
+| 1111000 | 5 | 4 |
+| 1111100 | 6 | 4 |
+| 1111110 | 7 | 2 |
+| 1111110 | 0,7 | 2 |
+| 1111111 | 0 | 2 |
+
+For an output map $f$, its score is
+$\sum_{(b,H,v)}v\mathbf1_{\{f(b)\in H\}}$. The total row weight
+is $32$. The greatest score for a given stopped schedule is exactly
+
+$$
+V(S)=\sum_{C\in\{C_1,\ldots,C_r,C_*\}}
+       \max_{0\le j\le7}\sum_{(b,H,v):\ b\in C,\ j\in H}v.
+\tag{104.3}
+$$
+
+The maximum in each cell is independent because its terminal label
+may be chosen arbitrarily. For the empty schedule the maximum is $16$.
+For singleton schedules and pairs, the cell maxima are explicitly
+
+$$
+\begin{array}{c|c|c}
+S&\text{cell maxima}&\text{allowed indices}\\\hline
+(i)&5,11&i=1,2\\
+(i)&6,10&i=3,4\\
+(i)&8,8&i=5,6\\
+(7)&9,7&\\
+(1,2)&5,5,6&\\
+(i,j)&5,4,7&i=1,2,\ j=3,4\\
+(i,j)&5,5,6&i=1,2,\ j=5,6\\
+(1,7)&5,6,5&\\
+(2,7)&5,7,4&\\
+(3,j)&6,4,6&j=4,5,6\\
+(4,j)&6,4,6&j=5,6,7\\
+(3,7)&6,6,4&\\
+(i,j)&8,4,4&5\le i<j\le7
+\end{array}
+\tag{104.4}
+$$
+
+For the $35$ triples, the four maxima are as follows. Each third index
+listed in a row gives precisely its displayed tuple.
+
+| First two indices | Third index or indices | Four cell maxima |
+|---|---|---|
+| 1,2 | 3,4,5,6,7 | 5,5,4,4 |
+| 1,3 | 4,5,6 | 5,4,4,5 |
+| 1,3 | 7 | 5,4,4,4 |
+| 1,4 | 5,6,7 | 5,4,4,5 |
+| 1,5 | 6,7 | 5,5,4,4 |
+| 1,6 | 7 | 5,5,4,3 |
+| 2,3 | 4,5,6 | 5,4,4,5 |
+| 2,3 | 7 | 5,4,4,4 |
+| 2,4 | 5,6 | 5,4,4,5 |
+| 2,4 | 7 | 5,4,4,3 |
+| 2,5 | 6,7 | 5,5,4,4 |
+| 2,6 | 7 | 5,5,4,3 |
+| 3,4 | 5,6 | 6,4,4,4 |
+| 3,4 | 7 | 6,4,4,3 |
+| 3,5 | 6,7 | 6,4,4,4 |
+| 3,6 | 7 | 6,4,4,3 |
+| 4,5 | 6,7 | 6,4,4,4 |
+| 4,6 | 7 | 6,4,4,3 |
+| 5,6 | 7 | 8,4,4,2 |
+
+The entries are direct sums from the eighteen event rows using
+(104.2)--(104.3), rather than bounds tied to a particular schedule
+distribution. For example schedule $(1,2,3)$ puts the five first-zero-1
+rows in $C_1$, the five first-zero-2 rows in $C_2$, the two
+$1100000$ rows in $C_3$, and the remaining rows in $C_*$. Their maxima
+are $5,5,4,4$. For $(5,6,7)$ the maxima are $8,4,4,2$.
+The displayed groups exhaust every increasing schedule of length
+at most three. Consequently every such deterministic rule has score
+at most $18$, even with arbitrary terminal labels.
+
+It remains to prove this against unrestricted original competitors.
+Apply the measurable projection $\pi_7$ of (83.7) to the entire output
+carrier, fixing $\theta_1,\ldots,\theta_7$ and sending all other
+tapes to $\theta_0$. Its event pullbacks contract TV by (83.8).
+For each $m\ge8$, choose one actual source $x_{b,m}$ for each of the
+sixteen distinct displayed low words, with those replies through $7$
+and zero replies at every index $8,\ldots,m$. Boundaries, Theorem 35.2
+supplies them. These sources are fixed before seeds. The word $1^7$
+has actual first absence $8$ and its target projects to
+$\delta_{\theta_0}$; every other displayed word retains its
+first-absence target exactly.
+
+Countability of $X$ supplies one probability-one event $G$ of finite
+handoff and $K\le3$ at every actual source. The increasing preselected
+schedule has length at most three, by Definition 90.1 and Proposition
+90.2. Its source-independent measurable maximum index is finite on
+$G$. Thus, for the event $J_m$ that this preselected maximum exceeds
+$m$, $\gamma_m=\mathsf P_O(J_m)\to0$. This bounds a common seed
+event, not separate sourcewise tails.
+
+On $G\setminus J_m$, every requested high reply in the entire fixed
+source family is zero. Since the schedule is increasing, all high
+questions come after its selected low questions. A low zero stops
+before every high question; if all selected low replies are positive,
+the fixed high continuation merely fixes the exhaustion output.
+Contracting these high replies leaves one stopped low schedule of
+length at most three. Whole finite-execution transport from
+Source-Correlated Laws, Lemma 45.3 identifies its projected output on
+each cell, for the same seed. In particular terminal processing cannot
+distinguish two sources whose complete acquired stopped transcripts
+agree. The score is at most $18$ on this whole event and at most $32$
+on $J_m$. Integrating gives the upper bound $18+14\gamma_m$.
+No source was chosen through a seed and no competitor address ceiling
+or transition-time ceiling has been imposed.
+
+If the original error is $e=e_a(O)$, each weighted projected event is
+at least its projected target mass minus $e$. The five union events
+with mark $1$ and the five with mark $2$ have target mass one. The
+$1100000$ events contribute $2a_3+2$; the next singleton rows
+contribute $4a_4+4a_5+4a_6$; the two $1111110$ rows contribute
+$2a_7+2$; and the all-positive base event contributes $2$. Hence
+
+$$
+16+2a_3+4a_4+4a_5+4a_6+2a_7-32e
+\le18+14\gamma_m.
+\tag{104.5}
+$$
+
+Letting $m\to\infty$ proves (104.1), including equality. At $A$ the
+left side before subtracting $32e$ is $118/5$, giving $e\ge7/40$.
+The argument transports full-carrier events on actual finite-pattern
+sources; no added all-positive source or output-support premise enters.
+$\square$
+

@@ -1,0 +1,28 @@
+**Proposition 4.2 (Stationarity and renewal gaps).** The parameters (4.1) belong to $\Theta_3$. Given an observed one, successive distances to subsequent ones are independent with common law
+
+$$
+f(g)=pa s^{g-2}+cb t^{g-2},\qquad g\ge2.
+\tag{4.3}
+$$
+
+Proof. Every row of $A=M_0+M_1$ sums to one, and $\lambda$ is a positive probability row. Its three stationary coordinates satisfy
+
+$$
+(\lambda A)_R=\frac{p+c}{Z}=\frac1Z,\quad
+(\lambda A)_U=\frac{p+(p/a)s}{Z}=\frac{p}{aZ},\quad
+(\lambda A)_V=\frac{c+(c/b)t}{Z}=\frac{c}{bZ}.
+\tag{4.4}
+$$
+
+Since $ev=0$, $M_1^2=v(ev)e=0$, which implies the required scalar legality. The common law therefore exists by (1.6). This particular hidden chain is irreducible: $R$ reaches $U,V$ and each returns to $R$ with positive probability. Its positive $U,V$ self-loops also make it aperiodic. These are properties of the example, not conditions imposed on $\Theta_N$.
+
+An emission of one leaves the next hidden state exactly $R$. The next bit is a forced zero, followed by a choice of $U$ with probability $p$ or $V$ with probability $c$. In $U$, further zeros have factor $s$ until a one with factor $a$; in $V$ use $t,b$. Consequently the probability that the next one is at distance $g$ is
+
+$$
+eM_0^{g-1}v=f(g),\qquad
+\sum_{g\ge2}f(g)=\frac{pa}{1-s}+\frac{cb}{1-t}=p+c=1.
+\tag{4.5}
+$$
+
+For several consecutive gaps, multiply their word matrices and factor every intervening $M_1=ve$. After conditioning on the first one, their joint probability is the product of the corresponding $f(g)$ values. This proves renewal independence within $J$; no separate renewal law has been assigned. $\square$
+

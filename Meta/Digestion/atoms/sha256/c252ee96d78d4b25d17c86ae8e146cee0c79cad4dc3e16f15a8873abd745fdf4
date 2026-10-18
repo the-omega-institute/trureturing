@@ -1,0 +1,59 @@
+## 26. Reuse-only application: rigid feedback and exact literal histories
+
+This section is a reuse-only application of the classification and orbit
+calculations in Theorems 4.2, 5.2 and 6.1, with the source, row and service
+correspondences of §§1–2. Items
+26.1–26.9 spell out the parameter substitutions and resulting calculations;
+they are not new mathematical declarations or a new mathematical
+increment. In particular, feedback rigidity is an instance of Theorem
+4.2, and exchanging the two root branches gives the already classified
+atomic orbit. The whole-row consumer does not change that reuse status.
+
+The application concerns one fixed acquired feedback equation. The source
+domain, literal replies, original rows and paid service contract are those
+of Definitions 1.1–1.2 and Assumption 1.3. Write $\mathsf{Pair}$ for the
+reply denoted $\mathsf{branch}$ there. Every tree below is finite. Fix
+
+$$
+\begin{gathered}
+P=\{L,RL,RR\},\qquad
+C=\langle\square_1,\langle\square_2,\square_3\rangle\rangle,
+\qquad \pi=\{\{1,2\},\{3\}\},\\
+H_{\rm rel}=\bigl((1,L,0,R,=)\bigr).
+\end{gathered}
+\tag{CS.26.1}
+$$
+
+The old row is exactly the presentation
+$u=\langle x,\langle x,z\rangle\rangle$ with $x\ne z$.
+Allow any finite list $H_0$ of certified literal records, preserving every
+occurrence, and any finite prefix-free original cut $Q$. No additional
+relation records are included. For service claims the complete retained
+fiber is nonempty, and the actual certified epoch $r$ is at least one and
+at least every epoch in $H_0$. Empty fibers will also be detected by the
+mathematical calculation.
+
+Put
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{j+2}=\langle T_{j+1},T_j\rangle,\qquad
+u_j=\langle T_{j+1},\langle T_{j+1},T_j\rangle\rangle
+    =\langle T_{j+1},T_{j+2}\rangle.
+\tag{CS.26.2}
+$$
+
+The existing classification and guarded orbit formulas give the exact fiber
+
+$$
+\mathcal U_R(H_0,H_{\rm rel})
+   =\{u_j:j\in S(H_0)\},
+\tag{CS.26.3}
+$$
+
+where $S(H_0)$ is effectively an empty set, a finite integer interval, or
+an integer tail $[A,\infty)\cap\mathbb N$. We compute the entire original
+$Q$-row at every index. On an infinite retained tail a finite original
+prefix determines that row exactly when $Q$ covers every infinite binary
+branch. Finite retained intervals admit effective exhaustive separation.
+

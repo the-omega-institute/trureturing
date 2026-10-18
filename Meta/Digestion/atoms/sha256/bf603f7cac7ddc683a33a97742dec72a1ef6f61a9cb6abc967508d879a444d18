@@ -1,0 +1,123 @@
+**Theorem 13.1 (Exact complete eight-bit error).**
+At the first eight amplitudes of (1.4), the law 11.2 satisfies every
+$A,C,P$ row and the positive row at cap $h=5\tau+22s$.
+Its complete maximum error is exactly $h$.
+
+Proof. Nonnegative normalized complete-table weights were proved
+in 11.3, so all evaluated vectors are probability vectors.
+Let $c_n=K_w(n)$ and $D_n=1-K_w(0)-K_w(n)$ on a word
+with first zero $n$. By (2.2), its three independent deficits are
+$c_n+D_n-a_n$, $a_n-c_n$, and $D_n$.
+
+The transfer changes only labels zero and eight. The complete
+$P^0$ and $Q_8$ correct counts therefore give, constantly on
+each entire first-zero fibre,
+
+$$
+\begin{array}{c|l|l}
+n&c_n&a_n-c_n\\ \hline
+1&1-13\tau-327s&2\tau+327s\\
+2&1-16\tau-22s&5\tau+22s\\
+3&8\tau-22s&5\tau+22s\\
+4&5\tau-22s&5\tau+22s\\
+5&4\tau-22s&5\tau+22s\\
+6&3\tau-22s&5\tau+22s\\
+7&\tau-22s&5\tau+22s\\
+8&195s&5\tau+22s
+\end{array}
+\tag{13.1}
+$$
+
+For the first two entries the sums are
+$(1-24\tau)+11(\tau-128s)+1081s$ and
+$(1-24\tau)+8(\tau-128s)+1002s$.
+The remaining core entries follow in the same way from the printed
+correct counts. In class eight, (12.6) supplies $159s$ and
+(11.4) adds $36s$, while $u=217s$.
+All deficits in the last column are nonnegative.
+The first is at most $h$, because
+$305s\le305\tau/217<3\tau$.
+Thus every $C$ row holds, and $c_n\le a_n$ in every class.
+
+The independent $P$ rows require a separate full-word bound.
+The anchor $R$ has no outside-$\{0,n\}$ mass on any core
+word. If $n\le7$ and $w_6w_7=0$, the transfer is inactive,
+and the full-word bounds of 12.1–12.2 give
+
+$$
+D_n\le(24\tau-3072s)\frac5{24}
+          +(3072s)\frac{662}{3072}
+      =5\tau+22s=h.
+\tag{13.2}
+$$
+
+If $n\le7$ and $w_6w_7=1$, then $n\le5$ and the
+conditional $P^0$ bound is four rather than five.
+Label eight is outside $\{0,n\}$, so the transfer adds $36s$
+to this independent deficit. Consequently
+
+$$
+\begin{aligned}
+D_n&\le(24\tau-3072s)\frac4{24}
+           +(3072s)\frac{662}{3072}+36s
+       =4\tau+186s,\\
+h-D_n&\ge\tau-164s\ge53\tau/217>0.
+\end{aligned}
+\tag{13.3}
+$$
+
+This is the full activation-set check, including every multiple-zero
+suffix; it uses neither a marginal-only table nor sole-zero samples.
+
+In class eight, $R$ emits zero, $P^0$ has outside mass $5/24$,
+and $Q_8$ has outside count $728-159=569$.
+The transfer stays inside $\{0,8\}$, so
+
+$$
+D_8=(24\tau-3072s)\frac5{24}
+             +(3072s)\frac{569}{3072}
+       =5\tau-71s\le5\tau\le h.
+\tag{13.4}
+$$
+
+All $P$ rows are now proved independently.
+For each word the $A$ deficit is
+$c_n+D_n-a_n=D_n-(a_n-c_n)\le D_n\le h$,
+using the separately proved $c_n\le a_n$.
+Every $A$ row therefore holds, including negative demands.
+
+At the positive eight-word, (12.6) gives for $L$ nonbase mass
+$5(\tau-128s)+626s=5\tau-14s$.
+The transfer adds exactly $36s$, giving $h$.
+The exact positive and first-zero-eight vectors are
+
+$$
+\begin{aligned}
+K_+={}&(1-h)e_0+(2\tau-36s)e_3+(\tau+34s)e_4
+                    +(2\tau-69s)e_5+93s e_8,\\
+K_8={}&(1-5\tau-124s)e_0+(2\tau-36s)e_3+(\tau+34s)e_4
+                    +(2\tau-69s)e_5+195s e_8.
+\end{aligned}
+\tag{13.5}
+$$
+
+Hence the positive row is equality. The three class-eight deficits
+are $-93s,h,5\tau-71s$, respectively.
+Every fibre $n=2,\ldots,8$ also has correct deficit exactly $h$.
+This proves the exact full eight-bit error, as well as the upper bound.
+
+No step divides by $u$, $W$, $\varepsilon$ or a branch weight.
+At $u=0$, $K=(1-24\tau)R+24\tau P^0$ and $h=5\tau$.
+At $\tau=1/24$ the $R$ branch is absent; at $u=\tau$
+the donor bound (11.5) is still strictly positive.
+All head ties, $a_8=a_7$, and zero transfer are included.
+The algebraic $\tau=0$ point is outside the original positive domain.
+
+The balance explaining 217 is exact: the core deficit contributes
+$22s$, $Q_8$ supplies correct-eight mass $159s$, and its
+positive-word allowance supplies a further $36s$.
+The equation $u=(22+159+36)s$ balances the correct-eight
+deficit with the core cap. The donor and activation proofs make
+this balance a single feasible law; they assert no full-catalog
+optimality. $\square$
+

@@ -1,0 +1,10 @@
+**Proposition 7.2 (a partial copy instance).** For $\ell=3$, a receiver that
+has acquired the first bit L of the sealed payload has four compatible
+payloads LLL, LLR, LRL and LRR. Their materialized-prefix residual needs
+exactly 2 bits. The two complete copy loops cost 42 primitives before
+adding their allocation, descriptors and positioning.
+
+Proof. There are four length-two suffixes. Theorem 6.4 gives $\ell-c=2$
+and $12\ell+6=42$. Their request fields are distinct and their source
+responses on $t_*$ are all absent. ∎
+

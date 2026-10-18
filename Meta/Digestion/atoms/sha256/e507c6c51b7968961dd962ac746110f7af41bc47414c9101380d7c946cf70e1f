@@ -1,0 +1,104 @@
+**Theorem 75.2 (zero-channel-mean classification).** If \(0<|b|<1\) and
+\(w\) is common-flat, then \(X=0\) or \(Y=0\) implies \(X=Y=0\),
+and its ray is one of the four rays (74.2).
+
+**Proof.** By \(\Theta\), it suffices first to exclude \(X=0,Y\ne0\).
+Choose the common phase so \(Y=3t>0\). A zero-sum triple of unit phases
+is a scalar multiple of the three cube roots of unity. Synchronous
+permutation gives \(x=\lambda(1,\omega,\omega^2)\), \(|\lambda|=1\).
+The vectors \(1,x,\bar x\) are an orthogonal basis, so write uniquely
+\(y=t1+cx+d\bar x\). With \(e=\bar\lambda^3\), input flatness gives
+\[
+ t^2+|c|^2+|d|^2=1,\qquad
+ t(c+\bar d)+e\bar c d=0.                           \tag{75.2}
+\]
+The two original unnormalized output channels are
+\[
+ Bt1+(P+Qc)x+Qd\bar x,\qquad
+ -\bar At1+(\bar Q-\bar Pc)x-\bar Pd\bar x.
+\]
+For \(kt1+Cx+D\bar x\), the coefficient of \(x\) in its squared moduli
+is \(t(\bar kC+k\bar D)+e\bar CD\). Adding the two output coefficients
+and subtracting six times the input coefficient, then dividing by
+\(t>0\), gives
+\[
+ h(b+i)+(-3-ib)c+(-3+ib)\bar d=0.                   \tag{75.3}
+\]
+Subtracting \(|Q|^2\) times the input coefficient from the upper output
+coefficient gives
+\[
+ t[\bar BP+3Qc+3\bar Q\bar d]+e\bar PQd=0.
+\]
+Multiply this by \(\bar c\) and subtract \(\bar PQ\) times the second
+identity in (75.2). The upper constant norm equation gives the second
+of the following necessary equations:
+\[
+\begin{aligned}
+ E&=\bar c[\bar BP+3Qc+3\bar Q\bar d]-\bar PQ(c+\bar d)=0,\\
+ N&=2\operatorname{Re}(P\bar Q\bar c)
+                  -3bh(1-|c|^2-|d|^2)=0.           \tag{75.4}
+\end{aligned}
+\]
+No division by \(c\) or \(d\) has been made. Put \(q=b^2\),
+\(d=u+iv\), \(r^2=u^2+v^2\). Equation (75.3) gives
+\[
+ c=\frac{h(b+i)+(-3+ib)(u-iv)}{3+ib}.
+\]
+Define the following three real quadratics:
+\[
+\begin{aligned}
+ F_0={}&3h(q+1)(q+3)r^2-2(q^2-15q-36)v
+                         -2b(q+21)u+18h(q+1),\\
+ F_1={}&3h(q+1)(q+3)r^2-2hq(q+1)
+                         +(-4q^2+6q+18)v+2b(q-3)u,\\
+ F_2={}&3bh(q+1)(q+9)r^2-2bh(q+1)(q+3)
+                         -2b(q-3)(q+3)v+(q^2-42q-27)u.
+                                                               \tag{75.5}
+\end{aligned}
+\]
+Direct substitution, using \((1+b^2)h^2=3-b^2\), yields
+\[
+ \operatorname{Re}E=\frac{-bF_0}{(q+1)(q+9)},\quad
+ \operatorname{Im}E=\frac{3F_1}{(q+1)(q+9)},\quad
+ N=\frac{2F_2}{(q+1)(q+9)}.                         \tag{75.6}
+\]
+Since \(b\ne0\), all three \(F_j\) must vanish. But
+\[
+ F_0-F_1=2(q+9)[h(q+1)+(q+3)v-2bu],
+\]
+and \((q+3)F_2-b(q+9)F_0\) is linear in \(u,v\). Substituting
+\(v=[2bu-h(q+1)]/(q+3)\) into it gives
+\[
+ \frac{q+1}{q+3}
+ [3(q+9)(q^2-12q-9)u-2bh(q-3)(q^2+12q+9)]=0.
+\]
+For \(0<q<1\), the factor \(q^2-12q-9\) is strictly negative. Thus
+\[
+ u=\frac{2bh(q-3)(q^2+12q+9)}{3(q+9)(q^2-12q-9)},\qquad
+ v=\frac{h(q+3)(q^2+36q+27)}{3(q+9)(q^2-12q-9)}.
+\]
+At these forced values,
+\[
+\begin{aligned}
+ F_0&=-\frac{h(q+1)(q+3)^2 C(q)}{3(q+9)(q^2-12q-9)^2},\\
+ C(q)&=4q^5+15q^4-306q^3+864q^2+1782q+729\\
+     &=4q^5+15q^4+q^2(864-306q)+1782q+729>0
+        \quad(0\leq q\leq1).                       \tag{75.7}
+\end{aligned}
+\]
+This contradicts \(F_0=0\). Applying \(\Theta\) excludes
+\(Y=0,X\ne0\) as well.
+
+If both means vanish, each channel is a scalar multiple of \(f_1\)
+or \(f_2\). If their modes differ, upper-output flatness requires
+\(\operatorname{Re}z=\operatorname{Re}(z\omega)
+=\operatorname{Re}(z\omega^2)=0\) for a nonzero scalar \(z\), because
+\[
+ P\bar Q=\frac{(b^2+3)(1-ib)}{1+b^2}\ne0.
+\]
+These three real equations force \(z=0\), a contradiction. For equal
+modes, dephase to \(w=(f_m,gf_m)\), \(|g|=1\). Flatness becomes
+\(\operatorname{Re}(P\bar Q\bar g)=0\), whose two solutions are
+\(g=\pm(b+i)/\sqrt{1+b^2}\). Both satisfy the original equations.
+This proves the theorem. \(\square\)
+

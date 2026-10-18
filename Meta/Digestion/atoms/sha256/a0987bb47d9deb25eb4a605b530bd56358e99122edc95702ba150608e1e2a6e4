@@ -1,0 +1,65 @@
+## 10. Stability on the entire phase-asymmetric rectangle
+
+**Proof of Theorem 9.2, transformed coordinates.** Write $a_i=t_i(1-t_i)$, $b_i=(1-t_i)^2$, so $(a_1,b_1)=(2/9,4/9)$ and $(a_2,b_2)=(6/25,9/25)$. Define
+
+$$
+D(a,b)=\frac{412/729-b(1+a+a^2)}{d_p}
+-\frac{22/27-b(1+a)/(a+b)}{d_\beta},
+$$
+
+$$
+h_2=(ba^2-16/729)_+,\qquad
+h_3=(ba^3-1944/390625)_+,\qquad H=h_2+h_3,
+$$
+
+$$
+F=D+13000H,\qquad
+d(u,v)=\min_{i=1,2}(|u-t_i|+|v-t_i|).
+\tag{10.1}
+$$
+
+The event expressions are $G_p(E_p)=b(1+a+a^2)$ and $G_\beta(E_\beta)=b(1+a)/(a+b)$, since $u=1-a-b,v=a/(a+b)$. We prove on all of $S$ that
+
+$$
+F\ge0,\qquad d(u,v)\le112F.
+\tag{10.2}
+$$
+
+The image of $S$ satisfies
+
+$$
+1/5\le a\le4/15,\quad9/25\le b\le4/9,\quad
+3/5\le a+b\le2/3,\quad3a/2\le b\le2a.
+\tag{10.3}
+$$
+
+The derivatives are
+
+$$
+\partial_bD=-\frac{1+a+a^2}{d_p}
++\frac{a(1+a)}{d_\beta(a+b)^2},\qquad
+\partial_aD=-\frac{b(1+2a)}{d_p}
++\frac{b(b-1)}{d_\beta(a+b)^2}.
+\tag{10.4}
+$$
+
+On the larger box given by the first two bounds in (10.3) and $a+b\ge3/5$, both absolute derivatives are bounded by
+
+$$
+\frac2{d_p}+\frac{25}{9d_\beta}<100,
+\qquad d_p>9/100,
+\quad d_\beta>7/100.
+\tag{10.5}
+$$
+
+For example $1+a+a^2<2$, $b(1+2a)<2$, $a(1+a)<1$ and $b(1-b)<1$ give this bound. All comparison segments below stay in this box. For $\delta_i=|a-a_i|+|b-b_i|$ the inverse coordinates also give
+
+$$
+|u-t_i|\le\delta_i,\qquad
+|v-t_i|\le\tfrac53|a-a_i|+\tfrac23\delta_i,
+\qquad |u-t_i|+|v-t_i|\le4\delta_i.
+\tag{10.6}
+$$
+
+Indeed the second inequality follows by putting the two fractions $a/(a+b)$ and $a_i/(a_i+b_i)$ over their denominators, using $a+b\ge3/5$ and $t_i\le2/5$.
+

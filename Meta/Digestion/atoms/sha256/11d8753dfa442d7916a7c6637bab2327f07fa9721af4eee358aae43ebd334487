@@ -1,0 +1,9 @@
+**数学引文 11.3（有限菜单的共同像与有限见证）。** 复用运输与记忆卷命题 23.12／(RA.2321) 的闭前缀 $P_d$ 与准确更新 $f_d$，以及本卷定理 3.2 末段的良构前缀族 $\mathcal V_d$。$\mathcal V_0$ 有三项 $\alpha,\beta,\mathsf{branch}$；$d>0$ 时由两个叶前缀和任意两个 $\mathcal V_{d-1}$ 的有序配对组成。因此
+
+$$
+v_0=3,\qquad v_d=2+v_{d-1}^{\,2},\qquad v_d=|\mathcal V_d|.
+\tag{SLH.11.4}
+$$
+
+对每个 $x\in\mathcal V_d$，保留全部可见叶，把深度 $d$ 的边界分支补为 $\langle\alpha,\alpha\rangle$，得有效有限实现 $\widehat u_x$，深度至多 $d+1$。任意实际原树的 $P_d u$ 都在 $\mathcal V_d$；反向每个 $x$ 都有这个实际原来源实现。由 $P_d\rho^n=f_d^nP_d$，任意全部地址长不超过 $d$ 的有限多纪元条件，其共同像恰由同一个 $x\in\mathcal V_d$ 求值，且每个所得向量由 $\widehat u_x$ 实现。这是既有供应的直接应用，只证明所列有限坐标的语义，不把 $\widehat u_x$ 在更深坐标的任意补全回复赋给未知真实来源。
+

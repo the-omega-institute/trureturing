@@ -1,0 +1,48 @@
+**Lemma 1.2 (Phase equations and equality of current rays).** Relative
+phase increments have the form $h=(u,v,0,v,u)$, and
+
+$$
+I(k)=\frac r{k(H-k)},\qquad
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi.
+$$
+
+The circle coordinates $\alpha=u-v$, $\beta=u$ consequently satisfy
+
+$$
+d\alpha=\frac12d\chi,\qquad
+d\beta=\left(\frac12-\frac kr\right)d\chi.
+$$
+
+They identify precisely the actual current rays, with no additional
+quotient.
+
+**Proof of Lemma 1.2.** The reciprocal sum gives the displayed $I$.
+The two positive entries of $d_j/(p_jI)$ equal $(H-k)/r=1/2-k/r$;
+the two negative entries equal $-k/r$, and the middle entry is zero.
+Starting from zero increments proves the asserted grouping. These are
+equalities of increments, without restrictions on preparation phases.
+Subtracting the two equations gives the equation for $\alpha$.
+Both changes of circle coordinates have integer coefficients, with inverse
+$u=\beta$, $v=\beta-\alpha$.
+
+Put $\eta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$. A constant gauge gives
+the representative
+
+$$
+\psi(k,u,v)=\left(
+\sqrt{k}e^{-i(\eta_0+u)},
+\sqrt{H-k}e^{-i(\eta_1+v)},
+\sqrt Z,
+\sqrt{H-k}e^{-i(\eta_3+v)},
+\sqrt{k}e^{-i(\eta_{13}+u)}
+\right).
+$$
+
+The positive middle entry forces any scalar relating two such
+representatives of the same ray to be one. Their moduli determine $k$;
+the other positive amplitudes determine $u$ and $v$ separately modulo
+$2\pi$. Conversely these data determine the representative. Along a real
+history lift, $d^{\mathsf T}h=2(u-v)=\chi-\chi(0)$; this does not store
+that lift in the current ray. $\square$
+

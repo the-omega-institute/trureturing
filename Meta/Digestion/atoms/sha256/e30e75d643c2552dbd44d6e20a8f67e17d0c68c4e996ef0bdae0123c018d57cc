@@ -1,0 +1,39 @@
+**Lemma 7.3 (Endpoint-log corridor equivalence).** At any $T>\tau$,
+there exists a positive exponential $R(x)=ce^{\lambda x}$ with
+$\mathcal J(c,\lambda)\le T$ if and only if
+
+$$
+s(x)-v_T(x)\le f_T(x)\quad(0\le x\le1),
+$$
+
+equivalently $\Phi_\tau(T)\le0$. Whenever this holds, $f_T$ is itself
+feasible. Every feasible positive exponential satisfies $R\le f_T$.
+
+**Proof of Lemma 7.3.** The error inequality is exactly the corridor
+
+$$
+\ell_T(x):=s(x)-v_T(x)\le R(x)\le
+u_T(x):=s(x)+v_T(x).
+$$
+
+In particular $R(0)\le\sqrt T$ and $R(1)\le\sqrt{T-\tau}$.
+Because $\log R$ is affine,
+
+$$
+\log R(x)=(1-x)\log R(0)+x\log R(1)
+\le\frac{1-x}{2}\log T+\frac x2\log(T-\tau)=\log f_T(x).
+$$
+
+Thus feasibility implies $\ell_T\le R\le f_T$.
+
+For the converse, $s$ and $v_T$ are concave and $u_T>0$ on the
+closed interval. The logarithm of $u_T$ is concave: for positive
+values, first use concavity of $u_T$, then monotonicity and concavity
+of $\log$. A concave function lies above its endpoint chord.
+That chord for $\log u_T$ is precisely $\log f_T$, since
+$u_T(0)=\sqrt T$ and $u_T(1)=\sqrt{T-\tau}$. Hence
+$f_T\le u_T$ everywhere. If $\ell_T\le f_T$, both corridor
+inequalities hold for $f_T$. This proves equivalence, with no
+logarithm taken of the possibly nonpositive lower corridor.
+$\square$
+

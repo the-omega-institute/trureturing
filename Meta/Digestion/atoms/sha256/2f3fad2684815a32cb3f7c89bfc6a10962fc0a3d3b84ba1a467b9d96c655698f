@@ -1,0 +1,26 @@
+**定理 43.2（Exact acquired suffix fee with its paid acquisition retained）。** Suppose an actually acquired archive has one common current value, current tail zero, exactly phase candidates $\{L,\ldots,p-1\}$, and next chronological block index $L$, where $1\le L\le p$. Its immutable labels are $\Lambda_i$. The minimum additional adaptive and preset fees both equal $\Psi(L)$. Empty archives need no action. This is an additional fee at the stated actual archive; it does not make its acquisition or its $L$ preceding blocks free. In Theorem 44.2 the archive will be realized by the original INITIAL sources of an odd first-zero parent.
+
+**证明。** A constant label is returned without an action. For a nonconstant suffix, the first available block at index $L$ controls only phases $L,L+1$ independently by its two literal bits. Every phase in $\{L+2,\ldots,p-1\}$ has response zero. Tail zero makes every two-bit first word safe, since $2<k$.
+
+One block suffices exactly when the zero-response outside set is label-homogeneous and all suffix labels can be assigned to at most two scalar responses. These are exactly the second line of (43.1). For attainment, if the outside set is nonempty let its label be the zero-response baseline and assign the two bits to mark the other label at the two endpoints. If the outside set is empty, choose either occurring label as that baseline. Every response fibre then has one label, and the literal word is $00,01,10$ or $11$ according to those assignments. A nonconstant suffix necessarily has at least two candidates, so this construction covers the possible two-element suffix; a singleton uses the zero-fee case. If the one-block condition fails, any adaptive or preset controller needs at least two additional blocks.
+
+For the chronological lower bound, consider any differing adjacent labels at $j,j+1$ with $j\ge L+1$. Starting at absolute position $2L$, the two actual phases have no coefficient activity before position $2j-1$. Their current values and tails are equal. Up to that first possibly separating coefficient, any common input gives equal values and common tails; a rejection is common absorption and cannot distinguish their immutable labels. Equal acquired archives also force equal future adaptive choices and equal stopping decisions. Reaching position $2j-1$, the second bit of block $j-1$, requires at least $j-L$ additional complete blocks. No earlier endpoint can separate the pair. Thus the last differing boundary $B$ gives the lower bound $B-L$ when $B\ge L+1$; for $B=L$ that expression is zero and adds no restriction. Together with the failed one-block condition the lower bound is $\max\{2,B-L\}$.
+
+For attainment in this last case put $d=\max\{2,B-L\}$ and issue exactly $d$ consecutive words $11$ starting at index $L$. Failure of the one-block condition implies at least three phases in the suffix. Since $B\le p-2$ and $L\ge1$,
+
+$$
+ d\le p-L-1,\qquad L+d\le p-1,\qquad 2d\le2p-4<k.
+\tag{43.3}
+$$
+
+The bounds include the case $d=2$. There is no cyclic wrap in these rows. Their columns on $L,\ldots,L+d$ are
+
+$$
+e_0,\ e_0+e_1,\ldots,e_{d-2}+e_{d-1},\ e_{d-1},
+\tag{43.4}
+$$
+
+which are distinct for $d\ge2$, while every later phase has the zero column. All those later phases have one label, because their indices are beyond the last differing boundary $B$. Hence every nonzero column decodes its own phase label and the zero column decodes the constant remaining suffix label. Within-label splitting is allowed and is not charged as a new label. Starting at tail zero, the run contains $2d<k$ ones, so every actual block and its final seam is safe. No cleanup block is appended. Early homogeneous archives can stop earlier but never change this one fixed continuation.
+
+The lower bounds allowed arbitrary adaptive choices, and the upper bounds used one preset stream. Their equality therefore proves both additional optima. At an odd INITIAL cut the same-phase low tails that reached its clearing zero all have label $\Lambda_i$ by (41.5), and the tail-zero representatives in Convention 41.1 give the actual source pairs used in these lower bounds. That pullback, with the parent fee added, is made explicit next. ∎
+

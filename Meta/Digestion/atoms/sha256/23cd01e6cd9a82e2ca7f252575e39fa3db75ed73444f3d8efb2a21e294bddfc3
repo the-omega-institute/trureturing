@@ -1,0 +1,37 @@
+## 363. Actual D-circle closure and its degree contradiction
+
+Sigma is the unique CD-pair owner: every such genuine owner's shifted axial product would be at least (m−1)(v−1)≥(c+d)², contradicting its strict L>0. This uses z,u>m>v and four distinct labels.
+
+As in Sections 345–346, a face with label set {X,C,D}, X=M or V, can have only transverse pair CD, XC, or XD. The possibilities are now exactly:
+
+    MCD: sigma, or a D-axis MC owner; the MD alternative is excluded.
+    VCD: sigma, or a D-axis VC owner; the VD alternative is excluded.
+
+Select both original transverse D intervals of sigma, and every original axial D interval whose fixed transverse pair is MC or VC. Sigma intervals each have one MCD endpoint and one VCD endpoint; selected axial intervals have two MCD or two VCD endpoints, respectively. The displayed receiving classification proves that this nonempty set is closed under all actual face-endpoint identifications. Hence connectedness of the actual D circle forces it to contain every D interval. This is the original normal circle, including self-gluings and repeated visits, not a marked auxiliary graph.
+
+Every genuine selected interval costs more than π/2:
+
+* For a D-axis MC owner xi, its two actual M slots together with eta's axial M slot obey 2 beta_M(xi)+theta_M(eta)≤π. By (357.5), beta_M(xi)<π/3. At theta_D=π/2, the response (357.1) satisfies
+
+      T(m,c,d)>sqrt((m²−1)(m²/4−1))/(m+5m²/24)>sqrt(3).
+
+  The squared comparison, multiplied by 192, is
+
+      23m⁴−240m³−816m²+192.
+
+  At m=16+b this is 23b⁴+1232b³+22992b²+166400b+315584>0. Thus the reference angle is greater than π/3. Since the response decreases in theta_D, beta_M(xi)<π/3 forces theta_D(xi)>π/2.
+
+* For a D-axis VC owner xi, (361.1) and the four actual V slots give beta_V(xi)<π/4. At theta_D=π/2,
+
+      T(v,c,d)>sqrt((16m²/25−1)(m²/4−1))/(4m/5+5m²/24)>1.
+
+  The squared comparison, multiplied by 14400, is
+
+      1679m⁴−4800m³−22032m²+14400.
+
+  At m=16+b this is 1679b⁴+102656b³+2326512b²+23117312b+84748352>0. The reference angle is greater than π/4, so theta_D(xi)>π/2.
+
+The proof does not need to identify the other axial label of xi. Eta and xi are always distinct because xi contains D. The two subset budget arguments do not add their occurrences together or double-count eta in any one sum.
+
+The actual D degree is at least six. Exactly two D intervals belong to sigma, each with zero angle. All remaining at least four intervals are genuine selected D-axis slots, each with angle greater than π/2. Their sum is therefore greater than 2π, contradicting the original D angle sum. This disproves (357.2) and proves the conclusion.
+

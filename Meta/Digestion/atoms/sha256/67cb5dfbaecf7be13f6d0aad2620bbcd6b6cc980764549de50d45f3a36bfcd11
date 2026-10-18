@@ -1,0 +1,37 @@
+**Lemma 4.1 (general nested-support and equal-hit exclusion).** In the
+scope of Theorem 3.1, two live cube histories at one running state
+cannot have properly nested supports. If their supports differ and
+their hit counts agree, they cannot share a running state either.
+
+Proof. Suppose $S\subsetneq T$, put $b=|T\setminus S|>0$ and
+$U=[n]\setminus T$, and retain hit counts $h,g$. Take the $T$
+history to a negative saturated completion of total weight $k-1$.
+Its suffix reads only $U$ and possibly $RLR$, and ends immediately
+after its last selected call. Give the $S$ history the same $U$ values
+and set every bit of $T\setminus S$ to one. This actual source
+follows exactly the same suffix, even if the old assignments on $S$
+and $T$ disagree. Correctness of their common zero entry gives
+
+$$
+h+b+(k-1-g)<k,\qquad h+b\le g.                      \tag{PE.8}
+$$
+
+For a positive saturated $T$ completion of weight $k$, give the $S$
+history its same $U$ values and set $T\setminus S$ to zero. The
+common suffix now returns one, giving
+
+$$
+h+(k-g)\ge k,\qquad h\ge g.                         \tag{PE.9}
+$$
+
+The two inequalities contradict $b>0$. Interchanging the histories
+excludes the reverse containment. This is the general version of the
+five-coordinate argument in PCA Lemma 38.3; no unfolding is counted.
+
+For incomparable supports and equal hits put $q=k-h=k-g$.
+Both clipped intervals in (PE.5) are nonempty by liveness and have
+the same upper endpoint $\min(u,q-1)$. They therefore intersect,
+contradicting (PE.5). Together with the nested case this proves the
+second assertion. Equal supports and unequal hits are already excluded
+by PCA Theorem 35.1. $\square$
+

@@ -1,0 +1,52 @@
+**Theorem 68.3 (exact expansion, finite closure and universal lower control).**
+For every prefix of Definition68.1 the recursive domain is exactly
+$\mathcal E_n\oplus\bigoplus_{j<n}(\mathcal E_j\cap Q_jX_j)$. The form is dense,
+closed and semibounded there. For $y=(b,z_{n-1},\ldots,z_0)$ define the backward maps
+
+$$
+\begin{aligned}
+I_{j,n}&=\iota_{n-1}\cdots\iota_j,\\
+B_{j,n}&=V_j^*V_{j+1}^*\cdots V_{n-1}^*
+ =W_jI_{j,n}^*W_n^*:X_n\longrightarrow P_jX_j,\qquad p_j=B_{j,n}b.
+\end{aligned}
+\tag{68.5}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\boldsymbol q_n[y]&=q_n[b]+\sum_{j<n}\{q_j[z_j]+2\operatorname{Re}q_j(p_j,z_j)\},\\
+\boldsymbol q_n[y]&\ge-(2g+r\sqrt n)\|y\|^2.
+\end{aligned}
+\tag{68.6}
+$$
+
+The coefficient has no source, cap, context, bank-size, auxiliary-dimension or
+field-moment dependence. The bound itself depends on depth.
+
+Proof. For one cut polarization of (68.2) gives
+$q_1[b]+q_0[z]+2\operatorname{Re}q_0(V_0^*b,z)$ on the stated intersection;
+Lemma68.2 makes the cross form bounded. For induction substitute (68.2).
+Every earlier backward argument annihilates the newest reserve because
+$`V_{k-1}^*Q_k=0`$, while $`W_k^*W_k=I`$ collapses the intervening calibrations.
+This proves (68.5)–(68.6)'s exact expansion with every historical cross term.
+Absence of reserve/reserve terms is this annihilation identity, not a deletion.
+The adjoints have matched old/new types; a forward product acting on $b\in X_n$
+would not. Since $V_j^*b\in\mathcal E_j$, the recursive domain condition on
+$V_j^*b+z$ is equivalent to $z\in\mathcal E_j$, proving the domain equality.
+
+Each $B_{j,n}$ is a contraction. By (68.3) the column
+$`C_nb=(Q_j\mathcal R_jI_{j,n}^*W_n^*b)_{j<n}`$ has norm at most
+$r\sqrt n\|b\|$. The Hermitian off-diagonal block
+$`L_n(b,\mathbf z)=(C_n^*\mathbf z,C_nb)`$ consequently has norm at most $r\sqrt n$.
+The complete diagonal direct-sum form is dense and closed by Lemma68.2 and has
+lower bound $-2g$, since $A_D,h_D\ge0$ and $\sum_p\phi(p)m_p\le2$ on every stratum.
+Its bounded Hermitian perturbation $L_n$ proves closure and semiboundedness,
+including the one-cut base, by bounded form perturbation. Explicitly the cross
+sum is bounded in absolute value by
+$2r\sqrt n\|b\|(\sum_j\|z_j\|^2)^{1/2}\le r\sqrt n\|y\|^2$, proving the lower
+bound. Form representation gives a self-adjoint finite-history generator whose
+unitary group preserves this full form domain by spectral calculus. No analytic
+shift used to prove completeness is an installed energy offset. $\square$
+

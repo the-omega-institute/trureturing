@@ -1,0 +1,23 @@
+**命题 8.4（校准非正交实例的尖锐取得与初值档案）。** 令 $h=a\times b=-K$，取原六叶树
+
+$$
+\begin{aligned}
+X&=\langle\alpha,\langle\beta,\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle\rangle\rangle,\\
+Y&=\langle\alpha,\langle\langle\alpha,\beta\rangle,
+\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle\rangle.
+\end{aligned}
+$$
+
+二者组成均为 $(3,3)$，且 $E_p(X)=C^2h,E_p(Y)=\Delta h$。在公共校准 $p=(e_1,e_1+e_2)$ 处，首联合读均为 $(15,e_3)$，下一向量分别为零和 $(-2,2,0)$。因此恢复全初始联合行为在这个实例至少一次更新；两读一次更新达到。
+
+证明。置 $z=b\times h=Ba-Cb$。$a\times z=-Ch,h\times z=\Delta b$，故 $X$ 为 $a\times[b\times(a\times z)]=C^2h$，$Y$ 为 $a\times(h\times z)=\Delta h$。在指定制备 $A=1,B=2,C=\Delta=1$；$F(p)$ 有 $C'=0,\Delta'=2,h'=b\times K=(-1,1,0)$，得到下一项。零更新重复读无法分开二者。
+
+读调用下界也为二，即使允许唯一读在非初始时刻。树
+
+$$
+U=\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle,
+\qquad V_0=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle
+$$
+
+组成同为 $(2,2)$，初值分别为 $CK$ 和零，一阶后全部向量均零，全部数量以后也相同。在这固定校准处，一次读以前的确定 $\rho$ 日程源无关：若读在零时刻，$X,Y$ 反驳正确性；若读在任何后时刻，$U,V_0$ 反驳正确性。无读更不能恢复非恒定目标。两读一次更新由定理8.2达到。这不声称每个校准、任意编码口或更宽菜单都有该下界。$U,V_0$ 同时说明仅保留组成及下一向量一般会遗失初值，$u$ 必须另保留。
+

@@ -1,0 +1,42 @@
+**Theorem 12.2 (Complete-bit necessity under a cubic mean).** Fix the source premises of Section 2 and $0<\alpha<1/2$. Suppose that for every sufficiently small $s>0$ a deployed observer as in Definition 12.1 belongs, after the same-budget read-ready reduction, to $\mathfrak A_{m(s)}(e^{-s},\alpha)$, with $m(s)<\infty$. Suppose for one fixed target $i_\star$ there is a constant $0<C_T<\infty$, independent of $s$, such that
+
+$$
+\mathbb E_{i_\star,e^{-s}}T\le C_Ts^{-3}.
+\tag{12.1}
+$$
+
+Keep both selected risks, both almost-sure stops and both separate finite paid means at every selected parameter. Put
+
+$$
+A_T=\left(\frac{9!b^{11}}{8B^2C_T}\right)^{1/10},
+\qquad b=1-2\alpha.
+\tag{12.2}
+$$
+
+For all sufficiently small $s$, the existing configuration consequence of $G$, Theorem 10.1, applied to the actual count is
+
+$$
+m(s)\ge2+\frac{A_Ts^{-4/5}-b}{2\delta}.
+\tag{12.3}
+$$
+
+Every complete fixed-width binary representation then satisfies
+
+$$
+K(s)\ge\frac45\log_2\frac1s+\log_2\frac{A_T}{4\delta}
+=\frac45\log_2\frac1s-O_{H_c,\alpha,C_T}(1).
+\tag{12.4}
+$$
+
+Proof. The count $m(s)$, rather than an arbitrarily padded budget, is a permissible choice of the supplier's $M(s)$: it contains both labels and every read-ready configuration of the reduction. All its remaining hypotheses are exactly those stated above. Thus (12.3) is the direct credited application, requiring no cubic benchmark supplier. Restrict further to $A_Ts^{-4/5}\ge2b$. For instance, intersect the neighborhood where (12.1) holds with $0<s<\min\{s_*,(A_T/(2b))^{5/4}\}$. Then (12.3) gives
+
+$$
+m(s)\ge2+\frac{A_T}{4\delta}s^{-4/5}
+\ge\frac{A_T}{4\delta}s^{-4/5}.
+\tag{12.5}
+$$
+
+Injectivity of the binary representation gives $K(s)\ge\log_2m(s)$. Taking base-two logarithms in (12.5) proves (12.4). Its constant is uniform over the observers with this $C_T$, and depends on neither their descriptions nor their positive exit probabilities. Only one target needs the cubic upper bound; the opposing risk, termination and finite mean remain hypotheses. If both targets have uniform cubic bounds, either gives this conclusion with its own constant. $\square$
+
+The configuration implication (12.3) belongs to $G$. The additional assertion (12.4) uses the complete encoding hypothesis and is a source-relative consequence, not a sharp memory coefficient. In particular a growing allowed budget alone does not prove that an implementation uses many configurations: the application above deliberately uses its actual complete count. Nor do finitely many unbounded integer registers supply a finite width $K(s)$.
+

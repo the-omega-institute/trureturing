@@ -1,0 +1,55 @@
+**Theorem 5.3 (effective complete Pareto basis).** On every positive
+recovery instance one can compute a nonempty finite set
+$\mathcal B\subseteq\mathbb N^3$ with
+
+$$
+\mathcal F=\{b\in\mathbb N^3:\exists v\in\mathcal B, v\le b\},
+\qquad \mathcal B=\operatorname{Min}(\mathcal F).
+\tag{CRF.16}
+$$
+
+For every $v\in\mathcal B$ one can construct a legal finite service
+$A_v$ with $b(A_v)=v$ exactly, and actual-source witnesses for its
+coordinate maxima. On a negative recovery instance
+$\mathcal F=\varnothing$ and every correct service has both
+unbounded worst raw count and unbounded worst total address length.
+
+Proof. The finite optimization is JRF Lemma 5.2 and Theorem 5.3
+at the following fully matched interfaces: the source domain is
+(CRF.2), the static supplier is Definition 5.2, the sourcewise
+normalizations are Proposition 5.1, and the two feasibility
+decisions and exact witness interface are Theorems 4.2–4.3.
+The literal-only logical formulas of JRF are replaced entirely
+by Theorem 3.4.
+
+Explicitly, for every $0\le k\le K$ and $0\le b\le U_N$, decide
+unbounded-address feasibility by Theorem 4.2. In a true case obtain
+a finite skeleton, compute its finite worst length
+$L^{\rm wit}_{k,b}$, and find by the finite triple tests the least
+feasible $L_{k,b}$ in $[0,L^{\rm wit}_{k,b}]$.
+Keep a service for that triple. False cases undergo no address
+enumeration. All loops have the displayed finite bounds and all
+negative tests are finite-state decisions.
+
+For cofinality, normalize any comparator with finite worst vector,
+obtaining worst read and length costs $k',L'$ and updates at most
+$U_N$. Cleanup gives $k'\le L'+s_N$.
+If $k'\le K$, its pair occurs in the grid and
+$L_{k',b'}\le L'$ for its worst update count $b'$.
+If $k'>K$, then $k'>K_0$ and $L'>L_0$; the static supplier is
+no worse in all three worst coordinates. Its pair is also in
+the grid. Thus every feasible upper vector dominates a retained
+triple. Conversely every retained triple is feasible by its
+constructed service. Take the minimal elements of this finite
+set to get (CRF.16). At a minimal element the witness's exact
+worst vector cannot be strictly smaller, since that would itself
+be a feasible vector. Theorem 4.3 gives the maxima witnesses.
+
+On a negative decision ARH22.1 excludes finite worst read counts.
+If some correct service had finite worst length $L$, cleanup
+would give a correct read bound $L+s_N$, a contradiction.
+This proves the two unbounded coordinates separately. The
+cofinality comparison in the positive proof concerns worst
+vectors; it does not assert pointwise dominance by one fixed
+Pareto service on every source. $\square$
+

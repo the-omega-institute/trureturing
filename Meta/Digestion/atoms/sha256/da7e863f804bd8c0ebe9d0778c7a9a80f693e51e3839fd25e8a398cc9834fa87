@@ -1,0 +1,18 @@
+**Corollary 3.3 (Restricted finite separation pair).** With the parameter
+domain (2.3) unchanged,
+
+$$
+\max_{K\in\mathcal K}D_2(P_K)\le B
+<\frac{1200}{1201}\frac{23}{160}
+<\frac{1200}{1201}W\le\frac{\kappa_{1200}}{1201}.
+\tag{3.7}
+$$
+
+Proof. The parameter domain is compact and $D_2$ is continuous by its
+finite-cylinder formula, so the maximum exists. The first strict inequality
+in (3.7) is equivalent to
+$1200\cdot290213-328609787=19645813>0$. The remaining inequalities follow
+from (1.3). Thus radius two and length $1200$ supply an original-target
+finite upper certificate on this whole restricted producer class.
+This maximum is over $\mathcal K$, not over all of $\Theta_5$. $\square$
+

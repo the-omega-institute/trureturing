@@ -1,0 +1,70 @@
+**Proposition 45.3 (continuous extension and terminal independence).**
+The grid coupling extends measurably to actual continuous paths and
+proves (42.3).
+
+Proof. On a favorable leaf interval, let $C(t)$ be its actual
+partial covariance from the left endpoint and $S$ its total
+covariance. Take an independent continuous Gaussian integral path
+$G(t)$ with these independent-increment covariances. Its bridge
+
+$$
+G(t)-C(t)S^{-1}G(\mathrm{end})
+\tag{45.10}
+$$
+
+has zero covariance with its endpoint and is therefore independent
+of that endpoint. Its covariance at $s,t$ is
+$C(\min(s,t))-C(s)S^{-1}C(t)$. Add $C(t)S^{-1}U_{\rm leaf}$
+to (45.10), using independent bridges on distinct leaves. The
+result has the exact conditional mean and covariance of the actual
+path given its generated leaf increments. Unconditionally over
+those increments it restores exactly (41.6). Use ordinary Brownian
+bridges for the target, independently across its leaves. Both
+extended paths are continuous and have their claimed marginals.
+
+For completeness these constructions define probability kernels
+measurable in height. The integrands $c_\kappa(K_r)$ are bounded
+and continuous on each finite continuous height history; their
+integrated covariance entries are measurable in that history.
+The Gaussian continuous-path law with this covariance exists from
+the stochastic integral in (41.6). Its finite-dimensional laws are
+measurable functions of these covariance matrices: one may use the
+continuous positive matrix square root applied to standard normal
+vectors. Cylinder sets at rational times generate the Borel sets
+of the separable continuous-path space; a monotone-class argument
+then gives measurability of the path kernel. Products of independent
+copies of such kernels, followed by the continuous operations in
+(45.10), yield measurable bridge kernels. Matrices inverted here
+are positive definite on the measurable event $E_T$. Thus mixing
+this construction over height introduces no selection gap.
+
+The interpolation estimates (44.2) apply to both extended marginal
+paths. Their additional expected cost on $E_T$ is at most
+$C\sqrt{h_*\log(2N)}\le C_b\log(e+T)/\sqrt T$. Combine with
+(45.3). On $E_T^c$, use independent conditional actual and target
+paths; (44.2) at $N=1$ bounds the conditional expected cost by
+$C_b$ for every height history. This contributes at most
+$C_b\mathbb P_{g,\tau}(E_T^c)$, without a loss from an uncontrolled
+first moment or a singular covariance.
+
+In both constructions the target conditional path law given the
+entire height history is exactly $\mathcal W_{\kappa,b}$.
+Therefore it is independent of that history, particularly $K_\tau$.
+We have obtained a coupling from the actual joint law to
+$\mathcal W_{\kappa,b}\otimes\eta_{\tau,g}$ with the required path
+cost. Couple $\eta_{\tau,g}$ and $\nu_g$ by matching their common
+part identically and coupling their residual measures. The heights
+differ with probability $\tfrac12\|\eta_{\tau,g}-\nu_g\|_{\rm var}$,
+and their distance is at most $L$. Apply this height transition to
+the coupled terminal height independently of the target path. Its
+new terminal height still has a product law with that path. The
+extra cost is at most $C e^{-\gamma\tau}$ by (41.9).
+
+All these laws have finite first moments by (44.2) and boundedness
+of $I$. The resulting coupling proves (42.3). For any joint
+1-Lipschitz function its expectation difference is bounded by this
+same coupling cost; this bound holds simultaneously for the entire
+test class. In particular terminal independence is obtained under
+the exact full-horizon survivor law without exchanging a supremum
+with a height-dependent test. $\square$
+

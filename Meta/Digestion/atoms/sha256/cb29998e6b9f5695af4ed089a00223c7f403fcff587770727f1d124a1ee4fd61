@@ -1,0 +1,61 @@
+**Theorem 9.2 (every-cut recovery with pending writes and carries).**
+On every lawful Read frame, let $A_c$ be the word of actual receiver
+arrivals through cut $c$. This is proof notation, not a stored log.
+Define
+
+$$
+\begin{aligned}
+B(X,a)&=X[0:\min(a,H)]R^{\max(a-H,0)},\\
+\mathcal R(c)&=
+\begin{cases}
+\varepsilon,&\phi=\mathsf{pre},\\
+B(X,a_v),&\phi=\mathsf{ready}\text{ or }\mathsf{sealed},\\
+B(X,a_v)e,&\phi=\mathsf{pending}.
+\end{cases}
+\tag{9.1}
+\end{aligned}
+$$
+
+Use the empty default when a count is outside $[0,P]$. This makes a
+total mathematical projection on installed valuations. Its claimed
+arrival meaning is on lawful executions. At **every** paid microstep
+cut, $\mathcal R(c)=A_c$. In particular it does not rely on a torn
+counter, a routine PC or a moving materialization head for its length.
+
+Proof. In pre, no new-frame arrival has occurred; partial reset of old
+data is irrelevant. Entry to ready establishes the empty word. Suppose
+ready represents $A_c$ of length $a$. Sender/ROM/mailbox work leaves
+$(X,a_v,v,\phi)$ fixed. The arrival changes only $e$ and the phase
+among the fields in (9.1), so immediately after it (9.1) equals the
+old prefix followed by the actually copied letter.
+
+When $a<H$, the only prefix-array write is at $X_a$; the pending
+projection uses $X[0:a]e$, so its meaning is unchanged before and
+after that write. When $a\ge H$, $X$ is unchanged and the pending
+letter is $R$. The active counter and selector stay fixed during
+every bit-copy, carry, branch, head move and return cut. Therefore
+none of the inactive bank's intermediate values changes (9.1).
+
+For completeness, if the old count's first zero bit is $j$, clearing
+its lower $i\le j$ one bits in the copied inactive bank gives
+$a-(2^i-1)$; setting bit $j$ gives
+$a-(2^j-1)+2^j=a+1$. The scan terminates because $a<P<2^r-1$.
+After the final selector/phase transition, the new active count is
+$a+1$. For $a<H$, its longer $X$ prefix includes exactly the copied
+$e$; for $a\ge H$, its right-run length increases by one. Ready
+therefore has the same word as pending. Acknowledgement and arbitrary
+head motions preserve it. The delimiter only changes ready to sealed;
+its word is unchanged. Materialization writes only $Y$ and scratch,
+so its every cut preserves the same whole received word. Source receipt
+changes only a response flag. The next frame entry alone changes the
+meaning to a new empty word before reset begins. This covers $H=0$,
+$d=0$, the cut at $a=H$, all binary carries and partial clearing. ∎
+
+The pending-letter bit is essential to this particular invariant. For
+example an arrival of $L$ into an already zero bit changes the prefix
+without changing that data bit. Ready and pending remain distinguishable
+by their phase. Similarly $a=3$ need not be recoverable from a partially
+incremented inactive bank passing through $2,0,4$; the still-active
+bank says $3$ until the selector changes. Both banks and that selector
+are charged even when one is semantically inactive.
+

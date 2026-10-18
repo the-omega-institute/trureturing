@@ -1,0 +1,50 @@
+**Complete coefficient identity.** Every entry of (2.9) and (2.13)
+can be checked with the following single distribution identity. For
+
+$$
+F(p,s)=Ap^2+Bps+Cp+Es^2+F_0s+G,
+$$
+
+at $a=a_0+X,b=b_0+Z$ write $p_0=a_0b_0$, $s_0=a_0+b_0$,
+$H=b_0X+a_0Z+XZ$, $N=X+Z$. Then exactly
+
+$$
+\begin{aligned}
+F(p_0+H,s_0+N)={}&F(p_0,s_0)
+ +(2Ap_0+Bs_0+C)H+(Bp_0+2Es_0+F_0)N\\
+ &+AH^2+BHN+EN^2.
+\end{aligned}
+\tag{2.16}
+$$
+
+The constant, $H$ and $N$ coefficients and the remaining three
+quadratic coefficients are respectively
+
+$$
+\begin{array}{c|rrr|rrr}
+ &F(p_0,s_0)&[H]&[N]&A&B&E\\ \hline
+E_1&(1584)&1580&-5688&186&-1010&864\\
+E_2&(4536)&-10136&54684&-1162&6902&-3780\\
+E_3&(8320)&5644&-20700&382&-1962&1620\\
+E_4&(5440)&-2964&15860&-202&1102&-540
+\end{array}
+\tag{2.17}
+$$
+
+Here $(p_0,s_0)=(12,7)$ for the first two rows and $(20,9)$ for
+the last two. To spell out all terms, if $H=hX+kZ+XZ$ then
+
+$$
+\begin{aligned}
+H^2&=h^2X^2+2hkXZ+k^2Z^2+2hX^2Z+2kXZ^2+X^2Z^2,\\
+HN&=hX^2+(h+k)XZ+kZ^2+X^2Z+XZ^2,\\
+N^2&=X^2+2XZ+Z^2.
+\end{aligned}
+\tag{2.18}
+$$
+
+Thus no higher or unlisted coefficient is suppressed. The bounds hold
+on the closed squares, and every variable denominator in this proof is
+positive by (2.6). No division by $W$, $f(3)$, $a-b$, or an endpoint
+root sample occurred. This proves both closed rectangles. ∎
+

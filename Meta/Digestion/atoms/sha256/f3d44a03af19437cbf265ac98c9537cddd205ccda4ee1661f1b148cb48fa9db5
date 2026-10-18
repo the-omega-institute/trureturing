@@ -1,0 +1,38 @@
+### 定义 54.1（有限图的度量测度 Dirichlet 数据）
+
+第 \(j\) 层数据为
+
+\[
+\mathfrak D_j=(X_j,d_j,m_j,\mathcal E_j,\mathcal F_j),
+\]
+
+其中 \(X_j=V_j\) 是有限集，\(d_j\) 是外部度量，\(m_j\) 是满支撑概率测度，
+
+\[
+\mathcal F_j=\mathbb R^{X_j},
+\qquad
+\mathcal E_j(f)
+=
+\frac12\sum_{x,y\in X_j}c^{(j)}_{xy}(f(x)-f(y))^2,
+\]
+
+\[
+c^{(j)}_{xy}=c^{(j)}_{yx}\ge0,\qquad c^{(j)}_{xx}=0.
+\]
+
+令
+
+\[
+(L_jf)(x)
+=
+\frac1{m_j(x)}\sum_yc^{(j)}_{xy}(f(y)-f(x)).
+\]
+
+则
+
+\[
+\mathcal E_j(f)=\langle f,-L_jf\rangle_{L^2(m_j)}.
+\]
+
+这里 \(d_j\) 与 \(c^{(j)}_{xy}\) 是两个独立输入。前者决定 metric-measure 紧性，后者决定 Dirichlet 形式。必须另行假设它们相容。
+

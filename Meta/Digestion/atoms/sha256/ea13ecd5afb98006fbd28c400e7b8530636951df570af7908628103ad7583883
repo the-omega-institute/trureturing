@@ -1,0 +1,29 @@
+**定义 C-136.3（新声明的测量比较菜单）。** 无参考时允许全部
+$0\preceq T\preceq I$、$[T,\widehat N]=0$ 的系统效果。
+有参考时允许全部
+
+$$
+0\preceq\mathsf E\preceq I,\qquad
+[\mathsf E,L]=0,\qquad
+L=\widehat N\otimes I_R+I\otimes\widehat N_R.
+\tag{C136.2}
+$$
+
+这是按效果声明的数学菜单，未把 C-130.1 的独立翻转、相位调用预算与末端
+$n_1$ PVM 合成能力扩充为 (C136.2)。无条件宣告概率为
+
+$$
+\alpha^\zeta(\mathsf E)=\operatorname{Tr}(\mathsf E(P\otimes\zeta)),\qquad
+\beta^\zeta_{\mathcal F}(\mathsf E)
+=\sup_{\rho\in\mathcal F}\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C136.3}
+$$
+
+令 $A^0_{\mathcal F}(\delta)$ 为无参考菜单在
+$\beta_{\mathcal F}(T)\le\delta$ 下的最大目标功效，
+$A^\zeta_{\mathcal F}(\delta)$ 为 (C136.2) 在
+$\beta^\zeta_{\mathcal F}(\mathsf E)\le\delta$ 下的最大目标功效，$0\le\delta\le1$。
+下文的构造与有限维紧性给出这些最大值的存在。
+不加上标的 $A_{\mathcal F}$ 保留 C-128.2 的不限系统效果含义。
+效果只规定一个事件的概率，不规定条件输出态或测量仪器。
+

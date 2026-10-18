@@ -1,0 +1,20 @@
+**定理 13.5.2（严格零影响的充要条件）。** 对任意输出区域 $B$，以下等价：
+
+$$
+P_BT_tP_A=0\quad\forall t\ge0;
+$$
+
+$$
+P_BG^kP_A=0\quad\forall k\ge0;
+$$
+
+$$
+\mathcal K_\infty(A)\perp\operatorname{ran}P_B
+$$
+
+（在 Hilbert 空间情形）。有限维时，$\mathcal K_n(A)$ 在至多 $\dim\mathcal H-1$ 次严格增长后稳定。
+
+**证明。** 第一项推出第二项，是对 $t=0$ 的各阶导数取值；第二项推出第一项，是逐项代入指数级数；第二项与第三项只是正交关系的展开。有限维稳定性来自有限维子空间的严格维数增长界，或 Cayley–Hamilton 定理。证毕。
+
+<a id="claim-13-5-3"></a>
+

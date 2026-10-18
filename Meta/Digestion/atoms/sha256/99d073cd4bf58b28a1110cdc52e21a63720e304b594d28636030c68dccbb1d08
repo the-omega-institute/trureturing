@@ -1,0 +1,159 @@
+**Proposition 7.2 (an explicit alternative four-block certificate).** In
+the smooth interior $\bar\tau<\tau<\tau_3$ use the ordered frame
+$(f,u,w)=(F,U,W)$ and put
+
+$$
+\begin{gathered}
+g_{ij}=f_i^TGf_j,\quad c_{ij}=f_i^TCf_j,\quad
+q_{ij}=f_i^TQf_j,\qquad(f_f,f_u,f_w)=(f,u,w),\\
+\mathsf P=q_{fu},\quad\mathsf R=q_{fw},\quad\mathsf S=q_{uw},\\
+D_1=c_{fu}-\mathsf P c_{uw}/\mathsf S,\qquad
+D_2=c_{fw}-\mathsf R c_{uw}/\mathsf S,\\
+E_g=g_{uw}-\mathsf S g_{fw}/\mathsf R,\qquad
+\phi=g_{ff},\qquad
+\lambda=\frac{\mathsf P g_{fw}/\mathsf R-g_{fu}}{D_1},\\
+B_\lambda=\begin{pmatrix}
+g_{uu}&E_g-\lambda c_{uw}\\
+E_g-\lambda c_{uw}&g_{ww}-\lambda c_{ww}
+\end{pmatrix},\qquad z_c=(c_{fu},c_{fw})^T.
+\end{gathered}
+\tag{RH.56}
+$$
+
+All $\mathsf P,\mathsf R,\mathsf S,D_1$ are nonzero. They are moving
+quantities evaluated at the current $\tau$. Define $\mathcal D$ by the
+following simultaneous strict scalar conditions:
+
+$$
+\begin{gathered}
+\lambda>0,\quad\phi<0,\quad g_{uu},g_{ww}>0,\quad
+c_{uu}>0,\quad c_{ff},c_{ww}<0,\\
+M_1=(-\phi)c_{uu}-\lambda D_1^2>0,\\
+M_2=(-\phi-\lambda c_{ff})(-c_{ww})-\lambda D_2^2>0,\\
+M_3=(g_{uu}+\lambda c_{uu})g_{ww}-E_g^2>0,\\
+M_4=\det B_\lambda>0,\qquad
+M_5=-c_{ff}-\lambda z_c^TB_\lambda^{-1}z_c>0.
+\end{gathered}
+\tag{RH.57}
+$$
+
+The inverse exists under the preceding positive-pivot conditions.
+For every $\tau\in\mathcal D$, RH.54–55 hold, including grouped
+uniqueness. This domain contains an interval immediately to the right
+of $\bar\tau$. It is a pointwise sufficient certificate domain, with
+no assertion of connectedness, maximality or a new optimal branch.
+The certificate is an alternative gauge for the already credited
+initial branch.
+
+Proof. In this orthonormal null frame, $Q$ has zero diagonal and
+
+$$
+2\mathsf P\mathsf R\mathsf S=\det Q=\alpha\beta>0.
+\tag{RH.58}
+$$
+
+Differentiate the smooth frame with respect to $\tau$ as
+$f'=a u+b w$, $u'=-a f+c w$, $w'=-b f-c u$. Nullity gives
+$b=-a\mathsf P/\mathsf R$ and $c=a\mathsf P/\mathsf S$.
+Since $2u^TCu=\tau$,
+
+$$
+1=-4aD_1,\qquad
+f'=-\frac{u-(\mathsf P/\mathsf R)w}{4D_1},\qquad
+\phi'=\frac{\mathsf P g_{fw}/\mathsf R-g_{fu}}{2D_1}
+       =\lambda/2.
+\tag{RH.59}
+$$
+
+This proves the denominator claims and a derivative identity of the
+frame, without assuming its optimality. In this proof $a,b,c$ are only
+frame-derivative coefficients, not Kraus amplitudes or normalized
+parameters.
+
+Choose
+
+$$
+\nu_{-,+}=0,\qquad \nu_{+,+}=2\lambda c_{uw}/\mathsf S,\qquad
+\nu_{-,-}=-2g_{fw}/\mathsf R,\qquad \nu_{+,-}=\nu_{-,-},
+\tag{RH.60}
+$$
+
+and define the symmetric $Y$ in this frame by diagonal
+$(-\phi-\lambda c_{ff},\ g_{uu}+\lambda c_{uu},\ g_{ww}-\lambda c_{ww})$
+and upper entries
+$(g_{fu}+\lambda c_{fu}-\nu_{+,+}\mathsf P,
+ g_{fw}-\lambda c_{fw},
+ g_{uw}-\lambda c_{uw})$.
+For the original dual slacks
+$S_{r,\epsilon}=Y-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q$,
+substitution yields all four full matrices:
+
+$$
+\begin{aligned}
+\frac{S_{-,+}}2&=\begin{pmatrix}
+-\phi&\lambda D_1&0\\\lambda D_1&\lambda c_{uu}&0\\0&0&0
+\end{pmatrix},\\
+\frac{S_{+,+}}2&=\begin{pmatrix}
+-\phi-\lambda c_{ff}&0&-\lambda D_2\\0&0&0\\
+-\lambda D_2&0&-\lambda c_{ww}
+\end{pmatrix},\\
+\frac{S_{-,-}}2&=\begin{pmatrix}
+0&0&0\\0&g_{uu}+\lambda c_{uu}&E_g\\0&E_g&g_{ww}
+\end{pmatrix},\\
+\frac{S_{+,-}}2&=\begin{pmatrix}
+-\lambda c_{ff}&-\lambda c_{fu}&-\lambda c_{fw}\\
+-\lambda c_{fu}&g_{uu}&E_g-\lambda c_{uw}\\
+-\lambda c_{fw}&E_g-\lambda c_{uw}&g_{ww}-\lambda c_{ww}
+\end{pmatrix}.
+\end{aligned}
+\tag{RH.61}
+$$
+
+The first two nonzero block determinants are $\lambda M_1$ and
+$\lambda M_2$, with positive first pivots. The third block has positive
+first pivot and determinant $M_3$. Their kernels are respectively
+$w,u,f$. The fourth lower block is $B_\lambda\succ0$ and its scalar
+Schur complement is $\lambda M_5>0$. Thus the first three full slacks
+are PSD of rank two and the fourth is PD. Positivity only on the null
+cone has not replaced matrix positivity.
+
+RH.55 is primal feasible with contrast
+$-c_{ff}+c_{uu}-c_{ww}=2c_{uu}=\tau$. Its objective is
+$\operatorname{tr}G-2\phi$. Also
+$\operatorname{tr}Y=\operatorname{tr}G-2\phi+\lambda\tau$.
+For every feasible original tuple, summing its PSD pairings with RH.61
+therefore gives
+
+$$
+\text{objective}\leq\operatorname{tr}Y-\lambda t(X)
+\leq\operatorname{tr}Y-\lambda\tau
+=\operatorname{tr}G-2\phi.
+\tag{RH.62}
+$$
+
+This direction uses $\lambda\geq0$ and the original contrast
+inequality. Theorem 2.2 transfers the upper bound to every original
+complex optimizer; Section 5 gives actual equality. Complementarity
+forces each slot into the corresponding kernel and kills the fourth
+slot. Normalization fixes the other three weights to one, proving
+precisely grouped uniqueness.
+
+At $\bar\tau$, $Gv=\mu v-\lambda_{\rm sp}Qv$, so
+$\lambda=0$ and $\phi=\mu$. The $2\times2$ matrix with diagonal
+$g_{uu},g_{ww}$ and cross entry $E_g$ is $H_+|_{v^\perp}\succ0$.
+The limits of $M_1,M_2$ are $(-\mu)c_{uu}>0$, $\mu c_{ww}>0$;
+$M_3,M_4$ tend to its positive determinant, and $M_5$ to $-c_{ff}>0$.
+Twice differentiating the unit and null equations gives
+
+$$
+\phi''(\bar\tau)=2f'(\bar\tau)^T(H-\mu I)f'(\bar\tau)>0.
+\tag{RH.63}
+$$
+
+RH.59 makes $f'$ nonzero and perpendicular to $v$, where $H-\mu I$
+is positive definite. Thus $\lambda=2\phi'>0$ just to the right;
+continuity preserves every other strict margin there. This proves
+nonemptiness. These extra fourth-gauge filters need not locate the
+first active zero in JR54, and their failure is not an optimal-support
+transition theorem. $\square$
+

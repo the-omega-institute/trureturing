@@ -1,0 +1,11 @@
+**Convention 1.2 (parameters and distinct budgets).** Throughout,
+$m,d,\ell$ are integers with $m,d,\ell\ge2$, $\epsilon$ is rational
+with $0<\epsilon<1$, $k$ is a nonnegative integer, and
+$t=\min\{k,\ell\}$. A single hypothesis $\Theta\in\{P,Q\}$ has equal
+prior probabilities. Conditional on it, one whole actual source is drawn
+and remains stationary during preparation and testing. The quantity $k$
+is a charged online Read budget. It is neither the owner-resampling
+budget in OCC §5.3 nor a substitution count in a temporal prediction
+problem. No substitution is performed on the source during testing.
+The optional number $n$ of fresh whole sources is introduced in §8.
+

@@ -1,0 +1,23 @@
+**定理 14.3（The root-reentry condition is the complete four-row criterion）。** For every $r=2$ target of Convention 13.1,
+
+$$
+K_{\min}^{\rm GLOBAL}(4;f)=N+4
+\quad\Longleftrightarrow\quad\mathsf R.
+\tag{14.3}
+$$
+
+Proof of necessity. Lemma 5.3 supplies four as the lower word-row bound. Choose the mixed $O$ path $b_w\to X\to F$ with raw bit $e$ from Lemma 10.1. The final $F$ has both scalar updates Halt with the two lower labels. It cannot be a root or $b_w$. If the initial root is shared and the first queries are distinct, Lemma 14.1 excludes four rows. If the initial roots are distinct but their first query is shared, the only final row is the fourth row, leaving no intermediate: a shared-query self-edge repeats, a root-zero edge returns the shared query, and a root-positive edge sends a mandatory $C$ source to the lower-label final row at index one.
+
+If both root and first query are shared, the four rows would be $a,b,X,F$. Each scalar child of $b$ contains an actual phase-$m$ $C$ source and an actual $O$ lower source. Both scalar edges emit. Since all active successful sources are safe, the only available $C$ exit is the other scalar edge of $X$, namely $V(X,1-e)=H_C$. The other child of $b$, with raw scalar $1-e$, cannot use $X$ (an $O$ source would return $C$), $F$ (an actual $C$ source would return a lower label), a self-edge (it repeats through the last nonhalting query), or $a$ (the last row is again $b$, with both scalar edges emitting). Shared roots are thus impossible at four rows, including shared first queries.
+
+The roots and first queries must consequently all be distinct. The final row is the other value's first query $b_i$, $i=1-w$. Its two installed Halts give a bijection $G$ with $\lambda_i(j)=G(i\oplus q_1(j))$ on all $J$. The mixed intermediate can only be a root. Its positive edge cannot enter $b_i$, because the mandatory original $C$ sources would then execute this final query at index one and return lower labels. Its zero edge identifies it as $a_i$, with $e=i$, hence $d=1$. The stream is necessarily $1^m\mid B\mid1^m\mid B$.
+
+The whole $I=\{q_1=1\}$ class enters $a_i$, and the other class has a constant $\lambda_w$ label $z$, because the join has exactly three corners. Safety of the actual index-two all-one word gives $\tau(B)+m<k$, hence $\tau(B)<h$. At $a_i$ its current pair is an actual original INITIAL pair with phase $j'=j-2m$ and original tail $\tau(B)$:
+
+$$
+(\lambda_w(j),(i,-j+2m,\tau(B)))\quad(j\in I).
+\tag{14.4}
+$$
+
+The mandatory initial support of this same root contains that current record. Determinism forces its immutable label to equal the original target there. Fresh $C$ excludes $j'\in\{0,m\}$, and correctness gives $j'\in J$ and $\lambda_w(j)=\lambda_i(j')$. These are exactly (11.2), with its component names interchanged. In particular $a\notin I$ and the actual terminal bit of $B$ is zero. No source is copied in this comparison; it is a conflict or coincidence between two actual arrivals to the same stationary row. Theorem 11.1 supplies the complete matching four-row attainment. ∎
+

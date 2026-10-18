@@ -1,0 +1,38 @@
+**Theorem 91.1.** For the original channels in (2), including arbitrary output leakage,
+
+\[
+ \delta(A,B)\ge\mathcal B(L).                            \tag{5}
+\]
+
+If both original channels are fibre-calibrated, meaning that V_A|f,i〉=|f〉⊗a_fi and V_B|f,i〉=|f〉⊗b_fi, then
+
+\[
+ \delta(A,B)=\mathcal B(L)
+       =\max_{\rho\in\mathcal D}\|\sqrt\rho L\sqrt\rho\|_1.
+                                                               \tag{6}
+\]
+
+In this calibrated case a reference of dimension at most two attains the diamond norm. The leakage-safe construction proving (5) uses a tagged reference and makes no corresponding reference-qubit assertion for arbitrary leaking channels.
+
+The value in (4) has the exact primal and dual descriptions
+
+\[
+ \begin{split}
+ \mathcal B(L)
+   &=\max\{2\operatorname{Tr}(LW):\rho\in\mathcal D,
+                                      \ 0\le W\le\rho\}\\
+   &=\min\{t:Y\ge0,\ Y\ge2L,\ Y_{ff}\le tI_2
+                                      \text{ for every }f\}.
+ \end{split}                                             \tag{7}
+\]
+
+Both optima are attained. Under calibration the dual is equivalently
+
+\[
+ \mathcal B(L)=\min\{t:Z\ge L,\ Z\ge-L,
+                              \ Z_{ff}\le tI_2\ \forall f\}.
+                                                               \tag{8}
+\]
+
+Without calibration, the substitution Z=Y−L gives (Z+L)_ff≤tI₂, not the block constraint in (8).
+

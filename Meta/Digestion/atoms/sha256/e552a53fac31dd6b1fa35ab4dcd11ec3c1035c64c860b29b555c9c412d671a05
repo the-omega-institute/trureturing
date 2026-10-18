@@ -1,0 +1,68 @@
+**Theorem 5.1 (Same-mass domination by a measurable $K$ partition).**
+For every protocol on a specified space
+$(\mathsf U,\mathcal U,\nu)$ there is a measurable partition
+$(G_k)_{k\in K}$ of that same space such that
+
+$$
+q=\sum_{k\in K}\nu(G_k)q_k,\qquad
+L\ge\sum_{k\in K}\nu(G_k)\ell_k.
+\tag{5.1}
+$$
+
+Conversely every such partition, followed by the corresponding
+policies of Definition 4.1, attains both sums in (5.1). The seed
+law, source and target remain unchanged. No regular conditional
+distribution on $\mathsf U$ is required, and the statement includes
+noncomplete spaces under the completed-version convention.
+
+Proof. First take a measurable next-event representative of the
+protocol. Ignore the numerical values of its finite waiting times;
+only whether the next event is finite, its kind, and its address or
+output are relevant. At the root and the two possible first replies,
+and after each possible second reply, the truncated choices consist
+of finitely many integers, finite-valued action types and finite-valued
+outputs. Padding and rejection are as in Lemma 2.1. Thus the possible
+truncated behavior codes form a countable set.
+
+For each code its inverse image in $\mathsf U$ is measurable. It
+is described by finitely many measurable next-event conditions at
+specified finite records; the possible address values are countable.
+The first-zero and first-one subtree masses and root type of that
+code determine a $K$ label through Theorem 4.3. Use its fixed
+representative also for the two initial cases. The resulting label
+map is measurable, since each label inverse image is a countable
+union of code inverse images. Write that finite partition as $G_k$.
+
+For each fixed seed the source-section return mass is preserved,
+and the source-section risk is no larger. The section masses are
+ordinary $J_p$ masses of finite cylinders. Summing over the
+countably many terminal records and integrating with respect to
+$\nu$ gives (5.1), by Tonelli or monotone convergence. This uses
+independence and product sections, not conditioning on a singleton
+seed or assuming that the seed space is standard Borel.
+
+In the reverse direction, a measurable finite partition chooses a
+specific deterministic policy using only the original seed. The
+chosen policy then makes its two actual calls on the same $J_p$.
+Independence gives the two equalities for its masses. No extra
+randomness has been appended to $\mathsf U$.
+
+For completed versions, take measurable representatives first. There
+are only countably many records and relevant next-event categories;
+the union of their exceptional null sets is still null. A finite
+partition in the completion of $\mathcal U$ has representatives
+in $\mathcal U$ with the same measures. Remove overlaps successively
+and assign the remaining set to one label to obtain a genuine
+$\mathcal U$ partition. All masses are unchanged. Similarly,
+completed-product modifications agree with measurable representatives
+outside a product-null set, whose sections are null for almost every
+seed by Tonelli. No pointwise assertion on the exceptional sections
+is needed. This neither assumes that every subset of a null set was
+originally measurable nor permits a completed partition to split a
+positive-measure atom into positive parts. $\square$
+
+Theorem 5.1 is stronger than agreement of support maxima: it retains
+the exact mass of each protocol. Its representative set can omit
+high-risk attainable pairs while still determining feasibility and
+the whole lower frontier.
+

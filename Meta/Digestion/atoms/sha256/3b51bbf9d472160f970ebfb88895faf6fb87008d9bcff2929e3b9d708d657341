@@ -1,0 +1,6 @@
+### 107.7. Ramification and the exact arithmetic boundary
+
+**Proposition 107.2.** Under Theorem 107.1, beta is a ramified cubic descent class, rather than an everywhere-unramified cubic class. No class-number divisibility conclusion is asserted from its nontriviality. The point P is not divisible by 3, but neither this result nor its isogenous image supplies a second independent direction on an original curve E_D.
+
+**Proof.** At p_2 and p_3, beta has valuation exactly one. The polynomial T^3-beta is Eisenstein at each of these local fields. Thus adjoining a cube root is totally ramified there; that extension cannot be substituted for the everywhere-unramified cyclic cubic extensions in Theorem 107.1(e). The unramified Artin relation is obtained only after isolating the explicit prime factors in (beta). If Cl(K)/Cl(K)^3 is zero, that relation is automatic in the quotient, whereas the ramified descent class is still nontrivial. No nonzero 3-class quotient has been proved for a specified actual pair here. Applying phi to P gives an isogenous image, whose opposite descent class is trivial because it lies in the image of phi. It gives no second independent Mordell–Weil direction, and the recurrence map obstruction in section 106.3 supplies no rank comparison between E_D and E_(D'). ∎
+

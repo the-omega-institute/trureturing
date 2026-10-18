@@ -1,0 +1,29 @@
+## 261. A uniform individual-Z expense estimate
+
+We record the exact response needed in both exclusions. Consider any
+genuine paired owner with transverse pair {Z,C} and an axial cosh value
+r>=m. Its other axis is arbitrary. Let theta_r denote the chosen axial
+angle, beta_Z the transverse Z angle, and t=cot(theta_r/2)>0. The
+individual paired response of Sections 95–96 gives
+ beta_Z=atan(A*t)+atan(B*t),
+ A=(sqrt(z^2-1)+sqrt(c^2-1))/(z+c)*sqrt((r-1)/(r+1)),
+ B=(sqrt(z^2-1)-sqrt(c^2-1))/(z+c)*sqrt((r-1)/(r+1)).
+Both A and B are positive, since z>m>c>1. Their sum is
+ A+B=2*sqrt(z^2-1)/(z+c)*sqrt((r-1)/(r+1))>1.
+Here is a direct verification of the strict bound. For fixed c>1,
+ sqrt(z^2-1)/(z+c)
+is strictly increasing in z: its derivative has numerator z*c+1>0.
+For fixed z it is decreasing in c. The axial factor is increasing in r.
+Use z>m, c<m-2 and r>=m to compare with z=m,c=m-2,r=m. At that boundary
+ 2*sqrt(m^2-1)/(2*m-2)*sqrt((m-1)/(m+1))=1.
+The comparison is strict in the actual domain.
+
+Consequently beta_Z>atan(t). Indeed, if A*B*t^2>=1, the sum of the two
+arctangents is at least pi/2, which exceeds atan(t). Otherwise its sum
+lies in (0,pi/2) and its tangent is
+ (A+B)*t/(1-A*B*t^2)>t.
+In either case, since atan(t)=pi/2-theta_r/2, we obtain
+ theta_r+2*beta_Z>pi.                         (261.1)
+These are three actual slots of one owner; no assumption on the other
+axis, or on distinct neighboring owners, was used.
+

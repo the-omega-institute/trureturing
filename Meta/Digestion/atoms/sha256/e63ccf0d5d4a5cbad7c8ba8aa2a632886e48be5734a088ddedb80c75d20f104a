@@ -1,0 +1,23 @@
+**Corollary 60.4.** For a fixed \(|b|<1\), define a graph whose vertices
+are all actual common-flat input projective rays, with an edge between
+two distinct vertices exactly when the rays are orthogonal. The six
+canonical rays form a connected component isomorphic to \(K_6\).
+Any orthonormal common-flat input basis containing one canonical ray
+is exactly the canonical basis. The unitary image graph on common-
+unbiased column rays for \((I,H_0)\) has the same properties.
+
+**Proof.** The canonical rays are pairwise orthogonal. Proposition 60.1
+says that every neighbor of a canonical vertex is one of the other five
+canonical vertices, so no edge joins this \(K_6\) to a noncanonical
+vertex. In an orthonormal basis containing one canonical member, the
+other five rays must therefore be five distinct members of the remaining
+canonical set. The unitary transport preserves every edge. \(\square\)
+
+This is a connected-component statement about the orthogonality graph.
+It does not assert topological isolation in the common-flat ray space,
+or that every common-flat orthonormal basis intersects the canonical set.
+The genuine noncanonical endpoint ray in §59.4 shows why the restriction
+\(|b|<1\) cannot simply be replaced by \(|b|\le1\); no limiting
+interior existence claim follows from that example. The general
+fourth-basis problem remains outside Proposition 60.1.
+

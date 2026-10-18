@@ -1,0 +1,71 @@
+**Theorem 4.4 (Full-support joint-phase cut rank).** Under
+Definitions 4.1–4.2, for $z\ne1$,
+
+$$
+\operatorname{rank}A_z
+=2+\mathbf1_{\{i<k,\ j>k+1\}}
++\mathbf1_{\{i\le k-2,\ j\ge k+3\}}.
+\tag{4.5}
+$$
+
+For $z=1$ the rank is two. A gate whose two sites are on the
+same side preserves the entire cut Schmidt spectrum. If
+$(i,j)=(k,k+1)$, it is the identity on the legal space.
+
+Proof. Remove the nonzero row and column amplitude factors
+in (4.3). Its core is
+
+$$
+M_z=(1-xy)[1+(z-1)uv]
+=1-xy+(z-1)uv-(z-1)uxvy.
+\tag{4.6}
+$$
+
+The number of actual $(x,u)$ patterns is respectively two,
+three or four according as $i=k$, $i=k-1$ or $i\le k-2$.
+For coincident coordinates they are $00,11$; for adjacent
+coordinates they are $00,10,01$; otherwise all four occur
+by taking the vacuum, the two singletons and their legal pair.
+The same count holds for $(y,v)$ with $j=k+1,k+2$ or
+$j\ge k+3$. Equal patterns give equal rows or columns in
+the core, bounding rank by the smaller pattern count.
+
+For every placement, left and right vacuum and cut-boundary
+singletons give the actual two-by-two minor
+
+$$
+C=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad\det C=-1.
+\tag{4.7}
+$$
+
+If both selected sites differ from the cut-boundary sites,
+take left vacuum/selected singleton/boundary singleton and
+right vacuum/boundary singleton/selected singleton. Their
+minor is
+
+$$
+\begin{pmatrix}1&1&1\\1&1&z\\1&0&1\end{pmatrix},
+\qquad\det=z-1\ne0.
+\tag{4.8}
+$$
+
+It proves rank at least three even when either selected site
+is adjacent to its own cut boundary. When both selected sites
+are at least two positions from those boundaries, all four
+patterns occur on each side. Order them lexicographically as
+$(x,u)$ and $(y,v)$. Their four-by-four minor is
+
+$$
+C\otimes\begin{pmatrix}1&1\\1&z\end{pmatrix},
+\qquad \det=(z-1)^2\ne0.
+\tag{4.9}
+$$
+
+These are genuine legal strings with all other bits zero;
+no independent pattern realization is invented. The minors
+attain each upper bound and prove (4.5). If $z=1$, (4.6)
+has rank at most two, while (4.7) still supplies the lower bound.
+A same-side gate acts as a local unitary for this bipartition.
+Finally the cross-boundary adjacent occupation is forbidden,
+so its phase exponent is identically zero. $\square$
+

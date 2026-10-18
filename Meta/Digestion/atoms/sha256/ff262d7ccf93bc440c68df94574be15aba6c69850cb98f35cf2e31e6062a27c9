@@ -1,0 +1,30 @@
+**Convention 1.4 (Actual comparison witness).** Let $Q$ be the stationary
+legal-pair law of [TwoStep, Definition 2.1 and Proposition 2.2][T], with pair
+states $(00,01,10)$, transition matrix and stationary row
+
+$$
+T=\begin{pmatrix}7/10&3/10&0\\0&0&1\\2/3&1/3&0\end{pmatrix},\qquad
+\xi=(10/19,9/38,9/38).
+$$
+
+Its actual full-exterior risk is
+
+$$
+W=d(Q)=\frac1{38}\left(\frac{1372}{543}
++\frac{588}{247}+\frac{63}{113}\right),\qquad
+W>\frac{23}{160}+\frac1{76000},\quad W\le c_\star,\quad
+\kappa_n\ge nW\ (n\ge1).
+\tag{1.3}
+$$
+
+These are [TwoStep, Propositions 2.4 and Theorems 3.1, 4.1][T] together with
+(1.1). In particular, the identification $d(Q)=W$ has full-exterior
+justification: on a free fiber, changing the center in any exterior window
+of radius at least two changes precisely three transition factors. The
+ratio is independent of all farther coordinates and has values
+$200/343,100/147,100/147,50/63$ in context order $00,01,10,11$.
+Conditional projection convergence therefore gives the same posterior in
+$\mathcal E_0$. The corresponding lower and upper five-bit masses have
+numerators $(343,200),(147,100),(147,100),(63,50)$ over $1900$; their harmonic
+sum is $W$. Thus (1.3) compares actual risks under the original objective.
+

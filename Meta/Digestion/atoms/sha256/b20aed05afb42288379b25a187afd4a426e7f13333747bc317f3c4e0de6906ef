@@ -1,0 +1,9 @@
+**定义 6.3（相位响应与独立格）。** 对素数 $p$ 和 $a\in\mathbb N_0$，令
+
+$$
+A_{p,a}(\theta)=\sum_{k=0}^ap^{-k/2}e^{ik\theta},
+\quad m=a+1,\quad\theta_j=2\pi j/m.
+$$
+
+四方向响应是 $\mathcal A(\boldsymbol\theta)=\prod_pA_{p,a_p}(\theta_p)$，采样在各 $\theta_p$ 独立取值的 Cartesian 积格；这里的平均是确定性的有限算术平均。
+

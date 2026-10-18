@@ -1,0 +1,48 @@
+## 146. A single-block return: inherited complete-star facts
+
+Sections 137--145 supply the complete-star facts below. The refinement
+uses the exact angle responses (95.4)--(95.5); it is independent of the
+special-axis exclusion in Sections 151--155.
+
+Take an actual finite ideal tetrahedron face pairing with complete circular
+edge links and every actual edge degree at least six. All counts retain
+local occurrences, repeated actual labels, distinct-face self-gluing,
+and repeated appearances of a tetrahedron along an edge link.
+
+The actual edge set is E=H disjoint-union S, with |H|=4. Every tetrahedron
+has a fixed vertex-induced frame, in edge order (12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),       A,B in H, A != B.
+
+The axial labels may repeat each other or reservoir labels. There is one
+common positive global length field, x_e=cosh(ell_e)>1, and every original
+extended edge-angle sum is 2*pi. Assume a flat block exists.
+
+The source theorem gives four distinct actual labels H={M,C,D,Z} and a
+genuine escape block tau with frame (Z,M,C,D,M,C). Write m,c,d,z for their
+cosh lengths. Its already proved complete-star consequences are:
+
+1. m>1+c+d and z>1+m+c. Hence m>c+2 and z>m>c,d.
+2. Every H label has a genuine witness. Every flat block selects its
+   axial pair. M has exactly one flat occurrence, with angle pi, so the
+   sum of all genuine M angles is pi. Every occurrence of Z is genuine.
+3. The complete Z circle has a unique dominant maximal axial run I,
+   with constant actual reservoir pair {M,C}. It contains tau. A run
+   is dominant when its target value is at least one plus the sum of its
+   reservoir values. The source proves I is proper and nonempty.
+4. Its two distinct transverse Z boundary occurrences belong to the same
+   genuine owner rho, different from every owner of I. Their common
+   angle gamma exceeds pi/2. Thus the sum Theta of the axial Z angles
+   within I is strictly less than pi.
+5. The g owners of I are distinct. Indeed an owner with two axial Z slots
+   would be flat, since (z-1)^2>(m+c)^2. If beta_i is its transverse M
+   angle, its two M slots are distinct occurrences, and
+
+       2*sum_i beta_i < pi.                         (146.1)
+
+   The weak inequality is M's genuine budget; strictness follows because
+   the different genuine owner rho also contains M.
+
+These are full-star facts from the same original length field. No
+independent local angles or replacement length assignment is introduced.
+

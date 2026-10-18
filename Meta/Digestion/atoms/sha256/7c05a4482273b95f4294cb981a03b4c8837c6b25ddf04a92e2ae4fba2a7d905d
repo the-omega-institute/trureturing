@@ -1,0 +1,7 @@
+**Example 10.1 (the two-update fence has mathematical content).** Before
+warm-up, $\alpha$ and $\beta$ have the same unlabelled support. At one update,
+$\beta$ and $\langle\alpha,\alpha\rangle$ have the same substituted shape
+$A$. The existing two-step theorem removes these shape collisions. An atlas
+using the unlabelled views without the acquired warm-up fence is therefore
+not established by Theorem 5.3.
+

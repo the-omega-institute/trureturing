@@ -1,0 +1,26 @@
+**Proposition 5.2 (a matching mass set has a limited implication).**
+Let $H=\{A\}\cup\{g_{xy}:x,y\in S_1\}\subset S_2$ and
+$P_H=\{\langle x,y\rangle:x,y\in H\}\subset S_3$.
+Then $P_H$ is locally admissible and $w(P_H)=169$. Its products
+attain $\Omega_w(P_H^n)=169^n$ for every $n\ge1$.
+
+Proof. The $S_2$ root target is determined by the root reply.
+On $H$, a side reply is absent only on $A$, where the side
+factor is fixed; on its branches the three child replies determine
+the corresponding $\gamma$ value. Thus every target in $W_2$
+has an own-coordinate witness on $H$. On $P_H$, the root
+target is constant, and each target $sq$ uses the corresponding
+child's witness at the literal $sa$. Every target is served by
+at most one actual word. Since $v(H)=4+9=13$, its mass is
+$13^2=169$. Products use these same witnesses in their target
+coordinate, and their product mass is $169^n$. $\square$
+
+This is equality in the mass bound for the chosen weights. It
+does not construct a cover saturating all dual constraints, nor
+identify $Z_3(n)$, $\sigma_3$ or $\lambda$. A matching mass
+example is not a matching fractional cover or rate construction.
+The attained cyclic relation of [NCM, Proposition 6.1][NCM] is
+credited context for the need to admit locally insufficient
+projections. Theorem 2.2 covers it without assuming a locally
+admissible donor, and does not use NCM's lower-bound proof.
+

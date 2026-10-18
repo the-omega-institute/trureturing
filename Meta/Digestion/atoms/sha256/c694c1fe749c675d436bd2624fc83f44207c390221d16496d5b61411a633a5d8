@@ -1,0 +1,65 @@
+**Convention 9.2 (source-verified primary comparisons).** The following
+primary results have their own representation and hypothesis requirements.
+No native equivalence satisfying both mass directions and the original
+operational resource conditions is assumed for any row.
+
+| Primary source | Exact result and boundary |
+| --- | --- |
+| Gogacz–Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, Theorem 1 and Corollary 1, [arXiv:1512.01808v1][GT] | A fixed query schema has an almost-entropic characterization and a submodular outer bound. A native witness gives a functional dependence under one common law, but varying native lengths, maps and owned weights do not become a fixed-schema cofinality theorem. |
+| Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, Theorem 4.1, [arXiv:1202.6035v2][R] | Graph-cover domination assumes a binary log-supermodular factorization. Arbitrary native joint weights have no such premise. The current [GCB][GCB] native graph-cover and Bethe boundaries are separate credited results. |
+| de Boer–Buys–Zuiddam, *The asymptotic spectrum distance, graph limits, and the Shannon capacity*, Theorem 3.7, [arXiv:2404.16763v2][DBZ] | Fraction graphs approached from above converge uniformly over the specified spectrum. No cardinality-preserving native fraction-graph identification or effective approximation in that distance is established here. |
+| Sarantis–Tetali–Zheng, *On Counting Independent Sets in Regular Hypergraphs*, Theorems 1.4–1.5, [arXiv:2609.17468v1][STZ] | The first bound assumes uniform regular hypergraphs with no cross-edges; the second assumes vanishing relative maximum codegree of the twin quotient along growing degree. Arbitrary native donor networks with whole-block weights have neither a proved reduction nor these hypotheses as a general premise. |
+
+These comparisons give no imported effective all-instance cap. The
+proofs above instead use explicit native tables, same-realization
+maps and finite inequalities. The source references distinguish
+verified statements from unproved transfer bridges; inaccessible or
+unmatched literature would not establish originality.
+
+**Open problem 9.3 (the unchanged global obligation).** Construct a total
+sound verifier whose accepted rational caps are optimizer-cofinal in
+every original $\sigma_d$, or prove a uniform effective length-error
+bound yielding two-sided approximation of the same $\lambda$. Neither
+the exact core atlas nor the separated-majorant grammar supplies that
+bridge. The former has the quantified optimizer ceiling of Theorem
+4.3. The latter loses the coupled diagonal information, while the full
+joint rule already preserves it. Extending beyond these languages
+requires a proof of all-template coverage of optimizing weights, not
+only pointwise soundness or another fixed-size exact computation.
+
+No noncomputability, universal recut obstruction, or failure of
+unrestricted $V_{\mathrm{rec}}$ optimizer-cofinality follows. The
+general exact $M_1(D)$, sharp $\lambda$, effective lower convergence,
+and the broader minimal-relations and mutual-recovery programme remain
+open. The operational recovery established under the paid service
+premises stays
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+$$
+
+The reverse map recovers the first branch count and alpha-stage flag.
+It does not identify an unknown age, recover the entire hidden source,
+or derive a physical space-time realization or authentication service.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[JTC]: https://github.com/the-omega-institute/trureturing/blob/a8ded6741d47ed07ae4eabe95b27547e73a8407d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: https://github.com/the-omega-institute/trureturing/blob/a8ded6741d47ed07ae4eabe95b27547e73a8407d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: https://github.com/the-omega-institute/trureturing/blob/a8ded6741d47ed07ae4eabe95b27547e73a8407d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[D5J]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[D5M]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[D5E]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[GT]: https://arxiv.org/html/1512.01808v1
+[R]: https://arxiv.org/html/1202.6035v2
+[DBZ]: https://arxiv.org/html/2404.16763v2
+[STZ]: https://arxiv.org/html/2609.17468v1
+

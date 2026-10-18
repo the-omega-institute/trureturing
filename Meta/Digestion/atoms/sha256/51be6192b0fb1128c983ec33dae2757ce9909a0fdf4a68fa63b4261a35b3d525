@@ -1,0 +1,48 @@
+**Assumption 12.5 (mathematical supplier correspondence and limits).**
+The native source and port correspond to `Source`, `substitution`,
+`Address`, `Reply` and `readout` in the pinned suppliers cited in
+Mathematical citation 8.1. Acquired coordinate parsing corresponds to
+`rightClock` and `right_clock_iterate`; actual word replies correspond
+to `right_clock_readout` and Definition 5.3. Whole-row equality
+corresponds to `literalRecord`, `actualPartition` and
+`canonicalRow_record_iff`. In particular, the singleton partition
+does not expose a hidden-visible comparison. These semantic suppliers
+do not already assert the adaptive class bound, finite all-lag
+criterion or seventeen-label packing. Their distinct-address payment
+or supplied-epoch decoder services are different contracts from the
+chronological calls and unknown lag here.
+
+The zero-error conflict method is literature-attested in Charpenay,
+Le Treust and Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definitions II.1, III.1 and IV.5,
+and Theorem III.4](https://arxiv.org/html/2211.03649v2). A common
+compatible side-information value with unequal required outputs is
+the analogue of a common entire acquired entry with unequal lags.
+Their prefix-free probabilistic block code, expected length and
+asymptotic chromatic-entropy rate are not this attained-label,
+worst-native-call objective; their graph conditions do not authorize
+the reply partitions used here.
+
+Restricted adaptive query geometry is literature-attested in Nowak,
+[*The Geometry of Generalized Binary Search*, arXiv:0910.4397v5,
+Theorem 1 and §V.A](https://arxiv.org/html/0910.4397v5). Its binary
+hypothesis-identification bound assumes neighborliness and coherence,
+and its point-test versus dyadic-test comparison distinguishes
+different allowed query spaces. Here the hypotheses are compatible
+origins, the task is only target-coordinate recovery, and allowed
+queries have the supplied four-cell native geometry. No binary-search
+bound or arbitrary partition is transferred numerically.
+
+The repo-derived ordinary mathematical increment is the composition
+of the native adaptive two-coordinate obstruction, the exact finite
+criterion with its complete zero boundary, and the consumed symmetric
+packing and actual certificates through $q=17$. The separate
+[same-law stochastic predictive-quotient supplier, §§1--2](https://github.com/the-omega-institute/trureturing/blob/411caa2ef2896bc9c39706cf3d1239d4265f325d/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md)
+relates task defects to class-identification error; it supplies no
+deterministic native-call or changing-source handoff theorem here.
+No stochastic, thermodynamic or physical realization follows from
+this correspondence, and no kernel verification, global priority or
+unrestricted space/time/boundary/memory recovery claim is part of
+these ordinary statements.
+

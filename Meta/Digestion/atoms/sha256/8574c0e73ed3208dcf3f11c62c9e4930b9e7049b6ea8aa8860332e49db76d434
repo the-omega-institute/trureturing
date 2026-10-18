@@ -1,0 +1,29 @@
+**Theorem 4.2 (uniform transfer between native types).** For two types
+$\nu,\nu'$ of length $n$, put
+$m=\frac12\sum_x|\nu_x-\nu'_x|$. Then
+
+$$
+\left|\log_2a_n(\nu)-\log_2a_n(\nu')\right|
+\le\log_2\binom nm+m\log_2s
+\le n\omega_s(m/n).
+\tag{NPC.11}
+$$
+
+Proof. Put $c_x=\min\{\nu_x,\nu'_x\}$ and choose admissible
+$A\subseteq T_\nu$ of size $a_n(\nu)$. In each row select $m$ positions
+whose removed symbol counts are $\nu-c$, using any fixed rule.
+Record their position set $I$ and their ordered value word $z$.
+There are at most $\binom nm s^m$ records. Some record is selected
+by at least $|A|/(\binom nm s^m)$ rows. Its full section $A[I=z]$
+has at least that size and is admissible by Lemma 3.1. Every row has
+remaining counts $c$; deletion is injective because all deleted values
+were fixed. Append a fixed word with counts $\nu'-c$. The resulting
+length-$n$ relation is admissible, has type $\nu'$, and has the same
+size. This gives one direction of (NPC.11); exchange the types for
+the other direction.
+
+For $0<m<n$, the binomial probability
+$\binom nm(m/n)^m(1-m/n)^{n-m}$ is at most one. Taking logarithms
+gives the last inequality. At $m=0,n$ it holds directly. The loss is
+uniform over all witness systems and all joint correlations. $\square$
+

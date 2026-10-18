@@ -1,0 +1,70 @@
+**Theorem 6.2 (uniform exterior gain).** Let
+
+$$
+C_V=\sup_{|r|\ge1,\,\mathbf z}|r|^5V(r,\mathbf z)<\infty,
+\qquad\kappa_0=4\gamma C_V.
+\tag{6.1}
+$$
+
+Choose $R_1\ge1$ so that $1-\kappa_0R^{-3}\ge1/2$ for $R\ge R_1$. There is a nonnegative function $\eta(R)\to0$, depending only on the fixed canonical source, such that for every $R\ge R_1$ and every $u\in\dot{\mathscr E}_R^{\mathbb C}$,
+
+$$
+\begin{gathered}
+h_0[u]\ge(1-\kappa_0R^{-3})b[u],\\
+\frac{|e(u)|^2}{h_0[u]}\le\frac{K_{\rm tail}+\eta(R)}{R^3}\quad(u\ne0),\qquad
+2\operatorname{Re}e(u)-h_0[u]\le\frac{K_{\rm tail}+\eta(R)}{R^3}.
+\end{gathered}
+\tag{6.2}
+$$
+
+The supremum of the latter gain is the same over all complex exterior vectors, all real exterior vectors, and just real odd exterior vectors. It equals the supremum of $|e(u)|^2/h_0[u]$ over nonzero vectors in any of these respective classes. In particular arbitrary finite sums, with arbitrary complex coefficients and every cross term retained, obey the one uniform bound. Every convergent sum in the exterior completion obeys it as well.
+
+Proof. For a compact complex exterior test, integrate $(|u|^2/r)'$ separately on $(R,\infty)$ and $(-\infty,-R)$. All endpoint terms vanish because the compact support lies strictly beyond the excluded heights. Integrating also in phases gives
+
+$$
+\int\frac{|u|^2}{r^2}=2\operatorname{Re}\int\frac{\overline u Xu}{r}
+\le2\left\|u/r\right\|_2\|Xu\|_2,
+\qquad \|u/r\|_2\le2\|Xu\|_2.
+\tag{6.3}
+$$
+
+This is the needed Hardy boundary condition on both tails. It is not an assertion for arbitrary functions with a nonzero boundary trace. Since $V\le C_VR^{-3}r^{-2}$ on this support,
+
+$$
+\gamma\int V|u|^2\le4\gamma C_VR^{-3}\|Xu\|_2^2
+\le\kappa_0R^{-3}b[u].
+\tag{6.4}
+$$
+
+This proves coercivity. Equation (5.2), Cauchy–Schwarz on the joint horizontal derivative vector, and Hardy give
+
+$$
+|e(u)|\le(M_R+2N_R)\sqrt{b[u]},\qquad
+\frac{|e(u)|^2}{h_0[u]}
+\le\mathcal A_R:=\frac{(M_R+2N_R)^2}{1-\kappa_0R^{-3}}.
+\tag{6.5}
+$$
+
+Theorem 5.2 gives $R^3\mathcal A_R\to K_{\rm tail}$. For example define
+
+$$
+\eta(R)=|R^3\mathcal A_R-K_{\rm tail}|\quad(R\ge R_1).
+\tag{6.6}
+$$
+
+This is nonnegative, tends to zero and is independent of $u$. The inequality $|e(u)-h_0[u]|^2\ge0$ yields $2\operatorname{Re}e(u)-h_0[u]\le |e(u)|^2/h_0[u]$ for nonzero $u$; zero is immediate.
+
+Hardy makes a $b$-Cauchy exterior sequence Cauchy in $L^2(r^{-2}d\xi)$, hence on every compact set. Compact testing identifies its derivative limits and preserves the exterior support in the local representative. The potential bound, (6.4), and polarization extend $h_0$ continuously; (6.5) extends $e$. Thus every inequality passes to the stated completion. There is no boundary contribution left over from its limiting trace.
+
+The involution preserves $h_0$, and both $\mathcal L$ and $h_0(U_h,\cdot)$ annihilate even tests. Hence $e(u_+)=0$ and $h_0[u]=h_0[u_-]+h_0[u_+]$. For $u=v+iw$ with real $v,w$, $2\operatorname{Re}e(u)-h_0[u]=2e(v)-h_0[v]-h_0[w]$. Coercivity makes these added energies nonnegative. Dropping imaginary and even parts therefore cannot reduce the gain. For the quotient, $|e(u)|^2=e(v_-)^2+e(w_-)^2$ while $h_0[u]$ contains the sum of their energies and the nonnegative even energies. Its supremum also equals the real odd supremum. Along a real odd nonzero direction $v$, the maximum of $2t e(v)-t^2h_0[v]$ is exactly $e(v)^2/h_0[v]$ at $t=e(v)/h_0[v]$. These facts prove all supremum equalities, without a claim of a compact maximizing vector.
+
+For clarity, if $u=\sum_{j=1}^n a_j u_j$, the quantity used is exactly
+
+$$
+h_0[u]=\sum_{i,j=1}^n\overline{a_i}a_jh_0(u_i,u_j),\qquad
+e(u)=\sum_{j=1}^n a_j e(u_j).
+\tag{6.7}
+$$
+
+The proof bounds this combined vector. It never adds separately optimized gains or assumes disjointness. Continuity treats any sum converging in the exterior completion. This proves the full exterior-class assertion. $\square$
+

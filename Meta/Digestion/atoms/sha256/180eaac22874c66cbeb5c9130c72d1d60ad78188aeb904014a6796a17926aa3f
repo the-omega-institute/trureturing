@@ -1,0 +1,63 @@
+**Proposition 10.5 (Exact gluing of the common circle).**
+There is a unique abstract group homomorphism
+
+$$
+\mathcal R:\mathbb T\longrightarrow\operatorname{Aff}(\mathscr H)
+$$
+
+with $\mathcal R_c E(x)=E(C_cx)$ for all $x\in\mathcal M_I$.
+It commutes with every restricted $\mathcal B_t$ and every
+restricted $\mathcal A_s$ with $|s|<\ell$. For all such $s$
+and all real $t$,
+
+$$
+\mathcal B_{-t}\mathcal A_{-s}\mathcal B_t\mathcal A_s
+   =\mathcal R_{-st/r}\quad\hbox{on }\mathscr H.
+$$
+
+**Proof.** Fix $s_0$ with $0<s_0<\ell/2$. For each real
+representative $c$ and for $s=s_0,-s_0$, set $t=-rc/s$ and form
+the affine automorphism
+
+$$
+\mathcal R_c^{(s)}
+ =\mathcal B_{-t}\mathcal A_{-s}\mathcal B_t\mathcal A_s
+ \bigm|_{\mathscr H}.
+$$
+
+Proposition 10.2 and the factor identities imply
+$\mathcal R_c^{(s)}E(x)=E(C_cx)$ on $D_s$.
+The height domains for the two signs are $[a,b-s_0]$ and
+$[a+s_0,b]$. They cover $I$ and their intersection contains
+the nonempty open interval $(a+s_0,b-s_0)$.
+Its encoded image spans $\mathscr H$ by Lemma 10.3.
+Thus the two affine words agree on $\mathscr H$.
+Their common map, denoted $\mathcal R_c$, implements $C_c$
+on every source state, including endpoints.
+
+On the actual source, $C_{c+d}=C_cC_d$, $C_0$ is the identity
+and $C_{c+2\pi}=C_c$. Applying these identities to every encoded
+state and using affine spanning gives
+
+$$
+\mathcal R_{c+d}=\mathcal R_c\mathcal R_d,\qquad
+\mathcal R_0=\operatorname{id},\qquad
+\mathcal R_{c+2\pi}=\mathcal R_c.
+$$
+
+In particular the action descends to the actual circle and has
+inverse $\mathcal R_{-c}$. It is independent of the chosen
+rectangle and is unique by affine spanning.
+
+The common turn commutes with $Q_t$ on the whole source.
+It commutes with $P_s$ on $D_s$, and preserves that domain.
+These equalities imply commutation of the corresponding affine
+maps on $E(\mathcal M_I)$ or $E(D_s)$ respectively.
+For $|s|<\ell$, $D_s$ contains an open strip spanning
+$\mathscr H$. This proves the stated centrality. Applying
+the rectangle identity once more on such a strip proves the
+last formula for every short $s$, including $s=0$.
+No partial probability map has been made into a global source
+bijection. Only its affine restriction on the proven hull has
+an inverse. $\square$
+

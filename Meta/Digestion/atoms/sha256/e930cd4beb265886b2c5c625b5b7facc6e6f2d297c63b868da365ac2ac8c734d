@@ -1,0 +1,70 @@
+**Proposition 11.8 (explicit counterexample to prediction-only motion identification).** The two tables of Definition 11.7 are regular stationary and have identical complete phase laws at every corresponding label. Their common indexed paired arrays $f,h$ are both nonconstant. Nevertheless,
+
+$$
+V_\pi(A_0)=\frac1{45},\qquad V_\pi(A_1)=\frac4{135}.
+\tag{11.28}
+$$
+
+Their mean actual-return TV motion of complete p laws equals the respective quantity in (11.28), and therefore also differs.
+
+Proof. Both matrices are doubly stochastic and send $(1/3,11/30,2/5)^\mathsf T$ to $m\mathbf1$. Together with $B=I$ this proves $\pi B=\tau$, $\tau A_s=\pi$ for $s=0,1$. Define a p law $G_\sigma$ by
+
+$$
+G_\sigma(w_{j,0})=m t_\sigma^j,\qquad
+G_\sigma(w_{j,1})=q(1-\sigma)t_\sigma^j\quad(j\ge0),\qquad
+G_\sigma(\infty_p)=0.
+\tag{11.29}
+$$
+
+These nonnegative masses sum to one, since $m+q(1-\sigma)=1-t_\sigma$ and $t_\sigma<1$. Put
+
+$$
+W_\sigma=(1-\sigma)\delta_\beta+\sigma\alpha G_\sigma,\qquad
+Q_{\sigma,i}=u_i\delta_\alpha+(1-u_i)\beta W_\sigma.
+\tag{11.30}
+$$
+
+The geometric masses (11.29) give $G_\sigma=m\delta_\alpha+q\beta W_\sigma$. Since each row of either $A_s$ averages $u$ to $m$, that row's mixture of the laws $Q_{\sigma,i}$ is exactly $G_\sigma$. Equations (11.30) are consequently the two same-update phase equations for both tables, with $W_{\sigma,i}=W_\sigma$. They are their own generated full laws: finite cylinder iteration of the recursions has unique limits, since survival for $L$ returns is at most $(4/15)^L$. Infinite outcomes are retained at mass zero, without completion conditioning.
+
+For clarity the individual complete masses are
+
+$$
+\begin{aligned}
+Q_{\sigma,i}(w_{0,0})&=u_i,\\
+Q_{\sigma,i}(w_{j,0})&=(1-u_i)\sigma m t_\sigma^{j-1}\quad(j\ge1),\\
+Q_{\sigma,i}(w_{j,1})&=(1-u_i)(1-\sigma)t_\sigma^j\quad(j\ge0),\\
+W_\sigma(\beta)&=1-\sigma,\\
+W_\sigma(\alpha w_{j,0})&=\sigma m t_\sigma^j,\\
+W_\sigma(\alpha w_{j,1})&=\sigma q(1-\sigma)t_\sigma^j.
+\end{aligned}
+\tag{11.31}
+$$
+
+Thus the arrays are exactly
+
+$$
+f_{\sigma,i}=(1-u_i)(1-\sigma)(1+t_\sigma+t_\sigma^2),\qquad
+h_{\sigma,i}=(1-\sigma)(1+t_\sigma).
+\tag{11.32}
+$$
+
+Their rational values can be displayed as follows, with $f_{\sigma,i}=(1-u_i)k_\sigma$:
+
+| $\sigma$ | $t_\sigma$ | $k_\sigma$ | $h_{\sigma,i}$ |
+| --- | --- | --- | --- |
+| $7/20$ | $133/600$ | $5947357/7200000$ | $9529/12000$ |
+| $23/60$ | $437/1800$ | $156050053/194400000$ | $82769/108000$ |
+
+Within either block $f$ varies with the three distinct $u_i$. Across blocks $h$ varies: $h(\sigma)=1-m\sigma-q\sigma^2$ is strictly decreasing for positive $\sigma$. This proves nonconstancy of both full indexed arrays; it does not merely compare their means.
+
+In one block, with the conditional uniform p row, the only nonzero $A_0$ contributions to return variation are $0\to2$ and $2\to0$, each of transition probability $1/2$ and difference $1/15$. Their total is $1/45$. For $A_1$ the six ordered off-diagonal differences are $1/30,1/30,1/15$ in each direction, so their sum is $4/15$ and their uniform edge weight is $1/9$. The total is $4/135$. The two equal block masses preserve those values globally.
+
+Finally $Q_{\sigma,i}-Q_{\sigma,j}=(u_i-u_j)(\delta_\alpha-\beta W_\sigma)$. The two probability laws inside the last parentheses have disjoint supports. Hence
+
+$$
+\operatorname{TV}(Q_{\sigma,i},Q_{\sigma,j})=|u_i-u_j|.
+\tag{11.33}
+$$
+
+Every actual return remains in its block. Weighting (11.33) by $\pi B A_s$ proves the asserted full-law return motion. This equality of the two motion quantities is specific to (11.30), not a general identification of immediate-emission variation and complete-law dispersion. $\square$
+

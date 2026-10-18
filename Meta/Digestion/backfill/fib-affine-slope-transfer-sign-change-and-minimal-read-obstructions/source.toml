@@ -1,0 +1,5 @@
+source_id = "fib-affine-slope-transfer-sign-change-and-minimal-read-obstructions"
+path = "docs/develop/theory/FIB_AFFINE_SLOPE_TRANSFER_SIGN_CHANGE_AND_MINIMAL_READ_OBSTRUCTIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,186 @@
+**定理3.1（统一正价格）。** 在§1的原来源、全部有限 COMPLETE 随机模型及精确每配置同更新生成义务下，对任意 $j_p,j_\beta\in\{\mathrm{law},\mathrm{conf}\}$，置
+
+$$
+\epsilon_p=R_{j_p}(\mathcal H_p)-\rho_p,\qquad
+\epsilon_\beta=R_{j_\beta}(\mathcal H_\beta)-\rho_\beta.
+$$
+
+二者非负，且
+
+$$
+17\epsilon_p+7\epsilon_\beta+19\Delta_4>\sigma.
+\tag{3.1}
+$$
+
+所以式(3.1)亦成立于以 $\Delta_{\rm all}$ 替换 $\Delta_4$。常数独立于安装先验、状态数及随机核；不是尖锐前沿声明。
+
+**证明。** 先证 law/law。下界由 [ST]、[PH] 给出。若 $\epsilon_p,\epsilon_\beta,\Delta_4$ 中任一个大于 $1/1000$，结论由 $\sigma<1/1000$ 立即成立。以下三者都不超过 $1/1000$，记 $\delta=\Delta_4$。
+
+固定任意这台有限机器。消费 [ST, §§3.1、3.3] 的有限正历史见证：有两列第三书签历史，同一原配置、种子1、前三标记100，完整配置分布距离趋零，而真实后验分别集中在深度1、2。有限单纯形紧性给共同子列极限 $\lambda$。对每个固定有限合法第四段前缀 $v$，后继配置分布共同趋于 $\lambda P_v$。若端点后验质量原为 $1-\zeta$，续接后非端点质量至多 $\zeta/[(1-\zeta)L_k(v)]$，其中固定端点词似然 $L_k(v)>0$；因此整个可数非端点总质量仍趋零。
+
+有限配置混合到解码律是 TV 收缩的概率核。令 $Q_n$ 为 $\lambda P_{(\beta\alpha)^n}$ 的原始 $p$ 尾律，$V_n$ 为再接 $\beta$ 后的原始悬置尾律；源桥 $I_c$ 删除当前共同确定性字段后保持 TV。对每个 $n\ge0,k=1,2$，风险约束给
+
+$$
+\operatorname{TV}(Q_n,P_{p,r_k})\le\rho_p+\epsilon_p,
+\qquad \operatorname{TV}(V_n,P_{\beta,r_k})\le\rho_\beta+\epsilon_\beta.
+\tag{3.2}
+$$
+
+全部有限续接由同一个 $\lambda$ 产生，未给机器添加一个实际历史或分布服务。
+
+消费 [ST, §2.2] 的两个端点符号事件
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha\beta\beta\}.
+$$
+
+它们的端点平均质量为 $c_p=11758471/22781250$、$c=5261/6750$，置 $d=1-c$。端点事件差恰为 $2\rho_s$，所以事件 TV 界给
+
+$$
+|Q_n(E_p)-c_p|\le\epsilon_p,
+\qquad |1-V_n(E_\beta)-d|\le\epsilon_\beta.
+\tag{3.3}
+$$
+
+逐原子三角余项的和是各坐标到端点区间的距离总和，故(3.2)还给每个坐标区间外距离至多 $2\epsilon_s$，包括无限不完成原子。特别地，置
+
+$$
+b_n=Q_n(\beta\beta),\quad I=[l,h]=[9/25,4/9],\quad
+\gamma_n=Q_n(\text{首字母为 }\beta),\quad
+v_n=V_n(\text{首字母为 }\alpha),\quad d_n=1-V_n(E_\beta),
+$$
+
+有 $\operatorname{dist}(b_n,I)\le2\epsilon_p$，
+$3/5-2\epsilon_p\le\gamma_n\le2/3+2\epsilon_p$，
+$1/3-2\epsilon_\beta\le v_n\le2/5+2\epsilon_\beta$。
+因此需要条件化的两个预测字母概率有统一正下界。有限混合律 TV 收敛以及正分母使(2.1)的界可取极限：
+
+$$
+\operatorname{TV}(\operatorname{res}_\beta Q_n,V_n)\le\delta,
+\qquad \operatorname{TV}(\operatorname{res}_\alpha V_n,Q_{n+1})\le\delta.
+\tag{3.4}
+$$
+
+这里实际域仍包含预测零概率事件；只是在承担近最优冲突的共同极限中，这两个事件由(3.2)强制为正。
+
+令 $t_n=\gamma_nv_n$，于是 $0<t_n<1/3$。两个条件误差在实际完整事件上给
+
+$$
+b_n=\gamma_n(1-v_n)+e_n,\qquad
+d_n=v_n(1-b_{n+1})+f_n,
+\qquad |e_n|,|f_n|\le\delta.
+\tag{3.5}
+$$
+
+对 $j\ge1$，连续使用(3.4)，第一步误差至多 $\gamma_n\delta$，第二步至多 $\gamma_nv_n\delta$。近中心界给 $\gamma_n(1+v_n)<1$，所以
+
+$$
+|Q_n(w_{j,1})-t_nQ_{n+1}(w_{j-1,1})|\le\delta.
+\tag{3.6}
+$$
+
+这个界使用完整词事件，保留所有原控制与 Stop 前缀，未把词缩成终局标签。
+
+由(3.5)，精确地
+
+$$
+t_n=\frac{(b_n-e_n)(d_n-f_n)}{1-b_{n+1}-d_n+f_n}.
+$$
+
+在 $0\le b_n,b_{n+1}\le9/20$、$0\le d_n\le9/40$、$|e_n|,|f_n|\le1/1000$ 的矩形上，分母至少 $324/1000$。此分式对 $e_n,f_n$ 的偏导绝对值分别小于1、5：上界可取 $226/324<1$ 和 $(451/1000)/(324/1000)^2<5$。将 $e_n,f_n$ 换为零得
+
+$$
+\left|t_n-\frac{d_nb_n}{1-d_n-b_{n+1}}\right|\le6\delta.
+\tag{3.7}
+$$
+
+记 $g_e(x)=ex/(1-e-x)$。同一较小矩形上 $0\le g_e(x)<1/3$。乘(3.7)以 $b_{n+1}\le9/20$ 给
+
+$$
+|t_nb_{n+1}-b_ng_{d_n}(b_{n+1})|\le\frac{27}{10}\delta\le3\delta.
+$$
+
+再用 $t_n,g_{d_n}(b_{n+1})<1/3$，两次乘积比较给
+
+$$
+|t_nt_{n+1}b_{n+2}-b_ng_{d_n}(b_{n+1})g_{d_{n+1}}(b_{n+2})|\le\frac95\delta\le2\delta.
+$$
+
+这两个非严格界包含 $\delta=0$ 时误差恰为0的端点；最终严格分离仍来自式(3.12)的正词间隙。式(3.6)对 $j=1,2$ 给事件 $E_p$ 与 $b_n+t_nb_{n+1}+t_nt_{n+1}b_{n+2}$ 的差至多 $(2+t_n)\delta\le3\delta$。故源特定事件平衡被放松为
+
+$$
+\left|b_n\{1+g_{d_n}(b_{n+1})[1+g_{d_{n+1}}(b_{n+2})]\}-c_p\right|
+\le\epsilon_p+8\delta.
+\tag{3.8}
+$$
+
+下面消费 [CO, §2.4] 的静态代数证书，说明它不需精确相容性：
+
+$$
+F(x,y)=\frac{c_p}{1+g_d(x)[1+g_d(y)]}\quad(x,y\in I)
+$$
+
+将 $I^2$ 送入 $I$，且对于最大坐标距离的 Lipschitz 常数 $L<21/25$。其唯一常数不动点记为 $b_\star$。这些断言由 $F(h,h)>l$、$F(l,l)<h$、$g'_d(x)=dc/(c-x)^2$ 及
+
+$$
+L\le\frac{c_pdc[1+2g_d(h)]}
+{(c-h)^2[1+g_d(l)(1+g_d(l))]^2}<\frac{21}{25}
+\tag{3.9}
+$$
+
+给出；介值定理给存在，收缩界给唯一。
+
+把 $b_n$ 截到 $I$ 得 $x_n$，有 $|b_n-x_n|\le2\epsilon_p$。对(3.8)先除以其至少为1的括号；误差 $8\delta$ 不被放大。在 $x\le9/20,e\le9/40,1-e-x\ge13/40$ 上，$g_e<1/3$ 且 $|\partial_xg_e|,|\partial_eg_e|<3$。分式的两输入偏导和及两参数偏导和都小于3；其分子至多 $c_p+1/1000<0.521$。截取输入的误差至多 $6\epsilon_p$，换 $d_n,d_{n+1}$ 为 $d$ 的误差至多 $3\epsilon_\beta$，事件分子误差至多 $\epsilon_p$。因此
+
+$$
+|b_n-F(x_{n+1},x_{n+2})|
+\le7\epsilon_p+3\epsilon_\beta+8\delta.
+\tag{3.10}
+$$
+
+令 $B=\sup_{n\ge0}|b_n-b_\star|$。它有限，截取不会增加到 $b_\star$ 的距离。(3.9)、(3.10)于是给整个无界返回序列的界
+
+$$
+B\le\frac{25}{4}(7\epsilon_p+3\epsilon_\beta+8\delta).
+\tag{3.11}
+$$
+
+消费 [CO, §2.5] 的单词间隙。置 $a_\star=db_\star/(c-b_\star)$，则
+$b_\star(1+a_\star+a_\star^2)=c_p$。消去 $b_\star$ 得
+$f(a)=ca(1+a+a^2)-c_p(a+d)=0$；$f$ 在非负轴严格递增，$f(233/1000)<0<f(234/1000)$。故
+
+$$
+b_\star a_\star^3>
+\frac{c_p(233/1000)^3}{1+234/1000+(234/1000)^2}
+=\frac{1944}{390625}+\sigma.
+\tag{3.12}
+$$
+
+此右端的第一项是实际端点在完整词 $w_{3,1}$ 上的较大质量，不是合成数值拟合。
+
+分式 $db/(1-d-b')$ 对 $b,b',d$ 的偏导绝对值在原矩形上分别小于1、1、5；(3.7)给
+$|t_n-a_\star|\le2B+5\epsilon_\beta+6\delta$。乘积望远镜展开使用 $t_n,a_\star<1/3,b_\star\le4/9$，给
+
+$$
+|t_nt_{n+1}t_{n+2}b_{n+3}-b_\star a_\star^3|
+\le\frac B3+\frac{20}{27}\epsilon_\beta+\frac89\delta.
+$$
+
+式(3.6)连续三次的误差至多 $(1+1/3+1/9)\delta=13\delta/9$，所以
+
+$$
+|Q_n(w_{3,1})-b_\star a_\star^3|
+\le\frac B3+\frac{20}{27}\epsilon_\beta+\frac73\delta.
+\tag{3.13}
+$$
+
+另一方面，(3.2)的逐词端点区间界给 $Q_n(w_{3,1})\le1944/390625+2\epsilon_p$。合并(3.11)–(3.13)，得到
+
+$$
+\sigma<\frac{199}{12}\epsilon_p+\frac{755}{108}\epsilon_\beta+19\delta
+\le17\epsilon_p+7\epsilon_\beta+19\delta.
+$$
+
+最后，对于任一选取的 conf 坐标，其超额不小于对应 law 超额；非负系数使同一不等式适用于全部四个风险组合。证毕。
+

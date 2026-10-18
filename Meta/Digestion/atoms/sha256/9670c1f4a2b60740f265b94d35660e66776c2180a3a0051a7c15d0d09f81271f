@@ -1,0 +1,12 @@
+**Theorem.** Some actual edge other than Z has value greater than m.
+Consequently, after naming it U, the entire six-edge distinct-frame
+mixed-flat configuration has the following form:
+
+    H=E={M,C,D,Z,U,V}, u>m, z>m,
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2.
+
+Sigma is the unique flat owner and the only owner of transverse pair
+{C,D}. Thus both its M and V axial runs consist of one original interval.
+This is a structural reduction, not exclusion of the remaining flat.
+

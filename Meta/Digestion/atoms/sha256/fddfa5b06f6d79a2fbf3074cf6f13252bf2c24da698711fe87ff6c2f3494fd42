@@ -1,0 +1,57 @@
+**Theorem 2.13 (Metric completion).** At the lower and upper endpoints let
+$\nu_-$ and $\nu_+$ count vanishing bottom probabilities. Then
+
+$$
+\nu_-=\begin{cases}2&X+Y=r,\\1&X+Y\ne r,\end{cases}
+\qquad
+\nu_+=\begin{cases}2&X=Y,\\1&X\ne Y.\end{cases}
+$$
+
+The two completion cone angles are $2\pi/\nu_-$ and $2\pi/\nu_+$. The four
+possibilities are $(2\pi,2\pi)$, $(\pi,2\pi)$, $(2\pi,\pi)$ and $(\pi,\pi)$.
+
+Proof. At the lower end, either $p_{13}$ alone vanishes, or $p_0$ alone
+vanishes, or both vanish when $X+Y=r$. At the upper end, either $p_1$ alone,
+$p_3$ alone, or both vanish when $X=Y$. All other bottom masses have a positive
+limit; the middle mass is the fixed positive number $Z$.
+
+Let $t=\kappa-\kappa_-$ or $t=\kappa_+-\kappa$ be inward distance in the
+affine probability coordinate. Each vanishing mass is exactly $t$, so
+
+$$
+I=\frac\nu t+O(1),\qquad
+b=\frac{2t}{\nu}+O(t^2).
+$$
+
+The meridian distance from the end is
+
+$$
+\rho=\int_0^t\frac{ds}{\sqrt{b(s)}}
+=\sqrt{2\nu t}\,(1+O(t)).
+$$
+
+Inverting this expression gives
+$t=\rho^2/(2\nu)(1+O(\rho^2))$ and therefore
+
+$$
+g_{\rm red}=d\rho^2+
+\frac{\rho^2}{\nu^2}(1+O(\rho^2))d\chi^2.
+$$
+
+The circumference divided by radius tends to $2\pi/\nu$. Finite meridian
+distance and vanishing circle diameter add exactly one point at each end.
+On compact subintervals the metric is regular; near each end it is comparable
+to the displayed finite cone. The completion is consequently compact, hence
+proper, with two endpoint strata and the open cylinder between them. The
+rational coefficients have smooth expansions in $t$, so for $\nu=1$ the polar
+coefficient has the smooth even expansion with unit initial slope; for
+$\nu=2$ it has half that slope and cone angle $\pi$. This metric statement
+does not replace the hypotheses for smooth symplectic reduction. $\square$
+
+Both symmetry walls meet the interior of $\mathcal B$. Double zeros at a fiber
+endpoint thus need not mean that the visible mean is on the external boundary
+of the pyramid. HR C-14.3 supplies the same cone interpretation at its half
+metric scale; constant metric rescaling changes lengths and curvature, but not
+the angles. Sjamaar–Lerman's stratified reduction framework is appropriate for
+singular levels; the concrete angles above follow from the explicit metric.
+

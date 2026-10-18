@@ -1,0 +1,42 @@
+**Definition 27.1 (Common prepared batches and identification).** Fix $H=4$ and either $K=\{1,2,3,4\}$ or $K=\{1,2,4\}$. Use Definitions 23.1, 25.1 and 26.1 with known $p_k>0$ on $K$, $\sum_{k\in K}p_k=1$, and one fixed internal phase vector $\theta\in\mathbb T^K$. Thus, on the orthonormal memory basis $e_0,\ldots,e_4$,
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\quad c_k=0\ (k\notin K),\qquad
+x=\sum_{k\in K}c_ke_{4-k},\qquad
+Se_j=e_{j+1}\ (j<4),\quad Se_4=0,\quad J=xe_4^*.
+$$
+
+An actual monitored tick has posterior $`xx^*`$. A subsequent coherent window uses the same supplied isometry $V\psi=S\psi\otimes|0\rangle+J\psi\otimes|1\rangle$, with stable branch representatives, accessible chronological flags and no inaccessible which-history record. There is no intervention during a window and no terminal memory measurement. Inner products are conjugate-linear in the first entry. For $K_0=S,K_1=J$ and $K_w=K_{w_n}\cdots K_{w_1}$, write
+
+$$
+|\Psi_n\rangle=\sum_{w\in\{0,1\}^n}K_wx\otimes|w\rangle,\qquad
+\Omega_n=\operatorname{Tr}_{\rm mem}|\Psi_n\rangle\langle\Psi_n|,\qquad
+\Omega_n[w,v]=\langle K_vx,K_wx\rangle,\qquad
+Q_n|w\rangle=|w|_1|w\rangle,\qquad
+U_n(t)=e^{itQ_n},\qquad T_n=\mathcal D_n(\Omega_n)
+$$
+
+as in (25.3), with $\Omega_0=1$. A batch is a positive-integer list $\mathbf n=(n_1,\ldots,n_r)$ of independently actually prepared windows of this same device and internal $\theta$. All its flags are stored until one terminal POVM, whose effects commute only with
+
+$$
+Q_{\rm tot}=\sum_{j=1}^r Q_{n_j},\qquad
+\rho_{\mathbf n,\theta}=\bigotimes_{j=1}^r\Omega_{n_j,\theta},\qquad
+\mathsf Q_{\mathbf n,\theta}=\mathcal D_{\rm tot}(\rho_{\mathbf n,\theta}),
+\quad \mathcal D_{\rm tot}(A)=\sum_M P_M A P_M.
+\tag{27.1}
+$$
+
+Arbitrary effects within each total-count block are supplied. Preparation records are ignored: the terminal effect is tensored with their identity. Lengths within a batch are fixed before its preparation, without adaptation to its herald records. Theorem 27.2 gives a serial realization of the required product. Equal classical laws, equal $p$, equal local $T_n$, or equal single-window marginals alone do not imply this actual product with common $\theta$.
+
+The charged batch coordinates are largest window $L=\max_jn_j$, coherent applications $C=\sum_jn_j$, number of heralds $r$, and $C$ stored two-dimensional flags of joint dimension $2^C$. Monitored applications and all other apparatus are separate resources. A window of length one has the pure flag $|0\rangle$; call windows of length at least two nontrivial. Length-zero scalar factors, if supplied, contribute no information.
+
+A batch or fixed finite terminal law identifies the family if its equality implies $\theta'-\theta\in\Gamma_K$, the affine subgroup (25.4). The target is this supplied family's averaged-channel and outcome-labeled instrument orbit, with the memory-unitary meanings of Definition 24.1. In full support its complete character coordinates are
+
+$$
+\phi_1=\theta_1-2\theta_2+\theta_3,\qquad
+\phi_2=\theta_1-\theta_2-\theta_3+\theta_4;
+\tag{27.2}
+$$
+
+in sparse support the complete primitive coordinate is $\phi=2\theta_1-3\theta_2+\theta_4$. These are the full integer-quotient coordinates of (26.18) and (25.30), not a list of separately accessible formal monomials. An affine gauge may set $\theta_1=\theta_2=0$, leaving $(\theta_3,\theta_4)=(\phi_1,\phi_1+\phi_2)$ in full support and $\theta_4=\phi$ in sparse support.
+

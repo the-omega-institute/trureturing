@@ -1,0 +1,20 @@
+**Definition 2.4 (Prescribed-path classes).** A prescribed relative path
+specifies the original velocities $a_c=\dot k$, $b_c=\dot\chi$ on
+$[0,T]$ in Definition 1.1's regularity class. Write
+$\rho(\tau)=\int_0^\tau a_c(v)\,dv$. Its source guard is
+
+$$
+0<k+\rho(\tau)<H\quad\text{for every }\tau\in[0,T].
+$$
+
+The stronger literal class requires one fixed ambient affine map for
+each such prescribed path on that entire guard, including every
+intermediate truncation. The stronger guard class additionally requires
+its lawfulness indicator to be a function of the current encoding.
+Superscript $\mathrm{arb,path}$ denotes the corresponding capacities
+and tolerance sets. Every execution and concatenation is finite, with
+finite phase variation, but there is no uniform command magnitude,
+duration, length or variation bound. Section 8 derives the endpoint
+formula directly from the native equations and verifies these stronger
+contracts for the optimal witnesses.
+

@@ -1,0 +1,37 @@
+**Definition 4.1 (One finite replacement coupling).** Fix $n\ge1$, $C=[0,n+1]$ and $L=n+2$. On the product probability space $P\otimes\nu$, let $X\sim P$, $W\sim\nu\in\mathcal P(B_n)$ independently. Keep $Y=X_{C^c}$ and set
+
+$$
+Z=R_{n,W}X=(0W0)Y,\qquad Q=Q_{n,\nu}=\operatorname{law}(Z).
+\tag{4.1}
+$$
+
+Both guards belong to the replaced block. Consequently $Z$ is legal for every original exterior, and its joint $(Y,W)$ law is exactly $\mu_C\otimes\nu$. The auxiliary measure $Q$ need not be stationary or have a finite hidden presentation.
+
+For almost every actual exterior set
+
+$$
+g_C(y)=P(X_0=X_{n+1}=0\mid Y=y),\qquad
+r_n^y(w)=\frac{p_C(0w0;y)}{g_C(y)}.
+\tag{4.2}
+$$
+
+These conditionals are from $P$, not from $Q$. Equation (2.3) gives $g_C\ge2^{-L}$ and positivity of $r_n^y$ on all $B_n$. On the exceptional exterior null set assign $r_n^y=\pi_n$; no conclusion depends on that choice. For $i\notin C$ choose a $[0,1]$ Borel version
+
+$$
+a_i^C=\mathbb E_P[X_i\mid\sigma(X_j:j\notin C,\ j\ne i)].
+$$
+
+It is a function of $Y$ without $Y_i$, so it has the same value before and after replacement. Define
+
+$$
+\begin{aligned}
+E_C(P)&=\sum_{i\notin C}\mathbb E_P(q_i-a_i^C)^2,&
+O_C(P,\nu)&=\sum_{i\notin C}\mathbb E_Q(q_i-a_i^C)^2,\\
+G_C(P,\nu)&=\mathbb E_Q(q_0^2+q_{n+1}^2),&
+\mathcal B_n(P,\nu)&=\mathbb E_{\mu_C}\mathcal D_{B_n}(\nu\Vert r_n^Y).
+\end{aligned}
+\tag{4.3}
+$$
+
+Every $q_i$ in these quantities is the fixed original-law function from Convention 1.3.
+

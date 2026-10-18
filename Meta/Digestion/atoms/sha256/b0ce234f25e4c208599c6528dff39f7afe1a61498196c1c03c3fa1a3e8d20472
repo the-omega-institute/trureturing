@@ -1,0 +1,13 @@
+**Definition 1.1 (source and interpretation).** This is a `repo-derived`, ordinary finite classical construction using [Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) §§100–105 and 114.1. Its mathematical claims have no Lean verification; broader recovery claims remain open. Fix $m=2$, $d=1$, $\ell=2$, $n=4$ and $\mathbb F_2=\{0,1\}$. The same actual hidden depth $K=k\ge1$, or one fixed common prior $\mu$, governs seed acquisition and all payload Reads. Given $k$, restored fresh Reads are independent with $\Pr(\alpha)=r_k=F_{k+1}/F_{k+3}>0$ and $\Pr(\beta)=1-r_k>0$.
+
+The paid seed prelude interprets $\alpha\beta$ as 0 and $\beta\alpha$ as 1, discarding equal pairs with paid retries. It retains the actual seed $R$. Payload segments use the original parser
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,
+\qquad w_{j,1}=(\beta\alpha)^j\beta\beta.
+$$
+
+Only completed markers count toward $n$. The public initialized passive selector $\pi$ bookmarks exactly after the third completed marker on every four-marker word, including rejected words. It then continues the actual payload to the original $\mathrm{Stop}_{w_4}$; there is no Read after Stop. Retries, return cycles, incomplete parsing and noncompletion are retained in the source contract.
+
+For the actual seed $\rho=1$, the repeated coefficients are $v_1=v_2=v_3=v_4=1$ and $C_1=1+1=0$ in $\mathbb F_2$. For a marker prefix $u$ of length $t$, the original fields are $\beta(u)=|u|$ (integer weight) and $h(u)=|u|\bmod2$. Here $\beta(u)$ is a field name, distinct from the raw Read symbol $\beta$.
+

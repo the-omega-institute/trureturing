@@ -1,0 +1,107 @@
+**Theorem 96.1 (root inclusion and regularity).** For every source point in
+RC.4's entire nine-coordinate box, the eighteen equations (FA.123) have a unique
+zero in the strip box for every $9999/10\le t\le10001/10$. At $t=1000$ they
+also have a unique zero in the seed box, and it is the same zero. The
+Jacobian with respect to the eighteen unknowns is nonsingular throughout
+both boxes. These are statements about the comparison expressions; TP is
+asserted only at the source root under Assumption 93.1.
+
+**Proof.** Let $\mathcal F$ be the ordered left sides of (FA.123), with the targets
+subtracted. Denote its centre by $\bar X$, its radii by $r_i$, and its
+Jacobian by $J$. All interval endpoints below can be obtained using the
+dyadic denominator $D=2^{220}$, with
+
+$$
+\operatorname{down}(q)=\lfloor Dq\rfloor/D,\qquad
+\operatorname{up}(q)=\lceil Dq\rceil/D.
+$$
+
+An interval sum or product takes the extremal endpoint sums or four endpoint
+products and rounds outwards. Division uses the outwards reciprocal followed
+by multiplication, on intervals excluding zero. For $q=a/b\ge0$, a square
+root lower endpoint is $\lfloor\sqrt{\lfloor aD^2/b\rfloor}\rfloor/D$ and
+an upper endpoint is that integer plus one, divided by $D$. Squaring an
+interval containing zero uses lower endpoint zero. These rules involve
+only integer arithmetic and integer square roots.
+
+Evaluate source amplitudes by the positive-pivot adjugate expressions of
+§94, then $G$ by its expanded entries there. Evaluate ascending polynomials
+by Horner's rule, with coefficient sums and matrix products in increasing
+indices. Polynomial differentiation and multiplication are exact coefficient
+operations, followed by the stated endpoint rounding. In the following
+Jacobian formulas $g_{ij}(x)=\Gamma^{\rm num}_{\eta_i,j}(x)$,
+$D_i(x)=D_{\eta_i}(x)$ and $P_i$ use contact $i$'s own chart:
+
+$$
+\begin{aligned}
+J_{j,i}&=p_i\frac{g'_{ij}D_i-g_{ij}D'_i}{D_i^2},&
+J_{j,5+i}&=g_{ij}/D_i&& (0\le j<8),\\
+J_{8+2i,i}&=P_i',&J_{9+2i,i}&=P_i'',\\
+J_{8+2i,10+j}&=g_{ij},&J_{9+2i,10+j}&=g'_{ij}.
+\end{aligned}
+$$
+
+Unlisted entries vanish. Put $E_R=I-RJ$ and
+
+$$
+q_i=\sum_j\sup|(E_R)_{ij}|\frac{r_j}{r_i},\qquad
+\zeta_i=\sup|(R\mathcal F(\bar X,1000))_i|.
+$$
+
+For the seed let $e_i=\zeta_i/r_i$. For the strip use
+
+$$
+e_i=\frac{\zeta_i+\frac1{10}\sup|(R\partial_t\mathcal F
+ (\bar X,[9999/10,10001/10]))_i|}{r_i}.
+$$
+
+Precondition before bounding this derivative: $t$ is one common parameter.
+The only nonzero moment derivative rows are $\mu/t^2$ and
+$\alpha V/t^2$ in rows 5 and 6. At saturated contacts the other derivative
+rows are $-\epsilon_i N_cF_c$ and its local derivative. Thus the strip
+centre-displacement bound is the scalar mean-value theorem applied to
+$R\mathcal F$, with source coordinates held fixed inside their full box.
+All occurrences of the source and of $t$ remain over-enclosed; none is
+replaced by a root approximation or treated as an independent parameter.
+
+The resulting rational upper bounds are as follows. The seed $q_i$ column
+is in units of $10^{-15}$; the other three columns are dimensionless.
+
+| $i$ | Seed $10^{15}q_i<$ | Seed $e_i<$ | Strip $q_i<$ | Strip $e_i<$ |
+| --- | --- | --- | --- | --- |
+| 0 | 17 | 0.0000193 | 0.00041766 | 0.66740735 |
+| 1 | 130 | 0.00009088 | 0.00074404 | 0.66752689 |
+| 2 | 58 | 0.00003112 | 0.00094428 | 0.6675121 |
+| 3 | 5 | 0.00002838 | 0.00170517 | 0.67794482 |
+| 4 | 31 | 0.00007981 | 0.00266087 | 0.73366237 |
+| 5 | 5 | 0.00000869 | 0.0001267 | 0.66679263 |
+| 6 | 73 | 0.00002567 | 0.00347506 | 0.66792342 |
+| 7 | 81 | 0.00004112 | 0.00122273 | 0.66768712 |
+| 8 | 2 | 0.00000254 | 0.00000491 | 0.66678763 |
+| 9 | 6 | 0.00001148 | 0.00001008 | 0.66726904 |
+| 10 | 5 | 0.00000363 | 0.00064514 | 0.66743931 |
+| 11 | 2 | 0.00000043 | 0.00114617 | 0.66652024 |
+| 12 | 3 | 0.0000014 | 0.00091549 | 0.66724648 |
+| 13 | 5 | 0.00000388 | 0.00066279 | 0.66744546 |
+| 14 | 3 | 0.00000065 | 0.00831084 | 0.6642485 |
+| 15 | 430 | 0.00311194 | 0.00001337 | 0.66672836 |
+| 16 | 634 | 0.00430733 | 0.00002173 | 0.66678341 |
+| 17 | 518 | 0.00260262 | 0.00001978 | 0.66684789 |
+
+In particular $\max q_i<10^{-12}$ and $\max(e_i+q_i)<1/200$ for the seed;
+$\max q_i<1/100$ and $\max(e_i+q_i)<3/4$ for the whole strip. Every entry
+in the table follows by the displayed interval substitutions with the exact
+rational $R$, centres and radii; strictness also follows directly from the
+rounded upper entries.
+
+For the weighted maximum norm $\|v\|_r=\max_i|v_i|/r_i$, the map
+$T(X)=X-R\mathcal F(X)$ has Lipschitz constant $\max q_i<1$, and
+$|T(\bar X)_i-\bar X_i|\le e_i r_i$. Hence $T$ maps the closed box strictly
+into itself. Iterating $T$ gives a Cauchy sequence by the geometric-series
+bound on successive differences; its limit is a fixed point, and the same
+Lipschitz bound proves uniqueness. For every enclosed Jacobian,
+$\|I-RJ\|_r<1$ implies $RJ$ invertible by its Neumann series. In finite equal
+dimensions both $R$ and $J$ are therefore invertible, so a fixed point is
+exactly $\mathcal F=0$. The seed box lies inside the strip box, so their
+zeros at $t=1000$ coincide. $\square$
+

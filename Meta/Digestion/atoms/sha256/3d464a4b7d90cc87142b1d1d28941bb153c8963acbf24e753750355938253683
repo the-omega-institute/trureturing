@@ -1,0 +1,34 @@
+**Definition 5.1 (Step for this actual graph).** Use ARC Definition 6.2's
+complete Step74 and RCA Definitions 12.2–12.4's raw/event codec, with the
+actual $G_\circ$ descriptions, catalog and distinguished entries. Lookup
+scans the complete framed row list, decodes seven native fields and finite
+effects and requires a unique in-range row. Ports 0–73, latches 0–7, finite
+symbols/tables/stages and effect slots use the actual bounds. During
+bootstrap its fixed rows remain active until DONE; after a raw DONE use
+the actual decoded raw table, not the intended $G_\circ$.
+
+For clarity, the only represented core transformations are these:
+
+| Core | Word transformation, before the common receipt |
+| --- | --- |
+| RD | Nth actual marked cell; copy its symbol into the named latch; choose the literal equality successor. |
+| WR | Check actual represented writer/writability; select literal/latched symbol; Replace only its designated tracks. |
+| ML/MR | Check boundary/token/neighbor, Replace the two actual marks, preserving other tracks. |
+| EX | On ordinary marked R retain that cell identity as blank; AppendItem one new unmarked R. |
+| BF | Select the actual finite eight-entry truth table bit for its three operand subfields; Replace the result subfield. |
+| IN | Consume the next bit only from its actual version/PC/call-site kind; update latch, not tape. |
+| OUT | Record its actual bit as an event; no represented bit triggers a live OUT. |
+| TOK | Check source=1/destination=0 and replace those named finite slots only. |
+| CTL | Apply the ordered finite local effects: literal/latched finite bit, current/predecessor marker, stage/version/cursor, F receipt or halt, and its actual successor. |
+| Boot variants | Construct its one boundary cell or finite bit and actual fixed cursor successor. |
+
+Cell/head lookup and all changes are Nth/Find/Replace/AppendItem. Receipt
+changes old meter append R into its ordinary/F receipt, appends new R,
+updates append mark and preserves the core's newly updated read mark,
+including aliases. Append actual event and tally. Redundant original
+request/commit/pending fields are RCA Definition 12.4's explicit fold;
+they are simulator bookkeeping, not added old physical cells. There is
+no whole bank, semantic Call, Cover, conversion, counter increment or
+source-change opcode. Runtime descriptions and simulated words are tape
+data; an earlier converter's next instruction is still one RD/WR/etc.
+

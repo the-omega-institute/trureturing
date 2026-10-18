@@ -1,0 +1,93 @@
+**Theorem 52.2 (signed boundary coefficient and late diagonal size).**
+The integrals (52.1) converge absolutely for each fixed $b>0$,
+$0<C_E<\infty$, and
+
+$$
+\lim_{b\downarrow0}b^5\Delta_b=-C_E/j_0<0,
+\qquad W_{1,b}(o)\asymp b^2\quad(0<b\le b_{\rm ref}).
+\tag{52.3}
+$$
+
+The comparison constants in the second assertion are independent of $b$.
+
+Proof. In the source chart at scale one the height intervals are
+$(-b,\ell_0-b)$ and $(-b_{\rm ref},\ell_0-b_{\rm ref})$.
+Both kernels are expectations over the same free height bridge, with
+the same rational covariance on a path surviving the relevant interval.
+A difference of their survival indicators forces the path to reach
+$-b$ or $\ell_0-b_{\rm ref}$, hence to have supremum at least $b$.
+On paths surviving either interval the factor $(1+\nu H)^{-2}$ has
+common positive bounds; its covariance is comparable to $M_0$.
+Taking the phase Gaussian supremum and using (3.3), with $m=0$, gives
+
+$$
+|(K_b-K_{\rm ref})(t;o,o)|
+ \le Ct^{-7/2}e^{-cb^2/t}\quad(0<t\le1).
+\tag{52.4}
+$$
+
+The common raw chart factor and bounded $e^{\lambda t}$ are included
+in $C$. L41 gives $Ct^{-3/2}$ for $t\ge1$. These are integrable
+for each positive $b$; separate divergent diagonal Green integrals
+have not been subtracted.
+
+For $t\le1$, (3.3) bounds $D_E(t)$ by
+$Ct^{-7/2}e^{-c/t}$; for $t\ge1$, it is at most
+$k_t(0)=t^{-7/2}k_1(0)$. Thus $C_E$ is finite. The crossing event
+has positive bridge probability and $M_0$ is positive definite almost
+surely, so $C_E>0$. More explicitly, if $Z=-\min_{[0,1]}H$, Brownian
+scaling and Tonelli give
+
+$$
+C_E=\frac25h_1(0)\mathbb E_{0,0}^1[\gamma_{M_0}(0)Z^5].
+\tag{52.5}
+$$
+
+The integral of $t^{-7/2}\mathbf1_{\{t\ge Z^{-2}\}}$ is
+$2Z^5/5$; (3.3)'s fifth moment also proves its finiteness.
+The variance convention is exactly generator $\partial_r^2$.
+
+Apply the exact privileged chart $\Xi_b$ and determinant-one shear
+(2.4) at scale $b$, with raw Jacobian $j_0b^7$.
+At physical time $b^2u$ the first interval becomes
+$(-1,\ell_0/b-1)$, its covariance factor is $(1+\nu bH)^{-2}$,
+and its clock is $e^{\lambda b^2u}$.
+The reference interval becomes
+$(-b_{\rm ref}/b,(\ell_0-b_{\rm ref})/b)$.
+For every fixed $u>0$ continuity of bridges, covariance comparability
+and (3.3)'s inverse moment give
+
+$$
+j_0b^7(K_b-K_{\rm ref})(b^2u;o,o)\longrightarrow-D_E(u).
+\tag{52.6}
+$$
+
+The minimum equals $-1$ with probability zero; the upper face is
+retained before tending to infinite rescaled distance. On
+$u\le b^{-2}$, (52.4) gives the integrable majorant
+$Cu^{-7/2}e^{-c/u}$ for the left side of (52.6).
+Extend this integrand by zero beyond $b^{-2}$ and use dominated
+convergence. The physical-time part $t\ge1$ has uniformly bounded
+integral by Proposition 51.2 and vanishes after multiplication by
+$b^5$. Since $dt=b^2du$, this proves the first limit in (52.3).
+The original clock has remained present at every finite $b$.
+
+For the late part L41, uniformly in $b$, gives
+$K_b(t;o,o)\le C\phi_b(k_0)^2t^{-3/2}$ for $t\ge1$ and
+
+$$
+K_b(t;o,o)=\phi_b(k_0)^2
+ \left[(4\pi)^{-3/2}(\det M_b)^{-1/2}t^{-3/2}
+                         +O(t^{-5/2})\right].
+\tag{52.7}
+$$
+
+By (51.2) the leading coefficient has a positive uniform lower
+bound. Choose one fixed large $T_0$ making the error at most half
+that coefficient for $t\ge T_0$. Integration on $[T_0,\infty)$
+gives the lower bound for $W_{1,b}(o)$; the first estimate gives the
+upper bound. Finally
+$\phi_b(k_0)^2=(2/L_0)\sin^2(\pi\varepsilon b/L_0)\asymp b^2$.
+Positivity alone would not have supplied this uniform lower bound.
+$\square$
+

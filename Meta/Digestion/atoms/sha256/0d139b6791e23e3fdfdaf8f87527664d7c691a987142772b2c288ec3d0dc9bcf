@@ -1,0 +1,58 @@
+**Convention 12.2 (credited suppliers and primary boundaries).** All
+repository supplier citations with suffix `j` below designate public
+revision `91170b89dfe9dd7eadc64d14d86d2157ed14abdf`. The mathematical
+content here is ordinary theory, without a claim of Lean certification,
+independent review or worldwide originality. The joint weight law,
+finite projection bounds, exact pressure for that law and strict
+original lower endpoint are `repo-derived` deductions.
+
+Theorem 2.2 owns the all-cyclic half-entropy rule. Lemma 3.2 and tables
+(NCE.26)–(NCE.27) own the separating factor and collision suppliers.
+AAR owns the exact factor/trajectory equivalence. FMR owns canonical
+all-word simulation, paid finite-cover implementation, actual scaffold
+restriction and rate existence; NPC owns unrestricted product pressure
+and its all-original-competitor consumer. Proposition 11.1 instantiates
+that paid mechanism with the explicit $100^n$-state equality fiber.
+COK owns the comparison used only in Corollary 9.3. D3 owns the exact
+finite value $M_1(3)=4$ and the upper $\lambda<3/16$. None of these
+suppliers is counted as a new general theorem here.
+
+| Primary source | Exact mathematical correspondence and transfer limit |
+| --- | --- |
+| Tomasz Gogacz and Szymon Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, [arXiv:1512.01808v1](https://arxiv.org/html/1512.01808v1), Theorem 1 and Corollary 1 | A native decoder equation makes its target a function of one reply under the same tuple law. Their theorem fixes a schema, query and functional dependencies and optimizes a closed entropic cone; the submodular relaxation is an upper bound. It supplies neither the particular joint law (NCE.51) nor a finite cutoff for varying native lengths and donors. |
+| Pascal O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, [arXiv:1012.0065v2](https://arxiv.org/html/1012.0065v2), Definition 32 and Theorem 33 | The degree-$M$ Bethe partition function is the $M$th root of the average Gibbs partition function over covers of one fixed normal factor graph; its limsup is that base graph's Bethe partition function. This is an average over a fixed graph's covers. It gives no universal upper bound for the maximum over all complete native networks, and no optimizer-cofinality is transferred. |
+
+Finite entropy, conditional Gibbs domination and permutation averaging
+are the mature machinery already proved in §2. The new numerical law
+does not strengthen their epistemic status. No differently scoped
+predecessor-row or finite-reader-synthesis theorem is used to infer
+an all-length cap or a preparation bound.
+
+**Open problem 12.3 (optimizer-cofinality and global completion).**
+The strict endpoint is a universal certificate at one fixed rational
+law and depth. It does not identify
+$\min_{\mu\in\Delta(S_3)}\beta_3(\mu)$, exact $\sigma_3$, sharp
+$\lambda$ or general exact $M_1(D)$. Even exact pressure at a chosen
+law, attained at every length, does not give covers attaining its dual
+lower bound.
+
+The remaining [COK, Open problem 9.3][COKj] and [GDB, Definition
+11.1][GDBj] obligation is a total sound cap verifier with accepted
+weight-optimized endpoints cofinal at every depth, or a uniform
+effective native length error sufficient for terminating two-sided
+approximation. The conditional-owner local-law completion and global
+entropy-loss questions remain open. [SCP, §§3–6][SCPj]'s uniform
+softening estimates compare semantic all-size quantities and do not
+evaluate them effectively. No length modulus, universal global-law
+completion, bounded-width or mixing premise follows from (NCE.67).
+The minimal-relations/internal-observer/mutual-recovery programme
+retains the original sources, operations, all-view recovery objective
+and separate resource obligations beyond this strict quantitative
+lower consequence.
+
+[NPCj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COKj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[D3j]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[GDBj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCPj]: https://github.com/the-omega-institute/trureturing/blob/91170b89dfe9dd7eadc64d14d86d2157ed14abdf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+

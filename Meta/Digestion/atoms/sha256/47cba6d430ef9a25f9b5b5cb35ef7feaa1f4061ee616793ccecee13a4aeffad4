@@ -1,0 +1,33 @@
+**Definition 10.1 (additional source-bound actuator).** Suppose an actual
+service executes (AC.28) or its mirror on the same source at its unknown
+actual height, using the calibrated canonical instrument. Its source-bound
+configuration/coupling, waveform implementation, timing and permissions,
+blanks and complete event recorder are additional resources. The service
+may depend on the actual source through that coupling; it is not assumed
+to be a common channel on $V$ and history-independent blanks. Neither
+naming the relative path nor knowing (AC.29) acquires this service.
+
+For clarity its complete two-unit operation is specified, including
+failures. For either actual waveform let
+
+$$
+\begin{aligned}
+\lambda(t)&=(k'(t))_+/k(t)+(-k'(t))_+/(c-k(t)),\\
+S(t)&=\exp(-\int_0^t\lambda),\qquad
+K_t=\sqrt{S(t)}\operatorname{diag}_{i=0}^4
+ \sqrt{p_i(k(t))/p_i(x)},\\
+\gamma_i(t)&=\lambda(t)-(\log p_i(k(t)))',\qquad
+J_i(t)=\sqrt{\gamma_i(t)}|f\rangle\langle i|K_t.
+\end{aligned}
+\tag{AC.35}
+$$
+
+The live branch is $K_2\rho K_2^*$; failure in a Borel set $A$ and mode
+$i$ is $\int_A J_i(t)\rho J_i(t)^*dt$, tensor identity on the actual
+reference/archive. Nonnegative rates and
+$\sum_i\int_0^2J_i^*J_i=I-K_2^*K_2$ prove completeness, as in OC.19b.
+There are no failure atoms at the turn. For the positive loop first-leg
+possible failure modes are $1,3,2$; second-leg new failures are $0,13,2$.
+Reflection swaps these patterns. The second leg runs only after first-leg
+survival. Old failures keep their earlier event and $f$.
+

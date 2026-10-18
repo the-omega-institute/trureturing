@@ -1,0 +1,27 @@
+**定理 49.2（Sharp odd-critical finite ceiling and an unbounded surcharge family）。** For every odd $k=m\ge3$, let
+
+$$
+b=k-1,\qquad h=\lceil\log_2 b\rceil,\qquad
+H(k)=1+h+\mathbf1_{\{b\text{ a power of two and }b\ge4\}}.
+\tag{49.4}
+$$
+
+Across arbitrary label sets and all full INITIAL targets with finite GLOBAL preset fee, the exact supremum of that fee is $H(k)$. It is attained by assigning a different label $y_j$ to each phase at INITIAL tail zero, the same on both free-value fibres, and one arbitrary common label $R$ to every positive INITIAL tail. Initial bottom retains any independent label. On this complete target,
+
+$$
+C_{\rm pre}(f)=H(k),\qquad C_{\rm ad}(f)=1+h,
+\tag{49.5}
+$$
+
+where the adaptive value is the supplied [CR46, Theorem 4.1]. In particular $k=m=2^h+1$, $h\ge2$, has exact adaptive fee $h+1$ and exact preset fee $h+2$.
+
+Proof. For any finite nonconstant target select one eligible cut. If $a>0$, the actual critical mask $E=\{0,a\}$ is permitted; if $a=0$, choose $E=\{1,2\}$. Thus one can always use an actual two-phase parent child and a complementary child of $b=k-1$ phases. Evaluate their spectra at dimension $h$, even if their actual label counts require fewer coordinates. A nonempty two-phase child always admits a nonzero aggregate at this dimension, whether its labels agree or differ.
+
+If $k=3$, both children have two phases and their one-dimensional spectra meet at one. If $k>3$ and $b<2^h$, the larger child is unsaturated; (47.5) says that it admits every nonzero aggregate, even in its singleton exceptions. It can therefore match the two-phase child at length $h$. If $b=2^h\ge4$, length $h+1$ always matches by Theorem 47.2. This proves $C_{\rm pre}(f)\le H(k)$ for every finite target. Constant targets have fee zero and also obey this bound.
+
+For the stated target, $\Lambda$ is injective, and at least one $y_j$ differs from $R$. As in Theorem 49.1, its only eligible cut is $a=k-1$, with unique parent mask $\{0,k-1\}$. Its two children have two and $b$ distinct singleton labels. Binary capacity forces at least $h$ further coordinates. At $k=3$ both aggregate spectra are nonzero-only at dimension one, so that length is possible. At $h\ge2$ the two-phase child is nonzero-only. When $b=2^h$, the complementary singleton child fills the whole cube and is zero-only; this forces the additional coordinate. When $b<2^h$, it admits a nonzero aggregate and there is no surcharge. Theorem 48.1 therefore gives exactly $H(k)$.
+
+Here is an explicit code construction for one attaining literal stream. Let $d=H(k)-1$ and list the $b$ complementary phases in their ordinary increasing order. If $b=2^h\ge4$, assign them all vectors of an $h$-dimensional subspace of $\mathbb F_2^{h+1}$, replacing its zero vector by one vector $w$ outside that subspace. Their aggregate is the nonzero $w$. Otherwise choose $b$ distinct vectors in $\mathbb F_2^h$ with nonzero aggregate $w$. Such a subset exists for $b<2^h$: if a chosen subset has zero aggregate, exchange one of its vectors with an unused vector. For the remaining case $b=2,h=1$, use the entire one-dimensional cube, whose aggregate is one. Give the two endpoint phases the codes $0,w$. All labels are separated within their actual parent children, and the combined full-phase aggregate is zero. Apply the common coordinate normalization (47.8) at each actual paid index, then the literal inverse (47.9). Together with the unchanged root $1^{k-1}0$, these are exactly $H(k)$ safe complete blocks. The lower bound ensures that some source actually requires that worst fee; archives identified earlier can stop.
+
+Finally, the existing critical adaptive law [CR46, Theorem 4.1] applies to the same unique parent and its actual terminal tail, with independently optimized children of two and $b$ distinct labels. It gives $1+h$. Its fresh-label special case is already [CR46, Theorem 6.1]; the use of Theorem 4.1 also permits $R=y_j$. This comparison changes neither the adaptive benchmark's source nor the preset controller's one-stream requirement. ∎
+

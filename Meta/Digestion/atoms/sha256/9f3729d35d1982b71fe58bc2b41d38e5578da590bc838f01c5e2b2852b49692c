@@ -1,0 +1,76 @@
+**构造 82.5（A uniformly inhabited five-even-class family）。** For every integer $d\ge2$, set
+
+$$
+h=2d,\qquad r=2^d,\qquad N=r^2=2^{2d},\qquad
+m=N+2d+1=N+h+1,\quad k=m+1,\quad T=m+2.
+\tag{82.26}
+$$
+
+Let $I=\mathbb F_2^d$, ordered lexicographically, with distinct unit vectors $a=(1,0,\ldots,0)$ and $b=(0,1,0,\ldots,0)$. Take disjoint row and column label sets $\{A_i:i\in I\}$ and $\{D_i:i\in I\}$, with all labels within each set distinct. Choose common fresh distinct $R,C$ outside these sets and independent $L_\bot$. The joined low pair set is
+
+$$
+\mathcal J=(I\times I)\setminus\{(0,0)\}.
+\tag{82.27}
+$$
+
+Its five designated pairs are
+
+$$
+H_1=(a,0),\quad H_2=(b,0),\quad
+H_3=(0,a),\quad H_4=(0,b),\quad
+H_5=(a+b,a+b).
+\tag{82.28}
+$$
+
+They are distinct nonzero pairs, also when $d=2$. Put $A=\{0,\ldots,m\}$ and $M=\{m+1-2t:1\le t<h\}$. Specify the actual pair table $G:A\to\mathcal J$ by
+
+$$
+\begin{aligned}
+G(j)&=H_1&&j\in\{0\}\cup M,\\
+G(1)=G(2)&=H_5,\\
+G(3)=G(4)&=H_2,\\
+G(5)=G(6)&=H_3,\\
+G(7)=G(8)&=H_4.
+\end{aligned}
+\tag{82.29}
+$$
+
+Assign all other pairs in $\mathcal J\setminus\{H_1,\ldots,H_5\}$ in lexicographic order to all remaining phases in increasing order, each exactly once. If $G(j)=(i,\ell)$, define
+
+$$
+\lambda_0(j)=A_i,\qquad \lambda_1(j)=D_\ell,
+\tag{82.30}
+$$
+
+and extend them by the entire INITIAL target and history pullback (82.12).
+
+**证明（well-defined table, actual class counts and a witness of the criterion）。** Here $h\ge4$ is even. The $h-1$ phases of $M$ are distinct; their least member is $N-h+4\ge16$ (equality at $h=4$, and the expression increases thereafter), and their greatest is $m-1$. Thus $M$ is disjoint from $\{0,\ldots,8\}$, so no prescription in (82.29) conflicts with another. The $H_1$ class has exactly $h$ phases; each other $H_i$ has two. The remaining phase count is
+
+$$
+|A|-h-8=(N+h+2)-h-8=N-6
+       =|\mathcal J\setminus\{H_1,\ldots,H_5\}|.
+\tag{82.31}
+$$
+
+Consequently the ordered bijection is well defined and exhausts all pairs in (82.27). There are exactly $N-1=2^h-1$ joined low classes, precisely five with positive even multiplicity, namely the $H_i$ after translating to labels; all the other $N-6$ classes have multiplicity one. The total phase count is $h+4\cdot2+(N-6)=N+h+2=m+1$, as required.
+
+Every row and column of $I\times I$ has $r$ pairs. Deleting $(0,0)$ leaves $r-1>0$ pairs in row zero and column zero and $r>0$ in every other row and column. All remaining pairs occur in $G$, so each component table has exactly $r=2^d$ positive classes. The two component tables are different, since their label sets are disjoint. The width $m=N+h+1$ is odd, is at least $2^h-1$, and has actual gcd $\gcd(m,m+2)=1$. Formula (82.17) realizes every phase, every original tail and both values jointly for these tables; no separate marginal realization is substituted.
+
+Identify the joined class associated to $(i,\ell)\ne(0,0)$ with its pair of row and column labels, and assign its code by concatenation:
+
+$$
+c((A_i,D_\ell))=(i,\ell)\in\mathbb F_2^{2d},
+\qquad c(\widehat C)=(0,0).
+\tag{82.32}
+$$
+
+This is a bijection onto the full cube. With coordinates numbered $0,\ldots,2d-1$, the five even classes have codes
+
+$$
+e_0,\ e_1,\ e_d,\ e_{d+1},\
+e_0\oplus e_1\oplus e_d\oplus e_{d+1},
+\tag{82.33}
+$$
+
+where here $e_i$ denotes a unit vector, not a missed phase. Their XOR is zero. The code of $\widehat C$ has coordinate zero zero, and the codes at phases zero and one, $H_1,H_5$, have coordinate zero one. Every missed phase $m+1-2t$ for $1\le t<h$ has class $H_1$, whose only nonzero code coordinate is zero. Thus every clause of (82.15) holds. The witnessing code and the pair table are explicit finite formulas, rather than a fee solver or a choice of an unspecified validation example. ∎
+

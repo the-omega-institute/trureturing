@@ -1,0 +1,11 @@
+**定义 5.1（已供应参考与有限坐标图）。** 给一份标定的纯参考 $|o\rangle$ 和与它正交的单位向量 $|o_\perp\rangle$，在此有序基下令 $w=a+ib\in\mathbb C$，
+
+$$
+|\psi(w)\rangle=
+\frac{|o\rangle+w|o_\perp\rangle}{\sqrt{1+|w|^2}},
+\qquad
+r(a,b)=\frac{(2a,2b,1-a^2-b^2)}{1+a^2+b^2}.
+$$
+
+这份参考是接口信号，不是观察者的全部记忆、控制或取得过程。有限 $w$ 覆盖除正交射线 $|o_\perp\rangle$ 外的纯态；该射线要用另一张图，不能当作有限参数点。
+

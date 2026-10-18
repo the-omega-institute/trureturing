@@ -1,0 +1,21 @@
+**Proposition 3.2 (all physical covariances and original objective).** The eight moments give
+
+$$
+\sum p h h^T=I_3,\qquad \sum p b_{\rm label}n_hn_h^T=M,
+$$
+
+including both cross-covariances. Under Assumption 1.2 every original competitor has this same-law representation, with
+
+$$
+k\ge\sqrt\alpha\,s/s_0,\qquad
+T_{\rm actual}=\frac{H_{\rm high}+\sum p|\ell_h+t c_h\xi f_h|}{2}.
+$$
+
+Its endpoint bound is
+
+$$
+|\ell_h+t c_h\xi f_h|\le(1-\xi)|H_0|+\xi|H_1|.
+$$
+
+Proof. The first five rows give $\sum p=1$, $\sum pu=\sum pv=\sum puv=0$ and $\sum pu^2=\alpha$; the circle supplies $\sum pv^2=\beta$. Division by the positive square roots recovers every entry of $\sum phh^T$. The final three rows give $\sum pb_{\rm label}=\mu$, $\sum pb_{\rm label}z^2=V_f$ and $\sum pb_{\rm label}zw=0$. As $\alpha z^2+\beta w^2=1$, the remaining squared moment is $W_f$. Congruence by $n_h$ gives $M_{11}=d^2W_f/h_2^2=m_1$, $M_{22}=b^2V_f/h_1^2=m_2$ and the off-diagonal zero. The contrast and objective are the retained full-class reduction, with the high contribution positive. The final inequality is convexity of the absolute value within each existing atom. It is only an upper bound: endpoint splitting neither refines the acquired alphabet physically nor proves its minimum count. $\square$
+

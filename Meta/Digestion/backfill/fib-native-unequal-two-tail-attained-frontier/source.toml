@@ -1,0 +1,5 @@
+source_id = "fib-native-unequal-two-tail-attained-frontier"
+path = "docs/develop/theory/FIB_NATIVE_UNEQUAL_TWO_TAIL_ATTAINED_FRONTIER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

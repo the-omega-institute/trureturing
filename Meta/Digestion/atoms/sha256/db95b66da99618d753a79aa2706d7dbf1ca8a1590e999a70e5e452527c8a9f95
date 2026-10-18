@@ -1,0 +1,17 @@
+**Corollary 12.4 (the same self donors at every length).** Under
+(RCE.40), $P^n$ is admissible for every $n\ge1$. For every
+probability $\mu$ on $S_d$ with $\mu(P)=1$,
+
+$$
+A_n^{(d)}(\mu)=1\quad(n\ge1),\qquad \beta_d(\mu)=1.
+\tag{RCE.42}
+$$
+
+Proof. For target $(i,q)$ on $P^n$, take the constant or the exact
+word and decoder of Theorem 12.3 in coordinate $i$ itself. These
+equations hold simultaneously on every tuple; no change of witnesses
+or correlations is needed. The product probability of $P^n$ is one,
+and no subset of $S_d^n$ has probability greater than one. This
+proves both equalities. Same-witness saturation also gives the
+complete-template maximum one. $\square$
+

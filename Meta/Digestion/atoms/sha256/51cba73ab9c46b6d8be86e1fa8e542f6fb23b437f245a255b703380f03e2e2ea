@@ -1,0 +1,39 @@
+**Open Problem 7.2 (Unchanged arbitrary-finite target).** With the entire
+original $\Theta_N$, set
+$C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and
+$U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$. Still decide whether some
+finite exact producer attains $c_\star$, or whether $C_N<c_\star$ for every
+finite $N$. [Universal, Theorem 6.2][U] owns the equivalence of the latter
+with
+
+$$
+\forall N\ge1\ \exists r,k\ge1:\qquad
+U_{N,r}<\kappa_k/(k+1).
+$$
+
+The response route still needs some $\gamma_L(P)>0$, or a strict finite
+residual exceeding its justified allowance, for each intended remaining
+law. Exact nullity, positive kernel dimension, cross-event dependence
+and a summable tail do not supply that escape. No whole row-unifilar
+exclusion, new attaining-law coverage, fixed-$N$ uniform margin or
+original all-$N$ completion follows. A lawful candidate with every
+$\gamma_L=0$ would obstruct the full-response route on that law; it would
+prove neither attainment nor failure of every finite budget certificate.
+The separately scoped protected-branch/cycle posterior-defect package
+is not a theorem of this volume, and no implication from balanced cycles
+to productive response is proved here.
+
+[G]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[M]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[QT]: FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md
+[N]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[C]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md
+[P7]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[BPP]: https://arxiv.org/html/1501.06841v3
+[BV]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf
+[DLP]: https://arxiv.org/html/1104.2224v2
+[TC]: https://arxiv.org/html/1011.1581v2
+

@@ -1,0 +1,36 @@
+## 4. 直接有限证书
+
+对任意整数 $N,L\ge1$、$r\ge0$、候选 $\theta\in\Theta_N$ 和满足（3.2）的 $f:B_L\to\mathbb R$，全部对象明确取在该候选的实际 $P_\theta$ 下。对 $i=1,\ldots,L$ 令
+
+$$
+q^\theta_{r,i}=\mathbb E_{P_\theta}[X_i\mid
+\sigma(X_{i-r},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+r})],\qquad
+T_{L,r}(\theta,f)=\sum_{i=1}^L
+\mathbb E_{P_\theta}[f_C(X_i-q^\theta_{r,i})^2].
+\tag{4.1}
+$$
+
+具体地，半径 $r$ 外部词为 $u,v$ 时，正总质量原子上的 $q^\theta_{r,i}$ 等于
+
+$$
+\frac{\lambda M_uM_1M_v\mathbf1}{\lambda M_uAM_v\mathbf1}.
+$$
+
+分母为零时取零而加权风险为零；强制中心原子的分子为零。$r=0$ 用两个空词。故（4.1）完全由同一个 $P_\theta$ 在 $[1-r,L+r]$ 的有限柱概率决定，包括 $f_C$ 与窗口的重叠。
+
+仅为推导必要界，假设这个候选满足 $d(P_\theta)=c_\star$，并置 $P=P_\theta$、$c=c_\star$、$q_i=\mathbb E_{P_\theta}[X_i\mid\mathcal E_i]$。矩阵桥与定理 3.1 给块内响应界，投影给 $\mathbb E_{P_\theta}(q_i-q^\theta_{r,i})^2=D_r(P_\theta)-c$。由 $|(X-a)^2-(X-b)^2|\le2|a-b|$、Cauchy–Schwarz 和（2.2），
+
+$$
+|T_{L,r}(\theta,f)|\le Fc+2LF\sqrt{\frac{c}{r+1}}.
+\tag{4.2}
+$$
+
+因此，量词仍遍历任意上述候选 $\theta\in\Theta_N$：若其某个精确矩阵零方向严格满足
+
+$$
+|T_{L,r}(\theta,f)|>F\bar c+2LF\sqrt{\frac{\bar c}{r+1}},
+\tag{4.3}
+$$
+
+则 $d(P_\theta)<c_\star$。证明是对这个同律候选假设达到后用（4.2）产生矛盾：右侧随非负 $c$ 单调且 $c_\star\le\bar c$；再用全平稳律的 $d(P_\theta)\le c_\star$ 得严格非达到。证书可在裁剪前或裁剪后的表示上使用；它只排除产生该证书的同律，不给统一 $L,r,f$ 或证书存在性。
+

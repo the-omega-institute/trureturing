@@ -1,0 +1,44 @@
+## 142. Exact return-label alternatives, including repetitions
+
+The return rho has one of the following forms, in fixed paired coordinates
+up to a vertex-induced reindexing:
+
+    (C,Z,M,Q,Z,M),       or       (M,Z,C,Q,Z,C).    (137.8)
+
+Write a for the companion reservoir value (m or c), b for the shared
+axial value (c or m), and q=x_Q. Genuine transverse discriminant and (137.5)
+give the necessary strict bounds
+
+    q > (z-a)^2/(b+1)-1 > b,
+    q < 1+z+a.                                    (137.9)
+
+If Q is in S, its actual fixed pair is {Z,A}, and (137.9) gives its interval.
+No condition that Q be a fourth distinct H label is imposed.
+
+If Q is in H, the complete possibilities are:
+
+* Companion M, shared axis C: Q can be M or Z. It can also be D only
+  when d>(z-m)^2/(c+1)-1>c. It cannot be C.
+* Companion C, shared axis M: Q can only be Z, since q>m and every other
+  H value is at most m.
+
+Each listed possibility still has to satisfy all inequalities and all
+remaining complete edge equations; this is a list of necessary alternatives,
+not an assertion of their existence.
+
+If Q=Z, rho has one additional axial Z occurrence besides its two
+transverse Z occurrences. If Q=M in the first form, rho has an axial M
+occurrence besides its two transverse M occurrences. Both multiplicities
+must be retained in the full budgets.
+
+Every axial Z occurrence outside I has a non-dominant reservoir pair.
+Since H={M,C,D,Z}, its pair either contains Z itself, or is {M,D} with
+
+    d>z-m-1>c.                                    (137.10)
+
+Indeed the other possible pairs not containing Z are {M,C} and {C,D},
+both dominant by (137.4)--(137.5). A {M,D} pair is non-dominant exactly when
+z<1+m+d. Pairs containing Z are permitted and never dominant; these are
+precisely the repeated-role cases that cannot be suppressed in a full-star
+argument.
+

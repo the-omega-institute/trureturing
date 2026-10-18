@@ -1,0 +1,20 @@
+**Definition 1.2 (the macro supplier and its observations).** Write
+SLHC for [Sparse Literal History Transport Continuation][SLHC12]. Its
+Definitions 1.3 and 11.1 give the original complete macro observer:
+$W\subseteq L_\ell$, where $L_\ell$ consists of length-$\ell$ binary
+words without adjacent ones; one whole-word row selects one fixed
+literal Read, Update or fixed-bit Halt. A primitive reply immediately
+selects a hold or one-coordinate change $\delta(w,r)\in W$ and is
+otherwise discarded. Every installed row counts, reachable or not.
+The macro trace retains each selected row, each exact address, each
+raw reply, each actual current tree and source successor, and the
+first Halt. In particular the root routing Reads of SLHC Construction
+11.6 are part of this trace. They are not silent local operations.
+
+The positive regimes are $T=0$ for every $h$, and positive finite $T$
+for even $h$. SLHC §§10–11 at [the fixed supplier revision][SLHC11]
+provide complete correct macro controllers in those regimes. SLHC
+§12 supplies capped variants and literal bounds on the same family.
+These are conditional source and whole-word services, not an
+implementation of selection or literal delivery with absent cursors.
+

@@ -1,0 +1,16 @@
+**Legal realization.** Powers of the shears are
+
+$$
+U^j=\begin{pmatrix}1&j\\0&1\end{pmatrix},\qquad
+L^j=\begin{pmatrix}1&0\\j&1\end{pmatrix}\quad(j\ge0).
+$$
+
+The successive nonempty multipliers are
+
+$$
+L^h,\quad UL^{w-1-h},\quad U^{a-2}J,\quad U,
+\tag{9.2}
+$$
+
+with $d$ empty words between the $d+1$ consecutive $Q_w$ reads. In particular $w-1-h=w/2\ge0$. Chronologically $L$ is $(J,M)$, $U$ is $(M,J)$, and $U^{a-2}J$ is one $J$ followed by $a-2$ pairs $(M,J)$. Their lengths are $2h$, $2+2(w-1-h)$, $1+2(a-2)$, and $2$, giving the stated total. There is no interior read in any word. Equations (1.2)–(1.4) realize these exact words with one positive source, one unchanged row, and positive unread states.
+

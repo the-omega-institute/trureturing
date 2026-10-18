@@ -1,0 +1,24 @@
+**Definition 7.1 (coordinate realization of the label graph).** For
+$K,L\ge2$, put $n=K+L-1$ and use $V,\gamma$ from Section 6. Take
+the running states
+
+$$
+q_{d,e}\quad\text{for }(d,e)\in\gamma(V)
+$$
+
+and terminals $\mathsf0,\mathsf1$. Start at $q_{0,0}$ and query
+coordinate $d+1$ at $q_{d,e}$. For reply
+$\varepsilon\in\{0,1\}$, if there is a representative
+$(h,z)\in V$ with $\gamma(h,z)=(d,e)$ and
+$(h+\varepsilon,z+1-\varepsilon)\in V$, set
+
+$$
+\delta(q_{d,e},\varepsilon)=q_{d+1,(e+\varepsilon)\bmod2}.
+\tag{SI.25}
+$$
+
+If no such representative exists, set the successor to terminal
+$\mathsf\varepsilon$. The existence test concerns the fixed
+finite table definition, not a computation performed during a run.
+Theorem 6.2 makes (SI.25) unambiguous.
+

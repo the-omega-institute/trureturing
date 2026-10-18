@@ -1,0 +1,14 @@
+#### 33.5　多步链的干预增益与擦除边界
+
+推广链模型，令 $X_0\sim\operatorname{Bernoulli}(1/2)$，
+
+$$
+X_{j+1}=X_j\oplus N_j,
+\qquad
+N_j\sim\operatorname{Bernoulli}(p_j),
+$$
+
+且噪声相互独立。
+
+<a id="claim-33-5-1"></a>
+

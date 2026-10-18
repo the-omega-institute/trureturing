@@ -1,0 +1,74 @@
+**命题 467.1（实际残差与其 size-bias 的完整相对熵）。** 对全部自然数 $n$，定义正轴上的密度
+
+$$
+p_n(v)=\frac{R_n(v)}{r_n},\qquad
+q_n(v)=\frac{vR_n(v)}{m_n}.
+\tag{RSK.3}
+$$
+
+二者都是概率密度，且 $q_n=vp_n/\mu_n$，即 $p_n$ 的 size-bias 密度。取自然对数，定义
+
+$$
+D(p\Vert q)=\int_0^\infty p(v)\log\frac{p(v)}{q(v)}\,dv.
+$$
+
+本命题中该积分绝对可积，并且
+
+$$
+\boxed{
+A-L_n
+=r_n D(p_n\Vert q_n)
+=\int_0^\infty h(v/\mu_n)R_n(v)\,dv>0,
+\qquad h(x)=x-1-\log x.
+}
+\tag{RSK.4}
+$$
+
+在 $n=0$ 时，$R_0=B$、$r_0=k$、$m_0=1$、$L_0=k\log k$，所以
+
+$$
+\boxed{A-k\log k=kD(B/k\Vert vB).}
+\tag{RSK.5}
+$$
+
+**证明。** 完整质量与一阶矩分别给 $\int p_n=1$、$\int q_n=1$。正轴上每个分母都严格正，故逐点有
+
+$$
+\frac{p_n(v)}{q_n(v)}=\frac{\mu_n}{v},\qquad
+\log\frac{p_n(v)}{q_n(v)}=\log\mu_n-\log v.
+$$
+
+完整绝对可积性由已支付的预算直接控制：
+
+$$
+\int_0^\infty p_n(v)
+ \left|\log\frac{p_n(v)}{q_n(v)}\right|dv
+\le |\log\mu_n|+\frac{\ell_n}{r_n}<\infty.
+\tag{RSK.6}
+$$
+
+这里同时保留零附近和无穷远端，不要求 $R_n\log R_n$ 可积。计算的是对数比的完整积分，没有将两个可能发散的微分熵相减。
+
+由 $B=B_n+R_n$ 及完整对数积分的线性性，RSK.1–RSK.2 给
+
+$$
+\begin{aligned}
+A-L_n
+&=-\int_0^\infty\log(v)R_n(v)\,dv+r_n\log\mu_n\\
+&=r_nD(p_n\Vert q_n).
+\end{aligned}
+$$
+
+另一方面 $h(v/\mu_n)R_n(v)$ 的可积性由 $vR_n$、$R_n$ 和 $|\log v|R_n$ 支付；其线性项的完整积分恰为
+
+$$
+\int_0^\infty(v/\mu_n-1)R_n(v)\,dv
+=m_n/\mu_n-r_n=0.
+$$
+
+展开 $h$ 就得到 RSK.4 的第二个等号。对 $x>0$，对数切线不等式给 $h(x)\ge0$，且 $x\ne1$ 时严格大于零。实际 $R_n$ 在正轴严格正，故在正测度集合 $v>2\mu_n$ 上被积函数严格正，完整积分也严格正。
+
+最后 $B_0=0$、$\int B=k$ 和 $\int vB=1$ 给全部零层预算及 RSK.5。特别是 $B/k$ 与 $vB$ 分别被正确归一化；$B$ 的质量是 $k$。证毕。
+
+RSK.4 的方向是 $p_n\Vert q_n$。若反向取 $q_n\Vert p_n$，其对数期望变成一阶矩加权的 $v\log v$ 积分，须另行支付这一可积性。当前完整误差所消费的是 RSK.6 的已付绝对对数矩。
+

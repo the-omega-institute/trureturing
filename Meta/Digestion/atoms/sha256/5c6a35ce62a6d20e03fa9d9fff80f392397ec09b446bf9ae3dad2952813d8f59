@@ -1,0 +1,25 @@
+**Example 9.4 (finite full-row image with no bounded full-row selector).**
+Reuse NSF Proposition 11.4. The root old row and the literal original
+root reply branch give the entire domain of original pairs. At
+$Q=\{L,R\}$ the reached set and exterior are constant, and the full row
+has exactly two possible partitions, equal and unequal children.
+Theorem 5.3 returns precisely these two rows; Theorem 6.2 permits a
+zero-read exterior consumer.
+
+For every original prefix depth $h$, choose $m\ge2(h+1)$ and compare
+
+$$
+\langle T_m,T_m\rangle,\qquad
+\langle T_m,T_{m+1}\rangle.
+\tag{NPL.27}
+$$
+
+Both are in the same entire fiber, agree through depth $h$, and have
+different full partitions. The common-prefix fact follows from the
+all-source branch saturation in NSF Lemma 9.2; $T_m\ne T_{m+1}$ follows
+from the normal-code bijection. The ARH serial/static/prefix equivalence
+therefore excludes a uniformly bounded full-row service. Deciding the
+finite image neither adds an equality read nor installs a semantic
+partition selector. CAR Proposition 9.1 supplies a further acquired,
+coupled example of this same boundary at its own stated atomic scope.
+

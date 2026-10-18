@@ -1,0 +1,43 @@
+**命题 24.14（三阶实例及相位单项式的精确方向）。** 在包含 $T=\{1,3,5\}$ 的合法路径上，四对四交换
+
+$$
+\{\varnothing,13,15,35\}\longleftrightarrow\{1,3,5,135\}
+$$
+
+保持全部二阶及以下矩，只改变三阶矩 $\mu_{135}$；实际上它保持所有其他合法矩。一般 $k$ 阶方向 $D_T$ 的相位单项式为
+
+$$
+M_T=\prod_{D_T(I)=+1}\psi_I
+\prod_{D_T(I)=-1}\overline{\psi_I}.
+$$
+
+若这些振幅均非零，则 $\arg M_T=-\Phi_T$；其总次数为 $2^k$，正振幅及共轭振幅的因子数各为 $2^{k-1}$。
+
+证明。当 $k=3$，$D_T$ 在单点和三点子集上为正，在空集和二点子集上为负，因此上式从左到右的直方图差正是 $D_T$。两侧质量都是四；每个 $T$ 内坐标在两侧各出现两次，每个二点集在两侧各出现一次，其他位置和二点关系出现零次。三点关系左侧零次、右侧一次。全部其他更高阶或不同关系也不变，这是 $m_S(D_T)=\mathbf1_{S=T}$ 的完整计算，不是仅检查三个一阶均值。
+
+例如按显示顺序选择 $|\mathbf I_-\rangle=|\varnothing,13,15,35\rangle$、$|\mathbf I_+\rangle=|1,3,5,135\rangle$，定理 24.13 的 $A_T$ 就是这两个明确有序四系统态之间的矩阵单位，给上述交换的无储库实现。
+
+在非零支撑上乘入负相位表达式，
+
+$$
+M_T=\left(\prod_{I\subseteq T}\sqrt{p_I}\right)
+\exp\left(-i\sum_{I\subseteq T}D_T(I)\theta_I\right)
+=\left(\prod_{I\subseteq T}\sqrt{p_I}\right)e^{-i\Phi_T}.
+$$
+
+全部 $2^k$ 个子集各贡献一个因子，正负各半，给次数与等长副本数。共同相位因两侧因子数相同而抵消。更一般地，在 $\theta_I\mapsto\theta_I+\sum_S t_S\mathbf1_{S\subseteq I}$ 下，$\Phi_T$ 只增加 $t_T$，因为 $m_S(D_T)=\mathbf1_{S=T}$；因此保持所有其他关系的相位作用也保持此单项式。若有零振幅，仍使用这个多项式，其辐角不再定义。证毕。
+
+若额外独立准备 $m$ 份相同的 $|\psi\rangle$，单个有序矩阵单位的期望是
+
+$$
+\langle\psi^{\otimes m}|A_T|\psi^{\otimes m}\rangle
+=\overline{\prod_{D_T(I)=+1}\psi_I}
+\prod_{D_T(I)=-1}\psi_I=\overline{M_T},
+$$
+
+$$
+\langle H_T\rangle=2\operatorname{Re}M_T.
+$$
+
+没有自动多出来的第二个有序方向。$T=\{1,3\}$ 时 $M_T=M$，而定理 24.3 的 $A$ 还特意加入交换系统后的第二项，所以其期望是 $2\overline M$，$V$ 的期望为 $4\operatorname{Re}M$；这解释了两种公式的因子差。相同准备只用于这一相位期望式，达到交换下界的确定列表准备不需要它。次数和体积衡量的是所声明的多系统关系交换，不能据此宣称一般相位估计必需同样多的样本。
+

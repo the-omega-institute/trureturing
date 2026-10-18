@@ -1,0 +1,38 @@
+**Theorem 39.1 (a selected minus-sign history can have zero probability).**
+For any selected $y\in\{5,16,27\}$, there is, separately for that $y$,
+a feasible original finite law at every $s=0,t\ge3000$ with
+
+$$
+P^{\rm rev}_{y,\epsilon,-1}=0,\qquad
+\operatorname{rank}F_{\rm rev}=1,\qquad
+\operatorname{tr}F_{\rm rev}>0.
+\tag{FC.174}
+$$
+
+Consequently the original feasible-law constraints imply neither a
+positive lower bound on every history nor $F_{\rm rev}\succeq cM$
+for any fixed $c>0$. This does not exclude additional restrictions
+proved separately for a height-optimal face, and supplies no lower
+bound on each individual acquisition label.
+
+Proof. In (FC.169) choose instead
+
+$$
+z_y^0=-\frac{b_f}{a_f\sqrt{2q_y}}.
+\tag{FC.175}
+$$
+
+The three source intervals, in order $y=5,16,27$, are
+$(-0.659,-0.658)$, $(-0.731,-0.730)$ and $(-0.832,-0.831)$.
+Each slope satisfies $z_y^0<-\max\{1/10,V_2/(4U)\}$. The positive
+three-line construction and the residual lift (FC.171)–(FC.173) thus
+apply with no change to the full moments, $M$ or capacities. Only the
+$z_y^0$ antipodal pair is reverse. Its lower failure vectors are
+proportional to $(a_fz_y^0,-b_f)$, whose dot product with
+$(-\sqrt{q_y},1/\sqrt2)$ is zero. The reverse pair has strictly
+positive intensity, giving a nonzero rank-one effect and (FC.174).
+Since $M$ is positive definite on this lower two-dimensional support,
+a kernel vector of that rank-one effect contradicts every proposed
+$F_{\rm rev}\succeq cM$. Each selected $y$ uses its own law; no one
+law is claimed to null all three selected minus histories. $\square$
+

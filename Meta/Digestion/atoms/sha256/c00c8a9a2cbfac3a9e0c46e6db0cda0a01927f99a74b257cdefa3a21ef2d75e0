@@ -1,0 +1,7 @@
+# 11. Fixed-dimension uniform gaps and finite Hankel certificates
+
+The preceding volume fixes the full-open native contract. This section keeps
+that contract unchanged and makes the dimension quantifier explicit. In
+particular, every encoder, update matrix, decoder row, affine offset, and
+preparation may vary from one model to another.
+

@@ -1,0 +1,150 @@
+**Convention 59.1 (objects, quantifiers and credited supplies).**
+This is a same-topic continuation of [JR], §§29–57, linked by
+[the owner's Convention 58.1](FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md#58-the-joint-height-record-and-decoder-clock-continuation).
+Throughout, the
+isolated point of [CG, Proposition 13.2], its existence/isolation,
+nonsingular Jacobian, slack and adjugate ranks, exact normalization and
+original minimax identification in CG §§13–17 are inherited conditional
+premises. They are not established anew here. All exact TP identities
+below apply at that point, rather than at arbitrary points of its
+rational source box. These are ordinary conditional mathematical proofs;
+they carry no Lean/kernel certification or native-execution conclusion.
+
+The sole input is the normalized reached-cut unknown specimen with
+supported coordinates
+
+$$
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+p_y=(y/128,(64-y)/128,1/2),\quad (a_y)_i=\sqrt{p_{yi}},
+\tag{JRH.1}
+$$
+
+for all twelve histories $y\in\{5,16,27\}$ and $e,n=\pm1$.
+The fixed calibrated isometry $E:\mathbb C^3\to V\subset\mathbb C^5$
+embeds them in the original five modes. The ideal live block is still
+$EU_{e,n}B_y^{\rm ideal}U_{e,n}^\dagger E^\dagger$, where
+$B_y^{\rm ideal}$ is CG.111, and the five separately labelled ideal
+failure measures are
+
+$$
+w_\ell f_y(t)dt\,P_f,\quad f_y(t)=\frac{6y}{(y+6t)^2},\quad
+(\ell,w_\ell)=(0,0),(1,1/4),(2,1/2),(3,1/4),(13,0).
+\tag{JRH.2}
+$$
+
+Time $t\in[0,1]$ means the original absolute time $6+t$.
+The objective $E(\Phi)$ is the maximum over all twelve histories of
+HALF the complete cq trace norm, as in CG Definitions 3.1–3.2 and
+JR Definition 41.1. It counts live coherences, every labelled Borel
+failure measure, singular-time mass, wrong support, abort and all
+zero-target sectors. Passive references are arbitrary and inaccessible.
+There is one common all-complex CPTP processor, no source prior, helper,
+readable history, acceptance division, postselection, copy, reset, retry
+or free bypass.
+
+The acquisition is an actual CP instrument $\mathcal E_\alpha$,
+with full-output TP conditional decoders $\mathcal R_\alpha$ and
+$\sum_\alpha\mathcal E_\alpha^\dagger(I)=I$. Its classical labels,
+including report coins, are actually generated and dephased. At the
+same cut $d_\alpha$ counts jointly every future-accessible input-bearing
+specimen, memory, controller, environment and entanglement share.
+All other dilation systems are permanently inaccessible before that
+cut. Independent blanks introduced later are allowed. A Kraus index
+used in a proof is not a readable record.
+
+Let $F$ be the plus effect of an acquired binary report, let
+$\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa$, and let
+$\mathsf W=\max_{y,e,n}\sum_{d_\alpha\ge3}
+\operatorname{tr}\mathcal E_\alpha(E\rho_{y,e,n}E^\dagger)$.
+The original cost $\mathsf C(s)$ and height-record optimum
+$\mathcal T(s)$ are exactly JR.20 and JR.43, under
+$E(\Phi)=E_*$, $\mathsf V(F)\ge s$ and
+$\mathsf W=\mathsf C(s)$. Full effects and the forgotten complete
+channel are not fixed competitor hypotheses. The height comparison
+uses $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$; it does not replace the
+twelve-history error or cost maximum.
+
+Necessity statements retain JR Definition 41.1's finite class, its
+convergent countable version, and only CG Convention 21.3's expressly
+stipulated measurable finite-fibre Kraus fields with integrable effects
+and live Choi matrices and full TP decoders almost everywhere. In the
+integral case CP encoder densities need not individually be TNI relative
+to the reference measure. No arbitrary disintegration or infinite-memory
+extension is presumed. All constructions in this continuation are finite.
+
+The exact source dictionary is CA.7–CA.9, equivalently CG.112–CG.116,
+CG.134 and JR.2, JR.21–JR.23:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a|0\rangle\langle1|+b|1\rangle\langle0|,\quad
+S=c|0\rangle\langle2|+d|2\rangle\langle0|,\quad
+M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\quad
+\kappa=h_0a+h_1b,\quad
+\theta=\frac{ab}{h_0h_1},\quad\omega=\frac{cd}{h_0h_2},\\
+\delta=\theta+\omega,\quad k=1-\delta,\quad
+s_0=\sqrt\delta,\quad v_0=\frac{\omega}{1-\theta},\\
+\mathfrak f(v)=\sqrt{v(\theta v+\omega)}+
+ \sqrt{(1-v)(1-\theta v-\omega)}.
+\end{gathered}
+\tag{JRH.3}
+$$
+
+All seven amplitudes and $m_1,m_2$ are positive. On $[v_0,1]$,
+$\mathfrak f$ decreases strictly from $1$ to $s_0$. Put $v=v_s=1$
+for $s\le s_0$, $v=\mathfrak f^{-1}(s)$ otherwise, and
+$u=\theta v+\omega$. Reuse the sharp result of JR §§34–40:
+
+$$
+\begin{gathered}
+A_y=\sum_i h_i^2p_{yi},\quad
+B_y=b^2p_{y0}+a^2p_{y1},\quad C_y=d^2p_{y0}+c^2p_{y2},\\
+P_y(s)=(1-u)A_y+(1-v)B_y,\qquad
+\mathsf C(s)=P_{27}(s).
+\end{gathered}
+\tag{JRH.4}
+$$
+
+Here $B_y$ is a scalar resource expression, distinct from
+$B_y^{\rm ideal}$. Set $K_0=D,K_1=T,K_2=S$,
+$N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$ and
+
+$$
+N=\begin{pmatrix}\Delta A&\xi&\eta\\
+\xi&\Delta B&\zeta\\\eta&\zeta&\Delta C\end{pmatrix},\quad
+\ell(K)=\operatorname{tr}(K^\dagger K\Delta),
+\tag{JRH.5}
+$$
+
+where $\Delta A=A_{27}-A_5$, and similarly for $B,C$;
+$\xi,\eta,\zeta$ are JR.49. In particular
+$\Delta A,\Delta B,\Delta C,\xi,\eta>0$ and $\zeta<0$.
+For $K=xD+zT+wS$ with real coefficients,
+$\ell(K)=\Delta Ax^2+\Delta Bz^2+\Delta Cw^2+
+2\xi xz+2\eta xw+2\zeta zw$.
+
+For each actual label let $A_\alpha$ be its supported acquisition
+effect, $N_\alpha$ its pulled total canonical-failure effect, and
+$\Lambda_\alpha=\mathcal R_\alpha^L\mathcal E_\alpha$ its entire
+supported live CP map. Define
+
+$$
+Z_{\rm cf}=\sum_{\alpha:\Lambda_\alpha=0}A_\alpha,\qquad
+p_{\rm cf}(y,e,n)=\operatorname{tr}(Z_{\rm cf}\rho_{y,e,n}).
+\tag{JRH.6}
+$$
+
+The sum becomes an integral over this measurable zero-map set in the
+stipulated integral model. The condition concerns the whole supported
+map at an actual label, not a single hidden product or an unused decoder
+direction. Define $\mathfrak P_s$ to consist of finite actual
+instruments with $E=E_*$, $\mathsf V\ge s$,
+$\mathsf W=\mathsf C(s)$ and terminal live effect
+$L_\alpha=(\mathcal R_\alpha^L)^\dagger(I)\succ0$ on the
+ENTIRE decoder fibre for every nonzero acquisition branch. Zero
+encoder branches are omitted; unused fibre directions are not exempt.
+The original free coherent full-$M_5$ completion is allowed.
+

@@ -1,0 +1,45 @@
+**假设 11.2（Fixed C-108 local access, conditional on its suppliers）。** On each
+of the two original factors use the fixed walk operator $K$, waits
+$U(t)=e^{-itK}$ with $t\ge0$, complete five-result rank-one Lüders readings,
+and Stop from C-108.1. The ordered identification on each side is
+
+| Original label | $0$ | $1$ | $2$ | $3$ | $13$ |
+| --- | --- | --- | --- | --- | --- |
+| Walk label | $N$ | $2$ | $3$ | $5$ | $25$ |
+
+The conditional two-sided interface permits $U(t)\otimes I$,
+$I\otimes U(u)$ with separately chosen nonnegative waits, complete local
+readings, and subsequent local choices based on retained classical records
+from both sides. After a local Stop that side is not acted on. Every
+strategy has finite depth, and the comparison includes all finite depths.
+The input-independent random control resources, strategy and record rule
+are identical for compared inputs. Complete histories retain both sides'
+outcomes, actions and stops; event grouping is classical postprocessing.
+Denote these strategies by $\mathcal M_{\mathrm{loc}}$ and their laws by
+$P_\Gamma^\pi$.
+
+The passive-frame interface inherited from C-108.2 is the following:
+
+$$
+D_\phi=\operatorname{diag}(1,i,i,i,1),\qquad
+D_\phi^\dagger U(t)D_\phi\text{ is real orthogonal},
+\tag{11.3}
+$$
+
+the complete reading branches in this frame are real coordinate projections,
+and the real span of the single-side actual effects is
+$D_\phi\operatorname{Sym}_5(\mathbb R)D_\phi^\dagger$.
+These facts about the fixed $K$ and available effects are inherited
+assumptions here. Their unprovided nested suppliers are not independently
+verified. The passive matrix $D_\phi$ and the spanning argument do not grant
+a phase control, a derivative measurement or the execution of every matrix
+in a real linear span.
+
+Access is to two local factors of the same possibly correlated $\Gamma$;
+it does not require $\Gamma=\rho_1\otimes\rho_2$. It does not follow merely
+from single-system state preparation or a native tree-memory contract, and
+grants no arbitrary unitary, reset, source copy, swap instrument, quantum
+side information or hidden Kraus record. Different settings are defined on
+the same matrix $\Gamma$; realizing their laws by sampling a common stable
+source is an additional preparation requirement.
+

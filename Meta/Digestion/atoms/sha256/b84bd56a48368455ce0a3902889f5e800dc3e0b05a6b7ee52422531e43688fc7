@@ -1,0 +1,66 @@
+### 58.1 Actual convention and theorem
+
+Let
+
+\[
+ |b|<1,\quad h=\sqrt{\frac{3-b^2}{1+b^2}}>1,\quad a=hb,\quad
+ P=\frac{a-3+i(h+b)}2,\quad Q=\frac{-a-3+i(h-b)}2,
+ \quad A=P+3,\quad B=Q+3,
+\]
+
+where \(J\) is the three-by-three all-ones matrix and \(I\) is the
+three-by-three identity. Let the actual seed be
+
+\[
+ H_0=\frac1{\sqrt6}
+ \begin{pmatrix}J+PI&J+QI\\J+\bar QI&-J-\bar PI\end{pmatrix}.
+\]
+
+Indices are in \(\mathbb Z_3\), and \(f_l(j)=\omega^{lj}\), where
+\(\omega=e^{2\pi i/3}\). The parameter map is the one in (57.32),
+so \(|b|<1\) covers precisely \(-1<a<1\); in particular
+\(1-a^2=(1-b^2)^2/(1+b^2)>0\).
+The Fourier convention, with no additional square-root factor, is
+
+\[
+ x=\sum_{l=0}^2u_lf_l,\qquad y=\sum_{l=0}^2z_lf_l,
+ \qquad
+ \binom{U_l}{V_l}=T_l\binom{u_l}{z_l},
+\]
+
+where
+
+\[
+ T_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\\bar B&-\bar A\end{pmatrix},
+ \qquad
+ T_1=T_2=\frac1{\sqrt6}
+                 \begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+\]
+
+Here \(U,V\) are the Fourier coefficients of the actual two output
+channels. These blocks are unitary. For any coefficient triple \(q\),
+its inverse Fourier transform has three unit entries if and only if
+
+\[
+ \sum_l|q_l|^2=1,\qquad \sum_l\bar q_lq_{l+1}=0.
+\]
+
+This follows by expanding its squared moduli in the basis
+\(1,f_1,f_2\). Thus these are the original input and output flatness
+equations for each of \(q=u,z,U,V\).
+The canonical input rays, for \(l=0,1,2\) and \(\epsilon=\pm1\), are
+
+\[
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,g_l^\epsilon f_l),\qquad
+ g_l^\epsilon=\frac{\epsilon i\alpha_l\bar\beta_l}
+ {|\alpha_l||\beta_l|},
+\]
+
+where \((\alpha_0,\beta_0)=(A,B)\) and
+\((\alpha_1,\beta_1)=(\alpha_2,\beta_2)=(P,Q)\).
+Here \(|A|^2=3+2a, |B|^2=3-2a, |P|^2=3-a, |Q|^2=3+a\),
+so none of these denominators vanishes. These six rays form an
+orthonormal basis, and each is actual common-flat. Orthogonality of an
+input ray to \(c_k^\epsilon\) is exactly
+\(u_k+\overline{g_k^\epsilon}z_k=0\).
+

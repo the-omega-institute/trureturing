@@ -1,0 +1,33 @@
+**Convention 16.5 (mathematical provenance and comparison contracts).**
+Lemmas 14.1 and 15.1, Theorems 14.2 and 15.2 and their stated consequences
+are `repo-derived` ordinary source-model deductions. Their central facts
+are the concrete mandatory original allocations and the annex-only
+physical operands, not an assumed abstract service-effect condition.
+No Lean certification or worldwide novelty is asserted. The source
+meanings and formal-library boundaries in Conventions 8.2 and 12.3 are
+retained, including the private source-traversal and evaluator-erasure
+results: those results presuppose their actual run/realization and
+readout contracts, rather than constructing this original interface.
+
+The `literature-attested` comparison interfaces have different premises.
+Pinned mathlib's StateTransition.Respects requires a supplied relation
+matching a step by a nonempty target path and matching termination.
+[CompCert v3.16's `fsim_properties`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v)
+requires a well-founded index, initial/final matching, public-symbol
+preservation and trace-matching Plus or decreasing-index Star. Neither
+contract asserts equality of all the concrete physical coordinates here.
+[CSLib's `IsSimulation`](https://github.com/leanprover/cslib/blob/6d9d11371bae527fa615a016da8111bbdeb36f7c/Cslib/Foundations/Semantics/LTS/Simulation.lean)
+likewise assumes the two LTSs and a relation, matching an already given
+transition with the same label and related successor. It supplies no
+entry for this source. Its Lean4.36.0-rc1/mathlib625d8914 setting is
+separate from this source's Lean4.33.0/mathlibdb584cd6 setting.
+Devriese, Patrignani, Piessens and Keuchel's *Modular, Fully-abstract
+Compilation by Approximate Back-translation*, DOI10.23638/LMCS-13(4:2)2017,
+uses preservation/reflection of behavioral equivalence for its specified
+languages and contexts; its abstract's approximate back-translation is
+step-bounded and conservative beyond that bound. Those observations
+cannot silently replace the full original response. The present
+obstruction fixes that response requirement and proves an actual
+source-effect mismatch; it proves no general impossibility of simulation,
+full abstraction or recovery under other separately specified contracts.
+

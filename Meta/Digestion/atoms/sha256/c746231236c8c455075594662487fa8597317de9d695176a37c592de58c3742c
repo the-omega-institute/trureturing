@@ -1,0 +1,94 @@
+### 五、因果方格上的 holonomy 与 FIB 曲率
+
+考虑一个因果方格：
+
+$$
+\begin{array}{ccc}
+e_{00}&\xrightarrow{a}&e_{10}\\
+\downarrow b&&\downarrow d\\
+e_{01}&\xrightarrow{c}&e_{11}
+\end{array}
+$$
+
+有两条到达 $e_{11}$ 的路径：
+
+$$
+\pi_1=d\circ a,
+\qquad
+\pi_2=c\circ b.
+$$
+
+分别定义：
+
+$$
+U_{\pi_1}=U_dU_a,
+\qquad
+U_{\pi_2}=U_cU_b.
+$$
+
+定义因果方格曲率：
+
+$$
+\mathcal R_\square
+=
+U_dU_a-U_cU_b.
+$$
+
+如果：
+
+$$
+\mathcal R_\square=0,
+$$
+
+则两条路径对所有状态给出相同结果。
+
+如果：
+
+$$
+\mathcal R_\square\ne0,
+$$
+
+则路径顺序会影响最终状态。
+
+但是观察者未必能看见全部曲率。真正可见的曲率是：
+
+$$
+P\mathcal R_\square.
+$$
+
+对隐藏方向 $d$，定义：
+
+$$
+\mathcal R_{\square,\mathrm{hid}}
+=
+P\mathcal R_\square d.
+$$
+
+于是：
+
+- $\mathcal R_\square d=0$：隐藏方向在该方格中没有动力学曲率；
+- $P\mathcal R_\square d=0$：即使存在全局曲率，观察者也看不见；
+- $P\mathcal R_\square d\ne0$：隐藏关系通过不同因果路径产生可见差异。
+
+这给出两个层次：
+
+$$
+\boxed{
+\text{本体曲率}
+=
+\mathcal R_\square;
+}
+$$
+
+$$
+\boxed{
+\text{观察曲率}
+=
+P\mathcal R_\square.
+}
+$$
+
+FIB 的 $J_f$ 是单窗口中的最小离散混合曲率，而 $\mathcal R_\square$ 是因果路径上的动力学曲率。
+
+---
+

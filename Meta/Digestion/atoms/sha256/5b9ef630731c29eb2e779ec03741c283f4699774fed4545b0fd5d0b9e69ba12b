@@ -1,0 +1,315 @@
+**Theorem 4.1 (A finite quadrature and a whole-block TP port).** Suppose
+an exact feasible extension $\Omega$ in Definition 2.1 is given.
+For the appropriate threshold $p_0$ in Theorem 2.2, and every fixed
+$p\in[p_0,1]$, the repaired channel has a finite scalar-port description
+with at most
+
+$$
+K_n+1,\qquad
+K_n=(s m)^4,\quad s=\left\lceil\frac{n+2}{2}\right\rceil,
+\quad m=n+2
+\tag{4.1}
+$$
+
+flags. The additional flag is needed only for further depolarizing
+mixing. If all entries of $\Omega$ and $p$ are algebraic, all the
+port data can be algebraic. The flags in (4.1) may have mixed POVM
+effects; finite spectral refinement gives rank-one composite Kraus
+operators. The same repaired channel also has the credited QRC
+real-product support bound of $225$ flags.
+
+Proof. The following construction makes the finite-node assertion
+independent of an unspecified finite-design order. Let $\mu$ be
+normalized complex projective Haar measure on unit $z\in\mathbb C^5$.
+Set $t=n+1$. For each $j=1,2,3,4$, take the $s$-node positive Gauss
+rule for the probability measure
+
+$$
+(5-j)(1-x)^{4-j}\,dx\quad(0\le x\le1).
+\tag{4.2}
+$$
+
+These are standard Gaussian quadrature ingredients. Their properties
+needed here follow directly: the degree-$s$ orthogonal polynomial has
+$s$ simple interior zeros, since otherwise multiplying its sign-changing
+factors would contradict orthogonality to lower-degree polynomials.
+Division by that polynomial proves exactness through degree $2s-1$.
+If $\ell_a$ is a cardinal Lagrange polynomial at a node, its quadrature
+weight equals the integral of $\ell_a^2$, hence is strictly positive.
+Rational moments give rational orthogonal-polynomial coefficients;
+the nodes and weights are algebraic. Thus all four rules have the
+claimed positivity and exactness, not merely an asymptotic accuracy.
+
+For one product node $(x_1,x_2,x_3,x_4)$ put
+
+$$
+\begin{aligned}
+p_1&=x_1,&p_2&=(1-x_1)x_2,\\
+p_3&=(1-x_1)(1-x_2)x_3,
+&p_4&=(1-x_1)(1-x_2)(1-x_3)x_4,\\
+p_5&=\prod_{j=1}^4(1-x_j),
+\qquad
+z_j=\sqrt{p_j}e^{2\pi i\ell_j/m}\ (j\le4),
+&z_5&=\sqrt{p_5},
+\end{aligned}
+\tag{4.3}
+$$
+
+where each $\ell_j$ ranges from $0$ to $m-1$. Give this node weight
+$q_z$ equal to the product Gauss weight divided by $m^4$. There are
+$s^4m^4=K_n$ nodes, all with positive weights summing to one, and
+
+$$
+\sum_zq_z(zz^\dagger)^{\otimes l}
+=\int(zz^\dagger)^{\otimes l}\,d\mu(z)
+=\frac{P_l}{D_l},\qquad
+0\le l\le t,\quad D_l=\binom{l+4}{4}.
+\tag{4.4}
+$$
+
+To prove exactness, an entry is $z^\alpha\bar z^\beta$ with
+$|\alpha|=|\beta|=l$. The four phase sums kill it unless the first
+four exponent differences vanish, since each has magnitude at most
+$l<m$. Equality of total degrees then forces the fifth difference
+to vanish. The surviving monomial is $\prod_jp_j^{\alpha_j}$,
+of degree at most $l$ in each stick variable. Since $2s-1\ge t$,
+the four Gauss rules integrate it exactly. The change of variables
+(4.3) sends the independent densities (4.2) to the uniform simplex
+law, whose density is $4!$; its monomial moment is
+
+$$
+\int\prod_jp_j^{\alpha_j}\,d\mu
+=\frac{4!\prod_j\alpha_j!}{(l+4)!}.
+\tag{4.5}
+$$
+
+Together with uniform relative phases this is projective Haar measure.
+The permutation-sum formula for $P_l$ has matching entry
+$\prod_j\alpha_j!/l!$ and zero unmatched entries; division by
+$D_l$ gives exactly (4.5). This proves both equalities in (4.4).
+It also proves exactness for every balanced polynomial of bidegrees
+$(l,l)$ with $l\le t$.
+
+For use in both repairs, let $\Omega^{(l)}$ be the reduced extension
+on $I\otimes O^{\otimes l}$, and define its input matrix contraction
+
+$$
+G_l(z)=(I_I\otimes\langle z^{\otimes l}|)\Omega^{(l)}
+(I_I\otimes|z^{\otimes l}\rangle),\qquad G_0(z)=\chi_I.
+\tag{4.6}
+$$
+
+Every reduced extension has Bose support. Consequently
+
+$$
+\begin{aligned}
+\int G_l(z)\,d\mu&=\frac{\chi_I}{D_l},\\
+\int zz^\dagger\otimes G_l(z)\,d\mu
+&=\frac{l\chi+I_O\otimes\chi_I}{(l+5)D_l}.
+\end{aligned}
+\tag{4.7}
+$$
+
+The first identity follows from (4.4). For the second, expand
+$P_{l+1}$ as the average of all permutations. The $l!$ permutations
+fixing the prepared last slot contribute $I_O\otimes\chi_I$;
+the other $l\,l!$ contribute the same one-output marginal $\chi$.
+Left and right permutations of the first $l$ slots leave the
+Bose-supported operator unchanged. Finally
+$(l+1)D_{l+1}=(l+5)D_l$ gives the coefficient in (4.7).
+For $l=0$ this reads $\int zz^\dagger\otimes\chi_I
+=I_O\otimes\chi_I/5$, so the degenerate case is included.
+This is the contraction behind NOP §VI, equation (64).
+
+For the ordinary Bose repair set
+
+$$
+R_z=D_nq_zG_n(z)\succeq0.
+\tag{4.8}
+$$
+
+The finite rule is exact for $G_n$ and $zz^\dagger\otimes G_n$.
+Equations (4.7) therefore give
+
+$$
+\sum_zR_z=\chi_I=I_I/5,\qquad
+\sum_z zz^\dagger\otimes R_z
+=\frac{n\chi+I_O\otimes\chi_I}{n+5}.
+\tag{4.9}
+$$
+
+For the PPT repair write $n=2k+\delta$, where
+$\delta\in\{0,1\}$. Reorder the outputs as
+$(O_1,O'_1,\ldots,O_k,O'_k)$ with one additional untransposed output
+when $\delta=1$. Transpose the $k$ primed factors. This is (2.2),
+up to a permutation, by Bose support. Put
+
+$$
+\begin{gathered}
+\Phi=\sum_{j=1}^5e_j\otimes e_j,\\
+\psi_i(z)=(z\otimes\bar z)^{\otimes i}
+\otimes\Phi^{\otimes(k-i)}\otimes z^{\otimes\delta},
+\quad 0\le i\le k,\qquad
+\phi(z)=\sum_{i=0}^kc_i\psi_i(z),\\
+\mathsf B_{ij}=\frac{(i+j+\delta)!}{(i+j+\delta+4)!},\qquad
+\mathsf A_{ij}=\frac{(i+j+\delta)!}{(i+j+\delta+5)!}.
+\end{gathered}
+\tag{4.10}
+$$
+
+Choose a nonzero real vector $c$ minimizing
+$\alpha=c^T\mathsf Ac/(c^T\mathsf Bc)$. The following derivation
+of its value is the NOP Appendix A ingredient, specialized with all
+normalizations retained. For $q(x)=\sum_{i=0}^kc_ix^i$,
+
+$$
+\begin{aligned}
+c^T\mathsf Bc&=\frac16\int_0^1x^\delta(1-x)^3q(x)^2\,dx>0,\\
+c^T\mathsf Ac&=\frac1{24}\int_0^1x^\delta(1-x)^4q(x)^2\,dx.
+\end{aligned}
+\tag{4.11}
+$$
+
+The strict inequality follows because a nonzero polynomial cannot
+vanish on the open interval. Thus $\mathsf B$ is positive definite
+and $\alpha$ is one quarter of the minimum weighted mean of $1-x$
+over polynomials of degree at most $k$. The compression of multiplication
+by $x$ to that polynomial space has eigenvalues the $k+1$ zeros
+of its degree-$k+1$ orthogonal polynomial. Indeed, an eigenvector
+polynomial $q$ at eigenvalue $y$ satisfies
+$(x-y)q\perp\{1,x,\ldots,x^k\}$, so $(x-y)q$ is a nonzero
+multiple of that orthogonal polynomial. Conversely division by any
+of its simple interior zeros gives such an eigenvector. The simple
+interior-root assertion follows from the same sign-change argument
+used for the Gauss rules. Under $u=2x-1$ the weight becomes a positive
+constant times $(1-u)^3(1+u)^\delta$. Therefore
+
+$$
+\alpha=\frac{1-\zeta_n}{8}=\frac{g_n}{8},\qquad
+p_n^{\rm P}=5\alpha.
+\tag{4.12}
+$$
+
+In particular $0<p_n^{\rm P}\le5/(n+5)<1$, since the quotient at
+$c=e_k$ is $1/(n+5)$. The minimizing $\alpha$ and a nonzero kernel
+vector of $\mathsf A-\alpha\mathsf B$ can be algebraic, because
+the two matrices are rational and $\mathsf B$ is positive definite.
+For $n=1$, $k=0$, $\delta=1$, one gets $\alpha=1/6$ and
+$p_1^{\rm P}=5/6$, agreeing with the ordinary repair. No transposed
+output is required in that case.
+
+Define the input matrix
+
+$$
+F_z=(I_I\otimes\langle\phi(z)|)\Omega^{\Gamma_{
+O'_1\cdots O'_k}}(I_I\otimes|\phi(z)\rangle)\succeq0.
+\tag{4.13}
+$$
+
+There is the exact Bose contraction identity
+
+$$
+F_z=\sum_{i,j=0}^kc_ic_jG_{i+j+\delta}(z).
+\tag{4.14}
+$$
+
+To verify it, move the primed transpose onto
+$|\psi_j(z)\rangle\langle\psi_i(z)|$. For $i\le j$, the
+first $i$ common pairs give $2i$ copies of $zz^\dagger$.
+Each of the next $j-i$ pairs has one $\Phi$ factor and one
+$z\otimes\bar z$ factor. Its partial transpose is a swap composed
+with one $zz^\dagger$ and an identity. Every remaining
+$|\Phi\rangle\langle\Phi|$ becomes a swap. The extra odd factor
+gives one further $zz^\dagger$. Independent left and right
+permutations remove these swaps against the Bose-supported $\Omega$,
+leaving $i+j+\delta$ projectors and identities on all other outputs.
+Tracing these outputs is precisely $G_{i+j+\delta}$. For $i>j$
+take adjoints. This proves the matrix identity, not just its trace.
+
+Using (4.7), $D_l^{-1}=24l!/(l+4)!$, and (4.10) gives
+
+$$
+\begin{aligned}
+\int F_z\,d\mu
+&=24(c^T\mathsf Bc)\chi_I,\\
+\int zz^\dagger\otimes F_z\,d\mu
+&=24\left[(c^T\mathsf Bc-5c^T\mathsf Ac)\chi
++(c^T\mathsf Ac)I_O\otimes\chi_I\right].
+\end{aligned}
+\tag{4.15}
+$$
+
+The normalization is the strictly positive number
+$h=24c^T\mathsf Bc$. Entries of $F_z$ are balanced polynomials
+of bidegree at most $(n,n)$, either directly from (4.10) or from
+(4.14). Multiplication by $zz^\dagger$ raises this to at most
+$(n+1,n+1)$. The same finite rule (4.4) therefore preserves both
+integrals in (4.15) exactly. Set
+
+$$
+R_z=q_zF_z/h\succeq0.
+\tag{4.16}
+$$
+
+Then
+
+$$
+\sum_zR_z=\chi_I=I_I/5,\qquad
+\sum_z zz^\dagger\otimes R_z
+=(1-5\alpha)\chi+\alpha I_O\otimes\chi_I
+=\chi_{p_n^{\rm P}}.
+\tag{4.17}
+$$
+
+This proves the needed positive decomposition, including its full
+input marginal, for both even and odd levels. It is the finite
+specialization of NOP §VI, equations (71)–(76); the node count here
+follows from (4.2)–(4.5), rather than from an unquantified design
+existence statement.
+
+For either (4.9) or (4.17), discard nodes with $R_z=0$ and set
+
+$$
+E_z=5R_z^T,\qquad \sigma_z=zz^\dagger,\qquad
+\operatorname{Enc}(X)=(\operatorname{tr}(E_zX))_z,
+\qquad \operatorname{Dec}_z(y)=y\sigma_z.
+\tag{4.18}
+$$
+
+Each $E_z$ is positive, $\sum_zE_z=I_5$, and
+$\operatorname{tr}\sigma_z=1$. Spectral factorization of $E_z$
+gives a finite sum of rectangular row sandwiches for its encoder
+branch; its positivity at every reference dimension follows directly.
+The decoder is a normalized column sandwich, hence is CPTP on every
+complex scalar, including values outside encountered state branches.
+The composite normalized Choi matrix is
+$\frac15\sum_z\sigma_z\otimes E_z^T
+=\sum_z\sigma_z\otimes R_z$, exactly the repaired state.
+The same calculation proves the branch probability
+$\operatorname{tr}(E_zX)$ before and after decoding. In physical
+coordinates use effects $DE_zD^\dagger$ and preparations
+$D\sigma_zD^\dagger$.
+
+For $p>p_0$ multiply all these encoder effects by
+$(1-p)/(1-p_0)$ and add the one effect
+$(p-p_0)I_5/(1-p_0)$ with decoder $y\mapsto yI_5/5$.
+This realizes (2.9). The endpoint $p=1$ uses just that depolarizing
+branch. No division by a zero branch weight is used.
+
+When $\Omega$ and $p$ are algebraic, all quadrature nodes, phase
+roots of unity, $c$, contractions, weights and positive normalizations
+above are algebraic. Finite Hermitian spectral factorization also
+permits algebraic eigenvalues and eigenvectors. It gives rank-one
+composite Kraus matrices because every branch factors through a scalar.
+The decoder with state $I_5/5$ may have several column Kraus matrices;
+each composite still has rank at most one. The effects need not be
+rank one for the flag count (4.1).
+
+Lastly, separate realification of this finite product decomposition
+as in Theorem 2.2 leaves the repaired $\mathcal W$ state unchanged.
+The credited QRC real-product Carathéodory bound reduces its support
+to at most $225$ flags. It preserves the entire channel and its
+full marginal. This existence bound and the explicit quadrature are
+different descriptions of the same repaired channel. Neither gives a
+decomposition of the unperturbed $\chi$. $\square$
+

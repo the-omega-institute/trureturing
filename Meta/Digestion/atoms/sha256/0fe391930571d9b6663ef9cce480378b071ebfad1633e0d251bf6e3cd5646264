@@ -1,0 +1,33 @@
+**Lemma 30.2 (weighted ordered kernels).** There are signed kernels $k_{jm}(t)$, $0\le m\le j\le4$, such that
+
+$$
+\mathsf Q_j(t)g=\sum_{m=0}^j(r^{j-m}g)*k_{jm}(t),
+\qquad
+\|k_{jm}(t)\|_b\le Ct^{m/2-(7/2)(1-1/b)}
+\quad(1\le b\le\infty).
+\tag{30.3}
+$$
+
+Each kernel may be a finite sum of differentiated-Gaussian terms. Consequently, whenever the displayed input norms are finite and $1\le p_m\le q\le\infty$,
+
+$$
+\|\mathsf Q_j(t)g\|_q
+ \le C\sum_{m=0}^j
+ t^{m/2-(7/2)(1/p_m-1/q)}\|r^{j-m}g\|_{p_m}.
+\tag{30.4}
+$$
+
+Proof. The triangular matrix
+
+$$
+D_A=\begin{pmatrix}1&0&0\\A&1&0\\A^2/2&A&1\end{pmatrix}
+\quad\text{satisfies}\quad u(A+W)=D_Au(W),\qquad\det D_A=1.
+$$
+
+The phase component of $\eta^{-1}\xi$ is $D_A^{-1}(\mathbf z_\xi-\mathbf z_\eta)$. Conjugate the covariance by $D_A^{-1}$. Derivatives of $(1+\nu\vartheta(A+W))^{-2}$ at zero are polynomials in $A$ and $W$. Every coefficient of order $j$, after extracting $A^{j-m}$, has relative bridge degree $m$. A clock factor $t^\ell$ contributes degree $2\ell$, so is included in the same count. The remaining expression depends only on $\eta^{-1}\xi$, giving the factor order in (30.3).
+
+Matrix differentiation produces a polynomial in whitened phase variables times a Gaussian. Its absolute value is bounded by a fixed inflated-covariance Gaussian times the corresponding powers of the relative bridge supremum, with clock powers retained. Phase integration of this majorant, then height integration and Brownian scaling, give $\|k_{jm}(t)\|_1\le Ct^{m/2}$. Taking the phase supremum and using P (107.5) on the relative zero-start bridge gives $\|k_{jm}(t)\|_\infty\le Ct^{(m-7)/2}$. Its layer-cake proof works for every nonnegative real moment order, not only integers: the integral $\int_L^\infty v^{\alpha-1}e^{-cv^2/t}dv$ is finite for $\alpha>0$, with the zero-order case supplied separately. Interpolation proves the remaining $L^b$ bounds. Young's inequality with $1+1/q=1/p_m+1/b$ proves (30.4).
+
+Young's inequality here is the classical graded-group convolution inequality of Fischer–Ruzhansky, *Sobolev spaces on graded groups*, [arXiv:1311.0192v1, §2.1, (2.2)](https://arxiv.org/html/1311.0192v1#S2.SS1). The group (2.6) is graded and unimodular, its Haar measure is unit Lebesgue measure, and the factors have the order used in that inequality. It supplies the norm step, not the native coefficient decomposition. $\square$
+
+

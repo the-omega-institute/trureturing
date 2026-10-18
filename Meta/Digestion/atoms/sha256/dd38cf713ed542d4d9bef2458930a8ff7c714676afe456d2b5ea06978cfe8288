@@ -1,0 +1,54 @@
+**Theorem 262.2 (Whole-class exact distances).** The law $p_t$ is
+original cap-$e$ feasible with exact error $e$, and
+
+$$
+\inf_{q\in\mathcal O_2}\sup_x\operatorname{TV}(p_t(x),q(x))
+ =\frac t3,\qquad
+\inf_{\substack{q\in\mathcal O_2\\ e_a(q)\le e}}
+ \sup_x\operatorname{TV}(p_t(x),q(x))=\frac t2.
+\tag{262.2}
+$$
+
+Both infima are attained. The same statements hold over the complete
+finite $O_3$ classes. The intrinsic finite changed weight is exactly
+$t$. The same-cap infimum ranges over the entire cap slice, not
+only a repair menu, a positive-law-preserving class or a fixed schedule.
+
+**Proof of feasibility and attainment.** The base singleton demand
+is $1/10-v<0$. The least correct mass is $u$, and
+$u-(9/10-v)=1/10-t\ge0$. Every pair row has probability one
+except at $110$, where it is $k=1-v$ exactly. The positive base
+is $v\ge k$, and actual tail error is
+$\max\{k,a_n\}\le v$. Thus all independent rows and closed-cap
+ties hold, with exact error $v$ at $110$.
+
+The conversion of Section 261 gives unrestricted distance at most
+$t/3$. For a same-cap attainer put $h=t/2$ and
+
+$$
+C=O(1,2;0,2,3),\qquad E=O(1,2;1,1,0),\qquad
+q_t=uA+vB+hC+hE.
+\tag{262.3}
+$$
+
+Its mass is $u+v+2h=1$ and its complete laws are
+
+| words | $q_t$ |
+|---|---|
+| $000,001$ | $(v+h)e_0+(u+h)e_1$ |
+| $010$ | $h e_0+(1-h)e_1$ |
+| $011$ | $(v+h)e_0+(u+h)e_1$ |
+| $100,101$ | $v e_0+h e_1+(u+h)e_2$ |
+| $110$ | $h e_0+v e_1+(u+h)e_3$ |
+| $111$ | $(v+h)e_0+(u+h)e_3$ |
+
+Subtract the corresponding vectors: TV is exactly $h$ at every
+word. The least correct mass is $u+h$, with slack $1/10-h$.
+Pair mass is one in class one, $1-h$ in class two, and
+$h+u+h=k$ at $110$. Positive base $v+h\ge k$ and tail error
+$\max\{u+h,a_n\}\le e$ verify every remaining row.
+These are algebraic inequalities throughout the entire real interval,
+including its endpoint, rather than sampled-parameter claims.
+Proposition 251.4 realizes both laws on the original source.
+The lower bounds are proved next. $\square$
+

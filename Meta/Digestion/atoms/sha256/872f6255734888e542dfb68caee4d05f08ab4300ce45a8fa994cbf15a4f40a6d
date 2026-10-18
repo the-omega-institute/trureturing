@@ -1,0 +1,25 @@
+**Theorem 8.2 (conditional effective approximation of the original rate).**
+If a verifier satisfying Definition 8.1 exists, then for every positive
+rational $\epsilon$ there is a terminating effective computation of
+rational $l,u$ with $l\le\lambda\le u$ and $u-l<\epsilon$.
+
+Proof. Enumerate all rational inputs and finite strings and run the
+total verifier. Each acceptance gives the valid lower endpoint
+$-2^{-d}\log_2C$ by Theorem 7.1. Keep the greatest certified rational
+lower enclosure seen, including zero. Dovetail this enumeration with
+the finite canonical-cover computations of $M_1(D)$ supplied by FMR,
+keeping the least rational upper enclosure of
+$2^{-D}\log_2(M_1(D)+1)$ seen. Rational logarithm enclosures can be
+refined to arbitrary precision. Their validity follows from elementary
+monotonicity and convergent rational series for the logarithm.
+
+Soundness keeps $l\le\lambda\le u$. Cofinality, (NPC.8) and growing
+$d$ make the supremum of accepted lower endpoints equal to $\lambda$.
+The computed shifted uppers also tend to $\lambda$. Therefore a
+finite stage has a true endpoint gap less than $\epsilon/2$ and
+sufficiently fine logarithm enclosures have width less than the
+remaining $\epsilon/2$. Stop when their rational gap is below
+$\epsilon$. This stopping test is decidable and eventually succeeds.
+The argument supplies no useful time, table-size or certificate-size
+bound. $\square$
+

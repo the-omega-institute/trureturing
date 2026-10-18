@@ -1,0 +1,7 @@
+**Convention 9.3 (finite evidence scope).** Finite checks of the reader,
+unary routines, sealed-copy phases and a finite record-level version model
+can detect the falsifiers in Definition 9.1. They do not execute the
+private gate machine, construct the native consumer graph, verify its
+exact descriptors, or prove that graph's self-replay certificate. No
+finite check turns Definition 6.4 or 7.3 into an implemented theorem.
+

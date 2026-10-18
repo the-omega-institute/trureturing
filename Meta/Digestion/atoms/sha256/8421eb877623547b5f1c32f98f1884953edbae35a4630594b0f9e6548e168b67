@@ -1,0 +1,29 @@
+## 第一部分：局部钟场—因果场的内在关系理论
+
+你这次的修正可以把理论进一步压缩：
+
+$$
+\boxed{
+\text{基本本体不是 }(3+1)\text{，而是局部钟场与因果场。}
+}
+$$
+
+前面出现的 $N,\gamma,\beta$ 只是把关系结构嵌入连续坐标后的表示。现在把它们全部降级为派生量，直接从事件、因果路径、局部时钟和 FIB 观察投影开始。
+
+当前项目中最适合接入这套本体的结果有四个：
+
+1. 五态 FIB 代数中存在唯一的隐藏联合方向 $\kappa$；
+2. 两个不同投影 $P,Q$ 的隐藏核交为零，因此联合读出可以闭合；
+3. 动态未来律由路径历史摘要 $(\mathrm{phase},A,B)$ 决定；
+4. 配对响应读出 $(f,h)$ 可以联合确定发射规律，而单独一个读出通常不能。
+
+相关开放理论材料：
+
+- [FIB-ATOM 基础公式与隐藏关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+- [动态未来商](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+- [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)
+
+下面建立一个不依赖全局线性时间的形式系统。
+
+---
+

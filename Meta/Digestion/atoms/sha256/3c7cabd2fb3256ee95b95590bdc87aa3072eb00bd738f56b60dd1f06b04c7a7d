@@ -1,0 +1,29 @@
+**Status 11.4 (what the evidence establishes).** The support for the new
+claims consists of the ordinary universal proofs and exact examples
+above, with the named suppliers at their stated hypotheses. No new Lean
+build, experiment, implemented solver or physical run is asserted.
+Structural document checks do not verify the mathematics. Exact paid
+claims retain the acquisition, common-state and action assumptions of
+§1; their finite-domain restriction is proved from the full input before
+resource synthesis. These results do not complete the unrestricted
+continuing recovery programme.
+
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[CAR]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[BASE]: https://github.com/the-omega-institute/trureturing/tree/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c
+[D5-CENTRAL]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[D5-DEPTH]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5-GROUND]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation.lean
+[D5-CUT]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[D5-HISTORY]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[D5-RECUT]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[D5-READ]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[D5-TEMPLATE]: https://github.com/the-omega-institute/trureturing/blob/0457c83095ce46852f746bfa2d8b2d0bf04d1b8c/D5/S3/Arith/FibonacciAtomic/Observer/DelayedTemplateCertificate.lean
+[FREE]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Free.lean
+[KR]: https://arxiv.org/pdf/cs/0408015v1
+

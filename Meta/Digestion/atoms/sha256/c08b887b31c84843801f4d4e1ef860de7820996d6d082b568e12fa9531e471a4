@@ -1,0 +1,30 @@
+**Definition 3.1 (signed rank excess).** List the positive differences
+of $C_t$ and the absolute values of its negative differences as
+
+$$
+1\le x^+_{t,1}<\cdots<x^+_{t,p_t},\qquad
+1\le x^-_{t,1}<\cdots<x^-_{t,n_t}.
+\tag{NAGC.3.1}
+$$
+
+An empty list has length zero. Put $u_t=U_t$ and $v_t=-L_t$;
+these are respectively zero if the positive or negative list is empty.
+Define
+
+$$
+\begin{aligned}
+g_t^+&=u_t-p_t,&g_t^-&=v_t-n_t,&
+G^+&=\sum_tg_t^+,&G^-&=\sum_tg_t^-,\\
+H_t^+&=\sum_{i=1}^{p_t}(x^+_{t,i}-i),&
+H_t^-&=\sum_{i=1}^{n_t}(x^-_{t,i}-i),&
+H^+&=\sum_tH_t^+,&H^-&=\sum_tH_t^-.
+\end{aligned}
+\tag{NAGC.3.2}
+$$
+
+Empty sums are zero. The anchor is the sole difference-zero point,
+so $p_t+n_t=m_t-1$. Consequently $g_t=g_t^++g_t^-$ and
+$G=G^++G^-$. In terms of Definition 2.1,
+$G^+=\sum_{k=1}^{q-1}h_k$ and
+$G^-=\sum_{k=1}^{q-1}h_{-k}$.
+

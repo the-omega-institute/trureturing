@@ -1,0 +1,45 @@
+**Corollary 12.3 (finite recorded CP update and its support invariant).**
+Under Theorem 12.2, let $r$ range over a finite set of successful recorded
+suboutcomes. There are common CP maps $\mathcal T_r$ on the helper such
+that the actual accessible output on record $r$ is
+
+$$
+|\psi_{l,\beta,m}\rangle\langle\psi_{l,\beta,m}|
+ \otimes\mathcal T_r(\tau_\epsilon),\qquad
+\sum_r\mathcal T_r^\dagger(I)\leq sI_S.
+\tag{PR.40}
+$$
+
+The output helper includes every actually accessible success register.
+There exist $0<a\leq b<\infty$ with
+$a\tau_-\leq\tau_+\leq b\tau_-$, and the same constants satisfy
+
+$$
+a\mathcal T_r(\tau_-)\leq\mathcal T_r(\tau_+)
+ \leq b\mathcal T_r(\tau_-).
+\tag{PR.41}
+$$
+
+Every nonzero recorded branch is thus nonzero for both parities and has
+equal updated supports. Its normalized states remain phase independent.
+If $t_{r,\epsilon}=\operatorname{tr}\mathcal T_r(\tau_\epsilon)>0$,
+the actual conditional helper is
+$\mathcal T_r(\tau_\epsilon)/t_{r,\epsilon}$; no normalized successor
+is assigned when that trace is zero.
+
+Proof. Apply (PR.37) to the success dilation with its recorded outcome
+projections, or to its Kraus components. After tracing only unavailable
+proof registers, write
+$\mathcal T_r(X)=\sum_j A_{rj}XA_{rj}^\dagger$.
+Stacking all successful components gives
+$\sum_{rj}A_{rj}^\dagger A_{rj}\leq sI$, which is (PR.40).
+Finite-dimensional positive definiteness on $S$ supplies $a,b$, for
+example the extreme eigenvalues of
+$\tau_-^{-1/2}\tau_+\tau_-^{-1/2}$. Positivity preserves their operator
+inequalities, proving (PR.41). Positive operators dominating positive
+multiples of one another have the same kernel and support. This proves the
+remaining assertions. For a joint helper/unread-reference state, the
+actual update is $\mathcal T_r\otimes\operatorname{id}$; no accessible
+purification or independent replacement of that joint state is inferred.
+$\square$
+

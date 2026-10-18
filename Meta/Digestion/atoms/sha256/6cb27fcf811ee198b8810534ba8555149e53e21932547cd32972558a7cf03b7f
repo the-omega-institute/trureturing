@@ -1,0 +1,12 @@
+**Definition 365.3 (The full edge/odd-list cone).** As in [XXI 358.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXI.md#358-alternating-odd-list-replacement), an edge $i<j$ contributes $-B$ to $g_{ij}$, where $m(B)=0$ and $B(z)\ge0$ for $0\le z\le i$. An increasing odd list
+$I=(i_1<\cdots<i_{2h+1})$, $h\ge1$, contributes
+
+$$
+g_{i_si_t}\mathrel{+}=b_sb_tV\quad(s<t),\qquad
+b_s=(-1)^{s+1},\qquad m(V)=0,\qquad
+V(z)\ge0\quad(0\le z<i_{2h+1}).
+\tag{365.13}
+$$
+
+Allow every finite sum, with overlapping lists and edges. Later label coordinates are restricted only by the zero total sum. Funding means (364.3) for the aggregate whole gauge, not separately for individual summands. Length three gives the edge/triangle condition of [XX 351.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XX.md).
+

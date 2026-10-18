@@ -1,0 +1,55 @@
+**Theorem 27.1 (exact imaginary-space obstruction with a real zero witness).** At $a=\beta=1/2$ the actual two-Kraus channel
+
+$$
+K_0=(e_0,e_1,e_2)/\sqrt2,\qquad
+K_1=(e_2,e_3,-e_0)/\sqrt2
+\tag{R.131}
+$$
+
+has $q=1$, rank $B=\operatorname{rank}C_{\rm out}=2$ and $c_{\rm pl}=1$. For every $\xi=(x,y,z)\in\mathbb R^3$, including zero, put
+
+$$
+X(\xi)=i\begin{pmatrix}0&x&y\\-x&0&z\\-y&-z&0\end{pmatrix},\qquad
+E_{ij}^{\wedge}=e_ie_j^T-e_je_i^T.
+$$
+
+Then $X(\xi)\in\mathcal H_0$ and
+
+$$
+\begin{gathered}
+N(X(\xi))=iF(\xi),\\
+F(\xi)=\frac{x}{2}(E_{01}^{\wedge}+E_{23}^{\wedge})
+        +yE_{02}^{\wedge}
+        +\frac z2(E_{12}^{\wedge}+E_{03}^{\wedge}),\\
+\|N(X(\xi))\|_1=\|X(\xi)\|_1=2\sqrt{x^2+y^2+z^2}.
+\end{gathered}
+\tag{R.132}
+$$
+
+In contrast the nonzero real symmetric input $X_{\rm r}=|0\rangle\langle2|+|2\rangle\langle0|\in\mathcal H_0$ obeys
+
+$$
+\|X_{\rm r}\|_1=2,\qquad N(X_{\rm r})=0,\qquad m_0(N)=0.
+\tag{R.133}
+$$
+
+Thus searching only the imaginary antisymmetric Hermitian three-space cannot establish G even for this example: every nonzero member of that search space has ratio one, while a valid real witness has ratio zero. The example satisfies G and supplies no counterexample to it.
+
+**Proof.** Each displayed column triple is orthonormal before division by $\sqrt2$, so the TP sum is $I_3$. Its first columns give $B=\operatorname{diag}(1/2,0,1/2,0,0)$ and its cross block is $C_{\rm out}=(e_0e_2^T-e_2e_0^T)/2$. The phase relation, rank and $q$ assertions follow as in (R.116); the third columns are independent. The input spectrum is $0,\pm\sqrt{x^2+y^2+z^2}$, by the characteristic polynomial of its $3\times3$ skew matrix. Direct multiplication of both Kraus terms gives exactly the signed expression for $F$ in (R.132), whose $h$ row and column vanish.
+
+Let the four active eigenvalues of the real skew matrix $F$ be $\pm i\lambda_1,\pm i\lambda_2$, with $\lambda_j\geq0$. These are its two possibly zero singular-value pairs. On the ordered active frame $(e_0,e_1,e_2,e_3)$,
+
+$$
+\begin{aligned}
+\lambda_1^2+\lambda_2^2
+ &=\tfrac12\|F\|_F^2=(x^2+z^2)/2+y^2,\\
+\operatorname{Pf}F
+ &=F_{01}F_{23}-F_{02}F_{13}+F_{03}F_{12}
+   =(x^2+z^2)/4,\\
+\lambda_1\lambda_2&=|\operatorname{Pf}F|=(x^2+z^2)/4,\\
+(\lambda_1+\lambda_2)^2&=x^2+y^2+z^2.
+\end{aligned}
+$$
+
+Here the Pfaffian identity follows by expanding the $4\times4$ determinant as the square of the displayed three-term expression. The nonnegative square root fixes the sign of $\lambda_1+\lambda_2$. The Hermitian eigenvalues of $iF$ have absolute values $\lambda_1,\lambda_1,\lambda_2,\lambda_2$, proving the norm identity. The calculation permits all signs of $x,y,z$, the zero vector, repeated singular values and vanishing singular values without division. Finally $N(X_{\rm r})=C_{\rm out}+C_{\rm out}^T=0$, proving (R.133). $\square$
+

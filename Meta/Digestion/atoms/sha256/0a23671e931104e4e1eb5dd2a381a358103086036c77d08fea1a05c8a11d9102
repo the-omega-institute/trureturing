@@ -1,0 +1,28 @@
+**定义 5.1（预算公式的模式）。** 假设 GB 通过且 $B\ne\varnothing$。给定预算 $k\ge0$，用 $\mathcal A^{<k}$ 标记满四叉回复树的内部节点。节点 $v$ 的标记为旧类 $b_v\in B$、一阶后缀变量 $s_v$ 和模式 $m_v$。静止公式取全部 $m_v=N$；正入口串行公式取全部 $m_v=M=\max(5,N)$；零入口串行公式取 $m_v\in\{0,5\}$ 且沿每条树边非递减。不同回复分支可在不同节点切换，根也可直接选择五。
+
+模式表和类表是有限选择，放在所有来源量词之外；后缀变量也在所有来源量词之外存在量化。对 $\eta\in\mathcal A^k$，置
+
+$$
+\operatorname{Path}_{\eta}(X;\mathbf s)
+ =\bigwedge_{j=0}^{k-1}
+   \operatorname{Reply}_{\eta_{j+1}}
+       (X_{b_{\eta_{\le j}},m_{\eta_{\le j}}},s_{\eta_{\le j}}).
+\tag{SCR.5.1}
+$$
+
+对每个允许标记表取公式
+
+$$
+\begin{aligned}
+G_k(\mathbf s)=\forall X\,\forall Y\ \bigl[
+  (\operatorname{Adm}(X)\land\operatorname{Adm}(Y))\Longrightarrow\qquad\qquad\\
+ \bigwedge_{\eta\in\mathcal A^k}
+ ((\operatorname{Path}_{\eta}(X;\mathbf s)
+   \land\operatorname{Path}_{\eta}(Y;\mathbf s))
+       \Longrightarrow\operatorname{SameRow}(X,Y))\bigr].
+\end{aligned}
+\tag{SCR.5.2}
+$$
+
+先对有限允许表析取，再存在量化全部 $s_v$，所得句子分别记为 $\Psi_k^{\rm st}(N)$、$\Psi_k^{\rm ser}(N)$。$k=0$ 使用唯一空表、空路径条件；句子就是整个 $D$ 上行恒定。模式上界可取定义4.1的 $L=\max(5,N)$。
+

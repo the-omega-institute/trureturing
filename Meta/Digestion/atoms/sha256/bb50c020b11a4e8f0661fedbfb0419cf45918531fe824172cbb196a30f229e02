@@ -1,0 +1,12 @@
+**数学引文 28.4（供应、重叠与新内容范围）。** 源码引用固定于 [a58c24900650d4a0b6022c5e2cf76f5f6f2f8271](https://github.com/the-omega-institute/trureturing/tree/a58c24900650d4a0b6022c5e2cf76f5f6f2f8271)。`D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean` 的 `readout` 明确全部有限地址合法，`Policy` 仍是静态 Boolean 任务。`ActualFiniteObserverAbsentElimination.lean` 的 `CacheTruth`、`queryReply`、`cacheUpdate`、`Legal`、`ActualPrefix`、`barStep` 和 `actualPrefix_semantics` 给准确原始合同。`Observer/ActualObserverPrefixRigidity.lean` 的公开 `actualPrefix_replay` 不需要 `Allowed`、合法性或停止前提；`actualPrefix_history_rigid` 另使用第一来源合法性、共同缓存真值与第二来源有限运行。其供应 `ActualObserverBoundedLowerBounds.prefix_cache_spectrum`、`ActualExactSupportPruning.prefix_run_tail` 已为公开声明；`run_cache_spectrum` 仍是该文件内私有证明。这里只核对并按实际前提复用，不重复声称静态重放为新成果。
+
+`ActualExactTraceCompiler` 的公开 `strategy_actual_prefix_replay` 与 `strategy_exact_run` 属于指定策略和编译表，私有 `exact_actual_prefix_replay` 有其具体编译前提。新 `ActualExactMarkedTables` 的 `PrefixCertificate` 包括零前缀和终端，`PairCertificate` 保留不可能回复和矛盾命中；其 `same_carrier_original_marking`、`marked_competitor_table_coverage`、`original_exact_marked_attainment` 则有 `Allowed N`、`Admissible N`、规定 trace／phase／policy 的前提。它们不直接供应本节无界原来源上的更新、任务更改或 $K(R)$。全反事实粗桥仍按 `ActualObserverPairReach.pairActionInvariant_iff_allHistoryFactorization` 的原条件使用，不能用实际像替代。
+
+本卷 §1–3 的同源历史运输、§10–15 的任意有限历史任务 minimax、§19.4 的任意新任务障碍、§20–24 的完整容量及 §23.3 的同安装静态重放均直接复用。运输与记忆卷 §§22.2、23.12 已证明一次出生与闭前缀更新，本批不重复申领。做不到交接接口时，原静态运行或其吸收终态照原合同维持；供应接口后逐个重新读全部 $s$ 个已取得地址已有 $s$ 次上界；本批新增的较小充分结果是显式 $K\le s$、共同来源立方及全深匹配下界，而非一般纤维常值刻画、有限展开或 WS2S 再包装。
+
+相关开放参考 [HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE 的 Q7](AURIC_FIB_ATOM_HIDDEN_SEAM_CAUSAL_READOUT_CLOSURE.md) 明列取得核到固定五态方向的未供桥梁；[OCCLUSION_SECOND_PROJECTION_AND_LOCAL_RECOVERY 的独立限定 Q2–Q3](AURIC_FIB_ATOM_OCCLUSION_SECOND_PROJECTION_AND_LOCAL_RECOVERY.md) 区分同一五态律的精确期望、样本和原生动态接口。它们不供应本节的字面树共同实现或新权限，本节也不填补其物理及概率桥梁。
+
+Comon 等，[*Tree Automata Techniques and Applications*](https://inria.hal.science/hal-03367725/document)，Lemma 3.3.4 与 Theorem 3.3.8 分别给弱单子逻辑可定义集合的有效树自动机表示与 WSkS 可决定性；这些原文命题已核对，属于本卷既有有效性背景，不参与此次显式最优值的证明。Buhrman–de Wolf，[*Complexity Measures and Decision Tree Complexity: A Survey*](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf)，§3.1 的确定查询树深度与最坏查询数定义，是本节比较量的成熟背景；这里对四值字面口的共同源锥下界由正文直接证明，不将 Boolean 输入模型的定理未经映射移植。新增综合标为 `repo-derived` 普通数学；全世界文献新颖性未验证，亦没有宣称数学可计算等于实用求解器。
+
+**未决范围。** 任意新菜单、一般后续像的准确价格、全局 coarse 类的最优值、物理保留与访问最优、以及空间、时间、边界和记忆在全部接口上的互恢复，均不由上述结果解决。
+

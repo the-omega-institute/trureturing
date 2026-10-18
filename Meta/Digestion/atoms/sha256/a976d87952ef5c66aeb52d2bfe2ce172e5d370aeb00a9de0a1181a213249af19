@@ -1,0 +1,11 @@
+**Theorem 108.1.** If either correct-output Gram is translation-invariant, then
+
+$$
+ \delta(A,B)\ge\sqrt2-1.
+ \tag{108.1}
+$$
+
+The same conclusion holds after reciprocal diagonal unitary phases and a common original-fibre-preserving coordinate relabeling. If $\Gamma=(\mathbb Z/2\mathbb Z)^3$, the bound strengthens to $\delta(A,B)\ge1/2$.
+
+The constant $\sqrt2-1$ is sharp over the union of these abelian classes. It is sharp separately for $\Gamma=\mathbb Z/8\mathbb Z$, $h=4$, and for $\Gamma=\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$, $h=(2,0)$, with calibrated physical rank-$(3,3)$ attainers. No sharpness assertion is made for the elementary-abelian action or for the action with $h=(0,1)$ in $\mathbb Z/4\mathbb Z\times\mathbb Z/2\mathbb Z$.
+

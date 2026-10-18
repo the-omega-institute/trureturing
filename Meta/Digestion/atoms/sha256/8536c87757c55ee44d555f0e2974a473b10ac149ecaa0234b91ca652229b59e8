@@ -1,0 +1,103 @@
+**Theorem 3.2 (native execution and phase description in both directions).**
+For every fixed finite graph and descriptor-type choice, the formulas
+(NPS.10)–(NPS.11) are effectively Presburger. For every valid common
+descriptor valuation, every admitted $(\eta,\mathbf n)$, every halt
+$h$ and every $J\in\mathbb N$,
+
+$$
+\begin{aligned}
+\mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta)
+\quad\Longleftrightarrow\quad
+&\text{the unchanged literal graph on }
+u=\Theta_\eta(\mathbf n)\text{ from epoch }N\\
+&\text{first halts at state }h\text{ at actual epoch }J.
+\end{aligned}
+\tag{NPS.12}
+$$
+
+Any realizing word may be installed once at each read state. Halt rows
+do not enter this arrival statement. The correspondence preserves every
+actual control visit, response and unit update. In particular
+$H_{\eta,h}$ is exact finite-halting support, with no action horizon.
+
+Proof. First establish the finite number of relevant phases on an
+arbitrary finite native source, without an atomic-source assumption.
+Reuse reached-subtree transport
+[NativeDepthPatterns, `original_present_transport`][TRANSPORT]. Applied
+to the actual tree $\rho^j u$ at any epoch where $p$ is reached, it gives
+
+$$
+(\rho^{j+a}u)|_p=\rho^a((\rho^j u)|_p),
+\qquad a\in\mathbb N,
+\tag{NPS.13}
+$$
+
+and persistence of that reached address. This application is made only
+after reach; it does not transport an absent original subtree. The
+root transition of a reached subtree, from (NPS.1), follows
+$\alpha\to\beta\to\mathsf{branch}\to\mathsf{branch}$ or a suffix of
+that chain. Before first reach the reply is absent. Consequently
+$j\mapsto r_{\rho^j u}(p)$ is nondecreasing for the order
+
+$$
+\mathsf{absent}<\alpha<\beta<\mathsf{branch}.
+\tag{NPS.14}
+$$
+
+It changes at most three times. Give these four values ranks $0,1,2,3$.
+For the $r$ fixed installed words, the sum of reply ranks increases
+whenever the vector changes and can increase by at most $3r$. Thus on
+any integer interval $[N,J]$ the vector has at most $3r+1$ maximal
+nonempty constant intervals. Simultaneous changes count once; duplicate
+words do not invalidate this bound. This bounds the number of intervals,
+not their durations or the number of actions in them.
+
+For the forward implication from actual execution to description, take
+its finite trace ending at $h,J$. Every integer epoch from $N$ to $J$
+is visited, because updates increment by exactly one and reads do not
+change the epoch. Partition that whole interval by the vector just
+described. Set the last right endpoint to $J+1$. At each internal
+boundary $t_{i+1}$ cut the trace immediately after the actual update
+that first enters that epoch. Let $x_{i+1}$ be its destination state.
+Every action before this cut within the segment uses vector $v_i$.
+Its path is a path of $F_{v_i}$, its update count is $d_i$ with
+$t_i+d_i=t_{i+1}$, and its final action is the crossing update. Hence
+it satisfies $X_{v_i}$. The last segment ends at $h$ with update count
+$d_{m-1}$ and $t_{m-1}+d_{m-1}=J$, so satisfies $P_{v_{m-1}}$.
+Equation (NPS.5) gives every interval guard. There are at most the
+number of segments allowed by (NPS.9). This supplies all witnesses in
+(NPS.10), on the same original source throughout.
+
+Conversely suppose (NPS.10) holds. By the exact path construction of
+§2, each $X$ witness expands to a finite $F_{v_i}$ path ending in its
+specified update; the last $P$ witness expands to a finite path ending
+at $h$. Concatenate them at the shared states $x_i$. On an internal
+segment the argument after (NPS.7) places every action's starting epoch
+in $[t_i,t_{i+1})$. On the final segment nonnegative edge weights and
+total update count $d_{m-1}$ place all action-start epochs between
+$t_{m-1}$ and $J$, inclusive. The final guard extends through $J$.
+
+Induct on the actions of this finite concatenation. At its start the
+register is $\rho^N u$ and control is $e_*$. At a read, (NPS.8) and
+(NPS.5) supply exactly the real literal reply on that register, so the
+installed response successor is the one used by the path. At an update,
+the unique installed action changes $\rho^j u$ to $\rho^{j+1}u$ and
+uses its fixed successor. These facts preserve the actual register,
+state and epoch at each step. No segment can continue through an earlier
+halt, because $F_v$ has no outgoing halt edge. An intermediate segment
+ending at a halt cannot be followed by a positive crossing from that
+halt; the only compatible final segment there is the empty path to
+that same halt. Thus the concatenation is the actual first-halting
+execution, at $h,J$. Determinism supplies no additional choices to the
+controller merely because the description used existential witnesses.
+
+For effectiveness, (NPS.9) is finite after $G$ is fixed. Each $P_v$
+is the finite formula of §2; (NPS.7) uses a finite disjunction over
+update states. Formula (NPS.8) is a first-order quantified CAR reply
+formula. The remaining conditions are addition, order, conjunction
+and first-order quantification over natural numbers. All coefficients
+in (NPS.6) are numerals. Neither source ranks nor word parameters are
+cycle weights, and no product of two quantified variables occurs.
+Thus (NPS.10) and its existential projection (NPS.11) are effectively
+Presburger, proving the theorem. $\square$
+

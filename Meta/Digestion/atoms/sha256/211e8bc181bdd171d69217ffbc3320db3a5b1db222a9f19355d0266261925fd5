@@ -1,0 +1,19 @@
+**Theorem 39.1 (exact pair fidelity in the marginal image).** For two image points $A_z,A_w$ in (R.170),
+
+$$
+ f(A_z,A_w)^2=a^2+\beta^2+2a\beta\Re(\bar zw)
+ +2a\beta\sqrt{(1-|z|^2)(1-|w|^2)}.
+\tag{R.184}
+$$
+
+Therefore
+
+$$
+ \min_{|z|,|w|\leq1/2}f(A_z,A_w)=\sqrt{1-a\beta},
+\tag{R.185}
+$$
+
+attained at $z=-w$ with $|z|=|w|=1/2$. In particular every pair has fidelity strictly larger than $\sqrt a$ for $\beta>0$.
+
+**Proof.** Apply the same two-by-two identity as in (R.175). Since $\Re(\bar zw)\geq-|z||w|\geq-1/4$ and the square-root factor is at least $3/4$, the right side of (R.184) is at least $a^2+\beta^2+a\beta=1-a\beta$. The stated antipodal boundary pair attains both inequalities. Since $1-a\beta-a=\beta^2>0$, the final strict comparison follows.$\quad\square$
+

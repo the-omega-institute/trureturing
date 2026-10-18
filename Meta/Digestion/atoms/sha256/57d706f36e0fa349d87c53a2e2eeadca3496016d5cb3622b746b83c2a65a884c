@@ -1,0 +1,74 @@
+## 366. Angles, original budgets and a bad eta
+
+For a genuine paired response with axes r,o and transverse values a,b,
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0,
+    D_a,b(t)=t^2+a^2+b^2+2*t*a*b-1,
+    cos(theta_r)=[2*a*b+r*(a^2+b^2)-(r^2-1)*o]/D_a,b(r),
+    cos(beta_a)=[b*(r+o)+a*(r*o+b^2-a^2+1)]
+                  /sqrt(D_a,b(r)*D_a,b(o)).               (366.1)
+
+Also tan(theta_r/2)^2=(r-1)*J/[(r+1)*L]. All actual genuine
+angles lie in (0,pi). These are the original fixed-frame angles.
+
+The complete genuine capacities at M,V,D are pi,pi,2*pi. Suppose
+eta=(M,V,D,U,V,D) violates (365.2). Tau and eta are distinct, so
+
+    theta_M(eta)+theta_U(eta)<=pi,
+    2*beta_M(tau)+theta_M(eta)<=pi.                       (366.2)
+
+Flatness and v<=m-2 give
+
+    c+d<m-2, c,d<m-3, m>4.                              (366.3)
+
+Write Q=v^2+d^2, T=v*d, and
+p=sqrt((m-1)*(u-1)), q=sqrt((m+1)*(u+1)). The bad-axis condition
+is equivalent to
+
+    p*q<=Q+2*T*(q-p)/(q+p),
+    Le/Je>=p/q>(m-1)/(m+1),                             (366.4)
+
+where Le=(v+d)^2-(m-1)*(u-1) and Je=(m+1)*(u+1)-(v-d)^2.
+Since 0<(q-p)/(q+p)<=1/m, 2*T<=Q, and u>m,
+
+    p*q=sqrt((m^2-1)*(u^2-1))>u*(m^2-1)/m.
+
+Consequently
+
+    u<Q/(m-1), Q>m*(m-1),
+    z<Q/(m-1)+m+1.                                     (366.5)
+
+The weaker bound
+
+    u<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1)              (366.6)
+
+will be convenient for two polynomial comparisons.
+
+From Q<(m-2)^2+(m-3)^2 follows m^2-9*m+13>0. Together
+with m>4 this gives m>43/6. Indeed on 4<m<=43/6,
+
+    m^2-9*m+13=(m-4)*(m-43/6)+(13*m-94)/6<0.
+
+We also have
+
+    d^2>3*m-4, v^2>5*m-9.                               (366.7)
+
+The eta M cosine has numerator and denominator
+
+    Ne=2*v*d+m*(v^2+d^2)-(m^2-1)*u,
+    De=m^2+v^2+d^2+2*m*v*d-1.
+
+It increases in v,d and decreases in u on 1<v,d<m and u>=m.
+For example its v derivative has sign numerator
+
+    Ne_v*De-Ne*De_v
+      =2*(m^2-1)*[-d^3+d*m*u+d*v^2+d+m*v+v*u]>0.
+
+At v=d=m-2,u=m, De-2*Ne=(m+1)*(7*m-9)>0. Hence
+
+    theta_M(eta)>pi/3, beta_M(tau)<pi/3.                 (366.8)
+
+The comparison is algebraic, with positive denominators; no comparison
+endpoint is claimed to be a genuine owner.
+

@@ -1,0 +1,43 @@
+**命题 39.5（共同有限商及其不变因子）。** 对每个正整数 $m$，
+
+$$
+\mathbb Z^2/(m\mathbb Z^2)\cong(\mathbb Z/m\mathbb Z)^2,
+$$
+
+$$
+\mathbb Z^2/(m\Lambda_5)
+\cong\mathbb Z/m\mathbb Z\times\mathbb Z/(5m)\mathbb Z.
+$$
+
+第二式有整数可逆行列变换的显式证书
+
+$$
+P=\begin{pmatrix}0&1\\-1&2\end{pmatrix},
+\qquad
+Q=\begin{pmatrix}1&-2\\0&1\end{pmatrix},
+\qquad
+P(m\mathsf C_5)Q=\begin{pmatrix}m&0\\0&5m\end{pmatrix}.
+$$
+
+证明。第一式由逐坐标模 $m$ 的满射及核 $m\mathbb Z^2$ 得到。对第二式，$\det P=\det Q=1$，并且
+
+$$
+P\mathsf C_5=\begin{pmatrix}1&2\\0&5\end{pmatrix},
+\qquad
+\begin{pmatrix}1&2\\0&5\end{pmatrix}Q
+=\begin{pmatrix}1&0\\0&5\end{pmatrix}.
+$$
+
+乘以 $m$ 即得证书。右乘 $Q$ 只换整数格基，左乘 $P$ 是环境整数群的自同构。因此 $P$ 把 $m\Lambda_5$ 双射到 $m\mathbb Z\times5m\mathbb Z$，并诱导所列商群同构。这个同构还可直接写为
+
+$$
+[(U,V)]\longmapsto
+\bigl(V\bmod m,\ -U+2V\bmod5m\bigr).
+$$
+
+它满射，因为 $P$ 在 $\mathbb Z^2$ 上满射；其核恰由证书给出。两个对角元为正，且 $m\mid5m$，所以是 Smith 标准形的不变因子，并非只有相同群阶的猜测。$m=1$ 时第一因子是平凡群，也没有例外。
+
+取 $m=2$，得到 $[\mathbb Z^2:2\Lambda_5]=2\cdot10=20$；取标准格的 $m=5$，得到 $[\mathbb Z^2:5\mathbb Z^2]=25$。若 $\ell\ne5$ 为素数，两类指数中的 $\ell$ 赋值都为 $2v_\ell(m)$，必为偶数；五的赋值分别为 $2v_5(m)$ 与 $1+2v_5(m)$。因此其他素数可以出现，但只能通过平方尺度进入，唯一能有奇数赋值的素数是五。证毕。
+
+数学引文及范围。整数可逆行列变换和按整除排列的不变因子是经典 Smith 标准形工具，参见 Eric W. Weisstein 的 [Smith Normal Form](https://mathworld.wolfram.com/SmithNormalForm.html)。这里对所需矩阵给出完整证书，不将一般标准形定理另立为新结果。所分类的是有限加法群及其指定操作，不是第 36–37 章的 $Q=1$ 范数曲线；该曲线的点数与点周期不能由这些群阶直接替代。
+

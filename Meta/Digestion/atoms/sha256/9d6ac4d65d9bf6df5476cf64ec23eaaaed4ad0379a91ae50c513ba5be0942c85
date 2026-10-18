@@ -1,0 +1,6 @@
+### 84.5. Boundary
+
+The proof uses Schur positivity and its trace-norm contraction consequence, the section-81 algebraic support witness, and the original reference/output pinching with its complete trace deficit. It does not claim that arbitrary local frames factor as a qubit core times markers. Nor does it complete arbitrary transferred contraction blocks into physical channels.
+
+The two-sided path certifies a nontrivial family of simultaneous rank-raising directions, not the complete feasible cone around equality. Any sub-quarter product must fail the qubit-core factorization on both sides and satisfy the quantitative escape condition (11), in addition to the section-83 transversal conditions. General nonfactorizable bilateral deformations remain unresolved. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
+

@@ -1,0 +1,67 @@
+**定理 64.1（Native58 的有限字加强）。** 保留定义 55.1、假设 55.2、(VII.18) 的被动标架及定理 58.1 已证明的全尺寸翻转 Lie 代数。对每个 $n\geq1$，实际翻转字集本身满足
+
+$$
+\mathcal V_n=D_nSO(d_n)D_n^\dagger.
+\tag{IX.1}
+$$
+
+对每个 $n\geq3$，仍只使用同址固定门 $S_{\star,n}$，实际有限字集本身满足
+
+$$
+\boxed{\mathcal W_n=\{Q\in U(d_n):\det Q\in\langle i^{F_{n-2}}\rangle\}}.
+\tag{IX.2}
+$$
+
+因此 $SU(d_n)\subseteq\mathcal W_n$；每个酉通道都有一个精确有限原生字实现。这里“原生”仅指假设 55.2 的理想菜单，参数仍可取任意实数。结论没有给出已评价的脉冲数、持续时间、参数精度或硬件实现。
+
+**证明。** 在被动标架中记 $\widetilde{\mathcal W}_n=D_n^\dagger\mathcal W_nD_n$，$A_j=A_j^{(n)}$，并定义
+
+$$
+\mathfrak L=\operatorname{span}_{\mathbb R}
+ \{\operatorname{Ad}_g A_j:g\in\widetilde{\mathcal W}_n,\ 1\leq j\leq n\}.
+\tag{IX.3}
+$$
+
+这里 $g$ 总是一个实际有限字，不是字集闭包中的元素。$\mathfrak L$ 是有限维实向量空间，因而闭；每个实际字的共轭保持它。对每个生成其线性张成的方向 $X=\operatorname{Ad}_gA_j$，都有精确恒等式
+
+$$
+e^{tX}=g e^{tA_j}g^{-1}\in\widetilde{\mathcal W}_n
+\qquad(t\in\mathbb R).
+\tag{IX.4}
+$$
+
+字的逆可用，特别是固定相位的逆就是其三次幂。对 $Y\in\mathfrak L$，曲线 $e^{tX}Ye^{-tX}$ 全在 $\mathfrak L$ 内；在零点求导给 $[X,Y]\in\mathfrak L$。对 $X$ 的有限实线性组合使用双线性，故 $\mathfrak L$ 是 Lie 代数。这一步只对有限维向量空间取导数，没有执行一个交换子极限字。
+
+由定理 58.1 的翻转代数等式，$\mathfrak{so}(d_n)\subseteq\mathfrak L$。该定理的 (VII.25)–(VII.33) 是全 $n$ 归纳：被末位阻断的控制产生第一块中的非零理想，孤立匹配边的括号给全部第一块旋转，再由最后控制的匹配与一个零行得到全部矩形跨块方向和第二块旋转。因此这里复用的是该全尺寸证明，不是有限尺寸的秩外推。
+
+设 $P=n_1n_3|_{\mathcal K_n}$。对每个 $n\geq3$，$P$ 的像和核均非零，$S_{\star,n}$ 在两者上分别为 $i$ 和 $1$。$\mathfrak L$ 在这个实际门的共轭下不变。于是对计算基指标 $p\in\operatorname{ran}P$、$q\in\ker P$，它同时包含
+
+$$
+J_{pq},\qquad i(E_{pq}+E_{qp}),\qquad
+[J_{pq},i(E_{pq}+E_{qp})]=2i(E_{pp}-E_{qq}).
+\tag{IX.5}
+$$
+
+两个非空指标集之间的完全二分图连通；沿路径相加，以上对角差张成全部迹零纯虚对角矩阵。再与全部 $J_{uv}$ 交换，得到每个 $i(E_{uv}+E_{vu})$。这些与实反对称方向张成 $\mathfrak{su}(d_n)$。反向，(IX.3) 的每个方向都是迹零反 Hermitian，故
+$\mathfrak L=\mathfrak{su}(d_n)$。
+
+从 (IX.3) 的实际共轭方向中选一组基 $X_1,\ldots,X_{d_n^2-1}$，考虑
+
+$$
+\mathcal F(t_1,\ldots,t_{d_n^2-1})
+ =e^{t_1X_1}\cdots e^{t_{d_n^2-1}X_{d_n^2-1}}.
+\tag{IX.6}
+$$
+
+它在零点的微分是 $(t_j)\mapsto\sum_jt_jX_j$，为到 $T_I SU(d_n)$ 的同构。逆函数定理给 $SU(d_n)$ 中一个恒等邻域，邻域的每个点都是 (IX.4) 的有限字乘积。故 $\widetilde{\mathcal W}_n\cap SU(d_n)$ 是开子群。开子群的全部陪集均开，因而它也闭；$SU(d_n)$ 连通，迫使此子群为整个 $SU(d_n)$。没有把稠密子群当成整个群。
+
+同一论证把 (IX.3) 中的字限于翻转字，所得代数恰为 $\mathfrak{so}(d_n)$：一侧来自定理 58.1，另一侧来自正交共轭保持实反对称性。选实际共轭基，在连通 $SO(d_n)$ 上使用 (IX.6) 的相应维数版本，即得 (IX.1)，包括 $n=1,2$。$n=0$ 的空菜单仅给一维空间上的恒等。
+
+所有翻转脉冲行列式为一，而定理 58.1 已给
+$\operatorname{rank}P=F_{n-2}$，所以每个实际字的行列式在 $C_n=\langle i^{F_{n-2}}\rangle$ 内。反之，若 $\det Q\in C_n$，选整数 $k$ 使 $\det Q=\det S_{\star,n}^k$，则
+$QS_{\star,n}^{-k}\in SU(d_n)\subseteq\mathcal W_n$，故 $Q\in\mathcal W_n$。被动共轭不改变 $SU$ 或行列式，得到原坐标中的 (IX.2)。对任意 $U$ 取 $|z|=1$ 使 $z^{d_n}\det U=1$，则 $zU$ 有精确有限字，且其酉通道等于 $U$ 的通道。
+
+例如 $n=3,5,8$ 时，$C_n$ 的阶分别为 $4,2,1$。$n=8$ 虽有 $\det S_{\star,8}=1$，该门的相位支撑仍是非零真子空间，故 (IX.5) 仍成立；不能因行列式为一而删去其控制作用。$\square$
+
+本定理应用的是成熟的共轭基与逆函数方法，见 D. D'Alessandro，[*Uniform finite generation of compact Lie groups and universal quantum gates*，Lemma 1、Theorem 2](https://arxiv.org/html/quant-ph/0111133v1)。其接口是连通有限维 Lie 群、所给单参数子群及实参数；本证明把每个共轭和逆都落实为当前固定相位菜单中的字。[《合法门、状态机与 Shor 读出》Theorem 11.2](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#11-a-phase-restriction-has-an-exact-blind-sector-one-extra-quadrature-removes-it) 已在另一项“某一位置增加第二正交驱动”的菜单下使用精确控制原理。这里增加的是 Native58 的固定相位、全合法链应用，不认领该一般控制方法，也不把两种菜单的权限互换。
+

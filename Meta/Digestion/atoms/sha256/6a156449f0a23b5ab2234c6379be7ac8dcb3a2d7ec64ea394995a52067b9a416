@@ -1,0 +1,18 @@
+**Convention 7.2 (Literature status and use).** The marginal-cap
+consequence and the particular attained fourteen-flag certificate are
+`repo-derived`. The event–atom–TP identity (6.5) is an explicit
+specialization of conic slackness. No worldwide originality follows
+from these descriptions. The supplier reductions and witness are
+credited in Convention 1.3 and are not new results of this volume.
+
+| Primary source | Exact correspondence and limit |
+| --- | --- |
+| [Horodecki–Shor–Ruskai, quant-ph/0302031v2, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031v2) | `literature-attested`: measure-and-prepare, separable Choi and rank-one Kraus equivalences. Their CPTP version separately requires a POVM or $\sum_fC_f^\dagger C_f=I$. Equation (3.6) proves that normalization directly; (4.5) fixes output-first Choi order. |
+| [Doherty–Parrilo–Spedalieri, quant-ph/0308032v3, §VI and §VI.1](https://arxiv.org/html/quant-ph/0308032v3) | `literature-attested`: decomposable witnesses and product-form positivity certificates. The lower uses the explicit QWS witness and PSD weak duality. Hierarchy completeness or a positive relaxed point supplies no matching endpoint or legal port here. |
+| [Ohst et al., 2411.08110v2, §3.3 and Appendix C.3](https://arxiv.org/html/2411.08110v2) | `literature-attested`: constrained separability and alternating feasible-factor optimization have their specified per-factor constraints and objectives. A summed TP marginal is not a constraint on each factor separately, and a candidate from alternating optimization is not an optimality certificate for (1.3). |
+
+The explicit atoms avoid a separability-extraction hypothesis. No
+low-dimensional PPT sufficiency, flat extension, irreducible-group
+fidelity optimum, diamond-norm result or general decidability theorem
+is used to evaluate this $5\times5$ actual-menu problem.
+

@@ -1,0 +1,10 @@
+**Convention 41.2 (reused source dictionary).** Keep $D,T,S,M,\kappa$
+from (JR.2), the positive $\theta,\omega,\delta,k,v_0,s_0$ of (JR.21),
+and $A_y,B_y,C_y$ of (JR.23). For the prescribed $s$ write
+$v=v_s$, $u=\theta v+\omega$ and $P_y(s)$ as in (JR.30)–(JR.33).
+The sharp law $\mathsf C(s)=P_{27}(s)$, its inverse (JR.42), the
+constant interval $[0,s_0]$, and the complete H/L attainer (JR.34)–(JR.41)
+are reused from §§34–40. In CA notation
+$(\alpha,\beta,\ell)=(\theta,\omega,\delta)$ and
+$(p_s,q_s)=(1-u,1-v)$; CA's $B_0$ is the matrix called $Q_0$ below.
+

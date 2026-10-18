@@ -1,0 +1,170 @@
+## 5. Two entire late-and-terminal-root classes have at most two worlds
+
+For $a\in\{4,5\}$ define the known root class
+
+$$
+\mathcal Z_{a7}=\{W\in\mathcal F(H):f(a)=f(7)=0\}.
+\tag{5.1}
+$$
+
+**Theorem 5.1.** Each entire $\mathcal Z_{a7}$ contains at most two
+complete worlds. The source and gain shape are initially variable,
+and the original drift is arbitrary. Within the class the drift is
+forced to equal the actual reading at $a$.
+
+**Proof, generic drift and all quadratic coefficients.** Write
+
+$$
+f(T)=(T-a)(T-7)(b+eT),\qquad b=-d/(7a).
+\tag{5.2}
+$$
+
+This includes quadratic gains and repeated roots. First suppose
+$d\notin\{0,24,48,312/5\}$. Then $b\ne0$, and each of the first
+three noninitial gain samples is nonzero by (1.6) and positivity.
+Put $\mu=e/b$. In particular $1+\mu,1+2\mu,1+3\mu$ are
+nonzero. Use $j+\ell$ as the sum of the first two traces. Set
+$A=24-d$, $B=48-d$, $C_*=312/5-d$ and
+
+$$
+\begin{aligned}
+p_1&=(1+2\mu)(1+3\mu)=1+5\mu+6\mu^2,\\
+p_2&=(1+\mu)(1+3\mu)=1+4\mu+3\mu^2,\\
+p_3&=(1+\mu)(1+2\mu)=1+3\mu+2\mu^2.
+\end{aligned}
+\tag{5.3}
+$$
+
+For $a=4$, the samples at one, two and three are
+$b(18(1+\mu),10(1+2\mu),4(1+3\mu))$. Clearing the proved
+nonzero factors in $A/f(1)+B/f(2)=C_*/f(3)$ gives
+
+$$
+10A p_1+18B p_2-45C_*p_3=R_4(\mu)=0,
+\tag{5.4}
+$$
+
+whose complete coefficient triple is
+
+$$
+\begin{aligned}
+&(10A+18B-45C_*,\ 50A+72B-135C_*,\ 60A+54B-90C_*)\\
+&\hspace{8mm}=(17d-1704,\ 13d-3768,\ -24d-1584).
+\end{aligned}
+\tag{5.5}
+$$
+
+This polynomial is never identically zero: its quadratic coefficient
+can vanish only at $d=-66$, where its constant is $-2826$.
+
+For $a=5$, the three samples are
+$b(24(1+\mu),15(1+2\mu),8(1+3\mu))$, giving
+
+$$
+5A p_1+8B p_2-15C_*p_3=R_5(\mu)=0,
+\tag{5.6}
+$$
+
+with the complete triple
+
+$$
+\begin{aligned}
+&(5A+8B-15C_*,\ 25A+32B-45C_*,\ 30A+24B-30C_*)\\
+&\hspace{8mm}=(2d-432,\ -12d-672,\ -24d).
+\end{aligned}
+\tag{5.7}
+$$
+
+Its quadratic coefficient is nonzero in this case. Thus at most two
+real $\mu$ values are possible for either class, including the
+linear degree drop in $R_4$.
+
+We need a nonzero late sample to recover $r$. No legal world has all
+three roots $4,5,7$. Indeed such a world would have
+
+$$
+f(T)=c(T-4)(T-5)(T-7),\qquad c=d/140\ne0.
+\tag{5.8}
+$$
+
+Its samples at one, two and three are $-72c,-30c,-8c$. The trace
+sum relation gives
+
+$$
+\frac{35}{18}(d-24)+\frac{14}{3}(d-48)
+                         =\frac{35}{2}(d-312/5).
+\tag{5.9}
+$$
+
+Multiplying by 18 gives $119d-4872=315d-19656$, whence
+$d=528/7$. Therefore
+
+$$
+j=175/132,\quad \ell=56/33,\quad u=23/33,\quad v=83/132,
+\qquad uv=1909/4356>1/4
+\tag{5.10}
+$$
+
+because $7636>4356$. This contradicts rank-one source legality.
+
+For a fixed $\mu$, the other late sample (at five for $a=4$, at
+four for $a=5$) is consequently nonzero. The first two gain samples
+fix $j,\ell$, hence $u,v$; the other late equation fixes $r$.
+Each $\mu$ thus gives at most one complete world. All remaining
+equations and inequalities still apply: the quadratic equation alone
+is not sufficient for membership.
+
+**Proof, the three nonzero exceptional drifts.** If
+$d\in\{24,48,312/5\}$, let $q\in\{1,2,3\}$ be its corresponding
+clock. The gain also has root $q$, so it is uniquely
+
+$$
+f(T)=\frac{d}{7aq}(T-a)(T-q)(T-7).
+\tag{5.11}
+$$
+
+At zero the product is $-7aq$, giving exactly $f(0)=-d$.
+At the two non-root clocks among one, two and three, the trace
+factors determine $j,\ell$: for $q=1$ use $\ell,j+\ell$, for
+$q=2$ use $j,j+\ell$, and for $q=3$ use $j,\ell$. The other late
+sample is nonzero in this explicit three-root polynomial and fixes
+$r$. Thus each such class has at most one world. The zero sample at
+$q$ is not divided out.
+
+**Proof, zero drift.** If $d=0$, (5.2) has $b=0$ and $e\ne0$.
+For $a=4$, the samples are $18e,20e,12e$, which would require
+
+$$
+j=\frac4{3e},\quad \ell=\frac{12}{5e},\quad
+j+\ell=\frac{26}{5e}.
+\tag{5.12}
+$$
+
+The first two sum to $56/(15e)$, whereas the third is
+$78/(15e)$. Thus this class is empty.
+
+For $a=5$, write $f(T)=cT(T-5)(T-7)$. The clock-one trace forces
+$c>0$, and the first four equations give
+
+$$
+j=1/c,\quad \ell=8/(5c),\quad
+u=8/(5c)-1,\quad v=1-3/(5c).
+\tag{5.13}
+$$
+
+Put $A_0=(y-12)/12$. Since $f(4)=12c$, the fourth equation gives
+$r=A_0/c-1$. The rank-one equation is exactly
+
+$$
+c^2-(3A_0-11/5)c+A_0^2-24/25=0.
+\tag{5.14}
+$$
+
+To check every coefficient, multiply $uv=r(1-r)$ by $c^2$:
+the two sides are respectively
+$(11/5)c-c^2-24/25$ and $3A_0c-2c^2-A_0^2$.
+The leading coefficient in (5.14) is one, so at most two $c$ values
+are possible, each fixing the complete world. The fifth equation is
+also retained and requires $\zeta=0$. These cases exhaust all drifts
+and every permitted gain degree and multiplicity. ∎
+

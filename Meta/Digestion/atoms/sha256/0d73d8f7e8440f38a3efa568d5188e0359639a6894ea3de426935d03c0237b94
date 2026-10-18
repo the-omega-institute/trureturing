@@ -1,0 +1,43 @@
+**Proposition 5.2 (a positive law violating joint completion).** Let
+$D=2$ and $p=RL$. There are $38$ sources in $\mathcal F_2$. Give each of
+the five descriptors
+
+$$
+(1,0),(1,1),(2,0),(2,1),B
+\tag{5.2}
+$$
+
+mass $1/5$. Conditional on $(2,0)$, let the $RR$ subtree be the mixture
+$\tfrac12\operatorname{Unif}(\mathcal T_1)+\tfrac12\delta_\alpha$; conditional
+on $(2,1)$ use
+$\tfrac12\operatorname{Unif}(\mathcal T_1)+\tfrac12\delta_\beta$. Conditional
+on $B$, take $RR$ uniform on $\mathcal T_1$ and take the two children of
+$RL$ independently uniform on $\{\alpha,\beta\}$. The two $(1,e)$ sources
+have no $RR$ subtree. This is a rational full-support law on all $38$ sources.
+
+It violates (4.5), since
+
+$$
+\Pr(RR=\alpha\mid(2,0))=\frac7{12},\qquad
+\Pr(RR=\alpha\mid B)=\frac16.
+\tag{5.3}
+$$
+
+Nevertheless
+
+$$
+V_{\rm all}(\mu)=\frac75.
+\tag{5.4}
+$$
+
+**Proof.** Read $RL$ first. A leaf gives $(2,e)$ and a branch gives $B$;
+on an absent reply, Read $R$ to obtain $(1,e)$. The mean is
+$1+2/5=7/5$. Conversely, a one-Read termination on either $(1,e)$ source
+requires $R$, and a one-Read termination on either $(2,e)$ source requires
+$RL$, by the label-flip argument. A word different from both cannot finish
+on any leaf-label pair in one Read; it cannot lower the displayed mean.
+Thus every strategy has mean at least $1+2/5$, proving (5.4). $\square$
+
+This example shows that the joint-completion criterion is only sufficient.
+Its failure does not by itself imply a mean-cost separation.
+

@@ -1,0 +1,33 @@
+**Definition 153.4 (Verification and the unresolved universal intersection).**
+The finite certificate here comprises the 94 indexed TV rows, all 13
+nonnegative full $N$ scores, 22 halfspaces, seven initial vertices,
+15 complete clipping transitions, 225 common-active rank sets, 36 final
+vertices, all 36 full 246-coordinate stopped lifts and the 306-coordinate
+completion lookup. Laws and row slacks are reconstructed from these
+primitive formulas and integers. Ordinary clipping, convexity and
+conforming triangulation provide continuum proofs, not extrapolation from
+sampled feasible parameters. The general rational normal form is an
+ordinary quantified deduction, not a scan or an actual separator.
+Neither unit has Lean/kernel verification, ingestion, coverage or freeze
+status assigned by this text.
+
+The fixed remaining obligation is to prove for every full original
+positive monotone vanishing sequence and every positive closed cap
+
+$$
+\mathcal F_N(a,e)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,e)\cap\mathscr C_L\ne\varnothing
+\tag{153.1}
+$$
+
+at its actual active length, or to refute it with an original one-common-seed
+$N_2$ attainer and a uniform lower certificate against every original
+full-carrier arbitrary-address $O_2$ competitor. Theorem 148.1 settles
+all original five-active profiles. Theorem 152.1 identifies a complete
+rational strict-cap certificate whenever a fixed finite-length inclusion
+fails, but supplies no such failure. Whole $L\ge6$ comparisons and any
+actual full-class rational separator remain unproved. No $L=6$ candidate
+is a premise of either unit. Finite bounded completion does not complete
+the universal or persistent long-term goal.
+

@@ -1,0 +1,34 @@
+**Lemma 8.4 (Invariant legal space and two-state blocks).** Every pulse
+preserves $\mathcal K_n$. For an oriented site-$i$ edge $e=(u,v)$, its block
+in the ordered basis $|u\rangle,|v\rangle$ is
+
+$$
+H_i(\beta)\big|_e=
+\begin{pmatrix}0&e^{-i\beta}\\e^{i\beta}&0\end{pmatrix},\qquad
+R_i(\beta,t)\big|_e=
+\begin{pmatrix}
+\cos t&-i\sin t\,e^{-i\beta}\\
+-i\sin t\,e^{i\beta}&\cos t
+\end{pmatrix}.
+\tag{8.7}
+$$
+
+All other legal vertices are fixed by this pulse.
+
+Proof. A legal one at $i$ has zero neighbors, so its deletion is enabled.
+Insertion into a zero is enabled precisely when both existing neighbors
+are zero; at an endpoint the missing neighbor contributes the identity.
+Every enabled flip is therefore another legal word. If a neighbor is one,
+the two projectors kill the action and the pulse is the identity. A word
+has at most one partner for a flip at this fixed site. The site-$i$ edges
+thus form disjoint two-state blocks. Squaring each displayed Hamiltonian
+block gives $I$, so its exponential has (8.7). On a blocked vertex the
+Hamiltonian is zero. This proves the block description and invariance.
+$\square$
+
+For $n=1$, both boundary projectors are identities, $B_1=\{0,1\}$ and
+there is one ordinary two-state block. A zero entry of an initial law
+does not delete a basis vector from $\mathcal K_n$. Subsequent pulses may
+populate that legal mode. No intermediate measurement is part of the
+depth protocols below.
+

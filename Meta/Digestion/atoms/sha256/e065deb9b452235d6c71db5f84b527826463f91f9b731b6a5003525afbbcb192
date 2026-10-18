@@ -1,0 +1,28 @@
+**Definition 5.3 (One fixed original-output decoder).** On all of
+$\mathbb R^4$ define
+
+$$
+\widehat A(z_1,z_2)
+=2H\sqrt T\bigl[(1+\varepsilon a)z_1-\varepsilon z_2\bigr],
+\qquad
+\mathcal D_\varepsilon(z_1,z_2)=D(\widehat A(z_1,z_2),0).
+$$
+
+In the five original output blocks, this is
+
+$$
+\left(
+R_{\delta_{01}}\widehat A,\quad
+0_2,\quad
+R_{\delta_{03}}\widehat A,\quad
+R_{\delta_{1,13}}J\widehat A,\quad
+R_{\delta_{3,13}}J\widehat A
+\right).
+$$
+
+This is one fixed linear decoder with zero affine offset. Its negative
+coefficient on the second block is allowed by the affine contract.
+Preparation phases occur only in its fixed rotations. In particular
+the zero $02$ pair is permitted even though no native ray in the open
+source has a zero $02$ radius.
+

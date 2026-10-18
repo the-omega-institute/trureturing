@@ -1,0 +1,10 @@
+### 60.2 The exact common-channel feasible class
+
+Put l=|λ|, m=|μ|. Necessity follows from §54's full-support normal form: apply an exact implementation to J(I/2). Every positive-weight product branch has a deterministic code-label map f. Identity f can contribute only to λ, with coefficient of modulus at most one; flip f can contribute only to μ, also with modulus at most one; constant f kills both coherences. If total identity and flip branch weights are a and b, then l≤a≤min(α,β) and m≤b≤min(1−α,1−β).
+
+For a constructive converse set S=1−l−m, A=α−l, B=β−l. The displayed inequalities imply S≥0 and 0≤A,B≤S. Choose U=max(0,A+B−S), so 0≤U≤min(A,B). Define
+
+    wI=l+U, wF=m+S−A−B+U, w0=A−U, w1=B−U.
+
+All weights are nonnegative and sum to one. Use an identity-label branch of weight wI, with local dephasing on Alice chosen so its logical 01 coefficient is λ/wI. Use a flip-label branch of weight wF: dephase Alice and then apply X on both sides, choosing the dephasing coefficient so the resulting logical 10 coefficient is μ/wF. Local dephasing with any complex multiplier of modulus at most one is CPTP. The remaining branches reset both parties to |0> or |1>, with weights w0,w1. Zero-weight branches are omitted, so division by zero is never needed. The identity and flip weights dominate l and m respectively. Directly on the four matrix units, the resulting channel has populations α=wI+w0, β=wI+w1 and coherences λ,μ. Therefore it agrees on all logical inputs and all reference extensions. This reuses the known PIO-type constructions; no new priority is asserted for the feasible-class ingredients.
+

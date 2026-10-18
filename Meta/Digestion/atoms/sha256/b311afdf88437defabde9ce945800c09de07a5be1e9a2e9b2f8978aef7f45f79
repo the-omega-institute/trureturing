@@ -1,0 +1,51 @@
+**Proposition 3.2 (effective exact full-row fibers on the positive gate).**
+On $\mathsf{Fin}$ one can compute the exact finite set
+$\mathscr R=R_Q(U)$ and WS2S formulas $\mathsf{Row}_r(Y)$ for
+$r\in\mathscr R$ such that
+
+$$
+\mathsf{Adm}(Y)\Longrightarrow
+ [\mathsf{Row}_r(Y)\ \Longleftrightarrow\ R_Q(F(y))=r].
+\tag{GRS.12}
+$$
+
+Every $r$ is attained by an actual finite source. Equal rows get one label,
+even if obtained from different original prefix patterns.
+
+Proof. List all functions $\theta:\{p:|p|\le H\}\to\mathcal A$ and form
+
+$$
+\mathsf C_\theta(Y)=\mathsf{Adm}(Y)\land
+   \bigwedge_{|p|\le H}\mathsf G_{0,\theta(p)}(Y;p).
+\tag{GRS.13}
+$$
+
+This is an effective finite list of exact full-source formulas. Decide
+the emptiness of each by Lemma 2.2. For a nonempty cell enumerate finite
+$y$ until one satisfies it. This succeeds because the cell has a finite
+tree witness, and concrete membership is decidable. Alternatively use
+a finite model from the decision. Compute $F(y)$ and its whole $R_Q$.
+
+Every admitted tree is in exactly one cell, since its original replies
+are unique. Any two trees in that cell agree through original depth $H$;
+the supplied determining-prefix theorem makes their whole rows equal.
+Consequently the computed row is correct on the entire cell, including
+all its arbitrarily large continuations. Compare the computed reached
+lists, concrete numbered contexts and complete partitions and merge
+equal rows. Set $\mathsf{Row}_r$ to the disjunction of exactly the cells
+labelled by $r$. This proves (GRS.12), exhaustion and attainment.
+
+No sample is substituted for a universal source domain: the witness
+computes the finite output of a cell whose constancy has already been
+proved. The terminal predicate still quantifies all of that cell.
+This is the prefix-to-label method of [SRF, Proposition 1.5][SRF] with
+its hypotheses supplied by the graph gate and (GRS.10), not an application
+of SRF's synchronous membership assumption. $\square$
+
+This order matters. A general WS2S formula for equality of two arbitrary
+shifted graph subtrees is not needed or asserted. The ARH graph decision
+first handles nested and incomparable target comparisons on the whole
+domain. Only its positive finite-prefix conclusion licenses (GRS.13).
+On its negative branch, finite labels are not manufactured by choosing
+one source per purported output.
+

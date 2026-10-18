@@ -1,0 +1,8 @@
+**Corollary 135.2 (three reservoir labels, without seeds).** If |H|<=3,
+every such field is genuine.
+
+Proof. Every block already uses two distinct H labels transversely, so
+at most one distinct H label remains available outside that pair.
+Apply Corollary 135.1; equivalently, Theorem 134.1 requires four distinct H
+labels. QED.
+

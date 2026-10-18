@@ -1,0 +1,61 @@
+### 79.5. Mixed pairs and a full multiplication determinant
+
+Use the exact degree-five aligned algebra of §77. Write its quintic variable
+as \(d\), set \(s^2=K(d)=d^2+4\tau(d)\), where \(\tau\) is (77.5),
+and take \(a(d)=A(d,\tau(d))\), \(c(d)=C_a(d,\tau(d))\) from the
+first-two-row Cramer solutions in §77.2, using the original system (75.26). The scaled aligned representative is
+\[
+(1,1,z;H,H,Hr),\quad
+z=\frac{2+i(s+d)}{2-i(s+d)},\quad
+r=\frac{2+i(s-d)}{2-i(s-d)},\quad H=s(a+ic).
+\tag{79.12}
+\]
+Here \(H\) is the scaled lower phase \(\kappa g\), of squared modulus \(R\),
+not the original unit phase \(g\). Both signs of \(s\), all three physical
+quintic roots, and all three unique-position choices are retained. The
+finite/pole exclusions are already part of Theorem 77.1.
+
+For a generic normalized root \(Z\) at the unique aligned position, the
+ordinary overlap divided by \(t\) is \(A_mZ^2+B_mZ+C_m\), where
+\[
+\begin{aligned}
+A_m&=(z-1)/E+(H/R)(r-1)\bar C/E,\\
+B_m&=-3(z-1)/E+(H/R)(r-1)(\bar D-3\bar C/E),\\
+C_m&=3z+3\bar GH/R+(H/R)(r-1)(\bar G+2\bar C-\bar D).
+\end{aligned}                                                    \tag{79.13}
+\]
+This follows by summing the two repeated positions in the original overlap.
+Let
+\[
+C_Z=\begin{pmatrix}0&0&E/q\\1&0&-3E\\0&1&3\end{pmatrix},\qquad
+N_m=\det(A_mC_Z^2+B_mC_Z+C_mI_3).
+\tag{79.14}
+\]
+It is the product over the three possible relative unique positions.
+In
+\[
+\mathcal A\otimes\mathbb Q(i)[d,s]/(f_5(d),s^2-K(d)),
+\]
+the full multiplication determinant of \(N_m\) equals
+\[
+57\pmod {97},\qquad i\mapsto22.                          \tag{79.15}
+\]
+To reconstruct it, use basis \(s^\epsilon\eta^rd^j\), indexed by
+\(100\epsilon+5r+j\), with \(\epsilon=0,1\), \(0\le r<20\), \(0\le j<5\).
+Reduce each column by the two monic factors and \(s^2=K(d)\). The aligned
+coordinate functions, quintic, and inverses are exactly those in (77.1)–
+(77.6); all scalar and polynomial denominators, including those in (79.12),
+are checked invertible modulo 97 and the factor degrees remain 20 and 5.
+More explicitly, the aligned norms of \(K,J,F_0,(2-22d)^2+K,
+(2+22d)^2+K\) are respectively \(51,37,90,15,36\), where
+\(J=d-2\tau(d)+6\), \(F_0=d^2+(\tau(d)+1)^2\).
+Thus (79.15) lifts to invertibility in characteristic zero. No mixed physical
+pair can annihilate \(N_m\), so there is no generic–aligned orthogonal edge.
+
+Generic pairs now satisfy (79.2), mixed edges are absent, and aligned pairs
+satisfy the same mean-spinor implication by Theorem 77.1. The channel means
+are nonzero by Theorem 75.2. An orthogonal noncanonical triple would give
+three mutually orthogonal nonzero vectors in \(\mathbb C^2\), impossible.
+This proves Theorem 79.1.
+
+

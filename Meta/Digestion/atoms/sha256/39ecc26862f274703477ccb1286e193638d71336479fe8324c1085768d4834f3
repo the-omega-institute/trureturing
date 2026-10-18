@@ -1,0 +1,33 @@
+**Lemma 3.1 (Two capacities for detached components).** Suppose a finite
+collection of $C$ nonempty paths has positive integer edge lengths
+$\ell_1,\ldots,\ell_C$ and total edge count $d$. Its vertex sizes
+$s_i=\ell_i+1$ can be split into two groups with respective total sizes
+
+$$
+x\le d,\qquad y\le d+1.
+\tag{3.1}
+$$
+
+The split can be specified deterministically from any fixed ordering.
+
+Proof. If $C=0$, then $d=0$ and use two empty groups. If $C=1$, put the
+only component, of size $d+1$, in the second group. Suppose $C\ge2$.
+The other $C-1$ paths each have at least one edge, so for every $i$,
+
+$$
+s_i\le d-(C-1)+1=d-C+2.
+\tag{3.2}
+$$
+
+In the fixed order, take the shortest initial segment with size sum
+$x\ge C-1$. It exists since the full sum is $d+C$. Before its final
+term the integer sum is at most $C-2$, so
+
+$$
+C-1\le x\le(C-2)+(d-C+2)=d.
+\tag{3.3}
+$$
+
+The remaining size is $y=d+C-x\le d+1$. This proves both capacities
+by a finite specified split. $\square$
+

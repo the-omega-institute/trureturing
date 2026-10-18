@@ -1,0 +1,14 @@
+**Definition 9.1 (Supplier correspondence and attribution).** The mathematical source used here is the published volume *Real renewal instruments and detector rank*, through Section 22. Its relevant interfaces and the contribution of the present volume are as follows.
+
+| Source | Exact role and boundary |
+| --- | --- |
+| Theorems 11.5 and 15.2–15.5; equation (19.7) | The two actual degree-nine instruments, their own stationary initializations, the exact rational-center $H$, positivity and $1\le r_k\le1+\delta/k$. Their construction is inherited, not replaced by a scalar sampler or a different producer. |
+| Theorem 17.4; equations (20.1) and (20.29) | The actual forward wait, iid gaps after the observed tick, means and stationary read convention. Proposition 1.3 states their exact correspondence. |
+| Definition 22.1 and Theorem 22.2 | The all-sum pair law and its two conditional divergence expansions. At $m=2$, $C_{i,2}(n)=A_i(n)$ and $G_{i,2,n}(k,n-k)=c_{i,n}(k)$ in that notation. Corollary 6.3 recovers those results as a consistency specialization. |
+| Theorem 22.3 and Proposition 22.6 | The completed-pair martingale, predictable read identity and finite-arithmetic controller. Theorem 7.2 justifies the fixed-block version; Proposition 8.2 charges its growing exact product rather than importing the pair's dyadic workspace estimate. |
+| Lemma 20.6 and Theorem 22.5 | The unequal-nuisance converse on actual stationary histories, with initialization and an unbounded tilt controlled in the supplier. Only its stated rate and decision inequality are used for comparison here. |
+| Equation (19.13) | The separate known-common-$q$ rate coefficient $a^2/12960$. It is not a nuisance-free composite experiment. |
+| Present Sections 2–8 | Repository-derived fixed-$m$ convolution, inverse moments through total order four, endpoint control, variance, both KL remainders, averaging, paid rate, block observer and increasing-horizon law. These are handwritten derivations, not a claim of worldwide priority. |
+
+Conditional cancellation in exponential families, finite differences, beta integrals, Taylor remainder bounds, nonnegative-martingale crossing bounds, predictable summation and iid strong laws are the classical methods instantiated in the proofs. Their use here is supported by the displayed arguments and the credited supplier interfaces. No additional external-literature coverage or independently verified mathematical supplier is claimed.
+

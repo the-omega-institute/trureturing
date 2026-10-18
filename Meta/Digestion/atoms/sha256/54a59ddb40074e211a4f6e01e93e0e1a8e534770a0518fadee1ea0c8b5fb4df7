@@ -1,0 +1,48 @@
+**Definition 27.1 (normal connector geometry).** Use the analytic target
+mesh $t_i$ of (16.4), with scale $\rho$, on an auxiliary Brownian
+continuation if needed. Write
+$C_{s,t}=J^\lambda_t-J^\lambda_s-W^1_s(W^2_t-W^2_s)$ as in
+(16.3). Each mesh increment satisfies
+
+$$
+|X_i|,|Y_i|\le\rho,\quad |C_i|\le\rho^2,\qquad
+(X_i,Y_i,C_i)=
+(W^1_{t_i}-W^1_{t_{i-1}},W^2_{t_i}-W^2_{t_{i-1}},C_{t_{i-1},t_i})
+\tag{27.1}
+$$
+
+for $i\ge1$. At an active $t_i<S$, set $h=k+W^1_{t_{i-1}}$,
+choose the inward sign $d$ from (17.2), with $|d|=\rho$, and put
+$q_i=C_i/d$. Let $g_i:[0,1]\to\mathbb R^2$ be the six-leg
+piecewise linear path (17.3) with vertices
+
+$$
+(0,0),(d,0),(d,q_i),(0,q_i),(0,0),(0,Y_i),(X_i,Y_i),
+\tag{27.2}
+$$
+
+and equal parameter durations $1/6$. Its entire numerical geometry is
+known at $t_i$. Translated from the native controls at $t_i$, it will
+connect the exact target triple at $t_{i-1}$ to that at $t_i$.
+It is executed after $t_i$, rather than interpolated before that time.
+
+The connector computation is the explicit rectangle of Lemma 17.1,
+with the stronger bounds (27.1). Consequently all its prefixes have
+$|x|,|y|\le\rho$, $|j|\le\rho^2$, where $j=\int x\,dy$.
+The relative integral runs from $0$ to $C_i$ on its second leg and
+is constant thereafter. All heights are strictly interior to $I$
+when its two endpoint heights are interior. Its geometric costs are
+
+$$
+V^a(g_i)\le3\rho,\qquad V^b(g_i)\le3\rho,\qquad
+L(g_i)\le6\rho,\qquad
+\int_0^1|g_i'(v)|^2\,dv\le36\rho^2.
+\tag{27.3}
+$$
+
+Indeed the variations are $2\rho+|X_i|$ and
+$2|q_i|+|Y_i|$. All legs are along the original axes, so length is
+their sum. The last integral is
+$6(2\rho^2+2q_i^2+X_i^2+Y_i^2)$. These are direct uses of the
+published connector geometry, with no additional steering premise.
+

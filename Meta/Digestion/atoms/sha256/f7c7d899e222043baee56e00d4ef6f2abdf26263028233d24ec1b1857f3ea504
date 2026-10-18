@@ -1,0 +1,66 @@
+**Proposition 4.2.** There is no complete zero-sixth world on $H_*$
+with $d=0$, also on $\mathcal N_1$ and without a seventh promise.
+
+**Proof.** Both actual late equations are used here. At $d=0$ they
+give $f(4)>0$ and $f(5)<0$. The first four give $f(0)=0$ and
+$f(1),f(2),f(3)>0$. With $f(6)=0$, the intermediate value theorem
+supplies a third distinct root $\tau\in(4,5)$.
+A nonzero polynomial of degree at most three must therefore be
+
+$$
+f(T)=kT(T-\tau)(T-6),\qquad
+[f]=k(0,6\tau,-(\tau+6),1).
+\tag{4.2}
+$$
+
+Its clock-one product is positive, so $k>0$. All three roots are
+simple, and lower degrees are excluded by these three distinct roots.
+The samples at one, two and three are respectively
+$5k(\tau-1)$, $8k(\tau-2)$ and $9k(\tau-3)$.
+Since $t_3=t_1+t_2$,
+
+$$
+\frac{24}{5k(\tau-1)}+\frac{48}{8k(\tau-2)}
+                  =\frac{312/5}{9k(\tau-3)}.
+\tag{4.3}
+$$
+
+Here $k>0$ and $\tau>4$ justify all divisions. Multiplication by
+$15k(\tau-1)(\tau-2)(\tau-3)>0$ gives
+
+$$
+\begin{aligned}
+0={}&72(\tau-2)(\tau-3)+90(\tau-1)(\tau-3)
+                                      -104(\tau-1)(\tau-2)\\
+={}&72(\tau^2-5\tau+6)+90(\tau^2-4\tau+3)
+                                      -104(\tau^2-3\tau+2)\\
+={}&2(29\tau^2-204\tau+247).
+\end{aligned}
+\tag{4.4}
+$$
+
+The inner quadratic has full row $(247,-204,29)$, values $-105$
+and $-48$ at four and five, and derivative $58\tau-204>0$ on
+$[4,5]$. It stays strictly negative there. This contradicts (4.4). ∎
+
+For completeness, finite nonnegative rank-one trace-one sources with
+$u=0$ have $p=q=0$, $s=0$ or $1$. Clock one forces $d=24$.
+With $q_1=f(1)$ now treated as an independent sample, the other samples
+are $f(0)=-24$, $f(2)=24$, $f(3)=192/5$.
+Interpolation gives $f(4)=168/5+4q_1$ and $f(5)=15q_1$.
+The two possible actual late pairs are
+
+$$
+\begin{array}{c|cc}
+s&y&\zeta\\ \hline
+0&288/5+4q_1&24+30q_1\\
+1&456/5+8q_1&24+15q_1.
+\end{array}
+\tag{4.5}
+$$
+
+At $y=48/5$, these force $q_1=-12$ or $-51/5$ and then
+$\zeta=-336$ or $-129$. Neither equals $-532/5$; the differences
+$-532/5-\zeta$ are $1148/5$ and $113/5$. Thus there is no omitted
+finite $u=0$ complete $H_*$ world, even without the sixth promise.
+

@@ -1,0 +1,12 @@
+#### 4.5　一个锐利的记录层级见证
+
+令 $\Theta=\{0,1\}$。定义完全揭示实验 $R$：
+
+$$
+K_R(\omega\mid\theta)=\mathbf 1\{\omega=\theta\}.
+$$
+
+定义擦除实验 $E_\varepsilon$，其输出为 $0,1,\perp$，以概率 $1-\varepsilon$ 输出 $\theta$，以概率 $\varepsilon$ 输出 $\perp$，其中 $0<\varepsilon<1$。
+
+<a id="claim-4-5-1"></a>
+

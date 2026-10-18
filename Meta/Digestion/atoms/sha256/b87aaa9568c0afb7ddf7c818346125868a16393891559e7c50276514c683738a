@@ -1,0 +1,46 @@
+**Lemma 9.2 (Elementary distribution solutions through order two).**
+On $(0,1)$, a distribution annihilated by a nonzero constant-
+coefficient polynomial of degree at most two is an ordinary
+analytic function in $\mathcal E_2$. If the polynomial has
+degree at most one, the function has minimal order at most one.
+
+Proof. First, if $v'=0$, choose one smooth compactly supported
+$\theta$ with integral one. For any test function $\phi$, the
+function $\phi-(\int\phi)\theta$ has integral zero. Its ordinary
+primitive, taken from a point to the left of its support, is
+smooth and compactly supported inside $(0,1)$: it vanishes both
+before and after that support because the total integral is zero.
+Consequently $v$ annihilates it as a derivative. It follows that
+
+$$
+\langle v,\phi\rangle=\langle v,\theta\rangle\int\phi,
+$$
+
+which is the constant distribution. Multiplication of a
+distribution by a smooth function obeys the product rule, directly
+from its definition on test functions. Thus
+$(\partial_x-\lambda)v=0$ implies
+$(e^{-\lambda x}v)'=0$ and $v=ce^{\lambda x}$.
+
+A degree-zero nonzero polynomial forces $v=0$. A degree-one
+polynomial reduces to the preceding first-order equation. In
+degree two factor over $\mathbb C$ and divide out the nonzero
+leading coefficient. Suppose
+$(\partial_x-\lambda_1)(\partial_x-\lambda_2)v=0$.
+Set $w=(\partial_x-\lambda_2)v$. The first-order result gives
+$w=ae^{\lambda_1x}$. Therefore
+
+$$
+(e^{-\lambda_2x}v)'=ae^{(\lambda_1-\lambda_2)x}.
+$$
+
+For distinct roots subtract the ordinary primitive
+$a e^{(\lambda_1-\lambda_2)x}/(\lambda_1-\lambda_2)$.
+The remaining derivative is zero, so
+$v=c_1e^{\lambda_1x}+c_2e^{\lambda_2x}$. For equal roots
+subtract $ax$ instead, obtaining
+$v=(c_0+c_1x)e^{\lambda x}$. This proves all cases, including
+zero coefficients. The formulas extend analytically to both
+scalar endpoints and beyond; this is a property of the solution,
+not an endpoint assumption. $\square$
+

@@ -1,0 +1,9 @@
+**定义 7.1（根孔入口与四种完整输出）。** 取 $P=\{\varepsilon\}$，保留的旧行是单根孔单类，其纤维是全部 $\mathcal T$。合法接管后实际在零纪元读取 $RL$，取回复为缺席的完整证据
+
+$$
+H=((0,RL,\mathsf{absent})),\qquad Q=\{L\}.
+\tag{SCR.7.1}
+$$
+
+随后可通过共同的真实更新达到任意认证 $N\ge0$。新入口完整地保留旧行及此证据；生产者旧值和取得长度不可额外访问。具体行 $r_\alpha=\alpha,r_\beta=\beta$ 没有新孔，$r_{L\alpha}=\langle\square_1,\alpha\rangle,r_{L\beta}=\langle\square_1,\beta\rangle$ 各有一个新孔及唯一单类分区。
+

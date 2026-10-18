@@ -1,0 +1,32 @@
+### 定义 30.1（三角量子源）
+
+取三个有限维边 Hilbert 空间
+
+\[
+H_{AB},\qquad H_{BC},\qquad H_{CA},
+\]
+
+以及三个边源状态
+
+\[
+\omega_{AB}\in\mathsf D(H_{AB}^{A}\otimes H_{AB}^{B}),
+\]
+
+\[
+\omega_{BC}\in\mathsf D(H_{BC}^{B}\otimes H_{BC}^{C}),
+\]
+
+\[
+\omega_{CA}\in\mathsf D(H_{CA}^{C}\otimes H_{CA}^{A}).
+\]
+
+三角网络的独立源状态定义为
+
+\[
+\Omega
+=
+\omega_{AB}\otimes\omega_{BC}\otimes\omega_{CA}.
+\]
+
+这里“独立”只表示张量积结构。若边源本身是纠缠态，\(\Omega\) 仍是量子网络状态，但它不必具有经典隐变量分解。
+

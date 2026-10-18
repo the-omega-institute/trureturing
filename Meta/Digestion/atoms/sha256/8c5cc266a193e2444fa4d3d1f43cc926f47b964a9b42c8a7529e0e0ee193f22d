@@ -1,0 +1,21 @@
+**Definition 5.1 (exterior residual).** For a compact smooth complex test $u$ set
+
+$$
+e(u)=\mathcal L(u)-h_0(U_h,u),\qquad
+\begin{aligned}
+g_X&=-F_*Xp-pq_*,\\
+g_Y&=(2r-F_*)Yp,\\
+k&=\gamma(V_1+VF_*)p.
+\end{aligned}
+\tag{5.1}
+$$
+
+Using the local projection representative and its homogeneous derivative vector gives the exact identity
+
+$$
+e(u)=\int g_X Xu+\int g_Y Yu+\int k u.
+\tag{5.2}
+$$
+
+Both coefficient-potential contributions, $\gamma V_1p$ and $\gamma VpF_*$, are retained with the displayed signs. The identity uses only compact tests and does not assign a global $L^2$ representative to the response. It follows directly by subtracting $h_0(U_h,u)=b(U_h,u)-\gamma\int VpF_*u$ from (2.5).
+

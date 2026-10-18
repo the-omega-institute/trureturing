@@ -1,0 +1,27 @@
+### 71.2 Weighted polar rounding from actual output populations
+
+Choose finite local Stinespring isometries, enlarging each environment to dimension at least two if necessary. For party A write
+
+    U_t|f,i>=|f>e_(t,f,i)+b_(t,f,i),
+
+where b is orthogonal to the output-|f> subspace. Write h and c for party B. Applying the diamond bound to a basis density operator and then the output effect |ff><ff| gives
+
+    Σ_t w_t ||e_(t,f,i)||² ||h_(t,f,i)||² ≥ 1−δ/2.         (4)
+
+The factor δ/2 follows because the difference of the two output density operators is Hermitian and trace zero. Each local good norm is at most one, so (4) implies
+
+    Σ_t w_t ||b_(t,f,i)||² ≤ δ/2,
+    Σ_t w_t ||c_(t,f,i)||² ≤ δ/2.                         (5)
+
+For fixed t,f, let E_(t,f) have columns e_(t,f,0),e_(t,f,1), and let B_(t,f) have the two bad columns. Isometry of U_t gives E*E+B*B=I_2. There is an isometry V_(t,f):C²→environment such that
+
+    E_(t,f)=V_(t,f)(E*E)^(1/2),
+    ||E_(t,f)−V_(t,f)||op ≤ Tr(B*B).                     (6)
+
+This includes singular E: extend its polar partial isometry on the kernel into the orthogonal complement of its range. The enlarged environment has dimension at least two, so the extension exists. For every singular value s∈[0,1], 1−s≤1−s², which proves (6). No inverse or positive lower singular-value assumption is used. Let H_(t,f) have columns h_(t,f,0),h_(t,f,1), and let W_(t,f) be the corresponding isometry for party B. From (5),
+
+    Σ_t w_t ||E_(t,f)−V_(t,f)||op ≤ δ,
+    Σ_t w_t ||H_(t,f)−W_(t,f)||op ≤ δ.                   (7)
+
+These frames are auxiliary mathematical objects, not an assertion that either rounded family is a physical replacement channel.
+

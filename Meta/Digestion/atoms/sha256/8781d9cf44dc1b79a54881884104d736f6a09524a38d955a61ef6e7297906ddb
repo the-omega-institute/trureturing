@@ -1,0 +1,33 @@
+**Theorem 8.1 (Conditional information on increasing paid horizons).** Fix $m\ge2$ and one true $i,q$. Consider indefinite acquisition using the same block partition, without stopping at a threshold. Define
+
+$$
+H_N=1+\tau+\sum_{j=1}^N(T_j+m),\qquad
+S_N=\sum_{j=1}^NZ_j,\qquad H_0=1+\tau,\quad S_0=0,
+$$
+
+with $Z_j=(2i-1)\log R_j$. For an integer number of actual paid reads $W$, let $N(W)$ be the number of fully completed blocks by that read, with $N(W)=0$ before the first completed block. Then almost surely
+
+$$
+\frac{S_N}{H_N}\longrightarrow I^{\mathrm{paid}}_{i,m}(q),
+\qquad
+\frac{S_{N(W)}}W\longrightarrow I^{\mathrm{paid}}_{i,m}(q)
+\quad(W\to\infty).
+$$
+
+Both the stationary initial acquisition and any partial final block are included in the denominator $W$.
+
+Proof. The iid increments $Z_j$ are bounded, and the iid block durations have finite mean $m\mu_i(q)>0$. The ordinary iid strong laws give
+
+$$
+\frac{S_N}{N}\to\overline D_{i,m}(q),\qquad
+\frac{H_N}{N}\to m\mu_i(q)
+$$
+
+almost surely, since the one-time wait $\tau$ is finite almost surely. This proves the first ratio. Every finite block is eventually completed and durations are positive, so $N(W)\to\infty$. For all sufficiently large $W$,
+
+$$
+H_{N(W)}\le W<H_{N(W)+1}.
+$$
+
+After division by $N(W)$, both bounds tend to $m\mu_i(q)$, using $(N(W)+1)/N(W)\to1$ for the upper one. Thus $N(W)/W\to1/(m\mu_i(q))$. Multiply this by the strong-law limit for $S_{N(W)}/N(W)$ to obtain the second conclusion. The incomplete final block has already been included through the actual value of $W$ in this squeeze. This is an increasing observation horizon, not a horizon limit applied to the single finite record of a fixed-$\alpha$ threshold rule. $\square$
+

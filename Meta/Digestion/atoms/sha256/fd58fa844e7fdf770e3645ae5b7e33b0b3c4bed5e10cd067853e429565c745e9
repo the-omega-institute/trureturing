@@ -1,0 +1,26 @@
+## 377. Some one-P owners are also expensive
+
+A four-distinct owner with exactly one P label uses that label and all
+three labels V,C,D. If its pair is PC, its axes are V,D. For the
+transverse P cosine, as a function of its V-axis value r,
+
+    N(r)=c*(r+d)+p*(r*d+c^2-p^2+1)
+
+has positive slope c+p*d. At r0=1+p+c,
+
+    N(r0)=[c+p*(1+p+c)]*(1+c+d-p)<0,
+
+because p>=m>1+c+d. Actual v<=m-2<r0 therefore gives beta_P>pi/2.
+Its two P slots already cost more than pi. Interchanging C,D handles
+pair PD. These owners are genuine whenever they occur; their fixed
+frames are never changed by this comparison.
+
+Consequently the union of the following actual-owner classes has at
+most four members:
+
+- owners with at least two P labels;
+- owners with exactly one P label and transverse pair PC or PD.
+
+The claim follows by summing their separate strict P expenses against
+5*pi. This does not count the unique flat sigma as a genuine owner.
+

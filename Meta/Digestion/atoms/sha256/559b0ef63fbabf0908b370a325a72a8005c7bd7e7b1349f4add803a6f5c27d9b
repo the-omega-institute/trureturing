@@ -1,0 +1,37 @@
+**Proposition 10.2 (Conditional lower context only).** Grant the prior source-class lower statement, with its own general lower-bound interfaces and constants. For a compliant observer with finite complete budget $M\ge2$, let $b=1-2\alpha$ and
+
+$$
+L_M=\max\left\{1,\left\lceil\left(\frac{2c(M-2)}b\right)^{1/r}\right\rceil\right\}.
+\tag{10.1}
+$$
+
+The attributed statement is that on one source/risk neighborhood, with $A_->0$ independent of $M$,
+
+$$
+\mathbb E_iT\ge\frac{A_-s^{-(2r+1)}}{1+\log(\min\{L_M,1/s\})}
+\ge\frac{A_-s^{-(2r+1)}}{\log(e/s)}.
+\tag{10.2}
+$$
+
+Conditional on that statement, a compliant family attaining $\mathbb E_{i_\star}T\le C_{\rm paid}s^{-(2r+1)}/\log(1/s)$ for one fixed target and one fixed constant $C_{\rm paid}>0$ must satisfy
+
+$$
+1+\log(\min\{L_{M(s)},1/s\})\ge\frac{A_-}{C_{\rm paid}}\log(1/s).
+\tag{10.3}
+$$
+
+In particular $\log(1+M(s))=o(\log(1/s))$ is incompatible with that paid upper.
+
+Proof of the conditional implication. Intersect the family neighborhood with the prior lower neighborhood. Compare the positive bounds and cancel $s^{-(2r+1)}$ to obtain (10.3). The ceiling and maximum with one give $L_M\le C_LM^{1/r}$ for a fixed source/risk constant. Thus
+
+$$
+1+\log(\min\{L_{M(s)},1/s\})\le1+\log L_{M(s)}\le C+\frac1r\log(1+M(s)).
+\tag{10.4}
+$$
+
+The right side is $o(\log(1/s))$ under the subpolynomial-budget condition, contradicting (10.3). $\square$
+
+This is attributed conditional context, not a new converse or a re-verification of the prior forest/harmonic interfaces. No such interface is needed by the upper construction in Sections 2–9. If (10.2) is granted, its budget-independent lower and Theorem 9.2's upper have the same paid order, since $\log(e/s)$ and $\log(1/s)$ are comparable near zero. This concerns attainable paid order with a sufficient budget, not a matched budget-dependent threshold.
+
+The paid constant matters: the sufficient constant in Theorem 9.2 can grow as fixed $\theta$ decreases. Comparing different $\theta$ values does not prove necessity or sufficiency of an exponent $r$ for a prescribed paid constant. The minimum sufficient configuration cost, a matching necessary power for a specified paid constant, sharp constants, exact optimizers and the full critical all-budget frontier remain open. The construction does not classify the minimum nonempty budget or every intermediate budget.
+

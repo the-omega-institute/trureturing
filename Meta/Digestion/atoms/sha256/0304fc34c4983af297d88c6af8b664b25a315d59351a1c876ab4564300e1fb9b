@@ -1,0 +1,61 @@
+**Convention 1.4 (the reused all-count factor).** Write
+$s(q)=\#L(q)+2\#R(q)$ and $e(\alpha)=0,e(\beta)=1$. Use exactly the
+factor $\Gamma_q(u)=(b,c)$ of
+[Adaptive Acquired Reference Frontier, Definition 12.2, Theorem 12.3 and Proposition 13.3](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md),
+abbreviated AAR. At an original branch endpoint it is $(0,0)$. If the
+first original leaf along $q$ has label $\ell$ at $a$, with $q=ar$,
+then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{FMR.4}
+$$
+
+The supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1, k=b-1,\\
+\alpha,&c=1, k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{FMR.5}
+$$
+
+On attained factors $c=1$ implies $b\ge2$. The supplied theorem gives
+$r_{\rho^ku}(q)=\operatorname{Pred}(\Gamma_q(u),k)$ for every $k$.
+Conversely the trajectory recovers $b$ as its first branch count and
+$c$ from the presence of an alpha stage. Equality of factors is exactly
+equality of complete trajectories, not equality of first-leaf descriptors.
+For the actual paired source,
+
+$$
+\Gamma_{Rq}(\langle\alpha,v\rangle)=\Gamma_q(v),
+\qquad r_{\rho^k\langle\alpha,v\rangle}(Rq)=r_{\rho^kv}(q),
+\qquad b\le2D.
+\tag{FMR.6}
+$$
+
+**Source correspondence 1.5 (native carriers and existing endpoints).**
+In [GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+`Source` is `FreeMagma Bool` and `substitution` is the magma
+homomorphism above; `true` labels alpha and `false` labels beta.
+In [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+`Address` is a Boolean list, with false for $L$ and true for $R$;
+`Reply` and `readout` give all four replies and all finite legal words.
+Its recognition objective is different from (FMR.2).
+[NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean)
+supplies `original_present_transport` only at actually present original
+subtrees and `original_prefix_locality` for all-count dependence on
+the original boundary. AAR §§12, 13 and 16 supply the exact predictive
+quotient, known-singleton acquisition and known-menu acquisition.
+Their requests are declared before acquisition. The zero-later-Read
+full-menu endpoint is already among those suppliers. None is renamed
+as a late-request memory theorem.
+

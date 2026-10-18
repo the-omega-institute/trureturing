@@ -1,0 +1,49 @@
+**Proposition 2.4 (Feasible curve and endpoint scope).** One has
+
+$$
+\theta_\epsilon\in\Theta_5\quad\Longleftrightarrow\quad
+-1\le\epsilon\le14/3.
+\tag{2.5}
+$$
+
+On this complete interval $K^\epsilon\in\mathcal K$, with the exact
+correspondence
+
+$$
+\rho=3/10-9\epsilon/280\in[3/20,93/280],\qquad \tau=3/20.
+\tag{2.6}
+$$
+
+Every $P_\epsilon$ is full-support on the legal words and ergodic. At
+$\epsilon=-1$ the entry $K_{22}$ is zero; at $\epsilon=14/3$ the entries
+$K_{12},K_{21}$ are zero. Both endpoints and $\epsilon=0$ are retained.
+
+Proof. Since $\pi v=0$, row sums and stationarity hold algebraically for all
+real $\epsilon$, and detailed balance follows from
+$\pi_iK^\epsilon_{ij}=\pi_i\pi_j(1+\epsilon v_iv_j)$.
+Nonnegativity of $K_{22}$ requires $\epsilon\ge-1$ and that of $K_{21}$
+requires $\epsilon\le14/3$; these inequalities make every other entry
+nonnegative. All three rows of $K$ occur in $M_0(K)$, so a negative entry
+cannot be concealed by the constructor. This proves (2.5), and substitution
+proves (2.6).
+
+For every feasible $\epsilon$, $K_{11}\ge187/280$ and
+$K_{13}=K_{23}=K_{32}=K_{33}=3/20$, $K_{31}=7/10$.
+Free $3$ reaches tail $3'$, which reaches every free state; free $1$ reaches
+free $3$, and free $2$ reaches tail $2'$, which reaches free $3$.
+Thus the five-state chain is irreducible, with a positive self-loop at $1$.
+Its stationary visible factor is ergodic, using the finite-chain fact in
+[Universal, Theorem 5.1][U]. Every legal word has a positive path using free
+$3$ for each $1$, tail $3'$ for its following forced $0$, and free $1$ for
+all other zeros. The positive initial masses and the displayed transitions
+also handle an initial $0$, a final $1$, and all-zero words.
+
+At $\epsilon=0$ all rows of $K$ equal $\pi$, giving the first-order visible
+chain with $0\to1$ probability $3/10$ and $1\to0$ probability one. The
+feasible negative branch is not discarded by imposing positive
+semidefiniteness. Indeed, for a base-state column $f$,
+$K^\epsilon f=\mathbf1(\pi f)+\epsilon v\sum_i\pi_iv_if_i$;
+$\pi v=0$ and $\sum_i\pi_iv_i^2=51/280$ give the $L^2(\pi)$ eigenvalues
+$1,51\epsilon/280,0$. Thus positive semidefiniteness would restrict (2.5)
+to $[0,14/3]$. $\square$
+

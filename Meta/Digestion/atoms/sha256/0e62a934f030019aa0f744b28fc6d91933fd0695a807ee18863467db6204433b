@@ -1,0 +1,38 @@
+**Definition 4.2 (The full polynomial system).** Let $\mathcal P_q(C,r)$ be
+the following finite conjunction over the real coordinates $X_i,Y_i,r$:
+
+$$
+\begin{aligned}
+&0\le r\le1,\\
+&\sum_iC_i^\dagger C_i=I_5,\\
+&\operatorname{Re}\det\bigl((C_i)_{R,S}\bigr)
+=\operatorname{Im}\det\bigl((C_i)_{R,S}\bigr)=0
+&&\bigl(i\le625,\ |R|=|S|=q+1\bigr),\\
+&\operatorname{Re}(M_CG-GM_C)_{ab}
+=\operatorname{Im}(M_CG-GM_C)_{ab}=0
+&&\bigl(1\le a,b\le25\bigr),\\
+&\det\bigl((rI_5+\sigma H_J(C))_{I,I}\bigr)\ge0
+&&\bigl(J\in\mathcal J_{15},\ \sigma\in\{-1,1\},\
+\varnothing\ne I\subseteq\{0,1,2,3,4\}\bigr).
+\end{aligned}
+\tag{4.4}
+$$
+
+The TP equality is likewise split into real and imaginary equations.
+One can retain its $25$ independent real equations: five diagonal real
+equations and both parts of the ten strict-upper-triangular equations.
+Keeping every entry instead merely adds redundancy. Every event matrix is
+Hermitian, so each displayed principal determinant is identically real in
+the real variables. Its real expansion is the intended polynomial.
+
+There are $15\cdot2\cdot(2^5-1)=930$ principal-minor inequalities, in
+addition to the two bounds on $r$. Stationarity uses at most $1,250$ real
+quadratic equations. The rank equations number
+$1,250\binom5{q+1}^2$: respectively $125,000$, $125,000$, $31,250$ and
+$1,250$ for $q=1,2,3,4$. All coefficients are rational integers before a
+rational threshold is substituted. TP and stationarity have degree at most
+two; rank equations have degree $q+1\le5$. A principal minor of order $k$
+has total degree at most $2k$, hence at most ten in the $31,251$ variables.
+These are unrestricted complex rank minors, not projector constraints or a
+Schmidt-number SDP relaxation.
+

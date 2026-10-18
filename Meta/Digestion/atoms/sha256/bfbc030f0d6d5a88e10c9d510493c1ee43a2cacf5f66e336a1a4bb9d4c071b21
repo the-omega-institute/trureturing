@@ -1,0 +1,17 @@
+**Definition 261.1 (The common conversion).** Use the complete
+catalogs, full event rows and original source of Section 251.
+For a changed pair $D=N(i,j;u,v,s,t)$, meaning $u\ne v$,
+let $\mathcal T D$ be the equal mixture of the three legal rules
+
+$$
+O(i,j;u,s,t),\qquad O(i,j;v,s,t),\qquad (j;u,v).
+\tag{261.1}
+$$
+
+The third rule is a singleton, with outputs $u,v$ at replies $0,1$.
+For an unchanged pair use its identical stopped rule; retain constants
+and singletons. Apply this conversion to one entire table distribution.
+The table and daughter are selected before replies with the one
+source-independent seed. No second answer is acquired on the
+singleton branch.
+

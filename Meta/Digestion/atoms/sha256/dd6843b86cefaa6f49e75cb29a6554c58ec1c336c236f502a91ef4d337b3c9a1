@@ -1,0 +1,27 @@
+**Theorem 9.1 (heavy targets for the joint law).** Every range-feasible
+$P\subseteq S_3$ with $w_{\rm j}(P)>9996$ has a nonempty
+$q\in W_3$ which is not determined on $P$ by any own-coordinate
+experiment at any finite word, or by a constant experiment, and
+
+$$
+\sum_z w_{\rm j}(P\cap\Gamma_q^{-1}(z))^2
+\le4947^2+7244^2=76948345<99920016=9996^2.
+\tag{NCE.65}
+$$
+
+Proof. Proposition 8.4 forces $A,B\in P$. A branch has weight at
+most $1437$, the largest entry of $M$. If there were at most one,
+then $w_{\rm j}(P)\le4947+3264+1437=9648<9996$. Thus two distinct
+branches occur. By Lemma 3.2 some nonempty $q\in W_3$ separates
+them. The root experiment merges those branches. Every nonempty
+finite experiment merges $A$ and $B$, returning absent on both,
+whereas $\Gamma_q(A)\ne\Gamma_q(B)$. A constant experiment fails
+as well. This proves nonrecoverability for the entire original
+own-coordinate menu, including arbitrarily long off-target words.
+
+Lemma 3.2 also makes $A$ alone in its $\Gamma_q$ cell. That cell
+has weight $4947$. The other cells together have mass at most
+$3264+3980=7244$, by Proposition 8.4. Nonnegativity gives
+$\sum_j a_j^2\le(\sum_j a_j)^2$ for those other cell masses.
+This proves (NCE.65). $\square$
+

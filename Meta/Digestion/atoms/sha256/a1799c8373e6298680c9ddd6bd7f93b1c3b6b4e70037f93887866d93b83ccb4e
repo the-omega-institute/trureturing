@@ -1,0 +1,67 @@
+**Definition 72.7 (the full doubled effective space and the full-space lift).**
+Let $\widehat G$ be the double from72.5. Its edges are oriented so that
+reflection preserves the edge parameter $x\in(0,1)$. Put
+
+$$
+\begin{aligned}
+ \widehat{\mathcal H}
+  &=\bigoplus_{e\in\widehat E}L^2(0,1)\oplus\mathbb C^{\widehat V},
+ &\kappa_v&=\sqrt{m_v},\\
+ \operatorname{Dom}B
+  &=\{(u,\beta):u_e\in H^2(0,1),\ u_e(v)=u_v
+                \text{ for all incident }e,\ \beta_v=\kappa_vu_v\},\\
+ B(u,\beta)&=\left((-u''_e)_e,
+             \left(-\kappa_v^{-1}\sum_{e\sim v}
+                         \partial_{\rm in}u_e(v)\right)_v\right).
+\end{aligned}
+\tag{72.18}
+$$
+
+This is the operator of equations(16)–(18) of the cited paper.
+Equivalently its closed form is $\sum_e\int|u'_e|^2$, on the same
+trace-matching domain with $H^1$ in place of $H^2$. Its Hilbert norm
+is $\sum_e\|u_e\|_2^2+\sum_v|\beta_v|^2$; the $\beta_v$ are
+independent coordinates before imposing a domain condition.
+
+On the entire Hilbert space define
+$\Theta_\varepsilon:\widehat{\mathcal H}\to L^2(\Omega_\varepsilon)$
+by the following formulas in the rigid cylinder coordinates and chambers:
+
+$$
+ (\Theta_\varepsilon(u,\beta))|_{Q_e^\varepsilon}
+     =\varepsilon^{-(s-1)/2}u_e(x),\qquad
+ (\Theta_\varepsilon(u,\beta))|_{Q_v^\varepsilon}
+     =\varepsilon^{-(s-1)/2}\frac{\beta_v}{\sqrt{m_v}}.
+ \tag{72.19}
+$$
+
+Thus arbitrary cable $L^2$ inputs and arbitrary independent atomic
+$\beta$ coordinates are included. The map is an isometry into physical
+$L^2$, with closed proper range, not onto physical $L^2$. Its adjoint is
+
+$$
+\begin{aligned}
+ (\Theta_\varepsilon^*h)_e(x)
+  &=\varepsilon^{-(s-1)/2}
+                       \int_{Q_e^{\rm c,\varepsilon}}h(x,y)\,dy,\\
+ (\Theta_\varepsilon^*h)_v
+  &=\varepsilon^{-(s-1)/2}m_v^{-1/2}
+                       \int_{Q_v^\varepsilon}h(x)\,dx.
+\end{aligned}
+\tag{72.20}
+$$
+
+**Proof of the asserted normalization.** The edge factor is the normalized
+constant transverse function, since each cross-section has measure
+$\varepsilon^{s-1}$. The chamber contribution to its squared norm is
+$\varepsilon^{-(s-1)}m_v^{-1}|\beta_v|^2|Q_v^\varepsilon|
+=|\beta_v|^2$. The disjoint pieces therefore give
+$\Theta_\varepsilon^*\Theta_\varepsilon=I$, and integration gives
+(72.20). Nonconstant transverse functions and nonconstant chamber
+functions exhibit the proper orthogonal complement. On the dense
+operator domain, $\beta_v/\sqrt{m_v}=u_v$, so(72.19) agrees with the
+paper's stated constant-mode lift. Its bounded extension supplies the
+full Hilbert-space meaning of that lift; the word “onto” in the paper's
+description cannot mean surjectivity onto all of $L^2(\Omega_\varepsilon)$.
+$\square$
+

@@ -1,0 +1,33 @@
+**Convention 4.2 (full acquisition and complete alphabets).** Assumption
+2.1 has a concrete sufficient acquisition: use the credited
+$\operatorname{Acquire}(R,D)$ and reconstruct $v$ from the obtained
+constructor table. The height promise ensures that no reached node at
+relative depth $D$ is a branch; recursively replacing each branch by its
+two acquired children reconstructs exactly $v$. The wrapper is public.
+The sufficient original-source charges are
+
+$$
+T\le2^D,\qquad L\le(D+1)2^D,\qquad H\le D+1.
+\tag{ER.13}
+$$
+
+This is a reuse of PPF acquisition, not a new full-source optimum. Once
+$t$ is completely acquired, its height is local computation and incurs
+no additional original Read; (ER.11) must not be added again to (ER.13).
+
+Let $Q_D$ count all right-subtree syntax of height at most $D$. Then
+
+$$
+Q_0=2,\qquad Q_{d+1}=2+Q_d^2,\qquad |\mathcal F_D|=Q_D.
+\tag{ER.14}
+$$
+
+Indeed every tree is either one of two leaves or an ordered pair of
+height-at-most-$d$ trees. At initialization, if all other distinctions are
+isolated as stipulated, the complete retained source-dependent state is
+$(h(t),t)$ and has exactly $Q_D$ values, because height is a function of
+$t$. It has neither $D+1$ values nor the product $Q_D(D+1)$ values.
+Over unbounded update words the attained state alphabet is unbounded:
+even one fixed source and successive $G$ commits have strictly increasing
+heights. Thus Theorem 3.1 is not a finite-total-memory observer theorem.
+

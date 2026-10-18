@@ -1,0 +1,19 @@
+**Corollary 207.6 (Optimizing the displayed stock requirement).** For
+$d\ge0$, $\mu>0$, $\mu\ge2d$, take
+
+$$
+s=\mu-d,\qquad c_* =\min\{E,s-\sqrt{sd}\}.
+\tag{207.18}
+$$
+
+Then $t\ge s$ and $S\ge(2s-c_*)^2/s$ suffice. Indeed $c_*$ is the
+largest permitted retained early mass, and $(2s-c)^2/s$ decreases for
+$0\le c\le s$. It can be split below the two early totals, for
+example $c_a=c_*\gamma_a/E$ when $E>0$. This is an optimization only
+within (207.11). For a unit-$O$ input with $\mu\ge2$, the head table
+already forces $t\ge\mu-1$; the stock condition is an additional
+sufficient hypothesis. Zero $d$, zero class totals, arbitrary early
+imbalance and all equalities are included. When $c=s,d=0$, $q=1$ and
+the product is the all-zero late atom. If $\mu=0$, the anchor collects
+every scored row and both costs are zero directly.
+

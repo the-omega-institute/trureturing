@@ -1,0 +1,16 @@
+**推论 7.3（已知三目标的实际策略与稀疏必要形）。** Under Theorem 7.1's hypotheses the entire known triple has a strategy with at most three further reads. Moreover, any $L_3$ triple in a joint fifth fiber with $\kappa\ne0$ has both $b,d$ nonconstant. It can be labeled so that the bad pairs are $d:\{1,3\}$ and $b:\{2,3\}$, and, with $x=x_3,y=y_3,e=r_3-1$,
+
+$$
+\begin{gathered}
+x_1=x+e(x+2),\qquad x_2=x+e(x+1),\\
+y_1=y+\frac{e(x+1)}{x_1+1},\qquad
+y_2=y+\frac{ex}{x_2},\qquad
+-\frac1{15}<e<\frac1{14},\quad e\ne0.
+\end{gathered}
+\tag{7.19}
+$$
+
+Proof. If $b$ is constant, examine the nonconstant node $d$. If it has no bad pair, execute fifth $M$, read, execute sixth $M$, read, and at each nonsingleton child choose a final atom separating its pair; stop at singleton children. If $d$ has a bad pair, the proof of Theorem 7.1 implies that one final response at the constant $b$ node is injective on the entire triple. Execute $J,M$ and that final atom, reading after each. For constant $d$, interchange the two nodes in this rule. These predictions use the known triple, not acquired counterfactual readings.
+
+For an $L_3$ triple, apply the inherited necessity (4.7) and Theorem 7.1. Both nonconstant nodes need mixed bad pairs. The same mixed pair cannot work at both nodes, by the two difference equations in the proof. Relabeling gives the two displayed pairs. Their final differences give the formulas for $x_1,x_2$; their final-$J$ equalities then give $y_1,y_2$. The sharper ratio bound in (4.7) applies since $d$ is nonconstant. All source inequalities and all parent equations remain necessary in addition to (7.19). No sufficiency is asserted. ∎
+

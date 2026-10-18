@@ -1,0 +1,10 @@
+**数学引文 2.2（归一化隐藏方向）。** 同一前置给出
+
+$$
+d=(1,-1,0,-1,1),\qquad
+N:=\ker(DP)=\mathbb Rd,\qquad
+p_\kappa-p_{\kappa'}=(\kappa-\kappa')d.
+$$
+
+若将定义域改成整个 $H$，则 $\ker Q=\operatorname{span}\{e_0,d\}$，维数为二：$Q$ 的三行独立，且不读取空状态质量。质量零约束去掉独立的 $e_0$ 方向，才得到一维的 $N$。等价做法是在 $H$ 上增加质量行 $v\mapsto\sum_Iv_I$。
+

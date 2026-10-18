@@ -1,0 +1,100 @@
+**Theorem 8.18 (Finite character projection and mixed completeness).**
+Fix distinct legal $u,v$, $D=u\triangle v$, $K=u\cap v$ and the same
+single-use order of $D$ as in Theorem 8.17. Use angle $\pi/4$ at every
+site, independently choose the generator phases
+
+$$
+\beta_i\in\{0,2\pi/3,4\pi/3\}\quad(i\in D),
+\tag{8.34}
+$$
+
+and record the final probability $P_K(\boldsymbol\beta)$. There are
+$3^d$ settings, each of depth $d$. Known, nonzero coefficients $a_u,a_v$
+determined by that order give, for every density matrix $\rho$,
+
+$$
+\rho_{uv}
+=\frac{
+3^{-d}\displaystyle\sum_{\boldsymbol\beta}
+\exp\!\left(i\sum_{i\in D}(u_i-v_i)\beta_i\right)
+P_K(\boldsymbol\beta)
+}{a_u\overline{a_v}}.
+\tag{8.35}
+$$
+
+Thus diagonal measurement together with these pair protocols is
+informationally complete for arbitrary mixed states on $\mathcal K_n$.
+
+Proof. Sites outside $D$ are never flipped. Any initial word $w$ with a
+nonzero transition amplitude to $K$ must therefore agree with $K$
+outside $D$. Let $W_K$ be the set of all such legal words. Conversely,
+for each $w\in W_K$, the unique path to $K$ deletes its initial ones
+in $D$ and keeps its initial zeros there. This path is legal and all
+its factors are nonzero, by the same deletion reasoning as above.
+
+Let $m_w=\sum_{i\in D}w_i$, and let $r_w$ count positions whose
+conditional flip block is enabled when their pulse is reached on that
+path. This includes all $m_w$ deletions and any enabled zeros which
+stay zero. Formula (8.7) gives the exact amplitude
+
+$$
+U_{Kw}(\boldsymbol\beta)
+=a_w\exp\!\left(-i\sum_{i\in D}w_i\beta_i\right),
+\qquad a_w=(-i)^{m_w}2^{-r_w/2}\ne0.
+\tag{8.36}
+$$
+
+The enabled/blocked pattern depends on $w$ and the selected order but
+not on the phases. A word outside $W_K$ has zero amplitude. Expanding
+the actual Born probability, without discarding any mixed-state entry,
+therefore gives
+
+$$
+P_K(\boldsymbol\beta)
+=\sum_{w,z\in W_K}a_w\overline{a_z}\rho_{wz}
+\exp\!\left(-i\sum_{i\in D}(w_i-z_i)\beta_i\right).
+\tag{8.37}
+$$
+
+Write $\omega=e^{2\pi i/3}$. The exact character average obeys
+
+$$
+\frac13\sum_{k=0}^2\omega^{k\ell}
+=\begin{cases}1,&\ell\equiv0\pmod3,\\0,&\ell\not\equiv0\pmod3.
+\end{cases}
+\tag{8.38}
+$$
+
+Multiplying (8.37) by the character in (8.35) and averaging independently
+at each site leaves only pairs satisfying
+$w_i-z_i\equiv u_i-v_i\pmod3$ for every $i\in D$.
+Both differences lie in $\{-1,0,1\}$, whose three residues modulo three
+are distinct, so the congruence means equality. Every site of $D$ has
+$u_i-v_i=1$ or $-1$. It therefore fixes $(w_i,z_i)$ to $(u_i,v_i)$.
+Outside $D$, both words must equal $K$, which already equals both $u$
+and $v$ there. The unique surviving pair is $(w,z)=(u,v)$.
+The numerator of (8.35) is consequently $a_u\overline{a_v}\rho_{uv}$,
+and its denominator is nonzero. This proves the formula. Taking one
+representative of every unordered distinct pair, and using Hermitian
+conjugacy plus the diagonals, recovers the entire density matrix.
+$\square$
+
+The phases in (8.34)–(8.37) are generator phases $\beta$, not the
+measurement-basis phases $\alpha$ of (8.8). The three-point character
+identity is classical finite Fourier orthogonality; it is not a new
+phase-retrieval theorem. The application here supplies its exact
+single-use legal paths, frequencies and nonzero normalization, so that
+other coherences present in an arbitrary mixed state are removed rather
+than assumed absent.
+
+The diagonal entries need no off-diagonal division, so they use the
+original word measurement instead of a depth-zero version of (8.35).
+Zero input populations do not alter the known unitary coefficients
+$a_w$; PSD may already force some target coherences to zero. Formula
+(8.35) remains an exact matrix identity, including those cases.
+Its $3^d$ settings count is per target pair. It gives neither an
+efficient total-setting count nor a sample-complexity bound. Small
+$|a_u\overline{a_v}|$ amplifies empirical errors, and exact probability
+values are mathematical inputs to the inversion, not quantities
+obtained from finitely many samples without uncertainty.
+

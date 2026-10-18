@@ -1,0 +1,14 @@
+**Definition 4.1 (finite adapter to the supplied decoder).** On the realized record/register pairs, define
+
+$$
+j(ac,bc,z)=1-z,\qquad j(ac,cb,0)=2.
+$$
+
+The adapter supplies this integer to the unchanged original $\mathscr D_\pi$ together with $B_0,Y,s_{\rm stop}$. It does not replace that decoder's full nonnegative-integer domain, its dictionary, interface checks or original defaults. No result about other adapter addresses is asserted.
+
+| Accepted full marker word | Chronological selected events | Retained local records $q$ | Retained $z$ | Selected-past colex rank $j$ | Restored selected past |
+| --- | --- | --- | ---: | ---: | --- |
+| $1001$ | $bac$ | $(ac,bc)$ | 1 | 0 | $100$ |
+| $0101$ | $abc$ | $(ac,bc)$ | 0 | 1 | $010$ |
+| $0011$ | $acb$ | $(ac,cb)$ | 0 | 2 | $001$ |
+

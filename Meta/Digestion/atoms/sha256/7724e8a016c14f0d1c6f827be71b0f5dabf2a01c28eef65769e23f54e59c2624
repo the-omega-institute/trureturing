@@ -1,0 +1,39 @@
+**定理 83.6（Exact adaptive/GLOBAL pair of the different-value family）。** Construction 83.5 satisfies, under both original alphabets,
+
+$$
+\boxed{
+C_{\rm ad}(f)=C_{\rm ad}(F)=d+1,\qquad
+C_{\rm pre}(f)=C_{\rm pre}(F)=2d.
+}
+\tag{83.32}
+$$
+
+The exact worst emitted-bit pair is $(m(d+1),2md)$ at $m=2^{2d}-1$. The adaptive child fee and suffix are supplied by Chapter 73; the new whole-target content is safe GLOBAL attainment at $2d$ for the two-even unsaturated table.
+
+证明（all-action adaptive lower bound and the supplied physical attainment）。 Fix either free INITIAL value. Its component table has $r=2^d$ labels, plus fresh $C$ on the outside low phase. These $r+1$ low labels all have actual sources. The low/high-tail pair forces a $10$ root, as in the lower-bound proof of Theorem 83.3, independently of any value-dependent root choice. The successful common-tail binary bound for every literal continuation and endpoint stop gives $r+1\le2^H$ at total worst fee $H$. Since $r+1>2^d$, every correct adaptive controller has $H\ge d+1$. This covers all literal words, waits, repairs, uniform rejection and early homogeneous stopping.
+
+For attainment remember the free INITIAL value $v$ and issue the actual alternating root
+
+$$
+P_m=(10)^{(m-1)/2}1.
+\tag{83.33}
+$$
+
+Initial bottom has stopped freely. Root bottom returns $R$ after that full paid word. The successful outside phase has difference zero and returns $C$ at the same endpoint. Its other successful child is precisely the actual full positive window $A$ of Definition 73.1, with common current scalar, terminal tail one and component INITIAL table $\lambda_v$. It has $r$ labels. Lemmas 73.3 and 73.5, Construction 73.4 and Theorem 73.6 supply a lawful fixed $d$-word suffix for this one child.
+
+To specify those physical words, let $b^{(v)}:\lambda_v[A]\to\mathbb F_2^d$ be the credited Chapter 73 selection, with coordinates $q=1,\ldots,d$. For $j\in A$ put $\psi_q^{(v)}(j)=b_q^{(v)}(\lambda_v(j))$, and prescribe the already stopped outside phase and the actual suffix inverse by
+
+$$
+\psi_q^{(v)}(z)=\bigoplus_{j\in A}b_q^{(v)}(\lambda_v(j)),
+\qquad
+S^{(v)}_{q,i}=\bigoplus_{b=0}^i
+ \psi_q^{(v)}(qm+b\bmod T),\qquad0\le i<m.
+\tag{83.34}
+$$
+
+The selected code is zero in coordinate $q$ at the missing phase $m+1-2q$, and in its first coordinate at phase $m$. The compensation in (83.34) makes each full row even; it is a design bit of this word, without an observation on outside. In the ordinary list choice, the Chapter 73 restrictions put a zero among the two adjacent literal boundary bits of every subsequent suffix seam. The first suffix begins zero and clears the actual root tail one. At $d=2$, if the four specified labels of (73.7) are distinct, use exactly the supplied alternative (73.8); its only relaxed suffix seam has terminal run one and leading run two, giving $3<k$ here. These are the two credited physical cases, and together cover this family at every $d\ge2$.
+
+Every root-positive source issues $P_m|S_1^{(v)}|\cdots|S_d^{(v)}$, obtains its code from its own suffix endpoint differences and returns its immutable component label. Every word is complete and paid, all seams are strict, and no terminal clearing word is needed. The selected suffix depends on the remembered free INITIAL value, not a newly interpreted current value. These are lawful separate adaptive policies. The attainment costs exactly $d+1$ on actual positive sources, matching the all-action lower bound.
+
+The explicit common code of Construction 83.5 is instead used in (83.19). Theorem 83.3 gives its GLOBAL fee $h=2d$, using the same stream on both values, with all outside sources continuing to the final decoder and all high sources stopping after the paid rejecting root. This is not a concatenation or maximum of the two adaptive suffix optima. The supplied history factorization gives both history equalities. Multiplication by the actual width gives the bit pair. ∎
+

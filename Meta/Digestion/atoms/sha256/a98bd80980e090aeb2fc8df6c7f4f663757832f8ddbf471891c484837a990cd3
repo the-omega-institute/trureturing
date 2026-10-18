@@ -1,0 +1,21 @@
+## 10. Citations
+
+[Information][CT]: Thomas M. Cover and Joy A. Thomas, *Elements of Information Theory*, second edition, §2.5 for entropy and mutual-information chain rules, and the chapters on entropy rates and data processing.
+
+[Pinsker][PI]: Mark S. Pinsker, *Information and Information Stability of Random Variables and Processes*, relative entropy and total variation. Lemma 2.3 fixes the Bernoulli specialization and natural-log constant explicitly.
+
+[Probability][K]: Olav Kallenberg, *Foundations of Modern Probability*, conditional expectation, martingale convergence, Tonelli's theorem, stationary Markov chains and the ergodic theorem.
+
+[Crutchfield–Feldman][CF]: James P. Crutchfield and David P. Feldman, *Regularities Unseen, Randomness Observed: Levels of Entropy Convergence*, §V, equation (63) and Proposition 12. Their directly observed finite-order Markov synchronization interpretation is not extended to arbitrary hidden producers.
+
+[Travers][TR]: Nicholas F. Travers, *Exponential Bounds for Convergence of Entropy Rate Approximations in Hidden Markov Models Satisfying a Path-Mergeability Condition*, §2.2.1, Definitions 6–8, Theorems 1–2 and Lemmas 5–6.
+
+[CT]: https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X
+[PI]: #10-citations
+[K]: https://doi.org/10.1007/978-3-030-61871-1
+[CF]: https://arxiv.org/html/cond-mat/0102181
+[TR]: https://arxiv.org/html/1211.6181v2
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[MW]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[PQ]: FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md
+

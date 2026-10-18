@@ -1,0 +1,36 @@
+**Definition 2.2 (whitened scalars).** For $0\le p\le1$ write
+
+$$
+\begin{gathered}
+A(p)=\beta W+(\alpha V-\beta W)p,\quad x(p)=Vp/A(p),\quad
+J(p)=A(p)F_c(x(p)),\quad v(p)=\sqrt{p(1-p)},\\
+g(p)=2\zeta v(p)-d_0(1-p),\quad
+p_z=d_0^2/L_f^2,\quad u_f=2\zeta/(d_0+L_f),\quad
+p_s=1/(1+u_f^2),\quad C(p)=J(p)+J(1-p).
+\end{gathered}
+\tag{TC.2}
+$$
+
+The letters $p,q$ used for whitened contacts below are not radial $x,u$, and $u_f$ is not a contact parameter. The supplied bounds imply
+
+$$
+d_0>2\zeta,\qquad \tfrac12<p_z<p_s<1,
+$$
+
+because
+
+$$
+\frac{d_0}{2\zeta}=
+\frac{\sqrt{59}+\sqrt{37}}{16}\sqrt{m_1/m_2}
+>\frac{27}{32}\sqrt{496/345}>1
+$$
+
+and $729\cdot496=361584>353280=1024\cdot345$. On $(0,1)$,
+
+$$
+J''(p)=\frac{V^2(\beta W)^2}{A(p)^3}F_c''(x(p))>0,\qquad
+g''(p)=-\frac{\zeta}{2v(p)^3}<0.
+$$
+
+The unique maximum of $g$ is $g(p_s)=\gamma$; $g>0$ precisely on $(p_z,1)$. Also $C(1/2)=C_{\rm end}$, $C(p_s)=C_{\rm sat}$ and $C'(p)>0$ for $p>1/2$.
+

@@ -1,0 +1,72 @@
+**Proposition 8.1 (resource meaning of the constructions).** Every
+finite cover code, fractional-rounding code and whole-family
+joint-block code above can use the actual acquisition bounds
+(FMR.11). Its retained source-dependent fields can be represented by
+one fixed-width name for its complete attained alphabet. A late
+Read, when needed, has length at most $D$ and submits at most $D$
+letters. The final predictor may be the attained pair $(b,c)$ with
+$0\le b\le2D$, $c\in\{0,1\}$.
+
+Proof. In each case the code is an effective function of the actual
+canonical boundary, acquired by the fixed literal scan. Use fixed
+public ordering, names and output extent. All live fields at export
+are the name and public functions of it; the paid service isolates
+the boundary table, enumeration state, reply buffers and all other
+preparation dependence. The post-request table computes its selected
+boundary word solely from that name and the target. After its actual
+reply, (FMR.12) or (FMR.36) determines the factor, and (FMR.5)
+answers all subsequent authentic counts. A simple fixed-width
+representation of $(b,c)$ uses at most
+$\lceil\log_2(2D+1)\rceil+1$ bits, apart from public parameters.
+The exact depth-one optimum has the stronger zero-preparation
+special case already supplied by LTR. $\square$
+
+Installed covers can be very large. Their generation, membership
+search, witness tables and rational optimization are separate from
+the complete attained alphabet. Initial control and workspace,
+literal buffering, post-request workspace, the final predictor,
+authentication and count representation, paid handoff and physical
+time are also separate. No bound on their joint physical efficiency
+or on optimal preparation Read cost follows from the memory rate.
+Common tables are source-independent and provide only reply decoders
+and experiment choices; they never reveal which actual tree is present.
+
+**Source correspondence 8.2 (two-phase and topological boundaries).**
+[Native Birth Provenance, Assumption 14.1 and Theorem 14.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+supplies the paid common-start, complete-latch, stationary handoff
+discipline for its known-row predecessor problem. Its authenticated
+one-image family and fixed whole-predecessor output differ from
+the full bounded family and late target here. Its service assumptions
+are reused as assumptions, not as physical constructions. Likewise
+[TargetFamilyMinimalQuotient](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean),
+`target_family_minimal_quotient`, gives the passive joint-kernel
+universal property, without a native one-probe acquisition geometry.
+[CompactObservationFactorization](../../../D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean),
+`compact_observation_factorization`, assumes a nonempty compact
+space, compatible continuous surjective finite discrete observations
+forming a fiber basis, and continuous finite readouts. It supplies
+a finite observation level, also for bounded action words under
+continuous actions. It supplies no effective acquisition depth,
+retained-memory rate, or rate convergence modulus for this task.
+Reading these declarations does not certify a new Lean application.
+
+**Source correspondence 8.3 (primary models and limits of transfer).**
+The following primary texts locate the mature methods and the
+interface differences. The native proofs above do not import their
+problem-specific numerical lower bounds or graph-product identities.
+
+| Primary source | Parameter correspondence and exact boundary |
+| --- | --- |
+| Anna Gál and Peter Bro Miltersen, *The Cell Probe Complexity of Succinct Data Structures*, BRICS RS-03-44, abstract and initial model, [primary report](https://www.brics.dk/RS/03/44/BRICS-RS-03-44.pdf) | Systematic storage has form $x\cdot\phi^{\ast}(x)$, preserving the input and adding an index. Here the stationary boundary reply array is preserved and $E$ is retained advice. Our normalized array has $2^D-1$ four-valued positions, constrained by actual tree syntax. The index is wholly available to the late reader; one native constructor reply is the only charged later probe. Their bit-probe accounting, input families and query functions do not give a native tree lower bound. |
+| Sumegha Garg, Songhua He, Yuanzhi Li, Periklis A. Papakonstantinou and Xin Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024](https://arxiv.org/abs/2609.18024), Definition 2.1 | The sketch precedes coordinate probes; a deterministic transition chooses its next coordinate from sketch and replies. For each requested function $x\mapsto\Gamma_q(x)$, our retained code corresponds to the sketch and the native boundary Read to one coordinate probe, with one common sketch for all late $q$. Their general coordinate arrays and matrix-powering objectives differ; our sketch must be actually acquired before the request, and its objective is an attained alphabet. No distributional or min-entropy theorem is transferred. |
+| Nicolas Charpenay, Maël Le Treust and Aline Roumy, *On the Additivity of Optimal Rates for Independent Zero-Error Source and Channel Problems*, [arXiv:2407.02281](https://arxiv.org/abs/2407.02281), introduction and graph-product discussion | Their zero-error rates distinguish graph products, source distributions and regularized limits; the paper explicitly uses subadditivity before a Fekete limit. Here the reply experiment itself depends on the code and late target, and all pairs can be admissible despite higher-arity obstructions. Neither an AND product nor their independence or entropy hypotheses identify our native hypergraph. The actual gluing and the elementary limit proof are therefore supplied in §§3 and 6. |
+
+Finite fractional covering, finite LP duality and harmonic greedy
+rounding are established mathematical tools. Their native input
+family, every-word simulation, paid attainment and depth error are
+proved here. These are repository-derived ordinary results, without
+a worldwide-originality claim. In particular an arbitrary
+communication reply cannot replace a constructor reply: (FMR.9),
+(FMR.13), (FMR.36) and (FMR.45) specify which replies are available
+on the same actual source and how they are obtained.
+

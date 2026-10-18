@@ -1,0 +1,178 @@
+**Proposition 13.2 (root isolation and strict arithmetic margins).** Let
+$c$ have the following exact rational decimal coordinates, in order
+$(x,\eta)$, and let $C=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}]$.
+
+| Coordinate | Exact rational center |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+There is exactly one zero $u_*=(x_*,\eta_*)$ of $\Psi$ in $C$.
+The strict bounds below hold throughout $C$, before imposing $\Psi=0$:
+
+$$
+\begin{gathered}
+\frac{47}{100}<\lambda<\frac{49}{100},\qquad \eta_k>0,\\
+\zeta_0-\lambda p_{50}>\frac6{125},\qquad
+(S_0)_{00}>\frac6{125},\qquad
+\det S_0[\{0,1\}]>\frac{23}{10000},\\
+(S_{01})_{00}>\frac1{10},\qquad (S_{02})_{00}>\frac1{10},\\
+(S_{12})_{00}>\frac{69}{1000},\qquad
+\det S_{12}>\frac{11}{2000}.
+\end{gathered}
+\tag{CG.115}
+$$
+
+For any point of $C$, form the following matrices and quantities:
+
+$$
+\begin{aligned}
+H&=1000\eta_0\operatorname{adj}S_0,\qquad
+Q^{01}=\eta_1\operatorname{adj}S_{01},\qquad
+Q^{02}=\eta_2\operatorname{adj}S_{02},\qquad Q^{12}=0,\\
+r_0&=H_{00}+Q^{01}_{11}+Q^{02}_{11},\qquad
+r_1=H_{11}+Q^{01}_{00},\qquad r_2=H_{22}+Q^{02}_{00},\\
+m&=(0,1-r_1,1-r_2),\qquad q_y=p_y\cdot m,\\
+(C_y)_{ii}&=H_{ii}p_{yi}
+ +\sum_{j>i}Q^{ij}_{00}p_{yj}
+ +\sum_{j<i}Q^{ji}_{11}p_{yj},\\
+(C_y)_{ij}&=H_{ij}(\rho_y)_{ij}
+                  +Q^{ij}_{01}(\rho_y)_{ji}\quad(i<j),
+\qquad (C_y)_{ji}=(C_y)_{ij},\\
+\Delta_y&=B_y-C_y,\qquad
+\delta_y=\operatorname{tr}(R_y\Delta_y)\quad(y=5,27),\qquad
+T_{16}=\frac1{10}I_3-\Delta_{16}.
+\end{aligned}
+\tag{CG.116}
+$$
+
+The following additional inequalities hold throughout $C$:
+
+$$
+\begin{gathered}
+H_{00}>0,\qquad Q^{01}_{00}>0,\qquad Q^{02}_{00}>0,\\
+\frac{49}{100}<m_1<\frac12,\qquad
+\frac{34}{100}<m_2<\frac{35}{100},\\
+\delta_5>\frac3{1000},\qquad \delta_{27}>\frac{37}{250},\qquad
+q_5<\frac{60}{121},\quad q_{27}>\frac{36}{121},\quad q_{16}>\frac7{20},\\
+(T_{16})_{00}>\frac{97}{1000},\qquad
+\det T_{16}[\{0,1\}]>\frac{45}{10000},\qquad
+\det T_{16}>\frac{48}{10^6},\\
+0.14817810291080132013<F(x)<0.14817810291080132014,\\
+0.14817810291080132013<\delta_{27}<0.14817810291080132014.
+\end{gathered}
+\tag{CG.117}
+$$
+
+Proof. The finite arithmetic part is specified using directed dyadic
+enclosures, so the strict comparisons and the exact root have different
+roles. Put $D=2^{224}$. Represent an interval by its integer endpoints
+$[a/D,b/D]$. Embed a rational $q$ by
+$[\lfloor Dq\rfloor/D,\lceil Dq\rceil/D]$. Addition and negation
+are exact endpoint operations. For multiplication take the minimum and
+maximum of the four endpoint products, rounded down and up to multiples
+of $1/D$. For division take the four quotients, with the same directed
+rounding, only when the denominator interval excludes zero. For a
+nonnegative interval its square-root enclosure has integer endpoints
+
+$$
+\left[\left\lfloor\sqrt{aD}\right\rfloor,
+       \left\lceil\sqrt{bD}\right\rceil\right].
+\tag{CG.118}
+$$
+
+The integer endpoints in (CG.118) are again divided by $D$. Integer
+square comparison establishes their direction; no floating-point
+operation is required. Construct off-diagonal entries of $\rho_y,B_y$
+as square roots of the corresponding products of rational diagonal
+entries, and keep their diagonal entries rational.
+
+For differentiation, evaluate (CG.112)–(CG.114) in the truncated
+polynomial algebra on six formal increments, keeping degrees at most
+two. At a base point $x$, the variable $x_i$ is replaced by
+$[x_i]+X_i$. Multiply by polynomial convolution and discard degrees
+above two. For inversion, if the constant term is $a$ and the remaining
+terms are $v$, use
+
+$$
+(a+v)^{-1}=a^{-1}-a^{-2}v+a^{-3}v^2\pmod{\deg>2}.
+\tag{CG.119}
+$$
+
+The linear coefficients give first derivatives. The coefficient of
+$X_iX_j$ gives the $ij$ Hessian entry when $i\ne j$, and twice the
+coefficient of $X_i^2$ gives the diagonal entry. Evaluate sums in
+increasing index order, determinants by their first-row expansion,
+and divisions as multiplication by (CG.119). Thus, writing $\mathscr I$
+for this enclosure calculus, the full Jacobian is enclosed by
+
+$$
+D\Psi=
+\begin{pmatrix}
+F_{xx}+\sum_k\eta_k(g_k)_{xx}&
+ [\nabla g_0\ \nabla g_1\ \nabla g_2]\\
+[\nabla g_0\ \nabla g_1\ \nabla g_2]^T&0_{3\times3}
+\end{pmatrix}.
+\tag{CG.120}
+$$
+
+Let $M$ be the entrywise rational midpoint of
+$\mathscr I(D\Psi(c))$. Rational elimination gives an inverse
+$\mathcal R=M^{-1}$, with $\mathcal RM=I_9$ verified over $\mathbb Q$.
+Enclose each entry of $\mathcal R$ before interval matrix multiplication.
+The resulting arithmetic bounds are
+
+| Quantity | Strict rational upper bound |
+| --- | --- |
+| $\|\mathcal R\Psi(c)\|_\infty$ | $1/10^{28}$ |
+| $\sup_{u\in C}\|I_9-\mathcal R D\Psi(u)\|_\infty$ | $1/10^{15}$ |
+
+For the second row, take the maximum of the sums of interval absolute
+bounds along each row of $I_9-\mathcal R\mathscr I(D\Psi(C))$.
+Endpoint embedding may enlarge $C$ by less than $1/D$ per endpoint;
+this only enlarges the derivative enclosure. Applying the same endpoint
+operations directly to (CG.112), (CG.113) and (CG.116) gives every
+comparison in (CG.115) and (CG.117). The bounds for $F$ and $\delta_{27}$
+can also be enclosed more tightly as follows, with rational endpoints:
+
+$$
+\begin{aligned}
+0.14817810291080132013688243935582
+ &<F(x)<0.14817810291080132013689280825907,\\
+0.14817810291080132013685287501998
+ &<\delta_{27}<0.14817810291080132013692237259040.
+\end{aligned}
+\tag{CG.121}
+$$
+
+Only the weaker strict bounds (CG.117) are needed below. All inputs to
+these calculations are the rational center, radius, positive radicals
+and displayed expressions; no fitted residual is asserted to equal zero.
+
+For completeness, the enclosure bounds imply existence, not just a
+small numerical residual. On the exact rational closed box $C$, define
+$T(u)=u-\mathcal R\Psi(u)$. The derivative bound and the mean-value
+formula make $T$ Lipschitz with constant $k<10^{-15}$ in the maximum
+norm. For $\epsilon=10^{-24}$ and $b<10^{-28}$,
+
+$$
+\|T(u)-c\|_\infty\leq b+k\epsilon<\epsilon.
+\tag{CG.122}
+$$
+
+Thus $T$ maps $C$ strictly into itself and is a contraction. The complete
+metric space $C$ has a unique fixed point. Since $\mathcal R$ is
+invertible, its fixed points are precisely the zeros of $\Psi$.
+The derivative bound also makes $D\Psi(u_*)$ invertible. Clearing the
+positive chart denominators gives polynomial equations over the real
+algebraic numbers with a nonsingular isolated zero; the coordinates
+of that zero are algebraic. Only uniqueness in $C$ is asserted. The
+equations may have other zeros outside $C$. $\square$
+

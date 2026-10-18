@@ -1,0 +1,39 @@
+**Theorem 6.2 (all-length soundness of the separable rule).** The
+predicate $V_{\mathrm{sep},h}$ is total computable. Every acceptance
+implies $\beta_d(\mu)\le C$ for every complete native template and
+every length.
+
+Proof. Put $g=\sum_\ell F_\ell$. Fix an arbitrary admissible
+$B\subseteq S_d^n$ and expand $\prod_i g(x_i)$ by a term choice
+$\ell_i$ at each coordinate. For a fixed choice, the nonzero rows
+are on $T_h(P^k)^n$. Recut those same rows into their $kn$ actual
+modules by Lemma 2.3. The resulting relation is motif-admissible,
+with all its old equalities and correlations intact. Apply SRP's
+inhomogeneous theorem to the fine weights $f_{\ell_i j}$ to get
+
+$$
+\sum_{x\in B}\prod_iF_{\ell_i}(x_i)
+\le\prod_{i=1}^n\prod_{j=1}^k R(f_{\ell_i j}).
+$$
+
+Sum over all term choices. Finite distributivity yields
+
+$$
+A_n^{(d)}(g)\le
+\left(\sum_\ell\prod_jR(f_{\ell j})\right)^n.
+$$
+
+No source-dependent term selector is given to a reader; this is an
+analytical sum. Every coarse potential in a term is expanded exactly
+once. The table majorization, monotonicity and the credited nonnegative
+remainder inequality in (JPL.8) give $\beta_d(\mu)\le L\le C$.
+That remainder inequality uses fixed-value sections of the same native
+relation; it makes no projection-independence assumption. Probability
+stability and cap enlargement preserve soundness, so induction proves
+the assertion for an arbitrary finite derivation.
+
+Each input specifies finite lists on finite tree alphabets. All
+enumerations and rational comparisons terminate; malformed inputs
+are rejected without consulting any unverified cap. This proves
+totality as well as soundness. $\square$
+

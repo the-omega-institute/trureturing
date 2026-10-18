@@ -1,0 +1,28 @@
+**Definition 3.1 (completion and scalar faces).** Let
+$\widehat{\mathcal T}$ be the valid finite or infinite ordered tree reply
+tables, with the finite-prefix topology. It is a closed subset of the
+countable product of four-point discrete spaces: root presence, two
+children of a branch, and absence below leaves or absent nodes are
+closed finite-coordinate conditions. It is compact. Finite trees are
+isolated by a prefix extending below their leaves. Let $\Omega$ have
+branch at every address. Extend $\rho$ by its actual leaf replacements
+and pair law. It fixes $\Omega$, preserves every infinite branch, and
+is prefix-nonexpanding. The latter follows by navigation through the
+shared original branches, or through identical early leaf replacements;
+it includes absent replies. Pairing is a prefix guard; bare $\rho$
+is not asserted to be a strict contraction.
+
+By the supplied atomic recurrence, the minimum leaf depth of $T_n$ is
+$\lfloor n/2\rfloor$. Induction on the recurrence proves this from
+the two depth-zero leaves. Thus $T_n\to\Omega$ as $n\to\infty$.
+Every mixed source map is continuous on
+$(\mathbb N\cup\{\infty\})^k\times\widehat{\mathcal T}^m$, when an
+infinite atomic coordinate means $\Omega$ and finite scalar points are
+isolated.
+
+For one recognized chart tuple choose a subset $K$ of its *original*
+scalar names to diverge. All other scalar names have finite values
+$\mathbf t$. Each occurrence of a divergent name becomes $\Omega$;
+an occurrence of a finite name remains $T_{t_i+c}$. Sharing is not
+changed by this choice.
+

@@ -1,0 +1,21 @@
+**Boundary 6.1 (What the construction computes).** Given a complete
+finite integer-labeled tree with its return and divergence terminals
+already specified, Lemmas 3.1--3.2 and (4.2)--(4.3) give a finite explicit
+relabeling: find the components, keep the target component fixed, split
+the detached sizes in the specified order, translate the blocks, and
+convert their edge indices to actual addresses. No value of $p$ is
+needed for that operation. It constructs one simultaneous two-phase
+address assignment, rather than separate runtime phase-conditioned
+protocols.
+
+The reduction from an arbitrary measurable next-event rule to $T(u)$
+is semantic. Neither unfolding arbitrary code, deciding internal
+divergence, recognizing an arbitrary measurable seed cell effectively,
+nor obtaining an algorithm on arbitrary presentations of seed spaces
+follows. The countable-tree integration establishes measurable existence
+on the given space. It changes neither the seed law nor the permitted
+acquisition operations. It does not assert equality of original and
+compressed replies on a fixed realized spin sequence, numerical timing
+preservation, a minimal representative dictionary, an optimal adaptive
+rule, or a numerical larger-budget risk frontier.
+

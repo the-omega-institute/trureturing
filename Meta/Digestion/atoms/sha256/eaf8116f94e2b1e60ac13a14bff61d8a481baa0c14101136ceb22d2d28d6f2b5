@@ -1,0 +1,91 @@
+**Proposition 6.1 (curvature absorption with both thresholds explicit).**
+Under the rank-one hypotheses, with primes denoting angular
+derivatives,
+
+$$
+\begin{gathered}
+\rho<125M_P+\frac{25}{2}\lambda+\frac54,\\
+\left(1-\frac{18750}{t}\right)\rho
+<\frac{2505}{4}+1575\lambda.
+\end{gathered}
+\tag{RB.32}
+$$
+
+For $t\ge\max(t_0,37500)$ this implies only
+
+$$
+\rho<\frac{2505}{2}+3150\lambda.
+\tag{RB.33}
+$$
+
+Combining (RB.33) with Proposition 4.1, hence requiring both
+$t\ge37500$ and $t\ge14400000$, gives
+
+$$
+\rho<\frac{2505}{2}+3150(20000)<64000000.
+\tag{RB.34}
+$$
+
+Proof. Differentiating (RB.1) on $u=\cos\theta$, $v=\sin\theta$
+and using $A_\ell<B_\ell$ gives
+
+$$
+\|\ell''\|_\infty
+\le2(B_\ell-A_\ell)+4a_\ell+l_u+l_v
+<0.05948<\frac1{10}.
+\tag{RB.35}
+$$
+
+Write $P=\sum_{j=-2}^2\widehat P_je^{ij\theta}$.
+Nonnegativity gives
+$|\widehat P_j|\le(2\pi)^{-1}\int_0^{2\pi}P
+=\widehat P_0\le M_P$. Consequently
+
+$$
+\|P''\|_\infty\le\sum_{j=-2}^2j^2|\widehat P_j|
+\le10M_P.
+\tag{RB.36}
+$$
+
+This coefficient estimate is the direct Fourier integral inequality
+inside this proof; it does not assume a sign for $P''$.
+
+At $x_*$, the smooth saturated signed gap $S_-$ in (RB.7)
+vanishes and has a minimum, including when $\eta_1(x_*)=0$.
+The function $(w\cdot x)^2$ has value and first derivative zero,
+and second derivative $2$ there: $x_*$ and its unit angular
+tangent are orthonormal, and $w$ is one of the two unit tangents.
+Thus differentiating $c(x)(w\cdot x)^2$ contributes exactly
+$2c(x_*)$ at this point, with no derivatives of $c$ remaining.
+The minimum condition gives
+
+$$
+2\rho c(x_*)\le P''(x_*)+\ell''(x_*)-\lambda u_*.
+\tag{RB.37}
+$$
+
+Using $c(x_*)>1/25$, (RB.35), (RB.36) and $|u_*|\le1$
+gives
+$2\rho/25<10M_P+1/10+\lambda$, the first inequality of
+(RB.32). This uses a smooth signed gap, not differentiation of
+the absolute height.
+
+Insert (RB.27) in that first inequality:
+
+$$
+\begin{aligned}
+\rho
+&<125\left(5+\frac{25}{2}\lambda+\frac{150\rho}{t}\right)
+       +\frac{25}{2}\lambda+\frac54\\
+&=\frac{2505}{4}+1575\lambda+\frac{18750\rho}{t}.
+\end{aligned}
+\tag{RB.38}
+$$
+
+For $t\ge37500$ its left coefficient after rearrangement is
+at least $1/2$, proving (RB.33). Substituting
+$\lambda<20000$ is valid only with the additional threshold
+of Proposition 4.1. The resulting upper expression is
+$63001252.5<64000000$, proving (RB.34) with both premises.
+$\square$
+

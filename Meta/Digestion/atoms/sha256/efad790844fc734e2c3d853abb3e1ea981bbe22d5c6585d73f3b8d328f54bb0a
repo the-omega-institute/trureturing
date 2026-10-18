@@ -1,0 +1,128 @@
+**Theorem 7.1 (complete finite attainers).** For every admitted public
+state and every $0\leq s\leq s_*$ there is an actual finite instrument
+(NP.14) with
+
+$$
+G_{\rm acq}=G_{\rm live}=E\Theta(H_*)E^\dagger,\qquad
+E_s(\rho)=E_s^L(\rho)=F.
+\tag{NP.46}
+$$
+
+This construction has exactly fourteen acquired labels for $s<s_*$ and
+twelve for $s=s_*$. All declarations below are part of the new instrument,
+not flags presumed observable in a pre-existing Kraus representation.
+
+Proof. For each report $r$ take the nonzero atoms $z_{r,j}$ constructed
+in Proposition 6.2. Generate the following labels, retain exactly their
+declared quantum carriers, and permanently discard every other
+input-dependent dilation system. All spectral factors, null columns,
+bases and isometries are fixed from public coefficients before acquisition;
+none is chosen by observing the unknown specimen.
+
+| Actual label | Fibre dimension | Encoder specification | Full decoder |
+| --- | --- | --- | --- |
+| $(r,H)$ | $3$ | Kraus $K(h)E^\dagger/\sqrt2$ | $X\mapsto EXE^\dagger$, entirely live |
+| $(r,L,j)$ | $2$ | Kraus $U_{r,j}^\dagger K(z_{r,j})E^\dagger$ | $X\mapsto EU_{r,j}XU_{r,j}^\dagger E^\dagger$, entirely live |
+| $(r,f,j)$, $j=1,2$ | $1$ | row $\sqrt{m_j/2}\langle j|E^\dagger$ | scalar failure decoder specified below |
+| $(r,\perp)$ | $1$ | CP map $A\mapsto\operatorname{tr}(Q_5A)/2$ | scalar mass to original label $2$ with density $g(t)dt\,P_f$ |
+
+For a low matrix use its specimen columns one and two, $k_1,k_2$.
+Define, with the calibrated inner product,
+
+$$
+u_1=k_1/\|k_1\|,\qquad
+\widetilde u_2=k_2-u_1(u_1^\dagger k_2),\qquad
+u_2=\widetilde u_2/\|\widetilde u_2\|,\qquad U_{r,j}=(u_1,u_2).
+\tag{NP.47}
+$$
+
+The lower-right minor in (NP.18) makes these columns independent, so
+both denominators are nonzero. They span its rank-two range. Consequently
+$U_{r,j}^\dagger U_{r,j}=I_2$ and
+$U_{r,j}U_{r,j}^\dagger K(z_{r,j})=K(z_{r,j})$. This proves both the
+full TP property of each range decoder and its exact decoded product.
+The high decoder is also TP on all of $M_3$. Its product is genuinely
+rank three because
+
+$$
+\det K(h)=h_0h_1h_2\sqrt p\,(p+\alpha q)\ne0.
+\tag{NP.48}
+$$
+
+For a supported scalar label its full decoder sends a scalar $x$ to
+$x w_\ell g(t)dt\,P_f$ separately in EACH original failure label $\ell$,
+with zero live and extra maps. For the complement scalar label it uses
+only original label two. These scalar decoders are TP since
+$\sum_\ell w_\ell=1$ and $\int g=1$. Choose any fixed orthonormal
+basis $q_1,q_2$ of $V^\perp$ to realize the complement encoder by rows
+$\langle q_j|/\sqrt2$; their multiplicity is permanently inaccessible,
+so its accessible carrier is dimension ONE. There is no extra coherent
+register or future-accessible share.
+
+At report $r$ the sum of all encoder effects is
+
+$$
+E\bigl[\Theta(H_r+L_r)+M/2\bigr]E^\dagger+Q_5/2=F_r(s).
+\tag{NP.49}
+$$
+
+Summing reports yields $E[\Theta(I)+M]E^\dagger+Q_5=I_5$.
+Every individual encoder is CP and has positive effect at most this
+identity; hence it is TNI, and their joint acquisition is TP.
+This verifies actual normalization, including the failure and complement
+branches, rather than normalizing only the live ensemble.
+
+The live decoded Kraus matrices are $EK(h)E^\dagger/\sqrt2$ and
+$EK(z_{r,j})E^\dagger$. Their coefficient projectors sum to $I_3$,
+so their forgotten action equals the live part of (NP.11) on EVERY
+complex matrix unit. The supported scalar effects sum to $EME^\dagger$,
+and the complement effects to $Q_5$; their decoders give exactly
+(NP.11) separately at every original label. Precomposition by $E^\dagger$
+and complement trace kills every $V$–$V^\perp$ cross matrix unit.
+There is no complement live output, singular time part, endpoint atom,
+abort, rejection or extra-sector addition. The named zero measures at
+labels zero and mode $13$ remain zero. Common metadata is carried
+identically, without introducing history information.
+
+To verify the complete reference law, let $X$ be any positive joint
+input with an arbitrary passive reference. At report $r$ the supported
+scalar branches have the conditional reference operator
+
+$$
+R_{f,r}(X)=\operatorname{Tr}_5[(E(M/2)E^\dagger\otimes I)X],\qquad
+R_{\perp,r}(X)=\tfrac12\operatorname{Tr}_5[(Q_5\otimes I)X].
+\tag{NP.50}
+$$
+
+These expressions equal the actual Kraus-row sums; they do not replace
+a conditional reference by its unconditional marginal. In failure label
+$\ell$ and EVERY Borel set $B_{\rm time}\subseteq[0,1]$, the output is
+
+$$
+P_f\otimes\left[w_\ell R_{f,r}(X)
+       +\mathbf1_{\ell=2}R_{\perp,r}(X)\right]
+                       \int_{B_{\rm time}}g(t)\,dt.
+\tag{NP.51}
+$$
+
+Summing $r$ is exactly the reference amplification of (NP.11).
+The live matrix-product identities tensor by the reference identity as
+well. By complex linearity these identities hold for all joint complex
+operators, including singular and subnormalized states; trace-class
+infinite-reference versions follow by finite-rank approximation. Thus
+all complete channel, reference, separate time-label and zero-sector
+identities hold together.
+
+For $s<s_*$ the rank-many construction supplies exactly three nonzero
+low labels per report; at $s=s_*$ exactly two. The high matrices, two
+supported failure rows ($m_j>0$) and complement CP maps ($\operatorname{rank}Q_5=2$)
+are nonzero. The actual counts are therefore $2(1+3+2+1)=14$ and
+$2(1+2+2+1)=12$. These are counts of THIS specified generated alphabet,
+not minimum label counts or finite-clock hardware claims.
+
+Only the two high encoders are charged high, and their full decoders
+are wholly live. Their effect is exactly $E\Theta(H_*)E^\dagger$ and
+the selected cost is $F$. Theorem 5.1 supplies the universal lower bound
+without imposing these upper-construction restrictions. This proves
+(NP.46) for the entire closed interval. $\square$
+

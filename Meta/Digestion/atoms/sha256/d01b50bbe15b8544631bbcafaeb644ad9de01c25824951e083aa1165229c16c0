@@ -1,0 +1,17 @@
+**定义 144.4（左前缀档案）。** 对有限完整事件词定义
+
+$$
+\mathcal H(\varepsilon)=\alpha,\qquad
+\mathcal H(he)=\langle\mathcal H(h),Ee\rangle,
+\qquad H_n=\mathcal H(h_n).
+$$
+
+只在此档案像上定义追加深度
+
+$$
+\tau(\alpha)=0,\qquad
+\tau(\langle H,Ee\rangle)=\tau(H)+1.
+$$
+
+一般树的通常高度另记为 $\operatorname{ht}$，叶高度为零，节点高度为 $1+\max(\operatorname{ht}s,\operatorname{ht}t)$。$\tau$ 是档案的左前缀深度，不是对任意树的高度定义。
+

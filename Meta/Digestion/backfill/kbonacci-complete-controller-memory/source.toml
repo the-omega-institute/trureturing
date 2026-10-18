@@ -1,0 +1,5 @@
+source_id = "kbonacci-complete-controller-memory"
+path = "docs/develop/theory/KBONACCI_COMPLETE_CONTROLLER_MEMORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

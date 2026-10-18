@@ -1,0 +1,5 @@
+source_id = "fib-first-root-response-separation-and-mixed-terminal-drift-barriers"
+path = "docs/develop/theory/FIB_FIRST_ROOT_RESPONSE_SEPARATION_AND_MIXED_TERMINAL_DRIFT_BARRIERS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

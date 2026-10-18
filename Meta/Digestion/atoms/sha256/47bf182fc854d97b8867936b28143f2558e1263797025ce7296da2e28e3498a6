@@ -1,0 +1,68 @@
+**Proposition 12.1 (one whole-row disagreement relation).** Let a nonempty
+cell of an input in $\mathfrak S$ have $k=|X_\eta|\ge1$. Let
+$O_\eta\subseteq X_\eta$ be the variables occurring in $E_\eta$ after
+the original $Q$ holes have been removed. For two valuations $v,w$ put
+
+$$
+\begin{aligned}
+\mathsf{Bad}_\eta(v,w):={}&D_\eta(v)\land D_\eta(w)\land\\
+ &\left[
+ \bigvee_{x\in O_\eta}v(x)\ne w(x)
+ \ \lor\!
+ \bigvee_{\{q,r\}\subseteq J_\eta}
+       \bigl(e_{\eta,qr}(v)\mathbin{\mathsf{xor}}e_{\eta,qr}(w)\bigr)
+ \right].
+\end{aligned}
+\tag{ARH.12.1}
+$$
+
+Empty disjunctions mean false. This relation has an effective finite
+bottom-up automaton over $\Sigma_{2k}$, whose accepted terms are exactly
+
+$$
+\left\{\operatorname{conv}(v,w):
+ W_\eta[v],W_\eta[w]\in U\text{ in cell }\eta,\quad
+ R_Q(W_\eta[v])\ne R_Q(W_\eta[w])\right\}.
+\tag{ARH.12.2}
+$$
+
+Here the two copies of $X_\eta$ are ordered alike. They are mathematical
+coordinates for comparing possible sources, not two physical registers.
+
+Proof. By Proposition 10.3 the first two conjuncts specify exactly both
+feasible assignments, keeping every old and acquired constraint on each.
+The reached set and numbering $J_\eta$ are fixed on this cell. Recutting
+commutes with filling, since all residual occurrences are below the cut
+addresses. Thus the concrete outside is exactly $E_\eta[v]$ or
+$E_\eta[w]$, with the same fixed, numbered hole markers.
+
+For a fixed free term with these hole markers, cancellation down to an
+occurrence of each variable gives
+
+$$
+E_\eta[v]=E_\eta[w]
+\quad\Longleftrightarrow\quad
+\forall x\in O_\eta,\ v(x)=w(x).
+\tag{ARH.12.3}
+$$
+
+The forward implication uses only variables that actually occur outside;
+the reverse follows by substitution. A variable occurring both outside
+and inside holes is still included once in $O_\eta$. Its repeated
+occurrences need not be independent.
+
+By (ARH.3.4) and compiler correctness, $e_{\eta,qr}(v)$ is exactly the
+truth of complete subtree equality at those two original holes. Two
+partitions of the same finite reached set coincide if and only if all
+unordered distinct-pair equality truths coincide. Combining this fact
+with (ARH.12.3) proves (ARH.12.1) equivalent to full-row disagreement.
+In particular an unbounded outside tree is part of the predicate, not
+replaced by the partition.
+
+Lemma 11.2 recognizes both copies of $D_\eta$, each target formula and
+cross-copy coordinate equality. Its blank-state construction permits the
+other $2k-1$ or $2k-2$ coordinates to extend further than selected ones.
+Boolean closure, intersected with $V_{2k}$, therefore constructs exactly
+(ARH.12.2). For a zero-variable cell the row is constant and its bad
+relation is empty, as already handled separately. $\square$
+

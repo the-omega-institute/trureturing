@@ -1,0 +1,68 @@
+**定理 5.1（期望终端信息的固定产生器指数界）。** 对定义 4.1 的任意实际初始概率行 $\pi$，在存在不相容支撑对的情形，定理 3.1 的常数满足
+
+$$
+g_{i,n}(t)
+\leq
+\sqrt{\pi_i(1-\pi_i)t(1-t)}\
+\kappa^{\lfloor n/L\rfloor}
+$$
+
+对每个 $i,n$ 和 $0<t<1$ 同时成立。记
+
+$$
+K_\pi=\frac{\pi_{\mathrm{circ}}}{2}
+\sum_{i=1}^d\sqrt{\pi_i(1-\pi_i)},
+$$
+
+其中 $\pi_{\mathrm{circ}}$ 是圆周率，则
+
+$$
+\begin{gathered}
+0\leq\ell_n=\mathbb E_JD_{\mathrm{KL}}(p_\infty\Vert p_n)
+\leq K_\pi\kappa^{\lfloor n/L\rfloor},\\
+\sum_{n\geq0}\ell_n\leq\frac{K_\pi L}{1-\kappa},\qquad
+\sum_{n\geq R}\ell_n
+\leq\frac{K_\pi L}{1-\kappa}\kappa^{\lfloor R/L\rfloor}
+\quad(R\geq0).
+\end{gathered}
+$$
+
+若没有不相容支撑对，则 $p_n=p_\infty=\pi$ 几乎处处，全部 $\ell_n$ 为零。
+
+证明。**成本面积与公共子测度。** 对全部状态 $i$、$n\geq0$ 和 $0<t<1$，
+
+$$
+\begin{gathered}
+b_{i,n}(t)=
+\sum_{w\in\Sigma^n}\min(|r_{i,t}B_w|,|v_{i,t}B_w|),\\
+c_{i,n}(t)\leq b_{i,\infty}(t)\leq b_{i,n}(t),\\
+0\leq\delta_{i,n}(t)\leq g_{i,n}(t)
+=G_n(r_{i,t},v_{i,t})\leq t(1-\pi_i)\leq t,\\
+\ell_n=\sum_{i=1}^d\int_0^1\delta_{i,n}(t)\,\frac{dt}{t}.
+\end{gathered}
+$$
+
+$p_n(i)=\mathbb E[p_\infty(i)\mid\mathcal F_n]$，而 $\psi(\cdot,t)$ 凹，故 $\delta\geq0$。在一个前缀上，两个实际加权假设的质量分别为 $|r_{i,t}B_w|$、$|v_{i,t}B_w|$，得到第一式。
+
+在完整未来上，两个假设相对于实际边缘律 $P$ 的密度是 $(1-t)p_\infty(i)$ 和 $t(1-p_\infty(i))$，其重叠质量正是 $b_{i,\infty}(t)$。每个前缀中的可行等价对诱导同一未来有限测度；行支配和矩阵非负性使它同时受两个实际尾测度支配。给该测度接上前缀，再对互不相交的前缀柱集求和，得到实际完整未来上的公共子测度。因此各前缀最大质量之和不超过 $b_{i,\infty}(t)$。这证明证书方向，并由帐篷的第二分支得到 $g\leq b_{i,n}\leq t(1-\pi_i)$。
+
+对 $0<u<1$ 在 $t=u$ 处分段，
+
+$$
+\int_0^1\psi(u,t)\,\frac{dt}{t}
+=u(1-u)+u[-\log u-1+u]
+=-u\log u.
+$$
+
+$u=0,1$ 时帐篷恒为零，等式仍成立。这是 [RW, Corollary 3 与 Theorem 14] 的成本积分机制在单个熵坐标上的端点写法。对每个后验应用非负 Tonelli，得到其条件熵表达；两份条件熵都有限，且逐成本差非负，因而可相减得到最后一式。再次应用 Tonelli 还得
+
+$$
+\sum_{n\geq0}\ell_n
+=\sum_{i=1}^d\int_0^1
+\left(\sum_{n\geq0}\delta_{i,n}(t)\right)\frac{dt}{t},
+$$
+
+作为非负扩展量的等式。永久 Bayes 歧义 $b_{i,\infty}(t)$ 始终被扣除，没有以完美隐状态分类代替终端后验。
+
+这些面积与公共子测度公式是指数定理的输入接口；单凭其定性趋零，不能推出可求和率。
+

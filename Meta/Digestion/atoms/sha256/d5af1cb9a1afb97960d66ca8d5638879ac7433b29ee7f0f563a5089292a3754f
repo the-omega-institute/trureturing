@@ -1,0 +1,53 @@
+**命题 7.3（复用的精确源秩判据）。** 对每个固定合法源元组，存在满足全部共同祖先、全部非零增益及全部叶对区别的一个系数向量，当且仅当令 $\rho=\operatorname{rank}B(\mathbf P)$ 后有
+
+$$
+\begin{aligned}
+\operatorname{rank}[B;G_q]&>\rho &&\text{对全部 }q\in\mathcal S,\\
+P_{(w,0)}\ne P_{(w,1)}\quad\text{或}\quad
+\operatorname{rank}[B;D_w]&>\rho &&\text{对全部 }w\in\{J,M\}^7.
+\end{aligned}                                                   \tag{7.10}
+$$
+
+证明。共享响应由 (7.6) 全部消去。令 $U=\ker B$；对任意线性块映射 $T$，秩与零度公式给出
+
+$$
+\operatorname{rank}[B;T]-\operatorname{rank}B
+=\dim U-\dim(U\cap\ker T)=\operatorname{rank}(T|_U).        \tag{7.11}
+$$
+
+一个合法 $x\in U$ 必须使每个 $G_qx$ 非零，也必须使每个同源叶的 $D_wx$ 非零，所以每个适用限制映射均非零，得必要性。
+
+反之，将全部 $G_q$ 与全部同源叶的 $D_w$ 列为 $T_1,\ldots,T_m$，其中 $256\le m\le384$。(7.10) 保证每个 $T_j|_U$ 非零。各选 $u_j\in U$ 及 $T_j$ 的一个标量分量 $L_j$ 使 $L_j(u_j)\ne0$，并考虑
+
+$$
+u(t)=\sum_{j=1}^m t^{j-1}u_j\in U.                         \tag{7.12}
+$$
+
+$L_j(u(t))$ 的 $t^{j-1}$ 系数正是 $L_j(u_j)\ne0$，所以每个都是非零多项式。取一个实数避开它们有限个根的并，单一向量 $x=u(t)$ 就同时满足所有 $T_jx\ne0$。这不是为每个动作或叶选择不同向量。$U=\{0\}$ 会使所有增益守卫失败，因而没有零核例外。由 (7.3) 重构每个固定完整世界，再由 (7.6) 给出同一前缀共享的 $z_v$，即得全部相容性及区别。∎
+
+为明确保留全部秩下降层，令
+
+$$
+\begin{aligned}
+s_w&=2(a_{(w,0)}-a_{(w,1)})^2
+ +(b_{(w,0)}-b_{(w,1)})^2+(c_{(w,0)}-c_{(w,1)})^2,\\
+\mu_j(A)&=\sum_{\substack{I,J\text{ 为行、列指标集}\\|I|=|J|=j}}
+             \det(A_{I,J})^2,\qquad \mu_0(A)=1.
+\end{aligned}                                                   \tag{7.13}
+$$
+
+$j$ 超过矩阵任一维时取 $\mu_j=0$。$s_w$ 为源差的 Frobenius 范数平方。既有的完整源公式是
+
+$$
+\begin{aligned}
+\Phi(\mathbf P)=\bigvee_{\rho=0}^{1024}\Bigl[&
+\mu_\rho(B)>0\ \land\ \mu_{\rho+1}(B)=0\\
+&\land\bigwedge_{q\in\mathcal S}\mu_{\rho+1}([B;G_q])>0\\
+&\land\bigwedge_{w\in\{J,M\}^7}
+ \bigl(s_w>0\ \lor\ \mu_{\rho+1}([B;D_w])>0\bigr)\Bigr],\\
+\mathfrak S_7&=\{\mathbf P\in\mathcal P^{\mathcal S}:\Phi(\mathbf P)\}.
+\end{aligned}                                                   \tag{7.14}
+$$
+
+实矩阵上，平方子式之和为零等价于每个子式均为零，故这正是 (7.10) 的有限多项式写法，包括全部秩层。
+

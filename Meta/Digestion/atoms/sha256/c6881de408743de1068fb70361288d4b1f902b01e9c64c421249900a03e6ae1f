@@ -1,0 +1,15 @@
+### 74.1. Statement in the original input convention
+
+Write
+\[
+ h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ P=\frac{bh-3+i(h+b)}2,\qquad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix}.                 \tag{74.1}
+\]
+Let \(R\) exchange coordinates 0 and 1 synchronously in the two channels,
+and let \(\Theta(x,y)=(-\bar y,\bar x)\).
+

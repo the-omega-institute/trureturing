@@ -1,0 +1,19 @@
+**Theorem 69.1 (effective local exclusion).** If \(H\) is unitary and
+\(\|H-H_\star\|_{\mathrm F}\le\rho\), then
+
+\[
+ \left|\,|v^*w|^2-\frac16\,\right|>\frac1{360}
+ \qquad(v,w\in\mathcal F(H)).
+\tag{69.2}
+\]
+
+Thus every Hadamard unitary in this closed ball defines a pair
+\((I_6,H)\) that cannot belong to a quartet. In the actual family of
+§49, the conclusion applies whenever \(|b|\le\beta\), including zero.
+
+This is an effective version of the local exclusion in §68, obtained
+using a general polynomial-minimum theorem. The radius is astronomically
+small: \(K=15740214171382471854674411531\). It supplies neither useful
+numerical coverage nor exclusion on the remaining open branch. This is
+an analytic paper proof, not a Lean-kernel verification claim.
+

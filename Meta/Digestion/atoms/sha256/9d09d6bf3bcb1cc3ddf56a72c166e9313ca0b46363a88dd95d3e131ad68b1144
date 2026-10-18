@@ -1,0 +1,14 @@
+**命题 A-21.6（实际相位与通道的区别）。** $`AB=-BA`$，$`A^2=B^2=-I`$；固定提升的乘法为
+
+
+```math
+\mathcal{\text{ℒ}}(u,v)\mathcal{\text{ℒ}}(u',v')=(-1)^{uu'+vv'+uv'}\mathcal{\text{ℒ}}(u+u',v+v'),
+```
+
+
+其中右侧指数加法模二。$`M\bmod2`$ 保持此完整余循环，故原树同步 $`\rho`$ 保持中心符号。特别 $`t_L=\langle\langle\beta,\alpha\rangle,\alpha\rangle`$ 与 $`t_R=\langle\alpha,\langle\beta,\alpha\rangle\rangle`$ 同组成 $`(2,1)`$，$`U_{t_L}=-B,U_{t_R}=B`$，同步任意 $`\rho`$ 后仍差负号。
+
+证明。Pauli 乘法给反交换和平方；将 $`A^u`$ 移过 $`B^{v'}`$ 产生 $`uv'`$，两个同类指数进位分别给 $`uu',vv'`$，得全部符号，不只取反对称部分。对 $`M(u,v)=(v,u+v)`$ 展开余循环，两个 $`vu'`$ 项抵消，三个 $`vv'`$ 项留一个，仍得 $`uu'+vv'+uv'`$。叶替换分别 $`A\mapsto B,B\mapsto BA`$，与此自同构相容，结构归纳给同步中心符号不变。直接 $`BAA=-B`$，$`ABA=B`$。原语重相位 $`A'=e^{i\theta_\alpha}A,B'=e^{i\theta_\beta}B`$ 后，树多一个标量 $`e^{i(C_\alpha\theta_\alpha+C_\beta\theta_\beta)}`$，同组成两来源标量相同，相对符号保留。
+
+但 $`\mathrm{Ad}_U=\mathrm{Ad}_{-U}`$，因为对任意密度矩阵 $`\sigma`$，$`(-U)\sigma(-U)^\dagger=U\sigma U^\dagger`$。仅给两个通道名称不能取得相对负号；若实际供给共同控制位的 $`|0\rangle\langle0|\otimes U+|1\rangle\langle1|\otimes V`$、$`|+\rangle`$ 准备和 $`X_P`$ 读取，则 $`V=U`$ 或 $`-U`$ 分别给控制 $`|+\rangle`$ 或 $`|-\rangle`$，才可区分。若两支留下记录 $`e_0,e_1`$，非对角另乘 $`\langle e_1,e_0\rangle`$，不允许删除它。这是 [A-L7] 讨论的未知黑盒通道与额外物理实现的界线，不禁止已明确供应的相干比较。裸 FIB 没有自动供应这组条件。证毕。
+

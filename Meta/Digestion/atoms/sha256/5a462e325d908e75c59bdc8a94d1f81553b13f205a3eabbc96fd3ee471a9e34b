@@ -1,0 +1,93 @@
+**Theorem 7.1 (Full affine dimension of the no-worse channel class).**
+The set $\mathcal F$ has nonempty relative interior in the
+twelve-dimensional affine space (4.4). Therefore any faithful affine
+encoding of all the channels in $\mathcal C_{\mathbb R,J}$ into
+$\mathbb R^m$ requires $m\ge12$. This assertion concerns this
+specified channel class, not a smallest nonlinear optimization or a
+smallest number of event inequalities.
+
+Proof. In any real orthonormal vector basis $f_1,\ldots,f_5$, take
+the following $25$ trace-one projectors:
+
+$$
+P_i=f_if_i^T\quad(1\le i\le5),\qquad
+P_{ij}^\pm=\frac{(f_i\pm f_j)(f_i\pm f_j)^T}{2}
+\quad(i<j).
+\tag{7.1}
+$$
+
+They span $\operatorname{Sym}_5(\mathbb R)$: the $P_i$ give its
+diagonal basis, and
+$P_{ij}^+-P_{ij}^-=f_if_j^T+f_jf_i^T$ gives every off-diagonal
+basis matrix. Moreover,
+
+$$
+\sum_iP_i+\sum_{i<j}(P_{ij}^++P_{ij}^-)=5I_5.
+\tag{7.2}
+$$
+
+The $625$ ordered products of these $25$ projectors span the full
+$225$-dimensional real tensor space
+$V=\operatorname{Sym}_5(\mathbb R)\otimes
+\operatorname{Sym}_5(\mathbb R)$. They all have trace one and have
+strictly positive uniform average $Z_*=I_5\otimes I_5/25$.
+Their affine hull is the entire trace-one hyperplane in $V$:
+any linear combination representing a trace-zero vector has total
+coefficient zero, by taking its trace. Their differences therefore
+span the trace-zero subspace.
+
+This strictly positive average is an interior point of their convex
+hull within that hyperplane. To see this directly, select finitely
+many of the projector differences spanning the trace-zero space.
+A sufficiently small vector there has a linear representation by
+these differences with all coefficient changes smaller in magnitude
+than $1/625$. Adding those changes to the uniform positive weights
+keeps all weights nonnegative and their sum one. This produces a
+whole relative neighborhood of $Z_*$. In particular the convex body
+of real-separable trace-one matrices contains such a neighborhood.
+
+Under (5.2), the torus-and-$J$ invariant subspace of $V$ has linear
+dimension $15$ by Theorem 4.2. Its trace-one hyperplane has dimension
+$14$, and $Z_*$ is invariant. Intersect the preceding neighborhood
+with this invariant hyperplane. Every point of that intersection is
+real-separable and invariant, so averaging its real product
+decomposition expresses it by the generators of (5.1), as in
+Theorem 5.2. Thus it is a neighborhood in the invariant
+real-separable trace-one body as well.
+
+The normalized TP condition is
+$\operatorname{Tr}_{\rm out}\chi=I_5/5$. In the unnormalized
+coordinates it is the three independent equations $M^T\tau=\tau$.
+The trace equation $\tau^TM\tau=5$ is one consequence of these
+equations. On its trace-fixed hyperplane the other two are
+independent: (5.6) allows the three invariant marginal coordinates
+to vary freely before fixing their trace, since each column of $M$
+can be varied independently. Hence imposing the marginal removes
+exactly two more dimensions, giving $14-2=12$.
+
+The center is the completely depolarizing channel
+
+$$
+S_*(X)=\operatorname{tr}(X)I_5/5,\qquad
+M_* =\tau\tau^T/5,\qquad \eta_*=0,\qquad
+\chi_*=I_5\otimes I_5/25.
+\tag{7.3}
+$$
+
+It satisfies the marginal. Intersecting its invariant relative
+neighborhood with that affine marginal space leaves a relative
+neighborhood of dimension twelve. Uniqueness of (4.3) transfers
+this neighborhood to $\mathcal F$.
+
+If an affine encoding into $\mathbb R^m$ were injective on this
+neighborhood, its linear part would be injective on its
+twelve-dimensional direction space: a nonzero kernel direction
+would give two sufficiently close distinct feasible points with
+the same encoding. Rank-nullity implies $m\ge12$.
+
+The assertion is about distinguishing every channel in this class.
+It does not assert that every original complex channel is unchanged
+by the no-worse replacement, that an optimizer needs twelve free
+parameters, or that fewer variables cannot describe the single
+optimal value. $\square$
+

@@ -1,0 +1,6 @@
+**Definition 3.1 (reduced requirements).** Reduced admissibility asks
+for (SCE.6) only at $(i,q)\in[n]\times J_d$. Its donors still range
+over every $(j,a)\in[n]\times W_d$, with all the constant choices.
+The source universe remains $S_d^n$. A reduced complete template
+specifies one equation for every reduced target.
+

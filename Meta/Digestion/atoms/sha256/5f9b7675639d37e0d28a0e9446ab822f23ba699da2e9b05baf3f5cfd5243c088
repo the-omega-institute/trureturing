@@ -1,0 +1,17 @@
+**Definition 9.3 (extensions requiring further acquired data).** Extra
+installer residue, externally chosen allocator names, random bits,
+asynchronous interrupts, waits, diagnostic requests and scheduling choices
+must be fixed public data or retained as their actual acquired input if
+the replay theorem is extended to them. An unrecorded such choice breaks
+its determinism premise. Future values of the external actor are never
+replay inputs. Arbitrary-entry authentication, fabricated transcript
+recognition, crash recovery, hostile writers and physical noise remain
+outside this ideal exclusive-owner domain.
+
+Physically enabled raw bits that destroy canonical extendibility leave
+the lawful history and task-transport domains. Their actual IN successors
+are retained as executed occurrences in the physical semantics, but no
+malformed-frame continuation, response service or replay-image closure for
+those runs is established. Studying such a domain requires specifying that
+behavior; restricting task experiments does not physically prevent the input.
+

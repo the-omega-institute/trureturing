@@ -1,0 +1,25 @@
+**Definition 4.2 (The cut sectors).** Fix $1\le k<n$ and a
+cross-cut pair $i\le k<j$. For an internally legal left word
+$\ell$ put $(x,u)=(\ell_k,\ell_i)$; for an internally legal
+right word $r$ put $(y,v)=(r_{k+1},r_j)$. The actual sector
+masses are
+
+$$
+L_{xu}=\sum_{\substack{\ell\text{ internally legal}\\
+(\ell_k,\ell_i)=(x,u)}}\prod_{h\le k}\lambda_h^{\ell_h},
+\qquad
+R_{yv}=\sum_{\substack{r\text{ internally legal}\\
+(r_{k+1},r_j)=(y,v)}}\prod_{h>k}\lambda_h^{r_h}.
+\tag{4.2}
+$$
+
+Retain only sectors realized by legal words, so all retained
+masses are positive. The full coefficient matrix has entries
+
+$$
+A_z(\ell,r)=\frac{\sqrt{\prod_{h\le k}\lambda_h^{\ell_h}
+\prod_{h>k}\lambda_h^{r_h}}}{\sqrt{Z_G(\lambda)}}
+(1-xy)z^{uv}.
+\tag{4.3}
+$$
+

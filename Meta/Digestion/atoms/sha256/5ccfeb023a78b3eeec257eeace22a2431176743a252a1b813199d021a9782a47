@@ -1,0 +1,17 @@
+**Premise 6.2 (Guarded sufficient endpoint and budget).** [Guarded, Theorem 5.1 and Corollary 6.4] supplies
+
+$$
+\mathsf B(P),\ A_P<\infty,\ \mathsf Z_\Delta(P)\quad\Longrightarrow\quad d(P)=c_\star,
+\tag{6.3}
+$$
+
+and, for a single $\theta\in\Theta_N$ satisfying those premises,
+
+$$
+\mathcal R_{N,n}\le(n+2)c_\star-\kappa_n-\frac1{24}\le\tau
+\quad\text{for every }n.
+\tag{6.4}
+$$
+
+Its conditional-rank input is [Guarded, Theorem 6.2]: the guarded kernels from disintegrating that same $J_\theta/P_\theta$ satisfy all cut bounds. This is not an implication from cut ranks back to a producer. No implication from attainment or first-order balance to strong zero, and no generic assertion of $A_P<\infty$ on $\Theta_N$, is included in these premises.
+

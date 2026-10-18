@@ -1,0 +1,42 @@
+**Definition 1.4 (the seven features and the finite risk).** Use exactly
+[SEVEN, Definition 2.1]:
+
+$$
+\begin{aligned}
+f(Q)&=(Q(w_{0,1}),Q(w_{1,1}),Q(w_{2,1})),\\
+g(W)&=(W(\beta),W(\alpha w_{0,1}),W(\alpha w_{1,1}),W(\alpha w_{2,1})),\\
+V&=\int\|f(Q)-f(\mathcal R_A(W))\|_2^2\,d\Gamma_A
+ +\int\|g(W)-g(\mathcal R_B(Q))\|_2^2\,d\Gamma_B.
+\end{aligned}
+\tag{1.7}
+$$
+
+Features evaluate arbitrary probability laws on the indicated carrier, so
+(1.7) is defined even before invoking (1.5). Put
+
+$$
+\begin{gathered}
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\quad
+E_\beta=\{\beta,\alpha w_{0,1}\},\quad
+\kappa=\frac{1116529}{806625},\quad \zeta=-\frac{151298}{268875},\\
+M_p=\frac{11758471}{22781250},\quad M_\beta=\frac{5261}{6750},\quad
+M_p=\kappa M_\beta+\zeta,\\
+\eta=\left|\int Q(E_p)d\nu_p-M_p\right|
+ +\kappa\left|\int W(E_\beta)d\nu_\beta-M_\beta\right|,\\
+\rho_p=\frac{1116529}{22781250},\quad
+\delta_3=\frac{344076471}{6553600000000},\quad C=10^{16}.
+\end{gathered}
+\tag{1.8}
+$$
+
+The partition $\Pi$ has the three cells $E_p$, $\{w_{3,1}\}$ and their
+complete complement, which includes $\infty_p$. For $R=P_{p,3/8}$ define
+
+$$
+L_\Pi=\int\operatorname{TV}(\Pi_\#Q,\Pi_\#R)\,d\nu_p(Q).
+\tag{1.9}
+$$
+
+TV is inside the integral. All features, residual coordinates and losses
+above are bounded Borel functions. In particular $\eta,V,L_\Pi$ are finite.
+

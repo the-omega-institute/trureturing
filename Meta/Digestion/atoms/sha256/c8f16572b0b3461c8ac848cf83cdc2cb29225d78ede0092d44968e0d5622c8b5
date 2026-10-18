@@ -1,0 +1,14 @@
+## Appendix A. Exact source data and conventions
+
+All JSON objects below are inert mathematical data. Array order is part of their schema. Rational strings mean exact fractions; integers in endpoint pairs use the explicitly declared scale. A field named `file`, `edge` or `cell` is a selector for the correspondingly named record in the fixed-version dataset. `display`, decimal centres and rounded scalar summaries are orientation only. No path, hash or execution result is a proof premise.
+
+Exact JSON data (1 record): [appendix-a-source-box.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-a-source-box.json).
+
+The following common source enclosure has scale `D=2^224`. In `RC.coefficients`, `(g0,g1,g2,x,y,z)` denotes `(G00,G11,G22,G01,G02,G12)`; `RC.c` denotes the source amplitude. The `beta_direct`, `beta_cancelled` and `coefficients.beta` entries are alternative enclosures of the circle beta in (1); the cancelled-denominator entry is auxiliary and is not used in the strip proof. `box_derived.m` is ordered `(0,m1,m2)`.
+
+Exact JSON data (1 record): [appendix-a-source-enclosures.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-a-source-enclosures.json).
+
+Independent outward derived source bounds use scale `2^210=1645504557321206042154969182557350504982735865633579863348609024`. `high_acquired_probabilities` is ordered by heights `(5,16,27)`. The exact root identity for the omitted zero coordinate is a hypothesis, not an interval diagnostic.
+
+Exact JSON data (1 record): [appendix-a-derived-enclosures.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-a-derived-enclosures.json).
+

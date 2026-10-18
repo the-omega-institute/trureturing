@@ -1,0 +1,45 @@
+## 143. Both ends of the source M run enter the same short Z run
+
+Every genuine transverse M angle is strictly less than pi/2. Its owner
+supplies two equal such angles, while M has exactly one flat occurrence
+and at least five genuine occurrences. There are therefore at least three
+further positive occurrences sharing M's remaining pi budget with those
+two slots.
+
+Consider the proper axial M run containing sigma, as in the escape
+theorem. Its pair is {C,D} and its two distinct transverse boundary slots
+are genuine. At either boundary, actual face transport gives a block
+
+    (Q,M,A,B,M,A),       {A,B}={C,D}.
+
+The boundary M angle is strictly less than pi/2. The same increasing
+cosine numerator used by the escape theorem, together with (137.4), forces
+x_Q>1+m+x_A. The special-edge bound excludes Q in S. Among the four H
+labels, only Z has value greater than m, so Q=Z.
+
+Consequently each source-run endpoint owner contains a dominant axial Z
+occurrence. Both must lie in the unique run I. That run's actual reservoir
+pair is fixed; hence both endpoint companions A are the same label C
+(after the initial choice of names). The endpoint owners are thus either
+one common tetrahedron or two distinct tetrahedra with the identical
+labelled frame
+
+    (Z,M,C,D,M,C).                                 (137.11)
+
+If they are distinct, they occupy both of I's two available axial slots.
+If they are the same owner, I may still contain a second owner. Nothing
+here identifies two distinct actual tetrahedra just because their length
+vectors are equal.
+
+There is also an immediate residual-face restriction that keeps the
+repeated-label cases explicit. The two faces of rho used by I are its
+faces incident to the shared axis B. Each other face incident to a
+transverse Z slot has labels {Z,A,Q}, with the tracked target being its Z
+slot. If Q is in S, the next Z occurrence cannot be axial, since its
+reservoir pair would contain a special label. If Q=A, it cannot be axial
+because its two reservoir labels would coincide. In particular, the
+case (C,Z,M,M,Z,M) forces transverse Z neighbors across both unused
+return faces, whose labels are {Z,M,M}. These neighbors have reservoir
+pair {Z,M} and an axial M slot. If Q=Z instead, axial neighbors with
+reservoir pair {Z,A} remain permitted and are non-dominant.
+

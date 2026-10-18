@@ -1,0 +1,37 @@
+**Definition 5.1 (Multiword consumer).** For any actual stationary legal $P$, set
+
+$$
+q_i=\mathbb E_P[X_i\mid\sigma(X_j:j\ne i)],\qquad
+q_{k,i}=\mathbb E_P[X_i\mid X_{i-k},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+k}],
+$$
+
+$$
+\mathfrak d(P)=\mathbb E_P(X_0-q)^2,\qquad D_k(P)=\mathbb E_P(X_0-q_{k,0})^2.
+\tag{5.1}
+$$
+
+The notation $\mathfrak d(P)$ is the stationary risk denoted $d(P)$ in [Multiword][MW], and is distinct from the predictive gaps $d_L,d_R$. Its established interface is $\mathfrak d(P)=\inf_kD_k(P)\le c_\star\le\bar c:=3-2\sqrt2$. For $C=[1,L]$, take a bounded $f:B_L\to\mathbb R$, $f_C=f(X_C)$, $F=\max_{B_L}|f|$, with actual nullity
+
+$$
+\mathbb E_P[f_C\mid\mathcal H_C]=0,\qquad \mathcal H_C=\sigma(X_j:j\notin C).
+\tag{5.2}
+$$
+
+With $I_R=[1-R,L+R]$, define
+
+$$
+U_{R,k}(P,f)=\sum_{i\in I_R}\mathbb E_P[f_C(X_i-q_{k,i})^2].
+\tag{5.3}
+$$
+
+All overlaps, endpoints and original block seams remain. Under $P_\theta$ the finite marginal on $[1-R-k,L+R+k]$ determines (5.3). Positive exterior atoms use their actual conditional ratios; zero-total atoms have zero contribution, and radius zero uses empty exterior words.
+
+The established [Multiword, Theorem 3.1][MW] consumes a bound $\tau_P(R)\le\eta_P(R)$ proved without attainment. Under same-law attainment $\mathfrak d(P)=c_\star$, it gives
+
+$$
+|U_{R,k}(P,f)|\le F\eta_P(R)+2(L+2R)F\sqrt{\frac{c_\star}{k+1}}.
+\tag{5.4}
+$$
+
+Thus an independently established budget (2.4) can be inserted as $\eta_P(R)=\sigma_R+B_2(R)$; the alternative verified Shannon budget in Proposition 3.2 can also be inserted. A verified strict violation with $\bar c$ in place of $c_\star$ implies $\mathfrak d(P)<c_\star$. This is reuse of the consumer, not a new response theorem. A deficit decomposition alone supplies neither a null direction nor a nonzero complete response. A law-dependent allowance also supplies no uniform allowance for a parameter family.
+

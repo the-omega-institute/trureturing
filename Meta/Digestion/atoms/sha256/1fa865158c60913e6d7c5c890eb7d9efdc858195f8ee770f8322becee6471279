@@ -1,0 +1,36 @@
+**Definition 1.2 (mixed templates).** Fix finite dimensions $k,m\ge0$.
+A mixed template has grammar
+
+$$
+A::=g\mid T_{n_j+c}\mid\rho^a(z_i)\mid\langle A,A\rangle,
+\qquad 1\le j\le k,\quad1\le i\le m,
+\tag{URR.2}
+$$
+
+where $g\in\mathcal T$ is a supplied finite ground tree and $a,c$ are
+supplied nonnegative integers. Different occurrences may have different
+fixed exponents and offsets. Repeated names $n_j,z_i$ always have the same
+value. Evaluation uses $\mathbf n\in\mathbb N^k$ and
+$\mathbf z\in\mathcal T^m$.
+
+Let $\mathcal L=((A_\ell,B_\ell))_{\ell=1}^s$ be a finite list, retaining
+repetitions, and write
+
+$$
+D(\mathbf n,\mathbf z)=
+\bigwedge_{\ell=1}^s A_\ell(\mathbf n,\mathbf z)
+\ne B_\ell(\mathbf n,\mathbf z).
+\tag{URR.3}
+$$
+
+Each negative compares the entire two evaluated trees. It is not a
+conjunction of inequalities between corresponding children. The empty
+conjunction is true. The products $\mathbb N^0$ and $\mathcal T^0$ each
+contain exactly the empty tuple.
+
+The residual quantifier is over the **full Cartesian product**
+$\mathcal T^m$. It contains no additional positive equation, image
+condition, language restriction, endpoint-reach predicate or source-size
+promise. Section 4 proves this premise for a specified acquired family;
+it is not presumed for arbitrary positive histories.
+

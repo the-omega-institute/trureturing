@@ -1,0 +1,44 @@
+**Lemma 6.1 (Uniform stationary initial comparison).** Define
+
+$$
+R_j(q)=\sum_{k\ge1}k^jq^k,
+\qquad r_H(q)=\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}.
+\tag{6.1}
+$$
+
+For the rows in (3.2), using $\|u-v\|_{\rm TV}=\tfrac12\sum_x|u(x)-v(x)|$,
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q)\le\frac{2\delta}{\mu_0(q)}.
+\tag{6.2}
+$$
+
+Proof. The unnormalized first-wait weights and their sums are
+
+$$
+g_i(b)=\sum_{k\ge\max(1,b)}F_i(k)q^k,
+\qquad \mathcal W_i=\sum_{k\ge1}(k+1)F_i(k)q^k=Z_i\mu_i.
+\tag{6.3}
+$$
+
+Each $k$ contributes for $b=0,\ldots,k$, so $\sum_b g_i(b)=\mathcal W_i$ and the first-wait law is $g_i/\mathcal W_i$. By (2.3), $g_1\ge g_0$ pointwise and
+
+$$
+0\le\mathcal W_1-\mathcal W_0
+\le\delta\sum_{k\ge1}(k+1)k^8q^k
+=\delta(R_9+R_8),
+\qquad \mathcal W_0=R_{10}+R_9.
+\tag{6.4}
+$$
+
+When the difference is positive, normalize $g_1-g_0$ to a probability row $v$. Then
+
+$$
+\frac{g_1}{\mathcal W_1}
+=\frac{\mathcal W_0}{\mathcal W_1}\frac{g_0}{\mathcal W_0}
++\frac{\mathcal W_1-\mathcal W_0}{\mathcal W_1}v.
+\tag{6.5}
+$$
+
+Its variation distance from $g_0/\mathcal W_0$ is at most $(\mathcal W_1-\mathcal W_0)/\mathcal W_1\le r_H(q)$. If the difference is zero the two laws agree. Applying the common stochastic map $b\mapsto\eta A^bC$ cannot increase variation: for each finite-state event its conditional probability is in $[0,1]$, and the difference of its two averages is bounded by the input variation. This proves the first inequality. Finally $R_8\le R_9$ and $\mu_0=(R_{10}+R_9)/R_9$ give the second. The map is common under both labels even when its design and initialization depend on $q$. $\square$
+

@@ -1,0 +1,61 @@
+**推论 455.6（固定幂及对数调整的全部临界情形）。** 固定 \(\lambda>0\)、\(\rho>1\)、\(b\in\mathbb R\)，令
+
+\[
+N_{\lambda,\rho,b}(x)=\lceil\lambda x^\rho\ell^b\rceil.
+\]
+
+则该截止最终满足 \(N_{\lambda,\rho,b}\ge\lceil8x\rceil\)，且共同付款后的定量式为
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N_{\lambda,\rho,b}(x))
+=\frac1\lambda x^{3/2-\rho}\ell^{1-b}
+\left[F(\rho-1)+
+O_{\lambda,\rho,b}\!\left(\frac{1+\log\ell}{\ell}\right)\right].}
+\tag{CC.22a}
+\]
+
+由此恰有以下固定参数分类：
+
+| 固定参数范围 | \(\sqrt x\ell\,\mathscr E_x(N_{\lambda,\rho,b}(x))\) 的极限 |
+| --- | --- |
+| \(1<\rho<3/2\)，任意固定 \(b\) | \(+\infty\) |
+| \(\rho=3/2,\ b<1\) | \(+\infty\) |
+| \(\rho=3/2,\ b=1\) | \(F(1/2)/\lambda>0\) |
+| \(\rho=3/2,\ b>1\) | \(0\) |
+| \(\rho>3/2\)，任意固定 \(b\) | \(0\) |
+
+特别地，\(\lambda=1,b=0\) 的固定纯幂截止 \(N_\rho(x)=\lceil x^\rho\rceil\) 满足
+
+\[
+\mathscr E_x(N_\rho(x))\sim F(\rho-1)x^{1-\rho},\qquad
+\sqrt x\ell\,\mathscr E_x(N_\rho(x))
+\sim F(\rho-1)x^{3/2-\rho}\ell.
+\tag{CC.22}
+\]
+
+故临界归一化补偿在 \(1<\rho<3/2\) 时趋于 \(+\infty\)，在 \(\rho=3/2\) 时仍按正倍数 \(\log x\) 发散，而在 \(\rho>3/2\) 时趋于零。
+
+**证明。** 对每组固定参数，
+
+\[
+m=\lambda x^\rho\ell^b+O(1),\quad
+a_x=\rho-1+\frac{b\log\ell+\log\lambda}{\ell}
++O_{\lambda,\rho,b}(x^{-\rho}\ell^{-b-1}).
+\]
+
+因 \(\rho>1\)，整数误差趋于相对零，且 \(a_x\to\rho-1>0\)。可取固定正紧区间，使（CC.18）的误差共同成立；\(F'\) 在其固定邻域有界，给
+
+\[
+F(a_x)=F(\rho-1)+O_{\lambda,\rho,b}((1+\log\ell)/\ell).
+\]
+
+同时
+
+\[
+\frac{x^{3/2}\ell}{m}
+=\frac1\lambda x^{3/2-\rho}\ell^{1-b}
+\bigl[1+O_{\lambda,\rho,b}(x^{-\rho}\ell^{-b})\bigr].
+\]
+
+最后这个相对整数误差对固定 \(\rho,b\) 是 \(o(\ell^{-1})\)，故（CC.18）给（CC.22a）。因 \(F(\rho-1)>0\)，幂 \(x^{3/2-\rho}\) 压过任意固定对数幂；在 \(\rho=3/2\) 时由 \(\ell^{1-b}\) 的极限得到表中三种情形。（CC.22）是其特例。证毕。
+

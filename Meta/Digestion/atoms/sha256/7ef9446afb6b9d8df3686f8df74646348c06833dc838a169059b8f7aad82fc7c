@@ -1,0 +1,40 @@
+**Proposition 288.3 (Further containments at even, five-address and
+ordered-block lengths).**
+For $m=2q\ge4$, the terminal-protected supplier 207.13 has stock
+$c_{m-1}<c_m-\varepsilon_C$. At $m=5$, the numerical and signed
+consequences of 285.3 are implied by the five-address results
+282.1 and 283.1. At $m=6k-1$, both scalar inequalities 285.9 and
+287.2 are implied by 284.4 with unit weights.
+
+**Proof.** For even $m$, recurrence (285.1) implies
+$t_j\ge(j-1)/(q-1)$, so
+$U=1+(q/2)\sum_jt_j\ge q^2$. Therefore
+
+$$
+\varepsilon_C=\frac{a}{4qU}<\frac1{8q^3}
+ <\frac2{q(q+1)}=c_m-c_{m-1}.
+$$
+This proves the protected-stock comparison, including $m=4$.
+At $m=5$, (285.11) gives
+$K_C=16473/1765>46/5$. Using only $K\ge5s+h$, its signed payer
+of the form in 283.1 gives the sufficient range
+
+$$
+h\le\frac{25-K_C}{K_C-5}s
+ =\frac{6913}{1912}s<\frac{63}{17}s<\frac{79}{21}s.
+$$
+Hence that numerical inequality and that signed sufficient range
+are already covered by 282.1 and the older signed range in 288.1.
+The weighted-slice identity, its exact equality cone, and the explicit
+all-length nonnegative score remain the statements of 285.1–285.3.
+Neither this comparison nor those statements assert sharpness of
+$\varepsilon_C$.
+
+Finally $U\ge1$, $a<1/2$ give
+$\varepsilon_C=a(m-k)/(m^2U)<1/(2m)$.
+At $m=6k-1$ this is less than $1/(3k)$, the stock difference in
+288.1. Thus the asymmetric bound is stronger than the $C$ scalar
+bound at those lengths, and (288.2) also includes the $D$ scalar
+bound. All comparisons concern the same quotient and full feasible
+allocation, not separately attainable extrema. $\square$
+

@@ -1,0 +1,15 @@
+**定义 26.1（由旧行有限计算的父前沿）。** 写 $h\prec p$ 表示严格字面前缀。由实际列表 $R$ 计算
+
+$$
+\begin{aligned}
+H&=\{p_i^-:a_i=\mathsf{absent}\},\\
+H_0&=\{h\in H:\nexists g\in H,\ g\prec h\},\\
+L_R&=\{p_i:a_i\in\{\alpha,\beta\}\},\\
+J&=\{h\in H_0:\nexists \ell\in L_R,\ \ell\prec h\},\\
+U&=J\setminus L_R,\qquad K(R)=|U|.
+\end{aligned}
+\tag{SLH.26.1}
+$$
+
+所有集合均是有限字面集合；用缓存扫描、去重和字前缀比较即可计算。$H$ 中每个父至少有一个已取得的缺席孩子。$H_0$ 删去被更浅此类父遮住的候选；$J$ 再删去已有叶祖先遮住的候选。$J\cap L_R$ 的叶标签已被实际读取；$U$ 是仍须分辨是否为 $\beta$ 的父。空缓存给全空集合及 $K=0$，无需特设非空菜单。
+

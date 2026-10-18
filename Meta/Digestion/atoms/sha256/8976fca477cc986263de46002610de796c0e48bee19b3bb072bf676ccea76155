@@ -1,0 +1,110 @@
+**Theorem 11.1 (an actual full-family acquired code).** Fix any public
+index, let $N=2^j$, $j\ge0$, and put $H_{\rm sc}=j+1$,
+$D=H_{\rm sc}+2$. In the right subtree use a public perfect binary
+scaffold of height $H_{\rm sc}$, placing the $2N$ ordered blocks at
+its frontier words $a_1,\ldots,a_{2N}$. The actual original roots
+are $Ra_i$. Let $\widehat B_N\subseteq S_D$ be the resulting
+canonical right subtrees for $B_N$. There is a deterministic
+source-blind preparation and a jointly correct reader on every
+$t\in\mathcal F_D$ whose complete attained alphabet is exactly
+
+$$
+|S_D|-2^N+1.
+\tag{SCP.38}
+$$
+
+Preparation makes $2^D-1$ charged Reads on every source, at maximum
+address length $D$, submitting $(D-1)2^D+1$ letters. Each late
+target uses zero Reads or one actual original-root Read of length
+at most $H_{\rm sc}+1$, before every supplied count. This is a
+deliberately nonoptimal construction, with no new optimized memory
+bound asserted.
+
+Proof. Every inserted block has height at most two. The scaffold
+therefore gives actual trees of right-subtree height at most $D$,
+and ordered parsing embeds the $2^N$ distinct tuples injectively
+in $S_D$. Install a finite public assignment merging precisely
+$\widehat B_N$ into one name and assigning a distinct name to every
+other canonical state. This assignment is generated from explicit
+finite trees and contains no acquired source data.
+
+On the unknown actual $t=\langle\alpha,v\rangle$, before the
+request, Read every literal $Rq$, $q\in W_D$, including absent
+replies, in a fixed public order. These paid replies determine the
+credited canonical completion $\pi_D(v)$. At depth $D-1$ a branch
+is completed by $C_0$; all earlier constructors and leaves are
+retained. [FMR, Lemma 2.2][FMR] preserves every requested full
+factor and every boundary reply, including variable shapes. Export
+only the fixed-width public name of $\pi_D(v)$. Every canonical
+state is an actual possible right subtree and is fixed by $\pi_D$,
+so every stated name is attained. Merging exactly $2^N$ canonical
+states gives (SCP.38).
+
+At a singleton name every requested factor is installed and no
+late Read is needed. At the merged name, targets strictly above
+the frontier have constant branch factor. Every remaining target
+has the form $p=Ra_iq$, $q\in W_2$, because
+$|p|\le D=1+H_{\rm sc}+1$. Use the unpinned prescriptions
+(SCP.28)–(SCP.29), with its final own-root prescription, which
+are valid on $B_N$. A selector target queries the actual root
+of its $T_i$. A $Y_i$ target queries its own root for its root
+factor, $T_i$'s root for its left factor, the next $Y$ root for
+its right factor if $i<N$, and its own root for the final right
+factor. A target known constant on the named subset may instead
+use zero Reads. Each chosen query is one literal $Ra_l$ fixed
+by the name, $D$ and $p$ before its reply and any count. Its
+length is $H_{\rm sc}+1$.
+
+The original occurrences are actually present in every source in
+the merged inverse-image fiber. The exact presence premise of
+`original_present_transport` in [NativeDepthPatterns][SCP-Depth]
+therefore gives
+
+$$
+r_{\rho^kt}(Ra_iq)
+ =r_{\rho^k(t|_{Ra_i})}(q)\qquad(k\ge0).
+\tag{SCP.39}
+$$
+
+This subtree notation identifies an actual occurrence mathematically;
+every executed query is an original-root literal. Canonicalization
+preserves the queried root reply and requested factor on the whole
+inverse-image fiber, so the installed decoder recovers
+$\Gamma_p(t)$. The credited temporal predictor then answers
+$r_{\rho^kt}(p)$ for every authentic subsequently supplied $k$,
+with no further Reads. In particular initially absent suffixes
+remain among the targets. No boundary selector or supplied count
+is used to choose the query.
+
+The scan contains $2^D-1$ literals and its submitted length is
+$\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1$.
+It terminates on every source, independently of the later target.
+Use public allocation, a fixed scan schedule and padded finite
+membership computation. Under the declared paid handoff and
+isolation services, all scanned arrays, selectors, buffers,
+preparation control, allocation and timing distinctions beyond the
+exported name are inaccessible at reader entry. The complete
+attained alphabet is consequently the displayed name set.
+These services are premises, not physical erasure deductions.
+$\square$
+
+This construction uses the credited FMR/RRN paid realization; its
+additional content is the explicit fiber $B_N$ and its witnesses.
+It replaces acquisition and does not preserve a rival preparer's
+cost. The full source is always the original stationary
+$t=\langle\alpha,v\rangle$. There is no acquired free reference,
+extra readable root, subtree, equality, copying, reset, age,
+navigation or identity port. The public scaffold is part of the
+named slice, not a restriction on all original sources: all other
+canonical states and all variable-shape inverse images are served
+by the same preparation and reader.
+
+Preparation work/control, temporary scan space, finite table
+generation and installation, membership work, post-request
+workspace, final predictor size, submitted literal resources,
+authentic count representation, authentication, entry, source
+continuity, handoff, isolation and physical time remain separate
+resources. A fixed-width name needs
+$\lceil\log_2(|S_D|-2^N+1)\rceil$ bits. No free total-efficiency
+or physical mutual-recovery conclusion follows.
+

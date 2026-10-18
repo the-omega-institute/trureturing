@@ -1,0 +1,16 @@
+**Definition 5.1 (one static supplier and a finite read bound).** When GB holds, choose the actual finite static service supplied by SLH §74. From its finite probe set and read bound compute any finite upper budgets
+
+$$
+ (K_0,0,L_0),\qquad K_0,L_0\in\mathbb N.
+\tag{JRF.5.1}
+$$
+
+For example, use SLH (74.6) for $K_0$ and multiply it by the maximum physical address length in its finite template and prefix menus for $L_0$. Their addresses include original-hole prefixes. A sharper value is unnecessary. Set
+
+$$
+ K=\max(K_0,L_0+s_N).
+\tag{JRF.5.2}
+$$
+
+Neither $K_0$ nor $L_0$ is asserted optimal.
+

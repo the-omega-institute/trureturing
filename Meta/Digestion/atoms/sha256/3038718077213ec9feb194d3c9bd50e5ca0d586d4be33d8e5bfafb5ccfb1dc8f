@@ -1,0 +1,23 @@
+**Convention 1.1 (ordinary mathematical results).** This volume contains
+ordinary definitions and proofs, with bounded exact arithmetic checks.
+It asserts no new Lean verification, physical implementation or completion
+of the original programme. Its mathematical provenance is `repo-derived`
+for the applications proved here and `literature-attested` for the mature
+principles identified in §12. The authoring context uses
+formal-thinking-and-answer and theory-volume-template within an explicit
+theory-only boundary. A delegated mathematical author supplies the proofs;
+no independent review, independent-priors or model-diversity claim is made.
+
+Repository suppliers are selected at the immutable public revision
+`11e2a65d554143d0e3f38b37f1b686453451e3c4`.
+[FiniteRectangleTransport][FRT] and its [owning Scribe][FRTB] supply
+the positive original source and actual all-signed-sector paths.
+[OriginalControlComposition][OCC] and its [Scribe][OCCB] supply
+literal chronological composition, both original regularity alternatives,
+and arbitrary finite durations including zero. The canonical complete
+stopped instrument is the additional mathematical operation class of
+[Instrument Boundaries][IB] §§4–5.2 and 17. Its prescribed waveforms,
+calibrated Kraus operations, blanks and exact time/mode recorder remain
+declared ideal services. The transport equation alone supplies no sensor,
+height-dependent processor or physical actuator.
+

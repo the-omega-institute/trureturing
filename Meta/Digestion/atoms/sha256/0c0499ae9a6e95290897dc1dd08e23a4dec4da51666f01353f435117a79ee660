@@ -1,0 +1,19 @@
+**Reused balance 2.3 (First order, with its own premise).** Write
+$\mathsf Z(P)$ for the assertion that every intrinsic-null direction on
+every finite interval has absolutely convergent response
+$S_P(f_C)=\sum_i\mathbb E_P[f(X_C)\ell_i]=0$.
+Under (2.1), [Cocycle, Theorem 4.2][L] identifies this with
+
+$$
+\sum_{w:\,wy\in\mathsf X} p_C(w;y)f(w)\Delta_P(wy,0^Ly)=0
+\quad(f\in\mathcal K_C(P)),\quad\mu_C\text{-almost everywhere},
+\tag{2.5}
+$$
+
+simultaneously for all intervals and directions. Its reference-invariant
+contrast is integrable by (2.3). We reuse this localization; it is not
+proved again or assumed for arbitrary $P$ satisfying (2.1).
+The inherited attained-law response theorem, as supplied in
+[Cocycle, Convention 1.3][L], gives $d(P)=c_\star\Rightarrow\mathsf Z(P)$.
+It does not give the higher-order identities below.
+

@@ -1,0 +1,19 @@
+**Definition 7.3 (direct arrows and current decoder consumption).** An
+arrow receives only its indicated single body, $b$ and PublicCode:
+
+| Entry | Source and actual output algorithm |
+| --- | --- |
+| FromS | Run $D_S$ on the received S. Scan its parsed support, retaining precisely paths with neither child, then emit Definition 3.4's contour of that antichain. Output only B. |
+| FromB | Run $D_B$ on the received B. Use its derived raw/history and Definition 6.2 to emit exactly Definition 6.1's seven-family M-body. Output only $M_J$. |
+| FromM | Run $D_M$ on the received M. Run the explicit counted row/patch loop on the extracted reservoirs and emit Definition 5.3's occurrence list. Output only T. |
+| FromT | Run $D_T$ on the received T. Traverse its derived endpoint by Definition 3.2 and emit the S mask word. Output only S. |
+
+Rendering S initially uses only the actually receiver-imported, already
+checked historical Image's raw physical projection. Every callback also
+executes its same-kind independent decoder, body re-encoding and binding
+checks before ACK. These are separately charged computations. The next
+arrow clears their derived temporaries and uses `sourceBody`, not an
+internal candidate, cached endpoint or earlier Image. Whole-bank copying
+of unrelated persistent fields is physically retained/charged but is not
+a logical argument of any decoder or arrow.
+

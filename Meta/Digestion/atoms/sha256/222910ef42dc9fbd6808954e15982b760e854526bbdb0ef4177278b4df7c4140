@@ -1,0 +1,52 @@
+**Definition 58.3 (complete source and comparison boxes).** Use the entire
+nine-coordinate CG Proposition 13.2 box
+
+$$
+\mathcal B_9=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}],
+\quad
+u=(\lambda_{\rm CG},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm CG},
+\eta_0,\eta_1,\eta_2),
+\tag{RC.4}
+$$
+
+with these exact rational decimal centres:
+
+| Coordinate | $c_i$ |
+| --- | --- |
+| $\lambda_{\rm CG}$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z_{\rm CG}$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+For every point of this box form $S_0,S_{01},S_{02}$ by CG.112–.113,
+$H=1000\eta_0\operatorname{adj}S_0$ and
+$Q^{0i}=\eta_i\operatorname{adj}S_{0i}$ by CG.116, and use exactly
+CG.134's positive-pivot formulas
+
+$$
+h=He_0/\sqrt{H_{00}},\quad
+(a_{\rm src},b_{\rm src})^T=Q^{01}e_0/\sqrt{Q^{01}_{00}},\quad
+(c_{\rm src},d_{\rm src})^T=Q^{02}e_0/\sqrt{Q^{02}_{00}}.
+\tag{RC.5}
+$$
+
+No singular source matrix is inverted. These formulas define the
+comparison expressions off root as well, without asserting rank-one
+factorization there. Define the independent seven-coordinate closed box
+$\mathcal B_7$ by the following integer endpoints divided by $10^{23}$:
+
+| Coordinate | Lower integer | Upper integer |
+| --- | --- | --- |
+| $\beta$ | $12228666915779851600692$ | $12228666915779851600715$ |
+| $g_0$ | $126934124154363919620$ | $126934124154363919621$ |
+| $g_1$ | $292224504683244786341$ | $292224504683244786342$ |
+| $g_2$ | $167719666504311385249$ | $167719666504311385250$ |
+| $x$ | $237055800155858174667$ | $237055800155858174668$ |
+| $y$ | $220801123770243408728$ | $220801123770243408729$ |
+| $z$ | $-10165551560101453541$ | $-10165551560101453540$ |
+

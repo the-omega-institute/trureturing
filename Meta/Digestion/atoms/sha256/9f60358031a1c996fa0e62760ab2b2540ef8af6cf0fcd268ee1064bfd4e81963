@@ -1,0 +1,9 @@
+**Counterexample 4.3 (an earlier beta is not a substitute).** Begin with
+$\langle\beta,\alpha\rangle$. Read root branch, then $L$ beta. Perform
+one global update. Read $R$ beta in
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$. Rereading the
+earlier $L$ gives branch although $R$ is still a leaf. An invalid
+advance to level two can accept $LR$ alpha, of score four, when the
+true minimum is three. Rereading the latest beta $R$ instead accepts
+the correct score. This is a legal one-register history.
+

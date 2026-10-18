@@ -1,0 +1,16 @@
+**Theorem 7.1 (exact conjugate correspondence).** Each of Theorems 3.1, 4.1, 5.1, and 6.1 has a mirror obtained by conjugating its endpoints by $J$. The mirrored statements retain the same recorded indices and all final-word quantifiers.
+
+**Proof.** For an original history define $A'_i=JA_iJ$. Its transitions are $W'_i=JW_iJ$, legal finite words obtained by concatenating $J$, a word for $W_i$, and $J$. For an empty word this is $JJ=I$. Thus the primed history starts at $I$ and has the same number of reads and the same indices. Conjugation exchanges diagonal entries, exchanges off-diagonal entries, and preserves linear independence.
+
+Apply the appropriate theorem to the primed history and its complete constructed sources $S'_j$, slopes, and entire constant drifts. Transfer back by
+$$
+S_j=JS'_jJ,\qquad f_j=Jf'_j,\qquad \ell_j=\ell'_jJ.
+$$
+These factors are positive, their product is $S_j$, and cyclicity of trace gives
+$$
+\operatorname{tr}(A_iS_j)=\operatorname{tr}((JA_iJ)S'_j)
+$$
+at every original index. Slopes and drifts are unchanged, so all original readings agree. The row is fixed in each original run and every original unread atom preserves its positive column. No conjugation is acquired or added to the original history: this is an algebraic correspondence between realizations.
+
+In particular Theorem 3.1's mirror assumes first-four upper-left entries one and a final upper-left exit. The mirror of Theorem 4.1 covers all conjugate final multiplier matrices except $L^b$. The mirror of Theorem 6.1 covers every legal final word, including empty words, after the conjugate early-exit prefix. Conjugating the singular construction in (5.9) proves the mirrored singular branch as well. ∎
+

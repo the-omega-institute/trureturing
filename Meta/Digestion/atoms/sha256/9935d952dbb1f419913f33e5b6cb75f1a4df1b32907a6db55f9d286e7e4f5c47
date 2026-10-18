@@ -1,0 +1,31 @@
+**Definition 33.1 (local certificates on the complete old row).** Keep
+Definitions 1.1–1.2 and Assumption 1.3, with arbitrary finite prefix-free
+$P,Q$. In particular $U$ is the entire fiber (ARH.1.4), the target is the
+entire original $R_Q$, and the only source actions after the authentic
+entry epoch $N$ are original-root $\mathsf{Read}$, forward
+$\mathsf{ApplyRho}$ and absorbing $\mathsf{Halt}$. Every literal, both
+guards of every signed record, the concrete old exterior, repeated old
+classes and all different-class inequalities remain imposed.
+
+Write $I_P$ for the reached old addresses specified by $R=(C,\pi)$, and
+$\mathcal B$ for its equality classes. A *local atomic cover* consists,
+for each $b\in\mathcal B$, of an occurrence $a_b\in I_P$ of that class
+and a positive record actually present in $H_{\rm rel}$ of the form
+
+$$
+e_b=(n_b,a_b,m_b,a_bs_b,=),\qquad s_b\ne\varepsilon,
+\tag{LAC.33.1}
+$$
+
+allowing its two endpoints to be exchanged. Finding such a cover is a
+finite syntactic test on the retained records and old occurrence list.
+The rest of the history is unrestricted. Failure to find a cover means
+*outside this recognizer*, never a negative recovery answer on the
+unrestricted fiber. For $\mathcal B=\varnothing$ the cover is empty and
+the original source, if consistent with the records, is the concrete $C$.
+
+For logical consistency questions allow $U=\varnothing$ while retaining
+a well-formed complete old row. Such an input has no actual acquired
+entry satisfying Assumption 1.3; it will be reported separately from a
+nonempty fiber with no uniform recovery service.
+

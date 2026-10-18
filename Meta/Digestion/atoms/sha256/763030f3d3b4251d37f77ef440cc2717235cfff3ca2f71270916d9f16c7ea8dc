@@ -1,0 +1,30 @@
+**Definition 12.1 (one actual word and one four-reply map per old word).**
+Fix $b$ and $B_b$ of Definition 10.2. For every original finite native
+word $v$, define a word $h_b(v)\in B_b$ and a map
+$g_{b,v}:\mathcal A\to\mathcal A$ as follows.
+
+If exterior traversal of $v$ never enters a reached hole, let $z_v$
+be its exterior-determined reply, including any forced absence. Put
+$h_b(v)=\varepsilon$ and $g_{b,v}(z)=z_v$ for all four $z$.
+
+If traversal first enters hole $p$ of class $d$, write $v=pw$.
+For $|w|\le b$, put $h_b(v)=a_dw$ and let $g_{b,v}$ be the identity.
+For $|w|>b$, let $w_{\le b}$ be its length-$b$ prefix and put
+
+$$
+\begin{aligned}
+h_b(v)&=a_dw_{\le b},\\
+g_{b,v}(z)&=
+\begin{cases}
+\mathsf{branch},&z=\mathsf{branch},\\
+\mathsf{absent},&z\in\{\alpha,\beta,\mathsf{absent}\}.
+\end{cases}
+\end{aligned}
+\tag{PCA.30}
+$$
+
+Every new word is no longer than the old word, because $a_d$ is a
+shortest occurrence of the same class. These are static substitutions
+into a finite installed table. No running operation concatenates,
+truncates, selects or decodes an address.
+

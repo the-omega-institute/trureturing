@@ -1,0 +1,54 @@
+**Lemma 3.1 (one-coordinate finite forbidden set).** Fix all residual
+coordinates except $z$, and suppose one retained negative record is true at a
+finite tree $z_0$. Suppose its two sides have the form (RNL.7), with each side
+one uniform outer power of an ordinary constructor term. Then the set of finite
+trees $z$ that would make the displayed equality true is finite.
+
+Proof. Let $\nu(z)=(\#\alpha(z),\#\beta(z))^{\mathsf T}$. The recurrence for
+$\rho$ is
+
+$$
+\nu(\rho z)=M\nu(z),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{RNL.10}
+$$
+
+After the other coordinates are fixed, let $r$ and $t$ be the occurrence
+counts of $z$ in $A$ and $B$, and let $c_A,c_B$ be the constant leaf-count
+vectors contributed by all other terms. Equality implies
+
+$$
+(rM^a-tM^b)\nu(z)=M^b c_B-M^a c_A.
+\tag{RNL.11}
+$$
+
+If $a\ne b$ and $r+t>0$, assume for example $a>b$ and factor $M^b$. A singular
+matrix would make $t/r$ an eigenvalue of $M^{a-b}$ when $r,t>0$. The two
+ eigenvalues of $M$ are
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2};
+$$
+
+for every positive integer $d$, both $\varphi^d$ and $\psi^d$ are irrational:
+$\varphi^d-\psi^d$ is a nonzero integer multiple of $\sqrt5$, and
+$\psi^d=(-1)^d\varphi^{-d}$, so a rational value for either would make the
+other rational and contradict that difference. Whereas $t/r$ is rational, so
+the matrix is invertible. If exactly one of
+$r,t$ is zero, it is a nonzero scalar multiple of an invertible power of $M$.
+If $r=t=0$, equality is independent of $z$ and is false because the negative
+record is witnessed at $z_0$.
+
+If $a=b$, injectivity of $\rho^a$ reduces equality to $A(z)=B(z)$. After
+identical outer constructors are cancelled, a first constructor conflict gives
+no solution, a comparison with a ground term fixes $z$ to that term, and a
+proper self-occurrence would require a finite tree to have strictly more nodes
+than itself. Thus two nonidentical one-variable ordinary terms have at most one
+finite solution. If $A$ and $B$ were identical, the retained negative record
+could not be true at $z_0$. Therefore in every case only finitely many $z$ are
+forbidden. Finally, a fixed pair of leaf counts has finitely many ordered
+binary trees (a Catalan number of shapes times finitely many leaf labels), so
+the finite count solutions from (RNL.11) yield finitely many finite trees.
+$\square$
+

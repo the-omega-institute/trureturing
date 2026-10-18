@@ -1,0 +1,80 @@
+**Theorem 3.3 (Complete first-zero table).** The possible first-zero
+return masses are exactly $\mathcal S$, and their optimal correct
+masses are
+
+| $s$ | $V_I(s)$ | $V_D(s)$ |
+| --- | --- | --- |
+| $0$ | $0$ | $0$ |
+| $\eta/2$ | $a\eta/2$ | $a\eta/2$ |
+| $\eta c$ | $a^2\eta$ | $a\eta c$ |
+| $\eta$ | $a\eta$ | $a\eta$ |
+| $c$ | $a^2/2$ | $a^2/2$ |
+| $v$ | $a/2$ | $a/2$ |
+| $w$ | $a/2$ | $a/2$ |
+| $z$ | $a/2+a^2\eta$ | $a/2+a\eta c$ |
+
+Proof. Accepting subsets in the four geometries of Lemma 2.5 gives
+respectively
+
+$$
+\{0,z\},\quad \{0,\eta/2,w,z\},\quad
+\{0,\eta c,v,z\},\quad \{0,\eta,c,z\}.
+\tag{3.2}
+$$
+
+Their union is $\mathcal S$. The strict ordering
+
+$$
+0<2\eta^2<\eta/2<\eta c<\eta<c<v<w<z
+\tag{3.3}
+$$
+
+shows which single-leaf cases can supply each nonzero proper mass.
+Here $v-c=(1-c)^2/2>0$,
+$w-v=\eta(1/2-2\eta)>0$, and $z-w=\eta/2>0$;
+the earlier inequalities follow from $0<\eta<1/4$ and $c>1/2$.
+
+An adjacent single $01$ gives $a\eta/2$ at $s=\eta/2$.
+The disjoint $01$ gives $a^2\eta$ for type $I$ and, for type
+$D$, the larger choice $a\eta c>\eta c/2$ when the second edge
+avoids the target. An opposite-parity $01$ avoiding the phase-$\beta$
+target gives $a\eta$ at $s=\eta$. Its $00$ maximum at $s=c$
+is $a^2/2$: type $I$ already touches the phase-$\alpha$ target;
+type $D$ can make the second edge touch the phase-$\beta$ target.
+The same-parity $00$ leaves give $a/2$ at $v,w$.
+
+For $s=z$, the entire first-zero subtree must be accepted. For type
+$I$, the best sums from repeat, adjacency, disjointness and opposite
+parity are bounded respectively by
+
+$$
+\frac a2,\quad \frac a2+\frac{a\eta}{2},\quad
+\frac a2+a^2\eta,\quad \frac{a^2}{2}+a\eta.
+\tag{3.4}
+$$
+
+The disjoint sum exceeds the adjacent sum by
+$a\eta(a-1/2)>0$ and the opposite-parity bound by
+$\eta(1/2-\eta)>0$. It also exceeds the repeat sum.
+If the opposite-parity second edge touches its target, the sum is
+only $a^2/2+\eta/2=a/2$, already covered.
+
+For type $D$, the four geometry maxima are
+
+$$
+\frac a2,\quad \frac a2+\frac{a\eta}{2},\quad
+\frac a2+a\eta c,\quad \frac a2.
+\tag{3.5}
+$$
+
+In the disjoint case a target-touching second edge instead gives
+$a/2+\eta c/2$, smaller than the avoiding choice. In the
+opposite-parity case, touching gives $a^2/2+\eta/2=a/2$,
+while avoiding gives $ac/2+a\eta=a/2$. Since $c>1/2$,
+the third sum in (3.5) is largest. Section 4 realizes these maxima
+and the other rows. $\square$
+
+The two tables retain the small mass $2\eta^2$ even though it
+will never optimize a real support objective. No pruning by support
+values has been performed.
+

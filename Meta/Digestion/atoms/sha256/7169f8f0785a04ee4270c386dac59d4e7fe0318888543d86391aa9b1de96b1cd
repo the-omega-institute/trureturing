@@ -1,0 +1,96 @@
+### 九、内在理论的最小闭合对象
+
+因此，完整的 Auric FIB ATOM 内在对象应写成：
+
+$$
+\boxed{
+\mathfrak R
+=
+(\mathcal E,C,\omega,\mathcal U,\mathcal O).
+}
+$$
+
+其中：
+
+- $\mathcal E$：事件；
+- $C$：因果关系；
+- $\omega$：局部钟场；
+- $\mathcal U$：沿因果边的状态更新；
+- $\mathcal O$：观察投影。
+
+FIB 局部状态是：
+
+$$
+p_e\in\Delta_4.
+$$
+
+隐藏关系为：
+
+$$
+\kappa_e=p_{25}.
+$$
+
+路径时间为：
+
+$$
+\tau_\pi=\int_\pi\omega.
+$$
+
+路径状态为：
+
+$$
+p_{\pi}
+=
+\mathcal U_\pi(p_{e_0}).
+$$
+
+观察结果为：
+
+$$
+\mathcal O_\pi
+=
+\mathcal O(p_\pi).
+$$
+
+如果只给出：
+
+$$
+P(p_\pi)=(X,Y,Z),
+$$
+
+则隐藏 $\kappa$ 仍未确定。
+
+如果加入：
+
+$$
+W=Z+\kappa,
+$$
+
+则局部 FIB 状态闭合。
+
+如果还要预测完整未来，则需要加入：
+
+$$
+\sigma(h)
+=
+(\mathrm{phase},A,B).
+$$
+
+所以对于当前声明的任务，最小的可观测闭合状态可以写成：
+
+$$
+\boxed{
+\mathfrak M(h)
+=
+\left(
+\omega|_h,
+\mathcal U|_h,
+P(p_h),
+W_h,
+\sigma(h)
+\right).
+}
+$$
+
+---
+

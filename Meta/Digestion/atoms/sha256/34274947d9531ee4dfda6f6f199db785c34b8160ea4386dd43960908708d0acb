@@ -1,0 +1,42 @@
+**Proposition 78.8 (orientation-conditioned unequal-length obstruction).** Let
+$0\le\delta\le1/50$ and prescribe every $r_{p,j}\in[1-\delta,1+\delta]$. If a planar
+placement $E_2(D;r)$ additionally has one tip strictly left and one tip strictly
+right of every leaf, then its actual intervals satisfy
+
+$$
+2\ell(D)\sqrt{(1-\delta)^2-9/16}
+ <\sum_p|I_p|\le W<2h(D)+2(1+\delta).
+\tag{78.19}
+$$
+
+Consequently the cap-qualified authentic $T_5$ has no such planar placement. This
+side condition is an added hypothesis for unequal lengths, not a consequence of
+their near-unit bounds.
+
+**Proof.** All lengths are at most $51/50<3/2$, so78.2 gives interval disjointness.
+A stub of length $r$ has horizontal offset magnitude $\sqrt{r^2-y_p^2}$. Under the
+opposite-side hypothesis the interval width is the sum of its two offset magnitudes.
+Since $r\ge1-\delta$ and $y_p<3/4$, each magnitude is strictly larger than
+$\sqrt{(1-\delta)^2-9/16}>0$. The root-to-leaf unit-seam bound is still
+$|x_p-x_o|\le h(D)$, and each offset is strictly less than $r\le1+\delta$. The same
+enclosing-span argument as in78.3 proves (78.19).
+
+For $\ell(T_5)=8$ and $h(T_5)=4$, this necessity would give
+$16\sqrt{(1-\delta)^2-9/16}<10+2\delta$. However,
+
+$$
+\begin{aligned}
+\bigl(16\sqrt{(1-\delta)^2-9/16}\bigr)^2-(10+2\delta)^2
+ &=4Q(\delta),\\
+Q(\delta)&=3-138\delta+63\delta^2,\\
+Q(\delta)&\ge Q(1/50)=663/2500>0
+ \qquad(0\le\delta\le1/50).
+\end{aligned}
+\tag{78.20}
+$$
+
+Indeed $Q'(\delta)=-138+126\delta<0$ on this interval. Both compared quantities are
+positive, so the strict opposite inequality holds and gives a contradiction.
+Three-dimensional sufficiency for every prescribed length family in this band is
+separately supplied by78.5; it assumes no planar left/right condition. $\square$
+

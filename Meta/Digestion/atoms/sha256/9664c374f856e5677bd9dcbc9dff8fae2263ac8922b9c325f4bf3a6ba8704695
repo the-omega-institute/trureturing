@@ -1,0 +1,81 @@
+**Theorem 4.1 (positive series mass law).** Define
+
+$$
+\begin{aligned}
+F(\eta)&=1+2\eta+2\eta^2\psi_1(1-\eta)
+ =1+2\eta+2\eta^2\sum_{n=0}^\infty(n+1-\eta)^{-2},\\
+C_0&=\frac{Q^2}{8\pi a^2J\varrho},\qquad
+G(\eta)=\eta F(\eta).
+\end{aligned}
+$$
+
+Then the full column norm is
+
+$$
+\boxed{\displaystyle N(R):=\|\zeta_R\|_2^2
+ =\frac{Q^2}{8\pi a^2Jk_R}F(\eta_R)
+ =C_0G(\eta_R).}
+$$
+
+Proof. The series for $\psi$ converges absolutely and locally uniformly on $A>0$, since its summand is $(A-1)/[(n+1)(n+A)]$. Its derivative series also converges locally uniformly by comparison with $n^{-2}$, giving $\psi'(A)=\psi_1(A)$. Subsequent derivatives needed here are locally uniformly convergent series dominated by $n^{-3}$ or higher powers. These observations justify all following parameter derivatives.
+
+Fix $b=\beta_C/a=2\varrho$, rather than $\eta$, when differentiating $k$. Put
+
+$$
+u_k(r)=P_{\eta(k)}(2kr),\qquad \eta(k)=b/(2k),\qquad v_k=\partial_ku_k.
+$$
+
+On every compact $k$ interval contained in $(\varrho,\infty)$, Lemma 2.3 and its differentiated remainder give
+
+$$
+\begin{aligned}
+u_k(r)&=1+r\{-b\log r+D(k)\}+O(r^2(1+|\log r|)),\\
+u_k'(r)&=-b\log r+D(k)-b+O(r(1+|\log r|)),\\
+v_k(r)&=rD'(k)+O(r^2(1+|\log r|)),\\
+v_k'(r)&=D'(k)+O(r(1+|\log r|)),\\
+D(k)&=-b\log(2k)-b\psi(1-\eta(k))-2b\gamma+b-k.
+\end{aligned}
+$$
+
+The absence of a $k$ derivative of $-b\log r$ uses precisely the fixed-$b$ differentiation. Since $\eta'(k)=-\eta/k$ and $(1-\eta)'=\eta/k$,
+
+$$
+D'(k)=-\frac b k-\frac{b\eta}k\psi_1(1-\eta)-1
+ =-1-2\eta-2\eta^2\psi_1(1-\eta)=-F(\eta).
+$$
+
+Differentiate the radial ODE $u_k''=(k^2-b/r)u_k$ to obtain
+
+$$
+v_k''=(k^2-b/r)v_k+2ku_k,\qquad
+\{u_kv_k'-u_k'v_k\}'=2ku_k^2.
+$$
+
+At zero, the displayed expansions show $u_kv_k'-u_k'v_k\to D'(k)$: the potentially logarithmic product is $O(r|\log r|)$ and vanishes. At infinity this Wronskian tends to zero by Lemma 2.2 and its differentiated exponential bounds. The same bounds give an integrable exponential majorant on each compact $k$ interval at infinity, while the origin expansions bound $u_k^2$ there. Thus integration first on $[\epsilon,L]$ and passage to both limits is justified, as is the parameter differentiation used to derive the identity. It follows that
+
+$$
+2k\int_0^\infty u_k(r)^2dr=-D'(k)=F(\eta).
+$$
+
+Equivalently,
+
+$$
+\int_0^\infty W_\eta(x)^2dx
+ =\frac{F(\eta)}{\Gamma(1-\eta)^2}.
+$$
+
+If the unnormalized $W$ solution is differentiated instead, its leading coefficient is $A_0=1/\Gamma(1-\eta)$ and the zero Wronskian is $A_0^2D'(k)$; derivatives of $A_0$ cancel between the two Wronskian terms. The normalized computation above implements that cancellation directly.
+
+Finally anisotropic radial integration gives every constant explicitly:
+
+$$
+\begin{aligned}
+N(R)&=4\pi J\left(\frac{Q}{4\pi aJ}\right)^2
+ \int_0^\infty P_\eta(2kr)^2dr\\
+ &=\frac{Q^2}{4\pi a^2J}\frac{F(\eta)}{2k}
+ =\frac{Q^2}{8\pi a^2Jk}F(\eta).
+\end{aligned}
+$$
+
+Using the $W$ representation instead produces $\Gamma(1-\eta)^2$ in the squared prefactor and its reciprocal in the evaluated integral; they cancel exactly. This is the full $L^2$ norm, including $4\pi$, the determinant, the raw charge and the kinetic constant. $\square$
+

@@ -1,0 +1,13 @@
+**定义 10.1（baker 历史搬运接口）。** 在 $[0,1)^2$ 上置
+
+$$
+B(x,y)=\left(2x-b,\frac{y+b}{2}\right),\qquad b=\lfloor2x\rfloor.
+$$
+
+该符号移位结构与经典 baker 映射相关；参见 [Classical limit in terms of symbolic dynamics for the quantum baker's map](https://arxiv.org/abs/quant-ph/9908040)。它是另一个过程模型，不是第 9 节周界叠加的坐标变换。完整逆式为
+
+$$
+B^{-1}(x',y')=\left(\frac{x'+b}{2},2y'-b\right),
+\qquad b=\lfloor2y'\rfloor.
+$$
+

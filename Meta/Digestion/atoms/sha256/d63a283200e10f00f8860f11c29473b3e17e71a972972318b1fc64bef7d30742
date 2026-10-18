@@ -1,0 +1,18 @@
+**Definition 3.1 (the supplied cofinal rectangle).** On the positive branch
+of ARH Theorem 14.1, compute a sufficient static upper budget
+$(K_0,0,L_0)$, for example using (ARH.14.2) and multiplying its read bound
+by its maximum physical address length. Set
+
+$$
+ K=\max\bigl(K_0,L_0+\max(0,2-N)\bigr),\qquad
+ U_N=\max(N,5)-N.
+\tag{SRF.10}
+$$
+
+[ABC, Proposition 6.4 and Definition 8.1][ABC] already supply the
+same-source cap and cleanup on the entire signed fiber. The cap preserves
+$q$, makes $d'=\min(d,U_N)$ and does not increase $\ell$; cleanup does
+not increase any coordinate and gives $q\le\ell+\max(0,2-N)$. These
+are reused operational results. The epoch-four transport of SCR has an
+additive address bound and is not substituted for this joint cap.
+

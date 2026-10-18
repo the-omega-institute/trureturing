@@ -1,0 +1,18 @@
+**Definition 2.1 (exterior state guard).** Suppose $b$ is
+selection-valid and let $B$ be the classes of $\pi$. For
+$s\in Q^B$, evaluate $C$ bottom-up, using $s_{[p]}$ at hole $p$,
+the two actual leaf states at concrete leaves, and $\delta$ at pairs.
+Denote the resulting state at node $a$ by $\widehat q_{C,s}(a)$. Set
+
+$$
+\chi_A(C,s)\ \Longleftrightarrow\
+\left(\bigwedge_{p\in P}s_{[p]}\in F\right)
+\land
+\left(\bigwedge_{a\in\operatorname{Pos}(C)\setminus P}
+                 \widehat q_{C,s}(a)\notin F\right).
+\tag{NRF.6}
+$$
+
+The second conjunction includes every concrete leaf and every exterior
+node in a branch that contains no hole. No state below a hole is tested.
+

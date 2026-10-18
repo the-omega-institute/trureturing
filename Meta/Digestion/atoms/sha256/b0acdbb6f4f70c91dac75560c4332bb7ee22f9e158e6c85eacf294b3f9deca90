@@ -1,0 +1,50 @@
+**Proposition 8.1 (a paid adaptive anchor avoids a deep fixed ray).** Fix
+any finite preagreed word $w$. For arbitrary
+$h\ge\max(1,|w|)$ construct $u_h$ by placing $B_h^\beta$ in the
+root child traversed by the ray $wR^\infty$, and alpha in the
+other child. Let $P=\{L,R\}$. The one uniform program of
+Theorem 4.4, with no $w$ or $h$ input, has on these quiescent
+sources
+
+$$
+(T,A,Q)=
+\begin{cases}
+(6,4,1),&\text{alpha is the left child},\\
+(7,5,1),&\text{alpha is the right child}.
+\end{cases}
+\tag{AAR.26}
+$$
+
+It returns the complete two-hole disequality row and an actually
+acquired minimizing anchor of length one. Every all-source
+correct program required to acquire the fixed value $J^c_w(u_h)$,
+even with arbitrary off-ray queries and the same complete-row
+target, must submit an operand of length $h+1$ on $u_h$.
+
+Proof. With shallow alpha left the scan reads root and $L$; with
+shallow alpha right it reads root, $L$, $R$. In both cases it
+accepts alpha. The CWS body reads root and compares $L$ with $R$,
+ending at their leaf/branch mismatch; final validation rereads
+the chosen shallow leaf. These literal lists give (AAR.26) and
+the entire row: two reached addressed holes and their disequality.
+
+The terminal leaf $p$ on the fixed ray is at depth $h+1$, beyond
+the finite prefix $w$. Flipping its beta label to alpha changes
+$J^c_w$ by one and no other native reply. The deep child remains
+a branch in both sources, so the complete two-hole row is unchanged.
+Theorem 7.2's deterministic induction forces Read$(p)$ on the
+original source for this exact fixed-coordinate target.
+$\square$
+
+This extends the supplied CAB asymmetric comparison to an
+actually selected anchor and its continued-use consumer. It
+does not prove that every fixed reference is inferior: an
+already agreed shallow reference avoids selection cost, and
+different orientations favor different fixed choices. On
+$B_d^\beta$, the fixed right clock alone takes $O(\log(d+2))$
+Reads with the CAB/IDC right search, whereas globally certifying
+$m$ needs at least $2^d$ Reads. Its scalar value there is also
+$2d+1$. Equal output values on a family are not equal
+all-source acquisition tasks. The cost vectors remain
+incomparable in general.
+

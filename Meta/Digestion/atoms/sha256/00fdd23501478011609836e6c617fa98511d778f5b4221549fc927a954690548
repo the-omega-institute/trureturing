@@ -1,0 +1,24 @@
+**Theorem 40.1 (All-degree dimension bound with the finite-CP growth input).** Assume Theorem 31.2 for finite CP maps. Every quantum competitor in Definition 35.2 satisfies $D\ge\lceil n/2\rceil+1$. Together with Theorems 37.1 and 39.1 this gives the exact quantum minimum $D_n$, for every $n\ge1$ and $0<q<1$.
+
+Proof. Write its specified initial density as $\rho$ and its branches as $\widehat\Phi,\widehat\Psi$. Full cylinder equality supplies $\nu=\operatorname{Tr}\widehat\Psi(\rho)>0$ and the actual post-one density $\widehat\tau=\widehat\Psi(\rho)/\nu$. It may be mixed and need not be the post-one density on any other history. Nevertheless
+
+$$
+\operatorname{Tr}\widehat\Psi\widehat\Phi^k(\widehat\tau)=\frac{P(1\,0^k\,1)}{P(1)}=\gamma_k,\qquad \widehat S_k=\operatorname{Tr}\widehat\Phi^k(\widehat\tau)=\sum_{j\ge k}\gamma_j=q^kP_n(k). \tag{40.1}
+$$
+
+For the tail identity, completeness gives $\widehat S_k-\widehat S_{k+1}=\gamma_k$ and $\widehat S_0=1$; normalization of $\gamma$ forces $\widehat S_k\to0$. Thus properness is derived for this actual conditional state, rather than assumed for an unrelated pure vector. The tail polynomial is
+
+$$
+P_n(k)=C_n(q)\sum_{t\ge0}(k+t)^nq^t=C_n(q)\sum_{\ell=0}^n\binom n\ell k^{n-\ell}\sum_{t\ge0}t^\ell q^t,\qquad [k^n]P_n=\frac{C_n(q)}{1-q}>0. \tag{40.2}
+$$
+
+In the $\ell=0$ term, $t^0$ means $1$, including $t=0$. All these series converge. Thus $P_n$ has degree exactly $n$ for odd and even $n$ alike.
+
+Let $\mathcal H$ be the span of all zero Kraus words acting on $\operatorname{supp}\widehat\tau$, and let $d=\dim\mathcal H\le D$. The finite reachability argument in the proof of Theorem 32.2 uses no parity assumption: for some $N\le d-\operatorname{rank}\widehat\tau$, the positive operator $X=\sum_{j=0}^N\widehat\Phi^j(\widehat\tau)$ is faithful on $\mathcal H$, and $aI_{\mathcal H}\le X\le bI_{\mathcal H}$ for $0<a\le b$. For $T_k=(\widehat\Phi_{\mathcal H})^k$, the CP norm identity and positivity give
+
+$$
+a\|T_k\|\le\operatorname{Tr}T_k(X)\le bd\|T_k\|,\qquad \operatorname{Tr}T_k(X)=q^kP_X(k),\quad P_X(k)=\sum_{j=0}^Nq^jP_n(k+j),\quad [k^n]P_X=\frac{C_n(q)}{1-q}\sum_{j=0}^Nq^j>0. \tag{40.3}
+$$
+
+The norm is the induced operator norm on matrices, as in (32.8). Taking $k$th roots in this two-sided comparison proves $\rho(\widehat\Phi_{\mathcal H})=q$. Apply Theorem 31.2 on this reachable $d$-dimensional Hilbert space, not on an unused ambient spectral block. Equations (40.3) and (31.2) give $P_X(k)\le K'(1+k)^{2d-2}$ after cancelling $q^k$. Its positive leading coefficient and exact degree force $n\le2d-2$, hence $D\ge d\ge\lceil n/2\rceil+1$. This is the explicit arbitrary-degree extension of Chapter 32's even-degree consequence; it retains the finite-CP growth theorem as its mathematical dependency. $\square$
+

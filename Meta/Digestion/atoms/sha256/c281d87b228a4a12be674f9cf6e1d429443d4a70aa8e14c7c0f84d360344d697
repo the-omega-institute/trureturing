@@ -1,0 +1,134 @@
+**Lemma 338.1 (Correct stocks and two wrong-mass endpoints).**
+Denote the core in 337.1 before the anchor and head transfer by
+$C(\tau,\kappa)$. On every entire first-zero fibre its correct
+masses, in order $n=1,\ldots,8$, are
+
+$$
+(8\tau-24\kappa,\ 8\tau-24\kappa,\ 8\tau-24\kappa,
+ 5\tau-24\kappa,\ 4\tau-24\kappa,\ 3\tau-24\kappa,
+ \tau-24\kappa,\ 229\kappa).
+\tag{338.1}
+$$
+
+For every such word the core mass outside $\{0,n\}$ satisfies
+$D_n(w)\le E$.
+
+**Proof.** Nonzero first outputs are their first addresses, middle
+outputs are their second addresses, and nonzero exhaustion outputs
+are later addresses. The same fibre argument as 332.2 gives constant
+correct stocks by adding the table entries, proving (338.1).
+The unnormalized vectors have the identity
+
+$$
+C(\tau,\kappa)=(\tau-253\kappa)C(1,0)+\kappa C(253,1).
+\tag{338.2}
+$$
+
+Both coefficients are nonnegative. These endpoint cores are
+unnormalized measures, not probability laws at the original profile.
+It suffices to bound their wrong masses by $5$ and $1289$.
+
+For $C(1,0)$ write $(h,s,t,u,v,z,b)=(w_2,w_3,w_4,w_5,w_6,w_7,w_8)$
+and define
+
+$$
+\begin{aligned}
+B_0&=2s(1-t)+st+(s+t)(2-u-v)+u(1-v)+v(1-z),\\
+H_0&=3(1-s)+(1-t).
+\end{aligned}
+\tag{338.3}
+$$
+
+Adding the core table on each first-zero fibre gives
+
+$$
+\begin{aligned}
+D_1&=B_0+hH_0,&D_2&=B_0+H_0,\\
+D_3&=2+2(1-t)+t(2-u-v)+u(1-v)+v(1-z),\\
+D_4&=5-uv-vz,&D_5&=5-v-vz,&D_6=D_7=D_8&=5.
+\end{aligned}
+\tag{338.4}
+$$
+
+For $q=s+t$,
+
+$$
+\max_{u,v,z}\{q(2-u-v)+u(1-v)+v(1-z)\}
+                         =\max\{2q,q+1,1\}.
+\tag{338.5}
+$$
+
+For $st=00,01,10,11$ the maxima of $B_0$ are $1,2,4,5$,
+and the values of $H_0$ are $4,3,1,0$. Thus $D_1,D_2\le5$.
+In class three $t=0$ gives a maximum at most five and $t=1$
+a maximum at most four. Every remaining displayed expression is
+at most five. These include every suffix.
+
+For $C(253,1)$ use the same bits and put
+
+$$
+\begin{aligned}
+B={}&491s(1-t)+206st
+ +245[(s+t)(2-u-v)+u(1-v)]\\
+ &+21(s+t+u)(1-z)+166v(1-z)+129vz
+       +79v(1-b)+21z(1-b),\\
+H={}&757(1-s)+266(1-t)+21(1-u).
+\end{aligned}
+\tag{338.6}
+$$
+
+Here $B(s,t,u,v,z,b)$ denotes the displayed polynomial, so that
+substitution into its first arguments in the next identities is
+literal. Direct addition gives
+
+$$
+\begin{aligned}
+D_1&=B+hH+61(1-h),&D_2&=B+H,\\
+D_3&=468+532(1-t)+42(1-u)+B(0,t,u,v,z,b),\\
+D_4&=245+42(1-u)+B(1,0,u,v,z,b),\\
+D_5&=8+B(1,1,0,v,z,b),\\
+D_6&=1223-42z-21zb,&D_7&=1239-79b,&D_8&=1160.
+\end{aligned}
+\tag{338.7}
+$$
+
+The coefficient of $b$ in $B$ is $-79v-21z\le0$, so its
+maximum has $b=0$. After this substitution the coefficient of $z$
+is $21-21(s+t+u)-37v$. Eliminating $z$ therefore adds exactly
+$\max\{0,21-21(s+t+u)-37v\}$ to its $z=0$ value. The remaining
+sixteen possibilities give:
+
+| $st$ | $uv=00$ | $uv=01$ | $uv=10$ | $uv=11$ |
+| --- | ---: | ---: | ---: | ---: |
+| $00$ | 21 | 245 | 266 | 266 |
+| $01$ | 511 | 511 | 532 | 287 |
+| $10$ | 1002 | 1002 | 1023 | 778 |
+| $11$ | 1228 | 983 | 1004 | 514 |
+
+The maxima of $B+H$ by $st$ are $1289,1289,1289,1249$;
+the maxima of $B$ are $266,532,1023,1228$. Since $H\ge0$,
+$D_1\le\max\{B+H,B+61\}\le1289$, and $D_2\le1289$.
+For $D_3$, the cases $t=0,1$ have maxima $1287,1021$.
+For $D_4$, the cases $u=0,1$ have maxima $1289,1268$.
+For $D_5$, the cases $v=0,1$ have maxima $1236,991$.
+The last three identities give their bounds directly. Thus the eight
+class maxima are
+
+$$
+(1289,1289,1287,1289,1236,1223,1239,1160).
+\tag{338.8}
+$$
+
+For every fixed word wrong mass is linear in the core vectors.
+Equations (338.2)–(338.8) give
+
+$$
+D_n(w)\le5(\tau-253\kappa)+1289\kappa
+                            =5\tau+24\kappa=E.
+\tag{338.9}
+$$
+
+The anchor never emits outside $\{0,n\}$ on a first-zero fibre,
+and the head transfer stays inside $\{0,1\}$ on class one.
+They do not increase these wrong masses. $\square$
+

@@ -1,0 +1,70 @@
+**Theorem 14.2 (height does not factor through block states and contrast).**
+Under Assumption 14.1 there are two finite original common laws with
+identical pure and saturated coefficient blocks, the same saturated
+law and complete failure covariance $M$, and identical actual
+contrast, but different actual TV heights. These are feasible laws;
+no optimum-preserving perturbation is asserted.
+
+Proof. In $L^2(\mu_0;\mathbb R)$ take the finite-dimensional closed
+space
+$$
+\mathcal V=\operatorname{span}_{\mathbb R}
+                  \{1,u,v,u^2,uv,|u|\}.
+$$
+First $|\ell|\notin\mathcal V$. Otherwise a continuous representative
+of a function $P\in\mathcal V$ would equal $|\ell|$ almost everywhere.
+Full support makes this equality pointwise: a nonzero continuous
+difference at a point is bounded away from zero on an arc of positive
+measure. On the connected open half-circle $u<0$, the function $P$
+is an analytic trigonometric polynomial of degree at most two because
+$|u|=-u$. So is $\ell$. Near the assumed positive signed point,
+$P=\ell$ on a nonempty open interval. The real analytic identity
+theorem makes $P=\ell$ on the whole connected half-circle. Near the
+negative signed point this contradicts $P=|\ell|=-\ell$.
+Strict signs provide open intervals, so no claim about a zero-height
+point is used in this step.
+
+Let $q_\perp=|\ell|-\Pi_{\mathcal V}|\ell|$. The projection has a
+continuous representative, even if the displayed spanning functions
+are linearly dependent; full support identifies continuous
+representatives uniquely. Thus $q_\perp$ is bounded, continuous,
+nonzero and
+$$
+\int q_\perp P\,d\mu_0=0\quad(P\in\mathcal V),\qquad
+\int q_\perp|\ell|\,d\mu_0=\|q_\perp\|_{L^2(\mu_0)}^2>0.
+$$
+Choose $0<\varepsilon<\|q_\perp\|_\infty^{-1}$ and put
+$$
+d\mu_0^\pm=(1\pm\varepsilon q_\perp)d\mu_0,\qquad
+\mu_1^\pm=\mu_1.
+\tag{GC.65}
+$$
+Both densities are strictly positive. Orthogonality preserves mass,
+all pure Gram entries (using $v^2=1-u^2$), and pure contrast.
+The saturated law, its complete live and capacity moments, its
+failure covariance and its height are unchanged. Hence both common
+laws meet the same moment target and the same original contrast
+inequality, with the baseline's strict slack. Their low heights
+differ by $2\varepsilon\|q_\perp\|_2^2$ and their actual TV values
+by $\varepsilon\|q_\perp\|_2^2>0$, because actual TV includes HALF
+the low-height sum. Their individual TV shifts from the baseline
+are $\pm\varepsilon\|q_\perp\|_2^2/2$.
+
+To obtain finite laws, for each $\mu_0^\pm$ preserve exactly the
+vector
+$(1,u,v,u^2,uv,|u|,|\ell|)$ by a compact-image finite convex
+representation. For the saturated law perform this representation
+once, preserving its full live Gram, all three capacity moments,
+contrast and saturated absolute height, and use that same finite
+saturated law for both choices. All these integrands are continuous.
+The pure masses are positive before zero terms are omitted; both
+component masses and hence total coefficient normalization are
+preserved. Each recovered atom has $\xi=0$ or $1$ and legal capacity.
+The joint equations from Proposition 12.2 still give exactly $I_3$
+and $M$. The strict height difference and identical contrast remain.
+These finite laws satisfy every premise of Proposition 10.1 and thus
+have common original CP/TP realizations with all original outputs
+and resources. No continuous physical disintegration has been added.
+The full-support baseline is merely feasible; this proof does not
+place the perturbation on an optimal face. $\square$
+

@@ -1,0 +1,44 @@
+**Proposition 95.3 (conditional interaction and exact classical descent).**
+For a normalized complex $\psi\in\mathcal Q$ and fixed $\tau>0$, set
+$m(k,u)=\int|\psi(k,u,x)|^2dx$. On fibres with $m>0$ put
+$\nu_{k,u}(dx)=|\psi(k,u,x)|^2dx/m(k,u)$. Then exactly
+
+$$
+V_\tau[\psi]=\int_{\mathcal B}m(k,u)
+          \left(\int W_\tau(k,u,x)\nu_{k,u}(dx)\right)d\bar Y.
+\tag{95.7}
+$$
+
+Fibres with $m=0$ contribute zero. Thus a finite conditional field
+expectation, rather than the infinite Haar marginal (94.1), supplies
+the potential statistic. For any bounded smooth real multiplier $U$
+on the original carrier, the killed Feynman--Kac family of
+$a(B-\lambda)-gU$, $g>0$, factors through $\pi$ on all bounded Borel tests
+and every start if and only if $U$ is constant on every $x$ fibre.
+The original $U=W_\tau$ fails this criterion for every $\tau>0$.
+
+Proof. Equation (95.7) is Fubini; boundedness of $W_\tau$ makes it finite
+on the entire form domain, without an extra derivative requirement.
+If $U=\bar U\circ\pi$, the Feynman--Kac expression is
+
+$$
+e^{a\lambda t}\mathbb E_Y
+ \left[\exp\left(g\int_0^tU(Y_{av})dv\right)
+                      h(\pi Y_{at});\ at<\zeta\right].
+\tag{95.8}
+$$
+
+The projected path in (92.8) makes it depend only on $\pi Y$.
+Conversely take $h=1$. At every interior start its derivative at zero
+is $a\lambda+gU(Y)$. To justify it, stop first in a small interior
+height interval. The probability of exiting that interval by time $at$
+is $o(t)$ by the Brownian reflection bound. Continuity and boundedness
+of $U$ then give the derivative by dominated convergence. Thus all-start
+factorization forces equal $U$ at all points of each fibre. The original
+$W_\tau$ is smooth, bounded and positive by the positive-time heat
+regularization; at fixed $k,u$ it tends to zero as $|x|\to\infty$ by
+(70.3). It is therefore not fibre constant. This proves a scalar
+interacting diffusion-response obstruction for the original field.
+The kinetic factor $a$ changes the propagation clock in (95.8), while
+the field itself still uses the independent $B$ clock. $\square$
+

@@ -1,0 +1,44 @@
+**Theorem 17.1 (positive energy series and finite strict-sign criteria).** Define only from the fields and projection already specified
+
+$$
+d_*=w_{\rm f}-(I-\mathsf K)U_h,\quad m_n=b(d_*,\mathsf K^nd_*),\quad
+S_N=\sum_{n=0}^Nm_n,\quad B_h=3A-\gamma C_2-I_h.
+\tag{17.1}
+$$
+
+Then $(I-\mathsf K)v=d_*$, and the full residual of the height projection satisfies
+
+$$
+\delta_h=h_0[v]=\sum_{n=0}^\infty m_n,\qquad
+S_N+m_{N+1}\le\delta_h\le S_N+\frac{m_{N+1}}\theta,\qquad m_n\ge0.
+\tag{17.2}
+$$
+
+Consequently $G_{\rm resp}=B_h-\delta_h$ lies between
+
+$$
+\mathfrak L_N=B_h-S_N-m_{N+1}/\theta,\qquad
+\mathfrak U_N=B_h-S_N-m_{N+1},
+\quad 0\le\mathfrak U_N-\mathfrak L_N\le q_K^{N+2}m_0/\theta.
+\tag{17.3}
+$$
+
+The lower endpoints increase and the upper endpoints decrease. In particular $G_{\rm resp}>0$ if and only if some $\mathfrak L_N>0$, and $G_{\rm resp}<0$ if and only if some $\mathfrak U_N<0$. The same criterion applies to a fixed original coefficient after subtracting $\mathscr R\overline D$ from each endpoint, where $\mathscr R=\lambda/\nu^2$.
+
+Proof. The spectral measure of the positive contraction $\mathsf K$ at $d_*$ is supported in $[0,q_K]$. Thus $m_n\ge0$, $m_{n+1}\le q_Km_n$, and the norm-convergent energy series $v=\sum_{n\ge0}\mathsf K^nd_*$ gives $h_0[v]=b(d_*,v)=\sum m_n$. The tail after $S_N$ contains $m_{N+1}$ and is at most its geometric bound $m_{N+1}/\theta$. These inequalities prove (17.2)–(17.3), monotonicity and convergence. Convergence proves both reverse implications in the strict-sign criteria. No endpoint crossing is asserted to have been evaluated.
+
+For later explicit estimates the same series gives
+
+$$
+\begin{aligned}
+\sqrt{b\left[v-\sum_{n=0}^N\mathsf K^nd_*\right]}
+ &\le q_K^{N+1}\sqrt{m_0}/\theta,\\
+\left\|v-\sum_{n=0}^N\mathsf K^nd_*\right\|_2
+ &\le C_{\rm rec}q_K^N\sqrt{m_0}/\theta,\\
+\|v\|_2&\le M_v:=\|d_*\|_2+C_{\rm rec}\sqrt{m_0}/\theta.
+\end{aligned}
+\tag{17.4}
+$$
+
+For the second inequality write the tail as $\mathsf K(\mathsf K^Nv)$ and use (16.12); for the last use $v=d_*+\mathsf Kv$. These are estimates on one response in the energy norm and its particular $L^2$ representative. $\square$
+

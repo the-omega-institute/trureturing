@@ -1,0 +1,33 @@
+**Lemma 7.2 (all possible critical sharing endpoints).** A live state hosts at most two distinct count cells, so $D_B$ is the number of states shared by two cells in its pool. Put
+
+$$
+\mathsf a=(1,3),\qquad \mathsf b=(1,4),\qquad
+\mathsf c=(3,1),\qquad \mathsf d=(3,2).
+\tag{16}
+$$
+
+Every sharing pair without an axis endpoint is one of
+
+$$
+\mathsf a\mathsf c,\qquad
+\mathsf b\mathsf c,\qquad
+\mathsf b\mathsf d.
+\tag{17}
+$$
+
+The only axis cells that can participate in sharing are
+
+$$
+Z_2=(0,2),\quad Z_3=(0,3),\quad Z_4=(0,4),\quad
+O_2=(2,0),\quad O_3=(3,0).
+\tag{18}
+$$
+
+No depth-six or depth-seven cell can share with another count cell.
+
+**Proof.** Distinct hosted cells have distinct hit counts with pairwise gaps at least two. Three such integers cannot lie in $\{0,1,2,3\}$: their extreme gap would be at least four. Thus a shared state contributes exactly one to $D_B$, independently of its number of histories in either cell.
+
+For two non-axis endpoints, the oriented hit counts must be one and three. Their positive zero counts are at most four and decrease by at least two. The only ordered zero-count pairs are $(3,1),(4,1),(4,2)$, giving (17). An axis endpoint with zero hits must have at least two zeros; an axis endpoint with zero zeros must have at least two hits. This gives exactly the candidate list (18). These are necessary possibilities, with invalid pool endpoints omitted; no realizability of an abstract pair is asserted.
+
+For completeness, a partner of $(0,z)$ has at most $z-2\le2$ zeros and at most three hits, hence depth at most five. A partner of $(h,0)$ has at most $h-2\le1$ hits and at most four zeros, also depth at most five. All endpoints in (16) and (18) themselves have depth at most five. This exhausts every pair and excludes sharing at depths six and seven. $\square$
+

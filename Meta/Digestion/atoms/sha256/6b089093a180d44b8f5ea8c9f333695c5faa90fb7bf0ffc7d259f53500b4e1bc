@@ -1,0 +1,36 @@
+**Corollary 7.3 (exact acquired-high operator and edge cases).** The
+only high fibres in Definition 7.1 are the two genuinely rank-three
+$A_r$ branches. Their acquired and supported live effects agree, with
+
+$$
+G_{\rm new}(s)=E(p_sD^\dagger D+q_sT^\dagger T)E^\dagger.
+\tag{IR.47}
+$$
+
+For every positive five-mode $\sigma$, their mass is
+$\operatorname{tr}((p_sD^\dagger D+q_sT^\dagger T)E^\dagger\sigma E)$. This one
+design attains all diagonal minima in Theorem 6.2 simultaneously.
+
+Proof. Both high decoders send their entire fibre into supported live
+output, so there is no decoder trace loss. Summing $A_r^\dagger A_r$
+cancels the $D,T$ cross terms and gives (IR.47), in the weak regime
+as well as the strong one. Every nonzero other live fibre has dimension
+two, and every failure fibre dimension one. Per record the weak design
+has dimensions $3$, up to four $2$s, and three $1$s including the
+complement; the strong design has $3,2,2,1,1,1$. No later accessible
+share is omitted from this count. Formula (IR.47) equals the lower bound
+for every diagonal compression, proving the asserted simultaneous
+attainment.
+
+At $s=0$, $r$ is a fair record independent of every input because its
+effect is $I_5/2$; the finer acquired labels can still depend on input.
+At the threshold the zero branches are deleted as above. At $s=1$,
+$p_s=q_s=k/(1-\alpha)$, giving the common endpoint operator already
+present in RE. On zero input every branch mass is zero. Positive
+singular and subnormalized inputs use the same linear formulas with no
+renormalization. Complement-only inputs have zero high mass and the
+two complement branches give their required half/half binary record.
+Cross-support coherence changes none of these effects. A joint input's
+probabilities use its reduced specimen density; its full conditional
+reference operators are those just proved. $\square$
+

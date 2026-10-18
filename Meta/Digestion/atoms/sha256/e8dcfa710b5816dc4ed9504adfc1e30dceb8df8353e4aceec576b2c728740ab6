@@ -1,0 +1,14 @@
+## 57. Complete mixed-MC source to MC target trace-error formula
+
+All norms below are unhalved Schatten trace norms. LOSR means finite convex mixtures of product qubit CPTP maps, with arbitrary local product ancillas, no additional entanglement, communication or postselection. Competitor outputs are unrestricted two-qubit states.
+
+By independent local input and output unitaries, write the source as rho=r|00><00|+q|11><11|+c(|00><11|+|11><00|), where r>=1/2, q=1-r and 0<=c<=sqrt(rq); write the target as tau=P|00><00|+(1-P)|11><11|+w(|00><11|+|11><00|), where P>=1/2, 0<=w<=sqrt(P(1-P)). These reductions preserve the allowed set and trace distance.
+
+If q=0, the exact error is 2w. If q>0, put D=sqrt(q^2+c^2) and t=[q(1-P)+cw]/D^2. The exact error is
+
+    2 max(0,w-c),                         P<=r;
+    2 max(0,[qw-c(1-P)]/D),               P>=r and t<=1;
+    2 sqrt((P-r)^2+(w-c)^2),              P>=r and t>=1.
+
+The formulas agree on overlaps. The first regime reuses §51. The last two remove the source condition c>=q from §§55–56. In particular the theorem includes every physical mixed MC qubit source and target. It makes no statement about non-MC targets or coherent multisector recovery channels.
+

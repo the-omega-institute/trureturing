@@ -1,0 +1,48 @@
+**Theorem 13.3 (evaluated total cap for precisely this graph grammar).**
+Let $\mathcal G_4$ contain exactly the complete native templates of
+Definition 12.2, for all finite nonempty simple 4-regular graphs and
+their declared Euler orientations and slot orders. At (GDB.53),
+
+$$
+\sup_{G\in\mathcal G_4}Z_G^{1/|V(G)|}
+=Q:=\frac{128}{619}
+\left[1+\left(\frac{31}{32}\right)^5\right]^{1/5}.
+\tag{GDB.58}
+$$
+
+The value is attained by $K_5$ and by every disjoint union of copies
+of $K_5$. For a positive rational $C$, the all-size assertion
+$Z_G\le C^{|V(G)|}$ for this entire class is equivalent to the
+single exact rational comparison
+
+$$
+C^5\ \ge\
+\frac{63675988992}{90876845839099}.
+\tag{GDB.59}
+$$
+
+In particular $C=1/4$ is valid for this class and $Q<1/4$.
+
+Proof. A connected simple 4-regular graph has at least five vertices.
+Put $q=31/32$. By (GDB.57), its root mass is
+$(128/619)(1+q^n)^{1/n}$. For positive integers $m<n$,
+both $1/n<1/m$ and $\log(1+q^n)<\log(1+q^m)$, with positive
+terms. Their product decreases, so $(1+q^n)^{1/n}$ is strictly
+decreasing in $n$. Each connected component's root is therefore
+at most its value at five. Multiplying the component bounds proves
+the upper bound at every size; $K_5$ attains it, proving necessity
+and the reverse inequality in (GDB.58).
+
+The exact fifth power is
+
+$$
+Q^5=\frac{2^5(64^5+62^5)}{619^5}
+=\frac{63675988992}{90876845839099}.
+\tag{GDB.60}
+$$
+
+Comparing it to $4^{-5}$ amounts to
+$65204212727808<90876845839099$. Rational parsing, positivity
+and (GDB.59) define a total sharp cap test for this specified
+grammar, with no empirical tail argument. $\square$
+

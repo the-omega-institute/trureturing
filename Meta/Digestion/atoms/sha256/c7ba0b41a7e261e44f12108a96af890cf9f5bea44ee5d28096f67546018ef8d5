@@ -1,0 +1,21 @@
+**定义 41.2（当前前缀边界）。** 写 $d=|q|$，$q_j$ 为长度 $j$ 的前缀。若 $q$ 是当前节点，令 $\partial_q(y)=\mathsf{node}(r_y(q))$；否则，令
+
+$$
+\partial_q(y)=\mathsf{leaf}(j,\lambda_b),\qquad
+0\le j<d,\quad\lambda_0=\alpha,\quad\lambda_1=\beta,
+\tag{SLH.41.1}
+$$
+
+其中 $q_j$ 是沿 $q$ 的首叶。这个值等价于全部前缀的当前 literal 读数：首叶之前是分支，首叶处是该标签，之后缺席；若 $q$ 本身存在，则全部严格前缀是分支。记 $\mathbf B_Q(y)=(\partial_q(y))_{q\in Q}$、$\mathbf C_Q(y)=(\sigma_q(y))_{q\in Q}$ 及 $P_Q=\bigcup_{q\in Q}\operatorname{Pref}(q)$。于是 $\mathbf B_Q$ 与当前限制 $r_y|_{P_Q}$ 互相恢复；重复坐标不增加区别，空菜单的两种表示都只有一个值。边界不含未观察兄弟。
+
+对非根 $q$，置
+
+$$
+A_q=w(q^-),\qquad
+\theta_q(j,b)=A_q-w(q_j)+2-b,\qquad
+B_q(t)=\{(j,b):j<d,\ \theta_q(j,b)=t\}.
+\tag{SLH.41.2}
+$$
+
+由 (SLH.35.5)，缺席边界的代码是 $\mathsf D_{\theta_q(j,b)}$；三个存在边界分别给 $\mathsf C,\mathsf A,\mathsf B$。
+

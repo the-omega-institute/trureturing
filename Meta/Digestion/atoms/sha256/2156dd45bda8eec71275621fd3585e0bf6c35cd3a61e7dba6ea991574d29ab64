@@ -1,0 +1,51 @@
+**Theorem 6.2 (exact selector, finite and nonempty).** The set TA.38 is
+a finite nonempty subset of $(s_\dagger,s_0)$. Its defining equality
+is equivalent to $v_+(a)/u_+(a)=t_+$. It gives precisely the
+post-contact weak points at which positive spectral failure can share
+an actual low live label without changing optimal height or its fibre
+dimension. Negative spectral failure never shares a weak live label.
+No cardinality, singleton assertion or numerical root list is implied.
+
+Proof. On the initial plateau and initial branch through contact,
+the negative-height ray $f_0$ has same-sign coordinates $1,2$, while
+the two positive-height rays have opposite signs. This follows directly
+from TA.28: $f_0$ has both coordinates negative, $f_1$ has $1>0>k$,
+and $f_2$ has numerator
+$(t-k,-tp-qk,q+p)$ with last two coordinates of opposite signs.
+Their height signs are strict by the credited equality classification.
+By Lemmas 3.1–4.1 the negative failure sign requires negative slope,
+and the positive failure sign positive slope. Neither may attach to
+these three rays.
+
+After contact the negative-height $Z$ ray has positive slope, so
+cannot carry negative failure. The positive-height $n$ ray has
+negative slope; $q_-$ also has negative slope by Lemma 5.3 and
+$u_->0$. They cannot carry positive failure. The only possible
+attachment is $B_+$ to $q_+$, and TA.19 requires exactly
+$v_+/u_+=t_+$. A positive null ray normalized to coordinate $0$
+equal to one with this slope is uniquely TA.37. Since the only null
+lines in $W^\perp$ are $q_\pm$ and only $q_+$ has positive slope,
+the equality is equivalent to TA.38. Sufficiency uses the common
+decoder of §8, rather than individual-effect compatibility.
+
+For finiteness and existence, RC's analytic root and strictly positive
+denominators and $N_Q$ make $u_+,v_+$ analytic on an open
+neighborhood of $[0,a_\dagger]$. At zero, $q_+=(1,1,1)$ so its
+slope is $1>t_+$. At contact, TA.34 gives its slope strictly less
+than $1/2$, whereas $t_+>192/275>1/2$. The intermediate value
+theorem gives at least one equality strictly inside the interval.
+The analytic difference $v_+-t_+u_+$ is not identically zero and
+is nonzero at both endpoints. Its zeros are isolated; infinitely many
+on this compact interval would have an accumulation point within its
+analytic neighborhood, forcing the difference to vanish identically.
+Thus there are finitely many. The source point and formulas are
+algebraic under the supplied algebraic premises, so the prescribed
+finite set is algebraic. The decreasing bijection $a\mapsto\tau(a)$
+places it strictly between $s_\dagger$ and $s_0$.
+
+The zero-weight exposed $q_+$ ray at contact cannot carry a positive
+live mass there. Attaching failure without live mass would still
+require a separate failure-only outcome. At $a=0$ its slope is one,
+so it is not an absorption point. These facts account for both
+excluded endpoints in TA.38. $\square$
+

@@ -1,0 +1,22 @@
+## 3. Snapshot latch and post-bookmark holding
+
+Let $L(u)$ be the snapshot latch, with value `unset` before the third completed marker and value $B_0$ after it. The source contract is a write-before-latch transaction: the third marker first applies $U_e$ and $V_e$, then latches the resulting bare fields as $B_0$. Consequently the augmented snapshot
+
+$$
+\widehat B(u)=\bigl(B_0,Q(u),Z(u)\bigr)
+$$
+
+is obtained from one actual prefix, rather than by combining a record from one history with a snapshot from another.
+
+After the latch, every hold event and every later completed marker in the accepted cell leaves the retained boundary values $Q$, $Z$ and $B_0$ unchanged. The parser projection still advances: the fourth marker $1$ sends $p=(3,1)$ to $p=(4,2)$, while its $Q$ and $Z$ components are held. The source nevertheless continues its original payload and produces the actual common suffix and Stop values
+
+$$
+Y=1,
+\qquad
+s_{\rm stop}=1,
+$$
+
+on all three histories in $H$. The suffix and Stop are outputs of the continuing source; they are not read ahead to choose $Z$ or the bookmark.
+
+The same-source condition is therefore no longer an uninstantiated phrase for this cell: every retained field is produced by the displayed source transition, the latch occurs after the third update, the fourth parser transition is explicit, and the post-latch relation fields are held along the continuing execution. Seed retries, return cycles and incomplete parsing remain real source events, but their projected effect on this boundary is the explicit hold map above. The write-before-latch and post-latch retention are realizations of the source contract already stated in the chronology volume and Boundary Dynamics §114.1, not new global parser axioms.
+

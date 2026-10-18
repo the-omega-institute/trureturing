@@ -1,0 +1,18 @@
+**定义 34.1（实际来源与历史）。** 令 $\mathcal T$ 为以 $\alpha,\beta$ 为叶的自由有限非空有序二叉树集，构造子记作 $\langle s,t\rangle$。树大小不设上界，不加结合律、交换律、叶识别或空树。原替换为
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+在固定定向欧氏空间 $\mathbb R^3$ 中，一次共同制备 $p=(a,b)$ 给出
+
+$$
+E_p(\alpha)=a,\qquad E_p(\beta)=b,\qquad
+E_p(\langle s,t\rangle)=E_p(s)\times E_p(t),\qquad
+x_j=E_p(\rho^jt).
+$$
+
+同一历史中的 $p$ 始终不变。比较世界允许 $p$ 遍历所有向量对，包括零、平行和反平行对；构造比较世界不授予观察者重新制备或主动旋转权限。
+

@@ -1,0 +1,18 @@
+**Proposition 7.1 (carrier interpretation).** A type-preserving relabeling
+isomorphism of the atomic carrier, together with transported constructors,
+legal actions and response maps, leaves Definitions 1--6 unchanged.  Merely
+choosing two distinct symbols does not preserve a task automatically.  A
+Fibonacci sequence appears only after an additional recurrence and counting
+map are specified.
+
+**Proof sketch.** The residual quotient uses types, traces and action
+responses, not the spelling of atom labels.  A recurrence is extra structure
+on the generated source, so it cannot be inferred from two labels alone.
+Likewise, a physical spacetime interpretation requires a separately supplied
+metric, clock, causal law and acquisition contract.  $\square$
+
+Consequently this volume does not claim a universal Fibonacci geometry, a
+physical time coordinate, or a physical realization of $\alpha$ and
+$\beta$.  They are abstract atoms that can instantiate the typed residual
+interfaces.
+

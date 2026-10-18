@@ -1,0 +1,26 @@
+**Assumption 1.1 (Preparation, actions and observations).** Let
+$\mathsf S=(N,2,3,5,25)$ index an orthonormal basis of $\mathbb C^5$, put
+$\Pi_s=e_se_s^\dagger$, and allow every complex density input. The preparation
+hypothesis is exactly QMB Assumption 1.1:
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\qquad t\geq0.
+\tag{1.1}
+$$
+
+The future menu consists of nonnegative waits, the complete five-outcome
+rank-one Lüders read $X\mapsto(\Pi_sX\Pi_s)_s$, and Stop. Include all finite
+adaptive depths, retaining outcomes, controls and stops. Random controls are
+source-independent and the same policy is used for both compared inputs.
+Grouping an outcome is classical postprocessing of this complete read.
+There is no coarse-block Lüders instrument, independent mode phase, arbitrary
+future unitary, probability oracle, readable hidden Kraus record, source copy,
+reset or external quantum side information. This preparation is an explicit
+independent hypothesis; no native-tree or tensor-cut preparation is inferred.
+

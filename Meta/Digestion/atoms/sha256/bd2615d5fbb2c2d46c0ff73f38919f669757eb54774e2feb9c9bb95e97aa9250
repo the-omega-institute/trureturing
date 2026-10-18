@@ -1,0 +1,64 @@
+**Proposition 3.3 (Exact root and literal two-coordinate value).** There
+is a unique $T>\tau$ such that $\Phi_\tau(T)=0$, and
+
+$$
+\tau<T<T_0,\qquad
+e_{2,\mathsf L}^{\rm aff}(Z)=4H\sqrt T.
+$$
+
+The minimum normalized radial error is $T$, achieved by $f_T$.
+
+Proof. On any compact $t$ interval inside $(\tau,\infty)$ the defining
+functions are jointly continuous with $x\in[0,1]$. Uniform continuity
+and the inequality bounding the difference of two maxima by the supremum
+of the difference prove continuity of $\Phi_\tau$. For $t_2>t_1>\tau$,
+
+$$
+v_{t_2}(x)-v_{t_1}(x)
+=\frac{t_2-t_1}{v_{t_2}(x)+v_{t_1}(x)}
+\ge\frac{t_2-t_1}{\sqrt{t_2}+\sqrt{t_1}}>0,
+$$
+
+while
+
+$$
+\partial_t\log f_t(x)
+=\frac{1-x}{2t}+\frac{x}{2(t-\tau)}>0.
+$$
+
+Thus $g_{t_2}$ lies uniformly below $g_{t_1}$, and $\Phi_\tau$ is
+strictly decreasing. At $T_0$, the square-completion identity in
+Definition 3.1 gives $s\le v_{T_0}$. Also
+$T_0-\tau=(1-\tau)^2/4>0$, so $f_{T_0}$ has a positive minimum.
+Consequently $\Phi_\tau(T_0)<0$.
+
+Set $x_0=(1+\tau)/2$, which lies strictly between $\tau$ and $1$.
+As $t\downarrow\tau$, at this fixed interior point,
+
+$$
+f_t(x_0)\longrightarrow0,\qquad
+s(x_0)-v_t(x_0)\longrightarrow
+\sqrt{1-x_0}\bigl(\sqrt{x_0}-\sqrt\tau\bigr)>0.
+$$
+
+This yields $\Phi_\tau(t)>0$ near $\tau$ from above. Continuity and
+strict decrease give the asserted unique root and its range. This sign
+argument is pointwise at $x_0$, without a false claim of uniform
+convergence of $f_t$ as $t\downarrow\tau$ at $x=0$.
+
+Every positive exponential's objective exceeds $\tau$. If its objective
+were below $T$, Lemma 3.2 would force $\Phi_\tau$ to be nonpositive
+below its root, a contradiction. The zero amplitude has objective
+$T_0>T$. At the root Lemma 3.2 makes $f_T$ feasible, so the radial
+minimum is $T$. Theorem 2.3 and the normalization in Definition 3.1
+give the stated value for all literal competitors. This scalar argument
+is the root construction of [M, §7], included to fix the exact parameters
+used in the new perturbation. $\square$
+
+For the rest of the construction write
+
+$$
+\lambda=\lambda_T<0,\qquad f=f_T,\qquad v=v_T,\qquad
+g=g_T,\qquad F_0(x)=(f(x)-s(x))^2+\tau x.
+$$
+

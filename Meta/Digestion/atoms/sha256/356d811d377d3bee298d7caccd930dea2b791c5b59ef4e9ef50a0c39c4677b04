@@ -1,0 +1,23 @@
+**Convention 8.3 (retained objectives and evidence ceiling).** The
+credited native relations remain
+
+$$
+\lambda=\sup_{d\ge1}2^{-d}\sigma_d,\qquad
+0\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\qquad
+\frac18\log_2\frac{33}{13}\le\lambda<\frac3{16}.
+\tag{RRN.37}
+$$
+
+Here $U_0=1$, $U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h$. FMR supplies the rate and depth
+relations, NCE supplies the displayed lower, and D3 supplies the
+displayed upper and $M_1(3)=4$. General exact $M_1(D)$, sharp
+$\lambda$, effective optimizer-cofinality and the full
+minimal-relations/internal-observer/mutual-recovery programme remain
+open. The new normal form states what a boundary observer can recover
+after its one paid representative reply: the selected full factor,
+and hence every future requested reply. It does not recover the
+whole source, an unobserved age, a seed vector or physical space and
+time from the retained name.
+

@@ -1,0 +1,24 @@
+**Proposition 3.2 (reused maximal plateau and aggregate supports).** The
+credited value is $J(\tau)=J_{\rm bar}$ and
+$\mathcal T(s_0\tau)=T_{\rm bar}$ for $0\leq\tau\leq\bar\tau$;
+for $\bar\tau<\tau\leq1$ it is strictly smaller. Its equality
+aggregate consists of $P_*$ on the negative line and $I-P_*$ on the
+positive plane, whose null lines are exactly $u,w$.
+
+Proof. For $X_-=X_{+,-}+X_{-,-}$ one has $0\preceq X_-\preceq I$ and
+$\operatorname{tr}(QX_-)=0$. Therefore
+$\operatorname{tr}(GX_-)=\operatorname{tr}(HX_-)\geq\mu$.
+The unique negative eigenspace of $H$ is $v$ and its complementary
+spectrum is strictly positive, so equality forces $X_-=P_*$.
+The compression of $Q$ to $v^\perp$ is nonzero traceless: a totally
+null two-plane would contain a nonzero vector with coordinate $0$
+zero, where $Q$ is strictly negative. It consequently has precisely
+two real null lines, $u,w$. The null decomposition in Theorem 2.2
+classifies the equality atoms as $v,u,w$, with total projectors one
+on each line. Their maximal signed contrast is
+$|v_0v_1|+|u_0u_1|+|w_0w_1|=2u_0u_1=\bar\tau$.
+Reports $(-,+,-)$ attain it. The actual instrument in Section 5 attains
+that value in the original class. Compactness excludes plateau equality
+above $\bar\tau$. This recalls the JR50–51 proof and counts none of
+its plateau or aggregate classification as new content. $\square$
+

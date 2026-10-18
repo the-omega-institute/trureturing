@@ -1,0 +1,74 @@
+**引理 201.2（非负子集块与全部矩端点）。** 对任意非空
+$J\subseteq\{3,\ldots,L\}$，置 $z=\max J$、$I=J\setminus\{z\}$、
+$h=|I|$、$k=|J|=h+1$。在 $I$ 的子集上定义有限非负测度 $\nu_J$：
+
+$$
+\nu_J(Z)=
+\begin{cases}
+2\mathbf1_{Z=\varnothing},&h=0,\\
+2\mathbf1_{Z=I}+\mathbf1_{Z=\varnothing},&h=1,\\
+\displaystyle\frac{2h}{q\binom hq}\mathbf1_{|Z|=q},
+   &h=2q-1\ge3,\\
+\displaystyle\frac{2}{\binom{2q}q}\mathbf1_{|Z|=q}
+ +\frac{2q}{(q+1)\binom{2q}{q+1}}\mathbf1_{|Z|=q+1},
+   &h=2q\ge2.
+\end{cases}
+\tag{201.10}
+$$
+
+其总质量和全部所需一阶、定向二阶矩为
+
+$$
+\nu_J(2^I)=c_k,\qquad
+\nu_J\{Z:i\in Z\}=2\quad(i\in I),\qquad
+\nu_J\{Z:i\in Z,\ j\notin Z\}=1\quad(i\ne j\text{ 在 }I).
+\tag{201.11}
+$$
+
+记 $w(H)$ 为零地址集合恰为 $H$、其余位全为一的字。对应评分块 $W_J$ 在
+每个 $w(\{j,z\})$ 的正确行放单位质量，$j\in J$；在
+
+$$
+w(\{a,z\}\cup Z)\quad(a=1,2,\ Z\subseteq I)
+$$
+
+的 pair 行各放 $\nu_J(Z)/2$。其余行及 $T$ 为零，重合的字逐行相加。
+该块在每个 $j\in J$ 的首零类有正确总量一，pair 总量为 $c_k$，且 pair 支撑
+全在首零类 $1,2$。
+
+**证明。** $h=0$ 时总质量为二，没有内部地址，两个矩断言均为空。
+$h=1$ 时总质量三，唯一地址的包含质量二，二地址断言为空。
+对均匀 $r$ 元子集，指定地址的包含比例为 $r/h$，指定有序地址对的
+“包含第一个、排除第二个”比例为 $r(h-r)/(h(h-1))$。当 $h=2q-1\ge3$，
+总质量为 $2h/q=4-2/q=c_{2q}$；对应两矩分别为
+
+$$
+\frac{2h}{q}\frac qh=2,\qquad
+\frac{2h}{q}\frac{q(q-1)}{h(h-1)}=1.
+$$
+
+当 $h=2q\ge2$，两个均匀层的总质量为 $2$ 与 $2q/(q+1)$，故
+
+$$
+\begin{aligned}
+\nu_J(2^I)&=2+\frac{2q}{q+1}=4-\frac2{q+1}=c_{2q+1},\\
+\nu_J(i\in Z)&=2\frac q{2q}+\frac{2q}{q+1}\frac{q+1}{2q}=2,\\
+\nu_J(i\in Z,j\notin Z)
+ &=2\frac{q^2}{2q(2q-1)}
+   +\frac{2q}{q+1}\frac{(q+1)(q-1)}{2q(2q-1)}=1.
+\end{aligned}
+$$
+
+这里包括 $q=1$：第二层是整个二元集，其定向二阶矩贡献零；第一层的贡献为一。
+只要 $I$ 非空就有 $c_k\ge3$。有两个不同内部地址时，(201.11) 还给出
+
+$$
+\nu_J(i,j\in Z)=1,\qquad
+\nu_J(i\notin Z,j\notin Z)=c_k-3\ge0.
+\tag{201.12}
+$$
+
+正确字 $w(\{j,z\})$ 的最小零恰为 $j$，包括 $j=z$ 时的单零字；这是选取
+$z=\max J$ 的作用。pair 字的最小零恰为 $a$。两个 $a$ 的半质量合起来为
+$c_k$，各行非负，故所有首零类总量如述。$\square$
+

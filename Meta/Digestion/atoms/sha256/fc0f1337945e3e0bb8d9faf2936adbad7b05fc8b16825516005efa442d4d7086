@@ -1,0 +1,17 @@
+**命题 5.3（状态统计的积分不自动是流逝时间）。** 对分段 $C^1$ 路径和固定 $K$，
+
+$$
+\int_{\lambda_0}^{\lambda_1}\langle K,\dot p_\lambda\rangle\,d\lambda
+=\tau_K(p_{\lambda_1})-\tau_K(p_{\lambda_0}).
+$$
+
+该积分可以为负；闭合概率路径上的积分为零，即使路径并非常值。
+
+证明。应用实值微积分基本定理。具体取 $\bar p=(1/5,1/5,1/5,1/5,1/5)$、$0<\varepsilon<1/5$，令
+
+$$
+p_\lambda=\bar p+\varepsilon\sin\lambda\,d,\qquad K=xy,\qquad 0\le\lambda\le2\pi.
+$$
+
+这是一条固定 $P$ 的全支撑闭合路径，$\tau_K(p_\lambda)=1/5+\varepsilon\sin\lambda$，导数为 $\varepsilon\cos\lambda$，在部分区间严格为负，整圈积分为零。即使 $K\ge0$，它的期望沿路径也不必递增。这个反例排除把该响应自动解释为非负累计时间的推断。∎
+

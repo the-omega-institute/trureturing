@@ -1,0 +1,69 @@
+**Definition 9.14 (Shared calibration and actual four-corner angle).**
+Fix a strictly positive five-mode law $\bar p$, put
+$\kappa_0=\bar p_{13}$, and define
+
+$$
+I_0=\sum_s\frac{d_s^2}{\bar p_s},\qquad
+a_s=\frac{d_s}{\bar p_sI_0},\qquad
+p_s(\kappa)=\bar p_s+(\kappa-\kappa_0)d_s.
+\tag{9.42}
+$$
+
+Here $a_s$ is fixed once and for all at $\bar p$.
+It is not recomputed at the moving value $\kappa$.
+Writing $\delta=\kappa-\kappa_0$, the positive domain is
+
+$$
+-\min(\bar p_0,\bar p_{13})<\delta
+ <\min(\bar p_1,\bar p_3).
+\tag{9.43}
+$$
+
+The middle mass stays $\bar p_2>0$, normalization is preserved,
+and the three occupancies $(X,Y,Z)$ stay fixed as in (9.23).
+For real local $\chi$ near zero set
+
+$$
+|\psi(\kappa,\chi)\rangle
+=\sum_s\sqrt{p_s(\kappa)}\,e^{-i\chi a_s}|s\rangle.
+\tag{9.44}
+$$
+
+Since $\sum_s d_sa_s=1$, its actual four-corner angle is
+$d^{\mathsf T}\theta=d^{\mathsf T}(\chi a)=\chi$.
+Also $\sum_s\bar p_sa_s=0$.
+The coefficients $a_s$ are the residual (9.25) at the
+reference, with the same label and probability-fiber map.
+They are not new adjustable probability parameters.
+
+The negative-phase convention agrees with Boundary Calculus
+Definitions 15.9–15.11 [Boundary9]. Its chosen dimensionless
+projected two-form is
+
+$$
+\Omega=\sum_s d\theta_s\wedge dp_s.
+\tag{9.45}
+$$
+
+On the normalized sphere its common-phase direction has zero
+pairing with normalized probability variations; after the
+stated phase quotient it is well-defined. Here the pullback
+can be computed without a quotient assertion:
+$d\theta_s=a_s\,d\chi$ and $dp_s=d_s\,d\kappa$, hence
+
+$$
+\Omega|_{(9.44)}
+=\left(\sum_sa_sd_s\right)d\chi\wedge d\kappa
+=d\chi\wedge d\kappa.
+\tag{9.46}
+$$
+
+In the Hilbert convention conjugate-linear in the first slot,
+the form is $2\operatorname{Im}\langle\delta_1\psi|
+\delta_2\psi\rangle$ on horizontal vectors. With negative
+state phases its $d\theta\wedge dp$ sign is as displayed.
+HiddenRelations C-13–C-14 uses positive exponent phases;
+its angle $\Phi$ is $-\chi$ under this map, so its sign
+cannot be carried over without that change. The selected
+scale in (9.45) contains no physical clock or action constant.
+

@@ -1,0 +1,18 @@
+**定义 31.1（证书的输入与检查）。** 取 §25.1 的一个完整原纪元安装 $\mathcal O$ 和实际达到行 $e$，缓存为 $R=c(e)$。保留 $\mathcal O,e$ 的实际可访问表示、原任务及原始证据；由命题25.2，达到来源族恰为
+
+$$
+\mathcal V_e=\mathcal V(H_e),\qquad H_e=((0,p,c):(p,c)\in R).
+$$
+
+先构造 $\Sigma_{H_e}$，再取定理29.3的一棵见证，忘去其叶标签，得到有限满二叉形状 $S$，内部地址集为 $I$，叶地址集为 $F$。作有限检查：
+
+$$
+\begin{aligned}
+A_{H_e}(0,i)&=\{\mathsf{branch}\}&& (i\in I),\\
+\varnothing\ne A_{H_e}(0,f)&\subseteq\{\alpha,\beta\}&& (f\in F).
+\end{aligned}
+\tag{SLH.31.1}
+$$
+
+集合 $A$ 由定理30.1实际计算，不是形状或存在 oracle。通过时称 $e$ 具有完整原形祖先证书。检查的是未标叶形状；没有供应完整未知原树或未取得的标签。
+

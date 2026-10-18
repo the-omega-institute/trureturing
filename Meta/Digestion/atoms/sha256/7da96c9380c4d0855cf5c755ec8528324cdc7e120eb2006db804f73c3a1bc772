@@ -1,0 +1,36 @@
+## 4. Failure of an optimized Bethe upper substitution
+
+For either displayed matrix put $P=F/4$. It is doubly stochastic. On an
+$\ell$-cycle, a locally consistent edge law $\tau$ gives the Bethe objective
+
+$$
+\sum_i\left[H(B_{i+1}\mid B_i)+
+\mathbb E\log_2\frac{F(B_i,B_{i+1})}{W}\right]
+\le \ell\log_2\frac4W.
+\tag{GCB.8}
+$$
+
+Indeed, each summand equals $\log_2(4/W)$ minus a nonnegative conditional
+relative entropy against $P$. Uniform vertex marginals and edge law $P/2$
+achieve equality, so the optimized Bethe mass is $(4/W)^\ell$.
+
+For $F_+$ at length four, the exact native mass is
+$272/W^4$, while Bethe gives $256/W^4$. The rational inequalities
+
+$$
+\left(\frac{40}{87}\right)^4
+<\left(\frac{23}{50}\right)^4
+<\frac{272}{(87/10)^4}
+\tag{GCB.9}
+$$
+
+show that a cap chosen from the optimized Bethe value can be false on an
+actual complete native template. Disjoint four-cycles amplify the ratio to
+$(17/16)^r$. Consequently a correction whose logarithm is $o(n)$ cannot turn
+this per-template upper substitution into a sound universal cap.
+
+This does not say that every Bethe method is invalid: a theorem with explicit
+loop or support hypotheses may have a different direction. It says that the
+optimized Bethe value alone is an average-style quantity and is not an upper
+bound for every arbitrary native template with owned joint weights.
+

@@ -1,0 +1,13 @@
+### 定义 61.1（预测律场）
+
+对五模式载体 \(S=\{0,1,2,3,4\}\)，不把静态向量 \(p\in\Delta(S)\) 直接当作完整状态，而定义其 future-word profile
+\[
+\mathcal P_H(p)=\operatorname{Law}_p(X_1,\ldots,X_H)
+\]
+以及全时 profile \(\mathcal P_\infty(p)\)，其中允许性、startup 和 mixture law 均按 dev 的 Fin5 source/admissibility contract 给定。预测律场的等价关系是
+\[
+p\sim_{\mathrm{pred}}q
+\iff
+\mathcal P_\infty(p)=\mathcal P_\infty(q).
+\]
+

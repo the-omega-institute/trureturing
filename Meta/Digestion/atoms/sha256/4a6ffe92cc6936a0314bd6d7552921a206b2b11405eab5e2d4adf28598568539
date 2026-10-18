@@ -1,0 +1,47 @@
+**开放问题 9.1（Unchanged full-family target on the exact residual $U$）。**
+The unclassified original parameters are precisely
+
+$$
+U=\left\{(s,t):
+\begin{aligned}
+&a=|s|,\quad b=|t|,\quad a_0<a<A,\\
+&\phi(a)<b<B_0,\qquad 7a+3b\le5\sqrt3/2
+\end{aligned}
+\right\}.
+\tag{9.2}
+$$
+
+To verify this remainder, every $a\le a_0$ lies in $P_3$.
+For $a>a_0$, the portion $b\le\phi(a)$ is also in $P_3$.
+The vertical edge above $\beta=\phi(A)$ and the horizontal edge above
+$a_0$ have value four. The only points left before using the witness are
+the strict interior above the chord; removing its strict witness halfspace
+leaves exactly (9.2). In particular witness equality remains in $U$ unless
+another displayed branch applies.
+
+At every point of $U$, Theorem 3.1 excludes support two and Theorem 6.1
+constructs support four. Thus the established range is
+
+$$
+3\le k(C(s,t))\le4\qquad((s,t)\in U),
+\tag{9.3}
+$$
+
+and neither value is selected by this result. The remainder has a genuine
+two-dimensional portion: at $(a_0,B_0)$ the witness expression is strictly
+below threshold since
+$7/3+\sqrt3<5\sqrt3/2$ follows from $196<243$.
+Immediately to the right the chord is below $B_0$ and continuity leaves
+an open region between it and $B_0$ still below the witness threshold.
+
+The completion criterion is unchanged: for every remaining legal parameter
+of this same $F(s,t)$ family and this same ordered basis, decide existence of
+a finite complex support-at-most-three Gram decomposition. Each feasible
+portion requires actual finite original-coordinate vectors; each infeasible
+portion requires exclusion of all finite complex decompositions, with every
+tie and boundary assigned. Support one and two are completely settled, but
+the full support-three/four classification is not complete until $U$ is
+resolved. The chord is sufficient only. A nonnegative witness pairing is
+not a feasibility certificate. Edge kernel equations do not extend without
+proof to nonsingular interior points.
+

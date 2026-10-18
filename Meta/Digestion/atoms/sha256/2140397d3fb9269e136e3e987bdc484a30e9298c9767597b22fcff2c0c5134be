@@ -1,0 +1,76 @@
+**Definition 2.1 (The full finite-gap phase family, from Source Definition 23.1).** Let $H\ge1$ be an integer, $d=H+1$, and $K\subseteq\{1,\ldots,H\}$ contain $H$. Choose $p_k>0$ for $k\in K$, with $\sum_{k\in K}p_k=1$, and set $p_k=0$ for every nonnegative integer outside $K$, in particular $p_0=0$. For integers $a\ge0$ put
+
+$$
+t(a)=\sum_{k\ge a}p_k,\qquad
+\mu=\sum_{k\ge0}(k+1)p_k=\sum_{a=0}^H t(a).
+$$
+
+Let $e_0,\ldots,e_H$ be the standard orthonormal basis of $\mathbb C^d$ and $E_{ij}=e_ie_j^*$. For arbitrary phases $\theta_k\in\mathbb R/(2\pi\mathbb Z)$, $k\in K$, define
+
+$$
+Se_j=e_{j+1}\quad(j<H),\qquad Se_H=0,\qquad
+x_\theta=\sum_{k\in K}\sqrt{p_k}e^{i\theta_k}e_{H-k},\qquad
+J_\theta=x_\theta e_H^*.
+$$
+
+The outcome-labeled CP instrument and its averaged channel act on the **full complex matrix algebra** $M_d(\mathbb C)$:
+
+$$
+\mathcal C_0(A)=SAS^*,\qquad
+\mathcal C_{1,\theta}(A)=J_\theta A J_\theta^*
+=A_{HH}x_\theta x_\theta^*,\qquad
+\mathcal E_\theta=\mathcal C_0+\mathcal C_{1,\theta}.
+$$
+
+A density is a positive semidefinite matrix of trace one. For a chronological word $w=b_1\cdots b_n$ and initial density $\sigma$, its probability is
+
+$$
+\mathbb P_{\theta,\sigma}(w)
+=\operatorname{Tr}\bigl(\mathcal C_{b_n,\theta}\cdots
+\mathcal C_{b_1,\theta}(\sigma)\bigr),\qquad
+\mathcal C_{0,\theta}=\mathcal C_0,
+$$
+
+and the empty word has probability one. A complete stationary binary law consists of all these finite-word probabilities with a stationary initial density. All linear-algebraic dimensions and ranks below are over $\mathbb C$; the operator space has dimension $d^2$.
+
+**Source interface 2.2 (Credited Theorem 23.2).** For Definition 2.1 the averaged channel is trace preserving, and its unique faithful mixed stationary density is
+
+$$
+R_\theta=\sum_{j=0}^H S^j x_\theta x_\theta^*(S^*)^j,
+\qquad \rho_\theta=R_\theta/\mu,
+\qquad (\rho_\theta)_{ii}=t(H-i)/\mu.
+$$
+
+The stronger full-complex fixed-space identity, Source (23.13), is part of the premise:
+
+$$
+\mathcal E_\theta(A)=A
+\quad\Longrightarrow\quad
+A=A_{HH}R_\theta\qquad(A\in M_d(\mathbb C)),
+\qquad \operatorname{Tr}R_\theta=\mu.
+\tag{2.1}
+$$
+
+Every word effect is diagonal and independent of $\theta$. For initial densities $\sigma,\omega$ and phases $\theta,\eta$ with the same $H,K,p$, equality of all word probabilities is equivalent to $\sigma_{ii}=\omega_{ii}$ for all $i$. In stationarity the common law is $\mathbb P_p$, with, for an integer $m\ge1$ and nonnegative integers $a,b,g_1,\ldots,g_{m-1},N,k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(0^a1\,0^{g_1}1\cdots0^{g_{m-1}}1\,0^b)
+&=\frac{t(a)t(b)}{\mu}\prod_{j=1}^{m-1}p_{g_j},\\
+\mathbb P_p(0^N)&=\frac1\mu\sum_{k\ge N}(k-N+1)p_k\quad(N\ge0),\\
+\mathbb P_p(1)&=\mu^{-1},\qquad
+p_k=\frac{\mathbb P_p(10^k1)}{\mathbb P_p(1)}\quad(k\ge0).
+\end{aligned}
+\tag{2.2}
+$$
+
+The empty product in the first line is one. The second line includes the empty word. Source also gives
+
+$$
+\chi_{\mathcal E_\theta}(z)=z^{d^2-d}f(z),\qquad
+f(z)=z^{H+1}-\sum_{k=1}^H p_k z^{H-k}.
+\tag{2.3}
+$$
+
+These stationary and characteristic-polynomial assertions are reused from Source, not reproved as new claims. A characteristic polynomial specifies eigenvalues and algebraic multiplicities; it does not in general specify Jordan block sizes. Sections 3–5 supply the missing structural proof for the actual operators of Definition 2.1.
+

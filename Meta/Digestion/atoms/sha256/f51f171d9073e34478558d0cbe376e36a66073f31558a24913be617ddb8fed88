@@ -1,0 +1,15 @@
+**Proposition 2.6 (Positive full-word flip ratios at every cut).** For a permitted law, $n\ge m$ and any original upward edge $c=b+e_i$,
+
+$$
+\frac{Q_n(c)}{Q_n(b)}
+=\frac{\pi(c_1\cdots c_m)}{\pi(b_1\cdots b_m)}
+\prod_{j=\max(m+1,i)}^{\min(n,i+m)}
+\frac{k(c_j\mid c_{j-m}\cdots c_{j-1})}
+{k(b_j\mid b_{j-m}\cdots b_{j-1})}.
+\tag{2.9}
+$$
+
+Again the initial ratio multiplies the transition product. Empty products equal one. At $n<m$, the ratio is the ratio of the corresponding $\pi$-marginals.
+
+Proof. Divide the two products in (2.1). A factor changes only if its symbol or its history contains $i$, that is, $j-m\le i\le j$. Every denominator is positive. The initial factor is retained even when the flip lies in its context. No endpoint, seam or transition at an arbitrary cut is omitted. $\square$
+

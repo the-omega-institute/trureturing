@@ -1,0 +1,46 @@
+**Definition 2.1 (complete native templates and their exact carrier).**
+A complete template on $n$ original $S_d$ blocks prescribes at every
+$(i,q)\in[n]\times W_d$ a constant in $G_q$ or an equation
+
+$$
+\Gamma_q(x_i)=\delta_{i,q}(r_{x_j}(a)),\qquad
+j\in[n],\ a\in W_d,\quad\delta_{i,q}:\mathcal A\to G_q.
+\tag{OCC.6}
+$$
+
+Tables are total; donors, cycles, self queries, off-target queries and
+correlations are unrestricted. All equations refer to the same tuple.
+The full simultaneous solution set is $C_\Theta\subseteq S_d^n$.
+
+Use the two-way owned-seed language of [RRN, Definition 5.1 and Theorem
+5.2][RRN]. Each seed $c$ has a domain $T_c\subseteq\mathcal A$ and
+a distinct actual owner port $o_c$. Each port is a constant full factor
+or $B_{i,q}(s_c)\in G_q$ for one shared seed. The owner obeys
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{OCC.7}
+$$
+
+A seed vector is realizable precisely when each block's entire
+prescribed factor vector reconstructs an actual $x_i(s)\in S_d$,
+necessarily unique. For arbitrary nonnegative whole-block weights,
+
+$$
+\Phi_i(s)=
+\begin{cases}w_i(x_i(s)),&\text{block }i\text{ reconstructs},\\
+0,&\text{otherwise},\end{cases}
+\qquad
+Z=\sum_s\prod_i\Phi_i(s)
+ =\sum_{x\in C_\Theta}\prod_iw_i(x_i).
+\tag{OCC.8}
+$$
+
+Every actual tuple has one lift, recovered from its owner replies.
+Every lawful owned-seed network conversely gives a complete template.
+Each original whole-block weight occurs once. No repeated seed becomes
+an independent variable. The original number $n$ of weight owners is
+unchanged in both directions. [CBN][CBN] supplies actual constructor
+reconstruction; [OCB, Theorem 2.2][OCB] supplies its temporal tests.
+Seeds and probability laws here are analytical objects, not reader inputs.
+

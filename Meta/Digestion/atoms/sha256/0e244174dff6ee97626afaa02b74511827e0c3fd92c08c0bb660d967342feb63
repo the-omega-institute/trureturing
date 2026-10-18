@@ -1,0 +1,78 @@
+#### 定理四：FIB 单一变化场统一定理
+
+对于五态 FIB ATOM，设：
+
+```math
+\mathcal H=\mathbb R^\Sigma,
+```
+
+```math
+P:\mathcal H\to\mathbb R^4,
+```
+
+```math
+\ker P=\operatorname{span}\{d\},
+```
+
+```math
+d=(1,-1,0,-1,1).
+```
+
+则隐藏关系的未来可见性由两个独立的二阶响应决定：
+
+```math
+\Sigma_{a,b}
+=
+R(S_{a,b}d),
+```
+
+```math
+\mathcal H_{a,b}
+=
+R(H_{a,b}d).
+```
+
+其中：
+
+```math
+S_{a,b}
+=
+\frac12(D_aD_b+D_bD_a),
+```
+
+```math
+H_{a,b}
+=
+\frac12(D_aD_b-D_bD_a).
+```
+
+对于任意同一 $(X,Y,Z)$ 纤维中的两个概率律：
+
+```math
+p_\kappa,
+\qquad
+p_{\kappa'},
+```
+
+有：
+
+```math
+\boxed{
+R(D_aD_b p_{\kappa'})
+-
+R(D_aD_b p_\kappa)
+=
+(\kappa'-\kappa)
+\left(
+\Sigma_{a,b}+\mathcal H_{a,b}
+\right).
+}
+```
+
+因此：
+
+1. 若 $\Sigma_{a,b}\neq0$，则静态联合 seam 被读出；
+2. 若 $\mathcal H_{a,b}\neq0$，则动态路径次序被读出；
+3. 若二者都为零，则二阶未来读出仍然无法区分 $\kappa$；
+4. 若某个更长路径中响应变为非零，则该路径长度是隐藏 seam 的分辨阶。
+

@@ -1,0 +1,33 @@
+**Comparison 10.2 (primary branching-program references).** Ingo Wegener,
+The Complexity of Boolean Functions, Chapter 14 §4, Definition 4.1
+and Theorems 4.1 and 4.3, printed pp. 423–425 [WBP], supplies the
+classical read-once symmetric grid and optimal residual count.
+Printed p. 424 explicitly states that every graph path is realized
+for BP1 and that this fails for general branching programs.
+Bryant, Graph-Based Algorithms for Boolean Function Manipulation,
+§2 Definition 1 [BRY], requires strict increase of variable indices
+on every edge to a nonterminal.
+
+Our selected state maps to one actual Boolean test, its $E_i$ reply
+map gives the Boolean edge, and its literal contributes at least $c_i$;
+the reverse map installs the precise original root and all four
+successors. These maps prove Theorem 4.1. They do not prove read-once,
+a fixed increasing order or realization of every syntactic path.
+Accordingly no BP1 or ordered numerical lower bound is imported.
+
+Rakesh Kumar Sinha, Some Topics in Parallel Computation and Branching
+Programs, §2.1.3, printed p. 17 [SINHA], distinguishes semantic paths
+from inconsistent graph paths and allows union cycles with no semantic
+cycle. His stated leveling transformation takes $(l+1)s$ states by
+copying each state $l+1$ times. Semantic termination matches our actual
+input paths; that copying is not an installed-cardinality-preserving
+transformation. Repeated-scan native consumers of classical upper
+constructions already belong to PCA §§29–33, with their own larger
+execution budgets. They do not determine the objective at $(n,W)$.
+
+The cited primary passages are literature-attested for those restricted
+models and semantic conventions. The exact native correspondence and
+certificate obstruction are repo-derived ordinary deductions with the
+proofs above. Bounded source and literature comparisons do not assert
+worldwide novelty or that no other applicable theorem exists.
+

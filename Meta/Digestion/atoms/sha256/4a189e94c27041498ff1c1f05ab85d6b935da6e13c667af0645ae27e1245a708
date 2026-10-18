@@ -1,0 +1,32 @@
+**Definition 4.1 (Step, Boundary and Prefix for this graph).**
+$\operatorname{Step}_{\rm sel}$ is ARC Definition 6.2's literal interpreter,
+with the actual acquired description of $G_{\rm sel}$, its finite labels
+and the input-site partition of Definition 3.3. It traverses the full row
+list for one matching state, decodes actual seven unary row fields and
+finite local effects, validates port0–73/latch0–7/symbol/effect ranges,
+then performs the corresponding represented local operation. Mark/cell
+lookup and Replace/AppendItem use the finite word macros. It appends the
+actual represented receipt, event and one unary tally mark, including the
+meter read/append-head overlap rule. A missing required reservoir or
+disabled simulated operation returns a typed simulated failure; it is
+never replaced by a source refusal or an invented next row.
+
+The represented physical projection is only the actual cells, raw and
+active control, heads, latches, PC and tokens. Simulator tally, acquisition
+annotation, completed-cycle count and typed input cursors are bookkeeping
+words maintained separately. Finite graph labels in a bank-encoded nested
+simulation are ordinary payload bits; the physical PC is the outer control
+coordinate of the represented complete machine.
+
+$\operatorname{Boundary}_{\rm sel}$ starts from the canonical irreducible
+entrance, reconstructing the original padded packet by ARC Definition
+6.1's acquired-syntax converter. It stops at the first conjunction of
+activation complete, completed-cycle count equal to $|M|$, and the
+particular outer $R_r$ PC. It returns the original acquisition tally $a$
+and this predecessor tally $b$. A source ACK, internal callback or encoded
+nested PC is not the stopping test. $\operatorname{Prefix}_{\rm sel}$
+copies internal $1^k$ to a countdown and executes exactly one Step and
+one countdown tail per iteration, stopping before the next row at zero.
+It returns consumed inputs $I_k$, native history and the complete raw
+endpoint. A wire $U(k)$ is decoded first; its zero is not a countdown mark.
+

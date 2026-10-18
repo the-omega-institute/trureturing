@@ -1,0 +1,26 @@
+## 380. One-coordinate deletions at the endpoint
+
+Set
+
+$$
+ b^*=b(43/64)=\frac1{64}(43,34,34,29,27,25,22,20).
+$$
+
+A one-coordinate restriction deletes an original coordinate, relabels the retained coordinates in order, and uses labels (0,\ldots ,7). The eight retained profiles and their common cap are
+
+$$
+\begin{array}{c|c}
+\text{deleted coordinate}&\text{retained profile}\ \hline
+1&(17/32,17/32,29/64,27/64,25/64,11/32,5/16)\\
+2&(43/64,17/32,29/64,27/64,25/64,11/32,5/16)\\
+3&(43/64,17/32,29/64,27/64,25/64,11/32,5/16)\\
+4&(43/64,17/32,17/32,27/64,25/64,11/32,5/16)\\
+5&(43/64,17/32,17/32,29/64,25/64,11/32,5/16)\\
+6&(43/64,17/32,17/32,29/64,27/64,11/32,5/16)\\
+7&(43/64,17/32,17/32,29/64,27/64,25/64,5/16)\\
+8&(43/64,17/32,17/32,29/64,27/64,25/64,11/32)
+\end{array}
+$$
+
+The following tables give stopped allocations for these eight restrictions. In each table, a row (S) has its displayed mass; after the colon, cells are listed in stopped order: one cell for the empty schedule, two cells (0|1) for a singleton, and three cells (0|10|11) for a pair. An omitted coordinate is zero. All vectors are sums of the indicated multiples of (e_j).
+

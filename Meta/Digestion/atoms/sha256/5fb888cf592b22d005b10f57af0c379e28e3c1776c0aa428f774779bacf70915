@@ -1,0 +1,57 @@
+## 2. Elementary algebra and evaluation facts
+
+Write $\mathcal P_s$ for real polynomials of degree at most $s$, including zero. For any list of distinct clocks, evaluation of $\mathcal P_{m-1}$ has rank the smaller of $m$ and the number of clocks. Indeed, a nonzero polynomial of degree at most $m-1$ has at most $m-1$ distinct roots; at at most $m$ nodes, Lagrange polynomials give arbitrary values. Throughout,
+
+$$
+V_{ij}=i^j\quad(0\le j<m),\qquad 0^0=1,
+\qquad U=\operatorname{range}V.
+\tag{2.1}
+$$
+
+A diagonal operator preserving the evaluation space of $\mathcal P_{m-1}$ on $n\ge m+1$ distinct nodes is scalar. To prove this, take a polynomial whose roots are any chosen $m-1$ nodes. Its diagonal image is represented by a polynomial of degree at most $m-1$ with those roots, hence is a scalar multiple of it. All diagonal entries outside those roots are equal. For any two nodes, the other $n-2\ge m-1$ nodes supply the roots, proving equality of those two entries. This includes zero diagonal entries.
+
+The identities
+
+$$
+M^2=M+I,\quad J^2=I,\quad M^{-1}=M-I,
+\quad JM=2I+J-MJ,\quad JMJ=I+2J-M
+\tag{2.2}
+$$
+
+follow by multiplication. The four matrices $I,M,J,MJ$ are independent: the entries of a linear combination are
+
+$$
+aI+bM+cJ+eMJ=
+\begin{pmatrix}a+e&b+c\\b+c+e&a+b+e\end{pmatrix},
+$$
+
+so vanishing successively forces $e,a,b,c$ to be zero. In particular, $I,M,J,JM$ are also independent. Set $F_{-1}=1,F_0=0,F_1=1$ and $F_{k+1}=F_k+F_{k-1}$. Induction in (2.2) gives
+
+$$
+M^k=F_{k-1}I+F_kM\quad(k\ge0),\qquad F_k>0\quad(k\ge1).
+\tag{2.3}
+$$
+
+Distinct nonnegative powers of $M$ are nonproportional: a proportionality, after multiplication by an inverse power, would make $M^k$ scalar for some $k>0$, contrary to its nonzero off-diagonal entry $F_k$. Right multiplication by any integral power of $M$ preserves $\operatorname{span}\{I,M\}$ bijectively. Inverses here are auxiliary algebra and are never acquired actions.
+
+Every mixed word has cumulative-matrix span at least three. If its first run is $M^a$, $a\ge1$, the first $J$ gives $JM^a$. The matrices $I,M$ are symmetric, whereas the off-diagonal entries of $JM^a$ differ by $F_a>0$. If the first run is $J^b$, the first $M$ gives $M$ or $MJ$; neither is in $\operatorname{span}\{I,J\}$, by its diagonal or off-diagonal entries.
+
+Two useful charts of the complete legal source domain are
+
+$$
+P(x,r)=\frac1{1+xr}\begin{pmatrix}1&r\\x&xr\end{pmatrix},\quad x,r>0,
+\tag{2.4}
+$$
+
+and
+
+$$
+P(\theta,c)=\begin{pmatrix}1-\theta&\theta(1-\theta)/c\\c&\theta\end{pmatrix},
+\quad 0<\theta<1,\quad c>0.
+\tag{2.5}
+$$
+
+These are surjective and unique: rank one gives $P_{11}P_{22}=P_{12}P_{21}$, and trace one determines the remaining entry. For (2.4), $x=P_{21}/P_{11}$ and $r=P_{12}/P_{11}$. For (2.5), use $\theta=P_{22},c=P_{21}$. Both are charts of a nonempty open two-dimensional parameter domain.
+
+The legal sources span $\operatorname{Mat}_2(\mathbb R)$. Choose two independent strictly positive columns and two independent strictly positive rows. Their four outer products are a basis of the matrix space; their positive traces allow normalization without loss of independence. The trace pairing on all matrices is nondegenerate, as testing against matrix units shows.
+

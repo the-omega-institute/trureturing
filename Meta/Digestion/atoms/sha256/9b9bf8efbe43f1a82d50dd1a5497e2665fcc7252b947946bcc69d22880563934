@@ -1,0 +1,25 @@
+**Definition 2.2 (one attained joint image).** Set
+
+$$
+\mathcal H_D=\mathcal F_D\times\{\mathsf S,\mathsf G\}^{<\omega},
+\qquad X(t,w)=\operatorname{run}_w(t).
+\tag{ER.5}
+$$
+
+For the height reference, the displayed joint work state is
+
+$$
+J_D(t,w)=
+(\sigma,\nu,\mathsf{Work},X(t,w),h(t),P,\varnothing).
+\tag{ER.6}
+$$
+
+Its fields are source/session/type, work syntax, entry reference, permission
+and additional archive. The domain of states is exactly
+$\mathcal J_D=J_D[\mathcal H_D]$, not the product of their separate ranges.
+Acquisition initializes the fields jointly at $w=\epsilon$, and an actual
+commit appends its label to $w$ while implementing (ER.4). The fixed fields
+and empty archive are common in the comparison. No hidden source field is
+available to the decoder. In particular, the source binding in Assumption
+2.1 certifies provenance without furnishing a second copy of $t$.
+

@@ -1,0 +1,52 @@
+**Proposition 7.6 (finite-syntax service checking and its quantifier boundary).**
+Under Assumption 7.3, a supplied finite reply tree with fixed physical
+addresses and fixed read epochs, all at least $N$ and nondecreasing along
+each path, has decidable leaf reachability and decidable constancy of the entire original row at each
+leaf. When every reached leaf is constant, effective output labels turn
+it into a permitted actual service. Its exact sourcewise path costs and
+separate worst vector and weighted worst sums are computable, with an
+original-source witness for every reached leaf. This assertion does not
+quantify over unbounded choices of addresses or over all program codes.
+
+Proof. For a leaf $t$, let $\mathsf{Path}_t(X)$ be the finite conjunction
+of its acquired replies, using $\tau_m$ and navigation at the fixed
+physical word at each vertex. It is a formula from Theorem 7.2. Reachability
+is
+
+$$
+\exists X\ (\mathsf{Adm}(X)\land\mathsf{Path}_t(X)),
+\tag{ABC.7.5}
+$$
+
+and row constancy is
+
+$$
+\forall X,Y\quad
+ [\mathsf{Adm}(X)\land\mathsf{Adm}(Y)\land
+  \mathsf{Path}_t(X)\land\mathsf{Path}_t(Y)]
+ \Longrightarrow\operatorname{Same}_Q(X,Y).
+\tag{ABC.7.6}
+$$
+
+Both are finite sentences under the assumption. For each nonempty leaf,
+enumerate concrete finite sources and evaluate (ABC.1.3) and its fixed
+path until obtaining a witness. This terminates because (ABC.7.5) was
+first decided true; empty leaves do not enter the search. Compute the
+witness's full $Q$ row and use it as that leaf's output. Equation
+(ABC.7.6) proves its correctness for every source reaching the leaf.
+
+Execute the stipulated nonnegative epoch differences by actual updates,
+and the same fixed literal words by actual reads. Induction on the reply
+path shows that every actual source follows its own formula and reaches
+a nonempty leaf. Halt there is genuine and absorbing. A root halt and
+zero-length root words are included. Each reached leaf has fixed costs
+$(q_t,a_t,\ell_t)$, where $a_t$ is its last read epoch minus $N$ (zero at
+a root halt), and $\ell_t$ is the sum of the submitted literal lengths.
+There are no post-final-read updates in this stated tree contract.
+Maximizing each coordinate or, separately, $\lambda\cdot(q_t,a_t,\ell_t)$
+over the finitely many reached leaves gives the stated exact values.
+Each retained source witness realizes its leaf costs. No leafwise
+marginals from different sources have been combined. The enumeration is
+for outputs of an already supplied finite tree, not a search over all
+services. $\square$
+

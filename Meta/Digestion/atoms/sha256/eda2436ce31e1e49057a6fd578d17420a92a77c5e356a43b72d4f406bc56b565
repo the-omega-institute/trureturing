@@ -1,0 +1,43 @@
+**Proposition 2.2 (Full-word cancellation and the exterior posterior).** Let $P$ be permitted of visible order at most $k$, and put $\pi_P(u)=P_k(u)$. For $n\ge k$,
+
+$$
+P_n(b)=\pi_P(b_1\cdots b_k)
+\prod_{j=k+1}^nK_P(b_j\mid b_{j-k}\cdots b_{j-1}).
+\tag{2.3}
+$$
+
+For shorter words use the marginals of $\pi_P$. For an original upward edge $c=b+e_i$ with $n\ge k$, define
+
+$$
+J_{n,i}=[k+1,n]\cap[i,i+k]\cap\mathbb Z.
+$$
+
+Then its actual full-word ratio is
+
+$$
+\frac{P_n(c)}{P_n(b)}=
+\frac{\pi_P(c_1\cdots c_k)}{\pi_P(b_1\cdots b_k)}
+\prod_{j\in J_{n,i}}
+\frac{K_P(c_j\mid c_{j-k}\cdots c_{j-1})}
+{K_P(b_j\mid b_{j-k}\cdots b_{j-1})}.
+\tag{2.4}
+$$
+
+In particular the initial factor cancels for $k+1\le i\le n-k$, and the ratio depends only on the radius-$k$ window about $i$.
+
+To describe this common ratio, set $\varphi_P(ua)=\log K_P(a\mid u)$ on $B_{k+1}$. If $x_{-1}=x_1=0$, let $x^{(a)}$ replace the center of $x$ by $a$ and put
+
+$$
+H_P(x)=\sum_{j=-k}^{0}
+\left[\varphi_P(x^{(1)}_{[j,j+k]})
+-\varphi_P(x^{(0)}_{[j,j+k]})\right],\qquad
+p_P(x)=\frac{e^{H_P(x)}}{1+e^{H_P(x)}}.
+\tag{2.5}
+$$
+
+If a neighboring bit is $1$, put $p_P(x)=0$. The function $p_P$ is independent of $x_0$, depends only on the radius-$k$ exterior, and is a version of $P(X_0=1\mid X_j,\ j\ne0)$. On each exterior allowing both center choices it belongs to $(0,1)$.
+
+**Proof.** The chain rule and the visible-order hypothesis give (2.3). All legal initial marginals and transition factors are positive. Division of its two full-word products gives (2.4): a transition factor can change only when its block contains $i$, and no other factor is discarded. For an interior coordinate these changed blocks are exactly the $k+1$ translates in (2.5).
+
+For a conditioning window $[-N,N]$ with $N\ge k$, conditioning on all its bits except the center gives precisely this insertion ratio by (2.4); the left initial $k$-block does not include the center. Full cylinder support makes every legal conditioning context positive. A neighbor equal to $1$ forces the center to zero. The conditional probabilities therefore equal $p_P$ in every such window. Bounded conditional-expectation convergence for the increasing exterior sigma-algebras gives the same version for the entire exterior. Equivalently, the conditional identity against every exterior cylinder event extends to their generated sigma-algebra. No logarithm of an illegal transition or zero legal probability is taken. $\square$
+

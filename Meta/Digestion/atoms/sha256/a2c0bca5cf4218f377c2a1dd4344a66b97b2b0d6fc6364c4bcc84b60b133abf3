@@ -1,0 +1,4 @@
+### 103.5. A strict parameter-dependent kernel-imbalance bound
+
+Retain the full-domain, rank, support, subquarter and equal-polar hypotheses of §103.1, but omit (2). The derivation through (17) did not use \(m^2=1\); it holds for every real nonzero \(m\). Sections 101–102 exclude the real-gauge and unbiased endpoints, so \(d\ne0\), \(pq\ne0\), and \(|p|<1\). Keep the positive definite matrix \(M\) of (14) and \(r=R_{12}\in[-1,1]\). We use (17) without dividing by its possibly vanishing coefficient.
+

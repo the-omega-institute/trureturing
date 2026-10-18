@@ -1,0 +1,31 @@
+**Proposition 147.2 (Continuous absolute cutpoints and one measurable seed).**
+The section can be realized by one $U\sim\operatorname{Uniform}[0,1)$,
+common to all sources. Terminal masses, schedule weights and global seed
+cutpoints are continuous; normalized conditional ratios and emitted labels
+need not be continuous at zero schedule mass or interval boundaries.
+
+**Proof.** In the schedule order put
+$L_S(x)=\sum_{S'<S}w_{S'}(x)$ and
+$I_S(x)=[L_S(x),L_S(x)+w_S(x))$.
+Inside $I_S$ and for each counterfactual cell $c$, put the absolute cutpoints
+
+$$
+G_{S,c,k}(x)=L_S(x)+\sum_{r<k}T_{S,c,r}(x),
+\qquad 0\le k\le6.
+\tag{147.2}
+$$
+
+They begin at $L_S$, end at $L_S+w_S$, and subdivide $I_S$ into label
+intervals of lengths $T_{S,c,r}$. The seed selects $S$ by $I_S$ and fixes
+all terminal labels by these cell-specific subdivisions before replies.
+All these finite inequality-defined events are Borel in $(x,U)$.
+A zero-mass schedule has an empty interval and is never executed.
+Global cutpoints remain continuous at it without assigning
+$T_{S,c,r}/w_S$ any limiting value. No continuity of those ratios is needed
+or inferred. At an interval endpoint the half-open convention specifies
+one measurable label; the label itself is not pointwise continuous there.
+Every chosen $O$ schedule has at most two requests and finite handoff at
+every actual source and every seed. Arbitrary real amplitudes entail
+ordinary measurable existence, not effective exact evaluation or a runtime
+bound for computing real cutpoints. $\square$
+

@@ -1,0 +1,31 @@
+**Definition 4.5 (necessary outer value).** Set
+
+$$
+Z_s=\begin{pmatrix}1&s\cr s&1\end{pmatrix},\quad
+X=\begin{pmatrix}P&t-iR\cr t+iR&Q\end{pmatrix},\quad
+Y=Z_s-X=\begin{pmatrix}U&v+iR\cr v-iR&V\end{pmatrix},
+\quad U=1-P,\ V=1-Q,\ v=s-t,\ d=U-\alpha V.
+\tag{AS.26}
+$$
+
+Let $V(s)$ minimize $W=\operatorname{tr}(C_{DT}X)$ over
+
+$$
+0\preceq X\preceq Z_s,\qquad
+(\max\{d,0\})^2+4\alpha R^2\leq\beta^2.
+\tag{AS.27}
+$$
+
+Here $C_{DT}$ denotes the leading $2\times2$ block of $C$.
+The last inequality is exactly the intersection of
+$d\cos\theta+2\sqrt\alpha R\sin\theta\leq\beta$ over the right
+half-circle: its maximum is $\sqrt{d^2+4\alpha R^2}$ for $d\geq0$
+and $2\sqrt\alpha|R|$ for $d\leq0$. Hence every actual competitor
+has cost at least $V(s)$ by Lemmas 4.3–4.4, including negative $d$
+and plane slack. These affine tilt conditions and the PSD conditions
+give a convex feasible graph in $(s,X)$. Fibres are closed and bounded.
+They are nonempty: $X=(1-\zeta)Z_s$ for any fixed
+$0<\zeta<\beta/(1-\alpha)$ has $R=0$, $d=(1-\alpha)\zeta<\beta$.
+Thus $V(s)$ is a finite attained auxiliary minimum. Sufficiency of an
+arbitrary outer point is neither assumed nor needed.
+

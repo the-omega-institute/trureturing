@@ -1,0 +1,18 @@
+**Theorem 3.1 (exact geometry of the ambiguous branch).** For all $x,z\in[0,1]$ and $H\ge1$,
+
+$$
+\operatorname{TV}(M_x^H,M_z^H)
+=|x-z|\bigl(1-\min(a,b)^H\bigr),\qquad
+d(M_x,M_z)=|x-z|.
+$$
+
+**Proof (3.1).** Before its first non-$B$ symbol, a future from $2$ stays at $2$ and a future from $4$ stays at $4$. Their first exits are in disjoint visible categories: $\{1,3\}$ versus $\{0\}$. Thus the supports of $F_2^H$ and $F_4^H$ overlap only at $B^H$, whose masses are $a^H,b^H$. The finite-law overlap identity gives
+
+$$
+\operatorname{TV}(F_2^H,F_4^H)=1-\min(a^H,b^H).
+$$
+
+The signed difference of mixtures is $(x-z)(F_2^H-F_4^H)$; homogeneity of the half-$\ell^1$ norm gives the first formula. Since $a,b<1$, its factor tends to one, proving the supremum formula. Every calculation concerns a finite joint word. No observer receives the eventual exit as a present input.
+
+The usual channel-contraction upper bound is an attributed intermediate from the repository's `TotalVariation.DataProcessing` declarations at revision ad512afaf86ab2258ef58a78089f247e190866f4; each horizon supplies a finite stochastic channel from current states to words. The disjoint exit categories give the sharper equality for this source. $\square$
+

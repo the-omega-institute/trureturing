@@ -1,0 +1,41 @@
+**Theorem 16.2 (eight low atoms at both face contrast extrema).**
+Both $r_-$ and $r_+$ have multiplier-optimal realizations with at
+most eight original supported low atoms. They may also be chosen
+as endpoint atoms. This is a statement about contrast extrema on
+one common multiplier face, not all its interior contrasts.
+
+Proof. Compactness of the finite-dimensional vector hull in
+Proposition 12.2 gives each contrast extremum and an exact finite
+law attaining it. Omit zero weights. Suppose a contrast-maximizing
+law has $N>8$ positive weights. Its eight-component moment columns
+have a nonzero real dependence $c=(c_i)$ with
+$\sum c_i\Gamma(x_i)=0$. Since the first coordinate is one,
+$\sum c_i=0$; the vector has both positive and negative entries.
+For all sufficiently small positive $\varepsilon$, both
+$p+\varepsilon c$ and $p-\varepsilon c$ are nonnegative and
+preserve all joint moments. Multiplier maximality in both directions
+forces
+$$
+\sum c_i(g_t(x_i)+\lambda k(x_i))=0.
+$$
+Thus both perturbations stay on the same multiplier-optimal face.
+Contrast maximality there forces $\sum c_i k(x_i)=0$, and
+therefore $\sum c_i g_t(x_i)=0$. Move in either direction to the
+finite endpoint of the interval of nonnegative weights. At least
+one weight vanishes; the moment target, multiplier optimum and
+contrast extremum are retained. Repeat with the remaining positive
+weights until at most eight remain. For the contrast minimum the
+same two-sided argument reverses only the extremality inequality,
+so gives exactly the same conclusion. No independence or generic
+rank of the eight moments is assumed.
+
+For the endpoint version first split each fractional atom into
+$(h,0)$ and $(h,1)$ with weights $p(1-\xi)$ and $p\xi$.
+All moments and contrast stay fixed, and convexity of the absolute
+value makes height nondecreasing. A strict increase would exceed
+$C_t(\lambda)$; hence equality holds. This split law is still a
+contrast extremum on the multiplier face. Apply the same elimination
+within its finite endpoint table. Zero split masses are omitted.
+This is the classical finite linear-programming face-elimination
+argument applied to the original joint constraint table. $\square$
+

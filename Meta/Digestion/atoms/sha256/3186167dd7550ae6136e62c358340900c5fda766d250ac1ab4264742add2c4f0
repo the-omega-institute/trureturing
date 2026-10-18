@@ -1,0 +1,25 @@
+**Theorem 352.1 (Common-parent cancellation).** If a complete normalized $N$ kernel $p$ is feasible at a profile and satisfies (352.1) and the sign condition, then one complete normalized $O$ allocation is feasible at the same profile. More generally, the conclusion holds for a mass-$M$ affine row system (348.4) without dividing its anchor.
+
+*Proof.* Let one common seed choose, independently for every leaf, a parent $K_j$ with probabilities $\lambda_{ij}$. The Boolean proof map is
+$\rho_K(w)_i=w_i$ for roots and $\rho_K(w)_j=w_{K_j}w_j$ for leaves. Define
+$q(w)=\mathbb E_K p(\rho_K(w))$. Every transformed coordinate is an original bit times an earlier bit, so the first zero and the positive word are preserved. Therefore each row of $p(\rho_K(w))$ is the row at $w$ and averaging preserves all rows simultaneously.
+
+The support condition makes the entire contribution of a leaf $j$, before averaging, $\rho_K(w)_j(\ell_j+\sum_{i\in P_j}Q_{ij}w_i)$. Its average is
+
+$$
+w_j\left(\sum_{h\in P_j}\lambda_{hj}w_h\right)
+    \left(\ell_j+\sum_{i\in P_j}Q_{ij}w_i\right).
+$$
+
+Using $w_i^2=w_i$, its quadratic coefficient on $w_iw_j$ is $B_{ij}$. For distinct parents $i,h$, its cubic coefficient is $\lambda_{hj}Q_{ij}+\lambda_{ij}Q_{hj}$ and vanishes by (352.1), including zero coefficients and zero parent probabilities. Every possible cubic has this unique leaf; there are no omitted incoming terms or leaf-leaf interactions. Hence
+
+$$
+q(w)=c+\sum_{i\in R}\ell_iw_i+\sum_{j\in D,\ i\in P_j}B_{ij}w_iw_j.
+\tag{352.2}
+$$
+
+Fix a label $r$. Because the $B_{ij}(r)$ for a fixed leaf have one sign, choose that leaf bit to be one exactly when its common sign is negative. The contribution of the leaves to root $i$ is then
+$-V_i(r)$, where $V_i=\sum_j(-B_{ij})_+$. Choose root bit $i$ to be one when $\ell_i(r)-V_i(r)<0$. At this one word, $q(r)=c(r)-H(r)$ with
+$H=\sum_i(V_i-\ell_i)_+$. Since $q$ is nonnegative, $c\ge H$ coordinatewise. Every $\ell_i$ and $B_{ij}$ has zero label sum, so
+$m((V_i-\ell_i)_+)\ge m(V_i)$ and $m(H)\le m(c)=M$; the scalar stopped budget is therefore at most $M$ (one in the normalized case). The 109.1 inverse constructs one complete stopped allocation; at $M=0$ all schedule masses vanish. The seed used for the proof map is absorbed into that one finite allocation; no branch is executed as an extra query. The same argument with (348.4) keeps mass $M$ and its literal anchor. $\square$
+

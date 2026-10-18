@@ -1,0 +1,23 @@
+### 97.1. Conditional arithmetic criterion
+
+**Theorem 97.1.**
+
+Let j,C be positive integers, N=3^j>=81 and B_N=L_N^2+3=D C^2 with D the full positive squarefree kernel. Let A be the zero-row-sum Legendre matrix of Theorem 95.1 and assume dim ker A=2. Choose a proper admissible cut D=de: d,e>1, (d/p)=1 for p|e, and (e/p)=1 for p|d. Assume every prime dividing d is 1 modulo4. Actual support then makes every such prime 1 modulo12, allowing both 1 and13 modulo24.
+
+Put epsilon=[2/d]=(1-(2/d))/2 in F_2, where (2/d) is the Jacobi symbol; equivalently epsilon is the sum of [2/p] over p dividing d. Set l=5^epsilon d and eta=5^(1-epsilon). Thus d is 1 modulo8 when epsilon=0 and 5 modulo8 when epsilon=1. There exist primitive integers a,b,c with c>0 odd and
+
+ a^2-l b^2=5de c^2,
+
+which can additionally be chosen so that v_2(a/c)>=3 and b/c=3 modulo4. For any such choice, put
+
+ Gamma=(c/d) product_{p|d}(-eta e/p)_4.
+
+Here (c/d) is the ordinary Jacobi symbol, and the rational quartic symbols are defined for nonzero quadratic residues modulo p=1 mod4. Every displayed symbol is defined. The exact multiplicative Cassels pairing of the two extra Selmer directions is Gamma. Consequently Gamma=-1 forces rank E_D(Q)=1 and excludes every admissible repetition B_(Nk)=D c'^2 for k>1 odd, 3 not dividing k and c'>0 integral.
+
+The certificate factor simplifies as follows:
+
+ epsilon=0: (c/d)=1, so Gamma=product_{p|d}(-5e/p)_4;
+ epsilon=1: (c/d)=(c/5), so Gamma=(c/5) product_{p|d}(-e/p)_4.
+
+The second line retains the primitive conic-certificate character. It is not discarded or chosen freely. Both lines are independent of the permitted certificate choice because they compute a fixed pairing.
+

@@ -1,0 +1,95 @@
+**Theorem 18.1 (whole-product certificate and strict positive-gap completeness).** Choose finite sets $S_p,S_\beta\subset\{r_k:\mu(k)>0\}$, possibly empty in one phase, and weights
+
+$$
+\theta_{s,r}\ge0,\qquad
+\sum_{r\in S_p}\theta_{p,r}+\sum_{r\in S_\beta}\theta_{\beta,r}=1.
+\tag{18.1}
+$$
+
+Define the weighted losses, distinct from the midpoint constants $C_s$ of (17.8), by
+
+$$
+H_p(q)=\sum_{r\in S_p}\theta_{p,r}[\operatorname{TV}(q,P_{p,r})-\rho_p],\qquad
+H_\beta(w)=\sum_{r\in S_\beta}\theta_{\beta,r}[\operatorname{TV}(w,P_{\beta,r})-\rho_\beta].
+\tag{18.2}
+$$
+
+Let $a\in C(\mathcal K_p),b\in C(\mathcal K_\beta)$, and choose finitely many state tests $f_i\in C(\mathcal K_p),g_j\in C(\mathcal K_\beta)$ with complete outcomes $z_i\in\Omega_\beta,t_j\in\Omega_p$. Empty test lists are allowed. Set
+
+$$
+\begin{aligned}
+G_B(q,w)&=H_p(q)+a(q)+b(w)+\sum_i f_i(q)\mathcal E_{B,z_i}(q,w),\\
+G_A(q,w)&=H_\beta(w)-a(q)-b(w)+\sum_j g_j(w)\mathcal E_{A,t_j}(q,w).
+\end{aligned}
+\tag{18.3}
+$$
+
+If, on the **whole** product $\mathcal K_p\times\mathcal K_\beta$,
+
+$$
+G_B\ge c_B-\delta_B,\qquad G_A\ge c_A-\delta_A,\qquad
+\delta_B,\delta_A\ge0,
+\tag{18.4}
+$$
+
+then every original finite observer satisfies
+
+$$
+e(M):=\max_s\{R_{{\rm conf},s}(M)-\rho_s\}
+\ge\frac{11}{61}\max\{0,c_B+c_A-\delta_B-\delta_A\}.
+\tag{18.5}
+$$
+
+Conversely, $V_\mu>0$ if and only if finite data of this form exist with exact inequalities $\delta_B=\delta_A=0$ and $c_B+c_A>0$. This is existence of a finite strict certificate, not attainment of an optimal dual or a supplied numerical margin. Restricting (18.4) to endpoint boxes, native mixtures, one finite shape or sampled points does not give this conclusion.
+
+Proof. Integrate $G_B$ against $\gamma$ and $G_A$ against $\zeta$ for a feasible pair. Shared p and suspended marginals cancel $a$ and $b$, separately. Each conditional generator term vanishes by (16.5). What remains is
+
+$$
+\sum_{s,r}\theta_{s,r}
+\left[\int\operatorname{TV}(D,P_{s,r})\,d\sigma_s(D)-\rho_s\right]
+\le\Phi_\mu(\gamma,\zeta).
+\tag{18.6}
+$$
+
+The last inequality uses nonnegative weights jointly summing to one and losses from this same feasible pair. Since the two edge measures each have mass one, (18.4) lower-bounds the left side by $m=c_B+c_A-\delta_B-\delta_A$. Minimize over feasible pairs and use $V_\mu\ge0$ and (16.9). Then $e(M)\ge J(\mathfrak M_\mu)\ge(11/61)\max\{0,m\}$, proving (18.5). In particular an exact positive certificate implies $V_\mu>0$.
+
+For the converse choose $0<d<V_\mu$. On the compact convex space
+$\mathcal U=\operatorname{Prob}(\mathcal K)^2$ of two unconstrained, separately normalized edge measures, impose all marginal equalities tested by continuous functions, all equations (16.5), and every actually supported loss inequality at threshold $d$. Before marginal agreement is imposed, define these losses specifically as
+
+$$
+\ell_{p,r}(\gamma,\zeta)=\int\operatorname{TV}(q,P_{p,r})\,d\gamma_p-\rho_p,\qquad
+\ell_{\beta,r}(\gamma,\zeta)=\int\operatorname{TV}(w,P_{\beta,r})\,d\zeta_\beta-\rho_\beta.
+\tag{18.7}
+$$
+
+This choice is essential for the separated two-edge functional. All conditions are closed in $\mathcal U$. Their full intersection is empty: otherwise marginal agreement would identify the losses with (16.6), and continuity in the parameter would give a feasible value at most $d$ on $R_\mu$. By the finite intersection property, finitely many equality conditions and finitely many of these supported loss inequalities already have empty intersection.
+
+Let $X\subset\mathbb R^{h+m}$ be the image of $\mathcal U$ under their equality-coordinate and loss-coordinate integrals. This is a compact convex set, because all coordinates are continuous affine functions. It is disjoint from the closed convex set
+
+$$
+Y=\{(0,y):y_i\le d\ (1\le i\le m)\}.
+\tag{18.8}
+$$
+
+Finite-dimensional strict separation of a compact convex set from a disjoint closed convex set gives coefficients $\lambda_0,\theta_0$ with
+
+$$
+\inf_{(x,y)\in X}(\lambda_0\cdot x+\theta_0\cdot y)
+>\sup_{(0,y)\in Y}\theta_0\cdot y
+=d\sum_i\theta_{0,i}.
+\tag{18.9}
+$$
+
+Unbounded negative directions in $Y$ force every $\theta_{0,i}\ge0$. They cannot all be zero: the equality-feasible endpoint-tag pair (16.7) gives an element of $X$ with equality coordinates zero, contradicting a strict lower bound greater than zero if $\theta_0=0$. Thus divide the whole separating functional by $\sum_i\theta_{0,i}>0$. This gives joint normalization (18.1), combining repeated loss coordinates if needed.
+
+The equality multipliers for p-marginal agreement combine into one $a(q)$; those for suspended-marginal agreement combine into one $b(w)$. The remaining equality multipliers combine into finitely many $f_i\mathcal E_{B,z_i}$ and $g_j\mathcal E_{A,t_j}$, with their signs absorbed into the tests. Equation (18.7) then makes the separating functional exactly
+$\int G_B\,d\gamma+\int G_A\,d\zeta$. Over the unconstrained product $\mathcal U$ its minimum is
+
+$$
+\min_{(q,w)\in\mathcal K}G_B(q,w)
++\min_{(q,w)\in\mathcal K}G_A(q,w)>d.
+\tag{18.10}
+$$
+
+Indeed the two probability measures vary independently, so point masses can minimize the two continuous integrands separately. Choose constants slightly below these two minima, retaining a positive sum. They give the finite certificate. Only compactness and finite strict separation were used; no relative-interiority or optimal-dual-attainment hypothesis is needed. Convex separation is the mature principle behind transport duality [GRST18, §9.2], rather than a new duality theorem here. ∎
+

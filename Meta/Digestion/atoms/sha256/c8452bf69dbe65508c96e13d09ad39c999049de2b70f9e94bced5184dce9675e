@@ -1,0 +1,26 @@
+**定理 18.3.1（KL 收缩系数的串联次乘性）。** 若 $K:X\to Y$、$L:Y\to Z$，则
+
+$$
+\boxed{
+\eta_{\mathrm{KL}}(L\circ K)
+\le
+\eta_{\mathrm{KL}}(L)\eta_{\mathrm{KL}}(K).
+}
+$$
+
+**证明。**
+
+对任意有限相对熵的 $p,q$，先经过 $K$ 再经过 $L$，有
+
+$$
+\begin{aligned}
+D(pKL\Vert qKL)
+&\le \eta_{\mathrm{KL}}(L)D(pK\Vert qK)\\
+&\le \eta_{\mathrm{KL}}(L)\eta_{\mathrm{KL}}(K)D(p\Vert q).
+\end{aligned}
+$$
+
+取所有允许分布对的上确界即可。证毕。
+
+<a id="claim-18-3-2"></a>
+

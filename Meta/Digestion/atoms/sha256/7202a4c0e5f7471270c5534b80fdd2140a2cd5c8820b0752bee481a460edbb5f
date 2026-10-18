@@ -1,0 +1,34 @@
+**Lemma 57.2 (literal block calculus and the positive family).** Put $X_t=\rho^t\alpha$. Then $\rho^d\beta=X_{d+1}$ and
+
+$$
+X_0=\alpha,\quad X_1=\beta,\quad
+X_t=(X_{t-1},X_{t-2})\quad(t\ge2).
+\tag{57.4}
+$$
+
+For $t\ge2$ put $w(u)=\#L(u)+2\#R(u)$. The *entire* endpoint table of $X_t$ is
+
+$$
+r_{X_t}(u)=
+\begin{cases}
+\mathsf{br},&w(u)\le t-2,\\
+\beta,&w(u)=t-1,\\
+\alpha,&w(u)=t\ \text{and }u\text{ ends in }R,\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\tag{57.5}
+$$
+
+Write $z_t=L^{t-2}R$ for $t\ge2$. Thus $z_t$ is an actual $\alpha$ address of $X_t$. If $r_{X_t}(u)=\alpha$, deleting the first letter of $u$ cannot leave another $\alpha$ address of $X_t$. Heights are $\operatorname{ht}(X_t)=t-1$ for $t\ge1$. There are exactly
+
+$$
+p:=|\mathcal P|=\operatorname{Cat}_{n-1}\binom na
+\tag{57.6}
+$$
+
+positive trees. They are obtained by replacing the leaves of every ordered $n$-leaf tree of composition $(a,b)$ by $X_d,X_{d+1}$ respectively, preserving every original bracket.
+
+Proof. Equation (57.4) follows from the literal substitution. Along a path, $L$ subtracts one and $R$ subtracts two from the block index until index one or zero is reached. Every word of weight at most $t-2$ ends at an index at least two and is a branch. Weight $t-1$ ends at index one and gives $\beta$. Weight $t$ can reach index zero exactly when its last step is $R$; a last $L$ would already have crossed the index-one leaf. Larger weights cross a leaf. This proves all four cases, including absent replies, and the deletion assertion follows because the deleted positive weight makes the remaining weight strictly less than $t$. Induction in (57.4) gives the heights.
+
+The substitution is injective on complete ordered trees. At one step an output root $\beta$ decodes to $\alpha$; the literal pair $(\beta,\alpha)$ decodes to $\beta$; any other image branch must decode recursively as a source branch. The special pair cannot also be the image of a source branch, since no one-step image has root $\alpha$. This gives a unique inverse on the image, and iteration remains injective. Since $\det M=-1$, an image of composition $C$ has initial composition exactly $(a,b)$. The classical Catalan shape count and the choice of $a$ labelled positions now give (57.6). These counts describe public candidates, not a known index of the actual source. □
+

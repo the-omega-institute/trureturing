@@ -1,0 +1,20 @@
+**Theorem 452.1.** Under exactly the hypotheses of Section 448, the
+same original triangulation has a nondegenerate hyperideal
+realization with all original edge-angle sums 2*pi and smooth
+totally geodesic boundary. Its compact metric on N, including the
+boundary, is complete.
+
+Proof. Section 449 supplies a common positive generalized field.
+Section 450 makes every owner genuine. Section 451 realizes the
+prescribed face pairing and establishes the stated metric and
+boundary conclusions.
+
+The strict-angle and variational existence results are reused.
+The new input is the completed flat exclusion for exactly six
+actual edges and four distinct labels in each fixed paired frame.
+The theorem does not cover repeated selected frame labels, six
+reservoir labels with additional special actual edges, more than
+six actual edges, torus boundary or arbitrary minimum-six-degree
+triangulations. No unrestricted CFMP, dynamical convergence,
+literature-priority or Lean/kernel verification claim is made.
+

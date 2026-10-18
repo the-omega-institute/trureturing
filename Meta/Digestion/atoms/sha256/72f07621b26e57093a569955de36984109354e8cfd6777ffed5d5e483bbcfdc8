@@ -1,0 +1,119 @@
+**定义 14.1（一个共同十二维系统）。** 固定坐标顺序和尺度
+
+$$
+x=(b_1,D_1,r_2,b_2,D_2,r_3,b_3,D_3,r_4,b_4,D_4,Z),
+\qquad r_1=\frac7{15},\qquad d_i=100D_i,\qquad z=100Z.
+\tag{14.1}
+$$
+
+对 $i=1,\ldots,4$，定义
+
+$$
+\begin{gathered}
+c_i=\frac{r_i(1-r_i)}{b_i},\quad j_i=b_i+c_i,\quad
+ t_i=1+b_i,\quad n_i=r_i+j_i,\quad u_i=1+2b_i,\\
+P_i=\begin{pmatrix}r_i&b_i\\c_i&1-r_i\end{pmatrix},\qquad
+q_i=\left(-D_i,\frac{6/25-D_i}{j_i},
+                 \frac{12/25-D_i}{t_i},\frac{Z-D_i}{n_i}\right)^{\mathsf T}.
+\end{gathered}
+\tag{14.2}
+$$
+
+$q_i$ 的分量从 $0$ 到 $3$ 编号，只定义下面这一个整个多项式：
+
+$$
+g_i(s)=100\sum_{h=0}^3q_{ih}
+       \prod_{\substack{0\le k\le3\\k\ne h}}\frac{s-k}{h-k}.
+\tag{14.3}
+$$
+
+其次数至多三。以 $h_{ik}=g_i(k)/100$ 记归一增益，四个后期样本由同一多项式给出：
+
+$$
+\begin{pmatrix}h_{i4}\\h_{i5}\\h_{i6}\\h_{i7}\end{pmatrix}
+=Lq_i,\qquad
+L=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}.
+\tag{14.4}
+$$
+
+直接把式 (14.3) 的四个基多项式在 $4,5,6,7$ 取值即得 $L$。这只是式 (8.1)–(8.2) 的尺度对应，不另立插值结果；没有在后续分支重新拟合增益。
+
+本节的带横线量是物理读数除以 $100$。定义
+
+$$
+\bar Y_i=D_i+u_i h_{i4},\qquad
+\bar p_i=D_i+(n_i+u_i)h_{i5},
+\tag{14.5}
+$$
+
+以及两组归一实际响应
+
+$$
+\begin{aligned}
+M_{i6}&=D_i+(n_i+2u_i)h_{i6},\\
+M_{i7J}&=D_i+(2n_i+t_i+2r_i)h_{i7},\\
+M_{i7M}&=D_i+(2n_i+3u_i)h_{i7},\\
+J_{i6}&=D_i+(n_i+r_i+t_i)h_{i6},\\
+J_{i7J}&=D_i+(n_i+u_i)h_{i7},\\
+J_{i7M}&=D_i+(n_i+4t_i-2-r_i)h_{i7}.
+\end{aligned}
+\tag{14.6}
+$$
+
+这里第一个字母指第五 $M$ 后的第六动作，下标 $7J,7M$ 指两种互择的最终动作。置
+
+$$
+\boldsymbol m_i=(\bar Y_i,\bar p_i,M_{i6},M_{i7J},M_{i7M})^{\mathsf T},
+\qquad
+\boldsymbol\jmath_i=(\bar Y_i,\bar p_i,J_{i6},J_{i7J},J_{i7M})^{\mathsf T}.
+$$
+
+联合映射 $F$ 的定义域取上述正分母开集、值域为 $\mathbb R^{12}$，十二行严格依下列顺序：
+
+$$
+F(x)=\begin{pmatrix}
+\bar Y_2-\bar Y_1\\
+\bar p_2-\bar p_1\\
+M_{26}-M_{16}\\
+M_{27J}-M_{17J}\\
+M_{27M}-M_{17M}\\
+\bar Y_4-\bar Y_3\\
+\bar p_4-\bar p_3\\
+J_{46}-J_{36}\\
+J_{47J}-J_{37J}\\
+J_{47M}-J_{37M}\\
+\bar Y_3-\bar Y_1\\
+\bar p_3-\bar p_1
+\end{pmatrix}
+=\begin{pmatrix}\boldsymbol m_2-\boldsymbol m_1\\
+\boldsymbol\jmath_4-\boldsymbol\jmath_3\\
+\bar Y_3-\bar Y_1\\\bar p_3-\bar p_1\end{pmatrix}.
+\tag{14.7}
+$$
+
+其中 $M_{26}$ 表示 $M_{2,6}$，其余同理。四槽从一开始只有一个 $Z$；第 $1,2,6,7,11,12$ 行共同约束所有槽的同一个第四及第五读，不能为两对分别选择父或第五响应。
+
+为把这些方程接回实际轨迹，式 (1.2)–(1.4) 在这里给出下表。各时钟的物理读数始终是 $d_i+g_i(k)\operatorname{tr}(A_kP_i)$。
+
+| 原时钟与动作 | 左乘所得实际矩阵 | 迹 |
+| --- | --- | --- |
+| $0$ | $I$ | $1$ |
+| $1,J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ |
+| $2,M$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $t$ |
+| $3,J$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $n$ |
+| $4,M$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ |
+| $5,M$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u$ |
+| $6,M$ | $\left(\begin{smallmatrix}3&1\\5&2\end{smallmatrix}\right)$ | $n+2u$ |
+| $7,MJ$ | $\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $2n+t+2r$ |
+| $7,MM$ | $\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $2n+3u$ |
+| $6,J$ | $\left(\begin{smallmatrix}3&1\\2&1\end{smallmatrix}\right)$ | $n+r+t$ |
+| $7,JJ$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $n+u$ |
+| $7,JM$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $n+4t-2-r$ |
+
+表中 $7,EG$ 的 $E$ 是第六动作、$G$ 是最终动作，两行最终响应不是同一轨迹上的额外读数。代入式 (14.2)–(14.4)，前四读恰为 $0,24,48,100Z$，第四及第五动作后恰为 $100\bar Y_i,100\bar p_i$。后六行恰给式 (14.6)。这些恒等式不除以任何增益样本或最高次系数，也不依赖旧父读数界。
+

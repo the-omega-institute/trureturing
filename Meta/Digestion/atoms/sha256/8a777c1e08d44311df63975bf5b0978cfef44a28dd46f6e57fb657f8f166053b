@@ -1,0 +1,27 @@
+## 447. Flat exclusion for exactly six actual edges and four-distinct frames
+
+**Theorem 447.1.** Under all hypotheses of Section 444, every original
+tetrahedron of the common positive generalized length field is genuine.
+
+Proof. A nonempty flat set would give the source data of Section 445.
+Its entire range 1<v<=m is the union of the two cases excluded in
+Section 446. Thus no flat exists, and the positive-length classification
+leaves only genuine owners.
+
+The proof includes all actual original slots and face occurrences.
+It neither removes repeated visits nor forbids two distinct owners
+from having the same role vector. The four-distinct-label condition
+is a condition within each fixed frame, not an assumption that the
+four numerical coshes differ or that owners have different roles.
+
+This theorem completes flat exclusion for the stated intrinsic
+six-actual-edge class. It does not extend the 360-word census to
+repeated axial/frame labels, to six reservoir labels with additional
+special actual edges, or to more than six actual labels. The original
+degree and topology hypotheses remain those of Section 444.
+
+Existence of a common positive critical length field and conversion
+to a geometric realization are separate inputs and are not proved by
+this flat-exclusion argument alone. No unrestricted CFMP theorem or
+Lean/kernel verification is asserted.
+

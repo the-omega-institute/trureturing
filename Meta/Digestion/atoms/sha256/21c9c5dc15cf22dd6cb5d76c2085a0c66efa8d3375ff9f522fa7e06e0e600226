@@ -1,0 +1,37 @@
+**Proposition 206.19 (Stock exchange with a matching fixed-total minimum).**
+For every $L\ge8$, set all late totals to four, let
+$\gamma_1,\gamma_2\ge0$ have sum two, and use
+
+$$
+y=\mathcal V((\gamma_1,\gamma_2),
+              (6-2\gamma_1,6-2\gamma_2),(4,\ldots,4),3).
+\tag{206.51}
+$$
+
+It has $S=8,W=13$ and both excesses one, the attained fixed-data
+minimum. Every input in (206.7) with these same totals receives its
+exact-$Q$ certificate. This example is also in the clipping region.
+
+**Proof.** These are the stock core parameters
+$\mu=4,d=1,E_0=2,\tau=3$, so 206.17 applies with equality.
+For the explicit split $(\gamma_1,\gamma_2)=(2,0)$, the full $N$
+maxima are $(0,4,6,4)$ at $(1,2)$,
+$(2,2,4,6)$ at $(1,j)$, $(3,3,4,4)$ at $(2,j)$, and
+$(2,2,4,5)$ at late pairs. They follow directly from (206.14)–(206.16).
+The stopped first cells merge with the same total. Hence both complete
+supports are $14$, including shorter schedules. For any split the
+stock theorem proves the same value. Its lower bound is
+$\mu-t=1$ for every fixed-data competitor.
+
+Zero score fails at $u_L$ with $2m/(m+1)>1$, $m=L-2$.
+The 203.6 fair-profile unit threshold is $15>13$.
+The actual pair projection has $m_j=4,d_{ij}=2$, hence
+$\kappa=2,\pi=1$. The clipping corollary applies because
+$E=\mu-2$ and $W=3\mu-1$; this is one membership example with two
+available certificates. At 205.10's threshold, writing
+$r=\lceil(m+1)/2\rceil$, budget one requires
+$W\ge\max(15-6/r,13)$. It is strictly larger than $13$ for
+$r\ge4$, equivalently $L\ge8$. At $m=4,5$ it equals $13$,
+so those equality cases are already in that named prior region.
+$\square$
+

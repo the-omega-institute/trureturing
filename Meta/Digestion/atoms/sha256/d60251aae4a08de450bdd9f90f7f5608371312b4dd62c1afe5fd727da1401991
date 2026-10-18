@@ -1,0 +1,17 @@
+#### 27.2　低于全阶的记录完全相同
+
+对模型符号 $\sigma\in\{+1,-1\}$，定义至多 $k$ 阶的静态记录剖面
+
+$$
+\mathcal R_{\le k}(M_\sigma)
+=
+\left\{
+\operatorname{Law}_{M_\sigma}(Y\mid
+\operatorname{do}(X_S=a_S))
+\;\middle|
+\;|S|\le k,\ a_S\in\{-1,0,+1\}^{S}
+\right\}.
+$$
+
+<a id="claim-27-2-1"></a>
+

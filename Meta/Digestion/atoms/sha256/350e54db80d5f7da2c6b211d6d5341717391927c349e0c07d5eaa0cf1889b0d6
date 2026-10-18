@@ -1,0 +1,17 @@
+**命题 19.1（测试给定读数界的两种有限截止）。** 在 $\gamma>0$ 时，若 $h\le0$ 则无非零预测；若 $h>0$，定理18.2的完整三线判据可仅测试
+
+$$
+(m,n)\in\mathcal S,\qquad m+\varphi n\le h/\gamma.
+$$
+
+较宽截止 $m+\varphi n\le\varphi h/\gamma$ 也给准确决定。它们是不同的有限列表，但连同相同三线判据，均成功当且仅当 $h\ge h_*$。
+
+证明。即使不作正交化，定理4.3给规则尾
+
+$$
+q_1q_2^{\varphi}=(rs^{\varphi})^{m+\varphi n},\qquad
+rs^{\varphi}\ge s^{\varphi^2}/L\ge T.
+$$
+
+因 $\Delta\le AB\le L^2B$，有 $r\ge s/L$；$s\ge s_0$ 给第二个界。由 $q_1,q_2\le H$ 及 $\log T=\varphi^2\gamma$，得到 $(m+\varphi n)\gamma\le h$。这是较小列表的必要截止。较宽列表来自 $f_0+\varphi f_1\ge\varphi\gamma(m+\varphi n)$ 及 $f_0,f_1\le h$。两列表都覆盖每个可行组成，测试内的三线不等式又各自充分，故完整决定等价。若以 Gram 平方量写参数 $\log d_0,2\log L,2\log H,\log B$，分别是 $2z,2\ell,2h,2v$，不得把这项倍数变化与截止的 $\varphi$ 因子混为一谈。
+

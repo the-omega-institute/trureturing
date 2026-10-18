@@ -1,0 +1,18 @@
+### 69.4 Completion of the finite range and attribution
+
+Combining these two constructions with §§66–68 gives the following optimal positive-weight distributions for the specified channel:
+
+    k=3: (1);
+    k=4: (3/4,1/4);
+    k=5: (3/5,2/5);
+    k=6: (1/2,1/2);
+    k=7: (3/7,3/7,1/7);
+    k=8: (3/8,3/8,1/4);
+    k=9: (1/3,1/3,1/3).
+
+For k=3 use the three Pauli bases; k=4,8 use §68's scalar Hadamard construction; k=6 uses §66 with a Hadamard matrix of order two; and k=9 uses §67's explicit balanced frame. In every case both the number of listed weights and their Shannon entropy are globally minimal over exact finite physical LOSR decompositions.
+
+The Fourier frame and Naimark-complement principles are standard; see Novikov and Sevost'yanova, Maltsev equal-norm tight frames, §2 and Theorem4, https://www.mathnet.ru/eng/im9137 . The identities X1=0 and XX^T=(7/3)I identify the seven-vector configuration as a centered unit-norm tight frame, equivalently a real spherical2-design; this equivalence is classical, explicitly reviewed in Heineken, Morillas and Tarazaga, Balanced frames: a useful tool in signal processing with good properties, Proposition3.5, https://arxiv.org/html/1904.00920 . The elementary moment computation is supplied above, without a novelty claim for spherical designs or a general projection-decomposition theorem.
+
+The physical resource conclusion uses these standard frame ingredients in the exact common-channel equality criterion. It concerns the stated finite range and fixed MC channel family, with arbitrary physical product competitors and all reference extensions. No general-k existence or positive-error diamond optimum is asserted.
+

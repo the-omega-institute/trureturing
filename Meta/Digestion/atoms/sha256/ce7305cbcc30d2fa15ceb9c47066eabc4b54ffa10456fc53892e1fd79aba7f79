@@ -1,0 +1,36 @@
+**Definition 1.2 (full activity class).** Use exactly FA Definition
+67.2. On each whole joint decoder fibre a measurable PSD first-event
+rate $R_j(u)$ has integrable operator norm. Survivor controls preserve
+trace apart from that rate and may be arbitrary admitted TP controls,
+including noncommuting and unobserved controls. Their survivor maps obey
+
+$$
+-\frac d{du}\operatorname{tr}\mathcal S_{j,u}(X)
+=\operatorname{tr}(R_j(u)\mathcal S_{j,u}(X)),\qquad
+\mathcal S_{j,0}=\mathrm{id}.
+\tag{JS.4}
+$$
+
+Terminal survivor processing is TP on the whole fibre. No singular
+first-event part, forced deadline absorption or positive-carrier
+operation after first absorption is permitted. Activity is
+
+$$
+\mathsf A=\sup_j\int_0^1\|R_j(u)\|\,du.
+\tag{JS.5}
+$$
+
+For finite labels use a maximum; use the stipulated essential supremum
+for an integral instrument. This is a supremum of integrated norms,
+not an expectation or an integral of a labelwise maximum. Write
+$\mathfrak F_{s,A}$ for the class with original error $E_*$, (JS.3),
+and $\mathsf A\le A$, and $\mathcal T_A(s)$ for its supremal
+full-acquisition-label height TV between $(5,+,+)$ and $(27,+,+)$
+when nonempty. Necessity covers finite and convergent countable
+instruments and only the expressly stipulated measurable/integrable
+finite-fibre extension of CG Convention 21.3. No further disintegration
+or infinite-dimensional coding theorem is assumed. Write $\mathcal T(s)$
+for the same original optimization without an activity budget, and
+$t_{\min}(s)=\inf\{t\ge0:\mathfrak F_{s,\log(1+t)}\ne\varnothing\}$.
+FA73 supplies its positive finite attained value for $0\le s<s_0$.
+

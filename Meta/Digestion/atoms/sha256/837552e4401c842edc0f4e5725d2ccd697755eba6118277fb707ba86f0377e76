@@ -1,0 +1,20 @@
+**Definition 8.1 (restricted actual generation of the label).** Promise
+that the source is live at height $a_0$ at a public cut. The first five
+legs of Proposition 7.2 supply such a source class: their common known
+height waveform returns to $a_0$ for every unknown $\beta,m$. Their
+phase histories remain unknown to the controller. No claim is made that
+this anchor can be recognized in an arbitrary unknown past.
+
+At that cut the controller chooses $j\in\{1,\ldots,M\}$ using only
+its actual available inputs and latches the actual choice. Apply the
+supplied calibrated canonical horizontal instrument from $a_0$ to $k_j$.
+On its actual live output the new height is $k_j$ and its latched label
+is correct by the generator's operation, rather than by measurement of an
+unknown specimen or inversion of a whole law. On failure retain $j$, the
+actual time/mode and $f$, and stop.
+
+This is a restriction to a known source anchor and controller-generated
+heights. Calibrated operations, coherent coding, blank ancillas, exact
+clocks and recording are still the conditional services in Definition 1.3.
+The restriction adds no waveform sensor, overlap oracle or parity helper.
+

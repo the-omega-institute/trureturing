@@ -1,0 +1,40 @@
+**Theorem 7.4 (conditional closure, without a self-replay oracle).** For
+any fixed graph having a repeated-service certificate, the full lawful
+prefix class of its canonical version is closed under every prescribed
+non-IN successor and exactly its canonical-extendible IN successors.
+Every finite lawful cut, including a cut inside an earlier recovery or
+package copy, has a finite-completion-conditional later Cover and exact
+historical call. Frozen packages retain their old target. This theorem
+does not assert that a graph with the certificate has been constructed.
+
+Proof. Syntax determines the admissible IN bits exactly as for AIF's
+canonical language, now with the three additional frame languages.
+Serial admission prevents a second frame before handler return and
+acknowledgement. At non-IN phases the prescribed successor preserves the
+unfinished finite routine. At IN phases extendibility is necessary and
+sufficient for remaining in the lawful prefix class. This proves the
+closure assertion with physical raw IN distinguished from task admission.
+
+To avoid circular termination, induct on the number of completed frames.
+The original source fragments terminate by their suppliers. Consider a
+new handler after a finite prefix of completed frames. Its frozen
+predecessor consists entirely of those earlier completed fragments.
+Boundary-stopped replay of it is finite by the induction hypothesis and
+the certified row simulator. A Select or Next has a finite constructed
+interval. A Call has a finite previously published key and finite cutoff
+at or before a prior cover. Replaying that cutoff follows represented
+native rows; even when they are rows of an earlier recovery, each is a
+single finite representation update, not a recursive oracle answer.
+The certificate's output/copy/return graphs terminate on the resulting
+finite strings. Thus the next frame completes, closing the induction.
+
+For an unfinished lawful cut, supply a finite canonical remainder and
+finish its already admitted finite fragment. The next Cover freezes a
+complete predecessor containing that exact cut. All added input choices
+are retained, so the same boundary-stopping and prefix-selection argument
+applies to the actual extended graph, not merely to $M_0$'s source rows.
+The resulting endpoint includes the earlier recovery's work, cells and
+permissions. Freezing the package fields gives Proposition 6.2's target
+stability. All physical reads and live successors are those in the
+certificate; historical permissions remain represented data. ∎
+

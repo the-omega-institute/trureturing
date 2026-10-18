@@ -1,0 +1,74 @@
+**Theorem 43.2 (Reference-envelope necessity on the full source).** For every admissible measurable carrier, procedure, family, and common reference in Definition 43.1, put
+
+$$
+M=\sup_{y\in X}\nu(H_y),\qquad U=\sup_{y\in X}h_y.
+$$
+
+Then
+
+$$
+(1-\delta)M\le\rho_\nu,\qquad
+U\le M+\rho_\nu,\qquad
+(1-\delta)U\le(2-\delta)\rho_\nu.
+\tag{43.4}
+$$
+
+In particular, every attainable anchor row under the radius cap satisfies
+
+$$
+(1-\delta)h\le(2-\delta)\eta.
+\tag{43.5}
+$$
+
+No uniform execution horizon or sourcewise proposal probability is required.
+
+**Proof.** Let $S_y=H_y\setminus F_y$ be the measurable event of a correct finite proposal, so that $F_y,S_y$ are disjoint and $H_y=F_y\sqcup S_y$. The signed error test
+
+$$
+g_y=\mathbf1_{F_y}-\delta\mathbf1_{H_y}
+=(1-\delta)\mathbf1_{F_y}-\delta\mathbf1_{S_y}
+\tag{43.6}
+$$
+
+has values $1-\delta,-\delta,0$ on $F_y,S_y,\Theta\setminus H_y$, respectively. Its oscillation is at most one, including the endpoints. More explicitly, the two event-TV comparisons give
+
+$$
+\begin{aligned}
+\int g_y\,d\nu-\int g_y\,d\mu_y
+&=(1-\delta)\bigl[\nu(F_y)-\mu_y(F_y)\bigr]
+ +\delta\bigl[\mu_y(S_y)-\nu(S_y)\bigr]\\
+&\le\bigl[(1-\delta)+\delta\bigr]\operatorname{TV}(\mu_y,\nu)
+\le\rho_\nu.
+\end{aligned}
+\tag{43.7}
+$$
+
+Thus (43.1) implies
+
+$$
+\nu(F_y)-\delta\nu(H_y)\le\rho_\nu
+\qquad(y\in X).
+\tag{43.8}
+$$
+
+The single allowance in (43.7) uses the disjoint false/correct partition. Treating $F_y$ and $H_y$ as unrelated positive tests would give a different bound.
+
+Fix an arbitrary actual source $x$. Use exactly the increasing finite-record events $A_m$ of (40.6), now for the run at $x$: the finite proposal has execution length at most $m$, queries only the first $m$ primes $P_m$, and is at most $m$. They satisfy $A_m\uparrow H_x$. Every finite real proposal, including a negative one, is eventually within this upper cutoff. Constant zero advice and (37.1) supply one actual source $y_m$ with
+
+$$
+d_{P_m}(N(y_m))=d_{P_m}(N(x)),\qquad \Omega(y_m)>m.
+\tag{43.9}
+$$
+
+It is chosen for the whole event before quantifying over tapes. The finite-execution transport of Corollary 37.3 and Theorem 38.2 gives the literal inclusion $A_m\subseteq F_{y_m}$, on every declared tape. Hence (43.8) yields
+
+$$
+\nu(A_m)\le\nu(F_{y_m})\le\delta\nu(H_{y_m})+\rho_\nu
+\le\delta M+\rho_\nu.
+\tag{43.10}
+$$
+
+Continuity from below under this one fixed $\nu$ gives $\nu(H_x)\le\delta M+\rho_\nu$. Taking the supremum over $x$ proves $(1-\delta)M\le\rho_\nu$. Although the comparison source varies with $m$, neither its laws nor its proposal events are passed through a limit; the only exhaustion is under $\nu$ at the fixed source $x$.
+
+Separately, event-TV gives $h_y\le\nu(H_y)+\rho_\nu\le M+\rho_\nu$. Taking the supremum proves the middle inequality in (43.4). Multiplying it by $1-\delta\ge0$ and using the first inequality proves the last one. The anchor and cap give (43.5). There is no division by $1-\delta$, so the proof includes $\delta=1$, as well as $h=0$ and $\rho_\nu=0$. $\square$
+

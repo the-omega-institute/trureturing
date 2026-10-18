@@ -1,0 +1,37 @@
+### 11.4 Original histories and complete resources
+
+Install the finite table of Theorem 11.4 by [PAID, Lemma 2.1.1], with the entire original $C_0$ as a component. Before the third latch use fair synthesis and original control updates. In the same third-completion update, perform the original record write and latch before sampling the source-independent private row $\pi$. Use $B$ after an actual p-beta and $A$ after an actual suspended-alpha, as well as in synthetic generation. Completing letters clear the labels and enter precisely their original matching pendingStop; Stop and delivery keep their original rules.
+
+Induction over original operations preserves every record, seed, marker, flag and permission. At the first fourth-segment p cut the private row is $\pi$. Equation (11.10) makes the row $\tau$ after any noncompleting p-beta and $\pi$ after any suspended-alpha return. This holds on every positive finite acquired fourth-segment history, on every original record fibre. Conditioning on actual letters does not weight private configurations by synthetic probabilities. Private initialization and all updates are source-independent, and the actual source remains the single originally sampled $K$.
+
+For any such history, pull its target back through $I_{C_0(h)}$:
+
+$$
+T_{s,h}=\sum_k\nu_h(k)P_{s,r_k}.
+$$
+
+This is a normalized countable mixture under the fixed original prior, incorporating every paid rejection and partial parse. For example,
+
+$$
+\int\operatorname{TV}(Q,T_{p,h})\,d\nu_p(Q)
+ \le\sum_k\nu_h(k)\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p(Q).
+\tag{11.21}
+$$
+
+The target convexity in (11.21) is applied to each descriptor before integrating; it does not move TV outside the configuration average. Equation (11.12) applies to $T_{s,h}$ itself. Rendering then preserves these complete-law inequalities, including all future records, original operation blocks and the matching Stop. Hence
+
+$$
+R_{\mathrm{conf},p}(\widehat M)
+ \le\sup_{k:\mu(k)>0}\mathcal L_p(P_{p,r_k})+\frac{81}{44}\varepsilon,
+$$
+
+$$
+R_{\mathrm{conf},\beta}(\widehat M)
+ \le\sup_{k:\mu(k)>0}\mathcal L_\beta(P_{\beta,r_k})+\frac{61}{44}\varepsilon.
+\tag{11.22}
+$$
+
+The exact equality of a finite stationary table's phase suprema with its supported pure-depth suprema is [CLIP, Proposition 2.3]. Its lower direction uses finite paid rejection histories concentrating at each supported depth and a fixed legal seed/marker suffix. The summable likelihood-ratio domination in [PAID, Lemma 14.1] covers countable priors. Thus using pure targets here retains the full original history problem, rather than replacing it with hypothetical pure-source experiments.
+
+Only the finite table and label are retained with $C_0$. Cells, descriptors, both flow measures, their barycentres and posterior rows are mathematical construction data. They are not retained as a continuous register or exposed to the observer. For a represented table, installation data, selector and label addresses, numerical thresholds, sampler states, program, workspace and output indices belong to COMPLETE. Every acquired Read, fresh random bit, internal operation and synthetic output remains charged. Each finite approximant may have a different charged size or precision. No fixed COMPLETE budget, hard marginalized-defect bound, worst-case execution bound or physical exact-real sampler follows from (11.22).
+

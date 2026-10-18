@@ -1,0 +1,66 @@
+**Assumption 11.3 (target and separate convergence contracts).** Let
+$W^1,W^2$ be independent Brownian motions starting at zero with
+$[W^i]_t=2t$ and $[W^1,W^2]_t=0$. For an arbitrary fixed
+$\lambda\in\mathbb R$, specify jointly
+
+$$
+\begin{aligned}
+J^\lambda_t&=\int_0^t W^1_s\,dW^2_s+\lambda t,\\
+\tau&=\inf\{t\ge0:k+W^1_t\notin(l,u)\},\qquad S=\tau\wedge T,\\
+\bar z^\lambda_t&=(W^1_{t\wedge S},W^2_{t\wedge S},J^\lambda_{t\wedge S}),
+\qquad
+\zeta=\begin{cases}\tau,&\tau\le T,\\\infty,&\tau>T.\end{cases}
+\end{aligned}
+\tag{11.6}
+$$
+
+The integral is in the joint Brownian filtration. The Brownian pair
+specifies an additional comparison law; each finite-stage executed
+command is still an original absolutely continuous history, with no
+physical Brownian input assumed. Define $\bar q^\lambda$
+from this triple by (11.3), and $q^{\lambda,\dagger}$ by its censored
+lifetime. Proposition 4.5 gives $S>0$ and $\mathbb P(\tau=T)=0$.
+This fixes covariance $2I_2\,dt$ before death and the same clock $T$;
+the held process has no new fluctuations after $S$.
+
+The qualitative held-law contract is
+
+$$
+(\bar q_n,\zeta_n)\ \Rightarrow\ (\bar q^\lambda,\zeta)
+\quad\hbox{in }C([0,T],[l,u]\times\mathbb T^2)
+             \times([0,T]\sqcup\{\infty\}),
+\tag{11.7}
+$$
+
+with uniform path topology. The separate cemetery-law contract is
+$q_n^\dagger\Rightarrow q^{\lambda,\dagger}$ in $D([0,T],E)$ with
+$J_1$ topology. Either may be imposed for the qualitative result below.
+A time homeomorphism in $J_1$ compares observations; it never changes a
+command's execution clock or its energy. Death information is retained
+in (11.7); held uniform convergence alone is not a death convention.
+
+For quantitative statements impose instead the following coupled
+pathwise contract. On a space carrying the specified target, the held
+triples $(a_n,b_n,J_n)$ converge uniformly to $\bar z^\lambda$ and
+$\zeta_n\to\zeta$. Let $\epsilon_n>0$ tend to zero, allowing random,
+nonmonotone errors and dependence on the entire target and on extra
+randomness. Fix positive constants $d_a,d_b$. For every rational
+$0<t<T$ with $t<S$, eventually
+
+$$
+t<S_n,\qquad
+\sup_{s\le t}|a_n(s)-W^1_s|\le d_a\epsilon_n,
+\qquad
+\sup_{s\le t}|b_n(s)-W^2_s|\le d_b\epsilon_n.
+\tag{11.8}
+$$
+
+The eventual index may depend on $t$ and the realization. A uniform
+control tube on all of $[0,T]$ around the held target, with these same
+radii, is sufficient for (11.8) together with the stated lifetime
+convergence. The full chronological and
+lifetime convergence remains part of this approximation class even
+though the lower bounds use only (11.8). No tube for an unexecuted
+comparison extension is assumed. The qualitative contracts do not
+include an error variable and do not assert this pathwise coupling.
+

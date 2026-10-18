@@ -1,0 +1,46 @@
+**Definition 16.3 (the exact remaining mathematical gap).**
+For nineteen labels the remaining question is existence of a cover in
+(NARC.14.1), separately with $\mathcal P_t^+$ and $\mathcal P_t^0$.
+The six boundary corners, the 210 ordered unequal gate pairs and
+the incidence equations constrain that same cover. They are not
+a construction, and their individual consistency is not sufficient.
+A class-complete obstruction could, for each remaining gate pair,
+give real cell weights $w_p$ and bounds $\mu_t$ valid for every
+candidate of anchor $t$ compatible with that pair, such that
+
+$$
+\sum_{p\in C}w_p\le\mu_t\quad\text{for every such }C,
+\qquad
+\sum_{p\in[0,18]^2}w_p>\sum_{t=0}^{18}\mu_t.
+\tag{NARC.16.3}
+$$
+
+A disjoint full cover would contradict this inequality by summing
+over its actual classes. Its validity must include every allowed
+macro word and integer gap, rather than a symmetric, endpoint,
+unit-step or L-only subfamily. No such complete obstruction or
+full cover is supplied here.
+
+For eighteen labels the remaining question is a cover of the complete
+families $\mathcal A_t^\lambda$ in Theorem 15.2, with total defect
+eighteen. The geometric gaps include the native nine-run target
+conditions in the two axis-monotone defect-one cases, the zero-containing
+fibers of general fused classes, and compatibility of every permitted
+mixture of saturated and higher-defect classes. The finite criterion
+defines all of them without omitting a defect allocation; the fusion
+witness does not solve their joint packing. Thus unrestricted
+$q=18$ and $q=19$ whole-grid feasibility remains unresolved under
+each convention.
+
+In the broader alpha/beta programme, these results identify precisely
+which retained source relation and fresh native replies can align the
+current visible structure with its original coordinate, and thereby
+recover the selected original boundary row and substitution count.
+The saturated residual shows why this recovery can leave hidden
+spatial distinctions in memory's original fiber. Recovering the other
+original cut row or the full hidden filling demands further information.
+The next gap is the complete compatible cover or its unrestricted
+obstruction, followed by any additional hypotheses needed for stronger
+mutual reconstruction. Neither that gap nor the full space/time/boundary/
+memory programme is settled by the local class theorems.
+

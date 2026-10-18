@@ -1,0 +1,63 @@
+**Theorem 29.5 (Whole-state fixed-risk lower bound for the fixed $(3,3)$ experiment).** Fix $0<\delta_0<1/4$. For sufficiently small $\varepsilon>0$, with its cutoff depending only on $p$, uniformly for $0<v\le1$ and $0<\delta\le\delta_0$,
+
+$$
+N_{33}^{\rm all}(v,\varepsilon,\delta)
+\ge c_{p,\delta_0}v^{-2}\varepsilon^{-2}.
+\tag{29.23}
+$$
+
+Together with (29.17), at each fixed $\delta\in(0,1/4)$ both measurement classes have $\Theta_{p,\delta}(v^{-2}\varepsilon^{-2})$ pair cost. The constructive upper bound retains $\log(12/\delta)$; the claimed lower bound is fixed-risk and contains no asserted logarithmic strengthening.
+
+**Proof.** First record the classical fidelity conversion in the precise convention needed here. If two density matrices on the same finite support satisfy $\rho,\sigma\ge\lambda I$, write $\Delta=\rho-\sigma$ and $X=\sqrt\rho-\sqrt\sigma$. The Sylvester identity
+
+$$
+\sqrt\rho\,X+X\sqrt\sigma=\Delta
+$$
+
+and Hilbert–Schmidt Cauchy–Schwarz give $\|X\|_2\le\|\Delta\|_2/(2\sqrt\lambda)$: inner product with $X$ bounds the left side below by $2\sqrt\lambda\|X\|_2^2$. As $\operatorname{Tr}\sqrt\rho\sqrt\sigma=1-\|X\|_2^2/2$, the root fidelity obeys
+
+$$
+F_r(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1
+\ge1-\frac{\|\Delta\|_2^2}{8\lambda}.
+\tag{29.24}
+$$
+
+Root fidelity tensorizes. The Fuchs–van de Graaf inequality, in half-trace-norm convention, is
+
+$$
+T(\rho,\sigma):=\tfrac12\|\rho-\sigma\|_1
+\le\sqrt{1-F_r(\rho,\sigma)^2}.
+$$
+
+Using $(1-a)^N\ge1-Na$ in (29.24) yields
+
+$$
+T(\rho^{\otimes N},\sigma^{\otimes N})
+\le\frac{\sqrt N\|\Delta\|_2}{2\sqrt\lambda}
+\quad\text{if }N\|\Delta\|_2^2\le2\lambda.
+\tag{29.25}
+$$
+
+The equal-prior optimal testing error for arbitrary POVMs is $(1-T)/2$, the Helstrom formula. Thus the following bound controls the entire state before any measurement, not just its selected entries or local information matrix.
+
+For small $t>0$, set $\alpha(t)=\arcsin((B/A)\sin t)$ and choose
+
+$$
+\phi_2^+=t,\quad\phi_2^-=-t,\qquad
+\phi_1^+=-\alpha(t),\quad\phi_1^-=\alpha(t),\qquad
+\mu_+=\mu_-=v.
+\tag{29.26}
+$$
+
+These are actual internal phases, for instance via $\theta_1=\theta_2=0$, $\theta_3=\phi_1$, $\theta_4=\phi_1+\phi_2$. Both points use the **same** atomic angle law (29.16) with $r=v,\gamma=0$. Their $C$'s agree because their imaginary parts cancel and their cosine parts agree. Their $q$'s are $1+\eta e^{\mp it}$, so $|q_+|^2=|q_-|^2$. Every block of (29.6) is identical except the off-diagonal entries of the two cross matrices $\mu K$. Directly,
+
+$$
+\|\rho_{33}^+-\rho_{33}^-\|_2
+=4vD\eta|\sin t|\le4vD\eta t.
+\tag{29.27}
+$$
+
+Their character separation is at least $|e^{it}-e^{-it}|=2\sin t$. Take $t=3\varepsilon$ and restrict $\varepsilon$ so that $t\le1/2$ and $(B/A)\sin t\le1/2$. Then separation is greater than $2\varepsilon$. By (29.8), (29.25) applies with $\lambda=\lambda_p$. For a sufficiently small positive $p$-dependent constant $c$, $N\le cv^{-2}t^{-2}$ makes $T\le1/2$, hence every test has error at least $1/4>\delta_0$.
+
+An estimator with risk at most $\delta_0$ at both points would give a test of error at most $\delta_0$ by choosing the nearer character point: the two radius-$\varepsilon$ balls are disjoint. This contradiction proves (29.23). The support gap and atomic law include $v=1$, so there is no endpoint exception. $\square$
+

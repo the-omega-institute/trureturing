@@ -1,0 +1,24 @@
+**引理 46.3（局部回复律与首个分离深度）。** 令 $e_p$ 是展开位，且在展开情形把孔右树记为 $z$。探针回复为
+
+$$
+\begin{array}{c|cc}
+ &e_p=0&e_p=1\\ \hline
+N=0&\beta&\operatorname{branch}\\
+N=1&\alpha&r_{\rho z}(\varepsilon)\in\{\beta,\operatorname{branch}\}\\
+N\ge2&\beta&\operatorname{branch}.
+\end{array}
+\tag{SLH.46.3}
+$$
+
+在 $N=1$ 行，右树 $z=\alpha,\beta$ 分别达到 $\beta,\operatorname{branch}$。对每个固定有限 $z$，局部来源 $\beta$ 与 $\langle\alpha,z\rangle$ 在纪元 $N$ 的最短分离地址深度准确为 $\lceil N/2\rceil$。因此在整树中，一个地址若能区分只在该局部选择上不同的两个来源，长度至少为 $d_p+\lceil N/2\rceil$；当 $N\ge1$ 时它必须在 $pR\{L,R\}^{*}$ 中。
+
+**证明。** 令 $T_n=\rho^n\alpha$。直接由替换定义有
+$T_0=\alpha,T_1=\beta,T_{n+2}=\langle T_{n+1},T_n\rangle$。
+对 $N\ge1$，零位局部为 $T_{N+1}=\langle T_N,T_{N-1}\rangle$，一位局部为 $\langle T_N,\rho^Nz\rangle$，故左侧完全相同，差异只能在右锥。$N=0,1$ 的表项由这两个式子直接得到。
+
+若 $N=2m\ge2$，零位沿 $R^m$ 到达 $T_1=\beta$；一位先沿 $R$ 进入 $\rho^{2m}z$，再沿 $R^{m-1}$。任意树经 $2m$ 次替换后，所有深度小于 $m$ 的节点均为分支，故该回复为分支。此共同分支前缀也可直接由两步替换使每个叶的深度至少增加一归纳得到。
+
+若 $N=2m+1\ge3$，零位沿 $RLR^{m-1}$ 依次进入 $T_{2m}$、$T_{2m-1}$、$T_1$，回复为 $\beta$。一位先进入 $\rho^{2m+1}z$：若 $z=\alpha$ 或 $\beta$，再沿 $LR^{m-1}$ 分别到达 $T_2$ 或 $T_3$，均为分支；若 $z=\langle v,w\rangle$，沿 $L$ 进入 $\rho^{2m+1}v$，剩余深度 $m-1<m$，也为分支。这给出所有有限孔完成上的表项，而不只给固定孔例子。
+
+局部两来源最初的差异深度为零，一次替换后的差异深度为一。引用《[原子边界三分](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md)》定理 8.2 的全部有限树两步精确深移律，偶数 $2m$ 时差异深度为 $m$，奇数 $2m+1$ 时为 $m+1$。共同外骨架添加前缀 $p$，得到所述长度下界。该供应只用于深度运输；表中具体地址的回复已由上述递推给出。$\square$
+

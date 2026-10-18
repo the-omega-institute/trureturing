@@ -1,0 +1,40 @@
+**Proposition 63.11 (an actual pair binds although its one-particle sector is unbound).** Take exactly §55.6's INITIAL $t=\langle\beta,\alpha\rangle$ and fixed cap $H=3$, with its actual history
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{63.30}
+$$
+
+Commission $a=1$, $g=1/10$, $\nu=360$, $N=2$, and the existing paid known occupation $S=\{o,L\}$. The accepted domain is precisely $(o,L,R,LL,LR)$, with §55.6's inherited matrix and six exterior seams. Then
+
+$$
+\begin{aligned}
+m_1&=\lambda\quad\text{with no attained one-particle minimum},\\
+B_2&=2\lambda-120=-114-4\sqrt2,\\
+\langle e_S,H^{\rm c}_{D,2}e_S\rangle&=-3503/20<B_2,\\
+\langle e_S,H^{\rm k}_{D,2}e_S\rangle&=-31139/260<B_2,\\
+B_2-\langle e_S,H^{\rm c}_{D,2}e_S\rangle
+&=1223/20-4\sqrt2>0,\\
+B_2-\langle e_S,H^{\rm k}_{D,2}e_S\rangle
+&=1499/260-4\sqrt2>0.
+\end{aligned}
+\tag{63.31}
+$$
+
+Consequently $m_2<B_2$, so the common pair has an attained finite-dimensional groundspace and all-near-minimizer compactness, with the finite common/killed preservation of Theorems63.7–63.9. This is interaction-induced root binding despite the unbound one-particle sector, in a model whose coescaping adjacent pairs also retain attraction.
+
+Proof. The no-binding range (55.18b) applies because $1/10<1/(2+3\sqrt2)$. It gives $m_1=\lambda$ and escape near-minimizers. It also excludes a nonzero threshold eigenvector: its proof gives
+$H_1-\lambda I\ge[1-g(2+3\sqrt2)](L-\lambda I)$, with strictly positive prefactor, and the channel excess forms displayed before (55.18b) have zero kernel. Indeed their sums of squared differences and positive endpoint term can vanish only for the zero sequence. Hence the one-particle infimum is not attained.
+
+Here $c_1=0$, $c_2=1/3$, so the two lower channels are $m_1+b_1=2\lambda$ and $b_2=2\lambda-120$; the latter is $B_2$. The occupied root/left pair has kinetic diagonal five, field sum $3/2$ and common pair coefficient $1/2$. Direct inversion of the actual accepted $L_D$ gives $G_D^{\rm k}(o,L)=9/26$, as in §62.13. Substitution gives
+
+$$
+5-\frac3{20}-180=-\frac{3503}{20},\qquad
+5-\frac3{20}-\frac{360\cdot9}{26}=-\frac{31139}{260}.
+\tag{63.32}
+$$
+
+The killed strict margin is certified without rounding by $1499^2-32\cdot260^2=83801>0$. On the initial three-site domain the killed coefficient is only $1/4$, giving trial energy $-1703/20$; that particular trial does not certify separation from $B_2$. No absence of other initial finite bound trials is inferred from it. The accepted pair trial is a genuine common trial by zero extension; the higher killed value also lies below the same lower escape certificate. All original leaf counts $2,3,5$, numerical replies, refusal and INITIAL target remain exactly §55.6's. No spectrum is inserted into an original Read. $\square$
+

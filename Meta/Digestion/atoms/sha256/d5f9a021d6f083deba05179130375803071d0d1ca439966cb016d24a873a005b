@@ -1,0 +1,94 @@
+### 10.2 Exact rational pair and its certified properties
+
+PAIR15 gives
+
+$$
+ u_0=\frac{1829}{5000},\quad U_0=\frac{3171}{5000},\quad
+ v_0=\frac{46}{125},\quad d=\frac{13}{15000},
+$$
+
+$$
+ t=\frac{78975}{2857232},\quad
+ s_a=\frac12-t=\frac{1349641}{2857232},\quad
+ s_b=\frac12+t=\frac{1507591}{2857232}.
+$$
+
+The p law starts from the endpoint mixture $s_aP_{p,a}+s_bP_{p,b}$ and changes only the four displayed coordinates. In particular,
+
+$$
+\begin{aligned}
+Q(w_{0,0})&=u_0,\\
+Q(w_{0,1})&=\frac{995}{2484},\\
+Q(w_{2,1})&=\frac{19907803}{911250000},\\
+Q(w_{1,1})&=\frac{72763013}{776250000},
+\end{aligned}
+$$
+
+and every other finite p-word has mass $s_aP_{p,a}+s_bP_{p,b}$, with $Q(\infty_p)=0$. The suspended law is
+
+$$
+W=(1-v_0)\delta_\beta+v_0\,\alpha Q,
+\qquad W(\infty_\beta)=0.
+$$
+
+The correction has total mass
+
+$$
+-d+t\bigl(2\rho_p-(b-a)\bigr)=0,
+$$
+
+so $Q$ is normalized, and the displayed formula normalizes $W$. The exceptional coordinates lie in their complete endpoint intervals; the unchanged coordinates are convex endpoint mixtures with the fixed tail order. The source tail checks are
+
+$$
+Q(T_p(1))=\frac{725441}{3105000}<\lambda,qquad
+Q(T_p(2))=\frac{327003972413}{6026973750000}<\lambda^2,
+$$
+
+and for $j\ge3$ the endpoint mixture gives $Q(T_p(j))\le\lambda^j$. Since
+
+$$
+W(T_\beta(j))=v_0Q(T_p(j))\le b\lambda^j,
+$$
+
+all complete tails, including the zero-mass infinite outcomes, satisfy the original constraints.
+
+Direct prefix deletion gives $\mathcal R_A(W)=Q$. The opposite residual $Z=\mathcal R_B(Q)$ has
+
+$$
+Z(\beta)=\frac{1243750}{1969191},qquad
+1-Z(\beta)=\frac{725441}{1969191}\in[a,b],
+$$
+
+and PAIR15 checks every exceptional residual coordinate, the fixed tail order, and both residual tail bounds. Thus $Q,W$ lie in the full endpoint boxes and their residual projections, so every allowed level-five certificate sees a point in its declared domain.
+
+The four scalar identities are
+
+$$
+ f(Q)=C,\qquad b_0(Q)=H,\qquad h(W)=H,\qquad a_0(W)=C.
+$$
+
+Thus the two selected residual-event equalities hold exactly: $b_0(Q)-h(W)=0$ and $a_0(W)-f(Q)=0$.
+
+The endpoint coordinate identities therefore give the exact complete endpoint configuration losses $\rho_p$ and $\rho_\beta$ in the two directions. Every supported nonendpoint target lies in $[3/8,5/13]$. The complete-law bounds in PAIR15 are
+
+$$
+B_p=\frac{355994686242025987031}{26994670778880000000000}<\frac1{50},qquad
+B_\beta=\frac{3515477241015883163647}{421791730920000000000000}<\frac1{75},
+$$
+
+and the supplied stopped-parser couplings give
+
+$$
+\operatorname{TV}(P_{p,r},P_{p,t})\le\frac{125}{57}|r-t|,qquad
+\operatorname{TV}(P_{\beta,r},P_{\beta,t})\le\frac{107}{57}|r-t|.
+$$
+
+Because $5/13-3/8=1/104$,
+
+$$
+\operatorname{TV}(Q,P_{p,r})<\frac{6089}{148200}<\rho_p,qquad
+\operatorname{TV}(W,P_{\beta,r})<\frac{4651}{148200}<\rho_\beta
+$$
+
+uniformly on the supported nonendpoint interval. Hence every complete configuration loss is within its radius before phase averaging; every coarser level-$L$ loss with $L\le5$ is no larger by partition contraction. This is a complete-law statement, not a finite-horizon approximation. The pair has exact rational coordinates but countably many unchanged word coordinates, and it is not by itself a finitely represented observer or sampler.
+

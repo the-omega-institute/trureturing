@@ -1,0 +1,25 @@
+**约定 1.4（Literal response and inverse）。** Absolute block index $t$ starts at zero. Before block $t$, exactly $t$ complete blocks have been paid on a continuing branch. Put $u_t=tm\pmod T$ and use the ordered path $W_t=[u_t,u_t+m]\pmod T$. For a successful word $x_0\cdots x_{m-1}$ its endpoint difference is
+
+$$
+q_t(u_t)=x_0,\quad q_t(u_t+i)=x_{i-1}\oplus x_i\ (1\le i<m),\quad q_t(u_t+m)=x_{m-1},
+\tag{1.6}
+$$
+
+and is zero outside the window. A full-window prescription has a literal inverse exactly when its total charge is even. For a set $E\subseteq W_t$ of even size, define the complete word
+
+$$
+\mathcal B_t(E)_i=\bigoplus_{r=0}^{i}\mathbf1_E(u_t+r),\qquad0\le i<m.
+\tag{1.7}
+$$
+
+Its response support is exactly $E$, including the right endpoint, by (1.6). Empty $E$ gives the paid word $0^m$. This path inverse is reused from [S10, Interface 2.1; S15, Section 1], rather than counted as new content. All occurrences of $\mathcal B_t$ below specify one actual word, and their safety is proved separately. A parity donor must be absent from the same acquired archive, not merely from another branch or from a linear description.
+
+The useful calendar identity, including both endpoints, is
+
+$$
+W_{rQ+b}=[bm-r,(b+1)m-r]\pmod T,\qquad0\le b<Q,
+\tag{1.8}
+$$
+
+because $Qm\equiv-1\pmod T$. It is the supplier calendar of [S16, Section 2; S17, equation (3.2)].
+

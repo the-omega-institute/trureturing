@@ -1,0 +1,49 @@
+**Theorem 70.2 (uniform complex Gram bound).** Arrange the four vectors $L_\alpha|i\rangle$ in logical-first order $(i,\alpha)=(0,1),(0,2),(1,1),(1,2)$. Their Gram matrix is
+
+$$
+G_\xi=\begin{pmatrix}I_2/2&U_\xi/4\\U_\xi^\dagger/4&\operatorname{diag}(3/4,1/4)\end{pmatrix},\qquad
+U_\xi=\bar u Z+\bar v X,\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{S.130}
+$$
+
+It satisfies $G_\xi\succeq(2-\sqrt3)I_4/4\succ0$ and $\operatorname{Tr}\sqrt{G_\xi}\geq\sqrt2+\sqrt{3/2}$ for every complex unit direction.
+
+Proof. Formula (S.130) follows by contracting the actual columns; its conjugates cannot be dropped. With $\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$ and $\kappa=2\operatorname{Im}(\bar u v)$,
+
+$$
+B_\xi:=4G_\xi-2I_4=\begin{pmatrix}0&U_\xi\\U_\xi^\dagger&Z\end{pmatrix},\quad
+U_\xi^\dagger U_\xi=I_2+\kappa\sigma_y,\quad |\kappa|\leq1,\quad
+\operatorname{Tr}B_\xi=\operatorname{Tr}B_\xi^3=0,\quad\operatorname{Tr}B_\xi^2=6.
+\tag{S.131}
+$$
+
+For the cubic trace use $\operatorname{Tr}B_\xi^3=3\operatorname{Tr}(ZU_\xi^\dagger U_\xi)+\operatorname{Tr}Z^3=0$. Equivalently, a Schur computation for $t\ne0$, then polynomial continuation to $t=0$, gives
+
+$$
+\det(tI_4-B_\xi)=\det((t^2-1)I_2-tZ-\kappa\sigma_y)
+=t^4-3t^2+1-\kappa^2.
+\tag{S.132}
+$$
+
+Hermiticity and the even polynomial give eigenvalues $s_1,-s_1,s_2,-s_2$ with $s_j\geq0$ and $s_1^2+s_2^2=3$. This includes a zero pair at $|\kappa|=1$. Consequently the eigenvalues of $G_\xi$ are $1/2\pm s_j/4$, all at least $(2-\sqrt3)/4>0$. The four actual output columns are independent, so $\operatorname{rank}S_\xi=4$ for real, circular, zero-coordinate and all other complex directions.
+
+Put $z_j=s_j^2/16$, so $z_1+z_2=3/16$. On $[0,3/16]$ define
+
+$$
+g(z)=\sqrt{1/2+\sqrt z}+\sqrt{1/2-\sqrt z}
+=\sqrt{1+\sqrt{1-4z}}.
+\tag{S.133}
+$$
+
+With $r=\sqrt{1-4z}\geq1/2$ and $g=\sqrt{1+r}$, differentiation gives $g''=-2/(r^3g)-1/(r^2g^3)<0$, including finite endpoint limits. Hence each $g(z)$ lies above its chord between $0$ and $3/16$. Adding the two chord bounds yields
+
+$$
+\operatorname{Tr}\sqrt{G_\xi}=g(z_1)+g(z_2)
+\geq g(0)+g(3/16)=\sqrt2+\sqrt{3/2}.
+\tag{S.134}
+$$
+
+No step assumes $u,v$ real. $\square$
+

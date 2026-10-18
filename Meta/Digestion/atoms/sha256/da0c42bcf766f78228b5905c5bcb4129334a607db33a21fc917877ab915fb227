@@ -1,0 +1,21 @@
+## 5. Four expressions in the coherent finite cell
+
+The four expressions now arise from one executable relation history:
+
+| expression | source-derived object | finite recovery statement |
+| --- | --- | --- |
+| space | labelled scopes $S_1,S_2$ and shared event $c$ | $Q$ is the pair of scope restrictions |
+| time | completed-marker transition sequence $\delta_{e_1}\delta_{e_2}\delta_{e_3}$ | $\omega$ is the selected event order |
+| boundary | latched $B_0$ together with the frozen records $Q$ | it is the interface delivered at the bookmark |
+| memory | persistent register $Z$ | it retains the missing relation $b\prec a$ |
+
+On $\Omega=\{abc,bac,acb\}$, the maps
+
+$$
+\omega\longmapsto(Q(\omega),Z(\omega),B_0)
+$$
+
+and the table above give inverse maps. Hence the augmented boundary and the chronological selected word mutually recover on this finite cell. The recovery is joint: the scopes alone, $Q$ alone, $Z$ alone, or the bare snapshot alone do not have the same property.
+
+The new content is the commuting source-to-boundary calculation and the write-before-latch/hold proof. It does not add another generic quotient, gluing, or holonomy theorem; those remain the general supplies in Boundary Dynamics §§25–27, 36–40. The actual parser, source law, positive cell, selector and decoder are supplied by Boundary Dynamics §§97, 100–108 and 114.1, while the overlap and adapter are supplied by the chronology volume.
+

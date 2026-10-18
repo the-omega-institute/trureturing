@@ -1,0 +1,33 @@
+# Native FIB: unrestricted four-dimensional spectral reduction and attainment
+
+This volume gives ordinary handwritten mathematics for the original
+full-open native affine model. Its proofs are not Lean kernel
+verification. The spectral family below is derived from unrestricted
+competitors; it is not an additional encoder hypothesis.
+
+At most four real coordinates have an exact minimax reduction to complex
+exponential polynomials of order at most two. The scalar infimum is a
+minimum. The literal and prescribed-path classes attain their common
+value, and the two guarded classes have the same infimum. Below the
+transition, their attainment is equivalent to the existence of at least
+one global scalar minimizer with the specified height-separating spectrum.
+The scalar minimum is not evaluated in that range, and existence of such
+a guarded minimizer remains unresolved.
+
+The mathematical suppliers, with labels used throughout, are:
+
+- **[M]** [*Native FIB: exact two-dimensional affine minimax and an
+  attaining annulus*](FIB_NATIVE_TWO_DIMENSIONAL_AFFINE_MINIMAX.md),
+  including its §§12–20 on the unrestricted three-dimensional plateau.
+- **[Q]** [*Native FIB: an actual four-coordinate strict affine
+  improvement*](FIB_NATIVE_FOUR_DIMENSIONAL_STRICT_AFFINE_IMPROVEMENT.md).
+- **[O]** [*Native FIB on the full open domain: affine approximation and
+  finite attainment*](FIB_NATIVE_OPEN_DOMAIN_AFFINE_APPROXIMATION_AND_FINITE_ATTAINMENT.md),
+  including its §11 on fixed-dimension uniform gaps.
+
+The precise inherited statements and parameter substitutions are in §2.
+The three main theorems are stated in §3 and proved by the eight arguments
+in §§4–11. Section 12 gives the resulting parameter picture and the
+remaining optimization obligations. No result from an unquoted parent
+manuscript is an extra premise.
+

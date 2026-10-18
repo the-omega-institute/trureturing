@@ -1,0 +1,137 @@
+**Theorem 7.2 (strict actual fixed-pole ground-energy gap).** For every
+choice of the original parameters in Definitions 1.1--1.4, under the
+inherited analytic premises of Contract 1.3, every nonnegative normalized
+restricted minimizer and every bump as in Definition 6.1 give
+
+$$
+E_{\rm base}-E_{\rm full}\ \ge\ \Delta_\chi
+                 \ \ge\ \delta_\chi\ >\ 0.
+\tag{7.2}
+$$
+
+Both energies are actual finite attained minima. More precisely, all
+the certificate quantities are finite and satisfy
+
+$$
+A_\chi\ge a_\chi>0,\qquad
+0\le C_\chi<\infty,\qquad B_\chi\le C_\chi,
+\tag{7.3}
+$$
+
+with no sign restriction on $B_\chi$ or $E$. The number
+$E-\Delta_\chi$ is the exact minimum of the form on the unit sphere
+of $\operatorname{span}\{f_0,\eta\}$. An explicit unit form vector is
+
+$$
+\begin{gathered}
+\delta_\chi=
+ \frac{2a_\chi^2}{\sqrt{C_\chi^2+4a_\chi^2}+C_\chi},\qquad
+t_\chi=\frac{\delta_\chi}{a_\chi}>0,\\
+f_\chi=\frac{f_0+t_\chi\eta}{\sqrt{1+t_\chi^2}}
+       \in\mathcal F,\qquad
+\|f_\chi\|_2=1,\qquad q_g[f_\chi]\le E-\delta_\chi.
+\end{gathered}
+\tag{7.4}
+$$
+
+Neither $\Delta_\chi$ nor $\delta_\chi$ is asserted to equal the full
+energy difference. No negative-binding hypothesis is needed.
+
+Proof. Theorem 2.1 gives both finite attained minima. Lemma 6.2 gives
+$N>0$, finite $K$, and the orthonormal form vectors $f_0,\eta$.
+The integrals in (7.1) have compact height support; Lemma 5.1 and
+Proposition 6.3 give their finiteness and $A_\chi\ge a_\chi>0$.
+Positivity of the original full field implies $q_g[w]\le K$, while
+(2.1) gives $E\ge-gB_\varepsilon$. Therefore
+
+$$
+B_\chi=\frac{q_g[w]}N-E
+       \le\frac KN+gB_\varepsilon=C_\chi,
+\qquad C_\chi\ge0.
+\tag{7.5}
+$$
+
+The number $B_\chi$ can have either sign. All denominators $N$,
+$\sqrt N$ and $2\pi\sqrt N$ are positive.
+The symmetric matrix of the form on these two orthonormal vectors is
+
+$$
+\begin{pmatrix}
+E&-A_\chi\\
+-A_\chi&E+B_\chi
+\end{pmatrix}.
+\tag{7.6}
+$$
+
+This is a restriction of a form to a finite-dimensional subspace.
+In particular it is not an assertion that either vector belongs to the
+full attractive operator domain. For every real $t$ its normalized
+Rayleigh value is exactly
+
+$$
+q_g\left[\frac{f_0+t\eta}{\sqrt{1+t^2}}\right]
+ =E+\frac{B_\chi t^2-2A_\chi t}{1+t^2}.
+\tag{7.7}
+$$
+
+The characteristic equation of (7.6), after subtracting $E$, is
+$\lambda^2-B_\chi\lambda-A_\chi^2=0$. Its lower root is
+$-\Delta_\chi$. Since $A_\chi>0$, one has
+$\sqrt{B_\chi^2+4A_\chi^2}>|B_\chi|$, so
+$0<\Delta_\chi<\infty$ even when $B_\chi<0$.
+Equivalently
+
+$$
+\Delta_\chi(\Delta_\chi+B_\chi)=A_\chi^2,
+\qquad
+\Delta_\chi=
+ \frac{2A_\chi^2}{\sqrt{B_\chi^2+4A_\chi^2}+B_\chi},
+\tag{7.8}
+$$
+
+where the denominator is strictly positive. The lower eigenvector may
+be taken proportional to $(1,\Delta_\chi/A_\chi)$.
+Thus the exact two-dimensional minimum is $E-\Delta_\chi$, and
+inclusion of this form subspace in $\mathcal F$ proves
+$E-E_{\rm full}\ge\Delta_\chi$.
+
+Likewise $a_\chi>0$ and $C_\chi\ge0$ show that $\delta_\chi$ is
+finite and strictly positive, with the positive denominator in (7.4).
+It is the positive root of
+
+$$
+\delta_\chi^2+C_\chi\delta_\chi=a_\chi^2.
+\tag{7.9}
+$$
+
+Using (7.3) and (7.9),
+
+$$
+\delta_\chi^2+B_\chi\delta_\chi-A_\chi^2
+ =(B_\chi-C_\chi)\delta_\chi+(a_\chi^2-A_\chi^2)\le0.
+\tag{7.10}
+$$
+
+The polynomial on the left, as a function of its nonnegative argument,
+has its unique positive zero at $\Delta_\chi$ and its other zero
+strictly negative. Hence $\delta_\chi\le\Delta_\chi$, proving the
+second inequality in (7.2) without a sign assumption on $B_\chi$.
+
+For the explicit vector in (7.4), both form membership and normalization
+follow from Lemma 6.2. Since $t_\chi>0$, (7.3) and (7.7) give
+
+$$
+q_g[f_\chi]-E
+ \le\frac{C_\chi t_\chi^2-2a_\chi t_\chi}{1+t_\chi^2}
+ =-\delta_\chi.
+\tag{7.11}
+$$
+
+For the last equality substitute $t_\chi=\delta_\chi/a_\chi$ and
+$a_\chi^2=\delta_\chi^2+C_\chi\delta_\chi$ into both numerator
+and denominator. Its denominator is $1+t_\chi^2>0$.
+This independently exhibits a unit admissible full vector with energy
+strictly below the actual restricted minimum, not merely below a
+restricted trial value. All sign and domain arguments use only strict
+stability, never $E<0$. $\square$
+

@@ -1,0 +1,59 @@
+**Theorem 5.3 (sharp positive unary-port compensation).** On the
+unchanged full star scopes in Definition 5.1, over all positive $h,g$
+satisfying (INB.7),
+
+$$
+\inf_{h,g}U(h,g)=a^n2^{-n/2}.
+\tag{INB.19}
+$$
+
+Consequently the best bound in this class has exact log-mass excess
+
+$$
+\frac{n(k-1)}2-\log_2(1+\epsilon^n).
+\tag{INB.20}
+$$
+
+Proof. The factors in (INB.17) are positive on the entire edge-bit
+cube. Thus (INB.7) is a pointwise identity on that entire cube. Put
+$\xi_{ic}(b)=\log h_{ic}(b)$ and $\eta_c(b)=\log g_c(b)$.
+Feasibility is an affine constraint in these log variables. The
+logarithm of each edge integral in (INB.8) is convex in them:
+expand the integer power $r_c$ to write the integral as a finite
+sum of exponentials of affine expressions with nonnegative constant
+coefficients. The logarithm of such a sum is convex, since its Hessian
+is the covariance of those affine gradients under their normalized
+positive coefficients. The positive root scales the logarithm by
+$1/(k_ir_c)$. Summing shows $\log U$ is convex.
+
+Let $K$ be the binary cycle space of $G$, consisting of edge flips
+of even degree at every vertex. Such a flip preserves every parity
+potential $\Phi_i$. Apply it simultaneously to a shared seed value
+and all of its factor-coordinate occurrences. Reindexing the sums
+shows that it preserves $U$ and the affine compensation identity.
+
+Every edge lies on a cycle. Indeed a bridge would leave, on one
+side of its cut, total degree equal to twice the number of internal
+edges plus one, whereas the sum of the even degrees $k$ is even.
+This is impossible. A cycle through an edge gives an element of $K$
+that flips it. Hence the projection of the finite group $K$ onto
+each individual edge bit is onto. Averaging log gauges over $K$
+therefore makes each $\xi_{ic}$ and $\eta_c$ constant in its binary
+argument. The average is feasible and by convexity cannot increase
+$\log U$. No independence or full-star surjectivity of these flips
+is used; the one-coordinate projections suffice.
+
+Write the resulting constant multipliers as
+$\nu_i=A_i\Phi_i$ and $g_c=G_c$. Formula (INB.8) scales by
+$\prod_i A_i\prod_cG_c$: a factor has $k_i$ ports each contributing
+$A_i^{1/k_i}$, and a seed has $r_c$ ports each contributing
+$G_c^{1/r_c}$. Identity (INB.7) makes this total multiplier one.
+Thus every original gauge has $U(h,g)\ge U(1,1)$.
+
+Here $k\ge2$, and summing (INB.17) over the other $k-1$ bits
+cancels parity. Each one-bit marginal sum is $a/2$ and $r_c=2$.
+Every edge factor in (INB.8) is
+$[2(a/2)^2]^{1/(2k)}$. There are $nk$ incidences, so
+$U(1,1)=a^n2^{-n/2}$. Unit gauges attain the infimum. Dividing
+by (INB.18) proves (INB.20). $\square$
+

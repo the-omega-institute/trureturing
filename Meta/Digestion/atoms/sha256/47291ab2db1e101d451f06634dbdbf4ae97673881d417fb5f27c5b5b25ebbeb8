@@ -1,0 +1,41 @@
+**Proposition 3.3 (a common rational witness and a simpler phase witness).**
+Take $Z=r=1/2$, $c=1/4$, $a_0=1/8$, $q_0=1/16$ and common zero
+preparation phases. For every
+$x\in I_0=[1/8,3/16]$, $\beta\in\mathbb R$, $m\in\mathbb Z$,
+Proposition 3.1 has $B=8\beta-4\pi m$ and actual live probability
+
+$$
+q_x=\frac13\frac{a_0}{x}\geq\frac29.
+\tag{FH.8}
+$$
+
+The common horizontal tail $d=1/32$, $L=1$ is legal. Prefix probability
+support is at least $1/16$ and tail support at least $1/32$. Prefix and
+tail height speeds are at most $1/16$. For the eight nuisance choices
+$\beta\in\{0,\pi/2,\pi,3\pi/2\}$, $m\in\{0,1\}$, prefix phase
+speed is at most $12\pi$ and phase variation at most $24\pi$.
+The full real-phase/signed family has no such common phase budget.
+
+For the phase lower bound one may instead use only $\beta=m=0$ and
+the unit original history $k(t)=a_0+(x-a_0)t$, $\chi(t)=0$,
+$x\in I_0$. It reaches $\psi_{x,0,0}$ with
+
+$$
+q_x^{\rm simple}=a_0/x\geq2/3.
+\tag{FH.9}
+$$
+
+Proof. The rectangle descends with survival
+$(c-a_0)/(c-q_0)=2/3$ and ascends with survival $q_0/a_0=1/2$.
+Its phase legs have survival one. The final increasing leg contributes
+$a_0/x$, proving (FH.8). The simple increasing prefix has only that
+last factor, proving (FH.9). Its source output follows by multiplying
+the initial amplitudes by $K_1$ in (FH.5). The support and speed bounds
+follow from the displayed height intervals. For the eight nuisance
+choices $|B|\leq12\pi$ and $2\pi|m|+2|B|\leq24\pi$, by evaluating
+the two possible $m$ values; the winding leg itself has speed at most
+$2\pi$. Every failure is the actual branch (FH.7). These survival
+probabilities condition only on reaching the subsequent live cut; no new
+specimen, repeat-until-success source or free observed law is introduced.
+$\square$
+

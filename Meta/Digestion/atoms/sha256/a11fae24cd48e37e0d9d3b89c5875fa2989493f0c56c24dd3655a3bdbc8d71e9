@@ -1,0 +1,25 @@
+**推论 467.3（实际每一层的相对熵收益）。** 对全部自然数 $n$，令
+
+$$
+D_n=B_{n+1}-B_n,\qquad
+z_n=\int_0^\infty D_n(v)\,dv>0,\qquad
+t_n=\int_0^\infty vD_n(v)\,dv>0.
+$$
+
+则实际相邻分裂 $R_n=R_{n+1}+D_n$ 满足
+
+$$
+\begin{aligned}
+L_{n+1}-L_n
+&=z_nD\left(\frac{D_n}{z_n}\,\middle\Vert\,\frac{vD_n}{t_n}\right)\\
+&\quad+r_nD\left(
+\left(\frac{r_{n+1}}{r_n},\frac{z_n}{r_n}\right)
+\,\middle\Vert\,
+\left(\frac{m_{n+1}}{m_n},\frac{t_n}{m_n}\right)
+\right)>0.
+\end{aligned}
+\tag{RSK.10}
+$$
+
+**证明。** §465 的准确预算分裂给 $r_n=r_{n+1}+z_n$、$m_n=m_{n+1}+t_n$。实际 $R_{n+1}$ 与 $D_n$ 在完整正轴严格正，且准确相加为 $R_n$，因此满足命题 467.2。应用 RSK.8，再用 RSK.4 把剩余块的缺口改写为 $A-L_{n+1}$，与原 $A-L_n$ 相减即得 RSK.10。新增层 $D_n$ 的连续相对熵严格正，证明同命题 467.1 的 $h$ 支撑论证；离散项非负，故实际收益严格正，包括 $n=0$。证毕。
+

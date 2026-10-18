@@ -1,0 +1,107 @@
+**Definition 218.1 (Full words, scores, configurations and demands).**
+Fix $L\ge3$. Write $B_L=\{0,1\}^L$, $w_+=1^L$,
+$\Omega=B_L\setminus\{w_+\}$ and
+$\Omega_n=\{w\in\Omega:n(w)=n\}$, where $n(w)$ is the first zero.
+Every multiple-zero word belongs to this domain. The word $w(Z)$ has
+zero set exactly $Z$. A full score y has independent $A_w,C_w,P_w,T\ge0$:
+
+$$
+g_y(w,\ell)=A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n(w)}
+ +P_w\mathbf1_{\ell\in\{0,n(w)\}},\qquad
+g_y(w_+,\ell)=T\mathbf1_{\ell=0}.
+$$
+
+The complete catalogs allow every label $0,\ldots,L$ on every cell,
+including earlier and unqueried labels. They contain empty and singleton
+schedules and every distinct pair $i<j$. An N pair has cells $00,01,10,11$;
+an increasing O pair has cells $0,10,11$. Write $(i,j;a,b,c,d)$ for
+an N table and $(i,j;a,c,d)$ for an O table. N reversals permute cells;
+repetitions give singleton information. These representation statements
+do not discount actual requests. Define
+
+$$
+\begin{aligned}
+B_{\mathcal C}(y)&=\max_{D\in\mathcal D_{\mathcal C}}
+ \sum_{w\in B_L}g_y(w,D(w)),\qquad \mathcal C=N,O,\\
+W_y&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_{\mathcal C}(y)&=B_{\mathcal C}(y)-W_y,\\
+\beta_n(y)&=\sum_{\Omega_n}(C_w-A_w),\qquad
+K_y=\sum_w(A_w+C_w+P_w)+T,\qquad Q(y)=(\beta(y),K_y).
+\end{aligned}
+\tag{218.1}
+$$
+
+For each schedule this maximizes every cell over all labels.
+Unspecified coefficients in a displayed score vanish; coincident entries
+add. A zero coefficient deletes no word, label or event constraint.
+For class totals $A_n,C_n$, the existing stock identity is
+
+$$
+K_y-\sum_n|\beta_n(y)|
+ =2\sum_n\min(A_n,C_n)+\sum_wP_w+T\ge0.
+\tag{218.2}
+$$
+
+If $G=\sum(\beta_n)_+$ and $D=\sum(-\beta_n)_+$,
+literal stock $K-G$ equals absolute stock $K-G-D$ plus D.
+Neither stock is a probability budget. Put $Z_y=\sum A+\sum P+T$;
+then $W_y=Z_y+\beta_1+\beta_2$. The anchor
+$R=(1,2;1,2,0)$ gives $0\le\Delta_O\le\Delta_N$.
+Use the same auxiliary hull and signed reading as in 216.1:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\ b_2=b_3,\\
+ &(L+1)e\le\sum_{n\ge3}b_n,\quad
+ b_1+\sum_{n\ge3}b_n-(L+1)e\le1\},\\
+\alpha&=(1,1,0,\ldots,0),\qquad
+F_{(\beta,K)}(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke,\\
+\sigma_{H_L}(q)&=\max_{H_L}F_q.
+\end{aligned}
+\tag{218.3}
+$$
+
+At every $w\in\Omega_n$, the independent base, correct and pair
+rows of $d(b,e)$ are $1-b_n-e$, $b_n-e$ and $1-e$; at $w_+$
+the base row is $1-e$. Negative singleton demands remain negative.
+Let $z_D$ be the complete event vector of table D, $r=z_R=d(\alpha,0)$,
+$h=d-r$ and $G_{\mathcal C}=(z_D-r)_{D\in\mathcal D_{\mathcal C}}$.
+A configuration is one nonnegative vector on whole tables, of mass
+$M=\sum_D\lambda_D$. Define
+
+$$
+\rho_{\mathcal C}(b,e)=\inf\{\textstyle\sum_D\lambda_D:
+ \lambda\ge0,\ G_{\mathcal C}\lambda\ge h(b,e)\},\qquad
+H_N=\{(b,e)\in H_L:\rho_N(b,e)<\infty\}.
+$$
+
+Its affine output vector is
+$f_w=(1-M)e_{R(w)}+\sum_D\lambda_De_{D(w)}$.
+For $M>1$ this may be signed and is not executed as a probability law.
+The score identity is $y\cdot h(b,e)=F_{Q(y)}(b,e)$.
+A single certificate for an actual full unit-O input y is
+
+$$
+V\ge0,\quad0\le\theta\le1,\quad
+\Delta_N(V)+\theta\le1,\quad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{218.4}
+$$
+
+For the same complete feasible $\lambda$ at the same $(b,e)\in H_N$,
+
+$$
+F_{Q(y)}(b,e)\le V\cdot h(b,e)+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max(1,M).
+\tag{218.5}
+$$
+
+The last step uses $M(1-\theta)+\theta\le\max(1,M)$.
+Every independent row is charged to this same allocation once.
+No clipping, separately optimized marginal or identification $H_L=H_N$
+is used. All coefficients, Q, baseline, unaries, support and terminal of V
+may change; at $\theta=1$, nonzero zero-cost V remain legal.
+The definitions, stock identity and weak-duality interface are suppliers,
+rather than separate new relations.
+

@@ -1,0 +1,28 @@
+**命题 5.2（同一制备的两读反例与窗口下界）。** 在全树连续窗口约定下，三是统一最短长度；甚至一个固定制备即可反驳长度二的闭合。取
+
+$$
+a=(5/4,0,0),\quad b=(3/4,1,0),\quad
+\lambda=25/16,
+$$
+
+则 $A=B=\Delta=\lambda,C=15/16$。令 $k=\langle\beta,\alpha\rangle$、
+
+$$
+t_A=\langle\alpha,\langle k,\alpha\rangle\rangle,
+\qquad t_B=\langle\beta,\langle k,\beta\rangle\rangle.
+$$
+
+二者前三项为
+
+$$
+\begin{array}{c|ccc}
+&x_0&x_1&x_2\\\hline
+t_A&AK&BN&\Delta^2b\\
+t_B&BK&\Delta N&B\Delta^2b
+\end{array}
+$$
+
+前两项相同，第三项不同。
+
+证明。引理4.2给初值 $AK,BK$。在 $F(p)$ 处 $A'=B,B'=\Delta,K'=N$，得到第二项。在 $F^2(p)$ 处 $A''=\Delta,B''=B\Delta,K''=N\times K=\Delta b$，得到第三项；$b\ne0,\lambda\ne1$ 排除相等。因而两窗口的实际后继不能为函数。将二树各先替换一次，当前值相同、下一值不同，排除一窗口闭合；零观察由 $\alpha$ 与 $\langle\alpha,\alpha\rangle$ 的初值不同排除。三窗口充分性由定理5.1给出。这是全树的统一连续窗口界，不是每个制备分别的最短界、任意编码的存储界或规范轨道的界。
+

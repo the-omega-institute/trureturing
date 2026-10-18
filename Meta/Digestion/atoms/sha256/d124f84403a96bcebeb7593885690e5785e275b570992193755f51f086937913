@@ -1,0 +1,75 @@
+**Lemma 2.4 (effective finite separation of ground and variable leaves).**
+For a finite selector diagram $\mathcal D$ and fixed $\bar a$, one can
+choose an integer $b\ge2$ such that for every $h>2b+2$ and $k\ge0$ the
+following statements hold under $X=U^+_{h,k}$ and $X=U^-_{h,k}$.
+
+1. Every non-Boolean subexpression is defined in both evaluations or
+   in neither. Defined term and leafset expressions have the same shape
+   in both. Every domain guard for a primitive operation agrees.
+2. Every such shape, including every explicit shape expression, has a
+   skeleton in which the context height and all $|p|$ are at most $b$.
+   Leaves outside the $Z_p$ blocks have depth at most $b$; every leaf
+   inside a $Z_p$ block has depth at least $h-b>b+2$.
+3. Every leaf of depth greater than $b$ is in one of these perfect
+   blocks, has a sibling leaf, and that sibling belongs to the same
+   block. In every term expression the labels outside the blocks are
+   independent of the choice of sign. Inside a block the labels have
+   the bottom orientation of that sign.
+
+The same $b$ works for all $k$. It is allowed to depend on the finite
+shapes of the parameters, but not on their changing with $h$.
+
+Proof. Expand the shapes of the fixed parameters into their finite
+$c,F^S$ trees. For term expressions use the homomorphism rules
+
+$$
+\operatorname{sh}(F(t,u))=F^S(\operatorname{sh}t,\operatorname{sh}u),
+\qquad
+\operatorname{sh}(F_i(t))=F_i^S(\operatorname{sh}t)
+\tag{TPO.7}
+$$
+
+on the selector's domain. For leafset expressions use the corresponding
+rules for $F^L$ and its selectors. The shape of a defined inner
+instance, full or empty leafset, or indexed Boolean leafset operation
+is its displayed shape index. Thus erasing a shape or a tag recursively
+reduces to a finite shape expression built from $c$, constructors,
+selectors and $Z_\varepsilon=\operatorname{sh}(X)$.
+
+Cancel a selector applied to a displayed constructor. A selector
+reaching $Z_p$ produces $Z_{pL}$ or $Z_{pR}$; a selector reaching $c$
+is undefined. Every cancellation consumes an occurrence from the
+finite expression. Expanding a fixed parameter consumes its fixed
+finite tree. This yields finitely many skeletons for all shape
+expressions, implicit tags and operation arguments. There are also
+finitely many domain requirements: a selected root must be a constructor,
+and specified shapes or tags must agree. Choose $b\ge2$ larger than
+or equal to all resulting context heights and selector-word lengths.
+Taking a larger integer accommodates every intermediate argument and
+result, not just the final expressions.
+
+For $h>2b+2$, every $Z_p$ is a perfect tree of height at least
+$h-b>b+2$. Hence it is nonprimitive wherever one of the finitely many
+selectors reaches it. The skeleton evaluation is independent of $k$
+and of the sign. Equality of two shape values is therefore identical
+in the two evaluations, whether or not those values have the same
+skeleton description. Constructor tests are also identical. Induction
+through the operation domains now proves simultaneous definedness:
+all selector domains and all tag-matching domains agree, base relations
+are total on their rank tuples, and a simple inner instance has precisely
+the same-shape domain in (TPO.4). Strict undefined arguments propagate
+through non-Boolean expressions in both evaluations. The domains of primitive Boolean tests agree too;
+their truth values and the possibly nonstrict outer Boolean connectives
+are treated in Theorem 3.1. No rank-sensitive Boolean test controls the
+domain of a primitive nonlogical operation in this signature.
+
+A leaf contributed by the finite context has depth at most $b$. A leaf
+in a block $Z_p$ attached at context address $v$ has depth
+$|v|+h-|p|\ge h-b$. Its last edge is strictly inside that block, and
+its sibling is another leaf of the block. The term-algebra version of
+the cancellation argument leaves only fixed ground pieces and selected
+copies of $X$. The latter are $U^\pm_{h-|p|,k}$, so their labels have
+the stated orientation; fixed ground pieces retain their labels.
+Leafset membership is not asserted to be independent of sign here:
+only its shape and definedness have been established. $\square$
+

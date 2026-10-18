@@ -1,0 +1,21 @@
+**Definition 1.4 (Total cap, full law and radius).** Let $N$ count all actual calls and let $\tau$ be the return time, with $\tau=\infty$ on every nonreturn. A pathwise hard total cap $k\in\mathbb N_0$ means $N\le k$ on every execution, including nonreturns and exceptional source or seed paths. Set
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}
+\qquad Z=(H_j,O,D,N),\quad\bot\notin\mathcal A.
+\tag{1.4}
+$$
+
+The required objective is exactly equality of the joint law of $(u,Z)$. Under cap $k$, the finite alphabet is
+
+$$
+\mathcal Z_k=\{(h,o,d,n):h\in\mathcal A,\ o\in\mathcal A\cup\{\bot\},
+\ d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{1.5}
+$$
+
+In particular every measurable seed event retains its correlations with the other coordinates. A nonreturn at count $n$ remains internal continuation forever after $n$ paid calls. A return-only cap is insufficient: $k+1$ repeated calls followed by nonreturn obey every cap restricted to returns but cannot have their $N$-law represented under total cap $k$.
+
+A radius-$R$ rule uses only integer addresses with $|t-j|\le R$. Write $\rho_{\mathrm{law}}(k;p,j,\nu)$ for the least nonnegative radius representing every lawful total-cap-$k$ input with the same seed and full law. Literal records, numerical address names, tree shapes, potential replies at unvisited nodes, signatures, numerical finite return times, and equality on each original source sample are not preserved statistics. Upper constructions may retain some of these as sufficient construction properties; lower-bound competitors are not required to do so. Public dependence on the one fixed $p$ remains permitted throughout.
+

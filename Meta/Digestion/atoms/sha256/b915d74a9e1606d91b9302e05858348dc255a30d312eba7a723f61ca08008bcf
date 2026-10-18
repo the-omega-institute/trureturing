@@ -1,0 +1,25 @@
+**Proposition 9.3 (finite local verification domain).** Exhaustive finite
+checks of CSA.2 for $1\le q\le7$ give 3279 optional-register states
+and 42648 legal single-slot construction/assignment cases. They satisfy
+distinct absent/0/1 support and terminal decoding, terminal prefix closure,
+$V_R=2q-1+4c$, $L_R=q+2c$, and the four-vertex/two-leaf construction
+increments. The two fresh-bit endpoint templates have reciprocal edges,
+four new vertices and exactly 30 initialization/root assignments. All
+256 eight-track cell values have 47 vertices, 24 leaves, distinct terminal
+sets and exact bit decoding.
+
+Proof. Enumerate the $3^q$ ternary slot words, substitute the three
+literal socket trees into the recursive $F_q$, and independently read
+the terminal/fork cases at its fixed socket paths. For each state and
+slot assign either bit; count vertices and leaves before and after.
+Taking all prefixes of all terminal paths returns the full support in
+every case. The totals are $\sum_{q=1}^7 3^q=3279$ and
+$\sum_{q=1}^7 2q3^q=42648$. For each fresh-bit value initialize four
+seven-slot records and the two old root children; every occupied endpoint
+has its inverse partner. For the cell check substitute all eight-bit
+words into $F_8$. These exact finite enumerations have zero failed
+assertions. They check local combinatorics and counts, not a complete
+expanded RCA execution, ownership integration or a Lean theorem. The
+all-cut result rests on the ordinary row induction and supplier premises,
+not extrapolation from these finite samples. ∎
+

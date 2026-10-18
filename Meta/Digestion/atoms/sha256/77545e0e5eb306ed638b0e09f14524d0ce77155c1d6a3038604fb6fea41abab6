@@ -1,0 +1,15 @@
+**Definition 4.2 (fine operation and mathematical readout).** A fine
+label records the actual EX site, its attachment occurrence and
+template role $w_{j+1}$. Its local mathematical readout is the real
+incidence successor and enabled next constructor action. The terminal
+constructor readout is the append postcondition at $C_{24}(h)$.
+There is no constructor edge there. This is component completion,
+not original global halt or an executed return.
+
+The actual operation order is these fine occurrences after the old
+native history. Temporary private probe values and endpoint choices
+are not additional released outputs. If fine progress/charge labels
+are made public, they are an explicitly finer observation interface,
+not automatically an original $Q$ experiment. A mathematical view of
+the graph does not install a graph-output service.
+

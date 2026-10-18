@@ -1,0 +1,66 @@
+**Construction 320.1 (The law $P^\star$).**
+The target amplitudes and cap are
+
+$$
+A^\star=(13,13,13,10,9,8,6,6,6)/24,
+\qquad e^\star=331/1536=662/3072.
+\tag{320.1}
+$$
+
+All counts in this construction are divided by 3072. The following
+sixteen deterministic rows give $O(i,j;u,v,z)$ its listed count.
+
+| $i$ | $j$ | $u$ | $v$ | $z$ | Count /3072 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 4 | 0 | 4 | 0 | 110 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 5 | 0 | 5 | 0 | 132 |
+| 3 | 6 | 0 | 6 | 0 | 125 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 117 |
+| 4 | 6 | 0 | 6 | 0 | 110 |
+| 5 | 6 | 0 | 6 | 0 | 127 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+| 8 | 9 | 0 | 9 | 0 | 17 |
+
+There are five further schedule rows. Each entry is an unnormalized
+label vector on the indicated stopped cell; each vector in a row
+has the same schedule count $m$.
+
+| Schedule | $m$ | First vector | Middle vector | Exhaustion vector |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | 944 | $944e_{1}$ | $944e_{2}$ | $463e_{0}+220e_{3}+162e_{4}+99e_{5}$ |
+| $(2,3)$ | 391 | $333e_{0}+58e_{2}$ | $391e_{3}$ | $391e_{0}$ |
+| $(3,4)$ | 236 | $236e_{0}$ | $236e_{4}$ | $148e_{0}+88e_{5}$ |
+| $(6,7)$ | 74 | $74e_{0}$ | $74e_{7}$ | $17e_{0}+4e_{8}+53e_{9}$ |
+| $(6,8)$ | 53 | $53e_{0}$ | $53e_{8}$ | $17e_{0}+36e_{9}$ |
+
+The deterministic counts sum to 1374 and the five schedule counts
+sum to 1698. Thus total schedule count is 3072. Every vector is
+nonnegative and sums to its own $m$, including each exhaustion
+vector. Counterfactual cell masses are not added together.
+
+Here is an explicit complete-table coupling for each mixed row.
+Order its labels increasingly and, in each of the three cells,
+partition $[0,1)$ into half-open intervals of lengths given by that
+cell's counts divided by $m$. For each triple of cell labels
+$(u,v,z)$ assign to $O(i,j;u,v,z)$ mass
+
+$$
+\frac{m}{3072}\,\bigl|I_0(u)\cap I_{10}(v)\cap I_{11}(z)\bigr|.
+\tag{320.2}
+$$
+
+These intersections partition the interval, give nonnegative full
+table weights summing to $m/3072$, and recover every displayed
+cell marginal by summation. Equivalently the same local uniform
+coordinate fixes all three counterfactual labels by their cell
+quantiles before replies. This defines one whole probability law.
+It imposes no sum-fill condition on different counterfactual cells.
+

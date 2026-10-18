@@ -1,0 +1,49 @@
+## 6. Mathematical attribution and the four existence questions
+
+**Mathematical attribution 6.1 (inherited statements and compound content).**
+This volume is a same-theme continuation of [NARC §§13--16][NARC].
+Theorems 2.2 and 3.2 concern the full domains of its Theorems 14.2
+and 15.2. Their parameter map is the actual original pair $(a,b)$,
+its difference $d$, its attained class $C_t$, and its inherited
+defect $19-|C_t|$. Neither theorem needs monotonicity or an
+individual class's saturated path description. Theorems 4.4,
+5.1 and 5.2 additionally consume its complete nineteen-point
+normal form, six boundary corners, unequal first-band gates
+and, only for the stronger nonnegative bounds, the complete
+saturated zero-origin criterion. They do not replace any of
+those local results by renamed proofs.
+
+The repo-derived compound content is the simultaneous span and
+endpoint accounting on the whole square, its signed rank-moment
+coupling to every defect allocation, the corner-budget exclusions
+yielding four and five, and second-band exhaustion yielding the
+adjacent-gate six/seven bounds and four branch exclusions. The
+proofs use ordinary finite double counting, integer rank sums
+and the supplied native triple constraints. No worldwide priority
+claim is assigned to these deductions.
+
+The primary literature supports the following mathematical
+correspondences, within their stated scopes.
+
+| Primary source | Applicable mathematical relation | Boundary of the correspondence |
+| --- | --- | --- |
+| N. Charpenay, M. Le Treust and A. Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, [arXiv:2211.03649v2][CLR], Definitions II.1 and III.1, Theorem III.4 | Unequal target values at one common compatible side-information value require distinct codewords. This is the conflict relation behind the inherited complete-entry collision obstruction. | Their support-restricted probabilistic block model, prefix-free code length and asymptotic chromatic-entropy rate give no two-Read native class certificate or whole-square packing theorem. |
+| Robert D. Nowak, *The Geometry of Generalized Binary Search*, [arXiv:0910.4397v5][Nowak], §§I--II, Definition 3 and §V.A | A fixed unknown object has a reply function on the permitted query space. The point-test versus dyadic-subinterval comparison distinguishes available queries from stronger partitions. | Binary hypothesis identification under neighborliness and coherence does not supply the four-reply target-only native bounds or authorize the missing $P_1$. |
+| R. Bruno, R. De Prisco, A. De Santis and U. Vaccaro, *Bounds and Algorithms for Alphabetic Codes and Binary Search Trees*, [arXiv:2407.16443v1][BDDSV], abstract and §I | Ordered-search transcripts connect comparison trees and alphabetic codes; binary alphabetic comparisons and ternary search-tree comparisons have different reply structures. | Their probability-weighted average objectives supply neither the six native triples nor an exact grid cover. |
+
+These are literature-attested methods and model distinctions. No
+numerical theorem from these papers is invoked for the new gap
+bounds, and no matching, matroid, integral-relaxation or topological
+sufficiency hypothesis is assumed for the native families. The
+comparison is limited to the cited primary statements; it establishes
+no exhaustive literature classification or global novelty.
+
+The semantic source correspondences remain those of [NARC,
+Mathematical citation 8.1 and Definition 16.2][NARC]: actual ordered
+trees and homomorphic substitution, literal constructor replies,
+acquired clocks, and the full exterior with its actual hole partition.
+The resource restrictions in [NARC §§17--24][NARC] instead concern
+one fixed fifteen-origin acquired fiber with installed read/write
+control. Those additional restrictions and their optima impose no
+condition on Definition 1.2's unrestricted whole-square problem.
+

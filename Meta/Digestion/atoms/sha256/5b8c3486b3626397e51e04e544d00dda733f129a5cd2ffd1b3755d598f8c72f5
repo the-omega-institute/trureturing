@@ -1,0 +1,30 @@
+## 4. 四、闭环控制：局部 $\kappa$ 可能无法同时满足全局 holonomy
+
+对于一个长度为 $L$ 的周期 AURIC 链，令第 $i$ 个局部 transfer 矩阵为：
+
+$$
+T_i(\kappa_i).
+$$
+
+全局 transfer 为：
+
+$$
+\Pi(\kappa_1,\dots,\kappa_L)=
+T_L(\kappa_L)\cdots T_1(\kappa_1).
+$$
+
+存在全局闭合状态的必要条件是存在非零向量 $v\ge0$，满足：
+
+$$
+\Pi(\kappa_1,\dots,\kappa_L)v=v.
+$$
+
+定义 holonomy 缺陷：
+
+$$
+H(\kappa,v)=
+\Pi(\kappa)v-v.
+$$
+
+---
+

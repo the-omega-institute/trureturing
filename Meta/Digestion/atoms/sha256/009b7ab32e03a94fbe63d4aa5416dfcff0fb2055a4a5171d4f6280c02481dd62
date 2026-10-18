@@ -1,0 +1,28 @@
+**Proposition 35.4 (empty, no-hole and extreme-cut meanings).** The
+interpretation and decision have the following boundary values.
+
+1. If $S=\varnothing$, (LAC.35.3) is vacuously true, but the reported
+   result is logical emptiness. There is no admitted input run and no
+   negative witness or acquired positive example.
+2. If $\mathcal B=\varnothing$, the tuple space is the singleton
+   $\{()\}$. Its admission predicate is the concrete check of all records
+   on $C$. If it passes, $U=\{C\}$ and the complete target is computed
+   and returned with zero new reads, even when $P$ or $Q$ is empty.
+3. If $Q=\{\varepsilon\}$, the complete target is the constant one-hole
+   row, so $K=0$ suffices on every nonempty covered input.
+4. If $Q=\varnothing$, the target is the whole concrete original source.
+   Bounded recovery holds exactly when $S$ is finite. If all target cuts
+   happen to be absent on a branch, its row likewise contains the entire
+   source; absence never denotes an empty output.
+
+Proof. The first two assertions follow from the quantified predicates
+over an empty set or zero coordinates and the exact source bijection.
+In the third, the root always exists, its exterior is one numbered hole
+and its partition is one class. For the fourth, Theorem 34.1 identifies
+target equality with $k=l$. If a cutoff works, each of the finitely many
+clipped tuples contains at most one admitted tuple, hence $S$ is finite.
+Conversely a finite $S$ admits a cutoff strictly above all its coordinates
+(with $K=0$ sufficient when there are none), so equal clips imply equal
+tuples. The mask retains everything when no cut is reached, proving the
+last statement. $\square$
+

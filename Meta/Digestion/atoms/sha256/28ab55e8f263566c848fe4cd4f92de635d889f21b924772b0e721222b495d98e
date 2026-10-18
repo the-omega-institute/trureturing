@@ -1,0 +1,51 @@
+**Definition 8.1 (Same mixture and common domain).** Reuse precisely
+[Universal, Proposition 7.2][U]'s four-state mixture, writing
+$P=(R^{1/3}+R^{1/4})/2$. Let $H\in\{1/3,1/4\}$ denote its persistent
+component label, not its time-indexed hidden state. Under $R^a$, either
+one-sided empirical frequency of ones converges to $a/(1+a)$; these
+distinct limits identify $H=a$ and survive every finite coordinate
+change. On the no11 space $\mathsf X$, write
+$F_i=\{x:x_{i-1}=x_{i+1}=0\}$. The free-site full-exterior predictor
+values are
+
+$$
+r_{1/3}=\frac37,\qquad r_{1/4}=\frac4{13},\qquad
+q_i(x)=r_{H(x)}\mathbf1_{F_i}(x).
+\tag{8.1}
+$$
+
+These $r_a$ predict the visible bit given its entire exterior. They are
+not finite-record posterior probabilities of $H$.
+
+Use Standing interface 2.2 at its stated ordinary mathematical status.
+Choose one Borel, shift-invariant, saturated $P$-conull domain $\Omega$
+on which the two frequency labels, all identities (8.1), and that
+interface agree, by its countable intersection and nonsingularity
+procedure. It is conull under both components. The band in (2.1) holds.
+For $j\ge1$, either erasure field in (2.1) retains an entire half-line
+identifying $H$ and both neighbors of the center, so $p_j^L=p_j^R=q_0$
+almost surely. Thus $e_L(j)=e_R(j)=0$ for $j\ge1$, while the two
+$j=0$ terms are bounded, proving $A_P<\infty$. This verifies the
+additional hypotheses for consuming Theorem 4.1 with this finite producer
+and the supplied interface.
+
+Define the cylinder and total center insertion by
+
+$$
+E=\{x:x_{-2}=x_{-1}=x_0=x_1=x_2=0\},\qquad
+(Rx)_i=\begin{cases}
+1,&i=0\text{ and }x_{-1}=x_1=0,\\
+x_i,&\text{otherwise}.
+\end{cases}
+\tag{8.2}
+$$
+
+Thus $R=R_{\{0\},1}$ is the identity on incompatible inputs and on
+inputs whose center is already one. All pathwise statements use
+$x,Rx\in\Omega$; in particular $H(Rx)=H(x)$. For
+$\ell_i(x)=(x_i-q_i(x))^2$, the sign convention is
+$\Delta_P(x,z)=\sum_i(\ell_i(x)-\ell_i(z))$.
+In comparing losses we keep the fixed original law $P$ and its fixed
+posterior versions $q_i$, rather than recomputing predictors under the
+image law of $R$.
+

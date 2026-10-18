@@ -1,0 +1,14 @@
+**定义 156.3（叶序、恒等与单过程类比的范围）。** 叶序映射沿用定义116.1：$\operatorname{wd}(\langle s,t\rangle)=\operatorname{wd}(s)\operatorname{wd}(t)$。树替换的两个叶规则分别给叶序 $\beta$、$\beta\alpha$，与 $\rho_{\rm op}$ 一致。若对应对两个子树成立，保配对及保拼接给
+
+$$
+\operatorname{wd}(\rho\langle s,t\rangle)
+=\operatorname{wd}(\rho s)\operatorname{wd}(\rho t)
+=\rho_{\rm op}(\operatorname{wd}(s)\operatorname{wd}(t)),
+$$
+
+所以结构归纳得到 $\operatorname{wd}\rho=\rho_{\rm op}\operatorname{wd}$。这是原树到操作词的一个对应。它忘括号，不能成为原树的完整替代：前卷命题103.2的 $\langle\langle\alpha,\alpha\rangle,\beta\rangle$ 与 $\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 叶序相同而来源及其三周期读出不同。
+
+空词的求值是承载对象上的恒等操作，不是承载对象全部状态的唯一值，更不是整个宇宙为空。一个对象可以有多个自映射，但这里的非平凡语法已经给了生成元；$\rho_{\rm op}(\epsilon)=\epsilon$ 不自生 $\alpha$。已给语法也不等于实际器具已经取得这些操作。
+
+单过程的历史类比仅取假设150.4所引 Richard P. Feynman，[*The Development of the Space-Time View of Quantum Electrodynamics*，Nobel Lecture，1965年12月11日](https://www.nobelprize.org/prizes/physics/1965/feynman/lecture/)中 “As a by-product of this same view” 起首的 Wheeler 电话段。原文的一条折返世界线可与同一时间截面相交多次，并将逆向时间部分作正电子解释；Feynman指出正电子数量问题，并没有同样认真接受“全部电子是同一个电子”的说法。这里只保留复杂单过程有多个切面读出的图景，不用它证明 FIB 语法、实际单对象仪器、物质同一性或本卷档案的时间模型。
+

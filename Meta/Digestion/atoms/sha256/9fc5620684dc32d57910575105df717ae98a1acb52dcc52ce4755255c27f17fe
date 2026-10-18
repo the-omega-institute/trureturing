@@ -1,0 +1,43 @@
+**定理 21.3.1（序列似然的投影扩张上界）。** 定义每轮的局部投影扩张
+
+$$
+\Delta_t
+=\max_u\log\frac{\ell_{z_t}(x_t,u)}{\ell_{z_t}(a_t,u)}
+-\min_u\log\frac{\ell_{z_t}(x_t,u)}{\ell_{z_t}(a_t,u)}.
+$$
+
+则整体序列的扩张
+
+$$
+\Delta_{1:n}
+=\max_u\log R(u)-\min_u\log R(u)
+$$
+
+满足
+
+$$
+\boxed{\Delta_{1:n}\le\sum_{t=1}^n\Delta_t.}
+$$
+
+若每一轮的最大值和最小值由同一对潜变量取到，则等号成立。特别地，若每轮使用同一个选择标签与同一对输入行，则
+
+$$
+\boxed{\Delta_{1:n}=n\Delta_1.}
+$$
+
+**证明。** 对任意 $u,v$，有
+
+$$
+\log\frac{R(u)}{R(v)}
+=\sum_{t=1}^n
+\left(
+\log\frac{\ell_{z_t}(x_t,u)}{\ell_{z_t}(a_t,u)}
+-
+\log\frac{\ell_{z_t}(x_t,v)}{\ell_{z_t}(a_t,v)}
+\right).
+$$
+
+每一项不超过 $\Delta_t$，先对 $u,v$ 取最大，再得总和上界。若存在同一对 $(u_+,u_-)$ 同时在每一项达到最大与最小，代入该对即得等号；重复同一轮时该条件自动成立。证毕。
+
+<a id="claim-21-3-2"></a>
+

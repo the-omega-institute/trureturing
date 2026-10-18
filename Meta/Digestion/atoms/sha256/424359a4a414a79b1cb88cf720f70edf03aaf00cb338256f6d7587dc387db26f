@@ -1,0 +1,52 @@
+**定理 C-109.4（一个不可见纤维中的等谱边与三角形）。** 使用系数坐标的矩阵单位，令
+
+$$
+\begin{gathered}
+L=E_{04}-E_{40},\qquad
+R=E_{01}-E_{10}+E_{12}-E_{21}+E_{20}-E_{02},\\
+0\le a\le1/\sqrt3,\quad b=\sqrt3\,a,\\
+M_{\rm pair}(a)=I_5+ibL,\qquad M_{\rm tri}(a)=I_5+iaR,\\
+C_x(a)=M_x(a)/5,\quad \Gamma_x(a)=JC_x(a)J^\dagger,\quad
+T_x(a)(X)=M_x(a)\circ X.
+\end{gathered}
+\tag{C109.8}
+$$
+
+两者均为合法相关矩阵，$C_x$ 的共同全谱为
+
+$$
+\left\{\frac{1+b}{5},\frac{1-b}{5},\frac15,\frac15,\frac15\right\},
+\qquad \operatorname{tr}(\Gamma_x^2)=\frac{5+6a^2}{25}.
+\tag{C109.9}
+$$
+
+$\Gamma_x$ 的谱再添二十个零。对每个 $\pi\in\mathcal M_{\rm loc}$，
+$P_{\Gamma_{\rm pair}(a)}^\pi=P_{\Gamma_{\rm tri}(a)}^\pi=P_S^\pi$；
+它们也属于原 $Q$ 纤维 $\mathfrak F$。$a>0$ 时两者在原切口上都纠缠。
+
+证明。边块 $iL$ 的本征值是 $1,-1$。三角块满足
+$R^2=\mathbf1\mathbf1^T-3I_3$、$R\mathbf1=0$，所以 $iR$ 的本征值为
+$0,\sqrt3,-\sqrt3$。其余两个坐标固定；这给 (C109.9) 和全参数区间的正性。
+也可用以下共同可核的谱分解明确给出三角上界：在前三坐标中令
+
+$$
+u=(1,1,1)/\sqrt3,\quad p=(1,-1,0)/\sqrt2,\quad
+z=(1,1,-2)/\sqrt6,\quad h_\pm=(p\mp iz)/\sqrt2.
+$$
+
+$Rp=-\sqrt3z$、$Rz=\sqrt3p$，$u,h_+,h_-$ 为复正交单位向量，故
+
+$$
+M_{\rm tri}=uu^\dagger+(1+b)h_+h_+^\dagger
+ +(1-b)h_-h_-^\dagger+E_{33}+E_{44}.
+\tag{C109.10}
+$$
+
+边块类似地用 $g_\pm=(e_0\mp ie_4)/\sqrt2$：
+$M_{\rm pair}=(1+b)g_+g_+^\dagger+(1-b)g_-g_-^\dagger+
+E_{11}+E_{22}+E_{33}$。
+这些有限 Gram 因子也给通道合法性，$b=1$ 时零权重项直接省略。
+谱平方和为 $(5+2b^2)/25$。两者实部都为 $I_5/5$，故
+C-108.3 给全部有限自适应双边历史及原 $Q$ 约束，而非仅单读边缘等价。
+非零虚部使 $\Gamma_x\ne S$，C-106.2 给原切口纠缠。证毕。
+

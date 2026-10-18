@@ -1,0 +1,9 @@
+**定义 6.3（单源联合响应映射）。** 若 $\mathsf H$ 与 $K$ 作用于同一初始律和同一源，固定模型的隐藏响应为
+
+$$
+S:\mathbb R\longrightarrow V\oplus\mathbb R,\qquad
+S(a)=a(\Delta_{13}\mathsf H,\Delta_{13}K).
+$$
+
+此处向量与标量形成有类型的有序对。$\Delta_{13}\mathsf H=\Delta_{13}K$ 在一般 $V$ 上没有类型意义；比较它们必须给出 $V\to\mathbb R$ 的比较映射、量纲及校准约定。
+

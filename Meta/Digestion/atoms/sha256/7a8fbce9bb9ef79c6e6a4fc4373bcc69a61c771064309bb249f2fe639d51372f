@@ -1,0 +1,26 @@
+## 3. Finite sufficiency and restricted minimality
+
+The table proves that $(Q^+,Z,B,Y,s_{\rm stop})$ determines the selected past on all six positive accepted histories. Conversely, the first three rows are the old chronology witness and the last three rows are separated as follows:
+
+* $(da,b),Z=1$ identifies $110$;
+* $(ad,b),Z=1$ identifies $101$;
+* $(ad,b),Z=0$ identifies $011$.
+
+Thus the augmented boundary is injective on the selected target set, and the adapter followed by the unchanged decoder recovers every selected prefix.
+
+The added relation is also minimal in a narrow, explicit sense. Keep the two original scopes and the existing first-marker bit, and allow exactly one new membership of one of the four missing incidences $b\in S_1$, $d\in S_1$, $a\in S_2$, or $d\in S_2$. The old weight-two collision $110/101$ remains under the first, third and fourth choices; adding $d\in S_1$ changes their first records to $da$ and $ad$. Hence among this four-element incidence class, exactly one added membership closes the remaining fiber. This is not a minimum over arbitrary memory encodings or total resources.
+
+Without the new incidence, the same old boundary has a target fiber of size two on the weight-two cell. With $d\in S_1^+$, the largest fiber of $(Q^+,Z)$ on the six selected histories is one. The first local record alphabet grows from the realized values
+
+$$
+\varnothing, a, ac
+$$
+
+to
+
+$$
+\varnothing, a, ac, d, ad, da.
+$$
+
+This is a real persistent-record cost. It is not an additional chronology register bit: the existing $Z$ remains binary. Routing logic, event labels, writes, parser state, decoder tables, raw Reads, time and energy remain separate resource coordinates.
+

@@ -1,0 +1,67 @@
+**定理 220.10（Complete costs and cone-restricted joint feasibility）。**
+Let $\Psi_C$ be the maximum of zero and these expressions, omitting
+pair types that do not exist:
+
+$$
+\begin{aligned}
+ &\bigl(R(\{0,1\}^m)-(S-s_i-s_h+Z)\bigr)_+
+                   &&(i<h\le k),\\
+ &\sum_{t=0,1}\bigl(R(H_{a,t})-(U-u_i+z)(H_{a,t})\bigr)_+
+                   &&(i\le k<a),\\
+ &\sum_{H\in\Pi_C(a,b)}\bigl(R(H)-(U+z)(H)\bigr)_+
+                   &&(k<a<b\le L).
+\end{aligned}\tag{220.9}
+$$
+
+The suffix $\Pi_N$ has four cells and $\Pi_O$ its actual three
+stopped cells. On a pooled score satisfying D1–D2, and on its
+canonical reconstruction,
+
+$$
+ B_C=S+Z+\Psi_C,\qquad \Delta_C=E+\Psi_C.\tag{220.10}
+$$
+
+For fixed $q=(\beta,K)$, a full score in $\mathcal D_k$ of cost at
+most $b$ exists if and only if one tuple satisfies all quotient
+equations, $0\le d_i\le s_i$, the common interval (220.6), and
+$E+\Psi_C\le b$. This is simultaneous finite convex feasibility.
+When the fiber is nonempty both class minima are attained separately;
+no equality of the two minima or common minimizer is asserted.
+
+**证明。** After prefix domination only zero and tail numerical
+rewards matter. In a prefix pair only $11$ has tail numerical reward,
+with zero mass $S-s_i-s_h+Z$. In a mixed pair the prefix-zero side
+contributes $s_i$ and the one side has zero measure $U-u_i+z$.
+This gives the same mixed expression for $N$ and $O$. A suffix pair
+has exactly the four or three cells displayed. These yield (220.9).
+
+Empty schedules are bounded by refinement. For $k\ge2$ a prefix
+singleton is bounded by a prefix pair. For $k=1$ any mixed pair
+refines that singleton. A suffix singleton is bounded by the mixed
+expression at the same suffix address, since
+$U-u_i+z\le U+z$. Thus shorter schedules are included, also when
+$m=1$. The identity $W=S+Z+\beta_1+\beta_2$ proves (220.10),
+including the possibly negative $k=1$ offset. Cost nonnegativity
+follows independently from the legal anchor.
+
+For necessity pool a feasible input; 220.8 does not increase cost.
+Retain its one tuple and apply 220.9. Conversely reconstruct that
+tuple once. This proves the equivalence. Maximum reward and positive
+part are convex in the common measures; $K_{\rm lo}$ is convex and
+$K_{\rm hi}$ linear, giving the finite convex relation.
+At fixed $K$ the original coefficient fiber is a closed subset of
+the compact nonnegative simplex of total $K$, and the costs are
+continuous maxima over a finite catalog. Each minimum is therefore
+attained. These are cone-restricted assertions, not unrestricted
+full-fiber necessity statements. $\square$
+
+After verifying D1–D2, the $h_i$ and pointwise overlap variables are
+unnecessary for costs and quotient feasibility. For $N_s=2^m$ the
+retained measure entries number
+$(k+2)N_s-1$: $kN_s$ donor entries, $N_s$ zero-tail entries and
+$N_s-1$ tail numerical entries. At fixed $Q$, $d_i,K$ are parameters.
+For $L=8,k=3$ this is $159$ rather than the $766$ original
+$A,C,P,T$ entries. It is a normal-form bound, not a global minimum
+dimension or a computation-time claim. The common suffix allocation
+and common $K$ interval cannot be discarded.
+

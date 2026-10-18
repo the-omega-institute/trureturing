@@ -1,0 +1,60 @@
+**Theorem 45.1 (third charge and fourth solvability).** Set
+
+$$
+\begin{aligned}
+\mathcal R_3&=\mathcal N_3g_0+\mathcal N_2g_1+\mathcal N_1g_2,\\
+\mathcal R_4&=\mathcal N_4g_0+\mathcal N_3g_1
+                         +\mathcal N_2g_2+\mathcal N_1g_3,\qquad
+\rho=\langle p,\mathcal R_4\rangle.
+\end{aligned}
+\tag{45.1}
+$$
+
+There are unique normalized real $L^2$ charges $g_3,g_4$ with
+
+$$
+\begin{aligned}
+Ag_3&=\gamma\mathcal R_3,&\langle p,g_3\rangle&=0,\\
+Ag_4&=\gamma(\mathcal R_4-\rho g_0),&
+\langle p,g_4\rangle&=0.
+\end{aligned}
+\tag{45.2}
+$$
+
+The third charge is odd and satisfies
+
+$$
+g_3\in L^{6/5},\qquad \omega^3g_3\in L^2.
+\tag{45.3}
+$$
+
+Every coefficient row $\mathcal N_jg_i$, $i\le3$, $i+j\le4$, exists in $L^2$. Only the $L^2$ norm of $g_4$ is asserted or consumed.
+
+Proof. For the seed contribution to $\mathcal R_3$, the products are
+$\mathcal V_3p/(\gamma\mu)$,
+$\mathcal V_2G_1g_0$,
+$\mathcal V_1G_2g_0$ and $VG_3g_0$.
+Their $\omega^3$-weighted $L^2$ bounds use, in order, $\omega p\in L^2$ and bounded $\omega^2\mathcal V_3$; bounded $\omega^3\mathcal V_2$ and $G_1g_0\in L^2$; $\omega^3\mathcal V_1\in L^8$ and $G_2g_0\in L^{8/3}$; and $\omega^3V\in L^4$ and $G_3g_0\in L^4$. The $G_1g_0$ norm is also an immediate instance of (43.2).
+
+The three order-two products on $g_1$ use bounded $\omega^3\mathcal V_2$, bounded $\omega^3\mathcal V_1$, and $\omega^3V\in L^4$, respectively against $G_0g_1,G_1g_1\in L^2$ and $G_2g_1\in L^4$. The two order-one products on $g_2$ use bounded $\omega^3\mathcal V_1,\omega^3V$ against $G_0g_2,G_1g_2\in L^2$. Thus $\omega^3\mathcal R_3\in L^2$.
+
+For completeness its $L^{6/5}$ norm uses the following field/return Hölder pairs:
+
+$$
+\begin{array}{c|c}
+\text{product}&\text{field exponent, return exponent}\\ \hline
+\mathcal V_3p&(4,12/7)\\
+\mathcal V_2G_1g_0,\ \mathcal V_2G_0g_1&(3,2)\\
+\mathcal V_1G_2g_0&(30/13,5/2)\\
+VG_3g_0,\ VG_2g_1&(12/7,4)\\
+\mathcal V_1G_1g_1,\ \mathcal V_1G_0g_2,\ VG_1g_2&(3,2).
+\end{array}
+\tag{45.4}
+$$
+
+Every reciprocal sum is $5/6$. All field exponents satisfy (32.3)'s strict integrability condition; the mode is in $L^{12/7}$ by its full spatial decay, and all return norms were proved above or in §38. Hence $\mathcal R_3\in L^{6/5}$.
+
+Coefficient parity makes $\mathcal R_3$ real odd, so $\langle p,\mathcal R_3\rangle=0$. Fredholm solvability and normalization give $g_3$, and uniqueness makes it real odd. Equation (44.10) first gives $g_3\in L^{6/5}$. The unweighted $G_0$ assertion of Lemma 43.1 then gives $G_0g_3\in L^2$ with its specified adjoint interpretation. Bounded $\omega^3V$ and the already proved $\omega^3\mathcal R_3\in L^2$ give $\omega^3g_3\in L^2$ from its equation. This repeats the noncircular reconstruction bootstrap, not an $L^1$ claim about $g_3$.
+
+Lemma 43.1 now gives $G_0g_3,G_1g_3\in L^4$, and $G_jg_2\in L^4$ for $j\le2$. Multiplication by the corresponding $L^4$ fields proves every new row is in $L^2$; the seed and $g_1$ rows are §§33 and 38. Thus $\mathcal R_4\in L^2$. Since $\langle p,g_0\rangle=1$, its subtraction in (45.2) is exactly orthogonal to $p$. Fredholm gives the normalized real $g_4$. This construction makes no weighted, native-domain or energy assertion about $g_4$. Parity of fixed charges never restricts the actual complex states. $\square$
+

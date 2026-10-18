@@ -1,0 +1,37 @@
+**Lemma 4.2 (constant-rank replacement for residual blocks).** Fix one
+residual shape sort. Suppose its finite whole-block offset equations
+and disequations have a solution by natural-valued functions on the
+leaves of some nonempty finite shape. They then have a solution by
+constant natural-valued functions on any prescribed nonempty finite
+shape. All finitely many residual sorts can be treated simultaneously.
+
+Proof. Make a graph whose vertices are block names and whose equation
+$U=V+d$ imposes a difference of $d$. Following edges, with their signs,
+expresses every vertex in a connected component as
+
+$$
+U=B_C+\delta_U.
+\tag{NSF.10}
+$$
+
+A cycle with nonzero total offset is impossible even at a single leaf.
+Thus a functional solution implies that every cycle has zero offset.
+Potentials $\delta_U\in\mathbb Z$ can be computed by a finite traversal.
+
+A disequation between vertices of the same component is impossible if
+their prescribed offsets make its two sides equal; otherwise it holds
+at every leaf. A disequation between different components forbids just
+one difference between their constant bases. Choose component bases
+successively, each larger than all lower bounds required by
+$B_C+\delta_U\ge0$, and avoiding the finitely many forbidden values
+arising from already chosen components. Infinitely many natural
+choices remain. This gives the requested constant functions and
+satisfies every disequation simultaneously. Different shape sorts have
+no connecting constraints by Lemma 3.2. $\square$
+
+This argument uses whole-block equality and its negation. It would not
+apply without further proof to arbitrary pointwise predicates demanding
+different leaf locations, to comparisons between different positions
+inside one unspecified block, or to universally quantified code
+properties.
+

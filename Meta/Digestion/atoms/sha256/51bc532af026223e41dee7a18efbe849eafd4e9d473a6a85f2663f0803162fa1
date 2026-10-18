@@ -1,0 +1,16 @@
+**Proposition 4.3 (worst-parity symmetrization).** For both C and R, the
+maximum common probability equals the maximum of
+$\min(p_+,p_-)$ over arbitrary parity-dependent success probabilities.
+
+Proof. Let $Q$ fix $e_2,U_+$ and negate $U_-$. It exchanges the specimen
+parities without changing $\beta$. There is a calibrated helper unitary
+$R$ swapping $\eta_+,\eta_-$: for $0\leq\mu<1$ it fixes their normalized
+sum and negates their normalized difference; at $\mu=1$ use identity on
+their occupied line. Input conjugation by $Q\otimes R$ and output
+conjugation by $Q$ exchange the two parity success probabilities and
+preserve the required targets. In R also swap the returned helper at output.
+Randomly choose the original or exchanged operation with a retained fair
+coin. Both probabilities become $(p_++p_-)/2$, at least their original
+minimum. This mixing uses the additional calibrated operation permission;
+it is not an original-control sensor or a free hidden programme. $\square$
+

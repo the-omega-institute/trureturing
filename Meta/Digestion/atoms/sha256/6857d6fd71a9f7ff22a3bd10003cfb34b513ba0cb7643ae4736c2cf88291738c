@@ -1,0 +1,3 @@
+### 103.7. Full equal-polar continuation
+
+[RT IV, Theorem 104.1](ARITHMETIC_HOLOGRAPHIC_RT_IV.md) excludes every positive-subquarter local minimum on the full calibrated domain with ranks \((7,6)\), kernel-support occupancy \((2,1,1,0)\), and equal-polar supported \(H\) records as in §103.1. No balanced scaled-kernel assumption is required. Its proof uses the same original common normer and actual outside-partner constraints. Genuinely unequal-polar records, the remaining support patterns and the unrestricted global quarter optimum remain outside that conclusion.

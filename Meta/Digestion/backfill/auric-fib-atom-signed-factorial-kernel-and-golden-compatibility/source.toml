@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-signed-factorial-kernel-and-golden-compatibility"
+path = "docs/develop/theory/AURIC_FIB_ATOM_SIGNED_FACTORIAL_KERNEL_AND_GOLDEN_COMPATIBILITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

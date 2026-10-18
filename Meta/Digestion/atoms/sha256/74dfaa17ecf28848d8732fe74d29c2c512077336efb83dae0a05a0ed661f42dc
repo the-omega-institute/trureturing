@@ -1,0 +1,27 @@
+**Definition 178.4 (The graph-cut sign boundary of these suffix energies).**
+The intermediate graph-representation criterion is
+[Kolmogorov and Zabih, *What Energy Functions Can Be Minimized via
+Graph Cuts?*, IEEE TPAMI 26(2), Theorem 4.1 and equation (7), p. 150](https://www.cs.cornell.edu/~rdz/Papers/KZ-PAMI04.pdf).
+For binary pair terms it requires
+$E_{jk}(0,0)+E_{jk}(1,1)\le E_{jk}(0,1)+E_{jk}(1,0)$
+for direct graph representation. This intermediate sign criterion is
+literature-attested. Applied to the pair terms in (178.1),
+the difference of its two sides is
+
+$$
+E_{jk}(0,0)+E_{jk}(1,1)-E_{jk}(0,1)-E_{jk}(1,0)=Q_{jk}.
+\tag{178.6}
+$$
+
+Unary terms cancel in this difference. The nonnegative quadratic
+forms here are supermodular, and a strictly positive $Q_{jk}$ fails
+that direct graph-cut condition in the stated suffix coordinates.
+The literature theorem is used only for this sign boundary inside
+the suffix criterion; it supplies no augmented-catalog sufficiency,
+polynomial-time minimization bound for these forms, or impossibility
+under every change of variables. The exact coupled minima (178.3)
+remain the acquisition criterion. The residual and endpoint statements
+in this volume are repo-derived compositions with their named
+ordinary suppliers, without a first-discovery or exhaustive
+literary-priority assertion.
+

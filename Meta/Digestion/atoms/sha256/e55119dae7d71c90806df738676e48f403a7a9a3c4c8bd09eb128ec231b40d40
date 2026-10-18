@@ -1,0 +1,32 @@
+**Definition 13.3 (same-instance replacement branches).** Let $P$ be an
+authentic outer Ready of this fixed installation. A comparison branch
+$B$ is a finite actual continuation from this very $P$, using genuine
+current entries and their prescribed native rows. Count $E(B)$ whole
+completed original event services, once each at their actual commitment,
+and $J(B)$ completed producer journal invocations of Definition 13.2.
+Every original event commitment in the branch must belong to a service
+whose entire required row/delivery/ACK/return or halt completes before
+the endpoint. A pending committed event is outside this comparison
+domain. A helper nested in a larger service is counted at its actual
+invocation, not again as a second copy of the containing event. When
+using the completed event count at the end, require its actual counter
+completion, rather than a pending prepared version.
+
+The branch may use arbitrary finite request lengths and public adaptive
+choices, arbitrarily many services, any legitimately retained growing
+supplement, and additional lawful original or annex work. There is no
+uniform memory or runtime bound. All rows, channel copies and return
+routing remain actual work. No new code, entry, source initialization,
+port identification, counter reset or deallocation is introduced.
+Adaptivity chooses from actual available operations using acquired public
+information; it supplies no private-source advice. Quantification over
+such branches does not declare that an unavailable journal caller is
+available, or that an annex row has original-$Q$ admission.
+
+A *composition of whole services* is the subclass in which every executed
+row belongs to one of these completed invocations or its installed
+invocation/return routing. Unexecuted disabled trials may be interspersed.
+A branch with no service in this subclass has no executed rows. Standalone
+primitive work with no completed service belongs only to the broader
+comparison class, not to this subclass.
+

@@ -1,0 +1,131 @@
+**Theorem 8.1 (conditional lower and complete full-fiber lift).**
+Let a native preparer under Assumption 1.3 be correct on every
+$u\in\mathcal U_*$ and satisfy, on every such source, both caps
+$n+1,W+3$. If its particular Boolean projection of WTF Theorem 4.1
+satisfies Definition 3.1, then
+
+$$
+H_P\ge k(n-k+1)+4+r.
+\tag{IC.32}
+$$
+
+For each $g\ge8$, the exact entire $P_g$ of Definition 4.2 has a
+native lift on the whole original fiber with precisely
+
+$$
+M_g+4+r
+\tag{IC.33}
+$$
+
+installed preparation states. Its invocation and letter maxima are
+$n+1,W+3$, jointly attained on one actual original source. It produces
+literally the original latch for (IC.6) and uses the independent original
+reader of Definition 1.2, with its separate $K=8$ and fresh bounds
+$2,6$.
+
+Proof, conditional lower. The specified WTF projection is a complete
+correct Boolean graph satisfying both caps (IC.7), with
+$m\le H_P-4-r$. Its explicit class hypothesis permits Theorem 3.2,
+which gives $m\ge G$. Combining proves (IC.32). No class membership
+has been inferred from arbitrary native correctness, and another
+projection or a chosen representative system is not substituted for
+this particular projected graph.
+
+Proof, complete installed lift. For every retained parent state, every
+scan state and every exit state of $P_g$ with coordinate $i$, install
+the fixed absolute native literal $a_i=LLL L^{s_i}R$. Its four
+fixed successors are
+
+$$
+(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+\longmapsto(\delta(q,0),\delta(q,0),\delta(q,1),\delta(q,0)).
+\tag{IC.34}
+$$
+
+The zero successor is installed separately for each of its three
+replies. Replace the two Boolean terminals by the original latches
+$\widehat e_0,\widehat e_1$; do not count the terminals again.
+Add these two distinct running states, and take $D_0$ as the sole
+native start:
+
+| Native state | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_0$ | $RLR$ | $\widehat e_1$ | $q_\varepsilon$ | $T_0$ | $\widehat e_0$ |
+| $T_0$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Install every one of the $r$ further prescribed distinct latches,
+including unused ones. These rows and (IC.23)–(IC.25), the six-exit
+table and (IC.34) specify every installed state, literal and all four
+successors. The total is $M_g$ selected running states, two profile
+states, two original-entry latches and $r$ further latches, proving
+(IC.33). No source-dependent mode or weight is evaluated outside these
+counted fixed states.
+
+For any actual $u\in Z_{b_3}$, its arbitrary branch image $x_a$
+defines the static vector $\theta(x_a)$ of Definition 1.2. The
+all-address occurrence identity supplied in WTF Section 2 is
+
+$$
+r_{\rho u}(pv)=r_{x_{[p]}}(v)
+\quad(p\in\{L,R\}^3,\ v\in\{L,R\}^*).
+\tag{IC.35}
+$$
+
+It makes each selected native visit exactly the appropriate bit query
+under (IC.34), including noncomb shapes, alpha or absent replies,
+repeats and certified traffic. Beta at $D_0$ means precisely
+$Z_{b_3}$. The resulting selected run is the complete actual Boolean
+run on that one vector, so it terminates correctly with its prescribed
+entry, and its complete paid costs on that same source are
+
+$$
+q_P(u)=1+t_{P_g}(\theta(x_a)),\qquad
+\ell_P(u)=3+J_{P_g}(\theta(x_a)).
+\tag{IC.36}
+$$
+
+If $D_0$ returns alpha, the source belongs to $\Pi_3$ and requires
+one. If it returns branch, the only remaining profile requiring one is
+$\Pi_4$, recognized by alpha at $T_0$. Every other such profile
+requires zero. All four edges are installed also for replies impossible
+at those profile roots. This exhausts the other ten profiles; each uses
+at most two calls and six letters. Thus the upper covers the full
+unbounded fiber, rather than only a selected witness family. Since
+$n\ge6$ and $c_i\ge5$, these other routes also fit $n+1,W+3$.
+
+For joint attainment, the simultaneous actual cube supplier of
+[PCA, Lemma 24.1][PCA], recorded in WTF Supplier 2.1, realizes the
+$H,\mathsf U=0^p,\mathsf X=00$ vector of Theorem 5.1 as one
+actual finite source in $Z_{b_3}$. More explicitly, with
+$G_0=\langle\beta,\beta\rangle$ and
+$C_0=G_0$, $C_{m+1}=\langle C_m,\beta\rangle$, choose
+$m\ge s_n$ and replace the beta at each selected prefix-free word
+$w_i$ by $G_0$ exactly when the chosen bit is one. Call the resulting
+branch image $B_\theta$. Choose distinct branch images for
+$x_c,x_{b_1},x_{b_2},x_{b_4}$ avoiding $B_\theta$, set
+$x_a=B_\theta$, $x_{b_3}=\beta$, and use the actual origin
+$\delta(\mathscr S(x))$. All repeated occurrences and six-class
+disequalities are satisfied. The indicator vector is the selected
+$\theta$, so (IC.36) attains $n+1$ and $W+3$ on that same source.
+The inverse and word descriptions in this existence proof are not
+operations of the apparatus.
+
+At every source the resulting latch is precisely
+$\widehat e_{\sigma_{A,k}(u)}$. Handoff enters the unchanged
+complete $e_0$ or $e_1$ from Definition 1.2. The independently priced
+reader then returns the entire predecessor row: ordered exterior,
+occurrences, full equality partition, repeated partners, different-class
+disequalities and strict-prefix blocking guards. Its fixed three
+running states, five whole-row halts, literals and four successor
+columns remain exactly the displayed original table. Its fresh calls
+and letters are additional charges; they have not been absorbed into
+the preparation count or caps.
+
+Every finite original address and all four replies retain their original
+meaning and permission. Binding, source epoch and same-version acquired
+data, authentication, export, isolation, code-only handoff, complete
+entry and stationary continuity retain Assumption 1.3's separate service
+boundaries and prices. This construction grants no archive or code
+reread, source copy, selector, counter, phase, time coordinate, computed
+address, reset or additional work/control state. $\square$
+

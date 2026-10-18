@@ -1,0 +1,53 @@
+**Theorem 12.1 (inverse certificate retaining the kernel direction).** For $H\in\mathscr H(J)$ and $z>0$, put
+
+$$
+\eta_z(H;D)=\operatorname{Tr}[D(zI_r+H)^{-1}],
+\qquad D\in\{\tau,\bar\tau,\sigma\}.
+$$
+
+Then
+
+$$
+g_N^2\leq\frac{(1+z)\eta_z(H;D)}{1+\eta_z(H;D)}.
+\tag{R.46}
+$$
+
+In particular, for any of these actual environment states,
+
+$$
+\operatorname{Tr}[D(sI_r+H)^{-1}]\leq1
+\ \Longrightarrow\ g_N^2\leq t_\beta
+\ \Longrightarrow\ \delta_N\geq U(\beta).
+\tag{R.47}
+$$
+
+A strict inverse inequality gives a strict diamond lower bound above $U(\beta)$.
+
+**Proof.** Schatten Hölder, in its $2$-by-$2$ product form, gives for every positive definite $A$
+
+$$
+\begin{aligned}
+f(D,\omega)
+&=\|\sqrt D A^{-1/2}A^{1/2}\sqrt\omega\|_1\\
+&\leq\|\sqrt D A^{-1/2}\|_2\|A^{1/2}\sqrt\omega\|_2
+=\sqrt{\operatorname{Tr}(DA^{-1})\operatorname{Tr}(\omega A)}.
+\end{aligned}
+$$
+
+This is the standard Schatten duality/Hölder inequality of Watrous, [*The Theory of Quantum Information*, (1.173)–(1.174), printed p.33](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf); it requires neither commuting nor real operands. With $A=zI_r+H$ and $h=\operatorname{Tr}(\omega H)$, (R.44) therefore gives simultaneously
+
+$$
+m(\omega)\leq\eta_z(z+h),\qquad m(\omega)\leq1-h.
+$$
+
+Weight these two bounds by $1/(1+\eta_z)$ and $\eta_z/(1+\eta_z)$ respectively. The $h$ terms cancel and yield (R.46) before maximizing $\omega$. Setting $z=s>0$ gives (R.47), since $x\mapsto x/(1+x)$ is strictly increasing. This combines the pure-state restriction and actual kernel charge at one center, rather than comparing their separate optima.
+
+As a calibration of the existing $C=0$ branch of Theorem 4.3, at positive beta it has $\sigma=|v\rangle\langle v|$ with real unit $v$. The third pure input gives $H=I_r-|v\rangle\langle v|$. With $d=\langle v|\tau|v\rangle\leq a=s^2$,
+
+$$
+\eta_s(H;\tau)=\frac d s+\frac{1-d}{s+1}
+=\frac{s+d}{s(s+1)}\leq1.
+$$
+
+Thus the inverse certificate recovers that prior exclusion even though $\lambda_{\min}(H)=0$. This is a calibration, not an additional exclusion or a new general Hölder theorem. The rank-one factorization is not imposed at beta zero. $\square$
+

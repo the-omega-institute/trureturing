@@ -1,0 +1,38 @@
+## Finite quotient and whole-face pairings
+
+Include reflections u,v in the two truncation facets U,V and let
+\(\widehat W=\langle a,b,c,d,u,v\rangle\).  The compact polyhedron Q has
+only Coxeter ridges (labels 4,9,3,2 and right-angled truncation ridges), so
+the standard Coxeter/Poincare theorem gives a discrete \(\widehat W\)-tiling of
+\(\mathbb H^3\) by copies of Q.  Let \(W=\langle a,b,c,d\rangle\), the
+standard parabolic subgroup omitting u,v.  Its chamber residue
+\(\Omega=\bigcup_{w\in W}wQ\) has all A,B,C,D facets paired and all U,V
+facets unpaired.  Full-tile disjointness gives disjoint interiors; the
+incident u- or v-mirrors are orthogonal to every incident original mirror, so
+the omitted facets form smooth totally geodesic boundary patches.
+
+The development is a manifold with totally geodesic boundary. More precisely,
+let \(J=\{a,b,c,d\}\), and let a point \(x\in wQ\), \(w\in W\), lie on the
+Q-facets indexed by I. The full-tiling point stabilizer is the finite
+\(w\widehat W_Iw^{-1}\); its intersection with W is
+\(wW_{I\cap J}w^{-1}\), by the standard intersection property of special
+Coxeter subgroups. Away from truncation facets this is the full local
+stabilizer, so the residue contains a ball. At a truncation point I contains
+exactly one of u,v, which commutes with every incident original generator.
+Omitting that reflection leaves exactly half of the full local star, a
+half-ball. This covers interiors, edges, and corners of all truncation
+facets, excludes hidden boundary contacts, and gives totally geodesic boundary.
+The finite vertices ABD and ACD have spherical stabilizers of orders 16
+and 12 and become ordinary points after coarsening.
+
+Let \(W^+\) be the orientation-preserving index-two subgroup.  It has a
+finite-index torsion-free subgroup \(\Gamma\) by Selberg's lemma: W is a
+finitely generated characteristic-zero linear reflection group, and the
+intersection of any torsion-free finite-index subgroup with \(W^+\) has the
+required properties.  The quotient \(M=\Omega/\Gamma\) is compact,
+connected and orientable.  Its T-blocks are indexed by
+\(\Gamma\backslash W/K\).  Every K-orbit has six chambers: Γ has trivial
+intersection with every conjugate of finite K.
+
+Whole-face adjacency is consistent. Across the base, a commutes with all K, so the six exterior A pieces lead to the single neighboring block aKQ. Across a side, B and dB lead to bKQ and dbKQ=bKQ since bd=db. Their two maps coincide as the reflection in their common supporting plane. Translating by W gives the same statement for every base and side. Therefore the blocks yield actual complete tetrahedral face pairings, not piecewise or overlapping pairings.
+

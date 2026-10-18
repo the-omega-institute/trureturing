@@ -1,0 +1,6 @@
+### 73.1 Statement and precise comparison class
+
+For the uniform four-fibre qubit channel F_(4,2) with the fixed MC input and output encodings of §§66 and 70, there exists a single physical product CPTP channel whose unhalved diamond error is strictly less than 1/3. It uses local Stinespring environments of dimension three and exactly calibrates the fibre outputs. In particular, the tetrahedral product's error 1/2 is not the unrestricted one-product optimum.
+
+There is also an exact restricted comparison: among calibrated products constructed from four orthonormal qubit-environment bases on one party and their entrywise conjugates on the other party, the minimum error is 1/2. Thus the construction below strictly improves this entire conjugate-paired, common-qubit-environment class. No lower bound of 1/2 is asserted for arbitrary unequal local frames, and the unrestricted optimum is not determined.
+

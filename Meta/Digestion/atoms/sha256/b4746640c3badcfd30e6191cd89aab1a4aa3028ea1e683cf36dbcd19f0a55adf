@@ -1,0 +1,41 @@
+**定理 37.1（Complete finite-vector multiplicity law）。** Let $n=|\Lambda[P]|$. For $n=1$, $D_g(\Lambda)=0$. For $n\ge2$, put
+
+$$
+h=\lceil\log_2 n\rceil,\qquad M=2^h,\qquad
+r=\bigl|\{L\in\Lambda[P]:|\Lambda^{-1}(L)|\text{ is odd}\}\bigr|.
+\tag{37.1}
+$$
+
+For $g\ge2$, $D_g(\Lambda)=h$. For $g=1$ and $h=1$,
+
+$$
+D_1(\Lambda)=h+\mathbf1_{\{r=2\}}.
+\tag{37.2}
+$$
+
+For $g=1$ and $h\ge2$,
+
+$$
+D_1(\Lambda)=h+
+\mathbf1_{\{(n=M\ \text{and}\ r\in\{2,M-2\})\ \text{or}\ T=n=M-2\}}.
+\tag{37.3}
+$$
+
+Thus the optimum depends only on the actual phase-cell multiplicities at these wide query scopes. The equality $T=n$ in (37.3) refers to the original number of phases, since $g=1$; it means every label cell is a singleton.
+
+Proof. Separation requires at least $n$ different vectors, hence $d\ge h$. Without parity, give every label one different vector of length $h$ and repeat it at its phases. This proves the noncoprime case. For the coprime case, write $t_L=|\Lambda^{-1}(L)|$.
+
+We use the following existing subset-sum spectrum, with its exact domain made explicit. In the additive elementary abelian group $V=\mathbb F_2^e$, $e\ge2$, of order $N=2^e$, a subset of cardinality $b$ and sum zero exists for every $0\le b\le N$ except $b=2,N-2$. This is Bajnok–Edwards, *On two questions about restricted sumsets in finite abelian groups* [S27, Corollary 18], including zero as an allowed element; their Theorem 16 instead states the spectrum for $V\setminus\{0\}$. The empty set is added directly. The two excluded sizes also follow from distinctness and the zero sum of all of $V$. All uses below have $e\ge2$. This classical spectrum is credited mathematics inside the proof, not a new theorem of this volume.
+
+First suppose $h\ge2$ and $r\notin\{2,M-2\}$. Choose $r$ distinct vectors in $\mathbb F_2^h$ whose XOR is zero, and assign them, one each, to the odd cells. Give each even cell a distinct unused vector. There are $M-r\ge n-r$ available vectors. Repeating a cell's assigned vector $t_L$ times contributes that vector if $t_L$ is odd and zero otherwise. Therefore the total XOR is zero, giving depth $h$.
+
+Next suppose $r=2$ and $n<M$. Since $h\ge2$ implies $n\ge3$, some cell is even and has size at least two. Choose four distinct vectors of XOR zero, for example an affine two-dimensional plane. Give two to the two odd cells. Give the other two to the selected even cell, placing one phase at one vector and its other $t_L-1$ phases at the other vector. Both counts are odd. Every remaining even cell receives its own unused single vector. The total number of used vectors is $n+1\le M$, and its odd-multiplicity vectors are exactly the four chosen ones. This realizes (36.5). In particular a cell is allowed to occupy two different codes.
+
+Now suppose $r=M-2$, $n<M$, and the preceding case has not already applied. Then $n=M-2$ or $M-1$. If $n=M-1$, there is exactly one even cell. Assign the $M-2$ odd cells one vector each and split that even cell between the remaining two vectors with odd counts. All of $\mathbb F_2^h$ then has odd multiplicity, so its total XOR is zero. If $n=M-2$ and $T>n$, all cells are odd and some cell has size at least three. Give each of the other $n-1$ cells a different single vector. Split the selected cell among the remaining three vectors, with phase counts $1,1,t_L-2$, all odd. Here exactly $n+2=M$ vectors are used, again with odd multiplicity throughout the whole vector space. These assignments are possible for the actual cells, because the selected cell has the required number of phases. They account for every unsaturated case outside $T=n=M-2$.
+
+For the lower bounds in the excluded cases, if $n=M$ then every code vector is required by some label. No label can use a second vector: a vector shared by two labels violates separation, while giving two to one label leaves fewer than $M-1$ for the remaining labels. Thus each label has one vector and every vector is used. The total XOR is the sum of the $r$ distinct vectors assigned to odd cells. For $r=2$ this is nonzero. For $r=M-2$ it equals the sum of the two omitted vectors, also nonzero, since the sum of the whole space is zero. If $T=n=M-2$, every phase has a different label; its $M-2$ distinct vectors likewise have nonzero XOR. These arguments rule out length $h$, without assuming that codes are constant on labels in any unsaturated case.
+
+Every excluded case attains length $h+1$. For $n=M$, $r=2$, select an even cell, which exists since $M\ge4$. Split it with odd counts between two vectors, use two further vectors for the two odd cells, and choose these four to have XOR zero. Fill the remaining even cells with distinct unused vectors. Only $n+1\le2M$ vectors are needed. For $n=M$, $r=M-2$, select an even cell and use the $M$ vectors of an $h$-dimensional subspace of $\mathbb F_2^{h+1}$: one for each odd cell and two for that even cell with odd counts. Their XOR is zero because $h\ge2$. The other even cells have enough distinct vectors outside this subspace and contribute zero. For $T=n=M-2$, the relation $h=\lceil\log_2 n\rceil$ forces $h\ge3$; in $\mathbb F_2^{h+1}$ the desired cardinality $M-2\ge6$ is neither two nor $2M-2$. The credited spectrum supplies $n$ distinct vectors of XOR zero, one per phase. This proves both attainment and optimality in (37.3).
+
+It remains to handle $h=1$, where $n=2$ and the vector space is $\mathbb F_2$. Two labels require its two distinct vectors. If $r=0$, both cells contribute zero; if $r=1$, assign zero to the odd cell. These give depth one. If $r=2$, the XOR of the two distinct vectors is one, so depth one is impossible. Both cell sizes are odd. The full actual prior has $T\ge3$, and their sum is even, hence $T\ge4$ and one cell has size at least three. In $\mathbb F_2^2$ give that cell three distinct vectors with odd counts $1,1,t_L-2$ and give the other cell the remaining vector repeated its odd number of times. All four vectors then have odd multiplicity and XOR zero. Depth two is attained. This proves (37.2). ∎
+

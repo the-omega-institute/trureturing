@@ -1,0 +1,49 @@
+**Theorem 5.1 (cover-rate incidence approximation).** Define
+$K_{d,L}(0)=1$. The limits
+
+$$
+\gamma_{d,L}=\lim_{n\to\infty}\frac{\log_2K_{d,L}(n)}n
+ =\inf_{n\ge1}\frac{\log_2K_{d,L}(n)}n
+\tag{SIR.24}
+$$
+
+exist, and
+
+$$
+0\le\gamma_{d,L}-\sigma_d\le\frac{2m_d}{L+1}.
+\tag{SIR.25}
+$$
+
+For $\Lambda_L^{\rm cov}=\sup_{d\ge1}2^{-d}\gamma_{d,L}$,
+
+$$
+\lambda\le\Lambda_L^{\rm cov}\le\lambda+\frac2{L+1},
+\qquad \Lambda_L^{\rm cov}\downarrow\lambda.
+\tag{SIR.26}
+$$
+
+Proof. Disjoint products of restricted networks retain every seed's
+incidence. Products of cover members therefore give
+$K_{d,L}(n+r)\le K_{d,L}(n)K_{d,L}(r)$. Singleton covers give
+$1\le K_{d,L}(n)\le|S_d|^n$. Apply the elementary subadditive
+quotient-and-remainder argument used in FMR Theorem 6.4: for fixed
+$r\ge1$, write $n=jr+t$, $0\le t<r$, bound the logarithm by
+$j\log_2K_{d,L}(r)+\log_2K_{d,L}(t)$ and divide by $n$.
+The limsup is at most every length-$r$ quotient, and every quotient
+is at least their infimum. This proves (SIR.24).
+
+Take logarithms of (SIR.21), divide by $n$ and use both existing
+limits. Since $\log_2 4=2$, this proves (SIR.25). In particular,
+
+$$
+0\le2^{-d}(\gamma_{d,L}-\sigma_d)
+\le\frac{2(1-2^{-d})}{L+1}<\frac2{L+1}.
+\tag{SIR.27}
+$$
+
+Take depth suprema and use (SIR.8). Increasing $L$ enlarges the
+allowed class and decreases every restricted cover optimum; hence
+$\Lambda_L^{\rm cov}$ is nonincreasing. Its displayed error tends
+to zero. This is an incidence modulus for regularized quantities;
+it gives no computable length modulus for any member. $\square$
+

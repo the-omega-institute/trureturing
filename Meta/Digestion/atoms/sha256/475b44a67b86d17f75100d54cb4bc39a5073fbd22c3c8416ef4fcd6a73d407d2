@@ -1,0 +1,102 @@
+**Theorem 207.5 (Same-total biased construction).** Suppose $s>0$,
+$0\le d\le s$, and $\gamma_j\le s+d$ for every late $j$. Choose
+$0\le c_a\le\gamma_a$, $a=1,2$, and put $c=c_1+c_2$. If
+
+$$
+c\le s,\qquad(s-c)^2\ge sd,\qquad
+S\ge\frac{(2s-c)^2}{s},\qquad t\ge s,
+\tag{207.11}
+$$
+
+there is a full score with the prescribed totals, hence the same $Q,W$,
+and $\Delta_N\le d$. If $\mu=s+d$ and $t=s$, both excesses equal
+$d$, and $d$ is their attained minimum over the entire fixed-total
+$A=0$/early-pair class, with unrestricted correct suffixes and early
+pair allocation.
+
+**Proof.** Put
+
+$$
+v=s-c,\quad M=2s-c=s+v,\quad S_0=M^2/s,\quad
+q=s/M,\quad z=v^2/s,\quad\rho_a=(s-c_a)/M.
+\tag{207.12}
+$$
+
+On the entire late cube define one measure
+$\nu(x)=S_0\prod_{j=3}^Lf(x_j)$, where $f(0)=q$, $f(1)=1-q$.
+At $01x$ and $10x$, respectively, put $P=\rho_1\nu(x)$ and
+$P=\rho_2\nu(x)$. Put $C=c_a$ at
+$e_a=w(\{a\}\cup\{3,\ldots,L\})$. For each late $j$, put
+
+$$
+C_{w(\{j\})}=\min(\gamma_j,v),\qquad
+C_{w(\{j,\ldots,L\})}=(\gamma_j-v)_+,\qquad T=s.
+\tag{207.13}
+$$
+
+This core has anchor $W_0=c+S_0+s$. All coefficients are nonnegative
+and $\rho_1+\rho_2=1$. Product summation gives
+
+$$
+\nu(x_j=0)=M,\quad\nu(x_j=1)=Mv/s,\quad
+(\nu_{00},\nu_{01},\nu_{10},\nu_{11})=(s,v,v,z),
+\quad S_0=s+2v+z.
+\tag{207.14}
+$$
+
+Writing $\nu_a=\rho_a\nu$, we also have
+
+$$
+\nu_a(x_j=0)+c_a=s,\quad
+\nu_a(x_j=1)=(s-c_a)v/s\ge z\ge d,\quad
+\rho_as+c_a\le s.
+\tag{207.15}
+$$
+
+Since $v^2\ge sd$ and $s\ge d$, $v\ge d$. Every absorbing
+correct mass is at most $s+d-v=c+d\le s$.
+
+The head pair $(1,2)$ has maxima
+$(0,\rho_1S_0+c_1,\rho_2S_0+c_2,\max(s,\mu))$, of sum at most
+$W_0+d$. For an early/late pair $(a,j)$, with $b$ the other early
+index, the four maxima are bounded by
+
+$$
+\bigl(s,\ \nu_a(x_j=1),\ s+d,\ \nu_b(x_j=1)+s\bigr).
+\tag{207.16}
+$$
+
+The early-zero cells contain only early class $a$; its zero-suffix
+correct mass gives the first entry. Cell $10$ contains the other early
+label with reward $s$ and late labels of total at most $s+d$. In $11$
+there is no early correct mass, and the zero reward is at least $s+d$
+by (207.15), so it dominates all labels. The sum in (207.16) is
+$W_0+d$, using $\nu_b(x_j=0)=s-c_b$.
+
+For late $i<j$, an earlier class has its absorbing part only in $00$
+and its singleton part only in $11$. Class $i$ has singleton mass in
+$01$, an intermediate class has absorbing mass in $10$ and singleton
+mass in $11$, class $j$ lies wholly in $10$, and later classes lie
+in $11$. Thus their four bounds are $s,v,s+d,s+d$. Each early label
+earns at most $\rho_as+c_a\le s$ in $00$ and at most the pair
+baseline elsewhere. Label zero earns $s,v,v,z+s$. Consequently the
+complete maxima are bounded by
+
+$$
+(s,v,s+d,z+s),
+\tag{207.17}
+$$
+
+whose sum is $W_0+d$ because $c=s-v$ and $z\ge d$. This includes
+all earlier unqueried labels. Catalog completion from 207.2 proves the
+core upper bound. Complete the prescribed totals by adding
+$C=\gamma_a-c_a$ at $e_a$, $P=S-S_0$ at $e_1$, and $T=t-s$.
+These anchor-collected additions cannot increase the excess.
+
+For any competitor with those totals, the stopped table
+$(1,2;1,2,j_*)$, where $\gamma_{j_*}=\mu$, collects $E+S+\mu$,
+including every early $00$ pair row. It forces
+$\Delta_O\ge\mu-t$. At $\mu=s+d,t=s$ this equals the constructed
+upper bound $d$; $\Delta_O\le\Delta_N$ proves both attained minima.
+$\square$
+

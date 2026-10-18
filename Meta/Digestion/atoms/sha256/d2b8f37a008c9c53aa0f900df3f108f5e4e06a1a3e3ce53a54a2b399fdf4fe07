@@ -1,0 +1,88 @@
+**Definition 1.4 (canonical native fibers and fractional covers).** Write
+
+$$
+A=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad T=\{A,B,C\},
+\quad\mathcal G=\{g_{xy}=\langle x,y\rangle:x,y\in T\},
+$$
+
+$$
+S_1=T,\qquad S_{d+1}=\{A,B\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\},\qquad N_d=|S_d|.
+\tag{D3.8}
+$$
+
+Thus $S:=S_2=\{A,B\}\sqcup\mathcal G$ has eleven actual trees, and
+$S_3=\{A,B\}\sqcup\langle S,S\rangle$ has $123$, where
+$\langle X,Y\rangle=\{\langle x,y\rangle:x\in X,y\in Y\}$.
+The depth-three target menu is
+
+$$
+W_3=\{\varepsilon,L,R,LL,LR,RL,RR\}.
+$$
+
+A nonempty $H\subseteq S_d$ is admissible if, for every $q\in W_d$,
+the factor $\Gamma_q$ is constant on $H$ or there is an $a\in W_d$
+such that
+
+$$
+u,v\in H,\quad r_u(a)=r_v(a)
+\quad\Longrightarrow\quad \Gamma_q(u)=\Gamma_q(v).
+\tag{D3.9}
+$$
+
+The witness may depend on both $H$ and $q$ and may be off-target.
+Let $\mathcal H_d$ be all admissible sets and define
+
+$$
+z_d=\min\left\{\sum_{H\in\mathcal H_d}w_H:
+w_H\ge0,\quad\sum_{H\ni u}w_H\ge1\ (u\in S_d)\right\}.
+\tag{D3.10}
+$$
+
+Here the canonicalization $\pi_d(v)$ keeps all reached constructors
+through depth $d-1$, replacing each branch at that depth by $C$.
+[FMR, Lemma 2.2 and Theorems 2.3–2.5](RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md)
+supply the exact integral-cover correspondence with $M_1(d)$, the
+factor equality $\Gamma_q(\pi_d(v))=\Gamma_q(v)$, and simulation of
+every arbitrary longer native word. On $S_d$, a length-$d$ word returns
+alpha exactly when its length-$(d-1)$ parent is branch and otherwise
+absent; longer words are absent. The outer root and left cone have
+source-independent replies. Thus this finite menu retains every
+original experiment without restricting queries to target prefixes.
+The canonical boundary is actually acquired at all words $Rq$,
+$q\in W_d$, with sufficient costs
+
+$$
+T_{\rm prep}\le2^d-1,\qquad Q_{\rm prep}\le d,\qquad
+A_{\rm prep}\le(d-1)2^d+1.
+\tag{D3.11}
+$$
+
+On a fixed fiber (D3.9) is a functional dependency from one reply
+column to one target column of a finite relation. This is the relation
+notion in Gogacz–Toruńczyk,
+[*Entropy bounds for conjunctive queries with functional dependencies*,
+arXiv:1512.01808v1](https://arxiv.org/html/1512.01808v1).
+Their fixed-schema entropy exponents do not identify a cover whose
+dependency witness varies with the fiber and target. In Gál–Miltersen's
+systematic-storage model,
+[*The Cell Probe Complexity of Succinct Data Structures*, BRICS RS-03-44](https://www.brics.dk/RS/03/44/BRICS-RS-03-44.pdf),
+the preserved input and retained index correspond to the native boundary
+reply array and $E$. Here that array is constrained by tree syntax, the
+whole code is accessible, acquisition is charged, and one four-symbol
+source reply is the later probe. Likewise the sketch in Garg et al.,
+[*Systematic Data Structure Lower Bounds via the Query-with-Sketch
+Model*, Definition 2.1, arXiv:2609.18024v1](https://arxiv.org/html/2609.18024v1),
+precedes coordinate probes, but its matrix problem and conditional
+min-entropy hypotheses supply no numerical native bound here.
+Narodytska et al.,
+[*Learning Optimal Decision Trees with SAT*, IJCAI 2018, §§2–3](https://www.ijcai.org/proceedings/2018/0189.pdf),
+use binary features and tree-size optimization; replacing a native
+four-valued probe by multiple binary tests does not preserve this
+one-probe resource. A clausal refutation in the
+[DRAT proof format](https://www.cs.utexas.edu/~marijn/drat-trim/)
+concerns its specified formula; correspondence with (D3.9) is an
+additional mathematical obligation. None of these problem-specific
+optima is substituted for (D3.4) or (D3.10).
+

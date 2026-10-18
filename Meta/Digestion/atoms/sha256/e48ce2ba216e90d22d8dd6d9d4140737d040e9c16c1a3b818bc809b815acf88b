@@ -1,0 +1,27 @@
+**Proposition 37.1 (scope of the resulting state comparison).** Under
+Definition 32.2, for $3\le k\le n-2$ every candidate table at
+both execution minima obeys Theorem 34.3 and the exclusions of
+Theorem 35.1. Nevertheless these results do not give an
+original-state quotient in which every live state has one
+threshold residual, and do not determine
+$H_{\mathrm{exec}}(A,k;r)$ or $H_{\min}(A,k;r)$.
+
+Proof. The first claim applies the preceding theorems to exactly
+the competitors of Definition 32.2. The second claim about an
+original-state quotient follows from Proposition 36.1: its same
+state $V$ has the two different nonconstant restrictions (PCA.89).
+An assignment of one residual to that original state cannot
+represent both, and first-certificate truncation at $V_0$
+conflicts on the two histories just proved. Splitting states,
+changing their query words, or replacing an entire table may
+produce another representation, but preservation of installed
+cardinality, the prescribed code and both execution caps would
+then be additional obligations.
+
+In particular no bound stronger than (PCA.81) is deduced here.
+The grid remains an upper at both execution minima. The example
+(PCA.88) has a larger installed count and supplies a structural
+counterexample, not an improved resource optimum. The unrestricted
+minimum also still allows the already supplied paid multiple-scan
+constructions of §§29–33. $\square$
+

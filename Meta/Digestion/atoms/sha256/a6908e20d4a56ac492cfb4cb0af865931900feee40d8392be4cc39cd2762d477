@@ -1,0 +1,21 @@
+**Theorem 2.3 (published uniform finite existence, with exact parameters).** Fix $B\in\mathbb N$, a finite exact $S$ containing 1 and 2, rational $b>0$ with $|S|b\le1$, and rational $\epsilon>0$. Put
+
+$$
+\mathcal P(S,b)=\{\mu\in\mathbb R^S:\textstyle\sum_{k\in S}\mu(k)=1,
+\ \mu(k)\ge b\ \text{for every }k\in S\}.
+\tag{2.1}
+$$
+
+There exists an integer $H\ge7$ such that, for every $\mu\in\mathcal P(S,b)$, every $M\in\mathfrak D_\mu(B)$ and each of the four objective orders,
+
+$$
+0\le\Phi_\infty(M,\mu)-\Phi_H(M,\mu)\le\epsilon.
+\tag{2.2}
+$$
+
+Only acquired paid Reads are capped; the error at each retained cut uses the original full unbounded future loss.
+
+**Proof by exact application.** Apply [EF] Theorem 8.2 with its $(B,S,b,\epsilon)$ equal to the displayed tuple, its $\mathfrak D_\mu(B)$ equal to Convention 2.1, and its Definition 2.2 consumers equal to (1.2). Its $\ell(h)$ is our $N_R(h)$, including rejected seed letters and payload returns; its radii are exactly (1.3). Its true law is the same common-$K$ posterior mixture pushed through $I_c$, not a family of independently drawn depths. Its law/conf rows are the same fixed rows by Convention 2.2. Increasing its returned cap to 7 preserves the inequality.
+
+For clarity, the hypotheses of that application are all present: (2.1) is nonempty, closed and bounded in the finite-dimensional simplex; $b>0$ makes its support exactly $S$. PH37's charge for all binary code/data/providers gives finitely many descriptions at each fixed $B$, even when admissibility cannot be decided. All finite-history likelihoods are strictly positive. The reused bound [EF](8.3) gives $\operatorname{TV}(T_h^\mu,T_h^{\mu'})\le\|\mu-\mu'\|_\infty/b$, uniformly over every history; the unchanged rows give the same Lipschitz bound for both error orders, capped/uncapped suprema and two-phase maxima. Every finite history eventually enters the increasing paid-Read caps, so their bounded suprema increase pointwise to the full-history value. These are precisely the compactness/continuity and common-domain premises checked in [EF]'s finite-net proof. No net-point supremum algorithm is supplied by that proof. This is reuse of its result, not another proof of finite existence. $\square$
+

@@ -1,0 +1,29 @@
+**引理 11.2（Hall feasibility for the actual safe lists）。** There are pairwise distinct vectors $z_i\in\mathcal L_i$ for every $i\in A$.
+
+Proof. Reuse the finite distinct-representative form of Hall's theorem, with index set $A$ and lists (11.3); its hypotheses are verified here for these specific lists. In the pinned upstream source [H11], this is `Finset.all_card_le_biUnion_card_iff_existsInjective'`. The finite theorem supplies the matching step, rather than a block-cost conclusion.
+
+A subfamily containing a full-cube list has union size $2^d\ge n$, so satisfies Hall. Otherwise let $q$ be the number of distinct forbidden coordinates among its lists. If $q=0$, the subfamily is empty. If $q\ge1$, its union contains all vectors except those with one in each of these $q$ coordinates, and therefore has size
+
+$$
+2^d-2^{d-q}.
+\tag{11.5}
+$$
+
+Each forbidden-coordinate group has at most $\rho$ sources, so a $q$-group subfamily has at most $q\rho$ sources. The guard and $n\le2^d$ imply $d\rho\le n+1\le2^d+1$.
+
+For $d=2$ this gives $\rho\le2$, settling $q=1$ against the union size two. For $d\ge3$, the elementary inequality $2^d\ge3d-1$ gives
+
+$$
+(d-1)\rho\le\frac{(d-1)(2^d+1)}d\le2^d-2.
+\tag{11.6}
+$$
+
+The sequence $(1-2^{-q})/q$ is decreasing for positive integers $q$: consecutive comparison reduces to $2^{q+1}\ge q+2$. For $1\le q\le d-1$, (11.6) consequently yields
+
+$$
+q\rho\le\frac q{d-1}(2^d-2)\le2^d-2^{d-q}.
+\tag{11.7}
+$$
+
+This verifies every such subfamily. At $q=d$, its union has size $2^d-1$. The unrestricted phase of Lemma 11.1 is excluded from this subfamily, so its size is at most $n-1\le2^d-1$. All finite Hall inequalities hold. Applying the credited finite theorem gives the required distinct representatives. ∎
+

@@ -1,0 +1,76 @@
+**定理 448.5（同一正概率密度不能成为正 Laplace 原子）。** 记
+\(f_\mu=g'\)、\(f_{\rm Fib}=\mathsf F'\)，并令
+
+\[
+u_m=\frac{m}{\log6}-1\quad(m\text{ 为充分大的正整数}).
+\]
+
+原实际来源满足两个严格负的高阶导数极限：
+
+\[
+\boxed{
+\begin{aligned}
+\frac{(-1)^{m-1}f_\mu^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow-1,\\
+\frac{(-1)^{m-1}f_{\rm Fib}^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow
+-\frac{\log(1+q+q^2)}b<0.
+\end{aligned}}
+\tag{PM.14}
+\]
+
+因此这两个严格正密度均不完全单调，均不存在在全部 \(u>0\) 上有效的
+正测度表示 \(f(u)=\int_{[0,\infty)}e^{-ut}\,d\nu(t)\)。
+
+**证明：实际复合原子的局部化与整个无穷尾。** 在固定 \(u>0\) 的紧区间上，
+两个绝对 Dirichlet 级数可作任意固定阶微分。对
+\(a=\mu\) 或 \(a=e\)，其密度为
+
+\[
+f_a(u)=-\frac1{a_1}\sum_{n\ge2}
+a_n\frac{\log n}{n}e^{-u\log n}.
+\]
+
+代入 \(u_m\)，精确得到
+
+\[
+\frac{(-1)^{m-1}f_a^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}
+=-\frac1{a_1}\sum_{n\ge2}a_n\rho_n^m,\qquad
+\rho_n=\frac{\log n}{\log6}
+\exp\!\left(1-\frac{\log n}{\log6}\right).
+\tag{PM.15}
+\]
+
+\(x e^{1-x}\le1\)，且仅在 \(x=1\) 等号成立，所以 \(\rho_6=1\)，
+其余全部 \(\rho_n<1\)。选择一个固定整数 \(m_0>\log6\)。那么
+
+\[
+\sum_{n\ge2}\rho_n^{m_0}
+=\frac{e^{m_0}}{(\log6)^{m_0}}
+\sum_{n\ge2}\frac{(\log n)^{m_0}}{n^{m_0/\log6}}<\infty.
+\tag{PM.16}
+\]
+
+该完整整数尾由指数 \(m_0/\log6>1\) 的积分检验支付。
+\(\mu\) 与 \(e\) 的系数均有界；对全部 \(m\ge m_0\)，
+\(|a_n|\rho_n^m\) 被同一个可求和主导支付。因此计数测度上的支配收敛
+给 \(\sum a_n\rho_n^m\to a_6\)，没有只比较有限个竞争项。
+
+真实 Möbius 原子为 \(\mu(6)=1\)。对实际 Fibonacci 原子，有限卷积恰给
+
+\[
+\begin{aligned}
+e_6&=\beta_6-\beta_3-\beta_2+\beta_1\\
+&=\log\frac{(1-q^6)(1+q)}{(1+q^3)(1-q^2)}
+=\log(1+q+q^2)>0.
+\end{aligned}
+\tag{PM.17}
+\]
+
+这证明（PM.14）。若存在所述正 Laplace 测度，任意固定 \(u>0\) 和
+整数 \(k\ge0\) 都有
+\((-1)^kf^{(k)}(u)=\int t^ke^{-ut}d\nu(t)\ge0\)；
+微分由 \(t^ke^{-ut}\le C_{k,u}e^{-ut/2}\) 支付。它与（PM.14）
+矛盾。证毕。
+

@@ -1,0 +1,21 @@
+**Definition 237.2 (Whole-table terminal vectors).**
+A row of schedule mass $m/D$ may display one terminal mass vector
+$c_{s,k}(\ell)$ in each of its cells, each summing to $m$.
+For a three-cell pair with $m>0$, assign its whole deterministic table
+$(\ell_0,\ell_{10},\ell_{11})$ probability
+
+$$
+\frac{c_{s,0}(\ell_0)c_{s,10}(\ell_{10})c_{s,11}(\ell_{11})}{D m^2}.
+\tag{237.8}
+$$
+
+Summing over the other two labels gives terminal marginal
+$c_{s,k}(\ell)/D$; summing all labels gives $m/D$.
+For a singleton use the corresponding two-factor formula $\prod c/(Dm)$,
+and for an empty schedule its one vector divided by $D$.
+Zero-mass rows are omitted. Thus rows whose masses sum to $D$ produce
+one normalized distribution on complete tables. One uniform seed selects
+the complete table, including all potential outputs, before any answers.
+This is the common-law correspondence of §§108–109, rather than three
+independently sampled procedures after observing a cell.
+

@@ -1,0 +1,56 @@
+**Lemma 46.1 (retry and anchor charges).** Each normal service completes
+or is cut off by a terminal rule, abort or horizon after finitely many
+attempts almost surely. Conditional on its start and its known geometry,
+the probability of reaching attempt $j$ is at most $q^j$. The expected
+number $N$ of normal accepted starts satisfies $\mathbb EN\le N_0$.
+
+Proof. If the true relative coordinates from an attempt start remain
+strictly below $\epsilon_j$, their phase differences lie in the
+principal branches in (44.1), and no sampled retry threshold can occur.
+A retry is therefore contained in the supremum event of Lemma 44.2.
+The branch assertion follows from
+$\rho\le[32(1+r^{-1})]^{-1}$ and $|1/2-h/r|\le1/2$ for every
+sampled target height $h\in[l,u]$. The drift condition holds since
+$h_j/\epsilon_j=64c\rho2^{-j}$. Consequently, at each reached start,
+
+$$
+\mathbb P(\hbox{retry}\mid\mathcal F_{r_j})
+ \le10\exp\{-1/[65536c(1+\nu^2)]\}<q.
+\tag{46.1}
+$$
+
+A terminal detection, abort or horizon only reduces this probability.
+Successive conditioning proves the reach bound $q^j$ and rules out
+infinitely many retries. The total service duration is at most
+$\sum_jh_j=4c\rho^2/3<\rho^2$. Reparametrization of successive
+suffixes traverses each geometric prefix once, in order.
+
+For the anchor charge, consider the initial anchor time zero and every
+accepted normal start $p$; each has target height strictly interior and
+$p<S$. In the analytically continued, unstopped Brownian source, let
+$\vartheta_p$ be the minimum of $\rho^2$ and the first delay at which
+one of the true local first-level increments or the true relative
+central increment reaches $\rho/4$. This is solely a duration used in
+the estimate. Strong Markov and (44.5), with
+$\epsilon=\rho/4$, $h=c\rho^2$, give
+
+$$
+\mathbb E(\vartheta_p\mid\mathcal F_p)\ge m\rho^2.
+\tag{46.2}
+$$
+
+Before this analytic delay the local branches are correct and all three
+computed coordinates are below $\rho$. The next accepted normal start
+cannot yet occur: its waiting test needs a coordinate at least $\rho$
+or elapsed time at least $\rho^2$. Normal service itself introduces no
+new anchor. Thus $\vartheta_p$ is at most the spacing to the next
+accepted normal anchor, if there is one. For any finite initial list of
+anchors the sum of these analytic durations is at most $T+\rho^2$;
+only the last duration may extend past the last anchor or past $S$.
+Start selection is measurable at that start. Conditioning and Tonelli,
+first for finite initial lists and then monotonically, prove that the
+expected number of these anchors is at most $N_0$. In particular it is
+finite almost surely, and $N$, which excludes the initial anchor, obeys
+the stated bound. Neither an end-selected cell law nor a survival-
+conditioned fresh law was used. $\square$
+

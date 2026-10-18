@@ -1,0 +1,80 @@
+**Proposition 1.4 (inherited actual image classification).** Let
+$\mathcal I=\rho[\mathcal T]$. Its disjoint grammar and inverse are
+
+$$
+\begin{aligned}
+\mathcal I&::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle,\\
+\delta(\beta)&=\alpha,\qquad \delta(E)=\beta,\\
+\delta\langle y,z\rangle&=\langle\delta y,\delta z\rangle
+                                      \quad(y,z\in\mathcal I).
+\end{aligned}
+\tag{FCS.6}
+$$
+
+Writing $\mathcal B=\mathcal I\setminus\{\beta\}$ for the branch
+images, the eleven cases in this table are nonempty, disjoint and
+exhaust $\mathcal U_*$. In every row all different class values remain
+disequal; the unspecified values range over every allowed finite branch
+image.
+
+| Actual case | Forced leaves | Other class values | Whole target |
+| --- | --- | --- | --- |
+| $\Pi_1$ | $x_a=\beta,\ x_{b_1}=\alpha$ | Four distinct branch images | $R_1$ |
+| $\Pi_2$ | $x_a=\beta,\ x_{b_2}=\alpha$ | Four distinct branch images | $R_2$ |
+| $\Pi_3$ | $x_c=\beta,\ x_{b_3}=\alpha$ | Four distinct branch images | $R_3$ |
+| $\Pi_4$ | $x_c=\beta,\ x_{b_4}=\alpha$ | Four distinct branch images | $R_4$ |
+| $Z_a$ | $x_a=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_c$ | $x_c=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_{b_1}$ | $x_{b_1}=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_{b_2}$ | $x_{b_2}=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_{b_3}$ | $x_{b_3}=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_{b_4}$ | $x_{b_4}=\beta$ | Five distinct branch images | $R_0$ |
+| $Z_*$ | None | Six distinct branch images | $R_0$ |
+
+Precisely all injective valuations with $\mathscr S(x)\in\mathcal I$
+occur, with the bijection
+
+$$
+x\longmapsto\delta(\mathscr S(x)),\qquad
+u\longmapsto x_d=t_u|_{p_d}.
+\tag{FCS.7}
+$$
+
+Proof. These are NBP Proposition 9.3, Proposition 15.2 and Theorem 10.4,
+also recorded in PCA Definition 4.1 and TCR Supplier 2.4. The following
+direct image argument fixes the conditions used here. Each source
+constructor gives one case of (FCS.6), and each image case has the stated
+preimage. Alpha is not an image; $E$ is not a pair of images because its
+right child is alpha. Hence the cases are disjoint. Recursion decreases
+finite size, and structural induction gives $\delta\rho=\mathrm{id}$
+and $\rho\delta=\mathrm{id}$ on their domains. In particular $\rho$
+is injective. The same image grammar shows that every subtree of an
+image is either alpha or an image; every branch subtree is an image.
+
+In $\mathscr S(x)$ the root and its two depth-one children have branch
+right children, so none can be $E$. Each depth-two block must therefore
+be either $E$, forcing its right value alpha and its left partner beta,
+or a pair of image values. The four right classes are different, so at
+most one is alpha. Conversely these alternatives make all four blocks,
+and then the whole filling, images. The legal injective row filling has
+exactly $R_*$, including repetitions and every disequality; its inverse
+is an actual finite origin. Extracting representative subtrees recovers
+the valuation, proving (FCS.7).
+
+Beta is the only image leaf. With an alpha right class its forced beta
+partner precludes beta in any other class; without alpha there is at
+most one beta class. This gives exactly the eleven root cases. For
+explicit fresh branch images put
+
+$$
+B_0=\beta,\qquad B_{n+1}=\langle B_n,B_n\rangle.
+\tag{FCS.8}
+$$
+
+For $n\ge1$ these are branch images with every leaf at depth $n$.
+Their different heights make them distinct. Choosing finitely many
+different such images realizes each case and avoids any finite forbidden
+list. Every permitted filling, not just these witnesses, has its actual
+origin by (FCS.7). The target assertions are the complete-row calculation
+in §2. $\square$
+

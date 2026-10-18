@@ -1,0 +1,8 @@
+### 65.7 Attribution and boundaries
+
+The retained-matrix contraction proof extends §64's vector argument to two arbitrary fibres. The physical matching construction and unrestricted reference witness establish the exact channel reduction. Pairwise feasibility alone is insufficient whenever a contraction Z lies outside S, while shared randomness has a separate role even inside S as the example shows.
+
+Birkhoff and doubly substochastic decompositions are established matrix theory; see Lei Cao, A short note on doubly substochastic analog of Birkhoff's theorem, https://arxiv.org/abs/1801.01232 . Unistochastic matrices and the distinction from bistochastic matrices are standard; see Bengtsson, Ericsson, Kuś, Tadej and Życzkowski, Birkhoff's polytope and unistochastic matrices, N=3 and N=4, https://arxiv.org/abs/math/0402325 . For channel and diamond facts see Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . PIO/zero-communication background remains credited to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These standard ingredients are not claimed novel, and no global priority claim is made for the family result.
+
+The theorem concerns the specified two-fibre compression channels and fixed MC encodings, with unrestricted physical LOSR competitors for that target family. It does not classify arbitrary logical channels or assert full RT recovery. This is paper mathematics without a formal-kernel claim.
+

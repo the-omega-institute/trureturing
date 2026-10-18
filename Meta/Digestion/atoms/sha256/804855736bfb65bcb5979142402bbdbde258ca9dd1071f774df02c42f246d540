@@ -1,0 +1,20 @@
+**Corollary 11.6 (amplitude consequence and coefficient non-dominance).** For any sequence of lawful finite COMPLETE observers for one fixed prior as in Theorem 11.5, if $e(M_n)\to0$, then
+
+$$
+\liminf_n\mathcal V(M_n)\ge\frac{\eta}{164400000000}.
+\tag{11.24}
+$$
+
+An exact common conf/conf attainer, if one exists, has the strict inequality $\mathcal V(M)>\eta/164400000000$. The retained Section 9 relation is
+
+$$
+\frac{61}{11}e(M)+\frac{19}{11}\sqrt{\mathcal V(M)}>g.
+\tag{11.25}
+$$
+
+Neither numerical necessary condition uniformly implies the other on the nonnegative coordinate domain.
+
+Proof. Rearrange the second inequality of (11.22) as $\mathcal V(M_n)>(g-1500000e(M_n))/411000$ and pass to the lower limit. Set $e=0$ for an exact attainer. Equation (11.25) is Theorem 9.3 with its unchanged hypotheses and proof.
+
+For coefficient comparison alone, take $V=0$ and $e=11g/122$. The left side of (11.25) is $g/2$, whereas $1500000e>g$. Thus the larger coefficient of $e$ in (11.22) prevents uniform dominance of (11.25). Conversely take $e=0$ and $V=g/822000$. The linear left side is $g/2$, while $(19/11)\sqrt V>g$, since $0<g<1/400000<361/(121\cdot822000)$. These are comparisons of the numerical conditions, not assertions that observers realize these chosen coordinate pairs. Each valid observer must obey both conditions. Their free variation terms remain; neither condition evaluates the unrestricted risk-only infimum. $\square$
+

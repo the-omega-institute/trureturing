@@ -1,0 +1,81 @@
+**Theorem 10.4 (Matrix duality on the selected fiber).** Under Definition
+10.1 set
+
+$$
+W=P^{-1}DG^{-1},\qquad h(I)=W_{I,\cdot}^{\mathsf T}.
+\tag{10.14}
+$$
+
+Then
+
+$$
+D^{\mathsf T}W=I_r,\qquad
+(p^0)^{\mathsf T}W=0,\qquad
+W^{\mathsf T}PW=G^{-1},\qquad
+\mathbb E_{p^\xi}h=\xi.
+\tag{10.15}
+$$
+
+At the reference $\operatorname{Cov}_0h=G^{-1}$. Among all centered
+linear readout matrices $\widetilde W$ satisfying
+$\mathbb E_{p^\xi}\widetilde W_{I,\cdot}^{\mathsf T}=\xi$ for
+every $\xi\in\mathcal U$, this covariance is minimal in Loewner order.
+For any $\Phi\in\mathbb R^r$, the constraints
+
+$$
+D^{\mathsf T}\theta=\Phi,\qquad (p^0)^{\mathsf T}\theta=0
+\tag{10.16}
+$$
+
+have the unique minimum-$P$-norm solution
+$\theta=W\Phi$, with minimum squared norm $\Phi^{\mathsf T}G^{-1}\Phi$.
+
+Proof. The first three equalities in (10.15) follow by multiplying
+(10.14), using $D^{\mathsf T}P^{-1}D=G$ and $D^{\mathsf T}\mathbf1=0$.
+For the fourth,
+$W^{\mathsf T}(p^0+D\xi)=\xi$. Since $\mathcal U$ is an open
+neighborhood of zero, an alternative readout has the stipulated mean
+exactly when $(p^0)^{\mathsf T}\widetilde W=0$ and
+$D^{\mathsf T}\widetilde W=I_r$. Write $\widetilde W=W+Z$.
+Then $D^{\mathsf T}Z=0$, $(p^0)^{\mathsf T}Z=0$ and
+
+$$
+W^{\mathsf T}PZ=G^{-1}D^{\mathsf T}Z=0,\qquad
+\operatorname{Cov}_0(\widetilde h)=G^{-1}+Z^{\mathsf T}PZ
+\succeq G^{-1}.
+\tag{10.17}
+$$
+
+Because $P>0$, equality of the covariance matrices forces $Z=0$.
+For (10.16), $W\Phi$ is feasible. Every feasible $\theta$ can be written
+$W\Phi+z$ with $D^{\mathsf T}z=0$ and $(p^0)^{\mathsf T}z=0$.
+The same orthogonality gives
+
+$$
+\theta^{\mathsf T}P\theta
+=\Phi^{\mathsf T}G^{-1}\Phi+z^{\mathsf T}Pz.
+\tag{10.18}
+$$
+
+Strict positivity forces $z=0$ at the minimum. $\square$
+
+The $P$-norm is the probability-weighted quadratic size of the phase
+profile; (10.18) does not define physical energy. Off reference the exact
+mean identity still holds, but the covariance is
+
+$$
+\operatorname{Cov}_{p^\xi}h
+=W^{\mathsf T}\operatorname{diag}(p^\xi)W-\xi\xi^{\mathsf T},
+\tag{10.19}
+$$
+
+which is not asserted to be constant. For $r=1$, with column $d_T$,
+$G=I_T=\sum_{I\subseteq T}1/p^0_I$ and
+$h(I)=d_T(I)/(p^0_I I_T)$. The $n=3,T=\{1,3\}$ instance is precisely
+the fixed-fiber score and dual residual in Definition 9.7 and (9.42):
+$\xi=\kappa-\kappa_0$, $I_T=I_0$, $W_I=d_I/(\bar p_I I_0)$.
+The reference $p^0$ maps to that $\bar p$, with its occupancies fixed.
+For several targets the inverse in (10.14) is the full inverse of $G$;
+replacing it by independent diagonal reciprocals would violate
+$D^{\mathsf T}W=I_r$ whenever $r>1$, by (10.7).
+

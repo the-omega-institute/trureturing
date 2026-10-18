@@ -1,0 +1,18 @@
+**Proposition 8.3 (complete same-run accounting).** PVC.9–11 and
+Definition 8.1 evaluate one full native opcode/purpose/fee/storage vector
+at every original or added cut. In particular they count all old source
+preparation, retained dead banks, interpreter/serializer work, selectors,
+registry material, simultaneous sender/mailbox/receiver and all returns.
+
+Proof. Each actual native row has one purpose and one receipt. The
+compiler expansion gives its complete successor before the next schema
+is evaluated. Addition in sequence therefore partitions, rather than
+double-counts, occurrences. EX and finite-bit constructors have their
+actual net additions. All new helpers reduce to finite instruction
+expansions and their tests/metadata; no graph or historical row is charged
+as one word instruction. Induction on actual rows gives PVC.9, and the
+disjoint channel body count gives PVC.11. The source clone's RD/MR rows
+are additional to the one actual external ingress, without inventing a
+second IN. Historical virtual receipts are word data; their production
+has its own real rows/receipts already in this same count. ∎
+

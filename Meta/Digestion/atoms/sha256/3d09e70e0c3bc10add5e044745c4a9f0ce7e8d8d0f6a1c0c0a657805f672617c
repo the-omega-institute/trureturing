@@ -1,0 +1,44 @@
+**Definition 6.1 (radial payoff and evaluated derivatives).** Define
+
+$$
+A_{\rm loss}=11d^2/(64h_2^2),\qquad
+B_{\rm cross}=bd(\sqrt{59}-\sqrt{37})/(8h_1h_2),\qquad
+Q(x)=\sqrt{xY(x)},
+$$
+
+$$
+P_0(x)=B_{\rm cross}Q(x)-A_{\rm loss}Y(x),\quad
+x_z=\frac{A_{\rm loss}^2}{\alpha A_{\rm loss}^2+\beta B_{\rm cross}^2},\quad
+x_m=\frac{1+A_{\rm loss}\sqrt\alpha/\sqrt{\alpha A_{\rm loss}^2+\beta B_{\rm cross}^2}}{2\alpha}.
+\tag{TC.14}
+$$
+
+Then $k(z,w)=-A_{\rm loss}Y(z^2)+B_{\rm cross}zw$. Positive objective is possible only for $zw>0$ and $x_z<z^2<U$. The following formulas evaluate derivatives, rather than leaving differentiation as part of the scalar specification:
+
+$$
+\begin{aligned}
+F_1(x)&=\frac{(1-1/\sqrt x)(D_0+D_1x)}{2(N_0+N_1x)}
++\frac{(\sqrt x-1)^2A_{\det}}{2(N_0+N_1x)^2},\\
+F_2(x)&=\frac{D_0+D_1x}{4x^{3/2}(N_0+N_1x)}
++\frac{(1-1/\sqrt x)A_{\det}}{(N_0+N_1x)^2}
+-\frac{(\sqrt x-1)^2N_1A_{\det}}{(N_0+N_1x)^3}.
+\end{aligned}
+\tag{TC.15}
+$$
+
+They are $F_c'$ and $F_c''$ for $x>0$. The inherited inequalities imply
+
+$$
+\frac1{2\alpha}<r<x_z<x_m<U.
+\tag{TC.16}
+$$
+
+Indeed $\alpha/\beta>7$ and $V/W>1/5$ give $\alpha V>\beta W$ and the first inequality. At $r$, $P_0(r)=(-d_0+2\zeta)/\mu<0$. Squaring the positive factors in $B_{\rm cross}\sqrt x>A_{\rm loss}\sqrt{Y(x)}$ identifies the unique nonaxis payoff zero as $x_z$, so $r<x_z$. Write $A=A_{\rm loss}/\beta$, $B=B_{\rm cross}/\sqrt\beta$. Then
+
+$$
+P_0(x)=B\sqrt{x(1-\alpha x)}-A(1-\alpha x),\quad
+P_0''(x)=-\frac{B}{4[x(1-\alpha x)]^{3/2}}<0.
+$$
+
+Its unique maximum is $x_m$. If $v=A_{\rm loss}\sqrt\alpha/\sqrt{\alpha A_{\rm loss}^2+\beta B_{\rm cross}^2}\in(0,1)$, then $x_z=v^2/\alpha$, $x_m=(1+v)/(2\alpha)$ and $2v^2<1+v$, proving the rest. Both axes have $k\le0$; the opposite open sector has $k<0$.
+

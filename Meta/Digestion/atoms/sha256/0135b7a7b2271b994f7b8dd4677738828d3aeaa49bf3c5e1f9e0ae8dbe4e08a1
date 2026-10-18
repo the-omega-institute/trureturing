@@ -1,0 +1,81 @@
+**Corollary 219.12 (A second four-positive face).**
+Let $I=\{1,2,3\}$ and
+$J=\{p,q,r,s\}\subseteq\{1,\ldots,L\}$ with $3<p<q<r<s$.
+Let $\mu>0$ and $\mu/2\le v,w\le3\mu/4$.
+Take $\gamma=(\mu,\mu,v,w)$, $G=2\mu+v+w$, $c=\mu/2$,
+$S=5\mu/2+v+w$, $K=2G+\mu/2$.
+Use the one matrix and reserve vector
+
+$$
+x_1=x_2=(\mu/4,\mu/4,\mu/8,\mu/8),\qquad
+x_3=(\mu/2,\mu/2,v-\mu/4,w-\mu/4),\qquad
+t=(\mu/4,\mu/4,0).
+\tag{219.35}
+$$
+
+The row totals are $(\mu,\mu,\mu/2+v+w)$.
+Every debt vector between zero and these totals gives both unrestricted
+exact-$Q$ minima equal to $E=\xi_1+\xi_2$ by the conversions in
+Theorem 219.9. The separate all-zero case
+$\mu=v=w=\xi=0$ is defined by $V=0$.
+
+**Proof.** The margins are immediate and all entries are nonnegative.
+The pairs 1/3 and 2/3 have $s_i+s_3=S-\mu$; the pair 1/2 bound
+follows from $v+w\ge\mu$.
+For small rows, $x_{ij}+t_i$ is $\mu/2$ in the top columns
+and $3\mu/8$ in the tail columns.
+For row 3 it is at most $\mu/2$ since $v,w\le3\mu/4$.
+The complement bounds $G-\gamma_j-\mu_{-j}$ are
+$v+w,v+w,\mu+w,\mu+v$.
+A small row's complement masses are $\mu/2$ in the top columns
+and $5\mu/8$ in the others. Row 3's are
+$v+w,v+w,3\mu/4+w,3\mu/4+v$, respectively.
+Each is within its bound, proving (219.24) at all closed endpoints.
+Theorem 219.9 proves the claim. ∎
+
+Within the three-guard constructor, the opposite-pair inequalities
+give $s_1,s_2\ge\mu$, so $s_3\le S-2\mu=\mu/2+v+w$.
+This family attains that local ceiling.
+For proportional columns, $\mu\chi_i+t_i\le\mu/2$ implies
+$\chi_i\le1/2$ and
+$s_i=G\chi_i+t_i\le\mu/2+(G-\mu)\chi_i\le G/2$.
+If $v+w>\mu$, the attained third debt exceeds this bound by
+$(v+w-\mu)/2$. Equality $v+w=\mu$ is an overlap boundary.
+Neither ceiling is a global debt exclusion.
+
+Moving mass $u$, $0\le u\le\mu$, from correct atom $w(\{p\})$
+to $w(\{p,q\})$ preserves $Q,W$ and gives
+
+$$
+(\Delta_N(Y_u),\Delta_O(Y_u))=(E+(u-\mu/2)_+,E).
+\tag{219.36}
+$$
+
+Indeed, only pairs involving $q$ change. Pair $(p,q)$ has zero masses
+$(\mu/2,\mu,\mu,v+w)$ and label-$p$ masses $u,\mu-u$ in
+00,01. The N gain is $(u-\mu/2)_+$; the O merge has baseline
+$3\mu/2$ against total label-$p$ mass $\mu$.
+Every guard/$q$ receiving 10 cell has zero mass $\mu$, covering
+both the new label $p$ and existing label $q$ individually.
+For another positive pair involving $q$, the receiving cell likewise
+has baseline $\mu$ and already supports the label-$q$ mass $\mu$;
+the old cell only loses a competitor. Short and inactive schedules
+are bounded by the same full-pair comparisons.
+This proves the formula, including $u=\mu/2$ and $u=\mu$.
+
+For $L=7$, $J=\{4,5,6,7\}$, $\mu=1$, $v=3/4$, $w=1/2$,
+$\xi=(1,0,7/4)$, the score has
+
+$$
+Q=((-1,0,-7/4,1,1,3/4,1/2),7),\quad
+A=11/4,\quad P=1,\quad C=13/4,\quad T=0,\quad W=11/4.
+\tag{219.37}
+$$
+
+Its supports are $15/4$ and both costs are one. At $u=1$ the input
+costs are $(3/2,1)$, repaired by this same-quotient score.
+The proportional row ceiling $13/8$ is below debt $7/4$ by $1/8$.
+The two four-positive corollaries differ in guard count and positive
+profile; their shared matrix theorem and relocation mechanism are used
+once rather than treated as additional relations.
+

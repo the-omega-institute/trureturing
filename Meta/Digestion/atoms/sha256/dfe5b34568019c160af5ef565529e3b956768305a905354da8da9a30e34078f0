@@ -1,0 +1,24 @@
+**Open Question 9.3 (The original whole-domain finite-attainment alternative).** On the entire exact-real $\Theta_N$ in (8.1), define
+
+$$
+\begin{aligned}
+D_r(P)&=\mathbb E_P\left(X_0-
+\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,\ldots,X_r]\right)^2,\\
+C_N&=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad r\ge1.
+\end{aligned}
+\tag{9.1}
+$$
+
+Still decide whether some finite $N$ and $\theta\in\Theta_N$ attain $d(P_\theta)=c_\star$, or whether $C_N<c_\star$ for every finite $N$. [Universal, Theorem 6.2][U] supplies attainment of each $C_N$, the identity $C_N=\inf_rU_{N,r}$, and the equivalence of the negative alternative with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{9.2}
+$$
+
+The compact domain includes the zero-mass and reducible presentations; it is not restricted to full-support parameters. An attained visible law has full support by the supplied attained-law theorem. Padding by zero-mass hidden states preserves the law, so the finite-budget existence quantifier is unchanged.
+
+The response-density route here addresses a sufficient test at dimension two and supplies no all-$N$ separation pairs. No actual finite attaining $J_\theta/P_\theta$ is constructed. Even a future dimension-two endpoint exclusion would leave (9.2) unpaid. At $N=1$ scalar legality forces $M_1=0$, so the visible law is all zero and fails the free-site band; this boundary observation does not settle arbitrary finite $N$.
+

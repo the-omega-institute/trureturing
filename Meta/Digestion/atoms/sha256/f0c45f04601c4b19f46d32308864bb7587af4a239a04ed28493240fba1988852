@@ -1,0 +1,20 @@
+**Theorem 6.3 (separate extension permitting observer Updates).**
+The classification of Theorem 6.2 remains true if the observer may also
+issue genuine global $\rho$ with the source-free acknowledgement
+$\star$, selected from retained control. The positive root procedure
+still issues no Update.
+
+**Proof.** Keep the same paired sources and schedule. At an observer
+Update, apply $\rho$ in both registers and return $\star$ in both;
+observer controls remain equal. These events only advance the registers
+along their own trajectories. Equation (CNA.11) separates them at every
+pair of total exponents, including updates by both processes.
+The writer can still supply a finite saturating burst before every Read.
+Interleave writer steps with local or observer Update events as needed
+for fairness. The same output contradiction follows.
+
+An acknowledgement carrying a count, size, saved view or source-dependent
+duration would be a different port. This theorem extends the
+unrestricted-interference obstruction; it does not extend the
+read-only endpoint obstructions below. $\square$
+

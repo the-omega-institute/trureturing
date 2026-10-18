@@ -1,0 +1,15 @@
+**数学引文 37.2（Applicability of the classical spectrum）。** In [S27] the group rank is the code dimension, and the subset cardinality is the number of vectors assigned odd multiplicity; neither is the original reader order $k$ or block width $m$. Corollary 18 is applied only to the additive group $\mathbb F_2^e$ with $e\ge2$. It permits the zero vector and requires distinct elements within the subset. These are exactly the requirements in the proof of Theorem 37.1. The cases $e=1$, cardinality zero, and the multiplicities greater than one are handled explicitly there.
+
+Kosters, *The subset sum problem for finite abelian groups* [S28, Theorem 2.3] gives an exact subset count for every finite abelian group. With group $\mathbb F_2^e$, order $N=2^e$, target zero and cardinality $b$, it specializes to
+
+$$
+N_e(b,0)=
+\begin{cases}
+N^{-1}\binom Nb,&b\text{ odd},\\[2mm]
+N^{-1}\left[\binom Nb+(-1)^{b/2}(N-1)\binom{N/2}{b/2}\right],&b\text{ even}.
+\end{cases}
+\tag{37.4}
+$$
+
+Here the group exponent is two, its two-torsion is the whole group and $e(0)=2$ in Kosters' notation. Li–Wan, *On the subset sum problem over finite fields* [S29, Theorem 1.2] gives the same formula on taking the full finite field of order $N$, characteristic two, and target zero; its additive group is $\mathbb F_2^e$. The field multiplication has no role in this use. The support is the full field, not its nonzero part or a reader phase subgroup. Formula (37.4) is credited counting mathematics, not a count of legal source words. The proof of the reader law uses the spectrum [S27], so no additional positivity inference from (37.4) is required.
+

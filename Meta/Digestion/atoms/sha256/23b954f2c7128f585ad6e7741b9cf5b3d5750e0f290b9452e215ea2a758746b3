@@ -1,0 +1,203 @@
+## 7. A legal-source trace obstruction to the second alternative
+
+**Lemma 7.1.** For a legal source in the chart
+
+$$
+\frac13<x<\frac12,\quad \rho>0,\quad
+t=\frac{3x-1}{1-2x}>0,\qquad
+P=\frac1{1+\rho t}\begin{pmatrix}1&\rho\\t&\rho t\end{pmatrix},
+\tag{7.1}
+$$
+
+suppose $x+1/3<\rho<3/2$. Let $Z_P(D)$ be the sixth value of
+the first-four-reading interpolant at drift $D$. Then
+$Z_P(D)<0$ for every $D\in[24,48]$.
+
+**Chart conversions.** For a legal terminal matrix (5.1), put
+
+$$
+x=b/e=a/c,\quad \rho=e/c,\qquad
+S=\begin{pmatrix}c(1-2x)&e(1-2x)\\c(3x-1)&e(3x-1)\end{pmatrix}.
+\tag{7.2}
+$$
+
+The ratios are positive. Since $S=f(7)P$ and $c,e$ have the sign
+of $f(7)$, strict positivity gives exactly $1/3<x<1/2$.
+Taking the trace normalizes (7.2) to (7.1).
+Conversely (7.1) has positive entries, trace one and determinant zero.
+Its full conversions are
+
+$$
+\begin{gathered}
+x=(t+1)/(2t+3),\quad s=1/(1+\rho t),\quad
+p=\rho/(1+\rho t),\quad q=t/(1+\rho t),\\
+j=u=\frac{\rho+t}{1+\rho t},\qquad
+\ell=v=\frac{1+\rho+\rho t}{1+\rho t},\qquad
+m=u+v=\frac{2\rho+1+(\rho+1)t}{1+\rho t}.
+\end{gathered}
+\tag{7.3}
+$$
+
+All denominators are positive; the ratios in (7.2) cancel either
+terminal sign. The symbol $t$ in this chart is a scalar parameter,
+whereas $t_j$ always denotes an ancestor trace.
+
+**Proof of the trace lemma.** From (2.4),
+
+$$
+Z_P(D)=10D+\frac{36(24-D)}j-\frac{45(48-D)}\ell
+                              +\frac{20(312/5-D)}m.
+\tag{7.4}
+$$
+
+This is affine in $D$, and $Z_P(d)=f(6)$ for an actual world.
+At $D=24$,
+
+$$
+Z_P(24)=240-1080/\ell+768/m,
+\tag{7.5}
+$$
+
+and multiplication by $\ell m/24>0$ gives
+
+$$
+(10p-35)(1+2p+q)+32(1+p)
+             =20p^2-28p-3+(10p-35)q.
+\tag{7.6}
+$$
+
+Here $0<p<\rho<3/2$ and $q>0$.
+The convex quadratic $20p^2-28p-3$ has endpoint values $-3$ and
+$0$ on $[0,3/2]$; its chord is strictly negative in the interior,
+and the quadratic lies below it. Also $10p-35<0$.
+Thus (7.6) is strictly negative and $Z_P(24)<0$.
+
+At $D=48$, let
+
+$$
+s_0=1+\rho t,\quad j_N=\rho+t,\quad
+m_N=2\rho+1+(\rho+1)t.
+$$
+
+These three quantities are positive. Clearing only these denominators
+in $Z_P(48)=480-864/j+288/m$ gives
+
+$$
+Z_P(48)=\frac{96N}{j_Nm_N},\qquad
+N=5j_Nm_N-9s_0m_N+3s_0j_N.
+\tag{7.7}
+$$
+
+The complete increasing-power-in-$t$ coefficient rows are
+
+$$
+\begin{array}{c|ccc}
+&[t^0]&[t^1]&[t^2]\\ \hline
+5j_Nm_N&10\rho^2+5\rho&5\rho^2+15\rho+5&5\rho+5\\
+-9s_0m_N&-18\rho-9&-18\rho^2-18\rho-9&-9\rho^2-9\rho\\
+3s_0j_N&3\rho&3+3\rho^2&3\rho\\ \hline
+N&10\rho^2-10\rho-9&-10\rho^2-3\rho-1&-9\rho^2-\rho+5.
+\end{array}
+\tag{7.8}
+$$
+
+Multiplication of the two linear factors in each of the first three
+rows and columnwise addition proves every entry.
+
+The lower chart inequality becomes
+
+$$
+\rho>\frac{5t+6}{6t+9}>\frac23.
+\tag{7.9}
+$$
+
+If $2/3<\rho<7/10$, then $5-6\rho>0$ and
+
+$$
+0<t<\frac{9\rho-6}{5-6\rho}<\frac38.
+\tag{7.10}
+$$
+
+The last bound uses $9\rho-6<3/10$ and $5-6\rho>4/5$.
+In this subcase the constant coefficient of $N$ is below $-9$,
+its linear coefficient is negative, and its quadratic coefficient
+is at most $1/3$, by
+
+$$
+(-9\rho^2-\rho+5)-1/3=-(\rho-2/3)(9\rho+7)\le0.
+\tag{7.11}
+$$
+
+Consequently
+
+$$
+N<-9+\frac13(3/8)^2=-573/64<0.
+\tag{7.12}
+$$
+
+This bound is valid even if the quadratic coefficient is negative.
+If $7/10\le\rho<3/2$, convexity bounds the constant coefficient
+by the larger of its endpoint values $-111/10$ and $-3/2$ on
+$[7/10,3/2]$, hence by $-3/2$.
+The linear coefficient is negative. The quadratic coefficient is
+at most $-11/100$, its value at $7/10$, because its difference is
+
+$$
+-(\rho-7/10)\bigl(9(\rho+7/10)+1\bigr)\le0.
+\tag{7.13}
+$$
+
+Thus all three coefficients are strictly negative and $N<0$.
+The equality $\rho=7/10$ belongs to this second subcase.
+This proves $Z_P(48)<0$ on the whole lemma domain.
+For $D\in[24,48]$, the exact affine identity is
+
+$$
+Z_P(D)=\frac{48-D}{24}Z_P(24)
+                          +\frac{D-24}{24}Z_P(48)<0.
+\tag{7.14}
+$$
+
+A zero drift coefficient is included; none was divided out. ∎
+
+**Proposition 7.2.** Alternative II of Proposition 6.1 is impossible.
+
+**Proof.** For an $AC$ pair the entries $c$ and $m_A=a+e$ are common.
+For world $i$,
+
+$$
+a_i=cx_i,\quad e_i=m_A-cx_i,\quad
+\rho_i=m_A/c-x_i,\quad b_i=x_i(m_A-cx_i).
+\tag{7.15}
+$$
+
+Distinctness forces $x_1\ne x_2$; otherwise these formulas give
+equal matrices. From their differences, using the already proved
+$\epsilon\ne0$,
+
+$$
+\theta=\beta/\epsilon=x_1+x_2-m_A/c
+                         =x_2-\rho_1=x_1-\rho_2.
+\tag{7.16}
+$$
+
+Relabel the worlds so $x_1<x_2$. In II, $-1<\theta<-1/3$, so
+
+$$
+x_2+1/3<\rho_1<x_2+1,\qquad
+x_1+1/3<\rho_1<3/2.
+\tag{7.17}
+$$
+
+The first world thus satisfies Lemma 7.1, while $24<d<48$.
+It would have $f_1(6)=Z_{P_1}(d)<0$, a contradiction.
+Both late readings have remained fixed actual equations throughout
+the collision analysis. A necessary first-four obstruction suffices
+to contradict the full six-equation system. ∎
+
+This proof is confined to legal strictly positive sources.
+The divisions by $c,e,1-2x,2t+3,1+\rho t,j_N,m_N$ have been
+justified. Division by $5-6\rho$ occurs only in (7.10).
+No assertion extends Lemma 7.1 or Proposition 7.2 to arbitrary
+nonnegative boundary sources, where this chart can degenerate.
+

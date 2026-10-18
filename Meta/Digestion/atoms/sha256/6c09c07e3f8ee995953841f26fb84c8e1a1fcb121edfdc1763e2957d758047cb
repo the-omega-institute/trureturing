@@ -1,0 +1,8 @@
+**Remark 3.4 (why the finite profile is retained).** A finite coordinate
+forced by the graph is inserted as the actual native tree $f_i^A(\mathbf c)$
+in every whole negative. A coordinate not forced finite remains a Cartesian
+residual for the purpose of SLP lifting, even though its selected completion
+representative is infinite. This separation prevents a finite barrier from
+being replaced by an infinite marker and prevents an infinite coordinate from
+being replaced by a finite catalogue.
+

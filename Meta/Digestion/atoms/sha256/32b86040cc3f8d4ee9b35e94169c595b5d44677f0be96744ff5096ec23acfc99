@@ -1,0 +1,10 @@
+**Definition 4.1 (complete row mask and the NPL split).** Write
+$\mathsf{Mask}_Q(u)=R_Q(u)$. Reuse [NPL, Theorems 4.1 and 5.3][NPL] on the
+entire fiber (RNL.3), with the authentic common state and the actual action
+contract. The result is an exact finite/infinite split for the image of
+$\mathsf{Mask}_Q$. In the infinite branch it also supplies a total generator
+$G:\mathbb N\to D^{-}$ whose complete masks are pairwise distinct. In the
+finite branch it supplies the exact finite image and finite original witnesses
+for its elements. These witnesses are proof-side witnesses, not online
+representatives or source selectors.
+

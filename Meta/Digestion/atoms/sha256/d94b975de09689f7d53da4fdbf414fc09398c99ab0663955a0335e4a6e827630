@@ -1,0 +1,53 @@
+**Theorem 4.2 (all physical ranks, kernels and singular lines).** For nonzero positive supported $\rho$, $C(\rho)$ has rank two or three, and $\operatorname{rank}\rho\ge2$ implies $C(\rho)\succ0$. For a pure specimen $\psi=(x,y,z)^T$, its Gram is singular precisely on
+
+$$
+x=0\quad\hbox{or}\quad x^2=r_Ty^2+r_Sz^2.
+\tag{PG.20}
+$$
+
+These are complex bilinear equations. The kernel is one-dimensional and is as follows:
+
+$$
+\begin{array}{c|c|c}
+\text{specimen stratum}&\text{coefficient kernel generator }n&n^\dagger Bn\\ \hline
+x=0&(0,cz,-ay)^T&<0\\
+x\ne0,\ x^2=r_Ty^2+r_Sz^2&
+ (1,-h_1y/(bx),-h_2z/(dx))^T&
+ \le0 .
+\end{array}
+\tag{PG.21}
+$$
+
+On the second stratum $n^TBn=0$, and $n^\dagger Bn=0$ if and only if both $y/x$ and $z/x$ are real. Every projective line in the full complex singular coefficient locus (PG.14) occurs as the Gram kernel of a physical pure specimen.
+
+Proof. Lemma 3.1 gives
+
+$$
+\ker C(\rho)=\{z:K(z)\rho^{1/2}=0\}.
+\tag{PG.22}
+$$
+
+If a nonzero such $z$ exists, $K(z)$ is singular of rank two by Lemma 3.1, so its kernel has dimension one. It cannot contain the range of $\rho$ of dimension at least two. Thus all mixed positive specimens of rank at least two have positive-definite Gram.
+
+For a nonzero pure specimen the three tested columns are
+
+$$
+[D\psi,T\psi,S\psi]=
+ \begin{pmatrix}h_0x&ay&cz\\h_1y&bx&0\\h_2z&0&dx\end{pmatrix},
+\qquad
+\det[D\psi,T\psi,S\psi]
+ =h_0bd\,x(x^2-r_Ty^2-r_Sz^2).
+\tag{PG.23}
+$$
+
+They always have rank at least two. If $x\ne0$, columns $T\psi,S\psi$ are independent by their respective nonzero lower entries. If $x=0$, $D\psi$ is a nonzero vector in the lower plane while at least one of $T\psi,S\psi$ is nonzero on coordinate zero. The determinant therefore characterizes rank two exactly, including zero coordinates.
+
+Solving the two lower equations when $x\ne0$ gives the second kernel in (PG.21), and its first equation is (PG.20). On the plane, the first equation is $ay\,n_T+cz\,n_S=0$, giving the first kernel. This plane vector has strictly negative Hermitian $B$ value even if one coordinate vanishes. On the off-plane quadratic, bilinear nullity and the triangle inequality give
+$1=|\alpha n_T^2+\beta n_S^2|\le\alpha|n_T|^2+\beta|n_S|^2$.
+Equality occurs exactly when $n_T,n_S$ are real in the normalization $n_D=1$, equivalently $y/x,z/x$ real. This also proves that a singular real Gram in the quadratic stratum has a real specimen up to common phase; the plane may instead carry arbitrary relative phase.
+
+Conversely a plane coefficient $n=(0,v,w)$ has physical kernel specimen
+$\psi\propto(0,cw,-av)$. If $u\ne0$ and $u^2=\alpha v^2+\beta w^2$, take
+$\psi\propto(1,-bv/(h_1u),-dw/(h_2u))$. Direct substitution gives $K(n)\psi=0$; nonzero normalization makes an actual density, whose Gram has the unique kernel line $n$. The complex intersection is retained: for example
+$n=(0,\sqrt\beta,i\sqrt\alpha)$ lies on both coefficient components. Its corresponding specimen lies on the plane and satisfies the quadratic equation with $x=0$. These are the two complex intersection lines according to the sign of $i$; no real nonzero plane-null coefficient exists. Common phase changes no density or kernel line, whereas relative phase remains part of (PG.20)–(PG.21). Zero compression has $C=0$ and is handled separately in Section 12. $\square$
+

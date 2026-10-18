@@ -1,0 +1,56 @@
+**Proposition 11.2 (alphabet and class geometry).** The encoder $e_q$
+has exactly $q$ attained labels, the inherited minimum alphabet of
+[NAR, Theorem 16.3][NAR]. Every one of its classes has distinct
+differences $d=a-b$. In the master square, let $u=a-b,v=b$. For
+$0\le c\le6$, class $c$ consists of its entire maximum-$c$ base
+
+$$
+\begin{cases}
+-c\le u\le0,&v=c,\\
+1\le u\le c,&v=c-u,
+\end{cases}
+\tag{NARC.11.1}
+$$
+
+and its listed symmetric extras. For $7\le c\le16$, put
+$r=\min(c,9)$. Its class is exactly
+
+$$
+\begin{cases}
+-r\le u\le0,&v=c,\\
+1\le u\le r,&v=c-u.
+\end{cases}
+\tag{NARC.11.2}
+$$
+
+Smaller squares restrict these classes by deleting origins.
+
+**Proof.** Every reassignment label satisfies $0\le c\le A$,
+and $e_{17}(t,t)=t$. Thus a prefix square exports no label outside
+$[0,q-1]$, and its diagonal attains every label in that interval.
+The minimum-alphabet conclusion is the cited whole-current supplier,
+without a new alphabet lower proof.
+
+The seven reassignment rows contain $7+6+5\cdot3=28$ unordered
+pairs. For $A=10,11,12,13,14,15,16$, respectively, they contain
+all $A-9$ pairs with $B\le A-10$: the first five sets are read
+directly from the five finite reassignment rows, and the last two are
+the displayed stars. Hence they are exactly the pairs with $A-B\ge10$.
+All other pairs keep their maximum. This proves (NARC.11.1)--(NARC.11.2).
+
+The positive extra differences for labels $0,\ldots,6$ are,
+respectively,
+
+$$
+[10,16],\ [10,15],\ \{10,13,14\},\ \{10,11,12\},\
+\{10,11,12\},\ \{10,11,12\},\ \{10,11,13\}.
+\tag{NARC.11.3}
+$$
+
+Each is distinct within its class and disjoint from the base
+differences in $[-c,c]$. The reversed extras have their negative
+differences, and the diagonal is the sole difference-zero point.
+The normal classes have one point at each displayed $u$. Thus $d$
+is injective in every master class and remains so upon restriction.
+$\square$
+

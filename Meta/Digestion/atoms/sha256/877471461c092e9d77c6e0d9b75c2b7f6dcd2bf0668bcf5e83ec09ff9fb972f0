@@ -1,0 +1,26 @@
+## 375. The eight-active profiles
+
+Retain the source, carrier, marks, one-seed hard-two interfaces, complete tables, independent event rows, and literal affine anchor of [XXIII 368.1–368.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXIII.md). In particular, a complete stopped pair has cells \(0,10,11\), a complete preselected pair has cells \(00,01,10,11\), every cell of one schedule has its owning mass, and the rows (A,C,P,T) are imposed independently. For \(L=8\), write
+
+$$
+ b(h)=\left(h,{34\over64},{34\over64},{29\over64},{27\over64},
+                 {25\over64},{22\over64},{20\over64}
+\right),qquad
+ {17\over32}\le h\le {43\over64},
+$$
+
+and put
+
+$$
+ c={2867\over11856}.
+$$
+
+The admissible infinite profiles are the entire sequences
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_i\longrightarrow0,\qquad
+(a_1,\ldots ,a_8)=b(h),\qquad a_9\le c.
+$$
+
+The inequality \(a_9\le c<a_8\) keeps the active prefix equal to eight. Every finite Boolean word on these eight coordinates, including words with several zeros, has an actual source in the original \(X\). Thus a finite table satisfying the rows is transported to an original acquisition by the common-seed construction of [XXIII 368.2] and the positive-tail identity of [XXIII 373.1].
+

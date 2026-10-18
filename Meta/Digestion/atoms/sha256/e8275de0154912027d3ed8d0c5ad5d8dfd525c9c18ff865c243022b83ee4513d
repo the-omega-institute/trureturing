@@ -1,0 +1,11 @@
+**定义 10.1（有限类型响应网络）。** 给有限图每个端口一个有限维实正定空间 $E_\tau$，并给共同抽象群 $G$ 的正交表示 $D_\tau:G\to O(E_\tau)$。每个节点有按端口次序声明的多线性张量。内部边连接两个实际兼容的端口，用配对
+
+$$
+h_e:E_\tau\times E_\sigma\to\mathbb R,
+\qquad h_e(D_\tau(a)x,D_\sigma(a)y)=h_e(x,y)
+$$
+
+收缩。只有真实共享变量、来源记录和资源限制能进入同一个接缝；分别可实现的两端不能自动成为联合实现。此合同消费 [关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 5.2 的同源一一对应。有限指标收缩的标准表示由 [Biamonte–Bergholm §2.3](../../../Library/GraphInvariants/biamontebergholm2017tensornetworks.md) 供应。
+
+若使用运输边 $U_e:E_\tau\to E_\sigma$，配对写成 $h_e(x,y)=g_\sigma(U_ex,y)$。固定运输的对称要求 $U_eD_\tau(a)=D_\sigma(a)U_e$。三维方向端口与 $196883$ 维内部端口不能直接相连；须给实际配对或耦合及其表示相容条件。
+

@@ -1,0 +1,23 @@
+**Definition 4.1 (consumed input and its storage frontier).** For an actual
+prefix $h\in\mathcal R_H$ after $a(u)$, let $I(h)$ be precisely the word of
+bits consumed by public IN after that fence, in actual order. Fixed
+deterministic work does not add to it. Let $L(h)$ be the chronological word
+of those bits whose
+corresponding input WR has executed into retained frame material. Let
+$Q(h)$ be the singleton current input bit exactly in the phase between its
+IN and that WR, and empty otherwise. A stale value left physically in the
+latch outside that phase is not a second pending bit.
+
+Let $E(h)$, $A_P(h)$ and $P(h)$ have their original adapter meanings,
+restricted to events after $a(u)$ when comparing input frames. Deterministic
+local or return markers have no external source frame. Define $F(E)$ to
+concatenate the canonical frames of externally requested source events in
+$E$, in their actual order. Request references must be followed to their
+actual retained complete material; a name alone is not a payload.
+
+Let $D(h)$ be the consumed prefix of the one admitted input frame whose
+source event has not committed. It can be empty, a proper prefix, or the
+whole frame while source generation and execution are underway. After that
+event commits, $D$ is empty until the next frame begins. This is a logical
+partition of consumed input, not an atomic rewrite of all its physical cells.
+

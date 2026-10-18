@@ -1,0 +1,56 @@
+**Definition 2.1 (complete templates and once-owned seed networks).**
+Fix $d,n\ge1$, let $V=[n]\times W_d$, and put $G_q=\Gamma_q[S_d]$.
+A complete native template chooses at every $(i,q)$ a constant factor
+in $G_q$ or an equation
+
+$$
+\Gamma_q(x_i)=\delta_{i,q}(r_{x_j}(a)),\qquad
+(j,a)\in V,\quad\delta_{i,q}:\mathcal A\longrightarrow G_q.
+\tag{GDB.6}
+$$
+
+All tables are total and all equations hold on the same actual tuple.
+Let $C_\Theta\subseteq S_d^n$ be the full solution set, possibly empty.
+Admissible subsets have such witnesses for all targets, without having
+to equal their full solution set. [NDR, Theorem 2.2][NDR] supplies
+same-coordinate saturation preserving cover optima and nonnegative mass
+maxima; arbitrary off-target donors, self donors and cycles remain allowed.
+
+Use exactly [RRN, Definition 5.1 and Theorem 5.2][RRN]. A seed $s_c$
+has domain $T_c\subseteq\mathcal A$ and a distinct designated actual
+owner port $o_c\in V$. Every port $v=(i,q)$ prescribes a constant
+$z_v\in G_q$ or a table $z_v=B_v(s_c)$ with $B_v:T_c\to G_q$.
+The owner is assigned to its own seed and obeys
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{GDB.7}
+$$
+
+Repeated occurrences use one shared variable. For
+$s\in\mathcal S=\prod_cT_c$, a block is realizable if its entire
+prescribed factor vector equals that of an actual $x_i\in S_d$.
+Such $x_i$ is unique. For arbitrary full weights $w_i:S_d\to[0,\infty)$,
+set
+
+$$
+\begin{aligned}
+\Phi_i(s)&=\sum_{u\in S_d}w_i(u)
+       \prod_{q\in W_d}\mathbf1_{\{\Gamma_q(u)=z_{i,q}(s)\}},\\
+Z(\mathcal N;\boldsymbol w)&=\sum_{s\in\mathcal S}\prod_{i=1}^n\Phi_i(s).
+\end{aligned}
+\tag{GDB.8}
+$$
+
+Each $\Phi_i$ is zero or the weight of its unique reconstructed block.
+The original $w_i$ is used exactly once and need not factor within that
+block. Actual owner replies recover every seed on a realizable assignment.
+RRN gives complete templates in both directions with exactly the same
+actual tuples, one lift per tuple and this same mass. Seeds are analytical
+variables, not free acquired or exported readings.
+
+Empty domains give no assignments and zero mass. With no seeds there is
+one empty assignment, reconstructing either a constant tuple or none.
+Singleton domains are allowed; they may be replaced by constants when
+desired. None of the representation assertions requires positive weights.
+

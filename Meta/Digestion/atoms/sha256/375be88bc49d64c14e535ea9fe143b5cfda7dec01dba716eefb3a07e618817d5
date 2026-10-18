@@ -1,0 +1,123 @@
+**Theorem 7.4 (credited exact rational simultaneous system).** For
+$d\notin\{0,24,48,c_0,y,\zeta\}$, the core of Proposition 7.3 is
+realizable if and only if there are three pairwise distinct $k_h>0$
+satisfying all the following conditions, evaluated with one common
+$d,y,\zeta$:
+
+$$
+\begin{aligned}
+N_d(k)&=(4032-84d)k^2+(168+21d)k+70d-1680,\\
+\ell(k)&=\frac{N_d(k)}{20d\,k(k+1)},\quad j=k\ell,\quad
+u=\ell-1,\quad v=(k-1)\ell+1,\quad \ell>1,\ v>0,\\
+a_1&=\frac{24-d}{k\ell},\quad
+a_2=\frac{48-d}{\ell},\quad
+a_3=\frac{c_0-d}{(k+1)\ell}.
+\end{aligned}
+\tag{7.13}
+$$
+
+Let $f_k$ have exactly the coefficients (7.2), and define
+
+$$
+\begin{aligned}
+h_4&=a_1/2-9a_2/5+9a_3/4,\\
+h_5&=a_1-16a_2/5+3a_3,\\
+h_6&=a_1-3a_2+5a_3/2,\qquad h_4h_5h_6\ne0,\\
+r(k)&=(y-d)/h_4-1-k\ell,\qquad 0<r(k)<1,\\
+(\ell-1)((k-1)\ell+1)&=r(k)(1-r(k)),\\
+\zeta-d&=h_5((k+2)\ell-r(k)),\\
+P_k&=\begin{pmatrix}r(k)&\ell-1\\(k-1)\ell+1&1-r(k)\end{pmatrix}.
+\end{aligned}
+\tag{7.14}
+$$
+
+Finally put
+
+$$
+U(k)=h_6(2+2r(k)+(2k-1)\ell),\qquad
+V(k)=h_6(1+2(k+1)\ell),
+\tag{7.15}
+$$
+
+and require a common nonzero sign for the three $h_6(k_h)$ and
+
+$$
+U(k_1)=U(k_2)\ne U(k_3),\qquad
+V(k_1)=V(k_3)\ne V(k_2).
+\tag{7.16}
+$$
+
+No equation or inequality in (7.13)–(7.16) may be dropped.
+
+**Proof, necessity.** For an actual world $k=j/\ell>0$.
+Equation (7.5), multiplied by $k(k+1)$, is exactly
+
+$$
+20d\ell k(k+1)=84B k(k+1)-70A(k+1)-35C_*k=N_d(k).
+\tag{7.17}
+$$
+
+Its full coefficient list is
+
+$$
+\begin{array}{c|c|c}
+\text{power of }k&\text{unsimplified}&\text{simplified}\\ \hline
+2&84B&4032-84d\\
+1&84B-70A-35C_*&168+21d\\
+0&-70A&70d-1680.
+\end{array}
+\tag{7.18}
+$$
+
+Since $d\ne0$, (7.17) gives (7.13). Interpolation gives (7.2),
+(7.14), and $f(7)=0$; the fourth reading fixes $r$, source legality
+gives the determinant equation, and the actual fifth reading is the
+retained last scalar equality. Formula (1.8) gives (7.15), and
+Proposition 7.3 gives the sign and pair conditions. Equal $k$ fixes
+$\ell,j$, the full gain and $r$, hence the world; distinct worlds
+therefore have distinct $k$. Divisors are nonzero by $d\ne0$,
+$k>0$, $\ell>1$ and $h_4\ne0$.
+
+**Proof, sufficiency and actual children.** Conversely let every
+condition hold. All four entries of $P_k$ are positive and its trace
+is one; the retained determinant equation gives rank one.
+The coefficient vector (7.2) is a nonzero degree-at-most-three gain
+because its constant term is $-d\ne0$. Its first four samples are
+$-d,a_1,a_2,a_3$ by (7.3). Equation (7.17) gives
+$20d+70a_1-84a_2+35a_3=0$, hence $f_k(7)=0$. Its later samples
+are exactly $h_4,h_5,h_6$. Every ancestor equation is
+
+$$
+\begin{aligned}
+f_k(0)+d&=-d+d=0,\\
+f_k(1)j+d&=\frac A{k\ell}(k\ell)+d=24,\\
+f_k(2)\ell+d&=\frac B\ell\ell+d=48,\\
+f_k(3)(j+\ell)+d&=\frac{C_*}{(k+1)\ell}(k+1)\ell+d=c_0,\\
+f_k(4)(1+r+j)+d&=h_4(1+r+k\ell)+d=y,\\
+f_k(5)(j+2\ell-r)+d&=h_5((k+2)\ell-r)+d=\zeta.
+\end{aligned}
+\tag{7.19}
+$$
+
+The worlds are distinct because their sources determine different
+ratios $j/\ell$. None of their ancestor samples vanishes because
+$d$ differs from every ancestor reading and each trace is positive.
+Their sixth values are $d+U(k)$ and $d+V(k)$ and their terminal
+values all equal $d$.
+
+In the one fixed triple $K$, first action $J$ with actual raw response
+$D_0+\lambda(d+U(k_1))$ retains exactly $\{W_1,W_2\}$.
+Under each last action $F$, raw response $D_0+\lambda d$ retains
+that same pair, so this sixth child has $L_1$. First action $M$
+with response $D_0+\lambda(d+V(k_1))$ retains exactly
+$\{W_1,W_3\}$, and either last action again retains it at raw
+response $D_0+\lambda d$. Thus both action clauses of $L_2$
+hold. The only $J$ collision pair is $\{1,2\}$ and the only $M$
+collision pair is $\{1,3\}$; each proper pair fails one sixth-action
+clause. Empty and singleton proper subsets fail cardinality. This
+is exactly the inclusion-minimal core. Both normalization signs
+return the original worlds $g_h=\lambda f_{k_h}$,
+$\delta_h=D_0+\lambda d$ and readings
+$Y=D_0+\lambda y,z=D_0+\lambda\zeta$. No feasibility verdict is
+contained in this equivalence. ∎
+

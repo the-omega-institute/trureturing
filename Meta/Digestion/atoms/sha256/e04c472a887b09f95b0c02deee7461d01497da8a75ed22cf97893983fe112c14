@@ -1,0 +1,33 @@
+**Lemma 3.2 (complete affine risk, every future word).** Let $Q,V$ be PH15's ordinary $p,\beta$ laws of $G(a)$. For $0\le x\le\lambda$ let
+
+$$
+Q^x=(u+x)\delta_{[\alpha]}+(l-x)(\beta V).
+\tag{3.5}
+$$
+
+Completion and Stop are included by $I_c$. Its exact full-tail distances are
+
+$$
+\operatorname{TV}(Q^x,P_{p,r_1})=\rho_p+e+kx,\qquad
+\operatorname{TV}(Q^x,P_{p,r_2})=\rho_p+e-k_2x.
+\tag{3.6}
+$$
+
+For every $k\ge3$, $\operatorname{TV}(Q^x,P_{p,r_k})<\rho_p$. All laws retain the legal infinite outcome with zero mass.
+
+**Proof.** Write $t=1-x/l$. Expansion of (3.5), using $a=lv$ and $g=l(1-v)$, gives
+
+$$
+Q^x(u_{0,0})=u+x,\quad Q^x(u_{j,0})=tu a^j\ (j\ge1),\quad
+Q^x(u_{j,1})=tg a^j\ (j\ge0).
+\tag{3.7}
+$$
+
+The ordinary laws complete with geometric factor $a<6/25$; (3.5) completes almost surely and its masses sum to one. Put $a^{\rm src}_1=2/9$, $a^{\rm src}_2=6/25$. For the zero words, $1/3<u+x<2/5$. At $j=1$, (3.3) gives $tu a>2/27$, while $tu a\le ua<(2/5)(6/25)$ by PH15. Ratios to endpoint 1 increase with $j$ since $a>2/9$; ratios to endpoint 2 decrease since $a<6/25$. Both comparisons therefore hold for every $j\ge1$.
+
+For one words at $j=0,1,2$, PH15 has $ga^j<(4/9)(2/9)^j$; decreasing their masses preserves this inequality. At $j=3$, (3.3) gives $tga^3>32/6561$ and $tga^3>C=(9/25)(6/25)^3$. The first ratio increases thereafter, so all $j\ge3$ exceed endpoint 1. The second ratio decreases, so all $j\le3$ exceed endpoint 2. At $j=4$, PH15 has $ga^4<(9/25)(6/25)^4$; reducing it and propagating the decreasing ratio gives this comparison for every $j\ge4$. These finite gates and geometric ratios prove the entire infinite sign partition.
+
+Consequently the positive coordinates of $P_{p,r_1}-Q^x$ are exactly $E=\{u_{0,1},u_{1,1},u_{2,1}\}$, and those of $Q^x-P_{p,r_2}$ are exactly $F=E\cup\{u_{3,1}\}$. For normalized countable laws TV equals the sum of positive differences. PH14–15 gives $P_{p,r_1}(E)=\rho_p+c$ and $P_{p,r_2}(F)=c-\rho_p+C$, while $Q^x(E)=gS_a-kx$ and $Q^x(F)=g(S_a+a^3)-k_2x$. The arc identity $gH_a=2c+C$ gives (3.6).
+
+The two first-letter branches in (3.5) are disjoint, so $\operatorname{TV}(Q^x,Q)=x$. PH15.10's complete geometric bound for every nonendpoint parameter is $\operatorname{TV}(Q,P_{p,r_k})<4/125$. Triangle inequality and (3.3) give $4/125+x<\rho_p$. This controls the entire interval of nonendpoint parameters, not a checked finite list of depths. Pushforward through the same $I_c$ proves the identical statements for full original transcripts. No future-tail truncation or first-letter surrogate loss was used. $\square$
+

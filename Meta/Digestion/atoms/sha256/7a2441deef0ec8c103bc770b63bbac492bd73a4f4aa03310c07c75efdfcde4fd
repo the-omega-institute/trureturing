@@ -1,0 +1,116 @@
+**Theorem 73.1 (closed threshold and explicit two-sided bounds).** For
+$0\le s<s_0$, let $t_{\min}(s)$ be the infimum of $t\ge0$ for which
+FA.20 is feasible. It is positive, finite and attained, and
+
+$$
+A_{\min}(s)=\log(1+t_{\min}(s)),\qquad
+\mathfrak F_{s,A}\ne\varnothing\ \Longleftrightarrow\ A\ge A_{\min}(s).
+\tag{FA.24}
+$$
+
+Define
+
+$$
+\begin{gathered}
+\mathfrak c_{\max}=\max\left\{
+ \frac{h_2^2ah_1}{h_0b},\frac{h_1^2ch_2}{h_0d}\right\},\quad
+V_f=\frac{m_2h_1^2}{b^2},\quad W_f=\frac{m_1h_2^2}{d^2},\\
+\mu_f=\alpha_0V_f+\beta_0W_f,\quad
+ d_{\rm mom}=\frac{(\sqrt{\mu_f}-\sqrt{V_f})^2}{2}>0,\quad
+\nu_0=\max\left\{\frac{m_2}{\theta h_2^2},\frac{m_1}{\omega h_1^2}\right\},\\
+\varepsilon_s=\min\left\{1,\frac{s_0-s}{s_0-\sqrt\theta}\right\}.
+\end{gathered}
+$$
+
+Then
+
+$$
+\max\left\{\frac{\mu_f}{\mathfrak c_{\max}},
+ \frac{d_{\rm mom}}{\mathfrak c_{\max}(1-s/s_0)}\right\}
+\le t_{\min}(s)\le\frac{\nu_0}{\varepsilon_s}.
+\tag{FA.25}
+$$
+
+In particular
+
+$$
+A_{\min}(s)=\log\frac1{1-s/s_0}+O(1),\qquad s\uparrow s_0.
+\tag{FA.26}
+$$
+
+The implicit threshold itself is not evaluated as a scalar function.
+
+**Proof.** Normalize the low coefficient vectors to
+$\sqrt{p_j}(s_0,z_j,w_j)$ as in Theorem 72.1. Their Gram implies
+$\sum p_j=\sum p_jz_j^2=\sum p_jw_j^2=1$.
+Writing their failures as $p_j\beta_jn_jn_j^T$, the two diagonal
+failure equations give
+$\sum p_j\beta_jz_j^2=V_f$ and
+$\sum p_j\beta_jw_j^2=W_f$.
+The null equation $\alpha_0z_j^2+\beta_0w_j^2=1$ then gives
+$\sum p_j\beta_j=\mu_f$.
+Substitute the null equation into FA.6: the ratio $\mathfrak c$ is
+a positive linear-fractional function of $z^2,w^2$, so it lies between
+its two axial values. Direct cancellation gives exactly the two entries
+of $\mathfrak c_{\max}$. Thus $\beta_j\le t\mathfrak c_{\max}$,
+and the first lower bound follows. The signed contrast constraint gives
+$\sum p_j|z_j|\ge s/s_0$. Consequently
+$\sum p_j(|z_j|-1)^2/2\le1-s/s_0$.
+Cauchy–Schwarz in the positive weights $p_j\beta_j$ gives
+
+$$
+\sum_jp_j\beta_j(|z_j|-1)^2/2
+\ge (\sqrt{\mu_f}-\sqrt{V_f})^2/2.
+$$
+
+Since $V_f/W_f=v^\dagger<1$ and $\beta_0>0$,
+$\mu_f>V_f$, so this is strictly positive.
+Combining with $\beta_j\le t\mathfrak c_{\max}$ proves the other
+lower bound, including $s=0$. These sums are coefficient moments, not
+a prior on unknown histories.
+
+For the upper bound take $\varepsilon=\varepsilon_s>0$ and the
+following finite matrices and attached effects:
+
+$$
+\begin{aligned}
+H&=\sqrt{1-\delta}\,D,\\
+A_\sigma&=\sqrt{\varepsilon/2}(\sqrt\theta D+\sigma T),
+&N^A_\sigma&=(m_2/2)|2\rangle\langle2|,\\
+B_\tau&=\sqrt{\varepsilon/2}(\sqrt\omega D+\tau S),
+&N^B_\tau&=(m_1/2)|1\rangle\langle1|,\\
+C_{\sigma\tau}&=\frac{\sqrt{1-\varepsilon}}2
+ (\sqrt\delta D+\sigma T+\tau S),&N^C_{\sigma\tau}&=0.
+\end{aligned}
+$$
+
+Their low Gram is $L_0$, their failures sum to $M$, and the high
+effect is $(1-\delta)D^\dagger D$. Use report $\sigma$ on $A,C$,
+fair reports on $B,H$ and complement. Their raw contrast is
+$(1-\varepsilon)s_0+\varepsilon\sqrt\theta\ge s$.
+If exact contrast $s$ is desired, retain all old labels and append the
+common binary kernel $(1+r\sigma s/V_{\rm raw})/2$ on the old
+report; $V_{\rm raw}>0$ and the ratio is at most one.
+The coordinate-zero killing of failure effects preserves this contrast
+calculation. The null axes in FA.6–.9 give activities
+$\log(1+m_2/(\varepsilon\theta h_2^2))$ and
+$\log(1+m_1/(\varepsilon\omega h_1^2))$ on $A,B$, respectively.
+The other rates vanish. FA.11–.13 and Theorem 75.1 therefore attain
+the upper feasibility bound. When $\varepsilon=1$ omit the zero $C$
+matrices; at $s=0$ report fair coins if exact zero contrast is chosen.
+No zero-weight division is involved.
+
+Feasibility is upward closed in $t$ because an instrument within a
+budget remains within any larger budget. The equality to FA.20 passes
+this monotonicity to the moment problem, though saturated/pure moment
+coordinates themselves may change. Take feasible $t_n$ decreasing to
+the positive finite infimum. The uniform mass bound in Theorem 72.1
+is independent of $t_n$. Compactness of their moment tuples gives a
+convergent subsequence; the constraints are continuous in moments and
+$t$, so its limit is feasible at the infimum. This proves FA.24 and
+threshold attainment. Near $s_0$ put $q=1-s/s_0$; FA.25 reads
+$t_{\min}\ge d_{\rm mom}/(\mathfrak c_{\max}q)$ and
+$t_{\min}\le\nu_0(s_0-\sqrt\theta)/(s_0q)$.
+Taking $\log(1+t_{\min})$ proves FA.26 with explicit finite upper
+and lower constants. $\square$
+

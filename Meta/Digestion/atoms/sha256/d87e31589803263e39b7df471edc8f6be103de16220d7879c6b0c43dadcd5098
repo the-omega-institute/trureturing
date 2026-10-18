@@ -1,0 +1,24 @@
+**Proposition 6.3 (finite-interference boundary of the cheap first row).**
+For invocation source $X_k$ in (CAB.16) and $b$ updates during that
+call, the final exposed left subtree is $T_b$. The same §5 procedure
+has at most
+
+$$
+(b+1)O\bigl(|\operatorname{Pos}(T_b)|+b+\log(k+b+2)\bigr)
+\tag{CAB.17}
+$$
+
+Reads, operand peak $O(k+b+1)$ and row-candidate size
+$O(|\operatorname{Pos}(T_b)|+1)$. Its calibration remains $k+1$.
+The second complete row in the collision family contains $T_{4h+1}$
+and has exponentially many literal cells in $h$.
+
+Proof. The left guard length is at most $1+\max(b-1,0)$; the exterior
+visits only the root and positions in the final left tree. The hidden
+right clock is at most $k+b$, and there are no pair comparisons.
+Apply the bounded search and failure count to these actual subtrees.
+Invariance gives the unchanged calibration. The native size formula
+$|\operatorname{Pos}(T_j)|=2F_{j+1}-1$ gives the last statement. Hence
+the quiescent constant-row result is not an end-to-end logarithmic
+storage claim under arbitrary interference. $\square$
+

@@ -1,0 +1,10 @@
+**定理 17.2（非零目标的实际线性下界）。** 若主域含一个 $x_3\ne0$ 的来源，则 $\omega(\varepsilon)=\Theta(\varepsilon)$ 当 $\varepsilon\downarrow0$；若不含，则 $\omega\equiv0$。
+
+证明。固定该来源，令 $v=|x_3|>0$、$M_0=\max(q_0,q_1,q_2)>0$。取垂直于 $x_3$ 的旋转轴，以正向旋转 $Q_\theta$ 同时旋转两个原叶，保留同一字面树。定向体积给 $Q(u\times v)=(Qu)\times(Qv)$，结构归纳得 $x'_j=Q_\theta x_j$。两制备的 Gram 数据、叶范数及三个读数范数完全相同，故包括等号在内的全部限制同时保留。旋转差满足
+
+$$
+|Q_\theta z-z|\le2|z|\sin(\theta/2),
+$$
+
+当 $z$ 垂直于轴时等号成立。对 $0<\varepsilon\le2M_0$ 选 $2\sin(\theta/2)=\varepsilon/M_0$，则三读差都至多 $\varepsilon$，目标差恰为 $(v/M_0)\varepsilon$。结合定理17.1得尖锐阶。若全域目标为零，定义直接给零模量。旋转构造的是两个合法所供制备，未授予内部观察者旋转动作。固定 $p$ 的子域继承上界，却不能直接继承本变化制备下界。
+

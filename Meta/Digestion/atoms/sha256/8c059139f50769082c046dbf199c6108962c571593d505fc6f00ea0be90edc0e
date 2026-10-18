@@ -1,0 +1,26 @@
+**Theorem 14.1 (every order fails and its successor genuinely refines it).** Let $\theta(0)=01$, $\theta(1)=10$. For every fixed $\mu$ and every $k\ge1$, set $u_k=\theta^k(0)$, $v_k=\theta^k(1)$ and $h_k^+=\iota(u_k)$, $h_k^-=\iota(v_k)$. These are distinct positive same-source third-latch histories with the common records of Theorem 13.1, identical $G_k$ and full original future law, but
+
+$$
+\begin{aligned}
+A(h_k^{\pm})=B(h_k^{\pm})&=2^k+3,\qquad N(h_k^{\pm})=2^{k+1}+6,\\
+c_{\alpha\beta^k}(h_k^+)-c_{\alpha\beta^k}(h_k^-)
+&=2^{\,2+k(k-1)/2}>0.
+\end{aligned}
+\tag{SC.29}
+$$
+
+For every $t\ge1$, independently choosing $u_k$ or $v_k$ in $t$ consecutive blocks and applying $\iota$ gives $2^t$ distinct histories in one $G_k$ class, with
+
+$$
+A=B=t2^k+3,\qquad N=t2^{k+1}+6,
+\tag{SC.30}
+$$
+
+the same seed/marker/count boundary and full future law. Relative to those supplied data this family needs at least $t$ supplementary bits for zero error, and the optimized static $D$-label success is $\min(D,2^t)/2^t$ even with all $V$.
+
+Proof. Reuse Ochsenschläger's word theorem as given with its coefficient proof in Lejeune–Leroy–Rigo, *Computing the $k$-binomial complexity of the Thue–Morse word*, [arXiv:1812.07330v1, Lemma 30](https://arxiv.org/pdf/1812.07330v1): $u_k,v_k$ agree through $k$, first differ at $k+1$, and their $01^k$ count difference is $2^{(k-1)(k-2)/2}$. Theorem 13.1 multiplies this leading coefficient by $2^{k+1}$ and leaves it unchanged under the common suffix, yielding (SC.29). Both input words have $2^{k-1}$ copies of each letter. Thus (SC.28) gives the stated counts, and Theorem 13.2 gives their actual future law.
+
+Truncated multiplication in (SC.25), equivalently the literature's concatenation congruence, makes all block choices equal through $k$. Their fixed block length $2^k$ and $u_k\ne v_k$ make all choices distinct; the embedding preserves them. The same counts give (SC.30), and Theorem 13.2 supplies the label bound. This uses the Thue–Morse recursion $(u,v)\mapsto(uv,vu)$, not the indexed positive-pair recursion $(u,v,a)\mapsto(uav,vau)$. The existing degree-two family is its $k=2$ case; the retained conclusion here is the all-cutoff transfer and strict next-order escape on the original acquisition domain. $\square$
+
+For example, $u_3=01101001$, $v_3=10010110$. Their actual images have $(A,B,N)=(11,11,22)$, agree through degree three, and differ at $\alpha\beta^3$ by 32. This description names eight paid equal-pair retries in each history; it grants no word-writing action to the source.
+

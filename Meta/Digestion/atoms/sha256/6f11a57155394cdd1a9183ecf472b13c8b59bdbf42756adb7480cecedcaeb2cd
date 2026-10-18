@@ -1,0 +1,21 @@
+**Proposition 4.2 (reused strict static gap).** At every nonempty weak
+finite-budget point,
+
+$$
+\mathcal T_A(s)<\mathcal T(s),\qquad
+2\mathcal T(s)-H_0=j(\tau)+L_f,
+\tag{AC.19}
+$$
+
+where $j$ is RC's static optimal live height under the same Gram and
+contrast inequality. The reason is the all-class equality condition
+in TA6–7: static height equality requires a nonzero supported
+negative-spectral failure-only actual outcome. That negative spectral
+row cannot attach to any optimal weak live row or to a supported high
+row. Finite whole-fibre activity gives
+$L_{{\rm dec},j}\succeq e^{-A}I$ by FA68, excluding that outcome.
+FA72's attained maximum then makes the gap strict. Neither a limiting
+certain-failure decoder nor a supported-zero complement removes this
+obstruction. This uses the full static equality theorem, not an upper
+bound for one proposed allocation.
+

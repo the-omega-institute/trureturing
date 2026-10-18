@@ -1,0 +1,39 @@
+## 5. 五、多窗时隐藏关系不是简单复制，而是张量化
+
+设单窗函数代数分解为：
+
+$$
+\mathcal A=V\oplus H
+$$
+
+其中：
+
+$$
+H=\operatorname{span}\{xy\}
+$$
+
+对于两个窗口：
+
+$$
+\mathcal A^{\otimes2}=
+(V\otimes V)
+\oplus
+(V\otimes H)
+\oplus
+(H\otimes V)
+\oplus
+(H\otimes H)
+$$
+
+维数分别为：
+
+$$
+16,\qquad 4,\qquad 4,\qquad 1
+$$
+
+总维数：
+
+$$
+16+4+4+1=25
+$$
+

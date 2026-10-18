@@ -1,0 +1,62 @@
+**推论 53.7（保留有限界的全预算统一首项）。** 对每个整数 $N\ge3$，精确Read轴满足
+
+$$
+L_0\le R_\infty^{\rm cmd}(0,\eta)
+\le R_N^{\rm cmd}(0,\eta)\le L_0+25\eta,
+\qquad 0<\eta\le1/100.
+\tag{53.35}
+$$
+
+联合域满足
+
+$$
+L\le R_\infty^{\rm cmd}(\delta,\eta)
+\le R_N^{\rm cmd}(\delta,\eta)\le U.
+\tag{53.36}
+$$
+
+同样的上、下界适用于 $N=\infty$ 本身。精确Read轴的首项为
+
+$$
+R_N^{\rm cmd}(0,\eta)=25\sqrt\eta+O(\eta),\qquad
+\lim_{\eta\downarrow0}\sup_{N\in\{3,4,\ldots,\infty\}}
+\left|\frac{R_N^{\rm cmd}(0,\eta)}{\sqrt\eta}-25\right|=0.
+\tag{53.37}
+$$
+
+对任意固定 $\alpha,\beta>0$，沿 $\delta=t\alpha$、$\eta=t\beta$，
+
+$$
+R_N^{\rm cmd}(t\alpha,t\beta)
+=\sqrt t\sqrt{25\alpha+625\beta}+O_{\alpha,\beta}(t)
+\tag{53.38}
+$$
+
+对全部 $N\in\{3,4,\ldots,\infty\}$ 统一成立。因此任何变量预算 $N(\eta)\ge3$ 或 $N(t)\ge3$，包括无预设上限预算，都有相同首项。
+
+证明。两项全控制器下界由定理53.2、53.5给出，两个三更新上界由定理53.4、53.6给出。类包含
+$\mathcal P_3^{\rm cmd}\subseteq\mathcal P_N^{\rm cmd}\subseteq\mathcal P_\infty^{\rm cmd}$ 给全部有限不等式，不需预算极限与下确界交换。轴界除以 $\sqrt\eta$ 后夹在
+$25\sqrt{1-\eta/2}$ 与 $25\sqrt{1-\eta/2}+25\sqrt\eta$ 之间；例如全部这些预算同时满足归一化误差至多 $25\sqrt\eta$。这给（53.37）。
+
+联合界中 $J\le H+25\rho$，故
+
+$$
+0\le U-L\le U-H
+\le25\rho+\sqrt{\delta^2+D^2}
+\le\left(\frac52+\sqrt2\right)D.
+\tag{53.39}
+$$
+
+沿正射线，
+
+$$
+\begin{aligned}
+H^2&=t(25\alpha+625\beta)-(625/2)t^2\beta^2,\\
+L^2&=t(25\alpha+625\beta)+t^2(\alpha^2-(625/2)\beta^2),\\
+D&=t(\alpha+50\beta)-25t^2\beta^2.
+\end{aligned}
+\tag{53.40}
+$$
+
+例如 $0<t\le1/(\alpha+50\beta)$ 保证 $0<\eta<1$、$D\le1$。对固定正 $\alpha,\beta$，$L=\sqrt t\sqrt{25\alpha+625\beta}+O_{\alpha,\beta}(t^{3/2})$；（53.39）则给与预算无关的 $O_{\alpha,\beta}(t)$ 差。这证明（53.38）。参数极限比较的是各自合法有限实验的风险族，没有给任何一条可数历史添加极限Read或无限之后的事件。证毕。
+

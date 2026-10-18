@@ -1,0 +1,42 @@
+**定理 463.8（严格递增与准确极限）。** 对全部 n≥0，
+
+$$
+L_0=k\log k,\qquad L_n<L_{n+1}<A,\qquad L_n\longrightarrow A.
+\tag{RVF.33}
+$$
+
+更准确地，整个无穷轴上的剩余误差满足
+
+$$
+\boxed{\qquad 0<A-L_n\le\ell_n+\frac{m_n}{e}\longrightarrow0.\qquad}
+\tag{RVF.34}
+$$
+
+**证明：每一步的严格下界与极限。** 原 A 身份和完整积分线性性给
+$A=\mathcal J(B_n)+\mathcal J(R_n)$。
+RVF.29 对真实 Rn 的严格性成立于每个有限 n，包括 R0=B；
+RVF.26 已支付全部矩且 Rn 在整个正轴严格正。因此
+$A-L_n=\mathcal J(R_n)-\mathcal F(r_n,m_n)>0$。
+又 $|\mathcal J(R_n)|\le\ell_n$，RVF.31 给
+$A-L_n\le\ell_n+m_n/e$，这就是 RVF.34。
+RVF.26 使右侧趋零，故 Ln 趋于同一个原 A。
+等价地，$-m_n/e\le\mathcal F(r_n,m_n)<\mathcal J(R_n)\le\ell_n$
+把看似可能奇异的剩余项 $r_n\log(r_n/m_n)$ 夹至零，
+不需要假定 rn/mn 的极限。n=0 的 B0=0、r0=k、m0=1 给 L0。
+
+**证明：全部有限 n 的严格改进。** RVF.25 与线性性给精确差式
+
+$$
+\begin{aligned}
+L_{n+1}-L_n
+={}&\underbrace{\mathcal J(D_n)-\mathcal F(z_n,t_n)}_{>0}\\
+ &+\underbrace{\mathcal F(r_{n+1},m_{n+1})
+       +\mathcal F(z_n,t_n)-\mathcal F(r_n,m_n)}_{\ge0}.
+\end{aligned}
+\tag{RVF.35}
+$$
+
+第一项由新增层 Dn 的完整严格 Jensen 支付；第二项由 RVF.30 和
+RVF.25 支付。Dn 在正轴处处严格正，所以即使第二项恰好为零，
+第一项仍严格正。这支付每一个有限 n 的严格改进。证毕。
+

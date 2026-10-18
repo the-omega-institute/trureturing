@@ -1,0 +1,59 @@
+**引理 C-108.2（被动匹配相位与全部有限历史的闭包）。** 在 (C108.1) 的顺序中令
+$D=\operatorname{diag}(1,i,i,i,1)$，$d_s=D_{ss}$，并令
+
+$$
+\eta_s=d_sd_{f(s)},\qquad
+(\eta_0,\eta_1,\eta_2,\eta_3,\eta_{13})=(1,-1,-1,-1,1),\qquad
+Z=\operatorname{diag}(\eta_s).
+\tag{C108.2}
+$$
+
+则 $(D\otimes D)J=JZ$。$\mathcal M_{\rm loc}$ 的每个确定控制完整分支的效果
+属于
+
+$$
+\left\{DH D^\dagger\otimes DL D^\dagger:
+             H,L\in\operatorname{Sym}_5(\mathbb R),\ H,L\succeq0\right\}.
+\tag{C108.3}
+$$
+
+全部历史事件和输入无关随机策略的效果属于这些乘积的非负和或积分。
+全部可用双边效果的实线性张成，在 $J$ 压缩后恰为
+$\operatorname{Sym}_5(\mathbb R)$；这里不声称每个张成成员本身是可执行效果。
+
+证明。逐项乘相位得到 $1\cdot1,i\cdot i,i\cdot i,i\cdot i,1\cdot1$，
+所以 (C108.2) 成立。QMB 定义 1.2 及《AURIC FIB 二阶关系完成》
+定理 65.2–65.3 给被动帧中的真实等待
+$O(t)=D^\dagger U(t)D$ 为实正交矩阵，完整读分支为实模式投影，
+且实际单边效果实张成恰为 $D\operatorname{Sym}_5(\mathbb R)D^\dagger$。
+这里复用其非负等待右导数张成证书，不把被动 $D$ 或导数作为控制。
+
+固定一条双方完整记录后，自适应策略指定的每个动作都已确定；不同因子的作用交换，
+该分支 Kraus 算子因而为 $M_h^A\otimes M_h^B$。
+将每边所有实际等待和读分支按原次序相乘，得
+$M_h^A=DL_h^AD^\dagger$、$M_h^B=DL_h^BD^\dagger$，其中 $L_h^A,L_h^B$ 为实矩阵。
+其效果即 (C108.3)，取 $H=(L_h^A)^TL_h^A$、$L=(L_h^B)^TL_h^B$。
+未读的一边也适用，空乘积为恒等。
+经典策略的分支权重只乘上输入无关非负系数；互斥记录求和给事件。
+对输入无关随机种子先固定种子作上述分支展开，再积分，给相同闭包。
+因此使用未归一化分支即可处理零概率记录，无须对零概率事件作条件化。
+
+对任意实对称 $H,L$，直接按匹配基计算
+
+$$
+\left[J^\dagger(DHD^\dagger\otimes DLD^\dagger)J\right]_{sa}
+=\eta_s\eta_a H_{sa}L_{f(s)f(a)}.
+\tag{C108.4}
+$$
+
+右边为实对称矩阵，给压缩张成的上界。
+另一方面菜单包含两个互不依赖地预选等待的一读后 Stop 协议，故其效果张成包含
+两个单边实际效果张成的张量积。
+令 $E_{sa}=|s\rangle\langle a|$。
+$H=E_{ss},L=E_{f(s)f(s)}$ 在 (C108.4) 给 $E_{ss}$；
+当 $s\ne a$，$H=E_{sa}+E_{as}$、
+$L=E_{f(s)f(a)}+E_{f(a)f(s)}$ 给
+$\eta_s\eta_a(E_{sa}+E_{as})$。
+每个 $H,L$ 都是单边实际效果的有限实线性组合，故这些乘积是实际乘积效果的有限实线性组合。
+它们张成全部实对称矩阵，给下界，并证明增加上述经典自适应不会增加压缩后的方向。证毕。
+

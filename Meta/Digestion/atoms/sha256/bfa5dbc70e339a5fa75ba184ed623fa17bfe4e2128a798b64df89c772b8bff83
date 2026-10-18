@@ -1,0 +1,36 @@
+### Proof
+
+The exact identity already used in (M27.3) is
+\[
+ u_{j+1}=u_j\left(-1+4\cdot3^{\,2j+1}u_j^2\right),\qquad u_1=1.
+ \tag{M81.3}
+\]
+A direct calculation gives \(B_2=5779\) and \(u_2=(5779-1)/54=107\), hence
+\(u_2\equiv26\pmod {81}\). For every \(j\ge2\), the correction
+\(4\cdot3^{2j+1}u_j^2\) is divisible by \(3^5=243\), and therefore
+\[
+ u_{j+1}\equiv-u_j\pmod {81}.
+\]
+Induction gives (M81.1), with residue \(26\) on even indices and \(55\) on
+odd indices.
+
+For \(j\ge3\), \(81\mid m_j\). Every prime factor has the form
+\(p=1+m_jb_{p,j}\). The binomial theorem therefore gives
+\[
+ p^{h_p}\equiv1+m_jh_pb_{p,j}\pmod {81m_j},
+\]
+because every term of degree at least two contains \(m_j^2\), which is
+divisible by \(81m_j\). Multiplying over the distinct prime factors of
+\(B_j\), all cross terms have the same divisibility and
+\[
+ B_j=\prod_{p\mid B_j}p^{h_p}
+ \equiv1+m_jS_j\pmod {81m_j}.
+\]
+Comparing with \(B_j=1+m_ju_j\) and cancelling \(m_j\) yields
+\(S_j\equiv u_j\pmod {81}\), proving (M81.2).
+
+The remaining bases are exact. \(B_1=19\) gives \(S_1=1\). Also
+\(B_2=5779\) is prime (trial division through \(\sqrt{5779}<77\)), so its
+single factor has \(h_{5779}=1\) and
+\(b_{5779,2}=(5779-1)/54=107\), giving \(S_2=107\equiv26\pmod {81}\).
+

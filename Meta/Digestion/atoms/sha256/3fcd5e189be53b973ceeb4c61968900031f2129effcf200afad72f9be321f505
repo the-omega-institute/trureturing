@@ -1,0 +1,63 @@
+**Theorem 165.2 (Radial normal form on the entire closed domain).**
+$d(\alpha)=r$, and every $x\in Q_L\setminus\{\alpha\}$ has a unique
+representation
+
+$$
+x=(1-t)\alpha+tb,\qquad b\in H_L,\quad0<t\le1.
+\tag{165.3}
+$$
+
+The exact formulas are
+
+$$
+\begin{aligned}
+t&=1-a_2+a_3,\quad b_1=1-\frac{1-a_1}{t},\quad
+b_2=b_3=\frac{a_3}{t},\\
+b_i&=\frac{a_i}{t}\ (4\le i\le L),\qquad e_b=\frac e t.
+\end{aligned}
+\tag{165.4}
+$$
+
+Conversely every $b\in H_L$ and $0<t\le1$ gives a point of $Q_L$ by
+(165.3), with the stated value of $t$. At $t=0$ the point is $\alpha$;
+no unique direction is assigned there. Also
+
+$$
+d(x)-r=t(d(b)-r),\qquad
+x\in P_{R,L}\Longleftrightarrow b\in P_{R,L}\quad(t>0).
+\tag{165.5}
+$$
+
+**Proof.** At first zero 1 or 2 the three demands of $\alpha$ are
+$(0,1,1)$, and $R$ emits that mark. At a first zero $n\ge3$ they are
+$(1,0,1)$, and $R$ emits zero because its first two bits are positive.
+It emits zero at $1^L$, whose demand is one. Thus $d(\alpha)=r$ in
+all $m$ coordinates. As an input kernel its only nonconstant terms are
+
+$$
+R_w=e_1+(-e_1+e_2)w_1+(e_0-e_2)w_1w_2.
+\tag{165.6}
+$$
+
+It belongs to both complete catalogs, so $\Delta_C(y)\ge0$ for $y\ge0$.
+
+Put $u=1-a_1$, $v=1-a_2$. The defining inequalities of $Q_L$ become
+
+$$
+0\le u\le v,\quad a_3\ge\cdots\ge a_L\ge e\ge0,\quad
+v+a_3\le1,\quad0\le S-(L+1)e\le u.
+\tag{165.7}
+$$
+
+All but $v+a_3\le1$ are homogeneous. The number $t=v+a_3$ is in
+$[0,1]$. If it is zero then $v=a_3=0$; the ordering forces $u=0$ and
+all later coordinates and cap zero, which is exactly $\alpha$.
+Otherwise divide all homogeneous coordinates in (165.7) by $t$.
+Now $v_b+b_3=1$, equivalent to $b_2=b_3$, so the resulting profile
+is in $H_L$ and has precisely the coordinates (165.4). Conversely
+multiply the homogeneous coordinates of any $b\in H_L$ by $t$;
+then $v+a_3=t\le1$ and all inequalities hold. Applying $1-a_2+a_3$
+to (165.3) recovers $t$, hence also $b$, proving uniqueness.
+Affineness of $d$ gives (165.5). All arguments include zero caps,
+zero late coordinates, plateaus and saturated endpoints. $\square$
+

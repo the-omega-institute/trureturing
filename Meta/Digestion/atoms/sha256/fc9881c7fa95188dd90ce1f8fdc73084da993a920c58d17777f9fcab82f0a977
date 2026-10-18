@@ -1,0 +1,55 @@
+**Lemma 24.5 (two fixed seed scalar remainders).** On the original zero-extended domain,
+
+$$
+\begin{aligned}
+\left|\int p^2\left(F_s-\sum_{k=0}^4s^kV_k\right)d\xi\right|&\le Cs^5,\\
+\left|\left\langle g_0,H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\rangle\right|&\le Cs^5.
+\end{aligned}
+\tag{24.19}
+$$
+
+Proof. Keep the strip of Lemma 24.3 fixed during differentiation and set
+
+$$
+\phi_\theta(t)=j_0^{-1}\int p^2q_\theta^L(t;0,\xi)d\xi,
+\qquad \psi_\theta(t)=\langle g_0,Q_\theta^L(t)g_0\rangle.
+\tag{24.20}
+$$
+
+The measure-preserving reflection $\sigma(r,y,z,w)=(-r,y,-z,w)$ preserves this strip, reverses $X$, preserves $Y$, and conjugates $C_\theta^L$ to $C_{-\theta}^L$ as Friedrichs realizations. It fixes the source, $p$ and $g_0$. Hence both scalar functions are exactly even in $\theta$, and their fifth derivatives at zero vanish. No symmetry of the original two faces or of $u_s$ is asserted.
+
+The source-column bound gives $|\partial_\theta^6\phi_\theta(t)|\le Ct^{-1/2}$ for $1\le t\le T$. For the return, use output $L^\infty$ in (24.8) and then multiply by $\|g_0\|_1$. For input degrees $n=0,\ldots,6$ choose
+
+$$
+(p_0,\ldots,p_6)=(1,1,1,7/6,7/5,7/4,2).
+\tag{24.21}
+$$
+
+Every membership is a strict instance of $(10-n)p_n>7$. Their large-time exponents are
+
+$$
+-\tfrac12,\ -1,\ -\tfrac32,\ -\tfrac32,\ -\tfrac32,\ -\tfrac32,\ -\tfrac74.
+\tag{24.22}
+$$
+
+Below time one use bounded $r^ng_0$, $n\le6$, and the $L^1$ kernel bounds, giving integrable nonnegative half powers of $t$. The integrated sixth derivative is therefore at most $C(1+\sqrt T+\log T)\le C\sqrt T$. Taylor through degree five, whose fifth scalar coefficient is zero, has remainder $Cs^6\sqrt T=Cs^5$. This is a finite-time scalar Taylor argument, not the assertion that an infinite fifth return coefficient exists.
+
+Here are the separate restorations. For the field, J Lemma 23.2's proof bounds actual deleted paths by $CL^{-5}$, degree-$j$ coefficient deletion by $CL^{j-5}$, and its time tail by $CT^{(j-5)/2}$, $j\le4$. After multiplication by $s^j$ each is $O(s^5)$. Pair them with $p^2\in L^1$; this yields the first original-domain estimate in (24.19).
+
+For the return split input height at $L/4$. Inner native path deletion costs $CL^{-5}$ in integrated supremum by J (31.6). Outer native and safe inputs have integrated supremum at most $CL^{-8}$ by J (31.7). For an inner coefficient with input degree $n$ and relative degree $m$, $n+m=j\le4$, the deleted contribution is bounded by
+
+$$
+CL^{m-5}M_n(L),\qquad
+M_n(L)\le
+\begin{cases}
+C,&n<3,\\
+C(1+\log L),&n=3,\\
+CL^{n-3},&n>3.
+\end{cases}
+\tag{24.23}
+$$
+
+Thus $s^jL^{m-5}M_n(L)=O(s^5)$ or smaller. For outer coefficients the integrated supremum is $CL^{j-8}$; its factor $s^j$ makes it $O(s^8)$. One obtains this bound below $L^2$ from the weighted input supremum and above $L^2$ by choosing $7/(10-n)<p<7/(m+2)$, $p\ge1$, as in J (31.9). Such a choice exists for all $j\le4$. Coefficient tails above $T$ use $p=1$ for $n=0,1,2$ and $p=7/6,7/5$ for $n=3,4$; their costs after $s^j$ are respectively $O(s^{5+n})$ and $O(s^7)$. Pair these supremum estimates with $g_0\in L^1$.
+
+All are individual restoration estimates, independent of the logarithmic fifth Taylor bound of J (31.4). Original surviving paths outside the safe strip still have uniformly comparable covariance by the original denominator margins. A safe path cannot end beyond an original face, so the same coefficient-deletion bounds cover zero-extended outputs. This proves the second estimate of (24.19), with both native deaths and all phase/input/time tails restored. $\square$
+

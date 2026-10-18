@@ -1,0 +1,44 @@
+**Theorem 8.1 (O2: regularity and multiplier).** The actual-source function $\Phi$ is $C^1$ on $(C_{\rm end},C_{\rm sat})$, with unique optimal cost multiplier $\eta=\Phi'(\lambda)>0$. It is analytic away from the finite set $\{C(p):c(p)=0\}$. Its derivative is $\eta_2(C^{-1}(\lambda))$ on a projective segment and $\eta_3(L^{-1}(\lambda))$ on a positive three-line segment. These are regularity formulas, not an evaluated middle-budget selection algorithm.
+
+At a zero use Theorem 7.1's quantities, write $h=h_0^{\rm loc}$, $K=K_0^{\rm loc}$ and $A_0=a_0/B=G_0+\eta f_p$. The analytic pair and formal three-line values have equal value and first derivative. Their negative second derivatives are respectively
+
+$$
+K_2=\frac{G_0+\eta(f_p+f_q)}{\Delta^2},\qquad K_3=\frac{\eta f_q}{hK},
+$$
+
+and
+
+$$
+K_2-K_3=\frac{A_0h(1-\rho)^2}{\Delta^2K}
+=\frac{c'(p_0)^2}{d\,v(p_0)^2a_0K}\ge0.
+\tag{TB.22}
+$$
+
+At a simple downward zero the right-minus-left jump in $\Phi''$ is $-(K_2-K_3)<0$; at a simple upward zero it is $+(K_2-K_3)>0$. Thus $\Phi$ is not $C^2$ at any simple zero. It is $C^2$ at every nonsimple zero. Even-multiplicity zeros are locally analytic. No higher regularity is asserted at odd multiplicity at least three.
+
+Proof. On the projective branch $C'=\Delta_J>0$, and direct differentiation gives
+
+$$
+\frac{d\eta_2}{d\lambda}=-\frac{-g''+\eta_2(J''(p)+J''(1-p))}{\Delta_J^2}<0.
+$$
+
+On a positive three-line branch (TB.10) gives value derivative $\eta_3$ and second derivative $\eta_3'/L'<0$. The contact and budget inverses are analytic on both types of open segment.
+
+Every interior optimizer is one of Proposition 2.1's alternatives. A boundary must have $m=1$, hence $p=1-q$ and $c(p)=0$. There are finitely many such budgets by Theorem 4.1 and strict increase of $C$. Theorem 7.1 provides a neighborhood of each. At its center both values equal $g(p_0)$ and both derivatives equal $\eta$, because $g'=\eta\Delta$. Thus they glue to a global $C^1$ function. Every optimal finite dual has the same multiplier: on three positive lines its value/derivative tangencies force $\eta_3$, and on a pair they force $\eta_2$, including $c=0$. This proves the unique multiplier.
+
+At the zero the pair formula gives $K_2$. For the formal branch $L'=-K$ and $\eta_3'=\eta d f_q/B=\eta f_q/h$, giving $K_3$. From (TB.18),
+
+$$
+\rho=\frac{\eta f_q(\Delta-h)}{hA_0}.
+$$
+
+Let $w=\Delta-h>0$. Then
+
+$$
+K_2=\frac{A_0(w+\rho h)}{w\Delta^2},\qquad K_3=\frac{\rho A_0}{wK},\qquad K=h+\rho w.
+$$
+
+The identity $(w+\rho h)(h+\rho w)-\rho(h+w)^2=hw(1-\rho)^2$ proves the first expression in (TB.22). Substitution of (TB.19) and $a_0=BA_0$, $h=B/d$ proves the second.
+
+At a simple zero $\rho\ne1$, so the difference is strict. Theorem 7.1 fixes the branch on each side, giving exactly the signed jumps. At a nonsimple zero $c'=0$, hence $\rho=1$ and the second derivatives agree. Each side is an analytic branch restriction whose first two derivatives tend to the same values, proving $C^2$. At an even zero the same analytic branch applies on both punctured sides and agrees at the center, proving local analyticity. Both adjacent curvatures remain strictly negative even at an upward jump, so it is compatible with strict concavity. $\square$
+

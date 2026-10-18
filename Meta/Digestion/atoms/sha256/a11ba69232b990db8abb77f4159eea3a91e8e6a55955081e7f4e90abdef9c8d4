@@ -1,0 +1,35 @@
+**Theorem 3.2 (exact whole-block pressure).** For every `n\ge1`,
+
+$$
+\max_{B\subseteq S_d^n\ \mathrm{admissible}}
+\sum_{x\in B}\prod_{i=1}^nw_i(x_i)
+=\prod_{i=1}^nQ(w_i).
+$$
+
+**Proof.** Delete rows of zero product weight from a competitor. The remaining relation is still admissible and lies in `R^n`. By Theorem 3.1 it is contained in
+
+$$
+\prod_i\{v_{st}:s\in I_i,t\in J_i\}
+$$
+
+for sets of size at most three. Nonnegativity and finite distributivity bound its mass by $\prod_iQ(w_i)$. If all rows have zero product weight, the same inequality is immediate. Conversely choose a nonempty maximizing rectangle $I_i\times J_i$ for each coordinate and take their Cartesian product. Theorem 3.1 makes this product admissible and its mass is exactly the displayed product. If some $w_i$ is identically zero, the same nonempty product is a zero-mass attainer. Every $w_i$ is used once as a whole-block weight; no marginal product has been substituted. ∎
+
+Define, for any nonnegative whole-block weight $w$,
+
+$$
+A_n^{(d)}(w)=\max_{B\text{ admissible in }S_d^n}
+                 \sum_{x\in B}\prod_{i=1}^nw(x_i),\qquad
+\beta_d(w)=\sup_{n\ge1}A_n^{(d)}(w)^{1/n}.
+$$
+
+For the uniform law, a three-by-three rectangle has mass $9/m^2$, and Theorem 3.2 gives
+
+$$
+A_n^{(d)}(\mu)=\left(\frac9{m^2}\right)^n
+\quad\text{for every }n\ge1,
+\qquad
+\beta_d(\mu)=\frac9{m^2}.
+$$
+
+The same equality holds for complete templates by the same-witness saturation just stated. The probability $\mu$ is normalized because it gives mass $1/m^2$ to exactly $m^2$ actual states.
+

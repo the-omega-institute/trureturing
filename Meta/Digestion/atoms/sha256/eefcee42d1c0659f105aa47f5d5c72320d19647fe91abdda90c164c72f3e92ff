@@ -1,0 +1,49 @@
+### 101.6. The other principal Gram also requires genuinely complex phases
+
+**Theorem 101.6.**
+Under the hypotheses of Theorem 101.5, \(G_S\) cannot have a real
+diagonal-unitary gauge either.
+
+**Proof.**
+Apply a reciprocal full-domain gauge if needed and suppose \(G_S\) is real.
+Let \(f_G(Q)\) be the exact principal norm of \(T_S-G_S\odot Q\),
+on the full principal feasible domain \(\mathcal E_S\).
+The same supported common witness exposes \(H\)'s global one-party face
+in the full calibrated domain.
+For any \(Q\in\mathcal E_S\), assign every missing coordinate a new mutually
+orthogonal record, orthogonal to all principal records.
+This completes \(Q\) to an original Gram while preserving both missing
+singleton partners and the empty fourth fibre.
+The completion has no imposed fixed-rank constraint.
+Its value at the same common witness is at least \(t\), and support on \(S\)
+identifies that value with the principal witness value. Thus
+\[
+f_G(H_S)=t,\qquad f_G(Q)\ge t\quad(Q\in\mathcal E_S). \tag{37}
+\]
+This is the opposite-party version of Lemma 96.1's completion argument.
+
+Because \(G_S,T_S\) are real, conjugation preserves \(f_G\).
+Equation (37) and convexity make \(H_S,\overline{H_S}\) and their midpoint
+all attain \(t\). Averaging a midpoint normer with its conjugate gives
+a real pair. Its endpoint objectives are each at most \(t\) and average
+to \(t\), so it norms the original coefficient.
+Theorem 99.3 therefore identifies it with the original common pair:
+\(\rho_S,W_S\) are real. This invokes the same principal uniqueness theorem
+for the same original coefficient; fixing the other Gram changes neither
+its hypotheses nor its normers. No rank of the midpoint is used.
+
+Rearrange (33), using nonzero \(W_{ij}\), to obtain
+\[
+H_{ij}=-\frac{\alpha\overline{a_i}a_j}{2W_{ij}}. \tag{38}
+\]
+Choose \(E_{ii}=\overline{a_i}/|a_i|\) on \(S\), with arbitrary outside unit
+phases, and use (34). Then
+\[
+H'_{ij}=-\frac{\alpha|a_i||a_j|}{2W_{ij}}\in\mathbb R,\qquad
+a'_S=(|a_i|)_{i\in S}. \tag{39}
+\]
+The supported diagonal is one and the within-\(F\) off-diagonal entries
+are zero, so \(H'_S\) is real.
+The full reciprocal gauge preserves all original hypotheses.
+Theorem 101.5 gives the contradiction. \(\square\)
+

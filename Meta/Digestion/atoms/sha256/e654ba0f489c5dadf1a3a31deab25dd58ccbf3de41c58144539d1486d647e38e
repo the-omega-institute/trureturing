@@ -1,0 +1,36 @@
+**Proposition 5.2 (an exact negative completeness test).** For any
+finite list $A$ of feasible finite budgets, there is a feasible
+budget outside $\uparrow A$ if and only if
+
+$$
+\bigvee_f\operatorname{Feas}_K(B^f)
+\tag{NRF.22}
+$$
+
+is true. This is a terminating decision. A true answer supplies a
+literal table with at most $K$ complete states whose exact worst
+vector lies outside $\uparrow A$; a false answer proves
+$\mathcal F_K=\uparrow A$.
+
+Proof. For $x\in\mathbb N^3$,
+
+$$
+x\notin\uparrow A
+\ \Longleftrightarrow\
+\bigwedge_{v\in A}\bigvee_{i:\,v_i>0}(x_i\le v_i-1)
+\ \Longleftrightarrow\
+\bigvee_f(x\le B^f).
+\tag{NRF.23}
+$$
+
+This is a finite distributive expansion, including the empty
+conjunction and empty disjunction cases. If a feasible finite
+$x$ is outside, its witness table satisfies one of these mixed
+boxes. Conversely a table extracted for a true mixed box has a
+finite exact vector $b(C)$ by Proposition 4.2; this vector lies
+in that box and is outside $\uparrow A$. Theorem 4.1 decides all
+finitely many disjuncts, including the all-infinite empty-list
+case. If they are all false, no feasible finite budget is outside.
+Since every element of $A$ is feasible and feasibility is upward
+closed, this is precisely equality with $\uparrow A$. $\square$
+

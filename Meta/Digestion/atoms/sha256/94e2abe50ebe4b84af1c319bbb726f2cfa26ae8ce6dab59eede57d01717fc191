@@ -1,0 +1,35 @@
+**Theorem 3.2 (whole-family upper gluing).** For every $D\ge1$,
+
+$$
+m_{D+1}\le m_D^2+1.
+\tag{FMR.14}
+$$
+
+The construction covers leaf roots and branch roots of every allowed
+shape and has an effective paid preparation.
+
+Proof. Actually Read $R$. If $v$ is a leaf, export one common leaf
+marker for both labels. After any request, Read $R$ once and use its
+label and the residual target in (FMR.4). Its label is not retained.
+If $v=\langle x,y\rangle$, export the ordered pair of complete
+attaining depth-$D$ constituent codes for $x$ and $y$, in an alphabet
+disjoint from that marker. Lemma 3.1 implements constituent source
+calls at actual prefixes $RL$ and $RR$. Their source-dependent
+selectors and other surviving fields are already in their complete
+codes. The parent branch marker and the ordered pair are completely
+specified by the exported name. All $m_D^2$ pairs are jointly
+attained because $x,y$ range independently over actual height-bounded
+trees in this upper construction.
+
+For a branch code and $p=R$, the trajectory is constantly branch,
+using zero Reads. For $p=Rsq$, $s\in\{L,R\}$, the selected child
+reader receives its code and target $Rq\in\mathcal P_D$. Translate
+its one literal by Lemma 3.1. Constant wrapper probes need no actual
+Read; all others need one. Transport at the actual child gives
+correctness simultaneously for every $k$. Different potential targets
+select their own single experiment; an execution receives just one.
+The actual preparation can instead scan the full canonical boundary
+at depth $D+1$ and compute this same code from the acquired data,
+giving (FMR.11) with that depth. Thus no constituent colors are
+supplied without acquisition. $\square$
+

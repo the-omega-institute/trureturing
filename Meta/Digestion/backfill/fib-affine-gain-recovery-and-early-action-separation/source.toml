@@ -1,0 +1,5 @@
+source_id = "fib-affine-gain-recovery-and-early-action-separation"
+path = "docs/develop/theory/FIB_AFFINE_GAIN_RECOVERY_AND_EARLY_ACTION_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

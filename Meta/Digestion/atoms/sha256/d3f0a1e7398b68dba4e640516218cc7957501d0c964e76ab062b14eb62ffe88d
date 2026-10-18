@@ -1,0 +1,9 @@
+**Theorem 1.5 (Universal pointwise nonattainment).** For every integer $m\ge1$ and every permitted law $Q$ of visible order at most $m$, the limit $d(Q)$ exists. There are $\varepsilon_Q>0$ and one family of permitted laws $(Q_t)_{0\le t<\varepsilon_Q}$ on the same visible bits, with $Q_0=Q$ and visible order at most $2m$, such that for every $0<t<\varepsilon_Q$,
+
+$$
+d(Q)<d(Q_t)\le c_\star.
+\tag{1.4}
+$$
+
+Consequently $d(Q)<c_\star$ for every permitted finite visible-order law. Every $Q_t$ is stationary, normalized and positive on all legal finite cylinders and all legal next extensions; its marginals at all lengths belong to that same law. The proof is given in §6 after the local obstruction and compatible perturbation have been established.
+

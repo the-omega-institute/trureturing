@@ -1,0 +1,81 @@
+## 8. 八、最新动态未来商：$(\mathrm{phase},A,B)$ 不是静态 $\kappa$
+
+在指定的非单例 Fibonacci 深度先验下，项目动态文档定义：
+
+$$
+r_k=
+\frac{\operatorname{Fib}_{k+1}}
+{\operatorname{Fib}_{k+3}}
+$$
+
+$$
+s_k=
+\frac{\operatorname{Fib}_{k+2}}
+{\operatorname{Fib}_{k+3}}
+$$
+
+某个活动历史 $h$ 的后验为：
+
+$$
+\nu_h(k)
+\propto
+\mu(k)r_k^{A_h}s_k^{B_h}
+$$
+
+其中：
+
+- $A_h$ 是 $\alpha$ 计数；
+- $B_h$ 是 $\beta$ 计数；
+- $a(h)$ 是当前 phase。
+
+在该特定来源、先验和活动域中，完整 future law 满足：
+
+$$
+h\sim_{\mathrm{Fut}}h'
+\iff
+\bigl(a(h),A_h,B_h\bigr)=
+\bigl(a(h'),A_{h'},B_{h'}\bigr)
+$$
+
+因此：
+
+$$
+\sigma(h)=
+\bigl(a(h),A_h,B_h\bigr)
+$$
+
+是该动态未来律的最小精确摘要。
+
+但它通常不是有限状态，因为：
+
+$$
+A_h,B_h\in\mathbb N
+$$
+
+可以无限增长。
+
+构造：
+
+$$
+h_j=(\alpha\alpha)^jh_\ast
+$$
+
+则：
+
+$$
+(A_{h_j},B_{h_j})=
+(2j+A_\ast,B_\ast)
+$$
+
+不同的 $j$ 给出不同 future law，因此未来商有无限多个状态。
+
+这说明：
+
+$$
+\boxed{
+\text{三维坐标摘要可以是有限维的，但它仍然可能需要无限精度或无界整数。}
+}
+$$
+
+---
+

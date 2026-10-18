@@ -1,0 +1,41 @@
+**Theorem 9.1 (critical full-record limit).** Along any feasible
+sequence $q_n\to0$, $q_nt_n\to C_{\rm end}$, every full actual-label
+instrument has TV tending to $B_0$. Also
+$q\,t_{\min}(s_0(1-q))\to C_{\rm end}$.
+
+Proof. The strict tangent gap
+$F_c(x)-F_c(r)-F_c'(r)(x-r)$ is continuous, positive away from $r$,
+and has $\nu_n$ integral at most $q_nt_n-C_{\rm end}$.
+Hence $\nu_n$ concentrates at $z^2=r$. Lemma 3.1 makes all its
+limiting failure differences negative, so
+$\int|k|d\nu_n\to d_f$. The live laws still converge to uniform
+corners by Theorem 4.3.
+
+The actual grouping loss is bounded by
+
+$$
+0\le\int|f|dP_n+\int|k|d\nu_n-
+\int|f+vk|dP_n
+\le2\int\min(|f|,v|k|)dP_n.
+\tag{JS.44}
+$$
+
+Choose an open radial neighborhood $O$ of $r$ whose closure misses
+$1$. The last bound is at most
+$2(\|f\|_\infty P_n\{z^2\in O\}
++\|k\|_\infty\nu_n\{z^2\notin O\})$, which tends to zero.
+This estimate retains each actual label's own multiplier.
+Equation (JS.12) now gives the limit
+$(H_{\rm live}+S_{\rm corner}+d_f)/2=B_0$ for every full-label
+instrument. Coarsenings have only the corresponding upper-limit bound.
+
+Corollary 3.2 gives the strict lower threshold bound.
+For every fixed $\lambda>C_{\rm end}$, apply Theorem 5.1 with
+$\nu_0$ and $t=\lambda/q$ for all sufficiently small $q$.
+This gives $\limsup q t_{\min}\le\lambda$; let
+$\lambda\downarrow C_{\rm end}$ to match the lower bound.
+FA73 supplies threshold attainment, so its optimizing classes also
+have the critical TV limit. These are the credited WE critical
+conclusions, here established in the notation of the joint theorem.
+$\square$
+

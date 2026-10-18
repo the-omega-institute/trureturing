@@ -1,0 +1,32 @@
+**Definition 3.1 (The pointwise compliant observer class).** Fix a finite integer $M\ge2$, a risk allowance $0<\alpha<1/2$ and a known common $q\in(0,1)$. The observer may depend arbitrarily on $(q,H,\alpha,M)$, including in its state set, transition probabilities and source-independent initialization. Its design and initialization are the same under both true labels. The true label and source-dependent advice are unavailable.
+
+At most $M$ complete persistent configurations are permitted. The count includes initialization configurations, every active configuration, both internally emitted decision labels, every control phase and register, all retained randomness and every stored seed. An update-selection counter is persistent information and is counted. Fresh independent random choices are allowed; any retained consequence of such a choice belongs to the configuration set. Known $q$ and the fixed transition description are immutable design information. Their real precision is permitted and unpriced by this abstract contract; it is not an extra mutable channel. No continuity across $q$ or lower bound on positive transition probabilities is required.
+
+At each action the observer reads the next actual bit or stops and emits $D\in\{0,1\}$. A choice uses its current configuration, the bit just read when applicable and fresh randomness independent of the source and previous fresh randomness. Source access is to the one uninterrupted consecutive history of Definition 2.2. There is no external time, age, clock, action count, program counter, archive, skipped bit, free gap, reset, second source, hidden-state observation, parameter response, probability response or source oracle. The cost tally is not an input. The emitted label is the decision; there is no decoder using stop time or read length.
+
+Reading $X_0,\ldots,X_{T-1}$ costs $T$. Every read zero and one, the initial stationary wait and any terminal partial gap are paid. Initial stopping costs zero. Write $\mathfrak A_M(q,\alpha)$ for the observers satisfying all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,\qquad
+\mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,\qquad
+\mathbb E_{i,q}T<\infty\quad(i=0,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+This is uniform-source Definition 3.1, also lower-source Definition 3.1. The risks concern the two selected laws at a known common $q$. Correctness over separate unknown nuisance families is a stronger, different promise. The two stops and two means are pointwise; no uniform mean on the whole parameter interval is assumed.
+
+**Supplied interface 3.2 (Same-budget normal form).** Uniform-source Lemma 3.2 and lower-source Lemma 3.2 apply fixed-observer-source Lemma 23.4 at the selected $q$. They give a row distribution $\eta$ and row-stochastic bit matrices $A,C$ on one set $\mathcal S$, $|\mathcal S|\le M$. There are distinct labels $d_0,d_1$, both absorbing under both matrices, and every other configuration is ready for its next paid read. The reduction preserves the joint law of $(T,D)$ and uses the same $\eta,A,C$ under the two labels. Composition of read/stop choices and merging terminal configurations do not add persistent states.
+
+For analysis put $\mathcal K_k=A^kC$ and, suppressing $q$ in weights,
+
+$$
+U_i=\sum_{k\ge1}f_i(k)\mathcal K_k,\qquad
+\nu_i=\sum_{b\ge0}\frac{S_i(b)}{\mu_i}\eta A^bC.
+\tag{3.2}
+$$
+
+These are respectively the completed-gap kernel and stationary first-tick row of the same actual machine. Every $\mathcal K_k$ and $U_i$ is stochastic and fixes both labels. Holding an already emitted label fixed on an unused continuation defines these quantities without changing actual payment or providing any further observation to the observer. They are not operational gap queries.
+

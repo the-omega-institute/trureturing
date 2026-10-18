@@ -1,0 +1,63 @@
+**Theorem 2.2 (joint externally forced target mass inequality).** Let
+$B\subseteq\prod_{i=1}^n S_i$ be nonempty and jointly admissible: every target
+$g_q(x_i)$ is constant on $B$ or equals a decoder applied to one experiment
+$r_a(x_j)$ on a coordinate with arbitrary index $j$, including $j=i$.
+Different targets may have different donors, with arbitrary cycles. Let
+$P_i$ be the projection of the positive-product-weight rows, and let $w_i$
+be nonnegative weights. Then
+
+$$
+\sum_{x\in B}\prod_i w_i(x_i)
+\;\le\;\prod_{i=1}^n\kappa_{w_i}(P_i).
+\tag{JTC.4}
+$$
+
+Here all factors are whole-block weights; no constructor factorization is
+assumed.
+
+**Proof.** If the left side is zero there is nothing to prove. Otherwise put
+$\Pr[X=x]=\prod_iw_i(x_i)/\Omega$ on the positive rows. For every
+$q\in H(P_i)$, a constant or self donor would make $g_q$ determined by an
+own experiment, so a chosen witness has a donor $j(i,q)\ne i$.
+
+Fix an ordering of the hard targets in each coordinate. For a permutation
+$\pi$ of the coordinates, let $T_i(\pi)$ contain those hard targets whose
+chosen donor precedes $i$. The vector $Y_{i,T_i(\pi)}$ is a function of $X_i$
+and also a function of the preceding coordinates. Therefore
+
+```math
+I(X_i;X_{\mathrm{pre}(i)})\ge H(Y_{i,T_i(\pi)}).
+```
+
+For any subset of an ordered list, chain rule and conditioning monotonicity
+show
+
+$$
+H(Y_{i,T_i(\pi)})
+\ge\sum_{q\in T_i(\pi)}H\bigl(Y_{i,q}\mid Y_{i,q'<q}\bigr).
+$$
+Each selected donor precedes $i$ in exactly half of all permutations. Averaging
+and summing gives the total-correlation bound
+
+$$
+\sum_iH(X_i)-H(X)\ge\frac12\sum_iH(Y_{P_i}(X_i)).
+\tag{JTC.5}
+$$
+
+For one coordinate write $p_y=\Pr[Y_{P_i}=y]$. Conditional Gibbs
+inequality in each cell gives
+
+$$
+H(X_i)+\mathbb E\log_2w_i(X_i)-H(Y_{P_i})/2
+\le \frac12H(p)+\sum_yp_y\log_2 b_y(P_i)
+\le \log_2\kappa_{w_i}(P_i).
+\tag{JTC.6}
+$$
+
+The last step is relative entropy against the distribution proportional to
+$b_y(P_i)^2$. Adding (JTC.6) and using
+$\log_2\Omega=H(X)+\sum_i\mathbb E\log_2w_i(X_i)$ together with (JTC.5)
+proves (JTC.4). Repeated donors and directed cycles are included because the
+averaging is over one common joint law, with no independence assumption.
+$\square$
+

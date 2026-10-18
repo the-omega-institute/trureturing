@@ -1,0 +1,9 @@
+**定义 3.1（代码值与预设费用）。** 对标签函数 $\lambda:S\to Y$，令 $D_{\mathrm{code}}(S,\lambda;b,\sigma)$ 为满足下述条件的最小 $d$，若不存在则取 $+\infty$：存在 $z_j\in\mathcal L_j(d)$，使
+
+$$
+\lambda(j)\ne\lambda(\ell)\quad\Longrightarrow\quad z_j\ne z_\ell.
+\tag{3.1}
+$$
+
+另令 $D_{\mathrm{pre}}(S,\lambda;b,\sigma)$ 为所有预设协议的最小最坏追加块费，不存在协议时取 $+\infty$：块串在开始时固定，叶标签由其实际端点档案决定。可以在已经确定标签的端点早停，但下一动作不能因读数而换成另一字面块。空集和常值标签的两种费用均为零；每个实际发出的填充块也收费。
+

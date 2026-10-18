@@ -1,0 +1,69 @@
+**Theorem 7.1 (exact limiting correspondence and common recovery).**
+For every finite $\lambda>C_{\rm end}$ and every prescribed sequence
+$q_n>0$, $q_n\to0$, $t_n=e^{A_n}-1$, $q_nt_n\to\lambda$,
+the original classes are eventually nonempty and
+
+$$
+\lim_n\mathcal T_{A_n}(s_0(1-q_n))=B_0+\Phi(\lambda).
+\tag{JS.35}
+$$
+
+There is one sequence of common finite instruments attaining this
+limit, with all properties of Theorem 6.1. No fixed-$s$ estimate is
+transferred uniformly to obtain it.
+
+Proof. Choose a maximizing failure measure $\nu_*$ at $\lambda$,
+with at most five atoms, by Lemma 4.2. If its cost is strictly below
+$\lambda$, Theorems 5.1 and 6.1 already supply recovery. The following
+selection also handles equality of cost, including the saturation
+boundary.
+
+Let $c_{\min}=\min_{[0,U]}c_*>0$, and put
+
+$$
+B=\frac{\mu(1+U+1/\beta)}{c_{\min}},\quad K_B=B^2/4,\quad
+D_\lambda=\lambda-C_{\rm end}>0,\quad\lambda_n=q_nt_n,\\
+\epsilon_n=\frac{2(|\lambda_n-\lambda|+K_B/t_n)}{D_\lambda},\qquad
+\nu_n=(1-\epsilon_n)\nu_*+\epsilon_n\nu_0.
+\tag{JS.36}
+$$
+
+For sufficiently large $n$, $0<\epsilon_n<1$ and $t_n\to\infty$.
+The covariance is still $M$, and
+$C_{\nu_n}\le\lambda-\epsilon_nD_\lambda$.
+For every covariance-admissible measure, (JS.23)'s PSD matrix has
+trace at most $B$, since $z^2\le U$, $w^2\le1/\beta$ and mass is
+$\mu$. Thus all entries are uniformly bounded. For $t_n\ge16B$,
+(JS.24)'s radicals are positive and its four weights are positive:
+$m_t\ge15/16$, $X_t,Y_t\ge15/16$, and the sum of the three absolute
+corrections to $m_t/4$ is at most $B/t_n\le1/16$.
+Equation (JS.27) also gives uniformly
+
+$$
+t_ne_{t_n}\le C_{\nu_n}+K_B/t_n
+\le\lambda-2|\lambda_n-\lambda|-K_B/t_n\le\lambda_n.
+\tag{JS.37}
+$$
+
+This is the required finite contrast margin for the prescribed
+sequence; a cost equality in the limiting problem is never used as a
+finite strict margin. The rare support can be the fixed union of
+$\nu_*$ and $\nu_0$, at most seven points, with varying weights.
+Their exact failure covariance and moment repair hold at every finite
+$n$. Their actual height differences and bulk limits in the proof of
+Theorem 5.1 converge to those of $\nu_*$. Hence their common
+full-label TV tends to $B_0+\Phi(\lambda)$.
+
+There are at most seven rare, four bulk, two high and two fair
+complement labels in this construction. These fifteen labels are an
+upper construction count, not a minimum alphabet assertion. Zero
+weights may be omitted. An exact-contrast attenuation can double the
+count without changing the limit or other properties; the original
+inequality needs no attenuation.
+
+For the reverse bound use Theorem 4.3 on maximizing or asymptotically
+maximizing original instruments. FA72 supplies finite attainment when
+feasible. Alternatively choose full-label values within $1/n$ of the
+supremum; compactness then gives the same upper bound. This matches
+the explicit recovery and proves (JS.35). $\square$
+

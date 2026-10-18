@@ -1,0 +1,36 @@
+**Definition 4.1 (proof parameters and measured traffic).** For a completed
+call let $V=\rho^b u$, $N=|\operatorname{Pos}(V)|$, and
+$H=\max_{p\in\operatorname{Pos}(V)}|p|$. Here $b$ includes any updates after
+validation and before Return. For a pending finite-interference history use
+its final iterate in the same way. All three are proof parameters, not
+public promises or retained data. The actual maximum depth over *all*
+submitted query operands is
+
+$$
+D_{\rm read}=\max(\{0\}\cup\{|a|:\operatorname{Read}(a)
+                 \text{ is issued by RA}\}).
+\tag{CWS.4}
+$$
+
+For attempt $j$, let $d_j=|g_j|$, $E_j$ be its ordered exterior Read addresses,
+$r_j$ its candidate hole count, and $Z_{j,pq}$ the relative words visited by
+`same(p,q)`. These are analytical traces; RA does not retain them. Then the
+exact raw Read count and exact delivered-address letter count are
+
+$$
+\begin{aligned}
+T_j&=d_j+2+|E_j|+2\sum_{p<q}|Z_{j,pq}|,\\
+A_j&=\frac{d_j(d_j+1)}2+d_j+\sum_{a\in E_j}|a|
+ +\sum_{p<q}\sum_{z\in Z_{j,pq}}(|p|+|q|+2|z|).
+\end{aligned}
+\tag{CWS.5}
+$$
+
+The first guard search Reads depths $0,\ldots,d_j$; validation adds one
+Read of length $d_j$. Both sides of a final mismatching comparison count.
+Thus $T=\sum_jT_j$, $A=\sum_jA_j$ and the actual operand peak is
+$Q_{\rm peak}=D_{\rm read}$ letters, even when a first leaf is shallow.
+A delimiter cell and the operand length field are additional storage, not
+additional address letters. In particular an empty root operand has length
+zero and still needs a port state.
+

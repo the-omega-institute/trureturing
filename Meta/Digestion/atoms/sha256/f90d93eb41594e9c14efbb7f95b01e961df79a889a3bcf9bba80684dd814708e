@@ -1,0 +1,84 @@
+**Theorem 7.1 (I2: explicit parameter range).** Put
+
+$$
+Q_r=\sqrt{rY(r)},\quad Q_{\max}=1/(2\sqrt{\alpha\beta}),\quad
+\eta_r=\min\{r/2,(x_z-r)Q_r/(4Q_{\max})\}>0,\quad u_0=r-\eta_r.
+$$
+
+For $u\in[u_0,r]$ evaluate $X=X(u)$ and $S=S(u)$ by Theorem 6.2 and set
+
+$$
+\begin{gathered}
+a(u)=\frac{\mu(r-u)}{X-u},\quad
+b(u)=\frac{\mu(X-r)}{X-u}=\mu-a(u),\\
+b_+(u)=\frac{b(u)-a(u)Q(X)/Q(u)}2,\quad
+b_-(u)=\frac{b(u)+a(u)Q(X)/Q(u)}2,\\
+\Lambda_I(u)=b(u)F_c(u)+a(u)F_c(X),\qquad
+\Psi_I(u)=a(u)P_0(X),\quad \Lambda_1=\Lambda_I(u_0).
+\end{gathered}
+\tag{TC.20}
+$$
+
+$\Lambda_I$ is an analytic strictly decreasing bijection from $[u_0,r]$ onto $[C_{\rm end},\Lambda_1]$, where $C_{\rm end}<\Lambda_1<C_{\rm sat}$. Its unique inverse specifies the exact value
+
+$$
+\Phi(\Lambda_I(u))=\Psi_I(u).
+\tag{TC.21}
+$$
+
+For $u<r$ every optimizer, after line identification, consists exactly of
+
+$$
+\begin{array}{c|c|c}
+(z,w)&\text{failure mass}&\text{payoff sign}\\ \hline
+(\sqrt X,\sqrt{Y(X)})&a&+\\
+(\sqrt u,\sqrt{Y(u)})&b_+&-\\
+(\sqrt u,-\sqrt{Y(u)})&b_-&-
+\end{array}
+\tag{TC.22}
+$$
+
+All three masses are strictly positive. At $u=r$, $a=0$ and $b_+=b_-=\mu/2$. The endpoint $\Lambda_1$ is conservative, not a proved support transition.
+
+Proof. Here $u\ge r/2>0$ and $u\le r<x_z<X<x_m<U$. The masses $a,b$ are positive for $u<r$, sum to $\mu$, and satisfy $aX+bu=\mu r$. The signed mixed moment is
+
+$$
+aQ(X)+(b_+-b_-)Q(u)=0.
+$$
+
+The ellipse then supplies the remaining squared moment, giving exactly $\int nn^Td\nu=M$. For positivity use $Q(u)\ge Q_r/\sqrt2$, $Q(X)\le Q_{\max}$ and $X-r>x_z-r$. Thus
+
+$$
+\frac{aQ(X)}{bQ(u)}=
+\frac{(r-u)Q(X)}{(X-r)Q(u)}<\sqrt2/4<1,
+$$
+
+including at $u_0$. The three lines are distinct and their signs follow from (TC.16).
+
+For any covariance-admissible measure of cost at most $\Lambda_I(u)$, integrate the whole-ellipse certificate (TC.19). Its mass and radial first moment are $\mu,\mu r$, so its objective is at most
+
+$$
+S(u)[\Lambda_I(u)-\mu F_c(u)-\mu F_1(u)(r-u)]
+=S(u)a(u)G_u(X)=a(u)P_0(X).
+$$
+
+The displayed measure attains this bound. Because $S>0$, equality requires active cost and support exclusively at the three lines in (TC.22). Mass, radial first moment and signed mixed moment uniquely give their weights. Thus the assertion is against every measure and classifies all equality cases, not only a candidate family.
+
+For strict parameter monotonicity let $d=X-u$ and $G=G_u(X)$. Differentiating the contact equation gives
+
+$$
+\partial_uN_u(X)=F_2(u)[P_0(X)-P_0'(X)d]
+=S(u)F_2(u)[G-dG_u'(X)]<0.
+$$
+
+Indeed $G<dG_u'(X)$ by strict convexity. Since $\partial_XN_u<0$, $X'(u)<0$. At fixed $X$ and fixed $u$, respectively,
+
+$$
+\partial_u\Lambda_I=-bG/d<0,\qquad
+\partial_X\Lambda_I=a[dG_u'(X)-G]/d\ge0.
+$$
+
+The latter is positive when $a>0$. Hence $\Lambda_I'(u)<0$, also at $r$. Analyticity follows from the simple contact equation. Endpoint evaluation and strict decrease give bijective coverage and $\Lambda_1>C_{\rm end}$.
+
+Finally the spectral inequality $(e^T\Xi e)_+\le e^T\Xi_+e$ integrates to $\Phi\le\gamma$, with equality only on the two simple spectral lines. This follows directly by writing the two nonnegative spectral overlaps: $\max(\gamma A-b_fB,0)\le\gamma A$, with equality only when $A=0$ or $B=0$. The three positive distinct lines above give $\Psi_I(u)<\gamma$. If $\Lambda_I(u)\ge C_{\rm sat}$, the spectral measure of cost $C_{\rm sat}$ would contradict our matching upper certificate. Thus $\Lambda_1<C_{\rm sat}$. $\square$
+

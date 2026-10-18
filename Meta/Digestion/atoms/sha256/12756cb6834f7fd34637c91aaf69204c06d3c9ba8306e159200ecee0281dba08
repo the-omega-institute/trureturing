@@ -1,0 +1,74 @@
+**定理 35.2（B 记录）。** 以下完整分类仍遍及同一全部二次类；根一、根三以及 b=1/8 由记录强制。
+
+**precise statement.**
+
+For each a0 in R and kappa!=0, the entire degree<=2 compatible fiber of (y0,...,y6)=a0+kappa\*(0,-3,-33/8,-3,3/4,22,63/4) under JMJMJJ is exactly {(P_B1,kappa(t-1)(t-3),a0-3kappa),(P_B2,kappa(t-1)(t-3),a0-3kappa)}, where P_B1=[[1/2,1/8],[2,1/2]] and P_B2=[[3/4,1/8],[3/2,1/4]].
+
+**even coefficient check.**
+
+The record gives C=(3/4+33/4)/4=9/4 and D=63/4-3/4=15, so L=15/[2(1+2b)]. At b=1/2 this is 15/4; the necessary equation C=L/2 would require 9/4=15/8, impossible. For b!=1/2 use the same nonzero T=1-4b^2. The even inverse gives nu=(9-12b)/(8T), and mu=[60(1-2b)-10(9-12b)]/(8T)=-15/(4T). Now mu+2nu=-3/[2(1-2b)], so the non-lambda part of z2 is -3(1+b)/(1-2b). Thus b lambda=-33/8+3(1+b)/(1-2b), yielding lambda=9(10b-1)/[8b(1-2b)]. These are forced for every competitor, without assuming nu nonzero.
+
+**odd coefficients and factors.**
+
+With common nonzero denominator H=8bT, the lambda, mu, nu numerators are 180b^2+72b-9, -30b, and -12b^2+9b. The first, third and fifth sample numerators are respectively 168b^2+51b-9=3(8b-1)(7b+3), 72b^2+63b-9=9(8b-1)(b+1), and -120b^2+147b-9. Also lambda-3=[48b^2+66b-9]/[8b(1-2b)]=3(8b-1)(2b+3)/[8b(1-2b)], and lambda+22=[-352b^2+266b-9]/[8b(1-2b)]. Because b>0 and 7b+3,b+1 are positive, G(1),G(3) vanish precisely at b=1/8 in this branch.
+
+**nonexceptional odd equations.**
+
+Assume b!=1/8. Only now divide the proved nonzero G(1),G(3). The first and third actual equations, both with right side lambda-3, force j=N/(7b+3) and j+r=N/[3(b+1)], with N=(2b+3)(1+2b). Therefore j+2r=2(j+r)-j=N(11b+3)/[3(b+1)(7b+3)]. Keep (j+2r)G(5)=lambda+22 undivided, including any zero fifth sample or zero right side. Cancelling only known nonzero denominators gives (2b+3)(11b+3)(-120b^2+147b-9)=3(b+1)(7b+3)(-352b^2+266b-9).
+
+**full elimination expansion.**
+
+**left intermediate.**
+
+(2b+3)(11b+3)=22b^2+39b+9
+
+**right intermediate.**
+
+3(b+1)(7b+3)=21b^2+30b+9
+
+**left descending coefficients.**
+
+-2640
+
+-1446
+
+4455
+
+972
+
+-81
+
+**right descending coefficients.**
+
+-7392
+
+-4974
+
+4623
+
+2124
+
+-81
+
+**independent coefficient account.**
+
+The left b^3 coefficient is 3234-4680=-1446; its b^2 coefficient is -198+5733-1080=4455, and b coefficient is -351+1323=972. The right b^3 coefficient is 5586-10560=-4974; its b^2 coefficient is -189+7980-3168=4623, and b coefficient is -270+2394=2124. Leading coefficients are 22\*(-120)=-2640 and 21\*(-352)=-7392; both constants are 9\*(-9)=-81. Left minus right is 4752b^4+3528b^3-168b^2-1152b=24b(198b^3+147b^2-7b-48). Since b>0, compatibility requires f_B(b)=198b^3+147b^2-7b-48=0. These are unexecuted symbolic expansions.
+
+**all positive roots and source exclusion.**
+
+For 0<b<=2/5, dropping the strictly negative -7b and bounding the positive terms by their endpoint values gives f_B(b)<198\*(2/5)^3+147\*(2/5)^2-48=(1584+2940-6000)/125=-1476/125<0. For b>=2/5 the formal derivative f_B'(b)=594b^2+294b-7 is greater than 294\*(2/5)-7=553/5>0. The endpoint values are f_B(2/5)=(-1476-350)/125=-1826/125<0 and f_B(1/2)=(99+147-14-192)/4=10>0. Continuity, the exclusion below 2/5 and strict monotonicity from 2/5 onward therefore prove exactly one positive root, in (2/5,1/2). The competitor's forced c=j-b=(-3b^2+5b+3)/(7b+3) satisfies c-5/8=(-24b^2+5b+9)/[8(7b+3)]. This denominator is positive. On the root interval its numerator is greater than -24\*(1/2)^2+9=3, since b<1/2 and 5b>0. Thus c>5/8 and b>2/5 imply bc>1/4, impossible for every legal diagonal value. This excludes every positive nonexceptional b, including those with a zero fifth sample.
+
+**retained branch and complete source count.**
+
+At b=1/8 the forced coefficients are lambda=3, mu=-4, nu=1, delta=-3 and the entire gain is G_B=(t-1)(t-3). The zero first and third sample equations are retained undivided. The proved nonzero fifth sample G_B(5)=8 gives j+2r=(lambda+z5)/8=25/8. Hence c=3-2r. The actual rank-one condition is (3-2r)/8=r(1-r), equivalently r^2-(5/4)r+3/8=(r-1/2)(r-3/4)=0. These are all source roots and both are legal; c is respectively 2 and 3/2. With the unique forced gain and drift this gives exactly the displayed two complete worlds, and the other branches contain none.
+
+**survivor legality.**
+
+P_B1 has bc=1/4=(1/2)(1/2); P_B2 has bc=3/16=(3/4)(1/4). Every entry is positive, each trace is one and each determinant zero. Nonzero trace makes the rank exactly one. The sources differ and thus the complete targets differ. G_B=t^2-4t+3 is a fixed nonzero quadratic, also after either nonzero scale sign.
+
+**full samples and response sufficiency.**
+
+**gain samples at 0 through 7.**
+
+(3,0,-1,0,3,8,15,24)
+

@@ -1,0 +1,6 @@
+### 96.6. Rank bound and original-orbit exclusion
+
+If this product is -1, the alternating pairing on the pure Selmer space has rank at least two. That space has dimension three by Theorem 95.1, so its radical has dimension at most one. The image of E_D(Q)/2E_D(Q), modulo the injected rational torsion image, has dimension rank E_D(Q) and lies in this radical. Hence rank E_D(Q)<=1. Theorem 85.1 supplies the actual non-torsion original point, giving rank exactly one. Corollary 94.2 now excludes all admissible repeated kernels for N>=81. ∎
+
+This does not infer rational rank from the mere existence of the extra Selmer classes. The nontrivial pairing is the necessary additional input. A positive product, higher-nullity matrices, and proper cuts with primes outside 1 modulo24 remain outside this rank-one conclusion. The criterion does not assert a numerical actual block satisfying the negative product, an infinite actual-support family, independence from every earlier residue test, or universal WSS exclusion.
+

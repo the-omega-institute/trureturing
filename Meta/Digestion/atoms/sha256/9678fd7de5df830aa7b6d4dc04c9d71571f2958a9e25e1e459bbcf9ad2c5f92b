@@ -1,0 +1,22 @@
+**Corollary 9.1 (Conditional strong-endpoint exclusion).** If for a specified $N$ and some $n$ one establishes
+
+$$
+\mathcal R_{N,n}>2(3-2\sqrt2)-\tfrac1{24},
+\tag{9.1}
+$$
+
+then no $\theta\in\Theta_N$ can simultaneously satisfy $\mathsf B(P_\theta)$, $A_{P_\theta}<\infty$ and $\mathsf Z_\Delta(P_\theta)$. A lower bound from (7.1) or (8.4) exceeding this threshold suffices.
+
+Proof. Such a law would violate (6.7). More explicitly, for any actual $P=P_\theta$ satisfying the band and (2.2), without assuming strong zero, (4.4), (5.1) and Theorem 6.2 give
+
+$$
+\begin{aligned}
+\mathbb E_{P\otimes\pi_n}\Delta_P(X,R_{n,W}X)
+&\le(n+2)c_\star-\kappa_n-\tfrac1{24}-\mathcal R_{N,n}\\
+&\le2\bar c-\tfrac1{24}-\mathcal R_{N,n}.
+\end{aligned}
+\tag{9.2}
+$$
+
+Existence of this actual law already makes its rank family nonempty and its discrepancy finite. If that family is empty, Theorem 6.2 directly rules out the assumed band law. Otherwise (9.1) makes (9.2) negative. The left side is the finite weighted sum over $w\in B_n$ of $\pi_n(w)\mathbb E_P\Delta_P(X,R_{n,w}X)$. Each term is integrable by (4.6) with $\nu=\delta_w$. At least one fixed word therefore has negative expectation and $\Delta_P(X,R_{n,w}X)<0$ on a set of positive actual probability. This contradicts strong zero and gives an actual finite-modification witness. It need not give an intrinsic-null direction or a nonzero first-order response. $\square$
+

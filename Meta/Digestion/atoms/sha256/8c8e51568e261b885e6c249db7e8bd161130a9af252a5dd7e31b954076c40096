@@ -1,0 +1,17 @@
+**Definition 8.3 (requirements on a full price).** An
+expression containing an unspecified interpreter or loader constant is
+not a complete acquisition/delivery price. The recurrences in §§11 and 16
+include virtual-state parsing, cell and native-rule lookup,
+replacement/append, dynamic code, numeric origin construction, all
+Base/Allocate/descriptors, actual head positions, control tests,
+framing, seals, acknowledgements and return. The known copy-body and
+selector-body formulas cannot substitute for these terms.
+
+For a canonical frame with payload length $d$, the actual input is
+$3+(d+1)+d=2d+4$ bits. Thus the new empty Cover frame, if installed,
+requires four real INs; a Select payload $1U(c)U(k)$ has length
+$c+k+3$ and requires $2c+2k+10$ real frame INs. These are bit counts,
+not full ingress prices. Header/length construction, matching WRs,
+allocation, delimiters, descriptors and positions remain paid. The
+final AIF setup price has its own entrance and is unnecessary for these identities.
+

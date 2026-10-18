@@ -1,0 +1,64 @@
+**Theorem 72.3 (Sharp fixed-depth budget and strict cumulative separation).**
+If a lawful exact acquisition satisfies either
+$\sup_x\mathsf E_A Z_{c,A,x}\le B<\infty$ or
+$\sup_x\mathsf E_A S_{c,A,x}\le B<\infty$, then, whenever $c(m+1)>0$,
+
+$$
+\Omega_\lambda(m)\le\min\{1,B/c(m+1)\}.
+\tag{72.5}
+$$
+
+For every fixed depth $m$, every such charge with $c(m+1)>0$, and every
+$B\ge0$, this bound is attained by a selected family on the unchanged tapes
+and actual sources of Theorem 67.5. Even maximum-tail optimality of the
+prefix acquisition does not imply cumulative-charge optimality.
+
+**Proof.** On $\{M_{A,x}>m\}$,
+$Z_{c,A,x}\ge c(m+1)$. Thus (71.5) gives
+$c(m+1)r_x(m)\le\mathsf E_A Z_{c,A,x}$. Use $S_c\ge Z_c$ when the cumulative
+budget is given, and take the supremum in $x$. Deficits are at most one,
+proving (72.5).
+
+For the witness fix $d=m+1$ and $t\in[0,1]$. On the carrier of Theorem 67.5
+choose two distinct points $\theta_0,\theta_1$ in $B_1$ and put
+
+$$
+\lambda_x=(1-t)\delta_{\theta_0}+t\delta_{\theta_{q_d(x)}}.
+\tag{72.6}
+$$
+
+At every occupied depth $j<d$, finite-pattern realization supplies both
+answers at $p_d$, consistent with that prefix. The two laws there are
+$\delta_{\theta_0}$ and $(1-t)\delta_{\theta_0}+t\delta_{\theta_1}$, whose
+greatest common submeasure is $(1-t)\delta_{\theta_0}$. At depth $j\ge d$ the
+law is fixed. Therefore, at every actual source,
+
+$$
+r_x(j)=\Omega_\lambda(j)=
+\begin{cases}t,&j<d,\\0,&j\ge d.\end{cases}
+\tag{72.7}
+$$
+
+With a common Bernoulli seed of success probability $t$, emit $\theta_0$
+immediately on failure; on success query only $p_d$ and emit
+$\theta_{q_d(x)}$. This exact acquisition has finite handoff for every seed
+and source, measurable finite records, and
+
+$$
+\mathsf E Z_{c,A,x}=\mathsf E S_{c,A,x}=t c(d)\qquad(x\in X).
+\tag{72.8}
+$$
+
+The first formula of (72.2) and (72.7) give the sourcewise lower bound
+$t c(d)$ for every exact acquisition's maximum charge, and hence also for
+its cumulative charge. Thus (72.8) attains both optima for this family.
+Taking $t=\min\{1,B/c(d)\}$ proves sharpness of (72.5), including $B=0$.
+
+For the prefix acquisition, (72.3) instead gives
+$\mathsf E S_{c,A^+,x}=t\sum_{i=1}^dc(i)$. With $t>0$, $d\ge2$ and
+$c(i)=i$, this is $td(d+1)/2>td$, although its maximum-index tails are
+optimal. For example $d=100,t=1$ gives cumulative charges $5050$ and $100$
+respectively. The exact general-family formula (72.2) is consequently a
+maximum-charge result; (72.3) supplies a prefix cumulative cost, not an
+arbitrary-family cumulative optimum. $\square$
+

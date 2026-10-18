@@ -1,0 +1,41 @@
+**Theorem 8.3 (exact $23/434$ binary minimax).** Take $d=15/256$, so
+$t_0=15/16$ and the common support margin is $a-d=1/256$. For the
+positive excursion $u=11/31$, $v=1/21$. The infimum worst-input
+survival-bit simulation error over all common specimen-only processors is
+exactly
+
+$$
+\epsilon_{\rm bit}=\frac{23}{434}.
+\tag{AC.31}
+$$
+
+Consequently every such simulation of the complete prescribed excursion
+has complete-output error at least $23/434$ on some actual input. This
+does not assert sharpness for that complete output task.
+
+Proof. The four-history averages at the two heights are
+
+$$
+\rho_L=\operatorname{diag}(1/8,3/8,1/2),\qquad
+\rho_H=\operatorname{diag}(3/8,1/8,1/2),\qquad
+\rho_L\leq3\rho_H.
+\tag{AC.32}
+$$
+
+For any simulator effect put $U=\operatorname{tr}(E\rho_L)$ and
+$V_0=\operatorname{tr}(E\rho_H)$. Positivity gives $U\leq3V_0$.
+If the worst pure-input bit error is $\epsilon$, nuisance averaging
+gives $u-\epsilon\leq U\leq3V_0\leq3(v+\epsilon)$. Thus
+
+$$
+\epsilon\geq(u-3v)/4=23/434.
+\tag{AC.33}
+$$
+
+For sharpness use the valid effect $E=(524/651)P_-$. On every nuisance
+input it gives $U=131/434$ and $V_0=131/1302$. The two absolute errors
+are both $23/434$. Complementing the effect makes a complete binary
+measurement, proving the exact infimum. It need not preserve any specimen
+state. No calibrated implementation of the unknown-height excursion is
+thereby constructed. $\square$
+

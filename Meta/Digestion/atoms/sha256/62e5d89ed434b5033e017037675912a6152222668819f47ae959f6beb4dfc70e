@@ -1,0 +1,76 @@
+### 11.2.6. 轮筛反射的参数与来源
+
+固定 \(W\in\mathbb N\)、\(W\ne0\)，令 \(a\in\mathbb Z/W\mathbb Z\)。把两个有向轮的可容许条件写为
+\[
+A_+(a)=\operatorname{IsUnit}(a)\land
+\operatorname{IsUnit}(a+2)\land\operatorname{IsUnit}(a+6),
+\]
+\[
+A_-(a)=\operatorname{IsUnit}(a)\land
+\operatorname{IsUnit}(a+4)\land\operatorname{IsUnit}(a+6).
+\]
+这里的 \(\operatorname{IsUnit}\) 是模环中的单位条件；对自然数代表元，
+它由 `ZMod.isUnit_iff_coprime` 对应到与 \(W\) 互素的轮筛条件。
+仿射反射
+\[
+\rho_W(a)=-a-6
+\]
+满足
+\[
+\rho_W(\rho_W(a))=a,\qquad
+\rho_W(a)+4=-(a+2),\qquad
+\rho_W(a)+6=-a.
+\]
+第一式是环恒等式；后两式和 \(\rho_W(a)=-(a+6)\) 将三个单位条件逆序对应。
+由单位取负的不变性得到
+\[
+A_+(a)\Longleftrightarrow A_-(\rho_W(a)).
+\]
+用同一个反射作逆映射，就得到
+\[
+\{a\in\mathbb Z/W\mathbb Z:A_+(a)\}\simeq\{b\in\mathbb Z/W\mathbb Z:A_-(b)\},\qquad
+|\{a:A_+(a)\}|=|\{b:A_-(b)\}|.
+\]
+非零模数保证两边有限；这一步不要求平方自由性，也不使用实际素数三胞胎的无穷性。
+
+上述推导明确应用 Mathlib 修订
+`db584cd6d46c92f209a44c0f1c829460d327499d` 的既有供应，而非新的独立内容定理。
+参数与供应对应如下：
+
+- [ZMod.commRing](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Defs.lean#L175)
+  取 \(n=W\)，提供上述反射恒等式所在的交换环；
+  [IsUnit.neg](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Ring/Units.lean#L98)
+  与 [IsUnit.neg_iff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Ring/Units.lean#L102)
+  分别应用于 \(a,a+2,a+6\)，提供单位取负的不变性。
+- [Function.Involutive.toPerm](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Basic.lean#L774)
+  取 \(f=\rho_W\)，再将
+  [Equiv.subtypeEquiv](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Equiv/Basic.lean#L262)
+  的谓词取为 \(A_+,A_-\)，由逐点等价得到候选子类型的等价。
+- [ZMod.fintype](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Defs.lean#L158)
+  取 \(n=W\ne0\)；再使用
+  [Finite.of_fintype](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L170)、
+  [Subtype.finite](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L195)
+  与 [Fintype.ofFinite](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/EquivFin.lean#L179)
+  取得两个候选子类型的有限结构。
+  [Fintype.card_congr](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Fintype/Card.lean#L67)
+  应用于该子类型等价，提供基数相等。
+- [ZMod.isUnit_iff_coprime](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/ZMod/Basic.lean#L809)
+  取自然数代表元 \(m\) 和模数 \(n=W\)，提供单位条件与轮筛解释之间的对应。
+
+任意模数的参数化及不依赖枚举，本身不提供新的独立数学内容；候选密度、定向读出和实际素数计数仍是不同对象。
+
+\(W=30\) 的原点前缀数值和 \(W=210\) 的三点跨度数值来自 Foundational Formulas
+§16；§27 解释含重复素因子模数上的轮商。它们在这里是有限数学见证，不能据此宣称
+实际素数三胞胎无穷，也不能将未形式化的读出称作内核已核验结论。
+
+层间接口须保留以下对象与对应条件：
+
+- 有序间隙和归一化手性 \(\chi\)，以及反射翻转 \(\chi\) 的对应；
+- 有限轮候选、二点相关、三点相关和固定原点前缀，并明确各自的观察商；
+- \(W=6\) 的首次原点前缀分离、\(W=30\) 的后续原点见证，以及
+  \(W=210\) 的首次平移不变三点分离，各自与 LayeredCapture 接口的相容性；
+- 三点方向坐标进入 AURIC 的 \(\kappa\)-fiber 所需的同源编码假设。
+
+实际 \(T_H(x)\) 仍是独立的算术输入。给有限轮轨迹附加经验素数观测，不会把候选密度
+转换为实际 prime-triplet count，也不会把有限样本转换为普遍素数分布定理。
+

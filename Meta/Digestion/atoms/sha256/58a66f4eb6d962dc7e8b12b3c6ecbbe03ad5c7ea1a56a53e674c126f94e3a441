@@ -1,0 +1,26 @@
+**Premise 1.2 (Canonical optimizer and growth interfaces).** Write $\pi_n$ for the strictly positive optimizer supplied by [Positive unique optimizer, Theorem 3.1][O], as collected in [Universal, Convention 1.3][U]. On each legal insertion edge $u\to v$ it satisfies
+
+$$
+\Phi_n(\pi_n)=\kappa_n,\qquad
+\frac13\pi_n(u)\le\pi_n(v)\le\pi_n(u).
+\tag{1.2}
+$$
+
+[Growth, Lemma 3.1 and Theorems 3.2 and 5.2][G], through the same Universal interface, supplies continuity, concavity and degree-one homogeneity of $h$, and
+
+$$
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n},\qquad
+nc_\star\le\kappa_n\le(n+1)c_\star,\qquad
+\frac{\kappa_n}{n+1}\longrightarrow c_\star.
+\tag{1.3}
+$$
+
+[Guarded, Definition 1.1] supplies the ceiling $c_\star\le\bar c:=3-2\sqrt2$. Define the fixed threshold
+
+$$
+\tau=2\bar c-\frac1{24}=2(3-2\sqrt2)-\frac1{24}.
+\tag{1.4}
+$$
+
+These are supplied interfaces. Optimizer existence, uniqueness, the insertion bounds, the growth theorem and the original whole-simplex square-discrepancy identity retain their canonical source attribution.
+

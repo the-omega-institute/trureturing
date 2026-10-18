@@ -1,0 +1,42 @@
+**引理 39.1（支付包含越界对在内的全部间隔）。** 令
+
+$$
+V_k^s=D_{2k}^s+D_{2k+1}^s,\qquad
+\mathcal H_k^s=\sigma(D_{2i}^s,D_{2i+1}^s:0\le i<k)
+\tag{39.1}
+$$
+
+为一对的原位点距离及前 $k$ 个完整对的字段。在任一固定的该侧锚及标签条件律下，
+
+$$
+\mathbb E\left[\sum_{k=0}^{M_s-1}V_k^s\,\middle|\,\text{该侧锚及标签}\right]
+=Z\,\mathbb E[M_s\mid\text{该侧锚及标签}].
+\tag{39.2}
+$$
+
+**证明。** 由（36.3），完整间隔对彼此独立，每对的参数包含 $p,q$ 各一次，故
+
+$$
+\mathbb E[V_k^s\mid\text{该侧锚及标签}]
+=(1+1/p)+(1+1/q)=Z.
+$$
+
+一对的长度与它的分数可以相关。但 $\{M_s>k\}$ 只表示前 $k$ 个完整对中所有已到达的检查点都未越界，属于 $\mathcal H_k^s$；等价地，$M_s$ 是完整对字段的停止时刻。下一对长度 $V_k^s$ 独立于此前字段，所以在该条件律下
+
+$$
+\mathbb E[V_k^s\mathbf1_{\{M_s>k\}}]
+=Z\Pr(M_s>k).
+$$
+
+将随机和定义为 $\sum_{k\ge0}V_k^s\mathbf1_{\{M_s>k\}}$，Tonelli 的非负求和给出
+
+$$
+\begin{aligned}
+\mathbb E\sum_{k=0}^{M_s-1}V_k^s
+&=\sum_{k\ge0}\mathbb E[V_k^s\mathbf1_{\{M_s>k\}}]\\
+&=Z\sum_{k\ge0}\Pr(M_s>k)=Z\mathbb E M_s.
+\end{aligned}
+$$
+
+最后一式来自正整数值变量的逐点尾和 $M_s=\sum_{k\ge0}\mathbf1_{\{M_s>k\}}$，包括扩展值情形。这证明（39.2）。使分数越界的那一对也在和中：是否取得第 $k$ 对由取得它之前的 $\{M_s>k\}$ 决定。证明没有假设 $M_s$ 与全部长度独立，没有遗漏越界对，也没有使用两侧独立或无界可选停止定理。$\square$
+

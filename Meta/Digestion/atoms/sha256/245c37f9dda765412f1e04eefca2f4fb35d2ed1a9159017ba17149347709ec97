@@ -1,0 +1,21 @@
+**Corollary 3.4 (Rank and component count in this fiber).** With the endpoint
+multiplicities of Theorem 2.13,
+
+$$
+\mathcal H_b\cong
+\mathbb T^{\,5-\nu_--\nu_+}\times
+\mathbb Z_{\gcd(\nu_-,\nu_+)},
+$$
+
+where $\mathbb Z_1$ is trivial.
+
+Proof. Here $\nu_-=1+\mathbf1_{E_-}$ and
+$\nu_+=1+\mathbf1_{E_+}$. Hence
+$g-1=3-\mathbf1_{E_-}-\mathbf1_{E_+}=5-\nu_--\nu_+$.
+The grouped coefficients have gcd two exactly in the double-collision case
+and gcd one otherwise, which equals $\gcd(\nu_-,\nu_+)$. Theorem 3.3 gives
+the formula. The same equalities of masses produce the endpoint cone angles
+$2\pi/\nu_-$ and $2\pi/\nu_+$. This correspondence is derived from this
+specific four-pole pattern; it is not a universal formula for symplectic
+reductions. $\square$
+

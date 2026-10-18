@@ -1,0 +1,70 @@
+### 88.3. Characteristic-zero completeness and real-component exclusion
+
+At any parameter with \(E_*\ne0\), form
+\[
+ \mathcal A_i=K[k]/(P_i),\qquad
+ \mathcal A_{\rm prod}=\prod_{i=0}^5\mathcal A_i.
+\]
+Its dimension is \(10+5\cdot4=30\). All \(D_i\) are units by their
+resultant guards, and the Chinese remainder theorem shows that \(k\)
+alone generates the product algebra. Put \(t=N_i/D_i\) on factor \(i\).
+The eighteen exact identities (88.3) induce a surjection
+\[
+ K[k,t]/(h_0,h_1,h_2)\longrightarrow\mathcal A_{\rm prod}.
+\]
+The left side has dimension at most 30 by (88.8), while the right side
+has dimension 30. The map is therefore an isomorphism. This proves the
+complete component description with multiplicities, at every safe
+parameter, rather than only at a generic point or a sampled specialization.
+Equation (88.9) simultaneously excludes all allowed vertical points.
+
+Five components have no real points on the entire puncture. Indeed
+\[
+ Q=-R(k-b)^2-b^2(1+b^2)<0,\qquad P_5=(1+k^2)^2>0.
+                                                               \tag{88.12}
+\]
+For \(i=1,2,4\), write \(P_i=a_0+a_1k+a_2k^2+a_3k^3+a_4k^4\).
+The three even polynomials
+\[
+ a_0,\quad a_4,\quad S_i=4a_0a_2a_4-a_1^2a_4-a_3^2a_0
+                                                               \tag{88.13}
+\]
+have the following Bernstein coefficient lists in \(z=b^2\). A list
+\([B_0,\ldots,B_d]\) means exactly
+\(\sum_{j=0}^dB_j\binom djz^j(1-z)^{d-j}\).
+
+```text
+1 a0: [243, 1458/5, 378, 2448/5, 3069/5, 737]
+1 a4: [0, 0, 81]
+1 S: [0, 0, 3188646/11, 57395628/55, 27398736/11, 4822335, 624876201/77, 134948835/11, 931699908/55, 107464806/5, 274301316/11, 25879986, 22503096]
+2 a0: [81, 108, 234, 480, 868]
+2 a4: [729, 729, 648, 540, 468]
+2 S: [114791256, 133923132, 1717617312/11, 10059115248/55, 11879714016/55, 2835611712/11, 23973579072/77, 380969568, 26006645376/55, 32791843008/55, 8417405952/11, 1001991168, 1341633024]
+4 a0: [729, 4131/5, 972, 5742/5, 1344, 1552]
+4 a4: [2187, 3645, 5994, 8748, 11664]
+4 S: [18596183472, 23761789992, 1047585002256/35, 16952487477336/455, 2984011454304/65, 8014011237216/143, 339400908753408/5005, 11633435281152/143, 69190548281856/715, 571231795041792/5005, 133585208377344/1001, 5413227687936/35, 80807123017728/455, 7068127371264/35, 227221438464, 252709797888]
+```
+
+Expansion verifies each Bernstein identity against (88.13). Every entry
+is nonnegative and each list has a positive entry, so all three
+polynomials are strictly positive for \(0<z<1\). The Gram matrix
+\[
+ \begin{pmatrix}a_0&a_1/2&0\\a_1/2&a_2&a_3/2\\0&a_3/2&a_4\end{pmatrix}
+                                                               \tag{88.14}
+\]
+has positive endpoint block and Schur complement \(S_i/(4a_0a_4)>0\).
+It is positive definite, proving \(P_i(k)>0\) for every real \(k\).
+Thus only \(P_0=F\) has real points. This proves (88.1).
+
+For a real root \(k\) set \(t=T/F_k\) and retain both radial lifts
+\[
+ x_\pm=\frac{t\pm\sqrt{t^2+4R(1+k^2)}}{2(1+k^2)},
+ \qquad y_\pm=kx_\pm.                                 \tag{88.15}
+\]
+The radicand is strictly positive and neither lift is zero. The two scaled
+means satisfy \(G_-=-R/\bar G_+\). At each mean use the entire line-lift
+rule of §87.5 and the original strict filters and root orders. The degree
+of \(F\) alone is not a count of physical rays. This construction is
+necessary for every original generic ray by Theorem 87.2, and sufficient
+with the stated filters whenever \(F_8\ne0\).
+

@@ -1,0 +1,14 @@
+**Definition 9.3 (simplest sufficient alternatives).** AcquisitionOffset
+alone is sufficient for the full authentic $[a,b]$ interval, with one
+mode bit, a retained unary offset, cancellation and Cat feeding existing
+Issue. SourceOffset adds only the source-occurrence adapter, its finite
+code/register burden and bounded scan; it avoids requiring the requester
+to possess an absolute native tally for an acquired named call. A supplied
+absolute $U(k)$ with bounds checks would be sufficient if that intended
+ordinal were already acquired, but does not provide such acquisition.
+The legacy $m,z,s$ family remains useful and may have much shorter unary
+requests for its Zero cuts. General PC/visit selectors, endpoint tables,
+additional descriptor stages and another outer dispatcher are not parts
+of $G_{\rm sel}$; none is needed for the stated covered-prefix consumer.
+These comparisons prove sufficiency, not global minimality or a cost order.
+

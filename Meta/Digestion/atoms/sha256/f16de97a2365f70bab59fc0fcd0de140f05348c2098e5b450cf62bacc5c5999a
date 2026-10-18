@@ -1,0 +1,44 @@
+**Corollary 9.5 (the qualified Boolean and full-fiber native minima).**
+Within the class of Definition 1.2 graphs for which every consecutive
+common-support gap has length at most three,
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,\qquad m\ge G+u.
+\tag{SI.37}
+$$
+
+The minimum Boolean running-state count in this class, at both caps
+$n,W$, is exactly $G$. For complete original native preparers at
+both caps $n+1,W+3$ whose supplied Boolean projection in (SI.5)
+has this gap property, the minimum installed preparation count is
+exactly $G+4+r$.
+
+Proof. Sum (SI.34) over the intervals. Equation (SI.32), with
+$E_{\mathrm{cut}}\ge0$, gives $D\le E$ and $m\ge G+u$;
+subtracting $u$ gives the live-state assertion. The existing grid of
+[PCA, Theorem 26.1][PCA] has $G$ Boolean running states and a fixed
+live coordinate order. Every depth is common-support, so every gap
+has length one. It supplies equality and needs no new construction.
+
+For a native competitor with the stated projection property, the
+projection in [WTF, Theorem 4.1][WTF] is a complete correct Boolean
+graph satisfying both caps, with at most $H_P-4-r$ running states.
+Applying (SI.37) proves $H_P\ge G+4+r$. The same supplied grid
+and full-fiber lift attain this count and both native execution bounds.
+The class condition concerns that projection's actual selected-history
+supports; it is not asserted for every native competitor.
+
+The native quantifier remains over the entire original
+$\mathcal U_*$ of Definition 1.1, with all finite tree sizes,
+depths and shapes. The lower-witness cube supplies the projection;
+the reused upper is correct on the full fiber. The original pointwise
+code, literal latches and complete $e_0,e_1$ entries, all four native
+replies and all original addresses remain fixed. The unchanged reader
+returns the whole predecessor row, including its exterior, occurrences,
+equality partition, repetitions, disequalities and strict-prefix guards.
+Its eight states remain separately priced. All installed unused states
+and all actual invocations, including constants, repeats and visits
+after certification, retain their original charges. The separate
+services in Convention 1.3 remain assumptions; no acquisition or
+physical implementation follows. $\square$
+

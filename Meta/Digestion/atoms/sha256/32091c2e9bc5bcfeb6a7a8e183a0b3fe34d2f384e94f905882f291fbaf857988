@@ -1,0 +1,8 @@
+**文献表态 12.2（适用量词）。**
+
+| 来源 | 状态与精确迁移 |
+| --- | --- |
+| Chen–Kiefer, *On the Total Variation Distance of Labelled Markov Chains*, [CK] v1，定义 1、定理 7、推论 8 | `literature-attested`：给定有限有理 LMC 与有理初始比较时，全未来 TV 的可计算上下收敛及任意宽度区间。§7 先证明新的取得界，才把它用于有限多个完整同记录比较；该文不提供 acquired-history 上确界的停止证书。 |
+| Gaubert–Qu, *Dobrushin Ergodicity Coefficient for Markov Operators on Cones, and Beyond*, [GQ] v2，例 4.1、注记 4.5 式 (19)–(20)，及定理 1.1 的有限正锥特例 | `literature-attested`：有限随机核的行直径收缩公式。引理 3.2 给其所需初等证明并处理不同原纤维间的矩形核；不把一般锥、非线性流或 Hilbert 度量结论搬作后验遗忘。 |
+| 本卷 §§3–6、7.2、8–9、11 | `repo-derived`：在原 PH 语法及合同上自证的充分类、可达网格、同源有限见证、双损失比较及其反向边界。对数网的抽屉原理和素因子分解证明均已写出，不另假设 Diophantine oracle。没有文献优先权或 `suspected-novel` 主张。 |
+

@@ -1,0 +1,42 @@
+### 110.3. Kernels of dimension at most two
+
+If $K=0$, then $|P|=|F|\leq8$. Transitivity forces $|P|=8$, so $P$ itself is regular.
+
+If $\dim K=1$, the four nonzero functionals coincide, so $K=\langle c\rangle$. The inverse image of a regular $F_0\leq F$ has order eight. Its image is transitive on fibres and $c$ interchanges the two coordinates in each fibre. It is therefore transitive and regular on $\Omega$.
+
+Suppose $\dim K=2$. There are only three nonzero functionals on $K$. The number of distinct coordinate functionals can neither be four nor be one, since they span $`K^*`$. Hence two distinct functionals occur, each on two fibres. Call these two fibre pairs $A_0,A_1$. Distinct nonzero functionals over $\mathbb F_2$ are independent. Consequently $K$ consists exactly of the independent simultaneous flips $k_0,k_1$ on $A_0,A_1$, and $c=k_0k_1\in K$. The image $F$ permutes the two pairs transitively.
+
+If $F$ contains a four-cycle, choose a lift $g\in P$. It interchanges $A_0,A_1$, so conjugation by $g$ interchanges $k_0,k_1$. Since $g^4\in K$ commutes with $g$,
+
+$$
+g^4\in\{e,c\}.
+\tag{110.7}
+$$
+
+If $g^4=c$, then $g$ has order eight. Its projected cycle visits all four fibres, and its fourth power flips each fibre, so $\langle g\rangle$ is transitive and regular. If $g^4=e$, then $g$ has order four and $c\notin\langle g\rangle$, since each nonidentity power of $g$ has nonidentity projection. Thus $\langle g,c\rangle$ has order eight and is transitive, hence regular.
+
+It remains to treat $F=C_2^2$. Its nonidentity element $u$ preserving both $A_0,A_1$ swaps the two fibres within each pair. Choose $v\in F$ interchanging the pairs, and choose arbitrary lifts $U,V\in P$. Then $U$ centralizes $K$, while $V$ interchanges $k_0,k_1$. Denote this interchange automorphism of $K$ by $\sigma$.
+
+Both $U^2$ and $V^2$ lie in $K$. Since $V^2$ commutes with $V$, it is fixed by $\sigma$ and lies in $\langle c\rangle$. The abelian quotient gives $VUV^{-1}=Uk$ for some $k\in K$. Squaring and using that $U$ centralizes the exponent-two group $K$ gives
+
+$$
+VU^2V^{-1}=(Uk)^2=U^2.
+\tag{110.8}
+$$
+
+Hence $U^2$ is also fixed by $\sigma$ and lies in $\langle c\rangle$. As $V^2$ is central, conjugation twice yields
+
+$$
+U=V^2UV^{-2}=Uk\sigma(k).
+\tag{110.9}
+$$
+
+Therefore $k=\sigma(k)\in\langle c\rangle$. The squares of $U,V$ and their commutator all belong to the central group $\langle c\rangle$. Every element of $R=\langle U,V,c\rangle$ consequently has a normal form
+
+$$
+c^aU^bV^d,\qquad a,b,d\in\{0,1\}.
+\tag{110.10}
+$$
+
+Thus $|R|\leq8$. Its image in $F$ has order four and its kernel contains the nontrivial $c$, giving $|R|\geq8$. Its image is transitive on the fibres and $c$ flips every fibre, so $R$ is regular. In all cases of this subsection the constructed subgroup is already contained in $P$ and preserves $M$.
+

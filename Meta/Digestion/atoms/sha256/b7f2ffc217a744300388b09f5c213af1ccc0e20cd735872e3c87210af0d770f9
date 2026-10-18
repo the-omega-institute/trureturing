@@ -1,0 +1,29 @@
+## 349. W: exact raw-mass elimination in the restricted witness cone
+
+The following calculation concerns precisely the $W_N$ cone of VI 190.2 and its conversion in VI 191–197. It is not the affine profile cost and it does not replace the complete $g$ family of XIX 341.2.
+
+For labels $k=1,\ldots,L$, prescribe
+
+$$
+ p_k(w)=c_k+\sum_i\ell_{i,k}w_i+\sum_{i<j}Q_{ij,k}w_iw_j,
+\tag{349.1}
+$$
+
+and set $p_0(w)=M-\sum_{k=1}^Lp_k(w)$. Put $x_+=\max(x,0)$,
+$Z_i=-\ell_{i,i}$, $\xi_{ij}=Q_{ij,i}$, and
+$d^0_{ij,k}=(-Q_{ij,k})_+$ for $i<k\le j$. Define
+
+$$
+\begin{aligned}
+t_{ij}&=\max\left\{\sum_{k>i}(Q_{ij,k})_+,\ \sum_{k>i}(-Q_{ij,k})_+\right\},\\
+m^0_{ij}&=\max\{|\xi_{ij}|,t_{ij}\},\\
+S_{i,k}&=\ell_{i,k}-\sum_{j=k}^Ld^0_{ij,k}\qquad(i<k),\\
+A_i&=\left[Z_i-\sum_{j>i}(\xi_{ij})_+-\sum_{j>i}(m^0_{ij}-|\xi_{ij}|)\right]_+,\\
+D_i&=\max\left(0,\max_{i<h\le L}\left\{\sum_{k=h}^LS_{i,k}-\sum_{j=h+1}^L(m^0_{ij}-t_{ij})\right\}\right),\\
+B_W&=\sum_{k=1}^L(c_k-Z_k)+\sum_{i=1}^L\left(\sum_{j>i}m^0_{ij}+\max\{A_i,D_i\}\right).
+\end{aligned}
+\tag{349.2}
+$$
+
+An empty maximum is zero.
+

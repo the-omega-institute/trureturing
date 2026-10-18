@@ -1,0 +1,25 @@
+**命题 A-21.7（全历史相干不能由经典路径权代替）。** 若实际共同边界是
+
+
+```math
+\Omega_n=\sum_{h,k}|h\rangle\langle k|\otimes\Xi^{(n)}_{hk}\succeq0,
+\quad\mathrm{tr}\Omega_n=1,
+```
+
+
+并另供 $`V_n=\sum_{h,a}|h,a\rangle\langle h|\otimes K_{a|h}`$、$`\sum_aK_{a|h}^\dagger K_{a|h}=I`$，则
+
+
+<table><tbody><tr><td>
+
+```math
+\Xi^{(n+1)}_{ha,kb}=K_{a|h}\Xi^{(n)}_{hk}K_{b|k}^\dagger.
+```
+
+</td></tr></tbody></table>
+
+
+经典历史权为 $`\mathrm{tr}\Xi_{hh}`$，一般不确定非对角块或复用环境的未来。
+
+证明。不同 $`|h,a\rangle`$ 正交，故 $`V_n^\dagger V_n=I`$，共轭保持正性和迹；逐块展开得到式。具体反例是两历史的 $`|+\rangle\langle+|`$ 与 $`I/2`$：对角权均为 $`(1/2,1/2)`$，额外供应的共同 $`X_P`$ 比较却给均值一与零。亦可从同一相干输入出发，使两历史留下相同记录或正交记录；约化后的非对角分别乘一或零，仍有相同历史权。块载体必须包括会再次接入的环境、控制和记忆；若实际分支含隐藏 Kraus 指标，需保留共同等距实现及其环境，不能自行挑单个 Kraus 算子拼相干。此式复用 [A-R6，§110]，用具名来源说明共同实现的条件。证毕。
+

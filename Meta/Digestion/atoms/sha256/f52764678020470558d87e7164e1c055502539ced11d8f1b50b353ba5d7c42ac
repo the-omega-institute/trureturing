@@ -1,0 +1,7 @@
+**Reading contract.** This volume gives ordinary mathematical proofs,
+> without Lean kernel certification. Numbered claims follow the
+> `generic-v1` theory convention. Published bytes remain immutable;
+> additions begin after the terminal append anchor and end with another
+> append anchor. Repository suppliers designate their committed text at
+> `5fe79351d430d929eb588422fdf31364c82d9363`.
+

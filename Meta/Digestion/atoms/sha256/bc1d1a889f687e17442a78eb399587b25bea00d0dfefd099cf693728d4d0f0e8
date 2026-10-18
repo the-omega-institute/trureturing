@@ -1,0 +1,18 @@
+**Proposition 2.3 (all-history interpretation of a table).** For every table of Definition 2.1,
+
+$$
+R_{\rm conf}(\mathcal H_p)=\sup_{i,k:\mu(k)>0}
+\sum_x\pi_i(x)\operatorname{TV}(Q_{i,x},P_{p,r_k}),
+\tag{2.6}
+$$
+
+and the analogous suspended formula uses $\tau_i,W_{i,y},P_{\beta,r_k}$. The law-order formulas use the TV of the corresponding mixture before taking this supremum. All four formulas belong to the same installed model. Its early and terminal defects are zero; its fourth defects depend only on the finitely many modes and the two noncompletion letters.
+
+**Proof.** Conditional on any acquired fourth-segment history, the actual label row is exactly $\pi_i$ or $\tau_i$ by (2.1), independently of the actual posterior. Countable TV convexity and (1.2) give the upper bounds in (2.6) and its three companions.
+
+For the converse use the paid rejection histories of [FLOW, equations (3.1)–(3.2)], followed by its fixed legal seed/marker suffix and a fixed number of returns giving mode $i$. For each supported $k$, the posterior tends to its pure depth while the table row is unchanged. These are finite positive histories in the same fixed prior; the supplied dominated-convergence argument includes every countable nonendpoint weight. TV is 1-Lipschitz in its target, so their risks approach the displayed pure-target risk. Current records and transcript maps preserve these comparisons.
+
+The pre-latch label is fixed; the latch sampler is the same source-independent update in actual and synthetic generation. Therefore conditioning any positive pre-latch synthetic letter produces exactly the next report. Terminal residuals are the deterministic original Stop or empty future. In the fourth segment, conditioning a completing letter gives that same deterministic terminal residual. Only p-$\beta$ and suspended-$\alpha$ remain. ∎
+
+For $\mathcal H_3$ alone, (2.6) uses mode 0 only. It does not become the supremum over all modes unless that extra equality is proved.
+

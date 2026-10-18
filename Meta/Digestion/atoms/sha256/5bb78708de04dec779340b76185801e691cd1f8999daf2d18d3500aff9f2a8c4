@@ -1,0 +1,15 @@
+**Definition 153.3 (Primary source boundaries).** The following sources
+support the specified mature ingredients or delimit resource comparisons.
+The particular 13-score/36-lift projection and the source-specific rational
+normal-form composition are repo-derived ordinary deductions. Bounded
+textual overlap and primary-source checks do not establish exhaustive
+novelty, worldwide absence or literary priority.
+
+| Primary source | Exact result or passage used | Boundary here |
+| --- | --- | --- |
+| Andreas Löhne and Benjamin Weißing, [*Equivalence between polyhedral projection, multiple objective linear programming and vector linear programming*, arXiv:1507.00228v5](https://arxiv.org/html/1507.00228v5), problem (PP), Theorem 3 | A feasible projection $Y=\{y:\exists x,\ Gx+Hy\ge h\}$ is represented by a multiple-objective LP using one added objective $(y,-\sum y)$ and a finite point/direction description. | Hidden variables here are full common-budget allocations and projected variables are head amplitudes/cap. Our polytopes are bounded. This framework does not supply the particular full $N/O$ inclusion or a request-resource theorem. |
+| Jędrzej Kaniewski, Troy Lee and Ronald de Wolf, [*Query complexity in expectation*, arXiv:1411.7280v1](https://arxiv.org/html/1411.7280v1), Definition 8, Theorem 9 | Randomized scalar nonnegative-output expectation query complexity equals nonnegative literal degree; the query cost is maximal positive-weight root-to-leaf depth. | Worst-path depth relates to hard requests, but scalar coefficient normalization does not supply equal cell masses for jointly normalized vector outputs or an increasing first-zero-stop replacement at a TV cap. |
+| Lisa Hellerstein, Devorah Kletenik, Naifeng Liu and R. Teal Witter, [*Adaptivity Gaps for the Stochastic Boolean Function Evaluation Problem*, arXiv:2208.03810v1](https://arxiv.org/html/2208.03810v1), abstract and introduction | The task uses independent random input-bit probabilities and expected testing costs. | Those stochastic objectives differ from uniform every-actual-source law error and a hard two-actual-request bound. Their gaps do not give a separator for the present classes. |
+| Volker Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1](https://arxiv.org/html/1001.2161v1), Theorems 2, 13, 15, 18 and Section 1.6 | Cramer's rule, full-rank active subsystems at vertices, vertex attainment for pointed polyhedra, and coordinate projection by Fourier-Motzkin elimination. | Our finite nonempty bounded rational systems, with affine equalities in both orientations, satisfy these conditions. Rationality and projection are reused; no source or probability-vector conversion is imported. |
+| Stephen Boyd and Lieven Vandenberghe, [*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), Section 2.5.1, Example 2.20, printed page 49 | A point outside a nonempty closed convex set admits strict separation. | $U_{O,L}$ is closed and convex but unbounded. The explicit nearest-point proof above derives nonnegative normals from downward recession directions, without assuming compactness of $U_{O,L}$. |
+

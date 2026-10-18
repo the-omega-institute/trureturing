@@ -1,0 +1,22 @@
+**推论 6.2（同历史失败族的基数必要条件）。** For arbitrary compatible
+families, with no drift promise,
+
+$$
+L_3(K,C_4(Y))\ \Longrightarrow\
+\exists z:\ L_2(K_z,C_5(Y,z))\ \land\ |K_z|\ge3.               \tag{6.1}
+$$
+
+In particular, if $|K|=3$ and $K$ has $L_3$ at this $C_4(Y)$, its
+fifth-$J$ prediction is constant on all three targets. Moreover any
+$L_4$ family at this same $C_3$ retains, after some actual fourth-$M$
+reading $Y$ and actual fifth-$J$ reading $z$, an $L_2$ subfiber with
+at least three targets.
+
+Proof. The failure recursion supplies an actual fifth-$J$ child with
+$L_2$. It has at least two targets, and Theorem 5.1 excludes exactly
+two, so it has at least three. When $K$ itself has three targets this
+child equals all of $K$. At $C_3$, first unfold the recursion at fourth
+$M$ to get an actual $Y$ child with $L_3$, and then apply (6.1) to that
+same child's fifth $J$. All ancestor equations and all worlds are
+retained by these intersections. ∎
+

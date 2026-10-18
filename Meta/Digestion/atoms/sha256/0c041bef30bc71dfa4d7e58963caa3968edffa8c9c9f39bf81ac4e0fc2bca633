@@ -1,0 +1,99 @@
+**定理 202.6（覆盖—链插值与早期正确总量转移）。** 保持任意输入 (202.6)。
+用前卷定义 201.1 的系数
+
+$$
+c_1=2,\qquad c_2=3,\qquad c_k=4-2/\lceil k/2\rceil\quad(k\ge3),
+\qquad\Lambda(\gamma)=\int_0^\mu c_{|J_r|}\,dr,
+\quad J_r=\{j\ge3:\gamma_j\ge r\}.
+\tag{202.19}
+$$
+
+这里积分是有限层集和；$\mu=0$ 时取 $\Lambda=0$。
+令 $M_2$ 为晚期权重的前两大项之和，不足两项以零补足。若 $\mu>0$，置
+
+$$
+s=(1-\delta/M_2)_+,\qquad W_{\rm cap}=E+B.
+$$
+
+若
+
+$$
+W_{\rm cap}\ge\mu+s\Lambda(\gamma),
+\tag{202.20}
+$$
+
+则存在同一个完整非负评分 $V$，使
+
+$$
+\begin{aligned}
+V\cdot\mathbf r&=W_{\rm cap}=y\cdot\mathbf r,&K_V&=K_y,\\
+\Delta_N(V)&\le\min\{\delta,M_2\},&
+F_{Q(y)-Q(V)}(b)&=-\gamma_1(1-b_1)-\gamma_2(1-b_2)\le0\quad(b\in H).
+\end{aligned}
+\tag{202.21}
+$$
+
+故 $Q(y)\in D_N(\delta)+P_H$；当 $\delta\le1$，$(V,0)$ 是完整证书。
+若 $E=0$，商也精确保持。若 $\mu=0$，无须 (202.20)，直接取仅有
+$T_V=E+B$ 的评分，(202.21) 仍成立且超额为零，不作任何除法。
+
+**证明。** 用前卷引理 201.2 的块 $W_J$ 构造覆盖评分
+
+$$
+Z=\int_0^\mu W_{J_r}\,dr+\mu e_T,
+\tag{202.22}
+$$
+
+其中 $e_T$ 只在正字基行取一。明确地，在每个层令 $z_r=\max J_r$、
+$I_r=J_r\setminus\{z_r\}$；正确质量 $dr$ 放在每个 $w(\{j,z_r\})$，
+$j\in J_r$；对 $a=1,2$ 和 $U\subseteq I_r$，pair 质量
+$\nu_{J_r}(U)dr/2$ 放在 $w(\{a,z_r\}\cup U)$。
+$\nu_J$ 正是前卷 (201.10) 的有限非负测度，重合行相加。
+其总质量 $c_{|J|}$、包含矩二、定向割矩一及所有非 $11$ 胞的全标签覆盖
+由引理 201.2 与定理 201.3 供应。因此，不论不同层的终端是否相同，
+
+$$
+Z\cdot\mathbf r=B_N(Z)=\Lambda+\mu,\qquad\Delta_N(Z)=0.
+\tag{202.23}
+$$
+
+另取链评分 $C^{\rm ch}$：在 $1^{j-1}0^{L-j+1}$ 的正确行放 $\gamma_j$，
+$j\ge3$，并置 $T_{C^{\rm ch}}=\mu$。定理 198.4 的前三大项公式应用于
+多重集 $\{0,0,\gamma_3,\ldots,\gamma_L,\mu\}$，精确给出
+
+$$
+B_N(C^{\rm ch})=\mu+M_2,\qquad C^{\rm ch}\cdot\mathbf r=\mu.
+\tag{202.24}
+$$
+
+令 $\xi=W_{\rm cap}-\mu-s\Lambda\ge0$，固定
+
+$$
+V=sZ+(1-s)C^{\rm ch}+\xi e_T.
+\tag{202.25}
+$$
+
+这是一个非负评分；其晚期正确总量为 $\gamma$，没有早期正确行，pair 总量为
+$s\Lambda$，正字质量为 $W_{\rm cap}-s\Lambda\ge\mu$。
+对同一张任意完整 $N$ 表 $D$，先比较而后取最大值：
+
+$$
+\begin{aligned}
+V\cdot z_D
+&\le s(\Lambda+\mu)+(1-s)(\mu+M_2)+\xi\\
+&=W_{\rm cap}+(1-s)M_2.
+\end{aligned}
+$$
+
+锚值为 $W_{\rm cap}$，故超额不超过
+$(1-s)M_2=\min\{\delta,M_2\}$。这是固定系数的同一评分不等式，
+没有从输入的 $\delta$ 推断各分量分别拥有一份预算。
+
+两种构件的晚期正确总量一致，且 $K_V=G+W_{\rm cap}=K_y$；商差只留下
+早期的 $\gamma_1,\gamma_2$，直接代入 (202.3) 得 (202.21) 的精确残差。
+这说明早期正确质量怎样成为可用总量，同时用有符号残差记清损失。
+若 $\mu=0$，也有 $M_2=0$，仅取 $T_V=W_{\rm cap}$ 即得同一身份。
+若 $\mu>0$，$M_2\ge\mu>0$ 才定义 $s$：$\delta=0$ 给 $s=1$，
+$\delta\ge M_2$ 给 $s=0$。阈值的等号、$\delta=1$ 及全零输入均已包括。
+$\square$
+

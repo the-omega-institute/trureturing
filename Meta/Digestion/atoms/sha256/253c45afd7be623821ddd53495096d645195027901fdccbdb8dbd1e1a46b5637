@@ -1,0 +1,31 @@
+**引理 N2.1（双末预测为零的精确条件）。** 在同一实际第六时钟矩阵 $U$，令任意 $W\in\mathcal F_3(c)$ 的两末预测为
+
+$$
+b_M(W)=g(7)\operatorname{tr}(MUP)+\delta,\quad
+b_J(W)=g(7)\operatorname{tr}(JUP)+\delta.
+\tag{3.1}
+$$
+
+则
+
+$$
+(b_M,b_J)=(0,0)\quad\Longleftrightarrow\quad
+\delta=0\ \hbox{且}\ g(7)=0.
+\tag{3.2}
+$$
+
+证明。$M-J=e_{22}=\left(\begin{smallmatrix}0&0\\0&1\end{smallmatrix}\right)$，所以
+
+$$
+b_M-b_J=g(7)(UP)_{22}.
+\tag{3.3}
+$$
+
+若 $P=\left(\begin{smallmatrix}a&b\\e&f\end{smallmatrix}\right)>0$，则
+
+$$
+UP=\begin{pmatrix}a&b\\2a+e&2b+f\end{pmatrix}>0,
+$$
+
+特别 $(UP)_{22}>0$。两个预测均零时先由差强迫 $g(7)=0$，再由任一预测强迫 $\delta=0$；反向立即成立。若 $g(7)=0,\delta\ne0$，两预测均为同一非零漂移；若 $g(7)\ne0$，无论符号，预测差非零，至多一项为零。这穷尽全部零层与符号，不使用未知增益作未经验证的除数。∎
+

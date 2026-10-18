@@ -1,0 +1,8 @@
+## 56. 正噪声三点纤维和特定 dyadic 单元下界
+
+风险的精确定义如下：来源集为所声明的实际类 $\mathcal S_{act}$，报告空间为 $(\mathbb R^3)^3$，兼容纤维为 $\mathcal A_\delta(y)=\{s:\max_{i\le2}|y_i-x_i(s)|\le\delta\}$。允许的估计器 $D(y,j)$ 是所有集合函数，不假定可计算或有限记录；定义
+
+$$R_\delta=\inf_D\sup_{s\in\mathcal S_{act}}\ \sup_{y:\ s\in\mathcal A_\delta(y)}\ \sup_{j\ge3}|D(y,j)-x_j(s)|.$$
+
+有限记录定理则单独量化有限字编码 $a(s)$ 及固定 $D(a,j)$，不能把这个实数报告界面的 $\delta=0$ 值直接搬到有限字界面。
+

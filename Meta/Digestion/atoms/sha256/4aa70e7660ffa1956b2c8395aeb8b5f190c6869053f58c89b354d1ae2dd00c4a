@@ -1,0 +1,20 @@
+**Theorem 3.1 (rectangular admissibility).** For every nonempty `B\subseteq R^n`, `B` is natively admissible exactly when
+
+$$
+|I_i(B)|\le3\quad\text{and}\quad |J_i(B)|\le3
+\qquad(1\le i\le n).
+$$
+
+**Proof.** Suppose four left rows occur in coordinate `i`. Choose a separating hash column `j`. The target `q^L_j` takes the four distinct values shown in the core table on those four rows. Every possible donor coordinate ranges inside `R`, and every finite donor literal has at most three replies there. A decoder of one such reply, or a constant, has at most three values. Therefore no admissibility equation for `q^L_j` can hold on all tuples of `B`. The same argument with `q^R_j` proves the right bound. The four witnesses need not occur in one tuple; the target equation is required on the whole relation, so arbitrary correlations, donor reuse, self-donors, cycles, and cross-coordinate donors are covered.
+
+Conversely, suppose both projections have size at most three. A target that ends above a variable module or enters a fixed tag is constant. Otherwise it enters one fixed module on one side. At that module the possible core states form a set of at most three states, and `L` or `RL` identifies that set. Prefix the identifying literal by the actual outer-child, tag-left edge, and hash-column address. Its one reply determines the requested factor on every tuple of `B`; unused reply symbols are assigned arbitrary decoder values. Doing this separately for every target gives a complete simultaneous family of admissibility equations. The witnesses are own-coordinate witnesses, so no factorization of `B` is used. ∎
+
+Let `w_i:S_d\to[0,\infty)` be arbitrary weights supported on `R`, with all correlations between the two sides and all hash modules retained in one original block. Define
+
+$$
+Q(w_i)=\max_{\substack{I,J\subseteq[m]\\|I|,|J|\le3}}
+\sum_{s\in I,\,t\in J}w_i(v_{st}).
+$$
+
+The empty rectangle has mass zero. A maximizing nonempty rectangle can always be chosen: if the maximum is positive this is automatic, and if it is zero any singleton rectangle attains it.
+

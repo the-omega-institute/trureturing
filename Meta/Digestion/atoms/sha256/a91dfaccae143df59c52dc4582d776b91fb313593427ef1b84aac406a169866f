@@ -1,0 +1,16 @@
+**Convention 10.2 (attribution of the mathematical ingredients).**
+The five-state motif, its paired decoder and its paid-fiber discipline
+are credited to NCM §6. The all-joint cap in Lemma 4.3 is a specialization
+of NCE Theorem 2.2, whose original rate bound remains credited. FMR
+supplies canonicalization, cover attainment, native gluing, harmonic
+rounding and regularized limits. MSS supplies the graph existence
+theorem. The twice-covered count is a standard entropy projection
+inequality, with the exact finite proof included.
+
+Theorems 2.2 and 2.4 give the exact decoder-template and binary-closure
+interface; Theorem 3.2 and Proposition 3.3 give its finite type/mass
+relations. Theorem 7.2 combines actual-module conditioning, expansion and
+shared-label counting to obtain (NDR.29), with the full-family attainment
+of Theorem 8.1. These deductions use the cited ingredients with the
+hypotheses and boundaries stated in their proofs.
+

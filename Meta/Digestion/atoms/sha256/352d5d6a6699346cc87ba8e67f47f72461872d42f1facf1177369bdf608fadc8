@@ -1,0 +1,16 @@
+**Convention 10.1 (References and applicability).** The following primary
+sources support only the indicated statements or methodological comparisons.
+
+| Source | Correspondence and limit |
+| --- | --- |
+| [Bluhm–Rauber–Wolf, *Quantum Compression Relative to a Set of Measurements*, arXiv:1708.04898v4](https://arxiv.org/html/1708.04898v4), Definition 4.1, Theorem 5.1 and Lemmas 5.2–5.3 | Common CPTP encoding/decoding, all inputs, $M_d\otimes\mathbb C^n$ free classical blocks, finite $D^4$ support and compactness. Here $D=5,d=q$. The original measurement-relative seminorm uses its specified observables; our observables are the actual subset events through QMB's first-read identity. Its stability theorem does not evaluate this frontier. |
+| [Terhal–Horodecki, *A Schmidt number for density matrices*, arXiv:quant-ph/9911117v4](https://arxiv.org/html/quant-ph/9911117v4), Definition 1 and Proposition 1 | Convex low-Schmidt-number states, pure decomposition and rank constraints. The TP marginal is imposed separately in (2.1); a maximally entangled overlap bound is not substituted for the present menu distance. |
+| [Werner, *Optimal Cloning of Pure States*, arXiv:quant-ph/9804001](https://arxiv.org/html/quant-ph/9804001), §4, equation (4.2) | Averaging admissible channels in an invariant minimax problem. Cloning inputs, outputs and fidelity differ. Theorem 3.3 proves menu invariance and resource preservation for this problem separately. |
+| [Navez–Cerf, *Cloning a real d-dimensional quantum state on the edge of the no-signaling condition*, arXiv:quant-ph/0302172v1](https://arxiv.org/html/quant-ph/0302172v1), real-state model and covariance/fidelity calculation | Comparison only: two-clone real-state fidelity and its orthogonal symmetry do not give this all-complex-input port optimum or authorize full orthogonal averaging here. |
+| [Fuchs–Sasaki, *Squeezing Quantum Information through a Classical Channel: Measuring the Quantumness of a Set of Quantum States*, arXiv:quant-ph/0302092v3](https://arxiv.org/html/quant-ph/0302092v3), equation (16), §4.3 and equation (116) | Ensemble-dependent accessible fidelity and measure/prepare reasoning. Its real-Haar value $3/(d+2)$ is for another ensemble. Equations (6.7)–(6.19) calculate the present weighted actual-orbit bound instead. |
+| [Caves–Fuchs–Rungta, *Entanglement of Formation of an Arbitrary State of Two Rebits*, arXiv:quant-ph/0009063](https://arxiv.org/html/quant-ph/0009063), real/complex product-state distinction | Real density coefficients do not equate real and complex separability. Proposition 9.2 supplies its own TP embedding and exact witness, so no rebit entanglement formula is needed as a premise. |
+| [Basu–Pollack–Roy, *Algorithms in Real Algebraic Geometry*, second edition](https://www.maths.ed.ac.uk/~v1ranick/papers/basupollackroy.pdf), Algorithm 11.14 and correctness, printed p.422; Algorithm 14.9 and correctness, printed pp.557–558 | Exact cylindrical decision and polynomial global optimization, including algebraic sample data and an attained minimizer. Theorem 5.1 supplies the full task-specific input system and realization bridge. These algorithm statements support termination, not a measured runtime or an evaluated certificate. |
+
+The compactness, Kraus/Schmidt-number equivalence and $625$ support bound
+are the supplied QMB results of Convention 2.1.
+

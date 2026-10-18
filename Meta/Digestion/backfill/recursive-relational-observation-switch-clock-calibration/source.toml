@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-switch-clock-calibration"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SWITCH_CLOCK_CALIBRATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

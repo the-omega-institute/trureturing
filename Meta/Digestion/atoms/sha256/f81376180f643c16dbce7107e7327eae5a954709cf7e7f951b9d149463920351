@@ -1,0 +1,19 @@
+**Convention 7.1 (Literature status).** The witness-slack consequence
+and the particular independent-decoder certificate are `repo-derived`
+results, with their complete data and derivations above. The first-read,
+compactness, no-worse stationary and real-coordinate results belong to
+the credited supplier sources. No worldwide originality claim follows
+from this classification.
+
+| Primary source | Exact use and boundary |
+| --- | --- |
+| [Horodecki–Shor–Ruskai, quant-ph/0302031v2, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031v2) | `literature-attested`: measure-and-prepare, rank-one Kraus and separable Choi correspondence, with the separate POVM/TP condition. Equations (2.15) and (3.6) establish the normalization needed here directly. |
+| [Doherty–Parrilo–Spedalieri, quant-ph/0308032, §§IV, VI](https://arxiv.org/html/quant-ph/0308032) | `literature-attested`: PSD/PPT weak duality and decomposable witnesses. The explicit shifted certificate is (2.8); PPT sufficiency is not used. |
+| [Fuchs–Sasaki, quant-ph/0302092v3, §4.2.2, pp. 16–18, Eqs. (97)–(98)](https://arxiv.org/html/quant-ph/0302092v3) | `literature-attested`: the finite-group irreducibility and rank-one orbit-POVM argument has those hypotheses and that location. Section 4.3 concerns the uniform all-pure-state ensemble. Neither evaluates this reducible $1+2+2$ actual-menu minimax. Only elementary circle moments are used here. |
+| [Nechita–Park, 2403.03667v2, §2.1](https://arxiv.org/html/2403.03667v2) | `literature-attested`: representation-dependent averaging. Scalar twirl formulas require their multiplicity hypotheses; group-specific PPT/entanglement-breaking equivalences are not general DOC or present-cone equivalences. The needed invariant multiplicity-three block remains arbitrary in QRC. |
+| [Ohst et al., 2411.08110v2, §3.3 and Appendix C](https://arxiv.org/html/2411.08110v2) | `literature-attested`: constrained separability includes specified constraints on individual decomposition factors. A summed TP marginal and joint walk symmetry do not establish that correspondence. No optimum is imported. |
+| [Koßmann–Zeiss, 2607.23689v1, §§4–5, 7.1](https://arxiv.org/html/2607.23689v1) | `literature-attested`: fixed-point extension results have their own per-factor constraints. No bridge from this joint covariance and common TP marginal to those constraints is supplied. |
+| [Hildebrand, math/0701571v1, Theorems 3.8, 3.9, 8.1](https://arxiv.org/html/math/0701571v1) | Their specified low-dimensional real/complex separability spaces do not identify the whole $5\times5$ QRC cone with PPT. No such identification is assumed. |
+| [Leditzky et al., 1709.01111v3, Lemma III.8](https://arxiv.org/html/1709.01111v3) | The dimension-product restriction and diamond-norm objective are different from (1.3); the result supplies no minimax value here. |
+| [Milazzo–Braun–Giraud, 2006.15003v1, Theorem 4](https://arxiv.org/html/2006.15003v1) | Flat-extension extraction is conditional on its moment/localizing and flatness hypotheses. No such extension for the present minimum is supplied or used. |
+

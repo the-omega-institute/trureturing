@@ -1,0 +1,24 @@
+**Definition 8.1 (Exact consumer interface).** The input to [Multiword, Theorem 3.1][MW] is an independently justified same-law bound
+
+$$
+\tau_P(R)\le\eta_P(R)<\infty,\qquad \eta_P(R)\longrightarrow0,
+\tag{8.1}
+$$
+
+for sufficiently large integer $R$, on the original emitted-bit clock and with exactly the fields (1.1). For a legal $P$, Corollary 4.2 or Proposition 7.1 supplies this input under its explicit additional hypotheses.
+
+The consumer still requires a finite block $C=[1,L]$, a bounded direction $f_C=f(X_C)$ that is conditional-null under this same $P$,
+
+$$
+\mathbb E_P[f_C\mid\sigma(X_j:j\notin C)]=0,
+$$
+
+and a justified strict finite violation to certify that law's nonattainment. Its finite detectability conclusion additionally uses a nonzero complete response
+
+$$
+S_P(f)=\sum_{i\in\mathbb Z}
+\mathbb E_P\!\left[f_C(X_i-\mathbb E_P[X_i\mid\sigma(X_j:j\ne i)])^2\right].
+$$
+
+The independent tail allowance ensures absolute convergence through [Multiword, Lemma 2.1][MW]. The finite statistic and its proof belong to that consumer and are not reproduced here. Finite marginals, overlapping observation windows, legal seams and zero-total fibers must still be evaluated under the candidate's actual law. Existence of a law-dependent allowance does not acquire usable constants or supply a productive response sign. An attained-law-only tail budget cannot replace (8.1) for an arbitrary candidate.
+

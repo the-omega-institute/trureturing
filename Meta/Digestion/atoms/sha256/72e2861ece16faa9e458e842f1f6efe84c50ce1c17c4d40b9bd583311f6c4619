@@ -1,0 +1,97 @@
+**定理 449.1（同一概率来源的完整算术身份）。** 有
+
+\[
+\boxed{
+\frac{\mathsf F'(u)}{\mathsf F(u)}
+=-\frac{\zeta'}{\zeta}(1+u)
++\frac{\mathcal B'}{\mathcal B}(1+u)
+=\sum_{n\ge1}\frac{\Lambda(n)+c_n}{n^{1+u}},
+\qquad u>0.
+}
+\tag{HT.4}
+\]
+
+令
+
+\[
+T_0=\frac{q^2(2-q)}{(1-q)^3},\qquad
+U_0=\frac{q^2(4-3q+q^2)}{(1-q)^4},\qquad
+M_0=\frac{T_0}{\delta_0},
+\]
+
+\[
+\alpha=\min\!\left\{1,\frac{\delta_0}{2U_0}\right\}>0,\qquad
+M_\alpha=\frac{2U_0}{\delta_0}.
+\tag{HT.5}
+\]
+
+则全部实际系数的无穷预算满足
+
+\[
+\boxed{
+\sum_{n\ge1}|\gamma_n|\le\frac1\delta\le\frac1{\delta_0},\quad
+\sum_{n\ge1}|\gamma_n|n^\alpha\le\frac2{\delta_0},\quad
+\sum_{n\ge1}|c_n|\le M_0,\quad
+\sum_{n\ge1}|c_n|n^\alpha\le M_\alpha.
+}
+\tag{HT.6}
+\]
+
+此外，在整个 \(\Re s\ge-\alpha\) 上，绝对收敛身份为
+
+\[
+\boxed{
+\sum_{n\ge1}\gamma_nn^{-s}=\frac1{\mathcal B(s)},\qquad
+\sum_{n\ge1}c_nn^{-s}=\frac{\mathcal B'(s)}{\mathcal B(s)}.
+}
+\tag{HT.7}
+\]
+
+**证明：有符号逆与全系数预算。** 写 \(\beta=b\varepsilon+a\)，其中
+\(a_1=0\)，\(\|a\|_1=b-\delta<b\)。正整数 Dirichlet 卷积的绝对范数
+满足 \(\|h*k\|_1\le\|h\|_1\|k\|_1\)，因为完整非负双和可按乘积分组。
+因此实际逆有绝对收敛 Neumann 展开
+
+\[
+\gamma=b^{-1}\sum_{j\ge0}(-a/b)^{*j},
+\qquad
+\|\gamma\|_1\le\frac1\delta.
+\tag{HT.8}
+\]
+
+每个固定整数系数只用有限多阶非单位卷积，故该逆也是既有有限递推定义
+的同一个 \(\gamma\)。
+
+指数尾 \(|\beta_d|\le q^d/(1-q)\) 与 \(\log d\le d\) 给完整预算
+
+\[
+\sum_{d\ge2}|\beta_d|\log d\le T_0,\qquad
+\sum_{d\ge2}|\beta_d|d\log d\le U_0.
+\tag{HT.9}
+\]
+
+右侧分别由完整几何级数的 \(\sum_{d\ge2}dq^d\) 和
+\(\sum_{d\ge2}d^2q^d\) 得出，没有截去后续系数。
+
+对 \(0<\alpha\le1\)，有
+\(d^\alpha-1=\int_0^\alpha d^v\log d\,dv\le\alpha d\log d\)。
+因此
+
+\[
+\sum_{d\ge2}|\beta_d|d^\alpha
+\le b-\delta+\alpha U_0\le b-\delta_0/2.
+\]
+
+权 \(n^\alpha\) 满足 \((mn)^\alpha=m^\alpha n^\alpha\)，故同一
+Neumann 展开在这个完整加权范数中收敛，给
+\(\sum|\gamma_n|n^\alpha\le2/\delta_0\)。卷积定义（HT.3）与（HT.9）
+随后给 \(c\) 的两条完整预算（HT.6）。
+
+若 \(\Re s\ge-\alpha\)，则 \(|n^{-s}|\le n^\alpha\)；
+上述全部 Dirichlet 级数及卷积双和均绝对收敛。在同一域中，
+\(|\mathcal B(s)-b|\le b-\delta_0/2<b\)，所以 \(\mathcal B(s)\ne0\)。
+卷积身份与逐项微分给（HT.7）。当 \(s=1+u>1\) 时，经典
+von Mangoldt Dirichlet 级数给
+\(-\zeta'/\zeta(s)=\sum\Lambda(n)n^{-s}\)。对原 \(\mathsf F\)
+取对数导数即得（HT.4）。证毕。
+

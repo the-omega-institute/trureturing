@@ -1,0 +1,39 @@
+### 70.3 Approximate row saturation and a common two-dimensional span
+
+For f≠g, let R_fg and T_fg be the cross-record matrices of the rounded frames, with entries
+
+    R_fg[i,j]=<V_g e_j,V_f e_i>,
+    T_fg[i,j]=<W_g e_j,W_f e_i>.
+
+They are 2×2 contractions. The actual retained physical coefficient is <e_(g,j),e_(f,i)><h_(g,j),h_(f,i)>. Its difference from1/2 has modulus at most δ: apply the diamond bound to the trace-norm-one logical matrix unit and then take the indicated output matrix entry. Equation (2) changes each local overlap by at most2δ, hence the product by at most4δ. Therefore
+
+    |R_fg[i,j]T_fg[i,j]−1/2|≤5δ.                        (3)
+
+For every row i, Σ_j|R_ijT_ij|≥1−10δ. Row norms of contractions are at most one, so Cauchy–Schwarz gives each row norm at least1−10δ. Its square is at least1−20δ. Thus Tr(RR*)≥2−40δ and RR*≤I_2 imply
+
+    smallest singular value of R squared≥1−40δ.        (4)
+
+The same row estimate also yields
+
+    Σ_j (|R_ij|−|T_ij|)²
+      =||R_i||²+||T_i||²−2Σ_j|R_ijT_ij|≤20δ.
+
+Combining this with (3), and |R_ij|≤1, gives the first-party-only estimate
+
+    ||R_fg[i,j]|²−1/2|≤sqrt(20δ)+5δ.                   (5)
+
+Fix the two-dimensional environment plane S=range(V_1), with orthogonal projection P. For f≠1, the contraction M_f=V_1*V_f has the singular values in (4). Hence
+
+    ||(I−P)V_f||op≤sqrt(40δ).
+
+Its unitary polar factor L_f satisfies ||M_f−L_f||op≤1−sqrt(1−40δ)≤40δ. Set Q_f=V_1 L_f, and Q_1=V_1. All Q_f are orthonormal bases of the same plane S, and
+
+    ||V_f−Q_f||op≤η:=sqrt(40δ)+40δ.                    (6)
+
+For any two unit record vectors, (6) changes their inner product by at most2η and its squared modulus by at most4η. Equation (5) therefore gives, for every distinct f,g and each i,j,
+
+    ||<Q_g e_j,Q_f e_i>|²−1/2|
+      ≤(sqrt20+4sqrt40)sqrtδ+165δ=:E(δ).                (7)
+
+All square roots used here are valid under δ≤1/40000<1/40.
+

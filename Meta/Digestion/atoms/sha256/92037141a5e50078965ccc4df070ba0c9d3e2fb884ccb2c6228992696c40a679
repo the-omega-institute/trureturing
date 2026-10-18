@@ -1,0 +1,14 @@
+### 54.2 Complete qubit exact-reachability corollary
+
+Write rho(r,c)=r|00><00|+(1-r)|11><11|+c|00><11|+conj(c)|11><00|, with 0<r<1 and |c|^2<r(1-r). Set R=max(r,1-r), Q=1-R>0 and C=|c|. A physical target rho(p,d) is exactly reachable by finite LOSR if and only if
+
+    |d| <= C min{1, p/Q, (1-p)/Q}.
+
+This includes populations outside [Q,R]. If C=0, the condition is simply d=0, and every such target is obtainable by shared random product resets. If C>0, set z=|d|/C. Equivalent conditions are 0<=z<=1 and zQ<=p<=1-zQ.
+
+Proof. Sort and phase-align the source by local input unitaries. In the normal form n=m=2, f is either a permutation or constant. A permutation branch has populations (R,Q) or (Q,R), and coherence magnitude at most C. A constant branch is a reset to |00> or |11>, with zero coherence. If total permutation weight is a, then |d|<=aC and both target populations are at least aQ. Thus |d|/C <= min(1,p/Q,(1-p)/Q).
+
+Conversely choose permutation weight z. Mixtures of the two aligned permutation branches contribute population in [zQ,zR] and coherence exactly zC, after phase alignment. The remaining weight 1-z can be split between the two resets, expanding the achievable population interval to [zQ,zR+1-z]=[zQ,1-zQ]. Restore the desired coherence phase by a local diagonal unitary. At most four product CPTP branches suffice. This proves necessity over unrestricted product CPTP maps, rather than only over maps assumed to preserve M_2.
+
+For a target outside this region, the minimum unhalved trace distance over finite LOSR is strictly positive: the compact set of product qubit channels has compact convex hull in a finite-dimensional vector space, so its image on rho is compact. This is a qualitative obstruction, not an explicit error formula or a claim that the closest output stays in M_2.
+

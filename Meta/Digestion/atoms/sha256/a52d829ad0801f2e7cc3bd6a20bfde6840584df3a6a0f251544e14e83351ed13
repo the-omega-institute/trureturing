@@ -1,0 +1,47 @@
+**Corollary 7.3 (explicit optimized initial curvature).** Only in this
+corollary, stars on the following scalar quantities denote evaluation
+at $\tau=\bar\tau$:
+
+$$
+\begin{gathered}
+\mathsf P_*=v^TQu,\quad\mathsf R_*=v^TQw,\quad\mathsf S_*=u^TQw,\\
+D_*=v^TCu-\mathsf P_*(u^TCw)/\mathsf S_*,\qquad
+z_{\rm tan}=u-(\mathsf P_*/\mathsf R_*)w,\\
+K_{\rm opt}=\frac{z_{\rm tan}^T(H-\mu I)z_{\rm tan}}{16D_*^2}>0.
+\end{gathered}
+\tag{RH.64}
+$$
+
+As $h\downarrow0$,
+
+$$
+\begin{aligned}
+T_{\rm bar}-\mathcal T(s_0(\bar\tau+h))
+ &=K_{\rm opt}h^2+O(h^3),\\
+J(\bar\tau)-J(\bar\tau+h)&=2K_{\rm opt}h^2+O(h^3),\\
+\lambda(\bar\tau+h)&=4K_{\rm opt}h+O(h^2).
+\end{aligned}
+\tag{RH.65}
+$$
+
+The optimized curve has zero right derivative at $\bar\tau$ and
+$\bar s$; its physical-$s$ quadratic coefficient is $K_{\rm opt}/s_0^2$.
+Every optimal normalized contrast multiplier on the differentiable
+initial branch equals $2\phi'$. This is an explicit corollary of
+JR54's exact branch and JR.151–152, not a new exact branch theorem.
+
+Proof. RH.58–59 prove that all denominators in RH.64 are nonzero and
+$f'(\bar\tau)=-z_{\rm tan}/(4D_*)$. Substitution in RH.63 gives
+$\phi''(\bar\tau)=2K_{\rm opt}$. The vector $z_{\rm tan}$ is nonzero
+in $v^\perp$, which proves strict positivity. The initial radicals and
+normalizations are strictly positive, so the frame is real analytic
+near $\bar\tau$. Taylor expansion of the true value in RH.54 gives
+RH.65. At a moving point, any optimal dual supports the concave value
+function by
+$J(\tau')\leq J(\tau)-\lambda(\tau'-\tau)$; differentiability forces
+$\lambda=-J'(\tau)=2\phi'(\tau)$. Thus the contrast multiplier is
+unique even if other dual coordinates have a common $Q$ gauge. The
+moving identities RH.56–59 use moving $\mathsf P,\mathsf R,\mathsf S$;
+initial starred constants are not substituted into those identities.
+$\square$
+

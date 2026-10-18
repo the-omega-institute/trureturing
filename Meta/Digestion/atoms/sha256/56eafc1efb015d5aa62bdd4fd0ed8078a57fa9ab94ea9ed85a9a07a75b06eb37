@@ -1,0 +1,30 @@
+**Theorem 10.2 (Direct reset-based payment of both tails).** For $j\ge1$,
+
+$$
+e_L(j),e_R(j)\le P([0^j])
+\le\frac{Z-1}{Z}s^{j-1},\qquad
+A_P\le2+\frac{2\sqrt{(Z-1)/Z}}{1-\sqrt s}<\infty.
+\tag{10.2}
+$$
+
+More precisely, for every integer $R\ge1$,
+
+$$
+\sum_{j\ge R}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr)
+\le\frac{2\sqrt{(Z-1)/Z}\,s^{(R-1)/2}}{1-\sqrt s}.
+\tag{10.3}
+$$
+
+Proof. Let $G_j^L$ be the event that at least one of $X_{-j},\ldots,X_{-1}$ equals one. It belongs to $\mathcal H_j^L$. On this event the reduced field retains the nearest left one, all the bits between it and the missing center, and the entire right half-line. Lemma 4.3 makes a nearest right one available almost surely. If a retained immediate neighbor is one, the posterior is zero. Otherwise Theorem 5.1 expresses it using precisely the two nearest retained anchor distances. Thus $\mathbf1_{G_j^L}q_0$ is $\mathcal H_j^L$-measurable up to a null set.
+
+Because $\mathcal H_j^L\subseteq\mathcal E_0$, the tower property gives $p_j^L=\mathbb E_P[q_0\mid\mathcal H_j^L]$. Multiply by the measurable indicator of $G_j^L$ to conclude $p_j^L=q_0$ there. On the complement, both predictors lie in $[0,1]$. Therefore
+
+$$
+e_L(j)\le P((G_j^L)^c)=P([0^j]).
+\tag{10.4}
+$$
+
+For right erasure, let $G_j^R$ be the event that some $X_1,\ldots,X_j$ equals one. The field $\mathcal H_j^R$ retains that nearest right anchor and the entire left half-line. The same explicit posterior formula and forced-neighbor rule make $\mathbf1_{G_j^R}q_0$ measurable in this field. Projection gives equality of the predictors there and hence $e_R(j)\le P([0^j])$. These are separate statements about the actual two reduced fields; neither replaces an opposite half-line by a finite collar.
+
+Use (4.11) to obtain the geometric bounds. At $j=0$, $e_L(0),e_R(0)\le1$ by the predictor range; this pays a total of at most two after taking square roots. For $j\ge1$, sum the geometric series with ratio $\sqrt s<1$. This proves (10.2), and summing from $R$ instead proves (10.3). The proof uses an actually observed visible reset and the entire opposite half-line, without a mixing assertion for an arbitrary hidden filter or a general rectangular-support theorem. $\square$
+

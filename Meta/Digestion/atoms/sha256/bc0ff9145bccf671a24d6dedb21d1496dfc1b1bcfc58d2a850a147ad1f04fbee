@@ -1,0 +1,27 @@
+**Convention 8.1 (literature status).** The specific source-bound residual
+identities, paid ingress fibers, conditional local kernels, replay
+application and owner/copy statements above are `repo-derived`: their
+proofs use the explicit adapter and declared input runtime. The following
+primary works are `literature-attested` suppliers of the indicated general
+methods. No worldwide originality claim is attached to their concrete
+application here. In particular an abstract complement or auxiliary
+variable is not cited as a physical acquisition mechanism.
+
+| Primary source | Exact correspondence and excluded inference |
+| --- | --- |
+| N. Lynch and F. Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, Information and Computation 121(2), 1995; [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), §3.2, Lemma 3.8 and Theorem 3.10, PDF pp. 11–12 | A forward simulation matches from every related state by finite fragments with the required trace; its soundness is trace inclusion. This does not imply an inverse state decoder, exact task kernels, acquired input, identical clocks or equal costs. The primitive equality induction in Theorem 4.4 supplies the stronger concrete conclusion under its explicit hypotheses. |
+| L. Lamport and S. Merz, *Auxiliary Variables in TLA+*, [arXiv:1703.05121](https://arxiv.org/abs/1703.05121), §§3.1–3.2 and 4.1, PDF pp. 15–17 and 22–23 | History variables remember the past; prophecy variables predict future transitions; stuttering variables add steps without the old state change. Hiding an auxiliary variable is a semantic device, not acquisition, retention or a paid memory service. $I$ changes only at actual consumed INs and contains no future input suffix. |
+| M. Hofmann, B. Pierce and D. Wagner, *Symmetric Lenses*, POPL 2011; [author manuscript](https://www.cis.upenn.edu/~bcpierce/papers/symmetric.pdf), §2, PDF p. 2, discussion “Complements” | A complement retains information discarded by a projection so the two results can reconstitute the concrete value. The concrete $2^r$ and suffix fibers here are proved using actual request tasks. The lens complement supplies no owner, input port, publication fence or access price. |
+| C. H. Bennett, *Logical Reversibility of Computation*, IBM Journal of Research and Development 17, 1973, pp. 525–532; [full text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html), introduction and reversible history/output construction | Reversible simulation saves intermediate results and output before reversing work. Theorem 4.4 instead performs ordinary forward local replay with actual external inputs fixed. It claims no physical uncomputation, archive erasure, reversible implementation or thermodynamic bound. |
+| G. Winskel, *Event Structures*, Advances in Petri Nets 1986, LNCS 255, 1987; [author-hosted chapter](https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf), Definitions 1.1.1–1.1.2, PDF pp. 2–3 | Consistency and enabling distinguish possible event configurations and prior causes. Here IN, WR, commitment, row seal and receiver seal are distinct actual occurrences in a specified serial history. General enabling relations alone do not supply their tokens, chronological bytes or paid communication. No concurrency composition theorem is substituted for this runtime's actual ownership proof. |
+| N. Barnett and J. P. Crutchfield, *Computational Mechanics of Input-Output Processes: Structured Transformations and the epsilon-Transducer*, Journal of Statistical Physics 161, 2015; DOI [10.1007/s10955-015-1327-5](https://doi.org/10.1007/s10955-015-1327-5), [arXiv:1412.2690](https://arxiv.org/abs/1412.2690), §VI, equation (9), PDF pp. 12–13, and Proposition 5, p. 15 | Channel causal equivalence conditions future output on future input and the joint past, and joint unifilarity describes symbol-driven updates. The paper distinguishes the channel from a particular input process. Statistical predictive sufficiency and minimality do not give pointwise full-successor audit equivalence, actual retention, or minimum physical storage for this machine. |
+| R. Beutner and B. Finkbeiner, *Prophecy Variables for Hyperproperty Verification*, CSF 2022; [arXiv:2206.01797v1](https://arxiv.org/abs/2206.01797v1), Definition 3 and Theorem 4, PDF pp. 7–8 | For a finite-state transition system satisfying a universal-then-existential HyperLTL property, finitely many QPTL prophecies suffice for its verification game. Those future-dependent predicates are not a causal input-acquisition algorithm. Finite source capacity does not make the present unbounded constructed-tape runtime finite-state, and no prophecy is used in AIF.5. |
+
+The relevant primary passages support the distinctions just stated. No
+general completeness theorem for refinement or prophecy is used to assert
+that a missing input has already been acquired. No probabilistic assumption
+is needed for the counting bounds: the full finite address fibers are
+realized by the two accessible supply edges, both admissible at each of
+their payload INs. Search scope and these citations do not establish absence
+of stronger results elsewhere.
+

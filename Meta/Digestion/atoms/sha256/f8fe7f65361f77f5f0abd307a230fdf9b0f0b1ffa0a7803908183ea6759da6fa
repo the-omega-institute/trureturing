@@ -1,0 +1,54 @@
+**Theorem 8.3 (complete degree-two classification).** Let $I(u)$ count scattered $XY$ pairs in the retry word and let $s=\sum_i j_i$, $p=|u|_X$, $q=|u|_Y$. On the specified slice,
+
+$$
+C(h)=4I(u)+c_s+2j_1+j_3,\qquad
+c_s=2p(s+3)+\binom{s+1}{2}+2.
+\tag{SC.9}
+$$
+
+Define
+
+$$
+\begin{aligned}
+P_{p,q}(t)
+&=\#\{0\le x_1\le\cdots\le x_q\le p:
+                 \textstyle\sum_jx_j=t\},\\
+g_s(d)
+&=\max\{0,\min(s,\lfloor d/2\rfloor)-\max(0,d-s)+1\}.
+\end{aligned}
+\tag{SC.10}
+$$
+
+For $q=0$, $P_{p,0}(0)=1$ and its other values are zero. Then the complete refined fiber size is
+
+$$
+F(A,B,C)=
+\sum_{s\in\mathcal S_{A,B}}
+\ \sum_{t=0}^{p_sq_s}
+P_{p_s,q_s}(t)\,
+g_s(C-c_s-4t).
+\tag{SC.11}
+$$
+
+Equality of $(A,B,C)$ is equality of the complete degree-two signature of raw letters represented by the two fixed basis vectors over $\mathbb Z$. It implies equality in every fixed-letter represented step-two carrier. An observation that labels individual occurrences or includes parser context is an additional observation, not this fixed-letter degree-two datum.
+
+Proof. Reuse the ordered-pair concatenation identity in [SignatureOrderedMoment](../../../D5/S3/Observer/Chronology/SignatureOrderedMoment.lean), ordered_pair_moment_append: $C(vv')=C(v)+A(v)B(v')+C(v')$. Within $u$, each $XY$ contributes four raw $\alpha\beta$ pairs; hence $C(u)=4I(u)$. Its cross contribution to the accepted seed and payload is $2p(s+3)$. The accepted $\beta\alpha$ has no internal $\alpha\beta$ pair and its alpha contributes $s+2$ pairs to the payload.
+
+Within the three payload segments, internal return pairs and intersegment return pairs total $\binom{s}{2}$. The first marker's $\beta\beta$ adds $2j_1$ and the second marker's $\alpha$ adds $j_3$ before third-segment betas; the third marker's alpha adds none. Thus the total is $4I(u)+2p(s+3)+(s+2)+\binom{s}{2}+2j_1+j_3$, which is (SC.9). The prefix-count supplier identifies retry words of area $t$ with the vectors counted by $P_{p,q}(t)$. Fixing $d=2j_1+j_3$ gives $j_3=d-2j_1$, $j_2=s+j_1-d$. Nonnegativity is exactly
+
+$$
+\max(0,d-s)\le j_1\le\min(s,\lfloor d/2\rfloor).
+$$
+
+Its integer count is $g_s(d)$, including $d<0$ or $d>2s$, when it vanishes. Combining these independent choices within each normal-form summand proves (SC.11).
+
+The reused [TruncatedTensorSignature](../../../D5/S3/Observer/Chronology/TruncatedTensorSignature.lean) chronological_tensor_signature_append and SignatureOrderedMoment's diagonal/ordered-pair identity give, for fixed raw basis $e_\alpha,e_\beta$, degree one $(A,B)$ and doubled degree-two coordinates
+
+$$
+T_{\alpha\alpha}=A^2,\quad T_{\beta\beta}=B^2,\quad
+T_{\alpha\beta}=2C,\quad T_{\beta\alpha}=2(AB-C).
+\tag{SC.12}
+$$
+
+Hence the complete integral tensor datum and $(A,B,C)$ recover one another. Applying a fixed-letter representation to these coordinates gives its shadow; it cannot distinguish histories already equal in (SC.12). [BinaryParikhStepTwoBridge](../../../D5/S3/Observer/GoldenChronology/BinaryParikhStepTwoBridge.lean), binary_parikh_matrix_entries and binary_doubled_magnus_center, supplies the equivalent Parikh/centered coordinate $(A,B,2C-AB)$, with true assigned to $\alpha$. None of these generic identities asserts injectivity on this stopped-source language; (SC.11) supplies its actual residual fibers. $\square$
+

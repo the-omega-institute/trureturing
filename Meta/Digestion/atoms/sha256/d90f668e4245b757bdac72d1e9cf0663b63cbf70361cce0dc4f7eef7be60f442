@@ -1,0 +1,17 @@
+**Lemma 3.3 (free scalar pumping).** In a feasible branch, fix one free
+scalar component $C$. There is an effectively constructed sequence of
+scalar solutions for which $b_C=b_*+k$, $k\in\mathbb N$, while every
+other scalar component has one fixed base. The solutions satisfy every
+scalar condition of the branch.
+
+Proof. Begin with any scalar solution supplied by feasibility and freeze
+all components except $C$. Equations internal to $C$ retain their
+potentials. Internal disequations depend only on those potentials and
+remain true. Nonnegativity is $b_C\ge\max_{r\in C}(-\delta_r)$.
+Every disequation between $C$ and a fixed other component excludes at
+most one integer value of $b_C$. There are finitely many such values.
+Choose $b_*$ above all excluded values and at least the nonnegativity
+bound. Every $b_*+k$ then satisfies all constraints. The component is
+free, so no equation ties this change to $o$ or to another component.
+All quantities and the chosen bound are computable. $\square$
+

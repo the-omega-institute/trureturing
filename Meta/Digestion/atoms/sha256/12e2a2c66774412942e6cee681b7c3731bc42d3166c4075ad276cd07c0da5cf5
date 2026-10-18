@@ -1,0 +1,81 @@
+**Proposition 8.1 (actual original-source realization and exact
+alphabet accounting).** Let $B\subseteq S_d^n$ be one of the
+nonempty solution fibers in Definition 4.1, Definition 5.1, or
+Lemma 7.2 and its products. Put $H=\lceil\log_2n\rceil$,
+$N=2^H$, $D=H+d$. Pad the remaining $N-n$ positions with the
+fixed tree $\alpha$, and place these $N$ blocks at the frontier
+of a public perfect right-subtree scaffold of height $H$. There
+is a correct preparation/reader on the entire $\mathcal F_D$
+with attained alphabet exactly
+
+$$
+|S_D|-|B|+1,
+\tag{INB.35}
+$$
+
+merging precisely these $|B|$ canonical states into one name and
+giving every other canonical state its own name. A sufficient
+preparation on every source uses exactly
+
+$$
+2^D-1\text{ Reads},\qquad
+\text{maximum literal length }D,\qquad
+(D-1)2^D+1\text{ submitted letters}.
+\tag{INB.36}
+$$
+
+After any original late request it makes zero Reads or one actual
+original-root Read of length at most $D$ on the same stationary
+source, before its reply and before any authentic count.
+
+Proof. This is the paid full-family construction of CBN Theorem 7.1,
+Proposition 7.2 and GCB §5, applied to the specified fibers. Here are
+its exact hypotheses and substitution. At public frontier addresses
+$a_i$ of length $H$, insert the actual trees $x_i$ from $B$ and
+the fixed padding. These are distinct canonical states of $S_D$:
+ordered assembly is injective, each inserted block is in $S_d$,
+and the height is at most $H+d$. Call their image $\widehat B$.
+Targets strictly above the frontier are branch constants; those
+inside padding have fixed full factors, including initially absent
+ones. Every remaining target is $Ra_iq$, $q\in W_d$, and inherits
+the complete witness for block $i$. A donor $(j,b)$ is the actual
+word $Ra_jb$, of length at most $1+H+d-1=D$. All these occurrences
+are present; no absent position is transported as a subtree.
+
+Their trajectories agree with the local ones by homomorphic
+transport at the present occurrence. This is exactly the presence
+premise of `original_present_transport` in [NativeDepthPatterns][D5N].
+The complete supplied $\Gamma$ decoder then handles every authentic
+subsequent count. For a canonical singleton every factor is already
+known from its name and needs no Read. Thus the one merged fiber
+and all other singletons are a complete admissible canonical partition.
+
+To obtain its name without advice, before receiving $p$ submit all
+original-root $Rq$ with $q\in W_D$, including absent replies, in a
+fixed public order. The acquired boundary determines $\pi_D(v)$
+by the credited canonical reconstruction, hence its name. The call
+count is $\sum_{l=0}^{D-1}2^l=2^D-1$, and the letter count is
+$\sum_{l=0}^{D-1}(l+1)2^l=(D-1)2^D+1$; the latter follows
+by induction, adding $(D+1)2^D$ at the next depth. The maximum
+length is $D$. This is a deterministic effective terminating scan,
+independent of both source replies and the later request.
+
+Install the finite public witness and membership tables and compute
+a fixed-width name. Export that name alone. The paid isolation
+removes the scan, temporary arrays, selectors and other accessible
+source dependence; control, allocation and computation can use a
+public padded finite schedule. Canonicalization preserves all
+boundary replies and all requested factors. Therefore the same
+zero-Read or one-Read witness works on every original source in
+the inverse image of a name, even when its unrepresented deeper
+labels differ. Its literal is selected using only the complete
+name, $D,p$ and installed tables, before reply or count. The
+source never changes and no prior transcript is accessible.
+
+Every canonical state is attained by taking $v$ equal to it.
+There is one name for $\widehat B$, whose size is $|B|$, and
+one per other canonical state. Hence the complete attained alphabet
+is exactly (INB.35). Its merged fiber on $\mathcal F_D$ is the
+full inverse image under $\pi_D$, not just the displayed physical
+canonical sources. $\square$
+

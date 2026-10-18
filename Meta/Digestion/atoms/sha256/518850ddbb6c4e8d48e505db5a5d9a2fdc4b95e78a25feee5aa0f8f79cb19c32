@@ -1,0 +1,43 @@
+**Definition 2.2 (literal word-program language).** The only register
+assignments are empty, copy, literal-bit cons and tail; tail of empty is
+empty. Tests are empty and first-bit tests. Sequence, finite case and while
+have static finite-flow successors. Internal $n$ is the actual word $1^n$;
+wire $U(n)=1^n0$. Define
+
+$$
+F(w)=U(|w|)w,\qquad
+\mathcal L([])=0,\qquad
+\mathcal L(w::r)=1F(w)\mathcal L(r).
+$$
+
+A displayed tuple is precisely an $\mathcal L$ list with the displayed
+arity. Every enclosing parser requires exhaustion. A symbol is its actual
+three-bit code in ARC's order $L,R,0,1,\square,\mathsf{sep},\mathsf{seal},
+\mathsf F$; cell tracks are their original eight literal bits. Naturals,
+tuple indices, record lengths, paths, stacks and dictionaries are words,
+never runtime native addresses or an unbounded finite-control integer.
+
+Reverse, Cat, Length, Equal, Take, ReadUnary, ReadFrame, ReadList, Nth,
+Replace and AppendItem have exactly RCA Definition 12.1's acyclic
+expansions. For definiteness the additional routines used here are fixed
+as follows.
+
+| Routine | Exact word operations and exit |
+| --- | --- |
+| Prefix$(x,y)$ | Copy both cursors; compare/tail simultaneous leading bits; accept at exhaustion of $x$, reject at mismatch or earlier exhaustion of $y$. |
+| LexLess$(x,y)$ | Cancel equal leading bits; proper prefix is less; otherwise 0 is less than 1; equality is false. |
+| Find$(D,key)$ | ReadList a copied closed list, compare the designated key by Equal; retain the first item and unary index, else missing. |
+| Insert$(D,w)$ | Scan sorted copied $D$, emitting to a separate output; insert before its first greater key, suppress an equal key, append at end if absent. A duplicate-forbidden call rejects equality instead. |
+| Push/Pop | Prepend literal 1 and Frame(item) to a word list; Pop is ReadList. No native call stack is used. |
+| Emit | Cat of literal 1 and Frame(item) to the output accumulator; append terminal 0 once at end. |
+| Add/subtract/compare | Copy unary operands; Cat for addition; tail both for comparison/subtraction, failing subtraction when the right outlasts the left. |
+| Half$(1^n)$ | Repeatedly tail a copied cursor twice, consing one mark to the quotient; a leftover single mark is the parity bit. This gives floor/ceiling halves. |
+| Fixed-field/cell access | Nth/Replace with a literal index; a dynamic list index is a constructed unary word and uses cancellation. |
+| TakeItems$(n,D)$ | Copy unary $n$ and list $D$; once per mark ReadList one whole item and Emit to a different list, tail the mark; fail on early list end, otherwise terminate the output and return the unconsumed list. This counts records, not bits. |
+| Finite vector enumeration | Start the list containing the empty pattern; for each location cons each allowed literal symbol to each old pattern into a different list; reverse field order at end. |
+
+Every emitted item is itself built by the earlier word macros. Finite
+bits obtained by tests are selected into separate literal branches before
+the compiler can overwrite a native read latch. No generic string, sorting,
+dictionary, arithmetic, traversal or parser opcode is introduced.
+

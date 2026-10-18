@@ -1,0 +1,61 @@
+**定义 C-76.2（条件底面、精确基序与商不变量）。** 条件于底面事件 $s\ne2$，将四个模式识别为
+
+$$
+0\leftrightarrow |0\rangle_A|0\rangle_B,\quad
+1\leftrightarrow |1\rangle_A|0\rangle_B,\quad
+3\leftrightarrow |0\rangle_A|1\rangle_B,\quad
+13\leftrightarrow |1\rangle_A|1\rangle_B.
+\tag{C76.5}
+$$
+
+因此按张量积标准次序 $(00,01,10,11)$ 写的系数向量是
+$(\psi_0,\psi_3,\psi_1,\psi_{13})/\sqrt r$；它不同于删掉中模式后的原标签次序 $(0,1,3,13)$。行指标为 $A$、列指标为 $B$，二者均按 $0,1$ 排列，矩阵为
+
+$$
+\mathsf B=\frac1{\sqrt r}
+\begin{pmatrix}\psi_0&\psi_3\\ \psi_1&\psi_{13}\end{pmatrix},
+\qquad
+\operatorname{Tr}(\mathsf B\mathsf B^\dagger)=1,\qquad
+\mathcal C=2|\det\mathsf B|.
+\tag{C76.6}
+$$
+
+这里的 $\mathsf B$ 依赖代表元。具体地，C-73.4 的共同及占位相位作用
+$\theta_s\mapsto\theta_s+\gamma_0+x_s\gamma_X+y_s\gamma_Y+z_s\gamma_Z$
+使
+
+$$
+\mathsf B\longmapsto e^{-i\gamma_0}
+\begin{pmatrix}1&0\\0&e^{-i\gamma_X}\end{pmatrix}
+\mathsf B
+\begin{pmatrix}1&0\\0&e^{-i\gamma_Y}\end{pmatrix}.
+\tag{C76.7}
+$$
+
+底面上 $z_s=0$，故 $\gamma_Z$ 不出现。这是整体相位和左右对角酉变换；矩阵本身一般变化，但行列式模与奇异值不变。因此 $\mathcal C$ 及奇异值下降到声明的五模式相位商。这里允许的相位变换与 C-67.4 的正行列重加权不同：前者保留每个概率，后者一般改变概率。
+
+经典中间定义取自 Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)、(6)–(8)。对归一化两因子纯态 $|\varphi\rangle$，其 concurrence 为
+$|\langle\varphi|(\sigma_y\otimes\sigma_y)|\overline\varphi\rangle|$。
+在式 (C76.5) 的标准基上代入 $\sigma_y|0\rangle=i|1\rangle$、
+$\sigma_y|1\rangle=-i|0\rangle$，得到 $2|\det\mathsf B|$，与原卷 C-12.2 一致。
+本处只消费纯态公式，不调用一般混态的优化结论。
+
+归一化也直接证明取值范围。设 $\lambda_1,\lambda_2$ 是正半定矩阵
+$\mathsf B\mathsf B^\dagger$ 的特征值，则
+
+$$
+\lambda_1,\lambda_2\ge0,\qquad \lambda_1+\lambda_2=1,\qquad
+\mathcal C^2=4\lambda_1\lambda_2
+=1-(\lambda_1-\lambda_2)^2.
+\tag{C76.8}
+$$
+
+故 $0\le\mathcal C\le1$。$\mathcal C=0$ 恰为非零矩阵 $\mathsf B$ 秩一，即条件纯态为乘积态；
+$\mathcal C=1$ 恰为两特征值均为 $1/2$，即两个 Schmidt 系数相等。
+约化态实际为 $\rho_A=\mathsf B\mathsf B^\dagger$、
+$\rho_B=\mathsf B^{\mathsf T}\overline{\mathsf B}$；后者与
+$\mathsf B^\dagger\mathsf B$ 互为转置，有相同谱。其纯态熵为
+$-\sum_j\lambda_j\log_2\lambda_j$，零谱项按连续值零处理。
+二元熵在 $\lambda_1=1/2$ 取最大值一：其内部导数为
+$\log_2((1-\lambda_1)/\lambda_1)$，在该点左正右负。这说明“最大纠缠”在此指声明的二元因子纯态，而非整个五维空间的无条件张量分解。
+

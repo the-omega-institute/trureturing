@@ -1,0 +1,20 @@
+**定义 7.2（同源连续数量响应）。** 在同一 $`\sigma`$ 上定义提升与读出
+
+```math
+z_\sigma(t)=T_3(t)Jd_\sigma,\qquad
+f_\sigma(t)=qLz_\sigma(t)=qU(t)d_\sigma.
+```
+
+整数 $`n\ge0`$ 时它是所选贡献经 $`n`$ 次组成替换后的数量；非整数时是声明的表示读出，不是新增实际动作。由第四节矩阵及递推，逐项有
+
+```math
+\begin{aligned}
+f_2(t)&=2\mathcal F(t-1)+3\mathcal F(t)=\mathcal F(t+3),\\
+f_3(t)&=2\mathcal F(t)+3\mathcal F(t+1)=\mathcal F(t+4),\\
+f_0(t)&=0,\qquad f_5(t)=f_2(t)+f_3(t),\\
+f_{25}(t)&=2f_2(t)+f_3(t).
+\end{aligned}
+```
+
+第一式由三次递推得到 $`\mathcal F(t+3)=3\mathcal F(t)+2\mathcal F(t-1)`$；第二式同理。这给 $`t=0`$ 时的 $`0,2,5,7,3`$，也固定了整族来源对应。
+

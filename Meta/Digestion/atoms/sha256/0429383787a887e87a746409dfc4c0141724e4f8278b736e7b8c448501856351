@@ -1,0 +1,24 @@
+**Mathematical citation 7.2 (primary sources).** Herlihy and Wing,
+*Linearizability: A Correctness Condition for Concurrent Objects*, ACM TOPLAS
+12(3), 463–492 (1990), [original paper, §2.2][HW], DOI
+[10.1145/78969.78972](https://doi.org/10.1145/78969.78972), define linearizable
+histories through an equivalent legal sequential history respecting
+nonoverlapping operation order. RA's validation Read gives a particular
+in-call linearization point for the row. This is a safety correspondence,
+not a wait-free guarantee or equality at the separate Return endpoint.
+
+Turing, *On Computable Numbers, with an Application to the Entscheidungsproblem*,
+Proceedings of the London Mathematical Society, series 2, 42, 230–265
+(1936–1937), [original paper, §§1–2][TURING], describes tape symbols, finite
+control and the scanned square; a complete configuration includes the
+scanned-square position. This motivates explicitly charging moving heads and
+mutable control. It does not supply a lower bound for this native row problem
+or turn a binary address description into a physically materialized word.
+
+These are `literature-attested` background in the stated scopes. The RA
+construction, its moving-traversal proof, candidate and bit-space account,
+and the same-program family/traffic comparison are `repo-derived` results.
+They combine the cited native suppliers with the explicit proofs above.
+No worldwide originality, exhaustive literature classification, independent
+review or new kernel verification is asserted.
+

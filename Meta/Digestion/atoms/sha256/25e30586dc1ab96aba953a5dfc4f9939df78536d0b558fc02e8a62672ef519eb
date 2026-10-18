@@ -1,0 +1,22 @@
+**定义 13.2.1（区域分解与生成元）。** 令 $X$ 为有限区域标签集，
+
+$$
+\mathcal H=\bigoplus_{x\in X}\mathcal H_x
+$$
+
+为有限维向量空间；经典有限状态过程也可取 $\mathcal H_x=\mathbb R$。对 $A\subseteq X$，记
+
+$$
+P_A=\sum_{x\in A}P_x
+$$
+
+为对应的块投影。令 $G$ 为一个有限维生成元，时间演化写作
+
+$$
+T_t=e^{tG},\qquad t\ge0.
+$$
+
+量子闭系统是 $G=-iH/\hbar$、$H=H^\dagger$ 的特例；连续时间 Markov 链是 $G=L$、$L_{yx}\ge0$（$y\ne x$）且列和为零的特例。
+
+<a id="claim-13-2-2"></a>
+

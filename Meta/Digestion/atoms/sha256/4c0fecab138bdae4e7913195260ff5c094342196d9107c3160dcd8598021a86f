@@ -1,0 +1,32 @@
+**Definition 7.1 (fixed reversible historical wire interpretation).** Use
+exactly RCA Definition 12.4's canonical HistoricalImage bytes, including
+the complete native event list, raw physical-state projection and actual
+source/version/cut binding. For a target $h$ the target-version tag is
+its actual old/main/bootstrap/raw-table phase. The package separately
+binds the later service $D_1$ and activation chain. Fix $\Pi$ and the
+layout of §§3–4 as public parameters of the structural runtime.
+
+Interpret that wire value by the finite map
+
+$$
+\mathcal W_\Pi\bigl(\operatorname{Image}_{P}(h,Y(h),\mathrm{binding})\bigr)
+ =\bigl(\widehat h,\Gamma_+(Y(h)),X_+(h),
+          \mathrm{binding},\operatorname{bill}_\Pi(h)\bigr).
+\tag{CSA.8}
+$$
+
+$X_+(h)$ denotes the same complete joint interpretations on this structural
+storage. Decode the native wire fields, apply the literal compiler to its
+finite event list, apply the incidence encoding to its raw endpoint and
+use the same event/field interpretations. The bill is evaluated by §8 on
+that event list. This is a wire codec for a structural historical image,
+not a transmitted graph adjacency list or four separately printed view
+lists. No service is asserted to execute $\mathcal W_\Pi$ at unit cost.
+
+For a complete Call fragment, $\operatorname{wire}(r)$ denotes the entire
+published/delivered result tuple, including its Image tag, package and
+target fields. Let $\operatorname{payload}_{\rm Image}$ parse its
+HistoricalImage field by RCA's exact framing. Applying CSA.8 means applying
+it to that field; the enclosing result, binding, print bits and delivery
+observations remain part of $Q_+$ and the actual Call response.
+

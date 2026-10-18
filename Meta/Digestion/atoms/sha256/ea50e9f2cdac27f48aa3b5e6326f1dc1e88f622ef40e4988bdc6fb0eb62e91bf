@@ -1,0 +1,19 @@
+**Corollary 5.2 (credited parity identity on this sector).** Its exact
+mass is
+
+$$
+Z_G=a^n2^{-nk/2}(1+\epsilon^n).
+\tag{INB.18}
+$$
+
+Proof. This is [GDB, Theorem 13.1][GDB] for $k=4$, with the same
+standard parity-character argument for general $k$. Expand
+$\prod_i(1+\epsilon\chi_i)$ by vertex subsets $A$. Summing a term
+over the independent counting coordinates $s_e$ gives zero if an edge
+has exactly one endpoint in $A$, since changing that edge bit changes
+its sign. Connectedness leaves exactly $A=\varnothing,V(G)$. Each
+surviving character is identically one and contributes $2^{|E|}$.
+Since $|E|=nk/2$, multiplication by $(a2^{-k})^n$ proves (INB.18).
+The product counting carrier in this finite summation is not an
+independence assumption on the normalized actual solution law. $\square$
+

@@ -1,0 +1,196 @@
+**Theorem 2.2 (uniform mass bound with arbitrary cyclic donors).**
+Suppose that every range-feasible $P\subseteq S$ with $w(P)>C$
+has a target $g_q$ which no own-coordinate experiment determines on
+$P$, and for which
+
+$$
+\sum_{z\in g_q(P)}A_{q,z}(P)^2\le C^2.
+\tag{NCE.13}
+$$
+
+Then for every $n\ge1$ and every jointly admissible $B\subseteq S^n$,
+
+$$
+\boxed{\Omega_w(B)\le C^n.}
+\tag{NCE.14}
+$$
+
+In particular the functions
+$y_n(x)=C^{-n}\prod_iw(x_i)$ are feasible fractional-cover dual
+weights for the entire family of jointly admissible sets, with total
+$(w(S)/C)^n$. Every integral joint cover has at least
+$\lceil(w(S)/C)^n\rceil$ members.
+
+Proof. Empty $B$, or $\Omega_w(B)=0$, is immediate. Zero-weight states
+can be deleted: replace $S$ by $S_+=\{x:w(x)>0\}$ and $B$ by
+$B\cap S_+^n$. Joint admissibility and the hypothesis restrict to
+these subsets, and neither relevant mass changes. Hence assume
+$w>0$ and $B\ne\varnothing$.
+
+Use the single probability law
+
+$$
+\Pr[X=x]=\frac{\prod_iw(x_i)}{\Omega_w(B)}\quad(x\in B).
+\tag{NCE.15}
+$$
+
+Every point of $B$ has positive probability. Its marginal support is
+exactly $P_i=\pi_i(B)$: every projected state occurs in at least one
+positive-probability tuple. Every $P_i$ is range-feasible. Indeed,
+for a fixed target its values on $P_i$ are exactly its values on
+$B$, and the witnessing single experiment on $B$ has at most $m$
+replies. This argument asserts neither that $P_i$ is locally
+admissible nor that the tuple coordinates are independent.
+
+All logarithms in this proof are base two. For a finite random
+variable $U$ with law $p$, write $H(U)=H(p)=-\sum_up_u\log_2p_u$.
+Conditional entropy is
+$H(U\mid V)=\sum_{v:\Pr[V=v]>0}\Pr[V=v]H(U\mid V=v)$.
+We record the finite entropy facts used, with their support conditions.
+For a distribution
+$p$ and a distribution $q$ positive on the support of $p$,
+
+$$
+D(p\Vert q)=\sum_{p_z>0}p_z\log_2\frac{p_z}{q_z}\ge0.
+\tag{NCE.16}
+$$
+
+To see this directly, apply $\ln t\le t-1$ to $t=q_z/p_z$ and
+sum: $\sum_{p_z>0}p_z\ln(q_z/p_z)\le
+\sum_{p_z>0}q_z-1\le0$. Thus, for positive numbers $a_z$,
+
+$$
+H(p)+\sum_zp_z\log_2a_z\le\log_2\sum_za_z.
+\tag{NCE.17}
+$$
+
+Here (NCE.17) is (NCE.16) with $q_z=a_z/\sum_ua_u$; the
+convention $0\log 0=0$ applies throughout. The chain rule follows
+by writing a positive joint mass as marginal mass times conditional
+mass, and summing its logarithm. Conditioning reduces entropy:
+
+$$
+H(U\mid V,Z)\le H(U\mid Z).
+\tag{NCE.18}
+$$
+
+For each $z$ of positive probability, apply (NCE.16) to the conditional
+joint law of $(U,V)$ and the product of its two conditional marginals.
+The product is positive wherever that joint law is positive. Expanding
+and averaging gives
+$H(U\mid Z)-H(U\mid V,Z)\ge0$. Zero-probability conditioning
+events make no contribution. This proves (NCE.18), including empty
+or constant conditioning variables. It also proves all the following
+uses for vector-valued conditioning variables.
+
+Let $I=\{i:w(P_i)>C\}$. For each $i\in I$, choose a target from
+the hypothesis and put $Y_i=g_{q_i}(X_i)$. Its joint witness gives
+a donor $j_i$ and a function $d_i$ with
+
+$$
+Y_i=d_i(r_{a_i}(X_{j_i}))\quad\text{on }B.
+\tag{NCE.19}
+$$
+
+Such a function exists on attained replies because equal replies have
+equal target values; its definition elsewhere is immaterial. A constant
+target would have a constant own-coordinate witness, so $Y_i$ is
+nonconstant on $P_i$. A donor $j_i=i$ would determine the chosen
+target on all of $P_i$: take any two projected states, lift them to
+tuples in $B$, and apply the witnessing equality. Both possibilities
+contradict its choice. Therefore $j_i\ne i$. Crucially, $Y_i$ is a
+deterministic function both of $X_i$ and of $X_{j_i}$ under the
+same law (NCE.15).
+
+Let the total correlation under this law be
+
+$$
+\mathcal C(X)=\sum_iH(X_i)-H(X_1,\ldots,X_n).
+$$
+
+For any ordering $\pi$ of the coordinates, let $A_i^\pi$ be the
+tuple of coordinates preceding $i$. The chain rule gives
+
+$$
+\mathcal C(X)=\sum_i\bigl(H(X_i)-H(X_i\mid A_i^\pi)\bigr).
+\tag{NCE.20}
+$$
+
+Every summand is nonnegative by (NCE.18). If $i\in I$ and $j_i$
+precedes $i$, then $Y_i$ is a function of $A_i^\pi$, so
+
+$$
+\begin{aligned}
+H(X_i\mid A_i^\pi)
+ &=H(X_i\mid A_i^\pi,Y_i)\le H(X_i\mid Y_i),\\
+H(X_i)-H(X_i\mid A_i^\pi)
+ &\ge H(X_i)-H(X_i\mid Y_i)=H(Y_i).
+\end{aligned}
+\tag{NCE.21}
+$$
+
+The last equality uses that $Y_i$ is a function of $X_i$ and the
+chain rule for $(X_i,Y_i)$. Average (NCE.20)–(NCE.21) over all
+$n!$ coordinate orders. For each distinct pair $j_i,i$, swapping
+their order shows that $j_i$ precedes $i$ in exactly half the
+orders. Consequently
+
+$$
+\mathcal C(X)\ge\frac12\sum_{i\in I}H(Y_i).
+\tag{NCE.22}
+$$
+
+No assertion that all donor edges point backward in one order is
+needed. Reciprocal donors and every longer cycle are included in
+this averaging. The order is an analytical device, not a sequence
+of actual queries or new side information supplied to a reader.
+
+For a light coordinate, (NCE.17) on its exact marginal support gives
+
+$$
+H(X_i)+\mathbb E\log_2w(X_i)\le\log_2w(P_i)\le\log_2C.
+\tag{NCE.23}
+$$
+
+For a heavy coordinate write $p_z=\Pr[Y_i=z]$ and
+$A_z=A_{q_i,z}(P_i)$. Each attained cell has $A_z>0$ and $p_z>0$.
+The conditional law of $X_i$ given $Y_i=z$ is supported on exactly
+that cell, because the marginal law has full support $P_i$. Applying
+(NCE.17) within each cell and then the chain rule gives
+
+$$
+H(X_i)+\mathbb E\log_2w(X_i)
+ \le H(p)+\sum_zp_z\log_2A_z.
+$$
+
+Apply (NCE.17) again, this time to the positive numbers $A_z^2$:
+
+$$
+\begin{aligned}
+H(X_i)+\mathbb E\log_2w(X_i)-\tfrac12H(Y_i)
+ &\le\tfrac12H(p)+\sum_zp_z\log_2A_z\\
+ &\le\tfrac12\log_2\sum_zA_z^2\le\log_2C.
+\end{aligned}
+\tag{NCE.24}
+$$
+
+Finally (NCE.15) gives the exact weighted Gibbs identity
+
+$$
+\log_2\Omega_w(B)=H(X)+\sum_i\mathbb E\log_2w(X_i).
+\tag{NCE.25}
+$$
+
+Substitute $H(X)=\sum_iH(X_i)-\mathcal C(X)$, apply (NCE.22),
+then (NCE.23) and (NCE.24). The result is
+$\log_2\Omega_w(B)\le n\log_2C$, proving (NCE.14).
+For a fractional cover, sum its pointwise covering inequalities
+against $y_n$; each member has mass at most one by (NCE.14),
+while the whole product has mass $(w(S)/C)^n$. This proves the
+fractional and integral assertions. $\square$
+
+The hypothesis concerns only heavy range-feasible projections.
+Light projections can also be locally insufficient. The proof uses
+neither an entropy-cone completeness assertion nor an achievability
+theorem for arbitrary functional dependencies.
+

@@ -1,0 +1,20 @@
+**Definition 2.3 (comparison and hybrid interfaces).** For the bracket lower
+bounds we allow a stronger comparison interface: one current source, native
+literal Read, actual unconditional $\rho$, and insertion of the current source
+exactly once into a known ordered one-hole context. We even grant the entire
+current leaf word as a free semantic observation. Contexts are constructed from
+public inputs and acquired data; they cannot contain additional unacquired
+source advice. There is no operation that copies the unknown source occurrence.
+The genuine native submodel omits grafts. Guarded numerical modifications are
+included by making their complete word-count test and mutating only on accept.
+This is a mathematical comparison interface, not a claimed supplier composition.
+
+For the balanced lower bound we instead retain the exact fixed-$H$ numerical
+menu and TM57 services, and explicitly add a nonmutating `LitRead(p)` on the
+same actual current source. Its only new source-dependent observation is the
+four-valued literal reply. Any visible preparation, execution, delivery and
+recording schedule for this added port must be determined by public data and
+the already acquired prefix, consuming the reply only at release. This is a
+hypothesis of the hybrid model. The original PR57.T3 proves that property for
+the original services, not automatically for a new literal instrument.
+

@@ -1,0 +1,30 @@
+**Proposition 2.3 (complete joint moment correspondence).** The eight
+moment equations in (QS.8) are equivalent to the full physical equations
+
+$$
+\int hh^T\,d\pi=I_3,\qquad
+\int b_x n_hn_h^T\,d\pi=M.
+\tag{QS.9}
+$$
+
+Proof. This is the correspondence of [GC, Proposition 12.2][GC], with
+$b_x=t c\xi$. To spell out every entry, the first five coordinates give
+$\int1=1$, $\int u=\int v=\int uv=0$ and $\int u^2=\alpha$.
+Since $v^2=1-u^2$, $\int v^2=\beta$. Rescaling by
+$z=u/\sqrt\alpha$, $w=v/\sqrt\beta$ gives all six independent entries
+of the first matrix in (QS.9). Multiplying the last three coordinates by
+$t$ gives
+
+$$
+\int b_x=\mu,\quad \int b_xu^2=\alpha V,\quad\int b_xuv=0.
+$$
+
+Thus $\int b_xz^2=V$, $\int b_xzw=0$, and the pointwise ellipse identity
+$\alpha z^2+\beta w^2=1$ gives $\int b_xw^2=W$. The lower diagonal
+entries of the second matrix in (QS.9) are $d^2W/h_2^2=m_1$ and
+$b^2V/h_1^2=m_2$, its cross entry is zero, and its first row and column
+vanish. Conversely the complete live Gram gives the first five moments;
+the two failure diagonals and cross entry give $V,W,0$, and the ellipse
+gives $\mu$. They recover the last three moments. All constraints belong
+to this one law. $\square$
+

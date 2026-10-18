@@ -1,0 +1,31 @@
+**Corollary 5.2 (short original separation under local interface facts).**
+Fix $h\in\mathcal H_{\mathrm{mode}}$. Suppose the unchanged original
+interface admits the $d(h)$ successive Advances from $h$ as precisely those
+single native rows. Suppose also that, uniformly for alternative starts
+in $\mathcal H_{\mathrm{mode}}$ with matching executed original responses,
+these actions are the corresponding single native rows and equality of
+those original responses implies equality of Definition 2.1's control and
+latch4/6 records. Then
+
+$$
+k\in\mathcal H_{\mathrm{mode}},\quad h\sim_Q k\quad\Longrightarrow\quad h=k.
+$$
+
+On any $D\subseteq\mathcal H_{\mathrm{mode}}$ satisfying these interface
+facts for every member, each $V\in\{S,B,M_J,T\}$ separately satisfies
+$V(h)=V(k)\Longleftrightarrow h=k\Longleftrightarrow h\sim_Q k$ on $D$.
+
+Proof. Use the fixed finite nonadaptive word Advance$^{d(h)}$. Original
+partial-response equality forces the same defined executed response at
+each of its prefixes. Undefinedness, unexecuted `none` or a different
+refusal cannot replace the reference executed response. The stated local
+interface facts therefore give the matching native record of Theorem
+2.4, hence $k=h$. Identical initialized histories have identical original
+partial response maps. GENERAL Corollary 4.4 supplies the independent
+view directions. ∎
+
+This corollary reduces the mode-cut separation obligation to an existing
+non-IN segment. It neither instantiates EXPOSURE Definition 5.1 literally
+nor eliminates its full two-flight experiment obligation where that
+certificate is used.
+

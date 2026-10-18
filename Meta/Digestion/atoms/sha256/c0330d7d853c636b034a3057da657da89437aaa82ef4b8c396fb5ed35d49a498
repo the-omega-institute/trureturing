@@ -1,0 +1,27 @@
+**Corollary 4.3 (finite eliminable abbreviations do not define normality).**
+The conclusion of Corollary 4.2 holds after adjoining finitely many
+acyclic explicit formula abbreviations and explicitly definable
+function symbols whose finite guarded graph expansions eliminate them
+back to Definition 1.2. All parameters in those definitions must be a
+fixed finite tuple independent of $X$.
+
+Proof. Expand predicate abbreviations in dependency order, renaming
+bound variables to avoid capture. Replace each defined function
+occurrence by a fresh variable and its graph, with the domain condition
+required by its partial semantics. For a partial graph $G(\bar t,y)$
+the domain is $\exists y\,G(\bar t,y)$; functionality makes the value
+unique when that domain holds. Guarded case expansion preserves the
+false and undefined branches as well as the defined branch. By the
+assumed finite elimination property this produces a finite formula in
+the original language, possibly with outer quantifiers. Acyclicity
+ensures expansion terminates. The union of all parameter tuples is
+still fixed and finite. A definition of $\mathcal N$ in the expanded
+notation would therefore contradict Corollary 4.2 after expansion and
+Theorem 4.1's quantifier elimination.
+
+In particular the fixed-numeral and fixed-address formulas of
+[ABC, Theorem 7.2][ABC] are available as abbreviations with their actual
+guards. An unbounded recursive scheme, a primitive native-normality
+predicate or an arbitrary-address operation is not such a finite
+eliminable abbreviation. $\square$
+

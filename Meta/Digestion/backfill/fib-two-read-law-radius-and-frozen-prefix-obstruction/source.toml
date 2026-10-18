@@ -1,0 +1,5 @@
+source_id = "fib-two-read-law-radius-and-frozen-prefix-obstruction"
+path = "docs/develop/theory/FIB_TWO_READ_LAW_RADIUS_AND_FROZEN_PREFIX_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,68 @@
+**Lemma 4.2 (linear-system enumeration).** After projective scaling, the
+non-family conics obtained from the edge alternatives are exactly the 67
+isolated $F$ candidates and the 28 isolated $G$ candidates before the
+determinant filter. After removing determinant-zero conics, there are 50
+isolated $F$ conics and 21 isolated $G$ conics. The $G$ list is the following
+21 indices from the zero-based $F$ list:
+
+$$
+[0,2,3,4,5,6,7,8,11,12,13,14,17,18,20,22,23,25,28,29,32].
+$$
+
+In addition, both branches contain the unbounded family
+
+$$
+q_e=XY+(1-e)X+eY,
+\qquad e\in\mathbb Q\setminus\{0,1\}.
+$$
+
+The determinant of $q_e$ is $2e(1-e)$ in the normalized conic matrix.
+
+**Proof.** Solve the edge coefficient systems. For $AC\ne0$, scale $C=1$. Choose
+$(E,F_0),(d,f)\in S_2$ and $(u,v),(w,h)\in U_2$, with $(w,h)=(2,1)$
+for $G$, and solve
+
+$$
+A=\frac{1-E+F_0}{h},\quad B=E-u,\quad D=Ad,
+$$
+
+subject to
+
+$$
+F_0=Af,\quad A-D+F_0=v,\quad D-B=Aw.
+$$
+
+For $C=0$, $A\ne0$, scale $A=1$, choose $(D,F_0)\in S_2$ and the
+corresponding $(w,h)\in U_2$ (restricted to $(2,1)$ for $G$), set
+
+$$
+B=D-w,\qquad E=F_0-h,
+$$
+
+and test the two remaining $Y$-edges against the constant and linear members
+of $S$ and $U$. The $A=0$, $C\ne0$ case is the $F$-branch exchange of
+$X,Y$. For $G$, the final edge is tested against $V$.
+
+For $A=C=0$, scale $B=1$ and write
+
+$$
+q=XY+dX+eY+f.
+$$
+
+The edge equations are linear alternatives. They require $f/e\in\{0,2\}$
+when $e\ne0$, the corresponding nonzero-constant condition when $e=0$,
+and the analogous condition for $d$. The two shifted edge equations require
+
+$$
+\frac{f-d}{e-1}\in\{-1,1\},
+\qquad
+\frac{f-e}{d-1}\in\{-1,1\}
+$$
+
+for $F$, with the last set reduced to $\{1\}$ for $G$, with the stated
+nonzero-denominator alternatives when a denominator vanishes. Solving these
+linear alternatives gives the isolated entries and $q_e$. No bounded choice
+of $e$, $k_i$, $m_i$, or $n_i$ is made. Finally remove the determinant-zero
+cases. In characteristic zero, a nonzero determinant is exactly absolute
+irreducibility for a plane conic. $\square$
+

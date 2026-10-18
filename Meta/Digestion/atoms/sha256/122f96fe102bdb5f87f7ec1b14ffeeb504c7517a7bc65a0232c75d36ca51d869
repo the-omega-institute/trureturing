@@ -1,0 +1,46 @@
+**Definition 2.1 (Literal complete controller).** Keep an arbitrary
+probability space $(\mathsf U,\mathcal U,\nu)$ independent of the
+whole $J_p$ source, with its law unchanged. An installed table is
+$(\mathcal K,\lambda,\delta,c_{\rm init})$, with finite nonempty
+row set $\mathcal K$,
+
+$$
+\begin{aligned}
+\lambda &:\mathcal K\longrightarrow
+\{\operatorname{Read}(t):t\in\mathbb Z\}
+\sqcup\{\operatorname{Halt}(h):h\in\mathcal A\},\\
+\delta &:\mathcal K_{\rm R}\times\{0,1\}\longrightarrow\mathcal K,
+&c_{\rm init}&:\mathsf U\longrightarrow\mathcal K.
+\end{aligned}
+\tag{2.1}
+$$
+
+The sets $\mathcal K_{\rm R},\mathcal K_{\rm H}$ are the Read and
+Halt rows. The initialization is measurable for discrete $\mathcal K$.
+At initialization
+the current row becomes $c_{\rm init}(u)$. A Read row makes its
+fixed literal call to the actual $X_t$, consumes the reply in its
+immediate update $\delta(r,X_t)$, and enters that successor. A Halt
+row returns its fixed actual four-state label. Each instruction takes
+finite duration; there are no silent instructions. A nonreturning
+installed execution therefore makes infinitely many paid calls.
+
+After initialization the current row contains all runtime memory.
+There is no separate program position, clock, counter, phase port,
+archive, stack, saved reply, output latch, computed address, seed
+reaccess or online coin. The public fixed $p,j$ may determine the
+static table. All installed rows count in $|\mathcal K|$, including duplicate
+instructions, duplicate labels, unused rows and rows reached only on
+null histories. Both successors of every Read row are fixed. Cycles
+and arbitrarily long formal executions are allowed.
+
+Every actual call is paid, including separators, repetitions, ignored
+replies, negative coordinates, disconnected placements and arbitrarily
+distant addresses. There is no hidden-state, half-line or tail read,
+source-dependent seed or timing, reset, law switch, endpoint movement
+or erased-coordinate substitution. This is the interface of
+[Two Endpoint, Definition 8.1][E2]. It is a subclass of [Original,
+Definition 9.1][O]'s measurable acquired-record protocols. The latter
+also allow internal nonreturn after finitely many calls; that larger
+class is not identified with installed tables here.
+

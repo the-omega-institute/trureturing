@@ -1,0 +1,32 @@
+**Proposition 12.1 (normalization without sign evaluation).** Put
+
+$$
+W=j_0V,\quad W_j=j_0V_j,\quad W_{\rm t}=j_0V_{\rm t},\quad
+\overline C=j_0C_*.
+\tag{12.1}
+$$
+
+The canonical heat, these $W$ fields and $\overline C$ have no remaining original fixed-data parameter. The normalized mode solves $\mathcal Ep=\overline C^{-1}Wp$ and is canonical. Define
+
+$$
+G_{108}=1-A-(\chi/a)(C_2+2B_1),\qquad
+G_{\rm resp}=(K_{\rm base}-D_{\rm resp})/a,\qquad
+\overline D=1+(\chi/a)T>1.
+\tag{12.2}
+$$
+
+These are constants of this particular canonical source and
+
+$$
+\frac{C_{108}}a=\nu^2G_{108}-\lambda\overline D,\qquad
+\frac{C_{\rm resp}}a=\nu^2G_{\rm resp}-\lambda\overline D,
+\qquad G_{\rm resp}\le G_{108}.
+\tag{12.3}
+$$
+
+Proof. The factors in (12.1) remove exactly the original $1/j_0$ from the heat integrals. The threshold quotient gives $\chi/a=j_0/\overline C$. Hence $h$ and $\ell$ are $a$ times canonical forms and functionals, $\Psi$ is canonical in energy space, and $D_{\rm resp}/a$ is canonical. Substitution in (5.4) and (7.2) proves (12.3). Strict positivity of $T$ gives $\overline D>1$. $\square$
+
+The identities do not evaluate $G_{108}$ or $G_{\rm resp}$, and do not prove that every ratio $\lambda/\nu^2$ occurs under the original interval, pole and admissibility constraints. If $G_{\rm resp}\le0$ were proved, $\lambda>0$ would force a negative response for all original data. That inequality is not proved here. If $G_{\rm resp}>0$, the sign comparison is with the actual ratio $\lambda/\nu^2$ and $G_{\rm resp}/\overline D$, retaining its original parameter restrictions. Occurrence on either side and at equality is not established here.
+
+The original task of signing the complete $C_{108}$ for the entire admitted family remains active. Its negative clock term alone does not sign its rational and response terms. A nonnegative $C_{108}$ does not imply profile failure, since $C_{\rm resp}$ can be smaller. The present comparison, response limit and conditional alternatives therefore do not relabel the original full-family decision as complete. The still required relations are an evaluated same-realization complete affine sign, an evaluated response sign over the permitted original data, and, if response zero occurs, a finer actual energy and $r_s$ analysis. Even in the positive case, the exact finer coefficient, centered crossover and replacement profile remain separate questions.
+

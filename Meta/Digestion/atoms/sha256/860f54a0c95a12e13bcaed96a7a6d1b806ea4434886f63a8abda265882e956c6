@@ -1,0 +1,50 @@
+**Theorem 3.1 (the exact prescribed-slope kernel).** For every prescribed $\kappa\in\mathbb R$, define
+
+$$
+K(\kappa,1)=\{\Delta:\ (1+\kappa i)\operatorname{tr}(A_i\Delta)=P(i)
+\text{ for }0\le i\le5\text{ and some affine }P\}.
+$$
+
+Then
+
+$$
+K(\kappa,1)=\operatorname{span}\left\{
+\begin{pmatrix}0&1\\0&-1\end{pmatrix}\right\}.
+$$
+
+This line is contained in the union of the cone
+
+$$
+\mathcal C_{\mathrm{safe}}=
+\left\{\begin{pmatrix}a&b\\c&e\end{pmatrix}:
+a,e\ge0,\ b,c\le0\right\}
+$$
+
+and its negative. No nonzero point of that union is a difference of two strictly positive rank-one matrices.
+
+**Proof.** Work first with an arbitrary real matrix $T=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and arbitrary affine drift, without a rank-one or sign assumption. Write $a=p+s$, $Y=p+2r$, and $L=2p+5r+q+2s$. The same prefix and terminal expansions give
+
+$$
+2z_1-z_2-z_0=r,\qquad H=z_2-z_1=\kappa(a+r)+\delta_1,
+$$
+
+$$
+\mathsf A=\kappa Y,\qquad
+\mathsf B=Y+\kappa L+\delta_1,\qquad
+\mathsf C=L+\delta_0.
+\tag{3.1}
+$$
+
+The prefix combination also annihilates the affine drift. Set all six observations to zero. Then $r=H=0$, and the terminal polynomial is zero at three distinct nodes, so $\mathsf A=\mathsf B=\mathsf C=0$. If $\kappa\ne0$, $\mathsf A=\kappa p=0$ gives $p=0$. If $\kappa=0$, $H=\delta_1=0$ and $\mathsf B=p+\delta_1=0$ give $p=0$ as well. The initial equation gives $\delta_0=-s$, the $H$ equation gives $\delta_1=-\kappa s$, and the terminal constant equation gives $q+s=0$.
+
+Thus every homogeneous solution is
+
+$$
+T=\begin{pmatrix}0&b\\0&-b\end{pmatrix},\qquad
+\delta_0=b,\qquad \delta_1=\kappa b.
+$$
+
+Conversely the trace of this $T$ is $-b$ at each of the six matrices, including each terminal matrix, where it is $b-2b=-b$. Its signal is canceled by the affine drift $b(1+\kappa t)$. Replacing that drift by $-P$ proves the exact formula for $K(\kappa,1)$, without a restriction on $\kappa$ or on sampled gain zeros.
+
+The negative of the displayed generator has nonnegative diagonal entries and nonpositive off-diagonal entries. Its scalar multiples therefore lie in $\mathcal C_{\mathrm{safe}}\cup-\mathcal C_{\mathrm{safe}}$. To prove the final assertion for the whole union, suppose two positive matrices differ by a nonzero element of $\mathcal C_{\mathrm{safe}}$. Their diagonal product weakly increases and their off-diagonal product weakly decreases; at least one comparison is strict, since an entry changes and all factors are positive. If the first matrix has equal diagonal and off-diagonal products, the second cannot also have them equal. Exchanging the endpoints handles the negative cone. This proves the safe-direction implication used here; no converse secant classification is needed. ∎
+

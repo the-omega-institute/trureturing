@@ -1,0 +1,118 @@
+**Theorem 33.1 (complete field and two-endpoint seed matching).** In the fixed frame of Definition 32.1, define
+
+$$
+\alpha_s=\int p^2\left(F_s-\sum_{j=0}^4s^jV_j\right),\qquad
+\beta_s=\left\langle g_0,H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\rangle.
+\tag{33.1}
+$$
+
+Then
+
+$$
+\frac{\alpha_s}{s^5}\longrightarrow Z_d,\qquad
+\frac{\beta_s}{s^5}\longrightarrow j_0a_0^2Z_d.
+\tag{33.2}
+$$
+
+The returns and pairings include the whole endpoint product space, both original deaths, all phases and the entire coefficient-time tails. More precisely, fix an admissible $\ell$ first. There is a function $\rho_\ell(\delta)\downarrow0$ as $\delta\downarrow0$ such that, with
+
+$$
+\begin{aligned}
+B_d(\delta)&=\int_\delta^1K_d(t;o,o)dt
+ -\frac{2d_0^{\rm h}}5\delta^{-5/2}
+ -\frac{2d_1^{\rm h}}3\delta^{-3/2}
+ -2d_2^{\rm h}\delta^{-1/2},\\
+\Psi_\ell(\delta)&=\sum_{j=0}^4\int_0^\delta
+              t^{(j-7)/2}e^{-c\ell^2/t}dt,
+\end{aligned}
+\tag{33.3}
+$$
+
+one has
+
+$$
+\limsup_{s\downarrow0}\left|\alpha_s/s^5-B_d(\delta)\right|
++\limsup_{s\downarrow0}\left|\beta_s/s^5-j_0a_0^2B_d(\delta)\right|
+\le C_d\sqrt\delta+C_d\Psi_\ell(\delta)=:\rho_\ell(\delta).
+\tag{33.4}
+$$
+
+Here $\delta>0$ is fixed before $s$, and tends to zero only after the displayed limsups. No rate for convergence at fixed positive physical time is required.
+
+Proof. Set $L=\ell/s$ and $D=\delta/s^2$. For small $s$, $1<D<T$. Split the field at microscopic time $D$, beginning at time one; split the return there, beginning at time zero. Each canonical coefficient is integrated to infinity, so its complementary tail begins at $D$ in both cases.
+
+On the symmetric strip use exactly the two scalar tests (24.20). Their odd derivatives at zero vanish. Taylor through degree five is therefore Taylor through degree four. The column sixth derivative is bounded by $Ct^{-1/2}$ for $t\ge1$. For the return, the input exponents (24.21) give precisely the powers (24.22); below time one bounded weighted seed inputs give integrable nonnegative half powers. The integrated sixth derivative on $(0,D)$ is at most
+
+$$
+C\{1+\sqrt D+\log(2+D)\}.
+\tag{33.5}
+$$
+
+Multiplication by $s^6$ and division by $s^5$ give a fixed-$\delta$ limsup at most $C\sqrt\delta$. This controls the short-physical-time scalar Taylor error. It does not differentiate an infinite-time return.
+
+Restore the original kernels on this short interval. For the field, the source is at zero. A deleted native source kernel is bounded by $Ct^{-7/2}e^{-cL^2/t}$; a deleted degree-$j$ coefficient by $Ct^{(j-7)/2}e^{-cL^2/t}$, $j\le4$. Integrate against $p^2$, whose mass is one. After its factor $s^j$, the substitution $v=s^2t$ and division by $s^5$ leave the corresponding term of $C\Psi_\ell(\delta)$. The native term is $j=0$. These bounds hold for all outputs, including zero extension beyond either original face.
+
+For the return, split input height at $L/4$. The outer seed has supremum $O(L^{-10})$ and $L^1$ mass $O(L^{-3})$. Native and safe returns cost $O(L^{-8})$ by J (31.7). A retained outer degree-$j$ coefficient has integrated supremum $O(L^{j-8})$ by J (31.9). After its factor $s^j$ this is $O(s^8)$. Pairing with the output $g_0\in L^1$ preserves these bounds, all negligible after division by $s^5$.
+
+For the inner input, write $j=n+m$ as in J (30.3), where $n$ is the input-height degree and $m$ is the relative degree. Retaining the exit event bounds the deleted kernel by $Ct^{(m-7)/2}e^{-cL^2/t}$ times the input moment. For $n=0$, physical rescaling gives $C\Psi_\ell(\delta)$. For $n\ge1$, the full integrated bound (24.23), after normalization, is at most
+
+$$
+C_{\ell,j}s^nM_n(L),\qquad
+M_1,M_2\le C,\quad M_3\le C(1+\log L),\quad M_4\le CL.
+\tag{33.6}
+$$
+
+Every expression in (33.6) tends to zero. Original paths that survive outside the estimating strip still have uniformly comparable covariance, by the fixed denominator margins. Thus the same deletion bound applies to them; safe paths cannot end outside an original face. This accounts for all input, output and face restorations on the short interval. It retains a modulus at order $s^5$, rather than declaring all face contributions zero.
+
+On physical times $v\in[\delta,1]$, exact scaling gives the complementary native pieces
+
+$$
+\begin{aligned}
+s^5\int_\delta^1\!\int p(\xi)^2K_d(v;o,Y_s\xi)d\xi\,dv,\\
+j_0s^5\int_\delta^1\!\iint g_0(\eta)g_0(\xi)
+                 K_d(v;Y_s\eta,Y_s\xi)d\eta d\xi\,dv.
+\end{aligned}
+\tag{33.7}
+$$
+
+For each fixed endpoint $Y_s\xi\to o$. The both-endpoint bound P76 is uniform on $[\delta,1]$, and $p^2$ and $|g_0|\otimes|g_0|$ have finite mass. Positive-time kernel continuity and dominated convergence on the entire endpoint product space therefore give the limits $\int_\delta^1K_d(v;o,o)dv$ and $j_0a_0^2$ times that integral after division by $s^5$. No compact-output replacement is made.
+
+It remains to identify the canonical tails, not just the native middle interval. Brownian scaling of J (30.1), with every clock factor of degree two included, gives
+
+$$
+\mathsf q_j(t;\eta,\xi)=t^{(j-7)/2}
+ \mathsf q_j(1;\delta_{t^{-1/2}}\eta,\delta_{t^{-1/2}}\xi),
+\qquad \delta_R(r,y,z,w)=(Rr,Ry,R^2z,R^3w).
+\tag{33.8}
+$$
+
+For the field the source-column supremum is $Ct^{(j-7)/2}$. At $t=v/s^2$ this is integrable on $v\in[\delta,\infty)$ for $j\le4$, and dominated convergence against $p^2$ collapses the output to zero. Odd diagonal coefficients vanish. For $j=0,2,4$, the normalized field tail is therefore respectively
+
+$$
+\frac{2d_0^{\rm h}}5\delta^{-5/2},\qquad
+\frac{2d_1^{\rm h}}3\delta^{-3/2},\qquad
+2d_2^{\rm h}\delta^{-1/2}.
+\tag{33.9}
+$$
+
+For the return, use the ordered decomposition J (30.3), not an unproved fourth $L^1$ height moment. The $n=0$ relative kernel is uniformly bounded after the scaling (33.8). Its limit at each fixed endpoint pair is the diagonal value. Dominated convergence against $|g_0|\otimes|g_0|$ gives $j_0a_0^2$ times each expression in (33.9). The other input degrees vanish. Indeed, using
+
+$$
+p_n=1,1,1,7/6,7/5\quad(n=0,\ldots,4)
+\tag{33.10}
+$$
+
+in J (30.4), their integrated tails satisfy
+
+$$
+s^j\int_D^\infty
+ t^{(j-n)/2-7/(2p_n)}\|r^ng_0\|_{p_n}dt
+ \le C_{\delta,j,n}s^{7/p_n-2+n}.
+\tag{33.11}
+$$
+
+For $n=1,2,3,4$ the powers are $6,7,7,7$, all strictly greater than five. For $n=0$ the power is five, and the just-proved dominated limit applies. All time powers in (33.11) are strictly integrable. The $n=0$ decomposition evaluated at input height zero is the full source coefficient, which identifies its limiting constant. No third or fourth absolute $L^1$ height moment of $g_0$ enters.
+
+Subtracting these full coefficient tails from (33.7), and adding the short-interval error, proves (33.4). Theorem 32.3 gives $B_d(\delta)\to Z_d$ with error $O(\sqrt\delta)$. Taking $s\downarrow0$ first and then $\delta\downarrow0$ proves (33.2). All physical times beyond one remain in $W_{1,d}(o)$ in (32.8). $\square$
+
+

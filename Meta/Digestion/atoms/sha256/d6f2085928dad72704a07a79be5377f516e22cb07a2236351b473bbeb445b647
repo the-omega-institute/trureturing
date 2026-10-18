@@ -1,0 +1,53 @@
+### 105.4. Original unit diagonals force quotient symmetry
+
+Use the orthonormal parity basis \(F_+,F_-,J_+,J_-\), where each pair is the sum and difference of its original coordinates divided by \(\sqrt2\). Put
+\[
+h_+=cv+s\overline v,
+\qquad h_-=cv-s\overline v.
+\tag{105.10}
+\]
+In parity sector \(\tau\in\{1,-1\}\), the \(H_S\) block has rank one and range vector \((1,\overline{h_\tau})\). From (105.3) and the two rank equalities,
+\[
+\ker\mathsf R
+=\operatorname{range}\bigl(\operatorname{diag}(\overline a)H_S\bigr).
+\tag{105.11}
+\]
+Multiplication by \(\operatorname{diag}(\overline a)\) sends parity \(\tau\) to \(\sigma\tau\). Taking the orthogonal complement in (105.11) shows that \(\operatorname{range}\mathsf R\) has basis
+\[
+w_+=(-h_\sigma/r,0,1,0)^T,
+\qquad
+w_-=(0,-h_{-\sigma}/r,0,1)^T.
+\tag{105.12}
+\]
+Consequently
+\[
+\mathsf R=(w_+,w_-)M(w_+,w_-)^*,\qquad M\succ0,
+\]
+for a two-by-two Hermitian matrix \(M\). The two original \(J\) diagonal entries equal one, so \(\operatorname{Tr}M=2\) and \(\operatorname{Re}M_{12}=0\). Equality of the original \(F\) diagonal entries similarly gives
+\[
+\operatorname{Re}\bigl(M_{12}h_\sigma\overline{h_{-\sigma}}\bigr)=0.
+\tag{105.13}
+\]
+But \(\operatorname{Im}(h_+\overline{h_-})=-2csq\ne0\). Since \(M_{12}\) is purely imaginary, (105.13) forces \(M_{12}=0\). Hence
+\[
+M=\operatorname{diag}(1+z,1-z),\qquad -1<z<1,
+\qquad |r|^2=1+\sigma hz>0.
+\tag{105.14}
+\]
+The last identity is the original \(F\) diagonal normalization. It follows that \(\mathsf R\), and therefore the actual \(G_S=H_S\odot\overline{\mathsf R}\), commute with \(\Pi\). This is derived from the original unit diagonals and nonreal phase, rather than imposed on an averaged Gram.
+
+In the original four supported coordinates the same formulas give
+\[
+\mathsf R_{13}=-\frac{cv+\sigma s\overline v z}{r},\qquad
+\mathsf R_{14}=-\frac{\sigma s\overline v+cvz}{r},\qquad
+\mathsf R_{34}=z,
+\tag{105.15}
+\]
+and hence
+\[
+G_{13}=-\frac{c^2+\sigma cs v^2z}{\overline r},\qquad
+G_{14}=-\frac{\sigma s^2+cs\overline v^2z}{\overline r}.
+\tag{105.16}
+\]
+The other two cross entries follow by \(\Pi\) symmetry. Reality of \(z\) is a consequence of the preceding diagonal constraints.
+

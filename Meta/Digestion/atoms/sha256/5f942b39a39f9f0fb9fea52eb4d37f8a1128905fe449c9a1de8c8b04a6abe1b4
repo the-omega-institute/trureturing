@@ -1,0 +1,39 @@
+### Theorem 12.2 (exact classification when $a=1$)
+
+Suppose (10.1), $K=E_{22}$, and $a=1$, so $I$ is the only recorded endpoint with upper-right entry zero. Then among the other five endpoints there are exactly two $Q$ readings and three $T_\nu$ readings with distinct positive integer parameters, and
+
+$$
+d_*=w+\sigma-1\ne0.
+\tag{12.1}
+$$
+
+At most one of the three $T$ readings is $T_1=P$; it lies in the pair phase, with the two $Q$ readings. Every other $T$ parameter is at least two, and those readings form the final strictly increasing phase. Conversely every such six-entry list, with this order, is legal and satisfies (10.1), $\ker T_k=\mathbb RE_{22}$ and $\operatorname{rank}T_k=3$ at every real slope. Every prescribed-slope slice has a global positive-source inverse. Each of these histories nevertheless has the different-slope collision constructed in Section 14.
+
+**Proof of necessity.** Count $P$ as $T_1$. If no $Q$ occurs, all endpoints lie in $\operatorname{span}\{I,P,R\}$, where
+
+$$
+R=\begin{pmatrix}w&1\\0&0\end{pmatrix},\qquad
+T_\nu=P+(\nu-1)R.
+$$
+
+That span is at most three. If exactly one $Q$ occurs, deleting it gives the same failure. Thus there are at least two $Q$ reads. There must be at least three $T$ reads: with none, the full span is at most two; with one, it is at most three; with two, deleting one leaves only $I,Q$ and one $T$. The six total reads force exactly two $Q$ reads and three $T$ reads. If the three parameters have only one distinct value, full span fails. If they have exactly two distinct values, delete the parameter occurring only once, leaving just $I,Q$ and one $T$ value. Thus the three parameters are distinct.
+
+To check the remaining parameter degeneracy, use the trace coefficients on $(p,q,r)$. The matrices $P-I,Q-I,R$, all with lower-right entry zero, have respective coefficient vectors
+
+$$
+\mathbf p=(w+\sigma-1,w,1)^{\mathsf T},\quad
+\mathbf q=(w-1,w+\sigma,1)^{\mathsf T},\quad
+\mathbf r=(w,0,1)^{\mathsf T}.
+$$
+
+Subtracting the first column from the second and expanding gives
+
+$$
+\det_3[\mathbf p,\mathbf q,\mathbf r]
+=\sigma(w+\sigma-1).
+$$
+
+If $d_*=0$, the span of $I,Q,P,R$ is at most three, contradicting full span. Hence (12.1) holds. It implies $w\ge1$: for $\sigma=1$, $w=0$ is excluded; for $\sigma=-1$, nonnegativity already required $w\ge1$ and (12.1) additionally excludes $w=2$. The order assertions follow from Theorem 11.2; distinctness allows at most one $T_1$. Converse legality follows from that theorem, and the exact rank and inverse are proved next. ∎
+
+In this class $N=JMJ$ cannot be recorded, because $N_{22}=0$. A recorded $M$ is exactly $T_1$ in the case $w=1,\sigma=-1$. The alternative $Q=M$ would require $w=0,\sigma=1$, already excluded by $d_*=0$. Thus in the residual with neither $M$ nor $N$ recorded, the case $w=1,\sigma=-1$ requires all three $T$ parameters to be at least two. All other allowed $w,\sigma$ are retained. This statement concerns recorded cumulative matrices; unread $M$ atoms remain allowed.
+

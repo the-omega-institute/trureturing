@@ -1,0 +1,46 @@
+### 76.2 A rank-two Schmidt-support inequality
+
+Let a_0,a_1 and b_0,b_1 be orthonormal pairs in arbitrary finite-dimensional local spaces. Set
+
+    x_i=a_i⊗b_i,
+    c=(x_0+x_1)/sqrt(2),
+    d=(x_0−x_1)/sqrt(2).
+
+These are orthonormal unit vectors. Their two local reduced density operators are equal: both are the uniform states on the spans of the corresponding record pairs.
+
+Let c₀ be any maximally entangled rank-two unit vector, with local Schmidt-support projections P_A,P_B. Write
+
+    P=P_A⊗P_B,
+    Q=P−|c₀><c₀|,
+    F=|<c₀,c>|²,  e=1−F.
+
+Here Q is an orthogonal projection of rank three. Then
+
+    ||(I−Q)d||²≤e+e².                                  (2)
+
+To prove this, write F_−=|<c₀,d>|² and p_±=<c or d,P(c or d)>. Every product vector a⊗b satisfies
+
+    |<c₀,a⊗b>|²≤(1/2)||P_A a||²||P_B b||².
+
+Applying this to x_0,x_1 and using the plus/minus change of basis gives
+
+    F+F_−≤(p_++p_−)/2.
+
+Let h_A=<a_0,P_A a_1> and h_B=<b_0,P_B b_1>. Direct expansion gives p_+−p_−=2 Re(h_A h_B). Consequently
+
+    <d,Qd>=p_−−F_−≥F−Re(h_A h_B)≥F−|h_A h_B|.          (3)
+
+For L_A=Σ_i||(I−P_A)a_i||², orthogonality of a_0,a_1 gives
+
+    |h_A|=|<a_0,(I−P_A)a_1>|≤L_A/2.
+
+Moreover, |c₀><c₀|≤P_A⊗I and the local reduced-state identity imply F≤1−L_A/2. Thus L_A≤2e. The same statements hold for B, so |h_A h_B|≤e². Substituting into (3) proves (2).
+
+The simpler coefficient-one bound ||(I−Q)d||²≤e is false. In local dimension three take
+
+    c₀=(|00>+|11>)/sqrt(2),
+    a_0=b_0=(e_0+e_2)/sqrt(2),
+    a_1=b_1=(e_0−e_2)/sqrt(2).
+
+Then c=(|00>+|22>)/sqrt(2), d=(|02>+|20>)/sqrt(2), F=1/4, and Qd=0. The leakage is one although e=3/4. No optimality of the quadratic estimate (2) is asserted.
+

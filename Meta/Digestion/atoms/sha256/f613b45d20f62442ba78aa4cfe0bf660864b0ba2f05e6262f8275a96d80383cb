@@ -1,0 +1,14 @@
+**定理 8.2（固定二输入的最小闭合切面与成本阈值）。** $E_0$ 是包含 $a,b$ 的唯一最小叉积闭合线性空间，维数三。$L(E)$ 基无关，且 $L(E)=0$ 当且仅当 $E$ 对叉积闭合。上述候选族的精确最优值为
+
+$$
+\min_{E\supset\{a,b\}}J(E)=\min\{2\lambda+\gamma,3\lambda\}.
+$$
+
+若 $\gamma>\lambda$，唯一最优接口为 $E_0$；若 $\gamma=\lambda$，恰有 $\operatorname{span}\{a,b\}$ 与 $E_0$ 两个最优接口；若 $\gamma<\lambda$，唯一最优接口为 $\operatorname{span}\{a,b\}$。这一阈值可以作用于二输入 FIB 表示，但不选择全七维系统的所有任务边界。
+
+证明。八元数的两个固定元生成结合子代数，直接复用 [Monster 局部完成与三次响应](MONSTER_LOCAL_COMPLETION_AND_CUBIC_RESPONSE.md) 命题 32.2；其 Artin 来源是 Baez 的 [node2](https://math.ucr.edu/home/baez/octonions/node2.html)，不是 $G_2$ 所在的 node14。对正交单位虚元，$a^2=b^2=-1$、$ab=-ba$，故所生成子代数为 $\operatorname{span}\{1,a,b,ab\}$ 的四元数代数。其虚部就是 $E_0$，对叉积封闭。任何包含 $a,b$ 的闭合空间都包含 $a\times b$，而范数恒等式使这三个向量正交单位，故 $E_0$ 最小且唯一。
+
+线性映射 $\Lambda^2E\to E^\perp$、$u\wedge v\mapsto(I-P_E)(u\times v)$ 的 Hilbert–Schmidt 范数平方就是 $L(E)$；$e_i\wedge e_j$ 是正交单位基，故基无关。平方和为零恰指全部基对的叉积落在 $E$，双线性展开等价于闭合。
+
+二维候选只能是 $E_2=\operatorname{span}\{a,b\}$，其唯一基对产生单位法向，所以 $L(E_2)=1$。三维候选有 $J\geq3\lambda$，等号要求闭合，因而只能是 $E_0$。维数至少四时 $J\geq4\lambda>3\lambda$。比较二维与三维的两个数即得全部阈值及唯一性。第七章的二标签表示可以落在这类切面中；附加外部输入则须另按第三章判断充分性。证毕。
+

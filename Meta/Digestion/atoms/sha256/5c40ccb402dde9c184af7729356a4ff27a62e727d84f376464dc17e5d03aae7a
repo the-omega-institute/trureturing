@@ -1,0 +1,80 @@
+**Proposition 9.2 (The inherited four-part face).** Put
+$\delta=a-b$, $D=\delta\eta^2$ and $q_H=\eta c$.
+The universal curve satisfies
+
+$$
+F(q)=bq-D,\qquad q_H\le q\le\eta(1+c).
+\tag{9.3}
+$$
+
+For each specified unchanged auxiliary space, equality
+$L=bq-D$ holds if and only if it admits a measurable four-part
+partition $G_0,G_h,G_c,G_1$ such that
+
+$$
+q=q_H+\frac\eta2\nu(G_h)
++\eta c\nu(G_c)+\eta\nu(G_1).
+\tag{9.4}
+$$
+
+The four deterministic equality masses are
+$q_H$, $q_H+\eta/2$, $2\eta c$, and $\eta(1+c)$.
+This face and its exact four-part criterion belong to Universal
+Support, rather than being an additional fixed-law result claimed
+here.
+
+Proof. Consider $C-aq$ at a fixed seed. By the raw leaf tables,
+every all-zero leaf has correct proportion strictly below $a$;
+every ordinary one-containing leaf has proportion $a$ or $1/2$.
+The only leaf with proportion greater than $a$ has a zero edge
+touching the target and a disjoint one edge certifying the same
+phase. Its masses are $(W,M)=(\eta c,a^2\eta)$ and its
+excess is $D$ by (8.14). At most one such leaf occurs in any
+depth-two tree: for type $I$ it is on first zero, and for type
+$D$ on first one. Consequently $C-aq\le D$ at every seed,
+including initial returns and nonreturns, and hence $L\ge bq-D$
+after integration.
+
+If equality holds at a seed, that unique exceptional leaf must
+be accepted with a maximizing state. Every other accepted leaf
+must have proportion exactly $a$. For type $I$, the first-zero
+subtree is consumed by the exceptional leaf; on first one only
+adjacency supplies such leaves, each of mass $\eta/2$.
+The optional total is $0,\eta/2$, or $\eta$. For type $D$,
+the exceptional first-one subtree uses a disjoint target-touching
+zero edge; its other leaf has proportion $1/2<a$. On first zero,
+the permitted proportion-$a$ leaves have mass $\eta/2$ from
+adjacency, $\eta c$ from a disjoint avoiding edge, or $\eta$
+from an opposite-parity edge avoiding its phase's target. Repeats
+give no such leaf. Thus every equality seed has mass
+
+$$
+q(u)=q_H+d(u),\qquad d(u)\in\{0,\eta/2,\eta c,\eta\}.
+\tag{9.5}
+$$
+
+Early returns do not add cases: zero-read and first-zero returns
+have proportion below $a$; a type-$I$ first-one early return
+has proportion $1/2$; a type-$D$ first-one early return has
+proportion $a$ but prevents its exceptional descendant.
+
+If integrated equality holds, the nonnegative deficit
+$D-[C(u)-aq(u)]$ has integral zero. It vanishes almost everywhere,
+so (9.5) holds almost everywhere. Its four distinct values define
+the measurable partition in (9.4) by Theorem 5.1's countable-code
+argument, with null sets treated as there. This proves necessity
+without a regular conditional distribution.
+
+For sufficiency all four policies occur explicitly in Section 4:
+use type $D$, $(r,s)=(\eta c,0)$;
+type $I$, $(r,s)=(\eta/2,\eta c)$;
+type $D$, $(r,s)=(\eta c,\eta c)$; and
+type $D$, $(r,s)=(\eta c,\eta)$, respectively.
+Each has correct mass $aq+D$, by the tables, and each pays for
+both actual calls on all paths. Running these policies on the
+four parts gives exactly (9.4) with equality risk. On an atomless
+space, mixing the first and last fills the entire interval in
+(9.3), proving its universal attainment and the stated face.
+No single adjustable gate has been assumed necessary: (9.4)
+is the full partition condition. $\square$
+

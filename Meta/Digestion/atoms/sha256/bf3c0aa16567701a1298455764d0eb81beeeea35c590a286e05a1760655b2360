@@ -1,0 +1,32 @@
+**定理 27.2.1（低阶碰撞）。** 对任意真子集 $S\subsetneq[n]$、任意赋值 $a_S$ 和任意 $\sigma\in\{+1,-1\}$，有
+
+$$
+\boxed{
+\Pr_{M_\sigma}(Y=1\mid\operatorname{do}(X_S=a_S))=\frac12.
+}
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal R_{\le k}(M_+)=\mathcal R_{\le k}(M_-).
+}
+$$
+
+等式包含空查询、所有单变量查询、所有低阶组合以及它们的任意随机混合。
+
+**证明。** 因为 $S$ 是真子集，存在 $j\notin S$。在该干预下：
+
+$$
+\mathbb E[q(X)\mid\operatorname{do}(X_S=a_S)]
+=
+\left(\prod_{i\in S}a_i\right)
+\prod_{j\notin S}\mathbb E[U_j]
+=0,
+$$
+
+其中使用了 $\mathbb E[U_j]=0$ 与根变量独立。代入两个通道的定义即得 Bernoulli$(1/2)$。随机混合只是对相同的 Bernoulli$(1/2)$ 律再取凸组合，仍然相同。证毕。
+
+<a id="section-27-3"></a>
+

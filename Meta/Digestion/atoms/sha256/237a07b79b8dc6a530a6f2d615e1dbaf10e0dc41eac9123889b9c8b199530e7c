@@ -1,0 +1,48 @@
+**Open Problem 4.1 (Complete original quantifiers).** For the unchanged
+domains (1.2), put
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+
+Does some finite $N$ and exact $\theta\in\Theta_N$ satisfy
+$d(P_\theta)=c_\star$, or does every finite $N$ satisfy $C_N<c_\star$?
+[Universal, Theorems 3.1 and 6.2][P4] show that every attainer has positive
+legal cylinders, that $C_N$ is attained on the complete compact domain,
+and that the second alternative is equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\kappa_m/(m+1).
+\tag{4.1}
+$$
+
+Theorem 2.2 excludes every law representable by Definition 2.1, and any
+other admissible representation of such a law. Its image is a restricted
+subset of $\Theta_5$, and (2.14) is only a certificate on that subset.
+The proof relies on fixed $\pi$, reversibility and the exact refractory
+constructor, notably $M_0^2=fw$ and the return-mass correspondence (2.7).
+General finite producers need not admit those identities. The theorem
+does not supply (4.1) or an exact finite attainer. Every structural zero,
+zero stationary mass, reducible and periodic parameter remains in (4.1).
+
+The stationary and ergodic attainment results of [Stationary][P1] and
+[Ergodic, Theorem 2.1][P0] remain existence results without a finite
+hidden representation. [Nonattainment, Theorem 1.5][P2] excludes positive
+finite visible-order laws; Proposition 3.1 does not meet that memory
+hypothesis. [Completeness, Theorem 1.4][P3] and [Universal, Corollary
+7.3][P4] retain $\sup_N C_N=c_\star$, which does not decide finite
+attainment. Finite-volume positivity and uniqueness in [Optimizer,
+Theorem 3.1][P5] do not decide it either.
+
+[Renewal, §§7–9][P7] excludes event-independent laws, the stated rank-one
+reset representations and effective state count $N_+\le3$. General
+nonreset producers with $N_+\ge4$ remain outside the whole-class
+certificate here. The route of [Conditional Response, §§3–5][P8] still
+needs a productive same-law witness for every hypothetical finite
+attainer: a matrix null direction alone supplies neither nonzero total
+response nor a strict finite certificate. A finite block response is
+not identified with that total response. No universal productivity
+statement follows from (2.14).
+

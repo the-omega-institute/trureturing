@@ -1,0 +1,33 @@
+**Definition 1.1 (static native source and supplied depth algebra).** All sources are nonempty finite free ordered trees
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+There is no sharing quotient, associativity or commutativity. A repeated subtree has repeated native occurrences. For every finite absolute word $q$ over $\{L,R\}$, including $\varepsilon$, the only source operation is $\mathsf{Read}(q)$, returning $r_u(q)\in\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}$. A strict descendant of a leaf is absent. The source remains $u$ throughout; neither the mathematical operation $\rho$ nor its inverse is an available source action.
+
+Use the primitive-ray and pairing results of [JM, §§36, 49][JM]. Put
+
+$$
+T_j=\rho^j\alpha,\qquad
+\nu(t)=\max\{n:t\in\rho^n[\mathcal T]\},\qquad
+Q(t)=(\nu(t),e(t)),\quad e(t)=\mathbf1_{\{T_j:j\ge0\}}(t).
+$$
+
+Every $t$ has a unique primitive endpoint $p(t)$ with $t=\rho^{\nu(t)}p(t)$. In particular $\nu(\rho^n t)=n+\nu(t)$, $\rho$ is injective, and $e(t)=1$ precisely when $t=T_{\nu(t)}$. With $Q(s)=(a,e)$ and $Q(t)=(b,f)$ the supplied ordinary pairing law is
+
+$$
+Q(\langle s,t\rangle)=
+\begin{cases}
+(b+2,1),&e=f=1\text{ and }a=b+1,\\
+(\min(a,b),0),&\text{otherwise}.
+\end{cases}
+\tag{LRD.1}
+$$
+
+Thus $T_0=\alpha$, $T_1=\beta$, and $T_{j+2}=\langle T_{j+1},T_j\rangle$. Both $\nu$ and the atomic flag are intrinsic coordinates of a finite tree, not physical time, an actual entrance count, a size oracle or a reply supplied by $\mathsf{Read}$.
+

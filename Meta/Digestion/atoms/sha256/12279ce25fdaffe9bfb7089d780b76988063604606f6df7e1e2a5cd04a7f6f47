@@ -1,0 +1,48 @@
+## 189. Suppose both source axes were dominant
+
+Assume the opposite axis is U and, contrary to the proposition,
+u>=1+c+d. Then U is pi-selected, so u<=m by maximality of M.
+Since U has a genuine witness and its flat occurrence in sigma is pi,
+p_U=1. All other U occurrences are genuine, by Proposition 184.1 and Section 187.
+Its complete genuine angle budget is pi, and degree(U)>=6 gives at least
+five genuine occurrences.
+
+The entire U star cannot be axial. If it were, actual face transport
+would keep its reservoir pair {C,D} throughout. A genuine owner cannot
+contain both axes U, because (u-1)^2>=(c+d)^2 would make that owner flat.
+Thus all g=degree(U)-1>=5 genuine occurrences have distinct owners.
+For each, the dominant-axis inequality is
+
+ 2*theta_U+beta_C+delta_D>pi.
+
+Summing and counting both transverse slots per label gives
+
+ 2*sum(beta_C+delta_D)>2*g*pi-4*pi>=6*pi.
+
+Those actual C/D slots have total capacity only 4*pi, contradiction.
+
+Hence the maximal axial U run containing sigma is proper and has pair
+{C,D}. Its two distinct transverse boundary U slots are genuine. Their
+angles total at most pi, so at least one has angle at most pi/2. At that
+boundary, actual face transport gives a genuine frame
+
+ (W,U,A,B,U,A), with {A,B}={C,D}.
+
+The transverse U cosine numerator is increasing in w, and its value at
+w0=1+u+a is
+
+ [a+u(1+u+a)]*(1+a+b-u)<=0.
+
+Therefore the chosen nonobtuse U angle implies w>=1+u+a. W cannot be
+special because its fixed-pair special-edge barrier is w<1+u+a.
+Thus W is a reservoir. Moreover
+
+ w>=1+u+a>u+2>m,
+
+using a>1 and u>m-2. Among the five labels, only Z can have value above
+m: U is selected with u<=m, and c,d<m. Consequently W=Z.
+This genuine owner has an axial Z slot and pair {U,A}, and
+z>=1+u+a makes that axial run dominant. The original tau similarly gives
+a dominant axial Z run with pair {M,C}. These two pairs are distinct,
+because U,M,C,D are distinct actual labels. We next exclude two such runs.
+

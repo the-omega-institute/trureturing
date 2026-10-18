@@ -1,0 +1,17 @@
+**Assumption 1.3 (actual paid handoff).** For operational consequences
+use exactly [ARH, Assumption 1.3][ARH]. Acquisition was paid on the same
+source, original root and physical register. At entry that register has
+authentically reached $\rho^N u$, with common $N$ at least all recorded
+epochs. The entire accessible state is a common recoverable encoding of
+$I$ and common parameters, with precisely fiber $D$. Every accessible
+source-bearing cache, address, count, length, program position, timing
+field, archive, output, permission and handle is included. This is an
+access and source-continuity premise, not a physical-erasure measurement.
+
+Services are deterministic, effective, terminating and correct on all
+$D$. The source actions are paid four-valued original-root
+$\mathsf{Read}(p)$, real same-register forward $\mathsf{ApplyRho}$, and
+absorbing $\mathsf{Halt}$. Local computation and updates reveal no extra
+source-dependent information. There is no chart, rank, equality, selected
+source, old-version, reset, reroot, clone or clock port.
+

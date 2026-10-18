@@ -1,0 +1,23 @@
+**Definition 1.3 (declared extension).** Extend the TM57 producer with the public
+request `TagRead(p)`. Its new permission allows the producer, while exclusively
+owning the existing private source arena, to evaluate the circuit of §3 on that
+arena. The actor acquires only its complete two-bit result. The original ReadE,
+guarded $\rho$, `Left(v)` and `Right(v)` remain separately typed ports with their
+original responses. No source navigation, physical inverse or reroot is added.
+
+The extension also installs a typed journal writer, controller-local and terminal
+markers, and a verifier/consumer mode specified below. Its finite description,
+inputs, code generation, descriptors, work and communications are paid TM57
+occurrences. This is an added source instrument and record language, rather than
+a derivation of literal access from numerical ReadE or an unchanged old verifier.
+
+The control description is common to all $H$ and sources. Expand its fixed
+sequences, public tests and public while/for loops by PR57.D1's finite graph
+rules; public tree/stack processing uses constructed frames, not native recursive
+calls. Enumeration, locator, `Emit`, copy and row routines have fixed finite
+nesting and reuse PR57.D2's service graphs. Their integer parameters, dynamic
+gate tapes and stack depths are data on constructed tapes, not a family of
+native states indexed by $H$. Public $H$, priors and program descriptions are
+fixed independently of the hidden actual source within their declared domain;
+their actual ingress and retention are charged.
+

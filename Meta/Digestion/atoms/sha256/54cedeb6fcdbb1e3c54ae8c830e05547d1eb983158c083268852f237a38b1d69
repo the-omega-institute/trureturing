@@ -1,0 +1,15 @@
+**Convention 17.2 (the preparation design and its budgets).** Use exactly
+Definition 2.2. For the basic state count there are precisely the two
+installed latches $\widehat e_0,\widehat e_1$ and a finite set $V$ of
+running states. A prescribed common start is a member of $V$. The
+installed literals and all four successors may be designed; state
+identities, the running/latch partition, start and literal latch contents
+can be fixed in advance. An upper state budget $H$ permits a choice of
+such an alphabet with at most $H$ members. Every installed state counts,
+including unused ones; every running visit costs one actual call,
+including forced replies and the root word $\varepsilon$. Its literal
+charge is the sum of the lengths of the submitted absolute words.
+There are no silent running transitions. A start already fixed to a
+latch cannot generate these codes, since both values occur on positive
+profiles. Additional mandated latches are addressed in Theorem 19.1.
+

@@ -1,0 +1,21 @@
+**Proposition 5.3 (empty, singleton and no-seed cases).** The
+correspondence includes all of the following degeneracies. An empty
+domain makes both the seed sum and native solution set empty. A
+singleton domain can be removed by replacing every port assigned to
+it by its sole full-factor value. With no seeds, the sum contains
+one empty assignment and equals the product of the constant block
+potentials, which may be zero. A domain of size four needs no
+off-domain guard.
+
+Proof. A product with an empty factor has no seed tuples. Its native
+owner has no fixed reply by (RRN.21), so no solution exists. If
+$T_c=\{a\}$, every admissible seed assignment already has $s_c=a$.
+Replacing $B_v(s_c)$ by $B_v(a)$ at all of that seed's ports leaves
+the same compatibility sets on the other seeds. The omitted owner
+reply is still $a$ because of (RRN.16); the two solution maps remain
+inverse. The assertions about no seeds and a full domain follow from
+the empty-product convention and the absence of arguments outside
+$\mathcal A$. None of these facts requires positivity of the weights
+or existence of an actual tuple compatible with all constants.
+$\square$
+

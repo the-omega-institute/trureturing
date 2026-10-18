@@ -1,0 +1,34 @@
+**Definition 10.1 (Source Section 24 access, restricted to positive $H=3$).** Specialize Definition 2.1 to $H=3$, $K=\{1,2,3\}$ and **fixed known** $p_1,p_2,p_3>0$ with sum one. These probabilities need not be equal. Write
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x_\theta=(c_3,c_2,c_1,0)^{\mathsf T},\qquad
+q_{\mathrm{tail}}=p_2+p_3,\qquad
+\delta=\theta_1-2\theta_2+\theta_3.
+$$
+
+An actual observed outcome $1$ heralds the tick; its normalized posterior is $x_\theta x_\theta^*$, independent of the conditional input density. After this observed tick, Source Definition 24.1 assumes the additional ability to apply repeatedly the same fixed isometry
+
+$$
+V_\theta\psi=S\psi\otimes|0\rangle+J_\theta\psi\otimes|1\rangle.
+\tag{10.1}
+$$
+
+Its chronological output flags are retained coherently and accessibly. The branch representatives remain stable across uses, and no inaccessible environment retains which-branch records. There are no intermediate memory interventions or terminal memory measurements. A permitted terminal POVM on the $n$ flags has effects commuting with the total count
+
+$$
+N_1^{(n)}=\sum_{r=1}^n |1\rangle\langle1|_r.
+$$
+
+Arbitrary measurements within a count sector are allowed, including the relative complex control needed there; no external reference breaking the count symmetry is supplied. For $K_0=S$, $K_1=J_\theta$ and chronological $K_w=K_{b_n}\cdots K_{b_1}$, put
+
+$$
+\begin{aligned}
+|\Psi_{n,\theta}\rangle&=\sum_{w\in\{0,1\}^n}K_wx_\theta\otimes|w\rangle,\\
+\Omega_{n,\theta}&=\operatorname{Tr}_{\mathbb C^4}|\Psi_{n,\theta}\rangle\langle\Psi_{n,\theta}|,\\
+T_{n,\theta}&=\sum_{m=0}^n P_m^{(n)}\Omega_{n,\theta}P_m^{(n)},
+\end{aligned}
+$$
+
+where $P_m^{(n)}$ projects onto words with $m$ ticks. This count-sector twirl is the complete output datum in the stated access class. It is unrelated to the symbol $T$ for the off-diagonal restriction in Section 3.
+

@@ -1,0 +1,5 @@
+source_id = "fib-native-terminal-span-five-strict-compensation"
+path = "docs/develop/theory/FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,68 @@
+**Theorem 6.1 (Frozen-prefix extension obstruction).** Fix any allowed $p,j,\nu$. No lawful total-cap-three representative of the full $(u,H_j,O,D,N)$ law (5.1) can have first query $j+3$ and next query on its zero reply $j-3$. Subsequent integer addresses are unrestricted, and arbitrary measurable use of the unchanged seed and the fixed public bias is allowed. The conclusion also holds if those prescribed prefix actions are required only at almost every seed.
+
+Proof. Suppose such a rule exists. Apply Lemmas 2.1–2.2, obtaining a full-measure set of good seeds at which its normalized deterministic source law equals (5.1). If necessary intersect with the full-measure seed set where its prescribed actions hold. Fix one good seed. As before, call phase $\psi$ phase $B$ and its opposite phase $A$. In phase $A$ the law requires $O=a_0,D=1,N=3$ surely. In phase $B$ it prescribes all four positive masses in the first four lines of (5.1), conditionally on either target value.
+
+First derive the stopping decisions from that law. Phase $A$ sees a root separator zero, so the root-zero child cannot terminate at count one or internally diverge. In phase $B$ root one has probability $2d$, and the required count-one mass is exactly $2d$, all with output $a_0$. A count-one return can occur only on the root-one child. Its next event, fixed by this seed and record, must therefore be a finite $a_0$ return. A further read or internal nonreturn there would give no count-one mass. In particular no root-one mass can be diverted to later counts.
+
+On root zero the second query is prescribed. It is also a separator in phase $A$, so its zero child must make a third read to achieve the required count three. In phase $B$, the first two edges (5.4) are independent; zero then one has probability $2dc$, exactly the required count-two mass. Since the root-one branch has already returned and the second-zero branch must read in phase $A$, the second-one child is the only possible source of this mass and must return $a_0$ at count two. Thus phase-$B$ count three is exactly
+
+$$
+C=\{S_{q+1}=S_{q+2},\ S_{q-2}=S_{q-1}\},\qquad
+J_p(C\mid\varphi=\psi,S_q=s)=c^2\quad(s=0,1).
+\tag{6.1}
+$$
+
+On the common zero-zero record the third address is a single fixed integer at this seed. The third read is forced by the phase-$A$ count, a fourth call is disallowed by the cap, and positive-probability internal nonreturn is disallowed by $D=1$.
+
+If the third address had parity opposite to $\psi$, it would be active in phase $A$. That phase has acquired only separator replies so far, so both replies have positive probability, $c$ and $2d$, there. Both terminal actions must return $a_0$ at count three. In phase $B$ this third address would be a separator zero, with the same $a_0$ terminal action. Earlier branches also return $a_0$, leaving no $a_1$ mass, contrary to (5.1). Hence the third address has parity $\psi$.
+
+Its zero child is now reached surely in phase $A$ and must return $a_0$. To supply the positive $a_1$ mass, its one child must be reachable in phase $B$ and return $a_1$. If unreachable, the contradiction already follows. Writing $Y$ for the third active XOR, the full target law (5.1), divided by the positive probability $c^2$ in (6.1), therefore requires
+
+$$
+J_p(Y=1\mid\varphi=\psi,S_q=s,C)=\delta,
+\qquad \delta=\frac{2d^2}{c^2},\qquad s=0,1.
+\tag{6.2}
+$$
+
+This requirement has been deduced only from the full output/return/count/target law and the prescribed query actions. No acquired-record or signature preservation is being assumed.
+
+Compute now the actual conditional spin law on $C$. Its constraints involve two disjoint pairs. Each pair is constant, with common spin Bernoulli$(r)$, where
+
+$$
+r=\frac{p^2}{c},\qquad 1-r=\frac{(1-p)^2}{c}.
+\tag{6.3}
+$$
+
+The two common spins, $S_q$, and every outside spin are independent apart from the within-pair equalities. All outside spins retain their original Bernoulli$(p)$ laws. Indeed the conditioning indicator factors into the two pair-equality indicators on disjoint iid coordinates, so dividing their finite product probabilities by $c^2$ gives exactly these independent conditional factors. Conditioning further on $S_q=s$ merely fixes that independent coordinate. As $p\ne1/2$, $r\ne1-r$.
+
+For every possible third active edge $\{e,e+1\}$, its conditional one-probabilities given phase $B$, $C$, and the two target values are as follows:
+
+| Third left endpoint $e$ | Relation to conditioned vertices | Given $S_q=0$ | Given $S_q=1$ |
+| --- | --- | --- | --- |
+| $q-2$ or $q+1$ | Repeats $F$ or $E$ | $0$ | $0$ |
+| $q-1$ or $q$ | Joins the target to an inner pair endpoint | $r$ | $1-r$ |
+| $q-3$ or $q+2$ | Joins an outer pair endpoint to a fresh spin | $d/c$ | $d/c$ |
+| $e\le q-4$ or $e\ge q+3$ | Two fresh outside spins | $2d$ | $2d$ |
+
+For a repeated edge equality is already imposed on $C$, yielding zero. A target-touching edge has the fixed target on one end and an independent Bernoulli$(r)$ pair spin on the other, yielding $r,1-r$. An outside extension has an independent Bernoulli$(r)$ pair spin and Bernoulli$(p)$ fresh spin, so its probability is
+
+$$
+p(1-r)+(1-p)r
+=\frac{p(1-p)^2+(1-p)p^2}{c}
+=\frac d c.
+\tag{6.4}
+$$
+
+An outside edge has two fresh iid spins, yielding $2d$. For exhaustiveness, the conditioned vertices are $q-2,q-1,q+1,q+2$ and the distinguished vertex is $q$. The six consecutive left endpoints $q-3,q-2,q-1,q,q+1,q+2$ are exactly the exceptional edges listed. Every other edge has two outside vertices. In particular there is no single edge bridging the two conditioned pairs: the closest vertices $q-1,q+1$ have $q$ between them. This covers negative, remote, repeated, disconnected, and target-touching choices without an address-radius restriction.
+
+At every fixed allowed biased $p$ one has $0<d<1/4$ and $c=1-2d>1/2$, hence $c>2d$ and
+
+$$
+0<\delta=\frac{2d^2}{c^2}<\frac d c<2d.
+\tag{6.5}
+$$
+
+The first strict comparison follows by the ratio $2d/c<1$, and the second by the ratio $1/(2c)<1$. Thus repeats, outer extensions, and fresh edges cannot give (6.2). A target-touching edge gives the unequal pair $r,1-r$, whereas (6.2) requires the same $\delta$ at both target values, each of positive probability. It cannot work either. Every third address is excluded at the fixed good seed.
+
+The good-seed set has measure one, so this contradiction excludes the proposed measurable rule on every unchanged seed space. Even an atomless seed cannot supply a mixture to repair it: preserving the seed coordinate already forced the exact witness source law at almost every seed by (2.3). Finite waits provide no extra observation or choice beyond the fixed seed and acquired record. This proves the obstruction. $\square$
+

@@ -1,0 +1,98 @@
+**Theorem 8.2 (an acquired morphism graph has no finite ordinary compilation).**
+The relation
+
+$$
+\mathcal G=\{(x,y)\in\mathcal T^2:x=\rho(y)\}
+\tag{ARH.8.2}
+$$
+
+is not a finite union of ordinary cells. Adding finite literal-history
+conditions at fixed epochs to those cells does not change the conclusion.
+It follows that a coordinate-preserving finite ordinary-cell normalization
+cannot handle every actually acquired mixed-epoch input of Definition 1.2.
+This is a representation obstruction, not an undecidability assertion.
+
+Proof. Suppose a finite union equals $\mathcal G$. Every nonempty disjunct
+is then contained in $\mathcal G$. Apply the ordinary finite-term
+unification supplied in [SLH, Theorem 74.4, proof (ii)][SLH] to that
+disjunct's equations. This application involves only free terms, so
+occurs-check and the full solved-substitution correspondence apply.
+Discard inconsistent disjuncts. In a nonempty one, the solved substitution
+expresses
+
+$$
+x=A(\mathbf z),\qquad y=B(\mathbf z)
+\tag{ARH.8.3}
+$$
+
+in the remaining free variables, subject only to finitely many residual
+ordinary disequalities. This includes originally existential variables
+and any free coordinate left by the substitution.
+
+Fix a satisfying assignment. Suppose a variable $z$ occurs in $B$.
+Hold all other variables at their assigned finite trees. By the
+one-variable fact in [SLH, Theorem 74.4, proof (ii)][SLH], each remaining
+disequality, being true at the fixed assignment, excludes at most one
+replacement value for $z$. Thus all but finitely many finite trees can
+replace $z$ while staying in this same disjunct.
+
+Let $a\ge0,b>0$ count occurrences of $z$ in $A,B$. Let $w_j$ be any fixed
+choice of a tree with exactly $j$ leaves all labeled $\alpha$, for each
+$j\ge1$. Infinitely many of these pairwise distinct trees avoid the
+finite excluded set. With all other variables fixed, write $c_\alpha,
+c_\beta,d_\alpha,d_\beta$ for their constant contributions to the two
+leaf counts. Then
+
+$$
+\begin{aligned}
+\#_\alpha A(w_j)&=aj+c_\alpha,&
+\#_\beta A(w_j)&=c_\beta,\\
+\#_\alpha\rho(B(w_j))&=d_\beta,&
+\#_\beta\rho(B(w_j))&=bj+d_\alpha+d_\beta.
+\end{aligned}
+\tag{ARH.8.4}
+$$
+
+The second line uses exactly the actual images of $\alpha,\beta$ in
+(ARH.1.1). Containment in $\mathcal G$ requires equality of both counts
+for unbounded $j$. The alpha equality forces $a=0$; the beta equality
+then, and in fact already, contradicts $b>0$. Hence $B$ contains no free
+variable. This disjunct fixes one $y$, and containment in $\mathcal G$
+fixes $x=\rho(y)$ as well. Each nonempty disjunct contains just one pair,
+whereas $\mathcal G$ has infinitely many. This is the contradiction.
+
+For the literal extension, physical-address locality (SLH.74.7) makes
+every fixed finite history depend on a finite original prefix in its
+source coordinates. Enumerate the finitely many such prefix patterns.
+Each is described by ordinary equations with fresh frontier variables;
+the literal outcomes are constant on a pattern. Distribute this finite
+disjunction into (ARH.8.1). The result is still a finite union of ordinary
+cells, already excluded. A fixed old row likewise has the ordinary
+context-filling equations and all its class disequalities (ARH.1.2).
+
+To exhibit the graph as an actual input, take
+
+$$
+P=\{L,R\},\quad C=\langle\square_1,\square_2\rangle,
+\quad\pi=\{\{1\},\{2\}\},\quad H_0=\varnothing,
+\quad H_{\rm rel}=\{(0,L,1,R,=)\}.
+\tag{ARH.8.5}
+$$
+
+Writing the original tree $\langle x,y\rangle$, this record says exactly
+$x=\rho(y)$. The old inequality adds no restriction, since
+$\kappa(\rho(y))=\kappa(y)+1$ implies $\rho(y)\ne y$. Both endpoints
+are original and reached. Proposition 2.1 acquires them by paid traversal,
+one actual update, finite comparison and the complete cut. Its entire
+fiber is therefore $\{\langle\rho(y),y\rangle:y\in\mathcal T\}$.
+An ordinary description of this original-source fiber would give an
+ordinary description of $\mathcal G$ by substituting
+$u=\langle x,y\rangle$. It is impossible by the preceding proof. $\square$
+
+The theorem rules out a route that simply turns all morphic constraints
+into finitely many ordinary cells and then invokes the unchanged ground
+binding test of [SLH, §74][SLH]. It does not exclude a finite description
+which retains $\rho$, a richer automaton with a proved correspondence,
+or another effective representation. It says nothing against a particular
+constant recut on (ARH.8.5); for instance its $Q=P$ row is already retained.
+

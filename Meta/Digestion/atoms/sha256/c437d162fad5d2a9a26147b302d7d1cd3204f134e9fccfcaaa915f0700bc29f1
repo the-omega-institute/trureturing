@@ -1,0 +1,25 @@
+### theorem 11.1: 定理 8：Auric FIB ATOM 纤维化定理
+
+设一个有限合法关系系统具有：
+
+1. 一个有限状态集 $\Omega$；
+2. 一个基础投影 $\pi:\Delta(\Omega)\to B$；
+3. 一个边界运输图 $G$；
+4. 一个未来读出族 $\mathscr R$。
+
+则其结构可以分解为四层：
+
+$$
+\boxed{
+\text{基础商空间}
+\quad+\quad
+\text{局部纤维}
+\quad+\quad
+\text{运输环流}
+\quad+\quad
+\text{未来可观测商}.
+}
+$$
+
+具体地：
+

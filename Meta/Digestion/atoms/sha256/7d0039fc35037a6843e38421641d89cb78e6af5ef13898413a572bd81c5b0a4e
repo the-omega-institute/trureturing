@@ -1,0 +1,26 @@
+**Proposition 11.2 (three-block paired-module relation).** Let the vertices
+of a triangle be $0,1,2$, with the cyclic orientation
+$0\to1\to2\to0$. Independently assign a label $s_e\in\{0,\ldots,4\}$
+to each of its three edges. At each vertex use the four-module form
+(NDR.26): put $u_{s_e}$ at port $LL$ for its outgoing edge,
+$u_{\tau(s_e)}$ at port $LR$ for its incoming edge, and $u_0$ at each
+of the other two ports. The resulting relation in $S_5^3$ has exactly
+$125$ tuples and is jointly admissible for all $93=3|W_5|$
+coordinate-target pairs. Each of its six nonconstant edge-port $LL$
+targets has exactly the opposite endpoint as its possible donor block,
+even when all finite native words are allowed.
+
+**Proof.** Each module state recovers its edge label, so the parametrization
+is injective and has $5^3=125$ images. Targets above the module frontier
+are constantly branch, and targets in either fixed module are constant
+factors. In an edge module, use the paired witnesses of Lemma 4.2 at
+the corresponding actual port. They are parent words in $W_5$, since
+the port has length two and the suffix has length at most two. Thus all
+$3(1+2+4+8+16)=93$ parent coordinate-target pairs have witnesses.
+For each edge-port $LL$ target, vary that edge label while keeping the
+other two fixed. An experiment in an unrelated module is constant under
+this variation; an experiment in the target module cannot determine its
+$LL$ factor by Lemma 4.2. Every finite word enters at most one module.
+The mate's $RL$ reply does determine the factor, so precisely the other
+endpoint block can be its donor. $\square$
+

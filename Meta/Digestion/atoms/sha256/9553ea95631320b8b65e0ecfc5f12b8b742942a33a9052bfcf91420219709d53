@@ -1,0 +1,33 @@
+## 4. Consequence for the selected-past decoder
+
+At the bookmark, the three source histories have the following jointly acquired states:
+
+| selected prefix | chronological word $\omega$ | $(Q,Z)$ | selected-past colex rank |
+| --- | --- | --- | ---: |
+| $010$ | $abc$ | $((ac,bc),0)$ | $1$ |
+| $100$ | $bac$ | $((ac,bc),1)$ | $0$ |
+| $001$ | $acb$ | $((ac,cb),0)$ | $2$ |
+
+The adapter from the preceding volume,
+
+$$
+j(ac,bc,z)=1-z,
+\qquad
+j(ac,cb,0)=2,
+$$
+
+therefore receives the value produced by the same source run that produced $Q$ and $B_0$. The unchanged decoder returns the corresponding selected past. No independently chosen chronology bit, replay port, or post hoc source selection is being smuggled into the interface.
+
+This proves the finite source-coherence statement:
+
+$$
+\boxed{
+\text{on }H,
+\quad
+(Q,Z,B_0,Y,s_{\rm stop})
+\text{ is a function of one actual source history and is sufficient for the supplied decoder.}
+}
+$$
+
+It also preserves the earlier negative result: $Q$ alone still merges $abc$ and $bac$, even though their $B_0$, suffix and Stop agree.
+

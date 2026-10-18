@@ -1,0 +1,17 @@
+**定理 11.2（运输下的源与读出链式法则）。** 在假设 11.1 的固定值空间表示中，设读出算子为 $\widehat K_{\omega,\lambda}:H_\omega\to\mathbb R$，则
+
+$$
+\begin{aligned}
+v_\omega&=\dot J_{\omega,\lambda}q_\lambda
+             +J_{\omega,\lambda}\dot q_\lambda,\\
+\frac{d}{d\lambda}\bigl(\widehat K_{\omega,\lambda}J_{\omega,\lambda}q_\lambda\bigr)
+ &=\dot{\widehat K}_{\omega,\lambda}J_{\omega,\lambda}q_\lambda
+   +\widehat K_{\omega,\lambda}\dot J_{\omega,\lambda}q_\lambda
+   +\widehat K_{\omega,\lambda}J_{\omega,\lambda}\dot q_\lambda.
+\end{aligned}
+$$
+
+向量读出具有同样的有类型公式。若 $J$ 和读出都固定，只有共同源变化项；若运输或读出变化，则其导数不能遗漏。
+
+证明。有限维算子乘积法则给出三项。质量保持使 $v_\omega$ 属于质量零空间。非单射运输可以合并共同源差异，故不能反向推断被合并信息仍可恢复；不同观察者的隐藏核是否对应，还须检验其观察映射与运输的交换关系。∎
+

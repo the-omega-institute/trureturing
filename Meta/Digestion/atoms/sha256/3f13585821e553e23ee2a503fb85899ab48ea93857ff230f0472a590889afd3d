@@ -1,0 +1,26 @@
+**定义 C-106.1（实际联合人口与两个观察纤维）。** 沿用 C-105.1 的 $B,H,f,e_s,Q,R_+$，
+以及 C-105.2 的 $S,T,\Psi,\Gamma_t$。所有密度算子均为
+$H^{(1)}\otimes H^{(2)}$ 上任意复矩阵 $\Gamma\succeq0$、$\operatorname{tr}\Gamma=1$；
+可分离性仍只相对于 $H^{(1)}\mid H^{(2)}$。
+定义同一实际状态的精确联合概率和两个二元设置的响应
+
+$$
+p_{su}(\Gamma)=\langle s,u|\Gamma|s,u\rangle,\qquad
+q(\Gamma)=\operatorname{tr}(Q\Gamma),\qquad
+p_R(\Gamma)=\operatorname{tr}(R_+\Gamma),
+\tag{C106.1}
+$$
+
+$$
+\begin{aligned}
+\mathfrak D&=\left\{\Gamma\succeq0:\operatorname{tr}\Gamma=1,\quad
+p_{su}(\Gamma)=\tfrac15\mathbf1_{\{u=f(s)\}}\quad\text{对所有 }s,u\in B\right\},\\
+\mathfrak F&=\{\Gamma\in\mathfrak D:q(\Gamma)=1/5\}.
+\end{aligned}
+\tag{C106.2}
+$$
+
+$\mathfrak F$ 是 C-105 原完整菜单在 $S$ 处的纤维；$\mathfrak D$ 只固定全部 $25$ 个
+联合基概率。它们都不要求 $\Gamma=\Gamma_t$、实矩阵、乘积来源或轮内独立。
+不同测量设置的期望须属于同一个实际状态；两个单份边缘相同不供应这个条件。
+

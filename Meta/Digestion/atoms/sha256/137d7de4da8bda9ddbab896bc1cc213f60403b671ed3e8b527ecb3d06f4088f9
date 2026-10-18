@@ -1,0 +1,66 @@
+**定义 82.3（Arbitrary two-value tables and the saturated compatibility criterion）。** Fix
+
+$$
+h\ge4,\qquad m\ge2^h-1\text{ odd},\qquad
+k=m+1,\quad T=m+2,\quad g=1.
+\tag{82.10}
+$$
+
+Put $A=\{0,\ldots,m\}$ and $z=m+1$. Let $\lambda_0,\lambda_1:A\to Y$ be arbitrary finite phase tables, allowing repetitions and different component images, such that
+
+$$
+\Gamma(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+|\Gamma[A]|=2^h-1.
+\tag{82.11}
+$$
+
+Choose common distinct $R,C$ fresh relative to both component images. On the entire original INITIAL record space define
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+R,&s=m,\\
+\lambda_v(j),&0\le s<m,\ j\in A,\\
+C,&0\le s<m,\ j=z,
+\end{cases}
+&&v\in\mathbb F_2,\\
+f(\bot)&=L_\bot,&&F(w)=f(q_{\rm INITIAL}(w)).
+\end{aligned}
+\tag{82.12}
+$$
+
+Initial bottom has its arbitrary independent label, possibly equal to another label. The pullback is part of the specified target, not inferred from the legality of a source history. No INITIAL label is reevaluated after control begins.
+
+Write $\widehat C=(C,C)$, $L=\Gamma[A]\cup\{\widehat C\}$, and extend $\Gamma$ to the full low phase cycle by
+
+$$
+\Lambda(j)=\Gamma(j)\ (j\in A),\qquad
+\Lambda(z)=\widehat C.
+\tag{82.13}
+$$
+
+For a joined class $D\in\Gamma[A]$, let $n_D=|\Gamma^{-1}(D)|$, and put
+
+$$
+E=\{D\in\Gamma[A]:n_D>0\text{ is even}\},\qquad
+e_t=m+1-2t\quad(1\le t<h).
+\tag{82.14}
+$$
+
+The criterion $\mathsf K$ is the existence of a bijection $c:L\to\mathbb F_2^h$, with coordinates $0,\ldots,h-1$, satisfying exactly
+
+$$
+\begin{aligned}
+\bigoplus_{D\in E}c(D)&=0,\\
+c_0(\widehat C)&=0,\qquad
+c_0(\Gamma(0))=c_0(\Gamma(1))=1,\\
+c_t(\Gamma(e_t))&=0\quad(1\le t<h).
+\end{aligned}
+\tag{82.15}
+$$
+
+Repeated classes accumulate their coordinate restrictions. There are no additional seam clauses in $\mathsf K$. Its XOR is over positive even-multiplicity joined phase classes, not over INITIAL tails or separate component parities.
+
+All prices below are the original minimum worst-branch ACTUAL emitted-complete-block fees [IC, Definition 1.3]. The free initial output gives the INITIAL scalar or initial bottom; all subsequent observations are complete endpoints. A GLOBAL controller uses ONE preset literal stream for this fixed full target, on both free-value fibres and all actual original sources, with its own endpoint stopping and decoding. Every issued block, including a wait, padding, repair or absorbed rejection, costs one. Reset, copy, intermediate reading, hidden INITIAL clock and borrowed sibling observations are excluded.
+

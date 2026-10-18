@@ -1,0 +1,41 @@
+**Lemma 29.1 (the exact nested comparison).** Let $z\in\mathcal T$,
+let $p\ne\varepsilon$ be originally reached in $z$, and let
+$a,b\in\{0,1\}$. Then
+
+$$
+\rho^a(z)=\rho^b(z|_p)
+\quad\Longleftrightarrow\quad
+a=0,\ b=1,\ p=L,\quad z=T_k\text{ for some }k\ge2.
+\tag{ARH.29.1}
+$$
+
+Proof. If $a=b$, injectivity reduces the equation to equality of a finite
+tree and its proper subtree, which finite node count excludes. If
+$a=1,b=0$, the number of nodes of $\rho(z)$ is at least the number of
+nodes of $z$, while a proper subtree has fewer. This excludes that case.
+Node monotonicity follows directly from the two actual leaf images and
+preservation of pairing.
+
+It remains to consider $z=\rho(z|_p)$. Because $p$ is an original reached
+position, original-address transport gives
+
+$$
+(\rho z)|_p=\rho(z|_p)=z.
+\tag{ARH.29.2}
+$$
+
+Both endpoints of the predicate $(0,\varepsilon,1,p,=)$ on this very
+finite tree $z$ therefore exist. Apply the source classification in
+Theorem 4.2 to precisely this predicate: it forces $1=w(p)$ and
+$z=T_k$ with $k\ge1$. Positive letter weights give $p=L$. Original
+reach of $L$ in $z$, an additional hypothesis retained here, then gives
+$k\ge2$. Conversely, for $k\ge2$, $T_k|_L=T_{k-1}$, and
+$\rho(T_{k-1})=T_k$. This proves the converse with the original guard.
+
+The application of Theorem 4.2 has been supplied with its whole-root,
+proper-descendant equality (ARH.29.2), derived under the target equality
+being classified. It is not applied to the old-child record of
+(ARH.8.5), and does not assert that all sources in that graph have a
+root certificate. Using $z$ as a mathematical argument neither reroots
+the physical register nor acquires a comparison. $\square$
+

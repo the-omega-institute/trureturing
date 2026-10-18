@@ -1,0 +1,44 @@
+**Theorem 5.1 (the exposed real boundary).** The cone is contained in
+$\operatorname{tr}(B_0L)\leq0$, and its trace-zero face is exactly
+
+$$
+\{L\in\mathcal C_2:\operatorname{tr}(B_0L)=0\}
+ =\{L\text{ real symmetric}:L\succeq0,\ \operatorname{tr}(B_0L)=0\}.
+\tag{CA.21}
+$$
+
+Every matrix on this face is a sum of at most three real quadratic-null
+projectors.
+
+Proof. A plane atom has trace $-\alpha|v|^2-\beta|w|^2$, strictly
+negative unless zero. A quadratic-null atom has
+$|u|^2=|\alpha v^2+\beta w^2|\leq\alpha|v|^2+\beta|w|^2$.
+Thus each atom has nonpositive trace. If the sum has trace zero, every
+nonzero atom must be quadratic-null and saturate this inequality. Its
+$u$ cannot be zero. Dividing the null equation by $u^2$ shows that the
+two summands $\alpha(v/u)^2$, $\beta(w/u)^2$ sum to $1$ and their
+moduli sum to $1$. Equality in the complex triangle inequality makes
+both nonnegative real (including a possible zero). Therefore $v/u$ and
+$w/u$ are real. The projector is a positive real multiple of a real
+null projector. The whole matrix is real symmetric.
+
+Conversely factor a real symmetric $L\succeq0$ as $BB^T$ with at most
+three columns, using the real spectral theorem. $A=B^TB_0B$ is real
+symmetric and has trace zero. It has an orthonormal basis with every
+Rayleigh diagonal zero. Indeed if $A=0$ any basis works. Otherwise its
+trace-zero spectrum has a positive $\lambda_+$ and a negative
+$\lambda_-$. For corresponding real orthonormal eigenvectors the vector
+
+$$
+f=\frac{\sqrt{-\lambda_-}e_++\sqrt{\lambda_+}e_-}
+ {\sqrt{\lambda_+-\lambda_-}}
+\tag{CA.22}
+$$
+
+is unit and has zero Rayleigh value. The compression to $f^\perp$ still
+has trace zero; induction gives the rest of the basis, including a zero
+compression. If $O$ has these columns, the columns of $BO$ give the
+claimed real null decomposition. Zero columns are removed. This proves
+the converse, including $L=0$. Since $-B_0$ is nonnegative on the cone,
+its zero pairing indeed exposes this face. $\square$
+

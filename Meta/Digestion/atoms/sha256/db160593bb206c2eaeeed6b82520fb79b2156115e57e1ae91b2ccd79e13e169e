@@ -1,0 +1,51 @@
+**Theorem 12.4 (exact complete-installation-budget feasibility).**
+For a nonempty cycle-covered input, specified integers $K,S\ge0$, and
+any upper bounds $k,d,L\in\mathbb N\cup\{\infty\}$, existence of a
+successful native table with
+
+$$
+|E|\le K,\quad I(C)\le S,\quad
+(q_C(u),a_C(u),\ell_C(u))\le(k,d,L)\quad(u\in D)
+\tag{CAR.54}
+$$
+
+is decidable. Every positive decision supplies the actual finite literal
+table. Both action budgets may be infinite.
+
+Proof. There are finitely many binary strings of length at most $S$.
+Parse them with the fixed input prefix of Definition 12.3 and retain
+the valid tables with at most $K$ states. This includes every table
+admissible under that encoding and budget, with arbitrary literal
+addresses and concrete output rows that fit the budget.
+
+For each candidate compute $T_C$ from its actual read words by (CAR.46).
+Enumerate its formal paths through that many nonhalt actions. Use
+(CAR.49) with these literal words and their actual preceding update
+counts, and use horizon $B=T_C$ in (CAR.51)–(CAR.52). Require (CAR.52),
+all finite requested cost inequalities on
+reachable terminal paths, and, for every terminal path to $h$,
+
+$$
+\forall\mathbf n\quad
+\operatorname{Adm}_\eta(\mathbf n)\land
+\operatorname{Path}_{\eta,\pi}(\mathbf n)
+\Longrightarrow R_Q(\Theta_\eta(\mathbf n))=Y_h.
+\tag{CAR.55}
+$$
+
+Lemma 4.1(4) supplies precisely this last comparison with the candidate's
+already installed row. Pairwise support constancy without (CAR.55)
+would allow a uniformly wrong installed output, and is insufficient.
+All tests are Presburger sentences. Infinite budget coordinates simply
+contribute no inequality.
+
+If a candidate succeeds on every source, every run halts by $T_C$ by
+Theorem 11.2, so all tests hold. Conversely (CAR.52) makes every actual
+source halt within that horizon, and (CAR.55) and the path inequalities
+give its correct complete row and costs. The same-source correspondence
+is the induction in Theorem 12.1, using the bijection (CAR.13).
+The finite enumeration and each arithmetic test terminate, giving both
+directions of (CAR.54). The source domain is never enumerated or cut off;
+only installed tables and their uniformly bounded path descriptions are
+finite. $\square$
+

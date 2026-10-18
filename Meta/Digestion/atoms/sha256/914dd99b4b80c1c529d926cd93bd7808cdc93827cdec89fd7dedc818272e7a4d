@@ -1,0 +1,73 @@
+**Theorem 4.2 (existence of some low-dimensional full completion).** For a
+zero-transfer live CP/TNI map, (JG.10) is equivalent to existence of SOME
+full CPTP completion with that live map admitting a finite abstract
+factorization (JG.23) with all fibres of dimension at most two. A
+whole-complex five-mode completion can be specified as well. This
+existence statement is about an abstract channel and not its native
+availability.
+
+Proof. Use the vectors $v_s$ of Theorem 2.2, with support $S_s$ of size
+$k_s\in\{1,2\}$. In a carrier with orthonormal basis $q_i$ for
+$i\in S_s$, set
+
+$$
+A_s=\sum_{i\in S_s}v_{si}|q_i\rangle\langle i|,\qquad
+V_s=\sum_{i\in S_s}|i\rangle\langle q_i|.
+\tag{JG.25}
+$$
+
+The encoder is $X\mapsto A_sXA_s^\dagger$; the full decoder is the
+TP live isometry $Y\mapsto V_sYV_s^\dagger$.
+Here $V_s^\dagger V_s=I_{k_s}$ and
+$V_sA_s=\operatorname{diag}(v_s)$. Let
+$D=I-\operatorname{diag}(d)\succeq0$. A scalar encoder
+$X\mapsto\operatorname{tr}(DX)$, followed by a decoder that emits
+original stopped mode $2$, stopped state $P_f$, and density
+$h_0(t)=2/(1+t)^2$ on $[0,1]$, supplies the remainder. Since
+$\int_0^1h_0=1$, that full decoder is TP. Its live part is zero.
+The joint encoder effect is
+$\sum_sA_s^\dagger A_s+D=\operatorname{diag}(d)+D=I$.
+Thus the entire channel is
+
+$$
+\begin{aligned}
+\Phi_{C,L}(X)&=C\odot X,\\
+\Phi_{C,\ell}(X)(dt)&=\mathbf1_{\ell=2}
+       \operatorname{tr}(DX)h_0(t)dt\,P_f,\qquad 0\leq\ell\leq4,
+\end{aligned}
+\tag{JG.26}
+$$
+
+with zero extra sectors. It is common and CPTP on every complex matrix,
+including at passive reference amplification. All zero-weight stopped
+labels remain named. Zero $D$ omits the stopped branch, and zero $C$
+omits all live branches; neither case needs normalization of a branch.
+
+For the full original input algebra take live output
+$\iota\Lambda(\iota^\dagger X\iota)\iota^\dagger$, live encoders
+$A_s\iota^\dagger$, and scalar stopped encoder effect
+
+$$
+D_5=I_5-\iota\operatorname{diag}(d)\iota^\dagger\succeq0.
+\tag{JG.27}
+$$
+
+The total effect is $I_5$, all complementary-support mass is routed to
+mode $2$, and cross-support operators have the specified zero image.
+This proves a complete extension rather than presuming the unspecified
+action of another channel outside $V$.
+
+Conversely, encoder Kraus matrices $C_{\alpha u}$ and live-decoder
+Kraus matrices $D_{\alpha v}$ yield live products
+$L_{\alpha vu}=D_{\alpha v}C_{\alpha u}$ with
+$\operatorname{rank}L_{\alpha vu}\leq d_\alpha$. If every fibre has
+dimension at most two, their Choi sum belongs to $\mathfrak S_2$.
+Zero transfer and Theorem 2.2 imply (JG.10). The same necessity holds
+for the countable and stipulated integral models. To see the limiting
+cone step, normalized rank-at-most-two vectorized matrices form a compact
+set, as do their projectors and their finite-dimensional convex hull.
+Its bounded homogeneous slices are compact, so positive integrable
+sums remain in the cone. This is the mature product-rank bottleneck
+argument already used in CG23, with the present exact supported test.
+$\square$
+

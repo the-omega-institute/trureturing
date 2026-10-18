@@ -1,0 +1,32 @@
+**Example 313.3 (A genuinely strict-head parameter point).**
+Set $\tau=0$, $\sigma=1/100$,
+$(a_1,\ldots,a_7)=(46,46,46,35,29,26,20)/100$ and
+$a_n=(17/100)2^{-(n-8)}$ for $n\ge8$.
+Then $E=17/100$, $\rho=31/100$, $x_1=0$ and $x_2=11/100$.
+The first and second head slacks are $31/100$ and $1/5$.
+The hull excess is $1/5$, its sum with $a_1$ is $33/50$,
+and $p_+(0)=83/100$. The theorem gives both attained original
+optima $17/100$; the same conclusion holds with any other permitted
+tail bounded at eight by $17/100$.
+
+For a bounded necessary-basis comparison, keep the same first seven
+amplitudes but take $c_0=1699/10000$ and
+$a_n=c_0\,2^{-(n-8)}$ for $n\ge8$.
+The active horizon is seven and its hull excess is $251/1250$.
+The exact readings of $Y_1,Y_2,C$ and the reused uniform five-late
+cut $\sum_{3}^7a_n\le(46/5)c_0$ are, respectively,
+
+$$
+-\frac{3083}{10000},\qquad-\frac{49}{250},\qquad
+-\frac{7829}{10000},\qquad-\frac{77}{25000}.
+$$
+
+Their nonnegative late coefficients make consecutive placements the
+largest readings among all ordered placements. The new reading is
+$43/10000>0$. These are exact substitutions into the specified
+inequalities, and show refinement only of that named basis.
+The new cut excludes this profile from complete $N$ feasibility;
+it is not a separator or a second optimum result. Its fixed sequence
+still has optimum $17/100$ by 313.1, since its new tail also lies
+below that cap.
+

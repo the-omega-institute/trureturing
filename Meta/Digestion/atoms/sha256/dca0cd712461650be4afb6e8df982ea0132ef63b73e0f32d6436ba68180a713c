@@ -1,0 +1,10 @@
+**Corollary 4.2 (Comparison of explicit upper bounds).** The explicit
+gap-count upper in Theorem 4.1 is $1/(2\kappa)=2\mathrm e/(2\mathrm e-1)$
+times the ideal upper $2(A+3/2)/\Delta$ in [C, Theorem 5.1]. This
+comparison does not bound the ratio of the two actual mean stopping
+times.
+
+Proof. Divide the two displayed upper bounds. They are upper bounds
+for different stopping laws, so this division alone gives no comparison
+of the actual expectations. $\square$
+

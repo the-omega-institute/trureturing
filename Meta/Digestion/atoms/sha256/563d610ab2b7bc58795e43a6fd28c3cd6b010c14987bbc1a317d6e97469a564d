@@ -1,0 +1,19 @@
+**Corollary 7.3 (integral and fractional repair costs).** Any fractional
+cover of $B_G$ by $b$-component admissible subsets of $S_5^N$, with
+$b\le N/2$, has total weight at least
+
+$$
+(5/4)^{N/8}.
+\tag{NDR.31}
+$$
+
+Every integral such cover has at least $\lceil(5/4)^{N/8}\rceil$
+members. Overlaps and replacement sets extending outside the test fiber
+are allowed. The unrestricted fiber $B_G$ itself is one admissible set.
+
+**Proof.** Give $B_G$ uniform probability mass. Theorem 7.2 says every
+replacement has mass at most $(4/5)^{N/8}$. Multiply its pointwise covering
+inequalities by this probability law and sum. If its coefficients are
+$c_H$, then $1\le(4/5)^{N/8}\sum_Hc_H$. The integral ceiling follows.
+$\square$
+

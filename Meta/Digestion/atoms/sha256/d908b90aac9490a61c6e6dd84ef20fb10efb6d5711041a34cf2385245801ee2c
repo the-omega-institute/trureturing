@@ -1,0 +1,27 @@
+### 79.1. Physical family and its exact diamond error
+
+Let F_(4,2) be the uniform four-fibre target of sections 66 and 72, with fixed MC encodings. Let the four tetrahedral Bloch vectors be
+
+    n_1=(1,1,1)/sqrt(3), n_2=(1,-1,-1)/sqrt(3),
+    n_3=(-1,1,-1)/sqrt(3), n_4=(-1,-1,1)/sqrt(3).
+
+For each f choose an orthonormal qubit basis u_(f,0),u_(f,1) whose projectors are (I+(-1)^j n_f dot sigma)/2. For a complex parameter eta with |eta|<=1, choose unit marker vectors a_0,a_1 satisfying <a_1,a_0>=eta; for example
+
+    a_0=e_0, a_1=conj(eta)e_0+sqrt(1-|eta|^2)e_1.
+
+Define local Stinespring isometries on the full eight-dimensional local inputs by
+
+    V_A|f,j>=|f> tensor u_(f,j) tensor a_j,
+    V_B|f,j>=|f> tensor conj(u_(f,j)).                  (1)
+
+Tracing the environments gives one physical product channel, denoted A_eta tensor B. It acts on every coherent input with the same maps. Its exact unhalved, arbitrary-reference diamond error is
+
+    ||(A_eta tensor B) J_in-J_out F_(4,2)||diamond
+       =1/4+|eta-3/4|.                                (2)
+
+In particular eta=3/4 gives an exact error of 1/4. This is the unique optimal parameter within this marker family. The original unrestricted product optimum is not determined: together with section 78 it lies in
+
+    [sqrt(3)-3/2, 1/4].                               (3)
+
+At eta=3/4 the local channels in (1) have Kraus ranks exactly four and two, respectively. This is an attaining resource count for (2), not a minimal-resource claim for quarter error.
+

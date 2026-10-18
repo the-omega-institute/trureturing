@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-reversible-five-state-slice-uniform-separation"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_REVERSIBLE_FIVE_STATE_SLICE_UNIFORM_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,28 @@
+**Theorem 6.1 (large-$R$ endpoint).** Keep the datum fixed and set
+
+$$
+K_\infty=\frac{Q^2\chi_c}{8\pi a^{3/2}J}=C_0\sqrt{r_C}>0.
+$$
+
+For the comparison functions, as $R\to\infty$,
+
+$$
+\begin{aligned}
+N(R)&=K_\infty R^{-1/2}+2K_\infty\sqrt{r_C}\,R^{-1}+O(R^{-3/2}),\\
+m_M(R)&=K_\infty R^{-1/2}+O(R^{-1}),\\
+m_\mu(R)&=1-K_\infty R^{-1/2}+O(R^{-1}),\\
+\alpha(R)&=1-\tfrac12K_\infty R^{-1/2}+O(R^{-1}).
+\end{aligned}
+$$
+
+When these are interpreted through actual finite branches, each native limit is taken first at its own fixed finite $R>r_C$. These expansions assert no simultaneous $s\downarrow0$, $R\to\infty$ rate, no uniform native resolvent approximation and no theorem selecting a divergent $r_s$ branch.
+
+Proof. Put $Z_2=\sum_{n=1}^\infty n^{-2}<\infty$. For $0\le\eta\le1/2$, the mean value theorem and convergence of $\sum n^{-3}$ give $\psi_1(1-\eta)=Z_2+O(\eta)$. Therefore
+
+$$
+F(\eta)=1+2\eta+2Z_2\eta^2+O(\eta^3),\qquad
+G(\eta)=\eta+2\eta^2+O(\eta^3).
+$$
+
+Insert $\eta=\sqrt{r_C/R}$ into $N=C_0G$. The identity $r_C=\chi_c^2a\varrho^2$ gives the stated $K_\infty$. Taylor's formula at $N=0$ for $(1+N)^{-1}$ and $(1+N)^{-1/2}$, with bounded second derivatives on a fixed neighbourhood of zero, proves the three remaining estimates. They concern the scalar family alone. Their actual interpretation has exactly the fixed-$R$-before-endpoint order stated in the theorem; no native estimate has been differentiated or made uniform. $\square$
+

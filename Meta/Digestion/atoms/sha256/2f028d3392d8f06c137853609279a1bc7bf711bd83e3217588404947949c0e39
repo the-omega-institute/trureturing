@@ -1,0 +1,19 @@
+**Theorem 8.3 (An inadequately centered instance).** In the same $J=1$
+construction, setting $\widehat\theta=0$ gives the identical risk
+failure even with exact adjacent-grid probabilities. Thus finite
+stopping and small probability-rounding error do not replace a
+midpoint guarantee relative to the shrinking signal.
+
+Proof. The live normalized input is now one, of floor one and
+fractional part zero. Its increment is $+\delta$ deterministically.
+The dead input is zero, of floor and fractional part zero, and its
+increment is zero. These are exactly the increments in Theorem 8.2,
+so its live-success and predictable-payment argument proves finite
+paid stopping and label one under both laws. In particular the tick
+probability error can be zero while source-zero risk is one.
+The actual midpoint error is $\gamma=\theta$, which is not covered by
+the robustness allowance: since $m_0>0$,
+$\theta=(m_0+m_1)/2>\Delta/2\ge D_0I/2>D_0I/(4\mathrm e)$.
+Conversely, $\gamma=\epsilon=0$ in Theorem 4.1 recovers exactly the
+ideal table and its centered means and moments. $\square$
+

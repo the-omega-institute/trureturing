@@ -1,0 +1,79 @@
+**定理 39.2（同格等式与不同的输入圆盘像）。** 有
+
+$$
+G=\mathsf C_5H,
+\qquad
+G\mathbb Z^2=\mathsf C_5\mathbb Z^2=\Lambda_5.
+$$
+
+然而
+
+$$
+\mathsf C_5\mathbb D=\sqrt5\,\mathbb D,
+$$
+
+而 $G\mathbb D$ 是半轴为 $\sqrt5\varphi$、$\sqrt5\varphi^{-1}$ 的椭圆。两个矩阵的像格是同一个嵌入在标准欧氏平面中的集合，继承同一个环境度量；不同的是把同一个输入圆盘送到该平面的两张带标记线性映射。
+
+证明。相乘给
+
+$$
+\begin{pmatrix}2&-1\\1&2\end{pmatrix}
+\begin{pmatrix}1&1\\0&1\end{pmatrix}
+=\begin{pmatrix}2&1\\1&3\end{pmatrix}.
+$$
+
+$H$ 的行列式为一，且 $H^{-1}=\left(\begin{smallmatrix}1&-1\\0&1\end{smallmatrix}\right)$ 为整数矩阵，所以 $H\mathbb Z^2=\mathbb Z^2$，两个像格相同。$\mathsf C_5$ 的两列 $(2,1)$、$(-1,2)$ 的读数 $U+3V$ 分别为五、五，都在 $\Lambda_5$ 中；其行列式为五。满秩整数格的指数等于基矩阵行列式的绝对值，故这个包含两边的指数都是五，必相等。等价的显式验证是
+
+$$
+\mathsf C_5^{-1}\begin{pmatrix}U\\V\end{pmatrix}
+=\frac15\begin{pmatrix}2U+V\\-U+2V\end{pmatrix}.
+$$
+
+若 $U+3V=0\pmod5$，则 $U=2V\pmod5$，右边两分子均被五整除，故每个核元素都在像格中。
+
+几何方面，
+
+$$
+\mathsf C_5^{\mathsf T}\mathsf C_5
+=\begin{pmatrix}2&1\\-1&2\end{pmatrix}
+\begin{pmatrix}2&-1\\1&2\end{pmatrix}=5I.
+$$
+
+因此 $\mathsf C_5/\sqrt5$ 正交，且行列式为一；它旋转单位圆盘，$\mathsf C_5$ 则将其等比例放大为半径 $\sqrt5$ 的圆盘。
+
+为明确 $G$ 的主轴，取两个正交单位向量
+
+$$
+e_+=\frac{(1,\varphi)}{\sqrt{1+\varphi^2}},
+\qquad
+e_-=\frac{(\varphi,-1)}{\sqrt{1+\varphi^2}}.
+$$
+
+它们的内积为零、长度为一。用 $\varphi^2=\varphi+1$ 逐项相乘，得到
+
+$$
+Ge_+=(2+\varphi)e_+,
+\qquad
+Ge_-=(3-\varphi)e_-.
+$$
+
+两个特征值均为正，且
+
+$$
+2+\varphi=\frac{5+\sqrt5}{2}=\sqrt5\varphi,
+\qquad
+3-\varphi=\frac{5-\sqrt5}{2}=\sqrt5\varphi^{-1}.
+$$
+
+在这组正交基下，$G$ 将 $ae_++be_-$ 送到 $\sqrt5\varphi\,ae_++\sqrt5\varphi^{-1}\,be_-$；$a^2+b^2\le1$ 因而给出所述椭圆。正特征值同时是奇异值，所以它们确实是半轴长度，而非只给轴向比例。
+
+最后，$H$ 不是正交矩阵：$H(0,1)=(1,1)$，长度从一变为 $\sqrt2$。换整数格基可以使用 $H$，换保持输入圆盘的欧氏正交坐标却不可以。两个输入上的拉回 Gram 矩阵分别是
+
+$$
+\mathsf C_5^{\mathsf T}\mathsf C_5=5I,
+\qquad
+G^{\mathsf T}G=G^2=5\begin{pmatrix}1&1\\1&2\end{pmatrix},
+$$
+
+这明确区分了两种带标记变换，同时没有改变像格继承的环境内积。证毕。
+

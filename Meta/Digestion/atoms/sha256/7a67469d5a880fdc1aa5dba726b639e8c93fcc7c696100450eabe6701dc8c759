@@ -1,0 +1,24 @@
+## 194. The return cannot have companion C
+
+For (M,Z,C,Q,Z,C), genuineness gives
+ q>(z-c)^2/(m+1)-1>=m,
+so q>m. Special Q is excluded in Section 193, and all H values except Z
+are <=m. Hence Q=Z.
+
+Every owner with pair {Z,C} is genuine and has only H axes. If one axis
+is not Z, its value b<=m and the other r<=z. At r0=1+z+c the increasing
+Z numerator is [c+z(1+z+c)]*(1+c+b-z)<=0; since r<r0 its actual Z
+angles are obtuse. It must be rho. The only other possibility has axes
+Z,Z and frame (Z,Z,C,Z,Z,C). Its four Z angles have cosine
+z(c+1)/(2z^2+c-1)<1/2, because z>c+1. They exceed 4*pi/3 in total,
+and together with rho's two obtuse Z slots exceed 2*pi. Thus every
+owner with pair {Z,C} is rho.
+
+The residual faces of rho=(M,Z,C,Z,Z,C) are {Z,Z,C}. Any actual Z slot
+transported across one has pair {Z,C}, whether axial or transverse,
+since the two reservoir labels must differ. It therefore stays in rho.
+The other faces lead to tau. Their one plus three Z slots would be the
+complete connected Z circle, contrary to degree>=6. This excludes
+companion C. The return has frame (C,Z,M,Q,Z,M), with Q in H and q>c
+by genuineness and z>=1+m+c.
+

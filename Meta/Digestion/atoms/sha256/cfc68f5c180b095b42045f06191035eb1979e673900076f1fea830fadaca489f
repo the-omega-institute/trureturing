@@ -1,0 +1,28 @@
+**Definition 2.2 (row encoding and ownership).** Write the exterior in prefix
+order, using single tokens `B`, `a`, `b` for branch and the two leaves.
+A hole is `H`, its literal address letters, then `;`. Branch has arity two;
+leaves and holes have arity zero, so explicit closing brackets are unnecessary
+and the entire ordered bracketing is recoverable. Terminate the exterior by
+`|`. Append the upper-triangular equality bits for the holes in exterior
+order, then `$`. The diagonal is true and symmetry is implicit. All off-diagonal
+false bits are stored. Thus the complete partition is present, without an
+additional class-label array. Class ordinals can be recovered by scanning
+these bits. Holes occur in lexicographic order because $P$ is prefix-free.
+
+If $c$ is the exterior token length and $r$ its hole count, the row occupies
+
+$$
+s=c+\binom r2+2\quad\hbox{cells},\qquad O_{\rm ret}=4s\quad\hbox{bits}.
+\tag{CWS.3}
+$$
+
+A private candidate region $B$ is readable by the observer and rollbackable.
+Only exterior tokens and final pair-result bits are ever appended to it;
+no stack, temporary node value, counter, guard or transcript is stored there.
+Scans may read its already written hole fields. Before acceptance this is
+charged private candidate allocation, not published output and not a free
+output channel. On success its ownership changes to retained output without
+copying its payload. A rejected candidate is cleared and retracted before
+another attempt. A candidate formed during interference need not be a valid
+partition and is never published on that basis.
+

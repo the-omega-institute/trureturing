@@ -1,0 +1,37 @@
+**Proposition 151.2 (Exact joint support and simultaneous attainment).**
+For every $y\ge0$,
+
+$$
+\max_{v\in R_{O,L}}y\cdot v=B_{O,L}(y).
+\tag{151.5}
+$$
+
+For integer $y$, the right side is an integer and is attained by one
+complete deterministic stopped table on one schedule.
+
+**Proof.** A complete allocation satisfies
+
+$$
+\begin{aligned}
+\sum_jy_jp_{b_j}(E_j)
+ &=\sum_{S,c,r}h^y_{S,c}(r)T_{S,c,r}\\
+ &\le\sum_S w_S\sum_c\max_r h^y_{S,c}(r)
+ \le B_{O,L}(y).
+\end{aligned}
+\tag{151.6}
+$$
+
+Choose one schedule attaining the outer maximum, put its weight one and
+all other weights zero, and in each of its stopped cells choose a label
+attaining the corresponding inner maximum. Put unit mass at that label
+in that cell. The resulting complete predetermined table has mass one
+in every cell and simultaneously attains every term in the support value.
+It is valid on every word, with no label support mask. Thus the upper
+bound is attained, proving (151.5). Integer weights yield integer $h$
+and integer maxima. $\square$
+
+If a complete $O$ allocation met the cap at the strict profile, its
+weighted row lower bound would be $y\cdot d=B_{O,L}(y)+\Delta$,
+contradicting (151.5). The exact support is for the full class, not a
+collection of separately attainable event estimates.
+

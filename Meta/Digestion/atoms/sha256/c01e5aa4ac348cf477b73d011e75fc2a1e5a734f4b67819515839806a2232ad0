@@ -1,0 +1,32 @@
+**Theorem 5.1 (scalar bijection).** For $R\in(r_C,\infty)$, $N(R)$ is smooth and strictly decreasing with range $(0,\infty)$. Define the comparison core amplitude and two mass fractions by
+
+$$
+\alpha(R)=(1+N(R))^{-1/2},\qquad
+m_\mu(R)=\frac1{1+N(R)},\qquad
+m_M(R)=\frac{N(R)}{1+N(R)}.
+$$
+
+Then $\alpha$ increases bijectively from $0$ to $1$, $m_\mu=\alpha^2$ increases from $0$ to $1$, $m_M$ decreases from $1$ to $0$, and $m_\mu+m_M=1$. For every supplied $\alpha\in(0,1)$ there is exactly one $R>r_C$ satisfying this law: solve the positive scalar equation
+
+$$
+C_0\eta\left[1+2\eta+2\eta^2\sum_{n=0}^\infty(n+1-\eta)^{-2}\right]
+ =\frac{1-\alpha^2}{\alpha^2},\qquad 0<\eta<1,
+\qquad R=\frac{r_C}{\eta^2}.
+$$
+
+Proof. On any compact subinterval of $(0,1)$, the series and all its derivatives converge uniformly by comparison with convergent power series in $1/n$. In particular
+
+$$
+F'(\eta)=2+4\eta\psi_1(1-\eta)
+ +4\eta^2\sum_{n=0}^\infty(n+1-\eta)^{-3}>0,
+\qquad G'=F+\eta F'>0.
+$$
+
+Since $\eta_R'=-\eta_R/(2R)$,
+
+$$
+N'(R)=-\frac{C_0\eta_R}{2R}\{F(\eta_R)+\eta_RF'(\eta_R)\}<0.
+$$
+
+As $\eta\downarrow0$, the trigamma series remains bounded and $G(\eta)\to0$. As $\eta\uparrow1$, its $n=0$ term gives $G(\eta)\ge2\eta^3/(1-\eta)^2\to\infty$. Continuity, strict monotonicity and the intermediate value theorem prove the claimed range and unique inverse. Differentiating the elementary functions of $N$ proves their strict monotonicities. A complex supplied core coefficient $c$ determines this $R$ only through its modulus $\alpha=|c|\in(0,1)$; its phase is unconstrained by the scalar equation. Values $\alpha=0$ and $\alpha=1$ are endpoint values of this family and correspond to no finite $R>r_C$. $\square$
+

@@ -1,0 +1,32 @@
+### 109.3. One invariant side and original leakage
+
+For calibrated Grams, fix the invariant $G$ and average only $H$ over the eight original left translations. These permutations preserve the original fibre partition and target. The full original norm $F$ is simultaneously permutation invariant and convex in $H$ with $G$ fixed. Consequently $F(G,H)\geq F(G,\overline H)$, and the two-sided result applies to the invariant calibrated average $\overline H$. Interchanging the channels covers the other fixed side.
+
+For leaking channels form the actual calibrated completions
+
+$$
+\widetilde G=G+\bigoplus_f(I_2-G_{ff}),\qquad
+\widetilde H=H+\bigoplus_f(I_2-H_{ff}).
+\tag{109.13}
+$$
+
+The correct-output blocks satisfy $0\preceq G_{ff},H_{ff}\preceq I_2$. The completions are positive semidefinite, physically realizable, and retain every cross-fibre entry. If $G$ is invariant, write $g(e)=d_0$ and $g(s)=c\in\mathbb R$. Its completion increment is $(1-d_0)I-cR_s$, which commutes with every left translation. Thus the fixed side remains invariant.
+
+Set $L=T-G\odot H$ and $\widetilde L=T-\widetilde G\odot\widetilde H$. Their difference is supported on original fibre blocks and satisfies
+
+$$
+(L-\widetilde L)_{ff}=I_2-G_{ff}\odot H_{ff}\succeq0,
+\qquad G_{ff}\odot H_{ff}\preceq\operatorname{diag}(H_{ff})\preceq I_2.
+\tag{109.14}
+$$
+
+The tagged-reference consumer of RT III §91, with the same positive witness domain, now gives
+
+$$
+\delta\geq\mathcal B(L)\geq\mathcal B(\widetilde L)
+ =F(\widetilde G,\widetilde H)\geq\sqrt2-1.
+\tag{109.15}
+$$
+
+Reciprocal diagonal unitary phases cancel in every original product coefficient. Fibre-preserving relabelings simultaneously reindex that coefficient, the target and the full witness domain. The physical covariance argument of §107 therefore proves the stated gauge extension. This completes Theorem 109.1. Any reflection $r^ks$ can replace $s$ as presentation generator, so the theorem covers every noncentral involution of $D_8$.
+

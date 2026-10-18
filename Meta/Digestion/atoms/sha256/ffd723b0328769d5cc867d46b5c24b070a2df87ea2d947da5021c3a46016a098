@@ -1,0 +1,48 @@
+**Proposition 9.5 (all supplied response-sign alternatives).** For each fixed admitted datum, R Theorem 11.2 retains the following precise consequences.
+
+If $C_{\rm resp}<0$, (9.5)–(9.6) hold whether or not an affine coefficient is nonpositive.
+
+If $C_{\rm resp}>0$, there are fixed-data constants $0<c\le B_*<\infty$ such that eventually
+
+$$
+c\le r_s\le B_*,\qquad -E_s=\Theta(s^6),\qquad
+-\epsilon_c(s)=\Theta(s^8).
+\tag{9.8}
+$$
+
+For every prescribed sequence and every actual normalized complex ground-state choice, every subsequence has a further weak global limit $cp$. For each fixed positive-measure compact $K$, all such limits obey
+
+$$
+\begin{gathered}
+|c|^2\le(1+\gamma_K/\sqrt{B_*})^{-1}<1,\\
+\liminf_n\operatorname{dist}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)
+ \ge\left(2-2(1+\gamma_K/\sqrt{B_*})^{-1/2}\right)^{1/2}>0.
+\end{gathered}
+\tag{9.9}
+$$
+
+Here, for the original long-time tensor $M=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0$, the source constants from P §§102–103 are
+
+$$
+\begin{aligned}
+J_K&=\int_K Vp>0,& b_0&=\frac{e^{-3}}{24\pi\sqrt{\det M}},&
+v_M&=\frac{28\pi}{3}\sqrt{\det M},\\
+C_0&=\frac{\chi^2j_0}{a^{3/2}}b_0^2v_M,&
+\gamma_K&=C_0\phi(k_0)^2J_K^2>0.
+\end{aligned}
+\tag{9.10}
+$$
+
+No exact finer coefficient, replacement actual profile or centered crossover is identified.
+
+If $C_{\rm resp}=0$, the supplied assertions remain only
+
+$$
+E_s\to0,\qquad c\le r_s=o(s^{-6}).
+\tag{9.11}
+$$
+
+Bounded, divergent or mixed subsequential $r_s$ behavior remains undecided. Equivalence (9.2) still applies to every actual sequence, but (9.11) does not choose its branch. In particular (9.7) is no proof of actual profile failure.
+
+Proof. The negative case follows from (9.3) and (9.2). For positive response, absence of an eventual finite upper bound on $r_s$ would supply a sequence tending to zero along which $r_s\to\infty$. Choosing actual ground states and using (9.2) and (9.1) would give $\liminf E_s\ge C_{\rm resp}>0$, contradicting actual negativity. Thus $r_s\le B_*$ eventually. The independent macroscopic upper direction gives the lower bound $r_s\ge c$, hence (9.8). The compact-charge shell argument in P Theorems 102.2 and 103.1 supplies exactly (9.9) with (9.10); its mass escapes each fixed microscopic compact set, so a local weak profile is not a global unit profile. At response zero, (9.3), (1.6) and the same macroscopic direction give (9.11). A vanishing unscaled energy does not decide its size after division by $s^6$. These are the existing conditional alternatives, retained with their actual-state hypotheses. $\square$
+

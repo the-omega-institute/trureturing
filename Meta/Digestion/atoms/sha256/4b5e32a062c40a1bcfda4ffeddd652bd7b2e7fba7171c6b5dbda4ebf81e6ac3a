@@ -1,0 +1,55 @@
+**Theorem 29.3 (Internal inversion, all cancellation cases and the zero-moment boundary).** If $\mu\ne0$, the complete state and the finite observations $P,W,C$ identify the two characters and the nuisance moment by
+
+$$
+\boxed{
+\mu=P/D,\qquad
+u_2=\overline{\frac{W/P-1}{\eta}},\qquad
+u_1=\frac{C-p_1p_2-Bu_2}{A}.}
+\tag{29.14}
+$$
+
+For the promised family the actual margin is $|P|\ge vD$. No lower bound on $|d_2|$, $|W|$ or $|C|$ is needed. This includes the balanced case $\eta=1$, the cancellation $d_2=W=0$, and every zero of $C$. No functional of $\pi$ beyond $\mu$ is identified.
+
+At $\mu=0$, equality of complete $(3,3)$ states is exactly equality of $C$. Their entire character fibers are determined as follows. With $z=C-p_1p_2$, for $z\ne0$ the possible $u_2$ obey
+
+$$
+|u_2|=1,\qquad
+\operatorname{Re}(\overline z u_2)=\frac{|z|^2+B^2-A^2}{2B},\qquad
+u_1=\frac{z-Bu_2}{A}.
+\tag{29.15}
+$$
+
+Such a fiber has at most two points. If $z=0$, a fiber exists exactly when $A=B$, and then it consists of all $u_1=-u_2$. For every positive $p$ some fibers contain two distinct character points. There are also identifiable points at $\mu=0$, for example $C=p_1p_2+A+B$, whose fiber is $u_1=u_2=1$. Hence zero moment is a failure of uniform identification in this fixed experiment, not failure at every point or an impossibility for other window lengths.
+
+Every complex $\mu=r e^{i\gamma}$ with $0\le r\le1$ is realized by an atomic joint-angle law. In particular, the visibility endpoint $v=1$ belongs to the model. There are finite-bit laws with identical one-window marginals but different joint states for **every** internal phase vector.
+
+**Proof.** Equations (29.7) and $D>0$ give the first two inverses, and the known coefficient $A>0$ gives the third. If $d_2=0$, then $q=0$ and $1+\eta\overline u_2=0$; since $|u_2|=1$, this forces $\eta=1,u_2=-1$. Formula (29.14) still uses the nonzero $P$ and returns this value. A vanishing $C$ is only a known value in the affine numerator of the third formula, not a denominator.
+
+Equality of the two characters is exactly equality modulo the affine subgroup $\Gamma=\{(\lambda+\nu k)_{k=1}^4\}$. Indeed, if $\Delta=\theta'-\theta$ has both characters zero, then $\Delta_3=2\Delta_2-\Delta_1$, $\Delta_4=3\Delta_2-2\Delta_1$; take $\lambda=2\Delta_1-\Delta_2$, $\nu=\Delta_2-\Delta_1$. Conversely affine differences annihilate both characters. On the actual vectors an affine difference multiplies each local density entry by a common count phase $e^{i(\lambda-\nu)(|w|_1-|z|_1)}$, which cancels in retained joint entries. Equivalently, substitution in (29.5)–(29.6) proves invariance directly. Thus the equality fibers for $\mu\ne0$ are exactly affine phase classes together with a fixed nuisance moment; laws with that same moment remain indistinguishable.
+
+For comparison with the source's channel terminology, this affine equivalence also equals memory-unitary equivalence of the outcome-labeled instrument and averaged channel in this supplied family. The elementary classification can be recovered from (29.1):
+
+$$
+\det(aS+bJ)=a^4bc_4.
+$$
+
+The two singular lines of this Kraus pencil have ranks four and one, respectively. Unitary equivalence of the averaged channel induces a unitary mixing of its two linearly independent Kraus operators. To see the latter fact directly, vectorize the two Kraus lists as full-column-rank matrices $F,H$. Equality of their Choi matrices says $FF^\dagger=HH^\dagger$; their ranges agree, so $H=FT$ for a square matrix $T$. Multiplication by a left inverse of $F$ and its adjoint gives $TT^\dagger=I$, hence $T$ is unitary. Preservation of the distinct singular-line ranks forces this mixing to preserve each line, so it preserves the labeled branches up to scalar phases. If $USU^\dagger=e^{it}S$, then $\ker S^\dagger=\mathbb Ce_0$ and $S^je_0=e_j$ imply $Ue_j=e^{i(\chi+jt)}e_j$. The corresponding rank-one reset equivalence says that $c'_k/c_k$ has an affine phase in $k$. Conversely the same diagonal unitary realizes every such affine change, with harmless Kraus scalar phases. This recovers only the supplied-family interpretation of §§24–27; it does not classify arbitrary competing sources.
+
+At $\mu=0$, (29.6) is determined by $G$ alone, and its marginal recovers $C$, proving the equality assertion. Solving $|z-Bu_2|=A$ gives (29.15). A line intersects the unit circle in at most two points when $z\ne0$; when $z=0$ the equation reduces to $A=B$. To produce a collision for every $p$, choose $0<k<\min(A,B)$ and let $\alpha=\arcsin(k/A)$, $\beta=\arcsin(k/B)$. The two points
+
+$$
+(u_1,u_2)=(e^{i\alpha},e^{-i\beta})
+\quad\text{and}\quad(e^{-i\alpha},e^{i\beta})
+$$
+
+have the same real $z=A\cos\alpha+B\cos\beta$ and distinct characters. At $z=A+B$, equality in the triangle inequality instead forces $u_1=u_2=1$.
+
+For the actual moment law, take a fair bit $B_0\in\{0,\pi\}$ and an independent angle $\Gamma$ equal to $\gamma$ with probability $(1+r)/2$ and to $\gamma+\pi$ with probability $(1-r)/2$. Set
+
+$$
+\beta_1=B_0,\qquad\beta_2=B_0+\Gamma\pmod {2\pi}.
+\tag{29.16}
+$$
+
+Its first relative moment is $r e^{i\gamma}$. Draw these variables anew at every trial, independently of all preparation and design variables. For $r=1$ the second angle has a deterministic offset from the same fair bit. For $r=0$ the two bits may be taken independent and fair. Because $\Omega_3$ supports only counts zero and one, averaging the fair bit makes each local marginal exactly its count twirl. The common-bit law $\beta_1=\beta_2=B_0$ has $\mu=1$; independent fair bits have $\mu=0$. Both give the same one-window marginals, while their joint entry $P$ is respectively $D$ and zero, uniformly in $\theta$. These laws prove moment realizability and the joint distinction without supplying a noise record to the estimator. $\square$
+

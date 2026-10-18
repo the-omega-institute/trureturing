@@ -1,0 +1,4 @@
+### 104.3. Infinity, two, three, five, and other support primes
+
+The second Hilbert argument d is a square at all these places. At infinity use positivity. At 2 use d=1 modulo 8, at 3 use d=1 modulo 3, and at 5 use (d/5)=product_(p|d)(5/p)=1. At each q|e, mutual Legendre positivity gives (d/q)=1, and d is a q-unit, so Hensel lifting makes it a square in Q_q. All their factors in (104.6) are one, independently of rational tangent denominators.
+

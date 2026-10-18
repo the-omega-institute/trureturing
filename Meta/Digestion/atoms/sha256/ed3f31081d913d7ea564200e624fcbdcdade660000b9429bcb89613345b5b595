@@ -1,0 +1,59 @@
+**Proposition 7.2 (exact conditional fragment account).** Use unit
+charges for a fine commitment, endpoint probe, designated endpoint
+assignment and created vertex. For one actual completed row fragment
+let $B$ count unary SetBit reactions including no-ops/head marks;
+$V$ one-vertex Births; $R$ reciprocal retargets; $A$ first activations;
+and $E$ explicit assignments of an already empty old slot, each with
+its own stage. Each reaction also relocates the controller with three
+designated assignments. A Birth initializes seven new slots and the
+one parent attachment. Retarget and activation use three and two
+data assignments respectively. Let $O$ be 1 for an original OUT row
+and 0 otherwise. For the unfused stage convention and its fused
+version respectively,
+
+$$
+\begin{aligned}
+N&=2+B+V+R+A+E+O,\\
+N^*&=2+B+V+R+A+E,\\
+g&=4N+P+3B+9V+3R+2A+E,\\
+g^*&=4N^*+P^*+3B+9V+3R+2A+E.
+\end{aligned}
+\tag{OR.4}
+$$
+
+Here $P,P^*$ are the complete ordered sums of actual guard, control,
+operand, matching, vacancy, reciprocity and return probes. Any further
+primitive evaluation tariff must be added explicitly. Under the same
+full-scaffold scan prescription, $P=6MN+P_{\rm data}$. If the deleted
+pure Finish has no noncontrol probes and all retained probe lists
+are unchanged, then
+
+$$
+g-g^*=(6M+4)O.
+\tag{OR.5}
+$$
+
+Proof. Each reaction contributes one commitment and three controller
+assignments, giving $4N$. Data assignments are
+$3B+8V+3R+2A+E$; vertex charges add $V$. This proves (OR.4), including
+unchanged assignments. The controller subtree contains $2M$ vertices
+including its marker. Probing two child slots per vertex, a parent
+return per nonroot vertex, and its entrance costs
+$4M+(2M-1)+1=6M$ per specified complete scan. Fusion deletes one
+such scan, one commitment and three controller assignments, while
+keeping data effects and births identical. This gives (OR.5).
+Other routing or evaluator changes instead contribute their actual
+price difference. ∎
+
+The $E$ coordinate makes the tariff convention explicit. UAS 2.2's
+fresh finite bit designates both old socket child slots, including
+the unchanged vacant one. A bare eight-assignment Birth designates
+only the occupied attachment. To retain that literal UAS no-op
+assignment in a fine schedule, add its actual guarded empty-slot
+assignment and stage, or declare another primitive that includes it.
+It cannot disappear from a purported identical assignment account.
+For a row with $e$ core-plus-receipt cell appends and $s$ fresh finite
+bits, $V=24e+s$ under the supplied one-vertex templates; this is reused
+local material accounting, not a new constructor theorem. It says
+nothing about the installed availability of those stages.
+

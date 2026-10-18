@@ -1,0 +1,34 @@
+**Theorem 387.1 (Marked original-source consequence).** Let $a$ be any entire positive nonincreasing vanishing profile with $(a_1,\ldots,a_8)=b^*$ and $a_9\le c$. Every original $A\in\mathcal O_2$ with $e_a(A)\le c$ satisfies
+
+$$
+\sup_{x\in X:\,n(x)>8}
+\mathsf P_A\{\text{output }\theta_8\text{ and no actual request to address }8\}
+\ge\frac{465}{15808}.
+\tag{387.1}
+$$
+
+No source attaining this supremum is required.
+
+*Proof.* Refine the original-to-finite construction of Theorem 110.2 by retaining the acquired low schedule with its terminal table. Countability of $X$ supplies one conull seed event on which all actual executions obey their hard bound and hand off finitely. The whole preselected increasing schedule has length at most two and finite maximum address $A_S$ almost surely, by the original schedule normalization used in 110.2. Consequently $\gamma_m=\mathsf P(A_S>m)\to0$.
+
+For each integer $m\ge9$, fix before seeds an actual witness $x_{w,m}$ for each $w\in B_8$, with low word $w$ and replies zero at addresses $9,\ldots,m$. Their existence is exactly [Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows), as used in 110.2; in particular $n(x_{1^8,m})=9$. For this finite witness family choose one transition cutoff $t_m$ whose late-handoff probability is at most $1/m$ on each member.
+
+Simulate the rule with variable low word $w$ and these fixed higher replies, outputting base before an address above $m$, a third request or a transition beyond $t_m$. At a genuine handoff apply the measurable projection $\pi_8$ fixing $\theta_1,\ldots,\theta_8$ and sending every other tape to $\theta_0$. The coupling argument of 110.2 gives one common finite simulation with cap at most $c+\eta_m$ at all low words, where $\eta_m=\gamma_m+1/m\to0$.
+
+The additional event must be preserved as well. For each seed keep the low acquired prefix along the positive low path and its table, rather than replacing the output function by an arbitrary law-equivalent schedule. Low addresses precede all higher addresses. A low zero stops before any higher request, and after a positive low exhaustion all remaining supplied replies are fixed. If a cutoff or early handoff shortens the positive path, omit its unperformed suffix. This yields one empty, singleton or increasing-pair low schedule: every word stopping earlier belongs to its usual stopped cell, and words continuing positively share its prescribed continuation. The deterministic simulation therefore has a complete stopped representation with its actual low requests retained. All these schedule/table possibilities form a finite measurable catalog, as in Source-Correlated Laws 45.3 and 110.2. Original repeated or ignored requests remain charged; their deletion from redundant static information is not a refund to the original rule.
+
+On the agreement event at the positive witness, label $8$ is preserved exactly by $\pi_8$, and whether address $8$ was actually requested agrees with the retained low execution. Cutoff outputs are base and create no label-$8$ event. Thus the simulation's blind stock $g_m$ satisfies
+
+$$
+\left|g_m-\mathsf P_A\{\text{output }\theta_8,
+\ \text{no request }8\mid x_{1^8,m}\}\right|\le\eta_m.
+$$
+
+The notation after the bar means execution at the specified source, not conditioning a source distribution. Applying (386.3) at mass one and cap $c+\eta_m$ yields
+
+$$
+g_m\ge\frac{465}{15808}-\frac{324}{20}\eta_m.
+$$
+
+The actual witness event is therefore at least $465/15808-(1+324/20)\eta_m$. Take the supremum over actual $n(x)>8$ and then let $m\to\infty$. Only actual finite witnesses occur; neither an infinite all-positive source nor attainment of the source supremum has been used. $\square$
+

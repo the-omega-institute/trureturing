@@ -1,0 +1,49 @@
+**Corollary 4.2 (one fixed injective coordinate for at most three
+known worlds).** Let $K\subseteq\mathcal F^{\ne0}_7(H)$ be known,
+with $|K|\le3$, common $d,U,V$, and nonzero sixth gains. There
+is one terminal coordinate injective on all of $K$. Its fixed
+chronological two-atom word gives a lawful complete-target inverse
+on the whole known set, using at most eight total readings.
+
+Proof. There are at most three unordered pairs of distinct members.
+If every one of the four terminal coordinates had a collision,
+choose a colliding pair for each coordinate. Some pair would then
+occur for two coordinates. This contradicts Theorem 4.1. Hence one
+coordinate is injective on the whole known set. This argument also
+handles two members; on an empty set or singleton any coordinate
+is injective.
+
+Choose the first injective coordinate in the order $A,B,C,D$.
+Choose the corresponding fixed chronological word $JJ,JM,MJ,MM$,
+and denote its first and second atoms by $E,F$. The inverse sends
+an actual terminal raw response $v$ to the unique $W\in K$ whose
+selected normalized coordinate equals $(v-D_0)/\lambda$.
+Existence follows from actual membership, and injectivity proves
+uniqueness of the complete world, not just of a parameter.
+
+More explicitly, for every real raw sixth response $w$, let
+
+$$
+K_{E,w}=K\cap\mathcal F(H,E,w).
+\tag{4.7}
+$$
+
+For every such $w$ and every real raw terminal response $v$,
+
+$$
+\left|K_{E,w}\cap\mathcal F(H,E,w,F,v)\right|\le1.
+\tag{4.8}
+$$
+
+Indeed both sets are subsets of the same known $K$, on which
+the selected terminal scalar is injective. Thus every actual
+sixth child fails $L_1$, and $K$ fails $L_2$. Execute and read
+each selected atom immediately; a known singleton or a singleton
+intermediate child may stop earlier. Empty children are unreachable.
+The six ancestor readings plus these two give at most eight.
+The cardinality bound is essential to this pigeonhole argument:
+for larger sets there can be at least four distinct colliding
+pairs. No assertion for a larger or infinite common-prediction
+class follows from this proof. Common drift and both predictions
+are promises on $K$, not data acquired on both sixth branches. ∎
+

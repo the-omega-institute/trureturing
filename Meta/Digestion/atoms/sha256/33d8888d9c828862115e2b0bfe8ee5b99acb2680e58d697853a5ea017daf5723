@@ -1,0 +1,39 @@
+**Theorem 93.2 (selected original optimum).** Under Assumption 93.1, assume the original CG isolated root exists in the entire nine-coordinate radius-10^(-24) box of RC58, with the supplied ranks, source-root TP normalization, original HALF stopped-cq minimax/error identification, JR42 supported equality/sharp joint acquisition-cost conclusions, and FA67's admitted original instrument class. Use the free JR coherent full-M5 completion, rather than imposing fixed CA10's certain-failure complement. Only supported-nonzero low labels enter the necessary low-label reduction; supported-zero labels can have nonzero full encoders.
+
+For every
+
+$$
+9999/10\le t=e^A-1\le10001/10,\qquad0\le s\le3/25,
+$$
+
+the exact original value is
+
+$$
+\boxed{\mathcal T_{\log(1+t)}(s)=\tfrac12\{H_0+d_0+\alpha d_3+
+ (\mu/t)d_5+(\alpha V/t)d_6\}.} \tag{FA.120}
+$$
+
+The eight multipliers $d$, five positive weights and five contact coordinates in (FA.120) form the unique zero of the eighteen equations (FA.123) in the explicit box of §95, for that $t$ and the original source. This is a selected algebraic root with an outward existence/uniqueness and global sign certificate, not a remaining maximization, grid optimum, SDP, or uninstantiated sufficient-certificate condition. The same five supported low atoms attain (FA.120) for every requested s in the displayed interval. Their actual contrast is strictly greater than 0.12421255 on the whole strip, so the original requested contrast inequality has slack. All these points have $t>t_0$; for $0<s<3/25$ they are strictly interior original weak points.
+
+An exact seed is
+
+$$
+\boxed{s=1/16,\quad t=1000,\quad A=\log1001.} \tag{FA.121}
+$$
+
+At this seed the conditional optimal TV lies in
+
+$$
+(0.10283536503869052157453180203846052,
+ 0.10283536503869071116976210460262283).
+$$
+
+The selected family has three pure-live and two saturated low labels, five distinct low projection lines, two nonzero physical failure lines, and one entirely counted dimension-five high fibre. The minimum number of actual supported low labels among all original global height optimizers is five, and the minimum total actual alphabet is six, throughout this strip. This count is restricted to this strip; it is not the global atlas. The supported atom law is unique, and the multipliers are unique in the specified gauge and box; arbitrary full instrument representatives and time laws are not asserted unique.
+
+The selected maps, weights, contacts and multipliers depend real analytically on $t$ in $(999.9,1000.1)$. The value is independent of requested $s$ on this rectangle. The original positive global seed, all contact curvatures, absence of other zeros, strict contrast slack, positive weights, fixed gauge and nonsingular Jacobian required by the implicit-function continuation argument are established in §§96--99.
+
+**Proof.** Sections 94--97 establish the selected root and its complete
+circle certificate; §98 proves matching, universal optimality and the actual
+alphabet minimum. Section 99 proves regularity, and §100 supplies one
+simultaneous original instrument. All statements use Assumption 93.1. $\square$
+

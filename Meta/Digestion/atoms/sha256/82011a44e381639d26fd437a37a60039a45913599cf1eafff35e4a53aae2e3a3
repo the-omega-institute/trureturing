@@ -1,0 +1,40 @@
+**Lemma 1.5 (Exact metric factorization).** Put
+
+$$
+U(a)=\binom{\cos a}{\sin a},\qquad
+R_a=\begin{pmatrix}\cos a&-\sin a\\\sin a&\cos a\end{pmatrix},
+\qquad J=\operatorname{diag}(1,-1),
+$$
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B(k)=2\sqrt{Zk},
+$$
+
+$$
+D_0(a,b)=(a,b,a,Ja,Ja),\qquad
+O=\bigoplus_{(i,j)\in\mathcal E}R_{\delta_{ij}},\qquad D=OD_0.
+$$
+
+Here $a,b\in\mathbb R^2$. Then
+
+$$
+y(k,\alpha,\beta)=D(A(k)U(\alpha),B(k)U(\beta)),\qquad
+D^{\mathsf T}D=4I_2\oplus I_2,
+$$
+
+$$
+\|D(a,b)\|_2^2=4\|a\|_2^2+\|b\|_2^2,\qquad
+\|y(k,\alpha,\beta)\|_2^2=16k(H-k)+4Zk.
+$$
+
+**Proof of Lemma 1.5.** The negative phase convention gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$.
+The two Hermitian expectations are twice its real and imaginary parts.
+The five increment differences are $\alpha,\beta,\alpha,-\alpha,-\alpha$.
+Since $U(-\alpha)=JU(\alpha)$, the output is exactly $D$ as written.
+Four blocks contain the first pair, and one contains the second pair;
+their coordinate supports are disjoint. The preparation rotations and
+$J$ are orthogonal. Summing squared block norms proves every displayed
+identity. The factor of four is a consequence of the original metric,
+not a replacement for it. $\square$
+

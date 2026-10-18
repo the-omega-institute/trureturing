@@ -1,0 +1,15 @@
+**Definition 12.1 (Joint-realization gate).** A collection of finite
+responses $\{\mathscr R_w\}_{w\in\mathcal W}$ passes the gate when there are
+a single source domain $S$, a single boundary map $z:S\to\mathcal V$, and
+linear maps $L_w$ such that
+
+$$
+\mathscr R_w=L_w\circ z
+\qquad(w\in\mathcal W),
+\tag{12.1}
+$$
+
+with all $L_w$ using the same source coordinates and the same declared
+continuation domain. The maps may have different output spaces, but their
+inputs are one common realized state.
+

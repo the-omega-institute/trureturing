@@ -1,0 +1,4 @@
+# Sharp positive-degree recovery and six-read stability with affine gain
+
+For every integer $d\ge1$, a predetermined forward history with $d+5$ exact scalar reads recovers one strictly positive rank-one effective source, an arbitrary real affine-gain slope, and the entire degree-at-most-$d$ additive drift. The all-fixed-history lower bound matches the construction, so $C_{\mathrm{fix}}(d)=d+5$ throughout this positive-degree range. The six-read member also has quantitative inverse bounds with explicit domains and actual-source counterexamples to unrestricted stability. A separate finite collision excludes the three-initial-lower-shear diagonal stratum under its stated rank hypothesis. The constant-drift endpoint remains $5\le C_{\mathrm{fix}}(0)\le6$ and is unresolved; this does not complete the original all-degree programme.
+

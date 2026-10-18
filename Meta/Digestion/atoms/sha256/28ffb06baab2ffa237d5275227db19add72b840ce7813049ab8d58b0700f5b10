@@ -1,0 +1,12 @@
+**Definition 37.2 (The cycle face primes and their intersection).**
+For $k\ge3$ and each labelled cycle set
+
+$$
+\mathfrak p_a=\operatorname{span}_{\mathbb C}
+ \{X^s:\delta_a(s)>0\},\qquad
+J=\bigcap_{a=1}^b\mathfrak p_a.
+\tag{37.6}
+$$
+
+The powers $J^r$ below are ordinary ideal powers; $J^0=R_{k,b}$.
+

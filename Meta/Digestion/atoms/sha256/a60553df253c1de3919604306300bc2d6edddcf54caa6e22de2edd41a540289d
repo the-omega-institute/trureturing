@@ -1,0 +1,75 @@
+**Theorem 4.2 (specified local-weight zeros, susceptibility and influence).**
+Under Theorem 4.1's positive leaf-weight hypotheses, for even $n=2m\ge4$
+perturb only the alpha weight in odd-numbered original blocks by a
+multiplier $z$, leaving every other entry of every whole-block weight
+fixed. The exact complex partition function is
+
+$$
+Z_n(z)=(ab)^m(1+z^m).
+\tag{GDB.19}
+$$
+
+It vanishes at $z_m=\exp(i\pi/m)$, with
+$|z_m-1|=2\sin(\pi/(2m))\le\pi/m=2\pi/n$.
+Consequently, for every $\delta>0$, a nonempty actual incidence-two
+network has a zero with all independent relative perturbations
+
+$$
+w_i(u)=\mu(u)(1+\xi_{i,u}),\qquad |\xi_{i,u}|<\delta.
+\tag{GDB.20}
+$$
+
+The lengths can be chosen dyadic. If $\mu$ is a probability and each
+complex block vector is required to sum to one, the same conclusion
+holds after normalization, with arbitrarily small relative perturbations
+on every positive coordinate.
+
+For real $t$ the natural-log pressure
+
+$$
+f_n(t)=\frac1n\ln\frac{Z_n(e^t)}{(ab)^m}
+       =\frac{\ln(1+e^{mt})}{2m}
+\tag{GDB.21}
+$$
+
+satisfies $f_n''(0)=n/16$ and tends pointwise to $\max(0,t)/2$.
+For the actual seed indicators $X_i=\mathbf1_{s_i=\alpha}$, the
+zero-diagonal signed influence matrix
+
+$$
+\Psi_{ij}=\Pr(X_j=1\mid X_i=1)-\Pr(X_j=1\mid X_i=0)
+\quad(i\ne j)
+\tag{GDB.22}
+$$
+
+has largest eigenvalue $n-1$. Opposite pinnings of one actual seed give
+Hamming Wasserstein distance exactly $n-1$ on the common remaining
+free set. At seeds at arbitrarily large cycle distance, their conditional
+total-variation difference is one.
+
+Proof. Exactly one alternating tuple has alpha at all $m$ odd sites;
+the other has beta there. Inspecting their weights gives (GDB.19) and
+its zeros. As $m$ grows, their distances to one tend to zero, also
+along powers of two. Only the entries specified in (GDB.20) are changed.
+
+For a probability law, divide every perturbed odd block by
+$1+a(z-1)$. The partition function is divided by
+$[1+a(z-1)]^m$. For $|z-1|\le1/2$ these denominators are nonzero,
+and each positive entry changes relatively by at most $2|z-1|$.
+The zeros are therefore preserved under arbitrarily small normalized
+perturbations. Zero coordinates, if present, remain zero.
+
+Differentiating (GDB.21) proves the curvature, and dividing the elementary
+log-sum-exp bounds by $2m$ proves its pointwise limit. Choose parity
+signs $\epsilon_i\in\{1,-1\}$. The balanced two-point law gives
+$\Psi_{ij}=\epsilon_i\epsilon_j$ off the diagonal, hence
+$\Psi=\epsilon\epsilon^{\mathsf T}-I$, with eigenvalues $n-1$
+and $-1$ on its orthogonal complement. Pinning any one seed selects
+one actual tuple deterministically. The opposite pinnings select tuples
+differing at every other seed, so their only coupling has Hamming cost
+$n-1$. The last assertion follows from the same deterministic difference.
+This is the mature two-phase influence calculation of
+[Anari–Liu–Oveis Gharan, Definitions 1.1–1.2 and introduction][ALO];
+Theorem 4.1 supplies its actual native realization for every positive
+leaf-weight pair. $\square$
+

@@ -1,0 +1,57 @@
+**Convention 11.2 (quantitative frontier and recoverable information).**
+The credited frontier remains
+
+$$
+\frac18\log_2\frac{33}{13}\le\lambda<\frac3{16},\qquad M_1(3)=4,
+\tag{GDB.49}
+$$
+
+with lower from [NCE, Theorems 6.1–6.2][NCE] and upper and finite value
+from [D3, Theorems 2.3 and 4.1][D3]. General exact $M_1(D)$,
+sharp $\lambda$, effective all-size optimized convergence and the broader
+minimal-relations/internal-observer/mutual-recovery programme remain open.
+The operational recovery used here, under the paid services, is exactly
+
+$$
+(E(t),D,p,\text{at most one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{GDB.50}
+$$
+
+Its reverse recovers the first branch count and alpha-stage flag.
+For a contracted component the selected actual owner reply also
+determines its phase on the named fiber. These conclusions recover
+neither the full hidden source in general, an unknown age, an unseen
+history, a physical space-time realization nor the access services.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[SIR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SEED_INCIDENCE_REDUCTION.md
+[OCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OVERLAP_CLOSURE_BOUNDARIES.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[JTC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[RCEnew]: https://github.com/the-omega-institute/trureturing/blob/292c09e25e3a1659e17174a95383ae5606fd3371/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[Join]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[Depth]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[Minimax]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[Criterion]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[MinimaxB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.md
+[CriterionB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.md
+[Forney]: https://arxiv.org/html/1306.6264v2
+[BS]: https://arxiv.org/html/1406.1771v3
+[BCKL]: https://arxiv.org/html/1002.0115v1
+[ALO]: https://arxiv.org/html/2001.00303v3
+[SS]: https://arxiv.org/html/2610.12456v1
+[PR]: https://arxiv.org/html/1607.01167v3
+[HLS]: https://arxiv.org/html/1205.4356v2
+

@@ -1,0 +1,41 @@
+**Construction 9.1 (transactional prefix accumulation).** Use one
+single-letter mailbox, separate from both receiver arrays, and a
+receiver-owned pending-letter bit $e$. Use two $r$-bit receiver count
+banks $a_0,a_1$, an active-bank bit $v$, and a receiver phase
+$\phi\in\{\mathsf{pre},\mathsf{ready},\mathsf{pending},\mathsf{sealed}\}$.
+Put $a=a_v$ only in the mathematical description; it is not a third
+register. On each frame entry set $\phi=\mathsf{pre}$ and clear the
+material-seal bit in the same paid entry transition. RESET clears
+$X,Y$, both count banks, all response
+flags and mailbox control by scans. Only after those scans does it
+enter ready with $v=0$, $a_0=a_1=0$. No arrival takes place in pre.
+
+To receive a letter, the sender first writes the mailbox, seals it
+and hands ownership to the receiver. The mailbox bit is read into
+a local transfer bit by a paid instruction. The receiver arrival is
+one paid write of that bit into $e$, simultaneously setting
+$\phi=\mathsf{pending}$. This event counts as an arrival even if $e$
+already held that bit. Until this occurrence the received word has
+not changed. The active count $a_v$ and selector $v$ are held fixed
+through the following routine.
+
+If $a<H$, seek to $X_a$ and copy $e$ there; otherwise check $e=R$.
+An overflow $a=P$ or a late $L$ enters a source-free error hold without
+acknowledging another letter. On a lawful frame neither occurs, by
+Lemma 8.2. Copy the active count into the inactive bank one bit at a
+time, then increment that inactive bank by the ordinary carry scan.
+Finish all its carry clearing, head motion, comparison and return work.
+Finally, one paid local control transition flips $v$ and changes
+$\phi$ to ready. These are permitted local multi-bit writes, not
+source-response writes. Acknowledgement releases the mailbox for
+the next letter. No next arrival can precede this acknowledgement.
+
+The end delimiter is a distinct nonletter handoff. It can be accepted
+only in ready, after the last acknowledgement. Its acceptance changes
+$\phi$ to sealed. Construction 8.3 then uses the active count and
+$X$, preserving both. Its additional material-seal bit is different
+from the arrival phase. All materialization, source-receipt and response
+continuation cuts retain the sealed receiver phase until the next
+frame's pre transition. An empty frame follows this same delimiter
+path with active count zero.
+

@@ -1,0 +1,38 @@
+### 79.4. Matching characteristic-zero upper rank and exact lower minor
+
+Define the surjection
+\[
+\rho:\mathcal A\otimes\mathcal A\longrightarrow\mathcal A,
+\qquad \rho(a\otimes b)=a\sigma(b).
+\]
+Its kernel has dimension \(400-20=380\). At the \(\sigma\)-point one of the
+six relative rays is \(J_Rw\), by §79.2, and its overlap vanishes identically:
+\[
+\sum_j[\bar x_j(-\bar y_j/\sqrt R)
+       +\bar y_j(\sqrt R\bar x_j)/R]=0.
+\]
+In the faithful splitting algebra one factor of (79.9) therefore vanishes.
+Faithfulness gives \(\rho(N)=0\) in characteristic zero. Consequently the
+image of multiplication by \(N\) lies in \(\ker\rho\) and has dimension
+at most 380. This is an all-algebra-point identity, not a sampled-real-root
+rank bound.
+
+For the lower bound, reconstruct \(N\) by (79.8)–(79.9) from §78.A, reduce
+modulo 97 with \(i=22\), and form its multiplication matrix in the ordered
+basis \(\eta^r\otimes\eta^s\), \(0\le r,s<20\), indexed by \(20r+s\).
+The leading \(380\times380\) principal minor has determinant
+\[
+2\pmod {97}.                                             \tag{79.10}
+\]
+This is a complete reconstruction rule for the minor: each column is
+\(N\eta^r\otimes\eta^s\), reduced separately by the monic degree-twenty
+factor in each variable; retain row and column indices 0 through 379.
+All reductions and inverses have good reduction by §79.1. Thus (79.10)
+proves characteristic-zero rank at least 380. Together the two bounds give
+\[
+N(\mathcal A\otimes\mathcal A)=\ker\rho.                  \tag{79.11}
+\]
+Moreover \(\rho(M)=1+\bar G(-R/\bar G)/R=0\), so \(M\in(N)\). Evaluation
+at a physical orthogonal pair annihilates \(N\), hence also \(M\). This
+proves the required generic–generic mean-spinor implication in every order.
+

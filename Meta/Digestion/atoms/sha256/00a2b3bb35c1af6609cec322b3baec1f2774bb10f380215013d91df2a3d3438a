@@ -1,0 +1,6 @@
+### 101.6. Unique odd-depth consequence
+
+If D=Q is prime, actual support gives Q=19 modulo 120. The congruence Q C²=3 modulo 19 gives (Q/19)=(3/19)=-1. Since Q and 19 are both 3 modulo 4, reciprocity gives (19/Q)=+1. Thus the hypothesis of the balance is automatic, recovering the relevant quadratic splitting input of GPC10 without imposing it anew.
+
+The balance then gives chi(Q)=+1. Since Q splits in Q(sqrt5,sqrt19), its Frobenius in F lies in Gal(F/E), and chi(Q) is exactly that last quadratic Frobenius. It is trivial, so Q splits completely in F. This conclusion allows arbitrary C, including primes of even depth not splitting19 and the possibility Q divides C. Only the full odd-depth kernel is used. It excludes the stated chi=-1 family from the unique odd-depth role, not from every possible role or every Fibonacci index.
+

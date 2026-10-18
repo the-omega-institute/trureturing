@@ -1,0 +1,14 @@
+**Theorem 6.5 (Large-squeezing constant).** Under the hypotheses of Theorem 6.4,
+
+$$
+\lim_{a\to\infty}\Big(\mathrm{GM}^{(3)}_n-\frac{2-n}{2n}\log a\Big)=K_n,
+$$
+
+$$
+K_n=\frac{n-2}{4n}\Big(\log\frac{N-1}{N^2}-\frac{6\log n}{n-1}-\sum_{p\in\{x_A,x_B,x_C\}}\log\frac{p(1-p)}{4}\Big)+\frac{\log\Omega_3(0)}{2n(n-1)},
+$$
+
+with $\Omega_3(0)=\prod_{j\in\mathcal O}\nu_j$ the product of Corollary 5.4 at $\varepsilon=0$, equivalently $\Omega_3(0)=\kappa(\Gamma_3)\big/\big(n^4\,4^{(n-1)(n-2)}\prod_p(p(1-p))^{n-1}\big)$ in terms of the weighted spanning trees of the triangular torus. For $n=2$, $K_2=0$ and $\mathrm{GM}^{(3)}_2=0$ for every $a>1$. Stance: suspected-novel; it contains the leading term $\frac{2-n}{2n}\log a$ conjectured by Camargo and Nishida, Eq. (3.8).
+
+**Proof.** By Theorem 6.4, $\mathrm{GM}^{(3)}_n-\frac{2-n}{2n}\log a=\frac{n-2}{4n}\log(a^2\varepsilon)+\frac{\log\Omega_3(\varepsilon)}{2n(n-1)}+\frac{2-n}{4n(n-1)}\sum\log D_2^{(p)}(\varepsilon)$, using $\log\varepsilon=\log(a^2\varepsilon)-2\log a$. As $a\to\infty$, Lemma 6.2 gives $\varepsilon\to0$ and $a^2\varepsilon\to(N-1)/N^2$; $\Omega_3$ and $D_2^{(p)}$ are polynomials in $\varepsilon$, positive at $0$ (Theorem 5.3 and Corollary 3.5), so their logarithms converge to the values at $0$. With $D_2^{(p)}(0)=n^2(p(1-p)/4)^{n-1}$ (Theorem 5.2), $\frac{2-n}{4n(n-1)}\sum_p\log D_2^{(p)}(0)=-\frac{n-2}{4n}\big(\frac{6\log n}{n-1}+\sum_p\log\frac{p(1-p)}4\big)$. The tree form of $\Omega_3(0)$ is Theorem 5.3(3) with $\mathtt q=3$. For $n=2$, $\mathcal O=\varnothing$, so $\Omega_3\equiv1$ and the coefficients $\frac{n-2}{4n}$, $\frac{2-n}{4n(n-1)}$ vanish. ∎
+

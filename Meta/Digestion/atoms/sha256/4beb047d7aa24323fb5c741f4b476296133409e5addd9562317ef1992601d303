@@ -1,0 +1,25 @@
+**Lemma 104.5.** In this chart,
+\[
+1<\mu<m<(A/B)\mu,\qquad
+\mu=\frac{d/p+\sqrt{(d/p)^2+4AB}}{2A}.
+\tag{104.36}
+\]
+Equivalently \(p(Am-B/m)>d>p(Bm-A/m)\).
+
+**Proof.** Write \(X=p(Am-B/m)\), \(Y=p(Bm-A/m)\),
+\(F_*=d(m-1/m)+2p\), and \(h_2=d^2+(1-d^2)p^2\).
+First \(X\ne d\): if equality held, (104.22) would give
+\(d=2ABp(m-1/m)\); comparison gives \(pd(Am+B/m)=0\), impossible because \(Am^2+B>0\).
+The actual positive matrix obeys
+\[
+M_0(-1)=M_0(r)+(r+1)\operatorname{diag}(B,A)\succ0.
+\]
+Eliminating \(g\) in (104.22) gives the exact identities
+\[
+\operatorname{Tr}M_0(-1)=\frac{pdF_*}{X-d},\qquad
+\det M_0(-1)=\frac{h_2(d-Y)}{X-d}.
+\tag{104.37}
+\]
+If \(m>0\), then \(X-Y=pd(m+1/m)>0\); determinant positivity forces \(X>d>Y\). Both functions are increasing on \(m>0\), with respective positive roots at level \(d\) equal to \(\mu\) and \((A/B)\mu\). Also \(X(1)=pd<d\), so \(\mu>1\).
+If \(m<0\), determinant positivity instead gives \(X<d<Y\). Put \(n=-m>0\). Then \(p(A/n-Bn)>d\), which forces \(n<1\), since for \(n\ge1\) its left side is at most \(pd<d\). Hence \(F_*=d(1/n-n)+2p>0\), while \(X-d<0\). The trace in (104.37) would be negative. This contradiction proves (104.36). Only a Loewner comparison at \(r=-1\) was used; no physical endpoint completion is asserted. \(\square\)
+

@@ -1,0 +1,50 @@
+**Definition 14.1 (the lower-bound access and cost contract).** During
+calibration the only additional dependence on the unknown height is the
+port of Definition 13.2. The input old specimen may be any member of
+(RA.14). All other accessible assistance is one common state independent
+of $k,\beta,m$, jointly, not merely in its separate marginals. Thus a
+source-sensitive installed programme, readable archive, clock side channel,
+receiver share, setting label or extra coupling is not an uncounted input.
+Actual history-correlated spectator archives may remain untouched but
+cannot be read by this lower-bound protocol. The upper protocol below
+preserves arbitrary such correlations and does not require their
+independence.
+
+Allow finite-dimensional ancillas, arbitrary common known controls,
+measurements, retained records and finite adaptive feedback. All outcomes
+are kept. As in FIB Atom Whitebox SIC Time Acquisition §2.4, dilate
+instruments with their outcome registers and environments and extend common
+isometries to common unitaries with extra blanks. The access contract
+requires that the outcome-retaining implementation have, between finitely
+many common instantaneous operations, the Hamiltonian
+
+$$
+H_k(t)=H_0(t)-\frac{k}{r}G(t),\qquad
+\mathcal A=\int_0^{T_c}\operatorname{diam}(\operatorname{spec}G(t))\,dt.
+\tag{RA.18}
+$$
+
+Here $\hbar=1$, $T_c<\infty$ is a common terminal time, and $H_0,G$
+are known common bounded self-adjoint operators, measurable in operator
+norm with integrable norms on each piece. The common Hilbert space may
+include enlarged outcome/environment registers; finite-dimensional
+implementations are included. Spectral diameter means supremum minus
+infimum of the bounded spectrum. The operators include routing and
+coherently retained feedback registers. The paid action is the displayed
+spectral diameter on this full coherent implementation. For one scalar drive
+$G(t)=u(t)|1\rangle\langle1|$ it is $\int|u(t)|\,dt$ and
+$a=\int u(t)\,dt$. Extra parallel couplings or coherent choices of forward
+and inverse coupling must pay their full spectral width; they are not
+unit-price extensions of a scalar call. The inaccessible producer label is
+not included as an already distinguishable input in this discriminator.
+
+Early decisions can be latched and padded to $T_c$ with the port off on
+those branches. The action bound applies to the whole padded coherent
+implementation, not its expected cost or a chosen successful branch.
+The protocol must terminate with the correct label $x$ or $y$ with
+probability one for every $\beta,m$ at each candidate height. A discarded,
+inconclusive or failed branch does not meet this task. The lower bound even
+allows disturbance of the old specimen by the common controls. Unknown
+height-dependent native processors are not additional available queries
+during this calibration; supplying them changes the access contract.
+

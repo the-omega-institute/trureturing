@@ -1,0 +1,43 @@
+**Definition 6.1 (an exact ascent direction).** In constraint order
+$(g_0,g_1,g_2)$ let $e^{(1)}=(0,1,0)^T$ and define
+
+$$
+d=-G(G^TG)^{-1}e^{(1)},\qquad x(r)=x_\star+rd.
+\tag{ZG.23}
+$$
+
+Every entry of $G$ is a fixed derivative of the displayed rational
+functions, rather than a new datum. More explicitly, for chart coordinate
+$x_i$ and constraint index $k$,
+
+$$
+G_{ik}=c_k\operatorname{tr}\left(
+ \operatorname{adj}(S_k)\,\partial_{x_i}S_k\right)_{x_\star},
+\quad (S_k,c_k)=(S_0,1000),(S_{01},1),(S_{02},1).
+\tag{ZG.24}
+$$
+
+Partial differentiation here means the ordinary finite sum, product and
+quotient rules on (ZG.18)–(ZG.19). Thus (ZG.24) defines finite algebraic
+entries without an unspecified bound or optimization. Lemma 5.3 gives
+
+$$
+G^Td=-e^{(1)},\qquad
+\nabla g_0(x_\star)\cdot d=0,\qquad
+\nabla F(x_\star)\cdot d=\eta_{1,\star}>0.
+\tag{ZG.25}
+$$
+
+Write
+
+$$
+\ell=d_\lambda,\qquad
+q_5=\sqrt{d_{\alpha_1}^2+d_{\alpha_2}^2},\qquad
+q_{27}=\sqrt{d_{\beta_1}^2+d_{\beta_2}^2},\qquad
+c_\kappa=d_z-p_{50}\ell.
+\tag{ZG.26}
+$$
+
+The symbol $d$ in (ZG.23) is a chart direction, distinct from the fixed
+scalar ramp displacement $6/256$ in (ZG.4).
+

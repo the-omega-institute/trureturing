@@ -1,0 +1,16 @@
+**Definition 9.2 (repository precedents and nontransferred hypotheses).**
+Besides [N], [B] and [G], the closest suppliers are:
+
+| Repository source | Precise use and boundary |
+| --- | --- |
+| [C] [Recursive holographic boundary geometry, continuation III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md), §§81.5,82.3--82.6,85.5 | Prior matched heat-factor/Green-marginal, translated-energy and compressed-multiplier arguments. Its carrier is $H^1\times\mathbb R$ with three direct fields, infinite hidden Haar fiber and volume exponent five. Its pullback is generally not an $L^2$ map and its all-scale collapse conclusion is not transferred to the present compact hidden circle with two direct fields and exponent four. |
+| [F] [Recursive holographic boundary geometry](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md), §§18,33 | Existing static/dynamic elimination and hidden-initial-state distinctions. They do not by themselves identify a nonzero coupling for (1.10)--(1.11). |
+| [S] [Symplectic predictive completion](SYMPLECTIC_PREDICTIVE_COMPLETION.md), §§2.1,5.1--5.2 | Existing invariant-quotient and projected-response viewpoint. Its finite linear/Gaussian or Hamiltonian hypotheses are not imposed on native nonlinear pure-source commands by analogy. |
+| [A] [Native open-domain affine approximation and finite attainment](FIB_NATIVE_OPEN_DOMAIN_AFFINE_APPROXIMATION_AND_FINITE_ATTAINMENT.md), complete §11 | Fixed-dimension affine approximation, varying-model quantifiers and all-times guard recovery are separate contracts. The smooth behavioral base and its exact killed free factor here do not evade those affine-capacity hypotheses or make an endpoint guard sufficient. |
+| [D] [Real renewal instruments and detector rank](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md), §12 | Exact coefficient selection is distinguished there from finite-precision realization of its own instrument. That result supplies no instrument, conditioning estimate or amplitude preparation for this cylinder. |
+
+The structural overlap with [C] is explicit. The positive circular harmonic
+(4.1), the finite compact-torus estimate (4.8), the exact pair (5.1) and
+coefficient (6.3) are the native-source additions; a generic projection
+identity is not being counted again as new mathematics.
+

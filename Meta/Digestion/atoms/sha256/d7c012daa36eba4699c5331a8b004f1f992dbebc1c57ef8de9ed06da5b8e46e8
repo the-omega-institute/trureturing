@@ -1,0 +1,18 @@
+**Theorem 5.1 (Arbitrary-support first-sensitive horizon).** For every family and access model in Definitions 2.1–2.2,
+
+$$
+\boxed{
+n_{\rm sens}(K,p)=
+\begin{cases}
+\infty,& |K|\le2,\\
+\displaystyle\min_{0\ne z\in L_K}\bigl[\ell_z-1-\min(P_z,M_z)\bigr],& |K|\ge3.
+\end{cases}}
+\tag{5.1}
+$$
+
+For $|K|\ge3$ the minimum is attained. Its value depends only on $K$, for every fixed strictly positive probability vector allowed on that support. At every smaller horizon the entire datum $T_n$ is phase independent; at the displayed horizon a fixed count-preserving terminal measurement has a nonconstant law.
+
+**Proof.** If $|K|\le2$, Proposition 3.3 gives $L_K=0$. Every character in every actual equal-count entry then has exponent zero by Proposition 4.1; invalid histories and unequal-count entries are zero independently of phase. Hence every $T_n$, including $T_0$, is constant.
+
+If $|K|\ge3$, any three ordered labels supply the nonzero integer relation written in the proof of Theorem 5.2 below. Thus $L_K\setminus\{0\}$ is nonempty. Equation (3.3) makes all costs nonnegative integers, so their set has an attained minimum $V$. If $n<V$, Theorem 4.2 excludes every nonzero overlap exponent at that horizon. All remaining terms have zero exponent, and Proposition 4.1 covers the whole matrix, including every unfinished tail, terminal coordinate and count sector. Thus the entire $T_n$ is independent of phase. A minimizing relation has the actual-history witness and permitted measured variation of Theorem 4.2 at $V$. Consequently $n_{\rm sens}=V$. Strict positivity of $p$ was used only to keep the required amplitudes and coefficients positive. It does not alter the integer cost or its minimum. $\square$
+

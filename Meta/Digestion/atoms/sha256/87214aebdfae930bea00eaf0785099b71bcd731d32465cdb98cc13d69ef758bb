@@ -1,0 +1,5 @@
+## Scope and prior art
+
+The MSRD/MR-LRC composition is established coding theory: see Martínez-Peñas–Kschischang, arXiv:1809.11158, Construction 1, Proposition 1, and Theorem 2. The present statement translates that rank-profile condition into a deterministic positive-uniform tensor realization and proves exact RT for every individual boundary subset of this bouquet topology. Perfect-tensor RT for connected regions and probabilistic random-stabilizer exactness are known, but do not provide this deterministic all-subset finite-field bouquet statement. No claim is made for arbitrary graphs, arbitrary phases, or gravitational duality.
+
+Bertrand's postulate gives a prime (p) with (k<p<2k), so (Q=p^2<4k^2).

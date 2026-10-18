@@ -1,0 +1,19 @@
+**Theorem 350.1 (Face restriction).** If
+$\kappa_k(0)\ge0$ and $\kappa_k(k)\ge0$, then $T_kp$ preserves every row in (348.3), the positive row and the same affine demands. If $p$ has a complete $N$ allocation, folding the reply $1$ into every counterfactual table and deleting the actual request to $k$ realizes $T_kp$ with the same common mass. Any finite sequence of successful restrictions may be followed by the stopped criterion
+
+$$
+V_i=\sum_{j>i}(-Q_{ij})_+,\qquad
+H=\sum_i(V_i-\ell_i)_+,\qquad c\ge H,
+\tag{350.2}
+$$
+
+to obtain one complete stopped allocation at the same profile and mass. The scalar schedule budget is then automatic from normalization. An ordered outward-star endpoint may instead use the accepted whole-vector contraction of XIX 343.1, with the attribution and limitations of XV 258.3–258.4.
+
+*Proof.* At a word whose first zero is $k$, all earlier bits are one, and
+
+$$
+(T_kp-p)(w)=\ell_k+\sum_{i<k}Q_{ik}+\sum_{j>k}Q_{kj}w_j.
+$$
+
+For label $r$, its minimum over the independent suffix cube is (350.1). The two displayed tests therefore make both the base and correct coordinates nondecreasing on the $n=k$ face. Their sum is also nondecreasing, so the independent union row is preserved. If $n<k$, changing bit $k$ leaves the first zero and all three demands unchanged; if $n>k$, bit $k$ was already one. The positive word is fixed. These cases exhaust the cube, and induction gives a whole-kernel statement rather than separate row witnesses. Folding a preselected reply-one table deletes an actual request and leaves all remaining complete cells fixed before replies. Applying the reused 109.1 inverse to (350.2) gives the final stopped allocation, including zero coefficients and zero masses. $\square$
+

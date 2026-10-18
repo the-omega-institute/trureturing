@@ -1,0 +1,28 @@
+**Corollary 5.5 (degenerate targets and finite source domains).** The
+preceding decisions include zero reads, ground sources, the root cut,
+the empty cut and absent target positions, with the following consequences.
+On a nonempty fiber the root cut has exact basis $\{(0,0,0)\}$ and all
+prices zero. The empty cut has a finite-budget service if and only if
+$U$ is finite. A singleton fiber has a zero-cost service for every $Q$;
+several ground possibilities are not assumed to be distinguishable for
+free. An absent target address contributes no hole or equality class.
+
+Proof. The root-cut row is constant. For the empty cut the output is the
+entire original source. A uniform read bound gives finitely many terminal
+outputs by the finite reply-tree argument, so $U$ must be finite.
+Conversely, for finite $U$, take the maximum height of its sources.
+Agreement of all replies through that height forces equality of the
+entire source, because its leaves terminate all deeper paths. This is a
+determining prefix, so the gate is positive and its paid static supplier
+applies. These are existence statements with a decision supplied by the
+same graph gate; no enumeration of a possibly infinite fiber is presumed.
+
+For a singleton fiber every full row is constant; nonemptiness allows
+its finite witness to be found, and its row can be installed as a root
+halt. Installation remains separately charged. Ground and nonground
+trees alike have exactly the label-set codes of Lemma 2.2; no discarded
+chart or zero-coordinate exception arises. Finally Proposition 3.2
+computes the actual reached cut list from an entire source in each
+proved constant cell, so it includes absent positions with precisely
+the semantics of Definition 1.1. $\square$
+

@@ -1,0 +1,40 @@
+**Definition 2.1 (credited projection).** H §§3–6 establish the following marginal, force and projection dictionary:
+
+$$
+\begin{aligned}
+\rho(r)&=\int_{\mathbb R^3}p(r,\mathbf z)^2d\mathbf z,&
+m_Y(r)&=\int_{\mathbb R^3}|Yp(r,\mathbf z)|^2d\mathbf z,\\
+v_1(r)&=\int_{\mathbb R^3}V_1(r,\mathbf z)p(r,\mathbf z)^2d\mathbf z,&
+f_h(r)&=2r m_Y(r)+\gamma v_1(r),\\
+J(r)&=\int_r^\infty f_h(t)dt,&I_h&=\int_{\mathbb R}\frac{J^2}{\rho},&
+F_*(r)&=\int_0^r\frac{J(t)}{\rho(t)}dt.
+\end{aligned}
+\tag{2.1}
+$$
+
+The even continuous weight $\rho$ integrates to one and has a positive lower bound on each compact height interval. Its reciprocal has divergent integrals on both unbounded half-lines. The function $J$ is even, locally absolutely continuous and integrable, $J(\pm\infty)=0$, and $\int J=t_0$. In particular $q_*(r):=J(r)/\rho(r)$ has a continuous representative.
+
+Let $\mathscr W_o$ be the completion of real odd compact smooth height functions in $\int\rho|F'|^2$. H proves that differentiation maps it onto all of $L^2_{\rm even}(\rho dr)$; the representative is $F(r)=\int_0^rF'$. The map $F\mapsto pF$ is an isometry with squared norm multiplied by $a$ into the homogeneous space. Its closed image is
+
+$$
+\mathcal H_h=\overline{\{pF:F\in C_c^\infty(\mathbb R;\mathbb R)_{\rm odd}\}}^{\,h}.
+\tag{2.2}
+$$
+
+The $h$-orthogonal projection $U_h$ of $\Psi$ onto this entire subspace has local representative $pF_*$ and
+
+$$
+\begin{gathered}
+h(pF,pG)=a\int\rho F'G',\qquad\ell(pF)=a\int JF',\qquad
+h[U_h]=aI_h,\\
+\delta_h:=h_0[\Psi-U_h]\ge0,\qquad
+D_{\rm resp}/a=I_h+\delta_h,\qquad
+G_{\rm resp}=3A-\gamma C_2-I_h-\delta_h,\\
+I_h-t_0^2=\int\rho(q_*-t_0)^2\ge0,\qquad
+\Delta_{\rm aff}/a=(I_h-t_0^2)+\delta_h>0.
+\end{gathered}
+\tag{2.3}
+$$
+
+Here $rp\in\mathcal H_h$ is the image of the derivative $1$, and N supplies only the strict total affine margin $\Delta_{\rm aff}$. That margin alone proves no separate strictness of either summand. Neither $U_h$ nor $pF_*$ has asserted global $L^2$ or native-domain membership.
+

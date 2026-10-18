@@ -1,0 +1,33 @@
+**Corollary 8.2 (per-source payment for the common-old requery).**
+On each of the two complete actual runs in Theorem 7.1 separately, let
+$D$ be its exposed coordinate set, $m_j$ its number of $E_j$ visits,
+and $O=[n]\setminus D$ its omitted coordinates. Put
+
+$$
+R=\sum_{j\in D}(m_j-1),\quad
+R_c=\sum_{j\in D}(m_j-1)c_j,\quad
+E_{\rm sel}=\sum_{\text{selected visits in }E_j}(|a|-c_j).
+\tag{WTF.29}
+$$
+
+Let $N$ and $L_{\rm out}$ be that run's nonselected visit count and
+letter charge. Then
+
+$$
+|O|\ge R+N-1,\qquad
+C_O\ge R_c+E_{\rm sel}+L_{\rm out}-3.
+\tag{WTF.30}
+$$
+
+In particular it omits at least one coordinate and $C_O\ge c_i$ for
+its first distinguishing coordinate $i\in D_I$.
+
+Proof. Exact accounting gives
+$q_P=|D|+R+N$ and
+$\ell_P=C_D+R_c+E_{\rm sel}+L_{\rm out}$.
+Use the two caps, $E_{\rm sel}\ge0$, and Lemma 2.2's $N\ge1$,
+$L_{\rm out}\ge3$. Since $i$ was old before the common state and is
+queried again, $m_i\ge2$ and $R\ge1,\ R_c\ge c_i$. These are
+separate full-run identities, not a transfer of slack between sources.
+$\square$
+

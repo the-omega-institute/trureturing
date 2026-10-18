@@ -1,0 +1,34 @@
+**Lemma 4.2 (An explicit coherent full-support law).** Fix any stationary legal law $S$ of visible order at most $m$. For $0<\delta<1$ define, on all legal words of the indicated lengths,
+
+$$
+\begin{aligned}
+\pi_\delta(s)&=(1-\delta)S_m(s)+\delta R_m(s),\\
+F_\delta(sz)&=(1-\delta)S_{m+1}(sz)+\delta R_{m+1}(sz),\\
+k_\delta(z\mid s)&=\frac{F_\delta(sz)}{\pi_\delta(s)}.
+\end{aligned}
+\tag{4.2}
+$$
+
+Set $k_\delta(z\mid s)=0$ for illegal extensions. These data specify one stationary two-sided visible order-$m$ law $Q^\delta$ through (2.1), with shorter cylinders given by $\pi_\delta$-marginals. This law has full support and positive probabilities for every legal next-bit extension.
+
+Proof. Stationarity and cylinder consistency of both source laws give the two balance identities
+
+$$
+\sum_{z:sz\text{ legal}}F_\delta(sz)=\pi_\delta(s),
+\qquad
+\sum_{a:as\text{ legal}}F_\delta(as)=\pi_\delta(s).
+\tag{4.3}
+$$
+
+Thus the rows of $k_\delta$ sum to one. For the overlapping context transition $s\mapsto s_2\cdots s_mz$, the incoming mass of a target $s$ is the second sum in (4.3), so $\pi_\delta$ is invariant. It is normalized because both source $m$-word distributions are normalized.
+
+The products (2.1) now have total mass one by summing their last transitions and then their initial distribution. Summing a final symbol proves right consistency. Summing an initial symbol uses the incoming identity in (4.3), then leaves exactly the product for the remaining word, proving left consistency. At lengths below $m$ the marginals of $\pi_\delta$ inherit both consistency identities; they are $(1-\delta)S_n+\delta R_n$. Hence the products assign consistent probabilities to every translated finite interval.
+
+These consistent probabilities give a finitely additive probability on the algebra of finite unions of cylinder sets in $\{0,1\}^{\mathbb Z}$. This product space is compact, and every such cylinder-algebra set is closed. A decreasing sequence of these sets with empty intersection must therefore have an empty member. The assignment is consequently continuous at the empty set, which makes it countably additive on that algebra. The measure extension theorem produces its unique law on the cylinder sigma-algebra. The verified consistency and finite-alphabet compactness are the hypotheses of the usual probability extension step.
+
+The equal left and right consistency formulas make this two-sided law stationary. Successive products give the conditional next-bit kernel $k_\delta$ for every finite past of length at least $m$; conditioning on the whole past yields that same kernel, so its memory is visible.
+
+Since $\delta>0$ and every legal $R$-cylinder is positive, $\pi_\delta(s)>0$ and $F_\delta(sz)>0$ for every legal $sz$. All legal transition probabilities are therefore positive. The full-word products and their shorter marginals give positive mass to every word of every $B_n$. Illegal adjacent ones have probability zero. This proves every assertion about the final process.
+
+Only stationary block flows are mixed in (4.2). Longer cylinders of $Q^\delta$ are their Markov products; no claim that a mixture of whole processes is Markov is involved. $\square$
+

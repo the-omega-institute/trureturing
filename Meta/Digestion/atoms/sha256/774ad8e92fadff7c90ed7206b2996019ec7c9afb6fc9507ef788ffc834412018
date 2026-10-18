@@ -1,0 +1,17 @@
+### Theorem 5.1. Calibrated imperfect measurements admit a valid anytime test
+
+Choose a predictable 0<=lambda_n<1/(3+4 bar epsilon_n), and define
+
+$$Z_n=V_n-4\bar\epsilon_n,\qquad
+M_0=1,\quad M_N=\prod_{n=1}^N(1+\lambda_n Z_n).$$
+
+Then, under the conditional null,
+
+$$\boxed{\Pr(\exists N\ge1:M_N\ge1/\alpha)\le\alpha,\qquad0<\alpha<1.} \tag{5.1}$$
+
+No independence of different preparations is required. The error contract and conditional separability cannot be replaced by an assertion only about unconditional average states.
+
+Proof. An observable score in [-3,1] changes its expectation by at most four times the total-variation change. This follows by subtracting its minimum and using the signed mass's positive and negative variations. Averaging the two settings gives E[V_n|F_(n-1)]<=4 bar epsilon_n because the ideal expectation is Tr rho_n(K_1+K_2-P_b)<=0 under the supplied separability premise. Hence E[Z_n|F_(n-1)]<=0. The chosen lambda makes every multiplier nonnegative, so M_N is a nonnegative supermartingale. Stopping at the first crossing and an arbitrary finite horizon gives P(crossing by horizon)<=alpha; increasing the horizon proves (5.1). This is the standard Ville/supermartingale method [HRMS20] with the explicit native measurement error correction above. QED.
+
+The factor four is sharp given only the three-outcome total-variation contract: the null boundary distribution (3/4,1/4,0) has mean zero; moving epsilon mass from minus to plus gives mean 4epsilon. Without a correction, even a valid small measurement error can give positive null drift. This sharp distributional example is not claimed to identify the worst calibrated physical gate error.
+

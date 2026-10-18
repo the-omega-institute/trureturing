@@ -1,0 +1,62 @@
+**Proposition 91.2 (scope of the critical and detuning conclusions).**
+Theorem 88.1 settles the critical tangent zero-mode question left
+open in Theorem 84.1 and Proposition 86.1. Theorem 89.1 concerns
+the tangent forms on the single fixed domain $\mathcal Q_E$.
+Theorem 90.1 classifies the native near-minimizer class (85.5),
+and does not select the limit of actual native ground states on
+an arbitrary coupled critical path. In particular that class
+contains, for each such path, sequences with every limiting
+mass $|c|^2\in[0,1]$ and every constant complex phase.
+
+The qualitative suppliers (82.10), Proposition 83.2 and (85.2)
+give no error relative to an independently prescribed
+$\delta_n\downarrow0$. To obtain selection by the criterion
+(91.2)--(91.3), the native critical lower error and a critical-mode
+recovery error must be $o(\delta_n)$, and the near-minimizer
+excess must also be $o(\delta_n)$ in rescaled energy.
+No such universal rates are concluded here. Even when those
+additional hypotheses hold, they do not supply a finer native
+Coulomb $g_n^2$ coefficient. That coefficient requires control
+at the rescaled scale
+
+$$
+\tau_ng_n^2=(\chi_c+\delta_n)^2\tau_n^4,
+\tag{91.5}
+$$
+
+and the appropriate finer asymptotics, rather than just an
+$o(1)$ or $o(\delta_n)$ error.
+
+All these results retain the real cover and the same fixed
+signed $\kappa\ne0$, both native Dirichlet faces, raw source,
+$j_0^{-1}$ density factor and heat clock. They imply no physical
+spatial-dimension or physical $SO(3)$ selection, no actual-zero-leaf
+or torus result, and no uniformity as $\kappa\to0$.
+
+Proof. The critical statements follow from (88.2), (89.2) and
+(90.5)--(90.7). In particular (90.7) only tends to zero; its
+ratio to $\delta_n$ has not been bounded. The sufficient argument
+in Proposition 91.1 uses exactly the stronger ratios in
+(91.2)--(91.3), whereas (85.2) only implies
+$\epsilon_n^c\to0$ and qualitative recovery. A quantity tending
+to zero need not be little-oh of another prescribed vanishing
+quantity. Formula (91.5) follows from the exact definition of
+$g_n$; control relative to $\delta_n$ does not in general give
+control relative to $\tau_ng_n^2$. These are distinct limits.
+The geometric and normalization restrictions are precisely those
+in Definition 81.1 and Proposition 86.1 and were used unchanged
+in (87.5)--(87.6) and (90.4)--(90.7).
+
+The mathematical suppliers for the deductions are the heat and
+source estimates of §§81--82, the full-domain compactness and
+recovery of §83, the threshold and positive-kernel arguments of
+§84, and the native weak-limit bridge of §85. Fischer--Ruzhansky
+(2.2) supplies only the explicitly matched Young convolution
+inequality in (87.6). Compact spectral theory and closed-form
+representation are used in their usual Hilbert-space senses.
+The additional deductions are the zero-energy $L^2$ inverse for
+this particular source, critical attainment and simplicity,
+the tangent onset and profile law, and the exact attainable
+native disk. These correspondences make no literature-wide
+novelty claim. $\square$
+

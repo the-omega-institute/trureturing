@@ -1,0 +1,22 @@
+**Convention 2.2 (actual forks and singleton diagonals).** Every cell is
+realized by a fresh live reply word. At fixed $p,q$ the support is unique,
+so $b_p\ge a_p\ge1$. If a history at $q$ has support $S$ and counts
+$(h,z)$, and its reply $\varepsilon$ has live child counts, then its
+actual fixed successor hosts that child with support $S\cup\{i(q)\}$.
+Axis cells have one host and one support. Adjacent cells
+$(h,z),(h+1,z-1)$ on a diagonal have a common live parent $(h,z-1)$.
+Forking any actual parent history gives child supports that are equal.
+Consequently a consecutive string of cells with singleton support families
+has one support throughout. In particular a diagonal is common-support
+exactly when all its cells have singleton support families. Depth one is
+always common-support, since both first replies expose the fixed start
+label. These are [SI, Theorem 2.2 and the local argument of Theorem 4.1][SI].
+
+Indeed a requested word with $h$ ones and $z$ zeros stays live at every
+prefix, so freshness realizes it on a consistent actual completion. The
+support uniqueness follows from equal-hit exclusion. Either reply at an
+unread coordinate has a completion; its installed successor is running
+when the child remains live. The deterministic all-zero and all-one spines
+give the axis claim. The stated fork proves the diagonal assertion without
+any singleton-parent assumption.
+

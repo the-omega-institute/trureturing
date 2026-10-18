@@ -1,0 +1,15 @@
+**定义 29.1.3（暴露商相容性）。** 称 $e_v$ 对响应核是合法暴露商，若
+
+$$
+e_v(a)=e_v(a')
+\Longrightarrow
+K_v(\cdot\mid a)=K_v(\cdot\mid a')
+\qquad\forall a,a'\in\mathcal A.
+$$
+
+确定性情形把核相等替换为 $f_v(a)=f_v(a')$。
+
+这个条件是对全部 assignment 的结构命题；在一组有限实验中暂时没有观察到差异，不会自动给出它。
+
+<a id="section-29-2"></a>
+

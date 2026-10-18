@@ -1,0 +1,42 @@
+**Theorem 5.2 (paid source-specific reserve).** From every reached idle valid
+state and every actual finite $J>K$, the installed Reserve($J$) has a unique
+finite continuation to an idle state whose source is the very same $t$ on
+the very same preparation occurrence $\xi$, represented with reserve $J$.
+It preserves $h,q,g,e$, the encoded controller continuation, acquired seed
+and input, all old archive bytes and permissions. It extends $\phi_K$ on its
+whole domain and changes the actual current backing by the fresh segment.
+
+Proof. The command and old state are already materialized finite words.
+Lemma 3.5 terminates each arithmetic, base and zero-fill invocation. After
+$z$ zero-fill iterations the old arena cells are unchanged and the first
+$z$ cells of the new interval are actual constructed zeros. Its fixed bound
+$d$ was sealed before the loop and is on another port, so neither arena
+extension nor meter growth changes it. At $z=d$ the interval has the claimed
+length, zeros and following delimiter, and does not alias any old source,
+scratch or archive cell. Metadata writing reads only actual public words;
+before its final seal it has no committed-entry status.
+
+At publication, concatenation of the old source bits with these $d$ zeros
+is its old preorder code followed by $d/2=2(J-K)$ extra PAD tokens. Its length
+is $L(K)+d=L(J)$, so it is exactly the $J$-packet of the same ordered $t$.
+The predecessor and source occurrence are fixed by the actual directory
+chain starting at its original entry. Lemma 4.3 proves stable address extension.
+No new private preparation IN, source reset or representative selection has
+occurred. Base's boundary-only arena scan is paid RD work, but its ordinary
+bit values neither select a branch nor become new source material.
+
+Publication has changed only source layout and its ordinal. It has changed
+neither a source-call counter nor an accepted-update or rho epoch. The actor
+table, workspace, seed, consumed input and previous archive intervals lie
+outside the newly allocated interval and directory append. Their old payload
+bits, owners and seals are untouched. Protected controller heads are unchanged;
+archive/checking heads move only by their actual declared service work.
+The new response and row/copy work terminate
+by Lemmas 6.1b and 6.7, including construction/readout of the new
+post-publication CTL-fence, complete manifest transport, final row ACK,
+source-token TOK and idle CTL. They restore the prescribed saved return edge.
+They add genuine receipts and
+history; they do not establish equality of complete pre/post states. This
+joint invariant proves a continuing operation on the installed original
+source, not a fresh per-capacity installation. $\square$
+

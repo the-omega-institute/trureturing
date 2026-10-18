@@ -1,0 +1,146 @@
+**引理 12.3（每个实际第五 J、第六 J 子纤维至多两个完整世界）。**
+For every $x,d\in\mathbb R$,
+
+$$
+|\mathcal C_{x,d}|\le2.
+\tag{12.9}
+$$
+
+This counts complete triples $(P,g,\delta)$, including every source
+asymmetry, gain sign, sampled or multiple root and degree drop.
+
+Proof. Evaluation of the interpolant (12.7) gives
+
+$$
+\begin{pmatrix}f(4)\\f(5)\\f(6)\\f(7)\end{pmatrix}
+=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}\alpha_0\\\alpha_1\\\alpha_2\\\alpha_3\end{pmatrix}.
+\tag{12.10}
+$$
+
+Multiplying by $D$ and subtracting $1/10,2/5,2$ times the sixth
+row from the fourth, fifth and seventh rows respectively gives the
+identities
+
+$$
+Df(6)=10dD-N,\qquad
+D\bigl(f(i)-a_i f(6)\bigr)=p_i,
+\quad (i,a_i)=(4,1/10),(5,2/5),(7,2).
+\tag{12.11}
+$$
+
+Consequently every promised world satisfies
+
+$$
+10d\ell k(k+1)=N,\qquad
+f(i)=\frac{p_i}{\ell k(k+1)}\ (i=4,5,7),\qquad
+x=d+\frac{p_5}{k}.
+\tag{12.12}
+$$
+
+The fourth reading is still the actual equation
+
+$$
+y-d=f(4)(1+r+k\ell).
+\tag{12.13}
+$$
+
+First suppose $d\ne0$ and $y\ne d$. Put $e=x-d$. Equation
+(12.12) requires $p_5-ek=0$, a polynomial of degree at most two
+in $k$. Its quadratic coefficient is $2(d-48)$ and its constant
+coefficient is $-3(d-24)/5$. They cannot both vanish, so the
+polynomial is not identically zero. It has at most two positive
+roots. This includes $d=48$, where $p_5=(72/5)(k-1)$ and the
+constraint remains nonzero. Each candidate $k$ uniquely fixes
+
+$$
+\ell=\frac{N}{10d k(k+1)}.
+\tag{12.14}
+$$
+
+In a legal world $y\ne d$ and the positive trace in (12.13) imply
+$f(4)\ne0$. Thus
+
+$$
+r=\frac{y-d}{f(4)}-1-k\ell
+\tag{12.15}
+$$
+
+is uniquely fixed. Equations (12.3) and (12.7) then fix the source
+and every gain coefficient. There are at most two complete worlds.
+
+Next suppose $d\ne0$ and $y=d$. The same positive trace forces
+$f(4)=0$, hence $p_4=0$. Directly from (12.8),
+
+$$
+4p_4-3p_5=\frac{(600-9d)k+d-24}{5}.
+\tag{12.16}
+$$
+
+Since $p_5=ek$, this gives
+
+$$
+(600-9d+15e)k+d-24=0.
+\tag{12.17}
+$$
+
+If $d\ne24$, its nonzero constant permits at most one $k$;
+a zero linear coefficient gives no solution. If $d=24$, instead
+use $p_4=k(-36k+204/5)$, whose only positive root is $17/15$.
+Thus at most one $k$ occurs in either case. It fixes $\ell$ by
+(12.14). The remaining rank equation
+
+$$
+r(1-r)=(\ell-1)((k-1)\ell+1)
+\tag{12.18}
+$$
+
+is a nonzero quadratic in $r$, with at most two roots. Each fixes
+one complete world by (12.3) and (12.7).
+
+Finally suppose $d=0$. Equation (12.12) becomes
+
+$$
+45k^2+k-18=0.
+\tag{12.19}
+$$
+
+This polynomial is strictly increasing for $k>0$, negative at $3/5$
+and positive at $2/3$. It has one positive root $\kappa$, with
+$3/5<\kappa<2/3$. Reduction of (12.8) by (12.19) gives
+
+$$
+p_4(\kappa,0)=64\kappa-96/5>0,\qquad
+p_7(\kappa,0)=(336-392\kappa)/5>0.
+\tag{12.20}
+$$
+
+Define the positive constants
+$c_i=p_i(\kappa,0)/[\kappa(\kappa+1)]$ for $i=4,7$.
+Then $f(4)=c_4/\ell$. Set $b=y/c_4-\kappa$; the actual fourth
+reading (12.13) gives $r=b\ell-1$. Substituting into (12.18)
+gives exactly
+
+$$
+(b^2+\kappa-1)\ell^2+(2-\kappa-3b)\ell+1=0.
+\tag{12.21}
+$$
+
+Its constant is one, so it has at most two real roots, including
+all linear or constant degeneracies and repeated roots. Every legal
+$\ell$ fixes $r,u,v$ and the entire interpolated gain. Thus there
+are at most two worlds even before imposing the fifth reading.
+
+These three cases exhaust $d,y$. In each case retain only candidates
+satisfying all positivity and rank conditions and all actual history
+equations; filtering cannot increase the count. A polynomial root
+alone has not been asserted to give a legal world. No division by
+$f(5)$, $x-d$, a leading coefficient or a discriminant occurs.
+Interpolation is on the whole cubic-or-lower space and uses no
+root-simplicity assumption. ∎
+

@@ -1,0 +1,29 @@
+### 60.5 A sharp simultaneous-deficit family
+
+Assume α≥β, l=β+k and m=1−α+k with k>0, and the physical CPTP inequalities. Cauchy–Schwarz gives l+m≤sqrt(αβ)+sqrt((1−α)(1−β))≤1, so 2k≤α−β. Define
+
+    a=α−k/2, b=β+k/2, x=b, y=1−a.
+
+These are feasible. The corresponding common physical implementation consists of identity on both sides with weight β+k/2, flip X on both with weight1−α+k/2, and simultaneous reset to zero with weight α−β−k. All weights are nonnegative and sum to one. The phase-aligned logical difference Δ=E−E' has
+
+    Δ(00)=Δ(11)=(k/2)Z,
+    Δ(01)=Δ(10)=(k/2)X.
+
+Consequently, with P±=(I±X)/2,
+
+    Δ(T)=(k/2)[Tr(P+T)(Z+X)+Tr(P−T)(Z−X)].
+
+For a density input with any reference, its two positive conditional reference operators ρ± have total trace one. Since ||Z±X||1=2sqrt(2), the triangle inequality bounds the output trace norm by sqrt(2)k. Convexity, Jordan decomposition and the Hermitian block embedding used in §58 extend this bound to all operator inputs and hence to diamond norm. Encoding J preserves trace norm, including references.
+
+For a direct lower bound against all physical products, use |Ω>=(|0_R0_L>+|1_R1_L>)/sqrt(2). On the joint output define H=0 outside the reference/code subspace. On |0,00>,|1,11> use [[1,1],[1,−1]]/sqrt(2); on |0,11>,|1,00> use [[−1,1],[1,1]]/sqrt(2). Thus ||H||∞=1. With the product-channel notation above, put t_A=a0−a1 and t_B=b0−b1. Direct expansion gives
+
+    sqrt(2) Tr(Hσ)=(t_A+t_B)/2+Re(z_Az_B+v_Av_B).
+
+The Choi minor bounds imply
+
+    |z_A|²+|v_A|²≤a0a1+(1−a0)(1−a1)≤1−|t_A|,
+
+and similarly for B. The last inequality follows by considering a0≥a1 and a1≥a0 separately; its slack is twice the smaller probability times one minus the larger. Cauchy–Schwarz and the arithmetic-geometric mean inequality therefore bound the displayed witness expectation by 1/sqrt(2). Mixtures obey the same bound. On the ideal output it equals [(α−β)+l+m]/sqrt(2)=(1+2k)/sqrt(2). Norm duality gives the lower bound sqrt(2)k, matching the common physical attainer.
+
+For an explicit genuinely two-direction example take α=4/5, β=1/5 and l=m=2/5. Both Choi determinant bounds are saturated and k=1/5. The exact diamond error is sqrt(2)/5, attained by weights3/10 identity,3/10 simultaneous flip,2/5 simultaneous reset to zero. Applying the one-direction §59 formula separately would give8/45 for each deficit, strictly below the true joint optimum; a maximum of separate errors is not the channel answer.
+

@@ -1,0 +1,71 @@
+**定义 20.1（数学范围与实际纤维）。** 本卷承接
+[前卷 §18，特别是定义 18.1、定理 18.5–18.6](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md#18-五态关联相干完整真边缘纤维与电荷模)。
+物理张量因子仍为前卷定义 15.2 的三个 qubit，位序为 $(x,z,y)$；
+每份系统的合法支撑及电荷为
+
+$$
+(e_0,e_1,e_2,e_3,e_4)
+=(|000\rangle,|100\rangle,|010\rangle,|001\rangle,|101\rangle),
+\qquad
+V=\operatorname{span}\{e_0,e_1,e_2,e_3,e_4\},
+\qquad
+N=\operatorname{diag}(0,1,1,1,2).
+$$
+
+记 $E_{ij}=|e_i\rangle\langle e_j|$、$H=E_{24}$、$q=(0,1,1,1,2)$。
+给定三个候选成对约化矩阵，要求它们满足前卷定理 18.6 的全部线性条件：
+按定理 18.5 的逆式恢复可见条目，补上 Hermitian 伴随，
+再代回定理 18.2 的三个实际偏迹矩阵，逐项得到原候选矩阵，且恢复的对角和为一。
+令 $R$ 为这些可见条目组成的 Hermitian 矩阵，其中 $R_{24}=R_{42}=0$。
+对应的完整实际纤维是
+
+$$
+\rho_s=R+sH+\overline sH^\dagger,\qquad
+\mathcal F_R=\{s\in\mathbb C:\rho_s\succeq0\},\qquad
+p_j=R_{jj}.
+\tag{20.1}
+$$
+
+若线性一致性或归一化失败，则没有该候选数据的实际扩张。
+以下凡称一个实际 $s$ 或实际态对，均量化于满足这些条件的
+$s,t\in\mathcal F_R$。没有另加 $R\succeq0$ 的假设；
+$R$ 是将隐藏条目置零的仿射背景，不必自身是态。
+完整八维计算基中的其余行列均零，副本之间的张量积不同于每份内部的三个物理因子。
+
+为明确保留前卷的全部正性条件，记 $U=(0,1,3)$，并只作矩阵重排：
+
+$$
+\rho_s=
+\begin{pmatrix}
+M&u&v\\
+u^\dagger&p_2&s\\
+v^\dagger&\overline s&p_4
+\end{pmatrix},
+\quad
+M=R_{UU},\quad u=R_{U2},\quad v=R_{U4},
+$$
+
+$$
+\mu=u^\dagger M^+v,\qquad
+\alpha=p_2-u^\dagger M^+u,\qquad
+\gamma=p_4-v^\dagger M^+v.
+\tag{20.2}
+$$
+
+这里 $M^+$ 是 Moore–Penrose 逆。直接使用前卷定理 18.6 的广义 Schur 补结论：
+若 $M\succeq0$、$u,v\in\operatorname{ran}M$、$\alpha,\gamma\ge0$ 全部成立，则
+
+$$
+\mathcal F_R=\{s:|s-\mu|^2\le\alpha\gamma\};
+\tag{20.3}
+$$
+
+任何一项失败则 $\mathcal F_R=\varnothing$。
+这保留奇异 $M$ 的像空间条件，以及平移圆盘、零半径单点和空纤维。
+不以对角主子式的零中心大圆盘替代 (20.3)。
+此处引用既有纤维结论，不重新提出一条 Schur 补定理。
+
+数学引文。伪逆正性工具见
+[A. Albert，Conditions for Positive and Nonnegative Definiteness in Terms of Pseudoinverses][SP-A]；
+本卷实际复用的是前卷定理 18.6 已给出的像条件与二次型配方。
+

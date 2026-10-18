@@ -1,0 +1,26 @@
+**Proposition 13.10 (endpoints, guards and collisions).** The same
+acquisition result applies to left-ending, right-ending and mixed
+addresses, with the following concrete distinctions.
+
+| Public target | Calls from (AAR.80) | Actual semantic check |
+| --- | ---: | --- |
+| $R$, including $D=1$ | $1$ | $R$ itself gives alpha, beta or branch; these are the three complete future behaviors. |
+| $RL$ | $2$ | $\langle\alpha,\beta\rangle$ gives absent at zero, while $\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ gives alpha; both then give beta and branch. |
+| $RR$ | $2$ | From $\langle\alpha,\alpha\rangle$ the replies are absent, absent, alpha, beta, then branch; the right-ending suffix has an alpha stage. |
+| $RLL$ | $2$ | The distinct blockers in Proposition 13.3 have the same complete future; their respective labels must still be acquired. |
+| $RLR$ | $2$ | Those same sources have factor $(4,1)$, hence absent, absent, alpha, beta, then branch on this mixed path. |
+| $RLLL$ | $3$ | Four mandatory leaf positions exceed the two-call capacity $2^2-1$, although the predictive quotient merges some of their descriptors. |
+
+Proof. The call values substitute the displayed lengths into Theorem
+13.8. The replies follow from (AAR.76) and the guarded table (AAR.59).
+For $RLR$, the two descriptors are $(1,1)$ and $(2,0)$; their suffix
+weights are three and two, giving the same $(4,1)$. In the $D=1$ case,
+$v$ may be either leaf or any height-one branch; a single $R$ Read
+covers all of them, not only three representative sources. For every
+row with length $n$, (AAR.79) fits $D=n$ and hence every larger $D$.
+The upper algorithm never inspects off-path shape. Therefore arbitrary
+extra height slack does not alter either optimum. Along an absent
+target's nested prefixes there is exactly one first leaf, not several
+independent blockers; the comparison invariant searches that one
+actual boundary. $\square$
+

@@ -1,0 +1,24 @@
+**Lemma 6.1 (the two unary formulas).** Consider an unmarked unary trie node: it has one explicit observed child and one $\#$ child. Its entire index set $J$ lies strictly below the root. Fix a requested vector $r$ on $J$ and let the observed child's four counts be $c=(a,h,i,o)$. Here $a,h\in\{0,1\}$. Define
+
+$$
+e=\mathbf1_{\{r\text{ is all absent}\}},\qquad
+S=(a+h+i+o>0),\qquad G=(h+i>0).
+\tag{BPS.16}
+$$
+
+With the observed child on the left or right respectively the parent summary vector is
+
+$$
+\begin{aligned}
+U_L(c)&=(e,e,6\mathbf1_G,6\mathbf1_S),\\
+U_R(c)&=(e,e,\min(6,a+6\mathbf1_G),6\mathbf1_S).
+\end{aligned}
+\tag{BPS.17}
+$$
+
+The leaf terms $e,e$ apply even when $c$ is the zero vector.
+
+Proof. All indices are proper descendants, so each of the two root leaves realizes precisely the all-absent vector, independently of whether any child tree realizes that vector. For a left-observed branch, the $E$ case contributes $h$ and the general image-pair cases contribute the capped product of $h+i$ with the unrestricted number of right images, whose capacity is six. If $h+i>0$ that product already saturates; otherwise both contributions vanish. For a right-observed branch, $E$ contributes $a$, while the general image-pair contribution again saturates exactly when $h+i>0$. The special and general cases are disjoint. This proves the two image entries, with their orientation retained.
+
+For a nonimage branch, no observed-child realization means zero possibilities. If any realization exists, pair it with six distinct unrestricted $\mathsf O$ siblings on the unobserved side. Each resulting ordered pair is nonimage by (BPS.11), is different, and realizes the same vector. Thus its capacity is exactly six. Lemma 5.3 proves that these cases account for every parent tree. $\square$
+

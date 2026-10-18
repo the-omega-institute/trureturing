@@ -1,0 +1,19 @@
+**Lemma 18.2 (an additional paid distinction on the same negative run).**
+On the source $u_0$ of Lemma 18.1, every successful preparer makes at
+least one call outside $\bigcup_{s\in S}E_s$ whose word has length at
+least three. This call can be forced in addition to one distinguishing
+call for each $s\in S$.
+
+Proof. Keep $x_a=B_0$ and $x_{b_j}=D_j$ for $j=1,2,4$, but change
+$x_c=D_c$ to beta and $x_{b_3}=\beta$ to alpha. This is an injective
+tuple in the positive alternative $3$ of NBP Proposition 9.3; its actual
+finite inverse $u_+$ belongs to $\Pi_3$ and requires entry $e_1$.
+The source $u_0$ requires $e_0$. Their currents differ only in the
+two $c$ occurrence cones and the $b_3$ cone. Any differing reply
+therefore has length at least three and lies outside every $E_s$.
+If all queries on the terminating $u_0$ path had equal replies on
+$u_+$, induction from the common start would give the same latch,
+a contradiction. The same path argument against each $u_s$ forces
+a query in $E_s$. These are distinctions on one actual execution,
+not costs added from different maximizing sources. $\square$
+

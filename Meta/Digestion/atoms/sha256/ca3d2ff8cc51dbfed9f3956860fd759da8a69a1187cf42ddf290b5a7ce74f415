@@ -1,0 +1,193 @@
+**Theorem 2.2 (finite-feature equality forces full endpoint calibration).**
+Every pair in $\mathfrak C_7$ satisfying both boxes (1.7) obeys
+
+$$
+\mathcal D:=\int Q(E_p)d\nu_p
+ -\kappa\int W(E_\beta)d\nu_\beta-\zeta\le0,
+\quad
+\kappa=\frac{1116529}{806625},\qquad
+\zeta=-\frac{151298}{268875}.
+\tag{2.3}
+$$
+
+Equality holds if and only if, for one $\theta\in[0,1]$, the original flows are
+
+$$
+\begin{aligned}
+\Gamma_B&=(1-\theta)\delta_{(P_{p,a},P_{\beta,a})}
+             +\theta\delta_{(P_{p,b},P_{\beta,b})},\\
+\Gamma_A&=(1-\theta)\delta_{(P_{\beta,a},P_{p,a})}
+             +\theta\delta_{(P_{\beta,b},P_{p,b})}.
+\end{aligned}
+\tag{2.4}
+$$
+
+Thus the conclusion concerns the original complete laws and both original
+flows, although only seven edge variances were assumed zero. Either event
+midpoint in (1.8), in addition to equality in (2.3), forces $\theta=1/2$.
+
+**Proof.** Use the disintegrations of this one compatible pair to form the
+stationary analysis path
+
+$$
+W_0\xrightarrow{A}Q_0\xrightarrow{B}W_1
+ \xrightarrow{A}Q_1\xrightarrow{B}W_2\longrightarrow\cdots,
+\qquad W_0\sim\nu_\beta.
+\tag{2.5}
+$$
+
+This is the descriptor-disintegration chain, not a prescribed original
+hidden triple. Both unweighted balances imply stationarity. Countably many
+null exceptions can be removed simultaneously along the forward path.
+Write $u_t=u(Q_t)$, $v_t=v(W_t)$,
+$h_n(t)=Q_t(w_{n,1})$, and $c_t=h_0(t)$. From $V=0$ one has exactly
+
+$$
+\begin{aligned}
+W_t(\alpha w_{n,1})&=v_t h_n(t) &&(0\le n\le2),\\
+c_t&=(1-u_t)(1-v_{t+1}),\\
+h_{n+1}(t)&=(1-u_t)W_{t+1}(\alpha w_{n,1}) &&(0\le n\le2).
+\end{aligned}
+\tag{2.6}
+$$
+
+The first line uses the three A features; the last two use the four B
+features. These are equalities on the sampled edges, obtained from zero
+nonnegative squared integrals. No full residual is replaced by an individual
+successor law on an untested coordinate.
+
+Define $x_t=v_tc_t/(1-v_t)$. All denominators are positive. Combining
+(2.6), then iterating only the indicated finite range, gives
+
+$$
+h_n(t)=c_t\prod_{j=1}^n x_{t+j}\quad(0\le n\le3),
+\qquad
+W_t(\alpha w_{1,1})=v_tc_tx_{t+1}.
+\tag{2.7}
+$$
+
+For example $(1-u_t)v_{t+1}c_{t+1}=c_tx_{t+1}$. This proves the
+induction in (2.7). No such product formula is asserted for $n>3$.
+
+Here and below use the constants from [REV, (16.11)]
+
+$$
+\ell=\frac29,\quad L=\frac6{25},\quad G=\frac9{25},\quad
+T=\frac{16}{729},\quad q=\frac{1944}{390625},\quad
+d_0=\frac{2341664383}{41527474875}>0.
+\tag{2.8}
+$$
+
+The suspended boxes for its marker-one words at indices 0 and 1 imply
+
+$$
+\frac{18}{125}\le v_tc_t\le\frac4{27},\qquad
+\frac8{243}\le v_tc_tx_{t+1}\le\frac{108}{3125}.
+$$
+
+Taking ratios gives $\ell\le x_{t+1}\le L$; stationarity also gives
+this at time 0. The p boxes at indices 0, 2 and 3, using (2.7), imply
+
+$$
+c_t\ge G,\qquad c_tx_{t+1}x_{t+2}\le T,\qquad
+c_tx_{t+1}x_{t+2}x_{t+3}\le q.
+\tag{2.9}
+$$
+
+For $X=(x_0,x_1,x_2,x_3)$ set
+
+$$
+\begin{aligned}
+U(X)&=\min\{T/(x_1x_2),q/(x_1x_2x_3)\},\\
+F(X)&=U(X)(1+x_1+x_1x_2)
+ -\kappa\frac{U(X)(1+x_0)}{U(X)+x_0}-\zeta,\\
+\psi(t)&=F(t,t,t,t).
+\end{aligned}
+\tag{2.10}
+$$
+
+Two supplied algebraic conclusions apply on the entire cube $[\ell,L]^4$.
+First, [REV, (16.21)--(16.26)] proves that $F(X)-x_0x_1$ is bounded
+continuous supermodular after coordinate clipping. For any four variables
+with the same marginal distribution, its comonotonic comparison therefore
+gives
+
+$$
+\mathbb EF(X)\le\mathbb E\psi(x_0)
+ -\tfrac12\mathbb E(x_1-x_0)^2.
+\tag{2.11}
+$$
+
+Second, [REV, (15.13)--(15.20)] gives $\psi\le0$, with zero set exactly
+$\{\ell,L\}$. These are algebraic and scalar-distribution suppliers:
+their cube, seam at $x_3=q/T$, and equal-marginal hypotheses hold here.
+The deterministic complete-successor hypothesis of REV Theorem 16.2 is
+not used as a theorem premise.
+
+For the actual path, (2.6)--(2.7) also give
+
+$$
+Q_0(E_p)=c_0(1+x_1+x_1x_2),\qquad
+W_0(E_\beta)=\frac{c_0(1+x_0)}{c_0+x_0}.
+\tag{2.12}
+$$
+
+The derivative of their chord difference with respect to $c_0$ is at least
+
+$$
+1+\ell+\ell^2-
+ \kappa\frac{L(1+L)}{(G+\ell)^2}=d_0
+\quad\text{on }[c_0,U(X)],
+\tag{2.13}
+$$
+
+because $G\le c_0\le U(X)$. Thus (2.11) proves the precise inequality
+
+$$
+\mathcal D\le\mathbb E\psi(x_0)
+ -\tfrac12\mathbb E(x_1-x_0)^2
+ -d_0\mathbb E[U(X)-c_0]\le0.
+\tag{2.14}
+$$
+
+If $\mathcal D=0$, all three nonnegative slacks vanish. Stationarity
+then gives, simultaneously at every time, either an $\ell$ orbit with
+$x_t=\ell,c_t=4/9$, or an $L$ orbit with $x_t=L,c_t=9/25$.
+The identities $v_t=x_t/(c_t+x_t)$ and
+$c_t=(1-u_t)(1-v_{t+1})$ force respectively
+
+$$
+u_t=v_t=a\ \text{for all }t,
+\quad\text{or}\quad u_t=v_t=b\ \text{for all }t.
+\tag{2.15}
+$$
+
+It remains to recover untested words without a full pathwise product
+assumption. The original phase marginals are supported on the two emission
+classes $u=r$ and $v=r$, and both original edge flows join only matching
+classes, by (2.15). On each class the full conditional equations (1.5)
+have constant emissions $r$. Their alpha and completing-beta coordinates
+are $r$ and $1-r$. Induction through those full equations yields, at every
+input in a common full-measure set,
+
+$$
+Q(w_{n,0})=rt_r^n,\qquad Q(w_{n,1})=(1-r)^2t_r^n,
+\qquad W=(1-r)\delta_\beta+r\alpha Q.
+\tag{2.16}
+$$
+
+For the last identity the coordinate induction has identified every Q in
+that class with the same native law. Infinite masses are zero by (1.2),
+and the finite masses in (2.16) sum to one. Thus the complete laws are
+native, and common marginals give the same mixture weight in both flows.
+This proves (2.4). Its converse follows from the native recursions and the
+endpoint chord identity. The two event endpoint values at each phase are
+distinct, so either midpoint gives weight $1/2$. $\square$
+
+The mature expectation comparison in (2.11) can equivalently be supplied
+by Côté--Wang, *On convex order and supermodular order without finite mean*,
+[Proposition 6 and Definition 3(iii)](https://arxiv.org/html/2502.17803v3).
+The clipped test is bounded continuous, so it belongs to their bounded
+right-continuous supermodular class. No comparison for arbitrary unbounded
+tests, and no equality case from that literature theorem, is used.
+

@@ -1,0 +1,97 @@
+**Theorem 241.1 (Same-allocation cut at every ordered embedding).**
+For $L\ge7$ and $3\le j_1<\cdots<j_5\le L$, every full feasible
+N cone allocation, of any finite mass, satisfies
+
+$$
+10b_{j_1}+14b_{j_2}+13b_{j_3}+14b_{j_4}+14b_{j_5}\le117e.
+\tag{241.1}
+$$
+
+Every original N or O cap attainer obeys the same necessary inequality
+with its actual amplitudes and positive closed cap. The selected
+addresses may be inactive and may have arbitrary gaps.
+
+Proof. On seven bits take $A=0$, $T=10$ and exactly these atoms:
+
+| Word | Event | Weight |
+| --- | --- | --- |
+| $1100110$ | $C$ | 6 |
+| $1101101$ | $C$ | 4 |
+| $1110000$ | $C$ | 4 |
+| $1110110$ | $C$ | 10 |
+| $1111000$ | $C$ | 3 |
+| $1111010$ | $C$ | 10 |
+| $1111100$ | $C$ | 4 |
+| $1111101$ | $C$ | 10 |
+| $1111110$ | $C$ | 14 |
+| $0100110$ | $P$ | 3 |
+| $0101000$ | $P$ | 1 |
+| $0101001$ | $P$ | 1 |
+| $0101100$ | $P$ | 5 |
+| $0110000$ | $P$ | 3 |
+| $0110010$ | $P$ | 4 |
+| $0111000$ | $P$ | 2 |
+| $1000100$ | $P$ | 2 |
+| $1000110$ | $P$ | 1 |
+| $1001001$ | $P$ | 3 |
+| $1001010$ | $P$ | 4 |
+| $1010001$ | $P$ | 2 |
+| $1010100$ | $P$ | 3 |
+| $1010101$ | $P$ | 2 |
+| $1011000$ | $P$ | 2 |
+| $1100010$ | $P$ | 2 |
+| $1100101$ | $P$ | 2 |
+
+Summing gives $C=(0,0,10,14,13,14,14)$, $P$ total 42,
+$W=52$, $K=117$. The $P$ measure includes mass four in class three;
+no early-P restriction is imposed on full competitors. The following
+are all schedule cell maxima over all eight labels:
+
+| Schedule | N maxima | O maxima |
+| --- | --- | --- |
+| $\varnothing$ | $(52)$ | $(52)$ |
+| $1$ | $(19,33)$ | $(19,33)$ |
+| $2$ | $(19,33)$ | $(19,33)$ |
+| $3$ | $(24,28)$ | $(24,28)$ |
+| $4$ | $(24,28)$ | $(24,28)$ |
+| $5$ | $(24,28)$ | $(24,28)$ |
+| $6$ | $(28,24)$ | $(28,24)$ |
+| $7$ | $(32,20)$ | $(32,20)$ |
+| $12$ | $(0,19,19,14)$ | $(19,19,14)$ |
+| $13$ | $(10,9,14,19)$ | $(19,14,19)$ |
+| $14$ | $(10,9,14,19)$ | $(19,14,19)$ |
+| $15$ | $(11,8,13,20)$ | $(19,13,20)$ |
+| $16$ | $(12,7,16,17)$ | $(19,16,17)$ |
+| $17$ | $(18,1,14,19)$ | $(19,14,19)$ |
+| $23$ | $(10,9,14,19)$ | $(19,14,19)$ |
+| $24$ | $(10,9,14,19)$ | $(19,14,19)$ |
+| $25$ | $(11,8,13,20)$ | $(19,13,20)$ |
+| $26$ | $(14,5,14,19)$ | $(19,14,19)$ |
+| $27$ | $(12,7,20,13)$ | $(19,20,13)$ |
+| $34$ | $(10,14,14,14)$ | $(24,14,14)$ |
+| $35$ | $(11,13,13,15)$ | $(24,13,15)$ |
+| $36$ | $(14,10,14,14)$ | $(24,14,14)$ |
+| $37$ | $(18,6,14,14)$ | $(24,14,14)$ |
+| $45$ | $(11,13,13,15)$ | $(24,13,15)$ |
+| $46$ | $(14,10,14,14)$ | $(24,14,14)$ |
+| $47$ | $(18,6,14,14)$ | $(24,14,14)$ |
+| $56$ | $(14,10,14,14)$ | $(24,14,14)$ |
+| $57$ | $(18,6,14,14)$ | $(24,14,14)$ |
+| $67$ | $(18,10,14,10)$ | $(28,14,10)$ |
+
+For every cell, label zero collects its $P$ mass and any terminal mass;
+label $n$ collects that cell's $C+P$ mass in class $n$. Taking the
+maximum of these quantities gives each entry by integer addition.
+Every schedule sum is 52. Constant zero and the anchor attain 52,
+so $B_N=B_O=W=52$ and both costs are zero.
+Embed the seven positions as $(1,2,j_1,\ldots,j_5)$ and fix other
+scored bits to one. Inactive-bit observations coarsen the checked
+partitions and inactive labels have zero reward on this score.
+This proves the full all-label support for every embedding and horizon.
+Pairing with the same full $\lambda$ in (237.5) proves (241.1),
+regardless of mass. The original necessary statement follows from
+§110.2 and the restriction/ignored-bit extension in Theorem 240.1,
+retaining negative singleton and independent pair rows. For caps at
+least one it follows from the coefficient sum $65<117$.
+O completion counts every ignored acquired reply. ∎
+

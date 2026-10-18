@@ -1,0 +1,26 @@
+#### 7.6　响应 Hankel 矩阵读出同一个维数
+
+定义脉冲响应块：
+
+$$
+M_k=CA^{k-1}B,
+\qquad k\ge1.
+$$
+
+对正整数 $r,s$ 定义块 Hankel 矩阵：
+
+$$
+\mathsf H_{r,s}
+=
+\begin{bmatrix}
+M_1&M_2&\cdots&M_s\\
+M_2&M_3&\cdots&M_{s+1}\\
+\vdots&\vdots&&\vdots\\
+M_r&M_{r+1}&\cdots&M_{r+s-1}
+\end{bmatrix}.
+$$
+
+它只记录输入脉冲如何经过过程影响未来读出，不直接暴露内部坐标。
+
+<a id="claim-7-6-1"></a>
+

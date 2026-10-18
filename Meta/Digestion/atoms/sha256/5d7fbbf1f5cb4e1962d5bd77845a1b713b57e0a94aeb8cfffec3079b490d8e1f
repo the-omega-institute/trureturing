@@ -1,0 +1,31 @@
+**Definition 6.1 (scope of an event target).** A work word in this volume
+records ordered committed updates only. A prior acquisition transcript
+records ordered submitted literals and replies. A full run target can
+also record preparation transactions, executed failures, successful Reads,
+their outputs, permissions and authentic event identities. These are
+different sets of events. An authenticated receipt establishes an actual
+commit; a mathematical candidate word does not establish that it occurred.
+
+Theorem 3.1 does not recover the earlier acquisition transcript. The
+source $t$ determines replies to a chosen query word, but not which
+queries were actually chosen or their order. This is the distinction
+already present in [PG, §1][PG] and [SC, §§7 and 18–23][SC].
+
+Likewise, neither recovery theorem extends to erased self-loop events.
+For example, if a larger menu permits a work-root Read while leaving
+all retained fields fixed, at a pair $x$ that actual event returns
+$\mathsf{branch}$ with successor $x$. The empty history and that
+one-event history have the same retained state and different event words.
+The same issue occurs for an executed failure with unchanged retained
+state: its response is a defined $(\mathsf{failure},\text{successor})$,
+whereas an illegal unexecuted action has no response or successor. To
+include either event, a recovery state must distinguish it from the empty
+history and preserve its full response and successor; (ER.6) does not.
+
+This is why Assumptions 2.1 and Definition 5.1 restrict the successful
+domain explicitly. They supply no four maps on a failure-bearing run
+domain and no reconstruction of physical durations. Fixed-total counts,
+a final position and a monotone cost potential do not substitute for
+the ordered executed word. The monotone quantity (ER.9) is only the
+termination measure for a syntax decoder.
+

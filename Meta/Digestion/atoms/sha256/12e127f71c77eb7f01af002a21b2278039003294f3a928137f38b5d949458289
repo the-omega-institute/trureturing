@@ -1,0 +1,59 @@
+**Theorem 6.3 (exact restricted alphabet with paid attainment).** The
+minimum complete attained alphabet on $\mathcal X_{n,D}$ is $C_n$.
+It has an effective target-blind preparation with at most $2n$ actual
+Reads, maximum word length at most $D$ and total letters at most
+$n(2D-1)$. Moreover
+
+$$
+\left\lceil(4/3)^n\right\rceil\le C_n
+\le\left\lceil(4/3)^n(n\ln4+1)\right\rceil,
+\qquad
+\log_2 C_n=n\log_2(4/3)+O(\log n),
+\tag{LTR.21}
+$$
+
+and $C_1=2$, $C_2=3$.
+
+Proof of the exact correspondence. By Theorem 6.2 every lawful fiber
+is contained in a box from (LTR.19), selecting one absent projection
+state in each coordinate. Thus any attained-code partition supplies
+a cover with the same number of boxes, and needs at least $C_n$
+codes. Conversely install a minimum box cover, and assign every
+actually acquired vector to its first containing box. Each resulting
+fiber satisfies (LTR.20) and has the reader of Theorem 6.2. It uses
+at most $C_n$ codes; the preceding lower bound forces all $C_n$
+values to be attained.
+
+To acquire this vector from common initialization, actually Read
+every gadget root $Ra_i$. A leaf reply identifies $h_0$ or $h_1$;
+a branch reply is followed by Read $Ra_iL$, whose alpha or beta
+reply identifies $h_2$ or $h_3$. The scaffold promise makes these
+addresses known, not their replies. At most two calls per gadget
+are made, with respective lengths at most $D-1$ and $D$. After
+computing the box index, export only its fixed-width name and
+isolate all other acquired state by Assumption 1.3. Public cover
+construction, installation, local search and temporary vector storage
+are separate resources. This is an actual paid attaining encoder.
+
+For the cover lower bound each box has $3^n$ points, while there
+are $4^n$ points to cover. For the upper bound choose $m$ exclusion
+vectors uniformly and independently from $[4]^n$. A fixed source
+vector belongs to each random box with probability $(3/4)^n$.
+The probability that some vector is uncovered is at most
+
+$$
+4^n(1-(3/4)^n)^m\le4^n\exp(-m(3/4)^n)<1
+$$
+
+when $m=\lceil(4/3)^n(n\ln4+1)\rceil$. A cover therefore exists.
+Finite exhaustive search for this public cover is an effective
+installation procedure; no efficiency bound or source-dependent
+advice is inferred. Taking logarithms gives (LTR.21).
+
+Two three-element sets cover $[4]$, while one does not, proving
+$C_1=2$. For $n=2$ any two maximal boxes have intersection of size
+at least four and union of size at most $9+9-4=14<16$. Three boxes
+with exclusion vectors $(0,0),(1,1),(2,2)$ cover every pair: a pair
+contains at most two of those three symbols, so one excluded symbol
+is absent from both coordinates. Hence $C_2=3$. $\square$
+

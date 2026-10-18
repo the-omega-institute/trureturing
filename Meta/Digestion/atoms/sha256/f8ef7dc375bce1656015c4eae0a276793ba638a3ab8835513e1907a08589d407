@@ -1,0 +1,46 @@
+**定理 16.1（算术四角在五态统计源上的响应）。** 取整数 $n\ge3$、三个互异素数 $p,q,r$、$\beta>0$，声明五个实际地址 $(n,pn,qn,rn,prn)$ 对应 $(O,L,T,R,J)$。置 $R(n)=\sigma(n)/n$、$C(n)=\gamma+\log\log\log n-\log R(n)$，以 $d_s=-C(n_s)$ 定义严格正律 $P_s=e^{\beta d_s}/\sum_t e^{\beta d_t}$。则
+
+$$
+\chi(P)=\log\frac{P_OP_J}{P_LP_R}=-\beta J_C>0,\quad
+J_C=C(npr)-C(np)-C(nr)+C(n).
+$$
+
+在本章标签下 $(X,Y,Z)=(P_L+P_J,P_R+P_J,P_T)$、$\kappa=P_J$。采用定义14.1及定理14.2的正 Fisher 水平，但置换均值次序，完整混合坐标度量为
+
+$$
+ds^2=dm^{\mathsf T}\Sigma_v^{-1}dm+\frac{d\chi^2}{I_\kappa},\quad
+m=(X,Y,Z),\quad I_\kappa=P_O^{-1}+P_L^{-1}+P_R^{-1}+P_J^{-1},
+$$
+
+$$
+\Sigma_v=\begin{pmatrix}X(1-X)&\kappa-XY&-XZ\\\kappa-XY&Y(1-Y)&-YZ\\-XZ&-YZ&Z(1-Z)\end{pmatrix}.
+$$
+
+系数依赖同一完整 $P$，不下降为仅由三均值决定的度量。
+
+证明。《AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION》定义8.1、命题8.2使用 $G=-C$，实际素数方向为本节 $p,r$。设 $L=\log n>1,u=\log p,v=\log r$。Euler 对数因子各只依赖一个实际素数指数，故即使 $p,r\mid n$ 其混合差仍零；阈值 $B(t)=\gamma+\log\log t$ 则满足 $B''(t)=-(\log t+1)/(t^2(\log t)^2)<0$。两次微积分基本定理给
+
+$$
+J_C=\int_0^u\int_0^v B''(L+s+t)\,dt\,ds<0.
+$$
+
+五地址相异，$pr$ 不等于素数 $q$；归一化的两个对数在四角差中相消，$T$ 项不参加，所以得优势比式。若要求有限截点，五地址均须不超过它；此菜单含一次双轴变化，并非每一原生单步的全部后继，也不提供未列分支的上界。
+
+完整正五态的自然族和逆式复用本卷式(14.6)：$P\propto(1,e^u,e^w,e^v,e^{u+v+\chi})$，$u=\log(P_L/P_O),v=\log(P_R/P_O),w=\log(P_T/P_O)$。有限和微分给协方差 Fisher；其经典正则极小族前提由函数 $1,x,y,z,xy$ 在五点的仿射独立供应，文献为 Wainwright–Jordan，出版版 Propositions3.1–3.2，DOI [10.1561/2200000001](https://doi.org/10.1561/2200000001)。该独立性通过按 $O,L,R,T,J$ 评价依次消去系数证明；固定较小支撑须重新计算秩。点态乘法表给 $\mathbb E(T_iT_j)$，进一步有限微分给 $\partial_k g_{ij}=\mathbb E[(T_i-\mu_i)(T_j-\mu_j)(T_k-\mu_k)]$、自然坐标的降指标 Levi–Civita 连接 $\Gamma_{ijk}=\tfrac12\partial_i\partial_j\partial_k\log Z$，它们不是五个独立物理轴。
+
+对 $E(m,\kappa)=\sum_sP_s\log P_s$，完整反解为 $(1-X-Y-Z+\kappa,X-\kappa,Z,Y-\kappa,\kappa)$。微分给 $\nabla E=(u,v,w,\chi)$；其 Hessian 是
+
+$$
+G=\begin{pmatrix}A&b\\b^{\mathsf T}&I_\kappa\end{pmatrix},\quad
+A=\operatorname{diag}(P_L^{-1},P_R^{-1},P_T^{-1})+P_O^{-1}\mathbf1\mathbf1^{\mathsf T},\quad
+b=-(P_O^{-1}+P_L^{-1},P_O^{-1}+P_R^{-1},P_O^{-1})^{\mathsf T}.
+$$
+
+于是 $d\chi=b^{\mathsf T}dm+I_\kappa d\kappa$，完成平方给 $ds^2=dm^{\mathsf T}(A-bb^{\mathsf T}/I_\kappa)dm+d\chi^2/I_\kappa$。均值与自然参数的雅可比互逆，所以 $G^{-1}=\operatorname{Cov}(x,y,z,xy)$；块三角消元给其左上块 $(A-bb^{\mathsf T}/I_\kappa)^{-1}=\Sigma_v$。$\Sigma_v$ 正定，因为非零线性组合 $x,y,z$ 不会在全部正五点恒定。这证明完整显示式，无须把相关水平定理误称为已经逐字显示该矩阵。
+
+混合坐标的全域仍是定理14.2的正域：$X,Y,Z>0,X+Z<1,Y+Z<1$，$\kappa$ 严格位于闭纤维两端之间。$\partial_\kappa\chi=I_\kappa>0$，两端极限分别为 $-\infty,+\infty$，包括并列端点；故每个 $\chi\in\mathbb R$ 有唯一正补全，隐函数定理给全域光滑图。正律 $(1,1,1,1,1)/5$ 与 $(1/4,3/20,1/5,3/20,1/4)$ 三均值相同，$\operatorname{Cov}(x,y)$ 却为 $1/25,9/100$。因此交叉项零不意味着 Riemannian 乘积。对声明的光滑截面 $\chi=f(m)$，拉回度量是 $\Sigma_v^{-1}+\nabla f\nabla f^{\mathsf T}/I_\kappa$，全部系数在同一截面上求值；更新保持它须另证 $\chi'=f(m')$。
+
+若要将这个概率菜单用于绝对算术界，须保留地址、全部分数及绝对锚。一般 logits 同加常数 $c$ 不改变 $P$，却使最大分数与 $\beta^{-1}\log\sum e^{\beta d_s}$ 同增 $c$；保留 $A_0=\log\sum e^{\beta d_s}$ 才能由 $d_s=(\log P_s+A_0)/\beta$ 恢复。优势比与 Fisher 几何不补回这个常数，也不认证菜单外的整数。
+
+同一五点值还不决定另供的曲面曲率。例如平面与图 $z=c u(u-1)v(v-1)[(u-1/2)^2+(v-1/2)^2]$（$c\ne0$）在单位方形四角和中心值相同，在原点切平面相同。后者二阶主项为 $(c/2)uv$，Hessian 为 $\left(\begin{smallmatrix}0&c/2\\c/2&0\end{smallmatrix}\right)$，图曲率 $\det\operatorname{Hess}f/(1+|\nabla f|^2)^2=-c^2/4$，平面为零。这个反例区分所选 Fisher 度量与仅给五校准点的外在图景。
+

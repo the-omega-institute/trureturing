@@ -1,0 +1,23 @@
+### 63.8 外部研究锚点与本项目接口
+
+本节的外部锚点是：
+
+- Bui、Lester、Milinovich，Balazard–Saias–Yor 等价式；
+- Nakamura，完整 Riemann zeta 概率分布与 RH；
+- Connes 2026 年 RH 综述，其中把 Weil 二次型、信息论和从有限 Euler 乘积到零点极限的收敛问题放在同一框架中，参见 [arXiv:2602.04022](https://arxiv.org/abs/2602.04022)；
+- 四阶矩的谱展开与 Motohashi 型 reciprocity，用来说明四阶读出具有真实谱结构，但其本身不是 RH 等价式。
+
+本节不把任何外部工作转写成 Auric FIB 内部定理。当前真正的 bridge obligation 是：
+
+\[
+\text{FIB probability field}
+\longrightarrow
+\text{Weil/Poisson positive form}
+\longrightarrow
+\Xi_\sigma\text{ characteristic-function family}
+\longrightarrow
+\text{regularized global spectrum}.
+\]
+
+---
+

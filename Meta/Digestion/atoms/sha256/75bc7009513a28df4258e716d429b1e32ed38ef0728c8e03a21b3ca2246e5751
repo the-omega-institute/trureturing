@@ -1,0 +1,44 @@
+**Theorem 5.3 (effective supplied-profile locus and finite reconstruction).**
+For every supplied $(\mathbf b,\mathbf A,\mathbf F,\mathbf f)$,
+(FNS.26) has a terminating exact Presburger description in all its finite
+scalar parameters. The same holds for supplied finite templates
+$\mathbf f(\mathbf c)$ by Corollary 2.6. If a common completed map (FNS.24)
+is separately proved at the same finite point $\mathbf c$ with computable
+finite prefixes, membership of that point in this locus produces actual
+finite signed witnesses for each requested $h$. Recognizing a valid
+common-map certificate does not show that all contacts have been
+found. No decision over unknown $\mathbf f$ or arbitrary common maps follows.
+
+**Proof.** Conjoin the fixed-profile support formulas (FNS.25) on their one
+joint tuple and quantify the simultaneous lower bound as in (FNS.26).
+Presburger quantifier elimination and witness extraction terminate. This is
+the fixed-parameter cofinal step of [PAC, Theorem 4.2][PAC], following the
+native support and lifting interfaces already in [SLP, Corollary 3.2][SLP].
+
+For its semilinear form, decompose the joint support in
+$\mathbb N^{\mathbf c}\times\mathbb N^{\mathbf w}$ into finitely many linear
+sets. A component is eligible exactly when its periods with **zero finite
+$\mathbf c$ part** collectively increase every required $\mathbf w$
+coordinate. Summing those periods gives $(0,\mathbf q)$ and a cofinal ray
+with that same fixed $\mathbf c$. In a fixed-$\mathbf c$ fiber, coefficients
+of periods with a positive finite-parameter component are bounded. If a
+component has no zero-$\mathbf c$ period increasing one required divergent
+coordinate, that coordinate is bounded on this fiber. Finitely many such
+ineligible components cannot meet all simultaneous lower bounds. The locus
+is therefore exactly the projection of the eligible components. When there
+are no divergent coordinates, every component is eligible and this is
+ordinary support nonemptiness; zero finite-parameter dimensions are literal
+empty vectors.
+
+For reconstruction, compute the certified common prefix requirements,
+extract one joint rank tuple from (FNS.26), and apply the finite simultaneous
+SLP lifting in Theorem 5.2. A supplied functional graph as in Lemma 3.3 can
+provide such prefixes, after exact positive source normalization and a proof
+of its common-output equations. It is not assumed for every normalized
+acquired input. Alternatively, each fixed $h$ is an exact finite native
+query by [NSF, Theorem 5.2][NSF], so whenever (FNS.27) holds that query returns
+finite source witnesses. If no contact exists, increasing finite-depth
+queries eventually find an exclusion depth; if a contact exists, that NO
+search does not terminate. No unconditional terminating alternative is
+claimed for unknown contacts. $\square$
+

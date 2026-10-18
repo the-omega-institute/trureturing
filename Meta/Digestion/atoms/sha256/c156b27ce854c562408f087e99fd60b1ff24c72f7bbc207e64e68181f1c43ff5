@@ -1,0 +1,53 @@
+**Definition 4.1 (Square-sector and center-overlap parameters).** Set
+
+$$
+U=ac+2c+a,\qquad
+d=\frac1{1+a}+\frac c{a+c}=\frac U{(1+a)(a+c)},\qquad
+q=2-d=\frac{aT}{(1+a)(a+c)}.
+\tag{4.3}
+$$
+
+Thus $0<d,q<2$. Define positive coefficients summing to one by
+
+$$
+C_0=\frac Z{T(1+b)},\qquad
+C_1=\frac{2b(a+c)^2}{TU(1+b)},\qquad
+C_2=\frac{acb}{U(1+b)}.
+\tag{4.4}
+$$
+
+For $0<t<q$, write
+
+$$
+F(t)=\frac{C_0}t-\frac{C_1}{q-t}-\frac{C_2}{2-t},
+\qquad
+R(t)=\sqrt{\frac{qC_1}{2(q-t)^2}+\frac{C_2}{(2-t)^2}}.
+\tag{4.5}
+$$
+
+Let $t_0\in(0,q)$ be the unique zero of $F$. Let
+$\widehat t\in(0,t_0)$ be the unique solution of $F(t)=R(t)$,
+and put $t_*=\min\{\widehat t,d\}$.
+
+These parameters have exact algebraic specifications. With
+$B=q+2C_0+(2-q)C_1$,
+
+$$
+N(t)=t^2-Bt+2qC_0,\qquad
+F(t)=\frac{N(t)}{t(q-t)(2-t)}.
+\tag{4.6}
+$$
+
+Since $N(0)>0$ and $N(q)=-q(2-q)C_1<0$,
+$t_0$ is its smaller root. The selected $\widehat t$ is the
+unique root in $(0,t_0)$ of
+
+$$
+2N(t)^2-t^2\bigl[qC_1(2-t)^2+2C_2(q-t)^2\bigr]=0.
+\tag{4.7}
+$$
+
+Indeed $F$ is strictly decreasing and $R$ strictly increasing
+there, with $F-R$ positive near zero and negative at $t_0$.
+The interval excludes roots created by squaring.
+

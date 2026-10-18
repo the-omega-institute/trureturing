@@ -1,0 +1,32 @@
+## 174. Contrary hypothesis and the genuine owners actually needed
+
+Suppose, to the contrary, that every label B in
+
+    L = H_Z \ {M,Z}
+
+has b<=m-2. Since c,d>1 and m>=1+c+d, we already have c,d<m-2.
+Consequently the theorem's desired U is exactly a violation of this
+contrary hypothesis. Under that hypothesis every H label in an owner containing Z has value
+at most z. This is a local consequence of the contrary hypothesis; no
+upper bound on H labels outside those owners is used. The original
+weak escape inequalities already give
+
+    m>3, z>m+2, c,d<m-2, z>2c+3.
+
+In particular, no strict version of m>=1+c+d or z>=1+m+c is needed.
+
+Every transverse occurrence of Z is genuine, even without the contrary
+hypothesis. A flat selecting Z is excluded by p_Z=0. A flat selecting
+its companion A transversely would require a>z>m, contrary to maximality
+of the pi-selected M. For an axial-flat owner with pair {Z,A}, every
+H-valued selected axis is <=m<z, and every special selected axis has
+shifted value <z+a. In each of the cases of zero, one or two special
+axes, their shifted product is strictly below (z+a)^2, contradicting
+axial flatness.
+
+An owner with axial Z and reservoir pair {M,B}, b<=m-2, is also genuine.
+It cannot select its axes because p_Z=0; it cannot select M transversely
+because p_M=1; and it cannot select B transversely because that would
+require b>m. This includes B=C and does not require B to be witnessed.
+We make no assertion that other axial Z occurrences are genuine.
+

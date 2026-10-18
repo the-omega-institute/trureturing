@@ -1,0 +1,10 @@
+**Theorem 381.1 (Endpoint obstruction).** At \(b^*\), every one-coordinate deletion is stopped-feasible at \(15/64\), whereas the full eight-coordinate profile is infeasible there. The gap is
+
+$$
+ c-{15\over64}={353\over47424}>0.
+$$
+
+*Proof.* The eight allocations in §380 prove the first assertion by their common masses and the nonnegative slack table. For the full profile, any complete (N) allocation at \(15/64\) would satisfy the rows used by the zero-cost score \(Y\). Applying (378.1) at \(b^*\) would give \(15/64\ge c\), contradicting the displayed positive gap. Hence the full finite (N) profile is infeasible, and therefore the original \(N_2\) profile is infeasible as well: every finite Boolean word used in the score has an actual source, and the one source-independent seed induces the complete finite table.
+
+If a restriction deletes still more coordinates, start with the allocation for any one deleted coordinate, set every further deleted reply to \(1\), and project every output label belonging to a deleted coordinate to label \(0\). For each retained word, the base coordinate and the independent union coordinate can only increase, while the retained correct coordinate is unchanged; the positive-word base also increases. Contracting fixed replies preserves increasing stopped schedules, equal cell masses, and the one common seed. Thus every smaller finite restriction remains feasible at \(15/64\). The obstruction therefore defeats the whole strategy of certifying the eight-coordinate profile by independently feasible proper restrictions. It does not compare the unrestricted original \(N_2\) and \(O_2\) classes and does not provide a strict same-profile (N/O) separation. \(\square\)
+

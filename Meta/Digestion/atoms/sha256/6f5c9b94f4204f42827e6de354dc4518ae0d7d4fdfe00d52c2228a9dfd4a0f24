@@ -1,0 +1,19 @@
+**Open Problem 6.1 (Original arbitrary-finite completion).** Put
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad
+D_r(P)=\mathbb E_P(X_0-q_{r,0}(P))^2.
+$$
+
+Still decide whether some exact finite producer attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2][U], the latter remains equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{6.3}
+$$
+
+No such all-$N$ separation pairs or finite attainer are supplied. All original zero, reducible, periodic, noncontractive, seam and null cases remain in this target.
+
+For general nonunifilar producers, Lemma 2.2 still screens future output, but the successor-mixture equalities do not supply Proposition 3.2's marked quotient. Endpoint masses after a word sum over hidden paths, so the deterministic coalescing identity (3.5) is unavailable. Current-class uncertainty can remain even when remote-exterior influence is small; identifying that entire class is only a sufficient route to the actual defect. Neither general per-law summability nor a fixed-law divergent actual tail is established here. Independently, productive same-law directions or other strict certificates covering the remaining hypothetical attainers remain missing.
+

@@ -1,0 +1,31 @@
+**Theorem 3.3 (Exact finite-size obstruction).** For $n\ge5$,
+
+$$
+V_2(n)<\frac{n-4}{312}.
+\tag{3.6}
+$$
+
+For every $1\le n\le98$,
+
+$$
+V_2(n)<\tau.
+\tag{3.7}
+$$
+
+Thus a successful strict threshold test $V_2(n)>\tau$ requires $n\ge99$.
+
+Proof. There are $n-4$ reset indices, so summing the strict bound (3.3) gives (3.6). For $5\le n\le98$,
+
+$$
+V_2(n)<\frac{94}{312}=\frac{47}{156}.
+$$
+
+The exact comparison with the threshold is
+
+$$
+\tau-\frac{47}{156}=\frac{1765}{312}-4\sqrt2>0,
+\tag{3.8}
+$$
+
+because $1765,1248>0$ and $1765^2-2\cdot1248^2=217>0$. For $n<5$, $V_2(n)=0$, and (3.8) also proves $\tau>0$. This covers every stated length without computing any $\pi_n$. The necessary length bound asserts neither positivity nor a threshold crossing at length $99$. $\square$
+

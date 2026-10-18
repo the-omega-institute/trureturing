@@ -1,0 +1,12 @@
+**Corollary 85.2 (primitivity in the full Mordell–Weil lattice).** Under the hypotheses of Theorem 85.1, the common class of $R,S$ in $E_D(\mathbb Q)/E_D(\mathbb Q)_{\mathrm{tors}}$ is primitive. Equivalently, if $S=[m]H+T$ with $m\ge1$, $H\in E_D(\mathbb Q)$ and rational torsion $T$, then $m=1$.
+
+**Proof.** The descent class $\delta(S)=(-15,5,-3)$ differs from every torsion class listed above. For $O$ and $(-5D,0)$ use the second coordinate; for $T_0$ the ratio of first coordinates is $5$; for $(15D,0)$ the ratio of third coordinates is $-1$. Thus $S$ cannot be a double plus torsion, excluding even $m$.
+
+Suppose $m\ge3$ is odd. Since the torsion is two-torsion, absorb $T$ into $H'=H+T$ to get $S=[m]H'$. Put $K=H'+T_0$. Then $[m]K=R$.
+
+The point $K$ is integral at every prime. On this integral Weierstrass model, a nonintegral rational point lies in the formal subgroup and has negative $X$ valuation. Its nonzero multiples remain in that subgroup and have negative $X$ valuation; see [Silverman IV.1--2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). If $K$ were nonintegral anywhere, $R=[m]K$ would be nonintegral, contrary to its displayed coordinates. The points are non-torsion, so the multiple is not $O$. This includes $2,3,5$ and primes dividing $D$, and requires no prime-to-residue-characteristic condition on $m$. The model is also minimal everywhere: its discriminant $2^8 3^2 5^6D^6$ has every valuation below twelve.
+
+Odd multiplication preserves the two-descent class, so $\delta(K)=\delta(R)$. Also $\widehat h(K)=\widehat h(R)/m^2\le\widehat h(R)$. Theorem 85.1 forces $K=\pm R$, and then $R=[m]K=\pm[m]R$ contradicts non-torsion. Thus $m=1$. ∎
+
+These statements impose an integral-index and divisibility restriction for every actual squarefree kernel. They do not assert that the primitive point generates a group of rank greater than one, impose a universal rank bound, or exhibit a newly excluded prime family. The rank-one generation conclusions in §§76--78 retain their own hypotheses.
+

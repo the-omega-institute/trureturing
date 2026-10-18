@@ -1,0 +1,46 @@
+## 461. The source axial run has exactly one original interval
+
+Assume (459.3). From (459.1), m>3, c<m-2, z>m+2 and z-1>=m+c.
+On the maximal axial Z run through tau, the fixed pair is {M,C}.
+All its owners are genuine. No such owner has two axial Z slots:
+that would give L=(m+c)^2-(z-1)^2<=0. Thus the original intervals
+of this run have distinct owners.
+
+For each of them the individual transverse M response has two
+positive arctangent coefficients whose sum is
+
+    2*sqrt(m^2-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+Indeed compare c with m-2 and z with m; equality would hold at those
+boundary values, while the actual inequalities are strict. The same
+tangent-branch argument as in Section 460 gives
+
+    theta_Z+2*beta_M>pi.                           (461.1)
+
+If the entire Z circle were axial, it would have at least six such
+original intervals and exceed the available 3*pi M/Z capacity. So
+the run is proper. Its two original transverse boundary Z intervals
+are distinct: otherwise that one interval and the run would close the
+whole circle, leaving the other transverse Z slot of its owner outside.
+Their owners have the form
+
+    (B,Z,A,Q,Z,A), {A,B}={M,C}.
+
+Write a=x_A,b=x_B,q=x_Q. By (459.3), q<=z<1+z+a. The transverse Z
+cosine numerator is increasing in q, with derivative a+z*b>0, and
+at q=1+z+a it is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Therefore each boundary Z angle is strictly greater than pi/2.
+Every such owner has two equal transverse Z slots. Two different
+boundary owners would already use more than 2*pi at Z, so both
+boundary intervals belong to one actual owner rho. Its two
+transverse Z angles alone use more than pi.
+
+Together with (461.1) and the total 3*pi capacity, this forces the
+axial run to have exactly one owner, tau. No distinctness of other
+axes was used. The two possible rho frames are
+
+    (M,Z,C,Q,Z,C), or (C,Z,M,Q,Z,M).                (461.2)
+

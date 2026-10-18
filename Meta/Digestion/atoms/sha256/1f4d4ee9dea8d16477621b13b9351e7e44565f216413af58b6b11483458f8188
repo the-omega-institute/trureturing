@@ -1,0 +1,29 @@
+**Definition 87.1 (three distinct contracts on the unchanged source).** Keep the literal $G=H^1\times\mathbb R$, $e$, Lebesgue Haar measure, $X_i$, $L$, $\Gamma$, $\pi$ and free clock of (82.5), (82.8) and (84.1). In particular $\Gamma$ is the actual positive degree-$-3$ Green field, with $\int\Gamma(\xi,w)dw=(4\pi|\xi|)^{-1}$. Put $D_w=-i\partial_w$, and for $\sigma>0$ define
+
+$$
+\begin{gathered}
+D_\sigma[\psi]=\big\||D_w|^{\sigma/2}\psi\big\|_2^2,qquad
+\mathcal E_\sigma=D(L^{1/2})\cap D(|D_w|^{\sigma/2}),\
+\|\psi\|_{\mathcal E_\sigma}^2=\|\psi\|_2^2+T[\psi]+D_\sigma[\psi],\
+\mathcal A_\sigma=\mathcal E_\sigma\cap D(M_{\sqrt\Gamma}),\qquad
+q_0[\psi]=aT[\psi]-gV[\psi],\
+q_{\sigma,\eta}[\psi]=aT[\psi]+\eta D_\sigma[\psi]-gV[\psi],\
+\mathcal B_{\sigma,B}=\{\psi\in\mathcal A_\sigma:\|\psi\|_2=1,\ D_\sigma[\psi]\le B\},
+\qquad a,g,\eta>0.
+\end{gathered}
+\tag{87.1}
+$$
+
+The added-law contract is $q_{\sigma,\eta}$, whose kinetic functional differs from $q_0$. The fixed-budget contract is the original $q_0$ restricted to $\mathcal B_{\sigma,B}$. Mere finiteness means membership in $\mathcal A_\sigma$, with no common $B$ and no added term. For $\sigma\ge2$ the estimates below prove $\mathcal A_\sigma=\mathcal E_\sigma$; no such whole-domain equality is required for $0<\sigma<2$. All potential integrals on $\mathcal A_\sigma$ are actual same-field integrals.
+
+Use the shear $s=w-xy/2$ of (85.1). For convenience write the unitary central transform as $b(\xi,\lambda)=(2\pi)^{-1/2}\int e^{-i\lambda s}\Psi(\xi,s)ds$. Then
+
+$$
+D_\sigma[\psi]=\int_{\mathbb R^3\times\mathbb R}|\lambda|^\sigma|b(\xi,\lambda)|^2d\xi d\lambda.
+\tag{87.2}
+$$
+
+The phase relating the $w$ and $s$ transforms does not change this expression. The intersection domain in (87.1) is a dense Hilbert form domain. The punctured core $\mathcal D_0$ is dense in it for every finite $\sigma$: first truncate central frequencies, using the strong free commutation in Proposition 85.2, and approximate the free form by compact smooth functions before applying that truncation. These projected tests have compact horizontal support and smooth central tails, with every central derivative square integrable. Central smooth cutoffs converge in any fixed integer central Sobolev norm and in the horizontal norm, by their tails and the bounded horizontal coefficients on this support; interpolation gives convergence in the required fractional central norm. Finally remove a horizontal cylinder $|\xi|<\varepsilon$. For a fixed smooth compact test, its squared horizontal cutoff-gradient cost is $O(\varepsilon)$ in three horizontal variables; central derivatives commute with this cutoff. The other terms tend to zero by dominated convergence. This proves punctured-core density without using a high-order cutoff at a point in four Euclidean variables.
+
+For an $L^2$ state, $D_\sigma=0$ implies that its central Fourier transform is supported at the null singleton $\{0\}$, hence the state is zero. Likewise $T=0$ implies zero by (84.5). Thus $\mathcal B_{\sigma,0}$ is empty, whereas the zero vector is included in every linear form domain. Bounds involving powers of the norm are read at the zero vector by their continuous value zero. Budget assertions below require $0<B<\infty$.
+

@@ -1,0 +1,12 @@
+**Example 3.5 (unequal constructor headers really occur).** In the
+six-hole fiber of §7, at epoch $n$ the physical word beginning
+$LL$ reads a suffix in $\rho^n(x)$, while one beginning $RLL$
+reads a suffix in $\rho^{n+1}(x)$; the $y$ ports at $LR,RRL$
+have exponents $n,n+2$. More generally the reconstruction templates
+can copy several coordinates under arbitrary unequal finite headers,
+with different headers in different charts. Theorem 3.4 uses
+constraints $p=h z$ for these occurrences after complete-source
+quantification. It requires neither the common routing tree of
+SRF Lemma 1.3 nor recognizability of the direct physical-word/source
+convolution excluded by SRF Counterexample 1.6.
+

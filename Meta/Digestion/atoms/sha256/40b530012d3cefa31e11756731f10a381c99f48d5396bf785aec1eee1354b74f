@@ -1,0 +1,120 @@
+**Corollary 31.1 (lawful static whole-row recovery at every allowed epoch).**
+On every nonempty acquired input of Definition 27.1, the following
+conditions are equivalent:
+
+1. The algorithm of Theorem 30.2 returns YES.
+2. For every permitted certified $N$, there exist a deterministic
+   effective source-total static full-row service $A_N$ and an integer
+   $K_N<\infty$ such that $A_N$ uses at most $K_N$ new raw reads on
+   every $u\in U$.
+3. For some permitted certified $N$, there exist a deterministic
+   effective source-total serial full-row service $A$ and an integer
+   $K<\infty$ such that $A$ uses at most $K$ new raw reads on every
+   $u\in U$, allowing real forward updates on the same register.
+
+Each service and its bound use only the common retained input and task;
+the bound in each predicate is uniform over the entire $U$. Moreover,
+on YES the static services can be constructed effectively from the
+computed sufficient inclusive original depth $H$, with one raw bound
+$K_0$ valid simultaneously for every permitted $N$:
+
+$$
+K_0=2(2^{H+1}-1),\qquad
+\max|p_{\mathrm{physical}}|\le H+\lceil N/2\rceil.
+\tag{ARH.31.1}
+$$
+
+The bound on raw calls is independent of $N$. A root-cut input can
+instead halt with its known row and zero new reads. A NO answer excludes
+a uniform finite raw bound for every permitted static or serial service.
+
+Proof. Apply the existing bridge (ARH.2.3) to the exact $U$ of
+(ARH.27.2). Its common complete state, decidable finite-candidate
+membership, four literal replies, original-address locality and
+source-totality hypotheses are precisely those of Definition 27.1
+and Assumption 1.3. Theorem 30.2 supplies the previously missing
+effective bound or all-depth obstruction; the bridge itself is reused.
+
+Explicitly, at the actual static epoch $N$, use [SLH, Theorem 2.2][SLH]
+to recover all original replies at $|p|\le H$. This gives (ARH.31.1).
+Each decoder request is an actual original-root address, and every
+actual repeated call is paid. The acquired evidence is the actual
+$N$-epoch address/reply list, not fabricated old events.
+
+Enumerate finite original trees in an effective size-and-encoding order.
+Test each candidate against the complete old row, every retained literal,
+both relation guards, the complete acquired equality and the recovered
+original prefix. All these tests on a supplied finite candidate are
+decidable. The actual source guarantees a successful candidate, so this
+local search terminates on every admitted source. Compute its entire
+original $R_Q$ and output it, then enter absorbing Halt. Theorem 30.2
+makes the output common to the whole prefix-conditioned fiber; the
+candidate is not claimed to be the actual source. The consumer neither
+queries an unknown equality nor reads an unobserved chart or code.
+
+The bridge's converse covers all allowed effective serial services,
+including reply-dependent finite updates and unbounded a priori physical
+addresses. Its finite reachable reply tree under a uniform raw bound,
+together with original-address locality, would give a finite determining
+original prefix. The NO witnesses contradict that conclusion. This
+reuse establishes equivalence of uniformly raw-bounded service existence,
+not equality of minimum raw prices. $\square$
+
+Source-totality without a uniform read bound has a different meaning.
+The paid original-tree traversal used in [SCR, Theorem 6.1][GRAPH-SCR]
+works on every finite source: at the fixed actual epoch $N$, decode the
+original root reply with [SLH, Theorem 2.2][SLH], and decode both original
+children only after a decoded branch. Each original node costs at most
+two actual current-register reads. The original tree is finite, so this
+procedure terminates, reconstructs it, computes the entire $R_Q$, and
+enters absorbing Halt. It uses at most $2|\operatorname{Pos}(u)|$ new
+reads on that source, with no uniform bound asserted over $U$.
+Restricting this all-tree procedure to the present acquired fiber is
+lawful and preserves every retained predicate; it adds no inverse,
+reroot, equality, identity or timing port.
+
+For example, with $H_0=\varnothing$ and $Q=\varnothing$, the full graph
+has no determining finite prefix by Theorem 30.2: its concrete exterior
+contains the entire source and its cylinder list has a nonground pattern.
+Explicitly, for each inclusive $b$, take a perfect all-$\alpha$ tree
+$y$ of height $b+1$ and change one deepest leaf to $\beta$ to obtain
+$y'$. The finite sources $F(y),F(y')$ lie in that same full fiber, agree
+through $b$ by Lemma 19.2, and have different empty-cut rows. Nevertheless
+the preceding source-total static traversal works at every permitted
+$N$. Thus NO rules out exactly the uniformly raw-bounded service classes
+in items 2–3; it does not rule out source-total recovery with an unbounded
+source-dependent read count. This distinction uses the existing traversal
+and prefix suppliers and adds no minimum-price or new traversal theorem.
+
+The empty-domain flag has only a logical interpretation: immediate
+output of any fixed row, for example $R_Q(\alpha)$, has vacuous
+correctness with zero calls. It is not an actual acquired-state
+realization.
+
+The computation of patterns, automata, finite trees and installed
+consumer code is effective ordinary mathematics. It supplies no
+implemented solver, practical complexity estimate, uniform running-time
+guarantee or physical acquisition procedure beyond the existing
+conditional producer contract. Semantic projections to $y$ and its
+subtrees are not reset, reroot, clone, inverse, identity, equality or
+code-inspection operations. Only paid literal reads occur in the
+positive consumer; no new update is needed.
+
+Raw calls, actual updates, physical address length and radius, address
+generation and transmission, certified versions, working storage,
+retention, local work, labels, bits, fees, installation, acquisition,
+entry, archives, output, clocks, precision, field and reference resources,
+and total physical resources remain separate obligations. For the
+displayed consumer the actual post-entry update count is zero and the
+address-length sum is at most $K_0(H+\lceil N/2\rceil)$; these are
+sufficient bounds, not joint optima or prices for the other coordinates.
+
+In particular outputting $r=R_Q(u)$ does not erase the old relation,
+$H_0$, the actual new replies or other accessible fields. A separately
+supplied complete-successor retention operation, with its own payment
+and state correspondence, is still necessary. If its whole accessible
+source-bearing content is exactly a recoverable encoding of $r$ and
+common data, the conditional new fiber is $U\cap R_Q^{-1}(r)$, by the
+existing complete-cut contract. Remaining accessible information imposes
+its further intersections. Absorbing Halt does not supply another entry.
+

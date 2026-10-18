@@ -1,0 +1,22 @@
+**Assumption 16.1 (resource interpretation and operational premises).**
+The resources in §§10–15 are the exact installed preparation and reader
+state alphabets, actual running visits and sums of submitted absolute
+word lengths. Every running, latch and whole-output state counts,
+including unused installed states. A terminal latch has no native call;
+every running visit has one, including a forced constant reply or
+$\varepsilon$. Handoff and the phase boundary are the separately
+supplied operations of Definition 2.2. No phase coordinate is silently
+added to a running configuration. If an implementation requires phase,
+entry or service storage, that storage has its own price under the
+supplied realization contract; the theorems do not construct it.
+
+Literal table substitution can change the stored literals and successors
+of the preparation graph, and in Theorem 13.3 also of the design-variable
+reader graph. The state identities, partitions, starts, latch contents,
+complete recoverable entry values and whole-row halt labels are as
+stated in each theorem. Installed-address representation, all four
+successor slots, output representation, acquisition, acquired-term
+computation, authentication, export, isolation, entry, local work,
+elapsed time, energy and native service retain separate prices. Their
+costs are not determined by state/call/submitted-word counts.
+

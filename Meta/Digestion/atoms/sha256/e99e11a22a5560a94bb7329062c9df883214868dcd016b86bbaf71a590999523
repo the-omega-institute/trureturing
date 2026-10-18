@@ -1,0 +1,18 @@
+**Corollary 4.3 (unchanged cover and mass optima).** Restricting complete
+templates to representative-reply form leaves $K_d(n)$, $Z_d(n)$
+and the maximum of every nonnegative mass on $S_d^n$ unchanged.
+In particular it preserves masses with arbitrary whole-block weights
+and with an arbitrary correlated weight $W:S_d^n\to[0,\infty)$.
+
+Proof. Each original complete solution set is exactly the solution
+set of its representative template, and representative templates
+are themselves complete native templates. Thus the two collections
+of solution sets coincide, including the empty set. Their cover
+optima and masses coincide. Convention 2.3 relates them to all
+admissible competitors. $\square$
+
+The theorem changes the witness decoders and donors; it does not
+claim CBN's separate same-witness property. It removes long cycles
+from the reply skeleton, while retaining every relation imposed by
+sharing an original block.
+

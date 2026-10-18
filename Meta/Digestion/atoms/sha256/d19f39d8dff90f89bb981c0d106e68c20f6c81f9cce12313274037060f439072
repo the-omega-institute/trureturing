@@ -1,0 +1,111 @@
+**Theorem 209.5 (Exact retained-credit fixed-data minimum).** Let
+$L\ge4$, $s>0$, $3\le\chi\le4$, and stipulate one actual full
+late measure $\nu$ of mass $S=\chi s$ with every late pair having
+cells $(s,s,s,z)$, where $z=(\chi-3)s$. Fix arbitrary
+$\gamma_1,\ldots,\gamma_L\ge0$, $T=s$ and $0<E=\gamma_1+\gamma_2\le S$.
+Set
+
+$$
+\begin{aligned}
+r_j&=(\gamma_j-s)_+,&r_*&=\max_jr_j,&
+R_j&=\max(\{r_k:k>j\}\cup\{0\}),&b_*&=(\chi-2)s/2,\\
+D_T&=\max\left\{r_*,\max_j(r_j+R_j-b_*-E/2),
+ \max_{i<j}\big((r_i-s)_++r_j+(R_j-z)_+-E\big)\right\}.
+\end{aligned}
+\tag{209.8}
+$$
+
+Over all scores with this entire $\nu$, these individual correct
+totals and this terminal mass, both complete excesses have attained
+minimum $D_T$. Early $00$ pair allocations and all correct suffixes
+remain arbitrary in the competitor class.
+An attainer uses $H=(S+E)/2$, $p_a=H-\gamma_a$ and
+
+$$
+P_{01x}=p_1\nu(x)/S,\quad P_{10x}=p_2\nu(x)/S,\quad
+C_{01x}=\gamma_1\nu(x)/S,\quad C_{10x}=\gamma_2\nu(x)/S,
+\qquad C|_{\Omega_j}=\min(\gamma_j,s)\delta_{e_j}+r_j\delta_{v_j}.
+\tag{209.9}
+$$
+
+It preserves $Q,W$ and has $\Delta_N=\Delta_O=D_T$.
+At $E=0$ the same conclusion is the specialization of 209.3, so
+no second zero-credit minimum is needed. A unit-$O$ input in the
+stated range has the single certificate $(V,0)$.
+
+**Proof.** Since $\gamma_a\le E\le H\le S$, all coefficients
+in (209.9) are nonnegative, $p_1+p_2=S$, and each early label's
+reward measure is $H\nu/S\le\nu$. Totals are preserved.
+
+For any competitor the head table forces $r_*$. A late stopped
+$(i,j)$ offers baselines $2s,s,z+s$ against correct totals
+$\gamma_i,\gamma_j$ and a maximal future total. Its lower excess
+is $(r_i-s)_++r_j+(R_j-z)_+-E$.
+For the early lower bound it suffices to consider $r_j,R_j>0$;
+otherwise the claimed expression is at most $r_*$.
+Choose $k>j$ with $\gamma_k=s+R_j$, and write
+$P_a=\sum_{\Omega_a}P$, so $P_1+P_2=S$ even with early $00$.
+The original stopped tables $(a,j;a,j,k)$, $a=1,2$, earn at least
+$\gamma_a+P_a+\gamma_j+\gamma_k$.
+The catalog maximum exceeds their average, so subtracting $W$ gives
+$r_j+R_j-b_*-E/2$. Averaging valid lower bounds executes no extra
+schedule. Every competitor therefore has $\Delta_O\ge D_T$.
+
+For (209.9), at a late $N$ pair $i<j$ put
+
+$$
+A_i=\max(\{(r_p-s)_+:p\le i\}\cup\{0\}),\quad
+U_{ij}=\max(\{r_j\}\cup\{(r_q-s)_+:i<q<j\}),\quad
+V_j=(R_j-z)_+.
+$$
+
+All-label maxima are $s+A_i,s,s+U_{ij},z+s+V_j$.
+The dominated early labels add no larger entry; earlier chain masses,
+intermediate chain masses and future totals are explicitly retained.
+Choose $p\le i$ attaining $A_i$ and $q\in(i,j]$ attaining
+$U_{ij}$, using $p=i$ when its gain is zero and $q=j$ when the
+queried class wins. Then $A_i=(r_p-s)_+$, $U_{ij}\le r_q$,
+$R_q\ge R_j$, and the whole excess is bounded by the single term
+$(r_p-s)_++r_q+(R_q-z)_+-E$ in (209.8).
+This readdressing compares static tables; it is not an adaptive query.
+
+For early/late pairs put $c_* =\min(\gamma_1,\gamma_2)$,
+$\ell=(\chi-2)/\chi$, and
+$U_j=\max(\{r_j\}\cup\{(r_k-s)_+:k<j\})$.
+The early-zero branch contributes $H$ even after splitting.
+The other zero-cell maximum is $s+\max(E/\chi,U_j)$.
+In the last cell the other early owner has reward $H\ell$, while
+zero has reward $(H-\gamma_b)\ell+s$.
+The larger of the two early-address supports uses $\gamma_b=c_*$.
+Only for that maximizing choice do we need zero to dominate this
+owner: $c_*\ell\le S\ell/2=b_*\le s$ proves it.
+Earlier sole-zero correct rewards are at most $s$. Consequently the
+maximum excess over the two early addresses is exactly
+
+$$
+(U_j-E/\chi)_+
+ +(R_j-b_*-\ell(E/2-c_*))_+-\ell c_*.
+\tag{209.10}
+$$
+
+Expanding the two positive parts gives the maximum of
+
+$$
+-\ell c_*,\quad U_j-E/\chi-\ell c_*,\quad
+R_j-b_*-\ell E/2,\quad U_j+R_j-b_*-E/2.
+$$
+
+The first three are at most $r_*$. If $U_j=r_j$, the last is a
+term of (209.8); otherwise $U_j=(r_k-s)_+$ for some $k<j$, and
+$U_j+R_j\le r_k+R_k$, giving another such term.
+The head excess is $r_*$, and catalog completion bounds all shorter
+rules. Hence $\Delta_N(V)\le D_T$; the universal lower bound and
+$B_O\le B_N$ give both minima and attainment. No condition
+$\gamma_j\le2s$ was used.
+
+When $E>S$, this fixed-projection minimum is not asserted.
+The existing chain supplier 206.7–206.8 has
+$E\ge\min(S,\mu)$ and supplies a unit certificate for a unit input,
+possibly changing its projection. This separate application does not
+extend (209.8)'s minimum domain. $\square$
+

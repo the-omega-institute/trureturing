@@ -1,0 +1,27 @@
+**Corollary 74.2 (one symmetry-union is bipartite).** At \(b=\pm1/2\),
+for every noncanonical common-flat ray \([w]\), the orthogonality graph
+induced on \(S_3[w]\cup S_3[\Theta w]\) is bipartite, with these two
+orbits as its parts. In particular this union contains no orthogonal
+triple.
+
+To prove it, a relative transposition edge is excluded by Theorem 74.1.
+An order-three edge \(w\perp Sw\) gives the full synchronous triple
+\(w,Sw,S^2w\), excluded outside canonical rays by Proposition 57.1
+in [Continuation I](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION.md).
+Its parameter convention agrees with (74.1): put \(a=bh\), so its
+\(p(a)-1=P\), \(q(a)-1=Q\), using the positive roots \(h+b,h-b\).
+Thus neither orbit has an internal edge. The original identities
+\(H_0\Theta=-\Theta H_0\), \(R\Theta=\Theta R\), and
+\(\Theta^2=-I\) show that \(\Theta\) preserves common-flatness and
+the canonical set. The two projective orbits are disjoint: a fixed
+projective ray of \(R\Theta\) is impossible since its square is
+\(-I\) for a transposition, and its \(2\operatorname{ord}(R)\)-th
+power is \(-I\) for odd-order \(R\). An antiunitary projective
+fixed ray instead has positive scalar even powers. This proves the
+corollary.
+
+Edges between different such unions remain outside this result.
+Neither an exhaustive half-parameter ray census nor arbitrary
+noncanonical-triple exclusion follows from the same-union statement.
+The whole-open-branch pair and basis classification remains open.
+

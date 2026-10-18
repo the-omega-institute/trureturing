@@ -1,0 +1,70 @@
+**定理 50.2（原状态律到已取得累计增益的关系）。** 对（50.5）的每条合法联合
+历史，令 $\mu=\gamma_1\gamma_2\in J$，$Fz=c_2\times(c_1\times z)$，
+$w=\operatorname{Im}(bq)$。实际四读严格满足
+
+$$
+\begin{aligned}
+y_0&=a+e_0,\\
+y_1&=\gamma_1(c_1\times a)+e_1,\\
+y_2&=\mu Fa+e_2,\\
+y_3&=\mu w+e_3,\qquad |e_j|\le\delta,\\
+\langle u,Fz\rangle&=\alpha\langle u,z\rangle.
+\end{aligned}
+\tag{50.6}
+$$
+
+因此在 $y_2$ 真正取得时，以下由已见报告计算的闭区间含有该同一历史的真实
+累计增益：
+
+$$
+\begin{aligned}
+r&=\frac{\langle u,y_2\rangle}{\alpha A},\qquad
+E_\mu=\frac{(1+\alpha)\delta}{\alpha A},\\
+L&=\max\{m,r-E_\mu\},\qquad U=\min\{1,r+E_\mu\},\\
+J_{\rm acquired}&=[L,U],\qquad
+\widehat\mu=(L+U)/2,\qquad \beta=(U-L)/2,\\
+\mu&\in J_{\rm acquired},\qquad
+m\le\widehat\mu\le1,\qquad
+|\widehat\mu-\mu|\le\beta
+\le\min\{\zeta/2,E_\mu\}\le\min\{\zeta/2,3\delta/A\}.
+\end{aligned}
+\tag{50.7}
+$$
+
+$J_{\rm acquired}$ 是实际Read的后处理产物，不是来源合同预先给出的缩窄区间。
+它保证目标所用的乘积，未声称分别取得全部数值执行参数。
+
+证明。对真实当前状态逐次使用（47.2）。第一次内部更新后是
+$(\gamma_1(c_1\times a),\gamma_1bc_1)$；第二次之后是
+$(\mu Fa,\mu bq)$。实标量与四元数右乘可交换，且乘积次序是 $c_1c_2$。
+精确锚把这同一状态送到 $(\mu w,-\mu Fa)$。这给四条读数式，并非从另一次
+执行移来一个增益。Read不改变状态，所以 $e_0,e_1,e_2$ 均没有成为被更新的
+来源坐标。
+
+三重叉积恒等式给
+$Fz=c_1\langle c_2,z\rangle+\alpha z$，因为
+$\langle c_2,c_1\rangle=-\alpha$。又 $u\perp c_1$，故其沿 $u$ 的投影就是
+$\alpha\langle u,z\rangle$。方向本身虽按 $y_0$ 选择，但逐条历史固定这些方向
+之后，这个恒等式对所有 $z$ 都成立，因而也对含噪初读的真实 $a=y_0-e_0$ 成立。
+由 $\langle u,y_0\rangle=A$ 得
+
+$$
+\langle u,y_2\rangle-\mu\alpha A
+=\langle u,e_2\rangle-\mu\alpha\langle u,e_0\rangle,
+\qquad
+|r-\mu|\le E_\mu.
+\tag{50.8}
+$$
+
+这里只用逐读范数界及 $0<\mu\le1$；不平均误差，也不假设方向选择与误差独立。
+真实 $\mu\in J$ 同时满足（50.8），所以 $L\le\mu\le U$，区间非空。
+闭区间中点距其任一点至多半宽，交集宽度至多 $\zeta$、$2E_\mu$，证明全部界。
+$\alpha>1/2$ 给 $(1+\alpha)/\alpha<3$。证毕。
+
+这一证书的可核验准确度同时使用实测分母 $\alpha A$、实测投影
+$\langle u,y_2\rangle$ 和声明Read精度 $\delta$。只知道 $a$“非零”没有提供
+正噪声下的统一绝对精度。若 $A\le\delta$，甚至 $a=0$ 仍与初读相容，区间可以
+不比 $J$ 小。取得证书的本地计算也必须真实完成并保留所用的原记录；“存在某个
+含真实增益的区间”不替代（50.6）–（50.8）。为使估计在全部报告空间有定义，
+不合法报告导致 $L>U$ 时可返回 $J$ 并标为不相容；本定理的合法历史不会经过该分支。
+

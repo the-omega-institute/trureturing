@@ -1,0 +1,9 @@
+# Native common-prefix installed-memory frontier
+
+The common prefixes of carefully chosen actual histories give a global
+count of installed states for the prescribed native threshold task.
+The count applies at both execution minima simultaneously. It is sharp
+for the third-hit and third-miss thresholds. Restriction at an actual
+live prefix also gives inequalities on the single installed vector of
+coordinate-label multiplicities.
+

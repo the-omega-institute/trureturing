@@ -1,0 +1,39 @@
+**定义 230.1（The seven-coordinate score）。** Let $A=0$. The following
+table gives all nonzero correct weights, and the next gives all
+nonzero union weights. Set $T=4$. Every unspecified coefficient is zero.
+
+| Word | $C_w$ |
+| --- | ---: |
+| $1101000$ | 2 |
+| $1101111$ | 2 |
+| $1110000$ | 3 |
+| $1110010$ | 2 |
+| $1110110$ | 3 |
+| $1111000$ | 5 |
+| $1111011$ | 2 |
+| $1111100$ | 3 |
+| $1111101$ | 5 |
+| $1111110$ | 8 |
+
+| Word | $P_w$ |
+| --- | ---: |
+| $0101011$ | 1 |
+| $0101100$ | 3 |
+| $0110001$ | 2 |
+| $0110010$ | 1 |
+| $0110100$ | 1 |
+| $0111000$ | 1 |
+| $1001010$ | 2 |
+| $1001100$ | 1 |
+| $1001101$ | 1 |
+| $1010100$ | 2 |
+| $1010110$ | 2 |
+| $1011001$ | 2 |
+| $1011010$ | 1 |
+| $1100001$ | 2 |
+| $1100110$ | 2 |
+
+There are ten correct atoms, fifteen union atoms and one terminal
+atom. The correct class totals are $(0,0,4,8,7,8,8)$; the union
+total is $24$. Denote this score by $D$.
+

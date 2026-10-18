@@ -1,0 +1,19 @@
+**Corollary 105.4.** Let U be any subspace of U0 isotropic for (105.6), put u=dim U, and let w(q|U) be the largest dimension of a subspace on which q vanishes identically. Then
+
+ rank E_D(Q) <= 1+2(r-u+dim ker H_U)
+             <= 1+2(r-u+w(q|U)).                    (105.7)
+
+If u=r and q|U has no nonzero zero, the rank is one and every repetition B_(Nk)=D C'^2 with k>1 odd, 3 not dividing k, and integer C'>0 is excluded by Corollary 94.2.
+
+**Proof.** On the independent subspace consisting of lambda_U and mu_U, the additive alternating matrix is
+
+ [[0,H_U],[H_U^T,J_U]],
+
+where J_U is not assumed zero or known. If H_U has rank k, choose a nonsingular k-by-k minor and restrict to the corresponding lambda rows and mu columns. The resulting 2k-by-2k alternating matrix has determinant equal to the square of that minor's determinant, independently of its bottom-right block. Hence the full pure pairing has rank at least 2k, so its radical has dimension at most (2r+1)-2k=1+2(r-u+dim ker H_U). The rational Kummer image modulo exact rational torsion lies in that radical and has dimension the Mordell–Weil rank. Further, H_U x=0 implies q(x)=0, so the whole kernel is totally singular for q and dim ker H_U<=w(q|U). The actual original point gives rank at least one. No Sha finiteness or rank parity is used. ∎
+
+For the canonical choice U24, full coverage u=r has a concrete check. Restrict vectors of K to the nonempty set of coordinates with q_i not equal to 1 modulo 24. Its kernel is U24 and its image contains the restricted all-one vector. Thus u=r exactly when this image is the one-dimensional span of that vector. This can be tested on the complete actual support without solving any norm conic. When u<r, (105.7) retains the explicit deficit r-u; same-cut quartics have not evaluated the missing left/right directions.
+
+In dimension two, q is anisotropic exactly when its values at all three nonzero vectors are one. Equivalently all three composite quartic products are negative. Then every mixed refinement H_U is invertible: in a basis its diagonal entries are both one and its off-diagonal entries x,y satisfy x+y=1, so det H_U=1+xy=1. Thus (105.3) determines this determinant without determining either individual off-diagonal entry.
+
+For dimensions at least three, a quadratic form over F_2 always has a nonzero zero, so this particular q-only rank-one deduction cannot hold. A direct proof in dimension three suffices by restriction: if all seven nonzero values were one, basis values would force every pair polarization to one; the sum of three basis vectors would then have value 3+3=0. This limitation does not preclude additional arithmetic information on H_U or the other blocks.
+

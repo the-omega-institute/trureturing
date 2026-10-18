@@ -1,0 +1,23 @@
+## Proposition 4. The odd obstruction, including order one
+
+For positive odd \(q\), set
+\(w_i=(-1)^i([1]-[\tau])\) and \(c_q=\operatorname{of}_0(w)\). Then
+\[
+c_q\ne0,\qquad (\mathrm{id}+\Theta_q)c_q=0.
+\]
+
+Proof. At a nonzero suffix, the predecessor formula gives
+\((T_qw)_j=w_{j-1}=-w_j\). At suffix zero,
+\(\sum_{i<q}(-1)^i=1\), and right multiplication by \([\tau]\) negates
+\([1]-[\tau]\). Thus \(T_qw=-w\) and
+\(T_q^kw=(-1)^kw\). The identity coefficient at suffix zero is
+\((-1)^k\), so no iterate vanishes. If \(c_q=0\), eventual equality
+would force some iterate to vanish. The stage formula for \(\Theta_q\)
+now gives \(\Theta_qc_q=-c_q\).
+
+The argument includes the deterministic flip \(q=1\). Proposition 2
+does not extend to that case: its spectral radius is one, while the support
+fallback \(p=1/2\) is not the reciprocal of that radius. For odd
+\(q\ge3\), the two coefficients of every \(w_i\) sum to zero, so
+\(\Phi_q(c_q)=0\). The obstruction is invisible to the arithmetic state.
+

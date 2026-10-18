@@ -1,0 +1,42 @@
+## 428. An M-axial five-slot owner forces the other one to match
+
+Choose the five-slot owner rho whose high axis is M, whose existence
+was just proved. Write its low axis as L. Its frame is
+
+    (M,Z,U,L,Z,U)
+
+up to interchanging its axes and its two transverse labels. Its two
+L-end original faces have label triple LZU. The face table shows that
+no owner outside the two five-slot owners can have an LZU face:
+sigma, cheap owners and C(P0) have at most one P label on each face;
+tau's only two-P face has M,Z, not Z,U.
+
+The two LZU faces of rho cannot be paired to each other. If they were,
+the unique original L-edge normal interval in rho would have both
+endpoints glued to each other. It would be a closed one-interval
+component of the actual L normal quotient. No further normal interval
+could attach, since both original face endpoints have already been
+paired. Connectedness would make this the whole L circle, of original
+degree one, contradicting original degree at least six.
+
+In the canonical frame, the two L faces are 134 and 234. Their
+unique label-preserving internal map is 1->2, 3->4, 4->3, which
+reverses the parametrization of the L edge 34. This does not change
+the fact that the two face-incidence endpoints belong to its one
+original normal interval.
+
+This argument uses endpoints corresponding to face incidences, not
+the endpoints of the actual edge in the vertex quotient. A face map
+may reverse the parametrization of L or exchange its two vertices;
+it still pairs the two ends of the same normal interval. Loops and
+orientation-reversing self-gluings therefore do not evade the closed-
+component conclusion. Distinct-face self-gluings were allowed and have
+been analyzed, rather than excluded by an extra simplicity premise.
+
+At least one LZU face of rho must consequently be paired to a face
+of the other five-slot owner rho'. For rho' to have such a face, its
+two transverse high labels must be Z,U, so its high axis is also M;
+its low axis must be the same actual L. Thus rho' has the same paired
+role (M,Z,U,L,Z,U). Repeated roles are allowed; the contradiction
+below is topological, not a prohibition on duplicating this role.
+

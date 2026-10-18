@@ -1,0 +1,38 @@
+**Theorem 5.2 (evaluated gap for every endpoint-suspended shape).** Every finite regular stationary table with $v_y\in\{a,b\}$ and a supported nonendpoint satisfies
+
+$$
+e>\eta/300000.
+\tag{5.4}
+$$
+
+**Proof.** Reuse the supplied source-specific excursion [DIRECTION, Section 5]: for every $r\in I_0$,
+
+$$
+P_{p,r}(w_{3,1})-\max\{P_{p,a}(w_{3,1}),P_{p,b}(w_{3,1})\}\ge\eta.
+$$
+
+It follows by the coordinate triangle identity that
+
+$$
+\frac{\operatorname{TV}(P_{p,a},P_{p,r})+
+       \operatorname{TV}(P_{p,b},P_{p,r})}{2}
+\ge\rho_p+\eta/2.
+\tag{5.5}
+$$
+
+Changing the fair tag weights to $(w,1-w)$ changes this average by at most $d_p|w-1/2|$, since the two distances differ by at most $d_p$. The $x$ marginal of $\zeta$ is $\pi$, so reverse triangle and (5.1) give, for the same supported $r$,
+
+$$
+\pi\operatorname{TV}(Q_x,P_{p,r})
+\ge\rho_p+\eta/2-d_p|w-1/2|-D_0.
+$$
+
+The left side is at most $\rho_p+\varepsilon_p$. Thus (4.9) and (5.1) imply
+
+$$
+\eta/2\le\varepsilon_p+L+281e+600e+31L
+\le132082e.
+$$
+
+In particular $e>0$, and $264164<300000$ gives (5.4). This conclusion is uniform in all finite label counts and all stochastic kernel entries. A supported interior depth is consumed as an actual full configuration-loss target; it is not an arbitrary diagnostic target or a replacement mean loss. $\square$
+

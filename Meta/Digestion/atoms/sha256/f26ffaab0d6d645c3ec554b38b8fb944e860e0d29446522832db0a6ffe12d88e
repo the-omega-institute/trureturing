@@ -1,0 +1,62 @@
+**引理 461.1（紧单位区间的共同域）。** 存在仅依赖 $c,B,a_{\max}$ 的
+固定 $h_1>0$，使全部 $0<h<h_1$、全部 $a\in[0,a_{\max}]$ 同时满足
+$$
+u_a>v_a>z_a>0,\qquad v_a>(u_a+z_a)/2,
+\qquad \Delta_a>0,\quad S_a>0,
+\quad 0<K_{a,h}<v_a.
+\tag{MU.2}
+$$
+对于任意 $0\le\varepsilon\le K_{a,h}$，定义
+$$
+U_a=u_a+\varepsilon,\quad V_a=v_a-\varepsilon,
+\quad Z_a=z_a+\varepsilon,
+$$
+$$
+\Delta_{a,\varepsilon}=V_a^2-U_aZ_a
+ =\Delta_a-S_a\varepsilon\ge0,
+\qquad D_a=\sqrt{9V_a^2-8U_aZ_a}
+ =\sqrt{V_a^2+8\Delta_{a,\varepsilon}},
+$$
+$$
+r_a=\frac{3V_a-D_a}{2U_a},\qquad
+n_a=\frac{8(V_a-U_ar_a)}{r_a^3},\qquad
+W_a=\frac{U_a}{r_a^2}+\frac{n_a}{4}.
+\tag{MU.3}
+$$
+同一个 $h_1$ 还可取到使整个上述 $a,\varepsilon$ 域同时满足
+$$
+r_*:=2(\sqrt2-1)<r_a<1,\quad W_a>0,\quad n_a\ge0;
+\qquad n_a=0\ \Longleftrightarrow\ \varepsilon=K_{a,h}.
+\tag{MU.4}
+$$
+
+**证明。** 原实际 $B$ 已有 $B(0)=1/2$、$B'(0)=B''(0)=-1/6$，
+并在一个共同零邻域正、严格递减、严格凹。
+由于 $c/2-a_{\max}>0$，缩小邻域后可使整个邻域内 $cB>a_{\max}$。
+减去一个常数不改变严格递减和严格凹，所以得到残余正性和中点严格凹性。
+正端点及严格算术平均不等式给 $v_a^2>u_a z_a$。
+此外
+$$
+v_a S_a-\Delta_a=(v_a+u_a)(v_a+z_a)>0,
+$$
+故 $K_{a,h}<v_a$。
+
+对允许的容差有 $U_a,Z_a,V_a>0$。
+$U_aZ_a>0$ 给 $D_a<3V_a$，而 $\Delta_{a,\varepsilon}\ge0$ 给
+$D_a\ge V_a$，因此
+$$
+0<r_a\le V_a/U_a<1.
+$$
+由 $V_a-U_ar_a=(D_a-V_a)/2$ 得 $n_a\ge0$，
+且它为零恰在 $\Delta_{a,\varepsilon}=0$，即容差右端点。
+$W_a>0$ 直接由定义支付。
+
+令 $p_a=c/2-a$，其在固定紧区间一致远离零。
+原二阶 Taylor 估计给 $\Delta_a=O(h^2)$ 一致于 a，
+而 $S_a\to4p_a$，所以 $K_{a,h}=O(h^2)$ 也一致成立。
+因此整个容差带上 $U_a,V_a,Z_a\to p_a$，
+$\Delta_{a,\varepsilon}=O(h^2)$ 一致成立。
+正分母上的连续公式使 $r_a\to1$ 一致成立。
+由于 $r_*<1$，再缩小同一个 $h_1$ 即得 MU.4。
+该窗口在 a、容差和候选测度选择之前固定。证毕。
+

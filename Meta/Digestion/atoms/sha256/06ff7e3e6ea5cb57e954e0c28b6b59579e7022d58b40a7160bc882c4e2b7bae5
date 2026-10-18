@@ -1,0 +1,115 @@
+**Proposition 16.1 (an active one-read full-row consumer).** Take four
+original old holes and four distinct old classes:
+
+$$
+\begin{gathered}
+P=\{LL,LR,RL,RR\},\quad
+C=\langle\langle\square_1,\square_2\rangle,
+          \langle\square_3,\square_4\rangle\rangle,\quad
+\pi=\{\{1\},\{2\},\{3\},\{4\}\},\\
+H_0=\{(0,LRL,\mathsf{absent}),(0,RR,\mathsf{branch})\},\\
+H_{\rm rel}=\{(0,LL,1,LR,=),\ (0,RL,1,RR,=),\
+                       (2,LL,0,RL,\ne)\},\\
+Q=\{LLL,LLR,RL,RR\},\qquad N\ge2.
+\end{gathered}
+\tag{ARH.16.1}
+$$
+
+This input belongs to $\mathfrak S$ and has entire fiber
+
+$$
+\begin{aligned}
+\{u_{b,t}:={}&\langle\langle\rho(b),b\rangle,
+                       \langle\rho(t),t\rangle\rangle:\
+ &b\in\{\alpha,\beta\},\quad t\text{ is a finite branch tree},\\
+ &\rho(b),b,\rho(t),t\text{ are pairwise distinct},\quad
+                     t\ne\rho^2(b)\}.
+\end{aligned}
+\tag{ARH.16.2}
+$$
+
+Its whole original target has exactly the following two rows:
+
+$$
+\begin{array}{c|c|c|c}
+b&\text{reached cuts}&\text{outside context}&\text{partition}\\
+\hline
+\alpha&RL,RR&
+\langle\langle\beta,\alpha\rangle,
+                 \langle\square_1,\square_2\rangle\rangle&
+\{\{1\},\{2\}\}\\
+\beta&LLL,LLR,RL,RR&
+\langle\langle\langle\square_1,\square_2\rangle,\beta\rangle,
+                 \langle\square_3,\square_4\rangle\rangle&
+\{\{1\},\{2\},\{3\},\{4\}\}.
+\end{array}
+\tag{ARH.16.3}
+$$
+
+For each allowed $N$, the minimum new-read count in both service classes
+is one for this example.
+
+Proof. Write the old values at $LL,LR,RL,RR$ as $x,b,z,t$. All four
+positions are reached. The absent reply at $LRL$ makes $b$ a leaf; the
+reply at $RR$ makes $t$ a branch. The two positive records say exactly
+$x=\rho(b)$ and $z=\rho(t)$. The negative one says
+$\rho^2(x)\ne z$, equivalently $\rho^3(b)\ne\rho(t)$, and injectivity
+gives $t\ne\rho^2(b)$. Retain the six old inequalities explicitly.
+Every implication reverses, proving (ARH.16.2) on all finite sources.
+Taking $t=\langle\alpha,\alpha\rangle$ makes both leaf choices legal.
+For each choice infinitely many other branch trees remain legal.
+
+If $b=\alpha$, then $LL$ contains the original leaf $\beta$; neither
+$LLL$ nor $LLR$ is reached. The retained old inequality between $RL,RR$
+gives the first complete row. If $b=\beta$, then $LL$ contains
+$\langle\beta,\alpha\rangle$; its two new holes have those different
+leaf values. The other two holes contain $\rho(t),t$, both branch trees,
+which are distinct by the old row. They therefore differ from both leaf
+holes. This proves every entry of the second complete row, including all
+cross-parent comparisons and the concrete outside leaf $b$.
+
+For eligibility, $P$ is level two and every relation has level-two
+endpoints, so the constraint-stage part of Proposition 15.1 applies
+regardless of $Q$. Here $d=4$. In a nonempty cell, the literal forces the
+entire $b$ pattern to be a concrete leaf, and the first equality forces
+the entire $x$ pattern to be the corresponding ground tree $\rho(b)$.
+A pattern with a depth-four frontier cannot fill to such a small tree.
+Consequently any reached $LLL,LLR$ target is ground. The other two target
+terms have equal relative frontier depth $d$, so they compare successfully
+with each other; ground-versus-term comparisons also compile. Exact empty
+cell removal before target eligibility is used here. Thus the non-level
+$Q$ is admitted without changing it.
+
+Since $LR$ is a known reached original hole, its current subtree is
+$\rho^N(b)$. Apply the **root** case of [SLH, Theorem 2.2][SLH] under that
+physical prefix: read just
+
+$$
+LR\,R^{\lceil N/2\rceil}.
+\tag{ARH.16.4}
+$$
+
+For even $N$, the replies $\alpha,\beta$ select $b=\alpha,\beta$.
+For odd $N$, absent and $\alpha$ respectively select those two cases.
+This is the supplied leaf/root decoder; no new hole comparison is made.
+Return the entire corresponding row (ARH.16.3). The address length is
+$2+\lceil N/2\rceil$ and remains paid. Both rows occur at a common
+retained input, so a zero-read deterministic service, even with real
+unobserved updates, cannot choose correctly. This proves the
+example-specific minimum.
+
+The family is not a product: $t=T_3$ is legal for $b=\alpha$ and excluded
+by $t\ne\rho^2(b)$ for $b=\beta$, whereas
+$t=\langle\alpha,\alpha\rangle$ is legal for both. It is not restricted
+to one whole-source atomic orbit. For example, the latter $t$ gives a
+source not equal to any $T_j$: its left subtree is $T_2$ when $b=\alpha$
+and $T_3$ when $b=\beta$, which would force the right subtree to be $T_1$
+or $T_2$ respectively in an orbit source. The actual right subtree is
+$\langle\rho(t),t\rangle$ and fails either forced equality.
+
+Proposition 2.1 supplies a legal finite paid producer at epochs zero,
+one and two, retaining earlier endpoint descriptions until comparison
+and cutting all extra source-bearing fields afterwards. Thus the small
+retained record really has (ARH.16.2) as its whole fiber under the contract.
+The one-read claim concerns only subsequent new reads. $\square$
+

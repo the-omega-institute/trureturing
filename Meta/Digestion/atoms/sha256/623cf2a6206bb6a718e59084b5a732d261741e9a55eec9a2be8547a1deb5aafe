@@ -1,0 +1,60 @@
+**Theorem 28.1 (all legal installations fail at five bits and two Reads).**
+For every positive $d\le5$,
+$\mathfrak W_{\rm int}(2,d)=\varnothing$. This exclusion permits
+arbitrary finite internal processing and every installed subset.
+Zero-length words likewise fail if admitted.
+
+**Proof.** At zero length the sole word cannot supply seven distinct
+halt outputs. For positive lengths, apply Lemma 26.1 to the actual last-Read supports of
+Theorem 27.1. The three complete outputs at $A$ and four at $B$
+require
+
+$$
+\deg_{\Gamma_d}(A)\ge4,\qquad
+\deg_{\Gamma_d}(B)\ge5.
+\tag{NARC.28.1}
+$$
+
+For $d<5$, the second inequality exceeds the maximum possible
+one-bit degree $d$. For $d=5$, the complete ambient degree roles are:
+
+| Ambient degree | All legal words with that degree |
+| --- | --- |
+| $5$ | `00000` |
+| $4$ | `00001`, `10000` |
+| $3$ | `00010`, `00100`, `00101`, `01000`, `10001`, `10100`, `10101` |
+| $2$ | `01001`, `01010`, `10010` |
+
+These are the thirteen legal words, exhausted by the disjoint
+initial-$0$/initial-$10$ recursion. Their degrees follow by removing
+any existing one or inserting a one precisely at a zero with no
+neighboring one. Equivalently the degree is five minus the number
+of zero positions blocked by adjacent ones. This gives every role
+in the table. The unique degree-five and two degree-four counts are
+also the literature-attested cases $n=5,m=0,1$ of
+[Klavžar--Mollard--Petkovšek, Corollary 3.4][KMP-RW], manuscript p.7;
+both meet $n\ge2m+2$. These classical graph facts are intermediate
+premises of the native obstruction.
+
+Necessarily $B=00000$. Since $A\ne B$ and has degree at least four,
+$A$ is `00001` or `10000`. Either is an ambient neighbor of $B$.
+Choose an actual upper-support arrival $p_B\to B$. The last-Read
+lemma requires four distinct nonquery response successors of $B$
+and the separate neighbor $p_B$. None of the four successors can
+be $A$, which is query. Nor can $p_B=A$: that upper source would
+execute $R$, then $A$, then $B$, giving three Reads. Equivalently,
+its path after $R$ and before $B$ consists only of internal rows.
+Thus all five required neighbors avoid $A$, while $B$ has only
+five ambient neighbors including $A$. This is impossible.
+
+The $A-B$ edge here is ambient adjacency, not an asserted executed
+transition. Every required arrival and successor must be installed;
+deleting ambient words cannot increase degree. Extra internal or
+query rows, empty-support rows and duplicate halts cannot supply
+the missing neighbor. Shared internal suffixes cannot reduce the
+number of different-output successors, by Lemma 25.3. Unsupported
+self loops and cycles formed by different source supports remain
+permitted. Only actual terminating paths enter the contradiction.
+Hence no additional controller configuration or topology assumption
+is omitted. $\square$
+

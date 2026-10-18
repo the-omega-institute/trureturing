@@ -1,0 +1,61 @@
+## 26. 场、轨迹与 RH 能级的候选连接
+
+前文的五态场和 Fibonacci 支持已经给出局部转移结构。若把一个局部能量势 \(\varphi\) 放到无限支持场上，可以定义加权转移算子
+
+\[
+(\mathcal L_s f)(w)
+=
+e^{-s\varphi(w)}
+f(\sigma w).
+\]
+
+对有限窗口，这相当于一个加权邻接矩阵；其特征值控制允许轨迹的增长率、压力和能量分布。无权 Fibonacci 转移的邻接矩阵为
+
+\[
+A_{\mathrm{Fib}}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\]
+
+其特征值为
+
+\[
+\varphi,\qquad -\varphi^{-1}.
+\]
+
+这解释了黄金比例首先出现在支持计数和局部传输谱中。它提供的是 field-side transfer spectrum。
+
+若要把这个结构提升为 Hilbert–Pólya 型算子，必须增加一个算术边界结构。所需的算术边界数据与条件是：
+
+1. 每个素数或 sector 的局部传输块 \(G_{p,\pi}\)；
+2. 由 Fibonacci/FIB 支持给出的隐藏 fiber 和 holonomy；
+3. Gamma 因子对应的 archimedean boundary；
+4. sector 对偶 \(\pi\leftrightarrow\widetilde\pi\) 对应的反射；
+5. 一个正定兼容度量 \(G\)；
+6. 一个正则化行列式或迹公式，满足
+   \[
+   \det_{\mathrm{reg}}(z-H)
+   =
+   C\,\Xi(z)
+   \]
+   或其一般 \(L\)-函数版本。
+
+在这条链中，FIB 三维几何提供局部传输和隐藏状态；Fisher/Dirichlet 能量提供候选正定度量；Cayley/Krein 提供零点反射与负模态判据；Weil 显式公式负责把素数源和零点谱连起来。
+
+当前可证明的结构只支持以下条件式命题：
+
+\[
+\begin{aligned}
+&\text{若存在一个由算术局部块和边界条件构造的闭合自伴 }H,\\
+&\text{且其谱行列式等于完成的 }\Xi\text{ 或 }\Lambda,\\
+&\text{则所有非平凡零点都在临界线上。}
+\end{aligned}
+\]
+
+FIB 到 \(H\) 的构造、FIB 缺陷到 Cayley 缺陷的守恒、以及谱行列式识别，仍然是桥接接口，不能由局部 Fibonacci 递推自动推出。
+
+---
+

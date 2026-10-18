@@ -1,0 +1,21 @@
+**命题 4.4（Actual omitted phases and prescribed charges）。** The second ordered path is
+
+$$
+W_1=[m,2m]\pmod T=[m,T-1]\cup[0,m-r].
+\tag{4.5}
+$$
+
+Its actual complement is precisely $F$. A word with first zero after $a$ leading ones has, for $\varepsilon=\mathbf1_{\{a>0\}}$,
+
+$$
+q_1(m)=\varepsilon,
+\qquad
+q_1(m+i)=0\ (1\le i<a),\qquad
+q_1(m+a)=1\quad(a>0).
+\tag{4.6}
+$$
+
+All other path charges are free subject to full-path even parity. The prescribed charges matter as phase responses only at vertices in $P$.
+
+Proof. The path description follows from $2m=T+(m-r)$. Formula (1.4) applied to $1^a0$ gives (4.6). Conversely these charges and the full-path parity yield exactly this literal prefix through (1.5); for $a=0$ it reads $q_1(m)=x_0=0$. Low sources have current tails at most $k-a-1$, so $a$ leading ones remain strictly below $k$ and the zero safely clears them. Middle sources have tails at least $k-a$ and reject during those leading ones. After the zero every survivor has a common tail determined solely by the suffix; its length is less than $m<k$, so no survivor rejects internally. A later word starting zero is safe at the next seam. ∎
+

@@ -1,0 +1,19 @@
+**Definition 8.1 (a sound cofinal cap verifier).** A cap verifier is a
+total computable predicate $V(d,\mu,C,\pi)$ for $d\ge1$,
+$\mu\in\Delta(S_d)\cap\mathbb Q^{S_d}$, $C\in\mathbb Q_{>0}$
+and finite strings $\pi$. Soundness means that acceptance implies
+(NPC.28) at that $d$, for every length and complete template. Cofinality means
+that for every $d\ge1$ and rational $\epsilon>0$, some accepted pair
+has
+
+$$
+-\log_2C>\sigma_d-\epsilon.
+\tag{NPC.35}
+$$
+
+A sufficient stronger completeness premise is that for every rational
+probability $\mu$ and rational $C>\beta(\mu)$, some finite $\pi$
+is accepted. By Theorem 6.4 this stronger premise implies cofinality.
+Existence of such a sound cofinal verifier is an additional premise;
+it is not included in the closure, continuity or compactness assumptions.
+

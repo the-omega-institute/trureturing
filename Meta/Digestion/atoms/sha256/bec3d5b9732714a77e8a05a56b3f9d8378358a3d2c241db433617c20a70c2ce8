@@ -1,0 +1,49 @@
+### 59.4 Symmetries, endpoint, and scope
+
+Synchronous reflection \(j\mapsto-j\) commutes with \(H_0\) and
+exchanges modes 1 and 2. The antiunitary
+\(\Theta(x,y)=(-\bar y,\bar x)\) preserves unit entries and satisfies
+\(H_0\Theta=-\Theta H_0\) by block multiplication. Thus it preserves
+actual common-flatness. At (59.1) it maps \(c_l^\epsilon\)
+projectively to \(c_{-l}^{-\epsilon}\). Reflection followed by
+\(\Theta\) flips the sign at a fixed nonzero mode. This proves all
+four nonzero-mode cases. Together with Proposition 58.1 it proves
+Proposition 59.1, without assuming cyclic covariance of any basis or
+triple.
+
+For comparison, the excluded endpoint \(b=h=a=1\) has a genuine
+noncanonical ray orthogonal to \(c_1^+\). Let \(\zeta=e^{i\pi/12}\),
+\(M=\sqrt6H_0\), and
+
+\[
+ v=(1,\zeta^{-4},\zeta^{-7},\zeta^{-8},\zeta,\zeta^{-3}),
+ \qquad P=-1+i,\quad Q=-2,\quad g_1^+=\frac{1+i}{\sqrt2}.
+\]
+
+Substitution, using \(\zeta^4=(1+i\sqrt3)/2\), gives
+
+\[
+ (|(Mv)_j|^2)_{j=0}^5=(6,6,6,6,6,6),\qquad
+ \langle c_1^+,v\rangle=0.
+\]
+
+The squared moduli of the two channel Fourier triples are respectively
+\((\alpha,1/9,\beta)\) and \((\beta,1/9,\alpha)\), where
+
+\[
+ \alpha=\frac{8+3\sqrt2-\sqrt6}{18}>0,\qquad
+ \beta=\frac{8-3\sqrt2+\sqrt6}{18}>0.
+\]
+
+Thus all six Fourier coefficients are nonzero, and this endpoint ray
+is noncanonical. The endpoint calculation makes no assertion about
+nonzero-mode orthogonality on \(0<|a|<1\).
+
+Proposition 59.1 classifies only the common-flat rays orthogonal to an
+already specified canonical ray at the central seed. Proposition 58.1
+provides the zero-mode classification throughout the open real branch.
+These results impose mixed-orthogonality constraints without a covariance
+hypothesis. They do not prove that an arbitrary further orthonormal
+basis must contain a canonical ray, classify the remaining nonzero-mode
+fibres away from the center, or settle the general fourth-basis problem.
+

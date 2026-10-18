@@ -1,0 +1,20 @@
+## 5. A uniform regular-class gap and the original consequence
+
+Set
+
+$$
+\delta_p=2\rho_p=\frac{1116529}{11390625},\qquad
+\eta=\frac{14219478376}{318644812890625}>0.
+\tag{5.1}
+$$
+
+For every original supported $r_0\in[3/8,5/13]$, the supplied complete word $w_{3,1}$ has mass $r_0^3(1-r_0)^5\ge b^3(1-b)^5+\eta$. This also follows directly: the derivative has sign $3-8r$, so its minimum on that interval is its value at $5/13$, and subtraction at $b$ gives (5.1). The value at $a$ is smaller than the value at $b$. The countable coordinate triangle identity therefore gives
+
+$$
+\operatorname{TV}(P_{p,a},P_{p,r_0})+
+\operatorname{TV}(P_{p,b},P_{p,r_0})\ge\delta_p+\eta.
+\tag{5.2}
+$$
+
+This source protrusion is supplied mathematics [NATIVE, Section 6; INTERIOR] and is not counted as new content.
+

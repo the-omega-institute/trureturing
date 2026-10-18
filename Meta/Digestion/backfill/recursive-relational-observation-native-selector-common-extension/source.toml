@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-selector-common-extension"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SELECTOR_COMMON_EXTENSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,26 @@
+**Proposition 3.4 (a nonfactor whole-block example).** At $h=1,d=4$,
+give $\langle u_s,u_t\rangle$, $0\le s,t<4$, the weight
+$1+\mathbf1_{s=t}$, and set every other weight to zero. Its total is
+$20$ and $\mathcal R_1(w)=12$. Hence
+
+$$
+A_n^{(4)}(w)=12^n,\qquad \beta_4(w/20)=3/5.
+\tag{JPL.19}
+$$
+
+Proof. A box excludes one row index $c$ and one column index $e$.
+It has nine entries and contains three diagonal entries if $c=e$,
+two otherwise. Its mass is therefore $12$ or $11$; among the sixteen
+boxes there are four of the first kind and twelve of the second.
+The $\{0,1\}\times\{0,1\}$ minor of the weight table has determinant
+$2\cdot2-1\cdot1=3$, so the table is not a product of two nonnegative
+module functions. Apply Theorem 3.3, which does not require that
+factorization. $\square$
+
+The donor-range premise is support-specific. In particular NCM's full
+five-state motif has a four-reply $RL$ donor and its cyclic relation
+has locally inadmissible coordinate projections. Theorem 3.1 is not a
+projection theorem for arbitrary native supports or for donors outside
+$U_h$. All original competitors in Theorem 3.3 were retained before
+the zero-weight restriction.
+

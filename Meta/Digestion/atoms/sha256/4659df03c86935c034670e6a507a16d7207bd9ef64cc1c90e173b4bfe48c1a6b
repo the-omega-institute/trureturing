@@ -1,0 +1,16 @@
+**Open Problem 6.1 (Original arbitrary-finite attainment).** With $C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and $U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$, still decide whether some exact finite $\theta$ attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2][U], the latter is equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+$$
+
+A pair-conditional certificate or this proper five-state family does not bound that full compact-domain maximum. To use this route on every hypothetical finite attainer requires an actual positive exterior-equivalent pair with productive interior response, or another proved response mechanism; matrix dimension counting supplies neither. The arbitrary-finite problem remains open.
+
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[T]: FIB_LEGAL_EDGE_LOAD_TWO_STEP_BULK_SEPARATION.md
+[V]: FIB_LEGAL_EDGE_LOAD_REVERSIBLE_FIVE_STATE_SLICE_UNIFORM_SEPARATION.md
+[DLP]: https://arxiv.org/html/1104.2224v2
+[EV]: https://arxiv.org/html/1001.3122v1
+

@@ -1,0 +1,71 @@
+**定理 4.1（正有限迹走廊上的一致有界性）。** For every
+$0<\varepsilon\le R<\infty$ and $B_0<\infty$ with $B_0\ge0$,
+there is a finite constant $C_{\varepsilon,R,B_0}$ such that the
+following holds. If $P\in\mathcal N$,
+$\varepsilon\le\operatorname{tr}(JP)\le R$,
+$\|\mathbf c\|_\infty\le B_0$, and
+$\mathcal C(P;\mathbf c)=0$, then the pair in (3.2), written
+$f(T)=\sum_{j=0}^3f_jT^j$, satisfies
+
+$$
+|d|+\sum_{j=0}^3|f_j|\le C_{\varepsilon,R,B_0}.
+\tag{4.1}
+$$
+
+The conclusion includes nonnegative source limits and does not
+require rank one. In particular it applies to every fixed ancestor
+vector in (1.4), and uniformly to any bounded family of those
+vectors. For fixed $D_0$ and $\lambda\ne0$, it also bounds the
+original drift and gain coefficients of the corresponding legal
+worlds.
+
+**证明。** Consider the closed source corridor
+
+$$
+\mathcal K_{\varepsilon,R}
+ =\{(a,b,c):0\le a\le1,\ b,c\ge0,
+                          \varepsilon\le b+c\le R\}.
+\tag{4.2}
+$$
+
+It is compact: it is closed and $0\le b,c\le R$. It lies in
+$\mathcal N$, and on it
+
+$$
+t_0=1,\qquad t_1\ge\varepsilon,\qquad
+t_2\ge1,\qquad t_3\ge1+\varepsilon.
+\tag{4.3}
+$$
+
+The coefficients of $V_P$ and $U_{P;\mathbf c}$, and all
+$\alpha_i,\beta_i$, are therefore continuous on
+$\mathcal K_{\varepsilon,R}\times[-B_0,B_0]^6$.
+Theorem 2.1 applies on all of the closed corridor, so
+
+$$
+\min_{P\in\mathcal K_{\varepsilon,R}}\Delta(P)
+ =m_{\varepsilon,R}>0.
+\tag{4.4}
+$$
+
+Consequently (3.2) defines continuous gain coefficients and drift
+on this entire compact product, even before imposing $\mathcal C=0$.
+Their displayed absolute-value sum attains a finite maximum, proving
+(4.1). Restriction to compatible sources or to determinant-zero
+sources preserves the bound. For the original parameters,
+
+$$
+|\delta|\le |D_0|+|\lambda||d|,\qquad
+\sum_{j=0}^3|g_j|=|\lambda|\sum_{j=0}^3|f_j|.
+\tag{4.5}
+$$
+
+This proves the stated transfer with these normalization parameters
+fixed. In particular any sequence of compatible legal sources in
+one corridor, with a fixed ancestor vector, has a subsequence whose
+source, gain coefficients and drift converge. The source limit is
+nonnegative, trace one and determinant zero, still with $u>0$;
+all six equations pass to the limit. For the nonconstant vector
+(1.4) its gain limit is nonzero, by $c_0\ne c_1$. The limiting
+source need not be strictly positive. ∎
+

@@ -1,0 +1,75 @@
+**Theorem 83.1 (directed full-kernel residue constraint).** Let $j,C$ be positive integers, $N=3^j$, and
+
+$$B_N=L_N^2+3=D C^2,$$
+
+where $D$ is the positive squarefree kernel of the original golden block. Let $q\mid D$ be a prime such that
+
+$$\left(\frac q p\right)=1\qquad\text{for every prime }p\mid D,\ p\ne q.$$
+
+There exist integers $u,v$ with $q=u^2-5v^2$ and $u>0$, normalized as follows:
+
+- if $q\equiv1\pmod4$, then $v$ is even and $u\equiv1+v\pmod4$;
+- if $q\equiv3\pmod4$, then $u$ is even and $v$ is odd.
+
+For every such representation, define
+
+$$\chi_q=\begin{cases}(u/5),&q\equiv1\pmod4,\\(u/2\,/5),&q\equiv3\pmod4.\end{cases}$$
+
+Then, choosing either root $s_p^2\equiv5\pmod p$ at each other prime in $D$, one has
+
+$$\boxed{\prod_{\substack{p\mid D\\p\ne q}}\left(\frac{u+v s_p}{p}\right)=\left(\frac{-2}{q}\right)\chi_q.}$$
+
+All factors are nonzero and independent of the chosen roots; an empty product is one. This necessary condition permits arbitrarily many odd-depth primes and imposes no quadratic-residue conditions among the primes other than $q$. The hypothesis is directed: it must not be replaced by an undirected residue graph when both primes are $3\pmod4$. There is no elliptic-rank or Selmer-dimension premise.
+
+**Proof.** Write $\mathcal O_0=\mathbb Z[\phi]$, $\phi=(1+\sqrt5)/2$. The original-support inputs are Theorems TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md): every prime $p\mid B_N$ satisfies $p>5$, $(5/p)=1$, $\rho(p)=6N$, and $p\equiv1\pmod{6N}$, while the full squarefree kernel satisfies $D\equiv19\pmod{120}$. Also
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+We use the multiplicative convention $\mathcal R(a,b,c)=(-1)^{[a,b,c]}$ and [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48).
+
+First check admissibility for $(5,-D,q)$. The three discriminants are $5,-D,\Delta(q)$; their three-way gcd is one. The pairs $(5,q)$ and $(5,-D)$ are locally split, using the $5$-splitting of every prime of $D$, $(-D/5)=1$, and $5\equiv-D\equiv1\pmod4$ at two. For $(-D,q)$, every prime $p\mid D$, $p\ne q$, contributes $(q/p)=1$. At $q$, the factor is $((D/q)/q)$ because $(-q,q)_q=1$. If $q\equiv1\pmod4$, reciprocity makes every $(p/q)=1$. If $q\equiv3\pmod4$, their product is $(-1)^e$, where $e$ counts the other prime factors of $D$ that are $3\pmod4$. Since $D\equiv3\pmod4$, this $e$ is even. The dyadic factor is one because $-D\equiv1\pmod4$; infinity is trivial, and all remaining places are unit pairs. Thus the shared argument $q\mid D$ is admissible.
+
+Put
+
+$$\beta=-1-F_N\sqrt5,\qquad E=\mathbb Q(\sqrt5,\sqrt{-D}),\qquad K=\mathbb Q(\sqrt{-5D}).$$
+
+Then $\beta+\bar\beta=-2$, $N(\beta)=-D C^2$, and $\beta\in1+4\mathcal O_0$. Corollary 5.2 supplies the cyclic quartic extension $E(\sqrt\beta)/K$. At an odd prime outside $5D$, the conjugates have no common prime divisor; a split prime dividing $C$ has even valuation, and an inert prime cannot divide either conjugate. At any $p\mid D$, use the embedding $F_N\sqrt5\equiv1\pmod p$, in which $\beta\equiv-2$ is a unit. The other valuation is $1+2v_p(C)$, but the two conjugates define the same extension over $E$, since their product is a square there. As five is locally a square, $E=K$ locally and the unit description proves unramifiedness. At five, $-D$ is a square and $\beta$ is a unit. At two, writing $\beta=1+4t$ gives the étale polynomial $T^2-T-t$; $D\equiv3\pmod8$ makes $K$ split and $E$ unramified quadratic. Thus the field is minimally ramified at every finite place. The conjugate-unit evaluation at $q$, including when $q\mid C$, gives
+
+$$\mathcal R(5,-D,q)=\left(\frac{-2}{q}\right),\qquad \mathcal R(5,q,-D)=\left(\frac{-2}{q}\right).$$
+
+We next construct a normalized positive generator. The norm-Euclidean argument of Theorem 81.3 gives a generator $\pi$ of a prime ideal above $q$, and multiplication by $\phi$ if needed makes its norm $q$.
+
+Suppose first that $q\equiv1\pmod4$. The kernel of the norm map on $(\mathcal O_0/4\mathcal O_0)^\times$ is $\{\pm\phi^{2k}:k=0,1,2\}$. Multiplication by a global norm-one unit therefore produces $\delta\equiv1\pmod{4\mathcal O_0}$ with norm $q$. To determine its real sign, use the admissible triple $(5,-1,q)$. Its minimally ramified field is
+
+$$\mathbb Q(\sqrt5,i,\sqrt\phi)=\mathbb Q(\sqrt5,i,\sqrt{1+2i}),\qquad (\phi+i)^2=\phi(1+2i).$$
+
+At odd primes $\phi$ is a unit; at two this is the exact $2$-minimal model preceding Definition 7.5. Hence $\mathcal R(5,-1,q)=(\phi\bmod q\,/q)$. The original rank gives $\operatorname{ord}_q(-\phi^2)=6N$, hence $\phi^{6N}=1$. Since $N$ is odd and $4\mid q-1$, one has $6N\mid(q-1)/2$, so this character is $+1$. Reciprocity gives $\mathcal R(5,q,-1)=1$.
+
+The field defined by $\delta$ is minimally ramified at finite primes: use units away from $5q$, the conjugate unit $2u$ at $q$, a unit at five, and the étale construction from $\delta\equiv1\pmod{4\mathcal O_0}$ at two. For $q\equiv1\pmod8$, $K_q=\mathbb Q(\sqrt{5q})$ and $E_q=\mathbb Q(\sqrt5,\sqrt q)$ have the same unramified quadratic local field at two; for $q\equiv5\pmod8$, $K_q$ is split and $E_q$ is unramified quadratic. Thus $\mathcal R(5,q,-1)$ is the infinite Artin factor. Its value $+1$ forces $\delta$ totally positive. Writing $\delta=1+4(m+n\phi)=u+v\sqrt5$ gives $u=1+4m+2n>0$, $v=2n$, and the asserted normalization. This includes $q\equiv13\pmod{24}$, where $u\equiv3$, $v\equiv2\pmod4$ can occur.
+
+If $q\equiv3\pmod4$, use the generator $\phi^2$ of $(\mathcal O_0/2\mathcal O_0)^\times$ to arrange $\pi\equiv1\pmod{2\mathcal O_0}$. Its real signs agree; changing both signs preserves this congruence, so take $\pi$ totally positive. Writing $\pi=1+2(m+n\phi)=u+v\sqrt5$ gives $u+v$ odd. Its norm $q\equiv3\pmod4$ forces $u$ even and $v$ odd. This case does not need the original rank for generator existence. Primality gives $\gcd(u,v)=1$, $q\nmid2u$, and $5\nmid u$ in both cases.
+
+Take any normalized representation in the statement and put $\gamma=u+v\sqrt5$. For $q\equiv1\pmod4$, the preceding finite-place argument applies to this $\gamma$. For $q\equiv3\pmod4$, odd-prime minimality is the same, but at two Definition 7.6 requires $2$-minimal ramification, not unramifiedness. Corollary 5.2 supplies the equivalent norm element $\alpha=2(u+\sqrt q)$ in $\mathbb Q(\sqrt q)$. Set $\varpi=1+\sqrt q$ and $c_0=(1+q)/2$. The exact identity is
+
+$$\frac{\alpha}{\varpi^2}=\frac{u+\sqrt q}{c_0+\sqrt q}\in1+2\mathcal O_{\mathbb Q_2(\sqrt q)},\qquad N\!\left(\frac{\alpha}{\varpi^2}\right)=5\left(\frac{2v}{1-q}\right)^2.$$
+
+Indeed $u,c_0$ are even, $c_0+\sqrt q$ is a unit, and the numerator differs from the denominator by the even rational integer $u-c_0$. The denominator $\varpi^2$ is a square. This verifies Definition 7.5 and its following characterization for both $q\equiv3,7\pmod8$, including $q\equiv19\pmod{24}$.
+
+The resulting minimally ramified field computes $\mathcal R(5,q,-D)$. Total positivity makes the infinite factor one. At $q$, use $\bar\gamma$ with residue $2u$: the equality $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$ follows because $\gamma\bar\gamma=q$ is a square in $E_q$. At every other $p\mid D$, the factor is $(u+v s_p\,/p)$. It is nonzero because $N(\gamma)=q\ne p$, and the two root choices give equal characters because their residues have product $q$ and $(q/p)=1$. Consequently
+
+$$\left(\frac{-2}{q}\right)=\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\prod_{\substack{p\mid D\\p\ne q}}\left(\frac{u+v s_p}{p}\right).$$
+
+It remains to simplify the shared-prime factor. If $q\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac u q\right)=\left(\frac q u\right)=\left(\frac{-5}{u}\right)=\left(\frac{-1}{u}\right)\left(\frac u5\right).$$
+
+For $v\equiv0\pmod4$ one has $u\equiv1\pmod4$, $q\equiv1\pmod8$; for $v\equiv2\pmod4$ one has $u\equiv3\pmod4$, $q\equiv5\pmod8$. In either case $(2/q)(-1/u)=1$, so $(2u/q)=(u/5)$.
+
+If $q\equiv3\pmod4$, write $u=2^t w$ with $t\ge1$ and $w>0$ odd. Reciprocity and $q=u^2-5v^2$ give $(w/q)=(w/5)$: the reciprocity sign cancels the factor $(-1/w)$ from $(-5/w)$. Thus
+
+$$\left(\frac{2u}{q}\right)=\left(\frac2q\right)^{t+1}\left(\frac w5\right)=\left(\frac{u/2}{5}\right).$$
+
+For $t=1$, $q\equiv7\pmod8$ and the prefactor is one; for $t\ge2$, $q\equiv3\pmod8$ and it is $(-1)^{t+1}=(-1)^{t-1}$, exactly the power of $(2/5)=-1$ required on the right. The Jacobi convention covers $w=1$. Combining these evaluations proves the boxed constraint. ∎
+
+The theorem extends the original integral Fibonacci construction beyond two odd-depth primes. Failure of its product test excludes the stated full kernel at every ternary index and square cofactor satisfying the hypotheses. It does not assert a violating family that survives all earlier support restrictions, independence from every previous Cassels condition, prime-family infinitude, or a universal WSS exclusion.
+

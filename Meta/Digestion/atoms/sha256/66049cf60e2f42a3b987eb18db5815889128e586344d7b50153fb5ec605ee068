@@ -1,0 +1,40 @@
+**Theorem 12.2 (one further unit on adjacent depths).** If a cell
+$v\in V_d$ satisfies $\nu_v>\kappa_v$ and at least one of its children
+has $\kappa=1$, then $a<d<d+1<b$ and
+
+$$
+e_d+e_{d+1}\ge p_d+p_{d+1}+1.
+\tag{CL.48}
+$$
+
+Proof. Lemma 11.2 gives the two internal children. Since
+$\kappa_v\ge2$, one has $\Lambda_d\ge1$ and $p_d=\Lambda_d$.
+If $e_v\ge\kappa_v$, sum all other credited cell bounds
+$e_x\ge\kappa_x-1$ on depth $d$ to obtain
+$e_d\ge\Lambda_d+1=p_d+1$. Combine it with $e_{d+1}\ge p_{d+1}$.
+
+Otherwise Theorem 12.1 gives $e_{v_0},e_{v_1}\ge1$. If
+$\Lambda_{d+1}\ge1$, a child with $\kappa=1$ contributes one above
+its credited bound zero; all other cell bounds still give
+$e_{d+1}\ge\Lambda_{d+1}+1=p_{d+1}+1$. If
+$\Lambda_{d+1}=0$, both distinct children have credited bound zero,
+and together give $e_{d+1}\ge2=p_{d+1}+1$. In either case combine
+with $e_d\ge p_d$. The extra unit is above the existing maximum
+baseline, rather than an additional copy of it. $\square$
+
+Let $\mathcal T_B$ be the set of depths satisfying the trigger of
+Theorem 12.2 for at least one cell. Define
+
+$$
+\mu_B=\max\left\{|\mathcal M|:
+ \mathcal M\subseteq\mathcal T_B,\quad
+ \{d,d+1\}\cap\{d',d'+1\}=\varnothing
+ \text{ for distinct }d,d'\in\mathcal M\right\}.
+\tag{CL.49}
+$$
+
+The empty choice is permitted, with size zero. This is a finite
+mathematical index of this graph, not an executed optimization or a
+resource available during a run. Several triggering cells, edges or
+witnesses at one depth still give only that one depth pair.
+

@@ -1,0 +1,23 @@
+**Derived 层。** 只使用 Primitive 层的有限代数、线性代数、凸性和图论定义出的对象，包括
+\[
+p_\kappa,\quad
+\mathcal F_{X,Y,Z},\quad
+\Delta=r\kappa-XY,\quad
+\ker DP_0=\mathbb Rd,
+\]
+Shannon 熵、负熵势
+\[
+\mathcal V_{\mathrm{ent}}(p)=-H(p)=\sum_s p_s\log p_s,
+\]
+以及内部单纯形上的 Fisher 二次型
+\[
+g_{F,p}(u,v)=\sum_s\frac{u_sv_s}{p_s},
+\qquad
+T_p\Delta_0=\{u:\sum_su_s=0\}.
+\]
+图论方面，\(Z_j=\ker B_j\) 是循环载体，\(L_j=B_jB_j^*\) 给出由 incidence 映射导出的非负图二次型
+\[
+Q_j(v)=\langle v,L_jv\rangle=\|B_j^*v\|^2.
+\]
+这些定义不含时间、质量、能量级或量子化假设。
+

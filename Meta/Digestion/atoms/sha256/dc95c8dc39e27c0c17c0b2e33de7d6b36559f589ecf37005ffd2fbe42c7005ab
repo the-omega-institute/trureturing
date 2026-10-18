@@ -1,0 +1,112 @@
+**Proposition 207.20 (Original necessary bound by existing transport).**
+For either original class attaining a closed cap $\varepsilon>0$, the
+representative of 207.17 yields the necessary condition
+
+$$
+\sum_{j=3}^L\gamma_j a_j
+ \le D+\bigl(G+(c+1)s\bigr)\varepsilon.
+\tag{207.49}
+$$
+
+At (207.45) this reads
+
+$$
+28(a_3+a_4)+27(a_5+a_6+a_7+a_8)\le10+245\varepsilon.
+\tag{207.50}
+$$
+
+**Proof.** The ordinary full support bound is $B_N=W+D$, while the
+target event score is $W+\sum\gamma_ja_j-K\varepsilon$, with
+$W=(c+1)s$, $K=G+W$. Multiplying all independent event demands by
+their nonnegative score weights and comparing gives (207.49). This
+finite inequality requires no membership in $H_L$.
+
+For arbitrary original active length, reuse the finite-prefix argument
+of 137.1 together with 110.2. If the transported active length exceeds
+$L$, restrict its later replies to zero and project output labels
+greater than $L$ to zero. The full low-word event bounds remain and
+constant high replies can be composed into each finite table. This is
+an algebraic restriction of the representation, not an uncounted source
+observation. If active length is smaller than $L$, ignore new input
+coordinates; their positive amplitudes are at most $\varepsilon$,
+and the exact tail identity below supplies their TV bounds. Thus all
+low words, including multiple zeros, and the positive word satisfy the
+finite comparison. For $\varepsilon\ge1$ the inequality is immediate
+from $a_j\le1$ and $K\ge G$. Containment of stopped laws in
+preselected laws uses 90.2 with the same seed and hard count. The
+rational substitution multiplies (207.49) by ten, giving (207.50).
+These are necessary conditions only. $\square$
+
+**Scope, transport and remaining comparison.** The constructions above
+use actual joint Boolean measures for their scores. Proper marginals,
+PSD matrices, separate optimizers and a score-maximizing deterministic
+table do not supply a feasible acquisition probability law. The subset
+atoms remain those of [201.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md),
+the threshold placement remains that of
+[203.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md),
+and the hull/certificate remains that of 198.5 and 199.3–199.4.
+The additional assertions here are their stated retained-credit bounds,
+the global nonextendibility and protected-stock necessity, and the
+simultaneous low-tail fixed-data minima. Integer moment cuts and the
+distinction between a Boolean moment cone and its PSD relaxation are
+ordinary classical methods. No external priority or exhaustive overlap
+claim is needed for these proofs.
+
+For actual normalized feasible finite probability configurations,
+Theorem 110.2 supplies the original acquisition transport. Its necessity
+projects arbitrary full-carrier tapes measurably to the finite marks;
+countability gives a common full-measure seed event of finite handoff
+and at most two requests. A common seed event controls the maximum
+address of the whole preselected schedule. Actual finite-word witnesses
+are fixed before the seed, sourcewise finite handoff supplies a cutoff
+for each finite witness family, and compactness of the finite catalog
+simplex preserves the closed cap. These steps retain arbitrary-address
+competitors; a fixed finite calculation alone would not do so.
+
+For sufficiency, one $U\sim\operatorname{Unif}[0,1)$ chooses the entire
+schedule and terminal table by a fixed interval partition before any
+reply. The actual prime queries and original output marks give finite
+handoff. Two finite class configurations can use this same $U$ by a
+common refinement of their partitions; seedwise equality of their outputs
+is not required. This realizes probability configurations, not the score
+weights used here. All-word and independent pair demands remain (207.3).
+For every actual source with $n>L_a$, the exact transported error is
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^{L_a}p_{1^{L_a}}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^{L_a}}(0),a_n\}\le\varepsilon.
+\tag{207.51}
+$$
+
+This includes $a_n=\varepsilon$ and all actual positive tails. The
+finite positive word is not an infinite all-positive source. Small
+active lengths and the cap-one endpoint retain their existing transport;
+auxiliary hull endpoints with $e=0$ do not alter (207.2).
+
+The entire all-$L$, $A=0$/early-pair, arbitrary-correct, low-$T$
+unit-excess inclusion is still unresolved. The fixed-total and fixed-data
+minima above have exactly their declared scopes; the protected-class
+necessity does not become a universal lower certificate, and the
+nonextendible data are not an actual input. In the notation of 199,
+the universal relation $\rho_O(b)\le\max\{1,\rho_N(b)\}$ and, for
+every original sequence and every positive closed cap,
+
+$$
+\mathcal F_N(a,\varepsilon)\ne\varnothing
+\quad\Longrightarrow\quad
+\mathcal F_N(a,\varepsilon)\cap\mathscr C_{L_a}\ne\varnothing
+\tag{207.52}
+$$
+
+remain open. A strict separator would require one compatible $b\in H_L$,
+an actual full $y\ge0$ with $\Delta_O(y)\le1$, and an attained
+$\lambda\ge0$ satisfying all complete rows $G_N\lambda\ge h(b)$,
+mass $M=\sum_D\lambda_D\ge1$, and $F_{Q(y)}(b)>M$, followed by
+the existing normalization
+and original-source transport. No such attainer or uniform lower bound
+against every original $O_2$ competitor is supplied here. The remaining
+question is whether one common realizable full-row construction, with
+early credit charged once, covers the omitted unit inputs, or whether
+an actual full-budget separator exists.
+

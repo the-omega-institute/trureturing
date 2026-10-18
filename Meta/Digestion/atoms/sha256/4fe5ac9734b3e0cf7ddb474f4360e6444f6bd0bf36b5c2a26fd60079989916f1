@@ -1,0 +1,40 @@
+**Proposition 5.3 (a source drawn once cannot be reaveraged at each retry).**
+Even when the attempt law regenerates at each fixed source, the ratio
+of prior-averaged attempt probabilities need not be the actual eventual
+proposal probability under that prior.
+
+**Proof.** Draw $x=A$ or $x=B$ once with equal probabilities, then keep
+it fixed. Give both sources target 1. At $A$, each attempt immediately
+proposes 1. At $B$, each attempt uses a new independent fair bit to
+diverge literally with probability $1/2$ or to return a finite retry
+with probability $1/2$. After a finite retry the same source is ready
+for the next attempt without any further state change. The private
+bits are independent of the initial source draw.
+
+The prior-averaged first-attempt probabilities are
+
+$$
+\bar h=\tfrac12,\qquad\bar d=\tfrac14,\qquad\bar r=\tfrac14,
+\qquad \frac{\bar h}{\bar h+\bar d}=\tfrac23.
+\tag{5.1}
+$$
+
+At $A$ a proposal occurs immediately. At $B$ no attempt can propose;
+the probability of $m$ consecutive finite retries is $2^{-m}$, so
+literal divergence in some attempt has probability one. Hence
+
+$$
+\Pr(\text{eventual proposal})=\tfrac12,
+\qquad
+\Pr(\text{eventual divergence})=\tfrac12.
+\tag{5.2}
+$$
+
+Reaching a second attempt has prior probability $1/4$ and identifies
+$x=B$, where the conditional proposal probability is zero. It is
+therefore false that each reached attempt has proposal probability
+$\bar h$. Conditional on each original source the established scalar
+calculation gives 1 at $A$ and 0 at $B$; averaging these completed
+sourcewise probabilities gives (5.2). Drawing a new source at each
+retry would define a different experiment. $\square$
+

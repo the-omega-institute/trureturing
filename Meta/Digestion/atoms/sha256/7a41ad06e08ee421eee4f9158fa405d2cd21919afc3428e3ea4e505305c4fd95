@@ -1,0 +1,42 @@
+**定理 37.2（每个正可行三元组的同制备反根见证）。** 对所有 $h,k,l>0$ 且 $l\le hk$，存在同一个 $p$ 及计数同为 $(2,1)$ 的两棵实际树，前三个范数为 $(h,k,l)$，全部时间向量互为相反值，单位标签符号也相反。
+
+**证明。** 置
+
+$$
+\begin{aligned}
+r&=(k^3/l)^{1/5},&s&=(l^2/k)^{1/5},
+&C&=\sqrt{h^2r^2/s^2-s^2},\\
+b&=re_1,&a&=\frac Cr e_1+\frac sr e_2.
+\end{aligned}
+$$
+
+因 $s^2/r=l/k\le h$，$C$ 为实数；$r,s>0$，且
+
+$$
+B=r^2,\quad\Delta=s^2,\quad A=h^2/s^2,
+\quad K=se_3,\quad N=rse_2.
+$$
+
+取
+
+$$
+t_-=\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+\qquad t_+=\langle\langle\alpha,\beta\rangle,\alpha\rangle.
+$$
+
+它们有 $\chi(t_-)=-f_2,\chi(t_+)=f_2$。字面评价及五符号表给出
+
+$$
+\begin{aligned}
+(x_0,x_1,x_2)(t_-,p)&=(U,-BK,-\Delta N),\\
+(x_0,x_1,x_2)(t_+,p)&=-(U,-BK,-\Delta N),\\
+\|U\|&=\sqrt{A\Delta}=h,
+\qquad \|BK\|=r^2s=k,
+\qquad \|\Delta N\|=rs^3=l.
+\end{aligned}
+$$
+
+根反转在全部后来时间仍使值取负，故两符号在同一制备和相同计数上达到，包括 $h=l/k,C=0$ 边界。
+
+三个叶是实现该全称同制备反根要求的最小叶数：叶没有内部根可反转；混合二叶树计数为 $(1,1)$，其 $q_1=rs,q_2=rs^2$ 强迫 $s=l/k,r=k^2/l$，初始 $\|K\|=s$，只能实现 $h=l/k$，纯二叶树尾部为零。五叶 $(3,2)$ 反根对同样可作冗余见证；它不替代这里对全部正三元组的三叶构造。定理 37.1 的叶实现及本定理的三叶负符号树均保留其实际来源意义。证毕。
+

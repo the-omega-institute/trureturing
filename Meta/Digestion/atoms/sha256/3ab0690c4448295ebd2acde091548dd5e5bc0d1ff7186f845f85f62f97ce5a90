@@ -1,0 +1,4 @@
+**B2 exact factorization of every possible ratio.**
+
+Substituting B1 into F gives kappa\*[2q^2-(s+8)q+alpha\*(s+9)-2]. Let qstar=4-alpha+s/2. Then alpha+qstar=(s+8)/2. Also 2alpha\*qstar=alpha\*(s+8)-2alpha^2=alpha\*(s+9)-2 using 2alpha^2+alpha=2. All three coefficients consequently equal those of 2\*kappa\*(q-alpha)\*(q-qstar). Since s>21 and alpha<1, qstar>1>alpha>0. These are two distinct positive roots and the only possible real ratios. Eta(qstar)!=0 because alpha is its only positive zero.
+

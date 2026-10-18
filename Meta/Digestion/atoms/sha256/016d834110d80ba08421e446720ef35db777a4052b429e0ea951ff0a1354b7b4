@@ -1,0 +1,21 @@
+**Proposition 6.1 (birth, empty classes and a genuinely unbounded
+fiber).** At $P_0=P_1=\{L,R\}$, let $R_0$ be the concrete leaf
+$\alpha$ with no holes and empty partition, and let $R_1$ have
+exterior $\langle\square_L,\square_R\rangle$ and two distinct
+classes. Then
+
+$$
+E=\{(0,n):n\ge2\},\qquad U=\{\alpha\}.
+\tag{NUE.21}
+$$
+
+If the second row instead has one equality class, its fiber is empty.
+
+Proof. The zero-class first row forces $t=\alpha$, with both
+requested children blocked. $T_0=\alpha$ and $T_1=\beta$ still
+block them. For $n\ge2$, the supplied atomic recurrence gives
+$T_n=\langle T_{n-1},T_{n-2}\rangle$. Both holes are then reached
+and their values are distinct. This proves both directions of
+(NUE.21) and the assertion for the opposite partition. The same
+finite original realizes every accepted lag. $\square$
+

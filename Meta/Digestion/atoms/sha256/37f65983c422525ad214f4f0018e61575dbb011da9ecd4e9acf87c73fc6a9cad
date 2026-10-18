@@ -1,0 +1,64 @@
+**Proposition 74.9 (growing height and normalized range can have vanishing
+strength).** In $s=3$, for any fixed $\beta>0$, take
+
+$$
+ h_\varepsilon=\varepsilon^{3/2},\qquad
+ v_\varepsilon(r)=\varepsilon^{-1}
+                          \mathbf1_{\{|r|\le h_\varepsilon\}}.
+\tag{74.34}
+$$
+
+The height tends to infinity and
+$h_\varepsilon/\varepsilon^2=\varepsilon^{-1/2}\to\infty$, while
+$h_\varepsilon/\varepsilon=\varepsilon^{1/2}\to0$.
+Nevertheless
+
+$$
+ \ell_\varepsilon
+   =\frac{\varepsilon^{7/2}}{6\beta}(1+O(\varepsilon^2)),
+ \qquad
+ \Gamma_\varepsilon
+   =\frac{4\pi}{3}\varepsilon^{3/2}(1+O(\varepsilon^2))
+       \longrightarrow0.
+\tag{74.35}
+$$
+
+Consequently Theorem74.6 obstructs full resolvent convergence for this
+model for every allowed $W_\varepsilon$, separately for all three
+comparators. The growing range here is the ratio to the
+$\varepsilon^2$ scale; the actual support radius tends to zero.
+
+**Proof.** For a constant barrier of height $H>0$ and radius $h$, let
+$\kappa=\sqrt{H/(2\beta)}$. Solving (74.14) in three dimensions with
+finite value at zero gives the candidate
+
+$$
+ u_0(r)=
+ \begin{cases}
+ \displaystyle\frac{\sinh(\kappa r)}
+                   {\kappa r\cosh(\kappa h)},&0<r\le h,\\[4pt]
+ 1-\ell/r,&r\ge h,
+ \end{cases}
+ \quad u_0(0)=\frac1{\cosh(\kappa h)},\qquad
+ \ell=h-\frac{\tanh(\kappa h)}{\kappa}.
+\tag{74.36}
+$$
+
+The interior solves $u_0''+2u_0'/r=\kappa^2u_0$.
+At $h$ its value is $\tanh(\kappa h)/(\kappa h)=1-\ell/h$
+and its derivative is
+$1/h-\tanh(\kappa h)/(\kappa h^2)=\ell/h^2$.
+Thus value and flux match, the weak equation holds across $h$, and
+$1-u_0\in\mathcal D^{1,2}$. Uniqueness in Lemma74.4 identifies it
+with the variational minimizer, not merely a radial trial estimate.
+For (74.34), $\kappa h=\varepsilon/\sqrt{2\beta}$.
+The Taylor expansion with its analytic remainder,
+$\tanh z=z-z^3/3+O(z^5)$ as $z\to0$, gives
+$\ell=Hh^3/(6\beta)(1+O(Hh^2/\beta))$.
+Substituting $H=\varepsilon^{-1}$ and $h=\varepsilon^{3/2}$,
+and then using (74.33), proves (74.35). This analytical computation
+also agrees with the elementary upper bound
+$S(v)\le\int v=(4\pi/3)\varepsilon^{7/2}$ from the admissible
+constant function $u=1$. No numerical experiment or trap convergence
+theorem is a premise of the network conclusion. $\square$
+

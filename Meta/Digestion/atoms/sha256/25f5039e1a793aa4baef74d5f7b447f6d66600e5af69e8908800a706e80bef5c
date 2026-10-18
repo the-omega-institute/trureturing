@@ -1,0 +1,28 @@
+**Proposition 285.4 (Size and exact constants).**
+The constants in (285.6) satisfy $\varepsilon_C=\Theta(m^{-3})$,
+and
+
+$$
+\varepsilon_C(4)=1/576,\qquad
+\varepsilon_C(5)=1/5295,\qquad
+\varepsilon_C(7)=3/20356.
+\tag{285.11}
+$$
+They are not asserted sharp.
+
+**Proof.** Solving (285.1) gives
+$t_j=((k/(m-k-1))^{j-1}-1)/(2k-m+1)$.
+For $m=2q$ the largest value is $(q/(q-1))^{2q-1}-1\le7$;
+for $m=2q-1\ge5$ it is
+$((q/(q-2))^{2q-2}-1)/2\le40$.
+To check these bounds, $(2x+1)\log(1+1/x)$ decreases for $x>0$:
+its derivative is nonpositive by
+$\int_x^{x+1}du/u\le(1/x+1/(x+1))/2$.
+Use $x=q-1$ and $x=(q-2)/2$, respectively, and the smallest
+permitted $q$. Also $t_j\ge(j-1)/m$, so $\sum_jt_j=\Theta(m)$.
+Thus $U=\Theta(m^2)$, $\zeta=O(m^2)$,
+$\Lambda=\Theta(m^3)$ and $1-p$ stays bounded away from zero.
+Substitution gives (285.11). At $m=5$ explicitly
+$t=(0,1,4,13,40)$, $U=353/5$, $\zeta=48$, $\Lambda=2118$,
+and $K_C=16473/1765$. $\square$
+

@@ -1,0 +1,37 @@
+### 91.8. Failure of the uniform witness together with every complete two-fibre test
+
+**Corollary 91.3.** For every parameter
+
+\[
+ \frac{1+1/\sqrt3}{2}<t<\frac56,
+                                                               \tag{35}
+\]
+
+the original rank-(3,3) channels (22) satisfy
+
+\[
+ \max\left\{\tfrac14\operatorname{Tr}L_+,
+              \max_{f<g}\|L_{fg}\|_{\rm op}\right\}<\frac14.
+                                                               \tag{36}
+\]
+
+Each pair norm here is the full arbitrary-reference diamond norm of the original error map restricted to those two input fibres. Nevertheless the full original error is (27) and is always at least the strictly superquarter quantity (29).
+
+**Proof.** Equations (26) and (30) give
+
+\[
+ \operatorname{Tr}L_+
+     =2|s|+r+\sqrt{r^2+3h^2},\qquad
+ \max_{f<g}\|L_{fg}\|_{\rm op}=\max\{r,|s|,h\}.
+                                                               \tag{37}
+\]
+
+Indeed an outer-pair block has eigenvalues r,s, while an outer-central block has singular values h,0. Throughout (35), r<1/4, 0<s<1/4 and h<1/4. Since 2/3<t<1, the comparison TrL₊<1 is equivalent, after dividing by 1−t, to
+
+\[
+ \sqrt{9t^2/4+3/2}<3-3t/2.
+                                                               \tag{38}
+\]
+
+Its right side is positive. The difference of the squared right and left sides is 15/2−9t, so (38) is equivalent to t<5/6. This proves (36). Calibration and section 91.5 give the complete two-fibre interpretation, and Theorem 91.2 gives the stated full error.
+

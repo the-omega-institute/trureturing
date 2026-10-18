@@ -1,0 +1,49 @@
+**定理 68.1（主执行核）。** 设实际三读 $q_0,q_1,q_2\le1$，真付费有理证书 $q_1q_2\le\kappa<1$、$0\le\kappa<1$。同时有限报告满足 $|y_i-x_i|\le e\le1$，误差可相关且报告可在实际像外。计算
+
+$$Z=\operatorname{sgn}(y_0\cdot(y_2\times y_1))(y_2\times y_1),\quad
+\widehat U=\min(1,|y_1|^2),\quad\widehat V=\min(1,|y_2|^2).$$
+
+在第64节三个相位中分别使用系数
+
+$$\widehat U^{(a_j-1)/2}\widehat V^{b_j/2},\quad
+\widehat U^{a_j/2}\widehat V^{(b_j-1)/2},\quad
+\widehat U^{(a_j-1)/2}\widehat V^{(b_j-1)/2},$$
+
+乘报告锚 $y_1,y_2,Z$，得 $\widehat P_j$。这些半指数都是非负整数。若 $e\le(1-\kappa^2)/12$，则全部 $j\ge3$ 同时有
+
+$$|\widehat P_j-x_j|\le\left(9+\frac{18}{1-\kappa^2}\right)\sqrt e.$$
+
+若额外付费给 $0<c_-\le\sqrt{d_0}/L^2$，还可用线性界
+
+$$|\widehat P_j-x_j|\le\left(\max(1,16/c_-)+\frac{18}{1-\kappa^2}\right)e.$$
+
+执行只需有限数的平方、叉积、点积、有限有理比较及整数幂，无真实实数范数、符号或相等端口。
+
+证明。先证第三锚，精确复用第51节的机制并给此处常数。令 $w=x_2\times x_1,W'=y_2\times y_1$，双线性给 $|W'-w|\le B_e=(2+e)e\le3e$。真尾零或符号正确时锚差至多 $B_e$；错号或报出零号时
+
+$$|x_0\cdot w|\le e|w|+(q_0+e)B_e\le7e.$$
+
+实际桥 $q_2^2\le|x_0\cdot w|$ 给 $|w|=q_1q_2\le\sqrt{7e}$，于是反号误差 $2|w|+B_e\le9\sqrt e$。这覆盖极小真值、报零、错号及非正交像外报告。在有 $c_-$ 的分支，若 $q_0<2e$，$|w|\le q_0$ 给误差至多 $7e$；否则 $q_0\ge2e>0$，
+
+$$c_-q_0|w|\le e|w|+(q_0+e)B_e\le q_0e+\tfrac32q_0B_e.$$
+
+故 $2|w|+B_e\le16e/c_-$，因为 $c_-\le1$。$e=0$ 使用准确核，不作零分母推理。前两锚误差至多 $e$。
+
+置 $U=q_1^2,V=q_2^2$。范数的1-Lipschitz性及 $|y_i|\le1+e$ 给 $||y_i|^2-q_i^2|\le3e$；标量裁剪到 $[0,1]$ 不增加到真值的距离，故 $|\widehat U-U|,|\widehat V-V|\le3e$。取包含两点的坐标矩形，其最大坐标均至多1；最大乘积为
+
+$$\max(U,\widehat U)\max(V,\widehat V)\le UV+6e\le\kappa^2+6e\le\zeta=(1+\kappa^2)/2<1.$$
+
+这里分别用每个坐标增量至多 $3e$ 以及另一最大坐标至多1。整条插值线段在此矩形中；只检查两端乘积不足以证明线段乘积界。
+
+$j=3$ 的系数准确为1，$j=4$ 的系数为 $V$、误差至多 $3e$。对所有 $j\ge5$，三个相位的整数指数 $(p,q)$ 均满足 $1\le p\le q\le2p$。验证：$b_j=a_j+F_{j-3}\le2a_j$；相位1的 $j\ge7$ 有 $b_j\le2a_j-1$，$b_j$ 为偶数，故加强为 $b_j\le2a_j-2$，于是 $q\le2p$。相位0的 $j\ge6$ 用同一严格界；相位2用 $b_j\le2a_j$。$j=5,6,7$ 分别给 $(1,1),(1,2),(2,4)$；正性及 $q\ge p$ 随 Fibonacci 单调和模2周期成立。不能漏掉前两例外系数。
+
+矩形上多项式 $C(u,v)=u^pv^q$ 的导数包括零边界均满足
+
+$$|\partial_u C|\le p\zeta^{p-1},\qquad |\partial_v C|\le q\zeta^{p-1}.$$
+
+例如前者为 $p(uv)^{p-1}v^{q-p+1}$，后者为 $q(uv)^{p-1}uv^{q-p}$，剩余因子均至多1。沿上述线段积分，系数差至多 $3e(p+q)\zeta^{p-1}\le9ep\zeta^{p-1}$。又
+
+$$p\zeta^{p-1}\le\sum_{h=0}^{p-1}\zeta^h\le(1-\zeta)^{-1},$$
+
+故系数差至多 $18e/(1-\kappa^2)$，也涵盖 $j=3,4$。真锚范数至多1、报告系数至多1；先变锚再变系数，误差不超过锚误差加系数差。$e\le\sqrt e$ 完成通用平方根界；条件分支完成线性界。证明统一覆盖全部树和无限多个未来时刻。
+

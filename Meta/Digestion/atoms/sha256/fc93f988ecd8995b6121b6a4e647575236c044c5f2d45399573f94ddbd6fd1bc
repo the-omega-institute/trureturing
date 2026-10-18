@@ -1,0 +1,34 @@
+**Definition 34.1 (scales and a numerical connector).** Write
+$d_*=\min(k-l,u-k)$, $K_*=\max(k-l,u-k)$ and set
+
+$$
+\begin{aligned}
+A_r&=8(1+r^{-1}),\\
+\rho&=\min\{\eta/A_r,1,(u-l)/8,d_*/2,\sqrt T\},
+       \qquad\delta=\rho^2,\\
+c&=[4096(1+|\lambda|+\nu^2)]^{-1},\qquad
+q=8e^{-64}+2e^{-16}<1/16,\qquad m=15c.
+\end{aligned}
+\tag{34.1}
+$$
+
+For a starting height $h\in I=(l,u)$ and relative endpoint
+$(X,Y,D)$ with $h+X\in[l,u]$, choose $d=\rho$ if
+$h\le(l+u)/2$ and $d=-\rho$ otherwise. If $D\ne0$, let
+$M=\lceil |D|/\rho^2\rceil$ and concatenate $M$ copies of the
+closed rectangle
+
+$$
+(0,0)\longrightarrow(d,0)\longrightarrow(d,D/(Md))
+ \longrightarrow(0,D/(Md))\longrightarrow(0,0).
+\tag{34.2}
+$$
+
+Then append $(0,0)\to(0,Y)\to(X,Y)$. If $D=0$ use no rectangle.
+All coordinates in this definition are relative to the actual starting
+controls; the original chronological increment after translation is
+$a_{\rm start}Y+D$. Parametrize the concatenation on $[0,1]$ with
+constant Euclidean arclength speed, deleting zero-length legs. If its
+length is zero use the constant path. Call the resulting numerical
+piecewise linear profile $g=(x,y)$ and put $j=\int x\,dy$.
+

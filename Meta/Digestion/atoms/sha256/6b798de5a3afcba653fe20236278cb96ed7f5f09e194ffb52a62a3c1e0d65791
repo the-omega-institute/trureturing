@@ -1,0 +1,13 @@
+**Corollary 71.3 (when balanced orientation is optimal).** The choice
+$\vartheta_i=0$ is optimal exactly when some common $u$ satisfies
+$d_i=u\cdot v_i$ for all $i$ on both sheets.
+
+**Proof.** Its orientation contribution is zero, whereas (RC.77)'s
+minimum is nonnegative and attained. That minimum is zero exactly when
+all its positive-weight absolute residuals vanish. $\square$
+
+Separate pure and saturated balance would impose extra constraints.
+The common $u$ is essential. This theorem evaluates the orientation of
+the fixed even family; it does not select that family or evaluate the
+global finite frontier.
+

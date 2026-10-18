@@ -1,0 +1,19 @@
+**Definition 21.2 (the entire-row bad-pair relation).** Let $O_\eta$ be the
+set of surviving parameters occurring in $\bar E_\eta$, including decorated
+occurrences. On two copies of the surviving tuple define
+
+$$
+\begin{aligned}
+\operatorname{Bad}_\eta(v,w):={}&D_\eta(v)\land D_\eta(w)\land\\
+&\left(\bigvee_{y\in O_\eta}v(y)\ne w(y)
+ \ \lor\!\bigvee_{q<r\in J_\eta}
+       \bigl(e_{\eta,qr}(v)\mathbin{\mathsf{xor}}e_{\eta,qr}(w)\bigr)\right).
+\end{aligned}
+\tag{CE.21.2}
+$$
+
+Empty disjunctions mean false. Every condition in $D_\eta$ is retained in
+both copies. In particular this is not a product of marginal feasibility
+conditions. Lemma 21.1 constructs an automaton $\mathcal A_\eta$ for this
+relation. A zero-parameter chart has at most one source and empty Bad.
+

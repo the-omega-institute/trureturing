@@ -1,0 +1,47 @@
+**Proposition 55.1 (what the native finite inquiry determines).**
+The all-time equivalence of arbitrary UNIT full amplitudes is
+(51.3); its minimal selfadjoint supplied-boundary representative
+is (51.6). Boundary-prepared responses on all base inputs have
+the finite-list obstructions, sharp derivative orders and
+attaining approximations of §§52--54. These are different input
+quantifiers. The necessary native label distinctions are coupling
+distinctions, with exactly the reflection equivalence (50.4).
+The budget $n$ counts complete $\mathscr H_B$-amplitude branches
+in (52.2), and gives neither a physical spatial dimension nor
+a memory-bit or scalar-state count.
+
+Proof. A general $f\in\mathscr H$ is read by $Q_t$ in (50.2),
+whereas a boundary-prepared input has the special form $Jh$
+and response $Q_tJh=B_b(t)h$. The former allows arbitrary even
+and odd amplitudes; the latter fixes the hidden profile before
+evolution. Theorem 51.1 determines the former equivalence and
+Theorem 51.2 removes exactly its invisible reducing summand.
+Theorem 53.1 excludes exact finite positive native lists for
+the latter response, while Theorems 54.1--54.2 approximate it
+and the original compensated raw coefficients by the same
+attaining lists. Every branch still contains all base modes,
+and its base generator has both original absorbing faces.
+In particular none of these theorems replaces a branch by a
+number, a bit, an axis, or a commuting height-only model.
+
+The raw response has no zeroth moment and no normalized hidden
+probability in (50.3); its extra matching order comes from the
+finite weighted measure $c\,d\nu_s$, not from an additional
+spatial direction. The standard spectral, moment and quadrature
+facts credited above are intermediate suppliers. The native
+content is their verified correspondence with $K-cM$, the
+actual $J^*e^{-tH_\infty}$, the two different raw measures and
+their ordered response coefficients. No worldwide novelty
+claim follows from that correspondence.
+
+All statements are pointwise in the original fixed $s\in\mathbb R$,
+$b>0$, $g>0$ and model data. The two signs of $\kappa$ retain
+their already proved limits in §§44--49; nothing here asserts
+new finite-$\kappa$ observability or norm-error transfer.
+The approximation bounds concern fixed finite horizons, not
+optimal uniform rates or growing horizons. The supplied
+analytic boundary entails no physical amplitude acquisition,
+projection actuator, reset, new driver, $SO(3)$ law, actual-ground
+residue rate, spatial selection or computational speedup.
+$\square$
+

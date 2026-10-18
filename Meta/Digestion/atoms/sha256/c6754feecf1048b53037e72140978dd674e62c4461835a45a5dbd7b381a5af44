@@ -1,0 +1,4 @@
+**边界 4.1（Width one and the near-critical edge）。** When $m=1$, the fee is $T=k+1$ and the actual stream is one one, $T-2$ paid zeros, and one one. For $k=m+1$ with $m\ge2$, the fee is two and the stream is $1^m\mid010^{m-2}$. The intersection $(k,m)=(2,1)$ instead has fee three and stream $1\mid0\mid1$. Thus the unqualified assertion “$k=m+1$ gives fee two” is false at this intersection; the formula (3.1) includes it.
+
+For the explicit falsifier $(k,m)=(2,1)$, the low-tail sources at indices $0,1$ and tail zero have distinct labels. The root must be one; it gives the same successful value on both and leaves both with tail one. The second bit must be zero, and both outputs remain equal. No two-block adaptive tree can distinguish them, whereas the third bit one separates them. This remains true when $R=D$, $R=E$, or any outside or initial-bottom labels coincide.
+

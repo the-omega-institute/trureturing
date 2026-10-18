@@ -1,0 +1,41 @@
+## 423. Every middle-V cheap owner has the same actual companion
+
+A cheap axial-P owner means A(P0)=(P0,V,C,D,V,C) or
+B(P0)=(P0,V,D,C,V,D), where P0 is M,Z or U. The strict opposite-axis
+ordering lemma in Section 383 says every genuine owner of either form
+has v greater than its opposite low axis. This lemma is a scalar
+consequence of the source product and strict genuineness; it does not
+assume that the owner receives a source face.
+
+Consequently:
+
+- if d<v<c, all cheap owners are A(P0), with transverse companion C;
+- if c<v<d, all cheap owners are B(P0), with transverse companion D.
+
+Let A0 denote this larger actual low companion and B0 the smaller
+opposite low axis. These names do not interchange C,D in tau. There
+is only one cheap family in either order, but its M,Z,U owner counts
+remain separate.
+
+Let a count cheap owners, f count five-P-slot owners, k count owners
+with at least four P slots, n count noncheap genuine owners and g=a+n.
+The bounds from Sections 400 and 405 are a>=2, f<=k<=2 and g>=6. Define
+
+    X=sum_cheap theta_P0,
+    Y=sum_cheap (2*beta_V+2*beta_A0).
+
+The common-companion capacities now give the sharper bound
+
+    Y<=pi+2*pi=3*pi.                              (423.1)
+
+This uses exactly the V and A0 budgets, not a combined C,D allowance.
+Let D_P be the total genuine original P degree. Its componentwise
+lower bound is (5,6,6), in order M,Z,U, and D_P>=17. Tau contributes
+(2,1,0), so the post-tau deficits remain (3,5,6).
+
+The noncheap role charges give
+
+    5*pi-X>(pi/3)*(D_P-a-f)
+              >=(pi/3)*(17-a-f),
+    X<(pi/3)*(a+f-2).                             (423.2)
+

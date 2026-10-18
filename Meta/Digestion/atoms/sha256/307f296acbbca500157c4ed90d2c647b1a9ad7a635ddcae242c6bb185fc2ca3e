@@ -1,0 +1,29 @@
+**Proposition 7.4 (operational suppliers that still restrict to signed
+fibers).** The all-source transformations of [JRF, Lemma 2.2, Theorem
+3.1 and Lemma 3.2][JRF] restrict to (NSF.3) without change. With
+$M=\max(N,5)$ and $U=M-N$, every comparator has a capped comparator
+with identical output and
+
+$$
+q'(u)=q(u),\qquad a'(u)=\min(a(u),U),\qquad
+\ell'(u)\le\ell(u)
+\tag{NSF.17}
+$$
+
+on each same $u$. Its further caching/constant-reply cleanup has
+$q''(u)\le\ell''(u)+\max(0,2-N)$ and does not increase any coordinate.
+
+Proof. JRF's address transport is an identity on every finite native
+source, including absence, with nonincreasing physical word length.
+Its controller simulation preserves each successive reply and actual
+early epoch. Restricting its source quantifier to $D$ changes none of
+these facts. Skipped late updates and locally supplied constant or
+cached replies are not actual receipts. Cleanup removes repeated
+same-epoch requests and universally constant root replies, so its
+argument also makes no source-language assumption. $\square$
+
+This proposition does not import JRF's literal-history GB or its WS2S
+source decision. Theorem 7.3 uses the new finite native feasibility
+supplier at fixed words. Its finite enumeration already suffices
+without capping; capping is useful for reducing its epoch choices.
+

@@ -1,0 +1,8 @@
+**Definition 1.4 (marginal update defect).** At an actual positive history, for a legal next operation $x$ with predicted probability $q_h(x)>0$, let $\operatorname{res}_xQ_h$ be the conditional law after deleting that operation and its original event block. Put
+
+$$
+\delta(h,x)=\operatorname{TV}(\operatorname{res}_xQ_h,Q_{hx}).
+$$
+
+If $q_h(x)=0$, set the defect to zero without creating a conditional law; the actual successor and its risk remain in the domain. $\Delta_4$ takes the supremum over all fourth-segment positive finite histories and legal next Reads; $\Delta_{\rm all}$ includes all original operations from initialization through deliveredStop. PendingStop has its unique zero-defect Stop successor, and the delivered empty supremum is zero. This is the convention of [PRICE, Definition 2.1]. It relaxes only marginalized conditioning/update coherence, not per-configuration generation.
+

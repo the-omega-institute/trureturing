@@ -1,0 +1,10 @@
+**定义 A-15.1（偏移任务）。** 取 $`\mathcal{\text{ℋ}}_+=(0,2,6)`$、$`\mathcal{\text{ℋ}}_-=(0,4,6)`$，讨论 $`N+\mathcal{\text{ℋ}}`$ 的三项同时为素。它们是固定加法偏移，不是原子种子 $`2,3,5`$，也不是同窗 Fibonacci 四数量。有限偏移集合 $`\mathcal{\text{ℋ}}`$ 的 $`\nu_p=|\mathcal{\text{ℋ}}\bmod p|`$；对有限素数集 $`\mathcal{\text{𝒬}}`$、正指数 $`k_p`$，置 $`\mathfrak{\text{𝔪}}=\prod_{p\in\mathcal{\text{𝒬}}}p^{k_p}`$，
+
+
+```math
+A_{\mathfrak{\text{𝔪}}}(\mathcal{\text{ℋ}})=\{a\bmod\mathfrak{\text{𝔪}}:\gcd(a+h,\mathfrak{\text{𝔪}})=1\ \forall h\in\mathcal{\text{ℋ}}\}.
+```
+
+
+可容许指 $`\nu_p\lt p`$ 对所有素数成立。[A-L5，Conjectures 1–2 的实际偏移、固定性及整数论域]
+

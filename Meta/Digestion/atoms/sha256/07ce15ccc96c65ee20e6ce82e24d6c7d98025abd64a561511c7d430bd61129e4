@@ -1,0 +1,17 @@
+## 437. Three high labels with the low label transverse
+
+Let
+
+    r,p,o>=s>2, 1<q<=s-1,
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+In the genuine paired frame (r,p,q,o,p,q), define its four-high-slot
+expense E=theta_r+theta_o+2*beta_p. Then
+
+    E>4*pi/3-4/s^2>pi.                            (437.1)
+
+Compared with Sections 395-399, the low-label gap is now one rather
+than two, with a weaker
+expense conclusion. It does not assume monotonicity of E.
+

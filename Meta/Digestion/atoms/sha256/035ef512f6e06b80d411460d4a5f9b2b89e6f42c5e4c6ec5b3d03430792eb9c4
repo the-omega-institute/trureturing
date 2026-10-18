@@ -1,0 +1,18 @@
+**Corollary 4.2 (actual coverage for a full root frame).** Fix a root chart
+$Q_o$. Under Theorem 4.1, every chart has injective root coordinates if every
+actual point can be transported to some point of $Q_o$. These coordinates
+are bijections $Q_i\cong Q_o$ for every $i$ if and only if every transport
+orbit meets every chart. Equivalently, every $q\in Q_i$ has an actual route
+to the root and every root point has an actual route to each chart.
+
+**Proof.** Root coverage says $\iota_o(Q_o)=Y$; injectivity then gives a
+unique root representative of every orbit. Composing $\iota_i$ with this
+inverse defines injective coordinates. They are onto $Q_o$ exactly when
+every root orbit also meets $Q_i$. A chain witnessing an orbit intersection
+is an actual transport path by the proof of Theorem 4.1. Thus the two route
+coverage clauses are both necessary and sufficient. The coordinates commute
+with partial transports on their domains. Conversely, compatible bijective
+coordinates *realized by actual root transport* imply these coverage clauses
+and make all closed paths identity. Arbitrary set bijections with no actual
+root realization do not imply coverage. $\square$
+

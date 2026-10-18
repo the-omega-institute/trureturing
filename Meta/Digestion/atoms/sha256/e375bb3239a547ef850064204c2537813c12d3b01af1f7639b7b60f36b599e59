@@ -1,0 +1,15 @@
+**定义 8.1（乘法续接任务与来源律）。** 对 $H=5040$ 的约数状态，允许选择非负四元续接 $r=(r_2,r_3,r_5,r_7)$，相乘后要求仍在 $\operatorname{Div}(H)$；合法性响应为
+
+$$
+F_r(d)=\mathbf1\{d\,2^{r_2}3^{r_3}5^{r_5}7^{r_7}\mid H\}.
+$$
+
+合法时可以继续读出或进行下一次同类操作。这里 $q(d)$ 指先取 $d$ 的唯一指数配置再作 $q$。另为信息计量明确指定随机变量 $\mathsf D$ 在六十个约数上均匀分布，$\mathsf Y=q(\mathsf D)$。这不是四十八个像点上的均匀分布。对有限变量取 $0\log_20=0$ 的约定，并用二进制对数定义
+
+$$
+H(\mathsf D\mid\mathsf Y)
+=\sum_y\Pr(\mathsf Y=y)
+\left[-\sum_d\Pr(\mathsf D=d\mid\mathsf Y=y)
+\log_2\Pr(\mathsf D=d\mid\mathsf Y=y)\right].
+$$
+

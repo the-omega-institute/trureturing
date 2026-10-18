@@ -1,0 +1,20 @@
+**Convention 14.1 (restricted conditional operation class).** Sections
+14–20 optimize the survival likelihoods of common relative zero-phase
+returns, and the ensuing classical height guess, under the additional
+source-bound calibrated actuator specified in Definition 14.4, following
+the conditional contract of §10.1. The new result is the envelope
+over every finite original AC/PC1 return, followed by the sharp infimum
+over finite public mixtures. The single-triangle survival formula and
+scalar live return are credited ingredients of §§8 and 10. The programme
+depends on public parameters and controller randomness, never on an old
+height, phase or winding read.
+
+These are ordinary, repository-derived mathematical deductions. They
+assert no new Lean certification, acquired original actuator, physical
+implementation or full observer. Repository suppliers in these sections
+are read at the immutable public revision
+11e2a65d554143d0e3f38b37f1b686453451e3c4. Earlier sections retain their
+own reference conventions and conclusions. The extension follows the
+formal-thinking-and-answer and theory-volume-template disciplines within
+the explicit theory-only boundary.
+

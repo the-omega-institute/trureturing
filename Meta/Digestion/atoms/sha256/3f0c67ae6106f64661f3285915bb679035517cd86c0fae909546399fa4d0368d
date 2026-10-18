@@ -1,0 +1,81 @@
+**Lemma 12.2 (one actual witness for all submitted words).**
+For any finite native menu $N$, let
+$L=\max(\{0\}\cup\{|v|:v\in N\})$. For every actual $u$ with profile
+$\eta=\eta_b(x)$, the single actual witness $u^{\eta,L}$ of Theorem
+11.2 satisfies, simultaneously for all $v\in N$,
+
+$$
+r_{\rho u^{\eta,L}}(v)
+ =g_{b,v}\bigl(r_{\rho u}(h_b(v))\bigr).
+\tag{PCA.31}
+$$
+
+It has the same original code, complete entry and whole predecessor
+row as $u$ when $b$ comes from its determining certificate.
+
+Proof. Outside holes both sides have the exterior's fixed reply. For
+$v=pw$ with $|w|\le b$, the every-address occurrence identity reads the
+same suffix in either occurrence of the class, and both sources have
+the same profile. For $|w|>b$, consider the actual reply at
+$w_{\le b}$ in that class. If it is alpha or beta, every strict
+continuation is absent. If it is absent, an earlier leaf already blocks
+all continuations. If it is branch, it is a live name in the profile.
+In $x^{\eta,L}$ that name is filled by a tree of minimum leaf depth
+greater than $L$. The remaining suffix has length $|w|-b\le L$,
+so the endpoint is a reached branch. These are exactly the four cases
+of (PCA.30). One LRD filling serves the entire menu, including all
+occurrences of repeated classes and all absent continuations.
+
+The witness and $u$ agree on $M$, so (PCA.22) keeps their original
+codes and entries. They have the same class roots, so NBP Theorem
+10.4 keeps their complete predecessor rows. The inverse in (PCA.29)
+makes this an actual-source comparison. $\square$
+
+**Proof of Theorem 10.3.** Let $a(v),N(v,z)$ be the old preparation
+table. Include all its installed running words, even unused ones, in
+the finite menu of Lemma 12.2. On precisely the old alphabet install
+
+$$
+a'(v)=h_b(a(v)),\qquad
+N'(v,z)=N\bigl(v,g_{b,a(v)}(z)\bigr).
+\tag{PCA.32}
+$$
+
+Keep every latch and its literal complete entry, the running/latch
+partition and the common start $b_0$ exactly. All four successors are
+installed, including unattained replies. A source-independent word is
+replaced by a genuine root call followed by its forced old successor;
+it is not bypassed by a silent edge. In particular $\varepsilon$ still
+costs one invocation. No extra selector, counter, trace or working
+configuration is installed.
+
+Fix an arbitrary actual $u$ with profile $\eta$. Compare the new run
+on $u$ with the old run on the actual $u^{\eta,L}$ of Lemma 12.2.
+Their common start is the same. At an equal running state (PCA.31)
+and (PCA.32) give the same next state. Induction gives precisely the
+same ordered running-state visits and the same terminal latch. The
+old run terminates correctly with $\widehat{s(u^{\eta,L})}$, which
+is $\widehat{s(u)}$. Its call count is identical to the new run's;
+each new word on this common state path is no longer. Thus
+
+$$
+q_{P'}(u)=q_P(u^{\eta,L}),\qquad
+\ell_{P'}(u)\le\ell_P(u^{\eta,L}).
+\tag{PCA.33}
+$$
+
+The old uniform upper bounds apply on this actual witness in the full
+original fiber. Hence the new bounds hold for every original $u$.
+The installed state cardinality is exactly unchanged, including unused
+states and unused latches. If $b_0$ is a latch, both runs stop there
+without a call and the same argument applies. A terminating run cannot
+revisit a running state by Lemma 2.3; no assumption of an acyclic union
+graph, no state unfolding and no elimination of shared successors has
+been used. Cycles on unused transitions remain permitted.
+
+Handoff enters the same original $s(u)$ in the untouched original
+reader. It therefore retains that reader's correctness on $u$ and any
+of its separately valid uniform phase bounds. The reverse implication
+is immediate because all words in $B_b$ are legal original native
+words. This proves the exact upper-region assertion. $\square$
+

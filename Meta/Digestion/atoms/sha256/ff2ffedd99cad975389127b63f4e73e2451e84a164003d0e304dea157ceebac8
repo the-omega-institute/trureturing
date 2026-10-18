@@ -1,0 +1,17 @@
+**Theorem 6.5 (endpoint equality is not authentication, even at fixed $z$).**
+For $D=H=1$, let $a=(0,1)$ and $b=(0,0)$. A reading at slot one
+of $X_a$ at epoch zero and a reading at slot one of $X_b$ at epoch
+one are both three; both initial sources have $z=2$. Treating these
+two readings as one same-source comparison would return zero,
+although their displayed epoch indices differ by one.
+
+Proof. Here $q=2$, so $K_1^a(0)=2+1+0=3$ and
+$K_1^b(1)=2+0+1=3$. The old and new slot trees are both $T_3$.
+But the whole first source is $\langle T_0,T_3\rangle$, whereas
+the second captured tree is $\langle T_1,T_3\rangle$. It is not
+$\rho\langle T_0,T_3\rangle=\langle T_1,T_4\rangle$.
+Thus equality of endpoint values, even of these endpoint subtrees,
+does not certify the presumed continuation. This pair is outside
+the common-history contract, not a counterexample to Theorem 6.2.
+$\square$
+

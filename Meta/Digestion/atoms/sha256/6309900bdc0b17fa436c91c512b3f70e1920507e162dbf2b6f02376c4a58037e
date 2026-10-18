@@ -1,0 +1,13 @@
+**Lemma 6.3 (every long unary chain has its bottom-two action).** A consecutive run of unmarked unary nodes of length at least two has exactly the summary action of its bottom two nodes, with their original child orientations and attachment, simultaneously for every requested vector.
+
+Proof. Throughout this run $J,r$ and therefore $e$ are unchanged. Suppose first $e=0$. After the bottom node the leaf entries vanish and the nonimage entry is $6\mathbf1_S$. The image entry is positive exactly when $G$ holds or when the bottom orientation is right and $a>0$. After the second node, either orientation gives
+
+$$
+\left(0,0,
+6\mathbf1_{\{G\ \lor\ (\text{bottom is right and }a>0)\}},
+6\mathbf1_S\right).
+\tag{BPS.18}
+$$
+
+If $S$ fails, all entries here vanish; otherwise the last entry is six. Both $U_L$ and $U_R$ fix this vector. If $e=1$, the first node has both leaf entries one even for zero child vector. The next node therefore has a positive beta-child contribution to general images, and a nonempty child realization. Its vector is $(1,1,6,6)$, fixed by both orientations. Thus all nodes above the bottom two are redundant for this full summary action. In particular deletion down to one node is not justified by this proof: the zero-child all-absent case and the one-image $E$ case change at the second node. The possible actions are contained in $\mathrm{id},U_L,U_R,U_L\circ U_L,U_L\circ U_R$; equality among some actions is harmless. $\square$
+

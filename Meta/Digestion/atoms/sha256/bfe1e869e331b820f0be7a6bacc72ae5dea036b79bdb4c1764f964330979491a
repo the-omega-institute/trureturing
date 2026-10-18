@@ -1,0 +1,32 @@
+**Assumption 1.1 (Preparation and actual histories).** Let
+$\mathcal H=\mathbb C^5$, with ordered orthonormal basis
+$\mathsf S=(N,2,3,5,25)$ and $\Pi_s=e_se_s^\dagger$. All complex
+density matrices are allowed inputs. Fix exactly
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=\exp(-itK),\quad t\ge0.
+\tag{1.1}
+$$
+
+This is the independent quantum preparation hypothesis of
+[QMB, Assumption 1.1](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+It is not a preparation map from the native $\alpha/\beta$ trees;
+$N$ labels a unit vector.
+
+An actual protocol uses nonnegative waits, the complete five-outcome
+rank-one Lüders instrument $X\mapsto(\Pi_sX\Pi_s)_s$, and Stop.
+Each protocol has finite adaptive depth, and all finite depths are
+included. Histories retain outcomes, chosen controls and stops.
+Initial controls and any permitted random controls are source-independent;
+the two compared inputs use the same policy. Grouping outcomes is
+classical postprocessing of the complete read, not a coarse-block
+Lüders instrument. Independent mode phases, arbitrary future unitaries,
+source copies, resets, probability oracles, external quantum side
+information and readable hidden Kraus records are absent.
+

@@ -1,0 +1,16 @@
+**Theorem 19.2 (all-prefix acquired capacity and inverse).** Under Hypothesis 18.1, for every fixed $\mu$ and every legal finite acquired prefix up to and including its first third latch, (SC.46) is adapted to the original acquired filtration and gives a bijection
+
+$$
+\mathcal P_\kappa(A,B)\ \longleftrightarrow\
+\{0,\ldots,G_\kappa(A,B)-1\}.
+\tag{SC.47}
+$$
+
+Its inverse uses only the current tag, acquired counts and rank, and reconstructs the entire actually acquired raw prefix. At $L_{1,100}$ the held supplementary alphabet has exactly $F(A,B)$ values, with $\lceil\log_2F(A,B)\rceil$ fixed-fiber data bits, attaining Theorem 9.3's terminal static minimum causally from the first paid Read. The same statement with $G_{L_{\rho,v}}$ holds for both seeds and all marker triples. It is a supplementary alphabet statement relative to the declared side information, not a minimum for the complete observer.
+
+Proof. Reuse counted-block enumeration and its interval inverse from Cover, *Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm, also used in Boundary Dynamics §102.4. Here the concrete block certificates are (SC.41)–(SC.45). Apart from the empty base, delete the last letter of any dictionary member. Its unique original parser path gives one incoming edge and a predecessor in the indicated count dictionary. Conversely appending that edge's letter to any such predecessor gives a member of precisely that block. Two different incoming edges cannot give the same raw word: its parser path and last letter are deterministic. This remains true for shared incoming letters and for return visits to the same state. Thus the predecessor sizes sum to the target size and their ordered intervals partition it, with zero-size blocks skipped.
+
+Induct on $A+B$. The empty dictionary has only rank zero. Each last-edge block inherits its predecessor's contiguous bijective ranks; adding the preceding block sizes gives exactly its target interval. This proves (SC.46)–(SC.47). To invert, select the unique interval containing a valid rank, subtract its offset, remove its letter count and pass to its old tag. Each step decreases $A+B$; it ends at $s,(0,0),0$. Reversing these recovered letters gives the actual word, without consulting any discarded record or source. The acquired-count initialization and deterministic transactions give filtration adaptation; the third transaction uses no future count or letter. Theorem 18.3 identifies the terminal count dictionary with the already supplied $F$, and Theorem 9.3 supplies its matching lower bound, even with all original future $V$.
+
+For other terminal tags the same lower-bound argument applies: every member has the same positive mass $Z_{A,B}$ and the common next source phase is $p_4$. Every complete legal fourth-segment word is positive after each member and has the same ratio (SC.15). The seed and finite marker fields are fixed within the dictionary. Hence the original future cannot separate two equal supplementary labels on that dictionary. This is the original-source instantiation of the existing actual-image and finite-label criteria, not a new generic coding theorem. $\square$
+

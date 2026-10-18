@@ -1,0 +1,74 @@
+**Theorem 7.1 (Exact eventual budget criterion; C1).** Let $M(s)\ge2$
+be any finite integer-valued function on $(0,\bar s)$, without
+monotonicity or regularity assumptions. The following are equivalent:
+
+1. There are $0<C<\infty$ and $s_1>0$ such that for every $0<s<s_1$
+   one can select a common table
+   $\mathcal A_s\in\mathfrak A_{M(s)}^{\rm det}(e^{-s},\alpha)$ with
+   $\max_i\mathbb E_i^{\mathcal A_s}T
+   \le Cs^{-p}/\log(\mathrm e/s)$.
+2. The same holds with one fixed target $i_\star\in\{0,1\}$ in the
+   paid upper. Each selected table still satisfies both risks, both
+   almost-sure stops and both finite means.
+3. There are $\varepsilon>0$ and $s_2>0$ such that
+   $\log(1+M(s))\ge\varepsilon\log(1/s)$ for every $0<s<s_2$.
+
+All neighborhoods are restricted to $s<\min\{\bar s,1\}$. Constants
+in these eventual conditions may depend on the budget family. The
+necessity is inherited from [S, Theorem 11.2 and Open problem 11.3]
+and [C, Theorem 7.1]; the deterministic sufficiency follows from
+Theorem 6.1. In particular every fixed positive polynomial budget
+exponent suffices when the paid upper constant may depend on that
+exponent.
+
+Proof. Condition 1 implies 2. If condition 2 holds, use the credited
+lower (2.4) for its fixed target on the intersection of the applicable
+neighborhoods. It forces
+
+$$
+1+\log\min\{L_{M(s)},1/s\}
+\ge(C_-/C)\log(\mathrm e/s).
+\tag{7.1}
+$$
+
+The left side is at most
+$1+\log C_L+r^{-1}\log(1+M(s))$ by (2.5). Absorbing the fixed
+additive constant as $s\downarrow0$ gives condition 3, for example
+with $\varepsilon=rC_-/(2C)$ after further restricting the
+neighborhood. Opposing compliance requirements have not been removed.
+
+Conversely, condition 3 gives
+
+$$
+M(s)\ge s^{-\varepsilon}-1
+\ge\tfrac12s^{-\varepsilon}
+\tag{7.2}
+$$
+
+eventually, so $M(s)\ge M_{\rm det}$ eventually. For the cap selected
+in (6.4), $L\ge y/2$ yields
+
+$$
+\log L\ge
+\min\left\{\frac{\log M(s)-\log K}{p},\log(1/s)\right\}-\log2.
+\tag{7.3}
+$$
+
+By (7.2) the right side is at least a positive constant times
+$\log(\mathrm e/s)$ for all sufficiently small $s$. More explicitly,
+put $\eta_\varepsilon=\min\{\varepsilon/p,1\}>0$ and
+$t=\log(1/s)$. The minimum in (7.3) is at least
+$\eta_\varepsilon t-(\log2+\log K)/p$, and its fixed losses can
+be absorbed into, for example, a lower bound
+$(\eta_\varepsilon/4)(1+t)$ once $t$ is sufficiently large.
+Theorem 5.1 now supplies both means of the one selected deterministic
+table at most a fixed multiple of $s^{-p}/\log(\mathrm e/s)$.
+This is condition 1.
+
+Every step is pointwise at each sufficiently small $s$, so the proof
+covers oscillating finite budgets and discontinuous retuning. For
+$M(s)=\lceil s^{-\gamma}\rceil$ with any fixed $\gamma>0$, condition
+3 holds with any $0<\varepsilon<\gamma$. No particular positive
+exponent, such as the cap-count exponent $p$, is necessary when the
+paid constant is allowed to vary with the family. $\square$
+

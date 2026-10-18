@@ -1,0 +1,19 @@
+**Definition 3.3 (boundary conventions in the correspondence).** For
+$r=0$ use the unique empty response vector and $m=1$. If the initial
+state is a halt $h$, its empty path gives $J=N$; there is no need for a
+read or update. If the final crossing update enters a halt at a vector
+change, the final segment is empty at that new epoch. Singleton
+$\alpha$ or $\beta$ phases are ordinary one-epoch intervals. A change
+while control is at an update state is included even though that state
+does not read the changing word.
+
+Pure-read cycles cannot use a later hypothetical epoch to escape: their
+update weight is zero and they have no path to a crossing update or an
+external halt under the current vector. Update-containing cycles can
+cross arbitrarily distant boundaries by their actual unit updates;
+their terminal positions, including a boundary in the middle of a
+cycle, are retained by $P_v$ and $X_v$. An update-only cycle with no
+exit to a halt has no terminal $P_v$ path in any phase. These are cases
+of (NPS.12), not extra termination assumptions. Empty halt sets make
+the disjunction of eventual halt supports false.
+

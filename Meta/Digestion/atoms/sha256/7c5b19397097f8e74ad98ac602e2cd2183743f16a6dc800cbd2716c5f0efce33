@@ -1,0 +1,9 @@
+**Theorem 66.1 (repo-derived exact central census).** The entire
+projective common-flat input locus of this matrix consists of
+exactly 42 rays: the six canonical rays and the 36 noncanonical rays
+in (65.3).
+
+The following proof establishes an upper bound for every solution
+of the original equations. Finiteness, covariance, and completeness
+of a numerical sample are not assumptions.
+

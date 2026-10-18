@@ -1,0 +1,65 @@
+**Theorem 83.3 (eventual optimal-count obstructions).** Let $k(s)$ be
+RH9.5's unbudgeted height-optimal low-label minimum: three through the
+static contact, four above it. For each fixed $0\le s<s_0$, there is
+a finite budget threshold beyond which
+
+$$
+n_{\rm opt}(s,A)\ge k(s)+1.
+\tag{FA.72}
+$$
+
+If no ray in any static optimal live family at this $s$ is compatible
+with the positive physical spectral failure direction and has
+nonnegative live height difference, then eventually
+
+$$
+n_{\rm opt}(s,A)\ge k(s)+2.
+\tag{FA.73}
+$$
+
+On the entire fixed static initial height platform this hypothesis
+holds, so every fixed parameter there eventually has
+$n_{\rm opt}(s,A)\ge5$.
+
+**Proof.** Suppose there were a budget-diverging sequence of optimal
+instruments with too few labels. Pad their slots and take convergent
+subsequences in the compact variables of Theorem 82.4, now with the
+assumed finite number of slots. Theorem 74.3 makes their heights tend
+to the unbudgeted optimum. Splitting the gap into static live slack,
+failure spectral slack and triangle mixing slack as in Theorem 74.2
+shows that each tends to zero. Positive limiting live mass therefore
+forms a static height-optimal live family and occupies at least $k(s)$
+slots by RH9.5. Spectral equality requires the two fixed physical
+failure effects $B_\pm^{\rm sp}$. The negative one cannot occupy a
+positive-live slot: its only compatible live orientations have strictly
+positive height by FA.27, causing strict opposite-sign mixing loss.
+It must occupy an additional slot whose live weight tends to zero.
+This proves FA.72 by contradiction, with a finite eventual threshold.
+
+Under the additional hypothesis the positive spectral effect likewise
+cannot attach to a positive-live slot without either incompatible
+rank-one direction or opposite-sign loss. Its line differs from the
+negative spectral line, and one actual low slot has only one failure
+line by FA.7. It therefore requires a second additional slot, proving
+FA.73. A zero live height is correctly allowed by the nonnegative
+condition and does not force a needless split.
+
+On the static plateau the unique live rays are JR50's frame $(v_*,u_*,w_*)$.
+Two have negative $z/w$ and the remaining positive ratio is
+$1/t_*<20/17$. The positive physical spectral direction instead
+requires
+
+$$
+\frac zw=-\frac{dh_1}{bh_2}\sqrt{\frac{m_2}{m_1}}
+ \frac{z_f}{\lambda_+}>\frac{243}{205}>\frac{20}{17}.
+$$
+
+This is physical whitening as in FA.36. The same directed source-box
+substitution gives the stronger interval $1.2146<z/w<1.2147$;
+JR's plateau enclosure gives $t_*>17/20$. Thus none of its three
+rays is compatible and FA.73 applies. In particular at $s=0$,
+three labels are merely feasible for $A\ge A_3$, while every sufficiently
+large-budget height optimizer needs at least five. These are eventual
+lower bounds, not evaluated budget thresholds or matching optimal-count
+sufficiency statements. $\square$
+

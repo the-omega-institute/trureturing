@@ -1,0 +1,57 @@
+**Theorem 3.3 (original preparation-history alphabet).** For every
+$D\ge2$ and every correct pair $A$ of Assumption 1.3,
+
+$$
+|\mathcal H_A(D)|\ge3^{2^{D-2}}.
+\tag{NPH.10}
+$$
+
+The same lower bound holds for pairs required to work only on the
+realized scaffold subfamily $U^Q$, while serving every original target
+and every later $k$. On that restricted promise it is sharp: one
+effective native preparer has exactly $3^Q$ transcripts and complete
+retained names, uses $Q$ preparation Reads, exactly $(D-1)Q$
+submitted letters and peak length $D-1$, and its retained name
+recovers its preparation transcript. No full-family equality for the
+minimum transcript alphabet is asserted.
+
+Proof of the lower bound. Give an attained prefix cell
+$\prod_a B_a$ potential $\prod_a c(B_a)$. If the next query enters
+cone $a$, the sum of its child potentials is at least the parent
+potential by (NPH.7); a constant query preserves the potential. Every
+terminal potential is one by Lemma 3.2. The restricted source set is
+finite, and preparation terminates on every member. Its execution
+tree is therefore finite: the maximum of these finitely many actual
+finite run lengths is finite. Backward induction bounds its number
+of terminal transcripts below by its initial potential
+$c(U)^Q=3^Q$. The transcript set on the full family contains that
+restricted transcript set, proving (NPH.10).
+
+Proof of restricted attainment. In a fixed public address order,
+Read each full word $Ra$ for $|a|=d$. Retain only the vector of
+these $Q$ root replies. All three possibilities alpha, beta and
+branch are independently attained at every cone, so the complete
+retained alphabet and actual transcript alphabet each have exactly
+$3^Q$ values. Fixed query order makes the transcript recoverable
+from that vector. Complete handoff/isolation removes all other
+accessible preparation dependence.
+
+For a late target $Rq$, if $|q|<d$, its endpoint is a known
+scaffold branch and its entire trajectory is branch. Otherwise write
+$q=ar$ with $|a|=d$ and $|r|\le1$. If the retained cone root is a
+leaf, its label and this suffix determine its entire trajectory by
+(NPH.4). If the retained cone root is branch and $r$ is empty, the
+trajectory is branch. If it is branch and $|r|=1$, Read the one
+original word $Rar$; its alpha, beta or branch reply gives
+$(2,1),(1,0),(0,0)$ respectively. In each case the selected Read
+precedes its reply and every $k$, and (NPH.5) answers all later
+counts without another Read. This serves all original targets on
+the restricted promise. Each preparation word $Ra$ has length
+$D-1$, giving the stated simultaneous charges. $\square$
+
+The restriction in the attainment statement is essential. At a fixed
+scaffold location an arbitrary full-family subtree need not belong to
+$U$. The full-family lower bound was proved by restriction; the
+restricted upper construction does not assert correctness on those
+additional sources.
+

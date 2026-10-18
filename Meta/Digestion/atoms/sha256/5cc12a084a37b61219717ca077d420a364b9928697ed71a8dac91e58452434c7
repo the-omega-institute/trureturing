@@ -1,0 +1,55 @@
+**Definition 209.12 (The retained early score and matching condition).**
+For any input $y$ of 209.1, let $Z$ retain all its pair rows, early
+correct rows and $T=t$, deleting only the late correct rows.
+For $i<j$ let $g_{ij,b}(\ell)$ be the reward of $Z$ at label
+$\ell$ in the cell $w_i=0,w_j=b$. Impose the condition
+
+$$
+\operatorname*{argmax}_{\ell}g_{ij,0}(\ell)
+ \cap\operatorname*{argmax}_{\ell}g_{ij,1}(\ell)\ne\varnothing
+ \quad\text{for every }i<j.
+\tag{209.26}
+$$
+
+This is a condition on the actual early score, including its $00$
+prefix rows. Only labels $0,1,2$ can have nonzero rewards there.
+Define three measures on the full late cube by
+
+$$
+\begin{aligned}
+\zeta_0(x)&=\sum_{w|_I=x}P_w,\\
+\zeta_a(x)&=\sum_{w\in\Omega_a,\ w|_I=x}(P_w+C_w)
+                      \quad(a=1,2).
+\end{aligned}
+\tag{209.27}
+$$
+
+For $n\ge3$, let $\omega_{r,n}$ be the suffix projection onto
+$n+1,\ldots,L$ of $\zeta_r|_{\{x_n=0\}}$, $r=0,1,2$.
+Let $\mu_n(v)=C_{1^{n-1}0v}$ be the original correct suffix measure,
+and put $c_{nj}=\mu_n\{v_j=0\}$ for $j>n$.
+A permitted replacement consists of a suffix measure $\sigma_n$ and
+coefficients $\tau_{n,r}\ge0$, $\sum_r\tau_{n,r}=1$, such that
+
+$$
+0\le\sigma_n\le\sum_{r=0}^2\tau_{n,r}\omega_{r,n},\qquad
+|\sigma_n|=\gamma_n,\qquad
+\sigma_n\{v_j=0\}=c_{nj}\quad(j>n).
+\tag{209.28}
+$$
+
+All classes are replaced simultaneously, leaving the entire $Z$
+unchanged; no sum of the $\sigma_n$ across labels is restricted.
+For a finite suffix measure $\omega$ write
+
+$$
+\mathcal Z(\omega)=
+ \left\{\int f(v)(1,X(v))\,d\omega(v):0\le f\le1\right\},
+\quad X_j(v)=\mathbf1_{v_j=0},\qquad
+\mathcal D_n=\operatorname{conv}\bigcup_{r=0}^2\mathcal Z(\omega_{r,n}).
+\tag{209.29}
+$$
+
+At $n=L$ the suffix has one empty word and there are no unary
+coordinates. Zero carrier masses are permitted.
+

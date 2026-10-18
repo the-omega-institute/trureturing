@@ -1,0 +1,75 @@
+**Convention 40.1 (covered mathematics and the uncovered relation).**
+The exact original benchmark, isolated root, coefficient bounds and
+particular complete channel are credited to [CG, §§13–16]. Its
+Theorem 17.2 fixes only the sign-averaged live Choi of every optimizer;
+its entire full channel and individual failure-time laws are not unique
+by that theorem. The Schmidt-three and every-input nonsharp lower
+bounds in [CG, §§22–24], near-optimal results in §§26–28, and the
+attained family and particular-channel ceiling in §§29–33 above remain
+credited results. They are not the sharp optimization in (JR.20).
+
+The additional `repo-derived` relation is the joint actual-record/cost
+reduction (JR.24)–(JR.29), the determinant allocation and complete
+frontier (JR.30)–(JR.33), and its single finite complete-channel
+attainer with laws (JR.34)–(JR.42). In particular the constant-cost
+interval uses singular mixtures of $D,T,S$, instead of simply
+interpolating the previously attained $D+sT$ family. These results
+are ordinary conditional proofs, without fresh Lean/kernel evidence
+or a new certificate for $E_*$. The per-height necessity is explicitly
+an average; (JR.26)'s coherent-input terms remain in the actual cost.
+
+The mature mechanisms are `literature-attested`. Sekatski,
+[*The bottleneck dimension of quantum operations*,
+arXiv:2608.25010v1](https://arxiv.org/html/2608.25010v1), §II.A,
+equation (2) and Definition 1, gives the classical-assisted
+encoder/TP-decoder compression and its Kraus-rank/Schmidt-number
+correspondence. Its singular-value factorization explains the
+rank-two image compression used here; it does not supply a cost for
+this original twelve-history task or an actually acquired record.
+Leppäjärvi–Sedlák, [*Incompatibility of quantum instruments*,
+arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Definition 8,
+Remark 3 and Proposition 7, gives finite-dimensional instrument
+dilation and complementary-instrument postprocessing compatibility.
+Its joint-instrument requirement is retained here, but no accessible
+native environment or continuous-outcome theorem is inferred from it.
+Our failure-measure equalities instead follow directly from (JR.39).
+Complex triangle inequalities, Cauchy–Schwarz, character averaging and
+finite positive-support arguments are standard tools inside the proofs.
+
+The exact generic Kraus-mixing and branch-effect identities are reused
+from `UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance` and
+`FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal`.
+`FiniteKrausRepresentation`, including `choi_of_kraus`,
+`choi_PSD_iff_CP_map` and its Kraus representation, supplies the finite
+CP machinery, selected from Physlib at
+`6a09b2d1761a0d4430083045a247eb121d8da260`.
+`AntidistinguishabilityGram.psd_summand_projection` and its private
+`psd_summand_kills_kernel` express the support argument; their specific
+antidistinguishability conclusions are not premises of this frontier.
+Pinned mathlib `db584cd6d46c92f209a44c0f1c829460d327499d` supplies the
+matrix positivity, Gram and trace framework. These are source reuse,
+not newly compiled applications or additional Lean declarations.
+
+The source snapshot
+`648765d8c61a33ec941bbfc16416ca49c4c8c36c` also contains
+[Joint Transfer–Coherence Interface Geometry](https://github.com/the-omega-institute/trureturing/blob/648765d8c61a33ec941bbfc16416ca49c4c8c36c/docs/develop/theory/FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md),
+whose Theorem 2.2 characterizes a simultaneous ZERO-TRANSFER and
+Schmidt-two live restriction by a comparison matrix. The present live
+face has the nonzero transfers of $T,S$; that Schur-supported criterion
+is not a replacement for (JR.22) or an exhaustive native class.
+`SchurChannelMixedUnitaryDistance` concerns diamond distance of TP
+Schur channels to mixed-unitary sets. `ThreePointPositivityGate`
+concerns an entrywise nonnegative real three-point matrix under its
+one-versus-many hypothesis. `ChenDeyNaiveEquationsFive` refutes a
+five-dimensional orthostochastic lifting criterion. Their conclusions
+do not optimize this acquisition cost. The pure-state entropy identity
+in `InputInformationBalance.input_information_balance` and the
+specific coherent-copy identity in
+`CoherentCopyCorrelationTax.coherent_copy_correlation_tax` concern
+their own joint states and entropy functionals. No conversion from
+those entropies, the designated-subspace EOF refutation, or the
+classical $137/512$ allocation score to (JR.20) is established or used.
+The later weak-binding extension and structural atlas are not premises.
+These bounded source and primary-literature comparisons assert no
+worldwide priority or literature-absence result.
+

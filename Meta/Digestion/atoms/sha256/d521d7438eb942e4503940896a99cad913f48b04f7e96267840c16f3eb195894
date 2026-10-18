@@ -1,0 +1,41 @@
+## 468. Every transverse Z owner has three or four Z slots
+
+Suppose instead z>=1+2*w. Then z>w. Consider any owner with transverse
+pair {Z,A}, where a<=w and A!=Z. Its two axes have values b,r.
+
+If neither axis is Z, both b,r<=w. Its genuine inequality would require
+
+    (b+1)*(r+1)>(z-a)^2,
+
+whereas z-a>=1+w and (b+1)*(r+1)<=(w+1)^2. This is impossible.
+Thus at least one axis is Z.
+
+If one axis is not Z, name it B, with b<=w; its other axis is Z.
+The transverse Z cosine has a positive denominator and numerator
+
+    N(r)=a*(b+r)+z*(b*r+a^2-z^2+1).
+
+Its derivative in r is a+z*b>0. At the algebraic comparison value
+r0=1+z+a it factors as
+
+    N(r0)=[a+z*(1+z+a)]*(1+a+b-z)<=0,
+
+because a+b<=2*w<=z-1. The actual r=z is strictly below r0, so
+N(z)<0. Each of its two equal transverse Z angles exceeds pi/2.
+The owner has exactly three original Z slots, and its total Z
+expense is greater than pi. No genuine test at r0 is needed here.
+
+If both axes are Z, its frame is (Z,Z,A,Z,Z,A). All four original
+Z angles have the same cosine
+
+    z*(a+1)/(2*z^2+a-1)<1/2.
+
+Indeed z>a+1, and cross multiplication leaves
+2*z*(z-a-1)+a-1>0. Thus this four-slot owner spends more than 4*pi/3
+at Z, and in particular more than pi.
+
+Every transverse Z owner therefore spends more than pi at Z.
+The complete Z equation permits at most one such actual owner, rho.
+This counts all its axial and transverse Z slots; repeated labels
+are not collapsed to one angle.
+

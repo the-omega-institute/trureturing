@@ -1,0 +1,51 @@
+**定义 220.2（Independent event rows and one residual budget）。**
+Let $\alpha=(1,1,0,\ldots,0)$ and reuse the hull $H_L$ of 219.2:
+
+$$
+\begin{gathered}
+1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\qquad b_2=b_3,\\
+(L+1)e\le\sum_{n\ge3}b_n,\qquad
+b_1+\sum_{n\ge3}b_n-(L+1)e\le1.
+\end{gathered}
+$$
+
+For $q=(\beta,K)$ put
+$F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke$ and
+$\sigma_H(q)=\max_{H_L}F_q$.
+At every $w\in\Omega_n$ the demands on the three independent events
+$\{0\}$, $\{n\}$, $\{0,n\}$ are respectively
+
+$$
+ 1-b_n-e,\qquad b_n-e,\qquad1-e.
+$$
+
+At $1^L$ the base demand is $1-e$. Negative singleton demands remain.
+Let $R=O(1,2;1,2,0)$, let $z_D$ be the complete event vector of a table,
+$r=z_R$, $h(b,e)=d(b,e)-r$, and let $G_C$ contain every column
+$z_D-r$ of the full catalog. Membership of $H_N$ means membership of
+$H_L$ together with one actual complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h$. Put $M=\sum_D\lambda_D$ for that same witness.
+Hull membership alone does not supply it.
+
+The positive certificate for an actual $\Delta_O(y)\le1$ is one
+unrestricted full $V\ge0$ and $\theta\in[0,1]$ such that
+
+$$
+ \Delta_N(V)+\theta\le1,\qquad
+ \sigma_H(Q(y)-Q(V))\le\theta.\tag{220.1}
+$$
+
+No exact-$Q$, fixed-baseline, unary, suffix or terminal constraint is
+part of this search. Nonzero zero-cost $V$ is allowed at $\theta=1$.
+For the same $b\in H_N$ and same complete feasible $\lambda$,
+nonnegativity of $V$ gives the reused weak-duality calculation
+
+$$
+ F_{Q(V)}(b,e)=V\cdot h(b,e)
+ \le V\cdot G_N\lambda\le M\Delta_N(V).
+$$
+
+Adding one residual bounded by $\theta$ gives
+$F_{Q(y)}(b,e)\le M\Delta_N(V)+\theta\le\max(1,M)$.
+All independent rows enter this calculation with one allocation.
+

@@ -1,0 +1,40 @@
+**Definition 2.1 (directed fractional cylinder).** Fix finite
+$t=e^A-1\ge t_0$. Write $u=\cos\phi$, $v=\sin\phi$,
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$ and
+
+$$
+\begin{gathered}
+X=\{(u,v,\xi):u^2+v^2=1,\ 0\le\xi\le1\},\quad
+b_x=t\mathfrak c(h)\xi,\\
+\Gamma(x)=(1,u,v,u^2,uv,\xi\mathfrak c,
+                  \xi\mathfrak c u^2,\xi\mathfrak c uv)^T,\\
+B=B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0)^T,\quad
+k(x)=|u|,\quad g_t(x)=|\ell(h)+b_x f(h)|.
+\end{gathered}
+\tag{FC.3}
+$$
+
+Angles are directed modulo $2\pi$; $\phi$ and $\phi+\pi$ are
+distinct. One original supported-nonzero low label is a pair
+$(h,\xi)$ with positive coefficient weight. Those weights sum to
+one but are not acquisition probabilities. A common finite law
+$\pi=\sum p_i\delta_{x_i}$ has $p_i\ge0$ and
+$\sum p_i\Gamma(x_i)=B$. Let
+$K(\pi)=\sum p_i k(x_i)$ and $J_t(\pi)=\sum p_i g_t(x_i)$.
+Zero-weight terms are omitted when labels are counted. Define
+
+$$
+\begin{aligned}
+R_t(r)&=\max\{J_t(\pi):\textstyle\sum p_i\Gamma(x_i)=B, K(\pi)\ge r\},\\
+C_t(\lambda)&=\max\{J_t(\pi)+\lambda K(\pi):
+                                  \textstyle\sum p_i\Gamma(x_i)=B\}.
+\end{aligned}
+\tag{FC.4}
+$$
+
+These are GC.57 and GC.74 in the same normalization. For reference,
+$q=\nu/t$ and
+$r_{\max}(t)=\sqrt\alpha\,[q\sqrt{u_F}+
+\sqrt{(1-q)(1-qu_F)}]$. The weak request domain is
+$0\le r\le r_{\max}(t)$ and $s=s_0r/\sqrt\alpha$.
+

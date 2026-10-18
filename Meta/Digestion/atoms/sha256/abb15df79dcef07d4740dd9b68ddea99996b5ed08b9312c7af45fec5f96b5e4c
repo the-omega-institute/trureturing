@@ -1,0 +1,27 @@
+## 482. Owners with one or two H slots
+
+The upper-V CD-axis lists in Section 479 show that an h=1 owner can only have pair CD and axes {V,Q}. If genuine, put
+
+    L=T-(v-1)*(q-1)>0,
+    J=(v+1)*(q+1)-(q-b)^2>0.
+
+Since m<v+2, (480.1) gives T<(v+1)*(q-1). Thus
+
+    0<L<2*(q-1),
+    J>2*(v+1)+4*q*b,
+    tan(theta_V/2)^2=(v-1)*J/((v+1)*L)
+                     >(v-1)/(q-1)>4.           (482.1)
+
+For the last inequality, (v-1)*(b-1)>=T and
+T-4*q*(b-1)=(q-b)^2+4*q>0 give v-1>4*q. Therefore
+
+    E_H=theta_V>2*atan(2)>2*pi/3.                (482.2)
+
+The genuine V capacity is pi, so at most one such owner exists; denote its count by epsilon in {0,1}.
+
+There is no genuine h=2 owner. If its two axes are high and its pair CD is low, its L is negative because (v-1)^2>T. Otherwise its transverse pair has one high value p>=v and one low value a<=w, and both axes r,o<=w. Then p-a>w+1, so
+
+    J=(r+1)*(o+1)-(p-a)^2<0.
+
+These are all ways to have exactly two high slots in a paired frame. No four-distinct-frame hypothesis is used.
+

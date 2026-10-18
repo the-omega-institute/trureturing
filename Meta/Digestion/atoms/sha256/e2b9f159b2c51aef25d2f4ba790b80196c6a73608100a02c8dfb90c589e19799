@@ -1,0 +1,28 @@
+## 8. Provenance, unchanged bounds, and the remaining all-history target
+
+The common positive source, trace convention, effective target, and representation fibres are credited through the supplied affine companions. The original self-calibrating model is background provenance carried by those companions; no additional original-source input is required by the new proofs here.
+
+[Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md), Theorems 2.1 and 5.1, supplies $\max(d+6,7)$ reads as an upper bound and $d+5$ as the all-fixed-history lower bound. Its Theorem 4.1 concerns only its specified baseline/shear prefix. [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md), Theorem 4.1 and Lemma 3.2, supplies the broader polynomial-gain construction; its Theorems 6.1 and 8.1 supply its scale fibre and specified-prefix continuation optimum. For the affine restriction the complete target correspondence is
+
+$$
+R_0=S/\operatorname{tr}S,\qquad
+H(t)=(\operatorname{tr}S)(1+kt),\qquad
+S=H(0)R_0,\quad k=H'(0)/H(0),\quad H(0)>0.
+$$
+
+[Six-read constant-drift recovery and different-slope collisions](FIB_AFFINE_SIX_READ_RECOVERY_AND_UNKNOWN_SLOPE_COLLISIONS.md), Theorem 2.1 and Proposition 2.2, supplies the six-read constant-drift upper bound and its exact compatibility criterion. Its affine-drift example already shows that all prescribed-slope slices can be injective while different slopes collide on that particular path. None of these constructions or bounds is claimed anew.
+
+The safe-cone/secant and prescribed-slope criteria used throughout are the credited results specified in Section 2. Their polynomial-erasure and one-erasure span tests retain their original scope. The quotient, transfer obstruction, R1–R3, and quadratic tests are credited to the critical-point companion specified in Sections 2 and 7, including its appended Sections 6–10. The present theorems add the simultaneous clock restriction on polynomial kernels and its common-safe-kernel consequence. The proofs range over all legal histories in Definition 1.1 rather than a new proper family of excluded words.
+
+Let $C_{\rm fix}(d)$ denote the smallest uniform exact-read bound over all predetermined legal finite-word cumulative histories for the entire actual target. The credited numerical intervals remain exactly
+
+$$
+5\le C_{\rm fix}(0)\le6,\qquad
+ d+5\le C_{\rm fix}(d)\le d+6\quad(d\ge1).
+\tag{8.1}
+$$
+
+The remaining problem is to decide each lower-versus-upper endpoint and supply a matching actually legal fixed history with a common-source inverse valid for every real affine slope, all gain-zero cases, and the entire degree-at-most-$d$ drift; alternatively, a universal endpoint obstruction must cover every legal endpoint history. Regular pencils and identically singular pencils with the common safe kernel and lower-degree signal above still require such a uniform inverse or universal obstruction. No endpoint construction, global inverse from derivative nonsingularity, or universal endpoint collision theorem is established here. At $d=0$ the regular five-read branch remains; at $d=1$ the trace-normalized hyperplane is only necessary.
+
+All statements are ordinary conditional mathematics under the exact model. Source preparation is not independent review, kernel verification, or completion of the programme. No adaptive impossibility, optimal atom count, precision bound, noisy stability, physical-resource conclusion, general neural-network result, empirical assertion, or external-priority claim is made. Reading index, atomic-operation count, elapsed time, bit precision, and acquisition cost remain distinct resources.
+

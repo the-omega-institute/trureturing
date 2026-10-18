@@ -1,0 +1,21 @@
+### 85.2. Three different singleton positions
+
+For aligned inputs \(w_i,w_k\) whose singleton positions differ,
+(85.1) gives
+\[
+ \langle w_i,w_k\rangle
+       =(\langle S_i,S_k\rangle-\langle d_i,d_k\rangle)/3. \tag{85.8}
+\]
+Suppose three such inputs have pairwise different singleton positions
+and are mutually orthogonal. Their three-by-three Gram matrices satisfy
+\[
+ G_S-G_d=\operatorname{diag}
+ (\|S_1\|^2-\|d_1\|^2,\|S_2\|^2-\|d_2\|^2,
+                          \|S_3\|^2-\|d_3\|^2)>0.       \tag{85.9}
+\]
+As \(G_d\) is positive semidefinite, \(G_S\) is positive definite.
+But its three spinors lie in \(\mathbb C^2\), so
+\(\operatorname{rank}G_S\leq2\), a contradiction.
+This excludes all three-distinct-position triples without classifying
+the individual cross-union edges.
+

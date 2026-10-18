@@ -1,0 +1,48 @@
+**Definition 1.2 (the exact native family and literal port).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\operatorname{height}(\alpha)=\operatorname{height}(\beta)=0,
+\qquad
+\operatorname{height}(\langle u,v\rangle)
+ =1+\max(\operatorname{height}(u),\operatorname{height}(v)).
+$$
+
+The pairing is ordered. A word is a finite string of $L,R$, including
+the root word $\varepsilon$. Every word is a legal original-root query.
+At a present leaf it returns its label, at a present pair it returns
+$\mathsf{branch}$, and beyond a leaf it returns $\mathsf{absent}$.
+In particular absence is a reply, rather than an illegal query. Write
+$r_t(w)=\operatorname{readout}(w,t)$. The substitution is
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For public $D\ge1$ the source and target families are exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:
+                    \operatorname{height}(v)\le D\},
+\qquad
+\mathcal P_D=\{Rq:q\in\{L,R\}^{\ast},\ |q|\le D-1\}.
+$$
+
+One actual $t\in\mathcal F_D$ remains stationary throughout preparation,
+handoff and later acquisition. No source is changed within an execution.
+There is no subtree, equality, source-identity, age, reset, copying,
+free-navigation or free-advice port. Mathematical child notation does
+not supply a child as an operational input. Every child observation must
+submit its entire literal address from the original root.
+
+These are `Source` and `substitution` in
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+and `Address`, `Reply`, `readout` in
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean).
+The Boolean directions there are $L=\mathrm{false}$ and
+$R=\mathrm{true}$; the leaf labels are alpha for `true` and beta for
+`false`. That module's Boolean recognition task is not the task below.
+

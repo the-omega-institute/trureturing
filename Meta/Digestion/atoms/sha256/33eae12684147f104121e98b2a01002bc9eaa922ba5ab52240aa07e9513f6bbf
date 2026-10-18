@@ -1,0 +1,73 @@
+**theorem 6.1 (At most two read instructions).** Any table of
+Definition 2.2 with $|K_{\rm R}|\le2$ and $q_2=1$ has correct mass
+at most
+
+$$
+T=\frac a2+a\eta(1+c),
+\tag{6.1}
+$$
+
+with no restriction on the number or choice of its halt rows.
+
+Proof. By Lemma 3.2 it suffices to examine any actual deterministic
+start with $q(r)=1$, retaining the whole installed table for counting.
+An initial halt gives at most $a/2$. Otherwise let the root row $R$
+carry $\operatorname{Read}(t)$, with $\alpha,\beta,e,v$ as in §5.
+By Lemma 3.3 neither first successor equals $R$.
+
+If both first successors halt, correctness is at most $S_1$.
+If both read, the two-read-row hypothesis forces both to be the
+same other installed row $S$. Every source sample then reaches $S$.
+For each of the two replies to its fixed address, its positive
+marginal section must lead to a halt: it is a union of the
+corresponding two-call sections, and any positive one requires a
+halt by Lemma 3.3. Thus the output depends only on the reply at
+$S$'s address. The first history has been forgotten when both
+branches enter the same row; neither it nor the last reply is
+available beside that row. This actual output function has the
+same correctness as a one-call rule at $S$'s address, hence at most
+$S_1$. This includes distinct read rows with identical addresses.
+It is an identity of output functions, not an assertion that the
+original first call was free.
+
+Exactly one first branch remains to read in all other cases.
+If zero halts and one reads, Lemmas 5.1–5.2 give at most $S_1$.
+If zero reads and one halts, the early-one correct mass is
+$\eta/2$ for $v\in e$, or $a\eta$ for $v\notin e$.
+For a same-parity second call, (5.2) therefore gives respectively
+
+$$
+A_*:=\frac a2+\eta\left(a^2+\frac12\right)
+\quad\hbox{or}\quad T.
+\tag{6.2}
+$$
+
+For an opposite-parity second call, (5.3) and the uniform early-one
+bound give
+
+$$
+B_*:=\frac{a^2}{2}+2a\eta.
+\tag{6.3}
+$$
+
+These cases include every successor type, repeated address, parity,
+edge incidence and target placement. They used individual-state
+maxima, so minority and wrong-phase outputs are included.
+The comparisons on the entire parameter range are
+
+$$
+\begin{aligned}
+T-S_1&=ac\eta>0,\\
+T-A_*&=\eta\left(a-\frac12\right)c>0,\\
+T-B_*&=\eta\left(\frac12-2a\eta\right)>0.
+\end{aligned}
+\tag{6.4}
+$$
+
+For the middle identity use $c=2a^2-2a+1$; for the last use
+$c=1-2\eta$ and $a-a^2=\eta$. Its strict sign follows from
+$\eta<1/4$ and $a<1$. Thus all cases are bounded by $T$.
+Averaging the actual starts with Lemma 3.2 proves the theorem.
+Unused read rows are included in its hypothesis, and null-path
+instructions never supplied an additional positive leaf. $\square$
+

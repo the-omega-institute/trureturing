@@ -1,0 +1,89 @@
+**Theorem 10.3 (Highest-order overlap on an even path).** Let $n=2k$,
+$k\ge1$, and take all maximum independent sets, indexed from $0$ to $k$:
+
+$$
+T_j=\{1,3,\ldots,2j-1\}\ \cup\
+\{2j+2,2j+4,\ldots,2k\},\qquad 0\le j\le k.
+\tag{10.9}
+$$
+
+Empty pieces in this expression are omitted. There are exactly $k+1$
+such sets, each of size $k$, and
+$|T_i\cap T_j|=k-|i-j|$. For their uniform-reference Fisher matrix,
+
+$$
+G=d_n2^k K,\qquad K_{ij}=2^{-|i-j|},\qquad
+G^{-1}=\frac{B}{3d_n2^k},
+\tag{10.10}
+$$
+
+where the only nonzero entries of the symmetric matrix $B$ are
+
+$$
+B_{00}=B_{kk}=4,\qquad
+B_{jj}=5\ (1\le j\le k-1),\qquad
+B_{j,j+1}=B_{j+1,j}=-2\ (0\le j<k).
+\tag{10.11}
+$$
+
+For $k=1$ there are two endpoint entries and no interior entry.
+
+Proof. If $a_1<\cdots<a_k$ is legal, the compressed positions
+$b_\ell=a_\ell-(\ell-1)$ form a $k$-element subset of $[k+1]$.
+Exactly one position $j+1$ is missing. Before that gap $a_\ell=2\ell-1$;
+after it $a_\ell=2\ell$, which gives (10.9). There cannot be $k+1$
+occupied positions in a path of length $2k$, since they would need
+at least $2k+1$ places. For $i\le j$, the common odd positions number
+$i$ and the common even positions number $k-j$, proving the intersection
+formula. Formula (10.8) now gives $G=d_n2^kK$.
+
+The inverse is the classical Kac–Murdock–Szegö inverse specialized to
+order $k+1$ and parameter $\rho=1/2$. In George Fikioris,
+*Spectral properties of Kac-Murdock-Szegö matrices with a complex
+parameter*, [Theorem 2.1(i)][KMS10], the matrix of order $m\ge2$ is
+$K_m(\rho)=(\rho^{|a-b|})$, and for $\rho\ne\pm1$ its inverse has
+endpoint diagonal $1$, interior diagonal $1+\rho^2$ and adjacent
+entries $-\rho$, all divided by $1-\rho^2$. The correspondence is
+$m=k+1$, $a=i+1$, $b=j+1$; multiplication by the external scale
+$d_n2^k$ gives (10.10).
+
+For completeness, the product at this parameter can be checked directly.
+In the first column,
+$(KB)_{i0}=4K_{i0}-2K_{i1}$ is $3$ at $i=0$ and zero for $i\ge1$;
+the last column is symmetric. In an interior column $j$,
+
+$$
+(KB)_{ij}=-2K_{i,j-1}+5K_{ij}-2K_{i,j+1}.
+\tag{10.12}
+$$
+
+At $i=j$ it equals $-1+5-1=3$. At $i<j$, factor
+$2^{-(j-i)}$ to obtain $-4+5-1=0$; at $i>j$ the reflected
+calculation gives zero. Thus $KB=3I_{k+1}$, including the two-column
+case where only the endpoint calculation is present. $\square$
+
+For $n=6$, $k=3$, $d_6=F_8=21$, the sets are
+$246,146,136,135$, where each string lists occupied positions, and
+
+$$
+G=21\begin{pmatrix}
+8&4&2&1\\4&8&4&2\\2&4&8&4\\1&2&4&8
+\end{pmatrix},\qquad
+G^{-1}=\frac1{504}\begin{pmatrix}
+4&-2&0&0\\-2&5&-2&0\\0&-2&5&-2\\0&0&-2&4
+\end{pmatrix}.
+\tag{10.13}
+$$
+
+These values follow by substitution in (10.10). The chain index records
+the location of the missing compressed position. Adjacency of these
+indices is not adjacency of physical positions in the original path.
+
+The odd case has a different top layer. On $n=2k+1$, $k\ge0$, a maximum
+independent set has $k+1$ positions. Compression now sends it to a
+$(k+1)$-element subset of $[k+1]$, so it is uniquely
+$\{1,3,\ldots,2k+1\}$. Its uniform top-layer information is the scalar
+$d_n2^{k+1}$. This includes $n=1$, whose information is $4$.
+There is no even-style top chain on odd lengths; $n=0$ has no nonempty
+target and is outside the selected-family assumptions.
+

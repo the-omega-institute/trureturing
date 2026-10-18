@@ -1,0 +1,27 @@
+**命题 12.2（Adaptive attainment and compatible siblings）。** Construction 12.1 gives an adaptive protocol of worst fee $1+d$. It also gives one common preset stream of that fee whenever
+
+$$
+g>1\quad\text{or}\quad n<2^d\quad\text{or}\quad C=D.
+\tag{12.5}
+$$
+
+Proof. Start with the forced parent $B_0=1^m$. Its rejection archive returns $R$ at fee one. Its successful $Z$ archive records its own successive differences during the $d$ actual queries and obtains precisely $z_{j/g}$. The distinct code identifies the INITIAL phase, so it returns $\lambda(j)$, without evaluating the target at the cleared current tail. Stopping may occur earlier when the code prefix already fixes that label; the full $d$ rows are a uniformly finite bound. Both free-value fibres have this same difference decoder. Initial rejection returns $L_\bot$ without issuing any block.
+
+For adaptive control the $H$ archive stops at the parent if $C=D$. Otherwise it issues the single literal block
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{12.6}
+$$
+
+Its pulse is at absolute position $T-1$, with physical charge support $\{T-1,0\}$, so it has response one at INITIAL phase zero and zero at INITIAL phase $m$. Since $r-1\ge1$, its first zero safely clears every root survivor before the pulse, and the isolated one is legal. Thus it returns $C,D$ at fee two on this archive. These are actual alternate adaptive actions on separate root archives; no sibling observation is borrowed. The outside archive has the bound $1+d\ge3$, so the global adaptive bound is $1+d$.
+
+For preset control use the one fixed literal stream $1^m\mid B_1\mid\cdots\mid B_d$ from Construction 12.1. If $g>1$, its first query already separates $H$ by $q_1(0)=1$, $q_1(m)=0$, independently of every outside code bit. If $C=D$, the endpoint archive stops before any query. In the remaining nonsaturated coprime case, (12.2) gives
+
+$$
+q_t(0)\oplus q_t(m)=X_t.
+\tag{12.7}
+$$
+
+The nonzero vector $X$ guarantees a query where the endpoint responses differ. Their preceding common archive includes both INITIAL endpoints; at that differing query, the observed difference selects its correct label. Thus their actions are prefixes of the same actual stream that handles $Z$. This verifies global sibling compatibility, rather than inferring it from independently optimal children. Lemma 10.2 makes the attained adaptive bound exact and makes the preset bound exact under (12.5); in particular some actual outside source pays at least $d$ post-parent blocks even if others stop early. ∎
+

@@ -1,0 +1,61 @@
+**Theorem 8.2 (Exact minimum-entropy orbit in the phase fiber).**
+The reference Schmidt probability vector majorizes the vector
+of every $\psi_\chi$. Moreover, the following are equivalent:
+
+$$
+\begin{aligned}
+S(\psi_\chi)&=S(\psi_+),\\
+\mathfrak h_\chi(\ell,r)&=1
+\quad\text{for every legal concatenation},\\
+\chi(\ell,r)&=a(\ell)b(r)
+\quad\text{for cut-local unit phases}.
+\end{aligned}
+\tag{8.3}
+$$
+
+If any canonical rectangle is nontrivial, the majorization
+compares unequal spectra with a strictly smaller first
+partial sum, and the entropy inequality is strict. This
+does not mean every majorization partial sum is strict.
+
+Proof. Write $A_\chi(\ell,r)=A_+(\ell,r)\chi(\ell,r)$
+and $\rho_\chi=A_\chi A_\chi^\ast$. As in Theorem 5.1,
+$|\rho_\chi|\le\rho_+$ entrywise, and every entry of
+$\rho_+$ is positive because the right vacuum contributes.
+Perron comparison bounds the largest eigenvalue of
+$\rho_\chi$ by the largest reference eigenvalue. Since
+$\rho_+$ has rank two and both matrices have trace one,
+that single eigenvalue bound gives majorization.
+
+Suppose some rectangle $(\ell,r)$ in (8.2) is nontrivial.
+Consider the reduced entry between left rows $\ell$ and
+the left vacuum. The right vacuum and $r$ both contribute
+with positive amplitudes. Their phase ratios differ exactly
+by $\mathfrak h_\chi(\ell,r)$. Hence the triangle
+inequality in this entry is strict. The positive-reference
+Perron comparison is then strict, as proved in (5.4).
+The two spectra differ, and strict Schur concavity gives
+$S(\psi_\chi)>S(\psi_+)$.
+
+If instead every rectangle is one, set
+
+$$
+a(\ell)=\chi(\ell,0),\qquad
+b(r)=\frac{\chi(0,r)}{\chi(0,0)}.
+\tag{8.4}
+$$
+
+Equation (8.2) reconstructs $\chi(\ell,r)=a(\ell)b(r)$
+on every legal concatenation. Thus $A_\chi$ differs from
+$A_+$ by diagonal unitary matrices on its two sides and
+has exactly the same singular values. A cut-local phase
+also makes every rectangle one by cancellation. These
+facts prove all equivalences. $\square$
+
+This is a statement about the specified rank-two positive
+reference. A bound on the largest eigenvalue alone would
+not provide complete majorization for an arbitrary reference
+of larger rank. Complete classical probabilities determine
+the reference in (8.1), but do not determine its phase
+rectangles or the orbit in (8.3).
+

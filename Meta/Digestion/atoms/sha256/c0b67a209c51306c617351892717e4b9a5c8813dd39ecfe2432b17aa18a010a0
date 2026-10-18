@@ -1,0 +1,27 @@
+**Definition 6.1 (regular original-state domains).** Use the finite
+representative set $J$ of Definition 4.1. For each $r\in J$, let
+$A_r$ have the same state set and pair operation as $A$, but leaf
+states $(a_r,b_r)$. Acceptance is immaterial when recording a state.
+Equation (NRF.13) says
+
+$$
+q_{A_r}(x)=q_A(\rho^r x).
+\tag{NRF.19}
+$$
+
+Take the finite total deterministic product $M=\prod_{r\in J}A_r$.
+Its state at $x$ is the whole vector $(q_{A_r}(x))_{r\in J}$.
+For each product state $s$ let
+
+$$
+L_s=\{x\in\mathcal T:q_M(x)=s\}.
+\tag{NRF.20}
+$$
+
+These are entire regular languages, with some possibly empty, finite
+or infinite. Different states have disjoint languages. The product
+and inverse-image principle are the ordinary tree-automaton operations
+of [Engelfriet, Theorems 3.8, 3.32 and Exercise 3.68][ENG]; (NRF.19)
+is their direct construction for this particular substitution.
+No automaton state asserts equality of two actual trees.
+

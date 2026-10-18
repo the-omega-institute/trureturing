@@ -1,0 +1,85 @@
+**Theorem 87.1 (Exact hard count on a unit plateau).** Suppose $\ell\ge1$,
+
+$$
+a_1=\cdots=a_\ell=1,\qquad
+ a_{\ell+1}\le\varepsilon<1.
+\tag{87.1}
+$$
+
+The tail continues to satisfy (73.3); in particular $\varepsilon>0$.
+Then
+
+$$
+\kappa_\varepsilon=
+\max\{0,\lceil\ell-(\ell+1)\varepsilon\rceil\}.
+\tag{87.2}
+$$
+
+For each $k\in\{0,\ldots,\ell\}$, an original common-seed acquisition
+with $K\le k$ everywhere has error
+
+$$
+e_k=\frac{\ell-k}{\ell+1}
+\tag{87.3}
+$$
+
+at every source in $D_1\cup\cdots\cup D_\ell$, and error
+$\max\{e_k,a_{n(x)}\}$ at every source in $H_\ell$.
+Its count is exactly $k$ on $H_\ell$ for every seed.
+
+**Proof.** The supplied mean theorem (79.3) gives
+
+$$
+D=\bigl(\ell(1-\varepsilon)-\varepsilon\bigr)_+
+  =\bigl(\ell-(\ell+1)\varepsilon\bigr)_+,
+\tag{87.4}
+$$
+
+since every tail residual is zero. Any sourcewise almost-sure hard-$k$
+competitor has $\sup_x\mathsf E_AK_{A,x}\le k$, and thus $k\ge D$.
+Its integer count must be at least the right side of (87.2).
+
+For the matching upper bound, order the finite label set as
+$1<\cdots<\ell<\ast$, where label $\ast$ means tape $\theta_0$.
+Use one source-independent categorical seed to choose uniformly a subset
+$C$ of $k+1$ labels. Query its first $k$ labels in increasing order,
+stopping at the first zero and emitting the tape of that queried label.
+If all $k$ answers are positive, emit the tape of the maximum label in
+$C$, without querying that last label. The label $\ast$ is always last
+when it is present, so it is never queried. This includes $k=0$, when
+the sole chosen label is emitted without a request. Every branch is finite,
+uses at most $k$ actual prime requests, and has indices at most $\ell$.
+The records are measurable categorical seed events.
+
+At an actual source with first absence $n\le\ell$, the output is
+$\theta_n$ exactly when $n\in C$. To prove the forward assertion, if
+$n$ is among the queried labels, every preceding selected label is less
+than $n$ and has positive answer, and the query at $n$ stops with its
+tape. If $n$ is the final unqueried label, all queried labels are less
+than $n$ and positive, and the final emission is again $\theta_n$.
+For the converse, if $n\notin C$, every possible emitted label belongs
+to $C$ and therefore cannot be $n$, regardless of all suffix answers.
+Uniform subsets of size $k+1$ include each particular label with
+probability
+
+$$
+\frac{\binom{\ell}{k}}{\binom{\ell+1}{k+1}}
+=\frac{k+1}{\ell+1}.
+\tag{87.5}
+$$
+
+Here the target is $\lambda_n=\delta_{\theta_n}$, so its TV error is
+one minus this probability, exactly $e_k$.
+
+At any actual source in $H_\ell$, all queried numerical labels have
+positive answers and all $k$ requests are made. The output is
+$\theta_0$ exactly when $\ast\in C$, also with probability
+$(k+1)/(\ell+1)$. No tail mark can be emitted. Equation (83.9) thus
+gives error $\max\{e_k,a_{n(x)}\}$. This calculation concerns every
+actual tail source, not an added source representing the label $\ast$.
+
+Choose the least integer $k\ge0$ with $e_k\le\varepsilon$; it is at
+most $\ell$ and equals the right side of (87.2). Since every tail
+amplitude is at most $\varepsilon$, the constructed acquisition belongs
+to $\mathcal A_\varepsilon(a)$ and attains this hard count. $\square$
+

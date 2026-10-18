@@ -1,0 +1,62 @@
+**Theorem 2.1 (only executed addresses enter the bound).** Fix any
+native table with $s$ states, any finite source $u$ and entry epoch
+$N$. If its actual run halts and has total submitted literal-address
+length at most $L\in\mathbb N$, then
+
+$$
+q_C(u)+a_C(u)
+\ \le\ s\bigl(\max(0,2L+2-N)+1\bigr).
+\tag{NRF.10}
+$$
+
+No bound is imposed on an installed word that is not read on this
+run. Consequently, if $C\in\mathcal C_K$ and
+$\sup_D\ell_C\le L$, the same installed table has the uniform
+action bound
+
+$$
+T_\ell(K,L,N)=K\bigl(\max(0,2L+2-N)+1\bigr)
+\tag{NRF.11}
+$$
+
+on the entire original fiber.
+
+Proof. Use the all-finite-source identity [JRF, (2.4)][JRF]:
+
+$$
+j\ge w(p)+2\quad\Longrightarrow\quad
+r_{\rho^j u}(p)=\mathsf{branch},\qquad
+w(p)=\#_L(p)+2\#_R(p).
+\tag{NRF.12}
+$$
+
+It applies to every word, including the root, and every finite source.
+On the given halting run each actually read word has length at most
+$L$, because its nonnegative length is one summand of the actual
+total. Thus its weight is at most $2L$. Set
+$b=\max(0,2L+2-N)$ and $J=N+b$.
+
+Before epoch $J$, a repeated pair $(j,e)$ would repeat the same
+physical register $\rho^j u$ and the same complete control state.
+Determinism would then repeat forever. A halting run therefore has
+at most $sb$ actions starting at epochs $N,\ldots,J-1$. This count
+includes an update that first enters epoch $J$, if it occurs.
+
+At epochs at least $J$, every read actually encountered on this run
+returns branch by (NRF.12). Its update successor also depends only
+on the state. Suppose a nonhalt state were repeated in this tail.
+The intervening segment would be a directed cycle consisting of
+update successors and branch successors. Every read word on that
+cycle was actually read, hence has weight at most $2L$, and will
+continue to return branch at every later epoch. Starting at the
+second visit therefore repeats that cycle forever, contradicting
+halt. There are at most $s$ tail actions.
+
+This argument does not declare all installed words short or all
+installed reads eventually branch by epoch $J$. An arbitrarily long
+unused word outside the repeated segment is irrelevant. It also
+does not redirect a successor, delete a read, remove an update,
+change a halt row, or add an online clock. Combining the two counts
+proves (NRF.10); $s\le K$ gives (NRF.11). The source was arbitrary,
+so the uniform conclusion keeps every original source. $\square$
+

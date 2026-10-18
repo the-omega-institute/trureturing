@@ -1,0 +1,35 @@
+**Definition 49.1 (supplier correspondence).** The native input is the
+published source of §§2, 11, 13, 20 and 33–40 at revision
+512365bd25688eefaf2aede357a545c40ae5f375; its bytes agree with the same
+owner source at 6c88a1ec4802a0d008b2f1106db7638eb0a561df.
+Convention 1.1's N, O and G retain their original source meanings.
+The exact reusable geometric supplier is Lemma 34.2: inward rectangles,
+ordinary chronology, prefix bounds, constant arclength speed and full
+height legality. Its $(A,B)=(2,2)$ and $(5,15)$ instances give exactly
+the numbers in (46.4). This is reuse of that connector, not a new
+primitive central operation. The suffix parametrization is the finite
+numerical mechanism of §§27 and 36. Its former continuous interruptions
+are replaced here by paid polling, with (46.1), (47.1) and (47.3)
+proving the changed operation contract.
+
+The classical strong Markov and reflection suppliers are
+Mörters–Peres, *Brownian Motion*, the public draft referenced in
+Definition 20.1, Theorems 2.14 and 2.18. Independent initial enlargement
+and multiplication by $\sqrt2$ preserve their required hypotheses and
+give this covariance-$2$ law. The bounded stopped stochastic product
+rule and Itô square formula enter through the exact identities
+(33.6)–(33.8); §43 verifies their chance-stopping application.
+The Gaussian density and exponential-martingale estimates needed here
+are displayed in §§42 and 44. No Brownian bridge independence, offline
+interpolation theorem or general rough differential equation supplier
+is required for the upper construction.
+
+Pinned mathlib at db584cd6d46c92f209a44c0f1c829460d327499d, v4.33.0,
+provides Brownian finite-dimensional laws and increment facts in
+Probability/BrownianMotion/Basic and GaussianProjectiveFamily, and
+stopped-process infrastructure in Probability/Process/Stopping.
+Those are intermediate formal-library scopes, not a supplied paid-point
+native tracking endpoint. No exact compiled Lean application or
+Lean-kernel verification of §§41–48 is asserted. The ordinary proof
+here supplies the additional acquisition-to-command correspondence.
+

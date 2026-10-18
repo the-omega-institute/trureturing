@@ -1,0 +1,17 @@
+# Recursive relational observation: witness slack and independent decoding
+
+This volume gives two bounds for the original measurement-relative scalar
+quantum port:
+
+$$
+\boxed{\frac{12993}{25000}\le\varepsilon_1\le\theta},\qquad
+\frac{52427}{100000}<\theta<\frac{13107}{25000}.
+\tag{0.1}
+$$
+
+The lower bound applies to every original complex competitor. The upper
+bound is the exact error of one fixed fourteen-flag port with independent
+measurement and preparation factors. The bounds do not match. The
+derivations are ordinary mathematics, not Lean certification or a physical
+realization theorem.
+

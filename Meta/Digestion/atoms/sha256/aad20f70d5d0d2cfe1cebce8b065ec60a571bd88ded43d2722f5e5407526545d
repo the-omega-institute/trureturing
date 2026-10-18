@@ -1,0 +1,115 @@
+**Theorem 78.3 (evaluated scalar feasibility).** For $0\le s<s_0$ the
+entire exact threshold is
+
+$$
+ t_{\min}(s)=
+ \begin{cases}
+ t_0,&0\le\tau\le\tau_*,\\
+ \displaystyle\nu\frac{1+u_f-2\tau\sqrt{u_f}}{1-\tau^2},
+       &\tau_*<\tau<1.
+ \end{cases}
+\qquad
+\mathfrak F_{s,A}\ne\varnothing
+ \Longleftrightarrow A\ge\log(1+t_{\min}(s)).
+\tag{FA.41}
+$$
+
+Every threshold is attained. In the remaining original scalar domain
+$s\in[s_0,1]$, Theorem 71.1 gives exactly the isolated point
+$s=s^\dagger$, $A\ge\log(1+t_0)$, since
+
+$$
+v^\dagger=V_f/W_f,\quad
+u^\dagger=\theta v^\dagger+\omega=\delta\mu_f/W_f,\quad
+\mathfrak c_\dagger=c_f,\quad \nu_\dagger=t_0.
+\tag{FA.42}
+$$
+
+Here and in every strong formula the substitution is explicitly
+$(u,v)=(u^\dagger,v^\dagger)$. The strong $s^\dagger$ is distinct
+from the static weak contact $s_\dagger=s_0\tau_\dagger$.
+In particular $A=0$, $s=s_0$ and $s=1$ are infeasible at finite
+budget; $s=0$ has the positive attained threshold $\log(1+t_0)$.
+
+For comparison with WE Theorem 4.1, on the rising branch write
+$q_{\rm end}=1-\tau$. The same exact threshold becomes
+
+$$
+t_{\min}(s)=\frac{\kappa_0}{q_{\rm end}}
+ +\frac{\nu(1+\sqrt{u_f})^2}{2(2-q_{\rm end})},
+\qquad 0<q_{\rm end}\le1-\tau_*.
+$$
+
+WE.29 has $p_{\rm cap}=q_m/2$ and
+$q_0=1-p_{\rm cap}\sqrt{u_f}
+-\sqrt{(1-p_{\rm cap})(1-p_{\rm cap}u_f)}<1-\tau_*$.
+Its exact recovery expression WE.30 is therefore this threshold on
+$0<q_{\rm end}\le q_0$. WE supplies that restricted recovery and its
+endpoint constant, rather than the entire threshold claim. FA.41 also
+covers the rest of the rising branch and the attained floor, using the
+global convexity of Lemma 78.2.
+
+**Proof.** Use FA.37. Let $p$ be its coefficient probability measure,
+$u=z^2$, and let $d\lambda=b_jdp/\mu_f$ be the failure-weighted
+probability measure. Its mean $u$ is $u_f$. Capacity makes the measure
+$d\pi_{\rm cap}=\mu_fw_c(u)d\lambda/t$ dominated by $p$. Since
+$\int(u_m-u)dp=u_m-1$, strict Jensen gives
+
+$$
+u_m-1\ge\frac{\mu_f}{t}\int(u_m-u)w_c(u)d\lambda
+ \ge\frac{\nu}{t}(u_m-u_f).
+$$
+
+Thus $t\ge\nu(u_m-u_f)/(u_m-1)=W_f/c_f=t_0$.
+The last identity follows by substituting
+$u_f=V_f/\mu_f$, $\mu_f=\alpha V_f+\beta W_f$.
+No zero-budget division is needed, since FA.8 already excludes $t=0$.
+
+For $t\ge t_0$ let
+
+$$
+q=\nu/t,\qquad u_R=\frac{1-qu_f}{1-q},\qquad r=\sqrt{u_R}.
+\tag{FA.43}
+$$
+
+Then $0<q\le q_m<1$ and $1<r\le\sqrt{u_m}$. Write
+$P=\int d(p-\pi_{\rm cap})$ and
+$Q'=\int u\,d(p-\pi_{\rm cap})$. Cauchy–Schwarz and
+$\sqrt{PQ'}\le(rP+Q'/r)/2$ imply
+
+$$
+\begin{aligned}
+\int\sqrt u\,dp
+&\le\frac{r+1/r}{2}
+ -\frac{\mu_f}{2rt}\int h_r(u)d\lambda\\
+&\le q\sqrt{u_f}+\sqrt{(1-q)(1-qu_f)}=:\tau_{\max}(t).
+\end{aligned}
+\tag{FA.44}
+$$
+
+The second inequality is strict Jensen from Lemma 78.2. This is a
+universal necessity for the original class, independent of its prescribed
+failure-time laws or inaccessible Kraus decomposition.
+
+For equality, put saturated mass $q$ at
+$(s_0,\pm\sqrt{u_f},\pm\sqrt{v_f})$,
+$v_f=(1-\alpha u_f)/\beta=W_f/\mu_f$, with equal four sign weights
+and failure ratio $b=t c_f$. Put pure-live mass $1-q$ at
+$(s_0,\pm\sqrt{u_R},\pm\sqrt{v_R})$,
+$v_R=(1-\alpha u_R)/\beta$, also sign-balanced. These data have live
+Gram $L_0$, failure sum $M$, and available contrast
+$s_0\tau_{\max}(t)$. At $t=t_0$ one has $v_R=0$ and the duplicate
+signs are merged. Section 86 realizes this same finite family with all
+original outputs and cost. It satisfies every smaller requested contrast
+as an inequality. The function $\tau_{\max}$ is strictly increasing
+from $\tau_*$ to $1$ for $t\ge t_0$. Solving FA.44 for $q$ on that
+range gives
+$q=(1-\tau^2)/(1+u_f-2\tau\sqrt{u_f})$ and proves FA.41,
+including the join and attainment.
+
+Finally $(\sqrt{u^\dagger},\sqrt{v^\dagger},1)$ is the scalar multiple
+$\sqrt{\mu_f/W_f}(s_0,\sqrt{u_f},\sqrt{v_f})$.
+Capacity is homogeneous of degree zero, proving FA.42. Theorem 71.1
+then supplies the rest of the original domain without a new strong-regime
+proof. $\square$
+

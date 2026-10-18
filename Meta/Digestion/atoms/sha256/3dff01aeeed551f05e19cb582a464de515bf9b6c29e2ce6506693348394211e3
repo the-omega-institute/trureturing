@@ -1,0 +1,96 @@
+**Theorem 41.1 (Attained minimum on the actual arithmetic source).** Fix exactly the numerical advice $\beta_*$, source $x_*=(7,2)$, numerical set $V=\{27\}\cup\{n_j:j\ge1\}$, marker primes $q_j$ and counts $c_j$ supplied by [Proposition 39.3](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#39-output-conditioned-error-and-the-literal-divergence-tradeoff). In particular, $x_*\in B_{\beta_*}$, $N(x_*)=27$, $\Omega(x_*)=1$, and $c_j=\omega(n_j)\ge j+1$. For every $\delta\in[0,1]$ and every nonnegative row $(h,d,z)$ with $h+d+z=1$, the minimum possible pairwise law diameter among all families and common procedures of Definition 40.1 with $\eta=1$ satisfying
+
+$$
+\beta=\beta_*,\qquad e_y\le\delta h_y\ (y\in X),\qquad
+(h_{x_*},d_{x_*},z_{x_*})=(h,d,z)
+\tag{41.1}
+$$
+
+is attained and equals
+
+$$
+t=\big[(1-\delta)h-\delta d\big]_+
+=\big[h-\delta(h+d)\big]_+.
+\tag{41.2}
+$$
+
+One fixed three-tape deterministic procedure, independent of $\delta$ and the row, suffices for every attainment; only the laws vary. It has $e_{x_*}=0$. In particular, for fixed $\delta,\eta\in[0,1]$ the complete attainable set at this fixed $\beta_*,x_*$ under $\Delta\le\eta$ is the closed region
+
+$$
+\mathcal R_{\delta,\eta}
+=\{(h,d,z)\in[0,1]^3:h+d+z=1,
+\ (1-\delta)h\le\delta d+\eta\}.
+\tag{41.3}
+$$
+
+The necessary inequality applies at every $x\in B_\beta$ for arbitrary supplied finite-range $\beta$; the sufficiency and minimum in this theorem concern the specified $\beta_*,x_*$.
+
+**Proof.** The lower bound on diameter is (40.5), because Proposition 39.3 already establishes persistence of $x_*$ for $\beta_*$. It remains to construct a complete family attaining it. Reuse that proposition's arithmetic family and marker-search branch directly. In particular,
+
+$$
+q_j\nmid27,\qquad
+q_j\mid n_i\ \Longleftrightarrow\ i=j,
+\qquad c_j=\Omega(y)\ \text{if }N(y)=n_j.
+\tag{41.4}
+$$
+
+The supplied branch generates $(q_j,c_j)$ in order, queries the prime $q_j$, and returns $c_j$ at the first positive answer. Each individual generation terminates. On advice zero it therefore diverges literally at numerical value $27$ and returns the correct finite value $c_j$ at numerical value $n_j$. These are the existing arithmetic and persistence conclusions of Proposition 39.3; no new marker family or arithmetic witness is required.
+
+Take $\Theta=\{a,b,c\}$ with its full sigma algebra. On advice one the procedure returns unknown on every tape. On advice zero, tape $a$ returns the finite proposal $1$, tape $b$ uses the supplied marker-search branch, and tape $c$ returns unknown. This describes the procedure on every source and every tape. In particular, it makes no attempt to decide whether the hidden integer is $27$ or one of the $n_j$: the marker branch distinguishes them only through its prime answers.
+
+For the specified $\delta,h,d,z$, define probability vectors in the order $(a,b,c)$ by
+
+$$
+\alpha=(h,d,z),\qquad
+\gamma=(h-t,d+t,z).
+\tag{41.5}
+$$
+
+Since $0\le t\le h$, both are nonnegative and have sum one. Assign laws to every labeled source by
+
+$$
+\mu_y=
+\begin{cases}
+\gamma,&N(y)=n_j\text{ for some }j\ge1,\\
+\alpha,&N(y)=27\text{ or }N(y)\notin V.
+\end{cases}
+\tag{41.6}
+$$
+
+The classification in (41.6) specifies the allowed source dependence of the law; it is not an additional input or branch of the deterministic procedure. The strictly increasing sequence $n_j>27$ from Proposition 39.3 makes these classes disjoint, and they exhaust $X$. All numerical duplicates receive the same advice and law, have the same target, and give the same prime answers. Thus no choice of a generating label is implicit in either (41.6) or the procedure.
+
+For every event $A\subseteq\Theta$,
+
+$$
+\alpha(A)-\gamma(A)
+=t\big(\mathbf1_{\{a\in A\}}-\mathbf1_{\{b\in A\}}\big).
+\tag{41.7}
+$$
+
+The absolute value is at most $t$, with equality for $A=\{a\}$. Hence $\operatorname{TV}(\alpha,\gamma)=t$. The only possible source laws are these two, and each is assigned to an actual source: $x_*$ has law $\alpha$, and the source realizing $n_1$ has law $\gamma$. Thus the family has diameter exactly $t$, including $t=0$.
+
+The full outcome rows are
+
+| Actual source class | Law | $h_y$ | $e_y$ | $d_y$ | $z_y$ |
+| --- | --- | --- | --- | --- | --- |
+| $N(y)=27$ | $\alpha$ | $h$ | $0$ | $d$ | $z$ |
+| $N(y)=n_j$ for some $j\ge1$ | $\gamma$ | $h+d$ | $h-t$ | $0$ | $z$ |
+| $N(y)\notin V$ | $\alpha$ | $0$ | $0$ | $0$ | $1$ |
+
+For the first row, the proposal $1$ is correct, the marker branch literally makes infinitely many negative queries, and unknown is a finite nonproposal. For a marker source the marker branch terminates correctly at $q_j$, while the proposal $1<c_j$ is false; both are finite outputs. For the remaining sources, advice one forces unknown before any query. These observations prove every entry, including the divergence entries, rather than merely specifying an abstract outcome table.
+
+On the marker row, (41.2) gives
+
+$$
+h-t=\min\{h,\delta(h+d)\}\le\delta(h+d).
+\tag{41.8}
+$$
+
+The other two rows have zero error. Thus $e_y\le\delta h_y$ holds on all of $X$, including sources with zero proposal probability. On the finite tape space every finite record event and every Borel restriction on a terminal real output is measurable: each is a subset of $\{a,b,c\}$. A divergent tape needs no finite terminal output. The marker searches and prime queries are precisely those already justified by Proposition 39.3, with no bound on their length across sources. Consequently this is a family satisfying Definition 40.1 and attaining (41.1) with diameter $t$.
+
+Together with the universal lower bound, this proves an attained minimum, not only an infimum. Since $\eta\ge0$, condition $t\le\eta$ is equivalent to the inequality in (41.3). Every row in that region is therefore attained by (41.5)--(41.6), including the boundary $t=\eta$. Conversely (40.4) excludes every simplex row outside it. The intersection of the simplex with this closed half-space is closed, completing (41.3).
+
+The minimum concerns stipulated laws and a common procedure. In (41.6) the law depends on the numerical source class, while the procedure receives only supplied advice and prime responses; existence of this family supplies no operation for acquiring the advice or generating that source-dependent law from those inputs. The real parameters in (41.5) define exact probability measures, without an effective exact sampler for arbitrary real parameters.
+
+The source-relative bound and minimum are deductions here from the arithmetic persistence and actual marker family of Sections 37 and 39.3. The finite-execution transport and the TV facts cited in Theorem 40.2 are reused ingredients. The complete realization concerns the changed law contract and makes no literature-priority, physical-realization, uniform-runtime or resource claim. $\square$
+

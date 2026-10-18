@@ -1,0 +1,16 @@
+**Definition 1.3 (the local split protocol being tested).** At a stable
+Ready image of an original record, admission checks the actual original
+guard, binds the actual row and bounded old operands, and on IN consumes
+its actual site bit. Native data and the original meter are unchanged
+by this admission. A retained Busy phase then selects a finite list of
+data writes, constructors and head handoffs. Only the final Finish
+completes the original row and returns to Ready, or to Halt on the
+original final halt. In the unfused output protocol a distinct OUT
+reaction precedes Finish. No second original row starts during Busy.
+
+This definition isolates rules used in the obstructions below. It
+assumes neither a generated all-row compiler nor an installed matcher.
+A predecessor reconstruction $W_-(x)$ at Busy is a mathematical
+interpretation of actual partial material and before-images. It is not
+the actual current source, a restore instruction, or an actor right.
+

@@ -1,0 +1,59 @@
+**定理 11.1（A sufficient two-block translation condition, without a converse）。** Keep the entire Definitions 3.1 and 5.1 contract, assume $r=2$ and $|\Lambda[O]|=3$, and choose $v\in\mathbb F_2$, $w=1-v$. Let $B$ be a literal length-$m$ word beginning zero, let $q_1=q_1^B$ be its physical charge, put
+
+$$
+I=\{j\in J:q_1(j)=1\},\qquad U=J\setminus I,
+\tag{11.1}
+$$
+
+and let $G:\mathbb F_2\to U_Y$ be a bijection. Suppose there is a literal label $z$ such that
+
+$$
+\begin{aligned}
+\lambda_w(j)&=G(w\oplus q_1(j)) &&(j\in J),\\
+\lambda_v(j)&=z &&(j\in U),\\
+j'=j-2m&\in J,\qquad \lambda_v(j)=\lambda_w(j') &&(j\in I).
+\end{aligned}
+\tag{11.2}
+$$
+
+Then
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=N+4.}
+\tag{11.3}
+$$
+
+Failure of (11.2) does not exclude any four-row controller. This theorem gives an exact sufficient region inside the original deadline-four classification, not a classification of its complement.
+
+Proof. The actual vertex $a=2m\pmod T$ belongs to $J$. It cannot lie in $I$, because its translated $j'$ would be zero, excluded from $J$. Hence $q_1(a)=0$, which by (1.5) is the actual last bit of $B$. Thus $B$ ends zero as well as begins zero.
+
+Use four word rows $a_v,a_w,b_v,b_w$, all $N$ actual Halt rows, $c(x)=a_x$ for $x\in\mathbb F_2$, and $c(\bot)=H_{L_\bot}$. Install $L=1^m$ at both roots and $B$ at both queries. The complete scalar table is
+
+$$
+\begin{aligned}
+V(a_x,x)&=b_x,&V(a_x,1-x)&=H_C &&(x\in\mathbb F_2),\\
+V(b_v,v)&=H_z,&V(b_v,w)&=a_w,\\
+V(b_w,e)&=H_{G(e)} &&&&(e\in\mathbb F_2).
+\end{aligned}
+\tag{11.4}
+$$
+
+Set every word-row bottom update to $H_R$ and all Halt updates to self-updates. The stream is the single installed $L\mid B\mid L\mid B$. Its actual unions are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,&\Gamma_{b_v}&=\mathcal S_v,\\
+\Gamma_{a_w}&=\mathcal R_w\ \cup\
+\{(\lambda_v(j),(w,-j+2m,0)):j\in I\},\\
+\Gamma_{b_w}&=\mathcal S_w\ \cup\
+\{(\lambda_v(j),(w,-j+3m,m)):j\in I\}.
+\end{aligned}
+\tag{11.5}
+$$
+
+Both added sets are already subsets of the corresponding first supports: use $j'=j-2m\in J$, the immutable-label equality in (11.2), and original tail $s=0$. These are actual reachable unions; coincidence with an existing support is a consequence of the target relation, not a free archive or phase input.
+
+At initial value $w$, the root-zero support is decoded by the first equation of (11.2). At value $v$, $q_1=0$ stops with $z$; $q_1=1$ produces scalar $w$, phase $-j+2m$ and tail zero. This is the actual pair already in $\mathcal R_w$ at $j'$. The reused all-one root is safe because its incoming tail is zero and $m<k$. Since $j'\in J$, it has charge zero and reaches the corresponding pair of $\mathcal S_w$ at original tail zero. The same $B$ and the same raw decoder then return $\lambda_v(j)$. The first $B$ clears all root tails, including $k-1$, and its derived final zero makes the reused all-one seam safe; the last $B$ clears tail $m$. No cleaning block is added.
+
+Use ranks $4,3,2,1,0$ on $a_v,b_v,a_w,b_w,H_y$, respectively, with exact Halt images (5.6). Every actual step is closed and strictly descending, even though $a_w$ occurs at indices zero and two and $b_w$ at indices one and three. The two binary tables and the first two equations of (11.2) show that $I$ has both labels of $\lambda_v$: on $U$ one joined class occurs, so its other two classes must occur on $I$. These actual sources emit all four blocks. The full certificate therefore attains $N+4$ states at the original fee four. Lemma 5.3 is the matching universal lower bound, including all other root/word/reuse competitors. No new all-controller restriction is needed for this sufficient region. ∎
+

@@ -1,0 +1,73 @@
+**Definition 10.1 (signed endpoint charts and finite derivative inputs).** In a report chart let $r_c=1+x^2$, $(u,v)=(U/r_c,V/r_c)$, $x\in[-1,1]$. For report sign $+$ use $(U,V)=(1-x^2,2x)$; for sign $-$ use $(U,V)=(-1+x^2,-2x)$. These closed half-circles cover the circle, including their report axes. The local base-$3\pi/2$ chart for contact $6$ uses $(U,V)=(2x,-1+x^2)$. Put $Z=U/\sqrt\alpha$, $W=V/\sqrt\beta$ and
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r_c^2+b_{\rm src}^2Z^2+d_{\rm src}^2W^2,\\
+N_c&=h_1^2h_2^2\delta r_c^2+a_{\rm src}^2h_2^2Z^2+c_{\rm src}^2h_1^2W^2,\\
+L_c&=G_{00}r_c^2+G_{11}Z^2+G_{22}W^2
+       +2G_{01}r_cZ+2G_{02}r_cW+2G_{12}ZW,\\
+F_c&=-\frac{11}{64}(d_{\rm src}/h_2)^2W^2
+       -\frac{2(\Delta_\rho)_{12}d_{\rm src}b_{\rm src}}{h_1h_2}ZW .
+\end{aligned}
+$$
+Here $(\Delta_\rho)_{11}=-11/64$ and
+$(\Delta_\rho)_{12}=(\sqrt{37}-\sqrt{59})/16<0$. OE's clearing dictionary is
+$$
+\begin{array}{c|c|c|c|c}
+\eta&\Gamma_{\rm num}&d_\eta&H_{\rm num}&W_{\rm num}\\\hline
+0&(r_c^2,r_cU,r_cV,U^2,UV,0,0,0)&r_c^2&L_c&r_cU\\
+1&(D_cr_c^2,D_cr_cU,D_cr_cV,D_cU^2,D_cUV,N_cr_c^2,N_cU^2,N_cUV)
+&D_cr_c^2&D_cL_c+1000N_cF_c&D_cr_cU
+\end{array}
+$$
+Thus $\Gamma_\eta=\Gamma_{\rm num}/d_\eta$,
+$H_\eta=H_{\rm num}/d_\eta$, and $W_{\rm num}/d_\eta=u$.
+Every denominator is positive on every chart. At the event set
+$$
+P_{\eta,\epsilon,\sigma}
+ =Y_e\cdot\Gamma_{\rm num}-\epsilon H_{\rm num}
+                          -\lambda_e\sigma W_{\rm num},\qquad
+D_\eta^e=Y_e\cdot\Gamma_\eta-|H_\eta|-\lambda_e|u|.
+$$
+The eight event signed cases and their exact removed double factors are
+
+| $(\eta,\epsilon,\sigma)$ | contact indices removed | quotient degree |
+| --- | --- | --- |
+| $(0,+,+)$ | $0,3$ | $0$ |
+| $(0,+,-)$ | $1$ | $2$ |
+| $(0,-,+)$ | none | $4$ |
+| $(0,-,-)$ | $2$ | $2$ |
+| $(1,+,+)$ | $4$ | $6$ |
+| $(1,+,-)$ | none | $8$ |
+| $(1,-,+)$ | $6$ | $6$ |
+| $(1,-,-)$ | $5$ | $6$ |
+
+Contact $6$ in the base-zero report chart has root
+$\widehat x_6=(x_6-1)/(x_6+1)$, with positive denominator. OE §§6 and 16 give positive quotients $Q_{\eta,\epsilon,\sigma}>q_B$ on all their closed leaves. The polynomial identity at the event is exactly
+$P=Q\prod_{j\in S}(x-c_j)^2$ with $|S|\le2$.
+No unused constant has been dropped: it is zero at the event; off the event the six-system unused value is retained as in OE Definition 6.1.
+
+Choose finite rational $d_{\max},M_H,M_3\ge1$ with
+$$
+\begin{gathered}
+0<d_\eta(x)\le d_{\max}
+\quad\hbox{on all eight closed report charts},\\
+|\partial_\phi H_\eta|\le M_H,\qquad
+\left|\partial_\phi^3
+ (Y_e\cdot\Gamma_\eta-\epsilon H_\eta-\lambda_e\sigma\cos\phi)\right|\le M_3
+\quad\hbox{on }\mathbb T
+\quad(\eta=0,1,\ \epsilon,\sigma=\pm1).
+\end{gathered}
+$$
+The bounds refer to normalized functions; derivatives of cleared polynomials alone are not substitutes for them. Set
+$$
+\begin{gathered}
+\gamma_*=\frac{q_B\Delta^2}{8d_{\max}},\qquad
+\rho=\min\left\{\frac12,\frac\Delta4,\frac{u_*}2,
+                     \frac{h_*}{2M_H},\frac{\gamma_*}{2M_3}\right\},\\
+d_{\rm off}=\frac{q_B(\rho/2)^4}{d_{\max}},\qquad
+c_{\rm sh}=\min\{\gamma_*/4,d_{\rm off}/10\},\qquad
+c_e=\frac{c_{\rm sh}\Delta^2}{88}.
+\end{gathered}
+$$
+All are strictly positive. They contain no unspecified off-support minimum.
+

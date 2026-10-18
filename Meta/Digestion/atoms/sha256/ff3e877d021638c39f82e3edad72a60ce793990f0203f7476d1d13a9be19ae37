@@ -1,0 +1,64 @@
+**Theorem 211.4 (Retained head credit on one actual measure).**
+Let $y$ be an input-family score as in 211.1 and let
+$d\ge\Delta_O(y)$. For every late $j$,
+
+$$
+\begin{aligned}
+\nu_{10}(Z_j)&\ge(\gamma_j-c_2-d)_+,\\
+\nu_{01}(Z_j)&\ge
+ \max\{0,\gamma_j-E-d,\gamma_j-c_1-p_{00}-d\},\\
+\nu(Z_j\setminus Z_i)&\ge(\gamma_j-E-d)_+\quad(3\le i<j),\\
+t&\ge(\mu-d)_+.
+\end{aligned}
+\tag{211.10}
+$$
+
+Choose $m\ge2$ late addresses $J=\{j_1<\cdots<j_m\}$ with
+$\gamma_j\ge g>E+d$, and define
+
+$$
+s=g-E-d>0,\qquad\bar c=c_1+(c_2-p_{00})_+,\qquad
+ a=2s+\bar c,\qquad
+\Psi=\frac{a^2}{a-s}=4s+\frac{\bar c^2}{s+\bar c}.
+\tag{211.11}
+$$
+
+On this same actual $\nu$, every $j\in J$ has $m_j\ge a$ and
+every $i<j$ in $J$ has $D_{ij}\ge s$. In particular $S\ge a+s$.
+
+**Proof.** The following three legal stopped tables have exactly the
+listed excesses, before any maximization:
+
+$$
+\begin{array}{c|c}
+(1,j;1,j,0)&\gamma_j-c_2-\nu_{10}(Z_j)\\
+(2,j;0,j,0)&\gamma_j-E-\nu_{01}(Z_j)\\
+(2,j;2,j,0)&\gamma_j-c_1-p_{00}-\nu_{01}(Z_j).
+\end{array}
+\tag{211.12}
+$$
+
+The first keeps every class-1 correct and pair reward, including early
+$00$, and loses the class-2 correct total and exactly the indicated
+$10$ lift of pair mass. The second earns no early correct reward;
+its pair loss is only the $01$ lift on $Z_j$. The third retains
+class 2, loses every early-$00$ pair row as well as that same $01$
+loss, and earns no class-1 correct reward. In all three, the whole
+class-$j$ correct measure is in the second cell, and $T$ is retained.
+All other correct labels earn zero. This proves the identities for
+arbitrary suffixes and early allocations. Their excesses are at most
+$d$, giving the first two lines of (211.10).
+The late table $(i,j;0,j,0)$ has excess
+$\gamma_j-E-\nu(Z_j\setminus Z_i)$; the head table
+$(1,2;1,2,j_*)$, $\gamma_{j_*}=\mu$, has excess $\mu-t$.
+These prove the remaining lines, using nonnegativity for positive parts.
+
+For $j\in J$, the first lift is at least $s+c_1$, and the second
+is at least $s+(c_2-p_{00})_+$. These are masses on disjoint early
+lifts. Their sum is at most $\nu(Z_j)$, even with arbitrary positive
+$\nu_{00}$. This gives $a$ without discarding any early-$00$ row.
+Finally $Z_i$ and $Z_j\setminus Z_i$ are disjoint, proving
+$S\ge a+s$. The identities are necessary conditions on actual
+inputs; their conjunction alone is not a sufficient score or certificate
+construction. $\square$
+

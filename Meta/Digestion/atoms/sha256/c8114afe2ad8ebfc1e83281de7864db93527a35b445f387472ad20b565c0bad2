@@ -1,0 +1,63 @@
+**Theorem 5.1 (closed one-cut optima).** For every source and calibrated
+pure helper pair in Definitions 2.1–3.2, the sharp common and worst-parity
+success probabilities are
+
+$$
+\begin{aligned}
+p_C&=1-E_C,\\
+E_C&=\max\left\{0,\frac{\mu|u-v|}{1+|v|},
+                     \frac{\mu|u|-|v|}{1-|v|}\right\},\\[2pt]
+p_R&=1-E_R,\\
+E_R&=\max\left\{0,\frac{\mu|u-v|}{1+|v|},
+                     \frac{\mu(|u|-|v|)}{1-\mu|v|}\right\}.
+\end{aligned}
+\tag{PR.14}
+$$
+
+The denominators are positive and both optima are attained by the complete
+instruments of Theorem 4.2. In particular $p_R\leq p_C$.
+
+Proof. Put $e=1-p$. For C and $v\ne0$, the real feasibility conditions
+are intersection of three closed intervals:
+
+$$
+[-1+e,1-e],\qquad [\mu-e,\mu+e],\qquad
+\left[\frac{\mu u}{v}-\frac e{|v|},
+      \frac{\mu u}{v}+\frac e{|v|}\right].
+\tag{PR.15}
+$$
+
+Intervals on a line have common intersection exactly when each pair
+intersects: the largest left endpoint cannot exceed any right endpoint.
+The first two intersect because $\mu\leq1$. The first and third intersect
+exactly when
+$\mu|u|\leq |v|+(1-|v|)e$. The second and third intersect exactly when
+$\mu|u-v|\leq(1+|v|)e$. Thus the least possible $e\geq0$ is $E_C$.
+If $v=0$, the last constraint is simply $e\geq\mu|u|$; the first two
+intervals still intersect, yielding the same formula.
+
+For R, $\mu=0$ permits $p=1,x=1$. If $\mu>0$ and $v\ne0$, the
+intervals are
+
+$$
+[-1+e,1-e],\qquad [1-e/\mu,1+e/\mu],\qquad
+\left[\frac u v-\frac e{\mu|v|},
+      \frac u v+\frac e{\mu|v|}\right].
+\tag{PR.16}
+$$
+
+The first two intersect because $1\leq1-e+e/\mu$. Pairwise intersection
+with the third gives
+
+$$
+\mu(|u|-|v|)\leq(1-\mu|v|)e,\qquad
+\mu|u-v|\leq(1+|v|)e.
+$$
+
+For $v=0$ again the sole extra condition is $e\geq\mu|u|$.
+This proves $E_R$. Strict $|u|,|v|<1$ makes every positive lower bound
+strictly below one, so the displayed minima are feasible in $[0,1)$.
+Theorem 4.2 gives attainment and Proposition 4.3 gives minimax optimality.
+Finally every R instrument is a C instrument if return is not demanded,
+so $p_R\leq p_C$. $\square$
+

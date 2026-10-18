@@ -1,0 +1,75 @@
+**Lemma 47.1 (global domination and compact-input asymptotic).** For physical endpoints $A,B,Y\in\mathcal C$, define
+
+$$
+\begin{aligned}
+\mathcal K_b(A,Y)&=\int_1^\infty e^{-bt}K_d(t;A,Y)dt,\\
+\mathcal I_b(A,B)&=\int_{\mathcal C}W_1(Y)
+             \mathcal K_b(A,Y)\mathcal K_b(B,Y)dY,\qquad 0<b<1.
+\end{aligned}
+\tag{47.1}
+$$
+
+On the entire two-input space,
+
+$$
+0\le\mathcal I_b(A,B)\le C(1+\log(1/b)).
+\tag{47.2}
+$$
+
+Uniformly for $A=(k_A,q_A),B=(k_B,q_B)$ in any fixed physical compact subset of the height interior,
+
+$$
+\mathcal I_b(A,B)=
+ \frac{\phi_0\phi(k_A)\phi(k_B)I_3}{32\pi^2\Delta}
+ \log(1/b)+O(1).
+\tag{47.3}
+$$
+
+Proof. Integrating the large-time Gaussian of L Lemma 41.2 gives
+
+$$
+\begin{aligned}
+\mathcal K_b(A,(k,q))&\le
+ C\phi(k_A)\phi(k)
+ \frac{e^{-c\sqrt b|q-q_A|}}{1+|q-q_A|},\\
+W_1(k,q)&\le C\phi(k)(1+|q|)^{-1}.
+\end{aligned}
+\tag{47.4}
+$$
+
+The first estimate follows by splitting its time integral at $|q-q_A|^2$ and using $bt+c|q-q_A|^2/t\ge c'\sqrt b|q-q_A|$; bounded displacements use integrability of $t^{-3/2}$ from one. Heights have bounded factors. To bound the square at any input, the two radial decreasing functions $(1+|q|)^{-1}$ and $e^{-2c\sqrt b|q|}(1+|q|)^{-2}$ have convolution maximized at coincident centers. Explicitly their layer-cake superlevel sets are balls, and the intersection of two balls has volume at most the smaller ball's volume, attained for common centers. Tonelli reduces the assertion to that observation. At the common center the radial integral is bounded by
+
+$$
+C\int_0^\infty\frac{r^2e^{-2c\sqrt b r}}{(1+r)^3}dr
+ \le C(1+\log(1/b)).
+\tag{47.5}
+$$
+
+Split at $1$ and $b^{-1/2}$ to obtain the last bound. Cauchy–Schwarz in the positive measure $W_1(Y)dY$ then proves (47.2) for different inputs. This proves a bound on all inputs, including heights near either face and arbitrarily remote phase inputs.
+
+For the coefficient use L Theorem 42.1, keeping its polynomial error. Outside a fixed phase ball containing $q_A,q_B$, uniformly for compact inputs,
+
+$$
+\begin{aligned}
+W_1(k,q)&=\frac{\phi_0\phi(k)}{4\pi\sqrt\Delta\,\mathfrak r(q)}
+                    +O(\phi(k)|q|^{-3}),\\
+\mathcal K_b(A,(k,q))&=
+ \frac{\phi(k_A)\phi(k)e^{-\sqrt b\mathfrak r(q-q_A)}}
+      {4\pi\sqrt\Delta\,\mathfrak r(q-q_A)}
+                    +O(\phi(k)|q|^{-3}).
+\end{aligned}
+\tag{47.6}
+$$
+
+The subtracted time interval $(0,1)$ in each expression is exponentially small at remote output, by L (41.2); it is included in the displayed polynomial errors. Translation by bounded $q_A$ changes the leading Yukawa factor to its centered value with error $C\phi(k)|q|^{-2}$, uniformly in $b$, since $(1+\sqrt b r)e^{-\sqrt b r}$ is bounded. All product errors, integrated against $dq\,dk$, are $O(1)$: a leading triple product has degree $-3$, and replacing a Yukawa factor by its translation error adds one inverse power, while native errors add at least two. The errors are integrated as polynomial bounds, without assigning exponential decay to them. The inner region is uniformly bounded by (47.4).
+
+In raw phase measure the change $q=\mathsf M^{1/2}(r\omega)$ gives $dq=\sqrt\Delta\,r^2dr\,d\omega$, with sphere area $4\pi$. Thus the leading outer integral is
+
+$$
+\frac{\phi_0\phi(k_A)\phi(k_B)I_3}{16\pi^2\Delta}
+ \int_{R_0}^\infty e^{-2\sqrt b r}\frac{dr}{r}.
+\tag{47.7}
+$$
+
+For any fixed $R_0>0$ the radial integral is $\tfrac12\log(1/b)+O(1)$: subtract the integral of $1/r$ on $[R_0,b^{-1/2}]$, then substitute $v=\sqrt b r$ in both remaining integrals; $(e^{-2v}-1)/v$ is integrable at zero and $e^{-2v}/v$ at infinity. This proves (47.3), including its raw-density constant. $\square$
+

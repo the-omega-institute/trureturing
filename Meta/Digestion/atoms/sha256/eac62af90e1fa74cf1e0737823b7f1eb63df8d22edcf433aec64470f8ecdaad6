@@ -1,0 +1,56 @@
+**定理 198.8（有限条件和的单一预算证书）。** 设有限和分解为
+$$
+y=\sum_t M_t+\sum_j C_j+\sum_k E_k,
+\tag{198.27}
+$$
+其中 $M_t$ 属于定理 198.2 的共同马尔可夫类，$C_j$ 属于定理 198.4 的
+正确行加尾类，$E_k$ 属于定理 198.3 的四码类。令
+$$
+V=\sum_t M_t+\sum_j\operatorname{chain}(C_j),\qquad
+\theta=\sum_k\tau(E_k).
+\tag{198.28}
+$$
+若待检验的得分还满足归一条件 $\Delta_O(y)\le1$，并且
+$$
+\sum_t\Delta_O(M_t)+
+\sum_j\Delta_O(C_j)+\theta\le1,
+\tag{198.29}
+$$
+则
+$$
+0\le\theta\le1,\qquad
+\Delta_N(V)\le1-\theta,\qquad
+\sup_{b\in H_L}(y-V).h(b)\le\theta.
+\tag{198.30}
+$$
+这里的归一条件与分项预算分别承担 (198.5) 的输入域和输出剩余预算，不能互相替代。
+固定任意 $b\in H_L$ 及实际的非负 $N$ 分配 $\lambda$，满足
+$$
+A_N\lambda\ge h(b),\qquad S=\sum_D\lambda_D.
+$$
+$V$ 是得分向量而不是分配。弱对偶性给出
+$$
+V.h(b)\le V.A_N\lambda\le S\,\Delta_N(V)\le S(1-\theta).
+$$
+令 $E=y-V$。由 (198.30)，$E.h(b)\le\theta$，所以
+$$
+y.h(b)\le S(1-\theta)+\theta.
+\tag{198.31}
+$$
+当 $S\ge1$ 时右端不超过 $S$。当 $S<1$ 时，以零列 $R$ 补足
+$\lambda'=\lambda+(1-S)e_R$；它保持 $A_N\lambda'\ge h(b)$，质量变为一，故
+$V.h(b)\le1-\theta$，进而$y.h(b)\le1=\max\{1,S\}$。
+这是一个展示的充分分解，不是任意 $y$ 的分解定理。
+
+**证明。** 完整目录支持函数满足次可加性，
+$$
+\Delta_N\left(\sum_i y_i\right)\le\sum_i\Delta_N(y_i).
+$$
+定理 198.2 给出每个 $M_t$ 的 $N/O$ 支持相等，定理 198.4 给出
+$\operatorname{chain}(C_j)$ 的支持不增，故 (198.29) 推出 $\Delta_N(V)\le1-\theta$。
+对每个四码项，定理 198.3 给出残差不超过 $\tau(E_k)$；有限求和得到 (198.30)。
+随后对任意给定的 $b,\lambda$ 使用上面的弱对偶及零列补足，得到 (198.31)。全程只
+使用一个显示的总预算。一般地，$\Delta_O(\sum_i y_i)$ 可能严格小于
+$\sum_i\Delta_O(y_i)$，所以总和支持小并不推出 (198.29)；逐项饱和也不是加法。
+该证书没有给出任意饱和混合基/并行行的归一提升，也没有制造新的停止概率核。
+

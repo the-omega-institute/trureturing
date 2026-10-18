@@ -1,0 +1,30 @@
+**Theorem 11.2 (Integrated bound separated by record type).** Under the
+same contract let $Z$ be the event of finite return with all replies zero,
+including a return with no calls. Define the random variable $G$ by cases,
+
+$$
+G=\begin{cases}
+z_N&\text{on }Z,\\
+e_N&\text{on }\{\tau<\infty\}\setminus Z,\\
+0&\text{on }\{\tau=\infty\}.
+\end{cases}
+\qquad
+\mathbb P_p(A\ne H_j,\tau<\infty)\ge\mathbb E_pG.
+\tag{11.8}
+$$
+
+The definition makes no evaluation of $z_\infty$ or $e_\infty$.
+
+Proof. For each fixed seed, sum Theorem 11.1's inequality over the all-zero
+terminal records and Theorem 10.1's inequality over the other terminal
+records. There are countably many finite ordered integer-address/reply
+records. Their terminal sections are disjoint, including the empty record,
+so integration over the arbitrary independent law $\nu$ and Tonelli's
+theorem give (11.8). All masses used before integration are source-section
+masses, with no conditioning on a singleton seed or assumed regular
+conditional law on the seed space. Finite internal waits supply no extra
+observations. Every nonreturn, whether internal divergence after finitely
+many calls or an infinite-read path, contributes zero to $G$; its actual
+reads remain part of $N$. Measurable completion changes none of these
+integrated masses. $\square$
+

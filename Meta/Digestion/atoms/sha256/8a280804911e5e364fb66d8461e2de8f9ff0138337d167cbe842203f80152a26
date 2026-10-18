@@ -1,0 +1,101 @@
+### 93.1. Exact parameter field
+
+Let \(P(B)=\sum_{j=0}^{98}p_jB^j\) be the primitive integer polynomial
+whose complete ascending coefficient list is in §93.7. Put
+\(Q(b)=P(b^2)\).
+
+**Theorem 93.1.** For every real \(0<|b|<1\) with \(Q(b)=0\),
+there is no original noncanonical common-flat orthogonal triple.
+Every complete common-flat input basis is canonical up to phases and
+permutation, and the fixed pair \((I_6,H_0(b))\) cannot belong to a quartet.
+There are exactly six such parameters, three positive and their negatives.
+
+The polynomial \(P\) has multiplicity exactly two in the discriminant of
+\(\widetilde F(B,K)=b^{-6}F(b,bK)\), where \(B=b^2\) and \(F\) is the
+literal decic in §88. The substitution is a polynomial identity.
+Exact discriminant division verifies \(P^2\mid\operatorname{disc}_K
+\widetilde F\) and \(P^3\nmid\operatorname{disc}_K\widetilde F\).
+No numerical discriminant is used.
+
+The monic reductions of \(P\) have irreducible factor degrees
+\[
+\begin{array}{c|c}
+19&1,1,2,4,90\\
+29&2,9,15,17,19,36\\
+61&1,4,13,80.
+\end{array}
+\]
+The following ascending coefficient arrays specify all monic factors.
+For each prime, multiply its listed polynomials in \(B\); the result is
+the monic reduction of \(P\).
+
+~~~text
+factor19_1: [6, 1]
+factor19_2: [-7, 1]
+factor19_3: [3, -5, 1]
+factor19_4: [9, 6, 9, -9, 1]
+factor19_5: [-5, -3, 9, 8, 2, 1, 8, 6, -7, 5, -2, -8, 6, -5, 0, 9, -4, 0, 6, -7, 3, 3, 2, 4, 7, -9, -6, 9, 1, -9, -8, 4, -4, -2, 4, 0, -2, 6, 8, -9, -2, 2, 2, 6, 2, 4, -8, -8, -5, -6, 1, -9, -1, 9, 5, -3, -7, -1, 3, -9, -3, -1, -7, -4, -8, 3, 6, -5, 7, 5, 0, 0, -6, 9, -4, -5, -8, -3, 3, 6, 0, -3, -1, -5, -9, 7, -1, -5, 0, -2, 1]
+factor29_1: [-3, 7, 1]
+factor29_2: [13, 2, -8, 1, 14, 9, 6, 1, 9, 1]
+factor29_3: [-3, -11, 3, 2, -14, 4, 9, -2, 8, -2, -8, -4, 12, 6, 0, 1]
+factor29_4: [-3, -1, -8, -14, 2, 13, -1, 11, -10, -10, 4, 4, -5, 6, 10, -1, 3, 1]
+factor29_5: [3, 9, 4, 14, 2, -12, -13, -12, 11, 5, 9, -3, -3, 4, 7, -10, 9, 10, 2, 1]
+factor29_6: [-13, 4, -9, 5, 10, 2, 8, -5, -1, -6, 6, -11, -1, 3, -7, -13, -10, 6, -3, 3, -2, 3, 5, -9, -7, 9, 4, 2, -4, 4, -7, 8, 13, -10, -5, -6, 1]
+factor61_1: [-25, 1]
+factor61_2: [22, 7, 11, 9, 1]
+factor61_3: [-21, -11, 13, 4, -21, -25, 16, -3, 28, 28, 9, 23, -12, 1]
+factor61_4: [-7, -21, -7, 9, -1, -27, -30, 7, -1, 26, -14, 26, -30, -14, 22, -11, 21, 16, -8, -14, 21, 22, 27, 19, -6, 15, 0, -11, -3, 23, 8, -26, -16, -2, -13, -13, -2, -20, 22, 5, -15, 26, -17, 19, 1, 7, 19, -6, 11, -15, 11, 6, 17, -27, 26, -14, -16, -29, -27, 21, -1, 8, -4, -3, -10, 18, 25, 24, -16, -5, 25, 7, 16, -27, 16, 10, -20, -24, -22, -6, 1]
+~~~
+
+Their products are as stated, and each factor satisfies the Rabin criterion: for a
+degree \(n\) factor \(f\), \(B^{p^n}=B\bmod f\), and
+\(\gcd(f,B^{p^{n/r}}-B)=1\) for each prime \(r\mid n\).
+The proper subset-degree intersection for the first two rows is
+\(\{2,96\}\), while the third allows neither. Hence \(P\) is irreducible.
+
+For a root \(\beta\), its exact norm is
+\[
+ \operatorname{Nm}(\beta)
+ =\frac{3736172995358363574201349399792269}{23265280}
+ =\frac{3^{59}11\,13\,43^2}{2^{16}5\,71}.
+\]
+Its 5-adic valuation is \(-1\), so \(\beta\) cannot be a square in
+\(\mathbb Q(\beta)\). Adjoining its square root has degree two. Thus
+\(Q\) is irreducible of degree 196.
+Exact Sturm division gives three roots of \(P\) in \((0,1)\), one in each
+\[
+\begin{split}
+ &(282912/349561,\ 274537/339213),\\
+ &(215864/248923,\ 158403/182662),\\
+ &(508935/581954,\ 49319/56395).
+\end{split}
+\]
+For reproducibility, use the Sturm sequence beginning with \(P,P'\),
+replace each nonzero next term \(-\operatorname{rem}(A,B)\) by its
+positive primitive integer multiple, and omit zero signs when counting
+variations. Its endpoint variation counts are:
+
+~~~text
+0: 53
+1: 50
+282912/349561: 53
+274537/339213: 52
+215864/248923: 52
+158403/182662: 51
+508935/581954: 51
+49319/56395: 50
+~~~
+
+Their positive and negative square roots are the six stated parameters.
+In particular \(\mathbb Q[b]/(Q)\) has a real embedding, so it cannot
+contain \(i\). Thus \(Q\) remains irreducible over \(\mathbb Q(i)\).
+Work in \(K_Q=\mathbb Q(i)[b]/(Q)\).
+
+The good residue map is \(b\mapsto5,\ i\mapsto11\) modulo 61:
+\(P(25)=0\), \(11^2=-1\), and the leading coefficient of \(Q\) is nonzero.
+A nonzero residue of any constructed scalar proves its nonvanishing in
+\(K_Q\), hence at every complex root of \(Q\). Inverses are always formed
+by adjugates and determinants, with all denominators certified below.
+This irreducible-number-field argument does not identify a modular
+solution set with the real solution set.
+

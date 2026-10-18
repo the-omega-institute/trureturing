@@ -1,0 +1,39 @@
+**Theorem 8.2 (no finite installed preparer for the original code).**
+No finite installed stationary fixed-address common-start preparer
+generates $e_{\sigma_\infty(u)}$ correctly on the whole
+$\mathcal U_*$. This holds even if no uniform preparation call bound
+is specified and only sourcewise termination is demanded.
+
+Proof. Fix any finite installed menu $M$ of a proposed preparer. Let
+$L=\max(\{0\}\cup\{|v|:v\in M\})$ and choose an integer $d>L$
+with $d\ge1$. Let $B^-$ be the complete ordered binary tree with all
+leaves beta at depth $d$. Choose one of these leaf occurrences and
+replace its beta by $E$, obtaining $B^+$. Both are finite branch
+images by (PCA.11). The first has no alpha leaf and the second has
+one. Every address of length strictly less than $d$ reads branch in
+both trees.
+
+Choose four other branch images for $c,b_1,b_2,b_4$, pairwise distinct
+and different from $B^-,B^+$. In both current valuations set
+$x_{b_3}=\beta$, set $x_a$ respectively to $B^-$ and $B^+$, and keep
+those four values fixed. The valuations are injective image fillings;
+NBP Proposition 9.3 gives two actual finite origins $u^-,u^+$ in the
+entire $Z_{b_3}$. Both have the same full target $R_0$. Their prescribed
+codes, and hence their required complete entries, differ.
+
+For every $v\in M$ shorter than three the current reply is the common
+exterior branch. Otherwise write $v=pw$ with $p\in P$. In a class other
+than $a$ the entire subtree value is the same. In either occurrence of
+$a$, the actual occurrence identity gives the reply of $B^-$ or $B^+$
+at $w$. Here $|w|\le|v|\le L<d$, so both replies are branch. Thus
+the two actual currents have identical replies at every installed
+word, including words that are absent in any unchanged class. This
+covers the whole menu, rather than a chosen shallow query policy.
+
+Lemma 2.3 forces identical paths and the same latch, contradicting
+the different prescribed entries. If the path never terminates,
+sourcewise correctness already fails. A cycle cannot wait for a new
+reply from a stationary register, and the fixed-state model cannot
+generate a new longer address. No uniform call assumption was used.
+$\square$
+

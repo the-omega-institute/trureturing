@@ -1,0 +1,55 @@
+**Theorem 24.1 (full-$M_5$ obstruction for GC.51).** Consider an upgrade
+of the native $\mathcal K_3$ menu allowing any finite adaptive sequence
+of the same two-outcome read with effects $\{n_1,I-n_1\}$, intervening
+native unitaries and input-independent randomization, but no additional
+quantum carrier or other nonunitary primitive. Allow arbitrary hidden
+Kraus multiplicities for that read and classical merging of complete
+records. No actual branch of such an instrument can equal
+$X\mapsto C_HXC_H^\dagger$ from (GC.51) on the full complex
+$M_5$. Identify its five-dimensional output with $\mathcal K_3$ by
+any fixed unitary if needed.
+
+Proof. If a read outcome $b$ has effect $P_b$, its Kraus operators
+$L_{b\mu}$ obey $\sum_\mu L_{b\mu}^\dagger L_{b\mu}=P_b$.
+For $v\in\ker P_b$, the sum $\sum_\mu\|L_{b\mu}v\|^2$
+is zero, so every $L_{b\mu}=L_{b\mu}P_b$. Each Kraus matrix
+therefore has rank at most $\operatorname{rank}P_b\le3$.
+Every trajectory containing a read has Kraus rank at most three,
+even after pre/post unitaries and further reads. A trajectory with
+no read is a scalar-weighted unitary and has scalar input effect.
+
+In contrast the particular coherent high encoder has effect
+
+$$
+C_H^\dagger C_H=(1-\delta)ED^\dagger DE^\dagger+P^\perp.
+\tag{GC.97}
+$$
+
+Its eigenvalues are $(1-\delta)h_0^2,(1-\delta)h_1^2,
+(1-\delta)h_2^2,1,1$. The first three are strictly between zero
+and one. Thus $C_H$ has rank five and nonscalar effect.
+Its Choi matrix is the single positive ray
+$|C_H\rangle\!\rangle\langle\!\langle C_H|$. If positive Kraus
+terms sum to this ray, expectation on any vector orthogonal to
+$|C_H\rangle\!\rangle$ is a sum of nonnegative squares equal
+to zero. Every nonzero Kraus vector must be collinear with
+$|C_H\rangle\!\rangle$. A measured trajectory violates its
+rank five, while an unmeasured trajectory violates its nonscalar
+effect. Classical merging and hiding Kraus indices are positive sums,
+so neither helps. For a convergent countable sum the same squares
+vanish termwise. For an integrable random seed they vanish almost
+everywhere; a finite basis of the orthogonal complement suffices.
+The argument is the Choi-ray mechanism already used in Native
+Proposition 44, now applied to this specified nonunitary encoder.
+A normalized maximally entangled five-dimensional input and passive
+reference distinguishes any unequal CP maps. $\square$
+
+This is specifically the full completion (GC.51). Its supported
+restriction $C_HE$ has rank THREE, so the preceding rank-five
+argument does not follow after replacing the full $M_5$ problem by
+that restriction. Theorem 23.1 supplies the separate supported-cut
+cost obstruction. Neither theorem excludes all lawful full completions
+or all optimizers of the original problem. Matching the supported
+effect in Native Theorem 65.2 is compatible with both obstructions:
+an effect and a complete conditional quantum map are different data.
+

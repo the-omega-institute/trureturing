@@ -1,0 +1,7 @@
+**Definition 5.1 (native cost convention).** Each displayed RD, WR, move,
+EX, BF, TOK or CTL is one PR57 primitive, one receipt, one tick and two
+fee units. A successor edge itself costs no additional CTL. Separate CTL
+occurrences are counted. Every routine below requires constructed cells,
+proper ownership, distinct input/test latches and heads at its stated
+entry positions. No formula is an empty-port setup allowance.
+

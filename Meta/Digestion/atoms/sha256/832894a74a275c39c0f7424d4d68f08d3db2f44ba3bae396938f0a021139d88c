@@ -1,0 +1,34 @@
+### 8.4 最终结论保留的条件
+
+`actual_uniform_native_joint q` 对所有 $q\in\mathbb N$ 提供 $J(q+2)$。
+`actual_uniform_native_hamiltonian_cycle` 对任意 `Frame d (q+3)` 与 $q+6\le d$，直接给出
+
+$$
+\exists v\in F.\texttt{domain},\ \exists p:v\leadsto v
+\text{ in }(\texttt{recursiveFactor}(q+3,F))|_{F.\texttt{domain}},
+\quad p\text{ is a Hamiltonian cycle}.
+$$
+
+这是实际闭 Walk 的存在性与完整 Hamilton 圈性质。
+没有导出匹配、路径、覆盖、连通性或 Hamilton 供应者参数，也没有导出单点基数排除条件。
+内部 Mathlib `IsHamiltonian` 的单点约定通过已有实际圈处理；最终输出直接给出实际圈。
+源码使用非计算的路径选择，没有额外承诺可执行的规范枚举算法。
+
+与本卷最初的 necklace 状态目标连接，使用原始全 Cayley 图与相应 Frame 域的准确关系，
+并核对所需的全部阶数和维数界。这些是本节之外的构造结果；本节自身不证明整个原 Cayley 图的闭合。
+本节说明的结论对象与量词就是上面明确列出的原始 Frame 域。
+
+构造结果与代码标识：
+
+- `UniformNativeJointData`：`JointData`、`NativeJoint`。
+- `UniformNativeSuccessorMatching`：`actual_uniform_native_joint_successor`。
+- `UniformNativeHamiltonianBridge`：`actual_uniform_parent_hamiltonian_cycle`。
+- `UniformNativeJointBaseTwo`：`actual_native_joint_two`。
+- `UniformNativeInductionClosure`：`native_induction_from_original_bases`、
+  `actual_uniform_native_joint`、`actual_uniform_native_hamiltonian_cycle`。
+
+良基归纳、低阶 Hamilton 圈删边、二因子分量提取与群作用的轨道机制继续归属于既有结果。
+相关构造结果中的原始字面递归、完整原域覆盖及其统一组合标记为 `repo-derived`；
+本节对这些结果作研究说明，不将归纳窗口的组织另称为新增数学定理。
+本节不把本地验收、dev 交付或官方验收互相替代，也不作全球 unique 声明。
+

@@ -1,0 +1,60 @@
+**Theorem 12.1 (square reduction and directed zero scope).** Under
+Assumption 10.1, none of the eight tests (FC.7) is identically zero,
+and every zero of $F_{j,\epsilon,\sigma}$ satisfies
+$\epsilon u>0$. If a pure test has two distinct zeros, it has the
+form $(Au+Bv+C)^2$ on the circle. If a saturated test has four
+distinct zeros, it has the form $(E_2(u,v)+L_1(u,v))^2$, where
+$E_2$ is a real homogeneous quadratic and $L_1$ is a real linear
+form. Multiplicities and the point $(-1,0)$ are included.
+
+Proof. The following homogeneous maximal-zero square fact is the
+auxiliary lemma used here. For $d=2$ or $4$, let $T$ be a nonzero
+nonnegative real trigonometric polynomial of degree at most $d$.
+Under the half-angle map
+
+$$
+u=\frac{V_h^2-U_h^2}{U_h^2+V_h^2},\qquad
+v=\frac{2U_hV_h}{U_h^2+V_h^2},
+\tag{FC.37}
+$$
+
+$H=(U_h^2+V_h^2)^dT$ is a nonzero nonnegative real homogeneous
+binary form of degree $2d$. The map from $\mathbb{RP}^1$ to the
+circle is bijective, including $V_h=0$, which is $(-1,0)$.
+At every real projective zero the local polynomial has even
+multiplicity, since an odd multiplicity would change its sign.
+Thus there are at most $d$ distinct zeros. If there are $d$,
+their multiplicities exhaust all $2d$ degrees. Each is exactly
+double, and factorization over $\mathbb R$ gives
+$H=c_H\prod_{i=1}^d\ell_i(U_h,V_h)^2$ with $c_H>0$ and real
+linear $\ell_i$. There is no unaccounted complex factor, lower-degree
+exception, or extra point at infinity. Repeated roots consume the
+same degree budget and cannot increase the number of distinct zeros.
+
+For $d=2$ the homogeneous quadratic square root is a linear
+combination of $V_h^2-U_h^2$, $2U_hV_h$, $U_h^2+V_h^2$.
+Dividing by $U_h^2+V_h^2$ gives $Au+Bv+C$. For $d=4$ a
+homogeneous quartic square root is a linear combination of the lifts
+of $u^2,v^2,uv,u,v$, which form a basis of the five-dimensional
+space of real binary quartics. Dividing by $(U_h^2+V_h^2)^2$
+gives $E_2+L_1$. The positive constant is absorbed into the square
+root. This elementary scalar factor argument is consistent with
+Dritschel–Rovnyak, *The Operator Fejér–Riesz Theorem*,
+[arXiv:0903.3639v1, §1](https://arxiv.org/html/0903.3639v1),
+a survey of the classical factorization. No operator factor rank
+or general quadrature node bound is used.
+
+For the source tests, flipping $\epsilon$ changes a pure test by
+$2\epsilon\lambda u$ and a saturated test by
+$2\epsilon\lambda D_cu$. If one test were identically zero,
+the opposite test would change sign, contradicting full-circle
+nonnegativity. At a zero with $u\ne0$, the same comparison and
+$D_c>0$ imply $\epsilon u>0$. At $u=0$ both report tests
+would vanish. Both angular derivatives would be zero by
+nonnegativity, but their difference is $2\epsilon\lambda u'$
+or $2\epsilon\lambda D_cu'$, and $u'\ne0$ there. This is
+impossible. The degree-two and degree-four tests now satisfy the
+auxiliary lemma. This also recovers the positive-multiplier parts
+of RC Theorem 69.1 and Proposition 70.2 in the present normalization;
+no nonidentity assertion at $\lambda=0$ is inferred. $\square$
+

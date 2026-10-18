@@ -1,0 +1,18 @@
+## 458. Realization and the limited separation conclusion
+
+The face pairing of Proposition 453.1 meets every hypothesis of Section 448:
+there are six actual edges, four distinct labels per fixed paired frame,
+original degree at least six, connected normal circles, and one closed
+orientable genus-5 boundary link on the connected actual manifold.
+Theorem 452.1 therefore realizes this same triangulation by genuine
+hyperideal tetrahedra with totally geodesic boundary and a compact complete
+metric including that boundary.
+
+The construction has an actual six-label transverse necessity. It cannot
+be put into the earlier at-most-five-reservoir class merely by changing
+vertex-induced paired frames. This is the asserted strict separation;
+it does not exclude another older geometric criterion from proving this
+particular triangulation realizable. No minimality or unrestricted CFMP
+claim is made, and no explicit numerical edge-length solution is needed
+for this application of Theorem 452.1.
+

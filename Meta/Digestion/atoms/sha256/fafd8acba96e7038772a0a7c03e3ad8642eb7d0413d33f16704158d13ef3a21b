@@ -1,0 +1,59 @@
+**Theorem 14.2 (exact four-name optimum on this augmented slice).**
+For every $m\ge3$, every deterministic complete export and reader
+satisfying Definition 14.1 obeys
+
+$$
+\left|\{E(t_s):s\in R_m\}\right|\ge4.
+\tag{OCC.41}
+$$
+
+Four names suffice, together with every original requested trajectory.
+Consequently this augmented slice task has exact attained alphabet
+four. The bound is not an original $M_1(D)$ lower bound.
+
+Proof. Let $Q_h$ be uniform on $R_h$. By Theorem 13.1 every single
+edge is fair under every $Q_h$. By Definition 12.1 the reply law of
+every fixed finite original-root literal is therefore the same under
+all four $Q_h$, whether that word is constant or observes one edge.
+
+Fix one public original request $p_0$, for example $R$. For every
+attained name $e$, its chosen literal $a_e$ and the function $f_e$
+decoding the descriptor from its reply are fixed. A zero-Read branch
+is represented by a fixed formal reply. Extend $f_e$ arbitrarily on
+unattained replies. For $h\in\mathbb F_2^2$ put
+
+$$
+F_{e,h}=\{s\in R_m:f_e(r_{t_s}(a_e))=h\}.
+\tag{OCC.42}
+$$
+
+For each $h$, the sets $F_{e,h}$ cover $R_h$: a source belongs to
+the successful set for its own actual name. Hence
+$1\le\sum_e Q_h(F_{e,h})$. For each fixed $e$, its reply has one
+common law under all four $Q_h$, and the four outputs of $f_e$
+are disjoint events in that reply alphabet. Thus
+
+$$
+\sum_hQ_h(F_{e,h})\le1.
+\tag{OCC.43}
+$$
+
+Sum first over $h$ and then over names to get $4\le|E[R_m]|$.
+No independence of the export and descriptor, no rectangular fiber,
+and no restriction to target-prefix queries has been used.
+
+For sufficiency export the four sector names $h=\chi(s)$ after
+paid acquisition. The name itself supplies the extra output.
+Each original target in the scaffold or padding is constant, and
+each nonconstant graph target reads its one actual edge owner and
+decodes its leaf factor using (OCC.32). Equation (OCC.5) gives every
+subsequently supplied authentic-count reply. Every sector is nonempty,
+so all four names are attained. The next section supplies this
+acquisition as one terminating full-family preparation. $\square$
+
+The common distribution argument, rather than a bound of four on
+the raw reply alphabet, is essential: a single edge has the same
+distribution in all sectors, even though its value can be correlated
+with a source-dependent export. The proof explicitly handles that
+correlation through the successful-set cover.
+

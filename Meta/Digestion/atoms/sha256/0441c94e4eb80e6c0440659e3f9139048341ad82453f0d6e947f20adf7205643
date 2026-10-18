@@ -1,0 +1,16 @@
+**命题 16.7.1（平衡查询与过程查询的严格分离）。** 令 $\mathcal Q_{\mathrm{eq}}$ 只包含所有恒定 $I,c,u$ 的代数平衡查询，令 $\mathcal Q_{\mathrm{dyn}}$ 另外包含第三坐标钳制下的全局成功收束谓词。则对 $d=1$ 与 $d=4$：
+
+$$
+\mathcal Q_{\mathrm{eq}}(\mathcal M_1)=\mathcal Q_{\mathrm{eq}}(\mathcal M_4),
+\qquad
+\mathcal Q_{\mathrm{dyn}}(\mathcal M_1)\ne\mathcal Q_{\mathrm{dyn}}(\mathcal M_4).
+$$
+
+因此，过程查询严格细化平衡查询的可辨识分区。
+
+**证明。**
+
+第一式是定理 16.3.2。第二式由命题 16.5.1 中 $\operatorname{do}(x_3=1)$ 的收束结果得到。证毕。
+
+<a id="section-16-8"></a>
+

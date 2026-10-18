@@ -1,0 +1,33 @@
+### 99.1. Exact criterion
+
+**Theorem 99.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=D C^2, with D=pqr the full positive squarefree kernel and p,q,r distinct primes. Assume p and q are 1 modulo 24, r is 19 modulo 24, and all mutual Legendre symbols between the three primes are +1. Actual support supplies primes greater than 5 and (5/p)=(5/q)=(5/r)=1.
+
+Choose primitive integer certificates with positive last coordinate:
+
+ a_p^2-p b_p^2=5D c_p^2, q not dividing b_p c_p;
+ a_q^2-q b_q^2=5D c_q^2, p not dividing b_q c_q;
+ u^2-p v^2=-5D w^2, q not dividing v w;
+ U^2-p V^2=15D W^2, q not dividing V W.
+
+Each triple has gcd 1. All four certificates exist under the stated actual-support hypotheses. The last two also have q not dividing uU. Define signs
+
+ H_p=(-5qr/p)_4, H_q=(-5pr/q)_4,
+ X=(b_p/q), Y=(b_q/p), Z=(uU/q).
+
+The quartic symbols are rational quartic characters of nonzero quadratic residues. For a sign T put [T]=(1-T)/2 in F_2. Set h_p=[H_p], h_q=[H_q], x=[X], y=[Y], z=[Z].
+
+In the ordered pure Selmer basis consisting of the actual golden class S followed by lambda_p=(p,1), lambda_q=(q,1), mu_p=(1,p), mu_q=(1,q), the first row and column of the alternating pairing are zero and the remaining additive-bit matrix is
+
+ M=[[0,0,h_p,x],
+    [0,0,y,h_q],
+    [h_p,y,0,z],
+    [x,h_q,z,0]].
+
+Every displayed certificate sign is independent of its allowed choices. In particular, if
+
+ h_p h_q + x y = 1 in F_2,
+
+then rank E_D(Q)=1 and there is no B_(Nk)=D c'^2 for k>1 odd, 3 not dividing k, and positive integer c'. This is a conditional actual-support criterion; it asserts neither numerical realization, a converse, independence from all earlier tests, nor universal WSS exclusion.
+

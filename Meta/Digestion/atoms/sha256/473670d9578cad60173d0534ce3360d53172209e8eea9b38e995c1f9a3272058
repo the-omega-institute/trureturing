@@ -1,0 +1,58 @@
+## 9. The earlier fixed-machine result and the unrestricted cubic comparison
+
+The continuation's Theorem 25.4 has quantifier order
+
+$$
+\begin{gathered}
+\forall\mathcal A\ \exists c_{\mathcal A}>0\ \exists s_{\mathcal A}>0\\
+\forall s\in(0,s_{\mathcal A})\ \forall i\in\{0,1\}:
+\mathbb E_{i,e^{-s}}^{\mathcal A}T\ge c_{\mathcal A}s^{-11}.
+\end{gathered}
+\tag{9.1}
+$$
+
+for one fixed finite $q$-free full-contract machine. Its Lemma 24.2 uses the non-one spectral resolvent of a fixed zero matrix $A$ to obtain $O_{\mathcal A,H}(s^{10})$ completed-gap closeness and $O_{\mathcal A,H}(s^2)$ initial-row closeness. The resolvent neighborhood and constants depend on $A$. A transition eigenvalue approaching one under retuning can invalidate uniform versions of those estimates. Formula (7.3) instead places $c,s_0$ before the observer; its initial estimate is the machine-uniform $O_H(s)$ bound (5.2).
+
+The source's Proposition 27.2 makes the additive obstruction concrete. In its three-state machine, zero preserves the live state $u$ with probability $r$ and otherwise emits $d_0$; one emits $d_1$. The completed-gap coordinate is
+
+$$
+U_i(q)(u,d_1)=\frac{Z_i(qr)}{Z_i(q)}.
+\tag{9.2}
+$$
+
+For fixed $r<1$ the source's fixed-machine estimates apply. On the changing diagonal $r=q=e^{-s}$ the source proves
+
+$$
+\frac{Z_1(e^{-2s})}{Z_1(e^{-s})}
+-\frac{Z_0(e^{-2s})}{Z_0(e^{-s})}
+=\frac{a}{9\cdot2^{10}}s+O_H(s^2).
+\tag{9.3}
+$$
+
+Since $a>0$, this rules out one additive $Cs^{10}$ bound for all retuned matrices. The example is a counterexample to that kernel estimate, not a compliant classifier counterexample: it is not supplied as satisfying both testing risks. It neither disproves Theorem 7.2 nor establishes efficient tuned testing. The present proof uses a different pair of comparisons (5.7).
+
+The supplied unrestricted append's Theorem 22.9 and Corollaries 22.10–22.11 give the cubic paid-mean lower order and matching unrestricted upper order for the same $H_c$ and stationary consecutive-read experiment. Its paid length $L$ corresponds to $T$ here. Its full-family observer is $q$-free and may have arbitrary persistent memory; its common-band version may be retuned to the supplied band. The matching procedure and prefix-KL suppliers cited inside that append are nested source claims. They are credited comparisons, not dependencies of the eleventh-power proof.
+
+In the source's band notation $I_\varepsilon=[1-2\varepsilon,1-\varepsilon]$, its Corollary 22.11 supplies both separate worst-band mean infima and the joint worst-band mean infimum of order $\Theta_{H_c,\alpha}(\varepsilon^{-3})$, with $\varepsilon\le-\log q\le4\varepsilon$ on sufficiently small bands. This is a source-owned unrestricted-memory statement; it is not used to assert any fixed-$M$ upper bound.
+
+The source's lower argument also applies pointwise when common $q$ is known and only its two selected risks are required. To see the parameter correspondence, put $\rho=(1-2\alpha)/4$, $\beta=\alpha+\rho$ and
+
+$$
+b_{\rm ent}=(1-2\beta)\log\frac{1-\beta}{\beta}>0.
+\tag{9.4}
+$$
+
+For a fixed target $i$ with mean $m_i$, its proof-fixed cap is $W=\max\{1,\lceil m_i/\rho\rceil\}$. Retain an ordinary label if the protocol stops by read $W$, and otherwise default to $1-i$. Markov's bound increases only the target error, by at most $\rho$, while the opponent error cannot increase. Both capped errors are therefore at most $\beta<1/2$. The index $i$ selects this proof comparison; it is not supplied as a true label to the original observer. At this fixed $q$, the capped label remains one common measurable function of the prefix and a common independent seed, even if the design depends on known $q$. The source's forward data-processing and prefix envelope give the first inequality below, using its quantities $A_{\rm src}(q),B_{\rm src}(q)$ from (22.60). Since $W\le m_i/\rho+1$ and $B_{\rm src}(q)>0$, rearrangement gives the second:
+
+$$
+b_{\rm ent}\le A_{\rm src}(q)+WB_{\rm src}(q),
+\qquad
+m_i\ge\rho\frac{[b_{\rm ent}-A_{\rm src}(q)-B_{\rm src}(q)]_+}
+ {B_{\rm src}(q)}.
+\tag{9.5}
+$$
+
+The source's (22.64) has $A_{\rm src}(e^{-s})=O_H(s^2)$ and $B_{\rm src}(e^{-s})=\Theta_H(s^3)$, which yields the cubic lower order with constants before the protocol. These prefix premises are not independently established here. The supplied $q$-free cubic upper procedure is also allowed in the unrestricted known-$q$ class by ignoring $q$. Conditional on those suppliers, its per-family infima consequently have cubic order as well.
+
+A cubic information lower bound does not imply the fixed-budget eleventh-power bound. The supplied cubic procedure has unbounded possible gap and pair counters and growing arithmetic precision; finitely many named integer registers are not a finite configuration set. For any fixed $M$ admitting a classifier, (7.3) precludes a paid $O(s^{-3})$ mean under even one family while retaining both risks and both mean conditions. For $M\ge S_\alpha$, (8.11) makes the comparison nonvacuous. This is a separation of the specified resource classes, conditional on their respective suppliers, rather than a statement about physical storage.
+

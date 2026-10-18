@@ -1,0 +1,39 @@
+**Definition 1.2 (input and exact support).** An input $I$ consists of
+$m\ge1$ finite proposed complete rows $(P_i,R_i)$ and a finite set
+$\Lambda$ of triples $((i,p),(j,q),\epsilon)$, where
+$\epsilon\in\{=,\ne\}$. Both endpoints must be addressed reached
+holes in the indicated records. Class names are local to each row;
+the same printed class name in different rows creates no link.
+
+Use the proposed-row validation of [NUE, Definition 1.2 and Proposition
+1.3][NUE]: the cut is prefix-free; the exterior is a finite full ordered
+context; each hole occurs once at its own address in the cut; every
+other requested cut is blocked by a concrete leaf at a strict prefix;
+and the partition is an equivalence relation on exactly the holes.
+Also validate the address alphabet, record indices and link signs, and
+require both link endpoints to be holes. Malformed input is rejected.
+For representation purposes its formula is $\mathsf{false}$, while the
+diagnostic distinguishes malformed input from valid but inconsistent
+input. In particular neither sign is a test on a default absent tree.
+
+For valid input let $\mathscr H_I$ be the set of pairs $(t,\mathbf n)$
+with $t\in\mathcal T$, $\mathbf n\in\mathbb N^m$,
+
+$$
+\begin{gathered}
+\operatorname{Chron}(\mathbf n):\quad
+0=n_0\le n_1\le\cdots\le n_{m-1},\\
+R_{P_i}(\rho^{n_i}t)=R_i\quad(i<m),\\
+(\rho^{n_i}t)|_p\ \epsilon\ (\rho^{n_j}t)|_q
+\quad(((i,p),(j,q),\epsilon)\in\Lambda).
+\end{gathered}
+\tag{NCE.2}
+$$
+
+The last line includes both reachedness guards. Define
+$E_I=\{\mathbf n:\exists t\ (t,\mathbf n)\in\mathscr H_I\}$;
+this is the requested $E_\Lambda$. There is no inhabitation premise,
+no supplied finite epoch set, and no source size, depth or age bound.
+Ties, $m=1$, empty cuts, root cuts, blocked and mixed cuts, rows without
+holes, and empty $\Lambda$ are included.
+

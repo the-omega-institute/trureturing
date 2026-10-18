@@ -1,0 +1,46 @@
+## Theorem 14. Integral normal form of two genuine time steps
+
+Let $A$ be an additive commutative group and $J:A\to A$ additive with
+$J^2=I$. On $A^q$, genuine time is
+$(Tv)_0=J(\sum_i v_i)$ and $(Tv)_{i+1}=v_i$. Put $L_2=I+T^2$.
+For $q\ge2$, two independently defined integral additive equivalences on
+its domain and codomain reduce $L_2$ to an identity tail and the following
+head operator:
+
+| $q\bmod4$ | Head on $A^2$ |
+| --- | --- |
+| $0$ | $I$ |
+| $1$ | $\operatorname{diag}(2I,I)$ |
+| $2$ | $\operatorname{diag}(3I+2J,I)$ |
+| $3$ | $\operatorname{diag}(I+J,I+J)$ |
+
+At $q=1$, the operator is $2I$. This is equivalence on two sides, with
+no conjugacy assertion; the domain and codomain transformations differ.
+No torsion-free hypothesis is imposed on $A$.
+
+Proof. Write $a=v_0$, $b=v_1$, and $t_j=v_{j+2}+v_j$. Reconstruct by
+$v_{j+2}=t_j-v_j$. This is an integral additive equivalence onto the two
+seeds and the $q-2$ tails. Subtract from the two image heads the actual
+$L_2$ image of the zero-seed reconstructed tail. The remaining homogeneous
+coordinates repeat $a,b,-a,-b$. An induction in the length gives
+
+$$
+(S,v_{q-1})=
+\begin{cases}
+(0,-b)&q\equiv0,\\
+(a,a)&q\equiv1,\\
+(a+b,b)&q\equiv2,\\
+(b,-a)&q\equiv3
+\end{cases}\pmod4,
+\qquad S=\sum_i v_i.
+$$
+
+The two residual heads are $(a+S+J(S-v_{q-1}),b+JS)$. For residues zero,
+one, two and three, respectively, use the domain head coordinates
+$(a+Jb,b)$, $(a,b+Ja)$, $(a,b+2a+Ja)$ and $(a+b,b)$.
+For residue two use the codomain head shear $(r,s)\mapsto(r+Jr-s,r)$;
+in the other residues leave the residual heads alone. Each change has an
+integer additive inverse. Direct substitution with $J^2=I$ gives the
+table. The other coordinates remain identity. At length one $T=J$,
+so $I+T^2=2I$.
+

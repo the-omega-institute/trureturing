@@ -1,0 +1,92 @@
+**Theorem 74.2 (explicit positive uniform deficit).** For the normalized
+circle FA.19 let
+
+$$
+\begin{gathered}
+q_\pm(\phi)=|e_\pm^TM_2^{-1/2}n(\mathbf c(\phi))|^2,
+\quad R_\pm^2=q_\pm(0)+q_\pm(\pi/2)>0,\\
+m=\min(\alpha_0,\beta_0),\quad
+\mu_\ell=\frac{\delta}{10^4(\theta q_f^2+\omega)},\quad
+L_N=2\|N\|\frac{\sqrt{\delta+1/m}}{\sqrt m},\quad
+\eta_*=\frac{\mu_\ell R_+}{4L_N},\\
+c_{\rm TV}=\min\left\{b_{\rm sp},
+ \frac{\min\{\mu_\ell/2,a_{\rm sp}\eta_*^2\}}{R_-^2}\right\}>0.
+\tag{FA.28}
+\end{gathered}
+$$
+
+For every nonempty weak class,
+
+$$
+\mathcal T(s)-\mathcal T_A(s)
+ \ge\frac{c_{\rm TV}}{1+\mathfrak c_{\max}(e^A-1)}>0.
+\tag{FA.29}
+$$
+
+The bound is uniform in weak $s$ wherever the class is feasible.
+For an explicit conservative constant replace $\|N\|$ in $L_N$
+by $\|N\|_F$. The same whole-box directed comparisons give
+$c_{\rm TV}>10^{-10}$ even for that replacement; replacing it can
+only decrease this lower-bound constant.
+
+**Proof.** Both $q_\pm$ are squares of nonzero real linear
+combinations of $\cos\phi,\sin\phi$. Their maximum is exactly
+$R_\pm^2$. The zeros of $q_+$ are exactly the compatible negative
+spectral lines of Proposition 74.1; at these zeros normalization
+$x=s_0$ gives $\ell\ge\mu_\ell$ by FA.27.
+Also $\|\mathbf c\|\le\sqrt{\delta+1/m}$ and
+$\|\mathbf c'\|\le1/\sqrt m$, so $|\ell'|\le L_N$.
+The nearest zero has angular distance
+$\arcsin(\sqrt{q_+}/R_+)$. The source bounds imply
+$\mu_\ell/(4L_N)<1/2$: for example use $\|N\|\ge\Delta A$,
+JR.52 and the table in Proposition 74.1. Thus if
+$\sqrt{q_+}\le\eta_*$, the inequality
+$\arcsin v\le2v$ for $0\le v\le1/2$ shows that distance is
+at most $\mu_\ell/(2L_N)$, giving $\ell\ge\mu_\ell/2$.
+Outside that set $a_{\rm sp}q_+>a_{\rm sp}\eta_*^2$.
+Using $q_-\le R_-^2$ in the two cases proves
+
+$$
+\ell(\phi)_++a_{\rm sp}q_+(\phi)\ge c_{\rm TV}q_-(\phi).
+\tag{FA.30}
+$$
+
+All constants are positive: $z_f\ne0$, both $m_i>0$, both ellipse
+axes are nonzero and $N\ne0$. For specificity, the conservative
+whole-box integer evaluation in Proposition 74.1 gives
+$0.00063684<\mu_\ell<0.00063686$,
+$1.45280<L_N^{(F)}<1.45282$ and
+$1.35\cdot10^{-10}<c_{\rm TV}^{(F)}<1.37\cdot10^{-10}$.
+These evaluations again use the complete source box; they certify
+positivity, not the root or a quantum implementation.
+
+For an actual label with normalized direction $\phi$, coefficient
+weight $p$ and failure coefficient $\beta$, its loss relative to the
+separated spectral bound, divided by $p$, is
+
+$$
+D=\frac{|\ell|+\beta(a_{\rm sp}q_++b_{\rm sp}q_-)
+ -|\ell+\beta(a_{\rm sp}q_+-b_{\rm sp}q_-)|}{2}.
+$$
+
+For $\ell\ge0$ this equals
+$\min\{\ell+\beta a_{\rm sp}q_+,\beta b_{\rm sp}q_-\}$;
+for $\ell<0$ it equals
+$\min\{\beta a_{\rm sp}q_+,-\ell+\beta b_{\rm sp}q_-\}$.
+Both give
+$D\ge\frac{\beta}{1+\beta}
+\min\{\ell_++a_{\rm sp}q_+,b_{\rm sp}q_-\}
+\ge c_{\rm TV}\frac{\beta}{1+\beta}q_-$.
+The identity $\sum p_j\beta_jn_jn_j^T=M$ whitens to
+$\sum p_j\beta_jq_-(\phi_j)=1$. Since
+$\beta_j\le t_A\mathfrak c_{\max}$,
+$\sum p_jD_j\ge c_{\rm TV}/(1+t_A\mathfrak c_{\max})$.
+The actual binary reports make this low Gram feasible for JR.58, so
+$J_s-\sum p_j|\ell(\phi_j)|\ge0$.
+Subtracting the actual TV from JR.59 is exactly half this live slack
+plus $\sum p_jD_j$: the whitened positive/negative failure totals
+are one each, so their separated absolute sum is $L_f$.
+This proves FA.29 for every actual label distribution, without making
+an analytic Kraus refinement readable or altering any history's error.
+$\square$
+

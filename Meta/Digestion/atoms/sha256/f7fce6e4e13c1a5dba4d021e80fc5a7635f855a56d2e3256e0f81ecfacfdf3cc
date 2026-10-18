@@ -1,0 +1,39 @@
+**定理 30.8.1（运输方块交换）。**
+
+$$
+\boxed{
+\langle\mu_t,\delta_t\rangle
+=
+\langle T_\#\mu_t,\delta_s\rangle.
+}
+$$
+
+**证明。**
+
+直接按纤维分组：
+
+$$
+\begin{aligned}
+\langle\mu_t,\delta_t\rangle
+&=
+\sum_{z_t}\mu_t(z_t)\delta_s(T(z_t))\\
+&=
+\sum_{z_s}
+\left(\sum_{z_t:T(z_t)=z_s}\mu_t(z_t)\right)
+\delta_s(z_s)\\
+&=
+\langle T_\#\mu_t,\delta_s\rangle.
+\end{aligned}
+$$
+
+证毕。
+
+这个方块清楚区分两项工作：
+
+- $T$ 把目标域上下文搬回源域的坐标；
+- $\delta_t=\delta_s\circ T$ 才是机制桥接。
+
+只有上下文映射而没有响应交换条件，不能推出效应运输。相反，若交换条件成立，源域核可以在推前后的目标上下文上重新积分。
+
+<a id="section-30-9"></a>
+

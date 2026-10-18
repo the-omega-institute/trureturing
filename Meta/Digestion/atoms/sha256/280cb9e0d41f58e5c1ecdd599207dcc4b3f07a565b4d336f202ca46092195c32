@@ -1,0 +1,6 @@
+## §0. 问题与记号
+
+记 \([n]=\{1,\ldots,n\}\)、\(V(n,k)=\binom{[n]}k\)。对互异的 \(A,B,C\in V(n,k)\)，称 \(\{A,B,C\}\) 为**不交三角**，若 \(A\cap B\cap C=\varnothing\)；这不要求两两不交。若对 \(V(n,k)\) 的完全图的每一种红蓝边染色，都存在单色不交三角，则称 \((n,k)\) **强制**。对 \(F\subseteq V(n,k)\) 同样定义 \(F\) 强制。
+
+Hrušák（\(\alpha=1/2\) 的情形）及 Holmsen、Roldán-Pensado 提出下述开放问题：是否对所有充分大的 \(k\)，\((2k-1,k)\) 都强制。其陈述见 Heath–McCourt–Parker–Schwieder–Zerbib [1]。下列两项是文献结论，在本卷中只用作背景：
+

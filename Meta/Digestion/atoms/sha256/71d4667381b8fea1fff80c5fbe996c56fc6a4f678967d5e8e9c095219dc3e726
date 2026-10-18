@@ -1,0 +1,41 @@
+**Definition 65.1 (finite generated labels).** For each selected
+$0\leq a\leq a_\dagger$, take the coefficient vectors
+
+$$
+\begin{aligned}
+h_+&=\sqrt{w_+}\,q_+,&h_-&=\sqrt{w_-}\,q_-,\\
+h_B&=\sqrt{-R/(2D\sigma H)}\,n,&
+h_C&=Z/\sqrt{2H\mathcal E}.
+\end{aligned}
+\tag{RC.55}
+$$
+
+Omit $h_+=0$ at $a_\dagger$. Each remaining vector is nonzero and
+
+$$
+\sum_i h_ih_i^T=I,\quad h_i^TQh_i=0,\quad
+c_i=Lh_i,\quad K_i=(c_i)_0D_{\rm src}+(c_i)_1T_{\rm src}+(c_i)_2S_{\rm src}.
+\tag{RC.56}
+$$
+
+The actual low reports are $r_+=r_-=+1$, $r_B=r_C=-1$.
+Before arrival of the unknown specimen fix the image isometry
+$V_i:\mathbb C^2\to\operatorname{ran}K_i$ by IR.22.
+Generate and dephase label $i$ with encoder
+$V_i^\dagger K_iE^\dagger$; its decoder on the entire declared fibre
+is $X\mapsto EV_iXV_i^\dagger E^\dagger$.
+
+Add two high encoders
+$\sqrt{(1-\delta)/2}\,D_{\rm src}E^\dagger$, with fair reports and
+whole-$M_3$ decoder $X\mapsto EXE^\dagger$.
+Let $v_+,v_-$ be fixed real unit eigenvectors of
+$\Xi=M_f^{1/2}\Delta M_f^{1/2}$ on coordinates $1,2$.
+For each $\epsilon,r=\pm1$ use the scalar spectral row
+$2^{-1/2}\langle v_\epsilon|M_f^{1/2}E^\dagger$, report $r$, and
+scalar decoder $z\mapsto zw_\ell g_{\rm time}(t)dt\,P_f$ at each
+original failure label. Finally use two fair-report scalar complement
+encoders $X\mapsto\tfrac12\operatorname{tr}((I-P)X)$, each decoded
+as $zg_{\rm time}(t)dt\,P_f$ at label $2$ only. The internal complement
+Kraus multiplicity is permanently discarded. This is precisely JR
+Definition 53.3 with the exact new coefficient atoms substituted.
+

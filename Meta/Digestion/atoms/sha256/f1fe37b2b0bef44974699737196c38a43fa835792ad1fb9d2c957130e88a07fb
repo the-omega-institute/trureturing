@@ -1,0 +1,25 @@
+**定义 1.1（原时钟完整世界）。** 令
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+一个完整世界是 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[t],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+不添加对称性条件，也不限制正非对角元的上界。令 $A_0=I$，选定的第 $i$ 个单独动作是 $E_i\in\{J,M\}$，$A_i=E_iA_{i-1}$，其立即读数为
+
+$$
+z_i(W)=d+g(i)\operatorname{tr}(A_iP).
+\tag{1.2}
+$$
+
+初读计入预算；八次总读使用原时钟 $0,\ldots,7$。只有一条不可重置、不可复制的轨迹，每个原子动作后立即读取，不能跳读、补空动作、改编号或增设观察通道。增益保留全部实系数符号、次数下降、采样根和重根，漂移任意。恢复目标是整个 $P,g,d$，不是仅恢复来源或某个样本。未选动作的响应函数用于比较固定完整世界，不表示已经取得额外读数。
+

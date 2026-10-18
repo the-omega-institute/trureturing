@@ -1,0 +1,10 @@
+**命题 87.1（zero future does not bound the initial read by one）。** The zero branches preserve exactly the initial-read envelope of §§73.2–73.3. A truthful zero-label or zero-regime certificate permits a constant numerical future word; it does not remove the original three Reads or their reported data, source execution or supplier costs. When $H$ can exceed one, use a separately represented rational envelope $\overline H\geq\max(1,H)$ for the true initial reads. Canonical replies must support that envelope: their numerator ranges and bit lengths include $\log_2(\overline H+1)$ and their full precision, rather than silently imposing the unit-plateau numerator bound of §76.3. Recognizing a future-zero certificate, or receiving zero later vectors, does not justify a smaller initial alphabet.
+
+The retained actual witness is the four-leaf tree $\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle$ with
+
+$$
+a=(3,0,0),\qquad b=(7/24,4/3,0),\qquad L=3,\quad H=7/2,\quad d_0=16.
+$$
+
+It has $\Delta=16$, $C=7/8$, $\|b\|^2=1073/576$, $x_0=(0,0,-7/2)$ and $x_j=0$ for every $j\geq1$. The corresponding retained threshold is $H_\star=4$. At reply precision zero a third-coordinate report $-4$ is a valid error-at-most-one report under $\overline H=7/2$, while a unit-envelope integer alphabet bounded by two rejects it. This distinction is part of the original envelope contract, even though the future target is identically zero. The plateau algorithms in §§76,79–80 keep their stated unit-norm premise; this witness does not weaken that premise or assert that their unit-only reply grammar handles arbitrary $H$.
+

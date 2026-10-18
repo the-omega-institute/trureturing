@@ -1,0 +1,30 @@
+**Proposition 5.3 (finite obstruction to commuting the closures).** Take
+$X=\{0,1,2,3,4\}$, the observation and action tables
+
+$$
+q=(0,0,0,0,1),\qquad f=(0,0,1,4,4),
+\tag{5.5}
+$$
+
+and let $g$ swap $0,3$, fixing the other points. For $K=\ker q$, the relation
+$\operatorname{Sat}_{\langle g\rangle}(\operatorname{Core}_f(K))$ is not
+$f$-invariant. In particular it differs from the joint mixed-word core.
+
+**Proof.** Under repeated $f$, the points $0,1,2$ always read zero; $3$
+reads zero once and then one forever; $4$ reads one forever. Hence
+$\operatorname{Core}_f(K)$ has blocks $\{0,1,2\},\{3\},\{4\}$.
+Intersecting this relation with its pullback by $g$ gives the blocks
+$\{0\},\{1,2\},\{3\},\{4\}$. Thus $1,2$ remain related, but their
+$f$ images $0,1$ do not. The chronological mixed word $f,g,f$ takes
+$1\mapsto0\mapsto3\mapsto4$ and
+$2\mapsto1\mapsto1\mapsto0$, whose final $q$ values are one and zero.
+The joint core must therefore separate the pair. There is no complete
+normalizer law for this menu: $gfg^{-1}(0)=4$ whereas $f(0)=0$.
+$\square$
+
+If $g$ is a pure relabeling, this obstruction says the once-refined relation
+fails action descent; the mixed words test representation compatibility.
+If $g$ is a permitted executable probe with its own complete contract,
+$f,g,f$ is an enlarged experiment. Those are different interpretations of
+the same finite relation calculation.
+

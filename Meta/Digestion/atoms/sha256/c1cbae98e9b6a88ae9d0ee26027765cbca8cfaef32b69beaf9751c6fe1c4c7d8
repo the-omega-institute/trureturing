@@ -1,0 +1,82 @@
+**Theorem 76.2 (all-leaf planar separation and strict width necessity).**
+For every $D$ of76.1 and every placement satisfying $E_2(D)$, put
+
+$$
+b_p=\sqrt{1-y_p^2},\qquad
+I_p=[x_p-b_p,x_p+b_p],\qquad p\in\operatorname{Leaf}(D).
+\tag{76.2}
+$$
+
+The closed grounding intervals $I_p$ are pairwise disjoint. If $W$ is the
+horizontal span of all ground tips, then
+
+$$
+\ell(D)\frac{\sqrt7}{2}
+ <\sum_{p\in\operatorname{Leaf}(D)}|I_p|
+ \le W<2h(D)+2.
+\tag{76.3}
+$$
+
+In particular the strict necessary inequality is
+$\ell(D)\sqrt7/2<2h(D)+2$, and hence also the non-strict bound in the
+original planar question. The proof needs no additional planar angle or
+clearance hypothesis beyond the stated incidence and nonintersection.
+
+**Proof.** A unit segment from $p=(x_p,y_p)$ to $(X,0)$ must satisfy
+$(X-x_p)^2+y_p^2=1$. Since $0<y_p<1$, there are exactly two possible tips,
+$g_p^-=(x_p-b_p,0)$ and $g_p^+=(x_p+b_p,0)$. Distinctness forces the two
+actual stubs to use both. Write
+
+$$
+V_p=[g_p^-,p]\cup[p,g_p^+],\qquad
+\Delta_p=\operatorname{conv}\{g_p^-,p,g_p^+\},\qquad
+F_p(X,Y)=\frac{|X-x_p|}{b_p}+\frac{Y}{y_p}-1.
+\tag{76.4}
+$$
+
+In $Y>0$, $F_p=0$ is exactly $V_p$ with its ground tips removed,
+and $F_p<0$ is the triangle interior. The base $I_p\times\{0\}$ closes
+the triangle only for this proof; it is no installed graph edge or cable.
+
+Suppose $D$ is not a singleton, and let $v$ be the source parent of a leaf
+$p$. Every $z\in\Delta_p$ of positive height has a convex representation
+$z=\theta p+\mu g_p^-+\eta g_p^+$, where the coefficients are nonnegative,
+sum to one, and $\theta=Y(z)/y_p>0$. Therefore
+
+$$
+|z-p|\le\mu|g_p^--p|+\eta|g_p^+-p|
+       =\mu+\eta=1-\theta<1.
+\tag{76.5}
+$$
+
+But $|v-p|=1$ and $Y(v)>0$, so $v\notin\Delta_p$ and $F_p(v)>0$.
+Delete $p$ and its parent seam from the ungrounded source tree as a
+mathematical proof device. The remaining source tree is connected and
+contains $v$ and every other leaf. Its straight segments stay at positive
+height. It avoids $V_p$, since it has no graph endpoint in common with
+either stub of $p$. Consequently $F_p$ never vanishes on that connected
+remainder. Continuity along its paths and $F_p(v)>0$ imply $F_p>0$
+throughout it, including at every other leaf $q$.
+
+If a ground tip $g=(X,0)$ of $q$ lay in the interior of $I_p$, then
+$F_p(g)<0$. On the actual stub from $q$ to $g$, the intermediate value
+theorem would give $F_p=0$ before reaching the ground. That point has
+positive height and belongs to $V_p$, contradicting literal
+nonintersection. A tip of $q$ cannot equal an endpoint of $I_p$ either,
+because all tips are globally distinct. Thus no other leaf's ground tip
+belongs to $I_p$. Apply the same argument with each leaf as $p$. Two
+closed intervals with four distinct endpoints can overlap only if an
+endpoint of one lies in the other's interior, also in the nested case.
+This proves pairwise disjointness. For a singleton there is only one
+interval, so the separation assertion is immediate. Leaf deletion above
+is not a source operation and changes no source or producer carrier.
+
+For every leaf, $y_p<3/4$ gives
+$|I_p|=2\sqrt{1-y_p^2}>\sqrt7/2$. A root-to-leaf path has at most
+$h(D)$ unit seams, whence $|x_p-x_o|\le h(D)$. Each tip differs
+horizontally from its leaf by $b_p<1$. All finitely many tips therefore
+lie strictly between $x_o-h(D)-1$ and $x_o+h(D)+1$, giving
+$W<2h(D)+2$. Disjoint intervals have total length at most their enclosing
+span $W$. Summing their strict width floors proves76.3, including the
+singleton case. $\square$
+

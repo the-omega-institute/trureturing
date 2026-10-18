@@ -1,0 +1,126 @@
+**Theorem 177.2 (Exact supports and simultaneous required masses).**
+For every $3\le k\le L$, both the complete stopped and complete
+preselected support maxima of $\Psi_k$ are four. Among stopped
+tables, score four occurs exactly on $M_k$. The prefix anchor
+$R=(1,2;1,2,0)$ has score three, and every $T_L$ mixture has score
+at most three. In any single cap-feasible complete stopped
+probability representation with weights $p_D$, the masses
+
+$$
+q_k=\sum_{D\in M_k}p_D\ge\max\{0,f_k(a,\varepsilon)\}
+\qquad(3\le k\le L)
+\tag{177.2}
+$$
+
+hold simultaneously. They satisfy $q_3\le\cdots\le q_L$, with
+
+$$
+|M_k|=\begin{cases}
+\binom{k+1}4+\binom k3,&k<L,\\
+\binom{L+1}4,&k=L.
+\end{cases}
+\tag{177.3}
+$$
+
+These are constraints on one finite representation. For an original
+arbitrary-address/full-carrier $O_2$ cap attainer, every finite feasible
+representation obtained through Theorem 110.2 obeys them; its weights
+are not identified with the competitor's original seed-mode weights.
+
+**Proof.** A pair $(i,j)$ partitions the selected chain words into
+three transcript intervals: $t<i$, $i\le t<j$, and $j\le t\le k$,
+intersected with $0\le t\le k$. Suppose $2\le i<j\le k$.
+In the first interval a fixed label hits at most two events, and hits
+two exactly when it is zero, at rows zero and one. Every other label
+hits at most one. In the middle interval a fixed label hits at most
+one event, with equality exactly for labels $i+1,\ldots,j$.
+In the final interval it also hits at most one, with equality exactly
+for zero or labels $j+1,\ldots,\min(k+1,L)$. These choices produce
+four precisely on the tables in $M_k$.
+
+If $i=1$, the first interval has maximum one, and each of the next
+two intervals has maximum one: the second contains row one but no
+other event carrying zero before the final row. Thus its total is at
+most three. If $i\le k<j$, the final interval is empty. For $i\ge2$
+the first maximum is two and the second is one; for $i=1$ the second
+can hit both rows one and $k$ with zero but the first maximum is one.
+Both totals are at most three. If $i>k$, only the first interval is
+nonempty; zero hits exactly rows zero, one and $k$, and no label hits
+more. Empty and singleton schedules also score at most three: a
+singleton splits the rows at $i$, and the same event multiplicities
+give maximum three. This proves the entire stopped upper support and
+all its equality cases. The table $(2,3;0,3,0)$ attains four for every
+$k\ge3$.
+
+On these chain words a sorted preselected pair observes only $00,10,11$;
+its $01$ cell never occurs. Hence its three used outputs have precisely
+the interval optimization just proved. Static repetitions give no extra
+cell information, and sorting a reversed preselected schedule only
+permutes its table. The full preselected maximum is therefore also
+four. This uses separate word laws in a linear score, without a joint
+observation of several trajectories.
+
+For a canonical numerical triple in $T_L$, each of its three distinct
+numerical labels can hit at most one selected event. A canonical pair
+has the same first two numerical contributions, and base on positive
+exhaustion can hit only the final row. A singleton has at most one
+numerical hit and at most two base hits after its queried coordinate;
+immediate base hits rows zero, one and $k$. Each of the four prefix
+tables hits exactly these three rows. In particular $\Psi_k(R)=3$,
+and $T_L$ has support at most three.
+
+For a cap-feasible kernel, the rows at $t=0,1$ are pair rows, each
+at least $1-\varepsilon$. At $2\le t<k$, the correct row is at
+least $a_{t+1}-\varepsilon$. The last row is another pair row when
+$k<L$, and the all-positive base row when $k=L$; it is at least
+$1-\varepsilon$ in either case. Their sum is
+
+$$
+\Psi_k(p)\ge3+\sum_{i=3}^ka_i-(k+1)\varepsilon=3+f_k.
+\tag{177.4}
+$$
+
+All deterministic scores are integers. Tables in $M_k$ have score four,
+and all other stopped tables have score at most three. Therefore the
+same mixture satisfies $\Psi_k(p)\le3+q_k$. Combining the inequalities
+and $q_k\ge0$ proves (177.2).
+
+For the counts, sum the $j-i$ middle choices over $2\le i<j$ to
+obtain $\binom{j-1}2$. At the full prefix the exhaustion count is
+$L+1-j$, so
+
+$$
+\sum_{j=3}^L\binom{j-1}2(L+1-j)=\binom{L+1}4.
+$$
+
+For a proper prefix replace $L$ by $k$ and add one exhaustion choice
+per middle choice, giving $\binom{k+1}4+\binom k3$.
+These identities follow by the same two cumulative binomial sums as
+(176.3).
+
+Within the fixed full-$L$ catalog, a table with $i\ge2$, first label
+zero, $i<r\le j$, and legal exhaustion label enters the sets at
+
+$$
+\vartheta(D)=\begin{cases}
+j,&\ell=0,\\
+\max\{j,\ell-1\},&\ell>j,
+\end{cases}
+\tag{177.5}
+$$
+
+and every other table has $\vartheta(D)=+\infty$. Thus
+$D\in M_k$ exactly when $\vartheta(D)\le k$. This proves nesting
+even at $k=L$, including the new tables with $j=L,\ell=0$.
+It also writes $q_k=\mathsf P\{\vartheta\le k\}$ under the one
+common finite weight measure. The lower cuts cannot be treated as
+independently chosen row budgets.
+
+Finally apply the necessary direction of the reused Theorem 110.2
+to any original competitor at its active length. The theorem preserves
+feasibility at the exact closed cap; it does not preserve an arbitrary
+competitor's law or seed decomposition. The cuts apply to every
+representation of the resulting finite feasible stopped kernel.
+The $k=L$ row is therefore an actual-tail requirement, not a new
+infinite all-positive source. $\square$
+

@@ -1,0 +1,15 @@
+**定义 52.1（骨架分区与地址域）。** 固定任意有限有序菜单 $Q$（可空、可重复）和一个达到的初始联合码 $\mathbf c$，使用定义42.1的同一骨架 $S_Q(\mathbf c)$。令 $I$ 为其强制分支地址集，$F=F_Q(\mathbf c)$ 为可展开 $\beta$ 叶集，$L$ 为除 $F$ 以外的带标签叶地址集，$G$ 为骨架原有的无条件孔地址集。展开块中的可选右孔不列入 $G$。来源族为定理42.2的整个 $U_{\mathbf c}$，包含每个孔的任意有限非空完成。令 $w(s)=\#_L(s)+2\#_R(s)$，负预算下的集合为空。对 $N\ge0$ 定义
+
+$$
+\begin{aligned}
+D_N(\mathbf c)={}&I\ \cup\!\bigcup_{l\in L}l\Sigma^*
+\ \cup\!\bigcup_{g\in G}g\{s:w(s)+2\le N\}
+\ \cup\!\bigcup_{p\in F}E_N(p),\\
+E_0(p)={}&pL\Sigma^+,\\
+E_N(p)={}&\{p\}\cup pL\Sigma^*\cup pR\{s:w(s)+3\le N\}\quad(N\ge1).
+\end{aligned}
+\tag{SLH.52.1}
+$$
+
+记 $u_0$ 为不展开任何 $F$、用 $\alpha$ 填满全部 $G$ 的有限原树。它只是由码定义的一个相容代表，不是已取得的实际来源描述。
+

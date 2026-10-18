@@ -1,0 +1,63 @@
+### 9.3 全尾端点盒、非端点余量及可数先验的风险等号
+
+置 $a_1=2/9,a_2=6/25$。有 $a_1<a<a_2$，$1/3<\bar u,U<2/5$，且 $9/25<1-\bar u-a<4/9$。p 的所有0词由这些起点及返回因子夹持在两个端点坐标之间。其余1词的全部所需起点是
+
+$$
+\frac{54}{625}<Ba<\frac8{81},\qquad
+\frac{324}{15625}<Ba^2<\frac{16}{729},\qquad
+\frac{32}{6561}<Ba^3<\frac{1944}{390625}.
+\tag{9.8}
+$$
+
+其中最紧的上侧余量为
+
+$$
+\frac{1944}{390625}-Ba^3
+=\frac{12255576540411631}{1000000000000000000000000}>0.
+$$
+
+端点1的1词大于端点2恰在 $n=0,1,2$；从 $n=3$ 起次序反转。对 $n\ge3$，$Ba^n/[(4/9)a_1^n]$ 递增，$Ba^n/[(9/25)a_2^n]$ 递减，所以第三起点传播到每个无界尾长。悬置的全部起点为
+
+$$
+\frac13<V<\frac25,\qquad \frac19<VU<\frac4{25},\qquad
+\frac{18}{125}<VB<\frac4{27},\qquad \frac8{243}<VBa<\frac{108}{3125}.
+\tag{9.9}
+$$
+
+分别夹持单字 $\beta$、第0个0词、第0个1词、第1个1词；同样的两端返回比例传播给所有0词和余下全部1词。悬置端点1大于端点2的词恰为 $E_\beta=\{\beta,\alpha\beta\beta\}$；p 的相应事件仍是 $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$。所有无限不完成坐标均为0。
+
+在这两个完整坐标盒内，TV 正差恰由对应符号事件求和。(9.2)、(9.7)给
+
+$$
+\overline Q(E_p)=1-\bar u-a+B(a+a^2)=C,
+\qquad \overline V(E_\beta)=1-V+VB=1-V(U+a)=H.
+\tag{9.10}
+$$
+
+两个端点在这些事件上的质量分别为 $C\pm\rho_p$、$H\pm\rho_\beta$，所以 $\operatorname{TV}(\overline Q,P_{p,r_i})=\rho_p$、$\operatorname{TV}(\overline V,P_{\beta,r_i})=\rho_\beta$，$i=1,2$。盒只要求实际混合 $\overline Q$，没有要求各 $Q_j$ 在盒内。
+
+对所有真实非端点 $r\in[3/8,5/13]$，有 $U<r$、$a<r(1-r)$、$B>(1-r)^2$、$V<r$。两组几何律满足
+
+$$
+\operatorname{TV}(W,P_{p,r})\le\frac{B-(1-r)^2}{1-a}
+\le N:=\frac{B-64/169}{1-a}.
+\tag{9.11}
+$$
+
+可直接逐词用 $|p a^n-q a_r^n|\le |p-q|a^n+q(a_r^n-a^n)$ 求完整几何和，得到 $2\operatorname{TV}\le[|U-r|+|B-(1-r)^2|+a_r-a]/(1-a)$。三个符号和 $U+B+a=r+(1-r)^2+a_r=1$ 使分子为 $2[B-(1-r)^2]$，证明(9.11)，没有截断词长。
+
+$\overline Q,W$ 仅在两个即刻完成词有互为相反数的差，因此 $\operatorname{TV}(\overline Q,W)=U-\bar u=D_{\rm new}>0$。分离悬置的两个互斥首分支给
+
+$$
+\begin{aligned}
+\operatorname{TV}(\overline Q,P_{p,r})&\le D_{\rm new}+N<\frac4{125}<\rho_p,\\
+\operatorname{TV}(\overline V,P_{\beta,r})&\le r-V+V\operatorname{TV}(W,P_{p,r})
+\le\frac5{13}-V+VN<\frac3{100}<\rho_\beta.
+\end{aligned}
+\tag{9.12}
+$$
+
+对每条实际历史，(1.3)给同一实际后验 $\nu_h$。标准 TV 对目标混合凸，非负可数和可交换，故 $\operatorname{TV}(\overline Q,\sum_k\nu_h(k)P_{p,r_k})\le\sum_k\nu_h(k)\operatorname{TV}(\overline Q,P_{p,r_k})\le\rho_p$，悬置同理。$I_c$ 保持距离。这个上界覆盖全部正有限历史，不要求先验有限均值、熵、有理性或有效求值。
+
+等号可直接复用原付费见证。令 $S=\beta\alpha\mid\beta\beta\alpha\alpha$，固定种子1和前三标记100，竖线仅作解析分界。对 $e=0,1$，分别在 p、悬置取 $(\beta\beta)^N S\beta^e$ 和 $(\alpha\alpha)^N S\beta^e$。置 $c_t=\mu(t)r_t^3(1-r_t)^{3+e}$，则 $\sum_tc_t\le1$、$c_1,c_2>0$；整个非深度1后验赔率至多 $c_1^{-1}(15/16)^{2N}$，整个非深度2赔率至多 $c_2^{-1}(25/26)^{2N}$。前者用 $r_t\ge3/8$（$t\ne1$），后者用 $r_t\le5/13$（$t\ne2$）。所以同一任意可数先验的完整真实律分别在 TV 中趋于两个端点。所有见证均为正质量有限原历史，实际解码行恒为(9.7)。TV 距离连续，(9.10)使两风险上确界恰为各半径，完成风险等号证明。这也与已供应的全有限类单独下界一致；端点极限不是某条历史观察到了 $K$。
+

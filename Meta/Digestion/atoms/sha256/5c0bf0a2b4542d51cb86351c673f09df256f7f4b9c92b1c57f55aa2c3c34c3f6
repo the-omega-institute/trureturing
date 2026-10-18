@@ -1,0 +1,24 @@
+**Definition 2.1 (An isolated algebraic parameter).** Let $\tau$ be
+the unique root in $(1/2,13/25)$ of
+
+$$
+P_4(t)=12t^4+20t^3-2t^2-4t-1.
+\tag{2.4}
+$$
+
+Set
+
+$$
+q=4\tau^2+2\tau-1,\qquad
+D=2q+4\tau(1-\tau^2),\qquad
+x=\frac qD,\qquad y=\frac{4\tau(1-\tau^2)}D.
+\tag{2.5}
+$$
+
+These definitions are unambiguous:
+$P_4(1/2)=-1/4$ and $P_4(13/25)=26857/390625>0$, while
+$P_4'(t)=48t^3+60t^2-4t-4\ge373/25>0$ throughout the
+isolating interval. The intermediate value theorem and strict
+monotonicity give existence and uniqueness there. Also $q>0$,
+$0<x<1/2$, $y>0$, and $2x+y=1$.
+

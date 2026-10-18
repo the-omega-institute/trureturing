@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-acquired-input-frontier-and-replay"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

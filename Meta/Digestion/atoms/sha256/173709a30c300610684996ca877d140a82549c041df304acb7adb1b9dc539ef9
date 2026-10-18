@@ -1,0 +1,31 @@
+**Definition 32.1 (compatible finite binary record).** Consider ANY
+actually enacted finite acquisition/execution factorization in the
+sense of [CG, Definition 21.2], with full TP decoders and jointly counted
+quantum fibres, whose forgotten complete output is exactly
+$\widehat\Phi_*$. A binary record can be any classical postprocessing
+of its acquired finite label, including an additional input-independent
+coin. Absorb that coin into the finite label. Write its full-output CP
+branches as $\Psi_+,\Psi_-$, so
+$\Psi_++\Psi_-=\widehat\Phi_*$ on the whole complex algebra and
+all output measures. The input effect on the supported qutrit is
+$F=\Psi_+^\dagger(I)$, compressed by $E$, so that
+$\Pr_\rho(+)=\operatorname{tr}(F\rho)$ and $0\preceq F\preceq I_3$.
+No separate access to an original environment is presumed.
+
+For a fixed actual height define the algebraic phase contrast and
+worst-case correct-parity probability by
+
+$$
+\begin{aligned}
+\Gamma_y(F)&=\frac14\sum_{e,n=\pm1}en\,
+                   \Pr_{y,e,n}(+),\\
+\mathsf S_y&=\min_{e,n=\pm1}\Pr_{y,e,n}(r=en).
+\end{aligned}
+\tag{JR.14}
+$$
+
+The finite sum defining $\Gamma_y$ is a Fourier coefficient of four
+conditional laws, not a source prior or a prepared mixed specimen.
+The decision $r=en$ means $r=+1$ reports even winding and $r=-1$
+reports odd winding; relabeling these two reports is allowed.
+

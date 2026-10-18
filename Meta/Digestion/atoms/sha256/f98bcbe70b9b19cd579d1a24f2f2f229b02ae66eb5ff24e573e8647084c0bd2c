@@ -1,0 +1,27 @@
+**Exact substitution 7.2 (word index five).** Ordinary rational
+substitution in (6.1) gives
+
+$$
+\begin{aligned}
+\sum_{j=1}^4(\lambda/z_a)^j&=\frac{4026}{625},&
+C_{a,5}&=\frac{4534618}{135},&
+\delta_{a,5}&=\frac{1116529}{765216787500},\\
+\sum_{j=1}^4(\lambda/z_b)^j&=\frac{34390}{6561},&
+C_{b,5}&=\frac{1643670050}{59049},&
+\delta_{b,5}&=\frac{90438849}{51364689062500}.
+\end{aligned}
+\tag{7.5}
+$$
+
+Under either face hypothesis of Corollary 7.1, its interval becomes
+
+$$
+\frac{128}{531441}+\frac{1116529}{765216787500}
+\le d_5\le
+\frac{69984}{244140625}-\frac{90438849}{51364689062500}.
+\tag{7.6}
+$$
+
+These are substitutions into the universal proof, not independent
+mathematical claims or evidence for its Borel quantifiers.
+

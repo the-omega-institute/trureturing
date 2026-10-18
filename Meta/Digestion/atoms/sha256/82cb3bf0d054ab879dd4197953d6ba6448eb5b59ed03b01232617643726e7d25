@@ -1,0 +1,16 @@
+**Proposition 7.2 (Direct one-copy implementation).** An independent explicit attainment of (7.3) uses $S(1,\epsilon,0)$ on outcome $a_\epsilon$, $S(1,0,\epsilon)$ on $b_\epsilon$, and $S(w/\nu,0,0)$ on either neutral outcome $o,*$.
+
+Proof. Since $5w=s\le1$, $w\le1-4w=\nu$, so $0\le w/\nu\le1$; all responses are CPTP. The total signal mass is $4w$ under every source. The mean matching parameter is
+
+$$
+4w+\nu(w/\nu)=5w=s,
+$$
+
+and the mean wrong-coordinate parameter for each wrong output is
+
+$$
+\nu\frac{1-w/\nu}{4}=\frac{\nu-w}{4}=\frac{1-s}{4}=\eta/5.
+$$
+
+Under $a,\sigma$, the mean $a$ coefficient is $\sigma2u$ and the $b$ coefficient is zero; the roles interchange under $b,\sigma$. Thus the induced channels have active coherence $\sigma2c/5$ and the exact target diagonal, giving error $3c/5$ by (3.3). The converse (3.4) at $D_1=2c/5$ proves optimality. The proof applies unchanged at $t=0$, $\eta=0$ and $\eta=1$, retaining every outcome. Compared with the existing one-copy upper bound, the gain is $2c(1-s)/5$, strictly positive when $c,\eta>0$. QED.
+

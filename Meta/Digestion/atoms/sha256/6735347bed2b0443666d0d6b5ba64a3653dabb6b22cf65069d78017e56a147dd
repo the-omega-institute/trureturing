@@ -1,0 +1,11 @@
+**定义 175.1（积分扩展的独立域）。** 对有限区间上的连续分段 $C^1$ 路径 $z(t)=(x(t),y(t))$，以有限个光滑段上的普通积分之和定义
+
+$$
+A=\frac12\int\det(z,dz),\qquad
+S=\frac13\int z\det(z,dz),\qquad m=S-\frac{Aq}{2},
+$$
+
+其中起点为零、终点为 $q$。路径可以自交或回走，不要求正坐标方向；参数改变只在保持方向的分段 $C^1$ 重参数化下作普通变量代换。另允许有限个闭曲线的有向链，系数取整数，其 $A,S$ 按线性相加，净端点为零，故 $m=S$。不通过共同原点的闭分量也可直接用同一坐标积分。这些是正词域之外的数学扩展，不宣称能由原生正叶或窗口读取实际实现。
+
+积分背景采用 Joscha Diehl、Rosa Preiß、Jeremy Reizenstein，[*Conjugation, loop and closure invariants of the iterated-integrals signature*，arXiv:2412.19670v1](https://arxiv.org/abs/2412.19670v1)，版本2024-12-27，[完整正文](https://arxiv.org/pdf/2412.19670v1)。其 §2 pp.3–5、§3 pp.11–13、§4 pp.22–25 分别讨论共轭、闭路换起点和直线闭合，Definition 2.1、Definition 3.1、Proposition 3.2、Definition 4.1及Lemma 4.7的对象和条件各有区别。下列 FIB 接口的计算逐项给出；不把文献的平滑路径和数学反向路径当成已取得的 FIB 操作。
+

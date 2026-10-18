@@ -1,0 +1,37 @@
+**Theorem 9.2 (uniform actual fibers and independence from all legal future).** For every nonempty $\mathcal F_{A,B}$ and every fixed $\mu$ of Definition 6.1, each member has the identical positive joint mass
+
+$$
+Z_{A,B}=\sum_{k\ge1}\mu(k)r_k^A(1-r_k)^B>0.
+\tag{SC.14}
+$$
+
+Conditional on this actual fiber, $H_3$ is uniform and independent of $V$. The same statement holds conditional on any nonempty refined fiber with given $C$. No arbitrary posterior mixture is used.
+
+Proof. The deterministic parser and latch contribute no additional factor to a particular raw cylinder. A literal history includes its particular rejected pairs and particular accepted seed pair, so its mass is (SC.14); there is no seed factor $1/2$ here. That factor belongs only to summing over the entire accepted-seed prelude. Distinct third-latch words are a prefix antichain, because a proper extension has already crossed the third latch, so these cylinders are disjoint. The fiber event has mass $F(A,B)Z_{A,B}$.
+
+For a complete legal future raw word $v=(\beta\alpha)^j c_e$ followed by the required Stop, put $a_v=\#\alpha(v)$, $b_v=\#\beta(v)$. Fixed-$k$ stopping-layer freshness from Boundary Dynamics §97 gives
+
+$$
+\Pr_\mu(H_3=h,V=v\mathrm{Stop}_e)
+=Z_{A+a_v,B+b_v},\qquad
+\Pr_\mu(V=v\mathrm{Stop}_e\mid H_3=h)
+=\frac{Z_{A+a_v,B+b_v}}{Z_{A,B}}.
+\tag{SC.15}
+$$
+
+This depends only on $(A,B)$, with the common $p_4$ control, not on retry order, the split between retries and returns, or return placement. The same ratio holds for every legal unfinished future cylinder using its acquired letter counts. The posterior used to mix the future is exactly
+
+$$
+\nu_{A,B}(k)=\mu(k)r_k^A(1-r_k)^B/Z_{A,B},
+$$
+
+which arises from each of these actual histories under this same prior. Future noncompletion has probability zero: at every supported $k$ a complete return has probability $r_k(1-r_k)\le1/4$, and mixing preserves vanishing tails. Thus the countably many complete stopped words, together with their deterministic events, determine the full future law. For any future event $E$, (SC.15) gives
+
+$$
+\Pr_\mu(H_3=h,V\in E\mid\mathcal F_{A,B})
+=\frac1{F(A,B)}\Pr_{\nu_{A,B},p_4}(V\in E).
+\tag{SC.16}
+$$
+
+Restricting the finite past side to a nonempty $C$ class replaces $F(A,B)$ by $F(A,B,C)$ and leaves the same future row. This proves both assertions. $\square$
+

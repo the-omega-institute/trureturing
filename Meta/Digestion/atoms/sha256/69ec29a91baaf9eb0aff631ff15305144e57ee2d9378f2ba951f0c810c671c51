@@ -1,0 +1,35 @@
+**Proposition 5.4 (all-attempt calibration costs).** Set
+$S_H=2\lceil\log_2(H+2)\rceil+4$. Each attempt of Definition 5.2 obeys
+
+$$
+T_j\le H+2+N+S_H,\qquad
+A_j\le H(H+2+N)+(2H+1)S_H,\qquad Q\le2H+1.
+\tag{CAB.15}
+$$
+
+Multiply the per-attempt bounds by $b+1$ for a call. A row candidate
+uses at most $4(N+5)$ bits, a calibration candidate
+$O(\log(H+2))$ bits, auxiliary paths/control $O(H+1)$ bits, and a
+complete operand region at most $4(2H+2)$ bits. The code and two
+fixed cuts are constant source-independent installation. The retained
+decoder payload is the two actual full rows plus the signed calibration.
+
+Proof. There are no hidden-pair comparisons at a singleton cut.
+The RA bound applies with $K_P=3$. A hidden search uses at most
+$S_H$ Reads, with a one-letter base and at most twice its final
+subtree right depth. This gives the loose safe bound $2H+1$, including
+absent probes and failed attempts. Every row path is in $V$; the
+syntactically complete candidate left tree has height at most $H-1$.
+Its computed $c$ and a provisional acquired hidden $c$ are bounded by
+$2H+1$, so their difference has logarithmic width even before rejection.
+All failure allocations are cleared before the next attempt.
+
+For a signed integer $z$, map it to the natural $2z$ when $z\ge0$,
+and to $-2z-1$ when $z<0$, then gamma-code that natural plus one.
+This costs $O(\log(|z|+2))$ bits with paid framing. On a successful
+source $|\delta|\le2H+1$. The candidate scan and arithmetic can be
+implemented in addition to CWS's local-work bound within
+$O((F+(H+1)S_H)L^2)$ bit/cell operations, with
+$L=1+\lceil\log_2(N+H+8)\rceil$. It accounts for materialization,
+binary indices and cleanup without a stored hidden tree. $\square$
+

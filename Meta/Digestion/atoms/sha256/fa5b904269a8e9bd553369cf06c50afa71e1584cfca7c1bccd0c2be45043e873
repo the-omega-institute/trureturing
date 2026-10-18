@@ -1,0 +1,22 @@
+**Lemma 7.1 (two additional mandatory class cones).** Every accurate
+preparer for any code of template (PCA.12) has an installed running
+state whose address enters the $b_3$ occurrence and another whose
+address enters the $b_4$ occurrence.
+
+Proof. Choose $x_c=\beta$ and five pairwise distinct branch image
+values for $a,b_1,b_2,b_3,b_4$. Their filling is an actual zero source
+$z\in Z_c$ by NBP Proposition 9.3. It has code zero under (PCA.12).
+Replace only $x_{b_3}$ by alpha. The resulting filling is an actual
+$\Pi_3$ source, with code one; distinctness and the repeated beta
+partner are preserved. These two current trees agree at every word
+outside the $b_3$ occurrence cone, by the same complete occurrence
+analysis as Lemma 6.2. Without an installed query in that cone their
+entire menu replies would agree, contradicting Lemma 2.3 and their
+different required latches.
+
+Instead replace only $x_{b_4}$ in the zero source by alpha. This gives
+an actual $\Pi_4$ source of code one, differing only in the $b_4$
+cone. The same reasoning requires an installed query there. The two
+cones are disjoint. This is a restriction of a lower-bound comparison
+to actual sources, not a new promise on the full domain. $\square$
+

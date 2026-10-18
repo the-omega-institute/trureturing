@@ -1,0 +1,32 @@
+**Definition 12.1 (Budget three and the radial comparison family).**
+Let $\mathfrak F_{\le3}^{\rm aff}(Z)$ consist of the models of
+Definition 2.1 with stored dimension $m\in\{0,1,2,3\}$. Thus
+
+$$
+e_3^{\rm aff}(Z)=
+\inf_{(E,q)\in\mathfrak F_{\le3}^{\rm aff}(Z)}
+\sup_{x\in\mathcal M}\|q(x)-y(x)\|_2.
+$$
+
+There is one fixed affine ten-output decoder and one state-independent
+affine map for each original command, including both update offsets.
+Encoders may be irregular, nonmeasurable, unbounded, and noninjective.
+No ambient inverse, ambient composition law, common affine center,
+or regularity in a command parameter is required. Infinite errors are
+included. Guard recovery and prescribed paths retain Definition 2.2.
+
+For $C\ge0$ and $\gamma\in\mathbb R$ write
+
+$$
+\mathcal R_Z(C,\gamma)=
+\sup_{0<k<H}\left\{4(Ce^{\gamma k}-A(k))^2+4Zk\right\},
+\qquad A(k)=2\sqrt{k(H-k)}.
+$$
+
+Here $C=0$ means the zero model, so
+$\mathcal R_Z(0,\gamma)=R_0^2$ independently of $\gamma$.
+Every positive $C$ and finite $\gamma$ gives the actual model of
+Theorem 6.4, with encoder $Ce^{\gamma k}U(\alpha)$ and decoder
+$D(E,0)$. Thus these comparisons refer to lawful models in the
+original metric, not just scalar lower bounds.
+

@@ -1,0 +1,28 @@
+**Definition 4.1 (finite structural compiler).** Use SSA Definition 5.2's
+finite pattern enumeration for the union of the primitive bootstrap,
+$D_0,L,D_1$ and the single Install instrument. Enumerate each finite
+slot as absent/0/1; inspect the actual active version, mode, PC, cursor,
+token and operand fields. Reject patterns inconsistent with the particular
+native guard. Use SSA's byte, mark, latch and receipt effects, ordinary
+EX convention, adjacent-cell routes, alias resolution and head retargeting.
+For a fresh finite-bit WR use Definition 3.3 rather than an assignment to
+an already existing switch. NEXT/ADVANCE update precisely their actual
+existing mode/cursor fields; DONE alone changes the active table. An
+ordinary new cell and a fresh finite control bit are different constructor
+variants. Both physical IN bits have their actual latch-update patch.
+
+All designated old target bits are assigned once after alias combination,
+in first-role/track order, whether changed or unchanged. Construct core
+cells before the receipt cell. For a fresh finite bit create its four
+roles in the order $f,t,v_0,v_1$ before the receipt template. The new bit
+is not also counted as an existing four-assignment target. Combine core
+and receipt changes on a shared meter cell exactly as in SSA; its read
+head is not inadvertently moved to the new append R.
+
+Order table entries as SSA does, extended by absent before 0 before 1
+and the displayed version/constructor order. Encode the guarded walks,
+patterns, output labels, assignments and templates by SSA Definition 3.2's
+unary/list encoding. Denote the resulting finite bit length by $d_\Pi$.
+Thus both the rule table $\Pi$ and its description are specified by a
+finite enumeration, not an unspecified graph interpreter.
+

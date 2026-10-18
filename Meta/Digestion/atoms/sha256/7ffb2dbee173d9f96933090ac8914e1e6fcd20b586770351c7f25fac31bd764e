@@ -1,0 +1,140 @@
+**Proposition 9.6 (Retained-target reduction of the information network).**
+Consider a connected positive-edge network from (9.6), or one of its
+connected components. Partition its vertices into a nonempty retained
+boundary $\mathcal B$ and an interior $\mathcal I$. If
+$\mathcal I\ne\varnothing$, then $L_{\mathcal I\mathcal I}$ is
+positive definite, and define
+
+$$
+L_{\rm red}
+=L_{\mathcal B\mathcal B}
+ -L_{\mathcal B\mathcal I}L_{\mathcal I\mathcal I}^{-1}
+                         L_{\mathcal I\mathcal B}.
+\tag{9.17}
+$$
+
+For each boundary potential $x$,
+
+$$
+x^{\mathsf T}L_{\rm red}x
+=\min_y
+\begin{pmatrix}x\\y\end{pmatrix}^{\mathsf T}
+L\begin{pmatrix}x\\y\end{pmatrix},
+\qquad
+y_*=-L_{\mathcal I\mathcal I}^{-1}L_{\mathcal I\mathcal B}x.
+\tag{9.18}
+$$
+
+For a retained target $\ell=(\ell_{\mathcal B},0)$ with
+$\sum_{\mathcal B}\ell_{\mathcal B}=0$,
+
+$$
+\ell_{\mathcal B}^{\mathsf T}L_{\rm red}^+\ell_{\mathcal B}
+=\ell^{\mathsf T}L^+\ell.
+\tag{9.19}
+$$
+
+Proof. Extend any interior vector $y$ by zero on the boundary.
+Its full network energy is $y^{\mathsf T}L_{\mathcal I\mathcal I}y$.
+If this is zero, every positive edge has equal endpoint values.
+Connectivity of the full graph makes the extension constant, and
+the nonempty zero boundary makes it zero. Thus nonzero $y$ has
+strictly positive energy. This argument does not assume that the
+induced interior graph is connected.
+
+Completion of the square gives
+
+$$
+\begin{aligned}
+\begin{pmatrix}x\\y\end{pmatrix}^{\mathsf T}
+L\begin{pmatrix}x\\y\end{pmatrix}
+&=x^{\mathsf T}L_{\rm red}x\\
+&\quad+(y+L_{\mathcal I\mathcal I}^{-1}L_{\mathcal I\mathcal B}x)^{\mathsf T}
+L_{\mathcal I\mathcal I}
+(y+L_{\mathcal I\mathcal I}^{-1}L_{\mathcal I\mathcal B}x),
+\end{aligned}
+\tag{9.20}
+$$
+
+which proves (9.18). In particular $L_{\rm red}$ is positive
+semidefinite. Its kernel consists of constant boundary values:
+zero minimized energy forces a constant extension on the connected
+full graph, and a constant boundary has the constant extension.
+Thus its range is the zero-sum boundary subspace.
+
+For completeness this Schur matrix is again a loopless Laplacian.
+The grounded inverse has nonnegative entries. Indeed, if
+$L_{\mathcal I\mathcal I}y=f\ge0$ had a negative minimum in the
+zero-boundary extension, then at an interior minimizing vertex all
+terms $g(y_i-y_j)$ are nonpositive. Their sum can be nonnegative
+only if every neighbor shares the minimum. Repeating along a path
+to the boundary contradicts its value zero. Hence $y\ge0$.
+The off-diagonal entries of
+$L_{\mathcal B\mathcal I}L_{\mathcal I\mathcal I}^{-1}
+ L_{\mathcal I\mathcal B}$ are nonnegative, so those of
+$L_{\rm red}$ are nonpositive. The full row-sum equations also give
+$L_{\rm red}1=0$. This identifies its effective nonnegative
+conductances without any interior-connectivity premise.
+
+Now put $x=L_{\rm red}^+\ell_{\mathcal B}$ and extend it by
+$y_*$. The block equations give
+
+$$
+L\begin{pmatrix}x\\y_*\end{pmatrix}
+=\begin{pmatrix}\ell_{\mathcal B}\\0\end{pmatrix}.
+$$
+
+Any two solutions of this equation differ by a constant. Since
+$\ell$ sums to zero, pairing with $\ell$ removes that constant:
+the full energy coefficient is
+$\ell^{\mathsf T}L^+\ell
+=\ell_{\mathcal B}^{\mathsf T}x$.
+This is (9.19). $\square$
+
+If the interior is empty, set $L_{\rm red}=L$ and do no elimination.
+A singleton boundary has reduced matrix $[0]$ and admits only the
+zero balanced retained target, so (9.19) gives zero. An empty
+boundary is excluded from grounding: the full Laplacian is singular,
+and there is no retained nonzero target; no inverse of that full
+matrix is asserted. In a disconnected network the same construction
+may be used on individual components with a nonempty retained
+boundary, and estimability still requires balance on each component.
+
+These are the Dirichlet-energy and source-free forms of Kron
+reduction. Dörfler–Bullo [Kron9], equation (2.1), Lemma 2.1 and
+Theorem 3.9, equation (3.14), supply the classical Schur and
+resistance framework; the target map here is $Q=L$, retained
+vertices $\alpha=\mathcal B$, and injected vector $\ell$.
+The proof above includes the singleton boundary separately from
+their at-least-two-retained-vertices setting.
+
+As a concrete application, if vertex $0$ is connected to $1,2,3$
+with conductances $a,b,c\ge0$ and $S=a+b+c>0$, eliminating its
+potential contributes
+
+$$
+g^{\rm added}_{12}=\frac{ab}{S},\qquad
+g^{\rm added}_{13}=\frac{ac}{S},\qquad
+g^{\rm added}_{23}=\frac{bc}{S}.
+\tag{9.21}
+$$
+
+Existing edges are added to these conductances. To see the formula,
+the eliminated block is $[S]$ and its boundary coupling is
+$(-a,-b,-c)^{\mathsf T}$; its Schur correction has off-diagonal
+entries $-ab/S,-ac/S,-bc/S$, with matching row sums. A zero numerator
+creates no edge; $S=0$ is an isolated ungrounded vertex and this
+division is not made.
+
+Equation (9.19) requires zero internal source. More generally
+$L_{\mathcal I\mathcal B}x+L_{\mathcal I\mathcal I}y
+=\ell_{\mathcal I}$ gives a boundary source
+$\ell_{\mathcal B}
+ -L_{\mathcal B\mathcal I}L_{\mathcal I\mathcal I}^{-1}\ell_{\mathcal I}$
+and additional source terms in the energy. Consequently vertex
+$0$ cannot be deleted by the source-free rule for the four-corner
+target below, whose $d_0=1$. The reduction minimizes an information
+quadratic form; it is neither deletion of recorded observations
+nor restoration of an internal quantum state. Its added edges are
+effective statistical couplings, not newly available gates.
+

@@ -1,0 +1,24 @@
+**Theorem.** After naming the larger of C,D by A and the smaller by B,
+with values a,b, the following necessary conclusions hold:
+
+1. a>=1+v+b, in particular a>b and a>v.
+2. Exactly two actual axial-flat owners have V transversely. One has
+   frame (A,V,B,Q,V,B); the other has frame (U,V,L,T,V,L), where L=A or B.
+   They are distinct. Their selected A and U slots are unique, so
+   p_A=p_U=1 and m-2<u<=m.
+3. If an owner F_V selects V transversely, it is unique and has
+   transverse companion B. The degree of V is six or seven. Without
+   F_V its degree is exactly six.
+4. The original source flat sigma=(M,C,D,O,C,D) and the two owners
+   above have their other selected axial labels O,Q,T in {B,V} union S.
+   Across these three actual owners there is at most one B pi slot.
+   If F_V exists none of O,Q,T is V; otherwise they contain at most
+   two V slots, counting repetitions.
+
+Thus an unwitnessed sixth label must be a degree-six or degree-seven
+actual edge with this specific flat-owner configuration. In particular,
+if all six reservoir edges have degree at least eight, every reservoir
+is genuinely witnessed and every flat owner selects its axes. This
+last conclusion is not an exclusion of axial flats or a six-reservoir
+geometric-realization theorem.
+

@@ -1,0 +1,32 @@
+**definition 4.2 (A normalized common failure action).**
+Suppose a data-pair protocol has aggregate paid stay and partner weights
+$\alpha,\beta$ satisfying
+
+$$
+0\le\alpha\le s,\qquad 0\le\beta\le5n,\qquad
+z_0=1-\alpha-\beta>0.
+\tag{4.4}
+$$
+
+In every total-failure history Alice measures her data coordinate
+$\ell\in d$, sends it to Bob, and Bob prepares the distribution
+
+$$
+p_{v\mid\ell}=
+\begin{cases}
+(s-\alpha)/z_0,&v=\ell,\\
+(5n-\beta)/z_0,&v\text{ is its partner in }d,\\
+5n/z_0,&v\notin d.
+\end{cases}
+\tag{4.5}
+$$
+
+The probabilities are nonnegative. Their numerator sum is
+$s+20n-\alpha-\beta=z_0$, so they sum to one. Success and failure
+together give $s$ at the input coordinate and $5n$ at every other
+coordinate. The failure action kills both pair off-diagonals.
+These are fixed normalized probabilities used in every failure
+history, including those with unpromised inputs; they are not divisions
+by a history's actual probability. Real basis measurement, a classical
+message and Bob's real diagonal preparation realize (4.5).
+

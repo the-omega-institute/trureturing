@@ -1,0 +1,16 @@
+**Definition 389.1 (The remaining comparison).** Retain the full scores, anchor excesses $\Delta_N,\Delta_O$, quotient map $Q$ and signed hull support $\sigma_{H_L}$ of XXIII 368.4. The unresolved universal assertion is: for every finite $L\ge8$ and every full $y\ge0$ with $\Delta_O(y)=1$, there exist one unrestricted full $V\ge0$ and the same $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}(Q(y)-Q(V))\le\theta.
+\tag{389.1}
+$$
+
+Equivalently in the inherited clipped primal formulation, the still-missing step is (385.3) for every required real prefix, cap and finite $M\ge1$ at every $L\ge8$. Signed residuals, both $\theta$ endpoints and nonzero zero-$N$-excess $V$ remain permitted. Neither a fixed old allocation nor fixed endpoint laws or separately optimized stock coordinates constrain this assertion.
+
+Its alternative is one entire positive ordered vanishing profile, one complete original common-seed $A_N\in\mathcal N_2$ attaining $c_0=e_a(A_N)$, and one $\varepsilon>0$ such that every original arbitrary-address/full-carrier $A_O\in\mathcal O_2$ has $e_a(A_O)\ge c_0+\varepsilon$. The necessary inequality (386.3) and the restricted optimum (388.1) establish neither alternative: the unrestricted stopped attainer of XXIV 376–379 remains feasible at $c$ on the very profile used here.
+
+Original nonatomic-target accuracy and complete paid-$M1$ acquisition remain separate questions with their unchanged conditions. In particular a finite marked output law has TV distance one from an unchanged nonatomic target on the same carrier; none of the selected-law conclusions implies nonatomic accuracy.
+
+The mathematical dependencies of the new capacity and stock deductions are the complete-table and original-source interfaces 108–110 and Source-Correlated Laws 45, the signed score/anchor definitions IX 207 and XXIII 368, the signed transfers XV 258 and XXIII 371, the fixed-complement tool XXIII 372, and the full clipped alternative VI 199.3–199.4. The unrestricted optimum and its attainer are reused from XXIV 375–379. Compactness, finite nonnegative score pairing and coordinate elimination are standard ingredients; compare Volker Kaibel, [*Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorems 12 and 18](https://arxiv.org/abs/1001.2161v1). They are used inside these deductions, with no claim of a new general duality theorem or of literature priority for their methods.
+

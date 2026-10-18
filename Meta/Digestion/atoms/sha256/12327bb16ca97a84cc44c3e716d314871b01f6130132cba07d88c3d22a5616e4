@@ -1,0 +1,41 @@
+## 10. Exact attribution and statement correspondence
+
+**Mathematical citation 10.1 (source identities).** The two source
+snapshots fixing the citations in this volume are:
+
+| Citation | Mathematical source and exact snapshot |
+| --- | --- |
+| [DEV] | *Adaptive acquired references and the retention frontier*, revision `142f723c`, including §§1–12; SHA-256 `3d1a16530adf59065ec64c5d26791ea5cdb0cf20fb74355365d0adc670d59bdd`. |
+| [PRIOR] | *Native finite-menu minimal memory*, the source with §§1–12 and Theorem 7.2; SHA-256 `f81c2985462d3984fe5e97244293b6ed2e0fdf129da5a8d5b0a63d6742bbf75c`. |
+
+A cited published premise carries its exact hypotheses from the stated
+native interface. References within [DEV] remain its own supplier
+attributions; they do not add unacquired data or operations here.
+The complete overlap and retained-result correspondence is:
+
+| Mathematical conclusion | Prior statement | Published supplier or retained proof here |
+| --- | --- | --- |
+| Native family, four replies, nested/empty menu and complete state | [PRIOR, §§1–2] | [DEV, Definitions 1.1–1.4, 11.1 and 12.1]; §2 fixes the same parameters and relative reduction. |
+| Atomic presence asymmetry, blockers and full response phases | [PRIOR, Lemma 3.2 and Theorem 3.4] | [DEV, Definition 12.2 and Theorem 12.3]; Citations 3.1–3.3 include the explicit signature correspondence. |
+| Exact saturation and legal finite separation | [PRIOR, Corollary 3.5] | [DEV, Theorem 12.3]; $B(S)=H_P$ in (FM.12). |
+| All constructor collisions, including the joint strict-left overlap | [PRIOR, §4] | [DEV, Theorem 12.6]; Citation 4.2 states every case and both equivalences. |
+| Terminating pruned form, exact recurrence and bounded common realization | [PRIOR, §5] | [DEV, Definition 12.5 and Theorem 12.6]; Citation 4.3 uses its code order and actual representatives. |
+| Rank/unrank, effective decoder, arbitrary-state and bit minima | [PRIOR, §6] | [DEV, Definition 12.5 and Theorem 12.6]; Citations 4.3–4.4 retain the complete-state conditions. |
+| Initial-vector iff relative-prefix-closure criterion | [PRIOR, Theorem 7.2] | Full independent proof in Theorem 5.2, including every missing proper prefix, effective sufficiency and actual common-count sources; not stated in [DEV]. |
+| Full-menu recurrence and the $D=1$ cases | [PRIOR, Corollary 8.1] | Specialization of [DEV, Theorems 12.6–12.7] in Corollary 6.1; its initial-vector assertion also uses Theorem 5.2. |
+| Symbolic binary-width bounds | [PRIOR, Proposition 8.2] | Full proof in Proposition 6.2 from the credited recurrence. |
+| Fixed public ray count and its distinct resource meaning | [PRIOR, Citation 8.3] | [DEV, Theorem 11.4, Corollary 11.6 and Theorem 12.8]; Citation 6.3. |
+| Sampling failures, sparse initial vector, hidden equality and full source | [PRIOR, Propositions 9.1–9.3] | [DEV, Example 11.5, §11.7, Counterexample 11.9 and Theorem 12.6]; Citations 7.1–7.3. |
+| Count omission for every nonempty menu | [PRIOR, Proposition 9.4] | Full common-source proof in Proposition 7.4, consistent with [DEV, §§11.8–11.10 and 12.9]. |
+| Guarded capture, full-tree query account and historical origin | [PRIOR, §10] | [DEV, Proposition 11.8 and Theorem 12.9]; §8 gives the precise full-tree variant and separate unknown-lag service. |
+| Non-invariance, operation limits and unresolved resource optima | [PRIOR, §11] | [DEV, §12.10 and Open problems 9.4 and 11.12]; §9 preserves these limits. |
+
+The substantive independent proof retained here is the prefix criterion
+with its native missing-prefix witnesses. The bit inequalities and
+count-omission witness are useful proved consequences. The spatial
+statistic, constructor analysis, normal-form count, bounded realization,
+minimal code, horizon and capture are published reuse. The criterion
+adds a precise test for one proposed retained representation; it does
+not supply new generic quotient mathematics or identify all recovery
+interfaces with one another.
+

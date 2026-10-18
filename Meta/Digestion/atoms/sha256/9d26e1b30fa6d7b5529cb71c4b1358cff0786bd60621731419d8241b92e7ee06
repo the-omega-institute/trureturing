@@ -1,0 +1,40 @@
+**Theorem 14.2 (Conditional logarithmic complete-bit order on matched bands).** Conditional on the lower suppliers identified in Section 11 and the upper suppliers of Definition 14.1, the supplied deterministic controller family realizes uniform cubic paid means with $O_{H_c,\alpha}(1+\log(1/\varepsilon))$ complete mutable bits. Every family in the matched contract with a uniform cubic mean upper bound under either fixed target requires
+
+$$
+K_\varepsilon\ge\frac45\log_2(1/\varepsilon)-O(1).
+\tag{14.1}
+$$
+
+Thus logarithmic mutable-bit order is necessary and attained within this contract. The upper controller is source-blind throughout each band and is an element of the known-common-$q$ lower class at every selected $q$ in that band. This is an order comparison, with no assertion that the necessary configuration exponent $4/5$ or the displayed bit coefficient is attained.
+
+Proof. Fix a sufficiently small supplied rational $\varepsilon$. The supplier initializes from immutable band and risk data without reading the source. After each read it performs only the source-disabled finite computations covered by $C$, Lemma 29.5, then either emits its own label or reaches a next read-ready state. For this fixed width and descriptor, composing those deterministic finite paths gives deterministic bit kernels $A,C$ and a common initial row $\eta$. All mutable intermediate modes already belong to the counted configuration domain. No step of this composition introduces a stored elapsed-work index, another read, or an external program counter. Identifying terminal states with the same emitted label can only reduce the state count. This is the same-budget normal-form reduction of Lemma 3.2, with internal source-disabled computations composed as in Definition 12.1.
+
+Let $m_\varepsilon$ be the actual complete configuration count of this controller. It is finite and at most $2^{K_\varepsilon}$. At each selected $q\in I_\varepsilon$, both separate band risk bounds from $C$, Theorem 28.4, imply (3.1) for that same $q$. The finite cap and terminating internal work give both almost-sure stops and both finite paid means. The source law and all access restrictions agree by Definition 14.1. Therefore the controller, with its read-ready reduction, belongs to $\mathfrak A_{m_\varepsilon}(q,\alpha)$. The lower class allows immutable knowledge of $q$; a design which ignores it is included. Restricting the supplier's two nuisance parameters to the same chosen $q$ loses none of these conditions.
+
+The following necessity argument applies equally to any family in the matched contract. If its target mean is at most $C_{\rm band}\varepsilon^{-3}$ uniformly on the band, (13.2) bounds it by $C_Ts^{-3}$ with $C_T=64C_{\rm band}$, uniformly before selecting $q$ or the band. If $4\varepsilon<s_*$, every point of the band lies in the common lower neighborhood. Apply (11.9) pointwise with the actual complete count as budget and this target upper bound. The same positive-root rearrangement supplied by $G$, Theorem 10.1, yields (12.3), with $A_T$ from (12.2), for each selected pair $(\varepsilon,q)$. This application uses a simultaneous inequality, so it does not require the family to select a unique observer as a function of $s$ across overlapping bands. For sufficiently small $\varepsilon$, $s\le4\varepsilon$ makes $A_Ts^{-4/5}\ge2b$ throughout the band. Hence
+
+$$
+m_\varepsilon\ge\frac{A_T}{4\delta}s^{-4/5}
+\ge\frac{A_T}{4\delta}\,4^{-4/5}\varepsilon^{-4/5},
+\qquad
+K_\varepsilon\ge\frac45\log_2(1/\varepsilon)
++\log_2\frac{A_T}{4\delta}-\frac85.
+\tag{14.2}
+$$
+
+This is (14.1); both means are used for compliance, while only the selected mean needs the uniform cubic upper constant. An upper constant depending without bound on the band would not suffice.
+
+For attainment, the single supplied controller at each band has the uniform cubic upper constant just used, and its separate mean lower constants are exactly the credited owner Corollary 22.11 through $C$, Theorem 28.4. No new prefix-information bound is asserted. For its complete width, $C$, (29.1) and Theorem 29.6, give, at fixed $H_c,\alpha$ and controlled $\rho$,
+
+$$
+w=O(1+\log(W+2)),\qquad
+ a=O(1+\log(w+1)),\qquad
+K_\varepsilon=256w+32a+97
+=O_{H_c,\alpha}(1+\log(1/\varepsilon)).
+\tag{14.3}
+$$
+
+Here $W=O_{H_c,\alpha}(\varepsilon^{-3})$ and all small-band constants are uniform. The complete width includes transient and initialization configurations, so (14.3) meets precisely the encoding hypothesis used in (14.2). Proposition 13.1 converts these logarithmic orders to $\log(1/s)$ on comparable bands, with only a bounded additive difference. Its dyadic coverage is an offline existence statement; the compiler still receives only the rational band and risk, and the deployed controller never queries a real parameter. These facts prove the stated order comparison. $\square$
+
+The mutable-bit lower bound and supplied upper configuration estimate leave a genuine distinction: necessity is $m_\varepsilon=\Omega(\varepsilon^{-4/5})$, whereas the supplied complete domain is only bounded above by $2^{K_\varepsilon}$ with $K_\varepsilon=O(\log(1/\varepsilon))$. The unspecified upper polynomial exponent need not be $4/5$. Taking logarithms permits an order match without matching either that exponent or its coefficient. Likewise there are no matching lower bounds here for compiler workspace, immutable description, initialization or internal bit work. Allowing arbitrary independent $\rho\downarrow0$, changing $H_c$, or changing the stationary start does not preserve the uniform constants asserted above.
+

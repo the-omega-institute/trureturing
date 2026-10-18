@@ -1,0 +1,16 @@
+**范围与来源。** 本节的实际前缀宏观导数极限是本仓从 §441–§442
+原对象推出的结论（`repo-derived`）；肩部形状是经典 Laplace 单调
+机制在同一 \(K\) 上的应用。具体地，若 \(\mathcal L\) 表示正轴
+Laplace 变换，则 \(h(t)=\mathcal L(1/Q)(t)/\mathcal L1(t)\)。
+这一比率的单调性对应 Yang–Tian 的 Laplace 比率单调规则：
+《Monotonicity rules for the ratio of two Laplace transforms with applications》，
+J. Math. Anal. Appl. 470(2) (2019), 821–845，
+[DOI: 10.1016/j.jmaa.2018.10.034](https://doi.org/10.1016/j.jmaa.2018.10.034)。
+本节用（MR.1）的严格逐点比较直接支付严格性；Laplace 参数求导的
+经典公式参见 [NIST DLMF 1.14.23](https://dlmf.nist.gov/1.14.E23)。
+支配收敛、导函数判凹性和介值定理均为经典分析供应。
+这里的最大点是首积分在宏观阻尼尺度上的有限修正最大点。
+实际阻尼零点仍位于 §441 的 \(L^{-C}\) 尺度；本节没有将其移到
+\(L^{-1}\) 尺度，也没有断言有限前缀导数在全轴上的唯一零点。
+完整 Robin 配对中其余有符号项的联合临界估计仍待证明。
+

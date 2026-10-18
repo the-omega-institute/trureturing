@@ -1,0 +1,9 @@
+# Recursive relational observation: native graph-cover and Bethe boundaries
+
+The constructor-network representation is equality-aware and admits arbitrary
+whole-block potentials. This volume gives exact native cycle families showing
+why two proposed upper substitutions fail: unrestricted graph-cover domination
+and an optimized Bethe value used as a per-template upper bound. The examples
+are finite, positive-rational and amplify by disjoint products. They do not
+rule out a different sound cofinal verifier.
+

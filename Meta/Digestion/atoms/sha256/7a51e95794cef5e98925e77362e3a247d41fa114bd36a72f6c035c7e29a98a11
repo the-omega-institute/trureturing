@@ -1,0 +1,63 @@
+## 7. Complete actual-bit controller
+
+For a permitted $(s,J)$, use $u=u(s,J)$ and set
+
+$$
+\delta=\sqrt u,\qquad R=2\log(1/\alpha),\qquad H=\left\lceil\frac R\delta\right\rceil.
+$$
+
+Introduce a formal category $0$ only for the impossible consecutive-one row, with
+$\ell_0=0$. For $1\le j\le J$, set
+
+$$
+\ell_j=\log\frac{a_1(j)}{a_0(j)},\qquad
+m_j=\left\lfloor\frac{\ell_j}{\delta}\right\rfloor,\qquad
+ t_j=\frac{\ell_j}{\delta}-m_j\in[0,1).
+$$
+
+At a closing one the table chooses $m_j$ with probability $1-t_j$ and $m_j+1$ with
+probability $t_j$. All these values, destinations, and probabilities are immutable design
+entries at the known common $q$. The table never computes a likelihood or a floor at
+runtime.
+
+The complete persistent set is
+
+$$
+\mathcal Q=\{w,d_0,d_1\}\cup
+\{(e,j):-H<e<H,\ 0\le j\le J\}.
+$$
+
+The waiting state $w$ is initialized under both sources. It loops on zero and enters
+$(0,0)$ on one. From $(e,j)$ with $j<J$, a zero goes to $(e,j+1)$ with probability
+$2^{-j}$ and stays at $(e,j)$ otherwise. From $(e,J)$ every zero stays at $(e,J)$.
+On a one, choose the rounded increment as above and use
+
+$$
+\Phi(e,n)=
+\begin{cases}
+ d_1,&e+n\ge H,\\
+ d_0,&e+n\le-H,\\
+ (e+n,0),&-H<e+n<H.
+\end{cases}
+$$
+
+The label states stop on entry; their identity rows are included only to make every row
+of the finite table explicit. The impossible one at category $0$ has $m_0=t_0=0$ and
+therefore leaves the evidence coordinate unchanged while resetting the level.
+
+Equivalently, every transition row is the following immutable table (the two successors
+in a rounded row have their probabilities added if they coincide):
+
+| current state | next bit | successor(s) and probabilities |
+| --- | --- | --- |
+| $w$ | $0$ | $w$ with probability $1$ |
+| $w$ | $1$ | $(0,0)$ with probability $1$ |
+| $(e,j)$, $j<J$ | $0$ | $(e,j+1)$ with probability $2^{-j}$; $(e,j)$ with probability $1-2^{-j}$ |
+| $(e,J)$ | $0$ | $(e,J)$ with probability $1$ |
+| $(e,j)$, $0\le j\le J$ | $1$ | $\Phi(e,m_j)$ with probability $1-t_j$; $\Phi(e,m_j+1)$ with probability $t_j$ |
+| $d_i$ | $0$ or $1$ | $d_i$ with probability $1$ (the row is never read after emission) |
+
+The $j=0$ one-row is the formal impossible consecutive-one case. Every zero after
+level $J$ is still read and paid, so the table also specifies indefinitely long
+saturated gaps.
+

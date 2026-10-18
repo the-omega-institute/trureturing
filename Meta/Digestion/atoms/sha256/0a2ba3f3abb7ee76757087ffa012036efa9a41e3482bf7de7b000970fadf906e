@@ -1,0 +1,61 @@
+**Theorem 4.1 (two actual join supports).** In Corollary 3.2 suppose
+
+$$
+r\le K-g,\qquad s\le L-z.
+\tag{CL.15}
+$$
+
+Then $v=(g,z)\in V_B$, and it has actual live supports $S^+,T^+$ with
+
+$$
+S^+\cap(S\cup T)=S,\qquad T^+\cap(S\cup T)=T.
+\tag{CL.16}
+$$
+
+Thus for every $x\in S\setminus T$ and $y\in T\setminus S$ the
+two supports realize both $x$-in/$y$-out and $y$-in/$x$-out.
+
+Proof. The original bounds $g\le K-1,z\le L-1$ make $v$ live.
+By (CL.14), $r,s\ge\ell+1$, where $\ell=n-b$. Conditions (CL.15)
+give $g+r\le K,z+s\le L$, whence
+
+$$
+g+z\le K+L-r-s
+       =n+1-r-s\le b-\ell-1\le b-1.
+\tag{CL.17}
+$$
+
+Also $g+z=(h+z)+r>a$, proving $v\in V_B$.
+
+From the occurrence at $p,q$ follow $1^r$. Its own counts stay live
+through the last reply, ending at $(g,z)$. Before the query with
+$j$ previous appended replies, $0\le j<r$, the original occurrence
+at $p',q$ can separately follow $1^j$ while live, because
+$g+j\le g+r-1\le K-1$. The two actual extensions have the same fixed
+state at that step. Its label is fresh for both, hence outside $S\cup T$
+and outside all previously appended coordinates. The retained lower
+history therefore ends with $S^+=S\cup R_1$, where
+$R_1\cap(S\cup T)=\varnothing$.
+
+Independently follow $0^s$ from the occurrence at $p',q$. It stays live
+through its last reply and ends at $(g,w+s)=(g,z)$. At every proper
+prefix of length $j<s$, the original lower occurrence can separately
+follow $0^j$ while live, since $z+j\le z+s-1\le L-1$. Fixed successors
+again make every queried label fresh for both. Thus the retained upper
+history ends with $T^+=T\cup R_0$, where
+$R_0\cap(S\cup T)=\varnothing$.
+
+On either construction the helper's last reply may certify it.
+Freshness was used only before that reply, when both occurrences were
+live. Each retained extension is actual on its own completion; their
+completions need not agree, and the two constructions need not use the
+same appended coordinates. Their intersections prove (CL.16).
+Incomparability supplies private elements, so these supports are
+different and require different hosts at the fixed cell by (CL.5).
+No behavior after certification has been prescribed or erased.
+$\square$
+
+The eligibility conditions (CL.15) are sufficient for this construction.
+Sharing near a hit or zero boundary can fail them. Such sharing is still
+part of the original graph and is still counted in $D_B$.
+

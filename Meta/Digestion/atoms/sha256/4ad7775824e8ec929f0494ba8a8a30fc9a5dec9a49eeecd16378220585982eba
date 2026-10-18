@@ -1,0 +1,36 @@
+## 14. Full-target domains, local inverses, and compact sets
+
+**Theorem 14.1.** On $\mathcal C_\rho$ with exactly calibrated $u=u_0>0$, the full target has the bound
+
+$$
+\max\{\|\Delta S\|_{\max},|\Delta k|,\|\Delta D\|_{\mathrm{coef}}\}
+\le\max\{C_{SD}(\rho),6C_0/u_0\}\,e
+\tag{14.1}
+$$
+
+for all real slopes. On $\mathcal C_\rho$ with $u\ge m_0>0$ and $|k|\le K<\infty$, it instead has the bound
+
+$$
+\max\{\|\Delta S\|_{\max},|\Delta k|,\|\Delta D\|_{\mathrm{coef}}\}
+\le\max\{C_{SD}(\rho),(7C_b+6K)/m_0\}\,e.
+\tag{14.2}
+$$
+
+No upper scale bound or drift bound is needed in either assertion.
+
+**Proof.** For (14.1) combine (12.1) and (13.1). For (14.2), set $b_u=3(b_x)_p+3(b_x)_q+(b_x)_r=ku$. The exact product identity is
+
+$$
+\bar u\Delta k=\Delta b_u-\bar k\Delta u.
+$$
+
+Here $|\Delta b_u|\le7C_be$, $|\Delta u|\le6e$, $\bar u\ge m_0$, and $|\bar k|\le K$. This proves the slope bound and hence (14.2). ∎
+
+These are sufficient domains, not a classification of every restricted family that can admit stability. For example, prescribing $q$ proportional to $p$ can make $s$ linear without this particular shape bound; prescribing $k$ removes slope estimation entirely.
+
+The unrestricted six-read map is globally injective by Section 4 and is a local smooth diffeomorphism at every actual target. To see the latter, use the open chart $(p,q,r,k,\delta_0,\delta_1)$ with $s=qr/p$. Its change to $(\zeta,\eta,u,t,v,k)$ is smooth and invertible: the source change has (3.2), and the drift change is triangular with unit coefficients in $\delta_0,\delta_1$. The output change to $(\zeta,\eta,u,W,Y,Z)$ is a linear isomorphism. Its remaining derivative block is exactly $DF_u$, whose determinant is nonzero by (4.2). The inverse function theorem supplies local smooth inverses; global injectivity makes them agree on the exact image.
+
+Every compact subset of this actual-target chart has positive minima of $u$ and $p/u$, and bounded $k$. Choose $\rho<1/3$ below its shape minimum, a positive $m_0$ below its scale minimum, and a finite $K$ bounding its slopes. Equation (14.2) then gives a Lipschitz inverse on that entire compact set. This separates local smooth inversion, compact-domain Lipschitz estimates, and the stronger global domain claims.
+
+For each fixed $d\ge1$, use the drift coefficient norm $\max_{0\le h\le d}|\delta_h|$ and the same maximum product norm on $(S,k,D)$. Both higher-degree families also have local smooth inverses by the same coordinate argument with $(P,u,t,v,k)$ and (9.9)–(9.11). On any compact actual-target set these inverses are Lipschitz as well: cover the compact image by finitely many small output balls whose larger concentric balls admit smooth local inverses with bounded derivatives. A positive Lebesgue number gives a uniform local pair bound; pairs farther apart are bounded by the finite target diameter divided by that number. This compactness statement does not assert the quantitative six-read constants for higher degrees or any unrestricted higher-degree stability domain.
+

@@ -1,0 +1,31 @@
+**Lemma 3.1 (Initialization and acquired sections).** For a fixed table
+let $w_r=\nu(c_{\rm init}^{-1}\{r\})$, and denote by $q_3(r),C_3(r)$
+the source masses of return and correct return within three calls from
+deterministic initial row $r$. Then
+
+$$
+q_3=\sum_rw_rq_3(r),\qquad
+q_3-L_3=\sum_rw_rC_3(r),\qquad \sum_rw_r=1.
+\tag{3.1}
+$$
+
+If $q_3=1$, every positive-weight initial row has $q_3(r)=1$.
+At a deterministic start a consistent finite acquired record has exactly
+its acquired-reply cylinder as source section.
+
+Proof. After initialization the seed has no runtime role. Independence
+therefore gives the finite sums (3.1), without a conditional law on
+singleton seeds. Since $\sum_rw_r(1-q_3(r))=0$ has nonnegative summands,
+each positive-weight summand vanishes. Uniform deterministic-start upper
+bounds consequently apply to the original initialization. Constant
+initialization is available on every given seed space.
+
+For the section assertion, the empty record imposes no condition. At
+each fixed prefix the row and instruction are fixed. Reading $t$ with
+reply $x$ intersects the previous section with $\{X_t=x\}$. A halt
+adds no source condition. Induction proves the assertion, including
+adaptive paths and contradictory repetitions, which are empty. Finite
+instruction durations add no information. Completed versions agree off
+product-null sets; Tonelli gives the same section identities for almost
+every seed and the same integrated masses. $\square$
+

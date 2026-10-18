@@ -1,0 +1,8 @@
+# Recursive relational observation: quantum-port covariance and a certified frontier
+
+**Convention (Problem).** The approximate quantum-port problem is that of
+[QMB, Convention 5.2](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+Its preparation, actual future protocols and fixed-port class are specified
+in §1. The four nontrivial exact frontier values and minimizing Kraus tuples
+remain undetermined.
+

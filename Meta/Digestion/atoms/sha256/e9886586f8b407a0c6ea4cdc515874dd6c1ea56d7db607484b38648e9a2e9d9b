@@ -1,0 +1,14 @@
+**Lemma 3.4 (shortest physical occurrence of an old class).** Let $B$ be the old class set and $p_i$ its reached hole addresses. For each class $b$, choose $a_b$ of minimum physical length among its occurrences, using shortlex only to break ties, and put $\delta_b=|a_b|$. Replacing a read $p_i s$ by $a_{[i]}s$ preserves its reply on every $u\in D$ at every epoch and never increases literal length. A read with no old-hole prefix has a source-independent value computable from $C$ and the actual epoch, and can be simulated without a raw call.
+
+Proof. SLH Theorem 60.2 gives
+
+$$
+ r_{\rho^j u}(p_i s)=r_{\rho^j z_{[i]}}(s)
+                    =r_{\rho^j u}(a_{[i]}s).
+\tag{JRF.3.4}
+$$
+
+The selected occurrence has $|a_{[i]}|\le|p_i|$. Without a hole prefix, the value is exactly SLH's $\chi_C(j,p)$, including concrete leaves' later descendants, strict ancestors of holes, and absent paths. Simulate the original control with these exact replies as in Theorem 3.1; output and termination are preserved and all three costs weakly decrease. The class name remains the original canonical name; only its read location changes. $\square$
+
+The canonical least hole index need not be shortest. For instance, the single class occurring at $LLL$ and $R$ in $\langle\langle\langle z,\alpha\rangle,\alpha\rangle,z\rangle$ is canonically named by $LLL$, whereas $R$ is shorter. A length proof must use the actual chosen physical occurrence, not merely a class suffix length.
+

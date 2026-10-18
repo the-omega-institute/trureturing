@@ -1,0 +1,11 @@
+### 65.5 An explicit finite convex program
+
+Formula (1) can be evaluated as a semidefinite program with complex matrix W, real variables t_ij≥0 and δ≥0:
+
+    minimize δ,
+    [[δ I_m,Z−W],[(Z−W)*,δ I_n]] ≥0,
+    [[t_ij,W_ij],[conj(W_ij),t_ij]] ≥0 for every i,j,
+    Σ_j t_ij≤1 for every i,    Σ_i t_ij≤1 for every j.
+
+The two-by-two constraints say t_ij≥|W_ij|, so their projection is exactly S. The first constraint says ||Z−W||op≤δ, including δ=0. Complex Hermitian constraints can equivalently be written as real symmetric constraints by the usual realification. This is an exact description with a proved finite physical attainer, not a relaxation of the physical optimum. No closed-form solution or computational complexity claim is made for general Z.
+

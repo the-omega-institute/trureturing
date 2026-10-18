@@ -1,0 +1,18 @@
+**更正命题 Q7.a：切空间与环境核不同。** 以源次序 $(s_0,s_1,s_2,s_3,s_{13})$ 取 $\mathcal H=\mathbb R^5$、$d=(1,-1,0,-1,1)$，令 $P_3(p)=(X,Y,Z)$。在零总质量切空间 $\mathcal H_0=\{q:\sum q_i=0\}$ 中有
+
+```math
+\ker P_3\cap\mathcal H_0=\operatorname{span}\{d\}.
+```
+
+但在整个 $\mathbb R^5$ 中，$\ker P_3$ 是二维，包含质量方向 $e_0=(1,0,0,0,0)$。只有质量增广映射 $P_4(p)=(\sum p_i,X,Y,Z)$ 才在整个环境中满足 $\ker P_4=\operatorname{span}\{d\}$。概率单纯形上的固定三均值纤维属于总质量为一的仿射超平面，不能把其切方向直接冒称环境中三行映射的全部核。
+
+固定 $X,Y,Z$ 后的实际可行律为
+
+```math
+p_\kappa=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad
+\max(0,X+Y+Z-1)\le\kappa\le\min(X,Y).
+```
+
+非空性要求该区间确实非空；比较隐藏差异要求其中至少有两个不同点。$p_{\kappa=0}$ 作为仿射基点未必是概率律，单位方向 $d$ 也不要求对应两个相距一的合法概率律。
+

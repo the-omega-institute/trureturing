@@ -1,0 +1,97 @@
+**Theorem 29.1 (the two evaluated original optima).** Under Convention
+26.1, define $k_u,s$ from the occupied weights of $S$ or $D$. Then
+
+$$
+\mathcal T_{\log1001}(s)
+ =\frac12[H_0+\boldsymbol d\cdot B-\lambda k_u].
+\tag{AC.136}
+$$
+
+At $S$, where $\lambda=1/4$,
+
+$$
+0.12444515769477<s_S<0.12444515769480,\qquad
+0.10273812575328<\mathcal T_{\log1001}(s_S)<0.10273812575331.
+\tag{AC.137}
+$$
+
+At $D$,
+
+$$
+\begin{gathered}
+0.15672072828365<\lambda_D<0.15672072828368,\\
+0.12435694642837<s_D<0.12435694642840,\\
+0.10280323941363<\mathcal T_{\log1001}(s_D)<0.10280323941368.
+\end{gathered}
+\tag{AC.138}
+$$
+
+Both are strict original weak interior points. The theorem maximizes
+over every original allocation and live-height decomposition, including
+those below fixed-allocation maximum contrast.
+
+Proof. The first five exact moment equations give
+$\sum p=1$, $\sum pu=\sum pv=\sum puv=0$, $\sum pu^2=\alpha$.
+Since $u^2+v^2=1$, the omitted square gives $\sum pv^2=\beta$.
+After the diagonal rescaling to $(1,z,w)$ this is the full live Gram
+$I_3$, not just its diagonal. The last three exact equations give
+
+$$
+1000\sum p\eta c=\mu,\quad
+1000\sum p\eta c z^2=V,\quad
+1000\sum p\eta c zw=0.
+\tag{AC.139}
+$$
+
+Using $\mu=\alpha V+\beta W$ restores the $w^2$ moment $W$.
+Congruence by $(z,w)\mapsto(d_{\rm src}w/h_2,-b_{\rm src}z/h_1)$
+therefore gives $\sum p\eta1000c\,n n^T=M$. This is the physical
+failure covariance. In particular neither bare whitened projectors nor
+separately optimized failure marginals have replaced it.
+
+For an arbitrary original competitor, FA69's reduction applies to its
+**own** actual supported-nonzero low label $(p,h,b)$,
+$0\le b\le1000c(h)$. With $a=b/(1000c(h))$, convexity gives
+
+$$
+|\ell+bf|\le(1-a)|H_0(h)|+a|H_1(h)|.
+\tag{AC.140}
+$$
+
+Here $H_0(h)=\ell(h)$ is a sheet height, distinct from the constant
+high contribution $H_0$ in AC.7. Apply AC.134 separately to the two
+terms. Integration of the same full Gram and physical failure moments
+makes the interpolated moment vector exactly $B$. Thus its low height
+obeys $v_{\rm low}\le\boldsymbol d B-\lambda\int|u|dp$.
+The actual report inequality is
+$s\le\mathsf V(F)\le C_s\int|u|dp$; $\lambda>0$ gives
+
+$$
+T_{\rm actual}\le\frac12
+ [H_0+\boldsymbol d B-\lambda s/C_s].
+\tag{AC.141}
+$$
+
+This proves a universal necessity on the original full-complex,
+multi-Kraus class, with every admitted time law and free other outputs.
+No real competitor restriction, fixed failure allocation or
+maximum-contrast completion was imposed.
+
+At $S$ all six weights are positive. At $D$ the first five are positive
+and $p_5=0$ exactly. The moments hold exactly, every occupied contact
+has its required height/report signs, and its signed gap is zero.
+Consequently its low absolute height is $\boldsymbol d B-\lambda k_u$.
+The simultaneous instrument of §32 attains these very moments, actual
+contrast $C_sk_u$, height and sharp cost. It attains AC.141 for the
+same joint object. This proves AC.136 without a remaining optimization
+or an unselected root. Substitution of the §27 boxes gives the strict
+rational bounds AC.137–.138.
+
+For the interior assertion, AC.14 and the source table give
+$t_0<265<1000$, $\tau_{\max}(1000)>0.998$, while both selected
+$\tau$ are less than $0.993$. These follow using
+$u_f=V/\mu$, $c_f=c_*(u_f)$, $q=\mu/(1000c_f)$ in the exact
+threshold expression; they certify feasibility slack, not just $s<s_0$.
+At $t=0$ the class is empty because its failure covariance is positive,
+before any division by $t$ is made. $\square$
+

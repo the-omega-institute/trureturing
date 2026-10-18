@@ -1,0 +1,74 @@
+**Coordinates and polynomial reduction.** Write $a_S=p+s$ and set
+
+$$
+u=(w-1)(p+q)+r,\qquad t=wp+r,\qquad v=q-p.
+\tag{9.3}
+$$
+
+The exact linear inverse is
+
+$$
+p=\frac{u-t-(w-1)v}{w-2},\qquad
+q=\frac{u-t-v}{w-2},\qquad r=t-wp.
+\tag{9.4}
+$$
+
+Indeed $u-t=-p+(w-1)q=(w-2)p+(w-1)v$. The fixed divisor $w-2$ is positive. Positivity means exactly that these three expressions are positive, followed by $s=qr/p$. Thus $u>0$ and the fixed-$u$ domain of $(t,v)$ is convex.
+
+Direct trace expansion gives
+
+$$
+\operatorname{tr}(L^hS)=a_S+hq,\quad
+\operatorname{tr}(Q_wS)=a_S+u,\quad
+\operatorname{tr}(T_\nu S)=a_S+u+(\nu-1)t+v.
+$$
+
+The single polynomial
+
+$$
+P(\tau)=D(\tau)+(a_S+u)(1+k\tau)
+\tag{9.5}
+$$
+
+has degree at most $d$, because $d\ge1$. At the actual $Q_w$ indices $j=2,\ldots,d+2$, it equals $z_j$. Consequently its entire value is determined by
+
+$$
+P(\tau)=\sum_{j=2}^{d+2}z_j
+\prod_{\substack{2\le e\le d+2\\e\ne j}}
+\frac{\tau-e}{j-e}.
+\tag{9.6}
+$$
+
+Every denominator is a fixed nonzero integer. Uniqueness follows because successive division by distinct linear root factors makes a degree-at-most-$d$ polynomial with $d+1$ distinct roots zero. Lower actual degrees, cancellations, and $P=0$ are included.
+
+Form the residual coordinates, using $E$ as an auxiliary quantity
+
+$$
+u=P(0)-z_0,\quad E=z_1-P(1),\quad W=-2E-u,
+\qquad Y=z_a-P(a),\quad Z=z_b-P(b).
+\tag{9.7}
+$$
+
+For actual data the first coordinate agrees with (9.3), and
+
+$$
+E=(1+k)(hq-u),\qquad hq-u=-\frac{u+t+v}{2}.
+$$
+
+Therefore
+
+$$
+(W,Y,Z)=F_u(t,v,k)
+=\bigl((1+k)(t+v)+ku,\ (1+ak)(mt+v),\ (1+bk)((m+1)t+v)\bigr).
+\tag{9.8}
+$$
+
+The data change to $(P,u,W,Y,Z)$ is a linear isomorphism: its inverse has $z_j=P(j)$ on the $Q_w$ block and
+
+$$
+z_0=P(0)-u,\quad z_1=P(1)-(W+u)/2,\quad
+z_a=P(a)+Y,\quad z_b=P(b)+Z.
+$$
+
+Polynomial evaluation here is decoding, not a virtual read. All reductions are undivided identities at gain zeros as well.
+

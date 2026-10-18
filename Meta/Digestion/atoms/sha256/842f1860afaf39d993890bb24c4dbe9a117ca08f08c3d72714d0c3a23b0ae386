@@ -1,0 +1,26 @@
+**定理 3.1（全端点支持先验族的尖锐随机终局值）。** 固定任意有限或可数实际深度概率先验 $\mu$，满足 $\mu(1),\mu(2)>0$。一次运行在第一笔 Read 前只抽取一个共同 $K$，原来源、提种、记录、解析和 Stop 全部保持。对定义1.3的全部因果、时间齐次、来源独立随机有限完整配置机器及其终局律解码器，两个风险次序分别满足
+
+$$
+\begin{aligned}
+\inf_M R_{\rm law}(\mathcal H_3;Y,\mathrm{Stop})
+&=\inf_M R_{\rm conf}(\mathcal H_3;Y,\mathrm{Stop})=\frac{13}{266},\\
+\inf_M R_{\rm law}(\mathcal H_p;Y,\mathrm{Stop})
+&=\inf_M R_{\rm conf}(\mathcal H_p;Y,\mathrm{Stop})=\frac{13}{266},\\
+\inf_M R_{\rm law}(\mathcal H_\beta;Y,\mathrm{Stop})
+&=\inf_M R_{\rm conf}(\mathcal H_\beta;Y,\mathrm{Stop})=\frac9{266}.
+\end{aligned}
+\tag{3.3}
+$$
+
+整个活动第四段域的共同值为 $13/266$。同一台计费持久位机器同时达到两种风险、两个阶段和每个这样的先验的全部终局值；它不需表示或求值 $\mu$。任意有限深度均值、有限支持、有限熵或有理先验都不是本定理的前提。这里不声明较大先验族的完整尾律最优值。
+
+还有对任意 $S$ 状态竞争机器的有限见证。给定 $0<\epsilon<1$、$0<\zeta<1/2$ 和阶段 $s$，存在两条有限正历史，其当前原配置相同、配置分布 TV 至多 $\epsilon$、一个后验在深度1的质量至少 $1-\zeta$、另一个在深度2的质量至少 $1-\zeta$，因此
+
+$$
+\min\{R_{\rm law},R_{\rm conf}\}
+\ge\frac{(1-2\zeta)\gamma_s-\epsilon}{2}.
+\tag{3.4}
+$$
+
+两条都可取种子1、前三标记100和零载荷返回圈；$p$ 见证属于原 $\mathcal H_3$，$\beta$ 见证只再接一笔实际 $\beta$。下面给出显式有限长度界。
+

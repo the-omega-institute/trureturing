@@ -1,0 +1,38 @@
+**定义 2.4（无损行分类与原权限）。** 两格均有5个共同 `r` 行：0、1、2、3、5。56个非恒定代表的行号为4、6、8、9、10及12至62；亦即按定义2.3行号依次选取的 `LR,RR,LLR,LRL,LRR` 及行12至62的原词。其余18行与较早行的完整向量相同，两格对应关系如下；代表子矩阵即定义2.3的这些行，不另复制。
+
+| 重复行 | 原地址 | 代表行 | 代表原地址 |
+| --- | --- | --- | --- |
+| 7 | `LLL` | 4 | `LR` |
+| 11 | `RLL` | 6 | `RR` |
+| 63 | `LLLLLL` | 33 | `LLLRL` |
+| 64 | `LLLLLR` | 34 | `LLLRR` |
+| 65 | `LLRLLL` | 37 | `LLRRL` |
+| 66 | `LLRLLR` | 38 | `LLRRR` |
+| 67 | `LRLLLL` | 41 | `LRLRL` |
+| 68 | `LRLLLR` | 42 | `LRLRR` |
+| 69 | `LRRLLL` | 45 | `LRRRL` |
+| 70 | `LRRLLR` | 46 | `LRRRR` |
+| 71 | `RLLLLL` | 49 | `RLLRL` |
+| 72 | `RLLLLR` | 50 | `RLLRR` |
+| 73 | `RLRLLL` | 53 | `RLRRL` |
+| 74 | `RLRLLR` | 54 | `RLRRR` |
+| 75 | `RRLLLL` | 57 | `RRLRL` |
+| 76 | `RRLLLR` | 58 | `RRLRR` |
+| 77 | `RRRLLL` | 61 | `RRRRL` |
+| 78 | `RRRLLR` | 62 | `RRRRR` |
+
+深度不超过5的全部63个词均已列入原矩阵；深度6有16个已列词，其余48个原词如下，全部正源上的回复为 `x`。每行按所列前缀分组，表内列全该组的字面词。
+
+| 前三字母 | 未在节点并集内的全部深度6词 |
+| --- | --- |
+| `LLL` | `LLLLRL,LLLLRR,LLLRLL,LLLRLR,LLLRRL,LLLRRR` |
+| `LLR` | `LLRLRL,LLRLRR,LLRRLL,LLRRLR,LLRRRL,LLRRRR` |
+| `LRL` | `LRLLRL,LRLLRR,LRLRLL,LRLRLR,LRLRRL,LRLRRR` |
+| `LRR` | `LRRLRL,LRRLRR,LRRRLL,LRRRLR,LRRRRL,LRRRRR` |
+| `RLL` | `RLLLRL,RLLLRR,RLLRLL,RLLRLR,RLLRRL,RLLRRR` |
+| `RLR` | `RLRLRL,RLRLRR,RLRRLL,RLRRLR,RLRRRL,RLRRRR` |
+| `RRL` | `RRLLRL,RRLLRR,RRLRLL,RRLRLR,RRLRRL,RRLRRR` |
+| `RRR` | `RRRLRL,RRRLRR,RRRRLL,RRRRLR,RRRRRL,RRRRRR` |
+
+所有深度大于6的有限词在正族上也共同给 `x`，因为正源高度至多6。上述分类只描述公共正族的回复纤维；原 $\mathcal T_C$、所有合法有限词和四值回复均保留。两个不同原地址即使行向量相同，也不是同一已付地址，缓存不可沿重复行免费迁移。$(2,2)$ 的诊断使用行8、10、14、16、18、22、24、26、28、30、32；$(3,1)$ 使用行9、10、13、14、16、18、20、24、26、28。使用子矩阵按这些原行引用。
+

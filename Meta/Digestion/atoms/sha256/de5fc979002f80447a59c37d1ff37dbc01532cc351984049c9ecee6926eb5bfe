@@ -1,0 +1,23 @@
+## 6. Exact TT recursion and joint pattern exclusions
+
+For a known compatible set $K$ at a history $H'$, within the remaining
+original-clock horizon, use the actual-child recursion
+
+$$
+\begin{aligned}
+L_0(K,H')&\Longleftrightarrow |K|\ge2,\\
+L_{m+1}(K,H')&\Longleftrightarrow |K|\ge2\ \land\
+ \bigwedge_{E\in\{J,M\}}\exists w\in\mathbb R:
+ L_m(K\cap\mathcal F(H',E,w),(H',E,w)).
+\end{aligned}
+\tag{6.1}
+$$
+
+Every $w$ is a raw real response. For the same three distinct worlds
+$K=\{W_1,W_2,W_3\}\subseteq\mathcal K_{\mathbf c,d}$, put
+
+$$
+\Pi(R)=(R_1-R_2)(R_1-R_3)(R_2-R_3).
+\tag{6.2}
+$$
+

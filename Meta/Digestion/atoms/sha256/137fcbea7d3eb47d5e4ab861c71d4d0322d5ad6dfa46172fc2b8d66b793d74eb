@@ -1,0 +1,43 @@
+**Proposition 33.2 (atomicity is forced at each original occurrence).**
+If a covered input has a source, every designated record satisfies
+
+$$
+m_b=n_b+w(s_b),\qquad
+(u|_{a_b})=T_{k_b},\qquad k_b\ge\epsilon_b,
+\quad
+\epsilon_b=
+\begin{cases}
+1,&n_b=0\text{ and }s_b\text{ ends in }L,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{LAC.33.2}
+$$
+
+The index $k_b$ is unique and is shared by every occurrence of class $b$.
+Different old classes have different indices. If $\mathcal B$ is nonempty,
+every authentic entry has $N\ge1$. An incompatible epoch equation in
+(LAC.33.2) implies an empty fiber, not an additional source promise.
+
+Proof. Put $z=u|_{a_b}$. This original subtree exists by the complete
+old row. Original-address transport gives
+$(\rho^n u)|_{a_b}=\rho^n z$ for every $n\ge0$. In particular $a_b$
+persists at both recorded epochs, and the descendant endpoint exists
+exactly when $s_b$ exists in $\rho^{m_b}z$. The whole guarded predicate
+of (LAC.33.1) is therefore
+
+$$
+s_b\in\operatorname{Pos}(\rho^{m_b}z)\quad\land\quad
+\rho^{n_b}z=(\rho^{m_b}z)|_{s_b}.
+\tag{LAC.33.3}
+$$
+
+Apply Theorem 4.2 to this actual finite subtree. Its full classification,
+including its last-edge reach condition, is exactly (LAC.33.2).
+The old partition identifies the whole original subtrees at repeated
+occurrences; injectivity of $k\mapsto T_k$ transfers that identity to
+indices. The old different-class disequalities give $k_b\ne k_c$ for
+$b\ne c$, including classes absent from the task. Finally
+$m_b=n_b+w(s_b)\ge1$, and the authentic $N$ dominates $m_b$.
+This is a mathematical application at an original subtree, not a physical
+reroot or an acquisition of its index. $\square$
+

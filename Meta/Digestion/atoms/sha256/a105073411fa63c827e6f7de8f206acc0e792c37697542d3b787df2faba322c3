@@ -1,0 +1,74 @@
+**Proposition 12.1 (source-preserving repair on the embedded qutrit).**
+Fix ANY ONE $y\in\{5,16,27\}$, and retain the four original states
+$U\rho_yU^*$ of (JG.5), $U=\operatorname{diag}(e,n,1)$.
+If a proposed CPTP repair $T:M_3\to M_3$ fixes these four densities
+exactly, then $T=\operatorname{id}_{M_3}$. More generally, if a full
+five-mode CPTP repair $\widehat T$ fixes their embedded densities, then
+
+$$
+\widehat T(\iota X\iota^*)=\iota X\iota^*
+                  \quad\hbox{for every }X\in M_3.
+\tag{JG.75}
+$$
+
+This conclusion concerns only the embedded qutrit support $V$, not
+identity on the other two modes or on their cross-support coherences.
+It also holds after passive reference amplification.
+
+Consequently, suppose a proposed single-slot universal repair on that
+support has $T=\mathcal S(\operatorname{id})$ and is source-preserving
+in this exact sense. If it takes EVERY CPTP slot to a Schur channel,
+then every positive actual bypass branch has $m_c\geq3$. If the proposed
+repair instead satisfies the all-Schur-fixing hypothesis, a cap
+$r=1,2,3$ has sharp auxiliary uniform distances $2,1,0$, respectively.
+The latter quantitative lower bound uses the ADDITIONAL premise
+$\mathcal S(\Delta)=\Delta$; source calibration alone does not imply it.
+
+Proof. In the ordered basis $(+,-,2)$ put
+$a=\sqrt{y/128}$, $b=\sqrt{(64-y)/128}$, $c=1/\sqrt2$ and
+$\psi_{e,n}=(ea,nb,c)$. These are normalized and all $a,b,c$ are
+positive. The signed sums are
+
+$$
+\sum_{e,n}\psi_{e,n}=4c|2\rangle,\qquad
+\sum_{e,n}e\psi_{e,n}=4a|+\rangle,\qquad
+\sum_{e,n}n\psi_{e,n}=4b|-\rangle.
+\tag{JG.76}
+$$
+
+They therefore span $\mathbb C^3$. Flipping only $e$, only $n$, or
+both signs gives the respective inner products
+
+$$
+1-y/64,\qquad y/64,\qquad0.
+\tag{JG.77}
+$$
+
+The two single-flip overlaps are strictly positive at every supplied
+height, and the nonorthogonality graph is the connected four-cycle.
+Mayer–Knill, *Quantum process fidelity bounds from sets of input states*,
+[arXiv:1805.04491v1][MK], §V, Theorem 1, is the exact
+`literature-attested` rigidity used here: spanning and connectivity
+make the identity the unique CPTP map fixing those pure densities.
+No extra tomographically complete preparations are assumed.
+
+For the support assertion, the same theorem's Stinespring argument
+applies to an isometry $W$ with input $\mathbb C^3$ and output the
+five-mode space times its environment. Purity of each fixed output gives
+$W\psi_s=\iota\psi_s\otimes\eta_s$. Inner-product preservation on
+each nonorthogonality edge forces $\langle\eta_s,\eta_t\rangle=1$,
+so all environment vectors are the same. Equation (JG.76) then gives
+$Wx=\iota x\otimes\eta$ on all $\mathbb C^3$, proving (JG.75) on every
+complex matrix and every reference extension. This proof also covers
+an output algebra with additional sectors: those sectors have zero
+mass on the fixed pure outputs.
+
+Apply Theorem 9.2 to $T=\mathcal S(\operatorname{id})$ for the exact
+universal Schur-valued repair. For the stronger uniform bound use
+Theorem 10.1 under (JG.52). The existing
+`connected_probability_preserving_identity` in
+[Probe Component Rigidity][PCR] has the DIFFERENT hypothesis of
+preserving probe probabilities for all density inputs. That hypothesis
+is not substituted for the four source-state fixing conditions here.
+$\square$
+

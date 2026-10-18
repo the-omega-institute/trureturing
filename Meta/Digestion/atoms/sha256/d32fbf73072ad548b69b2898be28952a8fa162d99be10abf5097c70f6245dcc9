@@ -1,0 +1,19 @@
+**Counterevidence 12.2 (an excluded scaling identity).** In §4.1 of the
+last cited version, the displayed assertion
+$Y_t^{\eta,\lambda}=\lambda Y_t^{\eta/\lambda}$ is made for the equation
+$dY=\lambda V(Y)\,dX$. It is false for general vector fields. For
+$V(y)=y$, $X(t)=t$, the two sides are $\eta e^{\lambda t}$ and
+$\eta e^t$; at $\eta=1$, $\lambda=2$, $t=1$ they are $e^2$ and $e$.
+Even a bounded smooth field does not fix the general identity: for
+$V(y)=\sin y$, $\eta=\pi/2$, $\lambda=2$, the derivatives at zero are
+$2$ and $2\sin(\pi/4)=\sqrt2$. This is counterevidence to that displayed
+proof step, not a proof that the paper's full reconstruction theorem is
+false. It supplies no acquisition bridge here.
+
+The bounded primary-source comparisons separate quadrature and signature
+data from acquired control samples. They neither establish an exhaustive
+literature search nor convert a different observability interface into this
+one. There is no new physical law, physical realization, global recovery,
+Lean certification, or completion of the continuing programme in these
+ordinary results.
+

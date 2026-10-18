@@ -1,0 +1,18 @@
+**Theorem 7.2 (strict finite-budget growth).** For fixed $0\le s<s_0$,
+
+$$
+A_{\min}(s)\le A_1<A_2<\infty
+\quad\Longrightarrow\quad
+\mathcal T_{A_1}(s)<\mathcal T_{A_2}(s).
+\tag{AC.38}
+$$
+
+Proof. Take an attained $A_1$ optimizer and retain its actual encoders,
+decoders and time laws at budget $A_2$. Every supported-nonzero low
+label obeys $b\le t_1c<t_2c$, where $t_i=e^{A_i}-1$.
+The $A_2$ point is strict interior: $t_2>t_0$ and
+$\tau<\tau_{\max}(t_2)$ by §3 and Lemma 3.2, also when
+$A_1=A_{\min}(s)$. Equality of optimal heights would make the same
+instrument $A_2$-optimal without any saturated supported label,
+contradicting Theorem 6.1. $\square$
+

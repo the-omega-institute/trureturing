@@ -1,0 +1,33 @@
+**Definition 34.1 (live histories at both execution minima).** Fix
+$n\ge5$, $3\le k\le n-2$, the supplied $A$ of Definition 23.1,
+and $r\ge0$. Throughout §§34–35, $P$ is any preparer of Convention
+23.2, correct for the original $\sigma_{A,k}$ on the whole
+$\mathcal U_*$, with
+
+$$
+q_P(u)\le n+1,\qquad \ell_P(u)\le3+W_A
+\quad(u\in\mathcal U_*).
+\tag{PCA.82}
+$$
+
+There is no restriction on its installed addresses, repeated literals,
+unused states, shared successors or union cycles. Its actual runs on
+Lemma 24.1's cube are used only as lower witnesses. In a finite
+execution history, let $S$ be the set of coordinates exposed by any
+query in $E_i$, let $h$ be their number of ones, and let
+$m=|S|-h$. An exposure includes a selected child query: all three
+addresses at either occurrence determine that same bit by (PCA.55).
+A history ending just before the next invocation is *live* if its
+cube completions have both prescribed bits, equivalently
+
+$$
+h<k,\qquad m\le n-k.
+\tag{PCA.83}
+$$
+
+Histories include all paid invocations already made, including
+cube-constant ones. Their sets and counts are proof notation, not
+accessible running coordinates. A live history cannot end at a
+latch: all its cube completions follow that history, whereas their
+two different original entries are required.
+

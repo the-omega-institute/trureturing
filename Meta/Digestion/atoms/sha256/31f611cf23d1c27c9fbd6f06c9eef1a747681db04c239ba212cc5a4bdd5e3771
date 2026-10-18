@@ -1,0 +1,18 @@
+**Definition 367.2 (Mass and target boundaries).** For a mass-$M$ complete allocation the affine anchor convention remains
+
+$$
+k_w(E)\ge d_{w,E}(b,e)+(M-1)\mathbf r_{w,E}
+\tag{367.3}
+$$
+
+on every canonical event. When $M>0$, division by $M$ changes the profile to
+
+$$
+b'=\alpha+(b-\alpha)/M,\qquad e'=e/M.
+\tag{367.4}
+$$
+
+In particular, if $b_2=b_3$, then $b'_2-b'_3=1-1/M$. Thus mass normalization does not preserve the same equality slice or the same demands. This is the affine convention of XIX 341.3 and XXI 358.3; an all-mass conclusion is not implicit in (364.10).
+
+The separately unchanged nonatomic targets $\mu_x$ and the complete-name paid M1 problem remain distinct from selected marked-law accuracy. The complete M1 requirements retain all-$D$ quantification, late requests, authentic indices, actual paid literals and one common all-count bound. A scalar nonnegative expectation representation supplies none of these additional requirements: in Kaniewski, Lee and de Wolf, [*Query complexity in expectation*, arXiv:1411.7280v1, Definitions 6 and 8, Theorem 9](https://arxiv.org/abs/1411.7280v1), the inverse rescales a scalar literal output and bounds maximum supported root-to-leaf depth. It does not impose the normalized labelled vectors, equal counterfactual cell masses or increasing first-zero stopping of 363.3.
+

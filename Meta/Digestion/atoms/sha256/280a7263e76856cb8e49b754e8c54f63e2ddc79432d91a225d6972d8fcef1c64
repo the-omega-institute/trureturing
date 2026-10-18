@@ -1,0 +1,54 @@
+#### 定理 2：因果 holonomy 障碍定理
+
+若存在闭合因果路径 $\gamma$，使得：
+
+$$
+\mathcal H_{\mathcal U}(\gamma)\ne\mathrm{id},
+$$
+
+则不存在一个对所有路径都一致的全局状态赋值，使得状态只依赖事件终点而不依赖到达路径。
+
+##### 证明
+
+假设存在路径无关的全局状态赋值 $s(e)$。
+
+从 $e_0$ 沿闭合路径 $\gamma$ 返回 $e_0$，路径无关性要求：
+
+$$
+s(e_0)
+=
+\mathcal H_{\mathcal U}(\gamma)s(e_0).
+$$
+
+若要求对任意初态都成立，则必须有：
+
+$$
+\mathcal H_{\mathcal U}(\gamma)=\mathrm{id}.
+$$
+
+这与假设矛盾。证毕。
+
+因此有两个不同层次的不可积性：
+
+$$
+\boxed{
+\oint\omega\ne0
+\quad\Rightarrow\quad
+\text{局部时间不能全局化};
+}
+$$
+
+$$
+\boxed{
+\mathcal H_{\mathcal U}(\gamma)\ne\mathrm{id}
+\quad\Rightarrow\quad
+\text{状态演化不能全局化}.
+}
+$$
+
+这比传统“空间弯曲”更接近你的关系本体：
+
+> 真正基础的不是某个坐标空间是否弯曲，而是局部关系沿不同路径复合后是否保持一致。
+
+---
+

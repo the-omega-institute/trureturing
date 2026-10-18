@@ -1,0 +1,54 @@
+**Theorem 42.2 (Attained arbitrary-measurable minimum).** Let $0\le\delta\le1$ and $(h,d,z)\in\mathscr S$. Among all measurable common carriers, the minimum diameter at $x_*$ is attained and equals
+
+$$
+\Delta_{\mathrm{meas}}^{\min}(\delta;h,d,z)=(1-\delta)h.
+\tag{42.9}
+$$
+
+With a diameter cap $\Delta\le\eta$, the exact anchor region is
+
+$$
+\mathcal R_{\mathrm{meas}}(\delta,\eta)
+ =\{(h,d,z)\in\mathscr S:(1-\delta)h\le\eta\}.
+\tag{42.10}
+$$
+
+**Proof.** Put $t=(1-\delta)h$. The set $W=N[X]$ is countably infinite by the arithmetic supplier in Section 35. Let
+
+$$
+\Theta_\infty=\{a,b,c\}\mathbin{\sqcup}\{p_n:n\in W,\ n\ne27\}
+\tag{42.11}
+$$
+
+with the full power-set sigma algebra. The deterministic rule on $a$ immediately proposes $1$; the rule on $b$ queries an infinite fixed prime sequence and therefore diverges literally; the rule on $c$ terminates with an unknown nonproposal; and the rule on $p_n$ immediately proposes the finite real number $\omega(n)$. No rule receives a source label or an integer: $p_n$ is a tape parameter, and the source dependence below is solely a stipulated law relation.
+
+At every labeled source with $N(y)=27$, put mass $(h,d,z)$ on $(a,b,c)$. At a source with $N(y)=n\ne27$, put the following masses:
+
+$$
+\mu_y(a)=\delta h,\qquad
+\mu_y(p_n)=t,\qquad
+\mu_y(b)=d,\qquad
+\mu_y(c)=z,
+\tag{42.12}
+$$
+
+and zero mass on the other $p_m$. This depends only on the numerical value $N(y)$, so labels from distinct windows that generate the same integer receive the same law and the same deterministic outcomes.
+
+At $x_*$ the $a$ proposal is correct and the other two atoms give literal divergence and nonproposal mass, hence the row is $(h,d,z)$. For $N(y)=n\ne27$, the $p_n$ proposal is correct, while the $a$ proposal is false only when $\omega(n)>1$. Therefore
+
+$$
+h_y=h,\qquad e_y\le\delta h,\qquad d_y=d,\qquad z_y=z
+\tag{42.13}
+$$
+
+for every such source, including all zero-proposal cases when $h=0$. The law at $27$ and each law in (42.12) differ by moving mass $t$ from $a$ to $p_n$; two different laws in (42.12) differ by moving mass $t$ from one $p_n$ to another. The event-supremum definition therefore gives
+
+$$
+\operatorname{TV}(\mu_u,\mu_v)\le t,
+\qquad
+\operatorname{TV}(\mu_{x_*},\mu_y)=t\quad(N(y)\ne27),
+\tag{42.14}
+$$
+
+so the attained diameter is exactly $t$. Equations (42.6) and (42.14) prove (42.9), and (42.10) follows by imposing the cap. The construction uses a countably infinite carrier; each individual law has finite support, but that sourcewise finite support does not make the common carrier finite. The stipulated real probability masses need not have an effective exact sampler. $\square$
+

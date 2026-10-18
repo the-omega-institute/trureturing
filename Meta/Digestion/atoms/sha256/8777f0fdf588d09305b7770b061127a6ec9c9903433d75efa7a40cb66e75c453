@@ -1,0 +1,34 @@
+**Theorem 3.1 (signed local-prefix lifting and support closure).** For every
+normalized piece (SLP.1),
+
+$$
+(\lambda,\eta)\in\overline C
+\quad\Longleftrightarrow\quad
+\lambda\in\overline{S_f},
+\tag{SLP.4}
+$$
+
+where $f$ consists exactly of the finite residual coordinates of $\eta$.
+The closure on the right is in $\overline{\mathbb N}^{\,k}$. When these
+equivalent conditions hold, for every vector of lower bounds on coordinates with
+$\lambda_i=\infty$, one scalar tuple in $S_f$ satisfies all those bounds
+simultaneously; finite coordinates of $\lambda$ are equalities, not limits.
+
+**Proof.** For the forward implication, take a finite witness in every
+neighborhood of $(\lambda,\eta)$. A neighborhood that isolates each finite
+$\eta_i$ forces $z_i=f_i$ for $i\in F$. The scalar projection of that witness
+therefore lies in $S_f$. Shrinking scalar neighborhoods gives
+$\lambda\in\overline{S_f}$, with one witness tuple for all simultaneous
+lower bounds.
+
+For the reverse implication, take any finite scalar neighborhood of $\lambda$
+and any finite prefix of every infinite $\eta_i$. By
+$\lambda\in\overline{S_f}$, choose one $\mathbf n\in S_f$ in that scalar
+neighborhood. The definition of $S_f$ supplies some finite completion of the
+remaining residuals, so the hypothesis of Lemma 2.1 holds at this same
+$\mathbf n$ and $f$. Apply that lemma to the prescribed prefixes. The result
+keeps the finite coordinates exactly $f$, satisfying their requested
+prefixes too. It is a finite member of $C$ in the chosen product
+neighborhood. Since the neighborhood was arbitrary,
+$(\lambda,\eta)\in\overline C$. $\square$
+

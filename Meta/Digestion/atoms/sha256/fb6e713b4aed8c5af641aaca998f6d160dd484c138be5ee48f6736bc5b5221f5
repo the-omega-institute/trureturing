@@ -1,0 +1,16 @@
+**定理 32.2.1（处理第一阶段）。** 在定义 32.1.1 的假设下，
+
+$$
+\boxed{
+\Delta_A
+:=\mathbb E[A\mid Z=1]-\mathbb E[A\mid Z=0]
+=\pi_C.
+}
+$$
+
+**证明。**
+
+由工具独立性，条件于 $Z=z$ 等同于对主层分布取平均。对 never-taker，$A_1-A_0=0$；对 always-taker 也为 $0$；对 complier 为 $1$。逐层求和即得 $\Delta_A=\pi_C$。证毕。
+
+<a id="claim-32-2-2"></a>
+

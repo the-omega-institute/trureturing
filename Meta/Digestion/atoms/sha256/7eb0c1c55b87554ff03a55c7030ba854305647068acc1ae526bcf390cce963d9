@@ -1,0 +1,28 @@
+**Corollary 7.4 (Finite same-optimizer certificate).** For any subset $I_n\subseteq\{3,\ldots,n-2\}$, choose a one-coordinate probe $f_i$ at each of its sites and put $d_i=d_i(f_i)$. Then
+
+$$
+V_2(n)\ge\frac9{49}\sum_{i\in I_n}M_id_i^2
+\ge\frac9{12544}\sum_{i\in I_n}d_i^2.
+\tag{7.15}
+$$
+
+In particular,
+
+$$
+\sum_{i\in I_n}d_i^2>\frac{12544}{9}\tau
+\quad\Longrightarrow\quad V_2(n)>\tau.
+\tag{7.16}
+$$
+
+If $J=|I_n|$ and every $d_i\ge\varepsilon>0$, the sufficient condition is $J\varepsilon^2>(12544/9)\tau$.
+
+Proof. Sum (7.3) over these sites, use nonnegativity of the omitted site variances, and then use (7.12). Each summand is a distinct site term of the original $V_2(n)$. Overlap between reset events or probe events creates no double counting of a site and needs no independence assumption. All quantities in the sum refer to this same $\pi_n$. The strict comparisons follow directly. $\square$
+
+For probes of at most $s$ coordinates the same argument gives
+
+$$
+V_2(n)\ge\frac1{256(1+4s/3)^2}
+\sum_{i\in I_n}d_i(f_i)^2.
+\tag{7.17}
+$$
+

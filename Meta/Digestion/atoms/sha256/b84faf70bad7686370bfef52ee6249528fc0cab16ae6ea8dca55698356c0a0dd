@@ -1,0 +1,172 @@
+**Theorem 5.1 (negative-pure orientation and conditional exclusion of every FC38 lift).**
+Under Assumptions 1.1 and 1.4, suppose separately that the complete
+inventory contains a pure contact of strictly negative height. Define
+
+$$
+d_-=(y_1+l_u,y_2+l_v)^T,\qquad
+o_-(z)=y_1+l_u+(y_2+l_v)z.
+\tag{IC.25}
+$$
+
+Then $d_-\ne0$, and every complete endpoint contact $(x,j)$ of
+weakly negative height $\eta_j(x)\le0$ satisfies
+
+$$
+d_-\cdot x<0.
+\tag{IC.26}
+$$
+
+In particular no antipodal pair of weakly negative saturated contacts
+can be present, occupied or unused. In the signed chart this gives
+$\epsilon o_-(z)<0$ for every weakly negative saturated contact.
+Every negative pure contact has $\epsilon=-1$ and $o_-(z)>0$.
+This conclusion uses the same two odd dual coefficients for both sheets
+and does not discard any negative pure contact. It requires no
+indefiniteness assumption and no saturated-contact cap.
+
+The negative-pure premise is supplied for height-optimal laws with
+$S_{\rm end}\le1/100$ by FC Theorem 34.1. Uniformly over all
+representations on the supplied face it is therefore supplied when
+
+$$
+t\ge\max\{t_0,100\mu/c_{\min}\},\qquad
+c_{\min}=\min\{N_u/D_u,N_v/D_v\}.
+\tag{IC.27}
+$$
+
+The inherited sufficient range $t\ge\max\{t_0,30000\}$ is included.
+Neither $t\ge800$ alone nor indefiniteness alone supplies this premise.
+
+For each of the eight full-common-law scalar equality lifts in FC
+Theorem 38.1, at
+
+$$
+t\ge\max\{t_0,3000,100\mu/c_{\min}\},
+\tag{IC.28}
+$$
+
+the lift cannot belong to any supplied finite, entire-cylinder feasible,
+jointly attained face with positive height multiplier $\lambda$.
+Since FC supplies $t_0<3000$, (IC.28) is also
+$t\ge\max\{3000,100\mu/c_{\min}\}$; in particular $t\ge30000$
+suffices. This excludes membership even when the face is considered
+at the lift's own achieved contrast $K$. It is conditional face-membership
+exclusion, not a nonoptimality statement without that face premise,
+a conclusion at $\lambda=0$, or nonexistence of finite duals.
+
+Proof. For the actual report choice, normalize the negative signed
+gaps on the two sheets as
+
+$$
+\begin{gathered}
+H_{j,-}(x)=P_y+j\mathfrak c Q_y+\ell+jt\mathfrak c f-\lambda|u|
+           =\mathcal E_j(x)+d_-\cdot x,\\
+\mathcal E_j(x)=y_0+y_3u^2+y_4uv+x^TE_\ell x
+                 +j\mathfrak c x^T(Q+t\mathsf F)x-\lambda|u|.
+\end{gathered}
+\tag{IC.29}
+$$
+
+Here $H_{0,-}=F_{0,\epsilon,-}$ and
+$H_{1,-}=F_{1,\epsilon,-}/D_c$ at a point of actual report tag
+$\epsilon$. Each $H_{j,-}$ is globally nonnegative;
+$\mathcal E_j(-x)=\mathcal E_j(x)$ because capacity and all its
+quadratic terms are even. These functions are smooth near every
+contact, since contacts have $u\ne0$.
+
+A negative pure contact $x_*$ lies in $u<0$ by FC Theorem 11.1.
+If $d_-=0$, evenness would give $H_{0,-}(-x_*)=H_{0,-}(x_*)=0$.
+But $-x_*$ lies on the right hemisphere, where the same source has
+$\ell(-x_*)>0$. Thus
+$H_{0,-}(-x_*)=\mathscr D_0(-x_*)+2\ell(-x_*)>0$, a contradiction.
+Hence $d_-\ne0$.
+
+At any complete contact with $\eta_j\le0$, the negative height tag
+is maximizing, including the weak-zero case. Thus $H_{j,-}(x)=0$,
+and antipodal feasibility gives
+
+$$
+0\le H_{j,-}(-x)=-2d_-\cdot x.
+$$
+
+If equality held, both antipodal functions would be at smooth zero
+minima. Write $x=x(\phi)=(\cos\phi,\sin\phi)$.
+Evenness gives $\mathcal E_j'(\phi+\pi)=\mathcal E_j'(\phi)$;
+the odd linear term has opposite derivatives at these two arguments.
+Subtracting the two zero-derivative equations yields
+$d_-\cdot x^\perp=0$. Equality had already given $d_-\cdot x=0$,
+so $d_-=0$, a contradiction. This proves the strict inequality (IC.26)
+for the entire inventory. Antipodes cannot both lie in this strict
+half-plane. Finally
+$d_-\cdot x_\epsilon(z)=\epsilon o_-(z)/s(z)$; negative pure
+contacts have $\epsilon=-1$, giving their stated slope orientation.
+
+Existence of a negative pure contact is a different step from this
+parity argument. FC Theorem 34.1 gives
+$H_->1/30000$ for every height-optimal law with
+$S_{\rm end}\le1/100$. Collection into the complete groups then
+supplies a positive negative-pure coordinate and hence a contact.
+FC Proposition 34.2 gives the exact minimum in (IC.27): capacity is
+a positive-denominator weighted mean of its two axial ratios. The
+same law's equation $\int\xi\mathfrak c\,d\pi=\mu/t$ consequently
+gives
+
+$$
+S_{\rm end}(\pi)\le\frac{\mu}{tc_{\min}}.
+$$
+
+This establishes precisely the threshold stated in (IC.27), using
+FC's negative-pure theorem rather than inferring existence from
+reverse mass, a contact count or a smaller budget range. Its coarse
+source bound $\mu<12$, $\mathfrak c>1/25$ yields
+$S_{\rm end}<300/t$ and the stated sufficient range $t\ge30000$.
+
+It remains to apply the strict orientation to the actual FC38 laws.
+Those are the seven physical scalar witnesses of FC §§36–37
+(trace, three sign averages and three plus-sign probabilities), and
+separately the intensity witness $\mathsf W=I_2$. Denote a scalar
+certificate multiplier there by $\gamma_{\mathsf W}>0$. It is
+not the height-dual multiplier $\lambda$ of (IC.7). FC38 uses the
+kernel of $\mathsf W-\gamma_{\mathsf W}Q_\Psi$, where
+
+$$
+Q_\Psi=\begin{pmatrix}-2/5&-39/20\\-39/20&1\end{pmatrix},\qquad
+z_*=-\frac{\mathsf W_{11}+2\gamma_{\mathsf W}/5}
+                 {\mathsf W_{12}+39\gamma_{\mathsf W}/20}.
+$$
+
+Write $\varsigma$ for the angular intensity measure of a lift.
+For each of its eight certificates FC38 supplies
+$z_*<-\max\{1/10,V_2/(4U)\}$. With
+$z_1=z_*,z_2=-1/10,z_3=4$ and $\{i,j,k\}=\{1,2,3\}$, its
+intensity masses are
+
+$$
+d_i=\frac{V_2+z_jz_kU}{(z_i-z_j)(z_i-z_k)}>0,\qquad
+x_i=\frac{(1,z_i)^T}{\sqrt{1+z_i^2}},\qquad
+\varsigma\{x_i\}=\varsigma\{-x_i\}=\frac{d_i(1+z_i^2)}2.
+\tag{IC.30}
+$$
+
+The coefficient lift divides these positive masses by
+$t\mathfrak c(x_i)>0$ and sets $\xi=1$; its four positive pure
+atoms fill the residual full live Gram as in FC (FC.171)–(FC.173).
+Thus the pair $\pm x_1$ is occupied by actual saturated labels,
+not merely by a relaxed intensity representation. It has $\Psi>0$;
+the remaining four saturated points have $\Psi=0$. FC Theorem 25.1
+therefore gives strictly negative saturated height at both $x_1$
+and $-x_1$.
+
+Suppose such a lift belonged to a face satisfying Assumption 1.4.
+It would be height optimal at its own achieved $K$, by FC Theorem
+4.2. At (IC.28) its same-law $S_{\rm end}$ is at most $1/100$,
+so the preceding existence argument supplies a negative pure contact
+on that face. Equation (IC.26) would then apply to both occupied
+antipodal negative saturated contacts. Their two dot products are
+opposite and cannot both be strictly negative. This contradiction
+excludes the face membership of each of the eight lifts. Their
+scalar equality, feasibility at $s=0$, full moments and physical
+realizations remain the separate FC38 conclusions. Neither a scalar
+certificate multiplier nor equality in its scalar bound supplies a
+height-optimal dual. $\square$
+

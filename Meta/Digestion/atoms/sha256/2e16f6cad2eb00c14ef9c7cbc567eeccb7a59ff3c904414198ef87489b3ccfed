@@ -1,0 +1,20 @@
+## 144. An actual dual cycle and a conditional realization theorem
+
+Form the dual multigraph of the original face pairing: its vertices are
+the actual tetrahedra and its edges are paired face pairs. Self-loops and
+parallel edges are retained.
+
+The g owners of I are distinct, and rho is different from every one of
+them. The consecutive faces crossed by the Z normal circle give a dual
+cycle through those g owners and rho, of length g+1. For g=1 it consists
+of two distinct face pairings between rho and the single run owner. For
+g=2 it is a triangle on three distinct tetrahedra.
+
+Here the face pairings really are distinct. Each run owner has exactly
+one local Z slot, axial, and its two incident faces are different. Its
+other axis cannot also be Z because that would make the owner flat.
+The two boundary transverse Z slots of rho are opposite local edges;
+no tetrahedral face contains both. Hence the two return faces in rho
+are different as well. The cycle is therefore an actual dual cycle,
+not a repeated traversal of one paired face caused by a repeated label.
+

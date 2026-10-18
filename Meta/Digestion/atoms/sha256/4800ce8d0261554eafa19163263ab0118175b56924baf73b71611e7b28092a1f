@@ -1,0 +1,27 @@
+**Corollary 6.5 (a rational strictly positive separation).** At
+$h=1,d=4$, let $s=|S_4|=15131$ and let $u$ be uniform on the entire
+$S_4$. Put
+
+$$
+\mu_+=\frac{99}{100}\mu_0+\frac1{100}u.
+\tag{JPL.29}
+$$
+
+Every coordinate of $\mu_+$ is strictly positive and
+
+$$
+\beta_4(\mu_+)\le\frac{81}{100},\qquad
+V_{\mathrm{sep},1}\text{ acceptance implies }
+C\ge\frac{99}{100}+\frac1{20s}
+ =\frac{748987}{756550}>\frac{99}{100}.
+\tag{JPL.30}
+$$
+
+Proof. Every coordinate is at least $1/(100s)$. By (JPL.8) and
+Theorem 5.2,
+$\beta_4(\mu_+)\le4/5+\operatorname{TV}(\mu_+,\mu_0)
+\le4/5+1/100=81/100$.
+The set $\mathcal Q_1$ has five states, so its $\mu_+$ mass is
+$99/100+5/(100s)$. Apply Theorem 6.4 and simplify the exact fraction.
+$\square$
+

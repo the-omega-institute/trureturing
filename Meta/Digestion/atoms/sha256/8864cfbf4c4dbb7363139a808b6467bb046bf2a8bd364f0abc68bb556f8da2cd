@@ -1,0 +1,18 @@
+##### 定义 2.7.1： 理想位置记录耦合
+
+令：
+
+$$
+P_x=|x\rangle\langle x|,
+\qquad
+\sum_xP_x=I.
+$$
+
+取正交记录标签 $|r_x\rangle$，定义：
+
+$$
+J\psi=\sum_xP_x\psi\otimes|r_x\rangle.
+$$
+
+<a id="claim-2-7-2"></a>
+

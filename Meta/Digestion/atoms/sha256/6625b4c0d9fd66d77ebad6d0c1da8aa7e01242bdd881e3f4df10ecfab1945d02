@@ -1,0 +1,14 @@
+**数学引文 5.1（既有供应及其精确范围）。** 以下既有结果仅承担对应推导步骤，不单列为本卷新定理。
+
+| 来源 | 数学供应与边界 |
+| --- | --- |
+| [Recovery][Recovery] 定义 1.2–1.4、式（2.4）–（2.5）、式（3.2）、§3.4、定义 4.2 及推论 4.3 | 不变来源、一块式合同、Fibonacci 合法图计数、全协议类均匀 Bayes 首项、共同输入邻边实部、乘积 Gram 构造和整条服务归约；其式（4.1）与开放问题 6.3 不供应本卷的 $\kappa_n$ 或 Bayes 刚性。 |
+| [Eldar、Forney，*On Quantum Detection and the Square-Root Measurement*][EF]，定理 3 | `literature-attested`：SRM 正交列框架；特殊最小错误最优性另需其态族对称性假设，不确定本来源的 minimax 最优值。 |
+| [Ambainis，*Quantum lower bounds by quantum arguments*][Ambainis]，§3、引理 1 | `literature-attested`：正交答案空间分解及 Cauchy–Schwarz 重叠估计；本卷的新增推导是实际共同决策振幅在全部合法边上的同时分配与匹配旋转。 |
+| [Tyson，*Error rates of Belavkin weighted quantum measurements and a converse to Holevo’s asymptotic optimality theorem*][Tyson]，版本 v1、§§1.2–1.4 | `literature-attested`：带权平方根测量与固定先验近正交态族的渐近最优性；不直接给出对全部共同准备及参考的源整体下界。 |
+| [D’Ariano、Sacchi、Kahn，*Minimax quantum state discrimination*][DSK]，版本 v5、§III、定理 3–4 | `literature-attested`：固定态族的 minimax/Bayes 联系及完全协变态族的相等情形；不视为本共同输入渠道辨识问题的显式解，也不用一般凸规划替代源特定最优证明。 |
+| [Montanaro，*On the Distinguishability of Random Quantum States*][Montanaro]，版本 v2、§2.2、式（8） | `literature-attested`：Gram 平方根的逐来源成功率界；是指定接收器保障，不是优化 minimax 系数。 |
+| [Montanaro 仓内条目][MontanaroNote]；[Contextual Spacetime Arithmetic Quantum][CSAQ] §16.5；[EquiprobablePgmActiveSetRefutation][ActiveSet] | 前两者提供逐来源 SRM 界；第三者是不同的三混态 active-set 反例，不供应此合法边系数或准备无关的下界。 |
+| mathlib 固定提交 [`db584cd6d46c92f209a44c0f1c829460d327499d`](https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d)，输入版本 v4.33.0 的 [凸集拓扑][MathConvex]、[矩阵正定][MathPosDef]、[Hermitian 函数演算][MathCFC] | 通用紧性、凸性和谱演算供应；不归属本卷源特定 minimax 定理，也不作为本卷经过编译的形式证据。 |
+| [原生树来源][Native]与 [KBonacci INITIAL 续卷][KBonacci] | 各自合同下的共同证书与相容延续动机；没有量子源／操作对应或数值价格传递。 |
+

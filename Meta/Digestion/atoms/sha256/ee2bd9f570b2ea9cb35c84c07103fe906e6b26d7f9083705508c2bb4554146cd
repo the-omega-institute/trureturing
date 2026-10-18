@@ -1,0 +1,117 @@
+**Theorem 9.5 (All lengths with alternating site weights).** For every
+$n\ge2$ and $t>0$, let $\lambda_i=t$. Set $\omega_i=a$ on odd sites
+and $\omega_i=b$ on even sites, where $a,b>0$ and
+$\lceil n/2\rceil a+\lfloor n/2\rfloor b=1$. Then
+
+$$
+\gamma+\Lambda\le1,
+\qquad \Gamma(r,\omega)=r\gamma\quad(0\le r\le1).
+\tag{9.13}
+$$
+
+There is no restriction on $t$ or on $a/b$.
+
+Proof. Lengths through six follow from Theorem 7.2. Assume $n\ge7$,
+and put $m=\lfloor n/2\rfloor$, $h=1+t$, $q=t/h$ and $c=\min(a,b)$.
+A matching of $m$ adjacent edges gives
+
+$$
+\delta\ge\frac{mc}{h}.
+\tag{9.14}
+$$
+
+Indeed $d(a,b)\ge c(1-q)=c/h$. When $a\le b$, the required
+square-root comparison follows from
+
+$$
+(b-a+2aq)^2-\bigl((b-a)^2+4abq^2\bigr)
+=4a(b-a)q(1-q)\ge0.
+\tag{9.15}
+$$
+
+The other ordering is symmetric. If $t\le1$, conditional exclusion
+gives $\rho_i\le q$, so $U\le c$. Since $m\ge3$ and $h\le2$,
+$\gamma\le U\le c\le mc/h\le\delta$.
+
+Now let $t\ge1$ and let $T$ be the lighter-weight parity. More
+generally, for either entire parity under homogeneous activity, write
+$W_T=\sum_{i\in T}\omega_i$ and
+$E_T=\sum_{i\in T\cap\{1,n\}}\omega_i$. Its complement has no
+internal path edges. Formula (9.2) therefore simplifies to
+
+$$
+\alpha_T=\frac{h^{n-|T|}}{Z_n},
+\qquad
+\kappa_T=\frac{t(W_T+tE_T)}{h^3(1-\alpha_T)}.
+\tag{9.16}
+$$
+
+An interior insertion blocks two opposite-parity sites; an endpoint
+insertion blocks one. This is the source of $E_T$, which cannot be
+discarded for the open chain.
+
+The homogeneous recurrence gives
+$Z_{k+2}=hZ_k+tZ_{k-1}>hZ_k$ for $k\ge1$.
+Also $Z_4-2h^2=t^2-1\ge0$. Hence for $n=2m$,
+$\alpha_T\le1/2$. Each parity has $m$ sites and one endpoint, so
+
+$$
+\kappa_T\le\frac{2ct(m+t)}{h^3}\le\frac{mc}{h}.
+\tag{9.17}
+$$
+
+The final comparison is equivalent to $(m-2)t^2+m\ge0$.
+
+For $n=2m+1$ and the odd parity lighter, $T$ has $m+1$ sites and
+both endpoints. Put $x=t-1\ge0$. Direct expansion gives
+
+$$
+Z_7-4h^3=x^4+10x^3+27x^2+23x+2>0.
+\tag{9.18}
+$$
+
+The same recurrence propagates this strict bound to every odd
+length at least seven. Thus $\alpha_T<1/4$ and
+
+$$
+\kappa_T<\frac{4ct(m+1+2t)}{3h^3}\le\frac{mc}{h}.
+\tag{9.19}
+$$
+
+The last comparison is equivalent to
+$(3m-8)t^2+(2m-4)t+3m\ge0$, valid for $m\ge3$.
+
+For $n=2m+1$ and the even parity lighter, $T$ has $m$ sites and no
+endpoints. The configurations with zero occupied even sites have
+total mass $h^{m+1}$. Those with exactly one occupied even site have
+mass $mt h^{m-1}$: its two odd neighbors are blocked and the
+remaining $m-1$ odd sites are free. These disjoint classes give
+
+$$
+Z_{2m+1}\ge h^{m+1}+mt h^{m-1},
+\qquad
+\alpha_T\le\frac{h^2}{h^2+mt}.
+\tag{9.20}
+$$
+
+Consequently
+
+$$
+\kappa_T\le\frac{c(h^2+mt)}{h^3}\le\frac{mc}{h}.
+\tag{9.21}
+$$
+
+The last comparison is equivalent to
+$(m-1)t^2+(m-2)t+(m-1)\ge0$. All cases now give
+$\gamma\le\kappa_T\le mc/h\le\delta$. Equation (5.8) proves
+the Fisher statement. $\square$
+
+This theorem extends the uniform-site case along an unrestricted
+parity imbalance at homogeneous activity. The universal statement
+with arbitrary positive activities and arbitrary positive weights
+at $n\ge7$ remains unresolved outside the preceding certificate
+domains. Failure of every cylinder certificate is a necessary
+condition for a counterexample candidate, not a sufficient one.
+
+[BGRT12]: ../../../Library/StatisticalMechanics/blancagalvinrandalltetali2012slowmixing.md
+

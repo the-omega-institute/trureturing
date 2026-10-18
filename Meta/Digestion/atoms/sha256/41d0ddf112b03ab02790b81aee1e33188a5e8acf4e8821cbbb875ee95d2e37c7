@@ -1,0 +1,10 @@
+**Theorem 5.3 (active-face identification).** There is $\varepsilon>0$ such that, for
+$$
+s_e-\varepsilon<s<s_e,
+$$
+every global maximizer in $\mathcal Q_6$ has all six old endpoint constraints active and has $K=\kappa$ active. It is the unique six-contact stationary law at that same strength.
+
+**Proof.** By Theorem 4.3 all global maximizers lie in the localized coordinate neighborhood. LICQ persists there. At any such maximizer the KKT theorem applies to its active subset; extend omitted multipliers by zero in the full independent gradient family. The coefficients expressing the objective gradient in that family are unique and continuous, since a continuous left inverse exists for a full-rank matrix. At the event the six inward multipliers and the contrast multiplier are strictly positive. Hence, after shrinking the neighborhood, none can become zero: every endpoint constraint and the contrast constraint remains active.
+
+On this active face, the bordered stationarity Jacobian is nonsingular. A homogeneous kernel vector would have a tangent $dz$ with $A\,dz=0$ and $DK\,dz=0$; its quadratic equation with $H$ forces $dz=0$, and row independence then forces the multiplier variation to vanish. The implicit-function theorem gives one stationary solution for each nearby $\kappa$. Since $dk_6/d\lambda>0$, the solution is precisely the analytic six section reparametrized by its same strength. The localization theorem makes this local solution global within $\mathcal Q_6$. $\square$
+

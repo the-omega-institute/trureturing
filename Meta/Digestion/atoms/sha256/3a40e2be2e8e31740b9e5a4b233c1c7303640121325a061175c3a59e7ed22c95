@@ -1,0 +1,47 @@
+**Theorem 14.2 (live calibration-support price).** Under Definition 14.1,
+let $P_g(\beta,m)$ be the probability, including acquisition survival, of
+an accepted exact continuation. With $s=s_*(k,l)<1$,
+
+$$
+P_g(\beta,m)\leq s q_g+(1-s)e_g
+\quad\text{for every }g,\beta,m.
+\tag{PR.52}
+$$
+
+In particular any positive gain over $sq_g$ requires
+
+$$
+e_g\geq\frac{P_g(\beta,m)-sq_g}{1-s}.
+\tag{PR.53}
+$$
+
+Calibration obtained only on dead branches contributes no $e_g$.
+
+Proof. Fix a physical latch value $y$. On $O$ both conventions are
+possible, with opposite parities $\pi(m)=y\oplus g$, and each parity
+still allows every phase. The same acceptance map selected by $(z,y)$
+must therefore transform the full two-parity phase family exactly.
+Instrument Boundaries Theorem 4.1 bounds its acceptance probability by
+$s$, with arbitrary retained success auxiliaries included through their
+Kraus components. Unequal nonzero likelihoods for the conventions do not
+alter this exact bound. On $E_g$ acceptance is at most one.
+
+There is no uncountable-null-set assumption in that argument. For each
+$y,g$, first impose the purity/correctness condition on a countable dense
+set of phases and one signed winding of each needed parity. Positivity
+of the integrated output implies branchwise correctness almost everywhere
+for each such parameter. Take the common conull set of these countably
+many conditions. On $O$ the two restricted measures are mutually
+absolutely continuous, so this is a common conull set for both. At each
+remaining $z$ the selected finite-dimensional CP map is continuous in the
+specimen input; the dense phase conditions extend to the full circle.
+Thus rigidity applies on that one set and bounds all phases there.
+Other signed windings of the same parity have the identical input state
+and are not passed to the map. They inherit the same bound.
+
+For the actual input convention $g$, integrate against $\mu_g$.
+The overlap contributes at most $s(q_g-e_g)$, and the exclusive part at
+most $e_g$. Dead outcomes contribute zero by the absorbing-successor
+contract. This proves (PR.52) and rearrangement gives (PR.53).
+No failed specimen is replaced by a live one from another run. $\square$
+

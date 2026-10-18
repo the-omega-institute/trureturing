@@ -1,0 +1,11 @@
+### 69.1 Resource statement
+
+For the uniform multi-fibre channel F_(k,2), fixed MC encodings, and exact finite physical LOSR implementations of §§66–68, the following minima are attained by common physical channels:
+
+    k=5: minimum branches 2, minimum entropy H(3/5,2/5);
+    k=7: minimum branches 3, minimum entropy H(3/7,3/7,1/7).
+
+Here H is the Shannon entropy in bits of the shared branch variable, and the product factors may be arbitrary local CPTP maps C^(2k)→C^k. A single choice of channel acts on all coherent inputs and passive references. Local private randomness is already included in those factors.
+
+The lower bounds are §68's universal packed-weight bounds. It remains to construct orthogonal matrices with column-block squared norms (3/5,2/5) and (3/7,3/7,1/7), respectively. These finite cases complete the packed entropy optimum for every integer 3≤k≤9, using the previously proved cases; they do not imply existence at arbitrary k.
+

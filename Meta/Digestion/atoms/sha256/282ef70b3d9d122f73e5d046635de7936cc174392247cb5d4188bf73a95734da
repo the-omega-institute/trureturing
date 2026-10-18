@@ -1,0 +1,4 @@
+**Proposition 9.2 (what the operational relation recovers).** Under GB, the retained whole-fiber relation and full original-row task determine exactly the finite upper-budget feasibility relation (JRF.5.3) and every rational weighted worst-run value (JRF.1.4), with actual attaining services under the stated paid interfaces. This does not recover the actual historical action sequence from the output row, nor the original source from a noninjective row.
+
+Proof. Theorems 5.3 and 7.1 supply the first claim. The two services in Theorem 8.1 return the same row on each source and have different actual update/read records, so the row cannot determine which record occurred. For any fixed right leaf, all trees $\langle x,\alpha\rangle$ in (JRF.8.1) have the same $Q$ row and arbitrarily different $x$. Thus that row does not determine the original source. $\square$
+

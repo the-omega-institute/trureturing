@@ -1,0 +1,11 @@
+**Proposition 3.3 (Unrestricted converse).** For every $m,t,\eta$ in the stated domains,
+
+$$
+e_m(t,\eta)\ge[c-D_m(t,\eta)]_+.
+\tag{3.4}
+$$
+
+Proof. Fix any competing whole-algebra CPTP processor, any finite complex reference and any reference/data state $\omega$. Appending this fixed $\omega$ and applying the processor while leaving the reference untouched defines a CPTP map from program states to reference/output states. Trace-distance contraction therefore bounds its output difference for the opposite actual $a$ programs by $2D_m$. Taking the supremum in the channel-discrimination norm gives $\|N_{X_a}-N_{-X_a}\|_\diamond\le2D_m$. The opposite targets have distance $2c$ by (3.3). If their respective simulation errors are $\epsilon_+,\epsilon_-$, the triangle inequality gives $2c\le\epsilon_++2D_m+\epsilon_-$. Consequently the worst four-label error is at least $c-D_m$ and at least zero. Taking the infimum proves (3.4). This argument restricts no competitor to the response family or to the PVM. QED.
+
+The lower bound (3.4), the fixed-diagonal construction below and the zero-noise formulas are existing results of the supplied original-source volume, Sections 121–123; they are credited here and proved to keep the present task self-contained.
+

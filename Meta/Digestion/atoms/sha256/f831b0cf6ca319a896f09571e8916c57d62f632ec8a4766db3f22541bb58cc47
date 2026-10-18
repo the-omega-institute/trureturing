@@ -1,0 +1,76 @@
+**Theorem 8.1 (transverse zeros force different-slope collisions).** At a singular slope $a$, a uniformly recovering history must have $\operatorname{rank}\mathcal T_a=3$ and
+
+$$
+\ker\mathcal T_a=\mathbb R K,\qquad
+K\in\mathcal C_{\mathrm{safe}}\setminus\{0\}.
+\tag{8.1}
+$$
+
+Choose any nonzero covector $w$ with $w\mathcal T_a=0$, and define the linear functional
+
+$$
+h(S)=w(\mathcal C S)
+ =h_pp+h_qq+h_rr+h_ss .
+$$
+
+If $h(S_*)=0$ at a positive rank-one source, there are actual different-slope collisions with slopes $a$ and $a+t$ for every sufficiently small nonzero $t$ of either sign. Thus recovery requires either that $(h_p,h_q,h_r,h_s)$ be all nonnegative and not all zero, or that they be all nonpositive and not all zero.
+
+**Proof.** If $\operatorname{rank}\mathcal T_a\le2$, its kernel has dimension at least two and cannot lie in the safe cone union. If the rank is three but the kernel line is unsafe, it already contains a nonzero positive secant. In both cases the credited prescribed-slope criterion supplies an actual same-slope collision. Its matrix difference has a polynomial compensator by Lemma 2.1; Section 6 supplies the entire drifts and actual positive factors. Hence only (8.1) can remain.
+
+Now suppose (8.1) holds and set $S=S_*$. The range of $\mathcal T_a$ equals $\ker w$, since inclusion holds and both have dimension three. The condition $h(S)=0$ therefore gives a real matrix $X$ with
+
+$$
+\mathcal T_a X=\mathcal C S.
+\tag{8.2}
+$$
+
+Explicitly, choose three matrices whose images form a basis of the range, express $\mathcal C S$ in that basis, and use the same coefficients on those matrices. No singular inverse is used.
+
+For $K=(\begin{smallmatrix}A&B_0\\C_0&E_0\end{smallmatrix})$, positivity of $S$ gives
+
+$$
+v=\mathfrak b(S,K)=sA+pE_0-rB_0-qC_0>0,
+\tag{8.3}
+$$
+
+because all four terms are nonnegative and some entry of $K$ is nonzero. Put $m=\min_{j,k}S_{jk}>0$. Choose $\eta>0$ with
+$\eta\max|K_{jk}|<m/4$ and $\eta|\det K|<v/2$; the latter bound is automatic if $\det K=0$. Then
+
+$$
+\det(S+\eta K)>\eta v/2>0,\qquad
+\det(S-\eta K)<-\eta v/2<0.
+$$
+
+For every sufficiently small $|t|$, these endpoint signs persist for
+$\det(S+tX+\eta K)$ and $\det(S+tX-\eta K)$. Also require
+$|t|\max|X_{jk}|<m/4$, which imposes no restriction if $X=0$. Every
+$S+tX+\lambda K$, $-\eta\le\lambda\le\eta$, then has entries greater than $m/2$. Continuity in $\lambda$ gives a value $\lambda(t)$ making its determinant zero. Set
+
+$$
+S_0=S+tX+\lambda(t)K,\quad S_1=S,\quad
+\kappa_0=a,\quad\kappa_1=a+t .
+$$
+
+Both sources are positive rank one, and (8.1)–(8.2) yield
+
+$$
+\mathcal T_a S_0
+ =\mathcal T_a S+t\mathcal C S
+ =\mathcal T_{a+t}S_1.
+$$
+
+For each nonzero $t$ the slopes differ. Equations (6.2)–(6.3) realize every observation, including any sampled gain zero, with one entire polynomial and one fixed positive row in each run.
+
+For completeness, a linear functional has no zero on $\mathcal R_+$ exactly when its four entry coefficients have one weak sign and are not all zero. Evaluate it on $E(x,y)$. The limits
+
+$$
+\begin{aligned}
+h(E(\varepsilon,\varepsilon))&\longrightarrow h_r,\\
+h(E(T,T))/T^2&\longrightarrow h_q,\\
+h(E(T,T^{-2}))/T&\longrightarrow h_p,\\
+h(E(T^{-2},T))/T&\longrightarrow h_s
+\end{aligned}
+$$
+
+isolate each nonzero coefficient, with $\varepsilon\downarrow0$ and $T\to\infty$. Mixed signs therefore give both signs on positive sources and a zero along a positive-coordinate path. All zero coefficients give zeros everywhere. Conversely one nonzero coefficient and a common weak sign give a strict sign at every source because all source entries are positive. Applying this equivalence to $h$ proves the coefficient requirement, which is invariant under nonzero rescaling of $w$. ∎
+

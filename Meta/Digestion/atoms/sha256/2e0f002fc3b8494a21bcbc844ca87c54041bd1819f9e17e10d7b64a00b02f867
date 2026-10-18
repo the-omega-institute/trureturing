@@ -1,0 +1,23 @@
+**Theorem 3.2 (closed count on the full independent box).**
+Let $n_C=|C|$ for $C\in\mathcal C(G)$. With no other retained
+source information, the exact source-summary alphabet is
+
+$$
+M_{\rm box}(G,H)=
+ \prod_{C\in\mathcal C(G)}\bigl((H+1)^{n_C}-H^{n_C}\bigr).
+\tag{SCC.13}
+$$
+
+Proof. A component profile $v$ in (SCC.6) is exactly a vector in
+$\{0,\ldots,H\}^{C}$ with at least one zero. Every such vector is
+realized by taking $a_i=v_i$ on $C$. There are $(H+1)^{n_C}$ vectors
+in the box and $H^{n_C}$ with no zero. Independent components give
+the product. Theorem 3.1 gives necessity and attainment. $\square$
+
+The factor of an isolated vertex is one. With no edges the empty
+calibration needs one label. When $H=0$ all factors are one. A
+connected graph needs $(H+1)^r-H^r$ labels, regardless of its edge
+orientations, because its edge differences determine every relative
+coordinate. This is an information statement; it supplies no legal
+reverse switch when only the forward edge belongs to $G$.
+

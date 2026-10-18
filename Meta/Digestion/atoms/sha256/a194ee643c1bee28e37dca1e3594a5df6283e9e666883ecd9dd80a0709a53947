@@ -1,0 +1,9 @@
+# Native joint transfer–coherence interface geometry
+
+> This reference volume gives ordinary conditional mathematics, without Lean
+> kernel verification. Its coefficient and interface applications are
+> `repo-derived`; the generic positive-matrix, factor-width-two and
+> quantum-operation structures used in their proofs are mature mathematics.
+> The append convention is `generic-v1`: corrections and extensions belong
+> after the final append anchor once the preceding text is admitted.
+

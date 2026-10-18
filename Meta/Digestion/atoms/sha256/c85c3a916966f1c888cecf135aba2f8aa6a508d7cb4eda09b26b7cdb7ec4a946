@@ -1,0 +1,45 @@
+**Proposition 3.2 (phase geometry and a singular passing family).** When
+all $d_i>0$, write $a=r_{01}/\sqrt{d_0d_1}$,
+$b=r_{02}/\sqrt{d_0d_2}$ and $c=r_{12}/\sqrt{d_1d_2}$.
+Then (JG.10), apart from the diagonal bounds, is exactly
+
+$$
+a^2+b^2+c^2+2abc\leq1.
+\tag{JG.20}
+$$
+
+The unscaled test handles zero diagonals. Joint membership is equivalently
+positivity for EVERY independent Hermitian assignment of edge phases
+at the same diagonals and magnitudes.
+
+Proof. Dividing (JG.14) by $d_0d_1d_2$ gives (JG.20); its nonnegative
+summands also imply all pair bounds. This rescales coefficients and does
+not normalize the Choi trace. If the edge product is nonzero and
+$\phi=\arg(C_{01}C_{12}C_{20})$, ordinary CP instead uses
+
+$$
+\det C=d_0d_1d_2-\sum_i d_i r_{jk}^2
+                         +2r_{01}r_{02}r_{12}\cos\phi,
+\tag{JG.21}
+$$
+
+where each $jk$ is complementary to $i$. The comparison determinant
+uses the worst sign $-2r_{01}r_{02}r_{12}$. The construction in Theorem
+2.2 works for any chosen edge phases; conversely, positivity for all
+assignments includes all-negative edges, which is precisely $M$.
+Favorable cyclic phase can thus preserve CP while failing the common
+pair budget, but cannot repair joint membership.
+
+For $d_i=1$ and $r_{ij}=1/2$, the comparison is
+$M=(3/2)I-(1/2)\mathbf1\mathbf1^\dagger\succeq0$ and is singular.
+Three pair vectors, each with moduli $1/\sqrt2$ and the required conjugate
+phase, construct every phase assignment. Here
+$\det C=(1+\cos\phi)/4$ and every pair minor is $3/4$.
+Hence $\operatorname{rank}C=2$ at $\phi=\pi$ and $3$ otherwise.
+Every such live Choi has Schmidt number exactly two: a singleton-only
+decomposition would make every off-diagonal coefficient zero.
+Choi matrix rank therefore differs from required fibre dimension.
+These phase assignments and consistent changes of coordinates are
+mathematical comparisons, not supplied physical phase gates, arbitrary
+rotations or an acquired reference frame. $\square$
+

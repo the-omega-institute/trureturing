@@ -1,0 +1,22 @@
+**Definition 7.1 (one prefix-compatible encoder).** Let the public
+matrix, with rows indexed by $a$ and columns by $b$, be
+
+$$
+M=\begin{pmatrix}
+0&1&2&1&1&5\\
+0&1&2&3&3&3\\
+0&1&2&0&0&0\\
+2&2&2&3&4&5\\
+4&4&4&3&4&5\\
+5&1&5&5&4&5
+\end{pmatrix}.
+\tag{NARC.7.1}
+$$
+
+For $1\le q\le6$, set $e_q(a,b)=M_{a,b}$ on the upper-left
+$q\times q$ block, and write $C_{q,\gamma}=e_q^{-1}(\gamma)$.
+The encoder computes the two coordinates from the genuinely acquired
+original row as in Assumption 5.1, exports this entry, and discards
+the row and both coordinates. The public matrix is the same for
+every original in the declared family.
+

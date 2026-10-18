@@ -1,0 +1,30 @@
+### 2.3 相容性把两个事件平衡接成递推
+
+令 $\gamma_n=Q_n(\text{首字母为 }\beta)$、$v_n=V_n(\text{首字母为 }\alpha)$、$t_n=\gamma_nv_n$。相容性给
+
+$$
+b_n=\gamma_n(1-v_n),\qquad
+Q_n(w_{j,1})=t_nQ_{n+1}(w_{j-1,1})\quad(j\ge1).
+\tag{2.6}
+$$
+
+置 $d_n=1-V_n(E_\beta)$，由悬置事件的两个分支得
+
+$$
+d_n=v_n(1-b_{n+1}),\qquad |d_n-d|\le\epsilon_\beta,
+\qquad
+t_n=\frac{d_nb_n}{1-d_n-b_{n+1}}.
+\tag{2.7}
+$$
+
+分母严格正；由 $b_n\in I+[-2/1000,2/1000]$、$d_n\in[d-1/1000,d+1/1000]$，还统一大于 $13/40$。令 $\eta_n=Q_n(E_p)-c_p$。式(2.5)–(2.7)给出精确递推
+
+$$
+b_n=\frac{c_p+\eta_n}
+{1+g_{d_n}(b_{n+1})[1+g_{d_{n+1}}(b_{n+2})]},\qquad
+g_e(x)=\frac{ex}{1-e-x},\qquad |\eta_n|\le\epsilon_p.
+\tag{2.8}
+$$
+
+这对任意随机有限机器导出的共同极限成立，不假设其配置周期、确定性或固定相位参数。
+

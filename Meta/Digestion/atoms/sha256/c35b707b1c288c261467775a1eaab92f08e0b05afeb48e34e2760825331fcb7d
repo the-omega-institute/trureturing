@@ -1,0 +1,23 @@
+-\operatorname{tr}
+\left[
+\mathcal L_e(\rho)
+(\log\rho-\log\sigma)
+\right].
+\]
+在每个边半群保持 \(\sigma\) 且满足量子 Markov 单调性的条件下，
+\[
+\Sigma_e(\rho)\ge0.
+\]
+总熵生产率
+\[
+\Sigma(\rho)=\sum_{e\in E}\Sigma_e(\rho)
+\]
+满足
+\[
+\boxed{
+\frac{d}{dt}D(\rho_t\Vert\sigma)
+=
+-\Sigma(\rho_t).
+}
+\]
+

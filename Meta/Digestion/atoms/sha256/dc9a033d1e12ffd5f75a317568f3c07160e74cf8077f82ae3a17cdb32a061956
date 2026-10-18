@@ -1,0 +1,163 @@
+**Proposition 7.1 (whole-cell avoidance for Theorem 4.2).** In every feasible
+cell, the forbidden replacements used in Theorem 4.2 can include every old
+cross-class inequality, including classes outside the target task, as well as
+every additional negative record. This holds both after imposing the diagnostic
+target MGU and after removing it. Consequently both finite sources in its
+non-ground-binding construction belong to the original fiber (RNL.3).
+
+Proof. Work first over the residual coordinates $Z_\eta$ of Convention 2.3.
+Take $\tau$ to be the identity when no preliminary equations are used. The
+complete list of variable-dependent restrictions is
+
+$$
+\begin{aligned}
+\mathcal C_\eta={}&
+ \{t_b[\tau]\ne t_c[\tau]:b<c\}\\
+&\cup\{\rho^{a_e}(A_e[\tau])\ne
+             \rho^{b_e}(B_e[\tau]):e\in H^-\}.
+\end{aligned}
+\tag{RNL.16}
+$$
+
+Concrete endpoint evaluations are included as ordinary ground terms, with
+outer power zero. Every pair in the first line is likewise an instance of
+Lemma 3.1 with both outer powers zero. No pair is omitted because one of its
+classes has no occurrence in $Q$.
+
+There are no additional variable-dependent reach or literal restrictions.
+The concrete old exterior and old hole addresses are fixed by $C$. In
+particular an absent old cut address cannot lie below a reached old hole,
+since $P$ is prefix-free; its absent guard is fixed by that exterior. The
+original constructors needed for each literal or additional endpoint are
+strictly above the frontier of its mask. At a known leaf, the epoch and
+remaining address determine the leaf-sector guard and reply. Otherwise
+navigation stays in known original constructors to the endpoint. Thus all
+retained literal replies, including absent replies and repetitions at mixed
+epochs, and both guards of every negative record are constant throughout this
+cell. This is the guarded correspondence of Proposition 2.2 and [ARH,
+Proposition 3.2][ARH]. Filling a frontier never changes those constructors.
+An exact preliminary substitution only restricts these fillings; it does not
+change their guards.
+
+Here substitution means substitution in the free ordered binary term algebra.
+The terms $t_b[\tau]$, $A_e[\tau]$ and $B_e[\tau]$ are finite ordinary
+constructor terms. After all but one coordinate $z$ are fixed to finite trees,
+each old inequality is an ordinary one-variable inequality. The elementary
+one-variable fact in the proof of [SLH, Theorem 74.4, part (ii)][SLH] applies:
+cancel equal outer pair constructors until a first difference is reached.
+Different constructors give no equality solution; $z$ against a ground term
+fixes its unique possible value; $z$ against a proper term containing $z$
+gives no finite solution by strict node-count increase. If no difference is
+reached, the terms are identical and equality is universal. A current satisfying
+valuation excludes this last case. Each old inequality therefore forbids at
+most one value, including when its two sides contain repeated occurrences of
+$z$ or share other frozen coordinates. An inequality independent of $z$
+forbids none. This argument concerns trees with brackets and ordered children,
+not associative concatenation equations; the latter's infinite solution
+families are not in (RNL.16).
+
+More generally let $\sigma$ be any ordinary constructor substitution and
+suppose a finite valuation satisfies $\mathcal C_\eta[\sigma]$. After freezing
+its other free coordinates, every member of this transformed list still has
+one uniform outer power per side. Lemma 3.1 applies to the additional records,
+and its zero-power case applies to all old pairs. Their finite union is the
+forbidden set for this coordinate. Substitution cannot introduce an internal
+interpreted iterate: only the ordinary terms inside the displayed outer
+powers are substituted. In particular this argument does not apply to
+(RNL.12), or to a presentation that leaves an internally mixed iterate in
+place of an ordinary term.
+
+For the first pump, let $D=\operatorname{dom}\theta$ and
+$Y=Z_\eta\setminus D$ for the fully composed idempotent target MGU. A feasible
+joint query supplies a finite valuation $w_0$ of $Y$ such that
+$\theta(w_0)$ satisfies the whole of (RNL.16). Apply the preceding argument to
+$\mathcal C_\eta[\theta]$, freezing $Y\setminus\{y\}$. The old pairs are
+explicitly
+
+$$
+t_b[\tau][\theta]\ne t_c[\tau][\theta]\qquad(b<c).
+\tag{RNL.17}
+$$
+
+They are ordinary terms. If any became identical, the alleged feasible joint
+witness would violate that old inequality, so this query could not enter the
+pump branch. Otherwise their one-coordinate forbidden sets are finite. The
+same witness excludes an identically true forbidden equality for every
+additional record. Choose a finite replacement for $y$ outside the union for
+*both* lines of (RNL.16), with more than $2^h$ leaves; leave every other $Y$
+coordinate fixed. Put $v_h=\theta(w_h)$. All bound coordinates are reconstructed
+by this same $\theta$, and all preliminary eliminated coordinates by $\tau$.
+Thus $u_h=W_\eta[\tau(v_h)]$ satisfies the entire original retained cell and
+the diagnostic target equation. This step does not freeze a coordinate that
+is required to depend on the varied $y$.
+
+For the second pump discard the diagnostic target equation, but keep the
+preliminary substitution $\tau$ and all of (RNL.16). Choose a bound coordinate
+$x\in D$ whose ordinary term $\theta(x)$ contains $y$. Its current value
+$v_h(x)$ has at least as many leaves as $w_h(y)$, hence more than $2^h$.
+A binary tree of height at most $h$ has at most $2^h$ leaves, so there is a
+branch at depth $h$ on a longer path in $v_h(x)$. Change only a child cone
+below that branch. The resulting infinite family of finite replacements
+agrees with $v_h(x)$ at every relative address of length at most $h$, and has
+unbounded leaf count.
+
+Now freeze every coordinate of $Z_\eta\setminus\{x\}$ at its value in $v_h$.
+Use the *unsubstituted-by-$\theta$* list (RNL.16). Its old pairs are
+$t_b[\tau]\ne t_c[\tau]$, and each is true at the current value $v_h(x)$.
+Each again forbids at most one replacement for $x$; Lemma 3.1 supplies finite
+forbidden sets for the additional records. Choose a member $x'_h$ of the
+child-cone family outside their union and with larger leaf count than
+$v_h(x)$. Set $v'_h=v_h[x:=x'_h]$ and
+$u'_h=W_\eta[\tau(v'_h)]$. Other bound target coordinates stay fixed in this
+step. Preliminary eliminated coordinates are reconstructed, rather than
+independently frozen; the original source is always one filling of
+$W_\eta[\tau]$. Hence $u_h,u'_h\in D^-$ with all old pairs and all additional
+records true simultaneously.
+
+Every occurrence of $x$ in the ordinary filled context $W_\eta[\tau]$ is
+changed to that same $x'_h$. A global address through depth $h$ either stays
+outside these occurrences or enters one at some original depth $k\ge0$ and
+uses only a relative address of length at most $h-k\le h$. The common local
+prefix therefore preserves every required original reply, including absence.
+The recovery address $p_x$ of (RNL.9a) still recovers the actual residual
+coordinate; no substitution shortens it. Since $Y\cap D=\varnothing$, the
+second pump leaves $v'_h|_Y=v_h|_Y$. Every solution of the target equation must
+satisfy
+
+$$
+v'_h(x)=\theta(x)[v'_h|_Y]
+       =\theta(x)[v_h|_Y]=v_h(x),
+\tag{RNL.18}
+$$
+
+whereas $x'_h\ne v_h(x)$. The target equality is therefore false on $u'_h$
+and true on $u_h$. Proposition 2.2 gives their common reached target set and
+the interpretation of this different partition bit as different full rows.
+
+The exterior argument in Theorem 4.2 uses the same complete list (RNL.16),
+with $\sigma$ the identity. If a residual coordinate occurs in $E_\eta$,
+fix one feasible valuation and all other coordinates. Avoiding the finite
+union for both old and added inequalities leaves infinitely many finite
+values. A visible occurrence of that coordinate in the ordinary exterior
+context makes these exteriors distinct by free-constructor cancellation.
+This contradicts the finite complete-mask image. Thus its fixed-exterior
+conclusion also holds on the whole old-row fiber.
+
+All these choices are effective finite-source constructions: enumerate
+finite trees with increasing leaf counts for the first pump, or fill the
+fixed child cone with such trees for the second, and evaluate the whole
+finite list (RNL.16) at each candidate. Finiteness of the forbidden union
+ensures termination. A ground cell has no coordinate to pump and is checked
+directly. An identity or ground-only target MGU has no binding of the required
+kind, so it uses the existing constant or ground-test branch. Empty lists,
+zero outer powers, coordinate-independent inequalities, $h=0$, repeated old
+classes and off-task classes require no exception to the argument.
+
+The construction produces proof-side alternative finite sources in the exact
+fiber, under the authentic acquisition and complete-access hypotheses. It
+supplies no new online source handle, free comparison, clone or reset, and
+changes neither the common certified epoch nor the paid consumer (RNL.13).
+This is a repo-derived completion of the applications of Lemma 3.1 and
+[SLH, Theorem 74.4][SLH] inside Theorem 4.2; it extends neither the admitted
+history signs nor the uniform-outer-power syntax. $\square$
+

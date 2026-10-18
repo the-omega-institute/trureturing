@@ -1,0 +1,25 @@
+## 1. Result, interpretation and mathematical ownership
+
+This volume determines a complete-configuration versus paid-read frontier for a fixed positive two-term renewal source pair. Fix integers $d\ge1$ and $1\le r\le d$, a real $c>0$, and a risk allowance $0<\alpha<1/2$. Write $a=d+1$. The shapes are exactly
+
+$$
+F_0(k)=k^d,\qquad F_1(k)=k^d+c k^{d-r}\qquad(k=1,2,\ldots).
+\tag{1.1}
+$$
+
+The parameter $q=e^{-s}$ is known and common to the two hypotheses. One source-blind observer design at that parameter must satisfy both risks, both almost-sure stops and both finite paid means. Its mutable resource is the number $M$ of all possible complete persistent configurations, including its internally emitted labels. Every bit of one consecutive stationary history that it reads is paid. Immutable real transition probabilities have unrestricted precision in this abstract model.
+
+For $a>2r$, define
+
+$$
+\kappa=\frac{a-2r}{r},\qquad
+\Phi(s,M)=\max\{s^{-(2r+1)},\ s^{-(a+1)}M^{-\kappa}\}.
+\tag{1.2}
+$$
+
+Theorems 7.1 and 10.1 establish constants $A_-,A_+>0$, a finite sufficient budget $M_0$, and one neighborhood $0<s<s_0$, all depending only on the fixed $(d,r,c,\alpha)$, with the following quantifiers. Every compliant observer at every finite $M\ge2$ has each paid mean at least $A_-\Phi(s,M)$. For every $M\ge M_0$ and every $s$ in that same neighborhood, one common observer with at most $M$ configurations has both paid means at most $A_+\Phi(s,M)$. Thus each separate mean infimum and the infimum of the maximum of the two means have this order, uniformly over all sufficient finite budgets. Achieving the bulk order $s^{-(2r+1)}$ under even one fixed target, with one fixed eventual upper constant and all opposing compliance conditions, requires $M(s)=\Omega(s^{-r})$; a common family achieves it with $M(s)=O(s^{-r})$.
+
+For $a<2r$, every finite-budget compliant observer pays $\Omega(s^{-(a+1)})$ under each source, and a family of q-retuned tables with one fixed sufficient configuration budget achieves that order under both. At $a=2r$, the proved result is the logarithmic sandwich in Section 11. A lawful multiscale controller attaining the logarithmic gain remains open. Section 12 gives a sparse pair with paid order $s^{-(d+2)}$ and a fixed sufficient budget. That pair satisfies the same tail upper envelope as (1.1), showing exactly why an upper envelope alone does not determine the matched frontier.
+
+These are ordinary mathematical derivations. Their source-relative content follows the source-class proposal's S1–S6, U1–U3 and C1–C2, whose independent handwritten check concerns that proposal. The proofs below state every model and applicability hypothesis and develop the required interfaces in full. They do not inherit approval of this authored source. The additional q-independent-table bridge in that check is outside the mathematical delivery here. The old rational-center polynomial pair remains a separate source with separate hypotheses. Section 13 identifies the supplied results and classical methods; no kernel certificate or worldwide originality claim accompanies this volume.
+

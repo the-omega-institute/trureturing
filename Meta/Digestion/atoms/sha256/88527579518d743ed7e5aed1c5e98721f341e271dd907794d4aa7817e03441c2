@@ -1,0 +1,106 @@
+**Theorem 9.1 (universal actual-three-label cap value).** Among every
+original implementation of Definition 1.2 with sharp weak cost, required
+contrast at least $s_0\tau_3$, and at most three actual low live-bearing
+labels, the largest height TV is
+
+$$
+T_{3,\rm cap}=T_{\rm flat}-B_++D_+,\qquad
+B_+=\frac{g_0+\alpha g_1}{2d}+\frac{g_2}2-\frac{\sqrt\alpha x}{d},
+\qquad D_+=\frac{y-\sqrt\alpha z}{\sqrt d},\quad d=1+\alpha.
+\tag{RH.73}
+$$
+
+This restricted value is attained by the three-label cap frame of
+RH.47 with the common completion in Section 5. Its real cap frames and
+sign pattern are credited to JR.153; the additional assertion is the
+universal actual-label scope, justified by Lemma 8.2, and the comparison
+of both cap orientations. This is not the full value
+$\mathcal T(s_0\tau_3)$.
+
+Proof. Theorem 8.3 forces exactly three normalized rank-one contributions,
+forming an orthonormal null frame. The contrast requirement at the cap
+saturates the unit-null product bound RH.72. One frame vector therefore
+has third coordinate zero. Up to overall signs and column permutations,
+the exhaustive possibilities are
+
+$$
+U_\sigma=\frac{(\sqrt\alpha,\sigma,0)^T}{\sqrt d},\qquad
+F_{\sigma,t}=\frac{(1,-\sigma\sqrt\alpha,t\sqrt d)^T}{\sqrt{2d}},
+\qquad \sigma,t\in\{+1,-1\}.
+\tag{RH.74}
+$$
+
+The two vectors $F_{\sigma,\pm1}$ are exactly the two null lines in
+$U_\sigma^\perp$. Their dot products and nullity follow by substitution;
+there are no other lines because that plane compression of $Q$ is
+nonzero traceless. Thus both cap orientations have been included, without
+assuming a selected family is exhaustive.
+
+Put $r=\sqrt\alpha$ and
+
+$$
+A_\sigma=\frac{\alpha g_0+g_1+2\sigma rx}{d},\qquad
+B_\sigma=\frac{g_0+\alpha g_1-2\sigma rx}{2d}+\frac{g_2}2,\qquad
+D_\sigma=\frac{y-\sigma rz}{\sqrt d}.
+\tag{RH.75}
+$$
+
+The three low height differences are $A_\sigma,B_\sigma-D_\sigma,
+B_\sigma+D_\sigma$. For an arbitrary actual implementation, separating
+its products and later failure only increases the possible absolute sum.
+The high and failure contributions are bounded by
+$(1-\delta)\Delta A$ and $L_f$ as in Theorem 2.2. This gives the
+corresponding universal height upper bound from these three values,
+even when an actual label also has later failure mass.
+
+Here are coarse rational comparisons sufficient to select the larger
+orientation, using RH.17 only. Terminating decimals in this proof are
+exact rationals. We have
+
+$$
+\begin{gathered}
+.87<\alpha<.88,\quad1.87<d<1.88,\quad .9<r<1,
+\quad1.3<\sqrt d<1.4,\\
+.001269<g_0<.001270,\quad .0029222<g_1<.00293,
+\quad .0016771<g_2<.00168,\\
+.002370<x<.002372,\quad .002207<y<.002209,
+\quad -.0001017<z<0.
+\end{gathered}
+\tag{RH.76}
+$$
+
+For $\sigma=+$, $A_+>0$, $B_+>-x/d>-.0013$, and
+
+$$
+B_+<\frac{.001270+.88(.00293)}{2(1.87)}
++\frac{.00168}2-\frac{.9(.002370)}{1.88}<.0008,
+\qquad D_+>\frac{.002207}{1.4}>.0015.
+\tag{RH.77}
+$$
+
+Thus only $B_+-D_+$ is negative. RH.10 makes the resulting bound
+$T_{\rm flat}-B_++D_+>T_{\rm flat}+.0007$.
+For $\sigma=-$, the numerator of $A_-$ exceeds
+$.87(.001269)+.0029222-2(.002372)>-.000718$, so $A_->-.0004$.
+Also
+
+$$
+B_->\frac{.001269+.87(.0029222)+2(.9)(.002370)}{3.76}
++\frac{.0016771}2>.0029,
+\qquad |D_-|<\frac{.002209+.0001017}{1.3}<.0018.
+\tag{RH.78}
+$$
+
+Both $B_-\pm D_-$ are positive. That orientation's upper value is
+$T_{\rm flat}+[-A_-]_+<T_{\rm flat}+.0004$, strictly smaller.
+These are symbolic inequalities on the supplied coarse box, not a new
+numerical authentication of the narrow CG enclosures.
+
+The plus frame reports $+$ on $U_+$ and $-$ on its other two vectors,
+giving exactly $\tau_3$. The actual instrument of Section 5 has exactly
+three low live-bearing labels and attains its live, high and spectral
+failure terms simultaneously. Thus the upper bound RH.73 is attained.
+Lemma 8.2 makes the preceding upper argument apply to arbitrary complex
+Kraus multiplicities and to the stipulated countable/integral scope,
+with the finite CP-mass convention of Definition 8.1. $\square$
+

@@ -1,0 +1,41 @@
+### 478.3. 极点归一化支付平滑主项
+
+在 $\operatorname{Re}s>1$，实际 Möbius Dirichlet 级数绝对收敛并满足
+
+$$
+\sum_{m\ge1}\mu(m)m^{-s}=\frac1{\zeta(s)}.
+$$
+
+由 $|M_N|\le N$，锚的绝对值不超过 $N/(N+1)^{\operatorname{Re}s}$，趋于零。
+因此 $\Phi_N$ 在这个半平面逐点趋于实际倒数 zeta。
+这一步没有把收敛域扩展到边界 $s=1$。
+
+实际 zeta 在 $1$ 的留数为一。其局部形式是
+
+$$
+\zeta(s)=\frac1{s-1}+g(s),\qquad
+Z(s)=\frac{s-1}{1+(s-1)g(s)},
+$$
+
+其中 $g$ 在 $1$ 附近解析，$Z$ 是倒数的全纯延拓，满足
+$Z(1)=0$、$Z'(1)=1$。这里延拓的值不依赖在极点处为原函数指定的总化取值。
+
+若实际算术边界极限 $h_N\to0$、$\ell_N\to-1$ 已独立建立，则
+
+$$
+h_NI-\ell_NJ\longrightarrow J.
+$$
+
+对 $S(t)=t\log t-t$，这给出 $T_{\nu_N}S(t)\to t$。
+因此原有限阶乘重构
+
+$$
+\sum_{m=1}^N\mu(m)\eta(t/m)-M_N\eta(t/(N+1))
+=\psi(t)-t(\log t-1)h_N+t\ell_N,
+\qquad 0<t\le N+1,
+$$
+
+在每个固定 $t>0$ 趋于 $\psi(t)-t$。
+全物理积分的识别还使用完整有符号块的 $L^1$ 可求和性及几乎处处识别；
+有限重构与局部 Mellin 资料本身没有支付这个积分交换。
+

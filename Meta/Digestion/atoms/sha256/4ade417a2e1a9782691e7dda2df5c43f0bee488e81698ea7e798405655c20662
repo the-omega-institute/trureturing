@@ -1,0 +1,70 @@
+**Theorem 93.2 (exact original-observation correspondence).** For every
+$s>0$ and every $\xi\in\Omega_s$,
+
+$$
+\pi\Xi_s(\xi)=\Lambda_sF_s(\xi),\qquad
+F_s^{-1}(b)=\{i_s(b,w):w\in\mathbb R\},\qquad
+\Xi_s(\xi+t n_s)=\Xi_s(\xi)+(0,0,0,t\ell_s).
+\tag{93.3}
+$$
+
+The last equation is in original coordinates $(k,\theta,v,x)$.
+The absolute retained Jacobian is $J_s$, and
+$J_s|\ell_s|=j_0s^7$. In coordinates $(b,w)$ the full rescaled density is
+exactly $db\,dw$. Thus for every integrable $f$ on $\Omega_s$,
+
+$$
+\mathsf M_s f(b)=\int_{\mathbb R}f(i_s(b,w))dw
+\tag{93.4}
+$$
+
+is its pushforward density under the original observation in this chart.
+For every native amplitude $\psi\in L^2(dY)$, with $f=\mathcal U_s\psi$,
+
+$$
+J_s\int_{\mathbb R}|\psi(\Lambda_s b,x)|^2dx
+                 =\mathsf M_s(|f|^2)(b).
+\tag{93.5}
+$$
+
+The exact projected scaled fields are $\partial_r$ and
+
+$$
+\bar Y_s=
+ (v_{s,1}+\varepsilon^2s^2\beta v_{s,3})\partial_Y
+ +(v_{s,2}+\varepsilon s\gamma v_{s,3})\partial_Z.
+\tag{93.6}
+$$
+
+They converge in $C^\infty$ on bounded height intervals to
+$\partial_r$ and $\partial_Y+r\partial_Z$. Their tangent quotient is
+therefore the three-coordinate Heisenberg heat operator
+
+$$
+\bar{\mathcal E}
+ =-\partial_r^2-(\partial_Y+r\partial_Z)^2
+\tag{93.7}
+$$
+
+with its complex Friedrichs horizontal form closure on
+$L^2(\mathbb R^3,db)$. Its weights are $(1,1,2)$ and homogeneous
+dimension four, while the full Engel weights remain $(1,1,2,3)$
+and homogeneous dimension seven.
+
+Proof. Project (78.1) onto its first two phase components and substitute
+$d_2=\beta d_0+\gamma d_1$. Factoring $s d_0$ and
+$\varepsilon s^2d_1$ gives (93.3)'s first identity. Solving its two
+linear equations gives precisely $i_s$. In the full phase space,
+$c_2-\beta c_0-\gamma c_1=(0,0,h_*)$; the invertible determinant in
+(76.4) proves it is nonzero. This proves the translation identity,
+including the sign of $\ell_s$. Taking determinants gives $J_s$ and
+$J_s|\ell_s|=j_0s^7$. The shear $(b,w)\mapsto i_s(b,w)$ has determinant
+one. Changing variables first along the hidden line and then on the
+base proves (93.4)--(93.5), using the exact unitary factor in (81.1).
+Applying $\partial_r,Y_s$ to the three components of $F_s$ gives
+(93.6); (78.4) gives its stated limit. The two limiting fields and
+their bracket $\partial_Z$ span three dimensions, and dilation
+$(r,Y,Z)\mapsto(Rr,RY,R^2Z)$ gives the stated weights. This is the
+projection of the Engel fields in (81.2), not a redefinition of the
+original observation as $F_0$ at positive $s$. $\square$
+

@@ -1,0 +1,60 @@
+**Theorem 371.2 (Complete-cell normal form with persistent tight witnesses).** Every feasible complete allocation for (371.1) has a feasible representative in the same class with exactly the same individual schedule masses such that each final positive nonbase cell entry $X_c(n)>0$, $1\le n\le L$, has a witness word $w$ satisfying
+
+$$
+w\text{ visits }c,\qquad n(w)=n,\qquad p_w(n)=d_C(w)
+\quad\text{in the final allocation}.
+\tag{371.2}
+$$
+
+Processing every complete terminal cell once, in any order, constructs such a representative. During the whole pass every nonbase cell entry and every nonbase word coordinate weakly decrease; every base word coordinate and every applicable union coordinate $p_w(0)+p_w(n(w))$ weakly increase.
+
+*Proof.* Enumerate the finitely many cells in any order. Consider the current cell $c$, with owning mass $m$, current vector $X_c$ and visiting word set $\mathcal C_c$. For $w\in\mathcal C_c$ put $k_w=p_w-X_c$. This is the contribution from all other schedules at that word and is held fixed during this update. For $n=1,\ldots,L$ set
+
+$$
+a_n=\max\bigl(\{0\}\cup
+ \{d_C(w)-k_w(n):w\in\mathcal C_c,\ n(w)=n\}\bigr).
+\tag{371.3}
+$$
+
+If no such word exists, $a_n=0$. Current feasibility gives
+$d_C(w)-k_w(n)\le X_c(n)$ for every word in that maximum, and $X_c(n)\ge0$. Hence
+
+$$
+0\le a_n\le X_c(n),\qquad
+\sum_{n=1}^L a_n\le\sum_{n=1}^L X_c(n)\le m.
+\tag{371.4}
+$$
+
+Replace this one cell by
+
+$$
+X_c^{\mathrm{new}}(n)=a_n\ (n>0),\qquad
+X_c^{\mathrm{new}}(0)=m-\sum_{n=1}^L a_n.
+\tag{371.5}
+$$
+
+It is nonnegative and has the same owning mass. Every other cell of this schedule keeps its old mass $m$, and all other schedules are unchanged. Thus every schedule budget remains exactly the same.
+
+Put $\delta_n=X_c(n)-a_n\ge0$. At a visiting zero word with first zero $n$, the new correct entry satisfies its literal demand by (371.3). The base gain and the actual union gain are respectively
+
+$$
+p_w^{\mathrm{new}}(0)-p_w(0)=\sum_{j=1}^L\delta_j,\qquad
+\bigl(p_w^{\mathrm{new}}(0)+p_w^{\mathrm{new}}(n)\bigr)
+ -\bigl(p_w(0)+p_w(n)\bigr)
+ =\sum_{j\ne n}\delta_j\ge0.
+\tag{371.6}
+$$
+
+Therefore the base and independently imposed union demands remain satisfied. The positive word, if it visits $c$, only gains base mass. Words not visiting $c$ do not change. This proves feasibility after each update without deducing the union row from singleton estimates. It also proves all claimed monotonicities, including with negative demands and at equality.
+
+If $a_n>0$, the finite maximum in (371.3) is attained by a word $w$ with $n(w)=n$, since its zero option cannot attain a positive value. Immediately after this update,
+
+$$
+p_w^{\mathrm{new}}(n)=k_w(n)+a_n=d_C(w).
+\tag{371.7}
+$$
+
+Every subsequent cell update weakly decreases this word's nonbase coordinate and preserves its lower bound $d_C(w)$. A quantity already equal to that bound cannot decrease further while remaining feasible. It therefore stays equal through every later update. The processed cell is never changed again, so any positive entry retained in it has the same witness in the final allocation. Apply this argument to each processed cell. This proves (371.2) after one pass.
+
+For $L=0$ there are no nonbase entries; the only cell is the empty base vector and the assertion is immediate. At $M=0$ all cell vectors vanish; feasibility and the same formulas give the zero allocation without division. Zero-mass schedules, absent first-zero classes within a cell, multiple-zero words and closed ties are all covered. The proof uses only each cell's visiting set and common owning mass, so it applies to both complete catalogs. $\square$
+

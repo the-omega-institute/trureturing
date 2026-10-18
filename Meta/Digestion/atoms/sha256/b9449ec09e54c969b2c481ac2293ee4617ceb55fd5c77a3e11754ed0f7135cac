@@ -1,0 +1,28 @@
+**Theorem 6.2 (selected obstruction and full-image distinction).** A
+productive outcome of Theorem 4.1 rules out any uniform finite-new-read
+controller for the entire full-row task on $D$ under Assumption 6.1.
+A negative outcome for a selected $B$ does not by itself establish
+whole-row determination: it excludes only simultaneous representation
+of those labels at one prefix.
+
+Proof. A productive tuple includes two different full rows at every
+original prefix depth. Therefore no finite depth determines $R_Q$ on
+$D$. The exact operational equivalence [ARH, (2.3)][ARH] applies to
+this entire signed domain: common complete state, source-totality,
+four-valued replies and original-prefix locality are its hypotheses.
+The locality supplier includes born and absent physical addresses.
+It allows arbitrary finite words and reply-dependent forward updates;
+it does not need a rank observation. A uniformly raw-bounded serial
+controller would give a finite determining original prefix, contrary
+to the witnesses. This proves the obstruction for every allowed
+controller. In particular Theorem 5.3 obstructs uniform recovery on
+its entire mixed-source domain, not just on the two displayed samples.
+
+For the distinction, let $B$ have three labels. The statement
+$\neg J_B(H)$ merely says that no prefix cylinder meets all three
+strata. A cylinder meeting two distinct row strata still violates
+determination. For two selected labels, their exclusion need not
+exclude pairs involving any unselected attained label. Thus full
+determination requires all distinct pairs of the whole attained image,
+not an inference from a selected multirow negative. $\square$
+

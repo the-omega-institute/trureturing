@@ -1,0 +1,69 @@
+**Theorem 3.2 (fixed sets, multiplicity bounds and minimization).** Assume
+$A$ is finite and nonempty. For a nonempty subset $B\subseteq A$, use $J_B(h)$
+for (SJM.12) with exactly those labels. Each fixed $J_B(h)$ is decidable, and
+
+$$
+\begin{aligned}
+m_h<k
+&\Longleftrightarrow
+ \forall B\subseteq A,\ |B|=k\Longrightarrow\neg J_B(h),\\
+M(D,Q)<k
+&\Longleftrightarrow
+ \forall B\subseteq A,\ |B|=k\Longrightarrow
+       \exists H_B\ \neg J_B(H_B),\\
+M(D,Q)
+&=\max\{|B|:\varnothing\ne B\subseteq A,\ \forall h\ J_B(h)\}.
+\end{aligned}
+\tag{SJM.36}
+$$
+
+The first two lines hold for $1\le k\le |A|+1$, with a vacuous family when
+$k>|A|$. A fixed $k$-set's exclusion says only that this set does not jointly
+occur at that depth. Excluding **every** $k$-set gives $m_h<k$.
+Full unassisted determination is the special case $k=2$: it is equivalent to
+some depth excluding every distinct row pair, and hence to $M=1$.
+
+*Proof.* For fixed $B,h$, apply NSF Lemma 5.1 and Theorem 5.2 to $|B|$
+independent whole-source variables. Each copy satisfies all of (SJM.6) and its
+specified complete target row; impose identical four-valued replies at every
+word $|w|\le h$. All epochs, words, cuts and row constants are finite supplied
+values. YES produces each original finite source, including all signed guards
+and off-task constraints. The query is exactly $J_B(h)$ in both directions.
+
+At depth $h$, $J_B(h)$ holds exactly when some attained prefix has
+$B\subseteq S_h(p)$, proving the first line. Each $J_B$ is downward closed in
+$h$. If all $k$-sets have failed depths, take their finite maximum (zero for
+an empty family); every such set still fails there, so $m_h<k$ and $M<k$.
+Conversely, a depth with $m_h<k$ excludes each $k$-set. This proves the second
+line without confusing multiplicity with uniqueness.
+
+A persistent $k$-set gives $m_h\ge k$ for all $h$, hence $M\ge k$.
+Conversely, if $M\ge k$, at every $h$ some $k$-set has contact. Finitely many
+$k$-sets are available, so one occurs at arbitrarily large depths; downward
+closure makes that same set persistent at every depth. At least one singleton
+is persistent, and no set has size larger than $|A|$. This proves the maximum
+formula and also covers $k=1$, where contact of each attained singleton is
+always true. Taking $k=2$ gives the stated unassisted determination criterion.
+
+Thus a minimizing depth $h_*$ is certified by an upper bound $m_{h_*}=m$
+and a persistent $m$-set, not by exclusion of one set or by a temporary plateau.
+If a terminating all-depth chooser for every fixed $B$ were supplied, finitely
+many calls would find the largest persistent size $m$ and exclusion depths for
+all $(m+1)$-sets. Their maximum yields $m_h\le m$; the persistent set gives
+the matching lower bound. When $m=|A|$, there are no larger sets and $h=0$
+suffices. The rank encoder then follows from Theorem 2.2.
+
+No such complete all-depth chooser or general minimizing-depth synthesis is
+supplied here. Fixed-depth decisions and a supplied productive mechanism do
+not prove that arbitrary contacts have a finitely recognizable persistent
+case. Deciding a fixed set's persistence is a sufficient route to the global
+optimizer, not a claim that every optimizer must decide every fixed set.
+The unsupplied all-depth/finite-realization boundary is consistent with
+[NPL, §10][NPL] and [ARH, Definition 9.1][ARH]; neither reference proves the
+multi-label synthesis now required. No undecidability claim follows. $\square$
+
+An observed plateau of the computable values $m_h$, finitely many tests, or a
+valid supplied guarded certificate at a prescribed budget does not prove that
+no later depth lowers the value. The complete-handoff premise and the finite
+realization of every positive witness remain required at every finite stage.
+

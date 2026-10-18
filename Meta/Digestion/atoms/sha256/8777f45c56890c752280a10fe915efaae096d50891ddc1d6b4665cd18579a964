@@ -1,0 +1,11 @@
+**假设 1.3（同一个历史的联合实现）。** 复用 [S1，约定1.3、式 (1.6)；S15，式 (1.1)]。对任意 $(v,\theta,s)\in\mathbb F_2\times P\times\{0,\ldots,k-1\}$，可选
+
+$$
+N\equiv0\pmod m,\quad N\equiv\theta\pmod T,\quad N\ge s+2,
+\qquad D=\bigoplus_{i=N-s}^{N-1}c_i,
+\qquad w=(v\oplus D)0^{N-s-1}1^s.
+\tag{1.3}
+$$
+
+首因子是一个实际位。中间至少一个零隔开首位与终端一串；终端一串长 $s<k$，所以整个词合法且能切成完整合法块。其首位贡献 $v\oplus D$、终端贡献 $D$，故同一词同时实现值 $v$、相位 $\theta$ 与尾 $s$。不同相位的见证可以不同长；未知 $N$ 不交给控制器。本文下界中的每对来源以及上界中的每条执行都取自这种实际历史，包含两个免费值和最大 INITIAL 尾。
+

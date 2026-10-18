@@ -1,0 +1,12 @@
+**Definition 4.1 (complete-interval extraction).** On a finite ordered
+record of actual native primitives, select a witnessed $E_0$ handoff and
+its subsequent $E_1$ in the same uninterrupted stage region of Lemma 3.2.
+Require a record of every intervening row, with the actual physical
+code/PC/phase and OUT correspondence. Select all releases at its specific
+stage-0 print site. Apply only the existing seven-field wrapper and binding
+interpretation; require its kind0100, stage0, S tag00, fixed service/source
+and target tally $k=N$. If a boundary, row, field check or output is absent,
+this extraction has no success value. This is a mathematical selection
+from existing occurrences and existing syntax, not a new source parser
+or a permission to fetch producer-owned material.
+

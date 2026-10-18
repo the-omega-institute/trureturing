@@ -1,0 +1,81 @@
+**Theorem 7.2 (Observer-uniform fixed-budget eleventh-power converse).** Keep the exact fixed $H_c$, the source premises and the observation contract. For every fixed integer $M\ge2$ and $0<\alpha<1/2$, there exist $c(M,H_c,\alpha)>0$ and $s_0(M,H_c,\alpha)>0$ such that
+
+$$
+\begin{gathered}
+\forall s\in(0,s_0)\ \forall\mathcal A\in
+ \mathfrak A_M(e^{-s},\alpha)\ \forall i\in\{0,1\}:\\
+\mathbb E_{i,e^{-s}}^{\mathcal A}T\ge c\,s^{-11}.
+\end{gathered}
+\tag{7.3}
+$$
+
+The constants are chosen before every machine and are independent of the true label and of the selected $q$ in this neighborhood. They permit arbitrary retuning across $q$.
+
+Proof. All choices below use only $M,H_c,\alpha$. Put
+
+$$
+\begin{aligned}
+b_\alpha&=1-2\alpha,
+&K_M&=2\cdot3^M,\\
+L&=\max\left\{1,\left\lceil\frac{8K_M\delta}{b_\alpha}\right\rceil\right\},
+&S_L&=\sum_{k=1}^Lk^9,
+&C_L&=\frac{4BS_L}{9!}.
+\end{aligned}
+\tag{7.4}
+$$
+
+These are finite and positive. With $x=K_M\delta/(L+1)$, the choice of $L$ gives $0\le x\le b_\alpha/8<1/2$. The elementary inequalities $\log(1+u)\le u$ and $e^x\le(1-x)^{-1}$ for $0\le x<1$ yield
+
+$$
+\chi_{M,L}
+\le e^x-1
+\le\frac{x}{1-x}
+\le2x
+\le\frac{b_\alpha}{4}.
+\tag{7.5}
+$$
+
+For completeness the exponential inequality follows by comparing the nonnegative series $\sum_{n\ge0}x^n/n!$ with $\sum_{n\ge0}x^n$. Thus (7.5) uses no transition-specific estimate.
+
+Choose $s_H>0$, depending only on the fixed source, so that the source moment estimates (2.8) give
+
+$$
+Z_0(e^{-s})\ge\frac{9!}{2}s^{-10},
+\qquad \mu_0(e^{-s})\ge\frac5s
+\quad(0<s<s_H).
+\tag{7.6}
+$$
+
+Because $Z_i\ge Z_0$, $F_i(k)\le Bk^9$ and $q^k\le1$, at $q=e^{-s}$ we have
+
+$$
+\pi_i(q,L)\le\frac{BS_L}{Z_0(q)}
+\le\frac{2BS_L}{9!}s^{10},
+\qquad \pi_0+\pi_1\le C_Ls^{10},
+\qquad r_H(e^{-s})\le\frac{2\delta}{5}s.
+\tag{7.7}
+$$
+
+Take
+
+$$
+s_0=\min\left\{s_H,1,\frac{5b_\alpha}{8\delta}\right\},
+\qquad c=\frac{b_\alpha}{2BC_L}
+=\frac{b_\alpha\,9!}{8B^2S_L}>0.
+\tag{7.8}
+$$
+
+For $0<s<s_0$, (7.5) and (7.7) each consume at most $b_\alpha/4$ of the decision separation. The per-target inequality (6.3), with the selected risks, therefore gives
+
+$$
+\frac{b_\alpha}{2}
+\le C_Ls^{10}\mathbb E_{i,e^{-s}}N
+\le BC_Ls^{10}(1-e^{-s})\mathbb E_{i,e^{-s}}T
+\le BC_Ls^{11}\mathbb E_{i,e^{-s}}T.
+\tag{7.9}
+$$
+
+Division proves (7.3) with (7.8), separately for both families. None of $L,C_L,c,s_0$ uses $A,C,\eta$, spectral projections, a transition lower bound or machine-description precision. Every comparison was at the fixed selected $q$; no derivative or limiting continuity of a retuned matrix enters. $\square$
+
+The two distinct relations in (5.7) explain the power. For the fixed cutoff $L$, clipping gives an $O_{H,L}(s^{10})$ additive change relative to the target, uniformly over observers, while its multiplicative change relative to the opponent has a fixed small hitting-probability effect controlled by the state budget. A fixed decision separation consequently requires order $s^{-10}$ live epochs under each target. Actual-read hazards price those epochs at a further order $s^{-1}$. Uniform additive $O(s^{10})$ closeness of the two original kernels is not a premise of this argument.
+

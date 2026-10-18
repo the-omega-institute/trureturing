@@ -1,0 +1,4 @@
+**定义 11.1（互易多重图与局部规范）。** 取有限无向多重图，允许自环、平行边和多个连通分量。每条无向边保留身份及两个形式方向 $e:v\to w$、$\bar e:w\to v$；自环的两个形式方向也各有身份。节点带已校准定向三维接口 $(V_v,g_v,C_v)$。运输 $U_e:V_v\to V_w$ 是正向等距，$U_{\bar e}=U_e^{-1}$。
+
+路径 $\gamma=e_1\cdots e_m$ 的运输为 $U_\gamma=U_{e_m}\cdots U_{e_1}$；空路径运输为单位。根闭走法的 holonomy 为 $H_\gamma=U_\gamma$。这消费 [递归全息边界几何](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) §§19–20 的互易运输和平坦接口；[Singer–Wu 注](../../../Library/Geometry/singerwu2011vectordiffusion.md) 供应正交边运输背景。裸 FIB 并不自动提供边矩阵。
+

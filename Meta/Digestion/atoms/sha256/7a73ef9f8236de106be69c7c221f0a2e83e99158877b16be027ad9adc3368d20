@@ -1,0 +1,20 @@
+**定义 8.4（公开的精确有限输入域）。** 对 $d=2,\ldots,10$，取全部 $d^3$ 个有序指标三元组，包括重复，和全部 $\binom d2$ 个 $J_{pq}$。固定空间约束是
+
+$$
+t_{ijk}=s_is_js_k\,t_{\pi(i)\pi(j)\pi(k)},
+$$
+
+其中 $J_{pq}e_i=s_i e_{\pi(i)}$。第二个有限域为所有 $\alpha,\beta$ 词的长度 $0,\ldots,8$，包括空词，共 $\sum_{n=0}^8 2^n=511$；按从左到右的乘法折叠 $Q(\varepsilon)=1$，$Q(w\ell)=Q(w)Q(\ell)$。逐字替换为 $\alpha\mapsto\beta$、$\beta\mapsto\beta\alpha$，替换后的词不限制回长度八，其长度最大十六。这些是词，不是所有有括号树。
+
+第三个有限域由以下十个整数四元数的全部有序三元组组成，允许重复，共 $10^3=1000$；全部有序二元组另外有一百个：
+
+$$
+\begin{aligned}
+\mathcal S=\{&(0,0,0,0),(1,0,0,0),(-1,0,0,0),\\
+&(0,1,0,0),(0,0,1,0),(0,0,0,1),\\
+&(1,1,0,0),(1,0,1,0),(1,0,0,1),(2,-1,3,-2)\}.
+\end{aligned}
+$$
+
+输入是明确重建的例子，不具有原始附件取回的来源声明。[精确程序](../../reports/fib-stable-relation-boundary/fib_stable_relation_boundary_certificate.py) 与 [确定性 JSON](../../reports/fib-stable-relation-boundary/fib_stable_relation_boundary_certificate.json) 保存完整四元数输入、全部词及替换像、每个三元组的公共乘积与范数、每个二元组的乘积与范数，以及每维生成元和完整不动基。该有限域的获取、表示与精度成本仍与数学约束的可判性分开。
+

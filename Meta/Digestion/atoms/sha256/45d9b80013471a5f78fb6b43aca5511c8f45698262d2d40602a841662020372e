@@ -1,0 +1,29 @@
+## 362. Reuse and the unresolved unrestricted obligations
+
+The scalar inequality behind (358.5) is classical hypermetric geometry. Deza and Dutour Sikirić, [*The hypermetric cone on 8 vertices and some generalizations*, arXiv:1503.04554v1, §1](https://arxiv.org/abs/1503.04554v1), use integer $b$ with $\sum b_i=1$ and $\sum_{i<j}b_ib_jd(i,j)\le0$, including the odd-gonal specializations. Here $d(i,j)=|w_i-w_j|$ is a cut metric. For alternating signs, the linear orientation correction cancels, so its evaluation is twice (358.5). The proof above explicitly gives this specialization; no cut-facet classification, completeness of odd lists, or acquisition theorem is assumed from the literature. The consecutive-integer product argument also occurs in IX 207.10.
+
+The complete $N$ inverse, the stopped inverse and original transport are XIX 341.2 and 109.1–110.2. The original seed/finite-record interface is Source-Correlated Laws 45.1–45.3, and complete-table coupling is II 140.2–140.3. T is XX 351.1; length-three lists and the earlier outward-star mechanism of XV 258.3–258.4 keep their prior scopes. P is XX 352.1. The normalized H7 classification of XIX 344–345 remains a mass-one result and is not transported by affine division. The seven-coordinate unrestricted optimum is precisely the supplier XIX 346.1. The additional conclusions here are the labelled odd-list replacement with its funded aggregate, strictness for every T representation of one whole kernel, and the sharp one-global-partition exclusion with its chain and stability consequences. Neither the scalar cut inequality, the inverses nor the already attained profiles acquire new-result credit. No global priority or exhaustive classification is asserted.
+
+The original universal score obligation remains: for every finite horizon in its original domain and every full nonnegative score $y$ with $\Delta_O(y)=1$, find one unrestricted full $V\ge0$ and the **same** $\theta\in[0,1]$ jointly satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}\bigl(Q(y)-Q(V)\bigr)\le\theta,
+\tag{362.1}
+$$
+
+where $\Delta_N$ is the full preselected support excess, and $\sigma_{H_L}(q)=\max_{(b,e)\in H_L}F_q(b,e)$ uses the unchanged hull of IX 207.3:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+\tag{362.2}
+$$
+
+The residual in (362.1) is signed, and a nonzero zero-cost $V$ at $\theta=1$ is admissible. Theorem 358.2 assumes a suitably funded and decomposable representative; it does not select such a representative or a pair $(V,\theta)$ for every required score. Theorem 361.1 bounds one fixed-partition subclass, while unrestricted $O$ already attains its profile at a smaller cap. Thus neither theorem supplies the alternative complete original $N$ attainer with a uniform strict lower against **all** original arbitrary-address, full-carrier $O$ rules.
+
+The original nonatomic target and complete paid M1 acquisition obligations remain unresolved here. Indeed every constructed marked preparation has finite support, which has zero mass under an unchanged nonatomic target, so its TV distance from that target is one. The selected-law conclusions neither assert a physical acquisition realization nor change the source, the common-seed contract or the original cost model.
+

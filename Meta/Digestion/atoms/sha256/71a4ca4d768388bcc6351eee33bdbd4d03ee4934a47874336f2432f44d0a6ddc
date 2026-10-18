@@ -1,0 +1,12 @@
+### 层 3：纤维层
+
+隐藏环流 $\kappa_q$ 是否位于其 Fréchet 区间：
+
+$$
+\kappa_{q,-}
+\le
+\kappa_q
+\le
+\kappa_{q,+}.
+$$
+

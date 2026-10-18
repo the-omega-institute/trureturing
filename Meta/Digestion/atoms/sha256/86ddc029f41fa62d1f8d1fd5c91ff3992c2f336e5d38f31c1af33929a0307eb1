@@ -1,0 +1,22 @@
+**Definition 3.3 (finite chart routing at a fixed epoch).** Fix an actual
+epoch numeral $n$. Normalize $\rho^n(F_\eta)$, expanding ground
+parts completely and leaving each residual occurrence as a port
+$\rho^{n+e}(y)$. The finite full constructor template has explicit
+internal nodes, ground leaves, and port leaves. Its physical words
+are partitioned into finitely many kinds:
+
+- A word exactly equal to an explicit internal-node address or to
+  a ground-leaf address; its reply is the known branch or leaf.
+- A strict descendant of a ground-leaf address; its reply is absent.
+- A word $p=h z$ at a port address $h$ labelled
+  $\rho^{n+e}(y)$; its reply is
+  $\mathsf{Rep}_{n+e,c}(X_y,z)$.
+
+The first two kinds are fixed-word or finite-cone conditions.
+Their replies include all ground births because ground parts were
+expanded at $n$. The port addresses are prefix-free within one
+template, so the kinds are exhaustive and disjoint. Port copies
+use the same coordinate but can have different $h,e$.
+No assertion that the partition is the same in different charts
+is made.
+

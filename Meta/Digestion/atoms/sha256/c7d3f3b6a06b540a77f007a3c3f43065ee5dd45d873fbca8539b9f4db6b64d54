@@ -1,0 +1,43 @@
+**Theorem 15.1 (merge defect, including zero cases).** At one fixed
+original direction $h$, let a pure endpoint have coefficient mass
+$a_p\ge0$ and a saturated endpoint have mass $a_s\ge0$. Put
+$H_p=\ell(h)$ and $H_s=\ell(h)+t\mathfrak c(h)f(h)$.
+If $a_p+a_s>0$, replacing the pair by the single original atom
+$$
+p=a_p+a_s,\qquad \xi=\frac{a_s}{a_p+a_s},\qquad
+b=t\mathfrak c(h)\xi
+\tag{GC.66}
+$$
+preserves complete live and failure moments, normalization and
+contrast. Its low-height loss and actual TV loss are respectively
+$$
+\begin{aligned}
+D_{\rm low}
+ &=a_p|H_p|+a_s|H_s|-|a_pH_p+a_sH_s|,\\
+D_{\rm TV}&=D_{\rm low}/2.
+\end{aligned}
+\tag{GC.67}
+$$
+If both masses are positive, the loss is zero exactly when
+$H_pH_s\ge0$, and when $H_pH_s<0$ it is
+$$
+D_{\rm low}=2\min\{a_p|H_p|,a_s|H_s|\},\qquad
+D_{\rm TV}=\min\{a_p|H_p|,a_s|H_s|\}.
+\tag{GC.68}
+$$
+If either mass is zero the loss is zero irrespective of the two
+height signs; if both vanish the label is omitted.
+
+Proof. The live contribution is $(a_p+a_s)hh^T$ both before and
+after merging. The failure contribution is
+$a_st\mathfrak c(h)n_hn_h^T$ in both cases. The contrast contribution
+is $(a_p+a_s)|u|$, and (GC.66) lies in the allowed capacity interval.
+The merged signed height is $a_pH_p+a_sH_s$, which proves (GC.67).
+For two nonzero real numbers, equality in the triangle inequality
+holds exactly when they have the same sign; if one is zero equality
+also holds. With positive masses these are precisely $H_pH_s\ge0$.
+For opposite signs put $A=a_p|H_p|$, $B=a_s|H_s|$; then
+$A+B-|A-B|=2\min(A,B)$. Zero masses and zero heights give the
+stated cases directly. The high contribution stays fixed, so HALF
+gives the actual TV formulas. $\square$
+

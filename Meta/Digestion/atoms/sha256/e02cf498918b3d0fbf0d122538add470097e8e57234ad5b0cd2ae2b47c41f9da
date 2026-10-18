@@ -1,0 +1,56 @@
+**Proposition 17.3 (Full-support degeneration and inefficient vacuum anchoring).**
+On $P_3$ with the cut after site 2, choose
+$(\lambda_1,\lambda_2,\lambda_3)=(1,t^2,t)$,
+$t>0$, and $\chi(S)=(-1)^{s_1s_3}$. Then
+
+$$
+Z=t^2+2t+2,\quad
+\alpha=2/Z,\quad\beta=2t/Z,\quad\zeta=t^2/Z,
+\tag{17.13}
+$$
+
+and the exact orbit quantities are
+
+$$
+\Delta_2=2\alpha\beta,\qquad
+\delta_{\rm local}
+=2\left(\alpha+\beta-\sqrt{\alpha^2+\beta^2}\right),
+\qquad W=4t/Z.
+\tag{17.14}
+$$
+
+Every finite $t$ has full legal support, but
+
+$$
+\frac{\Delta_2}{\delta_{\rm local}}
+=\frac{\alpha+\beta+\sqrt{\alpha^2+\beta^2}}2
+\sim s_-\sim\frac2t\longrightarrow0,
+\qquad
+\frac{W}{\delta_{\rm local}}\sim t.
+\tag{17.15}
+$$
+
+Proof. The only nontrivial rectangle uses the two $L_0$
+rows and the two right words, giving $\Delta_2=8t/Z^2$.
+For the exact gauge optimization choose the relative column
+phase $e^{i\varphi}$. Optimizing each row phase separately
+gives overlap
+
+$$
+\zeta+\frac{|1+te^{i\varphi}|+|1-te^{i\varphi}|}{Z}.
+\tag{17.16}
+$$
+
+The sum is at most $2\sqrt{1+t^2}$ by the scalar
+Cauchy inequality, attained when $\cos\varphi=0$.
+The orbit distance is twice one minus the maximal overlap,
+which gives (17.14). The vacuum gauge differs only on
+$101$, proving the formula for $W$. Rationalizing the
+distance proves (17.15). Also
+$\Delta_2=2W/Z$ exactly. $\square$
+
+Thus activity or cut-spectrum degeneration cannot be removed
+from every positive lower comparison. The canonical vacuum
+bound can be attained even when its chosen gauge is
+arbitrarily worse than the closest diagonal local gauge.
+

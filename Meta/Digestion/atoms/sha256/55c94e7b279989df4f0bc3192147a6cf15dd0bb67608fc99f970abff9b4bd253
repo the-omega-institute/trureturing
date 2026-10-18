@@ -1,0 +1,19 @@
+**定义 13.4（互素双因子、原边与好边偏移）。** 固定互素整数 $p,q\ge2$，$m=pq$，顶点 $s,v$，端口 $d_s=p,d_v=m$。整个有限原边集可含任意方向的平行边和自环；每条原边都是
+
+$$
+T_e(x)=p b_e x+c_e\pmod m,\qquad
+b_e\in\mathbb N,\quad c_e\in\mathbb Z/m\mathbb Z.
+\tag{13.11}
+$$
+
+所有边在其声明源顶点的全部相位上合法。好到达边和不同偏移数为
+
+$$
+G=\{e:s\to v:\gcd(b_e,q)=1\},\qquad
+H=\{c_e\bmod p:e\in G\},\qquad
+h=|H|\ge1,\qquad g=\lceil p/h\rceil.
+\tag{13.12}
+$$
+
+$p,q$不必是素数，偏移任意公开，$1\le h\le p$。$G$只用于成功证书，没有从合法动作集删去任何 $\gcd(b_e,q)>1$ 或零边；其它方向的边也不受非零或单位条件限制。根全路径模数 $D_s=m$：根空路径贡献 $p$，任一 $G$ 边贡献 $m/\gcd(m,pb_e)=q$，所有贡献均整除 $m$。目标是初始 $t\bmod m$ 的全部 $m$ 个字面值，来源未缩到某个端口纤维。
+

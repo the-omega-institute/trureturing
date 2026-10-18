@@ -1,0 +1,58 @@
+### 定义 50.1（固定模式的三点统计）
+
+令 \(x(n)=\mathbf 1_{\mathbb P}(n)\)，取固定模式
+
+\[
+H=\{0,h_1,h_2\},
+\qquad
+t_H(n)=\prod_{h\in H}x(n+h),
+\qquad
+T_H(N)=\sum_{n\le N}t_H(n).
+\]
+
+当 \(T_H(N)>0\) 时，对模数 \(q\) 定义可容许起点集合
+
+\[
+A_H(q)=
+\left\{a\bmod q:
+\gcd\!\left(\prod_{h\in H}(a+h),q\right)=1
+\right\}.
+\]
+
+经验条件分布和均匀可容许基准分别为
+
+\[
+\mu_{H,q}^{N}(a)
+=
+\frac1{T_H(N)}
+\sum_{n\le N}t_H(n)\mathbf 1_{n\equiv a\pmod q},
+\]
+
+\[
+\lambda_{H,q}(a)
+=
+\frac{\mathbf 1_{a\in A_H(q)}}{|A_H(q)|}.
+\]
+
+取 \(\epsilon>0\)，定义局部缺陷能量
+
+\[
+D_{H,q}^{2}(N)
+=
+\sum_{a\bmod q}
+\frac{\bigl(\mu_{H,q}^{N}(a)-\lambda_{H,q}(a)\bigr)^2}
+{\lambda_{H,q}(a)+\epsilon}.
+\tag{50.1}
+\]
+
+对 \(q\le Q\) 和非负权 \(w_q\)，定义算术场能量
+
+\[
+\mathscr E_{\rm sieve}^{Q}(H,N)
+=
+\sum_{q\le Q}w_qD_{H,q}^{2}(N)\ge0.
+\tag{50.2}
+\]
+
+它测量真实三点起点在局部模可容许场中的偏离，不是物理能量。
+

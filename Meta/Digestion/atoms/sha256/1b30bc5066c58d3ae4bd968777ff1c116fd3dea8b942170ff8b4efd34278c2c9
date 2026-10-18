@@ -1,0 +1,30 @@
+**Definition 1.3 (Admissible acquisition).** Retain [Original, Definition
+9.1][Original] and [Paid-return, Definition 1.2][Paid-return]. Fix an arbitrary probability space
+$(\mathsf U,\mathcal U,\nu)$ independent of the entire $J_p$ source.
+All auxiliary and random public data are included in the same variable
+$u$ with exactly this unchanged law. The next event is a measurable
+function only of the fixed public data, $u$, and the finite ordered
+acquired record
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))
+\in(\mathbb Z\times\{0,1\})^n.
+\tag{1.3}
+$$
+
+Its type is a read at an integer address, a finite return of a state in
+$\mathcal A=\{a_0,a_1,b_0,b_1\}$, or indefinite internal continuation
+without further read or return. A finite event may follow internal
+waiting; its occurrence, kind, address or output, and finite waiting time
+are measurable functions of precisely those available data. Thus timing
+supplies no additional source observation. A requested address $t$ returns
+only the actual $X_t$ of (1.1).
+
+Every read occurrence costs one, including repetitions, separator zeros,
+negative or positive addresses, remote addresses, and disconnected sets.
+No phase, spin, half-line or tail observation, reset, law switch,
+source-dependent seed or timing, moving endpoint, erased-coordinate
+substitution, or extra random coin is available. A return before reading
+and an output state from the wrong phase are both permitted. Null records
+and the usual measurable completion versions are included.
+

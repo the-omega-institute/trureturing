@@ -1,0 +1,46 @@
+**定理 7.4.2（商模型的存在与精确复现）。** 在 $\mathcal Z$ 上定义
+
+$$
+\bar A[x]=[Ax],
+\qquad
+\bar B u=[Bu],
+\qquad
+\bar C[x]=Cx,
+$$
+
+其中 $[x]$ 表示 $x$ 在 $\mathcal Z$ 中的等价类。则这些定义良定，并且对任意允许输入词，商模型产生与原模型完全相同的读出词。
+
+**证明。**
+
+若 $[x]=[x']$，则 $x-x'\in\mathcal R\cap\mathcal N$。由引理 7.4.1，
+
+$$
+A(x-x')\in\mathcal R\cap\mathcal N,
+$$
+
+所以 $\bar A$ 良定。$\bar B$ 的像落在 $\mathcal R$，故良定。
+
+又因为 $\mathcal N\subseteq\ker C$，若 $x-x'\in\mathcal R\cap\mathcal N$，则
+
+$$
+Cx=Cx',
+$$
+
+故 $\bar C$ 良定。
+
+原系统状态递推逐步取商，得到
+
+$$
+[x_{t+1}]
+=
+\bar A[x_t]+\bar B u_t,
+\qquad
+y_t=\bar C[x_t].
+$$
+
+归纳可知每一步读出相同。证毕。
+
+这一定理说明「删掉因果沉默方向」不是近似，而是在声明的接口上保持全部响应的精确替换。
+
+<a id="section-7-5"></a>
+

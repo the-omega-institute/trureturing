@@ -1,0 +1,25 @@
+## 168. No axial-Z owner has pair {M,D}
+
+Suppose an owner has an axial Z slot, angle theta, and fixed pair {M,D},
+with transverse M angle beta. It is genuine. The exact response gives
+
+ beta=atan(lambda_plus*t)+atan(lambda_minus*t), t=cot(theta/2)>0,
+ lambda_plus/minus=[sqrt(m^2-1) +/- sqrt(d^2-1)]/(m+d)
+                          *sqrt((z-1)/(z+1)).
+
+Both lambda parameters are positive. From d<m-2 and z>m+2,
+
+ (lambda_plus+lambda_minus)^2
+   =4(m^2-1)/(m+d)^2 * (z-1)/(z+1)
+   >(m+1)^2/((m-1)(m+3))>1,
+
+where (m+1)^2-(m-1)(m+3)=4.
+If A,B,t>0 and A+B>1, then atan(At)+atan(Bt)>atan(t):
+when the left sum is at least pi/2 this is immediate; otherwise its
+tangent is (A+B)t/(1-ABt^2)>t, with positive denominator.
+Therefore beta>(pi-theta)/2 and theta+2 beta>pi.
+The owner differs from tau and rho because its fixed pair differs from
+both. Its actual M/Z contribution is at least theta+2 beta; any further
+M/Z axis slots only increase this. Together with tau and rho it would
+exceed 3*pi. Thus this owner cannot exist.
+

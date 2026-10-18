@@ -1,0 +1,11 @@
+**定义 40.1（任意父数据的第六 J 方向类）。** 沿用定义 1.1 的严格合法完整世界及定义 9.1 的失败递归。对任意实数 $z,Y,p,v$，置
+
+$$
+H_{6MJ}=(0,J,24,M,48,J,z,M,Y,M,p,J,v),
+\qquad
+\mathcal C_h(z,Y,p,v)=\mathcal K_h(z,Y,p)\cap\mathcal F(H_{6MJ}),
+\tag{40.1}
+$$
+
+其中 $0\ne h\in\mathbb R[X],\deg h\le3$，$\mathcal K_h$ 如式 (31.1)。不采用式 (1.3) 的窗口。整个增益 $g=\lambda h$ 的尺度 $\lambda\ne0$ 可正可负；每个世界各有自己的源和漂移。所有采样零、降次、重复增益根及严格合法的对称源均保留。
+

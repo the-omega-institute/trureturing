@@ -1,0 +1,28 @@
+**Definition 12.2 (finite falsification targets).** A finite receiver
+model can enumerate $\mathcal D_{H,J}$ and interrupt the specified
+routines before and after each pending write, inactive-bank copy bit,
+carry bit, selector change, head move, reset write, delimiter and
+materialization step. Its assertions are equality of (9.1) with the
+actual arrival trace, equality of (8.4) with the whole word at issue,
+and absence of a source issue before material seal on an initialized
+execution. Empty words, $H=0,J=0$, counts on both sides of $H$, and
+all-ones counts immediately before a carry are mandatory instances.
+Malformed range descriptors must select root; malformed response masks
+must not reissue. Each of four Read replies and the sole Update reply
+must set just its own zero flag, even if other scratch is malformed.
+Writes addressed to the immutable tail must preserve every tail cell
+regardless of control.
+
+Such a receiver/string model does not execute a complete graph
+interpreter, prove supplier parity, or exhaust (10.1)'s complete state
+set. A further falsifiable full realization question is whether a
+bit-level interpreter with exactly the inventory in Construction 10.1
+realizes the stated routines and simulation on arbitrary parameter
+instances without an extra persistent field. Its proof obligation is
+the specified total transition refinement and allocation, rather than
+finite agreement of final XOR alone. The ordinary construction and
+proofs above do not claim that such a compiled interpreter has been
+produced or kernel checked.
+
+[LZSPACE]: https://arxiv.org/html/1802.10347
+

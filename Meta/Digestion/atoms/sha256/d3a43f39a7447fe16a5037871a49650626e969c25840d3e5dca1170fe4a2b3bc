@@ -1,0 +1,17 @@
+**Proposition 4.2 (what every dual certifies).** For any dual-feasible
+$y$ and any correct original preparation and one-Read reader,
+
+$$
+|E[\mathcal F_D]|\ge\sum_{x\in S_D}y_x.
+\tag{FMR.18}
+$$
+
+Proof. On the canonical actual sources, every nonempty restricted
+code fiber is in $\mathcal H_D$ by Theorem 2.5. Its dual mass is at
+most one. These same fibers partition $S_D$, so their number is at
+least the total mass. Their number is no larger than the complete
+attained original alphabet. The argument permits arbitrary correlations,
+off-target or arbitrarily long words, and zero-Read branches, since
+their native reduction was proved before forming $\mathcal H_D$.
+$\square$
+

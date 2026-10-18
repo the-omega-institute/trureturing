@@ -1,0 +1,13 @@
+**Convention 6.4 (precise incompleteness boundary).** All-low certificates
+include strict rational COK caps with an unused $\delta$. A positive
+swap correction gives a smaller bound than a supplied $c_1$ only with
+the stated high-star coverage and a sufficiently smaller $c_0$. This
+does not imply an improvement over the optimized COK envelope. No
+coverage theorem for near-optimizing weights or kernels is asserted.
+The finite outer list can reject a cap because of a pattern that has no
+positive global realization; accepting it nevertheless is sound.
+[NWO, Theorem 7.2][NWO] supplies strict optimized rational caps for
+the all-low COK subfamily, as specified in §9. It does not establish
+approximation retaining a nonzero swap correction, completion of
+zero-defect residues or native optimizer-cofinality.
+

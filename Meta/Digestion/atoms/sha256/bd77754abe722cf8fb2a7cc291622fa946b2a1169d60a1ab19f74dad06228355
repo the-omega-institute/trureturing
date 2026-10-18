@@ -1,0 +1,36 @@
+**Definition 260.2 (The unchanged full one-budget alternative).**
+For every $L\ge3$ and every actual full $y\ge0$ with
+$\Delta_O(y)\le1$, the positive alternative asks for one
+unrestricted full $V\ge0$ and one $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Q(y)-Q(V))\le\theta.
+\tag{260.1}
+$$
+
+The score $V$ may change every coordinate; the residual is signed.
+At $\theta=1$, nonzero zero-cost scores are allowed.
+There is no fixed-law, anchor, unary, quotient, schedule-graph,
+canonical-table, positive-residual or separately funded component
+restriction. By the full alternative of Theorem 199.3, its negative
+route requires the same actual $b\in H_N$, one full feasible
+$\lambda\ge0$ with $G_N\lambda\ge h(b)$, mass $M\ge1$,
+and an actual full unit-$O$ score with the strict inequality
+$F_y(b)>M$, together with the original source transport.
+
+The relation (260.1) for every input remains unresolved here.
+The estimates (253.3), (254.7) and (255.4) retain positive score
+allowances; (253.5) computes an unpaid signed residual for one
+particular score construction. The regional exact law in Section
+257 excludes a separator on its own family, and the mixed cut
+excludes some infeasible profiles. The event identity in Section
+258 is exact for a fixed repair, and Section 259 distinguishes
+its affordability from scalar summaries. None of these statements
+proves the universal full-budget inclusion or constructs the required
+same-feasible-profile separator. Equivalently, the original
+all-sequence positive-closed-cap implication
+$\mathcal F_N(a,e)\ne\varnothing\Rightarrow
+\mathcal F_N(a,e)\cap\mathscr C_L\ne\varnothing$
+retains its original quantifiers.
+

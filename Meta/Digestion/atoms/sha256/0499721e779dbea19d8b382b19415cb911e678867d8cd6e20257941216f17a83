@@ -1,0 +1,23 @@
+**Definition 1.3 (prescribed budgets and relaxed finite obstructions).**
+For integers $K,A\ge0$, let $\operatorname{Win}_D(K,A)$ mean that a
+service meets $q_B(u)\le K$ and $a_B(u)\le A$ for every $u\in D$.
+There is no literal-address-length bound in this predicate.
+
+For a finite $S\subseteq D$, define $\operatorname{Win}_S(K,A)$ using
+the same physical entry epoch, actions, common retained input and full
+original target, but requiring correctness and budgets only on $S$.
+The competing program may be designed using the complete finite list
+$S$, hard-coded as common mathematical data. It still receives no actual
+source index, membership answer or extra runtime observation. This is a
+relaxation of the whole-domain comparison problem, not a new acquisition
+claim for $S$. A finite obstruction is a finite $S\subseteq D$ for which
+$\operatorname{Win}_S(K,A)$ is false.
+
+For use with weighted path constraints, let
+$\mathcal B\subseteq\{0,\ldots,K\}\times\{0,\ldots,A\}$ be a supplied
+finite downward-closed set. Write $\operatorname{Win}_D(\mathcal B)$
+when $(q_B(u),a_B(u))\in\mathcal B$ on every source. This includes a
+rectangle and its intersection with
+$\lambda_q q+\lambda_a a\le T$ for nonnegative weights. Downward closure
+is essential when deleting uninformative actions.
+

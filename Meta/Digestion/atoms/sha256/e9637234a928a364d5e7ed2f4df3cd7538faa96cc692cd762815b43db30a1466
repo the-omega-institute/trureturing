@@ -1,0 +1,18 @@
+**Theorem 2.7 (Inherited uniform lower gap).** The finite minima
+$d_{N,m}$ exist, are nondecreasing in $m$, and tend to one. Therefore
+$M_O$ is finite and $\Gamma(n,Z)>0$ for $0<Z<2/3$. For every
+allowed preparation and every literal model of stored dimension at
+most $n$,
+
+$$
+\operatorname{err}(E,\mathcal D)^2\ge4ZH+\Gamma(n,Z).
+$$
+
+The bound holds on each stronger class by inclusion. The quantities
+are precisely [O, Lemma 11.2 and §§11.3–11.4], and the uniform
+model quantifiers are [O, Theorem 11.1]. Its $n$ is a real stored
+coordinate budget, $N=n+1$ includes the affine constant, and its
+$\Gamma$ is in original squared-error units. A feasible finite Hankel
+prefix need not have a native realization. No evaluation of its least
+index or of these finite minima is supplied here. $\square$
+

@@ -1,0 +1,20 @@
+**Definition 1.5 (two relations).** For row-valid $b$ put
+
+$$
+H_b(u,n)\ \Longleftrightarrow\ R_P(\rho^n u)=(C,\pi),\qquad
+E_b(u,n)\ \Longleftrightarrow\ \mathcal O_A(\rho^n u)=b.
+\tag{NRF.5}
+$$
+
+For non-row-valid data both are false; for row-valid but
+non-selection-valid data $E_b$ is false. Always $E_b\subseteq H_b$.
+Neither definition supplies an epoch to the observer.
+
+The supplied row-only result [NUE, Theorem 2.2][NUE] preserves each
+original $u$ when reducing equality to a fixed row. The signed results
+[NCE, Theorems 4.2 and 5.1][NCE] instead give exact existential epoch
+support and may replace source witnesses. The fixed-numeral feasibility
+interface [NSF, Theorem 5.2][NSF] does not itself include arbitrary
+regular selector guards. The extra condition and its effective
+all-source treatment are the subject here.
+

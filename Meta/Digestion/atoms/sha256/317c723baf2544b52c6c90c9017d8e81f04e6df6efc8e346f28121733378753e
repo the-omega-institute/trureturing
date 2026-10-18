@@ -1,0 +1,38 @@
+**Theorem 68.5 (Exact stable-fiber cap criterion within the supplied range).** For a range $\mathcal R$ supplied by Definition 68.3 and a cap $\eta\in[0,1]$, start with
+
+$$
+K_{0,\mathcal R}^{\eta}(q)=
+\bigcap_{y\in X:\,[y]=q}
+       \{\lambda\in\mathcal R:\operatorname{TV}(\lambda,\mu_y)\le\eta\}.
+\tag{68.17}
+$$
+
+Use exactly the metric-distance refinement and countable-ordinal intersections (54.4)--(54.5), with metric space $\mathcal R$ and actual neighborhoods $U_m(q)$. Write $K_{\infty,\mathcal R}^{\eta}$ for the stabilized fibers. Then
+
+$$
+\begin{aligned}
+&\text{a lawful original-tape cap-}\eta\text{ preparation with all laws in }\mathcal R
+       \text{ exists}\\
+&\qquad\Longleftrightarrow\quad
+K_{\infty,\mathcal R}^{\eta}(q)\ne\varnothing\quad(q\in Q).
+\end{aligned}
+\tag{68.18}
+$$
+
+In particular stable nonemptiness at the independently defined original $R_\mu$ is necessary and sufficient for an $\mathcal R$-valued attainer of that original value. It is sufficient for unrestricted attainment, and is not asserted necessary for unrestricted attainment.
+
+**Proof.** All initial values are closed in the complete separable range $\mathcal R$ of Theorem 68.4; the triangle inequality makes distance to each original target continuous. The stabilization and continuous-selection parts of Theorem 54.2 apply with this range. Their actual hypotheses are countability of $Q$, its countable clopen prefix basis, a complete separable metric range, and closed values, allowing empty values. Compactness or finite-dimensionality of the range is not among them. A strict decrease deletes a new pair consisting of a signature and a basis open set in the range, so stabilization occurs at a countable ordinal. Stable nonempty fibers are lower semicontinuous, and the disjoint clopen refinements with summable successive distances in (54.9)--(54.10) give a continuous selection $\lambda_q\in K_{\infty,\mathcal R}^{\eta}(q)$. These metric portions are reused; the countable-tape acquisition step (54.11) is not being applied to diffuse blocks.
+
+Write this selection as $\lambda_q=g_q\sigma$. Theorem 68.4 supplies (68.2), and Theorem 68.2 supplies greatest common submeasures $\ell_C$ with masses $a_C$ exhausting one along every actual branch. The original-tape realization is precisely Theorem 46.4: give the root a zero parent, and put $\Delta_C=\ell_C-\ell_{C^-}$. Each increment is a positive original-tape measure, of mass $a_C-a_{C^-}$. Give a coordinate $W_C$ its normalized probability law when this mass is positive, and use the point-evaluation probability at one fixed original tape when it is zero. There are countably many nodes. All these coordinates and an independent $U$ uniform on $(0,1)$ form one source-independent product seed law. At a reached node the shared rule hands over $W_C$ if $U<a_C$ and otherwise queries the next actual prime. For an original tape event $A$ its unconditional output submeasure at that node is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}=\Delta_C(A),
+\tag{68.19}
+$$
+
+with root lower threshold zero. Zero-mass nodes have empty output intervals. Summing (68.19) along an actual branch through depth $m$ gives $\ell_{C_m(q)}$. Since its mass increases to one and it is dominated by $\lambda_q$, actual handoff is sourcewise almost surely finite and its full output law is $\lambda_q$. Finite records are measurable interval events in $U$; specifying an output event adds a measurable coordinate event, and the full output preimage is their countable union. The countable product is the probability-product construction already used in Theorem 46.4, with [pinned Mathlib, Measure.infinitePi and infinitePi_cylinder](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/ProductMeasure.lean). Each coordinate is a probability on its declared measurable space, which is the product theorem's hypothesis.
+
+Only finite actual prime-divisibility answers precede the handoff; no source label, $N$, magnitude, target value or law on sources is supplied. The unchanged consumer receives only the original tape and runs on the same static source. Preparation does not reset the source or condition away any seed event. The depth of handoff is allowed to depend on the actual source and seed. Membership in (68.17) gives the cap against every label, including equal-signature labels with distinct targets.
+
+Conversely, Lemma 45.3 makes every lawful family with laws in $\mathcal R$ a TV-continuous map on $Q$. If it satisfies the cap, it selects (68.17). The survival induction (54.8) keeps this selection in every refinement, proving necessity in (68.18). Finally the unrestricted original infimum is $R_\mu$ by Theorem 50.2, so a cap-$R_\mu$ family supplied by (68.18) has uniform error exactly $R_\mu$. No equality of unrestricted cylinder radii with $\mathcal R$-restricted radii is needed or asserted. $\square$
+

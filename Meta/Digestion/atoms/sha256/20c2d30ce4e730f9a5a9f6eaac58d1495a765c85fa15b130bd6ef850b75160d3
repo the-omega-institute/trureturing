@@ -1,0 +1,36 @@
+**Corollary 10.3 (Finite-precision joint selection).** Under the centered
+whitened source law and the equivariant orthogonal compression class of
+Theorem 9.4, let
+
+$$
+\lambda_1^{\mathcal W}\ge\cdots\ge\lambda_m^{\mathcal W}\ge0
+$$
+
+be the complete spectrum of $A_{\mathcal W}$. Retaining $r$ complete
+three-component multiplicity groups has minimum joint response error
+
+$$
+\boxed{
+3\sum_{i=r+1}^{m}\lambda_i^{\mathcal W},\qquad 0\le r\le m.
+}
+\tag{10.4}
+$$
+
+Thus path addition changes the finite-precision budget through the spectrum of
+the summed Gram matrix, not through a separate per-path dimension count.
+
+**Scope 10.4.** The result is finite: $\mathcal W$ is finite, all maps share
+one source and one $SO(3)$ action, and the source moments and projection class
+are those explicitly stated in Theorem 9.4. An infinite path closure requires
+its own operator convergence and summability hypotheses. The theorem still
+does not establish that the FIB source has this rotation action, that its
+paths are metric transports, or that the multiplicity rank is an ambient
+space dimension.
+
+**Scope clarification 10.5.** The finite path result uses the interface
+hypothesis (9.1), together with the centered/whitened source and
+orthogonal-projection assumptions of Theorem 9.4. These are the assumptions
+that make the joint response calculation conditional; they do not identify
+the FIB source with an $SO(3)$ representation or with a physical ambient
+space.
+

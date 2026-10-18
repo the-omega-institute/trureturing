@@ -1,0 +1,4 @@
+# 六维第四个无偏基问题：理论续卷 III
+
+本卷承接[理论续卷 II](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md)，沿用相同的实际输入基约定。第 78 节给出半参数处的完整六十射线分类；第 79 节证明所有非 canonical 正交对的通道均值刚性；第 80 节推出两个半参数附近的 canonical 基唯一性及固定 MUB 对的局部四基排除。区间半径仍为存在性结论。
+

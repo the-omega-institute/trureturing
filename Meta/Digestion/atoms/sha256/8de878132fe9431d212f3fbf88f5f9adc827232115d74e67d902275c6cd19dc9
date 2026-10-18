@@ -1,0 +1,4 @@
+## 98. Curved common-stress tests and finite principal quotients
+
+The principal affine directions of §97 need not detect every remaining support. This section constructs curved directions that may move both kernels, retains their exact full-coordinate curvature costs, and reduces the rank-\((7,6)\) test to seven finite real quadratic forms. The forms are necessary conditions; their signs on the remaining configurations are not settled here.
+

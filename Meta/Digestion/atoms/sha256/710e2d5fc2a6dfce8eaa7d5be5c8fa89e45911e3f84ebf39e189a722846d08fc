@@ -1,0 +1,24 @@
+**定义 3.1（出向间隔标记与占据位条件律）。** 在 $X_s=1$ 的位点定义辅助标记
+
+$$
+C_s=\begin{cases}q,&H_s=1,\\p,&H_s=2.\end{cases}
+\qquad \overline p=q,\quad\overline q=p.
+\tag{3.1}
+$$
+
+$C_s$ 表示这个 $1$ 之后的间隔参数，不表示刚刚发射该 $1$ 的概率。它此时只是隐藏标记。占据强度及离散 Palm 条件律为
+
+$$
+\rho=J(X_0=1)=\lambda_1p+\lambda_2q=2/Z>0,\qquad
+Q=J(\,\cdot\mid X_0=1).
+\tag{3.2}
+$$
+
+在 $Q$ 下依次列出全部 $1$ 的位点
+
+$$
+\cdots<T_{-1}<T_0=0<T_1<\cdots,\qquad G_j=T_{j+1}-T_j.
+$$
+
+命题 2.3 保证这些位点全部存在。$Q$ 只用于间隔分析；最后的风险仍在 $P$ 下计算。
+

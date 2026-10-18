@@ -1,0 +1,22 @@
+**Finite table 4.2 (max and Boolean-or lose order).**  Consider one state
+$q$, two typed self-actions, and the following complete one-step table.
+
+| word | ordered trace | max meter | Boolean meter |
+| --- | --- | ---: | --- |
+| $\varepsilon$ | empty | $0$ | $0$ |
+| $a$ | $A$ | $2$ | $1$ |
+| $b$ | $B$ | $3$ | $0$ |
+| $ab$ | $AB$ | $3$ | $1$ |
+| $ba$ | $BA$ | $3$ | $1$ |
+
+Both actions return to $q$; the displayed trace is part of the declared
+response.  The words $ab$ and $ba$ are distinct legal histories, but
+their max and Boolean-$\lor$ summaries coincide.  This table demonstrates
+loss of order by a summary; it does not by itself exhibit two distinct hidden
+states.  Max is neither left nor right cancellative: $\max(5,1)=\max(5,4)$.  Boolean-or is likewise
+noncancellative: $1\lor0=1\lor1$.  A boundary retaining only either
+summary merges the two histories and cannot support an ordered continuation
+task.  Even addition, which is cancellative on $\mathbb N$, remains
+commutative and therefore does not encode the order of two return blocks; an
+ordered archive or an order-sensitive action record is still required.
+

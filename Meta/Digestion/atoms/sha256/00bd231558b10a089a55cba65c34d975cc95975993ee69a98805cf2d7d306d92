@@ -1,0 +1,11 @@
+**Mathematical citation 2.2 (supplied comparison).** [FLOW, §3] supplies the following comparison for every observer of Definition 1.3. One periodic table of Definition 2.1 satisfies, simultaneously,
+
+$$
+R_j(\mathcal H_s;M^\circ)\le R_j(\mathcal H_s;M),
+\qquad
+\Delta_{\rm all}(M^\circ)=\Delta_4(M^\circ)\le\Delta_4(M).
+\tag{2.5}
+$$
+
+For every mode and every $k$ with $\mu(k)>0$, its pure-target configuration risks are bounded by the corresponding original risks. The source, positive finite histories, current records and original control are unchanged. The comparison does not preserve a state or total-resource budget. Periodicization, finite-chain limits and actual circulation in this statement are supplied results.
+

@@ -1,0 +1,41 @@
+**Definition 289.2 (The reused protected four-address score).**
+For $J=(j_1<j_2<j_3<j_4)\subset\{3,\ldots,L\}$ put
+$I=\{j_1,j_2,j_3\}$ and $z=j_4$. Write $w(Z)$ for the full word with
+precisely the zeros $Z$. Let $Y^4_J$ have
+
+$$
+C_{w(\{j,z\})}=1\ (j\in I\cup\{z\}),\qquad
+P_{w(\{a,z\}\cup Z)}=\tfrac12\
+(a=1,2,\ Z\subset I,\ |Z|=2),\qquad T=1,
+$$
+
+with all other coefficients zero and $\{z,z\}=\{z\}$.
+This is the $h=3,s=T=1$ instance of
+[207.12–207.13](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md),
+using the old two-subset measure on three internal addresses. Its unary
+zero masses are $2$, its directed internal masses are $1$, and its total
+pair mass is $3$. Thus
+
+$$
+Q(Y^4_J)=(\mathbf1_J;8),\qquad W=B_N=B_O=4,\qquad\Delta_N=\Delta_O=0.
+$$
+
+For completeness, the zero-label rewards on the four cells of a pair
+are as follows; every numerical-label reward is at most that cell entry.
+
+| Pair type | $00,01,10,11$ zero rewards |
+| --- | --- |
+| two heads | $(0,3/2,3/2,1)$ |
+| head, internal | $(1,1/2,1,3/2)$ |
+| head, terminal | $(3/2,0,3/2,1)$ |
+| two internals | $(1,1,1,1)$ |
+| internal, terminal | $(2,0,1,1)$ |
+
+The stated moments give the entries. Each late label receives only its
+one unit correct row, and each head label receives a subset of the pair
+reward of zero. Inactive coordinates are constantly one on this score
+support; their queries give coarser partitions. Summing cell inequalities
+covers empty, singleton and stopped partitions, including all earlier
+and unqueried labels. Constant zero and $R$ attain $4$. This calculation
+uses the protected core of 207.13 without changing its scope.
+

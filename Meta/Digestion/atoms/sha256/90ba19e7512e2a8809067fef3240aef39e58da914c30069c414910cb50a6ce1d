@@ -1,0 +1,7 @@
+## 2. Notation and cited facts
+
+**Cited facts.** The following are taken from A. M. Albalahi, S. Das, A. Ali, J. Barman, A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025) 108–115, DOI 10.47443/dml.2025.176; preprint arXiv:2510.24809v1.
+
+- (a) Definition, Sec. 1 (journal p. 109; arXiv v1 Sec. 1): for a graph $G$ with edge set $E$ and degrees $d(w)$, the complementary diminished Sombor (CDSO) index is ${}^c\mathrm{DSO}(G)=\sum_{uv\in E}\sqrt{d(u)^2+d(v)^2}/\max\{d(u),d(v)\}$.
+- (b) Sec. 4, Concluding remarks (journal p. 115): the cyclomatic number of a graph is the minimum number of edges whose removal makes the graph acyclic, and Conjecture 4.1 reads: “A graph minimizing (maximizing, respectively) the CDSO index (HSO index, respectively) among fixed-order connected graphs with cyclomatic number $\ell(\ge1)$ has a vertex adjacent to all other vertices.” In arXiv v1 the same assertion appears as prose in Sec. 4, Concluding Remarks, without a conjecture number.
+

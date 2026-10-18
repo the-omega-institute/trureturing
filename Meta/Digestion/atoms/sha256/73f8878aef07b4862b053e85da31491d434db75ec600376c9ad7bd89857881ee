@@ -1,0 +1,13 @@
+**定义 14.1（原命令出现费与比较范围）。** 本节严格使用定义13.1的同步具名Read主合同及定义13.4的整个来源。仍有互素 $p,q\ge2$、$m=pq$、全部 $m$ 个初相位、原初目标 $t\bmod m$、全部原边和字面Halt。给每条原具名边 $e$ 及两个具名Read分别指定公开固定正有理数 $\tau_e,\rho_s,\rho_v$。控制器 $C$ 在实际初相位 $t$ 上的非Halt命令词为 $a_1(t),\ldots,a_{L_C(t)}(t)$，其实际费用为
+
+$$
+\mathcal T_C(t)=\sum_{i=1}^{L_C(t)}\tau(a_i(t)),\qquad
+\tau(\operatorname{Read}_s)=\rho_s,\quad
+\tau(\operatorname{Read}_v)=\rho_v,\quad \tau(e)=\tau_e.
+\tag{14.1}
+$$
+
+每次重复发行都另付一次，Halt不收费。此和是执行的数学评价，不是响应、可查询费用计、时钟或附加控制输入；$u,\delta$ 的输入仍完全是（13.2）。发行、同步等待、下一命令及字面输出都由完整有限地址集 $K_C$ 承担。逐相位有限终止在有限来源上给有限的最大事件数；比较域本身不预设路径长度。规定事件预算时仍逐初相位要求 $L_C(t)\le B$。
+
+原卷11.2、11.5、11.7分别供应全路径行为核、指定运输的纤维及已知词恢复容量；12.2供应实际读数核及原初目标解码，13.5–13.6供应本族全部成功控制器的首到达碰撞与完整容量。这些已有结论作为前置使用。特别是 [AffineModularBehavior 的 `theorem11_2`](../../../D5/S3/Arith/AffineNetworks/AffineModularBehavior.lean) 及其[对应Blueprint](../../../Blueprint/D5/S3/Arith/AffineNetworks/AffineModularBehavior.md) 的全路径等价和最小边界像，不涵盖本节的完整取得记忆或固定费优化。此处的费不是该全路径定理的新观察。
+

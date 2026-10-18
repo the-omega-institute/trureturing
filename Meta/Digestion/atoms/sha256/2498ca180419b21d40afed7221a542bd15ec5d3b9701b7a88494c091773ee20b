@@ -1,0 +1,55 @@
+**Definition 2.1 (the motif and its core).** Keep the actual trees of
+[NCM, Proposition 6.1][NCM] and [SRP, Definition 3.1][SRP]:
+
+$$
+\begin{aligned}
+A&=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,\quad Q=\langle C,A\rangle,\\
+(u_0,u_1,u_2,u_3,u_4)
+&=(C,J,\langle C,C\rangle,\langle J,J\rangle,\langle A,Q\rangle),\\
+P&=\{u_0,u_1,u_2,u_3,u_4\}\subseteq S_3,
+\qquad K=\{u_0,u_1,u_2,u_3\}.
+\end{aligned}
+\tag{JPL.10}
+$$
+
+For $f:P\to[0,\infty)$ define
+
+$$
+R(f)=\sum_{s=0}^4 f(u_s)-\min_{0\le s<4}f(u_s).
+\tag{JPL.11}
+$$
+
+[SRP, Theorems 1.2 and 3.2][SRP] supply the following facts. The only
+residual target on $P$ is $LL$; every other target has its own witness.
+A subset is locally admissible precisely when it omits a core state.
+For arbitrary $n$ and arbitrary nonnegative weights $f_i$ on $P$,
+the maximum mass over all admissible subsets of $P^n$ is
+$\prod_i R(f_i)$. This includes cyclic and off-coordinate witnesses.
+The motif, this inhomogeneous theorem and the motif fractional cover
+$(4/3)^n$ are credited suppliers.
+
+The particular core data needed below are
+
+$$
+\begin{array}{c|cccc}
+ &u_0&u_1&u_2&u_3\\\hline
+r_\varepsilon&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+r_L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}\\
+r_R&\alpha&\alpha&\mathsf{branch}&\mathsf{branch}\\
+r_{LL}&\mathsf{absent}&\mathsf{absent}&\alpha&\beta\\
+r_{LR}&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha\\
+r_{RL}&\mathsf{absent}&\mathsf{absent}&\alpha&\beta\\
+r_{RR}&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha\\\hline
+\Gamma_{LL}&(3,0)&(2,0)&(2,1)&(1,0).
+\end{array}
+\tag{JPL.12}
+$$
+
+All longer literals on this core are absent. Every literal thus has
+at most three replies on $K$, whereas its $LL$ factor has four values.
+If $u_0$ or $u_1$ is omitted, $RL$ determines $LL$; if $u_2$ or $u_3$
+is omitted, $L$ determines it. The other targets
+$\varepsilon,L,R,LR,RL,RR$ use respectively a constant and the literals
+$L,R,L,RL,R$. These are the NCM/SRP witness tables, not new motifs.
+

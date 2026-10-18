@@ -1,0 +1,53 @@
+**Lemma 26.3 (Paid thinning preserves the conditional mark).** For analysis at a fixed $i,q$, let
+
+$$
+\begin{aligned}
+A_i^{\rm sh}(q)&=\sum_{k=1}^3F_i(k)q^k,&
+\rho_i(q)&=\frac{A_i^{\rm sh}(q)}{Z_i(q)},\\
+g_{i,q}(k)&=\frac{F_i(k)q^k}{A_i^{\rm sh}(q)}\quad(k=1,2,3),&
+\zeta_i(q)&=\frac{C_iq^4}{A_i^{\rm sh}(q)^2}.
+\end{aligned}
+\tag{26.7}
+$$
+
+After the first actual tick, the retained categories are iid with law $g_{i,q}$. Successive retained pairs are iid; each is accepted with probability $\zeta_i(q)>0$, and its conditional one-mark probability is $\theta_i$, independent of $q$. The successive accepted marks are iid Bernoulli variables with that mean. The observer of Definition 26.1 consequently satisfies
+
+$$
+\sup_{0<q<1}\mathsf P_{0,q}(D=1)\le\alpha_0/2\le\alpha,
+\qquad
+\sup_{0<q'<1}\mathsf P_{1,q'}(D=0)\le\alpha_0/2\le\alpha.
+\tag{26.8}
+$$
+
+Proof. Each raw gap independently belongs to $\{1,2,3\}$ with probability $\rho_i(q)>0$. Let $W_r$ be the number of raw gaps since the preceding retained gap, including retained gap $r$, and let $J_r\in\{1,2,3\}$ be its category. For the first block, and identically for each subsequent independent block,
+
+$$
+\begin{aligned}
+\mathsf P_{i,q}(W_r=n,J_r=k)
+&=(1-\rho_i(q))^{n-1}f_{i,q}(k)\\
+&=(1-\rho_i(q))^{n-1}\rho_i(q)g_{i,q}(k)
+\quad(n\ge1, k\in\{1,2,3\}).
+\end{aligned}
+\tag{26.9}
+$$
+
+Independence of the raw gaps factors the joint probabilities for any finite sequence of these blocks. Hence the $W_r$ are iid geometric variables of mean $1/\rho_i(q)$ and are independent of the entire iid category sequence $(J_r)$. This statement concerns only the number of gaps per block, not their paid durations; those durations need not be independent of categories.
+
+For a retained pair, each ordered composition $(k,4-k)$ has probability
+
+$$
+g_{i,q}(k)g_{i,q}(4-k)
+=\frac{F_i(k)F_i(4-k)q^4}{A_i^{\rm sh}(q)^2}
+\quad(k=1,2,3).
+\tag{26.10}
+$$
+
+Their sum is $\zeta_i(q)$, and conditioning on acceptance gives exactly the conditional distribution in Theorem 20.2 of the owning source. Disjoint retained pairs are independent, so accepting successive pairs gives the same iid Bernoulli marks as that theorem and the confidence construction of Theorem 20.3. In particular the midpoint threshold and variance estimate there apply with the risk input $\alpha_0$: each wrong-decision probability is at most
+
+$$
+\frac{4V}{M\Delta_\theta^2}\le\frac{\alpha_0}{2}.
+\tag{26.11}
+$$
+
+The threshold is the integer ceiling in (26.3), just as in that construction. Since the conditional mark law does not involve the actual nuisance value, the two suprema in (26.8) are separate full-family bounds. Retention alters how these marks are acquired; it does not alter the supplied shape certificate or the confidence calculation. $\square$
+

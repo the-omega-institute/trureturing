@@ -1,0 +1,129 @@
+**Theorem 90.1 (all possible profiles and attainability on every path).**
+Fix any prescribed positive parameter sequences $g_n,\tau_n\to0$
+with $\chi_n=g_n\tau_n^{-3/2}\to\chi_c$, and put
+$s_n=\sqrt{\tau_n}$. For every normalized complex native sequence
+$\psi_n\in\mathcal Q$ satisfying exactly (85.5), let
+$f_n=\mathcal U_{s_n}\psi_n$, extended by zero.
+Every subsequence has a further subsequence with a weak global
+$L^2(d\xi)$ limit, and every such limit belongs to
+
+$$
+\mathcal D_c=\{c\Phi_c:c\in\mathbb C,\ |c|\le1\}.
+\tag{90.1}
+$$
+
+Along any subsequence with $f_n\rightharpoonup c\Phi_c$, one has
+
+$$
+\begin{aligned}
+f_n&\longrightarrow c\Phi_c&&\text{in }L^2_{\rm loc},\\
+\int U_{s_n}|f_n|^2&\longrightarrow |c|^2\mu_c,&
+b_{s_n}[f_n]&\longrightarrow |c|^2b[\Phi_c],\\
+\|f_n-c\Phi_c\|_2^2&\longrightarrow1-|c|^2.
+\end{aligned}
+\tag{90.2}
+$$
+
+Conversely, for each $c\in\mathbb C$ with $|c|\le1$ and for
+each prescribed original parameter sequence just specified,
+there exists a normalized complex sequence in the original
+two-face native form domain satisfying (85.5) whose rescaled
+vectors converge weakly along the whole sequence to $c\Phi_c$.
+Thus (90.1) is both the complete possible-limit set and the
+attainable set, without choosing a subsequence of the parameters.
+In this construction, and in the necessity assertion, the heat
+clock, signed fixed nonzero $\kappa$, density $j_0^{-1}$ and
+source centre are unchanged.
+
+Proof. Theorem 85.1 gives $\tau_nE_{\tau_n}(g_n)\to0$.
+Condition (85.5) and (81.4) therefore give $q_n[f_n]\to0$,
+with $q_n$ exactly (83.5). Theorem 85.3 and Theorem 88.1 identify
+every weak limit as $c\Phi_c$, $|c|\le1$, and give the potential
+and kinetic conclusions along a convergent subsubsequence.
+Local compactness makes those conclusions valid on an entire
+weakly convergent subsequence: any failure would have a further
+subsequence, and then a compactness subsubsequence with the same
+weak limit and the asserted conclusions, a contradiction.
+The final line of (90.2) follows by expanding the squared norm,
+using $\|f_n\|_2=1$ and weak convergence. In particular global
+strong convergence to that limit holds exactly when $|c|=1$.
+
+Here is an upper construction that supplies every point of the
+disk. Choose real $u_m\in C_c^\infty(\mathbb R^4)$ with
+$\|u_m\|_2=1$ and $u_m\to\Phi_c$ in $\mathcal Q_E$.
+Such a sequence is supplied by the defining core, followed by
+normalization. Then $h_c[u_m]\to0$ and $v[u_m]\to\mu_c$.
+Choose also a fixed normalized smooth compact vector $\zeta$.
+Its normalized homogeneous dilation of radius $R$ has kinetic
+energy $R^{-2}b[\zeta]$. For each $m$ choose $R$ large enough
+to make this at most $1/m$. Translate the result in the central
+$w$ coordinate far enough to obtain a vector $z_m$ such that
+
+$$
+\|z_m\|_2=1,\qquad b[z_m]\le1/m,\qquad
+\operatorname{supp}z_m\subset\{N>m\},\qquad
+\operatorname{supp}z_m\cap\operatorname{supp}u_m=\varnothing.
+\tag{90.3}
+$$
+
+Central translation preserves Haar measure and commutes with
+$X,Y$ and every $Y_s$, because their coefficients depend only
+on $r$. Each of these supports is compact; making the translation
+larger ensures disjoint supports including their closures.
+In particular $z_m\rightharpoonup0$ in $L^2$ and
+$v[z_m]\le\sup_{N>m}V\to0$.
+
+For each fixed $m$, both vectors belong to $\mathcal Q_{s_n}$
+for all sufficiently large $n$: their compact height supports
+lie strictly between the two moving Dirichlet faces.
+The coefficient convergence in (78.4), uniform potential
+convergence (82.10), $\chi_n\to\chi_c$ and $s_n\to0$ imply
+
+$$
+q_n[u_m]\longrightarrow h_c[u_m],\qquad
+q_n[z_m]\longrightarrow h_c[z_m]
+\quad\text{at fixed }m.
+\tag{90.4}
+$$
+
+Choose increasing indices $n_m$ so that for $n\ge n_m$ both
+supports lie inside $\Omega_{s_n}$ and both errors in (90.4)
+are at most $1/m$. Let $m(n)\to\infty$ increase slowly enough
+that $n\ge n_{m(n)}$. Put $d=(1-|c|^2)^{1/2}$ and, for all
+sufficiently large $n$, set
+
+$$
+F_n=c u_{m(n)}+d z_{m(n)},\qquad
+\psi_n=\mathcal U_{s_n}^{-1}F_n.
+\tag{90.5}
+$$
+
+The finitely many unused indices may be filled with any normalized
+native core vectors. Disjoint supports make the norms and all
+the form terms add without cross terms, including the two
+horizontal derivative terms. Hence $\|F_n\|_2=1$ exactly,
+and (90.3)--(90.4) give
+
+$$
+q_n[F_n]=|c|^2q_n[u_{m(n)}]+d^2q_n[z_{m(n)}]\longrightarrow0.
+\tag{90.6}
+$$
+
+Indeed $h_c[z_m]=ab[z_m]-\chi_cv[z_m]\to0$.
+The first term in (90.5) converges strongly to $c\Phi_c$;
+the second converges weakly to zero and strongly to zero on
+every compact set. Thus the whole rescaled sequence has the
+required weak limit. Finally (81.4), (90.6) and
+$\tau_nE_{\tau_n}(g_n)\to0$ show
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                     -E_{\tau_n}(g_n)\bigr)
+ =q_n[F_n]-\tau_nE_{\tau_n}(g_n)\longrightarrow0.
+\tag{90.7}
+$$
+
+This is precisely the original near-minimizer condition, including
+when $c=0$, $|c|=1$, or the prescribed couplings approach criticality
+from different sides. It imposes no detuning rate. $\square$
+

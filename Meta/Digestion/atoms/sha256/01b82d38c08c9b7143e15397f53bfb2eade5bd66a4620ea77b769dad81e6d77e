@@ -1,0 +1,64 @@
+**Theorem 12.2 (exact finite realization of each prescribed atomic triple).** Every admissible $\Xi$ with $N$ positive atoms is exactly $\Xi_F$ for a finite regular table with real entries, at most $N$ p labels and at most $N$ suspended labels. Its generated phase laws and its two configuration losses are exactly those of $\Xi$. This is an algebraic real-table assertion. An effective original observer additionally requires permitted finitely represented exact samplers for the latch row, both updates and the emissions; arbitrary real entries do not supply such samplers.
+
+**Proof.** List the distinct p-law atoms as $q_i$ and the distinct suspended-law atoms as $w_j$. Equality of the first and third marginals ensures that the same p list suffices at both ends. Put
+
+$$
+t_{ijk}=\Xi\{(q_i,w_j,q_k)\},\qquad
+\pi_i=\sum_{j,k}t_{ijk}=\sum_{r,j}t_{rji},\qquad
+\tau_{ij}=\sum_k t_{ijk}.
+\tag{12.5}
+$$
+
+Retain the p labels with $\pi_i>0$ and the suspended labels $y=(i,j)$ with $\tau_{ij}>0$. All subsequent suspended-label sums omit deleted pairs. The suspended label retains the incoming p index even when different labels have the same complete law $w_j$. Define
+
+$$
+B_{i,(r,j)}=\mathbf1_{\{r=i\}}\frac{\tau_{ij}}{\pi_i},
+\qquad
+A_{(i,j),k}=\frac{t_{ijk}}{\tau_{ij}},
+\qquad
+u_i=u(q_i),\quad v_{ij}=v(w_j).
+\tag{12.6}
+$$
+
+All divisions are on positive rows. Zero rows have no incident positive flow and are deleted without a transition into a deleted label. Direct summation proves that the rows are stochastic,
+
+$$
+\pi B=\tau,\qquad \tau A=\pi,\qquad
+\pi_iB_{i,(i,j)}A_{(i,j),k}=t_{ijk}.
+\tag{12.7}
+$$
+
+The two conditional equalities of (12.1), tested at these atoms, give
+
+$$
+\sum_jB_{i,(i,j)}w_j=\mathcal R_B(q_i),\qquad
+\sum_kA_{(i,j),k}q_k=\mathcal R_A(w_j).
+\tag{12.8}
+$$
+
+The second equality uses the atom $(q_i,w_j)$, not just $w_j$. Expanding the residual definitions turns (12.8) into the two complete recursions (2.3) for $q_i,w_j$. The normalized own-law generation and uniqueness argument in PAIRED, (11.19)–(11.20), applies with these finite carriers: the maximal phase distances of two solutions obey $z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$. Its two-step factor is $4/15<1$, independently of reducibility or periodicity. Therefore the atoms are the table's own complete laws, including the infinite outcomes at mass zero. Equation (12.7) now gives $\Xi_F=\Xi$. There are at most $N$ distinct first-coordinate atoms and at most $N$ positive incoming pairs, proving the label bounds.
+
+The conditional identities also survive collisions of generated descriptors in this and subsequent constructions. In fact, in any regular finite table sample $(X,Y,X')$ with probability $\pi_xB_{xy}A_{yk}$. Its complete recursions give, coordinatewise,
+
+$$
+\mathbb E[W_Y^F\mid X]=\mathcal R_B(Q_X^F),\qquad
+\mathbb E[Q_{X'}^F\mid X,Y]=\mathcal R_A(W_Y^F).
+\tag{12.9}
+$$
+
+Conditioning the first identity on $Q_X^F$, and the second on $(Q_X^F,W_Y^F)$, proves (12.1) for its descriptor pushforward. The right sides are functions of exactly the descriptors conditioned upon. Thus a collision only mixes equal right sides, and does not invalidate either identity. The first and third marginals agree by $\tau A=\pi$. This argument identifies descriptors after generation; it does not merge private labels or change an update row.
+
+For the specific diagnostic in Proposition 11.9, each $\Xi_s$ in (11.35) is admissible even for the stronger incoming-pair condition. At $(Q_{\sigma,i},W_\sigma)$ the outgoing barycentre is $G_\sigma=\mathcal R_A(W_\sigma)$ for each row of $A_s$, by Proposition 11.8, while $\mathcal R_B(Q_{\sigma,i})=W_\sigma$. In (12.5)–(12.6) its p index is $(\sigma,i)$ and its suspended index is the retained pair $((\sigma,i),\sigma)$. Thus $\pi_i=\tau_{i,\sigma}=1/6$, $B$ is deterministic to this retained label, and its outgoing row is exactly the original row of $A_s$. For $s=0$ the construction therefore returns $\Xi_0$, and for $s=1$ it returns $\Xi_1$, with the corresponding own laws (11.30).
+
+Within either block the return variations are respectively
+
+$$
+\frac13\left(\frac12+\frac12\right)\frac1{15}
+ =\frac1{45},\qquad
+\frac19\,2\left(\frac1{30}+\frac1{30}+\frac1{15}\right)
+ =\frac4{135}.
+\tag{12.10}
+$$
+
+The two block masses are $1/2$, so these values hold globally. The two directional flows, complete phase-law distributions and losses against every target are still the equal quantities of Proposition 11.9. In particular the input $\Xi_0$ has not been replaced by the independent join (11.37), which would return $\Xi_1$. The retained suspended labels are precisely what distinguishes these two exact constructions. $\square$
+

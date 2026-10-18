@@ -1,0 +1,12 @@
+### Lemma 3.2 (a gap ending at six cannot carry a deficit)
+
+If $B$ is consecutive, ends at $b=6$, and has span at least five, then
+
+$$
+D_B\le2<E_B.
+$$
+
+**Proof.** By (5), a shared pair has both oriented gaps at least three. Since hit counts lie in $\{0,1,2,3\}$, its lower hit count is $0$ and its higher hit count is $3$. The lower cell has the form $(0,z)$ with $z\ge3$, hence is $(0,3)$ or $(0,4)$; both are axis cells and each has exactly one host.
+
+No installed state can host three distinct count cells: their hit counts would be three distinct elements of $\{0,1,2,3\}$, pairwise separated by at least two, which is impossible. Thus each shared state uses the unique host of one of those two axis cells, and $D_B\le2$. A span at least five has at least four internal depths, all noncommon by consecutivity, so $E_B\ge4$. \(\square\)
+

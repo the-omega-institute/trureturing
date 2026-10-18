@@ -1,0 +1,26 @@
+**Definition 13.2 (two prescribed finite joint flows).** Take distinct full-law atoms $Q_i\in\mathcal K_p$ for a finite nonempty set $I$ and distinct $W_j\in\mathcal K_\beta$ for a finite nonempty set $J$. Let
+
+$$
+\Gamma_B=\sum_{i,j}b_{ij}\delta_{(Q_i,W_j)},\qquad
+\Gamma_A=\sum_{j,k}a_{jk}\delta_{(W_j,Q_k)}
+\tag{13.2}
+$$
+
+be a compatible pair in exactly [PAIRED, Definition 11.2](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md). Thus the masses are nonnegative, each directional total is one, and, after deleting zero phase atoms, their common unweighted marginals are
+
+$$
+\pi_i=\sum_jb_{ij}=\sum_ja_{ji}>0,\qquad
+\tau_j=\sum_ib_{ij}=\sum_ka_{jk}>0.
+\tag{13.3}
+$$
+
+For every completed-word and infinite atom of the respective carrier they satisfy
+
+$$
+\sum_jb_{ij}W_j(\eta)=\pi_i\mathcal R_B(Q_i)(\eta),\qquad
+\sum_ka_{jk}Q_k(\omega)=\tau_j\mathcal R_A(W_j)(\omega).
+\tag{13.4}
+$$
+
+These full-law row equations are equivalent to that definition's continuous-test equations on finite supports: its bounded Borel extension isolates each whole input atom, and summing the atomic row equations gives every test equation. Neither synthetic continuation factor occurs in (13.3).
+

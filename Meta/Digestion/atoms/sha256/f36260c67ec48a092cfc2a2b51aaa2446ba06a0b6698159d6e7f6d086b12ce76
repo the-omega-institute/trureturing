@@ -1,0 +1,82 @@
+**Lemma 2.3 (origin expansion with differentiated remainder).** Uniformly on each compact $K\subset(0,1)$, as $x\downarrow0$,
+
+$$
+\begin{aligned}
+P_\eta(x)&=1+x\{-\eta\log x+B(\eta)\}+\mathcal R(\eta,x),\\
+B(\eta)&=-\eta\psi(1-\eta)-2\eta\gamma+\eta-\tfrac12.
+\end{aligned}
+$$
+
+Writing $L(x)=1+|\log x|$ for bounds only, the remainder and its parameter derivatives through order two satisfy
+
+$$
+\partial_\eta^j\mathcal R=O_K(x^2L(x)),\qquad
+\partial_x\partial_\eta^j\mathcal R=O_K(xL(x)),\qquad
+\partial_x^2\partial_\eta^j\mathcal R=O_K(L(x))
+\quad(0\le j\le2).
+$$
+
+In particular, the coefficient and logarithm in this expansion follow from the defining integral.
+
+Proof. Write $f_\eta(q)=(1+1/q)^\eta$ and
+
+$$
+h_\eta(q)=f_\eta(q)-1-\frac\eta{1+q},\quad
+H_\eta(x)=\int_0^\infty e^{-xq}h_\eta(q)dq,\quad
+\mathcal L(x)=\int_0^\infty\frac{e^{-xq}}{1+q}dq.
+$$
+
+At $q\ge1$, Taylor's formula for $(1+1/q)^\eta$ gives $\partial_\eta^jh_\eta(q)=O_K(q^{-2})$ for $0\le j\le2$. For $0<q\le1$ these derivatives are bounded by $C_K[1+q^{-b}(1+|\log q|^2)]$, where $b=\max K<1$. Thus they have an integrable majorant.
+
+The exact derivative identity
+
+$$
+\{q(f_\eta(q)-1)\}'=f_\eta(q)-1-\frac{\eta f_\eta(q)}{1+q}
+$$
+
+gives, upon integration,
+
+$$
+H_\eta(0)=\eta+\eta\int_0^\infty\frac{f_\eta(q)-1}{1+q}dq.
+$$
+
+The boundary values of $q(f_\eta-1)$ are $0$ at zero and $\eta$ at infinity, justified respectively by $\eta<1$ and the same Taylor expansion. Substitute $t=q/(1+q)$ in the remaining integral. Expanding $(1-t)^{-1}$ gives
+
+$$
+\int_0^1\frac{t^{-\eta}-1}{1-t}dt
+ =\sum_{n=0}^\infty\left(\frac1{n+1-\eta}-\frac1{n+1}\right)
+ =-\psi(1-\eta)-\gamma.
+$$
+
+The summands before integration are nonnegative, so monotone convergence justifies this expansion. The resulting series is finite because its tail is $O_K(n^{-2})$. Parameter differentiation is also justified by the preceding integrable bounds, or by locally uniform convergence of its differentiated series. Hence
+
+$$
+H_\eta(0)=\eta\{1-\psi(1-\eta)-\gamma\}.
+$$
+
+An elementary substitution gives
+
+$$
+\mathcal L(x)=e^x\int_x^\infty\frac{e^{-u}}u du
+ =-\log x-\gamma+O(xL(x)).
+$$
+
+For the last equality, subtract $1/u$ on $(x,1)$; the omitted integral on $(0,x)$ is $O(x)$. Its differentiated bounds follow directly from $\mathcal L'=\mathcal L-1/x$ and $\mathcal L''=\mathcal L'+1/x^2$.
+
+For $0<x\le1/2$, split the integral for $H_\eta(x)-H_\eta(0)$ into $(0,1)$, $(1,1/x)$ and $(1/x,\infty)$, using $|e^{-xq}-1|\le\min(xq,2)$. The bounds on $h_\eta$ give
+
+$$
+H_\eta(x)-H_\eta(0)=O_K(xL(x)),\quad
+H_\eta'(x)=O_K(L(x)),\quad H_\eta''(x)=O_K(x^{-1}).
+$$
+
+The same bounds hold after zero, one or two $\eta$ derivatives. For example, the middle interval in the first bound contributes at most $C_Kx\int_1^{1/x}q^{-1}dq$, and the tail at most $C_K\int_{1/x}^\infty q^{-2}dq$; the derivative estimates follow by inserting $q$ or $q^2$ under the exponentially damped integral.
+
+Finally the exact decomposition is
+
+$$
+P_\eta(x)=e^{-x/2}\{1+x[\eta\mathcal L(x)+H_\eta(x)]\}.
+$$
+
+Insert the evaluated $H_\eta(0)$ and the expansion of $\mathcal L$, and expand $e^{-x/2}$. This gives the displayed $B(\eta)$. The differentiated estimates just proved give all three stated remainder bounds by the product rule. In particular these bounds control mixed radial and parameter derivatives, rather than merely an undifferentiated little-oh term. $\square$
+

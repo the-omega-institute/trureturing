@@ -1,0 +1,17 @@
+**Corollary 8.2 (Identical prefix law need not admit continuation).** The inherited bridge witness's first two placements can be replaced by $j+3$ and $j-3$ on root zero while preserving the full joint law of the target and both potential prefix replies. They also preserve the stopped prefix law, with the second reply omitted when not acquired. Yet no lawful total-cap-three continuation of these fixed prefix actions preserves the full witness law. This remains true with unrestricted subsequent integer addresses and arbitrary measurable use of the original seed and fixed public bias, also when the prefix is required only at almost every seed.
+
+Proof. In phase $\psi$ the original first two edges are $\{q+3,q+4\}$ and $\{q+1,q+2\}$. The replacement pair is
+
+$$
+E'=\{q+1,q+2\},\qquad F'=\{q-2,q-1\}.
+\tag{8.5}
+$$
+
+Both configurations have two disjoint pairs, each detached from $q$. Given either $S_q=s$, their two potential replies are independent pair XORs with probabilities $c,2d$ for zero and one. In the opposite phase all these addresses are separators. The actual endpoint table and the phase weights therefore give the same target/potential-reply-pair law, including every seed rectangle. Applying the deterministic operation that acquires the second reply only on root zero gives the stopped-prefix law too.
+
+If a full-law continuation existed, intersect its good-seed set from Lemma 2.2 with the full-measure set of prescribed prefix actions. Theorem 7.2 would force an actual line edge joining the two pairs (8.5). Their nearest vertices are $q-1,q+1$, which have the target $q$ between them and are not consecutive. No such joining edge exists. This contradicts the necessary classification at every good seed, regardless of the third address or any seed-dependent choice. The pair $(j+3,j+7)$, in contrast, has the actual bridge $j+5$ and is an attainer by (8.1).
+
+The conditional calculation underlying this failure is explicit: after two zeros the pair constants are independent Bernoulli$(r)$ as in (7.9), and Full requires bridge-one probability $\delta$ at both target values. The exhaustive table in Theorem 7.2 allows that kernel only through an actual line edge between the pairs. Preserving the prefix distribution retains the pair XOR laws but need not leave that edge available in the chosen placement. This is why a prefix law does not imply extendability. No stronger prefix- or signature-preservation condition was imposed on the full-law lower argument. $\square$
+
+The specified frozen-prefix example and its no-continuation conclusion already belong to Two-read Propositions 5.1–5.2 and Theorem 6.1. Corollary 8.2 relates them to the all-representative classification rather than claiming a new example.
+

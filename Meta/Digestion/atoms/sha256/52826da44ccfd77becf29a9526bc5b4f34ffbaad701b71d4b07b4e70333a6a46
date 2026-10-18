@@ -1,0 +1,25 @@
+**Definition 2.2 (original reverse region and endpoint mass).** Put
+
+$$
+\Psi(u,v)=(v+u/10)(v-4u),\qquad
+T_{\rm rev}=\{x\in S^1:\Psi(x)\ge0\},\qquad
+T_{\rm rev}^{\circ}=\{x:\Psi(x)>0\}.
+\tag{IC.10}
+$$
+
+Here the superscript denotes strict inequality, including the two
+report-axis points, not an instruction to discard directed boundaries.
+The finite slope rays of $T_{\rm rev}$ are $z\le-1/10$ and $z\ge4$.
+Define the saturated endpoint coefficient mass and negative pure
+endpoint contribution of any common law by
+
+$$
+S_{\rm end}(\pi)=\int_X\xi\,d\pi,\qquad
+H_-(\pi)=\int_X(1-\xi)\max\{-\ell,0\}\,d\pi.
+\tag{IC.11}
+$$
+
+These are FC's $S$ and $H_-$, not acquisition or failure probabilities.
+A negative pure coordinate of a paired fractional label would contribute
+to $H_-$ even if the actual label were not at $\xi=0$.
+

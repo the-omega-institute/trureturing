@@ -1,0 +1,50 @@
+**Proposition 8.10 (Retained real lifts are a different affine source).**
+On the source $[a,b]\times\mathbb R^2$ retaining real increments
+$(u,v)$, the three coordinates $(k,u,v)$ have affine updates for
+all native $P_s,Q_t$ and prescribed simultaneous continuations.
+These coordinates do not define an encoder of actual current rays.
+
+**Proof.** Before reducing phases modulo $2\pi$, the exact formulas
+are
+
+$$
+P_s(k,u,v)=(k+s,u,v),
+$$
+
+$$
+Q_t(k,u,v)=
+ \left(k,\ u-\frac tr k+\frac t2,\ v-\frac tr k\right).
+$$
+
+For each fixed real command these are affine in the three
+coordinates. For a simultaneous path they become
+
+$$
+\left(k+\Delta,
+ u-\frac Lr k+\frac L2-\frac Cr,
+ v-\frac Lr k-\frac Cr\right),
+$$
+
+again affine, on the same all-times height guard.
+The positive-width reachability construction of Proposition 7.2
+realizes arbitrary real representatives as lifted increments,
+so these formulas do describe a possible retained-lift source.
+
+On actual rays, however, $(k,u+2\pi,v)$ and $(k,u,v)$ are the
+same point while their displayed three coordinates differ.
+Thus they are not a function of the ray quotient. Selecting
+wrapped representatives introduces state-dependent wrap
+changes; the displayed affine formulas on real lifts do not
+become affine formulas on those representatives.
+A producing-history encoder can retain lifts even when the
+current ray returns, and then it is a function of histories,
+not a lossless current-ray encoder in Definition 8.1.
+
+Theorem 8.4 cannot be transferred to arbitrary history encoders
+by asserting that a returned ray has a returned encoded history.
+Corollary 7.5 has a separate finite-function-space proof for
+history features with a fixed affine approximate readout.
+The retained-lift construction here supplies no such affine
+readout below that floor; its usual trigonometric decoding is
+nonlinear. These contracts are distinct. $\square$
+

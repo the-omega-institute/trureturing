@@ -1,0 +1,105 @@
+**Theorem 50.1 (strictly feasible full fifteen-dimensional certificate).** Keep exactly the Kraus matrices (R.244). The full-rank density and rational output matrix
+
+$$
+\rho_* =\operatorname{diag}(1/4,1/4,1/2),\qquad
+Y=\frac1{200}B,\qquad
+B=\begin{pmatrix}
+34&0&0&7&16\\
+0&32&-5&0&0\\
+0&-5&25&0&0\\
+7&0&0&26&18\\
+16&0&0&18&49
+\end{pmatrix}
+\tag{R.260}
+$$
+
+satisfy $Y\succ0$ and the full recovery-dual inequality $Y\otimes I_3\succeq D_{\rho_*}D_{\rho_*}^\dagger$ on $\mathbb C^5\otimes\mathbb C^3$. Consequently
+
+$$
+p(\rho_*)\leq\frac{83}{100}<T,\qquad
+g_N^2\leq\frac{83}{100},\qquad
+\delta_N\geq\frac{17}{50}.
+\tag{R.261}
+$$
+
+These are bounds for this encoder; equality and optimality of the displayed input or dual are not asserted.
+
+**Proof.** Permute $B$ into the blocks indexed by $(0,3,4)$ and $(1,2)$. Their leading principal minors are respectively $(34,835,27275)$ and $(32,775)$, all strictly positive, proving $B\succ0$ by Sylvester's criterion. Exact inverse blocks, in those same orders, are
+
+$$
+(B^{-1})_{(0,3,4)}=\frac1{5455}
+\begin{pmatrix}190&-11&-58\\-11&282&-100\\-58&-100&167\end{pmatrix},
+\qquad
+(B^{-1})_{(1,2)}=\frac1{775}\begin{pmatrix}25&5\\5&32\end{pmatrix};
+\tag{R.262}
+$$
+
+all entries between the two blocks are zero. Multiplication by the corresponding blocks of $B$ gives the identity, so these formulas also permit a direct rational check independent of the minor test.
+
+Use the output-first vectorization of (R.29), with row index $3b+i$. The entire fifteen-by-two matrix, with no discarded rows, is
+
+$$
+D_{\rho_*}=\frac c4J,\qquad
+J=\begin{pmatrix}
+1&0\\0&0\\1&0\\
+0&0\\1&0\\0&1\\
+0&1\\0&0\\0&-1\\
+0&0\\0&1\\1&0\\
+0&0\\0&0\\2&0
+\end{pmatrix}.
+\tag{R.263}
+$$
+
+Thus $D_{\rho_*}^\dagger(Y^{-1}\otimes I_3)D_{\rho_*}=(25/4)J^T(B^{-1}\otimes I_3)J$. To expose each exact contraction, group terms by the input index. For column zero of $J$ the three output vectors are $e_0,e_1,e_0+e_3+2e_4$; for column one they are $e_2,e_3,e_1-e_2$. Corresponding vectors lie in different blocks of (R.262), so the off-diagonal contraction vanishes. The diagonal contractions are
+
+$$
+\begin{aligned}
+\frac{25}{4}\left(\frac{190}{5455}+\frac{25}{775}+\frac{486}{5455}\right)
+&=\frac{132055}{135284},\\
+\frac{25}{4}\left(\frac{32}{775}+\frac{282}{5455}+\frac{47}{775}\right)
+&=\frac{129899}{135284}.
+\end{aligned}
+\tag{R.264}
+$$
+
+Here $486=(1,1,2)\left(\begin{smallmatrix}190&-11&-58\\-11&282&-100\\-58&-100&167\end{smallmatrix}\right)(1,1,2)^T$ and $47=(1,-1)\left(\begin{smallmatrix}25&5\\5&32\end{smallmatrix}\right)(1,-1)^T$. In particular the exact slack is
+
+$$
+I_2-D_{\rho_*}^\dagger(Y^{-1}\otimes I_3)D_{\rho_*}
+=\operatorname{diag}\left(\frac{3229}{135284},\frac{5385}{135284}\right)\succ0.
+\tag{R.265}
+$$
+
+To pass from this calculation to the full fifteen-dimensional inequality, set $A=Y\otimes I_3\succ0$. Taking the two Schur complements of the same seventeen-by-seventeen block matrix gives
+
+$$
+\begin{pmatrix}A&D_{\rho_*}\\D_{\rho_*}^\dagger&I_2\end{pmatrix}\succeq0
+\ \Longleftrightarrow\ I_2-D_{\rho_*}^\dagger A^{-1}D_{\rho_*}\succeq0
+\ \Longleftrightarrow\ A-D_{\rho_*}D_{\rho_*}^\dagger\succeq0.
+\tag{R.266}
+$$
+
+Indeed (R.265) makes both inequalities strict. This is a proof of the full matrix inequality, not only of a selected compression. The inverse argument applies to this positive definite certificate; it imposes no positive-definiteness requirement on general feasible duals or their optima.
+
+For completeness, for every complex recovery Kraus list $L_j:M_5\to M_3$, let $\ell_j=\operatorname{vec}(L_j^T)$ and $X=J_R^T=\sum_j\bar\ell_j\ell_j^T$. Then $X\succeq0$, $\operatorname{Tr}_3X=I_5$, and
+
+$$
+\ell_j^T\operatorname{vec}(K_\alpha\rho_*)=\operatorname{Tr}(\rho_*L_jK_\alpha),
+\qquad
+F_e(\rho_*,RN)=\operatorname{Tr}(XD_{\rho_*}D_{\rho_*}^\dagger)
+\leq\operatorname{Tr}[X(Y\otimes I_3)]=\operatorname{Tr}Y=\frac{166}{200}.
+\tag{R.267}
+$$
+
+This uses the full transpose of the Choi matrix, not a partial transpose, and $K_\alpha\rho_*$, not $K_\alpha\sqrt{\rho_*}$. The real encoder and real certificate do not restrict the recovery to real Kraus matrices. Finally $83/100<T$ follows from $(33/50)^2=1089/2500<1/2$.
+
+Each recovery's minimum over inputs is bounded by its value at $\rho_*$, so $g_N^2\leq p(\rho_*)$ without a new minimax exchange. For the norm bound take the fixed purification
+
+$$
+|\Omega_*\rangle=\tfrac12|0\rangle|0\rangle+\tfrac12|1\rangle|1\rangle
++\tfrac1{\sqrt2}|2\rangle|2\rangle.
+\tag{R.268}
+$$
+
+Measuring the pure identity target $|\Omega_*\rangle\langle\Omega_*|$ against its recovered output gives unhalved trace-norm error at least $2[1-F_e(\rho_*,RN)]\geq17/50$ for every recovery. Taking the diamond supremum and then the recovery infimum proves (R.261). A three-dimensional reference already witnesses this lower bound; allowing every finite complex reference preserves it. The Kraus-trace formula is independent of the choice or isometric embedding of the purification. $\square$
+

@@ -1,0 +1,11 @@
+**Assumption 4.1 (history-recovery extension).** After the complete
+export of a specified public preparer $A$, a deterministic recovery
+procedure receives only that name and common public inputs. It may
+make further charged adaptive original-root Reads of the same
+stationary source and must output exactly $\tau_A(t)$ for every
+$t\in\mathcal F_D$. Inaccessible old buffers and histories are not
+inputs. Any extra retained field is counted jointly with the export.
+This is an additional task, separate from (NPH.2). Public targets or
+count inputs, if present, can be fixed to the same allowed values on
+every source; they provide no source-dependent advice.
+

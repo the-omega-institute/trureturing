@@ -1,0 +1,33 @@
+**definition 4.3 (The response action and its norm).**
+For $0\le G\le c$ and $X=\sigma X_d$, let the response action have
+the following full complex matrix-unit values:
+
+$$
+\begin{aligned}
+E_{\ell\ell}&\longmapsto sE_{\ell\ell}
+                          +5n\sum_{v\ne\ell}E_{vv}
+                         &&(0\le\ell\le4),\\
+E_{jk}&\longmapsto i\sigma G E_{jk},&
+E_{kj}&\longmapsto-i\sigma G E_{kj}&& (d=(j,k)),
+\end{aligned}
+\tag{4.6}
+$$
+
+and let every other off-diagonal unit vanish. Its difference from the
+target has exact diamond norm $c-G$, as in the response norm of
+C-121.3. The following direct norm argument also fixes the reference
+scope needed here. Compress any reference/input operator to the active
+pair. Trace norm cannot increase under left and right multiplication
+by this orthogonal projection. On the compressed block, off-diagonal
+extraction is $(Y-Z_2YZ_2)/2$ and is a trace-norm contraction by the
+triangle inequality and unitary invariance. Multiplication of the two
+off-diagonal blocks by $i,-i$ is conjugation by
+$\operatorname{diag}(i,1)$ and preserves trace norm. Tensor all these
+identities with the arbitrary reference identity. The difference map
+therefore has stabilized norm at most $c-G$. The balanced pure data
+input $(|e_j\rangle+|e_k\rangle)/\sqrt2$ gives a Hermitian output
+difference with eigenvalues $\pm(c-G)/2$, proving equality.
+The complex unitary in this norm identity is a proof device, never a
+processor gate. Sections 5–7 establish the response action through
+actual complete instruments, independently of a Choi existence claim.
+

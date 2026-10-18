@@ -1,0 +1,32 @@
+**Proposition 8.4 (a global joint statistic for this subfamily).** For
+the graph-realized networks define
+$N_G(j)=|\{b:m_G(b)=j\}|$ for $0\le j\le e$, and let
+$h_G(j)=\log_2N_G(j)$ with $\log_2 0=-\infty$. For $t>0$,
+
+$$
+\begin{aligned}
+\max_j\frac{h_G(j)+j\log_2t}{3e}
+&\le\mathcal P(\mathcal N_d(G))+\log_2W_d^{\rm wt}\\
+&\le\max_j\frac{h_G(j)+j\log_2t}{3e}
+       +\frac{\log_2(e+1)}{3e}.
+\end{aligned}
+\tag{GDB.42}
+$$
+
+Proof. Group the exact same spin assignments in (GDB.35) by $m_G$.
+Its raw sum is exactly $\sum_{j=0}^e N_G(j)t^j$, between its
+largest summand and $(e+1)$ times that summand. Taking logarithms
+and dividing by $3e$ proves both directions. At $t=0$ the exact
+raw sum is the proper-coloring count $N_G(0)$ instead; a zero value
+requires the extended logarithm convention. $\square$
+
+This elementary finite Laplace comparison is a consumer of the exact
+native lift, not a new general entropy theorem. It specifies a joint
+relation missing from the demonstrated neighborhood data: simultaneous
+realizability and multiplicity of near-proper colorings. In (GDB.38)
+the low graph has $N_G(j)=0$ for $j<e/5$, whereas its bipartite
+cover has positive $N(0)$. A maximum cut alone does not give the
+full histogram entropy. Finite computation of that histogram does not
+bound the supremum over all native networks or construct a cofinal
+global-statistic hierarchy.
+

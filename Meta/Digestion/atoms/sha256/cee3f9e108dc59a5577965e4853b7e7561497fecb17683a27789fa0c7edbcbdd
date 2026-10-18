@@ -1,0 +1,23 @@
+**Theorem 4.3 (whole arcs and exact zero sets).** On each physical portion of the cover, the selected $Y$ satisfies Definition 3.1 on both entire circles. Its equality set is precisely the listed occupied contacts, with the extra zero-weight contact at the event.
+
+Proof. For each $\eta,\epsilon\in\{0,1\}\times\{\pm1\}$, the $\sigma=+1$ base-$0$ and $\sigma=-1$ base-$\pi$ charts with $x\in[-1,1]$ cover the complete circle, including their common endpoints $u=0$. On its chart $\sigma u=|u|$. The other report sign gives a weaker inequality by $2\lambda|u|$. Thus the eight cases suffice for the complete absolute-value inequality.
+
+At an occupied root the exact equations $P=P'=0$ justify division by its double factor. Contact $4$ converts to the base-$0$ chart root $(x_4-1)/(x_4+1)$. Successive divisions are valid because the contacts are distinct. Remainders vanish by the root equations; an interval merely containing zero is never replaced by zero. For a stationary unused direction only $P_6'=0$ is known, and the exact division identity is
+
+$$
+P(x)=P(x_6)+(x-x_6)^2Q(x).
+$$
+
+Its constant is retained. Here `factors` also contains index $6$ when this unused stationary division is made, although it is not an occupied contact. On the $182$ long cells using that division, the enclosed $P(x_6)$ is strictly positive. The remaining $21$ long cells certify the full $P$ directly. In the two six-contact event-band cells $Q$ is strictly positive and §5 determines the constant's sign. This does not presume that a selected positive-level stationary point is the unique lowest minimum everywhere on the long range.
+
+For $Q(x)=\sum c_kx^k$, substituting $x=2y-1$ gives power coefficients $a_j$ and Bernstein coefficients $b_i$ of degree $d_Q$ by
+
+$$
+a_j=\sum_{k\ge j}c_k\binom{k}{j}2^j(-1)^{k-j},\qquad
+b_i=\sum_{j\le i}a_j\frac{\binom{i}{j}}{\binom{d_Q}{j}}.
+$$
+
+Exact dyadic de Casteljau subdivision gives the leaf controls. Each recorded control has strictly positive lower endpoint. Bernstein basis functions are nonnegative and sum to one, so $Q>0$ throughout each closed leaf. Exact leaf endpoints start at $0$, abut without gaps, and end at $1$. All $1672$ cases and $5333$ leaves are included in §13. Shared-parameter coefficient/remainder tuples explain the tighter control enclosures; replacing them by independently widened coefficient ranges is unnecessary.
+
+The geometry records enclose positive old weights, $\epsilon_iH_i$, $\sigma_i u_i$, angular contact curvatures, nonzero moment-column minors, pairwise squared circle separations and nonzero saturated projection wedges. The long-cover strict lower bounds exceed $.0363723338$, $.0031856871$, $.0064025551$, $.48924977$, $.00571234$ for weights, signed heights, curvatures, signed reports and squared separation. The seven-band old-weight lower bound exceeds $.0386918163$. All tubes have $\tau<.997006297$. Moment minors and the event's seven possible columns are checked independently of whether the seventh weight is zero. The strict quotients exclude every additional dual zero, including half-circle endpoints. These inequalities and §5's crossing select exactly the asserted zero sets and exclude the other optimizing geometric degeneracies. This proves whole-circle positivity rather than stationary-point or mesh positivity. $\square$
+

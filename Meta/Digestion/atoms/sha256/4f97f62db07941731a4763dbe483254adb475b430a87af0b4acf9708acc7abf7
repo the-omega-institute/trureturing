@@ -1,0 +1,55 @@
+### 5.3 与 V19 的固定射线恰两读结论的区别
+
+以下固定射线接口及最少读数属于 **REUSE/APPLICATION**。令 $h(T)=T(T-5)(T-7)$，
+
+$$
+\begin{gathered}
+\mathscr R=\{R>0:\det R=0,\operatorname{tr}(JR)=1,
+\operatorname{tr}(LR)=8/5\},\\
+\mathcal C=\{(R/\operatorname{tr}R,(\operatorname{tr}R)h,0):R\in\mathscr R\}.
+\end{gathered}
+\tag{5.7}
+$$
+
+$\mathcal C$ 是 V 16.1 的整个无限正源曲线，包含在 $\mathcal C_2$ 中。令 $R=\left(\begin{smallmatrix}A&B\\C&F\end{smallmatrix}\right)$，则 $C=1-B,F=8/5-A-B$。在 $H_2$ 执行第三 $J$、第四 $M$，其实际响应 $(\sigma,\zeta)$ 满足
+
+$$
+\sigma=24(1+A),\qquad \zeta=12(8/5+B).
+\tag{5.8}
+$$
+
+所以全部重建为
+
+$$
+\widehat A=\sigma/24-1,\quad
+\widehat B=\zeta/12-8/5,\quad
+\widehat C=1-\widehat B,\quad
+\widehat F=8/5-\widehat A-\widehat B.
+\tag{5.9}
+$$
+
+该对属于整个 $\mathcal C$ 的联合像，当且仅当四元严格正且 $\Delta=\widehat A\widehat F-\widehat B\widehat C=0$。正向来自迹约束；反向所构造矩阵正、秩一并满足两迹约束，式 (5.8) 给回同一实际响应，归一后返回整个目标。清分母式为
+
+$$
+14400\Delta
+=5(\sigma-24)(504-5\sigma-10\zeta)
+ -4(5\zeta-96)(156-5\zeta).
+\tag{5.10}
+$$
+
+V 17.4 的同世界整盒联合包络在第一盒给出
+$0.001486462<\Delta<0.001488988$，在第二盒给出
+$-0.015170242<\widehat C<-0.015168132<-15/1000$，在第三盒给出
+$-0.363958637<\widehat C<-0.363957400<-36/100$。
+这些继承包络排除每个固定额外响应对与整个固定射线联合像相交，不能由粗边缘区间单独代替。与三个已知额外响应对精确相等时返回对应的整个 $W_i$；否则用式 (5.9) 返回整个固定射线目标。这是 V 19.1 在已知 $\mathcal C\cup\mathcal T$ 上的两读策略，保留其有限文本依赖。
+
+它的恰两读下界也直接复用 V 19.9：
+
+$$
+R^{(1)}=\begin{pmatrix}2/5&3/5\\2/5&3/5\end{pmatrix},\qquad
+R^{(2)}=\begin{pmatrix}2/5&4/5\\1/5&2/5\end{pmatrix}.
+\tag{5.11}
+$$
+
+两者严格正、行列式零，$J,L$ 迹同为 $1,8/5$，迹分别为 $1,4/5$，故定义两个不同完整目标。第三 $M$ 都读 $312/5$，第三 $J$ 都读 $168/5$。在同一 $H_2$，停止或只作任一单个动作都不能分开它们，故一读不够。N4 扩大了基线域，使用其明确较大的读数上界；不把 V19 的两读公式推广到任意可变射线。
+

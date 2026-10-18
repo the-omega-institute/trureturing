@@ -1,0 +1,17 @@
+**定理 7.1（完整分类）。** 保持 $L,H>0,0<d_0<L^4,D_{\rm crit}=L^{2/\varphi^2}$。全部行均有 $R_0=0$；正噪声制度为
+
+| 行 | 完整主参数条件 | 同一全未来任务的风险 |
+| --- | --- | --- |
+| 1 | $L<1$，任意 $H>0$ | $R_\delta=\Theta(\delta)$，$\delta\downarrow0$ |
+| 2 | $L=1,H<1$ | $R_\delta=\Theta(\delta)$，$\delta\downarrow0$ |
+| 3 | $L=1,H\ge1$ | 第一平台，定理 2.4 |
+| 4 | $L>1,d_0<D_{\rm crit},H<1$ | $R_\delta=\Theta(\delta)$，$\delta\downarrow0$ |
+| 5 | $L>1,d_0<D_{\rm crit},H=1$ | 第二平台，定理 2.4 |
+| 6 | $L>1,d_0<D_{\rm crit},H>1$ | 每个 $\delta>0$ 有 $R_\delta=+\infty$ |
+| 7 | $L>1,d_0=D_{\rm crit},H\le1$ | 每个 $\delta\ge0$ 有 $R_\delta=0$ |
+| 8 | $L>1,d_0=D_{\rm crit},H>1$ | 每个 $\delta>0$ 有 $R_\delta=+\infty$ |
+| 9 | $`L>1,d_0>D_{\rm crit},H<H_*`$ | 每个 $\delta\ge0$ 有 $R_\delta=0$ |
+| 10 | $`L>1,d_0>D_{\rm crit},H\ge H_*`$ | 每个 $\delta>0$ 有 $R_\delta=+\infty$，包括达到的 $`H=H_*`$ |
+
+$\Theta$ 的常数允许依固定主参数而变，线性行恰是 1、2、4。以下三条证明给出原分类如何进入本风险定义，不将实际对模量与风险混同。
+

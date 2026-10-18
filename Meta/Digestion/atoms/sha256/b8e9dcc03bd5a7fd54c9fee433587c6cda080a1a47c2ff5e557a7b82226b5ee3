@@ -1,0 +1,137 @@
+**Theorem 7.2 (Complement bound and arbitrary weights through length six).**
+For every positive activity vector and every site
+distribution,
+
+$$
+C_{\lambda,\omega}
+=H_{\lambda^{-1},\omega}+\sum_i\omega_i\Pi_i^{\rm blocked},
+\qquad \delta\ge D_{\mathcal M}
+\quad\text{for every matching }\mathcal M.
+\tag{7.3}
+$$
+
+At every length $2\le n\le6$ these operators satisfy
+
+$$
+\gamma(\omega)+\Lambda(\omega)\le1,
+\qquad\Gamma(r,\omega)=r\gamma(\omega)
+\quad(0\le r\le1).
+\tag{7.4}
+$$
+
+Proof. On an oriented legal pair the activity-law
+projection has the matrix
+
+$$
+K_i=\begin{pmatrix}
+q_i&-\sqrt{q_i(1-q_i)}\\
+-\sqrt{q_i(1-q_i)}&1-q_i
+\end{pmatrix}.
+\tag{7.5}
+$$
+
+The parity conjugation reverses the off-diagonal sign.
+Its complement exchanges $q_i$ and $1-q_i$ and has
+negative off-diagonal entries, giving the projection
+for reciprocal activity. On a blocked singleton,
+$K_i=0$ and its complement is identity. Since
+$\sum_i\omega_i=1$, these pair and singleton
+calculations prove the first identity in (7.3).
+
+For an adjacent pair $\{i,j\}$ fix the complete
+exterior word. When both sites are externally free,
+the allowed pair states are $00,10,01$. The two unit
+projector vectors have inner product $\sqrt{q_iq_j}$.
+Their weighted sum has eigenvalues
+$0,d_e,\omega_i+\omega_j-d_e$; its complementary
+operator therefore has minimum $d_e$. When one site
+is externally blocked, its complement contributes
+its entire weight, and the other complement is
+nonnegative. The minimum is at least $\omega_i$ or
+$\omega_j$, respectively. When both are blocked,
+the complement equals $(\omega_i+\omega_j)I$.
+The expression (7.2) gives
+$0\le d_e\le\min(\omega_i,\omega_j)$, so every
+exterior sector satisfies
+
+$$
+\omega_i(I-SK_iS)+\omega_j(I-SK_jS)\succeq d_eI.
+\tag{7.6}
+$$
+
+Sum over a matching and keep the nonnegative
+unmatched terms. This proves the second part of (7.3).
+In particular, if an adjacent pair has positive
+weights then $d_e>0$, because $q_iq_j<1$.
+The complementary operator has positive minimum
+energy and is not a frustration-free zero-ground
+operator.
+
+If any $\omega_i=0$, the centered occupation
+$s_i-\rho_i$ is nonconstant and is unchanged by
+every remaining site update. Its tangent vector
+$D(s_i-\rho_i)$ is killed by those projections.
+Thus $\gamma=0$; since $H\preceq I$, the inequality
+in (7.4) follows. It suffices to prove the result
+when every weight is positive. Length two follows
+from Proposition 6.3's trace calculation and length
+three from Theorem 5.2's two-projection argument.
+
+For lengths four through six, delete selected
+exclusion edges, splitting the physical path into
+blocks of lengths two or three. Write $\Omega_0$
+for the enlarged legal carrier, $H_0$ for the block
+operator with exactly the same activities and weights,
+and $J:\mathbb R^{B_n}\to\mathbb R^{\Omega_0}$ for
+the coordinate embedding. Then
+
+$$
+H_{\lambda,\omega}=J^{\mathsf T}H_0J-R,\qquad
+R_{ss}=\sum_{\substack{i:\ s\to s\cup\{i\}\text{ legal in }\Omega_0\\
+s\to s\cup\{i\}\text{ forbidden in }B_n}}\omega_iq_i\ge0.
+\tag{7.7}
+$$
+
+Indeed, surviving off-diagonal toggles have the
+identical activity odds (7.5). An insertion newly
+forbidden by the restored exclusion contributes
+only its $\omega_iq_i$ diagonal entry to the
+compression, and this is precisely the subtracted
+term. A removal of an occupied site remains legal.
+Thus (7.7) accounts for every entry. The auxiliary
+carrier is used only for comparison.
+
+For block $j$, let $s_j$ be its total inherited
+weight, $g_j$ its gap, and $\Lambda_j$ its maximum
+eigenvalue. Scale the length-two or length-three
+result by $s_j$ to obtain $\Lambda_j\le s_j-g_j$.
+Put $D_0=\sum_jg_j$. The tensor-sum operator $H_0$
+has maximum at most $\sum_j(s_j-g_j)=1-D_0$.
+Choosing either a ground vector or a first-excited
+vector independently in each of the $k$ blocks
+gives $2^k$ orthogonal eigenvectors with energy
+at most $D_0$.
+
+Let $c_0=|\Omega_0|-|B_n|$, with eigenvalues indexed
+in increasing order starting at 1. Compression
+interlacing and $R\succeq0$ give
+
+$$
+\gamma(\omega)=\lambda_2(H_{\lambda,\omega})
+\le\lambda_{c_0+2}(H_0),\qquad
+\Lambda(\omega)\le\lambda_{\max}(H_0).
+\tag{7.8}
+$$
+
+The required dimension counts are
+
+| $n$ | Block lengths | $|\Omega_0|$ | $|B_n|$ | $c_0+2$ | $2^k$ |
+|---|---|---:|---:|---:|---:|
+| 4 | $2+2$ | 9 | 8 | 3 | 4 |
+| 5 | $2+3$ | 15 | 13 | 4 | 4 |
+| 6 | $2+2+2$ | 27 | 21 | 8 | 8 |
+
+Thus $\gamma\le D_0$ and $\Lambda\le1-D_0$ in
+all three cases. Equation (5.8) then yields (7.4).
+$\square$
+

@@ -1,0 +1,38 @@
+**Proposition 5.2 (finite rational comparisons).** With all source coordinates varying in Appendix 12, all three systems satisfy
+
+| System | Strict bound for $q$ | Strict bound for $\iota$ |
+| --- | --- | --- |
+| $\mathsf e$ | $0.000060$ | $0.000060$ |
+| $\mathsf7$ | $0.010$ | $0.040$ |
+| $\mathsf6$ | $0.000172$ | $0.00925$ |
+
+Starting with $w^{(0)}=r$, apply eight times
+
+$$
+w_i^{(j+1)}=\sup|(RF(c,I))_i|+\sum_k\sup|(E_{\rm def})_{ik}|w_k^{(j)}.
+$$
+
+The resulting root enclosures are the exact intervals in Appendix 15. Embedding the event root into either branch box has coordinate margin greater than $9.99\cdot10^{-9}$ and multiplier margin greater than $9.999\cdot10^{-7}$. Its multiplier lies strictly between the two endpoints asserted in Theorem 1.4. The implicit branch derivatives satisfy throughout $I$
+
+$$
+-0.000216<\frac{dp_4^{\mathsf7}}{d\lambda}<-0.000215,\qquad
+0.000015<\frac d{d\lambda}P_4^{\mathsf6}(x_4)<0.000040.
+$$
+
+Proof. This is finite interval substitution into Definitions 2.2, 4.1–4.2 and 5.1. Appendices 12–15 give every input, preconditioner and refined enclosure. In particular the exact $q,\iota$ pairs are included in Appendix 14; comparison with the rational thresholds above is by cross multiplication. Matrix $R$ multiplies precisely the row order in Definition 4.2. One must not interleave value and derivative rows without permuting its columns.
+
+For an explicit derivative comparison choose the rational decimal vector $v$ in Appendix 17 and bound
+
+$$
+\|X'-v\|_r\le\frac{\|R(Jv+F_\lambda)\|_r}{1-q},\qquad
+\|z\|_r=\max_i|z_i|/r_i.
+$$
+
+The right side is less than $28$ on seven and $0.352$ on six. This bounds each coordinate error by $28r_i$ or $0.352r_i$. On six use stationarity, not a vanishing unused value, to obtain
+
+$$
+\frac d{d\lambda}P_4(x_4)=\Gamma_{{\rm num},4}(x_4)\cdot Y'-W_{{\rm num},4}(x_4).
+$$
+
+Direct outward evaluation gives the displayed strict signs. This derivative concerns the cleared polynomial; away from the event it is not identified with the derivative of $P_4/d_1$. To reproduce the refined intervals use the fixed defect matrix from the broad box in every width iteration. Strict containment margins follow by subtracting each embedded refined event endpoint from its branch-box endpoint, including the multiplier endpoints. No root sampling is used. $\square$
+

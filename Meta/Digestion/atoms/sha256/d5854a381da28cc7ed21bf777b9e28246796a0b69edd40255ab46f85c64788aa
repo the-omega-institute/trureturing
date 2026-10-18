@@ -1,0 +1,84 @@
+**Proposition 4.5 (Exact nonzero defects and the forcing qualification).** Under this same law,
+
+$$
+e_L(0)=e_R(0)=\frac9{62}>0.
+\tag{4.5}
+$$
+
+Proof. Since $q=X_0$, these defects are the respective one-sided conditional Brier risks. Use the six quotient classes and their masses $\pi$ from Proposition 4.2; quotient path weights include both original hidden lifts. All sums below run over $z\in\mathbb Z/3\mathbb Z$.
+
+The whole past identifies $Q_0$. The actual outgoing rule gives $p_R(0)=p_z$ on $Q_0=F_z$ and $p_R(0)=0$ on $Q_0=T_z$. The joint masses for $X_0=0,1$ on $Q_0=F_z$ are respectively $\pi(F_z)(1-p_z),\pi(F_z)p_z$; on $Q_0=T_z$ they are $\pi(T_z),0$. These are also the whole-past conditional probabilities integrated over each class, because the future output law given that past depends only on $Q_0$. Therefore
+
+$$
+e_R(0)=\sum_z h\bigl(\pi(F_z)(1-p_z),\pi(F_z)p_z\bigr)
+=2c\sum_z(1-p_z)=3c=\frac9{62}.
+$$
+
+For the left side, define two normalized measures on the entire future $X_{1:\infty}$. Under $\mathcal R_z$, the first bit $X_1$ is zero and the remaining process starts at time two in class $F_z$. Under $\mathcal S_z$, $X_1=1$ and the remaining process starts at time two in class $T_{z+1}$. Both have initial residue $Z_1=z$. Theorem 4.4 and the positive actual weights below make these six measures mutually singular: $X_1$ distinguishes the two types, and the future-measurable $Z_1$ distinguishes their residues. This does not recover the initial F/T phase.
+
+For a measurable future event $D$, put $\mu_x(D)=J_\theta(X_0=x,\ X_{1:\infty}\in D)$. The complete joint future submeasures are
+
+$$
+\mu_0=\sum_z(a_z\mathcal R_z+d_z\mathcal S_z),\qquad
+\mu_1=\sum_z b_z\mathcal R_z,
+\tag{4.6}
+$$
+
+where the actual two-edge weights give
+
+$$
+\begin{aligned}
+a_z
+&=\pi(F_z)(1-p_z)^2+\pi(T_z)(1-p_z)
+=\pi(F_z)(1-p_z),\\
+b_z
+&=\pi(F_{z-1})p_{z-1}=2c=\pi(T_z),\\
+d_z
+&=\pi(F_z)(1-p_z)p_z+\pi(T_z)p_z
+=\pi(F_z)p_z=2c.
+\end{aligned}
+$$
+
+In the first line the two center-zero paths are $F_z\xrightarrow{0}F_z\xrightarrow{0}F_z$ and $T_z\xrightarrow{0}F_z\xrightarrow{0}F_z$. In particular the latter has weight $\pi(T_z)(1-p_z)$: its first zero is certain, while its second zero has probability $1-p_z$. The center-one path is $F_{z-1}\xrightarrow{1}T_z\xrightarrow{0}F_z$. The two terms in $d_z$ similarly end at $T_{z+1}$ after a center zero and a future one. These are all possibilities under (4.1); a center one followed by a future one is impossible.
+
+The simplifications use the stationary incoming-zero mass
+
+$$
+\pi(F_z)(1-p_z)+\pi(T_z)=\pi(F_z).
+$$
+
+Thus $a_z+b_z=\pi(F_z)$ and $\sum_z(a_z+b_z+d_z)=\sum_z(\pi(F_z)+\pi(T_z))=1$. The $X_1=0$ submeasure has total mass $22/31$, and the $X_1=1$ submeasure has total mass $9/31$.
+
+Taking the density of $\mu_1$ with respect to $\mu_0+\mu_1$ determines the actual future-only posterior on every component: it is $b_z/(a_z+b_z)=p_z$ on $\mathcal R_z$ and zero on $\mathcal S_z$. Consequently
+
+$$
+\begin{aligned}
+e_L(0)
+&=\sum_z\bigl(a_zp_z^2+b_z(1-p_z)^2\bigr)
+=\sum_z h(a_z,b_z)\\
+&=\sum_z\pi(F_z)p_z(1-p_z)=\frac9{62}.
+\end{aligned}
+$$
+
+The omitted forcing neighbors also have explicit positive contributions. Put $A_-=\{X_{-1}=1\}$ and $A_+=\{X_1=1\}$. Almost surely $A_-$ is the union of $Q_0=T_z$, so its future submeasure is
+
+$$
+J_\theta(A_-,\ X_{1:\infty}\in\cdot)
+=\sum_z\pi(T_z)\bigl((1-p_z)\mathcal R_z+p_z\mathcal S_z\bigr).
+$$
+
+Here $q=X_0=0$, while $p_L(0)$ equals $p_z$ on the $\mathcal R_z$ part and zero on the $\mathcal S_z$ part. For the right defect on $A_+$, the $Q_0=T_z$ part has $p_R(0)=0$; the $Q_0=F_z$ part has weight $\pi(F_z)(1-p_z)p_z$ and $p_R(0)=p_z$. Hence
+
+$$
+\begin{aligned}
+\mathbb E_P[\mathbf1_{A_-}(q-p_L(0))^2]
+&=\sum_z\pi(T_z)(1-p_z)p_z^2\\
+&=\mathbb E_P[\mathbf1_{A_+}(q-p_R(0))^2]
+=2c\left(\frac3{64}+\frac18+\frac9{64}\right)
+=\frac{15}{496}>0.
+\end{aligned}
+\tag{4.7}
+$$
+
+In the original twelve-state notation, the smaller event $H_0=T_0,\ X_1=0$ has future submeasure $\lambda(T_0)(1-p_0)\mathcal R_0=(9/248)\mathcal R_0$. It has $X_{-1}=1$, $q=X_0=0$ and $p_L(0)=1/4$, so its exact defect contribution is $(9/248)(1/4)^2=9/3968$. By contrast, the left defect on $A_+$ and the right defect on $A_-$ vanish because their fields retain those forcing neighbors. Both defects vanish on either forcing event for $r\ge1$, as specified in §1. $\square$
+

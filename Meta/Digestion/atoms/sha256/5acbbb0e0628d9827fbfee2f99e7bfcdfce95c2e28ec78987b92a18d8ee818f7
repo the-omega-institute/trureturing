@@ -1,0 +1,16 @@
+**定义 51.1（带原标签的旋转比较）。** 在纯配对单孔上下文
+
+$$
+D::=\square\mid(D,c)\mid(c,D),\qquad c\in\mathcal T,
+$$
+
+内，将一次局部变换
+
+$$
+((x,y),z)\longleftrightarrow(x,(y,z))
+\tag{JM.145}
+$$
+
+定义为一条旋转边。三个子树非空、左右叶序与每个原标签保留。它是不同实际树之间的比较关系，未将原树取结合律商。$d_{\rm rot}$ 是该图的最短边数；对不存在路径的两个来源不要求有限距离。
+有序二叉树的经典结合多面体背景见 Loday，*Realization of the Stasheff polytope*，[arXiv:math/0212126v1](https://arxiv.org/pdf/math/0212126)，§1的平面二叉树载体和定理1.1、§2.8的局部 Tamari 边；其多面体坐标不作为本卷的 $G$，也不供应 $\rho$ 的祖先深度。
+

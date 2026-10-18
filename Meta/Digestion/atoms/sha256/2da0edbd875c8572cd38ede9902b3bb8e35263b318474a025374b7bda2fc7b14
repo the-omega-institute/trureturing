@@ -1,0 +1,44 @@
+**Theorem 8.1 (quantitative inequality for every original code).** Fix
+$d\le D$ and any analytical probability $\mu$ on the full $S_d$.
+Restrict the same arbitrary correct original complete code to the
+perfect right-subtree scaffold with $n=2^{D-d}$ actual canonical blocks.
+For each positive-mass restricted name fiber $B_e$, choose complete
+witnesses, perform the exact RRN owner lift, and retain the lift of
+$B_e$ as $R_e$. Any valid kernels and disjoint-neighborhood edge set
+$T_e$ then give
+
+$$
+\mu^{\otimes n}(B_e)\le
+\left(\prod_iC_{e,i}\right)
+\prod_{f\in T_e}\left(1-\frac{2\delta_{e,f}}{|W_{e,f}|}\right),
+\qquad
+1\le\sum_e
+\left(\prod_iC_{e,i}\right)
+\prod_{f\in T_e}\left(1-\frac{2\delta_{e,f}}{|W_{e,f}|}\right).
+\tag{OOA.33}
+$$
+
+The sum can be over positive-mass names only. It is a bound on every
+original competitor with its own correlated fibers and arbitrary
+off-target late queries, without independently assigning child codes.
+
+Proof. Let the public frontier words be $a_i$ of length $D-d$.
+Every tuple in $S_d^n$ gives an actual source in $\mathcal F_D$.
+The request $Ra_iq$, $q\in W_d$, has length at most $D$. At a fixed
+name and request, the original query is fixed before reply and count.
+Every arbitrary original-root query either lies in the fixed scaffold
+and wrapper cones and is constant, or enters one unique actual donor
+block with an arbitrary finite suffix. FMR canonical all-word
+simulation turns that suffix into a function of one boundary reply in
+that same donor block, or a constant. Equal chosen replies therefore
+give identical predictors and, by correctness for all $k$, equal whole
+target trajectories and equal $\Gamma$.
+
+Consequently the unchanged restricted fiber is admissible, as in
+[NPC, Theorem 7.1][NPC]. NDR saturation and RRN's one-lift identity
+provide $R_e$ without replacing it by independent projections. Theorem
+5.1 bounds its same product mass. The restricted fibers partition a
+probability-one slice; discard zero-mass fibers and sum their inequalities.
+The analytical product law supplies no independent-seed premise, source
+prior, request or extra observation to a reader. $\square$
+

@@ -1,0 +1,30 @@
+**Theorem 13.3 (exact nineteen-point positive-lag normal form).**
+A nineteen-point subset of the source square is two-readable on both
+cuts at every positive lag if and only if, in increasing $d$ order,
+its eighteen edges are six consecutive pure triples, three $AAA$
+and three $BBB$, with the middle edge of each triple of length one.
+Every other pure step has an arbitrary positive integer length,
+subject only to membership in the square. Equivalently the second,
+fifth and eighth changes of each coordinate have unit length.
+All twenty macro words are permitted: if $U=AAA$ and $W=BBB$,
+they are exactly the six-letter words with three $U$ and three $W$,
+whose number is $\binom63=20$.
+
+**Proof.** If the class is readable, (NARC.13.2) at $|C|=19$
+forces $r_a=r_b=10$ and $\sigma=0$. Every edge is pure, so $a$
+is nondecreasing and $b$ nonincreasing. Theorem 13.2 supplies three
+consecutive change triples for each coordinate. Their disjoint union
+is all eighteen edges, so they tile that list by the six stated blocks.
+On a pure edge the $d$ increment is exactly its coordinate length;
+the six middle increments are therefore unit lengths.
+
+Conversely, each such word has nine changes of each coordinate,
+three consecutive change triples with the required middle increments.
+All pure lengths are positive, so $d$ increases strictly and the
+vertices are distinct. The two full-reference trees of Theorem 13.2
+and the positive part of Theorem 10.2 prove all positive lags.
+There is no symmetry or endpoint-label hypothesis in either direction.
+The count twenty chooses the three positions of $U$ among six;
+it counts direction words, not coordinate embeddings or encoders.
+$\square$
+

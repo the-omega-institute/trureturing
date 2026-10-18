@@ -1,0 +1,31 @@
+**Proposition 21.2 (exact common actual solutions).** The full
+complete-template solution set of (COK.104) is exactly
+
+$$
+x_{A_i}=\langle a_i,b_i\rangle,\qquad
+x_{B_i}=\langle b_i,a_{h(i)}\rangle
+\quad(i\in[m]),
+\tag{COK.105}
+$$
+
+for all $2^{2m}$ assignments of the same shared owner bits.
+Every tuple has exactly one seed lift, every seed has prescribed
+block incidence two, and each original block receives its one
+whole weight (COK.103). A length-$\ell$ cycle of $h$ gives a
+cycle on $2\ell$ actual owner blocks; $\ell=1$ gives a
+reciprocal pair.
+
+Proof. The root equation forces branch. The guarded actual owner
+equation forces its $L$ child to be precisely its binary seed
+leaf. Its $R$ child factor, at the other owner's actual reply,
+forces precisely the other specified leaf. These immediate factors
+already force (COK.105); every longer prescribed suffix is then
+its correct leaf factor. Conversely any binary seed assignment
+constructs (COK.105) and satisfies all those equations and guards.
+The actual $L$ replies recover all seeds, giving the inverse
+without multiplicity. Each $a_i$ occurs in $A_i$ and in the
+unique $B_{h^{-1}(i)}$; each $b_i$ occurs in $B_i$ and $A_i$.
+The alternating route through these matchings gives the stated
+cycles. Both source identity and every repeated coordinate are
+unchanged. $\square$
+

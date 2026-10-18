@@ -1,0 +1,18 @@
+**Lemma 5.2 (coverage by original pruning).** If $H_b(u,n)$ for any
+$n$, there is a unique $S\in\Gamma(C)$ and a unique valuation
+$x_p\in\mathcal T$ of its variables with $u=S[\mathbf x]$.
+The pattern is determined by $u,C$ alone and is independent of $n$.
+For a fixed pattern, filling is injective.
+
+Proof. Compare $u$ with $C$ from the root. At a hole of $C$, retain
+the actual entire original subtree as $X_p$. At an original leaf,
+stop and retain its original label. At an original pair, $\rho^n$
+retains that pair. Thus $C$ cannot have a concrete leaf there when
+$H_b(u,n)$ holds; if $C$ is a pair, descend to both children. This
+is exactly (NRF.15) and is forced at every step. Each variable value
+is recovered from the original subtree at its stated address.
+Conversely every valuation fills the same pattern, and these present
+addresses recover its values. The alternatives leaf/pair/variable
+are distinguished by this pruning rule, so different patterns do
+not represent the same pruned original. $\square$
+

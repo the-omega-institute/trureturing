@@ -1,0 +1,40 @@
+**推导 2.1（固定分支的反向关系）。** 在定义 1.1 下，对每个实 $`t`$，
+
+```math
+\mathcal F(-t)=-e^{i\pi t}\mathcal F(t).
+```
+
+证明是完整的指数代入：
+
+```math
+\begin{aligned}
+-e^{i\pi t}\mathcal F(t)
+&=-\frac{e^{at+i\pi t}-e^{-at}}{\sqrt5}\\
+&=\frac{e^{-at}-e^{at+i\pi t}}{\sqrt5}
+=\mathcal F(-t).
+\end{aligned}
+```
+
+于是整数时恢复 [Koshy 的负指标 Binet 关系](../../../Library/notes/koshy2001fibonacci.md)：
+
+```math
+F_{-n}=(-1)^{n+1}F_n,\qquad
+F_{-1}=1,\quad F_{-2}=-1,\quad F_{-3}=2,\quad F_{-4}=-3,\quad F_{-5}=5.
+```
+
+非整数时不能把 $`(-1)^{t+1}`$ 当成只有正负两值的实符号。例如本分支给
+
+```math
+\mathcal F(1/2)=\frac{\sqrt\varphi+i/\sqrt\varphi}{\sqrt5},\qquad
+\mathcal F(-1/2)=\frac{1/\sqrt\varphi-i\sqrt\varphi}{\sqrt5}
+=-i\mathcal F(1/2).
+```
+
+若记 $`R(t)=\Re\mathcal F(t)`$、$`I(t)=\Im\mathcal F(t)`$，则实部的准确反向式是
+
+```math
+R(-t)=-\cos(\pi t)R(t)+\sin(\pi t)I(t).
+```
+
+证明只须展开 $`-e^{i\pi t}(R+iI)`$。半整数例中 $`R(-1/2)`$ 与 $`R(1/2)`$ 的绝对值不同，已排除“只对实部交替乘正负一”的扩展。
+

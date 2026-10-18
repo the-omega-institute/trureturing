@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-renewal-closure-separation-and-observable-dependence"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

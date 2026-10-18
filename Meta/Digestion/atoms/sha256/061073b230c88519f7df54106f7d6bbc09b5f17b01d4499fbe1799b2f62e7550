@@ -1,0 +1,91 @@
+**Proposition 19.1 (exact common reweighting and its missing functionals).**
+For an endpoint law let $\mu_0,\mu_1$ be its pure and saturated
+coefficient measures on the circle. Write $c_{\rm src}$ for the
+source amplitude $c$ in $S$ and define the positive polynomials
+$$
+\begin{aligned}
+D_c&=h_0^2\delta+(b^2/\alpha)u^2+(d^2/\beta)v^2>0,\\
+N_c&=h_1^2h_2^2\delta+(a^2h_2^2/\alpha)u^2
+                      +(c_{\rm src}^2h_1^2/\beta)v^2>0.
+\end{aligned}
+\tag{GC.84}
+$$
+Then $\mathfrak c=N_c/D_c$. Set
+$d\sigma_0=d\mu_0$ and $d\sigma_1=D_c^{-1}d\mu_1$.
+The same joint constraints, contrast and height become exactly
+$$
+\begin{gathered}
+\int hh^T\,d\sigma_0+\int D_chh^T\,d\sigma_1=I_3,
+\qquad t\int N_cn_hn_h^T\,d\sigma_1=M,\\
+K=\int|u|\,d\sigma_0+\int D_c|u|\,d\sigma_1,\\
+J_t=\int|\ell|\,d\sigma_0+
+                   \int|D_c\ell+tN_cf|\,d\sigma_1.
+\end{gathered}
+\tag{GC.85}
+$$
+The polynomial moment equations alone have a three-plus-five-node
+representation. That representation does not in general preserve
+$K$ or $J_t$, and gives no eight-low optimal theorem.
+
+Proof. The substitution $d\mu_1=D_c\,d\sigma_1$ cancels the
+capacity denominator in each failure covariance. Since $D_c>0$,
+$D_c|\ell+tN_cf/D_c|=|D_c\ell+tN_cf|$, proving the height
+identity with the absolute value in the correct place. Conversely
+a saturated $\sigma_1$ mass $w$ at $h$ recovers coefficient mass
+$D_c(h)w$ and capacity $tN_c(h)/D_c(h)$; pure masses remain
+unchanged. Positivity follows from $D_c,N_c>0$, and normalization
+is the first diagonal entry of the SAME live Gram equation in
+(GC.85). Thus reversal preserves one common law and its full $M$,
+not independently optimized sheet marginals.
+
+The entries of $hh^T$ are trigonometric polynomials of degree at
+most two. The entries of $D_chh^T$ and $N_cn_hn_h^T$ have degree
+at most four. Reuse the scalar circle moment representation theorem
+of Curto–Fialkow, *Recursiveness, Positivity, and Truncated Moment
+Problems*, Houston J. Math. 17 (1991), 603–635,
+[Theorem 6.12, printed p.634](https://www.math.uh.edu/~hjm/v017n4/0603CURTO.pdf).
+The Toeplitz matrix of moments of orders $-d,\ldots,d$ of an
+existing positive circle measure is positive semidefinite and has
+rank at most $d+1$. That theorem, in both its singular and full-rank
+cases, supplies a representing measure with its rank many nodes.
+Applying it with $d=2$ to $\sigma_0$ and $d=4$ to $\sigma_1$
+preserves their full polynomial spaces with at most three and five
+nodes. Zero measures need no nodes; singular moment matrices only
+reduce these bounds. Recovering coefficient masses as above preserves
+all joint moment equations and legal capacities.
+
+The unpreserved tests in (GC.85) are $|u|$, $D_c|u|$ and the two
+absolute-height functions. They are not among those polynomial
+moment tests. Theorem 13.1 already gives original common laws with
+the same blocks and same failure law but different contrasts;
+Theorem 14.2 gives the further same-contrast height obstruction
+under its signed/full-support assumptions. Thus preserving polynomial
+moments is an insufficient justification for preserving these
+operational functionals.
+
+There is an additional exact degree-four contrast counterexample.
+Let $\zeta_0$ and $\zeta_1$ be uniform probability measures at
+$$
+\phi_j=j\pi/4\quad\hbox{and}\quad
+\widetilde\phi_j=\pi/8+j\pi/4,\qquad j=0,\ldots,7.
+\tag{GC.86}
+$$
+For each $n=1,2,3,4$ the geometric sum
+$8^{-1}\sum_{j=0}^7e^{in j\pi/4}$ vanishes. Rotation multiplies
+it by $e^{in\pi/8}$, so both laws have identical real trigonometric
+moments through degree four, including the common mass one.
+Nevertheless
+$$
+\int|\cos\phi|\,d\zeta_0=\frac{1+\sqrt2}{4},\qquad
+\int|\cos\phi|\,d\zeta_1=
+ \frac{\sqrt{2+\sqrt2}+\sqrt{2-\sqrt2}}4.
+\tag{GC.87}
+$$
+The numerators are positive, and the square of the second numerator
+is $4+2\sqrt2$, whereas that of the first is $3+2\sqrt2$.
+The second contrast is strictly larger. Equal degree-four moments
+therefore do not determine contrast even without the height issue.
+These two scalar laws are a moment counterexample, not a claim of
+original optimality or a replacement for the full common-law
+embeddings above. $\square$
+

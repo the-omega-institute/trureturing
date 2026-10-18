@@ -1,0 +1,100 @@
+**Definition 89.1 (one source orbit and its declared comparison geometry).**
+Use the free ordered source and forward substitution of the base volume,
+Definition 1.1, equivalently [Process44, Definition 44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+Fix INITIAL to be the actual one-leaf tree $\alpha$, and put
+
+$$
+T_n=\rho^n(\alpha),\qquad
+h_n=(\underbrace{\rho,\ldots,\rho}_{n\text{ forward updates}}),\qquad
+s_n=(\mathrm{INITIAL}=\alpha,h_n,\mathrm{current}=T_n),
+\quad n\in\mathbb N_0.
+\tag{89.1}
+$$
+
+Every $h_n$ is a finite legal history in that contract. It has one current
+register, no graft, no Read and no Stop yet. Any chosen finite prefix may be
+stopped under the original contract; no later update is appended to a stopped
+history. Each $T_n$ retains its entire ordered labelled tree, including every
+bracket and occurrence. The collection $\mathcal S=\{s_n:n\in\mathbb N_0\}$
+is a mathematical family of finite snapshots of the same forward lineage,
+not an acquired simultaneous archive and not a source after an infinite
+execution. Retaining, reconstructing or comparing these snapshots as actual
+records would require its own acquisition and retention contract. No such
+operation is needed to define this family.
+
+Take the carrier to be an identical copy $X=\{x_n:n\in\mathbb N_0\}$ of
+these complete states, with $\chi(s_n)=x_n$. Thus $\chi$ has singleton
+fibres and does not identify states with equal direction, composition,
+prefix reply or leaf position. Declare
+
+$$
+d(x_m,x_n)=|m-n|^{1/3},\qquad
+\mu(\{x_n\})=1,\qquad
+F(x_n)=x_{n+1}=\chi(s_{n+1}).
+\tag{89.2}
+$$
+
+The exponent in this metric is a supplied scale choice. It is not inferred
+from a three-component readout. The standard operation $d_0\mapsto d_0^a$,
+$0<a\le1$, is snowflaking; its metric property is stated in
+Naor–Neiman, [*Assouad's theorem with dimension independent of the snowflaking*,
+Introduction, p. 1](https://arxiv.org/pdf/1012.2307v1).
+Only that elementary metric construction is used here, not an embedding
+theorem or an assertion about an ambient Euclidean dimension. The measure in
+(89.2) counts complete source states, not leaves of $T_n$, spatial sites of
+an apparatus or quotient multiplicities. Balls are closed:
+$B_d(x,R)=\{y:d(x,y)\le R\}$. A strict $\varepsilon$-packing consists of
+points with pairwise distance greater than $\varepsilon$.
+
+Supply one comparison operator on $\ell^2(X,\mu)$, with unit conductance
+on each adjacent pair:
+
+$$
+\begin{aligned}
+(Lu)_0&=u_0-u_1,\\
+(Lu)_n&=2u_n-u_{n-1}-u_{n+1}\quad(n\ge1),\\
+\mathcal E(u)&=\langle u,Lu\rangle
+ =\sum_{n\ge0}|u_{n+1}-u_n|^2,\qquad P=I-L/2,\\
+(Pu)_0&=(u_0+u_1)/2,\qquad
+(Pu)_n=(u_{n-1}+u_{n+1})/2\quad(n\ge1).
+\end{aligned}
+\tag{89.3}
+$$
+
+Here $u_n=u(x_n)$. The propagation clock is one unit per application of
+$P$; the normalization $L=2(I-P)$ is fixed throughout. The root boundary
+is reflecting, with holding probability $1/2$ at $x_0$; there is no killing
+at infinity and no screening term. The local energy of a set $A$ is
+$\mathcal E_A(u)=\sum_{x_n,x_{n+1}\in A}|u_{n+1}-u_n|^2$.
+All nonholding transitions have declared metric length one. The reverse
+comparison transition $x_{n+1}\to x_n$ is not a native source action:
+Process44's source contract supplies forward $\rho$, not an inverse update,
+a reset or a copied old current register. Equation (89.3) is an additional
+analytic law on the state carrier; it does not grant those operations.
+
+For $N\in\mathbb N_0$, let $D_N=\{x_0,\ldots,x_N\}$ and define $L_N^D$
+by restricting this same $L$ with zero exterior value at $x_{N+1}$.
+The superscript distinguishes this outer Dirichlet killing from the
+unchanged reflecting root. In particular
+
+$$
+\mathcal E_N^D(u)
+ =\sum_{n=0}^{N-1}|u_{n+1}-u_n|^2+|u_N|^2,
+\qquad P_N^D=I-L_N^D/2.
+\tag{89.4}
+$$
+
+The empty sum applies when $N=0$. This is a killed restriction of the
+declared propagation, not a new finite reflecting propagation. Its field
+Green is $G_N=(L_N^D)^{-1}$, and the nonnegative unscreened occupation
+Green of the infinite comparison law is the extended-valued kernel
+
+$$
+G(x,y)=\frac12\sum_{j=0}^{\infty}P^j(x,y).
+\tag{89.5}
+$$
+
+The factor $1/2$ matches $L=2(I-P)$ and the counting measure. No subtraction
+of a recurrent constant, pseudoinverse, finite-time truncation or screened
+inverse is meant by (89.5).
+

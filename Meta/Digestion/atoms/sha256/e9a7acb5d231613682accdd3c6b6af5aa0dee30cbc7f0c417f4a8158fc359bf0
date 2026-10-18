@@ -1,0 +1,21 @@
+**Proposition 13.4 (the unrestricted pressure boundary).** This
+restricted test is not the verifier of Definition 11.1. At the same
+full-support law,
+
+$$
+\beta_3(\mu)\ge\frac{512}{619}>\frac14>Q.
+\tag{GDB.61}
+$$
+
+Proof. The entire sixteen-state set of perfect height-two four-leaf
+trees is a one-block complete native solution set: all internal
+targets are branch constants and every leaf target uses its own
+guarded reply. Its mass is $(8\cdot63+8)/619=512/619$.
+This is a legitimate competitor omitted by the graph grammar.
+$\square$
+
+Thus the evaluated sector gives neither an unrestricted cap nor
+a new rate endpoint. Its global statistic is the common syndrome
+$Hs$ and the dimension of its affine fibers. Arbitrary native joint
+weights are not asserted to depend only on this syndrome.
+

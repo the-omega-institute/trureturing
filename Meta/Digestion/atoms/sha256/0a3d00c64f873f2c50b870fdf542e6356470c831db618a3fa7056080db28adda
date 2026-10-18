@@ -1,0 +1,62 @@
+**Assumption 1.4 (credited correspondences and rate suppliers).** The
+native sources cited here are their committed mathematical statements
+at revision `f586077f0b16eb03fc18e753a30e4b6b68996dae`.
+[RRN, Theorems 4.2, 5.2 and 6.1][RRN] give a same-solution
+representative-reply normalization and its two-way owned-seed language.
+In that language each seed $s_c$ has domain $T_c\subseteq\mathcal A$
+and a distinct actual owner port $o_c$. Each port prescribes a constant
+in $G_q$ or $z_{i,q}(s)=B_{i,q}(s_c)\in G_q$. At its owner,
+
+$$
+h(B_{o_c}(a))=a\qquad(a\in T_c).
+\tag{OCB.8}
+$$
+
+Repeated seed occurrences remain the same variable. A seed assignment
+is realizable precisely when each prescribed full factor vector is
+that of an actual block $x_i(s)\in S_d$, necessarily unique. Its local
+potential is zero if reconstruction fails and otherwise
+$\Phi_i(s)=w_i(x_i(s))$. RRN gives the bijection and identity
+
+$$
+Z(\mathcal N;\boldsymbol w)=\sum_{s\in\prod_cT_c}\prod_i\Phi_i(s)
+=\Omega_{\boldsymbol w}(C_\Theta).
+\tag{OCB.9}
+$$
+
+[CBN, Theorems 2.2, 4.2 and 6.2][CBN] supply actual constructor
+reconstruction and its equality-aware representation with these same
+once-owned weights. Neither supplier factors an arbitrary joint weight.
+A general nonnegative $W(x_1,\ldots,x_n)$ is also transported by the
+same bijection, without replacing it by a product.
+
+Writing $K_d(n)$ for the unrestricted admissible cover number,
+[FMR, §§3 and 6][FMR] and [NPC, §§5–7][NPC] supply
+
+$$
+\begin{aligned}
+\sigma_d&=\inf_{n\ge1}n^{-1}\log_2K_d(n),
+&2^{-\sigma_d}&=\min_{\mu\in\Delta(S_d)}\beta_d(\mu),\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_d2^{-d}\sigma_d,
+&0&\le\lambda-2^{-d}\sigma_d\le2^{-d}\phi,
+\end{aligned}
+\tag{OCB.10}
+$$
+
+where $U_0=1$, $U_{h+1}=1+U_h^2$ and
+$\phi=\lim_h2^{-h}\log_2U_h\le1$. A probability cap
+$\beta_d(\mu)\le C$ gives
+
+$$
+M_1(D)\ge\left\lceil C^{-2^{D-d}}\right\rceil\quad(D\ge d),
+\qquad\lambda\ge-2^{-d}\log_2C.
+\tag{OCB.11}
+$$
+
+All logarithms and finite entropies below have base two. These suppliers
+and the mature finite entropy, rectangular-relation, sum-product and
+linear-programming ingredients are credited within the proofs. The new
+native deductions carry ordinary proofs here; no kernel verification or
+worldwide novelty is asserted.
+

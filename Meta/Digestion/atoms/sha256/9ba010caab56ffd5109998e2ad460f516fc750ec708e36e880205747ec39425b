@@ -1,0 +1,42 @@
+**Corollary 4.3 (extreme balanced collisions cannot supply two boundary
+thresholds).** Suppose a collision in Theorem 4.2 has no polarity defect
+and its two live residuals are respectively AND on $Y\cup U$ and OR
+on $X\cup U$. Then its equal private size $m$ satisfies
+
+$$
+2\le m\le\min(k-2,n-k-1).                            \tag{PE.14}
+$$
+
+In particular this extreme geometry cannot supply the necessary
+collision at $k=3$ or $k=n-2$. This leaves the nonextreme and
+polarity-defect alternatives of Theorem 4.2 in scope.
+
+Proof. Theorem 3.1 gives $a=b=m>0$ and $C_X=C_Y$.
+Since original positions have distinct individual costs, $m=1$ is
+impossible. The common selected state queries a fresh coordinate for
+both histories, so $u\ge1$. Write $j=|I|$. The extreme residuals give
+
+$$
+h=k-m-u,\qquad g=k-1.                               \tag{PE.15}
+$$
+
+The two histories must disagree on some old bit of $I$. Indeed, their
+supports are incomparable, so neither path is a prefix of the other;
+at their first different reply they query the same literal. A cube
+constant cannot be that reply, so its coordinate is in both supports
+and its bits differ. Stationarity and freshness justify this comparison
+even though later query orders differ.
+
+On $T$, the $I$ hit count is $g-m$. If it were zero, then
+$g=m$, $k=m+1$, and $h=1-u$. Nonnegativity and $u\ge1$ force
+$h=0,u=1$. Both histories would be all zero on $I$, contrary to the
+preceding disagreement. Thus $g-m\ge1$, giving $m\le k-2$.
+On $S$, the $I$ hit count is $h$. If $h=j$, then the $T$ hit count
+on $I$ would be $g-m=h+u-1=j+u-1$. For $u>1$ this is impossible;
+for $u=1$ both histories are all one on $I$, again contradicting
+disagreement. Thus $j-h\ge1$. Since
+$n=j+2m+u$ and $k=h+m+u$, this gives $n-k=j+m-h\ge m+1$,
+proving the other upper bound. PCA Proposition 36.1 supplies the
+already established onset $n=7,k=4,m=2$; it is not a new example
+here. $\square$
+

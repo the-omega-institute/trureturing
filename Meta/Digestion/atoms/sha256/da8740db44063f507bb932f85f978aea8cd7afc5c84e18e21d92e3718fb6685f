@@ -1,0 +1,41 @@
+**引理 16.2（投影同时控制角度与幅度）。** 设 $\Delta>0$ 且 $\chi(t)=\sigma f_i\ne0$。令 $u=w/|w|$，则
+
+$$
+P:=\sigma x_0\cdot u>0,\qquad
+P\ge\frac{q_2}{q_1},\qquad
+P\ge\sqrt{\frac{\Delta}{AB}}\,q_0.
+$$
+
+证明。定理4.3的尾标架给
+
+$$
+x_1=\sigma r^ms^ng_i,\qquad
+x_2=\sigma r^ns^{m+n}g_{i+1},\qquad
+w=q_1q_2g_{i+2},\quad r=\sqrt B,\ s=\sqrt\Delta.
+$$
+
+由引理4.2，非零标签的所选描述子没有 $C$ 因子，可将 $\sigma$ 提出，并选初值符号 $Z\in\{a,b,K,-U,V\}$，使 $x_0=\sigma A^iB^j\Delta^kZ$。这里 $i,j,k$ 为描述子指数，而非标签索引。赋予 $A,B,C,\Delta$ 双次数 $(2,0),(0,2),(1,1),(2,2)$，赋予 $a,b,K,U,V$ 双次数 $(1,0),(0,1),(1,1),(2,1),(1,2)$。完整表的每一项都保持孩子双次数的和；故对 $Z$ 的次数 $(m_Z,n_Z)$ 有
+
+$$
+m=2i+2k+m_Z,\qquad n=2j+2k+n_Z.
+$$
+
+对应正向投影如下；各行的 $u$ 是该符号实际所属尾分支的 $g_{i+2}$。
+
+| 16初值符号 $Z$ | $Z\cdot u$ | $(Z\cdot u)/|Z|$ |
+| --- | --- | --- |
+| 16投影 $a$ | $s/r$ | $\sqrt{\Delta/(AB)}$ |
+| 16投影 $b$ | $r$ | $1$ |
+| 16投影 $K$ | $s$ | $1$ |
+| 16投影 $-U$ | $s^2/r$ | $\sqrt{\Delta/(AB)}$ |
+| 16投影 $V$ | $rs$ | $1$ |
+
+例如 $a\cdot V=\Delta$、$(-U)\cdot b=\Delta$，而 $|U|^2=A\Delta,|V|^2=B\Delta$，给两个非平凡比值。各投影又恰等于 $(s/r)^{m_Z}r^{n_Z}$。利用 $A=(\Delta/B)(AB/\Delta)$ 得完整恒等式
+
+$$
+P=\left(\frac{AB}{\Delta}\right)^i(s/r)^mr^n
+=\left(\frac{AB}{\Delta}\right)^i\frac{q_2}{q_1}.
+$$
+
+$AB/\Delta\ge1$ 给幅度不等式；投影／范数比值中正单项式相消，给角度不等式。所有所除量在本分支严格为正。
+

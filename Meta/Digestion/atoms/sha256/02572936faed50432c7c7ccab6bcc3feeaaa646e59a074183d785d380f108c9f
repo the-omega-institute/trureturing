@@ -1,0 +1,29 @@
+**Lemma 3.1 (three phases fix each successful linear component).** Fix
+$0<x,l<c$, a sign $s$ and three distinct complex numbers
+$z_1,z_2,z_3$ on the unit circle. Let $K:\mathcal V\to\mathbb C^5$
+be linear. If for each of these phases
+
+$$
+K(\sqrt Z e+z\sqrt r n_s(x))
+\in\mathbb C(\sqrt Z e+z\sqrt r n_s(l)),
+\tag{RB.8}
+$$
+
+including zero images, then one $\lambda\in\mathbb C$ satisfies
+
+$$
+Ke=\lambda e,\qquad Kn_s(x)=\lambda n_s(l).
+\tag{RB.9}
+$$
+
+Proof. Wedge the image with its required target. The result is a
+vector-valued polynomial of degree at most two in $z$ with three distinct
+zeros. In any basis all scalar coefficients therefore vanish. The constant
+term says $Ke\wedge e=0$, so $Ke=\lambda e$. The quadratic term says
+$Kn_s(x)=\nu n_s(l)$. The linear coefficient is then
+$\sqrt{Zr}(\lambda-\nu)e\wedge n_s(l)$. Both amplitudes are nonzero
+and the two directions are independent, so $\nu=\lambda$. This is the
+phase-rigidity argument of Parity Record Transport Lemma 4.1, applied to
+the present uncertain-height input. It requires no phase estimate or
+covariance assumption. $\square$
+

@@ -1,0 +1,78 @@
+**Theorem 4.2 (sharp optimum over the complete defined class).** On
+every graph of Definition 1.4 and for every $A>B>0$, the minimum
+of the sound upper bound (WBF.8), over all data in Definition 2.1,
+is
+
+$$
+\min_{\nu,\boldsymbol\theta,c,\boldsymbol f} F
+=\big[8(A^2+B^2)\big]^{n/2}=T^{n/2}.
+\tag{WBF.19}
+$$
+
+The minimum is attained. This includes arbitrary real positive
+product bases, zero exponents, scalars, and globally compensating
+full-star tables obeying only (WBF.7).
+
+Proof. Fix any feasible certificate and use the one common trial law
+$P$ from Lemma 3.2. Taking its expectation of the logarithm of the
+global pointwise majorant gives
+
+$$
+\log_2c+\sum_v\mathbb E_P\log_2 f_v
+ +\sum_{e\in E}\ell_e\ge na.
+\tag{WBF.20}
+$$
+
+All logarithms are finite. Add (WBF.17) over the vertices and
+substitute (WBF.20). For $\Theta=\sum_v\theta_v$ this gives
+
+$$
+\begin{aligned}
+\log_2F
+&\ge na+h\Theta+
+  \sum_{uv\in E}(\theta_u+\theta_v-1)\ell_{uv}\\
+&\ge na+h\Theta+\sum_{uv\in E}(1-\theta_u-\theta_v)\\
+&=na+2n+(h-4)\Theta.
+\end{aligned}
+\tag{WBF.21}
+$$
+
+In the second line each coefficient $\theta_u+\theta_v-1$
+is nonpositive and $\ell_{uv}\le-1$, so the inequality has the
+displayed direction. The last line uses degree four and $|E|=2n$.
+Summing the edge constraints yields $4\Theta\le2n$.
+Since $h-4\le0$, it follows that
+
+$$
+\log_2F\ge na+2n+(h-4)\frac n2
+=n(a+h/2)=\frac n2\log_2T.
+\tag{WBF.22}
+$$
+
+This lower bound used no local factor identity, no symmetry assumption
+on the certificate data, and no independence of the trial law.
+
+For the converse, take
+
+$$
+\nu_e(0)=\nu_e(1)=\tfrac12,\qquad
+\theta_v=\tfrac12,\qquad c=1,\qquad f_v=4\Phi_v.
+\tag{WBF.23}
+$$
+
+Every edge constraint is equality. Since there are $2n$ edges,
+$\prod_e\nu_e=2^{-2n}$ and $\prod_v4=2^{2n}$; hence
+the global majorant is pointwise equality. At a star,
+
+$$
+\sum_z 2^{-4}(4\Phi_v(z))^2
+=8A^2+8B^2=T.
+\tag{WBF.24}
+$$
+
+Its norm factor is $T^{1/2}$, so $F=T^{n/2}$. This proves the
+opposite inequality and attainment, rather than merely an infimum
+approached by singular data. If $A,B$ are rational, all attaining
+certificate entries, exponents and the scalar are rational; the
+evaluated upper bound can be algebraic. $\square$
+

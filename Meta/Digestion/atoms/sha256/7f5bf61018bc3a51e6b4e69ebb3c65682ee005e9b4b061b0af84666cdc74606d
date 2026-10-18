@@ -1,0 +1,27 @@
+**Proposition 3.2 (common full conditional kernel and exact phase laws).**
+The partition function is $Z=(2\tau_{m,d})^\ell$. Under $P$ the
+phases are independent fair bits. For either hypothesis, for every
+phase vector $f$ and compatible native tuple $g$,
+
+$$
+\Pr_\Theta(G_1=g_1,\ldots,G_\ell=g_\ell\mid F=f)
+       =\prod_{j=1}^\ell K_{f_j}(g_j).
+$$
+
+Both laws are strictly positive on the same $(2^m+1)^\ell$ actual
+tuples, and both give each entire gadget marginal $(K_0+K_1)/2$.
+
+Proof. Disjointness gives a Cartesian product of actual relations and
+a product of their original weights. Successive finite summation
+therefore factors the partition sum into $\ell$ one-gadget sums.
+Lemma 2.5 gives each sum $2\tau_{m,d}$ and each phase mass one
+half after normalization. This proves the product law under $P$,
+including its full conditional formula. Definition 3.1 transfers that
+very full conditional to $Q$. Each $q(f)>0$ and all native
+conditional weights on their respective supports are positive, proving
+the support assertion. Every coordinate of $q$ is fair: both the
+common-bit part and the uniform part have that marginal. Averaging
+the full conditional formula over the other phases therefore gives
+$(K_0+K_1)/2$ for each gadget under both laws. It does not make
+$Q$'s different phases independent. $\square$
+

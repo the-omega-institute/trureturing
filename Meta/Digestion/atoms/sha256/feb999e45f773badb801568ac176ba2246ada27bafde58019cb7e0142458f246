@@ -1,0 +1,18 @@
+**文献表态 35.1（仓内综合与供应边界）。** 本章至第34章是 `repo-derived` 的普通数学综合，不据有界检索主张全球原创或优先性，不新增 Lean 核验。数学源取以下固定版本及准确范围；代码声明阅读不冒充重新编译，数值存在和本地描述不冒充实际操作。
+
+| 35.1 的供应 | 直接复用的内容 | 本卷的连接及边界 |
+| --- | --- | --- |
+| 固定修订 `bc85e5e91a44d5c81c27dadb7c67703046347ec0` 的 `ActualTreeReadoutAcquisition`，`Source/readout/Policy/paid/source_foundation/acquisition_foundation` | 同一不可变原生源、四回复、空历史全域成员目标、正叶必要性及完整根取得 | 第28–29章扩到全域叶敏感任务和每个成员策略的整个正查询 profile；负历史保留完整取得条件。 |
+| 同修订的 `ActualJointResponseCostCore`，`actualVectors/representative/Recipe/phase_foundation/result` | 真实全向量、shortlex、原始口正族同时成本核及全域验证／fallback | 第30章复用该正族结果，证明任意原生原型的叶敏感扩展、独立粗核心及实际上闭区域；不把核心认作总资源最优。 |
+| 同修订的 `ActualCoarseReadoutHistory`，`kappa/kappa_hist/obstruction`；`ActualCoarseReadoutCompletion`，`encodeHistory/compileRaw/cachedExecute/completion_contract` | 分支／缺席商、自己的阶段历史、真实缓存并集、已知存在的粗遍历 | 粗口只用粗字段；已有完成合同不等于原始／粗最优核心相等，第30章独立证明其区域和严格原生分离例。 |
+| 同修订的 `ActualLeafHistoryRigidity.actual_address_geometry` | 正域块与叶历史刚性、实际地址几何 | 保留其原域，不移用组成／深度许诺的单色证书；全域翻叶竞争由第28章承担。 |
+| 同修订的 `GenealogicalFiberTransport`，`sourceEquiv/labelsEquiv/indexedEquiv/fiberEquiv/result` | 实际形状—词分解、Catalan 因子、组成及替换单射 | 第31章限制到同一个实际 $G$ 词纤维并完整运输第三像，因子位于前像叶数；不重复声明一般 Catalan 或替换单射定理。 |
+| 同修订的 [Auric](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md) 第168–172、177章 | 原生词、共同参照、中心矩、接缝、旧值更新、$L$ 及其整数逆、有限菜单边界 | 几何全部按同一词计算；地址取得供应记录，不供应物理单位／校准；数值逆不供应源逆动作。 |
+| 同修订的本卷第1–27章，特别是命题3.1–3.4、定理21.2、22.1、23.1、24.2、25.1 | 精确所有参数词数和守卫、饱和室／壳、残余三项解码、固定短边尺度、增长同响应块 | 第31–33章连接整个树源纤维、一个全域控制器及条件切口；第34章仅供应已有解码器的真实取得输入。 |
+| 固定修订 `f58a634fd626c700af9438262a63f9d453372f90` 的 [过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 第35章及 §44.1、44.6、44.9–44.10 | 取得码因子化、已取得历史的通用恢复和数值消费者、真实源／控制／资源边界 | 通用 restore-then-compute 作为既有机制；不把它另立为新的取得归属卷 或当成本卷统一两个读口成本区的证明。 |
+| 同固定修订的 [运输与记忆卷](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §49.1–49.3、49.5–49.10 | 其 $q_H$/Clifford 来源的词乘 Catalan、付费有效秩和解秩、历史／动作限制 | 第32章复用形状秩和混合进位机制，词序枚举用本卷精确纤维；不移植该卷响应域或复杂度。 |
+| 同固定修订的 [递归全息边界续卷](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md) 第57章及定义58.11 | 精确组成／深度许诺的取得、单色证书、真实完整语法消费者及访问边界 | 不以许诺替代全原生正确性，不由语法取得推出谱、相位、幅度、实际时间或仪器符合性。 |
+| 固定修订 `bc85e5e91a44d5c81c27dadb7c67703046347ec0` 的 `HorizonPermutationCost.result` | 已供有限记录及固定读出的有限时域排列成本 | 仅作为适用范围对照，无新时域或在线取得结论。 |
+
+经典计数、形状秩、精确因子化、分拆／签名背景的文献归属继续按本卷第8、15、20、27章及运输与记忆卷 §49.10 复用；其中 Richomme 的实际词对应、经典 Catalan 枚举和低阶拼接都不作为本卷新发明。以上连接不依赖新增外部正文；有界仓内检索仅覆盖所列供应及其相关章节，未穷尽全仓或全部文献，也未重新核验既有外部引用的所有版本。没有利用同分布、相同名称或外部未核对摘要跨来源搬入结论。
+

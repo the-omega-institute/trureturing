@@ -1,0 +1,69 @@
+**Lemma 4.5 (exact positive correspondence).** Temporarily impose the
+old concrete exterior and all within-role old equalities, the mandatory
+records of Definition 4.2, and all refinements of Definition 4.4. Leave
+the different-role old inequalities and the additional negative records
+for Theorem 4.6. The resulting set of sources is in effective bijection
+with
+
+$$
+\{(\mathbf n,\mathbf z)\in\mathbb N^k\times\mathcal T^m:
+K(\mathbf n)\},
+\tag{URR.18}
+$$
+
+through $\Theta$. In particular its residual coordinates are genuinely
+unrestricted, for each admissible rank vector.
+
+Proof. Start with a source satisfying those positive data. The old
+exterior and within-role equalities give exactly $C[(u_H)_H]$, with
+$u_H=u|_{p_H}$ unique. At $A_j$, the branch literal writes
+$u_{A_j}=\langle x_j,y_j\rangle$. The original path $p_{A_j}L$
+survives the update, because all its original ancestors are pairs.
+Its epoch-one subtree is $\rho(x_j)$. The two guarded endpoints of
+(URR.14) therefore assert
+
+$$
+\rho(x_j)=\langle x_j,y_j\rangle.
+\tag{URR.19}
+$$
+
+The complete finite feedback classification is reused from [ARH,
+Application 26.1][ARH]: there is one and only one $n_j\ge0$ with
+$(x_j,y_j)=(T_{n_j+1},T_{n_j})$. Its premises are exactly (URR.19)
+on finite native trees. Thus $u_{A_j}=F_{A_j}$, and the original right
+subtree at its representative is $T_{n_j}$.
+
+Set $z_i=u|_{p_{Z_i}}$, with no restriction on this finite native tree.
+At a payload pair node the retained branch literal permits ordered
+decomposition. At a ground token the full finite literal description
+fixes exactly that ground tree: every listed leaf stops the tree there.
+At a residual token the positive link gives precisely $\rho^a(z_i)$;
+at an atomic token its link gives precisely $\rho^c(T_{n_j})$.
+Original paths to the generator subtrees persist under $\rho$, so these
+are the actual recorded-epoch endpoint values. Induction up the finite
+payload syntax gives $u_{V_t}=E_t(\mathbf n,\mathbf z)$.
+The rank-region navigation and both guards in the remaining positive
+links translate exactly to $K(\mathbf n)$. This proves the source-to-
+coordinate direction, including every fixed literal and positive link.
+
+Conversely take any $\mathbf n$ satisfying $K$ and any finite tuple
+$\mathbf z\in\mathcal T^m$. Fill $C$ by (URR.17). Its exterior and
+all repeated roles have the prescribed values. The atomic cells satisfy
+(URR.19) by $T_{n+2}=\langle T_{n+1},T_n\rangle$ and
+$\rho T_{n+1}=T_{n+2}$. They are branches, including $n=0$.
+Their left and right positions are reached. Every explicit payload pair
+and ground node has its retained literal, and both endpoints of every
+token link are reached with the values in (URR.15) or (URR.16).
+All rank refinements hold with their guards by the exact interpretation
+of $K$. Thus the constructed source satisfies every asserted positive
+condition, without any extra assumption on $\mathbf z$.
+
+Finally the ranks are recovered uniquely from the $A_j$ right subtrees
+by atomic-index injectivity; each residual is recovered from its
+$Z_i$ representative. Hence equal reconstructed sources have equal
+coordinates. Payloads and repeated role copies are already determined.
+This proves both directions and uniqueness, including zero coordinates.
+All constructions are finite on a supplied source or supplied tuple.
+The inverse is a mathematical operation on a given tree, not an
+observer operation. $\square$
+

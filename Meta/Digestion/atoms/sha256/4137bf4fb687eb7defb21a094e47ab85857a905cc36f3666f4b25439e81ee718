@@ -1,0 +1,24 @@
+**Convention 7.3 (fixed-tree common extensions).** In
+[FixedTreeCommonExtension][FCE], `Full` requires disjoint sibling leaf
+coordinate sets, `Implementation.encode` receives the leaf coordinate
+itself, and `Implementation.combine` receives the full child-message
+tuple. The public `result` assumes finite nonempty coordinate alphabets,
+a fixed full tree covering those coordinates, an arbitrary nonempty
+promise and a task on it. The promise may be correlated. It compares
+the upward closures of reachable-message and common-total-extension
+capacity vectors, with attained equal minima for monotone costs.
+Its canonical implementation uses representative choice; its root
+`read` is an output decoder. The [owning narrative][FCEB] has the same
+scope. None of those inputs is the charged literal acquisition of
+Assumption 1.3.
+
+Theorem 3.2 supplies an original-task interface requirement for a
+purported compiler from such freely supplied coordinates: on the
+actual perfect-scaffold witness it must pay at least $2^{D-2}$
+preparation Reads. In particular no compiler can serve all depths
+with worst paid preparation $o(2^D)$ under this unchanged task and
+without other acquired source data. This excludes that explicit budget
+class only. Exponential preparation is permitted in the original
+objective, so the bound disproves neither original feasibility nor
+effective optimizer-cofinal certification.
+

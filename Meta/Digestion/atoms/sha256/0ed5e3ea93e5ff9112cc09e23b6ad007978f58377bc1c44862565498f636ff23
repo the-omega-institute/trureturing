@@ -1,0 +1,37 @@
+**Proposition 8.8 (stopped-law coupling comparison).** Under the same suppliers, a second, weaker quantitative consequence is
+
+$$
+e(M)+\frac{15}{122}\operatorname{osc}(M)>\frac1{195200}.
+\tag{8.37}
+$$
+
+Proof. In the clipped table set $s_0=(\max v+\min v)/2$ and replace only $v$ by $s_0$, retaining $u,B,A,\pi,\tau$. This is one regular constant-emission comparison with its own charged realization. Its suspended Bernoulli perturbation is at most $t/2$. Couple emissions from identical labels maximally, and after matched letters use the same acquired-update randomness. At p emissions already agree. From suspension the probability of reaching the $j$th further suspended visit without completion or an earlier discrepancy is at most $(4/15)^j$. The coupling inequality and the geometric sum therefore give, for complete stopped laws,
+
+$$
+\sup_y\operatorname{TV}(W_y,W_y^{s_0})\le\frac{t/2}{1-4/15}=\frac{15t}{22},
+\qquad
+\sup_x\operatorname{TV}(Q_x,Q_x^{s_0})\le\frac23\frac{15t}{22}=\frac{5t}{11}.
+\tag{8.38}
+$$
+
+Both regular generators terminate almost surely; their legal infinite outcomes have zero mass. Matching letters and labels match every rendered deterministic event and Stop. These bounds thus concern full laws rather than terminal projections. The triangle inequality before configuration averaging, followed by convexity, gives the endpoint mean-law bounds of Theorem 3.1 for this one constant table, with excess bounds $\epsilon_p+5t/11$ and $\epsilon_\beta+15t/22$. Hence
+
+$$
+\frac1{35200}<\max\{\epsilon_p+5t/11,\epsilon_\beta+15t/22\}
+\le\frac{61}{11}e+\frac{15}{22}t.
+$$
+
+Multiply by $11/61$, use $t\le\omega$ and $11/(61\cdot35200)=1/195200$ to prove (8.37). Only synthetic geometric survival is used, not actual-chain convergence or mixing. ∎
+
+**Mathematical citation 8.9 (proof suppliers and attribution).** The bounded-range covariance estimate in (8.12) is the classical Grüss bound, proved here from a variance bound and Cauchy–Schwarz; (8.13), interval chords, multi-affine interpolation and convex tangent separation are likewise embedded elementary proof steps. Sequential coupling, the coupling inequality and conditional-product TV perturbation are mature suppliers for (8.38). They are not standalone discoveries of this chapter.
+
+For the classical arbitrary-dependence covariance bound, see Martín Egozcue, Luis Fuentes García, Wing-Keung Wong and Ričardas Zitikis, *Grüss-Type Bounds for the Covariance of Transformed Random Variables*, Journal of Inequalities and Applications, volume 2010, article 619423, [DOI 10.1155/2010/619423](https://doi.org/10.1155/2010/619423), Section 2. Only the bounded-range inequality proved in (8.12) is used, not its dependence-sensitive refinements.
+
+For a public precise reference for conditional-product coupling, see Alessandro Abate, Frank Redig and Ilya Tkachev, *On the effect of perturbation of conditional probabilities in total variation*, [arXiv:1311.3066v1](https://arxiv.org/abs/1311.3066v1), Theorems 1–2, Lemma 2 and Section 3.2. Its total-variation norm is twice the event-supremum TV used here. Finite configuration spaces and countable stopped-word carriers meet its measurable-space conditions. Its finite-horizon product estimates require the additional geometric survival argument above to control entire stopped laws uniformly. [CK] supplies context for distances between specified labelled-chain output laws; it does not supply the original-history extraction or simultaneous configuration-loss comparison.
+
+The mathematical contribution here is the source-specific uniform variable-emission modulus (8.7)–(8.9), obtained through the dependent centered-response comparison (8.11)–(8.23). Its attribution is repo-derived ordinary mathematics conditional on Mathematical citation 8.2. The existing source-specific products (3.7)–(3.9), complete-tail events and radii, clipping constants and full-record realization are reused at their declared scopes. No external novelty, priority or optimality of the coefficient $1/898$ is asserted.
+
+**Open mathematical boundary 8.10 (necessity, realization and optimization).** These inequalities are necessary conditions for the original conf/conf objective. They neither construct simultaneous baseline attainment nor establish that a family with $e\to0$ exists. The unrestricted infimum, its sign, attainment, fixed-resource optimization and attainability of the polynomial root remain undetermined by this chapter. Satisfying the inequalities is not sufficient: one same generator must still satisfy exact individual generation, the common actual circulation and all supported-depth full configuration-loss constraints.
+
+No comparison here preserves a fixed COMPLETE allocation or a hard bound on either marginalized defect $\Delta_4,\Delta_{\mathrm{all}}$. It introduces no law/law or mixed-risk transfer, physical-memory bit bound, exact-real physical sampler, new actual source access or runtime access to an analysis posterior, row or path coordinate. The comparison's full-record realization is conditional on the stated supplier; its resource costs belong to that comparison. All original transient histories, zero/one emissions, held records and Stop obligations remain within the original hypotheses. No irreducibility, aperiodicity, independent path coordinates, mixing, or separate stationary law for $B\operatorname{diag}(v)A$ or $K_{\mathrm{syn}}$ is available or required.
+

@@ -1,0 +1,45 @@
+**Theorem 13.2 (Exact finite region, compactness, and its atomless
+specialization).** The attainable laws of $Z$ under either hard-budget
+convention are exactly $\mathcal V_{k,j,p,\nu}$, and their joint laws
+with the given seed are exactly (13.2). The finite-dimensional set
+$\mathcal V_{k,j,p,\nu}$ is compact for every given probability space,
+including atomic spaces. If $\nu$ is atomless, then
+
+$$
+W_m(\nu)=\Delta_m
+:=\{w\in[0,1]^m:\textstyle\sum_iw_i=1\},\qquad
+\mathcal V_{k,j,p,\nu}=\operatorname{conv}\{v_1,\ldots,v_m\}.
+\tag{13.3}
+$$
+
+For a general given seed, (13.1) is the exact region; replacing
+$W_m(\nu)$ by $\Delta_m$ requires proof of the needed partition
+availability and is not part of the representation theorem.
+
+Proof. Theorems 12.2--12.3 give both inclusions, first with the seed
+retained and then by taking $B=\mathsf U$ in (13.2). For compactness use
+the classical decomposition-range result of Dvoretzky, Wald and
+Wolfowitz, *Relations among certain ranges of vector measures*, Pacific
+Journal of Mathematics **1**, 59--74, Section 1 and Section 3,
+Remark (c), p. 68 [DWW]. In their notation take the underlying measurable
+space to be $(\mathsf U,\mathcal U)$, take the single measure
+$\mu_1=\nu$, and take their number of decisions to be $n=m$. A pure
+probability $m$-vector is exactly
+$(\mathbf1_{B_1},\ldots,\mathbf1_{B_m})$ for a measurable partition.
+Its decomposition-range vector is
+$(\int\mathbf1_{B_i}\,d\nu)_{i=1}^m=w$; hence their decomposition range
+is precisely $W_m(\nu)$. The measure is finite and nonnegative with
+$\nu(\mathsf U)=1$. Remark (c) keeps compactness without atomlessness,
+while explicitly withdrawing general convexity. The finite linear map
+$w\mapsto\sum_iw_iv_i$ is continuous, so its image is compact.
+
+When $\nu$ is atomless, their Section 3, Lemma 2 gives a partition with
+any prescribed nonnegative weights summing to one, by taking again the
+one finite measure $\mu_1=\nu$. Equivalently, Theorem 4 identifies its
+pure range with the full probability-vector range, which in this
+one-measure case is $\Delta_m$: constant probability vectors already
+realize every point of that simplex. This proves (13.3). This is a
+classical partition corollary, not a new purification theorem or a
+change to the given seed. No compactness assertion about a space of
+seed-dependent measures in an unspecified topology is used. $\square$
+

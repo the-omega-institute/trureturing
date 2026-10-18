@@ -1,0 +1,44 @@
+**Definition 8.2 (exact full expansion recurrence).** For every routine
+here define its bill by fully expanding Definition 2.1 and ARC §10/RCA
+Definition 11.5, with its actual entered heads, banks, tokens, retained
+words and typed inputs. A native leaf has Definition 8.1's increments
+and its actual successor. Sequence adds the next bill at the previous
+complete successor. A test pays its actual RD/CTL and chosen branch;
+a while pays every test, body and back edge in written order. Its
+termination value has zero further rows only after the prescribed final
+row. The recurrence's leaves, including every new operation, are fixed
+by the following table; none is an unspecified unit-cost oracle.
+
+| Contributor | Native leaves required in addition to the actual successor dependence |
+| --- | --- |
+| Initial apparatus | Original boot/preparation/validation/acquisition/client parking; twenty annex boundary constructors; all old/new owner/token/control bits; both bootstrap NEXT/IN/WRITE/ADVANCE/DONE sequences; full captured frame and descriptor/seal. |
+| Initial registers/manifest | Actual $r_{\rm sel}$ unrolled empty fields, bank sentinels and descriptor; all original/capture/current descriptions and public fields; saved-head imports, symbol-triple cons, restore moves; every measured export and complete ManifestPrefix scan. |
+| Every word assignment | Base, dry field-length emissions, LastBank/Field/LastScratch scans, real old/new field copies, separators/F/seal, descriptor count/write, parity/purpose CTLs and retained previous bank. |
+| Mode and frame | Saved Base, all IN/EX/WR/MR and length tests, mode CTL, payload bound copy and tested append, F/seal, literal/measured lengths, descriptor scans/fields, native F-bounded imports, Reverse and persistent copies. |
+| Parse/arithmetic | ReadList/ReadFrame/ReadUnary, each Take/cons/tail/test, payload exhaustion, copied unary cancellation/comparison/Cat, numeric wire zeros and every finite failure branch. |
+| Source resolution | Whole frozen M traversal and unary item index, fixed CAP tuple parsing, origin/status/dependency/predecessor checks and full selected-item copies. |
+| Anchor location | Represented entrance/reservoir construction; copy of $b$; each fixed-set/equality test on actual physical control; each Step row-table/cell/mark scan and replacement, token/latch/control update, receipt/event/tally serialization; all entry/exit tests/saves and countdown tails. |
+| Cover and Issue | Actual cover/package cardinality, complete immutable list/backing copies, Boundary/Prefix, exact consumed $I_k$, whole tagged selector/binding fields, sender export/descriptor/seal. |
+| Call | Its own immutable resolution and Prefix, full 74-port raw state/history serializer including raw control and permission data, copied Image and its new retained backing. |
+| Each publication | Actual bases, allocations and initialized intervals; full descriptors; dry/real descriptor staging and its own descriptor; both endpoint seeks; fresh payload length copies; both tested copies; seals/TOKs and completion records; mandatory print. |
+| Every callback/return | Placement recovery/Seek before bank work, clear/import/Reverse/tuple checks, full binding comparison, ACK and mailbox availability; received-reference/invocation TOKs; complete cycle append and Ready; all rejection/refusal routes. |
+| Other original work | Every auxiliary source cycle and CaptureCAP, original counter/directory/fence/row/acquisition/ACK work; eventual original loan/client/terminal snapshot/verifier/receipt/consumer output/ACK and halt. |
+
+For a successful general history flight its ordered bill is therefore
+
+$$
+\begin{aligned}
+V_{\rm hist}={}&V_{\rm gate}+V_{\rm mode}+V_{\rm frame}
++V_{\rm Boundary}+V_{\rm cover/publication}+V_{\rm ClientCover}\\
+&+V_{\rm bind}+V_{\rm Issue/publication}+V_{\rm ClientIssue}
++V_{\rm Call/Image/publication}+V_{\rm ClientImage/ACK}\\
+&+V_{M/{\rm invocation}/Ready}.
+\end{aligned}
+$$
+
+Each summand is evaluated at the previous one's full actual successor,
+not at a separately optimized entry. Source CaptureCAP and the original
+stopping flight are additional same-run contributors. A rejected flight
+uses its actual shorter/changed rejection route in the same recurrence;
+it is not billed for fictitious successful publications.
+

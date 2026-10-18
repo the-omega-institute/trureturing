@@ -1,0 +1,78 @@
+**Theorem 6.3 (full expansion and coverage of all near-endpoint parameters).**
+The exact original value satisfies the first line of EP.9 for EVERY
+sufficiently small positive $\varepsilon$. The contacts and masses have
+expansions
+
+$$
+\begin{aligned}
+d_j&=-\frac{b_j}{\Gamma}\sqrt\varepsilon+O(\varepsilon),\\
+\pi_j&=\frac14+\frac{2w_j}{\Gamma}\sqrt\varepsilon+O(\varepsilon).
+\end{aligned}
+\tag{EP.42}
+$$
+
+Proof. All expectations in this proof use the four exact coefficient
+masses $\pi_j(p)$. From EP.17, with $d=|u|-1$,
+$\mathbb Ed=-\mathbb Ed^2/2$ and
+$\tau=1-\mathbb Ed^2/2$. Also $\mathbb Ek=-B/4-\mathbb E\mathfrak r$.
+Consequently the EXACT identity for EP.24 is
+
+$$
+W(p)=1-\frac B4p-\frac12\mathbb Ed^2-p\mathbb E\mathfrak r.
+\tag{EP.43}
+$$
+
+Write $d_j=-\ell_jp+t_jp^2+O(p^3)$. Use EP.36 and EP.40 to expand
+EP.43. At cubic order the unknown $t_j$ terms are
+$\sum_j\ell_jt_j/4$ from $-\mathbb Ed^2/2$ and its negative from
+$-p\mathbb E\mathfrak r$. They cancel. The weight terms combine to
+$\sum_jw_j\ell_j^2/2$, and the quadratic residual contributes
+$-\sum_jD_j\ell_j^2/8$. Thus
+
+$$
+W(p)=1-\frac B4p+v_2p^2+v_3p^3+O(p^4),
+\tag{EP.44}
+$$
+
+with the fully evaluated $v_2,v_3$ in EP.34. No unknown second-order
+contact solution remains in this coefficient.
+
+There is also the exact envelope identity $W'(p)=K(p)$. To verify it,
+differentiate $W=\sum_j\pi_j(1+d_j+p k_j(d_j))$. Replace contact
+values and tangents by $a\cdot m_j$ and $a\cdot m_j'$ using EP.20.
+The terms from differentiating weights and contacts sum to
+$a\cdot(d/dp)\sum_j\pi_jm_j(d_j)=0$. The remaining term is $K$.
+Analyticity therefore gives
+
+$$
+\begin{aligned}
+K(p)&=-B/4+2v_2p+3v_3p^2+O(p^3),\\
+\varepsilon(p)=1-\tau(p)&=1-W+pW'
+                     =v_2p^2+2v_3p^3+O(p^4).
+\end{aligned}
+\tag{EP.45}
+$$
+
+Because $v_2>0$, $\varepsilon'(p)>0$ for small positive $p$.
+The positive branch
+$\sqrt\varepsilon=p\sqrt{v_2+2v_3p+O(p^2)}$ is analytic in $p$
+with derivative $\sqrt{v_2}\ne0$ at zero, and has a unique analytic
+inverse in $\sqrt\varepsilon$. It covers an entire positive endpoint
+neighborhood, rather than just a sequence or a formal trajectory.
+Its inverse expansion is
+
+$$
+p=\frac{\sqrt\varepsilon}{\sqrt{v_2}}
+       -\frac{v_3}{v_2^2}\varepsilon+O(\varepsilon^{3/2}).
+\tag{EP.46}
+$$
+
+Substituting into $T_{\rm flat}+K(p)$ gives
+$T_0+2\sqrt{v_2}\sqrt\varepsilon+(v_3/v_2)\varepsilon
++O(\varepsilon^{3/2})$, which is EP.9 and EP.35. Substitution in
+EP.36 gives EP.42. All remainders follow from analytic functions on
+a sufficiently small interval; no quantified radius or error constant
+is inferred. Shrink that interval so its contrasts lie in the original
+residual interval. This completes the parameter-coverage part of
+Theorem 1.4. $\square$
+

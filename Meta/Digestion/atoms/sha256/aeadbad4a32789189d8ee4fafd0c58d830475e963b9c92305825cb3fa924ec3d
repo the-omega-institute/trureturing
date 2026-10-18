@@ -1,0 +1,25 @@
+**Assumption 2.1 (Exact scalar source estimates).** Reuse [C, equation
+(2.3)], with its source-class basis [S, Lemma 2.3]. Choose positive
+$s_*<1,z_-,z_+,C_\mu,C_\beta$, before every cap and budget, such that
+for both labels and $0<s<s_*$,
+
+$$
+z_-s^{-2r}\le Z_i(e^{-s})\le z_+s^{-2r},\qquad
+\mu_i\le C_\mu/s,\qquad 1+\beta_i\le C_\beta/s.
+\tag{2.1}
+$$
+
+The exact-source asymptotics supporting this choice are
+
+$$
+Z_i(e^{-s})=(2r-1)!s^{-2r}(1+O(s)),\qquad
+\mu_i=2r/s+O(1),\qquad
+\beta_i=(2r+1)/(2s)+O(1).
+\tag{2.2}
+$$
+
+They concern the full normalizers in (1.2), not a tail envelope or a
+replacement observation law. No phase-reader estimate from [C] or
+finite-precision estimate from [P] is a premise of the deterministic
+construction.
+

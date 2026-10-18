@@ -1,0 +1,60 @@
+**Theorem 118.3 (unread-cone certificate radius).** Fix any common rational
+$t>0$, controller $A$ and guard $G$ of Definition 118.1. On any actual
+finite terminal run on $u\in D$ with unequal root children, if an INITIAL
+leaf cone is unread, then
+
+$$
+\operatorname{rad}_t(H,\mathsf{Row}(u))\ge\frac12.
+\tag{118.8}
+$$
+
+This includes every literal address, arbitrary finite serial Apply
+histories and every common history-only guard of IV Contract 112.1a.
+
+Proof. Let $x$ be unread and write $u=C[a]$ as above. For any finite
+filling $w$ and every accepted epoch $e\ge0$, substitution preserves
+the context brackets and acts independently below its original leaf
+prefixes. Thus $\rho^e(C[w])$ has the same outside branches and the
+same independently substituted outside leaf blocks. At a requested
+address $p$ not prefixed by $x$, its actual four-valued reply is independent
+of $w$. This includes paths ending above $x$, paths in another leaf
+block, repeated calls and paths reporting absent. It extends precisely
+the substitution locality of IV Lemma 112.7 from a label flip to a
+whole filling in that one cone.
+
+Induct through every actual prefix of the finite run on $u$. The same
+complete entry and equal local state choose the same next effective
+computation and action. All its Reads lie outside the cone of $x$, so
+at the same accepted epoch they give the same actual replies on $C[w]$.
+Each Apply attempt has identical $(\gamma,e,H_{\rm prefix})$, hence
+identical status under the fixed $G$. Both registers advance by exactly
+one $\rho$ or neither advances. The same local state reaches the same
+Stop with the same output and no executed suffix. There is no bound on
+the number of these updates other than finiteness of this actual run.
+
+Choose $w=B_m^+$ and $B_m^-$ from Theorem 118.2. For all sufficiently
+large $m$, the root child containing $x$ has more occurrences than the
+unchanged other root child. They are therefore unequal for both signs.
+Both resulting finite sources retain exactly the entire row of $u$:
+reached list $(L,R)$, numbered exterior
+$\langle\square_1,\square_2\rangle$, and the two singleton partition
+classes. The count comparison proves a property of competitors; it is
+never input advice. Both graft sequences are members of
+$\mathcal C_{A,G,H}(\mathsf{Row}(u))$ and, by (118.5), their responses
+tend to $+1/2$ and $-1/2$. For every real $z$ it follows that
+
+$$
+\sup_{v\in\mathcal C_{A,G,H}(\mathsf{Row}(u))}|z-R_v(t)|
+\ge\max(|z-1/2|,|z+1/2|)\ge1/2.
+$$
+
+Taking the infimum proves (118.8). This is the ordinary two-compatible-input
+half-diameter argument, without assuming an attained supremum or an
+infinite admissible source. More explicitly, for each fixed
+$0<\epsilon<1/2$ choose a finite common $m$ meeting the row condition
+and making (118.5) smaller than $1/2-\epsilon$. The two finite signed
+targets differ by more than $2\epsilon$, although their terminal history,
+entire INITIAL row and output agree. Grafting is a construction of
+alternative INITIAL sources in $D$, not an operation executed on $u$;
+$m$ is not its accepted epoch. $\square$
+

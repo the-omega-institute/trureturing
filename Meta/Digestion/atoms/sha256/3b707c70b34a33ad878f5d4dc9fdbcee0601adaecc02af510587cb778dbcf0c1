@@ -1,0 +1,53 @@
+**Theorem 2.2 (one-step rigidity of this continuing task).** For all
+$h,k\in\mathcal R_H$,
+
+$$
+h\sim_Q k
+\quad\Longleftrightarrow\quad
+K(h)=K(k)
+\quad\Longleftrightarrow\quad
+W(h)=W(k)
+\quad\Longleftrightarrow\quad h=k.
+\tag{SSA.2}
+$$
+
+In fact the partial task responses to at most one primitive action already
+have this kernel. This assertion uses the complete-successor coordinate
+and the continuing, nonabsorbing dispatcher.
+
+Proof. Every cut has a lawful next primitive. A non-IN cut has its
+prescribed Advance. At IN, the current frame is a proper prefix in
+$\mathsf P$, so a witnessing completion supplies at least one next
+admissible bit. At the final idle cut of a finite witnessing request list,
+append the canonical ReadE frame `0000`; AIF Lemma 2.7 gives the dispatcher's
+next reservation/ingress work. Idle is therefore not global halt.
+
+Suppose the one-step partial response maps agree. If Advance succeeds at
+$h$, it must succeed at $k$ with the same complete successor. Proposition
+2.1 extracts from that successor
+$\bigl(\operatorname{code}(u),I(h),n(h)+1\bigr)$ on the first side and
+the corresponding tuple on the second. A non-IN has consumed no additional
+external source-frame bit. Cancelling $+1$ gives equal predecessor keys.
+
+Otherwise $h$ is at IN. Choose $c\in\operatorname{Adm}(h)$. Supply($c$)
+has a defined successful response. At $k$ it cannot be disabled (`none`),
+and cannot be an enabled noncanonical Supply (undefined). It must be the
+same successful Supply with an equal complete successor. Extract its key:
+
+$$
+\bigl(\operatorname{code}(u_h),I(h)c,n(h)+1\bigr)
+ =\bigl(\operatorname{code}(u_k),I(k)c,n(k)+1\bigr).
+$$
+
+Right cancellation of the common bit and cancellation of $+1$ again give
+equal predecessor keys. This argument does not confuse undefinedness with
+disabledness, and does not require an inadmissible bit to be prevented
+physically. AIF Theorem 4.4 gives $h=k$ from either equal-key case.
+
+Equal full histories give equal states, keys, and response-map domains.
+Determinism with the same subsequent supplied bits gives the same responses
+to every allowed finite experiment, including the semantic and audit
+experiments. Thus equality of histories implies full $Q$ equivalence, and
+full $Q$ equivalence implies the one-step equivalence just considered.
+Proposition 2.1 and replay give both remaining equivalences in SSA.2. ∎
+

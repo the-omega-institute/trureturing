@@ -1,0 +1,39 @@
+**Theorem 6.3 (conditional total sound and cofinal transfer).** If a
+uniform $W$ satisfies soundness and optimized coverage in Definition
+6.2, then a total sound verifier satisfying [NPC, Definition 8.1][NPC]
+exists for the original unrestricted problem.
+
+Proof. A certificate for input $(d,\mu,\widehat C)$ contains
+$L,C_0,\pi$. Reject malformed data; otherwise require acceptance
+by $W$ and the exact rational comparison (SIR.32). The finite
+parsing and rational operations terminate, and $W$ is total by
+hypothesis. Theorem 6.1 proves soundness for every original length
+and template.
+
+Fix $d$ and rational $\epsilon>0$. Choose $L$ with
+$\delta=2m_d/(L+1)<\epsilon/3$. By (SIR.34), take an accepted
+label with $-\log_2C_0>\tau_{d,L}-\epsilon/3$. Choose a rational
+$\widehat C\ge4^{m_d/(L+1)}C_0$ so close from above that
+
+$$
+0\le\log_2\frac{\widehat C}{4^{m_d/(L+1)}C_0}<\epsilon/3.
+$$
+
+It passes (SIR.32), and
+
+$$
+-\log_2\widehat C
+>\tau_{d,L}-\epsilon/3-\delta-\epsilon/3
+\ge\sigma_d-\epsilon.
+\tag{SIR.35}
+$$
+
+This is the unchanged optimizer-cofinality requirement. At the
+original normalized-rate scale, the incidence loss is strictly
+less than $2/(L+1)$, independently of $d$. Together with the
+credited depth error $2^{-d}\phi$ and arbitrarily fine cap rounding,
+the conditional hypothesis would therefore give the two-sided
+effective original-rate approximation of NPC Theorem 8.2. The
+unproved premise is the existence and optimized coverage of $W$,
+not the finite rational transfer comparison. $\square$
+

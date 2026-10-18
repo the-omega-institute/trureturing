@@ -1,0 +1,6 @@
+**命题 54.7（准确范围与下一缺口）。** 本节统一证明所有 $n\ge9$ 的完整 $V_6$；$n=9$ 为全 $S_9$ 的真实闭合圈。构造就是所有完整 $V_5$ 块加完整末 $w$ 供应；之前标准混合开关加逆八圈修复，按既有开关恒等式得到同一最终因子，不需要新局部元件。
+
+原生旁证 `six_label_marked_boundary_native_probe.py/json` 在 $n=9,10$ 的真实完整 $V_5$ 块读回 (5)、全部六路边数与单供应边界。`six_label_subblock_path_probe.py/json`、`six_label_inner_path_probe.py/json`、`six_label_v3_inner_probe.py/json` 保存实际 $P/C_S/Q/Q_2/C_0/C_1$ 路径；明确 (1)–(4) 与已有路径逐字相符。这些有界检查用于发现、旁证统一证书，不是数学前提。已导出全 $S_9$ 字由主承担者独立流式核验全部元组与末 $c$，本轮没有重复该枚举。
+
+下一七接触状态及全 $k$ 可反复保持的不变量仍未证明，因此最初所有 $n\ge4$ 的 Hamiltonicity 目标仍开放。未作全 $S_{11}$ 枚举、新 Pro 提交、热仓写入、kernel 或官方验收声明。
+

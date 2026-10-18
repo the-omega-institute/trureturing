@@ -1,0 +1,65 @@
+**Theorem 13.4 (a static state lower bound on the same infinite fiber).**
+Every successful native table on all of $\mathcal D_m$ with zero
+actual post-entry updates and $\sup\ell\le B_m$ has
+
+$$
+|E|\ge 2+\left\lceil\frac{2m-1}{3}\right\rceil.
+\tag{CAR.66}
+$$
+
+No read-count or installation bound is assumed for this lower bound.
+
+Proof. Let $r$ be the number of read states reachable from some source
+in the whole $\mathcal D_m$. Each of their literal words has length
+at most $B_m$, because an actual visit pays that nonnegative length
+as part of its run's total. Fix $h=2m+2$ only for the lower-bound
+witnesses, and consider the actual same-fiber sources
+
+$$
+u_n=U_{D_m}(T_n,T_{n\bmod2},T_{2m+2}),
+\qquad n=2,3,\ldots,2m+1.
+\tag{CAR.67}
+$$
+
+A word of length at most $B_m<D_m$ cannot enter either deep original
+hole at $b$ or $c$, whose lengths are $D_m+1$. Forward substitution
+preserves every original pairing node and its address, so entry at
+$N_m$ does not shorten those paths. A word not entering $x$ consequently
+has a reply independent of $n$: it encounters a fixed part of the comb
+or an image of one of its fixed $\alpha$ leaves.
+
+A word entering $x$ starts with $L$. At the empty suffix the reply is
+branch for every indicated $n$. At a nonempty suffix $s$ ending in
+$e$, (CAR.23) says that its reply at epoch $N_m$ is determined by
+$n+N_m-w(s)$, with the endpoint threshold $2-\omega(e)$. As $n$
+increases, the four possible replies occur in the order
+
+$$
+\mathsf{absent},\quad\alpha,\quad\beta,\quad\mathsf{branch},
+\tag{CAR.68}
+$$
+
+with some values possibly skipped. A word ending in $L$ skips
+$\alpha$, because its reachability threshold is one. In particular
+each installed read word changes its reply at no more than three of
+the $2m-1$ adjacent positions in the sequence (CAR.67).
+
+Take the vector of replies to all $r$ reachable read-state words at
+the fixed entry epoch. It changes at at most $3r$ adjacent positions.
+If two of these sources have equal vectors, their entire executions
+are identical: start in the common initial state; every encountered
+read is among these $r$ words and returns the same reply; their next
+states therefore coincide. No update is encountered on an admitted
+execution, by the hypothesis of zero actual updates. Induction gives
+the same halt and the same complete output. This argument permits
+adaptive choices, arbitrarily many read calls and unused update states.
+
+The correct rows on consecutive $u_n$ are $Y_{n\bmod2}$ and
+$Y_{(n+1)\bmod2}$, which differ. Each of the $2m-1$ adjacent positions
+must therefore be a vector change. Thus $3r\ge2m-1$. Both complete
+rows occur, requiring two distinct halt states in addition to the
+read states. This proves (CAR.66). The witness list (CAR.67) is used
+to refute a controller required to work on the whole infinite domain;
+it does not redefine that domain or remove the unbounded $h$ coordinate.
+$\square$
+

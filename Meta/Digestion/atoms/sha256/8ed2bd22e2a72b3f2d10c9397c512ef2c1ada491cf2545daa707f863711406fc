@@ -1,0 +1,79 @@
+**Theorem 4.2 (unrestricted prescribed-$K$ native-table synthesis).**
+For every input of Assumption 1.1 and every prescribed $K\in\mathbb N$,
+$\mathsf{Native}_K(D,N,Q)$ is decidable. More precisely it is equivalent
+to the finite disjunction of (NPS.15) over all graphs with
+$1\le |E|\le K$ and all descriptor-type choices. For $K=0$ that
+disjunction is false. A true answer effectively constructs an original
+literal table with at most $K$ complete states. A false answer excludes
+every such table on the entire original fiber, irrespective of its
+finite word lengths, finite output sizes and terminating run durations.
+
+No read, update, address-length or literal-installation upper bound is
+an input, an auxiliary cutoff or an existence premise of this decision.
+
+Proof. CAR supplies the exact finite chart and predicate data of
+Definition 1.2 from the cycle-covered input. Theorem 3.2 supplies the
+finite formulas $H$ for each of the finitely enumerated designs.
+Consequently each (NPS.15) is a first-order Presburger sentence over
+nonnegative integers. Apply [Ginsburg–Spanier, Theorem 1.2][GS] to
+decide them. Arbitrary first-order quantifier alternation, including
+the interval guards inside source-universal clauses, is allowed.
+Both true and false decisions terminate. This is not enumeration of
+successively larger action horizons or literal installations.
+
+For necessity take any successful original table $C$ with $s\le K$
+states and relabel its states in the enumerated format. Retain its
+initial state, instruction types and every successor. Give each read
+state the descriptor of its actual installed word, once for all visits.
+Theorem 6.2 of CAR gives that word's responses on every source at every
+epoch, including absent responses. Each source has exactly one admitted
+tuple by (NPS.2), and its finite actual trace yields $H$ by (NPS.12).
+This proves $\operatorname{Total}_G$. Two sources reaching the same
+halt have that halt's one installed complete row, hence satisfy
+(NPS.3). This proves $\operatorname{Shared}_G$ across all charts and
+terminal epochs. Thus $C$ makes one disjunct true. If every disjunct
+is false, no successful original table of the requested size exists;
+this proves the exact negative direction.
+
+For sufficiency take a true disjunct. Extract one common satisfying
+descriptor tuple. For example, after its existential truth is decided,
+enumerate tuples of naturals by increasing total sum and decide the
+remaining formula for each tuple. Existence ensures that this extraction
+terminates; the preceding negative decision did not depend on that
+enumeration. Realize every descriptor once as a literal word by CAR
+Theorem 6.2 and keep the selected graph and initial state.
+
+For each halt decide the support-nonemptiness sentence
+
+$$
+\operatorname{Reach}_h(\boldsymbol\delta)
+\ \Longleftrightarrow\
+\bigvee_{\eta\in\mathcal A}\exists\mathbf n\quad
+ \operatorname{Adm}_\eta(\mathbf n)\land
+ H_{\eta,h}(\mathbf n;\boldsymbol\delta).
+\tag{NPS.16}
+$$
+
+When it is true, extract one such tuple, construct the actual finite
+source $u_h=\Theta_\eta(\mathbf n)$ and compute its **entire original**
+$Q$ row. This computation is effective on a finite tree: navigate the
+fixed original cut, keep the complete remaining marked tree and compare
+the finitely many reached whole subtrees. Install that concrete row
+$Y_h=R_Q(u_h)$ at $h$. By $\operatorname{Shared}_G$, every other
+admitted source reaching this halt has exactly $Y_h$, including sources
+in other charts and sources reaching it at other epochs. At an
+unreachable halt install the row of any witness to nonempty $D$, found
+using $\operatorname{Adm}$ and (NPS.2).
+
+Now fix an arbitrary original $u\in D$. Its unique admitted tuple
+satisfies $\operatorname{Total}_G$, so (NPS.12) forces its actual
+execution with the installed words to reach some halt in finite time.
+That halt is reachable, and the preceding equality shows its installed
+row is $R_Q(u)$. This holds for every original source. The implementation
+is the selected $s$-state graph itself: no $x_i,t_i,d_i,J,v_i$, source
+witness, chart tag, descriptor evaluator or output decoder becomes a
+runtime input or an additional state. Witness sources are used only to
+construct literal rows before execution. All words and rows are finite,
+so installation is finite, with no prescribed bound. This proves the
+reverse direction and positive extraction. $\square$
+

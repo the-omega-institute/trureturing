@@ -1,0 +1,34 @@
+### 88.4. Exact elimination of all old normal directions
+
+Choose smooth tubular coordinates x=χ(m,n) near M, with n in a fixed local trivialization of the real normal bundle. Write f(m,n,R)=f(χ(m,n),R). At R=0, n=0 is a critical point and the normal Hessian is positive definite. The parameter-dependent implicit-function theorem gives a unique nearby solution
+
+\[
+ \partial_nf(m,n_*(m,R),R)=0,\qquad n_*(m,R)=O(r^2).
+                                                               \tag{12}
+\]
+
+The estimate is uniform, because f is even in R, the forcing ∂_nf(m,0,R) is O(r²), and the inverse normal Hessian is uniformly bounded in a sufficiently small neighborhood. Shrink the normal-coordinate balls so their Hessians remain uniformly positive definite for all m and small R. Ordinary Taylor expansion along the segment from n_* to n then gives
+
+\[
+ f(m,n,R)\ge f(m,n_*(m,R),R)+a\|n-n_*(m,R)\|^2,
+ \qquad a>0.                                            \tag{13}
+\]
+
+In particular no old tangent, including a larger A environment or output leakage, remains unminimized in this reduction.
+
+The reduced smooth even function has the uniform expansion
+
+\[
+ f(m,n_*(m,R),R)=\tfrac14+L_m(R)+Q_m(R)+O(r^6),          \tag{14}
+\]
+
+where Q_m is a homogeneous real quartic polynomial in R, with coefficients smooth in m. To identify it, expand before minimization as
+1/4+q_{H,m}(n)+L_m(R)+b_m(n,R)+q_{N,m}(R), with q_H quadratic in n, b linear in n and quadratic in R, and q_N quartic in R. Minimizing the first two n-dependent terms gives
+
+\[
+ Q_m(R)=\min_n\{q_{H,m}(n)+b_m(n,R)+q_{N,m}(R)\}.
+                                                               \tag{15}
+\]
+
+There is no minimization over tangential motion in (12). On the flat kernel it is unnecessary: for fixed flat R the physical noise derivative L_m(R) is a nonnegative function on M with value zero, so its tangential differential is zero. Both the old Hessian and the mixed source therefore vanish on TM. Consequently (15) agrees, on K_m, with minimization over every old comparison tangent.
+

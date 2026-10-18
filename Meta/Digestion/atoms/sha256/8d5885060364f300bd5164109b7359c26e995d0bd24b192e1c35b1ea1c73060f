@@ -1,0 +1,81 @@
+**Proposition 7.1 (A disjoint target pair and its paid join).** Seven
+installed rows attain
+
+$$
+W:=Z+a\eta=S_3-d\eta^2.
+\tag{7.1}
+$$
+
+Hence $C_7\ge W$. Throughout the entire stipulated range,
+
+$$
+W-F=2d\eta^2(1-\eta)>0,\qquad
+W-V=\frac{ad\eta c}{2}>0.
+\tag{7.2}
+$$
+
+Proof. Install these four read and three halt rows:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+2))$ | $S$ | $P$ |
+| $S$ | $\operatorname{Read}(2j)$ | $A_0$ | $B$ |
+| $A_0$ | $\operatorname{Read}(2(j+4))$ | $Z_H$ | $P$ |
+| $B$ | $\operatorname{Read}(2(j+1))$ | $Q$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+In phase zero root $\{j+2,j+3\}$ avoids target $j$. After zero,
+the pair $\{j,j+1\}$ contains the target and is disjoint from the
+root. On $00$, pair $\{j+4,j+5\}$ is disjoint from both. On
+$01$, edge $\{j+1,j+2\}$ joins the first two pairs. Phase one
+again sees only paid separators. The full terminal law is
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $1$ | $h_0(\sigma)$ | $\eta$ | $a\eta$ | $1$ |
+| $000$ | $h_1(\sigma)$ | $(1+c^3)/2$ | $a/2$ | $3$ |
+| $001$ | $h_0(\sigma)$ | $c^2\eta$ | $a^2c\eta$ | $3$ |
+| $010$ | $h_0(1-\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+| $011$ | $h_0(\sigma)$ | $c\eta/2$ | $a^2\eta/2$ | $3$ |
+
+The first record uses independence of root and target. On $001$, the
+target pair must be constantly majority, contributing $a^2$; the other
+zero pair contributes $c$ and the final one pair contributes $2\eta$,
+with phase factor $1/2$. On $000$, success is the phase-one
+majority-target event alone.
+
+For the joining leaves $010,011$, the larger completions in order
+$j,j+1,j+2,j+3$ are, respectively,
+
+$$
+(1-\sigma,\sigma,\sigma,\sigma),\qquad
+(\sigma,1-\sigma,\sigma,\sigma).
+\tag{7.3}
+$$
+
+Each has weight $a^3b$, its complement has weight $ab^3$, and their
+sum is $ab(a^2+b^2)=c\eta$. This proves their labels, whole
+source masses and correct masses after the phase factor. The source
+sum is
+$\eta+c\eta+c^2\eta+(1+c^3)/2=1$.
+The correct sum is $a/2+a^2c\eta+a^2\eta+a\eta=Z+a\eta=W$.
+The identity $D-a\eta=d\eta^2$ from (6.5) gives (7.1).
+
+Every formal path halts after one call on $1$ and three on $0$.
+Thus its exact cost law is
+
+$$
+\mathbb P(N=1)=\eta,\qquad
+\mathbb P(N=3)=1-\eta,\qquad
+\mathbb E N=3-2\eta,
+\tag{7.4}
+$$
+
+with maximum three and error $1-W$. Subtract its deficit $d\eta^2$
+from (5.2) and (6.4) to obtain (7.2). Their factors are positive.
+This establishes a common-source attained lower point, with every
+output distinction paid for in the three halt rows. It supplies no
+universal matching seven-row upper bound. $\square$
+

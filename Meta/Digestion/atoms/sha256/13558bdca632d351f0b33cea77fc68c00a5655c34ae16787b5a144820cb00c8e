@@ -1,0 +1,57 @@
+## 18. 九、BIND-ONLY 信息不能参与定理传播
+
+可以把证据规则形式化为一个简单的类型系统。
+
+定义：
+
+$$
+\mathrm{Status}(P)
+\in
+\{
+\mathrm{BindOnly},
+\mathrm{Computed},
+\mathrm{Verified}
+\}.
+$$
+
+规定证明传播规则：
+
+$$
+\frac{
+\Gamma\vdash_{\mathrm{Verified}}P_1
+\quad\cdots\quad
+\Gamma\vdash_{\mathrm{Verified}}P_n
+}{
+\Gamma\vdash_{\mathrm{Verified}}Q
+}
+$$
+
+只有当推理规则本身明确，并且所有前提都属于可承重层，结论才能获得 `Verified` 状态。
+
+对于 BIND-ONLY 前提 $B$，允许的唯一操作是：
+
+$$
+B
+\longmapsto
+\mathrm{Candidate}(B).
+$$
+
+不允许：
+
+$$
+\mathrm{BindOnly}(B)
+\Longrightarrow
+\mathrm{Verified}(Q).
+$$
+
+这意味着：
+
+- PR 标题不能证明定理；
+- 文档中的“连接”不能证明连接已经完成；
+- 未验证的 typed reference 不能证明目标对象存在；
+- 绑定成功不能证明数学命题成立；
+- 生成的 Blueprint 不能替代 Lean theorem；
+- 数值实验不能替代全称命题证明。
+
+---
+

@@ -1,0 +1,43 @@
+## 388. The source self-gluing and its original normal interval
+
+Sigma's original V edge is 34. Its incident faces 134 and 234 are
+exactly its two VCD faces; its other faces have label set MCD. Since
+M and V are distinct actual labels, a VCD face cannot pair to an MCD
+face. Thus an internal partner for either VCD face would have to be
+the other VCD face of sigma.
+
+The three edge labels of each face are distinct. There is exactly one
+label-preserving vertex map between these two source faces:
+
+    134 -> 234: 1 -> 2, 3 -> 4, 4 -> 3.              (388.1)
+
+It reverses the endpoints 3 and 4 of the tetrahedron's V edge. No
+orientation-preserving self-gluing is silently imposed. If the ambient
+quotient convention excludes this reversal, the pairing is already
+impossible. If it allows the reversal while satisfying the stated
+original-normal-interval convention, the argument below still applies.
+
+The tetrahedron-edge vertices 3 and 4 are different objects from the
+two endpoints of its normal interval. The latter are the edge-in-face
+incidences on faces 134 and 234. Under (388.1), these two normal
+endpoints are paired with each other. Every original face has precisely
+one partner, so each normal endpoint has precisely one paired endpoint.
+There is no remaining endpoint through which another original interval
+can attach. In particular recurring actual labels or quotient vertices
+do not introduce further normal-endpoint identifications.
+
+The one original V interval of sigma would therefore form a complete
+connected component with its endpoints joined. This component is a
+one-interval loop: its graph vertex has valence two, but its original
+degree is one. Connectedness would make it the entire actual V normal
+circle, contrary to original degree at least two. Thus neither source
+VCD face pairs within sigma.
+
+Both source faces have actual partners, so Section 387 forces each
+partner to be an external A(P) or B(P) owner. This is the promised
+existence deduction. It uses no count of distinct receiving owners.
+If both partners belong to the same owner, its two different target
+faces and two transverse V intervals remain separate original objects.
+The argument is independent of a receiver's global orientation and
+uses every compatible label-preserving local face map.
+

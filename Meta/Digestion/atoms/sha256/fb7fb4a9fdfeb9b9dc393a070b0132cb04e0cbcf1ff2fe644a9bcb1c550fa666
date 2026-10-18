@@ -1,0 +1,29 @@
+**Definition 286.1 (A label's own charge).**
+Let $L\ge4$, $J=\{3,\ldots,L\}$ and use the same balanced $\nu$
+and $c=c_m$ as in 274.1. For every late label $i$ and every complete
+$N$ table $D$, define
+
+$$
+\begin{aligned}
+a_i(D)&=\tfrac12\int([D(01Z)=i]+[D(10Z)=i])\,d\nu,\\
+g_i(D)&=a_i(D)-[D(v^i)=i]+[D(+)=i],\\
+\ell_i(D)&=[D(v^i)=i]-[D(u^i)=i],\\
+p_i(D)&=[D\text{ is a late pair }(i,j),\ j>i,
+                  \text{ with }01\text{ output }i].
+\end{aligned}
+\tag{286.1}
+$$
+Here $u^i=1^{i-1}0^{L-i+1}$ and $v^i$ has its sole zero at $i$.
+For one full feasible allocation put
+
+$$
+\begin{gathered}
+G_i=\sum_D\lambda_Dg_i(D),\quad
+\Pi_i=\sum_D\lambda_Dp_i(D),\\
+s_i=\mu_{v^i}(i)-(b_i-e),\qquad
+ t_i=\mu_{u^i}(i)-(b_i-e).
+\end{gathered}
+\tag{286.2}
+$$
+The symbol $t_i$ here is a correct-row slack, unrelated to (285.1).
+

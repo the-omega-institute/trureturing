@@ -1,0 +1,11 @@
+**定义 1.3（相位表与受护栏截止）。** 第2–7节固定
+
+$$
+1\le m<k,\qquad \gcd(m,T)=1,\qquad
+\theta_j=-j\pmod T\quad(0\le j\le k),\qquad
+h=\left\lfloor\frac{k}{m}\right\rfloor.
+\tag{1.6}
+$$
+
+固定免费初始值 $v$，给任意集合 $Y$ 和任意表 $\lambda:\{0,\ldots,k\}\to Y$，要求 $f(v,\theta_j,s)=\lambda(j)$ 对每个 INITIAL 尾成立。置 $A=\lambda(0)$，最小最坏追加完整块费记为 $C_v(\lambda)$。所谓受护栏截止只指 $0\le d\le h$，即各分支续接至多 $dm\le k$ 位。常值表免费返回。两个免费值纤维各自处理，原目标总费用取其最大值；初始拒绝叶免费返回其规定标签。有限表只使用标签的相等关系，不要求 $Y$ 带有额外结构。
+

@@ -1,0 +1,15 @@
+**Theorem 22.2 (refined acquired capacity and same-history inverse).** Let $G_\kappa(A,B,C)$ count the actual prefix dictionary with this extra acquired datum. Its empty base is $G_s(0,0,0)=1$, all other empty cells are zero, and invalid arguments give zero. For $A+B>0$ it obeys
+
+$$
+G_\kappa(A,B,C)=
+\sum_{(\eta,\alpha)\text{ incoming to }\kappa}G_\eta(A-1,B,C)
++\sum_{(\eta,\beta)\text{ incoming to }\kappa}G_\eta(A,B-1,C-A).
+\tag{SC.54}
+$$
+
+Use these sizes in (SC.46)'s ordered predecessor blocks, subtracting $A'$ from $C'$ for a $\beta$ predecessor and zero for an $\alpha$ predecessor. For every fixed $\mu$ and every positive finite acquired prefix this initializes, updates and inverts a rank with exactly $G_\kappa(A,B,C)$ possible values. At $L_{1,100}$ the size is the supplied $F(A,B,C)$ of (SC.11), so its supplementary data alphabet and fixed-class $\lceil\log_2F(A,B,C)\rceil$ data bits are causally attained. Its raw/relational inverse and holding refer to the same history and record as in Theorem 19.4.
+
+For a fixed $D$, clipping this refined additive rank by (SC.51) attains $\min(D,F(A,B,C))/F(A,B,C)$ in every nonempty class. The terminal image of this variable-width rank across all acquired $C$ classes at fixed $(A,B)$ has the sharp $\max_C F(A,B,C)$ label values; this does not choose a threshold from those counts before they are acquired. Averaging the fixed-$D$ success over the actual $C$ distribution gives exactly (SC.18). This does not establish an optimal complete machine or a small-workspace refinement.
+
+Proof. Induction on actual letters gives $C=C(h)$: a new beta contributes precisely one pair for each already acquired alpha. Deleting a final beta therefore subtracts the predecessor alpha count $A$, which equals the current $A$; deleting an alpha contributes no new pair. The same unique last-edge partition as in Theorem 19.2 gives (SC.54), including zero/empty cases. Count cardinalities, ordered interval ranks and inverse are thus justified without enumerating a discarded actual past. Appending a common continuation transforms $C$ by $C(hv)=C(h)+A(h)B(v)+C(v)$, the existing ordered-pair concatenation supplier. Hence a refined prefix fiber embeds into one refined terminal fiber, and the pathwise rank-alphabet bound also holds with the refined terminal size. The completed $100$ dictionary is exactly the normal-form dictionary already classified in Theorem 8.3; no new signature convention or higher-order hierarchy is introduced. Clipping and the fixed-prior uniformity/independence of Theorems 9.2–9.3 give the remaining statements, with actual weights $F(A,B,C)/F(A,B)$. $\square$
+

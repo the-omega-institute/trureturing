@@ -1,0 +1,60 @@
+**Convention 2.1 (source matrices and cost).** Use positive source
+amplitudes and the exact source-root normalization
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a_K|0\rangle\langle1|+b_K|1\rangle\langle0|,\quad
+S=c_K|0\rangle\langle2|+d_K|2\rangle\langle0|,\\
+M=\operatorname{diag}(0,m_1,m_2),\qquad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=\frac{a_Kb_K}{h_0h_1},\quad
+\omega=\frac{c_Kd_K}{h_0h_2},\quad
+\delta=\theta+\omega<1,\quad s_0=\sqrt\delta,\quad
+\beta=\omega/\delta,\quad\alpha=1-\beta,\\
+L=\operatorname{diag}(s_0,1,1),\quad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\quad
+C=(e_0e_1^T+e_1e_0^T)/2.
+\end{gathered}
+\tag{TA.7}
+$$
+
+Write $A_y=\sum_i h_i^2p_{yi}$,
+$B_y=b_K^2p_{y0}+a_K^2p_{y1}$ and
+$C_y=d_K^2p_{y0}+c_K^2p_{y2}$. These positive quantities strictly
+increase through the three heights. Set $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$,
+$\Delta A=A_{27}-A_5$, and similarly for $B,C$. In coefficient order
+$(D,T,S)$, put
+
+$$
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+G=LNL=\begin{pmatrix}g_0&x&y\\x&g_1&z\\y&z&g_2\end{pmatrix},
+\qquad(K_0,K_1,K_2)=(D,T,S).
+\tag{TA.8}
+$$
+
+The entries $x,y,z$ of $G$ are coefficient coordinates, distinct from
+the original height and CG coordinates. All formulas apply at the
+conditional source root; off-root boxes supply comparison inequalities,
+not TP identities.
+
+JR's sharp cost is
+
+$$
+\mathsf C(s)=A_{27}(1-u_s)+B_{27}(1-v_s),\qquad
+u_s=\theta v_s+\omega,
+\tag{TA.9}
+$$
+
+where $v_s=1$ for $0\leq s\leq s_0$; for $s_0<s\leq1$ it is the
+unique $v\in[\omega/(1-\theta),1)$ satisfying
+
+$$
+\sqrt{v(\theta v+\omega)}+
+ \sqrt{(1-v)(1-\theta v-\omega)}=s.
+\tag{TA.10}
+$$
+
+In particular $\mathsf C(s)=(1-\delta)A_{27}$ on the weak interval.
+The contrast ceiling is one; $s>1$ is infeasible.
+

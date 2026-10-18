@@ -1,0 +1,26 @@
+**Convention 13.4 (mature methods and external boundaries).** Positive
+Choi support, Gram left inverses, Kraus ranks, finite PSD spectral
+factorizations, zero-Rayleigh induction, complex triangle and
+Cauchy--Schwarz inequalities, Taylor estimates, the implicit-function
+theorem and Gram--Schmidt are established methods. The increment is a
+repository-derived source-specific application, not an invention of
+those methods. Generic Kraus/Born identities and the pinned
+Physlib/mathlib references named in the supplied texts are inherited
+source reuse, not newly compiled Lean applications.
+
+The supplied texts attribute finite CP extension to
+Heinosaari--Jivulescu--Reeb--Wolf, Schmidt overlap bounds to
+Terhal--Horodecki, Choi/Kraus correspondence to
+Chruściński--Kossakowski, classical-assisted dimension/image compression
+to Sekatski, and finite compatible-instrument mechanisms to
+Leppäjärvi--Sedlák and Muñoz-Moller--Leppäjärvi--Heinosaari.
+JG credits Mayer--Knill for connected spanning-state rigidity;
+JR notes Uhlmann's affine-flat decomposition antecedent.
+These are conditional inherited attributions, not independent readings
+or authentication of those external works. No unproved continuous
+instrument disintegration is needed: all present acquisitions are
+finite and each time measure is checked directly. Root isolation,
+enclosures, Jacobian, minimax, nested control/library compatibility
+and physical calibration keep their declared conditional status.
+No literature-wide absence or worldwide novelty/priority is certified.
+

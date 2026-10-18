@@ -1,0 +1,9 @@
+**定义 6.4（同一实际整数的严格全除数预算）。** 原目标仍要求同一个实际整数
+
+$$
+N^*=1+F_r g^*,\qquad r\ge7\text{ 为素数},\qquad
+C^*+H^*<\left(\frac{\log\log(N^*)}{\log\log(A)}\right)^s.
+$$
+
+不假定 $F_r$ 为素数；原连续非空窗口、分离分母、全部实际素数幂与全部约数均保留。原 $A,C_0,N_g,s,t,Z,b_s$ 和非空 $E^*$ 条件保持其数论含义，见[混色卷定义8.5](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md#8-部分界的边界与未解目标)及原目标；数论 $A$ 不与树组成计数混用。两格树证书没有支付这项严格预算。一般混色、GeneralH、同一整数预算及原 Robin、黎曼假设和长期 FIB-ATOM 几何代数目标均不由这两格结算。
+

@@ -1,0 +1,255 @@
+**theorem 3.1 (Uniform three-copy certificate bound).**
+Every processor of Definition 1.2 has worst-label error at least
+$[c-B_3]_+$. The same lower bound holds for limits of its induced
+four-channel tuples in diamond norm.
+
+Proof. Fix either active pair $d=(j,k)$. At Alice prepare the real local
+data/reference vector
+
+$$
+|\Omega_d\rangle=
+ (|0\rangle_R|e_j\rangle_D+|1\rangle_R|e_k\rangle_D)/\sqrt2.
+\tag{3.1}
+$$
+
+Feed its data into an arbitrary admissible processor and keep $R$
+untouched. This defines a CPTP real LOCC map $\mathcal F$ from all three
+programs to $R$ at Alice and Bob's output. This deduction uses the
+processor's whole-algebra validity. It is valid regardless of when the
+original processor first interacts with data. The imaginary Hermitian
+test
+
+$$
+W_d=i(|0,j\rangle\langle1,k|-|1,k\rangle\langle0,j|)
+\tag{3.2}
+$$
+
+has operator norm one and target expectations $+c,-c$ on the two
+opposite labels. It is a mathematical norm test, not a processor
+operation. If the respective diamond errors are $\epsilon_+,\epsilon_-$,
+put
+
+$$
+\Delta_3=\frac{\rho_+^{\otimes3}-\rho_-^{\otimes3}}2,
+\qquad g=\operatorname{tr}[W_d\mathcal F(\Delta_3)].
+$$
+
+Trace-norm duality on (3.1) gives
+
+$$
+\frac{\epsilon_++\epsilon_-}{2}\ge c-g.
+\tag{3.3}
+$$
+
+Indeed, if $f_\pm$ are the actual output expectations, then
+$\epsilon_+\ge c-f_+$ and $\epsilon_-\ge c+f_-$, while
+$g=(f_+-f_-)/2$. This accounts for the unhalved normalization.
+
+We first establish the exact supplied two-pair interface needed to
+bound $g$. This is the finite certificate of
+[C-135.1](AURIC_FIB_ATOM_HIDDEN_RELATIONS_COMPOUND_COMMUNICATION_AND_CALIBRATION.md),
+with its signs and support patterns made explicit here. Put
+
+$$
+C=A^{T_A}=i(|10\rangle\langle01|-|01\rangle\langle10|),
+\qquad R_n=A\otimes Q+Q\otimes A.
+\tag{3.4}
+$$
+
+For a CPTP real separable map $\mathcal G$ from two such pairs to a bit
+$r_0$ at Alice and a bit $o$ at Bob, use the unnormalized Choi order
+$(r_0,a_1,a_2,b_1,b_2,o)$:
+
+$$
+M_{r_0abo,\,sa'b'p}
+ =[\mathcal G(|ab\rangle\langle a'b'|)]_{r_0o,sp}.
+\tag{3.5}
+$$
+
+Then $M\ge0$ and $\operatorname{tr}_{r_0,o}M=I_{ab}$. Let $\Gamma$
+transpose Alice's entire block $(r_0,a_1,a_2)$. A product real Kraus
+matrix has a vectorized real factor on each side, and the corresponding
+rank-one local projector is symmetric. Thus $M^\Gamma=M$.
+For real LOCC, refine every local Kraus history and final discard;
+each complete history has exactly such product real Kraus factors.
+Arbitrary finite real ancillary states can be absorbed using real
+spectral decompositions. Classical mixtures, or integrals of histories,
+preserve this finite-dimensional linear identity. This proves its
+necessity for the entire competitor class without a round or ancillary
+size bound. It is used only as a converse condition.
+
+On the output bits set $W=i(|00\rangle\langle11|-|11\rangle\langle00|)$,
+and on the inputs set
+
+$$
+Z=Q\otimes Q+\tfrac12(A\otimes A+C\otimes C),
+\qquad \operatorname{tr}Z=4,\qquad Z^{T_{a_1a_2}}=Z.
+$$
+
+A hat extends an input operator by identity on the output bits, with
+the reordering in (3.5). Define
+
+$$
+H_{r_0abo,\,sa'b'p}=W_{r_0o,sp}(R_n)_{a'b',ab}.
+\tag{3.6}
+$$
+
+Thus $\operatorname{tr}(MH)=\operatorname{tr}[W\mathcal G(R_n)]$;
+in output/input tensor notation $H=W\otimes R_n^T=-W\otimes R_n$.
+In the stated six-bit order take the supplied real vectors
+
+$$
+\begin{aligned}
+v_1&=|000110\rangle-|011000\rangle,\\
+v_2&=|000111\rangle-|011001\rangle-|101100\rangle-|110010\rangle,\\
+v_3&=|001101\rangle+|010011\rangle+|100110\rangle-|111000\rangle,\\
+v_4&=|001100\rangle+|010010\rangle,\\
+v_5&=|101101\rangle+|110011\rangle,\\
+v_6&=|100111\rangle-|111001\rangle,\qquad
+S=\sum_{\ell=1}^6|v_\ell\rangle\langle v_\ell|\ge0.
+\end{aligned}
+\tag{3.7}
+$$
+
+Their sparse expansion gives the more explicit identity
+
+$$
+S=\widehat{Q\otimes Q+C\otimes C}-H^\Gamma.
+\tag{3.8}
+$$
+
+Here is a complete support-pattern verification. Each support state
+satisfies $b=\bar a$, the bitwise complement of $a$. For every fixed
+output $(r_0,o)$, the four diagonal entries, one for each $a$, are one.
+The within-output off-diagonals are $-1$ between $a=00,11$ and $+1$
+between $a=01,10$, including their reverses. These are precisely the
+entries of $C\otimes C$, since $C_{01,10}=-i$ and $C_{10,01}=i$.
+The remaining entries connect output $01$ to $10$ with Alice strings
+that differ in exactly one bit $\ell$. Their value is $-(-1)^{a_\ell}$.
+To see that these are all the entries, the two four-term vectors in
+(3.7) contain the output $01,10$ support states, and the other four
+vectors each contain the two within-output support states for output
+$00$ or $11$. Expanding these six projectors gives exactly the patterns
+just listed and their Hermitian reverses, with no other nonzero entry.
+
+Writing $C_{\rm out}=W^{T_{r_0}}$, one has
+
+$$
+-H^\Gamma=C_{\rm out}\otimes(C\otimes Q+Q\otimes C).
+$$
+
+On a listed output $01$-to-$10$ entry, $C_{\rm out}$ contributes $-i$.
+The one flipped input bit contributes $-i$ for $a_\ell=0$ and $+i$
+for $a_\ell=1$. Their product is exactly $-(-1)^{a_\ell}$.
+This verifies (3.8), including all zero entries and signs. Transposing
+Alice's block therefore gives
+
+$$
+\frac{S+S^\Gamma}{2}
+   =\widehat Z-\frac{H+H^\Gamma}{2}.
+\tag{3.9}
+$$
+
+Pair (3.9) with $M=M^\Gamma$. Self-adjointness of partial transpose
+for the trace pairing and trace preservation yield
+
+$$
+\operatorname{tr}[W\mathcal G(R_n)]
+ =\operatorname{tr}(M\widehat Z)-\operatorname{tr}(MS)
+ =4-\operatorname{tr}(MS)\le4.
+\tag{3.10}
+$$
+
+Only $M,S$ need to be positive; no positivity of $Z$ is asserted.
+Every transpose in this argument is algebraic, never a physical gate.
+
+We will also use (3.10) with a spectator $T\in\{P,Q,O\}$ in another
+copy position. Each such $T$ is a nonnegative diagonal sum of original
+real product projectors. If $z=\operatorname{tr}T>0$, locally preparing
+$T/z$ with shared classical randomness before a full real LOCC map
+gives (3.10) multiplied by $z$. If $z=0$, the term is zero. Copy
+permutations are local real operations. Restricting each input to its
+local pair is a real isometric restriction. For Bob's five-dimensional
+output, the pair-identification Kraus matrix and the rows
+$|0\rangle\langle e_\ell|$ for $\ell\notin\{j,k\}$ form a real CPTP
+compression preserving the $W_d$ expectation. Thus these reductions
+give exactly the interface of (3.10), without restricting the internals
+of the original processor.
+
+Return to three copies. The same-sign iid expansion is
+
+$$
+\Delta_3=u(A\otimes D\otimes D+D\otimes A\otimes D
+                    +D\otimes D\otimes A)+u^3A\otimes A\otimes A.
+\tag{3.11}
+$$
+
+The cubic term survives. The following decomposition is a linear
+calculation on Hermitian operators; it does not give the processor a
+choice of programs or access to a matching-sector measurement.
+
+Terms with two $O$ factors have three placements and total contribution
+to $g$ at most $6ur^2$: $\|A\|_1=2$ and $\|O\|_1=r$.
+We use the standard contraction of Hermitian trace norm under a CPTP
+map, followed by the norm-one test.
+
+For each of the three placements with one $O$, the other two factors
+are
+
+$$
+uw(A\otimes P+P\otimes A)+unR_n.
+$$
+
+On $P\otimes P$, the first bracket has eigenvalues $2,0,0,-2$ and
+trace norm four. The spectator multiplies this bound by $r$.
+Equation (3.10) bounds the second bracket by $4r$. Thus all one-$O$
+terms contribute at most $12ur(w+n)=12urh$.
+
+With no $O$ factor, first group the $P$-supported terms with the cubic:
+
+$$
+L=uw^2(A\otimes P\otimes P+P\otimes A\otimes P
+                       +P\otimes P\otimes A)+u^3A\otimes A\otimes A.
+$$
+
+The three $A$ operators commute on $P^{\otimes3}$ and have joint
+eigenvalues $\epsilon_1,\epsilon_2,\epsilon_3\in\{1,-1\}$.
+The eigenvalue of $L$ is
+$uw^2(\epsilon_1+\epsilon_2+\epsilon_3)+u^3\epsilon_1\epsilon_2\epsilon_3$.
+The two all-equal words have magnitude $3uw^2+u^3$; the other six have
+magnitude $uw^2-u^3\ge0$, because $u\le w$. Hence
+
+$$
+\|L\|_1=2(3uw^2+u^3)+6(uw^2-u^3)=12uw^2-4u^3.
+\tag{3.12}
+$$
+
+Taking a separate triangle bound on the cubic would lose the negative
+term in (3.12), including its endpoint cancellation when $u=w$.
+
+The six terms with one $A$, one $P$ and one $Q$ group into three
+placements of $R_n$ with spectator $P$. Since $\operatorname{tr}P=2$,
+(3.10) bounds each group by eight, for total $24uwn$.
+The three terms with one $A$ and two $Q$ factors are half the sum of
+the three placements of $R_n$ with spectator $Q$: each $AQQ$ term
+occurs twice in that sum. Since $\operatorname{tr}Q=2$, their total
+contribution is at most $12un^2$.
+
+Combining every group gives
+
+$$
+\begin{aligned}
+g&\le6ur^2+12urh+12uw^2+24uwn+12un^2-4u^3\\
+ &=6u(1-2h+2h^2)-4u^3=B_3,
+\end{aligned}
+\tag{3.13}
+$$
+
+where $r=1-2h$. Equation (3.3) and nonnegativity of error prove
+$\max_X\epsilon_X\ge[c-B_3]_+$. This argument applies to either
+actual active pair and every admissible processor, including those
+that interact with data first and retain all programs adaptively.
+At $u=0$ the same inequalities apply directly. The bound is uniform
+over all finite round counts and finite ancillary dimensions, so
+continuity gives the asserted extension to limits. QED.
+

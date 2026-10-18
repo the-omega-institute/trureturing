@@ -1,0 +1,11 @@
+**Convention 3.4 (the true cone and credited reduction).** Let $\mathcal C_2$ be the finite sums of singular coefficient projectors in Lemma 3.2, with zero included. These atoms are rank-one coefficient projectors, without a canonical factorization or ontological claim. The exact IR reduction retains $H_r\succeq0$, $L_r\in\mathcal C_2$, their sum $\sum_r(H_r+L_r)=I$, and
+
+$$
+0\preceq N=\frac{I+s\kappa X_{01}}2-\Theta(H_++L_+)\preceq M.
+\tag{RG.19}
+$$
+
+It is an exact compact original-class problem, with actual finite realizations; its earlier generic branch bound is thirty. The supplied complex-cone volume CA, Sections 4–8, gives the spectral cone lift, six singular atoms, twenty-four general branches and the complete sharp-average equality face. Those are reused results, not new laws here. In its lift one subtracts a positive $2\times2$ plane slack from $L$, factors the positive remainder $AA^\dagger$, and requires the largest Takagi value of $A^TBA$ to be at most the sum of the other two, padded by zeros. No plane slack is eliminated here.
+
+In particular $\operatorname{tr}(BL)\le0$ alone is not general cone membership. For $z=(\sqrt\alpha,i,0)^T/\sqrt{1+\alpha}$, $zz^\dagger\preceq I$ and $z^\dagger Bz=0$, but $u\ne0$, $z^TBz=2\alpha/(1+\alpha)\ne0$, so $K(z)$ is invertible. Every positive summand of a rank-one positive matrix has its range in that line; a singular-projector decomposition would require a singular vector parallel to $z$, which is impossible. Thus this matrix is outside $\mathcal C_2$. The new proof uses (RG.18) only as a necessary relaxation, and proves true cone sufficiency for its own real low matrices in Section 6.
+

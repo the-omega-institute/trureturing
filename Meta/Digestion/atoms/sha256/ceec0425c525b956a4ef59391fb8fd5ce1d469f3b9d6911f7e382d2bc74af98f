@@ -1,0 +1,17 @@
+**Definition 8.1 (the alpha-containing acquired term).** For a finite
+branch image $B$, prescribe
+
+$$
+f_\infty(B)=\mathbf1_{\{B\text{ contains an alpha leaf}\}},
+\qquad \sigma_\infty=\sigma_{f_\infty}
+\tag{PCA.21}
+$$
+
+using exactly (PCA.12) on all other profiles. Structural inspection of
+an acquired finite term decides this predicate: beta contributes false,
+alpha true, and a pair takes the disjunction of its children's values.
+This is a statement about a finite mathematical computation on already
+acquired data. Its workspace and access are not supplied to Definition
+2.2. The original eight-state reader of 4.3 still serves this exact
+code, with the same $e_0,e_1$ and two-call bound.
+

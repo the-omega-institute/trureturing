@@ -1,0 +1,48 @@
+**Definition 52.2 (one supported center and transported reality).** Fix a density $\omega\in\mathsf D(E)$, let $S=\operatorname{supp}\omega$ and $k=\dim S$, and choose an eigenbasis on $S$ with
+
+$$
+\omega|_S=\operatorname{diag}(\lambda_1,\ldots,\lambda_k)>0,
+\qquad \sum_i\lambda_i=1.
+$$
+
+With $F=\mathbb C^k$ define
+
+$$
+|\omega\rangle_{FE}=\sum_{i=1}^k\sqrt{\lambda_i}|i\rangle_F|i\rangle_E,
+\qquad V_\omega\psi=\psi\otimes|\omega\rangle,
+\qquad \mathcal C_\omega(X)=\operatorname{Tr}(X)\omega.
+\tag{S.4}
+$$
+
+Only the center is represented on $S$; the encoder and its complement still use the actual environment $E$. Original environmental conjugation is the real-basis antiunitary $J_E$. A coordinate unitary $T_E$ transports it to $T_EJ_ET_E^\dagger$, which need not be entrywise conjugation in the new basis. The original input basis is unchanged. In phase coordinates its real structure remains the swapped conjugation (R.33) of the first volume, rather than entrywise reality of phase coordinates.
+
+For one contraction $U:\mathbb C^5\to\mathbb C^3\otimes F$, $U^\dagger U\preceq I_5$, put
+
+$$
+\begin{aligned}
+A_{\omega,U}&=V_\omega^\dagger(U\otimes I_E)V,\\
+t_\psi&=V_\omega\psi,
+&x_\psi&=(U\otimes\Pi_S)V\psi,
+&r_\psi&=\operatorname{Re}\langle t_\psi,x_\psi\rangle
+=\operatorname{Re}\langle\psi,A_{\omega,U}\psi\rangle.
+\end{aligned}
+\tag{S.5}
+$$
+
+The existing unequal-dimension Uhlmann interface (R.223) gives
+
+$$
+F_\rho(\Gamma,\mathcal C_\omega)
+=\max_{U^\dagger U\preceq I_5}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U}).
+\tag{S.6}
+$$
+
+[Bény–Oreshkov, *Approximate simulation of quantum channels*, arXiv:1103.0649v3, (54)–(56)](https://arxiv.org/pdf/1103.0649v3) allows rectangular norm-one contractions and uses root fidelity. Its Corollary 5, (64)–(66), supplies the unrestricted CPTP recovery/complement identity
+
+$$
+g_N=\max_\omega\min_\rho F_\rho(\Gamma,\mathcal C_\omega).
+\tag{S.7}
+$$
+
+The Kraus-bounded trace-nonincreasing optimization alone does not justify (S.7). The contraction in (S.6) is a purification variable, not a physical recovery with a Kraus bound.
+

@@ -1,0 +1,39 @@
+**Open boundary 12.3 (the original acquisition and recovery programme).** The
+unaugmented original observer still has no constructed and certified route
+from an arbitrary unknown past to the RA producer coupling or another
+sufficient joint reference. Its missing pieces include actual source/epoch
+authentication, stable-setting carrier, permitted nondisturbing probe coupling,
+reference/gain/clock calibration, complete acquisition failure behavior and
+their physical and informational costs. Installing (CP.30) as an unexplained
+oracle would assume that gap away.
+
+Readable phase/winding-correlated archives, arbitrary nonmonotone paths,
+changing menus outside (CP.10), exact current-height guards and acquisition
+interacting with the old specimen are not characterized by these theorems.
+Neither full marked-law acquisition nor the complete-instrument minimax values
+left open in AC are obtained. Transport–Memory's acquired interference data
+and individual Atlas-view sufficiency remain unsupplied. Full mutual recovery
+of space, time, boundary and memory, native memory/cofinality and the separate
+fixed-Hamiltonian quantum minimax objectives retain their unresolved scope.
+No action, observation or resource law is transferred from the stationary
+alpha/beta source, PCA, KBONACCI, NativeLiteralMoore, C114, twisted-ground
+lattices, TwoClockKrylovClosure or the independent fixed-Hamiltonian model.
+
+[FRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean
+[FRTB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs
+[OCC]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/D5/S3/Quantum/Fibers/OriginalControlComposition.lean
+[OCCB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs
+[IB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[IS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md
+[QCM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md
+[RA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md
+[SCI]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md
+[EMA]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md
+[PRT]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md
+[RB]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md
+[AC]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_ACQUIRED_CONTINUATION_LIMITS.md
+[PP]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+[TM]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md
+[PG]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[ATLAS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+

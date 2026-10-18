@@ -1,0 +1,54 @@
+**Theorem 6.3 (One four-coordinate model for all paths and truncations).**
+For every path of Proposition 6.2, assign the fixed ambient linear map
+
+$$
+\mathcal W_{\rm p}^\varepsilon(z)
+=\begin{pmatrix}
+e^{\nu_1\Delta/H}R_{L/2}&0\\
+0&e^{\nu_2\Delta/H}R_{L/2}
+\end{pmatrix}z+0_4.
+$$
+
+On the actual image its exact guard is
+
+$$
+\mathscr G_{\rm p}=
+\{z\in\mathscr S_\varepsilon:
+0<\kappa(z)+\rho(t)<H\ \text{for every }t\in[0,T_{\rm p}]\}.
+$$
+
+The map intertwines the full native endpoint on all of
+$\mathcal G_{\rm p}$. Every truncated path has the same assertion with
+its own truncated integrals and full truncated guard. The original
+uniform error bound of Theorem 5.5 holds at every such current point.
+
+Proof. Substitute the source endpoint into the $j$th block of the
+encoder, for $j=1,2$:
+
+$$
+e^{\nu_j(k+\Delta)/H}U(\alpha+L/2)
+=e^{\nu_j\Delta/H}R_{L/2}
+e^{\nu_jk/H}U(\alpha).
+$$
+
+This proves exact intertwining. The coefficients depend only on the
+fixed model and the prescribed path, never on the starting ray.
+The mixed source term $C_{\rm p}$ is present in Proposition 6.2;
+it is absent here solely because $E_\varepsilon$ is independent of
+$\beta$. The source dynamics have not been replaced by different
+dynamics.
+
+Proposition 6.1 identifies the inverse image of $\mathscr G_{\rm p}$
+with precisely $\mathcal G_{\rm p}$, so this is the full original
+guard, constant on encoder fibers. Empty guards impose no identity,
+but their ambient map remains assigned. On a lawful path the
+intertwining identity proves preservation of the actual image.
+
+For any $t_0\in[0,T_{\rm p}]$, replace all upper limits by $t_0$,
+and restrict the guard to $[0,t_0]$. The same integration and
+substitution prove the exact intermediate encoding. This argument
+also handles a lawful truncation of a path whose full extension is
+unlawful: its own full truncated guard is the relevant one. At every
+encoded current ray, Theorem 5.5 applies without a time-dependent
+change of model or constants. $\square$
+

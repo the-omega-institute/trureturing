@@ -1,0 +1,4 @@
+**Theorem 5.3 (common-code restriction).** If an actual pair satisfying the oldblind condition (P.4) is supported in one common three-dimensional complex subspace of $\mathbb C^5$, then $\beta=0$.
+
+**Proof.** Its difference has rank at most three. A purely imaginary Hermitian matrix $iA_0$ with $A_0$ real skew-symmetric has even rank, hence rank at most two here. Its second positive spectral weight must vanish. In particular a common three-dimensional isometric code cannot supply the positive-$\beta$ witnesses, whose combined phase support has dimension four. This is a restriction on that actual common support, not on all noisy qutrit encoders. $\square$
+

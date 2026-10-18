@@ -1,0 +1,62 @@
+## 2. The complete root-seven interpolation identities
+
+**Lemma 2.1.** Let $\deg f\le3$, $f(7)=0$, and put
+$a_i=f(i)$ for $i=1,2,3$. Then
+
+$$
+\begin{aligned}
+0=f(7)&=-20f(0)+70a_1-84a_2+35a_3,\\
+f(4)&=\tfrac12a_1-\tfrac95a_2+\tfrac94a_3,\\
+f(5)&=a_1-\tfrac{16}5a_2+3a_3,\\
+f(6)&=a_1-3a_2+\tfrac52a_3.
+\end{aligned}
+\tag{2.1}
+$$
+
+When $f(0)=-d$, the entire coefficient vector in increasing powers
+of $T$ is
+
+$$
+\left(-d,\ \tfrac{11}6d+3a_1-\tfrac32a_2+\tfrac13a_3,
+ -d-\tfrac52a_1+2a_2-\tfrac12a_3,
+ \tfrac16d+\tfrac12a_1-\tfrac12a_2+\tfrac16a_3\right).
+\tag{2.2}
+$$
+
+**Proof.** The Lagrange polynomials at clocks zero through three are
+
+$$
+\begin{aligned}
+\ell_0(T)&=-(T-1)(T-2)(T-3)/6,\\
+\ell_1(T)&=T(T-2)(T-3)/2,\\
+\ell_2(T)&=-T(T-1)(T-3)/2,\\
+\ell_3(T)&=T(T-1)(T-2)/6.
+\end{aligned}
+\tag{2.3}
+$$
+
+They have value one at their own node and zero at the other three.
+The difference between $f$ and its interpolation has four distinct
+zeros, hence is zero: successive division by distinct linear factors
+proves the root bound for a nonzero polynomial. Their complete
+evaluation table needed here is
+
+$$
+\begin{array}{c|rrrr}
+T&\ell_0&\ell_1&\ell_2&\ell_3\\ \hline
+4&-1&4&-6&4\\
+5&-4&15&-20&10\\
+6&-10&36&-45&20\\
+7&-20&70&-84&35
+\end{array}
+\tag{2.4}
+$$
+
+The last row and $f(7)=0$ give
+$f(0)=\tfrac72a_1-\tfrac{21}5a_2+\tfrac74a_3$.
+Substitution into the other rows yields, respectively, the triples
+$(1/2,-9/5,9/4)$, $(1,-16/5,3)$ and $(1,-3,5/2)$.
+Expanding $-d\ell_0+a_1\ell_1+a_2\ell_2+a_3\ell_3$ gives (2.2).
+Only fixed nonzero integer denominators occur. No gain sample has
+been divided out. Lower degrees and repeated roots are included. ∎
+

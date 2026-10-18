@@ -1,0 +1,34 @@
+**Definition 2.1 (Consumed five-mode source).** The mode order is
+$\Sigma=(0,1,2,3,13)$. Its occupation vectors, in the coordinate order $(x,y,z)$,
+are
+
+$$
+(0,0,0),\quad(1,0,0),\quad(0,0,1),\quad(0,1,0),\quad(1,1,0).
+$$
+
+The vector $|0\rangle$ is a normalized basis vector representing the empty
+occupation, not the zero vector. Write $r=1-Z$ and assume throughout this proof
+unit, except in explicitly stated limits,
+
+$$
+0<Z<1,\qquad 0<X,Y<r.
+$$
+
+SP §35.1 and HR C-2.2 supply the normalized fiber and its kernel direction:
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad d=(1,-1,0,-1,1)^{\mathsf T},
+$$
+
+$$
+\kappa_-:=\max(0,X+Y-r)<\kappa<\kappa_+:=\min(X,Y),
+\qquad \frac{dp_\kappa}{d\kappa}=d.
+$$
+
+This interval is nonempty under the displayed hypotheses and is precisely the
+full-support part of the fiber. The constraints are total probability one and
+$X=p_1+p_{13}$, $Y=p_3+p_{13}$, $Z=p_2$. Their normalized tangent kernel is
+$\mathbb R d$. These formulas consume the existing affine reconstruction;
+subsequent arguments concern transport on this already specified source.
+

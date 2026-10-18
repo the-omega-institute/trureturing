@@ -1,0 +1,19 @@
+## 391. Source bounds and the full lower range of m
+
+Every low value is at most m-2: this is explicit for v, while
+c<m-d-1<m-2 and d<m-c-1<m-2. Every high value is at least m.
+The source product and v<=m-2 imply
+
+    (m-1)*(m-3)>4,
+
+because c+d>2. Since m>3, this gives
+
+    m>2+sqrt(5)>4.                                  (391.1)
+
+For any transverse high pair p,q, both at least m,
+
+    K>=sqrt(m^2-1)/m,                               (391.2)
+
+because sqrt(x^2-1)/x increases for x>1, and K is the p,q-weighted
+mean of this function. Also 0<K<1.
+

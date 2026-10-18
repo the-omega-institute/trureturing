@@ -1,0 +1,54 @@
+**Proposition 29.3 (processing, interaction and the extended account).**
+In Assumption 25.1 the exact frontier concerns mutable recovery width
+and chronological Reads. An actual path has a separate service account
+
+$$
+\begin{aligned}
+\mathcal C_{\rm int}={}&C_{\rm setup}+C_{\rm immutable}\\
+&+\sum_{t:w_t\in Q}
+ \bigl(C_{\rm table}(w_t)+C_{\rm submit}(p_t)
+       +C_{\rm Read}(p_t,Y_{a,b})
+       +C_{\rm response\ write}(w_t,o_t)\bigr)\\
+&+\sum_{t:w_t\in I}
+ \bigl(C_{\rm table}(w_t)+C_{\rm internal\ step/write}
+          (w_t,\eta(w_t))\bigr)\\
+&+C_{\rm table}(h)+C_{\rm output}(17-b),
+\end{aligned}
+\tag{NARC.29.2}
+$$
+
+where $C_{\rm setup}$ retains every acquisition, export/discard,
+continuation, later capture/parse, compilation/installation and
+initialization charge of (NARC.20.5). Use nonnegative scalar or
+vector accounts without double counting shared services. Peak storage
+and other nonadditive resources require their own composition rule.
+
+**Proof.** Sum each row's supplied services along this same actual
+path. A query obtains a new native reply; an internal row acquires
+nothing and has its own access, processing and write charge. The
+terminal service emits the full installed constant. Setting
+$I=\varnothing$ recovers the account of Proposition 20.2. Both
+reused certificates have $u=b_I=0$ on all fifteen paths, and their
+$r,b_Q$, address peaks and sums are precisely Proposition 19.2,
+Theorem 22.2 and Proposition 24.2. Their attained resource triples
+$(d,|W|,\max r)$ remain $(6,11,2)$ and $(5,12,3)$.
+
+The three-Read certificate changes the information schedule as in
+Proposition 24.1: ages $18,27$ share the $P_{16}$ branch word but
+require outputs $17,12$. Fixed internal processing from that word
+cannot distinguish them; its $P_{18}$ query acquires the needed
+distinction. Theorem 28.1 excludes every redesigned five-bit two-Read
+controller, not merely substitution of internal rows in this table.
+Entry and completed-answer routing compete in the last query's
+neighborhood even when internal time is allowed.
+
+Neither witness uniformly reduces sourcewise Read cost: age $27$
+uses one versus three Reads, while age $29$ uses two versus one.
+Literal letters are logical address costs, not physical latency.
+The eleven/twelve installed-word counts and forty/fifty independently
+stored literal letters retain their representation-specific meanings
+from §§20.2 and 24.2. Conditional service availability and immutable
+storage are additional to five or six mutable recovery bits.
+Equation (NARC.29.2) therefore supplies no total physical storage,
+time, energy or scalar-cost optimum. $\square$
+

@@ -1,0 +1,26 @@
+**Convention 23.2 (unchanged reader and all allowed preparers).** Keep
+exactly Supplier application 4.3's eight installed reader states,
+its two original complete entries $e_0,e_1$, entry map, four-successor
+reader table and five whole-row halts. Handoff must install precisely
+$e_{\sigma_{A,k}(u)}$. The reader's separate upper budgets remain
+$K=8,q_R\le2,\ell_R\le6$. Its output $R_0$ is the complete original
+row $R_*$. Each $R_j$, $1\le j\le4$, is exactly NBP Proposition
+9.3's row: replace the two holes at $q_jL,q_jR$ by a concrete beta
+at $q_j$, retain every other exterior part and old hole, restrict the
+whole equality partition, and recompute its canonical names. All
+remaining disequalities and strict-prefix blocking guards are retained.
+The other occurrence of the repeated partner is still an old hole.
+These literal complete outputs are supplied, not reconstructed from a
+root-type answer in the preparation phase.
+
+Preparation uses Definition 2.2 and Convention 17.2 with a common
+running start. Competitors are all finite stationary fixed-literal
+four-successor shared graphs accurate on the entire $\mathcal U_*$.
+Only sourcewise termination is required initially. Repeated words at
+different states, shared successors, cyclic union graphs and unused
+states are admitted. Every installed state and every running visit is
+charged; a constant reply, absence or a root query is not free. Initially
+there are the two original-entry latches. If $r$ further distinct
+latches are mandated, all $r$ are also installed and counted. No bound
+on tree size, height or interior shape is imposed on the upper domain.
+

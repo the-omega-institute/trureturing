@@ -1,0 +1,48 @@
+### 37.3. 全偶数方程与不混名的父坐标
+
+写 $g(t)=\lambda+\mu t+\nu t^2$，$x_i=y_i-a_0$。初读恰给 $d=a_0-\lambda$，于是 $x_i=-\lambda+T_i g(i)$。这是整个世界平移双射，逆向把 $a_0$ 加回漂移，不给漂移、根或增益标签。
+
+偶数账为
+
+$$
+\begin{aligned}
+x_2&=b\lambda+(2+2b)\mu+(4+4b)\nu,\\
+x_4&=2b\lambda+(4+8b)\mu+(16+32b)\nu,\\
+x_6&=2b\lambda+(6+12b)\mu+(36+72b)\nu.
+\end{aligned}
+\tag{37.6}
+$$
+
+令
+
+$$
+a=x_2,\quad C=\frac{x_4-2x_2}{4},\quad K=\frac{x_6-x_4}{2},\quad
+\epsilon=C-\frac K4,\quad u=1+2b,\quad w=1-2b.
+\tag{37.7}
+$$
+
+相减逐项给
+
+$$
+\begin{aligned}
+x_4-2x_2&=4b\mu+(8+24b)\nu, & C&=b\mu+(2+6b)\nu,\\
+x_6-x_4&=(2+4b)\mu+(20+40b)\nu, & K&=u(\mu+10\nu).
+\end{aligned}
+\tag{37.8}
+$$
+
+反向 $x_2=a,x_4=2a+4C,x_6=2a+4C+2K$，故解 $a$ 原式及 $C,K$ 两式等价于全部偶数式，包含零读数与零样本。
+
+为对接《FIB 增益零平面与因果观测策略》第 36 节，把其五动作父坐标单独记成 $A_p,L_p,D_p,B_p,C_p$。同一 $x_0,\ldots,x_5$ 给
+
+$$
+\begin{aligned}
+A_p&=C/2,& L_p&=a/2-C,\\
+D_p&=(x_5-2x_3+x_1)/8,& B_p&=(x_3-x_1-8D_p)/2,\\
+C_p&=x_1-B_p-D_p.
+\end{aligned}
+\tag{37.9}
+$$
+
+其 $E_p=L_pt+A_pt^2,R_p=D_pt^2+B_pt+C_p$ 只插父的三个偶、三个奇节点。这里 $K$ 是新取得第六响应的差，不是该父的 $H_p(q)=2\eta(q)+3q$；$C$ 也不是 $C_p$。下面的 $b$ 图谱直接解整个七读纤维，无须调用父的十四次式、二十二界或恒等开区间。
+

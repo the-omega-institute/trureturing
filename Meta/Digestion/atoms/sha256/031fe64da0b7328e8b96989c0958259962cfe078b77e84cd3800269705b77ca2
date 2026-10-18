@@ -1,0 +1,12 @@
+#### 9.3　统一编译的代数判据
+
+把 $S_{\mathrm{in}}$ 与 $S_{\mathrm{out}}$ 用 $T$ 识别后，定义终端坐标中的正向变换
+
+$$
+\widetilde I_a=T I_a T^{-1}.
+$$
+
+记 $\widetilde M^+=\langle\widetilde I_a:a\in A\rangle$。
+
+<a id="claim-9-3-1"></a>
+

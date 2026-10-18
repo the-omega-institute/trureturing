@@ -1,0 +1,16 @@
+**Proposition 255.3 (A sufficient score test and its limitation).**
+If $\Delta_O(y)+\Xi_y\le1$, then $V=y,\theta=0$ is a valid
+full certificate. The condition is not necessary.
+
+**Proof.** Theorem 255.2 gives $\Delta_N(y)\le1$, and the
+signed residual is zero. For nonnecessity use the score ray of
+[Proposition 198.7](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md):
+at $L=3$, its only nonzero coordinates are
+$C_{110}=s$, $P_{010}=P_{100}=s$, $T=s$, with $s\ge0$.
+The anchor score is $3s$. Partitioning these four words by any
+query pair shows their maximum score is $3s$ in both catalogs,
+so $\Delta_N=\Delta_O=0$. The signed cell differences in
+(255.1) have maximal oscillation $s$, giving $\Xi=s/2$;
+also $\Gamma=3s$. For $s>2$ the sufficient test fails while
+$V=y,\theta=0$ still pays the input exactly. $\square$
+

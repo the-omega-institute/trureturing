@@ -1,0 +1,13 @@
+**定理 44.4（The delayed endpoint pair with arbitrary full outside labels）。** In (41.1), suppose cut $a=2$ is eligible and $\Lambda_0\ne\Lambda_1$. The complete target may have arbitrary outside phase labels, arbitrary coincidences with high labels, and different component tables, subject only to (41.5) at this cut. Then
+
+$$
+ C_{\rm ad}(f)=C_{\rm pre}(f)=p.
+\tag{44.7}
+$$
+
+**证明。** Eligibility says that all top two INITIAL tails $s\in\{k-2,k-1\}$ have one joined label $R$, over every phase, and all lower tails at phase $i$ have label $\Lambda_i$. Choose a free-value component $v$ in which the two endpoint low labels differ. At least one of these two labels differs from that component $R_v$. At that endpoint choose the two actual sources with INITIAL tails $k-3$ and $k-2$, common initial value $v$, and common phase. Any first word containing a zero has zero or one leading one; both sources survive its leading run and merge at that zero with the same archive but different required labels. Hence a correct adaptive root on this value fibre must be $11$, exactly as in the lower-bound mechanism of Theorem 2.2/[S20]. It cannot stop at the free reading because those actual labels differ.
+
+Now choose the two endpoint sources at INITIAL tail $k-3$, with that same initial value $v$. Their $11$ output is the same successful value $v\oplus1$, and their current tails both equal $k-1$. Their different component labels forbid stopping. Any next word beginning one rejects both at its first bit, before a new observable endpoint, and makes them permanently indistinguishable. The next word on their shared archive must therefore start zero. That zero suppresses phase one's absolute coefficient at position two and makes their current tails common. Until absolute position $T-1=2p-1$, phase zero and phase one have no further unsuppressed coefficient difference. Induction on actual acquired endpoints forces identical future adaptive actions and stopping decisions before that position; common rejection gives no exception. They cannot return their unequal INITIAL labels at a total fee below $p$.
+
+The preset stream (42.4) attains $p$ for the full target, not just these two sources, by Theorem 44.2's exceptional even-cut construction. It identifies all outside phases when their labels require it, decodes every high-tail rejection from the common high label, and works on both free values in one stream. Since $C_{\rm ad}\le C_{\rm pre}$, the lower and upper bounds give (44.7). The new scope here is the arbitrary complete outside and value tables; the endpoint obstruction itself is credited reuse. This family does not establish the adaptive optimum for an arbitrary mixed-tail table without the stated cut and endpoint inequality. ∎
+

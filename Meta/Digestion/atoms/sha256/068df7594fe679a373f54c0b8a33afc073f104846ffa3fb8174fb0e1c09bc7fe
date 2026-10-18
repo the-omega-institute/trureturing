@@ -1,0 +1,38 @@
+**Definition 1.4 (the exact joint problem).** For $m\ge1$, the input is
+an ordered tuple $(P_i,R_i)_{i<m}$. Define the chronological cone,
+the source fibers, and their joint relation by
+
+$$
+\begin{aligned}
+\mathcal C_m&=\{\mathbf n\in\mathbb N^m:0=n_0\le\cdots\le n_{m-1}\},\\
+F_{\mathbf n}&=\{t\in\mathcal T:
+        \forall i<m,\ R_{P_i}(\rho^{n_i}t)=R_i\},\\
+\mathscr H&=\{(\mathbf n,t):\mathbf n\in\mathcal C_m,
+                                      \ t\in F_{\mathbf n}\},\\
+E&=\{\mathbf n\in\mathcal C_m:F_{\mathbf n}\ne\varnothing\}.
+\end{aligned}
+\tag{NUE.3}
+$$
+
+This is the fiber of [NAR, Proposition 12.6][NAR]; for $m=2$ it is
+the lag fiber of NAR Proposition 10.3, with its first coordinate zero.
+The same $t$ appears in every conjunct. Each exponent is an unbounded
+natural, and equal epochs are permitted. If any row fails validation,
+$\mathscr H$ and $E$ are empty. No nonempty-fiber premise is used below.
+
+For later use, the exact formula for $t\in F_{\mathbf n}$ is
+
+$$
+\exists (\mathbf z_i)_{i<m}\quad
+\bigwedge_{i<m}\left(
+ \rho^{n_i}t=C_i[\mathbf z_i]\ \land\
+ \bigwedge_{b\ne c}z_{i,b}\ne z_{i,c}\right).
+\tag{NUE.4}
+$$
+
+Class names from different rows are separate variables. Their only
+implicit connection is the common whole original $t$ and its iterates.
+At supplied numeral epochs this formula is directly in the scope of
+NSF Theorem 5.2. With free epochs it is a semantic definition, not a
+claim that NSF already accepts quantified powers.
+

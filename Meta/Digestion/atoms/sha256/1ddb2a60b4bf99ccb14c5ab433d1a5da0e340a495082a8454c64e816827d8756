@@ -1,0 +1,28 @@
+**Convention 10.1 (method and literature scope).** The quantitative
+cylinder, rounding and deficit arguments in §§5–8 are repo-derived
+conditional deductions at the original GC/FA/RC interface. The original
+joint moment and HALF normalizations, double rigidity, capacity and common
+constructor are reused with their owning premises. The new analytic
+estimates use elementary real absolute-value identities, Taylor's formula,
+compactness, Lipschitz bounds and finite-dimensional left inverses.
+
+Strict dual separation, curvature and full rank also occur in the
+nondegenerate certificate methods of Duval–Peyré, *Exact Support Recovery
+for Sparse Spikes Deconvolution*, [§3.1–§3.2, served
+arXiv:1306.6909v1](https://arxiv.org/pdf/1306.6909v1). Their support-recovery
+theorem requires a convolution setting, a minimal-norm nondegenerate dual
+certificate, the stated value/derivative sampling rank, and a specified
+noise-to-regularization regime. Those hypotheses are not a theorem about
+this constrained positive common law and fractional capacity cylinder.
+Likewise the dual-interpolant criterion and homogeneous M-system theorem
+of de Castro–Gamboa, *Exact Reconstruction Using Support Pursuit*,
+[Lemma 1.1 and Theorem 2.1, served
+arXiv:1103.4951v1](https://arxiv.org/pdf/1103.4951v1), require their own
+full-rank interpolation, strict off-support and moment-system conditions.
+No such M-system for the present two-sheet functions is assumed. These
+references supply methodological context at their stated served-text
+scopes, without a version-exact historical-byte premise. Neither result
+is invoked to obtain (QS.31), (QS.38), (QS.42), an original higher-contact
+seed or a universal compression theorem. No priority, exhaustive literature
+search or nonexistence assertion is made.
+

@@ -1,0 +1,29 @@
+## 224. At most two single-high transverse-X owners
+
+Any such owner has pair {X,B}, B=C or D. Its axes r,o can only be
+X,C,D, or special. Thus r,o<=x: the low labels are smaller and
+Section 223 bounds special axes; repeated X axes are allowed.
+The transverse X angle beta has cosine
+ N/sqrt(D_r*D_o),
+ N=b*(r+o)+x*(r*o+b^2-x^2+1),
+ D_r=r^2+x^2+b^2+2*r*x*b-1,
+ D_o=o^2+x^2+b^2+2*o*x*b-1.
+The denominators are positive for positive cosh values. The sign of
+the derivative in r is the sign of
+ (b+x*o)*D_r-N*(r+x*b)
+ =(x^2-1)*[-b^3+b*o*r+b*x^2+b+o*x+r*x]>0,
+since x>b>1. The derivative in o is positive by symmetry. These
+rational comparisons do not require the interpolating data to be a
+genuine tetrahedron. Therefore its cosine is at most its value at
+r=o=x, namely
+ x*(b+1)/(2*x^2+b-1).
+This expression is increasing in b, with derivative
+ 2*x*(x^2-1)/(2*x^2+b-1)^2>0.
+Since b<x-2,
+ cos(beta)<x*(x-1)/(2*x^2+x-3)<1/2;
+the final denominator exceeds twice the numerator by 3*(x-1)>0.
+Thus beta>pi/3. Each actual owner has two such transverse X slots,
+so three distinct owners would exceed the complete X budget 2*pi.
+There are at most two single-high transverse-X owners. Any additional
+axial X slots only increase their actual X expense.
+

@@ -1,0 +1,76 @@
+**Theorem 9.2 (Every complex scalar port annihilating this family).**
+Let $T$ be any original legal complex scalar port, with any finite
+flag presentation, and suppose that for one $H$ in (8.1),
+
+$$
+\operatorname{tr}(W_HZ_T)=0.
+\tag{9.9}
+$$
+
+Then $e(T)\ge43/68$. If $H=I$, then $e(T)\ge103/136$.
+No reality, stationarity, reflection, unitality, self-adjointness
+or pure decoding is required of the given presentation of $T$.
+
+Proof. The credited QRC replacement can be chosen to preserve this
+particular witness pairing. To see the needed additional property,
+let $\mathcal R(Y)=(Y+Y^T)/2$ in the passive frame. At the Choi
+level, separate realification of a scalar port applies
+$\mathcal R\otimes\mathcal R$. The matrix $W_H$ is invariant
+under transposition of either factor, because it lies in
+$\operatorname{Sym}_5(\mathbb R)\otimes
+\operatorname{Sym}_5(\mathbb R)$. Trace self-adjointness of those
+transposes therefore gives
+
+$$
+\operatorname{tr}\bigl(W_H(\mathcal R\otimes\mathcal R)(Z_T)\bigr)
+                    =\operatorname{tr}(W_HZ_T).
+\tag{9.10}
+$$
+
+QRC Theorem 2.2 proves CP and TP of this particular replacement
+by splitting actual complex rank-one factors into their real and
+imaginary parts. It contracts every original real-effect residual.
+It does not assert that $\mathcal R$ itself is CP. Arbitrary mixed
+decoder states and POVM effects admit the finite spectral refinement
+needed for those factors by the scalar-port correspondence in §1.
+
+Furthermore $W$ is invariant under simultaneous sector orthogonal
+transformations: each cross-sector sum $\mathcal Q_{ij}$ in (4.1)
+is independent of its orthonormal sector bases. Since $H$ commutes
+with those transformations, so is $W_H$. In particular for every
+walk-torus or specified reflection matrix $g$,
+
+$$
+(g\otimes g)^TW_H(g\otimes g)=W_H.
+\tag{9.11}
+$$
+
+Conjugating a channel's design by this real $g$ conjugates its
+output-first Choi matrix by $g\otimes g$. Thus the stationary
+average of QPC Theorem 3.3 and the reflection average of QRC
+Theorem 3.2 both preserve (9.9). Continuity preserves the pairing
+under their compact averages. QPC's recurrence argument proves
+exact invariance of the original error under each walk-design
+conjugation for nonnegative waits; convexity makes its average
+no worse. QRC proves the same no-worse assertion for the reflection
+of the stationary channel. These are transformations of port data,
+not additional future controls or readable random flags.
+
+Applying these operations gives one selected channel $S_x$ with
+$e(T_x)\le e(T)$ and $\operatorname{tr}(W_HZ(x))=0$.
+QRC's finite-product representation keeps this entire channel and
+its full TP marginal. Theorem 8.2 puts $x$ in (8.4), and
+Theorem 9.1 gives
+
+$$
+e(T)\ge e(T_x)\ge43/68,
+\tag{9.12}
+$$
+
+with $103/136$ in the identity-filter case. The explicit wait-zero
+test in Theorem 9.1 is a test of this legal no-worse representative;
+the argument does not assert that the given nonstationary channel
+has the same wait-zero survival. It suffices for its original error
+bound. The replacement may change the channel, consistently with
+the unchanged-channel obstructions in QPC §9. $\square$
+

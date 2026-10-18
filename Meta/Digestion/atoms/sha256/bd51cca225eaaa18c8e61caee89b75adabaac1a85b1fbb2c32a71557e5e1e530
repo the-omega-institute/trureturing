@@ -1,0 +1,15 @@
+**Theorem 82.1.** Exactly one of the following holds.
+
+1. Both channels have at most two distinct entries. Then \(w\) is aligned,
+   the two disjoint \(S_3\) orbits have three rays each, and
+   \(\Gamma(w)=K_{3,3}\).
+2. At least one channel has three distinct entries. Then the two disjoint
+   \(S_3\) orbits have six rays each, and \(\Gamma(w)\) is four-regular
+   bipartite. Its vertices \(Pw,Q\Theta w\), for \(P,Q\in S_3\), are
+   adjacent exactly when \(P^{-1}Q\) is the identity or a transposition.
+
+In particular there is no orthogonal triple within any such symmetry union.
+The theorem does not classify edges between different unions. Arbitrary
+noncanonical triples and whole-branch canonical-basis uniqueness are not
+consequences of this statement.
+

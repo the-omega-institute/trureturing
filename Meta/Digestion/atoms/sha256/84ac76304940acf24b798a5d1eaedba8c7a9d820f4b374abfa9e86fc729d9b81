@@ -1,0 +1,56 @@
+**命题 23.9（同一四角平衡附近的局部时间对应）。** 在命题 23.8 的正底面域内，以 $\Delta\kappa=\kappa-\kappa_*$、$\chi=0$ 附近的实相位坐标，有
+
+$$
+\begin{aligned}
+h&=\frac{r^2}{4c_*}(\Delta\kappa)^2+c_*\chi^2
++O\bigl((|\Delta\kappa|+|\chi|)^3\bigr)\\
+&=\frac r2\left[\frac{I_*}2(\Delta\kappa)^2+
+\frac2{I_*}\chi^2\right]+O\bigl((|\Delta\kappa|+|\chi|)^3\bigr).
+\end{aligned}
+$$
+
+在 $\omega_{\rm red}=d\chi\wedge d\kappa$ 和 $\iota_{X_h}\omega_{\rm red}=dh$ 的符号约定下，线性化方程为
+
+$$
+\dot\chi=\frac{rI_*}2\Delta\kappa,\qquad
+\dot\kappa=-\frac{2r}{I_*}\chi,
+$$
+
+小振动角频率为 $r$。在选定函数生成元 $L/m$ 的连续时间链中则有精确均值方程
+
+$$
+\frac d{dt}\mathbb E(k/m)=XY-r\mathbb E(k/m).
+$$
+
+非单点扇区的 $\widehat H_m/m$ 正谱隙恰为 $R/m=r$。
+
+证明。由 $b-\delta_c=XY-r\kappa=-r\Delta\kappa$，
+
+$$
+(\sqrt b-\sqrt{\delta_c})^2
+=\frac{r^2(\Delta\kappa)^2}{(\sqrt b+\sqrt{\delta_c})^2}
+=\frac{r^2}{4c_*}(\Delta\kappa)^2+O(|\Delta\kappa|^3).
+$$
+
+另有 $2\sqrt{b\delta_c}(1-\cos\chi)=c_*\chi^2+O((|\Delta\kappa|+|\chi|)^3)$，证明展开；$I_*=r/c_*$ 给度量系数的对应。收缩公式给 $\dot\chi=\partial_\kappa h$、$\dot\kappa=-\partial_\chi h$，再代入二次项，二阶方程是 $\ddot\chi=-r^2\chi$。
+
+对链，$Lk=UV-Rk$，因而 $L(k/m)=(UV-Rk)/m$。生成元再除以 $m$，得到 $XY-r(k/m)$；有限空间上取期望即可得均值方程。谱隙是定理 23.5 除以 $m$ 的直接消费者。证毕。
+
+正底面局部平衡允许 $Z=0$，也允许 $X=Y$ 或 $X+Y=r$；它只需四底角在 $\kappa_*$ 正，不需要 §23.5 的整个闭约化球面正则条件。所用 Fisher 及水平度量在平衡的实际支撑上定义，中模式零概率不进入四角 $I_*$。
+
+这里的时间是模型中自定的无量纲参数。相同的 $r$ 分别表示 Hamilton 小振动频率、Markov 均值衰减率和固定扇区谱隙，并不使耗散、酉演化和非线性 Hamilton 流相等。特别是 §23.8 的严格符号归一化为 $\widehat H_m/[m(m-1)]$，本节谱与链的时间归一化为 $\widehat H_m/m,L/m$；后者相干期望为 $(m-1)h$，不能据此把有限 $m$ 的相干轨道认作 $h$ 的精确流。
+
+全空间缩放还须保留 §23.7 的结论：$\widehat H_m/m$ 正谱隙为 $2/m$，不等于固定非平凡扇区的 $r$。对一列存在的扇区，若 $R/m\to r>0$ 且固定 $j$ 始终在允许范围内，则
+
+$$
+\frac{j(R-j+1)}m\longrightarrow jr.
+$$
+
+这只是逐个固定 $j$ 的极限。若 $j/m\to\eta>0$ 且 $R/m\to r$，允许范围要求 $\eta\le r/2$，并有
+
+$$
+\frac{j(R-j+1)}{m(m-1)}\longrightarrow\eta(r-\eta).
+$$
+
+两式直接分别除以相应尺度取极限，说明固定指标与随次数增长指标的谱尺度不同。有限范围和全空间简并仍存在，没有从前一式推出整条极限调和梯级。
+

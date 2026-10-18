@@ -1,0 +1,124 @@
+**定理 204.8（全晚投影的终端完成）。** 回到全投影 $I=\{3,\ldots,L\}$，固定原始 $\nu$，令
+
+$$
+m_j=\nu(x_j=0),\qquad d_{ij}=\nu(x_i=1,x_j=0),
+$$
+
+$$
+\kappa=\max\left(0,\max_j(\gamma_j-m_j/2)_+,\max_{i<j}\big[(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+\big]\right),
+$$
+
+$$
+\pi=(\mu-t)_+,\qquad c_L=\frac{L-2}{L+1}.
+$$
+
+把终端权补到 $T_V=\max(t,\mu)=t+\pi$，使用 203.2 的 (203.9)—(203.10) protected-tail threshold 代表：原 pair 测度平衡提升为 $P^V_{01x}=P^V_{10x}=\nu(x)/2$，删除 early 正确行，保留全部晚正确量，按截断阈值区间分配正确行。完整目录的精确 excess 为 $\Delta_N(V)=\Delta_O(V)=\kappa$；且
+
+$$
+K_V=K_y-E+\pi,\qquad
+F_{Q(y)-Q(V)}(b)=-\gamma_1(1-b_1)-\gamma_2(1-b_2)+(\pi-E)e.
+\tag{204.12}
+$$
+
+它在 $o,p,u_k,v_k$ 上分别为
+
+$$
+-E,\quad-\gamma_2,\quad-\frac{E(k-2)}{k-1},\quad
+\frac{(\pi-E)(k-2)}{k+1},
+$$
+
+故正支撑恰为 $c_L(\pi-E)_+$。单一预算条件
+
+$$
+\kappa+c_L(\pi-E)_+\le1
+\tag{204.13}
+$$
+
+给出 $(V,\theta)$，其中 $\theta=c_L(\pi-E)_+$；$\pi\le E$ 时收费为零。删除 early 行使 excess 至多增加 $E$，而完整守卫给 $\kappa\le\delta+E$、(1,2;1,2,j) 给 $\pi\le\delta$，所以
+
+$$
+\delta+E+c_L(\delta-E)_+\le1
+\tag{204.14}
+$$
+
+是充分条件。特别在 $E=0$ 时，所有 profile、所有晚支撑和任意 $T$ 在
+
+$$
+\delta\le\frac{L+1}{2L-1}
+\tag{204.15}
+$$
+
+下成立，等号也成立；这只是有限 $L$ 的正预算改进，并非单位预算全分类。
+
+为明确这一供应器在全部标签上的应用，置 $a_{nk}=\nu(x_n=0,x_k=1)$（$n<k$），$a_{nn}=0$。early/late $(a,k)$ 的 early-zero 两胞没有晚正确质量，10 中 $n<k$ 的质量为 $(\gamma_n-a_{nk})_+$、$n=k$ 为 $\gamma_k$、$n>k$ 为零。由 $m_n\le m_k+a_{nk}$，保留正部得
+
+$$
+[(\gamma_n-a_{nk})_+-m_k/2]_+\le(\gamma_n-m_n/2)_+\le\kappa.
+$$
+
+$n=k$ 用同一一元界；11 由 $T_V\ge\mu$ 覆盖，$(1,2)$ 也无 excess。early 标签只收集 pair 子集，始终被零标签基线支配。
+
+对全晚 pair $i<j$，置 $p_{ab}=\nu(x_i=a,x_j=b)$。由 (203.10)，较早类 $n<i$ 的 10 质量准确为
+
+$$
+\left[\min\{\gamma_n,a_{ni}\}-\min\{\gamma_n,a_{nj}\}\right]_+
+\le(a_{ni}-a_{nj})_+
+\le\nu(x_n=0,x_i=1,x_j=0)\le p_{10}.
+$$
+
+这是区间 $[0,\gamma_n)\cap[a_{nj},a_{ni})$ 的长度，不一般等于未截断的 $(a_{ni}-a_{nj})_+$。第二个不等式来自
+$a_{ni}-a_{nj}=\nu(x_n=0,x_i=1,x_j=0)-\nu(x_n=0,x_i=0,x_j=1)$。
+$n=i$ 的 10 质量为零，$n>j$ 也为零。同理，01 只可能含 $n\le i$，质量为
+
+$$
+\left[\min\{\gamma_n,a_{nj}\}-\min\{\gamma_n,a_{ni}\}\right]_+
+\le\nu(x_n=0,x_i=0,x_j=1)\le p_{01},
+$$
+
+包括 $n=i$ 的 $a_{ii}=0$。因此这两种较早标签均不能产生超过对应 pair 基线的正 excess；不能说它们没有正确奖励。
+
+剩余 00 的候选为 $n\le i$，质量 $(\gamma_n-h_n)_+$，其中 $h_n=\max(a_{ni},a_{nj})$。由 $m_n\le p_{00}+2h_n$，有
+$[(\gamma_n-h_n)_+-p_{00}]_+\le(\gamma_n-m_n/2)_+\le\kappa$。
+10 可能产生正 excess 的标签恰须在 $i<m\le j$，其质量为 $(\gamma_m-a_{mj})_+$，由 $d_{im}\le p_{10}+a_{mj}$ 得
+$[(\gamma_m-a_{mj})_+-p_{10}]_+\le(\gamma_m-d_{im})_+\le\kappa$。
+11 的每个正确奖励都不超过 $\mu\le T_V$。
+
+令 $g_{00},g_{10}$ 为同一表各胞对全部标签的最大正 excess。仅一项为正时用其上述单项界；两项都为零时无须支出。两项都为正时，取实际达到它们的标签 $n\le i<m\le j$。此时才可去掉内部截断；用 $p_{00}+p_{10}=m_j$ 与同一测度的并集容量得到
+
+$$
+\begin{aligned}
+g_{00}+g_{10}&=\gamma_n+\gamma_m-h_n-a_{mj}-m_j,\\
+m_n+d_{nm}&\le m_j+a_{nj}+a_{mj}\le m_j+h_n+a_{mj},\\
+g_{00}+g_{10}&\le\gamma_n+\gamma_m-(m_n+d_{nm})\\
+&\le(\gamma_n-m_n)_++(\gamma_m-d_{nm})_+\le\kappa.
+\end{aligned}
+$$
+
+并集界的理由是：$x_n=0$ 或 $x_m=0$ 时，若 $x_j\ne0$，至少落在相应的 $a_{nj}$ 或 $a_{mj}$ 事件中。这涵盖 $n=i,m=j$、零总量以及零容量端点。所有完整 $N$ 日程的支撑至多 $S+T_V+\kappa$；空表与 singleton 嵌入双询，重复和反序不增加信息。203.11—203.12 的停止守卫下界又达到 $\kappa$，故 $N/O$ 同时取等。整个论证只支出一次共同容量，复用的仍是 203.2 的代表。
+
+在 $V$ 内保留全部 pair 行，把每个晚正确区间截到 $\eta_n=(\gamma_n-\kappa)_+$，并取 $T_Z=(\mu-\kappa)_+$。由 $\kappa$ 的定义，$\eta_n\le m_n/2$、$\eta_j\le d_{ij}$，且 $\max_n\eta_n=T_Z\le T_V$；204.2 的零成本盒和区间嵌套给出 $0\le Z\le V$、$\Delta_N(Z)=0$。余项 $U_{\rm term}=V-Z$ 无 pair 与 early 行，每个晚正确总量至多 $q=\min(\mu,\kappa)$，且 $T_{U_{\rm term}}\ge q$。任何 $N$ 表若使用零标签，至多还从三个其他胞收集正确标签，总奖励至多 $T_{U_{\rm term}}+3q$；不用零标签时至多为 $4q\le T_{U_{\rm term}}+3q$。减去余项锚 $T_{U_{\rm term}}$，得 $\Delta_N(U_{\rm term})\le3q$。联合恒等式仍是 $\Delta_N(Z+U_{\rm term})=\kappa$，不能把两个分别达到的上界相加。
+
+该收费在一个严格的显示参数族上优于旧标量测试。令 $m=L-2\ge4$，$c=c_L$，$c_m=4-2/\lceil m/2\rceil$，取
+
+$$
+\max(1/2,1/(3c))<d\le1/(1+c),\qquad \mu\ge3d,
+\qquad (4-c_m)\mu>5-c_md,
+$$
+
+令 $s=\mu-d$，取 201.2 的 (201.10) 明定子集测度 $\nu_J$，$J=\{3,\ldots,L\}$、$z=L$、$I=J\setminus\{z\}$。精确 pair 行为
+$P_{\{a,z\}\cup H}=s\nu_J(H)/2$（$a=1,2,H\subseteq I$），另加 $P_{\{a\}}=d/2$。该测度总量 $c_m$、内部零边际 2、有向矩 1。选一份实际输入的正确行：对每个 $i\in I$，在 $w(\{i,z\})$ 放 $s$、在 $w(\{i,i+1,\ldots,z\})$ 放 $d$，在 $w(\{z\})$ 放 $\mu$，重合行相加；取 $E=0,t=s$，故所有晚总量为 $\mu$。此时 $\kappa=\pi=d$，新证书总收费 $(1+c)d\le1$；旧 $\kappa+\pi$ 测试为 $2d>1$，条件抽取为 $3cd>1$，product 与 201 阈值也在该指定族上失败。$L=6,d=3/5,\mu=4$ 时
+
+$$
+S=54/5,\quad t=17/5,\quad W=71/5,\quad
+\kappa=\pi=3/5,\quad \theta=12/35,\quad
+\kappa+\theta=33/35.
+$$
+
+这一有理实例的 pair 支撑完整为：六字 $010010,100010,010100,100100,011000,101000$ 各有 $17/10$，$011111,101111$ 各有 $3/10$；正确权为
+$C_{110110}=C_{111010}=17/5$、$C_{110000}=C_{111000}=3/5$、$C_{111100}=C_{111110}=4$，$T=17/5$。阈值完成代表保持这些正确行及 pair 行，只把 $T$ 改为 4。输入两类 pair 支撑在 $(1,6),(2,6)$ 为 $71/5$，其余十三对为 $74/5$；完成代表在 $(1,2),(1,6),(2,6)$ 为 $74/5$，其余十二对为 $77/5$。两者各自空表及 singleton 均等于各自锚 $71/5,74/5$，故完整 excess 均为 $3/5$。
+
+一般族中，interior pair 的 pair 四胞质量为 $s,s,s,(c_m-3)s+d$；正确 00、01 最大质量分别至多 $d,s$，10 最大质量为 $\mu$，只有 10 增益 $d$，11 加上 $t=s$ 后由 $s\ge2d$ 覆盖。interior/terminal 的零胞容量为 $2s,(c_m-2)s$，增益至多 $d$；early/interior 也只在 early-one zero 胞增益 $d$，early/terminal 无增益，$(1,2)$ 达到 $d$。这给出实际输入的全目录 $\Delta_N=\Delta_O=d$。
+
+相应 $W=(c_m+1)\mu-c_md$ 比 201 显示阈值 $c_m\mu+\mu-d$ 少 $(c_m-1)d$，且由参数条件有 $W<5(\mu-1)$。fair-suffix 的显示阈值为 $5(\mu-1)$；budget-one terminal-product 族必须同时满足
+$u\ge4\mu^2/(2\mu+1)$、$\tau\ge\mu-1$，从而 $W=2u+\tau>5(\mu-1)$，在此无法达到。以上只比较这些已显示测试及指定参数族，不是对所有旧闭包、所有抽取分数或所有 $E_N$ 证书的分离。
+

@@ -1,0 +1,37 @@
+**Attribution 7.6 (Established operators and the specific comparison).**
+The conditional-resampling transition operator is
+$T=I-D^{-1}H_{\lambda,\omega}D$.
+[Dyer--Greenhill--Ullrich][DGU7], Definition 1.1
+and Lemma 1.2, establish nonnegative spectrum for
+such heat-bath mixtures. This supplies $H\preceq I$,
+not the stronger comparison $\gamma+\Lambda\le1$.
+Projection geometry, conditional factorization,
+Rayleigh quotients and compression interlacing are
+established tools; the block counts and combined
+two-edge bounds above are the specific deductions
+on this carrier.
+
+There is also an exact local correspondence with
+[Lesanovsky][L7], equations (1)--(2). Writing
+$z_i=\sqrt{\lambda_i}$, its constrained local term
+is
+
+$$
+h_i(z_i)=P_{i-1}(\sigma_x+z_iP_i+z_i^{-1}n_i)P_{i+1},
+\qquad SK_iS=\frac{h_i(z_i)}{z_i+z_i^{-1}}.
+\tag{7.15}
+$$
+
+Its homogeneous periodic spectral formulas do not
+transfer to arbitrary open-path activities and
+weights. Its unpinned open-boundary conserved edge
+sectors also differ from the present endpoint
+updates. The correspondence gives an established
+quantum parent, not a preparation or a hardware
+realization. No literature priority is claimed
+for the source-specific inequalities above.
+
+[DGU7]: ../../../Library/StatisticalMechanics/dyergreenhillullrich2014heatbath.md
+[L7]: ../../../Library/StatisticalMechanics/lesanovsky2012constrainedspinchain.md
+
+

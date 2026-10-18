@@ -1,0 +1,20 @@
+## 282. Each remaining M owner has exactly one M interval
+
+Let V be the nonempty subset of {eta,xi} consisting of owners containing
+M. Each owner v in V receives one actual face with three distinct labels
+{U,Z,C}, none equal to M.
+
+Every face of a chosen paired frame contains its two transverse labels.
+Therefore M cannot be transverse in v. At least one of its axes is M
+because v contains M. Both axes cannot be M: every face contains an
+axis edge and would then contain M, contradicting the incoming face.
+Thus v has exactly one original M occurrence, an axial one. The incoming
+{U,Z,C} face is opposite that M axis.
+
+The transverse pair of v is a pair of distinct labels chosen from
+{U,Z,C}, so it contains at least one of U,Z. Both faces incident to the
+M axis therefore contain M and another distinct P label. They are
+marked. Their label multisets are exactly one of {M,U,Z}, {M,U,C}, or
+{M,Z,C}. Each contains exactly one M edge occurrence. Neither is the
+incoming M-free face from rho.
+

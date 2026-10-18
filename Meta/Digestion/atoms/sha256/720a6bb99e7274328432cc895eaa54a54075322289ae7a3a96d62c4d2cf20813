@@ -1,0 +1,24 @@
+**Theorem 66.5 (Intrinsic lawful cap criterion in the common-order subclass).** The fibers of Definition 66.4 stabilize at a countable ordinal. The following are equivalent:
+
+$$
+ \begin{aligned}
+ &\text{an original-tape lawful preparation has uniform error at most }\eta;\\
+ &\text{such a preparation exists with every law in }\iota(\mathcal M);\\
+ &K_{\infty,\uparrow}^{\eta}(q)\ne\varnothing
+       \quad\text{for every actual }q\in Q.
+ \end{aligned}
+\tag{66.16}
+$$
+
+In particular attainment at the independently defined original $R_\mu$ is equivalent to nonemptiness of all the fibers at cap $R_\mu$. Cap zero is exact acquisition, not merely an infimum statement. Neither initial nor stable fiber nonemptiness is automatic from the rank hypothesis. The criterion does not require a global integrable upper envelope, finite-dimensional density space or compact set of laws.
+
+**Proof.** The space $\mathcal M$ is closed in $L^1(\lambda)$. Indeed from an $L^1$-convergent sequence choose an almost-everywhere convergent subsequence. On a common full-measure subset of $I$ its limit is nonnegative and ordered in the argument. This set is dense; the ordered limit extends to an increasing function on $I$, agreeing with the original limit except possibly at its countably many jumps. Right-continuous modification gives the chosen representative. Integral one passes to the limit in $L^1$. Hence $\mathcal M$ is complete, and is separable as a subspace of separable $L^1(\lambda)$. Each initial fiber is closed because it is an intersection of closed metric balls in this space.
+
+The metric stabilization and clopen selection portions of Theorem 54.2 therefore apply with their exact hypotheses: $Q$ is countable, its prefix neighborhoods form a countable clopen basis, the range is complete and separable, and the values are closed. Strict successor losses use distinct elements of $Q$ times a countable range basis, giving countable stabilization. Nonempty stable values are lower semicontinuous, and the disjoint-clopen-refinement construction (54.9)--(54.10) produces a continuous selection in a complete range. No countable-tape assumption is used in these portions, and their inverse cumulative sampling step is not invoked.
+
+If a lawful preparation has laws $\lambda_y$ within cap $\eta$, Lemma 45.3 makes those laws factor through $Q$ as a TV-continuous map. Apply $\mathfrak R$ pointwise. Theorem 66.2 gives a continuous $\mathcal M$-valued map $g_q$ whose laws are within the same cap against every original $\mu_y$. Thus it selects (66.15). The survival induction (54.8), with its limit intersections, puts $g_q$ in every refinement stage, proving nonemptiness of every stable fiber. Theorem 66.3 additionally realizes this reduced family lawfully on the original tapes; this is the operational cap-preservation assertion, rather than an assumption that the nonlinear law map is itself a tape map.
+
+Conversely, nonempty stable values supply a continuous selection $g_q\in K_{\infty,\uparrow}^{\eta}(q)\subseteq K_{0,\uparrow}^{\eta}(q)$. Theorem 66.3 supplies its exhausting common submeasures and lawful original-tape realization. Membership in (66.15) proves the cap at every original label. Inclusion of these preparations in all original-tape preparations proves the remaining implication in (66.16). Theorem 50.2 identifies the unrestricted acquisition infimum with $R_\mu$; (66.6)--(66.7) keep that original value and its quantifier order. At cap $R_\mu$, any feasible preparation therefore attains it.
+
+This deduction concerns the explicit common-rank input subclass. For original families without such a target-specified rank and dominating anchor, the nonlinear selection/exhaustion question of Section 62 remains unresolved. In particular this criterion does not classify all positive-proposal rows, all prescribed profiles or arbitrary fixed-consumer endpoint constraints. It preserves any such conditions already imposed on the original target family, while imposing no matching profile condition on prepared laws. $\square$
+

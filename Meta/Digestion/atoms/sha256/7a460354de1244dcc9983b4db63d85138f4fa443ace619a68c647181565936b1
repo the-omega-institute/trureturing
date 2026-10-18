@@ -1,0 +1,27 @@
+**Corollary 27.2 (an arbitrarily large installed-state premium at
+unchanged execution minima).** Compare the new $\sigma_{A,2}$ with
+the existing finite sparse OR code $\sigma_a$ of Definition 17.1
+for $a(s)=\mathbf1_{\{s\in A\}}$, under the identical original
+reader, entry, source and preparation conventions. Their respective
+minimum installed preparation cardinalities differ by exactly
+
+$$
+(2n+2+r)-(n+4+r)=n-2,
+\tag{PCA.64}
+$$
+
+while their independent minimum call and absolute-literal upper
+budgets are the same $n+1$ and $3+W_A$. The premium is unbounded
+as the supplied finite set grows. It survives arbitrarily large
+finite execution budgets.
+
+Proof. Use the exact sparse OR frontier of Theorem 19.1 and the
+second-hit frontier of Theorem 27.1. The lower state bound for each
+holds with unrestricted larger finite execution budgets, and both
+frontiers have a simultaneous attaining table. No encoder or reader
+has been changed while solving either fixed input: this comparison
+is between two explicitly different prescribed-code problems.
+Both lower cubes have the same whole predecessor row $R_0$; the
+extra state demand is for faithful original-code acquisition rather
+than for distinguishing new predecessor outputs. $\square$
+

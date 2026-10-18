@@ -1,0 +1,33 @@
+#### 84.4.2. Every mixed transversal retains a strict margin
+
+First work at t=0 with arbitrary fixed markers of real overlap rho in [0,1]. A mixed transversal selects one or three copies of bit zero, or two copies.
+
+If it selects one copy of one bit and three of the other, balance of the tetrahedral axes makes the sum of the three qubit projectors equal to I plus the selected single qubit projector. In the latter qubit line, the frame operator on the marker factor is P_m+2P_n. Its top eigenvalue is
+
+    L_(1,3)(rho)=(3+sqrt(1+8rho^2))/2.              (14)
+
+The perpendicular qubit line contributes only a unit marker projector, so (14) is the full top eigenvalue.
+
+If it selects two copies of each bit, the two qubit frame operators coincide, by sum_f n_f=0. Each is I+v dot sigma with ||v||=1/sqrt(3). The full frame operator is their common qubit operator tensored with the sum of the two marker projectors, giving
+
+    L_(2,2)(rho)=(1+1/sqrt(3))(1+rho).              (15)
+
+For A at t=0, rho=3/4, and both (14)--(15) are strictly greater than 5/2. For B at t=0, rho=1, and they are at least three.
+
+For any transversal, let V be its matrix of four unit environment columns. At the base, ||V||op<=2. If its perturbation is DeltaV, then
+
+    ||V(t)^*V(t)-V(0)^*V(0)||op
+       <=4||DeltaV||op+||DeltaV||op^2.              (16)
+
+For A only the fourth column can change, and
+
+    ||D(t)-I||op=2t/sqrt(1+t^2)<=2t.
+
+Thus ||DeltaV_A||op<=2t and its Gram change is at most 8t+4t^2<1/2 on the stated interval. Every mixed A transversal consequently still has norm greater than two.
+
+For B, the change of any marker vector has norm at most 2t, since
+
+    ||r_1(t)-e_0||^2=2-2sqrt(1-t^2)<=2t^2.
+
+The four marker changes contribute Frobenius norm at most 4t, and the one changed qubit column contributes at most 2t. Therefore ||DeltaV_B||op<=6t, and its Gram change is at most 24t+36t^2<1. Every mixed B transversal likewise retains norm strictly greater than two. Together with (13), all 32 norms exceed two for every 0<t<=1/100.
+

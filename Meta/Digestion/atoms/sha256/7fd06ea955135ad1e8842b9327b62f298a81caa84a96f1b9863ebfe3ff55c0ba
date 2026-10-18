@@ -1,0 +1,17 @@
+### 86.8. Intrinsic Choi-tail form and path consequence
+
+At B_0 the two nonzero Choi eigenvalues are 4,4: the eight base correct records are four orthonormal qubit frames. Thus there is a spectral gap separating the top-two Choi subspace from the rest. Near B_0 let P_B be its spectral projection. Choose a continuous orthonormal frame E_B:C^2->C^32 for that subspace, aligned with the base Kraus vectors. The Choi vector columns
+
+    J_B^(1/2) E_B,
+    J_B^(1/2)(I-P_B)
+
+form an old/new Kraus decomposition. Their Gram outer-product sum is J_B because P_B commutes with J_B. After the usual vector-to-Kraus reshaping, its Stinespring isometry has an old square block W near V_0 and a new block R satisfying
+
+    ||R||_F^2=Tr[J_B(I-P_B)]=epsilon_2(B).                 (28)
+
+The old frame can be aligned at the base by a fixed environment unitary. For A use the canonical square-root Choi decomposition in environment dimension 32; it is continuous near A_0, and a fixed environment unitary identifies its base with an embedding of the original four-dimensional equality environment. Therefore every pair of physical channels in a sufficiently small neighborhood has a lift to the Stinespring neighborhood used in (3), with d=32. This proves (2) without a smooth-path assumption.
+
+Alternatively, for any given Stinespring split the rank-two old Kraus contribution is positive semidefinite and leaves a positive Choi remainder of trace ||R||_F^2. The variational characterization of the two largest Choi eigenvalues gives epsilon_2(B)<=||R||_F^2. Hence amplitude ||R(t)||_F=O(t) implies the stated quartic path lower bound. In particular a C^2 finite-environment path covered by section 85 has this property. Arbitrary convergence of the other channel suffices for eventual membership in U.
+
+The theorem is local in channel space and its constant need not be uniform over the entire equality family. The second-order positive coefficient of section 85 can still provide a stronger positive gap in nonflat directions. In the flat directions, the present estimate rules out cubic improvement but leaves quartic and higher-order escape unresolved. The unrestricted quarter-optimum conjecture remains open.
+

@@ -1,0 +1,20 @@
+**Definition 2.3 (common specimen-only processor).** The actual accessible
+input at the chosen live cut is $\rho_{x,\beta,m}$ and a fixed common
+state $\tau$ of metadata and blanks. The metadata include the no-failure
+flag, aligned cut time, source/preparation/epoch identity, supplied fixed
+reference calibration, permissions and controller state. Neither an unknown
+history index nor a source-dependent installed processor is included in
+$\tau$. Any history-bearing readable register changes this premise and
+belongs in the full joint assistance of §7.
+
+Allow arbitrary finite adaptive instruments on this input, quantum or
+classical retained records, independent private randomness and arbitrary
+independent ancillary space and computation. Choices use only actual records.
+Composing unnormalized CP branch maps, retaining all outcomes and including
+any fixed output interpretation gives one common trace-preserving CP map
+$\Phi$. Absorbing acquisition failures and unexecuted rejections are outputs;
+none is divided out by a new acceptance event. Our lower bounds hold even
+for every unrestricted common CPTP $\Phi$, a larger comparison class than
+the existing lawful menu. This relaxation supplies no additional legal
+quantum read, original actuator or permission.
+

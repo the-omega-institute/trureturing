@@ -1,0 +1,56 @@
+**Lemma 8.1 (Score separation collapses every residue).** There exist $C\in[1/3,1]$ and $L\in[1/8,9/32]$ such that
+
+$$
+F_n\longrightarrow C,\qquad v_n\longrightarrow L.
+\tag{8.1}
+$$
+
+Let $g(t)=(1+t)^{-2}$ for $t>0$, set $s=2L$, and let $R(t)=t^{-1/2}-1$ for $0<t<1$. Then
+
+$$
+s=g(C)\in[1/4,9/16],\qquad
+F_a=R(v_a+L)\quad(a\ge2),
+\tag{8.2}
+$$
+
+and
+
+$$
+\frac{F_aF_b}{F_{a+b}}=R(v_a+v_b)\quad(a,b\ge2).
+\tag{8.3}
+$$
+
+**Proof.** The definition of $U$, together with (4.2) and cancellation of the powers of $\rho$, gives
+
+$$
+U(a,b)=g\left(\frac{F_aF_b}{F_{a+b}}\right),\qquad
+v_n=\frac12g\left(\frac{F_n^2}{F_{2n}}\right).
+\tag{8.4}
+$$
+
+Lemma 7.2 therefore gives limits $L_r$ of $v_n$ along each residue $r$; explicitly $L_r=g(C_r^2/C_{2r})/2$. Hold $a\ge2$ fixed and let $n$ tend to infinity in residue $r$ in $U(a,n)=v_a+v_n$. Then
+
+$$
+v_a+L_r=g\left(\frac{F_aC_r}{C_{r+a}}\right).
+\tag{8.5}
+$$
+
+Next let $a$ tend to infinity through residue $t$. The finite set of residue indices makes the denominator index fixed in this limit, and hence
+
+$$
+L_t+L_r=g\left(\frac{C_tC_r}{C_{t+r}}\right)
+\quad(t,r\in\mathbb Z/p\mathbb Z).
+\tag{8.6}
+$$
+
+Take $t=0$, meaning the zero residue class, not a gap of length zero. The right side is $g(C_0)$, independent of $r$, so all $L_r$ equal $L_0=:L$. Since $g$ is injective on positive numbers, (8.6) gives
+
+$$
+\frac{C_tC_r}{C_{t+r}}=C_0.
+\tag{8.7}
+$$
+
+Consequently $\chi_r=C_r/C_0$ is a positive multiplicative character of the finite cyclic group: $\chi_{t+r}=\chi_t\chi_r$ and $\chi_0=1$. Each $\chi_r^p=1$, so positivity forces $\chi_r=1$. All $C_r$ therefore have one common value $C$. With finitely many residues this proves the full limits in (8.1).
+
+Equation (8.6) now gives $2L=g(C)$. Letting $n\to\infty$ in (8.5) yields $v_a+L=g(F_a)$; inverting $g$ gives (8.2). Inverting (8.4) and using $U(a,b)=v_a+v_b$ gives (8.3). All arguments of $R$ belong to $[1/4,9/16]\subset(0,1)$, so these inversions are legitimate. $\square$
+

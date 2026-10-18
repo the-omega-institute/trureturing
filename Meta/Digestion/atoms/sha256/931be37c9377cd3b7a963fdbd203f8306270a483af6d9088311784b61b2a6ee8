@@ -1,0 +1,47 @@
+**Lemma 4.1 (Exact residence kernel).** For $k\ge0$ define
+
+$$
+ w_j(k)=\mathsf P(T_j\le k<T_{j+1})\quad(0\le j<J),
+ \qquad w_J(k)=\mathsf P(T_J\le k).
+$$
+
+These are exactly the probabilities of the finite level table after $k$ actual zeros.
+They partition every $k\ge0$. For $0\le z<1$,
+
+$$
+\sum_{k\ge0}w_j(k)z^k
+=\frac{z^j\prod_{\ell<j}p_\ell}
+ {\prod_{\ell\le j}(1-(1-p_\ell)z)}\quad(j<J),
+$$
+
+and
+
+$$
+\sum_{k\ge0}w_J(k)z^k
+=\frac{z^J\prod_{\ell<J}p_\ell}
+ {(1-z)\prod_{\ell<J}(1-(1-p_\ell)z)}.
+$$
+In particular, $w_0(k)=0$ for every $k\ge1$.
+
+**Proof.** At level $\ell$, the number of zero transitions before the successful
+increment is $G_\ell$. Therefore after $k$ updates the uncapped level is $j$ exactly
+when $T_j\le k<T_{j+1}$; after capping, the same event holds for $j<J$ and the event
+$T_J\le k$ is the level-$J$ event. The events partition the nonnegative integers.
+
+The geometric transform is
+
+$$
+\mathbb E z^{G_\ell}=\frac{p_\ell z}{1-(1-p_\ell)z}.
+$$
+
+Conditional on arrival at $T_j$, the level-$j$ residence contributes
+$\sum_{h\ge0}\mathsf P(G_j>h)z^h=[1-(1-p_j)z]^{-1}$. Multiplying transforms gives
+the first formula; summing the infinite cap residence gives the second. Since $p_0=1$,
+$T_1=1$ and the noncap level zero is occupied only at $k=0$. $\square$
+
+Define the completed-gap laws
+
+$$
+ a_i(j)=\sum_{k\ge1}f_i(k)w_j(k),\qquad 1\le j\le J.
+$$
+

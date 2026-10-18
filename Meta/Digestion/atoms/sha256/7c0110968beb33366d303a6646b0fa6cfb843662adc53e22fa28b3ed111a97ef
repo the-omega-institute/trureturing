@@ -1,0 +1,31 @@
+**Definition 1.3 (supplied native coordinates).** Put $T_j=\rho^j\alpha$.
+Use [ABC, Theorems 2.2–2.3][ABC]: every source has a unique normal atomic
+code $B(u)$, whose primitive leaves $[j]$ expand to $T_j$. Its ordinary
+binary constructor $F$ is retained except that native pairing uses
+
+$$
+J([j+1],[j])=[j+2],
+\qquad J(X,Y)=F(X,Y)\text{ in every other case}.
+\tag{CAR.6}
+$$
+
+Normality excludes the displayed collapsible pair everywhere. Forward
+$\rho^a$ preserves the $F$ structure and adds $a$ to every primitive rank.
+Expansion $E$ and $B$ are inverse on normal codes. In particular
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{j+2}=\langle T_{j+1},T_j\rangle,
+\qquad \rho^a T_j=T_{j+a},
+\tag{CAR.7}
+$$
+
+and $j\mapsto T_j$ is injective. These coordinates describe possible
+sources; they are not accessible observer data.
+
+The question treated below is a recognized part of [ARH, Definition
+9.1][ARH]. Atomicity will be deduced from actual mandatory positive
+constraints, rather than assumed for arbitrary sources. All remaining
+signed constraints and all finite targets are then handled without a
+synchronous-comparison restriction.
+

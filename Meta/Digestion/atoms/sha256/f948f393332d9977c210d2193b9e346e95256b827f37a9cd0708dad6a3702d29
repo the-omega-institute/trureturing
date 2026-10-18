@@ -1,0 +1,86 @@
+**定理 10.7（任意实角的双接触分离）。** 先接触 $AB$，再接触 $BC$，总动作是
+
+$$
+W(u,v)=e^{-ivh_{BC}}e^{-iuh_{AB}}.
+$$
+
+对每个 $u,v\in\mathbb R$，终端 $C$ 点占据满足
+
+$$
+q_C^\pm(u,v)=\operatorname{Tr}(\rho_\pm W^\dagger n_CW)
+=\frac12\mp\frac12\sin u\sin2v.
+$$
+
+特别地，$u=\pi/2,v=\pi/4$ 时 $q_C^+=0,q_C^-=1$。
+
+证明。两点交换 $h=RL+LR$ 仅在 $|01\rangle,|10\rangle$ 上为 $\sigma_x$，在 $|00\rangle,|11\rangle$ 上为零，故在完整两点空间有
+
+$$
+e^{-ith}=I+(\cos t-1)h^2-i\sin t\,h.
+$$
+
+例如在 $BC$ 的有序活动基 $(|01\rangle,|10\rangle)$ 上，$n_C=\operatorname{diag}(1,0)$、$J_{BC}=\begin{pmatrix}0&i\\-i&0\end{pmatrix}$，直接相乘得到
+
+$$
+e^{iv\sigma_x}\begin{pmatrix}1&0\\0&0\end{pmatrix}e^{-iv\sigma_x}
+=\begin{pmatrix}\cos^2v&-i\sin v\cos v\\i\sin v\cos v&\sin^2v\end{pmatrix}.
+$$
+
+在 $|00\rangle,|11\rangle$ 上，两边分别给零和一。将同一计算用于 $AB$ 的右端占据 $n_B$，便得到完整算子式
+
+$$
+e^{ivh_{BC}}n_Ce^{-ivh_{BC}}
+=n_C\cos^2v+n_B\sin^2v-\frac12J_{BC}\sin2v,
+$$
+
+$$
+e^{iuh_{AB}}n_Be^{-iuh_{AB}}
+=n_B\cos^2u+n_A\sin^2u-\frac12J_{AB}\sin2u.
+$$
+
+第二式对于一般准备不可删去；只有在本见证上取期望后，它才化为 $1/2$。
+
+为计算跨边流，令 $X=R_AL_B,Y=R_BL_C,F=R_AZ_B^{\rm sf}L_C$。前节乘法规则给
+
+$$
+[h_{AB},Y-Y^\dagger]=F+F^\dagger=T,
+\qquad [h_{AB},T]=Y-Y^\dagger.
+$$
+
+例如后式的两项可分别写成
+
+$$
+[h_{AB},F]=(I-n_A)R_BL_C+n_AR_BL_C=Y,
+$$
+
+$$
+[h_{AB},F^\dagger]=-Y^\dagger.
+$$
+
+因此 $i[h_{AB},J_{BC}]=T$、$i[h_{AB},T]=-J_{BC}$。设 $F_1(u)=e^{iuh_{AB}}J_{BC}e^{-iuh_{AB}}$、$F_2(u)=e^{iuh_{AB}}Te^{-iuh_{AB}}$，则
+
+$$
+F_1'=F_2,\qquad F_2'=-F_1,
+\qquad(F_1(0),F_2(0))=(J_{BC},T).
+$$
+
+常系数微分方程的唯一解给出所有实数上的恒等式
+
+$$
+e^{iuh_{AB}}J_{BC}e^{-iuh_{AB}}=J_{BC}\cos u+T\sin u.
+$$
+
+又因 $n_C$ 与 $h_{AB}$ 交换，完整拉回为
+
+$$
+\begin{aligned}
+W^\dagger n_CW={}&n_C\cos^2v
++n_B\sin^2v\cos^2u+n_A\sin^2v\sin^2u\\
+&-\frac12J_{AB}\sin^2v\sin2u
+-\frac12J_{BC}\sin2v\cos u
+-\frac12T\sin2v\sin u.
+\end{aligned}
+$$
+
+这是任意 $\rho\in\mathcal D_3$ 都能取期望的算子等式。代入本节六个初始期望，三个占据系数的和是一，流期望为零，得所述 $q_C^\pm$。所用指数和微分方程恒等式对所有实角成立，不依赖小角近似或有限参数抽样。证毕。
+

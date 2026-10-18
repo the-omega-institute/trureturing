@@ -1,0 +1,121 @@
+**Theorem 2.2 (finite joint coefficient characterization).** A supported
+map is CP/TNI, zero-transfer, and has $J_\Lambda\in\mathfrak S_2$ if
+and only if it is $\Lambda(A)=C\odot A$ on ALL complex matrices, for
+one Hermitian $C$ with $0\leq d_i\leq1$ and $M(C)\succeq0$.
+Equivalently its finite scalar test is
+
+$$
+\boxed{
+\begin{gathered}
+0\leq d_i\leq1\quad(i=0,1,2),\qquad
+ d_i d_j\geq r_{ij}^2\quad(i<j),\\
+d_0d_1d_2\geq d_0r_{12}^2+d_1r_{02}^2+d_2r_{01}^2
+                         +2r_{01}r_{02}r_{12}.
+\end{gathered}}
+\tag{JG.10}
+$$
+
+If CP/TNI and zero transfer are already given, only $M(C)\succeq0$
+is additional. All complex phases, zero coefficients, zero maps and
+singular boundaries are included. Before the TNI upper bounds the
+criterion is homogeneous. In particular $\operatorname{tr}J_\Lambda
+=\sum_i d_i\in[0,3]$, rather than a prescribed unit trace.
+
+Proof. The first reduction reuses the Schur/zero-transfer characterization
+CG18.1 and ZG4.1. To fix its scope, a finite Kraus family has
+$T_{ij}=\sum_a|(L_a)_{ij}|^2$. Vanishing off-diagonal transfers makes
+every $L_a$ diagonal. With $L_a=\operatorname{diag}(v_a)$ this gives
+$C=\sum_a v_av_a^\dagger\succeq0$ and $\Lambda(A)=C\odot A$,
+including every non-Hermitian matrix unit. Conversely a positive
+factorization of $C$ gives those Kraus operators. The coefficients are unique by the action on each matrix unit. Its effect is
+$\Lambda^\dagger(I)=\operatorname{diag}(d)$, and its Choi matrix is
+$SCS^\dagger$. TNI is exactly $d_i\leq1$.
+
+Suppose this Choi matrix has a decomposition into vectorized matrices
+of rank at most two. For $z\perp\operatorname{range}S$, positivity gives
+$0=z^\dagger Jz=\sum_s|\langle z,L_s\rangle\!\rangle|^2$.
+Every summand is supported on $\operatorname{range}S$, so every $L_s$
+is diagonal. Its rank equals the number of its nonzero diagonal entries.
+Consequently the Schmidt condition is precisely
+
+$$
+C=\sum_s v_sv_s^\dagger,\qquad |\operatorname{supp}v_s|\leq2.
+\tag{JG.11}
+$$
+
+Vectorization proves the converse. The support argument is termwise
+for positive countable sums and almost everywhere for positive integrals
+by testing a finite basis of $(\operatorname{range}S)^\perp$.
+
+For a decomposition (JG.11) and a real vector $q\geq0$, triangle
+inequalities for the off-diagonal coefficients give
+
+$$
+q^TM(C)q\geq\sum_s\left[\sum_i |v_{si}|^2q_i^2
+       -2\sum_{i<j}|v_{si}v_{sj}|q_iq_j\right]\geq0.
+\tag{JG.12}
+$$
+
+Each singleton term is a square; each pair term is
+$(|v_{si}|q_i-|v_{sj}|q_j)^2$. For any real $z$, nonpositive
+comparison off-diagonals imply $z^TMz\geq|z|^TM|z|\geq0$.
+Thus $M\succeq0$, also as a Hermitian matrix on complex vectors.
+The inequalities also hold for the stated integrable positive sums.
+
+For sufficiency assume $M\succeq0$. If $d_i=0$, its pair minors force
+all incident $r_{ij}=0$; omit this isolated zero coordinate. On each
+connected component of the remaining positive-diagonal graph, set
+$D=\operatorname{diag}(d)$ and
+$R_{ii}=0$, $R_{ij}=r_{ij}/\sqrt{d_i d_j}$, so
+$M=D^{1/2}(I-R)D^{1/2}$. A top Rayleigh vector $u$ of the symmetric
+nonnegative matrix $R$ can be chosen nonnegative, since taking absolute
+values does not lower its Rayleigh quotient. It is an eigenvector for
+the maximum eigenvalue $\lambda$. In a connected component a zero
+coordinate in $u$ forces its neighbors to vanish by $Ru=\lambda u$,
+and then forces $u=0$. Hence $u>0$. A singleton uses $u=1$, $\lambda=0$.
+The maximum Rayleigh value is nonnegative, and $I-R\succeq0$ makes
+$\lambda\leq1$. Put $s_i=u_i/\sqrt{d_i}>0$. Then
+$Ms=(1-\lambda)D^{1/2}u\geq0$.
+
+Allocate, for each nonzero edge $i<j$,
+
+$$
+b_{ij}=r_{ij}s_j/s_i,\qquad b_{ji}=r_{ij}s_i/s_j,
+\qquad \eta_i=d_i-\sum_{j\ne i}b_{ij}\geq0.
+\tag{JG.13}
+$$
+
+Their products are $b_{ij}b_{ji}=r_{ij}^2$. Choose a pair vector with
+$v_i^{(ij)}=\sqrt{b_{ij}}$,
+$v_j^{(ij)}=\overline{C_{ij}}/\sqrt{b_{ij}}$, and remaining coordinate
+zero. Its cross coefficient is exactly $C_{ij}$, with diagonal costs
+$b_{ij},b_{ji}$. Add the singleton $\sqrt{\eta_i}e_i$ whenever
+$\eta_i>0$. These at most three pairs and three singletons sum exactly
+to $C$. This proves CP and the Schmidt condition for arbitrary phases;
+no separate positivity premise on $C$ is missing. Zero edges are skipped,
+so no zero denominator occurs. At a singular connected boundary
+$\lambda=1$ the residual is zero; isolated positive coordinates use
+singletons and $C=0$ uses the empty sum.
+
+Finally, the principal minors of $M$ are $d_i$, $d_id_j-r_{ij}^2$ and
+
+$$
+\det M=d_0d_1d_2-d_0r_{12}^2-d_1r_{02}^2-d_2r_{01}^2
+                           -2r_{01}r_{02}r_{12}.
+\tag{JG.14}
+$$
+
+They are necessary. For sufficiency, a zero diagonal and the pair
+conditions remove all its incident edges and leave a positive two by
+two matrix or a smaller diagonal matrix. Otherwise pivot on $d_0>0$.
+The Schur complement has nonnegative diagonal entries by the two pair
+conditions involving $0$, and determinant $\det M/d_0\geq0$.
+A two by two Hermitian matrix with nonnegative diagonals and determinant
+is PSD: a positive pivot proves it by a scalar Schur complement, and a
+zero pivot forces its off-diagonal entry to vanish. Hence $M$ is PSD.
+This uses all relevant principal minors, not just leading minors.
+The two-coordinate positive decomposition and scaled diagonal allocation
+are mature factor-width-two/scaled-diagonal-dominance structures; their
+application to the homogeneous supported live intersection is the
+specific statement proved here. $\square$
+

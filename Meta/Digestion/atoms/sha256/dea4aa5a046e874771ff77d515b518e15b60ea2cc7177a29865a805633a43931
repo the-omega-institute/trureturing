@@ -1,0 +1,81 @@
+**Convention 7.1 (resource coordinates).** The unguarded compiler
+preserves the attained complete-entry alphabet, increases installed
+finite controller states as in (NVC.8), and charges actual calls and
+whole submitted words as in (NVC.9). The guard compiler changes
+the complete acquired alphabet to the joint image (NVC.14), charges
+its preparation separately and uses one call per virtual visit.
+Neither alphabet count is a total observer-memory measure. Installed
+public address/transition/output tables, generation of those tables,
+entry acquisition, transient workspace, complete output payload,
+recording/access/persistence, authenticated root continuity, handoff
+and isolation, internal execution work and physical scheduling retain
+their own costs. Numeric tariffs for these services are unspecified;
+no complete physical or monetary implementation cost is established.
+
+**Supplier correspondence 7.2 (exact repository uses).**
+
+| Supplier | Use and boundary |
+| --- | --- |
+| [ActualTreeReadoutAcquisition][ATR] and [owning Scribe][ATB] | `readout` is total on finite words; `Policy` is stationary; `paid` charges distinct addresses. This volume instead charges every invocation. Its `flip` is a comparison operation, not an installed update permission. |
+| [NativeSixSourceMoore][NSM] | `Controller` and `Run` supply the complete finite-control/whole-output stationary semantics. A mathematical run trace is not accessible workspace. |
+| [NativeLiteralMoore][NLM] and [owning Scribe][NLB] | Conditional predecessor feasibility on actual `substitution u.val`; whole output `canonicalRow P u.val`. The explicit acquired entry and origin equation remain necessary premises in Application 6.2. |
+| [FixedTreeCommonExtension][FTE] and [owning Scribe][FTB] | Given leaf coordinates and full child-message tuples on a fixed `Full` tree; no native literal acquisition or original late-target port is inferred. |
+| [PPF, §§4–7][PPF] | Credited actual acquisition, optimal preparation projections, exact-name acquisition and nonidentity source-domain obstruction. Proposition 6.1 reuses acquisition. |
+| [AAR, §12][AAR]; [CBN, §2][CBN]; [SCE, §§5–6][SCE] | Credited prediction/finite spatial correspondences and common-table pooling costs. Per-request compilation does not acquire a pooled whole table. |
+| [PG, §§34,38–39,43–44][PG]; [Atlas, §6.3][Atlas] | Common actual image and lawful successors, explicit actual-update services, corrected nonredundancy, and each-view kernel requirements. Response simulation does not discharge these conditions. |
+
+**Literature correspondence 7.3 (primary executable-view and history
+models).**
+
+| Primary source | Verified scope and parameter correspondence |
+| --- | --- |
+| Greenwald, Moore, Pierce and Schmitt, *A Language for Bi-Directional Tree Transformations*, [author manuscript](https://www.cis.upenn.edu/~bcpierce/papers/lenses.pdf), Definitions 3.1.1–3.1.2 | `literature-attested`: partial get and put obey GetPut/PutGet; put receives the modified abstract view and the old concrete state or a missing-state argument. These operations and concrete access are premises, not native acquisition or update permissions. Theorem 2.2 is proved from original Read semantics instead. |
+| Matsuda, Nguyen and Wang, *Lenses for Partially-Specified States*, [extended version](https://arxiv.org/pdf/2601.04573), Definitions 2–3; [DOI](https://doi.org/10.1007/978-3-032-22723-2_2) | `literature-attested`: i-posets describe partial specification; partial put and a designated merge operator govern lawful composition and duplicability. A merge operator is not actual copying, common-source history acquisition or a price theorem. |
+| Lamport, *Refinement in State-Based Formalisms*, [primary technical note](https://lamport.azurewebsites.net/pubs/refinement.pdf), implementation discussion and auxiliary variables, PDF pp.6–7 | `literature-attested`: implementation by the stated refinement requires stuttering-invariant specifications; history and stuttering variables have distinct roles. Projected controller completion can ignore microsteps, whereas a full event/archive task observes their changes and requires a separate refinement proof. |
+| Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, [primary paper](https://lamport.azurewebsites.net/pubs/time-clocks.pdf), Clock Condition | `literature-attested`: happened-before implies increasing logical-clock values; the converse is not assumed. A count is neither an actual event nor a lossless encoding of our ordered Read history. |
+| Lanese, Phillips and Ulidowski, *An Axiomatic Theory for Reversible Computation*, [arXiv:2307.13360v2](https://arxiv.org/html/2307.13360v2), Definition 3.2 and Proposition 3.8; [DOI](https://doi.org/10.1145/3648474) | `literature-attested`: causal equivalence allows swapping independent transitions and cancelling a transition with its reverse; causal consistency uses the stated well-foundedness/parabolic premises. Such a causal quotient can forget literal execution order, and reverse transitions are supplied operations. It cannot justify an inverse from current source or requested reply to our full actual trace. |
+| van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2), adaptive testing and compatibility | `literature-attested`: the finite state-identification model declares its input/output transitions, tests and compatibility relation. Here actual trees are candidate objects and literal words are tests; their particular response and acquisition prices are proved separately. |
+| Prabhakaran and Prabhakaran, *Assisted Common Information with Applications to Secure Two-Party Computation*, [arXiv:1002.1916](https://arxiv.org/pdf/1002.1916), §II | `literature-attested`: iid correlated observations and an omniscient helper with rate-limited messages define an asymptotic agreement problem. Neither that helper nor common-information rates supply a zero-error single-source branch guard or a free shared transcript. |
+
+The literature comparison includes partial-state lenses and axiomatic
+reversibility as well as older state/refinement models. No exhaustive
+search, global originality or formal-certification claim follows.
+The quantified compiler and lower bounds rest on their ordinary
+proofs; bounded exact checks of actual trees cannot replace them.
+
+**Open problem 7.4 (original interface and four native views).**
+The compiler supplies two concrete response interfaces: pay up to two
+actual Reads per virtual request, or acquire a finite branch-guard
+relation and pay one. A proposal preserving actual chronology must
+also retain and price the raw event relation it claims to recover.
+Theorem 4.3 shows that merely retaining the requested scalar reply
+does not do this. A genuinely evolving register needs the separate
+actual-update, permission and writer contracts of PG38/44; authentic
+prediction $k$ is not an executed substitution count.
+
+Neither interface proves four concrete natural views each having the
+original task kernel. Mutual recovery and task sufficiency give only
+the inclusion of PG43.1; nonredundancy is an additional obligation.
+Full same-source history coverage, lawful whole successors including
+executed failures, and coherent infinite-scale bonding/ThreadComplete
+remain unproved. The original all-source/all-target/all-later-count
+task, general $M_1(D)$, sharp $\lambda$ and effective all-size
+certificates retain their original unresolved scope. No scalar,
+finite-controller or guard-augmented result replaces them, and no
+universal physics or ontological conclusion is asserted.
+
+[PPF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PREPARATION_FRONTIERS.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[SCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SELECTOR_COMMON_EXTENSION.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[PG]: RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[Atlas]: RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+[ATR]: ../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ATB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs
+[NSM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSixSourceMoore.lean
+[NLM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLB]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[FTE]: ../../../D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTB]: ../../../Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+

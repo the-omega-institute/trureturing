@@ -1,0 +1,29 @@
+**Theorem 3.2 (independent inverse for each fixed slope).** For each prescribed real $\kappa$, the six-read map on positive rank-one sources with affine drift is globally injective. It has the following inverse on actual data, valid also at every gain-erasure slope.
+
+**Proof.** Form $r=2z_1-z_2-z_0>0$, $H=z_2-z_1$, and the terminal interpolant $Q$ as before. Recover
+
+$$
+Y=\begin{cases}
+\mathsf A/\kappa,&\kappa\ne0,\\
+\mathsf B-H,&\kappa=0.
+\end{cases}
+$$
+
+Indeed (3.1) gives the first branch. In the second branch $H=\delta_1$ and $\mathsf B=Y+\delta_1$. Put $Z=Y/r=x+2>2$. Since $\mathsf C-z_0=L-a$, the same source identity gives
+
+$$
+y=\frac{(\mathsf C-z_0)/r-Z-3}{Z-1},\qquad x=Z-2,
+\qquad S=r\begin{pmatrix}x&xy\\1&y\end{pmatrix}.
+$$
+
+Finally
+
+$$
+\delta_0=z_0-r(x+y),\qquad
+\delta_1=H-\kappa r(x+y+1).
+$$
+
+Every formula returns the original parameter. Divisors are $r>0$, $Z-1>1$, interpolation node differences, and $\kappa$ only on its declared nonzero branch. No sampled gain is divided out. Two actual targets at the same prescribed slope and with the same data therefore agree in all source entries and both drift coefficients.
+
+These formulas also give an exact arbitrary-data existence criterion for a prescribed slope: require $r>0$, compute $Y,Z$, require $Z>2$, compute $y$, require $y>0$, form $S,\delta_0,\delta_1$, and check all six observation equations, including every zero-gain position. Necessity follows from the identities. Sufficiency follows from the fixed-row factorization in Lemma 1.2 on the actual history. Thus this inverse proves fixed-slope injectivity independently of the safe-cone interpretation. ∎
+

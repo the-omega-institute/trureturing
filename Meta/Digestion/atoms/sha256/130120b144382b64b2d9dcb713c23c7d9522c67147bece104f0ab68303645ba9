@@ -1,0 +1,17 @@
+**Open obligation 10.2 (raw decoder and admission).** The canonical-code
+premise is material. GCA specifies actual raw PC/row semantics, separate
+active/raw stores and unique/absent/duplicate/out-of-range cases. To
+extend this construction to arbitrary raw bootstrap/capture supply
+after DONE, the outstanding obligation is a proof for that raw decoder
+on every admitted actual bit pattern: its row/effect interpretation,
+guards, labels and successors must have an exact original-experiment
+correspondence with the unchanged lawful $Q$ domains. The raw admission
+criterion and its relation to task-domain undefined, unexecuted `none`
+and executed refusal must be stated without silently substituting the
+canonical table. One must also show how the
+selected retained material recovers every variable input of those
+decoded continuations: a raw table need not obey Lemma 4.1's durable
+reader discipline. Neither a post-DONE raw counterexample nor a
+universal raw recovery theorem follows from this canonical construction. No new
+canonicality filter is added to raw enabledness.
+

@@ -1,0 +1,21 @@
+**Definition 11.2 (explicit inverse intervals).** Put
+$$
+\begin{gathered}
+\tau=\min\{a/4,(b-a)/4\},\quad
+l_6=a-\tau,\quad u_6=a+\tau,\quad
+l_7=b-\tau,\quad u_7=b+\tau,\\
+U_b=N_bP_b,\qquad
+W_b=N_b(Q_bU_b^2+2R_bU_b),\qquad
+T_b=\max\{1,K_{2b}U_b^2+K_{1b}W_b\},\\
+h_{\lambda,0}=9/10^7,\quad h_b=\min\{h_{\lambda,0},\tau/T_b\},\quad
+d_{\rm branch}=\min\{l_6h_6,l_7h_7\},\quad C=1/(2l_6),\\
+A_w=K_GL\sqrt{C/c_e},\quad
+A_q=\sqrt{2C/(c_ep_*)},\quad
+D_{\rm loc}=\sqrt{6(A_w^2+A_q^2+A_q^4)},\quad
+C_{\rm br}=(2U_6+1)/l_6 .
+\end{gathered}
+$$
+All denominators are positive; in particular
+$0<l_6\le u_6<l_7\le u_7$.
+OE's exact event-multiplier margin is greater than $9.999\cdot10^{-7}$, so $[\lambda_e-h_{\lambda,0},\lambda_e]\subset I$.
+

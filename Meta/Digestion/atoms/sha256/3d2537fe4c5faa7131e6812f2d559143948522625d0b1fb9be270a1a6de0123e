@@ -1,0 +1,42 @@
+**Definition 149.1 (All-$L$ cap rows and extended polytopes).** Fix any
+integer $L\ge1$, retain $D_L$, $B_L$, $J_L$, the complete allocations
+$K_{N,L},K_{O,L}$ and all cell conventions of Definition 140.2.
+Order words lexicographically with $b_1$ first. For every zero-containing
+word $b$ with first zero $n$ list the distinct rows
+
+$$
+\begin{array}{c|c|c}
+\text{row}&E_j&d_j(a,e)=\eta_b(E_j)-e\\\hline
+(b,0)&\{0\}&1-a_n-e\\
+(b,n)&\{n\}&a_n-e\\
+(b,\mathrm{pair})&\{0,n\}&1-e
+\end{array}
+\tag{149.1}
+$$
+
+and finally the row at $1^L$ with event $\{0\}$ and lower bound $1-e$.
+There are $m_L=3(2^L-1)+1$ rows. All words, all union rows and all
+multiple-zero patterns are present even if their eventual score weight
+is zero. Define
+
+$$
+\begin{aligned}
+P_{C,L}&=\{(a,e,w,T):(a,e)\in D_L,\ (w,T)\in K_{C,L},
+                   \ p_{b_j}(E_j)\ge d_j(a,e)\ (0\le j<m_L)\},\\
+\Pi_{C,L}&=\{(a,e):\exists(w,T),\ (a,e,w,T)\in P_{C,L}\},
+\qquad C=N,O.
+\end{aligned}
+\tag{149.2}
+$$
+
+Proposition 141.2's two-point TV calculation applies with $n=n_L(b)$
+and makes (149.1) exactly the full closed TV-cap system.
+A finite $N$ schedule with static repeated or reversed observations is
+represented by Definition 140.2's normalization; original requests still
+count repetitions, and arbitrary-address transport remains exclusively
+Theorem 110.2. Every finite terminal cell permits every label, including
+unqueried labels. At a strict active profile, the stopped feasibility slice
+is $\mathcal F_N(a,e)\cap\mathscr C_L$ by Theorems 109.1 and 110.2, where
+$\mathcal F_N(a,e)=\{p\in\mathscr N_L:
+  \operatorname{TV}(p_b,\eta_b)\le e\text{ for every }b\in B_L\}$.
+

@@ -1,0 +1,29 @@
+**Definition 1.2 (one original unknown specimen and complete output).** Let the ambient Hilbert space have ordered orthonormal modes $(e_0,e_1,e_2,e_3,e_{13})$. Put
+
+$$
+E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2),\qquad P=EE^\dagger,
+$$
+
+$$
+p_y=(y/128,(64-y)/128,1/2),\quad a_y=(\sqrt{p_{yi}})_{i=0}^2,
+\quad U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger.
+$$
+
+There is one normalized reached-cut unknown input $E\rho_{y,e,n}E^\dagger$, where $y\in\{5,16,27\}$ and independently $e,n\in\{\pm1\}$. One fixed complex CPTP instrument acts on this input, without a history oracle, prior, helper specimen, copying, reset, retry, postselection, acceptance division or uncounted subsequently accessible quantum share. The output is the complete stopped classical–quantum output: the live operator retains its off-diagonal entries; each of the five failure components, in order $(0,1,2,3,13)$, is a separate CP Borel measure on relative time $a\in[0,1]$. The ideal failure density is
+
+$$
+w_\ell f_y(a)P_f,\qquad
+w=(0,1/4,1/2,1/4,0),\qquad f_y(a)=\frac{6y}{(y+6a)^2}.
+$$
+
+For the ideal live operator, define the original CG.111 quantities
+
+$$
+d_y=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},\frac y{2(y+6)}\right),\quad
+\xi_y=(\sqrt{d_{yi}})_{i=0}^2,\quad
+\mathsf B_{y,e,n}=U_{e,n}\xi_y\xi_y^TU_{e,n}^\dagger.
+$$
+
+Its physical live block is $E\mathsf B_{y,e,n}E^\dagger$, and $\operatorname{tr}\mathsf B_{y,e,n}=y/(y+6)$. Error is HALF the norm of the complete stopped output difference, including the live block, all five time measures, singular-time, wrong-support, abort and zero-target sectors, and the original passive-reference amplification. Thus a scalar equality of total failure probabilities is not an equality of outputs. The other outputs and completion on $P^\perp$ have the original JR freedoms; a particular fixed completion is not imposed on all competitors.
+

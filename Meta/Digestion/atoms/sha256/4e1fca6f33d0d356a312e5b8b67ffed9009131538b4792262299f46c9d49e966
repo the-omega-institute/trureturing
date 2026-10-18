@@ -1,0 +1,63 @@
+**Lemma 3.1 (N2, coefficient and cusp estimates).** If a bad pair has
+$T\le1$, then
+
+$$
+|c_1|+|c_2|\le\frac32,\qquad
+\bigl||c_1|-|c_2|\bigr|\le\sqrt\delta,
+\tag{3.1}
+$$
+
+and
+
+$$
+\delta\ge\frac{a^4}{9216\,\Omega^2}.
+\tag{3.2}
+$$
+
+**Proof.** The corridor gives $|R(x)|\le1/2+\sqrt T\le3/2$. Over an
+interval of length $p<1$, the relative phase makes a full turn, so the
+summands align at some point and $|c_1|+|c_2|\le3/2$. The reverse triangle
+inequality at $x=1$ gives the second part of (3.1).
+
+Relabel so $|c_1|\ge|c_2|$, put $\Delta=\omega_2-\omega_1$, and compare
+the value at $1-y$ with that at $1$ after multiplying by a unit phase.
+Using $|e^{iv}-1|\le|v|$ and $|c_2|\le3/4$,
+
+$$
+|R(1-y)|\le\sqrt\delta+\frac{3\Omega}{4}y.
+\tag{3.3}
+$$
+
+The reverse corridor and $\sqrt{\delta+\tau y}\le
+\sqrt\delta+\sqrt\tau\sqrt y$ give
+
+$$
+|R(1-y)|\ge[\sqrt{1-y}-\sqrt\tau]\sqrt y-\sqrt\delta.
+\tag{3.4}
+$$
+
+For $0\le y\le a/2$,
+
+$$
+\sqrt{1-y}-\sqrt\tau
+=\frac{a-y}{\sqrt{1-y}+\sqrt\tau}\ge\frac a4.
+$$
+
+Combining (3.3)--(3.4),
+
+$$
+\frac a4\sqrt y\le2\sqrt\delta+\frac{3\Omega}{4}y.
+\tag{3.5}
+$$
+
+Choose $y=a^2/(36\Omega^2)$; it is positive and below $a/2$ because
+$a<1$ and $\Omega>2\pi$. Substitution into (3.5) gives
+
+$$
+\frac{a^2}{24\Omega}
+\le2\sqrt\delta+\frac{a^2}{48\Omega},
+$$
+
+so $\sqrt\delta\ge a^2/(96\Omega)$ and (3.2) follows. The common
+frequency has disappeared; only $\Omega$ remains. $\square$
+

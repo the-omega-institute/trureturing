@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-suspended-emission-heterogeneity"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SUSPENDED_EMISSION_HETEROGENEITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

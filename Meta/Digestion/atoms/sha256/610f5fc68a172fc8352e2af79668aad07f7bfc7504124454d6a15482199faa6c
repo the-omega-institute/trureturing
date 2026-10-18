@@ -1,0 +1,87 @@
+**Theorem 3.3 (common supports and compatible block localization).**
+For each $t\in\mathcal C\setminus\{n\}$ all cells at depth $t$ have
+one common support $T_t$. The canonical chain is indexed only by
+$\mathcal C$:
+
+$$
+T_0=\varnothing,\qquad T_n=[n],\qquad |T_t|=t\ (t\in\mathcal C),
+\qquad T_s\subsetneq T_t\quad(s<t,\ s,t\in\mathcal C).
+\tag{3.2}
+$$
+
+At each such cut $t$, supports at earlier live depths are contained in
+$T_t$ and those at later live depths contain $T_t$. Every state with
+multiple count-cell incidences lies entirely in one ambiguity block.
+Consequently
+
+$$
+D=\sum_BD_B,\qquad E=E_{\rm reg}+\sum_BE_B,\qquad
+m-G=\nu+E_{\rm reg}+\sum_B(E_B-D_B).
+\tag{3.3}
+$$
+
+The stronger fixed-vector bookkeeping of [SI, Theorem 9.3][SI] also holds.
+For consecutive cuts $a<b$ in $\mathcal C$, let $I=(a,b)$,
+$X_I=T_b\setminus T_a$, and $V_I=\{p\in V:a<h+z<b\}$.
+Put $E_I=\sum_{p\in V_I}(b_p-1)$, define $D_I$ by the same restricted
+incidence formula as $D_B$, and put
+
+$$
+\begin{aligned}
+m_i&=|\{q\in Q:i(q)=i\}|,&m(X_I)&=\sum_{i\in X_I}m_i,\\
+E_a&=\sum_{p:\,h+z=a}(b_p-1),&g_I&=|V_a|+|V_I|,\\
+\nu_I&=|\{q\in Q\setminus Q_{\rm live}:i(q)\in X_I\}|,
+&V_a&=\{p\in V:h+z=a\}.
+\end{aligned}
+$$
+
+Then the $X_I$ partition $[n]$ on this same original installed vector, and
+
+$$
+m(X_I)-g_I=E_a+E_I-D_I+\nu_I,\qquad
+\sum_I\nu_I=\nu.
+\tag{3.4}
+$$
+
+Proof. Adjacent cells $(h,z),(h+1,z-1)$ on one depth diagonal have the
+common live parent $(h,z-1)$. Fork one actual parent history with the two
+replies; (2.7) gives children with the same support. If their support
+families are singleton, these singleton supports coincide. The admissible
+hit counts on a diagonal form an integer interval, so this connects that
+whole diagonal; a one-cell diagonal is immediate. No singleton hypothesis
+on the parents is needed. This is the local diagonal argument of [SI,
+Theorem 4.1][SI].
+
+Every live history extends to any prescribed later depth at most $n-1$:
+unless at the live corner $(K-1,L-1)$, at least one reply has live child
+counts, and (2.7) makes it an actual fresh extension. Iterate, choosing a
+completion of the resulting consistent finite assignment. Extending to a
+later cut gives containment; taking the actual ancestor at an earlier cut
+gives the reverse envelope. Sizes give strictness. At $n$ only containment
+in $[n]$ is asserted, with no live depth-$n$ extension. This proves (3.2).
+For $B=[\ell,r]$ every live support at a depth in $B$ lies between
+$T_{\ell-1}$ and $T_{r+1}$; its next query lies in
+$T_{r+1}\setminus S$. If $r+1<n$, extend through that live cut; if
+$r+1=n$, use freshness.
+
+At a cut all supports coincide, so unequal hits exclude a common host.
+Across a cut the support envelopes make earlier and later supports properly
+nested, also excluding sharing. Hence every multiple incidence is confined
+to one block. Partitioning incidences proves (3.3). These are the cuts and
+localization already proved in [SI, Lemma 9.2 and Theorem 9.3][SI]. In
+particular, for consecutive cuts $a<b$, every live host at depth
+$a\le d<b$ queries a label in $X_I$: if $b<n$, extend through that
+cut, and if $b=n$, use freshness. The strict cut chain partitions $[n]$
+by the $X_I$, so one installed state cannot be live in two such half-open
+depth ranges. Within a range, cut hosts are disjoint from the interior
+hosts and from one another. The cut pool therefore has size $|V_a|+E_a$;
+the interior pool has size $|V_I|+E_I-D_I$ by the restricted double count.
+Every state labeled in $X_I$ is either in these two pools or never live;
+a live state from another range would have its label in a disjoint block.
+Adding the three pools proves (3.4), including empty interiors. The fixed
+labels partition the never-live states too, proving the last sum. This
+retains SI's stronger bookkeeping, with its full original multiplicity vector.
+No independent table is substituted for any block here. Actual certified
+traffic need not follow these live envelopes and is still fully charged.
+$\square$
+

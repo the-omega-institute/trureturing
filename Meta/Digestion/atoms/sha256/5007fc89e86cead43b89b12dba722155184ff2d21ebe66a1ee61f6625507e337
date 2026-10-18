@@ -1,0 +1,10 @@
+### 107.4. The dyadic primes, including the marking
+
+The actual recurrence preserves B=19 modulo 120, so B=3 modulo 8 and v_2(B-1)=1. Since M=1 modulo 8, K has two Q_2 embeddings, and r is odd in both. The coefficient q is odd and in fact
+
+ q=B(2B-3)=1 modulo 4.
+
+Consequently r+q is even at both primes over 2. The rational norm of beta has 2-adic valuation 3, because B and 3 are units and v_2(B-1)=1. The two valuations are therefore positive integers summing to 3, hence are 1 and 2. More explicitly, r=1 modulo 4 gives r+q=2 modulo 4 and valuation 1, whereas its conjugate has valuation 2. This proves the unique marking in (b).
+
+Equivalently, p_2 is the Q_2 embedding with sqrt M=t modulo 4, and p_3 is the Q_3 embedding with sqrt M=-t modulo 3; we used t^-1=t in these residue groups. These are local embedding conditions, not an invalid identification of prime ideals using sqrt M modulo 2 alone. The ring of integers is O_K=Z[(1+sqrt M)/2], so the modulus 4 is essential to distinguish the two dyadic primes.
+

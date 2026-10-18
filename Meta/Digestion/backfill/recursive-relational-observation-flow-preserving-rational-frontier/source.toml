@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-flow-preserving-rational-frontier"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FLOW_PRESERVING_RATIONAL_FRONTIER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

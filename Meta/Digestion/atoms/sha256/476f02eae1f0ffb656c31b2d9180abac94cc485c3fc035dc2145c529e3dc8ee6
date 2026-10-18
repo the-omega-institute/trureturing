@@ -1,0 +1,25 @@
+**Definition 3.1 (Boolean feasibility and terminal convention).**
+A Boolean graph has $m_B$ installed running states, two distinct output
+terminals $0,1$, one source-independent running start, one fixed
+$i(v)\in[n]$ and two fixed successors at every running state. The whole
+changing configuration is the current state. On input
+$\theta\in\{0,1\}^n$, a visit reads $\theta_{i(v)}$, costs one query
+and $c_{i(v)}$ letters, then follows its fixed zero/one successor.
+
+Every installed running state counts, including unreachable ones.
+Every actual visit counts, including repeats after certification.
+Require semantic termination and output
+$\mathbf1_{\{|\theta|\ge k\}}$ on every input. Impose no variable
+order, read-once, leveling, graph-path-realizability or union-acyclicity
+condition. A syntactic graph path assigning opposite values to one
+coordinate need not be an actual path.
+
+Let $\mathsf B_{c,k}(m,t,J)$ mean existence with $m_B\le m$ and uniform
+query and weighted-letter upper bounds $t,J$ on every Boolean input.
+Any negative bound means infeasible. The parameter $m$ counts running
+states only: the Boolean total installed alphabet has $m_B+2$ states.
+Both terminals will become two counted native entry latches. Thus the
+native overhead beyond $m_B$ is two profile states plus two terminals
+plus $r$ latches; it is not an additional four states beyond the
+Boolean total.
+

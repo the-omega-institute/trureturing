@@ -1,0 +1,30 @@
+## 260. Inherited setting and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+259 of the return continuation. All edges have shared positive lengths,
+complete connected circular normal links, original degree at least six,
+and total dihedral angle 2*pi. Each chosen paired frame
+(R,A,B,O,A,B) has distinct transverse labels A,B in H. The labels in
+S=E\H occur only axially. Repeated axes, repeated neighboring owners,
+parallel face pairings and self-gluings of distinct faces remain allowed.
+
+Write H={M,C,D,Z,U}, P={M,Z,U}. The four distinct interacting owners K
+are the genuine owners containing two distinct P labels. Each consumes
+more than pi of the genuine P budget, whose total is 5*pi: M has budget
+pi, while Z and U each have budget 2*pi and occur in no flat owner.
+Every P label occurs in at least two distinct K owners. The unique flat
+owner has transverse pair {C,D}; no flat owner contains Z or U.
+These are the established reductions in Sections 205–234.
+
+The source is tau=(Z,M,C,D,M,C). Its two {M,Z,C} faces pair to one
+other owner rho. Sections 242–245 and the exceptional-U exclusion in
+Sections 254–259 leave rho=(M,Z,C,Q,Z,C). We prove that Q=U.
+This is a necessary role classification; it does not exclude this last
+role or prove five-reservoir realization.
+
+For lower-case cosh values the retained strict premises are
+ c,d>1, m>1+c+d, z>1+m+c, u>m.
+Thus c,d<m-2 and m>3. Since rho is genuine,
+ (m+1)(q+1)>(z-c)^2>(m+1)^2,
+so q>m. It follows that Q is Z, U or a special label in S.
+

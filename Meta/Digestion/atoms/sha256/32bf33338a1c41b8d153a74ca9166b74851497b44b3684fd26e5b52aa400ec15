@@ -1,0 +1,11 @@
+**Convention 9.2 (retained supplier discriminators).** RCA Lemma 7.2's
+equal-length Select payloads $1010$ and $1100$ separate new service input
+from a source-only key. Their complete canonical frames are
+$110111101010$ and $110111101100$. The occupied input bit belongs in
+$J_1$ even before WR. SSA Proposition 6.4's capacity-one alpha-to-beta
+write has intermediate raw $00$ or $11$ according to write order; both
+remain raw represented bytes. RCA's payload-complete flags-11 destination
+still lacks final-seal availability, and missing live token differs from
+an unknown package with token. These are reused discriminators, not new
+claims of source acquisition or new mathematical content.
+

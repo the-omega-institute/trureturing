@@ -1,0 +1,16 @@
+**Open problem 8.5 (unchanged unrestricted original target).** Decide
+$\exists h\,\operatorname{PrefDet}(D,Q,h)$ on every nonempty original
+signed fiber (PDC.2), with a terminating negative decision or an exact
+effective finite-source countercertificate productive at every requested
+depth. In the finite-image case the remaining obligation is boundedness
+of all the exact relations (PDC.21), equivalently (PDC.22).
+
+No source-size, shape, rank, sample or depth cutoff may replace those
+domains. A proposed automaton or limit method still owes both
+finite-source directions, all joint signed constraints and guards,
+whole-row disagreement and the original-prefix correspondence.
+Theorem 5.2 discharges the representation and residual-domain
+obligations needed for §7; it does not discharge this further
+unbounded separation obligation. No unrestricted selector, negative
+stop, undecidability result or completed research programme follows.
+

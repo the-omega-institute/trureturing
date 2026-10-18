@@ -1,0 +1,45 @@
+**定义 16.1（同一无界来源上的四值完整观察者）。** 固定任意公共有限路径 $p$，令 $d=|p|$，$p_j$ 为其长度 $j$ 的前缀，$0\le j\le d$。取定义 10.1 的参数切片
+
+$$
+M=0,\qquad F=((0,p)),\qquad \tau_p(u)=r_u(p).
+\tag{SLH.16.1}
+$$
+
+未知 $u$ 仍遍历约定 1.1 的全部非空有限自由有序 $\alpha/\beta$ 满树；当前静止来源恰为 $\rho^0u=u$。没有叶数、树高、词、成员资格或原型族许诺。替换仍是 $\rho\alpha=\beta$、$\rho\beta=\langle\beta,\alpha\rangle$ 并分配于配对，但本切片不执行替换或取得其他纪元。公共 $p,M,F$ 不携带未知来源行、时钟或旧档案。
+
+完整确定观察者为
+
+$$
+\mathcal O=(E,e_0,a,\delta,c),\quad
+a:E\longrightarrow\mathcal P\sqcup\mathcal A,\quad
+\delta:E\times\mathcal A\longrightarrow E,\quad
+c:E\longrightarrow(\mathcal P\times\mathcal A)^*.
+\tag{SLH.16.2}
+$$
+
+$E$ 是非空有限名义载体，初态和三个总函数共同安装且与来源无关。$a(e)=\operatorname{Query}(q)$ 或 $\operatorname{Halt}(y)$，其中 $y$ 是完整四值目标。每个名义行的 $c(e)$ 地址无重复，包括不可达行。所有仍可用于控制或保留的动态字段都属于 $E$；$c(e)$ 是该行的确定解码，不是另一个可自由写入的寄存器。没有表外可变程序、游标、缓存、阶段、档案、计数器或控制输入。
+
+原供应的停止吸收通过有效转移表达：查询行上 $\bar\delta(e,y)=\delta(e,y)$，停止行上 $\bar\delta(e,y)=e$。因此停止后的反事实 response-fold 保持原停止动作，即使未使用的原始 $\delta$ 表项另有值。下面的达到表还令停止行的所有 $\delta$ 项等于自身。外部原始历史 $h=[(q_i,y_i)]$ 只用于陈述：
+
+$$
+e(h)=\operatorname{foldl}(\bar\delta,e_0,[y_i]),\qquad A(h)=a(e(h)).
+\tag{SLH.16.3}
+$$
+
+fold 忽略报告地址；这些标签既不替控制器选请求，也不成为控制器输入。实际查询使用当前行自己的 $q$ 和 $c(e)$：精确缓存命中返回已存原始值，未命中才读同一 $r_u(q)$，然后进入 $\delta(e,y)$。每次查询都产生一个外部事件，包括命中与重复；停止没有后续实际查询事件。
+
+实际合法性沿用 ActualFiniteObserverAbsentElimination 的 Legal 三项义务：初态缓存为空；每个实际前缀上的缓存为同源真记录；每条实际查询边精确满足
+
+$$
+c(\delta(e,y))=
+\begin{cases}
+c(e),&q\in\operatorname{dom}c(e),\\
+c(e)\mathbin{+\!+}[(q,y)],&q\notin\operatorname{dom}c(e).
+\end{cases}
+\tag{SLH.16.4}
+$$
+
+不得补写推断值、覆盖、删记录或改时序。逐个实际前缀要求这些义务；全部名义行要求地址无重复。这不要求虚构报告地址就是实际动作地址，也不要求不可能回复的转移重放一份来源真的报告缓存。所有有限字面地址仍可直接请求；合法性没有另加“先读祖先才准查询”的权限规则。
+
+称 $\mathcal R_p$ 为在每个 $u\in\mathcal T$ 上实际合法、有限停止并输出 $\tau_p(u)$ 的上述观察者类。这个四值停止合同是对原 Boolean 输出槽的明确替换：不是源码中原 Admissible 的实例。原 Admissible 包含 Allowed 的叶数上限、Boolean Positive 目标和附加粗条件；本定义不使用前两者，也不把粗条件归为全部完整观察者的共有性质。
+

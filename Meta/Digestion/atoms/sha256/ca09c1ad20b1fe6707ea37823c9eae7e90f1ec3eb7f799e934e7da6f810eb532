@@ -1,0 +1,34 @@
+**Definition 4.3 (the four-value fiber).** Keep $P,Q$ and the same root row, and
+use literals
+
+$$
+\begin{gathered}
+(0,\varepsilon,\mathsf{branch}),\ (0,R,\mathsf{branch}),\ (0,RR,\mathsf{branch}),\
+(0,RRL,\mathsf{branch}),\ (0,RRR,\mathsf{branch}),\
+(0,RRLL,\beta),\ (0,RRRL,\beta),
+\end{gathered}
+\tag{SJM.20}
+$$
+
+with positive records
+
+$$
+(1,RL,0,RRLR,=),\qquad (1,RRL,0,RRRR,=),
+\tag{SJM.21}
+$$
+
+and negatives
+
+$$
+(0,RL,0,RRL,\ne),\qquad (0,RL,0,RRR,\ne),\qquad
+(0,RRL,0,RRR,\ne).
+\tag{SJM.22}
+$$
+
+Again use the common final epoch $N\ge1$. Put
+
+$$
+V(y,z)=\langle z,\langle y,\langle Fy,F^2y\rangle\rangle\rangle .
+\tag{SJM.23}
+$$
+

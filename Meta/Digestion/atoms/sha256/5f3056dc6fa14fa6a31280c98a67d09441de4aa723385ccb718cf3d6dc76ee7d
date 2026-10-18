@@ -1,0 +1,92 @@
+**Theorem 10.6 (Unipotence and rational common-turn erasure).**
+Every value of the abstract action in Proposition 10.5 is
+unipotent after homogenization. Consequently every finite
+affine factor satisfies
+
+$$
+E(C_{2\pi q}x)=E(x)
+ \quad(q\in\mathbb Q,\ x\in\mathcal M_I).
+$$
+
+**Proof.** Choose affine coordinates
+$\mathscr H\cong\mathbb R^d$ and put $N=d+1$.
+Represent an affine automorphism $z\mapsto Lz+b$ by
+
+$$
+\widehat F=
+\begin{pmatrix}L&b\\0&1\end{pmatrix}
+\quad\hbox{on }\mathbb R^{d+1},
+\qquad
+\widehat F\binom z1=\binom{F(z)}1.
+$$
+
+This faithful, multiplication-preserving construction retains
+both $p_s$ and $q_t$ after restriction. No offset has been
+removed by assuming a fixed point. Complexify the homogeneous
+space. Fix $c$ and an eigenvalue $\lambda$ of
+$\widehat{\mathcal R}_c$. Invertibility gives $\lambda\ne0$.
+Its generalized eigenspace
+
+$$
+V_\lambda=
+ \ker(\widehat{\mathcal R}_c-\lambda I_N)^N
+$$
+
+has dimension $m$ with $1\le m\le N$.
+Since $\mathcal R_c$ commutes with the short probability maps
+and all phase maps, their homogeneous matrices, and their
+inverses, preserve this kernel. Their restrictions are
+automorphisms of the same $V_\lambda$.
+
+Use the fixed $s_0$ above and $t=-rc/s_0$.
+The rectangle formula restricts to
+
+$$
+\widehat{\mathcal R}_c\bigm|_{V_\lambda}
+ =
+ \left(\widehat{\mathcal B}_{t}\bigm|_{V_\lambda}\right)^{-1}
+ \left(\widehat{\mathcal A}_{s_0}\bigm|_{V_\lambda}\right)^{-1}
+ \left(\widehat{\mathcal B}_{t}\bigm|_{V_\lambda}\right)
+ \left(\widehat{\mathcal A}_{s_0}\bigm|_{V_\lambda}\right).
+$$
+
+The determinant of this product is one. The restriction on the
+left is $\lambda I$ plus a nilpotent map, so its determinant
+is $\lambda^m$. Therefore $\lambda^m=1$.
+
+Let $q=N!$. Apply this eigenvalue conclusion to
+$\widehat{\mathcal R}_{c/q}$. Each of its eigenvalues has order
+dividing an integer between $1$ and $N$, hence dividing $q$.
+The abstract action law gives
+
+$$
+\widehat{\mathcal R}_c
+   =\left(\widehat{\mathcal R}_{c/q}\right)^q.
+$$
+
+Every eigenvalue of this power is one. For example, triangularize
+the one complex matrix by choosing an eigenvector and then
+inducting on the quotient dimension; its power has the powers
+of the diagonal entries. This requires no simultaneous
+triangularization of the action. The characteristic polynomial
+of $\widehat{\mathcal R}_c$ is consequently $(X-1)^N$, and
+Cayley--Hamilton gives
+$(\widehat{\mathcal R}_c-I_N)^N=0$.
+
+If $c/(2\pi)$ is rational, some integer $j>0$ has
+$jc\in2\pi\mathbb Z$. Periodicity and the action law give
+$\widehat{\mathcal R}_c^j=I_N$. Its minimal polynomial divides
+both $(X-1)^N$ and $X^j-1$. In characteristic zero the latter
+has a simple root at one, since its derivative there is $j$.
+The two polynomials have greatest common divisor $X-1$.
+Thus the minimal polynomial divides $X-1$ and
+$\widehat{\mathcal R}_c=I_N$. The required encoder identity
+follows.
+
+If $d=0$, $\mathscr H$ is a point and its homogeneous space
+has dimension one; the same conclusion is immediate.
+The proof supplies an abstract homomorphism from the underlying
+group of $\mathbb T$. It supplies no continuity, measurability
+or algebraic dependence on $c$, and no Zariski-closedness of
+its image. $\square$
+

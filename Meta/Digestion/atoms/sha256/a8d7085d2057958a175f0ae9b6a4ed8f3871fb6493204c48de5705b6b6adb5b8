@@ -1,0 +1,33 @@
+**Definition 10.2 (eligibility order).** The family $\mathfrak S$ consists
+of the complete input presentations $(P,Q,R,H_0,H_{\rm rel})$ passing the
+following finite procedure. Its service theorem additionally requires
+the actual acquisition and nonempty-fiber hypotheses of Assumption 1.3.
+
+First enumerate the prefix cells of Proposition 3.2 and reject those
+violating any literal or either endpoint-existence guard. On **every**
+remaining cell require compilation of every old class inequality and
+every signed retained relation. If any compilation is unsupported, the
+input is outside $\mathfrak S$. Write $D_\eta$ for the conjunction of the
+compiled conditions, retaining all off-task old inequalities. Lemma 11.2
+below constructs its exact finite-tree automaton and decides emptiness.
+Discard exactly the cells with no satisfying assignment.
+
+Only then compute $J_\eta,E_\eta,A_{\eta,q}$ from (ARH.3.4) on each
+nonempty cell, and require compilation of every equality
+$A_{\eta,q}=A_{\eta,r}$ for distinct $q,r\in J_\eta$ at epoch zero.
+Denote the resulting formula by $e_{\eta,qr}$. A failure here also means
+outside $\mathfrak S$. No test is needed for the outside term itself:
+its complete variable values will be included in the disagreement relation.
+
+For $X_\eta=\varnothing$, evaluate all constraints directly on the single
+empty assignment. A surviving such cell is one ground source and needs
+no tuple automaton. Its target comparisons are ground and compile.
+Thus zero old holes, ground cells, empty cuts and root cuts are included.
+
+This definition chooses constraint eligibility **before** emptiness, and
+target eligibility **after** exact emptiness. Requiring target eligibility
+also on empty cells, or first solving contextual equations by substitution,
+would define different procedures. No equivalence of those families is
+claimed. The two algorithms in §11 have no dependence on this definition,
+so the eligibility procedure is terminating rather than circular.
+

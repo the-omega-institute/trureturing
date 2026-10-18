@@ -1,0 +1,11 @@
+## 10. 同一 JMM 的 L4 桥：直接复用与应用
+
+以下桥梁明确属于 **DIRECT REUSE/APPLICATION**，不是本卷新增数学。固定
+
+$$
+H_{JMM}=(0,J,24,M,48,M,312/5),\qquad Q=ML=J+L.
+\tag{10.1}
+$$
+
+它是同一 $H_{JM}$ 的第三 $M$ 实际响应 $312/5$ 子历史；$Q=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$。两条既有臂必须在这个完全相同的历史、相同原时钟上拼合。
+

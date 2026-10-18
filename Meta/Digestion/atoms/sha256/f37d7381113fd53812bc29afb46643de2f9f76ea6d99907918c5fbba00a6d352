@@ -1,0 +1,11 @@
+**例 34.3（A final cut and an infinite joined boundary）。** At $k=8,m=3$, $T=9$, $g=3$, $P=\{0,3,6\}$ and $D=2$. Give both value fibres label $L$ on INITIAL tail zero and a different label $H$ on all positive tails, independent of phase. The eligible final cut is $a=7=2\cdot3+1$, with the literal stream
+
+$$
+111\mid111\mid100.
+\tag{34.4}
+$$
+
+Rejection bands at its successive endpoints are exactly $s\in[5,8)$, $s\in[2,5)$, and $s=1$; each returns $H$. INITIAL tail zero survives the first zero and returns $L$. This proves fee at most three, paying both all-one blocks and the final mixed block. For a smaller fee, a first zero after $a<7$ ones would merge, at every fixed phase, the still surviving tails zero and one with different INITIAL labels. Before such a zero, both have the same successful archive; any hypothetical earlier stop would already have to return both labels and is impossible. An all-one stream of at most two blocks also leaves both tails successful, with the same observations. Hence no controller restricted to a preset stream of two blocks can succeed, and $C_{\rm pre}=3$. This exhibits the endpoint $q=D$ and a nonempty final partial rejection band.
+
+For any parameters (31.1), assign in value fibre zero two different labels at the threshold $s=k-1$ and in value fibre one two different labels at the threshold $s=k-m$, with unrestricted cross-component coincidences. The two adjacent tails around the first threshold force a correct first word in fibre zero to have its first zero after exactly one leading one: an earlier zero merges them successfully, while a later zero or no zero merges them by rejection. Around the second threshold, every zero inside the first word merges the adjacent differently labelled tails successfully, so fibre one requires $1^m$. Both fibres are nonconstant initially, hence both must execute the common first block. Their permissible first words are disjoint. Absorbing rejection or subsequent rows cannot repair either merger, so $C_{\rm pre}=+\infty$. This is the supplied competing-value obstruction of Theorem 29.4, here used to test the infinite case of (33.4), with the full pair labels and independently treated initial bottom. It is not a new adaptive or threshold-family law.
+

@@ -6502,3 +6502,10 @@ so the reverse implication needs no finite exclusion. Finally, GAW4-GAW5
 and the residue-class theorem following GAW6 use the Fibonacci valuation
 formula and Euler's product, not $E_{200}$; their conclusions therefore
 remain unconditional.
+
+
+## 实验材料入口
+
+正文中的程序名与结果文件路径对应以下固定版本；有限核验数据不代替普遍证明或 Lean 证书。
+
+- [PERIODIC_TREE_registry.jsonl](https://github.com/the-omega-institute/trureturing-experiments/blob/d96621ce210b8853b202a287ecb538bd7a6ae273/experiments/theory/periodic-tree/PERIODIC_TREE_registry.jsonl)

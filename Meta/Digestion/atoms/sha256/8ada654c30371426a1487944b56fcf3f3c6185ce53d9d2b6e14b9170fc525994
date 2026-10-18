@@ -1,0 +1,45 @@
+**Lemma 5.2 (A signed positive flow through the original law).** Fix a permitted $Q$ of least order $r$, let $M=2r$, and choose $z,\beta$ from Proposition 4.1. Define, for $e\in B_{M+1}$,
+
+$$
+q(e)=Q_{M+1}(e),\qquad
+v(e)=\frac1L\sum_{j=0}^{L-1}\mathbf1\{z_{[j,j+M]}=e\},
+$$
+
+and put
+
+$$
+\delta=|\beta-d(Q)|>0,\qquad
+s=\operatorname{sign}(\beta-d(Q)),\qquad
+\alpha=\min_{e\in B_{M+1}}q(e)>0,
+\qquad f_t=q+s t(v-q).
+\tag{5.4}
+$$
+
+For $|t|\le\alpha/4$, $f_t$ is a positive normalized stationary flow. The law $Q_t=P^{f_t}$ from Proposition 5.1 has visible order at most $M$, satisfies $Q_0=Q$, and obeys
+
+$$
+\mathbb E_{Q_t}\ell_Q=d(Q)+\delta t.
+\tag{5.5}
+$$
+
+**Proof.** Stationarity of $Q$ gives conservation for $q$. The vector $v$ is the genuine $(M+1)$-cylinder distribution of the uniform orbit law of $z$; incoming and outgoing $M$-word frequencies coincide by cyclic reindexing. Both vectors have total one and obey (5.1), so the same is true for $f_t$. Since $|v(e)-q(e)|\le1$,
+
+$$
+f_t(e)\ge q(e)-|t|\ge3\alpha/4>0.
+$$
+
+This verifies positivity even for the sign $s=-1$, when the direction is an extrapolation rather than a convex combination. Proposition 5.1 now supplies the claimed law. At $t=0$, its initial $M$-block distribution is $Q_M$ and its transition kernel is $Q_{M+1}(ua)/Q_M(u)$. The visible-order property of $Q$, with $r\le M$, identifies this with the original next-bit kernel on the last $r$ bits. Thus every cylinder in (5.3) agrees with $Q$, proving $Q_0=Q$.
+
+The function $\ell_Q$ depends on a centered block of length $2r+1=M+1$. Let $\ell_Q(e)$ denote its value with the center at bit $r+1$ of $e$. Stationarity gives
+
+$$
+\begin{aligned}
+\mathbb E_{Q_t}\ell_Q
+&=\sum_e f_t(e)\ell_Q(e)\\
+&=d(Q)+s t\left[\sum_e v(e)\ell_Q(e)-d(Q)\right]\\
+&=d(Q)+s t[\beta-d(Q)]=d(Q)+\delta t.
+\end{aligned}
+$$
+
+The orbit average in the penultimate line is $\beta$ because shifting the center by $r$ just permutes the $L$ terms. This establishes (5.5) for one actual compatible cylinder law. $\square$
+

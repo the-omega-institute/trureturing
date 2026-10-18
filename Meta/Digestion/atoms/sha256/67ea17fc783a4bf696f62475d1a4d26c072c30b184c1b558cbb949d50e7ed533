@@ -1,0 +1,11 @@
+**约定 C-25.2（文献中的中间步骤）。** 以下均 `literature-attested`，只承担表中中间结果；各有限 FIB 域的支撑分类、反演、任务桥和条件响应由前述普通证明给出，不主张全局原创性。
+
+| 来源 | 完整题名、版本与链接 | 精确使用范围 |
+| --- | --- | --- |
+| [C-L1] | Stephen Boyd、Lieven Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，2004 年书，作者站修正印刷版，附录 A.5.5，印刷页 650–651 | Schur 补、奇异参考 range 条件；本卷实际投影与递归在 §9 自证 |
+| [C-L2] | Frank Nielsen，[*An elementary introduction to information geometry*](https://arxiv.org/abs/1808.08271v2)，v2；同题扩展出版 [Entropy 22(10), 1100 (2020)](https://doi.org/10.3390/e22101100) | Fisher–Rao、得分、平方根概率嵌入的经典背景；两版本不当作独立证据；§4 的有限信息损失自证 |
+| [C-L3] | Michał Oszmaniec、Daniel J. Brod、Ernesto F. Galvão，[*Measuring relational information between quantum states, and applications*](https://arxiv.org/abs/2109.10006v1)，v1，式 (1) 与 Fig. 1 的 cycle tests | Bargmann 闭路及额外受控循环制备背景；不冒称该文证明本卷五态四角投影概率 |
+| [C-L4] | William K. Wootters，[*Entanglement of Formation of an Arbitrary State of Two Qubits*](https://arxiv.org/abs/quant-ph/9709029v2)，v2，式 (4)、(7) | 纯态 spin-flip concurrence；§12 明确计算 $`2\lvert\det𝒜\rvert`$，不调用未供给混态任务 |
+| [C-L5] | Abhay Ashtekar、Troy A. Schilling，[*Geometrical Formulation of Quantum Mechanics*](https://arxiv.org/abs/gr-qc/9706069v1)，v1，§II | 射线空间度量背景；本文 FS 归一化另定，不移植其物理尺度或声明全局 toric 对应 |
+| [C-L6] | Jesús A. De Loera、Edward D. Kim，[*Combinatorics and Geometry of Transportation Polytopes: An Update*](https://arxiv.org/abs/1307.0124v1)，v1，§2 | 行列边缘与运输多面体背景；其无禁止格一般结果不替代 §17 全纤维可用支持计算 |
+

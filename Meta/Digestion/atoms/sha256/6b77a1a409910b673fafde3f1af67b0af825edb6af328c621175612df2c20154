@@ -1,0 +1,27 @@
+**Proposition 4.2 (the explicit loop charge and global-cap boundary).**
+For a disjoint union of $c$ displayed cycles with $n$ blocks, the exact
+mass obeys
+
+$$
+Z=\prod_{j=1}^c\frac{4^{\ell_j}+(\pm2)^{\ell_j}}{W^{\ell_j}}
+\le2^c(4/W)^n.
+$$
+
+This is a sound upper for that cycle subfamily. The false per-template
+value $23/50$ in (GCB.9) is not a global cap shown to evade small-length
+checks: for these same weights $\beta(\mu)\ge8/W$ already at length one.
+
+**Proof.** Each eigenvalue correction has absolute value at most
+$4^{\ell_j}$, giving the displayed bound by multiplication. The four
+states $u_{00},u_{01},u_{10},u_{11}$ are locally admissible: the root is
+branch and each leaf target uses its own literal. Their raw weight is
+eight for either matrix. Thus they give the stated length-one pressure
+lower. In particular the cycle calculation refutes the two defined
+upper substitutions and their subexponential repairs; it does not show
+an invalid global cap escaping every finite test or an obstruction at
+optimizing weights. $\square$
+
+[Vontobel]: https://arxiv.org/html/1012.0065v2
+[Ruozzi]: https://arxiv.org/html/1202.6035
+[DJPR]: https://arxiv.org/html/2609.02017v1
+

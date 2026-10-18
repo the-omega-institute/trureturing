@@ -1,0 +1,24 @@
+**引理 7.2（all-valid-name scale discovery）。** With $e=2^{-b}$ set
+
+$$
+l_i=[1-\|y_i\|^2]_0^1\quad(i=1,2),\qquad
+\operatorname{lo}=\max(0,l_1+l_2-6e),\qquad
+\operatorname{hi}=\min(2,l_1+l_2+6e),
+$$
+
+where $[u]_0^1=\min(1,\max(0,u))$. At discovery precisions $b=1,2,4,\ldots$, stop only if
+$\operatorname{lo}>0$ and $\operatorname{hi}\le2\operatorname{lo}$. Take $\sigma=2^{-h}$ to be the largest dyadic not exceeding $\min(\operatorname{lo},1)$, equality included. On every actual $D>0$ and every valid name this procedure stops, and its first returned bin satisfies
+$\sigma\le D\le4\sigma$. Its successful precision obeys
+
+$$
+b_c\le2\max\left(1,\left\lceil\log_2(48/D)\right\rceil\right).
+$$
+
+**证明。** $\|y_i\|\le1+e$ implies
+$|\|y_i\|^2-q_i^2|\le(2+e)e\le3e$. Clipping is nonexpansive, hence
+$|l_i-\delta_i|\le3e$ and $D\in[\operatorname{lo},\operatorname{hi}]$.
+If $e\le D/48$, then
+$\operatorname{lo}\ge D-12e\ge3D/4$ and
+$\operatorname{hi}\le D+12e\le5D/4$, so the guard holds for all valid replies. Doubling gives the displayed first-success bound. When $\operatorname{lo}\le1$, largest-dyadic selection gives
+$\sigma\le\operatorname{lo}<2\sigma$ and $D\le2\operatorname{lo}<4\sigma$. When $\operatorname{lo}>1$, $\sigma=1$ and $1<D\le2$. Selection is finite rational comparison by numerator and denominator lengths followed by exact adjustment; it uses neither a true logarithm nor a real equality oracle.
+

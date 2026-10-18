@@ -1,0 +1,34 @@
+**Corollary 6.2 (the credited pair and the classical Lucas sequence).**
+For length two, $B_2$ is precisely the predecessor's relation
+
+$$
+B_*=
+\{(u_0,u_0),(u_1,u_4),(u_4,u_1),(u_2,u_2),(u_3,u_3)\},
+\quad
+\Omega_\theta(B_*)=3+2\theta.
+\tag{CIT.33}
+$$
+
+For length three, $\Omega_\theta(B_3)=3+3\theta$. At
+$\theta=1$, the sequence $R_j(1)$ is the classical Lucas sequence
+$L_0=2,L_1=1,L_j=L_{j-1}+L_{j-2}$, so
+$|B_\ell|=L_\ell+2$ for every $\ell\ge2$.
+
+Proof. In a two-cycle a state $c_*$ or $d$ can only be paired
+with itself, giving $(u_2,u_2)$ and $(u_3,u_3)$. In the two-state
+block, the possible two-step closed transitions are the $a$ loop
+twice and the two orientations of the $a$--$b$ return, giving the
+other three listed pairs. Their weights sum to $3+2\theta$.
+Alternatively the recurrence gives $R_2=1+2\theta$ and
+$R_3=1+3\theta$, proving both mass formulas. At $\theta=1$,
+the initialization and recurrence coincide with the classical Lucas
+definition, so equality follows inductively. $\square$
+
+The values $R_0,R_1$ initialize a matrix recurrence only. No
+empty-cycle or length-one fiber with full $P$ projections is
+constructed. At $\theta=0$, the recurrence gives $R_j=1$ for
+every $j\ge1$, so all $B_\ell$ with $\ell\ge2$ have mass
+three while their projections still equal the five-symbol $P$.
+Equation (CIT.29) describes this particular family, not every
+admissible cycle-shaped fiber or every joint fiber.
+

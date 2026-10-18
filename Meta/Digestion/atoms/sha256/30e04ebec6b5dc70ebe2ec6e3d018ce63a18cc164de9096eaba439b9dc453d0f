@@ -1,0 +1,10 @@
+**假设 C-13.1（五维纯模式载体及标架）。** 另供正交模式基上的归一化 $`|\psi\rangle=\sum c_s|s\rangle`$，$`c_s=\sqrt{p_s}e^{i\theta_s}`$。标架等价为
+
+
+```math
+\theta_s\mapsto\theta_s+\gamma_0+\gamma_xx(s)+\gamma_yy(s)+\gamma_zz(s).
+```
+
+
+整体相位按射线识别；探针也随坐标标架运输。实际改变来源而固定探针不是纯标架更名。原语重相位在窗口代表上给 $`\gamma_y=\gamma_x+\gamma_z`$，是这里位置标架群的较窄子群。
+

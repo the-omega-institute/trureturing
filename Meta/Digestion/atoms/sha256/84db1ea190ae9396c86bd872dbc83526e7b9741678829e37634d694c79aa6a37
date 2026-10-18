@@ -1,0 +1,55 @@
+### 89.6. Exact stationarity on every nearby scalar cone
+
+Fix any nearby m∈M and D with D*D=λI₂, λ≥0 small. In (10), the two records of each fibre are orthogonal with squared norms λ/4. Different fibres have different output labels. Hence
+
+\[
+ R^*R=\frac\lambda4 I_8,\qquad
+ V_B=\sqrt{1-\lambda/4}\,U_m\ \oplus\ R.                \tag{19}
+\]
+
+When λ>0 write D=√λ J_D with J_D*J_D=I₂. This B channel has the same qubit core b_fi in two isometric environment copies, with normalized bit markers of overlap
+
+\[
+ \tau=1-\lambda/2.                                      \tag{20}
+\]
+
+For m define T_i=√2(S+(−1)^iW/2). Equations (4) give T_i^*T_i=I₂ and T₀^*T₁=ηI₂, with η=1−h/2−2iβ. Thus a_fi=T_i conjugate(b_fi). The fixed-bit Gram of each party is a rank-two tight-frame Gram with nonzero eigenvalues 2,2, regardless of η and λ. The cross-bit product entries are ητ|〈b_f0,b_g1〉|².
+
+Let P₀=(J₄/4)⊗I₂. Tightness gives row and column sums two for each matrix of squared overlaps, including the cross-bit one. Hence P₀ is invariant under T−K, and its compression in the two uniform bit vectors is
+
+\[
+ \begin{bmatrix}
+  1/2&3/2-2\eta\tau\\
+  3/2-2\overline\eta\tau&1/2
+ \end{bmatrix}.                                         \tag{21}
+\]
+
+Its trace is one. The top-cluster gap persists uniformly near the original base, so (21) is still the top two-dimensional cluster. Consequently f=1/4 for every nearby m and every sufficiently small scalar D*D. This assertion includes complex marker overlaps; no restriction β=0 is used.
+
+These points are stationary in every original-channel Stinespring direction. Indeed, if either party is fixed at such a point, its two fixed-bit Grams H_i satisfy H_i≤2I₄. For any original other party with correct-bit Grams G_i, positivity and Tr G_i≤4 give
+
+\[
+ \operatorname{Tr}(P_0K)
+   =\frac14\sum_i\operatorname{Tr}(G_iH_i^T)\le4,
+ \quad \operatorname{Tr}(P_0T)=5,
+ \quad f\ge\frac14.                                    \tag{22}
+\]
+
+Equality at the point and differentiability imply zero derivative in each party separately, hence in the full product of Stinespring manifolds. This includes arbitrary original leakage and larger A environments.
+
+In the slice coordinates the scalar points have y=0 exactly. By the uniqueness of the normal critical point in (12),
+
+\[
+ y_*(m,D)=0,\qquad \psi(m,D)=\frac14
+      \quad\text{whenever }D^*D=\lambda I_2.             \tag{23}
+\]
+
+For λ>0 the derivative of D↦D*D at D=√λ J_D is onto the real space of Hermitian 2×2 matrices: use δD=J_D H/(2√λ) for a prescribed Hermitian H. Full stationarity, (15), and the chain rule therefore imply
+
+\[
+ g(m,\lambda I_2)=\frac14,\qquad d_Eg(m,\lambda I_2)=0.
+                                                               \tag{24}
+\]
+
+The same identities at λ=0 follow by continuity. Thus the required vanishing of the reduced gradient is proved on every nearby scalar ray, not inferred from the existence of a few equality paths.
+

@@ -1,0 +1,17 @@
+**Definition 30.2 (the specific restoration implication).** A
+maximum-of-small-menu restoration claim with parameters $k_D$ and
+$A_D\ge1$ asserts
+
+$$
+M_1(D)\le A_DH_D(k_D).
+\tag{GDB.121}
+$$
+
+It includes any proposal that separately solves public menus of size
+at most $k_D$ and then restores a full-menu code whose cardinality is
+at most $A_D$ times the largest of those optima. Such a largest value
+is at most $H_D(k_D)$, so that proposal implies (GDB.121).
+This definition concerns a numerical implication, independent of the
+method used to obtain the constituent controllers. It does not assert
+that any credited supplier makes this claim.
+

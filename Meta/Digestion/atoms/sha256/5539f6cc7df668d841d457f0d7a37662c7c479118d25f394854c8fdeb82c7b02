@@ -1,0 +1,21 @@
+**Theorem 14.3 (endpoint-sign sufficient orientation test).** Under
+Assumption 10.1, the sufficient conditions
+
+$$
+R_-\succeq0,\qquad a_o^2+b_o^2>0,\qquad
+a_o(a_o+\chi b_o)\ge0
+\tag{FC.50}
+$$
+
+imply all conclusions of Theorem 14.1. They allow an endpoint zero
+at $z=0$ or $z=\chi$.
+
+Proof. The nonzero affine function $a_o+b_oz$ has weakly same-sign
+values at $0,\chi$, and hence has a fixed strict sign on
+$(0,\chi)$. Both endpoint values cannot be zero unless
+$a_o=b_o=0$. By Theorem 13.1 the negative slope interval is
+contained in this open interval. Thus the proof of Theorem 13.2
+applies directly and Theorem 14.1 follows. This is a sufficient
+orientation test on the larger interval $(0,\chi)$; no necessity
+assertion is made. $\square$
+

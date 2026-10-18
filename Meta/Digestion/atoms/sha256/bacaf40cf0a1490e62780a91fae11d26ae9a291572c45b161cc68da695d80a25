@@ -1,0 +1,14 @@
+**Definition 4.1 (separate guard and bracketed traversal).**
+Start an attempt by Reading the root and continuing only to the left
+child on each branch reply. Stop this guard search at its first leaf
+$(q,\ell)$, with $q=L^d$, and retain that paid pair.
+Start a fresh left-first full traversal from $\varepsilon$, recording
+its complete grammar as in Definition 3.1. Then Read $q$ at validation
+$v$. Accept only on the same reply $\ell$; otherwise discard the attempt
+and begin a new guard search. Compute the row only after acceptance.
+
+The finite check validates the guard-search prefix
+$\varepsilon,L,\ldots,L^d$, with all earlier replies branch and the last
+a leaf, then the complete fresh traversal grammar and final identical
+guard. It never substitutes a guard-search reply for a fresh traversal Read.
+

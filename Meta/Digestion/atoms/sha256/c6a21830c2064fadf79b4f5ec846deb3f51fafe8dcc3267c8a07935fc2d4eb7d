@@ -1,0 +1,116 @@
+**Proposition 10.14 (Choice, unboundedness and measure limitations).**
+For any $\sigma$ above with $f\ne0$, $f$ is unbounded on every
+nonempty real open interval. Its induced circle function is
+unbounded on every nonempty arc and is not measurable for
+completed Haar measure. The corresponding $E_\sigma$ is
+neither Borel measurable nor measurable for the usual completed
+product measure on $I\times\mathbb T^2$.
+
+These assertions use ordinary Lebesgue measure and its
+translation invariance and regularity, the corresponding
+completed circle measure, and the section theorem for finite
+product measures. In the usual representations of computable
+analysis, $E_\sigma$ is not a total computable function.
+
+**Proof.** Suppose an additive $f$ vanishing on $\mathbb Q$
+is bounded in absolute value by $M$ on an open interval.
+Differences of two points in that interval fill a neighborhood
+$(-\delta,\delta)$ of zero, on which $|f|\le2M$.
+Given $\epsilon>0$, choose an integer $m>0$ with
+$2M/m<\epsilon$, using any positive $m$ if $M=0$.
+For $|h|<\delta/m$, additivity gives
+
+$$
+|f(h)|=\frac{|f(mh)|}{m}\le\frac{2M}{m}.
+$$
+
+Thus $f$ is continuous at zero. Additivity then gives continuity
+everywhere, and density of $\mathbb Q$ forces $f=0$.
+The contrapositive proves unboundedness for nonzero $f$.
+Period one makes the same statement true on every circle arc.
+For every fixed $k,u,v$, the fourth coordinate of
+$E_\sigma(C_c(k,u,v))$ is $f(v/(2\pi)+c/(2\pi))$,
+so even an arbitrarily short open common-turn arc has unbounded
+image.
+
+Suppose now that $f$ were Lebesgue measurable.
+The measurable sets
+
+$$
+A_m=\{x\in[0,1]:|f(x)|\le m\},\qquad m=1,2,\ldots,
+$$
+
+cover $[0,1]$. At least one, $A$, has positive measure.
+Its measure is finite. We spell out the translation step.
+For any $\epsilon>0$, Lebesgue regularity provides a finite
+union $U$ of bounded intervals with
+$\mu(A\mathbin{\triangle}U)<\epsilon$.
+One obtains such a union by placing a compact inner
+approximation inside an open outer approximation and taking
+a finite interval cover of the compact set inside the open
+one. If $U$ uses $h_0$ intervals, translation invariance gives
+
+$$
+\mu(A\mathbin{\triangle}(A+h))
+ \le 2\mu(A\mathbin{\triangle}U)
+       +\mu(U\mathbin{\triangle}(U+h))
+ \le 2\epsilon+2h_0|h|.
+$$
+
+First choosing $\epsilon$ small and then $h$ small proves
+translation continuity of this symmetric-difference measure.
+Since $\mu(A+h)=\mu(A)>0$, it follows that
+$\mu(A\cap(A+h))>0$ for every sufficiently small $h$.
+In particular $h\in A-A$. If $A=A_m$, additivity now bounds
+$|f(h)|\le2m$ on a neighborhood of zero. The preceding
+argument forces $f=0$, a contradiction.
+
+Let $g:\mathbb T\to\mathbb R$ be
+$g(v)=f(v/(2\pi))$. Completed Haar measurability of $g$
+would give Lebesgue measurability of $f$ on $[0,1)$ using
+the usual fundamental-domain measure identification.
+Countably many integer translates and period one would make
+$f$ measurable on $\mathbb R$. Thus $g$ is not measurable.
+If $E_\sigma$ were Borel measurable, its restriction along
+the continuous circle map $v\mapsto(k_*,u_*,v)$ would make
+$g$ Borel measurable, again impossible.
+
+For completed product measure a null slice alone would not
+justify the same inference. Instead choose a Borel set
+$B\subset\mathbb R$ whose preimage $A=g^{-1}(B)$ is not
+Haar measurable. The preimage of $B$ under the fourth
+coordinate of $E_\sigma$ is exactly
+
+$$
+I\times\mathbb T\times A.
+$$
+
+If this cylinder were measurable for the completed product
+measure, the section theorem would make its $v$ section
+measurable for almost every $(k,u)$. Indeed a completed
+measurable set differs from a Borel representative by a
+subset of a product null set; the null-set section theorem
+and Borel sections give completed measurable sections
+almost everywhere. Every section of this cylinder is $A$,
+and the base $I\times\mathbb T$ has finite positive measure.
+This is a contradiction.
+
+In the standard real and circle representations by arbitrarily
+accurate approximations, total computability entails continuity.
+Thus the discontinuous $E_\sigma$ cannot be total computable
+in that model. This does not claim that each of its individual
+values is a noncomputable real, or exclude every possible
+oracle or alternative exact-real model.
+
+The coefficient assignments also use the irregular field map:
+$\sigma(s/r)$ and $\sigma(t/(2\pi))$ are not supplied by a
+continuous or measurable parameterization. For nonzero $f$,
+the real part of $\sigma$ on the real line is not Lebesgue
+measurable, since subtracting the identity would make $f$
+measurable. In particular the real phase coefficient
+$\operatorname{Re}\sigma(t/(2\pi))$ in these explicit maps
+is nonmeasurable. The factor contract allows this.
+All these limitations concern the constructed examples; no
+classification of every merely measurable factor is asserted.
+$\square$
+

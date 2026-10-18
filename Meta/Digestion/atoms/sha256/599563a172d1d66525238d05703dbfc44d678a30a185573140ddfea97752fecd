@@ -1,0 +1,16 @@
+**Theorem 9.2 (strict platform lower bound).** At every $t\ge t_0$,
+
+$$
+\min_{\zeta\in\mathscr O_t}k(\zeta)>\sqrt\alpha,
+\qquad s_0\tau_c(t)>\sqrt\theta.
+\tag{AC.45}
+$$
+
+Proof. Pointwise on the ellipse,
+$|z|\ge\sqrt\alpha z^2$. Integration gives $k\ge\sqrt\alpha$.
+Equality forces $z=0$ or $|z|=\alpha^{-1/2}$ almost everywhere,
+so all projected lines are the two axes. Lemma 9.1 excludes that
+for any top optimizer. Compactness of the top face upgrades the
+strict individual inequalities to a strict minimum. Since
+$s_0\sqrt\alpha=\sqrt\theta$, AC.45 follows. $\square$
+

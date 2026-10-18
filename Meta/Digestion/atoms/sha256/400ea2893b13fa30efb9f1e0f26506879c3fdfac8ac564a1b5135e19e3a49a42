@@ -1,0 +1,25 @@
+**Definition 2.3 (three classes kept distinct).** The unmodified estimate
+has $h=g=1$ and is denoted $B_{\rm inc}(\Phi)$. Whole-scope
+compensation, used in §4, instead replaces the factor tables by arbitrary
+nonnegative $\Psi_f$ on their unchanged scopes satisfying
+
+$$
+\prod_f\Psi_f(s_{I_f})=\prod_f\Phi_f(s_{I_f})
+\quad\text{for every common assignment }s,
+\tag{INB.9}
+$$
+
+and then evaluates $B_{\rm inc}(\Psi)$ with seed counting measures.
+Unary port compensation, used in §5, keeps each original $\Phi_f$ and
+uses precisely (INB.7)–(INB.8), including the seed measures $g_c$.
+The constructor class in §§6–7 uses the particular reciprocal choice
+$g_c=\prod_{f:c\in I_f}h_{fc}^{-1}$ on its specified constructor lift.
+No identification of these three optimization problems is assumed.
+
+For each class one may take finite minima or geometric averages of its
+sound upper estimates and enlarge the result. This does not add scope
+splitting, regrouping, elimination, conditional branching, new variables,
+joint-port gauges or any other inference rule. In §7 the trivial
+probability upper $1$ is also allowed. The estimates are analytical;
+their auxiliary tuples or gauges are not source observations.
+

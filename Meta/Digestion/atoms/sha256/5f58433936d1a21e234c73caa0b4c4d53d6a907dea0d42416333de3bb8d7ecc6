@@ -1,0 +1,54 @@
+**Definition 1.1 (One stationary law and one fixed endpoint).** Fix
+$0<p<1$, $p\ne1/2$, and $j\in\{0,1\}$. The four states in
+$\mathcal A=\{a_0,a_1,b_0,b_1\}$ are distinct. Let $\varphi$ be
+uniform on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$. On the original integer clock define
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=Y_\ell:=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+Write $J_p$ for this joint hidden-visible law. It is the law of
+Original, Proposition 2.1 and (2.2). In the state order
+$(a_0,a_1,b_0,b_1)$ the stationary masses are
+$(1-p,p,1-p,p)/2$. Indeed an active transition chooses $b_t$ from
+$a_s$ with probability $\pi_t$, where $\pi_0=1-p$, $\pi_1=p$,
+and emits $s\oplus t$; the following transition copies $b_t$ to
+$a_t$ and emits zero. Incoming mass at each $b_t$ is $\pi_t/2$,
+and copying gives the same mass at $a_t$. Formula (1.1) uses this
+stationary emitted-bit clock, including the separator positions.
+In particular $X_tX_{t+1}=0$ for every integer $t$.
+
+The target is the actual $H_j$, with the original endpoint indices
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+\varphi=0&a_{S_0}&b_{S_1}\\
+\varphi=1&b_{S_0}&a_{S_0}
+\end{array}
+\tag{1.2}
+$$
+
+from Original, (9.4). For this fixed $j$, put
+
+$$
+\begin{aligned}
+h_0(s)&=\begin{cases}a_s&j=0,\\b_s&j=1,\end{cases}&v_0&=j,\\
+h_1(s)&=\begin{cases}b_s&j=0,\\a_s&j=1,\end{cases}&v_1&=0.
+\end{aligned}
+\qquad H_j=h_\varphi(S_{v_\varphi}).
+\tag{1.3}
+$$
+
+The two phase state pairs are disjoint. Correct masses for different
+phases cannot be added as though a single output could be correct in
+both. The representation grants no observation of $\varphi$ or any
+unread spin.
+

@@ -1,0 +1,30 @@
+**Lemma 8.1 (edge integration).** Let $s_-(t)=s(t,91/20)$ and $s_+(t)=s(t,23/5)$. Uniformly on the closed budget interval,
+
+$$
+0.1249631858479<s_-(t)<0.1249631904871,
+\qquad0.1249655224418<s_+(t)<0.1249655270641.
+\tag{11}
+$$
+
+Proof. Appendix B includes two separate full-$t$ edge boxes and two separately contracted point boxes at $t=1000$. They use exactly (5), with a degenerate multiplier interval. Appendix C gives their independent contractions, strict containment margins, uniform implicit derivative bounds, midpoint strengths and integrated strengths.
+
+The derivative is from $JX_t=-F_t$. For any fixed rational approximate tangent $v_t$, set $e=\max_i|(R(Jv_t+F_t))_i|/r_i$. The Neumann series for $RJ$ gives
+
+$$
+|(X_t)_i-(v_t)_i|\le r_i e/(1-q).
+\tag{12}
+$$
+
+Appendix D gives fixed rational tangents and the exact $q,e$ and resulting $s_t$ intervals for (12). To obtain those tangents, enclose $F_t$ at the dyadic centre and parameter midpoint, take each integer midpoint (floor the average of its two integer endpoints), multiply by $-R$ with outward grid operations, and take integer midpoints again. All source and matrix inputs for these operations are in the linked data records. Multiplying this derivative enclosure by the exact rational derivative of $k=\sum p\sigma_iU_i/r_i^{\rm chart}$, then by $s_0/\sqrt\alpha$, gives $s_t$. This use of an implicit equation is uniform on the full edge, not a finite difference.
+
+The stronger independent intervals in Appendix C, displayed decimally for orientation, are respectively
+
+$$
+(s_-)_t\in[1.1654281940881829,2.3179357111638457]\,10^{-7},\quad
+(s_+)_t\in[1.15605707928324,2.3094528228122073]\,10^{-7}.
+$$
+
+The separate midpoint roots give $s_-(1000)\in[0.12496318816747852,0.12496318816749688]$ and $s_+(1000)\in[0.12496552475290233,0.12496552475292068]$. The exact Appendix C intervals, rather than these decimal displays, carry comparisons. Each point box lies strictly inside its edge box, and each edge box inside the adjacent strip box. Contraction uniqueness therefore identifies the actual roots before integration.
+
+The explicit Appendix D tangents separately prove $(s_-)_t\in(1.1638,2.3196)10^{-7}$ and $(s_+)_t\in(1.1544,2.3111)10^{-7}$. These slightly wider bounds already imply (11) when integrated against the exact midpoint intervals. For $|t-1000|\le1/100$, integrating the stronger Appendix C intervals gives enclosing intervals with decimal displays $[0.12496318584954282,0.12496319048543258]$ and $[0.12496552244344951,0.12496552706237350]$. Exact rational comparisons place them strictly inside (11). Therefore $s_-(t)<0.1249633\le0.1249654<s_+(t)$ throughout the budget interval. Lemma 7.1 covers every intermediate requested strength, including both endpoints. Finally $1+t\in[1000.99,1001.01]$ exactly; monotonicity of the logarithm gives the stated closed $A$ interval without a numerical logarithm approximation. This proves rectangle inclusion. ∎
+

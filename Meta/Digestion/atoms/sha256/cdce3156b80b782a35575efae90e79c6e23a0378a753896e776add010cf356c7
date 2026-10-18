@@ -1,0 +1,11 @@
+**定义 139.4（独立的叉积树读出）。** 在标准定向的 $\mathbb R^3$ 中，用本章的单位体积叉积定义
+
+$$
+q_{\mathrm{cross}}(\alpha)=e_1,\qquad
+q_{\mathrm{cross}}(\beta)=e_2,\qquad
+q_{\mathrm{cross}}(\langle s,t\rangle)
+=q_{\mathrm{cross}}(s)\times q_{\mathrm{cross}}(t).
+$$
+
+这是几何读出的新声明；符号 $q_{\mathrm{cross}}$ 与前卷第87、103章取值于 $\mathbb F_3$ 的负加法读出 $q_3$ 分开。两者既不同域值，也不同节点运算。对 $\gamma=\langle\beta,\alpha\rangle$，此几何读出为 $-e_3$。
+

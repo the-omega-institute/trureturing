@@ -1,0 +1,22 @@
+**定义 2.1（Full-one endpoint target）。** Let $Y$ be a label set and choose $D,E,R,A,L_{\bot}\in Y$ subject only to $D\ne E$. In particular, $R$, $A$, and $L_{\bot}$ may coincide with either endpoint label, with each other, or with neither. Set
+
+$$
+H=k-m>0,\qquad j=-\theta_{\rm INITIAL}\pmod T.
+$$
+
+For both free initial values, define
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&H\le s<k,\\
+D,&0\le s<H,\ j=0,\\
+E,&0\le s<H,\ j=m,\\
+A,&0\le s<H,\ j\in P\setminus\{0,m\},
+\end{cases}
+\qquad f(\bot)=L_{\bot}.
+\tag{2.1}
+$$
+
+Both $0$ and $m$ belong to $P$, and they are distinct because $0<m<T$. The outside phase set may be empty. The low-tail endpoint labels are immutable INITIAL labels; after a clearing zero their definition is not reevaluated on the new tail.
+

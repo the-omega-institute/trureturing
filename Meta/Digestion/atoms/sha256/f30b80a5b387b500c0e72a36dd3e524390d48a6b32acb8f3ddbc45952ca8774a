@@ -1,0 +1,12 @@
+**Theorem 29.6 (Complete configurations and online work).** The deterministic transducer just constructed has at most
+
+$$
+2^{30}\,2^{256w+32a+67}
+=2^{256w+32a+97}
+\tag{29.14}
+$$
+
+complete configurations, and can be encoded by $256w+32a+97$ mutable bits. This includes all operands, constants copied into the bank, scratch, heads, selectors, input and output, flags, modes, call sites and halts. Its paid count is at most $W$ and its internal online work is at most $2^{40}Ww^3$ bit operations, with a separate initialization allowance $2^{34}w^3$.
+
+Proof. There are 256 word cells, 32 pointers, 64 Boolean flags, one input bit, at most two bits for the output latch, and 30 control bits. Lemma 29.5 proves reachability and exact refinement within those domains; multiplying their cardinalities gives (29.14), allowing unused encodings. The pair-sum output occupies one of the already counted cleared words; $J,e_+,e_-$ occupy existing product-bank words. Their lives require no extra coordinates. Per read, at most 8192 primitive occurrences and their connecting edges are traversed. Specifically the two pair-sum occurrences cost at most $2^{17}w^2$ local transitions and $2^{24}w^3$ bit work, with at most $32\cdot128w=4096w$ additional bit work for their connections. This is below $2^{25}w^3$ per completed pair. No shift is added there; the precision and threshold shifts retain their proved counts below $w$. Lemma 29.3 charges $2^{23}w^3$ per occurrence; $2^{40}w^3$ leaves slack for all 4738 occurrences, read nodes, phase/selector/flag setting and the threshold/timeout output. Initialization has fewer than 512 occurrences; its corresponding $2^{34}w^3$ allowance includes every clear and copy, including cell 116 and the temporary product-bank words. No operations before the first source read are omitted from that separate charge. For fixed $H,\rho$, (29.1)–(29.2) give $w=O_{H,\rho}(1+\log(W+2))$ and $a=O(1+\log(w+1))$. Thus the complete online bit bound is logarithmic in $W+2$ and its configuration count is polynomial in $W+2$. Under the controlled surrogate the constants depend only on $H,\alpha$. $\square$
+

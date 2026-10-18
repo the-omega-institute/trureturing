@@ -1,0 +1,24 @@
+**Definition 2.4 (one-vertex attachment).** At a currently reached parent
+$p$ and side $s\in\{0,1\}$, with vacant $p.s$ and the current guard of
+Definition 4.1, attach one fresh occurrence $v$. Its complete effect is:
+
+$$
+v.\mathsf P:=(p,s),\qquad
+v.\mathsf L=v.\mathsf R=v.\mathsf O_0=v.\mathsf O_1
+              =v.\mathsf H_0=v.\mathsf H_1:=\varnothing,
+\qquad p.s:=v.
+$$
+
+This means seven designated new-slot initializations and one assignment
+at the reached parent, coherently reciprocal inside the attachment.
+It has exactly one birth and one fine commitment. It changes no other
+old endpoint, source symbol, head link, native PC, latch, token, input,
+output or receipt. Freshness is the actual birth occurrence, not an
+integer supplied to a global allocator. New material inherits this
+source-16 region's original ownership and creation binding.
+
+The seven initializations and reciprocal attachment remain atomic;
+unilateral endpoint writing is not implemented here. The atom is
+strictly smaller in constructed material than a 24-vertex extension,
+and has no whole-row or receipt coeffect.
+

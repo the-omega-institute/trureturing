@@ -1,0 +1,35 @@
+**命题 475.1（实际锚点与完整远尾）。** 可以选择这样的 $A,D_0$，使对所有
+$x>1$、$\log x\ge1$、$x\le D$、$D_0\le D$ 及 $e^x\le D+1$，记
+$r=\log(D+1)$，有
+
+$$
+\begin{aligned}
+|b_x(D+1)|&\le r(2\log r+13),\\
+|b_x(D+1)H_o(D)|&\le\frac{A(8\log x+52)}x,\\
+|T_x(D)|&\le\frac{A(10\log x+96)}x.
+\end{aligned}
+$$
+
+证明中完整保留二倍物理分拆的 $1/2$ 和实际高余项。其低原函数与高余项预算给出
+第一式。由 $D+1\le2D$ 及 $\log D\ge1$，有 $r\le2\log D$，故
+
+$$
+|H_o(D)|\le\frac{4A}{r^2},\qquad
+|b_x(D+1)H_o(D)|\le\frac{4A(2\log r+13)}r.
+$$
+
+对于 $c\ge1$ 和 $1\le x\le r$，已证明
+
+$$
+\frac{\log r+c}{r}\le\frac{\log x+c}{x}.
+$$
+
+取 $c=13/2$ 支付锚点。另一方面，原中心化预算在同一截止下给出
+
+$$
+|T_x(D)+b_x(D+1)H_o(D)|\le\frac{2A(\log x+22)}x.
+$$
+
+将两个实际预算相加得到第三式。这一步控制整个远尾，无需改变 $b_x$，
+也没有把有符号锚点删掉或预设它有利于 Robin 不等式。
+

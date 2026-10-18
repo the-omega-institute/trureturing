@@ -1,0 +1,20 @@
+**Definition 7.2 (primary arithmetic and unification comparisons).**
+S. Ginsburg and E. H. Spanier, *Semigroups, Presburger Formulas, and
+Languages*, Pacific Journal of Mathematics 16(2), 285--296,
+[Theorems 1.2--1.3][GS], supplies the literature-attested decidability and
+effective semilinear conversion used only after the explicit native
+elimination. It says nothing about unknown native completed values before
+that elimination.
+
+A. M. Marshall, C. Meadows and P. Narendran, *On Unification Modulo
+One-Sided Distributivity: Algorithms, Variants and Asymmetry*,
+[Sections 4--5, Theorems 4.4 and 5.8][MMN], supplies a comparison with a
+single homomorphism distributing over a binary operation. Their
+subterm-collapse-free finite-unifier setting is not the present native
+leaf algebra or its completion. In particular their finite occurs-check
+reasoning cannot discard a completed native constructor cycle, and it
+cannot replace the atomic branches forced by $\rho\beta=
+\langle\beta,\alpha\rangle$. No unification algorithm or complexity bound
+is imported from that paper. The finite ambient closure and the native
+source directions are proved above instead.
+

@@ -1,0 +1,99 @@
+**Theorem 11.2 (whole-class scalar $A$ injection).** Define
+
+$$
+\mathcal S=(-\infty,24]\ \cup\ [48,72]\ \cup\ [96,\infty).
+\tag{11.4}
+$$
+
+For every $d\in\mathcal S$, $A$ is injective on the entire
+$\mathcal Z_6(d)$, including terminal-zero worlds and arbitrary
+cardinality. The endpoints refer to normalized $d$ for either
+sign of $\lambda$.
+
+Proof. First suppose $\zeta\ne d$. Since the fifth trace in
+(10.2) is positive, $f(5)\ne0$ and
+$\operatorname{sgn}p_5=\operatorname{sgn}(\zeta-d)$.
+The repeated cumulative matrix $Q$ at clock seven after $JJ$ gives
+
+$$
+A-d=(\zeta-d)\frac{f(7)}{f(5)}
+     =(\zeta-d)\frac{p_7(k,d)}{p_5(k,d)}.
+\tag{11.5}
+$$
+
+There is no restriction on $f(7)$ in this identity. Direct
+differentiation gives the full numerator and its discriminant:
+
+$$
+\begin{aligned}
+\left(\frac{p_7}{p_5}\right)'&=\frac{Q_d(k)}{5p_5^2},\\
+Q_d(k)&=8(d-48)(d-72)k^2-4(d-24)(d-48)k
+                           +3(d-24)(d-72),\\
+\operatorname{disc}_k Q_d
+ &=-80(d-24)(d-48)(d-312/5)(d-96).
+\end{aligned}
+\tag{11.6}
+$$
+
+For $d<24$ or $d>96$, its leading coefficient is positive and
+its discriminant negative, so $Q_d>0$ for all real $k$.
+At $d=24$ it is $9216k^2>0$ for $k>0$.
+For $48\le d\le72$ every coefficient is nonpositive and at
+least one term is strictly negative for $k>0$; explicitly
+$Q_{48}=-1728$ and $Q_{72}=-4608k$. At $d=96$,
+
+$$
+Q_{96}=576(4k-3)^2,\qquad
+p_5(k,96)=\frac{24}{5}(4k-3)(5k+3).
+\tag{11.7}
+$$
+
+Its sole stationary point $k=3/4$ is therefore excluded when
+$p_5\ne0$. These facts give a strict derivative sign wherever
+the fixed nonzero sign of $p_5$ is legal in (11.5).
+
+To obtain global, rather than merely local, injectivity, consider
+the whole positive $k$ axis. For $d<24$, $p_5$ has negative
+quadratic coefficient and positive constant, so has exactly one
+positive root and one negative root. For $48<d\le72$ or
+$d\ge96$, it has positive quadratic coefficient and negative
+constant, again exactly one positive root. The opposite signs of
+the product also ensure real distinct roots. The remaining endpoint
+polynomials are
+
+$$
+p_5(k,24)=-\frac{48}{5}k(5k-3),\qquad
+p_5(k,48)=\frac{72}{5}(k-1).
+\tag{11.8}
+$$
+
+In each case exactly one root lies in $k>0$, is simple there,
+and each prescribed nonzero sign of $p_5$ selects exactly one
+interval. Every legal candidate for the same actual $\zeta$ lies
+in that same interval. The derivative sign in (11.6) is strict
+throughout the interval, including the endpoint drift 96 by
+(11.7), so $p_7/p_5$ is strictly monotone on it. Any disconnected
+subsets caused by the other source or ancestor constraints remain
+inside this one monotonicity interval. Hence equal $A$ forces equal
+$k$, even if either terminal gain is zero.
+
+For $d\ne0$, (10.4) fixes $\ell$; its fifth sample and the
+actual fifth equation fix $r$. Thus $u,v$ and $P$ are fixed.
+The first four positive trace factors fix all four gain samples;
+Lagrange interpolation fixes the full polynomial. This gives the
+entire original target by (1.4). The $d=0$ stratum is already
+unique by Lemma 11.1, without dividing by $d$.
+
+It remains to include $\zeta=d$. At $d=0$ there is no such world.
+For $d\in\mathcal S\setminus\{0\}$ the preceding root count
+shows that $p_5$ has exactly one positive root. It fixes $\ell$,
+and $f(4)\ne0$ by Lemma 11.1, so the actual fourth equation
+fixes $r$. Thus this entire class has at most one world, which
+makes $A$ injective, including when its terminal gain vanishes.
+The case $y_4=d$, $\zeta\ne d$ was already included in (11.5).
+Both late-zero cases and all endpoint and degree-drop cases have
+now been covered. The proof divides only by positive traces,
+$\ell k(k+1)$, the nonzero $d$ on its stated stratum, and the
+particular late sample proved nonzero before use. It imposes no
+restriction on the sign, other roots or multiplicities of the gain. ∎
+

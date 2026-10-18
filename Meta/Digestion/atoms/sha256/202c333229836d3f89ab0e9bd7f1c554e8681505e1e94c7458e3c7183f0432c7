@@ -1,0 +1,9 @@
+**定义 12.1（逻辑证成与证书接口）。** 给逻辑背景 $\Gamma$、命题 $P$ 和证书 $\pi$，$\operatorname{Check}_\Gamma(\pi,P)=1$ 表示合法证成。标准演绎闭包满足
+
+$$
+\Gamma\vdash P\Longrightarrow
+\operatorname{Cn}(\Gamma\cup\{P\})=\operatorname{Cn}(\Gamma),
+$$
+
+因为可将每次引用 $P$ 替换为其证明。证成不定义真值在完成时改变；它改变有限主体是否持有证据和后续使用成本。证明项的逻辑等同性不定义物理源码或顺序记录被删除。可逆计算的保历史、复制结果与逆向清理构造参见 Bennett, [Logical Reversibility of Computation](https://www.cs.princeton.edu/courses/archive/fall04/cos576/papers/bennett73.html)。
+

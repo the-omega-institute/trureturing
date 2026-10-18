@@ -1,0 +1,33 @@
+**Theorem 11.5 (linear original-observer necessity).** Fix any finite or countable prior with positive masses at depths 1 and 2 and a supported depth $k\ge3$. Every original source-independent finite COMPLETE observer of Definitions 1.1–1.3 satisfies
+
+$$
+\frac{176998271}{121}e(M)+\frac{4519890}{11}\mathcal V(M)>g,
+\qquad
+1500000e(M)+411000\mathcal V(M)>\frac{\eta}{400000}.
+\tag{11.22}
+$$
+
+Here $\mathcal V(M)$ is exactly the original worst-history acquired-return statistic (9.1). Zero or unit emissions, possible noncompletion, reducible acquired kernels and all finite positive original histories remain allowed.
+
+Proof. Start from the original initialized observer, before the first paid seed Read. PAID42, Lemma 14.1, extracts common rows on the original seed-1, marker-100 fibre, using finite paid rejection histories and the fixed legal suffix $S$ of (1.5). Its histories approaching every supported depth have the same limiting private row $\lambda$ obtained from that original initialization, and appending any fixed $j$ returns gives the row $\lambda(BA)^j$. For a countable prior, the supplier bounds each relative likelihood by a fixed constant times $\mu(i)/\mu(k)$; this summable bound justifies posterior concentration. Every approximant retains all of its paid letters and original control and record updates.
+
+Let $F_x=\sum_{y,x'}B_{xy}A_{yx'}|u_x-u_{x'}|$ for the original, possibly unclipped emissions. Every positive approximating history has row applied to $F$ at most $\mathcal V(M)$ by its definition. Finite-row continuity and then the very same Cesaro subsequence used for both phase risks give
+
+$$
+\lambda(BA)^jF\le\mathcal V(M)\quad(j\ge0),\qquad
+\pi F\le\mathcal V(M).
+\tag{11.23}
+$$
+
+Thus the statistic and every supported-depth configuration-loss bound belong to the same extracted table, as in (9.19). No independently chosen row at either interface is substituted. Positive extracted labels are original reachable configurations; transient labels absent from the stationary support remain in the original suprema.
+
+Delete zero-row labels, which cannot be reached from positive-row labels by the nonnegative flow identities. Clip the two emissions to $[a,b]$ and regenerate complete laws with the same $B,A,\pi,\tau$. The initialized common-row clipping consequence (2.2), supplied by CLIP42, Theorem 3.1, gives simultaneous supported-depth slacks with $\epsilon\le61e(M)/11$. Clipping is 1-Lipschitz, so (11.23) also gives $\widehat V_\pi\le\mathcal V(M)$. Proposition 11.4 applied to this one clipped table therefore yields
+
+$$
+\frac{2901611(61e(M)/11)+4519890\mathcal V(M)}{11}>g.
+$$
+
+Since $2901611\cdot61=176998271$, this is the first inequality of (11.22). Finally $176998271<1500000\cdot121$ and $4519890<411000\cdot11$; both original quantities are nonnegative, so the second inequality follows.
+
+When an original product comparison is used, PAID42, Lemma 2.1.1, retains the full $C_0$ and performs the independent private latch sampling in the original third-completion update after its record write and latch. Both seeds, paid rejections and partial parses, every marker fibre, held registers, every finite return and the matching Stop keep their original transitions and permissions. The actual private rows after that latch are $\pi$ and $\tau^c$ by the repaired flow identities; the same $B^c,A^c$ are used synthetically. For a posterior target $\sum_k\nu_h(k)P_{s,r_k}$, countable convexity is applied inside each configuration's TV before the row average. The current-record maps $I_c$ preserve full tails, completion and Stop. This comparison changes neither the once-sampled source nor the meanings of the original $e(M)$ and $\mathcal V(M)$. It is a necessary comparison, not a construction of small excess or of a common attainer. $\square$
+

@@ -1,0 +1,36 @@
+**定理 3.3.1（词级协变）。** 对任意动作词 $w$，有
+
+$$
+\boxed{T'_w=h\circ T_w\circ h^{-1}.}
+$$
+
+因此对任意初态 $s$：
+
+$$
+\boxed{
+\pi'(T'_w(h(s)))=\pi(T_w(s)).
+}
+$$
+
+**证明。**
+
+对词长归纳。空词时 $T'_\varepsilon=\operatorname{id}_{S'}=h\operatorname{id}_Sh^{-1}$。若结论对 $w$ 成立，追加动作 $a$ 得
+
+$$
+T'_{wa}=T'_a\circ T'_w
+=(hT_ah^{-1})(hT_wh^{-1})
+=h(T_aT_w)h^{-1}=hT_{wa}h^{-1}.
+$$
+
+再用 $\pi'=\pi h^{-1}$：
+
+$$
+\pi'(T'_w(h(s)))
+=\pi(h^{-1}hT_w(s))
+=\pi(T_w(s)).
+$$
+
+证毕。
+
+<a id="claim-3-3-2"></a>
+

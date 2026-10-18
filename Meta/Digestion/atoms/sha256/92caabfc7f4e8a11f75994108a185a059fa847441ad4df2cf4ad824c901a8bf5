@@ -1,0 +1,31 @@
+**对象与条件。** 保留 §441–§446 的同一个实际素数前缀、原字面轮廓
+\(\Phi\)、原完整两段常数 \(A\)、原归一化
+\(Q(u)=u\zeta(1+u)\)，以及原完整肩部
+
+\[
+K(t)=A-(C-1)(\log t+\gamma_E)
+ +C\int_0^\infty e^{-tu}\frac{1/Q(u)-1}{u}\,du,
+\qquad C=e^{\gamma_E},\quad t>0.
+\]
+
+令 \(k=C-1>0\)，保持 §444 的
+
+\[
+\Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right],
+\qquad \delta=\frac{2\log2-1}{6}>0.
+\]
+
+下面所有指数积分都保留完整无穷尾。定义
+
+\[
+E_1(x)=\int_x^\infty\frac{e^{-y}}y\,dy,
+\quad H(x)=e^xE_1(x),
+\quad
+G(x)=k(\log(x/2)+\gamma_E)+CH(x),\qquad x>0.
+\]
+
+§444 已证明 \(A<1/2\)、\(k>1/3\)、
+\(\Lambda(k)>1/2+\delta\)，以及对全部 \(t>0\) 的原比较
+\(K(t)\le A-G(2t)\)。本节先给同一 \(G\ge\Lambda\) 的替代证明，
+随后证明一个显式正的额外储备，因而严格加强原统一负界。
+

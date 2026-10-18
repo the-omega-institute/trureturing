@@ -1,0 +1,11 @@
+**Theorem 2.4 (the time-window premise has content).**
+If the only allowed captures are $s=t=0$, uniform lag recovery needs
+one source-summary label for every $G$, even when $Q_G$ varies.
+Thus (SCC.7) need not remain necessary after arbitrary restrictions
+on future epochs.
+
+Proof. The constant output zero is correct on that restricted service
+domain. For $D=H=1$ and the sources in (SCC.11), the edge differences
+are zero and one. This violates (SCC.7) for a constant code, without
+violating the restricted service. $\square$
+

@@ -1,0 +1,31 @@
+**Definition 3.2 (An explicit decomposable lift).** Let $F$ swap the two real
+five-dimensional factors, let $\eta_i=\operatorname{vec}(R_i)$, and put
+
+$$
+I_i=R_i\otimes R_i,\quad F_i=I_iF,\quad E_i=\eta_i\eta_i^T,
+$$
+
+$$
+F_{ij}=(R_i\otimes R_j+R_j\otimes R_i)F,\qquad
+E_{ij}=\eta_i\eta_j^T+\eta_j\eta_i^T\quad(i<j).
+\tag{3.3}
+$$
+
+Use the exact rational numbers
+
+$$
+t_+=-\frac{393052110}{10^{10}},\quad
+t_-=-\frac{342190210}{10^{10}},\quad
+(U_{0+},U_{0-},U_{+-})
+=-\frac1{10^{10}}(243175091,98502039,301019632),
+\tag{3.4}
+$$
+
+and define
+
+$$
+P=W+\sum_{j=\pm}t_j(F_j-E_j)+
+\sum_{i<j}U_{ij}(F_{ij}-E_{ij}).
+\tag{3.5}
+$$
+

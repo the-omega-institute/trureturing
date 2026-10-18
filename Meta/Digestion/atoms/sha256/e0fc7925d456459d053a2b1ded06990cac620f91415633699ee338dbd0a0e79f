@@ -1,0 +1,16 @@
+## 300. Exact assumptions and conclusion
+
+Retain the actual paired-framework hypotheses of Section130 and a
+nonempty flat set, with exactly six distinct reservoir labels. Use the
+genuine escape and upper-gap label to write
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Here p counts original flat pi slots. The arbitrary-reservoir upper-
+witness theorem supplies genuine witnesses for M,Z,U and excludes all
+their flat transverse occurrences. C,D already occur in genuine tau.
+Suppose V is the only unwitnessed reservoir, so p_V=2 and v<=m-2.
+All degrees and counts below refer to the original face quotient.
+

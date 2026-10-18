@@ -1,0 +1,13 @@
+**Definition 4.3 (boundary-stopped replay).** From $B_s$, reconstruct the
+canonical boot and acquisition using its actual seed and fixed $v_0$.
+Then feed the scanned complete frames in order to the literal original
+transition simulator. For each frame continue through its mandatory
+acknowledgement to the fixed ready PC. Stop after the last complete frame
+at that PC, before the next ingress. Keep a unary tally of simulated
+original primitives, and retain the tally at the acquisition fence.
+
+This stopping rule uses sealed frame exhaustion and the represented PC.
+It does not use the live physical meter, an end-of-input guess during a
+frame, or a supplied mathematical primitive ordinal. Every simulated
+primitive includes its original receipt and complete state effect.
+

@@ -1,0 +1,84 @@
+#### 464.1 可消费的供应及其边界
+
+OpenAI/math 的不可变修订
+[`adc7f1241b42e322a6451854ab7e4b4c146bf78a`](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a)
+在 `lean/OAI/Analysis/VlasovMaxwell/Regularity/VolterraSup.lean`
+给出 `OAI.RVM.integral_Icc_factorial_tail`。对所有实数 C、自然数 d
+和 t≥0，其准确合同是
+
+$$
+C\int_{[0,t]}\frac{(Cu)^d}{d!}\,du
+=\frac{(Ct)^{d+1}}{(d+1)!}.
+\tag{RLB.1}
+$$
+
+这条供应不要求 C≥0；用于正积分比较时另支付 C≥0。
+同文件的 `volterra_uniform_bound` 则要求非负 D、C、每个窗口上的
+实际有限上界和真实积分递推不等式。其前置
+`Retarded/VolterraMajorant.lean` 构造连续单调的全局 majorant。
+这些是经典 Volterra 工具；两个小文件只依赖 Mathlib，适合按 Apache-2.0
+保留来源后移植所消费的私有证明。上游 Lean 为 4.34.1；本库保持
+自身钉版工具链，移植后的实际编译另验。
+
+RLB.1 的自然消费是规范化单项式 v^d/d!。原 T 的内层 lift 增加
+两个积分次数，外层增加一个，因此每次真实递归是 d→d+3。
+系数 a≤1/3 和 exp(−v)≤1 另给每层的 1/3。这正是 §463 中
+`v^(3n)/(2·3^n·(3n)!)` 的结构，而非把原递归改成别的 n! 模型。
+规范化阶乘积分的私有移植由同一实际 T 的归纳证明消费；
+完整对数矩和算术有符号尾仍需各自支付，不从紧区间一致收敛推出。
+
+dbsanfte/RiemannGaussian 的不可变修订
+[`24444671cee3bf643ff1307909b961a329372a9e`](https://github.com/dbsanfte/RiemannGaussian/tree/24444671cee3bf643ff1307909b961a329372a9e)
+在 `RiemannGaussian/MoebiusHarmonicMonotoneTail.lean` 给出保留两端点
+的有限 Abel 恒等式，以及实际调和 Möbius 前缀有界时的完整单调权尾界。
+其 `abs_sum_moebiusHarmonic_antitone_le` 保留 D<M、权非负、权在
+[D+1,M] 递减和全部 n∈[D,M] 上的实际前缀界；结论是
+`2·e·b(D+1)`。前缀界仍是输入，不能由该尾界反向冒领已经得到消去。
+
+同修订 `MoebiusHarmonicCancellation.lean` 的
+`exists_moebiusHarmonicPrefix_cubic_rate` 确实提供实际 H 的统一衰减：
+
+$$
+\exists h_0\ge22\ \forall h\ge h_0\ \forall D\in\mathbb N:\quad
+e^{2\cdot10^{15}h^3}\le D
+\Longrightarrow |H(D)|\le C_{\rm harmonic}e^{-h/8}.
+\tag{RLB.7}
+$$
+
+其中 h₀、h∈ℝ，C_harmonic=6+4 C_finite 是上游证明为正的固定实常数，
+不依赖 h 或 D。
+因此满足该阈值的同一 D 对全部后继 n∈[D,M] 支付 Abel 的
+前缀小量输入；这不是任意序列上的假设。上游实际 exact-head CI
+构建成功，本次尚未将该证明闭包移植并在本库 kernel 验收。
+消去率随 log D 的立方根衰减，保留了巨大的准确阈值。
+其原核 variation、odd/full 运输和临界归一化仍须独立支付。
+
+AlexKontorovich/PrimeNumberTheoremAnd 的不可变修订
+[`c39a751132c88b6e8080b74c74023fd95b3d8be0`](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/c39a751132c88b6e8080b74c74023fd95b3d8be0)
+在 `PrimeNumberTheoremAnd/StrongPNT.lean` 的 `StrongPNT` 给出
+
+$$
+\exists c>0:\qquad
+\psi(x)-x=O\!\left(xe^{-c\sqrt{\log x}}\right).
+\tag{RLB.2}
+$$
+
+这比本库已有 MediumPNT 的对数指数 1/10 更强。
+它可补无条件背景尾估计，但尚不直接供给临界平方根消去。
+对固定 c>0，令 y=√log x，比较尺度满足
+
+$$
+\frac{xe^{-c\sqrt{\log x}}}{\sqrt{x}/\log x}
+=y^2e^{y^2/2-cy}\longrightarrow\infty.
+\tag{RLB.3}
+$$
+
+因此仅从 RLB.2 的上界不能推出本题所需的该临界量级。
+上游 StrongPNT 的直接对象也是 ψ；真实 Möbius 权运输仍须单独证明。
+
+OVVO-Financial/mobius-synthesis 的不可变修订
+[`516191483bd7c3f82e0e3891c8e1f7266063c335`](https://github.com/OVVO-Financial/mobius-synthesis/tree/516191483bd7c3f82e0e3891c8e1f7266063c335)
+包含从实际 Mertens 能量界及平方前缀能量界通往 Mathlib RH 的条件桥。
+可复用的是准确归约和对象匹配方式；全尺度能量合同仍是其假设。
+有限范围验证不支付全尺度假设，本节也未证明该假设。
+

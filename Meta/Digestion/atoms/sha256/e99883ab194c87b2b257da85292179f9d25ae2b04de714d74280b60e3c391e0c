@@ -1,0 +1,70 @@
+**Theorem 2.3 (Inherited complete two- and three-coordinate comparison).**
+For every fixed preparation, every $0<Z<1$ and every contract,
+
+$$
+e_{2,\mathsf C}^{\rm aff}(Z)=e_{3,\mathsf C}^{\rm aff}(Z)
+=4H\sqrt{T_2(\tau)}.
+$$
+
+Each of these values is attained in $\mathsf{GP}$, and the finite
+tolerance set in each of the four classes is
+$[4H\sqrt{T_2(\tau)},\infty)$. More strongly, every literal model
+with at most three coordinates is dominated by an actual radial model
+with at most two coordinates. The common squared value is
+
+$$
+\inf_{C\ge0,\ \gamma\in\mathbb R}
+\sup_{0<k<H}\{4(Ce^{\gamma k}-A(k))^2+4Zk\}.
+$$
+
+For $0<\tau<1$, put $T=T_2(\tau)$ and $T_0=(1+\tau)^2/4$.
+Then $\tau<T<T_0$. The optimal positive radial profile is uniquely
+$f_T$ within that radial family. The function $s-v_T-f_T$ is strictly
+concave on $(0,1)$, with unique zero and maximum at a point $x_*$
+satisfying
+
+$$
+\frac{1+\tau}{2}<x_*<1,\qquad
+s(x_*)-v_T(x_*)=f_T(x_*),
+$$
+
+$$
+\frac{1-2x_*}{2s(x_*)}
++\frac{\tau}{2v_T(x_*)}-\lambda_T f_T(x_*)=0.
+$$
+
+The attaining annulus is
+
+$$
+E_*(k,\alpha,\beta)=2Hf_T(k/H)e^{i\alpha},\qquad
+\mathcal D_*(z)=D(z,0),\qquad
+2H\sqrt{T-\tau}<|z|<2H\sqrt T.
+$$
+
+Its fibers are the $\beta$ circles at fixed $(k,\alpha)$, and its
+actual affine hull is the real plane. Its exact initialization is
+$E_*(k_0,0,0)$; its command maps are $e^{\lambda_T a/H}z$ and
+$e^{it/2}z$. It recovers height by
+
+$$
+\kappa_*(z)=\frac H{\lambda_T}\log\frac{|z|}{2H\sqrt T}.
+$$
+
+For $\tau\ge1$, the height encoder $E_{\rm h}(k,\alpha,\beta)=k$
+with zero decoder gives the common value $e_*$. It uses $K\mapsto K+a$
+and $K\mapsto K$ for the two commands. The full path extensions of
+both witnesses use the exact formulas in §8 below.
+
+Supplier justification. The all-competitor two-coordinate reduction is
+[M, Theorem 6.4], its root and contact are [M, Theorems 7.4–7.6], and
+the annulus, paths and transition are [M, Theorem 8.1, Proposition 8.2,
+Theorem 9.2 and Theorem 10.2]. The unrestricted three-coordinate
+domination is [M, Theorem 17.2]; its exact values and all four attained
+endpoints are [M, Corollaries 18.1–18.2 and Theorem 19.1]. In the
+supplier notation $x=k/H$, $c=C/(2H)$, $\lambda=\gamma H$, and
+the normalized squared objective is multiplied by $16H^2$. Its literal
+$e_n^{\rm aff}$ is the present $e_{n,\mathsf L}^{\rm aff}$. No
+restriction on hidden coordinates is added in passing to this notation.
+The uniqueness assertion is radial uniqueness, not uniqueness of all
+optimal encoders. $\square$
+

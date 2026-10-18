@@ -1,0 +1,18 @@
+**Lemma 3.4 (direct raw-record inverse).** The actual rooted support of
+$U_+(Y)$ determines $Y$'s full raw field values. Its actual terminal
+antichain independently determines the same values. This includes every
+partly constructed finite version and every raw byte; it requires neither
+a valid source tree nor a sealed field.
+
+Proof. Use SSA Theorem 4.4 for each cell and tape. At each fixed $F_q$
+socket, a terminal means absent; otherwise the unique fork side distinguishes
+the existing zero or one. These three shapes are distinct. This recovers
+the construction domain and all finite control, cursor and token bits,
+along with every tape track. The marks determine the actual access links.
+Every component is a finite full ordered tree, including an absent socket.
+SSA.6 therefore recovers its full support from the prefixes of the terminal
+paths, and maximal support paths recover the terminals. Apply it to the
+whole $U_+$, then the same component decoder. Rooted support does not by
+itself guess occurrence names: canonical provenance is recovered in §5.
+No extra owner permission is part of this mathematical decoding. ∎
+

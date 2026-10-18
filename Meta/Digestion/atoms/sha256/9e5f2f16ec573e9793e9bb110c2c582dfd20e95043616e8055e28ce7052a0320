@@ -1,0 +1,16 @@
+**Corollary 5.3 (zero rates, identical programmes and empty time).** For
+$\mu=0$, (CP.10) permits every path in Definition 2.3 and Theorem 5.2 uses
+orthogonal programmes. For $\mu=1$ and $x_1<x_2$, an exact causal realization
+exists exactly when $v=\omega=0$ almost everywhere, hence $a=b=0$ everywhere.
+For $0<\mu<1$, a phase-only segment forces $\omega=0$ almost everywhere on
+that segment. The interval $T=0$ always has the identity realization.
+
+Proof. At $\mu=1$ the first inequality is
+$(\lambda_1-\lambda_2)^2/4+\delta^2\le0$. Since
+$\lambda_1-\lambda_2=v(x_2-x_1)/(k_1k_2)$ and $x_2-x_1>0$, it gives
+$v=\omega=0$. Absolute continuity and the initial values give $a=b=0$.
+The common identity supplies the realization, completing the remaining case
+of Theorem 4.1. If $v=0$ and $\mu>0$, the same first inequality gives
+$\delta=0$. The zero-overlap and empty-interval claims follow directly from
+the construction and its normalization. $\square$
+

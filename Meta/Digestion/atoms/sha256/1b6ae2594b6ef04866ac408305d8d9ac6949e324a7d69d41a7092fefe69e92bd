@@ -1,0 +1,24 @@
+**Definition 4.3 (structural endpoints and whole negatives).** Expand
+the finite syntax of (URR.17), displaying each atomic-role value as the
+pair in its first line and expanding fixed ground tokens when needed.
+A structural position follows only the displayed pair skeleton and may
+stop at any displayed node or token. It does not descend into an unknown
+residual token or into an undisplayed atomic expansion. Such a position
+$p$ has a definite subtemplate $F_p$ of grammar (URR.2). It is reached
+in every $\Theta(\mathbf n,\mathbf z)$.
+
+At any fixed epoch $e\ge0$, that same original position is still reached,
+with entire subtree $\rho^e F_p(\mathbf n,\mathbf z)$. Distribute
+$\rho^e$ through the explicit pairs: a ground token becomes a fixed
+ground tree, $T_{n_j+c}$ becomes $T_{n_j+c+e}$, and $\rho^a(z_i)$
+becomes $\rho^{a+e}(z_i)$. Thus its value is again a mixed template.
+
+Permit any finite list of signed negative records
+$(a,p,b,q,\ne)$ with $p,q$ structural positions, at any fixed epochs.
+The translated negative is the **whole** comparison of these two
+subtemplates. Both native endpoint guards hold by the structural proof
+just given; they are justified, not replaced by the negation of equality.
+The position can include the original root or an ancestor spanning many
+payloads, so the comparisons are not restricted to sibling leaves or
+one residual variable.
+

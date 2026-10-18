@@ -1,0 +1,20 @@
+**Lemma 4.1 (remove only forecast decreases).** There is a finite stationary regular comparison table whose alpha emissions are no larger than their predetermined p successors. If its event score is D0, then
+
+$$
+D+KJ_+\ge D_0.
+\tag{4.1}
+$$
+
+Its p laws and suspended **mean** law are compared to the original ones; no suspended configuration-risk domination is asserted.
+
+**Proof.** Split a suspended label into pairs $(y,z)$ with $A_{yz}>0$. Give it row $\tau'_{yz}=\tau_yA_{yz}$, beta kernel $B'_{x,(y,z)}=B_{xy}A_{yz}$, and deterministic alpha successor z. Then $\pi B'=\tau'$, $\tau'A'=\pi$, and $B'A'=C$. Presampling the private successor after beta is causal, source-independent and finite; it is not a source observation. The split index and all sampler states are charged. If its emission remains $v_y$, its p laws are exactly Q, and its suspended mean is exactly $\tau W$, by (3.2). Individual suspended laws can differ because the private successor was sampled earlier.
+
+Now use $v^0_{yz}=\min(v_y,u_z)$. All emissions remain regular and both acquired flows remain exact. Generate the new laws Q0,W0 from these same installed updates; do not assign a centroid decoder. Let $d=\sum_x\pi_x\operatorname{TV}(Q_x,Q_x^0)$. Couple the synthetic suspended emissions, conditional on the presampled pair. Their discrepancy probability is $(v_y-u_z)_+$; a matched alpha continues at z. The p emissions agree. Averaging the complete-law coupling and using (3.1) gives
+
+$$
+d\le\tfrac23J_++\tfrac4{15}d,
+\qquad d\le\tfrac{10}{11}J_+.
+$$
+
+The suspended mean-law distance is at most $J_++(2/5)d\le15J_+/11$. Both bounds concern whole stopped laws; the regular survival bound includes all returns and the infinite outcome. Thus $|a-a_0|\le10J_+/11$, $|b-b_0|\le15J_+/11$. Since $K=10/(11d_p)+15/(11d_\beta)$, (4.1) follows. The comparison preserves no hard defect or COMPLETE budget. ∎
+

@@ -1,0 +1,60 @@
+**定理 38.3（共同素数指数格的唯一性）。** 设 $p$ 是素数，$\Lambda\subseteq\mathbb Z^2$ 满秩且 $[\mathbb Z^2:\Lambda]=p$。则
+
+$$
+\mathsf R\Lambda=\Lambda\ \text{且}\ M\Lambda=\Lambda
+\quad\Longleftrightarrow\quad
+p=5\ \text{且}\ \Lambda=\Lambda_5,
+$$
+
+其中
+
+$$
+\Lambda_5=\{(U,V)\in\mathbb Z^2:U+3V\equiv0\pmod5\}.
+$$
+
+证明。商群 $\mathbb Z^2/\Lambda$ 的阶为 $p$，每个元素的阶整除 $p$，故 $pC\in\Lambda$ 对所有 $C\in\mathbb Z^2$ 成立。因此 $p\mathbb Z^2\subseteq\Lambda$，并且
+
+$$
+\ell=\Lambda/p\mathbb Z^2\subseteq\mathbb F_p^2,
+\qquad
+|\ell|=\frac{p^2}{p}=p.
+$$
+
+它是一个一维子空间。反之，任一这样的直线的整数原像包含 $p\mathbb Z^2$，且指数为 $p$，故给出全部素数指数候选。整数矩阵保持原像，当且仅当其约化保持直线：前向由约化成立；反向由 $Av\bmod p\in\ell$ 及原像的定义得到 $Av\in\Lambda$。
+
+取 $\ell$ 中一个非零向量 $(U,V)$。若两个操作都保持它，则命题 38.2 给
+
+$$
+U^2+V^2=0,
+\qquad U^2+UV-V^2=0
+\quad\text{于 }\mathbb F_p.
+$$
+
+第一式减第二式得 $V(2V-U)=0$。若 $V=0$，第一式给 $U^2=0$，从而 $U=0$，与非零性矛盾。故 $V\ne0$，可约去 $V$，得到 $U=2V$。再代入第一式，有 $5V^2=0$；域中 $V^2$ 非零，所以 $p=5$。这个论证没有除以二，已包含对 $p=2$ 的排除。
+
+当 $p=5$，唯一可能直线为
+
+$$
+\ell_5=\mathbb F_5(2,1).
+$$
+
+其整数原像恰为 $U=2V\pmod5$，也就是 $\Lambda_5$。映射 $(U,V)\mapsto U+3V\pmod5$ 满射，因为 $(1,0)$ 映到一；其核因而确有指数五。
+
+还须验证这个唯一候选确实相容。在该直线上，
+
+$$
+\mathsf R(2,1)=(-1,2)=2(2,1),
+\qquad
+M(2,1)=(1,3)=3(2,1)
+\quad\text{于 }\mathbb F_5.
+$$
+
+两个标量非零，故两者都保持整条直线及其整数原像。也可在整数同余中直接计算：若 $U+3V=0\pmod5$，则
+
+$$
+(-V)+3U=3(U+3V),\qquad
+V+3(U+V)=3(U+3V)\pmod5,
+$$
+
+所以两种像仍在核中。包含关系由命题 38.2 升为相等，完成充分性与唯一性。证毕。
+

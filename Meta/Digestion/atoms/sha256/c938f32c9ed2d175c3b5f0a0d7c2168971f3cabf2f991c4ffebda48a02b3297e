@@ -1,0 +1,23 @@
+**定义 6.1（完整合法二进制域及实际联合律）。** 对每个有限 $N\geq1$，取 $\lambda\in\mathbb R^{1\times N}$、$M_0,M_1\in\mathbb R^{N\times N}$，保留整个域
+
+$$
+\begin{aligned}
+\Theta_N=\{(\lambda,M_0,M_1):\;&
+\lambda\geq0,\quad\lambda\mathbf1=1,\quad M_0,M_1\geq0,\\
+&A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad
+\lambda A=\lambda,\quad
+\lambda M_1^2\mathbf1=0\}.
+\end{aligned}
+$$
+
+矩阵项均为实数。对应实际双侧平稳标记边联合律为
+
+$$
+J_\theta[H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b]
+=\lambda_{h_a}\prod_{j=a}^{b}(M_{x_j})_{h_jh_{j+1}},
+$$
+
+输出边缘律满足 $P_\theta[X_{a:b}=w]=\lambda M_w\mathbf1$。合法性约束使实际输出没有相邻 $11$；不把它加强为原始矩阵的逐项 $M_1^2=0$。全部零平稳质量状态仍在原始呈现中。
+
+直接取 $B_0=M_0$、$B_1=M_1$、$d=N$、$\pi=\lambda$、$L=2N$。定理 3.1 与 5.1 在这一实际产生器上应用，无需先取本原分量、改换字母表或重标时间。下文的 $n,r,R$ 始终是原始发射比特的整数尺度。
+

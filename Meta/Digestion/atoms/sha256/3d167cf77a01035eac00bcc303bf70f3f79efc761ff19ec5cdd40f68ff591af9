@@ -1,0 +1,55 @@
+**Theorem 3.2 (closed finite obligation universe and saturation).** These
+operations have a terminating saturation schedule on the original slot set
+$S$. They preserve exactly the admissible valuation relation of the fixed
+branch, with the retained arithmetic conditions. They introduce no new
+child slots or displayed pair descriptors.
+
+**Proof.** A merge rewrites the same equality using a common representative.
+A nonzero potential cycle gives $C=\sigma^d C$, $d\ne0$, so (NAC.8) makes
+its mark necessary and sufficient for that cycle. Every equality in a
+marked component then holds for all its offsets. A marked parent of a raw
+pair is $O$ if and only if both its children are $O$. Raw pair injectivity
+and commutation with $\sigma$ give exactly (NAC.12). A shifted pair has a
+branch root; a shifted leaf has a leaf root, so the stated clashes are
+impossible. Two shifted leaf descriptors are equivalent to (NAC.13).
+Each transformation therefore preserves the full valuation relation;
+parallel descriptors are kept, rather than replaced by a selected one
+without their consequences.
+
+Here is an explicit finite schedule. Reserve the input shift equations,
+the two cancellation keys for every unordered pair of displayed pair
+descriptors, the two mark-propagation keys for every displayed pair,
+the descriptor clashes, and all unordered pairs of leaf descriptors.
+This is a finite obligation universe determined before saturation.
+Initially impose the input shift equations and explicit marks. Scan all
+reserved structural keys. When an operation merges two components or
+marks a previously unmarked slot, restart the scan. If a full scan produces
+no such change and no clash, structural saturation is finished. Read all
+leaf equalities (NAC.13) with the final potentials.
+
+There are at most $\max\{|S|-1,0\}$ component merges. The number of marked
+slots increases and is at most $|S|$. Thus at most
+$|S|+\max\{|S|-1,0\}$ change-triggered restarts are possible, followed by
+one unchanged scan. In the empty presentation case, there are no keys and
+the initial scan is already unchanged. Each scan has only the finitely many
+reserved keys. An equation within an unmarked component
+whose offset agrees with the potentials requires no restart. One whose
+offset disagrees marks that component and is counted as a change.
+
+This also justifies rescanning weighted keys. Once two slots are connected
+in an unmarked component their relative potential cannot change under a
+later forest attachment: both receive the same added representative offset.
+A later contradictory equation marks that component. If the parent component
+is marked, all children of every one of its pair descriptors are eventually
+marked, so its parallel pair equations hold at $O$. Consequently neither
+changing representatives nor a later mark leaves an unprocessed parallel
+condition. Arithmetic leaf conditions may be read at the end; changes of
+representative subtract the same offset from both sides of (NAC.13).
+
+Cancellation in (NAC.12) only refers to children already in a displayed
+record. There is no rule that splits a descriptor-free slot into a new pair.
+All pair-root information needed for native coverage was selected in
+(NAC.9). This is the difference from imposing reduced-code root cases on
+new children. It proves finite closure as well as termination, with no
+assumed bound on a slot-generating procedure. $\square$
+

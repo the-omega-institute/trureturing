@@ -1,0 +1,21 @@
+**Corollary 4.2 (no uniform native-domain formula).** There is no
+well-defined finite formula $\mathsf{Normal}(X;\bar a)$ in exactly
+Definition 1.2, with any fixed finite parameter tuple, such that
+
+$$
+\forall X\in\mathcal K,\qquad
+\mathfrak A\models\mathsf{Normal}(X;\bar a)
+\ \Longleftrightarrow\ X\in\mathcal N.
+\tag{TPO.13}
+$$
+
+Consequently [ABC, Assumption 7.3][ABC], with its stated language and
+all-shape native domain, cannot be supplied.
+
+Proof. Apply Theorem 4.1 to a proposed formula and choose $h\ge H$,
+$k=h$. Lemma 2.2 puts $U^+_{h,h}$ in $\mathcal N$ and excludes
+$U^-_{h,h}$, whereas (TPO.12) gives the same truth value. This contradicts
+(TPO.13). The witnesses have arbitrarily large heights and ranks;
+no finite rank range or supplied shape is a premise. ABC Assumption
+7.3 is the parameter-free special case. $\square$
+

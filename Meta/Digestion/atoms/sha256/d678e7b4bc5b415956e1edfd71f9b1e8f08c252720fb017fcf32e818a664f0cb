@@ -1,0 +1,28 @@
+**Theorem 8.4 (exact small fibers and return-placement collision).** The count cells $(3,3),(5,5),(7,7)$ have respectively $1,8,33$ histories. Their nonempty degree-two fibers are
+
+| $(A,B)$ | $C:\ F(A,B,C)$ |
+| --- | --- |
+| $(3,3)$ | $2:1$ |
+| $(5,5)$ | $5:1,\ 6:1,\ 7:2,\ 8:2,\ 9:1,\ 12:1$ |
+| $(7,7)$ | $12:1,\ 13:1,\ 14:3,\ 15:3,\ 16:4,\ 17:4,\ 18:4,\ 19:3,\ 20:2,\ 21:2,\ 22:3,\ 23:1,\ 26:1,\ 30:1$ |
+
+In particular these two actual positive histories have the same raw counts and complete fixed-letter degree-two data:
+
+$$
+\begin{aligned}
+h_L&=\beta\alpha\mid
+(\beta\alpha)\beta\beta\,(\beta\alpha)\alpha\,\alpha,
+&\mathbf j_L&=(1,1,0),\\
+h_R&=\beta\alpha\mid
+\beta\beta\,\alpha\,(\beta\alpha)^2\alpha,
+&\mathbf j_R&=(0,0,2).
+\end{aligned}
+\tag{SC.13}
+$$
+
+Both have $(A,B,C)=(5,5,7)$ but different acquired return incidences. They require no seed retries, future acceptance, replay or new source action.
+
+Proof. At $(3,3)$ only $s=0,p=q=0$ occurs. At $(5,5)$ the summands are $(s,p,q)=(0,1,1),(2,0,0)$, of sizes $2$ and $6$. Their $C$ distributions are respectively $\{8:1,12:1\}$ and $\{5:1,6:1,7:2,8:1,9:1\}$. At $(7,7)$ the summands are $(0,2,2),(2,1,1),(4,0,0)$, of sizes $6,12,15$. For the first, $P_{2,2}(t)$ at $t=0,\ldots,4$ is $1,1,2,1,1$ and $c_0=14$; for the second $P_{1,1}(0)=P_{1,1}(1)=1$ and $c_2=15$; for the third $c_4=12$ and $g_4(d)$ at $d=0,\ldots,8$ is $1,1,2,2,3,2,2,1,1$. Substitution in (SC.11) gives the table.
+
+For (SC.13), $p=q=0$, $s=2$ and $2j_1+j_3=2$ in both cases, so (SC.9) gives $C=7$ and (SC.2) gives $(5,5)$. The original parser assigns the displayed different return vectors, so normal-form injectivity proves $h_L\ne h_R$. This is a collision caused by legal return placement between completing markers, not a renamed selected-three-marker example or an arbitrary free-word collision. $\square$
+

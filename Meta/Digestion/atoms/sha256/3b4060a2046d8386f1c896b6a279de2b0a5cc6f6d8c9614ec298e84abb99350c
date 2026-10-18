@@ -1,0 +1,70 @@
+**Proposition 10.2 (conditional live-record curve).** Under this additional
+service, choose an independent fair direction coin and execute exactly one
+excursion. On live return guess $L$ for positive, $H$ for negative. For
+every nuisance parameter and either actual height, acceptance and wrong
+live mass are respectively
+
+$$
+q(t_0)=\tfrac12(u+v),\qquad v/2,
+\qquad
+\Pr(\text{wrong}\mid\text{live})=
+\frac{9(1-t_0^2)}{2(9-5t_0^2)}.
+\tag{AC.36}
+$$
+
+For any actual classical height prior $p_x$ and conditional joint
+specimen/reference states $\rho_{xR}$, the unnormalized joint live output,
+retaining an inaccessible mathematical source label, is exactly
+
+$$
+\sum_{x\in\{a,b\}}p_x|x\rangle\langle x|\otimes\rho_{xR}\otimes
+\left(\frac{S_{x,+}}2|+\rangle\langle+|
+      +\frac{S_{x,-}}2|-\rangle\langle-|\right).
+\tag{AC.37}
+$$
+
+The sign kets in the last factor label the classical coin, distinct from
+the specimen basis. No source label is accessible to the controller.
+Conditional on fixed $x$ and a successful sign the entire input state
+$\rho_{xR}$ is preserved. The sign is source-correlated; no factorization
+of the overall record and reference mixture is asserted.
+
+Proof. Proposition 8.2 gives the exact scalar success map for each actual
+height/sign. Multiplying by its coin probability gives (AC.37). At either
+height the favourable sign survives with probability $u$ and the wrong
+sign with probability $v$, proving acceptance and wrong mass. Substitution
+of (AC.29) gives $v/(u+v)$ equal to (AC.36). The failure blocks are exactly
+(AC.35), with all prior fields retained, so this is a full same-source
+conditional protocol rather than a resampled marginal bit. $\square$
+
+For $d=15/256$ the values are
+
+$$
+q=131/651,\qquad v/2=1/42,\qquad
+\Pr(\text{wrong}\mid\text{live})=31/262<1/4.
+\tag{AC.38}
+$$
+
+At that acceptance the internal decision-only wrong-mass minimum is
+$E(q)=131/2604$, exceeding $1/42$. This does not contradict Theorem 9.1:
+the added source-bound actuator violates its sole-accessible-input premise.
+Theorem 8.3 quantifies the failure of internally replacing that service
+already at the survival bit. It asserts no cost or dimension optimum for
+all possible assisted implementations.
+
+Writing the margin as $\eta=a-d=a(1-t_0)$ makes the boundary explicit.
+Every admissible excursion has $u,v>0$. As $\eta\downarrow0$,
+the conditional error in (AC.36) tends to zero and $q(t_0)\to1/6$.
+The value $d=a$ hits a forbidden wall; it is no admissible zero-error
+acquisition. This limiting family has no common positive support margin.
+The new stage lasts two units, with speed $d$, height variation $2d$
+and zero phase variation. Its exact rational programme at (AC.38) has
+finite description; actuation and recording remain separately supplied.
+
+If the same service is supplied at every reached live cut, a controller
+may select another such legal excursion using its actual records. Finite
+composition uses the updated joint state, the same actual height and
+matching real-phase interface; every first failure is absorbing. This
+conditional statement supplies no new service from the preceding record,
+no post-failure helper return, and no unbounded-horizon guarantee.
+

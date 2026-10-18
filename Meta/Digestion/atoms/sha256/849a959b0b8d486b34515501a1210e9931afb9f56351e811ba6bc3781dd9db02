@@ -1,0 +1,26 @@
+**Definition 4.1 (old classes before source installation).** Keep the supplied
+$P,R,Q,H_0,H_{\rm rel},N$ of (FNS.2), with no restriction on the old partition.
+Let $C_R$ be the concrete old exterior, let $I_R$ be its reached holes, and
+let $\pi_R$ be their full partition. For one variable $v_C$ per old class,
+form
+
+$$
+L_R(\mathbf v)=C_R[(v_{[p]})_{p\in I_R}],\qquad
+D_R^{\rm old}(\mathbf v)=\bigwedge_{C\ne C'}v_C\ne v_{C'}.
+\tag{FNS.17a}
+$$
+
+The occurrence list is retained: equal classes share a value at every old
+hole, while different classes stay unequal. The attained geometry of $C_R$
+preserves the reached set and every absent old address under arbitrary finite
+fillings. Empty cuts and zero old classes have their literal meanings; if
+there are no holes $L_R$ is the whole fixed original tree.
+
+By [ARH, Definition 1.1 and (ARH.1.2)][ARH], equivalently
+`NativeCutFibers.rowFiberEquiv` and `legal_values_row`,
+$\{u:R_P(u)=R\}$ is exactly the image of (FNS.17a). The inverse reads the
+actual old class values from the same original $u$. The owning private
+`recover_fill` proves reconstruction of that original, and `classValue_distinct`
+proves the required cross-class inequalities. These are mathematical source
+maps; the inverse is not a runtime subtree-read port.
+

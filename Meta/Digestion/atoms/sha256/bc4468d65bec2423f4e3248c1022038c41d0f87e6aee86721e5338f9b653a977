@@ -1,0 +1,15 @@
+**Theorem 6.2 (finite records supply every marker coordinate).** On all of $\mathcal H_3(\mu)$, the supplied $(w,Q^+,Z)$ determines the complete marker triple, for both actual seeds and every retry/return history. Conversely the marker triple determines these finite records. Their complete actual table is
+
+| Marker triple | $w$ | $r_1^+$ | $r_2^+$ | $Z$ |
+| --- | ---: | --- | --- | ---: |
+| $000$ | 0 | $ac$ | $c$ | 0 |
+| $001$ | 1 | $ac$ | $cb$ | 0 |
+| $010$ | 1 | $ac$ | $bc$ | 0 |
+| $011$ | 2 | $ad$ | $b$ | 0 |
+| $100$ | 1 | $ac$ | $bc$ | 1 |
+| $101$ | 2 | $ad$ | $b$ | 1 |
+| $110$ | 2 | $da$ | $b$ | 1 |
+| $111$ | 3 | $d$ | $b$ | 1 |
+
+Proof. At each marker completion the old zero count $t-\beta$ and one count $\beta$ identify the appropriate first or second occurrence, exactly as in the supplier's four routing rules. A third occurrence is unmatched and leaves the local records unchanged. Reading the eight triples through these rules gives the table. Its eight addresses are distinct. All non-marker events hold these fields; seed acquisition chooses coefficients in the bare syndrome but does not change routing. Hence the table applies to both seeds with arbitrary intervening retries and returns. It uses no future acceptance information. With the old $Q$ instead, $110$ and $101$ still share $(w,Q,Z)$; the added incidence is a necessary supply for this particular table. $\square$
+

@@ -1,0 +1,35 @@
+**Definition 59.1 (Target-generated tape information).** Fix exactly the full labeled source (44.1), every target law, the original consumer and its nonempty measurable tape carrier $(\Theta,\mathcal F)$, as in Definition 50.1. Thus
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor,\ g\in\mathbb Z\},\\
+N(r,g)&=1+F_rg,\qquad \Omega(r,g)=\omega(N(r,g)),\qquad \beta_0=0.
+\end{aligned}
+\tag{59.1}
+$$
+
+Here $\omega$ counts distinct prime divisors. All original labels remain in the occupied cylinders $C_m(x)$, including equal-signature labels with different targets. Only actual prime-divisibility answers are source observations. Any prescribed row or profile constrains the original $\mu_y$, without constraining the prepared rows.
+
+Enumerate $X$ without repetitions as $x_1,x_2,\ldots$, and define
+
+$$
+\begin{aligned}
+\sigma&=\sum_{i\ge1}2^{-i}\mu_{x_i},
+&f_i&=\frac{d\mu_{x_i}}{d\sigma},\\
+\mathcal G&=\sigma(f_i:i\ge1)\subseteq\mathcal F,
+&P_{\mathcal G}&=\left\{g\sigma:g\ge0,\ g\text{ is }\mathcal G\text{-measurable},\ \int g\,d\sigma=1\right\}.
+\end{aligned}
+\tag{59.2}
+$$
+
+Choose finite nonnegative measurable density versions; since $\mu_{x_i}\le2^i\sigma$, they can be chosen with $f_i\le2^i$ everywhere. Densities are identified almost everywhere. The notation $g\sigma$ means the measure $A\mapsto\int_A g\,d\sigma$ on the entire original $\mathcal F$, rather than a measure only on $\mathcal G$. The mixture $\sigma$ is a probability on tapes; its index weights supply no probability or sampling operation on sources.
+
+For a finite positive tape measure $\nu$, write its Lebesgue decomposition relative to $\sigma$ as $\nu=h_\nu\sigma+\nu_\perp$, where $\nu_\perp$ is singular to $\sigma$. Put
+
+$$
+\Pi\nu=\left(\mathsf E_\sigma[h_\nu\mid\mathcal G]+\nu_\perp(\Theta)\right)\sigma.
+\tag{59.3}
+$$
+
+The conditional expectation is on the probability space of tapes: it is the integrable $\mathcal G$-measurable density whose integral over each $B\in\mathcal G$ equals $\int_B h_\nu\,d\sigma$. This is a map on finite measures, not an extra observation or a supplied consumer tape map.
+

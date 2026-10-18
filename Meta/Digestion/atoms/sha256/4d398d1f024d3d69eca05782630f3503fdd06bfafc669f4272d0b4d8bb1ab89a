@@ -1,0 +1,19 @@
+**Definition 5.6 (paid enumeration of a certified interval).** The native
+enumerator's inputs are actual sealed $U(a),U(b)$ and sealed binding
+material $\eta=(v,\xi,\text{backing reference})$, all legally readable.
+They are not arguments supplied by a mathematical theorem. Obtain a fresh
+copy of $U(a)$ as current $K$. At each iteration position $K,U(b)$ at
+their first bits and run Definition 5.2. If greater, seal the end marker
+and return. Otherwise construct a fresh framed record containing $\eta$
+and a copy of $K$, seal it, and construct the incremented $K$ by
+Definition 5.4. Repeat. Each output record is physically appended; issuing
+a reference is not an unbounded native output instruction.
+
+One fixed public port assignment uses consumer ports 40–47 for the two
+bound copies, current-version stream, output arena, descriptor stream,
+Base counter, binding material and auxiliary copies, respectively.
+Temporaries of the unary library use its designated public arithmetic
+ports 0–15. All these ports must have their actual reserved ownership
+tokens at entry. The input backing itself is read through its existing
+owner's read token. The routine makes no source-port assignment.
+

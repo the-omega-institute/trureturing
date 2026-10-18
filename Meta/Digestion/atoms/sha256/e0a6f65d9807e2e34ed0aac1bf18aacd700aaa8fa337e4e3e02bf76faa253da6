@@ -1,0 +1,11 @@
+**Example 9.5 (edge cases).** On any nonempty admitted fiber,
+$Q=\{\varepsilon\}$ has a single full row and a zero-action consumer,
+even if the source fiber is infinite. For $Q=\varnothing$ on the all-tree
+fiber, the source projection is infinite and bounded recovery is
+impossible by Theorem 7.1. On a singleton fiber every $Q$ has a known
+constant row; $d-1=0$ in Theorem 8.1 and the Pareto basis is
+$\{(0,0,0)\}$. An inconsistent signed history, including either sign
+with a forced absent endpoint, has empty image rather than a fabricated
+witness. The mathematical classifier accepts this empty case, while
+all service assertions retain the nonempty-entry promise.
+

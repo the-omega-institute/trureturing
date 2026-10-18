@@ -1,0 +1,30 @@
+**Lemma 10.1 (Height recovery from the actual spectral coordinates).**
+The confluent realization recovers $x$ as $z_1/z_0$. A diagonal
+realization with some $\operatorname{Re}\lambda_j\ne0$ recovers it as
+
+$$
+x=\frac{\log|z_j|}{\operatorname{Re}\lambda_j}.
+$$
+
+In each case the same model belongs to $\mathsf{GP}$.
+
+Proof. In the confluent realization $z_0=e^{\lambda x}e^{i\alpha}$
+never vanishes, and $z_1/z_0=x$ is real on the actual image. In
+the diagonal realization $|z_j|=e^{\operatorname{Re}\lambda_j x}$,
+giving the displayed formula. Multiply by $H$ to obtain height
+$\kappa(z)$. On the actual image, the straight guard is exactly
+$0<\kappa(z)+a<H$, and every phase command has full guard. For
+each prescribed path the full guard is exactly
+
+$$
+0<\kappa(z)+\eta(u)<H\quad(0\le u\le T_{\rm p}),
+$$
+
+with its original displacement from (8.7). These subsets have
+precisely the original source domains as inverse images, including
+empty domains. The affine maps and every truncation and
+concatenation identity are already in Proposition 8.3. The guard
+function can be nonlinear; only updates and the output decoder
+are required to be affine. No height coordinate or external
+height input has been added. $\square$
+

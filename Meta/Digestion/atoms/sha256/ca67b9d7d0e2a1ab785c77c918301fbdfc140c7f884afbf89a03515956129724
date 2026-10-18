@@ -1,0 +1,17 @@
+**定义 5.1（标量与向量状态统计）。** 对固定函数 $K:\Sigma\to\mathbb R$、$\mathsf H:\Sigma\to V$，令
+
+$$
+\tau_K(p)=\sum_Ip_IK(s_I),\qquad h_{\mathsf H}(p)=\sum_Ip_I\mathsf H(s_I).
+$$
+
+它们分别是标量与向量值状态统计。记 $\langle K,v\rangle=\sum_IK(s_I)v_I$，向量配对类似。定义读出的四角差
+
+$$
+\begin{aligned}
+\Delta_{13}K&=K(s_{13})-K(s_1)-K(s_3)+K(s_0),\\
+\Delta_{13}\mathsf H&=\mathsf H(s_{13})-\mathsf H(s_1)-\mathsf H(s_3)+\mathsf H(s_0).
+\end{aligned}
+$$
+
+四角差是读出对 $d$ 的线性响应，复用[对称 seam 与 Fibonacci 层级卷 Q7、Q10 及第二部分第五节](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md)的质量零配对。向量差要求所有值在同一个 $V$ 中；没有给出线性载体时，不能直接平均抽象几何对象。
+

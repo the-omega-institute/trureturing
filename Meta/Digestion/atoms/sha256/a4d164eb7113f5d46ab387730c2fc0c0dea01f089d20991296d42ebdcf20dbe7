@@ -1,0 +1,80 @@
+**定理 50.3（已取得证书的同源消费）。** 继续同一（50.5）历史；不替换来源，
+不重做两次内部调用。实际 $y_3$ 到达后由（50.7）的产物定义
+
+$$
+\widetilde w=y_3/\widehat\mu,\qquad
+\Delta_{\rm cert}=\frac{\delta+25\beta}{\widehat\mu}.
+\tag{50.9}
+$$
+
+则 $|\widetilde w-w|\le\Delta_{\rm cert}$。若已经按（50.3）选定的 $p$ 满足
+$\Delta_{\rm cert}\le p$，下面有限解码器在所有合法联合历史上恢复同一个INITIAL，
+其误差有显式界：
+
+$$
+\begin{aligned}
+h&=\frac45\nu-\frac35\alpha,\qquad T=(7+25h)/2,\\
+\widehat R&=\begin{cases}7,&|\widetilde w|\le T,\\25,&|\widetilde w|>T,\end{cases}\qquad
+v_b=P_{\widehat R}(\widetilde w),\\
+\widehat s&=\sqrt{\widehat R^2-|v_b|^2},\qquad
+\widehat a=y_0,\qquad \widehat b=(\widehat s+v_b)q^{-1},\\
+|\widehat x-(a,b)|
+&\le\sqrt{\delta^2+\Delta_{\rm cert}^2+
+       (5p+\sqrt{50\Delta_{\rm cert}})^2}.
+\end{aligned}
+\tag{50.10}
+$$
+
+$P_R$ 仍为（46.17）的闭欧氏球投影。若 $\delta\le p$，特别有
+
+$$
+|\widehat x-(a,b)|\le B(\delta,p)
+:=\sqrt{\delta^2+p^2+(5p+\sqrt{50p})^2}<14\sqrt p.
+\tag{50.11}
+$$
+
+证明。把真正的（50.6）末读代入消费函数，而不是把 $\widehat\mu$ 当作执行值：
+
+$$
+\widetilde w-w
+=\frac{(\mu-\widehat\mu)w+e_3}{\widehat\mu}.
+\tag{50.12}
+$$
+
+$|w|\le|b|\le25$ 与（50.7）给（50.9）。无界 $a$ 没有乘上执行误差进入此界；
+锚已把它放到另一个隐藏槽，初始 $a$ 用保留的 $y_0$ 估计。
+
+§45的球帽投影及负实部分支界对任意单位 $u$ 相同，因为帽轴是四元数实方向。
+在本节参数下，它们给半径7时 $|w|\le7$，半径25时 $|w|\ge25h$，并给
+$bq=s+w$ 的 $s\ge-|b|\rho$。具体间隙仍是
+
+$$
+g=25h-7=24\rho-7(1-K)
+\ge\frac{12}{5}p-\frac7{100}p^2
+\ge\frac{233}{100}p>2p.
+\tag{50.13}
+$$
+
+这里 $1-K\le\rho^2$。所以 $\Delta_{\rm cert}\le p$ 强制
+内层 $|\widetilde w|\le7+p<T$，外层 $|\widetilde w|\ge25h-p>T$。
+$\widehat R=|b|$ 是实际报告判出的结果，未添加半径标签。球投影非扩张和既有
+平方根模量给
+
+$$
+|v_b-w|\le\Delta_{\rm cert},\qquad
+\left|\sqrt{R^2-|v_b|^2}-\sqrt{R^2-|w|^2}\right|
+\le\sqrt{2R\Delta_{\rm cert}},\quad R=|b|.
+\tag{50.14}
+$$
+
+若真实 $s<0$，取正根还多出至多 $2R\rho$；$s\ge0$ 时没有这项。
+因此 $|\widehat s-s|\le50\rho+\sqrt{50\Delta_{\rm cert}}
+=5p+\sqrt{50\Delta_{\rm cert}}$。右乘 $q^{-1}$ 等距，初始可见槽、四元数实部和
+虚部正交，得到（50.10）。在 $\delta\le p\le1$ 下复用（47.20）的数值界即得
+（50.11）。全部量由这次有限记录计算；$\widehat\mu$ 在（50.12）的实际除法上
+被消费，改变它会改变归一化投影及后续解码，绝非只附一个未使用字段。证毕。
+
+只有 $\mu$ 的证书而没有共享槽增益律，不能写出（50.12）；只有遥测数值而没有
+真正取得的 $y_3$，也不能执行该消费者。初读、两个中间Read、锚后Read均保留，
+即使本消费者不使用 $y_1$ 的数值。这里的充分记录没有被声称为最小记录。
+

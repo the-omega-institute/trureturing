@@ -1,0 +1,35 @@
+**Theorem 3.3 (three-height exact obstruction with all height-independent
+assistance).** Under Definitions 2.3–2.4, if $|S_y|\geq3$, then
+$p_{m,y}=0$ on every promised input at this record, for every signed $m$.
+This holds with arbitrary assistance satisfying (RB.7), even if exact
+parity is additionally revealed. For each fixed $m$ it already holds if
+exactness is required only at the same three distinct phases for each of
+three distinct heights.
+
+Proof. Fix $m,y$ and one successful $K_\alpha$. In the real coordinates
+$(U_+,sU_-)$, $s=(-1)^m$, the vectors $n_s(x)$ lie on the open
+positive quadrant of the unit circle. Any three distinct such points are
+affinely independent: a real affine line intersects a circle in at most
+two points. For three candidate indices $a,b,d$, therefore,
+
+$$
+n_s(x_b)-n_s(x_a),\qquad n_s(x_d)-n_s(x_a)
+\tag{RB.11}
+$$
+
+are independent over $\mathbb R$ and, since their coordinate matrix is
+real with nonzero determinant, over $\mathbb C$. They span $\mathcal B$.
+Equation (RB.10) sends both differences to zero. Thus $K_\alpha$ is zero
+on $\mathcal B$. Applying it to $n_s(x_a)$ now gives
+$0=\lambda_\alpha n_s(l_y)$, so $\lambda_\alpha=0$ and $K_\alpha e=0$.
+Every successful Kraus component vanishes on all of $\mathcal V$.
+Lemma 3.2 proves zero success, including every retained auxiliary output.
+Granting a classical parity label only makes the allowed map more general;
+the argument fixed that label from the outset. $\square$
+
+This is not indistinguishability of the three specimen density matrices.
+They are distinct quantum inputs. The obstruction is to one exact
+phase-preserving action on all of them using the stated common record.
+It does not prohibit other measurements, other targets, or height-dependent
+assistance under a different joint source relation.
+

@@ -1,0 +1,21 @@
+**Definition 2.1 (contact gap and response coordinates).** In the fixed local sign charts of [OE, Definition 4.1], set
+$$
+g_i=Y\cdot\Gamma_i-\lvert H_i\rvert-\lambda\lvert u_i\rvert .
+$$
+At every occupied contact $g_i=g_{i,x}=0$. At the event the unused contact $4$ also satisfies these two equalities. Let $v=\Gamma_4$ and $k_4=|u_4|$ at the event, and let $d_4>0$ be its normalized clearing denominator. Let $A$ be the differential of the eight-moment map in the six occupied contact variables at the event, let $H$ be the corresponding Lagrangian Hessian on those variables, and let $q=Dk$ be the differential of the contrast functional. The inherited geometry gives
+$$
+\operatorname{rank}A=8,\qquad
+H\succ0\ \text{on }\ker A,\qquad
+q|_{\ker A}\ne0.
+$$
+
+Write $z_6'$, $z_7'$ for the survivor-variable derivatives with respect to $\lambda$ at the event, and put
+$$
+h=z_7'-z_6',\qquad \Delta Y=Y_7'-Y_6'.
+$$
+The seven derivative $p_4'$ is the derivative of the signed seventh weight. The six unused-gap derivative is
+$$
+d_6'=\frac{d}{d\lambda}
+\left(Y_6\cdot\Gamma_4-\lvert H_4\rvert-\lambda\lvert u_4\rvert\right).
+$$
+

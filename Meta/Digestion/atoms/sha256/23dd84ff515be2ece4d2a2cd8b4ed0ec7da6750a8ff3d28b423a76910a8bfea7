@@ -1,0 +1,24 @@
+**Proposition 7.4 (storage versus conditional information).** In the
+underlying retained-cell machine the simultaneous storage is
+
+$$
+S(h)=S_0+b_{\mathrm{ctl}}(h)+8A(h)+8n(h),
+\tag{AIF.12}
+$$
+
+where $A(h)$ counts all constructed ordinary cells, including old versions,
+and $b_{\mathrm{ctl}}$ counts installed control/token/latch bits. On the
+address fiber, the already allocated $d$ payload cells alone contribute
+$8d$ model bits, even when only $r<d$ bits have arrived. The sharp $r$-bit
+bound is a conditional task-information bound, not a total storage optimum.
+
+Proof. PR57.D1 constructs an eight-model-bit ordinary cell and one
+eight-model-bit receipt cell for every executed primitive; PR57.D9 retains
+all constructed cells and separately counts finite control/token/latch
+storage. The new frame and copy operations use precisely those cell and
+receipt constructors. Partitioning by actual construction therefore gives
+AIF.12 without substituting separate maxima for coexisting objects. The
+port-local zero-reservation graph has constructed all $d$ cells before
+the varying ingress, and Theorem 5.2 counts distinguishable values
+conditional on that common layout. These are different quantities. ∎
+

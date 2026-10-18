@@ -1,0 +1,32 @@
+**Definition 1.2 (The unchanged scalar-port problem).** Let
+$\mathfrak C_1$ consist of composites of fixed CPTP maps
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_1,
+\qquad
+\operatorname{Dec}((y_f)_f)=\sum_f\operatorname{Dec}_f(y_f),
+\qquad \operatorname{Dec}_f:M_1\longrightarrow M_5,
+\tag{1.2}
+$$
+
+where $F$ is finite and every decoder is CPTP on its whole scalar
+block. The design precedes both the input and the future policy.
+All quantum information traverses the port, without original-input
+retention, entangled assistance or bypass. Flags are free for this
+quantum-dimension criterion, are consumed in decoding, and are not
+additionally exposed to the future policy. Every complex CPTP
+competitor is included. With one replacement before the common
+protocol, define
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathbb C^5)}
+\sup_{\pi\ {\rm actual,finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),\qquad
+\varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+TV is half the $\ell^1$ distance, or its measure version for random
+controls. CPTP legality includes every reference extension; performance
+tests only the system's actual histories.
+

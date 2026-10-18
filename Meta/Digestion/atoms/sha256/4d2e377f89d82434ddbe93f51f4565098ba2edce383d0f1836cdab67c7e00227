@@ -1,0 +1,20 @@
+**Lemma 4.4 (tilts valid on the whole complex low cone).** For every
+$\theta$ with $\cos\theta\geq0$ the matrix
+
+$$
+B_\theta=\begin{pmatrix}
+\cos\theta&i\sqrt\alpha\sin\theta&0\cr
+-i\sqrt\alpha\sin\theta&-\alpha\cos\theta&0\cr0&0&-\beta
+\end{pmatrix}
+\tag{AS.25}
+$$
+
+satisfies $\operatorname{tr}(B_\theta L)\leq0$ for $L\in\mathcal C_2$.
+For a quadratic-null $z=(u,v,w)$, put
+$x=|u|^2-\alpha|v|^2$, $y=2\sqrt\alpha\operatorname{Im}(u\overline v)$.
+Expansion gives $x^2+y^2=|u^2-\alpha v^2|^2=\beta^2|w|^4$;
+thus $x\cos\theta+y\sin\theta\leq\beta|w|^2$.
+On the entire plane $u=0$, the pairing is
+$-\alpha\cos\theta|v|^2-\beta|w|^2\leq0$. Sum over atoms.
+This is the NP full-cone tilt, including the plane. $\square$
+

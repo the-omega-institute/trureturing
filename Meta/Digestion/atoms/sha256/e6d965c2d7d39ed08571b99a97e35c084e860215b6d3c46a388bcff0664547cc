@@ -1,0 +1,11 @@
+**Definition 19.1 (both exact differentiated systems).** Use the full original row orders in OE Definition 4.2. In either branch the first eight rows are the moment equations. If $I_6=O$, $I_7=\{0,\ldots,6\}$, their derivatives in the half-angle and weight columns are $p_i\Gamma_i'$ and $\Gamma_i$. All value rows $P_i$ precede all derivative rows $P_i'$. A value row has $x_i$ entry $P_i'$, $Y$ entries $\Gamma_{{\rm num},i}$ and parameter derivative $-\sigma_iW_{{\rm num},i}$. A derivative row has $x_i$ entry $P_i''$, $Y$ entries $\Gamma_{{\rm num},i}'$ and parameter derivative $-\sigma_iW_{{\rm num},i}'$. Other entries vanish except the displayed moment derivatives. Six has the extra final row $P_4'(x_4)$ and final column $x_4$, with entries $P_4''$ and $\Gamma_{{\rm num},4}'$ in that row; its parameter derivative is $-\sigma_4W_{{\rm num},4}'$. It has no value row $P_4$ and no weight column $p_4$. These formulas specify every entry without deleting the unused stationary angle.
+
+For $J_b=F_{b,X}$ and $f_b=F_{b,\lambda}$ at the exact event, solve separately
+
+$$
+J_6v_6=-f_6,\qquad J_7v_7=-f_7,\qquad
+ a=D_Xk_6v_6,\quad b=D_Xk_7v_7.
+$$
+
+The half-angle entries of $D_Xk_b$ are $p_i\sigma_i u_i'$ and its weight entries are $\sigma_i u_i$; all $Y$ entries and the six unused $x_4$ entry are zero. This is ordinary differentiation in the original coordinates, not an adopted coarse derivative centre from OE Appendix 17.
+

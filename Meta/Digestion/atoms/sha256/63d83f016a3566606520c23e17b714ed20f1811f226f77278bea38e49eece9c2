@@ -1,0 +1,39 @@
+**Proposition 15.1 (equal-level cuts and within-record aligned endpoints).**
+Every admissible input with the following syntactic properties belongs
+to $\mathfrak S$: $P$ is any subset of one original address level,
+$Q$ is any subset of another original address level, and the two endpoint
+addresses of each relation record have equal lengths. The two levels
+may differ; different records may use different lengths and arbitrary,
+possibly unequal, certified epochs. Literal histories, repeated old
+classes, off-task classes, missing cuts, signs and coupling patterns are
+unrestricted. Empty subsets and the root level are included.
+
+Proof. Let the old cut level be $a$. All residual variable occurrences
+in $W_\eta$ have absolute depth $a+d$, even when an old class is repeated.
+A normalized endpoint at address length $s$ therefore has every nonground
+decorated variable at relative depth $a+d-s$. Expansion of a known
+original leaf contributes only ground subtrees; it does not shift a
+variable occurrence.
+
+In a comparison of endpoints of equal address length, both expressions
+have their nonground frontier atoms at this same relative depth. Above
+it a nonground expression has an explicit pair root. At it a nonground
+expression is a decorated variable. Hence a decorated variable can face
+only another decorated variable or a ground subtree, never a nonground
+pair. Ground comparisons and constructor clashes already compile. This
+proves compilation of every relation record after its guards, for all
+patterns, whether or not their constraints are feasible. Old class
+comparisons have common frontier depth $d$ and obey the same argument.
+For target holes on one level, the argument applies with epoch zero and
+common relative frontier depth $a+d-|q|$. Thus their comparisons also
+compile. If there are no reached old holes there are no variables and
+the assertion follows from the ground convention. The same reasoning
+covers empty $Q$, absent endpoints filtered by their guards, and root
+cuts. This proves the stated entire-input inclusion. $\square$
+
+No completeness of either cut is required. In particular, unknown
+concrete outside subtrees can remain; Theorem 14.1 decides their effect
+through (ARH.12.1). The proposition does not authorize moving an original
+cut to a convenient level. The larger tested family also includes the
+non-level positive recut in the next section.
+

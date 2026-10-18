@@ -1,0 +1,123 @@
+**Theorem 5.2 (All positive five-state laws).** Take $n=3$ with
+the order $(0,1,2,3,13)$, any strictly positive law $p$, every site
+distribution $\omega$, and every $0\le r\le1$. Then
+
+$$
+\boxed{\Gamma(r,\omega)=r\gamma(\omega).}
+\tag{5.4}
+$$
+
+Consequently the full probability-and-phase optimum has the same
+site distributions as the phase-only optimum, and every overall
+optimum in the enlarged menu has $r=1$. For the reflected laws
+of Theorem 4.2, its explicit unique site distribution is also
+the unique full-tangent optimum. Reflection symmetry is not
+needed for the pointwise identity (5.4).
+
+Proof. First compute the information of the actual experiment.
+On a pair set $S=p_s+p_t$,
+$\alpha=\psi_su_s+\psi_tu_t$ and
+$\beta=\psi_sv_t-\psi_tv_s$. At the reference the two
+probabilities are $S/2$, and their derivatives are
+$\alpha+\beta$ and $\alpha-\beta$, up to the fixed outcome-sign
+convention. Their Fisher contributions add to
+
+$$
+\frac{(\alpha+\beta)^2+(\alpha-\beta)^2}{S/2}
+=\frac{4(\alpha^2+\beta^2)}S.
+\tag{5.5}
+$$
+
+The normalized vectors
+$(\psi_se_s+\psi_te_t)/\sqrt S$ and
+$(\psi_te_s-\psi_se_t)/\sqrt S$ are orthonormal on the pair.
+A blocked word contributes $4u_s^2$ and no phase term.
+The mode-basis setting contributes $4\|u\|^2$.
+Summing pairs, blocked outcomes and recorded settings gives
+
+$$
+J_{r,\omega}(u,v)
+=4\bigl[u^{\mathsf T}(I-rH_\omega)u
++r v^{\mathsf T}H_\omega v\bigr].
+\tag{5.6}
+$$
+
+Polarization therefore gives the complete reference matrices
+in orthonormal horizontal coordinates:
+
+$$
+F_{r,\omega}=4\begin{pmatrix}I_V-rB_\omega&0\\0&rB_\omega\end{pmatrix},
+\qquad Q=4I_{2\dim V}.
+\tag{5.7}
+$$
+
+Every $K_i$ is a projection annihilating $\psi$, so
+$0\preceq B_\omega\preceq I_V$. Hence
+
+$$
+\Gamma(r,\omega)=
+\min\{r\lambda_{\min}(B_\omega),
+1-r\lambda_{\max}(B_\omega)\}.
+\tag{5.8}
+$$
+
+The paired calculation is an application of established
+rank-one measurement information algebra: see Li--Ferrie--
+Gross--Kalev--Caves, equations (12), (15)--(16) [FSIC5]. Its
+specialization here retains the actual legal blocks, blocked
+outcomes and setting budget. The block diagonal form uses the
+real calibrated reference and opposite quadratures; rank one
+alone does not set arbitrary classical cross blocks to zero.
+
+It remains to prove the five-state spectral inequality. On
+the four square states, $K_1$ and $K_3$ are rank-two orthogonal
+projections. Their common kernel is the one-dimensional ray of
+the restricted square-root law: their four pair equations
+connect the square. The sum of their ranges has dimension
+three, so their common range has dimension one. These two
+common spaces are orthogonal. Their two-dimensional orthogonal
+complement is invariant under both projections, each of rank
+one there.
+
+Put $s=\omega_1+\omega_3$. On $V$, the eigenvalues of
+$A=\omega_1K_1+\omega_3K_3$ are
+
+$$
+0,\lambda_-,\lambda_+,s,\qquad
+0\le\lambda_-\le\lambda_+\le s,\qquad
+\lambda_-+\lambda_+=s.
+\tag{5.9}
+$$
+
+The zero direction comes from the center state and the common
+square kernel after removing $\psi$. The common range has
+eigenvalue $s$. The remaining block has trace $s$ and is
+bounded above by $sI$, proving (5.9), including zero weights.
+
+Write $\mu_1\le\cdots\le\mu_4$ for the eigenvalues of
+$B_\omega=A+\omega_2K_2|_V$. Positivity of the added rank-one
+projection and the variational eigenvalue principle give
+$\mu_2\ge\lambda_-$ and $\mu_3\ge\lambda_+$.
+Meanwhile
+
+$$
+\sum_j\mu_j=2s+\omega_2=1+s,
+\qquad
+\mu_1+\mu_4
+=1+s-(\mu_2+\mu_3)\le1.
+\tag{5.10}
+$$
+
+Thus $1-r\mu_4\ge r\mu_1$ for $0\le r\le1$, and (5.8)
+is (5.4). The connected legal graph and any strictly positive
+site distribution give a positive phase gap. Its maximum
+$\gamma^*>0$ exists by continuity on the compact simplex.
+Equation (5.4) gives $\max_\omega\Gamma(r,\omega)=r\gamma^*$;
+therefore every overall optimum has $r=1$ and a phase-optimal
+site distribution. Apply Theorem 4.2 for reflected laws.
+$\square$
+
+The argument uses the square-plus-center projection geometry.
+It neither assumes independent endpoint occupations nor
+identifies a mixed-state tangent space with $V\oplus iV$.
+

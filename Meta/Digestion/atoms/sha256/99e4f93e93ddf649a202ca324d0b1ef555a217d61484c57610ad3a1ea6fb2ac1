@@ -1,0 +1,70 @@
+**Theorem 5.1 (combined membership and cut capacity).** For every
+interior cell,
+
+$$
+b_v\ge a_v\ge\kappa_v.
+\tag{CL.20}
+$$
+
+More explicitly, writing $A=a_v$,
+
+$$
+\chi_v\le\binom{A}{\lfloor A/2\rfloor},\qquad
+2|E(\Gamma_v)|\le A M_v\quad\text{if }E(\Gamma_v)\ne\varnothing.
+\tag{CL.21}
+$$
+
+Proof of the membership bound. List the distinct actual supports at $v$
+as $U_1,\ldots,U_A$. For $x\in X_B$ give it the membership code
+$C_x=\{j\in[A]:x\in U_j\}$. By Theorem 4.1 an edge $\{x,y\}$
+has one actual support containing $x$ and omitting $y$, and another
+containing $y$ and omitting $x$. Thus both $C_x\setminus C_y$ and
+$C_y\setminus C_x$ are nonempty: adjacent codes are incomparable.
+
+We use the standard symmetric-chain decomposition of the Boolean lattice,
+with its full elementary proof. At rank zero there is one chain consisting
+of the empty set. Suppose the subsets of an $A$-element set have been
+partitioned into chains
+$U_k\subset U_{k+1}\subset\cdots\subset U_{A-k}$, where $|U_j|=j$.
+Adjoin a new element $x$ and replace each such chain by
+
+$$
+U_k,\ldots,U_{A-k},U_{A-k}\cup\{x\},
+\qquad
+U_k\cup\{x\},\ldots,U_{A-k-1}\cup\{x\},
+\tag{CL.22}
+$$
+
+omitting the second chain if its range is empty. Each is a chain whose
+endpoint ranks sum to $A+1$, and together they partition exactly the
+sets of the old chain with and without $x$. Applying this replacement
+to every old chain proves the decomposition inductively. Every symmetric
+chain for an $A$-element ground set contains exactly one set of rank
+$\lfloor A/2\rfloor$. There are consequently
+$\binom A{\lfloor A/2\rfloor}$ chains.
+
+Color $x\in X_B$ by the chain containing $C_x$. Incomparable codes
+cannot have the same chain, so this is a proper coloring of $\Gamma_v$.
+It proves the first bound in (CL.21) and $A\ge\tau(\chi_v)$.
+Repeated codes at nonadjacent vertices and isolated vertices cause no
+problem; no injectivity of the coordinate codes is assumed.
+
+Proof of the cut bound. By (CL.9), each actual support has the form
+$U_j=T_a\cup R_j$ with $R_j\subseteq X_B$ and $|R_j|=t_v$.
+Each demanded edge has to be cut by at least two distinct supports:
+one for each of its opposite membership orientations. A single support
+cuts at most $M_v$ edges. Finite incidence counting gives
+
+$$
+2|E(\Gamma_v)|
+\le\sum_{j=1}^A|\{e\in E(\Gamma_v):|e\cap R_j|=1\}|
+\le A M_v.
+\tag{CL.23}
+$$
+
+For a graph with an edge, division by positive $M_v$ and integrality
+give the ceiling in (CL.19). For an edgeless graph, $A\ge1$ suffices.
+Finally (CL.5) gives $b_v\ge a_v$. The chain decomposition, coloring,
+and incidence count are standard combinatorial tools; their inputs here
+are the actual supports supplied by the join theorem. $\square$
+

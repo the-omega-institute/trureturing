@@ -1,0 +1,21 @@
+**Definition 53.3 (the common finite correspondence).** For any finite
+real null family $h_j=\sqrt{\pi_j}(1,u_j,v_j)^T$ with
+$\sum_jh_jh_j^T=I$, set
+
+$$
+c_j=Lh_j,\qquad K_j=\sqrt{\pi_j}(s_0D+u_jT+v_jS).
+\tag{JR.134}
+$$
+
+Use a fixed image isometry $V_j:\mathbb C^2\to\operatorname{ran}K_j$,
+encoder $V_j^\dagger K_jE^\dagger$, and decoder
+$X\mapsto EV_jXV_j^\dagger E^\dagger$ on all $M_2$.
+Retain the actual label $j$ and its specified raw report $r_j$.
+Add the two fair high branches
+$\sqrt{(1-\delta)/2}\,DE^\dagger$ with full $M_3$ isometric decoders,
+the four fair-report scalar spectral rows (JR.118), and the two scalar
+complement branches of Definition 51.1. On a spectral row the decoder
+sends $z$ to $zw_\ell g(t)dt\,P_f$ for each $\ell=0,\ldots,4$;
+on a complement branch it sends $z$ to $zg(t)dt\,P_f$ at label $2$ only.
+Their nonretained internal Kraus multiplicities are discarded.
+

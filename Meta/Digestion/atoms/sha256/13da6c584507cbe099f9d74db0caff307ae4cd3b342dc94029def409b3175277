@@ -1,0 +1,67 @@
+**Construction 325.1 (Only one exhaustion vector changes).**
+Let $R=O(1,2;1,2,0)$ and use exactly the genuine sixteen-table
+$P^0$ in 319.1 and the complete $P^\star$ in 320.1. Start with
+
+$$
+p^B=(1-24\tau)R+24(\tau-t)P^0+24tP^\star.
+\tag{325.1}
+$$
+
+Here every row of the displayed $P^0$ table has its integer count
+multiplied by $\tau-t$. In particular its row
+$O(1,4;0,4,0)$ keeps first output zero: its class-1 correct count
+is eleven per 24, not the twelve of the other head-fill variant.
+Every deterministic row in the displayed $P^\star$ table keeps its
+schedule and all three labels, with its integer count multiplied by
+$s=t/128$. Keep the five mixed $P^\star$ rows as follows, listing
+unnormalized vectors. Different rows, including coincident schedules
+from $P^0$ or $R$, remain alternative branches.
+
+| Schedule | Mass | First vector | Middle vector | Exhaustion vector |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $944s$ | $944s e_1$ | $944s e_2$ | $463s e_0+220s e_3+162s e_4+99s e_5$ |
+| $(2,3)$ | $391s$ | $333s e_0+58s e_2$ | $391s e_3$ | $391s e_0$ |
+| $(3,4)$ | $236s$ | $236s e_0$ | $236s e_4$ | $148s e_0+88s e_5$ |
+| $(6,7)$ | $74s$ | $74s e_0$ | $74s e_7$ | $17s e_0+(4s+\delta)e_8+(53s-\delta)e_9$ |
+| $(6,8)$ | $53s$ | $53s e_0$ | $53s e_8$ | $17s e_0+36s e_9$ |
+
+Call the resulting law $p^\delta$. Only the exhaustion vector of
+the $P^\star$ component on $(6,7)$ was changed. Its separate
+$P^0$ component on that same schedule is unchanged. In every row,
+**each** counterfactual vector has that row's mass; three such
+vectors are never added as three schedule masses. For the changed row,
+
+$$
+17s+(4s+\delta)+(53s-\delta)=74s,
+\qquad 53s-\delta\ge0.
+\tag{325.2}
+$$
+
+Every entry is nonnegative. The deterministic $P^\star$ counts sum
+to 1374 and its mixed counts to 1698, so the schedule masses of the
+entire construction sum once to
+
+$$
+(1-24\tau)+24(\tau-t)+(1374+1698)s=1.
+\tag{325.3}
+$$
+
+This is one normalized probability law before any source is inspected.
+
+For a row of positive mass $m$, partition $[0,1)$ separately in
+each of its three cells into increasing-label half-open intervals
+$I_0(u),I_{10}(v),I_{11}(z)$ of lengths equal to that cell's
+label masses divided by $m$. Give the full deterministic table
+$O(i,j;u,v,z)$ weight
+
+$$
+m\,|I_0(u)\cap I_{10}(v)\cap I_{11}(z)|.
+\tag{325.4}
+$$
+
+The intersections form a partition and reproduce all three marginals
+with total weight $m$. This supplies all counterfactual labels from
+the same local seed coordinate before replies. Zero-mass rows are
+omitted; no division or limit sampler is needed there. It is the
+coupling already used in 320.2, applied to the stated new vector.
+

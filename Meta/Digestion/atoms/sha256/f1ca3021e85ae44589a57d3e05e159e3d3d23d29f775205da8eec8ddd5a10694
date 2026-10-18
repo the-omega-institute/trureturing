@@ -1,0 +1,42 @@
+**Proposition 13.1 (pointwise witnesses do not assemble on the same
+export).** Consider the proposed mechanism which, on a prescribed
+paid complete export, verifies a one-query solution separately for
+every $(p,k)$ and then asserts a query-before-count solution for the
+same export without splitting names. This mechanism is false on
+actual full-family native sources. More generally, for the export
+$E^\circ$ at fixed $m\ge2$, any repair limited to refinements
+must pay the exact additional alphabet (LTR.37).
+
+**Proof.** Theorem 12.2 establishes every pointwise premise on the
+full family for $E^\circ$, including all original targets, all
+counts, paid acquisition and the same stationary source. Its original
+all-count refinements require $m^n>1$ names over the one special
+fiber, with the stated exact full-family premium. This refutes the
+asserted assembly on unchanged fibers and proves the refinement
+claim. $\square$
+
+The consumer of this obstruction is a transfer based on separately
+synthesized count-specific controllers or separately chosen task
+extensions. Such a transfer must instead exhibit one common literal
+witness determining the whole temporal factor on each attained fiber,
+as in Lemma 2.2, or count a lawful refinement or recoloring. This is
+a necessary operational distinction, not an assertion that either of
+the following suppliers made the rejected claim.
+
+**Source correspondence 13.2 (fixed-tree and finite-controller
+suppliers).** The following table states their exact input/output
+correspondence at the pinned revision. Reading declarations and their
+owning narratives supplies no new compiled application.
+
+| Supplier | Verified interface and transfer boundary |
+| --- | --- |
+| [FixedTreeCommonExtension][CombFT], with its [owning Scribe][CombFTB] | A fixed finite `Full` tree has disjoint sibling coordinate sets, finite nonempty alphabets, nonempty joint promise and one joint task $f$. Local leaf implementations receive coordinate values; internal implementations receive full child-message tuples. Common-total-extension capacity vectors and reachable-message vectors have the same upward closure and attained minima for coordinatewise monotone costs. Its canonical extension uses noncomputable representative choice. The root `read` is a decoder, not a charged literal query. Actual comb coordinates here must be acquired, and separate tasks $f_{p,k}$ do not supply a single count-blind literal or preserve a shared export. Applying it to the joint trajectory task keeps that operational obligation. |
+| [NativeLiteralMoore][CombMoore], `NativeLiteralFeasible` and `finite_literal_synthesis`, with its [owning Scribe][CombMooreB] | Fix a prefix-free cut $P$, $C=\operatorname{canonicalRow}P(\operatorname{substitution}u_0)$ and budgets $r,K\ge1,q,\ell$. Feasibility supplies `code : ImageValues C → Q ⊕ H` on the entire actual predecessor fiber; execution queries the stationary actual `substitution u`, and outputs the whole predecessor row `canonicalRow P u`. Budgets count attained initial code names, installed states, actual calls and the same trace's literal letters. The finite synthesis equivalence may reselect the encoder/controller. Acquisition of the actual `ImageValues`, paid export/isolation and authenticated one-update continuity remain supplied premises. This does not supply the original late $p$, all-authentic-$k$ output or a universal one-call bridge. No claim that these combs are that predecessor fiber is used. |
+
+In both cases a finite source-independent installed table is permissible;
+an unknown actual coordinate assignment, image source or chosen
+representative is not thereby acquired for free. All original targets
+here refer to one actual source and one shared acquired export.
+No separate optimization at different cuts or counts can discard that
+common realization requirement.
+

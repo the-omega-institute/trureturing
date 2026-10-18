@@ -1,0 +1,14 @@
+**A6 exceptional ratio complete root list.**
+
+**entry and necessity.**
+
+For q=alpha, eta=0. Kalpha must be the constant (1-alpha)\*d, so require k2=k1=0 and force d=k0/(1-alpha). Taking alpha only when it is a root of F is consistent with k2=0; retaining both checks is harmless. H=E-d is a cubic with leading coefficient e3. A compatible world's even source factor 1+b\*t/2 has its root zeta=-2/b. Thus H(zeta)=0. Because b>0 and alpha\*b<1, this root satisfies zeta<-2alpha. Conversely that strict inequality gives a negative nonzero zeta, b=-2/zeta>0 and alpha\*b<1. No other source parameters are free.
+
+**sufficiency.**
+
+For each distinct real root zeta of H with zeta<-2alpha set b=-2/zeta, r=alpha\*b, c=alpha(1-alpha\*b), and g=H/(1-t/zeta). The root condition proves exact polynomial divisibility. Its divisor is a degree-one polynomial with nonzero leading coefficient and constant coefficient one, so the quotient is a nonzero exact quadratic, with leading coefficient -zeta\*e3=2e3/b. The chart makes the source strictly legal. The root normalization fixes the scale, so there is no free factor multiplier. Also o=alpha\*e. The entry conditions give R+alpha\*e3\*S=alpha\*E+(1-alpha)\*d=d+alpha\*H=d+o\*g. The even identity is E=d+H=d+e\*g. Evaluating the two identities at their acquired clocks proves ALL seven actual equations. Therefore every listed root gives a world and every compatible exceptional world was one of these roots, with its entire g and d fixed.
+
+**multiplicities and filters.**
+
+H is a nonzero cubic and therefore has at most three distinct real roots. A repeated root is used once as a choice of the single source factor; any leftover multiplicity remains in g. Distinct eligible roots give different b, hence different complete worlds. Roots failing zeta<-2alpha, including zeta=0 and the boundary zeta=-2alpha, give no strict source. Other roots of H can be physical sampled roots of g, and are not suppressed. Vanishing lower coefficients, zero intercepts and repeated gain roots require no new branch or division. If there is no eligible root or the entry conditions fail, the exceptional group is empty.
+

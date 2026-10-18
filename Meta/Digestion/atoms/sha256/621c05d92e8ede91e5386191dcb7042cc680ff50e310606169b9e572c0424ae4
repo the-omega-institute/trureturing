@@ -1,0 +1,26 @@
+## 接口 E：几何冲突图适配器
+
+对 `soft-to-rigid` 的候选姿态集合，定义：
+
+$$
+(\tau,L)
+\mapsto
+G_{\tau,L}.
+$$
+
+证明：
+
+$$
+\tau_1\ge\tau_2
+\Longrightarrow
+\operatorname{STAB}(G_{\tau_2,L})
+\subseteq
+\operatorname{STAB}(G_{\tau_1,L})
+$$
+
+在固定姿态宇宙和嵌套容器假设下成立。
+
+这一步把几何数值实验变成可以接入 AURIC 组合核的有限图证书。
+
+---
+

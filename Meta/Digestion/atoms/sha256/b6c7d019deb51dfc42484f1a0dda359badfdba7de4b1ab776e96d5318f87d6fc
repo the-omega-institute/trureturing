@@ -1,0 +1,51 @@
+**Proposition 14.3 (a whole-strategy call/letter tradeoff).** For every
+admissible length-six target, the smallest worst total submitted letters
+among all native encoders using at most three Reads is exactly $14$.
+There is also an encoder with worst resource vector
+
+$$
+ (\max T,\max A,\max Q)=(4,12,6),
+\tag{AAR.84}
+$$
+
+whereas a three-call encoder attains $(3,14,6)$. These are complete
+strategies for the full source family. In particular, the call and peak
+optima do not specify a total-resource optimum.
+
+Proof. By Theorem 14.1, any three-call encoder has a prefix search tree
+with no larger worst letter total and height at most three. If its root
+key is $i$, the two remaining subtrees have height at most two and thus
+at most three keys each. With six keys, $i$ must be $3$ or $4$.
+If $i=3$, the right subtree on $4,5,6$ must have root $5$ and children
+$4,6$. Its key-six run submits lengths $3,5,6$, totaling $14$.
+If $i=4$, the subtree on $5,6$ queries both on one attained run,
+totaling $4+5+6=15$. Therefore every such whole native strategy has
+worst letter total at least $14$, including competitors that use
+nonprefix or deeper words.
+
+For attainment at three calls, choose root key $3$, with lower subtree
+root $1$ and its upper child $2$, and upper subtree root $5$ with
+children $4,6$. For four calls, choose root $5$, lower subtree root $3$
+with lower subtree $1$ followed upward by $2$ and upper child $4$,
+and upper child $6$ at the root. At a key $i$, submit $p_i$; terminate
+on either leaf label, descend left on absent and right on branch, and
+terminate with $B$ after branch at key $6$. The actual runs are:
+
+| First-leaf position, or terminal branch | Three-call strategy: submitted lengths | Four-call strategy: submitted lengths |
+| --- | --- | --- |
+| $1$ | $3,1$ | $5,3,1$ |
+| $2$ | $3,1,2$ | $5,3,1,2$ |
+| $3$ | $3$ | $5,3$ |
+| $4$ | $3,5,4$ | $5,3,4$ |
+| $5$ | $3,5$ | $5$ |
+| $6$ or $B$ | $3,5,6$ | $5,6$ |
+
+The first strategy has maximal sum $14$ and maximal call count three.
+The second has maximal sum $12$ on position four and maximal call
+count four on position two. Both have peak six. Every row has actual
+witnesses in (AAR.79), and every source has one of these descriptors,
+so these maxima are exact for the full strategies. The maxima need
+not occur on the same source. This proves the stated tradeoff without
+asserting a complete Pareto frontier or minimizing installation,
+workspace, arithmetic, clearing or physical latency. $\square$
+

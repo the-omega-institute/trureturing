@@ -1,0 +1,14 @@
+**Definition 2.4 (unchanged whole-block weights).** Set
+$L_d=|S_d|+9$ and give the entire $S_d$ the positive rational law
+
+$$
+w(A)=5,\quad w(B)=3,\quad w(C_0)=4,\quad
+w(u)=1\ (u\notin\{A,B,C_0\}),\qquad \mu_d=w/L_d.
+$$
+
+The sum is $|S_d|+9$ because the increases over unit weights are
+$4,2,3$. On each gadget use the product of its $11m$ original
+whole-block $\mu_d$ factors, each exactly once, including all
+connectors. A phase, seed occurrence, mixture marker, scaffold position
+or analytical cache receives no new weight factor.
+

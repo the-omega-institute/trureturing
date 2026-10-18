@@ -1,0 +1,49 @@
+**Corollary 391.2 (Exact bounded mass domain on the hull).** Let $L\ge4$, fix
+
+$$
+1\ge b_1\ge\cdots\ge b_{L-1}\ge e\ge0,\qquad b_2=b_3,
+$$
+
+and set
+
+$$
+S=\sum_{j=3}^{L-1}b_j,\qquad
+\ell=\max\{0,Le-S\},\qquad
+u=\min\{b_{L-1}-e,\ 1-b_1-S+Le\}.
+\tag{391.9}
+$$
+
+Assume $\ell\le u$. The following two assertions are equivalent: for every finite $M\ge1$, or just for every real $1\le M\le\max\{1,B\}$, respectively,
+
+$$
+\nu_N(M)\ge\ell\quad\Longrightarrow\quad
+\nu_O(M)\ge\min\{\nu_N(M),u\}.
+\tag{391.10}
+$$
+
+Moreover
+
+$$
+B\le C_L:=\max\left\{2,\frac{3(L-2)}{L+1}\right\}<3.
+\tag{391.11}
+$$
+
+Thus the uniform interval $[1,C_L]$ is also equivalent to the full mass domain; at $L=8$ it is $[1,2]$. These are reductions of the quantified comparison, with no assertion that (391.10) holds.
+
+*Proof.* By [XXV 385.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXV.md#385-whole-allocation-capacity-and-the-hull-slice), the nonempty interval $[\ell,u]$ is exactly the set of demands $\delta=b_L-e$ completing the prefix to $H_L$. Choose any such completion. Its order and lower hull inequality imply
+
+$$
+(L+1)e\le\sum_{j=3}^L b_j\le(L-2)b_2.
+$$
+
+Since $b_1\ge b_2$ and $b_2\in[0,1]$,
+
+$$
+B\le2-2b_2+\frac{3(L-2)}{L+1}b_2
+\le\max\left\{2,\frac{3(L-2)}{L+1}\right\}<3.
+$$
+
+The bound is independent of the chosen completion. If $M>\max\{1,B\}$, Theorem 391.1 identifies each catalog's capacity at $M$ with its capacity at $\max\{1,B\}$. Thus (391.10) at this endpoint is exactly (391.10) at $M$, including empty capacities and the zero threshold. The remaining masses stay quantified. The reverse implication follows by restriction; (391.11) then gives the uniform interval.
+
+The assumed nonempty hull prefix is essential to this bound; an empty interval has no demands to transfer. At $L=3$ Theorem 391.1 still holds, but a hull slice must additionally impose $\delta=b_2-e$. A depleted allocation can have mass below one: that is why the interval endpoint is $\max\{1,B\}$, and no same-mass transfer below one is asserted. $\square$
+

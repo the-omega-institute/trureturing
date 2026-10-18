@@ -1,0 +1,52 @@
+### 3.3 正交旋转的列余项与共同测量
+
+令 $Q=e^{xK}$。因 $K^T=-K$，所有 $e^{uK}$ 都正交。积分余项精确满足
+
+$$
+\begin{aligned}
+Q-I&=\int_0^x e^{uK}K\,du,\\
+Q-I-xK&=\int_0^x(x-u)e^{uK}K^2\,du.
+\end{aligned}
+$$
+
+结合式（3.2），有
+
+$$
+\|Q-I\|\le x\|K\|,\qquad
+\|(Q-I-xK)\mathbf e_b\|
+\le\frac{x^2}{2}\|K\|\,\|K\mathbf e_b\|
+\le\frac18n^{3/2}x^2.
+\tag{3.7}
+$$
+
+置 $T=QS$，利用 $D=K+A/2$ 作精确分解
+
+$$
+R_T:=T-I-xD
+=QR_S+(Q-I-xK)+\frac x2(Q-I)A.
+$$
+
+于是对全部 $b$ 同时成立
+
+$$
+\boxed{
+\|R_T\mathbf e_b\|
+\le\left(2+\frac18+\frac14\right)n^{3/2}x^2
+=\frac{19}{8}n^{3/2}x^2
+\le3n^{3/2}x^2.
+}
+\tag{3.8}
+$$
+
+此处末项使用 $\frac x2\|(Q-I)A\mathbf e_b\|\le n^{3/2}x^2/4$。
+
+现在沿用 [Minimax][Minimax] §3.4、式（3.8）–（3.9）的共同测量列
+
+$$
+W=\Phi G^{-1/2}e^{-xK},\qquad W^\dagger W=I,
+\qquad W^\dagger\Phi=e^{xK}\sqrt G=T.
+\tag{3.9}
+$$
+
+对 $W$ 各列作一维正交投影，将其共同正交补并入一个固定合法标签，即得一个完整 POVM。所有候选输出均在这些列的张成空间，补全不影响任何来源的概率。$G^{-1/2}$ 是公开候选矩阵的函数；测量定义不使用未知源的逆调用或额外候选样本。相同准备和相同末端测量同时适用于全部原标签。
+

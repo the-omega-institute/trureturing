@@ -1,0 +1,22 @@
+**Construction 4.1 (Every weight of the nineteen-schedule law $A$).**
+Set $\kappa=u/253$ and $E=5\tau+24\kappa$. Each range below
+supplies one copy for each named pair $(i,j)$; $m$ is that copy's
+schedule mass. Terminal vectors are on stopped cells $0,10,11$.
+
+| Schedule | $m$ | First vector $f$ | Middle vector $v$ | Exhaustion vector $z$ |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $8\tau-85\kappa$ | $m e_1$ | $m e_2$ | $(4\tau-27\kappa)e_0+(2\tau-20\kappa)e_3+(\tau-35\kappa)e_4+(\tau-3\kappa)e_5$ |
+| $(1,3),(2,3)$ | $3\tau-2\kappa$ | $m e_0$ | $m e_3$ | $m e_0$ |
+| $(1,4),(2,4)$ | $\tau+13\kappa$ | $(\tau-48\kappa)e_0+61\kappa e_i$ | $m e_4$ | $m e_0$ |
+| $(1,5),(2,5)$ | $21\kappa$ | $m e_0$ | $m e_5$ | $m e_0$ |
+| $(3,4)$ | $2\tau-15\kappa$ | $m e_0$ | $m e_4$ | $(\tau+32\kappa)e_0+(\tau-47\kappa)e_5$ |
+| $(3,5),(3,6),(4,5),(4,6),(5,6)$ | $\tau-8\kappa$ | $m e_0$ | $m e_j$ | $m e_0$ |
+| $(3,7),(4,7),(5,7),(7,8)$ | $21\kappa$ | $m e_0$ | $m e_j$ | $m e_0$ |
+| $(6,7)$ | $\tau-87\kappa$ | $m e_0$ | $m e_7$ | $(\tau-216\kappa)e_0+129\kappa e_8$ |
+| $(6,8)$ | $79\kappa$ | $m e_0$ | $m e_8$ | $m e_0$ |
+
+Add $R=O(1,2;1,2,0)$ with mass $1-24\tau$. For each positive-mass
+row give its complete table $O(i,j;r,s,t)$ weight
+$f(r)v(s)z(t)/m^2$. Omit zero-mass rows and add coincident table
+weights. This specifies every complete-table weight of $A$.
+

@@ -1,0 +1,109 @@
+**Theorem 5.2 (Exact all-history mixed-port error).** The port (5.2) is
+legal, with twenty-seven nonzero rank-one composite Kraus matrices
+and full input marginal $I_5/5$. With $a,b,c$ from (2.8), define
+
+$$
+\begin{gathered}
+a_p=(1-p)a+p/2,\qquad b_p=(1-p)b,\qquad c_p=(1-p)c-p/6,\\
+C_p=\begin{pmatrix}a_p&b_p\\b_p&c_p\end{pmatrix},\qquad
+q_p(z)=z^2-(a_p+c_p)z+a_pc_p-b_p^2,\\
+\lambda_{\rm mix}=
+\frac{a_p+c_p+\sqrt{(a_p-c_p)^2+4b_p^2}}2.
+\end{gathered}
+\tag{5.3}
+$$
+
+The nonnegative radical specifies the unique positive root of $q_p$.
+Then, for every complex density input and every actual finite adaptive
+history,
+
+$$
+e(T_{\rm mix})=\lambda_{\rm mix},\qquad
+\frac{52417598}{10^8}<\lambda_{\rm mix}<\frac{52417600}{10^8}
+<\lambda_{\delta_*}<\lambda_Q.
+\tag{5.4}
+$$
+
+Only $N$ attains the fifteen-event maximum. A pure input, actual
+wait zero, one complete five-outcome read and Stop attain this error.
+
+Proof. The two encoder families each sum to $I$ before their outer
+scaling. Thus the full encoder sum is $(1-p)I+pI=I$.
+Every decoder column $Da_f$ has norm one, so it is TP on all of
+$M_1$, and each composite $\sqrt{w_f}Da_fb_f^TD^\dagger$ is nonzero
+of rank one. The sandwich proof gives CP at every reference dimension.
+No original input or mixture flag is supplied to the future policy.
+The output-first normalized Choi state has marginal $I_5/5$;
+all three marginal equations are retained. The channel is stationary
+and reflected because both summands are so on all complex matrices.
+
+Every residual uses the actual adjoint of this one channel:
+
+$$
+H_J(S_{\rm mix})=(1-p)H_J(S_Q)+pH_J(\mathcal B).
+\tag{5.5}
+$$
+
+Formula (2.5) at $\delta=0$ and formula (3.3) specify all fifteen
+matrices exactly. For $J\ne\{N\}$, (2.14), the full table in
+Theorem 3.2, and $b_*<641/1000$ give simultaneously
+
+$$
+\|H_J(S_{\rm mix})\|_{\rm op}
+<(1-p)h+p\frac{641}{1000}
+=\frac{2620861683}{5000000000}
+<\frac{52417598}{10^8}.
+\tag{5.6}
+$$
+
+No pair event is discarded. The inequality $b_*<641/1000$ follows
+from $r<4.128$, or directly from (2.17).
+
+For $N$, (3.6) gives $H_N(\mathcal B)|_L=\operatorname{diag}(1/2,-1/6)$,
+so the mixed $L$ block is exactly $C_p$. Its entries satisfy
+$a_p>0$, $c_p<0$, $b_p>0$, making its determinant negative and its
+positive eigenvalue unique. The $V$ block is nonpositive as a
+compression of $-S_{\rm mix}^\dagger(\Pi_N)$. Also
+$H_N(\mathcal B)\succeq-I/6$ and (2.14) give
+$H_N(S_{\rm mix})\succ-I/2$.
+
+For the exact root certificate put
+$l_m=52417598/10^8$, $u_m=52417600/10^8$ and use the reduced-field
+endpoint evaluations (2.17)–(2.18). Direct substitution in (5.3) gives
+
+$$
+\begin{aligned}
+\mathcal U(q_p(l_m))
+&=-\frac{3364426893423761729050184437752561503}
+{540822227436345665100000000000000000000000000}<0,\\
+\mathcal L(q_p(u_m))
+&=\frac{4295674702592794618682441588602153}
+{676027784295432081375000000000000000000000}>0.
+\end{aligned}
+\tag{5.7}
+$$
+
+These exact rational signs isolate its sole positive root. Since
+$l_m>1/2$ and (5.6) holds, that eigenvalue strictly dominates every
+negative $N$ eigenvalue and every other event norm. It is therefore
+the full fifteen-event maximum. The rational comparisons in (2.9)
+give $u_m<\lambda_{\delta_*}<\lambda_Q$.
+
+Stationarity, TP complementation and (1.8) transfer this common event
+bound to the full original complex-input and actual-history suprema.
+For attainment set
+
+$$
+v_m=\frac{b_pe_N+(\lambda_{\rm mix}-a_p)e_{25}}
+{\sqrt{b_p^2+(\lambda_{\rm mix}-a_p)^2}},\qquad
+\rho_m=Dv_mv_m^TD^\dagger.
+\tag{5.8}
+$$
+
+The denominator is nonzero since $b_p>0$, and $q_p(\lambda_{\rm mix})=0$
+proves the eigenvector equation. At actual wait zero the event-$N$
+probability difference of the full read is $\lambda_{\rm mix}$.
+Its TV equals the bound; Stop completes a finite actual protocol.
+No physical torus-angle realization or limiting wait is required.
+$\square$
+

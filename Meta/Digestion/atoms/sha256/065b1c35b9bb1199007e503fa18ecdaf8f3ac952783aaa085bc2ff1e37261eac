@@ -1,0 +1,28 @@
+**Lemma 3.6 (codec domains and exact inverses).** The two parsers terminate
+on finite input, recover exactly their encoded S or B, and have canonical
+inverse encoders on their accepted tree domains. On $\mathcal R_\circ$ each
+separately recovers $W(h)$. Unary optional absence, zero and one remain
+distinct. In particular the literal PVC Definition 5.2 full-binary guard
+cannot serve as this parser.
+
+Proof. Each S iteration consumes exactly two input bits; its pending-path
+invariant is precisely the unvisited preorder frontier. On success every
+advertised child is visited once, and no other path is visited. Re-emitting
+the parsed masks returns the original input. Induction on a finite trie
+proves the converse. The B parser consumes one token per step. Its stack
+is exactly the current root path, with previously traversed children in
+left-before-right order. E is permitted precisely at a leaf. Its pop rule
+closes exactly one descent, so accepted words have the displayed contour
+grammar; induction on closed frames gives both inverse laws.
+
+Every node in a finite tree with at most two children extends a terminal:
+follow an existing child until finite descent ends. Thus
+$S=\operatorname{Pref}(B)$ and $B=\operatorname{Max}_{\preceq}(S)$ without
+full branching. The layout inverse then reads the same tape spines and
+track/socket sides as UAS Theorem 3.2. Conversely those raw fields generate
+the same support and terminals. The three local socket supports are
+$\{\varepsilon\}$, $\{\varepsilon,0\}$, $\{\varepsilon,1\}$; their boundaries
+are $\{\varepsilon\}$, $\{0\}$, $\{1\}$. A both-children-or-none check rejects
+the latter two; tagless sibling padding identifies them. Neither operation
+is used here. ∎
+

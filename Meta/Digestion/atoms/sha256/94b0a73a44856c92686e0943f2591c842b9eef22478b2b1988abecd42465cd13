@@ -1,0 +1,68 @@
+**Definition 2.2 (five complete rows).** Let
+$(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. Put $O_0=P$ and
+$O_j=P\setminus\{q_jL,q_jR\}$ for $1\le j\le4$.
+Define $R_j=(C_j,\pi_j)$ by the following full exteriors:
+
+$$
+\begin{aligned}
+C_0={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_1={}&\left\langle
+ \left\langle\beta,\langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_2={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,\beta\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,
+                  \langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_3={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\beta,\langle\square_{RRL},\square_{RRR}\rangle\right\rangle
+\right\rangle,\\
+C_4={}&\left\langle
+ \left\langle\langle\square_{LLL},\square_{LLR}\rangle,
+                  \langle\square_{LRL},\square_{LRR}\rangle\right\rangle,
+ \left\langle\langle\square_{RLL},\square_{RLR}\rangle,\beta\right\rangle
+\right\rangle.
+\end{aligned}
+\tag{NRE.9}
+$$
+
+The complete partitions, in order of first retained occurrence, are
+
+$$
+\begin{aligned}
+\pi_0={}&\{\{LLL,LRL\},\{LLR\},\{LRR\},
+                      \{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_1={}&\{\{LRL\},\{LRR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_2={}&\{\{LLL\},\{LLR\},\{RLL,RRL\},\{RLR\},\{RRR\}\},\\
+\pi_3={}&\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RRL\},\{RRR\}\},\\
+\pi_4={}&\{\{LLL,LRL\},\{LLR\},\{LRR\},\{RLL\},\{RLR\}\}.
+\end{aligned}
+\tag{NRE.10}
+$$
+
+For explicit canonical names, the following vectors assign to each
+retained hole the position of its class's first retained occurrence:
+
+| Row | Ordered reached holes | Canonical name vector | Blocked cuts and their concrete guard |
+| --- | --- | --- | --- |
+| $R_0$ | $LLL,LLR,LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,0,3,4,5,4,7)$ | None |
+| $R_1$ | $LRL,LRR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LLL,LLR$; leaf $\beta$ at $LL$ |
+| $R_2$ | $LLL,LLR,RLL,RLR,RRL,RRR$ | $(0,1,2,3,2,5)$ | $LRL,LRR$; leaf $\beta$ at $LR$ |
+| $R_3$ | $LLL,LLR,LRL,LRR,RRL,RRR$ | $(0,1,0,3,4,5)$ | $RLL,RLR$; leaf $\beta$ at $RL$ |
+| $R_4$ | $LLL,LLR,LRL,LRR,RLL,RLR$ | $(0,1,0,3,4,5)$ | $RRL,RRR$; leaf $\beta$ at $RR$ |
+
+All different classes in every displayed partition remain disequal.
+These are the complete answers of the owning volume's Proposition 9.3.
+In $R_1,R_2$ the unremoved occurrence of $a$ remains a hole; in $R_3,R_4$
+the unremoved occurrence of $c$ remains a hole. A concrete guard replaces
+one pair of occurrences, not an entire repeated class.
+

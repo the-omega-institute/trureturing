@@ -1,0 +1,44 @@
+**Corollary 9.3 (strengthened necessary condition for a smaller table).**
+Let $G=k(n-k+1)$. If an original full-domain preparer obeying both caps
+has $H<G+4+r$, then two of its actual live histories at an original
+selected state come from different pairs
+
+$$
+0\le h\le k-1,\qquad 0\le z\le n-k.
+\tag{WTF.35}
+$$
+
+Their differences obey (WTF.32). With Notation 6.2, either
+$\delta=0,\ \Delta=a=b\ge2,\ C_X=C_Y,\ \xi=0,\ \eta=b$,
+or $\delta>0$ and every conflict-band completion obeys the actual
+double-certificate, cost and omission constraints of §§7–8.
+Under PE (PE.11), the latter alternative is compulsory.
+
+Proof. PE Theorem 4.2 chooses one actual live history ending just before
+a selected invocation for each of the $G$ hit/zero pairs, and uses
+$H\ge M+4+r$ to force two representatives to share an original
+selected state. Equal-hit and nested cases are excluded as in Theorem
+9.1. Apply that theorem and the $\delta=0$ characterization in its
+proof. For $\delta>0$ use Theorem 7.1 and its consequences. PE (PE.11)
+forbids equal sums on nonempty disjoint equal-size private sets,
+excluding the first alternative. $\square$
+
+This is a condition on every proposed smaller whole original table.
+Proposition 9.2 supplies an entire excluded mixed-polarity class that
+the older necessary tests leave available. Conversely compatibility
+with these conditions does not construct a smaller table. In the
+existing PE Theorem 5.1 family, the hit and zero gaps are both $m+1$,
+so the separation is consistent with that supplied sharing. Its
+$m=1$ case realizes the two-gap boundary; it remains above the grid,
+with its paid old-coordinate state $J$, and is not a new upper here.
+
+The states counted in Theorem 7.1 are distinct on its one paired
+suffix and on each of its actual runs. No global injection assigns a
+different additional installed state to each collision. A requery state
+can serve several collisions and can be a live query on another source.
+Thus summing these local charges as new states would be unsupported.
+Neither a no-larger read-once/grid replacement nor a general net-saving
+or grid-optimality theorem follows. The still-open objective is exactly
+the unrestricted weighted Boolean objective in (WTF.16), or equivalently
+the unchanged original native objective.
+

@@ -1,0 +1,16 @@
+**Definition 1.3 (All lawful acquired-record rules).** Let $(\mathsf U,\mathcal U,\nu)$ be any given probability space independent of the entire source $J_p$, and set $\mathbb P_p=J_p\otimes\nu$. Keep the variable $u$ and its law unchanged. All internal randomness and random public data are included in this same independent variable. Fixed public data may include $p,j$ and the budget.
+
+A finite acquired record is an ordered list
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))\in(\mathbb Z\times\{0,1\})^n,
+\qquad n\in\mathbb N_0.
+\tag{1.3}
+$$
+
+A measurable next-event rule uses only the public data, $u$, and that record. It chooses a read at an integer address, a finite return of a state in $\mathcal A$, or indefinite internal continuation with no further read or return. Finite events may follow internal waiting; their occurrence, kind, address or output, and finite waiting time are measurable functions of precisely those available data. Waiting supplies no additional source observation. A read at $t$ returns only the actual $X_t$ of (1.1).
+
+Every actual call costs one, including every repeated address, separator zero, negative or positive address, remote address, and disconnected collection of reads. Ignoring a reply later does not remove its charge. Return before any read, wrong-phase output, and internal nonreturn after any finite read count, including zero, are allowed. Before a total cap is imposed, infinite-read nonreturn is also allowed. Null records and the usual measurable completion versions are included.
+
+There is no new coin, phase oracle, hidden-state or spin read, half-line or tail observation, source-dependent seed or timing, reset, source switch, moving endpoint, or erased-coordinate substitution. There is no connectedness, consecutiveness, predetermined-address, or always-returning restriction. This is Original Definition 9.1 and *FIB paid reads: return mass and hidden-endpoint classification risk*, Definition 1.2, hereafter **Paid-return**.
+

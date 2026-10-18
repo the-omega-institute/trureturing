@@ -1,0 +1,34 @@
+**Affine identity.** The common normalizations at six and seven imply
+
+$$
+h_2-h_1=R_2L,\qquad
+R_2=(T-6)(T-7)=T^2-13T+42,\qquad \deg L\le1,
+\tag{9.3}
+$$
+
+where $L$ may be zero. The complete coefficient row of $R_2$ is
+$(42,-13,1)$ and its sample row at $0,\ldots,7$ is
+$(42,30,20,12,6,2,0,0)$, directly from the product.
+For residuals $Q_j=c_j-d$, the exact identity is
+
+$$
+R_2(j)L(j)=-\frac{Q_jwF_j}{\sigma_{1,j}\sigma_{2,j}}
+                   \quad(0\le j\le5).
+\tag{9.4}
+$$
+
+The denominator is positive because this pair shares a terminal scalar.
+All six displayed $R_2(j)$ are positive.
+Thus $Q_jF_j=0$ gives $L(j)=0$ exactly, and otherwise
+
+$$
+\operatorname{sgn}L(j)
+=-\operatorname{sgn}(w)\operatorname{sgn}(Q_jF_j).
+\tag{9.5}
+$$
+
+A nonzero affine polynomial has at most one sign change on ordered
+nodes after zero samples are deleted: a nonconstant affine polynomial
+has only one real root, and a nonzero constant has none.
+The zero polynomial has no nonzero samples.
+

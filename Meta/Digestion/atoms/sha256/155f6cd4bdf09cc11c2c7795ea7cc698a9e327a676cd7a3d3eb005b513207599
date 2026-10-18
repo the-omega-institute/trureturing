@@ -1,0 +1,53 @@
+**Theorem 255.2 (Half-mass repair and the signed score identity).**
+For every normalized $N$ law with its fixed decomposition,
+
+$$
+\sup_w\operatorname{TV}(p_w,p_w^{\mathrm{mid}})\le\mu/2.
+\tag{255.2}
+$$
+
+The entire positive law is preserved. Sole-zero laws need not be
+preserved. If $p$ is feasible at $e$, the midpoint law satisfies
+every independent row at $e+\mu/2$, hence at the corresponding
+clipped cap. Any bound in (254.6) can be used for $\mu$.
+For a pair table the exact old-minus-midpoint score is
+
+$$
+\frac12\bigl(d_{ij}^y(u)-d_{ij}^y(v)\bigr).
+\tag{255.3}
+$$
+
+In particular, $\Delta_N(y)\le\Delta_O(y)+\Xi_y$.
+For the same full $\lambda,b,M$ of Theorem 253.2,
+
+$$
+F_y+S_y\le M\Delta_O(y)
+                +\Xi_y\min\{M,4J_\lambda\},
+\tag{255.4}
+$$
+
+with the sharper minimum (254.7) also available.
+
+**Proof.** On either cell with $w_i=0$, a changed pair originally
+emits one of $u,v$ and now emits the midpoint
+$(e_u+e_v)/2$. Its TV distance is exactly $1/2$ when $u\ne v$,
+zero otherwise. On $w_i=1$ it is unchanged. Convexity of TV
+under the same mixture gives (255.2), uniformly in every word.
+The event loss bound applies independently to base, correct and
+union rows. Positive words visit only cell $11$, which is unchanged.
+
+For scores, sum the $00$ contribution and subtract the $01$
+contribution before estimating. The old-minus-new difference is
+one half of the $00$ reward of $u$ minus that of $v$, plus one
+half of the $01$ reward of $v$ minus that of $u$. This is exactly
+(255.3), at most $\Xi_y[u\ne v]$. Constants and singletons
+have zero difference. Every midpoint daughter is an $O$ table,
+so the support bound follows columnwise. Integrating the signed
+identity under the same $\lambda$, then bounding its changed mass
+as in (253.2) or (254.7), proves (255.4). This is one signed
+aggregate, not a sum of independently optimized positive pieces.
+The common-seed construction preselects the daughter as well as
+the whole table before replies, within the same $U$.
+The original tail conclusion is again (251.9), since the positive
+law is preserved. $\square$
+

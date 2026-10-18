@@ -1,0 +1,35 @@
+**Proposition 2.2 (credited synthesis with one common preparation).** Fix
+$a,q\in(0,c)$ with $a\ne q$ before choosing $x,\beta,m$. From the
+preparation at height $a$, prepend a unit-time fixed-height phase leg of
+increment $2\pi m$. Follow it by the supplied four unit-leg rectangle
+from $a$ to $q$, of signed phase height
+
+$$
+B_{\beta,m}=\frac{r(\pi m-\beta)-2\pi m a}{q-a}.
+\tag{RB.5}
+$$
+
+Finally append a unit horizontal zero-relative-phase leg from $a$ to $x$.
+This actual six-unit history ends in (RB.3)–(RB.4). It obeys both original
+regularity alternatives. For any finite candidate set of strict heights it
+has a common positive probability margin. Its phase variation is
+$2\pi|m|+2|B_{\beta,m}|$, finite for each real $\beta$ and signed $m$.
+
+Proof. The rectangle residual from `finite_rectangles_realize` is
+$B(w(q)-w(a))$, while the fixed-height leg contributes $2\pi m w(a)$.
+Since
+
+$$
+w(q)-w(a)=-\frac{q-a}{r}(1,1,0,1,1),
+$$
+
+substitution gives (RB.4), coordinate by coordinate. The rectangle has zero
+real phase increment. The horizontal leg has $\chi'=0$, so keeps the
+entire residual. All controls are continuous with finitely many affine
+pieces. Their heights stay between the finitely many strict heights
+$a,q,x$, proving strict support and the stated regularity and variation.
+`concatenate_original` preserves the literal prefix, translates the tail's
+real lift at the actual join, and adds the weighted integrals. This is the
+all-sector application in the owning Scribe, reused with its original
+signs. No fixed variation budget contains every signed integer. $\square$
+

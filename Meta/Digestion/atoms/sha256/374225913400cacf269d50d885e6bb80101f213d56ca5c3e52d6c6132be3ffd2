@@ -1,0 +1,36 @@
+### 102.5. Positivity fixes the remaining phase and sign
+
+Multiplying (13)--(14), using (12), yields
+\[
+(EC^*)_{11}
+=-\frac\alpha{2\sqrt2}\overline z(b+du)
+ -\frac\alpha2|z|^2.
+\tag{15}
+\]
+By (4), this is positive and real. The number \(B=b+du\) is nonzero, since its imaginary part is \(ds\ne0\). Reality in (15) implies \(z=\mu B\) for some real \(\mu\). Strict positivity implies
+\[
+-\frac1{\sqrt2}<\mu<0.
+\]
+Consequently there is one real \(k\) with
+\[
+0<k<1,\qquad z=-\frac{k}{\sqrt2}(b+du).
+\tag{16}
+\]
+Substituting into the unit-record identity (12), define
+\[
+q=\frac{b^2+d^2}{2bd},\qquad
+r=k^2-\frac{1-k^2}{c}q.
+\tag{17}
+\]
+If \(d<0\), then \(q\le-1\), and (6), (16) give
+\[
+r\ge k^2+\frac{1-k^2}{c}>1,
+\]
+contrary to \(R\succeq0\) with unit diagonal. Hence \(d>0\) and \(q\ge1\). As \(r>0\), (17) now gives
+\[
+0<r<k^2<1,\qquad
+0<r<2k^2-1,\qquad k>\frac1{\sqrt2}>\frac12.
+\tag{18}
+\]
+The second strict inequality uses \(c<1\). No sign choice or reality condition on the original \(G\)-records has been imposed.
+

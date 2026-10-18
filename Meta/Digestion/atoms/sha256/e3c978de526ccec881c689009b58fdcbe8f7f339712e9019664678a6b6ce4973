@@ -1,0 +1,39 @@
+**定理 C-110.3（每个原匹配来源的精确人口 TV）。** 保留 C-109.1 的原
+$A\mid B$、$B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$、$f(2)=2$、$J$、$V$ 和 $W$。
+对任意 $C\succeq0$、$C_{ss}=1/5$，令
+$\Gamma_C=JCJ^\dagger$、$\Gamma'_C=(T_A\otimes\mathrm{id})(\Gamma_C)$。
+只在原 $A$ 因子作用同一 $T$，$B$ 不进入端口；$m_{rs}$ 的索引按 $V$ 与原模式对应。
+则对所有模式 $r,s$，
+
+$$
+\begin{aligned}
+\langle r,f(s)|\Gamma'_C|r,f(s)\rangle&=m_{rs}(T)/5,\\
+\langle r,f(s)|\Gamma_C|r,f(s)\rangle&=\delta_{rs}/5,\\
+\operatorname{TV}(P_{\Gamma'_C}^{\rm pop},P_{\Gamma_C}^{\rm pop})
+&=\ell(T)=P_{\Gamma'_C}^{\rm pop}\{(r,f(s)):r\ne s\}.
+\end{aligned}
+\tag{C110.9}
+$$
+
+$P^{\rm pop}$ 是两边立即完整局部模式读数的联合律。因此在 C-108.1 的条件性
+局部完整历史接口下，原来源与变换后来源的最坏历史 TV 至少为 $\ell(T)$。
+这些式子对整个 $\mathfrak D$ 一致成立，因而也覆盖 C-108.3 的每个不可见成员。
+
+证明。将同一份来源展开为
+$\Gamma_C=\sum_{j,k}C_{jk}|j\rangle\langle k|\otimes|f(j)\rangle\langle f(k)|$。
+在第二因子用 $|f(s)\rangle$ 夹取时，由 $f$ 单射只剩 $j=k=s$，故第一式是
+$C_{ss}\langle r|T(\Pi_s)|r\rangle=m_{rs}/5$。这不将 $C$ 的联合权重拆为边缘之积。
+原律只支撑 $r=s$，且 $0\le m_{ss}\le1$，所以
+
+$$
+\operatorname{TV}
+=\frac1{10}\left(\sum_s(1-m_{ss})+\sum_s\sum_{r\ne s}m_{rs}\right)
+=\frac15\sum_s\sum_{r\ne s}m_{rs}=\ell(T).
+\tag{C110.10}
+$$
+
+立即读数使用允许的零等待，然后两边 Stop；未匹配事件只是完整记录的经典分组。
+故它是 C-108.1 中一个真实有限策略，其 TV 给全部策略上确界的下界。
+原标签与行走标签按 (C108.1) 的位置对应，$T_A$ 由 $V$ 搬运；$f$ 是来源配对标签，
+不表示在 $B$ 上另加可执行门。没有独立副本、参考寄存器或参考测量。证毕。
+

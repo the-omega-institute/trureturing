@@ -1,0 +1,31 @@
+## 13. Attribution and exact limits of the result
+
+| Source or result | Scope and ownership |
+| --- | --- |
+| Inherited C-106 | Exact matched support and maximally correlated partial-transpose blocks; its PPT argument is a necessary-condition argument, not general $5\times5$ PPT sufficiency. Its source attributes the mechanisms to Peres and Rains. |
+| Inherited C-107 | Whole-source purity identity, the separate original and whole-copy tensor splits, and the independent-copy swap requirement. |
+| Inherited C-108 | Legal invisible skew class, purity interval $[1/5,9/25]$, equal-two-block purity attainers, and conditional all-history and fixed fourteen-flag erasure interfaces. |
+| Additional `repo-derived` deductions here | Sharp capped-entry lower frontier with equality patterns; determinant/parity sign obstruction; universal two-branch upper frontier; dense simultaneous upper attainers; both exact crossovers; maximum and maximizer purity/rank; fixed-purity interval filling and the full joint region. |
+
+This attribution compares the additional deductions only with the supplied
+C-106–C-108 text, which leaves negativity unoptimized. It does not establish
+literature-wide novelty. External primary citations and unprovided nested
+mathematical suppliers are not independently verified here; the ordinary
+matrix proofs above carry the optimization without relying on such a claim.
+
+There is no deferred mathematical step in the exact optimization over
+(2.1): universal inequalities, legal common-state endpoints, all interval
+values, crossover obstruction and all asserted ranks are proved in the
+volume. Formal kernel verification is not supplied. The operational
+identification remains conditional on the precisely stated fixed menu and
+fixed-port interfaces; their physical realization remains unestablished.
+
+The theorem does not cover arbitrary population fibers, invisible directions
+with nonzero real part, leakage, approximate population zeros, finite-sample
+frequencies, different menus, arbitrary bipartite states or a different
+tensor split. Exact zero populations are essential to the support argument;
+zero observed counts do not establish them. Conditional equal histories
+are statements about exact source laws, not a finite-data test. Extensions
+to these settings require new assumptions and proofs. This bounded result
+does not settle a broader research program or its physical applications.
+

@@ -1,0 +1,18 @@
+**Definition 63.1 (one commissioned source and its fixed-population operator).** Retain the whole joint source of §§55.1,58.1,60.1 and62.1: immutable ordered INITIAL, actual source packet, authentic addressed versions $D_j(t)$, original preparation, complete candidate guards, every actual Read, acceptance, refusal and Stop. The added occurrence realization has the same root $o$, counting measure, unit parent–child seams, inherited degrees $d_o=2$, $d_p=3$ otherwise, root field $\phi(p)=2^{-|p|}$ and $\lambda=3-2\sqrt2$. Its commissioned parameters are $a,g>0$, $\nu\ge0$. Fix any finite integer $N\ge2$. On $\mathscr H_N=\ell^2(\mathcal C_N(\mathcal P))$ write
+
+$$
+\begin{aligned}
+H_N&=aK_N-g\sum_{p\in S}\phi(p)
+-\nu\sum_{\{p,q\}\subset S}G^{\rm c}(p,q),\\
+G^{\rm c}(p,q)&=G_0(p,q)+\tfrac13\phi(p)\phi(q),\qquad
+G_0(p,q)=\tfrac23\,2^{-d(p,q)},\\
+m_k&=\inf\sigma(H_k),\qquad m_0=0,\qquad
+\Sigma_N=\inf\sigma_{\rm ess}(H_N).
+\end{aligned}
+\tag{63.1}
+$$
+
+Multipliers in this notation act at the occupation $S$. The $k$-particle operators have the same parameters and literal hard-core statistics. By §§62.2–62.3 they are bounded self-adjoint, and $K_k\ge k\lambda I$. An allowed configuration edge replaces one occupied address by one empty adjacent address, with coefficient $-a$. Its graph degree is at most $3k$, but its kinetic diagonal is $\sum_{p\in S}d_p$, including every collision and exterior killing term. The two degrees are not interchangeable. Finite common operators are precisely compressions of $H_N$; finite killed operators retain the same $\phi$ and replace only pair coefficients by $G_D^{\rm k}$. All occupation embeddings below are same-address zero extensions. An index beyond one actual execution belongs to §55.1's mathematical family of separately legal finite prefixes; only actually reached versions belong to that execution.
+
+The task is the missing implication from fixed-$N$ infimum recovery to actual bound states and their complete finite spectral spaces. An escaping group may remain internally adjacent, so its pair multiplier need not tend to zero. Nothing here replaces that group by independent particles or regards the many-particle potential as compact.
+

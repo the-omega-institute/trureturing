@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-attainment-strong-zero-equivalence-and-finite-optimizer-comparison"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

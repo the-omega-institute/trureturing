@@ -1,0 +1,6 @@
+#### 定理 C：一阶隐藏维数
+
+```math
+h_n=\operatorname{Fib}_{n+2}-n-1.
+```
+

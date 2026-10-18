@@ -1,0 +1,51 @@
+**Proposition 11.2 (The proved partial frontier).** With
+$F,V,W,X_{\star}$ defined in (4.1), (6.1), (7.1), (8.1), the known region
+is
+
+| Installed budget | Proved correct-mass conclusion | Evidence for equality or boundary |
+| --- | --- | --- |
+| $1,2$ | $C_m=a/2$ | Universal row split and immediate halt |
+| $3$ | $C_3=S_1$ | Universal row split and three-row table |
+| $4$ | $C_4=T$ | Actual-table no-revisit bound and four-row table |
+| $5$ | $C_5=F$ | Universal two-label bound and five-row table |
+| $6$ | $\max(F,V)\le C_6<S_3$ | Actual lower tables; finite attainment and inherited $M_3=9$ |
+| $7$ | $W\le C_7<S_3$ | Actual seven-row table; same strict-separation argument |
+| $8$ | $\max(W,X_{\star})\le C_8<S_3$ | Actual lower tables; same strict-separation argument |
+| $m\ge9$ | $C_m=S_3$ | Inherited unrestricted bound and nine-row attainer |
+
+All $C_m$ are attained, all $R_m=1-C_m$ are attained minima, and
+$C_6\le C_7\le C_8$.
+
+Proof. The equalities are Theorem 5.4 and Proposition 9.1. The actual
+lower points are Propositions 6.1, 7.1 and 8.1; (7.2) shows that $W$
+already dominates $F,V$. Theorem 10.2 gives attainment and Corollary
+10.3 gives the strict upper comparisons. Budget inclusion gives
+monotonicity. Complementation on $q_3=1$ gives the risk assertions.
+$\square$
+
+**Open Problem 11.3 (The remaining original installed target).**
+Determine the exact attained $C_m$ at each $m=6,7,8$ throughout
+$0<p<1$, $p\ne1/2$, for both actual original endpoints, the same
+arbitrary unchanged independent seed law, and exactly the complete
+runtime interface in Definition 2.1. Completion requires quantitative
+upper bounds for every actual table at those budgets, matched by
+complete actual-source attainers for every winning parameter branch.
+The equations
+
+$$
+C_6=\max(F,V),\qquad C_7=W,\qquad C_8=\max(W,X_{\star})
+\tag{11.1}
+$$
+
+are not established here and are not assumed completion criteria. The
+finite menu has unevaluated members and does not certify those guesses.
+
+A middle-budget upper proof must retain actual row-indexed successor
+closure. Shared rows force the same instruction and both successors at
+every reaching positive section. Distinct rows may have identical
+address literals, as $R_0,R_1$ do in Section 9. Unrestricted tree
+unfolding, address representatives that forget rows, separately optimized
+branch maxima, and $M_3=9$ alone do not supply matching quantitative
+upper bounds. The finite-menu theorem preserves these constraints but
+does not optimize the remaining members.
+

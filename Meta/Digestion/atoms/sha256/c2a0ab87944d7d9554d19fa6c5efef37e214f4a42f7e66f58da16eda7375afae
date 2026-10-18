@@ -1,0 +1,53 @@
+**Theorem 25.2 (call and absolute-literal lower bounds).** For every
+$1\le k\le n$, every successful finite preparer has an actual source
+$u\in Z_{b_3}$ on whose one preparation execution
+
+$$
+q_P(u)\ge n+1,\qquad
+\ell_P(u)\ge3+W_A.
+\tag{PCA.59}
+$$
+
+Consequently these are independent lower bounds on uniform upper
+budgets, even when arbitrarily many finite installed states are allowed.
+
+Proof. Examine the actual cube (PCA.56). Keep a partial assignment of
+its bits only in this proof. At the first query in $E_i$, assign that
+previously unassigned bit one if fewer than $k-1$ distinct bits have
+already been assigned one; otherwise assign it zero. Reply with the
+actual value prescribed by Lemma 24.1. Later queries in $E_i$ use
+the same bit. Every query outside the union has the constant actual
+reply on the cube. Thus every finite response prefix is realized by
+all completions of its current partial assignment.
+
+After $d<n$ distinct bits have been queried, the counts of assigned
+ones and zeros are $\min(d,k-1)$ and $\max(0,d-k+1)$. There are
+both zero-output and one-output completions: the assigned ones are
+at most $k-1$, the assigned zeros are at most $n-k$, and at least
+one bit is unassigned. A correct path therefore cannot yet latch.
+Nor can it repeat a running state. At a first repeated state every
+bit queried on the intervening loop is already assigned, so any
+completion of the partial assignment would realize that deterministic
+loop forever, contrary to sourcewise termination. Since the installed
+alphabet is finite, these responses must reach all $n$ distinct bits.
+Their completed vector $\theta$ has exactly $k-1$ ones. Subsequent
+execution is the terminating run on the actual $u_\theta$, and its
+required code is zero. In particular this one run contains a visit
+in each $E_i$, charging at least $n$ calls and $W_A$ letters.
+
+There is one further paid distinction on this same run. In (PCA.56)
+keep $x_a=B_\theta$ and $x_{b_j}=D_j$, $j=1,2,4$, but replace
+$x_c$ by beta and $x_{b_3}$ by alpha. The six values are still
+pairwise distinct and satisfy positive alternative $3$ of NBP
+Proposition 9.3. Its actual finite inverse $u_+$ is in $\Pi_3$ and
+requires code one. Its current tree differs from $t_{u_\theta}$ only
+in the $c$ occurrences and the $b_3$ occurrence. Equal replies along
+the entire $u_\theta$ path would force the same latch on $u_+$.
+A differing query on that path must therefore enter one of those
+class cones. It has absolute length at least three and is outside
+every $E_i$. Adding this different visit proves both bounds in
+(PCA.59). No costs from different maximizing sources are added.
+The adaptive bit choices establish existence of one actual source;
+there is no adversary, counter or partial-assignment register in the
+preparer's operational contract. $\square$
+

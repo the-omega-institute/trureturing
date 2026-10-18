@@ -1,0 +1,32 @@
+**引理 3.2（Paired spectrum with all degeneracies）。** For every $X\in\mathcal X$
+there are $a,b\in[0,1]$ and an orthonormal basis
+
+$$
+h_{1,+},h_{1,-},h_{2,+},h_{2,-},w
+$$
+
+of $\mathbb C^5$ in which the eigenvalues of $iX$ are respectively
+$a,-a,b,-b,0$. The vectors are expressed in the original coordinates;
+their supports are not asserted to be small.
+
+Proof. Since $X$ is real skew,
+
+$$
+(iX)^\dagger=iX,\qquad \overline{iX}=-iX.
+$$
+
+If $(iX)h=t h$, Hermiticity gives $t\in\mathbb R$. Conjugation yields
+$(iX)\overline h=-t\overline h$. Conjugation is an invertible antilinear
+map between the $t$ and $-t$ eigenspaces; their dimensions agree. The five
+eigenvalues can therefore be listed as $a,-a,b,-b,0$ with $a,b\ge0$.
+When there are fewer than two nonzero pairs, the remaining entries in this
+list are zero. The zero eigenspace has odd dimension and supplies all the
+needed zero slots. The Hermitian spectral theorem permits orthonormal
+choices within every eigenspace, including repeated positive or negative
+eigenvalues. Thus all five chosen vectors can be mutually orthogonal.
+
+The corresponding eigenvalues of $I_5+iX$ are $1+a,1-a,1+b,1-b,1$.
+Its assumed positive semidefiniteness forces $a,b\le1$. This also proves
+that no positive-definiteness or distinct-eigenvalue assumption was used.
+$\square$
+

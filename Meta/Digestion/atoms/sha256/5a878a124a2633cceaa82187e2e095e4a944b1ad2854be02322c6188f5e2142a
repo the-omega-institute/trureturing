@@ -1,0 +1,97 @@
+**Definition 216.11 (The unchanged source and resource domain).**
+The original labeled source and its static answers are
+
+$$
+X=\{(r,z):r\text{ prime},\ z\in\mathbb Z,
+ \lceil F_r/10\rceil\le z\le\lfloor F_r/5\rfloor\},\qquad
+N(r,z)=1+F_rz,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$ and $p_i$ are the
+increasing primes. This is a countable labeled set, not a prior over
+sources. Every N has finite prime support, so its first zero n(x) exists.
+[Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows)
+supplies every finite Boolean pattern on arbitrary finite addresses in
+every sufficiently large prime-index window, with a threshold independent
+of the pattern. The all-word arguments therefore include actual witnesses
+for every multiple-zero word. A positive finite word describes a tail
+source, not an infinite all-positive source.
+
+The full carrier is the disjoint-union Borel space
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, each block
+a copy of $(0,1)$. The fixed consumer returns unknown on B blocks and
+proposes j on $P_j$. The original nonatomic targets remain exactly
+those in Definition 213.22: for its fixed $h_0\in(0,1)$,
+$t(x)=\sum_i3^{-i}q_i(x)$, $\nu_x$ has density proportional to
+$e^{t(x)u}$ on $B_{n(x)}$, $\pi_j$ is uniform on $P_j$, and
+$\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with $\Omega(x)$ the number
+of distinct prime divisors. The marks $\theta_j=(B_1,1/(j+2))$,
+$j\ge0$, instead define the separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                 +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_j\longrightarrow0.
+\tag{216.25}
+$$
+
+They do not replace $\mu_x$. In particular any law supported on finitely
+many marks has TV distance one from every original nonatomic target:
+that finite Borel set has mass one under the former and zero under the
+latter. The companion laws below concern (216.25).
+
+The resource is the hard bound of two actual requests of 90.1, including
+repetitions and requests whose answers are ignored. Advice is zero.
+There is one source-independent seed, actual sourcewise almost-sure
+finite handoff, and error is uniform over every source and every Borel
+event. Neither source labels nor N nor n are extra observations.
+Arbitrary addresses and full-carrier outputs remain legal for competitors.
+No address bound, runtime, mean count or source-average error is substituted.
+N preselects a schedule and acquires its replies; O preselects an increasing
+schedule and stops at its first queried zero or exhaustion. Output labels
+may be earlier, later or unqueried.
+
+For a finite normalized mixture, partition one $U\sim\mathrm{Uniform}[0,1)$
+into its table masses and select the entire table before any answer.
+The O execution and its N completion use the same U and the same
+preselected addresses. The completion of 90.2 acquires the second reply
+even after a first zero, then ignores it and preserves the stopped output.
+These particular rules hand off finitely on every source and seed.
+The score coefficients and stock allocations of §§216.1–216.6 are proof
+weights, not acquisition probabilities or additional randomness.
+
+The owning finite-to-original theorem is
+[110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+Its necessity includes arbitrary-address full-carrier competitors:
+countability supplies a common probability-one finite-handoff event,
+the maximum-address seed tails vanish, finite-pattern witnesses transport
+whole executions, and finite-catalog compactness preserves the closed cap.
+Its sufficiency applies to one normalized configuration satisfying every
+independent base, correct, pair and positive row. At $0<\varepsilon\le1$
+the strict active horizon is
+$L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$.
+For a finite law with output labels through H, every actual n>H has
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Hp_{1^H}(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_{1^H}(0),a_n\}.
+\tag{216.26}
+$$
+
+In particular equality $a_n=\varepsilon$ is retained. This is the
+existing transport and tail identity, not a new theorem about arbitrary
+garblings. The separate criterion 109.1 concerns an actual normalized
+probability-vector kernel on every word,
+
+$$
+p_w=c+\sum_i l_iw_i+\sum_{i<j}Q^{\rm ker}_{ij}w_iw_j,
+\qquad
+H^{\rm ker}=\sum_i\left(\sum_{j>i}(-Q^{\rm ker}_{ij})_+-l_i\right)_+.
+$$
+
+Its stopped condition is $c\ge H^{\rm ker}$ coordinatewise, with the
+schedule-mass bound supplied by normalization. It is not a condition
+on Q(V). Exact-law failure in 112.2 has an alternative O cap attainer
+and remains an exact-law obstruction, not a cap separator.
+

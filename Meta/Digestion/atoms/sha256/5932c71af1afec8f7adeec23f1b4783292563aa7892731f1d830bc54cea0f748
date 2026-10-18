@@ -1,0 +1,19 @@
+**Theorem 3.4 (all-attained spectrum dichotomy).** For every attained finite $(R,h)$ the exact spectrum
+
+$$
+\Sigma(R,h)=\{\nu(u):u\in D(R,h)\}
+$$
+
+has an effective description. If there is no leaf anchor, it is exactly $\mathbb N_0$. If there is an anchor, it is the nonempty finite union
+
+$$
+\Sigma(R,h)=\bigcup_{\eta,\theta\ \mathrm{retained}}V_{\eta,\theta}.
+\tag{LRD.11}
+$$
+
+Each summand is a singleton or an initial interval; the union itself need not be an interval.
+
+**Proof.** With an anchor every kept cell contains a concrete leaf, so Definitions 3.1 and Theorem 3.3 give a finite exact enumeration. Pattern enumeration, literal evaluation, finite atomic expansion, syntactic comparison and finite inverse parsing all terminate on these finite inputs.
+
+Without an anchor the exterior contains only pair constructors and holes, and every history reply is branch. There is at least one old class. Give every class the complete branch pattern of relative depth $d$. Its residual names remain indexed by class and position, so different old-class terms have unequal syntax. Every recorded query has length less than $d$ and gives branch in this leafless whole term. This is a kept leafless cell. Apply Theorem 2.2 to its entire negative list, assigning every residual rank $n$. Every ancestor is non-atomic and its rank is the minimum, so the whole root has rank $n$. These are actual finite sources by (LRD.3) for every $n\ge0$. No larger set of natural-number targets exists, proving the first alternative. Other cells in this boundary may have unqueried concrete leaves; their existence does not remove the leafless cell's witnesses. $\square$
+

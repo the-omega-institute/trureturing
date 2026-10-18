@@ -1,0 +1,22 @@
+## 183. A local incidence criterion with arbitrary total reservoir count
+
+For an actual H edge e, let H_e be the set of H labels appearing in
+owners containing an actual e slot. Suppose that, for every paired
+tetrahedron whose four frame labels R,A,B,O are four distinct H labels,
+both of its external axial labels e=R,O satisfy |H_e|<=4. Then every
+common positive zero-curvature generalized length field is genuine.
+
+Indeed, a nonempty flat set supplies the genuine escape
+tau=(Z,M,C,D,M,C) with four distinct H labels. Its external axial label
+Z has M,C,D,Z in H_Z, and the theorem supplies an additional U in H_Z.
+Thus |H_Z|>=5, contrary to the local incidence condition.
+
+This permits arbitrarily many reservoir labels globally. It uses the
+original complete M/Z equations and the complete special-edge stars
+where they occur in the proof. The collection of owners containing Z
+need not be a closed subcomplex, and the M,C,D stars may leave it. The
+argument does not apply the at-most-four-reservoir theorem to an
+invented smaller quotient. No example, nonemptiness assertion, or
+separation from every earlier criterion is claimed here.
+
+

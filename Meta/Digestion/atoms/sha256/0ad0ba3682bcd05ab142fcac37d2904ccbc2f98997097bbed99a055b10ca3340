@@ -1,0 +1,59 @@
+**Theorem 252.2 (One quarter-gap repair).** For every normalized full
+feasible $N$ law and every one of its whole-table decompositions,
+
+$$
+\begin{gathered}
+\bar s_n=\frac1{2^{L-n}}\sum_{w\in\Omega_n}
+                 [p_w(n)-(a_n-e)]\ge0,\\
+0\le\kappa=D-s_0-\sum_n\bar s_n,\qquad
+\mu\le\nu\le\min\{1,4\kappa\}\le\min\{1,4D\}.
+\end{gathered}
+\tag{252.2}
+$$
+
+The fixed repair of Definition 251.3 preserves the positive and
+sole-zero vectors and satisfies all cap rows at $e+\mu$ under the
+same seed. There is also a projection onto canonical mixtures with
+uniform TV distance at most $\nu$ and nondecreasing positive base
+probability; that projection need not preserve sole-zero laws.
+
+**Proof.** For a pair $i<j$, the total fair-correct contribution of
+one terminal label, together with the positive-base contribution, is
+the following vector in $00,01,10,11$ order:
+
+| terminal label $r$ | $00$ | $01$ | $10$ | $11$ |
+|---|---:|---:|---:|---:|
+| $0$ | $0$ | $0$ | $0$ | $1$ |
+| $1\le r<i$ | $1/4$ | $1/4$ | $1/4$ | $1/4$ |
+| $r=i$ | $1/2$ | $1/2$ | $0$ | $0$ |
+| $i<r<j$ | $0$ | $0$ | $1/2$ | $1/2$ |
+| $r=j$ | $0$ | $0$ | $1$ | $0$ |
+| $r>j$ | $0$ | $0$ | $0$ | $1$ |
+
+For example, when the first zero is earlier than both queried
+indices, its fair suffix places each queried pair cell at probability
+$1/4$. When it is $i$, its two cells each have probability $1/2$.
+When it is $j$, the queried cell is $10$. This derives every entry
+for every label, with no constraint on the remaining zero suffix.
+
+The four cell maxima are $1/2,1/2,1,1$, attained simultaneously
+exactly by canonical tables. Any other pair loses at least $1/4$.
+A singleton has score at most two: its zero cell contributes at most
+one and its positive cell at most one. A constant has score at most
+one. Thus $\Phi(D)\le3$ on the entire catalog and
+$[D\text{ noncanonical}]\le4(3-\Phi(D))$.
+Every pair with $u\ne v$ is noncanonical. Integrating the one
+decomposition proves $\mu\le\nu\le4\kappa$.
+Substituting all averaged correct slacks and the positive slack in
+(252.1) gives the identity in (252.2). Their nonnegativity proves
+the remaining bound. Definition 251.3 proves the repair statements
+on every event, including the independent union event.
+
+For the canonical projection, retain canonical tables. Replace any
+other pair by $N(i,j;i,i,j,r')$, taking $r'=t$ when $t=0$ or
+$t>j$, and $r'=0$ otherwise. Replace constants and singletons by
+$N(1,2;1,1,2,0)$. All replacements are canonical; they can change
+outputs only on the one noncanonical seed event. A positive output
+of zero is retained, and new zero outputs can be added. This proves
+the asserted TV and positive-base properties. $\square$
+

@@ -1,0 +1,22 @@
+**Corollary 4.1 (Full feasible epsilon family).** For every exact real
+$\epsilon\in[-1,14/3]$, the original triple $\theta_\epsilon$ lies in
+$\Theta_5$ and
+
+$$
+d(P_\epsilon)\le D_2(P_\epsilon)\le B<W\le c_\star,
+\qquad D_2(P_\epsilon)<\kappa_{1200}/1201.
+\tag{4.1}
+$$
+
+Consequently no member improves the actual witness $W$ or attains
+$c_\star$. The larger class in Theorem 3.2 is proper, and includes the
+reducible periodic-component example in Proposition 2.2.
+
+Proof. Apply Proposition 2.4 and Theorem 3.2. The two structural-zero
+endpoints and the rank degeneration $\epsilon=0$ lie in the stated domain.
+The larger class contains $K(3/20,0)$, whereas every kernel on the epsilon
+curve has $K_{23}=3/20$; hence it is not merely the same parameter curve.
+The conclusion depends only on the visible law, and therefore also holds
+for any other admissible representation of that same law, including a
+representation padded with zero-stationary-mass states. $\square$
+

@@ -1,0 +1,26 @@
+## 2. Notation and cited facts
+
+**Cited facts.**
+
+(a) D. M. Ostrovskii and P. S. Shcherbakov, *Amplitude maximization in stable systems, Schur positivity, and some conjectures on polynomial interpolation*, arXiv:2508.13554v2, Section 6. There $\mathbb{D}$ is the closed unit disk, $e_m$ and $h_m$ are the elementary and complete homogeneous symmetric polynomials, and $s_{(a\mid b)}$ is the Schur polynomial of the hook partition $(a+1,1^b)$ in Frobenius notation. For $0\le k<n\le t$ the function $Q_{t,n,k}:\mathbb{C}^n\to\mathbb{C}$ is defined by
+
+$$
+Q_{t,n,k}(\zeta_1,\dots,\zeta_n)=\sum_{d=0}^{t-n}(-1)^d\,\frac{\binom{t}{n+d}\,s_{(d\mid n-k-1)}(\zeta_1,\dots,\zeta_n)}{\binom{t}{n}\,e_{n-k}(\zeta_1,\dots,\zeta_n)}.
+$$
+
+A list $z_1,\dots,z_n$ is self-conjugate when its characteristic polynomial $f(x)=\prod_j(x-z_j)$ has real coefficients and every real root of $f$ has even multiplicity. Conjecture 6.2 of the paper states: for all $0\le k<n\le t$ and every self-conjugate $(z_1,\dots,z_n)\in\mathbb{D}^n$,
+
+$$
+\lvert Q_{t,n,k}(z_1+1,\dots,z_n+1)\rvert\le 1,
+$$
+
+and, if in addition $\operatorname{Re} z_j\ge0$ for all $j$, then
+
+$$
+\lvert s_{(t-n\mid n-k-1)}(z_1,\dots,z_n)\rvert\le\binom{t}{n}\,\lvert e_{n-k}(z_1,\dots,z_n)\rvert .
+$$
+
+The paper presents this as equivalent to its Conjecture 6.1 on worst-case Lagrange interpolation errors at the test points $1$ and $0$. It records that both inequalities hold with equality when $t=n$; it proves the first inequality for $t=n+1$ and even $k$, using a Newton-type inequality of Ellard and Šmigoc for self-conjugate lists (Theorem 2.2(1) of their paper, applied with $n-k$ even); since a self-conjugate list contains each real node an even number of times and its nonreal nodes in conjugate pairs, $n$ is even, so "$k$ even" and "$n-k$ even" are the same condition; and it obtains the second inequality for real grids in $[0,1]^n$ from a monotonicity theorem of Khare and Tao for ratios of Schur polynomials on the positive orthant. It proves no other case.
+
+(b) Classical facts on two variables, used as inline steps: $h_m(x,y)=\sum_{i=0}^m x^iy^{m-i}$, so $(x-y)\,h_m(x,y)=x^{m+1}-y^{m+1}$; $h_m(x,y)=(x+y)\,h_{m-1}(x,y)-xy\,h_{m-2}(x,y)$ for $m\ge2$; $(\partial_x+\partial_y)\,h_m=(m+1)\,h_{m-1}$; the hook Schur polynomial $s_{(d\mid 0)}$ equals $h_{d+1}$; and the binomial theorem.
+

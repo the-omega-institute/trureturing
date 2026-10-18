@@ -1,0 +1,23 @@
+**Definition 1.1 (Open legal words and harmonic load).** For $n\ge1$ let
+
+$$
+B_n=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\}.
+$$
+
+$B_0$ consists of the empty word. The graph $\Gamma_n$ has every vertex in $B_n$ and every legal Hamming-one edge. For endpoint insertions use $w_0=w_{n+1}=0$; the endpoints are not joined. Set
+
+$$
+h(s,t)=
+\begin{cases}
+st/(s+t),&s+t>0,\\
+0,&s=t=0,
+\end{cases}
+\qquad
+\Phi_n(p)=\sum_{\{u,v\}\in E(\Gamma_n)}h(p_u,p_v),
+\qquad
+\kappa_n=\max_{p\in\mathcal P(B_n)}\Phi_n(p).
+\tag{1.1}
+$$
+
+The domain is the entire probability simplex. A zero mass does not remove a word, an edge or a seam constraint. The all-zero word and every legal endpoint one remain present.
+

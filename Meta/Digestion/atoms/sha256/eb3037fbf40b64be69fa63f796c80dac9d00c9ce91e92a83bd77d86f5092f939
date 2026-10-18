@@ -1,0 +1,38 @@
+## 7. Suppliers, mature overlap and verification boundary
+
+The following repository links all select revision
+`5094da88f161741b61de3b6b16dbc3a115a83d63`.
+
+| Supplier | Exact contribution and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), `ValidBase`, `probability`, `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`; [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | Positive five-mode source, signed transport, middle gauge, actual rectangles and ordinary all-signed-sector synthesis. The smooth and piecewise rational controls here satisfy that original law; no actuator or acquired waveform follows from it. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/OriginalControlComposition.lean), `OriginalControl`, `FiniteC1Control`, `concatenate_original`; [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Both original regularity alternatives, arbitrary finite and zero durations, literal prefix and translated real-phase tail, matching heights and additive integrals. No inverse permission, reset or unknown past lift is granted. |
+| [Instrument Boundaries](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§5.2, 9–11, 14–15 | Entire canonical stopped instrument, loss balance and Jordan range, terminal classification, full-reference CP formula, matched joint finite continuation and stronger calibrated dense-cut law access. These are credited, not new targets; whole laws are not acquired outcomes. |
+| [Instrument Stability](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md), §§1, 3.2, 5 | Exact output metrics, triangular signed-loss construction, bounded-speed forward discontinuity and sufficient strong derivative/loss-density data. The delta in §5 is reflection on every finite partition, full binned CP equality and exact separation/reconstruction floors. No existing bound is renamed. |
+| [Quantum Carrier Minimum](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§1.3, 3–6 | Exact $M_3$ live carrier plus absorbing sector preserves supplied correlated archives. Its separate unassisted live block minimum is three. Our total event-memory dimension $D=\sum d_\alpha$ is a different resource and task; the upper theorem's actual correlated assistance is not denied. |
+| [Record Acquisition](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2–9, 11 | Finite-query obstructions, bounded-speed area approximation and conditional paid timing/calibration/arithmetic and signed-winding certificates. Those results are reused, not repeated as timestamp or full-loss-law acquisition. |
+| [Transport-Memory Completion](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18; [Process Geometry](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), §§1–3 | Actual common coherent source and port, aligned acquired readings, known nonzero gains and record overlap, joint source/epoch image, domains/routes, complete legal/failure responses and selector/update inputs. An archive marginal, abstract quotient or regenerated law supplies none of these missing maps. |
+
+**Literature statement 7.1 (precise mature ingredients).**
+
+| Primary source | Attested use and non-transfer |
+| --- | --- |
+| A. Nayak, [*Optimal lower bounds for quantum automata and random access codes*, quant-ph/9904093v3](https://arxiv.org/html/quant-ph/9904093v3), Theorem 2.4(2) | `literature-attested`: correct recovery from $m$ qubits is bounded by the probability mass of the $2^m$ most probable encoded inputs. The uniform dimension/alphabet bound in (EM.13) is mature. The direct proof here handles any direct-sum dimension $D$ without rounding it to a power of two. No bit-query random access menu, iid rate or source sensor is imported. |
+| R. Koenig, R. Renner and C. Schaffner, [*The operational meaning of min- and max-entropy*, 0807.1338v2](https://arxiv.org/html/0807.1338v2), Theorem 1 and Eq. (18) | `literature-attested`: for a classical–quantum state, optimal POVM guessing probability is $2^{-H_{\min}(X\mid B)}$. This identifies the operational guessing resource; the proof here uses (EM.13), not an extra entropy, asymptotic or acquisition theorem. |
+
+Both primary texts supply their stated theorem content. No premise here
+is imported from inaccessible correction text for Kuramochi's erratum
+DOI `10.1063/1.4961516`, or from the numerical-differentiation leads
+DOIs `10.1090/S0025-5718-01-01307-2` and `10.5402/2011/164564`.
+The elementary CP postprocessing in §6 stands on its displayed proof and
+does not require a general minimal-POVM theorem or an unverified correction.
+
+The source-specific constructions and applications in Theorems 3.1, 4.3
+and 5.2, their exact event metrics and their consumer correspondence are
+`repo-derived`. Guessing inequalities, Jordan decomposition, CP
+postprocessing, total-variation duality and triangle inequality remain
+mature mathematics. Bounded searches in the pinned original-control
+volumes and relevant quantum/observer-memory declarations locate the
+credited triangular construction and prior qualitative record limitations;
+they do not establish an exhaustive literature search or worldwide novelty.
+

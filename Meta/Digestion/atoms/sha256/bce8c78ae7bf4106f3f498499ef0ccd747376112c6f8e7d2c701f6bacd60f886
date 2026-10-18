@@ -1,0 +1,21 @@
+### 定义 31.4（相对熵与量子信息收缩接口）
+
+对 \(\rho,\sigma\in\mathsf D(H)\)，在
+
+\[
+\operatorname{supp}\rho\subseteq\operatorname{supp}\sigma
+\]
+
+时定义
+
+\[
+D(\rho\|\sigma)
+=
+\operatorname{tr}
+\bigl[
+\rho(\log\rho-\log\sigma)
+\bigr],
+\]
+
+否则定义 \(D(\rho\|\sigma)=+\infty\)。
+

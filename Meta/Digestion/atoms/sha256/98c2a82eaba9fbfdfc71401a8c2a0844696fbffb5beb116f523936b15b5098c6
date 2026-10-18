@@ -1,0 +1,55 @@
+**Corollary 116.6 (full tests, ingress and positive-time old readouts).**
+With $\omega_n=\omega_n(\varepsilon,S)$, for every
+$t\in[\varepsilon,S]$,
+
+$$
+\begin{aligned}
+\|S'(t)C-ES(t)\|_{H\to H'}&\le\sqrt3\,\omega_n,\\
+\|S'(t)F-r^{-1}ES(t)\|_{H\to H'}&\le(\sqrt3/r)\,\omega_n,\\
+|\langle k,(S'(t)-ES(t)D)h\rangle_{\mu'}|
+ &\le\omega_n\|k\|_{\mu'}\|h\|_{\mu'}.
+\end{aligned}
+\tag{116.27}
+$$
+
+For an old readout $g$, let $Qg=r\,\operatorname{zeroext}_V(g)$.
+Then
+
+$$
+\begin{aligned}
+\|Qg\|_{\mu'}&=\sqrt r\,\|g\|_\mu,&
+\langle Qg,ES(t)f\rangle_{\mu'}&=\langle g,S(t)f\rangle_\mu,\\
+|\langle Qg,S'(t)Cf\rangle_{\mu'}
+               -\langle g,S(t)f\rangle_\mu|
+ &\le3\omega_n\|g\|_\mu\|f\|_\mu.
+\end{aligned}
+\tag{116.28}
+$$
+
+The exact ingress pairing $\langle Eg,Cf\rangle_{\mu'}=\langle g,f\rangle_\mu$
+and the positive-time pairing in (116.28) are different endpoint contracts.
+
+Proof. Multiply (116.23) by $C$ on the right and use $DC=I$,
+then divide by $r$ for $F$. Pairing the full norm estimate with arbitrary
+$k,h$ proves the third line of (116.27). Literal old zero extension gives
+$\|Qg\|_{\mu'}^2=r\|g\|_\mu^2$ and the exact pairing in (116.28).
+Pair its error with the first line of (116.27) and use
+$\sqrt r\,\sqrt3\le3$. $\square$
+
+No statement that $\langle Eg,S'(t)Cf\rangle_{\mu'}$ uniformly approaches
+$\langle g,S(t)f\rangle_\mu$ for every old $g$ is part of this corollary.
+Inserting $Eg$ instead of $Qg$ in its limiting expression gives the
+different exact quantity
+$\langle g,W S(t)f\rangle_\mu$. The estimate (116.8) does not bound this
+uniformly by $\langle g,S(t)f\rangle_\mu$ when $g$ is an arbitrary
+unsmoothed unit vector. Likewise $D$ is an exact ingress reverse,
+not a claimed reverse of the old state after heat.
+
+A literal evaluation at a successor address has probability-functional
+norm $\sqrt{N'}$, with Riesz vector $N'\delta_y$. Thus (116.23)
+bounds its error on a unit probability input by
+$\sqrt{N'}\,\omega_n$, without a source-uniform absolute point guarantee.
+For an old point readout in (116.28), the bound carries $\sqrt N$.
+All hidden signed modes remain in the operator domain even when a
+constructor or a particular point readout does not detect them.
+

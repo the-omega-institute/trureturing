@@ -1,0 +1,224 @@
+**定理 43.2（可变厚度框架的稀疏全面积界）。** 设约定43.1的 $k\ge1$，且
+
+$$
+4096k\le d^2.
+\tag{JM.106}
+$$
+
+则有不依赖任何参数及纵横比的绝对常数界
+
+$$
+c_0UVk^2\le C(u,v,K)\le UVk^2,\qquad
+c_0=\frac1{6144^2\,1120^6}.
+\tag{JM.107}
+$$
+
+$k\ge4096$ 时，下述构造给出恰 $|I_U||I_V|q^6$ 个词的分离族 $\mathcal S_{u,v,K}$，其矩对映射为单射；第45章给这个族的显式逆。$1\le k<4096$ 的下界复用定理10.1，不把这一小参数分支声明为同一个框架族。
+
+证明。命题9.4给 $k\le P\le Uk$、$k\le R\le Vk$，两数均与 $k$ 同奇偶。因此两个坐标的可能值数分别不超过
+
+$$
+\left\lfloor\frac{k(U-1)}2\right\rfloor+1\le Uk,\qquad
+\left\lfloor\frac{k(V-1)}2\right\rfloor+1\le Vk.
+$$
+
+相乘只作环境点数上界，得 $C\le UVk^2$；这一步没有使用（JM.106），也不声称任意两个边缘值可共同实现。
+
+若 $1\le k<4096$，则 $d\ge64\sqrt k\ge k$，故 $U=V=k$。定理10.1的 $d\ge\lceil k/3\rceil$ 前提成立，给
+
+$$
+C\ge\frac{k^4}{384^2\,840^6}\ge c_0UVk^2.
+$$
+
+下面设 $k\ge4096$。令 $d_1=\min(U,V)$。原尺寸及 $k$ 都至少 $64\sqrt k$，所以
+
+$$
+d_1\ge64\sqrt k\ge4096,\qquad k\le d_1^2/4096.
+$$
+
+取整数
+
+$$
+h=\lceil\sqrt k\rceil,\quad r=\lceil k/U\rceil,\quad
+s=\lceil k/V\rceil,\quad \Delta=128h,
+$$
+
+$$
+L_0=\lceil U/8\rceil,\quad L_1=\lfloor U/6\rfloor,\qquad
+H_0=\lceil V/8\rceil,\quad H_1=\lfloor V/6\rfloor,
+$$
+
+$$
+I_U=\{L_0+j\Delta:j\in\mathbb Z_{\ge0},\ L_0+j\Delta\le L_1\},\qquad
+I_V=\{H_0+j\Delta:j\in\mathbb Z_{\ge0},\ H_0+j\Delta\le H_1\}.
+\tag{JM.108}
+$$
+
+由 $U,V\ge4096$，有 $L_1-L_0\ge U/24-2\ge U/48$，高度同理。两个网格都非空，且
+
+$$
+|I_U|\ge\frac{U}{6144h},\qquad |I_V|\ge\frac{V}{6144h}.
+\tag{JM.109}
+$$
+
+独立选 $L\in I_U,H\in I_V$，令实际核心面积为
+
+$$
+t=k-rL-sH+rs.
+\tag{JM.110}
+$$
+
+先核对来源能否放入。由 $h\le2\sqrt k$ 及
+
+$$
+r,s\le k/d_1+1\le\sqrt k/32\le h,\qquad
+L,H\ge d_1/8\ge8\sqrt k\ge4h,
+$$
+
+得到 $L\ge s+h,H\ge r+h$。由 $rU\ge k,sV\ge k$，以及 $U,V\le k$，有
+
+$$
+k/8\le rL\le k/3,\qquad k/8\le sH\le k/3.
+$$
+
+此外 $d_1\ge4096,k\ge4096$ 给
+
+$$
+rs\le\frac{k^2}{d_1^2}+\frac{2k}{d_1}+1
+\le\frac{k}{4096}+\frac{2k}{4096}+\frac{k}{4096}
+=\frac{k}{1024}.
+$$
+
+故 $k/3\le t\le3k/4+k/1024<7k/8$。结合 $k\le h^2\le2k$，所选整数 $t$ 满足
+
+$$
+h^2/8\le t\le7h^2/8.
+\tag{JM.111}
+$$
+
+在这个准确面积使用既有第5–6章的平方核心。为固定随后逆映射的全部来源选择，以下在证明内部写明所用实例。令 $q=2^J$ 是不超过 $1+h/560$ 的最大二次幂，并置
+
+$$
+a_0=70(q-1)\le h/8,\qquad b_0=h-a_0\ge1.
+$$
+
+对 $0\le X,Y<q^3$，写 $X=\sum_{i=0}^{J-1}d_i8^i$、$Y=\sum_{i=0}^{J-1}e_i8^i$，其中数字在 $\{0,\ldots,7\}$。直接使用约定5.1、引理5.2的 $P_0=baaab,P_1=ababa,Q_0=babab,Q_1=abbba$ 和 $H_{ef}=P_eQ_fQ_0P_0$。按尺度 $i$ 递增、再按 $\ell=1,\ldots,7$ 的顺序连接
+
+$$
+H_{\mathbf1_{\ell\le d_i},\mathbf1_{\ell\le e_i}}(2^i),
+$$
+
+其中括号内的 $2^i$ 表示逐字母连续重复，得到既有核心 $V_{X,Y}$。$J=0$ 时它是辅助空贡献，不是原生空树。定理5.3的完整拼接计算直接给
+
+$$
+G(V_{X,Y})=
+(a_0,a_0,0,-92(q^3-1)-24X-12Y,
+ -136(q^3-1)-12X-24Y).
+\tag{JM.112}
+$$
+
+矩方向的行列式为 $432\ne0$，故 $q^6$ 个输出不同。这是既有核心公式的应用，不重证通用多尺度机制。
+
+置 $\kappa=t-a_0h+a_0^2/2$。$a_0$ 为偶数，所以 $\kappa$ 为整数；（JM.111）及 $a_0\le h/8$ 给
+
+$$
+\kappa\ge h^2/8-a_0h+a_0^2/2\ge0,\qquad
+b_0^2-\kappa\ge h^2/8-a_0h+a_0^2/2\ge0.
+$$
+
+用命题3.4在 $W_{b_0,b_0,\kappa}$ 中固定一个后缀 $Z_t$：写 $\kappa=b_0j+z,0\le z<b_0$，取
+
+$$
+Z_t=\begin{cases}
+b^{b_0-j}a^{b_0}b^j,&z=0,\\
+b^{b_0-j-1}a^zba^{b_0-z}b^j,&z>0.
+\end{cases}
+\tag{JM.113}
+$$
+
+在 $\kappa=0,b_0^2$ 也全部合法。连接 $V_{X,Y}Z_t$ 的散置 $ab$ 数是
+
+$$
+a_0^2/2+\kappa+a_0b_0=t,
+$$
+
+端点为 $(h,h)$。两个片段端点平行，核心 $D=0$；完整拼接律的接缝行列式为零，故矩对是（JM.112）的矩对加固定向量
+
+$$
+(E_Z+3a_0D_Z,\ F_Z+3a_0D_Z).
+\tag{JM.114}
+$$
+
+这里取该连接词的**直接前缀分拆** $\mu=(x_h,\ldots,x_1)$，依命题3.1补为 $h$ 行，面积为 $t$、宽高至多 $h$。这一步不把 $t$ 换成 $\min(t,h^2-t)$，也不反序核心；$t>h^2/2$ 时仍使用同一直接分拆。因此 $q^6$ 个共同统计 $(P_\mu,R_\mu)$ 不同，并有
+
+$$
+E_\mu=h^3-6ht+6P_\mu,\qquad
+F_\mu=-h^3+6ht-6R_\mu,
+\tag{JM.115}
+$$
+
+这是命题3.1及 $R_\mu=2ht-T$ 的原面积公式。
+
+把这个核心放入厚框架
+
+$$
+\lambda=(\underbrace{L,\ldots,L}_{r\text{ 行}},
+s+\mu_1,\ldots,s+\mu_h,
+\underbrace{s,\ldots,s}_{H-r-h\text{ 行}}).
+\tag{JM.116}
+$$
+
+已证 $L\ge s+h,H\ge r+h$ 保证非增性和全部行数合法。其宽为 $L\le U$、高为 $H\le V$，面积准确为
+
+$$
+rL+s(H-r)+t=k.
+$$
+
+共轭有 $s$ 列高 $H$、随后 $h$ 列高 $r+\mu'_j$（$\mu'$ 补零至 $h$ 列）、最后 $L-s-h$ 列高 $r$。对这个共同来源平方求和，得到
+
+$$
+\begin{aligned}
+P_\lambda&=rL^2+(H-r)s^2+2st+P_\mu,\\
+R_\lambda&=sH^2+(L-s)r^2+2rt+R_\mu.
+\end{aligned}
+\tag{JM.117}
+$$
+
+固定 $L,H$ 时它只平移同一核心的双矩，保留全部 $q^6$ 个区别。
+
+现在证明所有外框之间的联合分离。两个修正均非负，且 $P_\mu,R_\mu\le ht\le hk$。利用 $s\le k/V+1$、$V\ge64\sqrt k$、$V\le k$，有
+
+$$
+\begin{aligned}
+(H-r)s^2+2st+P_\mu
+&\le Vs^2+2sk+hk\\
+&\le3k^2/V+4k+V+hk\\
+&\le3kh/64+5kh+kh<7kh.
+\end{aligned}
+$$
+
+另一坐标交换 $U,V$、$r,s$ 后同理。因此整个 $(L,H)$ 子族落在
+
+$$
+[rL^2,rL^2+7kh]\ \times\ [sH^2,sH^2+7kh].
+\tag{JM.118}
+$$
+
+不同网格宽度 $L<L'$ 满足 $L'-L\ge128h,L\ge U/8$，所以
+
+$$
+r(L'^2-L^2)\ge2rL(128h)\ge32rUh\ge32kh>7kh.
+$$
+
+第一坐标区间不交。宽度相同而高度不同，则用 $sV\ge k$ 得第二坐标区间不交。这是对同一个共同像的分离，未把分别可达的最优值配成一个见证。
+
+于是四个索引 $(L,H,X,Y)$ 给恰 $|I_U||I_V|q^6$ 个不同共同输出，进而给这么多不同分拆和词。最大性给 $q>h/1120$，故
+
+$$
+|I_U||I_V|q^6
+\ge\frac{UV}{6144^2h^2}\frac{h^6}{1120^6}
+=c_0UVh^4\ge c_0UVk^2.
+$$
+
+最后将 $\lambda$ 补零到原 $v$ 行，令 $x_j=\lambda_{v+1-j}$，用（JM.2）和原 $u$ 恢复面积 $k$ 的词；若 $K>k$，只对该数学见证取字母反序。命题9.2保证矩不变、原 $K$ 准确。每个见证都含指定的 $u,v$ 个字母并可取左结合原生树。由此定义 $\mathcal S_{u,v,K}$ 并完成全部整数范围的证明。$\square$
+

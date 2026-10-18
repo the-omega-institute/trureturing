@@ -1,0 +1,71 @@
+**推论 201.5（零成本评分给出的加权必要幅界）。** 任取有限晚期非负权重
+$\gamma=(\gamma_3,\ldots,\gamma_L)$，按 (201.5)—(201.8) 定义 $G,\mu,\Lambda$。
+若 $b$ 有完整有限 $N$ 锥配置，则
+
+$$
+\sum_{j=3}^L\gamma_j b_j
+ \le\bigl(G+\Lambda(\gamma)+\mu\bigr)e.
+\tag{201.24}
+$$
+
+特别地它适用于所有 $b\in H_N$。对原始任意正、非增、趋零序列，若存在原始
+$N_2$ 达到者在正闭帽 $e>0$ 下具有统一误差不超过 $e$，则对任意有限
+$J\subseteq\{3,4,\ldots\}$ 和非负权重 $\gamma_j$，保持这些实际标签有
+
+$$
+\sum_{j\in J}\gamma_j a_j
+ \le\left(\sum_{j\in J}\gamma_j+\Lambda(\gamma)+\max_{j\in J}\gamma_j\right)e.
+\tag{201.25}
+$$
+
+空支持的 $\mu,\Lambda$ 均约定为零。等权单位的 $k\ge1$ 个晚期标签给
+$\sum_{j\in J}a_j\le(k+c_k+1)e$；$k=3$ 的前缀系数七已属于
+[定理 137.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#137-five-necessary-bounds-without-saturation-or-active-length-assumptions)。
+
+**证明。** 直接取引理 201.2 的加权块和，并取 $T=\mu$，不放早期正确行。
+记此评分为 $W_\gamma$。定理 201.3 的同一胞计算给出
+
+$$
+\Delta_N(W_\gamma)=0,\qquad
+W_\gamma\cdot\mathbf r=\Lambda+\mu,\qquad
+K_{W_\gamma}=G+\Lambda+\mu,
+$$
+
+因此
+
+$$
+F_{W_\gamma}(b)=\sum_{j=3}^L\gamma_jb_j-(G+\Lambda+\mu)e\le0
+$$
+
+由任何有限配置和 (201.19) 得出。这个计算仅依赖完整行需求，不需要 $b\in H$、
+饱和头部或额外单调性，故同样适用于实际有限帽剖面。
+
+对原始 $0<e\le1$，取实际活跃长度
+$L=\max(\{i:a_i>e\}\cup\{0\})$。由
+[定理 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)，
+原始达到者给出该长度上同一完整概率配置 $w$，满足 $Z_Nw\ge d(a,e)$。
+把 $J$ 明确分为
+
+$$
+J_{\rm act}=\{j\in J:a_j>e\}=J\cap\{3,\ldots,L\},\qquad
+J_{\rm inact}=J\setminus J_{\rm act}.
+$$
+
+若活跃部分非空，则 $L\ge3$，锚 $R$ 在该长度上有定义。由
+$\sum_Dw_D=1$ 得 $G_Nw\ge d(a,e)-\mathbf r$。在长度 $L$ 上对其他晚期
+标签取零权重，使用 $W_{\gamma^{\rm act}}$ 得
+
+$$
+\sum_{j\in J_{\rm act}}\gamma_ja_j
+ \le(G_{\rm act}+\Lambda(\gamma^{\rm act})+\mu_{\rm act})e.
+$$
+
+这里没有把稀疏 $J_{\rm act}$ 压缩或重标；块终端仍为每个实际层集的最大标签。
+非活跃部分，包括 $a_j=e$ 的标签，满足
+$\sum_{j\in J_{\rm inact}}\gamma_ja_j\le G_{\rm inact}e$。
+删除非负坐标只减小各层集基数，(201.6) 的非减性给
+$\Lambda(\gamma^{\rm act})\le\Lambda(\gamma)$，且
+$\mu_{\rm act}\le\mu$。两界相加即得 (201.25)。若活跃部分为空，只用后一界，
+也包括 $L=0,1,2$；若 $e>1$，由 $a_j\le1<e$ 直接得结论。这些界均仅是必要条件。
+$\square$
+

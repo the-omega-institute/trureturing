@@ -1,0 +1,37 @@
+**Proposition 6.4 (local orbit offsets, including births).** Fix an
+actual finite source $t$. For each address $p$ that occurs in the
+history, let $b_p$ be its first reached epoch. Put
+$v_p=(\rho^{b_p}t)|_p$ and use [ABC, Corollary 2.4][ABC] to write
+$B(v_p)=\tau_{a_p}Z_p$ uniquely, where $a_p\in\mathbb N$ and the
+minimum primitive rank of $Z_p$ is zero. For $n_i\ge b_p$ and
+$n_j\ge b_q$,
+
+$$
+(\rho^{n_i}t)|_p=(\rho^{n_j}t)|_q
+\quad\Longleftrightarrow\quad
+Z_p=Z_q\ \land\
+n_j-n_i=(a_p-b_p)-(a_q-b_q).
+\tag{NCE.18}
+$$
+
+Under the same two guards, disequality is the complement of the
+right side. In particular a reached same-address comparison gives
+equality exactly at zero lag.
+
+Proof. Once reached, a subtree is transported by each subsequent
+iterate, as in [NSF, Lemma 9.2][NSF] and
+[NativeDepthPatterns][DEPTH], `original_present_transport`, applied
+with the capture tree as its starting source; see [its Scribe][DEPTH-S].
+Its code is consequently $\tau_{a_p+n_i-b_p}Z_p$.
+Uniqueness of minimum-rank normalization gives (NCE.18). Each
+address eventually occurs by the same supplier's saturation result,
+so the first reached epoch exists. Transport starts there and never
+asserts a subtree before its birth. For $p=q$ the two intrinsic
+offsets coincide, leaving lag zero. $\square$
+
+The $Z_p,a_p,b_p$ in (NCE.18) are consequences of one actual source.
+They are not independent advice variables that may be assigned per
+edge. Their compatibility, finite occurrence structure and all
+negative constraints are carried jointly by (NCE.4). A necessary
+clock equation alone does not replace Theorem 5.1.
+

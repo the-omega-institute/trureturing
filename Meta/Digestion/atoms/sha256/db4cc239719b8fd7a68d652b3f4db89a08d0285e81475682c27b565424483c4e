@@ -1,0 +1,77 @@
+**Theorem 370.1 (Full-score shared witness at $H_7$).** For every full real nonnegative seven-coordinate score $y$ with $\Delta_O(y)=1$, there exists one full $V\ge0$ such that
+
+$$
+\Delta_N(V)=0,\qquad
+\sigma_{H_7}\bigl(Q(y)-Q(V)\bigr)\le1.
+\tag{370.1}
+$$
+
+Thus the same pair $(V,\theta)$ with $\theta=1$ satisfies
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_7}\bigl(Q(y)-Q(V)\bigr)\le\theta.
+\tag{370.2}
+$$
+
+There is no restriction on $y$ to a score basis, a gauge or a fixed total weight. The selected $V$ may be nonzero at $\theta=1$.
+
+*Proof.* Write
+
+$$
+a_y=(\beta_1,\beta_2+\beta_3,\beta_4,\beta_5,\beta_6,\beta_7,-K),
+\qquad t_y=\beta_1+\beta_2,
+\qquad F_{Q(y)}(x)=a_y\cdot x-t_y.
+\tag{370.3}
+$$
+
+For each $x\in P$, use its one normalized stopped lift $p^x$ from Data interface 369.1. All event rows of that same allocation satisfy $z(p^x)\ge d(x)$. Nonnegative pairing and (368.11) give
+
+$$
+F_{Q(y)}(x)=y\cdot(d(x)-r)
+ \le y\cdot(z(p^x)-r)\le\Delta_O(y)=1.
+\tag{370.4}
+$$
+
+Hence $a_y\cdot x\le1+t_y$ is valid on the actual nonempty finite polyhedron $P=\{Ax\le B\}$. Apply finite valid-inequality duality, in the form of [Kaibel, *Basic Polyhedral Theory*, arXiv:1001.2161v1, Theorem 12](https://arxiv.org/abs/1001.2161v1). Its hypotheses are precisely a nonempty finite real inequality polyhedron and validity of this one inequality; no strict feasibility is required. It gives one vector
+
+$$
+\Lambda\in\mathbb R_{\ge0}^{481},\qquad
+A^{\mathsf T}\Lambda=a_y,\qquad B^{\mathsf T}\Lambda\le1+t_y.
+\tag{370.5}
+$$
+
+Use that same vector to define
+
+$$
+V=\sum_{i=0}^{470}\Lambda_{10+i}\widehat c_i,
+\qquad \theta=1.
+\tag{370.6}
+$$
+
+It is a full nonnegative score. By Lemma 369.2 and linearity of $Q$, at every $x\in H_7$ the signed residual is exactly
+
+$$
+\begin{aligned}
+F_{Q(y)-Q(V)}(x)
+ &=a_y\cdot x-t_y
+       -\sum_i\Lambda_{10+i}(A_{10+i}x-B_{10+i})\\
+ &=\sum_{j=0}^{9}\Lambda_j(D_jx-d_j)
+                         +B^{\mathsf T}\Lambda-t_y\\
+ &\le B^{\mathsf T}\Lambda-t_y\le1.
+\end{aligned}
+\tag{370.7}
+$$
+
+The domain terms are nonpositive because $x\in H_7$ and $\Lambda\ge0$. Thus one $V$, selected from $y$ before $x$ is varied, works simultaneously at every hull point. No residual coefficient has been clipped or given an independent allowance.
+
+For any complete deterministic $N$ table $D$, Lemma 369.2 gives
+
+$$
+V\cdot(z(D)-r)
+ =\sum_i\Lambda_{10+i}\widehat c_i\cdot(z(D)-r)\le0.
+\tag{370.8}
+$$
+
+The paid $N$ completion of $R$ is in this catalog and makes the same expression zero. Taking the maximum over the full catalog therefore gives $\Delta_N(V)=0$. Equations (370.7)–(370.8) prove both inequalities with the same $V$ and $\theta=1$. If $y$ is rational, (370.5) is a nonempty rational linear system and admits a rational solution by rational polyhedral elimination; this supplies a rational $V$. No efficiency bound is inferred. $\square$
+

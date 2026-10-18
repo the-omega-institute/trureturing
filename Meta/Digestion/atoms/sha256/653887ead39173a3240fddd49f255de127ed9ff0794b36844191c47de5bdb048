@@ -1,0 +1,11 @@
+**Definition 10.5 (resource limitations).** No numerical $n_0$, code length,
+whole-run occurrence count or total fee is specified by these symbolic
+equations. Neither a minimum-port result nor complete-run cost superiority
+is asserted. Finite initial source does not bound retained runtime memory.
+An infinite continuation additionally requires continuing actual input
+supply and reached-local finite completion. SSA's structural replacement
+and CSA's callable structural atlas require a separately initialized
+74-role instance and its own actual finite rule/owner correspondence.
+Replacing a native tariff by a structural tariff and adding another
+tariff are distinct conventions. Neither is implicitly applied here.
+

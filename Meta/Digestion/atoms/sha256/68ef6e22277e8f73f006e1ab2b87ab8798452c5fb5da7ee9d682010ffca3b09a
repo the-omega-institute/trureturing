@@ -1,0 +1,53 @@
+**Theorem 9.1 (validation and finite-interference termination with
+routing).** Extend the original all-finite RA program by an interface
+satisfying Assumption 8.2. For every finite source, every finite prefix-free
+cut, and every legal independent-writer interleaving on which this
+extension Returns, the returned row is $R_P(U_v)$ at its actual
+designated final validation Read $v$. On every observer-progressing
+history with an unknown finite total of $b$ writer updates during the
+pending call, it Returns after finitely many observer actions, with at
+most $b$ failed validations and at most $b+1$ attempts. Neither the program
+nor the router is given $b$, a height bound or a last-update indication.
+
+Proof. On a completed history Lemma 8.3 gives an actual RA execution
+with identical guard address, saved leaf label, candidate and validation
+reply. Theorem 3.3 therefore applies. More explicitly, the successful
+saved leaf and its equal validation reply are authentic observations on
+the same source. The native leaf certificate of citation 1.3 excludes
+every update between them, including updates scheduled while routing.
+The candidate's exterior and comparisons thus have the stationary source
+required by Lemma 3.2. Later routing cannot change the accepted bytes.
+
+For progress, fix one pending designated action. Its routing episode
+starts with some finite value of $\nu$. Each service action occurs after
+finitely many intervening events by observer progress and strictly
+decreases that natural number. Writer updates cannot replenish it.
+Consequently the episode has finitely many service actions and ends;
+the ready designated action then occurs by the same progress premise.
+This argument holds without a bound on the intervening updates.
+
+If a pending extended call with finite interference were infinite, this
+argument would make its projected RA observer progressing: no pending
+designated action could be postponed forever inside routing. All its
+writer updates are retained, so their total remains $b$. Theorem 3.4
+forces a finite successful RA execution, its cleanup and its Return,
+contradicting the purported infinite pending extension. Equivalently,
+the final finite source bounds the moving traversals by Lemma 3.1,
+and every failed guard interval contains a distinct writer update.
+The disjoint failure intervals give the same $b$ and $b+1$ bounds.
+The finitely many routing episodes preceding the resulting finite set
+of designated actions each terminate, including any episode after
+validation and before Return. $\square$
+
+**Mathematical citation 9.2 (endpoint scope).** The designated validation
+point in Theorem 9.1 remains an in-call point, distinct from invocation
+and Return. [CNA, Theorem 7.1][CNA] supplies the invocation-row and
+separate Return-row obstructions for nonroot cuts in the source-blind
+read-only comparison class. Its indistinguishable histories still apply
+to the routed observer: place the entry update before all observer
+actions, or the final update after its last Read, including all routing
+Reads, but before the separate Return. The root cut retains its
+constant-row exception from Definition 1.2. Finite-service progress
+removes routing divergence; Theorem 9.1 makes no liveness assertion
+under infinitely many writer updates.
+

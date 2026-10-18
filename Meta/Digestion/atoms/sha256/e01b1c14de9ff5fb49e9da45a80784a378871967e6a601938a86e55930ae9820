@@ -1,0 +1,29 @@
+**Definition 13.3 (one-source class and its two label supports).** Let $I$
+be any finite proposed-row/link input of Definition 1.2. Validate it before
+using (NCE.4). Let $\Xi(\mathbf n,t,\mathbf x)$ be any additional finite
+Boolean formula of Definition 10.1, with any further joint existential
+tree variables. Its regular languages are supplied fixed descriptions.
+For this one fixed numeral $h$, define
+
+$$
+\begin{aligned}
+C_h(\mathbf n,t,\mathbf x)={}&
+\operatorname{Chron}(\mathbf n)\land\Psi_I(\mathbf n,t,\mathbf x)
+\land\Xi(\mathbf n,t,\mathbf x)\\
+&\land\ t\in\mathsf{HasBeta}\land\rho^{n_{m-1}}t\in L_h,\\
+E^+_h(\mathbf n)\ \Longleftrightarrow{}&
+\exists t,\mathbf x\quad C_h(\mathbf n,t,\mathbf x)
+                   \land\rho^{n_{m-1}+1}t\in L_h,\\
+E^-_h(\mathbf n)\ \Longleftrightarrow{}&
+\exists t,\mathbf x\quad C_h(\mathbf n,t,\mathbf x)
+                   \land\rho^{n_{m-1}+1}t\notin L_h.
+\end{aligned}
+\tag{NCE.30}
+$$
+
+For malformed $I$ both supports are false, with the malformed indication
+kept distinct from inconsistency. No reachedness guard, exterior leaf,
+blocker, old-class negative or signed link is dropped. Class names are
+local to their rows until linked. The same $t$, epoch tuple and entire
+class valuations occur in all constraints.
+

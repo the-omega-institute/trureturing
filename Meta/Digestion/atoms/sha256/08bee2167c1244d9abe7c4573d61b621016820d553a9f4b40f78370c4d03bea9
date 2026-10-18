@@ -1,0 +1,160 @@
+**Theorem 2.2 (Exact global optimum).** The unique maximizer of
+(2.2) over the entire site simplex is
+
+$$
+\boxed{\omega^\star=(x,y,x),\qquad
+\gamma^\star=(1-\tau)x.}
+\tag{2.6}
+$$
+
+In particular, the optimization includes nonsymmetric distributions
+and every zero-weight boundary. Numerical values are
+
+$$
+\tau\approx0.51588140,\qquad
+\omega^\star\approx(0.29574131,0.40851737,0.29574131),\qquad
+\gamma^\star\approx0.14317387.
+\tag{2.7}
+$$
+
+Proof. Consider the vector
+
+$$
+v=(2\tau^2-1,\ \tau,\ -2\tau(\tau+1),\ \tau,\ 1)^{\mathsf T}.
+\tag{2.8}
+$$
+
+Its coordinates sum to zero, and
+$yq=4\gamma^\star\tau(\tau+1)$ by (2.5).
+Direct substitution into (2.1) gives
+$(H_{\omega^\star}v)_{13}=x(1-\tau)$,
+$(H_{\omega^\star}v)_1=(H_{\omega^\star}v)_3
+=x\tau(1-\tau)$, and
+$(H_{\omega^\star}v)_2=-yq/2$.
+These are the corresponding coordinates of $\gamma^\star v$.
+The remaining coordinate agrees because $H_{\omega^\star}\mathbf1=0$
+and both vectors have coordinate sum zero. Thus
+
+$$
+H_{\omega^\star}v=\gamma^\star v.
+\tag{2.9}
+$$
+
+To identify this eigenvalue as the gap, take any $x,y>0$ and
+$H_{(x,y,x)}$. The endpoint-odd vector $e_1-e_3$ has eigenvalue $x$.
+In the orthonormal even basis
+$(e_2,e_0,(e_1+e_3)/\sqrt2,e_{13})$, the matrix is
+
+$$
+T_{x,y}=
+\begin{pmatrix}
+y/2&-y/2&0&0\\
+-y/2&x+y/2&-x/\sqrt2&0\\
+0&-x/\sqrt2&x&-x/\sqrt2\\
+0&0&-x/\sqrt2&x
+\end{pmatrix}.
+\tag{2.10}
+$$
+
+Its characteristic polynomial is $sC_{x,y}(s)$, where
+
+$$
+C_{x,y}(s)=s^3-(3x+y)s^2+
+\left(2x^2+\tfrac52xy\right)s-\tfrac54yx^2.
+\tag{2.11}
+$$
+
+The positive-weight legal graph is connected, so its only zero mode
+is constant and the three roots $r_1\le r_2\le r_3$ of $C_{x,y}$
+are positive. Their sum is $3x+y>3x$, so $r_3>x$.
+Since $C_{x,y}(x)=yx^2/4>0$, the factorization
+$C_{x,y}(x)=\prod_j(x-r_j)$ then forces
+
+$$
+0<r_1<x<r_2\le r_3.
+\tag{2.12}
+$$
+
+Consequently $r_1$ is simple. The candidate
+$\gamma^\star=x(1-\tau)$ lies in $(0,x)$, so (2.9) and
+(2.12) prove that it is the gap of $H_{\omega^\star}$.
+
+Now write
+
+$$
+N_v=v^{\mathsf T}v
+=8\tau^4+8\tau^3+2\tau^2+2,\qquad
+Z^\star=\frac{vv^{\mathsf T}}{N_v}.
+\tag{2.13}
+$$
+
+This is positive semidefinite, has trace one and annihilates $\psi$.
+The three grouped energies are
+
+$$
+\begin{aligned}
+v^{\mathsf T}K_1v=v^{\mathsf T}K_3v
+&=\tfrac12(1-\tau)^2\bigl((2\tau+1)^2+1\bigr),\\
+v^{\mathsf T}K_2v&=\tfrac12q^2.
+\end{aligned}
+\tag{2.14}
+$$
+
+Their equality follows from the exact polynomial identity
+
+$$
+q^2-(1-\tau)^2\bigl((2\tau+1)^2+1\bigr)=P_4(\tau)=0.
+\tag{2.15}
+$$
+
+Together with (2.9) and $\sum_i\omega_i^\star=1$, this gives
+
+$$
+\operatorname{Tr}(Z^\star K_i)
+=\frac{q^2}{2N_v}=\gamma^\star
+\quad\text{for every }i.
+\tag{2.16}
+$$
+
+For every $\omega\in\Delta_3$, the Rayleigh quotient of this same
+vector therefore supplies the global upper bound
+
+$$
+\gamma(\omega)
+\le\frac{v^{\mathsf T}H_\omega v}{N_v}
+=\sum_i\omega_i\operatorname{Tr}(Z^\star K_i)
+=\gamma^\star.
+\tag{2.17}
+$$
+
+The candidate attains the bound. Equivalently, with
+$\Pi=I-\psi\psi^{\mathsf T}$, its primal and dual certificates are
+
+$$
+H_{\omega^\star}-\gamma^\star\Pi\succeq0,\qquad
+(H_{\omega^\star}-\gamma^\star\Pi)Z^\star=0,
+\tag{2.18}
+$$
+
+together with (2.13) and (2.16).
+
+For uniqueness, equality in (2.17) requires
+$H_\omega v=\gamma^\star v$. Its endpoint-coordinate difference is
+
+$$
+(H_\omega v)_1-(H_\omega v)_3
+=(\omega_1-\omega_3)(1-\tau^2).
+\tag{2.19}
+$$
+
+Since $v_1=v_3$ and $1-\tau^2>0$, the weights satisfy
+$\omega_1=\omega_3$. The $13$ coordinate then yields
+
+$$
+\frac{\omega_1+\omega_3}{2}(1-\tau)=\gamma^\star,
+\tag{2.20}
+$$
+
+so both endpoint weights are $x$, and the remaining weight is $y$.
+This proves uniqueness among all site distributions. $\square$
+

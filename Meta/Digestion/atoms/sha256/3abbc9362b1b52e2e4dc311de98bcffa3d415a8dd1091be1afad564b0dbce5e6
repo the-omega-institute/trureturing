@@ -1,0 +1,18 @@
+**定义 2.1（前沿与锥）。** 当前树的真实叶地址集递归为
+
+$$
+F(\alpha)=F(\beta)=\{\varepsilon\},\qquad
+F((S,T))=LF(S)\cup RF(T).
+$$
+
+令
+
+$$
+N(T)=|F(T)|,\qquad
+\Lambda(T)=\sum_{p\in F(T)}|p|,\qquad
+\operatorname{Cone}(p)=\{pw:w\in\mathcal A\}.
+\tag{NIC.4}
+$$
+
+$|p|$ 是地址的方向字母数，$|\varepsilon|=0$。$\operatorname{Cone}(p)$ 包含 $p$ 本身及它的全部字面后代；对实际叶，严格后代的当前回复均为缺席。$F(T)$ 是非空有限前缀无关集，所以不同真实叶的锥两两不交。地址负载也可记为 $L(T)$；本卷使用 $\Lambda(T)$，以免与方向字母 $L$ 混淆。
+

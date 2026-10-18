@@ -1,0 +1,33 @@
+**Proposition 7.2 (one preparation for different current heights).** Fix
+$a_0,q\in(0,c)$ with $q\ne a_0$, before selecting $k,\beta,m$.
+Start at $a_0$ with the same calibrated preparation. Use a unit fixed-height
+phase leg of increment $2\pi m$, the four unit rectangle legs
+$a_0\to q\to a_0$ with phase height
+
+$$
+B_{\beta,m}=
+ \frac{r(\pi m-\beta)-2\pi m a_0}{q-a_0},
+\tag{QC.38}
+$$
+
+and a final unit horizontal leg $a_0\to k$ of zero relative phase.
+The duration is six. The actual endpoint is (QC.37), its real residual is
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$, and its real relation
+increment is $2\pi m$. Both original regularity alternatives hold. For
+each finite height catalogue the paths have a common positive support
+margin. Their phase variation is $2\pi|m|+2|B_{\beta,m}|$, finite for
+each history, without a uniform bound over all $\beta,m$.
+
+Proof. The first five legs are precisely the signed construction
+(QC.24)–(QC.25) at $a_0$ with auxiliary $q$. The last leg has
+$\chi'=0$, hence zero transported phase increment. Its heights stay in
+the convex interval between $a_0$ and $k$, and all legs are continuous
+affine pieces. Their compact positive height bands verify the source and
+regularity conditions directly. Literal chronological composition preserves
+the prefix and translates the unknown old lift; it does not reveal it to
+the controller. The canonical charge (QC.7) is finite, so the live event
+has strictly positive probability. Statements about this endpoint are
+conditioned only on that actual live event; every earlier failure retains
+its first time, mode and absorbing successor and is never retried.
+$\square$
+

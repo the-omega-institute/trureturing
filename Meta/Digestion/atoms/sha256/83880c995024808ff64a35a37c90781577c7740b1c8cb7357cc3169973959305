@@ -1,0 +1,17 @@
+**Definition 5.1 (finite public guard menu).** For a fixed public
+controller $M$, let $A=\operatorname{addr}[Q]$ be its finite set
+of installed words, and put
+
+$$
+P=\{\operatorname{parent}(w):w\in A,\ w\ne\varepsilon\},
+\qquad m=|P|,\qquad
+g(t)_u=\mathbf1_{r_t(u)=\mathsf{branch}}\quad(u\in P).
+\tag{NVC.13}
+$$
+
+The vector $g(t)$ is an additional source-bearing relation. Its
+indexing order is public and fixed before acquisition. If several
+late targets select different controllers, this definition applies to
+a fixed public finite union of their installed menus; the later
+target cannot be used during target-blind guard preparation.
+

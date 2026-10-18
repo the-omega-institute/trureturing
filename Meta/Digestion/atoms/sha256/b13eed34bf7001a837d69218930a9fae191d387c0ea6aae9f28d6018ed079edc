@@ -1,0 +1,33 @@
+**Corollary 5.3 (another late endpoint is necessary for a saving).**
+If $\rho=1$ and $m<G$, another positive-deficit gap must end at a depth
+
+$$
+b\in\{e_*+1,\ldots,n-5\}.
+\tag{TS.22}
+$$
+
+There are $\max(0,d_*-6)$ such endpoints. In particular, if $I_5$ is
+present and $d_*\le6$, then
+
+$$
+m\ge G+R+1+\eta_5,\qquad
+|Q_{\rm live}|\ge G+(R-\nu)+1+\eta_5.
+\tag{TS.23}
+$$
+
+Thus $d_*\ge7$ is necessary for a strict saving in a graph with $I_5$.
+
+Proof. All other gaps precede $I_5$ and end at most $n-5$.
+Under $m<G$, (TS.20) makes their total late deficit exceed the
+nonnegative $R+1+\eta_5$, so at least one has positive deficit.
+Its endpoint is after $e_*$ by (TS.17). The endpoint count is
+
+$$
+\max(0,n-5-e_*)=\max(0,d_*-6).
+$$
+
+For $d_*\le6$ there are no other late gaps at all, so (TS.20) becomes
+(TS.23), using $m=|Q_{\rm live}|+\nu$. Nothing in this argument
+excludes a saving in a graph without $I_5$ or controls the other late
+pools when $d_*\ge7$. $\square$
+

@@ -1,0 +1,18 @@
+**例 34.2（Both values, label coincidences and a paid wrapped row）。** At $k=5,m=4$, make the joined phase labels independent of INITIAL tail and give the three phases $0,2,4$ distinct pair labels $X,Y,Z$. These pairs can have coincident components, for example
+
+$$
+X=(A,A),\qquad Y=(A,B),\qquad Z=(B,A),\qquad A\ne B.
+\tag{34.2}
+$$
+
+Thus one component alone need not distinguish all phases; the full join is retained. Fee zero is impossible, and fee one is impossible. Indeed any correct first word with a leading one rejects all sources with INITIAL tail $k-1=4$, from all three actual phases, to the same endpoint in one free-value fibre. In the pair-valued problem those three labels are different, so such a word cannot complete it. A first word starting zero avoids that rejection but offers only a binary successful endpoint in the joined phase problem, which cannot distinguish three pair labels in one block. This is equivalently the value-join one-block lower bound.
+
+One common stream attaining fee two is
+
+$$
+0010\mid1000.
+\tag{34.3}
+$$
+
+The first word starts zero and selects precisely actual phase $2$, by (1.4). The next window is the wrapped path $[4,8]\pmod6=(4,5,0,1,2)$. The second word selects actual phase $4$ through its first bit; the adjacent physical charge at $5$ is nonactual. The full columns of $0,2,4$ are respectively $00,10,01$. Their joined labels decode correctly. The first word ends zero, the second's leading run is one, and both internal runs are one, so every INITIAL tail survives the first reset and every subsequent seam is legal. A phase already identified at the first endpoint can stop there; the other phases actually emit and pay the second, wrapped block. Thus $C_{\rm pre}=2$ for (34.2), retaining the chronological window and the full two-component label. Separately the value-zero component is computed by $0001$ and the value-one component by $0010$, each at fee one: the former selects actual phase $4$ and the latter phase $2$. Both fibres are nonconstant, so their component minima are one. Their maximum one is strictly smaller than the one-stream joined optimum two. These component optima supply no common first word.
+

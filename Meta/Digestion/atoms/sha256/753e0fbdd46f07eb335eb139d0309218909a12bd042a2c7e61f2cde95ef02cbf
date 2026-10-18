@@ -1,0 +1,27 @@
+**Definition 27.1 (public center groups).** For each $n\ge1$ put
+
+$$
+m=m(n),\qquad r=n-m,\qquad
+ a=\min\{\lfloor m/2\rfloor,r\},\qquad b=r-a.
+\tag{GDB.108}
+$$
+
+The $m$ center positions are $a+1,\ldots,a+m$. Define a public name
+map $g_n$ on the descriptors by
+
+$$
+g_n(j,e)=
+\begin{cases}
+2j-1+e,&1\le j\le a,\\
+j-a,&a<j\le a+m,\\
+2(j-a-m)-1+e,&a+m<j\le n,
+\end{cases}
+\qquad g_n(B)=2b+1.
+\tag{GDB.109}
+$$
+
+Each name is an integer in $[m]=\{1,\ldots,m\}$. The two descriptors
+at center $a+i$ have name $i$. Among the earlier positions there is
+at most one descriptor of each name, and the same holds among the
+later positions together with $B$.
+

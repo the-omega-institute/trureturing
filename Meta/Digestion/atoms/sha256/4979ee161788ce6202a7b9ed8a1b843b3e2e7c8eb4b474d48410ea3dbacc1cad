@@ -1,0 +1,27 @@
+### 84.2 接触后的系数接口与统一修复
+
+为明确接触右侧的输入，沿 RC60–63 的选定 $\mathcal P(a,\varkappa(a))=0$ 分支，$a<a_{\rm c}$ 对应 $s>s_{\rm c}$。使用本卷 (RC.8)、(RC.16)、(RC.31)、(RC.61) 的同一四射线静态族。为避免与 (RC.118) 的初始分支多项式 $P(r)$ 混淆，下式始终用 $\mathcal P$ 表示二维代数选根。令
+
+$$
+\gamma_a=-\frac{2g_a}
+ {\mathcal E_a^2-D_a^2\sigma_a(Z_a)_0(Z_a)_1},\qquad
+\Lambda_a=-\gamma_a D_a^2\sigma_a/2,
+$$
+
+$$
+\mathcal Y_a=G+\Lambda_a C+\gamma_a W_aW_a^T\quad\pmod Q,
+\qquad D_a^{\rm dual}(h)=h^T\mathcal Y_a h-\Lambda_a|z|.
+$$
+
+$D_a^{\rm dual}$ 是 dual function，区别于代数标量 $D_a$。RC 全局对偶供应 $D_a^{\rm dual}\ge|\ell|$。既有谱承载和 rank 条件修复机制给出的接触后表达式为
+
+$$
+K(s_0\tau(a))=\frac12\sum_{\epsilon=\pm1}\nu_\epsilon
+\min_{o=\pm1}\{D_a^{\rm dual}(h_{\epsilon,o})
+                         -\epsilon\ell(h_{\epsilon,o})\}.
+$$
+
+这里仅重列接触接口以明确拼接对象；接触后系数机制、FA80 的存在性和一般 rank 条件修复不是接触前三射线计算的新内容。下式的新增可用性来自引理 81.1 在**实际接触**仍成立。
+
+RC 的第四条静态射线在接触处权重为零；原有三条权重严格正。引理 81.1 已证明这三条的联合矩映射在接触处可逆。在接触后的 RC 四射线分支上，采用如下同一修复规则：固定新增第四条射线的静态方向和静态权重；加入 (RC.142) 的谱承载标签；只修复原有三条正权重射线的六个参数。这里第四条的静态权重按实际 $s$ 取值，修复时才固定。这六维导数连续趋向引理 81.1 的接触导数，逆因而一致有界。整个构造不除以新增射线的小权重。
+

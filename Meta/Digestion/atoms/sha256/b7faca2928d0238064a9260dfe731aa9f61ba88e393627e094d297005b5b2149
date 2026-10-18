@@ -1,0 +1,17 @@
+**Proposition 79.2 (explicit faster families and the remaining range).**
+Every family $\tau(g)=g^p$ with $p>2/3$ satisfies Theorem 79.1;
+its energy has the two-sided order $-g^{1-5p/2}$.
+The families $\tau(g)=g^{2/3}L(g)$ with $L(g)>0$ and $L(g)\to0$
+also satisfy that theorem. An example is
+$L(g)=(\log(1/g))^{-r}$ with $r>0$.
+Neither Theorem 77.1 nor Theorem 79.1 classifies families for which
+$\chi(g)$ tends to a finite strictly positive constant, or has
+neither limit zero nor limit infinity.
+
+Proof. In the power case $\chi=g^{1-3p/2}\to\infty$; in the
+second case $\chi=L^{-3/2}\to\infty$ and $\tau\to0$.
+Substitution in (79.1) gives the stated power order. The last
+assertion specifies the missing hypotheses of the two theorems;
+no critical constant or complete crossover classification is
+inferred. $\square$
+

@@ -1,0 +1,26 @@
+**Definition 367.1 (The remaining joint-selection problem).** With the full scores, signed quotients and unchanged closed hull of Definition 365.1, the universal problem is to establish
+
+$$
+\begin{gathered}
+\text{for every }L\ge3\text{ and every full }y\ge0
+\text{ with }\Delta_O(y)=1,\\
+\text{there exist one unrestricted full }V\ge0
+\text{ and one }\theta\in[0,1]\text{ such that}\\
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_{H_L}\bigl(Q(y)-Q(V)\bigr)\le\theta.
+\end{gathered}
+\tag{367.1}
+$$
+
+The same $V$ and the same $\theta$ must satisfy both inequalities. The residual $Q(y)-Q(V)$ is signed. Every nonzero zero-cost $V$ with $\Delta_N(V)=0$ remains allowed at $\theta=1$, along with zero weights and the closed endpoints. No prescribed gauge, edge/odd-list cone, fixed partition, basis, normalized-mass slice or preservation of a supplied $N$ law is imposed on this selection.
+
+The alternative sought is one actual entire profile (363.2), one complete original common-seed $A_N\in\mathcal N_2$ attaining a cap $c=e_a(A_N)$, and a strict uniform target-error lower bound
+
+$$
+\exists\varepsilon>0\quad\forall A_O\in\mathcal O_2:
+                   e_a(A_O)\ge c+\varepsilon.
+\tag{367.2}
+$$
+
+The quantifier includes all original arbitrary addresses, full-carrier outputs, actual paid requests and measurable sourcewise finite handoffs, at the same profile and its whole tail. This is the original comparison retained in [XIX 347](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md), [XX 356](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XX.md) and [XXI 362](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXI.md). The radial alternatives of [IV 165–168](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md) and the full finite Farkas/certificate alternative of [VI 199.3–199.8](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md) are existing reductions of this problem, not further conclusions of the two obstructions above.
+

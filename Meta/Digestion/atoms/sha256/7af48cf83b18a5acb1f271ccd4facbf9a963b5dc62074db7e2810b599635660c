@@ -1,0 +1,9 @@
+**定理 472.2（有限级定量可逆性）。** 若 $\operatorname{Re}s\ge\sigma>0$，则
+
+$$
+|E_S(s)|\ge\prod_{p\in S}(1-p^{-\sigma})>0,
+\qquad |E_S(s)^{-1}|\le\prod_{p\in S}(1-p^{-\sigma})^{-1}.
+$$
+
+*证明。* 对每个 $p$，有 $|a_pp^{-s}|=|a_p|p^{-\operatorname{Re}s}\le p^{-\sigma}<1$。反三角不等式给 $|1-a_pp^{-s}|\ge1-p^{-\sigma}>0$，再取有限乘积和倒数。空集给两端恰为 $1$。因此同一实际身份 $L_S=E_SL$ 双向保持这个半平面内的零点。
+

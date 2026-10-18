@@ -1,0 +1,26 @@
+**Proposition 6.3 (observer-relative recovery).** Under the declared paid
+services, both constructions implement exactly
+
+$$
+(E(t),D,p,\text{zero or one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{PPF.23}
+$$
+
+The inverse on the right is first branch count and alpha-stage presence.
+Theorem 3.2 lower-bounds the acquisition needed by every original pair
+supporting this requested recovery, without adding a descriptor task.
+
+Proof. Theorem 4.2 and the credited cover witnesses used in Theorem 5.1
+produce the exact requested factor. Convention 2.1 supplies both the
+forward trajectory decoder and the inverse. The five required outputs
+in Theorem 3.2 are trajectories for an allowed original $p$, so its
+lower bound is for this same task. $\square$
+
+The recovered relation is the specified predictive boundary of one
+requested literal. It does not recover an arbitrary complete hidden
+source, an unknown authentic age, an unobserved history, physical space
+or time, or the declared access services. The broader minimal-relations
+and space/time/boundary/memory mutual-recovery programme remains active.
+

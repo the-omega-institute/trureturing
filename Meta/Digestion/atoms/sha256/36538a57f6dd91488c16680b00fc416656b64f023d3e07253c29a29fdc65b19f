@@ -1,0 +1,2 @@
+**Definition 15.1 (root endpoint tables).** Each pair is divided by $D_{150}=2^{150}$. Row indices are zero-based coordinates in Definition 4.2, including the event multiplier and six unused $x_4$. These intervals enclose the roots uniformly over their full parameter sections after eight fixed-defect image refinements.
+

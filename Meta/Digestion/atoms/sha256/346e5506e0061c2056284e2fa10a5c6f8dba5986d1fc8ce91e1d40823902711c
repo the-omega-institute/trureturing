@@ -1,0 +1,24 @@
+**Construction 4.3 (root sorts and the scalar condition).** Split every
+remaining unrestricted normal $V_C$ into its exhaustive disjoint cases:
+a primitive $[n_C]$, or an $F$-rooted normal code. A primitive case
+adds one scalar coordinate. Retain one residual coordinate for each
+$F$-rooted case. There are finitely many such choices.
+
+After this split, each subtree of a named expansion has a known root
+sort. It is a primitive constant $[a]$, a primitive $[n_j+c]$, a
+translated nonprimitive residual, or an explicit $F$ node. In every
+named expansion inspect every explicit $F$ node. If both children
+have primitive roots, with respective ranks $a(\mathbf n)$ and
+$b(\mathbf n)$, impose
+
+$$
+a(\mathbf n)\ne b(\mathbf n)+1.
+\tag{PDC.12}
+$$
+
+If at least one child is nonprimitive, its root cannot be a forbidden
+primitive cherry. Let $K(\mathbf n)$ be the conjunction of all checks
+(PDC.12); a false constant check makes $K$ false. All constants and
+offsets are natural after Lemma 4.2. Hence $K$ is a finite
+quantifier-free Presburger condition, independent of the residuals.
+

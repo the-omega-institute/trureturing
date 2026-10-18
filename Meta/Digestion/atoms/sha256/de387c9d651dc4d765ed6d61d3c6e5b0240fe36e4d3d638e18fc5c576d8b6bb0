@@ -1,0 +1,34 @@
+### 91.2. Exhausting every ray and every triple type
+
+The complete original chart reduction in §75 divides every noncanonical
+ray on the puncture into two types, retaining its finite choices:
+
+- Aligned: both channels have at most two distinct values and share a
+  repeated pair, including a constant channel when present. Every repeated
+  position, finite chart and actual Cayley pole is retained.
+- Generic: after at most the optional \(\Theta\) channel interchange,
+  the selected channel has three distinct values and satisfies the full
+  strict original chart (87.3), with all six root orders.
+
+The zero-channel-mean and unaligned-two-value exclusions are proved parts
+of this coverage. Constant-channel cases are routed through the aligned
+chart, rather than excluded wholesale. No intersection with a canonical
+ray or covariance of a candidate basis is assumed.
+
+At \(H_*\ne0\), §89.4 covers every original generic ray, including
+all originally possible \(F_8=0\), pivot and line-coordinate strata.
+Each generic orthogonal edge lies entirely in the \(S_3\)-\(\Theta\)
+orbit union of either endpoint, by Theorem 89.1. The exact within-union
+graph is bipartite, so no all-generic orthogonal triple exists.
+
+Theorem 90.1 excludes all generic–aligned edges at the same parameter.
+The uniform all-aligned theorem of §§83–85 excludes every all-aligned
+noncanonical orthogonal triple, including rays from different orbit unions
+and all poles. It does not assume that the entire aligned graph consists
+only of its within-union edges.
+
+Any noncanonical orthogonal triple is entirely generic, entirely aligned,
+or contains both types. The first two cases are excluded by the preceding
+triple results. The last case contains a forbidden mixed edge. This proves
+assertion 1 and exhausts the complete original ray domain.
+

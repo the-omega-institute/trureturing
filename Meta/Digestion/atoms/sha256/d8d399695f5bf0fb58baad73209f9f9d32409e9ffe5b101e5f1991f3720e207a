@@ -1,0 +1,40 @@
+**Theorem 63.5 (an explicit nonempty binding regime for every fixed N).** The actual occupation trial $e_{S_N}$ has energy
+
+$$
+E_N^{\rm root}=a(3N-1)-gA_N-\nu P_N.
+\tag{63.16}
+$$
+
+If, for every $0\le k<N$,
+
+$$
+g(A_N-A_k)>
+a(3N-1-N\lambda)+\nu(r_k+c_{N-k}-P_N),
+\tag{63.17}
+$$
+
+then $m_N\le E_N^{\rm root}<B_N\le\Sigma_N$. This is a nonempty regime for each fixed $N,a,\nu$: every $A_N-A_k$ is strictly positive, so any positive $g$ larger than all the finitely many right-hand-side quotients in (63.17) suffices. No common $g$ for unbounded $N$ is asserted.
+
+Whenever $m_N<B_N$, the infimum is attained, the ground eigenspace is nonzero and finite dimensional, and *every* normalized near-minimizing sequence is strongly precompact. Its cluster points are unit ground states. There is a positive gap from $m_N$ to the spectrum on the orthogonal complement of that entire groundspace.
+
+Proof. The breadth-first occupation includes the root. Its diagonal is $2+3(N-1)$, and a single occupation basis vector has zero hopping expectation, proving (63.16). Lemma63.2 gives
+
+$$
+m_k+b_{N-k}\ge aN\lambda-gA_k-\nu(r_k+c_{N-k}).
+\tag{63.18}
+$$
+
+Inequality(63.17) compares the *one* actual trial (63.16) strictly with every lower channel in (63.18). It proves the claimed gap without assuming the existence of a bound state in any smaller sector.
+
+For attainment, let $f_n$ be any unit near-minimizing sequence, pass to a weak limit $f$ and put $r_n=f_n-f$. Boundedness of $H_N$ makes the cross energy vanish; $\|r_n\|^2\to1-\|f\|^2$. Rescaling (63.14), including the zero-norm case by boundedness, gives
+
+$$
+\begin{aligned}
+m_N&\ge q_N(f)+B_N(1-\|f\|^2)\\
+&\ge m_N\|f\|^2+B_N(1-\|f\|^2).
+\end{aligned}
+\tag{63.19}
+$$
+
+The strict gap forces $\|f\|=1$, hence strong convergence and energy $m_N$. Variation gives $H_Nf=m_Nf$. This argument applies to every near-minimizing sequence. The finite-dimensional subthreshold spectral conclusion in Theorem63.4, applied at a number strictly between $m_N$ and $B_N$, gives finite ground multiplicity and isolates $m_N$ from the rest. No single radial channel, source-label permutation or ground-state preparation was used. $\square$
+

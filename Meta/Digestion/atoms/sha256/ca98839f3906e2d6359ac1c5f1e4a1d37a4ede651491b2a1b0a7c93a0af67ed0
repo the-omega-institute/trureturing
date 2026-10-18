@@ -1,0 +1,24 @@
+## 2. Existing suppliers and the remaining composition
+
+**Mathematical citation 2.1 (stationarity and shared-source premises).**
+The following premises keep their original domains.
+
+| Supplier | Exact role and boundary |
+| --- | --- |
+| [NativeFullSourceProducer][NFSP], sourceControl, private traverse, private stationary, native_source_producer | An initially source-blind stack constructs an entire fixed tree. Its source does not advance during traversal. |
+| [NativeWholeRowService][NWRS], stationary_cell_service, stationary_whole_fiber_service | At fixed $\rho^N u$, given the old canonical row, consistent history and passing analysis, a continuous two-phase query service returns literalRecord $Q\,u$. This includes delayed reconstruction on a stationary current version, not hidden concurrent updates. |
+| [NativeSerialMachine][NSM], nativeStep, Run; [NativeSerialEffective][NSE], OriginalRun, effective_service_inclusion | Source-free control selects its own local/Read/Update actions. Its recorded updates do not count another process's hidden actions. |
+| [Sparse History, Proposition 23.3 and §59][SLH] | Actual-row continuation and prefix replay require the same stationary service. Complete-row fibers describe retained values after acquisition; their existence is not an equality oracle. |
+| [Acquired Intrinsic Depth, Assumption 4.1][IDC] | The producer and later current-source consumer are quiescent; authentication, complete retention cuts and later invocation are separate premises. |
+| [NAR, Assumption 12.1 and Theorems 12.3, 12.5][NAR] | Relative-epoch decoding starts from truthful complete rows in one chronological same-root pure-$\rho$ family; it does not acquire them from concurrent raw Reads. |
+| [Native Birth Provenance, Assumption 1.3 and Theorem 4.3][NBP] | Finite history recovery uses a specified authentic origin, an authenticated update count and the indicated birth records with the current row. |
+| [Process Geometry, Theorem 3.5 and §41][PG] | Joint gluing is restricted to one actual shared-history carrier and lawful transitions; equal marginals do not supply that carrier. |
+| [Transport–Memory, Convention 23.14 and §57.12][TM] | Earlier navigation assumes a stationary epoch or an additionally acquired snapshot. The separate bounded-source realization excludes concurrent/interrupted calls and assumes its stated exclusive ownership. |
+| [Serial Literal Delivery, Definitions 1.1, 1.3][SLD]; [Sparse History Continuation, §13][SLC] | Literal delivery is source-quiescent within its Read frame; bounded genuine Updates are serial and acquisition uses the stationary post-poll source. |
+
+The missing composition is executable concurrent acquisition and a
+transcript certificate producing one actual entire tree version, with
+finite-interference progress and paid resources. Abstract fiber criteria,
+stationary traversal, stationary row services and post-acquisition
+overlap recovery are reused, not new content here.
+

@@ -1,0 +1,52 @@
+**Assumption 1.4 (finite descriptor types, unbounded parameters).** Supply a
+finite type set $\mathcal B$. A descriptor of type $b$ is
+$\delta=(b,\mathbf t)$ with $\mathbf t\in\mathbb N^{k_b}$, where $k_b$ is a
+fixed natural number. There is an effective Presburger validity formula
+$\operatorname{Valid}_b(\mathbf t)$ and a nonempty set
+$\operatorname{Real}(\delta)\subseteq\mathcal W$ for every valid descriptor.
+Supply an effective choice of **one literal realization**
+
+$$
+p(\delta)\in\operatorname{Real}(\delta).
+\tag{UDB.3}
+$$
+
+It is chosen without a source, chart, epoch or future reply. Supply an
+effective descriptor $\delta$ for every $p\in\mathcal W$ such that
+
+$$
+\operatorname{Valid}(\delta)\land p\in\operatorname{Real}(\delta).
+$$
+
+Thus the descriptor language covers every permitted finite installation with
+a valid descriptor and a realization containing that installed literal.
+There are finitely many types, not finitely many descriptors. Different
+descriptors may share a realization, and different states may install
+the same literal. A singleton realization set is permitted.
+
+For every $\eta\in\mathcal A$, $c\in\mathcal C$ and descriptor type, supply
+an effective Presburger relation
+$\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta)$ jointly in the source
+coordinates, epoch and descriptor parameters. Its exactness requirement
+has the following quantifier order:
+
+$$
+\begin{aligned}
+\forall\mathbf n\;\forall j\in\mathbb N\;\forall\delta\quad
+&\operatorname{Adm}_\eta(\mathbf n)\land\operatorname{Valid}(\delta)
+\ \Longrightarrow\\
+&\forall p\in\operatorname{Real}(\delta)\;\forall c\in\mathcal C\quad
+\left(\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta)
+\ \Longleftrightarrow\ r_{U^j\Theta_\eta(\mathbf n)}(p)=c\right).
+\end{aligned}
+\tag{UDB.4}
+$$
+
+The quantifier over descriptor types is a finite conjunction. On admitted,
+valid arguments exactly one reply predicate holds. No independently
+chosen chart-specific words can witness (UDB.4): every realization is
+exact simultaneously on the entire chart union and at all epochs.
+The formulas themselves are finite arithmetic data; deciding whether
+arbitrary proposed formulas really satisfy these semantic assumptions is
+not part of the synthesis problem.
+

@@ -1,0 +1,41 @@
+**Lemma 90.1 (Family A, size, rate and signs).** Choose once
+
+$$
+\sqrt{d_0}<s<L^{1/\varphi^2},\qquad z=\log s>0.
+$$
+
+For sufficiently large positive $k\equiv0\pmod6$, set
+
+$$
+m=F_k,\quad n=F_{k+1},\quad t_k=\rho^{k+1}\alpha,
+\quad N_k=F_{k+2}=m+n,\quad
+p_k=(s^{1+n/m}e_1,s^{-n/m}e_2).
+$$
+
+These are actual jointly admissible sources with one fixed preparation per execution. Their first norms are $q_0=q_2=e^{-z/m}$ and $q_1=1$, and
+
+$$
+x_j=e^{-\lambda_kF_{j-1}}u_j\quad(j\geq3),\qquad
+\lambda_k=z/F_k,
+$$
+
+where $u_j$ is $e_2,-e_3,e_1$ for $j\equiv0,1,2\pmod3$, respectively. The same phase order holds at $j=0,1,2$.
+
+**Proof.** The literal trees $T_i=\rho^i\alpha$ satisfy $T_0=\alpha,T_1=\beta,T_{i+2}=\langle T_{i+1},T_i\rangle$. Their leaf counts give the stated $(m,n)$ and $N_k$. On the unit orthogonal leaves their ordered cross products cycle $e_1,e_2,-e_3$, so $T_{k+1+j}$ has the asserted sign and axis. Cassini, equivalently the sign reversal of $m^2+mn-n^2$ under $(m,n)\mapsto(n,m+n)$, gives $Q=-1$. Positive orthogonal homogeneity gives $q_0=s^{m+n-n^2/m}=s^{-1/m}$; the same-history transported formulas in 89.3 give $q_1=1$ and $q_2=s^{-1/m}$. The future formula follows from the actual norm recurrence. Finally $\Delta=s^2>d_0$, $\|b\|<1<L$, and $\|a\|\to s^{1+\varphi}=s^{\varphi^2}<L$. All sufficiently late sources therefore satisfy the simultaneous leaf and three-read bounds. No unit neutral member is used at $d_0>1$. This is the family of [supplier §81](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) with its original indexing. $\square$
+
+For every $u\in S^2$, a single proper rotation of both leaves sending $e_2$ to $u$ yields a source whose designated future phase is $e^{-\lambda_kF_{j-1}}u$ for $j=3,6,9,\ldots$. Proper rotations commute with each ordered cross-product node, preserving the tree, preparation relation, determinant, read norms and complete future. They construct different legal sources; they do not supply an observer rotation or frame-calibration action.
+
+Choose a fixed sufficiently late $k_0\equiv0\pmod6$ so that all these sources are legal and $\lambda_{k_0}\leq1$. Keep $k_i=k_0+6i$ and write $\lambda_i=\lambda_{k_i}$ for $0\leq i<K_N$, exactly while $F_{k_i+2}\leq N$. The identities
+
+$$
+13F_k\leq F_{k+6}=8F_{k+1}+5F_k\leq21F_k\quad(k\geq2)
+$$
+
+give $\lambda_i/\lambda_{i+d}\geq13^d$. Moreover $F_l\leq2^{l-1}$ for $l\geq1$ implies
+
+$$
+K_N\geq1+\left\lfloor\frac{\log_2N-k_0-1}{6}\right\rfloor
+$$
+
+whenever the right side is positive. Binet's formula, verified by the two initial values and recurrence, also gives $K_N=O(\log N)$; hence $K_N=\Theta_{L,d_0}(\log N)$. The designated sequence $F_2,F_5,F_8,\ldots$ starts at one, is unbounded and has consecutive ratios at most five, because $F_{l+3}=3F_l+2F_{l-1}\leq5F_l$ for $l\geq2$.
+

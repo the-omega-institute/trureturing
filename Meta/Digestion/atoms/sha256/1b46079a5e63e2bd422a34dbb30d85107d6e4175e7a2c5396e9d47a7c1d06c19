@@ -1,0 +1,45 @@
+### 52.5 两个共轭位移与中心化相位坐标
+
+同步坐标换位将 `m=1` 与 `m=2` 互换，并保持实际 flatness 和循环正交。因此只需排除 `y=gamma S conjugate(x)`。
+
+此时每个 `r_jk` 是 `x` 的两个相邻比值实部之和，亦即第三个实部的负值，因为三个实部之和为零。若 `x` 有两个相同分量，就会有一个相邻比值为一，从而产生换位内积零，与前卷第 51 节矛盾。故 `x` 的三个分量互不相同。
+
+乘公共相位后可设 `sum x=sqrt(3)`；共轭位移关系保持，只改变单位相位 `gamma`。置
+
+```math
+\xi=x_0x_1x_2,\qquad d=1-\sqrt3\xi,\qquad
+u=x-\frac1{\sqrt3}\mathbf1,\qquad\alpha_x=in.
+```
+
+单位相位的对称多项式给出
+
+```math
+u^Tu=2d,\qquad u^\dagger u=2,\qquad u^\dagger Su=-1+in.
+```
+
+`u,conjugate(u)` 线性无关；否则三个不同的单位圆点 `x_j` 会落在同一条实仿射直线上，而直线与圆最多相交两次。因此 `e=1-|d|²>0`。利用
+`u^T S conjugate(u)=-1-in`、`conjugate(u)^T S conjugate(u)=-conjugate(d)`，解出
+
+```math
+S\overline u=\frac{in\overline d}{2e}u+
+\left(-\frac12-\frac{in}{2e}\right)\overline u.
+```
+
+`S` 在二维零和空间的行列式为一；上述表示及其共轭组成的矩阵行列式为 `1/4+n²/(4e)`。所以 `n²=3e`，特别地 `n!=0`，并有
+
+```math
+S\overline u=\frac{3i\overline d}{2n}u+
+\left(-\frac12-\frac{3i}{2n}\right)\overline u,\qquad
+S^2\overline u=-\frac{3i\overline d}{2n}u+
+\left(-\frac12+\frac{3i}{2n}\right)\overline u.
+\tag{52.4}
+```
+
+再由 `|xi|=1`，即 `|1-d|²=3`，得到
+
+```math
+d=-\frac{n^2+3}{6}+i\nu,\qquad
+36\nu^2=27-18n^2-n^4,\qquad\nu\in\mathbb R.
+\tag{52.5}
+```
+

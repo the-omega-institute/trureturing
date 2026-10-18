@@ -1,0 +1,24 @@
+**约定 1.2（Full-block threshold family）。** Throughout Sections 2–6,
+
+$$
+Q\ge2,\qquad m\ge3,\qquad k=Qm,\qquad T=Qm+1,\qquad j=-\theta_{\rm INITIAL}\pmod T,
+$$
+$$
+I=\{1,\ldots,m-1\},\qquad J=\{1,\ldots,m-2\},\qquad H=m-1.
+\tag{1.3}
+$$
+
+Thus $g=1$ and $P=\mathbb Z/T\mathbb Z$. Because $m<k$, the two control alphabets contain the same literal words, while their common seam constraints still matter. Choose $\lambda:I\to Y$ with $N=|\lambda[I]|\ge2$, an outside label $A$ which may belong to $\lambda[I]$, and $R$ different from every low-tail label. The base target on both legal free-value fibres is
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge k-m,\\
+\lambda(j),&s<k-m,\ j\in I,\\
+A,&s<k-m,\ j\notin I.
+\end{cases}
+\tag{1.4}
+$$
+
+An INITIAL high tail means $s\ge k-m$; all other tails are low. The target at initial $\bot$ is separately specified. This is the full-block boundary $a=m$, outside the strict $a<m$ scope of [S17, Definition 2.1 and Theorem 3.1]. In particular that theorem's root contains a zero, whereas the root forced below does not.
+

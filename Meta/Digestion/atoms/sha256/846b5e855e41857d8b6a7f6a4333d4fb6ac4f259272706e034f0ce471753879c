@@ -1,0 +1,18 @@
+**引理 9.2（两种增益符号的仿射输运）。** For $D_0\in\mathbb R$ and $\lambda\in\mathbb R\setminus\{0\}$, define
+
+$$
+\Phi_{D_0,\lambda}(P,f,d)=(P,\lambda f,D_0+\lambda d).
+                                                                  \tag{9.2}
+$$
+
+This is a bijection of $\mathcal W_3$. On every fixed action word, it maps each normalized reading $z_i$ to $D_0+\lambda z_i$. Consequently it maps $\mathcal P_y$ bijectively onto $\mathcal F(H_J(Y))$ for $Y=D_0+\lambda y$, with exactly the parameters $D_0,\lambda$ in (5.1). It preserves complete-target distinction, actual response fibers, every failure predicate $L_s$, and recoverability by deterministic policies with early stopping and the same number of readings. These assertions hold for both signs of $\lambda$.
+
+Proof. The inverse is $(P,g,\delta)\mapsto(P,g/\lambda,(\delta-D_0)/\lambda)$. Source positivity, rank and trace are unchanged; multiplication of a nonzero polynomial by $\lambda\ne0$ preserves its degree and roots. At every original clock,
+
+$$
+(\lambda f(i))\operatorname{tr}(A_iP)+D_0+\lambda d
+=D_0+\lambda\bigl(f(i)\operatorname{tr}(A_iP)+d\bigr).
+$$
+
+Since this affine map on readings is injective, corresponding actual children are bijective. Induction in (1.1) proves preservation of $L_s$: cardinalities are preserved at $s=0$, and the possible next response values are related bijectively at each induction step. To transport a policy, apply the inverse affine map to each acquired reading before making the original policy's next action, stop or output decision, and apply $\Phi_{D_0,\lambda}$ to its returned target. The inverse construction transports policies back. No comparison of ordered readings or sign of $\lambda$ is used. ∎
+

@@ -1,0 +1,14 @@
+**Lemma 3.5 (Two disjoint one edges).** After two vertex-disjoint active
+edges labelled one, at most one further query gives summed full-law
+correct mass at most $2a\eta^2$.
+
+Proof. The phase-conditional prefix probability is $4\eta^2$. If the
+target lies in either tie component, extending it by one fresh vertex
+gives average correctness $a$. Joining the other tie component leaves
+correctness $1/2$ by (3.2). A repeat, separator or nontarget query
+leaves correctness $1/2$. For an external target its singleton has
+odds $R$; joining a tie component or a fresh vertex leaves its average
+correctness $a$, and a nontarget query cannot improve it. Hence every
+case has correctness at most $a$ times the prefix probability. Including
+the phase factor gives $\tfrac12(4\eta^2)a=2a\eta^2$. $\square$
+

@@ -1,0 +1,91 @@
+**Theorem 34.1 (complete quotient weight and distinct zero objects).**
+Let $\overline L_\kappa$ be the complete $j=0$ free operator on
+$B=I\times\mathbb T_\theta\times\mathbb T_v$ with raw measure, and
+put $\overline Z_\kappa(t)=\operatorname{Tr}e^{-t\overline L_\kappa}$.
+For small nonzero $\kappa$ it is the reducing sector under
+$Jh=(2\pi)^{-1/2}h$, not the full operator. Uniformly on positive
+compact time intervals,
+
+$$
+\begin{aligned}
+\overline Z_\kappa(t)&\longrightarrow Z_{\rm leaf}(t)
+ :=\operatorname{Tr}e^{-t\overline L_0}<\infty,\\
+a[Z_\kappa(t)-\overline Z_\kappa(t)]&\longrightarrow F(t),\qquad
+\frac{\overline Z_\kappa(t)}{Z_\kappa(t)}
+ \sim a\frac{Z_{\rm leaf}(t)}{F(t)}.
+\end{aligned}
+\tag{34.1}
+$$
+
+At the mixing clock, uniformly on compact positive $z$ intervals,
+
+$$
+\begin{aligned}
+e^{\lambda z/a^2}\overline Z_\kappa(z/a^2)&\longrightarrow1,\\
+e^{\lambda z/a^2}[Z_\kappa(z/a^2)-\overline Z_\kappa(z/a^2)]
+ &\longrightarrow\Theta_\beta(z)-1,\\
+\frac{Z_\kappa(z/a^2)-\overline Z_\kappa(z/a^2)}{Z_\kappa(z/a^2)}
+ &\longrightarrow1-\Theta_\beta(z)^{-1}.
+\end{aligned}
+\tag{34.2}
+$$
+
+On every intermediate path of Theorem 33.2 the omitted trace is
+asymptotic to the full trace, while
+$\overline Z_\kappa(t)\sim e^{-\lambda t}$.
+The actual zero leaf has direct rank two and homogeneous heat dimension
+four. The resolved real-$x$ cover has finite positive trace density
+$F(t)/(2\pi)$, homogeneous heat dimension seven, and infinite total
+positive-time trace. The enlarged four-coordinate operator at zero,
+with $D$ frozen and unchanged raw $dD$, has infinite multiplicity and
+infinite positive-time trace. These are distinct realizations.
+
+Proof. The completed free reduction and its exact isometry are
+(23.5), (26.13), and
+[Observation quotient, (10.7)](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md).
+Thus $\overline Z_\kappa=\sum_{n,m}T_\kappa(t;n,m,0)$ exactly.
+Equation (31.5) gives the complete summable dominator, and scalar
+min-max convergence gives its first limit in (34.1). Theorem 31.2
+then gives the other two, with positive continuous limiting functions.
+The constant block has spectrum $\lambda h^2$; the nonzero visible
+blocks have a uniform positive bottom gap above $\lambda$ by (26.6).
+Consequently, uniformly in small $\kappa$, for $t\ge1$,
+
+$$
+e^{\lambda t}\overline Z_\kappa(t)=1+O(e^{-dt})
+\tag{34.3}
+$$
+
+for a fixed $d>0$, by (31.5). Combine this with Theorems 33.1 and
+33.2 to obtain (34.2) and the intermediate assertions. There is no
+factor $2\pi$ in a sector trace: $J$ is an isometry and preserves
+multiplicities. The factor $1/(2\pi)$ in the cover density instead
+comes from continuous Fourier inversion and its noncompact length.
+
+At $\kappa=0$ the actual original motion has $D=0$ throughout,
+as in Proposition 29.2; its leaf operator is $\overline L_0$ on $B$.
+Its finite trace has just been proved, and its rank and $Q=4$ are the
+existing native conclusions of
+[N, Theorem 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+not new dimension claims. Resolving $x=D/\kappa$ before the limit
+instead gives $c_0\cdot\partial_{\theta,v,x}$, with the nonzero
+$x$ coefficient $b_0$ and determinant (32.2). Its local $Q=7$ is the
+resolved version of the existing step-three flag; Theorems 31.2 and
+32.1 supply its finite trace density and coefficient. Translation
+invariance in $x$ makes its diagonal integral over the entire real
+line infinite. More intrinsically, compressing its heat operator to
+$|x|<R$ has trace $2R F(t)/(2\pi)$, which increases without bound.
+
+Finally retaining all four coordinates while merely setting
+$\kappa=0$ in the unrescaled operator gives
+$\overline L_0\otimes\mathrm{Id}_{L^2(\mathbb T_D,dD)}$.
+Every eigenvalue of $\overline L_0$ then has the countably infinite
+multiplicity of the frozen $D$ Fourier modes; the heat trace diverges
+for every $t>0$. It is neither the actual zero leaf nor the resolved
+cover. In all four objects the supplied instantaneous controls have
+rank two. None of these trace identities changes that rank, supplies
+an elliptic Euclidean three-dimensional diffusion, or identifies the
+full spectrum with physical Euclidean space. In particular $Q=4$ and
+$Q=7$ concern the stated horizontal operators and measures, rather
+than a count of physical spatial axes. $\square$
+

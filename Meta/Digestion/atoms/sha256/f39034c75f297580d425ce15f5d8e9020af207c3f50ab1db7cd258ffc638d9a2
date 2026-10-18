@@ -1,0 +1,47 @@
+**定义 9.4（V13–15 的同一精确联合系统，REUSE/APPLICATION）。** 以下采用 [V，定义 13.1、14.1，定理 14.2、15.1–15.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的固定目标与规范有理盒定理。对 $\alpha,\beta>0$ 和 $d\in\mathbb R$，令
+
+$$
+\begin{gathered}
+h=1+\alpha\beta,\qquad
+P(\alpha,\beta)=\frac1h
+\begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\\
+a_{\rm V}=1/h,\qquad j_{\rm V}=(\alpha+\beta)/h,\qquad
+\ell_{\rm V}=1+\beta/h,\\
+\tau^{\rm V}=(1,j_{\rm V},\ell_{\rm V},j_{\rm V}+\ell_{\rm V}),
+\qquad b=(0,24,48,312/5),\\
+q_i=(b_i-d)/\tau^{\rm V}_i,\qquad
+f(T)=\sum_{i=0}^3q_i\lambda_i(T),\\
+A=1+a_{\rm V}+j_{\rm V},\qquad B=j_{\rm V}+2\ell_{\rm V}-a_{\rm V},\\
+Y=d+f(4)A,\quad Z=d+f(5)B,\quad V=d+f(6)(A+B),\\
+R=d+f(7)(2A+j_{\rm V}),\qquad S=d+f(7)(A+2B).
+\end{gathered}
+$$
+
+这里 $\lambda_i$ 恰为 (2.6)，后续样本恰为完整矩阵 (2.8)，不是另一次拟合。对
+$x=(\alpha_1,\beta_1,d_1,\alpha_2,\beta_2,d_2,\alpha_3,\beta_3,d_3)$，各函数的下标表示在对应同一三元组取值；定义
+
+$$
+F(x)=(Z_1,Z_2,Z_3,Y_1-Y_2,Y_1-Y_3,V_1-V_2,V_1-V_3,
+                         R_1-R_2,S_1-S_3)^{\mathsf T}.       \tag{9.4}
+$$
+
+固定精确有理中心与闭盒
+
+$$
+x_0=\frac1{10^{15}}
+\begin{pmatrix}
+648261282725604\\
+1661406963929015\\
+2963341227084761\\
+267996473307519\\
+1637499998610191\\
+4652954721959948\\
+576125340775968\\
+10453577045282132\\
+15807600936593863
+\end{pmatrix},\qquad
+\rho=10^{-8},\qquad X=\{x:\|x-x_0\|_\infty\le\rho\}.        \tag{9.5}
+$$
+
+$C_{\rm V}$ 专指 V 的 (14.2) 中逐项给定的固定有理 $9\times9$ 矩阵；其区间运算、导数包络及有限比较保持 V 的 (14.3)–(14.6) 所指定的表达式与顺序。它不表示任意近似逆，也不把中心当作联合零点。
+

@@ -1,0 +1,28 @@
+**Definition 2.3 (right-spine coordinate and calibrated defect).** Use the
+existing `rightClock` with the exact recurrence
+
+$$
+c(\alpha)=0,\qquad c(\beta)=1,\qquad c((s,t))=2+c(t).
+\tag{IDC.2.5}
+$$
+
+If the rightmost leaf has depth $h$ and label bit $b$, with $b=0$ for
+$\alpha$ and $b=1$ for $\beta$, then $c(u)=2h+b$.
+Initially regard the subtraction in
+
+$$
+d(u)=c(u)-\nu(u)
+\tag{IDC.2.6}
+$$
+
+as integer subtraction. Theorem 3.1 proves that it is nonnegative.
+Use [JM, Definition 49.1][JM]'s original flag and pair:
+
+$$
+e(u)=\mathbf1_{\{p(u)=\alpha\}},\qquad Q(u)=(\nu(u),e(u)).
+\tag{IDC.2.7}
+$$
+
+The coordinate $c$ is unrelated to the composition vector also denoted by
+$c$ in some owning volumes.
+

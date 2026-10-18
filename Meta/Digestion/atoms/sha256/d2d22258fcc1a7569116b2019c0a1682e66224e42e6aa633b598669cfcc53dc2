@@ -1,0 +1,34 @@
+## 23. Attribution, original interfaces and the remaining acquisition gap
+
+**Source statement 23.1 (what is reused and what is added).**
+
+| Supplier at the public revision of §17 | Precise use and boundary |
+| --- | --- |
+| [FiniteRectangleTransport](../../../D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and its [owning Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | Valid base, strict probabilities, signed phase weights, compatibility and actual rectangles; the Scribe's all-signed-sector/common-preparation application supplies the real lift construction. No sensor or physical actuator is inferred. |
+| [OriginalControlComposition](../../../D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Original controls, both regularities, finite/zero durations, literal unchanged prefix, matching heights, translated real tail and additive weighted integrals. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5.2, 9–15, 17–22; this volume §§12–15 | Full phase/parity source, sharp $s_*$, scalar canonical loops, complete exact-time/five-mode CP kernels, shared-support continuation rigidity and finite joint composition are credited. Supplied programmable processors and the failure-only calibration example are not redelivered as acquisitions. |
+| [Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md); [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md); [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md) | Their marked-law metrics, regularity conditions, query limits and conditional sampler/certification contracts remain. A Bayes parity score supplies none of their missing strong error data or extra joint sensor law. |
+| [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§1, 7–10; [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§2–6 | Live carrier and correlated-archive upper correspondence, separately scoped unassisted lower bounds, known-anchor labels, received commands and same-event timestamp costs retain their different contracts. The one selector bit is not a full archive minimum. |
+| [Reanchoring Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md), §§2–7 | Unknown-height reanchoring remains distinct. The known return height here is a promised source invariant, not a newly acquired unknown-height guard. |
+| [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12/2.18; [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Actual common coherent source/port, aligned acquired readings, known nonzero amplitudes and overlap, one source/epoch running image and complete compatible selection/update routes remain required. No individual four-view recovery map is constructed here. |
+
+The source-specific addition is (PR.68)–(PR.74), its actual path
+attainment, complete joint successor and retained-selector example.
+Binary likelihood decisions, survival filtering and CP calculus are
+mature mathematics. The shared-support exact-continuation ceiling is
+explicitly reused. This is a repository-derived synthesis, with no
+worldwide priority claim.
+
+**Literature statement 23.2 (likelihoods and operational scope).**
+
+| Primary reference | Verified content and use |
+| --- | --- |
+| S. Gammelmark and K. Mølmer, [Bayesian parameter inference from continuously monitored quantum systems, arXiv:1212.5700v1](https://arxiv.org/html/1212.5700v1), Eqs. (12)–(13) and the jump/counting model | An unnormalized conditional state's trace gives the likelihood relative to a chosen reference measure for a specified instrument. Clicks and no-click evolution both enter. This is mature motivation; (PR.64)–(PR.70) instantiate the actual original CP probabilities directly. The paper supplies no original sensor or black-box calibration certificate. |
+| L. Leppäjärvi and M. Sedlák, [Incompatibility of quantum instruments, arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | The stated compatibility condition is equivalent to postprocessing a complementary instrument from a chosen dilation. No complementary/environment port or implementing postprocessor is granted by that equivalence. None is used here. |
+| [Classical Sufficiency in Quantum Statistical Experiments, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), §3.4.2, Definition 7 and comparison with restricted-measurement sufficiency | Recovery of the quantum experiment by one channel is stronger than preservation of the declared classical experiments of a restricted measurement class. No inference from this binary score to full original future-law recovery is made. |
+
+These primary-source comparisons do not provide a directly sufficient
+joint acquired original observer under the present absorbing, single-
+specimen contract. This bounded comparison is neither an absence theorem
+nor an originality argument.
+

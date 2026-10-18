@@ -1,0 +1,59 @@
+**Theorem 7.2 (Explicit lower bound for every allowed actual continuation).**
+Every original competitor in either class under (1.4) satisfies
+
+$$
+e_a(A)\ge L_8=5\tau+11u/117.
+\tag{7.2}
+$$
+
+Proof. Let an original $N$ rule meet $0<c\le1$ and take its credited
+normalized representative on its actual finite active horizon $H$.
+For $H>8$, fix higher replies to zero, project labels above eight to
+zero and contract constant observations. Every low first-zero target
+is unchanged. On the positive eight-prefix, the higher first-zero
+target projects to the base point, giving $p_+(0)\ge1-c$ regardless
+of actual $a_9$. For $H=8$ use the representative directly.
+For $H<8$, ignore the added inputs. Each newly represented first zero
+has $a_n\le c$ and the old positive law has no mass at its label;
+(1.3) verifies every row. This includes $H=0$, all multiple-zero words,
+closed ties and negative demands. Hence there is one complete normalized
+eight-bit law at $(a_1,\ldots,a_8;c)$.
+
+Apply Lemma 7.1 to this law. Its sum is
+
+$$
+2a_2+11a_3+13a_4+13a_5+12a_6+11a_7+11a_8
+=(2-22\tau)+552\tau+55\tau+11u
+=2+585\tau+11u.
+\tag{7.3}
+$$
+
+Thus $c\ge5\tau+11u/117$. Decrease positive met caps to any actual
+error below one, including hypothetical zero error. At error one the
+bound follows from $L_8\le596/(117\cdot24)<1$.
+Counted $N$ completion proves the stopped-competitor conclusion.
+
+In the positive-width parameterization $a_8=5\tau+11\delta$,
+$r_0=5\tau+\delta$, the correspondence is exactly $\delta=u/11$.
+For $u>0$ it satisfies $0<\delta\le\tau/11$.
+The required head interval $a_2\le a_1\le1-7\tau$ holds because
+$a_1=a_2=1-11\tau$. Also $a_9\le a_8$, and the full stipulated
+continuation is positive, ordered and vanishing.
+Actual $a_9$ can exceed the cap: it is not replaced in the original
+sequence. Only the necessity representation receives $b'_9=c$ in
+Lemma 7.1. At $u=0$ the boxed bridge and direct substitution still
+hold without asserting positive width.
+
+The same deduction can be written with $S=\sum_{3}^8b_n$,
+
+$$
+s=1+44e-b_2-4b_3-5b_4-5b_5-5b_6-4b_7-4b_8,\qquad
+g=3S-b_6-29e.
+\tag{7.4}
+$$
+
+Expansion of (7.1) is exactly $g\le2s$. With $\delta=u/11$ and
+$t=e-r_0$, one has $s=44t$ and $g=4\delta-29t$, so
+$4\delta\le117t$. This is the same stronger consequence
+$e\ge r_0+4\delta/117$, not an independent score result. $\square$
+

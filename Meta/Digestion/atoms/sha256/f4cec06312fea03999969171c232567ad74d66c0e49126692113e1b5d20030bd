@@ -1,0 +1,9 @@
+**Definition 6.1 (an original-source Zero chart).** Fix one actual reached
+outer prefix $P$ and its completed predecessor. From that same prefix
+supply 01 and any canonical strict Reserve$(J)$ with $J>K_P$. Let
+$Z_P$ consist of its cuts
+$k=n_0+5z+s$, $0\le z\le4(J-K_P)$, $0\le s\le4$,
+as in ARC Definition 8.3. Here $P$ is a chart parameter, not a new
+initializer for each $J$. All original setup, external input and
+intermediate rows from $P$ to the chosen cut are included.
+

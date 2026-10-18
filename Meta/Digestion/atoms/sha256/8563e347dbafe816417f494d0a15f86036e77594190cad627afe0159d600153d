@@ -1,0 +1,9 @@
+**Definition 5.4 (unary copy and fresh increment).** The destination head
+is at its existing right marker; its writer token is held. The source is
+a sealed $U(x)$ followed by a constructed delimiter, with head at its
+first bit. A copy reads each bit, applies `EX; WR(bit); MR(destination)`,
+and moves the source head once, including after its zero. Its final-zero
+branch exits at that move. A fresh increment instead copies each leading
+one with the same five-row body, then reads the source zero and appends
+one and zero without moving the source again. It retains the old version.
+

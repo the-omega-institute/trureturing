@@ -1,0 +1,39 @@
+**Convention 280.2 (All rows and one allocation).**
+Definitions 273.1–273.2 apply in every section below: all $2^L$ words,
+all labels $0,\ldots,L$, all three independent zero-word events and the
+positive event remain. In particular negative singleton demands are
+retained. Write $w(Z)$ for the word with exactly the zero set $Z$.
+A score is a nonnegative vector of independent $A,C,P,T$ coefficients,
+not a probability law on sources. For any such score $V$ of zero cost,
+and any one complete feasible allocation of any finite mass,
+
+$$
+F_{QV}(b,e)\le V G_N\lambda
+ =\sum_D\lambda_D(Vz_D-W_V)\le0.
+\tag{280.2}
+$$
+All coordinates in this pairing belong to the same $(b,e),\lambda$.
+The definitions of $H_L,H_N,Q,\sigma_H$ are (273.5)–(273.6).
+No monotonicity of $b$ is needed in (280.2).
+
+The actual source, full disjoint-union Borel carrier, unchanged consumer
+and original nonatomic targets are exactly those of 273.3. The selected
+marked laws (273.8) remain distinct from those nonatomic targets. A
+probability allocation is realized by one source-independent uniform seed
+selecting its complete schedule and every counterfactual terminal output
+before replies. It has zero advice and finite handoff. $N$ obtains its
+whole preselected schedule; $O$ uses an increasing preselected schedule
+and stops at its first queried zero or exhaustion. At most two actual
+requests are allowed, including repeated and ignored requests. The
+unchanged competitor classes allow arbitrary addresses and full-carrier
+outputs. Theorems 109.1 and 110.2 supply, respectively, the normalized
+stopped criterion $c\ge H$ and exact closed-cap class feasibility
+transport. That transport need not preserve an arbitrary starting law or
+coupling. Proposition 280.1 supplies the actual finite words used in its
+source argument. Actual positive monotone vanishing tails always retain
+the exact error (273.9), including $a_n=e$. Conic division uses (273.10),
+with its changed profile; subunit mass can instead be padded at $R$.
+These closed-cap assertions concern the selected marked targets on the
+original acquisition interface. They give no approximation assertion for
+the distinct unchanged nonatomic targets $\mu_x^{\rm orig}$.
+

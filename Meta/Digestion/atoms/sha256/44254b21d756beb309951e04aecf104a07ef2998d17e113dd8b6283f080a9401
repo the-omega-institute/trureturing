@@ -1,0 +1,52 @@
+**定理 6.1（MJMM 根类的六总读逆）。** For every $Y$, a single fifth atom $J$ recovers every target in $C_{MJ}(Y)$ by original clock five, with six total readings. Fourth $M$ followed by fifth $J$ therefore recovers the entire $\delta=D_0,g(7)=0$ class compatible with $H_{MJ}^-$.
+
+Proof. The clock-one and clock-three readings equal the promised drift. Their positive traces force $g(1)=g(3)=0$. Together with $g(7)=0$ and the nonzero degree-at-most-three condition this gives
+
+$$
+g(t)=\kappa(t-1)(t-3)(t-7).
+$$
+
+The initial read $D_0-21\lambda$ and $\operatorname{tr}P=1$ give $\kappa=\lambda$. No alternative lower-degree gain can occur in this promised class.
+
+At clock two the cumulative matrix is $U_0=JM=(\begin{smallmatrix}1&1\\0&1\end{smallmatrix})$, and $g(2)=5\lambda$. Thus $\operatorname{tr}(U_0P)=1+\varepsilon$, equivalently $P_{21}=\varepsilon$. Strict positivity, rank one and trace one now give the complete parametrization
+
+$$
+P(d)=\begin{pmatrix}1-d&d(1-d)/\varepsilon\\\varepsilon&d\end{pmatrix},
+\qquad 0<d<1.                                                  \tag{6.1}
+$$
+
+Every such $d$ conversely gives the whole preceding history with this gain and drift. Put
+
+$$
+f_2(d)=d(1-d)/\varepsilon+\varepsilon+2d.
+$$
+
+The actual complementary fourth and fifth matrices are
+
+$$
+A_4=M^2U_0=\begin{pmatrix}1&2\\1&3\end{pmatrix},\qquad
+A_5=JA_4=\begin{pmatrix}1&3\\1&2\end{pmatrix}.
+$$
+
+Their traces are respectively $1+\varepsilon+f_2(d)$ and $1+2\varepsilon+f_2(d)-d$, while $g(4)=-9\lambda$, $g(5)=-16\lambda$. Hence the actual readings determine
+
+$$
+q=-\frac{Y-D_0}{9\lambda}-1-\varepsilon=f_2(d),\qquad
+v=-\frac{z_5-D_0}{16\lambda},\qquad
+d=1+2\varepsilon+q-v.                                        \tag{6.2}
+$$
+
+Return (6.1), the forced gain and drift $D_0$. The denominators are known and nonzero. The full possible fourth-coordinate range is
+
+$$
+\varepsilon<q\le\frac1{4\varepsilon}+1+2\varepsilon,            \tag{6.3}
+$$
+
+since the concave quadratic $f_2$ has its maximum at $d=1/2+\varepsilon\in(0,1)$, tends to $\varepsilon$ at $d=0$, and tends to $\varepsilon+2$ at $d=1$. The upper endpoint is included. For two distinct parameters,
+
+$$
+f_2(d)=f_2(d')\ \Longleftrightarrow\ d+d'=1+2\varepsilon.
+$$
+
+Their fifth readings then differ by $16\lambda(d-d')$. In particular the inverse covers both branches of any actual fourth fiber, including its vertex, with no division by a discriminant or by a gain sample. ∎
+

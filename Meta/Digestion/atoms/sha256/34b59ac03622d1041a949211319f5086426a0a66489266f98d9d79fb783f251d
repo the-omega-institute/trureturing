@@ -1,0 +1,28 @@
+**Corollary 8.4 (Vanishing error without a finite certificate, and synchronization scope).** Let $m_r(W_r)$ be the fixed-order MAP choices of (2.2). For the same fixed law,
+
+$$
+0<\epsilon_Q(r)\le\tfrac52\bar\rho^{\lfloor r/2\rfloor},\qquad
+\bar\rho=\sqrt{15}/4<1,\qquad
+\sum_{r\ge0}\epsilon_Q(r)<\infty,
+\tag{8.5}
+$$
+
+and
+
+$$
+J\bigl(\exists R<\infty\ \forall r\ge R:\ m_r(W_r)=Q_0\bigr)=1.
+\tag{8.6}
+$$
+
+The posterior vectors converge almost surely to the Dirac vector at $Q_0$, although no finite-radius posterior is Dirac. Over all almost-surely finite stopped classifiers in Definition 8.1, the infimum of error probability is zero and is not attained. The actual six-state quotient is nonexact in the sense of [Travers–Crutchfield, Exact Synchronization, Definitions 5–8][TCe].
+
+Proof. The strict positivity in (8.5) follows by integrating $1-\max_a\nu_r(a)>0$ from Theorem 8.2. Its upper bound and summability are the already proved Theorem 3.3 with the parameters of Proposition 4.3; (8.6) is the fixed-$Q_0$ eventual-correctness conclusion used in Theorem 4.4. That theorem also makes $Q_0$ measurable in $\mathcal F_\infty$, so bounded martingale convergence yields $\nu_r(a)\to\mathbf1_{\{Q_0=a\}}$ almost surely for each class $a$.
+
+A deterministic return at radius $r$ with label $m_r(W_r)$ is an almost-surely finite stopped classifier. Its error tends to zero by (8.5), proving the zero infimum. Theorem 8.3 excludes its attainment by any almost-surely finite stopped classifier, randomized or otherwise. At a fixed radius, independent randomization cannot improve the MAP error, since the conditional error of any class choice is at least $1-\max_a\nu_r(a)$. Thus there is no positive error floor uniform over finite radii or almost-surely finite return rules. The samplewise finite stabilization radius in (8.6) supplies no observable zero-error stopping certificate.
+
+For the synchronization statement, Propositions 3.2 and 4.2 give a strongly connected, stationary, row-unifilar quotient with probabilistically distinct states, satisfying [TCe, Definition 5][TCe]. The free classes $F_0,F_1$ have the same allowed finite-word language: all legal no11 words. On every common word their residues each increase by $k(w)$ modulo three, so they never reach the same class. This pair is neither topologically distinct nor path convergent. The exact characterization in [TCe, §IV.1 Theorem 3][TCe] therefore identifies this quotient as nonexact; (8.3) also directly shows that it has no synchronizing word. The distinction between exact and asymptotic synchronization is mature theory, as are the nonexact state-uncertainty estimates of [Travers–Crutchfield, Asymptotic Synchronization, §VI Theorem 1 and §VII.1 Proposition 3][TCa]. The exact support and stopped-classification consequences are elementary source-specific synthesis from (4.1).
+
+Stationarity identifies the distribution at each separate radius of $(Q_0,X_{-r:-1})$ with that of $(Q_r,X_{0:r-1})$. The nested past fields estimate one fixed target $Q_0$; forward filtering instead estimates the moving target $Q_r$. Equality of these separate distributions does not identify the refinements pathwise or transport a stopping rule. It also does not recover an initial forward F/T phase, whose overlapping future laws are retained in Theorem 4.4. Increasing mathematical past windows require the access premise of Definition 8.1 for a physical procedure.
+
+These conclusions concern exactly the fixed twelve-state law and its quotient, with no attainment premise. The supported-word guard is Theorem 5.1's law-level statement; the stopped-classification obstruction concerns this fixed actual quotient. The original finite-attainment and all-$N$ separation alternatives of Open Problem 6.1, and its general nonunifilar and uniform-rate residuals, remain unresolved by this fixed-target stopping result. $\square$
+

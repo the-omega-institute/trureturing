@@ -1,0 +1,50 @@
+**Corollary 22.2 (canonical coefficients and the full clock).** Let $A_\Omega,I_\Omega,B_{1,\Omega},C_{2,\Omega},T_\Omega$ denote the five defining integrals restricted to $\Omega=\mathbb B_{3R}$, with their original signed integrands for $B_1,C_2$. In this corollary every $\epsilon$ means its value at $3R$. Then
+
+$$
+\begin{gathered}
+A\in[A_\Omega,A_\Omega+\epsilon_A],\quad I_h\in[I_\Omega,I_\Omega+\epsilon_I],\\
+B_1\in[B_{1,\Omega}-\epsilon_B,B_{1,\Omega}+\epsilon_B],\quad
+C_2\in[C_{2,\Omega}-\epsilon_2,C_{2,\Omega}+\epsilon_2],\\
+T\in[T_\Omega,T_\Omega+\epsilon_T].
+\end{gathered}
+\tag{22.4}
+$$
+
+Define
+
+$$
+\begin{aligned}
+B_h^-&=3A_\Omega-\gamma(C_{2,\Omega}+\epsilon_2)-I_\Omega-\epsilon_I,\\
+B_h^+&=3(A_\Omega+\epsilon_A)-\gamma(C_{2,\Omega}-\epsilon_2)-I_\Omega,\\
+G_{108}^-&=1-A_\Omega-\epsilon_A
+ -\gamma(C_{2,\Omega}+\epsilon_2+2B_{1,\Omega}+2\epsilon_B),\\
+G_{108}^+&=1-A_\Omega
+ -\gamma(C_{2,\Omega}-\epsilon_2+2B_{1,\Omega}-2\epsilon_B),\\
+G_{\rm resp}^-&=B_h^- -\mathcal J(z)-\eta_R(z,\mathbf j)^2-\operatorname{Err}_R,\\
+G_{\rm resp}^+&=B_h^+ -\mathcal J(z)-\ell_L,\\
+D^-&=1+\gamma T_\Omega,&D^+&=1+\gamma(T_\Omega+\epsilon_T).
+\end{aligned}
+\tag{22.5}
+$$
+
+These enclose the same-source $B_h,G_{108},G_{\rm resp},\overline D$ in the correspondingly named intervals. For either $X=108$ or $X={\rm resp}$, write $[L_X,U_X]=[G_X^-,G_X^+]$. Then
+
+$$
+\boxed{\quad
+\frac{C_X}{a\nu^2}\in
+ [L_X-\mathscr R D^+,\ U_X-\mathscr R D^-],\qquad
+\mathscr R=\lambda/\nu^2>0.\quad}
+\tag{22.6}
+$$
+
+The threshold ratio $Q_X=G_X/\overline D$ lies between the minimum and maximum of the four numbers
+
+$$
+L_X/D^-,\quad L_X/D^+,\quad U_X/D^-,\quad U_X/D^+.
+\tag{22.7}
+$$
+
+Proof. Nonnegativity gives the one-sided $A,I_h,T$ intervals and the absolute tails give the symmetric signed intervals. Substitute them into $B_h=3A-\gamma C_2-I_h$ and $G_{108}=1-A-\gamma(C_2+2B_1)$, and use Theorem 21.1 for $G_{\rm resp}$. Since $\mathscr R>0$, the larger clock is subtracted at the lower endpoint in (22.6). Both $D^-,D^+$ are positive, so the extrema of division on this rectangle occur at corners, proving (22.7) without a numerator sign assumption.
+
+An evaluated upper endpoint below zero or lower endpoint above zero is a sufficient strict-sign certificate. The formulas alone evaluate neither absolute canonical sign nor the sign at an arbitrary fixed datum. No sign is inferred from separate extrema being simultaneously attainable; intervals are used only in their valid enclosure directions. The parameter-occurrence consequences of §§14–15 use the resulting threshold only with the actual admitted ratio image. $\square$
+

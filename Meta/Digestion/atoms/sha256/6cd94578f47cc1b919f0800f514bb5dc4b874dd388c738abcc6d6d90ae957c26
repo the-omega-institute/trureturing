@@ -1,0 +1,177 @@
+- [Shor97] P. W. Shor, *Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer*, SIAM Journal on Computing 26 (1997), 1484-1509. [arXiv:quant-ph/9508027](https://arxiv.org/abs/quant-ph/9508027). The factoring task is separate from the elementary three-character phase readout in (8.2).
+
+## 11. Nonperturbative positivity: a unique ground state at every positive matched coupling
+
+Sections 11-16 concern the same microscopic two-cell Hamiltonian as Section 6, now for every Delta>0 and g>0 without a small-coupling assumption. They give ordinary mathematical proofs, not new Lean declarations. The matrix-positivity mechanism is established spin-reflection-positivity methodology [LS00]. Its finite specialization is proved here, including the full-rank and uniqueness steps needed below. This is not an originality claim for reflection positivity or for the existence of singlet ground states in reflected magnets.
+
+Put h=Delta L/2 and R=Y^{tensor 4}; in computational coordinates R is real, symmetric and unitary. For a 16 by 16 coefficient matrix C define the linear isometry
+
+$$\mathcal V(C)=\sum_{\mu,\nu} C_{\mu\nu}|\mu\rangle_a\otimes R|\nu\rangle_b,\qquad \|\mathcal V(C)\|^2=\operatorname{Tr}C^\dagger C.$$
+
+The antiunitary time reversal on one cell is Theta=R times coordinate conjugation. The matrix identities R(J_i^alpha)^T R=-J_i^alpha and Rh^T R=h give
+
+$$H\mathcal V(C)=\mathcal V(\mathscr H(C)),\qquad
+\mathscr H(C)=hC+Ch-g\sum_{i,\alpha}J_i^\alpha C J_i^\alpha. \tag{11.1}$$
+
+This is a representation of the full 256-dimensional operator, with no projection or omitted sector. The superoperator is complex-linear, Hilbert-Schmidt selfadjoint and preserves Hermitian matrices.
+
+### Theorem 11.1. Strict matrix positivity and uniqueness
+
+For every Delta>0 and g>0, H has a unique ground ray. Its normalized coefficient matrix in (11.1) can be chosen strictly positive definite. Consequently its Schmidt rank across the two four-spin cells is 16. These assertions also hold for four unequal matched couplings g_i>0, replacing g in each site's three terms by g_i. No claim of the subsequent three-dimensional reduction or monotonicity is made for unequal links.
+
+Proof. A lowest-eigenvalue eigenmatrix has a nonzero Hermitian real or imaginary part, since the superoperator preserves adjoints. Choose a Hermitian ground matrix C with eigenvalues c_m and Hilbert-Schmidt norm one. In its eigenbasis,
+
+$$\langle C,\mathscr H(C)\rangle=2\operatorname{Tr}(hC^2)-g\sum_{i,\alpha,m,n}c_mc_n|(J_i^\alpha)_{mn}|^2.$$
+
+Replacing C by |C| preserves C^2 and the norm and cannot increase this Rayleigh quotient, because |c_m c_n|>=c_m c_n. The variational principle therefore gives a positive semidefinite ground eigenmatrix A.
+
+If v is in ker A, take its expectation in the eigenmatrix equation. The h terms and eigenvalue term vanish, leaving
+
+$$0=-g\sum_{i,\alpha}\langle J_i^\alpha v,A J_i^\alpha v\rangle.$$
+
+Every summand is nonnegative before the minus sign, so all J_i^alpha preserve ker A. The single-site Pauli matrices generate the full matrix algebra on four qubits: products contain every Pauli tensor. Its only common invariant subspaces are zero and the whole space. Since A is nonzero, ker A=0.
+
+For uniqueness, suppose D is an independent Hermitian ground eigenmatrix. The Hermitian matrix A^{-1/2}DA^{-1/2} is not scalar. At an appropriate finite endpoint of the interval on which $I+t A^{-1/2}DA^{-1/2}$ is positive semidefinite, A+tD is nonzero, positive semidefinite and singular. It is another ground eigenmatrix, contradicting the preceding kernel argument. If the complex ground eigenspace had larger dimension, its Hermitian real form would supply such a D. Thus the ground ray is unique. Strict positivity gives 16 nonzero singular values, hence full Schmidt rank. With g_i>0 the same sum-of-nonnegative-terms and irreducibility arguments apply. QED.
+
+Uniqueness implies a positive spectral gap for each fixed finite-system parameter pair. It does not give a gap uniform as g tends to zero or a thermodynamic-limit gap. At g=0 the full ground space has dimension four, so that endpoint is excluded.
+
+## 12. An exact three-dimensional ground-state problem, with a global certificate
+
+Define the single-cell spectral projectors and their ranks by
+
+$$P_0=\frac{(L-2I)(L-6I)}{12},\quad P_1=\frac{L(6I-L)}8,\quad P_2=\frac{L(L-2I)}{24},\qquad(d_0,d_1,d_2)=(2,9,5).$$
+
+These are the full spin-zero, spin-one and spin-two sectors, including multiplicities. Write Xi_j=mathcal V(P_j)/sqrt(d_j). They are orthonormal physical eight-spin vectors. The following direct spin identities determine their exact invariant span. With mathcal Q(A)=sum_{i,alpha}J_i^alpha A J_i^alpha,
+
+$$\mathcal Q(I)=3I,\qquad \mathcal Q(L)=L+6I,\qquad \mathcal Q(L^2)=-L^2+14L+12I,$$
+
+or equivalently
+
+$$\mathcal Q(P_0)=\frac23P_1,\quad
+\mathcal Q(P_1)=3P_0+\frac32P_1+\frac32P_2,\quad
+\mathcal Q(P_2)=\frac56P_1+\frac32P_2. \tag{12.1}$$
+
+These finite identities follow by substituting $L=3I+2\sum_{i<j}\mathbf J_i\cdot\mathbf J_j$ and $J_i^\alpha J_i^\beta=\delta_{\alpha\beta}I/4+(i/2)\epsilon_{\alpha\beta\gamma}J_i^\gamma$. A Pauli tensor of weight w is an eigenvector of mathcal Q with eigenvalue 3-w; expanding L and L^2 gives the three displayed formulas. The companion program verifies them as full exact 16 by 16 identities and verifies the corresponding physical eight-spin action separately.
+
+### Theorem 12.1. Exact ground block and cubic energy equation
+
+For every Delta>0 and g>0 the full ground energy is the smallest eigenvalue of
+
+$$\boxed{M(\Delta,g)=\begin{pmatrix}
+0&-\sqrt2 g&0\\
+-\sqrt2 g&2\Delta-3g/2&-\sqrt5 g/2\\
+0&-\sqrt5 g/2&6\Delta-3g/2
+\end{pmatrix}.} \tag{12.2}$$
+
+Let alpha=(alpha_0,alpha_1,alpha_2)^T be its normalized lowest eigenvector with positive entries. Then the full physical ground state and its coefficient matrix are exactly
+
+$$\Psi_0=\sum_{j=0}^2\alpha_j\Xi_j,\qquad
+C_0=\sum_{j=0}^2c_jP_j,\qquad c_j=\alpha_j/\sqrt{d_j}>0. \tag{12.3}$$
+
+In particular the ground energy is the smallest real root of
+
+$$z^3+(3g-8\Delta)z^2+(12\Delta^2-12\Delta g-g^2)z+12\Delta g^2-3g^3=0. \tag{12.4}$$
+
+Proof. Equation (12.1), the cell energies and Hilbert-Schmidt normalization give (12.2) on the Xi span. Since both off-diagonal couplings are strictly negative, replacing a real minimizing vector by its coordinatewise absolute value cannot raise the energy. A resulting nonnegative eigenvector cannot have a zero coordinate: its row equation forces its neighbor to be zero, and connectedness propagates this to every coordinate. Thus alpha is strictly positive. Its matrix C_0 is positive definite because the P_j are complementary projectors. Theorem 11.1 supplies a positive definite ground coefficient A for the full operator. One has Tr(A C_0)>0, so these two eigenmatrices cannot belong to distinct eigenvalues of a selfadjoint operator. Therefore the lowest block eigenvalue is the full ground eigenvalue, and uniqueness identifies its ray. The determinant of zI-M gives (12.4). QED.
+
+This last positivity comparison certifies that no state in an omitted symmetry sector has lower energy. Merely diagonalizing a three-dimensional trial block would not establish that fact. The other two eigenvalues of M are not in general the first two excitations of the full H, so (12.2) is not a three-level replacement of its entire spectrum.
+
+## 13. An exact majorization order from weak to strong coupling
+
+Let lambda(g) be the 16 Schmidt probabilities of the normalized ground state across cells, in decreasing order. Their exact form is
+
+$$\lambda(g)=\bigl((c_0^2)^{[2]},(c_1^2)^{[9]},(c_2^2)^{[5]}\bigr),$$
+
+where bracketed superscripts specify multiplicity rather than powers.
+
+### Theorem 13.1. Coupling orders the entire Schmidt spectrum
+
+For fixed Delta>0 and 0<g_1<g_2,
+
+$$\boxed{\lambda(g_1)\succ\lambda(g_2),} \tag{13.1}$$
+
+with a strict inequality for every proper decreasing partial sum. In particular the pure-state cell-to-cell entanglement entropy increases strictly with g and obeys
+
+$$1<S(\operatorname{Tr}_b|\Psi_0\rangle\langle\Psi_0|)<4\quad\text{bits},$$
+
+with limiting values one as g/Delta tends to zero and four as g/Delta tends to infinity.
+
+Proof. Set t=Delta/g and e(t)=lambda_min M(t,1). The ground eigenvalue is simple. Hellmann-Feynman gives
+
+$$e'(t)=2\alpha_1^2+6\alpha_2^2\in(0,6).$$
+
+The first and last rows of the eigenmatrix equation in the unnormalized projectors yield
+
+$$x(t):=\frac{c_1}{c_0}=-\frac{e(t)}3>0,\qquad
+r(t):=\frac{c_2}{c_1}=\frac{3/2}{6t-3/2-e(t)}>0. \tag{13.2}$$
+
+Therefore x'(t)=-e'(t)/3<0 and r'(t)=-(3/2)(6-e'(t))/(6t-3/2-e(t))^2<0. At t=0 the normalized ground vector is (sqrt(2),3,sqrt(5))/4, with e=-3 and c_0=c_1=c_2=1/4. For t>0, consequently c_0>c_1>c_2>0. Both successive ratios increase strictly as g increases.
+
+For two such couplings the ratios of the three groups of Schmidt probabilities, lambda_j(g_2)/lambda_j(g_1), increase strictly from group zero to group two. Their weighted average, with weights lambda(g_1), is one. Every proper leading partial set in the decreasing Schmidt order has a strictly smaller average ratio than the whole set, since the excluded entries have no smaller ratios and include an entry from a strictly larger group. This proves all partial-sum inequalities (13.1). Strict Schur concavity of the Shannon entropy gives strict increase; the majorization interpretation is standard [N99], rather than a new general entanglement-conversion theorem.
+
+As t tends to infinity, the positive 2t and 6t terms force alpha_1,alpha_2 to zero: the trial alpha=(1,0,0) has energy zero and the remaining fixed matrix has bounded norm. Hence alpha_0 tends to one and the two nonzero limiting Schmidt probabilities are 1/2. At t=0 the 16 probabilities equal 1/16. Continuity supplies both limits. Since $2c_0^2+9c_1^2+5c_2^2=1$ and all c_j are positive, $c_0^2<1/2$. The order just proved makes every Schmidt entry at most c_0^2, so the entropy is at least $-\log_2 c_0^2>1$. The unequal c_j make the upper bound strict. QED.
+
+The weak-coupling limiting vector is Xi_0=(H_+ tensor H_-+H_- tensor H_+)/sqrt(2). The strong-coupling limit is mathcal V(I/4), the product of four matched inter-cell spin singlets. Thus increasing coupling redistributes entanglement into the higher-spin sectors. It does not preserve exact singlet support of either cell, and this entanglement entropy is across cells, not the original four-qubit pure-state internal-cut objective.
+
+## 14. Exact HS-pair recovery, including a coupling-independent deterministic protocol
+
+### Proposition 14.1. Spin-zero filtering works throughout the positive-coupling range
+
+Measure the two cell spin sectors, retain their outcome labels, and select the outcome (0,0). Applied to the full microscopic ground state, the postselected state is exactly Xi_0, with probability
+
+$$\boxed{p_{00}=\alpha_0^2=2c_0^2,\qquad \frac18<p_{00}<1.} \tag{14.1}$$
+
+It decreases strictly with g/Delta, tending to one at weak coupling and 1/8 at strong coupling. This is exact filtering at arbitrary positive coupling, not a fidelity statement about a truncated effective ground state.
+
+Proof. Orthogonality of P_j gives (P_0 tensor P_0)Psi_0=alpha_0 Xi_0. By Theorem 13.1 the largest Schmidt entry c_0^2 decreases strictly. Its endpoints are 1/2 and 1/16, proving (14.1). Retaining the outcomes makes the success event explicit. Conditioning is not a trace-preserving operation; the unconditioned instrument includes the unsuccessful outcomes. QED.
+
+### Theorem 14.2. One encoded ebit can be recovered deterministically by specified cell-local operations
+
+There is a fixed one-way local-operations-and-classical-communication protocol, independent of Delta and g, that maps every density matrix supported on span{Xi_0,Xi_1,Xi_2} to the pure encoded Bell state Xi_0. It therefore applies to every uniform-matched ground state above. This stronger protocol allows arbitrary operations on the four spins within each cell; it is not restricted to exchange-only, spin-preserving or real-instrument readout menus.
+
+Proof by construction. Choose a real orthonormal basis |j,k> of each P_j sector, 1<=k<=d_j. Then
+
+$$\Xi_j=\frac1{\sqrt{d_j}}\sum_{k=1}^{d_j}|j,k\rangle_a\otimes\Theta|j,k\rangle_b.$$
+
+For every j and unordered pair k<l, cell a uses the Kraus operator
+
+$$A_{jkl}=\frac{|e_0\rangle\langle j,k|+|e_1\rangle\langle j,l|}{\sqrt{d_j-1}}.$$
+
+Each |j,k> occurs in d_j-1 pairs. Thus sum_{j,k<l} A_{jkl}^dagger A_{jkl}=sum_j P_j=I_16. There are choose(2,2)+choose(9,2)+choose(5,2)=47 labelled outcomes. On receiving (j,k,l), cell b applies a unitary mapping the two orthogonal vectors Theta|j,k>,Theta|j,l> to e_0,e_1, respectively, completed arbitrarily on the orthogonal complement. Such an extension exists in the same 16-dimensional cell.
+
+On a vector sum_j alpha_j Xi_j, the selected branch is
+
+$$\frac{\alpha_j}{\sqrt{d_j(d_j-1)}}(e_0\otimes e_0+e_1\otimes e_1),$$
+
+with probability 2|alpha_j|^2/[d_j(d_j-1)]. After normalization it is Xi_0 for every nonzero-probability outcome. The same map kills |Xi_j><Xi_k| for j!=k and sends each diagonal projector to |Xi_0><Xi_0|. Linearity therefore proves the assertion for every density matrix on the three-dimensional span. QED.
+
+This is an explicit application of established deterministic entanglement-concentration principles [N99], not a new general LOCC theorem. Some branches change the cell's total spin and are not realizable by assuming only the earlier exchange-control menu. Their physical implementation and costs have not been supplied. With those broader cell-local operations allowed, the output is unconditional and no outcome label is silently discarded before its conditional correction. Trace-distance contraction also makes the deterministic protocol robust: an input within trace distance epsilon of any state on this span produces an output within epsilon of Xi_0.
+
+## 15. Exact local input for arbitrary finite-graph energy bounds
+
+Let a finite simple cell graph have maximum degree d>=1, uniform onsite scale Delta>0 and positive edge strengths g_e, with microscopic Hamiltonian
+
+$$H_G=\frac\Delta2\sum_a L_a+\sum_{e=ab}g_e\sum_{i=0}^3\mathbf J_{ai}\cdot\mathbf J_{bi}.$$
+
+Write E_*(Delta,g)=lambda_min M(Delta,g), the exact full two-cell energy from Theorem 12.1. For any graph matching mathcal M, whose edges have disjoint endpoints,
+
+$$\boxed{\sum_{e\in E(G)}E_*(\Delta/d,g_e)\le E_0(H_G)\le\sum_{e\in\mathcal M}E_*(\Delta,g_e).} \tag{15.1}$$
+
+Proof. Allocate Delta/(2d)(L_a+L_b) to every edge. The remaining onsite operator is Delta/2 sum_a(1-deg(a)/d)L_a, which is positive semidefinite. Each edge operator is bounded below by its exact two-cell ground energy, proving the left inequality, including graphs with triangles. For the upper bound, take the tensor product of exact two-cell ground states on the matching and arbitrary singlets on the unmatched cells. The pair ground states are total spin zero because every P_j in (12.3) commutes with collective rotations in the reflected representation. Every individual physical spin therefore has zero expectation. Each edge outside the matching connects different independent factors of this trial state, so its exchange expectation vanishes. The variational energy is exactly the right side. QED.
+
+For a d-regular uniform graph on N cells with a perfect matching, this specializes to
+
+$$\frac d2E_*(\Delta/d,g)\le\frac{E_0(H_G)}N\le\frac12E_*(\Delta,g). \tag{15.2}$$
+
+These are nonperturbative bounds with finite per-cell scale, independent of N. The lower-bound mechanism is Anderson's established cluster construction, reviewed and extended for different pyrochlore motifs in [KP26]. The present contribution is its explicit substitution of the all-coupling eight-spin energy and the matching upper bound. It is not a size-uniform SW approximation, an optimal energy bracket, an exact thermodynamic energy, or a many-body spectral-gap theorem. Corners shared by physical spins in [KP26]'s motifs are different from the disjoint cells and matching links used here.
+
+## 16. Verification, attribution and the remaining many-body problem
+
+The new universal arguments concern a specified finite Hamiltonian and its graph-energy applications. They replace the weak-coupling premise for the uniform matched two-cell ground state with a full positivity argument, provide an exact ground block, establish an all-coupling Schmidt majorization order, and give explicit recovery instruments. The earlier perturbative determinant and triangle coefficients retain their different arbitrary-coupling-matrix scope. A three-cell loop's dynamics, its exact ground state, and an infinite chain's phase are not solved by Theorem 12.1.
+
+The companion program is `docs/reports/hs4-rigidity/verify_nonperturbative_exchange.py` in experiments PR #11. It checks exact spin reversal, all three projectors, the full sandwich identities, the physical 256-by-3 invariant-subspace action, the symbolic cubic and the complete 47-branch recovery map on all nine sector matrix units. Separate bounded numerical checks compare full eight-spin ground states with the exact block over 37 logarithmically spaced ratios from 10^-3 to 10^3, test 12 unequal positive matched-link cases, and evaluate four complete three-cell graph energy brackets. The graph checks use the full magnetization-zero sector, which contains a representative of every total-spin eigenmultiplet for twelve spin-1/2 sites. No inequality is certified universally by the sampled ratios.
+
+No new Lean compilation, inherited-certificate replay, independent mathematical review, historical-first claim, quantum hardware implementation or thermodynamic phase theorem is asserted. The reflected positive-coefficient argument and general majorization/LOCC interpretation retain their established source ownership. The precise finite formulas, domains and constructive proof steps above are the additional mathematical content. The next open scope is a uniform many-body description retaining actual loop corrections; the energy bounds (15.1) constrain that problem without claiming to solve it.
+
+### Additional primary sources
+

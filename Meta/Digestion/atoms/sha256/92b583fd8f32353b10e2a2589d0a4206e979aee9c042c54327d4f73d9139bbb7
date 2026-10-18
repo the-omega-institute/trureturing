@@ -1,0 +1,76 @@
+### 61.2 The original central flatness equations
+
+Directly from (61.2),
+\(|\gamma|^2=|t|^2=|\delta|^2=1\). Character orthogonality gives
+\(u_m^*u_n=6\delta_{mn}\). In \(u_m^*\Theta u_n\), the upper and
+lower terms cancel coordinatewise. Since \(\Theta\) preserves norms
+and orthogonality, \(U^*U=6I_6\), and every entry of \(U\) has modulus 1.
+
+For \(e\in\{+1,-1\}\), put
+
+\[
+ r_e=1+e\gamma,\qquad s_e=\tau+e\sigma,\qquad
+ R_e=|r_e|^2,\quad S_e=|s_e|^2,\quad z_e=\bar r_es_e.
+\]
+
+Their exact values are
+
+\[
+ \begin{aligned}
+ R_+&=2-\frac{\sqrt{21}}7,& S_+&=2+\frac{2\sqrt{21}}7,\\
+ z_+&=-\frac{1+\sqrt{21}}4
+       +\frac{3i(\sqrt7+7\sqrt3)}{28},\\
+ R_-&=2+\frac{\sqrt{21}}7,& S_-&=2-\frac{2\sqrt{21}}7,\\
+ z_-&=\frac{\sqrt{21}-1}4
+       +\frac{3i(\sqrt7-7\sqrt3)}{28}.
+ \end{aligned}
+\tag{61.5}
+\]
+
+Consequently
+
+\[
+ 2R_e+S_e=6,\qquad
+ \omega^2R_++z_++\omega\bar z_+=0,\qquad
+ \omega R_-+z_-+\omega^2\bar z_-=0.
+\tag{61.6}
+\]
+
+The rows of \(A\operatorname{diag}(r_+,r_+,s_+)\) have zero cyclic
+three-point autocorrelation and squared norm 6. The same is true of
+\(\bar A\operatorname{diag}(r_-,r_-,s_-)\). Their three-point Fourier
+transforms therefore have every squared modulus6. These are precisely
+the upper and lower channels of \(M(0)u_m\). The identity
+\(M(0)\Theta=-\Theta M(0)\) gives the other three columns. Thus
+
+\[
+ |U_{rk}|^2=1,\qquad U^*U=6I_6,\qquad |(M(0)U)_{rk}|^2=6.
+\tag{61.7}
+\]
+
+For a normalized input \(U_{:k}/\sqrt6\), the output is
+\(M(0)U_{:k}/6\), so (61.7) is exactly the original common-flatness
+condition. The same equations hold after the column phases defining \(V\).
+
+The first two upper coordinates of \(u_m\) fix its Fourier character
+as \(m\), whereas
+
+\[
+ \Re\tau=-\frac18+\frac{9\sqrt{21}}{56}\in(0,1).
+\]
+
+Hence \(\tau\ne1\), so no \(u_m\) is canonical. The antiunitary
+\(\Theta\) permutes the canonical rays by (60.13), so none of
+\(\Theta u_m\) is canonical either. Direct character sums give the
+following four possible squared moduli of normalized overlaps with the
+canonical basis:
+
+\[
+ \frac{1\pm1/\sqrt7}{4},\qquad
+ \frac{1\pm1/\sqrt7}{8}.
+\tag{61.8}
+\]
+
+All are positive and different from \(1/6\). In particular the recovered
+completion and the canonical completion are not mutually unbiased.
+

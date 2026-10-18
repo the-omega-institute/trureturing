@@ -1,0 +1,21 @@
+**Proposition 3.2 (Actual marked quotient under unifilarity).** The classes (2.1) have a well-defined row-unifilar marked kernel
+
+$$
+T_x(a,b)=p_a(x)\mathbf1_{\{b=\delta(a,x)\}},\qquad
+\pi_a=\sum_{i:[i]=a}\lambda_i.
+\tag{3.1}
+$$
+
+It is the actual pushforward of $(H_t,X_t)$ under $J_\theta$, is stationary with row $\pi$, and preserves every original output cylinder.
+
+Proof. If $i\sim j$, their first-symbol probabilities agree. For every $w$,
+
+$$
+p_i(x)\,\mathbf e_{\delta(i,x)}M_w\mathbf1
+=\mathbf e_iM_{xw}\mathbf1
+=\mathbf e_jM_{xw}\mathbf1
+=p_j(x)\,\mathbf e_{\delta(j,x)}M_w\mathbf1.
+$$
+
+When the common $p_i(x)$ is positive, division proves equivalent successors. Hence $p_a(x)$ and its successor class are independent of the representative. Conditional on any actual past and $Q_t=a$, every compatible $H_t$ has the same outgoing class/symbol probabilities (3.1). Averaging proves the marked Markov property for this actual pushforward. Stationarity and cylinder preservation follow by pushforward; distinct quotient states have distinct finite-word future distributions by construction. This is the step requiring row unifilarity. $\square$
+

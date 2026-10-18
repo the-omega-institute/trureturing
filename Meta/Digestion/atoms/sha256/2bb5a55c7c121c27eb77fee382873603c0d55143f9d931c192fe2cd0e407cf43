@@ -1,0 +1,53 @@
+**Definition 1.4 (canonical sources and unrestricted joint donors).** Set
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\quad S_1=\{\alpha,\beta,C_0\},
+\quad S_{d+1}=\{\alpha,\beta\}\sqcup
+                 \{\langle x,y\rangle:x,y\in S_d\},
+\quad N_d=|S_d|.                                               \tag{SCE.5}
+$$
+
+In particular $N_1=3$ and $N_{d+1}=2+N_d^2$. Write
+$G_q=\Gamma_q(S_d)$ when $d$ is fixed. A nonempty
+$B\subseteq S_d^n$ is fully admissible if each target $(i,q)$,
+$i\in[n],q\in W_d$, is constant on $B$ or has a donor
+$(j,a)\in[n]\times W_d$ and a total decoder
+$\delta:\mathcal A\to G_q$ such that
+
+$$
+\Gamma_q(x_i)=\delta(r_{x_j}(a))\qquad(x\in B).                 \tag{SCE.6}
+$$
+
+Every donor, self donor, cycle and correlation is permitted. Choices may
+differ between targets. A complete template chooses one such equation
+for every target; its full solution set may be empty. These are the
+credited [NPC, Definition 2.2][NPC] competitors. [FMR, Lemma 2.2][FMR]
+simulates every finite canonical word by one boundary reply in the same
+block or a constant. Thus the donor notation does not remove arbitrary
+native experiments.
+
+For reference, $K_d(n)$ is the least number of nonempty admissible
+subsets covering $S_d^n$. Its fractional counterpart $Z_d(n)$ minimizes
+$\sum_B z_B$ over nonnegative coefficients satisfying
+$\sum_{B\ni x}z_B\ge1$ for every $x\in S_d^n$. For a nonnegative
+whole-block weight $w:S_d\to[0,\infty)$ define
+
+$$
+A_n(w)=\max_{\Theta}\sum_{x\in C_\Theta}\prod_{i=1}^nw(x_i),
+\qquad \beta_d(w)=\sup_{n\ge1}A_n(w)^{1/n}.
+$$
+
+Here $\Theta$ ranges over full complete templates. The credited FMR
+and NPC relations give
+
+$$
+\sigma_d=\lim_{n\to\infty}\frac{\log_2K_d(n)}n
+        =\inf_{n\ge1}\frac{\log_2K_d(n)}n,\qquad
+\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+       =\sup_{d\ge1}2^{-d}\sigma_d.
+$$
+
+The maximum defining $A_n$ exists because every fixed-size template
+family is finite. No finite size cutoff for its all-length supremum is
+assumed. Write $\Delta(S_d)$ for the probability simplex on $S_d$.
+

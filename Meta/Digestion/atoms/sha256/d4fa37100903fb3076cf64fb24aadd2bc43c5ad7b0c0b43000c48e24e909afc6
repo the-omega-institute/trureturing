@@ -1,0 +1,10 @@
+### 92.9. Consequences and boundaries
+
+If the unrestricted original-channel minimum were below 1/4, an attained calibrated minimizer would satisfy the common adaptive stresses and complementary conditions above, with both ranks between three and seven. If both ranks were seven, its common stress support would have one of the five patterns in (36). The argument excludes supports on six or more coordinates and supports in only two fibres. It does not exclude the five remaining patterns, unequal rank pairs, or lower-rank common-stress systems.
+
+The exact 21/100 example shows why the remaining small-support analysis cannot discard the same norming witness and its positive stresses: positivity, equal principal Grams, rank |S|−1, and a physical completion do not alone imply a restricted quarter bound. Its full original error is at least 1/2, so it does not change the original optimum.
+
+These results do not classify all calibrated local minima or all quarter-error attainters. The unrestricted original-channel optimum remains in [√3−3/2,1/4]. Calibration is used only through the established physical global comparison, with no rank-preservation claim.
+
+The compact-max, finite-dimensional separation, Schur-product, and semidefinite duality ingredients are standard; see [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). The physical Gram optimization is the established section-72 reduction, and the exact adaptive norm and its primal-dual gap are section 91. The conclusions proved here are the simultaneous norming stress condition for this product problem, its exact rank-seven support constraints, the second-order and two-fibre exclusions using the original fibre dimensions, and the small-support scope counterexample. No general minimax or semidefinite-duality theorem is asserted to be new.
+

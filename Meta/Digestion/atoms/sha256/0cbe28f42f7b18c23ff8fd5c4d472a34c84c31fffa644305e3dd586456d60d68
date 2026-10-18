@@ -1,0 +1,47 @@
+**Application 6.2 (the exact supplied predecessor-controller
+premises).** The committed definition
+[`NativeLiteralMoore.NativeLiteralFeasible`][NLM] has witnesses
+$Q,H,M$ and
+
+$$
+\operatorname{code}:\operatorname{ImageValues}(C)\to Q\sqcup H.
+$$
+
+For every eligible $v\in\operatorname{ImageValues}(C)$ and
+$u\in\operatorname{OriginFiber}(P,C)$ it requires the actual
+origin equation
+
+$$
+\rho u=\operatorname{evaluateRow}(\operatorname{extend}(C,\operatorname{values}(v)),C),
+\tag{NVC.16}
+$$
+
+where $\operatorname{values}(v)$ forgets the membership wrappers
+and is the underlying assignment written `v.val.val` in the supplied
+definition, and a run of $M$ on $\rho u$, entered at
+$\operatorname{code}(v)$, whose whole halt output is
+$\operatorname{canonicalRow}(P,u)$. The definition also bounds
+the entry range, total state count, calls and the sum of the actual
+submitted lengths on that same run. Its owning [Blueprint
+Scribe][NLB] makes the same runtime/predecessor distinction.
+
+Given explicit finite public tables for that witness, an actual
+eligible $u,v$ satisfying (NVC.16), and a genuinely acquired complete
+entry $\operatorname{code}(v)$, Theorem 3.1 runs the response
+computation on the stationary original $u$ instead. Its output is
+the identical whole predecessor row. The simultaneous upper-budget
+bridge is (NVC.10), or Theorem 5.2 after guard acquisition. This
+is a conditional implementation of the supplied response witness.
+It does not acquire $v$, its code, its origin equation or a
+source-specific choice of $C$ merely from feasibility.
+
+To cover sources needing different $C$ values one needs a public
+catalogue and a genuinely acquired counted selector, with its code
+and carrier costs. A nonconstructive existential witness is not an
+installed public controller. Proposition 6.1 is a sufficient entry
+producer only when the desired entry is specified effectively on the
+acquired original syntax. Neither
+`literal_moore_feasibility` nor `finite_literal_synthesis` supplies
+the original late target, subsequent authentic-count ordering or
+the original one-Read budget after unguarded compilation.
+

@@ -1,0 +1,2 @@
+**定义 42.1（背景与补集类型）。** 固定 $U=\{2,3,5\}$，把模式认作 $U$ 的子集，定义 $C_U(S)=U\setminus S$。点值运算 $C_U:\mathcal P(U)\to\mathcal P(U)$、事件族 $\mathcal P(U)$ 的幂集上的逻辑补集，以及某一个布尔占位函数的取反各有不同类型。相对整体的约定见 [情境时空算术，定义 2、命题 1](https://github.com/the-omega-institute/trureturing/blob/94fb8f7b14e6dca112b6806810ed40d59e096bfe/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)。
+

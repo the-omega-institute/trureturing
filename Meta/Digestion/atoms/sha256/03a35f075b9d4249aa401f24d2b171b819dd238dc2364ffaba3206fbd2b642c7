@@ -1,0 +1,22 @@
+**Definition 2.1 (shape and arithmetic parameters).** A ground shape is
+an arbitrary nonempty finite ordered full tree
+
+$$
+K::=c\mid f(K,K).
+\tag{SFP.6}
+$$
+
+Its positions, leaf positions and primitive cherries are finite sets of
+$L/R$ words obtained by traversal. A primitive cherry is a node both of
+whose children are leaves. Equality of two supplied ground shapes is
+literal ordered-tree equality. If unequal, traversal produces an address
+where both nodes exist and one is $c$ and the other is $f$; choose the first
+such address in a fixed traversal order. This uses no native expansion.
+
+A finite shape template is a term over $c,f,w_1,\ldots,w_s$. Substitution
+of a tuple $\mathbf K$ of ground shapes gives a ground shape. Distinct
+$w_j$ may receive the same shape. Repeated occurrences of $w_j$ share
+only that shape: they do not, merely for this reason, share leaf labels.
+An affine form in epoch parameters $\mathbf n$ has integer coefficients.
+All scalar coordinates in the final representation are natural numbers.
+

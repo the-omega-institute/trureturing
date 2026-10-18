@@ -1,0 +1,27 @@
+**Theorem 4.4 (exact certificate and unique aggregate equality matrix).** Define
+
+$$
+S_{\rm cert}=C-\lambda B+\mu vv^T.
+\tag{RG.27}
+$$
+
+It is PSD of rank two with kernel $\mathbb Cv$. For every complex Hermitian $H$ satisfying the first two constraints of (RG.18),
+
+$$
+\begin{aligned}
+\operatorname{tr}(CH)-(\lambda k-\mu)
+={}&\lambda[\operatorname{tr}(BH)-k]
+ +\operatorname{tr}(S_{\rm cert}H)
+ +\mu(1-v^\dagger Hv)\ge0.
+\end{aligned}
+\tag{RG.28}
+$$
+
+Equality holds uniquely at $H^*$ in (RG.23). Consequently every original implementation, at every strength, has acquired and supported live high cost at least $F(C)$ on the selected input.
+
+Proof. In the unsaturated row $S_{\rm cert}=C-\lambda_0B$, whose rank and positivity are Lemma 4.1. In the saturated row, $\lambda B-C$ is $\mu$ on $v$ and strictly negative on $v^\perp$. Subtracting it and adding $\mu vv^T$ gives zero on $v$ and a strictly positive form on $v^\perp$. Expansion proves (RG.28). Its first term is nonnegative by $\lambda>0$ and the trace budget; the second by positivity; the third by $\mu\ge0$ and $H\preceq I$. This remains true for complex $H$.
+
+Both displayed $H^*$ are feasible: $\operatorname{tr}(BH^*)=k$, $0\preceq H^*\preceq I$, and $S_{\rm cert}H^*=0$. If $\mu>0$, they also have $v^\dagger H^*v=1$. Thus each makes every term zero. Conversely $\operatorname{tr}(S_{\rm cert}H)=0$ makes $S_{\rm cert}^{1/2}H^{1/2}=0$, so $\operatorname{ran}H\subseteq\mathbb Cv$. Equality in the first term fixes its coefficient to $k/(v^TBv)$, which is exactly (RG.23), including the transition. Theorem 3.3 and (RG.15) transfer this bound to every original acquired and live cost. $\square$
+
+For an acquired minimizer that matches this lower value, the chain acquired $\ge$ live $\ge F$ forces the same $H^*$. A pure selected input forces only the expectation of $G_H^{\rm acq}-G_H^L$ there to vanish. It does not force that entire positive slack operator to vanish. The instruments below have zero slack on every input, providing the stronger property by construction.
+

@@ -1,0 +1,32 @@
+**Lemma 4.2 (all source, event and permission fibers).** This construction leaves the original source and every positive finite original history unchanged. At a fourth-segment gate the history is exactly
+
+$$
+h(w,n)=\operatorname{enc}(w)\operatorname{enc}(\diamond)Y^nS_0,
+\qquad w\in\Gamma^*,\ n\ge0,
+\tag{4.1}
+$$
+
+with paid length $2d(|w|+1)+2n+6$. The probability of its retained accepting label is exactly $p_{\mathcal A}(w)$, including $w$ empty. All other fourth-segment histories have baseline reports. Both exact compatibilities hold independently at every original history and every legal positive-prediction continuation, from initialization to delivery.
+
+**Proof.** Before seed acceptance every completed $X$ or $Y$ is an original paid rejection. The fixed-width parser recognizes a sequence of complete data blocks followed by its first delimiter, then only $Y$ pairs. Its finite suffix matcher recognizes seed 1 followed by the exact four-letter payload suffix, and nothing else. Incomplete/unassigned codes or any mismatch are private dead tags. Induction at pair/block boundaries proves this grammar; no input history is removed. The suffix contains two seed Reads and four payload Reads, completing exactly markers 100. Its last $\alpha$ triggers the original third write and then latch, before the monitor gate is set. Reading any fourth letter clears the gate, so it cannot reappear. Both seeds and all eight marker triples continue through the unchanged original table. Writes, event ordering and original menus are unaltered on each such fiber, including partial prefixes, payload returns, completion and terminal cuts.
+
+The automaton's initial sample and letter updates are private and source-independent. Induction over complete data blocks gives exactly the row $\eta_{\mathcal A}T_w$ conditional on the actual source word. Neither delimiter, padding nor suffix changes the sampled label. Hence (4.1) has acceptance probability $p_{\mathcal A}(w)$. This is a conditional distribution of actual charged states. The runtime initial sample is its source-independent finite private automaton state; no source-prior sample or posterior is supplied to a report.
+
+First consider per-configuration generation. The program samples a synthetic letter with declared probability $q_z(x)$, using fresh bits, and then executes exactly the actual holding kernel $P_x$, with independent fresh bits for a possible automaton transition. For its full original event block $E(c,x)$ and residual measurable event $A$,
+
+$$
+D_z((x,E(c,x))A)=q_z(x)\sum_{z'}P_x(z,z')D_{z'}(A).
+\tag{4.2}
+$$
+
+Thus its joint effective kernel is $q_z(x)P_x(z,z')$. The entire original record and deterministic event block are part of this identity. Finite cylinders and almost-sure service return define the full decoder, including zero-mass noncompletion. Earlier fair synthesis has seed success probability $1/2$ and payload return factor $1/4$; after latch there is at most one altered letter followed by the geometric $G(a)$. Hence synthesis completes almost surely, from every reachable allowed entrance, without adding a nonreturning internal outcome. This proves the first compatibility.
+
+For actual-history marginalized compatibility, let $\rho_h$ be the actual row in the common original $c$ fiber. Conditioning (4.2) on a predicted $x$ yields the weighted successor mixture
+
+$$
+\frac{\sum_z\rho_h(z)q_z(x)\sum_{z'}P_x(z,z')D_{z'}}{\sum_z\rho_h(z)q_z(x)}.
+\tag{4.3}
+$$
+
+The next actual report is the unweighted successor mixture $\sum_{z'}(\rho_hP_x)(z')D_{z'}$. Before the special cut $q_z(x)$ is constant over the entire reachable private-state fiber of a fixed actual history, even though its future decoder may depend on the label. This cancels the weight in (4.3). At a special cut the letter probabilities can differ, but for each fixed $x$ every predecessor label has the same successor decoder: for $\alpha$ it is the deterministic original completion/Stop residual; for $\beta$ it is $V$ at the common original suspended successor and record. Label erasure therefore makes both mixtures equal. Afterward every report is baseline; deterministic original holding and the same kernel identity give equality. Terminal Stop has probability one; delivered has no next operation. All declared active letter probabilities are strictly positive. Induction proves the second compatibility for every finite legal positive continuation, separately from (4.2). Keeping unequal successor laws at a variable-probability step would invalidate (4.3); no general randomized-mixture principle is presumed. $\square$
+

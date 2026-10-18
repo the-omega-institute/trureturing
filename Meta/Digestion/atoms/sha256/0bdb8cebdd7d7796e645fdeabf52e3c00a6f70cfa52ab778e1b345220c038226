@@ -1,0 +1,33 @@
+### 命题 443.1（相邻接触比值的 Fibonacci 同余）
+
+在上述条件下，
+
+$$
+\boxed{
+F_{h_k}\mid R_k-1.
+}
+\tag{443.1}
+$$
+
+**证明。** 强整除律给
+
+$$
+F_{h_k}=\gcd(F_{r_k},F_{r_{k+1}}).
+$$
+
+由两个仿射表示，
+
+$$
+m_k\equiv1\pmod{F_{h_k}},
+\qquad
+m_{k+1}\equiv1\pmod{F_{h_k}}.
+$$
+
+另一方面 $m_{k+1}=R_km_k$，而 $m_k\equiv1$，所以
+
+$$
+1\equiv m_{k+1}=R_km_k\equiv R_k\pmod{F_{h_k}},
+$$
+
+即得（443.1）。证毕。
+

@@ -1,0 +1,6 @@
+**Reading convention.** This is mathematical reference input with ordinary
+> proofs, without Lean kernel certification or a claim of physical realization.
+> Numbered statements use the theory-volume template's `generic-v1` convention.
+> Published text is preserved; additions and corrections start after the terminal
+> append anchor and end with another such anchor.
+

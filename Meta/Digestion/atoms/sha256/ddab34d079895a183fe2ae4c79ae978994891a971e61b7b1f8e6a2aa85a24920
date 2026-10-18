@@ -1,0 +1,55 @@
+## Definition 5. The full geometric representation
+
+Expand \(A_q\) on vertices \((i,s)\in\operatorname{Fin}(q)\times C_2\).
+The natural adjacency counts every numbered edge:
+\[
+(B_q)_{(i,s),(j,t)}
+ =\operatorname{coeff}_{s^{-1}t}((A_q)_{ij}).
+\]
+Let \(X_q\) consist of all legal integer-indexed edge histories with the
+product/subspace topology. Let \(Sx\) have coordinate \((Sx)_k=x_{k+1}\),
+and let \(\operatorname{Aut}(X_q,S)\) be all homeomorphisms commuting with
+this unit shift.
+
+For any integer cut \(m\), the whole past ray is
+\[
+\mathcal R(x,m)=\{y\in X_q:\forall k\le m,\ y_k=x_k\}.
+\]
+A beam is a finite disjoint union of such rays at some cut. Finite tagged
+families retain separate copies and all endpoint multiplicities. Common
+refinement splits each ray by its actual numbered continuations. At a
+common cut, an endpoint-preserving bijection of ray pieces gives a
+geometric matching by replacing the whole past and retaining the legal
+future. Group completion of these matching classes gives the integer
+beam group \(\mathcal G_q\).
+
+The standard beam identification with a stationary dimension group is due
+to the established theory of shifts of finite type; see Schmieding,
+Section 2, Proposition 2.1, for the fixed-past and row-right conventions.
+Here its coordinate maps can be described explicitly. At a nonnegative
+cut \(N\), count one vertex basis row for each ray piece. Refinement
+multiplies that row on the right by \(B_q\), so its colimit class is
+independent of cut. At an arbitrary integer cut \(m\), use any
+\(N\ge\max(0,m)\) and the row \(zB_q^{N-m}\) at stage \(N\).
+Only nonnegative transition powers are used. Conversely, each vertex has
+a legal full history, and its ray supplies the inverse stage generator;
+common refinement proves both inverse identities after group completion.
+
+The integral coefficient map
+\[
+u\longmapsto\left(i\longmapsto\sum_{s\in C_2}u_{(i,s)}[s]\right)
+\]
+has inverse coefficient extraction and intertwines row multiplication by
+\(B_q\) with \(T_q\). Their composite is an integer-group isomorphism
+\(E_q:\mathcal G_q\cong G_q\).
+
+Every member \(h\) of the full automorphism group, and its inverse, has a
+finite coordinate window: continuity, compactness and commutation with
+the unit shift give uniform windows. The actual image of a whole past ray
+is therefore a beam at a sufficiently late cut. Conjugating past splices
+by \(h\) respects the geometric matching relations. Actual set image
+thus induces an automorphism \(h_*\) of \(\mathcal G_q\), with
+\((gh)_*=g_*h_*\). Define
+\(\rho_q(h)=E_qh_*E_q^{-1}\).
+The domain imposes no extra window, endpoint or supplied-action hypothesis.
+

@@ -1,0 +1,31 @@
+### `FIBNativeBridge.lean`
+
+最后才把仓库中的 native continuation 规则映射到抽象 instrument：
+
+$$
+\text{native continuation}
+\longrightarrow
+M_{a,o}.
+$$
+
+只有证明该映射合法，才能把上面的五态反例、$\kappa$-暴露定理和项目原生动态规律真正连接起来。
+
+目前最稳固的新结论是：
+
+$$
+\boxed{
+\text{Auric FIB ATOM 的最小隐藏元素不是第五个原子，而是两个可见原子的联合关系 }xy.
+}
+$$
+
+$$
+\boxed{
+\text{静态线性观察遗忘 }\kappa；
+\quad
+\text{二阶联合观察恢复 }\kappa；
+\quad
+\text{递归未来观察是否恢复 }\kappa，
+\text{取决于逐输出 instrument 的闭包。}
+}
+$$
+

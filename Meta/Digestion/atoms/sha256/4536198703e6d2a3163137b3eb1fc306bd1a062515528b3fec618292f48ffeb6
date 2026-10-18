@@ -1,0 +1,25 @@
+**Definition 83.1 (the scalar premise and inherited scope).** Keep the actual original-real channel class, the phase spectrum, all admissible third columns, and every complex whole-output CPTP recovery from Definition 80.1. For a fixed actual channel $N$, write
+
+$$
+T_\beta=\frac{1+\sqrt{1-\beta}}2,
+\qquad
+p_N(\rho)=\max_{R\ {\rm CPTP}}F_e(\rho,RN),
+\qquad
+h_N(\rho)=p_N(\rho).
+\tag{S.190}
+$$
+
+The existing fixed-input and channel minimax interfaces identify
+
+$$
+ g_N^2=\min_{\rho\in\mathsf D(\mathbb C^3)}h_N(\rho),
+\qquad
+ h_N(\rho)=
+ \min_{Y=Y^\dagger}
+ \left\{\operatorname{Tr}Y:
+ I_3\otimes Y\succeq C_{\rho,N}\right\},
+\tag{S.191}
+$$
+
+with both minima attained, including singular input densities and singular dual optima. Equation (S.191) is the previously established result of Sections 7 and 53 transported in the conventions of (S.153); it is not a new minimax theorem here.
+

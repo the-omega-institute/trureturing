@@ -1,0 +1,36 @@
+**引理 3.1（Cancellation of one original coordinate）。** Let $u,v\in\mathbb C^5$
+be orthonormal. For each original coordinate position $r\in\{1,2,3,4,5\}$
+define
+
+$$
+F_r(u,v)=v_r u-u_r v.
+\tag{3.1}
+$$
+
+Then $F_r(u,v)$ has its $r$-th coordinate zero, and
+
+$$
+\sum_{r=1}^5 F_r(u,v)F_r(u,v)^\dagger
+=uu^\dagger+vv^\dagger.
+\tag{3.2}
+$$
+
+Proof. The $r$-th coordinate is $v_ru_r-u_rv_r=0$, including when either
+coefficient vanishes. Expansion of the left side gives
+
+$$
+\begin{aligned}
+\sum_rF_rF_r^\dagger
+&=\left(\sum_r|v_r|^2\right)uu^\dagger
+ +\left(\sum_r|u_r|^2\right)vv^\dagger\\
+&\quad-\left(\sum_r v_r\overline{u_r}\right)uv^\dagger
+ -\left(\sum_r u_r\overline{v_r}\right)vu^\dagger.
+\end{aligned}
+\tag{3.3}
+$$
+
+The first two sums are one; the last two are $u^\dagger v=0$ and
+$v^\dagger u=0$. This proves (3.2) for complex vectors in the original
+coordinates. Each nonzero $F_r$ therefore has support at most four.
+$\square$
+

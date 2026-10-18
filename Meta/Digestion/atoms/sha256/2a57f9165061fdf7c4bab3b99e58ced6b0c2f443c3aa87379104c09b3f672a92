@@ -1,0 +1,20 @@
+**Proposition 19.4 (evaluated same-target inversion constants).** With $a,b$ the exact responses enclosed in Proposition 19.2 and the selections in Proposition 19.3, the inverse-branch construction of §11 gives
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $\tau$ | $7.08160038482\cdot10^{-12}$ | $7.08165527648\cdot10^{-12}$ |
+| $l_6$ | $2.12447462628\cdot10^{-11}$ | $2.12450207211\cdot10^{-11}$ |
+| $u_6$ | $3.54080019241\cdot10^{-11}$ | $3.54082763824\cdot10^{-11}$ |
+| $l_7$ | $6.84616964962\cdot10^{-8}$ | $6.84617270606\cdot10^{-8}$ |
+| $u_7$ | $6.84758597519\cdot10^{-8}$ | $6.84758903163\cdot10^{-8}$ |
+| $h_6$ | $4.56161487323\cdot10^{-48}$ | $4.56165023171\cdot10^{-48}$ |
+| $h_7$ | $2.62311244785\cdot10^{-45}$ | $2.62313278041\cdot10^{-45}$ |
+| $d_{\rm branch}$ | $9.69103505306\cdot10^{-59}$ | $9.69123536949\cdot10^{-59}$ |
+| $C$ | $23534926445.3$ | $23535230490.2$ |
+| $A_w$ | $1.23767289311\cdot10^{41}$ | $1.23768088777\cdot10^{41}$ |
+| $A_q$ | $4.47081574303\cdot10^{37}$ | $4.47084462190\cdot10^{37}$ |
+| $D_{\rm loc}$ | $4.89608747299\cdot10^{75}$ | $4.89615072495\cdot10^{75}$ |
+| $C_{\rm br}$ | $7.31422176501\cdot10^{21}$ | $7.31431625654\cdot10^{21}$ |
+
+Proof. Evaluate Definition 11.2 with the exact dyadic response enclosures and positive denominators. Here $\tau=a/4<(b-a)/4$, $h_b=\tau/T_b<h_{\lambda,0}$, and $l_6h_6<l_7h_7$ throughout the enclosures. Compare these choices before taking each minimum. Outward square roots and reciprocal endpoints then give the last five rows from $C=1/(2l_6)$, $A_w=K_GL\sqrt{C/c_e}$, $A_q=\sqrt{2C/(c_ep_*)}$, $D_{\rm loc}=\sqrt{6(A_w^2+A_q^2+A_q^4)}$ and $C_{\rm br}=(2U_6+1)/l_6$. The table proves $0<l_6\le u_6<l_7\le u_7$. The inherited multiplier embedding margin is greater than $9.999\cdot10^{-7}>h_{\lambda,0}$, so both inverse intervals remain inside $I$. Theorem 11.3 supplies the six feasible comparator, its $Cd^2$ slack bound and its $C_{\rm br}d$ joint-coordinate bound. The targets are the same $\kappa$ but the two inverse multipliers are separate. $\square$
+

@@ -1,0 +1,22 @@
+## 431. A reusable transverse-dominance expense
+
+**Theorem 431.1.** Let r,p,a,b>1 and consider the paired frame
+(r,p,a,b,p,a), with strict genuine factors
+
+    L=(p+a)^2-(r-1)*(b-1)>0,
+    J=(r+1)*(b+1)-(p-a)^2>0.
+
+Let theta_r be its axial angle at r and beta_p its transverse angle
+at p, with the usual paired hyperideal response formulas. Assume
+
+    p>=a+b.                                           (431.1)
+
+Then
+
+    theta_r+2*beta_p>pi.                               (431.2)
+
+No lower bound on r besides r>1 and strict genuineness is needed.
+No source, maximum gap, degree, normal circle or face receiver is
+assumed. The two transverse p occurrences are counted separately.
+The argument is a scalar consequence of the paired response formulas.
+

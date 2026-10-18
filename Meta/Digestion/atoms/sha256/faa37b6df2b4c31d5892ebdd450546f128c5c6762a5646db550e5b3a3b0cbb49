@@ -1,0 +1,37 @@
+**Proposition 52.3 (exact discriminating INITIAL responses).** For the two actual sources (52.20),
+
+$$
+F_{\mathrm{spec}}(t_{\mathrm{bal}})=\frac5{12},\qquad
+F_{\mathrm{spec}}(t_{\mathrm{comb}})=\frac{62614}{136883},\qquad
+\Delta F=\frac{66953}{1642596}>0.
+\tag{52.22}
+$$
+
+They also have different initial third root spectral moments, respectively $9$ and $7$. At least four independent zero-eigenvalue modes of $\mathcal H_{t_{\mathrm{bal}}}^{(0)}$ vanish at its root; therefore a scalar root response cannot by itself certify the full spectral multiplicities.
+
+Proof. At $z=-2$, a leaf attached to its parent has scalar pivot $2$. For the balanced tree the successive attached pivots from the bottom upward are $3$ and $10/3$; the closed root pivot is $3-2/(10/3)=12/5$. Its reciprocal is $5/12$. For the comb, an attached deepest cherry has pivot $3$; each further attached ancestor has pivot $s\mapsto7/2-1/s$. The six attached pivots below its root are
+
+$$
+3,\quad\frac{19}{6},\quad\frac{121}{38},\quad
+\frac{771}{242},\quad\frac{4913}{1542},\quad\frac{31307}{9826}.
+\tag{52.23}
+$$
+
+The closed root pivot is $5/2-9826/31307=136883/62614$. Subtracting the reciprocals gives (52.22). The full determinant pairs at this energy are
+
+$$
+(D_{\mathrm{bal}}^{(0)},P_{\mathrm{bal}})=(552960,230400),\qquad
+(D_{\mathrm{comb}}^{(0)},P_{\mathrm{comb}})=(547532,250456),
+\tag{52.24}
+$$
+
+which also verify that the numerator/denominator account differs before rational cancellation.
+
+For either graph, $L_{rr}=2$ and $(L^2)_{rr}=6$. Enumeration of length-three matrix products gives $(L^3)_{rr}=16+d(s)+d(u)$, with the two child degrees counted in the full initial graph. These degrees are $(3,3)$ for the balanced root and $(3,1)$ for the comb root. Thus $((L-I)^3)_{rr}=(L^3)_{rr}-13$ is $9$ or $7$. These are coefficients of the large-$|z|$ root resolvent expansion, not extra free derivative measurements.
+
+Finally each of the balanced tree's four deepest cherries has a vector with entries $1/\sqrt2,-1/\sqrt2$ on its two leaf occurrences and zero elsewhere. Leaf degree is one, so $L-I$ is zero on these leaf diagonal entries; at the parent their opposite contributions cancel. These four disjoint-support vectors are orthonormal full zero modes with root value zero. Their spectral multiplicities remain present in (52.15), even though their root residues vanish.
+
+The exceptional case $z=0$ also has a root-visible zero mode for the closed balanced tree. Give its nodes at depths $0,1,2,3$ the respective values $1,1/2,0,-1/4$. The leaf equations force the depth-two parents to vanish; the depth-one equations require their values to be half the root; and each cherry's leaf sum must be minus half the root. These equations leave exactly one root parameter and four independent leaf differences. Consequently the closed zero eigenspace has dimension five, with exactly four root-invisible directions. The displayed visible vector has squared norm $1+2(1/2)^2+8(1/4)^2=2$, so its normalized root value is $1/\sqrt2$. With the D root killing added, the root equation instead forces the root parameter to be zero, leaving exactly the four invisible modes. The internal block has the same four-dimensional kernel in both conventions and $C_0=0$; the scalar $A_0$ in (52.18b) is respectively zero or one. This gives zero multiplicity five or four directly, as well as zero order five or four of the corresponding determinant. Here (52.18a), rather than an inverse of the singular internal block, supplies the visible state and its normalization. □
+
+The source construction of §52.1 can start from either of these trees. Theorems about the common field and lost infinite binding therefore apply to the same initial sources used in the spectral calculation, not to an unrelated comparison graph.
+

@@ -1,0 +1,44 @@
+**Convention 9.1 (additional public supplier at its exact pin).** The
+additional [RCE, §§12–16][RCEnew] are public at
+292c09e25e3a1659e17174a95383ae5606fd3371, PR 17390.
+Their statements are documentary checked mathematical suppliers,
+not independently proof-reviewed or Lean certified here. They are
+credited inputs, not results of this volume.
+
+RCE Theorem 12.3 says: for any depth and nonempty declared $P$,
+if every permitted experiment attains at most two actual replies
+on all of $P$, then each complete temporal target is constant or
+decoded from one own-coordinate reply. The number two counts
+attained replies of each experiment; it does not authorize two
+calls. The premise and decoders include every declared state,
+including zero-weight ones.
+
+RCE Theorem 14.3 and Corollary 15.1 give, for arbitrary nonnegative
+full block weights on the entire $S_2$, with
+
+$$
+W=\sum_{x\in S_2}w(x),\quad a=w(\alpha),\quad b=w(\beta),\quad
+t=\max_{g\in S_2\setminus\{\alpha,\beta\}}w(g),\quad
+M(w)=\max\{W-a,W-b,a+b+t\},
+\tag{COK.54}
+$$
+
+the exact equalities
+
+$$
+J_2(w)=\beta_2(w)=M(w),\qquad
+\max_\Theta\sum_{x\in C_\Theta}\prod_iw_i(x_i)
+   =\prod_iM(w_i).
+\tag{COK.55}
+$$
+
+These include mixed full block weights, zeros and every length.
+Corollaries 15.2–15.3 state that the complete existing
+recursive-plus-range rational certificate at depth two accepts
+exactly $C\ge M(\nu)$, and its optimized endpoint is
+$c_+(2)=b_2=17/25$. The attaining law has
+$\nu(\alpha)=\nu(\beta)=8/25$ and weight $1/25$ on each of the nine
+branch states. The numerical optimum is credited there to NCM/NPC.
+RCE §16 retains the all-depth cofinality and effective-convergence
+questions. None of these supplier proofs is reproduced here.
+

@@ -1,0 +1,31 @@
+**Definition 2.1 (integral functions and series).** For $A>0$ let
+
+$$
+\Gamma(A)=\int_0^\infty e^{-u}u^{A-1}du.
+$$
+
+For $0<\eta<1$, set $A=1-\eta$ and, for $x>0$, define
+
+$$
+\begin{aligned}
+U(A,2,x)&=\frac1{\Gamma(A)}\int_0^\infty
+ e^{-xq}q^{A-1}(1+q)^{1-A}dq,\\
+W_\eta(x)&=e^{-x/2}xU(1-\eta,2,x),\\
+P_\eta(x)&=\Gamma(1-\eta)W_\eta(x)
+ =e^{-x/2}x\int_0^\infty e^{-xq}(1+1/q)^\eta dq.
+\end{aligned}
+$$
+
+Specify the constant and auxiliary functions by convergent integrals and series:
+
+$$
+\begin{aligned}
+\gamma&=-\int_0^1\frac{e^{-u}-1}{u}du-\int_1^\infty\frac{e^{-u}}u du,\\
+\psi(A)&=-\gamma+\sum_{n=0}^\infty
+ \left(\frac1{n+1}-\frac1{n+A}\right),\\
+\psi_1(A)&=\sum_{n=0}^\infty\frac1{(n+A)^2}.
+\end{aligned}
+$$
+
+The last series is the trigamma series; its displayed definition suffices for every use below. No logarithmic-derivative identity for $\Gamma$ is needed.
+

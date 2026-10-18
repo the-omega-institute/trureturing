@@ -1,0 +1,43 @@
+### 81.2. Complete chart boundary
+
+We recall precisely the uniform part of §74 needed here. Regard vectors in
+\(\mathbb R^3\) as imaginary quaternions, and put \(e=(1,0,0)\).
+The original reflection and individual input/output flatness equations give
+unit quaternions/vectors \(F,v,n\), with
+\[
+ |\boldsymbol K|^2=3,\qquad e\cdot\boldsymbol K=-b,
+ \qquad \Im F\perp\boldsymbol K,v.
+\]
+The real poles \(F=1,-1\) were handled before any coordinate division in
+§74.3: \(F=1\) gives exactly (81.2), whereas \(F=-1\) has the nonzero
+third input imbalance \(-h(b^2+3)/6\). For nonreal \(F\), the axis
+\(v=\pm e\) is impossible on \(|b|<1\): at \(b=0\) its linear
+conditions are inconsistent, and otherwise its unit condition forces
+\((b^2-1)(b^2+3)=0\). The full \(v\parallel\boldsymbol K\) stratum
+is impossible on \(|b|\le1\), since its output sum is
+\[
+ \frac{2(3-b^2)}{b^2+3}
+ [(3-b^2)(a+2bq)^2+3(1+b^2)]>0.                           \tag{81.3}
+\]
+Here \(a=\Re F\) and \(q\) is the real coordinate in that parallel chart.
+These are original-equation exclusions, not genericity assumptions.
+
+Consequently every remaining solution has
+\[
+ F=a+t(\boldsymbol K\times v),\quad t\ne0,\qquad
+ c=e\cdot v,\quad d=\boldsymbol K\cdot v,\quad
+ \delta=e\cdot(\boldsymbol K\times v),\quad |c|<1,
+\]
+\[
+ \delta^2=3-b^2-3c^2-d^2-2bcd,\qquad
+ a^2+t^2(3-d^2)=1,
+ \qquad \rho=\frac{3b}{b^2+3}.                            \tag{81.4}
+\]
+The four scalar equations are exactly \(I=D_f=S_f=O_f=0\) in
+(74.14), with its \(\Delta\) renamed \(\delta\). In particular,
+\[
+ D_f=2\delta[ca-t\{\rho(1+c^2)+cd\}].                  \tag{81.5}
+\]
+We retain both \(\delta=0\) and \(\delta\ne0\). The scalar
+\(K\) introduced later is distinct from the vector \(\boldsymbol K\).
+

@@ -1,0 +1,14 @@
+**命题 9.2（zero future does not erase a nonunit initial read）。** The tree
+$\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle$ with
+
+$$
+a=(3,0,0),\qquad b=(7/24,4/3,0),\qquad
+L=3,\quad H=7/2,\quad d_0=16
+$$
+
+lies in row 9, has $x_0=(0,0,-7/2)$ and $x_j=0$ for all $j\ge1$. Here $H_\star=4$. A unit-envelope raw-reply grammar is not applicable to its first read.
+
+**证明。** Its value is $(a\cdot b)(b\times a)$,
+$a\cdot b=7/8$, $b\times a=(0,0,-4)$ and $\Delta=16$.
+The first transported pair is orthogonal, making this label zero forever afterward. Leaf lengths are at most three and $16<3^4$. For a nonzero label $s\ge4$ and $r\ge s/3>1$, so $q_2=r^ns^{m+n}\ge4$; the single $\alpha$ leaf at $(2e_1,2e_2)$ attains three-read maximum four. This proves the threshold and row. At precision zero, $(0,0,-4)$ is a legitimate error-at-most-one first report. A unit alphabet bounded by two cannot contain any legitimate first report. A separately represented true envelope $\overline H\ge\max(1,H)$ supplies the lawful initial alphabet, with its actual precision and magnitude costs as in PCR §§73,87.
+

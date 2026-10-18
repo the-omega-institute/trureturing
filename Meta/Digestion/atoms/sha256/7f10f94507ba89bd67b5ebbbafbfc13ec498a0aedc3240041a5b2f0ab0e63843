@@ -1,0 +1,50 @@
+**Theorem 3.1 (rank-independent residual equality reflection).** The
+computable tuple in Definition 2.2 satisfies, simultaneously for every
+$\mathbf n\in\mathbb N^k$ and every listed pair,
+
+$$
+A_\ell(\mathbf n,\mathbf z^\star)=B_\ell(\mathbf n,\mathbf z^\star)
+\quad\Longleftrightarrow\quad
+\forall\mathbf z\in\mathcal T^m\quad
+A_\ell(\mathbf n,\mathbf z)=B_\ell(\mathbf n,\mathbf z).
+\tag{URR.9}
+$$
+
+Proof. Fix $\mathbf n$ only for the proof; Definition 2.2 has already
+been performed without it. Prove the forward implication for any two
+input subtemplates by induction on the sum of their syntax sizes,
+assuming their values at $\mathbf z^\star$ are equal.
+
+If neither contains a residual, both values are independent of the
+residual assignment, so the implication holds. If exactly one contains
+a residual, their masses lie respectively above or equal to $G$ and
+below $G$, contradicting equality by Lemma 2.3.
+
+It remains that both contain residuals. Each root is either a decorated
+variable or an explicit pair. A decorated variable has mass exactly $G$;
+a residual-containing pair has mass at least $G+1$. Thus a variable/pair
+comparison cannot be equal. If both roots are decorated variables,
+Lemma 2.3 forces their names and exponents to agree. Their values then
+agree for every assignment, with the shared-variable convention intact.
+If both are pairs, injectivity of the actual native ordered constructor
+gives equality of both corresponding children at $\mathbf z^\star$.
+Both child comparisons have smaller total syntax size. Induction makes
+each a universal residual equality at this same $\mathbf n$; reassembling
+the pairs gives the desired equality.
+
+These cases exhaust (URR.2). They use native pair injectivity even when
+its atomic code collapses; they never infer free-code syntax from a
+native equality. The reverse implication is evaluation at the finite
+tuple $\mathbf z^\star$. The argument works for every rank vector using
+the very same constants $M,d,G,b_i$.
+
+The mass argument in the proof of Theorem 3.1 uses the equal-mass
+variable/compound separation method of [NativeGroundSeparation][NGS].
+Its finite Boolean free-magma length bound becomes a rank-uniform bound
+here through $\gamma(T_{n_j+c})=0$. The clock then separates all the
+listed decorations of each shared residual. The infinite solution family
+in Proposition 7.1 explains why the syntactic finite-exception argument
+of [Comon–Lescanne, §3.2 Lemma 1 and Appendix B.3][CL] is not a substitute
+for that native mass-and-clock proof; their §6.2 distinguishes general
+equational theories from the free-term case. $\square$
+

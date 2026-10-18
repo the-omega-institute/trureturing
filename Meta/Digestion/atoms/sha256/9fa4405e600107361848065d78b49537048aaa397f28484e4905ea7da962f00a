@@ -1,0 +1,75 @@
+### 95.1. The full Selmer group and a necessary cut
+
+**Theorem 95.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_n=L_n^2+3 for odd n. Write B_N=D C^2, with D its full positive squarefree kernel, and list its distinct primes q_1,...,q_h. Define an h by h matrix A over F_2 by
+
+A_ij=[q_j/q_i] for i!=j, and A_ii=sum_{j!=i} A_ij,
+
+where [a/p]=(1-(a/p))/2 is the additive Legendre symbol. Then
+
+ dim Sel_2(E_D/Q)=1+2 dim ker A,
+
+where E_D: Y^2=X(X+5D)(X-15D), and Sel_2 denotes the full group, not its quotient by rational torsion.
+
+If k>1 is odd, 3 does not divide k, and B_(Nk)=D c^2 for a positive integer c, then dim ker A>=2. Equivalently, there must be a divisor d of D with 1<d<D such that, on writing e=D/d,
+
+ (d/p)=1 for every p|e, and (e/p)=1 for every p|d.
+
+Thus the absence of a proper admissible cut excludes every such repetition, for any number of prime factors in D. The criterion is necessary, not sufficient, for repetition.
+
+The original-block inputs are TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md): q_i>5, q_i=1 mod 3, (5/q_i)=1, and D=19 mod 120. The existing torsion theorem is Theorem 85.1; the rank-one nonrepetition conclusion for every actual N>=81 is Corollary 94.2. The local Selmer equations below are taken directly from Feng, Liu, Pan and Tian, Quadratic twists of tiling number elliptic curves, arXiv:2405.11132v1, section 3.1.1 (pages 9–10 in printed numbering), with matrix convention from section 3.1.2 and the general local matrix equation in section 3.1.3. See the [primary paper](https://arxiv.org/pdf/2405.11132). The reduction is supplied in full; no parity theorem or finiteness of Sha is used.
+
+**Proof of the Selmer formula and repetition obstruction.**
+
+Set d_i=[-1/q_i], t_i=[2/q_i], and write d,t for the resulting column vectors. Since D=3 mod 4, sum_i d_i=1. Quadratic reciprocity gives
+
+ A+A^T=diag(d)+d d^T.
+
+The paper's model is y^2=x(x-m)(x+3m). Here m=-5D is squarefree, negative, and 1 mod 24. Its odd bad primes other than 3 are 5,q_1,...,q_h. On this ordered list the source's zero-row-sum matrix is diag(0,A): the off-diagonal symbols involving 5 vanish because (5/q_i)=(q_i/5)=1. The vectors for -1, 2, 3 and -3 are respectively
+
+ (0,d), (1,t), (1,d), (1,0).
+
+The real condition forces the second descent squareclass positive. At 2 the first class is odd, and at 3 the second class has zero valuation. Thus all possible Selmer classes have unique representatives
+
+ b_1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b_2=2^b 5^y0 product q_i^y_i,
+
+with all exponents in F_2. The local condition at 3 gives b=y0+a. Indeed m=1 mod 3, each q_i=1 mod 3, and 2 and 5 are both -1 mod 3.
+
+For m=1 mod 8 the two local conditions at 2, stated in section 3.1.1, are
+
+ [-1/b_1]+[2/b_1]+[-1/(b_2/2^b)]=0,
+ [-1/b_1]+b=0.
+
+Substituting the representatives and b=y0+a gives exactly
+
+ epsilon=y0+d^T x,
+ x0=y0+t^T x+d^T y.
+
+At the odd primes the source's general matrix equation gives
+
+ (diag(0,A)+diag(0,d))(x0,x)^T+diag(1,0,...,0)(y0,y)^T
+       =epsilon(0,d)^T+a(1,d)^T,
+ diag(0,A)(y0,y)^T=(y0+a)(1,t)^T.
+
+The coordinate at 5 in the first equation is y0=a; the coordinate at 5 in the second gives the same equality. Consequently b=0. At the other primes the second equation is Ay=0. Substitution in the first gives
+
+ (A+diag(d))x=(epsilon+a)d=(d^T x)d,
+
+hence A^T x=0 by reciprocity. No equation remains on y0; x0 and epsilon have already been determined uniquely. Conversely any triple
+
+ (y0,x,y) in F_2 x ker A^T x ker A
+
+determines a unique class satisfying every local condition. The source says these conditions are sufficient as well as necessary; all good places impose no further conditions. This is a vector-space parametrization of the full Selmer group, proving the displayed dimension formula.
+
+The rational torsion is E_D[2] by Theorem 85.1 and has F_2-dimension 2. The Selmer injection therefore gives
+
+ rank E_D(Q)<=2 dim ker A-1.
+
+Also A times the all-one vector is zero. If dim ker A=1, the actual non-torsion original point from Theorem 85.1 forces rank exactly one. Corollary 94.2 then excludes the repetition. This proves dim ker A>=2 without invoking any parity of the Mordell–Weil rank or any assertion about Sha.
+
+**Proof of the cut equivalence.**
+
+For a subset S of {1,...,h}, let v be its indicator vector and d_S=product_{i in S} q_i. If i is outside S, the i-th coordinate of Av is sum_{j in S}[q_j/q_i], so it vanishes exactly when (d_S/q_i)=1. If i belongs to S, the zero-row-sum diagonal converts the i-th coordinate into sum_{j outside S}[q_j/q_i], which vanishes exactly when ((D/d_S)/q_i)=1. Therefore Av=0 is precisely the pair of cut conditions in the statement. The constant vectors correspond to d_S=1 and d_S=D. A vector outside their one-dimensional span exists exactly when dim ker A>=2. This proves the equivalence, including h=1 where there is no proper cut.
+

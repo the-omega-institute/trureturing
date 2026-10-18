@@ -1,0 +1,30 @@
+**定义 2.1（Original tensor split and matching embedding）。** Fix
+
+$$
+\mathcal H=H^{(1)}\otimes H^{(2)},\qquad
+H^{(1)}=H^{(2)}=\mathbb C^5,
+\qquad B=(0,1,2,3,13).
+$$
+
+Both local computational bases have this order. Define
+
+$$
+f(0)=13,\quad f(13)=0,\quad f(1)=3,\quad f(3)=1,\quad f(2)=2,
+\qquad e_s=|s,f(s)\rangle.
+$$
+
+The isometry $J:\mathbb C^5\to\mathcal H$ is $J|s\rangle=e_s$;
+thus $J^\dagger J=I_5$. Write
+$\mathcal E=\operatorname{ran}J$ and
+
+$$
+S=\frac15JI_5J^\dagger
+ =\frac15\sum_{s\in B}|s\rangle\langle s|
+                    \otimes|f(s)\rangle\langle f(s)|.
+$$
+
+Matrix indices $1,2,3,4,5$ in the constructions below mean the positions in
+$(0,1,2,3,13)$, not a different ordering or tensor split.
+Write $\varepsilon_i$ for standard real coordinate vectors in $\mathbb R^5$
+and $E_{sa}=|s\rangle\langle a|$ for the compressed $5\times5$ matrix units.
+

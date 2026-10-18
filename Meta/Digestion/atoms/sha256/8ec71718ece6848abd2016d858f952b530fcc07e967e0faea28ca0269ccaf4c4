@@ -1,0 +1,26 @@
+**Definition 1.1 (fixed apparatus).** Use [ARC] Definitions 1.1–1.4,
+4.1–4.3 and [UAS] Definitions 1.1–1.4. There is one finite original
+preparation $\xi$, one actual initial tree $u$, one initial $H_0$, the
+same private source on port 16 and the same evolving address relation
+$\phi_K$. The inequalities $\lambda(t)\le h\le K$ concern completed
+source boundaries. Intermediate source bytes need not encode a tree.
+Reserve extends this source's backing; Raise changes its current guard.
+No future capacity bound is part of the initial apparatus.
+
+The original actor table/state/seed/waiting packet occupy 24–27;
+acquired material occupies 28–29; the original verifier occupies 32–39;
+the original consumer occupies 40–47. Routes 48–51, producer ingress 13,
+source descriptors 17 and all original tokens keep their meanings.
+ARC's ten additional owned ports are 64–73, not borrowed verifier
+workspace. In particular, the twelve original workspace loans are twelve
+actual TOK rows followed by their prescribed CTL, even when the ultimate
+principal is unchanged.
+
+An original row means one actual RD, WR, ML, MR, EX, BF, IN, OUT, TOK
+or CTL, including its declared finite boot variant, finite control
+effects and one meter receipt. It does not mean a whole source request,
+bank assignment, channel transfer or history request. [ARC] Definition
+6.2 and [UAS] Definition 2.3 specify its literal ordered effects and
+identity-based alias combination. Internal whole-row patches in [UAS]
+are a stronger admitted basis, not a construction of exposed fine steps.
+

@@ -1,0 +1,57 @@
+**Theorem 81.1 (Two individually optimal tails can be incompatible).** For
+
+$$
+a_1=a_2=1,\qquad a_n=1/n\quad(n\ge3),\qquad\varepsilon=1/4,
+\tag{81.1}
+$$
+
+one has $\beta_0(\varepsilon)=5/8$ and
+$\beta_1(\varepsilon)=1/2$. Each minimum in (80.8) is attained
+individually, but no acquisition simultaneously satisfies
+
+$$
+\sup_x\mathsf P_A\{M_{A,x}>0\}=5/8,
+\qquad
+\sup_x\mathsf P_A\{M_{A,x}>1\}=1/2.
+\tag{81.2}
+$$
+
+**Proof.** At $p=5/8$, $\varepsilon+p=7/8$ and
+$S_0(7/8)=2(1-7/8)=1/4$. For a smaller $p$ the first two terms alone
+exceed $1/4$. Thus (80.2) gives $\beta_0=5/8$. Similarly
+$S_1(3/4)=1-3/4=1/4$, and a smaller $p<1/2$ makes its $n=2$ term
+exceed $1/4$. Thus $\beta_1=1/2$. Individual attainment follows from
+Theorem 80.2.
+
+Suppose (81.2) held. The zero-request finite-handoff event and its
+output submeasure $\rho_0$ are common to every actual source, since no
+source answer has been used. Its mass must be $1-5/8=3/8$.
+Theorem 80.1 at $m=0$ forces
+
+$$
+\rho_0(\Theta\setminus\{\theta_0\})\le1/4,
+\qquad \rho_0(\{\theta_1\}),\rho_0(\{\theta_2\})\ge1/8.
+\tag{81.3}
+$$
+
+The two required singleton masses exhaust the permitted mass outside
+$\theta_0$, so in particular $\rho_0(\{\theta_1\})=1/8$.
+
+Fix one actual $x\in H_1$. Inequality (80.7) and the second supremum
+in (81.2) force its tail at horizon one to equal $1/2$. Its finite-handoff
+output submeasure $\rho_1$ on $\{M_{A,x}\le1\}$ thus has mass $1/2$,
+and transports to every actual source in $H_1$. Theorem 80.1 forces
+
+$$
+\rho_1(\Theta\setminus\{\theta_0\})\le1/4,
+\qquad \rho_1(\{\theta_2\})\ge1/4.
+\tag{81.4}
+$$
+
+Therefore $\rho_1(\{\theta_1\})=0$. But at this same fixed $x$ the
+zero-request handoff event is contained in $\{M_{A,x}\le1\}$. Restricting
+one output map to these nested seed events gives $\rho_0\le\rho_1$,
+contradicting their masses at $\theta_1$. The obstruction is a common
+execution constraint on nested output submeasures, not a change of
+carrier or comparison source. $\square$
+

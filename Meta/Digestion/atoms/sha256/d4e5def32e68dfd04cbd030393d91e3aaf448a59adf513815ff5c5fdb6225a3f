@@ -1,0 +1,29 @@
+### 70.5 Exact interval arithmetic
+
+All rational centers, radii, and preconditioners are printed in §70.6.
+The bounds in §70.3 can be reproduced by evaluating (70.3), (70.6),
+and (70.8), together with their derivatives, using outward interval
+arithmetic at precision \(p=160\). The following rules specify one
+integer-only evaluation, so no external numerical data are needed.
+
+For completeness, an interval is stored as two integers \([L,U]\) representing
+\([L2^{-p},U2^{-p}]\). Addition and negation are exact. Multiplication forms
+the four integer products, divides their minimum and maximum by \(2^p\), and
+rounds the lower result down and upper result up. Reciprocation, only for
+intervals excluding zero, encloses the two endpoint values \(2^{2p}/L\) and
+\(2^{2p}/U\) by integer floor and ceiling. Division is multiplication by that
+reciprocal. Rational input endpoints are similarly rounded outwards.
+Derivatives use the ordinary sum, product, and reciprocal rules with these same
+interval operations. Therefore each reported enclosure contains the exact
+rational-function value or derivative on the full box.
+
+The strict rational inequalities in (70.9), the signs in (70.11),
+and the containment of the smaller boxes in the uniform box follow
+from these finite interval operations on the displayed data. The boxes
+also have \(c,h,T>0\) and \(-1<b<1\). All bounds in the table and
+sign display are outward rational bounds, with terminating decimals
+interpreted exactly. The original-equation identities and the continuity
+argument above turn these inequalities into the asserted existence and
+isolation theorem. No completeness assertion for rays away from zero
+or first-transition assertion is used.
+

@@ -1,0 +1,13 @@
+**定义 7.1（目标的两项关系系数）。** 对任意有限实函数 $`f:\mathcal{\text{𝒮}}\to\mathbb{\text{ℝ}}`$，将其五值按本卷顺序写为 $`f_{\varnothing},f_1,f_2,f_3,f_{13}`$，定义
+
+<table><tbody><tr><td>
+
+```math
+\Gamma_f=f_{\varnothing}+f_3-f_1-f_2,\qquad
+\Lambda_f=f_{\varnothing}+f_{13}-f_1-f_3.
+```
+
+</td></tr></tbody></table>
+
+$`\Gamma_f`$ 检查目标是否区分生成组成关系的两侧，$`\Lambda_f`$ 检查它是否区分正方形两条对角线。函数指的是该五模式域上的读出；对完整回复分布，须分别使用每个回复事件的指示函数。
+

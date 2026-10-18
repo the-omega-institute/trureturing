@@ -1,0 +1,59 @@
+**Theorem 55.3 (every optimal normalized multiplier and first-order
+contacts).** Let $\lambda_s$ be any optimal multiplier of the normalized
+contrast in (JR.126), $s<s_0$. Then
+
+$$
+\lim_{s\uparrow s_0}\lambda_s\sqrt{1-s/s_0}=\Gamma,
+\qquad
+\lambda_s=\Gamma/\sqrt\varepsilon+O(\varepsilon^{-1/4}).
+\tag{JR.172}
+$$
+
+For every optimal real-null decomposition near the endpoint, its sector
+weights tend to $1/4$ and
+
+$$
+\mathbb E\left[
+\left(\frac{|u|-1}{\sqrt\varepsilon}+\frac{b_{\sigma\eta}}\Gamma\right)^2
+\right]\longrightarrow0.
+\tag{JR.173}
+$$
+
+**Proof.** Let $F(\varepsilon)=j(1-\varepsilon)$.
+Theorem 55.2 gives
+$F(\varepsilon)=F(0)+2\Gamma\sqrt\varepsilon+R(\varepsilon)$,
+$-30\varepsilon\leq R(\varepsilon)\leq22\varepsilon$.
+An optimal normalized contrast multiplier is a supergradient of this
+concave function; every such supergradient obeys
+
+$$
+\frac{F(\varepsilon+\Delta)-F(\varepsilon)}\Delta
+\leq\lambda_s\leq
+\frac{F(\varepsilon)-F(\varepsilon-\Delta)}\Delta.
+\tag{JR.174}
+$$
+
+For $0<\varepsilon\leq5\cdot10^{-9}$ take $\Delta=\varepsilon^{5/4}$.
+Both comparison points lie in $(0,10^{-8}]$.
+The $R$ contribution in either secant is at most
+$(60+30\varepsilon^{1/4})\varepsilon^{-1/4}$ in absolute value;
+the square-root secant differs from $\Gamma/\sqrt\varepsilon$ by at most
+$\Gamma\varepsilon^{-1/4}/[4(1-\varepsilon^{1/4})^{3/2}]$.
+Their sum is $<61\varepsilon^{-1/4}$, proving (JR.172) without a
+smoothness or multiplier-uniqueness hypothesis. This is the multiplier
+for $j(\tau)$, not the physical-$s$ derivative and not $\lambda_{\rm sp}$.
+A finite endpoint dual minimum would force
+$j(1-\varepsilon)-j(1)\leq\lambda\varepsilon$, contradicting (JR.156).
+Endpoint primal attainment and equal dual infimum from Theorem 51.4
+are retained, with no finite original dual minimum.
+
+By Lemma 53.2 any optimal decomposition has aligned saturated contrast;
+hence $e=\varepsilon$ in (JR.158). Equation (JR.164) gives its sector
+weight limits. Asymptotic equality in the upper/lower estimates forces
+$\mathbb E[b_{\sigma\eta}d/(\Gamma\sqrt\varepsilon)]\to-2$.
+Also $\mathbb Ed^2/\varepsilon=2$ and
+$\mathbb Eb_{\sigma\eta}^2/\Gamma^2\to2$.
+Expanding the square gives (JR.173), including arbitrary proportional
+splitting. This is first-order contact rigidity, not a proof that four
+rays optimize each interior point, nor a physical-label minimum. $\square$
+

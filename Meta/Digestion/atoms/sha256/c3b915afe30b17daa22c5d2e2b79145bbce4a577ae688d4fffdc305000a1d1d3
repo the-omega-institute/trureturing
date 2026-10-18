@@ -1,0 +1,93 @@
+**Theorem 6.1 (saturation forces the binary live maps).** Set
+$s=1$, $R=R_1$ and $K_r=D+rT$. For every finite factorization of
+Definition 3.1 satisfying (RE.15), its two supported live Choi matrices
+are necessarily
+
+$$
+J_r=\frac12\left(|K_r\rangle\!\rangle\langle\!\langle K_r|
++|S\rangle\!\rangle\langle\!\langle S|\right).
+\tag{RE.34}
+$$
+
+Each aggregate supported binary failure effect is $M/2$. No assertion
+of unique binary-labelled failure-time CP measures is made. In
+particular the universal results below include every compatible
+exact-time splitting, every finite classical refinement, arbitrary
+complex CP encoders and arbitrary full TP decoders, with arbitrary
+finite jointly counted quantum fibres. At $\gamma=-\kappa$ the same
+statements hold after exchanging the two binary labels.
+
+Proof. Use the unnormalized output-input vectorization
+$|L\rangle\!\rangle=\sum_{i,j}L_{ij}|i\rangle|j\rangle$.
+The plus supported live map is a CP summand of the fixed live map, so
+$0\preceq J_+\preceq J_*$. The three nonzero vectors
+$|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle$
+are orthogonal and independent because their matrix supports are
+disjoint. They are not normalized. Let $V$ have these columns in that
+order and $G=V^\dagger V\succ0$. A positive dominated matrix kills
+$\ker J_*$: its nonnegative quadratic form is zero there, which forces
+its square root to kill those vectors. Its range is thus in
+$\operatorname{ran}V$. It follows that
+
+$$
+J_+=VZV^\dagger,\qquad
+Z=G^{-1}V^\dagger J_+VG^{-1},\qquad 0\preceq Z\preceq I_3.
+\tag{RE.35}
+$$
+
+To verify the last inequalities with the correct normalization, apply
+$0\preceq J_+\preceq VV^\dagger$ to $VG^{-1}z$ for each coefficient
+vector $z$. This retains the Gram matrix and does not treat the Choi
+columns as an orthonormal basis.
+
+The total plus failure effect on the supported input satisfies
+$0\preceq F_+^f\preceq M$. Because $M|0\rangle=0$, positivity
+forces $F_+^f|0\rangle=0$ and hence $(F_+^f)_{01}=0$.
+This follows by taking the event of all original labels and all times;
+it includes every singular measure allowed by a candidate. Zero extra
+sectors have zero CP branch maps, since positive summands of a zero
+output are zero. Thus they cannot contribute a missing effect.
+
+Writing $z=Z_{DT}$, the supported plus live effect has entry
+
+$$
+(F_+^L)_{01}=zbh_1+\overline z h_0a,
+\qquad \operatorname{Re}(F_+^L)_{01}=\kappa\operatorname{Re}z.
+\tag{RE.36}
+$$
+
+Indeed the effect of $VZV^\dagger$ is
+$\sum_{i,j}Z_{ij}K_j^\dagger K_i$, for $(K_D,K_T,K_S)=(D,T,S)$;
+only the $D,T$ pair has a $01$ entry. The required full binary effect
+has that real entry $\kappa/2$. Since $\kappa>0$, it forces
+$\operatorname{Re}z=1/2$.
+
+The Hermitian matrix $Y=2Z-I$ is a contraction. Its $DT$ entry has
+real part one, and absolute value at most one, so it is exactly one.
+The $D$ and $T$ columns each already have squared norm at least one
+from this entry. The contraction bounds each norm by one. Hence every
+other entry in those two columns is zero: $Z_{DD}=Z_{TT}=1/2$ and
+$Z_{DS}=Z_{TS}=0$. This argument also removes imaginary mixing; it
+has not assumed a real encoder.
+
+Let $Z_{SS}=z_S$. At input coordinate $0$, failure contributes zero,
+and the required plus effect has value $1/2$. It follows that
+
+$$
+\frac{h_0^2+b^2}{2}+z_Sd^2=\frac12,
+\qquad h_0^2+b^2+d^2=1.
+\tag{RE.37}
+$$
+
+The second equality is coordinate $0$ of (RE.9). As $d\ne0$,
+$z_S=1/2$. Expanding (RE.35) now gives (RE.34) for plus, and
+subtracting from $J_*$ gives minus. Their live effects, subtracted from
+the required binary total effects, leave $M/2$ for each supported
+failure effect.
+
+Only integrated failure effects were needed for this necessity proof.
+It has not assumed the specific half-density split in (RE.29), nor
+inferred that split from its integral. The full task still requires
+every exact-time measure; the conclusion permits all their compatible
+splittings. $\square$
+

@@ -1,0 +1,48 @@
+**Theorem 167.2 (Necessary and sufficient common-budget comparison).**
+For every $b\in H_L$, the class $C$ is probability-feasible along its
+radial segment exactly at
+
+$$
+\{t\in[0,1]:(1-t)\alpha+tb\in\Pi_C\}
+                         =[0,\tau(\rho_C(b))].
+\tag{167.2}
+$$
+
+In particular
+
+$$
+\Pi_N\cap Q_L\subseteq\Pi_O
+\quad\Longleftrightarrow\quad
+\rho_O(b)\le\max\{1,\rho_N(b)\}
+\quad\text{for every }b\in H_L\text{ with }\rho_N(b)<\infty.
+\tag{167.3}
+$$
+
+Equivalently, for every such $b$ and every complete $N$ conic allocation
+of $h(b)$ of finite mass $s$, there must be a complete $O$ conic
+allocation dominating $h(b)$ of mass at most $\max\{1,s\}$.
+
+**Proof.** At positive $t$, Theorem 166.2 gives feasibility exactly when
+$t\rho_C(b)\le1$ if the value is finite. If it is zero every positive
+$t\le1$ is feasible; if it is infinite none is. The point at zero is
+$\alpha$ and is feasible separately. When the value is finite and
+positive, the endpoint is included because the conic minimum is attained.
+This proves (167.2) in all three branches.
+
+Directions of infinite $\rho_N$ contribute only $\alpha$ and no condition.
+For a finite $q_N\le1$, the largest $N$-feasible parameter is $t=1$;
+containment therefore requires $\rho_O(b)\le1$.
+For $q_N>1$ it is $t=1/q_N$, requiring $\rho_O(b)\le q_N$.
+Conversely those requirements place the entire closed $N$ radial
+interval inside the $O$ interval, proving (167.3). Since
+$\rho_N\le\rho_O$, equality of the two costs is required whenever
+$1\le\rho_N<\infty$; when $\rho_N<1$ the requirement is
+$\rho_N\le\rho_O\le1$.
+
+If the exchange statement holds, apply it to an attained $N$ minimum
+to obtain (167.3). Conversely, for any feasible mass $s$, one has
+$\rho_N\le s$; (167.3) and an attained $O$ minimum give the required
+$O$ allocation of mass at most $\max\{1,s\}$. The exchange is a
+statement about dominating the demands, not preserving the supplied
+$N$ output laws. $\square$
+

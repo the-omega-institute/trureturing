@@ -1,0 +1,80 @@
+**Proposition 25.1 (an explicit sufficient acquisition factorization).**
+For the credited channel $\Phi_*$ there is an abstract factorization
+(CG.182) with fibre dimensions $3,2,2,1,1$, and a scalar extra branch
+for its original five-mode completion. In that factorization the sole
+three-dimensional branch has actual-input probability
+
+$$
+p_3(\rho_{y,e,n})
+ =H_{00,*}\frac y{128}
+   +H_{11,*}\frac{64-y}{128}+\frac{H_{22,*}}2.
+\tag{CG.200}
+$$
+
+It is independent of the four signs. For $y=5,16,27$ respectively it
+belongs to $(595/1000,596/1000)$, $(635/1000,637/1000)$ and
+$(676/1000,678/1000)$. These are probabilities for this construction,
+not an optimal lower bound for arbitrary factorizations.
+
+Proof. Retain the signed amplitudes of (CG.134). On the qutrit branch
+use encoder Kraus matrix $C_0=K_0$ and decode by the live identity.
+On branch $0j$, $j=1,2$, use a two-dimensional carrier with basis
+$|q_0\rangle,|q_1\rangle$ and put
+
+$$
+\begin{aligned}
+C_{0j}&=b^{0j}_1|q_0\rangle\langle0|
+                +b^{0j}_0|q_1\rangle\langle j|,\\
+V_{0j}&=|j\rangle\langle q_0|+|0\rangle\langle q_1|,
+&V_{0j}^\dagger V_{0j}&=I_2,
+&V_{0j}C_{0j}&=K_{0j}.
+\end{aligned}
+\tag{CG.201}
+$$
+
+The decoder $X\mapsto V_{0j}XV_{0j}^\dagger$ is TP into the live
+output. For each $k=1,2$, a scalar acquisition branch has Kraus row
+$C_{f,k}=\sqrt{m_{k,*}}\langle k|$. Its decoder sends scalar $s$ to
+the entire five-labelled failure law
+$s\,w_\ell h_0(t)dt\,P_f$ with $h_0(t)=2/(1+t)^2$.
+This decoder is TP since $\sum_\ell w_\ell=1$ and
+$\int_0^1h_0(t)dt=1$. Equation (CG.141) gives the JOINT encoder
+normalization
+
+$$
+C_0^\dagger C_0+
+ \sum_{j=1}^2C_{0j}^\dagger C_{0j}
+ +\sum_{k=1}^2C_{f,k}^\dagger C_{f,k}=I_3.
+\tag{CG.202}
+$$
+
+The branch products and failure maps give exactly (CG.135) on every
+complex matrix, including at arbitrary passive reference amplification.
+For five modes, compress the supported branches by
+$A\mapsto E^\dagger AE$. Add the scalar CP branch
+$A\mapsto\operatorname{tr}((I_5-EE^\dagger)A)$, decoded to original
+failure label $2$ with law $h_0(t)dt$. Its effect completes $EE^\dagger$
+to $I_5$, and the resulting full map is precisely (CG.142), including
+the discarded cross-support entries. No new output label is exposed.
+
+The table in Theorem 22.1 makes each diagonal entry of $H_*$ positive.
+Its rank-one factorization $H_*=hh^T$ makes $C_0$ rank three;
+both other live matrices have rank two by (CG.165)–(CG.166).
+The qutrit encoder effect is
+$C_0^\dagger C_0=\operatorname{diag}(H_{00,*},H_{11,*},H_{22,*})$,
+which proves (CG.200). The more precise rational enclosures from the
+same endpoint calculation used in Theorem 22.1 are
+
+$$
+\begin{aligned}
+0.968927785409&<H_{00,*}<0.968927785410,\\
+0.498837910301&<H_{11,*}<0.498837910302,\\
+0.655285923793&<H_{22,*}<0.655285923794.
+\end{aligned}
+\tag{CG.203}
+$$
+
+Substitution of $y=5,16,27$ in (CG.200) gives the stated coarse
+probability intervals. Every branch is unnormalized throughout.
+$\square$
+

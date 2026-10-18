@@ -1,0 +1,92 @@
+**Theorem 7.11 (Sharp threshold and exact-real persistence).**
+Definition 7.1 has a finite solution if and only if
+
+$$
+\epsilon\ge\epsilon_*:=2\sqrt{Zb}.
+$$
+
+The encoding in Definition 7.7 attains equality and stays exactly
+encoded at every prefix and every intermediate time of all finite
+valid command histories, with the same output error independent
+of history length. The same sharp threshold holds if one also
+requires exact affine updates for every prescribed simultaneous
+native continuation satisfying the all-times band guard.
+
+**Proof.** Necessity is Theorem 7.4. Propositions 7.8 and 7.9 give
+existence at equality, and the same model satisfies any larger
+tolerance. Starting from $z_0=E_*(x_0)$, the exact next-command
+identity gives $z_{j+1}=E_*(x_{j+1})$ whenever
+$z_j=E_*(x_j)$ and the next guard holds. Induction gives every
+finite prefix. Applying the uniform current-state estimate at
+each such prefix proves the error assertion. During a straight
+leg the corresponding fractional command $P_{\tau s}$ or
+$Q_{\tau t}$, $0\le\tau\le1$, gives the exact intermediate
+encoding and the same bound.
+
+For the larger command family, prescribe the original control
+velocities on a finite interval $[0,T]$, in Definition 1.1's
+regularity class. With $\rho(0)=0$, write
+
+$$
+k(\tau)=k+\rho(\tau),\qquad
+b_c(\tau)=\dot\chi(\tau),\qquad
+\Delta=\rho(T),\qquad L=\int_0^T b_c(\tau)\,d\tau,\qquad
+C=\int_0^T\rho(\tau)b_c(\tau)\,d\tau.
+$$
+
+The function $\rho$ is continuous and bounded, while $b_c$ is
+integrable with finite absolute integral, so $C$ exists. Integration
+of the native equations, as in Theorem 3.2, gives
+
+$$
+k'=k+\Delta,\qquad
+\alpha'=\alpha+\frac L2,\qquad
+\beta'=\beta+\left(\frac12-\frac kr\right)L-\frac Cr.
+$$
+
+In particular the native mixed-integral term has not been discarded
+from the source. The exact encoded endpoint map is
+
+$$
+\xi'=\xi+\Delta,\qquad
+\mathbf f_j'=
+ R_{L/2}\sum_{h=0}^j\binom jh\Delta^{j-h}\mathbf f_h.
+$$
+
+Its coefficients depend on the prescribed relative path, not the
+starting state or history. The parameter $C$ disappears only after
+the allowed $\beta$ quotient. Its exact source guard is
+
+$$
+a\le\xi+\rho(\tau)\le b\quad(0\le\tau\le T),
+$$
+
+equivalently
+
+$$
+a\le\xi+\min_{[0,T]}\rho,\qquad
+\xi+\max_{[0,T]}\rho\le b.
+$$
+
+Compactness supplies these extrema. Endpoint lawfulness alone is
+insufficient for a general nonmonotone path. This guard is again
+constant on each encoder fiber. Substitution of the binomial
+identity and the native $\alpha'$ formula proves exact endpoint
+intertwining. Replacing $T$ by any intermediate time proves exact
+encoding and the error bound throughout the path. Finite
+concatenation follows by the same induction. The larger family
+contains the phase commands of Theorem 7.4, so its lower bound is
+unchanged.
+
+For the history-encoder contract of Corollary 7.5, encode each
+history by $E_*$ of its actual endpoint. These same identities
+give the affine append maps and equality construction.
+
+No approximate decoded output is substituted for an encoded
+state in these assertions. Only readout is approximated; exact
+initialization and exact real updates preserve the exact feature
+point. Thus the readout error does not accumulate. Every asserted
+execution has finite duration and finite variation; arbitrary
+finite length is not an infinite-execution or limiting-state
+claim. $\square$
+

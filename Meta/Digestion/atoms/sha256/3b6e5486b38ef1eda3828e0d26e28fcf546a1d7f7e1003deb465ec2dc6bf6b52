@@ -1,0 +1,55 @@
+**Mathematical citation 3.1 (the full atomic path law).** Put
+$s(q)=\#_L(q)+2\#_R(q)$, $e(\alpha)=0$, $e(\beta)=1$ and
+$T_n=\rho^n\alpha$. The atomic recursion and guarded path law used
+in [DEV, Theorems 12.3 and 12.6] are
+
+$$
+T_0=\alpha,\quad T_1=\beta,\quad
+T_n=\langle T_{n-1},T_{n-2}\rangle\ (n\ge2),\quad
+\rho^k\beta=T_{k+1}.
+\tag{FM.6}
+$$
+
+For a nonempty $r$, write $\ell(r)=1$ when its last letter is $L$ and
+$\ell(r)=0$ when it is $R$. Presence and the reached subtree are
+
+$$
+r\in\operatorname{Pos}(T_n)
+ \ \Longleftrightarrow\ n\ge s(r)+\ell(r),\qquad
+T_n|_r=T_{n-s(r)}\quad\text{when present}.
+\tag{FM.7}
+$$
+
+The subtree expression is the recursion (FM.6) along legal edges:
+$L$ subtracts one and $R$ subtracts two, each from a parent index at
+least two. The final-edge guard is exactly the presence condition in
+(FM.7). Thus the credited reply table is
+
+$$
+\operatorname{val}(r,T_n)=
+\begin{cases}
+\mathsf{abs},&n<s(r),\\
+\alpha,&n=s(r),\\
+\beta,&n=s(r)+1,\\
+\mathsf{br},&n\ge s(r)+2
+\end{cases}
+\quad(r\ne\varepsilon\text{ ending in }R),
+\tag{FM.8}
+$$
+
+$$
+\operatorname{val}(r,T_n)=
+\begin{cases}
+\mathsf{abs},&n<s(r)+1,\\
+\beta,&n=s(r)+1,\\
+\mathsf{br},&n\ge s(r)+2
+\end{cases}
+\quad(r\ne\varepsilon\text{ ending in }L).
+\tag{FM.9}
+$$
+
+At $\varepsilon$ the replies are alpha, beta and branch at indices
+$0,1,\ge2$. In particular a final $L$ has no alpha phase. This is the
+atomic law stated in [DEV, Theorem 12.3]'s proof, with its stated
+supplier attribution.
+

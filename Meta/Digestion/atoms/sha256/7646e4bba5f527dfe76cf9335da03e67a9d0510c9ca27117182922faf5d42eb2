@@ -1,0 +1,64 @@
+**Assumption 5.1 (two independent ages and one exported alphabet).**
+Specialize [NAR, Assumption 16.1 and Reuse 16.2][NAR] to two slots,
+with public $q\ge1$, $H=q-1$, and the Cartesian source family
+
+$$
+\begin{aligned}
+X_{a,b}&=\langle T_a,T_{q+b}\rangle,
+&0\le a,b\le H,\\
+T_0&=\alpha,&T_1&=\beta,
+&T_{n+2}&=\langle T_{n+1},T_n\rangle.
+\end{aligned}
+\tag{NARC.5.1}
+$$
+
+Here $T_n=\rho^n\alpha$ for the actual homomorphic substitution of
+[NAR, Definition 1.1][NAR]. Independence means that every pair in the
+square is allowed; no probability distribution is imposed. The original
+offsets are zero and $q$ throughout. The complete original empty-cut row
+$R_{\varnothing}(X_{a,b})$ is genuinely acquired. A deterministic encoder
+computes and exports a label $e(a,b)$ solely from that row, before the
+future visible region and lag are chosen. The attained label set has
+exactly $q$ members. The row and every other source-bearing field are
+then discarded. All surviving source-bearing distinctions are counted
+in this one label; a source-dependent table selection or a retained
+origin is not an additional channel. Public controls common to every
+source may include the finite encoder table.
+
+Fix a public lag convention $\lambda\in\{0,1\}$. Correctness is required
+for every $\ell\ge\lambda$, separately under each convention. The same
+original undergoes its own pure-$\rho$ continuation, giving the current
+tree
+
+$$
+Y(a,b,\ell)=\langle T_{a+\ell},T_{q+b+\ell}\rangle.
+\tag{NARC.5.2}
+$$
+
+Both possible future singleton visible regions are required. Write
+$V=R$ for a visible right slot and cut $Q=\{L\}$, and $V=L$ for a
+visible left slot and cut $Q=\{R\}$. After the continuation, its complete
+later row $R_Q(Y)$ is genuinely acquired, including the full literal
+exterior, reached hole and its singleton partition. The row has no
+hidden-visible comparison. The decoder receives this row, $V$ and the
+exported label. It must return $\ell$ using at most one fresh chronological
+native Read at a finite literal original-root word of this same stationary
+current tree. The actual replies are $\mathsf{absent},\alpha,\beta,
+\mathsf{branch}$. No update occurs during capture or reading, and no age,
+subtree, epoch, old-source or hidden-visible comparison oracle is supplied.
+
+The address must be determined by the received label, public $q$, selected
+region and genuinely acquired row. Every letter is materialized before
+the request. Arbitrary finite local parsing and computation are allowed,
+with their own costs. Initial and later acquisition, retained-label
+representation, row storage, workspace, arithmetic, word production and
+lag-output representation are separate resources from chronological
+Read count. This assumption varies the encoder; it does not impose the
+fixed reference $e=a_0$ or the installed Moore-table restriction of §§1--4.
+
+The supplied right clock $c$ has $c(T_n)=n$. In particular the original
+acquired row computes $a=c(T_a)$ and $b=c(T_{q+b})-q$ before discard.
+This is [NAR, (NAR.16.4)][NAR], not access to an unacquired age profile.
+Later parsing of a visible literal computes its normalized clock, also
+by the same supplier. These computations grant no clock of a hidden tree.
+

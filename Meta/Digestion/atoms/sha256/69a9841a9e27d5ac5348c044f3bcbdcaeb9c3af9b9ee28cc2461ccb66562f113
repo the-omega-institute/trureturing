@@ -1,0 +1,29 @@
+**Definition 1.4 (separate costs).** Use the charged finite-sequence model
+and row encoding of [CWS, Definitions 2.1–2.2][CWS]. Sixteen-symbol cells cost
+four bits. An exterior has tokens for branches and concrete leaves;
+a hole has `H`, its literal address and a delimiter. After the exterior
+come its delimiter, every upper-triangular equality bit, and the row
+terminator. With $c$ exterior cells and $r$ holes the row has
+$s=c+\binom r2+2$ cells. A private row candidate becomes output by ownership
+transfer, without a second payload copy.
+
+For a call with invocation source $u$ and $b$ updates through Return, put
+
+$$
+V=\rho^b u,\quad N=|\operatorname{Pos}(V)|,\quad H=\operatorname{height}(V),
+\quad M=|P|,\quad K_P=1+\sum_{p\in P}(|p|+1),
+\quad F=N+K_P+\binom M2+2,
+\quad m_* =\max(1,M-1).
+\tag{CAB.3}
+$$
+
+These are analysis parameters, not observer advice. Count $T$ actual
+Reads, $A=\sum|p|$ delivered address letters, and
+$Q=\max(\{0\}\cup\{|p|:\operatorname{Read}(p)\})$ separately.
+Also separate auxiliary writable paths/control, complete operand payload,
+row and supplement candidates, actual final retained payload, immutable
+program/public input, and local bit/cell work. A scalar register uses its
+binary length. An immutable long literal still costs its installed bytes
+and full delivery. Source storage, writer work and port-internal copies
+are additional implementation costs, never assigned zero.
+

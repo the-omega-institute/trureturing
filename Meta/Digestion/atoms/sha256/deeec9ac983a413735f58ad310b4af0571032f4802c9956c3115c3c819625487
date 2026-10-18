@@ -1,0 +1,108 @@
+**Theorem 218.4 (Exact joint test for a signed affine reconstruction).**
+Let p be a probability-vector kernel on all $B_L$, with labels
+$J=\{0,\ldots,L\}$ and degree at most two:
+
+$$
+p_w=c+\sum_i\ell_iw_i+\sum_{i<j}R_{ij}w_iw_j.
+$$
+
+The coordinate sum of c is one; those of $\ell_i,R_{ij}$ are zero.
+These kernel coefficients are different objects from the score quotient.
+Fix target amplitudes $a_n\in[0,1]$ and cap $\varepsilon\in[0,1]$.
+For every real t define, coordinatewise,
+
+$$
+\begin{aligned}
+H_t&=\sum_i\left(\sum_{j>i}(-tR_{ij})_+-t\ell_i\right)_+,
+ &D_j(t)&=H_t(j)-tc_j,\\
+s_{n,E}(t)&=\min_{w\in\Omega_n}t\,p_w(E),&&E\subseteq J,\\
+A_0(t)&=\max\left\{D_0(t),\,1-\varepsilon-tp_{w_+}(0),\,
+ \max_n[1-a_n-\varepsilon-s_{n,\{0\}}(t)]\right\},\\
+A_n(t)&=\max\{D_n(t),\,a_n-\varepsilon-s_{n,\{n\}}(t)\},&&n\ge1,\\
+B_n(t)&=1-\varepsilon-s_{n,\{0,n\}}(t).&&
+\end{aligned}
+\tag{218.14}
+$$
+
+These bounds may be negative. The pair minimum is a joint reading on one
+word, not the sum of separately minimized singleton readings.
+There exists a full stopped kernel $q_w=tp_w+z$, with one signed constant
+$z\in\mathbb R^{L+1}$, meeting every finite cap row, if and only if
+
+$$
+A_0(t)+\sum_{j=1}^LA_j(t)\le1-t,\qquad
+B_n(t)+\sum_{\substack{j\ge1\\j\ne n}}A_j(t)\le1-t
+ \quad(1\le n\le L).
+\tag{218.15}
+$$
+
+Neither $z\ge0$ nor $0\le t\le1$ is required. When feasible, one
+simultaneous choice is
+
+$$
+z_n=A_n(t)\quad(n\ge1),\qquad z_0=1-t-\sum_{n=1}^LA_n(t).
+\tag{218.16}
+$$
+
+The feasible set of real t is a closed interval, possibly empty or unbounded.
+
+**Proof.** Normalization requires $\sum_jz_j=1-t$.
+The nonconstant coefficients of q are $t\ell_i,tR_{ij}$ and its constant
+is $tc+z$. The constructive sufficiency of 109.1 applies when
+$tc+z\ge H_t$. Its equal-mass terminal-vector allocation depends on
+zero coordinate sums of nonconstant coefficients and total constant mass
+one. It constructs nonnegative terminal vectors of total schedule mass one,
+so it proves positivity of the signed candidate rather than presupposing it.
+The common scalar mass condition follows from that normalization.
+Consequently stopped membership is exactly $z\ge D(t)$ and normalization.
+
+On $\Omega_n$, all-word base, correct and pair demands become respectively
+
+$$
+z_0\ge1-a_n-\varepsilon-s_{n,\{0\}}(t),\qquad
+z_n\ge a_n-\varepsilon-s_{n,\{n\}}(t),\qquad
+z_0+z_n\ge B_n(t).
+$$
+
+The positive row is $z_0\ge1-\varepsilon-tp_{w_+}(0)$.
+Together these are precisely $z_j\ge A_j$, $z_0+z_n\ge B_n$
+and $\sum z=1-t$. Summing coordinate bounds gives the first cut in
+(218.15); adding each pair bound to all other numerical-coordinate bounds
+gives its n-th cut. Conversely (218.16) has the required total,
+the first cut gives $z_0\ge A_0$ and the n-th cut gives
+$z_0+z_n\ge B_n$. All other coordinate bounds are equalities.
+One vector satisfies all membership, base, correct, pair and positive rows.
+
+Every coordinate of $H_t$ is convex piecewise affine: a sum of positive
+parts minus a linear function is convex, and taking its positive part
+preserves convexity. Each s is a finite minimum of linear functions,
+hence concave piecewise affine. Thus $A_j,B_n$ and all left sides of
+(218.15) minus $1-t$ are convex piecewise affine. Their common nonpositive
+set in $\mathbb R$ is a closed interval. This proves the continuous claim,
+including $t=0$, signed translations and equality endpoints. $\square$
+
+For a same-$\lambda$ application, retain $(b,e)\in H_N$ and its one
+complete feasible $\lambda$ of mass M. Set $M_0=\max(1,M)$ and pad
+only its zero anchor column to mass $M_0$; denote this allocation
+$\widehat\lambda$. The normalized kernel
+
+$$
+p=\sum_D\frac{\widehat\lambda_D}{M_0}e_{D(w)},\qquad
+a=\alpha+(b-\alpha)/M_0,\qquad\varepsilon=e/M_0
+\tag{218.17}
+$$
+
+satisfies every demand because $G_N\widehat\lambda=G_N\lambda$.
+If (218.15) holds at some real t, let $\pi$ be the one normalized whole-O
+distribution supplied for q. Then $\lambda_O=M_0\pi$ has exactly mass
+$M_0$ and
+
+$$
+G_O\lambda_O=M_0(z_q-r)\ge M_0(d(a,\varepsilon)-r)=h(b,e).
+$$
+
+Thus $\rho_O(b,e)\le M_0$. There is no extra charge for the signed
+translation. This sufficient test is not proved automatic for every
+normalized N allocation. The radial normalization and 109.1 application
+are reused interfaces, not separate new content.
+

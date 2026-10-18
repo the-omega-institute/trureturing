@@ -1,0 +1,88 @@
+**Proposition 35.1 (same-source positive-height consumer).** Under
+Assumption 23.1, at $t=10^6$ there is an original feasible law with
+exactly seven positive supported low labels, retaining reverse saturated
+labels, all eight $\Gamma$ moments and full failure covariance $M$,
+but with $H_-=0$. At its achieved request $r=K$, Theorem 32.3 improves
+$J_t$ by more than $1/15000$, and improves the original HALF height
+by more than $1/30000$. This proves this specific law nonoptimal; it
+does not prove that another seven-low law cannot be optimal.
+
+Proof. Keep the four saturated $F$ directions of (GC.62), each of
+mass $q/4$, where $q=\nu/t$. Their failure covariance is exactly $M$.
+In angular coordinates the remaining pure Gram is
+
+$$
+M_0=\operatorname{diag}(P,U_0,V_0),\qquad
+P=1-q,\quad U_0=\alpha(1-qu_F),\quad
+V_0=\beta(1-qv_F),\quad P=U_0+V_0.
+\tag{FC.151}
+$$
+
+Here $0<q<10^{-4}$, $U_0/P<0.88$ and $V_0/P>0.1$.
+Let $c_0=\sqrt{99}/10$, $x_0=(-c_0,1/10)$, and
+$\widehat h_0=(1,x_0)^T$ in angular Gram coordinates. Define
+
+$$
+p_0=(\widehat h_0^TM_0^{-1}\widehat h_0)^{-1},\qquad
+R_0=M_0-p_0\widehat h_0\widehat h_0^T.
+\tag{FC.152}
+$$
+
+Then $R_0\succeq0$ has rank two, by conjugating with $M_0^{-1/2}$.
+It has the circle null-trace identity and kernel
+$M_0^{-1}\widehat h_0$. Its remaining circle rays therefore satisfy
+
+$$
+u=A_0+B_0v,\qquad
+A_0=\frac{U_0}{Pc_0},\quad B_0=\frac{U_0}{10V_0c_0},\qquad
+0<B_0<A_0<1.
+\tag{FC.153}
+$$
+
+This line meets the circle in two distinct right-hemisphere points:
+$A_0/\sqrt{1+B_0^2}<1$ gives two intersections and
+$A_0>B_0$ makes $u>0$. They span the residual range. For their
+lifts $h_+,h_-$ the cross value of
+$J=\operatorname{diag}(1,-1,-1)$ is
+$h_+^TJh_-=1-x_+\cdot x_->0$. The diagonal values are zero.
+Writing $R_0=[h_+,h_-]C[h_+,h_-]^T$ gives $C\succ0$; the
+null-trace identity forces $C_{12}=0$. Its two diagonal weights are
+therefore strictly positive. This proves the exact three-pure-atom
+representation, including positivity, without a fitted moment repair.
+
+The first point has slope $-1/\sqrt{99}<-1/10$, so Theorem 25.1
+gives $\ell(x_0)>0$. The other two heights are positive by Theorem
+11.1. Thus all three pure heights are positive and $H_-=0$.
+Among the four saturated directions, the two negative-slope antipodes
+have slope $-\sqrt{m_v/m_u}<-1/10$ and lie in $T^+$; they are
+actual reverse labels. Their endpoint signs are supplied by Theorem
+25.1. All seven weights are positive. The source rays for the pure
+atoms are $(1,u/\sqrt\alpha,v/\sqrt\beta)$: they must not be
+replaced by the angular lifts $(1,u,v)$ used in (FC.152).
+
+For explicit source bounds, outward evaluation on the nine dyadic rows
+using (FC.85), (FC.151)–(FC.153), and the two quadratic line/circle
+roots gives the following strict intervals. All endpoints are terminating
+rationals; the two residual weights are ordered by decreasing size.
+
+| Quantity | Strict outer interval |
+| --- | --- |
+| $q$ | $(0.000088545791,0.000088545792)$ |
+| $p_0$ | $(0.452511544764,0.452511544765)$ |
+| First residual pure weight | $(0.435956268638,0.435956268639)$ |
+| Second residual pure weight | $(0.111443640805,0.111443640806)$ |
+| Achieved $r=K$ | $(0.900557123965,0.900557123966)$ |
+| $J_t(\widehat\pi)-J_t(\pi)$ from (FC.135)–(FC.138) | $(0.001281691803,0.001281691804)$ |
+
+For example, the residual roots are exactly
+$v_\pm=(-A_0B_0\pm\sqrt{1+B_0^2-A_0^2})/(1+B_0^2)$,
+$u_\pm=A_0+B_0v_\pm$; their weights solve mass and first moments
+of $R_0$. Thus the displayed evaluations refer to specified rational
+and radical expressions. The general strict gain already follows from
+$H_-=0$ in (FC.133), without these narrower evaluations. The explicit
+replacement here retains the same four saturated atoms and the exact
+original $K$, and has six positive pure endpoints, hence ten endpoint
+low labels. GC Proposition 10.1 realizes both finite laws with one
+coherent high. The comparison is not a seven-label compression and is
+not an eight-low or nine-low necessity seed. $\square$
+

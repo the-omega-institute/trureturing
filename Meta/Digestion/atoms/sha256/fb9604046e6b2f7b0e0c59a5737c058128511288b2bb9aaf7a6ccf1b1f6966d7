@@ -1,0 +1,8 @@
+### 88.7. Arbitrary nearby A channels and the boundary of the result
+
+For an arbitrary original A channel use the canonical Choi square-root Kraus decomposition in fixed environment dimension 32. It is continuous in J_A, including at rank changes. A fixed environment isometry aligns its base lift with the four-dimensional equality support. Thus every sufficiently nearby A channel has a lift in the Stinespring neighborhood used above with d=32. The old B lift from (22) is smooth, and its arbitrary-phase new vector has norm tending to zero by (23). Consequently all sufficiently nearby pairs of physical channels with rank J_B≤3 lie in the uniform chart to which (28) applies. Combining it with the original pinching consumer (5) proves (3).
+
+The proof has retained all normal directions of the full original comparison space. In particular no extra A-environment direction, output leakage direction, or bit-frame phase has been silently omitted. The new one-dimensional B environment is a rank restriction on the physical channel, not a restriction to calibrated perturbations.
+
+At rank four the new B sector can have two rows. Then D*D may be nonzero scalar, the coefficient in (18) vanishes, and the exact compensated-marker paths of section 87 give higher-rank quarter-attainers. Thus the strict tail conclusion (3) cannot be extended to rank four with the same positive tail term. This obstruction does not exhibit a subquarter channel and does not decide whether a weaker unrestricted local minimum holds. The unrestricted quarter-optimum problem remains open.
+

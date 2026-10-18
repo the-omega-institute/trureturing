@@ -1,0 +1,18 @@
+**Convention 2.3 (credited saturation and canonicalization).** A
+nonempty relation $B\subseteq S_d^n$ is admissible when every target
+has a constant or one-reply witness of the form (RRN.8) on $B$.
+[NDR, Theorem 2.2][NDR] supplies a complete template containing $B$
+on these same coordinates. Integral and fractional cover optima
+$K_d(n),Z_d(n)$, and all maxima of nonnegative masses, can therefore
+be computed using complete solution sets.
+
+For $\operatorname{ht}(v)\le d$, the completion $\pi_d(v)\in S_d$
+retains every constructor through depth $d-1$ and replaces a branch
+at that cutoff by $C_0$. It fixes $S_d$, preserves replies on $W_d$
+and preserves all their $\Gamma$ factors. On a canonical block, a
+length-$d$ word returns alpha if its parent is branch and absent
+otherwise; longer words are absent. Thus every finite canonical probe
+is simulated by one boundary reply in that same block or by a constant.
+These are [FMR, Lemma 2.2 and Theorems 2.3–2.5][FMR], not new
+normalization claims about projections of correlated fibers.
+

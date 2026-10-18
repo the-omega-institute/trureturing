@@ -1,0 +1,30 @@
+**Theorem 3.1 (connection to exact existing strata).** Suppose a finite family
+of chart pieces $b$ is an exact NIC signed image cover of an acquired row
+stratum. Then its source set is exactly
+
+$$
+\bigcup_b\{U_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z):
+P_b(\mathbf c,\mathbf w)\land
+\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)\},
+\tag{FNS.16}
+$$
+
+with both inclusions taken over finite original sources. The complete old
+exterior, reached set, equality partition, all off-task records and all
+whole signed inequalities are retained jointly by the source maps and their
+rank/negative predicates; positive identifications are built into the maps.
+
+**Proof.** NIC's expansion and finite-shape normalization give the forward
+inclusion from chart parameters to a source satisfying the old row and every
+record. Its completeness direction reads the actual finite ranks, finite
+frontier trees and repeated residual values from an arbitrary source and
+reconstructs that same source. Applying its signed pullback keeps every
+whole-tree disequality. A rank projection or a URR section alone would prove
+only existence at a rank; (FNS.16) uses the full source map and therefore has
+both directions. $\square$
+
+The existing finite-depth feasibility, finite whole-row image, supplied-prefix
+closure and equality-of-supplied-description results are used only under their
+published hypotheses. Recognizing one of those certificates does not prove
+completeness of this chart family or synthesize a common completed contact.
+

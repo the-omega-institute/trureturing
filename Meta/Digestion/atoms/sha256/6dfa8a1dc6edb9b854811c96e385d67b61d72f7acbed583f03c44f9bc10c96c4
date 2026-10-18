@@ -1,0 +1,76 @@
+**Definition 1.3 (Passive coordinates and the three sectors).** Put
+
+$$
+\begin{gathered}
+r=\sqrt{17},\quad D=\operatorname{diag}(1,i,i,i,1),\quad
+A=-iD^\dagger KD,\quad O(t)=e^{tA}=D^\dagger U(t)D,\\
+\widehat T(X)=D^\dagger T(DXD^\dagger)D,\quad
+Q_J(t)=O(t)^T\Pi_JO(t),\quad \Pi_J=\sum_{s\in J}\Pi_s,\\
+B=-A^2,\quad \mu_\pm=(5\pm r)/2,\quad \omega_\pm=\sqrt{\mu_\pm},\\
+R_\pm=\frac{B(B-\mu_\mp I)}{\mu_\pm(\mu_\pm-\mu_\mp)},\quad
+R_0=I-R_+-R_-=dd^T,\quad d=(e_2-e_5)/\sqrt2,\\
+W_\pm=AR_\pm/\omega_\pm,\quad
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\quad
+w_\pm(\theta)=\cos\theta\,u_\pm+\sin\theta\,W_\pm u_\pm.
+\end{gathered}
+\tag{1.4}
+$$
+
+Transposition always refers to this real frame; a dagger denotes an
+adjoint, or the trace-pairing dual for maps. Write $\mathcal H_j$ for the
+complexification of $\operatorname{ran}_{\mathbb R}R_j$, with dimensions
+$(d_0,d_+,d_-)=(1,2,2)$. These are the spectral coordinates of QMB
+Theorem 4.1,
+[QPC Convention 6.1](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md)
+and
+[QFA Definition 1.3](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md).
+Their identities follow directly by ordering coordinates as
+$L=(N,25)$, $V=(2,3,5)$:
+
+$$
+A=\begin{pmatrix}0&C\\-C^T&0\end{pmatrix},\qquad
+C=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+CC^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+\tag{1.5}
+$$
+
+The nonzero squared frequencies solve $x^2-5x+2=0$.
+Consequently the $R_j$ are mutually orthogonal projections,
+$W_j^T=-W_j$, $W_j^2=-R_j$, and $u_j,W_ju_j$ are orthonormal plane
+bases. Explicitly,
+
+$$
+\begin{aligned}
+R_+|_L&=\begin{pmatrix}(r+1)/(2r)&2/r\\2/r&(r-1)/(2r)\end{pmatrix},\\
+R_+|_V&=\begin{pmatrix}
+(r+3)/(4r)&1/r&(r+3)/(4r)\\
+1/r&(r-3)/(2r)&1/r\\
+(r+3)/(4r)&1/r&(r+3)/(4r)
+\end{pmatrix},\\
+R_0|_L&=0,\qquad
+R_0|_V=\frac12\begin{pmatrix}1&0&-1\\0&0&0\\-1&0&1\end{pmatrix},
+\qquad R_-=I-R_0-R_+.
+\end{aligned}
+\tag{1.6}
+$$
+
+Thus the squared sector lengths $r_{sj}=(R_j)_{ss}$ are
+
+$$
+\begin{array}{c|ccc}
+s&r_{s0}&r_{s+}&r_{s-}\\\hline
+N&0&(1+1/r)/2&(1-1/r)/2\\
+2&1/2&(1+3/r)/4&(1-3/r)/4\\
+3&0&(1-3/r)/2&(1+3/r)/2\\
+5&1/2&(1+3/r)/4&(1-3/r)/4\\
+25&0&(1-1/r)/2&(1+1/r)/2
+\end{array}.
+\tag{1.7}
+$$
+
+The matrices
+$G(\theta,\phi)=R_0+\cos\theta R_++\sin\theta W_+
++\cos\phi R_-+\sin\phi W_-$ are mathematical coordinates;
+the actual wait has angles $(\omega_+t,\omega_-t)$. The frame $D$ and
+independent angles are not extra future controls.
+

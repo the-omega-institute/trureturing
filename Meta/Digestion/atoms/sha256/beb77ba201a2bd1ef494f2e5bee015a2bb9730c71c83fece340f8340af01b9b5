@@ -1,0 +1,51 @@
+**定理 187.2（相位运输、盲族零点与完整系数接口）。** FIB 差异满足
+
+$$
+\mathcal R_{\mathcal TC}(\theta,\phi)
+=-e^{i\phi}\mathcal R_C(\phi,\theta+\phi).
+$$
+
+因此主动固定一个相位读口与共同运输到其对偶读口是不同观察合同。对185.2的 $C_r$，有
+
+$$
+\mathcal R_{C_r}(\theta,0)
+=\prod_{k=0}^{r-1}(1-e^{i2^k\theta}),
+\qquad
+|\mathcal R_{C_r}(\theta,0)|
+\le2^{r(r-1)/2}|\theta|^r\quad(r\ge1).
+$$
+
+这里取任意实角代表；$r=0$ 时响应恒为一，另行处理。低阶零点与完整多项式非零可以同时成立。
+
+若已知整数 $u,v>0$，且 $C=\sum_{0\le i<u,\,0\le j<v}c_{ij}z^iw^j$，已精确取得全部 $uv$ 个复样本，则成熟有限离散 Fourier 逆变换作为本 FIB 记录的恢复中间步骤给下式。正相位 Fourier 矩阵及共轭逆的约定采用 [MIT OpenCourseWare，18.06SC，Gilbert Strang 课程，*Complex matrices; fast Fourier transform*，pp.2–3](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/resources/mit18_06scf11_ses3-2sum/)；下面只使用有限根单位正交，不引入 FFT 实现或噪声结论。
+
+$$
+c_{ij}=\frac1{uv}\sum_{a=0}^{u-1}\sum_{b=0}^{v-1}
+\mathcal R_C\left(\frac{2\pi a}{u},\frac{2\pi b}{v}\right)
+\exp\!\left[-2\pi i\left(\frac{ia}{u}+\frac{jb}{v}\right)\right].
+$$
+
+对实际 $B_h$ 恢复全部系数后，连同端点用定义179.2恢复叶词；对差 $C$ 则恢复的是差异，不是两个未知来源各自的 $B$。若 $uv=0$，实际词的 $B$ 以及同端点差均为零，使用唯一纯字母词或空贡献，不使用除零公式。
+
+证明。183.1的代入直接给
+
+$$
+-wC(w,zw)\big|_{z=e^{i\theta},\,w=e^{i\phi}}
+=-e^{i\phi}C(e^{i\phi},e^{i(\theta+\phi)}),
+$$
+
+即第一式。角度的线性映射是地址线性部分 $M$ 的对偶映射，外部因子对应地址平移及符号；没有把系数地址和相位控制当成同一物理动作。
+
+盲族乘积令 $w=1,z=e^{i\theta}$ 得第二式。对实数 $x$，$e^{ix}-1=i\int_0^xe^{it}dt$，积分绝对值不超过 $|x|$。逐因子应用，乘积上界为 $\prod_{k=0}^{r-1}2^k|\theta|=2^{r(r-1)/2}|\theta|^r$。在 $r=0$ 的空乘积中没有任何零因子，响应为一；不能把它描述为正阶零点。
+
+为完整核对所用的经典逆式，整数 $m\ge1$ 及整数 $d$ 满足有限根单位正交关系
+
+$$
+\sum_{a=0}^{m-1}e^{2\pi i da/m}
+=\begin{cases}m,&m\mid d,\\0,&m\nmid d.\end{cases}
+$$
+
+整除时每项一；不整除时公比 $\zeta\ne1$、$\zeta^m=1$，将有限和乘 $1-\zeta$ 得 $1-\zeta^m=0$，所以和零。$m=1$ 只有整除分支，仍成立。将样本展开为 $\sum_{k,\ell}c_{k\ell}e^{2\pi i(ka/u+\ell b/v)}$ 后代入逆式，有限求和换序，两个正交和只保留 $k=i,\ell=j$，因为各指标差绝对值小于各周期。剩 $uvc_{ij}$，除以 $uv$ 即得。此证明也覆盖 $u=1$ 或 $v=1$，只排除零分母。
+
+完整恢复依赖精确无噪样本及已知有限支撑。式子没有给有限精度含噪恢复的保证，没有把 $uv$ 次取得、精确相位、位宽、程序、控制、全部样本保存或输出写入定为常数成本，也没有取得未知源的逆动作。实际运输读口还须满足187.1和184.3的共同控制条件。$\square$
+

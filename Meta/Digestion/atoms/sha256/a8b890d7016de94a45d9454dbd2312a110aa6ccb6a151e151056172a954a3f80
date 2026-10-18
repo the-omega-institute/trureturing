@@ -1,0 +1,22 @@
+**Definition 1.3 (observer and risks).** An observer has a fixed finite COMPLETE configuration set, source-independent initialization, fixed time-homogeneous source-independent letter kernels, and a decoder reading only its actual configuration. COMPLETE includes $C_0$, selectors, tables, program, workspace, output indices and all persistent randomness. There is no uncounted clock, archive, advice, tape, model index, correlated source seed, continuous register or readable distribution vector.
+
+A decoded law is the complete legal future generated from that configuration by its synthetic letter probabilities and the very same letter-update kernels used by actual acquired letters. Synthetic generation never queries the actual source. This per-configuration same-update condition is exact. The abstract real-kernel interpretation is the finite indexed stochastic rule of [FLOW, Definition 2.6]; it grants no numerical oracle or exact-real sampling device. Effective finite sampling is asserted only for separately specified effective tables.
+
+For the configuration row $\rho_h$ after the same actual history, write
+
+$$
+Q_h=\sum_z\rho_h(z)D_z,
+\quad e_{\rm law}(h)=\operatorname{TV}(Q_h,T_h^\mu),
+\quad e_{\rm conf}(h)=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu).
+$$
+
+$R_j(\mathcal H_s)=\sup_{h\in\mathcal H_s}e_j(h)$, for $j\in\{\mathrm{law},\mathrm{conf}\}$. Actual-history-average error is a different quantity. The supplied separate minima are
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750}.
+\tag{1.3}
+$$
+
+They apply to either risk order on its respective full phase domain [ST; PH, Theorem 2.1].
+

@@ -1,0 +1,88 @@
+**Theorem 7.2 (recut permission separates a hidden prefix factor).** For
+Definition 7.1 at the known cut $k$, the forward exact boundary has
+
+$$
+N_{\mathrm{forward}}(k)=q^{r_P+r_F-r}
+\tag{7.3}
+$$
+
+states, represented by the syndrome $H_Pp$ in
+$\operatorname{im}H_P\cap\operatorname{im}H_F$. With all labeled append and
+delete probes, the exact boundary is the actual prefix itself and has
+
+$$
+N_{\mathrm{recut}}(k)=q^{k+r_F-r}
+=q^{k-r_P}N_{\mathrm{forward}}(k)
+\tag{7.4}
+$$
+
+states. Each forward state has exactly $q^{k-r_P}$ enlarged states above it.
+When $k-r_P>0$, some delete domain at a reachable cut is not saturated under
+forward behavioral equivalence, so the enlarged recuts cannot all descend as pure
+relabelings of that boundary.
+
+**Proof.** The future completion set of $p$ is
+
+$$
+F(p)=\{f:H_Ff=-H_Pp\}.
+\tag{7.5}
+$$
+
+It is nonempty by actual extendability. Two prefixes have the same set
+$F(p)$ exactly when they have the same syndrome: equality follows from
+the same defining equation, and a shared completion forces the two right
+sides to be equal. Equality of completion sets also determines legality
+of each shorter suffix word, since such a word is legal exactly when it
+extends to an element of $F(p)$. Conversely, different completion sets
+are distinguished by a complete suffix word in one set and not the other.
+At its first rejected append, the full finite response differs. Thus
+syndrome equality is exactly forward behavior equality, not merely a
+sufficient summary. After a legal append the syndrome at the next cut is
+the old syndrome plus that symbol times the relevant column of $H$; legality
+is determined by membership of its negative in the remaining column image.
+This verifies forward update descent on the actual syndrome images.
+
+The intermediate state quotient just obtained is the standard trellis
+separator: the trimmed prefix space is $U_k$ and its nondynamical subspace
+is $\ker H_P$, so the effective state space is
+$U_k/\ker H_P\cong\operatorname{im}H_P\cap\operatorname{im}H_F$.
+This intermediate step is literature-attested by G. David Forney Jr.,
+[*Codes on Graphs: Fundamentals*, arXiv:1306.6264v2](https://arxiv.org/html/1306.6264v2),
+§5.5, the state-space theorem for leaf fragments, and §6.3, minimal
+cycle-free realizations. Here the past fragment's trimmed projection is
+$U_k$, its cross-section is $\ker H_P$, and the future fragment supplies
+the matching syndrome. Those results concern the effective forward
+separator, not the enlarged delete contract or physically acquired access.
+They are used only as an attributed intermediate ingredient.
+
+Since $\operatorname{im}H_P+\operatorname{im}H_F=\operatorname{im}H$,
+the dimension of their intersection is $r_P+r_F-r$. Every syndrome in
+this intersection has exactly $q^{k-r_P}$ prefix preimages. Therefore
+
+$$
+\dim U_k=(k-r_P)+(r_P+r_F-r)=k+r_F-r,
+\tag{7.6}
+$$
+
+and (7.3) and the asserted fiber count follow by finite-field cardinality.
+
+For the enlarged contract take distinct $p,p'\in U_k$. Delete the symbols
+of $p$ in reverse order. All $k$ deletions are legal from $p$, because each
+successor is one of its extendable prefixes. The same word cannot be legal
+from $p'$ unless its last symbol, then its next-to-last symbol, and so on
+all equal those of $p$. Thus the first disagreement yields one legal and
+one illegal request. Equality of prefixes suffices to preserve every
+operation and response, so the enlarged greatest stable relation on each
+cut is exactly equality. Its cardinality is $|U_k|$, giving (7.4).
+
+Finally, if $k-r_P>0$, a syndrome fiber contains distinct prefixes. Along
+the distinguishing deletion word, if every delete domain were forward
+saturated and every delete preserved forward equivalence, the pair would
+remain related and have equal legality at every step, contradicting the
+first disagreement. More directly, take the last position at which a pair
+of equal-syndrome prefixes differ. Deleting their common trailing symbols
+subtracts the same columns from both syndromes, so the resulting actual
+prefixes are still forward equivalent. Their different final symbols make
+a delete domain unsaturated at that cut. Hence the permission enlargement
+requires a genuine boundary refinement. $\square$
+

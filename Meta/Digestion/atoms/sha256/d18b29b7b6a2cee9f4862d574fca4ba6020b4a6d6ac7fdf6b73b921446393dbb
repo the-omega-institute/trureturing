@@ -1,0 +1,23 @@
+## 450. Applying the exact flat exclusion to that field
+
+Because the fixed frame uses actual global labels, pulling ell back
+to an original tetrahedron gives the length word
+
+    (ell_R,ell_A,ell_B,ell_O,ell_A,ell_B).
+
+Its coshes are greater than one and obey the paired response
+formulas. Equality in each repeated pair follows from the common
+field, without an averaging operation or additional symmetry.
+
+All original face maps, degrees, label classes and normal intervals
+are unchanged. Together with the complete angle sums and positive
+length classification, these are precisely the hypotheses of
+Section 444. Theorem 447.1 therefore excludes every flat owner.
+Consequently ell belongs to the simultaneous genuine length domain
+L(T), and all original edge-angle sums are still 2*pi.
+
+The low-sixth and near-maximal cases used in Theorem 447.1 exhaust
+1<v<=m only after the exact earlier source reduction. Neither a
+local scalar assignment nor the label count alone is substituted
+for that reduction in this application.
+

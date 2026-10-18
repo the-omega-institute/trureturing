@@ -1,0 +1,19 @@
+**Lemma 5.1 (weighted rank-one trace norm).** If $p,q$ are unit vectors,
+$A,B\geq0$ and $r=\langle p,q\rangle$, then
+
+$$
+\bigl\|A|p\rangle\langle p|-B|q\rangle\langle q|\bigr\|_1
+ =\sqrt{(A+B)^2-4AB|r|^2}.
+\tag{CG.21}
+$$
+
+Proof. Suppose first that $A,B>0$ and the vectors are not parallel.
+On their two-dimensional span the operator has trace $A-B$ and determinant
+$-AB(1-|r|^2)<0$. Its two eigenvalues have opposite signs. The square of
+the sum of their absolute
+values is therefore
+$(A-B)^2+4AB(1-|r|^2)=(A+B)^2-4AB|r|^2$.
+When a weight is zero or the vectors are parallel, direct evaluation gives
+the same formula. In particular, for $A=B=1$ the norm is
+$2\sqrt{1-|r|^2}$. $\square$
+

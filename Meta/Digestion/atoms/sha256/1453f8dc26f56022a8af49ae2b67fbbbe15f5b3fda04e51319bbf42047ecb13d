@@ -1,0 +1,12 @@
+**定义 4.1.1（有限干预实验）。** 令 $\Theta$ 为有限隐藏状态集，$\Omega$ 为有限记录集。一个实验 $E$ 是通道
+
+$$
+K_E(\omega\mid\theta),
+\qquad
+\sum_{\omega\in\Omega}K_E(\omega\mid\theta)=1.
+$$
+
+它可以来自一次干预、一个时序协议或一组位置探测的完整记录。对每个 $\theta$，记行分布为 $K_E^\theta$。
+
+<a id="claim-4-1-2"></a>
+

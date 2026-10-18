@@ -1,0 +1,33 @@
+**Definition 6.1 (all-history mass and common cuts).** Use the actual
+prefix indices of [SI, Definition 11.2][SI]. A prefix records its finite
+sequence of states, queried coordinates and replies, ending just before
+a query; different completing inputs following the identical prefix
+count once. For a live prefix $H$ of counts $(h,z)$ assign
+
+$$
+\omega(H)=\binom{h+z}{h}^{-1},\qquad
+\lambda(q)=\sum_{H\text{ actual live prefix ending at }q}\omega(H).
+\tag{IC.30}
+$$
+
+These are proof weights, not an input distribution or a runtime service.
+By SI Lemma 11.3, every cell has total weight one. A state is
+both-conflict when every two distinct live prefixes ending there have
+both directed intersections between one sets and zero sets nonempty.
+SI Theorem 11.4, using the classical nonuniform Bollobás inequality,
+then gives $\lambda(q)\le1$.
+
+A depth $d<n$ is common-support if every actual live history of that
+depth has the same support. Adjoin the formal endpoint $n$, even if
+some runs have already certified. Consecutive common depths $a<b$
+define the gap $(a,b)$ and its pool $Q_B$ of live states at internal
+depths. SI Theorem 9.3 localizes all live occurrences of each such state
+to its one pool. With $e_*=\max(k,n-k+1)$, the remaining late-long
+gaps are $b-a\ge5$, $b>e_*$, denoted $\mathcal L_*$.
+SI11's class $\mathfrak C$ requires both conflicts at every state in
+these pools. [TS, Definition 6.3][TS] permits a terminal span-five
+exception $I_5=(n-5,n)$, when this is an actual gap:
+$\mathfrak C_5$ requires both conflicts in the
+other remaining pools, and $\mathfrak A_5$ requires
+$\mathcal L_*\subseteq\{I_5\}$.
+

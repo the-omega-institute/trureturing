@@ -1,0 +1,24 @@
+#### 17.1.2 Gigli–Mondino–Savaré
+
+Gigli、Mondino 和 Savaré 的论文 [Convergence of pointed non-compact metric measure spaces and stability of Ricci curvature bounds and heat flows](https://arxiv.org/abs/1311.4907) 在 pointed metric-measure 收敛框架中证明了 RCD 类型曲率条件、热流和 Cheeger 能量的稳定性。对于满足适当紧性、有界性或正的 RCD 曲率下界的空间，Cheeger energies 以适配的 \(\Gamma\)-Mosco 方式收敛，相关 Laplacian 谱也具有稳定性。
+
+相应的数学依赖关系是：
+
+\[
+\mathrm{GraphEnergySequence}
+\longrightarrow
+\mathrm{CommonL2Embedding}
+\longrightarrow
+\mathrm{MoscoLimit}
+\longrightarrow
+\mathrm{DirichletForm}.
+\]
+
+它允许把
+
+\[
+Q_j(\phi)=\langle\phi,L_j\phi\rangle
+\]
+
+提升为极限 Dirichlet 形式。它没有直接证明极限是光滑黎曼流形，最自然的极限对象可能只是 metric-measure space 或 RCD space。
+

@@ -1,0 +1,46 @@
+**Proposition 206.20 (Stock exchange beyond the named clipping and aggregate tests).**
+For every $m=L-2\ge12$, take all late totals four and
+
+$$
+y=\mathcal V((1,0),(4,6),(4,\ldots,4),3).
+\tag{206.52}
+$$
+
+It has $E=1,S=10,t=3,W=14$, and both complete excesses one.
+It attains the fixed-total minimum, fails every clipping parameter
+$s\in[0,1]$ in 206.15, and lies below the stated 205.10 aggregate
+threshold for every allowed unit parameter $d\le1$.
+
+**Proof.** Here $\mu=4,d=1,E_0=1$, so (206.44) gives exactly the
+specified rows. For clarity, the complete $N$ maxima are
+
+$$
+\begin{array}{c|c|c}
+\text{schedule}&(00,01,10,11)\text{ maxima}&\text{sum}\\ \hline
+(1,2)&(0,5,6,4)&15\\
+(1,j)&(5/2,5/2,4,6)&15\\
+(2,j)&(3,3,4,5)&15\\
+(i,j),\ 3\le i<j&(5/2,5/2,4,11/2)&29/2
+\end{array}
+\tag{206.53}
+$$
+
+In a late pair the $11$ zero reward $11/2$ dominates every numerical
+label, and $00,01$ each have pair reward $5/2$. The common cell
+calculation supplies the remaining entries. For $O$, the first two
+maxima merge into their sum. Pair embedding and $(1,2)$ prove both
+supports $15$, and 206.17 supplies the fixed-total lower bound one.
+
+The old fair budget-one threshold is $15>14$. In 205.10,
+$r=\lceil(m+1)/2\rceil\ge7$, and the threshold at $d=1$ is
+$\max(15-6/r,13)>14$. Each of its two threshold terms decreases
+with $d$, so a smaller allowed $d$ cannot help.
+For clipping, $R_3=4-2s$, $E=1$; the $u_3$ residual is
+$(3-2s)/2=3/2-s>1-s$ for every $s$.
+The actual fair projection has $m_j=5,d_{ij}=5/2$,
+$\kappa=3/2$, $\pi=1$; thus both the direct $\kappa+\pi$ test
+and the positive-cell test 205.9 have cost exceeding one.
+This is a distinct gap between these named sufficient tests. It is
+not exclusion from all previous signed certificates or closures.
+$\square$
+

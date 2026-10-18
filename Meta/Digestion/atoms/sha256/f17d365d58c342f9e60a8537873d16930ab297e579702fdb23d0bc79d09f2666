@@ -1,0 +1,28 @@
+### Why E2 gives no stronger uniform limit
+
+Let \(C\) be the 3-adic limit from (L3.3), and put
+\(\widehat c_j=(-1)^{j+1}\widehat S_j\). Since
+\(v_3(m_j^2)=2j+2\), (E2.4) with \(Q=2\) and the sharp identity (L3.3)
+give
+\[
+ \boxed{v_3(C-\widehat c_j)=2j+1.}
+ \tag{E2.5}
+\]
+Therefore adding \(m_jE_{2,j}\) improves the reconstruction of \(u_j\) from
+\(S_j\), but does not improve the sharp 3-adic approximation to \(C\), and
+cannot produce a second limit by this correction. The same argument applies to
+all \(U_{j,Q}\) with \(Q\ge2\): the intrinsic \(2j+1\) error in the Lucas
+recurrence remains the first nonzero term.
+
+Nor does TBN.3 supply a cross-\(j\) recurrence for \(E_{2,j}\). It specifies,
+for each block separately, only \(p=1+m_jb_{p,j}\) and the exponent \(h_p\).
+It gives no relation between the multisets
+\(\{(b_{p,j},h_p):p\mid B_j\}\) and
+\(\{(b_{p,j+1},h_p):p\mid B_{j+1}\}\). At the coefficient level this is a
+real underdetermination: the multisets \(\{(a,1)\}\) and
+\(\{(1,1),(a-1,1)\}\) have the same \(E_1=a\), while their \(E_2\) values
+are \(0\) and \(a-1\), respectively. The local congruence \(p\equiv1\pmod{m_j}\)
+does not remove this freedom modulo 3. Hence no stable \(E_{2,j}\pmod3\), nor
+an \(E_2\) recurrence, follows from TBN.3 alone; proving one would require a
+new theorem relating the prime-depth vectors of consecutive Lucas blocks.
+

@@ -1,0 +1,75 @@
+**Lemma 8.3 (complete parent-leaf collision classification).** Let
+$P\subseteq S_3$ be range-feasible for all $q\in W_3$, with capacity
+four, and put
+
+$$
+T=\{(x,y):\langle x,y\rangle\in P\},\qquad
+X=\pi_L(T),\qquad Y=\pi_R(T).
+\tag{NCE.56}
+$$
+
+Then the following child count families apply:
+
+| $P\cap\{A,B\}$ | Family for $n(X)$ | Family for $n(Y)$ |
+| --- | --- | --- |
+| $\varnothing$ | $\mathcal F_4$ | $\mathcal F_4$ |
+| $\{A\}$ | $\mathcal F_3$ | $\mathcal F_3$ |
+| $\{B\}$ | $\mathcal F_{4A}$ | $\mathcal F_3$ |
+| $\{A,B\}$ | $\mathcal F_X$ | $\mathcal F_Y$ |
+
+Proof. At the four deep targets the parent-leaf factors, computed by
+(NCE.5), are
+
+$$
+\begin{array}{c|cccc}
+ &LL&LR&RL&RR\\\hline
+A&(4,0)&(5,1)&(5,0)&(6,1)\\
+B&(3,0)&(4,1)&(4,0)&(5,1).
+\end{array}
+\tag{NCE.57}
+$$
+
+For a branch these columns are respectively
+$\Gamma_L(x),\Gamma_R(x),\Gamma_L(y),\Gamma_R(y)$.
+The sets of possible child values are exactly $\mathcal V_L$ and
+$\mathcal V_R$ from (NCE.27). In $LL$ the parent $B$ factor equals
+$\Gamma_L(A)$ and no other child factor. In $LR$ it equals
+$\Gamma_R(A)$ and no other child factor. The parent $A$ values in
+these columns lie outside the respective child ranges. In $RL$ and
+$RR$, both parent-leaf values lie outside the respective child range,
+and they are distinct. This exhausts all parent-leaf versus child-factor
+collisions; equal blocking-leaf descriptions are not being substituted
+for equal temporal factors.
+
+With neither parent leaf, both side ranges of both projections are
+at most four. With only $A$, its extra value in each column reduces
+each child range to three. With only $B$, the left restrictions are
+exactly
+
+$$
+d_L(X\cup\{A\}),d_R(X\cup\{A\})\le4,
+\qquad d_L(Y),d_R(Y)\le3.
+\tag{NCE.58}
+$$
+
+The union with $A$ accounts also for the case in which the collision
+is not attained by $X$ itself.
+
+With both parent leaves, target $L$ adds $(3,0),(2,0)$ to
+$\Gamma_\varepsilon(X)$ and target $R$ adds $(4,1),(3,1)$ to
+$\Gamma_\varepsilon(Y)$. These are two distinct values outside the
+child root-factor set $\{(2,1),(1,0),(0,0)\}$. Consequently
+$k(X),k(Y)\le2$. At the deeper targets, removing the parent $A$ value
+on the left and the two parent values on the right gives
+
+$$
+d_L(X\cup\{A\}),d_R(X\cup\{A\})\le3,
+\qquad d_L(Y),d_R(Y)\le2.
+\tag{NCE.59}
+$$
+
+Lemma 8.2 now gives every row, including empty branch parts.
+These are necessary range conditions on the actual projections;
+there is no replacement of $T$ by an independently encoded pair.
+$\square$
+

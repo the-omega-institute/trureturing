@@ -1,0 +1,68 @@
+### 93.7. The unique physical stationary value
+
+It remains that V=0. The resultant in q is the exact identity
+
+\[
+ \operatorname{Res}_q(V,g)=4\lambda^3(3\lambda-2)C(\lambda),
+ \qquad C(\lambda)=6\lambda^3+9\lambda^2+9\lambda+5.           \tag{19}
+\]
+
+The leading q-coefficients of V and g are nonzero constants. Only the necessary implication from a common root to a zero resultant is used. The case λ=0 was excluded in section 93.3. At λ=2/3, V has roots q=−1/2 and q=−5/9, and only the former also solves g=0; neither is positive. Therefore C(λ)=0.
+
+The polynomial C is strictly increasing because
+
+\[
+ C'(\lambda)=18\left(\lambda+\frac12\right)^2+\frac92>0,
+ \quad C(-7/8)=-\frac1{256},\quad
+ C(-87/100)=\frac{15541}{500000}.                            \tag{20}
+\]
+
+It has a unique real root, in (−7/8,−87/100). Put
+
+\[
+ A_0=121\lambda^2-843\lambda-985,\qquad
+ B_0=295\lambda^2+395\lambda+25.                             \tag{21}
+\]
+
+Reduction of the polynomial remainder of g modulo V, followed by reduction modulo C in λ, gives (A₀q−B₀)/96. Thus A₀q=B₀ at a candidate. The coefficient A₀ is strictly negative on the interval in (20): it is decreasing there and A₀(−7/8)=−9903/64. Division by A₀ is therefore justified. The identity
+
+\[
+ A_0\frac{6\lambda^2-3\lambda+5}{20}-B_0
+      =\frac{(121\lambda-1085)C(\lambda)}{20}               \tag{22}
+\]
+
+forces q=q_C:=(6λ²−3λ+5)/20. The substitutions in (11) satisfy
+
+\[
+ \begin{aligned}
+ r-q_C&=-\frac{(\lambda+15)C(\lambda)}
+                  {20(6\lambda^2+7\lambda+5)},\\
+ X-\frac{18\lambda^2+21\lambda+20}{20}
+       &=-\frac{(9\lambda+10)C(\lambda)}
+                  {10(6\lambda^2+7\lambda+5)}.
+ \end{aligned}                                                 \tag{23}
+\]
+
+These denominators are positive because 6λ²+7λ+5=6(λ+7/12)²+71/24. Hence all three squared magnitudes agree and
+
+\[
+ q=r=\frac{6\lambda^2-3\lambda+5}{20},\qquad
+ X=\frac{18\lambda^2+21\lambda+20}{20}.                      \tag{24}
+\]
+
+Equation (5) now makes all three oriented squared entries equal, without requiring the unsquared entries to be real. Consequently
+
+\[
+ E=3\left(q^2+q-2X^2+\frac14\right)
+   =-\frac{3(54\lambda^2+63\lambda+10)}{80},                 \tag{25}
+\]
+
+where the second equality uses C(λ)=0. For u³=9 the real number λ=−(u²−u+3)/6 is the unique real root of C, as follows from
+
+\[
+ C\left(-\frac{u^2-u+3}{6}\right)
+   =-\frac{(u^3-9)(u^3-3u^2+3u+8)}{36}.                    \tag{26}
+\]
+
+Substituting this λ into (25) and reducing by u³=9 gives E=(21−9u)/16. Every global minimizer was below 3/16, and all boundary and stationary alternatives below that threshold have been exhausted. The matrix (2) attains the resulting value, proving the sharp minimum. Finally 9·12³=15552<15625=25³ gives u<25/12 and therefore (21−9u)/16>9/64. This completes the proof of Theorem 93.1.
+

@@ -1,0 +1,17 @@
+**定义 31.2.1（总、自然直接与自然间接效应）。** 取从 $0$ 到 $1$ 的方向，定义
+
+$$
+\begin{aligned}
+\operatorname{TE}
+&=\mathbb E[R_{1,1}-R_{0,0}],\\
+\operatorname{NDE}
+&=\mathbb E[R_{1,0}-R_{0,0}],\\
+\operatorname{NIE}
+&=\mathbb E[R_{1,1}-R_{1,0}].
+\end{aligned}
+$$
+
+这里 $R_{a,a'}$ 是定义 31.1.3 的路径响应。
+
+<a id="claim-31-2-2"></a>
+

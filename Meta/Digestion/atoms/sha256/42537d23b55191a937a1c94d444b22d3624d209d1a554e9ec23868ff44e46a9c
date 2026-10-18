@@ -1,0 +1,45 @@
+**定义 2.1（初始索引、位移与可用阈值）。** 令
+
+$$
+I=\{0,\ldots,k\},\qquad \theta_i=-i\pmod T,
+\qquad \lambda_v(i)=f(v,\theta_i,0).
+\tag{2.1}
+$$
+
+已经发出 $t$ 个完整块的成功节点具有已知自身位移
+
+$$
+\Delta=tk\pmod T=-t\pmod T.
+\tag{2.2}
+$$
+
+这里 $\Delta$ 只记自行发出的位数，不是初始长度。初始索引 $i$ 的当前相位为 $\Delta-i$。当前零相位在初始索引中的移动锚为 $z=\Delta\pmod T$，对应的初始相位是 $\theta_z=-\Delta$；这两个坐标不能混用。
+
+固定 $v$，称 $a\in\{0,\ldots,k-1\}$ 可用，若令 $r=k-a$ 后有
+
+$$
+\begin{aligned}
+f(v,\theta_i,s)&=\lambda_v(i)
+&&\text{对所有 }i\in I, 0\le s<r,\\
+f(v,\theta_i,s)&=\rho_a
+&&\text{对所有 }i\in I, r\le s<k
+\end{aligned}
+\tag{2.3}
+$$
+
+其中 $a>0$ 时要求共同原始标签 $\rho_a\in Y$；$a=0$ 时第二行为空条件，不选择空集标签。记可用阈值集为 $A_v$。允许 $\rho_a\in\lambda_v[I]$，也允许多个相位有相同标签；目标不必区分完整相位。这个阈值条件是 [S1] 首零正规形在 $m=k$ 的既有取得分类，本卷求的是其实际最优费用。
+
+定义首块允许的相位掩码族
+
+$$
+\begin{aligned}
+\mathcal E_0&=\{E\subseteq I:|E|\equiv0\pmod2, 0\notin E\},\\
+\mathcal E_a&=\{E\subseteq I:|E|\equiv0\pmod2, \{0,a\}\subseteq E,
+ E\cap\{1,\ldots,a-1\}=\varnothing\}\quad(1\le a<k),\\
+\mathcal E_a^\circ&=\{E\in\mathcal E_a:\varnothing\ne E\ne I\}.
+\end{aligned}
+\tag{2.4}
+$$
+
+上标 $\circ$ 只表示非空真子集。每个 $\mathcal E_a^\circ$ 非空：$a=0$ 时用 $\{1,2\}$，$a>0$ 时用 $\{0,a\}$，包括 $k=2$。
+

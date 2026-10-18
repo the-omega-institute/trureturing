@@ -1,0 +1,40 @@
+**Definition 1.4 (Credited mathematical suppliers).** The abbreviations
+refer to the following committed sources at
+`315f5dbf83a7ab871ae7026e0f5041f23834fd00`:
+
+| Abbreviation | Mathematical ingredient |
+| --- | --- |
+| [QMB](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md) | Theorem 2.1: first-read identity; Theorem 5.1: finite rank-one Kraus/scalar-port correspondence and optimizer existence. |
+| [QPC](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md) | Theorem 3.3: no-worse stationary replacement on the full complex class; §9: the three limits on stronger symmetry shortcuts. |
+| [QFA](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md) | Lemma 2.2: finite circle quadrature. |
+| [QEC](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md) | §§1–2: weighted actual-time moment and complex PPT/TP witness. |
+| [QRC](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_REAL_PORT_BOUNDARY_COORDINATES.md) | Theorems 3.2, 5.2 and 6.2: a no-worse real-product reflected representative, the exact cone with full TP marginal, and all fifteen event constraints. |
+| [QWS](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_WITNESS_SLACK_AND_INDEPENDENT_DECODING.md) | Lemmas 2.2–2.3: complementary witness gap; Proposition 4.2: the independent-factor adjoint orientation. |
+| [QJM](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_MARGINAL_AND_ATTAINING_PORT.md) | Theorem 2.3: the all-complex lower $L_*=129931/250000$; §§3–5: the fourteen-flag channel, full marginal, correct adjoint and exact event margins; Convention 6.3: the event–atom–TP slack identity. |
+
+In particular, with $H_J(S)=\Pi_J-S^\dagger(\Pi_J)$ and
+$\mathcal J_{15}=\{J\subseteq\mathsf S:1\le|J|\le2\}$, the supplied
+first-read identity and its stationary consequence are
+
+$$
+\begin{aligned}
+e(T)&=\sup_{t\ge0}\max_{J\subseteq\mathsf S}
+\|Q_J(t)-\widehat T^\dagger(Q_J(t))\|_{\rm op},\\
+Q_J(t)-S^\dagger(Q_J(t))&=O(t)^TH_J(S)O(t),\\
+e(S)&=\max_{J\in\mathcal J_{15}}\|H_J(S)\|_{\rm op}
+\quad\text{if }S\text{ is stationary}.
+\end{aligned}
+\tag{1.8}
+$$
+
+The notation $e(S)$ transports a frame channel back by $D$.
+Complementation uses TP, namely $S^\dagger(I)=I$. The fifteen events
+are the five singletons and the ten pairs
+$\{N,2\},\{N,3\},\{N,5\},\{N,25\},\{2,3\},\{2,5\},
+\{2,25\},\{3,5\},\{3,25\},\{5,25\}$.
+After first rank-one outcome $s$, both conditional states reset to
+$\Pi_s$; their common suffix is a probability kernel, including on
+zero-probability branches. Hence every finite adaptive suffix and
+permitted source-independent random control obeys the first-read bound.
+These ingredients retain all complex inputs and all actual histories.
+

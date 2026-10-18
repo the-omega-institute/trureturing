@@ -1,0 +1,124 @@
+### 20.1 额外相干制备、真实切口与关系综合
+
+**定义 C-20.1（另供的正平方根纯态）。** 在固定正交张量基
+$`ℋ_N=(ℂ^2)^{\otimes N}`$ 中，另外供应共同相位和实际相干制备
+
+
+<table><tbody><tr><td>
+
+```math
+|\Psi_N\rangle=
+\frac1{\sqrt{𝒵_N}}
+\sum_{\text{合法 }b}
+\sqrt{\prod_iw_i^{b_i}}\,
+|b_1\cdots b_N\rangle.
+```
+
+</td></tr></tbody></table>
+
+
+范数平方为 $`\sum_b\omega(b)/𝒵_N=1`$。经典权重只定义对角概率，不自动授予这个纯态、相位参照、联合控制或测量。单窗振幅记为 $`c_\sigma=\sqrt{p_\sigma}`$，其底面满足
+$`c_0c_{13}=c_1c_3`$，所以全正支撑的平方回路比 $`\chi=c_0c_{13}/(c_1c_3)=1`$。这是指定正相位及 $`p_0p_{13}=p_1p_3`$ 的结果。等五质量时，只把 $`c_{13}`$ 改为负的另供制备具有相同 𝑃，却给 𝜒=-1；端点逆式恢复概率而不恢复这种相位关系。是否能比较两制备仍取决于所供相干操作和共同记录。
+
+**定理 C-20.2（正因子化制备的精确切口秩）。** 对 𝑁≥2、真正切口 $`1\le k\lt N`$，定义
+
+
+```math
+\begin{aligned}
+|L_s\rangle&=
+\sum_{\substack{b_1,\ldots,b_k\text{ 合法}\\b_k=s}}
+\sqrt{\prod_{i=1}^kw_i^{b_i}}\,
+|b_1\cdots b_k\rangle,\\
+|R_t\rangle&=
+\sum_{\substack{b_{k+1},\ldots,b_N\text{ 合法}\\b_{k+1}=t}}
+\sqrt{\prod_{i=k+1}^Nw_i^{b_i}}\,
+|b_{k+1}\cdots b_N\rangle .
+\end{aligned}
+```
+
+
+则
+
+
+<table><tbody><tr><td>
+
+```math
+|\Psi_N\rangle=
+\frac{|L_0\rangle\otimes(|R_0\rangle+|R_1\rangle)
++|L_1\rangle\otimes|R_0\rangle}{\sqrt{𝒵_N}},
+```
+
+</td></tr></tbody></table>
+
+
+且此切口 Schmidt 秩恰为二，纠缠熵以比特计满足 $`0\lt S_{\mathrm{cut}}\le1`$。
+
+**证明。** 左右内部合法性已各自计入；跨切口只禁止 11，另外三种配对全部允许，因子化平方根权遂给显示的三项。两侧零、一组各有不交的正交基支撑，因此同侧向量正交。每侧非空，全部零位串和只把触边位设一的位串分别属于两组；正活动使四向量均非零。
+
+令 $`\ell_s=\|L_s\|^2\gt 0,\ r_t=\|R_t\|^2\gt 0`$。归一化四组向量后，在两侧正交单位基中的系数矩阵为
+
+
+```math
+C_{\mathrm{cut}}=
+\frac1{\sqrt{𝒵_N}}
+\begin{pmatrix}
+\sqrt{\ell_0r_0}&\sqrt{\ell_0r_1}\\
+\sqrt{\ell_1r_0}&0
+\end{pmatrix},
+\qquad
+\det C_{\mathrm{cut}}
+=-\frac{\sqrt{\ell_0\ell_1r_0r_1}}{𝒵_N}\ne0.
+```
+
+
+二侧纯态的 Schmidt 系数是系数矩阵的奇异值，故秩恰为二。这是既有 Schmidt/SVD 工具和等振幅合法链秩至多二证明的正权精确秩应用。[^CE-S] 两个约化谱概率为 𝜆,1-𝜆，$`0\lt \lambda\lt 1`$。其熵
+$`h_2(\lambda)=-\lambda\log_2\lambda-(1-\lambda)\log_2(1-\lambda)`$ 严格正；导数为
+$`\log_2((1-\lambda)/\lambda)`$，二阶导数
+$`-1/((\ln2)\lambda(1-\lambda))\lt 0`$，唯一最大点 1/2 给一比特。□
+
+例如 $`N=2,\ w=(4,9)`$，
+
+
+```math
+|\Psi_2\rangle=\frac{|00\rangle+3|01\rangle+2|10\rangle}{\sqrt{14}},
+\quad C_{\mathrm{cut}}=\frac1{\sqrt{14}}
+\begin{pmatrix}1&3\\2&0\end{pmatrix},
+\quad\det C_{\mathrm{cut}}=-\frac37.
+```
+
+
+𝑁=1 没有真实两侧切口；人为给空侧时只有秩一、熵零。零活动导致某些组消失，须按实际支撑另算，不能延用严格非零下界。任意相干振幅即使同样支撑于合法位串，也不必因子化；固定零接缝可制备
+$`F_{m+1}^{-1/2}\sum_{u\in𝒲_{m-1}}|u0\rangle\otimes|0u\rangle`$，
+$`𝒲_{m-1}`$ 为合法长 𝑚-1 词，其正交 Schmidt 秩为 $`F_{m+1}`$。这是既有明确见证，说明两态合法性接缝并不普遍限制相干秩。[^CE-S]
+
+**经典混合与共同环境。** 同一全链经典律的对角态是
+
+
+<table><tbody><tr><td>
+
+```math
+\rho_{\mathrm{diag}}=
+\sum_{\text{合法 }b}\frac{\omega(b)}{𝒵_N}
+\bigl(|b_L\rangle\langle b_L|\otimes
+|b_R\rangle\langle b_R|\bigr).
+```
+
+</td></tr></tbody></table>
+
+
+每项是乘积基态投影，权非负和为一，故它在每个切口可分。相同对角律既可来自上述相干纯态，也可来自这个可分混合。
+
+更具体地，若同一制备实际为
+$`|\Omega\rangle=\sum_b\sqrt{p_b}|b\rangle\otimes|e_b\rangle`$，全部记录归一化，迹掉记录给
+
+
+```math
+(\rho_{\mathrm{sys}})_{bc}
+=\sqrt{p_bp_c}\,\langle e_c|e_b\rangle.
+```
+
+
+相同记录向量保留指定正相位纯态；正交记录给 $`\rho_{\mathrm{diag}}`$；一般共同记录要求联合 Gram 正性，逐对可行不足以保证共同实现。[^CE-S][^CE-R] 如果还携带历史相关目标作用 $`U_b`$，其相位和目标记录也必须属于同一个等距准备，不能仍自动宣称系统处于定义 C-20.1 的纯态。
+
+这里经典求和、量子部分迹、相干振幅求和是不同映射。仅环境上的迹保持操作不改变系统无条件约化态：对任意系统测试 𝐴，其迹配对用环境伴随映射的 $`\Lambda^\dagger(I)=I`$ 即得。若环境会再次共同作用，应保留完整联合边界。已有同一环境 CNOT 例子给准确限制：系统控制、环境初态零，作用一次后系统退相干；同一 CNOT 再作用于原环境因 $`W^2=I`$ 恢复初始联合态，而两次各用新环境仍退相干。[^CE-S] 因此环境再接入、反馈、相干比较都需要其真实制备和操作合同。端点经典近独立不说明整链可分、所有切口无关系、环境未来不可见或设备总成本低。
+

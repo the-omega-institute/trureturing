@@ -1,0 +1,77 @@
+**定义 14.1（原根源可行域及其适用边界）。** Define
+
+$$
+\mathfrak S_7=\{\mathbf P\in\mathcal P^{\mathcal S}:
+                         \Phi(\mathbf P)\}.
+\tag{14.1}
+$$
+
+Theorem 13.3 identifies its nonemptiness with failure of every
+full-domain at-most-eight-reading decoder, and its emptiness with
+existence of such a decoder. Nonemptiness asserts the existence of
+one legal source tuple satisfying every gain guard and every applicable
+same-source separation guard; its one common coefficient vector
+then exists by (13.17). An emptiness proof must show that every
+legal source tuple fails at least one of those guards. Checking
+only a specified history, source band, sign, gain shape or root
+stratum cannot replace this universal source-tuple condition.
+Neither alternative is determined by Proposition 13.4 or by the
+rank equivalence itself. No feasible tuple, universal guard failure,
+explicit eight-reading full-domain inverse or nine-reading upper
+bound is supplied here.
+
+The explicit $1538\times1024$ response matrix, its joint guarded
+projection and the legal equal-source counterexample are
+repository-derived deductions. Initial-reading translation, the
+$256$-slot tree and its actual-history equivalence are the prior
+results of Section 9. Finite-subspace avoidance, rank-nullity and
+minor characterizations of rank are established tools within the
+projection proof, not separate new general theorems.
+
+| Mathematical source | Correspondence and retained hypotheses |
+| --- | --- |
+| This volume, Definitions 1.1–1.2 and 9.1; Theorem 9.3 | The full legal model, losing-history recursion, normalized complete-target coordinates and all $256$ terminal slots are reused. Equation (13.5) eliminates their common responses; (13.12) also eliminates the normalized gain/drift coordinates while retaining their legality and terminal distinctions. |
+| This volume, Corollary 9.4 and proof of Theorem 10.2 | Real-closed-field elimination already gives abstract decidability, algebraic-witness transfer and semialgebraic policy existence. Finite hyperplane avoidance already occurs in the fixed-linear-readout proof. The present result is the explicit source-dependent formula (13.12)–(13.13), without an evaluated feasibility or complexity conclusion. |
+| [FIB 自校准关系数学 IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Theorem 3.1 and Definition 11.1 | On its prescribed six-reading $JMMJM$ ancestor, gain and drift are uniquely forced once a legal source is supplied. That source graph neither acquires an unknown source nor supplies losing responses on the other original-root actions. The tuple in (13.1) is an existential mathematical witness variable, not an observed class label. |
+| [FIB JMMJM Terminal-Root Decoders and the Simultaneous Core](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md), Theorems 8.1–9.1 | Its inclusion-minimal triple has root seven, common drift, nonzero ancestor and sixth samples and two different proper sixth collision pairs. Those restrictions define its own simultaneous core; they are not imposed on $\mathfrak S_7$. |
+| [FIB JMMJM Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Definitions 1.2 and 7.1; Proposition 7.2 | The source chart and PP/PT/TP/TT conditions keep one literal $JMMJM$ ancestor and terminal nonvanishing. Their actual-child distinctions are consistent with (13.19), but a three-world conditioned system is not the unrestricted original-root source locus. |
+| [FIB JMMJM Zero-Sixth Root Rigidity and Terminal Collision Geometry](https://github.com/the-omega-institute/trureturing/blob/7a5bd6a6bce1b3213422b7b3a1eca2d6c10ec707/docs/develop/theory/FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorems 2.1, 4.1 and Proposition 7.1 | Its whole-class rigidity, three-terminal-coordinate injections and exact TT system assume the specified ancestor, common drift, root six and terminal nonvanishing where stated. They neither eliminate the full original-root coefficient vector nor give an unknown class label. The guard formula retains the zero-sixth and terminal-root possibilities without any such promises. |
+
+Yanjun Li, Kiryung Lee and Yoram Bresler, *A Unified Framework for
+Identifiability Analysis in Bilinear Inverse Problems with Applications
+to Subspace and Sparsity Models*,
+[Definition 2.7 and Theorem 2.8, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1),
+require both first-factor orbit identification among all compatible
+pairs and conditional second-factor identification for a nonzero pair
+in the specified constrained bilinear problem and ambiguity group.
+Only the conditional part resembles source-supplied recovery; it does
+not supply unknown-source acquisition or an adaptive reading bound.
+Theorem 13.3 instead constructs each original complete world and its
+shared ancestors explicitly.
+
+Choudhary and Mitra, *Identifiability Scaling Laws in Bilinear Inverse
+Problems*,
+[Proposition 1 and Remark 5, arXiv:1402.2637v2](https://arxiv.org/html/1402.2637v2),
+retain the constrained realizable factor-product set in their
+rank-two-nullspace intersection criterion. Remark 5 restricts the
+necessity statement to observations realizable in the original
+factor problem, rather than every freely chosen lifted observation.
+Here the source equations, the common kernel vector and the guard
+avoidance jointly supply realizability; independently fitted pair
+responses or unconstrained lifted differences cannot replace them.
+No bilinear sample threshold is imported.
+
+Perrucci and Roy, *Elementary Recursive Quantifier Elimination Based
+on Thom Encoding and Sign Determination*,
+[Theorem 1, arXiv:1609.02879v2](https://arxiv.org/html/1609.02879v2),
+concerns finite first-order formulas with polynomial atoms over a
+subring of a real closed field and elimination of a quantified block.
+The rational polynomial formulas (13.1), (13.7) and (13.13) are in
+that language. This is the established elimination setting already
+used in Corollary 9.4; the ranks and one-vector construction above
+give a specific projection directly, without invoking that theorem
+to decide $\mathfrak S_7$. These citations delimit the mathematical
+correspondences and make no external-priority or exhaustive-literature
+claim. The unrestricted eight-versus-nine original-root feasibility
+question remains undetermined.
+

@@ -1,0 +1,18 @@
+**Definition 1.4 (the three preparation charges).** For a correct
+preparation/reader pair $A$, write its actual preparation submissions on
+$t$ as $w_1,\ldots,w_{T_A(t)}$. Put
+
+$$
+L_A(t)=\sum_{j=1}^{T_A(t)}|w_j|,
+\qquad H_A(t)=\max\bigl(\{0\}\cup\{|w_j|:1\le j\le T_A(t)\}\bigr).
+\tag{PPF.6}
+$$
+
+Every Read counts in $T_A$, including repeated, absent, constant and
+empty-word calls. An empty word costs zero letters. With no Reads all
+three charges are zero. Their worst-case values are maxima over
+$\mathcal F_D$, which is finite. Preparation work and control,
+installation, temporary storage, post-request workspace, predictor size,
+address construction, authentic-count representation, access services and
+physical time are distinct resources.
+

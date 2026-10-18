@@ -1,0 +1,24 @@
+**Convention 1.2 (Fixed original-law functions).** With $(Tx)_i=x_{i+1}$, choose a Borel exterior version
+of $q_0$ and its translates $q_i=q_0\circ T^i$:
+
+$$
+\mathcal E_i=\sigma(X_j:j\ne i),\quad q_i=\mathbb E_P[X_i\mid\mathcal E_i],
+\quad \ell_i(x)=(x_i-q_i(x))^2,\quad F_i=\{X_{i-1}=X_{i+1}=0\}.
+$$
+
+Let $q_{r,i}$ be the same-law posterior given the radius-$r$ exterior window and
+$\ell_{r,i}=(X_i-q_{r,i})^2$. The two-index $q_{0,i}$ is the prior $\mathbb E_PX_i$, distinct from the
+full posterior $q_0$ at site zero. [Universal, §1][U] supplies
+
+$$
+D_r(P)=\mathbb E_P\ell_{r,0}\downarrow d(P)=\mathbb E_P\ell_0
+=\lim_n\Phi_n(P_n)/n\le c_\star,\qquad
+\|q_i-q_{r,i}\|_2^2=D_r(P)-d(P).
+\tag{1.4}
+$$
+
+All norms without another measure are under $P$. Every posterior evaluated at a replaced configuration or
+inside a tilt remains this original $P$ function. No posterior is recalculated under a replacement or
+tilted law. A retained neighbor one forces a finite posterior to zero; an omitted neighbor gives no such
+information. Null finite fibers have arbitrary versions and zero weighted contribution.
+

@@ -1,0 +1,58 @@
+**Theorem 2.6 (A finite family of faithful nonnegative waits).** For any
+rational $0<\delta<1$, put
+
+$$
+h=\frac\delta{48},\qquad
+n=\left\lceil\frac{153600}{\delta^2}\right\rceil,\qquad
+\mathcal W_\delta=\{jh:0\le j\le n\},\qquad H=nh.
+\tag{2.18}
+$$
+
+For every legal complex scalar port there is a test with
+$s\in\{N,2,3,5\}$ and $t\in\mathcal W_\delta$, input
+$DQ_s(t)D^\dagger$, and protocol wait $t$, full mode read, Stop, whose
+TV exceeds $5197/10000-\delta$. There are $4(n+1)$ alternatives, and
+
+$$
+\frac{3200}{\delta}\le H\le\frac{3200}{\delta}+\frac\delta{48}.
+\tag{2.19}
+$$
+
+Proof. The two-angle extension of $g$ in Definition 2.1 is in $[0,1]$
+for every CPTP competitor. Its Fourier support satisfies $|k|+|l|\le4$,
+so there are at most 40 nonconstant indices and every normalized Fourier
+coefficient has modulus at most one. Squaring rational endpoints in
+(1.4) gives
+
+$$
+2.13<\omega_+<2.14,\qquad 0.66<\omega_-<0.67.
+\tag{2.20}
+$$
+
+For every nonzero supported index, $|k\omega_++l\omega_-|>1/10$.
+For same-sign indices this is immediate. With opposite signs, $|k|\ge2$
+forces $|l|\le2$ and gives a lower bound
+$2(2.13)-2(0.67)>1/10$; $|k|=1$ permits $|l|\le3$ and gives
+$2.13-3(0.67)=0.12>1/10$.
+Integrating the exponentials as in (2.7) therefore gives
+
+$$
+\left|H^{-1}\int_0^Hg(t)\,dt-\mathscr S(T)\right|<800/H.
+\tag{2.21}
+$$
+
+By (2.17)–(2.19), some $t\in[0,H]$ and a positive-weight mode have
+failure at least $5197/10000-\delta/4$.
+For discretization, $Q_s'=-AQ_s+Q_sA$ and
+$\|Q_s'\|_1\le2\|A\|$. Positive and negative parts show that CPTP
+maps contract the trace norm on Hermitian matrices. Differentiating $f_s$
+thus gives $|f_s'|\le4\|A\|=4\omega_+<12$.
+A grid point within $h$ decreases failure by at most $12h=\delta/4$.
+Its TV is at least $5197/10000-\delta/2$, strictly greater than the
+claimed threshold. The ceiling gives (2.19).
+These are alternative legitimate single-input experiments for each channel;
+the statement does not infer probabilities from one sample or assert a
+physical preparation or clock cost. The time-average argument has produced
+finite nonnegative waits with a uniform termination and error bound.
+$\square$
+

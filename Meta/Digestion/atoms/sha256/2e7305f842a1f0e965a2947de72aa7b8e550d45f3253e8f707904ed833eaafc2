@@ -1,0 +1,35 @@
+### 71.4 A common plane in each branch and a robust Gram bound
+
+Anchor each branch at S_t=range(V_(t,1)), with projection P_t. For f≠1, sum (10) over the two rows of R_(t,1f). This yields
+
+    Σ_t w_t Tr[V_(t,f)*(I−P_t)V_(t,f)] ≤ 40δ.            (12)
+
+Let N_(t,f)=V_(t,1)*V_(t,f), and choose a unitary polar extension L_(t,f) of this 2×2 contraction. Set Q_(t,f)=V_(t,1)L_(t,f), and Q_(t,1)=V_(t,1). Thus each Q is an orthonormal basis of the same plane S_t. If s_1,s_2 are the singular values of N, then
+
+    ||V_(t,f)−Q_(t,f)||F²=2Σ_a(1−s_a)
+      ≤2Σ_a(1−s_a²)=2Tr[V_(t,f)*(I−P_t)V_(t,f)].
+
+The identity follows by expanding the Frobenius square and using Re Tr(L*N)=s_1+s_2; it holds also when N is singular. Equation (12) therefore implies
+
+    Σ_t w_t ||V_(t,f)−Q_(t,f)||op ≤ √(80δ).              (13)
+
+Changing the two vectors in a cross overlap changes that overlap by at most their two frame errors. For complex numbers of modulus at most one, the difference of their squared moduli is at most twice their distance. Hence (11) and (13) give, for every f≠g and i,j,
+
+    |Σ_t w_t |<Q_(t,g)e_j,Q_(t,f)e_i>|²−1/2|
+      ≤5δ+√(20δ)+4√(80δ)=5δ+9√(20δ).                   (14)
+
+Identify each S_t with C². Let n_(t,f)∈R³ be the unit Bloch vector of the rank-one projector onto Q_(t,f)e_0. The qubit overlap identity and (14) imply
+
+    |Σ_t w_t n_(t,f)·n_(t,g)| ≤ β(δ)  (f≠g).            (15)
+
+Define u_f=(√w_t n_(t,f))_(t=1)^r in the direct sum of r copies of R³, and let U have columns u_f. Its Gram matrix G=U*U has diagonal one and off-diagonal modulus at most β. For every scalar vector x,
+
+    x*Gx ≤ Σ_f |x_f|² + β Σ_(f≠g)|x_f||x_g|
+          ≤[1+(k−1)β]||x||₂².
+
+Thus ||U||op²≤M_k(δ). The t-th diagonal 3×3 block of UU* is
+
+    w_t Σ_f n_(t,f)n_(t,f)^T.
+
+It is positive semidefinite, has trace k w_t, and operator norm at most M_k(δ). Its trace is therefore at most 3M_k(δ), proving (1). Summing the weight cap proves (2), while −log w_t≥log(k/[3M_k(δ)]) and H≥0 prove (3).
+

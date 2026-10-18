@@ -1,0 +1,7 @@
+# Recursive relational observation: sampled original-control instrument certificates
+
+> **Machine contract.** This is a `generic-v1` reference volume. Locators are
+> determined from this file's bytes by `GenericAtomizer`, without a genre
+> registry. Merged bytes are append-only: corrections and extensions go after
+> the terminal append anchor, with existing sections and anchors preserved.
+

@@ -1,0 +1,59 @@
+**Theorem 3.4 (Constructed similarity and unique invariant graph).** For every instrument of Definition 2.1 let
+
+$$
+X_\theta=\sum_{j=0}^{H-1}T^jB_\theta P^{-j-1}:V\longrightarrow\mathcal N,
+\qquad
+\iota_\theta(v)=\Delta(v)+X_\theta v,
+\qquad W_\theta=\iota_\theta(V).
+\tag{3.4}
+$$
+
+The map
+
+$$
+G_\theta:\mathcal N\oplus V\longrightarrow M_d(\mathbb C),
+\qquad G_\theta(n,v)=n+\iota_\theta(v)
+$$
+
+is invertible and satisfies
+
+$$
+G_\theta^{-1}\mathcal E_\theta G_\theta=T\oplus P.
+\tag{3.5}
+$$
+
+The space $W_\theta$ is the unique $\mathcal E_\theta$-invariant vector-space complement of $\mathcal N$. For two phases with the same $H,K,p$, the actual operator-space map
+
+$$
+L_{\eta,\theta}=I+(X_\eta-X_\theta)D
+$$
+
+has inverse $L_{\theta,\eta}$ and intertwines the averaged channels:
+
+$$
+\mathcal E_\eta L_{\eta,\theta}=L_{\eta,\theta}\mathcal E_\theta.
+\tag{3.6}
+$$
+
+Proof. Lemmas 3.2–3.3 give $X_\theta P-TX_\theta=B_\theta$. Since $DX_\theta=0$ and $D\Delta=I_V$, the inverse of $G_\theta$ is
+
+$$
+G_\theta^{-1}(A)=\bigl(A-\Delta D(A)-X_\theta D(A),\ D(A)\bigr).
+$$
+
+The first component belongs to $\mathcal N$, and substitution in both directions gives the identity. Using (3.1),
+
+$$
+\begin{aligned}
+\mathcal E_\theta G_\theta(n,v)
+&=Tn+TX_\theta v+B_\theta v+\Delta(Pv)\\
+&=Tn+X_\theta Pv+\Delta(Pv)=G_\theta(Tn,Pv).
+\end{aligned}
+$$
+
+This proves (3.5) and invariance of the graph. Equivalently, the shear on actual matrices is $F_\theta=I+X_\theta D$, with inverse $I-X_\theta D$; conjugating by it removes the upper-right block in (3.1).
+
+For any vector-space complement $W$ to $\mathcal N$, $D|_W$ is an isomorphism onto $V$. Injectivity follows from $W\cap\mathcal N=0$; surjectivity follows by decomposing $\Delta(v)$ in $\mathcal N\oplus W$. Consequently $W$ is the graph of a unique $Y:V\to\mathcal N$. If it is invariant, (3.1) applied to $\Delta(v)+Yv$ gives $TY+B_\theta=YP$. Lemma 3.3 forces $Y=X_\theta$, proving uniqueness.
+
+Finally $G_\eta G_\theta^{-1}(A)=A+(X_\eta-X_\theta)D(A)$, giving (3.6) by (3.5). Its inverse is obtained by exchanging $\theta,\eta$, either from the two $G$ maps or because $D(X_\eta-X_\theta)=0$. This constructs similarity of the actual channels, without inferring it from their characteristic polynomials. $\square$
+

@@ -1,0 +1,48 @@
+**Theorem 8.4 (exact solutions, single defect and tree incidence).**
+For every public index and every $N\ge1$,
+
+$$
+\begin{aligned}
+C_{\Theta_N}&=\{x^h\},&
+x^h&=(u,h,\ldots,u,h),\\
+C_{\Theta_N^0}&=\{x^h\}\sqcup B_N,&
+B_N&=\{(t_1,f,\ldots,t_N,f):t_i\in\{v,w\}\}.
+\end{aligned}
+\tag{SCP.30}
+$$
+
+In particular $|B_N|=2^N$. Every row of $B_N$ violates exactly
+one of the $6N$ target prescriptions of $\Theta_N$, namely the last
+$R$ prescription, and differs from $x^h$ in all $2N$ original
+blocks. The block-seed incidence graph of either displayed network
+is a connected tree on $4N$ vertices with $4N-1$ edges. Every seed
+occurs in at most two distinct blocks and every block has degree at
+most three.
+
+Proof. By (SCP.26), the three equations at $T_i$ reconstruct exactly
+$\iota(c_i)$. Its root reply is indeed $c_i$. The guarded root
+equation at $Y_i$ forces that block to be the actual leaf $s_i$.
+The two distinct leaf $L$ factors then give
+$s_i=g(c_i)$. For $i<N$, the two distinct leaf $R$ factors give
+$s_i=s_{i+1}$. The pinned final equation gives $s_N=h$.
+Consequently all $s_i=h$ and all $\iota(c_i)=u$. Conversely that
+tuple satisfies every equation. Without the pin, the common leaf
+can also be $f$, and then each $\iota(c_i)$ may be $v$ or $w$.
+The final unpinned equation is an identity. This proves both exact
+solution descriptions, including exclusion of every other state in
+the full eleven-state alphabet.
+
+On a row of $B_N$, all pinned equations except the last agree with
+the unpinned equations and hold. The last fails because
+$\Gamma_R(f)\ne\Gamma_R(h)$. Also $t_i\ne u$ and $f\ne h$,
+giving the stated block distance.
+
+The edges are $c_iT_i$, $c_iY_i$, $s_iY_i$ for every $i$, and
+$s_iY_{i-1}$ for $2\le i\le N$. These $4N-1$ edges connect all
+$4N$ vertices: the $Y_i$ are linked successively by $s_{i+1}$,
+and each $T_i$ and $s_1$ is attached to that chain. Hence the graph
+is a tree, with the asserted degrees and distinct-block incidences.
+Each compatible seed assignment has exactly one actual tuple and
+vice versa, recovered from the actual owner roots. There are no
+independent copies of a repeated reply. $\square$
+

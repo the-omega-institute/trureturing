@@ -1,0 +1,76 @@
+**Lemma 8.5 (robust simultaneous response constraints).** The same scalar $s$ in (8.10) satisfies
+
+$$
+\begin{aligned}
+C_p-F(s)&\le\epsilon_p+5\epsilon_\beta+P(t),\\
+G(s)-q_*&\le2\epsilon_p+\epsilon_\beta/5+R(t),
+\end{aligned}
+\tag{8.17}
+$$
+
+with $F,G$ exactly as in (3.3), $C_p=11758471/22781250$, $q_*=1944/390625$ and the polynomials in (8.9).
+
+Proof. The common stationary $U$ marginals suffice for the product inequalities (3.7)–(3.9):
+
+$$
+\begin{aligned}
+M_2&\le(L+H)m-LH,\\
+M_3&\le(L^2+LH+H^2)m-LH(L+H),\\
+M_4&\ge LH^2(4m-L-2H).
+\end{aligned}
+\tag{8.18}
+$$
+
+Indeed $xy\le(x^2+y^2)/2$ and the three-variable identity preceding (3.7) first give $M_2\le\mathbb E U_0^2$ and $M_3\le\mathbb E U_0^3$; the interval chords then give the first two bounds. The four-product inequality (3.8) is multi-affine in its four arguments. At vertices with respectively $0,1,2,3,4$ arguments equal to $H$, its exact differences are $29/5625,2/1125,0,0,4/2025$. Multilinear interpolation makes the difference nonnegative throughout the box. Taking expectations with the common marginal mean gives the last bound. No equality case or independent attainability of these estimates is used.
+
+Put $c=1489/6750$ and $d=\overline W(E_\beta)-C_\beta$. The supplied endpoint event constraint (2.6) and (8.15) give
+
+$$
+|d|\le\epsilon_\beta,\qquad
+s(1-s)m=s-c+d-\eta_\beta.
+\tag{8.19}
+$$
+
+Using the first three word identities in (8.15) and the first two bounds of (8.18),
+
+$$
+\begin{aligned}
+\overline Q(E_p)
+&\le(1-s)(m+sM_2+s^2M_3)+k_0+k_1+k_2\\
+&\le F(s)+h(s)(d-\eta_\beta)+k_0+k_1+k_2,\\
+h(s)&=\frac1s+\frac{19}{15}+\frac{271}{225}s.
+\end{aligned}
+\tag{8.20}
+$$
+
+Here and below the $k_j$ are evaluated at $t$. Substitution of (8.19) gives the equality defining $F$ in (3.3), since $L+H=19/15$, $LH=2/5$ and $L^2+LH+H^2=271/225$. On the interval, $0<h(s)\le3+19/15+542/1125<5$. Together with $\overline Q(E_p)\ge C_p-\epsilon_p$, this proves the first inequality of (8.17) with error
+
+$$
+k_0+k_1+k_2+5b
+=\frac{45211}{337500}t+\frac{283}{270}t^2+\frac2{27}t^3=P(t).
+\tag{8.21}
+$$
+
+For the fourth word, (8.15), (8.18) and (8.19) instead give
+
+$$
+\begin{aligned}
+\overline Q(w_{3,1})
+&\ge(1-s)s^3LH^2(4m-L-2H)-k_3\\
+&=G(s)+g(s)(d-\eta_\beta)-k_3,\\
+g(s)&=4LH^2s^2\le\frac{64}{375}<\frac15.
+\end{aligned}
+\tag{8.22}
+$$
+
+The equality uses $LH^2=4/15$, $L+2H=29/15$ and $4-L-2H=31/15$, giving precisely $G$ in (3.3). Since $g(s)>0$, combine this with the complete-coordinate upper bound (2.8) to obtain the second inequality of (8.17). Its error is
+
+$$
+k_3+b/5
+=\left(\frac{37829}{6328125}+\frac1{300}\right)t
+ +\frac5{54}t^2+\frac4{45}t^3+\frac4{81}t^4=R(t).
+\tag{8.23}
+$$
+
+Both inequalities concern the one clipped generator, its two complete mean laws, one actual circulation and one common mean $m$. ∎
+

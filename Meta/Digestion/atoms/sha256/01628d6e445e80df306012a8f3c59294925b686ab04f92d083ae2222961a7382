@@ -1,0 +1,20 @@
+**Corollary 8.3 (the obstruction is inside a fixed target fiber).**
+The code in (PCA.21) is a lawful acquired-term code, compatible with
+the old reader, but has no determining finite menu of Theorem 3.2.
+The obstruction occurs between sources with the same $F=R_0$.
+It is therefore the cost of preserving this specified extra code,
+not an impossibility of recovering $F$ with freely reselected encoders.
+
+Proof. For every finite menu the construction in Theorem 8.2 gives an
+equal-observation pair with different prescribed code and the same
+whole target. This violates (PCA.7). For comparison within the same
+compatible-code template, choose instead $f\equiv0$. Then testing
+$b_3$ and, on a non-alpha reply, $b_4$ generates the prescribed bit
+with finitely many fixed states and at most two paid calls; on either
+alpha reply it latches $e_1$, otherwise $e_0$. All four successors
+can be fixed accordingly. Definition 4.1 shows on the entire domain
+that the only alpha cases are $\Pi_3,\Pi_4$, exactly the code-one
+cases for that different encoder. The supplier reader then recovers
+the full target. This comparison expressly changes the encoder; it
+does not generate $\sigma_\infty$. $\square$
+

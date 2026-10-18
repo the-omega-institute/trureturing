@@ -1,0 +1,27 @@
+**Corollary 9.3 (affine nonpositive boundary and every actual ground state).** For any actually admitted fixed datum, if
+
+$$
+\min_{t\in\mathbb R}C_{\rm aff}(t)\le0,
+\tag{9.4}
+$$
+
+then $C_{\rm resp}<0$ and
+
+$$
+E_s\to C_{\rm resp},\qquad
+\epsilon_c(s)=C_{\rm resp}s^2+o(s^2),\qquad
+r_s\sim(-C_{\rm resp})s^{-6}\to\infty.
+\tag{9.5}
+$$
+
+For every prescribed $s_n\downarrow0$ and every choice of actual normalized complex ground states in $D(S)$,
+
+$$
+\operatorname{dist}_{L^2}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)\to0.
+\tag{9.6}
+$$
+
+In particular the same implication holds if $C_{108}\le0$, including $C_{108}=0$, or if a fixed complex affine coefficient in (8.2) is nonpositive. No such datum is asserted to occur.
+
+Proof. Theorem 7.1 makes (9.4) imply a strictly negative response. Theorem 9.2 then gives its negative unscaled energy limit; the exact unit identities (1.6) give (9.5). At each positive cutoff the bottom is attained in $D(S)$, and (9.2) applies to every chosen actual state on every prescribed sequence, giving (9.6). Since $\min_t C_{\rm aff}(t)\le C_{108}$ and is also at most each fixed complex affine coefficient, the additional implications follow. Negative affine coefficients were already sufficient under R's non-strict comparison; the strict theorem additionally covers the affine zero boundary. $\square$
+

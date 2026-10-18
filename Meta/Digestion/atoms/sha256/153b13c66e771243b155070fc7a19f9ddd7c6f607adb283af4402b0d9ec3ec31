@@ -1,0 +1,10 @@
+**Definition 6.2 (native graph fiber at fixed depth five).** Fix the
+effective graph $G_N$ and a public ordering of its bipartition. Assign each
+vertex's four incident edges bijectively to its ports $LL,LR,RL,RR$.
+Give every edge $e$ a label $s_e\in\{0,1,2,3,4\}$. At its endpoint in
+the first bipartition place $u_{s_e}$ in that port; at the other endpoint
+place $u_{\tau(s_e)}$. Assemble the four modules by (NDR.26) to obtain
+$x_v\in S_5$. Let $B_G\subseteq S_5^N$ contain the tuples from all edge
+label assignments. Labels are mathematical parameters of a source family,
+not operational inputs supplied to a reader.
+

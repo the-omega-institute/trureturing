@@ -1,0 +1,52 @@
+**Proposition 3.3 (exact network mass obligation).** For nonnegative
+$w:S_d\to\mathbb R$, define
+
+$$
+A_d(n,w)=\max_\Theta\sum_{x\in C_\Theta}\prod_{i=1}^nw(x_i).
+\tag{NDR.16}
+$$
+
+It is exactly the maximum over all admissible sets. For $w>0$, put
+$W=\sum_xw(x)$. Then
+
+$$
+P_d(w)=\lim_{n\to\infty}\frac{\log_2A_d(n,w)}n
+       =\sup_{n\ge1}\frac{\log_2A_d(n,w)}n
+\tag{NDR.17}
+$$
+
+exists and is finite, and
+
+$$
+\sigma_d\ge\log_2W-P_d(w),\qquad
+M_1(d+h)\ge\left\lceil\frac{W^{2^h}}{A_d(2^h,w)}\right\rceil.
+\tag{NDR.18}
+$$
+
+For positive $C$, the assertion $P_d(w)\le\log_2C$ is equivalent to
+$A_d(n,w)\le C^n$ at every $n$. Finite values of $A_d(n,w)$ give
+lower bounds on $P_d(w)$, not its needed upper certification.
+
+**Proof.** Theorem 2.2 proves the maximum identity. Products of admissible
+sets on disjoint coordinate groups are admissible, so
+$A_d(n+m,w)\ge A_d(n,w)A_d(m,w)$, while
+$A_d(n,w)\le W^n$. The superadditive limit argument proves (NDR.17).
+Every cover partitions or covers total product mass $W^n$ with each
+member of mass at most $A_d(n,w)$; hence
+$K_d(n)\ge W^n/A_d(n,w)$. Take logarithms and limits for the first
+bound. For the second, restrict any original complete code to actual
+perfect-scaffold sources with $2^h$ simultaneous $S_d$ blocks. Every
+restricted fiber is admissible by FMR's every-word restriction, and its
+number is at most the original complete alphabet. The same mass count
+gives the ceiling. The equivalence follows from the supremum in
+(NDR.17). $\square$
+
+The corresponding all-network inequality is an explicit finite tensor
+sum for each template: multiply the indicators of (NDR.10) and its unary
+constraints by $\prod_iw(x_i)$ and sum over $S_d^n$. A universal bound
+must cover every such template at every length. It is not enough to
+enumerate bounded components. Nor has completeness of product-weight
+certificates for $\sigma_d$ been proved. The NCE weights already give
+$W=429$ and $A_3(n,w)\le169^n$; their attained mass examples do not
+supply a matching cover. This reproduces (NDR.9), not a new rate bound.
+

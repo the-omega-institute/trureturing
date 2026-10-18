@@ -1,0 +1,20 @@
+**Theorem 28.2 (Exact correlated-noise reduction).** For every supported row and column of the two-window product,
+
+$$
+\mathsf Q_{\pi}[(w,z),(w',z')]
+=\mathbf1_{\Delta m_1+\Delta m_2=0}
+f_\mu(\Delta m_1)
+\rho_{0}[(w,z),(w',z')],\qquad
+f_\mu(j)=
+\begin{cases}
+1,&j=0,\\
+\mu,&j=-1,\\
+\overline\mu,&j=1.
+\end{cases}
+\tag{28.1}
+$$
+
+Here $\rho_0$ is the corresponding entry before the random angles. The first length-two window supports only counts zero and one, so these are every possible retained transfer. The formula holds also at $\mu=0$. Thus the complete density depends on $\pi$ only through $\mu$ and $\overline\mu$.
+
+**Proof.** A local count rotation contributes $e^{i(\beta_1\Delta m_1+\beta_2\Delta m_2)}$. The common total-count twirl kills the entry unless $\Delta m_2=-\Delta m_1$. On a retained block the factor is $\mathbb E e^{-i(\beta_2-\beta_1)\Delta m_1}$: it is one at zero transfer, $\mu$ at transfer minus one and $\overline\mu$ at transfer plus one. Independence of the angles from the word amplitudes permits this entrywise factorization. No independence between the two angles is assumed, and no inverse of a nonunit moment is taken. $\square$
+

@@ -1,0 +1,236 @@
+**Theorem 13.1 (a fixed-block contrast obstruction).** Let $m>0$,
+$a_c,b_c>0$, $a_c^2+b_c^2=1$, and fix the angular coefficient block
+$$
+C=m\operatorname{diag}(1,a_c^2,b_c^2)
+ =\int(1,u,v)(1,u,v)^T\,d\zeta,\qquad u^2+v^2=1.
+\tag{GC.59}
+$$
+Its unconstrained minimal null-ray length is three, but its maximum
+contrast $\int|u|\,d\zeta=ma_c$ requires exactly four positive masses.
+Coefficient states, even with a fixed complete saturated failure law,
+therefore do not in general preserve original contrast under short
+coefficient decompositions. For every $t>t_0$ this obstruction has the
+finite original embedding specified below.
+
+Proof. First identify precisely what the coefficient-state description
+retains. This is a reuse of real null-cone and two-qubit moment-face
+geometry inside the original contrast application. Set
+$$
+Q_\alpha=\operatorname{diag}(1,-\alpha,-\beta),\quad
+\mathcal C_\alpha=\{B\in\operatorname{Sym}_3(\mathbb R):
+ B\succeq0,\ \operatorname{tr}(Q_\alpha B)=0\},\quad
+T_\alpha=\frac12
+\begin{pmatrix}1&\sqrt\alpha&0\\0&0&\sqrt\beta\\
+0&0&\sqrt\beta\\1&-\sqrt\alpha&0\end{pmatrix}.
+\tag{GC.60}
+$$
+Use $\Gamma_B$ for second-factor partial transpose, to distinguish it
+from the moment vector $\Gamma$. With
+$s_-=(|01\rangle-|10\rangle)/\sqrt2$, define
+$$
+\mathcal F=\{\rho\succeq0:\rho^{\Gamma_B}\succeq0,
+                       \ \rho s_-=\rho^{\Gamma_B}s_-=0\}.
+$$
+The real map $\Psi_\alpha(B)=T_\alpha BT_\alpha^T$ identifies
+$\mathcal C_\alpha$ with this exposed PPT face, preserves rank and
+satisfies $\rho^{\Gamma_B}=\rho$ on the face. Here are the full
+support and field details needed for this application.
+
+A Hermitian matrix annihilating $s_-$ has the form
+$$
+\rho=\begin{pmatrix}
+A&B&B&C\\ \overline B&D&D&E_c\\
+\overline B&D&D&E_c\\ \overline C&\overline E_c&\overline E_c&F_c
+\end{pmatrix},\qquad A,D,F_c\in\mathbb R.
+$$
+The further equation $\rho^{\Gamma_B}s_-=0$ forces
+$B,E_c\in\mathbb R$ and $C=D\in\mathbb R$ by its four entries.
+Thus $\rho$ is real and partial-transpose invariant. Conversely
+$T_\alpha$ has full column rank and image the symmetric tensor
+subspace. In real coefficients
+$$
+\rho_{00,11}=(B_{00}-\alpha B_{11})/4,\qquad
+\rho_{01,10}=\beta B_{22}/4.
+$$
+Their equality is exactly $\operatorname{tr}(Q_\alpha B)=0$.
+The full-column-rank congruence and its left inverse preserve positivity
+in both directions on this support and preserve rank. This proves the
+claimed real cone correspondence, including singular elements.
+For $P_-=|s_-\rangle\langle s_-|$, the functional
+$$
+\operatorname{tr}[(P_-+P_-^{\Gamma_B})\rho]
+ =\langle s_-,\rho s_-\rangle+
+   \langle s_-,\rho^{\Gamma_B}s_-\rangle
+$$
+is nonnegative on the PPT cone. Each summand vanishes exactly when
+the respective positive operator annihilates $s_-$. Its zero set is
+therefore $\mathcal F$, proving exposedness. Moreover
+$$
+T_\alpha^TT_\alpha=\tfrac12\operatorname{diag}(1,\alpha,\beta),
+\qquad\operatorname{tr}\Psi_\alpha(B)=B_{00}.
+$$
+If a positive $B$ in this cone has $B_{00}=0$, its first row and
+column vanish and $\alpha B_{11}+\beta B_{22}=0$ forces $B=0$.
+Every nonzero element has positive trace, and normalized coefficient
+states correspond exactly to $B_{00}=1$.
+
+For completeness, the available length is a rank statement, including
+all boundaries. Factor $B=AA^T$ with $A$ of full column rank $r$.
+The real symmetric matrix $S_A=A^TQ_\alpha A$ has trace zero.
+A zero-trace real symmetric matrix has a zero Rayleigh value on the
+unit sphere: unless it is zero it has both a nonpositive and a
+nonnegative eigenvalue and continuity gives such a vector. Compress
+to its orthogonal complement; the trace remains zero. Induction gives
+an orthonormal basis $o_1,\ldots,o_r$ with $o_i^TS_Ao_i=0$.
+Consequently
+$$
+B=\sum_{i=1}^r(Ao_i)(Ao_i)^T
+$$
+is an $r$-term null-ray decomposition. Each $Ao_i$ is nonzero, and
+its first coordinate is nonzero because
+$x_0^2=\alpha x_1^2+\beta x_2^2$. Normalize it to $h=(1,z,w)$
+and absorb its squared first coordinate into its positive weight.
+The converse length lower bound is matrix rank.
+
+Writing $u=\cos\phi$, $v=\sin\phi$ gives
+$$
+T_\alpha h(\phi)=\psi_\phi\otimes\psi_\phi,\qquad
+\psi_\phi=(\cos(\phi/2),\sin(\phi/2))^T.
+\tag{GC.61}
+$$
+No antipodal averaging of $\phi$ and $\phi+\pi$ is performed.
+In any complex positive pure-product decomposition of an element of
+$\mathcal F$, the first kernel condition forces each positive
+$v\otimes w$ to be orthogonal to $s_-$, hence $v\parallel w$.
+Applying the second kernel condition to the partial-transpose
+summands forces $v\parallel\overline w$. Thus the projective factor
+is real and every summand is one of (GC.61). This argument uses
+positivity term by term and also applies to singular states. The
+complex separable length is therefore the same rank. Rank zero has
+the empty decomposition; rank one one ray; rank two two rays and a
+normalized exposed chord; rank three lies in the relative interior
+and has length three. To see the rank-two chord assertion, expose
+its support by a nonzero null-vector functional $B\mapsto w^TBw$.
+On its two-dimensional range the restricted null equation has exactly
+two projective rays: it is indefinite, since its trace against a
+positive definite rank-two factor is zero, and cannot vanish
+identically because $Q_\alpha$ has no two-dimensional totally
+isotropic real subspace. The normalized face is their chord.
+Positive definite matrices give the relative interior in rank three.
+For $B=I_3$ the eigenvalues of $\Psi_\alpha(B)$ are
+$1/2,\alpha/2,\beta/2,0$, and both kernels are exactly $\mathbb Cs_-$.
+
+The real-field condition cannot be dropped. For $0<\varepsilon<1$,
+$$
+B=I_3+i\varepsilon(E_{01}-E_{10})\succ0,\qquad
+\operatorname{tr}(Q_\alpha B)=0,
+$$
+has eigenvalues $1,1+\varepsilon,1-\varepsilon$. Yet the middle
+$2\times2$ principal minor of
+$(T_\alpha BT_\alpha^*)^{\Gamma_B}$ is
+$$
+(\beta/4)^2-|\beta/4-i\varepsilon\sqrt\alpha/2|^2
+ =-\alpha\varepsilon^2/4<0.
+$$
+It does not define a PPT state.
+
+This coefficient face is the known $G_{3,3}$ trigonometric moment
+face: Kye, *Faces for two qubit separable states and the convex hulls
+of trigonometric moment curves*,
+[arXiv:1302.2226v1, §4, (7)–(11), Theorems 5.1–5.2](https://arxiv.org/pdf/1302.2226v1).
+Indeed for $U=2^{-1/2}\begin{pmatrix}1&i\\1&-i\end{pmatrix}$,
+$$
+(\overline U\otimes U)(\psi_\phi\otimes\psi_\phi)
+ =\tfrac12(1,e^{i\phi})^T\otimes(1,e^{-i\phi})^T,
+$$
+with $\omega=e^{-i\phi}$ in the convention
+$(1,\overline\omega)\otimes(1,\omega)$. Chen–Đoković,
+[arXiv:1210.0111v2, Table I and Theorem 23](https://arxiv.org/pdf/1210.0111v2),
+also supplies the relevant birank $(2,2)$ and $(3,3)$ length facts.
+The normalized slice is affinely the circle moment body
+$\operatorname{conv}\{(\omega,\omega^2):|\omega|=1\}$: with
+$\omega=u-iv$, its first complex moment records the two first
+angular moments and its second records $u^2-v^2$ and $-2uv$.
+Together with mass one and $u^2+v^2=1$, these recover every entry
+of the angular Gram, and conversely that Gram recovers both complex
+moments. The symmetric-support argument is consistent with
+Bohnet-Waldraff–Braun–Giraud,
+[arXiv:1606.07635v1, Theorem 1](https://arxiv.org/pdf/1606.07635v1);
+the second kernel condition here supplies the further real-circle
+restriction. Giraud–Braun–Braun,
+[arXiv:0805.2592v1, §III.B, (12)–(21)](https://arxiv.org/pdf/0805.2592v1),
+uses the spin-one first/second moment criterion $W-uu^T\succeq0$
+and positive coherent-state representations. These are established
+coefficient geometry and moment results reused here; their short
+lengths do not preserve extra original resource functionals.
+
+Now apply this distinction to (GC.59). Cauchy gives
+$$
+\int|u|\,d\zeta\le
+\sqrt{\left(\int1\,d\zeta\right)\left(\int u^2\,d\zeta\right)}=ma_c.
+$$
+Equality forces $|u|=a_c$ almost everywhere, hence $|v|=b_c$.
+Write the four possible masses as
+$m(1+\sigma X+\upsilon Y+\sigma\upsilon Z)/4$.
+The zero $u,v,uv$ moments force $X=Y=Z=0$. All four masses
+are $m/4>0$, and conversely these four masses attain the bound.
+Axis masses $ma_c^2/2$ at each $(\pm1,0)$ and
+$mb_c^2/2$ at each $(0,\pm1)$ give the same block but contrast
+$ma_c^2<ma_c$. A length-three representation is also explicit:
+mass $ma_c^2/(1+a_c^2)$ at $(1,0)$ and mass
+$m/[2(1+a_c^2)]$ at each
+$(-a_c^2,\pm\sqrt{1-a_c^4})$. Its first and mixed moments vanish,
+its second moments are $ma_c^2,mb_c^2$, and its contrast is
+$2ma_c^2/(1+a_c^2)<ma_c$. The angular block is congruent to a
+rank-three member of (GC.60), explaining exactly the unconstrained
+length and why it does not solve the contrast-constrained problem.
+
+For the original embedding fix any $t>t_0$ and retain one and the
+same saturated law
+$$
+p^F_{\sigma,\upsilon}=q/4,\qquad
+h^F_{\sigma,\upsilon}=(1,\sigma\sqrt{u_F},\upsilon\sqrt{v_F}),
+\qquad b_F=t\mathfrak c_f,\qquad q=\nu/t.
+\tag{GC.62}
+$$
+Since $qt\mathfrak c_f=\mu$, its complete failure covariance is
+$M$: its signed mixed moment vanishes and its $z^2,w^2$ intensity
+moments are $V,W$. Its live block is
+$\operatorname{diag}(q,qu_F,qv_F)$. The residual pure block
+$$
+B_R=\operatorname{diag}(r_0,r_1,r_2)
+ =\operatorname{diag}(1-q,1-qu_F,1-qv_F)\succ0
+\tag{GC.63}
+$$
+is $Q_\alpha$-null. Represent it either by the four signs
+$(1,\sigma\sqrt{r_1/r_0},\upsilon\sqrt{r_2/r_0})$, each mass
+$r_0/4$, or by the pure axes $(1,\pm1/\sqrt\alpha,0)$, each mass
+$\alpha r_1/2$, and $(1,0,\pm1/\sqrt\beta)$, each mass
+$\beta r_2/2$. Both are normalized with the unchanged $F$ law,
+satisfy the whole live Gram and $M$, and satisfy all pure/saturated
+capacity inequalities. Their original $z$-contrast sums are respectively
+$$
+\tau_{\rm rect}=q\sqrt{u_F}+\sqrt{r_0r_1}=\tau_{\max}(t),\qquad
+\tau_{\rm axes}=q\sqrt{u_F}+\sqrt\alpha\,r_1.
+\tag{GC.64}
+$$
+The strict inequality follows from
+$r_0r_1-\alpha r_1^2=\beta r_1r_2>0$; physical contrast is
+$s_0\tau$. Proposition 12.2 verifies Proposition 10.1's premises
+for each finite family, so both are original feasible instruments.
+The pure block can alternatively be given the preceding three-point
+representation after angular rescaling. In particular a shorter
+coefficient representation need not meet the original contrast request.
+
+Fixing each sheet's coefficient block is stronger than the original
+aggregate constraint: the original law permits opposite sheetwise
+odd moments that cancel. These examples prove feasible data
+insufficiency, not eight-low optimal necessity. Finally $T_\alpha$
+and $U$ act on auxiliary coefficient geometry. They are not local
+channels on the original $M_5$ acquisition or its Choi support, and
+do not remove its physical product-vector obstruction. A same-named
+PPT condition, full-support maximally correlated condition, exact
+zero-leakage condition or finite LOSR construction supplies no map
+preserving the original source, cost, capacity and recorded height
+without an additional proved operational correspondence. $\square$
+

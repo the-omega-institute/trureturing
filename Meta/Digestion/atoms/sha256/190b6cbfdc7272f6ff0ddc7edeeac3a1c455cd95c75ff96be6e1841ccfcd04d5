@@ -1,0 +1,75 @@
+**定理 53.5（联合正误差的全控制器有限下界）。** 在定义53.1的联合域，对每个 $\pi\in\mathcal P_\infty^{\rm cmd}$，
+
+$$
+\mathcal E_\pi(\delta,\eta)\ge L=\sqrt{\delta^2+H^2}.
+\tag{53.20}
+$$
+
+证明。固定控制器及任一单位 $v\in E$，选两个初始可见量 $a_0=\delta v$、$a_1=-\delta v$，首锚以前每次Read共同报告零。每个内部操作都收缩可见槽，因此两次运行的真实可见值各不超过 $\delta$；误差取各自真实可见值的相反数，零报告合法。这样共同前缀中的命令、Read、证书和停止由 $\pi$ 决定，与 $b$ 和见证增益无关。
+
+若没有首锚，或首锚前已有零命令，取 $b_0=20-15i$、$b_1=20+15i$、相同增益。完整共同记录的INITIAL半距为 $\sqrt{\delta^2+225}$。若有首锚，其有限非零命令积按（53.5）写为 $\sigma\lambda q$。当 $\alpha\ge3/5$，取引理45.2(ii)的合法两层同投影来源及全1增益，其INITIAL半距至少 $\sqrt{\delta^2+81}$。首锚后两个可见槽相同，隐藏槽差至多 $2\delta$；下面的续接不变量适用。
+
+余下 $0\le\alpha<3/5$，置
+$\rho_q=(3/5)\nu-(4/5)\alpha>0$、$K_q=(3/5)\alpha+(4/5)\nu=\sqrt{1-\rho_q^2}$。若 $25\rho_q\ge H$，使用引理45.2(i)的半径25两点
+
+$$
+b_\pm=(\pm25\rho_q+25K_qu)q^{-1}.
+\tag{53.21}
+$$
+
+全1增益下首锚后可见槽相同，隐藏槽差至多 $2\delta$；INITIAL半距
+$\sqrt{\delta^2+(25\rho_q)^2}\ge L$。
+
+只剩 $0<\rho_q<H/25$。联合域给 $H^2\le25D\le25$，所以 $\rho_q<1/5$、$K_q>24/25$，从而
+
+$$
+\alpha=\frac35K_q-\frac45\rho_q>\frac{52}{125}>\frac25,
+\qquad \nu>\frac45.
+\tag{53.22}
+$$
+
+这也证明首锚前实际有至少两次非零内部调用：空积的 $\alpha=1$，单个纯虚命令的 $\alpha=0$，均不在这个剩余分支。令
+
+$$
+\varepsilon_h=25\zeta+2\delta,\qquad
+S=\sqrt{50\varepsilon_h-\varepsilon_h^2},\qquad
+b_0=(25u)q^{-1},\qquad
+b_1=(S+(25-\varepsilon_h)u)q^{-1}.
+\tag{53.23}
+$$
+
+$0<\varepsilon_h\le2D\le2$。两范数恰为25，且 $S\ge\sqrt{48\varepsilon_h}$。帽条件不是附加假设：
+
+$$
+\operatorname{Re}b_0=25\nu\ge20,\qquad
+\operatorname{Re}b_1=\alpha S+\nu(25-\varepsilon_h)\ge25\nu\ge20,
+\tag{53.24}
+$$
+
+因为 $(2/5)\sqrt{48\varepsilon_h}\ge\varepsilon_h\ge\nu\varepsilon_h$。来源在运行前固定，初始帽与半径从未更换。
+
+第0次运行的首两个内部增益各取 $1-\eta$，其余首锚前增益取1；第1次运行的首锚前增益全部取1。零报告仍逐事件合法，公共命令前缀保持。首锚后两真实可见值分别为
+$\sigma\lambda25mu$ 和 $\sigma\lambda(25-\varepsilon_h)u$。由
+$25-\varepsilon_h=25m-2\delta$，可见槽差为 $2\sigma\lambda\delta u$，范数至多 $2\delta$。两隐藏槽是各自收缩后可见槽的负值，各自范数至多 $\delta$，故其差也至多 $2\delta$。这里不声称两个当前状态相同。
+
+对所有有锚分支，此后内部调用取相同合法增益，例如1。若两当前差槽满足
+
+$$
+|\Delta a'|\le2\delta,\qquad |\Delta b'|\le2\delta,
+\tag{53.25}
+$$
+
+相同内部命令分别收缩它们；精确锚送到 $(\operatorname{Im}\Delta b',-\Delta a')$，仍满足同界。每次实际Read共同报告两真实可见值的中点，各自误差为相反半差，范数至多 $\delta$。该递推只使用固定初态、当前两个状态和共同有限前缀，不用未来事件；相同报告迫使同一动作、Read选择、证书和Stop。重复Read、更新后立即Stop、任意有限续接及可数记录的每个有限前缀均覆盖。对无锚分支，已经合法的零报告覆盖整个记录；没有无限前缀后的事件。这个数学比较不是向控制器提供一个源副本。
+
+最后一对的完整INITIAL半距平方为
+
+$$
+\frac{|a_1-a_0|^2+|b_1-b_0|^2}{4}
+=\delta^2+\frac{S^2+\varepsilon_h^2}{4}
+=\delta^2+\frac{25}{2}\varepsilon_h
+=\delta^2+H^2=L^2.
+\tag{53.26}
+$$
+
+其余分支也足够，因为 $H\le5<9<15$。同一个完整命令记录须产生同一个 $W$ 值估计，三角不等式给至少一端误差不小于INITIAL半距。由共同零前缀确定命令积后即可事先选定两个来源和首两次增益；续接中点规则因果合法。Read和增益障碍属于同两条实际历史，不是两个分别可达轴界的拼接。这证明对全部控制器的结论。证毕。
+

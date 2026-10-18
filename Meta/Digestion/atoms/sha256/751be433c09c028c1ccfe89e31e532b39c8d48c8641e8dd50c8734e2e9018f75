@@ -1,0 +1,26 @@
+### 76.3. A three-distinct-channel representative and an aligned one
+
+Write the aligned input as \((1,1,z;h_a,h_a,h_ar)\), using either its
+finite quotient or its explicit pole stratum from Theorem 75.5.
+The symbol \(h_a\) is its unit phase. The three possible positions of its
+unique coordinate lead to the companion-matrix norms
+\[
+\begin{aligned}
+ \mathsf O_{ga}&=3(1+\bar gh_a)I_3
+                +(z-1)B(C)+h_a(r-1)L^c(C),\\
+ \mathsf S_{ga}&=3(h_a-g)I_3
+                +h_a(r-1)C-(z-1)L(C).
+\end{aligned}                                                   \tag{76.7}
+\]
+Their determinants are products of all three relative-position cross
+expressions divided by \(t\). Permuting the two repeated positions only
+duplicates values. The exact mean targets are
+\[
+ (2+z)+\bar gh_a(2+r)=0,\qquad
+ h_a(2+r)-g(2+z)=0.                                           \tag{76.8}
+\]
+The mixed failure systems consist of the two single-ray descriptions,
+the relevant determinant equation, and nonzero squared modulus of its
+target. Reversing the order of the rays conjugates \(\mathcal O\) or
+negates \(\mathcal S\), so introduces no further zero-condition case.
+

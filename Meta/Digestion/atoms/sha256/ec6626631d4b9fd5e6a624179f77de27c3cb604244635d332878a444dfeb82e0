@@ -1,0 +1,61 @@
+**定理 6.1（Explicit universal upper list in original coordinates）。**
+Every legal $C(s,t)$ has a finite four-support realization with at most
+sixty nonzero vectors. The construction also works for any real skew
+$X\in M_5(\mathbb R)$ with $I_5+iX\succeq0$.
+
+Proof. Hermiticity of $iX$ and $\overline{iX}=-iX$ pair its real eigenvalues
+by conjugation, including equal eigenspace dimensions. Choose an orthonormal
+original-coordinate eigenbasis
+$h_{1,+},h_{1,-},h_{2,+},h_{2,-},w$ with eigenvalues
+$\lambda,-\lambda,\mu,-\mu,0$, where $0\le\lambda,\mu\le1$.
+Positivity gives these bounds; in a zero or repeated eigenspace any
+orthonormal choice supplies the slots. No sparse eigenvectors are assumed.
+
+For $\varepsilon,\delta=\pm1$ put
+$p_{\varepsilon\delta}=(1+\varepsilon\lambda)(1+\delta\mu)/4$,
+$u=h_{1,\varepsilon}$, $v=h_{2,\delta}$, and
+$Q_{\varepsilon\delta}=2uu^\dagger+2vv^\dagger+ww^\dagger$.
+The four weights are nonnegative and sum to one.
+The first pair's spectral coefficients in $\sum pQ$ are
+$2\sum_\delta p_{\varepsilon\delta}=1+\varepsilon\lambda$;
+the second pair's are $1+\delta\mu$, and that of $ww^\dagger$ is one.
+Thus $\sum pQ=I_5+iX$.
+
+For any orthonormal complex $x,y$, set
+$f_r(x,y)=y_rx-x_ry$ in the original coordinate positions. Its $r$ coordinate
+is zero. Expanding its outer products gives
+
+$$
+\sum_{r=1}^5 f_r(x,y)f_r(x,y)^\dagger=xx^\dagger+yy^\dagger,
+\tag{6.1}
+$$
+
+because the squared-coordinate sums are one and the cross coefficient
+$\sum_r y_r\bar x_r=x^\dagger y$ is zero. For each sign pair and each $r$,
+take the three vectors
+
+$$
+\sqrt{\frac{3p_{\varepsilon\delta}}{10}}\,f_r(u,v),\qquad
+\sqrt{\frac{p_{\varepsilon\delta}}{10}}\,f_r(u,w),\qquad
+\sqrt{\frac{p_{\varepsilon\delta}}{10}}\,f_r(v,w).
+\tag{6.2}
+$$
+
+Writing $P_x=xx^\dagger$, equation (6.1) and the projection identity
+
+$$
+2P_u+2P_v+P_w
+=\frac32(P_u+P_v)+\frac12(P_u+P_w)+\frac12(P_v+P_w)
+$$
+
+show that their sum for a sign pair is $p_{\varepsilon\delta}Q_{\varepsilon\delta}/5$.
+Summing the four pairs gives exactly $(I_5+iX)/5$.
+Each vector misses its selected original coordinate, so has support at most
+four. The total squared norm is
+$\sum p_{\varepsilon\delta}\operatorname{tr}Q_{\varepsilon\delta}/5=1$.
+There are sixty slots. All zero weights and cancellations can be omitted.
+There is no division by an eigenvalue, coordinate, parameter, or gap, so
+zero, repeated and saturated spectral cases are included. This is the
+coordinate-cancellation construction owned by the sharp fixed-basis coherence
+source. $\square$
+

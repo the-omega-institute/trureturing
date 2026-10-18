@@ -1,0 +1,15 @@
+# CFMP geometric realization: repeated-axis two-flat obstructions
+
+This volume continues Sections 459-475 of the
+[six-edge high-axis volume](CFMP_GEOMETRIC_REALIZATION_SIX_EDGE_HIGH_AXES.md).
+The paired response formulas and source framework are in the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md);
+the six-reservoir witness and at-most-two-flat reductions are in the
+[five-reservoir return volume](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).
+Section numbers cited below refer to these linked volumes when they
+are outside the present range.
+
+The result here is restricted to exactly two flat owners in the stated
+six-actual-edge repeated-frame class. Its upper sixth-label branch is
+excluded. The one-flat and low sixth-label two-flat branches remain open.
+

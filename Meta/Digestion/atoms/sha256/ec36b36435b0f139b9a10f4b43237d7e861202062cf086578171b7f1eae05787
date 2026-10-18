@@ -1,0 +1,93 @@
+**Theorem 170.1 (Whole-sequence normalization and exact error scaling).**
+For any original sequence (164.1), put $t=1-a_2+a_3$ and normalize its
+entire sequence by
+
+$$
+b_1=1-\frac{1-a_1}{t},\qquad b_2=\frac{a_3}{t},\qquad
+b_i=\frac{a_i}{t}\quad(i\ge3).
+\tag{170.1}
+$$
+
+Then $0<t\le1$, $1\ge b_1\ge b_2=b_3\ge b_4\ge\cdots>0$ and
+$b_i\to0$. For each actual source, on the full original carrier,
+
+$$
+\lambda_\xi^a=(1-t)R_\xi+t\lambda_\xi^b.
+\tag{170.2}
+$$
+
+Here $R_\xi$ is the original $(1,2)$ prefix rule's law. Every actual
+amplitude, including every $i>L$, is normalized by the same $t$ and
+retains its actual mark $\theta_i$ in (170.2).
+Given an original $N_2$ or $O_2$ rule $A_b$ for the normalized sequence,
+there is a rule in the same class, using one source-independent seed,
+whose output law is $(1-t)R_\xi+t\widehat\lambda_{A_b,\xi}$ and whose
+uniform error is exactly
+
+$$
+e_a(A_{\rm mix})=t e_b(A_b).
+\tag{170.3}
+$$
+
+**Proof.** Since $a_2\ge a_3>0$, $0<t\le1$.
+Moreover $b_1=(a_1-a_2+a_3)/t>0$, $b_1\le1$ and
+$b_1-b_2=(a_1-a_2)/t\ge0$. All remaining inequalities and convergence
+follow by division of the entire tail by the fixed positive $t$.
+At a positive cap set $e_b=e/t$; then $b_i>e_b$ exactly when $a_i>e$,
+so active length and every tail-cap comparison are preserved.
+
+Check (170.2) separately at each possible actual first absence.
+If $n=1$, $R_\xi=\delta_{\theta_1}$ and the coefficients at the actual
+target atoms are
+
+$$
+t(1-b_1)=1-a_1,\qquad (1-t)+tb_1=a_1.
+$$
+
+If $n=2$, $R_\xi=\delta_{\theta_2}$ and
+
+$$
+t(1-b_2)=t-a_3=1-a_2,\qquad (1-t)+tb_2=1-t+a_3=a_2.
+$$
+
+If $n\ge3$, including every actual $n>L$, $R_\xi=\delta_{\theta_0}$ and
+
+$$
+(1-t)+t(1-b_n)=1-a_n,\qquad tb_n=a_n.
+$$
+
+These are full-carrier identities at $\theta_0,\theta_n$. The actual tail
+atom is never relabeled as zero in this identity. Only the separate
+finite transport uses the target $e_0$ for $1^L$.
+
+Choose the $R$ branch with probability $1-t$ and the $A_b$ branch with
+probability $t$, before any replies. Use one seed space consisting of
+the branch and the inherited branch seed, as permitted by Definition
+71.1; it is fixed source-independently. For interval realizations,
+partition one $U\in[0,1)$ and rescale it within the chosen interval to
+supply that branch's full local seed. More generally the disjoint union
+of the two weighted seed spaces is itself a single seed space.
+No sourcewise branch selection or extra observed random variable is used.
+The prefix and both class branches preselect their entire schedules;
+$O$ stops as required, while the $N$ prefix obtains both scheduled
+replies. Each branch has the hard-two bound and sourcewise almost-sure
+finite handoff. Null branches are omitted. Completing the stopped rule
+in $N$ uses the same global seed and counts ignored requests.
+
+Subtract (170.2) from the mixed output law to obtain
+$\widehat\lambda_{{\rm mix},\xi}-\lambda_\xi^a
+=t(\widehat\lambda_{A_b,\xi}-\lambda_\xi^b)$.
+Homogeneity of signed-measure TV and then the all-source supremum prove
+(170.3). For mark-supported finite rules at an actual $n>L$ the same
+identity is consistent with the exact tail formula
+
+$$
+\max\{t(1-p_{1^L}(0)),a_n\}
+           =t\max\{1-p_{1^L}(0),b_n\}.
+\tag{170.4}
+$$
+
+Every actual tail remains positive and vanishing. The auxiliary point
+$\alpha$ belongs only to the closed finite geometry; it is not invoked
+as a positive entire target sequence. $\square$
+

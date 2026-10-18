@@ -1,0 +1,17 @@
+**定义 A-23.1（项目不可变引文）。** 下列地址指向所用全文版本，内部章节定位作为具体条目的来源范围。
+
+| 代号 | 不可变来源 | 消费范围 |
+| --- | --- | --- |
+| A-R0 | [《FIB 关系延拓几何》，b432abd6e992f82a8c80127c720b45ff69064835](https://github.com/the-omega-institute/trureturing/blob/b432abd6e992f82a8c80127c720b45ff69064835/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | §§1、3–5、7：原树、下降、未来核、严格拼接、原生读者及已有 $`O_3`$ |
+| A-R1 | [《金字塔关联与原生接续》，d54b775b50754d407dd4e39ea1d4c6c7d67d5021](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) | §§一、三–四、八：均值凸包、关联纤维及跨窗来源限制 |
+| A-R2 | [《行列式、条件拼接与原生守卫接续》，d54b775b50754d407dd4e39ea1d4c6c7d67d5021](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md) | §§三–四、定义 10.4、命题 10.5–10.6：逆式、条件档案、真实守卫及取得界线 |
+| A-R3 | [《FIB 原子—金字塔—边界演算》，bb560bf50eeeee03b0981e5ee58994fe575a772c](https://github.com/the-omega-institute/trureturing/blob/bb560bf50eeeee03b0981e5ee58994fe575a772c/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) | §§一、四、六–八、十二–十三：组成、计数、双读向、单位位、核及相干界线 |
+| A-R4 | [《Fibonacci 原子关系生成》，2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72](https://github.com/the-omega-institute/trureturing/blob/2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) | 命题 105.5、§163、命题 168.1、定理 169.3 证明、§282.4：矩阵时钟、首次秩、Lucas 半相位、三七排斥及原有因子供给边界 |
+| A-R5 | [Finite Fibonacci Rank Closure，bb560bf50eeeee03b0981e5ee58994fe575a772c](https://github.com/the-omega-institute/trureturing/blob/bb560bf50eeeee03b0981e5ee58994fe575a772c/Blueprint/D5/S3/Arith/Primes/FiniteFibonacciRankClosure.md)；[Golden Prime Power Matrix Period，同版本](https://github.com/the-omega-institute/trureturing/blob/bb560bf50eeeee03b0981e5ee58994fe575a772c/Blueprint/D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.md) | 有限最小秩闭包的归属；一般素数幂时钟的域，不能代替小素数特例 |
+| A-R6 | [《二阶关系完成》，2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72](https://github.com/the-omega-institute/trureturing/blob/2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) | §§39、53、68、101–110、112：五函数、概率、共同 Gram、具名 Pauli、相干块及环境条件 |
+| A-R7 | [《历史、记录与时间箭头》，2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72](https://github.com/the-omega-institute/trureturing/blob/2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md) | §§174、177、188：已供应的词编译、守卫、取得档案及有限任务条件 |
+| A-R8 | [Observer Collision Order，d54b775b50754d407dd4e39ea1d4c6c7d67d5021](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/Blueprint/D5/S3/Arith/Congruence/ObserverCollisionOrder.md) | 碰撞阶等于差赋值及域 |
+| A-R9 | [Finite Future Congruence，同 d54b775 版本](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/Blueprint/D5/S3/Observer/Separation/FiniteFutureCongruence.md) | 既有单更新有限未来结果；本卷共同菜单的词版本直接归纳 |
+| A-R10 | [Continuous Hidden-Flow Rigidity，同 d54b775 版本](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/Blueprint/D5/S3/Observer/HiddenFlow/ContinuousRigidity.md) | 实连续加法流排除及非物理、非全动作分类边界 |
+| A-R11 | [《约数、多边形关联与边界几何》，同 d54b775 版本](https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/AURIC_FIB_DIVISOR_POLYGON_ASSOCIATION_BOUNDARY_GEOMETRY.md) | §§四、六：六十来源、四十八投影的实际不同任务 |
+

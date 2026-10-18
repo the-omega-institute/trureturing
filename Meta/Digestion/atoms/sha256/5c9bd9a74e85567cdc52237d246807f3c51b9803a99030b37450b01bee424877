@@ -1,0 +1,42 @@
+**Definition 6.1 (count incidence with live transition closure).** In
+this section let $K,L\ge2$ be arbitrary integers, $n=K+L-1$, and
+$V=\{0,\ldots,K-1\}\times\{0,\ldots,L-1\}$. A count incidence
+consists of a finite label set $\Lambda$ and nonempty subsets
+$\mathcal H_p\subseteq\Lambda$, $p\in V$, whose union is
+$\Lambda$. Require $\mathcal H_{(0,0)}=\{\lambda_*\}$ and require
+that two different cells whose label sets intersect be comparable
+under (SI.9). Multiple labels at one cell are allowed.
+
+For the version with transition closure, give each label two fixed
+successors in $\Lambda\cup\{\mathsf0,\mathsf1\}$ and use the
+start $\lambda_*$. For $p=(h,z)$ put
+$p_\varepsilon=(h+\varepsilon,z+1-\varepsilon)$ and require only
+
+$$
+p_\varepsilon\in V,\quad \lambda\in\mathcal H_p
+\quad\Longrightarrow\quad
+\delta(\lambda,\varepsilon)\in\mathcal H_{p_\varepsilon},
+\qquad \varepsilon\in\{0,1\}.
+\tag{SI.20}
+$$
+
+A transition leaving $V$ imposes no constraint. In particular, if a
+label represents both an exiting transition and a live transition for
+the same reply, the latter fixes the successor while the former
+imposes no terminal requirement. This definition retains count
+separation and all live count transitions, but discards actual supports,
+old assignments and correctness after a certificate. A functional
+count labeling is the special case
+$\mathcal H_p=\{\gamma(p)\}$, with $\gamma:V\to\Lambda$
+surjective.
+
+Every correct graph of Definition 1.2 gives such a count incidence
+with $\Lambda=Q_{\mathrm{live}}$ and $\mathcal H_p=F_p$.
+Keep its fixed successor for a reply if any live occurrence of that
+state has a live child for that reply. That successor is in
+$Q_{\mathrm{live}}$ by Theorem 2.2. If no such live child occurs,
+replace the reply's successor by the corresponding terminal. This
+replacement affects no obligation in (SI.20); paid post-certificate
+paths have deliberately been discarded. Thus no unique-host
+assumption is used in passing to this relaxation.
+

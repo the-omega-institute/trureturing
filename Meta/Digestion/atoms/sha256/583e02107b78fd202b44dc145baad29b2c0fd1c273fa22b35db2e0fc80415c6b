@@ -1,0 +1,25 @@
+**Convention 7.2 (the exact supplier and the scope of this obstruction).**
+The declaration `NativeLiteralFeasible` in [NativeLiteralMoore][NLM]
+quantifies an acquired code with input `ImageValues C`, actual origins
+in `OriginFiber P C`, and a runtime relation
+`Run M (substitution u.val) (code v) tr h`. Its whole output is
+`canonicalRow P u.val`. For fixed prefix-free $P$ and
+$C=\operatorname{canonicalRow}(P,\rho(u_0))$,
+`literal_moore_feasibility` and `finite_literal_synthesis` give the
+joint four-budget equivalence for names, installed states, calls and
+submitted letters. Its [owning narrative][NLMB] separately requires
+paid acquisition, export, installation, isolation and authenticated
+one-update continuity. The declaration supplies neither an original
+late request nor acquisition of its full image values under (PPF.21).
+
+Proposition 7.1 isolates a concrete failure of the identity-port
+assignment of its actual runtime source. It excludes no nonidentity
+encoding, actual-query simulation or differently priced implementation.
+Such a bridge must prove common-source and literal-response simulation,
+actual paid acquisition, complete alphabet accounting, all original
+targets and authentic-count timing. Merely changing the cut does not
+remove the runtime-source premise. The elementary substitution-image
+grammar is already part of the native predecessor suppliers; the use
+here is this exact source-domain check, without a global impossibility
+claim.
+

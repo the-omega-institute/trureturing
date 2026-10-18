@@ -1,0 +1,21 @@
+**Definition 29.1 (Integer words and slack).** Clear the fixed coefficient denominators by a positive integer $D$, and set $\bar F_i=DF_i$, $\bar A_i=D^2A_i$. These four integer polynomials have degree at most nineteen by the owning source's (22.7). Pad them to twenty coefficient slots each. Choose an integer $B\ge8$ so every coefficient has absolute value below $2^B$. Define
+
+$$
+\begin{aligned}
+m&=\lceil\log_2(2W+2)\rceil,&L_0&=B+8+19m,\\
+\lambda&=3L_0+4,&P&=b+2m+7,\\
+w&=8(b+P+\lambda+B+m+32),&
+a&=8+\lceil\log_2(w+1)\rceil.
+\end{aligned}
+\tag{29.1}
+$$
+
+In particular $w\ge128$, $a\le w$, and
+
+$$
+2W+2\le2^m<4W+4.
+\tag{29.2}
+$$
+
+A word has exactly $w$ bits, numbered from zero at the least significant bit. A signed value uses a magnitude word and a sign bit, with zero assigned positive sign. Every loop bound and stored constant below is an integer fitting a word. A pointer has a cell selector in $\{0,\ldots,255\}$ and a position in $\{0,\ldots,w\}$, costing at most $a$ bits. Position $w$ is a sentinel and is never dereferenced. End tests and moves concern these finite domains; there is no external time coordinate.
+

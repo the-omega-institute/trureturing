@@ -1,0 +1,69 @@
+**定理 230.2（Complete support and zero excess）。** The complete
+supports satisfy
+
+$$
+W(D)=B_N(D)=B_O(D)=28,\qquad
+Q(D)=(0,0,4,8,7,8,8;63).
+$$
+
+证明。 For a cell $E$ in any schedule partition, put
+
+$$
+P(E)=\sum_{w\in E}P_w,
+\quad P_n(E)=\sum_{w\in E\cap\Omega_n}P_w,
+\quad C_n(E)=\sum_{w\in E\cap\Omega_n}C_w.
+$$
+
+Its exact maximum over all eight labels is
+
+$$
+\max\left\{P(E)+4[1^7\in E],\
+                  \max_{1\le n\le7}(P_n(E)+C_n(E))\right\}.
+$$
+
+Adding the coefficients of 230.1 in this formula gives the following
+complete cell maxima. The singleton order is $0,1$; pair columns
+are $00,01,10,11$ for $N$ and $0,10,11$ for $O$.
+
+| Schedule | $N$ cell maxima | $O$ cell maxima |
+| --- | --- | --- |
+| empty | $(28)$ | $(28)$ |
+| $1$ | $(9,19)$ | $(9,19)$ |
+| $2$ | $(11,17)$ | $(11,17)$ |
+| $3$ | $(12,16)$ | $(12,16)$ |
+| $4$ | $(12,16)$ | $(12,16)$ |
+| $5$ | $(12,16)$ | $(12,16)$ |
+| $6$ | $(15,13)$ | $(15,13)$ |
+| $7$ | $(16,12)$ | $(16,12)$ |
+| $1,2$ | $(0,9,11,8)$ | $(9,11,8)$ |
+| $1,3$ | $(4,5,8,11)$ | $(9,8,11)$ |
+| $1,4$ | $(4,5,8,11)$ | $(9,8,11)$ |
+| $1,5$ | $(5,4,7,12)$ | $(9,7,12)$ |
+| $1,6$ | $(7,2,8,11)$ | $(9,8,11)$ |
+| $1,7$ | $(6,3,10,9)$ | $(9,10,9)$ |
+| $2,3$ | $(4,7,8,9)$ | $(11,8,9)$ |
+| $2,4$ | $(4,7,8,9)$ | $(11,8,9)$ |
+| $2,5$ | $(5,6,7,10)$ | $(11,7,10)$ |
+| $2,6$ | $(6,5,9,8)$ | $(11,9,8)$ |
+| $2,7$ | $(8,3,8,9)$ | $(11,8,9)$ |
+| $3,4$ | $(4,8,8,8)$ | $(12,8,8)$ |
+| $3,5$ | $(5,7,7,9)$ | $(12,7,9)$ |
+| $3,6$ | $(7,5,8,8)$ | $(12,8,8)$ |
+| $3,7$ | $(8,4,8,8)$ | $(12,8,8)$ |
+| $4,5$ | $(5,7,7,9)$ | $(12,7,9)$ |
+| $4,6$ | $(7,5,8,8)$ | $(12,8,8)$ |
+| $4,7$ | $(8,4,8,8)$ | $(12,8,8)$ |
+| $5,6$ | $(7,5,8,8)$ | $(12,8,8)$ |
+| $5,7$ | $(5,7,11,5)$ | $(12,11,5)$ |
+| $6,7$ | $(8,7,8,5)$ | $(15,8,5)$ |
+
+This table is a finite addition proof: each entry is specified by
+the preceding maximum formula and the full literal atom lists. For
+example, at pair $12$, the $00$ cell has no atom, the $01$ cell has
+union mass nine and no correct atom, the $10$ cell has union mass
+eleven and no correct atom, and the $11$ cell has union mass four,
+terminal mass four and largest correct total eight. Its maxima are
+$0,9,11,8$; the merged first cell has maximum nine. Every displayed
+schedule sum is $28$. The anchor attains $24+4=28$, and the class
+totals give $K=35+24+4=63$. Thus both excesses are zero. $\square$
+

@@ -1,0 +1,45 @@
+**Theorem 25.2 (fixed translated data and every actual choice).** Suppose the fixed reference member of J Definition 51.1 satisfies (24.1). There is $b_0>0$ such that for every separately fixed $0<b<b_0$ there is a finite $M_b$, fixed before $s\downarrow0$, with
+
+$$
+k_b(M_bs^8)<C_*,\qquad
+\epsilon_{c,b}(s)\ge-aM_bs^8,\qquad
+0<r_b(s)\le aM_b
+\tag{25.16}
+$$
+
+for all sufficiently small $s$ depending on $b,M_b$. For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice $\psi_{b,s_n}\in D(S_b)$ on the unchanged path $\tau=s_n^2$, $g=\chi_cs_n^3$,
+
+$$
+\liminf_n\operatorname{dist}_{L^2}
+ (\mathcal U_{b,s_n}\psi_{b,s_n},\mathbb T p)
+\ge\left[2-2\left(1+\frac{\gamma_{K,b}}{\sqrt{aM_b}}\right)^{-1/2}\right]^{1/2}>0.
+\tag{25.17}
+$$
+
+Here $K$ is any fixed compact set allowed by P §§102–103, and $\gamma_{K,b}>0$ is exactly P (103.1)'s constant.
+
+Proof. J Proposition 52.3 makes $C_{\rm resp},C_4$, $p,\mu,C_*,j_0,\nu,\lambda$ and $\mathscr A$ common to this translated family. Only the native faces move; each member retains a fixed positive source-face distance. Write its convergent relative diagonal integral as $\Delta_b$. J Theorems 52.2 and 54.1, and J Theorem 55.1 at the reference probe $s^6$, give
+
+$$
+\begin{aligned}
+\Delta_b&\sim-(C_E/j_0)b^{-5},\qquad C_E>0,\\
+\ell_b+\mathscr A W_{1,b}(o)s^5
+ &=k_{\rm ref}(s^6)+\mathscr A\Delta_bs^5+o_b(s^5).
+\end{aligned}
+\tag{25.18}
+$$
+
+Indeed $\ell_b-\ell_{\rm ref}=\mathscr A\delta_b^{<}s^5+o_b(s^5)$ and $\Delta_b=\delta_b^{<}+W_{1,b}(o)-W_{1,\rm ref}(o)$; substitution proves the second identity with all early and late contributions.
+
+Theorem 24.7 supplies one finite $A_0$ for the reference. Lemma 25.1 and (25.18) therefore imply, for each fixed $b$ and then each fixed $M\ge M_{0,b}$,
+
+$$
+\limsup_{s\downarrow0}\frac{k_b(Ms^8)-C_*}{s^5}
+\le A_0+\mathscr A\Delta_b+C_b(M^{-1/4}+M^{-1/2}).
+\tag{25.19}
+$$
+
+Choose $b_0\le b_{\rm ref}$ so that $A_0+\mathscr A\Delta_b<-2$ for every $0<b<b_0$. For each such fixed $b$ choose a finite $M_b\ge M_{0,b}$ with $C_b(M_b^{-1/4}+M_b^{-1/2})<1$. The right side is strictly negative, proving the first inequality in (25.16).
+
+J Theorem 56.1 applies at every $h>0$ on the entire original complex form domain: $k_b(h)\le C_*$ is equivalent to $\epsilon_{c,b}(s)\ge-ah$. Use $h=M_bs^8$. Negative attainment on the original path gives $\epsilon_{c,b}<0$, and the exact dictionary $\epsilon_{c,b}=s^2E_{b,s}=-r_b(s)s^8$ gives the remaining inequalities. P Theorem 103.1 with its finite bound $B=aM_b$ gives (25.17), using the original $\mathcal U_{b,s}$, not an auxiliary early vector or a trial state. Its sequential conclusion is for every prescribed sequence and every actual normalized complex choice; if it failed, the sequence of failing actual choices would contradict that same theorem. No reality, parity or auxiliary-eigenvector constraint is imposed on these actual states. $\square$
+

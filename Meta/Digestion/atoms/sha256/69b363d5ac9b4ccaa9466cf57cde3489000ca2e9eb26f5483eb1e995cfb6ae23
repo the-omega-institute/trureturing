@@ -1,0 +1,69 @@
+**Lemma 10.7 (The required complex-field extensions).**
+An isomorphism between countable subfields of $\mathbb C$ extends
+to an automorphism of $\mathbb C$. More generally, an isomorphism
+$K\to K'$ extends to an isomorphism between specified algebraic
+closures of $K$ and $K'$.
+
+**Proof.** First consider algebraic closures $\Omega,\Omega'$.
+Order the embeddings from intermediate fields
+$K\subset L\subset\Omega$ into $\Omega'$ extending the
+given isomorphism by extension of domain and map.
+The union of a chain is again such a field embedding.
+Zorn's lemma supplies a maximal one, $\varphi:L\to\Omega'$.
+If $z\in\Omega\setminus L$, it is algebraic over $L$.
+Transport its irreducible minimal polynomial by $\varphi$
+and choose a root in the algebraically closed $\Omega'$.
+The quotient description by the irreducible polynomial extends
+$\varphi$ to $L(z)$, a contradiction. Thus $L=\Omega$.
+
+The image of this embedding is algebraically closed: a polynomial
+over the image can be pulled back coefficient by coefficient to
+$\Omega$, a root found there, and the root mapped forward.
+The image contains $K'$, and every element of $\Omega'$ is
+algebraic over $K'$, hence over that image. An algebraically
+closed field has no proper algebraic extension, since every
+irreducible polynomial over it is linear. The embedding is
+therefore surjective. This proves the algebraic-closure assertion
+without a countability hypothesis.
+
+For countable $K,K'\subset\mathbb C$, choose transcendence
+bases $T,T'$ of $\mathbb C$ over them. Existence follows by
+the same maximality principle applied to algebraically independent
+sets; maximality means that the remaining extension is algebraic.
+For a basis of cardinality $\kappa$, its rational-function field
+has cardinality $\max(\aleph_0,\kappa)$: expressions use finitely
+many variables and coefficients. An algebraic extension of an
+infinite field has no greater cardinality than the field, since
+there are that many polynomials and each has finitely many roots.
+As $\mathbb C$ is uncountable and algebraic over $K(T)$, this
+forces $|T|=|\mathbb C|$, and likewise $|T'|=|\mathbb C|$.
+Choose a bijection $T\to T'$. Algebraic independence extends
+the original isomorphism to $K(T)\to K'(T')$ by substitution
+in rational functions. Both copies of $\mathbb C$ are algebraic
+closures of these fields. The first part now extends that map to
+an automorphism of $\mathbb C$. The uses of bases, a bijection
+and maximal embeddings all occur under choice. $\square$
+
+A concrete admissible starting isomorphism is
+
+$$
+\mathbb Q(\sqrt2)\longrightarrow\mathbb Q(\sqrt2),
+\qquad a+b\sqrt2\longmapsto a-b\sqrt2.
+$$
+
+The irrationality of $\sqrt2$ follows from the usual parity
+argument: a reduced equality $p^2=2q^2$ forces both $p$ and $q$
+even. The displayed map is consequently a field automorphism
+and Lemma 10.7 extends it to some
+$\sigma:\mathbb C\to\mathbb C$ with $\sigma(\sqrt2)=-\sqrt2$.
+
+It is essential to use a complex-field automorphism. Every
+automorphism of the real field preserves positive numbers
+because they are nonzero squares. It therefore preserves order.
+It fixes $\mathbb Q$, and rational numbers between two distinct
+real numbers show that an order-preserving map fixing
+$\mathbb Q$ must fix every real number. No nontrivial real-field
+automorphism can play the role of $\sigma$.
+A complex-field automorphism need not preserve the real subfield
+or commute with ordinary complex conjugation.
+

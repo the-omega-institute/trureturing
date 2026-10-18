@@ -1,0 +1,65 @@
+**Theorem 31.2 (complete weighted plane orbits and their plane-witness region).** Every rank-two $B$ satisfying the $B$ conditions of (R.108) has, on $U$,
+
+$$
+P=Q^{-1/2}BQ^{-1/2}=P^T=P^2,\qquad
+\operatorname{rank}P=2,\qquad
+J\operatorname{ran}P=(\operatorname{ran}P)^\perp.
+\tag{R.145}
+$$
+
+Conversely every such Lagrangian projection gives an admissible $B=Q^{1/2}PQ^{1/2}$. Under (R.143), every two-column factor of $B$ takes the form (R.144). For $0<\beta<1/2$ the angle in $[0,\pi/4]$ is unique. At $\beta=1/2$ the output stabilizer enlarges and every plane permits $\theta=0$. There is no additional plane-orientation parameter; uniqueness here concerns the plane orbit, not a representative of the joint pair $(A,T)$.
+
+For $B_{\beta,\theta}=A_{\beta,\theta}A_{\beta,\theta}^T$,
+
+$$
+\begin{gathered}
+\operatorname{spec}B_{\beta,\theta}
+=\{ac^2+\beta s^2,\ as^2+\beta c^2,\ 0,0,0\},\\
+c_{\rm pl}(\beta,\theta)
+=\sqrt{1-(1-2\beta)^2\sin^2(2\theta)},\\
+c_{\rm pl}\leq\sqrt a
+\quad\Longleftrightarrow\quad
+(1-2\beta)^2\sin^2(2\theta)\geq\beta.
+\end{gathered}
+\tag{R.146}
+$$
+
+An angle satisfying the last inequality exists exactly for $0<\beta\leq1/4$. For unequal weights and $\theta>0$, $B_{\beta,\theta}$ is not unitarily conjugate to the canonical $B$ of (R.116).
+
+**Proof.** All inverse powers of $Q$ in this argument are on $U$, where $Q$ is positive and commutes with $J$. The phase identity gives $P\succeq0$ and $P+JPJ^T=I_U$. Hence $P\preceq I_U$ and $\operatorname{Tr}P=2$. There are exactly two positive eigenvalues, both at most one, with sum two; both are one. The identity $JPJ^T=I_U-P$ now identifies the two orthogonal projection ranges and proves (R.145). Substitution proves the converse. This whitening is an algebraic classification only; it is not a trace-norm or recovery transformation.
+
+Identify the auxiliary real space $U$ with $\mathbb C^2$ by $x\mapsto(x_{b_1}+ix_{g_1},x_{b_2}+ix_{g_2})$, so $J$ acts as multiplication by $i$. This does not change the quantum output space $\mathbb C^5$. A real orthonormal basis of $L=\operatorname{ran}P$ gives a complex matrix $W$. Its real Gram matrix is $I_2$ and its imaginary Gram matrix vanishes by $JL=L^\perp$, so $W^\dagger W=I_2$. The symmetric unitary matrix $S=WW^T$ determines the unoriented plane: if $W_1W_1^T=W_2W_2^T$, then $W_2^\dagger W_1$ is both unitary and complex orthogonal, hence real orthogonal. This is the standard $U(2)/O(2)$ representation, used here within the weighted classification; see [P. Albers, U. Frauenfelder and J. P. Solomon, *A Γ-structure on Lagrangian Grassmannians*, arXiv:1209.4505v2, Section 1, PDF pp.1–2](https://arxiv.org/pdf/1209.4505v2). No odd-dimension Γ-structure theorem is used.
+
+For $a>\beta$, the $Q,J$-preserving output group on $U$ is precisely the diagonal auxiliary torus $D=\operatorname{diag}(e^{i\phi_1},e^{i\phi_2})$. Write
+
+$$
+S=\begin{pmatrix}\alpha&\zeta\\\zeta&\gamma\end{pmatrix},\qquad
+|\alpha|=|\gamma|=d,\quad |\zeta|=e,\quad d^2+e^2=1.
+$$
+
+Its transformation is $S\mapsto DSD$. If $d,e>0$, choose the two phases to make both diagonal entries equal to $d>0$. Row orthogonality then says $d(\zeta'+\overline{\zeta'})=0$, so the off-diagonal entry is purely imaginary. A remaining diagonal sign makes it $ie$. If $e=0$, eliminate the two diagonal phases; if $d=0$, choose the sum of the two phases to make the off-diagonal entry $i$. Thus in all cases
+
+$$
+DSD=\begin{pmatrix}\cos2\theta&i\sin2\theta\\
+i\sin2\theta&\cos2\theta\end{pmatrix}
+=W_\theta W_\theta^T,\qquad
+W_\theta=\begin{pmatrix}c&is\\is&c\end{pmatrix}.
+\tag{R.147}
+$$
+
+The invariant $|S_{12}|=\sin2\theta$ fixes a unique $\theta\in[0,\pi/4]$. Equality of the symmetric unitary matrices gives $DW=W_\theta O$ for some $O\in O(2)$. Its determinant may be negative, so orientation reversal is included. If $AA^T=B$ with two independent columns, then $(Q^{-1/2}A)(Q^{-1/2}A)^T=P$, and therefore the columns of $Q^{-1/2}A$ are a real orthonormal basis of $L$. Since the output transformations commute with $Q^{1/2}$, the same reduction gives (R.144) for $A$, using the right Kraus factor $O^T$.
+
+At $a=\beta=1/2$, the stabilizer on $U$ is the entire auxiliary $U(2)$; applying $W^\dagger$ sends $W$ to $I_2$, giving $\theta=0$. The independent sign on $h$ supplies no plane coordinate. Both endpoints of the angle interval are included above; the coincident positive eigenvalues at $\theta=\pi/4$ require no division by their difference. Beta zero is outside this whitening argument.
+
+The two columns in (R.144) have disjoint supports and squared lengths $ac^2+\beta s^2$, $as^2+\beta c^2$, giving the spectrum. In the orthogonal blocks $(b_1,g_2)$ and $(g_1,b_2)$, $B-JBJ^T$ is
+
+$$
+\begin{pmatrix}a\cos2\theta&\sqrt{a\beta}\sin2\theta\\
+\sqrt{a\beta}\sin2\theta&-\beta\cos2\theta\end{pmatrix}
+\oplus
+\begin{pmatrix}-a\cos2\theta&\sqrt{a\beta}\sin2\theta\\
+\sqrt{a\beta}\sin2\theta&\beta\cos2\theta\end{pmatrix}.
+$$
+
+Each determinant is $-a\beta<0$, and the two blocks have opposite spectra. The eigenvalue difference of either block is $\sqrt{(a-\beta)^2\cos^2(2\theta)+4a\beta}$; taking the half trace norm proves (R.146). The angle condition can be met exactly when $(1-2\beta)^2\geq\beta$, equivalently $(1-\beta)(1-4\beta)\geq0$. At $\beta=1/4$ only $\theta=\pi/4$ attains it. For $a>\beta$ and $\theta>0$, the larger positive eigenvalue is strictly below $a$ and the smaller strictly above $\beta$, proving the nonconjugacy assertion. The spectral calculation extends the already-owned instance (R.121)–(R.122); the additional assertion is its coverage of every rank-two plane. The witness itself is still (R.105). $\square$
+

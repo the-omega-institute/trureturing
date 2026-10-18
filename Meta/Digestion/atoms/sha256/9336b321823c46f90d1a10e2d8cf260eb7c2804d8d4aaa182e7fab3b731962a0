@@ -1,0 +1,55 @@
+### 95.4. Complete 19-dimensional lift and the auxiliary 18-dimensional algebra
+
+Define
+\[
+ f_{19}(Y)=f_Y(Y)/(Y-y_B),\qquad
+ \mathcal A_{19}=K[Y]/(f_{19}).
+\tag{95.5}
+\]
+This quotient removes exactly B. It is reduced, and every original
+strict generic ray in the selected three-distinct upper-channel chart
+maps to (95.5). The other channel is allowed to be two-valued.
+
+Reconstruct by (95.4) and the combined pivot, then by the original formulas
+for \(G,C,D,Y_c,q,e,\bar e\). Physical input coefficients are
+\(G/\kappa,C/\kappa,D/\kappa\), with \(|\kappa|^2=R\).
+The complete unit inventory in (95.5) is
+
+~~~text
+aY+aD:36; sigma:42; beta:86; barbeta:61;
+Yc*barYc:48; barC*D:46; C*barD:94;
+y:111; C:59; barC:11; D:54; barD:55; Yc:99; barYc:42;
+q:33; e:114; bare:87; F8:10; G:130; barG:14; delta:11.
+~~~
+
+Here \(\delta=q^2(3-4(e+\bar e))+6q-1\). The original complex and norm
+identities hold on (95.5). All original strict inequalities and the six
+upper-root orders are retained when selecting physical points. The norm
+of \(\Delta\) is zero; it is never inverted on (95.5).
+
+For clarity about specialization, let \(\mathcal O\) be the local ring
+of \(\mathbb Q(i)[b]\) at \((Q)\), with the finitely many certified scalar
+and source units inverted. The full source/radial construction is finite
+free over \(\mathcal O\). Localizing it at the original lift denominators,
+including \(a_Y+a_D\), is torsion-free over \(\mathcal O\).
+Every original identity valid over the generic fraction field therefore
+holds in this localization, and hence on its special fibre. That special
+fibre is (95.5), because B is the only removed point and every denominator
+above is a unit on (95.5). This proves the characteristic-zero original
+identities on (95.5). It does not pretend that the odd-dimensional quotient
+(95.5) is a finite flat generic-parameter family.
+
+The exact point C has \(\Delta=0\); the good reduction satisfies
+\(\gcd(f_{19},\Delta)=Y-42\). Subresultant rank gives degree at most one
+in characteristic zero, while C gives degree at least one. Thus C is the
+unique \(\Delta\)-zero of (95.5). For an auxiliary rank argument only, set
+\[
+ \mathcal A_{18}=K[Y]/\bigl(f_Y/((Y-y_B)(Y-y_C))\bigr).
+\tag{95.6}
+\]
+It is reduced and is preserved by the radial involution \(\iota\), because
+B and C are radial partners. All lift units and \(\Delta\) are units in
+(95.6). The exact normalized Theta transport therefore holds in (95.6), by
+localizing the full algebra also at the radial transforms of the lift
+units. There is no Theta-invariance claim for (95.5).
+

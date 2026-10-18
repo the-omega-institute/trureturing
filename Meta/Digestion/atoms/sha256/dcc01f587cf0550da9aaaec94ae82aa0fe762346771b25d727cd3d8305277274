@@ -1,0 +1,17 @@
+**Assumption 2.2 (supplied entire-cylinder attained dual).** In addition
+to Assumption 1.1, fix $\lambda>0$ and a finite $y\in\mathbb R^8$
+such that
+
+$$
+d(x):=y\cdot\Gamma(x)-g_t(x)-\lambda k(x)\ge0
+\quad(x\in X),\qquad y\cdot B=C_t(\lambda).
+\tag{FC.5}
+$$
+
+The maximum in (FC.4) is attained by GC Proposition 12.2's compact
+vector hull. Assumption 2.2 is attained dual data, including global
+nonnegativity, rather than a claim that finite dual data exist at
+every boundary request. RC §68 supplies dual attainment only in its
+own strict-interior scope. The results below apply at $t=t_0$ or
+another boundary only if (FC.5) is separately supplied there.
+

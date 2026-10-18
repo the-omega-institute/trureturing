@@ -1,0 +1,32 @@
+**定义 152.2（原树、局部组成及位序）。** 采用[《FIB 关系延拓几何》，版本2bf48d5375954170bae475578dc4d93ce77f8384，定义1.1、1.3、2.1及2.4](https://github.com/the-omega-institute/trureturing/blob/2bf48d5375954170bae475578dc4d93ce77f8384/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)的自由有序树、替换和零贡献约定。令
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle=\gamma,\qquad
+c(\alpha)=\binom10,\quad c(\beta)=\binom01,\quad c(\gamma)=\binom11,
+$$
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\ell=(2,3),\qquad c(\rho t)=Mc(t).
+$$
+
+三个位置按低到高写为 $(b_0,b_1,b_2)$，只允许 $b_0b_1=b_1b_2=0$。局部贡献是整数列向量
+
+$$
+d_w=b_0c(\alpha)+b_1c(\beta)+b_2c(\gamma)
+=\binom{b_0+b_2}{b_1+b_2},\qquad q_w=\ell d_w.
+$$
+
+沿用[前卷《Auric · FIB-ATOM 续篇：二元来源的三维二阶关系完成》，版本b9b4a62b69908c14f2b3ceb07204620db61aa862，定义24.1、命题24.2](https://github.com/the-omega-institute/trureturing/blob/b9b4a62b69908c14f2b3ceb07204620db61aa862/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)的表，按本批顺序记为
+
+| 152 的模式 | 低到高三位 | 局部组成 $d_w$ | 零层数量 $q_w$ |
+| --- | --- | --- | --- |
+| $\mathrm{null}$ | $000$ | $(0,0)^T$ | $0$ |
+| $[2]$ | $100$ | $(1,0)^T$ | $2$ |
+| $[3]$ | $010$ | $(0,1)^T$ | $3$ |
+| $[5]$ | $001$ | $(1,1)^T$ | $5$ |
+| $[25]$ | $101$ | $(2,1)^T$ | $7$ |
+
+这里 $[25]$ 是两端同时选中，数量为 $2+5$，不是乘积 $2\cdot5$ 或十进制二十五。三个单选、允许的端点联合及不选，描述同一个局部配置关系的五个结果；不引入五种本体。$\gamma=\rho^2\alpha$ 是有序配对树，不把它认作新的原子叶。跨窗口合法性另由接缝决定，局部表本身尚未给出全部合法串接。
+

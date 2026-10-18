@@ -1,0 +1,90 @@
+**Theorem 9.1 (Necessary $8/9$ growth, with all budget regimes).** Keep exactly the source of Section 2 and one fixed $0<\alpha<1/2$. Suppose that for every sufficiently small $s>0$ there is a finite integer budget $M(s)\ge2$ and an observer
+
+$$
+\mathcal A_s\in\mathfrak A_{M(s)}(e^{-s},\alpha).
+\tag{9.1}
+$$
+
+Thus both selected risks, both almost-sure stops and both finite pointwise means hold at every such $s$. Suppose additionally that one fixed $i_\star\in\{0,1\}$ and one fixed $0<C_T<\infty$, independent of $s$, satisfy
+
+$$
+\mathbb E_{i_\star,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}
+\quad\text{for every sufficiently small }s.
+\tag{9.2}
+$$
+
+Put
+
+$$
+K=\frac{b\,9!}{4B\delta C_T}>0,\qquad
+c_T=\min\{1,K^{1/9}\}>0,\qquad b=1-2\alpha.
+\tag{9.3}
+$$
+
+Then eventually
+
+$$
+M(s)\ge2+\frac{b}{2\delta}
+                \left(c_Ts^{-8/9}-1\right).
+\tag{9.4}
+$$
+
+In particular, once also $c_Ts^{-8/9}\ge2$,
+
+$$
+M(s)-2\ge\frac{bc_T}{4\delta}s^{-8/9},
+\tag{9.5}
+$$
+
+and hence $M(s)=\Omega_{H_c,\alpha,C_T}(s^{-8/9})$. The opposing source retains its risk, almost-sure stop and finite pointwise mean, but needs no cubic upper bound.
+
+Proof. Intersect the eventual neighborhoods of (9.1) and (9.2) with the single neighborhood $(0,s_\alpha)$ of Theorem 8.1. At each $s$ in that intersection take its actual finite budget and actual observer, and apply the affine-budget lower bound to the fixed target $i_\star$. Write
+
+$$
+X=X_{M(s)}=1+\frac{2\delta(M(s)-2)}b\ge1.
+\tag{9.6}
+$$
+
+Comparing (8.4) to (9.2) and multiplying only positive factors gives
+
+$$
+C_Ts^{-3}\ge\frac{b\,9!}{4B\delta}
+                    \frac{s^{-11}}{X^9\max\{1,sX\}},
+\qquad
+X^9\max\{1,sX\}\ge Ks^{-8}.
+\tag{9.7}
+$$
+
+There are two exhaustive cases at this selected $s$.
+
+If $sX\le1$, the maximum is one, and the increasing ninth root gives
+
+$$
+X\ge K^{1/9}s^{-8/9}\ge c_Ts^{-8/9}.
+\tag{9.8}
+$$
+
+This case is equivalently
+
+$$
+M(s)-2\le\frac{b}{2\delta}(s^{-1}-1).
+\tag{9.9}
+$$
+
+It includes equality $sX=1$; it is a case of the proof, not a restriction imposed on the family.
+
+If $sX>1$, then immediately $X>s^{-1}$. Throughout the chosen neighborhood $s<1$, so
+
+$$
+X>s^{-1}\ge s^{-8/9}\ge c_Ts^{-8/9}.
+\tag{9.10}
+$$
+
+This case is equivalently the strict reverse of (9.9), and already forces the required growth without dropping the maximum from (9.7). It includes every arbitrarily large value of $sX$ and imposes no bound on $sL_{M(s)}$. The family may switch between the two cases at any sequence of parameters.
+
+Thus in both cases $X\ge c_Ts^{-8/9}$ with the same constant. Substitute (9.6) and divide by $2\delta/b>0$ to obtain (9.4). Since $c_T>0$, eventually $c_Ts^{-8/9}\ge2$, and then $c_Ts^{-8/9}-1\ge(c_T/2)s^{-8/9}$. This proves (9.5) and the stated order.
+
+The source, risk, target and cubic constant are fixed throughout. Only the machines and their finite budgets may vary with $s$, without regularity. The proof uses the target inequality of Theorem 8.1 at each actual $s$ and makes no fixed-budget limiting interchange. The opposing cubic mean was never assumed; its separate compliance conditions remain those in (9.1). $\square$
+
+Pointwise finiteness of a mean does not by itself supply the fixed eventual $C_T$ in (9.2). Nor does the theorem allow a target label changing with $s$ or a risk allowance tending to $1/2$. Such alterations are different hypotheses. The budget counts all possible persistent configurations of the selected machine, not an expectation or a count along typical histories.
+

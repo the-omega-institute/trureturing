@@ -1,0 +1,13 @@
+**Lemma 3.2 (the only zero-length information opportunities).** Every serial service can be effectively replaced by a pointwise dominating one, with the same output and pointwise termination, for which
+
+$$
+ q(u)\le\ell(u)+s_N,\qquad s_N=\max(0,2-N).
+\tag{JRF.3.3}
+$$
+
+This replacement does not increase updates and can be applied after Theorem 3.1.
+
+Proof. Simulate the given control. For a repeated request to the same physical address at the same actual epoch, use its already acquired literal value locally. The register is unchanged between such reads; the epoch is part of the cache key. The first new read at that pair is still an actual paid read. Root replies at every epoch at least two are branch for all sources, by (JRF.2.4), so simulate these without calling the source at all. Root replies at epochs zero and one can each require at most one actual read; only epochs at least $N$ are available, giving at most $s_N$. All other actual reads have nonempty addresses, and hence each contributes at least one to $\ell$. This proves (JRF.3.3).
+
+The simulation supplies the same replies to the original control. It deletes only actual reads, preserves the actual updates, and preserves each finite original execution. Skipped reads are not inserted into the actual receipt list. An epoch-zero root read determines the epoch-one root reply as well, but that additional saving is unnecessary for the bound. $\square$
+

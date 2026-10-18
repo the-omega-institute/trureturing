@@ -1,0 +1,44 @@
+## 10. Fisher 几何中的“最优路径”与动力学路径
+
+平方根嵌入
+
+\[
+p\longmapsto 2(\sqrt{p_0},\sqrt{p_2},\sqrt{p_3},\sqrt{p_5},\sqrt{p_{25}})
+\]
+
+把 Fisher 度量变成正象限球面上的欧氏度量。固定 §8 的正底面条件律 \(q\)，只沿 \(p=(rq_{00},rq_{10},1-r,rq_{01},rq_{11})\) 的同一径向射线改变 \(0<r<1\) 时，取径向坐标
+
+\[
+\theta=2\arcsin\sqrt r,
+\]
+
+有
+
+\[
+ds_{\mathrm{radial}}^2=d\theta^2.
+\]
+
+在这条固定 \(q\) 射线上，取 \(T>0\) 和端点 \(\theta_0,\theta_1\in(0,\pi)\)。可容许径向路径要求其提升 \(\theta:[0,T]\to(0,\pi)\) 绝对连续；径向 Fisher 二次作用为
+
+\[
+\mathcal A_{\mathrm{radial}}[\theta]=\frac12\int_0^T\dot\theta^2\,dt,
+\qquad
+\mathcal A_{\mathrm{radial},\min}=\frac{(\theta_1-\theta_0)^2}{2T}.
+\]
+
+有限作用要求 \(\dot\theta\in L^2([0,T])\)，否则在绝对连续类中取 \(+\infty\)。由 §7 的同一积分下界与取等条件，唯一作用极小路径是 \(\theta\) 的仿射插值；它以常速实现径向最短长度 \(|\theta_1-\theta_0|\)，并给出
+
+\[
+r(t)=\sin^2\frac{\theta(t)}2.
+\]
+
+若端点的底面条件律 \(q\) 改变，则须使用 §8 的完整 Fisher 度量 \(dr^2/[r(1-r)]+r\,ds^2_{F,\Delta^3}(q)\) 并指定该度量的可容许绝对连续路径，不能使用此固定射线极小结论。
+
+它一般不是指数径向捕获
+
+\[
+r(t)=r_0e^{-\mu t}.
+\]
+
+指数捕获是开放系统的生成元轨迹，质量作用流是 Onsager 自由能梯度流，Fisher geodesic 是统计几何的最短路径。三者回答不同的优化问题，必须分别标记。
+

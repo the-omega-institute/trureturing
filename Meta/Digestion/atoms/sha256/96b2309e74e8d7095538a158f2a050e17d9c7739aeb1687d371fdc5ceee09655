@@ -1,0 +1,12 @@
+**Theorem 395.1.** The quantitative strict inequality is
+
+    E:=theta_r+theta_o+2*beta_p
+      >4*pi/3 + 3/(m+2) - 4/m^2
+      >4*pi/3.                                             (395.1)
+
+This theorem holds over the entire range m>3. It requires neither
+high-label upper gaps nor the source-flat
+condition, the special tau, or tau's angle budget. It does not claim the
+stronger individual estimates theta_r+beta_p>2*pi/3 or
+ theta_o+beta_p>2*pi/3. No coordinatewise monotonicity of E is used.
+

@@ -1,0 +1,61 @@
+**推论 C-107.3（锐利的独立实统计量数）。** 以 (C107.2) 在相应方向空间上的秩
+计独立新增实统计量，$\mathfrak D$ 的完整分类恰需秩 $20$；
+在 $\mathfrak F$ 中已知原 $Q$ 约束时，新增菜单恰需在 $V_Q$ 上有秩 $19$。
+这两个数都可由抽象 Hermitian 菜单达到。
+
+证明。十个无序匹配对各有任意复数 $X_{sa}$，下三角由共轭确定，对角为零，故
+
+$$
+\dim_{\mathbb R}V=2\binom52=20.
+\tag{C107.4}
+$$
+
+令 $x_{sa}=\operatorname{Re}X_{sa}$，按 $s<a$ 的模式顺序，
+$J^\dagger\Omega=(1,-1,0,-1,1)^T/2$ 给
+
+$$
+\ell_Q(X)=\tfrac12(
+ x_{0,13}+x_{1,3}-x_{0,1}-x_{0,3}-x_{1,13}-x_{3,13}).
+\tag{C107.5}
+$$
+
+取 $X=|0\rangle\langle13|+|13\rangle\langle0|$ 即得 $\ell_Q(X)=1/2$，
+所以它确为非零实线性约束，$\dim_{\mathbb R}V_Q=19$。
+秩–零化度与 C-107.2 给必要性和充分性；列出 $m$ 个值只给秩不超过 $m$，
+重复、依赖或在纤维上恒定的期望不计新方向。
+
+具体地，设 $K_{sa}=|e_s\rangle\langle e_a|$。全部十对的两个 Hermitian 算子
+
+$$
+H^R_{sa}=K_{sa}+K_{sa}^\dagger,\qquad
+H^I_{sa}=i(K_{sa}-K_{sa}^\dagger)
+\tag{C107.6}
+$$
+
+在 $\Gamma=JCJ^\dagger$ 上的期望依次为
+$2\operatorname{Re}c_{sa}$、$2\operatorname{Im}c_{sa}$，因为
+$\operatorname{tr}(K_{sa}\Gamma)=c_{as}=\overline{c_{sa}}$。
+这二十个实坐标达到 (C107.4)。在 $\mathfrak F$ 上可删去
+$H^R_{0,13}$：保留其余十九坐标，由 (C107.5) 的零值恢复
+
+$$
+\operatorname{Re}c_{0,13}=
+\operatorname{Re}c_{0,1}+\operatorname{Re}c_{0,3}
++\operatorname{Re}c_{1,13}+\operatorname{Re}c_{3,13}
+-\operatorname{Re}c_{1,3}.
+\tag{C107.7}
+$$
+
+故十九也是可达下界；这里的人口与原 $Q$ 已给定，不计入新增预算。证毕。
+
+这些数计的是精确期望的独立实方向，既不是测量设置数，也不是试验次数。
+例如一个 $k$ 结果的归一化 POVM 完整概率律只有至多 $k-1$ 个独立差方向；
+若只用这一个 POVM 的完整律补足人口纤维，分别须有 $k\ge21$ 或 $k\ge20$。
+它可以只有一个设置。抽象达到性也不要求把每个坐标作为一个独立设置：
+取相应方向空间的一组 Hermitian 对偶代表 $B_1,\ldots,B_n$，
+在 $\mathcal E$ 上令 $E_j=I_5/(n+1)+\delta B_j$（$1\le j\le n$）、
+$E_{n+1}=I_5/(n+1)-\delta\sum_jB_j$，充分小的 $\delta>0$ 保证全部效果非负且和为 $I_5$。
+在 $\mathcal E^\perp$ 上把恒等效果并入最后一项，就得到原空间上 $n+1$ 结果的 POVM；
+在人口纤维上其完整律的秩为 $n$。这是上述 Proposition 1 的有限维正性构造的受限应用，
+不供应实际装置、有限样本精度或这些效果的原生可执行性。
+

@@ -1,0 +1,10 @@
+**Definition 2.1 (event identity and retained local records).** Within the selected prefix on $H$, let $a$ be its first zero event, $b$ its first one event, and $c$ its second zero event. Identity includes the ordinal within its marker kind, but no global position or timestamp. Thus $a$ precedes $c$. Supply two labelled discrete spatial scopes
+
+$$
+S_1=\{a,c\},\qquad S_2=\{b,c\},\qquad S_1\cap S_2=\{c\}.
+$$
+
+The two occurrences of $c$ in the records refer to the same actual event. A chronological event word $\omega$ is one of $abc,bac,acb$, corresponding respectively to selected marker words $010,100,001$. Define $r_i(\omega)$ by deleting events outside $S_i$ while preserving the order of retained events, and let $q(\omega)=(r_1(\omega),r_2(\omega))$.
+
+The records are actually acquired: initialize each to the empty word, append a completed event to every scope containing it, and hold both after the third-marker bookmark. The original completed-marker count $t$ and weight $\beta$ identify a first zero by old $t-\beta=0$, a second zero by old $t-\beta=1$, and a first one by old $\beta=0$. This gives finite causal record updates even on prefixes outside $H$, where absent identities need not appear. The receiver gets the two frozen ordered records, with their shared-event identity, and no merged delivery log, global indices, clock, or replay archive.
+

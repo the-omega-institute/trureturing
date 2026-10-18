@@ -1,0 +1,33 @@
+**Theorem 66.2 (activity of the displayed approximation families).**
+For a fixed nonzero attached rank-one $N$ and fixed rank-two $K_0$
+with $\ker K_0\subseteq\ker N$, the mixed pair
+$(\sqrt\varepsilon K_0,N)$ in JRH.30 has nonzero failure eigenvalue
+and direct-synthesis activity
+
+$$
+f_\varepsilon=\frac{\nu}{\varepsilon+\nu},\qquad
+A_\varepsilon=\log(1+\nu/\varepsilon)\longrightarrow\infty,
+\quad \nu>0.
+\tag{JRH.59}
+$$
+
+Proof. On the row space let $N=nn^\dagger$, $n_r=J^\dagger n$,
+$A=J^\dagger K_0^\dagger K_0J\succ0$ and
+$\nu=n_r^\dagger A^{-1}n_r>0$. The only nonzero eigenvalue
+of $F=(\varepsilon A+n_rn_r^\dagger)^{-1/2}
+n_rn_r^\dagger(\varepsilon A+n_rn_r^\dagger)^{-1/2}$ is
+$n_r^\dagger(\varepsilon A+n_rn_r^\dagger)^{-1}n_r$.
+The rank-one inverse identity, obtained by multiplying
+$(\varepsilon A+n_rn_r^\dagger)$ by
+$\varepsilon^{-1}A^{-1}-
+\varepsilon^{-1}A^{-1}n_rn_r^\dagger A^{-1}/(\varepsilon+\nu)$,
+gives exactly $\nu/(\varepsilon+\nu)$. JRH.56 proves JRH.59.
+In §64 both auxiliary $K_\pm$ and their attached $B_\pm$ are
+fixed, so the corresponding $\nu_\pm$ are fixed positive numbers.
+The same holds for all four mixed branches in §65. The maximum of
+their direct activities diverges as well. All other branches are pure
+live; generating the classical coins and selectors does not remove
+this divergence. Each individual approximant is finite, but these
+families establish no common finite budget and no exact quantitative
+$(s,A)$ frontier. $\square$
+

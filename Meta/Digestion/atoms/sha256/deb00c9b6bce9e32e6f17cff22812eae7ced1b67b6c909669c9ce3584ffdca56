@@ -1,0 +1,49 @@
+**Theorem 7.1 (Separate compact minima and entire-tail independence).**
+For $C=N,O$, let $\Delta_C^9$ be its own complete nine-bit catalog
+simplex and put
+
+$$
+\begin{aligned}
+f_C(\lambda)=\max\bigl(&
+\{1-a_n-p_w(0),\ a_n-p_w(n),\ 1-p_w(0)-p_w(n):
+                  w\in\Omega_n,\ n\le9\}\\
+&\cup\{1-p_+(0)\}\bigr),\qquad
+m_C=\min_{\lambda\in\Delta_C^9}f_C(\lambda).
+\end{aligned}
+$$
+
+Each minimum exists, equals its own original attained minimum and
+depends only on $a_1,\ldots,a_9$ among all continuations in 1.2.
+Its positive closed caps are feasible exactly when $c\ge m_C$.
+Counted completion gives $m_N\le m_O$.
+
+Proof. Both catalogs are finite, retaining every independent $N$
+label choice. A finite maximum of continuous affine functions has a
+minimum on its compact simplex, separately for each class.
+The complete $253$ certificate on the first eight coordinates gives
+$m_C\ge5\tau+d_0\ge5\tau>0$. The explicit common upper laws give
+$m_C\le331\tau/64\le331/1536<1$.
+
+For any original competitor, 2.2 supplies a complete nine-bit law
+at every positive met cap $c\le1$. Decreasing caps to its error
+shows that $m_C$ is at most that error; at error one use $m_C<1$.
+Conversely, execute a finite minimizer in its own class by one
+uniform seed partition of complete tables. In $N$, acquire its
+whole preselected schedule and use its independent cell output; in
+$O$, execute its increasing schedule with the prescribed stop.
+Low-word rows give cap $m_C$ for actual $n\le9$. For every
+actual $n>9$ the exact tail error is
+
+$$
+\max\{1-p_+(0),a_n\}\le m_C,
+$$
+
+since the positive row holds and $a_n\le5\tau\le m_C$.
+This finite minimizer is therefore an original attainer.
+The two comparisons establish equality of finite and original minima,
+separately, and the proof works for every allowed entire continuation.
+Its objective uses only the first nine amplitudes, proving tail
+independence. The attainer meets every larger cap, and a smaller cap
+contradicts minimality. Counted completion gives the class inequality;
+compactness gives no reverse class comparison. $\square$
+

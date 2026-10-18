@@ -1,0 +1,49 @@
+**Theorem 52.3 (phase marginal, support compression and a single projection).** For every complex unit $\psi\in\mathcal C$, the environmental marginal $Q_\psi$ of $x_\psi$ satisfies
+
+$$
+0\preceq Q_\psi\preceq\Pi_S\Gamma(|\psi\rangle\langle\psi|)\Pi_S
+\preceq aI_S,\qquad \operatorname{Tr}Q_\psi\leq1.
+\tag{S.8}
+$$
+
+For $k=1$, every such direction satisfies $r_\psi\leq\sqrt a<v$. For $k\geq2$, choose one rank-five orthogonal projection $P$ on $\mathbb C^3\otimes F$ with $PU=U$, set $D=I-P$ and write
+
+$$
+H_\psi=(\langle\psi|\otimes I_F)P(|\psi\rangle\otimes I_F),
+\qquad D_\psi=(\langle\psi|\otimes I_F)D(|\psi\rangle\otimes I_F).
+\tag{S.9}
+$$
+
+The environmental marginal of $y_\psi=(P\otimes I_E)t_\psi$ is exactly
+
+$$
+M_\psi=\sqrt\omega H_\psi^T\sqrt\omega
+=\omega-\sqrt\omega D_\psi^T\sqrt\omega,
+\qquad 0\preceq M_\psi\preceq\omega,
+\tag{S.10}
+$$
+
+and $\langle t_\psi,x_\psi\rangle=\langle y_\psi,x_\psi\rangle$. The transpose is the full transpose of the $F$ matrix in the paired eigenbases of (S.4).
+
+Proof. By (R.3), $\Gamma(|\chi_+\rangle\langle\chi_-|)=0$ and the two phase marginals $\tau,\bar\tau$ have nonzero eigenvalues $a,\beta$. In the original real environment basis, writing $\psi=p\chi_++q\chi_-$ gives
+
+$$
+\Gamma(|\psi\rangle\langle\psi|)=|p|^2\tau+|q|^2\bar\tau\preceq aI_E,
+\qquad |p|^2+|q|^2=1.
+\tag{S.11}
+$$
+
+Changing environment coordinates transports both states and their conjugation together; the operator inequality survives without a new entrywise-bar hypothesis. For any environment ket $e$, the marginal quadratic form after applying $U$ is bounded by the one before applying $U$, since $I_5-U^\dagger U\succeq0$. Compressing this inequality to $S$ proves (S.8). It leaves (S.5) unchanged because $t_\psi$ is supported on $S$, and does not replace the actual encoder by a truncated channel.
+
+For $k=1$, (S.8) gives $\|x_\psi\|^2\leq a$ and $\|t_\psi\|=1$, hence $r_\psi\leq\sqrt a$. To see $a<T$, put $u=\sqrt a\in[1/\sqrt2,1)$ and use $1+u-2u^2=(1-u)(2u+1)>0$. No rank-five padding is used in dimension three.
+
+For $k\geq2$, $3k\geq6$ and $\operatorname{rank}U\leq5$, so complete its range to a five-dimensional subspace and take $P$. This one projection works for all inputs; equality $P=UU^\dagger$ is unnecessary. In tensor coordinates $(m,i)$, the $(i,j)$ entry of the environmental marginal of $y_\psi$ is
+
+$$
+\sqrt{\lambda_i\lambda_j}\sum_{m,l}\bar\psi_m\psi_lP_{(m,j),(l,i)}
+=\sqrt{\lambda_i\lambda_j}(H_\psi)_{ji}.
+\tag{S.12}
+$$
+
+Here $P^\dagger P=P$ was used in the partial trace. This proves the full transpose with the same complex input $\psi$. It is neither a conjugation of $\psi$ nor the reference-density transpose $q^T$ of (R.27). Since $0\preceq H_\psi\preceq I_F$, (S.10) is positive and bounded by $\omega$. Finally $PU=U$ fixes $x_\psi$ and proves the overlap identity. $\square$
+

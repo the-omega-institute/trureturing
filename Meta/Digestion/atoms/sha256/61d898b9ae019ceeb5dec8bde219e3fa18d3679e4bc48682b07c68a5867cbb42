@@ -1,0 +1,16 @@
+**Definition 5.2 (three different words at a microcut).** For a full actual
+primitive history $h$ from valid boot, let $E(h)$ be its ordered completed
+semantic events, committed as in §4. Let $A_P(h)$ be the event word decoded
+from complete sealed producer rows. Let $P(h)$ be empty unless one event has
+committed and its row has not sealed; in that phase it is the singleton event
+with its complete retained request, result and counter interpretation. A
+request admitted but not yet committed lives in a separate busy-work field
+$B(h)$ and contributes nothing to $E(h)$ or $P(h)$.
+
+The archive coordinate includes actual producer, actor, mailbox and verifier
+intervals, their physical partial contents, and their seal/copy phases. A
+receiver's readable prefix is only the contiguous prefix whose complete
+framing/material has sealed there. An incomplete destination is unavailable.
+A copied row preserves its origin and is not a new source event. No equality
+between all archive lengths is imposed during transit.
+

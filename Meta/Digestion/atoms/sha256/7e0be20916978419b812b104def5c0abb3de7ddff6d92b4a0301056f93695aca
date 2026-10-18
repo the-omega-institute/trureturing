@@ -1,0 +1,40 @@
+**推论 449.5（递归次数在原临界尺度上的准确成本）。** 对整数 \(m\ge0\)，
+取同一极值递归的分布函数
+
+\[
+\mathsf F_m(u)=g(u)\left[\frac{\mathcal B(1+u)}b\right]^m.
+\]
+
+其对数导数的规范算术读出为
+\(\psi_m(t)=\psi(t)+mC_\beta(t)\)。记相应完整尾为 \(I_m(x)\)。
+则对每个 \(x>1\) 和整数 \(m\ge0\)，精确有
+
+\[
+I_m(x)-I_\psi(x)=m[I_{\mathsf F}(x)-I_\psi(x)],
+\]
+
+\[
+\boxed{
+\sqrt{x}\log x\,[I_m(x)-I_\psi(x)]
+=\frac{m}{\sqrt{x}}
+\left[\kappa+\epsilon_\beta(x)\right],
+\qquad
+|\epsilon_\beta(x)|\le M_\alpha x^{-\alpha}.
+}
+\tag{HT.19}
+\]
+
+若 \(m=m(x)\) 变化，每个 \(x\) 先固定该整数，在整个积分尾 \(t\ge x\)
+上使用同一个 \(m(x)\)。于是 \(m=o(\sqrt{x})\) 时临界差趋零；
+若 \(m/\sqrt{x}\to a<\infty\)，临界差趋于 \(a\kappa\)；
+若 \(m/\sqrt{x}\to\infty\)，临界差趋于 \(+\infty\)。
+
+**证明。** 取同一 CDF 乘积的对数导数，新增项精确为
+\(m\mathcal B'/\mathcal B\)，所以自然整数系数新增 \(mc_n\)。
+全部尾积分由固定 \(m\) 的（HT.6）支付。完整线性身份与（HT.12）
+给（HT.19），三种极限随即成立。证毕。
+
+增长到平方根次数的概率递归可以产生临界量级的新增读出，但原
+\(I_\psi\) 必须扣回（HT.19）的同一完整补偿。因此该新增量不成为
+原 Robin 余量的免费储备。
+

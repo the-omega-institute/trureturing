@@ -1,0 +1,29 @@
+**Definition 4.1 (a counted late cluster and its estimator).** For $n\ge2$
+put $m=n-1$, $h_n=\tau/n^3$ and $\delta_n=h_n/m$. Query at
+
+$$
+T_j=\tau-h_n+(j-1)\delta_n,\qquad j=1,\ldots,n.
+\tag{4.1}
+$$
+
+Thus the first positive query costs one baseline and the remaining
+$m$ queries give $m$ short intervals. Every finite spacing is positive,
+$T_1>0$ and $T_n=\tau$. From the original wrapped values form
+
+$$
+\begin{aligned}
+z_j&=\operatorname{Arg}\left(e^{iv_{T_j}}\overline{e^{iv_{T_{j-1}}}}\right)
+\in[-\pi,\pi),\qquad 2\le j\le n,\\
+S_n&=\frac1{m\delta_n}\sum_{j=2}^n z_j^2,\\
+F_\kappa(s)&=a_\kappa^{-1}\left(
+\operatorname{clip}_{[a_\kappa(l),a_\kappa(u)]}(s)\right),
+\qquad \widehat K_{n,\kappa}=F_\kappa(S_n).
+\end{aligned}
+\tag{4.2}
+$$
+
+The inverse exists by (1.11) and is taken into $[l,u]$. This estimator
+is Borel and bounded. The long first interval supplies only the late
+wrapped baseline; its winding is immaterial to the group differences.
+For $n=1$ query only $\tau$ and use, for example, the prior mean.
+

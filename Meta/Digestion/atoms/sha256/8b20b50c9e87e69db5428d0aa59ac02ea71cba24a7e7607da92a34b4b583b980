@@ -1,0 +1,39 @@
+**Proposition 322.2 (The specified direct $m=7$ residual extraction fails).**
+For the $t>0$ family of 321.1, the direct residual extension of
+[173–174](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_V.md),
+with $m=7$, $L=9$, cannot supply the stated profile at cap $E_*$
+by extracting its core as in 174.1. This excludes that construction
+only, not every previous supplier or arbitrary replacement law.
+
+**Proof.** The residuals required by those fixed extension equations
+are $g_8=g_9=53t/64$. The reused identities 173.4 give
+
+$$
+W=\frac{9g_8+g_9}{3}=\frac{265t}{96},\qquad
+E_{\rm res}=\frac{6g_8+g_9}{3}=\frac{371t}{192}.
+\tag{322.3}
+$$
+
+Here $W\le265/2304<1$ and
+$E_*-E_{\rm res}=5\tau-169t/96\ge311\tau/96>0$.
+The uniquely extracted core would be
+$A_i=(a_i-W)/(1-W)$, $e_0=(E_*-E_{\rm res})/(1-W)$.
+But its reused necessary $Y_2$ reading, from 299.1, is
+
+$$
+A_2+4A_3+5A_4+5A_5+5A_6+4A_7-1-40e_0
+ =\frac{665t/96}{1-W}>0.
+\tag{322.4}
+$$
+
+To check the identity, its numerator before division is
+$[a_2+4a_3+5a_4+5a_5+5a_6+4a_7-1-40E_*]
+-23W+40E_{\rm res}$.
+The bracket is $-55t/8$, and substituting (322.3) leaves
+$665t/96$. Thus the extracted core cannot have any complete
+feasible $N$ allocation, and in particular cannot be a stopped
+core for that direct extension. At $\tau=t=1/24$, its reading
+is $665/2039>0$. This argument is a necessary-core obstruction to
+the specified extraction, not a classification of all old
+constructions. $\square$
+

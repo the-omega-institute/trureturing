@@ -1,0 +1,19 @@
+**Definition 57.6 (finite weighted identification on the matched positive family).** A positive-identification decision tree uses only original actual address replies, has no repeated address on a path, and has a terminal label $V\in\mathcal P$ which must be correct when its actual source is positive. It is a public finite diagnostic tree, not an acquired tree identifier or a new task required on negatives. For a query at $u$ its weight on $V$ is
+
+$$
+\omega_V(u)=\mathbf1_{r_V(u)\ne\alpha}.
+\tag{57.13}
+$$
+
+Let $E_h$ be the minimum worst positive sum of these weights. It is sufficient to use the finite union of positive node addresses: elsewhere every positive replies absent. Uniformly constant replies can be removed for identification. For a nonempty candidate set $S$ put $e(S)=0$ when $|S|=1$ and otherwise
+
+$$
+e(S)=\min_{u\ \mathrm{splits}\ S}\
+\max_{y:S_y\ne\emptyset}
+\left(\mathbf1_{y\ne\alpha}+e(S_y)\right),
+\quad S_y=\{V\in S:r_V(u)=y\}.
+\tag{57.14}
+$$
+
+The minimum ranges over allowed addresses with at least two realized replies. This is the ordinary finite decision-tree recurrence with source-dependent path weights. It counts every non-alpha reply, including $\beta$, branch and absence; it is not an alpha-only query budget. At $h\ge H$ the candidates are distinguishable, the recurrence is finite, $E_h=e(\mathcal P)$, and $E_h=E_H=E_\infty$.
+

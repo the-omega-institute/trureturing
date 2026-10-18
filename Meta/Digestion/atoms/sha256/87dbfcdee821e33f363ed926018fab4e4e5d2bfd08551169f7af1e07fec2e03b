@@ -1,0 +1,93 @@
+**Theorem 2.2 (Containment on the original TP slice).** Let
+$\Delta(X)=\operatorname{tr}(X)I_5/5$ and
+$\chi_*=I_O\otimes I_I/25=\chi(x_*)$, with
+$M_* =\tau\tau^T/5$ and $\eta_*=0$. Then
+
+$$
+\mathcal F\subseteq\mathcal R_n^{\rm P}\subseteq\mathcal R_n.
+\tag{2.4}
+$$
+
+For $\chi\in\mathcal R_n$, the state
+$\chi_p=(1-p)\chi+p\chi_*$ belongs to $\mathcal F$ whenever
+$5/(n+5)\le p\le1$. For $\chi\in\mathcal R_n^{\rm P}$ it
+belongs to $\mathcal F$ whenever $p_n^{\rm P}\le p\le1$, where
+
+$$
+\begin{gathered}
+p_n^{\rm P}=\frac58g_n,\qquad g_n=1-\zeta_n,\\
+\zeta_n=\text{largest zero of }
+\begin{cases}
+P_{n/2+1}^{(3,0)},&n\text{ even},\\
+P_{(n+1)/2}^{(3,1)},&n\text{ odd}.
+\end{cases}
+\end{gathered}
+\tag{2.5}
+$$
+
+Here $P_j^{(a,b)}$ is the Jacobi polynomial orthogonal for
+$(1-y)^a(1+y)^b$ on $[-1,1]$. Both repairs preserve the exact
+input marginal $I_5/5$.
+
+Proof. Write a point of $\mathcal F$ as
+$\chi=\sum_fq_f a_fa_f^T\otimes b_fb_f^T$, where the vectors
+are real unit vectors, $q_f\ge0$, and $\sum_fq_f=1$.
+Then
+
+$$
+\Omega=\sum_fq_f b_fb_f^T\otimes(a_fa_f^T)^{\otimes n}
+\tag{2.6}
+$$
+
+has exactly the required marginal and Bose support. It is positive
+under partial transpose of every subcollection of output factors.
+This proves (2.4).
+
+Apply the credited NOP Theorem 2 with its $A=I$ the channel input,
+its $B=O$ the channel output, and $d=5$. Its repaired operator is
+
+$$
+\frac{n}{n+5}\chi+\frac{I_O\otimes\chi_I}{n+5},
+\qquad \chi_I=\operatorname{Tr}_O\chi=I_I/5.
+\tag{2.7}
+$$
+
+It is complex-separable and equals $\chi_p$ for $p=5/(n+5)$.
+NOP Theorem 3 under precisely (2.2) instead gives
+
+$$
+(1-5g_n/8)\chi+(g_n/8)I_O\otimes\chi_I,
+\tag{2.8}
+$$
+
+which is $\chi_{p_n^{\rm P}}$. The untouched NOP marginal is
+the channel's input marginal. Its exact identification makes the noise
+center the fixed $\chi_*$ even for nonunital channels. Section 4
+derives the positive decomposition and the Jacobi constant in (2.8)
+with an explicit finite extraction.
+
+The repaired state remains in the linear space $\mathcal W$ and
+has the same full marginal. To show real-product membership, use the
+separate-transpose invariance of this whole state. On a product
+decomposition apply $\mathcal R(X)=(X+X^T)/2$ to each factor.
+For a Hermitian positive matrix $X$, $\mathcal R(X)$ is a positive
+real symmetric matrix: its quadratic form on a real vector is that of
+$X$, and real symmetric positivity also implies complex positivity.
+Real spectral decomposition therefore replaces each product by a finite
+sum of real product projectors. The separately invariant whole state
+is unchanged. This is an algebraic operation on the decomposition;
+it does not assert complete positivity of $\mathcal R$ on arbitrary
+entangled inputs. QRC Theorem 5.2 now gives membership in $\mathcal F$.
+
+Finally $\chi_*\in\mathcal F$. If a repair is valid at $p_0<1$,
+then for $p\in[p_0,1]$,
+
+$$
+\chi_p=\frac{1-p}{1-p_0}\chi_{p_0}
++\frac{p-p_0}{1-p_0}\chi_*.
+\tag{2.9}
+$$
+
+Both coefficients are nonnegative and sum to one. This proves the
+larger-noise assertions, including $p=1$. $\square$
+

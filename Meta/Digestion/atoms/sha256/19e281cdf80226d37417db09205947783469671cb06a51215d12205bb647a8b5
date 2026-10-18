@@ -1,0 +1,15 @@
+**定理 78.8（One simultaneous all-policy domination witness）。** Every deterministic exact full-history selector policy $P$ is componentwise above one vector from 78.7:
+
+$$
+\exists\pi\ \forall a\in A,\qquad
+c_\pi(a)\le c_P(a),\quad r_\pi(a)\le r_P(a).
+$$
+
+Proof. Follow the chronological branch reporting miss after every completed selector run, only until its survivor set first becomes a singleton. Let $D$ be the distinct labels named by completed runs and $C=A\setminus D$. Every member of $C$ realizes that whole history: all completed tests miss, all partial prefixes report active, and restorations return that same member to its own root. This invariant includes discarded prefixes, repeated eliminated-label tests and extra restorations. If $|C|\ge2$, exactness forbids return.
+
+This branch must reach a singleton after finitely many actions. Otherwise at most $n-2$ distinct originals are ever eliminated. The finite decreasing survivor sets have an eventual intersection of size at least two, every member of which realizes the entire infinite history. Finite exact return for such a member contradicts the impossibility of returning while at least two survive. This also excludes infinite useless tests or restorations. No impossible all-miss history after elimination of every original is used.
+
+Order the first newly eliminated labels as $x_1,\ldots,x_{n-1}$ and let $x_n$ be the remaining original at the first singleton time. For $x_i$, $i<n$, its actual history agrees with the miss branch until the first completed test naming it, which reports hit on its own execution. Before that moment at least two originals were compatible, so $P$ could not already have returned. At least $i$ complete runs have then executed, costing $Li$ bits and at least $i-1$ restorations between terminal stops. Partial discarded runs, repetitions and extra restorations add nonnegative cost. Later actions cannot reduce either count.
+
+For $x_n$, the miss spine through its first singleton is an actual prefix of its execution. It includes at least $n-1$ complete runs and $n-2$ restorations, with no earlier legal return. These bounds are precisely one permutation vector, and 78.7 realizes the entire vector in the fixed machine. The argument never replaces original coordinates by successors and retains zero-weight originals. $\square$
+

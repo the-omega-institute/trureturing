@@ -1,0 +1,12 @@
+**命题 67.2（阶的锋利性及边界）。** $1/N$ 衰减阶在同一域不可提高为统一较大阶，第66.1族有
+
+$$N_k(-\log q_2)=N_kD_*/d\longrightarrow D_*\varphi^3>0.$$
+
+第66.2有理族也给 $N_k(-\log q_2)\to c_*\varphi^3$。其最早全尾截止在 $0<E\le1/2$ 满足 $J_E=\log_\varphi N_k+\log_\varphi\log(1/E)+O(1)$，常数独立于 $k$ 和此范围的 $E$，由准确幅度式及 $d\log u_k\to c_*$ 得到。第27.2、55节指数缩放族还有准确常数：按其原记号 $C_*=\log a_*$、$\tau_k=2(1+C_*)\varphi^{-k}/N_k$、正12倍数 $k$，
+
+$$N_k(-\log q_2)\longrightarrow\frac\varphi{\sqrt5}\left[2(1+C_*)\varphi^2-C_*/\varphi^2\right]>0.$$
+
+证明只需代入原准确式 $-\log q_2=\tau_kF_{k+3}-C_*\varphi^{-k-2}$，以及 $N_k\varphi^{-k}\to\varphi/\sqrt5$、$F_{k+3}/N_k\to\varphi^2$。更一般 $j\ge3$，该式为 $\tau_kF_{k+j+1}-C_*\varphi^{-k-j}$。Binet 给首项在 $\varphi^j/N_k$ 的两个正常数之间，负项与首项的比例含 $\varphi^{-2j}$ 且 $2(1+C_*)>C_*$；故对全部足够晚 $k$、全部 $j\ge3$ 有 $-\log q_j=\Theta(\varphi^j/N_k)$，同样给所述全尾截止阶。使用已发表来源式不将原来源构造重算为新增内容。这里是来源衰减／截止律，尚未声称最优保留字长或总运行时间。
+
+$d_0>1$ 是必要条件：行3的固定 $\alpha$、近单位缩叶有 $N=1$ 且收缩可任意慢。行5的 $d_0\le1$ 取固定单叶 $t=\beta$，$a=-e_3/r,b=re_1$、$1/L<r<1$，有 $\Delta=1$、记录 $(re_1,e_2,-re_3)$、$q_j=r^{F_{j-1}}$；$r\uparrow1$ 时 $N=1,-\log q_2\to0$。准确大小本身不能在这部分域给正收缩间隙。另一常用坐标制备 $(e_1/r,re_2)$ 是同一单叶 $\beta$ 族的 $SO(3)$ 像：将正向标架 $(-e_3,e_1,e_2)$ 送到 $(e_1,e_2,-e_3)$，准确记录变为 $(re_2,-e_3,re_1)$，所有范数／行列式／指数相同；它仍不同于两叶局部族。
+

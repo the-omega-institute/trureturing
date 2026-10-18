@@ -1,0 +1,267 @@
+**定理 7.2（整纤维源无界性的半开线段及解析实现）。** For every
+$(Y,z)\in\mathbb R^2$, the source projection of $\mathcal F_{Y,z}$
+is unbounded if and only if
+
+$$
+z=12Y-\frac{288}{5},\qquad
+-\frac{1788}{25}<Y\le-\frac{5268}{155}.
+\tag{7.5}
+$$
+
+For each fixed $Y$ in this half-open interval there are
+$\epsilon_Y>0$ and a real-analytic family of legal worlds
+$W_t=(P_t,g_t,d_t)$, $0<t<\epsilon_Y$, all in the same
+$\mathcal F_{Y,12Y-288/5}$, such that $(P_t)_{12}=1/t$.
+After decreasing $\epsilon_Y$, different parameters give distinct
+sources and nonproportional gains over $\mathbb R$.
+At the excluded lower endpoint the entire source projection is
+bounded. The boundedness assertion off (7.5) also holds if sources
+are allowed to be nonnegative, rank one and trace one, provided
+$u>0$. Bounds concern each fixed history, not all histories at once.
+
+**证明。** Rank one and trace one give
+$bc=a(1-a)\le1/4$, with $a\in[0,1]$ in the nonnegative
+extension. Hence an unbounded sequence of sources has a subsequence
+with $b\to\infty$ or $c\to\infty$.
+
+First suppose $c_n\to\infty$. Then $b_n\to0$,
+$u_n\to\infty$, $v_n\to1$ and $T_{4,n},T_{5,n}\to\infty$.
+Uniformly for $a_n\in[0,1]$, (7.2) gives
+
+$$
+(\gamma_{4,n},\kappa_{4,n},\gamma_{5,n},\kappa_{5,n})
+ \longrightarrow(-288,7,-960,24).
+\tag{7.6}
+$$
+
+Divide the first equation of (7.4) by $T_{4,n}>0$ and solve it:
+
+$$
+d_n=\frac{Y/T_{4,n}-\gamma_{4,n}}
+              {1/T_{4,n}+\kappa_{4,n}}
+\longrightarrow\frac{288}{7}.
+\tag{7.7}
+$$
+
+The denominator tends to $7$, justifying the division without
+assuming bounded drift. The second equation divided by $T_{5,n}$
+would now require
+$0=-960+24(288/7)=192/7$, a contradiction. This excludes this
+orientation for every fixed real $Y,z$.
+
+For $b$ large put $t=1/b$ and $h=a(1-a)$. Define
+
+$$
+\begin{gathered}
+U=1+ht^2,\quad V=1+t,\quad W=2+t+ht^2,\\
+A=1+(1+a)t+ht^2,\qquad B=3+(2-a)t+ht^2,\\
+G_4=96/U-288/V+(1248/5)/W,\\
+G_5=360/U-960/V+624/W,\\
+K_4=1+t(-4/U+6/V-4/W),\\
+K_5=4+t(-15/U+20/V-10/W),\qquad C=t+AK_4.
+\end{gathered}
+\tag{7.8}
+$$
+
+Then $u=U/t$, $v=V/t$, $u+v=W/t$, $T_4=A/t$,
+$T_5=B/t$, $\gamma_i=tG_i$ and $\kappa_i=K_i$.
+At $t=0$, for every $a\in[0,1]$,
+
+$$
+(U,V,W,A,B,K_4,K_5,C)=(1,1,2,1,3,1,4,1).
+\tag{7.9}
+$$
+
+All these rational functions extend real-analytically to a
+neighborhood of $[0,1]\times\{0\}$. Compactness gives a common
+strip on which their denominator factors and $C$ stay away from
+zero. In particular the first equation of (7.4), for every
+compatible source in that strip with $t>0$, is equivalent to
+
+$$
+d=tR_Y(a,t),\qquad R_Y=\frac{Y-AG_4}{C}.
+\tag{7.10}
+$$
+
+Substitution into the other equation gives the exact function
+
+$$
+z=Z_Y(a,t),\qquad
+Z_Y=BG_5+(t+BK_5)R_Y.
+\tag{7.11}
+$$
+
+No large-$b$ branch is omitted: $1+T_4\kappa_4=C/t\ne0$ there.
+For each fixed $Y$, expansion on the common closed strip gives
+
+$$
+\begin{aligned}
+G_4&=-336/5+(1128/5)t+O(t^2),\\
+K_4&=1-5t^2+(11/2+5h)t^3+O(t^4),\\
+G_5&=-288+804t+O(t^2),\qquad
+K_5=4-(35/2)t^2+O(t^3),\\
+C&=1+(2+a)t+O(t^2),\\
+d&=(Y+336/5)t+\bigl(-(a+2)Y-1464/5\bigr)t^2+O(t^3),\\
+Z_Y(a,t)&=12Y-288/5+tN_Y(a)+t^2M_Y(a)+O(t^3),\\
+N_Y(a)&=-(15+16a)Y+(96a-5364)/5,\\
+M_Y(a)&=21162/5+(75/2)Y+(7536/5+39Y)a
+                              +(-1668/5+24Y)a^2.
+\end{aligned}
+\tag{7.12}
+$$
+
+Every remainder is uniform for $0\le a\le1$. Indeed the rational
+extensions have bounded derivatives on a compact smaller strip.
+The following polynomial certificate also fixes the two coefficients
+needed at the endpoints. With $L=UVW$, put
+
+$$
+\begin{aligned}
+G_{4n}&=96VW-288UW+(1248/5)UV,\\
+K_{4n}&=L+t(-4VW+6UW-4UV),\\
+G_{5n}&=360VW-960UW+624UV,\\
+K_{5n}&=4L+t(-15VW+20UW-10UV),\\
+D_n&=tL+AK_{4n},\qquad R_n=YL-AG_{4n},\\
+E&=BG_{5n}D_n+(tL+BK_{5n})R_n
+                         -(12Y-288/5)LD_n.
+\end{aligned}
+\tag{7.13}
+$$
+
+These are polynomials in $a,Y,t$. Substitution in (7.10)–(7.11)
+gives $d=tR_n/D_n$ and $Z_Y-(12Y-288/5)=E/(LD_n)$.
+Their exact coefficients are
+
+$$
+\begin{gathered}
+L|_{t=0}=D_n|_{t=0}=2,\qquad
+[t^0]E=0,\qquad [t^0](LD_n)=4,\qquad [t](LD_n)=20+4a,\\
+[t]E=4N_Y(a),\qquad
+[t^2]E=4M_Y(a)+(20+4a)N_Y(a).
+\end{gathered}
+\tag{7.14}
+$$
+
+Thus division by the nonzero constant term yields exactly (7.12),
+including its quadratic coefficient, uniformly at both source endpoints.
+
+Suppose now $b_n\to\infty$ in a fixed fiber. Choose a subsequence
+with $a_n\to a_0\in[0,1]$ and $t_n\downarrow0$. The constant
+term of (7.12) forces $z=12Y-288/5$; subtracting it and dividing
+by $t_n>0$ forces $N_Y(a_0)=0$. Equivalently
+
+$$
+Y=r(a_0):=\frac{96a_0-5364}{5(15+16a_0)},\qquad
+r'(a)=\frac{87264}{5(15+16a)^2}>0.
+\tag{7.15}
+$$
+
+The denominator is positive on $[0,1]$, and
+$r(0)=-1788/25$, $r(1)=-5268/155$. This proves necessity of
+the corresponding closed segment, for positive and nonnegative
+sources alike.
+
+Fix $Y$ strictly between these endpoint values and put
+$z=12Y-288/5$. The unique zero of $N_Y$ is
+
+$$
+a_0=\frac{5364+75Y}{96-80Y}\in(0,1).
+\tag{7.16}
+$$
+
+The quotient
+$F_Y(a,t)=(Z_Y(a,t)-z)/t$ extends real-analytically across
+$t=0$, since the numerator vanishes identically there. It satisfies
+
+$$
+F_Y(a,0)=N_Y(a),\qquad
+\partial_aF_Y(a_0,0)=96/5-16Y>0.
+\tag{7.17}
+$$
+
+The real-analytic implicit function theorem gives a unique local
+analytic solution $a(t)$ through $(a_0,0)$. For positive small
+$t$, it has $0<a(t)<1$. Define
+
+$$
+P_t=\begin{pmatrix}
+a(t)&1/t\\a(t)(1-a(t))t&1-a(t)
+\end{pmatrix},\qquad d_t=tR_Y(a(t),t),
+\tag{7.18}
+$$
+
+and define $g_t$ by (7.3). Its source is strictly positive, has
+trace one and determinant zero, hence rank one. Interpolation
+realizes clocks zero through three, (7.10) realizes clock four,
+and $F_Y(a(t),t)=0$ realizes clock five. Explicitly, in this same
+world the six readings are
+
+$$
+\begin{aligned}
+g_t(0)+d_t&=0,&
+(b_t+c_t)g_t(1)+d_t&=24,\\
+(1+b_t)g_t(2)+d_t&=48,&
+(1+2b_t+c_t)g_t(3)+d_t&=312/5,\\
+(1+a_t+b_t+c_t)g_t(4)+d_t&=Y,&
+(2-a_t+3b_t+c_t)g_t(5)+d_t&=z.
+\end{aligned}
+\tag{7.19}
+$$
+
+The gain is nonzero; more specifically $g_t(1)=24t+O(t^2)$.
+Every parameter specifies one fixed world for the entire trajectory,
+not a source or gain varying with the clock. Distinct parameters
+have distinct $b_t=1/t$.
+
+For gain shapes use the exact ratio, legitimate for positive small
+$t$ because $g_t(1)\ne0$:
+
+$$
+\frac{g_t(2)}{g_t(1)}
+ =\frac{48-d_t}{24-d_t}\frac{U}{V}
+ =2+\frac{Y+96/5}{24}t+O(t^2).
+\tag{7.20}
+$$
+
+The linear coefficient is independent of $a$. Composing with
+$a(t)$ therefore preserves it. It is strictly negative throughout
+the closed segment, since $-5268/155<-96/5$. The derivative of
+this analytically extended ratio remains negative on a sufficiently
+small interval. Thus the ratio is strictly decreasing there, and
+two different gains cannot be proportional, with either sign of
+proportionality.
+
+It remains to decide both endpoints rather than discarding them.
+The same analytic extension and nonzero derivative (7.17) apply at
+$a_0=0$ and $a_0=1$. Differentiating $F_Y(a(t),t)=0$ gives
+
+$$
+a'(0)=-\frac{M_Y(a_0)}{96/5-16Y}.
+\tag{7.21}
+$$
+
+The exact endpoint values are
+
+$$
+\begin{array}{c|c|c|c|c}
+Y&a_0&M_Y(a_0)&96/5-16Y&a'(0)\\ \hline
+-1788/25&0&7752/5&29088/25&-1615/1212\\
+-5268/155&1&308496/155&87264/155&-6427/1818
+\end{array}
+\tag{7.22}
+$$
+
+At the lower endpoint the unique branch has $a(t)<0$ for positive
+small $t$. Any unbounded sequence at that history would have
+$b_n\to\infty$, $a_n\to0$ and $F_Y(a_n,t_n)=0$ by the preceding
+necessity proof. Local uniqueness places it on this illegal branch,
+a contradiction even for nonnegative sources. At the upper endpoint
+the branch has $0<a(t)<1$ for positive small $t$; (7.18)–(7.20)
+therefore give legal worlds and pairwise nonproportional gains there
+also. The excluded orientation, the necessary segment, its interior
+realizations and these two endpoint decisions prove (7.5). The
+sequential contradiction also proves boundedness for each fixed
+history outside that half-open segment. No gain sample was divided
+out in the necessary direction; lower degrees, signs and all roots
+were retained. ∎
+

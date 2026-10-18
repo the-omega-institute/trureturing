@@ -1,0 +1,36 @@
+### 474.2 中心化保留的正是原有符号锚点
+
+沿用原物理积分 $P_x(s)$ 和实际二倍增长权
+
+$$
+b_x(s)=s\bigl(P_x(s)-P_x(2s)\bigr).
+$$
+
+对 $x>1$、$\ell=\log x\ge1$，以及自然数 $D\ge D_0$、$x\le D$，
+原自然截断为
+
+$$
+T_x(D,M)=\sum_{\substack{D<n\le M\\n\text{ 奇}}}
+             \frac{\mu(n)}n b_x(n).
+$$
+
+记其自然截断极限为 $T_x(D)$，有符号锚点为
+$\mathfrak a_x(D)=b_x(D+1)H_o(D)$。
+完整有限 Abel 恒等式保留终端项；已验收的解析合同在实际二阶率下给出
+
+$$
+T_x(D)=-\mathfrak a_x(D)
+       -\sum_{n>D}\bigl(b_x(n+1)-b_x(n)\bigr)H_o(n).
+$$
+
+这里绝对可和的是变差级数。原 Möbius 原子和采用自然有限截断的极限，
+不据此声称原子级数绝对可和。令 $r=\log(D+1)\ge\ell$，其中心化预算为
+
+$$
+|T_x(D)+\mathfrak a_x(D)|
+\le\frac{2A}{r}\left(\log\frac r\ell+1+\frac{21}{\ell}\right).
+$$
+
+这正是原完整变差预算 $4A\,\operatorname{tailBudget}(\ell,2,D+1)$，
+没有更换权函数或删除锚点。
+

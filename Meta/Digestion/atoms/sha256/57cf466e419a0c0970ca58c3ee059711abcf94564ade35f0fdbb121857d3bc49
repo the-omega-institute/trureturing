@@ -1,0 +1,24 @@
+#### 17.3.1 经典 triangle-local 的精确定义
+
+官方 [Fast Inflation repository](https://github.com/vgitton/fast-inflation) 将 classical triangle-local 分布定义为
+
+\[
+p(a,b,c)
+=
+\int
+d\alpha\,d\beta\,d\gamma\,
+p_A(a\mid\beta,\gamma)
+p_B(b\mid\gamma,\alpha)
+p_C(c\mid\alpha,\beta),
+\]
+
+其中三个源变量独立。该集合非凸，因此单一 Bell 不等式框架不够。
+
+FIB 推前最多提供
+
+\[
+Q_*p(a,b,c)\in\Delta(\Sigma),
+\]
+
+它是 triangle-local 模型的局部边缘。反向的 lift 需要单独证明。
+

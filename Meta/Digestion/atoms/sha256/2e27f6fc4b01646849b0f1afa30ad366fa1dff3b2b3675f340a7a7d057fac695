@@ -1,0 +1,32 @@
+**Lemma 77.7 (the necessary centre graph of the original supplier).**
+A planar assembly satisfying the72.4–72.5 chamber-and-straight-cylinder
+contract and72.13's grounding, exact metric and crossing-free clearance
+requirements, with positive centre-to-plate offsets, supplies the drawing
+required in77.3 with lengths $L_{vw}=1+h_v+h_w$.
+
+**Proof.** Its source-centre and ground-centre incidences are precisely
+the augmented occurrence tree of64.5. Chambers have distinct centres
+because each radial chamber contains an open neighbourhood of its centre
+and chamber interiors are disjoint. For an edge $vw$, its chamber axes
+are oriented along the centre line. The centre-to-plate axial segment
+lies in the radial chamber closure, with its open part in that chamber.
+The intervening axial segment lies in the straight cylinder and has
+length exactly one. Positive offsets concatenate these three collinear
+segments into the full straight centre edge of length $1+h_v+h_w$.
+
+Nonincident axial intersections would give unprescribed intersections of
+their owning chambers or cylinders, contrary to72.5 and72.13. An
+unrelated centre on an edge is forbidden for the same reason. At a
+common centre disjoint incident angular caps forbid coincident rays;
+distinct rays intersect only at that centre, and prescribed-only piece
+intersections exclude any subsequent edge intersection. This also follows
+from the supplier's explicit crossing-free centre clearance requirement.
+The grounding line contains the distinct ground centres and meets only
+ground chambers. The connected source half has its centres strictly
+on its upper side. Straight source edges have positive height throughout;
+each straight stub has positive height except at its ground centre.
+After choosing that side as $y>0$, these are exactly the required
+half-plane and incidence conditions. The centre graph is a necessary
+projection of this assembly; it is not a newly installed graph or a
+native/physical correspondence. $\square$
+

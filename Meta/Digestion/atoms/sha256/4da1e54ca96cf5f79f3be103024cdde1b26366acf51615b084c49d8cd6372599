@@ -1,0 +1,18 @@
+# CFMP six-edge high-axis expenses and the remaining owner count
+
+Sections 1–355 refer to the preceding theory, ending with
+[the five-reservoir return and six-edge source continuation](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).
+The section numbering continues that theory.
+
+The two M/U expense implications below are repo-derived from the
+published paired response formulas and original-normal-circle framework.
+Their hypotheses differ: the V/C branch uses actual D degree at least
+six; the V/D branch uses no degree bound beyond whatever is needed to
+supply its explicitly stated one-sided gap. The exact finite polynomial
+certificates are displayed in full. These are mathematical arguments,
+not claims of Lean or kernel verification.
+
+The final sections identify an honest remaining owner-count obligation.
+No full six-edge flat exclusion or general geometric realization theorem
+is asserted.
+

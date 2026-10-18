@@ -1,0 +1,59 @@
+**Theorem 16.3 (supplied calibrated and prescribed-prefix sharpness).** Suppose a continuation starts at a fixed pure-$M$ state $M^T$, $T\ge0$, with the entire actual prefix history and exact $g,\delta,\operatorname{tr}(MP)$ supplied, and no further source information. On the actual-degree-$s$ subclass its optimal uniform additional-read count is $s+2$. Among protocols prescribed to start with $M^{2d+2}$ the exact total is $2d+s+5$, with worst case $3d+5$ over $s\le d$. These lower bounds permit arbitrary deterministic adaptive continuation and nonlinear answers.
+
+**Proof.** The proof of Theorem 16.2 applies from every such $T$: use $B=JM^T$ and clocks $T+1+p$. The same all-pairs basis and root count prove the upper bound $s+2$.
+
+For the lower bound let
+
+$$
+\nu=\frac{(1,\phi)^{\mathsf T}}{\sqrt{1+\phi^2}},\qquad
+w=\frac{(-\phi,1)^{\mathsf T}}{\sqrt{1+\phi^2}},\qquad
+\mathcal I=(-\phi,\phi^{-1}).
+\tag{16.4}
+$$
+
+The entire legal fiber $\operatorname{tr}(MP)=\phi$ is
+
+$$
+\mathcal F=\{P_x=\nu(\nu+xw)^{\mathsf T}:x\in\mathcal I\}
+\cup\{Q_y=(\nu+yw)\nu^{\mathsf T}:y\in\mathcal I\}.
+\tag{16.5}
+$$
+
+To see completeness, in the orthonormal eigenbasis $\nu,w$ trace one and the specified $M$ trace force diagonal entries $1,0$. Rank one then says that the product of the two off-diagonal entries is zero, giving exactly these branches. Positivity of $\nu+xw$ is exactly $1-\phi x>0$ and $\phi+x>0$, hence $x\in\mathcal I$, and the same holds for $y$. The branches meet only at $P_* =\nu\nu^{\mathsf T}$: multiplying $x\nu w^{\mathsf T}=yw\nu^{\mathsf T}$ by $\nu$ forces $y=0$ and then $x=0$. Each source in this entire fiber has $\operatorname{tr}(M^iP)=\phi^i$ for every $i\ge0$ by the eigenvector relations and orthogonality. This is exactly the $\eta=0$ fiber of (12.2).
+
+For every real matrix $A$, a single scalar $\operatorname{tr}(AP)$ fails to distinguish the whole fiber. With
+
+$$
+a_A=w^{\mathsf T}A\nu,\quad b_A=\nu^{\mathsf T}Aw,\quad
+c_A=\operatorname{tr}(AP_*),
+$$
+
+the branch traces are $c_A+xa_A$ and $c_A+yb_A$. If either slope is zero, its branch already contains distinct equal-trace sources. If both are nonzero, choose a sufficiently small nonzero real $e$ and take $x=eb_A$, $y=ea_A$. Both lie in $\mathcal I$, both are nonzero, and the two distinct sources have the same trace. This establishes the scalar obstruction for every possible next cumulative matrix.
+
+Fix one common gain and drift
+
+$$
+g_*(t)=c\prod_{j=1}^s(t-(T+j)),\qquad c\ne0,\qquad\delta=\delta_*.
+\tag{16.6}
+$$
+
+The empty product at $s=0$ is one. All worlds with this same degree-$s$ gain, drift, and $P\in\mathcal F$ have identical pure-$M$ prefix history and identical supplied calibration data. The next $s$ reads are $\delta_*$ regardless of actions because those original clocks are roots. Induction makes their entire adaptive action history common. Correct recovery cannot stop on any such history, since it retains distinct complete targets. If a uniform protocol finished within $s+1$ added reads, its final cumulative matrix $A$ would be fixed by that common history before the last read. The scalar obstruction supplies two distinct actual sources in $\mathcal F$ with the same final read, hence identical decisions and answer. This contradicts correctness. The pair is chosen from the single already realized common-history family, so all ancestor equations remain satisfied.
+
+This proves the lower bound $s+2$. For prescribed prefix $M^{2d+2}$ take $T=2d+2$. Supplying the calibration data only enlarges the permitted information, so the lower bound also holds for the original prescribed-prefix protocols. None can stop during the prefix on the same family, since every partial pure history still retains distinct targets. Adding its $2d+3$ reads gives $2d+s+5$; taking $s=d$ gives $3d+5$. The fixed prefix and absence of extra source information are essential hypotheses. $\square$
+
+Write $N_d^{\mathrm{lin}}$ for the optimal uniform complete-target count under the countable fixed-linear full-gain-ray mechanism (1.3). The established scopes are:
+
+| Task | Established conclusion |
+| --- | --- |
+| Fixed acquisition, with no mixed-word requirement | Exact gain threshold $2d+3$; credited Hermite result |
+| Fixed mixed acquisition, $d=1,2,3$ | Exact gain thresholds six, eight, ten; arbitrary countable palettes |
+| Fixed mixed acquisition, $d\ge4$ ($m\ge5$) | Either $2d+3$ or $2d+4$; the exact positive criterion (10.3) remains unresolved, with the transition-window restrictions of the companion volume |
+| Complete target with this gain-output mechanism, $d=1$ | $6\le N_1^{\mathrm{lin}}\le8$; sharpness unresolved |
+| Complete target with this gain-output mechanism, general $d$ | $2d+3\le N_d^{\mathrm{lin}}\le3d+5$ |
+| Calibrated pure-$M$ continuation with only the specified source information | Exact additional count $s+2$ |
+| Complete recovery constrained to prefix $M^{2d+2}$ | Exact actual-degree total $2d+s+5$ and worst-case total $3d+5$ |
+
+The $4d+5$ construction of Theorem 16.1 remains a valid credited prior construction. Theorem 16.2 supplies the stronger current upper bound. Neither the prescribed-prefix lower bound nor the fixed mixed thresholds yield global complete-target sharpness. Separate fixed-word failures in degrees two or three do not combine their exceptional failure sets into a common adaptive obstruction. The mechanism-specific lower bounds do not apply to unrestricted nonlinear global recovery. The original full-domain cubic alternative of an at-most-eight-read decoder versus a lower bound of nine remains unresolved.
+
+No result restricts $\beta$ to a known-factor subspace, excludes a gain root, makes $\eta$ generic, or omits a positive source. A fixed invertible coefficient-basis change preserves (1.3); restricting the coefficient space changes the task. The assumption $d\ge1$ is used in line preservation and the rank-one-versus-scalar arguments. No degree-zero assertion is made.
+

@@ -1,0 +1,19 @@
+**Corollary 339.2 (The lower bound does not require the matched tail).**
+For every valid entire original profile with the same $a_2,\ldots,a_8$
+as (339.1), necessity $e_a(A)\ge E$ holds for every original
+competitor independently of $a_1$ and independently of the later
+positive ordered vanishing tail. This includes $a_9>E$ when order
+allows it. Only the attainment assertion uses the head and tail
+conditions displayed in Theorem 339.1.
+
+**Proof.** Equation (339.6) uses no $a_1$ or later amplitude, and
+Theorem 336.2 has neither a head nor a tail-cutoff assumption.
+$\square$
+
+The boundary $\kappa=0$ in the displayed construction is the reused
+seven-active branch with inactive eighth coordinate, a head transfer
+of size at most $4\tau$, and cap $5\tau$. It contributes no new
+positive-width attainment. A gap embedding in Theorem 336.2 is a
+necessary inequality; no cost-free gapped version of the primal
+attainer in 339.1 is asserted.
+

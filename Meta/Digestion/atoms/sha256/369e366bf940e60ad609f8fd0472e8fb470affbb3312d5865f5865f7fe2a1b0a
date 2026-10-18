@@ -1,0 +1,12 @@
+令
+\[
+\Sigma=\{0,2,3,5,25\},
+\qquad
+\Delta^4
+=
+\left\{
+p\in\mathbb R^\Sigma:
+p_s\ge0,\ \sum_{s\in\Sigma}p_s=1
+\right\}.
+\]
+

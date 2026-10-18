@@ -1,0 +1,41 @@
+### 定理 15.6（树场与 FIB 的乘积稳定性）
+
+令 \(\mathcal H_{\mathrm{tree}}=\ell^2(V_{\mathrm{FibTree}})\)，
+\[
+Lf(p)=\deg(p)f(p)-\sum_{q\sim p}f(q),\qquad
+\phi(p)=2^{-|p|},\qquad
+H_{\mathrm{tree}}=aL-gM_\phi.
+\]
+
+已有 Whole-rho 结果给出
+\[
+L\phi=\mathbf1_o,\quad \|\phi\|^2=2,\quad Q(\phi)=1,
+\quad H_{\mathrm{tree}}\ge
+\bigl(a(3-2\sqrt2)-g\bigr)I.
+\]
+
+在定义好的乘积空间
+\[
+\mathcal H_{\mathrm{tot}}
+=\mathcal H_{\mathrm{tree}}\otimes\mathcal H_{\mathrm{FIB}}
+\]
+上，令
+\[
+H_{\mathrm{tot}}
+=H_{\mathrm{tree}}\otimes I+
+I\otimes K_{\mathrm{FIB}}+V_{\mathrm{bridge}},
+\]
+其中 \(V_{\mathrm{bridge}}=V_{\mathrm{bridge}}^*\)。若
+\[
+H_{\mathrm{tree}}\ge\varepsilon_tI,\qquad
+K_{\mathrm{FIB}}\ge\varepsilon_fI,\qquad
+\|V_{\mathrm{bridge}}\|<\varepsilon_t+\varepsilon_f,
+\]
+则
+\[
+H_{\mathrm{tot}}\ge
+(\varepsilon_t+\varepsilon_f-\|V_{\mathrm{bridge}}\|)I>0.
+\]
+
+若 \(V_{\mathrm{bridge}}\) 为紧算子，连续谱的阈值保持不变，低于阈值的离散束缚态才可能由桥接产生。该乘积算子不是天然存在的统一场定理，而是需要明确给出张量积状态空间和耦合算子。
+

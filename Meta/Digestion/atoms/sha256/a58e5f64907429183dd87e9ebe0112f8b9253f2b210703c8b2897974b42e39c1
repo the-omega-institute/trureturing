@@ -1,0 +1,34 @@
+### 67.2 An explicit order-three balanced block construction
+
+Let I and J be the 3×3 identity and all-ones matrices and define
+
+    S=[[0,-1,1],[1,0,-1],[-1,1,0]],
+    C=−(I+J+sqrt(5)S)/4,
+    A=(C+2I)/3,    B=(C−I)/3.
+
+Equivalently, C is the real circulant matrix with first row (−1/2,(−1+sqrt(5))/4,(−1−sqrt(5))/4). Its subsequent rows are cyclic right shifts. The square root occurs in these exact orthogonality identities; no broader physical interpretation is needed.
+
+Then the real 9×9 block matrix
+
+    O=[[A,B,B],[B,A,B],[B,B,A]]                           (1)
+
+is orthogonal, and every column in every three-row block has squared norm 1/3.
+
+Proof. We have S^T=−S, S²=J−3I, JS=SJ=0 and J²=3J. Hence
+
+    (I+J+sqrt(5)S)(I+J−sqrt(5)S)
+       =(I+J)²−5S²=16I.
+
+Therefore C is orthogonal, and each diagonal entry is −1/2. Let P=J/3 be the orthogonal projection onto the uniform direction in the outer block index. Since A−B=I and A+2B=C, equation (1) is
+
+    O=P⊗C+(I−P)⊗I.
+
+The two summands act on orthogonal outer subspaces; thus O O^T=I. For every standard coordinate vector e_j,
+
+    ||A e_j||²=(1+4+4 C_jj)/9=1/3,
+    ||B e_j||²=(1+1−2 C_jj)/9=1/3.
+
+These are exactly all column-block norms of (1). The preceding criterion gives an exact implementation of F_(9,2) with three product branches and shared entropy log₂3; neither quantity can be smaller. All local environments in this construction have dimension two. The local isometries map |f,i> to |f> times the eigenvector of the Bloch direction sqrt(3) O_(block t,column f), and the second party uses its coordinatewise conjugate. This explicitly fixes one physical map per branch for all fibres and inputs.
+
+There is no real Hadamard matrix of order three: the inner product of two ±1 rows of length three is an odd integer, hence cannot vanish. Thus this attainer is outside the Hadamard-order hypothesis of §66, rather than an invocation of an unknown Hadamard matrix. Restrictions to seven or eight fibres still have branch minimum three by ceil(k/3), but no entropy equality is asserted for those restrictions. Every restriction to at most three whole fibres has a single product implementation as in §66.
+

@@ -1,0 +1,37 @@
+**Lemma 4.2 (Strict descent at every active point).** These choices obey
+
+$$
+-1<b<0,\qquad 0<\eta<\frac12,\qquad \frac12<a<1,
+$$
+
+and
+
+$$
+h=f(\psi-\eta),\qquad W=2(f-s)h.
+$$
+
+At the complete active set their values are
+
+$$
+W(0)=-2\eta T,\qquad
+W(1)=-2\eta(T-\tau),\qquad
+W(x_*)=-2\eta f(x_*)v(x_*).
+$$
+
+Proof. The endpoints of $\psi$ are both zero, and
+$\psi''(x)=-e^{-x}<0$. Strict concavity therefore gives
+$\psi(x)>0$ in the interior. Also $bx\le0$ and $e^{-x}>0$, so
+$\psi(x)<1$ throughout $[0,1]$. Since $x_*$ is interior, the bounds
+on $\eta$ and $a$ follow. Differentiating the defining formula in
+$u$ at zero gives
+
+$$
+h=f(a+bx-e^{-x})=f(\psi-\eta),
+$$
+
+and differentiation of its squared error gives $W=2(f-s)h$.
+At the endpoints, $h=-\eta f$ and $s=0$. At the interior contact,
+$\psi(x_*)=2\eta$, so $h(x_*)=\eta f(x_*)$, while
+$f(x_*)-s(x_*)=-v(x_*)$. Substitution proves all three strict
+negative values. $\square$
+

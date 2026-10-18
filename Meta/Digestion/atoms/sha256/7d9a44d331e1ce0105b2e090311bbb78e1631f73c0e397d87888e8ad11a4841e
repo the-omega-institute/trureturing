@@ -1,0 +1,46 @@
+## 7. Common drift and different terminal signs
+
+**Theorem 7.1.** Let $K$ consist of three distinct fixed legal worlds
+on (1.1), with one common normalized drift $d$. Suppose their signs
+$\operatorname{sgn}f_W(7)\in\{-1,0,1\}$ are not all identical.
+If all three signs differ, $\neg L_2(K,H)$. Otherwise let $G$ be the
+unique two-world sign class. Then
+
+$$
+L_2(K,H)\quad\Longleftrightarrow\quad L_2(G,H).               \tag{7.1}
+$$
+
+Consequently an inclusion-minimal common-drift $L_2$ triple must
+have one common terminal-gain sign, including the all-zero possibility.
+
+**Proof.** Put $B=QP$, which is strictly entrywise positive. The
+traces of $B, MJB, JMB, M^2B$ in (5.1) are all positive sums of its
+entries. Therefore for every terminal word $EF$,
+
+$$
+\operatorname{sgn}(r_{EF}(W)-d)=\operatorname{sgn}f_W(7).
+                                                                    \tag{7.2}
+$$
+
+Responses from different sign classes never collide. If all signs
+are different, each terminal scalar is injective on every sixth
+child. For either terminal action every real terminal response then
+retains at most one world, so no sixth child has $L_1$ and $K$ cannot
+have $L_2$.
+
+Otherwise the only possible terminal collision is the fixed pair
+$G$. Fix a sixth action $E$. If its response child has $L_1$, each
+last action $F$ has a response retaining at least two worlds. Those
+two must be $G$. Hence the sixth child contains $G$ and the two
+$r_{EF}$ values agree on $G$ for both last actions. This reasoning
+also applies when the sixth child contains all three worlds.
+If $K$ has $L_2$, applying it for each first action shows equal sixth
+responses on $G$ for both $E$, and equal terminal responses for
+all four $EF$. These are precisely (5.4), so $L_2(G,H)$.
+Conversely, if the pair has $L_2$, for each $E$ retain its common
+sixth response in the triple. For each $F$ retain the pair's common
+terminal response. These actual children still contain $G$, which
+verifies $L_1$ for each chosen sixth child and then $L_2(K,H)$.
+This proves (7.1) with all action and response quantifiers.
+No assumption about $f(6)$, degree drops or repeated roots is used. ∎
+

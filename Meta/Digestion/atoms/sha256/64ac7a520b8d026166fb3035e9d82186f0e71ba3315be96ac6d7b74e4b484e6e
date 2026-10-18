@@ -1,0 +1,14 @@
+## Scope and theorem
+
+This is a paper-first strict hyper-ideal realization of one explicit ideal
+triangulation. It is a new finite incidence class beyond the degree-eight /
+degree-at-least-twelve three-edge packet theorem: the same three-star packet
+has a global edge of degree exactly ten (and another of degree 38).
+
+Take the 16 tetrahedra and the face pairings in the table below. Local edges
+are ordered `(01,02,03,12,13,23)`. The six degree-eight classes are the local
+edges 0,1,2 in every tetrahedron; thus every tetrahedron has one three-star
+packet. The remaining classes have degrees 10 and 38. Every degree-ten
+occurrence has a degree-38 high neighbour in the actual local incidence
+(table audit below).
+

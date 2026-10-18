@@ -1,0 +1,28 @@
+**定理 4.3.4（缺失度的三角不等式）。** 对三个实验 $E,F,H$，
+
+$$
+\boxed{
+\delta(E,H)\le\delta(E,F)+\delta(F,H).
+}
+$$
+
+**证明。**
+
+取任意后处理 $G:E\to F$ 与 $H':F\to H$。对每个 $\theta$，总变差在后处理下不增加，所以
+
+$$
+\begin{aligned}
+\operatorname{TV}(K_EGH',K_H)
+&\le
+\operatorname{TV}(K_EGH',K_FH')
+ +\operatorname{TV}(K_FH',K_H)\\
+&\le
+\operatorname{TV}(K_EG,K_F)
+ +\operatorname{TV}(K_FH',K_H).
+\end{aligned}
+$$
+
+对状态取最大值，再分别在 $G,H'$ 上取最小值即可。证毕。
+
+<a id="claim-4-3-5"></a>
+

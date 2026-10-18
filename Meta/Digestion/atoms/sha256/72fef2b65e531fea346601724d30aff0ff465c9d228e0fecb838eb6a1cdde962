@@ -1,0 +1,12 @@
+**Proposition 5.1 (degenerate target).** If $n=1$ and $p=R$, then for every
+full-support law on every admissible $\mathcal F_D$,
+
+$$
+V_{\rm all}(\mu)=1.
+\tag{5.1}
+$$
+
+**Proof.** One Read at $R$ returns alpha, beta or branch, exactly the three
+descriptor cases. Zero Reads cannot distinguish two different target
+trajectories. $\square$
+

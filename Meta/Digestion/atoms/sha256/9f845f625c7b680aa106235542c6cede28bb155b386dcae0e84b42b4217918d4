@@ -1,0 +1,29 @@
+**Definition 5.1 (complete replies, targets and bounded paths).** For
+$\eta\in\Omega_b$, let $v_\eta(q)$ be the actual reply at
+$\operatorname{addr}(q)$ specified by its patterns. A word shorter
+than three reads a common exterior branch. Any other installed word
+has the unique form $pw$, $p\in P$, with $|w|\le b$ and reply that
+of class $[p]$ at $w$. The pattern gives that reply, including every
+absence after an early leaf. Both partner occurrences, repeated words
+and unused states are included. The class roots give its unique case
+of Proposition 1.4 and hence its entire target $F_\eta=R_{h(\eta)}$.
+
+For each original label $z$ start at $e_z$ with zero calls. Inspect a
+Halt before attempting any call, accepting it exactly when its complete
+output equals $F_\eta$. At a Read with fewer than $L$ calls used,
+take its successor for $v_\eta(q)$ and add one call. Inspect the
+successor again, also immediately after the $L$th call. A wrong Halt
+fails, and a Read still present at the limit fails. Let
+
+$$
+G_\eta=\{z\in\{0,1\}:\text{this bounded path accepts}\}.
+\tag{FCS.20}
+$$
+
+Whole-row comparison includes the finite exterior, complete partition,
+recomputed canonical names, every disequality and every blocking guard.
+An output outside the five required whole rows is not accepted by
+comparing only a label. At $L=0$ only an initial correct Halt accepts.
+This is TCR Definition 6.1's bounded path test with its bound two replaced
+by the arbitrary input $L$.
+

@@ -1,0 +1,34 @@
+**Definition 1.1 (the unchanged original task).** Let $\mathcal T$ be the
+free algebra of nonempty finite ordered full binary trees, with generators
+$\alpha,\beta$ and pairing $\langle\ ,\ \rangle$. Put
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+For public $h\ge1$ and $T\ge0$, the original $u$ ranges over **all**
+$h$-leaf ordered full trees, with independently chosen labels
+$\alpha=0,\beta=1$. Its shape is not supplied. Entry is $y=\rho^t u$,
+where $0\le t\le T$ is unknown. The target is the original leaf XOR
+$\pi(u)$, at the first fixed-bit Halt. Initialization is the same for
+all $(u,t)$ in this promise.
+
+For a whole materialized word $p\in\{L,R\}^{*}$, $r_y(p)$ follows the
+address from the root, reports the reached constructor, and reports
+absent if it attempts to continue beyond a leaf. The only source
+operations are
+
+$$
+\operatorname{Read}(p):(y\mapsto y,r_y(p)),\qquad
+\operatorname{Update}:(y\mapsto\rho y,\star).
+$$
+
+Read has four replies $\alpha,\beta,\mathsf{branch},\mathsf{absent}$;
+Update has the constant acknowledgement $\star$. No reset, copy,
+rerooting, inverse, source walk, partial-address query, historical row,
+reference label, shape, epoch, size or timing observation is added.
+Physical execution of these two primitives is a separate service. An
+address transport does not construct their physical internals.
+

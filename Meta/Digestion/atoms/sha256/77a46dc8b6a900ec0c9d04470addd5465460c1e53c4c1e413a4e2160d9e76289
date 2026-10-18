@@ -1,0 +1,22 @@
+**定义 1.5（合法图与四阶系数）。** 以 $B_n$ 为顶点，Hamming 距离一时连边，记邻接矩阵为 $A=A_n$、无向边数为 $e=e_n$、顶点度数为 $d_b$。复用 [Recovery][Recovery] 的计数
+
+$$
+e_n=\sum_{b\in B_n}|b|
+=\frac{nF_{n+1}+2(n+1)F_n}{5},\qquad |b|=\sum_i b_i.
+$$
+
+计数辅助约定 $B_0=\{\text{空词}\}$、$e_0=0$；实际源仍为 $n=3N\ge3$。令
+
+$$
+\begin{aligned}
+s_n&=\sum_{b\in B_n}\binom{|b|}{2}
+=\frac{(5n^2+3n-2)F_n-6nF_{n+1}}{50},\\
+C_n&=\frac{e_n}{2M},\\
+Q_n&=\frac{e_n-2s_n}{8M}
+=\frac{11nF_{n+1}-(5n^2-7n-12)F_n}{200F_{n+2}},\\
+\Delta_n&=\frac{e_{n-1}}{32M}>0.
+\end{aligned}
+$$
+
+$s_n$ 计数合法图的二维立方体面，其表达式在 §3.7 证明；$C_n$ 是既有全类 Bayes 首项。本卷的优化增量是 $Q_n$、$\Delta_n$ 及其准备实现，不将立方体计数作为独立新结论。范数采用 $\|T\|_{\mathrm{HS}}^2=\operatorname{Tr}(T^\dagger T)$；$O_n$ 的常数和邻域只须对固定 $n$ 成立。
+

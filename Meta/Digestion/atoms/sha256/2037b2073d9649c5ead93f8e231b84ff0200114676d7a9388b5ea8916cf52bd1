@@ -1,0 +1,22 @@
+**Corollary 58.8 (actually finite spectral preparation and explicit error contracts).** Let $W=[v_-,v_+]\subset(-\infty,c]$ be a compact interval with endpoints in common resolvent gaps; keep $D_0,j_0,R,S,T$ as in Theorem58.7. For any unit finite state $u_0\in\operatorname{ran}Q_{D_0}(W)$, zero extended, put
+$\delta_{D_0}=\|Q_{D_0}(W)-Q(W)\|$, and suppose $\delta_{D_0}<1$. Then $f=Q(W)u_0/\|Q(W)u_0\|$ is a common unit state and the same actual finite continuation satisfies
+
+$$
+ \sup_{0\le\tau\le S}\|u(\tau)-e^{-i\tau\mathsf H}f\|
+ \le\sqrt2\delta_{D_0}+2MT\ell_R.
+\tag{58.20}
+$$
+
+Here $\delta_{D_0}\to0$ along the actual source family of §55.5, including varying original sources with accepted indices tending to infinity. In a further expressly supplied precision model, suppose preparation has unit-state norm error at most $\eta_0$, actual between-event generators are self-adjoint on the same authenticated domains with integrated operator error at most $\eta_H$, actual isometric transfers have errors at most $\eta_k$ relative to $J$ on the states transferred, and clock-interval discrepancies sum to at most $\eta_\tau$. Then the norm budgets in (58.17) or (58.20) gain at most
+
+$$
+ \eta_0+\eta_H+\sum_k\eta_k+M\eta_\tau.
+\tag{58.21}
+$$
+
+The operator-error integral is over the actual intervals; the reference partition in (58.17) or (58.20) has total length at most $T$. This further model explicitly relaxes the ideal amplitude contract. Literal native source actions, authentic domains and original error models are unchanged.
+
+Proof. The projection distance bounds $\|(I-Q(W))u_0\|$ by $\delta_{D_0}$, and the normalization identity (58.18) bounds $\|u_0-f\|$ by $\sqrt2\delta_{D_0}$. Then (58.19) and the same Duhamel argument apply. The projection convergence is the already proved full-state, all-multiplicity theorem55.5, not a new eigenbasis-acquisition theorem. For the additional model, unitarity and isometric transfers propagate errors without norm amplification. Duhamel bounds each generator discrepancy by its operator-error integral, telescoping the finite transfers gives their actual error sum, and $\|e^{-isA_D}-e^{-itA_D}\|\le M|s-t|$ bounds interval-clock discrepancies. If a separately authorized contraction-response readout has error at most $\eta_{\rm read}$ in $Y$, its reported error gains that amount; an effect-probability readout with scalar error at most $\eta_{\rm read}$ has reported error at most twice the state-norm budget plus $\eta_{\rm read}$. These are additional response-error contracts, never the original native Read error model. These estimates require no independent errors, statistical averaging or resampling. □
+
+Exact real source execution, exact amplitudes and exact operator arithmetic in these theorems are mathematical contracts. Finite-bit control descriptions, an implemented actuator, clock calibration, normalization/preparation and readout need actual supplied bounds before (58.21) has numerical content. A wrong source/version or beta mask is not automatically a small operator error. An original Process44 reply error or the $\mathcal D_2$ Read error is not $\eta_0$, $\eta_H$ or a coherent transfer error. Even at a known gap, formal modal coefficients are not an acquired archive or a prepared field state.
+

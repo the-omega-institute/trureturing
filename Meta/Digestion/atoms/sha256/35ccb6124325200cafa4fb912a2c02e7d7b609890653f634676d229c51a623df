@@ -1,0 +1,22 @@
+**Proposition 9.1 (Unchanged unrestricted information).** For the complete original law-only problem and every fixed allowed $p,j,\nu$, the inherited exact values and bounds are
+
+$$
+\begin{aligned}
+\rho_{\mathrm{law}}(0;p,j,\nu)&=0,\\
+\rho_{\mathrm{law}}(1;p,j,\nu)&=3,\\
+\rho_{\mathrm{law}}(2;p,j,\nu)&=5,\\
+2k+1\le\rho_{\mathrm{law}}(k;p,j,\nu)&\le2^{k+1}-1
+\qquad(k\ge1).
+\end{aligned}
+\tag{9.1}
+$$
+
+In particular the established unrestricted budget-three comparison remains
+
+$$
+7\le\rho_{\mathrm{law}}(3;p,j,\nu)\le15.
+\tag{9.2}
+$$
+
+Justification and ownership. Stopping Corollary 6.1 supplies the all-$k$ linear lower against all lawful full-law representatives, and its Theorem 6.2 supplies the zero/one values. Address Theorem 4.1 supplies the upper $2^{k+1}-1$ by packing all potential nodes. Two-read Theorem 3.2 supplies the upper five at cap two, matching Stopping's lower, as stated in Two-read Theorem 4.2. These are inherited mathematical results with their owning proofs, not consequences of a checking verdict or newly claimed numerical bounds here. The subset and witness results of this volume change none of the unrestricted bounds. $\square$
+

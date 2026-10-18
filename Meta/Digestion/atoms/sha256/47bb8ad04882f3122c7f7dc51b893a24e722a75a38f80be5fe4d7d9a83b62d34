@@ -1,0 +1,14 @@
+**The Lucas relative index.** The normalized-coordinate height bound of §74 gives
+
+$$\widehat h(R)\ge\tfrac12\log B-\tfrac16\log144\ge\tfrac13\log B.$$
+
+For $v=((1+\sqrt5)/2)^{2N}>1$, one has $B=v+1+v^{-1}$ and, for $k>1$,
+
+$$B_{Nk}=v^k+1+v^{-k}<B^k.$$
+
+Consequently
+
+$$\widehat h(K)\le\tfrac12\log B_{Nk}+\tfrac16\log24<\tfrac{2k}{3}\log B.$$
+
+Quadraticity under $K=mR$ yields $m^2<2k$. Together with (92.1), this proves $k>B/2$.
+

@@ -1,0 +1,42 @@
+**Definition 212.5 (One equality block and funded face moves).**
+Fix $L\ge5$, nonempty disjoint sets $U,V\subseteq\{4,\ldots,L\}$,
+$J=U\cup V$, $d=|J|$, and $K=\{4,\ldots,L\}\setminus J$.
+Let $\kappa$ be any probability measure on the full $K$-cube,
+including the one-point cube when $K$ is empty. Choose $c>0,t\ge c$.
+For a three-bit prefix $h$, let $w_{ab}^h(v)$ have prefix $h$,
+all $U$ bits equal to $a$, all $V$ bits equal to $b$, and $K$ bits $v$.
+Define the actual full score $Y$ by
+
+$$
+\begin{aligned}
+P_{w_{01}^{010}(v)}=P_{w_{10}^{010}(v)}
+ =P_{w_{01}^{100}(v)}=P_{w_{10}^{100}(v)}&=t\kappa(v)/2,\\
+C_{w_{00}^{110}(v)}=C_{w_{11}^{110}(v)}&=c\kappa(v),\qquad T=t,
+\end{aligned}
+\tag{212.23}
+$$
+
+with $A=0$ and all unspecified coefficients zero. In particular
+$W=3t$, $Q(Y)=(2c e_3,2c+3t)$, where $e_3$ here denotes a
+quotient coordinate vector. Let $\mathcal U(Y)$ consist of every
+nonnegative replacement of the class-3 correct measure that preserves
+its mass and every unary marginal, with all other score rows fixed.
+No joint-marginal or support restriction is imposed in $\mathcal U(Y)$.
+For such a replacement $C'$ define its moved mass by
+
+$$
+\operatorname{mov}(C',C)=\frac12\sum_{w\in\Omega_3}|C'_w-C_w|.
+\tag{212.24}
+$$
+
+A coordinate-face move is a signed change of this correct measure,
+supported on one face on which all coordinates outside a set $S$
+are fixed. It preserves mass and every unary marginal, and its addition
+to the current measure must be nonnegative. Its width is $|S|$,
+counting suffix coordinates only. A batch is funded when the sum of
+its atomwise withdrawals is bounded by the current measure. Finite
+batches and countable batches with that property are allowed; mass
+preservation makes the latter absolutely summable. This definition
+does not allow unfunded summands merely because their net sum would
+be feasible.
+

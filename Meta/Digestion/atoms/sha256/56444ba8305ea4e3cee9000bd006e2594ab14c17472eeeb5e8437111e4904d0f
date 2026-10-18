@@ -1,0 +1,83 @@
+**Theorem 4.1 (sharp known-parity branch bound).** Fix a nonempty record
+support $S_y$, its target $l_y$, and suppose an exact parity label is
+separately supplied to a calibrated endpoint processor. Define
+
+$$
+\kappa(S)=
+\begin{cases}
+1,&|S|=1,\\[2pt]
+\dfrac{1+g_{ab}}2,&S=\{a,b\},\\[4pt]
+0,&|S|\geq3,
+\end{cases}
+\qquad
+g_{ab}=\frac{\sqrt{x_ax_b}+\sqrt{(c-x_a)(c-x_b)}}c.
+\tag{RB.12}
+$$
+
+For a pair of distinct heights, $0<g_{ab}<1$. The maximum exact branch
+success probability is $\kappa(S_y)$, independent of the unknown phase,
+the actual candidate within the support, and the selected strict target.
+These optima are attainable simultaneously for every record with complete
+endpoint instruments and absorbing retained failure. For arbitrary
+height-independent assistance without a readable parity label,
+$\kappa(S_y)$ remains an upper bound; its attainment is not asserted.
+
+Proof. Theorem 3.3 covers three or more candidates. For a singleton, the
+two orthonormal assignments $e\mapsto e$ and
+$n_s(x_j)\mapsto n_s(l_y)$ extend to a unitary, giving probability one.
+
+For a pair put $u=n_s(x_a)$, $v=n_s(x_b)$, $n=n_s(l_y)$ and
+$g=\langle u,v\rangle=g_{ab}$. Distinct heights give independent
+$u,v$; their positive coordinates give $0<g<1$. The unique vector
+$w\in\mathcal B$ with $\langle w,u\rangle=\langle w,v\rangle=1$ is
+
+$$
+w=\frac{u+v}{1+g},\qquad \|w\|^2=\frac2{1+g}.
+\tag{RB.13}
+$$
+
+Lemma 3.2 forces every successful component to equal
+$\lambda_\alpha A$ on $\mathcal V$, where
+
+$$
+Ae=e,\qquad A|_{\mathcal B}=|n\rangle\langle w|.
+\tag{RB.14}
+$$
+
+The output reference and bottom directions are orthogonal. Consequently
+$A^\dagger A$ is $1$ on $\mathbb Ce$ and
+$|w\rangle\langle w|$ on $\mathcal B$. If
+$p=\sum_\alpha|\lambda_\alpha|^2$, trace nonincrease gives
+$pA^\dagger A\leq I$. Its largest eigenvalue is $2/(1+g)$, so
+
+$$
+p\leq\frac{1+g}2.
+\tag{RB.15}
+$$
+
+For attainment take $p=(1+g)/2$ and $C_s=\sqrt p\,A$, extending it
+by zero on the two inactive original directions. Then
+$C_s\psi(x_j,z,m)=\sqrt p\,\psi(l_y,z,m)$ for both candidates of
+that parity, and $C_s$ is a contraction. With
+$F_s=(I-C_s^\dagger C_s)^{1/2}$, the map
+
+$$
+\zeta\longmapsto
+(C_s\zeta)_{\mathsf s}\ \oplus\ (f\otimes F_s\zeta)_{\mathsf f}
+\tag{RB.16}
+$$
+
+is an isometry. Reading the flag gives a complete instrument; the entire
+$F_s\zeta$ is retained as failure residue. The separately supplied parity
+label controls $C_s,F_s$. A singleton uses its unitary and zero failure
+on the promised input; three or more candidates can use $C_s=0$ and
+retain the input as stopped failure residue. Selecting these constructions
+by the actual $y$ attains every branch bound at once. All outputs keep
+the old record and actual auxiliary registers. $\square$
+
+The optimal success residue for a pair cannot carry the unknown phase or
+candidate label in any projected component, by (RB.10). Failure residues
+can carry both. The theorem places no unchanged-return requirement on the
+helper on failure. Its failure flag is its own endpoint flag, not an
+invented canonical first-time/mode readout.
+

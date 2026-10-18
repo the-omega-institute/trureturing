@@ -1,0 +1,5 @@
+source_id = "fib-native-finite-reader-code-synthesis"
+path = "docs/develop/theory/FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

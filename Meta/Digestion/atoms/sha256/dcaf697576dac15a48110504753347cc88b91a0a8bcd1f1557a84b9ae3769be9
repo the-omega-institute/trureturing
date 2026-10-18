@@ -1,0 +1,54 @@
+**Proposition 34.5 (Scope of the linked observations).**
+The maps in these chapters identify the following data of the
+same cyclic common-copy algebra: the nonnegative slack/deficit
+domain, the canonical quotient with its exact multiplication,
+its correction to the interior count, its two-scale trace-error
+difference, all terminal mode multidegrees, and the smooth index
+of its restriction to the face algebra. They do not make the
+index determine the relation maps or the full $R_k$-action, and
+they do not make occupancy totals determine a supplied history.
+
+Proof. The required correspondences are the inverse map (31.4),
+the exponent difference (31.15), the band and tail bijections
+(32.7)–(32.11), the canonical-Ext degree subtraction (33.3), and
+the cohomology identification (34.6). Each retains the same
+position and ordinary-degree conventions. In particular fixing
+$m$ permits the deficit recovery (31.10); it does not recover
+which histories contributed to $c$.
+For any three consecutive positions, the two common arrays
+$\{\{i\},\{i+2\}\}$ and
+$\{\varnothing,\{i,i+2\}\}$ have identical totals and degree two,
+but different frequencies of the five local modes. Both are legal
+in every $n\ge7$ considered here, and they are not row permutations.
+This is the common-copy ambiguity already exhibited in
+Proposition 28.5. Theorem 34.4 supplies an independent ambiguity:
+even all the bundle indices together fail to distinguish the
+actual multiplicative action from the split one for $k\ge4$.
+
+The canonical classification, polynomial face and free layers
+used in the argument belong to Miyazaki's general odd-cycle
+results; the multigraded canonical-module and Ext identifications
+are the classical results supplied by Barile–Bruns; the
+cohomology and index inputs are those of Stacks, GAGA and the
+Dolbeault–Hirzebruch–Riemann–Roch theory cited above.
+Their application here consists of the explicit slack/deficit
+action, the two-scale error comparison, and the relation between
+that algebraic information and the common-copy seam and smooth
+index observations. Changing the labels does not constitute a
+new general canonical classification or an originality claim.
+
+The free-resolution calculation determines its last module and
+length, without constructing all intervening matrices. The
+elliptic calculation determines the stated index and, using the
+proved vanishing range, the stated harmonic kernels. It does
+not identify full positive spectra, metrics, native Hamiltonians,
+preparation procedures or allowed physical operations. The
+polytope facet is not an analytic boundary: $\mathbb {CP}^{2k}$
+is smooth, compact and without boundary, so no APS boundary
+condition or eta correction enters (34.4). The inverse maps and
+the displayed counterexamples establish exactly these scopes.
+$\square$
+
+[PC34]: https://stacks.math.columbia.edu/tag/01XS
+[FR34]: https://arxiv.org/html/2107.03557v1
+

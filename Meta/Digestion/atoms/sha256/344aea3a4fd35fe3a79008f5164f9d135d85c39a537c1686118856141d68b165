@@ -1,0 +1,19 @@
+**定义 179.2（前缀列及其既有逆式）。** 固定整数 $u,v\ge0$。第 $j$ 个 $b$ 之前的 $a$ 数记为 $x_j$，于是
+
+$$
+0\le x_1\le\cdots\le x_v\le u.
+$$
+
+后面的差异运输使用这一列作为完整叶序坐标，直接复用[联合矩卷命题3.1，固定版本35c1ba7](https://github.com/the-omega-institute/trureturing/blob/35c1ba7ae929c1434470e3726fa6d1f0b19641f3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)的对应。给定这列，唯一逆词是
+
+$$
+a^{x_1}b\,a^{x_2-x_1}b\cdots
+ a^{x_v-x_{v-1}}b\,a^{u-x_v}.
+$$
+
+$v=0$ 时列为空，逆词为 $a^u$；$u=v=0$ 时逆词为空贡献。各零指数只省略对应字母段。
+
+这一中间对应已有 Gwenaël Richomme，[*On some 2-binomial coefficients of binary words: geometrical interpretation, partitions of integers, and fair words*，arXiv:2510.07159v1，§4.2，引理4.12，p.20](https://arxiv.org/abs/2510.07159v1)的有界分拆先例：分拆按 $(x_v,\ldots,x_1)$ 排列，以零补足 $v$ 项，散置 $ab$ 数为 $K=\sum_jx_j$。固定 $K$ 就取此和固定的子族；不固定 $K$ 时取这些子族的并。
+
+上述逆式适用的核对如下。实际词的前缀计数单调且不超过总 $a$ 数。反向，各差值非负，所写词含 $u$ 个 $a$、$v$ 个 $b$，第 $j$ 个 $b$ 前恰含 $x_j$ 个 $a$。两个连续 $b$ 之间及首尾的 $a$ 数也由这些差值唯一确定，故没有另一逆词。这个既有中间接口恢复叶词，不恢复原树括号；例如两个不同括号的三叶树都可映成 $aab$。
+

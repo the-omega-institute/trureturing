@@ -1,0 +1,34 @@
+### 82.6. The full negative-subspace invariance forces scalar matrix identities
+
+Let Delta=Khat-That. Since both channels are now calibrated, Tr Delta=0. The normalized reference test and delta=1/4 imply ||Delta||_1<=2. The witness Phat=diag(ss^*,vv^*) from (4) has Tr Phat Delta=-1. Thus
+
+    ||Delta||_1=2,   Tr Delta_-=1,
+    -Tr Phat Delta=Tr Delta_-.
+
+This optimality makes Phat an invariant subspace of the full Delta. Explicitly,
+
+    Tr Phat Delta_+ + Tr(I-Phat)Delta_-=0.
+
+Each term is nonnegative. Positivity therefore forces Phat Delta_+=0 and (I-Phat)Delta_-=0, so [Phat,Delta]=0. In particular the true cross block obeys
+
+    Xv in span(s).                                  (19)
+
+No cross coupling is discarded. Write R=W^*W and P=S^*S. Using sum v_fD_f=W gives
+
+    (Xv)_f=<C_f,W>=2lambda+v_f alpha_f,
+    alpha_f=Tr(N_f R),  alpha_f real.
+
+By (19), v_f alpha_f is constant in f. Its sum is zero, since sum v_fN_f=0. Hence every v_f alpha_f=0. By (18), alpha_f=0 for every f. Since the N_f span all traceless Hermitian 2-by-2 matrices,
+
+    R=(Tr R/2)I_2=I_2/4.                            (20)
+
+Return to the full identity C_f^*C_f=I_2/2:
+
+    P+v_f^2 N_f R N_f+2v_f Re(lambda)N_f=I_2/2.
+
+Using (18)--(20), if Re(lambda) were nonzero, all v_f N_f would coincide, contradicting their three-dimensional span. Consequently
+
+    Re(lambda)=0,   P=7I_2/16.                       (21)
+
+The possible remaining imaginary overlap is excluded by a separate coherent test, rather than by an unproved reality convention.
+

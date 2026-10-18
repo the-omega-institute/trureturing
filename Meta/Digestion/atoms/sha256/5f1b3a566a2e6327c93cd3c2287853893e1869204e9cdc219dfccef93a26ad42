@@ -1,0 +1,45 @@
+**Proposition 14.2 (no same-source pointwise prefix dominator).** For
+$D=4,p=RLLL$, there is a globally correct native encoder and a nine-source
+subfamily realizing every descriptor, on each of which it terminates
+within two Reads. No globally correct prefix-only encoder has Read
+count at most that encoder's count on every actual source.
+
+Proof. Use the eight witnesses $t_{j,e}$ of (AAR.79), modifying only the
+subtree at $RR$ when that address is present, and use the terminal
+branch witness. Choose the $RR$ subtree by the following table; all
+other off-path siblings remain alpha.
+
+| Descriptor | Subtree at $RR$ | First reply at $RR$ | Second literal |
+| --- | --- | --- | --- |
+| $(1,e)$, $e=0,1$ | absent | absent | $R$ |
+| $(2,e)$, $e=0,1$ | alpha | alpha | $RL$ |
+| $(3,e)$, $e=0,1$ | beta | beta | $RLL$ |
+| $(4,e)$, $e=0,1$ | $\langle\alpha,\alpha\rangle$ | branch | $RLLL$ |
+| $B$ | $\langle\alpha,\alpha\rangle$ | branch | $RLLL$ |
+
+These are nine concrete trees. In the first row $R$ itself is the leaf,
+so $RR$ is absent without any replacement. In all other rows $R$ is
+branch and $RR$ is an off-path sibling subtree. Their right-subtree
+heights are at most four, including the branch at $p$ in the last row.
+Thus the whole family has the same allowed root and height promise.
+The second query returns the true first-leaf label, or branch at $p$,
+so the table defines a two-call success on every one of these trees.
+
+For a globally correct extension, make these same two queries on every
+$t\in\mathcal F_4$, with the second chosen from the actual first reply.
+Return only if the second reply is a leaf on the path or branch at $p$;
+otherwise run the prefix acquisition of Theorem 13.4. All returns are
+justified by actual evidence, and the fallback is finite on every
+source. This is one common program, without a source name or a promise
+restricting its inputs to the nine witnesses.
+
+A prefix-only pointwise dominator would use at most two Reads on all
+nine. On prefixes these sources realize exactly the same replies as
+all the descriptors in $\mathcal K_p$; the off-path replacements cannot
+be seen. A two-call prefix tree would therefore have to hit all four
+possible leaf positions, each with its two possible labels. Its capacity
+is at most three by the proof of Theorem 13.8, a contradiction. Hence
+off-path correlations can improve selected actual runs. Theorem 14.1
+compares them with projected runs, which discard these correlations,
+and does not claim this false pointwise dominance. $\square$
+

@@ -1,0 +1,25 @@
+**Corollary 6.3 (the three optimization objects stay distinct).** Let
+$c_A(u)=(q_A(u),a_A(u),\ell_A(u))$. The correspondence preserves the full
+sourcewise cost function under $B$, its coordinatewise supremum vector,
+and, separately, every rational nonnegative weighted value
+
+$$
+b(A)=(\sup_Dq_A,\sup_Da_A,\sup_D\ell_A),\qquad
+W_\lambda(A)=\sup_{u\in D}\lambda\cdot c_A(u).
+\tag{ABC.6.2}
+$$
+
+It therefore preserves their feasible upper-budget sets, Pareto minima
+as sets, and weighted infima and any existing attainment. It supplies
+no algorithm computing these sets or values on arbitrary acquired fibers.
+
+Proof. Equation (ABC.6.1) and the source bijection preserve each individual
+value and the sets over which the indicated suprema are taken. The two
+controller directions identify the feasible objects before optimization,
+so the corresponding infima and witnesses agree as well. The weighted
+sum is taken on one source before its supremum. There is no step replacing
+it by the sum of three separate suprema; [JRF, Example 8.3][JRF] already
+gives a native strict inequality between those quantities. These are
+semantic equalities even when the suprema are infinite, without a search
+or termination claim. $\square$
+

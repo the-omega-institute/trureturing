@@ -1,0 +1,37 @@
+**Corollary 272.4 (The exact restricted flat-nine slice).**
+At $L=9$, on $b_1=\cdots=b_9=1/2$, the hull interval is
+$3/10\le e\le7/20$, and its full feasible-cone part is exactly
+
+$$
+\mathcal S=\{(1/2,\ldots,1/2;e):319/992\le e\le7/20\}.
+\tag{272.8}
+$$
+
+For every full nonnegative score $z$ with $\Delta_O(z)\le1$,
+the single pair $V=0$, $\theta=1$ satisfies
+
+$$
+\Delta_N(V)+\theta=1,\qquad
+\sup_{(b,e)\in\mathcal S}F_{Q(z)-Q(V)}(b,e)\le1.
+\tag{272.9}
+$$
+
+**Proof.**
+Here $E_b=7/2-10e\in[0,1/2]$, which is exactly the hull interval.
+The mass-independent bound (272.3) excludes every conic allocation
+below $e_*$. Conversely the normalized stopped allocation of
+Theorem 272.3 satisfies all rows at every $e\ge e_*$.
+It has mass one throughout this slice, rather than being a rescaling
+at a different profile. For each point of $\mathcal S$, the same
+allocation $\pi$ gives $h\le G_O\pi$. Therefore, simultaneously
+for every such $z$,
+
+$$
+F_z(b,e)\le z\cdot G_O\pi
+ \le\sum_D\pi_D\Delta_O(z)=\Delta_O(z)\le1.
+$$
+
+Taking the supremum over $\mathcal S$ proves (272.9).
+The support set here is exactly this restricted slice, not the full
+$H_L$ or full $H_N$. $\square$
+

@@ -1,0 +1,39 @@
+**Definition 3.1 (Four event tests and all TP multipliers).** In the original
+basis order let
+
+| $s$ | $v_s^T$ | $w_s$ |
+| --- | --- | --- |
+| $N$ | $(99647052,0,0,0,8394339)$ | $46079267/10^8$ |
+| $2$ | $(0,99648416,-6062523,5782645,0)$ | $29026410/(2\cdot10^8)$ |
+| $3$ | $(0,3825517,-99853547,3825517,0)$ | $24894323/10^8$ |
+| $5$ | $(0,5782645,-6062523,99648416,0)$ | $29026410/(2\cdot10^8)$ |
+
+Put $V_s=v_sv_s^T/(v_s^Tv_s)$. Each $V_s$ is a real rank-one density and
+$\sum_sw_s=1$. Among the fifteen singleton/pair representatives, use
+positive-event multipliers $w_sV_s$ for these four singletons, zero for the
+other eleven, and zero for every negative-event multiplier. Their total
+trace is exactly one. This assigns multipliers to the complete signed-event
+system; it does not discard constraints on a candidate channel.
+
+Let
+
+$$
+(\ell_0,\ell_+,\ell_-)
+=\frac1{10^{10}}(687411962,1044032526,961353618),\qquad
+Y=\sum_i\ell_iR_i.
+\tag{3.1}
+$$
+
+In the normalized sector basis $R_i/\sqrt{n_i}$, the three TP multipliers
+are $\sqrt{n_i}\ell_i$. All three are retained. Define the output-first tensor
+
+$$
+\mathcal V=\int_{\mathbb T^2}
+\sum_sw_s(G^T\Pi_sG)\otimes(G^TV_sG)\,dG,\qquad
+W=I\otimes Y-\mathcal V.
+\tag{3.2}
+$$
+
+The torus measure has total mass one. There is no factor $5$ in
+$\mathcal V$; that factor enters the Choi pairing (2.8).
+

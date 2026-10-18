@@ -1,0 +1,16 @@
+**Corollary 8.2 (span and signed moment necessities).** Every cover
+in Theorem 8.1 satisfies
+
+$$
+\sum_{t=0}^{18}(U_t-L_t)\ge355,\qquad H^+=H^-\ge7.
+\tag{NAGC.8.4}
+$$
+
+**Proof.** Use Theorem 2.2 with $q=19$, the same $C_t$ and the
+same $G$: its span total is $342+G$, now at least $355$.
+For Theorem 3.2 every $\delta_t=0$, so $H^+=H^-$, and its
+classwise inequalities sum to $H^++H^-\ge G$. Thus their
+common integer value $H$ satisfies $2H\ge13$ and $H\ge7$.
+This is a lower bound on the common moment, not an assertion that
+it equals seven. $\square$
+

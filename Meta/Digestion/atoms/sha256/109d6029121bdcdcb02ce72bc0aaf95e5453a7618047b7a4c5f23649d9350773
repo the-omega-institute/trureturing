@@ -1,0 +1,30 @@
+**Corollary 7.3 (Inherited eventual-growth criterion with sufficient
+precision).** Let $M(s)\ge2$ be any finite integer-valued function,
+without monotonicity or regularity assumptions. When finite dyadic
+precision and calibration may be provisioned as in Theorem 7.2, the
+following conditions are equivalent:
+
+1. There are $C_T<\infty$ and $s_1>0$ such that for every $0<s<s_1$
+   there exists one common compliant dyadic table at budget $M(s)$
+   with both paid means at most $C_Ts^{-(2r+1)}/\log(\mathrm e/s)$.
+2. The same statement holds for one fixed $i_\star\in\{0,1\}$ in the
+   paid upper, while still requiring both risks, both almost-sure stops
+   and both finite paid means for each chosen table.
+3. There are $\varepsilon_*>0$ and $s_2>0$ such that
+   $\log(1+M(s))\ge\varepsilon_*\log(1/s)$ for every $0<s<s_2$.
+
+Each neighborhood is restricted to $s<1$ and the budget function's
+domain. The equivalence is the precision-provisioned transfer of [C,
+Theorem 7.1], not a new necessary state-growth or precision theorem.
+
+Proof. Condition 1 implies 2. Any tables in condition 2 are admissible
+unrestricted tables, so necessity in [C, Theorem 7.1] implies condition
+3 with all opposing compliance conditions retained. Conversely,
+condition 3 makes $M(s)\ge M_0$ eventually. The same theorem, equation
+(7.2), supplies $c_*>0$ with
+$1+\log\min\{L_{M(s)},1/s\}\ge c_*\log(\mathrm e/s)$ eventually.
+Theorem 7.2 then provides dyadic tables satisfying condition 1 with
+$C_T=C_{\rm fp}C_3/c_*$. This reasoning applies to every sufficiently
+small $s$, including oscillating budgets and discontinuous retuning.
+$\square$
+

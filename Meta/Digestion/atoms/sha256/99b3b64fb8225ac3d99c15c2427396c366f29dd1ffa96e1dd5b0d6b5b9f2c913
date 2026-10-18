@@ -1,0 +1,25 @@
+**Theorem 92.1 (arbitrary square cofactor).** Let $j,C,c$ be positive integers, let $N=3^j\ge81$, and write the actual original block as
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is its full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$k>B_N/2.$$
+
+Moreover, there is an effectively computable absolute constant $B_0$ such that no such repetition occurs when $B_N>B_0$. This constant is uniform over all positive original square cofactors $C$.
+
+**Proof.** Put $n=Nk$. The two integral points are
+
+$$R=(5DB,25D^2L_NCF_N),\qquad
+K=(5DB_n,25D^2L_ncF_n).$$
+
+The odd-index identity $L_t^2+4=5F_t^2$ verifies their curve equations. Their full two-descent classes, ordered as $(X,X+5D,X-15D)$, are both $(5,D,5D)$. For example,
+
+$$X(R)=5D^2C^2,\quad X(R)+5D=25DF_N^2,\quad X(R)-15D=5DL_N^2,$$
+
+and the same identities hold with $c,n$ for $K$.
+
+Theorem 85.1 and Corollary 85.2 already apply to arbitrary positive $C$: the rational torsion is $E_D[2]$, and $R$ is primitive modulo all torsion. Rank one therefore gives $E_D(\mathbb Q)=\mathbb ZR\oplus E_D[2]$. Write $K=mR+T$.
+
+The torsion classes are $(1,1,1)$, $(-3,5D,-15D)$, $(-5D,1,-5D)$, and $(15D,5D,3)$. None equals $(5,D,5D)$: signs exclude the two negative classes, $5$ excludes the identity, and the last would require $15D$ to be a square. Here $D$ is squarefree and coprime to $15$. Only $O$ has trivial descent class. Thus $m$ is odd and $T=O$. Since $B_n>B$, one has $K\ne\pm R$ and $|m|\ge3$.
+

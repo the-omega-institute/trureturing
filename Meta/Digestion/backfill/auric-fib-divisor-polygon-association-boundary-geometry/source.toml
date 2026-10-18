@@ -1,0 +1,5 @@
+source_id = "auric-fib-divisor-polygon-association-boundary-geometry"
+path = "docs/develop/theory/AURIC_FIB_DIVISOR_POLYGON_ASSOCIATION_BOUNDARY_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

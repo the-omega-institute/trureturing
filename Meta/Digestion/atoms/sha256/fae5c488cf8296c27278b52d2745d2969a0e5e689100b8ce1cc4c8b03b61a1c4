@@ -1,0 +1,80 @@
+**Proposition 46.1 (same contrast, cost and complete channel).** Let
+
+$$
+s_{\rm int}=2s_0/3,\qquad
+c_*=(\sqrt\delta,-1,-1)^T/\sqrt3,\qquad
+Z_{\rm rem}=L_0-c_*c_*^T.
+\tag{JR.62}
+$$
+
+There is an actual finite instrument with three rank-two low live
+products, fair binary high and failure branches, contrast exactly
+$s_{\rm int}$, cost $\mathsf C(s_{\rm int})$, and forgotten complete
+channel (JR.56), such that
+
+$$
+\operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+})
+ \geq T_{\rm flat}-\frac43\mathsf b(1)
+ >\mathcal T(s_0),\qquad
+\text{gap}\geq-\mathsf b(1)/3>2/7500.
+\tag{JR.63}
+$$
+
+It strictly exceeds a comparator at the same required contrast and cost,
+with the same complete channel and every original comparator label kept.
+No optimality of these three low branches is asserted.
+
+Proof. One has $c_*^TQ_0c_*=0$ and
+$Z_{\rm rem}=L_0^{1/2}(I-aa^T)L_0^{1/2}$ with
+$a=(1,-1,-1)^T/\sqrt3$. It is PSD of rank two and has zero
+$Q_0$ trace. The supported version (JR.60) of IR Lemma 10.1 gives
+$Z_{\rm rem}=c_1c_1^T+c_2c_2^T$ with real null $c_1,c_2$.
+Supply the three image encoders for
+$K_*=K(c_*)=(\sqrt\delta D-T-S)/\sqrt3$, $K(c_1)$, $K(c_2)$.
+Report $r=-1$ on $K_*$ and $r=+1$ on the other two, while retaining
+the three distinct acquired labels. Use the two fair high branches and
+all spectral failure/complement branches from the proof of Theorem 45.1.
+This is one eleven-branch five-mode instrument, with the same full TP
+decoders and the full complex/reference/labelled-Borel identity (JR.56).
+Its effect normalization and full-output error follow from that proof.
+
+Its signed contrast is $-2(c_*c_*^T)_{01}=2s_0/3$, and only the high
+branches cost dimension three. The complete supported plus effect is
+
+$$
+F_+=\frac{I_3}{2}+\frac12\left[
+ \delta D^\dagger D+T^\dagger T+S^\dagger S-2K_*^\dagger K_*\right].
+\tag{JR.64}
+$$
+
+On five modes it is $EF_+E^\dagger+(I_5-P)/2$.
+This effect satisfies the original contrast constraint, not the
+prescribed full binary-effect identity (CA.11). For example its $02$
+entry is $s_0\kappa_{02}/3>0$, whereas (CA.11) has zero $02$ entry.
+This distinction prevents using the example as a counterexample to CA's
+narrower class or its resource classification.
+
+The $K_*$ height difference is $4\mathsf b(1)/3<0$. The total live
+difference is $d_f$, and the high difference is
+$(1-\delta)\Delta A>0$. The other two low differences have sum
+$\delta\Delta A+\Delta B+\Delta C-4\mathsf b(1)/3>0$.
+Their absolute sum is at least that sum. Adding the actual spectral
+failure contribution $L_f$ proves the first inequality in (JR.63).
+The strong endpoint is $T_{\rm flat}-\mathsf b(1)$, so its difference
+is at least $-\mathsf b(1)/3>2/7500$ by (JR.52).
+
+For the comparator, take Definition 44.1 at $s_0$ and apply the kernel
+(JR.35) with parameter $s_{\rm int}/s_0=2/3$ to report the lower
+binary contrast. Keep the old $\sigma$, every $\tau$ and spectral
+failure label, the branch type, and the new reported binary value.
+Write $\sigma(\alpha)$ for the old designated binary value, including
+the old $r$ on scalar rows. For each old label $\alpha$, its two new
+probabilities are $p_y(\alpha)k(r\mid\sigma(\alpha))$ with the same nonnegative
+input-independent kernel. Their absolute height differences sum to
+$|p_{27}(\alpha)-p_5(\alpha)|$. Consequently the comparator's full
+actual-record TV remains exactly $\mathcal T(s_0)$, while its binary
+contrast is $s_{\rm int}$, cost is the same plateau value and forgotten
+full channel is unchanged. Reporting $\sigma$ directly below $s_0$
+would have contrast $s_0$, so this kernel is required for the claimed
+exact lower contrast. No comparator label is discarded. $\square$
+

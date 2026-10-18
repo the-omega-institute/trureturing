@@ -1,0 +1,18 @@
+**定理 56.4（Exact root-pair fee）。** The exact minimum additional adaptive fee on the actual root-pair archive of Definition 56.3 is $\chi_v$.
+
+**证明。** If the whole rectangle is homogeneous it stops freely. Otherwise examine all four possible first words at chronological index one, where the physical window is $\{2,3,4\}$ modulo $T$.
+
+A first $00$ or $01$ clears all tails. Neither charges either of phases zero and two: $00$ has no charge and $01$ has charge $\{3,4\}$. Completion therefore requires constancy of each phase's whole INITIAL tail fibre. If their two labels agree, the archive was already homogeneous. If they differ, both sources have coefficient zero after this parent through absolute position $k-1$; the first remaining distinguishing position is $k$, the first bit of block $p$. Common rejection cannot distinguish them. Counting the parent at index one, at least $p$ further blocks are necessary. The literal continuation
+
+$$
+(00)^{p-1}\mid10
+\quad\text{at indices }1,\ldots,p
+\tag{56.5}
+$$
+
+attains $p$: its first word clears all possible tails, its waits are paid, and its last charge $\{k,0\}$ marks only phase zero. This proves the second row of (56.4) whenever it is needed. It is the endpoint-return mechanism of Theorem 2.2 at $N=\lceil(k+1)/2\rceil=p+1$, with its already-paid root block removed; the present archive has exactly that supplier's low-tail pair.
+
+A first $10$ rejects exactly INITIAL tail $h-1$ at both phases, at one common bottom endpoint. Its successful difference marks phase two and not phase zero. The two success archives therefore have known phases, but all their lower tails have already merged at that word's zero. Necessity and sufficiency are exactly the third row of (56.4), and successful and rejected sources stop after this one complete block.
+
+A first $11$ rejects the top two INITIAL tails at both phases. If $h=2$, this absorbs the whole archive and cannot help a nonconstant target. If $h>2$, its successful difference marks phase two and not phase zero, leaving two known-phase rectangles at paid depth two. The common rejection band must be homogeneous. Lemma 56.2 gives the exact further prices of the two success archives, so the last row of (56.4) is both necessary and sufficient. Its rejection sources stop after the first of these additional blocks. These four actions and immediate stopping exhaust every adaptive first choice. Their exact lower bounds and literal constructions prove the minimum. The constant and unequal-label cases, including $p=2$, are included without a special unattainable operation. ∎
+

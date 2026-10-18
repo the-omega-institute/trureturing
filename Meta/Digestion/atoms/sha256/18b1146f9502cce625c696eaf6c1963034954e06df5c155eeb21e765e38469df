@@ -1,0 +1,30 @@
+## 8. A quotient bridge from sign changes to finite collisions
+
+For a five-read history define linear maps on real $2\times2$ matrices by
+
+$$
+\mathcal L(X)_i=\operatorname{tr}(A_iX),\qquad
+(\mathcal I v)_i=iv_i,\qquad
+\mathcal Qv=(v_i-v_0)_{i=1}^4,
+$$
+
+$$
+\mathsf B=\mathcal Q\mathcal L,\qquad
+\mathsf C=\mathcal Q\mathcal I\mathcal L,\qquad
+\mathsf T_k=\mathsf B+k\mathsf C.
+\tag{8.1}
+$$
+
+The kernel of $\mathcal Q$ is exactly the constant vectors. Write
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$,
+
+$$
+\mathfrak b(S,Y)=sY_{11}+pY_{22}-rY_{12}-qY_{21}.
+\tag{8.2}
+$$
+

@@ -1,0 +1,23 @@
+## 438. Distortion of an angle for every u>2
+
+For u>2 put a0=sqrt(1-u^(-2))>1/2. If phi,psi in (0,pi) have
+positively oriented vectors proportional to (cos(phi),sin(phi))
+and (cos(phi),a0*sin(phi)), respectively, then
+
+    |psi-phi|<1/u^2.                              (438.1)
+
+Their difference delta has absolute value less than pi/2. The exact
+angle-between-vectors formula gives
+
+    tan(|delta|)=(1-a0)*|sin(phi)*cos(phi)|
+                  /(cos(phi)^2+a0*sin(phi)^2)
+                <=(1-a0)/(2*sqrt(a0)).
+
+The inequality follows from (|cos(phi)|-sqrt(a0)*sin(phi))^2>=0.
+Since |delta|<=tan(|delta|) and 1-a0=1/[u^2*(1+a0)],
+
+    |delta|<=1/[2*u^2*sqrt(a0)*(1+a0)]<1/u^2.
+
+This covers phi=pi/2 and the zero-distortion case too. The proof
+requires only u>2, rather than importing the earlier u>3 domain.
+

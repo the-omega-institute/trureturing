@@ -1,0 +1,41 @@
+**开放问题 11.3（带外纤维与不受限原根目标）。** The radius in
+Theorem 10.2 is existential; no numerical radius, stability modulus
+or computational cost bound is specified. Band membership is a known
+input restriction. The history does not thereby certify that its
+actual world lies in that band, and no collision between a band
+world and a world outside it has been excluded. At $H_*$, every
+$L_2$ family must contain a world outside this band, but such a
+necessary condition neither realizes a losing family nor supplies
+an inverse on all of $\mathcal F_*$. The full-fiber gain-ray theorem
+still permits families of different gain rays.
+
+For a complete two-further-reading inverse on $\mathcal F_*$ one
+must select a single sixth atom and, for every actual response, stop
+on a singleton or select one seventh atom injective on that entire
+retained fiber. Alternatively an $L_2$ witness must use fixed legal
+worlds realizing every ancestor simultaneously, with losing actual
+children for both sixth atoms. Different children and terminal
+actions can use different collision pairs, including disjoint pairs;
+constant-response arms also remain in scope. Neither alternative
+is supplied by the slice or band inverse.
+
+The exact-slice and band results concern (8.1) and its affine copies
+(11.1), not arbitrary $Y,z$ in (1.3). Corollary 8.3 provides only
+its explicit distinct-reading, negative-discriminant exclusion on
+some further histories. The complementary parent arms, other
+original histories and early stops retain their own obligations.
+At the distinct $MMJM$ parent, the unrestricted four-target and
+larger $L_3$ question and the whole-fiber three-read inverse remain
+the questions of Section 7. The $H_*$ restrictions do not impose a
+common gain, drift or source stratum on that distinct parent.
+
+The full original-clock alternative remains
+$n_{\mathrm{det}}(3,0)\ge9$ versus a lawful decoder for every
+$(P,g,\delta)\in\mathcal W_3$ in at most eight total readings.
+It quantifies over all initial actions and actual branches, all
+constant drifts, every nonzero cubic-or-lower gain with all signs
+and sampled or repeated roots, and arbitrary deterministic policies
+without regularity assumptions. The three conclusions above give
+neither an original-root lower-bound tree nor an unrestricted
+eight-reading decoder.
+

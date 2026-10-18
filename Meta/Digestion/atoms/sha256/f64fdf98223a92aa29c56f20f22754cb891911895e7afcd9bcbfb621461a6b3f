@@ -1,0 +1,37 @@
+**lemma 4.1 (One edge and complementary triples).** Conditional on a
+specified phase, the two target-spin masses for one active edge are
+as follows. The first entry denotes the majority spin when entries
+differ.
+
+| Target position | XOR zero | XOR one |
+| --- | --- | --- |
+| In the edge | $(a^2,b^2)$ | $(\eta,\eta)$ |
+| Outside the edge | $(ac,bc)$ | $(2a\eta,2b\eta)$ |
+
+The sum of maximal target-spin masses after one active XOR with
+phase known is $a$. For distinct adjacent edges, each label pair
+$01,10,11$ has conditional probability $\eta$ and maximal
+target-spin mass $a\eta$, for every target position. The pair $00$
+has its two constant-triple assignments of masses $a^3,b^3$.
+Every phase-specific full-law mass includes a factor $1/2$.
+
+Proof. Zero XOR permits two constant pairs, of masses $a^2,b^2$;
+one XOR permits two opposite pairs, each of mass $ab$. For an
+exterior target, multiply by its independent spin probability.
+The two sums are $a^2+\eta=a$ and $ac+2a\eta=a$.
+
+Two adjacent labels determine a triple up to simultaneous spin
+complementation. Unless both labels are zero, the two assignments
+are mixed, with masses $a^2b=a\eta$ and $ab^2=b\eta$.
+Their total probability is $\eta$. A target in that triple takes
+opposite spins on the two assignments, so its maximum is $a\eta$.
+An exterior target has independent majority factor $a$, giving
+$a\eta$ as well. Both-zero labels force a constant triple. The
+argument covers both orientations of adjacent edges. Disjoint
+edges use independent spin sets in this same realization. $\square$
+
+These are the products already used in Original, Lemma 3.1, and
+Endpoint, Lemmas 3.1–3.2. In particular every nonempty finite
+consistent spin assignment has positive probability for the stipulated
+$p$. Impossible parity or repeated-label constraints have mass zero.
+

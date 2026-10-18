@@ -1,0 +1,16 @@
+**假设 189.1（固定表示与两种次序）。** 使用假设164.1与假设176.1的固定表示
+
+$$
+\mathsf a=-iX,\qquad \mathsf b=-iY,\qquad
+U_h=U_{h_1}\cdots U_{h_N},\qquad U_\epsilon=I.
+$$
+
+矩阵按印刷词顺序相乘，对列状态右因子先执行；方格路径仍按从左到右的叶事件累计。二者的实际时间对应须另供编译。定理164.3的既有正常形是本章的中间步骤：
+
+$$
+U_h=(-1)^{K(h)}\mathsf b^{v}\mathsf a^{u},
+\qquad K(h)=B_h(1,1).
+$$
+
+这保留整数次幂中的中心符号，不把 $\mathsf a^2=\mathsf b^2=-I$ 约化遗漏。它复用[本卷固定版本，假设164.1、定理164.3–164.4及第176章](https://github.com/the-omega-institute/trureturing/blob/35c1ba7ae929c1434470e3726fa6d1f0b19641f3/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)，不是新 Pauli 定理或新仪器。
+

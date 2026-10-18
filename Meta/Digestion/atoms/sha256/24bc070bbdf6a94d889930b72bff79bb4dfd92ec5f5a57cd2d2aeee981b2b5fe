@@ -1,0 +1,18 @@
+**定义 1.2（一块式协议与两个优化目标）。** 整数 $q$ 满足 $0\le q\le L$。协议 $\Pi$ 准备任意与 $b$ 无关的输入密度态和任意有限维参考，在同一系统上连续作恰好 $q$ 次普通完整系统调用，最后作一次共同联合 POVM，经有限末端处理输出 $\widehat b\in B_n$。允许与源无关的随机化及工作空间初值。仅作用于参考的中间操作与源调用交换，可推迟到末端。调用间不操作系统，不允许逆源、源复位、重新抽取标签、未知 controlled-$U$ 或源相关建议。
+
+记最终条件概率为 $P_\Pi(c\mid b)$，整词错误为 $\eta_b(\Pi)=1-P_\Pi(b\mid b)$。令 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，$M_n=|B_n|=F_{n+2}$，并定义
+
+$$
+\begin{aligned}
+\varepsilon_n^\star(L,q)
+ &=\inf_\Pi\frac1{M_n}\sum_{b\in B_n}\eta_b(\Pi),
+&\beta_n(L,q)&=1-\varepsilon_n^\star(L,q),\\
+\delta_n(L,q)&=\inf_\Pi\max_{b\in B_n}\eta_b(\Pi),
+&\beta_n^{\mathrm{mm}}(L,q)&=1-\delta_n(L,q),\\
+x&=\cos\frac{\pi q}{2L}=\cos(2q\theta).
+\end{aligned}
+\tag{1.1}
+$$
+
+Bayes 目标采用完整 $B_n$ 上的均匀先验；minimax 目标取完整来源域上的最大整词错误。所有下确界均取遍上述整个协议类，准备、参考维数、随机化及测量可随公开整数合同变化。非法答案可归给一个固定合法词。$x$ 描述一次准备后的连续酉迭代，不描述重新准备的 $q$ 份样本。
+

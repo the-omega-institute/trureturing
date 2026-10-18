@@ -1,0 +1,57 @@
+**引理 8.3（准确因子及绝对层）。** 整数多项式恒等式为
+
+$$
+\begin{gathered}
+T_j=Z^2\overline T_j,\qquad P=Z^2\overline P,\qquad
+F_0=144Z^2\overline A,\\
+F_1=288Z^2[61\overline T_1+920ZV_n-981\rho ZW_n],\\
+F_2-2F_1+F_0=1464P.
+\end{gathered}
+\tag{8.12}
+$$
+
+证明。将 $L_j=Zl_j$ 和式 (8.10) 代入式 (8.3) 即得首个因子。对 $F_0$，完整收集是
+
+$$
+\begin{aligned}
+F_0&=1464(42T_0-12ZV_{\rm num})
+ +12\cdot39264Z(V_{\rm num}-\rho W_{\rm num})\\
+&=144[427T_0+3150ZV_{\rm num}-3272\rho ZW_{\rm num}]
+=144Z^2\overline A.
+\end{aligned}
+$$
+
+这里 $1464\cdot42=144\cdot427$、$-1464\cdot12+12\cdot39264=144\cdot3150$、$12\cdot39264=144\cdot3272$。对 $F_1$ 用 $39264-655\cdot24=23544$ 同样得到所列式；最后一个恒等式仍是式 (8.6)，没有丢掉原系统的任一绝对方程。
+
+也可直接看实际读数为什么强迫所需系统。令 $\alpha_j=a_j/Z$、$b_j^{\rm tr}=b_j/N$、$L_j^{\rm tr}=Zl_j/N$。实际迹和增益分别是
+
+$$
+\alpha_jt_i+b_j^{\rm tr},\qquad
+\omega\gamma_j(L_j^{\rm tr}-M_jt_{\rm other}).
+$$
+
+三个差商等式给 $L_j^{\rm tr}\alpha_j+M_jb_j^{\rm tr}=0$。展开同世界的乘积，使用 $t_i+t_{\rm other}=u$、$t_it_{\rm other}=v$，得到共同偏移 $\omega Y_j$，其中
+
+$$
+Y_j=\gamma_j[L_j^{\rm tr}b_j^{\rm tr}
+ -M_j(\alpha_jv+b_j^{\rm tr}u)],\qquad
+ZN^2K^2Y_j=\gamma_jZ^2\overline T_j.
+\tag{8.13}
+$$
+
+实际取得的是 $d+\omega Y_0=0,d+\omega Y_1=24,d+\omega Y_2=48$。其二阶差分为零，且 $\omega\ne0$，故乘以 $12ZN^2K^2$ 给 $Z^2\overline P=0$。单独的初读零和 $d=X-\omega v$ 又给
+
+$$
+\omega(Y_0-v)+X=0,
+\qquad (X-C)(Y_0-v)+X(v-\rho D)=0.
+$$
+
+第二式代入 $\omega=(X-C)/L_{\rm pair}$ 得到。乘以 $655\cdot12ZN^2K^2$ 正是 $F_0=144Z^2\overline A=0$。这里清掉的 $Z,N,K,L_{\rm pair},\omega$ 均已在第 3–5 节证明非零，固定有理整数亦非零。因此每个实际配对必满足
+
+$$
+\overline P(\rho)=\overline A(\rho)=0.
+\tag{8.14}
+$$
+
+这使用实际绝对层 $0,24,48$，不只使用两个世界之间的相等。$Z=0$ 已在任何饱和之前反证，剥离 $Z^2$ 不移除合法源分支。∎
+

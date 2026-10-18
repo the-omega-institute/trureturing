@@ -1,0 +1,104 @@
+**Proposition 2.4 (credited complete RC solution and its exact dictionary).**
+The original normalized problem EP.14 is exactly RC.6: the matrices
+$G,Q,C,L$, the parameter $\tau=s/s_0$, the value $j$ and the additive
+conversion $\mathcal T=T_{\rm flat}+(j-\operatorname{tr}G)/2$ coincide.
+In particular RC's $\omega_{\rm src}$ is EP.10's $\omega$, whereas
+RC's aggregate eigenvalue $\omega(a)$ is a different quantity. Its
+normalized $\beta$ is $\omega/\delta$, not $\omega$ itself.
+
+Here is the selected RC curve in a notation that distinguishes its
+coordinates from the specimen and Kraus matrices. On
+$[0,37/125]\times[7/20,2/5]$ define
+
+$$
+\begin{aligned}
+D_R&=\alpha(1-2a)+a^2,&U_R&=-\alpha+2a-a^2,&V_R&=\alpha-a^2,\\
+n_R&=(D_R,U_R,V_R)^T,&\sigma_R&=D_RU_R,\\
+W_R&=D_RCn_R-2\beta akQn_R,&H_R&=-n_R^TQW_R,&R_R&=W_R^TQW_R,\\
+Z_R&=2H_RW_R+R_Rn_R,&E_R&=2H_RW_R^TW_R+D_RR_R\sigma_R,\\
+g_R&=Z_R^TGZ_R,&\ell_R&=D_R^2\sigma_R Z_R^TCZ_R-E_R^2,\\
+\ell_{1R}&=\ell_R/a,&
+\mathcal P_R&=a^{-1}\det[D_R^2\sigma_R CZ_R-E_RW_R,\ QZ_R,\ GZ_R].
+\end{aligned}
+\tag{EP.18a}
+$$
+
+The divisions are exact polynomial divisions, including at $a=0$.
+RC selects the unique analytic $k(a)\in(7/20,2/5)$ with
+$\mathcal P_R(a,k(a))=0$. Put
+
+$$
+\begin{aligned}
+B_R&=-\frac{R_R}{2D_R\sigma_RH_R}n_Rn_R^T,&
+C_R&=\frac{Z_RZ_R^T}{2H_RE_R},&A_R&=I-B_R-C_R,\\
+\tau_R(a)&=2(A_R)_{01},&
+\omega_R(a)&=\operatorname{tr}A_R-1,&
+\lambda_R(a)&=-\frac{g_RD_R^2\sigma_R}{a\ell_{1R}}\quad(a>0).
+\end{aligned}
+\tag{EP.18b}
+$$
+
+Let $a_\dagger$ be the unique zero of $\omega_R$; RC supplies
+$.2951251<a_\dagger<.2951252$. The map $\tau_R$ is a decreasing
+bijection $[0,a_\dagger]\to[\tau_\dagger,1]$. The exact full residual
+value is the credited pair
+
+$$
+\begin{aligned}
+j(\tau)&=\operatorname{tr}G-2\psi(t),
+ &&\tau=h(t),\quad t_*\leq t\leq t_\dagger,\\
+j(\tau)&=\operatorname{tr}G-\frac{g_R}{H_RE_R},
+ &&\tau=\tau_R(a),\quad0\leq a\leq a_\dagger.
+\end{aligned}
+\tag{EP.18c}
+$$
+
+Here $h,\psi$ are JR.140–.143's initial-frame functions, reused by
+RC63, and $h(t_*)=\bar\tau$. RC identifies the unique simple first
+zero as $d_+(t_\dagger)=0$, with $d_-,d_N>0$, and supplies
+
+$$
+1.04175447537<t_\dagger<1.04175447539,\qquad
+.9962433511188<\tau_\dagger<.9962433511192.
+\tag{EP.18d}
+$$
+
+The initial and selected branches glue with equal value and normalized
+multiplier, giving a $C^1$ value at this finite contact. The unique
+aggregate there is three orthogonal null projections: the fourth
+exposed contact has zero weight. For $\tau_\dagger<\tau\leq1$ the
+four distinct real-null atoms have positive weights and grouped ranks
+$(2,1,1)$, with no later interior support or rank transition. For
+$0<a<a_\dagger$ the original active dual ranks are $(1,2,2)$ and
+the unused fourth block admits a PD completion. RC65 constructs one
+common twelve-label attainer, and an eleven-label attainer at contact,
+with all complex/reference/five-Borel output identities, exact contrast
+and sharp joint acquired cost. These are construction counts; they do
+not by themselves prove minima for actual labels with hidden Kraus
+multiplicity.
+
+Proof of correspondence and conditional status. EP.10–12 and RC.2–3
+give identical source amplitudes, $N$, congruence $G=LNL$, null form
+and contrast matrix. Since $\operatorname{tr}(CX)=X_{01}$, no factor
+of two changes EP.14 into RC.6. RC58.4's reduction is the same
+all-error-optimizer reduction recalled in Proposition 2.2; it does not
+prescribe a complete channel or other effect coordinates. EP.18a–c
+are RC.8, RC.12–13 and RC.63 with renamed variables. RC61's four
+full PSD slacks give the universal bound, RC62's positive weights,
+uniqueness and coverage give all post-contact parameters, RC63 gives
+the identified zero and genuine gluing, and RC65 gives simultaneous
+actual attainment. Thus the credited solution addresses the whole
+original conditional target, not a trial family or only an endpoint
+asymptotic.
+
+RC58's entire nine-coordinate source-box inclusion, RC60's directed
+interval/Bernstein tables and root/sign/denominator comparisons, and
+RC63's interval refinements remain NAMED CONDITIONAL SUPPLIERS here.
+Their finite arithmetic is not executed or independently reauthenticated
+in this companion. Their strict inequalities are used as supplied;
+off-root boxes certify comparisons, not normalized channels. The CG
+root, ranks, normalization, minimax and calibration premises also remain
+conditional. The local proof below uses only EP.18's coarse strict
+inequalities in addition to the common reduction, and Section 7 proves
+its exact correspondence with this supplied RC curve. $\square$
+

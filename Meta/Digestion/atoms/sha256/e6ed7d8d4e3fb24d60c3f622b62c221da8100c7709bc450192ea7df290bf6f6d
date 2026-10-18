@@ -1,0 +1,38 @@
+**Definition 309.2 (The single allocation and its supporting score).**
+As in 297.5 set $R=O(1,2;1,2,0)$,
+$\alpha=(1,1,0,\ldots,0)$, $r=z_R=d(\alpha,0)$,
+$h=d(b,e)-r$ and $G_C=(z_D-r)_{D\in\mathcal D_C}$.
+A complete feasible allocation means one vector $\lambda\ge0$
+satisfying every row of $G_C\lambda\ge h$, with one finite total
+mass $M=\sum_D\lambda_D$. The claims below allow any such finite
+mass. Mass one is normalized feasibility; division by $M$ does not
+preserve the same profile.
+
+For a nonnegative score $Y=(A_w,C_w,P_w;T)$ define
+
+$$
+\begin{aligned}
+g_Y(w,\ell)&=A_w[\ell=0]+C_w[\ell=n(w)]
+                         +P_w[\ell\in\{0,n(w)\}],\\
+g_Y(+,\ell)&=T[\ell=0],\\
+\beta_n&=\sum_{w:n(w)=n}(C_w-A_w),\qquad
+K=\sum_{w\ne+}(A_w+C_w+P_w)+T,\\
+W&=Yr,\qquad B_C(Y)=\max_{D\in\mathcal D_C}Yz_D,
+\qquad\Delta_C(Y)=B_C(Y)-W,\\
+F_{QY}(b,e)&=Yh=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{aligned}
+\tag{309.3}
+$$
+
+Nonnegativity and the same full allocation give
+
+$$
+F_{QY}(b,e)\le YG_C\lambda
+=\sum_D\lambda_D(Yz_D-W)\le M\Delta_C(Y).
+\tag{309.4}
+$$
+
+In particular zero excess proves a necessary relation independent of
+mass, order and hull membership. This is the existing pairing
+(297.5), not an additional duality theorem.
+

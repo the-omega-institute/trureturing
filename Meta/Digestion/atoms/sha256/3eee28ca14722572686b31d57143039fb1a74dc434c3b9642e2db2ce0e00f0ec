@@ -1,0 +1,8 @@
+**定理 11.1（bounded autonomous space is stronger than finite description）。** A deterministic closed generator with bounded complete live space and terminating identical requests has an eventually periodic output stream drawn from a finite output set. Consequently:
+
+1. No individual unbounded true trajectory can be tracked at any fixed finite $E$ in bounded autonomous space.
+2. At $E=0$, a positive contracting trajectory tending to zero but never equal to zero cannot be produced in bounded autonomous space.
+3. Exact-zero and finite-representable neutral periodic trajectories are exceptions, with all actual representation/output widths counted.
+
+**证明。** There are finitely many ready configurations. Their deterministic transition under NEXT must eventually repeat, hence cycle. Termination gives one finite output per transition; the outputs in the finite prefix and cycle form a finite set and are bounded. This proves the first claim. A periodic nonzero exact output cannot tend to zero, while a zero cycle cannot match a trajectory that stays positive forever, proving the second. The exceptions use a constant zero configuration or a three-valued counted phase with stored exact finite vectors.
+

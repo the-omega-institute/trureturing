@@ -1,0 +1,51 @@
+**命题 C-109.2（人口合同的同源字典）。** 对任意 CPTP $T:M_5\to M_5$，下列条件等价：
+$\mathrm{BP}(T)$；$T(\Pi_s)=\Pi_s$ 对所有 $s$ 成立；
+$(T_A\otimes\mathrm{id})(S)\in\mathfrak D$；
+$(T_A\otimes\mathrm{id})(\mathfrak D)\subseteq\mathfrak D$；
+以及归一化、输出因子在前的 Choi 态
+
+$$
+\chi_T=\frac15\sum_{s,t}T(E_{st})\otimes E_{st},\qquad
+\operatorname{Tr}_{\rm out}\chi_T=I_5/5
+\tag{C109.3}
+$$
+
+满足 $(V\otimes W)\chi_T(V\otimes W)^\dagger\in\mathfrak D$。
+此时存在唯一相关矩阵 $M\succeq0$、$M_{ss}=1$，使
+
+$$
+T(X)=M\circ X,\qquad
+(V\otimes W)\chi_T(V\otimes W)^\dagger=J(M/5)J^\dagger,
+\qquad C\longmapsto M\circ C.
+\tag{C109.4}
+$$
+
+最后一式是 $(T_A\otimes\mathrm{id})(JCJ^\dagger)$ 的系数矩阵。
+
+证明。复用 [C-29.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)
+的基人口保持分类及其零平方和证明；这里把来源和量词对应写明。
+BP 对输入 $\Pi_s$ 使输出对角集中在 $s$。正性给
+$|X_{rt}|^2\le X_{rr}X_{tt}$，故 $T(\Pi_s)=\Pi_s$。
+在任意有限 Kraus 族 $K_a$ 中，对 $r\ne s$ 有
+$0=\sum_a|K_a(r,s)|^2$，每个 $K_a$ 因而对角。
+写 $K_a=\operatorname{diag}z_a$ 得 $M=\sum_a z_az_a^\dagger$，
+保迹给 $M_{ss}=1$。反向的 CPTP 性消费
+[SecondOrder 定理 109.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#109-联合记录的正性与最小环境秩)，
+对角 Kraus 作用直接给 (C109.2) 与 (C109.4)。这不是另一个 Schur 分类。
+
+对 $S$ 的实际联合人口逐项为
+
+$$
+\langle r,f(s)|(T_A\otimes\mathrm{id})(S)|r,f(s)\rangle
+=\frac15\langle r|T(\Pi_s)|r\rangle.
+\tag{C109.5}
+$$
+
+若输出属于 $\mathfrak D$，它们迫使各基投影固定。反向由 (C109.4) 的 Schur 乘积正性
+及单位对角得到整个纤维保持。Choi 的同一人口也是 (C109.5)；其正性迫使支撑位于
+$\operatorname{span}\{|s,s\rangle\}$，所以必为
+$\frac15\sum_{s,t}M_{st}|s,s\rangle\langle t,t|$。
+Choi 逆对应恢复 $T(E_{st})=M_{st}E_{st}$，且局部 $V,W$ 恰给 (C109.4)。
+没有转置或遗漏 $1/5$。这些式子只是同一个通道的代数表示，不授予最大纠缠参考输入、
+参考读数，或把一个未知给定的 $JCJ^\dagger$ 物理编程成 $T$ 的程序。证毕。
+

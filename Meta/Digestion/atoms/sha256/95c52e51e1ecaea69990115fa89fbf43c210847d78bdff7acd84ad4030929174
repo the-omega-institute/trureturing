@@ -1,0 +1,81 @@
+**Theorem 7.3 (lawful consumer and the all-pair boundary).** Under
+Assumption 1.3, a YES answer in Theorem 6.2 excludes a uniform finite
+new-read static or lawful serial forward service for the entire $R_Q$
+on the entire $D$. A NO answer excludes only this designated pair.
+The full row image of this family is finite. If every distinct pair in
+that entire attained image has a finite exclusion depth, their maximum
+$H$ yields a correct static current-epoch service with
+
+$$
+q\le2(2^{H+1}-1),\qquad a=0,\qquad
+\ell\le2(2^{H+1}-1)(H+\lceil N/2\rceil),
+\tag{CRE.34}
+$$
+
+where $q$ counts new reads, $a$ new updates and $\ell$ total submitted
+literal-word length. Independently, every actual source permits
+sourcewise finite recovery by paid traversal of the finite current
+tree followed by local inverse reconstruction.
+
+**Proof.** Use the unchanged actual service/prefix existence bridge
+[ARH, (ARH.2.3)][ARH], also used by FJC §5. A controller with a uniform
+finite number of four-valued reads has a finite reply tree after its
+deterministic intervening computation/update segments are compressed.
+The submitted physical addresses have a finite maximum original
+dependency depth, by native prefix locality at every actual epoch,
+including born and absent cases. Two sources from different complete
+rows sharing that original prefix defeat the service. Theorem 6.2
+supplies them for every depth. Real forward updates add no new port
+and do not avoid this obstruction.
+
+Every source in (CRE.12) has the same exterior and reached six-hole
+set. Only its finite equality partition can vary, so its full row
+image is finite. Its exact distinct attained list and original
+realizers can be obtained by [NPL, Theorem 5.3][NPL], or by NSF
+Theorem 5.2's full-row feasibility query for every partition of those
+six holes. Other attained labels must be included. If each distinct
+pair has an exclusion depth, take their finite maximum $H$ (and take
+$H=0$ for a singleton image). Different rows on a common $H$-prefix
+would contradict their pair exclusion. Thus this prefix determines
+the entire row. An exclusion of $\{r_0,r_1\}$ alone supplies no such
+conclusion about other pairs.
+
+Apply the actual epoch-$N$ decoder of [ARH, §2][ARH] and
+[DelayedOriginalReadout, `original_decoder_correct` and
+`original_decoder_service`][DECODER] at every original word of length
+at most $H$. It uses at most two paid current-register reads per word,
+with length at most $H+\lceil N/2\rceil$, including original absence.
+There are $2^{H+1}-1$ words, proving (CRE.34). A compatible finite
+source can then be found by NSF or local finite enumeration. The
+actual source ensures compatibility; prefix determination makes the
+output row correct without identifying that witness with the actual
+source. No post-entry update is required.
+
+For sourcewise recovery, traverse the actual finite $\rho^N u$ using
+paid branch-guided reads. Its complete acquired description has the
+unique finite image inverse supplied by ARH Lemma 19.2 and ABC
+Theorem 2.3. Apply that inverse $N$ times as local computation on
+the description to recover $u$ and hence $R_Q(u)$. This is not inverse
+execution on the register. The traversal uses
+$|\operatorname{Pos}(\rho^N u)|$ new calls and their actual total
+word length, with storage and inverse work charged separately. There
+is no uniform bound on these quantities here.
+
+Pre-cut acquisition remains the paid sourcewise procedure of Theorem
+3.1. For a nonsharing acquisition its raw charge is the ARH bound
+
+$$
+|\operatorname{Pos}(u)|+|H_0|
+ +\sum_{(e,p)\in E}|\operatorname{Pos}((\rho^e u)|_p)|,
+\tag{CRE.35}
+$$
+
+with endpoint occurrences $E$ retaining repetitions and their root
+reads included. Literal-word lengths, actual updates to $N$, finite
+comparison work, descriptions, certification and the complete cut
+have separate costs. The offline support computation, synthesized
+completion and signed finite realizers are common mathematical
+preparation, not runtime evidence about the actual source. Local
+computation, table installation, memory, retention and entry are not
+bounded or refunded by (CRE.34)–(CRE.35). $\square$
+

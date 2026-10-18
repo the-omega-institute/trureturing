@@ -1,0 +1,51 @@
+**Definition 2.1 (coding and mass suppliers).** Use [ABC, Theorems
+2.2–2.3][ABC]. A normal atomic code is a tree over primitive leaves $[j]$
+and a binary constructor $F$, with no subtree $F([j+1],[j])$. Native
+pairing is represented by
+
+$$
+J(X,Y)=
+\begin{cases}
+[j+2],&X=[j+1],\ Y=[j],\\
+F(X,Y),&\text{otherwise}.
+\end{cases}
+\tag{URR.4}
+$$
+
+The canonical coding $B$ and expansion $E$ are effective inverse maps
+between $\mathcal T$ and the normal codes. In particular $B(T_j)=[j]$,
+$j\mapsto T_j$ is injective, and $\rho^a$ adds $a$ to every primitive
+rank while preserving every $F$ node. Consequently $\rho$ is injective;
+its image is not all of $\mathcal T$.
+
+Let $\gamma(u)$ count the $F$ nodes of $B(u)$, as in [CAR, Definition
+2.1 and the proof of Theorem 2.2][CAR]. The supplied identities give
+
+$$
+\begin{aligned}
+\gamma(T_j)&=0,&\gamma(\rho^a u)&=\gamma(u),\\
+\gamma(\langle u,v\rangle)&\le1+\gamma(u)+\gamma(v),\\
+\gamma(\langle u,v\rangle)&=1+\gamma(u)+\gamma(v)
+&&\text{if }\gamma(u)>0\text{ or }\gamma(v)>0.
+\end{aligned}
+\tag{URR.5}
+$$
+
+The last equality holds because a pair with a nonprimitive child cannot
+be the exceptional pair in (URR.4). The parent mass is always at least
+either child mass, including when both children have mass zero. This is
+constructor mass, not native leaf count. Atomic trees have mass zero at
+arbitrarily large rank and arbitrarily large native size.
+
+We also reuse the clock from [ARH, Lemma 19.2][ARH]:
+
+$$
+\kappa(\alpha)=0,\qquad\kappa(\beta)=1,\qquad
+\kappa(\langle u,v\rangle)=2+\kappa(v),\qquad
+\kappa(\rho u)=\kappa(u)+1.
+\tag{URR.6}
+$$
+
+Thus $\rho^p u=\rho^q u$ implies $p=q$ for every finite native $u$.
+No positive period or invertible physical action is introduced.
+

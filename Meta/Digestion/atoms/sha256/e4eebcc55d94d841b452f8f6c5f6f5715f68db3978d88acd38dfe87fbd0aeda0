@@ -1,0 +1,4 @@
+**Proposition 8.3 (The two-state class is empty; intermediate budgets are unclassified).** For $M=2$ and $0<\alpha<1/2$, $\mathfrak A_2(q,\alpha)$ is empty at every $q$. No emptiness classification or matching upper construction for $2<M<S_\alpha$ is supplied by the present argument.
+
+Proof of the emptiness assertion. The two required absorbing labels exhaust the state budget; no active configuration remains. If the initial label is one with probability $p$, the risks require both $p\le\alpha$ and $1-p\le\alpha$, contradicting $\alpha<1/2$. For intermediate budgets Theorem 7.2 still bounds every compliant observer whenever the class is nonempty, but the upper construction fits only at the stated sufficient threshold. These facts neither prove emptiness nor provide an upper bound there. $\square$
+

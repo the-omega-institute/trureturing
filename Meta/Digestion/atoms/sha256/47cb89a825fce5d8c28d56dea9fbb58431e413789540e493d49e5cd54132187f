@@ -1,0 +1,56 @@
+**Lemma 3.2 (component-normalization principle; mature supplier).** Let
+$Q$ be positive at every point of the same $R$. It has exactly the same
+full conditional laws as $P$ on every $U\subseteq[n]$ with $|U|\le r$
+if and only if $Q(s)/P(s)$ is constant on each connected component
+$C$ of $G_r(R)$. Equivalently,
+
+$$
+Q=\sum_C q_C P(\,\cdot\mid C),\qquad q_C>0,\quad\sum_Cq_C=1.
+\tag{OCC.12}
+$$
+
+Write $Z_C=\sum_{s\in C}W(s)$ and $\pi_C=Z_C/Z$. Then
+
+$$
+H(Q)+\mathbb E_Q\log_2W
+ =\log_2Z-D_2(q\Vert\pi).
+\tag{OCC.13}
+$$
+
+In particular the specified full conditionals uniquely determine a
+positive law on $R$ exactly when $G_r(R)$ is connected.
+
+Proof. If $s,t$ are adjacent, take $U$ containing their changed owners
+and of size at most $r$. They have the same outside value, which has
+positive probability under both laws. Equality of the full conditional
+rows gives
+
+$$
+\frac{Q(s)}{Q(t)}=\frac{P(s)}{P(t)}.
+$$
+
+Thus $Q/P$ is constant along each edge and hence each component.
+Conversely all points with one fixed outside-$U$ value form a clique in
+$G_r(R)$. A component-constant ratio cancels in that fiber's conditional
+normalization. This gives equality of every specified full conditional,
+and normalizing on a component gives (OCC.12).
+
+On $C$, $Q/P=q_C/\pi_C$, so
+$D_2(Q\Vert P)=D_2(q\Vert\pi)$. Expanding the left relative entropy
+using $\log_2P=\log_2W-\log_2Z$ proves (OCC.13). If there are two
+or more components, two different positive component vectors give
+different laws with the same conditionals. With one component the ratio
+must be one. This proves both uniqueness directions. $\square$
+
+This is the finite path-ratio principle for conditional specifications,
+not new abstract mathematics. [Slavkovic–Sullivant, §§1–2 and Theorem
+2][SS] treats compatible finite full conditionals with zeros;
+[Emerson, §4 Lemma 1][Emerson] explicitly constructs probabilities by
+path ratios separately on support components. The proof above states
+the actual-owner version and its elementary Gibbs variational identity
+without transferring any succinct-circuit complexity claim. Positivity
+is required only on $R$; Cartesian support positivity and independence
+are not assumed. With zero weights, define $R$ to be the nonempty
+positive support first. A zero partition has no Gibbs law and is outside
+this lemma.
+

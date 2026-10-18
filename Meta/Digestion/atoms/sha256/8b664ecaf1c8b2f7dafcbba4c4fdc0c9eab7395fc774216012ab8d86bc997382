@@ -1,0 +1,47 @@
+**Lemma 2.5 (full native $K_0,K_1$ laws).** Both phases have original
+unnormalized mass
+
+$$
+\tau_{m,d}=\frac{5^{8m}3^{3m}}{L_d^{11m}}.
+$$
+
+The full actual tuple conditional on phase one has law $K_1=\delta_{g_1}$.
+Conditional on phase zero its law is
+
+$$
+K_0(g_0(e))=\prod_{i=1}^m\nu(e_i),\qquad
+\nu(a)=\frac9{25},\quad\nu(b)=\frac{16}{25}.
+$$
+
+These are laws of all $11m$ actual blocks, including selectors and
+connector shapes.
+
+Proof. In either phase exactly $m$ variables are true and $2m$ are
+false, so the variable owners contribute raw product $5^{2m}3^m$.
+Each variable appears in two clauses and has two connectors equal to
+its leaf, so connectors contribute $5^{4m}3^{2m}$. In phase one
+all $2m$ selector blocks are $A$, adding $5^{2m}$. This gives
+$5^{8m}3^{3m}$ and the denominator $L_d^{11m}$.
+
+For phase zero, the selector pair at edge $i$ contributes $9$ for
+choice $a$ and $16$ for choice $b$. Write $h(a)=9,h(b)=16$.
+The weight of its entire unique lift is therefore
+
+$$
+L_d^{-11m}5^{6m}3^{3m}\prod_{i=1}^m h(e_i).
+$$
+
+Expanding the product of the $m$ two-term sums, its sum over all
+edge choices is
+
+$$
+L_d^{-11m}5^{6m}3^{3m}(9+16)^m
+  =L_d^{-11m}5^{8m}3^{3m}=\tau_{m,d}.
+$$
+
+Dividing each row by this phase sum gives the displayed $K_0$.
+The factorization proves conditional edge independence for this precise
+full-tuple law. It does not assert independent clause occurrences or
+independence for arbitrary native relations. The other phase is a
+singleton, proving its $K_1$ law. $\square$
+

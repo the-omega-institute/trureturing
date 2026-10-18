@@ -1,0 +1,37 @@
+**定义 4.2（首零父块）。** 对 $B\in\{0,1\}^m$，若含零，令
+
+$$
+\alpha(B)=\min\{i:B_i=0\},\qquad
+\rho(B)=\text{末端连续一的长度}.
+$$
+
+在原阶尾算子分类 [E] `actual_endpoint_operators` 中，令 $e_s$ 为 $\mathbb Q^{\{0,\ldots,k-1\}}$ 中表示合法尾 $s$ 的标准基向量。含零且内部合法的词 $B$ 的线性尾算子满足
+
+$$
+E_{\alpha,\rho}e_s=\mathbf1_{\{s+\alpha<k\}}e_\rho,\qquad
+E_{\alpha_2,\rho_2}E_{\alpha_1,\rho_1}
+=\mathbf1_{\{\rho_1+\alpha_2<k\}}E_{\alpha_1,\rho_2}.
+$$
+
+被删去的尾进入独立吸收拒绝态；该分类还给出宽 $k+1$ 的算子族。此处只使用同一字面词的实际尾更新与接缝组成；端点模二差仍按 (4.3) 另行保留，尾算子本身不含 INITIAL 标签取得费用。
+
+若 $\alpha(B)<h_t$，该块的拒绝带和成功尾区间分别是
+
+$$
+R_{t,S,B}=S\times\{h_t-\alpha(B),\ldots,h_t-1\},
+\qquad
+I_{t,S,B}=\{0,\ldots,h_t-\alpha(B)-1\}.
+\tag{4.2}
+$$
+
+在成功候选上定义父块差值
+
+$$
+\Delta_{t,B}(j)=\bigoplus_{i=0}^{m-1}B_i c_{-gj+tm+i},
+\qquad
+S_e(B)=\{j\in S:\Delta_{t,B}(j)=e\}\quad(e\in\mathbb F_2).
+\tag{4.3}
+$$
+
+一个父块 $B$ 对节点 $(t,S)$ 是**可合成的**，若 $\alpha(B)<h_t$，$f(v,\theta_j,s)$ 在拒绝带 $R_{t,S,B}$ 上恒定，并且对每个 $j\in S$，它在 $\{j\}\times I_{t,S,B}$ 上恒定。记后一常值为 $\lambda_B(j)$。一个可合成父块的同一个字面词同时决定 $\alpha(B)$、端点差划分 $S_0(B),S_1(B)$ 和共同成功尾 $\rho(B)$；这三项不能分别从不同块取。
+

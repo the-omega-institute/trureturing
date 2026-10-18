@@ -1,0 +1,129 @@
+**Proposition 205.14 (All-length terminal family and precise overlap).**
+For contiguous $J=\{3,\ldots,L\}$, $m=L-2\ge6$, let
+
+$$
+\widehat c_m=4-\frac2{\lceil m/2\rceil},\qquad
+x>\max\{3,2/(4-\widehat c_m)\},\qquad \mu=x+1.
+\tag{205.38}
+$$
+
+On the $m-1$ interior labels $I=J\setminus\{z\}$ use the subset
+measure of 205.10 on that many coordinates, namely the explicit
+coefficients of 201.2, of mass $\widehat c_m$, zero marginals two
+and directed disagreements one. Adjoin terminal $z$ to every zero
+subset, multiply by $x$, and add mass two at the all-active-zero word.
+Call this single measure $\nu$. For every active class set
+$\gamma_j=\mu$ and $t=x$, and form the conditional score (205.33)
+with balanced lifts. Then
+
+$$
+S=\widehat c_m x+2,\qquad W=(\widehat c_m+1)x+2,\qquad
+D(t)=d_*=\Delta_N=\Delta_O=1.
+\tag{205.39}
+$$
+
+Every $E=0$ input with these fixed data is certified by this attainer;
+its own excess is at least one, and if at most one it equals one.
+Adding arbitrary early correct rows to the displayed attainer still
+gives a unit certificate by 205.13. The construction and structural
+statement permit active gaps; the following extraction and hull
+comparisons use the contiguous addresses just specified.
+
+Within the fixed scaled-projection zero-core family with projection
+$s\nu$, $T=sx$, $0\le s\le1$, $A=E=0$, and extracted totals at most
+$\mu$, no residual of support at most one is possible. The family also
+fails the named 201, 202.6, fair-suffix, terminal-product, unscaled
+extraction and terminal-completion tests below. It is not globally
+disjoint from 205.10 or from earlier sufficient families.
+
+**Proof.** The subset formulas prove, for interior $i<j$,
+
+$$
+m_j=2x+2=2\mu,\quad d_{ij}=x,\quad h_{ij}=(\widehat c_m-3)x,
+\quad m_z=S.
+\tag{205.40}
+$$
+
+Since $\widehat c_m\ge10/3$ and $x>3$, one has
+$(\widehat c_m-3)x>1$ and $S\ge2\mu$. Thus the half-density
+hypotheses hold. In (205.32), the interior $10$ deficit equals one,
+while the interior $11$ deficit is
+$[1-(\widehat c_m-3)x]_+=0$. The terminal-pair deficit is the same
+zero positive part; early/interior positive-cell deficits are
+$[1-(\widehat c_m-2)x/2]_+=0$, and $(1,2)$ gives one. These verify
+(205.39), including attainment over the full catalog.
+The actual score is fully specified by the subset atoms, their balanced
+lifts and formula (205.33); marginal totals alone are not its definition.
+For the added-early-row assertion, every table gains at most $E$ and
+the anchor gains exactly $E$, so its $\delta$ is at most one. Its
+data still have $d_*=1$, and (205.34) applies.
+
+In the scaled zero-core family, the $(1,2)$ guard forces every
+extracted total to be at most $sx$. All these totals are attainable:
+$m_j(s\nu)/2\ge sx$, every directed capacity is at least $sx$
+(including $d_{iz}=(\widehat c_m-2)sx$), and the tail is $sx$.
+By 204.2 these are the componentwise maximal totals, and they minimize
+the residual pointwise within this fixed family. Put $a=1-s$.
+The residual at $u_L$ and $v_L$ is respectively
+
+$$
+\frac{m(1+ax)}{m+1},\qquad
+\frac{m[3-a((\widehat c_m-2)x+2)]}{m+3}.
+$$
+
+For both to be at most one would require
+
+$$
+a\le\frac1{mx},\qquad
+ a\ge\frac{2m-3}{m((\widehat c_m-2)x+2)}.
+\tag{205.41}
+$$
+
+They are incompatible since $(2m-\widehat c_m-1)x>2$.
+Unscaled extraction is the endpoint $s=1$ and has support
+$3m/(m+3)>1$, using all hull vertices as in 205.11.
+This excludes the stipulated extraction method, not $E_N$.
+
+The named stock comparisons follow directly. The actual
+$\kappa=\pi=1$ makes their sum two. The strict condition
+$(4-\widehat c_m)x>2$ gives $W<5x$, below the fair-suffix budget-one
+threshold. For the terminal-product family, two interior gains force
+$u\ge4\mu^2/(2\mu+1)$ and $(1,2)$ forces $\tau\ge\mu-1=x$;
+thus
+
+$$
+W\ge\frac{8\mu^2}{2\mu+1}+\mu-1>5(\mu-1)=5x.
+$$
+
+The strict inequality follows by subtracting $4(\mu-1)$ from
+$8\mu^2/(2\mu+1)$, leaving $(4\mu+4)/(2\mu+1)>0$.
+The 201 bound is $(\widehat c_m+1)\mu-1$, exceeding $W$ by
+$\widehat c_m-2$. The 202.6 bound is
+$(\widehat c_m+1)\mu-\widehat c_m/2$, exceeding it by
+$\widehat c_m/2-1$. There are more than two active classes;
+204.7's terminal-dominant hypothesis fails because $2\mu>\mu+1$.
+The full-projection 204.8 test costs $1+(L-2)/(L+1)$.
+These comparisons do not exclude closures or other applications of
+those suppliers.
+
+Finally compare the two constructions in this section. If $m=2q\ge6$,
+205.10 uses $c_m=4-2/(q+1)$, whereas here
+$\widehat c_m=4-2/q$. Its first threshold at $d=1$, less this $W$, is
+
+$$
+(c_m+1)x-W=\frac{2x}{q(q+1)}-2.
+\tag{205.42}
+$$
+
+Thus $E=0$, $x>q(q+1)$ give a strict region below that threshold;
+at equality 205.10 applies at its closed endpoint. Its second
+threshold is $4\mu-3=4x+1$, already below $W$ since
+$W-(4x+1)=(\widehat c_m-3)x+1>0$. For odd $m$, the two coefficients
+coincide and this $W$ exceeds the first threshold by two, so the
+family overlaps 205.10. Added early mass raises $W$ by $E$; the
+strict even-count condition becomes
+$E<2x/[q(q+1)]-2$. At $m=6$, $\mu=5$, one obtains
+$S=46/3,t=4,W=58/3$ and both excesses one, but this example lies in
+the overlap. None of these comparisons establishes global disjointness.
+$\square$
+

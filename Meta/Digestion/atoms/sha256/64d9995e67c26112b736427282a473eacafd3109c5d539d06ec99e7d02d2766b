@@ -1,0 +1,14 @@
+### 462.3 抽出指数底座后的完整剩余律
+
+定义实际剩余密度和质量
+
+$$
+R(v)=B(v)-\tfrac12e^{-v},\qquad
+r=k-\tfrac12.
+\tag{EFA.8}
+$$
+
+EFA.6 给 R(v)>0 于全部 v>0，且 R(0)=0。
+经典 $\gamma>1/2$ 和 $e^\gamma\ge1+\gamma$ 给
+$k\ge\gamma>1/2$，所以 r>0。
+

@@ -1,0 +1,21 @@
+### 66.4 Weighted Hilbert–Schmidt packing and branch entropy
+
+Let H_0(d) be the real Hilbert space of traceless Hermitian d×d matrices, with inner product Tr(XY) and dimension d²−1. For each t,f put P_(t,f,i)=|e_(t,f,i)><e_(t,f,i)|. For real vectors x∈R^d with Σ_i x_i=0 define
+
+    V_f x = ( sqrt(w_t) Σ_i x_i P_(t,f,i) )_(t=1)^r
+             ∈ ⊕_(t=1)^r H_0(d).
+
+Within a fibre, orthogonality of the projectors and Σ_t w_t=1 give <V_f x,V_f y>=Σ_i x_i y_i. Thus each V_f is an isometry on the (d−1)-dimensional zero-sum space. For f≠g, equation (3) gives
+
+    <V_f x,V_g y>
+       =Σ_ij x_i y_j Σ_t w_t Tr(P_(t,f,i)P_(t,g,j))
+       =(1/d)(Σ_i x_i)(Σ_j y_j)=0.
+
+The k image subspaces are mutually orthogonal. Counting dimensions proves (1).
+
+For the stronger weight statement, combine the V_f into an isometry V from the direct sum of k zero-sum spaces into ⊕_t H_0(d). The orthogonal projection VV* is at most the identity. Its t-th diagonal block is w_t Σ_f Q_(t,f), where Q_(t,f) is the orthogonal projection onto the traceless diagonal subspace for basis (t,f). Taking the trace on that block gives
+
+    w_t k(d−1)≤d²−1,
+
+so w_t≤(d+1)/k. Consequently −Σ_t w_t log₂w_t≥log₂(k/(d+1)); nonnegativity of entropy supplies the stated maximum with zero. This argument allows arbitrary positive, unequal weights and arbitrarily large original local environments.
+

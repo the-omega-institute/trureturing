@@ -1,0 +1,40 @@
+### 定理 5.2（Fisher 信息收缩）
+
+定义
+
+\[
+\mathcal I_{\mathrm{out}}
+=
+\sum_{a:q_a>0}\frac{(q_a')^2}{q_a}.
+\]
+
+则
+
+\[
+\mathcal I_{\mathrm{out}}
+\le
+\mathcal I.
+\]
+
+而且
+
+\[
+\mathcal I-\mathcal I_{\mathrm{out}}
+=
+\mathbb E[\operatorname{Var}(S\mid a)],
+\qquad
+S(s)=\frac{d_s}{p_s}.
+\]
+
+证明：对每个 \(a\) 使用 Cauchy–Schwarz：
+
+\[
+\left(\sum_sW(a\mid s)d_s\right)^2
+\le
+q_a\sum_sW(a\mid s)\frac{d_s^2}{p_s}.
+\]
+
+除以 \(q_a\) 并对 \(a\) 求和，利用 \(\sum_aW(a\mid s)=1\)，得到 \(\mathcal I_{\mathrm{out}}\le\mathcal I\)。条件方差分解给出差值公式。证毕。
+
+---
+

@@ -1,0 +1,71 @@
+**定理 13.2（已知整个根六类的任意子集均有八总读解码）。** For every
+$D_0,Y\in\mathbb R$, every $\lambda\ne0$ and every known set
+$K\subseteq\mathcal C_6(H_p)$, there is one deterministic policy
+recovering the complete target $(P,g,\delta)$ for every member of
+$K$ within eight total original-clock readings. The set $K$ has
+no cardinality bound and needs neither common drift, symmetric
+source, gain-sign restriction nor a nonzero sample at seven.
+The policy uses fifth $J$, sixth $J$, and at most one final
+seventh action, with singleton early stops permitted.
+
+Proof. The acquired parent already contains the five readings at
+clocks $0,1,2,3,4$. Its constants $D_0=z_0$ and
+$\lambda=(z_1-z_0)/24$ are available. If the known retained set is
+a singleton, return its complete target. Otherwise execute fifth
+$J$ and immediately read $z_5$, giving $x$. Stop if its entire
+retained child is a singleton. Otherwise execute sixth $J$ and
+immediately read $z_6$. The membership premise $f(6)=0$ makes
+this actual read $\delta$, so $d=(z_6-D_0)/\lambda$ is now
+acquired even when the fifth child had different drifts.
+
+The whole retained set is $K\cap\mathcal C_{x,d}$ and has at
+most two complete worlds by Lemma 12.3. Actual membership makes
+it nonempty. Return the target if it is a singleton. If it has
+two members, evaluate their predictions (13.1) as functions of
+these known candidates. Choose seventh $J$ when their $R$ values
+differ, and choose seventh $M$ otherwise. In the latter case
+Lemma 13.1 guarantees different $S$ values. Thus the chosen one
+coordinate is injective on the entire retained set. Execute only
+that one atom, immediately read it at clock seven, and return the
+unique retained world matching the normalized actual response.
+The two alternative predictions are never two acquired readings.
+
+For an explicit inverse description, form the candidates in the
+three cases of Lemma 12.3, filter by the full known set and history,
+and select the unique candidate matching the last chosen response.
+For its $r,k,\ell,d$, return
+
+$$
+P=\begin{pmatrix}r&\ell-1\\(k-1)\ell+1&1-r\end{pmatrix},\qquad
+g(T)=\lambda\sum_{i=0}^3\alpha_i\ell_i(T),\qquad
+\delta=D_0+\lambda d,
+\tag{13.7}
+$$
+
+where the $\alpha_i$ are (12.7). The rank and positivity filters
+and interpolation identify the complete target, not just a source,
+gain ray or root label. Existence of an inverse value follows from
+the actual legal world; uniqueness is on its entire retained set.
+
+This rule defines one policy for every reachable real response of
+the same known $K$, even if $K$ is infinite. Empty children are
+unreachable. Actions and inverse functions may be arbitrary
+deterministic functions under Definition 1.1; no computability,
+efficiency or noise-stability property is asserted. Normalization
+and (13.7) are mutually inverse for both signs of $\lambda$.
+Every added atom is immediately read on the one unresettable
+trajectory. The maximum budget is $5+1+1+1=8$, with clocks exactly
+$0,\ldots,7$ and no extra acquisition. ∎
+
+The root-six whole-child bound and its terminal injection are
+`repo-derived`. Their mathematical interfaces with preceding results
+are the following; standard interpolation and finite-child action
+selection are reused inside the proof.
+
+| Mathematical source | Parameter correspondence and scope |
+| --- | --- |
+| Definitions 1.1–1.2 and (8.3)–(8.5) | The same full target and literal $H_J(Y)$, with $f=g/\lambda$, $d=(\delta-D_0)/\lambda$; the interpolation trace parameters of (8.2) are $u_{8}=k\ell$, $v_{8}=\ell$, $a_{8}=r$. The special fourth and fifth readings of $H_*$ are not imposed. |
+| Theorem 5.1 | Its final finite-candidate action selection is reused. It assumes at most two targets in every actual fifth-$M$ fiber. Here the fifth action is $J$, the sixth $J$ acquires drift under (12.2), and Lemma 12.3 proves the bound on each entire resulting child rather than assuming it. |
+| Theorem 6.2 | Its common-response, root-six application belongs to the different literal $MMJM$ history (6.1), with additional known $m,j,b,d_6$ conditions. None of those common-response premises is transported to (12.1). |
+| [V, Definition 5.1 and Theorem 5.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) | The parent $H_J(Y)$ and $D_0,\lambda,Y$ agree exactly. V assumes $\delta=D_0$ and $g(7)=0$ and uses fifth and sixth $M$. Here only $g(6)=0$ is promised, arbitrary drifts and terminal roots are retained, and fifth and sixth $J$ are actually read. |
+

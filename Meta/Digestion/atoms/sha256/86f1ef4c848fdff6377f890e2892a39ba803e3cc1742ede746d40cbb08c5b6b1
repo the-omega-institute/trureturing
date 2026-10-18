@@ -1,0 +1,58 @@
+### 84.3. Reconstructible product quartics and the norm polynomial
+
+This section uses \(j\) for the **product** coordinate, distinct from
+the ratio coordinate \(k\) in §83:
+\[
+ \eta=zr=\frac{1+ij}{1-ij},\qquad
+ r=\frac{1+iv}{1-iv},\qquad z=\eta\bar r.               \tag{84.8}
+\]
+For finite \(j,v\), set
+\[
+ k_1=j(1-v^2)-2v,\qquad k_0=1-v^2+2jv.
+\]
+Let \(T_i^{\rm hom}(k_1,k_0;v)\) be the degree-two homogenization
+in \(k\) of the printed polynomial \(T_i(k,v)\) in §83. Define
+\[
+ C_i=\frac{\sigma_i T_i^{\rm hom}(k_1,k_0;v)}{1+v^2},
+ \qquad (\sigma_0,\sigma_1,\sigma_2)=(-1,1,-1).          \tag{84.9}
+\]
+Each division is exact in \(\mathbb Q[b,j,v,p,t]\).
+The resulting \(C_i\) are quartic in \(v\) and affine in \(p,t\).
+This is a complete finite definition of the product polynomials; no
+unprinted coefficient list is an input. Original equations (83.5) give
+\[
+\begin{aligned}
+ N_0+L_0&=\frac{4C_0}{(1+j^2)(1+v^2)^2},\\
+ (1+b^2)h(N_0-L_0)&=\frac{-4C_1}{(1+j^2)(1+v^2)^2},\\
+ (1+b^2)h(N_2-L_2)&=\frac{4C_2}{(1+j^2)(1+v^2)^2}.
+\end{aligned}                                                    \tag{84.10}
+\]
+They retain phase poles by homogeneous continuation. Write
+\(C=\mathcal M(p,t)^{\mathsf T}+c\), and define
+\[
+ A_*=bjv^2-bj+2bv-2jv-v^2-3.
+\]
+The determinant of rows \(0,1\) of \(\mathcal M\) is
+\[
+ m=bj(1+j^2)(1+v^2)^3A_*.                               \tag{84.11}
+\]
+For \(j\ne0\), finite nonconstant original inputs with neither
+phase a pole have \(m\ne0\), by (84.6)–(84.7). Define the two
+rational functions \(p_*,t_*\) by Cramer's rule on those rows:
+\[
+ p_*=(\mathcal M_{01}c_1-\mathcal M_{11}c_0)/m,\qquad
+ t_*=(\mathcal M_{10}c_0-\mathcal M_{00}c_1)/m.           \tag{84.12}
+\]
+Here row and column subscripts of \(\mathcal M\) are zero-based.
+Define two polynomials by exact rational simplification:
+\[
+ F_6=-\frac{\det[\mathcal M\mid c]}{2(1+j^2)(1+v^2)^3},\qquad
+ N_8=\frac{b^2j^2(1+j^2)(1+v^2)^2A_*^2}{2}
+                          (p_*^2+t_*^2-\rho).          \tag{84.13}
+\]
+These expressions are polynomials with respective \(v\)-degrees
+six and eight and \(j\)-degrees four and six. Any original solution
+in this chart satisfies \(F_6=N_8=0\). Conversely is not asserted
+here; only this necessary condition and uniqueness of \(p,t\) at
+fixed \(b,j,v\) are used.
+

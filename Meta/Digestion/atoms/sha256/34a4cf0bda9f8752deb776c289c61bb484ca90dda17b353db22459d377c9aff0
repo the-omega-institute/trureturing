@@ -1,0 +1,52 @@
+## 1. Fixed reader, actual sources and charged observations
+
+Fix the original forbidden-run order $k\ge2$ and complete-block width $m\ge1$. Bits are read in increasing weight order. A legal word avoids $1^k$. The matched integer weights and value are
+
+$$
+G_i=2^i\quad(0\le i<k),\qquad
+G_i=\sum_{h=1}^kG_{i-h}\quad(i\ge k),\qquad
+V_k(w)=\sum_{i<|w|}w_iG_i.
+$$
+
+The reader reports $V_k(w)\bmod2$, with independent absorbing rejection $\bot\notin\mathbb F_2$. Write $T=k+1$. The supplied matched coefficient law is $c_i=G_i\bmod2=\mathbf1_{\{0,-1\}}(i\bmod T)$, of exact period $T$ [S2, §§13–14]. This is the original matched $\Phi_k=X^k-\sum_{i<k}X^i$ reader, rather than a freely selected linear sensor.
+
+The two control alphabets remain separately fixed:
+
+$$
+\mathcal A_{\rm all}=\{0,1\}^m,\qquad
+\mathcal A_{\rm loc}=\{B\in\{0,1\}^m:B\text{ internally avoids }1^k\}.
+$$
+
+The prior is all finite actual complete-block histories in the chosen alphabet, including already rejected histories. A legal endpoint record is $(v,\theta,s)$, where $v\in\mathbb F_2$, $\theta=|w|\bmod T$, and $0\le s<k$ is the terminal run of ones. Generally $\theta\in P=g\mathbb Z/T\mathbb Z$, where $g=\gcd(m,T)$. This volume concerns $g=1$, so $P=\mathbb Z/T\mathbb Z$, indexed by
+
+$$
+\theta_j=-j\pmod T,\qquad 0\le j\le k.
+$$
+
+The initial output $v$ or $\bot$ is free. Afterwards only complete-block endpoints are visible. A controller chooses its next literal $m$-bit word from its actual archive, or stops with an INITIAL label. Every emitted block costs one, including all-zero displacement blocks and blocks containing padding. No reset, copy, intermediate observation, unknown initial clock or combination of different branches is available. The controller knows its own paid displacement $tm$ after $t$ blocks. Offline search time and controller memory are separate resources.
+
+Fix one free initial-value fiber $v$. All four laws concern targets
+
+$$
+f(v,\theta_j,s)=\lambda(j),\qquad 0\le s<k,
+$$
+
+independent of the INITIAL tail. The label set can be arbitrary; its image on the finite phase set is finite. Let $C_v(\lambda)$ be the minimum worst-case number of actually emitted blocks. Labels in the other value fiber may differ and are handled independently. The total cost is $\max\{C_0,C_1\}$; the initial $\bot$ branch returns its prescribed label for free. Constants on either legal value fiber also stop for free. Successful protocols in this volume never reject a legal source.
+
+The supplied actual joint-source interface [S3, Lemma 15.1; S1, Convention 1.3; S4, §1] gives a concrete history for every lower-bound representative. Choose
+
+$$
+N\equiv0\pmod m,\qquad N\equiv-j\pmod T,\qquad N\ge s+2,
+\qquad D=\bigoplus_{i=N-s}^{N-1}c_i,
+$$
+
+and take the single word
+
+$$
+W(v,j,s)=(v\oplus D)\,0^{N-s-1}1^s.
+$$
+
+Coprimality makes the congruences compatible, and increasing $N$ provides the indicated zero separator. Its initial bit contributes $v\oplus D$, its terminal run contributes $D$, its length phase is $-j$, and its actual tail is $s$. It is legal and cuts into locally legal complete blocks. Thus the full-tail sources used at the root and the tail-zero representatives used below are joint realizations, rather than a product of unrelated marginal reachability assertions. The chosen $N$ is a source witness, never information given to the controller.
+
+All displayed protocols have $m<k$. Consequently every $m$-bit word is internally legal and the two alphabets coincide here. This does not make a cross-block seam safe: a run reaching $k$ still rejects in either alphabet. The general equivalence of optimal costs in the two alphabets is already supplied by [S1, Proposition 2.3].
+

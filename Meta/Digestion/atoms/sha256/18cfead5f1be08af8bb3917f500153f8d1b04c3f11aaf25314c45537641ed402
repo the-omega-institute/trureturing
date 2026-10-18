@@ -1,0 +1,104 @@
+**Theorem 5.2 (complete boundary actual-total count).** Under
+Assumption 1.2, on the entire floor
+$t=t_0$, $0\le s\le s_0\tau_*$, the exact minimum is $n=5$.
+On the rising boundary $t>t_0$,
+$s=s_0\tau_{\max}(t)$,
+$$
+n(s,t)=
+\begin{cases}
+5,&t=t_b\ \text{and}\ |B_w(t_b)|\ge|B_z(t_b)|,\\
+7,&\text{otherwise}.
+\end{cases}
+\tag{GC.19}
+$$
+All objective ties, zero signed heights, vanishing weights and the
+collapsed floor directions are included. With the fixed-source
+enclosures of §6, the comparison is strict in the displayed direction.
+Consequently the rising boundary has exactly one five-total point,
+$t=t_b$, and has seven total at every other rising point.
+
+Proof. FA Theorem 79.1 forces every original boundary competitor,
+after proportional subdivisions on the same ray are merged, to a
+saturated $F$ family and a pure $R$ family. At $t>t_0$ their weights are
+$$
+p^F_{\sigma,\upsilon}=\frac q4(1+\sigma X+\upsilon Y),\qquad
+p^R_{\sigma,\upsilon}=\frac{1-q}{4}
+ (1-\sigma k_zX-\upsilon k_wY).
+\tag{GC.20}
+$$
+Their positivity region and variable height contribution are
+$$
+|X|+|Y|\le1,\qquad k_z|X|+k_w|Y|\le1,\qquad B_zX+B_wY.
+\tag{GC.21}
+$$
+For clarity, the underlying equality mechanism is distinct from
+restricting to a convenient witness: strict Jensen forces all
+failure-carrying directions to $u_F$ and saturation, and residual
+Cauchy equality fixes $u_R$. The failure off-diagonal moment kills the
+$\sigma\upsilon$ Fourier coefficient on $F$; the live $zw$ moment
+kills it on $R$. The first live moments yield (GC.20).
+Thus this is the entire forced original equality class.
+
+The published source inequalities give $0<k_z<1$. Directly,
+$$
+k_w^2=\frac{q^2v_F}{(1-q)(1-qv_F)},\qquad
+k_w=1\ \Longleftrightarrow
+q=\frac1{1+v_F}\ \Longleftrightarrow
+t=\nu(1+v_F)=t_b.
+\tag{GC.22}
+$$
+In particular, $k_w>1$ for $t_0<t<t_b$ and $k_w<1$ for $t>t_b$.
+
+Reflections let us use the nonnegative objective coefficients
+$|B_z|,|B_w|$ and count the first-quadrant vertices. When $k_w<1$
+the second diamond contains the first. Its axial vertices $(1,0)$
+and $(0,1)$ each have two positive $F$ weights and four positive $R$
+weights, hence six low labels. When $k_w>1$ the relevant vertices are
+$$
+(1,0),\qquad (0,1/k_w),\qquad
+\left(\frac{k_w-1}{k_w-k_z},\frac{1-k_z}{k_w-k_z}\right).
+\tag{GC.23}
+$$
+Their positive $(F,R)$ counts are respectively $(2,4)$, $(4,2)$
+and $(3,3)$. At the mixed vertex one weight from each family vanishes
+and the other three are strictly positive. At $k_w=1$, a signed
+$(0,1)$ vertex has $(2,2)$ positive weights; the signed $(1,0)$
+vertices still have $(2,4)$. A $Y$ vertex is optimal precisely when
+$|B_w|\ge|B_z|$.
+
+Here $u_F<1<u_R$ separates the two families, and all their signed
+coordinates are nonzero for $t>t_0$, so these positive weights count
+distinct supported rays. To exclude a smaller nonvertex optimum,
+write any point of the optimal face as a convex combination of its
+optimal vertices. Each weight in (GC.20) is nonnegative and affine.
+A positive weight at any positive-coefficient constituent vertex
+stays positive in the combination. The combination therefore contains
+that vertex's support. This proves that the minimum support among
+linear optima is achieved at an optimal vertex, including a constant
+objective and every tie along an optimal edge.
+
+At $t=t_0$, $v_R=0$. The live $w$ moment forces $Y=0$ and the two
+$\upsilon$ signs in each $R$ direction coincide. The distinct-ray
+weights are
+$$
+p^F_{\sigma,\upsilon}=\frac q4(1+\sigma X),\qquad
+p^R_\sigma=\frac{1-q}{2}(1-\sigma k_zX),\qquad -1\le X\le1.
+\tag{GC.24}
+$$
+Both $R$ weights are strictly positive. At $X=1$ or $-1$ there are
+exactly two positive $F$ weights and two $R$ weights; at an interior
+$X$ there are more. An objective-maximizing endpoint therefore gives
+four low and none can give fewer. Its available contrast is
+$s_0\tau_*$, so it also solves every lower requested floor contrast:
+the original requirement is an inequality.
+
+FA actual-label rigidity prohibits combining distinct rays into one
+low outcome through hidden Kraus multiplicity. Proportional
+subdivisions of a pure or saturated ray preserve its absolute height
+sum and only increase the count. Supported-zero encoders add labels.
+The high supported acquired mass is positive, hence requires at least
+one additional high label. The common constructor in §10 attains the
+counts with exactly one such label, including the complement. These
+are lower and upper bounds for original **total actual** counts.
+The strict scalar comparison follows from Proposition 6.2. $\square$
+

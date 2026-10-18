@@ -1,0 +1,18 @@
+## 8. Legal interference, information Laplacian and shortest phase-readout depth
+
+The finite objective in Definition 1.1 also measures the sensitivity of a
+specified coherent experiment. This chapter gives the complete map: legal
+word pairs become two-mode interference blocks; their harmonic weights
+become a classical Fisher matrix; the same weights are conductances of a
+conditional-resampling chain. A separate pulse construction reads coherences
+beyond those blocks and gives an exact depth within its stated menu.
+
+Throughout this chapter, $n\ge1$ is finite and $p=(p_u)_{u\in B_n}$ is one
+actual probability vector. Whenever risk, phase sensitivity and resampling
+are compared, they use this same $p$. It may be a specified finite marginal
+of an actual law, but no stationary extension or attaining producer is
+assumed. The coherent controls below are an explicit additional mathematical
+menu. Their availability is an assumption of the experiment, not a consequence
+of a native replacement rule, a geometric drawing or a classical transition
+matrix. All derivations here are ordinary mathematical proofs.
+

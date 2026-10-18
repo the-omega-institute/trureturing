@@ -1,0 +1,83 @@
+**Example 323.1 (The actual earlier-unqueried output).**
+At $(r,g)=(19,436)$, $F_{19}=4181$, the legal window is
+$419\le436\le836$, and $N=1822917$. Its residues modulo
+$2,3,5,7$ are $1,0,2,5$, so its prime-reply word is $0100$.
+The legal $N(3,4;1,0,0,0)$ makes two actual requests, obtains
+$00$, and emits earlier **unqueried** label 1. Replacing its
+unit mass there by the endpoint output zero changes mass one and
+has $\ell^1$ defect two, TV one. No such pruning is used in the
+full-catalog support bounds. A numerical exhaustion output later
+than both queries in 320 is a property of that explicit law only,
+not a restriction on the competitor catalog.
+
+**Literature scope 323.2.**
+David Blackwell, *Comparison of Experiments*, Second Berkeley
+Symposium (1951), pp. 93–102,
+[sections 2–3, Theorem 2 and proof](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf),
+uses finitely many probability measures on a Borel space, bounded
+finite-dimensional loss actions and whole attainable loss vectors
+under randomized decision procedures and their convex closure.
+Its supporting-hyperplane comparison is the mature whole-vector
+framework used here. It supplies neither the displayed integer
+coefficients nor a reverse hard-two increasing-stopping theorem.
+
+Jędrzej Kaniewski, Troy Lee and Ronald de Wolf, *Query complexity
+in expectation*,
+[arXiv:1411.7280v1, Definitions 6 and 8, Theorem 9 and both directions](https://arxiv.org/pdf/1411.7280v1),
+characterize nonnegative scalar expectation through nonnegative literal
+degree. Cost is the maximum supported root-to-leaf depth. Their
+converse samples nonnegative coefficients of total mass $M$ with
+probabilities $\alpha/M$ and rescales the scalar output by $M$.
+This gives a scalar expectation, and does not furnish a normalized
+joint output law, equal counterfactual schedule masses or increasing
+first-queried-zero execution. Those vector and resource conditions
+are supplied by the actual constructions 319–321. These citations
+carry only their specified framework roles; no broad novelty or
+priority assertion follows.
+
+Finite atomic output laws here give their finite support mass one,
+whereas every unchanged original nonatomic target gives it mass zero.
+Their TV distance is therefore one. Selected marked-target accuracy
+does not approximate those nonatomic targets or change the consumer.
+Both the full original output carrier and all original competitors
+remain present in the lower directions. Every permitted positive
+vanishing actual tail, every multiple-zero word, negative singleton
+demand, independent union row and closed cap has its stated role.
+
+**Unresolved question 323.3 (The original simultaneous budget).**
+With the full definitions of 315 and the hull (317.2), the remaining
+unrestricted assertion is: for every $L\ge3$ and every full
+$y\ge0$ with $\Delta_O(y)\le1$, there exist one unrestricted
+full $V\ge0$ and one $\theta\in[0,1]$ such that
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H(Qy-QV)\le\theta,\qquad
+\sigma_H(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\tag{323.1}
+$$
+
+The residual is signed, and nonzero zero-cost $V$ at $\theta=1$
+remains allowed. There is no exact-law, exact-quotient, fixed-anchor,
+unary-only, restricted-label or positive-residual restriction.
+The alternative negative witness requires the same actual
+$(b,e)\in H_N$, one complete feasible $N$ allocation of mass
+$M\ge1$, and a full unit-$O$ score satisfying $F_{Qy}(b,e)>M$,
+together with an actual original common-seed $N$ attainer and a
+uniform strict lower bound against every original arbitrary-address,
+full-carrier $O$ competitor. Equivalently the original positive-cap
+question is whether, for every entire sequence (315.2),
+$\mathcal F_N(a,c)\ne\varnothing$ implies
+$\mathcal F_N(a,c)\cap\mathscr C_{L_a}\ne\varnothing$.
+
+The diagnostic 317.1 is excluded from full $N$ feasibility, while
+321.1 supplies a law in both classes on its declared family. The
+regional statement 322.1 excludes a separator only on that stated
+$H_9$ continuum. These results establish neither unrestricted
+alternative, a general unequal-tail optimum, a four-tail allowance,
+a gapped primal construction nor attainment at the diagnostic lower
+bound. The complete support tables and Boolean endpoint proof are
+finite exact certificates; the all-horizon embeddings, all-real
+affine proof and original correspondence provide their stated
+quantifiers. No formal kernel verification is asserted.
+

@@ -1,0 +1,68 @@
+**Definition 3.1 (Fixed-loss tilt).** On the good exterior fibers above put
+
+$$
+\begin{aligned}
+d_C(w;y)&=\Delta_P(wy,0^Ly),\\
+Z_C(t;y)&=\sum_w p_C(w;y)e^{t d_C(w;y)},\\
+\pi_C^t(w;y)&=\frac{p_C(w;y)e^{t d_C(w;y)}}{Z_C(t;y)},\qquad t\in\mathbb R.
+\end{aligned}
+\tag{3.1}
+$$
+
+In these finite sums take $d_C(w;y)=0$ on incompatible coordinates,
+whose probabilities are zero. Compatible contrasts are finite by (2.4),
+so $0<Z_C(t;y)<\infty$ for every real $t$ at each good fiber.
+For fixed $t$ these are measurable conditional kernels, with positive
+mass on exactly the compatible words. No expectation of an exponential
+over exteriors is needed. On a null exterior set choose any legal
+probability vector, without imposing compatibility statements there.
+
+Cocycle additivity makes (3.1) independent of the reference completion:
+using a compatible $z$ instead of $0^L$ changes every compatible score
+by the common constant $-\Delta_P(zy,0^Ly)$. That factor cancels in the
+normalization. This invariance of the kernel does not require $f$.
+
+**Finite-sum compatibility.** For intervals $C\subset D$, fix a good
+exterior $y$ of $D$ and a configuration $v$ on $D\setminus C$ having
+a legal completion. In formulas $wv$ denotes the combined assignment
+on $D$, and $vy$ the exterior of $C$. The sums in this compatibility
+calculation run over compatible completions; other coordinates are zero.
+Define
+
+$$
+r(v;y)=\sum_s p_D(sv;y)>0.
+$$
+
+The simultaneous original conditional versions give
+$p_D(wv;y)=r(v;y)p_C(w;vy)$. Moreover
+
+$$
+d_D(wv;y)=d_C(w;vy)+b(v;y),\qquad
+b(v;y)=\Delta_P(0_Cvy,0_Dy).
+\tag{3.2}
+$$
+
+The zero fillings in (3.2) are legal. The second term is independent of
+$w$. Thus conditioning the tilted $D$-kernel on $v$ gives exactly
+
+$$
+\frac{\pi_D^t(wv;y)}{\sum_s\pi_D^t(sv;y)}
+=\frac{r(v;y)p_C(w;vy)e^{t(d_C(w;vy)+b(v;y))}}
+{r(v;y)e^{t b(v;y)}\sum_s p_C(s;vy)e^{t d_C(s;vy)}}
+=\pi_C^t(w;vy).
+\tag{3.3}
+$$
+
+This proves the nested resampling identity by finite summation over $v$.
+Incompatible $v$ has zero mass and is never divided by. Stationarity of
+the chosen original versions and shift invariance of $\Delta_P$ give
+shift covariance. The same good sets work for all real $t$, since (3.3)
+is an algebraic identity of finite sums once its ingredients are fixed.
+
+These are full-exterior kernels on the stated conull domain. Their
+compatibility is not a construction of a global stationary law $P_t$,
+a finite hidden realization, or an implementable intervention.
+No continuity in exterior records, finite-boundary dependence, Gibbs
+interaction, or identification of $\Delta_P$ with the original
+conditional log-density ratio is assumed or derived.
+

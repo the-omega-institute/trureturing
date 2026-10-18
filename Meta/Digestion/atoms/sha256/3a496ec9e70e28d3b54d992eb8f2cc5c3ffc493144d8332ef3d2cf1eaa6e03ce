@@ -1,0 +1,46 @@
+**First rectangle.** Substitute $a=3+X$, $b=4+Z$ with
+$0\le X,Z\le1$. Then $p=12+4X+3Z+XZ$, $s=7+X+Z$. Set
+
+$$
+\begin{aligned}
+E_1&=14pL_0-8D
+ =186p^2-1010ps+4186p+864s^2-5664s+6720,\\
+E_2&=35D-168pK_0
+ =-1162p^2+6902ps-30562p-3780s^2+24780s-29400.
+\end{aligned}
+\tag{2.8}
+$$
+
+In the ordered monomial basis
+$(1,X,Z,X^2,XZ,Z^2,X^2Z,XZ^2,X^2Z^2)$ the entire coefficient
+rows are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+ &1&X&Z&X^2&XZ&Z^2&X^2Z&XZ^2&X^2Z^2\\ \hline
+E_1&1584&632&-948&-200&702&-492&478&106&186\\
+E_2&4536&14140&24276&5236&2730&6468&-2394&-70&-1162
+\end{array}
+\tag{2.9}
+$$
+
+Here $632X-200X^2\ge0$; the other terms of $E_1$ except
+$-948Z,-492Z^2$ are nonnegative. Thus
+
+$$
+E_1\ge1584-948-492=144>0,\qquad
+E_2\ge4536-2394-70-1162=910>0.
+\tag{2.10}
+$$
+
+For $E_2$ the inequality drops its nonnegative terms and bounds the
+three remaining monomials by one. Equations (2.7)–(2.8) give exactly
+
+$$
+\frac{E_1}{5D}=\ell-\frac85=u-\frac35,\qquad
+\frac{E_2}{60D}=v-\frac5{12}.
+\tag{2.11}
+$$
+
+Hence $u>3/5$, $v>5/12$ and $uv>1/4$, a contradiction.
+

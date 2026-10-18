@@ -1,0 +1,33 @@
+**Lemma 6.1 (Decomposition of an arbitrary auxiliary probability
+space).** A positive-measure atom means a measurable set $A$ of
+positive measure such that every measurable subset of $A$ has
+measure either zero or $\nu(A)$. It need not be a singleton.
+All such atoms, modulo null equality, admit an empty, finite or
+countable list of disjoint measurable representatives $A_n$ with
+weights $\lambda_n=\nu(A_n)>0$. The measurable remainder
+
+$$
+\mathsf U_0=\mathsf U\setminus\bigcup_n A_n,\qquad
+d=\nu(\mathsf U_0)=1-\sum_n\lambda_n
+\tag{6.1}
+$$
+
+is atomless.
+
+Proof. If two atoms have intersection of positive measure, that
+intersection has full measure in each, so they agree modulo null
+sets. Otherwise their intersection is null. Distinct atom classes
+of measure at least $1/m$ number at most $m$: the measures of
+any finite collection add after removal of null intersections and
+have sum at most one. Every positive measure exceeds $1/m$ for
+some positive integer $m$. Taking the union of these finite sets
+shows that the atom classes are at most countable.
+
+Choose representatives and remove from each the preceding
+representatives. This removes only null intersections, preserves
+its positive weight, and gives disjoint measurable atoms. Their
+complement is measurable. A positive-measure atom in that complement
+would be an additional atom class absent from the list, a
+contradiction. Countable unions and differences suffice; no
+completeness assumption was used. $\square$
+

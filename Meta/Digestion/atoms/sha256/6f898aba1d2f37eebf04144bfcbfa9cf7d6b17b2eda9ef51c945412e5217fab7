@@ -1,0 +1,61 @@
+**Theorem 4.4 (literal D2 replay and structural extension).** The data in
+PVC.6, together with the fixed public code/binding, identify exactly $h$,
+including conversion, registry, own-code capture and all partial states.
+The literal $\Pi_2$ lift has endpoint $\Gamma_2(Y(h))$ and transports each
+lawful next native occurrence, with the same raw one-edge IN exits and
+the same disabled nonexecutions.
+
+Proof. Start RCA's word-encoded Step at the same primitive foundation.
+Reconstruct only the canonical original packet from the extracted seed
+and $H$. Feed the original fixed boot/preparation inputs, then $J_0$ at
+old variable INs. If $A\ne\bot$, select the actual Install instrument
+before ordinary row lookup at the old Ready with exactly $A$ completed
+frames. Feed fixed $E(L)$, captured $\Delta(D_2)$ frame and the corresponding
+serialized $E(D_2)$ at their distinct installation kinds. Before DONE
+lookup remains in the active bootstrap, with partial new bits retained
+separately. Afterwards feed $J_1$ only at installed variable INs. Stop
+after the extracted $n$ rows.
+
+Prove the assertion by induction on that native row count. The base is
+the original primitive entrance. Equal pre-row raw records and the selected
+input give equal RD, WR, adjacent moves, EX, BF, IN, OUT, TOK, CTL and
+boot constructors by RCA Proposition 12.5's explicit local transformations.
+Its receipt rule preserves the updated meter read head in the alias case.
+The only extra instrument choice was fixed by $A$. All other choices of
+$D_2$ are row tests on these same data.
+
+In particular Step has no Convert, Call, graph-materialize or register-map
+opcode. It interprets the compiled native row implementing that work.
+A represented converter's validation or replay loop is just more represented
+RD/WR/etc. There is no call to a semantic self-Call while proving this
+induction. Each represented row costs finite word operations even when
+the semantic handler containing that row is long. Registry assignment,
+its partial bank/descriptor cuts, post-ACK work and final frame update
+are ordinary rows in the captured $\Delta(D_2)$, and are included before
+the annotated final Ready.
+
+Own-code reconstruction has no circular literal. $L,D_0$ are fixed
+descriptions; the main description is the actually captured public code.
+The fixed public code parameter used by the inverse is the same description
+supplied at the original installation. At a historical pre-capture cut
+its bits are prescribed later installation parameters, not secretly present
+old cells. Simulation still constructs them only when their actual WR occurs.
+
+Each induction step has finite list lookup/replacement. The finite $n$
+loop terminates on the actual image and never consumes a future variable
+bit. Consequently equal extracted data yield the same entire prefix,
+native/auxiliary creation identities and endpoint.
+
+For the structural statement repeat CSA §§3–4's local proof for the actual
+finite location union $q_2$. Ordinary rows retain the identical bounded
+cell and receipt templates. Fresh-bit rows use the optional socket
+constructor, with the actual latched bit and active-table guard; unchanged
+bit writes are still assignments. $D_2$ introduces more rows and finite
+locations, but no new local opcode or unbounded primitive field.
+Its finite rule enumeration is therefore exhaustive. Induction gives
+the endpoint and commuting step equations. Both physical IN bits use
+their actual latch/receipt template, without a canonicality filter.
+Failed guards have neither native row nor patch. This verifies the changed
+code, finite sockets, input partition and stop annotations, rather than
+applying a fixed-$D_1$ theorem to a different runtime. ∎
+

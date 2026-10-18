@@ -1,0 +1,6 @@
+## 86. Local quartic stability from the rank-two Ky Fan minimum manifold
+
+The present argument strengthens the second-order theorem in section 85. It concerns arbitrary original CPTP maps C^8 -> C^4 near any section-82 quarter-error pair having a rank-two party. Both perturbed channels may have arbitrary Kraus rank and output leakage. No differentiable path, calibrated perturbation, or qubit-core factorization is assumed in the main statement.
+
+The conclusion permits improvement at fourth order in a smooth new-environment amplitude. It does not prove a local minimum or settle the unrestricted optimum.
+

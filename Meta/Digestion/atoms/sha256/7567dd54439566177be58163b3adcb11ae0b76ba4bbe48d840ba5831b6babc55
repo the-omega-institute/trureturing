@@ -1,0 +1,42 @@
+### 86.2. A universal original-coordinate reflection identity
+
+Choose the repeated positions as \(1,2\), and group the channels
+into three two-component spinors. Write
+\[
+ w=(a,a,c),\qquad q=(u,v,z).                              \tag{86.1}
+\]
+This notation groups the entries by position: the original channel-first
+six-vector lists the first components of the three spinors, followed by
+their second components. Every entry of \(a,c,u,v,z\) has modulus
+one, so each of these spinors has squared norm two. Put
+\(\mathcal J(x_0,x_1)=(-\bar x_1,\bar x_0)\).
+Orthogonality to both \(w\) and \(\Theta w\) is exactly
+\[
+ \langle a,u+v\rangle+\langle c,z\rangle=0,\qquad
+ \langle\mathcal Ja,u+v\rangle+\langle\mathcal Jc,z\rangle=0.
+                                                               \tag{86.2}
+\]
+For arbitrary spinors \(x,y\), the two-component identity (85.11) is
+\[
+ |\langle x,y\rangle|^2+|\langle\mathcal Jx,y\rangle|^2
+                           =\|x\|^2\|y\|^2.
+\]
+Apply it to both equations in (86.2). This gives
+\[
+ \|a\|^2\|u+v\|^2=\|c\|^2\|z\|^2,
+ \qquad\text{hence}\qquad \|u+v\|^2=2.                 \tag{86.3}
+\]
+Let \(R\) synchronously exchange positions \(1,2\) and fix
+position \(3\). Original input flatness now gives
+\[
+\begin{aligned}
+ \langle q,Rq\rangle
+ &=\langle u,v\rangle+\langle v,u\rangle+\|z\|^2\\
+ &=\|u+v\|^2-\|u\|^2-\|v\|^2+\|z\|^2=0.
+\end{aligned}                                                    \tag{86.4}
+\]
+Only a nonzero numerical constant was divided by. No phase coordinate,
+channel mean or difference, or parameter polynomial was inverted.
+Consequently constants, all aligned phase poles, arbitrary common phases,
+and every synchronous permutation are covered by this identity.
+

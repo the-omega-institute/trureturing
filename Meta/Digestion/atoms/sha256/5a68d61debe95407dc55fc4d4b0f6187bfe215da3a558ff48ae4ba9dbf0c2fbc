@@ -1,0 +1,47 @@
+**Definition 2.2 (Stationary start and consecutive renewal bits).** For $i\in\{0,1\}$ and $0<q<1$, define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,
+& f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),
+& f_{i,q}(0)&=0,\\
+S_{i,q}(b)&=\sum_{k\ge b}f_{i,q}(k)\quad(b\ge0),
+&\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{2.4}
+$$
+
+The indices $k,b$ in these laws are integers. All these sums are finite at each interior $q$. The stationary one-sided law $\mathsf P_{i,q}$ first draws a tick time $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=\frac{S_{i,q}(b)}{\mu_i(q)}
+\quad(b=0,1,\ldots).
+\tag{2.5}
+$$
+
+It puts zeros before $\tau$ and a one at $\tau$. Independently of $\tau$, let $K_1,K_2,\ldots$ be iid with mass function $f_{i,q}$, and place the remaining ones at
+
+$$
+\tau_0=\tau,
+\qquad \tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1).
+\tag{2.6}
+$$
+
+Every other bit of $X_0,X_1,\ldots$ is zero. Thus $K_r$ counts zeros, while $K_r+1$ is a full interval after a tick through the next tick. The first wait has the survival-normalized law (2.5), not the complete-gap law $f_{i,q}$.
+
+Indeed $S_{i,q}(0)=S_{i,q}(1)=1$, and nonnegative summation gives
+
+$$
+\begin{aligned}
+\sum_{b\ge0}S_{i,q}(b)
+&=\sum_{k\ge1}(k+1)f_{i,q}(k)=\mu_i(q),\\
+\mathbb E_{i,q}\tau
+&=\frac1{\mu_i(q)}\sum_{k\ge1}\frac{k(k+1)}2f_{i,q}(k)
+=\beta_i(q).
+\end{aligned}
+\tag{2.7}
+$$
+
+Each fixed $k$ contributes to the survival sum for $b=0,\ldots,k$ and to its first moment with total weight $0+\cdots+k$. These identities justify the normalization and mean in the stated observation law without supplying a hidden age to the observer.
+

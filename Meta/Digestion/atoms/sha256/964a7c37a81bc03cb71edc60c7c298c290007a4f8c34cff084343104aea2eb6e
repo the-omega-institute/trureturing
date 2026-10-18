@@ -1,0 +1,34 @@
+**Proposition 6.10 (inclusive prefix meaning and exact boundary).** For
+the entire $D^*$ and its complete target $Q$,
+
+$$
+\operatorname{PrefDet}(D^*,Q,h)
+\Longleftrightarrow
+\forall w\in E^*,\quad c(w)\le h+1.
+\tag{NIC.38}
+$$
+
+The obstruction in Theorem 6.9 concerns the raw canonical convolution
+universe and the explicit two hypotheses in its statement. It makes
+no claim against another encoding, constrained automata, costs defined
+only on a promise domain, reductions preserving only global boundedness,
+or decidability of Open problem 5.5.
+
+Proof. For a different-row pair its sources are distinct, and (NIC.21)
+is equivalent to $\delta(u,v)>h$. Prefix determination excludes all
+such pairs. Thus it requires $\delta(u,v)\le h$ on every different-row
+pair, which is exactly $c\le h+1$. This proves (NIC.38), including
+$h=0$ and the absent-reply convention. In particular existence of a
+determining depth is equivalent to boundedness of $c$ on $E^*$, and
+also on $W$ since the remaining values are zero.
+
+Theorem 6.9 uses the same raw universe for its regular cuts and for
+both directions on *every* subset; its contradiction uses $O$ and
+$T$ separately. Changing the encoding, removing $O$ through a promise,
+or requiring only global boundedness does not provide those premises.
+Consequently none of those distinct representation questions is answered
+by this proof. Likewise $c$ counts a depth in the original finite source,
+not the price of a legal action run. Its unboundedness and the exact
+prefix meaning do not introduce a new coordinate-worst or weighted
+service optimum. $\square$
+

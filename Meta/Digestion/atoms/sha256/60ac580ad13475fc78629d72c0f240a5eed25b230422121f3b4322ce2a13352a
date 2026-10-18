@@ -1,0 +1,83 @@
+## 1. 完整世界、原始时钟与固定祖先
+
+合法完整世界为 $W=(P,g,\delta)$，其中 $P$ 是逐项严格正的实 $2\times2$ 矩阵，秩一、迹一，$g\in\mathbb R[T]\setminus\{0\}$、$\deg g\le3$，$\delta\in\mathbb R$。不假设源对称，也不排除对称源；两个增益符号、所有降次、采样根和重根均在量词内。记
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+时钟 $i$ 的原始读数是 $g(i)\operatorname{tr}(A_iP)+\delta$。初始读数计入总次数；每次选取一个原子后立即读取，只存在一条不可重置、不可复制的实际轨迹。按时间先后执行 $EF$ 时，累计左作用是 $FE$，两次即时读数都必须保留。策略、停止与回答可为实际完整历史的任意确定函数，不附加正则性或可计算性要求。恢复目标始终是整个 $(P,g,\delta)$。
+
+固定 $D_0\in\mathbb R$ 和 $\lambda\ne0$，取
+
+$$
+\begin{gathered}
+\mathbf c=(0,24,48,312/5,48/5,-532/5),\\
+y=48/5,\qquad \zeta=-532/5,\\
+H_*^{D_0,\lambda}=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+ M,D_0+312\lambda/5,J,D_0+48\lambda/5,M,D_0-532\lambda/5).
+\end{gathered}
+\tag{1.2}
+$$
+
+其文字动作是 $JMMJM$。归一化为
+
+$$
+f=g/\lambda,\qquad d=(\delta-D_0)/\lambda,
+\qquad g=\lambda f,\quad\delta=D_0+\lambda d.
+\tag{1.3}
+$$
+
+读数转换 $r\mapsto D_0+\lambda r$ 对任一符号的 $\lambda$ 都是全实数上的双射，保存所有相等分区和实际保留集。不能把 $D_0$ 当作未知漂移 $\delta$。
+
+写
+
+$$
+P=\begin{pmatrix}s&p\\q&1-s\end{pmatrix},\quad
+0<s<1,\quad p,q>0,\quad pq=s(1-s),\qquad u=p+q,\quad v=1+p.
+\tag{1.4}
+$$
+
+这些条件恰好表达源合法性。为避免混淆，矩阵源条目 $q$ 不作为增益样本符号。实际累计矩阵为
+
+$$
+\begin{gathered}
+(A_0,\ldots,A_5)=(I,J,L,J+L,C_{\rm mat},Q),\\
+L=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+C_{\rm mat}=\begin{pmatrix}2&1\\1&1\end{pmatrix},\\
+Q=\begin{pmatrix}1&1\\3&2\end{pmatrix},\qquad
+Q^{-1}=\begin{pmatrix}-2&1\\3&-1\end{pmatrix}.
+\end{gathered}
+\tag{1.5}
+$$
+
+于是每个同一世界必须同时满足六个实际方程
+
+$$
+\begin{aligned}
+f(0)+d&=0,\\
+u f(1)+d&=24,\\
+v f(2)+d&=48,\\
+(u+v)f(3)+d&=312/5,\\
+(1+s+u)f(4)+d&=48/5,\\
+(u+2v-s)f(5)+d&=-532/5.
+\end{aligned}
+\tag{1.6}
+$$
+
+六个迹为 $t=(1,u,v,u+v,1+s+u,u+2v-s)>0$。令 $\mathcal F(H)$ 为实现文字历史 $H$ 的全部合法完整世界。对任意但固定的共同 $d$，本文研究
+
+$$
+\mathcal K_{\mathbf c,d}=\{W\in\mathcal F(H_*^{D_0,\lambda}):
+ (\delta-D_0)/\lambda=d,\ f(6)=0,\ f(7)\ne0\}.
+\tag{1.7}
+$$
+
+这两个未来样本承诺不是从祖先读数取得的标签。此类不附加基数、共同源和、增益形状或终端符号限制。
+
+本文的永久前卷记为 [B：零六次源正性与全局对注入](FIB_JMMJM_ZERO_SIXTH_SOURCE_POSITIVITY_AND_GLOBAL_PAIR_RIGIDITY.md)。B 的模型允许任意共同 $y,\zeta$；本文代入 (1.2)，保留同一 $JMMJM$、前四读数、共同 $d$、零六次与非零七次条件。因此 B 的全类结论可在此直接使用，不能外推到其他文字、其他前四读数或不同漂移。
+

@@ -1,0 +1,22 @@
+**Lemma 2.1 (cost convexity on the closed radial interval).** $F_c$ is strictly convex on $[0,U]$, with $F_c''>0$ on $(0,U)$. Every interior tangent is strictly supporting at every other point, including both endpoints.
+
+Proof. The supplied JR.52 bounds give $J_*=adh_2-bch_1>0$, since the common-denominator product comparison is $5153330>1662864$. Direct substitution gives
+
+$$
+D_1=-bJ_* /(ch_1)<0,\quad N_1=(ah_2/d)J_*>0,\quad
+\rho'=\frac{A_{\det}}{N_c^2}<0,\quad
+\rho''=-\frac{2N_1A_{\det}}{N_c^3}>0,
+$$
+
+where $\rho=D_c/N_c$ and $A_{\det}=D_1N_0-D_0N_1<0$. On $(0,1)$, $H'<0$, $H''>0$, hence $F_c''=H''\rho+2H'\rho'+H\rho''>0$.
+
+Above $1$, the inherited bounds give $\beta<1/8$, $\alpha/\beta<8$, $\delta>39/2500$, $h_0>123/125$, $b>29/200$, $a<33/500$, $h_1>353/500$ and $d<1/10$. Thus $U<8/7$, $\sqrt U<15/14$, $D_c>9/250$, $|D_1|/D_c<9/4$, and $N_1/N_c<3/5$. Dropping $H\rho''\ge0$ gives
+
+$$
+F_c''(x)\ge\frac{\rho(x)}{4x^{3/2}}
+\left[1-4x(\sqrt x-1)\left(\frac{|D_1|}{D_c}+\frac{N_1}{N_c}\right)\right]
+>\frac{17}{245}\frac{\rho(x)}{4x^{3/2}}>0.
+$$
+
+Here $4x(\sqrt x-1)<16/49$ and $9/4+3/5=57/20$. These are symbolic consequences of supplied inequalities. Continuity extends strict convexity to the closed interval; integrating the strictly increasing derivative proves the tangent assertion, also at zero. This is SC's global convexity result, with its source conditions explicit. $\square$
+

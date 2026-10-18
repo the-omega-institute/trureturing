@@ -1,0 +1,6 @@
+**命题 6.2（已有历史覆盖的准确使用）。** 在这个匹配的 $G_{\rm sel}$ 初始化、到达 Ready 并具备 GCA 要求的实际已完成前驱及 acquired 目标名称时，已有 SourceOffset$(m,t)$ 给出每个实际已返回七标签调用的 $e+t$，$0\le t\le f-e$，包含所有实际返回结果、维护拒绝及 changed idle CTL 后端；已有 AcquisitionOffset$(t)$ 给出该完成前驱的 $a+t$，$0\le t\le b-a$。这不需新增 selector。其交付仍走 receiver 73 的 ClientImage、当前 phase TOK/read、完整 binding 检查、ACK/mailbox return、历史项和 invocation TOK/Ready。
+
+证明。逐项采用 GCA 定义 4.2、5.3–5.6 及其返回定理。上述 $e,f,a,b,m$ 与其定义同名同来源，所以它的旧前驱重建及选取恰落在所列区间；不是把 ARC 的当前调用或别的 $m$ 填进其公式。GCA 第 6 节的实际交付保留所有 acquisition/return 前提，历史 image 中的旧 token 只作数据。SourceOffset 排除 gate 之前和后面的 CaptureCAP；更广 AcquisitionOffset 也要求那个前驱实际已经完成。当前未返回 flight 和最后 `00` 后没有新 Ready 的后缀不满足该入口前提。$\square$
+
+这份能力比 ARC 原先的 strict-Reserve Zero selector 广，不能作为本文新增成果。GCA 命题 3.4 的 mode 0 只保持旧分类及 Zero 意义，不给时钟、地址、capture、完整响应的相等。UAS 的四自然视图及 Cycle 的已支付转换不能因此直接移植到 $G_{\rm sel}$。定理 3.3 的局部 reader 论证可以对它真实匹配的 $F^A$ 重作参数实例，但没有由此建立 $G_{\rm sel}$ 全域的四视图原始 $Q$ 核；GCA 第 9.4 节所留义务仍在。
+

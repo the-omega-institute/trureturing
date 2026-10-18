@@ -1,0 +1,22 @@
+**Definition 2.1 (finite interfaces and heavy projections).** Let $S$ be
+a nonempty finite set, with target functions $g_q$ and experiment
+functions $r_a$. Each experiment has at most $m$ attained replies on
+$S$, where $m\ge1$. Include a constant experiment, representing zero
+observations. On $P\subseteq S$, say that an experiment determines
+$g_q$ if equal replies on $P$ imply equal target values there. Say
+that $P$ is range-feasible if $|g_q(P)|\le m$ for every target.
+For $w:S\to[0,\infty)$ write
+
+$$
+w(P)=\sum_{x\in P}w(x),\qquad
+A_{q,z}(P)=\sum_{x\in P:\ g_q(x)=z}w(x),\qquad
+\Omega_w(B)=\sum_{x\in B}\prod_{i=1}^nw(x_i).
+\tag{NCE.12}
+$$
+
+Joint admissibility in $S^n$ means that for every $i,q$ the target
+$g_q(x_i)$ is determined on $B$ by one experiment $r_a(x_j)$, with
+the constant experiment allowed. Its donor $j$ and experiment $a$
+can depend on the whole set $B$ and on $i,q$. For a positive real
+$C$, a projection is heavy if $w(P)>C$.
+

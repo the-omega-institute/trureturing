@@ -1,0 +1,64 @@
+### 14.3 Whole-fiber criterion and the finite lower certificate
+
+On a diagonal fiber \((a,a)\), output \(a\) weakly improves both losses. On an off-diagonal fiber \((a,b)\), a third label is weakly dominated by either \(a\) or \(b\). Thus, after these pointwise improvements, a deterministic quotient rule selects a set \(S\) of complete off-diagonal fibers on which it outputs \(A\), and outputs \(B\) on the other disagreement fibers. If
+\[
+x=4s^2\sum_{i\in S}b_i,
+\]
+then
+\[
+(R_A,R_B)=(D-x,x). \tag{14.3}
+\]
+Consequently, the exact deterministic realization criterion is global:
+\[
+V_Q=V_{\rm full}=D/2
+\quad\Longleftrightarrow\quad
+\text{some union of entire disagreement fibers has mass }D/2. \tag{14.4}
+\]
+Indeed every action has \(R_A+R_B\ge D\); equality at the lower bound forces no diagonal or third-label error, and then (14.3) forces \(x=D/2\). Conversely such a union gives both risks \(D/2\). This is one half of the total disagreement mass, not one half inside every fiber.
+
+It remains to solve the six-term subset problem. Put
+\[
+h=\frac{D}{8s^2}=2-\frac92s+s^2.
+\]
+Call \(1,2,3,5\) in (14.1) large and \(4,6\) small. For a subset with at most one large term,
+\[
+\sum_{i\in S}b_i\le 1-s+2s^2,\qquad
+h-\sum_{i\in S}b_i\ge1-\frac72s-s^2\ge\frac{13}{50}. \tag{14.5}
+\]
+For three large terms, the three-smallest direct comparison is
+\(b_1+b_3+b_5=3-8s\), giving the same lower bound in (14.5); four large terms give a larger sum and the bound remains valid. The subset \(\{2,3\}\) has distance at most \(s/2\), so no minimizer has zero, one, three, or four large terms.
+
+For exactly two large terms, substituting the four possibilities for adding \(b_4\) and \(b_6\) gives the complete table
+\[
+\begin{array}{c|c}
+\text{large pair}&\min_{E\subseteq\{4,6\}}
+\left|\sum_{i\in\mathrm{pair}\cup E}b_i-h\right|\\ \hline
+\{1,2\},\{3,5\}&s(1/2-s)\\
+\{1,3\},\{1,5\},\{2,3\},\{2,5\}&s|1/2-3s|.
+\end{array}
+\]
+Since \(|1/2-3s|\le1/2-s\) on \(0<s\le1/5\), (14.5) and this table prove
+\[
+\min_{S\subseteq\{1,\ldots,6\}}
+\left|\sum_{i\in S}b_i-h\right|=s|1/2-3s|. \tag{14.6}
+\]
+Multiplying (14.6) by \(4s^2\) yields the exact quotient value
+\[
+\boxed{V_Q(s)=T(1,s)+2s^3|1-6s|}. \tag{14.7}
+\]
+
+A single common rule attaining (14.7) for every allowed \(s\) is
+\[
+g_\ast(a,b)=
+\begin{cases}
+a,&(a,b)\in\{(0,2),(1,0)\},\\
+b,&\text{otherwise}.
+\end{cases} \tag{14.8}
+\]
+It selects \(b_2+b_3=2-4s-2s^2\), so the two risks from this one action are
+\[
+R_A(g_\ast Q)=8s^2-20s^3+16s^4,\qquad
+R_B(g_\ast Q)=8s^2-16s^3-8s^4. \tag{14.9}
+\]
+Their maximum is (14.7). Since \(s>0\), (14.7) equals the full-word threshold exactly at \(s=1/6\). This is an attainment statement for the deterministic quotient on this product law; it does not assert that every full-word minimizer factors through \(Q\).
+

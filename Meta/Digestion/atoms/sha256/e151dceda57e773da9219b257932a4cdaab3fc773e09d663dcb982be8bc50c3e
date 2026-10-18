@@ -1,0 +1,69 @@
+**Lemma 42.1 (tested lower charges).** For the errors in (24.24),
+
+$$
+\begin{aligned}
+\sum_{i=1}^3s^i|\langle p,E_{i,s}\rangle|
+ &\le C\{s^{31/6}+s^{21/4}+s^6(1+|\log s|)\},\\
+s^4|\langle p,(N_s-N_0)g_4\rangle|&\le Cs^{11/2}.
+\end{aligned}
+\tag{42.1}
+$$
+
+Proof. Put $k_i=5-i$. In the ordered return term (24.26), Taylor expand the inner input through degree $k_i$, keeping its degree-$k_i$ coefficient, and bound the next derivative of order $6-i$. The required input exponents, indexed in order by $n=0,\ldots,6-i$, are
+
+$$
+\begin{array}{c|c|c}
+i&(p_n)&\text{large-time powers}\\ \hline
+1&(1,1,7/6,7/5,7/4,2)&(-1,-3/2,-3/2,-3/2,-3/2,-7/4)\\
+2&(1,7/6,7/5,7/4,2)&(-3/2,-3/2,-3/2,-3/2,-7/4)\\
+3&(6/5,18/13,18/11,2)&(-17/12,-55/36,-59/36,-7/4)
+\end{array}
+\tag{42.2}
+$$
+
+These memberships follow from J (38.1), (43.4), (44.3), (45.3) and the retained weighted $L^2$ norms. The time powers are $(6-i-n)/2-7/(2p_n)$. At short times use the available weighted $L^2$ norms and integrable nonnegative half powers. The sole logarithm is the first entry for $i=1$; every other long-time exponent is strictly below $-1$. After $s^i$, Taylor's remainder is consequently $O(s^6(1+|\log s|))$.
+
+The added coefficient has total degree $i+k_i=5$. Replace its test $F_sp$ by $Vp$; their $L^1+L^2$ difference is $O(s)$ by (24.6). The derivative list (24.34) bounds this coefficient in $L^2$ below time one and $L^\infty$ above it, so that replacement costs $O(s^6)$. Its complete canonical scalar with test $Vp$ is zero by reflection: $g_i$ has parity $(-1)^i$ and $\mathsf Q_{k_i}$ has parity $(-1)^{k_i}$. This uses only canonical fixed-test parity.
+
+We spell out restoration of the additional degree, beyond the old retained degrees. The latter have outer coefficient scalar bound $O(s^{31/6})$ in (24.33), and native/safe outer scalar bound $O(s^6)$ in (24.30). For the new coefficient transpose its complete symmetric endpoint kernel onto $Vp=\mu g_0$. The finite-time $L^2$ bound is
+
+$$
+\left\|\int_0^T\mathsf Q_{k_i}(t)(Vp)dt\right\|_2
+ \le C(1+T^{k_i/2-3/4}).
+\tag{42.3}
+$$
+
+For $t\ge1$ its $n=0$ term uses $Vp\in L^1$ and output $L^2$, with power $k_i/2-7/4$. For $n\ge1$ use the seed memberships in (33.10); their integrated powers are no larger. For $t<1$ the weighted $L^2$ seed moments give a finite bound. Therefore its outer scalar, after $s^{i+k_i}=s^5$, is at most
+
+$$
+Cs^5L^{-(6-i)}(1+T^{k_i/2-3/4})=O(s^{15/2}).
+\tag{42.4}
+$$
+
+For its inner coefficient exits and its time tail use the order-$k_i$ sublists of (42.2), omitting the final entry. Formula (24.36), with the exterior $s^i$, gives powers $i+7/p_n-2+n$. For $i=1$ these are $6,7,7,7,7$; for $i=2$ all are $7$; for $i=3$ they are $41/6,127/18,131/18$. Every time power is strictly integrable and every resulting power is at least six. The exit event remains in the positive majorant before integration. This covers the extra retained coefficient on all output points and restores its whole canonical time interval. Thus there is no unquantified tail modulus in this scalar restoration.
+
+For the field part of (24.26), keep its first omitted coefficient as in Theorem 34.1. Every such scalar has total degree five and vanishes by reflection. The exceptional $(i,j)=(1,0)$ uses the degree-four supremum remainder $O(s^5(1+|\log s|))$ and costs $O(s^6(1+|\log s|))$ after $s^i$. The other eight entries of (24.38) use $L^4$ returns: when the added field degree is three, J Lemma 32.1 gives $O(s^{13/4})$ and the exterior degree is two, giving $O(s^{21/4})$; at added degrees two and one the remainders $O(s^3),O(s^2)$ give order at least six. This proves the first line of (42.1).
+
+For the final charge refine (34.4) to
+
+$$
+(L_s-K_{\rm rec})p=sD_1p+O_{L^2}(s^{3/2}),\qquad
+D_1p=G_0(V_1p)+\mu G_1g_0.
+\tag{42.5}
+$$
+
+For the seed-return term, the second strip derivative on $g_0$ has time-integrated $L^2$ bound $C(1+T^{1/4})$: the $n=0$ large-time power is $-3/4$, the $n=1$ power $-5/4$, and the $n=2$ power $-7/4$. Multiplication by $s^2$ gives $O(s^{3/2})$. Native/strip and degree-zero/one coefficient restorations are the $O(s^{3/2})$ column $L^2$ bounds in the proof of Lemma 24.4 and (34.4).
+
+For the field input, J Lemma 32.1 gives $\|F_s-V-sV_1\|_2=O(s^{3/2})$, and its supremum norm is $O(s^2)$. Multiplication by $p$ and (24.14) give the same $L^2$ return error. It remains to bound $H_s(V_1p)-G_0(V_1p)$ by $Cs$. Its first strip derivative is time integrable since $V_1p,rV_1p\in L^1$; here use $V_1\in L^2$, $p,rp\in L^2$. Its short-time weighted $L^2$ bounds hold because $\omega^4V_1$ is bounded. That same weight bounds its outer-input error by $CTL^{-4}=O(s^2)$; its native deletion and canonical time tail cost $O(s^{3/2})$. This proves (42.5).
+
+The normalized charge $g_4$ is even, as proved in Theorem 34.1, whereas $D_1p$ is odd. By adjointness, with only $g_4\in L^2$,
+
+$$
+s^4\langle p,(N_s-N_0)g_4\rangle
+=s^4\langle(L_s-K_{\rm rec})p,g_4\rangle
+=O(s^{11/2}).
+\tag{42.6}
+$$
+
+This proves the second assertion. $\square$
+

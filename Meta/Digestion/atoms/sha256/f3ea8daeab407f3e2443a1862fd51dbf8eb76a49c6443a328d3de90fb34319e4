@@ -1,0 +1,33 @@
+**Proposition 8.10 (Finite erasure consumes the harmonic objective).**
+Draw one word $U\in B_n$ from the actual law $p$, erase its bit at $i$,
+and retain all its other bits. With
+$\mathcal F_i=\sigma(U_j:j\ne i,\ 1\le j\le n)$, the squared prediction
+risk is
+
+$$
+R_i(p)=\mathbb E_p\bigl[(U_i-\mathbb E_p[U_i\mid\mathcal F_i])^2\bigr]
+=\sum_{e\text{ at }i}h(p_u,p_v),\qquad
+\sum_{i=1}^nR_i(p)=\Phi_n(p).
+\tag{8.20}
+$$
+
+Proof. Fix an outside word. If it has two legal completions $u,v$,
+orient them with $u_i=0$, $v_i=1$ and put $T=p_u+p_v$. For $T>0$, their
+conditional probabilities are $p_u/T,p_v/T$, and their Bernoulli
+variance is $(p_u/T)(p_v/T)$. The event has mass $T$, so its contribution
+is $p_up_v/T=h(p_u,p_v)$. A single legal completion has variance zero.
+If $T=0$ the conditional version is immaterial and its weighted
+contribution is zero. These fibers partition the law, and every graph
+edge belongs to exactly one site. This proves both equalities. $\square$
+
+The edge function, objective and finite-fiber identity are the existing
+ones of Definition 1.1 and [Stationary, §2, equations (2.1)–(2.3)][S].
+The exact substitution is its finite probability vector $\mu=p$, its
+site contribution $\Phi_{n,i}=R_i$, and its two completion masses
+$(s,t)=(p_u,p_v)$. This application uses all other bits of a finite word.
+It does not replace that field by the double-infinite exterior
+$\mathcal E_i$ of Convention 1.3. No equality with its stationary loss
+$d(P)$, no finite-state attainment and no answer to Open Problem 7.2
+follows from (8.20). At $n=1$ the outside record is empty, so
+$R_1=p_0p_1$ as required by the single edge and normalization.
+

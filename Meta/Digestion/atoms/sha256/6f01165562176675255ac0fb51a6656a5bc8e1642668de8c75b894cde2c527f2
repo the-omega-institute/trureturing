@@ -1,0 +1,31 @@
+## 444. The exact intrinsic six-edge ambient class
+
+For the next deduction retain the full ambient class of the earlier
+paired-reservoir volume. Let N be a connected orientable compact
+3-manifold with nonempty boundary, every component a closed surface
+of genus at least two. Fix an actual finite ideal face-pairing
+triangulation of N whose ideal vertex links are those boundary
+surfaces. Original faces are paired by a fixed-point-free involution
+on their occurrences. The actual normal quotient is formed by pairing
+the endpoints of the original local edge intervals through those face
+maps. Each actual edge has a connected circular normal link and
+original degree at least six.
+
+Suppose there are exactly six actual global edge labels. In every
+original tetrahedron choose one fixed vertex-induced paired frame,
+in edge order (12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B), with R,A,B,O four distinct actual labels.
+
+Assume one common positive global generalized length field has every
+original edge-angle sum equal to 2*pi. The usual positive-length
+classification makes each owner genuine or flat with two opposite
+pi angles and four zeros. All original occurrences count, including
+repeated visits, loops, parallel face pairings and distinct-face
+self-gluings. Numerical ties at distinct labels are permitted.
+
+These are the common ambient hypotheses for the following binding;
+no ambient topology assumption from the earlier volume is removed.
+The direct scalar/angle theorem of Section 443 needed less topology
+once its unique-flat normal form was already supplied.
+

@@ -1,0 +1,26 @@
+**Definition 297.4 (Every word, label and independent event).**
+Fix $L\ge3$, $B_L=\{0,1\}^L$ and labels $0,\ldots,L$. Write $+=1^L$
+and $\Omega_n=\{w:\min\{i:w_i=0\}=n\}$. A deterministic
+$N(i,j;u,v,s,t)$, $i<j$, outputs $u,v,s,t$ on $00,01,10,11$.
+A deterministic $O(i,j;u,s,t)$ outputs $u,s,t$ on stopped cells
+$0,10,11$. Constants and singletons are included. Every label is allowed,
+including earlier and unqueried labels. Reversed static queries permute
+cells; repeated queries give singleton information without refunding a call.
+
+For a real finite profile $(b,e)\in\mathbb R^L\times\mathbb R$, at
+every $w\in\Omega_n$ retain the three independent rows $A,C,P$ for
+events $\{0\},\{n\},\{0,n\}$, with demands
+$1-b_n-e,b_n-e,1-e$. The positive row has event $\{0\}$ and demand
+$1-e$. Negative singleton demands are retained without clipping.
+For probability kernels the exact error formula is
+
+$$
+\operatorname{TV}(p_w,(1-b_n)e_0+b_ne_n)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}
+\tag{297.3}
+$$
+
+when $0\le b_n\le1$. In the unrestricted real-profile conic problem,
+the stated linear rows, rather than probability targets outside this interval,
+define feasibility.
+

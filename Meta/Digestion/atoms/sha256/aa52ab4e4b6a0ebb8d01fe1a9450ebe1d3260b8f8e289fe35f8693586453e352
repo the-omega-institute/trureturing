@@ -1,0 +1,29 @@
+**Definition 3.1 (all names and exhaustive collapse cases).** In each
+remaining Boolean conjunction, retain all variables in $Y$ and give
+each native subexpression a name. Include subexpressions of the source,
+mask, hole expressions and both sides of every positive or negative
+atom. A name denotes its actual deterministic expression in $Y$;
+repeated uses share its value. Constants can be expanded into their
+finite Boolean/pair syntax.
+
+Use [NSF, Definition 2.2 and Lemma 2.3][NSF]. A name definition is
+$X_v=[0]$, $X_v=[1]$, $X_v=\tau_aX_w$, or
+$X_v=J(X_l,X_r)$. For each $J$ choose exactly one of:
+
+$$
+\begin{array}{ll}
+\text{collapse:}&
+ X_l=\tau_1X_r,\quad X_v=\tau_2X_r,\quad X_r\text{ primitive};\\
+\text{ordinary:}& X_v=F(X_l,X_r).
+\end{array}
+\tag{PDC.7}
+$$
+
+All names will be required normal. In particular normality of the
+ordinary output excludes its forbidden primitive cherry. The collapse
+case introduces no independent scalar witness: its rank is already
+the rank of the existing name $X_r$. Positive equalities are offset-zero
+edges. Original negatives remain whole named-code disequalities,
+with repetitions retained. No negative is replaced by a conjunction
+of childwise negatives or discarded because two symbolic shapes differ.
+

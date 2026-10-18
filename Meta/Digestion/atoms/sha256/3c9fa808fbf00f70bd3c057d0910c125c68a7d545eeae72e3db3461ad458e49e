@@ -1,0 +1,68 @@
+**Theorem 6.2 (One-dimensional affine hull forces output antipodes to
+collide).** If $\dim\operatorname{aff}E(\mathcal M)\le1$, then
+
+$$
+E(k,\alpha+\pi,\beta+\pi)=E(k,\alpha,\beta)
+$$
+
+for all actual source points. Every deterministic readout of such a
+factor therefore has error at least $R_0$.
+
+**Proof of Theorem 6.2.** A zero-dimensional hull is a point, so its
+collision is immediate. Otherwise use the affine line and its phase
+action from Lemma 6.1. At the interior height $h=H/2$,
+
+$$
+\frac12-\frac hr=\frac14,\qquad
+Q_{2\pi}(h,\alpha,\beta)
+=(h,\alpha+\pi,\beta+\pi/2).
+$$
+
+The fourth power of this source command is the identity on that
+height's entire torus. Equivariance gives
+$F_{2\pi}^4(E(h,\alpha,\beta))=E(h,\alpha,\beta)$.
+Lemma 6.1 forces $F_{2\pi}$ to fix this encoded point. Consequently
+
+$$
+E(h,\alpha+\pi,\beta+\pi/2)=E(h,\alpha,\beta).
+$$
+
+The common turn $\pi/2$ is rational and is erased by Theorem 3.4.
+Removing it from the left side gives
+$E(h,\alpha+\pi,\beta)=E(h,\alpha,\beta)$.
+
+Now fix any target height $k\in(0,H)$. The single probability command
+$P_{k-h}$ is lawful on the whole torus at $h$, and its entire straight
+segment is interior. Apply its fixed affine map to the last equality.
+This transfers it to
+
+$$
+E(k,\alpha+\pi,\beta)=E(k,\alpha,\beta).
+$$
+
+Only preservation of equality by that lawful map was used; this transfer
+does not assume an off-domain probability identity or an ambient inverse.
+Another erased common turn, now $\pi$, gives the claimed collision.
+
+Both phase pairs in Lemma 1.5 change sign under
+$(\alpha,\beta)\mapsto(\alpha+\pi,\beta+\pi)$. Hence
+
+$$
+y(k,\alpha+\pi,\beta+\pi)=-y(k,\alpha,\beta).
+$$
+
+A single prediction $v$ at their common encoding must obey
+
+$$
+\max\{\|v-y(k,\alpha,\beta)\|_2,
+         \|v+y(k,\alpha,\beta)\|_2\}
+\ge\|y(k,\alpha,\beta)\|_2
+$$
+
+by the triangle inequality. All witness rays and all commands used
+are reachable and finite by Proposition 1.3. Taking the height
+supremum proves the lower bound $R_0$. No continuity, boundedness,
+measurability, injectivity or affine-readout assumption entered this
+argument. It also applies to an affine line embedded in a larger
+ambient feature space. $\square$
+

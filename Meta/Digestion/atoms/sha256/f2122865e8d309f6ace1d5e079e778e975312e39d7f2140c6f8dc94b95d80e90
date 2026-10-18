@@ -1,0 +1,134 @@
+**Theorem 7.1 (complete names for the actual relation and its refinement).**
+Fix $m\ge2,d\ge2,\ell\ge1$. Let $B_{m,d,\ell}\subseteq S_d^N$
+be the complete actual relation of $\ell$ copies of $\mathcal T_{m,d}$,
+where $N=11m\ell$ and $|B_{m,d,\ell}|=(2^m+1)^\ell$. Put
+
+$$
+H=\lceil\log_2N\rceil,\qquad K=2^H,\qquad D=H+d.
+\tag{OCC.23}
+$$
+
+Pad by $K-N$ fixed $A$ blocks and insert these actual blocks at the
+ordered public frontier of a perfect height-$H$ scaffold in the right
+subtree of the original source. There is a correct preparation/reader
+on every original variable-shape $\mathcal F_D$ with exactly
+
+$$
+|S_D|-(2^m+1)^\ell+1
+\tag{OCC.24}
+$$
+
+attained complete names, merging exactly this scaffold image among
+canonical states and giving every other canonical state its own name.
+Its preparation, on every source, has
+
+$$
+T_{\rm prep}=2^D-1,\qquad Q_{\max}\le D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+\tag{OCC.25}
+$$
+
+The reader serves every original request with zero Reads or one actual
+owner-root Read of length $H+1\le D$, chosen before reply and count.
+
+Refine the merged name by requiring it also to supply the entire
+$\ell$-bit actual gadget phase vector before any late request, preserving
+every other assigned name. The refined complete attained alphabet is
+exactly
+
+$$
+|S_D|-(2^m+1)^\ell+2^\ell.
+\tag{OCC.26}
+$$
+
+The same paid scan attains this refinement. On the unrefined merged
+canonical fiber, any deterministic acquisition that must output all
+phases from its original-root Reads needs at least $\ell$ Reads on
+every source in that canonical fiber. Exactly $\ell$ Reads attain
+this descriptor task by querying one fixed actual $x$ owner per
+gadget. These are descriptor-acquisition bounds under the named fiber,
+not extra Reads beyond (OCC.25) or bounds for optimized $M_1(D)$.
+
+Proof. The fixed ordered scaffold is injective on its frontier tuple
+and belongs to $S_D$. The native lift is bijective, so its canonical
+image has exactly $(2^m+1)^\ell$ states. A common finite membership
+table gives them one name and all other $S_D$ states distinct names.
+
+Before any request, actually Read every original-root literal $Rq$
+with $q\in W_D$, in a public fixed order, including absent replies.
+The acquired constructor array computes $u=\pi_D(v)$ and its
+membership name for every $T=\langle A,v\rangle\in\mathcal F_D$.
+This is the credited paid construction of [OCB, Theorem 3.4][OCB]
+and [RRN, Theorem 7.1][RRN]. Each canonical state occurs as an actual
+right subtree, so all stated names are attained, proving (OCC.24).
+The scan has $2^D-1$ words and
+
+$$
+\sum_{j=0}^{D-1}(j+1)2^j=(D-1)2^D+1,
+$$
+
+giving (OCC.25). The scan and finite table construction are source-blind
+initially, and no request is used during preparation.
+
+At a singleton name every full target factor is already fixed. At the
+merged name, targets strictly above the frontier have constant branch
+factor, and targets in the padding have the fixed factors of $A$.
+Every remaining target has form $Ra_iq$, $q\in W_d$, at a public
+actual frontier root $Ra_i$. Variable-owner targets query their own
+actual root; selector-owner targets query their own actual root.
+A connector uses its variable-owner root for every target except
+$q=L$, which uses its selector-owner root. Thus each target's full
+factor is decoded from one actual reply at a literal $Ra_j$, with
+$|Ra_j|=H+1$. The root choice and table depend only on the name,
+$D$ and the request, before the reply and every authentic count.
+Targets whose table is constant can use zero Reads. There is never
+a joint read of a selector and a variable.
+
+All frontier occurrences are actually present. Homomorphism of pairing
+therefore gives
+
+$$
+r_{\rho^kT}(Ra_iq)=r_{\rho^k(T|_{Ra_i})}(q).
+\tag{OCC.27}
+$$
+
+This uses exactly the actual-presence premise of
+`NativeDepthPatterns.original_present_transport`; subtree notation is
+mathematical identification, not an input port. Canonicalization
+preserves the scaffold constructors, every selected owner reply and
+every requested full factor on the whole inverse-image fiber, including
+variable shapes. Equation (OCC.5) therefore gives every subsequently
+supplied authentic-count reply, with no further Reads. The construction
+serves all original targets, not merely those at the chosen cut.
+
+Export only a fixed-width encoding of the complete name. Public
+allocation and padded finite computation, followed by the paid isolation
+service, make the scan array, temporary selectors, control, buffers and
+transcripts inaccessible. No seed vector or source-dependent topology
+is exported. The code's complete attained cardinality is exactly the
+displayed number, even though its fixed-width bit storage can have
+unused bit patterns.
+
+For the refinement, compute the phases from the same acquired array
+and replace the merged name by its phase-vector names. Every one of
+the $2^\ell$ patterns occurs, because both phases of every gadget
+are nonempty. Each refined fiber is a subset of the original valid
+fiber and can use the same late tables. This proves (OCC.26), which
+adds $2^\ell-1$ names to the whole alphabet; it is not a claimed
+multiplicative factor for that whole alphabet.
+
+For the descriptor lower bound restrict to actual canonical sources
+in the merged fiber, whose unrefined retained name is constant. Any
+original-root literal is fixed outside the frontier, lies in padding,
+or enters one unique frontier block and hence at most one gadget.
+Suppose an acquisition execution never queried a block in gadget $j$.
+Change that gadget to any valid opposite-phase tuple, leaving all
+others fixed. Every reply in that execution is unchanged. Induction
+on the deterministic adaptive path gives the same subsequent queries,
+termination and output, contradicting the required different phase
+vector. Thus every execution must enter each gadget, requiring at
+least $\ell$ Reads. Conversely the root of one fixed $x_i$ owner
+in each gadget returns $A$ or $B$ according to its phase, attaining
+the task with $\ell$ original-root Reads, each of length $H+1$.
+$\square$
+

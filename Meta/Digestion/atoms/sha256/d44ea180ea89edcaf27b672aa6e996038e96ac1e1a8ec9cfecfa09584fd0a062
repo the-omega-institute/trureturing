@@ -1,0 +1,85 @@
+**Proposition 216.12 (Companion laws of the shared-stock detectors).**
+The following are actual common-seed laws on (216.25), with the stated
+uniform errors. They illustrate the mathematical constructions; they
+do not assert new optimal-cap classifications.
+
+For Theorem 216.2 use any probability vector $\pi$ on its full slot set,
+including $\star$, and select the displayed $D_i$. On every tail n>L
+the output is $\pi_\star\delta_{\theta_0}+(1-\pi_\star)\delta_{\theta_m}$.
+Its exact error is $\max(1-\pi_\star,a_n)$ by (216.26). The detector
+lower bound does not claim that an arbitrary prescribed cap is met.
+
+For Theorem 216.5 let $S_r=3r+1$, normalize its conic mixture by
+$R_r=S_r/r$, and take
+
+$$
+\varepsilon=r/S_r,\quad a_1=a_2=a_3=(r+1)/S_r,\quad
+a_4=\cdots=a_m=1/S_r,\quad a_{m+j}=1/(S_r2^j)\quad(j\ge1).
+\tag{216.27}
+$$
+
+The counts in its proof imply all three TV rows on every word:
+$p_0\ge1-a_n-\varepsilon$, $p_n\ge a_n-\varepsilon$ and
+$p_0+p_n\ge1-\varepsilon$. At n=3 the counts are exactly
+$(p_0,p_3)=(r/S_r,2r/S_r)$, giving error $\varepsilon$.
+At $1^m$ the base is $(2r+1)/S_r$ and remaining mass $r/S_r$ is
+at m. Every actual tail therefore has error $\varepsilon$.
+The strict active length here is three.
+
+For the distinct signed detector of 216.7, divide all its weights by
+$S_r$, retain $\varepsilon=r/S_r$, and take
+
+$$
+a_1=\cdots=a_m=(r+1)/S_r,\qquad
+a_{m+j}=\varepsilon 2^{1-j}\quad(j\ge1).
+\tag{216.28}
+$$
+
+Its count table gives $p_0\ge r/S_r$, $p_n\ge1/S_r$ and
+$p_0+p_n\ge(2r+1)/S_r$ on every zero word. These are exactly
+the three required lower bounds. The positive-word law is again
+$((2r+1)/S_r)\delta_{\theta_0}+(r/S_r)\delta_{\theta_m}$;
+all actual tail errors equal $\varepsilon$, including
+$a_{m+1}=\varepsilon$. This includes the detector's m=4 endpoint.
+
+For Theorem 216.9 choose j<n uniformly and use $D_j=(j,n;0,n,0)$.
+On every word
+
+$$
+p_n(w)=\frac{1-w_n}{n-1}\sum_{j<n}w_j,\qquad p_0=1-p_n.
+$$
+
+Put $\kappa=(n-2)/(n-1)$, $a_i=\kappa$ for i≤n, and
+$a_{n+j}=\kappa2^{1-j}$. At an actual first zero $\ell<n$,
+$p_n\le\kappa$, so the exact error is
+$\max(p_n,a_\ell)=\kappa$; this keeps the pair-event condition.
+At $\ell=n$ it is $1-\kappa\le\kappa$.
+At every $\ell>n$ the output is base only, with error
+$a_\ell\le\kappa$, including the first tail equality.
+
+For the zero face 216.4 reuse the single four-table law (213.30),
+with probability $1/4$ on each of
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0).
+$$
+
+Its same-seed N completions give one full mass-one $\lambda$ at
+$v_3=(1,1,1,1/4,\ldots,1/4;1/4)\in H_N$.
+Use $a_1=a_2=a_3=1$, $a_4=\cdots=a_L=1/4$ and
+$a_{L+j}=2^{1-j}/4$. The existing all-word probabilities give the
+cap $1/4$ and exact tail error $1/4$, including equality.
+For B=3g and every admissible h,
+$F_q(v_3)=(3g-B)/4=0$. This uses the very same feasible $\lambda$
+for the whole score, not a new mass allowance for each generator.
+
+Finally, $\Pi_J$ of 216.10 is an actual law but generally not a full
+cap attainer at its auxiliary point. Every actual n>L has exact error
+$\max(r_Jc,a_n)$. An omitted late class with target amplitude
+$(h+1)c$ has correct probability zero and error $(h+1)c>hc$.
+That missing row is measured by (216.22), not dropped. At h=0 the
+auxiliary e=0 is not a positive closed cap for a positive tail.
+All of these claims follow from the displayed all-word count formulas,
+one normalized mixture, and (216.26). $\square$
+

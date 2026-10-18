@@ -1,0 +1,41 @@
+**推论 459.4（有限谱截止的额外必要预算）。** 固定定理 459.2 的小窗口，
+若真实负部进一步支撑于 $[0,T]$，则令
+$$
+M_{h,T,r}:=\max_{0\le t\le T}q_r(t)>0
+$$
+便有
+$$
+N_-(\sigma)\ge\frac{n_\varepsilon r_\varepsilon^4}
+                       {16M_{h,T,r_\varepsilon}}
+\qquad(E_h(\sigma)\le\varepsilon\le K_h).
+\tag{SNC.20}
+$$
+若 $h\downarrow0$、$T_h\to\infty$、$hT_h\to0$，
+而实际误差为 $o(h^2)$，则
+$$
+\boxed{\qquad\liminf_{h\downarrow0}T_h^2N_-(\sigma_h)
+\ge2c/9,\qquad N_-(\sigma_h)/h^2\longrightarrow+\infty.\qquad}
+\tag{SNC.21}
+$$
+
+**证明。** 在（SNC.14）中只需把负部上的核上界改为
+$M_{h,T,r}$，即可得到（SNC.20）。该最大值可直接计算：
+令 $y_T=e^{-hT/2}$，比较两个端点 $y=y_T,1$，
+并在 $y_T\le r/2$ 时额外比较 $y=r/2$ 的值 $r^4/16$；
+其余驻点 $y=r$ 只是零值。
+由 $0\le\varepsilon\le K_h=O(h^2)$，有
+$r_\varepsilon=1-h/6+O(h^2)$ 一致成立。因此在指定截止族上，
+$y_T>r_\varepsilon/2$ 最终成立，端点值满足
+$$
+q_r(0)=(1-r)^2=O(h^2),\qquad
+q_r(T)=y_T^2(y_T-r)^2
+=\frac{h^2T^2}{4}[1+o(1)].
+$$
+后一式使用 $y_T=1-hT/2+O((hT)^2)$、$T\to\infty$
+及 $hT\to0$；所以 $M_{h,T,r}\sim h^2T^2/4$。
+对于误差 $o(h^2)$，（SNC.16）给 $n_\varepsilon\sim8ch^2/9$，
+（SNC.20）便给第一个下极限。第二个结论再用 $h^2T^2\to0$。证毕。
+
+（SNC.8）只求三个实际节点的预算。全区间误差 $o(h^2)$ 自动受其必要下界约束，
+但本节没有把两原子三点构造声明为全区间的最优负质量解。
+

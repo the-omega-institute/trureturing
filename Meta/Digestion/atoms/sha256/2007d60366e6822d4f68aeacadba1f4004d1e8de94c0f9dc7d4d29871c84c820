@@ -1,0 +1,4 @@
+**Lemma 2.2 (Observable phase on complete half-lines).** Under every $0<p<1$, either complete visible half-line determines the active parity almost surely. The same is true of the exterior of any fixed finite block.
+
+Proof. Disjoint spin pairs give independent active trials for $Y_k=1$, each with probability $2p(1-p)>0$. The probability of no successes after any fixed starting trial is zero, since the probability over $n$ trials is $(1-2p(1-p))^n\to0$. A countable union over starting trials shows infinitely many ones on both half-lines. All their indices have the active parity. Removing finitely many sites leaves this observation intact. This proof includes $p=1/2$ and makes no claim of phase observability at $p=0,1$. $\square$
+

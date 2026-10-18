@@ -1,0 +1,49 @@
+**Theorem 8.3 (Strict suboptimality for every real support
+objective).** The constant-seed fixed-mass optimal point
+
+$$
+P_*=(q_*,C_*)=(q_*,aq_*)
+\tag{8.12}
+$$
+
+is strictly suboptimal for $C-\lambda q$ for every real
+$\lambda$, among actual feasible deterministic policies of the
+same original source and endpoint.
+
+Proof. Three lawful deterministic competitors suffice. Complete
+internal nonreturn gives $O=(0,0)$ in $(q,C)$ coordinates. A
+single actual distant even read, for example $2(j+4)$, returning
+$h_0(\sigma)$ only on one gives
+$B=(\eta,a\eta)$. Its phase-zero spin pair avoids the target;
+it may also be padded with a paid repeat. The two-read anchor
+(8.8) gives $D=(\eta c,a^2\eta)$. These policies ignore the
+seed, so all three are feasible under every fixed auxiliary law.
+
+If $\lambda<a$, the objective gain of $B$ over $P_*$ is
+
+$$
+(a-\lambda)(\eta-q_*)>0.
+\tag{8.13}
+$$
+
+If $\lambda>a$, the gain of $O$ over $P_*$ is
+$(\lambda-a)q_*>0$. If $\lambda=a$, the objective of $P_*$
+is zero, whereas the anchor has value
+
+$$
+a^2\eta-a\eta c
+=a\eta(a-c)=(a-b)\eta^2>0.
+\tag{8.14}
+$$
+
+This covers all real $\lambda$ by strict inequalities, proving
+the assertion. $\square$
+
+The example is not merely a tied or nonexposed point: for every
+support objective a feasible point is strictly better. It is also
+not an unreachable mass or a nonattained infimum. Its mass is
+feasible, its constant-seed minimum is attained, and the smaller
+atomless minimum is attained with a positive gap. These distinctions
+are precisely what a classification of supporting values alone
+does not retain.
+

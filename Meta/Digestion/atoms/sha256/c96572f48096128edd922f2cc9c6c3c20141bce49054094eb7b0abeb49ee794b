@@ -1,0 +1,58 @@
+**Definition 206.23 (Owning suppliers and mathematical attribution).**
+The finite moment reduction used inside 206.5 is
+`literature-attested`: Christian Bayer and Josef Teichmann,
+*The Proof of Tchakaloff's Theorem*,
+[arXiv:math/0502473v2, Corollary 2 and Theorem 2](https://arxiv.org/html/math/0502473v2).
+Corollary 2 preserves a finite vector of integrable functions by
+positive weights at points of the original full-measure set. Here
+those functions are the constant, single-bit and pair-bit features
+within each actual first-zero/event class. The explicit elimination
+and cell argument establish the Boolean dimension and the complete
+reward preservation needed for this application. This gives a
+representation bound, not additional cap coverage or a minimality
+claim.
+
+The remaining support calculations, parameter correspondences,
+fixed-data optima and residual applications in this section are
+`repo-derived` ordinary synthesis. Their suppliers retain ownership:
+
+| Owning source | Exact use and boundary |
+| --- | --- |
+| [Continuation I, 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source) | Class-preserving original/finite closed-cap feasibility, arbitrary-address and full-carrier necessity, actual probability realization, and the exact positive-tail identity. |
+| [Continuation VI, 198.2, 198.4–198.6](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md) | Common-suffix support equality, correct-label collection, the full signed hull, and the existing obstruction to unconditional chain relocation. |
+| Continuation VI, 199.1–199.4, 199.7–199.8, 200.4 | Full-event quotient and certificate rule, the attained-separator alternative, its conditional normalization, common-seed realization and the subset-law bound at every $v_k$. |
+| [Continuation VII, 202.6, 203.2, 203.4, 203.6–203.7](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md) | The stated interpolation threshold, actual pair-projection quantities, complete product and fair suppliers, and three-label capacity. |
+| Continuation VII, 203.12, 204.1–204.2, 205.7–205.10 | The existing zero-cost example, the fixed-projection zero core and its residual, actual positive-cell protection and the precise correlated aggregate threshold. |
+
+For the fixed-projection comparisons, the same actual pair measure is
+used throughout: $m_j=\nu(x_j=0)$, $d_{ij}=\nu(x_i=1,x_j=0)$,
+
+$$
+\kappa=\max\left\{0,\max_j(\gamma_j-m_j/2)_+,
+ \max_{i<j}\big[(\gamma_i-m_i)_++(\gamma_j-d_{ij})_+\big]\right\},
+\qquad \pi=(\mu-t)_+.
+$$
+
+The zero core in 204.1–204.2 retains the capacity-limited late totals
+at that fixed projection, with early totals zero and the stated
+$S,t$. Its maximality is only under those restrictions. No comparison
+above excludes all choices of projections, all 202.4 parameters, all
+signed residuals, or all consequences of arbitrary-support and
+zero-cost closures. The moment application and the ordinary synthesis
+do not carry a claim of literary priority or exhaustive novelty.
+
+Other mature results have different conclusion types.
+Kaniewski, Lee and de Wolf, *Query complexity in expectation*,
+[arXiv:1411.7280v1, Theorem 9](https://arxiv.org/html/1411.7280v1),
+concerns a nonnegative scalar expectation and nonnegative literal
+degree. It does not by itself provide one normalized probability-vector
+kernel satisfying all event rows with increasing first-zero stopping.
+Leskelä, *Stochastic relations of random variables and processes*,
+[arXiv:0806.3562v1, Theorem 2.5](https://arxiv.org/html/0806.3562v1),
+gives a closed-relation coupling criterion with fixed marginals; no
+map supplying the present query-kernel coupling is assumed here.
+Kaibel's *Basic Polyhedral Theory* supplies the finite alternatives
+already used in 199.3. Blackwell's *Comparison of Experiments* and
+*Equivalent Comparisons of Experiments* are distinct works and provide
+background, not an additional acquisition bridge for this section.
+

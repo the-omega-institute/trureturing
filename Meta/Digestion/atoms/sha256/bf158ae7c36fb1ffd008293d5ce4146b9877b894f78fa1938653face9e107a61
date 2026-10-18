@@ -1,0 +1,26 @@
+**定义 7.1（有限窗口与零窗口约定）。** 对整数 $N\ge0$，沿用定义 5.1 所引 Fibonacci 层级卷的合法集合
+
+$$
+\Sigma_N=\{I\subseteq\{1,\ldots,N\}:I\text{ 不含相邻位置}\},
+\qquad Z_N(z)=\sum_{I\in\Sigma_N}z^{|I|}.
+$$
+
+采用该合法集合的选择递推作为中间工具：
+
+$$
+Z_0(z)=1,\quad Z_1(z)=1+z,\quad
+Z_N(z)=Z_{N-1}(z)+zZ_{N-2}(z)\quad(N\ge2).
+\tag{7.1}
+$$
+
+它由末位置未选或已选两种互斥情形得到。对 $\tau\ge0$ 定义
+
+$$
+\mathcal F_{N,\tau}(r)
+=\sum_{I\in\Sigma_N}(-\tau)^{|I|}h(r+|I|\ell),
+\qquad
+G_{N,\tau}=I_{N+1}+\sqrt\tau\,A_{N+1},
+$$
+
+其中 $A_{N+1}$ 是 $N+1$ 个顶点的路径邻接矩阵。特别地，$\mathcal F_{3,\tau}=\mathcal F_\tau$。零窗口单独规定为 $\mathcal F_{0,\tau}=h$、$G_{0,\tau}=(1)$，对所有 $\tau\ge0$ 都适用；其阈值可记为 $\tau_0=+\infty$，不使用下述余弦分母公式。
+

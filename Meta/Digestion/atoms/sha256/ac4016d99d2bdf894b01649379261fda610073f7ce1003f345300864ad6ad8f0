@@ -1,0 +1,21 @@
+### `SeamBilinear.lean`
+
+形式化：
+
+$$
+\mathbb R^S=
+\operatorname{span}\{1,x,y,z,xy\},
+$$
+
+以及
+
+$$
+\Omega(f,g)=a_1b_2+a_2b_1.
+$$
+
+重点证明：
+
+$$
+(x+z)(y+z)=z+xy.
+$$
+

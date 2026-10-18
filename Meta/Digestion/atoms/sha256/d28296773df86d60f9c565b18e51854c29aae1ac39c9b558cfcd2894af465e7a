@@ -1,0 +1,38 @@
+**Proposition 5.4 (refinement quantifiers and the missing regularity).**
+For every fixed finite partition Theorem 5.2 has the same support, survival
+and speed bounds and the same exact separations. If
+$\|\Pi\|=\max_j(t_j-t_{j-1})$, then
+
+$$
+\|k_\pm-a\|_\infty\leq c\|\Pi\|/4.
+\tag{EM.26}
+$$
+
+Nevertheless, as the number $N$ of cells tends to infinity, the variation
+of either height derivative, understood with its one-sided piecewise
+smooth representative, is at least $Nc/2$. Thus this family has no common
+BV bound on the derivative, despite its common height-speed bound.
+
+**Proof.** The peak estimate in the proof gives
+$C\leq c\|\Pi\|/4$ and $2S_*\geq1$, proving (EM.26). At a
+cell midpoint the change of $C'$ from $v$ to $-v$ gives a jump of
+$k_+'$ of magnitude $v/S_*(m)\geq c/2$, by (EM.21).
+Reflection gives the same magnitude for $k_-'$. Variation is at least
+the sum of these $N$ midpoint jumps; this follows also by taking points
+arbitrarily close on each side of every midpoint in the definition of
+variation. The rational rates within the finitely many pieces have finite
+variation individually, but these jump lower bounds are unbounded over
+the family. $\square$
+
+The quantifiers are $\forall\Pi\,\exists(\gamma_+,\gamma_-)$.
+The pair changes with the chosen partition. No fixed pair is claimed to
+agree for every arbitrarily refined partition, and no failure of
+pointwise histogram convergence for a fixed integrable density is claimed.
+The nonvanishing floors concern uniform reconstruction over this entire
+bounded-speed class. A theorem using a common BV derivative bound,
+derivative modulus or strong acquired loss-density approximation has an
+additional hypothesis absent here. Such a hypothesis must itself be
+justified on the actual source; naming it supplies neither samples nor a
+certificate. Adaptive random quantizers and other observation metrics
+require their own analysis.
+

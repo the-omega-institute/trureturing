@@ -1,0 +1,59 @@
+**Definition 2.1 (finite native source and complete row).** Reuse NBP
+Definitions 1.1–1.2 and Proposition 9.3, and NRN Definitions 2.1–2.2.
+The sources are all finite nonempty ordered terms
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{TCR.1}
+$$
+
+In the native Boolean notation, true is alpha and false is beta, while
+false and true address letters are $L$ and $R$. Every finite word in $L,R$,
+including $\varepsilon$, is a legal literal query. The actual reply
+$r_t(v)$ is alpha or beta at that leaf, $\mathsf{branch}$ at a pair, and
+$\mathsf{absent}$ outside the finite tree. Every strict continuation of a
+leaf is absent. At an existing occurrence $p$,
+
+$$
+r_t(pw)=r_{t|_p}(w)
+\qquad\text{for every finite suffix }w.
+\tag{TCR.2}
+$$
+
+Equality retains ordered brackets and both leaf labels. Different
+occurrences of equal subtrees remain different occurrences.
+
+For a finite prefix-free cut $P$, its complete row $R_P(t)$ consists of
+the whole exterior after replacing the subtree at each reached cut
+occurrence by its occurrence hole, and the complete equality partition
+of the replaced subtrees. Different classes assert disequality. Every
+unreached cut has a concrete blocking leaf at a strict prefix in the
+exterior. In lexicographic order of the reached holes, a class is named
+by the zero-based position of its first member. Names are recomputed
+after restriction and need not be consecutive.
+
+The inherited exact image grammar and inverse are
+
+$$
+\begin{aligned}
+\mathcal I=\rho[\mathcal T]&::=\beta\mid E\mid
+                                  \langle\mathcal I,\mathcal I\rangle,\\
+\delta(\beta)&=\alpha,\qquad \delta(E)=\beta,\\
+\delta\langle y,z\rangle&=\langle\delta y,\delta z\rangle
+                                      \quad(y,z\in\mathcal I).
+\end{aligned}
+\tag{TCR.3}
+$$
+
+These disjoint recursive cases give inverse maps on the stated domains.
+Thus $\rho$ is injective, alpha is not an image, and beta is the only
+image leaf. Every branch subtree of an image is an image, by the same
+grammar, as used in NBP Proposition 10.2 and PCA Theorem 11.2. Write
+$\mathcal B=\mathcal I\setminus\{\beta\}$ for the branch images.
+NBP Theorem 3.3 and Proposition 15.2 supply infinitely many distinct
+members, $\rho^m\alpha$ for $m\ge2$.
+

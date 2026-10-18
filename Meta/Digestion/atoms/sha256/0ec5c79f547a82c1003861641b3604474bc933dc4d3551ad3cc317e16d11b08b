@@ -1,0 +1,2 @@
+**Reference convention.** This volume is mathematical reference input, without Lean-kernel certification. It uses the `generic-v1` text convention without asserting ingestion or a ledger state. Once integrated, its existing text is retained; additions and corrections belong after the terminal append anchor. The proofs below carry their conclusions directly.
+

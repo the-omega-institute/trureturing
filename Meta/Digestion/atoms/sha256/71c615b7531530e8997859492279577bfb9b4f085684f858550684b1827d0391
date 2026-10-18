@@ -1,0 +1,67 @@
+**Theorem 7.2 (attained YES and NO families, with unrestricted residual size).**
+With no additional negatives and no ceiling, both rows are attained at
+every $j\ge2$, both supports equal $\{j:j\ge2\}$, and the pair has
+all-depth contact. With no additional negatives and any finite $m\ge2$,
+both rows remain attained and their pair is excluded at $m+4$.
+For every recognized input and every fixed feasible rank in either
+designated stratum, its legal residuals and whole sources have unbounded
+native constructor mass.
+
+**Proof.** In the unextended cases, $y=\alpha$ satisfies $y\ne T_j$
+for every $j\ge2$. Theorem 3.3 proves both exact full labels, so the
+support descriptions follow, including the finite ceiling case. Theorem
+6.2 supplies YES and NO respectively.
+
+For an explicit finite joint sequence in the unbounded base family, put
+
+$$
+a_h=T_{2h+4},\qquad c=\langle\alpha,\alpha\rangle,\qquad
+y_h=F_{a_h}^{\,h+1}(c),\qquad
+u_i(h)=\Theta_i(2h+4,y_h).
+\tag{CRE.32}
+$$
+
+The outer left child of $y_h$ is $\alpha$, so $y_h\ne a_h$.
+The two-pair guard gives
+$\delta(F_a(s),F_a(t))\ge\delta(s,t)+2$ for fixed $a$.
+Hence $y_h\equiv_h F_{a_h}(y_h)$ by iterating this estimate from
+the pair $c,F_{a_h}(c)$. The exact minimum leaf depths of
+$a_h,\rho a_h$ exceed $h$, so they agree through $h$; therefore
+$F_{a_h}(y_h)\equiv_h G_{a_h}(y_h)$. The sources in (CRE.32)
+differ only at the $x,v$ holes and agree through $h$. Theorem 3.3
+proves every finite partition bit. This sequence illustrates the
+unextended case; Theorem 6.2 covers the entire extended family rather
+than reducing it to this section.
+
+For the final assertion fix $j\in S_i$ and use the constructor mass
+$\gamma$ supplied by [URR, Definition 2.1][URR], via ABC's normal
+atomic code. It satisfies $\gamma(T_j)=0$,
+$\gamma(\rho t)=\gamma(t)$, and a pair with a positive-mass child
+has mass $1$ plus its children's masses. Prescribe longer and longer
+prefixes of the infinite comb $Z=\langle\alpha,Z\rangle$ for the
+one residual at this same fixed rank. SLP Lemma 2.1 supplies a finite
+legal residual for every such prefix, satisfying the entire $C_i$.
+A prefix through depth $d$ retains $d$ pairs of the form
+$\langle\alpha,t\rangle$ along its right spine. None is an atomic
+collapse: its left primitive rank is zero, whereas collapse requires
+the left rank to exceed the right rank by one. Each contributes one
+to $\gamma$, so the residual masses are unbounded.
+
+For $\gamma(y)=b\ge1$, the positive-child formula, with all occurrences
+counted, gives
+
+$$
+\begin{aligned}
+\gamma(F_{T_j}(y))&=\gamma(G_{T_j}(y))=b+2,\\
+\gamma(\Theta_0(j,y))&=5b+9,\qquad
+\gamma(\Theta_1(j,y))=5b+13.
+\end{aligned}
+\tag{CRE.33}
+$$
+
+Thus neither whole stratum has bounded mass. This does not justify
+erasing its constrained interior atomic rank: Theorem 6.1 still applies
+to every witness. We make no additional assertion that an arbitrary
+alternative finite rank-free cover cannot exist; FJC Theorem 7.1
+retains ownership of its atomic-tail cover obstruction. $\square$
+

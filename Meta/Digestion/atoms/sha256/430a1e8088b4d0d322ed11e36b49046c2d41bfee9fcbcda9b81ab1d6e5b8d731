@@ -1,0 +1,33 @@
+**Definition 1.2 (Fixed scalar ports and actual-history error).** Let
+$\mathfrak C_1$ be the class of all composites of fixed CPTP maps
+
+$$
+\operatorname{Enc}:M_5\longrightarrow\bigoplus_{f\in F}M_1,
+\qquad
+\operatorname{Dec}((y_f)_f)=\sum_f\operatorname{Dec}_f(y_f),
+\qquad \operatorname{Dec}_f:M_1\longrightarrow M_5,
+\tag{1.2}
+$$
+
+where $F$ is finite and each decoder is CPTP on its whole block.
+The design precedes the input and choice of future policy. All quantum
+information traverses the declared port, without original-input retention,
+entangled assistance or bypass. Finite flags are free for this quantum
+dimension criterion; decoding consumes them, and the future policy
+receives only the decoded state. Set
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathbb C^5)}
+\sup_{\pi\ {\rm actual,finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),
+\qquad \varepsilon_1=\inf_{T\in\mathfrak C_1}e(T).
+\tag{1.3}
+$$
+
+Replacement occurs once before the common protocol. TV is half the
+$\ell^1$ distance, with its probability-measure version for random
+controls. Complete positivity includes arbitrary reference extensions;
+the performance criterion in (1.3) measures system histories only.
+The original competitors are all complex CPTP designs, without an
+initial reality, covariance, unitality or projector restriction.
+

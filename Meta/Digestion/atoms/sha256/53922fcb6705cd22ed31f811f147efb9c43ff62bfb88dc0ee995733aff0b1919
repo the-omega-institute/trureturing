@@ -1,0 +1,117 @@
+**Lemma 24.2 (Completed gaps and the first stationary interval).** For the fixed observer write
+
+$$
+\begin{aligned}
+U_i(q)&=\sum_{k\ge1}f_{i,q}(k)A^kC,\\
+R_i(q)&=\frac1{\mu_i(q)}\sum_{b\ge0}S_{i,q}(b)A^bC,
+\qquad \nu_i(q)=\eta R_i(q).
+\end{aligned}
+\tag{24.5}
+$$
+
+These are stochastic matrices and initial distributions respectively. Define total variation of finite probability rows by $\|u-v\|_{\rm TV}=\tfrac12\sum_x|u(x)-v(x)|$, and put
+
+$$
+\varepsilon(q)=\max_{x\in\mathcal S}
+\|U_0(q)(x,\cdot)-U_1(q)(x,\cdot)\|_{\rm TV},
+\qquad
+r(q)=\|\nu_0(q)-\nu_1(q)\|_{\rm TV}.
+\tag{24.6}
+$$
+
+There are constants $C_U>0$, $C_R\ge0$ and $s_*>0$, depending on this fixed observer and $H$, such that
+
+$$
+\varepsilon(e^{-s})\le C_Us^{10},\qquad
+r(e^{-s})\le C_Rs^2
+\quad(0<s<s_*).
+\tag{24.7}
+$$
+
+Proof. The weights in each line of (24.5) are nonnegative and sum to one. Thus these averages are stochastic, including their absorbing rows. They describe following the word $0^k1$ after an observed tick, or $0^b1$ from the stationary starting time, while fixing any already emitted label.
+
+We use the following classical finite stochastic-matrix spectral and geometric-series facts as proof suppliers. Let $A$ be the zero-transition matrix from Lemma 23.4. Let $P$ be its spectral projection at eigenvalue one and $Q=I-P$. Define
+
+$$
+B_0=A-P,
+\qquad L=(I-A+P)^{-1}Q.
+\tag{24.1}
+$$
+
+These matrices exist, are real, and satisfy
+
+$$
+AP=PA=P,\qquad PL=LP=0,\qquad (I-A)L=L(I-A)=Q.
+\tag{24.2}
+$$
+
+For every integer $k\ge0$,
+
+$$
+A^k=P+B_0^kQ,
+\qquad
+\sum_{b=0}^k A^b=(k+1)P+(I-A^{k+1})L.
+\tag{24.3}
+$$
+
+The matrix function
+
+$$
+G(q)=qB_0(I-qB_0)^{-1}Q
+\tag{24.4}
+$$
+
+is analytic in a neighborhood of $q=1$. For $0<q<1$ it equals $\sum_{k\ge1}q^k A^kQ$.
+
+Indeed, nonnegativity and unit row sums give $\|A^n\|_\infty=1$ for every $n\ge0$. Thus all eigenvalues have modulus at most one. A nontrivial Jordan block at an eigenvalue of modulus one would have powers with a nonzero polynomially growing entry in Jordan coordinates, contradicting boundedness in finite dimension. Every peripheral eigenvalue is therefore semisimple, including eigenvalue one.
+
+The spectral decomposition into the eigenspace at one and its invariant complement gives $AP=PA=P$ and $PQ=0$. The projection is real since the matrix and the isolated eigenvalue one are real. On $\operatorname{ran}P$, $I-A+P$ is the identity; on $\operatorname{ran}Q$ it is $I-A$, which is invertible. This proves (24.1)–(24.2). The first identity in (24.3) holds also for $k=0$ because $I=P+Q$. Summing on the two invariant spaces and multiplying the finite geometric sum by $I-A$ on $\operatorname{ran}Q$ proves the second.
+
+The eigenvalues of $B_0$ are zero on $\operatorname{ran}P$ and the remaining eigenvalues of $A$ on $\operatorname{ran}Q$. None is one. Consequently $\det(I-qB_0)\ne0$ on some neighborhood of $q=1$, proving analyticity of the inverse and of $G$. For $q<1$ the absolutely convergent geometric series for the inverse gives the stated series.
+
+This argument allows multiple closed classes and multiple copies of eigenvalue one. A periodic class may give an eigenvalue such as $-1$; its possible resolvent pole is away from $q=1$. Jordan blocks strictly inside the unit disk are allowed and their poles are likewise away from that point. No convergence of $A^k$ to $P$, aperiodicity, irreducibility or diagonalizability of the whole matrix has been used.
+
+Let $\mathcal D=q\,d/dq$ and use the fixed scalar polynomial $F_i$ to define the matrix function
+
+$$
+V_i(q)=F_i(\mathcal D)G(q),\qquad W_i(q)=\frac{V_i(q)}{Z_i(q)}.
+\tag{24.8}
+$$
+
+Analyticity of (24.4) implies that $V_i$ is analytic at one. For $0<q<1$, polynomial factors in $k$ preserve absolute local convergence, so differentiating the series for $G$ gives
+
+$$
+\begin{aligned}
+V_i(q)&=\sum_{k\ge1}F_i(k)q^kA^kQ,\\
+\sum_{k\ge1}f_{i,q}(k)A^k&=P+W_i(q),\qquad
+U_i(q)=(P+W_i(q))C.
+\end{aligned}
+\tag{24.9}
+$$
+
+In a fixed finite-dimensional norm, $V_i$ is bounded near one and (23.7) gives $W_i(e^{-s})=O_{\mathcal A,H}(s^{10})$. The contribution $PC$ cancels exactly between the two normalized completed-gap kernels. Norm equivalence on the fixed state space proves the first bound in (24.7). In particular the bound accounts for absorption during zeros as well as at the closing tick.
+
+For the initial kernel, summing first over $b\le K$ and using (24.3) gives the exact identity
+
+$$
+\begin{aligned}
+R_i(q)
+&=\frac1{\mu_i(q)}\mathbb E_{i,q}
+   \left[\sum_{b=0}^K A^b\right]C\\
+&=\left[P+\frac1{\mu_i(q)}\bigl(L-AW_i(q)L\bigr)\right]C.
+\end{aligned}
+\tag{24.10}
+$$
+
+Indeed $\mathbb E A^{K+1}=A(P+W_i)=P+AW_i$ and $PL=0$. Formula (23.7) yields
+
+$$
+\mu_i(e^{-s})^{-1}=\frac{s}{10}+O_H(s^2),\qquad
+R_i(e^{-s})=PC+\mu_i(e^{-s})^{-1}LC+O_{\mathcal A,H}(s^{11}).
+\tag{24.11}
+$$
+
+The leading $PC$ and $(s/10)LC$ terms are the same for the two families. Hence $R_0-R_1=O_{\mathcal A,H}(s^2)$. Their common, parameter-independent initial row $\eta$ proves the second bound in (24.7).
+
+The first interval therefore has its own $O(s^2)$ estimate, not the $O(s^{10})$ completed-gap estimate. A stop before its first tick is encoded by its actual absorbing label inside $R_i$. The source continuation used to define that matrix supplies no additional decision data and incurs no declared payment. $\square$
+

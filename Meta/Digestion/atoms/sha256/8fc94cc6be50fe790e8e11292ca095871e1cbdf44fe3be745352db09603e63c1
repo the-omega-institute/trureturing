@@ -1,0 +1,50 @@
+**Theorem 8.3 (No positive-probability finite zero-error return).** For the fixed law and target of Definition 8.1, every stopped classifier, including one using the independent seed, satisfies
+
+$$
+J^U(\tau<\infty)>0
+\quad\Longrightarrow\quad
+J^U(\tau<\infty,\ A\ne Q_0)>0.
+\tag{8.4}
+$$
+
+More locally, if $E\in\mathcal G_r$ has positive probability for a finite $r$, any $\mathcal G_r$-measurable class choice on $E$ has positive error mass on $E$. Consequently an almost-surely finite zero-error stopped classifier does not exist.
+
+Proof. The elementary finite-target criterion underlying this application is as follows. For a fixed finite-valued target $Y$, an increasing discrete filtration $(\mathcal A_r)_{r\ge0}$, and probability-vector posterior versions $p_r(a)=\Pr(Y=a\mid\mathcal A_r)$, set
+
+$$
+D_r=\{\max_a p_r(a)=1\}.
+$$
+
+An almost-surely finite zero-error stopped classifier exists if and only if
+
+$$
+\Pr\left(\bigcup_{r\ge0}D_r\right)=1.
+$$
+
+The same equivalence holds after adjoining a seed independent of $\sigma(Y,\bigcup_r\mathcal A_r)$. This criterion is a conditional-probability intermediate step, not an extra synchronization assumption.
+
+To prove necessity, independence leaves the posterior unchanged after adjoining the seed. For each return event $E_{r,a}=\{\tau=r,A=a\}$, conditional expectation gives
+
+$$
+\Pr(E_{r,a},Y\ne a)
+=\mathbb E[\mathbf1_{E_{r,a}}(1-p_r(a))].
+$$
+
+Zero error forces this nonnegative integrand to vanish almost surely. Thus $E_{r,a}\subseteq D_r$ up to a null set. The countable union over radii and the finite union over labels contain $\{\tau<\infty\}$, proving necessity when that event has probability one. For sufficiency, take the first radius with $D_r$, and return the unique label with posterior one. The first-hit rule is a stopping time since $D_r\in\mathcal A_r$; it is finite almost surely by the displayed union condition. The same conditional-expectation identity on each return event proves zero error. A seed is unnecessary for this construction.
+
+In the present application, independence of $U$ from the whole joint law gives
+
+$$
+J^U(Q_0=a\mid\mathcal G_r)=\nu_r(a)
+\quad\text{almost surely}.
+$$
+
+Indeed the conditional-expectation identity holds on intersections of an $\mathcal F_r$ event and a seed event by independence, and extends to $\mathcal G_r$. Theorem 8.2 makes $1-\nu_r(a)>0$ almost surely for every class $a$ at every finite radius. Hence for any $\mathcal G_r$-measurable class choice $C$ and positive $E\in\mathcal G_r$,
+
+$$
+J^U(E,C\ne Q_0)
+=\mathbb E_{J^U}[\mathbf1_E(1-\nu_r(C))]>0.
+$$
+
+If the total return probability is positive, at least one finite-radius return event has positive probability, so this local statement proves (8.4). Equivalently, every $D_r$ in the fixed-target criterion is null here. Positivity of these integrals does not give a lower bound independent of the radius or return rule. $\square$
+

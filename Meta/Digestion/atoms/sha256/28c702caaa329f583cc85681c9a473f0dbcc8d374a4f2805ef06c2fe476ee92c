@@ -1,0 +1,34 @@
+**Theorem 392.2 (Weight-independent cost inflation).** Every operator (392.1) preserves all the literal affine base, correct, independent union and positive floors at a fixed $(b,e,M)$ whenever its input law satisfies them. Nevertheless the one-request stopped law
+
+$$
+p_w=(1-w_L)e_L+w_Le_0
+\tag{392.2}
+$$
+
+satisfies, for every choice of these weights,
+
+$$
+\deg(\Pi p)=L,\qquad D_{\mathrm{hard}}(\Pi p)=L.
+\tag{392.3}
+$$
+
+In particular $\Pi$ need not preserve either complete hard-two catalog, for any $L\ge3$.
+
+*Proof.* On a first-zero class each demanded coordinate and its floor are fixed linear functionals of the word law. Averaging the inequalities preserves the separate base and correct floors, even if negative, and the independently imposed union floor. The positive class is unchanged. This proves row preservation at literal mass, without constructing common owning masses for the averaged law.
+
+The first-zero expansion is the reused identity [XV (266.8)](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md):
+
+$$
+q(w)=v_1+\sum_{k=1}^L(v_{k+1}-v_k)\prod_{i=1}^k w_i
+\quad\text{when }q=\Pi p.
+\tag{392.4}
+$$
+
+It telescopes on each first-zero word and at the positive word. In (392.2), the last zero class and the positive class are singletons, so $v_L=e_L$ and $v_{L+1}=e_0$. The top coefficient in (392.4) is consequently $e_0-e_L\ne0$, independently of every other weight. Thus the degree is exactly $L$.
+
+Use the standard hard decision-tree degree bound, in its scalar expectation form from Kaniewski, Lee and de Wolf, [*Query complexity in expectation*, arXiv:1411.7280v1, Definition 8 and the lower-bound direction of Theorem 9](https://arxiv.org/html/1411.7280v1). Apply it to the indicator of output label $L$, whose expectation is the corresponding law coordinate. A deterministic path of at most $d$ actual requests has a leaf indicator that is a product of at most $d$ literals; repeated static literals reduce degree. Summing leaf indicators and averaging over the common seed gives ordinary multilinear degree at most $d$. The nonzero degree-$L$ coordinate therefore forces cost at least $L$. This uses a worst-path bound, rather than an expected number of requests or the scalar theorem's output-rescaling construction.
+
+For the matching upper bound, query the increasing schedule $1,\ldots,L$ until its first queried zero or exhaustion. One uniform seed fixes, before replies, a label partition for each of the $L+1$ terminal classes with marginal vector $v_n$. On reaching a class use its fixed partition of that same seed. This realizes the whole law with at most $L$ actual requests. Hence the cost is exactly $L$.
+
+The expansion and degree-two invariant subclass are already contained in XV 266.3, and XV 266.4 supplies a uniform-averaging cubic example at $L=3$. Here the single-query input and its forced endpoint difference give the exact cost for every horizon and every class weighting. The claim concerns the finite Boolean query contract; it is not an exact-law lower bound for original algorithms with arbitrary higher addresses. $\square$
+

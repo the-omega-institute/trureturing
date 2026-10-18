@@ -1,0 +1,58 @@
+**定理 2.1（全协议类六阶项与末端取得增量）。** 对每个固定的 $n=3N$，存在 $\rho_n>0$ 和 $K_n<\infty$，使每个满足 $0\le x\le\rho_n$ 的原整数合同都有
+
+$$
+ \left|\varepsilon_n^\star(L,q)
+       -C_nx^2-Q_nx^4-R_nx^6\right|\le K_nx^8.
+\tag{2.1}
+$$
+
+可增大同一组常数，使其同时满足
+
+$$
+\begin{aligned}
+ 0&\le (1-P_{\rm rot})-\varepsilon_n^\star\le K_nx^8,\\
+ \left|(1-P_{\rm tr,SRM})-
+ [C_nx^2+Q_nx^4+(R_n+\gamma_n)x^6]\right|&\le K_nx^8,\\
+ \left|\beta_n-P_{\rm tr,SRM}-\gamma_nx^6\right|&\le K_nx^8.
+\end{aligned}
+\tag{2.2}
+$$
+
+特别地，$\gamma_n>0$。四阶准备上的未修正 SRM 未达到全局最优的六阶 Bayes 系数，显式修正（1.5）达到该系数。用精确最优准备的四阶准备修正替代试验准备，对优化错误率的影响至多为 $O_n(x^8)$。
+
+界（2.1）对全部允许的准备、参考、测量和随机化类一致成立：每个这样的协议，其平均错误率至少为 $C_nx^2+Q_nx^4+R_nx^6-K_nx^8$。这不声称任意协议族本身具有 Taylor 展开。常数针对固定的 $n$，不承诺对增长的词长一致。
+
+对于保留全部五标签的 $B_3=\{000,100,010,101,001\}$，有
+
+$$
+ \varepsilon_3^\star
+ =\frac{x^2}{2}+\frac{3x^4}{40}+\frac{5x^6}{128}+O(x^8),
+ \qquad
+ \beta_3-P_{\rm tr,SRM}=\frac{3x^6}{1280}+O(x^8).
+\tag{2.3}
+$$
+
+对每个固定整数 $r\ge1$，置 $a=\pi r/2$，取 $q=L-r$、$L\to\infty$，则
+
+$$
+ \varepsilon_n^\star(L,L-r)
+ =\frac{C_na^2}{L^2}
+ +\frac{(Q_n-C_n/3)a^4}{L^4}
+ +\frac{(R_n-2Q_n/3+2C_n/45)a^6}{L^6}
+ +O_{n,r}(L^{-8}).
+\tag{2.4}
+$$
+
+因此，在原整数调用模型中，
+
+$$
+ \varepsilon_3^\star(L,L-r)
+ =\frac{\pi^2r^2}{8L^2}
+ -\frac{11\pi^4r^4}{1920L^4}
+ +\frac{13\pi^6r^6}{73728L^6}
+ +O_r(L^{-8}).
+\tag{2.5}
+$$
+
+既有的精确服务归约将这些 Bayes 最优值与可达分数结论转移到完整五窗索引服务和指针服务的安装，保留每个有限历史的读出、合法域及更新。本定理不主张 minimax 下一阶结论或有限内部整数 $q$ 的精确最优值。
+

@@ -1,0 +1,59 @@
+**Theorem 7.1 (memory lower bound against all original competitors).**
+Let $d\ge1$, let $\mu$ be a rational probability on the entire
+$S_d$, and suppose $V_{\rm cond}(d,\mu,C,\pi)$ accepts. Then
+every correct original preparation and reader, for every $D\ge d$,
+satisfies
+
+$$
+|E[\mathcal F_D]|\ge
+ \left\lceil C^{-2^{D-d}}\right\rceil.
+\tag{COK.43}
+$$
+
+Consequently
+
+$$
+M_1(D)\ge\left\lceil C^{-2^{D-d}}\right\rceil,\qquad
+\lambda\ge-2^{-d}\log_2C,\qquad
+\sigma_d\ge-\log_2\Omega_d(\mu).
+\tag{COK.44}
+$$
+
+The mass-to-memory bridge is the credited [NPC, Theorem 7.1][NPC];
+the new input is the constructed sound conditional-kernel cap.
+
+Proof with the original quantifiers. In the right subtree of the
+actual source use the fixed perfect scaffold of height $D-d$ with
+$n=2^{D-d}$ present canonical $S_d$ blocks at its frontier. Every
+tuple gives an actual member of $\mathcal F_D$. Restrict any
+original complete-code fiber to this scaffold, retaining all its
+correlations. For each requested block target its query is fixed by
+the exported name, the public $D$ and the request, before the reply
+and before any count. An arbitrary original-root word either stops
+in the fixed part and is constant, or enters one actual donor block
+with an arbitrary finite suffix. Canonical all-word simulation
+reduces that suffix to a boundary reply in that same donor block
+or a constant. No donor must equal the target block.
+
+Correctness for every authentic subsequent $k$ means that equal
+chosen replies on this entire fiber give the same full target
+trajectory, hence the same $\Gamma$. Thus every nonempty restricted
+fiber has complete native witnesses and is contained in a
+$C_\Theta$. This argument permits different off-target donors for
+different requests and imposes no independent-child code structure.
+Under the one product block law $\mu^{\otimes n}$, its mass is at
+most $C^n$ by Corollary 4.4. The restricted fibers partition a
+space of total mass one. If their number is $m$, then $1\le mC^n$.
+The complete attained original alphabet is at least $m$, proving
+(COK.43). The rate and $\sigma_d$ conclusions follow from
+(COK.11), or from the same cover-mass argument at every length.
+For the last inequality take rational caps decreasing to
+$\Omega_d(\mu)>0$. $\square$
+
+No rival preparation algorithm is replaced in this lower bound.
+In particular no seed vector, owner grouping, permutation, kernel
+context or support descriptor is made available to its reader.
+The kernels are source-independent mathematical proof tables.
+The analytical product law is a counting device, not a paid
+implementation or an independence restriction on code fibers.
+

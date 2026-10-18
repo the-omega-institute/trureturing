@@ -1,0 +1,2 @@
+**约定 0.2（选择记号与数列）。** 五个选择对象统一记为 $`\mathsf{𝖥}[\varnothing]`$、$`\mathsf{𝖥}[1]`$、$`\mathsf{𝖥}[2]`$、$`\mathsf{𝖥}[3]`$、$`\mathsf{𝖥}[1,3]`$。其中方括号写位置选择，不写数量。经典 Fibonacci 数列另记 $`\mathrm{Fib}_0=0`$、$`\mathrm{Fib}_1=1`$、$`\mathrm{Fib}_{n+2}=\mathrm{Fib}_{n+1}+\mathrm{Fib}_n`$。凸占位体记为 $`\mathcal{𝒫}`$，实数域记为 $`\mathbb{ℝ}`$；条件底面律用 $`q`$，数量行用 $`\ell_0`$，避免混同。
+

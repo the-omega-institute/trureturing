@@ -1,0 +1,72 @@
+**Proposition 210.3 (Failure of the critical-stock relaxation).**
+Define $R_{\rm crit}$ on four active late coordinates $3,4,5,6$ as
+the following conjunction, with $s=\mu-E-1>0$: one actual Boolean
+pair measure, $S\ge4s$, $m_i\ge2s$, $D_{ij}\ge s$ for $i<j$,
+$S\ge3s$, $T\ge\mu-1$, the basic-data bound $d_0\le1$ of
+206.7, and $m_i+\gamma_j+\gamma_k\le W+1$ for
+$3\le i<j<k\le6$. Here, writing $M_r$ for the sum of the $r$
+largest late totals,
+
+$$
+\begin{aligned}
+c_0&=\min((E+S)/2,S+\min(\gamma_1,\gamma_2)),\qquad
+q_{\rm ch}=\max(\mu,M_2-T),\\
+d_0&=\max(0,\mu-T,M_2-E-S,M_3-W,q_{\rm ch}-c_0).
+\end{aligned}
+$$
+
+For every $s>2$ and $L\ge6$, there is an input-family score whose
+data satisfy this conjunction but whose quotient is outside $E_N$.
+It is not a unit-$O$ score, and no representative of its quotient is
+unit-$O$.
+
+**Proof.** Put $g=3s-1$, $\gamma_1=2s-2$, $\gamma_2=0$,
+$\gamma_3=\cdots=\gamma_6=g$, and all later totals zero.
+On subsets of $\{3,4,5,6\}$ put mass $2/3$ on every two-subset
+and $s-1$ on every three-subset. Pad inactive bits with ones.
+Counting subsets gives
+
+$$
+S=4s,\quad m_i=g,\quad D_{ij}=s+1/3,\qquad
+(p_{00},p_{01},p_{10},p_{11})
+ =(2s-4/3,s+1/3,s+1/3,2/3).
+\tag{210.8}
+$$
+
+Split each pair atom equally onto early prefixes $01,10$.
+Put $C_{w(\{1\})}=2s-2$, $C_{w(\{j\})}=g$ for $3\le j\le6$,
+and $T=3s-2$. This defines a full nonnegative score with
+
+$$
+E=2s-2,\quad W=9s-4,\quad G=12s-4,\quad K=21s-8.
+\tag{210.9}
+$$
+
+All weak atom and relaxation inequalities hold already for $s\ge1$.
+In particular $g-E-1=s$, $c_0=g$, $q_{\rm ch}=g+1$;
+the five entries of $d_0$ are $0,1,0,1,1$.
+Every ordered triple reads $3g=W+1$. The actual-input guards and
+triple mechanism are those of 208.2; their application here proves
+only this explicitly listed conjunction.
+
+For the quotient $q_s=(\gamma,21s-8)$, direct substitution yields
+
+$$
+F_{q_s}(b^\dagger)=(s+2)/4>1\quad(s>2).
+\tag{210.10}
+$$
+
+The certificate consequence of (210.7) rules out every (210.4),
+including signed residuals and nonzero zero cores. Conversely (210.7)
+forces every nonnegative representative $V$ of this quotient to obey
+$\Delta_O(V)\ge(s+2)/3>1$. The displayed representative has the
+still larger lower reading $(3s-1)/2$ from $(1,3;1,3,0)$:
+that table earns $E+g+S-g/2+T$, and subtracting $W$ gives $g/2$.
+At $s=4$, $W=32$, $K=76$, $F_{q_s}(b^\dagger)=3/2$.
+The strict exclusion is only for $s>2$; (210.10) proves neither
+membership nor nonmembership at $s=2$.
+$R_{\rm crit}$ does not mean the full old necessary hierarchy or
+complete $O$ feasibility. Its failure therefore does not refute
+unit-$O$ quotient containment or the original universal comparison.
+$\square$
+

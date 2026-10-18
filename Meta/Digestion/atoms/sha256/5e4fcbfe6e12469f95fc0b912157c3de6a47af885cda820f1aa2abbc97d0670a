@@ -1,0 +1,46 @@
+**Theorem 4.2 (all-source concurrent minimum certification).** For every
+finite source, Construction 4.1 safely returns a genuine minimizing
+anchor $(a,e)$ at its designated Read $v$:
+
+$$
+2|a|+e=m(U_v).
+\tag{AAR.11}
+$$
+
+It terminates under unknown finite total interference and observer
+progress. The number of failed beta rereads is at most the number
+of actual updates during the call. No quiet interval for the entire
+scan is assumed.
+
+Proof. At the start of level $h$ every shorter address is currently
+branch. This is vacuous at zero. These branch facts persist, so every
+length-$h$ word is present throughout the level. An alpha reply is
+a leaf of score $2h$, and no smaller score is possible because all
+shorter words remain branch. Acceptance there is correct.
+
+If there was no alpha, each tested word was branch or beta. Thereafter
+it cannot become alpha. When no beta occurred, all words of this
+level are branch, justifying the next level. Otherwise let $g$ be
+the latest beta observation. If its reread is beta, no word at this
+level is alpha and $g$ is still beta. All shorter words are branch;
+the minimum is exactly $2h+1$.
+
+If the reread is branch, at least one update followed the latest beta
+observation. That update followed every earlier beta observation in
+this level too. It made all those positions branch; they and all
+already observed branches persist. Hence every word of length $h$
+is now branch, justifying advancement. This also proves that the
+impossible replies named in Construction 4.1 never occur. The
+validation claims concern the actual accepting Read; subsequent local
+computation and writer updates do not change its recorded value.
+
+For finite interference let $V$ be the final source and $D=\mu(V)$.
+All branch facts used by the scan hold in $V$. It cannot advance
+from level $D$ because $V$ has a leaf there. There are only finitely
+many generated words at each of the at most $D+1$ visited levels.
+Observer progress completes all those Reads and their finite local
+work, and it must accept. Each failed beta reread encloses an update
+between the latest beta and its reread. These intervals are disjoint
+in chronological order; one update cannot be charged twice.
+$\square$
+

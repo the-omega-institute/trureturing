@@ -1,0 +1,80 @@
+**Lemma 9.1 (E3: uniform eighth-power collapsed entropy).** On the source-only neighborhood (2.9), for every finite integer $L\ge1$ and both targets,
+
+$$
+d_i(e^{-s},L)\le4\delta^2s^2\min\{1,(sL)^8\}
+\quad(0<s<s_H).
+\tag{9.1}
+$$
+
+Proof. First take $sL\le1$. Put
+
+$$
+\Sigma_j^L=\sum_{k=1}^L\frac{w_k^2}{f_j(k)},
+\qquad m_L=\sum_{k=1}^Lw_k=\pi_1-\pi_0.
+\tag{9.2}
+$$
+
+Since $r=1-e^{-s}\le s$ and $\epsilon\le\delta r$, for $k\le L$,
+
+$$
+|\Delta_H(k)-\epsilon k^9|\le\delta k^8(1+sk)\le2\delta k^8.
+\tag{9.3}
+$$
+
+The denominator inequality from (8.4), $R_7^L=\sum_{k\le L}k^7q^k\le L^8$, and (2.9) give
+
+$$
+\Sigma_j^L\le\frac{4\delta^2R_7^L}{Z_0}
+\le\frac{4\delta^2L^8}{Z_0}
+\le\frac{8\delta^2}{9!}s^{10}L^8.
+\tag{9.4}
+$$
+
+For the same reference,
+
+$$
+\pi_j\le\frac{B\sum_{k\le L}k^9q^k}{Z_0}
+\le\frac{BL^{10}}{Z_0}
+\le\frac{2B}{9!}(sL)^{10}\le\frac12.
+\tag{9.5}
+$$
+
+The last step follows from $B<2$, $9!\ge8$ and $sL\le1$. Thus the collapsed reference tail has probability at least one half in this case.
+
+The collapsed short difference is $w$ or $-w$ and the corresponding tail difference is $-m_L$ or $m_L$. Applying (8.5) to the collapsed laws gives
+
+$$
+d_i\le\Sigma_j^L+\frac{m_L^2}{1-\pi_j}.
+\tag{9.6}
+$$
+
+Weighted Cauchy–Schwarz on these same short reference masses gives
+
+$$
+m_L^2
+=\left(\sum_{k\le L}\sqrt{f_j(k)}\frac{w_k}{\sqrt{f_j(k)}}\right)^2
+\le\pi_j\Sigma_j^L.
+\tag{9.7}
+$$
+
+Consequently,
+
+$$
+d_i\le\frac{\Sigma_j^L}{1-\pi_j}
+\le2\Sigma_j^L
+\le\frac{16\delta^2}{9!}s^{10}L^8
+\le4\delta^2s^{10}L^8.
+\tag{9.8}
+$$
+
+The last inequality uses $9!\ge4$. The tail normalization drift has been bounded explicitly, not deleted. Arbitrary signs of individual $w_k$ and of their sum are allowed.
+
+If $sL>1$, Lemma 8.1 instead gives
+
+$$
+d_i\le4\delta^2(1-e^{-s})^2\le4\delta^2s^2.
+\tag{9.9}
+$$
+
+Combining the cases proves (9.1) on the same $s_H$ neighborhood. Only the first case needs a lower tail-mass bound; the second uses full-law entropy contraction. There is no restriction on a growing cutoff in the result. $\square$
+

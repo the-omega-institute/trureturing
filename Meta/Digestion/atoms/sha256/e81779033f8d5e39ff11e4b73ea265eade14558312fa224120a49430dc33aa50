@@ -1,0 +1,12 @@
+**定理 6.2（固定制备的严格单孔上下文）。** 固定 $p$，允许有限上下文
+
+$$
+\mathsf C::=\square\mid\rho\mathsf C\mid
+\langle u,\mathsf C\rangle\mid\langle\mathsf C,u\rangle,
+\qquad u\in\mathcal T,
+$$
+
+旁树 $u$ 使用同一制备。两树的 $W_3$ 相同，当且仅当每个这种上下文的当前向量读数相同。
+
+证明。相等记录经 $G$ 保持相等；graft 时旁树的同一实际记录逐坐标相乘也保持相等。按上下文结构归纳得到其当前输出相同。反向取 $\square,\rho\square,\rho^2\square$ 恢复三坐标。这是对每个静态反事实上下文的全称比较，不是在一个破坏性源上实际执行所有上下文。
+

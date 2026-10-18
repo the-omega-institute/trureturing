@@ -1,0 +1,92 @@
+##### 定理 2.2.2： 无信号、边缘因子化与对偶局域性的等价
+
+以下条件等价。
+
+**第一，无信号：**
+
+$$
+\operatorname{Tr}_A\rho=\operatorname{Tr}_A\sigma
+\Longrightarrow
+\mathcal N(\rho)=\mathcal N(\sigma).
+$$
+
+**第二，存在唯一量子通道 $\mathcal F:B\to C$，使：**
+
+$$
+\boxed{
+\mathcal N=\mathcal F\circ\operatorname{Tr}_A.
+}
+$$
+
+**第三，对每个输出效果 $0\preceq E\preceq I_C$，存在 $B$ 上的效果 $G_E$，使：**
+
+$$
+\boxed{
+\mathcal N^*(E)=I_A\otimes G_E.
+}
+$$
+
+**证明。**
+
+**第一推出第二。**
+
+固定任意 $A$ 态 $\omega_A$，定义：
+
+$$
+\mathcal F(X)=\mathcal N(\omega_A\otimes X).
+$$
+
+准备 $\omega_A$、张量输入与 $\mathcal N$ 的复合都是完全正保迹的，因此 $\mathcal F$ 是通道。
+
+对任意密度矩阵 $\rho_{AB}$，它与：
+
+$$
+\omega_A\otimes\operatorname{Tr}_A\rho_{AB}
+$$
+
+具有相同的 $B$ 边缘。故：
+
+$$
+\mathcal N(\rho_{AB})
+=
+\mathcal F(\operatorname{Tr}_A\rho_{AB}).
+$$
+
+密度矩阵线性张成整个矩阵空间，所以等式对全部算子成立。
+
+偏迹是满射的，因此 $\mathcal F$ 唯一。
+
+**第二推出第三。**
+
+对任意输入 $\rho$：
+
+$$
+\begin{aligned}
+\operatorname{Tr}[\rho\mathcal N^*(E)]
+&=\operatorname{Tr}[\mathcal N(\rho)E]\\
+&=\operatorname{Tr}[\operatorname{Tr}_A\rho\,\mathcal F^*(E)]\\
+&=\operatorname{Tr}[\rho(I_A\otimes\mathcal F^*(E))].
+\end{aligned}
+$$
+
+迹配对非退化，因此：
+
+$$
+\mathcal N^*(E)=I_A\otimes\mathcal F^*(E).
+$$
+
+**第三推出第一。**
+
+若 $\rho,\sigma$ 具有相同的 $B$ 边缘，则对每个效果 $E$：
+
+$$
+\begin{aligned}
+\operatorname{Tr}[(\mathcal N(\rho)-\mathcal N(\sigma))E]
+&=
+\operatorname{Tr}[(\rho-\sigma)(I_A\otimes G_E)]\\
+&=0.
+\end{aligned}
+$$
+
+全部效果能够分离密度矩阵，所以输出相同。证毕。
+

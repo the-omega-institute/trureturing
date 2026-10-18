@@ -1,0 +1,30 @@
+**Theorem 69.2 (no late draw implements these causal prefixes).** For
+each original signed history, put
+
+$$
+m_y=\operatorname{tr}(M\rho_{y,e,n})
+ =m_1(64-y)/128+m_2/2>0,\qquad G(a)=2a/(1+a).
+\tag{JRH.71}
+$$
+
+For every $0<a<1$, the constructor has actual failure probability
+$m_yG(a)>0$ by time $6+a$. A protocol having no failure detector or
+absorbing event before absolute seven has probability zero for that
+same prefix event. It therefore cannot realize $\Psi$ as a causal
+FIRST instrument, even if a terminal classical draw reproduces its
+final distribution of timestamp metadata.
+
+Proof. In (GC.53) integrate the existing failure density over $[0,a]$
+and sum its five original weights. This gives $m_yG(a)$, positive
+by source positivity. A protocol with no such earlier physical event
+has no actual failure record in this prefix, so its probability is
+zero. A terminal draw does not change any record that already existed
+at $6+a$. The disagreement concerns an observable prefix event of
+the declared clock instrument. It is unaffected by relabelling the
+late scalar as FIRST. $\square$
+
+This is a source-specific causal obstruction. It neither changes the
+original error objective into a new prefix minimax nor excludes a
+separately supplied causal continuous-time detector. A final channel
+on metadata alone cannot certify the physical FIRST requirement.
+

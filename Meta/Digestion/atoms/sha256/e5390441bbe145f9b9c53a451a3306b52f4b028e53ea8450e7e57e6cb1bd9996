@@ -1,0 +1,51 @@
+## 399. An exact bound on the comparison cosine
+
+Let
+
+    R=(m+5)/(m+2).
+
+We claim that the scalar bounds (397.1), p>=m and q<=m-2 imply
+
+    h^2+p^2-q^2-k^2>=R*(h*p+k*q).                           (399.1)
+
+The function q^2+k^2+R*k*q increases in each positive variable q,k.
+Thus the left side of (399.1) minus its right side is at least
+
+    F=(1-1/m^2)*h^2+p^2-R*h*p
+        -(m-2)^2-R*h*(m-2)/m.
+
+Write A=h-m>=0 and B=p-m>=0. Exact expansion gives
+
+    F=((m-1)*(m-3)/m)*A
+        +(m*(m-1)/(m+2))*B
+        +(1-1/m^2)*A^2+B^2-R*A*B.                          (399.2)
+
+The constant term is zero. Since m>3, both displayed linear
+coefficients are positive, 1-1/m^2>=8/9, and R<=8/5. Hence the
+quadratic part is bounded below by
+
+    (8/9)*(A^2+B^2)-(8/5)*A*B
+      >=(4/45)*(A^2+B^2)>=0.
+
+This proves (399.1), including boundary ties among r,p,o.
+
+By (398.2), (399.1), and T0 in (0,pi),
+
+    cos(T0)<=-(m+5)/(2*(m+2))<-1/2,
+
+so T0>2*pi/3. The ordinary cosine is 1-Lipschitz on the real line;
+therefore
+
+    T0-2*pi/3
+      >=cos(2*pi/3)-cos(T0)
+      >=3/(2*(m+2)).                                      (399.3)
+
+Combining (398.1) and (399.3) proves the first strict inequality in (395.1).
+The remaining margin is positive because
+
+    3/(m+2)-4/m^2
+      =(3*m^2-4*m-8)/(m^2*(m+2))>0,
+    3*m^2-4*m-8=3*(m-3)^2+14*(m-3)+7>0.
+
+This completes the analytic derivation.
+

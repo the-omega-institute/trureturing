@@ -1,0 +1,8 @@
+# Recursive relational observation: critical-radius finite-word recovery
+
+> **Volume contract.** This `generic-v1` theory reference volume retains its published header and chapters byte for byte. Corrections and additions belong after the final append anchor.
+
+**Source and proof status.** The content is repo-derived ordinary mathematical theory, with its reused sources and proof limits stated in §96.5. It is reference input; Lean declarations and proofs remain the mathematical truth source of the repository. This volume supplies no new Lean/kernel verification or physical validation.
+
+**Supplier and numbering.** The complete [Parameterized Cross Product Recovery volume](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) is called the **supplier**. Its §§1–88 supply the original source, notation, published proofs, ten regimes, finite-word conventions and paid acquisition contracts. A reference labeled `supplier` points to that volume; §§89–96 and their numbered items are local to this continuation. The original section numbers are retained. Definitions, guards and interface/resource limits apply with the hypotheses of their cited statements; the supplier is linked in full rather than reproduced.
+

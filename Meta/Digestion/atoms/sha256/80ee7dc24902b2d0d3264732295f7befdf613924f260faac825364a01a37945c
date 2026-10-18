@@ -1,0 +1,23 @@
+## 7. The exact remaining joint system and the policy boundary
+
+The remaining feasibility obligation preserves complete-source
+legality and one simultaneous realization. Choose one common real
+$d,y,\zeta$ and three pairwise distinct sources $P_i$ with
+
+$$
+\begin{gathered}
+P_i=\begin{pmatrix}r_i&u_i\\v_i&1-r_i\end{pmatrix},\quad
+0<r_i<1,\quad u_i,v_i>0,\quad u_iv_i=r_i(1-r_i),\\
+\mathcal C(P_i;\mathbf c)=0,\quad d_{P_i}=d,\quad
+f_{P_i}(6)=0,\quad f_{P_i}(7)\ne0,\qquad i=1,2,3,\\
+\mathbf c=(0,24,48,312/5,y,\zeta),\\
+\Pi(A)=\Pi(B)=\Pi(C)=\Pi(D)=0,
+\end{gathered}
+\tag{7.1}
+$$
+
+where all reconstructed functions are (2.3)–(2.5) for these same
+readings and the terminal functions are (3.3) on
+$X_i=f_{P_i}(7)QP_i$. No gains or late readings can be selected
+independently after a source is chosen.
+

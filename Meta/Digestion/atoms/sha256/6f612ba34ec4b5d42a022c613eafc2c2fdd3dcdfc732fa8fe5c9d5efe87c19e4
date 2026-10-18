@@ -1,0 +1,22 @@
+**Definition 5.1 (source, active state and attempt outcome).**
+For active examples, a configuration has an immutable source $x$ and
+a mutable state $z$. A legal action may change $z$, permissions and
+retained memory, but source-preserving actions leave $x$ fixed.
+An attempt begins at a designated ready state and has one of the
+following mutually exclusive outcomes: $H$, a finite real proposal;
+$R$, a finite termination without a proposal; or $D$, literal infinite
+execution without termination. The false proposals form $F\subseteq H$,
+with probabilities $h_x,r_x,d_x,e_x$ and
+$r_x=1-h_x-d_x$. A finite unknown, abort or infinite-valued output is
+not $D$.
+
+A retry instruction means that after an $R$ outcome the controller
+tries to continue. It grants no reset action, lost permission or new
+source. A reset, when allowed, is a specified legal operation with
+specified state effects, observable failures and costs. Each attempt
+start and each recovery action contributes at least one execution
+transition; infinitely many finite retries therefore form an infinite
+execution. The numerical queries of Sections 1–4 are passive and need
+no state restoration; the active examples below have their own declared
+interfaces.
+

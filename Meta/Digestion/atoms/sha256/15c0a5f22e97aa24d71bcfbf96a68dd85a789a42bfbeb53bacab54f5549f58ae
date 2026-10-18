@@ -1,0 +1,96 @@
+**Theorem 72.4 (complete feasibility, value, attainer and minimum counts).**
+The two-line layer is feasible exactly when
+
+$$
+0\le s\le s_0\sqrt\alpha=\sqrt\theta,\qquad t\ge t_{\rm ax}.
+\tag{RC.83}
+$$
+
+On it set $q_{\rm ax}=\beta W/(tc_w)\in(0,\beta]$. Then
+
+$$
+2\mathcal T_A^{[2]}(s)=H_0+\alpha b_z+\beta a_w+d_f
+ -2a_wq_{\rm ax}+2b_w\min(q_{\rm ax},\beta-q_{\rm ax}).
+\tag{RC.84}
+$$
+
+Let $P_w=\beta/2$, $x_- =\min(P_w,q_{\rm ax})$,
+$x_+=q_{\rm ax}-x_-$. An attainer consists of the following
+supported-nonzero actual low labels, with zero rows deleted:
+
+| Direction | Weight $p$ | Failure ratio $b_j$ |
+| --- | --- | --- |
+| $h_{z,+}$ | $\alpha/2$ | $V$ |
+| $h_{z,-}$ | $\alpha/2$ | $V$ |
+| $h_{w,+}$, pure | $P_w-x_+$ | $0$ |
+| $h_{w,+}$, saturated | $x_+$ | $tc_w$ |
+| $h_{w,-}$, pure | $P_w-x_-$ | $0$ |
+| $h_{w,-}$, saturated | $x_-$ | $tc_w$ |
+
+At this layer's optimal height, the minimum number of supported-nonzero
+low labels equals the minimum number of all nonzero actual low labels;
+write this common minimum as $n_{\rm low}^{[2]}$. The complete total
+actual-alphabet minimum is $n_{\rm total}^{[2]}$. They are
+
+$$
+n_{\rm low}^{[2]}=
+\begin{cases}4,&t=t_{\rm ax}\text{ or }t=2t_{\rm ax},\\
+5,&t>t_{\rm ax},\ t\ne2t_{\rm ax},\end{cases}
+\qquad n_{\rm total}^{[2]}=n_{\rm low}^{[2]}+1.
+\tag{RC.85}
+$$
+
+Every optimizer has the same supported-nonzero $w$-axis pure/saturated
+mass allocation $x_\pm$. The $z$-axis failure allocation need not be unique: it has
+aggregate $\sum_{z\text{-axis}}p_jb_j=\alpha V$ and the individual
+capacity bounds, but its height is independent of this allocation.
+
+**Proof.** The live first and second moments give total mass
+$\alpha/2$ at each $z$ orientation and $\beta/2$ at each $w$
+orientation. Failure requires total $pb$ masses $\alpha V,\beta W$.
+The capacity conditions are $tc_z\ge V$, $tc_w\ge W$; the latter is
+stronger since $V<W$ and $c_z>c_w$. The available normalized contrast
+$\sum_jp_j|z_j|$ is always $\sqrt\alpha$; arbitrary binary reports can
+attenuate the actual contrast, while the deterministic reports in §75
+attain this available value. This proves necessity of (RC.83), and the table
+proves sufficiency of all moments, capacities and contrast.
+
+The $z$ contribution is $\alpha b_z$ since $f=0$. Set $C_w=tc_w$.
+At either $w$ orientation the pure height $a_w\pm b_w$ is positive,
+whereas the saturated height $a_w\pm b_w-C_wk_w$ is negative by
+$C_w\ge W$ and Lemma 72.3. Endpoint splitting therefore bounds the
+$w$ contribution by
+
+$$
+\beta a_w+d_f
+-2[x_-(a_w-b_w)+x_+(a_w+b_w)],\quad
+x_-+x_+=q_{\rm ax},\quad 0\le x_\pm\le P_w.
+\tag{RC.86}
+$$
+
+Since $b_w>0$, the unique maximizing allocation fills $x_-$ first.
+This proves (RC.84) and the table's attainment. Every supported-nonzero
+actual $w$ label of strictly intermediate failure ratio would make endpoint
+splitting strict, so all optimizing $w$ labels are endpoints. At
+$q_{\rm ax}=\beta$ or $\beta/2$ each direction needs one label;
+at every other finite feasible $q_{\rm ax}$ exactly one $w$
+direction needs both positive pure and saturated masses. Those cannot
+be combined: their opposite signs make (RC.73) strict. Different
+supported-nonzero low live directions cannot share one actual label by FA69's rigidity.
+All four directions have positive total mass. Thus every competitor
+needs at least four or five supported-nonzero low labels as in (RC.85),
+and hence at least as many actual low labels. Each $z$ direction can
+use one label with ratio $V$. Positive high acquired mass requires at
+least one high label. Section 75 attains both lower bounds with exactly
+these supported-nonzero low labels, no separate supported-zero low label,
+and one high label containing the complement. Any separate labels in
+$\mathcal J_0$ add to the actual low and total counts without changing
+(RC.80) or (RC.84). Their presence is permitted; the minimum uses the
+aggregated completion. Every full joint fibre is counted even on
+supported-zero inputs. $\square$
+
+The formula is constant in $s$ over this layer's entire feasible
+contrast inequality. The four/five changes here are layer minima,
+not the finite-budget global optimal alphabet, the strong fixed-source
+counts, or the static unbudgeted counts.
+

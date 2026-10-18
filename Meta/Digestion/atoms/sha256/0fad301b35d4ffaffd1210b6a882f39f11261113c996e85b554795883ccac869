@@ -1,0 +1,4 @@
+**命题 A-15.5（有限可容许类内存在无穷多全合数来源）。** 对任意有限整数偏移集 $`\mathcal{\text{ℋ}}`$、正模数 $`\mathfrak{\text{𝔪}}`$ 及任一 $`a\in A_{\mathfrak{\text{𝔪}}}(\mathcal{\text{ℋ}})`$，有无穷多正整数 $`N\equiv a\pmod{\mathfrak{\text{𝔪}}}`$ 使每个 $`N+h`$ 为合数。
+
+证明。对各不同偏移 $`h`$ 选互异素数 $`q_h\nmid\mathfrak{\text{𝔪}}`$。CRT 同时实现 $`N\equiv a\pmod{\mathfrak{\text{𝔪}}}`$ 与 $`N\equiv-h\pmod{q_h}`$。解是一条无界等差数列，取足够大使每项 $`N+h\gt q_h`$，其 $`q_h`$ 为真因子。可容许假设只说明原类已通过有限筛，构造本身对任意类有效。证毕。
+

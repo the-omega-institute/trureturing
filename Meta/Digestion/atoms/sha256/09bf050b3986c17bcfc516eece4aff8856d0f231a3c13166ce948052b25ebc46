@@ -1,0 +1,62 @@
+**Proposition 206.14 (A non-Markov input and its dense representative).**
+For every $m=L-2\ge5$, set $\mu=5/2$ and place, for all
+$v\in\{0,1\}^m$,
+
+$$
+C_{01v}=C_{10v}=\frac{1/2}{2^m},\qquad
+P_{01v}=P_{10v}=\frac2{2^m},\qquad T=3/2.
+\tag{206.36}
+$$
+
+Put correct mass $5/2$ at $w(\{3,4\})$, $5/2$ at
+$w(\{4,5\})$, and $5/2$ at each $w(\{j\})$ for $5\le j\le L$.
+All other rows are zero. Then $E=1,S=4,W=13/2$ and
+
+$$
+B_O=15/2,\quad\Delta_O=1,\qquad
+B_N=10,\quad\Delta_N=7/2.
+\tag{206.37}
+$$
+
+Replace only the late correct rows by fair suffix rows of the same
+class totals. The resulting score has the same $Q$ and both excesses
+one by 206.10, or equivalently 206.12 with $d=1$.
+
+**Proof.** Each numerical label contributes at most $5/2$ to any
+cell. For early-containing stopped pairs the first maximum is $5/2$;
+the other numerical rewards and their zero rewards are at most
+$5/2$. For late pairs the stopped zero-label rewards are
+$2,1,5/2$, and early numerical rewards are smaller. Hence any stopped
+pair has support at most $15/2$, attained at $(1,2)$.
+Early-containing $N$ pairs still have support at most $15/2$.
+For a late $N$ pair, the zero rewards are $1,1,1,5/2$; early
+numerical rewards are at most $\mu/4$, and every late label at most
+$\mu$. Thus support is at most $10$. At $(4,5)$ the labels
+$(4,3,5,0)$ attain four cell rewards $5/2$. Shorter schedules are
+covered by pair embedding. This proves (206.37) and the fair
+replacement statement.
+
+For precise comparisons, zero score fails at
+$F_{Q(y)}(u_L)=(3/2)m/(m+1)>1$. The old fair-profile threshold is
+$15/2>13/2$. The actual fair projection has $\kappa=2,\pi=1$.
+The maximal fixed-projection zero core has early totals zero,
+late totals one, $S=4,T=3/2$. Its unscaled charge is
+$(7/2)m/(m+3)>1$. Scaling this specific core by $\lambda\ge0$
+gives residual readings
+
+$$
+\frac{m(3/2-\lambda)}{m+1}\quad\hbox{at }u_L,
+\qquad
+\frac{m(1+5\lambda/2)}{m+3}\quad\hbox{at }v_L.
+$$
+
+To bound both by one would require
+$\lambda\ge1/2-1/m$ and $\lambda\le6/(5m)$, incompatible for
+$m\ge5$. For the product family 203.4, its definition and the
+$(1,2)$ unit condition force $u=\mu$; an $(i,z)$ gain is then
+$\mu>1$, and an internal pair also has total non-$11$ gain
+$2\mu>1$. These statements exclude those named constructions only;
+they do not exclude every 202.4 parameter or arbitrary old closure.
+The score support maximizers are tables, not cap-feasible acquisition
+laws. $\square$
+

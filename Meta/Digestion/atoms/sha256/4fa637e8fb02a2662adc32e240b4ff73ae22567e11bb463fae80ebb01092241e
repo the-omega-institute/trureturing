@@ -1,0 +1,13 @@
+**Definition 5.1 (installed reply vector and orientation).**
+Fix one arbitrary-literal table and its entry map. Its reply vector at
+an actual source lists the truthful replies at all installed Reads,
+including unused ones. Equal vectors give identical behavior from each
+fixed entry, even when an entry is not the prescribed one on that source.
+If a vector is realized by a source of target $R_0$ and a source of
+target $R_j$, correctness requires opposite bits on those sources. Both
+entry executions on that vector therefore terminate within the prescribed
+bound and return exactly $\{R_0,R_j\}$. Call the bit whose entry returns
+$R_j$ the positive orientation. Every positive source realizing the
+vector must carry that bit. This definition asserts validity of both
+entries only when the two actual sources establish it.
+

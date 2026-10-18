@@ -1,0 +1,47 @@
+## 1. Complete domain and same-law interfaces
+
+For $n\ge1$ retain the entire open-path word set and harmonic objective
+
+$$
+B_n=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\},\qquad
+h(s,t)=\begin{cases}st/(s+t)&s+t>0,\\0&s=t=0,\end{cases}
+$$
+
+$$
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad c_\star=\lim_n\kappa_n/n.
+$$
+
+$\Gamma_n$ has every legal Hamming-one edge, including endpoint insertions with the convention $w_0=w_{n+1}=0$. No first-to-last constraint is imposed. All-zero words, endpoint ones, every legal seam, and zero-mass vertices and edges remain present.
+
+Let $P$ be one normalized Borel probability law on $X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\text{ for all }i\}$, with coordinates $X_i$. Set $\mathcal E_i=\sigma(X_j:j\ne i)$, choose $[0,1]$ Borel versions $q_i=\mathbb E_P[X_i\mid\mathcal E_i]$, and put $\ell_i=(X_i-q_i)^2$. For $r\ge0$, let $\mathcal F_{r,i}=\sigma(X_{i-r},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+r})$ and $q_{r,i}=\mathbb E_P[X_i\mid\mathcal F_{r,i}]$; at $r=0$ this field is trivial. All expectations and versions below belong to this same $P$.
+
+For stationary $P$, [Stationary, §2][S] supplies
+
+$$
+d(P)=\lim_n\Phi_n(P_n)/n=\mathbb E_P\ell_0=\inf_rD_r(P)\le c_\star,
+\qquad D_r(P)=\mathbb E_P(X_0-q_{r,0})^2.
+\tag{1.1}
+$$
+
+Neighbor-one fibers force the center and its posterior to zero. Zero-total finite fibers have zero weighted contribution and require no division. These identities retain the original endpoint terms and emitted-bit integer clock.
+
+For any finite $N$, the full producer domain is [Universal, Definition 4.1][U]:
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,\ M_0,M_1\ge0,
+\ A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.2}
+$$
+
+The matrices are $N\times N$, the row is $N$-dimensional, and entries are exact reals. Zero stationary masses, structural zeros, reducibility and periodicity are allowed. [Universal, Proposition 4.2][U] constructs one coherent two-sided stationary joint law with visible cylinders $P_\theta([w])=\lambda M_w\mathbf1$, where $M_w$ is the ordered letter product and $M_\varnothing=I$.
+
+Two interfaces from [Conditional Response][R] are used only under their stated attainment hypothesis $d(P)=c_\star=c$: its Theorem 3.1 gives $S_P(f)=\sum_{i\in\mathbb Z}\mathbb E_P[f_C\ell_i]=0$ when $\mathbb E_P[f_C\mid\mathcal H_C]=0$, and its equation (2.2) gives
+
+$$
+0\le D_r(P)-c\le c/(r+1),\qquad c_\star\le\bar c:=3-2\sqrt2.
+\tag{1.3}
+$$
+
+Here $C=[1,L]$ and $\mathcal H_C=\sigma(X_j:j\notin C)$. The growth ceiling is the ordinary bound cited in that supplier. No attained-law budget is assumed for an arbitrary candidate.
+

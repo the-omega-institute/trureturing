@@ -1,0 +1,160 @@
+## 118. Original positive white noise: rates with complete reference spectra
+
+**Theorem C-118.1 (Useful bounds without a noisy degradability claim).**
+For all $0\le t,\eta\le1$ and the same $U_4$, define entropy of a probability
+list by $H(v)=-\sum_i v_i\log_2v_i$, with all multiplicities retained, and set
+
+$$
+\begin{aligned}
+u_\pm&=(1-\eta)(1\pm t)/2+\eta/10,\\
+v_\pm&=(1-\eta)(1\pm t)/4+\eta/20,\qquad
+v_0=(1-\eta)/4+\eta/20,\\
+L_s(t,\eta)&=H\left(((1-\eta)/2+\eta/5)^{[2]},(\eta/5)^{[3]}\right)
+             -H\left(u_+,u_-,(\eta/10)^{[8]}\right),\\
+L_c(t,\eta)&=H\left(((1-\eta)/4+\eta/5)^{[4]},\eta/5\right)
+             -H\left(v_+,v_-,v_0^{[2]},(\eta/20)^{[16]}\right).
+\end{aligned}
+\tag{C118.1}
+$$
+
+The resulting rate bounds are
+
+$$
+\begin{aligned}
+\max\{0,L_c(t,\eta)\}&\le Q_{\rm com}(t,\eta;U_4)
+ =Q_{\rm rec}(t,\eta;U_4)\le g(t)/2,\\
+\max\{0,L_s(t,\eta)\}&\le Q_{\rm send}(t,\eta;U_4)\le g(t),\\
+\max\{0,L_s(t,\eta)\}&\le Q(t,\eta;X)\le g(t)\qquad(X\in U_4).
+\end{aligned}
+\tag{C118.2}
+$$
+
+In particular $L_s(t,0)=g(t)$ and $L_c(t,0)=g(t)/2$.
+At $t=0$ or $\eta=1$ all three capacities and individual capacities are zero.
+For $\eta>0$ the displayed entropy differences are achievable bounds, not
+assertions of exact capacity or degradability.
+
+Proof. Use the balanced rank-two input on a label's active pair and its actual
+purification in $\mathbb C^2_R\otimes\mathbb C^5$.
+The five output eigenvalues are the first list in $L_s$.
+On the full ten-dimensional reference/output space the ideal output has the two
+eigenvalues $(1\pm t)/2$ and eight zeros. The noisy output is
+
+$$
+(1-\eta)\omega_0+\eta(I_2/2\otimes I_5/5),
+\tag{C118.3}
+$$
+
+so its full spectrum is exactly the second list in $L_s$.
+Imaginary off-diagonal entries are retained: the active coherence is
+$\pm it/2$, not its real part. Its sign disappears only after computing the
+Hermitian eigenvalues. No projection onto a successful output pair is made;
+the other three output labels are retained in the first entropy.
+
+For the same common input $D_{p_*}$ use a purification with four-dimensional
+reference. In the original matching subspace the ideal reference/output
+operator has one active pair with eigenvalues $(1\pm t)/4$ and two singleton
+eigenvalues $1/4$. Its full dimension is twenty, with sixteen additional zeros.
+The replacement branch is $I_4/4\otimes I_5/5$; adding it gives precisely
+$v_+,v_-,v_0^{[2]},(\eta/20)^{[16]}$.
+The output is the full five-dimensional probability list in $L_c$.
+All four labels have these same two entropy values, and the common input is
+identical for them. Using a five-dimensional reference would add exactly five
+zero eigenvalues; it would not change either entropy or discard any state.
+These calculations are purified coherent information, not an entropy of the
+source state substituted for channel coherent information.
+
+The $n$th tensor power of this common input has coherent information $nL_c$
+for every same fixed label. Inserting it into the common expression of (C116.5)
+yields the first lower bound. For the informed-encoder expression, each label
+has its own balanced active-pair input with value $nL_s$ before the infimum is
+taken. This gives the sender lower bound. The singleton coding theorem reused
+in C-115.2 gives the individual lower bound. Rate zero is always achievable.
+None of these lower bounds assumes single-letterization of the noisy channels.
+
+For upper bounds write the actual noisy map as output postprocessing of the
+zero-noise map:
+
+$$
+\Phi_{t,\eta,X}=\mathcal R_\eta\Phi_{t,0,X},\qquad
+\mathcal R_\eta(Z)=(1-\eta)Z+\eta\operatorname{tr}(Z)I_5/5.
+\tag{C118.4}
+$$
+
+Every noisy code can be run on the ideal channels by putting
+$\mathcal R_\eta^{\otimes n}$ into its decoder. This is the same postprocessing
+for all labels and respects each information-placement restriction. Therefore
+each capacity is no greater than its corresponding value in (C117.5).
+If $t=0$, the map measures the original basis and prepares a noisy basis state;
+it is entanglement breaking. At $\eta=1$ it is replacement. Tensor powers and
+local CPTP encoding/decoding preserve separability across the unchanged
+reference, giving zero capacity (also by the target test in C-119.1 below).
+Every entropy list remains normalized at these endpoints, including its zero
+and repeated eigenvalues. QED.
+
+**Corollary C-118.2 (An actual positive-noise calibration advantage).**
+Put $g=g(t)$. For $t>0$, the following explicitly specified parameter set is
+nonempty and contains an interval $(0,\eta_t)$ at each fixed $t$:
+
+$$
+0<\eta<1,\qquad h_2(\eta)+\eta(2+g/2)<g/2.
+\tag{C118.5}
+$$
+
+Throughout it,
+
+$$
+0<Q_{\rm com}=Q_{\rm rec}\le g/2
+ <Q_{\rm send},\qquad Q(t,\eta;X)>g/2\quad(X\in U_4).
+\tag{C118.6}
+$$
+
+In particular, a concrete closed range of positive noise is
+
+$$
+t=1,\qquad 0<\eta\le1/64:
+\quad Q_{\rm com}>1/4,\quad
+ Q_{\rm com}=Q_{\rm rec}\le1/2<3/4<Q_{\rm send}.
+\tag{C118.7}
+$$
+
+Proof. The standard entropy-of-mixture bounds
+$\sum_iw_iS(\omega_i)\le S(\sum_iw_i\omega_i)
+\le H(w)+\sum_iw_iS(\omega_i)$ applied separately to output and full
+reference/output state give, for the balanced rank-$r$ input,
+
+$$
+I_c(\sigma,\Phi_{t,\eta,X})
+ \ge(1-\eta)I_c(\sigma,\Phi_{t,0,X})-\eta\log_2r-h_2(\eta).
+\tag{C118.8}
+$$
+
+Indeed the noise-only output entropy is $\log_25$ and its reference/output
+entropy is $\log_2r+\log_25$. Use the lower mixture inequality on the first
+entropy and the upper one on the second. Thus
+
+$$
+L_s\ge(1-\eta)g-\eta-h_2(\eta),\qquad
+L_c\ge(1-\eta)g/2-2\eta-h_2(\eta).
+\tag{C118.9}
+$$
+
+Condition (C118.5) makes the second quantity positive. It also makes the first
+strictly greater than $g/2$, since $g+1\le2+g/2$ for $0\le g\le1$.
+The capacities therefore satisfy (C118.6) by (C118.2).
+For each $t>0$, $g(t)>0$ while the left side of (C118.5) tends to zero as
+$\eta\downarrow0$, proving the claimed nonempty interval with the original
+noise, not a flagged-erasure replacement model.
+
+For a purely analytic concrete bound, $h_2$ is increasing on $[0,1/2]$ and
+$-(1-x)\log_2(1-x)\le x\log_2 e$. Hence
+$h_2(\eta)\le h_2(1/64)\le(6+\log_2e)/64<8/64$ for $0<\eta\le1/64$.
+At $g(1)=1$, (C118.9) yields
+$L_s>1-10/64>3/4$ and
+$L_c>1/2-(5/2+8)/64=43/128>1/4$.
+This proves the whole range (C118.7) without a numerical capacity estimate. QED.
+
+No individual noisy exact-port value is inferred from these rates. In
+particular, neither the ideal rank-two argument nor positivity of a rate is a
+proof of a positive-noise Schmidt-number threshold.
+

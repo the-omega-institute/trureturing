@@ -1,0 +1,26 @@
+## 2. “一层一层逃逸”的正确类型
+
+[KernelChain](../../../Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.md) 和 [LayeredCapture](../../../Blueprint/D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.md) 给出离散层级
+
+\[
+K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
+\]
+
+其中 \(K_j\) 是第 \(j\) 层仍然无法区分的 pair 集合。第 \(j\) 层首次分离的 pair 构成 capture 增量，所有增量互不相交并与最终 unresolved 集合一起分割初始 pair 集合。相应结果给出 capture count/rate、unresolved count/rate，以及速率的望远镜恒等式。
+
+把这个结构和金字塔连接时，定义带类型的层状态
+
+\[
+\mathcal S_j=(K_j,\ P_j,\ \kappa_j,\ \Delta_j),
+\]
+
+而不是把所有量压成一个标量：
+
+- \(K_j\) 记录微观观察 kernel 和剩余信息；
+- \(P_j=(X_j,Y_j,Z_j)\) 记录宏观均值位置；
+- \(\kappa_j\) 记录同一点上的隐藏 fiber 坐标；
+- \(\Delta_j\) 或 \(D_j=r_jI_j\) 记录尚未热化的关联；
+- 素数支撑和获取成本另放在 arithmetic/cost 分量。
+
+本文件的质量作用流只改变 \(\kappa\)，因此 \(P_j\) 不动。它描述的是“先被投影隐藏，再在隐藏纤维内耗散”的内部信息逃逸。若要从金字塔底面向顶点真正跨层，需要增加改变 \(X,Y,Z\) 的反应或控制，并为这些方向指定 mobility 和环境账本。现有 κ 流不能单独承担这一步。
+

@@ -1,0 +1,23 @@
+**Corollary 144.2.** In an actual finite ideal face pairing with complete circular edge links,
+suppose |H|<=4, every edge degree is at least six, and
+the fixed paired frames and common positive zero-curvature length field
+exist. If no two distinct tetrahedra share two paired faces and no three
+distinct tetrahedra form a dual triangle, every tetrahedron is genuine.
+Self-loops elsewhere in the dual multigraph are allowed.
+
+For |H|=4 this is the contrapositive of Theorem 144.1. For |H|<=3 it follows
+from the maximal-selected four-label escape theorem already in the source.
+
+Under the standard original-manifold hypotheses used by the source
+realization theorem (a finite connected orientable ideal triangulation
+of a compact 3-manifold with all boundary components of genus at least
+two), this gives a conditional hyper-ideal realization of the original
+triangulation. The existing strict-angle-structure and Luo--Yang inputs
+supply the common positive generalized zero-curvature field. Corollary
+144.2 removes its flat blocks. Common edge lengths make paired truncated
+faces isometric, the full 2*pi equations remove edge singularities, and
+the truncation triangles give totally geodesic boundary.
+
+This criterion does not assert that every four-reservoir pairing avoids
+these dual cycles, or that the unrestricted four-reservoir case is realized.
+

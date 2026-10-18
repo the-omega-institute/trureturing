@@ -1,0 +1,95 @@
+**Theorem 7.3 (strict positive fixed-law failure of the constructor
+estimate).** Let $u$ be uniform on the entire $S_3$, where
+$|S_3|=2+11^2=123$, and put
+
+$$
+\mu_+=\frac{99}{100}\mu_0+\frac1{100}u.
+\tag{INB.30}
+$$
+
+This is the same positive perturbation used in [OCB, Theorem 5.3][OCB]
+for its different owner-only grammar. The law and its motif-pressure
+comparison are credited inputs; the conclusion about (INB.22) is the
+distinct assertion here. Then
+
+$$
+\beta_3(\mu_+)\le\frac{4979}{6150}<\frac{81}{100},
+\tag{INB.31}
+$$
+
+whereas every positive port-gauge estimate (INB.22) for every
+$\Theta_m$, retaining its full seven-coordinate owner factors,
+satisfies
+
+$$
+B>(11/10)^n,\qquad n=2m.
+\tag{INB.32}
+$$
+
+This remains true with every legal outside-$P$ owner state and all
+unused target-relation rows retained.
+
+Proof. The entries of $\mu_+$ are $6091/30750$ on $P$ and
+$1/12300$ elsewhere, all positive. Its motif mass and distance are
+
+$$
+\rho:=\mu_+(P)=\frac{6091}{6150}>\frac{99}{100},
+\qquad\operatorname{TV}(\mu_+,\mu_0)
+=\frac1{100}\left(1-\frac5{123}\right)=\frac{59}{6150}.
+\tag{INB.33}
+$$
+
+The credited inhomogeneous motif theorem [SRP, Theorems 1.2 and
+3.2][SRP], also stated in JPL Definition 2.1, gives
+$\beta_3(\mu_0)=4/5$. It covers every length and arbitrary cyclic
+or off-target donors: intersecting any native relation with $P^n$
+retains its witnesses, and weights outside $P$ vanish. Applying
+[NPC, Theorem 6.1][NPC]'s probability stability gives
+$\beta_3(\mu_+)\le4/5+59/6150=4979/6150$.
+Indeed $4979\cdot100=497900<498150=81\cdot6150$.
+This proves (INB.31) without optimizing the law.
+
+Now use exactly the actual $Q$ of Lemma 7.2 in Theorem 6.2,
+with $w_i=\mu_+$ and $W_i=1$. On $P$, $\mu_+=\rho\mu_0$,
+so every block divergence is $D_2(\mu_0\|\mu_+)=-\log_2\rho$.
+Under $Q$, the actual $LL$ reply has probabilities
+$(3/5,1/5,1/5)$ on absent, alpha, beta. Its entropy is
+
+$$
+H_{LL}=\log_25-\frac35\log_23>1,
+$$
+
+because $5^5=3125>864=2^5\,3^3$.
+
+In the uncontracted CBN target compilation, the $LL$ prefix test
+of the cross-$LL$ equation is a binary factor on $(i,LL)$ and
+its partner's $RL$. Thus every $LL$ variable has $m_v\ge1$.
+Here $k=7$, all indicator arities are at most two, and therefore
+
+$$
+\delta_v\ge\frac{m_v}{m_v+1}\left(\frac12-\frac17\right)
+\ge\frac5{28}\quad(v=(i,LL)).
+\tag{INB.34}
+$$
+
+With owner legality already in the owner factors and only the
+target indicators retained, it has exactly this one incident target
+test, hence $m_v=1$ and $\delta_v=5/28$. Redundant constructor
+tests can only preserve the displayed lower estimate, since the
+same calculation with $m_v\ge1$ applies. All other coefficients
+in (INB.23) are nonnegative. Consequently
+
+$$
+\log_2B\ge n\log_2\rho+\frac{5n}{28}H_{LL}
+>n\left(\log_2\rho+\frac5{28}\right).
+$$
+
+Finally $2^5\,9^{28}>10^{28}$, so $2^{5/28}>10/9$.
+The integer on the left is exactly
+$16747124256875537190832368672>10000000000000000000000000000$.
+Together with $\rho>99/100$ this yields
+$B>[\rho\,2^{5/28}]^n>(11/10)^n$. The proof used a law on a
+positive subset of the full actual solution set; it never removed
+any other owner states or constraint rows from the evaluated $B$.
+$\square$
+

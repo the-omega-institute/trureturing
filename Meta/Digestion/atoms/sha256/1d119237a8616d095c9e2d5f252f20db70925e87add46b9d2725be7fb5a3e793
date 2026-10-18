@@ -1,0 +1,90 @@
+**Theorem 5.2 (the entire arbitrary-code input and its targets).**
+Let $C=e^{-1}(\gamma)$ be any attained code class of Assumption 5.1;
+no geometric condition on $C$ is assumed. Put $d(a,b)=a-b$. A promised
+right-visible input has, for an integer $z\ge\lambda$, the entire row
+
+$$
+\mathcal R^R_z=
+ \bigl(\langle\square_L,T_{q+z}\rangle,\{\{L\}\}\bigr).
+\tag{NARC.5.3}
+$$
+
+Its complete code/row fiber, hidden left age and required lag are exactly
+
+$$
+\begin{aligned}
+F_R(C,z,\lambda)&=\{(a,b)\in C:b\le z-\lambda\},\\
+n_R(a,b)&=z+d(a,b),&\ell_R(a,b)&=z-b.
+\end{aligned}
+\tag{NARC.5.4}
+$$
+
+A promised left-visible input has the entire row
+
+$$
+\mathcal R^L_z=
+ \bigl(\langle T_z,\square_R\rangle,\{\{R\}\}\bigr),
+\qquad z\ge\lambda,
+\tag{NARC.5.5}
+$$
+
+with exact fiber and targets
+
+$$
+\begin{aligned}
+F_L(C,z,\lambda)&=\{(a,b)\in C:a\le z-\lambda\},\\
+n_L(a,b)&=q+z-d(a,b),&\ell_L(a,b)&=z-a.
+\end{aligned}
+\tag{NARC.5.6}
+$$
+
+Each member is realized by its own fixed original and its indicated lag.
+Equality here includes every exterior label and bracket, the reached
+hole and the whole partition. On a nonempty fiber, zero fresh calls are
+possible exactly when its visible-origin coordinate ($b$ for $V=R$,
+$a$ for $V=L$) is constant.
+
+Every original-root query is the empty word or has a slot prefix $L$ or
+$R$. The empty-root reply and all visible-prefixed replies are constant
+on this whole input fiber. A hidden-prefixed query returns precisely
+the relative native reply on $T_{n_R}$ or $T_{n_L}$. Thus a nonconstant
+target can be recovered with one call only by a target-constant partition
+of these hidden-age replies, with the word selected before that call
+from the common acquired entry.
+
+**Proof.** Homomorphism gives (NARC.5.2). The two slots remain reached
+even if a filling is a leaf. For the right-visible cut, replacement of
+the entire left filling gives (NARC.5.3). The single hole has exactly its
+singleton partition, independently of its value. The acquired right
+literal has clock $q+b+\ell$; subtracting $q$ gives $z=b+\ell$.
+Since the clock distinguishes the $T_n$, any history with this whole
+row must satisfy that equation. Its lag is therefore $z-b$, and the
+lag restriction is exactly $b\le z-\lambda$. Substitution in the hidden
+age $a+\ell$ gives $z+a-b$.
+
+Conversely, take any $(a,b)\in C$ with $b\le z-\lambda$ and set
+$\ell=z-b$. This is a legal lag on the one fixed original $X_{a,b}$.
+Its actual current tree is $\langle T_{z+a-b},T_{q+z}\rangle$.
+Its code is $\gamma$, and its complete later row is (NARC.5.3), including
+all its labels, brackets, reached guard and singleton partition. This
+proves both directions of (NARC.5.4) and shows that $n_R\ge0$ on the
+fiber. For the left-visible cut, the same argument starts with the
+acquired clock $z=a+\ell$. Each pair with $a\le z-\lambda$ is realized
+at $\ell=z-a$ by $\langle T_z,T_{q+z-a+b}\rangle$, with exactly
+(NARC.5.5); its hidden right age is at least $q$. These are complete
+histories, each using the same original through its own continuation.
+Their whole-row equality is also the specialization of [NAR,
+(NAR.16.6)][NAR].
+
+If the visible origin is a common $v$, return $z-v$. If it varies, the
+same received entry requires two different lags, so a deterministic
+zero-call output fails. Finally every current source is a branch at
+the original root, giving a constant empty-root reply. A word entering
+the visible slot is evaluated on the same acquired literal for every
+fiber member, including words that return absence. A word entering the
+hidden slot is evaluated on its indicated actual filling. This exhausts
+all original-root words. With at most one call there is no previous
+fresh reply on which to base its selection; all members of the entry
+receive the same selected word. Correctness is exactly constancy of
+the required target on each realized reply cell. $\square$
+

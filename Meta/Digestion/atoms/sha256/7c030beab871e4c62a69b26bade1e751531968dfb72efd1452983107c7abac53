@@ -1,0 +1,28 @@
+**Theorem 7.1 (correlated ranks cannot be replaced by marginals).** Take
+the exact atomic piece
+
+$$
+U(n_1,n_2)=\langle T_{n_1},\langle T_{n_2},T_{n_1+2}\rangle\rangle,
+\qquad S(n_1,n_2)=(n_1\ge2\ \land\ n_2=n_1+1).
+\tag{AAB.21}
+$$
+
+Its complete accumulation basis is the singleton $\{\Omega\}$.
+Replacing $S$ by the Cartesian product of its two rank projections
+changes that basis to an infinite set and adds impossible partial
+divergence profiles.
+
+Proof. With either coordinate fixed the equality $n_2=n_1+1$ bounds
+the other, so $E_{\{1\}}$ and $E_{\{2\}}$ are empty. Both can tend
+to infinity jointly, so $E_{\{1,2\}}$ is the singleton empty tuple.
+Theorem 3.1 gives exactly the completion with every atomic occurrence
+replaced by $\Omega$, which equals $\Omega$. The repeated $n_1$ and
+its offset $+2$ are retained at both addresses.
+
+The marginal product is $n_1\ge2,n_2\ge3$. It permits $n_2=c\ge3$
+while $n_1\to\infty$, producing
+$\langle\Omega,\langle T_c,\Omega\rangle\rangle$ for every such $c$.
+These are pairwise distinct accumulation points absent from (AAB.21).
+Thus separate rank feasibility and separate unboundedness cannot
+supply the joint cofinal condition (AAB.8). $\square$
+

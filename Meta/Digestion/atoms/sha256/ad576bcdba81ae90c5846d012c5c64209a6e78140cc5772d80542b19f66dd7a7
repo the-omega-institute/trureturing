@@ -1,0 +1,99 @@
+**Theorem 8.2 (Local equivalence and pure-state completion).**
+At the reference of Definition 8.1, on the full
+horizontal tangent $u+iv$, $u,v\in V$, the new menu has
+
+$$
+F_{\rm real}=4\begin{pmatrix}I_V-rB_\omega&0\\0&rB_\omega\end{pmatrix}
+=F_{\rm mode},\qquad Q=4I.
+\tag{8.3}
+$$
+
+This equality holds for every $r\in[0,1]$ and every
+$\eta$. If $0<r<1$ and every $\omega_i,\eta_i$ is
+positive, its exact observation-law map is injective
+on the pure rays whose amplitudes are all nonzero.
+This global statement does not assume that the unknown
+state equals the supplied reference.
+If any site is omitted from either readout family,
+the menu is not injective on this entire full-support
+pure-ray domain.
+
+Proof. At the reference the two real overlaps on a pair
+are $A=c\psi_s+d\psi_t>0$ and
+$C=-d\psi_s+c\psi_t>0$, by (8.1). The probabilities
+are $A^2,C^2$. Along the normalized horizontal path
+(5.1), their derivatives are
+
+$$
+2A(cu_s+du_t),\qquad 2C(-du_s+cu_t).
+\tag{8.4}
+$$
+
+The imaginary tangent has zero first derivative in this
+real basis. Nonzero overlaps allow ordinary Fisher
+division, and orthogonality gives the pair contribution
+
+$$
+4(cu_s+du_t)^2+4(-du_s+cu_t)^2
+=4(u_s^2+u_t^2).
+\tag{8.5}
+$$
+
+A blocked word contributes $4u_s^2$. Hence every real
+site has total information $4\|u\|^2$, independent of
+its site and of $\eta$. Combine this with the quadrature
+calculation (5.6) to obtain (8.3). The real-basis
+information algebra is a use of the pure-state machinery
+of [FSIC5]; it is not a new Fisher budget.
+
+For injection write $\rho=zz^*$ for an unknown pure
+state. Every nonempty legal word has an occupied site
+$i$ with a neighbor $j$, since $n\ge2$. At site $j$ that
+word is blocked. Its resolved singleton probability
+therefore supplies $p_s=\rho_{ss}$, after division by
+the known positive setting probability. All nonvacuum
+diagonals are recovered this way, and
+$p_0=1-\sum_{s\ne0}p_s$ gives the remaining diagonal.
+
+For each legal pair, the conditional quadrature and
+real probabilities satisfy
+
+$$
+\begin{aligned}
+q_{Y,-}-q_{Y,+}&=2\operatorname{Im}\rho_{st},\\
+q_{R,+}-q_{R,-}
+&=(c^2-d^2)(p_s-p_t)+4cd\operatorname{Re}\rho_{st}.
+\end{aligned}
+\tag{8.6}
+$$
+
+Here $Y_\pm=(e_s\pm i e_t)/\sqrt2$ fixes the sign
+convention. Both $c,d$ and both setting probabilities
+are positive, so all complex edge coherences are
+recovered. The full legal graph is connected, and the
+unknown state has nonzero amplitudes on it. Apply
+Parent/Readout Theorem 8.6's existing pure-state phase
+propagation result to these actual diagonals and edges.
+This gives a unique pure ray. $\square$
+
+For the necessity of coverage, if real site $i$ is
+omitted, the rays $z_s=\psi_s$ and
+$z'_s=(-1)^{s_i}\psi_s$ have identical records.
+Every imaginary edge coherence vanishes, while all
+remaining real pairs preserve bit $i$ and hence their
+real coherence. If quadrature site $i$ is omitted,
+take $z_s^\pm=\psi_s e^{\pm i\theta s_i}$ with
+$0<\theta<\pi$. Every remaining quadrature edge has
+real coherence; the real site-$i$ outcomes depend
+on the same cosine for the two states. Blocked
+probabilities are identical in both constructions.
+The rays in each pair are distinct because both
+bit values occur on the positive carrier.
+
+The equality is at the supplied real reference. It
+neither equates the menus' Fisher matrices at every
+complex state nor proves global mixed-state tomography.
+The recovered density entries are still only the
+diagonals and legal edges; the mixed-state nonedge
+kernel of Parent/Readout §8.5 remains.
+

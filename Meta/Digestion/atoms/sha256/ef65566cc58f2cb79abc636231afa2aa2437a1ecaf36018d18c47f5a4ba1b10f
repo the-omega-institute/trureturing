@@ -1,0 +1,25 @@
+**Example 10.4 (exact order fibers).** Four distinct Reads and two updates
+give $6!/2!=360$ command histories with one source-recovered spatial base,
+requiring nine conditional fixed-width bits. If their complete epoch records
+fix Read counts $(2,0,2)$, four within-epoch orders remain, requiring two bits.
+Zero Reads gives one order, and a single Read with $b$ updates gives $b+1$
+orders before epoch assignment is supplied.
+
+**Finite evidence 10.5 (bounded mathematical checks).** Finite checks of tree
+decoding, schedule ranking and separation test the displayed finite algebra
+and command interface. The exact checked domains and results are:
+
+| Finite domain | Result |
+| --- | --- |
+| All 102 labelled ordered trees with at most four leaves, each at actual epochs 2 through 6 | 510 support/frontier-to-seed inversions agreed with the initial tree; each boundary's prefix closure and terminal positions agreed with its actual support. |
+| Those 510 current trees, all 63 literal addresses of length at most five | 32,130 labelled-frontier replies agreed with independent recursive tree Read, including absent. |
+| The semantic calls of Definition 3.2 on all 102 seeds with $J=2$ | All terminal sources were $\rho^4u$; raw source/row counts agreed; 104 Fetch successes and 304 executed index rejections occurred, with both outcomes on every source. |
+| Histograms $(2)$, $(2,1)$, $(1,1,1,1)$, $(2,1,1,1,1)$ and $(2,2,1)$, with first coordinate counting updates | All 418 multiset words had their exact lexicographic ranks and inverses; 2,835 prefix rank/unrank checks agreed using only each prefix's histogram. |
+| Both one-leaf seeds and all four two-leaf seeds, four distinct-address Reads and two updates | All 2,160 actual command histories, 360 per seed, had a common terminal source within each seed and distinct full command traces. The fixed epoch partition $(2,0,2)$ had exactly four orders. |
+
+These checks are not an execution of the expanded tape
+interpreter, a model of electrical timing, a proof of source-call atomicity,
+or a new Lean check. The complete proofs above, rather than enumeration,
+carry the universal ordinary statements. No experiment program or command
+transcript is part of this theory source.
+

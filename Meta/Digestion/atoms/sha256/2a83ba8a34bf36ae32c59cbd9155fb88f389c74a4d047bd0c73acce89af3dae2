@@ -1,0 +1,21 @@
+**Convention 7.2 (reused formal and primary interfaces).** The following
+sources delimit the applicable general reasoning; none instantiates an
+original added-phase entry.
+
+| Source | Exact hypotheses and use boundary |
+| --- | --- |
+| `D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean`, `response`, `refinement`, `typed_finite_view_kernel`, and owning Scribe | Independently specified typed edges, partial label/successor maps and readouts precede the kernel theorem. Illegal `none` is not a successor. This does not decide the concrete original action domain. |
+| `D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean`, `predictive_memory_minimal_quotient`, and owning Scribe | Both current-readout factorization and descended update are premises. The present finite disclosure inverse does not obtain legal transitions or current authority from that quotient theorem. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean`, `OriginalCodeRealization`, `original_code_service_simulation`, private `erased_reads`/`erased_external`, and owning Scribe | A supplied genuine-state code realization and an actual `OriginalRun` give the stated evaluator-erased external trace, reads and whole-output halt. Those external observations are not the original complete-successor interface of this volume. |
+| [Pinned mathlib `Function.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Logic/Function/Basic.lean), `FactorsThrough`, `factorsThrough_iff` | `literature-attested`: constancy on observation fibres is necessary; the total factor equivalence assumes a nonempty codomain. It supplies neither the concrete bank sweep nor occurrence authenticity. |
+| [Pinned mathlib `StateTransition`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean), `Respects`, `tr_reaches` | `literature-attested`: one-or-more-step and termination matching are supplied simulation conditions. Reachability transport does not establish equal one-row receipt successors. |
+| [CompCert v3.16 `Smallstep.v`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v), `fsim_properties` | `literature-attested`: well-founded index, initial/final matching, trace-matching Plus or decreasing-index Star, and public-symbol preservation are explicit premises. Such a simulation is a different contract from unchanged complete original successors. |
+| Devriese, Patrignani, Piessens and Keuchel, [*Modular, Fully-abstract Compilation by Approximate Back-translation*](https://arxiv.org/abs/1703.09988v4), DOI10.23638/LMCS-13(4:2)2017, abstract | `literature-attested`: full abstraction preserves and reflects behavioral equivalence for the stated source/target languages and contexts; approximate back-translation is bounded and conservative. This terminology supplies no context/admission/OUT correspondence for this carrier. |
+
+The results require the concrete executed sweep and physical occurrence
+proofs above. A successful encoding, a search miss, an endpoint collision
+or numerical source-selector evaluation supplies none of the missing
+original-interface conditions. The ordinary proofs are not claimed as
+Lean-kernel verification; finite observation does not imply a uniform
+unbounded actor procedure or settle the full-domain programme.
+

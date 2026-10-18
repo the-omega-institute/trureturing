@@ -1,0 +1,68 @@
+**Corollary 5.1 (explicit parameter regimes).** The preceding refinement
+attains $L=O(P+\log(T_G+N+\ell+1))$. In particular it attains
+$L=O(h+T)$ for all of the following actual macro choices, with their
+simultaneous source bills inherited unchanged.
+
+For every $h$ at $T=0$, SLHC §11 gives
+
+$$
+k=h+3+\lambda(h)+2\lambda(h+1),\quad
+\ell=4k+15,\quad W_*=2^{2k+8},\quad
+P=h-1,
+$$
+
+$U=0$, $Q\le(2k+7)(2h-1)$ and
+$A\le(2h-1)(h-1)$. Thus the serial width is $O(h)$, including
+$h=1$, where all payloads are empty but reply, control and Halt states
+still count.
+
+For even $h$ and positive $T$, one choice is SLHC §11's active table:
+
+$$
+\begin{aligned}
+B_0&=2\left\lceil\frac{T+2h}{2}\right\rceil,\qquad
+k=h+3+\lambda(h)+2\lambda(h+1)+\lambda(2h),\\
+\ell&=4k+15,\quad W_*=2^{2k+8},\quad P=h-1+B_0/2,\\
+U&=B_0-t-\kappa(u),\qquad
+Q+U\le(2k+7)\bigl(2B_0+1+2h(4h-2)\bigr),\\
+A&\le(B_0+1)B_0/2+2h(4h-2)P.
+\end{aligned}
+\tag{5.1}
+$$
+
+Here $\kappa(\alpha)=0$, $\kappa(\beta)=1$ and
+$\kappa(\langle v,w\rangle)=2+\kappa(w)$ is proof notation, not a
+supplied epoch. The active macro width is independent of $T$ for fixed
+$h$, while its serial flat-buffer width is not.
+
+A second choice, using SLHC Theorem 12.2 at $\Delta=2$, has
+
+$$
+\begin{aligned}
+J&=\left\lceil(T+2h)/2\right\rceil,\qquad
+ g=\lambda(J),\qquad e=\lambda(2h+1),\\
+k&=h+3+\lambda(h)+2\lambda(h+1)+e+g,\qquad
+ P=h-1+J,\\
+\ell&=4k+15,\quad W_*=2^{2k+8},\quad U=0,\\
+Q&\le(2k+7)(g+1+8h^2-2),\qquad
+ A\le P(g+1+8h^2-2).
+\end{aligned}
+\tag{5.2}
+$$
+
+The same refinement also applies to each even $\Delta\ge2$ with
+$J=\lceil(T+2h)/\Delta\rceil$, $g=\lambda(J)$,
+$P=h-1+J\Delta/2$, and the exact capped macro bills in SLHC.12.3.
+When $\Delta$ is unnecessarily large, retain this displayed $P$;
+do not claim an $O(h+T)$ bound uniform in arbitrary $\Delta$.
+
+Proof. Equations (4.1)–(4.3) give
+$\log T_G=O(\log W_*+\log(P+\ell+1))$, and (4.5) gives the first
+assertion. Substitute the supplied values above. The macro native-call
+polynomial in (5.2) is in $h+\log(T+1)$. Equation (4.9) instead is a
+polynomial in **installed code size** $Z$: $W_*$ is exponential in the
+macro width, and literal expansion contributes $P$. It is not a
+polynomial-in-$h+\log(T+1)$ or polynomial-in-$h+T$ claim about total
+serial work. All copy traffic, ROM scans and original root routing
+Reads remain charged. ∎
+

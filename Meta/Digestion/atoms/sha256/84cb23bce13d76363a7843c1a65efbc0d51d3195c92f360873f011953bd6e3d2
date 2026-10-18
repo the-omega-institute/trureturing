@@ -1,0 +1,90 @@
+**Lemma 11.1 (a legitimate increasing-contrast tangent).** Assume
+$\mathrm M$ and let the three pure angles have charts
+
+$$
+\phi_0=2\arctan a_0,\quad
+\phi_1=\pi+2\arctan a_1,\quad
+\phi_2=\pi+2\arctan a_2,
+\tag{AC.53}
+$$
+
+with
+
+$$
+a_0\in[1/50,3/100],\quad
+ a_1\in[-3/10,-29/100],\quad a_2\in[3/25,7/50].
+\tag{AC.54}
+$$
+
+Then $dk$ is nonzero on $\ker J$. In fact there is a tangent with
+both saturated atoms fixed and $\dot k>0$, integrable to a local
+positive-weight curve preserving all moments.
+
+Proof. The pure report signs are $+,-,-$. Put
+$A_{\rm p}=(\sqrt{p_0}h_0,\sqrt{p_1}h_1,\sqrt{p_2}h_2)$ and
+$S_{\rm p}=A_{\rm p}^TQA_{\rm p}$. Here $h_i$ denotes the
+contact vector, not an amplitude from $D$. Its diagonal is zero and
+
+$$
+(S_{\rm p})_{ij}=\sqrt{p_ip_j}
+ [1-\cos(\phi_i-\phi_j)]>0\quad(i\ne j).
+\tag{AC.55}
+$$
+
+Take the antisymmetric $\Omega$ with
+$\Omega_{10}=1/(S_{\rm p})_{01}$,
+$\Omega_{20}=-1/(S_{\rm p})_{02}$ and
+$\Omega_{21}=1/(S_{\rm p})_{12}$. Then
+$\dot A_{\rm p}=A_{\rm p}\Omega$ preserves its Gram to first
+order, and $\operatorname{diag}(S_{\rm p}\Omega)=0$ preserves
+the individual null constraints to first order. Each positive-weight
+column therefore gives a valid $(\dot p_i,\dot\phi_i)$.
+The derivative is
+
+$$
+\dot k=2\left[
+\frac{z_0+z_1}{1-\cos(\phi_0-\phi_1)}
+-\frac{z_0+z_2}{1-\cos(\phi_0-\phi_2)}\right].
+\tag{AC.56}
+$$
+
+For $\rho_1=(a_0-a_1)/(1+a_0a_1)$ and
+$\rho_2=(a_0-a_2)/(1+a_0a_2)$, elementary half-angle identities
+factor this exactly as
+
+$$
+\dot k=\frac{2\cos\phi_0}{\sqrt\alpha}
+ (\rho_1-\rho_2)(\rho_1+\rho_2-\tan\phi_0).
+\tag{AC.57}
+$$
+
+All denominators below are positive on the full box AC.54.
+Monotonicity of these rational functions in their two arguments gives
+
+$$
+\begin{gathered}
+1550/4971\le\rho_1\le330/991,\qquad
+-300/2507\le\rho_2\le-225/2509,\\
+\tan\phi_0\le600/9991,\qquad
+\rho_1+\rho_2-\tan\phi_0
+\ge\frac{16446570850}{124510809327}>129/1000.
+\end{gathered}
+\tag{AC.58}
+$$
+
+Also $\rho_1-\rho_2>0$ and $\cos\phi_0>0$, proving strict
+response on every point of the box, independently of the weights.
+
+This is more than a formal tangent. With the saturated atoms fixed,
+the pure live moment map has rank five on its six variables by the
+first part of Lemma 10.2. Its fixed-moment set is a smooth
+one-dimensional manifold. The tangent just constructed lies in its
+tangent space and integrates to a local curve on that manifold.
+Positive weights and the nonzero $z$ signs persist. All failure moments
+are unchanged, so the curve is genuinely original-feasible by §13.
+$\square$
+
+If this particular factored response were zero outside the displayed
+box, it would only invalidate this chosen direction. It would not
+prove $dk|_{\ker J}=0$; the other tangent direction would remain.
+

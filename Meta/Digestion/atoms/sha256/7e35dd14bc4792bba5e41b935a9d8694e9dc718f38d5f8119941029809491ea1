@@ -1,0 +1,39 @@
+**Definition 10.3 (hard parity support and component descriptor).** On
+the entire $123$-state $S_3$ put the rational probability
+
+$$
+\mu(x)=
+\begin{cases}
+1/8,&x\text{ is a perfect four-leaf tree of even leaf parity},\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{OCC.33}
+$$
+
+This is an analytical whole-block weight, not a restriction of the
+original source family. Use it once at each of the $n$ original
+blocks. The positive support in the edge coordinates is
+
+$$
+R_m=\left\{s:
+ s^x_{x,y}+s^x_{x-1,y}+s^y_{x,y}+s^y_{x,y-1}=0
+ \text{ for every }(x,y)\in V\right\}.
+\tag{OCC.34}
+$$
+
+All sums in edge equations are in $\mathbb F_2$. Define
+
+$$
+\chi_x(s)=\sum_y s^x_{m-1,y},\qquad
+\chi_y(s)=\sum_x s^y_{x,m-1},\qquad
+\chi(s)=(\chi_x(s),\chi_y(s)),\qquad
+R_h=\{s\in R_m:\chi(s)=h\}.
+\tag{OCC.35}
+$$
+
+The actual positive-support Gibbs law is
+$P(s)=Z^{-1}\prod_v\mu(x_v(s))$ on $R_m$. The symbol $\chi$
+is a mathematical descriptor to be acquired if requested; it is not
+an existing native observation. Owner distance is precisely (OCC.11),
+counting changed two-bit tuples $O_v$.
+

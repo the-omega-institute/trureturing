@@ -1,0 +1,12 @@
+**Theorem 5.3 (sharp fixed-acquisition threshold).** For every declared $d\ge1$, the optimal read count for full-domain gain-ray extraction on a preassigned acquisition word is exactly $2d+3$, even with arbitrary countable-palette selection.
+
+**Proof.** Theorem 5.2 gives the upper bound. At $N\le2m$, mixed words are excluded by Theorem 3.1 and Lemma 2.3; pure-$M$ words are excluded by Theorem 4.3 and Lemma 2.3. For pure-$J$ words, use the same legal source
+
+$$
+P_*=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+$$
+
+in the two worlds $(P_*,t,0)$ and $(P_*,t+1,-1)$. Since $JP_*=P_*$, both produce $z_i=i$ at every original clock, for arbitrarily long pure-$J$ acquisition. The full coefficient vectors of $t$ and $t+1$ are noncollinear for every $d\ge1$. Identical histories therefore rule out any gain-ray selector, even unrestricted nonlinear selection. The same pair covers the no-action case. These cases exhaust all preassigned words. Padding early outputs as in Definition 1.2 covers early stopping on a preassigned word. $\square$
+
+Even infinitely many pure-$M$ reads cannot recover the whole source $P$: Lemma 3.2 supplies a distinct source with the same pure-$M$ trace sequence and the same $g,\delta$. Exact gain-and-drift recovery is thus strictly weaker than complete-target recovery.
+

@@ -1,0 +1,101 @@
+**Theorem 4.2 (Uniform Descriptor Boundary Theorem).** For every effectively
+presented task satisfying Definitions 1.2 and Assumptions 1.3–1.5, and for
+every $K\in\mathbb N$,
+
+$$
+\mathsf{Solve}_K\ \Longleftrightarrow\
+\bigvee_{\substack{G\text{ a labeled instruction graph}\\1\le|E|\le K}}
+\ \bigvee_{\mathbf b\in\mathcal B^{E_R}}
+\Phi_{G,\mathbf b}.
+\tag{UDB.17}
+$$
+
+The right side is a finite effective Presburger sentence. Its truth is
+decidable. If true, one can extract a single finite literal table and
+observer interface with at most $K$ complete controller states. If false,
+one obtains a finite arithmetic rejection of all graphs and all valid
+descriptor valuations in (UDB.17). This is an exact criterion within the
+declared instruction class, without a bound on finite word installation
+or terminating action durations.
+
+Proof 4.2. For each $1\le s\le K$, there are finitely many partitions of
+$\{0,\ldots,s-1\}$ into three instruction classes, finitely many initial
+states, $s^{|\mathcal C|}$ successor choices at each read, and $s$ at each
+update. Enumerate them all, including unreachable states and graphs
+without halts. For each graph, enumerate the finitely many descriptor-type
+tuples. Their dimensions are then fixed. No literal length is enumerated
+as a bounded cutoff: unbounded numeric descriptor values remain the
+existential variables in (UDB.16).
+
+Theorem 3.4 and supplied admission and Same formulas make (UDB.16)
+Presburger. Boolean closure, existential projection and universal
+quantification are all allowed, including quantifier alternation within
+the phase guards. Apply the decision theorem [GS, Theorem 1.2][GS] to
+the finite disjunction. Every cycle expression has form $a+bz$ with fixed
+numeral $b$. Graph size, alphabet rank and phase count are fixed before
+arithmetic quantification. Products of a descriptor length with a variable
+visit count, of two source coordinates, or of a source coordinate with
+an epoch are never introduced by this construction. Reply, Same and
+admission are required to be jointly Presburger already. Consequently no
+product of two unbounded quantified variables is hidden in a cycle weight
+or resource objective.
+
+For necessity, take a successful literal table with $s\le K$ states.
+Relabel its states, preserving instructions and successors, to one
+enumerated graph. Descriptor completeness supplies, for each installed word
+$p_e$, a descriptor $\delta_e$ satisfying
+$\operatorname{Valid}(\delta_e)\land p_e\in\operatorname{Real}(\delta_e)$;
+its type contributes to the enumerated tuple $\mathbf b$. All visits to that
+state retain that word. By (UDB.4), the installed word and the chosen
+$p(\delta_e)$ give identical
+replies on every admitted source at every epoch. Induction on instructions
+therefore preserves the table's execution when that chosen realization
+is used. Every original source has its unique admitted tuple and actually
+halts. Theorem 3.4 proves Total. If two sources reach one halt, correctness says both
+complete rows equal its single installed $Y_h$. Exact Same proves Shared.
+Thus this table makes one disjunct of (UDB.17) true.
+
+For sufficiency, take a true graph/type disjunct and extract a satisfying
+numeric tuple. One effective extraction is to enumerate natural tuples by
+increasing coordinate sum and decide the remaining Presburger formula
+after substitution; existential truth guarantees termination of this
+positive extraction. Realize each descriptor **once** by $p(\delta_e)$.
+All-chart, all-epoch exactness makes these the same literals whose halt
+supports were computed.
+
+For each halt, decide
+
+$$
+\operatorname{Reach}_h\ \Longleftrightarrow\
+\bigvee_{\eta\in\mathcal A}\exists\mathbf n\quad
+\operatorname{Adm}_\eta(\mathbf n)\land H_{\eta,h}(\mathbf n;\boldsymbol\delta).
+\tag{UDB.18}
+$$
+
+If true, extract one admitted witness tuple, construct the finite original
+source $u_h=\Theta_\eta(\mathbf n)$ and its entire row $R(u_h)$, and install
+that literal at $h$. Shared and (UDB.2) ensure that every other source
+reaching $h$ has that very row. If false, install $Y_*$ there. Now fix any
+$u\in D$. Total and Theorem 3.4 force its actual finite first halt; that
+halt is reachable, and its installed row equals $R(u)$. All choices of
+witness sources are offline output construction, not new online source
+access. The extracted controller is the selected graph itself. Phase
+vectors, epochs, chart tags, cut witnesses and descriptor evaluators do
+not become extra readable states or instructions.
+
+For rejection, effective Presburger reduction may eliminate the descriptor
+and source quantifiers, using congruences with fixed moduli if needed, to
+closed arithmetic truth values. A negative answer consists of the finite
+graph/type list and finite arithmetic reductions showing that each
+$\Phi_{G,\mathbf b}$ is false. Equivalently, its definable good-descriptor
+set is empty for each listed graph/type. This rejects unbounded parameter
+domains symbolically; it need not be one fixed finite collection of sources
+that defeats every installation. It is a mathematical finite rejection,
+not a claim that a particular certified solver has been run.
+
+If $K=0$, the graph disjunction is empty and false because controller
+states are nonempty. If $D=\varnothing$ and $K\ge1$, a one-state initial
+halt with row $Y_*$ succeeds vacuously. For a nonempty family, an initial
+halt succeeds exactly when its one output equals every complete target
+row. These conventions also agree with (UDB.16). $\square$
+

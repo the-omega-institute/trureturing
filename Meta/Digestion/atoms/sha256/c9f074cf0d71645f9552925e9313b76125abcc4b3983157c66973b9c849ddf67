@@ -1,0 +1,19 @@
+### 103.2. Class-number and unit input for the actual ternary fields
+
+**Proof.** The required parity theorem concerns exactly the full cyclotomic fields Q(zeta_(3^(j+1))). We use [Ichimura–Nakajima, *On the 2-part of the class numbers of cyclotomic fields of prime power conductors*, Theorem 1(II), printed page 318](https://www.jstage.jst.go.jp/article/jmath/64/1/64_1_317/_pdf/-char/en), and [Dummit, *A note on the equivalence of the parity of class numbers and the signature ranks of units in cyclotomic fields*, Proposition 1](https://www.cambridge.org/core/journals/nagoya-mathematical-journal/article/note-on-the-equivalence-of-the-parity-of-class-numbers-and-the-signature-ranks-of-units-in-cyclotomic-fields/DFAAD1914CA2C856EA78ECBE4E2E2BC9).
+
+In the first theorem write K_n=Q(zeta_(p^(n+1))) and n_0=v_p(ell^(p-1)-1). For p=3 and ell=2, its parameters are n_0=1, varpi_(p,ell)=1 because 2 is primitive modulo 9, M_(p,ell)=ell(p-1)varpi_(p,ell)-1=3, and phi(p-1)=1. The theorem therefore makes h(K_n)/h(K_(n-1)) odd whenever 3^n>3, hence for every n>=2.
+
+The base h(Q(zeta9))=1 follows directly. Its degree is six, it has three complex places, and its discriminant has absolute value 3^9. Minkowski's bound is
+
+ (4/pi)^3 (6!/6^6) sqrt(3^9)
+ < (4/3)^3 (720/6^6) 141=3760/729<6.
+
+The primes 2 and 5 have exact order six modulo 9, so their primes have norms 2^6 and 5^6. The only prime ideal of norm at most five is the principal prime (1-zeta9) above 3, of norm 3. Every ideal class has an integral representative of norm less than six, so every class is principal. The stated ratio theorem now makes every h(Q(zeta_(3^(j+1)))) odd.
+
+Dummit's Proposition 1, from condition (1) to conditions (4) and (5), applies to these prime-power conductors. It gives odd narrow class number for L and
+
+ O_L^(times,+)=O_L^(times,2).
+
+In particular Cl(L) also has odd order. Odd ordinary real class number alone is not being substituted for this full-field input, and no assertion that the class numbers equal one for all j is made.
+

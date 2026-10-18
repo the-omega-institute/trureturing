@@ -1,0 +1,78 @@
+**Proposition 6.2 (actual frame and retained-mixture lower bounds).** Use
+Definition 5.1 with the three vectors $(U,F,W)$ and reports $(+,-,-)$.
+It has eleven base labels, with dimensions
+$(2,2,2,3,3,1,1,1,1,1,1)$, and contrast exactly $s_0\tau$ because
+
+$$
+U_0U_1-F_0F_1-W_0W_1=2U_0U_1=\tau.
+\tag{RH.49}
+$$
+
+No assumption on the individual signs of $F_0F_1,W_0W_1$ away from
+the initial point is needed. It actually attains the value
+
+$$
+T_3(\tau)=\frac12\left[(1-\delta)\Delta A+L_f+
+ |U^TGU|+|F^TGF|+|W^TGW|\right],
+\qquad\mathcal T(s_0\tau)\geq T_3(\tau).
+\tag{RH.50}
+$$
+
+At the closed endpoint define
+
+$$
+B_0=\frac{g_0+\alpha g_1}{2d}+\frac{g_2}{2}
+                         -\frac{\sqrt\alpha x}{d},\qquad
+D_0=\frac{y-\sqrt\alpha z}{\sqrt d}.
+\tag{RH.51}
+$$
+
+Then $T_3(\tau_3)=T_{\rm flat}-B_0+D_0$.
+For $\tau_3\leq\tau\leq1$ an actual retained mixture gives
+
+$$
+\mathcal T(s_0\tau)\geq
+\frac{1-\tau}{1-\tau_3}T_3(\tau_3)
+ +\frac{\tau-\tau_3}{1-\tau_3}T_{\rm end}.
+\tag{RH.52}
+$$
+
+Proof. Orthonormality makes the three $01$ products sum to zero,
+which proves RH.49. RH.35–43 prove every original-class assertion
+and the exact attained value RH.50. At RH.47, expansion gives
+$U^TGU>0$, $F^TGF=B_0-D_0$ and $W^TGW=B_0+D_0$.
+For completeness the coarse conditional bounds RH.17 already imply
+that only $F$ is negative. They give
+$87/100<\alpha<88/100$, $187/100<d<188/100$,
+$9/10<\sqrt\alpha<1$, $\sqrt d<7/5$, and
+
+$$
+\begin{aligned}
+B_0&>-\frac{2372/10^6}{187/100}>-13/10000,\\
+B_0&<\frac{1270/10^6+(88/100)(293/10^5)}{2(187/100)}
+       +\frac{168/10^5}{2}
+       -\frac{(9/10)(2370/10^6)}{188/100}<8/10000,\\
+D_0&>\frac{2207/10^6}{7/5}>15/10000.
+\end{aligned}
+\tag{RH.53}
+$$
+
+These are rational comparisons, not sampled signs. Positivity of the
+entries $g_0,g_1,x$ makes $U^TGU>0$. Thus replacing the sole negative
+live difference by its absolute value in RH.43 and using RH.10 proves
+$T_3(\tau_3)=T_{\rm flat}-(B_0-D_0)$.
+
+For the other endpoint use the four low vectors
+$d_{\sigma,t}=(1,\sigma,t)^T/2$, reporting $r=\sigma$, in
+Definition 5.1. Their Gram is $I$, all four are null and rank-two
+compressed, and RH.49's signed sum is replaced by one. The three
+positive and one negative $G$ values give its exact actual TV
+$T_{\rm end}$, as also proved in Section 10. It has twelve base labels.
+Retain a choice between that instrument and the $\tau_3$ frame with
+weights $(1-\tau)/(1-\tau_3)$ and $(\tau-\tau_3)/(1-\tau_3)$.
+They lie in $[0,1]$, have a positive denominator, and give oriented
+contrast exactly $\tau$. Definition 5.4 proves the full output, sharp
+cost and affine actual TV simultaneously. Interior mixtures have at
+most twenty-three labels; zero-weight endpoint choices are removed.
+Neither RH.50 nor RH.52 is asserted globally height-optimal. $\square$
+

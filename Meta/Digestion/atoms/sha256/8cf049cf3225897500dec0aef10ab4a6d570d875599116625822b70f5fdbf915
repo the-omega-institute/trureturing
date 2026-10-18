@@ -1,0 +1,62 @@
+**Definition 19.3 (two finite original-prefix covers).** Let
+
+$$
+m=\max\bigl(\{0\}\cup\{|q|:q\in Q\}
+ \cup\{|p|:(n,p,c)\in H_0\}
+ \cup\{|p|,|q|:(n,p,n',q,\bowtie)\in H_{\rm rel}\}\bigr),
+\qquad d=m+1.
+\tag{CE.19.1}
+$$
+
+Start with $W=C[(z_{[i]})_i]$, one variable per old class, and all
+$z_b\ne z_c$ for different classes. Use either of the following two fixed
+finite covers. A successful cover is chosen as a whole; alternative
+constructions are not combined into overlapping semantic charts.
+
+The uniform cover is precisely the depth-$d$ old-class pattern cover of
+Proposition 3.2 and [SLH, Definition 74.2][SLH]. Each repeated class uses
+one shared pattern and shared frontier variables at all its occurrences.
+
+The second cover resolves only the prescribed navigation. Process literal
+requests in retained list order, then the two endpoints of each relation
+in retained list order, and then original $Q$ addresses in lexicographic order.
+To navigate a nonempty remaining suffix inside $\rho^n(x)$, split the
+original variable $x$, simultaneously at every occurrence, into the
+three disjoint cases $\alpha$, $\beta$, $\langle x_L,x_R\rangle$.
+In a leaf case navigate its concrete finite $\rho^n$-image. In a pair
+case distribute $\rho^n$ and consume the next address letter. A literal
+request additionally resolves the root reply at its endpoint, splitting
+there if needed. A relation endpoint or a reached cut endpoint can stop
+at a decorated variable; its full value remains a template. For $Q$ this
+navigation is at epoch zero. Recompute the affected expressions after a
+shared split. Stop a branch when a literal is wrong or a relation endpoint
+is absent. Otherwise stop when all requests have been resolved.
+
+Every split is indexed by an old class and an original relative address
+$s$ of length at most $m$. Once split, that variable is never split again.
+No branch has more than
+
+$$
+M_0=|\mathcal B|(2^d-1)
+\tag{CE.19.2}
+$$
+
+splits. Indeed a nonempty suffix can expose only an original strict
+ancestor of the requested address, and a literal root test only its
+endpoint; after a first original leaf there are no further original
+variables on that path. Sharing can require the same split at another
+occurrence, but creates no new relative address. Thus the three-way
+split tree is finite, including all early rejected branches. A concrete
+old context with no classes has an empty split tree.
+
+A surviving chart $\eta$ has a pure constructor source pattern
+$W_\eta(X_\eta)$; a fixed reached set $J_\eta\subseteq Q$ with its canonical
+numbering; an outside context $E_\eta$; and hole terms $T_{\eta,q}$.
+Every variable $x$ has a fixed reached original representative address
+$a_{\eta,x}$, obtained by following its relative address inside a
+representative old hole. At that occurrence the source term is literally
+$x$. Attach the conjunction $\Phi_\eta$ of **all** old class disequalities
+and every signed interpreted endpoint equality. Literal conditions and
+endpoint existence have already been checked in the chart. No general
+morphic feasibility test is used to discard a chart at this stage.
+

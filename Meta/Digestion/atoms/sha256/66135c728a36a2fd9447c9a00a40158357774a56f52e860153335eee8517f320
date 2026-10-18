@@ -1,0 +1,22 @@
+**Proposition 9.4 (representation does not complete a partial copy).** The
+observation consisting of a receiver's currently materialized copy prefix
+and the common copy layout/schedule need not determine $S$ or $B$, even
+though each is a mathematically exact $Q$ view. This assertion concerns
+that specified observation, not all earlier data an owner might possess.
+
+Proof. Take a receiver during a copy with two possible sealed senders
+having a common already-read prefix and different not-yet-read suffixes.
+Before the next payload RD, its acquired payload prefix is the same;
+the sender remains immutable under another owner and the destination is
+not yet readable as a complete block. AIF Theorem 6.4 gives exactly such
+actual partial-copy cuts and the conditional suffix ambiguity. The
+structural carrier stores the distinct sender bytes, so its supports and
+terminal antichains differ by Theorem 4.4. The specified materialized
+prefix observation has not acquired those distinctions. Earlier retained
+input or another complete copy could supply them; no equality of such
+additional records is asserted. An authorized later read can acquire
+them, and a genuine handle includes that backing; a common pointer string
+alone cannot do so. This is a distinction between the given partial
+acquisition and the complete representation, not a failure of either
+structural inverse. ∎
+

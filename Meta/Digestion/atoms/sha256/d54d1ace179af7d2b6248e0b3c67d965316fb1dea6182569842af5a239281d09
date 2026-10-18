@@ -1,0 +1,52 @@
+**定理 30.6.1（运输误差分解）。**
+
+$$
+\boxed{
+\theta_t-\theta_s
+=
+\underbrace{\sum_z(\mu_t(z)-\mu_s(z))\delta_s(z)}_{\text{上下文漂移}}
++
+\underbrace{\sum_z\mu_t(z)e(z)}_{\text{目标机制偏差}}.
+}
+$$
+
+**证明。**
+
+将 $\delta_t=\delta_s+e$ 代入：
+
+$$
+\begin{aligned}
+\theta_t-\theta_s
+&=
+\sum_z\mu_t(z)\delta_t(z)-\sum_z\mu_s(z)\delta_s(z)\\
+&=
+\sum_z(\mu_t(z)-\mu_s(z))\delta_s(z)
++\sum_z\mu_t(z)e(z).
+\end{aligned}
+$$
+
+证毕。
+
+若已知点态机制误差预算
+
+$$
+|e(z)|\le\varepsilon_z,
+$$
+
+则有
+
+$$
+\left|
+\theta_t-\theta_s-
+\sum_z(\mu_t(z)-\mu_s(z))\delta_s(z)
+\right|
+\le
+\sum_z\mu_t(z)\varepsilon_z.
+$$
+
+该界同样锐利：在每个正权重分层上取 $e(z)=+\varepsilon_z$ 或 $-\varepsilon_z$ 即达到对应端点，只要这些误差核仍落在合法的二元概率范围内。
+
+这条分解禁止把两种失败混成一个「域差异」数字：上下文变了，是权重项；机制变了，是核项；它们需要不同的额外测量与桥接假设。
+
+<a id="section-30-7"></a>
+

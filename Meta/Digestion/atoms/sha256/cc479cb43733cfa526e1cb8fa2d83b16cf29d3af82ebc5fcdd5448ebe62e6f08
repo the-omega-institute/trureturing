@@ -1,0 +1,31 @@
+## 2. Suppliers and the local relation that is already sufficient
+
+**Mathematical citation 2.1 (exact reuse).** [CNA, Theorem 2.2] supplies
+the following facts under Definition 1.1: a present address persists;
+a branch persists; its subtree undergoes exactly the global iterates;
+and equal leaf replies at one address enclose no update. A leaf alpha
+becomes beta and then branch; a leaf beta becomes branch immediately.
+Neither label can return at the same address after an update.
+[NDP]'s `original_present_transport` is the formal present-subtree
+supplier. The off-flipped-leaf conjunct of [READ]'s `source_foundation`
+states that changing one leaf label changes no other native reply,
+including replies at strict extensions of that leaf.
+
+[CWS, Definition 2.4 and Theorems 3.3–4.4] supplies the row body: a
+stackless literal exterior traversal, then complete pairwise hidden
+subtree comparison by actual rereads, and validation by a saved leaf.
+Moving failed bodies are finite under finite interference. The body
+does not require its guard to be leftmost; left descent in RA is one
+way to obtain a leaf before that body. Its proof uses leaf equality
+to validate the entire intervening body.
+
+[CAB, §§2–5] already supplies fixed left/right clock acquisition,
+finite-interference right-search repair, complete-row calibration and
+complementary-cut recovery. [IDC, §6] supplies stationary right-ray
+search and its contract limits. These are available results, not
+missing bridges here. [NAR, §§10–12] supplies agreed references,
+absence-safe advancing coordinates and exact integration of acquired
+overlap relations. [NLC, Lemma 3.1] supplies minimum leaf depth in an
+atomic iterate. Their recurrences, subtraction and generic integration
+are used as ingredients, not claimed as independent new content.
+

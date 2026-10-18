@@ -1,0 +1,38 @@
+##### 定理 1.14.6： 共同来源反事实严格增加分辨率
+
+存在有限实现对 $\theta_S,\theta_F$，使得所有 $\operatorname{Obs}$ 与 $\operatorname{Int}$ 查询的概率律相同，但某个共同来源反事实查询 $\operatorname{CF}$ 的联合律不同。因此
+
+$$
+\Pi_{\Gamma\cup\{\operatorname{CF}\}}
+\subsetneq
+\Pi_\Gamma
+$$
+
+其中 $\Gamma$ 只含 $\operatorname{Obs}$ 与 $\operatorname{Int}$ 查询。
+
+**证明。**
+
+取共同来源 $u=(x,z)\in\{0,1\}^2$ 均匀，动作 $a\in\{0,1\}$ 记为 setX。两实现都读出 $X=x$；在无动作时都读出 $Y=z$。在动作 $a$ 后，令
+
+$$
+\theta_S:\ Y=z,
+\qquad
+\theta_F:\ Y=z\oplus a.
+$$
+
+对每个固定 $a$，$Y$ 都是均匀位，因而全部单世界边缘查询相同。固定同一个 $u$ 比较 $a=0,1$ 时，$\theta_S$ 给出
+
+$$
+(Y_0,Y_1)=(z,z),
+$$
+
+而 $\theta_F$ 给出
+
+$$
+(Y_0,Y_1)=(z,z\oplus1).
+$$
+
+前者联合结果总相等，后者总不相等，所以共同来源反事实查询切开旧纤维。证毕。
+
+<a id="claim-1-14-7"></a>
+

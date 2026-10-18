@@ -1,0 +1,67 @@
+**Theorem 6.2 (no seven-label partition, including gapped arms).**
+Assumption 5.1 admits no successful at-most-one-call encoder/decoder
+with exactly $q$ attained labels when $q\ge7$, for either lag convention.
+
+**Proof.** Each of the $q$ classes has size at most seven by Theorem 6.1.
+For $q\ge8$, $q^2>7q$ precludes their covering the $q^2$ original
+pairs. It remains to exclude $q=7$.
+
+In a partition of the $7\times7$ square by seven feasible classes,
+all classes would have size seven. Each has the two four-point arms
+of (NARC.6.2), with a minimum or maximum corner. Two corners cannot
+share a row: their disjoint four-point row arms would require eight
+cells in a row of length seven. Likewise two corners cannot share a
+column. Thus there is one corner per row and per column; write them
+as $(i,\pi(i))$ for a permutation $\pi$ of $0,\ldots,6$. Call the
+class with this corner the row-$i$ class. A cell $(i,j)$ can belong
+only to the row-$i$ class's row arm or to the class with corner in
+column $j$'s column arm.
+
+A minimum corner has three distinct larger values on each arm, so
+both its coordinates are at most three. A maximum corner has three
+distinct smaller values on each arm, so both are at least three.
+The corners in rows $0,1,2$ are therefore minimum corners, and those
+in rows $4,5,6$ are maximum corners. If row three has a maximum
+corner, the four maximum corners occupy exactly columns $3,4,5,6$,
+leaving columns $0,1,2$ for the minimum corners. If row three has a
+minimum corner, the four minimum corners occupy exactly columns
+$0,1,2,3$. Consequently, for $m\in\{3,4\}$, the minimum corners
+match rows and columns $0,\ldots,m-1$, and the maximum corners match
+the complementary rows and columns.
+
+We next force $\pi$ to be the identity. In the minimum-corner block,
+proceed upward. Suppose rows less than $i$ are already fixed. If
+$\pi(i)\ne i$, then $\pi(i)>i$, because every smaller column has
+its fixed corner. The corner in column $i$ also has row
+$\pi^{-1}(i)>i$. The row-$i$ minimum arm reaches only columns at
+least $\pi(i)$, and the column-$i$ minimum arm reaches only rows
+at least $\pi^{-1}(i)$. Neither covers $(i,i)$, and no other class
+can cover it. This contradiction gives $\pi(i)=i$. In the maximum
+block, proceed downward. If the larger rows are fixed and
+$\pi(i)\ne i$, then $\pi(i)<i$ and $\pi^{-1}(i)<i$. The two
+maximum arms reach only columns or rows at most these respective
+values, leaving $(i,i)$ uncovered. Thus this block too is fixed.
+
+There are now two middle-corner cases. If $m=3$, class three has
+maximum corner $(3,3)$; both four-value arm sets are forced to be
+$\{0,1,2,3\}$. It contains $(1,3)$. The cell $(1,2)$ cannot be
+on the column arm of minimum-corner class two, since that arm has
+rows at least two. It must be on the row arm of minimum-corner
+class one. That arm has its minimum value one, contains two, and
+has two further values $2<u<v$. Its ordered values are
+$\{1,2,u,v\}$. Interior adjacency (NARC.6.3) forces $u=3$.
+Hence class one also contains $(1,3)$, contradicting disjointness.
+
+If $m=4$, class three has minimum corner $(3,3)$, so both its arm
+sets are $\{3,4,5,6\}$. It contains $(5,3)$. The cell $(5,4)$
+cannot be on the column arm of maximum-corner class four, whose
+rows are at most four. It must be on the row arm of maximum-corner
+class five. That arm has ordered values $\{u,v,4,5\}$, where
+$u<v<4$. Interior adjacency forces $v=3$, so class five also
+contains $(5,3)$, again a contradiction.
+
+Neither argument restricted the outer arm gaps. The class bound
+and all its equality constraints were derived from full entries
+realized at positive lags. The obstruction therefore applies to
+$\ell\ge1$ and, using the same histories, to $\ell\ge0$. $\square$
+

@@ -1,0 +1,29 @@
+**Corollary 30.3 (necessary alphabet overhead).** Every valid claim
+(GDB.121), with $D\ge3$ and $1\le k_D\le2^D-1$, satisfies
+
+$$
+2^{-D}\log_2A_D
+\ge\max\left\{0,\ \frac18\log_2R_{\rm a}
+                    -2^{-D}k_D\log_2m(D)\right\}.
+\tag{GDB.122}
+$$
+
+In particular, if $k_D\log_2D=o(2^D)$ as $D\to\infty$, then
+
+$$
+\liminf_{D\to\infty}2^{-D}\log_2A_D
+       \ge\frac18\log_2R_{\rm a}>0.
+\tag{GDB.123}
+$$
+
+Proof. Take logarithms in (GDB.121), apply (GDB.119), and divide by
+$2^D$. For $D\ge3$, $m(D)\le D$, so the menu-size hypothesis makes
+$2^{-D}k_D\log_2m(D)$ tend to zero. The ratio $R_{\rm a}>1$ gives
+strict positivity. $\square$
+
+Thus this specified restoration cannot have vanishing normalized
+log-alphabet overhead in that menu regime. Its overhead is counted
+source-dependent memory, not installed public tables or an uncharged
+selector. The conclusion applies even to optimal restricted-menu
+schemes with arbitrary native late queries.
+

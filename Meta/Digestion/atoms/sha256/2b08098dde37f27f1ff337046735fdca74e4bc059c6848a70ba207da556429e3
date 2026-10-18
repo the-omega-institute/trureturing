@@ -1,0 +1,39 @@
+**Definition 176.3 (Coupled zero-first terminal coordinates).** A
+zero-first schedule $(i,j)$ can be described by nonnegative masses
+$\beta_{ij}$, $v_{ij}(r)$ for $i<r\le j$, and $w_{ij}(\ell)$ for
+$\ell=0$ or $j<\ell\le L$, subject to
+
+$$
+\sum_r v_{ij}(r)=\sum_\ell w_{ij}(\ell)=\beta_{ij}.
+\tag{176.5}
+$$
+
+Its three cell vectors are $\beta_{ij}e_0,v_{ij},w_{ij}$.
+These are coupled coordinates for the existing complete-cell model,
+not independent row budgets. Its endpoint weights can be chosen as
+$\mu_{ijr\ell}=v_{ij}(r)w_{ij}(\ell)/\beta_{ij}$ when
+$\beta_{ij}>0$, and zero when $\beta_{ij}=0$; nonnegativity forces
+both marginal vectors to vanish in the latter case. Marginal summation
+recovers (176.5) and total mass $\beta_{ij}$. Conversely any endpoint
+weights give exactly these marginals by summation. At a word exactly
+one stopped cell is reached, so the recovered kernel is identical on
+all words, including base, correct and pair rows. One common seed
+selects the whole coupled endpoint, as in Proposition 140.3; this is
+an application of that finite realization, not an additional content
+theorem about coupling.
+
+There are $L-i+1$ raw terminal-marginal coordinates for each pair
+$(i,j)$, and hence
+
+$$
+\sum_{i=1}^{L-1}(L-i)(L-i+1)=\frac{L^3-L}{3}
+\tag{176.6}
+$$
+
+across pairs, with $\binom L2$ optional explicit schedule masses.
+The equality follows by summing $d(d+1)$ for $d=1,\ldots,L-1$.
+These are raw coordinate counts subject to (176.5), not independent
+dimensions or bounds on computational complexity. The indexed
+endpoint count remains (176.3); union duplicates are treated by
+Definition 176.1.
+

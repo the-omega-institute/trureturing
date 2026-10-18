@@ -1,0 +1,15 @@
+**推论 43.6（正纪元规范记录的三方对应及档案界限）。** 对任意达到 $H$ 和实际认证 $N\ge1$，固定共同安装、空当前缓存和定义43.4的实际执行，则在 $u\in\mathcal V(H)$ 上
+
+$$
+\mathbf C_Q(\rho^N u)\ \longleftrightarrow\
+\mathbf B_Q(\rho^N u)\ \longleftrightarrow\
+\operatorname{Can}_Q(\rho^N u).
+\tag{SLH.43.6}
+$$
+
+证明。第一双射为定理41.5；第二双射的规范查询只用前缀回复，且实际取得叶或终端节点，故定理43.5的两方向在任意来源子族上仍成立。$\square$
+
+由代码计算规范记录的**值**，不证明该记录已经实际发生。只有执行这份指定程序才取得其实际事件来源。任意别的策略可读锥外地址、重复请求、先作路线或验证；即使代码、边界相同，其记录也可不同。真缓存只保留首次回复时可能丢掉重复次数和时序；初始非空缓存或不同完整控制行也不能从代码免费逆出。
+
+`ActualObserverPrefixRigidity.actualPrefix_replay` 供应同一静止安装下按已付地址重放的桥；`actualPrefix_history_rigid` 还要求合法性、完整行上的持久真缓存及终止运行，并不证明代码决定任意档案。`ActualCompletionAcquisitionCut.acquisition_provenance_contract` 在其指定编译策略上保留实际路线、原型首失配段与同源取得前缀，缓存从先前段继续折叠，而不是重置为取得段。其参数 `N` 是那个编译器的来源预算，不是这里的演化纪元。`ActualAcquisitionCacheFiber.cacheEquiv` 及 `compatible_cache_card` 则处理 coarse-none（合并 branch/absent）的**名义** raw lifts；它们不筛实际来源，也不是本节 $\beta$/左-$\alpha$ 初始码纤维的计数供应。上述公共声明及编译器的私有前缀／缓存辅助只按自身合同复用，不作为本节新定理已经编译的证据。
+

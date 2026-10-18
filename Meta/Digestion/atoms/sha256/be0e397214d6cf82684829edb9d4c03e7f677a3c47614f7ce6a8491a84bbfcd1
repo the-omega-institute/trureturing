@@ -1,0 +1,62 @@
+**Proposition 10.2 (JR55 endpoint laws in the present notation).** Let
+$\varepsilon=1-s/s_0=1-\tau$, $\gamma_{\rm ep}=\alpha/\beta$, and
+use $R_1,R_2$ from RH.93. Define
+
+$$
+\begin{aligned}
+b_{++}&=R_1-\gamma_{\rm ep}R_2,&
+b_{+-}&=-(1+\gamma_{\rm ep})R_2,\\
+b_{-+}&=(1+\gamma_{\rm ep})R_1,&
+b_{--}&=-(\gamma_{\rm ep}+2)R_1+(2\gamma_{\rm ep}+1)R_2,\\
+\Gamma_{\rm ep}&=\sqrt{\frac18\sum_{\sigma,\eta=\pm1}b_{\sigma\eta}^2}.
+\end{aligned}
+\tag{RH.95}
+$$
+
+JR55 gives $.008<\Gamma_{\rm ep}<.009$ and, for
+$0<\varepsilon\leq10^{-8}$,
+
+$$
+T_{\rm end}+\Gamma_{\rm ep}\sqrt\varepsilon-15\varepsilon
+\leq\mathcal T(s_0(1-\varepsilon))
+\leq T_{\rm end}+\Gamma_{\rm ep}\sqrt\varepsilon+11\varepsilon.
+\tag{RH.96}
+$$
+
+Every optimal multiplier $\lambda_s$ of the normalized contrast obeys
+
+$$
+\lambda_s\sqrt\varepsilon\longrightarrow\Gamma_{\rm ep},\qquad
+\lambda_s=\Gamma_{\rm ep}/\sqrt\varepsilon+O(\varepsilon^{-1/4}).
+\tag{RH.97}
+$$
+
+For each optimal real-null decomposition near the endpoint, write its
+atoms $\sqrt\pi(1,u,v)^T$, with $\alpha u^2+\beta v^2=1$, and signs
+$(\sigma,\eta)$ of $(u,v)$. Its sector weights tend to $1/4$ and
+
+$$
+\mathbb E_\pi\left[
+\left(\frac{|u|-1}{\sqrt\varepsilon}
+      +\frac{b_{\sigma\eta}}{\Gamma_{\rm ep}}\right)^2\right]
+\longrightarrow0.
+\tag{RH.98}
+$$
+
+The expectation is over coefficient weights, not unknown histories.
+These are credited JR.155–174 with unchanged normalization: the present
+$J(\tau)$ is JR's $j(\tau)$ and $T_{\rm end}$ is its $T_0$.
+Theorem 2.2 retains their full original comparison class. The matching
+lower family has twelve actual labels, all full-output identities and
+sharp cost, and is asymptotically optimal. It is not asserted pointwise
+optimal at nonzero $\varepsilon$. Exact report attenuation retains all
+old labels and may increase the alphabet to twenty-four. The
+contact limit and this asymptotic family alone do not prove pointwise
+optimal sufficiency. RC's exact curve, Proposition 7.5 and Theorem 9.5
+supply that pointwise four-label attainment throughout the post-contact
+interval. The multiplier
+in RH.97 is the normalized contrast multiplier, distinct from
+$\lambda_{\rm sp}$ and from a physical-$s$ derivative. No narrow
+coefficient enclosure or endpoint constant is numerically reauthenticated
+here.
+

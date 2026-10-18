@@ -1,0 +1,81 @@
+**Theorem 5.2 (injective refinement of the all-source cover).** For every input
+(PDC.2) and finite prefix-free original $Q$, the construction terminates
+and produces finitely many domains (PDC.15), native templates $\Theta_i$,
+fixed reached sets $I_i$, complete masks $M_i$ and hole templates
+$H_{i,q}$ such that:
+
+1. $\Theta_i$ is injective on $\mathcal C_i$ and its image is contained
+   in $D$.
+2. $D=\bigcup_i\Theta_i(\mathcal C_i)$; every original source, without
+   any bound, is represented.
+3. For every admitted $a\in\mathcal C_i$,
+   $I_Q(\Theta_i(a))=I_i$, its mask is $M_i(a)$, and its whole subtree
+   at reached $q$ is $H_{i,q}(a)$. Thus these expressions determine
+   precisely the entire original $R_Q(\Theta_i(a))$.
+4. Every free coordinate is recoverable from an existing named native
+   expression in original frontier subtrees, followed only by the
+   proved image inverse and, for a scalar, atomic-index inversion.
+
+Empty domains and zero-dimensional products are included. Images of
+different Boolean branches need not be disjoint.
+
+Proof. For completeness, take any $u\in D$. Construction 2.2 takes its
+actual cell and its unique frontier subtrees, with the entire retained
+predicate true. The existing restriction in (PDC.6) recovers $w$ and
+its Ext reconstructs the same original frontier assignment. Evaluate
+every remaining named expression on this $w$, and apply $B$.
+
+Choose the actual $J$ case at every occurrence. These normal named
+codes satisfy all positive branch equations. Lemma 3.3 therefore
+cannot reject this assignment. Lemma 3.4 factors these very codes
+through their actual sink representative values, without replacing
+a shape or leaf-rank function. They satisfy every fixed-rank and
+all-name lower bound. Lemma 4.2 recovers the unique rebased normal
+sink values. Choose their actual primitive or nonprimitive roots.
+The scalar conditions hold because every actual named code is normal;
+the residual sort negatives hold by Lemma 4.4. Every original whole
+negative remains true on these same codes and hence on their native
+expansions. The resulting tuple belongs to $\mathcal C_i$ and its
+source expression expands to exactly $u$.
+
+Conversely let $a\in\mathcal C_i$. Lemmas 4.2 and 4.4 make every
+expanded named code natural and normal. Lemma 3.4 reconstructs every
+positive offset, ground and $F$ definition. In a collapse branch,
+the primitive flag and the two edges in (PDC.7) give exactly the
+native collapse; in an ordinary branch, the reconstructed normal
+output excludes collapse. Induction through the original expression
+definitions therefore identifies each reconstructed name with the
+actual code of its native expression. All original positives hold.
+All retained negatives hold by $\Gamma$, evaluated on whole values.
+The free subsystem and its same-assignment pullbacks hold by (PDC.6).
+
+Filling the original cell now satisfies every literal, every signed
+record with both guards, all old equalities and all different-class
+inequalities. Its concrete exterior and absent old cut positions are
+the ones in that cell. This proves membership in the complete $D$,
+rather than in a positive relaxation or witness subfamily.
+
+For injectivity, two equal reconstructed sources have equal original
+frontiers at all representative addresses, hence equal $w$ by
+restriction. Each sink representative is an existing name of a
+deterministic native expression in $w$, so its values agree. Its code
+is $\tau_{L_C}$ of the corresponding normal residual, or
+$[L_C+n_C]$ for a scalar. ABC's image injectivity and atomic-index
+injectivity recover equality of every coordinate. No independent
+auxiliary witness survives this argument.
+
+The source, mask and all reached-hole expressions underwent precisely
+the same substitutions. Construction 2.2's recutting identities
+therefore give item 3. In particular the mask still contains any uncut
+residual exterior, and every partition comparison uses the original
+whole hole values. Repeated classes do not become independent
+coordinates. Empty, root and absent cuts retain their stated meanings.
+
+All case lists are finite, free unification uses its existing
+termination supplier, weighted closure terminates by Lemma 3.3, and
+all remaining expansions and finite checks terminate. An unsatisfiable
+$K\land\Gamma$ may be retained as an empty domain; no new feasibility
+theorem is needed. NSF can decide such emptiness if desired. The
+construction never enumerates original source sizes or ranks.
+$\square$
+

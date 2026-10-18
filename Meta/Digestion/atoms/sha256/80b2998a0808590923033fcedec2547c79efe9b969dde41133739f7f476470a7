@@ -1,0 +1,25 @@
+## 362. Every opposite-V owner is impossible
+
+Suppose an actual rho has axes w,c and transverse pair v,d, with W in {M,Z,U}. By (358.5), w<9m/4; by (358.4), c<4m/9; by (360.1), v>d. The transverse V cosine increases with either axis. For example, its w derivative has sign numerator
+
+    (v²−1)[d(cw+v²−d²+1)+v(c+w)]>0.
+
+Thus increase the axes independently to r0=9m/4,c0=4m/9, keeping v,d unchanged. These are comparisons of algebraic cosines with positive denominators; no virtual genuine owner is asserted.
+
+For
+
+    D(x)=x²+v²+d²+2xvd−1,
+    N=d(r0+c0)+v(r0c0+d²−v²+1),
+
+the polynomial
+
+    Q_V(m,v,d)=1296[D(r0)D(c0)−2N²]
+
+is positive on m>14,4m/5<v<m,m/2<d<v by the fourth certificate. Therefore the comparison cosine has absolute value below 1/sqrt(2). The actual beta_V(rho)>π/4.
+
+Rho and eta are distinct because rho contains D and eta does not. Their four original V slots cost
+
+    2 beta_V(rho)+2 beta_V(eta)>π,
+
+contradicting the genuine V capacity. Thus no opposite-V owner exists anywhere.
+

@@ -1,0 +1,36 @@
+**Theorem 3.3 (sharp product mass against every correlated fiber).**
+For every integer $n\ge1$ and every jointly admissible
+$B\subseteq S_2^n$, let $g$ and $b$ be the numbers of its locally
+admissible and locally inadmissible coordinate projections. Then
+
+$$
+\boxed{\quad
+\sum_{x\in B}\prod_{i=1}^n w(x_i)
+\le17^g8^b\le17^n.
+\quad}
+\tag{NCM.18}
+$$
+
+The bound $17^n$ is attained by $H_\alpha^n$. Equivalently, for the
+analytical probability $\mu=w/25$,
+$\mu^n(B)\le(17/25)^n$.
+
+Proof. Apply Theorem 2.2 with $m=4$, $r=3$, $C_0=17$, $c_0=8$.
+Locally admissible projections have weight at most $17$ by
+(NCM.15). The argument in Lemma 3.2 applies to every range-feasible
+locally inadmissible subset of $S_2$. It supplies the deficient reply
+capacity and a four-valued side target. Each root-leaf cell of that
+target has weight $8$. Each branch cell fixes one child and contains
+at most three branches of weight $1$, so has weight at most $3$.
+Thus every selected target cell has weight at most $8$, as required.
+The resulting estimate is (NCM.18). Products of $H_\alpha$ are jointly
+admissible by their own-coordinate witnesses and have weight $17^n$.
+$\square$
+
+The product measure is a lower-bound witness, not a source prior.
+The proof quantifies over every correlated $B$. In particular it does
+not replace a fiber by its product of projections, declare its
+projections admissible, or assume a common query for distinct targets.
+The smaller product sets used to demonstrate equality impose no
+restriction on competitors.
+

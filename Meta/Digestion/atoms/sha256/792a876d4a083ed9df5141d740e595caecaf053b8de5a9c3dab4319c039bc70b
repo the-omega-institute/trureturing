@@ -1,0 +1,27 @@
+**Definition 56.1 (the unchanged families and boundary directions).**
+Keep Definitions 31.1, 38.1, 38.2 and 44.1, including the actual
+completed domains, both signs, all fixed data, raw measures and original
+periods. In this section abbreviate
+
+$$
+\begin{gathered}
+\mathcal H=H_{\sigma,\kappa},\quad W=W_{\sigma,\kappa},\quad
+\widehat{\mathcal H}=L_\kappa-gM_{U_\kappa},\quad
+h=h_{\sigma,\kappa},\quad d=d_{\sigma,\kappa},\quad
+\ell=d\sqrt h,\quad w=\alpha_\sigma\ell,\quad
+\alpha_\sigma=(\mathcal B_\sigma/\mathcal C_\sigma)^{1/4},\\
+\eta_\sigma(k,\theta,v)=\frac{u_{c_\sigma}(k)}{2\pi},\quad
+\Pi_\sigma=|\eta_\sigma\rangle\langle\eta_\sigma|,\quad
+\delta_\kappa=g\|W-U_\kappa\|_\infty=o(h),\\
+K_\kappa=H_\kappa^{\rm ht}-\xi_\kappa\ge0,\qquad
+m_h(y)=\min\{y^2,h^{-1}\},\quad |y|\le\pi/\ell.
+\end{gathered}
+\tag{56.1}
+$$
+
+Here $W_{{\rm raw},\kappa}=V_{\kappa,\tau_s}$ and
+$W_{{\rm unit},\kappa}=V_{\kappa,\tau_b}/S(\tau_b)$ are the actual
+fields. The vector $\eta_\sigma$ has norm one on the entire original base.
+Constants in the proofs may depend on the fixed original data and the
+family, but not on the sign or small magnitude of $\kappa$.
+

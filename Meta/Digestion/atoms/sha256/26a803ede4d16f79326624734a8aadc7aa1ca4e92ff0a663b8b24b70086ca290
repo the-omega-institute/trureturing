@@ -1,0 +1,9 @@
+**复用 36.2（像语法及局部解析的原归属）。** [过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) §37.2 的（PG.3705）及其证明、[运输与记忆卷](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §22 的像解析，供应
+
+$$
+I_1:=\rho[\mathcal T],\qquad
+I_1::=\beta\mid(\beta,\alpha)\mid(I_1,I_1).
+$$
+
+$\alpha$ 不在像内；特殊块的右孩子 $\alpha$ 不在像内，故它与一般配对像不交。唯一解析 $\delta:I_1\to\mathcal T$ 把叶 $\beta$ 解为 $\alpha$，把特殊块解为 $\beta$，把一般配对递归解为两个原像的配对。有限子树递归及三个互斥情形给 $\delta\rho=\operatorname{id}$、$\rho\delta=\operatorname{id}_{I_1}$，从而给 $\rho$ 及每个迭代的单射性。这是原解析接口的复述，不是另立解析定理。[关系纤维续篇二](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md) 第37章的来源是精确实数探针；原树的完整有限编译归其第38章。
+

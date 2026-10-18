@@ -1,0 +1,60 @@
+**Proposition 38.3 (Explicit full-degree sum and the two-seven-cycle end).**
+Set $A=F_{2k+2}$ and $B=F_{2k}$. The root coordinate of
+$\Sigma_{k,b}$ is $B^b$. For $1\le i\le2k$ on any cycle its
+nonroot coordinate is
+
+$$
+(\Sigma_{k,b})_{a,i}
+=A^{b-1}F_iF_{2k-i+1}+B^{b-1}v_i,
+\qquad
+v_i=
+\begin{cases}
+0,&i=1\text{ or }i=2k,\\
+F_{i-1}F_{2k-i},&2\le i\le2k-1.
+\end{cases}
+\tag{38.6}
+$$
+
+For two seven-cycles in particular,
+
+$$
+\begin{aligned}
+D_{3,2}&=21^2+8^2=505,\qquad c_{3,2}=505-14=491,\\
+\mathcal F_{491}
+ &=\mathscr P_{3,2}(-502)\oplus\mathscr P_{3,2}(-500)^{201}.
+\end{aligned}
+\tag{38.7}
+$$
+
+The last rank is $202$, the Cohen–Macaulay type. A single seven-cycle
+has type two, with one canonical generator in degree three and one
+in degree five; the shared-root pair has one in degree three and
+$201$ in degree five.
+
+Proof. A mode contains the root in exactly the root-one case counted
+above, proving $B^b$. In the root-zero case, requiring position $i$
+on one path removes it and its two neighboring path positions. The
+remaining left and right paths have independent-set counts $F_i$
+and $F_{2k-i+1}$, including the endpoint cases where one contribution
+is $F_1=1$. All other cycles contribute $A^{b-1}$. In the root-one
+case positions $1,2k$ are forbidden. For any other $i$, the remaining
+path from $2$ through $2k-1$, with $i$ required, has counts
+$F_{i-1}$ and $F_{2k-i}$ on its two remaining sides. The other cycles
+contribute $B^{b-1}$. This proves (38.6) and completely evaluates
+the degree vector used in (38.4).
+
+For $k=3,b=2$, the root coordinate is $64$, and on each cycle the
+six nonroot coordinates of $\Sigma_{3,2}$ are
+$(168,129,142,142,129,168)$. They follow from
+$F_iF_{7-i}=(8,5,6,6,5,8)$ and
+$(v_1,\ldots,v_6)=(0,3,2,2,3,0)$ in (38.6).
+Thus (38.4), with these coordinates and the basic tuples of Theorem
+35.4, also fixes every full shift in (38.7). Formula (38.2) gives
+$505$ modes and projective dimension $491$; Proposition 35.6 gives
+multiplicities one and $201$. Subtracting canonical degrees three
+and five from $505$ gives $502$ and $500$. For $b=1$, (35.14)
+is $1+101-100=2$, agreeing with Theorem 29.2 and (33.2).
+The pair's $202$ is therefore a synchronized amplification of a
+single-cycle type of two, not a correction to a supposed type one.
+$\square$
+

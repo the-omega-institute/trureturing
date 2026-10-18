@@ -1,0 +1,59 @@
+**Theorem 6.1.** Suppose the same three distinct worlds
+$K\subseteq\mathcal C_d(H)$ have $L_2(K,H)$. Then:
+
+1. At least two gains have a simple root at six, and at most one
+   has a double root there. No member has a triple root at six.
+   Outside $(-\infty,0)\cup(0,24)\cup(48,312/5)$, all three
+   sixth roots are simple.
+2. Each pair collides in at most two terminal coordinates. At most
+   one column is constant on all three worlds. If one is constant,
+   the other three columns collide on three different proper pairs.
+   If none is constant, the three pair multiplicities are $(2,2,0)$
+   or $(2,1,1)$, up to ordering the unordered pairs.
+3. The three normalized terminal gains have one common sign. If a
+   double-sixth world occurs, that common sign is positive. A losing
+   triple with negative normalized terminal sign has all three
+   sixth roots simple.
+
+**Proof.** Theorem 2.1 gives at most one repeated-sixth complete world
+at this fixed $d$ and entire ancestor, and makes any repeated sixth
+root exactly double. Every other sixth root must be simple. Its
+necessary drift ranges prove the assertion outside the three stated
+intervals, including their excluded endpoints.
+
+Theorem 4.1 gives at most two coordinate collisions per pair. There
+are three unordered pairs, so at most six pair-coordinate incidences.
+By (5.3), every one of the four columns collides. A proper colliding
+column, meaning a nonconstant column on the triple, contributes
+exactly one incidence; a column constant on all three contributes
+three. If $c$ columns are constant, there are
+$3c+(4-c)=4+2c\le6$ incidences, so $c\le1$.
+
+If $c=1$, this constant column already uses one incidence for every
+pair. Each pair can occur at most once more. The remaining three
+columns must therefore use three distinct proper pairs, once each.
+If $c=0$, four incidences are distributed among three pairs, each
+with count at most two. Sorting the counts, either the largest two
+are both two, giving $(2,2,0)$, or only one is two, giving
+$(2,1,1)$. A largest count of at most one would sum to at most three.
+This exhausts the possibilities. The ordering of terminal columns
+is still $JJ,JM,MJ,MM$; only pair counts have been sorted.
+
+For the sign assertion, every terminal response minus $d$ has the
+sign of $f_i(7)$, since its trace is positive. If the three nonzero
+signs were mixed, precisely one unordered pair would have matching
+signs; only that pair could collide in any column. Noninjectivity
+of all four columns would make it agree in all four, contradicting
+Theorem 4.1 (or the established inverse (3.3)). Thus there is a
+common terminal sign. This is the established terminal-sign
+restriction specialized to the present stratum. Theorem 2.1 makes
+the repeated-root world's $f(7)$ positive, forcing that common sign
+positive. Conversely a negative-sign losing triple contains no
+repeated sixth root, so all three are simple. For original gains the
+single fixed nonzero $\lambda$ transports this common sign as in
+(1.4). ∎
+
+These are restrictions on the same simultaneously realized $K$.
+Neither a pair collision certificate nor the singleton repeated-root
+class constructs the remaining triple or proves it impossible.
+

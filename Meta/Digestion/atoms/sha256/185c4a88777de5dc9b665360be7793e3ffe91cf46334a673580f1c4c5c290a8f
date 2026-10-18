@@ -1,0 +1,189 @@
+**Theorem 212.6 (Exact intermediate cost, sharp moved mass and locality).**
+For $0\le x_v\le c\kappa(v)$, put $X=\sum_vx_v$.
+Replace the class-3 measure in each stratum by
+
+$$
+\begin{array}{c|rrrr}
+\text{word}&w_{00}^{110}(v)&w_{01}^{110}(v)&w_{10}^{110}(v)&w_{11}^{110}(v)\\\hline
+C^{Y_x}&c\kappa(v)-x_v&x_v&x_v&c\kappa(v)-x_v
+\end{array}
+\tag{212.25}
+$$
+
+and leave all other rows fixed. Then $Y_x\in\mathcal U(Y)$ and,
+with $\delta=(2c-t)_+$,
+
+$$
+\Delta_O(Y_x)=\delta,\qquad
+\Delta_N(Y_x)=\max(\delta,c-X).
+\tag{212.26}
+$$
+
+For every $D\ge0$, the least moved mass over the entire declared
+fiber, subject to $\Delta_N\le D$, is
+
+$$
+\min_{C'\in\mathcal U(Y),\ \Delta_N(C')\le D}
+ \operatorname{mov}(C',C)
+ =\begin{cases}
+ +\infty,&D<\delta,\\
+ 2(c-D)_+,&D\ge\delta.
+ \end{cases}
+\tag{212.27}
+$$
+
+The finite value is attained by (212.25) with
+$x_v=(c-D)_+\kappa(v)$.
+
+Starting at $Y$, every sequence of feasible face moves each omitting
+at least one coordinate of $J$ preserves support on
+$E_J=\{v:\text{all bits in }J\text{ agree}\}$ and has
+$\Delta_N\ge c$. The same holds after funded batches and under
+coordinatewise limits. If $\delta<c$, the least maximum face width
+that can lower cost below $c$ is exactly $d=|J|$: a successful path
+must contain a face including $J$, and width-$d$ moves suffice.
+Width is a locality constraint on proof-weight changes, not a number
+of requests, an address bound, a seed size or a runtime bound.
+
+**Proof.** The signed change in each stratum is
+$x_v(-1,1,1,-1)$. Its total and both block marginals vanish,
+and $K$ coordinates are fixed in that stratum. It therefore preserves
+all unary marginals, $Q$ and $W$. Nonnegativity is exactly the displayed
+donor bound. Distinct strata have disjoint donors; each stratum's one
+withdrawal repairs all pairs in $U\times V$ simultaneously.
+
+Here is the full schedule calculation. Write $z_j=1/2$ on $J$
+and $z_j=\kappa\{v_j=0\}$ on $K$. The excesses over $W=3t$ are
+
+| Schedule | $N$ excess | $O$ excess |
+| --- | --- | --- |
+| $12,13,23$ | $\delta$ | $\delta$ |
+| $(a,j)$, $a\in\{1,2\}$, $j\ge4$ | $z_j\delta$ | $z_j\delta$ |
+| $(3,j)$, $j\ge4$ | $0$ | $0$ |
+| Suffix pair crossing $U,V$ | $c-X$ | $0$ |
+| Every other suffix pair | $0$ | $0$ |
+| Empty and every singleton | $0$ | $0$ |
+
+To verify every label in this table, zero earns the pair stock in each
+cell and $t$ at the positive word; labels 1 and 2 earn subsets of that
+stock. The only other nonzero label is 3. At the three head pairs the
+support is $2t+\max(t,2c)$. At $(a,j)$ the first-zero contribution
+is $t$ and the remaining two maxima are
+
+$$
+z_j\max(t,2c),\qquad
+\max\{t(2-z_j),2c(1-z_j)\}=t(2-z_j),
+\tag{212.28}
+$$
+
+using $t\ge c$. Splitting the first-zero branch does not change its
+maximum sum, since it has only pair stock. This gives $z_j\delta$.
+At $(3,j)$, label-3 cell masses are $2cz_j,2c(1-z_j),0,0$;
+the corresponding pair masses are $2tz_j,2t(1-z_j),0,0$ and
+$T$ contributes $t$ to $11$. Zero dominates, as asserted.
+
+For a pair crossing $U,V$, the zero-label masses are $(0,t,t,t)$,
+including $T$ in the last entry. The correct-label masses are
+$(c-X,X,X,c-X)$. Since $0\le X\le c\le t$, the full maxima are
+
+$$
+(c-X,t,t,t),\qquad\text{and the stopped maxima are }(t,t,t).
+\tag{212.29}
+$$
+
+The merged correct reward is $c\le t$. On any noncrossing suffix
+pair, its correct projection is $c/t$ times its pair projection.
+For pairs within one block this follows from the two preserved block
+marginals in each stratum; for a block/$K$ pair it follows from those
+same stratum marginals; for a $K/K$ pair it follows from the preserved
+stratum total. This remains valid for nonuniform $\kappa$ and unequal
+$x_v$. Zero dominates these cells, with $T$ added in $11$.
+Early singleton maxima are $t,2t$, query-3 maxima are $2t,t$,
+and suffix singletons have maxima $2tz_j,2t(1-z_j)+t$.
+The empty maximum is $3t$. These statements include all legal labels;
+other labels have zero reward here rather than being removed from the
+catalog. The table proves (212.26).
+
+For an arbitrary member of $\mathcal U(Y)$, a head pair still forces
+cost at least $\delta$, because its class-3 total is $2c$.
+Fix $i\in U,j\in V$. Total mass $2c$ and the two zero marginals
+$c$ force the new correct pair table to be
+$(u,c-u,c-u,u)$ with $0\le u\le c$.
+With the unchanged stock its full support is exactly $3t+u$.
+Thus cost at most $D$ forces $u\le D$. Projection to these two
+coordinates contracts the $\ell^1$ distance: the triangle inequality
+bounds the absolute value of each projected signed sum by the sum of
+its absolute values. The original pair table is $(c,0,0,c)$,
+so its projected distance is $4(c-u)$. At least $2(c-D)$ mass
+must therefore move if $D<c$. For $D\ge c$ the zero lower bound
+is attained without change. For $\delta\le D<c$, (212.25) with
+$X=c-D$ has exactly moved mass $2X$ and complete cost $D$.
+These arguments prove the entire-fiber minimum, not just optimality
+among the displayed stratum changes.
+
+For locality, suppose the current measure is supported on $E_J$,
+and a face omits $j_0\in J$, fixed there to bit $b$.
+Every old positive atom on that face has every $J$ bit equal to $b$.
+For each movable $j\in J$, its opposite-bit mass on the face is zero.
+A move supported there and preserving the global mass and unaries
+preserves those face quantities as well. Nonnegativity forces the new
+opposite-bit mass to remain zero. A face of zero mass must remain empty.
+Thus no such move creates mass outside $E_J$.
+
+Induction proves the assertion for finite paths. In a funded batch
+each summand is individually feasible, since its negative part is
+bounded by the current measure. Each summand consequently vanishes
+outside $E_J$; their sum does too. In a countable funded batch,
+$\sum\|\text{move}\|_1$ is at most twice the current total mass,
+so the same conclusion follows by absolute convergence. Finally,
+nonnegative measures supported on $E_J$ with fixed unary data form a
+closed set in this finite-dimensional space. Coordinatewise limits
+retain the invariant. Every crossing pair then still has table
+$(c,0,0,c)$ and forces cost at least $c$, independently of any changes
+on $K$ or of monotonicity along the path.
+
+Conversely (212.25) consists of width-$d$ moves, one per nonzero $x_v$,
+with the $K$ bits fixed. If $\delta<c$, any $0<X\le c$ lowers the
+cost below $c$ until the head bound takes over. Taking
+$X=c-\delta$ reaches cost $\delta$. Every successful path must
+therefore use at least one face containing $J$, and the displayed
+moves attain this width. All endpoints $x_v=0,c\kappa(v)$,
+$t=c$, $t=2c$, zero carrier atoms and empty $K$ are included.
+$\square$
+
+For example, $L=6$, $U=\{4\}$, $V=\{5,6\}$, $c=2,t=3$
+and the one-point outside carrier give $W=9$ and costs $(2,1)$.
+The four nonzero pair rows are
+$P_{010011}=P_{010100}=P_{100011}=P_{100100}=3/2$,
+and the original correct rows are $C_{110000}=C_{110111}=2$.
+The choice $x=1$ makes the four correct rows
+$110000,110011,110100,110111$ all have mass one; it attains costs
+$(1,1)$ with the least moved mass two. For any prescribed width
+bound $k\ge2$, take $|J|=k+1$ with the same $c,t$ to obtain the
+corresponding unit-$O$ locality obstruction. Taking $t=2c$ gives a
+zero-$O$ input with arbitrary positive initial $N$ cost $c$.
+
+The full-relocation endpoint $X=c$ directly reuses 209.13:
+its new correct measure is $c/t$ times the actual pair carrier
+conditioned at address 3, preserves the original unaries, and has
+label zero as a common baseline maximizer. The four-word mechanism
+of 211.2 remains its existing supplier. The additional assertions
+here are the whole-fiber moved-mass optimum, its intermediate complete
+cost and the all-length locality invariant. Whenever $\delta\le1$,
+$X=(c-1)_+$ gives the single certificate $(Y_x,0)$; $X=c-\delta$
+compares at the original stopped cost. No failure of bounded-width
+moves excludes nonlocal changes, changes of unaries or other rows,
+or signed residual certificates.
+
+The mass/unary map is a nonnegative real-table fiber. For rational
+prescribed margins and a fixed positive integer $D$ clearing them,
+scaling by $D$ identifies the tables restricted to the
+$D^{-1}\mathbb Z_{\ge0}$ grid with an integer fiber in the terminology of
+Clarke and Kosta, [*Distance Reducing Markov Bases*,
+arXiv:2406.17730v1, Definition 2.2 and Propositions 2.3 and 7.2](https://arxiv.org/pdf/2406.17730v1).
+Their applicable moves require donor nonnegativity; their Graver-basis
+result reduces $\ell^1$ distance in integer fibers. Neither supplies
+a bounded coordinate width nor a decrease of the complete maximum
+$\Delta_N$. The real-weight support argument and the projected
+$\ell^1$ lower bound above supply those distinct conclusions here.
+

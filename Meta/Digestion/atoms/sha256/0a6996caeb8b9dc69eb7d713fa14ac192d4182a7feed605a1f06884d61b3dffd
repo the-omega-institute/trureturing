@@ -1,0 +1,20 @@
+**Proposition 4.2 (exact diamond criterion).** All $q_\pi$ coincide
+if and only if $K_e^+=K_e^-$ for every edge, preceding subset and full
+context in Definition 4.1. For nonedges the corresponding equality
+holds automatically.
+
+Proof. Exchanging two consecutive blocks in a permutation changes only
+their two rows. Their product is precisely (OOA.15), using the earlier
+neighbors' values. For nonneighbors neither context changes and the
+rows commute. If all diamonds agree, adjacent transpositions connect
+all permutations and prove sufficiency.
+
+Conversely fix $e,P,u$ and choose a permutation putting exactly $P$
+first, then $i,j$, then all other blocks. Compare with the permutation
+reversing the two adjacent endpoints. Summing the common later rows
+in reverse order leaves the same strictly positive prefix density
+times respectively $K_e^+$ and $K_e^-$. Equality of the two full
+laws and cancellation of that density gives the required diamond at
+the arbitrary $u$. Strict positivity is essential to this cancellation.
+$\square$
+

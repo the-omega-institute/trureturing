@@ -1,0 +1,43 @@
+**Theorem 8.3 (Separate equality witness at $Z=2/3$).** At the
+transition itself, all four contracts satisfy
+
+$$
+e_{2,\mathsf C}^{\rm aff}(2/3)
+=e_{4,\mathsf C}^{\rm aff}(2/3)=\frac23.
+$$
+
+A height encoder with zero decoder achieves this value. It has exact
+initialization, every original guard and every prescribed path; it is
+not an endpoint extension of the divergent exponential construction.
+
+Proof. Here $H=1/6$, $Z=4H$ and $2\sqrt{ZH}=2/3$. Use
+
+$$
+E_{\rm h}(k,\alpha,\beta)=K=k,\qquad
+\mathcal D_{\rm h}(K)=0_{10},\qquad K^{\rm in}=k_0.
+$$
+
+Its actual image is $(0,H)$. For every real straight command the
+affine maps are $K\mapsto K+s$ and $K\mapsto K$, with exact
+probability guard $0<K+s<H$. For a prescribed path use
+$K\mapsto K+\Delta$ with the full guard
+$0<K+\rho(t)<H$ for every time. The exact height integration in
+Proposition 6.2, and its truncations and concatenations, proves all
+required identities. This one-coordinate model fits both at-most
+budgets two and four in every contract.
+
+Its original squared error is
+
+$$
+16k(H-k)+4Zk=4ZH-16(H-k)^2<4ZH\qquad(0<k<H),
+$$
+
+with supremum $4ZH$ as interior $k\uparrow H$. Thus the model's
+error is $2/3$, even though no lawful state maximizes that error.
+Theorem 2.3 supplies the lower floor for both literal budgets, and
+subclass inclusion supplies it for the stronger variants. The
+displayed model supplies the matching upper bounds. Its affine
+probability offset is the prescribed real number $s$; its path
+offset is $\Delta$. No divergent exponential limit is used as a
+model. $\square$
+

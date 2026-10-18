@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-finite-obstruction"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,27 @@
+**Corollary 6.4 (same-cut mathematical atlas and whole-edge transport).**
+On the four realized images there are finite recovery maps $R_{VW}$ for
+all twelve ordered distinct pairs, with
+
+$$
+R_{VW}(V(h))=W(h),\qquad
+R_{WV}R_{VW}=\mathrm{id},\qquad
+R_{WZ}R_{VW}=R_{VZ}.
+\tag{CSA.7}
+$$
+
+They transport each lawful primitive and every specified finite service
+with its complete successor, original source/owners and actual prices.
+
+Proof. Reuse SSA Theorem 7.3's algorithms: maximal paths give $S\to B$;
+prefix closure gives $B\to S$; component decoding selects $M$ from $S$;
+Lemma 5.3 and the instantiated replay identify $h$ from $M$; the literal
+compiler gives $T$; finite patch execution from the declared foundation
+gives $S$ and selected $M$ from $T$. Lemma 5.4 supplies provenance for
+the positional views. Each procedure is finite on its actual image and
+returns the view of exactly the same $h$. Thus every path has that same
+value, which proves the inverse and triangle equations. CSA.3 supplies
+the commuting primitive square and §8 its one-run prices; composition
+supplies finite service transport. These are mathematical maps between
+descriptions. Their execution, acquisition or serialization requires an
+actual paid authorized program. ∎
+

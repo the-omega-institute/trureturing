@@ -1,0 +1,59 @@
+### 2.4. Component insertion inequalities and all cylinder bounds
+
+We apply the support implications of [Stationary, §4][Stationary] to
+the component posterior just proved, retaining their constants. Fix
+$\lambda\in\Lambda_\star$ and write $R=R_\lambda$. For
+$A\in\mathcal E_i$, (2.8) gives
+
+$$
+R(A,X_i=1)=\int_A q_i\,dR,\qquad
+R(A,X_i=0)=\int_A(1-q_i)\,dR.
+\tag{2.12}
+$$
+
+On $F_i$ the bounds on $q_i$ imply
+$(1-q_i)/3\le q_i\le1-q_i$, yielding (2.2) by integration when
+$A\subseteq F_i$. On $F_i^c$ legality forces $X_i=0$ and $q_i=0$ almost
+surely. Thus $1-q_i\ge1/2$ everywhere almost surely, proving (2.1).
+These inequalities apply even when an exterior event has zero mass;
+they require no division by that mass.
+
+For any $a\in\mathbb Z$ apply (2.1) successively at the $m$ coordinates
+$a,\ldots,a+m-1$. At each step the zeros already imposed form an
+exterior event for the next coordinate. Starting with $R(X)=1$ gives
+
+$$
+R([0^m]_a)\ge2^{-m}.
+\tag{2.13}
+$$
+
+Given $w\in B_n$, consider its padded cylinder $[0w0]_{a-1}$. Start from
+$[0^{n+2}]_{a-1}$ and insert each of the $k(w)$ ones into its middle
+$n$ coordinates. All intermediate words are legal because no two of
+these insertion sites are adjacent. For each insertion the cylinder
+specifying every other coordinate of the padded word belongs to
+$\mathcal E_i$ and is contained in $F_i$. This includes an insertion at
+either endpoint of $w$, since the extra padding bit is zero. Inequality
+(2.2) therefore gives, one insertion at a time,
+
+$$
+R([w]_a)\ge R([0w0]_{a-1})
+\ge3^{-k(w)}R([0^{n+2}]_{a-1})
+\ge2^{-(n+2)}3^{-k(w)}.
+\tag{2.14}
+$$
+
+This proves (2.3) in every component in the already fixed set
+$\Lambda_\star$. No support assertion has been inferred from positive
+mixture masses. A cylinder on any other finite set of coordinates that
+admits a legal completion contains a legal interval cylinder, and is
+positive as well: fill unspecified positions in its spanning interval
+with zero.
+
+If $wv\in B_{n+\ell}$ is a legal extension with $\ell\ge1$, both
+$R([wv])$ and $R([w])$ are positive by (2.14), proving the stated finite
+conditional positivity. When $w$ ends in $1$, $[w1]$ is empty in $X$
+and $[w0]=[w]$ as events on $X$, so the sole legal next bit has
+conditional probability one. This uses finite-history conditionals;
+it introduces no finite-memory hypothesis.
+

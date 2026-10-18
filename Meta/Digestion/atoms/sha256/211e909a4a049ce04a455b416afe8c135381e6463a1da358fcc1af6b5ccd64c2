@@ -1,0 +1,59 @@
+**Lemma 6.1 (Full phase primary projectors).** The representation
+$V$ on the five-dimensional complexification has a finite primary
+decomposition
+
+$$
+X_{\mathbb C}=\bigoplus_{\chi\in\Lambda}X_\chi.
+$$
+
+For a character absent from $\Lambda$, set $X_\chi=\{0\}$.
+For $\chi\in\Lambda$, each $V_\delta$ on $X_\chi$ has sole
+eigenvalue $\chi(\delta)$,
+where $\chi:\mathbb T\to\mathbb C^\times$ is an abstract character.
+The full generalized-block projector $\Pi_\chi$ is a finite complex
+linear combination of phase maps. Moreover $X_1\ne0$, and
+
+$$
+\dim_{\mathbb C}X_\xi=\dim_{\mathbb C}X_{\xi^{-1}}\le2,
+\qquad \xi(\delta)=e^{i\delta}.
+$$
+
+Proof. The dimension-independent argument of [M, Lemma 15.1] applies
+as follows. A commuting complex family has a common eigenvector:
+inside a common invariant subspace, take a proper eigenspace of a
+nonscalar member when one exists and descend in dimension. Induction
+on the quotient by a common eigenline produces a simultaneous
+triangular flag. The diagonal functions of the group parameter are
+nonzero characters by the representation law. Let $\Lambda$ be
+the finite list of distinct characters so obtained.
+
+Choose finitely many $\delta_j$ separating each pair in $\Lambda$.
+For each $V_{\delta_j}$, Bezout identities between the relatively
+prime powers in its characteristic polynomial, together with
+Cayley–Hamilton, give polynomial projectors onto its generalized
+eigenspaces. These projectors commute. Their products for the
+eigenvalue tuple of a given $\chi$ are pairwise disjoint idempotents
+$\Pi_\chi$.
+
+In the triangular flag, a product has a one on exactly the diagonal
+positions with that tuple and zero on the other positions. An
+idempotent has rank equal to the number of these ones. Thus no
+additional nonzero joint piece exists, the projectors sum to the
+identity, and the image for $\chi$ has exactly the diagonal
+characters $\chi$ for every phase map. This proves the primary
+assertion, including possible hidden Jordan parts. The span of all
+$V_\delta$ is an algebra, since it contains $I$ and
+$V_\delta V_\eta=V_{\delta+\eta}$. Hence each polynomial projector
+and its finite products are finite linear combinations of phase
+maps.
+
+For a nontrivial $\chi$, choose $\delta$ with $\chi(\delta)\ne1$.
+Then $V_\delta-I$ is invertible on $X_\chi$, while
+$\lambda_0(V_\delta-I)=0$. Thus $\lambda_0$ annihilates every
+nontrivial block. Since $\lambda_0F=1$, a nonzero trivial block
+must remain. Reality pairs $X_\xi$ and $X_{\xi^{-1}}$ with equal
+dimension; these characters are distinct. Their common dimension
+$q_0$ satisfies $1+2q_0\le5$, proving $q_0\le2$. This count
+does not assume that the full hidden representation is semisimple.
+$\square$
+

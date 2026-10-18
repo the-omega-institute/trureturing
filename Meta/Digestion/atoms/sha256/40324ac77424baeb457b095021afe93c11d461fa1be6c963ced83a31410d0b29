@@ -1,0 +1,35 @@
+**Proposition 47.4 (compensated finite mass and original cemetery).**
+Let $\mu^{\rm kill}_{T,\kappa,k}$ be the unnormalized live
+endpoint measure of $(X_T(b),K_\tau)$ for the original killed
+process. Then
+
+$$
+\left\|e^{\lambda\tau}\mu^{\rm kill}_{T,\kappa,k}
+-\phi(k)\phi(y)\Gamma_{\kappa,b}(z)\,dy\,dz
+\right\|_{{\rm var},1}
+\le C_b\phi(k)[T^{-1}+e^{-\gamma\tau}].
+\tag{47.4}
+$$
+
+The comparison measure has total mass $\phi(k)J$, generally not
+one. The original killed/cemetery endpoint law has ordinary total
+variation distance exactly $S_k(\tau)$ from the cemetery point mass.
+
+Proof. The exact live measure is $S_k(\tau)$ times the survivor
+endpoint probability. DEV (37.4) gives, uniformly in $k\in I$,
+
+$$
+a_\tau=e^{\lambda\tau}S_k(\tau)
+=\phi(k)J[1+O(e^{-8\lambda\tau})].
+\tag{47.5}
+$$
+
+Multiply (42.4) for $g=\phi^{-1}$ by $a_\tau$. The remaining
+scalar difference from $\phi(k)J$ multiplies the target probability,
+whose weighted norm is uniformly bounded. Since $8\lambda>\gamma$,
+this proves (47.4). The cemetery law is
+$\mu^{\rm kill}_{T,\kappa,k}+(1-S_k(\tau))\delta_\dagger$.
+Subtracting $\delta_\dagger$ gives disjoint positive live and
+negative cemetery parts each of mass $S_k(\tau)$; half their
+variation is exactly the asserted distance. $\square$
+

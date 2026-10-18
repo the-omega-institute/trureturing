@@ -1,0 +1,85 @@
+## 413. Full hypotheses for the source-normal-form closure
+
+The following deductions additionally assume the full six-edge source
+setting. There are exactly six distinct actual labels M,V,C,D,Z,U;
+P={M,Z,U}, Q={V,C,D}. Every original tetrahedron has a fixed
+vertex-induced paired frame (R,A,B,O,A,B), edge order
+(12,13,14,34,24,23), with four distinct actual labels. There are finitely
+many original owners. Original faces are paired by a fixed-point-free
+involution on face occurrences, with actual-edge-label-preserving face
+maps. This allows pairing two distinct faces of the same owner. The
+normal quotient is formed from all original edge intervals, pairing
+their endpoints through these actual face maps. Original degree means
+the number of those intervals, not the valence of the quotient graph.
+Sigma=(M,C,D,V,C,D) is the unique flat owner,
+with angle pi at M,V and zero at C,D. All other owners are genuine,
+with strict paired tests L,J>0 and the paired angle responses used
+throughout this continuation.
+Tau=(Z,M,C,D,M,C) is a named genuine owner. Every actual edge has
+original degree at least six, a connected original normal-circle
+quotient, and total angle 2*pi. No simple-link or distinct-role premise
+is added; loops, self-gluings, repeated roles and numerical cosh ties
+at distinct labels remain permitted.
+
+The source scalar conditions are
+
+    c,d,v>1, m>1+c+d, v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.
+
+The two maximum gaps are separate premises here unless supplied by
+the complete-star theorem of Sections 318-321 under all its own
+hypotheses: a finite actual paired quotient, four distinct labels in
+each fixed frame, complete original angle sums, connected normal
+circles of original degree at least six, and a wholly genuine star
+at a largest actual cosh. Here the larger of Z,U has a wholly genuine
+star and every cosh outside {Z,U} is at most m, so that theorem
+supplies |z-u|<m+1 when applied in its stated scope. The existing
+role-charge results retain their exact scope: in particular the
+M/U V/C two-high-axis proof requires original D degree at least six;
+the double-P five-slot case with high axis Z uses z<u+m+1, with high
+axis U uses u<z+m+1, and with high axis M uses no upper gap. The mixed
+four-slot branch and the compensation inequalities use no upper gap.
+
+The exhaustive 360-word table of Sections 402-403 supplies these
+necessary role bounds. A transverse C,D pair is genuine nowhere.
+The remaining possibilities, using original P-slot count j, are:
+
+| Class | j | P expense |
+|---|---:|---|
+| A(P0) or B(P0), called cheap axial-P | 1 | theta_P0>0 |
+| Sole P transverse label paired with V | 2 | >2*atan(2)>2*pi/3 |
+| Sole P transverse label paired with C or D | 2 | >pi |
+| Two P labels, both axial | 2 | >pi |
+| Two P labels, one axial and one transverse | 3 | >pi |
+| Two P transverse labels, both axes low | 4 | >4*pi/3 |
+| Three P labels, low label transverse | 4 | >4*pi/3 |
+| Three P labels, low label axial | 5 | >4*pi/3 |
+
+The complete table and its scalar and topological dependencies are
+given in Sections 402-403. All those hypotheses remain in force here.
+In particular, the M/U V/C implication in Section 356 requires
+original D degree at least six; the V/D implication in Section 365
+does not add an independent degree bound beyond its gap source.
+
+Let a count cheap axial-P owners; n count all other genuine owners;
+g=a+n; k count all genuine owners with at least four P slots; and f
+count those with five P slots. Every count is an original-owner
+multiplicity. Thus 0<=f<=k, and tau is counted in n but not k.
+For each P0, keep A(P0) and B(P0) separately even when two numerical
+coshes agree. The six counts sum to a.
+
+For each actual label, all original slots continue to count. The
+componentwise genuine P degree requirement, in order (M,Z,U), is
+(5,6,6), because sigma contributes (1,0,0). Tau contributes (2,1,0),
+so the post-tau requirement is (3,5,6). In particular the total genuine
+P degree D is at least 17. The total genuine P angle capacity is
+5*pi; the individual genuine V,C,D capacities are pi,2*pi,2*pi.
+
+Sections 400 and 404-405 give the owner bounds
+
+    a>=2, f+a>=3, k<=2, g>=6.
+
+We will also derive the discounted degree inequality explicitly below.
+

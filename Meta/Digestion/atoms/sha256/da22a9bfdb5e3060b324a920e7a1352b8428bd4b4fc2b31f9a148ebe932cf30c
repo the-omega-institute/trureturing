@@ -1,0 +1,41 @@
+**Theorem 12.4 (finite exact-checkpoint collapse with feedback).** Fix a
+finite public height programme $k_0,\ldots,k_L\in(0,c)$. Require the exact
+state $\psi_{k_j,\beta,m}$ at every successful checkpoint, for every
+initial $\beta\in\mathbb R,m\in\mathbb Z$. Start with equal-support
+assistance as in Theorem 12.2. Allow arbitrary finite quantum memory,
+finite recorded internal outcomes, common CP updates, and implementation
+choices using only the actually retained records. No new history-correlated
+input or newly accessible archive is supplied. Then, for each initial
+parity separately, the sharp probability of all checkpoints succeeding is
+
+$$
+S_L=\prod_{j=1}^L s_*(k_{j-1},k_j),\qquad S_0=1.
+\tag{PR.42}
+$$
+
+The same protocol attains both values, with complete absorbing failure.
+
+Proof. On a successful recorded branch, (PR.40) gives the exact next
+specimen and the actual common CP image of the old helper. Inductively
+(PR.41) keeps equal supports on every nonzero branch. Additional
+history-independent memory and intermediate processing can be included in
+that branch map. Applying (PR.40) to the next chosen implementation bounds
+its total conditional success by $s_*(k_{j-1},k_j)$ on either normalized
+helper state. Sum over actual branches and induct to obtain (PR.42).
+This includes parity-dependent branch probabilities; it never conditions
+on a branch possible for only one parity or divides by zero.
+
+For equality use the attaining filter (PR.39) at each cut and leave the
+helper untouched on success. Retain all first-failure labels and residues.
+The effects of the all-success product and all first-failure products
+sum to identity by repeated substitution of $B_j^\dagger B_j+F_j^\dagger
+F_j=I$. This is a complete stopped protocol on the original input, without
+retry or another specimen. $\square$
+
+This theorem fixes the requested checkpoints. It permits record-dependent
+implementations of them, not arbitrary record-dependent changes to the
+requested height programme. It is also different from a final-endpoint-only
+loop task: deleting intermediate checkpoints can make the endpoint identity
+succeed with probability one. No infinite protocol, approximate-target
+bound or general mixed-helper optimum is asserted.
+

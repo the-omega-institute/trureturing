@@ -1,0 +1,75 @@
+**Theorem 15.2 (Joint vacancy-central occupation improvement).**
+Let $n\ge2$, choose a site $v$ and a nonempty
+$T\subseteq N(v)$, and put
+
+$$
+X=\prod_{i\in T}(1-s_i),\qquad Y=s_v,\qquad
+\alpha=\mathbb E_pX,\qquad\rho=\mathbb E_pY.
+\tag{15.4}
+$$
+
+Define $u=\alpha(1-\alpha)$, $z=\rho(1-\rho)$,
+$c=\rho(1-\alpha)$ and the actual energies
+$e=\mathcal E_\omega(X,X)$, $d=\mathcal E_\omega(Y,Y)$.
+Then $0<\rho<\alpha<1$, $e,d>0$ and
+
+$$
+V=\begin{pmatrix}u&c\\c&z\end{pmatrix},\qquad
+A=\begin{pmatrix}e&0\\0&d\end{pmatrix},\qquad
+\Delta=\det V=\rho(1-\alpha)(\alpha-\rho)>0.
+\tag{15.5}
+$$
+
+The smaller generalized eigenvalue is
+
+$$
+r_-=
+\frac{ez+du-\sqrt{(ez+du)^2-4\Delta ed}}{2\Delta},
+\qquad
+\gamma\le r_-<\min\left\{\frac eu,\frac dz\right\}.
+\tag{15.6}
+$$
+
+It is attained by a real linear combination of the two centered
+signals. For an interior site this joint phase has degree at
+most two; an endpoint gives a degree-one two-site combination.
+
+Proof. Legality implies $Y\le X$. The vacuum has $X=1,Y=0$,
+a singleton at $v$ has both one, and a singleton at a site
+of $T$ has $X=Y=0$. All three have positive mass, proving the
+strict probability inequalities. The variance and covariance
+entries in (15.5) follow from their Boolean values. The displayed
+determinant is positive, so every nonzero centered combination
+has positive variance.
+
+A single-site flip cannot change both $X$ and $Y$, since they
+depend on disjoint coordinate sets. Thus their bilinear energy
+is zero. Positive conductances and nonconstancy give $e>0$.
+The singleton calculation gives
+$d=\omega_v\rho/(1+\lambda_v)>0$.
+
+The Rayleigh quotient of $X+tY$ is
+
+$$
+\frac{e+dt^2}{u+2ct+zt^2}.
+\tag{15.7}
+$$
+
+Its derivative at zero is $-2ec/u^2<0$. Equivalently, for
+any sufficiently small positive $t$, the quotient is strictly
+less than $e/u$. Applying the same argument to $Y+tX$ gives
+strict improvement below $d/z$. The generalized minimum over
+all nonzero coefficient vectors is consequently below both
+component quotients. A $2\times2$ determinant expansion gives
+$\det(A-rV)=ed-r(ez+du)+r^2\Delta$, whose smaller root is
+(15.6). Positive definiteness of $A,V$ ensures two positive
+roots; the nonzero off-diagonal covariance makes them distinct.
+Compactness of the coefficient unit circle in the $V$ norm
+gives attainment. The full variational principle bounds
+$\gamma$ by this restricted minimum. $\square$
+
+The strict gain comes from a shared actual covariance even
+though no legal flip changes both signals. It generalizes the
+structure of (10.3) without claiming that this two-dimensional
+menu attains the full gap.
+

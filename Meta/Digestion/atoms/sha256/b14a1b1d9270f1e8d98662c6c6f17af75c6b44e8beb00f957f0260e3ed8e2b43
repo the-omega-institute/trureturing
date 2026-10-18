@@ -1,0 +1,27 @@
+#### 29.10　线性干扰下的设计秩
+
+网络响应有时被限制为一个有限特征的线性模型。令
+
+$$
+\varphi(a)=
+\bigl(1,a_v,(a_u)_{u\in N(v)}\bigr)\in\mathbb R^d,
+\qquad
+q_v(a)=\theta^\mathsf T\varphi(a),
+$$
+
+令 $\Theta_{\mathrm{adm}}\subseteq\mathbb R^d$ 为可接受参数族，其中所有参数都使 $q_v(a)$ 落在允许结果区间内。假设存在 $\theta_0$ 与 $\delta_0>0$，使欧氏开球 $B(\theta_0,\delta_0)\subseteq\Theta_{\mathrm{adm}}$。把设计支持中的特征行堆成矩阵
+
+$$
+\Phi_{S_\pi}
+=
+\begin{bmatrix}
+\varphi(a_1)^\mathsf T\\
+\vdots\\
+\varphi(a_k)^\mathsf T
+\end{bmatrix},
+\qquad
+q_{S_\pi}=\Phi_{S_\pi}\theta.
+$$
+
+<a id="claim-29-10-1"></a>
+

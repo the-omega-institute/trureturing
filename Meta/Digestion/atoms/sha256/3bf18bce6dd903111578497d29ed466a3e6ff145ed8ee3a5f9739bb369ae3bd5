@@ -1,0 +1,28 @@
+**Definition 8.1 (one acquired fiber and two exact labels).** Put
+$F(y)=\langle\alpha,y\rangle$ and $U(x,y)=\langle x,\langle y,F(y)\rangle\rangle$.
+Use the old root cut $P=\{\varepsilon\}$ and its one-hole row. Retain
+exactly the literals
+
+$$
+(0,\varepsilon,\mathsf{branch}),\quad
+(0,R,\mathsf{branch}),\quad
+(0,RR,\mathsf{branch}),\quad
+(0,RRL,\alpha)
+\tag{NLC.21}
+$$
+
+and the positive whole-subtree record
+
+$$
+(0,RL,0,RRR,=).
+\tag{NLC.22}
+$$
+
+Choose the original target $Q=\{L,RL,RR\}$. Let $r_0$ have the concrete
+exterior $\langle\square_1,\langle\square_2,\square_3\rangle\rangle$
+and partition $\{\{1,2\},\{3\}\}$; let $r_1$ have that same reached
+set and exterior and partition $\{\{1,3\},\{2\}\}$. These labels
+specify the full rows, with no unknown outside component. An authentic
+handoff may occur at any $N\ge0$ after the stated records have been
+acquired.
+

@@ -1,0 +1,101 @@
+**Theorem 5.1 (recovery of a strict-cost failure measure).** Let
+$\nu=\sum_{i=1}^m a_i\delta_{(z_i,w_i)}$, $a_i>0$, have covariance
+$M$ and cost $C_\nu<\lambda$. Along every prescribed sequence
+$q_n\to0$, $q_nt_n\to\lambda>C_{\rm end}$, one common finite
+original instrument for each sufficiently large $n$ has activity at
+most $\log(1+t_n)$, contrast at least $s_0(1-q_n)$, exact original
+sharp cost and errors, and TV tending to $B_0+\int k_+d\nu$.
+
+Proof. Put $c_i=c_*(z_i^2)$ and, using a matrix symbol distinct from
+the radial endpoint $U$, define
+
+$$
+\mathsf U=\sum_i\frac{a_i}{c_i}h_ih_i^T
+=\begin{pmatrix}b_0&b_1&b_2\\b_1&b_{11}&b_{12}\\b_2&b_{12}&b_{22}\end{pmatrix},
+\quad d_0=\sum_i\frac{a_i|z_i|}{c_i}.
+\tag{JS.23}
+$$
+
+The ellipse gives $b_0=\alpha b_{11}+\beta b_{22}$ and
+$C_\nu=(b_0+b_{11})/2-d_0$.
+For a sufficiently large finite $t$ generate one rare low label per
+atom, with live coefficient weight $\pi_i=a_i/(tc_i)$ and attached
+failure effect $a_in_in_i^T$. Its multiplier is $tc_i$, exactly its
+capacity. All these attached effects sum to $M$ at each finite $t$.
+Their nonvanishing later-failure acquisition mass is fully counted;
+small live coefficient weight is not small acquired mass.
+
+Set
+
+$$
+\begin{gathered}
+m_t=1-b_0/t,\quad X_t=(1-b_{11}/t)/m_t,\quad
+Y_t=(1-b_{22}/t)/m_t,\\
+p_{\sigma\eta}=\frac{m_t}{4}
+-\frac{\sigma b_1}{4t\sqrt{X_t}}
+-\frac{\eta b_2}{4t\sqrt{Y_t}}
+-\frac{\sigma\eta b_{12}}{4t\sqrt{X_tY_t}},\qquad
+(z,w)=(\sigma\sqrt{X_t},\eta\sqrt{Y_t}).
+\end{gathered}
+\tag{JS.24}
+$$
+
+These are four additional pure-live labels. For large $t$, $X_t,Y_t>0$,
+$\alpha X_t+\beta Y_t=1$ exactly, and every $p_{\sigma\eta}>0$
+since it tends to $1/4$. Their mass, two squared moments and three
+cross moments are exactly
+
+$$
+m_t,\quad 1-b_{11}/t,\quad1-b_{22}/t,\quad
+-b_1/t,\quad-b_2/t,\quad-b_{12}/t.
+\tag{JS.25}
+$$
+
+Adding the rare moments $\mathsf U/t$ gives $\int hh^TdP=I_3$
+exactly. No asymptotic moment equation is substituted for a finite
+normalization.
+
+Report $\operatorname{sign}z$ on each low label, choosing either sign
+at zero, and fair reports on the high and complement labels specified
+below. The normalized raw contrast is
+
+$$
+1-e_t=\frac{d_0}{t}+\sqrt{(1-b_0/t)(1-b_{11}/t)}.
+\tag{JS.26}
+$$
+
+For $Z_t=1-(b_0+b_{11})/(2t)$ its exact deficit is
+
+$$
+e_t=\frac{C_\nu}{t}+
+\frac{(b_0-b_{11})^2}
+{4t^2[Z_t+\sqrt{(1-b_0/t)(1-b_{11}/t)}]}.
+\tag{JS.27}
+$$
+
+This follows by multiplying $Z_t-\sqrt{(1-b_0/t)(1-b_{11}/t)}$
+by its conjugate sum. If $t\ge2(b_0+b_{11})$, the bracket is at
+least one. Thus $te_t=C_\nu+O(t^{-1})$ with a nonnegative remainder.
+Since $C_\nu<\lambda$ and $qt\to\lambda$, eventually $e_t\le q$.
+Moment Cauchy--Schwarz also gives $0\le e_t\le1$, so the original
+contrast inequality is met. If exact contrast is desired, append and
+retain an independent binary kernel of factor $(1-q)/(1-e_t)$.
+This lies in $[0,1]$ eventually and preserves full-record TV, costs
+and activities.
+
+The whole-fibre realization in Theorem 6.1 applies to this exact list.
+On a rare actual label the signed height difference is
+$a_if(z_i,w_i)/(tc_i)+a_ik(z_i,w_i)$; its absolute value tends to
+$a_i|k(z_i,w_i)|$, including $k=0$. Bulk weights and directions tend
+to the four corners. The high sum is $H_{\rm live}$. Therefore this
+same common acquisition has limiting TV
+
+$$
+\frac{H_{\rm live}+S_{\rm corner}+\int|k|d\nu}{2}
+=B_0+\int k_+d\nu.
+\tag{JS.28}
+$$
+
+This proves recovery with the actual live/failure grouping, rather
+than combining separately attainable marginal optima. $\square$
+

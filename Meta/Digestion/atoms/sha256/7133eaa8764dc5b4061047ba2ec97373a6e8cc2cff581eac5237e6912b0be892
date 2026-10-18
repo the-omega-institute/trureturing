@@ -1,0 +1,125 @@
+**Lemma 8.6 (a convex tangent with positive rational separation).** Set $s_*=3679/10000$ and $\lambda=G'(s_*)/F'(s_*)$. This is the positive rational in (8.9), and
+
+$$
+\lambda(C_p-F(s))+G(s)-q_*\ge D_\lambda
+\quad(a\le s\le b).
+\tag{8.24}
+$$
+
+Proof. Differentiating the explicit functions (3.3) gives
+
+$$
+\begin{aligned}
+F'(s)&=\frac c{s^2}+\frac{13}{15}-\frac{271}{225}c
+ +\frac{494}{225}s+\frac{38}{25}s^2>0,\\
+G'(s)&=\frac4{15}s\left(\frac{31}{5}s+\frac{116}{15}s^2-8c\right)>0,\\
+F''(s)&=-\frac{2c}{s^3}+\frac{494}{225}+\frac{76}{25}s,\\
+G''(s)&=\frac4{15}\left(\frac{62}{5}s+\frac{116}{5}s^2-8c\right).
+\end{aligned}
+\tag{8.25}
+$$
+
+The positive first derivatives also follow from the bounds in Section 3. Both second derivatives are increasing on this positive interval. Their relevant endpoint evaluations are
+
+$$
+F''(2/5)=-\frac{94013}{27000}<0,\qquad
+G''(1/3)=\frac{66776}{50625}>0.
+\tag{8.26}
+$$
+
+Therefore $H_\lambda(s)=\lambda(C_p-F(s))+G(s)-q_*$ is strictly convex. Its derivative vanishes at $s_*$ by the definition of $\lambda$, and $s_*\in(a,b)$. Hence its minimum is $H_\lambda(s_*)=D_\lambda$, yielding (8.24) and the exact value in (8.9).
+
+The following rational comparisons give an explicit positive margin:
+
+$$
+\begin{gathered}
+\frac{189}{4000}<\lambda<\frac{5908}{125000},\\
+C_p-F(s_*)-\frac1{4000}
+=\frac{12788985483823}{33524887500000000000}>0,\\
+G(s_*)-q_*-\frac1{16000}-\frac7{10000000}
+=\frac{116200318741}{5062500000000000000}>0.
+\end{gathered}
+\tag{8.27}
+$$
+
+The latter two identities refine the evaluations (3.10). Multiplication by the positive $\lambda$ gives
+
+$$
+D_\lambda>
+\frac{189}{4000}\frac1{4000}+\frac1{16000}+\frac7{10000000}
+=\frac{6001}{80000000}>\frac3{40000}.
+\tag{8.28}
+$$
+
+This is a separation of simultaneous constraints at one tangent; it does not optimize either phase independently. ∎
+
+**Proof of Theorem 8.3.** Multiply the first inequality of (8.17) by $\lambda$ and add the second. Equations (8.4) and (8.24) imply
+
+$$
+\begin{aligned}
+D_\lambda
+&\le(\lambda+2)\epsilon_p+(5\lambda+1/5)\epsilon_\beta
+ +\lambda P(t)+R(t)\\
+&=\left(\frac{326}{11}\lambda+\frac{663}{55}\right)e
+ +\lambda P(t)+R(t).
+\end{aligned}
+\tag{8.29}
+$$
+
+All coefficients of $P,R$ are positive. Thus $t\le\omega$ proves (8.8).
+
+To deduce the strict linear modulus, suppose instead that $e+\omega/898\le T$, where $T=1/195200$. The supplied nonnegative excesses imply
+
+$$
+0\le\omega\le898T=\frac{449}{97600}<\frac1{217},\qquad
+\frac1{217}-\frac{449}{97600}=\frac{167}{21179200}>0.
+\tag{8.30}
+$$
+
+Because $P(t)/t$ and $R(t)/t$ have nonnegative coefficients and increase for $t\ge0$, their exact endpoint margins give
+
+$$
+\begin{aligned}
+\frac{347}{2500}-217P(1/217)&=\frac{38669}{3973134375}>0,\\
+\frac{487}{50000}-217R(1/217)&=\frac{169810643}{1034604191250000}>0.
+\end{aligned}
+\tag{8.31}
+$$
+
+Consequently $P(\omega)\le(347/2500)\omega$ and $R(\omega)\le(487/50000)\omega$, including $\omega=0$. Using the upper bound for $\lambda$ in (8.27), define
+
+$$
+\begin{aligned}
+A^+&=\frac{326}{11}\frac{5908}{125000}+\frac{663}{55}
+ =\frac{2312626}{171875},\\
+K^+&=\frac{5908}{125000}\frac{347}{2500}+\frac{487}{50000}
+ =\frac{2546913}{156250000}.
+\end{aligned}
+\tag{8.32}
+$$
+
+The two budget margins are exactly
+
+$$
+\begin{aligned}
+\frac3{40000}-\frac{A^+}{195200}&=\frac{25453}{4193750000}>0,\\
+\frac3{40000}-\frac{898K^+}{195200}&=\frac{186063}{15250000000000}>0.
+\end{aligned}
+\tag{8.33}
+$$
+
+Finally, (8.8) and the supposed linear bound yield
+
+$$
+\begin{aligned}
+D_\lambda
+&\le A_\lambda e+\lambda P(\omega)+R(\omega)\\
+&\le A^+e+K^+\omega\\
+&\le\max\{A^+,898K^+\}(e+\omega/898)\\
+&\le\max\{A^+,898K^+\}T
+ <\frac3{40000}<D_\lambda,
+\end{aligned}
+$$
+
+a contradiction. This proves (8.7). The only use of mean-law bounds was downstream of (8.4); no mean/configuration risk identification is needed. ∎
+

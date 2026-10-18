@@ -1,0 +1,13 @@
+**Corollary 11.3 (Conditional nonvacuous fixed-budget comparison).** Conditional also on Assumption 11.2, every fixed budget $M\ge S_\alpha$ admits a compliant observer at every interior $q$. For each $i$,
+
+$$
+\inf_{\mathcal A\in\mathfrak A_M(e^{-s},\alpha)}
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+=\Theta_{M,H_c,\alpha}(s^{-11}).
+\tag{11.7}
+$$
+
+Proof. The supplied $q$-free machine may ignore known $q$; its complete count, two risks, two terminations and two finite means put it in the class whenever $M\ge S_\alpha$. Formula (11.6) supplies the upper order for both labels with the same machine. Formula (9.4), or the already supplied fixed-budget theorem, gives the uniform lower order for each infimum. This is the same attained fixed-budget order credited in the uniform companion's Corollary 8.2; it does not identify an exact optimizer. $\square$
+
+The threshold $S_\alpha$ is sufficient, not minimal. Neither the source upper construction nor the new lower bound classifies nonemptiness or supplies a matching upper for $2<M<S_\alpha$. The universal lower statements apply to any compliant machine there if such a machine exists.
+

@@ -1,0 +1,35 @@
+**定义 65.1（Actual common-tail child and its two continuation prices）。** Retain the original weights, matched scalar, joint actual-history prior, immutable INITIAL record target $f:Q\to Y$, free initial scalar or independent bottom, endpoint-only observations, and complete-block fee of Chapter 1. In Chapters 65–67 assume
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m.
+\tag{65.1}
+$$
+
+Thus $P=\mathbb Z/T\mathbb Z$ and $1\le h\le m-2$: the omitted endpoint $h=m-1$ would give $T=2m$ and nontrivial gcd. Both original alphabets contain exactly the same $2^m$ words, while cross-block rejection remains an actual operation.
+
+Fix either free INITIAL value and any actual chronological archive whose emitted block $B$ at absolute issued index $a\ge0$ has a successful positive-difference child. Write $b=a+1$ and retain that child's entire acquired archive, support $A$ of INITIAL indices $j=-\theta_{\rm INITIAL}$, common current value, and common actual tail $\sigma<k$. Require that the retained INITIAL label is one well-defined function $\lambda:A\to Y$: every surviving INITIAL record at a given $j$ has that same label. All candidates are original histories sharing this very archive. The parent may have mixed tails and may be the first issued-zero parent; no earlier recorded zero, low inherited tail, tail-independent full target, distinct labels at distinct phases, or condition on another child or value fibre is required. Well-defined $\lambda$ is a substantive hypothesis, not a consequence of the parent's legality. The first-zero merger conditions of [S1, Lemma 4.3 and Theorem 5.2; S15, Definition 4.1 and Proposition 4.2] must still hold whenever this child is used in a correct full INITIAL controller.
+
+Use the actual ordered windows $W_t=[tm,(t+1)m]\pmod T$ of Interface 1.4. Positivity gives $A\subseteq W_a$ and charge one on every $j\in A$. At the child, the current phase is $-j+bm\pmod T$. Let $D_{\rm ad}$ be its minimum additional worst-branch fee over adaptive continuations. Let $D_{\rm child\text{-}pre}$ restrict the continuation to a single preset literal stream selected for this particular acquired child, with stopping and decoding based on its own endpoints. It has no GLOBAL compatibility requirement with siblings or the other free-value fibre. Every further emitted block, including uninformative clearing and waits, is paid; a homogeneous archive may stop at its current endpoint. Empty supports have fee zero as vacuous composition entries. Label equality is semantic; effective selection requires a finite partition presentation or decidable equality, as in [S1, Note 5.3].
+
+Define the one-coordinate availability condition and the exceptional family by
+
+$$
+\mathsf Q_1:\quad |\lambda[A]|\le2\quad\text{and}\quad
+\lambda\text{ is constant on }A\setminus W_b,
+\tag{65.2}
+$$
+
+with empty-set constancy true, and
+
+$$
+\begin{aligned}
+\mathsf E:\quad &k=m+1,\quad m\text{ odd},\quad A=W_a,\\
+&H=\{bm,(b+1)m\}\pmod T,\quad
+\exists L\ne M:\quad
+\lambda(j)=\begin{cases}L,&j\in H,\\M,&j\in A\setminus H.\end{cases}
+\end{aligned}
+\tag{65.3}
+$$
+
+Here $H\subset A$ has two vertices. The path inverse and strict seam criterion used below are the credited interfaces (1.4)–(1.5), [S10, Interface 2.1] and [S15, Definitions 1.1 and 2.1]. The general residual one-block safe-cut certificate is [S13, Theorem 8.4]; its arbitrary-support condition is not itself the positive-child classification below. The constructions of Chapter 27 and the fee laws of Chapters 60–64 require $k\ge2m$ and are not continuation laws under (65.1).
+

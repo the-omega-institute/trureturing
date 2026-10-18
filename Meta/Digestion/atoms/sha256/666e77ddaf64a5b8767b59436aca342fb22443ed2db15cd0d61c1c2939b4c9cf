@@ -1,0 +1,4 @@
+## 88. Original-support squares and a single outside-support prime
+
+Write $B_n=L_n^2+3$. The support in this section is the full set of prime divisors of $B_N$, including primes whose original valuations are even.
+

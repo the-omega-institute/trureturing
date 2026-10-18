@@ -1,0 +1,27 @@
+**定义 46.1（独立指定的扩大域）。** 取第 24 节的负定向种子，$n=k+2\ge6$，标签为 $p,q,z_1,\ldots,z_k$。其完整供应集记为 $\mathcal S_*$，完整 $D$ 邻域并集记为 $\mathcal D_*$。取 $1\le i\le k-3$。对遗漏 $p$ 的圆序 $[W]$，记完整供应为 $P(W)=(p,[W])$，并取下列有向代表：
+
+$$
+\begin{aligned}
+A&=(q,z_1,\ldots,z_k),\\
+B&=(q,z_1,\ldots,z_{k-2},z_k,z_{k-1}),\\
+H_j&=(q,z_1,\ldots,z_j,z_k,z_{k-1},\ldots,z_{j+1}),\quad1\le j\le k-3,\\
+C&=(q,z_1,\ldots,z_{k-3},z_k,z_{k-2},z_{k-1}).
+\end{aligned}
+$$
+
+它们的无向圆序分别是第 26 节的 $H_0,H_{k-2},H_j,H_*$；这里 $C$ 只作为标记界面使用。令
+
+$$
+\mathcal F_1=\{[W]:|N(P(W))\cap\mathcal D_*|=1\},
+\qquad
+\mathcal S_i=\mathcal S_*\cup\{P(W):[W]\in\mathcal F_1\}\cup\{P(A),P(B),P(H_i)\},
+$$
+
+并独立定义 $\mathcal D_i=\bigcup_{E\in\mathcal S_i}N(E)$，$\Omega_i$ 为圆序属于 $\mathcal D_i$ 的全部实际排列。在 $\Omega_i$ 上从完整 $a/b$ 圈出发，切换 $\mathcal S_i$ 的全部完整供应，所得二因子记为 $F_i$。对每个所列 $p$ 供应的有向代表 $W$，取原生端点
+
+$$
+L^W_j=(\operatorname{rot}_jW,p),\qquad R^W_j=L^W_jb,\qquad0\le j\le k.
+$$
+
+正号表示实际旧圈沿 $L_j^W\to R_j^W$ 经过该 $b$ 切口，负号表示反向。
+

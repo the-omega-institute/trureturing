@@ -1,0 +1,32 @@
+**Lemma 3.3 (the central fork and its whole host pool).** If
+$v(01)=v(10)$, neither collision in (TC.2) occurs. Thus either
+collision forces $b_{1,1}\ge2$. Moreover $F_{1,1}$ is disjoint
+from every other live cell's host set.
+
+Proof. Suppose $v(01)=v(10)$. The equal-hit support exclusion in
+SI Section 2 forces the supports of these two histories to agree.
+Their second labels must therefore be the same coordinate $x\ne j$.
+Consequently the supports of $000$ and $111$ both contain
+$\{j,x\}$ and have size three. If their hosts coincided, equal
+supports would be forbidden by their unequal hits. Otherwise their
+private sets would be singletons. Their assignments are all zero
+and all one respectively, so (TC.4) would equate distinct individual
+costs. This excludes the first collision.
+
+The common state $v(01)=v(10)$ has a fixed label $y$ fresh for
+both histories, hence outside $\{j,x\}$. The supports of
+$1000$ and $0111$ therefore both contain $\{j,x,y\}$ and
+have size four. Equal supports again cannot share. Otherwise their
+private sets are singletons. The low history's only one and the high
+history's only zero occur at $j$ in their intersection. Their private
+assignments are consequently all zero and all one. Equation (TC.4)
+again contradicts distinct individual costs, excluding the second
+collision.
+
+The histories $01,10$ both host $(1,1)$, so contraposition gives
+two distinct hosts when either collision occurs. Finally no other
+cell in the $4\times4$ rectangle can satisfy (TC.3) with $(1,1)$
+in either orientation. This proves disjointness from the entire
+other-cell host union, rather than just the representatives.
+$\square$
+

@@ -1,0 +1,7 @@
+**Scope clarification 10.5.** The finite path result uses the interface
+hypothesis (9.1), together with the centered/whitened source and
+orthogonal-projection assumptions of Theorem 9.4. These are the assumptions
+that make the joint response calculation conditional; they do not identify
+the FIB source with an $SO(3)$ representation or with a physical ambient
+space.
+

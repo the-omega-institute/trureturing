@@ -1,0 +1,32 @@
+**定理 28.4.1（Möbius 归因公式）。** 对每个 $i\in N$，
+
+$$
+\boxed{
+\phi_i
+=
+\sum_{\substack{T\subseteq N\\i\in T}}
+\frac{\Gamma_T}{|T|}.
+}
+$$
+
+**证明。**
+
+由定理 28.2.2，
+
+$$
+\mu_{S\cup\{i\}}-\mu_S
+=
+\sum_{\substack{T\subseteq S\cup\{i\}\\i\in T}}\Gamma_T.
+$$
+
+因为 $i\notin S$，参与差分的 $T$ 必须满足 $i\in T$ 且 $T\setminus\{i\}\subseteq S$。交换有限求和后，$\Gamma_T$ 的系数为
+
+$$
+\sum_{S:\,T\setminus\{i\}\subseteq S\subseteq N\setminus\{i\}}
+\frac{|S|!(n-|S|-1)!}{n!}.
+$$
+
+这个系数正是随机排列中 $T\setminus\{i\}$ 的所有成员都排在 $i$ 之前、且 $T$ 中 $i$ 是最后一个的概率。对 $T$ 内部的 $|T|$ 个位置等可能，故概率为 $1/|T|$。于是得到所给公式。证毕。
+
+<a id="claim-28-4-2"></a>
+

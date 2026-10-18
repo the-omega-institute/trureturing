@@ -1,0 +1,11 @@
+#### 466.1 同一去素数 2 操作的准确有限递归
+
+保持标准算术 Möbius 函数 μ，令
+
+$$
+H(N)=\sum_{1\le n\le N}\frac{\mu(n)}n,
+\qquad H_{\mathrm o}(N)=
+\sum_{\substack{1\le n\le N\\n\text{ 奇}}}\frac{\mu(n)}n,
+\qquad H(0)=H_{\mathrm o}(0)=0.
+$$
+

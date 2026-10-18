@@ -1,0 +1,66 @@
+**Theorem 43.2 (full-principal enclosure independent of the fixed probe constant).** There is a finite constant $B_d$, independent of the separately fixed $H>0$, such that
+
+$$
+\limsup_{s\downarrow0}s^{-41/8}
+ \left\{k_d(Hs^{41/8})-C_*+\beta_*Hs^{41/8}\right\}
+\le B_d.
+\tag{43.6}
+$$
+
+This is the norm $k_d$ of the full original positive compact operator (35.1), including the infinite-time field and return.
+
+Proof. Fix $H>0$ and put $h=Hs^{41/8}$. P (104.2) gives norm convergence of the bounded reconstruction product to $K_{\rm rec}$ at this probe: in particular $s^2h^{-1/4}\to0$ and $s^4h^{-1/2}\to0$. The compact spectral neighborhood and bounded product factorization in the proof of Theorem 35.1 therefore apply unchanged. They give a bounded simple top and fixed separation of the remainder of the full selfadjoint compact spectrum. This is separation for the reconstruction, not a positive critical-Hamiltonian threshold gap.
+
+Keep exactly $x,y,m,d_s,z,D,L^h$ in (35.5)–(35.6) and its full quotient (35.13). The damping proof (36.4)–(36.6) applies at the present probe. Its majorants are $Ct$ below time one and $Ct^{-5/2}$ above it, independent of $h$, and $h\to0$, $T\to\infty$. It gives on this fixed input
+
+$$
+\langle x,Dx\rangle=C_*^2h+o_{d,H}(h).
+\tag{43.7}
+$$
+
+Theorem 42.2 and Lemma 43.1 evaluate the remaining early and late scalar terms in the quotient. Subtracting $\ell_s$ from (35.13) leaves
+$\ell_sd_s+\langle x,L^hx\rangle$ before the damping and smaller cross/self terms. Division by $m+d_s=\mu+O(s)$ therefore gives
+
+$$
+\begin{aligned}
+\ell_s+\frac{\ell_sd_s+\langle x,L^hx\rangle}{m+d_s}
+ &=C_*+\mathscr A\{Z_d+W_{1,d}(o)\}s^5
+       +O_d(s^q)+O(s^5\sqrt b)\\
+ &=C_*+O_d(s^q)+O(s^5\sqrt b).
+\end{aligned}
+\tag{43.8}
+$$
+
+The last equality uses exactly $\mathfrak m_d=Z_d+W_{1,d}(o)=0$. The constant in $O_d(s^q)$ is independent of $H$. Changes in its $s^5$ scalar denominators cost $O(s^6)$.
+
+For completeness every remaining term of (35.11)–(35.12), and the late damping error in (43.3), has the following order at this probe:
+
+$$
+\begin{array}{c|c}
+\text{term}&\text{bound}\\ \hline
+\langle y,R_s(h)y\rangle& O_H(s^{103/16})\\
+\langle x,L^hy\rangle& O_H(s^{183/32})\\
+\langle y,Dx\rangle& O_H(s^{77/8})\\
+s^5\sqrt{h/s^2}&O_H(s^{105/16})
+\end{array}
+\tag{43.9}
+$$
+
+Every exponent is greater than $q=41/8$. Dividing (43.7) by $m+d_s$ gives $\beta_*Hs^q+o_{d,H}(s^q)$; its denominator error $O_H(s^{q+1})$ is smaller. Consequently the exact full quotient satisfies
+
+$$
+\mathcal Q_s\le C_*+B_ds^q-\beta_*Hs^q+o_{d,H}(s^q)
+\tag{43.10}
+$$
+
+for one finite $B_d$ independent of $H$.
+
+The weighted full residual (35.18) is
+
+$$
+O_H(s^{37/4}+s^8+s^{103/16})=o_{d,H}(s^q).
+\tag{43.11}
+$$
+
+Here $\mathcal Q_s\to C_*$ and the rest of the spectrum stays below $C_*-3\zeta$. The selfadjoint variance inequality (35.19) upgrades (43.10) to the full principal value, with additional error bounded by (43.11). This proves (43.6). Thus a quotient upper estimate has been transferred by an explicit residual and spectral separation to the full norm. $\square$
+

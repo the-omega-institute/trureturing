@@ -1,0 +1,12 @@
+**Theorem 7.2 (a leaf word is not a full recovery target).** The sources
+
+$$
+S=\langle\langle\alpha,\beta\rangle,\alpha\rangle,
+\qquad
+T=\langle\alpha,\langle\beta,\alpha\rangle\rangle
+$$
+
+have the same complete leaf word $\alpha\beta\alpha$, but different shapes and different original reply functions. Therefore retaining only that word neither supplies the exact full-tree description nor preserves the independent labelled-leaf-flip domain used in Theorem 3.1.
+
+**Proof.** Their words agree by the ordered leaf recursion. At address $L$, $r_S(L)=\mathsf{branch}$ and $r_T(L)=\alpha$. Thus neither the tree nor the response function factors through the word. Flipping a leaf changes the complete word, so the necessity argument of Definition 2.1 does not remain inside a fixed-word fiber. This does not compute the discovery optimum on that different fiber. JM §55 and its later fixed-word theorems retain their own source promises and targets. $\square$
+

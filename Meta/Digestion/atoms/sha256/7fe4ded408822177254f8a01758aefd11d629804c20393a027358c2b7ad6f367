@@ -1,0 +1,10 @@
+**定义 28.2（三种联合与条件充分性）。** 被动汇总指取得上述配对的 $R_S$；边缘汇总指在另给概率律时取得各 $R_i$ 的分布或若干低阶联合分布；主动联合指改变合法协议族，使一方的操作或响应能成为另一方的输入。这三种读出分别有不同的实际像和不可区分关系。定义目标的条件充分集族
+
+$$
+\mathscr A_{Z\mid m}
+=\left\{S\subseteq I:
+\ker(R_S|_{\Omega_m})\subseteq\ker(Z|_{\Omega_m})\right\}.
+$$
+
+这里采用定义 1.3 的实际像因子化：$S$ 充分等价于存在 $g_{S,m}:J_{S,m}\to\mathcal Z$，使 $Z|_{\Omega_m}=g_{S,m}\circ R_S|_{\Omega_m}$。该函数存在不预设它可计算、档案已到达或译码已完成。$\operatorname{Min}\mathscr A_{Z\mid m}$ 表示按包含关系最小的充分集，而非最少份额或最低费用的充分集。群体联合视图与单个成员持有视图的区别，采用 Halpern–Moses, [Knowledge and Common Knowledge in a Distributed Environment，第 3、6 节](https://arxiv.org/abs/cs/0006009) 的分布式知识接口；联合可决定目标不等价于任一成员已持有目标，也不等价于共同知识。
+

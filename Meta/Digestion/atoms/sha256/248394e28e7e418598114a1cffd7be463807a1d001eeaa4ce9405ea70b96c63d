@@ -1,0 +1,81 @@
+**Theorem 148.1 (Complete original $L=5$ replacement).** For every entire
+sequence (140.2) and every positive closed cap $e$ with
+$a_5>e\ge a_6$, under exactly Definition 140.1's original acquisition
+contract,
+
+$$
+\exists N\in\mathcal N_2:\ e_a(N)\le e
+\quad\Longleftrightarrow\quad
+\exists O\in\mathcal O_2:\ e_a(O)\le e.
+\tag{148.1}
+$$
+
+Equivalently, at this actual active length,
+$\mathcal F_N(a,e)\ne\varnothing$ implies
+$\mathcal F_N(a,e)\cap\mathscr C_5\ne\varnothing$.
+The stopped law can differ from the initially given $N$ law.
+For profiles in $P$ the section in Theorem 147.1 has uniform actual error
+exactly $e$, as does its same-seed $N$ completion.
+
+**Proof.** The reverse implication is Proposition 90.2. For the forward
+implication let $N$ be any original full-carrier arbitrary-address witness.
+Its original repeated requests, one common seed and sourcewise almost-sure
+finite handoff are retained in the necessary $N$ direction of Theorem
+110.2, which supplies one full finite $N$ cap witness. We reuse this
+transport at the exact closed cap and impose no finite mark-support
+restriction on the original competitor.
+
+At active length five put $S=a_3+a_4+a_5$ and
+$D_3=\sum_{i\ge3}(a_i-e)_+=S-3e$.
+If $D_3\le3e$, the stopped residual construction of
+[Theorem 113.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#113-residual-demand-and-a-common-stopped-mixture)
+supplies an original $O$ at the same cap, including equality.
+This is the residual complement of the polytope argument, not an omitted
+parameter region. If $D_3>3e$, the reused necessary
+[Theorem 113.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#113-residual-demand-and-a-common-stopped-mixture)
+gives $D_3\le3e+1-a_1$. Hence
+$S>6e$ and $a_1+S-6e\le1$, so $x\in Q$.
+All thirteen score cuts follow from the full finite $N$ witness.
+In particular $C3$ gives $\kappa_3\ge0$, with no strict positivity
+assumption. Thus $x\in P$, and Theorem 147.1 supplies a stopped table.
+This applies equally when $\kappa_3=0$, at every tie and at every zero
+schedule boundary.
+
+Run the one-seed construction on the actual scheduled original primes,
+stopping at its first queried zero or exhaustion, and hand off the
+chosen original $\theta_r$. It has zero advice, at most two actual
+requests and finite measurable handoff at every source and seed.
+If $n(x)\le5$, its first five replies are one of all 32 checked words,
+and its selected target is exactly $\eta_b$. Every later zero pattern,
+including multiple zeros, is covered by the complete word rows.
+If $n(x)>5$, its low word is $11111$; no tail mark is emitted and
+$p_{11111}(0)=1-e$. The reused exact tail identity (110.9) is
+
+$$
+\operatorname{TV}\bigl(p_{1^5},(1-a_{n(x)})\delta_{\theta_0}
+                         +a_{n(x)}\delta_{\theta_{n(x)}}\bigr)
+ =\max\{1-p_{11111}(0),a_{n(x)}\}=e.
+\tag{148.2}
+$$
+
+Every prescribed positive monotone vanishing tail has $a_{n(x)}\le e$
+there. Equality $a_6=e$ is allowed, and all later positive amplitudes
+remain unchanged. There are actual tail sources by finite-pattern
+occupancy, so the uniform supremum is exactly $e$ in the polytope case.
+Theorem 109.1 identifies the stopped table with $\mathscr C_5$;
+Theorem 110.2 provides the original closed-cap feasibility implication.
+Completion with the same $U$ obtains and counts any remaining scheduled
+reply, reconstructs the stopped cell and hands off the same original tape,
+so it has the same uniform error and hard-two bound.
+The two residual cases exhaust every original five-active profile.
+The law-replacement statement does not contradict the exact-law
+obstruction of Theorem 112.2. $\square$
+
+All constructed marks lie in $B_1$. The unchanged consumer is unknown
+there, and their finitely supported laws have TV distance one from each
+unchanged original nonatomic $\mu_x$, as in Acquisition Resources 82.1.
+This does not certify any performance against $\mu_x$; the comparison is
+solely to the separately selected $\lambda_x^a$.
+The proof closes the bounded five-active case. It supplies no general
+$L\ge6$ containment, actual separator or universal all-amplitude theorem.
+

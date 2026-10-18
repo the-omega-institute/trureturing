@@ -1,0 +1,102 @@
+## 5. A finite collision with all four tests zero
+
+**Theorem 5.1.** The member $H_3$ satisfies every survivor-span condition and all four equalities (3.2), yet has a finite collision with strictly positive sampled gains. In particular the four necessary equalities, even combined with all those span conditions, are insufficient for recovery.
+
+**Proof.** The endpoints are
+
+$$
+I,\quad\begin{pmatrix}1&0\\3&1\end{pmatrix},\quad
+\begin{pmatrix}6&1\\5&1\end{pmatrix},\quad
+\begin{pmatrix}17&3\\6&1\end{pmatrix},\quad
+\begin{pmatrix}35&6\\6&1\end{pmatrix}.
+\tag{5.1}
+$$
+
+Legality, the recorded clock, and independence after every deletion follow from Theorem 4.1 at $N=3$. The earlier equalities follow from (4.4). The covector $w=(4,-6,4,-1)$ annihilates the independent $\mathbf a,\mathbf b,\mathbf c$. At $N=3$, (4.5) gives $w\mathbf A=0$. Also
+
+$$
+w\mathbf B'=-4N+(2N-2)3N+(2-N)8N=-2N(N-3)=0.
+$$
+
+Thus both $\mathbf A$ and $\mathbf B'$ lie in $\operatorname{span}(\mathbf a,\mathbf b,\mathbf c)$, as does $\mathbf e=(\mathbf a+\mathbf b)/3$. The two added determinants vanish as well.
+
+In entry order $(p,q,r,s)$, the quotient matrices are
+
+$$
+\mathsf B=\begin{pmatrix}0&3&0&0\\5&5&1&0\\16&6&3&0\\34&6&6&0\end{pmatrix},\qquad
+\mathsf C=\begin{pmatrix}1&3&0&1\\12&10&2&2\\51&18&9&3\\140&24&24&4\end{pmatrix},
+$$
+
+$$
+\mathsf T_1=\begin{pmatrix}1&6&0&1\\17&15&3&2\\67&24&12&3\\174&30&30&4\end{pmatrix}.
+$$
+
+Define the auxiliary linear map
+
+$$
+\mathsf H\begin{pmatrix}p&q\\r&s\end{pmatrix}
+=\begin{pmatrix}
+p&(-4p+7q-r)/6\\
+(-6p+q+5r)/6&4p-4q+r+s
+\end{pmatrix}.
+\tag{5.2}
+$$
+
+Then $\mathsf T_1\mathsf H=\mathsf C$: its four rows applied to $(p,q,r,s)$ give, respectively,
+
+$$
+p+3q+s,\quad12p+10q+2r+2s,\quad
+51p+18q+9r+3s,\quad140p+24q+24r+4s.
+\tag{5.3}
+$$
+
+This identity is on auxiliary matrices and does not assert an independently acquired source.
+
+Fix any $0<\epsilon<1$. For $1\le x\le2$ set
+
+$$
+S_1(x)=\begin{pmatrix}1&x\\1&x\end{pmatrix},\qquad
+\mathsf HS_1(x)=\begin{pmatrix}1&(7x-5)/6\\(x-1)/6&5-3x\end{pmatrix},\qquad
+S_0(x)=S_1(x)+\epsilon\mathsf HS_1(x).
+\tag{5.4}
+$$
+
+The first source is strictly positive and rank one. Every entry of $S_0$ is strictly positive: its upper-left entry is $1+\epsilon$, the upper-right correction is positive, the lower-left entry is at least one, and the lower-right entry is at least $x-\epsilon\ge1-\epsilon>0$.
+
+The exact determinant expansion is
+
+$$
+\det S_0(x)=\epsilon b(x)+\epsilon^2d(x),\qquad
+b(x)=\frac{35-18x-x^2}{6},\quad
+d(x)=\frac{175-96x-7x^2}{36}.
+\tag{5.5}
+$$
+
+For verification, $b=x+(5-3x)-(7x-5)/6-x(x-1)/6$, and $d=5-3x-(7x-5)(x-1)/36$. At $x=1$ these values are $8/3,2$; at $x=2$ they are $-5/6,-5/4$. Thus $\det S_0(1)>0$ and $\det S_0(2)<0$. Continuity supplies $x_\epsilon\in(1,2)$ with $\det S_0(x_\epsilon)=0$. Both selected sources are strictly positive rank one, and they differ in their upper-left entry.
+
+At this selected $x$, take
+
+$$
+k_0=1,\quad k_1=1+\epsilon,\qquad
+D_0(\tau)=0,\quad D_1(\tau)=\epsilon(6-3x_\epsilon).
+\tag{5.6}
+$$
+
+These are one entire constant drift per run. Equations (5.2)–(5.4) give
+
+$$
+\mathsf T_1S_0=\mathsf T_1S_1+\epsilon\mathsf CS_1
+=\mathsf T_{1+\epsilon}S_1.
+\tag{5.7}
+$$
+
+The two undrifted five-vectors consequently differ by their initial difference
+
+$$
+\operatorname{tr}(S_0-S_1)=\epsilon(6-3x_\epsilon)=D_1-D_0.
+$$
+
+This checks equality of all five original observations, including the initial one. Every sampled gain is positive since both slopes are positive. Equation (1.2), separately for each selected source, gives the actual positive factors and fixed rows; words (4.2) preserve positive unread states. Sources and slopes differ, so the collision lies beyond the representation fibres. This constructs a finite collision for every fixed $\epsilon\in(0,1)$, without a claim that these exceptional slopes approach zero. ∎
+
+Together, Theorems 4.1 and 5.1 exclude every integer member $H_N$, $N\ge3$. For $N\ge4$ the collision slopes can approach zero; the separately proved $N=3$ construction has slopes $1,1+\epsilon$. Corollary 3.2 transfers the corresponding statements to the conjugate histories.
+

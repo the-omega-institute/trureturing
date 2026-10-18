@@ -1,0 +1,2 @@
+**Convention 2.1 (Cycles and indices).** For $L\ge3$ the sites of the cycle $C_L$ are $\mathbb Z/L\mathbb Z=\{0,1,\dots,L-1\}$, with $i$ adjacent to $i\pm1$. $A_L$ is the adjacency matrix of $C_L$, $\Delta_L=2I-A_L$ its Laplacian, so $(\Delta_L\psi)(i)=2\psi(i)-\psi(i-1)-\psi(i+1)$. $e_i$ denotes the $i$-th standard basis vector and $E_{ij}=e_ie_j^\top$.
+

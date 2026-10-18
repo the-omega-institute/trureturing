@@ -1,0 +1,67 @@
+**Example 207.9 (A growing family below named stock tests).** For every
+$m\ge3$, put $L=m+2$, $k=\lceil(m+1)/2\rceil$ and
+
+$$
+h=\frac1{2k},\quad \mu=2+\frac2k,\quad a=1+\frac3{2k},\quad
+S=4+\frac4k,\quad t=1+\frac2k,\quad
+\gamma_1=\gamma_2=h,\quad\gamma_j=\mu\ (j\ge3).
+\tag{207.23}
+$$
+
+Use the measure and early rows of 207.8. Its empty-subset surplus is
+$S-c_ma=3/k^2$. Define input $y$ by putting late $C=\mu$ solely at
+$w(\{j\})$; define $V$ by replacing this with $a$ at the singleton
+and $\mu-a$ at the absorbing suffix. Both have $E=1/k$ and
+$W=5+7/k$. Every pair cylinder is $(a,a,a,1-h)$ and
+$2a-\mu=1/k$.
+
+The empty and late-single supports are $W-2h$, and each early-single
+support is $W-h$. Head and early/late pairs have support $W+1$.
+For $y$, late-pair $N$ maxima are $(a,\mu,\mu,\mu)$ and stopped
+maxima are $(2a,\mu,\mu)$; hence its costs are $(2+h,1)$.
+For $V$, late-pair maxima are $(a,a,\mu,\mu)$ when $j<L$ and
+$(a,a,\mu,2+3h)$ when $j=L$, with excesses $1$ and $1-h$.
+Their first two maxima merge without loss, so $V$ has costs $(1,1)$.
+All these formulas follow by the label classification in 207.8; no
+restriction on a queried label replaces maximization over all labels.
+
+For $m\ge4$, the aggregate threshold of 205.10 at $d=1$ is
+$5+8/k$, exceeding $W$ by $1/k$; decreasing $d$ raises that threshold.
+At $m=3$ this supplier is outside its stated domain, so evaluating its
+formula there is not an application of the theorem. The actual 203.2
+test has $\kappa=1+h,\pi=1$. The 205.9 positive-cell test has
+$\zeta=1-h$ and $D\ge1+h$. The fair unit threshold is
+$5+10/k>W$.
+
+The following comparisons include the whole indicated parameter
+families from §206. In its balanced-fair family, let $u$ be the largest
+retained late total, $c_1,c_2$ the early totals, $D$ the score cost and
+$\theta$ its nonnegative residual charge. The complete fair support
+and the $u_3$ residual give
+
+$$
+D\ge\frac{u-\min c_a}{2},\quad
+\theta\ge\frac{\mu-\eta_3-E+c_1+c_2}{2},\quad
+D+\theta\ge\frac{\mu-E+u-\eta_3+\max c_a}{2}
+\ge1+\frac1{2k}>1.
+\tag{207.24}
+$$
+
+For its clipped-fair test with scale in $[0,1]$, the $u_3$ condition
+would force $\mu-E\le2$, whereas here $\mu-E=2+1/k$. In the
+coupled-stock test, if $d'\le1$ and
+$c=\max(0,2(u-d')-S/2)\le E$, then
+$u\le1+d'+3/(2k)$. The function $3(\mu-u)-E+c$ decreases in $u$
+and at this largest permitted value is $3(1-d'+h)$. The last-prefix
+residual thus obeys, for $A_m=3m/(m+3)>1$,
+
+$$
+\theta\ge A_m(1-d'+h),\qquad
+d'+\theta\ge1+A_mh>1.
+\tag{207.25}
+$$
+
+These are failures of those named ansatzes, not failures of $E_N$.
+At $h=0$, 207.8 reuses the corresponding correlated mechanism wherever
+its earlier stated domain applies; no disjointness is asserted.
+

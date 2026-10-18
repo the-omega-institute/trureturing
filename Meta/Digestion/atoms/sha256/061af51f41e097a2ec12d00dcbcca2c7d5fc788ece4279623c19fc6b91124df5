@@ -1,0 +1,31 @@
+**定义 1.4（插值及最后两读的残差）。** For $P\in\mathcal N$ and,
+more generally, any $\mathbf c\in\mathbb R^6$, use the four-node
+interpolation of the
+[whole-class companion, equations (5.2)–(5.3)](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md):
+
+$$
+\begin{aligned}
+\ell_j(T)&=\prod_{\substack{0\le k\le3\\k\ne j}}
+                         \frac{T-k}{j-k},\\
+V_P(T)&=\sum_{j=0}^3\frac{\ell_j(T)}{t_j},\qquad
+U_{P;\mathbf c}(T)=\sum_{j=0}^3\frac{c_j\ell_j(T)}{t_j},\\
+\alpha_i(P)&=1-t_iV_P(i),\qquad
+\beta_i(P;\mathbf c)=c_i-t_iU_{P;\mathbf c}(i)
+                    \quad(i=4,5),\\
+\Delta(P)&=\alpha_4(P)^2+\alpha_5(P)^2,\\
+\mathcal C(P;\mathbf c)&=
+ \alpha_4(P)\beta_5(P;\mathbf c)
+ -\alpha_5(P)\beta_4(P;\mathbf c).
+\end{aligned}
+\tag{1.8}
+$$
+
+All denominators here are the positive $t_0,t_1,t_2,t_3$ and the
+nonzero integers $j-k$. None is a gain sample. The polynomial
+$U_{P;\mathbf c}-dV_P$ is the unique polynomial of degree at most
+three satisfying the first four equations in (1.4) for that $P,d$.
+Indeed its values there are $(c_j-d)/t_j$; any second such polynomial
+has four distinct roots in their difference and hence is equal to it.
+The remaining two equations are exactly
+$\alpha_i d=\beta_i$, $i=4,5$.
+

@@ -1,0 +1,17 @@
+**Corollary 6.2 (uniform exclusion of the classified class and its mirror).** Every history in Theorem 6.1 has the finite collision of Theorem 5.1, with two strictly positive rank-one sources, two different positive sampled-gain slopes, and one entire constant drift per run. The same sources work for any legal intervening words producing the classified endpoints, because the observations depend on the cumulative endpoints and every $M/J$ atom preserves the positive source column.
+
+If instead every $(A_i)_{11}=1$, use $A'_i=JA_iJ$ and $W'_i=JW_iJ$. Wrapping a finite word by $J$ gives another finite $M/J$ word (and an empty word remains empty after cancellation), with the same recorded indices and lower-right entries one. The four mirrored determinant tests become the four tests of Theorem 6.1 after exchanging the diagonal and off-diagonal sequences. Therefore the mirrored endpoints are
+
+$$
+I,\quad J\begin{pmatrix}1&0\\3&1\end{pmatrix}J,
+\quad J\begin{pmatrix}6&1\\5&1\end{pmatrix}J,
+\quad J\begin{pmatrix}17&3\\6&1\end{pmatrix}J,
+\quad J\begin{pmatrix}35&6\\6&1\end{pmatrix}J,
+$$
+
+and the conjugated $H_3$ collision transfers by $S\mapsto JSJ$, $c\mapsto Jc$, and $\ell\mapsto\ell J$, with slopes and complete drifts unchanged. This is an algebraic correspondence between original runs; no conjugation acquisition or extra clock is inserted.
+
+The endpoint classification concerns the survivor-regular all-four-zero branch. For recovery, the following three branches exhaust every legal five-read history in (3.1). If a noninitial survivor set is dependent, Lemma 2.1 gives a collision at a common sampled-zero-gain slope. If all such survivor sets are independent and at least one determinant in (3.2) is nonzero, Theorem 3.1 gives a finite collision with both slopes arbitrarily close to zero and all sampled gains positive. If all survivor sets are independent and all four determinants vanish, Theorem 6.1 forces $H_3$, and Theorem 5.1 gives its finite collision at slopes $1,1+\epsilon$, for every $0<\epsilon<1$. The exact mirror transfers each branch. Thus every legal five-read history whose lower-right sequence is identically one or whose upper-left sequence is identically one fails uniform recovery. This does not assert a positive-gain collision in the failed-survivor branch.
+
+A remaining candidate for five-read recovery must satisfy every noninitial survivor condition and have neither diagonal sequence identically one. The results here do not settle the general recovery status of that remaining class, provide a five-read protocol, or exclude arbitrary varying-diagonal histories. The unrestricted residual remains $5\le C_{\mathrm{fix}}(0)\le6$.
+

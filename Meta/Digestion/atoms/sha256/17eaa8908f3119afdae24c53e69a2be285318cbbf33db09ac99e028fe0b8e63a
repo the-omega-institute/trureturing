@@ -1,0 +1,58 @@
+**Proposition 35.6 (One seven-cycle has type two; two have type 202).**
+For the shared-root seven-cycle family,
+
+$$
+\operatorname{type}R_{3,b}=1+101^b-100^b.
+\tag{35.14}
+$$
+
+In particular the types for $b=1,2,3$ are $2,202,30302$.
+For every $b\ge1$ the five-cycle family has type one.
+
+Proof. For $k=3$ the two local canonical degrees are three and five.
+At degree three $M_{3,1}=1$. At degree five use
+
+$$
+T_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix}.
+\tag{35.15}
+$$
+
+Starting at the middle state, its row vectors for powers zero through
+seven are
+
+$$
+\begin{aligned}
+&(0,1,0),\ (1,1,0),\ (2,2,1),\ (5,4,2),\\
+&(11,9,5),\ (25,20,11),\ (56,45,25),\ (126,101,56).
+\end{aligned}
+\tag{35.16}
+$$
+
+Each step replaces $(a,b,c)$ by $(a+b+c,a+b,a)$, proving the
+entries directly. Thus $M_{3,2}=101$. There are $100$ other local
+interiors at boundary $(5,2)$, besides $\nu_2$. For two labelled
+cycles the basic degree-five tuples divide into $(\nu_2,\nu_2)$,
+$(\nu_2,p)$ and $(p,\nu_2)$ with $p\ne\nu_2$. Their counts are
+$1,100,100$, giving $201$. Including the single degree-three
+basic exponent gives $202$, whereas the product of the two local
+types would be $2\cdot2=4$. For three cycles the calculation is
+$1+101^3-100^3=30302$.
+
+For an explicit mixed tuple, take on one seven-cycle
+$p=\nu_1+(2;\mathbf1_{\{0\}})=(5;2,1,1,1,1,1,1)$.
+The remainder is realized by one root singleton and one empty row,
+so $p$ is locally reducible. Pair it with $\nu_2$ on the other
+cycle; both have boundary $(5,2)$. This tuple is globally basic:
+any global subtraction lowers the common degree on the second cycle
+as well and contradicts minimality of $\nu_2$. A local reduction
+cannot leave the other cycle's degree unchanged. This explains the
+extra generators without treating the rings as independent factors.
+
+For $k=2$ the only index is $j=1$, so (35.12) gives
+$1^b-0^b=1$ for $b\ge1$. The direct five-cycle proof in Theorem
+35.4 supplies the endpoint classification. $\square$
+
+[MI35]: https://arxiv.org/pdf/2205.01409v1
+[MOS35]: https://arxiv.org/pdf/1603.01850v1
+[BB35]: https://arxiv.org/pdf/2505.11402v1
+

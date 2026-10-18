@@ -1,0 +1,48 @@
+**Theorem 9.2 (same-source continuation and cumulative error).** Suppose a
+certified past record has phase budget $B_0$ and exact parity as in (7.5).
+For every finite common permitted future sequence whose actual residual
+increments and signed windings are known exactly, the full family of
+responses at all completed prefixes satisfies the same bounds (7.6)--(7.7).
+Enabledness, declared additional durations and waveform costs agree
+exactly with the actual same-source action of Definition 1.4.
+
+If instead future increment $j$ has a certified $02$ phase error $e_j$, its
+signed winding/parity is certified exactly, and its update arithmetic adds
+phase error at most $r_j$, then at prefix $J$ replace $B_0$ by
+
+$$
+B_J=B_0+\sum_{j=1}^J(e_j+r_j).
+\tag{9.1}
+$$
+
+Use that prefix's certified decoder calibration and output budgets in
+(7.7). If a future control is unknown, it requires its own acquisition
+certificate; calling its increment an input does not acquire it.
+
+Proof. Apply `concatenate_original` successively to the actual past and
+prescribed actual controls. It preserves the original prefix and adds their
+real residuals and signed windings. Hence exact common updates preserve the
+initial $02$ phase difference and bottom parity. For approximate updates,
+the triangle inequality on the real phase errors gives (9.1); exact integer
+addition preserves parity for negative and positive windings alike.
+The edge-circle chord bound gives the response estimate at each prefix.
+Legality follows from the common fixed endpoint, actual control conditions
+and matched permissions, rather than an inference from noisy phase values.
+$\square$
+
+For example an output budget can assign $E_A/r\leq\eta/4$,
+$M\varepsilon_\pi+\rho_\beta\leq\eta/4$,
+$\sum_{j\leq J}(e_j+r_j)\leq\eta/2$, and
+$\|\gamma\|_2+\rho_C\leq\zeta$. The resulting complete-response error is
+at most $a_{02}\eta+\zeta$. Every resource in this allocation is conditional
+on a certificate for the same actual history and future controls.
+
+Exact future rotations are mathematical resources. An indefinitely long
+sequence with positive per-step error does not have a summable budget by
+default. Fixed finite bits also do not implement exact rotation forever.
+Transport--Memory Completion §2.8 already gives the eventual-periodicity
+obstruction for a closed finite-state predictor of an infinite-order
+rotation. The present stable-initial-error estimate does not evade it.
+No integer winding is replaced by parity in the retained actual lift or
+control record; parity is only the bottom-edge prediction coordinate.
+

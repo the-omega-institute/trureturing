@@ -1,0 +1,41 @@
+**命题 5.2（子格尺度的正交振幅实现）。** 同一 $Z(n)$ 是该独立多相位边界的平均平方响应：
+
+$$
+\frac1{2\pi}\int_0^{2\pi}|F_{p,a}(\theta)|^2\,d\theta=S_p(a),
+$$
+
+$$
+\frac1{(2\pi)^{\omega(n)}}
+\int_{[0,2\pi]^{\omega(n)}}|A_n(\boldsymbol\theta)|^2\,
+ d\boldsymbol\theta=Z(n).
+$$
+
+同时每个局部振幅满足
+
+$$
+(1-p^{-1/2}e^{i\theta})F_{p,a}(\theta)
+=1-p^{-(a+1)/2}e^{i(a+1)\theta},
+$$
+
+而且对每个实相位 $\theta$，$F_{p,a}(\theta)\ne0$。
+
+证明。局部有限等比公式给出最后的乘积等式。令 $r=p^{-1/2}\in(0,1)$；因 $|re^{i\theta}|<1$ 和 $|r^{a+1}e^{i(a+1)\theta}|<1$，等式两端的相关因子均不为零，故 $F_{p,a}$ 不为零。
+
+对平方展开后使用经典有限 Fourier 正交性：
+
+$$
+\frac1{2\pi}\int_0^{2\pi}e^{im\theta}\,d\theta
+=\begin{cases}1&m=0,\\0&m\in\mathbb Z\setminus\{0\}.
+\end{cases}
+$$
+
+$m\ne0$ 时积分原函数是 $e^{im\theta}/(im)$，两个端点相同；$m=0$ 时被积函数为 $1$。于是
+
+$$
+\frac1{2\pi}\int |F_{p,a}|^2
+=\sum_{j,k=0}^a p^{-(j+k)/2}\mathbf1_{j=k}
+=\sum_{k=0}^a p^{-k}.
+$$
+
+对多方向，有限展开中的两项指数向量 $(b_p),(c_p)$ 仅在每个 $b_p=c_p$ 时保留。其系数为 $\prod p^{-b_p}$，正是命题 3.2 的小盒体积。有限多重积分可逐个坐标计算，故总平均是全部约数权重 $Z(n)$。这也是有限 Parseval 等式在该标签桥梁中的应用。证毕。
+

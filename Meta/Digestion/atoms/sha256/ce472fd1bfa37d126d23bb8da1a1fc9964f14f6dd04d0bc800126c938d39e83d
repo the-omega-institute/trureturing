@@ -1,0 +1,19 @@
+**Convention 8.2 (primary methods and exact transfer boundaries).**
+The deterministic same-transcript argument and multiway reply counting
+are mature decision-tree methods. The following primary-source
+correspondences delimit their use here:
+
+| Primary source | Verified relation and boundary |
+| --- | --- |
+| H. Kowshik and P. R. Kumar, *Optimal Function Computation in Directed and Undirected Graphs*, [arXiv:1105.0240v2][KK], §III-B, Theorem 4, Lemma 2 and Example 1 | The Cartesian-input response-class construction is followed by an all-cut zero-error condition for arbitrary joint support using a common complementary assignment of positive support. Example 1 explicitly couples encoders on correlated support. These statements give neither charged original-source preparation nor a late target and one arbitrary literal. The proof here imposes no Cartesian structure on an original code fiber. |
+| S. Garg, S. He, Y. Li, P. A. Papakonstantinou and X. Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024][QWS], §2.1, Definition 2.1 | A sketch map is given to a deterministic procedure that subsequently chooses coordinate probes from its transcript. On the canonical native promise, a complete export can be represented as a fixed-width sketch and FMR simulates any single native late word by one boundary coordinate or a constant. Native constructor consistency remains a promise, and the requested factor is an additional task family. The paper's sketch input has no paid-acquisition premise, so none of its other-function lower bounds or asymptotic conclusions is imported. |
+
+These are primary model comparisons, not assumptions replacing the
+proofs in §§3–5. The original native proof uses the actual four-reply
+port and bounded-height replacement sources directly. No literature
+absence, complete search or all-size cap conclusion follows from this
+bounded comparison. The acquisition submethod belongs to AAR; exact
+name-optimal cover implementation belongs to FMR/CBN. The contribution
+here is their explicit late-target all-competitor acquisition consumer
+and the resulting resource bounds.
+

@@ -1,0 +1,24 @@
+**Proposition 4.3 (Zero-winding double-wall capacity).** For this restricted
+source, $\operatorname{cap}_{\mathrm{aff}}^0(b)=2$.
+
+**Proof.** The middle edge has $a_{0,2}>0$, so its two coordinates give an
+invertible two-dimensional block of $D_b^0$. The bottom coordinates are
+constant on the zero-winding domain. Thus $\operatorname{rank}D_b^0=2$,
+which is both the affine-hull lower bound and the dimension of (4.13). For a
+prescribed zero-winding future loop $u$, $m_u=0$ and
+
+$$
+q_b^0(h+u)=R_{u_\beta}q_b^0(h),\qquad
+D_b^0[u]=D_b^0R_{u_\beta}.
+\tag{4.14}
+$$
+
+The rotations compose, so this restricted decoder is closed under
+zero-winding controls. For every integer winding, odd winding flips parity
+and even winding preserves it. Odd winding leaves the $\varepsilon=1$
+endpoint component, while even winding preserves that component. The
+restriction $m=0$ is imposed on histories and controls: a nonzero even
+winding is outside this chosen class, although its endpoint can lie in the
+zero-winding reachable image. No closure claim for nonzero-winding controls
+is made here. $\square$
+

@@ -1,0 +1,40 @@
+**推论 38.3（原 PH21 分析行的预算证书）。** 对原机器置 $\mathsf U=P_\alpha^2,\mathsf V=P_\beta^2,\mathsf R=P_\beta P_\alpha$。取其闭类周期公倍数 $d_U,d_V,d$，以及原(21.2)、(21.8)的极限。令
+
+$$
+\begin{aligned}
+S_0&=\beta\alpha\mid\beta\beta\alpha\alpha,\\
+\Lambda&=\eta E_U(0)E_V(0)P_{S_0},\\
+\lambda_i&=\Lambda E_R(i),\qquad0\le i<d,\\
+u_i&=\lambda_iq_\alpha,
+&v_i&=\lambda_iP_\beta q_\alpha.
+\end{aligned}
+\tag{38.4}
+$$
+
+三个矩阵都是原机器的实际更新，不按合成概率重加权。全部 $u_i,v_i$ 有一个共同整数分母 $K$，满足
+
+$$
+\log_2K\le96\mathsf N^4.
+\tag{38.5}
+$$
+
+**证明。** 三个矩阵的分母由 $L=D^2$ 清除，$\log_2L\le16\mathsf N$。由(38.2)及 $\log_2(\mathsf N+1)\le\mathsf N$，每个全部余数极限族的证书满足
+
+$$
+\log_2D_P^{\rm lim}
+\le\mathsf N^3(1+16\mathsf N)
+ +\mathsf N^2(\mathsf N+16\mathsf N)
+=16\mathsf N^4+18\mathsf N^3
+\le25\mathsf N^4.
+$$
+
+对全部 $i$ 取同一个
+$K=D^9D_U^{\rm lim}D_V^{\rm lim}D_R^{\rm lim}$ 即足够：初始化用一份 $D$，原六字母 $P_{S_0}$ 用六份，有效选择列用一份，$v_i$ 的额外 $P_\beta$ 用一份。有限行列求和不增加共同分母。因 $\mathsf N\ge2$，
+
+$$
+\log_2K\le72\mathsf N+75\mathsf N^4
+\le84\mathsf N^4<96\mathsf N^4.
+$$
+
+这里的 $K$、矩阵、提升和循环表全是证明证书，不安装在预算 $B$ 内，也不宣称提取保持时间或空间。其算术界直接来自原消费者的完整收费微状态。证毕。
+

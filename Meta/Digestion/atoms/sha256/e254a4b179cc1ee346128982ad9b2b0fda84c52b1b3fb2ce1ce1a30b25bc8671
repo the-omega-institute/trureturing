@@ -1,0 +1,13 @@
+**Open question 5.3 (Polynomial radius for law alone).** Theorem 4.1
+gives an exponential universal window for preserving $(u,Z)$.
+Theorem 5.2 rules out a polynomial-in-$k$ universal radius only when
+the complete oriented whole-tree signature must be preserved. That
+signature retains potential-reply relations even between nodes on
+incompatible branches; equality of the executed joint law can discard
+those relations. Whether every total-budget-$k$ rule admits an exact
+joint-law-preserving representative in a polynomial-in-$k$ radius, or
+whether this weaker objective has a superpolynomial obstruction, remains
+unresolved here. The complete tree has $M$ potential read nodes, although
+an execution has only $k$ paid calls; those two counts are not
+interchangeable.
+

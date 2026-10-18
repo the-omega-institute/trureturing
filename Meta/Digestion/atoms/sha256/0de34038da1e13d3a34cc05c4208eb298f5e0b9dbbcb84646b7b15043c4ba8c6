@@ -1,0 +1,53 @@
+**定理 196.1（锥配置的概率填充与原始实现）。** 设定理 194.1 的转换配置质量为 $s$，且它满足 $A_N^{\mathcal K}\lambda\ge h(b)$，其中 $\mathcal K=S$ 或 $W$。对
+
+$$
+0\le\tau\le\frac1{\max\{1,s\}},
+\tag{196.1}
+$$
+
+令转换后的各表概率为 $\tau\mu_D$，另加锚 $R$ 概率 $1-\tau s$。它给出一个合法停止概率核，满足参数 $x=\alpha+\tau(b-\alpha)$ 的全部闭帽行。质量一的原 $N$ 配置及其转换 $O$ 配置可以使用同一个与来源无关的种子，且原始实现保留全部字、实际尾部、闭端点和硬两请求契约。
+
+**证明。** 式 (196.1) 使所有概率非负且总和为一，包括 $\tau s=1$。若锚已有系数，只把填充质量加到该坐标一次。事件向量为
+
+$$
+\mathbf r+\tau A_O^{\mathcal K}\mu
+ \ge\mathbf r+\tau h(b)
+ =d\bigl(\alpha+\tau(b-\alpha)\bigr).
+\tag{196.2}
+$$
+
+最后的仿射身份由 $d(\alpha)=\mathbf r$ 直接得到，亦是式 (165.5) 的既有径向身份。所有帽行用同一概率配置，未拆分单点、并集预算。$\tau=0$ 是有限辅助锚；$s>1$ 的原仿射 $f$ 不因满足某些行而被称为概率律，只有上述非负填充概率可执行。
+
+在 $s=1$ 时，把一个来源无关的 $U\in[0,1)$ 分成长度为 $\mu_D$ 的半开区间，零质量省略，区间预先固定整个表。原 $N$ 配置也有同一 $U$ 上自己的固定区间分割；两分割可取有限共同细化。因此两规则使用同一个种子，而不要求同一种子处输出相同。上述重耦、归一与交换均在回答前完成，未添加额外随机观测。填充情形以同样方式先选锚或完整表。
+
+选定 $O$ 表后，实际查询其至多两个递增素数地址，遇首次被查询零即停，或正回答耗尽日程；随后交付原纸带 $\theta_{D(w)}$。所有记录和输出事件均可测，每个来源和种子处执行有限。其 $N$ 完成规则使用完全相同的 $U$，取得整个预选日程的全部回答，再重构停止胞；忽略的请求仍计数。单日程和空日程亦按其实际长度计数。硬预算始终是实际请求数，不是地址、深度、时间或平均数。
+
+原来源明确为定义 110.1 的
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,
+      \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N(x)},
+\quad n(x)=\min\{i:q_i(x)=0\},
+\end{aligned}
+$$
+
+其中 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$。输出的 $\theta_j=(B_1,1/(j+2))$ 是原完整载体 $\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$ 内的不同原始点，每块为 $(0,1)$ 的副本；消费者和原非原子目标不变。有限字的实际实现由定义 110.1 所引有限纤维结果供应，所有多零模式都在帽行中。这里未创造无限全正来源。
+
+停止概率核的 $\mathscr C_L$ 成员资格及其 $c\ge H$、$\beta\le1$ 概率向量条件复用[定理 109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget)。对每个实际 $n(x)>L$，规则看到有限字 $1^L$，但目标仍带实际原标记 $\theta_{n(x)}$。由该卷式 (110.9)，精确尾误差为
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Lp_{1^L}(j)\delta_{\theta_j},
+     (1-a_{n(x)})\delta_{\theta_0}
+                +a_{n(x)}\delta_{\theta_{n(x)}}\right)
+ =\max\{1-p_{1^L}(0),a_{n(x)}\}.
+\tag{196.3}
+$$
+
+因最终全正基点不下降，原来的每个实际尾幅 $a_n\le e$ 都保留，包括 $a_{L+1}=e$。任何晚零均不改变这个结论，实际尾目标没有被折叠为 $0$。
+
+原始正闭帽及其实际活跃长度的充分与必要运输，复用[定理 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)：它承担任意地址、重复计数和完整载体输出的必要性，本构造只提供合法见证，不限制竞争者。辅助长度大于实际活跃长度时，仍按该既有运输在实际长度处理，而不提出新的缩短定理。
+
+若 $b$ 来自完整正、单调、消失幅序列且尾部满足帽比较，则径向应用在 $\tau>0$ 时采用[定理 170.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#170-every-original-tail-under-the-same-radial-law-identity) 的整个序列身份：前两幅变为 $1-\tau(1-b_i)$，所有 $i\ge3$，包括每个实际 $i>L$，变为 $\tau b_i$，帽为 $\tau e_b$。于是正性、次序、消失性及所有尾帽比较保留。辅助零幅或零帽端点只属有限几何，不宣称它们是正原始尾序列。这些运输及误差身份均使用已有供应定理。$\square$
+

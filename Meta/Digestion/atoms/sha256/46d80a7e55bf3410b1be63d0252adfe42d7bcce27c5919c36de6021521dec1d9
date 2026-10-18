@@ -1,0 +1,47 @@
+**Proposition 288.2 (The explicit all-length bound implies the deletion
+scalar bound).** For every $m\ge4$,
+
+$$
+\varepsilon_C(m)>\varepsilon_D(m)>0.
+\tag{288.2}
+$$
+Thus every profile excluded by (287.2) is already excluded by (285.9).
+This implication does not replace the label-owned inequalities or the
+same-allocation deletion bound.
+
+**Proof.** In the notation of 285.2 and 287.1, $0<a<1/2$,
+$\ell\ge2$, and $t_j\le40$ by 285.4. Since
+
+$$
+\zeta\le\frac{mU}{(m-k)\ell}\le\frac54U<\frac{mU}{a},
+$$
+we have $\Lambda=mU/a$ and
+$\varepsilon_C=a(m-k)/(m^2U)$.
+Put $N=\binom mk(m+1)!/(m-k+1)!$. Then
+
+$$
+\varepsilon_D=\frac{\ell a}{N((1+c)a+c)}<\frac aN,
+\qquad
+\frac U{m-k}\le\frac1{m-k}+40k\le20m+21.
+\tag{288.3}
+$$
+For $m\ge7$, $k\ge4$ and central-binomial monotonicity gives
+$\binom mk\ge\binom m4$. Also
+$(m+1)!/(m-k+1)!\ge(m+1)m(m-1)(m-2)$. Consequently
+
+$$
+\frac N{m^2}\ge
+\frac{(m-1)^2(m-2)^2(m-3)(m+1)}{24}
+\ge150(m+1)>20m+21\ge\frac U{m-k}.
+$$
+This proves $\varepsilon_C>a/N>\varepsilon_D$ there. The remaining
+three substitutions are exact:
+
+| $m$ | $\varepsilon_C$ | $\varepsilon_D$ |
+| ---: | ---: | ---: |
+| 4 | $1/576$ | $1/1460$ |
+| 5 | $1/5295$ | $1/8760$ |
+| 6 | $4/4449$ | $1/38850$ |
+
+They prove (288.2) for all $m\ge4$. $\square$
+

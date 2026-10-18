@@ -1,0 +1,29 @@
+**Theorem 7.4 (codec-transfer and cycle laws).** For every
+$h\in\mathcal Z_\circ$ with its corresponding actually acquired binding
+$b$, each independent decoder terminates on its authentic body and returns
+exactly $h,W(h)$. Each direct arrow terminates and yields
+the next independently defined view of the identical $h$. The composite
+returns the identical initial S-body. On each accepted canonical image
+re-encoding after decoding is the identity. S/B raw shape inverses also
+hold on $\mathcal R_\circ$ as in Lemma 3.6.
+
+Proof. Lemma 3.6 supplies both geometric shape inverses, with unary sockets
+unchanged. Lemma 6.5 supplies their basic extraction and exact replay, and
+the memory decoder's extraction/reselection. For T, the first record has
+the foundation as actual prestate; Lemma 5.4 gives the next native event,
+constructor names and carrier. Repeating proves that each field-9 event
+and raw successor is the actual one, with its own IN bit. Thus $D_T$
+recovers $h$ without an endpoint input. Each encoder uses the actual
+independent definition, hence equality with the authentic body in both
+directions. Maximal paths/prefix closure give S→B, actual selection gives
+B→M, input-complete literal replay gives M→T, and checked native-row lift
+gives T→S. Composition returns the same canonical mask word.
+
+Finite parsers consume their source; list lookup/selection uses closed
+finite cursors; component and prefix traversals use finite trees/paths;
+replay has its explicit $n$ countdown. Those measures and RCA's finite
+bank compilation prove termination. Canonical image membership is used
+only for the positive history inverse, not for raw row enabledness.
+These proofs concern history/raw-image equality. They establish no
+individual equality with the original response map $Q$. ∎
+

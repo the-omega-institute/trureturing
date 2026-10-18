@@ -1,0 +1,90 @@
+**Theorem 10.5 (No same-clock full-state elliptic identification).**  Let
+$A(q)$ be any smooth positive $2\times2$ native-control covariance and let
+$b^1,b^2$ be arbitrary smooth lower-order coefficients.  The most general
+second-order operator with this covariance and horizontal drift has
+the form
+
+$$
+\mathscr G_Af=\sum_{i,j=1}^2a^{ij}(q)X_iX_jf
+ +\sum_{i=1}^2b^i(q)X_if,\qquad (X_1,X_2)=(P,Q).
+\tag{10.14}
+$$
+
+Its principal symbol is
+
+$$
+\sigma_q(\xi)=\sum_{i,j=1}^2a^{ij}(q)\,\xi(X_i(q))\xi(X_j(q)).
+\tag{10.15}
+$$
+
+It has rank exactly two on every current-ray manifold.  Consequently:
+
+1. no smooth change of coordinates on the full current-state manifold can
+   identify (10.14), in the same clock, with a nondegenerate isotropic
+   Euclidean operator in dimension $g+1$;
+2. no smooth three-dimensional target factor of the native state can have a
+   nondegenerate elliptic second-order generator induced by (10.14);
+3. adding $[P,Q]^2$ supplies a third independent principal direction;
+   adding any nonzero further bracket square also changes the specified
+   second-order law. Zero brackets supply no direction.
+
+**Proof.** The map
+$B_q:\mathbb R^2\to T_q\mathcal M_b$, $B_qe_i=X_i(q)$, is injective because
+$P$ has a nonzero $\kappa$ component and $Q$ is nonzero and vertical.  Since $A(q)$ is
+positive definite, the contravariant symbol is $B_qA(q)B_q^{\mathsf T}$ and
+has rank two.  Equivalently, every covector annihilating both $P$ and $Q$ is
+in the symbol kernel.  On the double wall the nonzero covector $dz-x\,dy$ annihilates
+both fields in (10.10); $dz$ itself does so at the chart centre $x=0$.
+Thus a reachable central direction does not provide principal variance in
+the missing cotangent direction.
+
+Under a smooth coordinate map, a principal symbol transforms by an invertible
+congruence on cotangent spaces, so its rank is unchanged.  The isotropic
+Euclidean operator $\sum_{j=1}^{g+1}\partial_{x_j}^2$ has rank $g+1>2$.
+For a smooth map into a three-dimensional target, the pushed-forward symbol
+has rank at most two and hence cannot be elliptic of rank three.  Drift terms,
+Jacobian terms and the choice between Itô and Stratonovich conventions are
+lower order and cannot change (10.15).
+
+The infinitesimal variance statement is the same obstruction.  If
+$A=\Sigma\Sigma^{\mathsf T}$ and the native diffusion is written with the
+same clock as
+
+$$
+dq_t=\sqrt2\sum_{a=1}^2\left(\sum_{i=1}^2\Sigma_{ia}X_i(q_t)\right)\circ dB_t^a
+ +\text{(drift)}\,dt,
+\tag{10.16}
+$$
+
+then for a smooth test $f$ and exit time $\sigma_U$ from a relatively
+compact interior chart containing the starting point $q$,
+
+$$
+\lim_{t\downarrow0}\frac1t
+\operatorname{Var}_q\bigl(f(q_{t\wedge\sigma_U})\bigr)
+=2\sigma_q(df_q).
+\tag{10.16a}
+$$
+
+Here $f$ is smooth near the chart closure. Itô isometry and continuity of
+the stopped coefficients give this limit; the drift contributes $o(t)$ to
+the variance. Every covector at $q$ is $df_q$ for such a local test.
+
+A covector annihilating the native two-plane has zero variance in this clock,
+whereas a nondegenerate three-dimensional Euclidean Brownian motion has
+strictly positive variance in every nonzero covector.  Squaring the commutator
+would assign positive variance in that missing direction and is therefore a
+different stochastic law, not bookkeeping for the original two controls.
+More explicitly, a factor would require a smooth map $F$ onto an open
+three-dimensional target and a generator $\overline{\mathscr G}$ with
+$\mathscr G_A(f\circ F)=(\overline{\mathscr G}f)\circ F$ for all local
+smooth tests. Quadratic tests with zero first derivative at $F(q)$ identify
+the target symbol with $DF_qB_qA(q)B_q^{\mathsf T}DF_q^{\mathsf T}$, of rank
+at most two. Cutoffs supported inside the source and target charts make
+these legitimate interior tests for any matched Dirichlet realization.
+Hence neither killing nor lower-order terms can repair the rank defect.
+A smooth positive clock multiplier also preserves rank, although it changes
+the operator; singular scaling limits or homogenization are different
+questions. Positive-time smooth transition densities from brackets do not
+contradict a rank-two infinitesimal covariance. $\square$
+

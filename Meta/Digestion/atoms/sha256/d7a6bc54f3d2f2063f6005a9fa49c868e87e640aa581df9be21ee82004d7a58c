@@ -1,0 +1,46 @@
+**Corollary 32.1 (uniform near-linear-polylog native state upper).**
+There are absolute constants $C,n_0$ such that for every $n\ge n_0$,
+every supplied $A$ of cardinality $n$, and every $1\le k\le n$,
+a preparer for the same original $\sigma_{A,k}$ on all of
+$\mathcal U_*$ has
+
+$$
+\begin{aligned}
+H&=nS_{n,k}+4+r,\\
+S_{n,k}&\le C\frac{\log^3 n}
+                      {\log\log n\,\log\log\log n},\\
+p&\le nb_{n,k}+1,\qquad
+\ell\le b_{n,k}W_A+3,\qquad b_{n,k}\le S_{n,k}.
+\end{aligned}
+\tag{PCA.80}
+$$
+
+The integers $S_{n,k},b_{n,k}$ refer to one and the same supplied
+chain for this $n,k$. In particular the native installed count is
+$O(n\log^3 n/(\log\log n\,\log\log\log n))+4+r$ uniformly in
+threshold. The implicit constant does not depend on $A,k$ or $r$.
+For smaller $n$, Theorem 29.2 supplies the explicit finite upper.
+
+Proof. Apply Sinha's [Theorem 3.29, printed p. 41][SINHA95], to the
+integer threshold problem on $I=\{0,\ldots,n\}$, of length
+$L=n+1$, with the $k$ smallest integers as its low set. Its
+high set is exactly $\{k,\ldots,n\}$. That theorem supplies
+a chain of size
+$O(\log^3 L/(\log\log L\,\log\log\log L))$ separating these
+sets, uniformly for the specified threshold and interval. Replacing
+$L=n+1$ by $n$ in this asymptotic bound changes only the absolute
+constant after increasing $n_0$.
+
+The uniformity used here is also explicit in that supplier's proof:
+Proposition 3.28 chooses the moduli using only interval length,
+Corollary 3.27 routes the unresolved integers into a shorter
+interval, and Theorem 3.29 recurses on that interval with the
+size estimate independent of the threshold. These are credited
+classical results, not newly asserted generic theorems. Supply
+one such chain to Theorem 31.2. Each modulus is a positive integer,
+so $b_{n,k}\le\sum_j q_j=S_{n,k}$. This gives every bound in
+(PCA.80) on one native table. It yields, if desired, the loose
+execution uppers $p\le nS_{n,k}+1$ and
+$\ell\le S_{n,k}W_A+3$; no smaller asymptotic scan count or
+execution optimum is inferred from the size theorem. $\square$
+

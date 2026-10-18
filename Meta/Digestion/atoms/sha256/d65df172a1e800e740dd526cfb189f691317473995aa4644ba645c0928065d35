@@ -1,0 +1,28 @@
+## Definition 1. The native group and the two actions
+
+Let \(C_2=\{1,\tau\}\), with \(\tau^2=1\), and write \([s]\) for its
+group-ring basis elements. For \(q>0\), put
+\[
+(A_q)_{ij}=\mathbf1_{j=0}[\tau]+\mathbf1_{j=i+1}[1],\qquad
+M_q=\operatorname{Fin}(q)\to\mathbb Z[C_2],\qquad
+T_q(v)=vA_q,\qquad G_q=\varinjlim(M_q,T_q).
+\]
+Multiplication is on the right of rows. In particular,
+\[
+(T_qv)_0=\Bigl(\sum_i v_i\Bigr)[\tau],\qquad
+(T_qv)_j=v_{j-1}\quad(0<j<q).
+\]
+Write \(\operatorname{of}_n(v)\) for a stage class, so that
+\(\operatorname{of}_{n+1}(T_qv)=\operatorname{of}_n(v)\).
+
+There are two commuting actions:
+\[
+\sigma_q\operatorname{of}_n(v)=\operatorname{of}_n(L_\tau v),
+\quad (L_\tau v)_i=[\tau]v_i,\qquad
+\Theta_q\operatorname{of}_n(v)=\operatorname{of}_n(T_qv).
+\]
+Associativity implies \(L_\tau T_q=T_qL_\tau\), and
+\(\sigma_q^2=\mathrm{id}\). Complement \(\sigma_q\) and time transition
+\(\Theta_q\) retain their separate definitions, including when their actual
+actions coincide in a degenerate case.
+

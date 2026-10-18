@@ -1,0 +1,9 @@
+# Reset parity, complement and the full dimension action
+
+The arithmetic state records the sum of the two sign coefficients at every
+suffix. Complement preserves that state, while the stationary unit transition
+scales it. A class invisible to the state can nevertheless obstruct an
+automorphism of the full integer dimension group. For the reset family, the
+actual geometric representation contains identity plus unit transition
+precisely at positive even orders.
+

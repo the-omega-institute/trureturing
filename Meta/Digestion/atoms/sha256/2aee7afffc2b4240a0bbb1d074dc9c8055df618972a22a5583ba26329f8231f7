@@ -1,0 +1,27 @@
+## Six-variable cosine and heterogeneous box
+
+Use Zhao's local order `(12,13,14,34,24,23)` and
+
+```
+A = 2*x1*x2*x6 + x1^2 + x2^2 + x6^2 - 1
+B = 2*x1*x3*x5 + x1^2 + x3^2 + x5^2 - 1
+P = x2*x3 + x5*x6 + x1*x2*x5 + x1*x3*x6 - (x1^2 - 1)*x4
+phi_1 = P / sqrt(A*B),       alpha_1 = arccos(phi_1).
+```
+
+On `[1,2]^6`, `phi_1` is nondecreasing in the four neighbouring
+coordinates and nonincreasing in the opposite coordinate (Zhao, Lemma 3.4;
+`partial phi_1/partial x4 = -(x1^2-1)/sqrt(A B)`). The universal envelope
+`2(2-u)/(u+1) <= phi_1 <= (9-u)/(7+u) < 1` puts every following box in the
+nondegenerate hyper-ideal length domain.
+
+Use this common global cosh-length box:
+
+```
+ degree 8:   11/8 <= x_e <= 2
+ degree 10:  11/10 <= x_e <= 71/50
+ degree 38:  1009/1000 <= x_e <= 21/20.
+```
+
+All endpoints are strictly above one and the intervals are nonempty.
+

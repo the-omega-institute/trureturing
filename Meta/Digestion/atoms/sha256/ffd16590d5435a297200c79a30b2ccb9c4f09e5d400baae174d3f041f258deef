@@ -1,0 +1,76 @@
+**Theorem 11.4 (necessary and sufficient finite sampling geometry).**
+Under Definition 11.1, the following are equivalent:
+
+1. There is one total computable decoder $\mathsf D_{P,Q}$ such that
+   for every $t\in\mathcal F_D$ and every $k\in\mathbb N$,
+   $\mathsf D_{P,Q}(Z_Q(t),k)=V_P(\rho^k t)$.
+2. There is a single-valued decoder with that property, without an
+   effectiveness requirement.
+3. The public rays satisfy
+
+$$
+\begin{aligned}
+&Q\cap[pR]\ne\varnothing &&\text{for every }p\in P,\\
+&Q\cap[aR]\ne\varnothing &&\text{for every }aL\in P.
+\end{aligned}
+\tag{AAR.47}
+$$
+
+The necessity is for uniform correctness at all counts, including zero;
+it is not a claim that these samples are necessary at every fixed late
+epoch. The source height bound applies at the first capture, not to
+its future iterates.
+
+Proof of sufficiency. Select one public ray in each required cylinder,
+using the fixed order of $Q$. Compute $x=Z_Q(t)_\omega+k$ and, when
+needed, $y=Z_Q(t)_\eta+k$. Lemma 11.2 identifies these with the
+coordinates of the actual current tree $\rho^k t$. Apply Lemma 11.3
+for each target. The arithmetic and public selections are finite.
+Define arbitrary default outputs on malformed inputs to make the
+decoder total. Its correctness is asserted on the promised inputs.
+The argument works for every finite initial tree; $\mathcal F_D$
+is needed below to witness necessity within the specified family.
+
+Proof of necessity. Define an actual one-hole path context recursively
+by
+
+$$
+ C_\varepsilon[z]=z,\qquad
+ C_{Lb}[z]=\langle C_b[z],\alpha\rangle,\qquad
+ C_{Rb}[z]=\langle\alpha,C_b[z]\rangle.
+\tag{AAR.48}
+$$
+
+For a nonempty word $b$ beginning with $R$, consider
+
+$$
+ u_b=C_b[\beta],\qquad
+ v_b=C_b[\langle\alpha,\alpha\rangle].
+\tag{AAR.49}
+$$
+
+These are concrete finite sources with the same off-path leaves and
+initial left child alpha. Their heights are $|b|$ and $|b|+1$.
+Their entire ray profiles agree outside $[bR]$. Indeed rays outside
+$[b]$ encounter an unchanged leaf; on $[bL]$ both profiles equal
+$s(b)+1$; on $[bR]$ their values are respectively $s(b)+1$ and
+$s(b)+2$. This is an exact description of the differing set, not
+just an equality of chosen summary numbers.
+
+If the first condition in (AAR.47) fails for $p$, put $b=p$.
+Both sources belong to $\mathcal F_D$, their whole retained tables
+agree, and at count zero their replies at $p$ are beta and branch.
+If the second condition fails for $p=aL$, put $b=a$. Since $p$
+begins with $R$, $a$ is nonempty and begins with $R$. Both heights
+are at most $|p|\le D$, so both sources again belong to
+$\mathcal F_D$. Their retained tables agree but their replies at
+$p$ are absent and alpha. In both cases their known minimum is two,
+all public data and the supplied count zero coincide, and the complete
+accessible entry state coincides by Definition 11.1. Each is a valid
+constant initial history. A single-valued decoder cannot give both
+answers. Their translated tables also agree at every common future
+count, although the zero-count difference already proves failure of
+the required uniform task. This proves both necessary conditions.
+Computability implies single-valuedness, completing the equivalence.
+$\square$
+

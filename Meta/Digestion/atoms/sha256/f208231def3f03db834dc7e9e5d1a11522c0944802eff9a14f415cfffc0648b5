@@ -1,0 +1,12 @@
+### 85.6. Completion of the asymptotic proof
+
+By (7), f(A(t),Bbar(t))>=1/4 for every sufficiently small t. Smoothness from section 85.3, convergence A(t)->A_0 and Bbar(t)->B_0, and (11) imply
+
+    f(A(t),B(t))-f(A(t),Bbar(t))
+       =t^2 d_B f(A_0,B_0)[Psi_R]+o(t^2)
+       =c(R)t^2+o(t^2).                             (18)
+
+For precision, this follows by integrating the derivative of the smooth function f along the line segment between Bbar(t) and B(t). Its derivative converges uniformly on that segment to d_B f(A_0,B_0), while the channel difference is t^2 Psi_R+O(t^3). The segment consists of CPTP maps, and in any case f is defined smoothly on a neighborhood in the ambient Hermitian coefficient space.
+
+Combining (6), (7), and (18) proves (2)--(3). If A(t)-A_0=O(t), then Bbar(t)-B_0=O(t) and the smooth derivative is locally Lipschitz. The error in replacing it by its value at the base is O(t) times O(t^2), and the remainder in (11) is O(t^3). This proves (4).
+

@@ -1,0 +1,54 @@
+**Lemma 28.1 (whole-circle dual and its exact zero sets).** At either
+selected zero, for both sheets and every angle,
+
+$$
+\boldsymbol d\cdot\Gamma_\eta(\phi)
+ \ge |H_\eta(\phi)|+\lambda|u|.
+\tag{AC.134}
+$$
+
+The geometric zero set consists precisely of the six indexed endpoints
+of §26; at $D$ endpoint 5 is unused. Pure and saturated zero sets are
+disjoint, all their report coordinates and signed heights are nonzero,
+and every listed zero is an exact double zero of its signed gap.
+
+Proof. On $u\ge0$ use the base-zero chart $x\in[-1,1]$; on
+$u\le0$ use the base-$\pi$ chart $x\in[-1,1]$. Each is a complete
+closed semicircle. For each height sign $\epsilon$ use its report sign
+$\sigma$ and the polynomial AC.132. The following exact factor inventory
+removes the listed factors $(x-a)^2$:
+
+| $\eta$ | $\epsilon$ | $\sigma$ | Roots $a$ removed | Quotient degree |
+| --- | --- | --- | --- | --- |
+| $0$ | $-$ | $-$ | $x_2$ | $2$ |
+| $0$ | $-$ | $+$ | none | $4$ |
+| $0$ | $+$ | $-$ | $x_1$ | $2$ |
+| $0$ | $+$ | $+$ | $x_0,x_5$ | $0$ |
+| $1$ | $-$ | $-$ | none | $8$ |
+| $1$ | $-$ | $+$ | $(x_4-1)/(x_4+1)$ | $6$ |
+| $1$ | $+$ | $-$ | none | $8$ |
+| $1$ | $+$ | $+$ | $x_3$ | $6$ |
+
+The selected equations give $P=P'=0$ exactly. The chart change for
+contact 4 gives its stated base-zero root. Thus synthetic division is
+exact at the selected root, and interval division encloses the exact
+quotient. In descending coefficients, division by $x-a$ uses
+$q_{n-1}=P_n$, $q_{k-1}=P_k+a q_k$; apply this twice per factor.
+No numerical remainder is declared zero. Distinct root boxes exclude
+collisions of contacts 0 and 5 or any other pair.
+
+Here is the complete positivity certificate. For a quotient
+$Q(x)=\sum_{j=0}^n a_jx^j$ and a leaf $[l,r]\subseteq[0,1]$, set
+
+$$
+\begin{aligned}
+b_j(l,r)&=(2(r-l))^j\sum_{k=j}^n
+ a_k\binom{k}{j}(2l-1)^{k-j},\\
+\mathcal B_i(l,r)&=\sum_{j=0}^i
+ b_j(l,r)\frac{\binom{i}{j}}{\binom{n}{j}},\qquad 0\le i\le n.
+\end{aligned}
+\tag{AC.135}
+$$
+
+These are the Bernstein controls of $Q(2l-1+2(r-l)y)$ on
+$0\le y\le1$. Each table entry below is an integer $L$ such that

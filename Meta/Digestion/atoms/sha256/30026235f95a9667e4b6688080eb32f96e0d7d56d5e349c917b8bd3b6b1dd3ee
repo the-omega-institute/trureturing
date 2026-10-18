@@ -1,0 +1,71 @@
+**Theorem 11.4 (retained-input extension of the four history inverses).**
+The selection of Definition 11.3 is well-defined on $\mathcal D$ and
+agrees with $M_J$ on $\mathcal D_0$. From each of
+$S,B,T,M_{\rm ret}$ separately a finite mathematical inverse recovers
+the consumed typed input, complete actual history and full raw endpoint.
+In particular, for each such $V$,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h',\qquad h,h'\in\mathcal D.
+$$
+
+Moreover $\mathcal D_0\subsetneq\mathcal D$. This containment concerns
+post-first-Ready prefixes, not all earlier cuts of $\mathcal C_{\mathrm{gc}}$.
+
+Proof. The first-version raw slots are constructed once and retained.
+After first Ready the unchanged main graph writes its named current
+control/token fields and ordinary banks/scratch; it has no instruction
+targeting those inactive first-store locations. Thus at every cut of
+$\mathcal D_\sigma$, family1 still yields the entire word $w_\sigma$
+in the original cursor order. These basic slot records, seed/binding
+and actual meter are selected before any construction-role fold. No
+callable payload or reconstruction of an old answer is needed to find
+them. In particular $P_1$ has $c_p=1$, whereas every $\mathcal D_0$
+endpoint has $c_p=0$, proving strictness on the stated domain.
+
+Use Definition 4.2's counted reconstruction, with one change to its
+mathematical input rule: at the first fresh-bootstrap INPUT sites supply
+the word just read from $c_0,\ldots,c_{e-1}$ instead of the constant
+$E(L)$. All other fixed sites retain their prescribed words; seed
+conversion is unchanged. Keep the actual installed raw word as well as
+its decoded map. Count $n$ from the actual family6 meter and stop after
+exactly $n$ rows. For each subsequent variable IN use Lemma 4.1: the
+already derived prestate determines its wire identity and matching-write
+ordinal. Use the retained bit if that write is within $n$, otherwise
+the unique matching occupied latch. The unchanged main graph preserves
+that table even while executing an old decoder or a rejection path;
+its virtual INs in bank data are not new external INs.
+
+Induction on the reconstructed ordinal proves equality with the actual
+complete prestate. At first-boot IN the selected retained bit is the
+actual one; Proposition 11.2 gives its actual WRITE and DONE semantics.
+Other fixed INs and later durable/pending INs receive their actual bits.
+Every non-IN then has the actual guard, core, ordered effects and receipt.
+The resulting $n$-row history and raw endpoint are exact, including all
+native work of any later converter. This reconstruction executes the
+installed canonical routines as they stand; it does not replace their
+internal simulated inputs or assume that their answers are faithful.
+
+Only after this induction fold the actual history through the unchanged
+ConstructionDirectory. The exchange changed neither PCs/call paths nor
+the captured main directory. Definitions 3.2 and CYCLE 6.2 consequently
+identify every actual construction site: add the old R on EX immediately,
+keep raw partial fields, and close a span only at its actual completion.
+An unsealed or rejected payload is not promoted to an authentic object.
+This gives the same seven-family selection at every claimed later
+history/converter cut, without using that selection as its own history
+witness. On $\mathcal D_0$ both the physical selection and the input
+rule coincide with the old ones, proving agreement. Reselecting all
+families checks the resulting body, rather than assuming its annotations.
+
+For S and B, Lemma 3.3's raw geometric inverse first supplies $W$ and
+these basic records. The local pattern construction of Definition 2.5
+includes both actual boot-bit values, as in UAS Definitions 2.3–2.4;
+no canonical-code hypothesis is needed for that raw inversion. For T,
+its own occurrence operands/input bits and receipt-preserving patch
+checks recover the actual native history from the same paid foundation.
+For memory the basic records supply the induction directly. Conversely,
+equal actual histories give equal endpoints, occurrences and the
+specified selected construction relations. This proves the four separate
+kernels and the inverses, without defining one view by another. ∎
+

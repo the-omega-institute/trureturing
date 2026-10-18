@@ -1,0 +1,28 @@
+**Definition 6.1 (raw right-spine search).** A current invocation starts
+with its authentic retained $d=d(u)$ and no knowledge of
+$K=c(y)$. The following common program searches the stationary current
+$y$.
+
+First read $R^0=\varepsilon$. If it is $\alpha$ or $\beta$, set
+$K=0$ or $K=1$, respectively. Otherwise its promised authentic reply
+is $\mathsf{br}$. Read $R^1,R^2,R^4,R^8,\ldots$ in that order until
+the first nonbranch reply. A leaf reply at $R^j$ immediately gives
+$K=2j$ or $K=2j+1$ and ends the search.
+
+If the first nonbranch reply is absent at $R^b$, let $a$ be the previous
+branch index, using the already read root if $b=1$. Search strictly
+between $a$ and $b$: read $R^j$ at
+$j=\lfloor(a+b)/2\rfloor$. A leaf reply ends the search with its
+corresponding $K$. A branch replaces $a$ by $j$; an absent reply replaces
+$b$ by $j$; repeat. All submitted requests are literal words. Once $K$
+is acquired, compute and output
+
+$$
+\widehat\nu=K-d,\qquad
+\widehat Q=(K-d,\mathbf1_{\{d=0\}}).
+\tag{IDC.6.1}
+$$
+
+A violated promise is outside the exactness domain; the algorithm's
+correctness does not certify the retention or source contract.
+

@@ -1,0 +1,14 @@
+**Definition 4.2 (The nine-cycle potential).** On $C_9$ put
+
+$$
+v=(1,1,-1,1,1,-1,1,-1,-1),\qquad V=\operatorname{diag}(v),\qquad H_t=\Delta_9+tV,
+$$
+
+and, for $\lambda,t\in\mathbb R$, $a=2-\lambda+t$, $b=2-\lambda-t$, so that $2+tv_i-\lambda$ equals $a$ when $v_i=1$ and $b$ when $v_i=-1$. Define
+
+$$
+c(\lambda,t)=\lambda^3-\lambda^2t-6\lambda^2-\lambda t^2+4\lambda t+9\lambda+t^3+2t^2-3t-3 .
+$$
+
+Stance: definition.
+

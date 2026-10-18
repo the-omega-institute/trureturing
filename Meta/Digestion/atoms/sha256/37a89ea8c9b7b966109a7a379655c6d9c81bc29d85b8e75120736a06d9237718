@@ -1,0 +1,10 @@
+**Definition 2.1 (the repeated history flight).** Write $U(n)=1^n0$. At an authentic Ready, actually supply gate1, HistoryMode1, and the whole frame
+
+$$
+F=111\,U(2)\,0\,U(0)=11111000.
+$$
+
+Its mode-one payload is exactly $0U(0)$, so it requests AcquisitionOffset$(0)$. Denote the complete existing history flight, through its receiver checks, final ACK, mailbox/invocation return and actual Ready, by $H$. This notation introduces no new entry or operation.
+
+If its predecessor tally is $b$, GCA Theorem 5.6 accepts this name because $0\le b-a$, and binds exactly $k=a$. GCA Theorem 6.4 gives its complete finite return. Every occurrence of $H$ consumes its own actual gate, mode and frame bits and executes its own paid replay and publications.
+

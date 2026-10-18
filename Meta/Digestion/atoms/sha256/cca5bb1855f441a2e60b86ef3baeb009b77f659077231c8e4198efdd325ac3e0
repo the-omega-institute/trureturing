@@ -1,0 +1,92 @@
+**Proposition 8.1 (A complementary allocation of the last read).**
+Eight installed rows attain
+
+$$
+X_{\star}:=S_3-\frac{ad\eta c}{2}.
+\tag{8.1}
+$$
+
+Consequently $C_8\ge\max(W,X_{\star})$. The two attained points compare by
+
+$$
+X_{\star}-W=\frac{ad\eta}{2}(1-2a^2).
+\tag{8.2}
+$$
+
+Thus $X_{\star}>W$ exactly for $a<1/\sqrt2$, with equality at
+$a=1/\sqrt2$. This compares constructions, rather than the unknown
+optima $C_7,C_8$.
+
+Proof. Install these five read and three halt rows:
+
+| Row | Instruction | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2(j+1))$ | $R_0$ | $R_1$ |
+| $R_0$ | $\operatorname{Read}(2j)$ | $A_0$ | $Q$ |
+| $R_1$ | $\operatorname{Read}(2(j-1))$ | $P$ | $B$ |
+| $A_0$ | $\operatorname{Read}(2(j+3))$ | $Z_H$ | $P$ |
+| $B$ | $\operatorname{Read}(2(j-2))$ | $Q$ | $P$ |
+| $Z_H$ | $\operatorname{Halt}(h_1(\sigma))$ | — | — |
+| $P$ | $\operatorname{Halt}(h_0(\sigma))$ | — | — |
+| $Q$ | $\operatorname{Halt}(h_0(1-\sigma))$ | — | — |
+
+Its zero subtree uses exactly the actual edge geometry and outputs of
+Proposition 6.1. On first one, root pair $\{j+1,j+2\}$ is
+disjoint from pair $\{j-1,j\}$, which contains the target. On $11$,
+edge $\{j-2,j-1\}$ is a fresh extension of that target pair,
+outside the root pair. Every address, including each negative literal,
+is an actual charged coordinate. Phase one sees only separators.
+
+With $t=1-3\eta$, the full terminal accounting is
+
+| Record | Output | Source mass | Correct mass | Calls |
+| --- | --- | --- | --- | --- |
+| $01$ | $h_0(1-\sigma)$ | $\eta/2$ | $a\eta/2$ | $2$ |
+| $001$ | $h_0(\sigma)$ | $t\eta$ | $a^3\eta$ | $3$ |
+| $000$ | $h_1(\sigma)$ | $(1+tc)/2$ | $a/2$ | $3$ |
+| $10$ | $h_0(\sigma)$ | $c\eta$ | $a^2\eta$ | $2$ |
+| $110$ | $h_0(1-\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+| $111$ | $h_0(\sigma)$ | $\eta^2$ | $a\eta^2$ | $3$ |
+
+The first three rows have the proofs in Proposition 6.1. On $10$,
+the disjoint root one has conditional probability $2\eta$ and the
+target zero pair has probability $c$; correctness uses its weight
+$a^2$. On $110,111$, the larger local triples in order
+$j-2,j-1,j$ are, respectively,
+
+$$
+(\sigma,\sigma,1-\sigma),\qquad
+(\sigma,1-\sigma,\sigma).
+\tag{8.3}
+$$
+
+Each has weight $a^2b$, its complement has weight $ab^2$, and the
+independent root one contributes probability $2\eta$. Each whole leaf
+therefore has mass $\tfrac12\eta(2\eta)=\eta^2$ and correct mass
+$\tfrac12(a^2b)(2\eta)=a\eta^2$, with the target spins shown.
+
+The first-one source mass is $c\eta+2\eta^2=\eta$ and its
+correct mass is $D$. The zero subtree has source mass $1-\eta$
+by (6.2) and correct mass $Z_V$. The complete law is therefore
+normalized, and its correct sum is $Z_V+D$. Equation (6.5) identifies
+this as $X_{\star}$. The seven-row table remains admissible at budget eight,
+giving the maximum lower bound.
+
+Every formal path halts after two or three calls. Its exact cost is
+
+$$
+\begin{aligned}
+\mathbb P(N=2)&=\eta(c+1/2),\\
+\mathbb P(N=3)&=1-\eta(c+1/2),\\
+\mathbb E N&=3-\eta(c+1/2).
+\end{aligned}
+\tag{8.4}
+$$
+
+The maximum is three and its error is $1-X_{\star}$. Finally,
+$X_{\star}-W=d\eta(\eta-ac/2)$, and
+$\eta-ac/2=(a/2)(2b-c)=(a/2)(1-2a^2)$, proving (8.2) and
+its full-range sign statement. Constant initialization, the actual target
+indices, and the same majority convention give both endpoints and bias
+directions without any extra runtime distinction. $\square$
+

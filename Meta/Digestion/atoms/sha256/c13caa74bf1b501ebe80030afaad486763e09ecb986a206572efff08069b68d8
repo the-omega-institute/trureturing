@@ -1,0 +1,63 @@
+**Lemma 5.1.** Let one finite stationary regular table have p/suspended sets $X,Y$, acquired kernels $B,A$, rows $\pi B=\tau$, $\tau A=\pi$, and emissions $u,v\in[1/3,2/5]$. Its same-update laws are $Q_x,W_y$. Set
+
+$$
+C=BA,\quad H=\operatorname{diag}(1-u)B\operatorname{diag}(v)A,\quad
+V=\sum_{x,z}\pi_xC_{xz}\operatorname{TV}(Q_x,Q_z).
+\tag{5.1}
+$$
+
+There is one finite persistent-label observer on the same original source and prior, with labels $x\in X$, installed row $\pi$, emissions $(u_x,\bar v_x)$ where $\bar v_x=(Bv)_x$, and identity private letter updates. It generates (2.2) on each label and satisfies simultaneously
+
+$$
+R_{j,p}^{\rm tag}\le R_{j,p}^{\rm old}+4V/11,\qquad
+R_{j,\beta}^{\rm tag}\le R_{j,\beta}^{\rm old}+6V/11,
+\qquad j\in\{\mathrm{law},\mathrm{conf}\}.
+\tag{5.2}
+$$
+
+No fixed COMPLETE budget or marginalized-defect budget is preserved.
+
+**Proof.** Put $a_x=(1-u_x)\bar v_x$, $b_x=(1-u_x)(1-\bar v_x)$. Exact individual generation gives
+
+$$
+Q_x=u_x\delta_\alpha+b_x\delta_{\beta\beta}+\beta\alpha\sum_zH_{xz}Q_z,
+$$
+
+where prefixing keeps the complete legal word and its rendered events. Its scalar comparison $G_x=G_p^{u_x,\bar v_x}$ satisfies the same equation with the last sum replaced by $a_xG_x$. The first two atoms agree exactly. In the remaining prefixed signed measure, insert $Q_x$:
+
+$$
+\sum_z H_{xz}(Q_z-G_x)
+=\sum_z H_{xz}(Q_z-Q_x)+a_x(Q_x-G_x).
+$$
+
+Prefixing is injective on the complete carrier, and TV of these zero-total-mass signed measures is their half-$\ell^1$ norm. Thus $d_x\le\sum_zH_{xz}\operatorname{TV}(Q_z,Q_x)+a_xd_x$. Since $a_x\le4/15<1$, rearranging gives
+
+$$
+d_x:=\operatorname{TV}(Q_x,G_x)
+\le\frac{\sum_zH_{xz}\operatorname{TV}(Q_z,Q_x)}{1-a_x}
+\le\frac4{11}\sum_zC_{xz}\operatorname{TV}(Q_z,Q_x).
+\tag{5.3}
+$$
+
+The last step uses $H\le(4/15)C$ entrywise. Thus $\sum_x\pi_xd_x\le4V/11$. It compares complete laws, including infinite outcomes, rather than just terminal markers.
+
+For the suspended comparison introduce $L_{xy}=(1-v_y)\delta_\beta+v_y\alpha Q_x$. Individual generation gives $W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_zA_{yz}Q_z$, so
+
+$$
+\sum_{x,y}\pi_xB_{xy}\operatorname{TV}(L_{xy},W_y)\le(2/5)V.
+\tag{5.4}
+$$
+
+For fixed $x$, averaging $L_{xy}$ by $B_{xy}$ gives $(1-\bar v_x)\delta_\beta+\bar v_x\alpha Q_x$. Its TV distance from $G_\beta^{u_x,\bar v_x}$ is $\bar v_xd_x$. Convexity in the decoder, (5.4), $\pi B=\tau$, and (5.3) therefore give, for every suspended target $T$,
+
+$$
+\sum_x\pi_x\operatorname{TV}(G_\beta^{u_x,\bar v_x},T)
+\le\sum_y\tau_y\operatorname{TV}(W_y,T)+\frac25V+\frac25\frac4{11}V
+=\sum_y\tau_y\operatorname{TV}(W_y,T)+\frac6{11}V.
+\tag{5.5}
+$$
+
+At p the configuration inequality follows directly from (5.3). For law order the p marginalized reports differ by at most $4V/11$. At suspension, average (5.4) before taking TV and add the $\bar v_xd_x$ comparison; the marginalized reports differ by at most $6V/11$. Triangle inequalities give both law-order comparisons against the same target. No old law risk is replaced by old conf risk in these two comparisons.
+
+Install the finite tag independently after the original third record write and latch, inside that same third-completion update. Use fair synthesis earlier, identity private updates later, and original completion, clearing, pendingStop and delivery. Every original $C_0$ fiber uses the same row while retaining its own records. The tag row is $\pi$ after every actual fourth history. This is the full-domain product realization of [PAID] (Lemma 2.1.1). Its own synthetic p/suspended laws are exactly (2.2); it never queries the source. The old table rows are likewise $\pi,\tau$ at every actual history. Applying the preceding comparisons to the same posterior target (1.2), then rendering with $I_c$ and taking the same suprema, proves all four bounds (5.2). $\square$
+

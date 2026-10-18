@@ -1,0 +1,12 @@
+### 457.1 两端可积性支付整个闭区间
+
+令 \(\mathfrak M(a,b)\) 为实线上的正 Borel 测度，要求两个核
+\(t\mapsto e^{-at}\)、\(t\mapsto e^{-bt}\) 可积。
+不添加总质量有限或 \(\sigma\)-有限假设。
+对 \(\mu\in\mathfrak M(a,b)\)，置
+\[
+L_\mu(v)=\int_{\mathbb R}e^{-vt}\,d\mu(t),\quad
+E_{[a,b]}(\mu)=\sup_{v\in[a,b]}|F(v)-L_\mu(v)|.
+\tag{UI.3}
+\]
+

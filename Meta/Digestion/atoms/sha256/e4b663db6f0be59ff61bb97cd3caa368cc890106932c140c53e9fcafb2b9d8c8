@@ -1,0 +1,17 @@
+**Definition 8.1 (explicit source radicals).** Put
+
+$$
+\begin{gathered}
+u_f=\frac{-2z_f}{d_f+L_f},\qquad 0<u_f<1,\\
+a_+=\frac{\alpha V+\beta Wu_f^2}{1+u_f^2},\qquad
+a_-=\frac{\alpha Vu_f^2+\beta W}{1+u_f^2},\\
+x_+=\frac{V}{\alpha V+\beta Wu_f^2},\qquad
+x_-=\frac{Vu_f^2}{\alpha Vu_f^2+\beta W},\\
+\boxed{C_{\rm sat}=a_+F_c(x_+)+a_-F_c(x_-).}
+\end{gathered}
+\tag{JS.38}
+$$
+
+All denominators are strictly positive, and $0<x_-<r<x_+<U$. In particular (JS.38) is a rational/radical
+evaluation, with no remaining root selection, minimization or SDP.
+

@@ -1,0 +1,63 @@
+**Theorem 8.1 (strict maximum for the original fixed mode).** Hold $p$, the original cutoff one and all original data fixed, and define for $\alpha,t>0$
+
+$$
+\mathcal S(\alpha)=\int V^{[\alpha]}p^2,\qquad
+\mathcal K(t)=j_0^{-1}\int k_t p^2.
+\tag{8.1}
+$$
+
+Then
+
+$$
+\alpha^{3/2}\mathcal S(\alpha)\le\mu\quad(\alpha>0),
+\qquad\text{equality if and only if }\alpha=1.
+\tag{8.2}
+$$
+
+The exact source pairing and strict clock bounds are
+
+$$
+\begin{aligned}
+\mathcal K(1)&=\frac32\mu,
+&\int(\mathcal EV)p^2&=j_0^{-1}\int k_1p^2=\frac32\int Vp^2,\\
+\mu&<T<3\mu,&
+1+b_p&<\overline D<1+3b_p,
+\qquad b_p:=b[p]=\gamma\mu>0.
+\end{aligned}
+\tag{8.3}
+$$
+
+The source pairing is with the weight $p^2$ and is distinct from the source's raw charge $1/j_0$.
+
+Proof. Apply the nonnegative form in Theorem 7.1 to the original $p$, without changing that vector. Since $ab[p]=\chi\mu$,
+
+$$
+0\le h^{[\alpha]}[p]
+ =\chi\{\mu-\alpha^{3/2}\mathcal S(\alpha)\}.
+\tag{8.4}
+$$
+
+If equality holds, the full equality case in Theorem 7.1 puts $p$ in $\mathbb C p^{[\alpha]}$. Both are positive normalized functions, so $p=p^{[\alpha]}$. No nonzero $L^2$ vector can be fixed by $\mathcal D_R$ for $R\ne1$. Indeed for $R>1$, if $g=\mathcal D_Rg$, its squared mass in a control ball $B_E(0,L)$ equals that in $B_E(0,L/R)$. Iteration makes the latter converge to zero: these balls shrink to the identity, which has Haar measure zero, and $|g|^2$ is integrable. Thus the mass in every finite ball is zero. Proper finite control balls exhaust the group, contradicting $g\ne0$. For $R<1$ apply the inverse dilation. Consequently equality forces $\sqrt\alpha=1$, and equality holds there by definition. This proves the sharp equality assertion on the whole positive auxiliary parameter axis.
+
+For $t>0$, $\mathcal K(t)>0$. On a compact positive time interval the canonical bound gives a common supremum bound for $k_t$, and continuity of its kernel and $p^2\in L^1$ give continuity of $\mathcal K$ by dominated convergence. Tonelli yields
+
+$$
+\mathcal S(\alpha)=\int_\alpha^\infty\mathcal K(t)dt,
+\qquad \mathcal S'(\alpha)=-\mathcal K(\alpha).
+\tag{8.5}
+$$
+
+The differentiable function $\alpha^{3/2}\mathcal S(\alpha)$ has its maximum at the interior point $1$. Its derivative there vanishes, giving $\mathcal K(1)=3\mu/2$. The source identity from (2.2) proves the second version of the same equality in (8.3); it is an ordinary integrable pairing of the smooth source function with $p^2$.
+
+For the whole time-weighted field, Tonelli gives the exact layer identity
+
+$$
+T=\int_1^\infty t\mathcal K(t)dt
+ =\mu+\int_1^\infty\mathcal S(\alpha)d\alpha.
+\tag{8.6}
+$$
+
+These quantities are finite also directly from $\sup k_t\le Ct^{-7/2}$ on $t\ge1$. Strict positivity of $\mathcal K$ on $t>1$ gives $T>\mu$. For $\alpha>1$, (8.2) gives the strict inequality $\mathcal S(\alpha)<\mu\alpha^{-3/2}$. The difference is positive and continuous, so its integral is strictly positive on, for example, any fixed nondegenerate compact interval in $(1,\infty)$. Since $\int_1^\infty\alpha^{-3/2}d\alpha=2$, (8.6) gives $T<3\mu$. Multiplication by $\gamma>0$ and addition of one give the strict bounds for $\overline D$.
+
+Every heat integral and pairing contains the same $j_0^{-1}$. The unitary change of scale changes neither the canonical heat generator nor the original native field clock $B$. The auxiliary $\alpha$ family supplies a comparison; it does not substitute a new native cutoff or a new critical path. $\square$
+

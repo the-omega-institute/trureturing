@@ -1,0 +1,85 @@
+**Theorem 2.4 (full actual raw-row square).** Under Assumption 1.2 the
+finite table $\Pi_U$, initialized as below, realizes every actual native
+row of $\mathcal R$ by one patch. It has simultaneous enabledness with
+the native partial operation, the same label, actual supplied/emitted
+bit, owner/role/origin and guard, and
+
+$$
+\operatorname{step}_{U}(\Gamma_U(W(h)),b)
+   =\Gamma_U(W(hb))
+$$
+
+whenever the prescribed native action $b$ executes. An unexecuted illegal
+operation has no patch and no receipt. An enabled malformed/raw exit has
+its real successor. Original and added boot, acquisition, partial control
+and data phases and the original final halt edge are all in this statement.
+
+Proof. Each fixed native store has a finite number of slots. Hence its
+entire raw bit-pattern space, not merely its intended table, is finite.
+PC and decoded field ranges are finite. The maximum effect-list length
+and the union of its named local roles over this finite space are finite.
+If a raw store does not decode, its main row is absent exactly as specified
+in ARC Definition 6.2. If it does decode, its actual finite ordered local
+effect is one of the enumerated cases. No estimate of three old cells is
+used: a CTL can name several current/predecessor markers on several ports.
+The finite maximum of these actual lists supplies the bound instead.
+
+The outer scaffold has finite height, all head links have length one,
+and a current/predecessor/neighbor route has bounded extra length. A cell
+component has bounded height and the finite-location component has at
+most $3q-1$ vertices. Thus every enumerated route, inspected component,
+assignment list and birth list has a fixed bound. One may take the
+maximum of their explicitly enumerated walk lengths and list sizes;
+neither table finiteness nor locality requires an unproved numerical
+radius. The primitive's actual cursor relation is preserved by each
+head operation. An ill-typed row or failed native cursor/boundary guard
+is absent, rather than repaired into a different head configuration.
+
+For the local equality, consider each native core.
+
+| Core | Equality of decoded effect and native effect |
+| --- | --- |
+| RD | Decode the same actual marked symbol into the named latch and take its identical literal equality-test successor. |
+| WR | With the same writer/writability guard, assign only the designated symbol tracks, from the actual literal or latched variant. Raw invalid source bits remain raw. |
+| ML/MR | Test the same existing boundary/neighbor, change the same two cursor marks and retarget the corresponding access link. |
+| EX | At ordinary R retain that old cell identity and head, change it to blank, and append the new unmarked R; do not move the ordinary head to the new R. |
+| BF | Use the identical eight-entry three-input truth table and designated result subfield. |
+| IN | Consume the same bit at the actual installed site and change only its input latch and native control/receipt fields. No tape write occurs. |
+| OUT | Release precisely the permitted actual latch bit. No new observation of a private coordinate is introduced. |
+| TOK | Test source=1 and destination=0 in the same named finite availability slots and perform their same two updates. Same principal does not remove these rows. |
+| CTL | Apply the actual finite effect list and testing/successor convention, including all its named marker footprints. Commitment interprets prepared data; it does not construct an unbounded object. |
+| Boundary/bit boot variant | Construct the one native boundary cell or one finite location with its actual value and cursor successor. An absent bit is constructed by the nine-assignment template. |
+
+Every row then performs its native receipt. Change the old append R into
+the selected ordinary/F receipt, append a new meter R, and move only the
+append mark. Preserve the core's newly updated meter read mark. If the
+read and append heads or any named roles coincide, compute their combined
+native result on that one old byte before assigning it. Its two head
+links occupy distinct endpoint lanes. Core meter RD/moves retain their
+actual effect; no core EX/WR permission on the meter is invented. Partial
+boot words and head activation use the same existing-cell/constructor
+cases. All reciprocal assignments in Definition 2.2 yield precisely
+these final decoded fields. This proves the row square and the identical
+guard failure at every actual pre-row record.
+
+At ordinal zero endow $F_{75}$, the $F_q$ optional scaffold with exactly
+the actually endowed primitive bits present, the two original meter
+boundary cells and its two links, and empty other tape words. Charge
+this finite foundation and its rule apparatus as in §4. It decodes to
+the native irreducible entrance. Run every original boundary, private
+IN/WR/move, validation, stationary acquisition, control installation,
+and every ARC activation row through its own patch. In particular the
+twenty new role-boundary constructors, both bootstraps, captured
+$\Delta(G)$, empty-bank prelude and asset imports are executed, not
+preloaded by the graph map. Wrong raw bootstrap supply remains stored
+while its bootstrap is active; after DONE the enumeration uses the actual
+decoded table. Unique well-typed noncanonical rows are covered by the
+same local cases. No success or return of such a raw table is asserted.
+
+Induction from that foundation gives the equation at every finite
+actual prefix. Loan cuts, unavailable descriptors, partial copies and
+source-invalid cuts use their literal tracks and tokens throughout.
+The original source is neither replaced nor restored from a second
+source. The last original halt CTL has the same output and final receipt
+and enables no later entry. This completes the initialized row proof. ∎
+

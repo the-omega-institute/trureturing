@@ -1,0 +1,65 @@
+**Proposition 8.1 (one complete terminal processor without a prescribed live
+checkpoint).** Take
+
+$$
+c=1/4,\quad Z=r=1/2,\quad
+x_1=1/8,\quad x_2=3/16,\quad d=1/32,\quad L=1,\quad \mu=19/20.
+\tag{CP.26}
+$$
+
+A common terminal processor for the whole exact-time/five-mode ramp instrument
+exists under [IB], Theorem 18.1. Nevertheless no exact causal implementation
+can expose its canonical live specimen at $t=3/4$ and then the matching
+remaining original tail. The obstruction already uses a finite checkpoint
+and a finite suffix, with strict positive support throughout.
+
+Proof. The credited terminal threshold is
+
+$$
+\mu_{\rm time}=\min\left\{
+\frac{\sqrt6\log(15/14)}{1-\sqrt{24/35}},\
+\frac{4\sqrt3\log(15/14)}{1-3/\sqrt{35}}\right\}>19/20.
+\tag{CP.27}
+$$
+
+To verify the strict comparison without relying on decimal rounding, set
+$z=1/29$. Then $\log(15/14)=2\operatorname{artanh}z$. With
+$L_6=2\sum_{n=0}^5z^{2n+1}/(2n+1)$,
+
+$$
+L_6<\log(15/14)<L_6+
+\frac{2z^{13}}{13(1-z^2)}.
+\tag{CP.28}
+$$
+
+The lower bound uses positive omitted terms; the upper bounds each remaining
+denominator below by $13$ and sums its geometric series. Rational square-root
+brackets in (CP.27) give
+$96974/100000<\mu_{\rm time}<96976/100000$.
+For example brackets of denominator $10^{30}$ are obtained from
+$n=\lfloor\sqrt{p\,10^{60}/q}\rfloor$ for each rational radicand $p/q$:
+$n/10^{30}\le\sqrt{p/q}<(n+1)/10^{30}$. Substitution in (CP.28) verifies
+both candidates exceed $19/20$. Thus the supplied terminal theorem applies;
+it expressly does not supply an intermediate quantum slot.
+
+For comparison, the three squared bounds in (CP.24) are
+$24/25$, $48/49$ and $105/121$. Hence
+$\mu_{\rm causal}=\sqrt{105}/11<19/20$.
+
+For the stronger finite-checkpoint certificate suppose the claimed prefix and
+suffix both exist. At $s=3/4$ the two heights are $19/128$ and $27/128$, with
+remaining displacement $1/128$. Lemma 4.2 forces the complete successful
+residue overlap still to be $19/20$. The suffix minus squared attenuations
+are $B_1^2=57/65$ and $B_2^2=27/35$. Lemma 4.3 requires
+
+$$
+\mu\le\frac{\sqrt{(1-B_1^2)(1-B_2^2)}}{1-B_1B_2}
+ =\frac{\sqrt{2275}+\sqrt{1539}}{92}
+ <\frac{87}{92}<\frac{19}{20}.
+\tag{CP.29}
+$$
+
+Indeed $2275<(477/10)^2$ and $1539<(393/10)^2$. This contradiction does not
+use an infinitesimal suffix, a near-wall limit or an assumed programme-return
+condition. $\square$
+

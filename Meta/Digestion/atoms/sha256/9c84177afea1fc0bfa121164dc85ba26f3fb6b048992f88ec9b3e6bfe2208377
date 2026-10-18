@@ -1,0 +1,13 @@
+**定义 A-21.5（额外 Pauli 来源表示）。** 在 $`\mathbb{\text{ℂ}}^2`$ 上另供
+
+
+```math
+X_P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y_P=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z_P=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+A=-iX_P,\quad B=-iY_P,
+```
+
+
+并置 $`U_\alpha=A,U_\beta=B,U_{\langle t,u\rangle}=U_tU_u`$，右因子先作用。取模二组成 $`(u,v)`$ 的 $`0,1`$ 代表，固定提升 $`\mathcal{\text{ℒ}}(u,v)=B^vA^u`$。[A-R6，§§101、102、106–110] 此酉表示不是原生树替换机制，矩阵结合性仍忘记括号。
+

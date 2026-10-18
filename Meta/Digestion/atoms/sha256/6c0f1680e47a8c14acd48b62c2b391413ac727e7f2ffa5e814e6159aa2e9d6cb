@@ -1,0 +1,54 @@
+**Theorem 13.8 (exact all-native-address Read price).** For every admissible
+$D,p$,
+
+$$
+ \boxed{C_D(p)=\lceil\log_2(|p|+1)\rceil.}
+\tag{AAR.80}
+$$
+
+The lower bound holds against every deterministic adaptive encoder of
+Definition 13.1, with arbitrary finite word queries and arbitrary
+complete retained codes, including codes that merge boundary positions.
+It does not require the source shape to be known.
+
+Proof. Theorem 13.4 gives attainment on the entire family. For the lower
+bound restrict any proposed encoder to the $2n$ leaf witnesses in
+(AAR.79), keeping its real queries and control. At a common truthful
+transcript call a pair intact if both $t_{j,0}$ and $t_{j,1}$ remain
+consistent and $p_j$ has not been queried. Lemma 13.5 forbids termination
+while even one intact pair remains. Both sources of such a pair produce
+the same complete acquired state so far and require different future
+answers at a common count.
+
+With at most $h$ Reads remaining, at most $2^h-1$ intact pairs can be
+handled. This is induction on $h$, applied to any subset of the pairs
+consistent with a common transcript. At $h=0$ there can be no pair. At
+the next query, Lemma 13.7 allows at most one pair to be hit at its
+actual leaf. Every other pair remains intact and belongs wholly to one
+of at most two reply groups. Each group must be solvable in $h-1$
+Reads, so their total size is at most $2(2^{h-1}-1)$. Adding the possible
+hit pair gives $2^h-1$. A query with a constant reply, or one that does
+not hit a candidate, cannot increase this capacity.
+
+This induction is about actual source-consistent executions. At each
+node the candidate trees are fixed members of the initial family and
+realize the entire preceding transcript together, not separately chosen
+answers. A selected nonempty branch retains those actual witnesses.
+An early halt fails on a retained pair. Infinite local computation at a
+reachable node fails termination on a retained actual source. Otherwise
+the next Read or halt is common by determinism. Thus adaptivity, local
+work and arbitrary growing state introduce no extra source input.
+Since $\mathcal F_D$ is finite and every run terminates, each admissible
+encoder has a finite worst Read count. Applying the capacity induction
+at its common initial state yields $n\le2^h-1$, or
+$h\ge\lceil\log_2(n+1)\rceil$.
+
+In particular, the proof never assumes distinct future codes for all
+$n$ leaf positions. It uses the separate indispensable label pair at
+each position. The four replies supply two successful label outcomes
+at a hit and at most two continuations for the other pairs; treating
+them as four arbitrary equally powerful branches loses this constraint.
+CNA's successful-search capacity is reused, but its unbounded-padding
+realization is replaced by Lemma 13.7's fixed bounded witnesses.
+$\square$
+

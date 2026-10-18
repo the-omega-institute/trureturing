@@ -1,0 +1,58 @@
+### 命题 450.1（库存与仿射模数的粗糙性）
+
+令 $t\ge4$，并沿用
+
+$$
+\lambda(t)=\frac1{t\log t},\qquad
+N^-(t)=\prod_p p^{a_p(t)},\qquad
+a_p(t)=\#\{k\ge1:r_{p,k}>\lambda(t)\}.
+$$
+
+若 $r\ge3$、$g\ge1$，且
+
+$$
+N^-(t)=1+F_rg,
+$$
+
+则
+
+$$
+\boxed{P^-(F_r)>t-1.}
+\tag{450.1}
+$$
+
+其中 $P^-(m)$ 表示 $m>1$ 的最小素因子。
+
+**证明。** 对任意素数 $p\le t-1$，有
+
+$$
+\log(1+1/p)>\frac1{p+1}.
+$$
+
+又因 $t\ge3$，
+
+$$
+(p+1)\log p
+\le t\log p
+<t\log t.
+$$
+
+所以
+
+$$
+r_{p,1}
+=\frac{\log(1+1/p)}{\log p}
+>\frac1{(p+1)\log p}
+>\frac1{t\log t}=\lambda(t),
+$$
+
+从而 $a_p(t)\ge1$，即 $p\mid N^-(t)$。另一方面，仿射表示给出
+
+$$
+N^-(t)\equiv1\pmod{F_r},
+$$
+
+故 $\gcd(N^-(t),F_r)=1$。因此 $F_r$ 不可能含有任何 $p\le t-1$，
+得到（450.1）。
+$\square$
+

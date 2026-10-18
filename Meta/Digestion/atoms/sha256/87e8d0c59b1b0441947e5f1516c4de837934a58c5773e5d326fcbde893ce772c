@@ -1,0 +1,34 @@
+**Definition 8.2 (Different resource coordinates).** The installed
+probability alphabet is the single fixed set $\{0,1\}$. The graph,
+cap and integer destinations may nevertheless be selected anew using
+the known $(s,M)$ and public fixed parameters. A fixed alphabet does
+not mean a universal $q$-independent graph or a universal installed
+table. The midpoint uses the two promised laws together, and never
+the true label.
+
+The exact listed count is
+$3+(2\lceil AN\rceil-1)(L+2)$, and its sufficient cap order is
+$O(L^{2r+1}/(1+\log L))$. It does not preserve the stochastic
+construction's $O(L^r)$ sufficient count or its exact count.
+The two-branch denominator comparison (6.10)–(6.12) is what permits
+the larger polynomial count to attain the same order $\Psi(s,M)$.
+It makes no comparison of sharp leading constants or exact finite-
+budget optimizers.
+
+An offline integer $a$ satisfying Theorem 3.2 selects a finite table.
+The choice $\lfloor N\theta\rfloor$ specifies existence for arbitrary
+known reals; it asserts no uniform effective decision of equality at
+a grid boundary. Any certified offline choice in the stated range
+and error allowance suffices. Uniform effective parameter encodings
+for arbitrary noncomputable reals and design bit-operation bounds
+are separate problems. Neither $a/N$ nor its accuracy is an installed
+probability denominator or a mutable precision register.
+
+The literal description upper (4.5), complete runtime configuration
+count and actual paid-read cost are distinct quantities. A state index
+can be represented by $\lceil\log_2M_L\rceil$ mutable bits, but neither
+that representation nor the literal table description is a physical
+storage or execution bound. No serial fair-coin, hardware, neural
+training, generalization or empirical learning conclusion is part of
+these mathematical resources.
+

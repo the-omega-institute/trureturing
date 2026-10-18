@@ -1,0 +1,53 @@
+**Proposition 6.2 (The full source formula for a prescribed path).**
+Prescribe integrable velocities $a_c=\dot k$ and $b_c=\dot\chi$ in the
+native class on $[0,T_{\rm p}]$, independently of the initial ray. Put
+
+$$
+\rho(t)=\int_0^t a_c(v_0)\,dv_0,\qquad
+\Delta=\rho(T_{\rm p}),\qquad
+L=\int_0^{T_{\rm p}}b_c(t)\,dt,\qquad
+C_{\rm p}=\int_0^{T_{\rm p}}\rho(t)b_c(t)\,dt.
+$$
+
+The original source guard is exactly
+
+$$
+\mathcal G_{\rm p}
+=\{(k,\alpha,\beta)\in\mathcal M:
+0<k+\rho(t)<H\ \text{for every }t\in[0,T_{\rm p}]\},
+$$
+
+equivalently $k+\min\rho>0$ and $k+\max\rho<H$, with extrema on
+this same compact time interval. On this guard the endpoint is
+
+$$
+k'=k+\Delta,\qquad
+\alpha'=\alpha+L/2,\qquad
+\beta'=\beta+\left(\frac12-\frac kr\right)L-\frac{C_{\rm p}}r.
+$$
+
+Proof. The displacement $\rho$ is absolutely continuous, hence
+continuous and bounded on the compact interval. Thus $C_{\rm p}$
+exists, since $b_c$ is integrable. The exact height trajectory is
+$k+\rho(t)$. This proves the all-times guard; attained extrema of
+$\rho$ make its two extremal inequalities equivalent to it, including
+their strictness. Checking only $k$ and $k+\Delta$ would not suffice
+for a general path. Each individual lawful compact path has its own
+positive height margin by these attained extrema; no margin common to
+different rays or paths is imposed.
+
+Integration of the equations in Proposition 1.2 gives the height and
+$\alpha$ formulas. For the other circle coordinate it gives
+
+$$
+\int_0^{T_{\rm p}}
+\left(\frac12-\frac{k+\rho(t)}r\right)b_c(t)\,dt
+=\left(\frac12-\frac kr\right)L-\frac{C_{\rm p}}r.
+$$
+
+This proves the exact negative mixed term. The formulas are identities
+on the phase circles, with no stored real lift. This is direct
+integration of the source, rather than an approximation by finitely
+split straight commands. It is the native path interface supplied by
+[A, §9] and [M, Proposition 9.1]. $\square$
+

@@ -1,0 +1,20 @@
+**Corollary 6.3 (Inherited unrestricted scalar value).** Every eligible
+deterministic installed start has correct mass at most $S_3=Z+D$.
+The same holds for its initialization average. This upper value and
+its unrestricted attainment are inherited from [Three Endpoint,
+Theorem 7.1][E3].
+
+Proof. An initial halt gives at most $a/2$. Otherwise add the
+actual inequalities $C_0\le Z$ and $C_1\le D$. Finally
+
+$$
+Z+D=\frac a2+a^2\eta(2+c)+2a\eta^2
+=\frac a2+3a^2\eta+2a(1-a)\eta^2
+=S_3.
+\tag{6.5}
+$$
+
+Average by Lemma 2.3. This derivation is included to expose the
+nonnegative deficits needed next; it does not claim a new optimum.
+$\square$
+

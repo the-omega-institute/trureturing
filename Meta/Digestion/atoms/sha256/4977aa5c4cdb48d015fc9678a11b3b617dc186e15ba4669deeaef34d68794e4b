@@ -1,0 +1,125 @@
+**Theorem 209.13 (Same-schedule support decrease and exact carrier cuts).**
+Suppose (209.26) holds and every vector
+$(\gamma_n,(c_{nj})_{j>n})$ belongs to $\mathcal D_n$.
+There exist simultaneous replacements (209.28); the resulting score
+$V$ satisfies, for every increasing pair $s$,
+
+$$
+B_N^s(V)=B_O^s(V)\le B_O^s(y).
+\tag{209.30}
+$$
+
+Empty and singleton supports are unchanged. Hence
+$Q(V)=Q(y)$, $W_V=W_y$ and
+$\Delta_N(V)=\Delta_O(V)\le\Delta_O(y)$.
+A unit-$O$ input satisfying these hypotheses has certificate $(V,0)$.
+For this declared matching route, membership in $\mathcal D_n$ is
+exactly the system of all real signed inequalities
+
+$$
+a_0\gamma_n+\sum_{j>n}a_jc_{nj}
+ \le\max_{r=0,1,2}\int
+       \left(a_0+\sum_{j>n}a_jX_j(v)\right)_+\,d\omega_{r,n}(v).
+\tag{209.31}
+$$
+
+Separately, (209.26) is exactly equality of the split and merged
+zero-branch supports for $Z$. These conditions are not asserted
+necessary for arbitrary $E_N$ membership.
+
+**Proof.** First suppose (209.28) is given. Fix $i<j$ and a late
+class $n\le i$. For $n<i$ both queried bits are preserved suffix
+coordinates; for $n=i$ its first queried bit is fixed zero.
+Domination by the projected mixture in (209.28) bounds this class's
+reward in every applicable cell by the same convex combination of
+$Z$'s three label rewards in that cell. The extra restriction
+$x_n=0$ can only decrease those rewards. A convex combination of
+three label rewards is at most their maximum.
+Thus no relocated class $n\le i$ can exceed the $Z$ maximum.
+Classes $n>i$ never occur in the first-zero branch.
+The maxima of $V$ in $00$ and $01$ are therefore precisely those
+of $Z$. Their sum equals the merged $Z$ maximum by (209.26).
+The same domination also holds on the merged cell, giving equality
+of the $N/O$ contributions there.
+
+In $10$ and $11$ the classes $n\le i$ remain dominated by $Z$.
+For $i<n<j$ their complementary rewards are $c_{nj}$ and
+$\gamma_n-c_{nj}$; for $n=j$ they are $\gamma_j,0$;
+for $n>j$ they are $0,\gamma_n$.
+All these numbers agree with those in the corresponding cells of the
+original $y$. The $Z$ rewards are also unchanged. Thus each new
+maximum is at most the original stopped maximum in that same cell,
+proving (209.30). If $i=1$ or $2$, there is no late $n\le i$,
+and the rest of the argument is unchanged.
+Empty and singleton label rewards depend only on the preserved class
+totals and unary marginals, so their supports agree exactly.
+Pair equality and catalog completion give the claimed full equality
+and inequality. Totals preserve $Q,W$, and (207.10) gives the
+certificate without any positive residual.
+
+It remains to prove existence and the exact cuts. If
+$\sigma\le\sum_r\tau_r\omega_r$, define the atomwise density
+$f=\sigma/(\sum_r\tau_r\omega_r)$, taking zero at a zero
+denominator. Then $0\le f\le1$ and
+$\sigma=\sum_r\tau_r(f\omega_r)$, so its moment vector is in
+$\operatorname{conv}\bigcup_r\mathcal Z(\omega_r)$.
+Conversely a convex combination of measures
+$\sigma_r\le\omega_r$ is dominated by the corresponding carrier
+combination. Convexity within each $\mathcal Z(\omega_r)$ permits
+grouping repeated terms with the same $r$. This proves the equivalence
+with (209.28), including zero carriers. The choices for distinct $n$
+are compatible because they share no disjoint-allocation constraint.
+
+Each $\mathcal Z(\omega)$ is the linear image of a finite box, so
+it is compact and convex. Its support in direction $(a_0,a_j)$ is
+the integral in (209.31): choose $f=1$ where the affine expression
+is positive and $f=0$ where it is negative. The support of the convex
+hull is the maximum, not the sum, of the three supports.
+For completeness, if a vector $x$ is outside this compact convex set,
+let $z$ minimize its distance to the set. For every point $y$ in the
+set, differentiating the squared distance along $z+t(y-z)$ at
+$t=0+$ gives $\langle x-z,y-z\rangle\le0$.
+The direction $x-z$ strictly separates $x$, since
+$\langle x-z,x-z\rangle>0$. Thus all signed cuts are sufficient.
+This is ordinary finite convex support and separation; the finite
+polytope and linear-image framework is the one in Volker Kaibel,
+[*Basic Polyhedral Theory*, Theorem 8 and §1.6](https://arxiv.org/html/1001.2161v1).
+Here the box coordinates are the actual suffix-atom densities, and the
+linear map consists of their mass and unary zero moments. This
+classical step supplies neither common carrier existence nor the
+acquisition comparison; those are the explicit hypotheses and
+same-cell argument above.
+
+Finally for any two finite reward vectors $u,v$,
+$\max u+\max v=\max(u+v)$ exactly when their maximizing index
+sets intersect. If equality holds, a maximizer of $u+v$ must attain
+both individual maxima; the converse is immediate. Applied to the
+actual $g_{ij,b}$ this proves the precise claim about (209.26).
+$\square$
+
+A direct sufficient construction inside (209.28) uses the same finite
+moment map. Choose one mixed carrier $\omega$ of mass $M>0$;
+under $\omega/M$ put $p=\mathbb E X$,
+$\Sigma=\mathbb E[(X-p)(X-p)^\mathsf T]$ and
+$d=c-\gamma p$. If
+
+$$
+M\Sigma v=d,\qquad
+0\le f(x)=\gamma/M+v\mathbin{\cdot}(X(x)-p)\le1
+ \quad\text{on every actual carrier atom},
+\tag{209.32}
+$$
+
+then $\sigma=f\omega$ has mass $\gamma$ and moment vector $c$:
+integrating gives $\int f\,d\omega=\gamma$ and
+$\int Xf\,d\omega=\gamma p+M\Sigma v=c$.
+For nonsingular $\Sigma$ the pointwise condition is exactly
+$-\gamma\le d^\mathsf T\Sigma^{-1}(X-p)\le M-\gamma$.
+If $0<\gamma<M$ and $\Sigma$ is positive definite, finiteness of
+the support and strict slack at $d=0$ give a neighborhood of
+$c=\gamma p$ satisfying it. A singular covariance still requires
+the displayed linear equation and pointwise bounds, not an inverse.
+At $M=0$ only the zero vector is permitted. These are sufficient
+conditions on an actual carrier; covariance positivity alone is not
+a substitute for (209.28).
+

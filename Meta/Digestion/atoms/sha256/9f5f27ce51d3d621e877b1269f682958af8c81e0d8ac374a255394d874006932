@@ -1,0 +1,16 @@
+**Valuations on the full original support.** Let $q\mid B_N$. The original-support inputs TBN3 and GPC5 give $q>5$ and splitting of $5$ modulo $q$. Lift a square root of $5$ to $\mathbb Z_q$, and again put $\varphi=(1+\sqrt5)/2$ and $a=\varphi^2$. Modulo $q$, $a^N$ is a nontrivial cube root of unity. For every positive odd integer $m$ with $3\nmid m$,
+
+$$B_{Nm}=\frac{a^{3Nm}-1}{a^{Nm}(a^{Nm}-1)}.$$
+
+The denominator is a $q$-adic unit. Set $u=a^{3N}$. Then $u\equiv1\pmod q$, and $u\ne1$ because the algebraic unit $\varphi$ has infinite order and its embedding in $\mathbb Q_q$ is injective. Odd-prime lifting gives
+
+$$v_q(u^m-1)=v_q(u-1)+v_q(m),$$
+
+and hence
+
+$$v_q(B_{Nm})=v_q(B_N)+v_q(m).\tag{88.1}$$
+
+Here the lifting identity is elementary: write $m=q^em_0$ with $q\nmid m_0$. The geometric quotient for $u^{m_0}-1$ is congruent to $m_0$ modulo $q$. At each subsequent $q$-th-power step, the first binomial term $q(z-1)$ has valuation $1+v_q(z-1)$, strictly smaller than all remaining terms because $q$ is odd.
+
+Equality of the full squarefree kernels of $B_N$ and $B_{Nk}$ makes their $q$-valuations have the same parity. Equation (88.1) therefore makes $v_q(k)$ even for every $q\mid B_N$. For the least prime $p$ of a composite $k$, this valuation is positive, so $k\ge p^2\ge(6N+1)^2$. This proves the asserted composite-index bound.
+

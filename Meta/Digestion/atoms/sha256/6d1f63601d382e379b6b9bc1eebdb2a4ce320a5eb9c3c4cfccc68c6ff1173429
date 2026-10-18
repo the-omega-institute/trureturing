@@ -1,0 +1,73 @@
+**Convention 2.4 (what is already credited).** CG §§1–7 give the
+coherent lower witness and its strict improvement over $1/22$; §§8–12
+give common-channel attainment, a strict gap above that witness and
+explicit scalar-live and fixed-filter feasible channels. CG §§13–16
+conditionally identify the exact complete-output minimax value and the
+particular channel (RE.10):
+
+$$
+\mathcal E(\widehat\Phi_*)=\mathcal E_*=F^{\rm src}(\mathbf x_*),
+\qquad
+0.14817810291080132013<\mathcal E_*<0.14817810291080132014.
+\tag{RE.11}
+$$
+
+This does not assert whole-channel uniqueness. CG §17 identifies the
+sign-averaged live Choi matrix of every optimizer; §§18–20 give the
+strict zero-transfer subclass gap, same-effects/different-successor pair
+and conditional native synthesis interface. They do not identify the
+native operation menu with a Schur subclass.
+
+CG §§21–25 already give the joint acquisition model, the Schmidt-number
+three obstruction, a nonsharp positive acquired-high mass on every
+supported input, and an unmixed sufficient factorization. In the
+unnormalized output-input Choi convention, let
+
+$$
+J_*=|D\rangle\!\rangle\langle\!\langle D|
+ +|T\rangle\!\rangle\langle\!\langle T|
+ +|S\rangle\!\rangle\langle\!\langle S|,\quad
+W_3=|\Omega\rangle\langle\Omega|-2I_9,\quad
+|\Omega\rangle=\sum_{i=0}^2|ii\rangle,
+\quad \delta_*=\operatorname{tr}(W_3J_*)>19/10.
+\tag{RE.12}
+$$
+
+CG §§26–28 further supply a finite positive source constant
+$C_{\rm CG}$, exactly defined in (CG.204), such that for
+$0\leq\epsilon\leq1$,
+
+$$
+\begin{aligned}
+\mathcal E(\Phi)\leq\mathcal E_*+\epsilon
+&\Longrightarrow
+\|\overline J_\Phi-J_*\|_1\leq C_{\rm CG}\sqrt\epsilon,\\
+p_H^{\rm acq}(\rho)\geq p_H^L(\rho)
+&\geq\frac{[\max\{\delta_*-2C_{\rm CG}\sqrt\epsilon,0\}]^2}{24}
+\quad(\operatorname{tr}\rho=1).
+\end{aligned}
+\tag{RE.13}
+$$
+
+Under the same near-optimal hypothesis, the second line requires an
+actual fully counted factorization;
+$\overline J$ is the mathematical four-sign average. CG (CG.225)
+also supplies the penalties $\delta_*^2/(4C_{\rm CG}^2)$ for live
+Schmidt number at most two, $\tau_{ij}^2/C_{\rm CG}^2$ for a missing
+one of its four positive transfers, and
+$[\max\{\delta_*-\sqrt{24p_H^L(\rho)},0\}]^2/(4C_{\rm CG}^2)$
+for a given resource probability, also with acquired mass substituted.
+Here $\tau_{ij}=\langle ij|J_*|ij\rangle$ for
+$ij\in\{01,10,02,20\}$.
+Those are inherited nonsharp bounds, with their stated source premises;
+no constant in them is improved here.
+
+JR §§29–31 construct a finite family with binary coefficient $s\kappa$
+and high-acquisition effect $D^\dagger D+s^2T^\dagger T$. JR §32
+proves the sharp fixed-channel ceiling $|\gamma|\leq\kappa$, including
+its original-winding correct-report bounds. JR §33 expressly leaves
+universal resource sharpness and native supply unresolved. Its exact
+family curve is not stated there to minimize over every factorization.
+The results below address that additional universal question, while
+preserving all of these credited results and their conditional scope.
+

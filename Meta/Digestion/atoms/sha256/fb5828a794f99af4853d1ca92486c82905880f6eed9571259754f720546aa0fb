@@ -1,0 +1,15 @@
+**Definition 3.1 (normalized order laws).** For a permutation $\pi$ of
+the original $n$ blocks, let $A_i(\pi)\subseteq I_i$ be the incoming
+owners preceding $i$. On the full $\mathcal S$ define
+
+$$
+q_\pi(s)=\prod_iQ_{i,A_i(\pi)}(O_i(s)\mid B_{i,A_i(\pi)}(s)),
+\quad
+H(s)=\prod_{\pi\in\mathfrak S_n}q_\pi(s)^{1/n!},
+\quad a_R=\sum_{s\in R}H(s).
+\tag{OOA.11}
+$$
+
+These are proof distributions on owner tuples. They are not a law of
+acquisition or an independent-source model.
+

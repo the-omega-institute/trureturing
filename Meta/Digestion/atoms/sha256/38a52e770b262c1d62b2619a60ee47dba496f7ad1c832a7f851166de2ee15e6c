@@ -1,0 +1,69 @@
+## 9. Mathematical provenance and the remaining relational problem
+
+**Mathematical citation 9.1 (primary concurrent-observation literature).**
+Herlihy and Wing, *Linearizability: A Correctness Condition for Concurrent
+Objects*, ACM TOPLAS 12(3), 463–492 (1990),
+[original paper, §2.2](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf),
+DOI [10.1145/78969.78972](https://doi.org/10.1145/78969.78972),
+supply the classical invocation-to-response linearization condition.
+A validation Read here supplies a particular such instant for the tree.
+This citation gives neither endpoint equality nor implementation progress.
+
+Afek, Attiya, Dolev, Gafni, Merritt and Shavit,
+*Atomic Snapshots of Shared Memory*, JACM 40(4), 873–890 (1993),
+[authors' manuscript, §§2–4](https://www.cs.tau.ac.il/~afek/papers/snapshot.ps),
+DOI [10.1145/153724.153741](https://doi.org/10.1145/153724.153741),
+supply atomic snapshot specifications and wait-free implementations.
+The unbounded implementation uses data, sequence and view fields:
+unsuccessful double collects detect movement through sequence numbers;
+repeated movement allows borrowing a writer's saved scan.
+The bounded construction replaces this with its own bounded-register
+protocol, not the four native constructor replies.
+Our writer only applies $\rho$ and provides neither sequence field nor
+helped view. Optimistic validation and failure-to-interference charging
+are antecedent methods. The native leaf guard and disjoint complete-row
+trajectories are the source-specific obligations proved here.
+Their wait-free result does not transfer by renaming a leaf reply
+as a timestamp.
+
+Chandy and Lamport, *Distributed Snapshots: Determining Global States of
+Distributed Systems*, ACM TOCS 3(1), 63–75 (1985),
+[original paper, §§2–4 and Theorem 1](https://lamport.azurewebsites.net/pubs/chandy.pdf),
+DOI [10.1145/214451.214456](https://doi.org/10.1145/214451.214456),
+use cooperating processes, ordered channels, markers and channel-state
+records. A recorded global state occurs in a suitable permutation of
+the computation between its bounding states. Those ports and that
+consistent-cut conclusion differ from the actual one-register state
+at a named Read required here. Definition 1.3 supplies no marker
+channels or local-state reporting ports.
+
+These are literature-attested antecedents in precisely the stated scopes.
+Locks, versioned registers, snapshots, writer helping, markers or
+authenticated clocks would be extra hypotheses in another model.
+Their realization, access, retention and costs require separate proofs;
+none is installed by citing an abstract algorithm.
+
+**Mathematical citation 9.2 (parallel rewriting and source-specific content).**
+Prusinkiewicz and Lindenmayer, *The Algorithmic Beauty of Plants* (1990),
+[Chapter 1, §§1.1–1.2, pp. 1–4](https://algorithmicbotany.org/papers/abop/abop-ch1.pdf),
+describe simultaneous deterministic rewriting and the string rules
+$a\mapsto ab$, $b\mapsto a$.
+Under $\beta\mapsto a$, $\alpha\mapsto b$, forgetting brackets and
+taking the ordered leaf word intertwines $\rho$ with this Fibonacci
+word substitution. This is literature-attested background.
+Forgetting brackets identifies distinct native trees, so word evolution
+does not supply literal-address or hidden-partition acquisition.
+No concurrent native acquisition claim is attributed to that source.
+
+Repository citations refer to the indicated declarations and theory
+sections at revision aa5971a02660b53afbdb436b35a183c1cba45103.
+The new mathematical basis is repo-derived: the concurrent whole-tree
+certificates of Theorems 3.3 and 4.2, actual failure and resource charging,
+saturation with complete-row trajectory separation and the class-level
+obstruction, the restricted endpoint comparison, and the explicit
+concurrent-to-row-family composition. Stationary traversal, native
+transport, injectivity, clocks, primitive ancestry, row reconstruction,
+graph integration and row-only overlap necessity retain their cited
+suppliers. This does not assert worldwide originality or an exhaustive
+literature classification.
+

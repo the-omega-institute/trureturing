@@ -1,0 +1,10 @@
+**定理 82.1（单位动作二值合同的精确实现）。** 设 $I$ 为有限非空集，$(\mathcal K_n)_{n\in\mathbb N}$ 是嵌套的向下封闭子集族，且 $\mathcal K_0=\{\varnothing\}$。令 $\tau$ 由式(80.3)给出。则存在一个有限确定的单位动作续接合同，目标集为 $\{0,1\}$，响应字母表为 $\{\star,0,1\}$，其初始公开视图对所有 $(i,b)$ 完全相同，并满足
+
+$$
+\forall S\subseteq I,\ \forall n\in\mathbb N,\qquad
+\mathsf F_n(S)\Longleftrightarrow S\in\mathcal K_n,
+\tag{82.1}
+$$
+
+以及 $\mathsf F_\infty(S)\Longleftrightarrow S\in\mathcal K_\infty$。这个结论是对所声明有限合同的存在定理，不是对 TM57、TM60 或任何实际设备的符合性定理。
+

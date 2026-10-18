@@ -1,0 +1,20 @@
+**Definition 6.1 (a separate minimax objective).** For a supplied
+$\lambda\in\mathbb Q_{\ge0}^3$, define
+
+$$
+W_\lambda(C)=\sup_{u\in D}
+ \bigl(\lambda_q q_C(u)+\lambda_a a_C(u)
+                   +\lambda_\ell\ell_C(u)\bigr),\qquad
+W^*_{\lambda,K}=\inf_{C\in\mathcal C_K}W_\lambda(C).
+\tag{NRF.26}
+$$
+
+The infimum of the empty class is $\infty$, with no attaining
+table. Every run cost and every individual table maximum is
+finite by Proposition 4.2. The sum in (NRF.26) uses one actual
+source before the supremum. In general it is not
+$\lambda\cdot b(C)$; [NSF, Example 11.7][NSF] supplies an
+explicit native sourcewise distinction. Coordinatewise
+domination of maxima does not supply sourcewise domination of
+weighted profiles.
+

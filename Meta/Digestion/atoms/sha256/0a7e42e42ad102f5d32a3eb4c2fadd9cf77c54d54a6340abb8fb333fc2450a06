@@ -1,0 +1,24 @@
+**Definition 9.1 (proof suppliers and evidence boundary).** The new content
+is the concrete separate-mode ARC74 acquisition/parser/binding/callback
+join and its completed-predecessor coverage. Generic compilation, replay,
+persistence and the terminal/horizon bounds are supplied results, not new
+claims of this construction. The following exact correspondences delimit
+their use.
+
+| Supplier | Substitution or hypothesis that remains necessary |
+| --- | --- |
+| ARC §§2–4 / RCA §§11–14 | Compiler32–39 becomes64–71, mailbox48 becomes72, receiver40 becomes73; all payload owners are actual $A$, but finite phase slots remain distinct. Use $r_{\rm sel}$ and captured/installed $G_{\rm sel}$ consistently. |
+| ARC §§3,5 / CAP §§4–6 | The same actual $\xi,u,H_0$, acquired26/28/29, historical $h$, extending $\phi_K$, old unified $m$ and seven raw tags. No CAP descriptor is parsed as an RCA descriptor. Source calls are auxiliary $F^A$, not arbitrary original-controller busy entries. |
+| ARC §§6–7 / RCA Lemma 15.1 | Actual input-site reservoirs, literal local interpreter, frozen shorter predecessor, same immutable package and positioned receiver. This volume adds HistoryMode and its retained replay field; it supplies no semantic self-Call oracle. |
+| ARC §9 / CAP §§6,8 | Original parked controller, original truthful proposal/prior/fibre conditions, occupied verifier32–39 and INITIAL consumer40–47. Only the beta instance has its unconditional-within-these-model-premises constant proposal. |
+| `NativeSerialMachine` and owning Scribe | `nativeStep`, `Run`, `replay_deterministic`, `reached_prefix_replay`, `actual_register_execution`: actual source/register and source-free chronological replay at their abstract action level; no finite native compiler or tariff follows from arbitrary abstract control. |
+| `NativeFullSourceProducer` and owning Scribe | `native_source_producer` with private `traverse`, `production_reads`, `stationary`: truthful acquisition of this actual finite source. Proof-side subtrees are not runtime input or a hidden source reader. |
+| `NativeSerialEffective` and owning Scribe | Explicit `OriginalCodeRealization` remains a supplied code/soundness premise. Its `terminalObservation` retains the external trace before halt, so it is not identified with CAP's absorbing original terminal readout. |
+| `TypedFiniteViewKernel` and owning Scribe | Independently specified typed edges, legality, labels, successors and root readouts are premises. `typed_finite_view_kernel` identifies their refinements/behavior, not four unconstructed natural observations. |
+| `PredictiveMemoryMinimalQuotient` and owning Scribe | `predictive_memory_minimal_quotient` requires both readout factorization and descended update through memory. Neither follows just from possession of a historical Image. |
+| Pinned mathlib `Encoding`, `StateTransition` | `Encoding.decode_encode`/`encode_injective` and `StateTransition.Respects`, `tr_reaches`, `tr_eval` are coding/forward-simulation infrastructure at revision `db584cd6d46c92f209a44c0f1c829460d327499d`. They supply no native target input, current token or paid return. |
+
+The D5 entries are used only within these stated semantic limits.
+The ordinary finite-word derivations above are repo-derived
+applications and new interface proofs in the declared primitive model.
+

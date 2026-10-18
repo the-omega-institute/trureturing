@@ -1,0 +1,20 @@
+##### 定义 1.2.1： 查询不可区分关系
+
+由查询族 $\mathcal Q$ 定义实现上的关系
+
+$$
+M\equiv_{\mathcal Q}N
+\iff
+R_M(q)=R_N(q)\quad\forall q\in\mathcal Q.
+$$
+
+它是一个等价关系。记其等价类划分为 $\Pi(\mathcal Q)$，记目标核为
+
+$$
+\ker C=\{(M,N):C(M)=C(N)\}.
+$$
+
+这里的“核”表示被查询或目标合并的实现对，不特指线性算子的零空间。
+
+<a id="claim-1-2-2"></a>
+

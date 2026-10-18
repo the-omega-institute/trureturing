@@ -1,0 +1,44 @@
+**Counterexample 11.9 (same sufficient memory, different hidden equality).**
+Set
+
+$$
+\begin{aligned}
+ X&=\langle\alpha,\alpha\rangle,&
+ Y&=\langle\beta,\alpha\rangle,\\
+ t&=\langle\alpha,\langle X,X\rangle\rangle,&
+ t'&=\langle\alpha,\langle Y,X\rangle\rangle,\\
+ D&=2,&P&=\{RL,RR\},\qquad
+ Q=\{RLR^\infty,RRR^\infty\}.
+\end{aligned}
+\tag{AAR.55}
+$$
+
+Both sources lie in $\mathcal F_2$ and have $m=2$. The rays hit
+$[RLR]$, $[RRR]$ and the left target's required $[RR]$, so (AAR.47)
+holds. Both initial tables, in the displayed order, are $(5,6)$:
+the relevant leaves are the alpha at $RLR$ and the alpha at $RRR$.
+Both selected replies are branch at every update count. Nevertheless
+the complete $P$ rows have different partitions at every common count.
+
+Proof. At count zero both row exteriors are exactly
+$\langle\alpha,\langle\square_{RL},\square_{RR}\rangle\rangle$.
+In $t$ the hidden values are equal, while in $t'$ they are $Y$ and
+$X$ and hence unequal. At count $k$, present-subtree transport gives
+equal hidden values $\rho^k X,\rho^k X$ in the first source and
+$\rho^k Y,\rho^k X$ in the second. Their left children are
+$T_{k+1}$ and $T_k$; the supplied right clock gives their distinct
+values $k+1$ and $k$. The hidden values therefore remain unequal.
+The common exterior now has the same concrete $T_k$ at $L$ and the
+same two holes. The table values in both sources are $(5+k,6+k)$
+by (AAR.44). Even the paid calibration in Proposition 11.8 has the
+same left subtree on both histories, so adding that acquired count
+does not resolve the hidden equality. Thus neither the complete row
+nor the full source is a function of these inputs. $\square$
+
+Full-menu reply recovery also need not recover the source. In (AAR.55)
+add $R$ to $P$; the same two rays attain Corollary 11.6's optimum for
+$A_2$, yet the sources and partitions still differ. This obstruction
+concerns finite sampled coordinates, not the full boundary-plus-scale
+representation of Boundary Geometry Continuation IV, Theorem 113.5.
+That already established injective representation has a richer input.
+

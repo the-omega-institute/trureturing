@@ -1,0 +1,21 @@
+### 定义 29.2（随机核的量子提升）
+
+令 \(W(a\mid s)\) 是从 \(\Sigma\) 到有限集合 \(A\) 的随机核。定义
+
+\[
+\mathcal E_W(X)
+=
+\sum_{a\in A}\sum_{s\in\Sigma}
+W(a\mid s)
+\langle s|X|s\rangle
+|a\rangle\langle a|.
+\]
+
+其 Kraus 算子为
+
+\[
+K_{a,s}
+=
+\sqrt{W(a\mid s)}\,|a\rangle\langle s|.
+\]
+

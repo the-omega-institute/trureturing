@@ -1,0 +1,8 @@
+**数学引文 36.2（已核实的直接供应与表示差别）。** Jeřábek 的作者原文PDF包含§2、Definition4.2、Theorem4.5的取整证明及Corollary4.6；其SHA256为 `4a64ee83a8dccdfb79ded439d4e4f35aaa15eb4e68e64def8610664a8f457e03`。[HABBIT] 作者原文PDF的SHA256为 `7bd549e8a9ab34a436047dced6e809332a113f4bbe3905bea4792b60b15b25e9`。这些精确位/算术电路是 `literature-attested`；有限几何 Bernoulli 消费者直接复用§25和§29的成熟随机位供应。本节新增的是固定 PH17 核到已收费原 $C_0$ 消费者的串行空间移植、原返回风险的全尾精度以及私有条件微状态的来源特定区别，标为 `repo-derived`，不主张外部原创优先权。
+
+原来源对应消费本卷定义1.2–1.5、§§11、14–18、24–29及[ST] §3的实际正历史；[FR] §§9、15提供从第一笔付费 Read 的过滤与停止层混合，[BD] §§97、100.1、105.1、114.1和[E1] §2提供共同来源、原解析、全标记树写前锁存和原交付。[ACP] §2与[MDA] §4区分实际边缘化相容和持久标签重加权；当前消费者不保存这样的标签。
+
+在供应快照 `a2a9fd8b9977b44f2260e03da5106d1790ce02bb`，`D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.lean` 的 `legalRead`、`legalStop`、`rawReadLaw` 与 `actual_fourth_segment_stopped_word_law` 给固定 $r$ 的原第一完成词律，`actual_noncompletion_mass_zero` 保留非完成结果及其零质量。其 raw 源是固定 Bernoulli 轨迹；它没有单独证明任意实际停止历史的后验新鲜性、共同先验混合或全记录映射。上述后者仍由原普通来源证明承担，没有将 raw 定理扩大成未核实桥梁。
+
+同快照的 `PredictiveStateUnifilarUpdate.unifilar_predictive_update` 以正柱条件延伸等式为前提构造商状态更新；本节先用(33.5)建立这个等式，不拿通用定理替代源桥。`DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile` 给不同风险而共享最优动作的例子，不供应代数位。`ProgramCostFiltration.program_cost_filtration_classification` 区分程序描述与时间的过滤，其给定的语义/runtime 前提也不供应本消费者的工作界。这里只读取这些钉版源码，没有新 Lean 核验；也没有援引通用根求值、形式 bisection 或实坐标数充当数字空间证明。
+

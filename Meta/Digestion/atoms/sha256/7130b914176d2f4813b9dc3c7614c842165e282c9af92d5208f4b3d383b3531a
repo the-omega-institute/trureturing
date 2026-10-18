@@ -1,0 +1,75 @@
+**Theorem 4.2 (whole-positive-fiber criterion).**
+For any prescribed binary code under Assumption 3.1, including a code with
+one attained value, a correct terminating representative-root reader with
+at most nine installed states exists if and only if
+
+$$
+\exists j\in\{1,2,3,4\}\ \exists z\in\{0,1\}\quad
+             \forall u\in\Pi_j,\ \sigma(u)=z.
+\tag{NRN.12}
+$$
+
+When this condition holds, nine installed states and at most four calls
+suffice. Necessity continues to hold if the other partner occurrence roots
+and exterior-only queries are also permitted.
+
+Proof of sufficiency. Choose $j,z$ as in (NRN.12), and a fixed ordering
+$(i_1,i_2,i_3,i_4)$ of the four indices with $i_1=j$. Install four Reads
+$Q_{i_1},Q_{i_2},Q_{i_3},Q_{i_4}$ and five Halts $H_0,\ldots,H_4$.
+Their entire Read table is
+
+| Read | Fixed actual literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $Q_{i_t}$, $1\le t<4$ | $p_{b_{i_t}}$ | $H_{i_t}$ | $Q_{i_{t+1}}$ | $Q_{i_{t+1}}$ | $Q_{i_{t+1}}$ |
+| $Q_{i_4}$ | $p_{b_{i_4}}$ | $H_{i_4}$ | $H_0$ | $H_0$ | $H_0$ |
+
+For each $0\le h\le4$, set $\operatorname{out}(H_h)=R_h$, meaning all
+of (NRN.7)–(NRN.8) and the naming and guard table, stored directly at that
+Halt. The actual literals are $p_{b_1}=LLR$, $p_{b_2}=LRR$,
+$p_{b_3}=RLR$, $p_{b_4}=RRR$. Initialize $z$ at $Q_{i_1}$ and, if the
+other value is attained, initialize $1-z$ at $Q_{i_2}$. These entries
+are distinct, so the complete bit is recoverable there without a later
+bit copy. For a one-value code only the first entry is required.
+
+On every actual source, a tested right root is alpha precisely at its
+positive index, if one exists. Entry $z$ tests all four indices. The other
+entry omits only $j$, and its code cannot occur on $\Pi_j$. Each entry
+therefore returns the correct $R_h$ on every original source, including
+all six beta placements in the zero sets, the all-branch zero set and
+every admissible internal branch filling. All representatives are reached,
+but every absent successor is installed nevertheless. The two entries
+use at most four and three actual calls, respectively. All nine installed
+states count whether or not every state is reached for this particular
+code. No free control step or output decoding is used.
+
+Proof of necessity. Suppose instead that every $\Pi_j$ attains both
+bits and a terminating root reader within nine states succeeds. Its two
+entries $e_0,e_1$ are distinct Reads: either bit occurs with all four
+different positive targets, so neither entry can be a Halt. Lemma 4.1
+allows at most four installed Reads.
+
+Each right class $b_j$ must have a Read. Otherwise the root profiles of
+$\Pi_j$ and $Z_{g(j)}$ agree at every installed query: they differ only
+at $b_j$. On the $\Pi_j$ profile both entry executions must return
+$R_j$, since each bit is actually attained there. Root-only behavior
+depends only on that profile, not on the hidden finite fillings. Both
+entries consequently return $R_j$ on the zero profile as well, contradicting
+its actual target $R_0$. This comparison includes any partner queries;
+the two partner occurrences have identical replies. Exterior-only words
+are shorter than three here and have the same branch reply everywhere.
+
+Thus the four Reads are exactly one at each right root. There is no room
+for a partner, exterior, repeated or additional Read. Choose any actual
+source in $Z_*$ and let $z$ be its code. Its finite run from $e_z$ ends
+at an $R_0$ Halt. It must visit every right Read. If it omitted $b_j$,
+an actual source in $\Pi_j$ with code $z$ would give branch at every
+queried right root on that path, and would reach the same wrong Halt.
+Stationarity makes this a path through all four different Reads once.
+
+The other entry is a different Read in this same four-Read path, strictly
+later than its first state. Let $b_i$ be the first state's queried class.
+A $\Pi_i$ source carrying the other bit exists. Starting at that later
+entry, it follows the all-branch suffix of the path, which omits $b_i$,
+and returns $R_0$. Its target is $R_i$, a contradiction. No call cap or
+global acyclicity assumption was made. This proves (NRN.12). $\square$
+

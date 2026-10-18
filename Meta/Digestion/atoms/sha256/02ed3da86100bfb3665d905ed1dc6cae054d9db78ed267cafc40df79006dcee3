@@ -1,0 +1,25 @@
+**Definition 7.2 (one-call selection and reply decoding).** At a promised
+entry parse $z$ from the acquired row and form the exact fiber of
+Theorem 5.2 with $C=C_{q,\gamma}$. If its visible-origin coordinate
+is constant $v$, halt with $z-v$ without a call. Otherwise select the
+following relative experiment; the subscript is a threshold, not an
+oracle-supplied age:
+
+| Code $\gamma$ | Right visible, hidden left | Left visible, hidden right |
+| --- | --- | --- |
+| $0$ | $P_{\max(2,z-2)}$ | $P_{q+z-1}$ |
+| $1$ | $E$ if $z\le4$; $P_{z-3}$ if $z\ge5$ | $P_{q+z-1}$ |
+| $2$ | $P_{z+2}$ | $P_{q+z}$ |
+| $3$ | $E$ if $z\le4$; $P_{z-3}$ if $z\ge5$ | $P_{q+z-1}$ |
+| $4$ | $P_{z+2}$ | $P_{q+z-1}$ |
+| $5$ | $P_{z+2}$ | $P_{q+z+1}$ |
+
+Materialize its representative (NARC.5.8), prefixed by $L$ for right
+visibility or $R$ for left visibility, and submit that one whole word.
+After its actual reply, keep the candidates in the exact fiber whose
+predicted relative reply in (NARC.5.7) is that reply. Output $z-v$,
+where $v$ is their common visible origin. Theorem 7.3 establishes
+that this set is nonempty and its origin is constant for every actual
+reply on a promised input. For an input or reply outside the promise,
+one may assign output zero; no correctness there is required.
+

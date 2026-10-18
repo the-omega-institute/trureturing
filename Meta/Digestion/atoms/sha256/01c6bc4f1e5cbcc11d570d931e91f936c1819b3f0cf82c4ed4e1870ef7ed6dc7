@@ -1,0 +1,36 @@
+## 7. The matching all-fixed-history lower bound
+
+The following is the actual-target lower-bound argument of [Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md), Theorem 5.1, reproduced with the parameter correspondence explicit.
+
+For general known $d\ge0$, use the injective chart
+
+$$
+(p,q,r,k,\delta_0,\ldots,\delta_d)
+\in(0,\infty)^3\times\mathbb R^{d+2},
+$$
+
+$$
+S=\begin{pmatrix}p&q\\r&qr/p\end{pmatrix},\qquad
+D(\tau)=\sum_{h=0}^d\delta_h\tau^h.
+\tag{7.1}
+$$
+
+Its dimension is $N=d+5$. Every chart point has the actual positive realization (1.2) on any legal history. For any predetermined $m$-read cumulative history, the observation map $F$ on this open chart has smooth components
+
+$$
+F_i=(1+ki)\left((A_i)_{11}p+(A_i)_{12}r
+ +(A_i)_{21}q+(A_i)_{22}\frac{qr}{p}\right)
+ +\sum_{h=0}^d\delta_hi^h.
+$$
+
+Suppose $m<N$ and let $\rho$ be its largest attained derivative rank. Then $\rho\le m<N$. If $\rho=0$, integrate the zero derivative along line segments in a small convex ball to obtain distinct chart points with identical outputs. If $\rho>0$, choose a nonzero maximal $\rho$-minor. On a sufficiently small neighborhood it stays nonzero, while maximality makes the total rank exactly $\rho$. Reorder coordinates and outputs so this is the first $\rho$ input coordinates and output components. The implicit function theorem makes the level set of those components a smooth graph over a small open ball in the remaining $N-\rho>0$ coordinates.
+
+At each graph point, every other output differential is in the span of the first $\rho$ differentials, since those rows are independent and the total rank is $\rho$. It therefore vanishes on the graph's tangent vectors. Integrating along paths in the connected graph patch makes every output constant there. Distinct chart points in that patch are distinct actual targets with the same observations. Thus $m<d+5$ cannot recover the entire target uniformly.
+
+A predetermined word list with earlier stopping can be extended by empty-word reads to its uniform bound. Identical full padded observations give identical prefixes and stopping decisions, so the collision remains. This is an all-fixed-history lower bound under the finite-word contract. At $d=1$ its chart is precisely the six-dimensional target of (1.1), and it excludes every bound below six. Theorem 2.1 attains six on that same target, proving
+
+$$
+\boxed{C_{\mathrm{fix}}(1)=6}.
+\tag{7.2}
+$$
+

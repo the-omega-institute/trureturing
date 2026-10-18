@@ -1,0 +1,65 @@
+### 60.3 The explicit sextic coefficient matrix
+
+All tuple and matrix indices in this subsection are zero-based.
+Let \(\mathcal A\) be the lexicographically ordered 15 weakly increasing
+pairs from \(\{0,\ldots,4\}\), and let \(\mathcal T\) be the analogous
+35 triples. Write \(z^u=\prod_{j\in u}z_j\) without multinomial factors,
+and \(\operatorname{gr}(u)=\sum_{j\in u}m_j\pmod3\).
+The cubic grade sizes are \((13,11,11)\).
+
+Order coefficient positions lexicographically as pairs
+\((u,v)\in\mathcal T^2\) with equal grade, omitting only the five
+pure-cube diagonals \(((j,j,j),(j,j,j))\). Position \((u,v)\)
+is the coefficient of \(\overline{z^u}z^v\). There are
+\(13^2+11^2+11^2-5=406\) positions. Every omitted coefficient is zero
+in every source below, since every canonical column itself satisfies
+(60.4).
+
+For \(s=0,\ldots,9\), then \(u\in\mathcal A\), then
+\(v\in\mathcal A\), in those orders, retain the source polynomial
+
+\[
+ q_s\overline{z^u}z^v
+ \quad\hbox{exactly when}\quad
+ \operatorname{gr}(v)-\operatorname{gr}(u)+\gamma_s=0\pmod3.
+\tag{60.6}
+\]
+
+There are 750 sources. Their 406-dimensional coefficient rows
+\(R_0,\ldots,R_{749}\) are specified by (60.5)–(60.6): a quadratic
+term \(a_{ij}\bar z_i z_j\) contributes \(a_{ij}\) at the position
+obtained by sorting \((i)+u\) and \((j)+v\), with contributions added
+when positions coincide.
+
+For coefficient arithmetic let
+
+\[
+ \mathbb F=\mathbb Q(b)(i,c,d,k),\qquad
+ \mathbb L=\mathbb Q(b)(i,c,d),
+\]
+
+with the quadratic relations in (60.1) and \(i^2=-1\).
+These are multiquadratic fields of degrees 16 and 8 over \(\mathbb Q(b)\).
+Let \(\tau\) change the sign of \(k\) and exchange canonical indices
+0 and 1 in every tuple, followed by sorting. On coefficient rows it is
+the induced position permutation followed by \(k\)-conjugation.
+It permutes the source rows by
+\((s,u,v)\mapsto(s,\tau u,\tau v)\), as follows directly from (60.2).
+
+Define 750 \(\tau\)-fixed source rows by scanning the original indices
+in increasing order and processing each orbit at its smallest index.
+Retain a fixed row; for a two-row orbit beginning with \(R\), append
+\(R+\tau R\) and \(k(R-\tau R)\), in that order. This basis change
+is invertible, using only division by \(2k\).
+
+Encode a fixed coefficient vector by scanning its original 406 positions
+in increasing order and processing each position orbit at its smallest
+index. A fixed position has value \(A\in\mathbb L\) and contributes
+one coordinate \(A\). For a two-position orbit the values are
+\(A+kB,A-kB\); append \(A,B\), in that order. This is an injective
+\(\mathbb L\)-linear encoding into 406 coordinates. Denote the resulting
+ordered \(750\times406\) source matrix by \(\mathcal B\).
+Its entries lie in \(\mathbb L\). These rules specify every entry
+and every index of \(\mathcal B\); they impose no symmetry on a candidate
+ray.
+

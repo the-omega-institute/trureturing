@@ -1,0 +1,18 @@
+**Definition 13.1 (type-restricted partition sum).** For rational
+$p\in\mathcal P^+(\mathcal N;\boldsymbol w)$ and an admissible
+denominator $m$, put
+
+$$
+\operatorname{Mult}(m,p)=\frac{m!}{\prod_a(mp(a))!}.
+\tag{COK.64}
+$$
+
+Let $Z_p(\mathcal N^\sigma;\boldsymbol w)$ sum the product weights
+of actual cover solutions whose empirical local law at copies of
+every $i$ is $p_i$. Let $\mathbb E_\sigma$ mean the average over
+the $(m!)^{|E|}$ independently uniformly permuted labeled full
+group edges. Different permutation tuples count separately even
+when the resulting native equations happen to coincide. The
+averaging is an analytical finite ensemble, not a randomized
+preparation on the unknown source.
+

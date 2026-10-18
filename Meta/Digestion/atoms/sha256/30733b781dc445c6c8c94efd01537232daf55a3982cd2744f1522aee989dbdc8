@@ -1,0 +1,7 @@
+**Convention 17.1 (reference meanings).** CG supplies the original source and complete-output minimax correspondence; JR separately supplies the sharp acquired-cost and unaveraged real face; FA supplies the whole-fibre path, rigidity, capacity and endpoint-constructor interfaces; RC supplies the normalized contact dictionary and explicitly scoped previous contact results. These citations retain the exact conditional roles stated in §§1–2. The self-contained data and proofs of the present selected transition are §§3–8 and §§10–16.
+
+[CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
+[JR]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[FA]: FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md
+[RC]: FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md
+

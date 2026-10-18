@@ -1,0 +1,17 @@
+### 65.1 Statement and exact parameter reflection
+
+Continue the actual family \(M(b)=\sqrt6H_0(b)\) of (60.1).
+Let \(X(x,y)=(y,x)\) and \(L=\operatorname{diag}(I_3,-I_3)\).
+Its block coefficients satisfy \(P(-b)=Q(b)\), so
+
+\[
+ M(-b)=LM(b)X.
+\tag{65.1}
+\]
+
+Thus \(X\) transports common-flat input rays at \(b\) to those at
+\(-b\). It is a fixed-parameter symmetry at zero, but not in general
+away from zero. Synchronous permutations \(R_p\) and the antiunitary
+\(\Theta(x,y)=(-\bar y,\bar x)\) preserve the common-flat locus at
+each parameter, by the identities in §63.4.
+

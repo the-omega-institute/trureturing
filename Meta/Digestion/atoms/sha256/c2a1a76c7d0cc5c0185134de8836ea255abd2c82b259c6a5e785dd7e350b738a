@@ -1,0 +1,107 @@
+### 218.8 Owning relations, suppliers and bounded literature overlap
+
+The new scopes are the unrestricted minimum in 218.2, the separated
+block operation with its fixed-remainder test in 218.3, the full real
+affine repair relation and its quantitative optimum in 218.4–218.5,
+the separate single-positive/all-positive guard allocation in 218.6,
+and the actual-score erasure with signed cross-dimensional lift in
+Theorem 218.8 and Corollary 218.9. Their examples, necessary inequalities, degenerations and
+direct certificate applications are consequences of those scopes.
+
+A's constructed measure also admits a common nonhomogeneous Markov
+description: return the early path to one before the second guard,
+split into constant late-zero and late-one paths equally after s,
+and use absorbing transitions afterwards. Its N/O equality alone is
+therefore already within 198.2. The additional relation is the exact
+minimum over every full score of its quotient, with arbitrary input
+suffix placement, and the automatic affordability at zero absolute stock.
+Correct-only and one-debt top-three degenerations reuse 198.4 and the
+owning sparse cores; they add no separate content.
+
+B's complete catalog conversion is 194.1, and its weak-duality pairing,
+normalization and elementary simultaneous inequality elimination are
+suppliers. A helpful block decomposition for every feasible configuration
+has not been shown. C uses the normalized criterion 109.1; its
+same-allocation radial application and elementary elimination are not
+separate new statements. Its quantitative whole-line optimum changes the
+scope of the fixed-law obstruction in 112: every real t and signed
+constant translation is optimized. The different O cap attainer survives,
+and the displayed plateau violates the hull inequality, so the example
+provides no $H_N$ hard-region advance.
+
+D allows different guard distributions for the single-positive columns
+and the all-positive reserve, while sharing their row totals and stock.
+This strictly exceeds the common-proportion constructor 217.5 at the
+printed four-positive quotient. To see the precise constructor distinction,
+allow its prefix columns $p_j\ge\gamma_j$, reserves
+$c_{\rm old},d_{\rm old}\ge0$, terminal $T\ge0$ and common guard shares.
+Its total guard stock is
+$S_{\rm old}=\sum p_j+c_{\rm old}+d_{\rm old}=15/4-T\ge G$.
+At a positive coordinate of coefficient one, its mixed cell forces
+$\alpha_3\le1-1/(p_j+c_{\rm old})$.
+The other columns total at least $G-1$, hence
+$p_j+c_{\rm old}\le1+S_{\rm old}-G$ and its third-guard
+conversion capacity is bounded by
+
+$$
+\alpha_3S_{\rm old}
+ \le\frac{S_{\rm old}(S_{\rm old}-G)}
+             {1+S_{\rm old}-G}
+ \le\frac54<\frac{13}{8}.
+$$
+
+The last function is increasing for $S_{\rm old}\ge G=13/4$,
+and $S_{\rm old}\le15/4$. In the new construction
+$\chi_3=1/2$ but $t_3=0$, so no common-proportion ceiling applies.
+The old uniform three-guard capacity $S/3=5/4$ likewise cannot cover
+that debt. Three-positive 217 scopes do not reclassify this four-positive
+example. This comparison excludes these named constructors only;
+it does not exclude every convex combination or signed residual assembly
+of old results.
+
+E reuses the hull/support supplier 198.5, generic weak duality in
+199.3–199.4, and the entire three-coordinate minimum 214.2.
+That minimum, its water filling and its direct application carry zero
+new-content credit here. The new relation is projection of the actual
+full score, exact signed residual accounting and a lift that preserves
+the single cost budget, including the nonzero anchor reading $F(o)$.
+It covers every input in its cumulative-tail cone without fixing its
+suffix, terminal, cancellations, number of positives or reserve ratios.
+Its example's component mechanisms remain diagnostic suppliers.
+Terminal erasure under this cumulative test does not invalidate the
+zero-net middle-deletion counterexample in 216.4.
+
+The shared zero relation among the 216 scopes remains counted once.
+Within 217, C's equal-profile relation is F at $k=3$, B's equal-profile
+zero endpoint is F's plateau endpoint, and D's equal-triple core overlaps A;
+none is recounted here. The sole-zero containment diagnostic remains
+within Acquisition Resources 91 and 94 and supplies no additional theorem.
+Signed stock, full support/lower detectors, CRT witnesses,
+same-seed completion, closed-cap transport and radial normalization
+are all reused. No exhaustive exclusion of old convex or polar
+assemblies, literature-absence claim or worldwide priority is asserted.
+
+The following primary-source mapping is bounded to the stated versions
+and passages. It records the conditions relevant to transfer, not a
+claim of a fresh exhaustive bibliographic search.
+
+| Source and version | Applicable relation and transfer boundary |
+| --- | --- |
+| [Blackwell, *Comparison of Experiments*, §§2–5, pp. 93–102](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s2_article-08.pdf) | Full words correspond to states, transcript cells to observations and labels to actions; attainable loss vectors concern one common procedure. The general framework does not construct increasing first-zero stopping with two actual requests. No unrestricted garbling converse is inferred from a dichotomy result. |
+| [Kaniewski–Lee–de Wolf, 1411.7280v1, Definition 8 and Theorem 9](https://arxiv.org/pdf/1411.7280v1) | Scalar nonnegative computation in expectation equals nonnegative literal degree under worst-path query cost. Scalar leaf values may exceed one; this does not normalize a probability-vector schedule or realize the stopped catalog. |
+| [Embrechts–Hofert–Wang, 1606.08212v1, Definition 2.2 and Theorem 2.2](https://arxiv.org/pdf/1606.08212v1) | Bernoulli second-moment compatibility is the convex hull of Boolean outer products under one joint law. Separate pair marginals or a PSD relaxation are insufficient. Our score measures are explicit joint measures, not automatically affordable acquisition laws. |
+| [Zaev, 1404.4962v1, Problem 1.3, Theorem 2.1 and Remark 2.4](https://arxiv.org/pdf/1404.4962v1) | Polish factors, prescribed marginals, a linear subspace $W\subseteq C_L(\mu)$ and cost in $C_L(\mu)$ are retained. Constrained-transport duality allows an empty feasible set; it does not establish our joint allocation's nonemptiness or resource budget. |
+| [Bertschinger–Rauh, 1401.3146v1, Example 18](https://arxiv.org/pdf/1401.3146v1) | Zonotope containment has a unique nonnegative representing matrix with row sums 2,2,2,0, which is not stochastic. This is a normalization boundary, without an original-source separator embedding. |
+| [Angel–Spinka, 1903.00632v2, Theorems 1–2](https://arxiv.org/pdf/1903.00632v2) | Pairwise optimal coupling does not imply simultaneous pairwise optimality. The joint mismatch bound $2\operatorname{TV}/(1+\operatorname{TV})$ assumes domination by one common sigma-finite measure. Neither theorem supplies a hard-two resource-preserving coupling or a source distribution. |
+| [Chen, 2502.06530v1](https://arxiv.org/pdf/2502.06530v1) and [2502.06530v2](https://arxiv.org/pdf/2502.06530v2), Theorem 3, Definition 7 and Corollary 3 | These are distinct versions. The binary-action comparison extends to finite actions under binary-decomposability of the value function. No such decomposition preserving the complete simultaneous schedule budget is established here. |
+| [Yang–Yang, 2603.11448v1, §2 and Theorem 1](https://arxiv.org/pdf/2603.11448v1) | The versioned PDF assumes compact Polish X, a convex cone of bounded upper-semicontinuous tests containing constants, a sup-norm-closed continuous part, decreasing continuous approximation from above and bounded decreasing-limit closure. Under this setup min-closure, affine values, order-preserving couplings and the trapezoid graph property are equivalent. No corresponding cone, min-closure or hard-two acquisition correspondence is proved here. |
+| [Kaibel, 1001.2161v1, Theorems 1(ii), 7, 8 and 10](https://arxiv.org/pdf/1001.2161v1) | Finite-dimensional Farkas alternatives, polyhedral/cone representations and recession systems supply the existing 199 alternative. They are generic suppliers and grant no new score construction or new resource theorem. |
+
+The Yang–Yang v1 citation is anchored to its versioned PDF, with SHA256
+1748332276759372cdb7f0efc61842c799484facf67a4388de4d03171e7df624.
+A differently dated HTML rendering is not identified with the entire v1
+manuscript. The relevant primitives and theorem have the stated scope;
+neither they nor the distinct Chen versions close the missing acquisition
+correspondence. The ordinary proofs here do not depend on an imported
+universal hard-two theorem from any listed source.
+

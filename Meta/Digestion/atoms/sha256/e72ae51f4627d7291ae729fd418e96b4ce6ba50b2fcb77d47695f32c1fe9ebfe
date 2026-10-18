@@ -1,0 +1,66 @@
+**Theorem 11.4 (one forced separator for every fixed-history completion).**
+For each $j=2,\ldots,M$, keep exactly Definition 11.2's displayed low
+and high histories at $V_j$. They represent the live cells
+
+$$
+L_j=(k-j-2,n-k),\qquad
+H_j=(k-1,n-k-j-1).
+\tag{WTF.40}
+$$
+
+All $2(M-1)$ cells are distinct. Cross-fill $(x,x')=(1,0)$ and
+$(y,y')=(0,1)$ on both inputs. Every assignment on $U_j$ belongs
+to Theorem 7.1's conflict band, and for every such assignment the first
+differing common-old state is the same installed $J$ of Definition
+11.2. In particular, for every joint choice
+$(\omega_j)_{j=2}^M\in\prod_{j=2}^M\{0,1\}^{U_j}$, all $M-1$
+first separators are that one $J$.
+
+Proof. The hit counts were computed in Theorem 11.3. Subtracting them
+from prefix length $n-j-2$ gives respectively $n-k$ and
+$n-k-j-1$ zeros. All counts lie in $\mathcal D_{n,k}$, and both
+residuals are nonconstant. Within either list the varying coordinate
+makes the cells distinct, while every $L_j$ has fewer than $k-1$
+hits and every $H_j$ has exactly $k-1$. Their hit and reverse-zero
+gaps are both $j+1$, consistent with Theorem 9.1.
+
+Their common old set is $I_j$, the private sets are precisely $X,Y$,
+and their common unread set is $U_j$. Notation 6.2 specializes to
+
+$$
+a=b=2,\quad u=j,\quad q=j+2,\quad v=1,\quad
+\xi=\eta=1,\quad \Delta=\delta=j+1,\quad \lambda=1.
+\tag{WTF.41}
+$$
+
+Thus the band (WTF.22) is the entire integer interval $[0,j]$.
+If $w=|\omega|$, the two cross-filled total weights are
+
+$$
+|\theta^-|=k-j-1+w\le k-1,\qquad
+|\theta^+|=k+w\ge k.
+\tag{WTF.42}
+$$
+
+Each extends its own fixed prefix and agrees with the other outside
+$I_j$, so Supplier 2.1 realizes both as actual inverse origins.
+
+Before leaving the scan both runs read identical $U_j$ bits. A mixed
+assignment goes directly to $J$. An all-zero assignment goes through
+$B_X$, whose common $x=1$ reply goes to $J$. An all-one assignment
+goes through $B_Y$, whose common $y=0$ reply goes to $J$.
+These are all assignments. No $v_i$, or any other differing coordinate
+of $I_j$, is queried on this suffix before $J$. At $J$ the old
+$t$ replies differ, zero on the low history and one on the high.
+Thus this is the first different reply and is a paid requery on both
+runs. In the native lift its literal is $a_t$ and its replies on
+these actual origins are beta and branch.
+
+The conclusion holds separately for each $j$ and every allowed
+$\omega$. Taking their finite product proves the joint statement;
+no compatibility between different inputs' completions is required.
+As $M$ grows these are arbitrarily many cell-disjoint fixed-history
+collisions with the same unavoidable first separator. The statement
+does not quantify over other choices of the incoming histories.
+$\square$
+

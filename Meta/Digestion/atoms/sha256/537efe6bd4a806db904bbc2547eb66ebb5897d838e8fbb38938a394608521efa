@@ -1,0 +1,21 @@
+### 61.4 Proof of joint local isolation
+
+The 31 selected components of \(\Phi\) define a real-analytic map
+from an open neighborhood of 0 in \(\mathbb R^{31}\) to
+\(\mathbb R^{31}\). The positive radicals in (60.1) are analytic near
+\(b=0\), and the phase chart is analytic. Equations (61.7) make 0 an
+exact zero, and (61.12) makes its derivative invertible.
+
+The inverse-function theorem therefore gives a neighborhood in which 0
+is the unique zero of those 31 components. Every actual common-flat
+orthonormal basis in the chart satisfies all 60 components, hence the
+selected 31. It follows that \(b=0\) and \(\theta=0\).
+
+Finally, the six rays are distinct, so their ordering can be fixed
+locally; column permutations are a discrete action. Together with the
+explicit column-phase normalization, this proves Theorem 61.1.
+It also excludes any distinct sequence of solutions converging to this
+point, including a nondifferentiable continuation through it. The result
+concerns the prescribed family \(H_0(b)\), not arbitrary nearby
+Hadamard-pair parameters.
+

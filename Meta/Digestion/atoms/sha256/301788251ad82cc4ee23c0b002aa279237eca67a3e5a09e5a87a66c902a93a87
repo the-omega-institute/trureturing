@@ -1,0 +1,74 @@
+**Proposition 4.1 (Finite endpoint obstruction).** For $Q$ and $r$ as in Lemma 3.1, set $L=4r+3$ and
+
+$$
+F(z)=\sum_{j=0}^{L-1}\ell_Q(T^jz)
+$$
+
+for every legal $L$-periodic configuration $z$. These totals are not all equal. In particular there is such a $z$ with
+
+$$
+\beta=F(z)/L\ne d(Q).
+\tag{4.1}
+$$
+
+**Proof.** The loss $\ell_Q$ depends only on a radius-$r$ window. For bits $a,b$ at positions $-r,r$ and fixed other bits, write the mixed endpoint difference as
+
+$$
+\Delta F=F_{11}-F_{10}-F_{01}+F_{00}.
+$$
+
+Since $L>4r$, the only radius-$r$ window on this period that can contain both endpoints is the window centered at $0$. Indeed the direct distance between them is $2r$, while the other circular distance is $L-2r>2r$. A window containing both along the shorter arc must have center $0$. Every other local term depends on at most one endpoint and cancels in $\Delta F$.
+
+If $r=1$, the insertion posterior at zero neighbors is the constant
+
+$$
+p=\frac{R}{1+R}\in(0,1),\qquad
+R=\frac{K(1\mid0)}{K(0\mid0)^2},
+$$
+
+because $K(0\mid1)=1$. Take the four periodic configurations with center $0$, endpoints $a,b$ at $-1,1$, and all other sites zero. All four are legal. At the center their losses are $p^2$ for $(a,b)=(0,0)$ and zero otherwise, since an endpoint $1$ forces the center to zero. Thus $\Delta F=p^2>0$, proving unequal totals.
+
+Now let $r\ge2$ and choose $w$ with $J=J(w)\ne0$ from Lemma 3.1. In the positions $[-r,r]$ place
+
+$$
+a\,w\,c\,w\,b,
+\qquad a,b,c\in\{0,1\},
+\tag{4.2}
+$$
+
+and set all other positions in a period to zero. All eight configurations are legal: $w$ begins and ends in zero, and the exterior zeros separate the period seam and the endpoints. For each fixed $c$, taking $\Delta F$ isolates the center loss as above.
+
+In (2.5), only the block $[-r,0]$ includes the left endpoint and only $[0,r]$ includes the right endpoint. The left endpoint's change in the center log odds is
+
+$$
+[\varphi(1w1)-\varphi(1w0)]
+-[\varphi(0w1)-\varphi(0w0)]=J,
+$$
+
+and the right endpoint's change is
+
+$$
+[\varphi(1w1)-\varphi(0w1)]
+-[\varphi(1w0)-\varphi(0w0)]=J.
+$$
+
+There is no block containing the center and both endpoints. The same oriented word $w$ was used on each side; no reflection symmetry of $Q$ is assumed. For some real $u$, the center posterior is therefore
+
+$$
+p_{ab}=\sigma(u+(a+b)J),\qquad
+\sigma(v)=\frac{e^v}{1+e^v},
+\tag{4.3}
+$$
+
+independently of the current center label $c$.
+
+If all eight totals were equal, their mixed differences would vanish both for $c=0$ and for $c=1$. With $p_0=\sigma(u)$, $p_1=\sigma(u+J)$ and $p_2=\sigma(u+2J)$ this would give
+
+$$
+p_2^2-2p_1^2+p_0^2=0,\qquad
+(1-p_2)^2-2(1-p_1)^2+(1-p_0)^2=0.
+\tag{4.4}
+$$
+
+Subtracting yields $p_2-2p_1+p_0=0$. Substitution in the first equality gives $2(p_1-p_0)^2=0$, contradicting strict monotonicity of $\sigma$ and $J\ne0$. Thus the totals cannot all be equal. At least one differs from $Ld(Q)$, proving (4.1). $\square$
+

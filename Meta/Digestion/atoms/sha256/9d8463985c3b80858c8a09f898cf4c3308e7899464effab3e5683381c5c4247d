@@ -1,0 +1,24 @@
+**定理 12.1（已知原节点的实际像与完整制备纤维）。** 从已知字面节点 $T_2=\langle\beta,\alpha\rangle$ 开始，未知 $p$。在节点及一次 $\rho$ 后两读记为
+
+$$
+u=K,\qquad v=N=K\times b.
+$$
+
+独立制备的准确像是全部非零正交 $(u,v)$；依赖制备全部给 $(0,0)$，无其它退化对。非零对的完整制备纤维为
+
+$$
+b=-\frac{u\times v}{|u|^2},\qquad
+B=\frac{|v|^2}{|u|^2},\qquad
+a=\frac vB+\lambda b\quad(\lambda\in\mathbb R).
+$$
+
+同一已知节点的整个数值历史与该对有相同制备纤维。若另可访问 $\tau=a\cdot b$，两读一次更新恢复 $a=v/B+(\tau/B)b$。
+
+证明。$u\perp b,v=u\times b$ 给 $u\times v=-|u|^2b,|v|^2=|u|^2B$；$v=Ba-Cb$ 给仿射表达式。反向任意非零正交 $u,v$，定义所列 $b,B$，则 $|b|^2=B>0$ 且
+
+$$
+b\times v=\frac{(-u\times v)\times v}{|u|^2}=Bu.
+$$
+
+取任意 $a=v/B+\lambda b$，得到 $b\times a=u$、$u\times b=v$，所以每个纤维点都实际实现且独立。原始点必有 $\lambda=C/B$，故无遗漏。规范节点尾由首两值的规范递推决定，整个历史相等的反向又包含这两值。依赖制备给 $K=N=0$，全节点历史零。最后 $v\perp b$，所以 $a\cdot b=\lambda B$；供应 $\tau$ 得唯一原制备。
+

@@ -1,0 +1,97 @@
+### 95.3. Joint face tangents with the full kernel constraint
+
+Continue with the general support S. Fix one pair in 𝒜₀ only to define R by (6). Let D be any Hermitian matrix on all eight coordinates, supported on S×S, such that
+
+\[
+ D_{ff}=0\text{ on every original fibre},\qquad
+ D\ker H=0.
+                                                                    \tag{11}
+\]
+
+Define D_G=−overline R⊙D on S×S and extend it by zero elsewhere. All subsequent Hadamard expressions involving this principal R and full eight-coordinate directions are formed on S×S and extended by zero outside that set. It is Hermitian and has zero original fibre blocks. Since range(P_B)⊆ker H, (11) implies DP_B=0 and therefore
+
+\[
+ D_S\operatorname{diag}(a_S)R=0,\qquad
+ (D_Ga)_i=-\sum_j D_{ij}a_jR_{ji}=0.                         \tag{12}
+\]
+
+For the second equality, the sum is the i-th diagonal entry of the first matrix in (12); outside S it vanishes by support. Thus D_G annihilates the entire kernel of G. Equation (7) also gives
+
+\[
+ D_G\odot H+G\odot D=0,\qquad
+ T-(G+sD_G)\odot(H+sD)
+       =L+s^2\overline R\odot(D\odot D).                   \tag{13}
+\]
+
+The entrywise square in this formula is not an absolute square. Both Gram paths are feasible for every sufficiently small real s. Indeed a Hermitian direction annihilating the full kernel acts only on its orthogonal complement, where the unperturbed Gram is positive definite. Small perturbations remain PSD, and every original fibre block remains I₂.
+
+**Lemma 95.3.** For every fixed D satisfying (11), some pair (ρ,W)∈𝒜₀ satisfies
+
+\[
+ Q_W(D):=2\operatorname{Tr}[(\overline R\odot D\odot D)W]\ge0.
+                                                                    \tag{14}
+\]
+
+**Proof.** The selection is made with D fixed. Given M>0 and arbitrary G′,H′∈𝓔, put V_G=M(G′−G), V_H=M(H′−H). The paths
+
+\[
+ G_s=G+sD_G+s^2V_G,\qquad H_s=H+sD+s^2V_H                 \tag{15}
+\]
+
+are feasible for sufficiently small s. For example,
+
+\[
+ G_s=(1-Ms^2)\left(G+\frac{sD_G}{1-Ms^2}\right)+Ms^2G'
+                                                                    \tag{16}
+\]
+
+is a convex combination of feasible matrices; the H path has the same form. Expansion gives the coefficient L plus
+
+\[
+ s^2[\overline R\odot D\odot D-V_G\odot H-G\odot V_H]+O(s^3).
+                                                                    \tag{17}
+\]
+
+The remainder is uniform against the compact witness set 𝓒. The compact-max derivative formula at scale s², together with local minimality, therefore gives
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+M b(W;G',H')]\ge0
+                \quad\text{for every }G',H'\in\mathcal E.          \tag{18}
+\]
+
+There is one pair in 𝒜 satisfying all the inequalities inside (18) simultaneously. Otherwise compactness would give finitely many with empty intersection. Their affine image of the compact convex set 𝒜 would be strictly separated from the nonnegative orthant by nonnegative coefficients. Normalize those coefficients to sum to one. The resulting convex average of the corresponding feasible pairs G′,H′ contradicts (18). This separation uses only affine variables; the direction D remains fixed.
+
+Call the resulting pair (ρ_M,W_M). Taking G′=G and H′=H gives Q_(W_M)(D)≥0. The Q values are uniformly bounded on 𝒜. Along a convergent subsequence as M→∞, the inequalities give b(W_*;G′,H′)≥0 for every fixed feasible pair. The limit belongs to 𝒜₀ and still has Q_(W_*)(D)≥0. This proves (14). ∎
+
+For every common witness, (5) has the same fixed G,H,a and some α_W>0. Substitution into (14), retaining the reversed indices in the trace, gives
+
+\[
+ \begin{aligned}
+ Q_W(D)&=\alpha_W q(D),\\
+ q(D)&=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+       \frac{\overline{a_i}a_j\overline{R_{ij}}}{H_{ij}}D_{ij}^2.
+ \end{aligned}                                                     \tag{19}
+\]
+
+The ordered summands for (i,j) and (j,i) are conjugates, so q is real. Its cross-fibre coefficients do not depend on the common witness, and its remaining entries vanish. Consequently Lemma 95.3 and α_W>0 imply q(D)≥0 for every admissible D. This does not interchange the direction and witness quantifiers: a witness may be selected separately for each fixed D because every such selection gives a strictly positive multiple of the same real number q(D).
+
+Introduce weighted coordinates
+
+\[
+ E_D=\operatorname{diag}(\overline{a_S})D_S\operatorname{diag}(a_S),
+ \qquad J=\operatorname{diag}(\overline{a_S})H_S
+                                         \operatorname{diag}(a_S).
+                                                                    \tag{20}
+\]
+
+Then E_D is Hermitian, its original fibre blocks vanish, E_DR=0 by (12), and
+
+\[
+ q(D)=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+               \frac{\overline{R_{ij}}}{J_{ij}}(E_D)_{ij}^2\ge0.
+                                                                    \tag{21}
+\]
+
+In general E_DR=0 does not by itself replace the full-kernel condition (11). The replacement is guaranteed when range(P_B)=ker H; no converse on the restricted direction space is asserted. In the full-support rank-(7,6) case, (10) gives exactly that equality. Invertible diagonal multiplication then makes (11) equivalent to E_DR=0.
+

@@ -1,0 +1,45 @@
+**Proposition 11.1 (Explicit two-copy value and the former residual strip).** For all $t,\eta\in[0,1]$,
+
+$$
+D_2=4u(1-w),\qquad
+ e_2(t,\eta)=\frac{c(1+4w)}5=\frac{c(5+4s)}{25}.
+\tag{11.1}
+$$
+
+Throughout the scalar-diagonal residual region
+
+$$
+c>0,\qquad R_m<1-s,\qquad c>K_mD_m,
+\tag{11.2}
+$$
+
+the attained value $[c-D_m]_+$ is strictly smaller than N1's positive error $c-K_mD_m$. This region contains the whole strip
+
+$$
+m=2,\qquad 5/16<\eta<1,\qquad 0<t\le1.
+\tag{11.3}
+$$
+
+Thus the residual (11.2) is resolved by Theorem 4.1, including its nonempty two-copy strip. It imposes no restriction on that theorem's all-parameter validity.
+
+Proof. Conditional on an observation belonging to the $a$ pair, its sign probability under $a,+$ is $p=(w+u)/(2w)$ and under $a,-$ is $1-p$. One such observation has total variation $2p-1=u/w$. For two such observations the mixed-sign words agree under the opposite laws. Each equal-sign word has absolute probability difference $p^2-(1-p)^2=2p-1$, so their total variation is again $u/w$. The number and positions of $a$ observations have the same law under both labels, and the other outcomes have identical conditional laws. A word with no $a$ observation contributes zero variation. Hence the two-copy variation is
+
+$$
+D_2=\bigl(1-(1-2w)^2\bigr)\frac{u}{w}=4u(1-w).
+$$
+
+This includes $u=0$ and $u=w$. For $c>0$, $D_2/c=4(1-w)/5<1$; Theorem 4.1 gives (11.1). At $c=0$ both sides of the final error formula are zero.
+
+At a point of (11.2), $K_m<1$ and $c-K_mD_m>0$. This excludes $m=0$, because $R_0=1$, and $m=1$, because $R_1=1-4s/5>1-s$. Thus $D_m\ge D_1=2c/5>0$. If $D_m<c$, N1's error minus the attained error is $(1-K_m)D_m>0$. If $D_m\ge c$, the attained error is zero while N1's error is positive. This proves strict improvement throughout the region.
+
+For two copies, a joint sign tie consists of two neutral outcomes or an opposite-sign pair in either location. Formula (5.1), or these three disjoint cases directly, gives
+
+$$
+R_2=\nu^2+2(w^2-u^2)+2w^2
+ =1-8w+20w^2-2u^2,
+\qquad (1-s)-R_2=w(3-4s)+2u^2.
+\tag{11.4}
+$$
+
+On (11.3), $1/5<s<3/4$ and $c>0$, so this last difference is positive. Therefore $R_2<1-s$ and $K_2<1$. Since $D_2<c$, also $c>K_2D_2$. Every point of the strip lies in (11.2), as claimed. No numerical search or hypothesis about completeness of the scalar-diagonal ansatz is involved. QED.
+

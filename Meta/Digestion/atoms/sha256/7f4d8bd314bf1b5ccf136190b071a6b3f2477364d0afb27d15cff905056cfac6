@@ -1,0 +1,44 @@
+**Lemma 3.3 (Live epochs and predictable tick payment).** Follow the full source history, freezing any actually emitted label afterwards. Let $Y_n$ be the resulting analytical state after tick $\tau_n$, and define
+
+$$
+N=\inf\{n\ge0:Y_n\in\{d_0,d_1\}\},\qquad
+Q_T=\sum_{t\ge0}\mathbf1_{\{T>t\}}X_t.
+\tag{3.5}
+$$
+
+Under source $i$, the initial row is $\nu_i$ and the epoch kernel is $U_i$. For a compliant observer,
+
+$$
+N<\infty\ \text{almost surely},\quad Y_N=d_D,\quad
+N\le Q_T\le T,\quad
+\mathbb E_iN\le B(1-q)\mathbb E_iT\le Bs\mathbb E_iT.
+\tag{3.6}
+$$
+
+Proof. The independent gaps and fresh coins give (3.2). If the stop precedes or coincides with the first tick, $N=0$. Otherwise each of $Y_0,\ldots,Y_{N-1}$ is immediately after an actually read tick and commits to a further read. These are $N$ distinct paid ticks. A stop during zeros is recorded at the next analytical tick by its frozen label; that unread tick is not added to $Q_T$. Finiteness of individual source intervals and actual almost-sure stopping give finite $N$ and its claimed terminal label. The finite paid mean gives finite $\mathbb E_iN$.
+
+After a read tick and $b\ge1$ subsequent zeros, the next-one hazard is
+
+$$
+\frac{f_i(b)}{S_i(b)}
+=\frac{F_i(b)q^b}{\sum_{k\ge b}F_i(k)q^k}
+\le\frac{Bb^dq^b}{\sum_{k\ge b}b^dq^k}
+=B(1-q).
+\tag{3.7}
+$$
+
+At $b=0$ it is zero since $K\ge1$. Earlier gaps are independent of the current one, so this conditions on the entire bit history. Before any read tick, $b$ zeros say $\tau\ge b$ and the hazard instead is $S_i(b)/\sum_{v\ge b}S_i(v)$. The envelope gives $F_i(k+j)\ge B^{-1}F_i(k)$. Shift the tail terms to get $S_i(b+j)\ge B^{-1}q^jS_i(b)$. When $b=0$, the shifted terms start at $j+1$ and are contained in the tail at $j$, which gives the same inequality. Sum over $j\ge0$ to bound this initial hazard by $B(1-q)$ too.
+
+Expose all independent observer coins only on the proof probability space. In the filtration containing them and $X_0,\ldots,X_{t-1}$, the event $\{T>t\}$ that the next read is undertaken is measurable. Coin independence leaves the source hazard unchanged. Tonelli and conditional expectation give
+
+$$
+\mathbb E_iQ_T
+=\sum_{t\ge0}\mathbb E_i\left[\mathbf1_{\{T>t\}}
+\mathbb E_i(X_t\mid\text{prefix, coins})\right]
+\le B(1-q)\sum_{t\ge0}\mathsf P_i(T>t)
+=B(1-q)\mathbb E_iT.
+\tag{3.8}
+$$
+
+Finally $1-e^{-s}\le s$. This charges actual reads, including the terminal read and any interrupted gap prefix. It supplies neither a coin archive to the observer nor an identity $\mu_i\mathbb E_iN$ for arbitrary observers. $\square$
+

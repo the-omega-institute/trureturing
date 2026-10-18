@@ -1,0 +1,47 @@
+**Theorem 82.1 (Measurable marked projection and original-target separation).**
+Let $H=\{\theta_j:j\ge0\}$, and define $T:\Theta\to\Theta$ to fix every
+point in $H$ and send every other original tape to $\theta_0$. Then $T$ is
+measurable, fixes every selected $\lambda^a_x$ by pushforward, and for
+every original-tape probability $\nu$,
+
+$$
+\operatorname{TV}(T_*\nu,\lambda^a_x)
+\le\operatorname{TV}(\nu,\lambda^a_x).
+\tag{82.1}
+$$
+
+Composing a lawful output map with $T$ preserves its request resources
+and measurable finite handoff under the contract of Definition 71.1.
+For every $A\in\mathcal A_\varepsilon(a)$, without any support
+restriction on its output, the unchanged original targets obey
+
+$$
+\operatorname{TV}(\widehat\lambda_{A,x},\mu_x)\ge1-\varepsilon
+\qquad(x\in X).
+\tag{82.2}
+$$
+
+All explicit attaining acquisitions in Theorems 78.1, 79.2 and 80.2
+instead have distance exactly one from every $\mu_x$. Their tapes remain
+in $B_1$, on which the original consumer returns unknown.
+
+**Proof.** The countable marked set and its singletons are Borel on the
+original carrier (73.1). For a Borel tape event $E$, its inverse image
+under $T$ is $E\cap H$ if $\theta_0\notin E$, and
+$(E\cap H)\cup(\Theta\setminus H)$ if $\theta_0\in E$. These are
+measurable sets, proving measurability. Since $T$ fixes the selected
+support, $T_*\lambda^a_x=\lambda^a_x$. Pulling back each event in the
+definition of TV proves (82.1). The output composition is a fixed
+measurable terminal map, permitted by the common-rule semantics; it
+adds no source observation or request and retains finite handoff.
+
+Every selected $\lambda^a_x$ has $\lambda^a_x(H)=1$, so the cap in
+(77.2) implies $\widehat\lambda_{A,x}(H)\ge1-\varepsilon$.
+Every original $\mu_x$ of (67.18) is nonatomic, so $\mu_x(H)=0$.
+The event $H$ proves (82.2). Each explicit attainer above is supported
+on finitely many points of $H$ at every source, hence gives $H$ mass one;
+the same event then gives TV exactly one. Those points are the unchanged
+original tapes in $B_1$, proving the consumer assertion.
+The projection does not fix $\mu_x$, and its selected-law contraction
+provides no original-target reduction. $\square$
+

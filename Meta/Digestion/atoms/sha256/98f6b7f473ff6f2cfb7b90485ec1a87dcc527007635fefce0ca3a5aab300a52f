@@ -1,0 +1,12 @@
+**定理 78.12（Entire deterministic restoration spectrum）。** For a response-identifiable machine define
+
+$$
+\rho=\min_{P\text{ exact}}\max_{a\in A}r_P(a).
+$$
+
+For $n=1$, $\rho=0$. Across the general machines of 78.1 with fixed $n\ge2$ the attainable values are exactly $\{0,1,\ldots,n-2\}$.
+
+Proof. The representative in 78.5 gives a finite integer upper value, so the nonempty set of integer worst counts has a minimum and lies in this interval. Fix $r$ in it, put $m=r+2$, and choose $B\subseteq A$ of size $m$. On $B$ use the complete selector with length $L_m=\lceil\log_2m\rceil$ and onto map to $B$. For every outside original add a state $o_a$ whose two transitions both go to its own distinct terminal colour $t_a$, different from hit and miss, and set $j(a)=o_a$.
+
+Begin the selector permutation policy on $B$. An outside original is identified by its first bit and uses no restoration. An inside original has exactly the selector history: when $L_m>1$ the first active report excludes the outside originals; when $L_m=1$ hit or miss excludes them. Thus the same policy acquires all originals and has worst restore count $m-2=r$. Conversely restrict any exact full policy to the actual inside originals. It remains a legal exact selector policy, so 78.8 forces a worst restore count of at least $m-2$. Hence $\rho=r$. The largest value needs only hit and miss; the intermediate constructions use the extra distinct colours permitted by the general model. No two-colour restriction is imposed on the entire spectrum statement. $\square$
+

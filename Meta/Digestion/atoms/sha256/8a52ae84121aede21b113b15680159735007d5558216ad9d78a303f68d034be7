@@ -1,0 +1,43 @@
+**Definition 7.1 (a candidate conservative frame extension).** Retain all
+five original source-frame tags and payload languages. Reserve tags 101,
+110 and 111 for the following additional canonical frames; all frames
+still have the original three-bit tag, $U(d)$ and exactly $d$ payload bits.
+
+| Tag | Payload and installed post-acknowledgement action |
+| --- | --- |
+| 101 | Empty payload: create a Cover for the preceding post-acknowledgement Ready before this frame's admission, using the immutable complete predecessor-frame prefix. |
+| 110 | Either $0U(c)$ for Next in cover $c$, or $1U(c)U(k)$ for Select in cover $c$ at $k$. These are distinct complete payloads. |
+| 111 | $U(p)$: Call an actual already published package number $p$. |
+
+Original ReadE, Rho, TagRead and graft semantics are unchanged. These new
+frames are a declared model extension, not original source operations or
+reinterpreted literal TagReads. Frame syntax is prefix-free after its
+length field, including well-typed payload validation. Every actually
+consumed service bit is retained through its corresponding WR and its
+whole canonical frame thereafter. The new handler adds no further IN,
+random bit, independently chosen allocator or schedule. Output delivery
+and return are deterministic mandatory work.
+
+Package and cover numbers are paid maintained unary creation counters.
+They name actual immutable archive records with owner tokens. An unknown
+number returns its distinct executed failure. A correct number alone
+never grants a missing current token. A Cover freezes its predecessor
+backing and bound; later Select and Call do not consult latest-cover.
+The version identifies the entire actually installed extension graph,
+boot, ownership rules and descriptor language.
+
+The finite-string handlers have these stopping rules. Cover
+replays the complete predecessor frame list to its final ready PC, writes
+the resulting bound and initializes its enumeration cursor at the
+acquisition bound. Next looks up that immutable cover, compares its cursor
+to the bound, and either issues the cursor's selected key and increments
+the cursor or returns an end marker. Select uses its actually supplied
+index instead and does not advance another cover's cursor. Both use
+strict prefix selection and publish only the selected input prefix, seed,
+version and provenance. Call looks up an already published immutable key,
+replays its finite cutoff and writes the historical image. Unknown
+records and out-of-range indices take their separate failure branches.
+All branches finish their deterministic publication/acknowledgement and
+return before admitting another frame. These are finite-string algorithms;
+their primitive lowering is specified in §§11–16.
+

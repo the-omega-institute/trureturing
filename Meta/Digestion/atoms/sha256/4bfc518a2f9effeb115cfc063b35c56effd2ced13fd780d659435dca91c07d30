@@ -1,0 +1,9 @@
+## 2. The full cone of positive rank-one secants
+
+Define the closed pointed cone
+
+$$
+\mathcal C=\left\{\begin{pmatrix}a&b\\c&e\end{pmatrix}:
+ a,e\ge0,\ b,c\le0\right\}.
+$$
+

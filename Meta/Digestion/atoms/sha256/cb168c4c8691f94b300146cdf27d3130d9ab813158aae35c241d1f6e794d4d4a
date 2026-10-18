@@ -1,0 +1,33 @@
+## 1. The uncovered direction
+
+The original common-model question asks for one finite same-update generator attaining the p and suspended complete-tail configuration-risk minima. The published ALPHA result requires positive absolute next-alpha change on actual suspended-alpha updates; MOTION requires positive complete-law change on an actual return. Neither condition specifies the direction of the alpha change. This article proves that direction matters: near common optimality requires a positive amount of **decrease** of the next-alpha forecast on some actual alpha updates.
+
+At every positive suspended cut, the true source next-alpha probability increases after the acquired alpha. The necessary decrease concerns the predictor's individual random configurations, not its mean forecast and not the source posterior. This difference is a source-specific constraint on causal minimax calibration.
+
+Write
+
+$$
+d_p=\frac{1116529}{11390625},\qquad
+ d_\beta=\frac{239}{3375},\qquad \rho_s=d_s/2,
+$$
+
+$$
+\eta=\frac{14219478376}{318644812890625},\qquad
+\kappa=\eta^2/64.
+\tag{1.1}
+$$
+
+At a positive actual suspended history h, let its conditional configuration row be $\rho_h(y)$, its actual alpha-update kernel be $A_h(y,x)$, and its current and successor next-alpha emission probabilities be $v_y,u_x$. Set
+
+$$
+\mathcal D_h(M)=\sum_{y,x}\rho_h(y)A_h(y,x)(v_y-u_x)_+,
+\qquad \mathcal D(M)=\sup_{h\in\mathcal H_\beta}\mathcal D_h(M).
+\tag{1.2}
+$$
+
+Here $(t)_+=\max(t,0)$. The weights are the unweighted acquired-alpha edge law. The row is an analysis object, never a runtime input. Let
+
+$$
+e(M)=\max_s\{R_{\mathrm{conf},s}(M)-\rho_s\}.
+$$
+

@@ -1,0 +1,83 @@
+**Corollary 205.13 (Actual early-credit transfer and a joint zero core).**
+For every input satisfying (205.31), with arbitrary early correct rows,
+
+$$
+D(t+E)\le\max\{\delta,d_*\}.
+\tag{205.34}
+$$
+
+The representative $V=V_{t+E}$ has $K_V=K_y$, $V\cdot r=W$, and
+
+$$
+F_{Q(y)-Q(V)}=-\gamma_1(1-b_1)-\gamma_2(1-b_2),\qquad
+\sigma_H(Q(y)-Q(V))=0.
+\tag{205.35}
+$$
+
+Consequently $\delta\le1$ and the additional condition $d_*\le1$
+give a certificate $(V,0)$. At $E=0$, the actual input automatically
+forces $d_*\le\delta$, so every input in this structural class has a
+same-budget completion with exact quotient preservation.
+
+If $D(t+E)\le d$, set $\eta_j=(\gamma_j-d)_+$. Keeping the pair and
+$T$ coefficients of $V$, replace $\gamma$ by $\eta$ in (205.33).
+The result satisfies
+
+$$
+0\le Z\le V,\qquad \Delta_N(Z)=\Delta_O(Z)=0,
+\qquad U=V-Z\ge0,\qquad\Delta_N(Z+U)=D(t+E)\le d.
+\tag{205.36}
+$$
+
+The remainder is correct-only; no separate cost bound $\Delta_N(U)\le d$
+is implied.
+
+**Proof.** The original stopped $(1,2;1,2,z)$ table retains all early
+correct and pair rewards, so $\mu-t\le\delta$. For each other lower
+witness in 205.12, comparison with constant-zero reward $S+t$ gives
+its nonnegative gain at most $\delta+E$. In particular the early
+positive-cell deficit at $t$ is at most $\delta+E$; increasing the
+tail by $E$ reduces its positive part to at most $\delta$.
+For an interior pair write
+
+$$
+a=(\gamma_j-d_{ij})_+,\qquad b=\mu-h_{ij}-t.
+$$
+
+The original single-table lower bound is $a+b_+\le\delta+E$.
+After the one transfer, its gain is
+
+$$
+a+(b-E)_+=\max\{a,a+b_+-E\}\le\max\{d_*,\delta\}.
+\tag{205.37}
+$$
+
+The terminal-pair gains already belong to $d_*$. The $(1,2)$ term
+is at most $\delta$, so the maximum proves (205.34). When $E=0$,
+the same necessary guards force every directed deficit and every
+terminal-pair deficit in $d_*$ to be at most $\delta$. This gives
+the automatic assertion. When $E>0$, those guards give only bounds
+with $E$ present; $d_*\le1$ is not inferred from $\delta\le1$.
+
+The new pair mass is $S$ and $T=t+E$, so its anchor and $K$ are
+$W$ and $G+W$. This gives (205.35), whose supremum is zero at every
+$v_k$. Early credit has been transferred once; no further $-Ee$
+allowance is available in this residual.
+
+For (205.36), $\eta$ stays nondecreasing on the same declared $J$
+and its conditional densities remain at most $1/2$. Put
+$\mu_0=(\mu-d)_+$. The entries of $D(t+E)\le d$ imply
+
+$$
+\mu_0\le t+E,\quad \eta_j\le d_{ij}\ (i<j<z),\quad
+\mu_0\le S-m_i\ (i<z).
+$$
+
+Substitution into (205.32) for the reduced totals makes every entry
+zero: the positive-cell terms are already covered by $T\ge\mu_0$.
+Each correct coefficient in (205.33) is linear in its class total,
+so $Z\le V$, even after coincident rows are added. Zero $\eta$, zero
+budget, $t=0$, $m_j=2\gamma_j$ and all equalities are covered without
+dividing by a zero correct total. For empty $J$ use only $T_V=W$,
+as in 205.9. $\square$
+

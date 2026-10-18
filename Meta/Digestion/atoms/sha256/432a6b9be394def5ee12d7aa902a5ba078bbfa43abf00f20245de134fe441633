@@ -1,0 +1,10 @@
+## 6. Full-support triplet locus and the native-operation boundary
+
+This appendix keeps the source, operation and metric contract of §§3–5
+unchanged. Thus $p=(p_0,p_1,p_2,p_3,p_{13})$ is positive with total mass one,
+the controls are exactly the full Definition 3.1 loops with every integer
+winding, the five readouts are the doubled coherence pairs of (4.1), and the
+endpoint average is normalized Haar with equal mass on the two components at
+the double wall. The Gram matrices below are the source pullback Gram or the
+actual ten-output covariance from (5.4); no whitening is introduced.
+

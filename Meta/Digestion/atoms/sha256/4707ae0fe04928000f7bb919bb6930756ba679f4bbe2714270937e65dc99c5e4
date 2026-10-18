@@ -1,0 +1,81 @@
+**Proposition 80.2 (finite optimal-static-dual lower bound).** Normalize
+$\tau=s/s_0<1$. Let $(Y,\lambda)$ be any finite attained optimal static
+dual at this parameter, in the convention
+
+$$
+D(h):=h^TYh-\lambda|z|\ge|h^TGh|
+\quad(h=(1,z,w),\ \alpha z^2+\beta w^2=1),\quad
+\lambda\ge0,\quad j(\tau)=\operatorname{tr}Y-\lambda\tau.
+\tag{FA.49}
+$$
+
+Use RC's finite static dual only at its stated scope. For each physical
+spectral line choose $\mathbf c_\epsilon=(s_0,z_\epsilon,w_\epsilon)$
+on the ellipse and its unique positive coefficient $b_\epsilon$ such that
+$B_\epsilon^{\rm sp}=b_\epsilon n(\mathbf c_\epsilon)n(\mathbf c_\epsilon)^T$.
+Its two live orientations are
+$h_{\epsilon,+}=(1,z_\epsilon,w_\epsilon)$ and
+$h_{\epsilon,-}=(1,-z_\epsilon,-w_\epsilon)$. Then
+
+$$
+K(s)\ge\frac12\sum_{\epsilon=\pm}
+ \frac{b_\epsilon}{\mathfrak c(\mathbf c_\epsilon)}
+ \min_{\iota=\pm}\left
+ \{D(h_{\epsilon,\iota})
+       -\epsilon h_{\epsilon,\iota}^TGh_{\epsilon,\iota}\right\}>0.
+\tag{FA.50}
+$$
+
+Here $\epsilon$ in the scalar expression means the sign of the
+corresponding eigenvalue. The expression is a bound supplied by the
+chosen finite optimal dual. It is not an equality formula for $K(s)$.
+At $\tau=1$ RC64 has no finite optimal dual and FA.50 is not asserted.
+
+**Proof.** Use actual endpoint refinements from FA.20 for a maximizing
+instrument and write $b_A=1/t$. Let $\nu_L$ be the pure-live coefficient
+measure and $\sigma$ the failure coefficient measure of the saturated
+labels. Their exact identities and low objective are
+
+$$
+\begin{gathered}
+\int hh^T d\nu_L+b_A\int\frac{hh^T}{\mathfrak c}d\sigma=I,
+\quad \int nn^T d\sigma=M,\\
+\int|z|d\nu_L+b_A\int\frac{|z|}{\mathfrak c}d\sigma\ge\tau,\\
+\int|\ell|d\nu_L+
+ \int|f+b_A\ell/\mathfrak c|d\sigma.
+\tag{FA.51}
+\end{gathered}
+$$
+
+The measures have uniformly bounded mass: the first identity bounds
+$\nu_L$; the second bounds $\sigma$ since the minimum of $\|n\|^2$
+on the ellipse is positive. Set
+$m(n)=n^TM_2^{-1/2}|\Xi|M_2^{-1/2}n$. Twice the height gap is exactly
+
+$$
+\begin{aligned}
+&\int(D-|\ell|)d\nu_L
+ +\lambda\left(\int|z|d\nu_L+
+             b_A\int|z|/\mathfrak c\,d\sigma-\tau\right)\\
+&\qquad+\int\left[m(n)-|f+b_A\ell/\mathfrak c|
+                    +b_AD/\mathfrak c\right]d\sigma.
+\tag{FA.52}
+\end{aligned}
+$$
+
+Every term is nonnegative: $m\ge|f|$ and $D\ge|\ell|$ give the
+last one by triangle inequality. The $O(b_A)$ upper bound forces every
+limiting optimal failure measure onto the two physical spectral lines,
+with their fixed effects $B_\pm^{\rm sp}$; this is precisely equality
+in the whitened trace-norm bound. Near either line $f$ is nonzero with
+sign $\epsilon$, uniformly for small $b_A$, so
+$|f+b_A\ell/\mathfrak c|=|f|+\epsilon b_A\ell/\mathfrak c$.
+Drop only nonnegative spectral slack and off-neighborhood terms in
+FA.52, divide by $b_A$, and take compact subsequential limits.
+The two compatible orientations may divide the fixed effect weight;
+minimizing over them gives FA.50. A subsequence argument applies to
+every liminf; Theorem 80.1 identifies it with $K(s)$.
+For the negative spectral line FA.27 gives strictly positive live
+height in both orientations. Thus $D+\ell\ge2\ell>0$ there,
+proving strict positivity of the displayed bound. $\square$
+

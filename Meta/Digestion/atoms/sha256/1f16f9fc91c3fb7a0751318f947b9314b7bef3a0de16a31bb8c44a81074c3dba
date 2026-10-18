@@ -1,0 +1,66 @@
+## 5. The midpoint and the risk separator
+
+**Proof of Theorem 2.1.** Let $\theta=\Pr(z_0=L)$. This is an analysis
+weight, not a runtime register. Since
+$P_{p,a}(E_p)-P_{p,b}(E_p)=2\rho_p>1/11$, event contraction and (4.4)
+give
+
+$$
+|\theta-1/2|\le\frac{\eta+D_\Pi}{2\rho_p}
+ \le11(\eta+D_\Pi).
+\tag{5.1}
+$$
+
+For clarity the three exact projected laws are
+
+$$
+\begin{array}{c|ccc}
+r&E_p&w_{3,1}&\text{complete remainder}\\ \hline
+1/3&412/729&32/6561&2821/6561\\
+2/5&7299/15625&1944/390625&206206/390625\\
+3/8&132025/262144&84375/16777216&8243241/16777216.
+\end{array}
+\tag{5.2}
+$$
+
+The first and third coordinates of the third row lie between those of
+the endpoint rows. Its second coordinate exceeds both endpoints; the
+upper endpoint there is the b row and the excess is $\delta_3$.
+Coordinatewise absolute values therefore give exactly
+
+$$
+\begin{aligned}
+\operatorname{TV}(\Pi_\#P_{p,a},\Pi_\#P_{p,b})&=2\rho_p,\\
+\tfrac12\operatorname{TV}(\Pi_\#P_{p,a},\Pi_\#R)
+ +\tfrac12\operatorname{TV}(\Pi_\#P_{p,b},\Pi_\#R)
+ &=\rho_p+\delta_3/2.
+\end{aligned}
+\tag{5.3}
+$$
+
+This is the supplied endpoint gap, now on the specified three-cell
+partition. No estimate on omitted individual atoms is needed.
+
+Apply the reverse triangle inequality separately at each configuration
+on the path and then integrate. Each fixed-target TV lies in $[0,1]$,
+so changing the endpoint weight from $1/2$ to $\theta$ changes its
+average by at most $|\theta-1/2|$. Equations (5.1)–(5.3) yield
+
+$$
+L_\Pi\ge\rho_p+\delta_3/2-12D_\Pi-11\eta.
+\tag{5.4}
+$$
+
+Finally (4.4) and $S=\eta+40000\epsilon$ give
+
+$$
+12D_\Pi+11\eta
+ \le12000011\eta+480001200000\epsilon
+ \le500000000000(\eta+\epsilon).
+\tag{5.5}
+$$
+
+Since $\epsilon=\sqrt V$ and $500000000000<10^{16}$, this proves the
+asserted coefficient. Every estimate is global, so large $\eta$ or $V$
+requires no additional case. $\square$
+

@@ -1,0 +1,56 @@
+**Definition 3.2 (prescribed binary component and resource).** Fix a
+public $s\in[0,1]$ before receiving the unknown specimen. The observed
+component $r(\xi)\in\{+1,-1\}$ must have every-input effects
+
+$$
+F_r(s)=\frac{I_5+r s\kappa E X_{01}E^\dagger}{2},
+\qquad X_{01}=|0\rangle\langle1|+|1\rangle\langle0|.
+\tag{IR.13}
+$$
+
+A finite postprocessing coin is absorbed into $\xi$. On a positive
+five-mode input $\sigma$, with unnormalized compression
+$\rho=E^\dagger\sigma E$, its law is
+
+$$
+\Pr_\sigma(r)=\frac{\operatorname{tr}\sigma}{2}
+ +r s\kappa\operatorname{Re}\rho_{01}.
+\tag{IR.14}
+$$
+
+For (IR.2) it is $1/2+rs\kappa en\sqrt{y(64-y)}/128$.
+This is a conditional law for each original history, with no prior on
+histories. The finer label laws are not prescribed. In particular the
+original class does not require the JR binary-conditioned output
+channels. Some constructions below preserve that stronger property;
+the lower proofs do not impose it. Negative coefficient
+$\gamma=-s\kappa$ is obtained by exchanging $r=+1,-1$. JR's ceiling
+excludes $|\gamma|>\kappa$ for this fixed channel.
+
+The acquired high-dimensional effect and mass are
+
+$$
+G_H^{\rm acq}(\mathfrak F)=
+ \sum_{d_\xi\geq3}\mathcal C_\xi^\dagger(I),
+\qquad p_H^{\rm acq}(\sigma;\mathfrak F)
+ =\operatorname{tr}(G_H^{\rm acq}(\mathfrak F)\sigma).
+\tag{IR.15}
+$$
+
+Let $G_H^L,p_H^L$ count the supported live output of these same actual
+high fibres. Full decoder TP and live TNI give the operator inequality
+
+$$
+G_H^{\rm acq}\succeq G_H^L\succeq0,
+\qquad p_H^{\rm acq}(\sigma)\geq p_H^L(\sigma)\geq0.
+\tag{IR.16}
+$$
+
+For supported inputs the notation means evaluation at $E\rho E^\dagger$.
+Every mass is homogeneous on positive inputs; no division by live or
+acquisition success occurs. The universal statements below concern this
+original finite model. JR's broader all-optimizer and countable/integral
+scalar law is reused through Comparison 2.5; it does not enlarge the
+implementation class of the binary-live, perturbation or compact
+reduction theorems here.
+

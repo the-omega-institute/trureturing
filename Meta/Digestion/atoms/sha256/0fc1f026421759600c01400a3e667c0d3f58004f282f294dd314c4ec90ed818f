@@ -1,0 +1,31 @@
+### 57.5 Completion on the strict branch
+
+Every point in the closed cube (57.22) belongs to a terminal leaf.
+A signed row leaf cannot contain a common zero. An \(E\) leaf can
+contain one only at \(e=0,s=-1/5,t=-2/5\), by Lemma 57.2. Direct
+substitution into the definitions (55.24)–(55.27) makes all four rows
+zero at this stratum, for every proper-chart coordinate. This proves
+the stronger closed polynomial assertion (57.3), while retaining its
+pole explicitly.
+
+The strict seed domain (57.2) has \(e>0\), so contains no such point.
+Both proper charts, their overlap endpoints, and reciprocal infinity
+were included in the proof. The negative half follows from (56.3),
+and the central closed half from Proposition 56.1. No exceptional
+linear-row branch was removed: all four necessary rows were kept
+throughout. The actual channel exchange used at the start is valid on
+the sign-symmetric complete open interval.
+
+Finally,
+\[
+a^2=\frac{b^2(3-b^2)}{1+b^2},\qquad
+\frac{d(a^2)}{d(b^2)}=
+\frac{(1-b^2)(3+b^2)}{(1+b^2)^2}>0\quad(|b|<1).
+\tag{57.32}
+\]
+Thus the remaining band is exactly
+\(\sqrt{11/20}<|a|<1\), adjoining the inclusive interval already
+excluded in Proposition 56.1. The original column-basis statement
+follows from the unitary basis-direction argument at the end of §55.
+This completes the proof of Proposition 57.1.
+

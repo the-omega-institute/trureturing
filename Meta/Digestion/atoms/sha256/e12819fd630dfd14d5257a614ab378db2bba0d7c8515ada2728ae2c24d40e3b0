@@ -1,0 +1,21 @@
+**Definition 1.4 (Total cap and full preserved law).** Let $N$ count all actual reads and let $\tau$ be the return time, with $\tau=\infty$ on every nonreturn. These are different quantities. A pathwise hard total cap $k\in\mathbb N_0$ requires $N\le k$ on every execution, including nonreturns and exceptional source/seed paths. Set
+
+$$
+D=\mathbf1_{\{\tau<\infty\}},\qquad
+O=\begin{cases}A&D=1,\\\bot&D=0,\end{cases}\qquad
+Z=(H_j,O,D,N),\qquad\bot\notin\mathcal A.
+\tag{1.4}
+$$
+
+Under the cap the alphabet is finite:
+
+$$
+\mathcal Z_k=\{(h,o,d,n):h\in\mathcal A,\ o\in\mathcal A\cup\{\bot\},
+d=\mathbf1_{\{o\ne\bot\}},\ 0\le n\le k\}.
+\tag{1.5}
+$$
+
+The objective is exactly equality of the joint law of $(u,H_j,O,D,N)$, including correlations with every measurable seed event. A nonreturn with $N=n$ keeps its $n$ paid calls and means internal continuation forever after them. A cap only on returns is insufficient: $k+1$ repeated reads followed by internal nonreturn obey every return-only cap but have an $N$-law impossible under total cap $k$.
+
+Numerical return times, literal address names, acquired records, whole-tree signatures, and equality on each original source sample are not coordinates of this objective. A representative may change its tree, decisions, and records, and may use the single fixed public $p$.
+

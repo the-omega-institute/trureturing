@@ -1,0 +1,28 @@
+**Definition 3.1 (base-four off-path guide).** Fix $r\ge2$, put
+
+$$
+n=D=4^r,\qquad p=RL^{n-1}.
+\tag{3.1}
+$$
+
+Let $d=\lceil\log_2 r\rceil$. Choose $r$ distinct leaves $s_0,\ldots,s_{r-1}$
+of a fixed binary skeleton of height $d$ and replace the selected skeleton
+leaves by the four trees
+
+$$
+G_0=\alpha,\quad G_1=\langle\alpha,\alpha\rangle,\quad
+G_2=\langle\beta,\alpha\rangle,\quad
+G_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle.
+\tag{3.2}
+$$
+
+Call the resulting subtree $Z(c)$ when the selected leaf $s_i$ receives
+$G_{d_i}$, where $(d_0,\ldots,d_{r-1})$ are the base-four digits of
+$c\in\{0,\ldots,4^r-1\}$. A Read at $s_iL$ returns respectively
+`absent`, $\alpha$, $\beta$, or `branch` for $G_0,G_1,G_2,G_3$.
+
+For $j=1$, use the canonical $t_{1,e}$. For $j\ge2$, replace the existing
+$RR$ subtree of $t_{j,e}$ by $Z(j-1)$ and call the result $g_{j,e}$. The
+height added at $RR$ is at most $d+2$, so the right-subtree height is at
+most $D$; no source is padded above the family bound.
+

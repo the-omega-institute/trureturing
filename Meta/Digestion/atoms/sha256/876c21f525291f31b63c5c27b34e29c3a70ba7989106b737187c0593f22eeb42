@@ -1,0 +1,52 @@
+**Theorem 3.2 (both directions at invocation, validation and Return).**
+Under Assumption 3.1 the projection of all legal returning producer
+histories with boundary $b$ onto their invocation source, actual update
+counts and Return register is exactly
+
+$$
+\mathscr R_b=
+\{(u,n,j,\rho^{n+j}u):u\in\mathcal T,\ n,j\in\mathbb N,
+                                      \ E_b(u,n)\}.
+\tag{NRF.8}
+$$
+
+Every member has a real producing history with those identical $u,n,j$
+and the entire boundary $b$. The producer terminates under the
+supplier's finite-interference and observer-progress assumptions.
+
+Proof. On any returning legal history, capture safety gives precisely
+$U_v=\rho^n u$, where $n$ includes all updates before and during all
+attempts. The producer evaluates the selector and exact literal
+partition on this acquired tree. Theorem 2.2 identifies its whole
+output, and complete handoff leaves exactly that boundary. The
+subsequent $j$ genuine updates give $\rho^{n+j}u$ at outer Return.
+This safety direction does not assume a paused writer, nor finite
+interference on histories that do not return.
+
+For the reverse direction fix any $u,n,j$ satisfying $E_b(u,n)$.
+After invocation, schedule exactly $n$ updates before the first
+observer Read. Schedule no updates during one successful full capture;
+its finite stationary execution validates $\rho^n u$. The local
+selector computation therefore gives $b$. Schedule exactly $j$ updates
+after validation and before outer Return, for example after the finite
+local preparation. Complete the specified handoff and Return. This is
+a legal schedule of the actual producer, preserving the original $u$
+and both actual counts. The paused portion is an existential witness
+schedule, not a suspension primitive available to the program and not
+the proof of universal safety.
+
+For liveness, the supplied capture terminates under finite interference
+and observer progress. Its returned tree is finite. State evaluation,
+cut construction, literal comparisons, canonical row formation and
+cleanup are finite computations on that tree. Observer progress
+therefore completes them and outer Return.
+
+For comparison, replace selection by taking the complete row at the
+fixed public cut $P$ after the same full capture, and perform the
+same canonical handoff. The identical forward and reverse arguments
+give its actual projection
+$\{(u,n,j,\rho^{n+j}u):H_b(u,n),\ j\ge0\}$, including
+row-valid blocked cuts. Thus the bare relation used below also has
+an actual producing interpretation; it is not only a relaxed
+predicate on trees. $\square$
+

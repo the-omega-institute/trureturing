@@ -1,0 +1,10 @@
+**Definition 93.3 (complete query and output).** Reuse [supplier Definition 76.8](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md)'s finite transport: a leading $Q$, the nonempty canonical binary expansion of $j\geq3$, a semicolon, then end of input. Every character is consumed, including saturated or already invalid suffixes. Maintain the saturated value $v=\min(J,\text{prefix value})$, the residue modulo three, and finite framing, seen-digit, first-digit and invalidity flags. A binary digit $d$ updates $v$ to $\min(J,2v+d)$ and residue $r$ to $(2r+d)\bmod3$. The identity
+
+$$
+\min(J,2\min(J,n)+d)=\min(J,2n+d)
+$$
+
+proves the exact head index or tail decision and phase are preserved without storing an arbitrarily long integer. Reject missing $Q$, empty digits, a sign, nonbinary symbols, leading zeros, $j<3$, missing or additional semicolons, and trailing tokens. An invalid word also requires full consumption of the finite query before the finite error answer. One optional final transport newline may be consumed using one-character lookahead; a second newline is trailing error. Infinite streams are outside this finite-input contract.
+
+The successful endpoint answer is the finite $V$ frame of [supplier §76.8](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md): gamma-coded precision ten, three gamma-coded signed dyadic numerators and a semicolon. Natural gamma is zeros followed by the binary expansion of the natural plus one, and the signed map is $2n$ for $n\geq0$, $-2n-1$ for $n<0$. The error frame is $\mathrm{ERR};$. The existing exact-zero mode has precision zero, and exact rational periodic modes use the $R$ frame of three reduced numerator/positive-denominator pairs. All symbols, precision, coordinates and output transport are paid. A symbolic power expression is not an emitted numerical answer. Full parsing, finite installation, finite head powering and finite output prove termination for every finite input; semantic accuracy is asserted for words satisfying the actual-source contract.
+

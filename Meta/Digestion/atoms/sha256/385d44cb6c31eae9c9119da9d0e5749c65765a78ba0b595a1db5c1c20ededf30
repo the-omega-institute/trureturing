@@ -1,0 +1,27 @@
+**Theorem 55.1 (Two distinct diagnostics of the published endpoint failures).** At cap $r$, the unchanged countable example of Theorem 52.1 has nonempty $K_0^r$ and $K_1^r$ at every actual signature, but $K_2^r([x_*])=\varnothing$. Applying the local operator (54.4) to the unchanged measurable example of Theorem 53.1 gives instead a nonempty stable singleton correspondence after the first refinement. For this second calculation interpret $P$ as all probability measures on that declared measurable carrier, and form $K_0^r$ and its successors by (54.3)--(54.4); no general stabilization theorem is imported. That second example is nevertheless unacquirable. These statements concern the two published families, rather than new constructions of their nonattainment.
+
+**Proof.** Use $E,D_n,B_n,w_n=r+c/n$ and the dense colors of Theorem 52.1. On $D_n$, density and closedness of the cap balls give
+
+$$
+K_1^r([z])=\bigcap_{i=1}^n
+ \{v\in P:d(v,(1-w_n)\delta_0+w_n\delta_{(n,i)})\le r\}
+       \qquad(z\in D_n).
+\tag{55.1}
+$$
+
+For necessity, approach $z$ through each color and use centers in its $K_0^r$ values at distances tending to zero from the proposed surviving point. For sufficiency, a member of the displayed intersection belongs to $K_0^r$ throughout the open set $D_n$, so all those distances are zero. The law (52.4) belongs to (55.1). At the anchor, $\delta_0\in K_1^r$: a color-$i$ source in $D_n$ has a cap center $(1-c/n)\delta_0+(c/n)\delta_{(n,i)}$ at distance $c/n$ from $\delta_0$, and the centers on $E$ may equal $\delta_0$. Every sufficiently long anchor cylinder has only $E$ and sufficiently late $D_n$, proving (54.4). Thus all first-refinement values are nonempty.
+
+Every member of (55.1) puts at least $c/n$ on each singleton in $B_n$, hence at least $c$ on $B_n$. For any fixed probability $v$, pairwise disjointness gives $v(B_n)\to0$, and therefore
+
+$$
+\operatorname{dist}(v,K_1^r([z]))\ge c-v(B_n)
+                   \qquad(z\in D_n).
+\tag{55.2}
+$$
+
+Every anchor cylinder contains arbitrarily late occupied $D_n$. Equation (55.2) excludes every $v$ from the second refinement at the anchor. One compatibility pass is therefore insufficient, even though every initial and first-refinement fiber is nonempty.
+
+For Theorem 53.1 use its unchanged $\alpha,t,k,\nu,\kappa$ and $k$ dense colors. A point surviving the first refinement at $q$ belongs to every cap ball centered at $\alpha\nu_q+t\delta_{a_i}$: approach through color $i$, choose nearby centers, and use TV continuity of $\nu$. The tag-saturation argument (53.5) forces that point to be $\kappa_q$. Conversely the continuous map $\kappa$ selects every initial fiber, so the survival induction (54.8) keeps it at every stage. Consequently the first refinement is precisely the stable map $q\mapsto\{\kappa_q\}$.
+
+Its common-submeasure mass in every anchor cylinder remains $t<1$ by (53.6). The necessary condition of Theorem 46.4 therefore prevents acquisition. The elementary selection construction requires a complete range and a clopen basis, but selecting a continuous law is not the operational sufficiency step on an arbitrary measurable carrier. The countable-carrier realization (54.11) is precisely the additional bridge available in Theorem 54.2. On general carriers, even a stable singleton of continuous cap laws cannot replace common-submeasure exhaustion. $\square$
+

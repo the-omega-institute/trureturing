@@ -1,0 +1,74 @@
+**Theorem 5.1 (disjoint-neighborhood owner-swap rule).** In any finite
+actual network satisfying Assumption 2.3, let $T$ be any set of edges
+whose full $W_e$ are pairwise disjoint, and suppose (OOA.16) holds.
+For every retained $R$, including arbitrary guards, compatibility zeros
+and correlations,
+
+$$
+a_R\le\prod_{e\in T}\left(1-\frac{2\delta_e}{|W_e|}\right),
+\qquad
+Z_R\le\left(\prod_iC_i\right)
+          \prod_{e\in T}\left(1-\frac{2\delta_e}{|W_e|}\right).
+\tag{OOA.17}
+$$
+
+The first inequality uses the definition of $a_R$ even when $R$ is
+empty. No independence of actual seeds, solutions or block weights is
+required.
+
+Proof. Let $\pi$ be a uniform permutation of the original blocks.
+Call $e=ij$ eligible if $i,j$ are consecutive in its restriction to
+$W_e$. On $w=|W_e|$ labels there are $2(w-1)!$ orders with this
+property, so eligibility has probability $2/w$. The relative orders on
+disjoint sets $W_e$ are independent: after prescribing them, the number
+of full permutations is $n!/\prod_e|W_e|!$, independently of the
+prescribed orders. This is independence of auxiliary relative orders.
+
+Swap the positions of both endpoints of every eligible $e\in T$.
+Because the neighborhoods are disjoint, the operations have disjoint
+endpoints, preserve every eligibility event, and define an involution
+$\tau$ on permutations. Thus $\tau$ preserves their uniform law.
+No neighbor of either endpoint lies strictly between eligible endpoints.
+No other kernel row changes its earlier incoming-owner set: a vertex
+between the endpoints is a nonneighbor of both, and a vertex outside
+their interval sees both on the same sides as before.
+
+For each eligible pair move its later endpoint just after its earlier
+endpoint, crossing only nonneighbors. Each crossed adjacent swap leaves
+every kernel row unchanged. These moves can make all eligible pairs
+consecutive at once. A move cannot split a previously completed pair:
+it removes its own distinct endpoint and inserts after its own other
+endpoint. It also leaves the restriction to every other selected $W_f$
+unchanged. In this grouped order $q_\pi$ and $q_{\tau\pi}$ have the
+same sequential list of single blocks and pairs; only each eligible
+pair's internal order is reversed. Contexts at a later group contain
+the same full earlier owner values on both sides.
+
+In $\sqrt{q_\pi q_{\tau\pi}}$ a single block contributes its
+normalized row, and an eligible pair contributes
+$\sqrt{K_e^+K_e^-}$ with the common preceding context. Reverse summation
+over this list, applying (OOA.16) uniformly in that context, proves
+
+$$
+\sum_{s\in\mathcal S}\sqrt{q_\pi(s)q_{\tau\pi}(s)}
+\le\prod_{\substack{e\in T\\e\text{ eligible in }\pi}}(1-\delta_e).
+\tag{OOA.18}
+$$
+
+This summation never factors a native solution law. It bounds full
+normalized analytical rows on their shared variables.
+
+For each $s$, permutation invariance gives
+$\mathbb E_\pi\log\sqrt{q_\pi(s)q_{\tau\pi}(s)}=\log H(s)$.
+Geometric/arithmetic mean yields
+$H(s)\le\mathbb E_\pi\sqrt{q_\pi(s)q_{\tau\pi}(s)}$.
+Sum on $R$, enlarge this nonnegative sum to $\mathcal S$, and apply
+(OOA.18). Independence of the eligibility indicators gives
+
+$$
+a_R\le\mathbb E_\pi\prod_{e\text{ eligible}}(1-\delta_e)
+=\prod_{e\in T}\left(1-\frac{2\delta_e}{|W_e|}\right).
+$$
+
+Theorem 3.2 supplies the mass inequality. $\square$
+

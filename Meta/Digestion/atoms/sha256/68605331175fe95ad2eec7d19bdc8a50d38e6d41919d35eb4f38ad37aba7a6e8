@@ -1,0 +1,39 @@
+**Theorem 10.3 (whole-row constancy on observable invariant charts).**
+For a certificate of Definition 10.1, bounded full-original-row recovery
+on $D$ is equivalent to constancy of $R_Q$ on every nonempty $D_i$.
+The criterion is effective. A positive decision constructs a lawful
+finite static paid service on the whole $D$, and a negative decision
+provides finite same-fiber counterexamples at every requested prefix
+depth.
+
+Proof. Suppose a bounded service exists. It restricts to each entire
+$D_i$, and ARH's prefix criterion gives a finite original determining
+depth on that chart. Situation 1 of Lemma 10.2 would contradict it.
+In situation 2 the reached set and full exterior are fixed. If two
+chart rows differ, a partition bit differs. Equation (NSF.22)
+preserves and reflects each of those two truth values under every
+simultaneous residual iterate. The first part of Lemma 10.2 makes
+the original prefixes agree arbitrarily deeply while their rows
+remain different. That too contradicts a determining depth.
+Thus every nonempty chart has one whole row.
+
+Conversely, acquire the supplied original prefix through $s$ with
+SLH's actual historical decoder, evaluate $\sigma$, and output the
+constant row of the selected chart. The selector guarantees actual
+membership in that chart, and its row is correct on its *whole*
+domain. If a source belongs to several constant charts, their output
+rows agree on that source. There is no need to learn its residual
+values or test a semantic chart condition. The selector uses finitely
+many actual current reads, followed by a genuine halt; it is
+source-total. Bounds (NSF.12) with $h=s$ are sufficient.
+
+For effectivity, the verification and row tests are precisely the
+finite native queries established in Proposition 10.4 below.
+A nonconstant nonempty chart supplies two native witnesses. If its
+geometry has an uncut residual cone, one witness and successive
+chart iterates give the negative pairs of Lemma 10.2. Otherwise
+their different row must contain a different partition bit, and
+(NSF.22) and common prefixes give the negative pairs by simultaneous
+iteration of both witnesses. Constructor filling puts each pair back
+in the entire original $D$. $\square$
+

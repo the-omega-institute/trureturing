@@ -1,0 +1,56 @@
+**Lemma 3.1 (aligned complete-source formulas).** Each $D_\eta$ has
+an effective WS2S formula on complete finite-tree label sets.
+For a surviving coordinate $y$, a fixed numeral $e\ge0$, and
+an arbitrary position $z$, each reply
+$r_{\rho^e(v(y))}(z)$ is expressed by a WS2S formula.
+Every fixed original physical-prefix condition on $F_\eta[v]$
+therefore has such a formula.
+
+Proof. Encode a coordinate by three finite disjoint label sets
+$X_{y,\alpha},X_{y,\beta},X_{y,\mathsf{branch}}$.
+Their union contains the root; every other member has a branch parent;
+each branch has both children in the union; leaves have neither.
+These are exactly complete nonempty finite ordered trees. A separate
+triple is used for each coordinate, and all occurrences of a coordinate
+use that same triple. Different triples need not be independent or
+disjoint from each other.
+
+Encode a run of the supplied ARH Lemma 21.1 automaton for $D_\eta$
+by finite state-label sets on the union of these coordinate domains.
+Use each coordinate's actual symbol or padding in the transitions,
+and require acceptance at the root. This is precisely the aligned
+run encoding in SRF Lemma 1.4, with the ARH21.1 residual automaton
+in place of the synchronous-family domain automaton. The argument
+requires only that this exact residual automaton exists, which
+Proposition 1.3 supplies. Zero-coordinate domains use their
+computed truth value.
+
+For completeness the variable reply formula uses only fixed right
+suffixes. For $c\ne\mathsf{absent}$ it is
+
+$$
+\begin{aligned}
+\mathsf{Rep}_{e,c}(X_y,z)\quad\Longleftrightarrow\quad&
+ [c=\mathsf{branch}\ \land\ z\in X_{y,\mathsf{branch}}]\\
+ &\lor
+ \bigvee_{\substack{\lambda\in\{\alpha,\beta\}, t\in\operatorname{Pos}(\rho^e\lambda)\\
+ r_{\rho^e\lambda}(t)=c}}
+ \exists b\,[b\in X_{y,\lambda}\land z=bt].
+\end{aligned}
+\tag{CRF.7}
+$$
+
+Every $t$ in this finite disjunction is a literal word, so $bt$
+is a finite composition of successor operations. The absent formula
+is the complement of the three nonabsent formulas. Equation (CRF.7)
+is SRF (3): the image consists of the preserved original branch
+nodes and the finite leaf images rooted at original leaves.
+It covers $e=0$, the root, born nodes and absence, and gives exactly
+one reply.
+
+For a fixed physical word, navigate the finite $F_\eta$ template.
+Either its reply is determined in the ground part, or its remaining
+fixed suffix lies in a port $\rho^e(y)$ and uses (CRF.7). This proves
+the final claim. All source sets and run sets remain unrestricted
+finite sets; the observation depth does not bound them. $\square$
+

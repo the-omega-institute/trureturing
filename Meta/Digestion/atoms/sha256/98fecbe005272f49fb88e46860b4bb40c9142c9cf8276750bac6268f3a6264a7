@@ -1,0 +1,21 @@
+## 356. M/U axes with transverse V/C: hypotheses and conclusion
+
+Retain the six-label setting of Sections 341 and 348: exactly M,V,C,D,Z,U; one fixed four-distinct-label paired frame per original owner; one actual connected circular normal link per label; original nonnegative angles summing to 2π; unique flat sigma=(M,C,D,V,C,D); every other owner genuine; genuine tau=(Z,M,C,D,M,C). Write shared coshes as m,v,c,d,z,u. Assume
+
+    c,d,v>1, m>1+c+d, 1<v≤m−2,
+    z>1+m+c, u>m,
+    (m−1)(v−1)≥(c+d)²,
+    z<u+m+1.
+
+The last inequality is an explicit one-sided upper-gap premise.
+Sections 318–321 supply it when their hypotheses hold: a finite actual
+paired quotient, four distinct labels in each fixed frame, connected
+normal circles of degree at least six, complete original angle sums
+2π, and a wholly genuine star at a largest actual cosh. Here Z and U
+have wholly genuine stars and all remaining values are at most m;
+applying that result to the larger gives |z−u|<m+1.
+
+Independently of how the gap is supplied, the actual D-link degree is
+required to be at least six for this V/C implication. No degree lower
+bound at another edge is used directly.
+

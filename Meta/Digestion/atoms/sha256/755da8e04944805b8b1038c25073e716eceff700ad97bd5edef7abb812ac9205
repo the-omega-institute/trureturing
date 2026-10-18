@@ -1,0 +1,74 @@
+**Proposition 79.1 (the exact five largest weights).** In the refined region (S.160), (S.175), define
+
+$$
+D_s=s+2t-T=2t-\varepsilon>0,\qquad
+x_{\rm w}=\sqrt{\frac{s}{a}},\qquad
+y_{\rm w}=\sqrt{\frac{D_s}{2\beta}},\qquad
+X=\operatorname{diag}(x_{\rm w},y_{\rm w},\ldots,y_{\rm w}),\qquad
+c=\frac1{y_{\rm w}}.
+\tag{S.176}
+$$
+
+Then $x_{\rm w}>y_{\rm w}>0$ and $s/x_{\rm w}>t/y_{\rm w}$. The five largest eigenvalues of $K_c=\operatorname{diag}(\omega X^{-1},\omega X^{-1},c\omega)$, with multiplicities, are exactly
+
+$$
+\frac{s}{y_{\rm w}},\quad
+\frac{s}{x_{\rm w}},\quad\frac{s}{x_{\rm w}},\quad
+\frac{t}{y_{\rm w}},\quad\frac{t}{y_{\rm w}}.
+\tag{S.177}
+$$
+
+Proof. First $t>3\varepsilon/2$ gives $D_s>2\varepsilon>0$. For the first ordering, use $t\leq1-s$ and $s>3T-2$ to obtain
+
+$$
+\begin{aligned}
+2\beta s-aD_s
+&\geq(2-a)s+aT-2a\\
+&>(2-a)(3T-2)+aT-2a\\
+&=(1-u)(u^2+2u-1)>0.
+\end{aligned}
+\tag{S.178}
+$$
+
+All factors are positive at $h\leq u<1$. Since $a,\beta>0$, this is exactly $x_{\rm w}>y_{\rm w}$ after squaring positive quantities.
+
+For the second ordering, positive-side squaring reduces it to
+
+$$
+\Phi_s(t):=as(2t-\varepsilon)-2\beta t^2>0.
+\tag{S.179}
+$$
+
+This is concave in $t$. The allowed $t$ lies between $3\varepsilon/2$ and $1-s$. At the lower endpoint,
+
+$$
+\Phi_s(3\varepsilon/2)
+=\varepsilon\left[2aT-\frac{9-5a}{2}\varepsilon\right]>0.
+\tag{S.180}
+$$
+
+Indeed $\varepsilon<\beta/2$, and $\beta(9-5a)<8aT$. To prove this last comparison, divide its difference by $1+u>0$: it is equivalent to $q_*(u)=9-9u-9u^2+5u^3<0$. Its value at $h$ is $(9-13h)/2<0$, and $q_*'(u)=15u^2-18u-9\leq-9-3u<0$ on $[h,1]$. This proves the strict sign in (S.180).
+
+At the upper endpoint put
+
+$$
+\begin{aligned}
+\Phi_{\rm top}(s)&:=\Phi_s(1-s)
+=as(2-s-T)-2\beta(1-s)^2,\\
+\Phi_{\rm top}(T)&=2dT(2u-1)>0,\\
+\Phi_{\rm top}(uT)&=dTQ(u),\qquad
+Q(u)=-u^4-u^3+6u^2+8u-8.
+\end{aligned}
+\tag{S.181}
+$$
+
+The function $\Phi_{\rm top}$ is concave in $s$, and (S.175) confines $s$ between $uT$ and $T$. Both endpoints are positive: $Q(h)=3(10h-7)/4>0$, and
+
+$$
+Q'(u)-(5u+8)=u(1-u)(4u+7)\geq0.
+$$
+
+Hence $Q>0$ on $[h,1]$. Concavity first in $s$ and then in $t$ proves (S.179) on the full required interval. There is no assumption on the tail beyond positivity and ordering.
+
+The leading center coordinate contributes $s/y_{\rm w}$ once and $s/x_{\rm w}$ twice to $K_c$. Each other coordinate contributes three copies of $\lambda_j/y_{\rm w}\leq t/y_{\rm w}$. The established strict comparisons put the first three above these; two copies belonging to $t$ complete the top five. Ties among the remaining coordinates are harmless. For $k=2$ this is a list of five among six eigenvalues, with the third copy of $t/y_{\rm w}$ outside the chosen five. This proves (S.177) also on the full-support rank-two boundary. $\square$
+

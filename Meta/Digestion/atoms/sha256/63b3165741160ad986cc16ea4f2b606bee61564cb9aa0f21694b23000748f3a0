@@ -1,0 +1,45 @@
+**定理 450.3（原 \(A\) 的完整负对数矩与严格下界）。** 同一随机变量
+满足 \(\mathbb E|\log V|<\infty\)，且
+
+\[
+\boxed{\quad A=-\int_0^\infty\log v\,B(v)\,dv
+                =-k\,\mathbb E\log V.\quad}
+\tag{CVP.8}
+\]
+
+因此原常数有严格两侧界
+
+\[
+\boxed{\qquad k\log k<A<\frac12.\qquad}
+\tag{CVP.9}
+\]
+
+**证明：完整分部及边界。** 引理450.1已先支付绝对可积性。
+对 \(0<\varepsilon<1<R\)，仅在有限区间分部积分，得
+
+\[
+\begin{aligned}
+\int_\varepsilon^1\frac{\Phi'(v)-1}{v}\,dv
+&=-\log\varepsilon\,[\Phi'(\varepsilon)-1]
+  -\int_\varepsilon^1\log v\,B(v)\,dv,\\
+\int_1^R\frac{\Phi'(v)-C}{v}\,dv
+&=\log R\,[\Phi'(R)-C]
+  -\int_1^R\log v\,B(v)\,dv.
+\end{aligned}
+\]
+
+两个截断边界由（CVP.4）趋于零，完整积分由绝对可积性收敛，故得到
+（CVP.8），没有无偿的形式分部。
+
+写 \(m=\mathbb EV=1/k\)。严格对数切线不等式给
+
+\[
+\log v\le\log m+\frac{v-m}m,
+\qquad\text{等号当且仅当 }v=m.
+\]
+
+各项期望均有限；由于 \(V\) 有全正轴严格正的密度，切线差在任意
+避开 \(m\) 的正长度紧区间上有严格正积分。因此
+\(\mathbb E\log V<\log\mathbb EV=-\log k\)，乘以 \(-k<0\) 得
+\(A>k\log k\)。上界直接复用 §444 的原 \(A<1/2\)。证毕。
+

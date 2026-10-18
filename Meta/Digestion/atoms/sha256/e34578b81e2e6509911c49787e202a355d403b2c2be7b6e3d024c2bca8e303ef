@@ -1,0 +1,21 @@
+**Definition 11.1 (Affine response minor).** Let $S$ be a source set, let
+$p_1,p_2,p_3$ be continuations that are legal for every source under
+consideration, and let $y$ be a scalar readout. For sources
+$s_0,s_1,s_2,s_3\in S$, define
+
+$$
+M_{ij}=y(T_{p_i}s_j)-y(T_{p_i}s_0),
+\qquad 1\le i,j\le3.
+\tag{11.1}
+$$
+
+An affine predictive boundary of dimension $k$ for these responses is a map
+$z:S\to\mathbb R^k$ for which, for each $i$, there are $a_i\in\mathbb R$ and
+$\ell_i\in(\mathbb R^k)^*$ satisfying
+
+$$
+y(T_{p_i}s)=a_i+\ell_i(z(s))
+\qquad\text{for every }s\in S.
+\tag{11.2}
+$$
+

@@ -1,0 +1,12 @@
+## 227. At least three interacting owners and a joint transverse budget
+
+Retain the exact paired five-reservoir hypotheses, including distinct
+transverse labels, original face pairings and complete circular edge
+links of degree at least six. Let P={M,Z,U}. Reuse the whole-high-core
+result: an actual owner containing two distinct labels from P is genuine,
+has original P-angle expense greater than pi, and there are at most four
+such owners. Denote this set by K and its cardinality by k.
+The escape owner is tau=(Z,M,C,D,M,C), where all four labels differ.
+Theorem 173.1 supplies an actual owner containing Z and U, so K contains
+at least one owner distinct from tau. No new ascent assertion is used.
+

@@ -1,0 +1,160 @@
+## 116. Original sources and three fixed-label communication tasks
+
+**Definition C-116.1 (Coordinates, channel and source).**
+Let $B=(0,1,2,3,13)$, $f=(0\ 13)(1\ 3)$ with $f(2)=2$.
+In the original cut $A\mid B$, retain the fixed identifications
+$Ve_j=|B_j\rangle_A$, $We_j=|f(B_j)\rangle_B$ and
+$Je_j=|B_j,f(B_j)\rangle$, $0\le j\le4$.
+These maps identify original labels; they are not a choice of a new observation
+basis. Matrix units $E_{jk}$ below use these coefficient positions.
+Retain precisely C-114.1's compact set
+
+$$
+\mathcal K=\{X=iR:R\in M_5(\mathbb R),\ R^T=-R,\ \|X\|_{\rm op}\le1\}.
+$$
+
+For known $0\le t,\eta\le1$, define, on the whole complex matrix algebra,
+
+$$
+\begin{aligned}
+A_{t,X}&=I_5+tX,\qquad C_{t,X}=A_{t,X}/5,\\
+\Phi_{t,\eta,X}(Y)&=(1-\eta)A_{t,X}\circ Y
+                     +\eta\operatorname{tr}(Y)I_5/5,\qquad Y\in M_5(\mathbb C),\\
+\rho_{t,\eta}(X)&=(1-\eta)JC_{t,X}J^\dagger+\eta I_{25}/25.
+\end{aligned}
+\tag{C116.1}
+$$
+
+Since $A_{t,X}\succeq0$ with diagonal one, the Schur term is CPTP.
+The replacement term is CPTP, hence so is their convex mixture, including all
+endpoints. No inverse or strict positivity is required.
+With output first, the normalized Choi operator is
+
+$$
+\chi(\Phi)=\frac15\sum_{j,k=0}^4\Phi(E_{jk})\otimes E_{jk},\qquad
+(V\otimes W)\chi(\Phi_{t,\eta,X})(V\otimes W)^\dagger
+=\rho_{t,\eta}(X).
+\tag{C116.2}
+$$
+
+Indeed the Schur contribution is $JC_{t,X}J^\dagger$, and the replacement
+contribution is $I_5/5\otimes I_5/5$ on these original local supports.
+The Choi trace is one and its partial trace over output is $I_5/5$.
+Equation (C116.2) is a correspondence between an explicitly defined channel
+and an original source. It supplies no common simulator programmed by one
+unknown source state.
+
+**Definition C-116.2 (A label fixed throughout a block).**
+For a nonempty compact $U\subseteq\mathcal K$, one $X\in U$ is selected and
+kept fixed throughout the entire block. Conditional on this same $X$, successive
+environments are fresh, independent of each other and initially independent of
+the input/reference. Thus the block map is $\Phi_{t,\eta,X}^{\otimes n}$,
+including on correlated complex inputs. A distribution on $X$ is not assumed.
+The known data $t,\eta,U$ may enter the code.
+
+Let $k_n\ge1$, $L_n\cong R_n\cong\mathbb C^{k_n}$ and
+$\beta_{k_n}=|\beta_{k_n}\rangle\langle\beta_{k_n}|$, where
+$|\beta_k\rangle=k^{-1/2}\sum_{a=1}^k|a,a\rangle$.
+Encoders and decoders are arbitrary complex CPTP maps
+
+$$
+\mathcal E_{n,X}:M_{k_n}\longrightarrow M_{5^n},\qquad
+\mathcal D_{n,X}:M_{5^n}\longrightarrow M_{k_n}.
+\tag{C116.3}
+$$
+
+There are three distinct tasks. In the common task neither map depends on $X$.
+In the receiver-informed task only $\mathcal D_{n,X}$ may depend on the supplied
+label. In the sender-informed task only $\mathcal E_{n,X}$ may depend on it;
+the decoder is one common CPTP map. In each case reliability means
+
+$$
+\epsilon_n=\sup_{X\in U}
+\left\| (\mathrm{id}_{R_n}\otimes
+ \mathcal D_{n,X}\Phi_{t,\eta,X}^{\otimes n}\mathcal E_{n,X})
+ (\beta_{k_n})-\beta_{k_n}\right\|_1\longrightarrow0,
+\tag{C116.4}
+$$
+
+with the dependencies just specified. The norm is not divided by two.
+Define $Q_{\rm com}(t,\eta;U)$, $Q_{\rm rec}(t,\eta;U)$ and
+$Q_{\rm send}(t,\eta;U)$ as the suprema of achievable
+$\liminf_n n^{-1}\log_2 k_n$ in these three tasks.
+For a singleton use $Q(t,\eta;X)$.
+
+Local blank ancillas and discarding are allowed. There is no preshared
+entanglement or other initial correlation across sender and receiver, no quantum
+bypass, free classical forward/feedback channel, hidden environment output,
+postselection exception, or uncounted transmission. The reference is never acted
+on. Supplying the label at one end is the additional information service being
+compared. It is not a proof that the native menu can acquire that label, nor does
+it itself communicate the label to the other end.
+The channel uses and all block coding operations are additional mathematical
+services, with the same resource exclusions as C-115.1.
+
+**Literature input C-116.3 (Corrected compound coding supplier).**
+We consume Bjelaković–Boche–Nötzel,
+[*Entanglement transmission and generation under channel uncertainty: Universal
+quantum channel coding*, arXiv:0811.4588v3](https://arxiv.org/html/0811.4588v3),
+§§1.3, 2.1–2.4, Theorem 1, together with their
+[erratum, DOI 10.1007/s00220-012-1609-6](https://doi.org/10.1007/s00220-012-1609-6),
+Commun. Math. Phys. 317, 99–102.
+For a set $\mathfrak I$ of CPTP maps between fixed finite-dimensional complex
+input/output spaces, that theorem gives
+
+$$
+\begin{aligned}
+Q_{\rm com}(\mathfrak I)=Q_{\rm rec}(\mathfrak I)
+ &=\lim_{n\to\infty}\frac1n
+   \max_{\sigma\in\mathcal S(\mathcal H^{\otimes n})}
+   \inf_{N\in\mathfrak I} I_c(\sigma,N^{\otimes n}),\\
+Q_{\rm send}(\mathfrak I)
+ &=\lim_{n\to\infty}\frac1n
+   \inf_{N\in\mathfrak I}
+   \max_{\sigma\in\mathcal S(\mathcal H^{\otimes n})}
+   I_c(\sigma,N^{\otimes n}).
+\end{aligned}
+\tag{C116.5}
+$$
+
+Here $I_c(\sigma,N)=S_2(N(\sigma))-S_2((\mathrm{id}\otimes N)(\psi_\sigma))$
+for any purification, equivalently output entropy minus complementary entropy.
+These are operational coding theorems, not definitions of capacity by entropy.
+Their maxima range over every complex density matrix, not a real or product
+subdomain. No generic coding framework is reproved here.
+
+The erratum corrects the missing square root in its Lemma 3 and the subsequent
+finite-channel/net error estimates on printed pp.70–86. It also replaces Lemma 14
+by an Alicki–Fannes conditional-entropy bound independent of the decoder output
+dimension, and adjusts the converse estimates on pp.87–89 and 93. These are
+corrections of the proofs and estimates; the listed corrections do not replace
+Theorem 1's capacity formulas. Only the corrected asymptotic theorem is consumed;
+no original projection/error constant is used.
+
+All its hypotheses hold here: input and output are both $\mathbb C^5$; (C116.1)
+is CPTP on the whole algebra; conditional uses are tensor powers of one channel;
+and encoders/decoders and information dependencies agree with §§2.1–2.3.
+The supplier permits the logical output space to be enlarged, $L_n\subseteq L_n'$.
+This does not enlarge our rates. Compress to $L_n$ by the CPTP map
+
+$$
+Z\longmapsto PZP+\operatorname{tr}((I-P)Z)\tau,
+\tag{C116.6}
+$$
+
+where $P$ projects onto $L_n$ and $\tau$ is a fixed state there. It fixes the
+embedded target; its adjoint sends that target test to the target plus a positive
+operator. Consequently target fidelity cannot decrease. Conversely our output
+space is already an allowed special case.
+For the pure normalized target, with $F=\langle\beta_k,\omega\beta_k\rangle$,
+
+$$
+2(1-F)\le\|\omega-\beta_k\|_1\le2\sqrt{1-F}.
+\tag{C116.7}
+$$
+
+The first inequality is the two-outcome target measurement; the second is the
+pure-target fidelity/trace inequality. Both are independent of $k$, so taking
+suprema/infima proves exactly the uniform convergence equivalence needed in
+(C116.4), including enlarged-output codes followed by (C116.6).
+

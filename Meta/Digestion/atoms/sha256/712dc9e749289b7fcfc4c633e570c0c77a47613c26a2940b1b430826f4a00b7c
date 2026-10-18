@@ -1,0 +1,18 @@
+**Proposition 3.4 (the actual split-TOK stall).** Use [ARC] Definition
+7.3's Recover handoff after its actual CoverRef print/check/ACK:
+TOK(handler slot, client slot), followed by CTL ClientCover. A
+replacement that changes at most one of these two native bits per
+data reaction and requires the original current TOK guard before
+every such reaction cannot complete this enabled row.
+
+Proof. The actual distinct availability slots start at $(s,d)=(1,0)$;
+the actual guard is $s=1\land d=0$, and the required result is
+$(0,1)$, by [ARC] Definition 6.2. There is a first reaction changing
+one of them. Changing the source first gives $(0,0)$; changing the
+destination first gives $(1,1)$. Either falsifies the guard, while
+the other required change remains outstanding. No further guarded
+data reaction can make it. Intervening scans, receipt births or
+unchanged assignments do not make that same guard true. This is a
+current permission failure on an ordinary mandatory callback, not
+a failure caused by absent historical information. ∎
+

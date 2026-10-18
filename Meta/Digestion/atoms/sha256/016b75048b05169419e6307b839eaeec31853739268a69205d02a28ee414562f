@@ -1,0 +1,41 @@
+**Corollary 276.3 (Exact conic slack substitution on the same Borel law).**
+If the same kernel satisfies the full rows (273.3), interpreted as
+the actual marked Borel events, put
+
+$$
+\begin{gathered}
+s_+=\mu_+(E_0)-M+e,\quad s_j=\mu_{v^j}(E_j)-(b_j-e),\\
+\eta=\mu_+(E_1)+\mu_+(E_2),\quad
+\omega=\mu_+(\Theta\setminus\{\theta_0,\ldots,\theta_L\}),\\
+u_i=\mu_{v^i}(E_i)-(M-1+b_i-e)\quad(i=1,2).
+\end{gathered}
+\tag{276.8}
+$$
+
+All these quantities are nonnegative. Then exactly
+
+$$
+\begin{aligned}
+\mathcal T&=E_b+2e+s_++\sum_{j\in J}s_j+\eta+\omega,\\
+H_i&=\min\{M,1-b_i+e+\mu_+(E_i)-u_i\}\\
+&\le\min\{M,1-b_i+2e-u_i-s_+\}.
+\end{aligned}
+\tag{276.9}
+$$
+
+Substituting these actual values in (276.3) is a necessary joint
+constraint on every full cap-feasible allocation. The trace part
+consumes the same-allocation identity of Theorems 266.2 and 268.4;
+the Borel expression retains its actual outside-mark mass $\omega$.
+
+**Proof.** Sum the late correct equalities to obtain
+$\sum_J\mu_{v^j}(E_j)=E_b+3e+\sum_Js_j$.
+Equal mass and the positive row give
+$\sum_J\mu_+(E_j)=e-s_+-\eta-\omega$.
+Their difference proves the trace identity, retaining mass outside
+all marks. The definition of $H_i$ and the early correct equality
+give its exact minimum expression. Finally
+$\mu_+(E_i)\le e-s_+$ by the same positive row and nonnegativity.
+No union row is inferred from singleton rows, and $M$ has not
+been divided out at unchanged $b$. $\square$
+

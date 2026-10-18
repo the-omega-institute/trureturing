@@ -1,0 +1,12 @@
+#### 10.3　仿射操作的精确 holonomy
+
+先限制到仿射动作：
+
+$$
+T_a(s)=A_as+c_a,
+\qquad
+T_b(s)=A_bs+c_b.
+$$
+
+<a id="claim-10-3-1"></a>
+

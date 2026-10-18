@@ -1,0 +1,10 @@
+### 56.2 Corner proof
+
+Let A=P-r>=0 and B=w-c. The condition t>=1 is equivalent to cB>=qA. Thus B>=0. If A=B=0, identity gives zero. Otherwise put L=sqrt(A^2+B^2)>0, x=A/L and y=B/L. In fact B>0, since q>0 and cB>=qA. Then x/y=A/B<=c/q. Choose u=(1+x)/2, so y=2sqrt(u(1-u)). For H=2|psi_u><psi_u|-I, the MC block is [[x,y],[y,-x]], the other block is -I, and ||H||_infty=1.
+
+The support result and cy>=qx show that every output xi obeys Tr H xi<=Tr H rho. Therefore
+
+    ||tau-xi||_1 >= Tr H(tau-rho) = 2(xA+yB) = 2L.
+
+Identity attains this bound because tau-rho has MC block [[A,B],[B,-A]], eigenvalues +/-L, and zero other block. This proves the third regime without any MC-output ansatz.
+

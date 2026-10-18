@@ -1,0 +1,23 @@
+**Definition 4.1 (selected material, independently of reconstruction).**
+Select CSA Definition 5.2's actual retained structures, now on the $D_2$
+carrier. The selection consists of authentic no-update acquisition rows
+and referenced backing; original chronological ingress with its descriptors;
+port-38 ingress; original port-37 installation/capture prefix and its
+frozen binding; the actual meter chain; cover/package backing, including
+partial unavailable backing and copies; their actual read/invocation
+rights; and the retained structures' actual phase/input-reader frontier.
+
+The selection does not include private source scratch, whole banks, the
+`images`/`views` lists or the new view output bodies as extra memory
+coordinates. The full carrier retains all of them. Their deterministic
+production can be recovered, but that is not their inclusion in $M$.
+The installation prefix is identified by its original construction role
+and frozen field order, never by latest-37 after staging.
+
+The frontier has the old/installing/installed classification, original
+reader-stage and marked input/length heads/cursors delimiting written
+ingress, and the variable input kind with its occupied latch bit precisely
+from its IN through the cut before its matching WR. It has no bit in that
+field after WR. Fixed boot/capture INs are a separate kind. There is no
+optional ACK, printing, idle-duration or scheduler input in $D_2$.
+

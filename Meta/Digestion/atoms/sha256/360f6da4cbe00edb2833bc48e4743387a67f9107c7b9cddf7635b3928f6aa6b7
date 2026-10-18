@@ -1,0 +1,25 @@
+**Proposition 296.2 (Scope of the proved consequences).**
+Theorems 289.3 and 290.1 pay their stated sufficient input classes;
+293.2 constrains each same feasible allocation; 294.1 pays its stated
+nonuniform quotient cone; 295.1 attains the two original optima on
+its stated sequence family. These do not establish either unrestricted
+alternative of 296.1 for the remaining full input domain.
+
+**Proof.** The first two payment theorems impose their explicit head,
+prefix or interleaving hypotheses. The nonuniform construction imposes
+(294.1). The ratio theorem is necessary on a given full allocation
+and constructs no general stopped replacement. The attained family
+has one stopped witness for both classes and hence no strict
+separation. None supplies a reduction of every full input to these
+classes with one affordable signed residual. In particular arbitrary
+mixed early, late and terminal coefficients remain allowed.
+
+The legal regression is still $0100$ with
+$N(3,4;1,0,0,0)$: at the actual source $(r,g)=(19,436)$,
+$F_{19}=4181$, $419\le g\le836$, $N=1822917$, its output is the
+earlier unqueried label $1$. The $00\to01$ stopped repair outputs
+$0$, with changed mass $1$ and the earlier counting defect $2$.
+No argument above removes that label or makes the repair free.
+The genuine source transport of 280.1 and 109.1–110.2 remains the
+ordinary bridge for the original alternatives. $\square$
+

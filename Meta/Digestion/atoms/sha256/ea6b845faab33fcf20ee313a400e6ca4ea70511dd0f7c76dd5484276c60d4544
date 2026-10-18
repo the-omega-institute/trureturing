@@ -1,0 +1,9 @@
+### 定义 57.1（有限源族与三维观测）
+
+令 \(L_h=\{L,R\}^h\)，\(m=2^h\)，令 \(\omega:L_h\to\{0,1\}\)。按 dev 的 CE/source contract 构造
+\[
+\mathcal F_h=\{\nu_{h,\omega}:\omega\in\{0,1\}^{L_h}\},\qquad
+|\mathcal F_h|=2^{2^h}.
+\]
+每个源具有相同 retained input、相同 native \(Q\)-row，并且三分量读出相同，例如 \(q(\nu_{h,\omega})=(0,0,0)\)，但 complete subtree valuation 两两不同。
+

@@ -1,0 +1,23 @@
+**定义 11.1（来源语法与组成读出）。** 采用 [Fibonacci 原子关系生成](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的有序树
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,\qquad
+\rho(\alpha)=\beta,\quad\rho(\beta)=\langle\beta,\alpha\rangle.
+$$
+
+组成 $c(t)=(a,b)$ 满足
+
+$$
+c(\rho t)=Mc(t),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad q(a,b)=2a+3b.
+$$
+
+这些关系不规定采样、概率或物理钟。既有双读出为
+
+$$
+y_0=2a+3b,\quad y_1=3a+5b,\qquad
+a=5y_0-3y_1,\quad b=-3y_0+2y_1.
+$$
+
+它恢复组成，不恢复叶序与括号。
+

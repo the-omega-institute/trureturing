@@ -1,0 +1,33 @@
+**Definition 5.1 (initial weak frame).** To specify the initial optimal
+family, write
+
+$$
+\begin{gathered}
+q(t)=\sqrt{\alpha+\beta t^2},\quad
+D(t)=1+\alpha+(1+\beta)t^2,\quad
+\psi(t)=\frac{(q(t),-1,-t)G(q(t),-1,-t)^T}{D(t)},\\
+\mathcal A(t)=\alpha[\beta-(1+\beta)t^2],\quad
+\mathcal B(t)=\beta[\alpha t^2-(1+\alpha)],\\
+k(t)=\frac{\mathcal B(t)}{t+\sqrt{t^2-\mathcal A(t)\mathcal B(t)}},
+\quad p(t)=\sqrt{\alpha+\beta k(t)^2},\\
+f_0(t)=\frac{(q(t),-1,-t)^T}{\sqrt{D(t)}},\quad
+f_1(t)=\frac{(p(t),1,k(t))^T}{\sqrt{D(k(t))}},\quad
+f_2(t)=f_0(t)\times f_1(t),\quad
+h(t)=\frac{2p(t)}{D(k(t))}.
+\end{gathered}
+\tag{TA.28}
+$$
+
+JR50 selects the unique stationary $t_*\in(17/20,9/10)$ of $\psi$.
+JR54 and RC63 supply the orthonormal real-null frame above for
+$t_*\leq t\leq t_\dagger$, its positive radicals and denominators,
+$k(t)<0$, $tp(t)+q(t)k(t)>0$, and increasing $h$. Its height signs
+are $(-,+,+)$ and maximizing reports $(-,+,-)$. Put
+$\bar s=s_0h(t_*)$. For $s\leq\bar s$ the fixed $t_*$ frame
+is height-optimal and satisfies the contrast inequality. For
+$\bar s<s\leq s_\dagger=s_0h(t_\dagger)$ take the unique
+$h(t)=s/s_0$. The height values are respectively
+$T_{\rm flat}-\psi(t_*)$ and $T_{\rm flat}-\psi(t)$.
+Plateau equality fixes the same three rays, even when the report
+assignment has slack. These are credited JR/RH statements.
+

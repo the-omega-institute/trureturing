@@ -1,0 +1,31 @@
+**定义4.1。** p 的来源混合族 $\mathcal N_p$ 是全部
+
+$$
+\int_{\mathcal R}P_{p,r}\,\omega(dr),\qquad \omega\in\mathcal P(\mathcal R).
+\tag{4.2}
+$$
+
+悬置族 $\mathcal N_\beta$ 类似。允许任意 Borel 混合仅用于数学包含关系，不给观察者一个连续混合寄存器、采样器或求值 oracle。实际合格解码仍必须由有限 COMPLETE 同更新程序描述。
+
+令 $u_x,v_y$ 分别为两相位配置的合成 α 概率。置
+
+$$
+U=\operatorname{diag}(1-u),\quad V=\operatorname{diag}(v),\qquad
+H=UBVA,\quad f=u,\quad g=UB(1-v).
+\tag{4.3}
+$$
+
+H 是合成一个完整返回圈的联合质量核，C=BA 是实际取得同一返回字的配置核。精确每配置同更新生成给
+
+$$
+Q_x(w_{j,0})=(H^jf)_x,\qquad Q_x(w_{j,1})=(H^jg)_x.
+\tag{4.4}
+$$
+
+$f+g+H\mathbf1=\mathbf1$；几何矩阵和望远镜后，有限完成质量加 $\lim_{j\to\infty}(H^j\mathbf1)_x$ 恰为1。后一项正是唯一无限不完成词质量，不能静默删去。悬置完整律是
+
+$$
+V_y=(1-v_y)\delta_{[\beta]}+v_y\sum_x A(y,x)(\alpha Q_x).
+\tag{4.5}
+$$
+

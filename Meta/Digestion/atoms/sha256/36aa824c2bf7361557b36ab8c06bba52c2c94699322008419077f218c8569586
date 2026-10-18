@@ -1,0 +1,30 @@
+**Corollary 10.6 (retained calibration, reused minima and nominal FIB names).** At $\epsilon<1/2$, queried configurations reached under distinct parameters are disjoint even after different positive histories. For a finite menu with authentic labels and
+
+$$
+0<2\epsilon<\min_{\vartheta\in\Theta}\kappa(\vartheta),
+$$
+
+let $n_\vartheta,m_\vartheta$ be the existing fixed-known total and positive-nonempty reached minima of Theorems 4.2–4.3 for the selected empty-query convention. The calibrated conditional predictive minima are respectively
+
+$$
+\sum_{\vartheta\in\Theta}n_\vartheta,\qquad
+\sum_{\vartheta\in\Theta}m_\vartheta.
+\tag{10.13}
+$$
+
+The same sum holds at zero tolerance for finite equality menus. These are conditional predictive counts; they exclude an upstream supplier or boot protocol unless its additional states are included explicitly.
+
+Under the independent zero-seam no-$11$ naming convention of Theorem 8.2 and [Fiber Calculus Continuation II, §24.6](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md), naming a minimum calibration alphabet requires and admits
+
+$$
+F_{\ell+2}\ge L_\epsilon(N),
+$$
+
+and naming $R$ complete predictive configurations requires and admits $F_{\ell+2}\ge R$. In the small-error menu regime use $R=\sum_\vartheta n_\vartheta$ for the full carrier, or $R=\sum_\vartheta m_\vartheta$ only when naming the positive reached image. These capacity statements name supplied information; they do not acquire it.
+
+**Proof (10.6).** A state shared under two distinct parameters would have one decoded profile within $\epsilon$ of two actual profiles at distance one by (10.2), contradicting $2\epsilon<1$. Thus their positive reached images are disjoint. Distinct installed initial configurations cannot coincide either: their common $[0]$ successors would violate the same conclusion. An initial state for $\vartheta$ cannot coincide with a positive reached state for $\varphi\ne\vartheta$, even if empty queries are disallowed. Choose a symbol $y$ with positive next-read probability after that reached history. The first-read word $[y]$ has positive uniform-prior mass under $\vartheta$. The common $U$ successor would then be queried under both parameters, again a contradiction.
+
+For each parameter restrict to its initialization and its actual positive reached image. On every positive extension $U$ stays in that set; arbitrary transitions on impossible extensions may be retargeted inside it. The restriction is a fixed-known observer with the same actual runs and decoder coherence. The already proved per-parameter minima therefore apply to these pairwise disjoint sets and their reached images. The disjoint union of the known attaining observers selected by the authentic label gives one fixed $c,U,D$ and attains both sums. This reuses the fixed-law minima rather than reproving them. The no-$11$ language has $F_{\ell+2}$ legal names; injection gives necessity, and assignment of distinct legal names gives the nominal sufficiency, exactly as in Theorem 8.2. $\square$
+
+The fixed-known near-equality state divergence is already Theorem 6.3. It remains a separate obstruction to a uniform bound on parameter-specific installed machines, even when calibration is supplied. In contrast (10.12) has bounded pointwise exact state counts and fails solely through missing common-decoder calibration. Neither statement is a replacement for the other.
+

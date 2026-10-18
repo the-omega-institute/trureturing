@@ -1,0 +1,34 @@
+**Convention 2.1 (Retained witness, with its exact scope).** Retain
+precisely the weighted moment $\mathcal W$, multiplier $Y$, witness
+$P$ and kernel projection $K_{\rm ker}$ of QWS Definition 2.1 and
+Lemmas 2.2–2.3. In particular,
+
+$$
+\begin{gathered}
+Y=(4025R_0+4974R_++5021R_-)/10000,
+\qquad \operatorname{tr}Y/5=4803/10000,\qquad \gamma=1/25000,\\
+I\otimes Y-\mathcal W=(P+P^\Gamma)/2,
+\qquad P\succeq\gamma(I-K_{\rm ker}),\\
+K_{\rm ker}+K_{\rm ker}^\Gamma=Q,
+\qquad Q=R_+\otimes R_++R_-\otimes R_-.
+\end{gathered}
+\tag{2.1}
+$$
+
+Choi order is output first, input second; $\Gamma$ transposes the input
+factor. The exact moment is QEC Proposition 2.2, with weights
+$a=(9/4,3/4,5/4,3/4,0)$ and $w=a/5$. Its actual forward-time mean
+satisfies
+
+$$
+\mathscr S(T)=\operatorname{tr}(\chi_T\mathcal W),\qquad
+e(T)\ge1-\mathscr S(T),\qquad
+\chi_T=(\widehat T\otimes\mathrm{id})(\Omega\Omega^\dagger),
+\quad \Omega=5^{-1/2}\sum_se_s\otimes e_s.
+\tag{2.2}
+$$
+
+The witness and its exact shifted-block certificate belong to QWS;
+the additional consequence here uses the matrix TP marginal instead
+of only $\operatorname{tr}\chi_T=1$.
+

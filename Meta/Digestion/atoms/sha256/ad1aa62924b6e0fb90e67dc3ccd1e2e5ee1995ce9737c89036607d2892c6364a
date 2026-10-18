@@ -1,0 +1,166 @@
+**Theorem 5.1 (indefinite prefix kernel, every final word).** Fix any legal prefix
+$$
+A_0=I,\qquad A_1=L^n,\qquad A_2=P_c,\qquad
+A_3=\begin{pmatrix}a&b\\x&e\end{pmatrix},
+$$
+where $n\ge1$, $c\ge n+1$ are integers and $e>1$. Set
+$$
+C=c-1,\qquad E=e-1,\qquad
+\lambda=\frac{a-1-bC}{E},
+\qquad \lambda>0,
+$$
+$$
+A=2c-C/n,\qquad B_*=2-C/n,
+$$
+$$
+\xi=\frac{3a-x/n-bA}{E},\qquad
+\psi=\frac{2x-bC}{E},\qquad
+\omega=\lambda/C,
+$$
+$$
+\gamma=\frac bE-\frac{1+\lambda}{n},\qquad
+\Lambda=\xi+\psi\omega-\omega(A+C\omega).
+\tag{5.1}
+$$
+If $\gamma\Lambda<0$, then every legal fifth multiplier $W$, including the empty word, gives a finite actual-target collision on all five original readings. If $\mathsf B$ is invertible, the sources and slopes differ, with slopes $0,\epsilon$ for every sufficiently small $\epsilon>0$. If $\mathsf B$ is singular, the sources differ and both slopes can be zero. Every sampled gain is positive in both branches.
+
+**Proof.** The first three rows of $\mathsf B$, in order $(p,q,r,s)$, are
+$$
+(0,n,0,0),\qquad(C,C,1,0),\qquad(a-1,x,b,E).
+\tag{5.2}
+$$
+They are independent: the first has a nonzero $q$ entry, the second a nonzero $r$ entry, and the third a nonzero $s$ entry. Their kernel is exactly $\mathbb RN$, where
+$$
+N=\begin{pmatrix}1&0\\-C&-\lambda\end{pmatrix},\qquad
+\det N=-\lambda<0.
+\tag{5.3}
+$$
+Their products with its entry vector are $0$, $C-C$, and $a-1-bC-E\lambda=0$. This indefinite kernel depends only on the first four recorded endpoints.
+
+Define a partial transfer map on arbitrary full matrices by
+$$
+G X=\begin{pmatrix}0&Q\\R_*&T_*\end{pmatrix},
+$$
+$$
+Q=q+(p+s)/n,\qquad
+R_*=Ap+Cq+2r+B_*s,
+$$
+$$
+T_*=\frac{3(ap+xq+br+es)-xQ-bR_*}{E}.
+\tag{5.4}
+$$
+The first three equations $\mathsf B(GX)=\mathsf C X$ hold, because they are precisely
+$$
+nQ=p+nq+s,\qquad
+CQ+R_*=2(cp+Cq+r+s),
+$$
+$$
+xQ+bR_*+ET_*=3(ap+xq+br+es).
+$$
+If $\mathsf B$ is invertible and $\mathsf H=\mathsf B^{-1}\mathsf C$, then $(\mathsf H-G)X$ lies in $\mathbb RN$ for every $X$. Only the scalar functional multiplying $N$ can depend on the final endpoint. Hence
+$$
+\mathfrak b(S,N)=0\quad\Longrightarrow\quad
+\mathfrak b(S,\mathsf H S)=\mathfrak b(S,GS).
+\tag{5.5}
+$$
+
+For $u>0$ use the positive rank-one curve
+$$
+Z(u)=\begin{pmatrix}u+Cu^2&\lambda u^2\\1+Cu&\lambda u\end{pmatrix}
+=\binom u1(1+Cu,\lambda u).
+\tag{5.6}
+$$
+It satisfies
+$$
+\mathfrak b(Z(u),N)=\lambda u-\lambda(u+Cu^2)+C\lambda u^2=0.
+$$
+Write $Z(u)=Z_0+uZ_1+u^2Z_2$, where
+$$
+Z_0=\begin{pmatrix}0&0\\1&0\end{pmatrix},\quad
+Z_1=\begin{pmatrix}1&0\\C&\lambda\end{pmatrix},\quad
+Z_2=\begin{pmatrix}C&\lambda\\0&0\end{pmatrix}.
+$$
+The polynomial $J_*(u)=\mathfrak b(Z(u),GZ(u))$ has degree at most four and zero constant coefficient, since $Q(Z_0)=0$. Moreover
+$$
+GZ_0=\begin{pmatrix}0&0\\2&b/E\end{pmatrix}.
+$$
+Thus its coefficient of $u$ is
+$$
+\mathfrak b(Z_1,GZ_0)+\mathfrak b(Z_0,GZ_1)
+=b/E-(1+\lambda)/n=\gamma.
+$$
+For its leading coefficient,
+$$
+R_*(Z_2)=C(A+\lambda),\qquad
+T_*(Z_2)=C\xi+\lambda\psi.
+$$
+Consequently
+$$
+\mathfrak b(Z_2,GZ_2)
+=C(C\xi+\lambda\psi)-\lambda C(A+\lambda)
+=C^2\Lambda.
+$$
+We have proved the exact identity
+$$
+J_*(u)=\gamma u+j_2u^2+j_3u^3+C^2\Lambda u^4.
+\tag{5.7}
+$$
+The coefficient matrices with zero entries only identify this polynomial; every $Z(u)$ used as a source has $u>0$ and strictly positive entries.
+
+Here are finite strict sign choices. Put
+$$
+A_* = |j_2|+|j_3|+C^2|\Lambda|,\qquad
+u_-=\min\{1/2,|\gamma|/[4(1+A_*)]\},
+$$
+$$
+u_+=2+\frac{|\gamma|+|j_2|+|j_3|+1}{C^2|\Lambda|}.
+\tag{5.8}
+$$
+Then $0<u_-<1<u_+$. At $u_-$ the higher terms have total magnitude at most $A_*u_-^2<|\gamma|u_-/4$. At $u_+$ the lower terms have total magnitude at most
+$(|\gamma|+|j_2|+|j_3|)u_+^3<C^2|\Lambda|u_+^4$.
+The signs of $J_*(u_-)$ and $J_*(u_+)$ are therefore the opposite strict signs of $\gamma$ and $\Lambda$.
+
+First suppose $\mathsf B$ is singular. Its first three rows have rank three, so its kernel is exactly $\mathbb RN$ and $\mathsf BN=0$. Define
+$$
+S_1=\begin{pmatrix}C/\lambda+1&1\\2C+2\lambda&2\lambda\end{pmatrix},
+\qquad
+S_0=\begin{pmatrix}C/\lambda+2&1\\C+2\lambda&\lambda\end{pmatrix}.
+\tag{5.9}
+$$
+They are positive, $S_0-S_1=N$, and their determinants vanish because
+$$
+(C/\lambda+1)2\lambda=2C+2\lambda,\qquad
+(C/\lambda+2)\lambda=C+2\lambda.
+$$
+Their quotient signals agree at slope zero. Their undrifted signals differ by the same constant $\operatorname{tr}N=1-\lambda$ at all five indices, so $D_0(\tau)=0$ and $D_1(\tau)=1-\lambda$ give a collision. If $\lambda=1$, the drifts coincide and the sources still differ. This branch needs no further sign argument.
+
+Now suppose $\mathsf B$ is invertible. Equation (5.5) makes $J_*(u)$ the transfer form $\mathfrak b(Z(u),\mathsf HZ(u))$ on the entire positive interval $[u_-,u_+]$. One could apply Lemma 2.2 directly. A finite construction staying on this tangent curve is as follows. Let
+$$
+\eta=\min\{|J_*(u_-)|,|J_*(u_+)|\}>0,\qquad
+m=\min_{a,b} Z(u_-)_{ab}>0.
+$$
+All entries of $Z(u)$ are nondecreasing for $u>0$, so $m$ bounds them below on the interval. With $Y_j=\mathsf H Z_j$, set
+$$
+K=1+\max_{a,b}\bigl(|(Y_0)_{ab}|+
+u_+|(Y_1)_{ab}|+u_+^2|(Y_2)_{ab}|\bigr).
+$$
+Then $|\det(\mathsf HZ(u))|\le2K^2$ there. Choose any
+$$
+0<\epsilon<\min\{m/(2K),\eta/(4K^2),1/8\}.
+\tag{5.10}
+$$
+The nonzero polynomial $J_*(u)+\epsilon\det(\mathsf H Z(u))$ has degree at most four and opposite strict endpoint signs. Its smallest root $u_\epsilon$ in $(u_-,u_+)$ exists and is a finite algebraic choice. Put
+$$
+S_1=Z(u_\epsilon),\qquad S_0=S_1+\epsilon\mathsf H S_1.
+$$
+Every entry of $S_0$ exceeds $m/2$, and (2.4) gives $\det S_0=0$. Also
+$$
+\mathsf T_0S_0=\mathsf B S_1+\epsilon\mathsf C S_1
+=\mathsf T_\epsilon S_1.
+$$
+The sources differ because $\mathsf C S_1$ is strictly positive. With slopes $0,\epsilon$ and drifts (2.3), all five original observations agree, including index zero, and every sampled gain is positive. An arbitrary additional positive upper bound on $\epsilon$ is allowed.
+
+Finally, both (5.9) and the nonsingular sources have the original positive factors of Proposition 1.2. All unread atoms of the fixed prefix and the arbitrary final word preserve their columns, while their respective rows remain unchanged. The singular and nonsingular branches exhaust all final endpoints. ∎
+
+This theorem does not require a final diagonal exit or a nonsingular final quotient. Its invariant is the tangent condition $\mathfrak b(S,N)=0$, rather than three fixed output entries of a full transfer map.
+

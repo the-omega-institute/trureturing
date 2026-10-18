@@ -1,0 +1,58 @@
+**Lemma 104.2.** There is an optimal fixed density with \(P\succ0\) and \(\pi>0\) exactly when
+\[
+\gamma<2,\qquad t_0=\sqrt{\frac{s_E}{2-\gamma}}>0,
+\qquad\|t_0Y_0\|_{\mathrm{op}}<1.
+\tag{104.8}
+\]
+Then \(\kappa(L)=t_0\), and every such fixed normer has
+\[
+\pi=\frac1{2(2-\gamma)},\quad
+P=\frac\pi{t_0^2}E(I-t_0^2Y_0^2)E^T,\quad
+W_{FJ}=\frac\pi{2t_0}E(I-t_0^2Y_0^2),\quad
+W_{JJ}=\frac\pi2(I+t_0Y_0).
+\tag{104.9}
+\]
+
+**Proof.** For necessity take an optimal real dual. Complementarity with the positive density gives \(Z_{FF}=tI_2\) and \(\operatorname{Tr}Z_{JJ}=2t\). Invertibility of \(E\) gives inertia \((2,2)\) for \(L\), so the fixed-density optimal split and its complement have rank two. They are obtained from the positive and negative spectral projectors of \(\rho^{1/2}L\rho^{1/2}\). Thus
+\[
+(Z-2L)W=0,\qquad Z(\rho-W)=0.
+\tag{104.10}
+\]
+Both dual matrices have the positive definite \(F\) block \(tI_2\), and both have rank two. Write
+\[
+N=Z-L=\begin{pmatrix}tI_2&B_1\\B_1^T&D_1\end{pmatrix}.
+\]
+Their zero Schur complements give
+\[
+B_1^TE+E^TB_1=tJ_0,\qquad
+D_1=(B_1^TB_1+M_E)/t,\qquad
+2t^2=\|B_1\|_F^2+s_E.
+\tag{104.11}
+\]
+From (104.10), direct expansion yields \(N\rho N=L\rho L\). Its \(FF\) and \(FJ\) blocks imply
+\[
+t^2P=\pi(EE^T-B_1B_1^T),\qquad
+EE^TB_1+B_1M_E=tEJ_0.
+\tag{104.12}
+\]
+Multiply the second equation by \(E^{-1}\) and compare with the first equation in (104.11). Then \(Y=E^{-1}B_1\) is symmetric and satisfies \(M_EY+YM_E=tJ_0\), so \(Y=tY_0\). Positivity of \(P\) gives \(I-Y^2\succ0\). Taking traces proves (104.8), the density normalization in (104.9), and the formula for \(P\). The \(FF\) diagonal block of dual complementarity gives \(E W_{JF}=tP/2\), proving the cross formula. The rank-two graph equations in (104.10) then give \(W_{JJ}=\pi(I+Y)/2\). No full identity \(LW=t\rho/2\) is asserted.
+
+Conversely assume (104.8), set \(t=t_0\), \(Y=tY_0\), and define
+\[
+N=\begin{pmatrix}tI_2&EY\\YE^T&(YM_EY+M_E)/t\end{pmatrix},
+\qquad Z=N+L.
+\]
+Both \(N+L\) and \(N-L\) have zero Schur complement and are PSD of rank two. Their diagonal bounds satisfy (104.6). Define
+\[
+\begin{aligned}
+W&=\begin{pmatrix}E(I-Y)/t\\I_2\end{pmatrix}
+\frac\pi2(I+Y)
+\begin{pmatrix}(I-Y)E^T/t&I_2\end{pmatrix},\\
+V&=\begin{pmatrix}-E(I+Y)/t\\I_2\end{pmatrix}
+\frac\pi2(I-Y)
+\begin{pmatrix}-(I+Y)E^T/t&I_2\end{pmatrix}.
+\end{aligned}
+\tag{104.13}
+\]
+These matrices are PSD, have rank two, and sum to the density in (104.9), whose trace is one. They satisfy \((Z-2L)W=ZV=0\). Consequently \(2\operatorname{Tr}(LW)=\operatorname{Tr}(Z\rho)=t\). This proves the criterion with the original unhalved normalization. \(\square\)
+

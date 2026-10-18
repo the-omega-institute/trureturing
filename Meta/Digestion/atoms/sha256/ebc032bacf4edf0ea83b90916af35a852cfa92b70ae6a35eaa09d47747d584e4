@@ -1,0 +1,56 @@
+**Definition 1.1 (native syntax and minimum leaf depth).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle.
+\end{aligned}
+\tag{NLC.1}
+$$
+
+Every member of $\mathcal T$ is nonempty, finite, ordered and free as a
+binary tree. Powers of $\rho$ in a native expression have fixed natural
+exponents. The expression grammar otherwise uses variables, the two
+constants and pairing. In particular $\rho$ is interpreted by (NLC.1),
+not treated as a free unary constructor. Put
+
+$$
+\begin{aligned}
+\mu(\alpha)&=\mu(\beta)=0,\\
+\mu(\langle u,v\rangle)&=1+\min(\mu(u),\mu(v)).
+\end{aligned}
+\tag{NLC.2}
+$$
+
+Thus $\mu(u)$ is the minimum original-root address length of a leaf.
+For every natural $h$, $\mu(u)>h$ means that every address of length at
+most $h$ is reached and has reply $\mathsf{branch}$. The equivalence
+follows by following a shortest leaf path in one direction and by
+induction through the binary levels in the other. This statistic is
+neither maximum depth nor source size.
+
+Let $\Phi(\mathbf x)$ be any finite quantifier-free Boolean combination
+of native equalities, with all its variables ranging over $\mathcal T$.
+Let $\mathbf t=(t_1,\ldots,t_s)$ be a nonempty finite tuple of native
+expressions in those variables. Variables absent from the output tuple
+are still jointly constrained by $\Phi$. Define
+
+$$
+\begin{aligned}
+\operatorname{Sol}(\Phi)&=\{\mathbf x:\Phi(\mathbf x)\},\\
+ m_{\mathbf t}(\mathbf x)&=\min_{1\le i\le s}\mu(t_i(\mathbf x)).
+\end{aligned}
+\tag{NLC.3}
+$$
+
+Fixed finite tree parameters are expanded as native expressions. Fixed
+literal observations, guarded whole-subtree comparisons and exact row
+tests are admitted through the exact compiler of [NSF, Lemma 5.1][NSF].
+A designated reached-subtree expression has its reach guard imposed;
+an absent endpoint is not assigned a fictitious tree. The compiler's
+finite cases retain both reconstruction directions. No variable epoch,
+variable physical word or universal pointwise predicate is added to this
+quantifier-free language.
+

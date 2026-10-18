@@ -1,0 +1,23 @@
+**Theorem 7.4 (almost-sure acquisition and the different entire-past contract).** Let $T=\min\{t\ge0:Y_t\ne B\}$. Then
+
+$$
+\Pr(T>n)=\frac{a^n+b^n}{5}\quad(n\ge0),\qquad
+\mathbb E T=\frac15\left(\frac1{p+q}+\frac1r\right).
+$$
+
+Synchronization occurs almost surely with finite expected delay, but no finite worst-case delay. In the different contract where a stationary observer is already supplied its entire two-sided visible past, the exact predictive quotient has five classes almost surely. A five-label finite-start parser guessing the dominant component on its first $B$ has expected all-future error $u^{n-1}/5$ after $n\ge1$ reads; its supremum error over nonempty finite histories is $1/2$. This comparison places no guarantee on a query at empty history. At equality either component may be guessed, with the same conclusions using $u=a=b$.
+
+**Proof (7.4).** The event $T>n$ is exactly $B^{n+1}$, giving its probability from Theorem 2.1. Summing these geometric tails gives the expectation. Their limit is zero, but every finite term is positive. Hence finite almost-sure delay and absence of a deterministic bound coexist. After the first singleton the five pure-state update is exact forever.
+
+For the separately supplied two-sided stationary chain, the probability that the interval $[-m,0]$ is entirely $B$ is $(a^m+b^m)/5$. These decreasing events have limiting probability zero. Almost surely the acquired infinite past therefore contains a most recent singleton at finite distance from the present; updating through its finite suffix determines the current state. Each hidden mode has stationary mass $1/5$, and its distinct profile gives one of five almost-sure classes. This provides no prescribed conditional value on the null all-$B$ past, and does not acquire that past for a finite-start observer.
+
+The finite-start parser can initialize at $R_d$ and use the total pure-state reset table. On its first singleton it resets correctly; on first $B$ it stays at $R_d$. It is exact after any singleton. On $B^n$ its conditional error is $\delta_{n-1}$ in the unequal case, or $1/2$ at equality. Thus the expected error is
+
+$$
+\frac{a^{n-1}+b^{n-1}}5\delta_{n-1}=\frac{u^{n-1}}5.
+$$
+
+The one-symbol startup history has error $1/2$, proving the asserted supremum across positive lengths. Exponential expectation decay does not remove any of the positive finite witnesses.
+
+The mature causal-state background is Shalizi–Crutchfield, [*Computational Mechanics: Pattern and Prediction, Structure and Simplicity*, Definition 5, Lemma 7 and Theorem 2](https://arxiv.org/html/cond-mat/9907176v2), DOI [10.1023/A:1010388907793](https://doi.org/10.1023/A:1010388907793). Its stationary entire-past, null-set and entropy-minimality conditions are retained here. Travers–Crutchfield, [*Exact Synchronization for Finite-State Sources*, Definitions 4–7 and Theorem 1](https://arxiv.org/html/1008.4182v3), supplies synchronization in probability for finite unifilar, probabilistically distinct sources. The edge matrices here are $T^{(y)}=PD_y$: the graph is strongly connected, each state has at most one successor per symbol, and Theorem 2.1 separates the state laws. Stationarity aligns edge-emitted observations beginning at $Y_1$ with the finite law beginning at $Y_0$, without supplying an observed prehistory. The exact tails and uniform finite-start memory counts above preserve that distinction. $\square$
+

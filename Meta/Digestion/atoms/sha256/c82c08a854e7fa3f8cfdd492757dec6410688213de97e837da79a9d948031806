@@ -1,0 +1,8 @@
+**定义 7.1（同一实现中的三点响应）。** 对同一复二级载体的 $a,b,c\in S^2$，定义
+
+$$
+\mathcal B(a,b,c)=\operatorname{tr}(P_aP_bP_c).
+$$
+
+这是标准三点 Bargmann 不变量。其共同酉变换和射线规范不变性、与复关系的联系，使用既有[Fernandes 注记](../../../Library/Quantum/fernandes2024imaginarity.md)、[Chaturvedi 注记](../../../Library/Quantum/chaturvedi2013nullphase.md)及[Elliott 注记](../../../Library/Quantum/elliott2025complex.md)。这里只将它们作为第6节面内标定和第9节共同实现要求的背景，不将该不变量或 Gram 原理作为新成果。
+

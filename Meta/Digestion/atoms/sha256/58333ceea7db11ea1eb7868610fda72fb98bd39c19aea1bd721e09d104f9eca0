@@ -1,0 +1,22 @@
+**Definition 6.2 (normalized slack and the constant).** Retain the
+notation of [LATE, Theorem 6.1][LATE15403]:
+
+$$
+\begin{aligned}
+d_n&=\int Q(w_{n,1})\,d\nu_p(Q),\\
+e_{a,n}&=d_n-c_az_a^n,&e_{b,n}&=c_bz_b^n-d_n,\\
+E_r&=\max_{s\in\{p,\beta\}}
+       \int\operatorname{TV}(D,P_{s,r})\,d\nu_s(D),\\
+\kappa&=\frac15,&
+M_r&=1+z_r+z_r^2+(1+z_r)\lambda+\lambda^2,\\
+H_r&=M_rc_r\kappa^{-3}z_r^3
+                  \sum_{j=0}^2(\lambda/z_r)^j.
+\end{aligned}
+\tag{6.2}
+$$
+
+Here TV is half the complete-carrier $\ell^1$ distance, evaluated at each
+configuration before integration. In particular $E_r$ is neither TV
+between descriptor distributions nor a loss obtained by replacing each
+configuration law by the phase barycentre.
+

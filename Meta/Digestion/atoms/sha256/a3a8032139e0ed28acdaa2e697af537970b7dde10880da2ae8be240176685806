@@ -1,0 +1,29 @@
+### 103.1. Original hypotheses and the balanced-kernel exclusion
+
+Retain the four original two-coordinate fibres and the calibrated Gram domain
+\[
+\mathcal E=\{G\succeq0:G_{ff}=I_2\}.
+\]
+The local physical channels have dimensions \(\mathbb C^8\to\mathbb C^4\), the correlated encoding is fixed, and the arbitrary-reference error uses the original unhalved diamond normalization. Put
+\[
+F(G,H)=\max_{\rho,W}2\operatorname{Tr}[(T-G\odot H)W],
+\quad T_{ff}=I_2,\quad T_{fg}=\tfrac12J_2\quad(f\ne g),
+\]
+where \(\rho\) is PSD and fibre-block diagonal, \(\operatorname{Tr}\rho=1\), and \(0\preceq W\preceq\rho\). Assume \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), its ranks are \((7,6)\), and \(0<t=F(G,H)<1/4\). Let \(a\) span the full kernel of \(G\), with support \(S\) of occupancy \((2,1,1,0)\). Label the supported whole original fibre \(F=\{1,2\}\) and the singleton coordinates \(J=\{3,4\}\).
+
+Assume the supported \(H\) records admit the following form under reciprocal diagonal phase changes of \(G,H\):
+\[
+h_1=e_1,\quad h_2=e_2,\quad
+h_3=(c,su),\quad h_4=(c,s\overline u),\qquad
+c,s>0,\quad c^2+s^2=1,\quad |u|=1.
+\tag{1}
+\]
+This is an additional equal-polar hypothesis, not a gauge reduction of general records. Assume also that a nonzero \(G\)-kernel vector \(a\) satisfies
+\[
+\frac{|a_1|}{c}=\frac{|a_2|}{s}.
+\tag{2}
+\]
+**Theorem 103.1.** No such local minimum exists.
+
+The proof uses delivered §§95 and 97 for the rank-two supported quotient, §96 for the unrestricted one-party principal best response and equality of full and principal norms, §99 for uniqueness of all principal normers, their strict density positivity, the common cross stress and invertible cross block, and §§101–102 for the already-excluded real-gauge and unbiased endpoints. It does not use a rank-preserving average, a principal joint local minimum, or any symmetry of outside records.
+

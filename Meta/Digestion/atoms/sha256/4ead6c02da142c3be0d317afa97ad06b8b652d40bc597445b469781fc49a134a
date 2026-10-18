@@ -1,0 +1,62 @@
+**Definition 268.1 (Common domain and equal-mass readouts).**
+Use the complete words, tables, independent rows, scores and cones of
+Definitions 251.1–251.2. Thus every word in $B_L$, every multiple-zero
+suffix and every label in $J_L$ participates. A zero word of first zero
+$n$ has three separate demands $1-b_n-e$, $b_n-e$, $1-e$ on
+$\{0\}$, $\{n\}$, $\{0,n\}$; the positive word has demand $1-e$
+on $\{0\}$. Negative singleton demands remain.
+
+Fix one full allocation $\lambda\ge0$, of mass $M=\sum_D\lambda_D$,
+and put $\mu_w=\sum_D\lambda_D\delta_{D(w)}$. Full conic feasibility
+means $G_N\lambda\ge h(b,e)$, equivalently, for every $w\in\Omega_n$,
+
+$$
+\begin{aligned}
+\mu_w(0)&\ge1-b_n-e+(M-1)[n\ge3],\\
+\mu_w(n)&\ge b_n-e+(M-1)[n\le2],\\
+\mu_w(\{0,n\})&\ge M-e,\qquad
+\mu_+(0)\ge M-e.
+\end{aligned}
+\tag{268.1}
+$$
+
+For total-mass-zero signed measures write
+$\|\xi\|_{\rm TV}=\frac12\sum_r|\xi(r)|$.
+Let
+
+$$
+\begin{gathered}
+\rho_i=\max_{w,v\in\Omega_i}\|\mu_w-\mu_v\|_{\rm TV}\quad(i=1,2),\\
+s_+=\mu_+(0)-(M-e),\qquad
+s_n=\mu_{v^n}(n)-(b_n-e)\quad(n\ge3),\\
+\mathcal T=\sum_{n=3}^L\bigl(\mu_{v^n}(n)-\mu_+(n)\bigr),\qquad
+E_b=\sum_{n=3}^Lb_n-(L+1)e.
+\end{gathered}
+\tag{268.2}
+$$
+
+All these quantities concern this same $\lambda$.
+The original interpretation throughout is Proposition 251.4:
+$X=\{(r,g):r\text{ prime},\lceil F_r/10\rceil\le g\le
+\lfloor F_r/5\rfloor\}$, $N(r,g)=1+F_rg$,
+$q_i=[p_i\mid N]$, and $n(x)$ is the finite first absence.
+Finite-pattern witnesses use Boundaries, Theorem 35.2, with its
+entry-rank, CRT and growing-window supplier. The carrier is the full
+Borel disjoint union of the $B_j,P_j$ interval blocks. Its consumer
+and nonatomic $\mu_x$ remain as in Definition 251.4; the targets here
+are the separately selected
+$(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}}$,
+$\theta_j=(B_1,1/(j+2))$, for the entire sequence
+$1\ge a_1\ge a_2\ge\cdots>0$, $a_n\to0$.
+
+One source-independent seed, zero advice and sourcewise almost-sure
+finite handoff are required. An $N$ rule preselects and obtains its
+complete schedule; an $O$ rule preselects an increasing schedule and
+stops at its first queried zero or exhaustion. The bound is two
+actual requests, counting repetitions and ignored replies. Original
+competitors retain arbitrary addresses and arbitrary carrier outputs.
+Theorem 110.2 transports feasibility, without asserting preservation
+of an arbitrary competitor's entire law. For a constructed finite
+marked law, every actual $n>L$ has exact error
+$\max\{1-p_+(0),a_n\}$, including equality at the cap.
+

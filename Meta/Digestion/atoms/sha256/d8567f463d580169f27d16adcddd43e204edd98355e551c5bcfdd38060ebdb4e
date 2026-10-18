@@ -1,0 +1,53 @@
+**Proposition 7.2 (Full band reachability and actual relative commands).**
+The source in Definition 7.1 is precisely the full band of native current
+rays. If $k_0\in[a,b]$, all these rays have band-confined producing
+histories. Otherwise they have a phase-free positive-fiber entry followed
+by such a history. The displayed $P_s,Q_t$ are the actual original
+relative commands on this source.
+
+**Proof.** From Definition 1.1,
+
+$$
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\qquad
+w_+(k)=\frac12-\frac kr,\qquad w_-(k)=-\frac kr.
+$$
+
+Consequently the phase increments, not the arbitrary preparation phases,
+satisfy $h=(u,v,0,v,u)$. Lemma 1.2 gives
+
+$$
+\alpha=u-v,\qquad\beta=u,\qquad
+u=\beta,\quad v=\beta-\alpha,\qquad
+d\alpha=\tfrac12d\chi,\quad
+d\beta=(\tfrac12-k/r)d\chi.
+$$
+
+The integer coordinate changes are inverse on $\mathbb T^2$.
+The positive middle amplitude $\sqrt Z$ fixes the common ray phase;
+the other positive amplitudes distinguish both circles. Thus these
+coordinates impose no extra parity quotient or closed-loop condition.
+Integrating along the two straight legs gives exactly $P_s,Q_t$.
+
+For the band version of Proposition 1.3, choose $k_*\in[a,b]$ and
+$k_1\in[a,b]$ with $k_1\ne k_*$. Take $k_*=k_0$ when preparation is
+in the band; otherwise reach $k_*$ by a probability leg at fixed $\chi$.
+For arbitrary target real representatives $u,v$, put
+
+$$
+L=2(u-v),\qquad
+u_L=(\tfrac12-k_*/r)L,\qquad v_L=-(k_*/r)L,
+\qquad q=u-u_L=v-v_L.
+$$
+
+The chronological rectangle
+$P_{k_1-k_*},Q_A,P_{k_*-k_1},Q_{-A}$ adds
+$-A(k_1-k_*)/r$ to both groups. Choose
+$A=-rq/(k_1-k_*)$, then execute $Q_L$ at $k_*$ and a probability leg
+to the desired $k\in[a,b]$. The endpoint increments are exactly $u,v$.
+Every probability segment after entry lies between band points, every
+phase leg has finite variation, and the whole history is finite.
+Conversely the native ODE preserves the displayed group equalities.
+This proves exact reachability, rather than density or closure of a
+reachable subset. Band endpoints remain strictly inside the positive
+fiber. $\square$
+

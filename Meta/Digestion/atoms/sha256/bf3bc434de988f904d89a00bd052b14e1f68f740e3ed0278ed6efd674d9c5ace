@@ -1,0 +1,34 @@
+**Definition 1.2 (an early source code and a later switch).**
+Fix a public directed graph $G\subseteq I\times I$. Loops are allowed.
+An encoder is any function $E:\mathcal A\to\mathcal L$ with effective
+finite labels on its image. Because $\mathcal A$ is finite and its
+coordinates are acquired, every such function is available as a finite
+table; its installation and evaluation costs are separate resources.
+The code is chosen from the initial acquisition, before both the
+future edge $i\to j$ and the epochs are known.
+
+After a complete handoff, the entire source-dependent service input is
+
+$$
+(E(a),i,K_i^a(s),j,K_j^a(t)),
+\qquad (i,j)\in G,\quad 0\le s\le t\le2H.
+\tag{SCC.3}
+$$
+
+The epochs are integers and authentic indices of the same pure-$\rho$
+history rooted at $X_a$; neither $s$ nor $t$ is an input. One uniform
+deterministic decoder must return $t-s$ for every displayed choice.
+No further source port is available to this decoder. The old address
+and old clock in (SCC.3) are explicit retained operands, not part of
+$E$'s separately measured alphabet.
+
+Complete handoff means that all other accessible source-dependent
+state has been discarded. This includes initial literals, subtree
+handles, source identities, acquisition transcripts, epochs, timing
+advice, allocation choices and source-dependent control state.
+Surviving state must be a function of (SCC.3) and public parameters.
+A saved pointer whose contents remain readable is an additional port
+and changes this contract. Authentication of the captures and the
+common history is a premise, not information extracted from their
+numerical agreement.
+

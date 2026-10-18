@@ -1,0 +1,10 @@
+**反例 Q2。** 取 $X=Y=1/2$、$Z=0$，令 $K_{s_0}=K_{s_1}=K_{s_2}=K_{s_3}=\delta_0$，$K_{s_{13}}=(1-q)\delta_0+q\delta_1$，$0<q\le1$。则
+
+~~~math
+C_K(p_\kappa)=(1-\kappa q)\delta_0+\kappa q\delta_1,
+\qquad
+\operatorname{Curv}_K=q(\delta_1-\delta_0)\ne0.
+~~~
+
+$(\kappa,q)=(1/4,1/2)$ 与 $(1/8,1)$ 给出相同 $P$ 和同一混合读出律；两次核族不同，故固定核的逆式没有同时识别 $q$。供文所引 4da8b2e 理论的 Conventions 1.1–1.2、Section 5 与 Mathematical citation 9.1 明确省略取得 p-beta 核而保留固定已知核逆式。这个省略核的障碍不反驳固定核反演，也不因引用而取得 Lean 认证。
+

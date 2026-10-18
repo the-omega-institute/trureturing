@@ -1,0 +1,66 @@
+## 7. Attribution and the unchanged productive obligation
+
+The compound results are the legal, version-preserving construction of
+(3.3), the localization (4.3), and the ensuing conditional balances.
+The construction and conditional balances are established here in
+Theorems 3.1, 4.2 and 5.1, using the canonical results of [Universal][U],
+[Intrinsic][I], [Multiword][M] and [Two-word][W] with the uses and limits
+specified below. It is a synthesis
+relative to the supplied results; abstract cocycle algebra, conditional
+expectation and signed-measure uniqueness are mature ingredients.
+
+| Source or ingredient | Exact use and limit |
+| --- | --- |
+| [Universal][U], §§1–4 and Theorem 6.2 | Complete original objective, actual $J_\theta/P_\theta$, necessary posterior band and insertion inequalities, and the fixed-$N$ separation equivalence. No new attainment implication is attributed to the band. |
+| [Intrinsic][I], Theorem 2.2, Theorem 3.2, Corollary 3.4 and Proposition 4.1 | Exact intrinsic collar, annihilator/dual residual and tail-qualified response norm. These are consumers and support, not new independent theorems here. |
+| [Multiword][M], Lemma 2.1 and Theorem 3.1 | Actual erasure offsets, exterior response control, finite certificate and detectability. Square-root summability is stated separately. |
+| [Two-word][W], Theorem 2.1 | Equality of the two actual exterior laws and posterior restrictions, including seams. Theorem 5.1 consumes it directly to obtain the additional conditional interior equality. |
+| [Dawid–Lauritzen–Parry][DLP], §4.2, especially Example 4.4 and (14) | Conditional Brier scoring and squared conditional discrepancy. The full-product strict-propriety argument assumes everywhere-positive distributions; it is not imported into hard no11. |
+| [Chandgotia–Meyerovitch][CM], §§2.2–3 | Finite-modification equivalence and additive cocycles are established language. Their Markov cocycles require finite-boundary dependence, and their specification correspondence uses conditional log ratios. Those additional conclusions are not asserted for (3.3). |
+
+Zero is a safe legal replacement symbol for no11, but that fact alone does
+not provide the Markov-cocycle hypothesis in [CM]. Even on this support,
+one must prove the missing locality and probability-ratio bridges before
+using its Markov or Gibbs conclusions. The bounded comparison credits
+these mature ingredients without a worldwide priority claim or an
+empirical statistical-performance claim.
+
+**Open Problem 7.1 (Original finite attainment and all-$N$ separation).**
+With the entire unchanged domain (1.1), let
+$C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and
+$U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$.
+Still decide whether some finite exact producer attains $c_\star$, or
+whether $C_N<c_\star$ for every finite $N$. The latter is equivalent, by
+[Universal, Theorem 6.2][U], to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+$$
+
+For the response route the remaining obligation is to prove, for each
+intended remaining producer, a conditional contrast nonzero on positive
+actual exterior probability, or another productive intrinsic direction.
+No such remaining producer is exhibited here, and no universal
+$\gamma_L(P)>0$ is obtained. General finite-hidden square-root
+integrability, uniform parameter-family constants, an efficient enlarged
+block or detecting radius, and a fixed-$N$ uniform margin are also not
+provided. The pair refinement does not owe integrability but still owes
+pair existence and a nonzero interior contrast to produce a witness.
+
+A fixed lawful necessary-band example with $A_P<\infty$ satisfying every
+conditional balance would obstruct this full-response route on that law; it would
+prove neither attainment nor failure of all finite budget certificates.
+No such obstruction is established here. Strict nonattainment alone is
+not identified with nonzero full response. The next structural question
+is whether the same finite producer can obey every balance of Theorem 4.2,
+or whether one actual intrinsic relation violates it on a finite exterior
+cylinder. The cocycle construction makes that question precise without
+settling either alternative.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[M]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[W]: FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md
+[DLP]: https://arxiv.org/html/1104.2224v2 "A. Philip Dawid, Steffen Lauritzen and Matthew Parry, Proper Local Scoring Rules on Discrete Sample Spaces"
+[CM]: https://arxiv.org/html/1305.0808v3 "Nishant Chandgotia and Tom Meyerovitch, Markov Random Fields, Markov Cocycles and The 3-colored Chessboard"
+

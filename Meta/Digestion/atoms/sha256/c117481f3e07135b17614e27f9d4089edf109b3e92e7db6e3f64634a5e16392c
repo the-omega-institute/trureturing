@@ -1,0 +1,23 @@
+**Theorem 2.6 (stable-core theorem).** Assume the declared action family is
+closed under all finite legal continuations, with explicit illegal outcomes,
+that $\varepsilon\in\mathcal U$, and that the tested family is prefix-closed
+and contains every legal suffix after a tested prefix.  Assume also that
+$K_0$ is an equivalence on the actual reachable carrier.  Then $K$
+is the largest forward-invariant equivalence relation contained in $K_0$.
+Consequently, the quotient by $K$ is the coarsest exact boundary for the
+mixed task in which ordinary responses, initial aggregate totals and all
+later fresh responses must be preserved.  Any finer autonomous exact
+realization whose kernel is contained in $K$ has a canonical surjection onto
+this quotient.  Static
+factorization of a trace table alone does not imply that the finer
+representation has a well-defined autonomous update.
+
+**Proof sketch.** Reflexivity, symmetry and transitivity follow pointwise
+from the corresponding properties of $K_0$.  If $xKy$ and $a$ is a common
+legal first action, every legal continuation $p$ after $a$ gives
+$K_0(T_{ap}x,T_{ap}y)$, so $T_ax\,K\,T_ay$; the first-step response is the
+$p=\varepsilon$ case.  If $R$ is any forward-invariant equivalence contained
+in $K_0$, induction over a legal prefix gives $R\subseteq K$, proving
+maximality.  The quotient statement is the universal property of the
+largest admissible identification.
+

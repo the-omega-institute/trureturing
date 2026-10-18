@@ -1,0 +1,34 @@
+**Convention 8.2 (the already evaluated sharp onset).** To identify the
+credited QO coefficient exactly, put
+
+$$
+\begin{gathered}
+p_1=\frac{\beta\sigma_0}{2}\left(1+\frac{1-\alpha}{Z_0}\right),\quad
+q_1=\frac{\beta\sigma_0}{2\alpha}
+ \left(\frac{1-\alpha}{Z_0}-1\right),\quad
+r_1=\frac{\beta c_0}{2\sqrt\alpha},\\
+a_{\rm curv}=\frac{d_{\rm cert}}p=\frac{\alpha A+B}{Z_0},\quad
+b_{\rm rec}=-\frac{p_1+q_1}{2s_*}<0,\\
+c_{\rm curv}=\frac{\lambda_0\beta}{2}
+ +a_{\rm curv}(\sqrt{q/p}\,p_1-r_1)^2>0,\quad
+D_{\rm onset}=\frac1{a_{\rm curv}}+\frac{b_{\rm rec}^2}{c_{\rm curv}},
+\quad K_{\rm onset}=D_{\rm onset}^{-1}.
+\end{gathered}
+\tag{AS.58}
+$$
+
+QO proves for each fixed admitted input, uniformly over original
+competitors in its lower bound,
+$E_{s_*+\varepsilon}=F+K_{\rm onset}\varepsilon^2+O(\varepsilon^3)$,
+with $0<K_{\rm onset}<a_{\rm curv}$, and supplies an actual twelve-label
+matching asymptotic path. Its normalized necessary-array slopes are
+$x/\varepsilon\to1/(a_{\rm curv}D_{\rm onset})$ and
+$(\theta-\theta_0)/\varepsilon\to b_{\rm rec}/
+(c_{\rm curv}D_{\rm onset})<0$, with radial slack $o(\varepsilon^2)$.
+Here $x=\sqrt{PQ-R^2}$ and the radial slack is $\beta-m$.
+These are statements about reduced arrays, not whole-instrument
+uniqueness. Since (AS.19) evaluates the identical optimization, it has
+this same onset; the coefficient and local path are not counted again
+as the later-interval increment. There is no input-uniform cubic
+constant or radius, nor a theorem at $\xi=0$ or singular limits.
+

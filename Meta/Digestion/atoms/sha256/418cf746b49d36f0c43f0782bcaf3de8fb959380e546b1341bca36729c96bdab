@@ -1,0 +1,29 @@
+**Definition 2.1 (the reused exact cell representation).** Set
+
+$$
+d=1+\max(\{0\}\cup\{|q|:(q,c)\text{ is a read in }h\}).
+$$
+
+A native depth-$d$ pattern exposes pairs and literal leaves above depth $d$, stops at early leaves, and places one residual at each reached depth-$d$ position. Enumerate such patterns $\eta_b$ for every old class. A residual name is the pair $(b,w)$ of old class and frontier position; every occurrence of that old class uses the same names. Different names are not required to have different values.
+
+Let $E_{\eta,b}$ be its free pair term over $\alpha,\beta$ and these names, and let
+
+$$
+W_\eta=C[(E_{\eta,[i]})_i],\qquad
+\Delta_\eta=\bigwedge_{b\ne c}E_{\eta,b}\ne E_{\eta,c}.
+\tag{LRD.4}
+$$
+
+These are whole-term negatives, not childwise negatives. Fixed native ground pieces are expanded into the literal free signature. Keep patterns for which $W_\eta$ gives every recorded reply and every displayed negative has syntactically different sides. Every query is strictly above every frontier in absolute coordinates, so its branch, leaf or absence reply is constant over the fillings of a fixed pattern. Absence is justified by an actual earlier terminating leaf, never by an empty residual. Contradictory literals eliminate the pattern.
+
+The existing `NativeHistoryCells.oldTerm`, `wholeTerm`, `cell_feasibility_exact` and `historyCellEquiv`, with stationary history and empty recutting cut, give the disjoint exact representation
+
+$$
+D(R,h)\ \cong\
+\coprod_{\eta\ \mathrm{kept}}
+\{v:X_\eta\longrightarrow\mathcal T:\Delta_\eta[v]\}.
+\tag{LRD.5}
+$$
+
+The map is $v\mapsto W_\eta[v]$; its inverse extracts each class value at $p_b$ and takes its unique depth-$d$ decomposition. It retains every repetition, unused-cut guard and old-class disequality. Syntactic feasibility here is supplied by finite free-term ground separation, already proved in `NativeGroundSeparation`. `NativeGroundSolutionSpace.constrainedEquiv` similarly transports the entire pulled-back constraint rather than an unrestricted product. These cell, feasibility, unification and generic recutting results are reused, not new claims of this volume. The next theorem supplies the additional simultaneous rank-and-prefix property needed for depth recovery.
+

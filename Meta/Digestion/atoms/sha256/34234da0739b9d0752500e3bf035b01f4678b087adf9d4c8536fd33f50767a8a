@@ -1,0 +1,68 @@
+**Definition 7.1 (logical target, records and error).** RTII §66.1 uses
+the maximally correlated encodings
+
+$$
+\mathcal J_{\rm in}(|x\rangle\langle y|)=|xx\rangle\langle yy|,
+\qquad
+\mathcal J_{\rm out}(|f\rangle\langle g|)=|ff\rangle\langle gg|.
+\tag{PC.30}
+$$
+
+RTII §81 concerns arbitrary local CPTP maps
+$\mathcal A,\mathcal B:M_{2k}\to M_k$, $k\ge2$, and target
+
+$$
+\begin{aligned}
+\mathcal F_{k,2}(|f,i\rangle\langle f,j|)
+ &=\delta_{ij}|f\rangle\langle f|,\\
+\mathcal F_{k,2}(|f,i\rangle\langle g,j|)
+ &=\tfrac12|f\rangle\langle g|\quad(f\ne g).
+\end{aligned}
+\tag{PC.31}
+$$
+
+If $V_A,V_B$ are their Stinespring isometries, the correct-output
+blocks are contractions
+
+$$
+A_fe_i=(\langle f|\otimes I)V_A|f,i\rangle,\qquad
+H_fe_i=(\langle f|\otimes I)V_B|f,i\rangle.
+\tag{PC.32}
+$$
+
+For columns $a_{fi},h_{fi}$ let
+$x_{fi}=a_{fi}\otimes h_{fi}$ and let
+$K_{(fi),(gj)}=\langle x_{fi},x_{gj}\rangle$ be the forward Gram.
+The fixed target Gram $T_k$ has diagonal blocks $I_2$ and
+off-diagonal blocks $J_2/2$, where $J_m$ denotes the $m$ by $m$
+all-ones matrix. The within-fibre plus/minus transform, with all plus
+coordinates ordered before all minus coordinates, gives
+$\widehat T_k=\operatorname{diag}(J_k,I_k)$. The transformed $K$
+includes its full plus/minus cross block.
+
+The RT81 error is the unhalved arbitrary-reference norm
+
+$$
+\delta_{\rm RT}=
+\| (\mathcal A\otimes\mathcal B)\mathcal J_{\rm in}
+             -\mathcal J_{\rm out}\mathcal F_{k,2}\|_\diamond.
+\tag{PC.33}
+$$
+
+Its resource $d$ is local Kraus rank, equivalently the least pure
+Stinespring environment dimension for the specified local channel;
+the purification of any mixed ancilla is included. RTII §81 proves
+$\operatorname{Tr}(T_k-K)_+\ge\max(0,k-d^2+1)$ and the corresponding
+$\delta_{\rm RT}\ge\max(0,(k-d^2+1)/k)$, using the normalized input
+
+$$
+|\Omega_{2k}\rangle
+=\frac1{\sqrt{2k}}\sum_{f=1}^k\sum_{i=0}^1
+           |f,i\rangle_R\otimes|f,i\rangle_{\rm logical}.
+\tag{PC.34}
+$$
+
+These are a different input, target, error and resource interface from
+(PC.1)–(PC.8). The following exact constructions concern the data
+required to identify the interfaces.
+

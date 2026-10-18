@@ -1,0 +1,24 @@
+**Convention 10.2 (verification and unresolved boundary).** Document
+structure checks do not verify these proofs in Lean. The volume adds
+ordinary theory only. The complete source domain is (PDC.2), the exact
+new consumer domain is (PDC.15), and the still-unresolved general
+decision is Open problem 8.5. No mathematical choice of coordinates
+adds an actual operation or information to the retained observer.
+
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[NFO]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_OBSTRUCTION.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[NGSS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSolutionSpace.lean
+[NUC]: ../../../D5/S0/Rewriting/NativeUnificationCore.lean
+[NTU]: ../../../D5/S0/Rewriting/NativeTermUnification.lean
+[NSUB]: ../../../D5/S0/Rewriting/NativeSubstitution.lean
+[UC]: ../../../D5/S0/Rewriting/UnificationCompleteness.lean
+[CENTRALIZER]: ../../../D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+

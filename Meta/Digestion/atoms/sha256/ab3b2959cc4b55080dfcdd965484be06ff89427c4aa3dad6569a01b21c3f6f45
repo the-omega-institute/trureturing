@@ -1,0 +1,21 @@
+**Definition 8.1 (Actual fixed target, information and returns).** Throughout this section fix exactly Definition 4.1's twelve-state parameter, its stationary joint law $J=J_\theta$ from (1.2), and its actual six-class quotient $Q_t=[H_t]$ from Proposition 4.2. The target is always $Q_0$. For integer radii $r\ge0$ put
+
+$$
+W_r=X_{-r:-1},\qquad
+\mathcal F_r=\sigma(W_r),\qquad
+\mathcal F_\infty=\sigma(X_j:j\le-1),\qquad
+\nu_r(a)=J(Q_0=a\mid\mathcal F_r).
+\tag{8.1}
+$$
+
+Here $W_0=\epsilon$, $\mathcal F_0$ is trivial, and the fields are completed under $J$. They increase with $r$ and generate $\mathcal F_\infty$ up to completion. Posterior vectors are probability-vector versions, chosen simultaneously for the countably many radii.
+
+Optional randomization means adjoining a seed $U$ independent of the entire joint process $\sigma(H_t,X_t:t\in\mathbb Z)$, with product law $J^U=J\otimes\mathcal L(U)$. Put $\mathcal G_r=\mathcal F_r\vee\sigma(U)$, completed under $J^U$; without a seed take $U$ constant. A stopped classifier consists of a discrete stopping time $\tau\in\mathbb N_0\cup\{\infty\}$ for $(\mathcal G_r)$ and a returned class $A$, with $\{\tau=r,A=a\}\in\mathcal G_r$ for every finite $r$ and every class $a$. Its zero-error condition is
+
+$$
+J^U(\tau<\infty,\ A\ne Q_0)=0.
+\tag{8.2}
+$$
+
+This permits abstention forever; an almost-surely finite classifier additionally requires $J^U(\tau<\infty)=1$. The fields in (8.1) specify mathematical information. Physical access to their coordinates requires an additional archive or access premise; these definitions supply neither an acquired archive, its resource cost, nor a deterministic $W_n$ transfer.
+

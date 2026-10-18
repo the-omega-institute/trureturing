@@ -1,0 +1,90 @@
+**Example 22.1 (informative survival with an exact continuation ceiling).**
+Take zero fixed preparation phases and
+
+$$
+c=\frac14,\quad Z=\frac12,\quad
+a=\frac18,\quad l=\frac3{16},\quad
+\ell=\frac17,\quad C=\log7.
+\tag{PR.81}
+$$
+
+Draw and retain a fair public bit $U$. If $U=\varepsilon$, the source
+waits at $a$ for two units. If $U\ne\varepsilon$, it executes
+$a\to7/32\to a$, one unit per affine leg and constant relative phase.
+This selection is made by the source's explicitly retained old parity
+bit and delivered seed; the observer sees neither that bit nor the path.
+Here $b=7/32$, $d=3/32$ and $A=1/56$ in (PR.75)–(PR.77).
+The loop's upward and downward survival factors are $4/7$ and $1/4$,
+so its complete live return is $I_5/\sqrt7$.
+
+The loop's total first-failure mass on each leg is $3/7$.
+Its upward mode masses, in the original five-mode order, are
+$(0,3/28,3/14,3/28,0)$; its downward masses are
+$(3/28,0,3/14,0,3/28)$. Their exact time densities are (PR.77);
+their joint reference successors are (PR.66). Waiting has no failure.
+Thus the full output is the actual live joint state or the actual
+$(U,\tau,i,f)$, with no discarded or repeated failure. Every failure
+reveals $\varepsilon=1-U$ in this particular source, but its specimen
+is already stopped.
+
+For each parity separately,
+
+$$
+Q_\varepsilon=\frac47,\qquad
+\Pr(\mathsf L,d(U)\ne\varepsilon)=\frac1{14},\qquad
+\Pr(d(U)\ne\varepsilon\mid\mathsf L)=\frac18,
+\quad d(U)=U.
+\tag{PR.82}
+$$
+
+Under the equal prior, $U$ is initially independent of the old history.
+The live flag alone carries no parity information because both yields
+are $4/7$. Jointly, however,
+$\Pr(U=\varepsilon\mid\mathsf L)=7/8$.
+Erasing $U$ and retaining only the live flag and common metadata restores
+error $1/2$. Within this balanced classical-record-only calibration
+contract, a one-valued live record always has error $1/2$; at least
+two retained values are necessary for this nontrivial error, and the
+one retained bit is sufficient. This is not a lower bound for every
+quantum calibration procedure or the whole observer memory.
+
+The next one-unit horizontal leg has
+$s_*(a,l)=2/3$. Corollary 21.1 gives the sharp unconditional exact
+endpoint probability
+
+$$
+\frac23\frac47=\frac8{21}.
+\tag{PR.83}
+$$
+
+Its remaining probability consists of acquisition failure $3/7$ and
+new tail failure $4/21$, with the first actual time/mode preserved.
+This is a complete stopped same-specimen construction.
+
+For a fully specified common preparation use $z=1/16$ in (PR.78).
+Then $B_{\beta,m}=8\beta-4\pi m$, the prehistory duration is five,
+and its canonical live mass is $1/3$ for every $\beta,m$.
+From that earlier preparation the final all-success probability is
+$8/63$ and the full successful chronology lasts eight units.
+The earlier failures remain absorbing. Every signed winding is allowed;
+no old-history programme parameter is supplied to the later observer.
+
+Acquisition alone has support margin at least $1/32$, maximum height
+speed $3/32$, height variation $3/16$, and interior velocity variation
+$3/16$; zero-padded velocity variation is $3/8$. Its duration is two
+and its additional phase variation and winding are zero. The tail has
+speed $1/16$, height variation $1/16$, duration one and margin at
+least $1/16$. The common-preparation history has height margin at least
+$1/16$, height speed at most $1/16$, and phase variation
+$2\pi|m|+2|8\beta-4\pi m|$. These bounds do not give a uniform
+phase budget over all old histories.
+
+All new height/time/probability parameters have finite rational
+descriptions, and the active basis and endpoint filter have finite
+algebraic descriptions. The exact loss charge is named by $\log7$;
+it is not a newly observed real-valued meter reading. Exact calibration,
+Kraus execution, source/epoch matching, clock/reference and exact
+continuous-time archive storage remain separately charged ideal services.
+In particular the retained one-bit live selector does not encode the
+failed branch's real timestamp or the full archive.
+

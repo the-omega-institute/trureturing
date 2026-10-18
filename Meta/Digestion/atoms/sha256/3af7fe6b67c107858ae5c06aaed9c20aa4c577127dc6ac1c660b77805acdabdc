@@ -1,0 +1,64 @@
+**Definition 5.1 (Multiword consumer).** For any actual stationary legal $P$, set
+
+$$
+q_i=\mathbb E_P[X_i\mid\sigma(X_j:j\ne i)],\qquad
+q_{k,i}=\mathbb E_P[X_i\mid X_{i-k},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+k}],
+$$
+
+$$
+\mathfrak d(P)=\mathbb E_P(X_0-q)^2,\qquad D_k(P)=\mathbb E_P(X_0-q_{k,0})^2.
+\tag{5.1}
+$$
+
+The notation $\mathfrak d(P)$ is the stationary risk denoted $d(P)$ in [Multiword][MW], and is distinct from the predictive gaps $d_L,d_R$. Its established interface is $\mathfrak d(P)=\inf_kD_k(P)\le c_\star\le\bar c:=3-2\sqrt2$. For $C=[1,L]$, take a bounded $f:B_L\to\mathbb R$, $f_C=f(X_C)$, $F=\max_{B_L}|f|$, with actual nullity
+
+$$
+\mathbb E_P[f_C\mid\mathcal H_C]=0,\qquad \mathcal H_C=\sigma(X_j:j\notin C).
+\tag{5.2}
+$$
+
+With $I_R=[1-R,L+R]$, define
+
+$$
+U_{R,k}(P,f)=\sum_{i\in I_R}\mathbb E_P[f_C(X_i-q_{k,i})^2].
+\tag{5.3}
+$$
+
+All overlaps, endpoints and original block seams remain. Under $P_\theta$ the finite marginal on $[1-R-k,L+R+k]$ determines (5.3). Positive exterior atoms use their actual conditional ratios; zero-total atoms have zero contribution, and radius zero uses empty exterior words.
+
+The established [Multiword, Theorem 3.1][MW] consumes a bound $\tau_P(R)\le\eta_P(R)$ proved without attainment. Under same-law attainment $\mathfrak d(P)=c_\star$, it gives
+
+$$
+|U_{R,k}(P,f)|\le F\eta_P(R)+2(L+2R)F\sqrt{\frac{c_\star}{k+1}}.
+\tag{5.4}
+$$
+
+Thus an independently established budget (2.4) can be inserted as $\eta_P(R)=\sigma_R+B_2(R)$; the alternative verified Shannon budget in Proposition 3.2 can also be inserted. A verified strict violation with $\bar c$ in place of $c_\star$ implies $\mathfrak d(P)<c_\star$. This is reuse of the consumer, not a new response theorem. A deficit decomposition alone supplies neither a null direction nor a nonzero complete response. A law-dependent allowance also supplies no uniform allowance for a parameter family.
+
+**Open Problem 5.2 (Full-domain finite attainment or separation).** Retain
+
+$$
+C_N=\sup_{\theta\in\Theta_N}\mathfrak d(P_\theta),\qquad
+U_{N,k}=\max_{\theta\in\Theta_N}D_k(P_\theta).
+\tag{5.5}
+$$
+
+The original question is whether some exact finite $\theta$ attains $c_\star$, or $C_N<c_\star$ for every finite $N$. The full-domain separation criterion retained in [Multiword, §9][MW] is
+
+$$
+\forall N\ge1\ \exists k,m\ge1:\qquad U_{N,k}<\kappa_m/(m+1).
+\tag{5.6}
+$$
+
+Theorem 2.1 leaves the universal fixed-law tail obligation precisely at $K_2(0)<\infty$. No proof of that condition for every $\theta\in\Theta_N$, and no one fixed lawful finite producer with divergent $\tau_P(0)$, is given. A divergent sufficient weighted entropy moment would not alone prove actual-tail divergence. Proposition 4.1 is a finite-tail witness against the direct comparison, not a full-domain maximum estimate. Productive directions or other strict certificates for all remaining hypothetical finite attainers are separate obligations.
+
+The mathematical addition to the weighted-moment formulation and the existing response interface is the exact conditional-budget reduction and the fixed-law radius-one failure of the unweighted bridge. Orthogonal projection, conditional Brier scoring, signed co-information, finite-cut entropy and the XOR producer/tail mechanism are attributed supporting steps. No universal positive-deficit integrability, exact finite attainer, all-$N$ strict separation, efficient constants or radii, hidden minimality, empirical machine-learning benefit or worldwide novelty is asserted.
+
+[MW]: FIB_LEGAL_EDGE_LOAD_MULTIWORD_RESPONSE_STABILITY_AND_VANISHING_TAIL_CERTIFICATE.md
+[EM]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
+[XOR]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[DLP]: https://arxiv.org/html/1104.2224v2
+[AJC]: https://arxiv.org/html/1507.00672v1
+
+Doob: J. L. Doob, *Stochastic Processes*, conditional expectations and martingale convergence. Cover–Thomas: Thomas M. Cover and Joy A. Thomas, *Elements of Information Theory*, Chapter 2, entropy chain rules and data processing. Dawid–Lauritzen–Parry: A. Philip Dawid, Steffen Lauritzen and Matthew Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*. Ara–James–Crutchfield: Pooneh M. Ara, Ryan G. James and James P. Crutchfield, *The Elusive Present: Hidden Past and Future Dependency and Why We Build Models*.
+

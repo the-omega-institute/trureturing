@@ -1,0 +1,13 @@
+**Corollary 4.3 (read budgets with updates left unrestricted).** For every
+supplied $K$, existence of a whole-domain service with $\sup_Dq\le K$
+is decidable, with the same positive controller and finite negative
+certificate alternatives. A negative certificate rejects even comparators
+with no prescribed update or word-length bound.
+
+Proof. Apply the sourcewise cap in Convention 2.3. A service with read
+bound $K$ becomes one with the same read bound and update bound $U$.
+Conversely a $(K,U)$ service is an unrestricted-update competitor.
+Invoke Theorem 4.2 at $(K,U)$. On a finite rejecting sample the same cap
+applies sourcewise to every comparator correct only there. Thus no
+uncapped comparator on that sample can meet $K$ either. $\square$
+

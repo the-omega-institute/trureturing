@@ -1,0 +1,11 @@
+**定义 B-16.1（实际像的两个事件读口）。** 对 $`\eta:\Omega\to B=\eta(\Omega)`$，令
+
+
+```math
+\eta_\exists(E)=\{b:\eta^{-1}(b)\cap E\ne\varnothing\},\qquad
+\eta_\forall(E)=\{b:\eta^{-1}(b)\subseteq E\}.
+```
+
+
+每个实际像纤维非空；空来源域的实际像也为空。此区分采用 [B-S2] §47。
+

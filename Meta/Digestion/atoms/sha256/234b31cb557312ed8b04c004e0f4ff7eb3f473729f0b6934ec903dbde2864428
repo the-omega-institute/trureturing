@@ -1,0 +1,39 @@
+**定理 48.5（任意偶前缀的完整重接）。** 在引理 48.4 的假设下，选择 $A_r$ 后所得实际因子是覆盖恰原域的一个圈。删去全部旧 $A_r$ 边，令 $X_j$ 为紧随旧切口 $A_j$ 至下一切口前的完整定向路径，$\overline X_j$ 为其反向。$\ell$ 为奇数时，新的完整路径列表为
+
+$$
+\begin{aligned}
+X_0,;&X_\ell,X_{\ell-2},\ldots,X_3,\\
+&X_{\ell+3},X_{\ell+5},\ldots,X_{\ell+h+1},X_2,X_1,\\
+&\overline X_4,\overline X_6,\ldots,\overline X_{\ell+1},\\
+&X_{\ell+2},X_{\ell+4},\ldots,X_{\ell+h}.
+\end{aligned}
+$$
+
+$\ell$ 为偶数时，列表为
+
+$$
+\begin{aligned}
+X_0,;&X_\ell,X_{\ell-2},\ldots,X_4,\\
+&\overline X_1,\overline X_2,\\
+&\overline X_{\ell+h+1},\overline X_{\ell+h-1},\ldots,\overline X_{\ell+3},\\
+&\overline X_3,\overline X_5,\ldots,\overline X_{\ell+1},\\
+&X_{\ell+2},X_{\ell+4},\ldots,X_{\ell+h}.
+\end{aligned}
+$$
+
+相邻路径均由实际 $A_r$ 的 $c$ 边连接，两种列表均从 $L_0^{A_r}$ 开始，以 $R_{m-1}^{A_r}$ 结束，并有实际闭合边
+
+$$
+\begin{aligned}
+L_0^{A_r}&=(p,q,V,u_h,\ldots,u_1,x),\\
+R_{m-1}^{A_r}&=(u_2,\ldots,u_h,\overline V,q,p,u_1,x),\\
+R_{m-1}^{A_r}c&=L_0^{A_r}.
+\end{aligned}
+$$
+
+**证明。** $X_j$ 是从完整旧圈实际切出的互不相交路径，穷尽全部旧顶点。设 $f(j)$ 为引理 48.4 的 $A$ 词中 $j$ 后的指标。若 $j$ 为负，$X_j$ 始于 $L_j$，否则始于 $R_j$；若 $f(j)$ 为负，则终于 $R_{f(j)}$，否则终于 $L_{f(j)}$。这确定列表中每个完整路径的实际端点。
+
+代入上表，各连接均为 $R_jc=L_{j+1}$ 或其反向。正指标的下降链按 $L_{j-1}c=R_{j-2}$ 连接；高位负指标块被偶数 $h$ 分成两条步长二的链。奇数情形从 $X_3$ 经第一条高位链到 $X_2,X_1,\overline X_4$；偶数情形从 $X_4$ 到 $\overline X_1,\overline X_2$，再经反向高位链到 $\overline X_3$。剩余反向正指标链按 $R_jc=L_{j+1}$ 连接，最后一条正向高位链终止于 $R_{m-1}$。因此全部连接与第 47 节相同的特殊指标过渡一致，新增高位指标全部由两条步长二的链列尽。
+
+每个 $X_j$ 恰出现一次，并使用全部新 $A_r$ 边，所以恢复完整路径后覆盖全部旧顶点且没有隐藏圈。最后实际元组的前 $n-2$ 项反转即得 $L_0^{A_r}$，故末边确为生成元 $c$ 的边。
+

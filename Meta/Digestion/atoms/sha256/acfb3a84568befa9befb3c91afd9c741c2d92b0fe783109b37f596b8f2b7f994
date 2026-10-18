@@ -1,0 +1,34 @@
+### 21.1 与图 Dirichlet 形式的接口
+
+Fibonacci cube \(\Gamma_n\) 的顶点为 \(\Sigma_n\)。删除映射 \(\delta_n\) 是图的顶点映射，但它把多条细边压到同一个粗边或粗顶点。为了得到第 20 节的 Dirichlet 收缩定理，不能只使用顶点映射。必须显式构造边梯度压缩
+
+\[
+S_n:\mathcal E_{n+1}\to\mathcal E_n
+\]
+
+和加权顶点压缩
+
+\[
+R_n:\mathcal H_{n+1}\to\mathcal H_n
+\]
+
+使
+
+\[
+G_nR_n=S_nG_{n+1},
+\qquad
+\|S_n\|\le1.
+\]
+
+一旦这两个条件成立，定理 20.6 给出
+
+\[
+\mathcal Q_n(R_nf)
+\le
+\mathcal Q_{n+1}(f).
+\]
+
+因此 Fibonacci 删除投影目前已经完全解决概率观察和隐藏核层面的相容性，Dirichlet 层面还需要逐边定义 \(S_n\)。不能把 \(D_n\) 自动当作图 Dirichlet 商映射。
+
+---
+

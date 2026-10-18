@@ -1,0 +1,21 @@
+**命题 73.2（共享内部类的有限正候选与重复出现冲突）。** 令
+
+$$
+\begin{aligned}
+P&=\{LL,LR,RL,RR\},\qquad q=L,\\
+C&=\langle\langle\square_a,\square_d\rangle,
+                 \langle\square_a,\square_b\rangle\rangle,
+\qquad a,d,b\text{ 为不同旧类},\\
+H&=((0,RRL,\alpha),(0,RRR,\beta)).
+\end{aligned}
+\tag{SLH.73.3}
+$$
+
+则 $D$ 无限、$A=\{a,d\}$、$B_{\rm out}=\{a,b\}$，且 $E_b=\{(\alpha,\beta)\}$。新孔与外部 $a$ 必不相等，与外部 $b$ 的相等在 $D$ 上有真、假两种。定理72.2给每个允许认证 $N$ 的完整新行服务，统一额外 raw 上界为四。
+
+另取 $P'=\{LL,LR,R\}$、$C'=\langle\langle\square_a,\square_a\rangle,\square_b\rangle$、$a\ne b$、$q'=L$ 和实际 $H'=((0,RL,\alpha),(0,RR,\beta))$。此时原族也非空且无限，但 $E_b=\varnothing$；同一个内部类的两次出现分别要求 $v_a=\alpha$ 和 $v_a=\beta$，故不能将两个出现各自非空的要求独立满足。
+
+证明。第一组证据固定 $z_b=\langle\alpha,\beta\rangle$，其他两个类任取与它及彼此不同的树。新值 $\langle z_a,z_d\rangle=z_b$ 的唯一内部解为 $(\alpha,\beta)$；它与复合值三者不同，故确可扩张，给准确单元素投影。取 $(z_a,z_d)=(\alpha,\beta)$ 得真，取 $(\beta,\alpha)$ 得假，两者都属于原行；让其中一个坐标在避开有限禁止值后变化，原族无限。新值严格包含 $z_a$，所以外部重复类 $a$ 的比较无需取得；四次上界为 $1+1+2$，比较域不预设内值的形状。
+
+第二组证据同样固定外部 $b$，而新值是 $\langle z_a,z_a\rangle$。配对单射性强制所列冲突，因此在定理71.1中恰产生 $M_a=\{\alpha\}\cap\{\beta\}=\varnothing$。任取 $z_a\ne\langle\alpha,\beta\rangle$ 都是合法原来源，所以冲突属于候选相等而不是实际旧证据。两组 $H$ 均可在零纪元共同入口真实执行。重复任一已有证据不改变语言；在已固定 $b$ 的原孔下再实际取得任何以后纪元的真回复，也不进一步过滤原族。若声称同一认证坐标的重复读有不同回复，则定理29.3、60.2判为空，这种列表不满足假设70.2。$\square$
+

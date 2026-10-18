@@ -1,0 +1,92 @@
+**Theorem 17.1 (exact ranks and fixed-fraction two-sided elimination).**
+Assume a strict weak point $t>t_0$, $0<r<r_{\max}(t)$ genuinely
+requires nine supported low actual labels at the optimal height.
+Choose a minimum optimizer
+$\pi=\sum_{i=1}^9p_i\delta_{x_i}$ with every $p_i>0$. Put
+$$
+A_\Gamma=[\Gamma(x_1)\ \cdots\ \Gamma(x_9)],\qquad
+\widehat A=\begin{pmatrix}A_\Gamma\\k(x_1)\ \cdots\ k(x_9)\end{pmatrix}.
+$$
+Then
+$$
+\operatorname{rank}A_\Gamma=8,\qquad
+\operatorname{rank}\widehat A=9.
+\tag{GC.78}
+$$
+The contrast inequality is active. There exist $\lambda>0$ and
+explicit original common laws $\pi_-,\pi_+$, each with at most
+eight positive low atoms on the very same $h_i,\xi_i$ table,
+that are global optima at contrasts $r_-<r<r_+$. On the whole
+$[r_-,r_+]$ the value is strictly decreasing and affine.
+
+Proof. If $\operatorname{rank}\widehat A\le8$, choose a nonzero
+$c\in\ker\widehat A$. Its moment first coordinate gives
+$\sum c_i=0$, hence both signs. For sufficiently small positive
+$\varepsilon$ the two laws $p\pm\varepsilon c$ preserve all
+moments and achieved contrast and remain feasible at the original
+request, whether or not that request was initially active. Optimality
+in both directions forces $\sum c_i g_t(x_i)=0$. Moving to a
+nonnegative-weight endpoint deletes a positive atom without changing
+height or feasibility. This contradicts nine-low necessity.
+Thus $\operatorname{rank}\widehat A=9$. Adding one row increases
+rank by at most one, and $A_\Gamma$ has eight rows, so its rank
+is exactly eight, with a one-dimensional kernel.
+
+The platform assertion of Theorem 16.3 excludes the platform.
+The supporting-line proof there provides $\lambda>0$, proves
+$K(\pi)=r$, and makes $\pi$ multiplier-optimal at this $\lambda$.
+For a nonzero generator $c\in\ker A_\Gamma$ one has
+$d=\sum c_i k(x_i)\ne0$, since otherwise
+$c\in\ker\widehat A$. Choose its orientation so $d>0$. Define
+$$
+\begin{gathered}
+a_+=\min_{c_i<0}\frac{p_i}{-c_i}>0,\qquad
+a_-=\min_{c_i>0}\frac{p_i}{c_i}>0,\\
+p_i^+=p_i+a_+c_i,\qquad p_i^-=p_i-a_-c_i,\qquad
+\pi_\pm=\sum_i p_i^\pm\delta_{x_i}.
+\end{gathered}
+\tag{GC.79}
+$$
+Both index sets are nonempty because $\sum c_i=0$ and $c\ne0$.
+The minima are finite and strictly positive. Every new weight is
+nonnegative and at least one is zero at each endpoint. Thus each
+law has at most eight positive atoms, remains normalized, and
+preserves all eight joint moments. Coordinates with $c_i=0$ retain
+their positive weights; multiple simultaneous zero weights only
+further reduce the count. All original $h_i$, all fractions $\xi_i$
+and the capacities $b_i=t\mathfrak c(h_i)\xi_i$ are fixed.
+There is no endpoint splitting or doubling of labels.
+
+Two-sided small moment-preserving perturbations and multiplier
+optimality force
+$$
+\sum_i c_i g_t(x_i)=-\lambda d.
+$$
+Writing $v=R_t(r)$, the two new laws have
+$$
+\begin{gathered}
+r_+=r+a_+d,\quad r_-=r-a_-d,\qquad
+v_+=v-\lambda a_+d,\quad v_-=v+\lambda a_-d,\\
+\pi=\frac{a_+\pi_-+a_-\pi_+}{a_++a_-}.
+\end{gathered}
+\tag{GC.80}
+$$
+Both contrasts are feasible achieved contrasts, so belong to the
+request interval, and $r_-<r<r_+$. The laws attain
+$C_t(\lambda)-\lambda r_\pm$; inequality (GC.76) for every
+competitor proves they are global optima at their own requests.
+Mixtures prove (GC.77) on this whole interval. Therefore the original
+request has a genuine neighborhood of strictly decreasing affine
+optimal height.
+
+The moments in (GC.79) are the original complete joint data, not
+just an augmented matrix of unrelated marginal values.
+Proposition 12.2 gives the exact live Gram and $M$ for both endpoint
+laws, with legal unchanged fractions. Proposition 10.1 consequently
+supplies a finite original instrument at each new request: its
+actual height is the proved global value and all original error,
+sharp joint cost, activity and reference/Borel constraints hold
+simultaneously. The one-high completion is the same type of coherent
+completion as for the original law; no additional readable Kraus
+indices occur. $\square$
+

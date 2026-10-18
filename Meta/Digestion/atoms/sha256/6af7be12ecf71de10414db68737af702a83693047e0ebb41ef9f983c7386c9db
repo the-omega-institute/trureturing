@@ -1,0 +1,10 @@
+**命题 6.1（Empty omitted set and smallest supports）。** For the two-threshold domain,
+
+$$
+F=\varnothing\quad\Longleftrightarrow\quad r=g,
+\qquad |P|=(m+r)/g\ge3.
+\tag{6.1}
+$$
+
+Proof. If $r=g$, the interval $m-g+1,\ldots,m-1$ contains no multiple of $g$. If $r>g$, divisibility gives $r\ge2g$, and the actual phase $m-g$ belongs to that interval, so $F$ is nonempty. Finally $m/g>r/g\ge1$ implies $m/g\ge2$, giving $|P|\ge3$. Hence $Z$ is always nonempty. If $|P|=3$, it is a singleton and the nonconstant frontier has no instances. ∎
+

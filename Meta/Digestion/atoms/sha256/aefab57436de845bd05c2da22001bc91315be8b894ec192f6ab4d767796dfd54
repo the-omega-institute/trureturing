@@ -1,0 +1,80 @@
+**定理 448.2（原有限损失的精确对数矩与带方向余量）。** 令
+\(Y_z=\max(M_z,1/L)\)、\(\lambda=\sigma L\)，其中最终 \(L>1\)。则对全部
+\(\sigma>0\) 精确有
+
+\[
+\boxed{
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\log(1/\lambda)+1-\gamma_E-\mathbb E\log Y_z+r_z(\lambda),
+}
+\tag{PM.4}
+\]
+
+\[
+\boxed{0\le r_z(\lambda)\le\frac{\lambda}{2}\mathbb EY_z.}
+\tag{PM.5}
+\]
+
+沿实际前缀，\(\mathbb EY_z\) 一致有界，且
+\(\mathbb E\log Y_z\to\mathbb E\log U\)。因此 §446 的原常数正是
+\(d_*=1-\gamma_E-\mathbb E\log U\)。
+
+**证明。** 对完整损失（CS.19）使用非负 Tonelli，得到
+
+\[
+\frac{\mathcal D_z(\sigma)}{C_z\sigma}
+=\mathbb E K_\lambda(Y_z),\qquad
+K_\lambda(y)=\int_y^\infty\frac{1-e^{-\lambda u}}{\lambda u^2}\,du
+=\frac{1-e^{-\lambda y}}{\lambda y}+E_1(\lambda y).
+\tag{PM.6}
+\]
+
+这里 \(Y_z\) 的分布函数在 \(u<1/L\) 为零，在 \(u\ge1/L\) 为
+\(g_z(u)\)，包括 \(1/L\) 处的原子，所以该期望保留原移动近段。
+指数积分恒等式给
+
+\[
+K_\lambda(y)=\log(1/\lambda)+1-\gamma_E-\log y+\mathsf R(\lambda y),
+\]
+
+\[
+\mathsf R(a)=\operatorname{Ein}(a)+\frac{1-e^{-a}}a-1,\qquad
+\mathsf R(0)=0,\qquad
+\mathsf R'(a)=\frac{a-1+e^{-a}}{a^2}.
+\]
+
+由于
+\(a-1+e^{-a}=\int_0^a(1-e^{-t})dt\)，有
+\(0\le\mathsf R'(a)\le1/2\)，从而
+\(0\le\mathsf R(a)\le a/2\)。取期望即得（PM.4）–（PM.5）。
+
+整个 \(u\ge1\) 上的原预算
+\(1-g_z(u)\le(5/2)2^{-u}\) 给
+
+\[
+\mathbb EY_z\le1+\frac52\int_1^\infty2^{-u}\,du<\infty
+\tag{PM.7}
+\]
+
+且常数不依赖最终 \(z\)。对数矩在有限前缀中存在，因为
+\(Y_z\ge1/L>0\) 且上述远尾可积。精确积分分部给
+
+\[
+\mathbb E\log Y_z
+=-\int_{1/L}^1\frac{g_z(u)}u\,du
++\int_1^\infty\frac{1-g_z(u)}u\,du.
+\]
+
+将近段在 \(u<1/L\) 补零，§446 已付的全近区包络给固定主导 \(M\)；
+远段主导为 \((5/2)2^{-u}/u\)。固定 \(u>0\) 时 \(g_z(u)\to g(u)\)，
+所以支配收敛给
+
+\[
+\mathbb E\log Y_z\longrightarrow
+-\int_0^1\frac{g(u)}u\,du+\int_1^\infty\frac{1-g(u)}u\,du
+=\mathbb E\log U.
+\tag{PM.8}
+\]
+
+所有近段、整个远尾与两个矩边界均在极限前支付。证毕。
+

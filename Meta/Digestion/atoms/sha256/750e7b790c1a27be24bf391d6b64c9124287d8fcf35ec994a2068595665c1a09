@@ -1,0 +1,38 @@
+**定理 18.5.2（擦除通道的精确预算）。**
+
+$$
+\boxed{
+\eta_{\mathrm{KL}}(E_\varepsilon)=1-\varepsilon.
+}
+$$
+
+并且对任意 $U\to X\to Y$，
+
+$$
+\boxed{
+I(U;Y)=(1-\varepsilon)I(U;X).
+}
+$$
+
+**证明。**
+
+输出擦除标记 $B=\mathbf 1\{Y\ne\perp\}$ 与 $X,U$ 独立，且 $B=1$ 时 $Y=X$。因此
+
+$$
+I(U;Y)=I(U;B,Y)=I(U;Y\mid B)
+=(1-\varepsilon)I(U;X).
+$$
+
+对任意输入分布 $p,q$，输出的非擦除部分按相同权重 $1-\varepsilon$ 缩放，而擦除部分相同，故
+
+$$
+D(pE_\varepsilon\Vert qE_\varepsilon)
+=(1-\varepsilon)D(p\Vert q).
+$$
+
+取比值即得相对熵收缩系数；当 $D(p\Vert q)>0$ 时比值正好恒为 $1-\varepsilon$。证毕。
+
+擦除是一个达到乘法预算的明确反例族：每一次独立擦除都把剩余互信息乘以同一个因子，而不是只给一个松的数量级估计。
+
+<a id="section-18-6"></a>
+

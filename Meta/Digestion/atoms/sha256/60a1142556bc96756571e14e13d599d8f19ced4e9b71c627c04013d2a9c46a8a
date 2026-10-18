@@ -1,0 +1,24 @@
+#### 17.2.4 图上的信息 Hessian
+
+Li 和 Lu 的 [Mean field information Hessian matrices on graphs](https://arxiv.org/abs/2203.06307) 在有限图概率单纯形上，对熵、线性能量和相互作用能量推导 mean-field information Hessian，并以最小特征值定义图上的离散曲率下界。
+
+相应的有限层对象为：
+
+\[
+\Pi_j=(\Delta(\Sigma))^{V_j},
+\]
+
+\[
+\mathcal V_j(p)
+=
+\sum_{v,s}p_{v,s}\log p_{v,s}
++
+\mathcal U_j(p),
+\]
+
+\[
+K_j=D^2\mathcal V_j.
+\]
+
+其中 \(\mathcal U_j\) 若包含边相互作用，必须显式给出。\(K_j\) 的最小特征值可以作为有限层静态稳定证书。它只有在另加物理单位和动力学结构后才可被解释为物理能量或时间尺度。
+

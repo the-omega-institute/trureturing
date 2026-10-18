@@ -1,0 +1,96 @@
+**Theorem 2.1 (the finite-address upper-proposal value).**
+For every $0\le s\le t<N$,
+
+$$
+V(N,t,s)=p_{N,t,s}:=\frac{\binom ts}{\binom Ns}>0.
+\tag{2.1}
+$$
+
+This value includes all adaptive policies of Definition 1.2 and all
+almost-surely finite real proposal distributions, including unbounded
+ones. For each such policy there is a single $J_*\in\binom At$ such
+that
+
+$$
+\sup_{n\ge1}e_{(n,J_*)}(P)\ge p_{N,t,s}.
+\tag{2.2}
+$$
+
+The infimum over policies is attained. The supremum over finite sources
+in (2.2) need not be attained.
+
+**Proof.** Run $P$ at $b$ and, on its full-measure set of finite runs,
+put $Q(\theta)=Q(h_b(\theta))$, $q(\theta)=|Q(\theta)|$ and
+$C(\theta)=C_b(\theta)$. For a fixed $J\in\binom At$ let
+
+$$
+E_J=\{\theta:T_b(\theta)<\infty,\ Q(\theta)\subseteq J\}.
+\tag{2.3}
+$$
+
+On $E_J$, running the same policy with the very same tape at $(n,J)$
+reproduces the entire baseline execution. Indeed the initial
+information agrees. At every later transition, equal acquired histories
+and equal tape give equal control decisions; each queried address lies
+in $Q(\theta)\subseteq J$, so its reply is again zero. The stopping
+decision, execution length, repeated reads and terminal output therefore
+agree. This is the fixed-path passive transfer used by
+[PassivePolicyNormalization, `execute_transfer`](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean),
+applied separately to each fixed tape and finite record. The probability
+argument below is additional to that fixed-path statement.
+
+A $q$-element query set is contained in exactly
+$\binom{N-q}{t-q}$ members of $\binom At$. Finite summation and
+integration consequently give
+
+$$
+\frac1{\binom Nt}\sum_{J\in\binom At}\mu(E_J)
+ =\int_\Theta\frac{\binom{N-q(\theta)}{t-q(\theta)}}{\binom Nt}
+       \,d\mu(\theta)
+ \ge\frac{\binom{N-s}{t-s}}{\binom Nt}
+ =\frac{\binom ts}{\binom Ns}.
+\tag{2.4}
+$$
+
+Set the integrand to zero on the measurable null omitted set.
+For $0\le q\le s$, its value is
+$\prod_{i=0}^{q-1}(t-i)/(N-i)$; adding a factor in $[0,1]$ cannot
+increase it. Empty products cover $s=0$, including $t=0$.
+Thus some fixed $J_*$ has $\mu(E_{J_*})\ge p_{N,t,s}$.
+For every positive integer $n$, the same-path comparison gives
+
+$$
+E_{J_*}\cap\{C<n\}\subseteq
+ \{C_{(n,J_*)}<n\}.
+\tag{2.5}
+$$
+
+Because $C$ is finite almost surely, the events on the left increase to
+$E_{J_*}$ up to a null set as $n\to\infty$. Hence
+$\sup_n e_{(n,J_*)}(P)\ge\mu(E_{J_*})\ge p_{N,t,s}$.
+The set $J_*$ is selected before varying $n$ or quantifying over tapes;
+$n$ is constant on each event in (2.5). No tape-dependent adversarial
+source has been integrated as though it were one source.
+
+For the matching policy, sample a uniform $s$-element set $S\subseteq A$
+independently of the source, query its addresses in public increasing
+order until the first positive reply or the end, output the positive
+reply when there is one, and otherwise output zero. Every run has at
+most $s$ calls. At $b$ the proposal is correct. At $(n,J)$ it is false
+exactly when $S\subseteq J$, an event of probability
+$\binom ts/\binom Ns$. Thus (2.1) holds, and this policy attains the
+minimax value. The possible nonattainment over sources is proved in
+Proposition 2.2. $\square$
+
+The sampling probability in this proof is classical. In the
+[R hypergeometric manual, Details](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Hypergeometric.html),
+take population counts $m=t$, $n=N-t$, sample size $k=s$ and sampled
+success count $x=s$. The same uniform-subset counting convention is
+stated in [Random Services, Hypergeometric Distribution, The Probability
+Density Function](https://www.randomservices.org/random/urn/Hypergeometric.html).
+These are suppliers for (2.4) and the matching sampling policy, not a
+claim that sampling without replacement is new. The source-relative
+combination here includes the unbounded integer target, adaptive acquired
+zero paths and the exhaustion by finite real proposals. It is a
+`repo-derived` deduction; no literature-priority assertion is made.
+

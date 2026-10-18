@@ -1,0 +1,10 @@
+### 12.2 来源、复用与证据等级
+
+| 来源或产物 | 本章的用途与边界 |
+| --- | --- |
+| Stanley Burris 与 H. P. Sankappanavar, [A Course in Universal Algebra](https://www.math.uwaterloo.ca/~snburris/htdocs/UALG/univ-algebra2012.pdf), 作者 PDF 2012 版，Chapter II §5，Definition 5.1–5.2、Theorem 5.3、5.5、Definition 5.6 | 已核对同余、商代数、同余完备格与生成闭包的经典来源；不申报生成同余的新颖性。 |
+| 仓内 CongruenceClosureDuality、DeterministicInterfaceEquivalence、InformedDisclosureDefect；钉版 Mathlib Setoid 与 ClosureOperator | 复用闭包、良定更新与纤维冲突；任意操作族交闭包、目标下降和抽象冲突的直接应用经过编译核对，没有新增绑定声明。 |
+| Fibonacci 理论 §§149–150 的 $M,J,C$ 关系 | 指定矩阵及其组合关系；不自动对应非负合法词形、物理规范或五分类。 |
+| 第 9 章判据、第 11.2 节轨道推导 | 普通数学综合；完整打包结果未新增为 Lean 声明，不申报原创或冻结成果。 |
+| 有限程序与结果 JSON | 指定有限输入的可重放计算；不是 Lean 证书，不承担无限全称分类。 |
+

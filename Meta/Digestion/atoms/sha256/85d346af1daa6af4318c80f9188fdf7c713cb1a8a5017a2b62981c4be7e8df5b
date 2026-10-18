@@ -1,0 +1,185 @@
+**Proposition 5.1 (finite-label recovery inside the same class).**
+Every finite list supplied by (WE.15), in particular the eight low
+labels of Theorem 4.1, has a common chronological realization in
+Definition 1.2, with the following full-complex and passive-reference
+identities. This is the FA70/75 constructor applied with the present
+exact live Gram and failure effects, rather than a new native service.
+
+Proof. For one low label let $K,N$ be its actual matrices. The null
+determinant identity is
+
+$$
+\det(x_0D+z_0T+w_0S)
+=h_0h_1h_2x_0(x_0^2-\theta z_0^2-\omega w_0^2).
+\tag{WE.36}
+$$
+
+Here $x_0=\sqrt\pi s_0\ne0$, and the lower-right minor is
+$\pi\delta h_1h_2>0$. Hence $K$ has rank exactly two, also on the
+axes of the general scalar construction. The effect $N$ is supported
+on $\operatorname{ran}K^\dagger$. Fix a row-space isometry
+$J:\mathbb C^2\to\operatorname{ran}K^\dagger$ and put
+
+$$
+\begin{gathered}
+Q_K=J^\dagger(K^\dagger K+N)J\succ0,\quad
+C_K=Q_K^{1/2}J^\dagger,\quad B_K=KJQ_K^{-1/2},\\
+F_K=Q_K^{-1/2}J^\dagger NJQ_K^{-1/2}.
+\end{gathered}
+\tag{WE.37}
+$$
+
+Direct multiplication, using the row-space projection $JJ^\dagger$,
+gives
+
+$$
+B_KC_K=K,\quad C_K^\dagger F_KC_K=N,\quad
+B_K^\dagger B_K+F_K=I_2,\quad B_K^\dagger B_K\succ0.
+\tag{WE.38}
+$$
+
+Thus $0\preceq F_K\prec I_2$ on the entire fibre, not only a selected
+encoded state. Use encoder $C_KE^\dagger$ into that whole fibre.
+This is exactly the row-space factorization FA.11–.12.
+
+Here is its actual first-event decoder. For elapsed time $u\in[0,1]$
+put
+
+$$
+\begin{gathered}
+g(u)=2/(1+u)^2,\quad G_t(u)=2u/(1+u),\\
+Z_K(u)=\sqrt{I_2-G_t(u)F_K},\qquad
+R_K(u)=g(u)F_K(I_2-G_t(u)F_K)^{-1}.
+\end{gathered}
+\tag{WE.39}
+$$
+
+The current-survivor jump density in each original label is
+
+$$
+\mathcal J_{K,\ell}(u)(Y)=w_\ell g(u)
+\operatorname{tr}(F_KZ_K(u)^{-1}YZ_K(u)^{-1})P_f.
+\tag{WE.40}
+$$
+
+Its total effect is $R_K(u)$. Commutativity of this chosen path gives
+$\dot Z_K=-R_KZ_K/2$. Pulling (WE.40) back by $\operatorname{Ad}_{Z_K(u)}$
+gives $w_\ell g(u)\operatorname{tr}(F_KY)P_f$ exactly. On survivors
+at time one apply the live isometry
+$EB_K(I_2-F_K)^{-1/2}$, whose adjoint-times-itself is $I_2$ by
+(WE.38). Its composite live matrix on the decoder input is $EB_K$.
+The fixed inverse is a linear operator; no input-dependent or
+acceptance normalization occurs.
+
+For an intermediate time $a$, the no-event propagator is
+$Z_K(u)Z_K(a)^{-1}$. Its squared norm has negative derivative and
+is contractive. The pullback of jumps from $a$ to $b$ integrates to
+
+$$
+Z_K(a)^{-1}\bigl(Z_K(a)^2-Z_K(b)^2\bigr)Z_K(a)^{-1},
+\tag{WE.41}
+$$
+
+complementary to the no-event effect at $b$. This proves whole-fibre
+CP/TP chronological consistency at every cut; splitting its integral
+at any intermediate time gives the same stopped instrument. Only the
+surviving carrier evolves. After its first jump the label/time and
+stopped output are retained, with no further positive-carrier action.
+There is no deadline atom or singular failure. The terminal survivor
+effect is positive definite for every finite parameter.
+
+If $F_K$ has nonzero eigenvalue $f$, the maximal rate eigenvalue is
+$g(u)f/(1-G_t(u)f)$. Its integral is $-\log(1-f)$. By (WE.12) and
+(WE.38), $f/(1-f)=v/c_*(z^2)$ for the failure multiplier $v$ of this
+label. Its activity is therefore $\log(1+v/c_*(z^2))\le\log(1+t)$.
+If $N=0$, its rate is zero. In Theorem 4.1, $f=t_{\rm rec}/(1+t_{\rm rec})$
+on each carrying label, attaining the stated uniform budget.
+These are FA.13's chronological operations; competitors in the
+necessity proof were never required to use them.
+
+Add the two high encoders
+$\sqrt{(1-\delta)/2}\,DE^\dagger$, one for each fair report, into
+whole three-dimensional fibres, with zero rate and TP live decoder
+$X\mapsto EXE^\dagger$. Fix isometries
+$W_\perp:\mathbb C^2\to V^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The two fair complement encoders
+are $W_\perp^\dagger/\sqrt2$ into counted two-dimensional fibres,
+with zero rate and TP live decoder
+$X\mapsto EJ_0XJ_0^\dagger E^\dagger$. This coherently transmits the
+whole complementary qubit. It has probability zero on all original
+histories but is still counted. It is FA75's free completion, distinct
+from the fixed certain-failure completion CG.142/CA.10.
+
+The total live coefficient Gram is
+$\operatorname{diag}(\delta,1,1)+(1-\delta)e_0e_0^T=I_3$.
+Thus supported live effect is $I_3-M$ by the exact root identity
+(WE.7). The low encoder effects are $K^\dagger K+N$; their attached
+$N$ sum to $M$. Adding the complement gives total encoder effect
+$P+(I_5-P)=I_5$. Each positive effect is bounded by this sum, proving
+individual CP/TNI. All decoders above are TP on their entire fibres.
+A dilation may generate these actual labels by copying the branch and
+Kraus multiplicity to a permanently discarded orthogonal environment;
+only the dephased label and its declared full fibre remain accessible.
+Any retained correlated share would change the stated dimension.
+
+For every complex $A\in M_5$, write $A_V=E^\dagger AE$. Forgetting
+acquisition labels gives exactly
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E[DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger
+ +J_0W_\perp^\dagger AW_\perp J_0^\dagger]E^\dagger,\\
+\Phi^f_\ell(\mathcal B)(A)&=w_\ell\left(\int_{\mathcal B}g(u)du\right)
+ \operatorname{tr}(EME^\dagger A)P_f,
+\quad \ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{WE.42}
+$$
+
+The second formula holds on every Borel set $\mathcal B\subseteq[0,1]$.
+The live identity follows by expanding the coefficient Gram, and the
+failure identity by summing the actual pulled-back $N$ in (WE.40).
+They are identities on all complex matrix units. Cross-support
+operators have zero image because the acquisition separates these
+branches; all within-complement complex coherences are retained.
+Labels $0$ and $13$ are separately zero; the other three remain
+separate. There are no extra sectors or singular measures.
+
+For every passive reference $R$ and joint complex operator $X$, the
+live amplification is the sum of conjugations by
+$EK E^\dagger\otimes I_R$, $K=D,T,S$, and by
+$EJ_0W_\perp^\dagger\otimes I_R$. The failure amplification is
+
+$$
+w_\ell\left(\int_{\mathcal B}g(u)du\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{WE.43}
+$$
+
+This is the conditional reference operator. It is not replaced by an
+unconditional marginal. Finite Kraus bilinearity and the displayed
+jump identities prove these formulas at every amplification, time and
+label; no sampling or selected-state agreement is used. Fixed common
+metadata remain in their original state.
+
+On each of the twelve supported histories the complement term vanishes.
+Hence the complete output is the credited CG.135 output, compared
+with the unchanged ideal live block and $f_y$, not $g$. All original
+HALF full-cq errors are preserved. The supplied values are
+$e_5=e_{27}=E_*$ and $e_{16}<71/484<37/250<E_*$. No failure or TV
+deficit is added to these errors.
+
+For an actual low label the acquisition probability is
+$\operatorname{tr}[(K^\dagger K+N)\rho_{y,e,n}]$, expressly including
+later-failure mass. High probabilities are $(1-\delta)A_y/2$ each,
+where $A_y=\sum h_i^2p_{yi}$. Only the high pair has dimension at
+least three, so every history has high mass $(1-\delta)A_y$, with
+maximum $(1-\delta)A_{27}=\mathsf C(s)$ by JR34–40. The complement
+is coherently counted as two. No $N$ has a $01$ entry, and reports
+$\sigma$ therefore give (WE.11)'s exact contrast for the radial
+recovery. Its twelve labels comprise eight low, two high and two
+complement labels, all generated before decoding. This establishes
+simultaneous output, cost, contrast and finite-activity attainment.
+It grants no native acquisition-duration or actuator permission.
+$\square$
+

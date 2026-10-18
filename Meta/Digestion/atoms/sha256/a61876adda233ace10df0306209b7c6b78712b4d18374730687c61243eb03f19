@@ -1,0 +1,56 @@
+**lemma 5.2 (Every first-zero branch).** An early halt gives
+$D_0\le a/2$. A same-parity second call satisfies
+
+$$
+D_0\le
+\begin{cases}
+a/2+a^2\eta,&v\in e,\\
+a/2+ac\eta,&v\notin e.
+\end{cases}
+\tag{5.2}
+$$
+
+An opposite-parity second call satisfies
+
+$$
+D_0\le a^2/2+a\eta.
+\tag{5.3}
+$$
+
+Proof. With no second call the phase-$\beta$ majority state has
+mass $a/2$ on the first-zero section, while no state exceeds its
+prior $a/2$.
+
+If the second address has parity $\alpha$, both calls are separators
+in phase $\beta$. Consequently the $00$ leaf has maximum exactly
+$a/2$. On the $01$ leaf only phase $\alpha$ remains, with edge
+constraints $e=0,f=1$. The exhaustive maxima are
+
+| Relation of $f$ to $e$ | Target position | $M(C_{01})$ |
+| --- | --- | --- |
+| Repeat | Anywhere | $0$ |
+| Distinct adjacent edges | Anywhere | $a\eta/2$ |
+| Disjoint edges | In $e$ | $a^2\eta$ |
+| Disjoint edges | In $f$ | $c\eta/2$ |
+| Disjoint edges | Outside both | $ac\eta$ |
+
+For the disjoint entries, the respective products are
+$\tfrac12a^2(2\eta)$, $\tfrac12c\eta$, and
+$\tfrac12ac(2\eta)$. The adjacent entry is Lemma 4.1.
+If $v\in e$, all applicable entries are at most $a^2\eta$,
+using $a/2<a^2$. If $v\notin e$, they are at most $ac\eta$:
+$c>1/2$ controls adjacency, and $a>1/2$ controls the target-in-$f$
+entry. Adding the $00$ maximum proves (5.2).
+
+If instead the second address has parity $\beta$, the $00$ leaf
+imposes only $e=0$ in phase $\alpha$ and only the second active
+edge $f=0$ in phase $\beta$. For either phase's own target vertex,
+Lemma 4.1 gives largest full-law state mass $a^2/2$ when incident
+and $ac/2<a^2/2$ when exterior. Taking the maximum over the two
+disjoint phase-label sets gives $M(C_{00})\le a^2/2$.
+The $01$ leaf certifies phase $\beta$, where the first call was
+a separator; its largest mass is $\eta/2$ or $a\eta$, according
+to incidence with that phase's actual target $v_\beta$. This proves
+(5.3). The two phase targets were never identified with each other.
+$\square$
+

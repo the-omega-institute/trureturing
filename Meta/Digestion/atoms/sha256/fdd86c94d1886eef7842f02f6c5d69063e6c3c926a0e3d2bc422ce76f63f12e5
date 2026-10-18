@@ -1,0 +1,13 @@
+**Definition 5.1 (the range-feasible floor).** For nonnegative $w$ on
+$S_d$, define
+
+$$
+F_d(w)=\max_{\substack{\varnothing\ne P\subseteq S_d\\
+                                  P\text{ range-feasible}}}
+                       \left(\sum_{x\in P}w(x)^2\right)^{1/2}.
+\tag{RCE.21}
+$$
+
+Zero-weight states may be removed. This quantity uses point masses,
+not hard-target cells.
+

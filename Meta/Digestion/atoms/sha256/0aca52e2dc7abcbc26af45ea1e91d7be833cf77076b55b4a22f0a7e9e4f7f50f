@@ -1,0 +1,38 @@
+**Lemma 4.1.** The minimum in (2.3) exists and is strictly positive.
+
+**Proof.** From $a\le4/15$ the mass surviving $L$ returns in (2.2) is at most $(4/15)^L$. The corresponding target mass is at most $(6/25)^L$. Finite-word probabilities depend continuously on $(u,v,t)$. Refining the residual cell changes TV by at most the smaller residual mass, including the infinite outcome. Thus the complete-law distance is a uniform limit of continuous finite-partition distances on $S\times[1/3,2/5]$ and is continuous. Compactness of probability measures on compact $S$, in the weak topology, and this joint continuity make $\Psi$ continuous on $\mathcal P(S)\times I_0$. Its minimum exists. Endpoint triangle inequalities give $\Psi\ge0$.
+
+Suppose the minimum were zero at $(\omega,r)$. Both endpoint expected configuration losses in each phase would be at most $\rho_s$. For any normalized countable laws $D,P_1,P_2$,
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-\operatorname{TV}(P_1,P_2)
+=\sum_w\operatorname{dist}\bigl(D(w),[\min(P_1(w),P_2(w)),\max(P_1(w),P_2(w))]\bigr).
+\tag{4.1}
+$$
+
+This is the supplied coordinate triangle identity [NATIVE] (6.4) and [CLIP] (3.6). Integrate it. Its nonnegative right side must be zero. Countably many zero-integral coordinates imply that almost every decoded law lies in its phase endpoint box. Each endpoint expected loss is exactly $\rho_s$. Within the box, the signed events (3.1) give
+
+$$
+\int G_p^{u,v}(E_p)\,d\omega=C_p,\qquad
+\int G_\beta^{u,v}(E_\beta)\,d\omega=C_\beta.
+\tag{4.2}
+$$
+
+Consequently $\int D\,d\omega=1/2-1/2=0$. Lemma 3.1 applies almost everywhere and makes $\omega$ concentrate on the two endpoint pairs. The first equality in (4.2) forces their weights to be $1/2,1/2$.
+
+The supplied source-specific interior excess [NATIVE] (6.1)–(6.6) is
+
+$$
+\eta=(5/13)^3(8/13)^5-(2/5)^3(3/5)^5
+=14219478376/318644812890625>0.
+$$
+
+For every $r\in I_0$, the target word $w_{3,1}$ exceeds both endpoint masses by at least $\eta$. Indeed $r^3(1-r)^5$ decreases on $I_0$ and its endpoint-2 value exceeds its endpoint-1 value. Applying (4.1) with $D=P_{p,r}$ yields
+
+$$
+\tfrac12\operatorname{TV}(P_{p,1/3},P_{p,r})
++\tfrac12\operatorname{TV}(P_{p,2/5},P_{p,r})\ge\rho_p+\eta/2.
+$$
+
+This contradicts $\Psi=0$. Therefore $\gamma>0$. Compactness is used only inside the enlarged two-parameter comparison; it does not make the union of all finite observer shapes compact. $\square$
+

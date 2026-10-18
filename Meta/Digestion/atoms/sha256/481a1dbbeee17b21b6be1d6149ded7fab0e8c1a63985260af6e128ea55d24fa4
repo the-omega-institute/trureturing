@@ -1,0 +1,35 @@
+**Theorem 60.4 (source-generated finite circuits with full-phase error).** Suppose $a,g>0$ are public rationals, or come with paid effective rational enclosures and public upper bounds $\bar a,\bar g$. Choose nonnegative rational approximants $\widetilde a,\widetilde g$ within those upper bounds and certified errors $\delta_a,\delta_g$. Exact rational coefficients permit $\delta_a=\delta_g=0$. Set
+
+$$
+\overline M=6\bar a+\bar g,\qquad F=K+(K-1)=2K-1.
+\tag{60.8}
+$$
+
+There is a public three-colouring of the bank's parent–child seams such that each colour is a matching. One product slice executes the $K$ phase slots of (60.2), then all edge slots in colour order $0,1,2$, using the installed private bits (60.3). For an interval $\theta\ge0$, use $m\ge1$ slices with $\delta=\theta/m$, angle $\delta(\widetilde a d_p-\widetilde g2^{-|p|})$ at site $p$ and angle $\delta\widetilde a$ on every edge. Round every angle to a signed dyadic with absolute error at most $u=2^{-b}$; retain and fetch all angle bits. Let $\widetilde U_s(\theta)$ be the actually executed ideal circuit. Then, on the whole one-excitation sector,
+
+$$
+\left\|\widetilde U_s(\theta)-e^{-i\theta\widehat H_s}\right\|
+\le \frac{\overline M^2\theta^2}{2m}+Fm\,2^{-b}
++\theta(6\delta_a+\delta_g).
+\tag{60.9}
+$$
+
+This is an operator norm with the reference phase fixed, not a distance modulo a scalar phase. The product-formula part is independent of $H$; its actual gate and angle-precision prices still depend on $K$.
+
+Proof. Assign a virtual incoming colour zero at the root, without installing an incoming edge. At a vertex with incoming colour $c$, assign colours $c+1,c+2$ modulo three to its left and right child seams. Each nonroot vertex has three distinct incident colours; the root has two. Removing inactive edges preserves the matching property. This public recursive wire list is generated from addresses, with no private traversal.
+
+On $\mathcal U_H$, group all diagonal terms as $A_0$ and each matching's hopping terms as $A_1,A_2,A_3$, using the approximated coefficients. The diagonal norm is at most $3\bar a+\bar g$. Each matching is an orthogonal direct sum of two-by-two matrices of norm at most $\bar a$, and zero coordinates. Hence
+
+$$
+\sum_{j=0}^3\|A_j\|\le\overline M.
+\tag{60.10}
+$$
+
+This estimate is on the declared one-excitation sector, not on every excitation sector of the qubits. Terms in each group commute, so its exponential is exactly the corresponding list of local gates before angle rounding. In particular no scalar identity part of $A_0$ is dropped.
+
+Use the classical first-order Hermitian product bound of Childs–Su–Tran–Wiebe–Zhu, [*A Theory of Trotter Error*, Proposition15, equation(145)](https://arxiv.org/html/1912.08854v3#S5.SS1), published as *Theory of Trotter Error with Commutator Scaling*, [DOI10.1103/PhysRevX.11.011020](https://doi.org/10.1103/PhysRevX.11.011020). It bounds a slice's error by
+$\delta^2\sum_{j<k}\|[A_j,A_k]\|/2\le\delta^2\overline M^2/2$.
+Its hypotheses hold because the four groups just constructed are Hermitian on this same finite invariant sector. Unitary telescoping over $m$ slices gives the first term in (60.9). This mature simulation estimate is an intermediate, not new Trotter theory.
+
+The generators of each enabled $P$ or $B$ have norm at most one, so changing its angle by $u$ changes its unitary by at most $u$, by the unitary Duhamel estimate already used in §58.8. There are exactly $Fm$ slots, including disabled ones; telescoping gives the second term. Finally (60.5) and $\|L_D\|\le6$, $\|M_\phi\|\le1$ give generator error at most $6\delta_a+\delta_g$. The reference and inactive blocks are zero for both coefficient choices. Duhamel gives the last term. Every gate leaves the inactive amplitude subspace invariant, because no enabled edge leaves the actual domain. $\square$
+

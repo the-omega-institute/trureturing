@@ -1,0 +1,16 @@
+**定义 14.2.2（$r$ 阶响应喷流）。** $\widetilde F$ 在 $0$ 处的 $r$ 阶喷流定义为
+
+$$
+J_rF(0)=\bigl(D\widetilde F(0),D^2\widetilde F(0),\ldots,D^r\widetilde F(0)\bigr),
+$$
+
+其中 $D^k\widetilde F(0)$ 是对称的 $k$ 重线性映射。两个接口 $F,G$ 称为 $r$ 阶局部等价，若
+
+$$
+F(0)=G(0),
+\qquad
+J_rF(0)=J_rG(0).
+$$
+
+<a id="claim-14-2-3"></a>
+

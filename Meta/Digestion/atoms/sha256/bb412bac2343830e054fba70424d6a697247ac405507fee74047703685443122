@@ -1,0 +1,82 @@
+**Proposition 5.3 (visible residuals, indispensable ranks and no whole
+atomic anchor).** With $\mathcal H=\varnothing$, all four rows in the
+table are attained and the table is the entire finite row image.
+Each selected stratum $D_{r_0},D_{r_1}$ contains all natural ranks,
+has an unrestricted residual before its two negatives, consists of
+non-atomic whole sources, and has unbounded constructor mass. Neither
+stratum has a finite exact rank-free negative-chart cover of FJC
+Definition 2.1. For $B=\{r_0,r_1\}$, every depth has joint finite
+witnesses, while no bounded section of either original rank coordinate
+can retain those witnesses at all depths.
+
+**Proof.** For attainment take $n=0$, $w=\langle\alpha,\alpha\rangle$,
+and choose respectively $x=\alpha,\beta,w$, or a tree distinct from
+those three. These give exactly the four complete partitions. At every
+$n$, positive constructor-mass residuals differ from $T_n,T_{n+1}$,
+so both selected strata retain every rank.
+
+Use the native canonical constructor mass $\gamma$ from [URR,
+Definition 2.1][URR]: atoms have mass zero, fixed powers preserve mass,
+and a pair with a positive-mass child has mass one plus its child masses.
+The last pair of $V$ is $T_{n+2}$. If $w$ has positive mass $M$, the
+whole source in either selected stratum has mass $M+3$. The finite
+combs $C_0=\alpha$, $C_{j+1}=\langle C_j,\alpha\rangle$ have
+$\gamma(C_j)=j$, so these whole-source masses are unbounded.
+
+For any allowed $w$, the pair $\langle w,T_{n+2}\rangle$ is either
+non-atomic, or, by the normal-code exceptional-pair rule, $w=T_{n+3}$
+and its value is $T_{n+4}$. In the first case the two containing pairs
+give positive whole mass. In the second the next pair has left child
+$T_n$ or $T_{n+1}$ and right child $T_{n+4}$, so it cannot collapse;
+the outer pair also has positive mass. Thus every source in either
+stratum is non-atomic. Their positive records constrain an interior
+rank; they do not put their entire outputs in an atomic orbit.
+
+Suppose one feasible rank-free whole negative chart were contained in
+one selected stratum. Apply NSF's finite fixed-navigation decomposition
+to its source expression at $L$: decompose each original residual into
+finitely many prefix contexts strictly beyond this word, retain the
+same context and frontier at repeated uses, and distribute fixed powers.
+Each case has the full Cartesian frontier carrier before its substituted
+whole negatives. Its reached left subtree is a rank-free expression in
+these frontiers. This is a finite exhaustive decomposition of the chart,
+not a choice of convenient fillings.
+
+On any inhabited case that left expression must always be atomic. If it
+contains a residual frontier, URR's equality-reflecting separator can
+choose any common mass $G$ above its finite syntax bound and still
+satisfy the entire feasible negative conjunction, as in [FJC, Theorem
+7.1][FJC]. Fixed powers and pairs never decrease this positive mass, so
+the left expression then has mass at least $G>0$, a contradiction.
+Thus every inhabited case fixes one finite left subtree, hence one
+rank. Each rank-free chart fixes only finitely many ranks after this
+finite decomposition. A finite union fixes finitely many, whereas both
+entire strata attain every $n$. This proves the exact rank-free-cover
+obstruction, not an obstruction to arbitrary representations.
+
+For the terminal algorithm, compare the $r_0$ chart with rank $n$ and
+residual $w$ to the $r_1$ chart with rank $m$ and residual $v$.
+Cancellation gives, with their repetitions,
+$T_n=T_m$, $T_n=T_{m+1}$, $w=v$, and
+$T_{n+1}=T_{m+1}$. The face $K=\{n,m\}$ assigns all atomic
+terminals and the residual component $\Omega$. There is no finite
+anchor. Its joint support is all $\mathbb N^2$, since positive-mass
+residuals satisfy both negatives at every rank. Hence (TOS.7) is true.
+
+For explicit finite witnesses at depth $h$, choose $n=m=2h+2$ and
+let $w=v$ be the perfect binary tree of height $h+1$ with $\alpha$
+leaves. It has positive constructor mass and branch at every address
+through $h$. The two originals are $V(T_n,T_n,w)$ and
+$V(T_n,T_{n+1},w)$. They satisfy the entire input, exactly the two rows,
+and share $p_h$. Their possibly unequal atomic values have no leaf
+through that depth. This is one jointly faithful finite construction.
+
+Finally suppose witnesses at unbounded depths could keep $n\le C$.
+There is a subsequence with one fixed $n$. At $L$, sufficiently deep
+agreement isolates that finite $T_n$, forcing the other rank $m=n$.
+At $RL$, still deeper agreement would then equate $T_n$ with
+$T_{n+1}$, which is impossible. The same argument starts from bounded
+$m$. Thus each original rank must escape every fixed bound along
+arbitrarily deep joint witnesses. Whole residual mass cannot erase this
+constrained interior rank. $\square$
+

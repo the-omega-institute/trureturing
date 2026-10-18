@@ -1,0 +1,67 @@
+**Theorem 2.3 (The consumed preparation-response condition).** Fix finitely
+many real unit measurement seeds $b_f$ and weights $w_f>0$ with
+$\sum_fw_f\int_{\mathcal G}gb_fb_f^Tg^T\,dg=I$.
+For real density matrices $\sigma_f$, define
+
+$$
+S_\sigma(X)=\sum_fw_f\int_{\mathcal G}
+g\sigma_fg^T\operatorname{tr}(gb_fb_f^Tg^TX)\,dg.
+\tag{2.21}
+$$
+
+Suppose the maximum (1.8) is attained only at one signed event
+$sH_{J_*}(S_\sigma)$, $s\in\{1,-1\}$, whose largest eigenvalue
+$z>0$ is simple, with real unit eigenvector $v$. Define
+
+$$
+C_f=s\int_{\mathcal G}
+\operatorname{tr}(vv^Tgb_fb_f^Tg^T)\,g^T\Pi_{J_*}g\,dg.
+\tag{2.22}
+$$
+
+A local minimum over these preparations with these measurement seeds
+fixed must obey
+
+$$
+\operatorname{tr}(\sigma_f C_f)=\lambda_{\max}(C_f),\qquad
+\operatorname{ran}\sigma_f\subseteq
+\ker(\lambda_{\max}(C_f)I-C_f)
+\quad\text{for every }f.
+\tag{2.23}
+$$
+
+If a real density $\tau_f$ instead satisfies
+$\operatorname{tr}[(\tau_f-\sigma_f)C_f]>0$, the corresponding
+preparation mixture strictly decreases the original error for every
+sufficiently small positive step.
+
+Proof. Each channel in (2.21) has the same full input marginal,
+because only the preparation trace enters TP. It is an admissible
+finite fixed scalar port: decompose a real density into real pure
+states, and use QRC Theorem 5.2's exact $50$-point torus/reflection
+quadrature. Alternatively keep the rotated mixed density as decoder
+at each of the $50$ fixed measurement flags per seed. The coefficients
+have total angular degree at most four, so this latter choice also
+gives exactly (2.21), with an encoder independent of $\sigma$.
+
+Replacing one $\sigma_f$ by $(1-t)\sigma_f+t\tau_f$ changes the
+active signed eigenvalue at derivative
+$-w_f\operatorname{tr}[(\tau_f-\sigma_f)C_f]$. For completeness,
+the derivative of a simple top eigenvalue of $M+tN$ is $v^TNv$:
+the Rayleigh expressions at $v$ and at a maximizing $v_t$ sandwich
+the difference quotient, and simplicity forces
+$v_tv_t^T\to vv^T$. All other signed event eigenvalues have a strict
+gap; finiteness and continuity preserve that gap for sufficiently
+small $t$. A negative derivative therefore decreases the full maximum.
+
+The fixed-measurement spectral maximization used here is the standard
+ingredient of [Fuchs–Sasaki, §3, equations (13)–(16)](https://arxiv.org/html/quant-ph/0302092v3):
+maximizing a linear preparation payoff over density matrices gives its
+largest eigenvalue. Their ensemble-fidelity objective is not (1.3);
+the signed-event derivative and finite inactive-event gap above provide
+the needed connection here. Zero trace pairing of the two PSD matrices
+$\sigma_f$ and $\lambda_{\max}(C_f)I-C_f$ is equivalent to the
+range condition in (2.23). A violation thus gives the asserted descent.
+The statement makes no claim with multiple active signed events or a
+repeated active eigenvalue. $\square$
+

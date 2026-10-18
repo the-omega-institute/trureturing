@@ -1,0 +1,111 @@
+**Theorem 53.1 (Positive nonattainment with a unique continuous best approximant).** For every $r\in(0,1)$ there is one fixed full-source target family on a standard Borel consumer carrier with acquisition infimum $r$ and no lawful attainer, although exactly one TV-continuous family attains uniform approximation error $r$. Every cap $\eta>r$ is lawfully feasible. The consumer always returns unknown, so every target has row $(0,0,0,1)$ and satisfies every prescribed profile.
+
+**Proof.** Let $(\nu_y)$ be the fixed TV-continuous dyadic-hole family of Proposition 46.5 on $Z=[0,1]$ with its Borel sigma algebra. This family is reused, including its actual-source realization; it is not a new zero-infimum example. In every anchor prefix cylinder its greatest common submeasure is zero. Indeed, for any level $n$ beyond the prefix, Theorem 35.2 realizes every level-$n$ dyadic hole by an actual source in that cylinder. A common submeasure gives zero mass to each such interval, hence to $[0,1)$; its possible endpoint mass is also zero because it is dominated by the anchor's Lebesgue law.
+
+Choose an integer $k\ge2$ with $r<1-1/k$ and put
+
+$$
+t=\frac{r}{1-1/k}\in(0,1),\qquad \alpha=1-t>0.
+\tag{53.1}
+$$
+
+Partition the actual observation classes of $Q$ into $k$ dense colors by the occupied-cylinder construction in the proof of Theorem 52.1. Let $c(y)$ be the resulting fixed color, constant on complete observation fibers. On
+
+$$
+\Theta=Z\sqcup\{a_1,\ldots,a_k\}
+\tag{53.2}
+$$
+
+use the disjoint-union Borel sigma algebra and the always-unknown consumer. Prescribe the entire family
+
+$$
+\mu_y=\alpha\nu_y+t\delta_{a_{c(y)}}.
+\tag{53.3}
+$$
+
+All these probability laws, the carrier and the consumer are fixed before optimizing preparation. The color specifies target data only.
+
+The candidate
+
+$$
+\kappa_y=\alpha\nu_y+\frac tk\sum_{i=1}^k\delta_{a_i}
+\tag{53.4}
+$$
+
+is TV-continuous, with $\operatorname{TV}(\kappa_y,\mu_y)=t(1-1/k)=r$ at every source. We show that it is the only continuous family within that cap, and that no continuous family has smaller uniform error.
+
+Let $\lambda$ be continuous with uniform error at most $\varepsilon$. Fix an actual $x$. For each color $i$, choose actual sources of that color matching successively longer prefixes of $x$. Continuity of both $\lambda$ and $\nu$ passes their cap inequalities to
+
+$$
+\operatorname{TV}(\lambda_x,\alpha\nu_x+t\delta_{a_i})
+   \le\varepsilon
+\qquad(1\le i\le k).
+\tag{53.5}
+$$
+
+Put $p_i=\lambda_x(\{a_i\})$ and $L=\sum_i p_i$. Singleton events and the events consisting of all tags except $a_i$ give respectively
+
+$$
+p_i\ge t-\varepsilon,\qquad L-p_i\le\varepsilon.
+$$
+
+Summing the two sets of inequalities yields
+
+$$
+k(t-\varepsilon)\le L,\qquad
+(k-1)L\le k\varepsilon,
+$$
+
+and hence $\varepsilon\ge t(k-1)/k=r$.
+
+At $\varepsilon=r$, equality is forced: $L=t$ and every $p_i=t/k$. For a Borel $A\subseteq Z$, compare the measurable event
+
+$$
+A\sqcup\{a_j:j\ne i\}
+$$
+
+in (53.5). Its signed mass difference is
+
+$$
+r+\lambda_x(A)-\alpha\nu_x(A),
+$$
+
+which must be at most $r$. Therefore $\lambda_x(A)\le\alpha\nu_x(A)$ for every such $A$. The two restrictions have the same total mass $\alpha$, so applying this domination also to complements inside $Z$ proves equality for every Borel set. Thus $\lambda_x=\kappa_x$ for every actual $x$, proving uniqueness. This finite tag-saturation argument uses event-TV directly, without an arbitrary-carrier maximal-coupling claim.
+
+Every lawful prepared family is continuous by Lemma 45.3. An operational attainer at error $r$ would therefore acquire $\kappa$ exactly. For every anchor prefix cylinder, its greatest common submeasure is
+
+$$
+\ell^\kappa_{C_m(x_*)}=\frac tk\sum_{i=1}^k\delta_{a_i},
+\qquad
+\ell^\kappa_{C_m(x_*)}(\Theta)=t<1.
+\tag{53.6}
+$$
+
+The displayed tag measure is dominated by every $\kappa_y$. Conversely, the restriction of any common submeasure to $Z$ is dominated by every $\alpha\nu_y$ in that cylinder and is zero by the dyadic-hole property above; its tag masses are at most $t/k$. This proves (53.6). It violates Theorem 46.4 at the actual anchor. Hence the unique continuous optimum is not exactly acquirable, and no lawful preparation attains the cap $r$.
+
+For upper approximations, Theorem 46.6 supplies a lawful preparation of $\nu$ with law $\widetilde\nu_y$ and uniform error at most any prescribed $\delta>0$. Include its whole seed in one common product seed, together with an independent finite selector. With probability $\alpha$, run that preparation on the unchanged source and hand over its tape in $Z$; with probability $t/k$ for each $i$, hand over $a_i$ immediately. This is an initial seed branch, not a restart or a success-conditioned attempt. Every actual source terminates almost surely, and finite-record/output events are measurable inherited events or finite unions of them. The resulting normalized law is
+
+$$
+\widetilde\kappa_y
+  =\alpha\widetilde\nu_y+\frac tk\sum_i\delta_{a_i}.
+\tag{53.7}
+$$
+
+Its error at source $y$ is exactly
+
+$$
+\operatorname{TV}(\widetilde\kappa_y,\mu_y)
+ =r+\alpha\operatorname{TV}(\widetilde\nu_y,\nu_y).
+\tag{53.8}
+$$
+
+To see the equality on the event-supremum normalization, the signed tag difference has positive mass $r$ on all tags except the actual color and negative mass $r$ at that color. The disjoint base difference has total mass zero. For any event its positive difference is at most $r+\alpha\operatorname{TV}(\widetilde\nu_y,\nu_y)$; taking the positive tags together with base events approaching the positive supremum attains that supremum in the limit. Complements give the same negative supremum. No existence of an event attaining the base supremum is needed.
+
+Choose $\delta<(\eta-r)/\alpha$ for any $\eta>r$. Equations (53.7)--(53.8) give uniform error strictly below $\eta$. The lower bound and the nonacquisition argument now prove $I(\mu)=r$ and the exact feasible-cap split $(r,1]$, even though the continuous relaxation has its unique minimizer (53.4).
+
+For an attained comparison, replace $\nu_y$ by the fixed point law $\delta_0$ on one base tape and retain the same colors and weights. The same tag inequalities give lower bound $r$; the constant law $\alpha\delta_0+(t/k)\sum_i\delta_{a_i}$ is handed over from its finite positive-weight seed support in one transition and attains $r$. Thus the positive value alone does not determine operational attainment.
+
+The common-submeasure and range-partition ingredients are those of Theorem 46.4, with the existing overlap in Gallo, Lerasle and Takahashi, [*Markov approximation of chains of infinite order in the $\bar d$-metric*, Section 3, Lemma 3.1](https://arxiv.org/html/1107.4353v2). No stationary-chain or coalescence conclusion is transferred to the static source. The mathematical increment is the positive-error forced optimum on the actual prime-observation family and its failure of acquisition, together with the different countable two-point obstruction of Theorem 52.1. These are repository-derived operational deductions from the cited suppliers, without a literature-priority claim.
+
+The original general endpoint question remains (50.5)--(50.7): a compatible candidate family is still quantified over. No criterion eliminating that family in favor of the targets alone is established here. Finite common carriers always attain; countable power-set carriers attain at zero but can fail at any interior positive value; general measurable carriers can fail at zero or at positive values, even with a continuous optimum; value $1$ always attains. The two nonattainment constructions use the explicitly stated zero-proposal input subclass and do not classify every prescribed positive-proposal row. All general value and candidate conditions retain every target law, the original consumer and the entire actual $X$. Common measurable tables and product seeds carry no conclusion about effective real sampling, finite descriptions, uniform runtime, physical acquisition or resources. $\square$
+

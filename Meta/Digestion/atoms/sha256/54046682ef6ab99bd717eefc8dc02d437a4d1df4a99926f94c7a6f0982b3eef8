@@ -1,0 +1,75 @@
+## 460. A three-slot inequality with its exact enlarged other-axis domain
+
+Let m>3, z>m+2, 1<q<=m, and let (M,Z,Q,R,Z,Q) be genuine.
+Write w=x_R>1 and assume only
+
+    w<1+z+q.                                      (460.1)
+
+Let theta be the axial M angle and gamma the transverse Z angle.
+Then
+
+    theta+2*gamma>pi.                              (460.2)
+
+This extends the scalar estimate of Section 315 of the
+[five-reservoir return volume](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md)
+to the other-axis domain (460.1). In particular (459.3) gives
+w<=z<1+z+q, even when R=Z.
+
+Put t=cot(theta/2)>0. The response is
+
+    gamma=atan(A*t)+atan(B*t),
+    A=[sqrt(z^2-1)+sqrt(q^2-1)]/(z+q)*sqrt((m-1)/(m+1)),
+    B=[sqrt(z^2-1)-sqrt(q^2-1)]/(z+q)*sqrt((m-1)/(m+1)).
+
+Both A and B are positive, since z>m>=q. If q<=m-2, then A+B>1:
+compare q with m-2 and z with m; the resulting boundary value is one,
+and sqrt(z^2-1)/(z+q) strictly increases with z, its derivative having
+positive numerator z*q+1. If gamma>=pi/2 then gamma>atan(t).
+Otherwise its tangent is (A+B)*t/(1-A*B*t^2)>t. This proves (460.2)
+in the first case with the correct tangent branch.
+
+Now m-2<q<=m. Define k=z+q, h=z-q>0 and alpha=sqrt((m-1)/(m+1)).
+The strict genuine factors and response identity are
+
+    L=k^2-(m-1)*(w-1)>0,
+    J=(m+1)*(w+1)-h^2>0,
+    A+B=2*sqrt(z^2-1)*alpha/k,
+    A*B*t^2=(h/k)*(L/J).
+
+Increase the scalar comparison variable w to w0=1+k. Throughout this
+path J increases and stays positive. L decreases to
+
+    L0=k*(k-m+1)>0,
+    J0=(m+1)*(k+2)-h^2>0.
+
+The endpoint L0 is positive because k>m. The ratio L/J strictly
+decreases. The strict assumption (460.1) therefore gives
+
+    A+B+A*B*t^2>F(q),
+    F(q)=2*sqrt(z^2-1)*alpha/(z+q)
+         +(z-q)*(z+q-m+1)/[(m+1)*(z+q+2)-(z-q)^2].
+
+On q<=v<=m the first term decreases. The second numerator is positive
+and has derivative m-1-2*v<3-m<0. Its denominator is positive and has
+derivative m+1+2*(z-v)>0. Hence F(q)>=F(m). At m,
+
+    J0(m)=(z+1)*(3*m+2-z)>0,
+    F(m)=2*sqrt(z^2-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Thus z<3*m+2. Both terms in F(m) strictly increase with z on
+m+2<=z<3*m+2: the derivative numerators have signs m*z+1>0 and
+2*m+2>0, respectively. Since z>m+2,
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+For the last comparison, both 1-1/m and the square root are positive;
+the squared difference has positive numerator
+
+    (2*m-1)*(m+1)^2-4*m^2
+      =(m-1)*(2*m^2+m+1)>0.
+
+Consequently A+B+A*B*t^2>1. When gamma<pi/2, its positive tangent
+is greater than t; when gamma>=pi/2, gamma>atan(t) directly. In either
+case gamma>atan(t)=(pi-theta)/2, proving (460.2). No angle expense is
+asserted monotone in w; only the displayed rational ratio is compared.
+

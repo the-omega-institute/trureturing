@@ -1,0 +1,40 @@
+**Proposition 14.1 (uniform hidden-phase suppression).** For every lawful
+history under the guard of Definition 12.1, without any endpoint
+condition, put
+$d_{\mathbb T}([x],0)=\inf_{j\in\mathbb Z}|x-2\pi j|$. Then
+
+$$
+\begin{aligned}
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\operatorname{TV}(b)\}\\
+ &\le\min\{\pi,|\kappa|M_\kappa\mathsf L\},\\
+\sup_{0\le t\le T}d_{\mathbb T}(D(t),0)
+ &\le\min\{\pi,|\kappa|M_\kappa\sqrt{T\mathsf E}\}.
+\end{aligned}
+\tag{14.1}
+$$
+
+Thus every fixed variation or length budget suppresses the hidden circle
+uniformly as $\kappa\to0$. More generally the same is true for variation
+or length $o(|\kappa|^{-1})$, and, at the fixed clock $T$, energy
+$o(\kappa^{-2})$. These statements are uniform over all guarded histories
+within the indicated resource envelope, not estimates with a separate
+history-dependent constant. Two same-preparation histories with the same
+retained observation and variation budgets at most $B$ have hidden
+circle separation at most
+$\min\{\pi,2|\kappa|M_\kappa B\}$.
+
+**Proof.** For every prefix, integrating (12.7) gives
+$|\delta(t)|\le|\kappa|M_\kappa\int_0^t|\dot b|$.
+Circle distance is at most both $\pi$ and the magnitude of any real lift.
+Taking the supremum and using (13.5) proves (14.1).
+The constants $M_\kappa$ are uniformly bounded by (12.9).
+The two-history assertion follows from the circle triangle inequality.
+This proof imposes no endpoint, winding or complexity restriction.
+For an arbitrary other finite duration $\tau$, the variation and length
+bounds are unchanged and the energy bound uses $\sqrt{\tau\mathsf E}$.
+A fixed energy budget alone, with no bounded duration, does not give the
+same suppression: stretching the target-attaining polygon to arbitrarily
+large duration decreases its energy while leaving its hidden endpoint
+unchanged. $\square$
+

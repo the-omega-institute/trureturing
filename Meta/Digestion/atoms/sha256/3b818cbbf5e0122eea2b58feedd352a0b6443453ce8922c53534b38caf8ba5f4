@@ -1,0 +1,110 @@
+**命题 470.3（实际有符号算子的量化成本）。** 对每个自然数 $L$，
+
+$$
+Q(L)\ge\frac L4,\qquad
+\sum_{d=1}^{L}\frac{|\mu(d)|}d\ge\frac14\mathcal H_L.
+\tag{QO.14}
+$$
+
+因此，当 $L\ge1$、$k\ge L(L+1)$ 时，
+
+$$
+R_0(k)\ge\frac14\mathcal H_L,\qquad
+R_\alpha(k)\ge2^{-\alpha-2}L^\alpha\quad(0<\alpha<1).
+\tag{QO.15}
+$$
+
+记 $F_{\alpha,N}=\|\prod_{p\le N}U_p\|_{\alpha,N}$。对每个 $N\ge16$，有完整界
+
+$$
+\boxed{\frac1{16}\log N\le F_{0,N}\le\mathcal H_N\le1+\log N,}
+\tag{QO.16}
+$$
+
+以及
+
+$$
+\boxed{
+2^{-2\alpha-2}N^{\alpha/2}\le F_{\alpha,N}
+\le1+\frac{N^\alpha-1}{\alpha}
+\quad(0<\alpha<1).}
+\tag{QO.17}
+$$
+
+特别地，普通正向范数为 $\Theta(\log N)$；对 $\alpha=1/2$，正向范数至少为 $N^{1/4}/8$。QO.17 没有断言正 $\alpha$ 的准确增长阶等于 $N^{\alpha/2}$。
+
+**证明。** 每个正的非平方自由整数 $d\le L$ 都有某个整数 $n\ge2$ 满足 $n^2\mid d$，且 $n\le d\le L$。因此全部非平方自由整数被有限集合
+
+$$
+B_n(L)=\{d:1\le d\le L,\ n^2\mid d\},\qquad2\le n\le L,
+$$
+
+覆盖。每个 $B_n(L)$ 的基数准确为 $\lfloor L/n^2\rfloor$，由 $m\mapsto mn^2$ 与 $1\le m\le\lfloor L/n^2\rfloor$ 的双射给出。当 $n^2>L$ 时，该集合及其计数均为零。有限并集的基数不超过各基数之和，故
+
+$$
+L-Q(L)\le\sum_{n=2}^{L}\lfloor L/n^2\rfloor
+\le L\sum_{n=2}^{L}\frac1{n^2}\le\frac{3L}4.
+$$
+
+最后一步在 $L\ge2$ 时由完整有限望远镜和给出：
+
+$$
+\sum_{n=2}^{L}\frac1{n^2}
+\le\frac14+\sum_{n=3}^{L}\frac1{n(n-1)}
+=\frac34-\frac1L\le\frac34.
+$$
+
+$L=2$ 时中间和为空，等式右端为 $1/4$。$L=0,1$ 的非平方自由集合为空，且 $Q(0)=0$、$Q(1)=1$，直接满足计数界。这证明 QO.14 的第一式，未用无穷并集，也未把实数界替换为未证明的整数取整界。
+
+对 $L\ge1$，完整有限 Abel 恒等式保留终端项：
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+=\frac{Q(L)}L+
+\sum_{m=1}^{L-1}Q(m)\left(\frac1m-\frac1{m+1}\right).
+$$
+
+括号内系数非负，把每个 $Q(m)$ 的计数界及终端 $Q(L)\ge L/4$ 代入，得到
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+\ge\frac14+\frac14\sum_{m=1}^{L-1}\frac1{m+1}
+=\frac14\mathcal H_L.
+$$
+
+$L=1$ 时内部和为空；$L=0$ 时原两边均为零，独立成立。对 $0<\alpha<1$ 和 $L\ge1$，因为 $d^{\alpha-1}\ge L^{\alpha-1}$ 对 $1\le d\le L$ 成立，
+
+$$
+\sum_{d=1}^{L}a_dd^{\alpha-1}
+\ge L^{\alpha-1}Q(L)\ge\frac14L^\alpha.
+$$
+
+将这两个界代入 QO.8 或 QO.11，得到 QO.15。
+
+现在取 $N\ge16$，令 $s=\lfloor\sqrt N\rfloor$、$L=s-1$。因为 $\sqrt N\ge4$，有 $L\ge\sqrt N-2\ge\sqrt N/2\ge1$，并且 $L(L+1)=s(s-1)\le s^2\le N$。QO.3 与 QO.15 给
+
+$$
+F_{\alpha,N}\ge R_\alpha(N)
+\ge2^{-\alpha-2}L^\alpha
+\ge2^{-2\alpha-2}N^{\alpha/2}
+\quad(0<\alpha<1).
+$$
+
+普通调和和的积分比较给 $\mathcal H_L\ge\log(L+1)$ 和 $\mathcal H_N\le1+\log N$。又 $L+1=s\ge\sqrt N/2$，所以
+
+$$
+F_{0,N}\ge\frac14\log(L+1)
+\ge\frac18\log N-\frac14\log2
+\ge\frac1{16}\log N,
+$$
+
+最后一步使用 $\log N\ge\log16=4\log2$。完整 QO.9 对每个 $k\le N$ 给 $R_0(k)\le\mathcal H_k\le\mathcal H_N$，得到 QO.16 的上界。对正 $\alpha<1$，同样对全部行使用 QO.9，然后用递减函数 $x^{\alpha-1}$ 的积分比较，得到
+
+$$
+F_{\alpha,N}\le\sum_{d=1}^{N}d^{\alpha-1}
+\le1+\int_1^N x^{\alpha-1}\,dx
+=1+\frac{N^\alpha-1}{\alpha}.
+$$
+
+这证明 QO.17。$\alpha=1/2$ 时下界系数为 $2^{-3}=1/8$。证毕。
+

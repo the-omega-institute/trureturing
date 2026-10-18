@@ -1,0 +1,72 @@
+**Corollary 13.4 (conditional native lower bound and whole-fiber inclusion).**
+An original native preparer correct on every $u\in\mathcal U_*$ at
+both caps $n+1,W+3$, whose particular Boolean projection of
+[WTF, Theorem 4.1][WTF] satisfies Definition 13.1, has
+
+$$
+H_P\ge G+4+r.
+\tag{SI.114}
+$$
+
+For every $v,g$ of Proposition 13.3 its complete Boolean graph has a
+full-original-fiber lift with exactly $M_{v,g}+4+r$ installed preparation
+states and simultaneous maxima $n+1,W+3$, attained on one actual source.
+The original pointwise code, literal complete entries and separately
+priced eight-state reader are retained.
+
+Proof. The supplied projection has $m\le H_P-4-r$ and both caps
+$n,W$. Theorem 13.2 gives (SI.114). Class membership is a hypothesis
+on that projection, not a consequence of arbitrary native correctness.
+
+For the upper, apply the constructive full-fiber direction of WTF
+Theorem 4.1 to the entire table of Proposition 13.3. Each coordinate-$i$
+row uses the original fixed literal $a_i=LLL L^{s_i}R$, separately
+installing its zero successor for alpha, beta and absent, and its one
+successor for branch. Replace Boolean terminals by the original
+$\widehat e_0,\widehat e_1$. Add exactly the two original profile rows,
+start at $D_0$, and retain every one of the $r$ further mandated latches:
+
+| State | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_0$ | $RLR$ | $\widehat e_1$ | Boolean root | $T_0$ | $\widehat e_0$ |
+| $T_0$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+The preparation count is exactly $M_{v,g}+4+r$, including all
+retained and unused running states, both profile rows, both original
+latches and all extra latches. Boolean terminals are replaced, not
+charged twice.
+
+For every $Z_{b_3}$ source, its arbitrary allowed branch image gives
+one stationary indicator vector. The supplied all-address occurrence
+identity makes every selected visit the corresponding Boolean test,
+including absent replies, repetitions and postcertificate visits. It adds
+one paid call and three letters to that vector's complete run. The
+other ten profiles are handled by the two displayed rows, using at
+most two calls and six letters, within $n+1,W+3$. This covers the
+entire unbounded fiber of finite nonempty ordered alpha/beta trees,
+including noncomb images and every actual inverse source. The cube
+supplier realizes the jointly attaining vector of Proposition 13.3,
+so the same actual source attains both native caps.
+
+The original homomorphic $\rho$, complete current row, eleven
+profiles, prescribed pointwise $\sigma_{A,k}$ and latch output remain
+those of Definition 1.1 and WTF Definitions 1.1–1.4. All finite
+original addresses and all four replies retain their meaning. Code-only
+handoff enters literally the original complete $e_0$ or $e_1$ on
+that same source. The independent reader retains its three running
+states and five whole-row halts, hence $K=8$, at most two fresh calls
+and six fresh letters. Its target remains the entire predecessor row:
+ordered exterior, occurrences, canonical equality partition, repetitions,
+disequalities and strict-prefix guards. No fixed source size, depth or
+shape has replaced that target or domain.
+
+Binding, the fixed register, acquired same-version row, authentication,
+permissions, export, access isolation, code-only handoff, lawful complete
+entry and stationary service remain the separate supplied and priced
+services of Convention 1.3 and WTF Assumption 1.5. All installed
+output, latch and unused states and all actual constant, repeated and
+postcertificate calls retain their charges. The descriptive $f$,
+$\gamma$ and chosen representatives confer no runtime selector, archive
+reread, source copy, counter, phase, computed address or other changing
+register. $\square$
+

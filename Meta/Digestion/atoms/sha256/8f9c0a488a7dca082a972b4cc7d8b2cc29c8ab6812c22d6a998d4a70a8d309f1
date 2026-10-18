@@ -1,0 +1,38 @@
+**Proposition 15.5 (what the first-level floors leave unselected).**
+The necessary bounds (12.1) and (13.2) apply with the same constants
+to every fixed area drift $\lambda$. They do not select a native law,
+prove full-lift attainment of a lower bound, or turn a scalar
+free-end optimizer into a full-native optimizer.
+
+Proof. The Brownian first-level pair, $S$, and the target-only event
+in Theorem 12.1 are common to all these drifts. Every scalar inequality
+used there holds for a restriction of any admitted native command,
+regardless of its chronological integral. The construction in Sections
+5–7 provides actual lawful approximating families for every fixed
+$\lambda$, with the distinct wrapped laws established in Theorem 7.2.
+Thus the resource inequalities cannot single out $\lambda=0$.
+
+The scalar minima in (12.12) relax both the common chronological
+constraint $J_n=\int a_n\,db_n$ and the requested accuracy of the
+full $\beta$ path and lifetime. Lower bounds for that larger feasible
+set imply lower bounds for the native set, but supply no command
+in the latter set attaining them. The classical scalar free-end
+optimizer may depend on the entire Brownian path. Its existence
+therefore gives no causal access rule, finite-bit sampler, or optimal
+causal native command. The explicit native families establish
+convergence, not a matching upper bound in the error variable of
+(12.13) or (13.2). No sharp full-native optimum follows.
+
+The costs and error metrics in these statements have the definitions
+(11.4) and (13.1). They add no calibration of physical energy or
+acquisition cost, and no preparation of an analytic amplitude. Their
+state is the original three-dimensional ray manifold with control
+rank two, bracket growth $(2,3)$ and declared local volume exponent
+four; the bottom-observation base remains two-dimensional. Those
+objects, task-dependent predictive memory, a number of stored
+coordinates and a number of physical spatial axes have different
+definitions. None is identified with another by a resource inequality.
+The statements fix the starting ray, horizon, killing interval and
+actual joint target law; they assert no uniform-in-start, all-Borel
+or heat-kernel approximation. $\square$
+

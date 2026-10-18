@@ -1,0 +1,27 @@
+**推导 3.2（第七节使用的经典谱分解）。** 直接乘出 $`M^2=M+I`$、$`\det M=-1`$，特征值为 $`\varphi,\psi`$。因此
+
+```math
+S^{\mathsf T}=S,\qquad S^2=I,\qquad \det S=-1.
+```
+
+$`S^{\mathsf T}S=I`$，所以它是上述欧氏尺子下的正交反射，正负特征方向各一维。[Higham §3 的指数级数](../../../Library/Quantum/higham2006eigenstate.md) 按偶奇项分组给
+
+```math
+e^{sS}=\cosh s\,I+\sinh s\,S.
+```
+
+黄金关系 $`\varphi-\varphi^{-1}=1`$、$`\varphi+\varphi^{-1}=\sqrt5`$ 给
+
+```math
+\sinh a=\frac12,\qquad \cosh a=\frac{\sqrt5}{2},\qquad
+Se^{aS}=\frac{\sqrt5}{2}S+\frac12I=M.
+```
+
+这完整证明 $`M=Se^{aS}`$。伸缩 $`e^{aS}`$ 的正特征值为 $`e^a,e^{-a}`$，所以其行列式为一、在实组成平面保有向面积；反射使 $`M`$ 每步反定向。两因子可交换，均可逆，因而对所有 $`n\in\mathbb Z`$ 有
+
+```math
+M^n=S^n e^{naS}.
+```
+
+负整数幂在扩展实组成层有意义，不因此成为原生树上的逆替换。
+

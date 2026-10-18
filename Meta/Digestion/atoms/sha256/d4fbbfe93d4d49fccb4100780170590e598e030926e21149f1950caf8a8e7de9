@@ -1,0 +1,41 @@
+**Definition 1.1 (Original stationary law).** Let $\varphi$ be uniform
+on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins
+$(S_\ell)_{\ell\in\mathbb Z}$, where $0<p<1$ and $p\ne1/2$.
+On the original integer clock define
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+The symbols in $\mathcal A=\{a_0,a_1,b_0,b_1\}$ are distinct.
+Write $J_p$ for this joint law. This is [Original, Proposition 2.1][O].
+Its stationary masses at $a_s,b_s$ are $\pi_s/2$, with
+$\pi_0=1-p$, $\pi_1=p$: an active transition chooses $b_t$ with
+probability $\pi_t$ and emits $s\oplus t$, and the next transition
+copies $b_t$ to $a_t$, emitting zero. Incoming mass at either state
+with spin $t$ is $\pi_t/2$. Thus the uniform phase retains the original
+stationary emitted-bit clock, with its actual separator coordinates.
+
+Fix $j\in\{0,1\}$ before acquisition. Define
+
+$$
+\begin{array}{c|cc|cc}
+ &h_0(s)&v_0&h_1(s)&v_1\\ \hline
+j=0&a_s&0&b_s&0\\
+j=1&b_s&1&a_s&0
+\end{array}
+\qquad H_j=h_\varphi(S_{v_\varphi}).
+\tag{1.2}
+$$
+
+In particular phase zero uses target spin $S_j$, whereas phase one uses
+$S_0$ for either endpoint. The two phase-label sets are disjoint. A
+single returned state cannot be correct in both phases. Description
+(1.1) supplies no observation of an unqueried spin or of $\varphi$.
+

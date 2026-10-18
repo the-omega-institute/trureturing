@@ -1,0 +1,79 @@
+**Theorem 64.2 (Integrable order-envelope cap certificate).** If
+
+$$
+K_{\infty,E}^{\eta}(q)\ne\varnothing\qquad(q\in Q),
+\tag{64.3}
+$$
+
+then a lawful preparation on the original tapes achieves uniform error at most $\eta$, with prepared laws in $\{g\sigma:g\in P_E\}$. The preparation has one source-independent product seed, uses only actual prime answers, and hands its tape to the unchanged consumer on the same static source after sourcewise almost-sure finite execution.
+
+The additional order assertion is the following. Every TV-continuous map $q\mapsto g_q\in P_E$ has cylinder greatest common submeasures
+
+$$
+\ell_{C_m(x)}(A)=\int_A\inf_{q'\in U_m([x])}g_{q'}\,d\sigma
+\quad(A\in\mathcal F)
+\tag{64.4}
+$$
+
+whose masses increase to one at every original source $x$. More precisely, a measurable basis envelope $w\in L^1_+(\sigma|_{\mathcal G})$, independent of $q$, supplies for every $q$ and every $\delta>0$ some finite $m$ such that
+
+$$
+\ell_{C_m(q)}(\Theta)\ge1-\delta\int w\,d\sigma.
+\tag{64.5}
+$$
+
+Here $C_m(q)=\{y:[y]\in U_m(q)\}$, as in (54.2). The source-dependent depth in (64.5) need not be uniform on $Q$.
+
+**Proof.** Choose a real basis $e_1,\ldots,e_d$ of $E$, with finite measurable integrable representatives; nonemptiness of $P_E$ ensures $d\ge1$. For $c\in\mathbb R^d$ set $Jc=\sum_jc_je_j$. On the compact coordinate sphere $\|c\|_\infty=1$, the continuous function $c\mapsto\|Jc\|_1$ has a strictly positive minimum: a zero minimum would give a nonzero coordinate vector representing zero in $E$, contrary to linear independence. Homogeneity therefore gives a constant $A<\infty$ with
+
+$$
+\|c\|_\infty\le A\|Jc\|_1,
+\qquad
+|Jc(\theta)|\le\|c\|_\infty w(\theta),
+\qquad
+w=\sum_{j=1}^d|e_j|,\quad \int w\,d\sigma<\infty.
+\tag{64.6}
+$$
+
+The elementary upper bound $\|Jc\|_1\le\sum_j|c_j|\|e_j\|_1$ and (64.6) show that the coordinate and $L^1$ norms are equivalent. Thus $E$ is complete and separable, and closed in the surrounding $L^1$ space. Nonnegativity and integral one are closed conditions, so $P_E$ is complete and separable in $d_E$. Every initial fiber (64.2) is closed, because TV distance to each fixed original target is continuous in this metric. The metric stabilization and clopen selection portions of Theorem 54.2 consequently apply: they use countability of $Q$, a countable basis in the range, closed values and completeness. The domain retains its countable clopen prefix basis. Under (64.3) they supply a TV-continuous selection $g_q\in K_{\infty,E}^{\eta}(q)\subseteq K_{0,E}^{\eta}(q)$. This invokes those proved portions only, rather than their countable-tape acquisition step.
+
+We now prove the order assertion, for any TV-continuous $P_E$-valued selection. Write $g_q=\sum_j c_j(q)e_j$ using the same representatives. Since $Q$ is countable, remove one measurable $\sigma$-null set so that all these densities are nonnegative and finite simultaneously. On that null set set all basis representatives, and therefore all $g_q$ and $w$, to zero. This changes no density measure. Equation (64.6) makes every coefficient $c_j(q)$ continuous. For fixed $q$ and $\delta>0$, choose an actual prefix neighborhood such that
+
+$$
+\max_j|c_j(q')-c_j(q)|<\delta
+\qquad(q'\in U_m(q)).
+\tag{64.7}
+$$
+
+The same envelope then controls all its densities pointwise, simultaneously:
+
+$$
+\inf_{q'\in U_m(q)}g_{q'}
+ \ge (g_q-\delta w)_+,
+\qquad
+\int\inf_{q'\in U_m(q)}g_{q'}\,d\sigma
+ \ge\int g_q\,d\sigma-\delta\int w\,d\sigma
+ =1-\delta\int w\,d\sigma.
+\tag{64.8}
+$$
+
+The infimum is measurable because $Q$ is countable. It defines the greatest common submeasure of all the selected laws in the cylinder, by the same countable-density comparison used in Theorem 46.4. Refining a cylinder increases its infimum; since the cylinder includes $q$, these densities are bounded above by $g_q$, and their masses are at most one. Arbitrary $\delta>0$ in (64.8) proves increasing convergence of their masses to one. This is the pointwise order estimate missing from a general $L^1$-continuous selection: finite-dimensional coordinate continuity gives a single integrable bound for every neighbor in a sufficiently small actual cylinder.
+
+To check the original-tape correspondence, apply the positive-increment realization of Theorem 46.4 to these selected laws. More explicitly, for each occupied prefix node $C$, with parent $C^-$, set $\Delta_C=\ell_C-\ell_{C^-}$, and use $\Delta_X=\ell_X$ at depth zero. Cylinder monotonicity makes each increment a positive measure on the original $(\Theta,\mathcal F)$, of mass $a_C-a_{C^-}$, where $a_C=\ell_C(\Theta)$. Give its coordinate $W_C$ the normalized probability law $\Delta_C/(a_C-a_{C^-})$ when this mass is positive, and a fixed original tape law $\delta_{\theta_0}$ when it is zero. There are countably many nodes. Their probability coordinates and an independent $U$ uniform on $(0,1)$ form one common product seed, fixed for every source. No standard-Borel or measurable-singleton hypothesis on the tape carrier is needed for this product or the point evaluation $\delta_{\theta_0}$.
+
+The shared rules and thresholds are exactly the existing realization: at the reached node $C$, hand over $W_C$ when $U<a_C$, and otherwise query the next actual prime. At a non-root node the reached seed already satisfies $U\ge a_{C^-}$, so for every original measurable tape event $A$ the unconditional output measure at that node is
+
+$$
+\mathsf P\{a_{C^-}\le U<a_C,\ W_C\in A\}
+   =\Delta_C(A).
+\tag{64.9}
+$$
+
+The root uses lower threshold zero. The accumulated measures telescope along source $x$ to $\ell_{C_m(x)}\le g_{[x]}\sigma$. By (64.8) the probability of no handoff through depth $m$ is $1-a_{C_m(x)}\to0$. Thus the actual handoff is finite almost surely at every source, and its output measure is precisely $g_{[x]}\sigma$, not a conditional version of that law. Finite-record and output-event preimages are measurable interval and coordinate events or countable unions of them. Each reached depth uses finitely many actual prime queries and the fixed tables. The handoff supplies only the original tape, after which the same consumer runs on the same static source. Membership in (64.2) proves the cap against every original target. This is the supplier correspondence for Theorem 46.4, with no new acquisition algorithm. $\square$
+
+Conversely, if an all-source lawful cap preparation has all its laws in $P_E$, Lemma 45.3 makes its density map a TV-continuous selection of (64.2), and the survival argument (54.8) puts it in every refinement stage. Thus (64.3) characterizes feasibility within this fixed density space. It is only a sufficient certificate for unrestricted feasibility: emptiness of a restricted stable fiber excludes $E$-valued preparations and says nothing by itself about other original-tape preparations.
+
+In particular set $\eta$ equal to the independently defined original $R_\mu$ of (50.1), whose centers range over all original-tape probabilities. If (64.3) holds at this value, the theorem and the lower bound in Theorem 50.2 prove attainment of that original sharp value. No equality between an $E$-restricted radius and $R_\mu$ is asserted. Nonemptiness of $P_E$ does not imply nonempty initial or stable cap fibers, either at the endpoint or at another cap. Targets outside $E$ still occur in every required original target ball.
+
+The norm and product ingredients are established mathematics; finite-dimensional completeness and closedness are also recorded as `FiniteDimensional.complete` and `Submodule.closed_of_finiteDimensional` in [pinned Mathlib, Normed/Module/FiniteDimension](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Module/FiniteDimension.lean), while the common product is the `Measure.infinitePi` interface already cited in Theorem 46.4. The basis argument and (64.8) supply their ordinary mathematical application to order exhaustion here. No compactness-only transfer, common finite tape support, common finite horizon, effective refinement test or real-sampling procedure follows. This certificate can be posed with nonatomic $\mathcal G$ and a proper finite-dimensional $E$; its all-source cap hypothesis remains an explicit additional obligation, rather than an automatic supplier.
+

@@ -1,0 +1,84 @@
+**Proposition 9.3 (existing quantitative core margin and three-way endpoint equivalence).** Fix one original admitted datum before any limit. In addition to the conditional antecedents already specified, retain A13.1's use of P §§70–73 and L Lemma 41.2, with the parameter applicability conditions of L Definition 35.1, where L is [Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md). All statements below retain those scopes. With exactly the Coulomb normalization (9.5), put
+
+$$
+c_{\rm ref}=\frac{e^{-4}h_C(0)}{24\sqrt\pi}
+ =\frac{e^{-4}\varrho^{3/2}}{24\pi(\det M)^{1/4}}>0,
+\qquad
+\mathbb B_g=\{q:\varrho d_M(gq)\le1\},
+\qquad e_1(g)=E_1(g).
+\tag{9.8}
+$$
+
+A13.2 supplies a datum-dependent $g_0>0$ such that every nonnegative normalized actual reference ground state $v_g\in D(S)$ of $aS-gW_1$, for every $0<g<g_0$, satisfies
+
+$$
+v_g(k,q)\ge c_{\rm ref}g^{3/2}\phi(k)
+\quad\text{for almost every }(k,q)\in I\times\mathbb B_g.
+\tag{9.9}
+$$
+
+The height range is the whole original interval. A13.3 supplies the same lower amplitude on every fixed microscopic compact set after composition with the exact $\Xi_s$. The constant $c_{\rm ref}$ is precisely A13.1's $c_*$, with no ground-state, compact-set or response-sign dependence.
+
+For any actual normalized complex ground-state choice set $F_s=\mathcal U_s\psi_s$, $u_s=|\psi_s|$, $D_s=W_{s^2}-W_1\ge0$ and $U_s^{<}=s^5D_s\circ\Xi_s$. The modulus $u_s$ is itself a normalized actual ground state in the unchanged $D(S)$. For each fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of positive measure define the scalar charge
+
+$$
+\mathfrak a_s(K)=\int_K\phi(k_0+\varepsilon sr)U_s^{<}(\xi)|F_s(\xi)|d\xi.
+\tag{9.10}
+$$
+
+This is A14.1's scalar $A_s(K)$, distinct from the Friedrichs operator of §1. For sufficiently small $s$ depending on $K$ and the fixed datum, A14.2 gives, uniformly over every actual complex ground-state choice,
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_{\rm ref}\sqrt{j_0\chi_c}\,\mathfrak a_s(K)\ge0.
+\tag{9.11}
+$$
+
+There is no response-sign or bounded-$r_s$ hypothesis. Its exact finite-native pairing, supplied by A14.2, is
+
+$$
+O_s=\langle v_{g_s},u_s\rangle\in(0,1],\qquad
+(e_1(g_s)-E_s)O_s
+ =g_s\int_{\mathcal C}D_s v_{g_s}u_s\,dY.
+\tag{9.12}
+$$
+
+Both vectors lie in the exact common original $D(S)$; the multipliers are bounded separately at each positive $s$. This is an actual spectral comparison, with no homogeneous response vector substituted into a native domain.
+
+Define the finite positive core charge and strict margin
+
+$$
+m_{\rm core}=\int_{\mathbb R^4}Vp\,d\xi\in(0,\infty),\qquad
+\eta_*=c_{\rm ref}\sqrt{j_0\chi_c}\,\phi(k_0)m_{\rm core}>0,
+\qquad r_C=-\chi_c^2e_C>0.
+\tag{9.13}
+$$
+
+A15.1 gives, for every prescribed $s_n\downarrow0$ and every actual normalized complex choice with $F_{s_n}\rightharpoonup cp$ globally in $L^2$,
+
+$$
+\liminf_{n\to\infty}\frac{e_1(g_{s_n})-E_{s_n}}{g_{s_n}^2}
+ \ge\eta_*|c|,
+\qquad
+\liminf_{n\to\infty}r_{s_n}
+ \ge r_C+\chi_c^2\eta_*|c|.
+\tag{9.14}
+$$
+
+Thus a finite actual endpoint with nonzero microscopic weak core lies strictly above $r_C$. In particular such a core is excluded at the Coulomb endpoint. A15.2 proves that, for every prescribed sequence and every actual normalized complex choice in $D(S)$, the following three assertions are equivalent along that same sequence:
+
+$$
+\begin{aligned}
+&r_{s_n}\longrightarrow r_C;\\
+&F_{s_n}\rightharpoonup0\quad\text{globally in }L^2(\mathbb R^4);\\
+&\inf_{\theta\in\mathbb R}
+ \|\mathcal D_{g_{s_n}}\psi_{s_n}-e^{i\theta}\phi h_C\|_2
+ \longrightarrow0.
+\end{aligned}
+\tag{9.15}
+$$
+
+Whenever they hold, the energy limits (9.6) hold and $F_{s_n}\to0$ in $L^2(K)$ on every compact $K$. No response-sign hypothesis is needed for this equivalence. At response zero it asserts neither existence nor selection of any of its three equivalent endpoints.
+
+Source correspondence. These are existing conditional A13–16 results, not additional theorems derived from the exterior estimate. A13 uses the all-height relative kernel estimate of L Lemma 41.2 and the actual fixed-cutoff Coulomb energy/profile of P72–73 to obtain the reference amplitude; macroscopic $L^2$ convergence alone supplies no shrinking-core pointwise bound. A14 pairs two actual eigen-equations on the same $D(S)$ and retains the exact raw Jacobian and path factors. A15 takes compact charge limits first and then exhausts space, using N's finite positive $\int Vp$; its strict margin excludes a nonzero weak core when the energy defect vanishes. A10.2 and A11.1 supply the other endpoint implications. A16 states these scopes and the unresolved selection boundary. None assumes a positive canonical $L^2$ spectral gap, global $L^2$ membership or native realizability of the homogeneous response, or a transfer of actual kinetic energies from norm proximity. The margin constrains actual weak core mass and does not sign either canonical coefficient or bound the full $\delta_h$.
+

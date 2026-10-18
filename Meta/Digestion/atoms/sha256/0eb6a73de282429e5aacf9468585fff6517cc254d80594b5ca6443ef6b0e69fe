@@ -1,0 +1,84 @@
+**Proposition 75.2 (defined B14 comparison, residual and equality).**
+The endpoint TV gain comparison called B14 is the published JR.157–.160
+statement, also used with its actual-instrument qualification by RC
+Theorem 65.2. Its exact dictionary is as follows. Put
+$G=L_0^{1/2}NL_0^{1/2}=
+\begin{psmallmatrix}g_0&X&Y\\X&g_1&Z\\Y&Z&g_2\end{psmallmatrix}$,
+$\alpha=\alpha_0$, $\beta=\beta_0$, $\gamma=\alpha/\beta$ and
+$f_G(u,v)=(1,u,v)G(1,u,v)^T$. Normalize every analytic low coefficient
+atom as $\sqrt\pi(s_0,u,v)$. Its coefficient law satisfies
+
+$$
+\alpha u^2+\beta v^2=1,\quad
+\mathbb E1=\mathbb Eu^2=\mathbb Ev^2=1,\quad
+\mathbb Eu=\mathbb Ev=\mathbb Euv=0.
+$$
+
+The expectation is $\mathbb Eh=\sum_j\pi_jh(u_j,v_j)$, or its
+stipulated coefficient integral; it is never a preparation prior or an
+average conditioned on failure. Define
+
+$$
+\begin{gathered}
+R_1=X-g_1-Z+\alpha(X+Y-g_0),\quad
+R_2=Y-Z-g_2+\beta(X+Y-g_0),\\
+B_\circ=f_G(-1,-1)=-(R_1+R_2),\quad
+m_\circ=2(\gamma R_2-R_1),\\
+P_\circ(u,v)=\frac{B_\circ}4(1-u)(1-v)
+ +\frac{m_\circ}8(u^2-1),\qquad
+\mathfrak r(u,v)=\min\{f_G(u,v),0\}-P_\circ(u,v),\\
+T_0=\mathcal T(s_0).
+\end{gathered}
+$$
+
+For every actual original sharp-cost weak instrument, including every
+finite-activity competitor,
+$T_{\rm instr}-T_0\le-\mathbb E\mathfrak r$.
+Precisely, there is the nonnegative actual-information slack
+
+$$
+\begin{gathered}
+\mathcal L_{\rm obs}=
+\frac{(1-\delta)\Delta A+L_f+\mathbb E|f_G|}{2}-T_{\rm instr}\ge0,\\
+T_{\rm instr}-T_0=-\mathbb E\mathfrak r-\mathcal L_{\rm obs}.
+\end{gathered}
+$$
+
+Equality requires no loss in the physically generated refinement and
+optimal spectral failure readout; hidden Kraus indices cannot certify
+it. An actually generated separated atom refinement and the spectral
+failure rows of JR53.3 attain equality in the unbudgeted class.
+No finite-activity equality is inferred for those certain-failure rows.
+
+**Proof.** The moment identities are the low Gram $L_0$ after scaling
+its first coordinate to $s_0$ and using the real null equation. They
+include all zero coordinates and both signs. They imply
+$\mathbb Ef_G=\operatorname{tr}G$ and
+$\mathbb EP_\circ=B_\circ/4$.
+By JR.51 at $s_0$,
+$T_0=((1-\delta)\Delta A+L_f+\operatorname{tr}G)/2-B_\circ/4$.
+For an actual acquisition label, splitting its live/failure effect and
+analytically resolving its Kraus products only upper-bounds its absolute
+height difference. The high differences are positive and have the
+fixed total $(1-\delta)\Delta A$. Whiten the failure subeffects to a
+POVM on $\operatorname{ran}M$; its absolute height-difference sum is
+at most $\|\Xi\|_1=L_f$. These two triangle/spectral inequalities
+prove $\mathcal L_{\rm obs}\ge0$ for the actual record. Subtracting
+$T_0$ and using $|f|=f-2\min(f,0)$ proves the exact slack identity
+and B14's inequality.
+
+The slack is a sum of nonnegative triangle and spectral slacks. Thus
+it vanishes exactly when the actual record loses no resolved signed
+height difference inside any grouped label and its induced failure
+POVM is optimal for $\Xi$. Equivalently all nonzero scalar differences
+combined inside each actual label have one sign, and the failure POVM
+separates the positive and negative spectral supports (up to splitting
+or zero effects). A generated refinement with the separated atom and
+spectral labels supplies these conditions. Purely analytic refinement
+of an existing instrument supplies only the upper bound, not its
+missing record. Coordinate failure rows instead give $d_f<L_f$ and
+lose $\gamma_f$ even at the same forgotten supported channel. The
+finite-activity strong construction likewise exhibits the persistent
+gap of FA.18. This proves both the equality conditions and the absence
+of an unconditional equality claim. $\square$
+

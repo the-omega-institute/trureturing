@@ -1,0 +1,39 @@
+## 424. Exactly two five-slot owners and two aggregate alternatives
+
+Summing the unconditional four-theta bound (407.2) and using (423.1)-(423.2),
+
+    2*pi*a<4*X+Y<(4*pi/3)*(a+f-2)+3*pi.
+
+Thus 2*a<4*f+1, and integer counts give a<=2*f. Since a>=2 and
+f<=2, either f=1,a=2 or f=2,2<=a<=4.
+
+If f=1,a=2, (423.2) gives X<pi/3. Every cheap axial angle is then
+less than pi/3. The conditional three-theta bound (407.1) yields
+
+    4*pi=2*pi*a<3*X+Y<pi+3*pi=4*pi,
+
+a contradiction. Hence
+
+    f=k=2, 2<=a<=4.                              (424.1)
+
+There are at least three noncheap owners: the two five-slot owners
+and tau. If n>=5, these three plus two other noncheap owners spend
+more than
+
+    2*(4*pi/3)+pi+2*(2*pi/3)=5*pi
+
+on P, which is impossible. Thus n is three or four.
+
+If n=4, the noncheap expense exceeds
+2*(4*pi/3)+pi+2*pi/3=13*pi/3, so X<2*pi/3. The unconditional compensation (407.2) gives
+2*pi*a<4*X+Y<17*pi/3, hence a<=2. Thus
+
+    (a,n,g)=(2,4,6).                             (424.2)
+
+If n=3, the only noncheap owners are tau and the two five-slot
+owners. They contribute exactly 3+5+5=13 original P slots. Since
+D_P>=17 and each cheap owner contributes one, a>=4. Together with
+(424.1), this gives
+
+    (a,n,g)=(4,3,7).                             (424.3)
+

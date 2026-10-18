@@ -1,0 +1,22 @@
+**定义 3.1（Full immutable INITIAL target）。** In the parameter range (1.1), take two tables $\lambda_0,\lambda_1:J\to Y$ with exactly two labels each. Require the ordered join
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+|\Lambda[J]|=3,\qquad \Lambda\text{ constant on }H.
+\tag{3.1}
+$$
+
+Choose distinct common root labels $R,C$ fresh from $\lambda_0[J]\cup\lambda_1[J]$, and any independent initial-bottom label $L_\bot$, with no freshness condition on $L_\bot$. Define the entire original target by
+
+$$
+f(v,-j,s)=\begin{cases}
+R,&h\le s<k,\\
+C,&0\le s<h,\ j\in\{0,m\},\\
+\lambda_v(j),&0\le s<h,\ j\in J,
+\end{cases}
+\qquad f(\bot)=L_\bot.
+\tag{3.2}
+$$
+
+Cross-value label coincidences are unrestricted subject to (3.1). In particular these are not identical free-value tables: identical tables with two labels would have only two joined labels.
+

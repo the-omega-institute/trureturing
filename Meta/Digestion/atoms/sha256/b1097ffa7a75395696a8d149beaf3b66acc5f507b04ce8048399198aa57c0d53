@@ -1,0 +1,32 @@
+**Theorem 45.3 (uniform full-spatial moving-mode envelope).** Uniformly on the common space,
+
+$$
+0\le u_s(\xi)\le C(1+\rho(\xi))^{-5},\qquad
+0\le x_s(\xi)\le C(1+\rho(\xi))^{-10}.
+\tag{45.5}
+$$
+
+In particular $\sup_s\|u_s\|_p<\infty$ for each fixed $p>7/5$, including $p=\infty$. There is no uniform $L^1$ assertion here.
+
+Proof. The Gaussian (45.3), Haar-ball volume and symmetry imply, by integration in either endpoint and interpolation,
+
+$$
+\|Q_s(t)\|_{p\to q}\le
+ C t^{-\frac72(1/p-1/q)},\qquad
+1\le p\le q\le\infty,\quad0<t\le T.
+\tag{45.6}
+$$
+
+The constants for $p=q$ are bounded on this finite early interval; sub-Markovianity is only used for the unshifted killed heat. From (35.5), $\|x_s\|_1+\|x_s\|_2\le C$ and $\ell_s\ge c>0$. In $u_s=\ell_s^{-1}H_sx_s$, use $2\to4$ on $(0,1)$ and $1\to4$ on $(1,T)$. The powers are $t^{-7/8}$ and $t^{-21/8}$, respectively, both integrable at the relevant ends. Thus $\|u_s\|_4\le C$, and bounded $F_s$ gives $\|x_s\|_4\le C$. Now use $4\to\infty$ on $(0,1)$ and $1\to\infty$ on $(1,T)$; their powers are $t^{-7/8}$ and $t^{-7/2}$. This proves $\|u_s\|_\infty\le C$.
+
+For completeness apply the convolution split of E Theorem 3.1 to the actual two-endpoint upper kernel in (45.3). If $R=\rho(\xi)\ge2$, split input into
+
+$$
+\rho(\eta)\le R/2;\qquad
+\rho(\eta)>R/2,\ d_E(\eta,\xi)\le R/2;\qquad
+\rho(\eta)>R/2,\ d_E(\eta,\xi)>R/2.
+\tag{45.7}
+$$
+
+On the first and third regions the kernel is at most $CR^{-5}$, so their sum is at most $CR^{-5}\|x_s\|_1$. Initially $x_s\le C(1+\rho)^{-5}$ by bounded $u_s$ and (45.3). On the middle region its supremum is $CR^{-5}$ and the kernel integral is at most $CR^2$, giving $CR^{-3}$. Hence $u_s\le C(1+\rho)^{-3}$ and $x_s\le C(1+\rho)^{-8}$. Repeating the same split makes the middle contribution $CR^{-6}$; the other contributions remain $CR^{-5}$. This proves (45.5). Local kernel integrability follows from dimension seven, since $\int_{d_E(\eta,\xi)<R}d_E(\eta,\xi)^{-5}d\eta=CR^2$. Finally integrate $(1+\rho)^{-5p}$ in homogeneous polar shells. This uses the existing convolution method on a new globally controlled moving input, without a radial assumption on the native mode. $\square$
+

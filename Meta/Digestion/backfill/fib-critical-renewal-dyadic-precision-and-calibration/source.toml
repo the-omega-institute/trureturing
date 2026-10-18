@@ -1,0 +1,5 @@
+source_id = "fib-critical-renewal-dyadic-precision-and-calibration"
+path = "docs/develop/theory/FIB_CRITICAL_RENEWAL_DYADIC_PRECISION_AND_CALIBRATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

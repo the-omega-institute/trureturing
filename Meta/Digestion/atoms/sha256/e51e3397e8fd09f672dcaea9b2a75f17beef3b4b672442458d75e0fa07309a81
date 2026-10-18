@@ -1,0 +1,42 @@
+**Proposition 2.7 (A loop invisible to the reduced task).** There are two
+positive pure states with equal reduced coordinates and different
+fixed-reference coherence statistics, connected by a transport rectangle.
+
+Proof. Take
+
+$$
+X=Y=\frac25,\quad Z=\frac15,\quad
+\kappa_0=\frac15,\quad \kappa_1=\frac1{10}.
+$$
+
+The two probability vectors and weights are
+
+$$
+p_{\kappa_0}=\frac15(1,1,1,1,1),\qquad
+p_{\kappa_1}=\left(\frac1{10},\frac3{10},\frac15,\frac3{10},\frac1{10}\right),
+$$
+
+$$
+w(\kappa_0)=\frac14(1,-1,0,-1,1),\qquad
+w(\kappa_1)=\frac18(3,-1,0,-1,3).
+$$
+
+Theorem 2.6 therefore gives
+$h=\alpha(1,1,0,1,1)/8$. Start with all phases zero and take
+$\alpha=4\pi$. The returned probability is uniform, while the output state is
+
+$$
+\psi_{\rm out}=\frac1{\sqrt5}(-i,-i,1,-i,-i),\qquad
+|\langle\psi_{\rm in},\psi_{\rm out}\rangle|^2
+=\left|\frac{1-4i}{5}\right|^2=\frac{17}{25}.
+$$
+
+For the explicitly added fixed-reference observable
+$A_{02}=|0\rangle\langle2|+|2\rangle\langle0|$, the expectation changes from
+$2/5$ to zero, since it is $2\operatorname{Re}(\overline\psi_0\psi_2)$.
+Thus the same $(X,Y,Z,\kappa,\chi\bmod2\pi)$ does not determine all full
+interference statistics. The task retaining only occupation-phase-symmetry
+invariants identifies these states; $A_{02}$ is not invariant under that full
+symmetry. Observability here depends on declaring the extra phase reference
+and observable, rather than changing the reduced task silently. $\square$
+

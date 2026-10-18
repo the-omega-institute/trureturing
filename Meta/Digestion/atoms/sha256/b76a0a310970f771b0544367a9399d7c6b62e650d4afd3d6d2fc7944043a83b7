@@ -1,0 +1,60 @@
+**Definition 2.2 (canonical source and threshold mode).** Use the Engel product, Haar measure and automorphic dilations
+
+$$
+\begin{aligned}
+(r,y,z,w)(r',y',z',w')
+ &=(r+r',y+y',z+z'+ry',w+w'+rz'+r^2y'/2),\\
+\delta_R(r,y,z,w)&=(Rr,Ry,R^2z,R^3w),\qquad Q=7.
+\end{aligned}
+\tag{2.5}
+$$
+
+Let $b[f]=\|Xf\|_2^2+\|Yf\|_2^2$, let $\mathcal Q_E$ be the complex compact smooth core closure in $\|f\|_2^2+b[f]$, and let $\mathcal E=-X^2-Y^2$ denote its Friedrichs operator. Write $P_t=e^{-t\mathcal E}$, $k_t(\xi)=p_E(t;0,\xi)$ and
+
+$$
+\begin{aligned}
+V&=j_0^{-1}\int_1^\infty k_tdt,&\mathcal EV&=j_0^{-1}k_1,\\
+C_*&=\sup_{0\ne f\in\mathcal Q_E}\frac{\int V|f|^2}{b[f]}\in(0,\infty),&
+\chi&=\chi_c=a/C_*,&\gamma&=\chi/a,\\
+h[f]&=a b[f]-\chi\int V|f|^2\ge0,&
+H_c&=a\mathcal E-\chi V,\\
+p&=\Phi_c>0,&\|p\|_2&=1,&\ker H_c&=\mathbb Cp,&\mathcal Ep&=\gamma Vp.
+\end{aligned}
+\tag{2.6}
+$$
+
+P §§82–88 supply a conservative, positive, symmetric canonical heat, the absence of an $L^2$ kernel for $\mathcal E$, and the following precise antecedents. If $d_E$ is its proper control distance and $N=\max(|r|,|y|,|z|^{1/2},|w|^{1/3})$, then
+
+$$
+p_E(t;\eta,\xi)\le Ct^{-7/2}e^{-c d_E(\eta,\xi)^2/t},\qquad
+0<V\le C(1+N)^{-5}.
+\tag{2.7}
+$$
+
+The critical mode belongs to $D(\mathcal E)$, and its reconstruction is
+
+$$
+p=\gamma\int_0^\infty P_t(Vp)dt\quad\text{in }L^2.
+\tag{2.8}
+$$
+
+The zero-energy reconstruction on the multiplier right sides in P Theorem 87.2 is compact into $L^2$ with range in $D(\mathcal E)$; it is not a bounded inverse of $\mathcal E$ on all $L^2$. P Theorem 106.1 supplies
+
+$$
+\begin{gathered}
+rp\in\mathcal Q_E,\qquad h[rp]=a,\qquad
+\int r^2(p^2+|Xp|^2+|Yp|^2)d\xi<\infty,\\
+\sigma(r,y,z,w)=(-r,y,-z,w),\qquad p\circ\sigma=p,\quad V\circ\sigma=V.
+\end{gathered}
+\tag{2.9}
+$$
+
+For a fixed smooth even height cutoff $\eta$, one on $[-1,1]$, zero outside $[-2,2]$, its scaled cutoff $\eta_R(r)=\eta(r/R)$ satisfies
+
+$$
+\int|\eta_R'|^2p^2=o(R^{-4}).
+\tag{2.10}
+$$
+
+Supported canonical form vectors are native admissible when their height support lies between both faces: approximate by the canonical compact core, multiply by the height cutoff, and use the equivalence of (2.4) and $b$ on that strip. No separate phase derivative is needed. Canonical local compactness and the corresponding native core and both-face heat assertions retain their supplied scopes. The underlying cited heat, localization and library literature remain conditional; none is independently authenticated by this volume.
+

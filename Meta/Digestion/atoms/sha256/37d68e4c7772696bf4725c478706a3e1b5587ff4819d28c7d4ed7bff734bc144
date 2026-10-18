@@ -1,0 +1,48 @@
+**引理 82.2（Sharp three-phase bound at every rejecting consecutive seam）。** In Definition 82.1, if the actual seam after $P$ rejects $Q$, then
+
+$$
+\bigl|\{j:q_{t,P}(j)=q_{t+1,Q}(j)=1\}\bigr|\le3.
+\tag{82.5}
+$$
+
+The bound is attained for every odd $m\ge5$. At the degenerate odd widths $m=1$ and $m=3$, the respective sharp bounds are one and two. An all-zero word on either side cannot produce such a rejecting seam; if either word is all ones, the intersection has at most two phases, and if both are all ones it has exactly one.
+
+**证明。** First let $m\ge3$. Translate phase coordinates by the known issued displacement $tm$ for this calculation only. The first path is $0,1,\ldots,m$, missing $m+1$; the next is
+
+$$
+m,m+1,0,1,\ldots,m-2,
+\tag{82.6}
+$$
+
+missing $m-1$. Their common vertices are $\{0,\ldots,m-2\}\cup\{m\}$. Put $r=\rho(P)$, $\ell=\alpha(Q)$. Rejection implies $r,\ell\ge1$ and $r+\ell\ge m+1$.
+
+All bits in the suffix of $P$ from position $m-r$ onward are one. Its consecutive differences in (82.3) therefore vanish at phases $m-r+1,\ldots,m-1$. Apart from its endpoint $m$, its charge support lies in $[0,m-r]$. The prefix of $Q$ has $\ell$ ones, so its consecutive differences vanish at local path positions $1,\ldots,\ell-1$. In the order (82.6), among the common vertices other than $m$, its charge support lies in $[\ell-2,m-2]\cap[0,m-2]$. These inclusions also hold when either run is the entire word. Hence the common charged vertices are contained in
+
+$$
+\{m\}\ \cup\
+\bigl([0,m-2]\cap[\ell-2,m-r]\bigr).
+\tag{82.7}
+$$
+
+The interval before clipping has $\max\{0,m-r-\ell+3\}\le2$ integer points, counting zero when it is empty. Clipping cannot increase this count, so including $m$ proves (82.5). This is a bound on the complete rows of the two actual words; it does not treat rejection as a third binary response.
+
+For sharpness, at every $m\ge5$ use the actual consecutive words
+
+$$
+P=10\,1^{m-2},\qquad Q=1110\,1^{m-4}.
+\tag{82.8}
+$$
+
+Start $P$ from tail zero. It succeeds, ends with tail $m-2$, and $Q$ has leading run three, so the next seam reaches $k=m+1$ and rejects. Their respective arithmetic supports, in the coordinates above, are
+
+$$
+\{0,1,2,m\},\qquad \{m,1,2,m-2\};
+\tag{82.9}
+$$
+
+their intersection is exactly $\{1,2,m\}$. The initial tail-zero record is jointly actual by [IC, (1.3)], and the complete rejecting $Q$ remains a fully paid width-$m$ action. Thus this is physical sharpness, not just an abstract row pair.
+
+To attain three, (82.7) must contain two actually charged points besides $m$. It requires $r+\ell=m+1$ and those points are $a-1,a$, where $a=m-r$. If $a=0$ there is only one nonnegative point; if $a=1$, the first bit of $P$ is zero, so its charge at zero vanishes. If $a=m-2$, then $\ell=m-1$ and the last bit of $Q$ is zero, so its endpoint charge at $m-2=a$ vanishes. If $a=m-1$, that point is absent from the common window. Thus three charged points require $2\le a\le m-3$. This is impossible at $m=3$. There the pair $P=101,Q=111$ rejects with $r+\ell=1+3=4$ and has common support $\{1,3\}$, proving sharp bound two.
+
+At $m=1$ a rejecting seam after a successful block is exactly $P=Q=1$. Its two rows have supports $\{0,1\}$ and $\{1,2\}$ on the three-cycle, with intersection one. If $P=0^m$, its outgoing tail is zero and no next word of length $m<k$ rejects; if $Q=0^m$, it starts by clearing any legal inherited tail. An all-one word has a two-endpoint arithmetic support by (82.3), giving the stated bound of two. For two all-one words those supports are $\{0,m\}$ and $\{m,m-2\pmod T\}$, with intersection exactly $\{m\}$, including $m=1$. This covers zero, all-one and degenerate cases. ∎
+

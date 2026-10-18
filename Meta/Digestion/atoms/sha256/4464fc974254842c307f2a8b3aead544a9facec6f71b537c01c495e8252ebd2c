@@ -1,0 +1,41 @@
+**Definition 11.1 (Legal monomial coordinates).** Let $G$ be a finite
+simple graph with vertex set $V$. Its legal configurations are the
+independent sets $\Omega_G$. Fix $\lambda_i>0$ and normalized
+$\omega_i>0$. Retain one law and one insertion form:
+
+$$
+p(s)=\frac{\lambda_s}{Z},\qquad
+\lambda_s=\prod_{i\in s}\lambda_i,\qquad
+Z=\sum_{s\in\Omega_G}\lambda_s,
+\qquad q_i=\frac{\lambda_i}{1+\lambda_i}.
+\tag{11.1}
+$$
+
+For real functions put
+
+$$
+\mathcal E_G(f,g)=
+\sum_{\substack{s\in\Omega_G,\ i\notin s\\s\cup\{i\}\in\Omega_G}}
+p(s)\omega_iq_i
+\bigl(f(s\cup\{i\})-f(s)\bigr)
+\bigl(g(s\cup\{i\})-g(s)\bigr).
+\tag{11.2}
+$$
+
+Every edge is counted once. For $I\subseteq V$ define
+$m_I(s)=\mathbf1_{I\subseteq s}$ and $\mu_I=\mathbb E_pm_I$.
+Thus $m_\varnothing=1$ and $m_I=0$ when $I$ is illegal. Let $N[I]$
+be the closed neighborhood of $I$, and let $Z_T$ be the partition
+function after deleting $T$ with all surviving activities retained.
+For legal $I$,
+
+$$
+\mu_I=\frac{\lambda_I Z_{N[I]}}{Z}.
+\tag{11.3}
+$$
+
+Indeed the configurations containing $I$ are exactly $I\cup J$
+with $J$ an independent set in $G\setminus N[I]$. The empty-set
+case gives $\mu_\varnothing=1$. Formula (11.3) computes a moment
+of the original law; deletion does not change its dynamics.
+

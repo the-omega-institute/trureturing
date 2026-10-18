@@ -1,0 +1,73 @@
+**定义 8.1（固定历史及其完整插值坐标）。** Retain Definition 1.1
+and fix the single literal history
+
+$$
+H_*=(0,J,24,M,48,M,312/5,J,48/5,M,-532/5),
+\qquad \mathcal F_* =\mathcal F(H_*).                         \tag{8.1}
+$$
+
+Its cumulative matrices at original clocks zero through five are
+exactly the six matrices in (1.5). No initial-root or drift condition
+is imposed on $\mathcal F_*$. For any legal source put
+
+$$
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+u=\operatorname{tr}(JP)=b+c>0,\qquad
+v=\operatorname{tr}(LP)=1+b>1.                               \tag{8.2}
+$$
+
+For a source and a real drift $d$, define $G_{P,d}$ by interpolation
+at the four original clocks $0,1,2,3$, with values
+
+$$
+(q_0,q_1,q_2,q_3)
+=\left(-d,\frac{24-d}{u},\frac{48-d}{v},
+                    \frac{312/5-d}{u+v}\right).
+\tag{8.3}
+$$
+
+Explicitly, $G_{P,d}(T)=\sum_{i=0}^3q_i\ell_i(T)$, where
+
+$$
+\begin{aligned}
+\ell_0&=-(T-1)(T-2)(T-3)/6,&
+\ell_1&=T(T-2)(T-3)/2,\\
+\ell_2&=-T(T-1)(T-3)/2,&
+\ell_3&=T(T-1)(T-2)/6.
+\end{aligned}                                                \tag{8.4}
+$$
+
+This is the unique gain of degree at most three giving the first four
+readings with this source and drift. It cannot be identically zero:
+otherwise those readings would all equal $d$. In particular these
+coordinates retain every lower degree, sign and sampled-root case.
+Write $G_i=G_{P,d}(i)$. The useful evaluations are
+
+$$
+\begin{pmatrix}G_4\\G_5\\G_6\end{pmatrix}
+=\begin{pmatrix}-1&4&-6&4\\-4&15&-20&10\\-10&36&-45&20\end{pmatrix}
+ \begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.              \tag{8.5}
+$$
+
+Define the following response functions of the same fixed world:
+
+$$
+\begin{aligned}
+\mathcal Y(P,d)&=d+G_4(1+a+u),\\
+\mathcal Z(P,d)&=d+G_5(u+2v-a),\\
+S_J(P,d)&=d+G_6(2+2a+2u-v),\\
+S_M(P,d)&=d+G_6(1+2u+2v).
+\end{aligned}                                                \tag{8.6}
+$$
+
+The first two are the fourth-$J$ and fifth-$M$ readings. The last two
+are alternative sixth readings, since
+$JQ=\left(\begin{smallmatrix}3&2\\1&1\end{smallmatrix}\right)$ and
+$MQ=\left(\begin{smallmatrix}3&2\\4&3\end{smallmatrix}\right)$.
+All their trace factors are positive for a legal source. Thus
+$\mathcal F_*$ is exactly the set of triples
+$(P,G_{P,d},d)$ with a legal source and
+$\mathcal Y=48/5,\mathcal Z=-532/5$. No equation at four or five is
+omitted by the interpolation. Defining both sixth response functions
+does not acquire both readings.
+

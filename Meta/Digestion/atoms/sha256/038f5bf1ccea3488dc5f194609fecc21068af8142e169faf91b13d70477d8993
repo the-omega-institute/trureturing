@@ -1,0 +1,8 @@
+**Definition 1.3 (Permitted visible laws).** Let
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\text{ for every }j\in\mathbb Z\}.
+$$
+
+A permitted law $Q$ is a stationary probability law on $X$ having some finite visible Markov order at most $m\ge1$. This means that, almost surely, its conditional next-bit probabilities given the entire visible past depend only on its last $m$ bits. Every legal $m$-context has positive probability, and every legal extension of every such context has positive conditional probability. Equivalently, all legal finite cylinders are positive and its visible order-$m$ kernel is positive on every legal extension. Denote its length-$n$ cylinders by $Q_n$.
+

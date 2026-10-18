@@ -1,0 +1,62 @@
+**例 220.27（Reused normalized companions and their exact row scopes）。**
+The four stopped tables
+
+$$
+ O(1,2;1,2,0),\quad O(1,2;1,2,3),\quad
+ O(1,3;1,3,0),\quad O(2,3;2,3,0)
+$$
+
+with weights $1/4$ form one old law. Its $N$ completions use the same
+seed and acquire the whole pair, counting any ignored reply.
+At first zero one or two correct mass is at least $3/4$ and pair
+mass at least $3/4$. At three base/correct/pair are $(1/4,3/4,1)$;
+after three they are $(3/4,0,3/4)$; positive base is $3/4$.
+Thus at finite horizon $H\ge3$ it supplies every independent row
+for $b_1=b_2=b_3=1$, $b_4=\cdots=b_H=e=1/4$, including negative
+base demands. At $H=7$ this is $382$ rows and one mass-one $H_N$
+witness. For the exact score in 220.6, $F_Q(b,e)=-31/16$, so it is
+not a separator. Extend with $a_4=\cdots=a_8=1/4$ and
+$a_n=2^{-(n-8)}/4$ for $n\ge9$. Its actual tail error beyond the
+seven-address demonstration horizon is $1/4$, including $a_8=e$.
+The active length is three, distinct from that horizon.
+
+At $H=10$ the same law verifies all $3070$ rows. A different reused
+extension is $a_1=a_2=a_3=1$ and
+$a_n=2^{-(n-4)}/4$ for $n\ge4$. It attains cap $1/4$ with
+actual error $\max(1/4,a_n)=1/4$ for every $n\ge4$.
+The constant late finite $b$ used for the row check is not this decaying
+tail. These laws supply correspondence checks for 220.17 and do not
+add amplitude coverage.
+
+For 220.11–220.13 a second reused companion gives mass $1/4$ each
+to empty zero, empty zero, $O(1,2;1,2,0)$ and $O(3,4;1,4,0)$.
+With $a=(4/5,3/4,1/2,1/4)$ and $a_n=1/(n+1)$ for $n\ge5$,
+all sixteen words satisfy the three TV rows at cap $11/20$, with
+maximum exactly $11/20$. The strict active length is two while the
+rule lawfully uses addresses three and four. Positive base is one,
+so every actual $n>4$ has exact error $a_n$. At $0100$ its second
+pair outputs earlier unqueried one: $O$ uses one actual request and
+its $N$ completion two. Every one of the sixteen patterns is an actual
+source by the CRT construction at $r=47$, $F_{47}=2971215073$,
+using prime probes $2,3,5,7$; prescribed replies at $11,13$ can be
+included in that same finite construction. This is a reused normalized
+law, separate from the proof-weight score reconstruction.
+
+For the family 220.6, applying its repaired cost-one score to any
+normalized original cap-feasible rule gives the necessary inequality
+
+$$
+ (1+g)a_j+g a_k-h a_r+g a_s
+            \le1+(3a+13g/2+h)\varepsilon.\tag{220.24}
+$$
+
+It is necessary only. No sufficient amplitude classification is implied.
+For 220.23 the explicit new finite allocation instead gives the two
+actual laws directly. A first-zero-seven source exists before the seed
+by the same CRT/window supplier. Explicitly $(r,z)=(47,297421613)$
+has $N=883703579581572750$ and replies $1111110$ at primes
+$2,3,5,7,11,13,17$. The integer $z$ lies in the prescribed Fibonacci
+window. This source is fixed for the whole scaled family before $U$
+is chosen. Formula (220.22) proves the attained closed endpoint on
+that actual source, not just on a formal terminal word.
+

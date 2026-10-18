@@ -1,0 +1,34 @@
+### 78.3. An unrestricted channel consequence
+
+For the uniform collapsed-fibre channel F_(k,2), with the fixed MC input and output encodings of sections 66 and 72, write delta for the unhalved diamond error of one common physical product of CPTP maps. Arbitrary original output leakage and arbitrary finite local environments are permitted. For integers 4<=k<=12,
+
+    delta >= (sqrt(12k)-6)/k.                         (6)
+
+For k=4 this is sqrt(3)-3/2, approximately 0.23205. Together with the strict upper construction in section 73, the unrestricted four-fibre optimum lies in [sqrt(3)-3/2,1/3). Equality in (6), and the exact channel optimum, are not asserted. For k>12 the existing section 77 bound 2(k-3)/(3k) is stronger than the threshold 1/2 supplied by this high-purity argument.
+
+Proof. Apply section 72's calibration comparison to the original product. It suffices to lower-bound the error delta of the resulting calibrated product, since that error does not exceed the original error. No environment-dimension resource constraint is imposed here. Its actual records determine c_f,d_f as above. The two normalized coherent inputs
+
+    |psi_+->=k^(-1/2) sum_f (|f,0> +/- |f,1>)/sqrt(2)
+
+give logical outputs C^T/k and M^T/k, where C and M are the Gram matrices of c_f and d_f. Their ideal outputs are J_k/k and I_k/k. As in section 77, trace-zero normalization gives
+
+    ||k^(-1) sum_f c_f||^2 >=1-delta/2,
+    delta >= ||M-I_k||_1/k.                          (7)
+
+These normalized state tests lower-bound the full arbitrary-reference diamond norm; the output MC embedding preserves trace norms.
+
+If delta>=1/2, (6) already follows, because (sqrt(12k)-6)/k<=1/2 for 4<=k<=12, equivalently (sqrt(k)-sqrt(12))^2>=0. Otherwise apply (5) with p_f=1/k and epsilon=delta. For B with columns d_f,
+
+    Tr B*(I-Q_star)B <= k u(delta),   rank(Q_star B)<=3.
+
+The variational principle bounds the sum of the k-3 smallest eigenvalues of M=B*B by k u(delta). Since Tr M=k, the second test in (7) yields
+
+    delta >= 2(k-3)/k-2u(delta)
+           =1-6/k+sqrt(1-2delta).                    (8)
+
+In particular delta-1+6/k is nonnegative. Squaring the inequality sqrt(1-2delta)<=delta-1+6/k is therefore legitimate and gives
+
+    delta^2+(12/k)delta+36/k^2-12/k >=0.
+
+Its nonnegative root is (sqrt(12k)-6)/k. This proves (6). At k=12, (8) rules out delta<1/2; for k>12 it does so as well. The proof uses one common physical channel and one common Schmidt-truncated anchor for all fibres. It does not replace either party's local records or assume simultaneous attainment of the auxiliary inequalities.
+

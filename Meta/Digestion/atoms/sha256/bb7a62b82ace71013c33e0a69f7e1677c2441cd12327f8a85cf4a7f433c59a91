@@ -1,0 +1,136 @@
+**Theorem 12.1 (same-source lowering and checked omitted-phase leakage).**
+For every nonzero $\kappa\in K$, the same full point-source field obeys
+
+$$
+\begin{aligned}
+\int_{\mathbb T_D}p_\kappa^\Omega(t,o,(q,D))dD
+ &=p_\kappa^B(t,q_0,q),\\
+\int_{\mathbb T_D}\Gamma_{\kappa,o}(q,D)dD&=G_\kappa(q),\\
+\frac1{2\pi}\int_{\mathbb T_D}\Gamma_{\kappa,o}(q,D)dD
+ &=W_\kappa(q),\\
+T_\kappa[Jz]-g\int_\Omega\Gamma_{\kappa,o}|Jz|^2d\mu
+ &=\mathfrak h_{\kappa,g}[z].
+\end{aligned}
+\tag{12.1}
+$$
+
+The Green identity is an extended pointwise integral, also in $L^1(B)$;
+the last identity is finite on every natural restricted form domain.
+Uniform smearing of the original pole around its hidden circle gives the
+different full-space field
+
+$$
+\frac1{2\pi}\int_{\mathbb T}
+ \Gamma_{\kappa,(q_0,s)}(q,D)ds=W_\kappa(q).
+\tag{12.2}
+$$
+
+Its source is $\delta_{q_0}\otimes dD/(2\pi)$ and has total mass one.
+Viewed as a field on $B$, $W_\kappa$ has source charge $1/(2\pi)$,
+whereas $G_\kappa$ has charge one. Theorem 11.1 concerns the original
+point field evaluated on the declared state class. It makes no
+full-space smeared-source stability assertion. In addition, the normalized
+test (12.3) strictly lowers the free minimum as in (12.4), and the original
+attractive differential expression fails to preserve the retained class
+on the checked local cores below.
+
+Proof. The marginal and smearing identities are reused intermediate
+steps in this same-source comparison. Apply the free semigroup identity
+(10.7) to bounded base tests.
+Smooth interior kernels and compactness of the hidden circle make the
+heat marginal pointwise. Tonelli gives the Green marginal and its
+$L^1$ version, using (10.15). The conditional Haar average divides that
+integral by the circle length. Since $|Jz|^2=|z|^2/(2\pi)$, Tonelli and
+(10.6) give the form identity, including finiteness and weighted
+polarization. Hidden translation symmetry of the free kernel gives
+(12.2); testing its free equation identifies the displayed smeared source.
+These are the marginal and source-smearing mechanisms of Theorem 3.1,
+now applied to the full-four/retained-three family after its actual free
+domains have been checked.
+
+For the lowering assertion put $d=u-l$ and
+
+$$
+\phi(k)=\sqrt{2/d}\sin\frac{\pi(k-l)}d,\qquad
+z_*(k,\theta,v)=\phi(k)/(2\pi),\qquad
+\mathcal V_*=
+ \frac1{(2\pi)^3\varepsilon^2}
+ \int_I G_I(k_0,k)|\phi(k)|^2dk>0.
+\tag{12.3}
+$$
+
+Then $z_*\in\mathcal F_\kappa^B$, $\|z_*\|_2=1$ and
+
+$$
+\min_{\|z\|_2=1}\mathcal E_\kappa[z]=\lambda_0,\qquad
+e_\kappa(g)\le\lambda_0-g\mathcal V_*<\lambda_0
+\quad(\kappa\in K,\ 0<g<g_*).
+\tag{12.4}
+$$
+
+The zero angular mode in (10.8) includes $\phi\in H^1_0(I)$,
+so the test is in the completed domain with kinetic value $\lambda_0$.
+The height Poincaré bound proves it is the free minimum. Equation (10.15)
+and the exact $1/(2\pi)$ in (12.1) give its attractive expectation
+$\mathcal V_*$, with all three factors of circle length retained.
+The height Green is positive in $I$, proving strict positivity and
+(12.4). This compares with the actual free minimum; it does not assert
+that the ground energy is negative relative to zero.
+
+For the local noninvariance assertion, for each $\kappa\ne0$ and $g>0$,
+the differential expression $L_\kappa-g\Gamma_{\kappa,o}$ fails to preserve the
+$D$-independent class, already on compact smooth tests supported away
+from the source height. This statement uses no semibounded full
+attractive operator or full attractive heat evolution.
+
+Define the actual hidden harmonic, with all angular measures
+unnormalized, by
+
+$$
+F_\kappa(k)=\int_{\mathbb T^3}
+ \Gamma_{\kappa,o}(k,\theta,v,D)e^{-iD}\,d\theta\,dv\,dD.
+\tag{12.5}
+$$
+
+Fourier decomposition of the free height operator, or its heat integral,
+gives
+
+$$
+F_\kappa(k)=
+ \left(-\varepsilon^2\partial_k^2+C_\kappa(k)^2\right)^{-1}_D(k_0,k)>0.
+\tag{12.6}
+$$
+
+The subscript denotes Dirichlet height endpoints. To check its charge,
+the full angular Fourier expansion has factor $(2\pi)^{-3}$; integration
+in (12.5) cancels that factor. Thus its height source is exactly
+$\delta_{k_0}$. Positivity follows from the one-dimensional positive
+Dirichlet heat kernel with bounded nonnegative potential $C_\kappa^2$.
+In particular it is positive at every $k\ne k_0$ in $I$.
+
+Choose any nonnegative nonzero $\eta\in C_c^\infty(I\setminus\{k_0\})$
+and use the $D$-independent full test
+$f=\eta(k)/(2\pi)^{3/2}$. It is in the full free operator domain by
+integration by parts against the completed form domain, with
+$L_\kappa f=-\varepsilon^2\eta''/(2\pi)^{3/2}$.
+The full Green field is smooth with bounded derivatives on this entire
+phase-torus height support, so $\Gamma_{\kappa,o}f$ is another compact
+smooth test there. Consequently $f$ lies in the domain of the symmetric
+minimal attractive differential operator on
+$C_c^\infty(\Omega\setminus\{o\})$, and every expression used here is
+an actual $L^2$ function on that checked local core.
+The angular $e^{iD}$ coefficient of its attractive image, integrated over
+the two retained circles, is
+$-g\eta(k)F_\kappa(k)/(2\pi)^{3/2}$, which is nonzero.
+A $D$-independent function would have zero such coefficient. This proves
+local leakage of the same original point multiplier.
+
+The full unrestricted point-source form is nevertheless unbounded below
+for every $g>0$, by [G, Theorem 3.1]: $X=Y$ and $X+Y\ne2H$ put each
+nonzero parameter exactly on its single-wall row. Restricting tests has
+not altered that theorem or repaired its form. In particular the stable
+restricted operators in Theorem 11.1 cannot be identified with a
+compression of a semibounded full attractive heat semigroup. The
+semiboundedness hypothesis used in §6's double-wall compressed-evolution
+argument fails for this nearby full point-source problem. $\square$
+

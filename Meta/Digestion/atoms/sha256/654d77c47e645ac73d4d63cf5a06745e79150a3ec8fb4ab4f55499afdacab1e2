@@ -1,0 +1,109 @@
+**Proposition 2.1 (antecedent interfaces).** SC's global strict convexity gives $F_c''>0$ on $(0,U)$ and $J''>0$ on $(0,1)$, with strict interior tangent support through both axes. TC Theorems 3.1, 4.1 and 5.1 give the following complete contact alternatives for every strict-interior budget. The optimizing failure-line measure is unique modulo antipodes and proportional splitting, and $\Phi$ is strictly concave. These are credited results, not new transition inventory.
+
+Their source signs and certificates can be checked directly. The JR.52 bounds give $J_{\rm src}=adh_2-bch_1>0$, using the common-denominator comparison $5153330>1662864$. Thus
+
+$$
+D_1=-bJ_{\rm src}/(ch_1)<0,\quad N_1=(ah_2/d)J_{\rm src}>0,\quad A_{\det}<0.
+$$
+
+For $\rho_c=D_c/N_c$, $\rho_c'<0$ and $\rho_c''>0$. On $(0,1)$ all terms of $F_c''=H_c''\rho_c+2H_c'\rho_c'+H_c\rho_c''$ are nonnegative, the first strictly positive. Above one the conditional bounds $\beta<1/8$, $\alpha/\beta<8$, $\delta>39/2500$, $h_0>123/125$, $b>29/200$, $a<33/500$, $h_1>353/500$, $d<1/10$ imply
+
+$$
+U<8/7,\quad\sqrt U<15/14,\quad D_c>9/250,\quad |D_1|/D_c<9/4,\quad N_1/N_c<3/5.
+$$
+
+Consequently
+
+$$
+F_c''(x)\ge\frac{\rho_c(x)}{4x^{3/2}}\left[1-4x(\sqrt x-1)\left(\frac{|D_1|}{D_c}+\frac{N_1}{N_c}\right)\right]
+>\frac{17}{245}\frac{\rho_c(x)}{4x^{3/2}}>0.
+$$
+
+Continuity and increasing derivatives extend strict convexity to the closed radial interval. Perspective differentiation gives (TB.4)'s positive $J_2$. The same-source failure bounds give
+
+$$
+\frac{d_0}{2\zeta}>\frac{27}{32}\sqrt{496/345}>1,
+\qquad729\cdot496=361584>353280=1024\cdot345.
+$$
+
+Hence $1/2<p_z<p_s<1$, $g>0$ on $(p_z,1)$, $g'>0$ on $(p_z,p_s)$, $g''<0$, and $g(p_s)=\gamma$.
+
+Whitening is exact: for $t=M_2^{-1/2}n=(w/\sqrt W,-z/\sqrt V)$, $M_2=\operatorname{diag}(m_1,m_2)$, take $e=t/\|t\|$ and $dm=\|t\|^2d\nu$. Its inverse is
+
+$$
+z=-\sqrt V e_2/\sqrt{A(p)},\quad w=\sqrt W e_1/\sqrt{A(p)},\quad d\nu=A(p)dm,\quad p=e_2^2.
+$$
+
+Substitution proves $\int ee^Tdm=I_2$, total mass two, $p$ moment one and cross moment zero; the cost and objective become $\int J(p)dm$ and $\int(e^T\Xi e)_+dm$.
+
+A finite strict-interior dual has $H=\begin{pmatrix}a_H&c_H\\c_H&b_H\end{pmatrix}$ and $\eta>0$. Its whole-circle inequalities are precisely
+
+$$
+\begin{aligned}
+\psi_0(t)&=\eta J(t)+a_H+(b_H-a_H)t-2|c_H|v(t)\ge0,\\
+\psi_1(t)&=\eta J(t)+a_H+d_0+(b_H-a_H-d_0)t-2|c_H+\zeta|v(t)\ge0
+\end{aligned}
+\tag{TB.5}
+$$
+
+for every $t\in[0,1]$. Both gaps are strictly convex. Finite dual attainment follows by mixing a small uniform-circle covariance measure into the critical measure while retaining strict budget slack. Its positive density permits independent small $\cos(2\vartheta)$ and $\sin(2\vartheta)$ covariance perturbations. Thus the covariance/budget projection has an interior neighborhood. Separation of the compact moment hull with budget/objective slack has nonzero objective coefficient and yields a finite normalized dual. An $\eta=0$ dual would have $H\ge0,H\ge\Xi$ and $\operatorname{tr}H\ge\gamma$, contradicting strict unsaturation. Active cost follows from JS strict increase.
+
+Complementarity and strict convexity leave one positive contact, at $p>p_z$ with negative cross sign, and negative contacts at one $q\in(0,1/2)$. One has $c_H\le0<c_H+\zeta$. A zero-expectation contact would zero both gaps at the positive contact coordinate, where neither sign has zero expectation; it is excluded. Axes cannot cancel the positive contact's nonzero cross moment. If $c_H<0$, the two lines must be orthogonal with unit masses. If $c_H=0$, there can be two negative lines. Their at-most-three projectors are independent: three distinct Bloch-circle points cannot be collinear. Covariance fixes the weights for a fixed dual. This proves equality uniqueness; an affine interval of $\Phi$ would force this same measure to have two different active costs, proving strict concavity.
+
+The explicit alternatives and certificates are as follows. A projective pair consists of
+
+$$
+e_P=(\sqrt{1-p},-\sqrt p),\quad e_N=(\sqrt p,\sqrt{1-p}),\quad m_P=m_N=1.
+$$
+
+It is optimal at budget $C(p)$ exactly when $c(p)\le0$, $p_z<p<p_s$, with value $g(p)$. To certify it, put $q=1-p$, $\eta=\eta_2(p)$, $c_H=c(p)$ and
+
+$$
+l_H=-\eta J_1(q)+2c_Hv'(p),\quad a_H=-\eta J(q)-l_Hq-2c_Hv(q),\quad b_H=a_H+l_H.
+\tag{TB.6}
+$$
+
+One has $c_H>-vg\ge-\gamma/2>-\zeta$, and the two gaps have zero value and derivative at $q,p$. The value calculation uses $v'(p)(2p-1)-2v(p)=-1/(2v(p))$. Strict convexity proves both inequalities on the whole closed interval. Conversely the two tangencies force $\eta_2,c(p)$, so the test is necessary as well as sufficient.
+
+For each $0<q<1/2$ there is a unique simple root $p=P(q)\in(p_z,p_s)$ of $T(p,q)=0$. Its formal masses and budget/value are
+
+$$
+\begin{gathered}
+m=\frac{1-2q}{P-q},\quad\omega_\pm=\frac{2-m\pm m v(P)/v(q)}2,\\
+e_P=(\sqrt{1-P},-\sqrt P),\quad e_{Q\pm}=(\sqrt{1-q},\pm\sqrt q),\\
+L(q)=mJ(P)+(2-m)J(q),\quad Z(q)=mg(P),\quad\eta_3(q)=g(P)/B(P,q)=g_1(P)/\Delta_J(P,q).
+\end{gathered}
+\tag{TB.7}
+$$
+
+The masses of $e_P,e_{Q+},e_{Q-}$ are $m,\omega_+,\omega_-$ respectively. They form a measure exactly when $m\le1$; $m<1$ makes all three positive, since
+
+$$
+(2-m)^2q(1-q)-m^2P(1-P)=1-m,\qquad m>0,\quad2-m>0.
+\tag{TB.8}
+$$
+
+At a feasible contact use $c_H=0$, $l_H=-\eta_3J_1(q)$, $a_H=-\eta_3J(q)-l_Hq$, $b_H=a_H+l_H$. The whole-interval gaps are
+
+$$
+\eta_3[J(t)-J(q)-J_1(q)(t-q)],\qquad
+\eta_3[J(t)-J(q)-J_1(q)(t-q)]-g(t).
+\tag{TB.9}
+$$
+
+They are strictly convex and tangent to zero at $q,P$. This proves global optimality for all measures, not merely finite trial families. The formal contact exists because $T(p_z,q)>0$, $T(p_s,q)<0$ and
+
+$$
+T_p=g''B-gJ''(p)<0,\qquad T_q=J''(q)[g-(p-q)g'].
+$$
+
+At a root $0<B<(p-q)\Delta_J$, so $T_q<0$ and $P'<0$. Differentiating $mP+(2-m)q=1$ gives
+
+$$
+Z'=g\left[-\frac{2-m}{P-q}+mP'\left(\frac{\Delta_J}{B}-\frac1{P-q}\right)\right]<0,\quad
+L'=Z'/\eta_3<0,\quad\eta_3'=\eta_3(P-q)J''(q)/B>0.
+\tag{TB.10}
+$$
+
+These analytic identities also hold on formally infeasible portions. They do not turn a negative weight into a measure. TC's polynomial-selected initial law and its slope/quadratic correction remain credited separately.
+

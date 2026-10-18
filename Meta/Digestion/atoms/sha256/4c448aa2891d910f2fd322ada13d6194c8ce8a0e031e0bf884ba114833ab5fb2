@@ -1,0 +1,9 @@
+## 217. Joint-triple acquisition-resource relations
+
+The six relations below share one owning continuation and retain their distinct hypotheses.
+All constructions below use the full finite Boolean word set, every word and every
+label, one complete score, one stock and one common budget. They are ordinary
+results with the hypotheses displayed beside each formula. Their failure
+conditions are construction limits, never nonmembership in the original
+comparison.
+

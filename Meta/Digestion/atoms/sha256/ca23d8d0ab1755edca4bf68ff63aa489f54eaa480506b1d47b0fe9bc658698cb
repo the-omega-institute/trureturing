@@ -1,0 +1,39 @@
+**引理 463.5（完整可积性与极限）。** 对每个有限 n，Bn、Rn、Dn
+以及各自乘以 v、$|\log v|$ 的函数，在完整正轴上可积。并且
+
+$$
+r_n=k-\int B_n>0,\qquad m_n=1-\int vB_n>0,
+\qquad z_n>0,\quad t_n>0,
+$$
+
+$$
+r_n=r_{n+1}+z_n,\qquad m_n=m_{n+1}+t_n,
+\tag{RVF.25}
+$$
+
+$$
+r_n\downarrow0,\qquad m_n\downarrow0,\qquad
+\ell_n:=\int|\log v|R_n(v)\,dv\longrightarrow0.
+\tag{RVF.26}
+$$
+
+因此
+
+$$
+\int B_n\longrightarrow k,\quad
+\int vB_n\longrightarrow1,\quad
+-\int\log v\,B_n(v)\,dv\longrightarrow A.
+\tag{RVF.27}
+$$
+
+**证明。** RVF.16–RVF.17 给
+$0\le B_n\le B$、$0\le R_n\le B$、$0\le D_n\le R_n\le B$。
+RVF.2 的三种可积主导同时支付全部所列完整积分；有符号对数项
+由相应绝对对数项支付。正密度在例如 [1,2] 上连续严格正，故其
+质量和一阶矩均严格正。RVF.25 由完整可积积分的线性性得到。
+RVF.20 给 Rn 逐点趋零。对 Rn、vRn 和 $|\log v|R_n$ 分别使用
+B、vB、$|\log v|B$ 的 DCT，得到 RVF.26。
+其中 rn、mn 的递减由 RVF.25 的严格正新增预算得到。
+最后准确相减得到 RVF.27；有符号对数极限亦可直接由同一绝对主导得到。
+整个论证保留无穷尾，并未从紧窗一致收敛直接推出无穷积分极限。证毕。
+

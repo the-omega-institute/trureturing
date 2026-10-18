@@ -1,0 +1,74 @@
+**Definition 1.2 (the exact four-sort language).** Let $\mathfrak A$
+be exactly [ABC, Definition 7.1][ABC], namely the covariant
+$\{F\}$-term-power of the relational presentation of
+$(\mathbb N,0,1,+,\le)$. Its language and partial semantics are
+[Kuncak–Rinard, *On the Theory of Structural Subtyping*,
+arXiv:cs/0408015v1, §§6.1–6.4, Figures 9–11][KR]. The four sorts are:
+
+| Sort | Values |
+| --- | --- |
+| $\mathsf{term}$ | $\mathcal K$ |
+| $\mathsf{shape}$ | finite ordered $F^S$-trees over the one-leaf shape $c$ |
+| $\mathsf{leafset}$ | $(s,A)$ with $A\subseteq\operatorname{Leaves}(s)$ |
+| $\mathsf{bool}$ | the truth values $\mathsf{true},\mathsf{false},\mathsf{undef}$ of the partial logic |
+
+Let $\operatorname{sh}(X)$ forget primitive ranks and let
+$\operatorname{lssh}(s,A)=s$. Leaves are finite $L/R$ words. The term
+algebra has $F$, its two partial selectors, its constructor test and its
+primitive test. The shape algebra has $c,F^S$, constructor tests and
+partial selectors. The leafset algebra has $F^L$, constructor and
+primitive tests, partial selectors and $\operatorname{lssh}$, with
+
+$$
+F^L((s,A),(t,C))
+ =(F^S(s,t),\ LA\cup RC).
+\tag{TPO.3}
+$$
+
+Its left selector returns $(s,A)$ and its right selector returns $(t,C)$.
+This is the constructor-inverse semantics of KR Figure 11.
+
+For each shape $s$ there are full and empty leafsets, intersection,
+union and complement relative to $\operatorname{Leaves}(s)$. For every
+first-order base formula $\theta$ with $r$ free rank variables, including
+arbitrary first-order quantifiers within the base formula, the inner
+formula instance is
+
+$$
+[\theta]^I_s(X_1,\ldots,X_r)
+ =\left(s,\{w\in\operatorname{Leaves}(s):
+       \mathbb N\models\theta(X_1[w],\ldots,X_r[w])\}\right).
+\tag{TPO.4}
+$$
+
+It is defined when every $X_i$ has shape $s$. Addition and constants in
+$\theta$ use their relational graphs if required. This does not introduce
+an outer scalar sort or a map selecting the rank at a variable leaf.
+The inner existential and universal binders are the pointwise union and
+intersection binders of KR Figure 10; an inner formula instance has
+exactly the semantics (TPO.4).
+
+The outer operations are equality on terms, shapes and tagged leafsets,
+constructor and primitive tests, and cardinality predicates
+$|A|_s=k$ and $|A|_s\ge k$ for each fixed numeral $k\ge0$. Outer logical
+connectives have KR's partial truth tables. Outer quantification ranges
+over terms, shapes and leafsets. There is no quantifier over leaf
+addresses among these operations. The sort $\mathsf{bool}$ is the
+truth-value sort, not an additional sort of source indices.
+
+Selectors are defined exactly at the corresponding constructor. An
+inner relation or Boolean leafset operation requires its term shapes or
+leafset tags to equal the supplied shape. A cardinality predicate requires
+the correct tag. Equality of two defined leafsets with different tags is
+false, not an equality of untagged sets. The other nonlogical operations
+are strict. These, together with defined arguments, are all the
+partial-operation conditions used below. On guarded formulas the truth
+value is ordinary Boolean; equality of partial truth values will also
+be preserved whenever an intermediate expression is undefined.
+
+Primitive numerals $[j]$ may be denoted as finite definitional
+abbreviations: the primitive test and the lifted predicate $x=j$ at $c$
+define their unique values. A fixed-numeral translation or another
+operation from [ABC, Theorem 7.2][ABC] likewise means its given finite
+graph formula, not an extra primitive operation on unknown subterms.
+

@@ -1,0 +1,29 @@
+**Theorem 14.1 (a total literal upper budget bounds semantic determination).**
+Suppose an original preparer of Definition 2.2 succeeds on the entire
+original fiber with total executed literal upper budget $\ell\in\mathbb N_0$.
+Then the original code and complete entry are constant on equality
+of all actual replies at absolute words of length at most $\ell$:
+
+$$
+\left(\forall v\in\mathcal W,\ |v|\le\ell\Rightarrow
+ r_{\rho u}(v)=r_{\rho u'}(v)\right)
+\ \Longrightarrow\ c(u)=c(u'),\quad s(u)=s(u').
+\tag{PCA.35}
+$$
+
+No bound on the lengths of unused installed words is a hypothesis.
+No such word is charged as if it had executed. The statement holds
+with sourcewise termination in place of a separately specified call
+upper bound.
+
+Proof. On a successful run every visited literal has length at most
+$\ell$, because its length is a nonnegative summand of that one run's
+literal total. Follow the successful run on $u$. Its common start is
+the start on $u'$. At every running visit, the visited word is within
+the stated depth, so its reply agrees and the successor is identical.
+Induction reaches the same latch on $u'$. Correctness and complete
+entry recoverability give (PCA.35). No claim has been made about a
+word in a state outside this run. The stationary no-revisit principle
+also supplies a finite call bound from the finite alphabet if needed.
+$\square$
+

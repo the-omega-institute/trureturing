@@ -1,0 +1,37 @@
+**Lemma 4.1 (Inverse-sum variance).** Under $G_{0,m,n}$ let $A_n=\sum_{j=1}^mK_j^{-1}$. For fixed $m\ge2$,
+
+$$
+\begin{aligned}
+\mathbb E_{0,n}A_n&=\frac{m(10m-1)}{9n}+O_m(n^{-2}),\\
+\mathbb E_{0,n}A_n^2
+&=\frac{m(8m+1)(10m-1)(10m-2)}{648n^2}+O_m(n^{-3}),\\
+\operatorname{Var}_{0,n}(A_n)&=\frac{v_m}{n^2}+O_m(n^{-3}),
+\qquad v_m=\frac{m(m-1)(10m-1)}{324}>0.
+\end{aligned}
+$$
+
+Proof. Lemma 3.3 supplies, for distinct $u,v$,
+
+$$
+\begin{aligned}
+\mathbb E_{0,n}K_v^{-1}&=\frac{10m-1}{9n}+O_m(n^{-2}),\\
+\mathbb E_{0,n}K_v^{-2}&=\frac{(10m-1)(10m-2)}{72n^2}+O_m(n^{-3}),\\
+\mathbb E_{0,n}(K_u^{-1}K_v^{-1})
+&=\frac{(10m-1)(10m-2)}{81n^2}+O_m(n^{-3}).
+\end{aligned}
+$$
+
+Sum the first identity over $m$ coordinates. Expanding $A_n^2$ gives $m$ diagonal terms and $m(m-1)$ ordered off-diagonal terms; $m/72+m(m-1)/81=m(8m+1)/648$. Subtracting the square of the mean gives the coefficient
+
+$$
+\begin{aligned}
+\frac{m(10m-1)}{648}
+\bigl((8m+1)(10m-2)-8m(10m-1)\bigr)
+=\frac{m(m-1)(10m-1)}{324}.
+\end{aligned}
+$$
+
+The remainder in the squared mean is $O_m(n^{-3})$, so the variance statement follows.
+
+For identification of the constant, let $X$ have density proportional to $\prod_jx_j^9$ on $x_j>0$, $\sum_jx_j=1$, with respect to $dx_1\cdots dx_{m-1}$ and $x_m=1-\sum_{j<m}x_j$. Iterated beta integration gives its normalizing integral $(9!)^m/(10m-1)!$: the two-variable beta integral is the integration-by-parts identity used in Lemma 3.1, and integrating the last free coordinate after rescaling by the remaining total reduces the dimension by one. The same argument after lowering exponents by $\ell_j$ gives exactly $M_\ell$. Thus these are the inverse moments of the Dirichlet$(10,\ldots,10)$ law, and $v_m=\operatorname{Var}(\sum_jX_j^{-1})$. The finite-$n$ conclusion was obtained from exact convolution ratios, so this identification supplies no additional limit-interchange premise. $\square$
+

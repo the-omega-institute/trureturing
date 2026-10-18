@@ -1,0 +1,46 @@
+**Theorem 5.2 (current-A fibre after the varying latch is gone).** All
+$2^{r_{\rm len}}$ histories $h_w$ have identical $P_A^+$. Their original
+$Q$ responses to the single prescribed Advance, the final original
+payload WR(13,5), are pairwise distinct. Hence no memory factoring
+through $P_A^+$ satisfies even memory equality implies original-task
+equality on a domain containing this family.
+
+Proof. CAP Definition 4.6 acquires the header and unary length, allocates
+the $d$-bit payload and then executes
+RD(length), IN(5), WR(13,5), MR(payload), MR(length).
+There is no branch on a payload value. Every binary address of length
+$d$ is a lawful TagRead payload, including descents later returning
+absent. Therefore every family member has the same paid setup, native
+row sequence, head motions, finite tests, origins and creation positions
+through this cut. During its first $r_{\rm len}$ complete payload
+iterations only the corresponding value symbols on producer 13 vary.
+Their WRs change no seal, head, descriptor, token or A material.
+
+ARC $F^A$ has no history-bank assignment and makes no request dependency
+delivery before the complete frame and ensuing original source service.
+The original 24/25/27 remain parked; 26 is unchanged; 28–31 have received
+nothing from this request. Added 64–73, prior acquired packages and
+their rights are identical, as is the already retained common gate 01.
+The final payload length RD reads the same positive counter bit and the
+final IN supplies 0 in every case. This overwrites the earlier varying
+input latch. All other latches have the same last writes, including the
+length-test latch, so every finite bit agrees. Receipt symbols depend
+on the common row/control schedule, not the payload value; the whole
+meter word agrees. All heads and token/owner fields also agree.
+Consequently the strengthened owner views are equal.
+
+At these cuts WR(13,5) is enabled with the actual producer token. Its
+actual effect writes the same final 0 and preserves the preceding $w$.
+The row is the separately numbered inlining of the original CAP payload
+WR: ARC Definition 4.1 changes only the graph's final return CTL, and
+Definition 6.2 preserves this row's operand, guard and successor effect.
+Projecting its successor to the original CAP coordinates still includes
+port 13, with the same original cell identities and differing $w$.
+AIF Definition 2.6 explicitly retains this complete original joint
+successor in the Advance response. Thus distinct $w$ give unequal
+original $Q$ responses, without reading a new history coordinate or
+assuming added-phase task rigidity. If a factor of $P_A^+$ were
+sufficient, its equal values would force these unequal responses to
+agree, a contradiction. The family is canonical, preterminal and
+ordinary; no final-halt or Ready-horizon argument is used. ∎
+

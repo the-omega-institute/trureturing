@@ -1,0 +1,17 @@
+**定理 67.1（整数行列式的较强界）。** 行5且 $d_0>1$，令 $z_0=\log\sqrt{d_0}>0$。一个非零尾的原始实际组成 $(m,n)$、叶数 $N=m+n$ 满足
+
+$$-\log q_2\ge\frac{z_0|m^2+mn-n^2|}{\max(m,n)}\ge\frac{z_0}{N},\qquad
+q_j\le\exp\left(-\frac{z_0F_{j-1}}N\right)\quad(j\ge3).$$
+
+零尾直接满足后一界。故整个尾输出零、误差至多 $E/2$ 的充分截止为 $F_{J-1}\ge N\log(2/E)/z_0$，$0<E\le1$，并有 $J=O(1+\log N+\log(1+\log(1/E)))$。
+
+证明。置 $a=-\log q_1\ge0,b=-\log q_2$。来源约束 $q_2\le q_0q_1\le q_1$ 给 $b\ge a$。反解准确幅度的矩阵 $\left(\begin{smallmatrix}m&n\\n&m+n\end{smallmatrix}\right)$，有
+
+$$\log s=\frac{na-mb}{D}\ge z_0,\quad D=m^2+mn-n^2\ne0.$$
+
+非零整数给 $|D|\ge1$；$na,mb$ 是非负数，其差的绝对值至多两者的最大，故
+
+$$z_0|D|\le|na-mb|\le\max(m,n)b.$$
+
+这也涵盖两种原单叶组成。代入准确全未来幅度式、$q_1\le1$，得全尾界；Fibonacci 指数单调并按 $\Theta(\varphi^j)$ 增长给所述截止，未限制来源树大小。
+

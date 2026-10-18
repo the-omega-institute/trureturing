@@ -1,0 +1,23 @@
+**Lemma 4.7 (installed control, input and return path).** With the boot of
+Definition 2.4, every complete canonical frame reaches exactly its selected
+service and returns by Definition 4.6 after complete recording/delivery,
+provided the reached controller computations and external supplies terminate.
+No allocation or descriptor construction grants that route to a legacy graph
+without these installed branches.
+
+Proof. The finite header recognizer has a distinct prescribed successor for
+each of the seven tags. The supplied length word bounds the explicit payload
+loop and its setup; the finite parser determines the selected complete
+command. Each branch is an actual inlined graph with the single stated row
+and acknowledgement join. Lemma 3.5 terminates the new setup and directory
+calls; the reused generator, source and old row services terminate on finite
+data by PR57.L1–L4. The field/descriptor and actual fence graphs of Lemma 6.1b and the
+complete row/channel/ACK composition of Lemma 6.7 terminate and have that
+join as their fixed exit, on every selected branch. The final source-token TOK and idle CTL return to the retained
+caller kind; maintenance has not changed the actor's stored continuation or
+table. At an unfinished input bit the IN/WR distinction and its successors
+are exactly the displayed graph. There is consequently a real route into,
+through and out of maintenance, rather than only a copy invariant. Conversely
+the transition relation of a closed graph has only its installed edges;
+allocating a data word does not add a new control successor. $\square$
+

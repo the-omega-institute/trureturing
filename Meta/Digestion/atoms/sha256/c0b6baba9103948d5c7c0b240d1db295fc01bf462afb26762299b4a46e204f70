@@ -1,0 +1,66 @@
+**Theorem 9.7 (Exact nonlinear predictive state on the same rays).**
+Under the relative command convention, the current ray determines
+lawfulness and all future original outputs. Two actual prefixes with
+the same current ray admit exactly the same commands and give the
+same future outputs under each one. Conversely, equality of future
+outputs for all common legal commands, including the constant command,
+forces equality of their current rays. Thus the future observational
+quotient is exactly $\mathcal M_b$, of intrinsic dimension $g+1$.
+It has the global finite real state representation
+
+$$
+E(k,[h])=(k,(\cos h_a,\sin h_a)_{a=1}^g)\in\mathbb R^{1+2g},
+\tag{9.28}
+$$
+
+with nonlinear updates given by (9.4). The ten current outputs are
+another sufficient finite representation by Theorem 8.4. On the double
+wall the four real coordinates $z=(z_a,z_b)$ of (8.18) are already
+sufficient, with the following exact update for a command of summary
+$(A,B,K)$ on its lawful domain:
+
+$$
+\begin{aligned}
+k&=\frac{\|z_b\|^2}{4Z},\\
+z_a'&=
+\sqrt{\frac{(k+A)(r/2-k-A)}{k(r/2-k)}}\,
+ R_{B/2}z_a,\\
+z_b'&=\sqrt{\frac{k+A}{k}}\,
+ R_{B/2-(kB+K)/r}z_b.
+\end{aligned}
+\tag{9.29}
+$$
+
+These states do not reconstruct real phase lifts, integer winding or
+past path lawfulness from their endpoints.
+
+Proof. The command domain depends only on $k$, which is part of the
+current ray. Its phase integral (9.3) depends only on that height and
+the command, not on any previous history or chosen real phase
+representative. Therefore (9.4) yields identical rays and outputs
+from identical current rays. This also applies after every lawful
+concatenation by (9.6). The constant command is lawful everywhere;
+Theorem 8.4 then proves the converse from the unchanged current
+outputs. It also supplies the smooth inverse needed for the
+output-state representation, and Theorem 8.2 supplies the intrinsic
+dimension. Formula (9.28) records precisely $k$ and all grouped phase
+classes, so is globally injective and updates each circle by the
+rotation through $H_{\gamma,a}(k)$.
+
+For (9.29), (9.11) gives
+$\alpha'=\alpha+B/2$ and
+$\beta'=\beta+B/2-(kB+K)/r$. Substitute $k'=k+A$ and these angles
+into (8.18). All square roots and denominators are positive on the
+lawful domain. The fixed preparation phases are contained in the
+original decoder $O D_0$ of (8.19); none are set to zero by the update.
+The real representation has the same curved three-dimensional image
+(8.20), so its four coordinates do not assert intrinsic dimension four.
+
+For the last assertion, the prefixes of Proposition 8.3 with identical
+current rays and different lifted winding remain examples here.
+Appending the same command adds $B_\gamma$ to both relation lifts;
+it does not erase their difference. If winding is queried, the actual
+real lift is additional data. Likewise (9.4) predicts future
+lawfulness conditional on an actual current source state; it does
+not certify a proposed past path. $\square$
+

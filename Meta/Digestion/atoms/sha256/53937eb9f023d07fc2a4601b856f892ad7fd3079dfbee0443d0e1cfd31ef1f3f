@@ -1,0 +1,20 @@
+**Definition 6.2 (Remaining exact-value and recovery questions).** The
+unresolved scalar-port problem is to identify the minimum in (6.1) over
+stationary separable TP Choi states, or equivalently the original
+$\varepsilon_1$, and a matching legal port. The explicit feasible upper
+and decomposable lower in (5.5) are different endpoints. Neither a
+projector-orbit optimum, a PPT optimum, nor equality at $\xi$ is part
+of (5.5). A stronger lower must bound all admissible independent complex
+product factors jointly with their TP marginal and actual event residuals;
+a sufficient improvement must be another single fixed legal port satisfying
+all event inequalities at once. The scalar multiplier certificate and
+changed joint moment (3.7) provide the two concrete relations used here.
+
+Finite classical flags, algebraic coefficient descriptions and quantum
+block dimension are separate from coefficient synthesis, finite precision,
+preparation acquisition, clocks, storage duration and physical transport.
+Those resources require additional hypotheses and bounds. The original
+values for $q=2,3,4$, a native memory-rate theorem, a preparation bridge
+from the native tree, and mutual recovery of space, time, boundary and
+memory remain separate mathematical questions.
+

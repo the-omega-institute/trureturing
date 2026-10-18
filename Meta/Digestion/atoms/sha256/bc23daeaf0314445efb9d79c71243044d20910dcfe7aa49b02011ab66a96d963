@@ -1,0 +1,36 @@
+**Theorem 95.1 (original transport has no invariant three-dimensional slice).**
+There is no nonempty $C^2$ immersed three-dimensional submanifold of
+$\mathcal C$ everywhere invariant under both original local transport
+flows $P=\partial_k$ and $Q=c_\kappa(k)\cdot\partial_q$.
+In particular no section of the fixed observation (92.1) is such a slice.
+The original transport does project to $\partial_k,R$ with its original
+height legality constraints; a projected transport family is not an
+integral slice of the full one.
+
+Proof. A submanifold invariant under the local flows is tangent to
+$P,Q$ and to their successive Lie brackets. Locally this follows by
+pulling a defining function back to a submanifold chart: its derivatives
+along tangent fields vanish, so their commutator is tangent. Alternatively
+the four-flow commutator curve has leading displacement equal to the
+bracket and stays in the invariant submanifold. Repeating with $P$
+gives tangency to
+
+$$
+P,\quad Q,\quad [P,Q]=c_\kappa'(k)\cdot\partial_q,
+\quad [P,[P,Q]]=c_\kappa''(k)\cdot\partial_q.
+\tag{95.1}
+$$
+
+Their determinant is the nonzero expression (76.4); their span has
+dimension four everywhere. This contradicts a three-dimensional tangent
+space. For the bracket iteration on a $C^2$ invariant manifold, one can
+also use invariance under the smooth ambient flows directly: conjugating
+$Q$ by arbitrary sufficiently small $P$ flows keeps a tangent vector,
+and its first and second differences converge to $c'$ and $c''$ in the
+closed tangent space at the point. This avoids requiring a third
+submanifold derivative. Projection of the original vector fields is
+immediate from their coefficients' independence of $x$. A common control
+has the same height path for all starts in a fibre, so every intermediate
+height refusal is retained. No independent hidden actuator is inferred.
+$\square$
+

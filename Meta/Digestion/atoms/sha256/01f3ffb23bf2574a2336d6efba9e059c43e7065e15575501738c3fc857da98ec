@@ -1,0 +1,44 @@
+**Definition 10.1 (fixed normalization and comparison test).** Use exactly
+$d$, the depth-$d$ patterns, variables $X_\eta$, source terms $W_\eta$,
+old inequalities $\Delta_\eta$, and guarded endpoints of Definition 3.1
+and Proposition 3.2. In particular, patterns record replies at depths
+strictly less than $d$, and a reached depth-$d$ frontier is an arbitrary
+nonempty finite subtree. Different old classes have different variable
+names; every occurrence of one class uses the same names.
+
+For each guarded endpoint, distribute its interpreted iterate through
+all explicit pairing nodes and expand its concrete leaves. The result
+has syntax
+
+$$
+S::=\alpha\mid\beta\mid\langle S,S\rangle\mid[a,x],
+\qquad [a,x][v]:=\rho^a(v(x)),\quad a\in\mathbb N.
+\tag{ARH.10.1}
+$$
+
+The decoration is an interpreted function, not a free constructor.
+Ordinary variables are $[0,x]$. Expanding any ground part is effective
+and finite; no bound on the size of that expansion is asserted.
+
+Define a deterministic partial comparison compiler $\mathsf{Eq}(S,T)$.
+It returns a finite Boolean formula, or the token $\mathsf{unsupported}$.
+Use the following priority order, with the symmetric cases included.
+
+1. Syntactically identical expressions give true. If both expressions
+   are ground, evaluate them as finite trees and return their equality.
+2. Two decorated variables give the atom
+   $\rho^a(x)=\rho^b(y)$. A decorated variable and a ground expression
+   $g$ give the atom $\rho^a(x)=g$.
+3. Two explicit pairs give the conjunction of their child comparisons,
+   provided **both** child comparisons compile. Different explicit root
+   constructors give false. This includes a leaf against an explicit pair.
+4. A decorated variable against a nonground explicit pair is unsupported.
+
+These cases are exhaustive after symmetry. Ground against a nonground
+pair is handled by constructor comparison, not rejected. The recursion
+terminates by syntax size. A failed child is not suppressed because the
+other child returned false. A signed disequality is the negation of the
+**whole** compiled equality; it is not the conjunction of child
+disequalities. In particular, the test performs no ordinary unification
+and makes no assumption that an unsupported equality is false.
+

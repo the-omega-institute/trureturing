@@ -1,0 +1,40 @@
+#### 线性动力学下的判据
+
+如果局部更新写成：
+
+$$
+\dot p=\mathcal Lp,
+$$
+
+且 $P$ 是线性的，那么：
+
+$$
+P\bigl(\mathcal L(p+td)\bigr)-P(\mathcal Lp)
+=
+tP(\mathcal Ld).
+$$
+
+因此：
+
+$$
+\boxed{
+P\mathcal Ld=0
+\Longleftrightarrow
+\text{隐藏方向对可见动力学不产生一阶影响}.
+}
+$$
+
+$$
+\boxed{
+P\mathcal Ld\ne0
+\Longrightarrow
+\text{隐藏关系会进入可见未来响应}.
+}
+$$
+
+这比单纯问“当前是否看见 $\kappa$”更深入，因为它问的是：
+
+> 隐藏关系是否能够改变未来。
+
+---
+

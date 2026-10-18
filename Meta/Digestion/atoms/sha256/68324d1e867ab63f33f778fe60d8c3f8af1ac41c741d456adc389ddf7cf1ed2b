@@ -1,0 +1,40 @@
+**Theorem 4.1 (exact local minimax).** For every nonempty $R_\eta(w)$,
+
+$$
+2^{h_\eta(w)}
+=\inf_{\substack{Q_A>0\\ \sum_a Q_A(a\mid b_A)=1}}
+   \max_{s\in R_\eta(w)}
+       \frac{\Phi_\eta(s)}
+            {\prod_AQ_A(O(s)\mid B_A(s))^{\gamma_k(A)}}.
+\tag{COK.23}
+$$
+
+The infimum ranges over full owned-tuple kernels at all full contexts.
+It need not be attained by strictly positive kernels.
+
+Proof. Let $M=\prod_{c\in O}|T_c|$, with $M=1$ for empty $O$.
+For $0<\varepsilon<1$ restrict every kernel entry to be at least
+$\varepsilon/M$. This is a nonempty compact convex product of
+polytopes. On its product with $\Delta(R_\eta)$ the function
+
+$$
+f(p,Q)=\mathbb E_p\log_2\Phi_\eta
+                   -\sum_A\gamma_k(A)\mathbb E_p\log_2Q_A(O\mid B_A)
+\tag{COK.24}
+$$
+
+is continuous, linear in $p$ and convex in $Q$. The compact convex
+minimax theorem [Sion, Theorem 3.4][Sion] therefore exchanges
+$\max_p\min_Q$ and $\min_Q\max_p$. For fixed $Q$, the latter maximum
+is its largest pointwise logarithmic ratio in (COK.23).
+
+For fixed $p$, unrestricted conditional cross entropy has infimum
+$H_p(O\mid B_A)$. Smooth its conditional rows to
+$(1-\varepsilon)p(a\mid b_A)+\varepsilon/M$, using uniform rows at
+zero-probability contexts. Its cross entropy exceeds the entropy by
+at most $-\log_2(1-\varepsilon)$. Since $\sum_A\gamma_k(A)=1$,
+the restricted minimax logarithm lies between $h_\eta(w)$ and
+$h_\eta(w)-\log_2(1-\varepsilon)$. Let $\varepsilon\downarrow0$.
+Weak duality supplies the same lower bound for every positive
+kernel, establishing both directions of (COK.23). $\square$
+

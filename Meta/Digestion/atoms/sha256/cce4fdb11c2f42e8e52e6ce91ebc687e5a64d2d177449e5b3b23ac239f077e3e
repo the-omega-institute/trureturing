@@ -1,0 +1,19 @@
+**Definition 2.1 (resource-aware future relation).** For $x,y\in X$, put
+
+Here and below, the trace is the one belonging to the selected resource
+contract: the fresh contract uses the identity-meter trace, while the
+inherited contract uses the current-meter trace on $(x,m)$.  The two carriers
+are not silently identified.
+
+$$
+x\equiv_{\mathcal U}^{\rm res}y
+\quad\Longleftrightarrow\quad
+\Phi_{\mathcal U}(x)=\Phi_{\mathcal U}(y).
+\tag{2.1}
+$$
+
+Equality includes every declared resource response, action name and order,
+legality and failure label, selector-visible record, clock value and archive
+field.  It is only a relation on the actual image $X$, and only for the
+declared test family $\mathcal U$.
+

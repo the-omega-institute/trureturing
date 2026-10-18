@@ -1,0 +1,19 @@
+**Lemma 4.2 (corner endpoints and small corner budgets).** In every
+nineteen-label cover:
+
+1. $L_N=-18$, $U_N=g_N$, $U_P=18$, and $L_P=-g_P$.
+   If $N=P$, then $g_N=18$.
+2. A class ending at difference zero must be the all-unit class
+   $N=C_9$. A class starting at difference zero must be the all-unit
+   class $P=C_9$. Thus $N,P$ cannot both have gap count zero, and
+
+$$
+h_1=\begin{cases}0,&g_N=0,\\1,&g_N>0,\end{cases}
+\qquad
+h_{-1}=\begin{cases}0,&g_P=0,\\1,&g_P>0.\end{cases}
+\tag{NAGC.4.2}
+$$
+
+3. A corner class with gap count one contains both differences
+   $-1$ and $1$. A corner class with gap count two cannot omit
+   both of them.

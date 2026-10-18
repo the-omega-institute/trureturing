@@ -1,0 +1,27 @@
+### 2. Paired Calibration
+
+PR #15014 中的两个事件数组 $f,h$，可以看作两个不同观察切面。
+
+单独的 $f$ 可能留下不可见纤维；单独的 $h$ 也可能留下不可见纤维；但联合映射
+
+$$
+(u,v)\longmapsto(f,h)
+$$
+
+在共同递归 kernel 下可以变成可逆或稳定可逆。
+
+这与 FIB 的
+
+$$
+\mathcal B
+\longrightarrow
+\mathcal B+\operatorname{span}\{xy\}
+$$
+
+是同一种结构：
+
+- 每个读口只提供一个投影；
+- 联合读口产生交叉信息；
+- continuation kernel 把当前边界信息重新传回未来；
+- 只有联合闭包才可能消除隐藏纤维。
+

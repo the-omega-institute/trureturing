@@ -1,0 +1,5 @@
+source_id = "wss-fm-rank-corollary"
+path = "docs/develop/theory/WSS_FM_RANK_COROLLARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

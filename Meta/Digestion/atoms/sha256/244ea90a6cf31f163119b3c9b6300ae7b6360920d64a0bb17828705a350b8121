@@ -1,0 +1,91 @@
+**Definition 14.2 (activation material and initialization).** At activation
+$A$, the seed recipient and retained-ingress owner actually authorize the
+needed copies. The source token stays with the producer. Asset copies preserve source-ready
+public heads as follows. Before moving a public source head $i$, serialize
+its current distance $h$ by RD; on L append 0 and stop, otherwise ML;
+Append(1) and repeat into owned scratch. This constructs $U(h)$ and leaves
+that head at L, with $5h+4$ body occurrences. Copy the saved word into the
+manifest head table before reusing scratch. After asset copying, restore
+it by Home(i), then one RD(saved); MR(i); MR(saved) per leading 1 and a
+final RD(0). Positioning of the saved word is the existing scratch/field
+scan. Only public seed/frame-copy heads need this; no private head is read
+or moved. Tokens borrowed for these actual copies return to their canonical
+source-ready owners by explicit TOKs. The eight unused
+verifier port tokens are transferred to $O$ by the capture controller
+$L$'s eight actual TOKs, counted once. Old
+boundary cells exist from original boot; their heads are positioned by
+Home/Tail. Append the bank and frame-stream sentinels, then install/import
+records with the §11 and §13 append/descriptor routines.
+
+Scan the owner's actual complete old frame prefix to construct its count
+$j_A$ in unary. Preserve its full original material, seed and origins by
+authorized bitwise copies into port 37. The copied manifest also contains
+$D_0$, the canonical public boot material and $D_1$'s actual code-capture frame and the fixed capture-controller encoding.
+The literal descriptions of $D_0$ and $L$ are source-independent compiler
+constants: $L$ does not contain $D_1$, so the compiler first constructs
+$L$, then embeds those two finite words in $D_1$ by finite chains of
+literal appends. Their emission into manifest fields is paid per bit.
+It does not read the overwritten control store or assume those old code
+bits have an ordinary read port. Only $D_1$'s own description uses the
+prior actual capture; it is never embedded in $D_1$. Other fixed finite
+boot constants use the same literal-emission rule. Variable public $H,\xi$
+and actual source/seed/frame descriptors come from their already acquired
+public backing by authorized copies, not compiler literals.
+The record order is fixed: captured new-description frame, old public
+initialization, old description, capture-controller description, acquired
+seed, old frames in chronological order with each referenced context in
+its source-frame order, their copy-origin fields, and the saved public-head
+table in ascending port order. Each top-level physical field is one binary
+block followed by F on 37; it has the same Base/length/full descriptor/seal
+construction as the captured code block. Its internal variable lists and
+tuples are length framed with Definition 12.1's wire grammar, emitted by
+the native unary/copy routines before bank initialization. The captured
+code field includes its 101 header and real length; the old-frame field
+is the explicit encoded list, with 0 for no old frames. Its frame count
+$j_A$ is constructed during that list scan. Repeated
+material references are copied in that same order rather than resolved by
+an external dictionary. Each copied finite source field uses its existing
+actual descriptor, full positioning and bitwise copy graph. Only completed
+owned source blocks enter this manifest. Its framed records seal only after these copies. No new $j_A$ input or
+primitive-meter numeral is supplied. If the retained old material is not
+already local to $O$, its actual channel copies are part of installation.
+The source's no-update acquired seed is reused; no additional TagRead or
+private-latch access is introduced.
+
+Thus before full-prefix import the actual port-37 tape has precisely
+Lemma 13.2a's shape, with captured code as $w_0$ and the fixed subsequent
+fields in this order. The old-frame list is one field with an internal
+variable-length list, not a variable number of top-level fields. Its
+empty case is the word 0; any other legitimately empty top-level field
+still has its own terminating F. Neither case changes another field's
+index. The captured field is the nonempty word
+$101\,U(d_1)\,\Delta(D_1)$ of length $2d_1+4$. Its Base is one and its
+first actual descriptor has ordinal zero, as used by Definition 13.3's
+version pointer. Later fields, including the complete saved-head table,
+are finished and sealed before import. Their source-head restorations
+are paid native work; import does not stand in for those restorations.
+
+The activation record says: after old acquisition and exactly these
+$j_A$ complete original frames, take the declared Install CTL, execute
+these two bootstraps, code capture, asset-copy and initialization graphs,
+and thereafter use $D_1$.
+Its old boundary ordinal is computed by Boundary replay of this actual
+old backing, not read from a private meter. This records the one actual
+activation choice at its complete-frame position. The actual choice to
+activate there is additional control information. Omitting this record
+would not determine which old Ready led to installation.
+
+There is no self-description fixed-point assumption: native $D_1$ does
+not contain its own bit string. Its public description is acquired by the actually installed capture
+controller before recovery runs. Step reads that owned ordinary data.
+When simulating either bootstrap it supplies the prescribed $E(L)$ bits
+or constructs $E(D_1)$ by the explicit serialization of its actual captured
+$\Delta(D_1)$ frame. Its capture-phase INs use that frame's literal bits. The bootstrap
+recipe is fixed finite code; the service description is acquired data.
+Initialization first constructs the initial empty bank by Proposition
+11.4's native prelude, then runs ManifestPrefix and parses its exact fields
+by Definition 13.1. Only after that full-prefix scan may staging append
+other blocks to 37. Initialization creates the service archive records,
+installs the finite service-token state bit by
+bit, executes the receiver-port handoff to $C$, hands the service token to $C$, and executes the first installed Ready CTL.
+

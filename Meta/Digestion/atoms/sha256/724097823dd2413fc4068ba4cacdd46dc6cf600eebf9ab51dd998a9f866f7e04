@@ -1,0 +1,30 @@
+**Theorem 63.8 (uniform tightness of every certified subthreshold eigenvector).** Fix $c<B_N$. For all sufficiently large integers $R$, every unit eigenvector with energy $z\le c$, either of $H_N$ or of any authentic finite common/killed operator, has
+
+$$
+\bigl\|\mathbf1_{\mathcal C_N(\mathcal P)\setminus
+\mathcal C_N(B_{(2N+2)R})}f\bigr\|^2
+\le\frac{3aN}{(B_N-c)R^2}.
+\tag{63.23}
+$$
+
+Finite vectors in this formula are zero extended. No radial, root-visible or occupation-symmetry sector is removed.
+
+Proof. Let $r(S)=\max_{p\in S}|p|$ and let $h_R(S)$ be zero for $r(S)\le(2N+1)R$, one for $r(S)\ge(2N+2)R$, and affine between. It is $1/R$-Lipschitz on allowed configuration edges, and $h_Rf$ vanishes on $\mathcal F_R$. For a finite eigenvector use its *finite* eigen-equation; all diagonal terms, including its killed pair multiplier, cancel in the exact identity
+
+$$
+q^\diamond_D(h_Rf)-z\|h_Rf\|^2
+=a\sum_{\{S,T\}\text{ allowed in }D}
+\operatorname{Re}(\overline{f(S)}f(T))(h_R(S)-h_R(T))^2
+\le\frac{3aN}{2R^2}.
+\tag{63.24}
+$$
+
+The same identity holds for a common infinite eigenvector. Exterior and collision killing stay in both diagonal expressions. The common exterior bound (63.6) applies after zero extension, and killed energy is at least common energy. Hence
+
+$$
+(B_N-z-\eta_N(R))\|h_Rf\|^2\le\frac{3aN}{2R^2}.
+\tag{63.25}
+$$
+
+Choose $R$ so that $\eta_N(R)\le(B_N-c)/2$; where $r(S)\ge(2N+2)R$, $h_R=1$. This proves (63.23). Its finite cores and vanishing tails imply strong precompactness of all such eigenvectors over arbitrary authentic domains. The conclusion is stronger than local convergence of their matrix entries. $\square$
+

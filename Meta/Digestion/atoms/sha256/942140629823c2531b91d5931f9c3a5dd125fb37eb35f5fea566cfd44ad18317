@@ -1,0 +1,18 @@
+**Definition 3.1 (the chosen sixteen histories).** In this section
+fix $n=7,k=4$ and $P\in\mathcal F_{c,4}$. For a live reply word
+$w$, let $v(w)$ be the actual state after those replies and before
+the next query. The supplied live freshness statement [SI, Theorem
+2.2][SI] makes every word below an actual consistent history with
+all its prefixes live. Use $f(h,z)=v(w_{h,z})$, with the words
+
+| $h\backslash z$ | $0$ | $1$ | $2$ | $3$ |
+| --- | --- | --- | --- | --- |
+| $0$ | $\varepsilon$ | $0$ | $00$ | $000$ |
+| $1$ | $1$ | $01$ | $100$ | $1000$ |
+| $2$ | $11$ | $011$ | $0011$ | $00011$ |
+| $3$ | $111$ | $0111$ | $00111$ | $000111$ |
+
+The word specifies replies to actual fixed labels, rather than a fixed
+coordinate order. Let $j$ be the label of the running start; all
+nonempty displayed histories expose $j$ first.
+

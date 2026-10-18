@@ -1,0 +1,20 @@
+**Definition 2.1 (Future-output equivalence).** On the positive-mass states define
+
+$$
+i\sim j\quad\Longleftrightarrow\quad
+\mathbf e_iM_w\mathbf1=\mathbf e_jM_w\mathbf1
+\quad\text{for every finite binary word }w.
+\tag{2.1}
+$$
+
+These are equality classes of conditional future output measures, since future cylinders determine those measures. Let $Q_t=[H_t]$, with $K$ classes. Define the optimal current-class error
+
+$$
+\epsilon_Q(r)=\inf_m J_\theta(Q_0\ne m(X_{-r:-1}))
+=\mathbb E_{J_\theta}\!\left[1-\max_a
+J_\theta(Q_0=a\mid X_{-r:-1})\right].
+\tag{2.2}
+$$
+
+A fixed ordering resolves MAP ties. Stationarity identifies (2.2) with the optimal error for $Q_{r+1}$ given $X_{1:r}$. At radius zero the observed word is empty. This quotient is a function of the selected actual producer; its class count is not a hidden-state minimality assertion.
+

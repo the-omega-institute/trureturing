@@ -1,0 +1,28 @@
+**Definition 4.1 (five native gadgets on one actual scaffold).** For
+$D\ge2$, set $h=D-2$, $N=2^h$ and take the perfect ordered binary
+scaffold of height $h$ in $v$. At every frontier word
+$a_i\in\{L,R\}^h$, independently choose one of
+
+$$
+g_0=\alpha,\quad g_1=\beta,\quad
+g_2=\langle\alpha,\alpha\rangle,\quad
+g_3=\langle\alpha,\beta\rangle,\quad
+g_4=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+\tag{LTR.13}
+$$
+
+For $x\in\{0,1,2,3,4\}^N$, call the resulting source $t_x$.
+Every simultaneous filling is an actual member of $\mathcal F_D$,
+since its right-subtree height is at most $h+2=D$. Define the late
+target $p_i=Ra_iR$, of permitted length $D$. The five factors at
+that target, in order, are
+
+$$
+(4,1),\ (3,1),\ (2,1),\ (1,0),\ (0,0).
+\tag{LTR.14}
+$$
+
+Thus its complete trajectory identifies $x_i$. These are not separate
+marginal best cases: all $5^N$ combinations exist on the same actual
+source grammar with the same scaffold and the same target menu.
+

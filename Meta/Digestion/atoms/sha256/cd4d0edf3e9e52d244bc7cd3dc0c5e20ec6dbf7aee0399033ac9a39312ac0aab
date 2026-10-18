@@ -1,0 +1,28 @@
+**Theorem 99.3.** Every norming density/witness pair for the complete restricted principal norm equals this pair, even without either first-order best-response condition.
+
+**Proof.** Let \((\rho',W')\) be any principal normer, allowing singular density. It is complementary to the same optimal dual, so
+\[
+Z\rho'=2L_SW',\qquad W'=\tfrac12(I+J)\rho',
+\qquad J\rho'=\rho'J^*.\tag{13}
+\]
+Write \(\rho'=\operatorname{diag}(\rho_F',p_3',p_4')\). Equation (12) gives \(J_{34}=2W_{34}/p_4\) and \(\overline{J_{43}}=2W_{34}/p_3\). The \(34\) entry in (13) forces
+\[
+p_3'/p_3=p_4'/p_4=\lambda\ge0.\tag{14}
+\]
+Comparing the \(F,\mathcal J\) block with that of the original pair gives
+\[
+J_{F\mathcal J}\lambda\operatorname{diag}(p_3,p_4)
+=\rho_F'J_{\mathcal JF}^*,\qquad
+J_{F\mathcal J}\operatorname{diag}(p_3,p_4)=\rho_FJ_{\mathcal JF}^*.
+\]
+Since \(J_{\mathcal JF}^*=2\rho_F^{-1}C\) is invertible, \(\rho_F'=\lambda\rho_F\). Trace one gives \(\lambda=1\), and (13) gives \(W'=W_S\). \(\square\)
+
+In particular the canonical common-normer set is a singleton. An alternative reconstruction of its cross scale is useful: let \(W^0\) have the cross-fibre entries in (2) with \(\alpha=1\), and zero fibre blocks. Because \(L_S\) has zero fibre blocks,
+\[
+\chi:=2\operatorname{Tr}(L_SW^0)>0,\qquad
+t=\alpha\chi,\qquad \alpha=t/\chi.\tag{15}
+\]
+Existence of a common pair and \(\alpha,t>0\) establish the strict inequality. Equation (7) then fixes the entire density from the fixed cross entries, and (9) fixes \(W_S\).
+
+The restricted norm has directional derivative \(2\operatorname{Tr}(\dot L W_S)\), by the compact-maximum derivative formula and uniqueness. No second derivative is asserted. Theorem 99.3 does not exclude additional normers of the original eight-coordinate objective with outside density support.
+

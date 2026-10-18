@@ -1,0 +1,130 @@
+**Theorem 4.1 (finite positive quadratic certificate).** There is an
+explicit finite constant $\kappa_d>0$ such that
+
+$$
+\begin{aligned}
+J(\tau)&\leq J_{\rm bar}-\frac{(\tau-\bar\tau)^2}{4\kappa_d},\\
+\mathcal T(s_0\tau)&\leq T_{\rm bar}
+                         -\frac{(\tau-\bar\tau)^2}{8\kappa_d},
+\qquad \bar\tau\leq\tau\leq1.
+\end{aligned}
+\tag{RH.19}
+$$
+
+These are upper bounds, including the closed endpoint, not claims that
+the following dual family is optimal.
+
+Proof. Since $v,u,w$ are orthonormal and $Q$-null, the compression of $Q$
+to $\operatorname{span}(u,w)$ is
+$\begin{pmatrix}0&q_{uw}\\q_{uw}&0\end{pmatrix}$ with
+$q_{uw}=u^TQw\ne0$. Otherwise that plane would be totally null, contrary
+to the argument in Proposition 3.2. Define
+
+$$
+\begin{gathered}
+\sigma_Q=-\frac{u^TCw}{u^TQw},\qquad D_c=C+\sigma_QQ,\qquad
+c_v=v^TCv,\ c_u=u^TCu,\ c_w=w^TCw,\\
+A_c=|c_v|vv^T+|c_u|uu^T+|c_w|ww^T,\qquad
+h=(I-P_*)D_cv,\qquad m=-\mu>0.
+\end{gathered}
+\tag{RH.20}
+$$
+
+Let $R_+$ be the inverse of $H_+$ on $v^\perp$, extended by zero on
+$v$. It is finite and positive definite on that plane. In the fixed
+frame, $D_c$ has diagonal $c_v,c_u,c_w$, zero $uw$ entry and remaining
+cross term $vh^T+hv^T$. In particular
+$\operatorname{tr}A_c=\bar\tau$. Put
+
+$$
+E_c=\frac{hh^T}{2m}+\frac{h^TR_+h}{2}P_*,\qquad
+\kappa_d=\operatorname{tr}E_c
+ =\frac12\left(\frac{\|h\|^2}{m}+h^TR_+h\right).
+\tag{RH.21}
+$$
+
+For every contrast multiplier $\lambda\geq0$ supply
+
+$$
+Y_\lambda=|H|+\lambda A_c+\lambda^2E_c,\qquad
+\nu_{r,\epsilon}=-\epsilon\lambda_{\rm sp}-\lambda r\sigma_Q.
+\tag{RH.22}
+$$
+
+The four required original dual slacks are exactly
+
+$$
+S_{r,\epsilon}=Y_\lambda-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q
+ =|H|-\epsilon H+\lambda(A_c-rD_c)+\lambda^2E_c.
+\tag{RH.23}
+$$
+
+Here $\lambda_{\rm sp}$ is the spectral multiplier, $\lambda$ is the
+nonnegative contrast multiplier, and $\sigma_Q$ is a fixed scalar
+eliminating a cross entry. They have different roles. Set
+$B_r=\operatorname{diag}_{(v,u,w)}(|c_i|-rc_i)\succeq0$.
+For each of the two signs $r=+1,-1$ the positive-report slack has the
+explicit decomposition
+
+$$
+\begin{aligned}
+S_{r,+}={}&\lambda B_r+\frac{\lambda^2h^TR_+h}{2}P_*\\
+ &+\left(\sqrt{2m}\,v-\frac{\lambda r}{\sqrt{2m}}h\right)
+   \left(\sqrt{2m}\,v-\frac{\lambda r}{\sqrt{2m}}h\right)^T
+ \succeq0.
+\end{aligned}
+\tag{RH.24}
+$$
+
+For each $r=+1,-1$ the negative-report slack is
+
+$$
+\begin{aligned}
+S_{r,-}={}&\lambda B_r+\frac{\lambda^2}{2m}hh^T\\
+ &+\left[2H_+-\lambda r(vh^T+hv^T)
+                      +\frac{\lambda^2h^TR_+h}{2}P_*\right]\succeq0.
+\end{aligned}
+\tag{RH.25}
+$$
+
+Indeed the bracket, in $\mathbb Rv\oplus v^\perp$, has positive
+block $2H_+$ on the plane and scalar Schur complement
+$\lambda^2h^TR_+h/2-\lambda^2h^T(2H_+)^{-1}h=0$.
+Equivalently its quadratic form on $tv+z$, $z\perp v$, is
+
+$$
+2\left\|H_+^{1/2}z-\frac{\lambda rt}{2}R_+^{1/2}h\right\|^2.
+$$
+
+These formulas prove all four PSD inequalities, also for $\lambda=0$.
+Every denominator is positive; no positivity on a null cone substitutes
+for positivity of the full slack matrix.
+
+For any feasible tuple, multiplication by its PSD slots and summation
+of RH.23 give
+
+$$
+\sum_{r,\epsilon}\epsilon\operatorname{tr}(GX_{r,\epsilon})
+ \leq\operatorname{tr}Y_\lambda-\lambda t(X)
+ \leq\operatorname{tr}Y_\lambda-\lambda\tau.
+\tag{RH.26}
+$$
+
+The last direction uses exactly $\lambda\geq0$ and the original
+inequality $t(X)\geq\tau$. Every $Q$ term vanishes by its individual
+null-trace constraint. Since $\operatorname{tr}Q=0$ and
+$|H|=H-2\mu P_*$, the final objective is
+$J_{\rm bar}-\lambda(\tau-\bar\tau)+\kappa_d\lambda^2$.
+
+To prove $\kappa_d>0$, suppose $h=0$. Then $D_c$ is diagonal in the
+frame and $A_c-rD_c\succeq0$ for both signs. Every feasible tuple would
+have
+$t(X)=\sum r\operatorname{tr}(D_cX_{r,\epsilon})\leq\operatorname{tr}A_c
+=\bar\tau$. But the four vectors
+$d_{\sigma,t}=(1,\sigma,t)^T/2$, $\sigma,t=\pm1$, have null
+projectors summing to $I$, and report $r=\sigma$ gives contrast one.
+This contradicts $\bar\tau<1$. Thus $h\ne0$, so RH.21 is strictly
+positive and finite. Choosing
+$\lambda=(\tau-\bar\tau)/(2\kappa_d)$ proves RH.19 by RH.12.
+No endpoint dual attainment has been invoked. $\square$
+

@@ -1,0 +1,46 @@
+**Theorem 4.2 (effective approximation at a fixed rational weight).**
+For fixed integer $d\ge1$ and rational $w:S_d\to[0,\infty)$,
+$\Omega_d(w)$ is a computable real. For every rational
+$C>\Omega_d(w)$, strictly positive normalized rational kernels
+with common cap $C$ exist for every nonempty type. Conversely such
+kernels imply $C\ge\Omega_d(w)$. These assertions include rational
+weights with zeros; they do not assert effective optimization as the
+support of $w$ varies.
+
+Proof. Determine $F$, enumerate all finite decorations and test every
+assignment for local reconstruction and the finite joint owner-image
+conditions. All these operations terminate using rational support
+tests and finite tables. The identically zero case is separate.
+For a nonempty relation with $N$ assignments, put
+$L=\max\log_2\Phi_\eta-\min\log_2\Phi_\eta$. For two laws at total
+variation distance $t\le1/2$ and $N\ge2$,
+
+$$
+|F_\eta(p)-F_\eta(p')|
+ \le 2h_2(t)+2t\log_2N+tL.
+\tag{COK.25}
+$$
+
+Indeed each conditional entropy is the difference of two entropies
+on alphabets of size at most $N$; apply the finite entropy continuity
+bound to each. The expectation term is bounded by its oscillation
+times $t$. Average with the coefficients summing to one.
+
+A rational probability grid of denominator $M_0$ approximates every
+law within total variation $(N-1)/M_0$. Choose $M_0$ so that this is
+at most $1/2$ and the computable bound (COK.25) is below the requested
+error. Evaluate the finite grid using computable logarithm enclosures,
+with $0\log 0=0$. This produces terminating two-sided enclosures for
+$h_\eta$, then for $\Omega_d(w)$ by finite maxima and exponentiation.
+For $N=1$ the value is simply its log weight.
+
+Theorem 4.1 gives positive real kernels whose pointwise maxima are
+strictly below $C$. Positive normalized rational rows are dense in
+the corresponding simplexes; finitely many strict inequalities
+survive a sufficiently close rational approximation. The type list
+is finite, so the same $C$ works throughout. Conversely take
+expectations of any pointwise witness and use conditional relative
+entropy as in (COK.20); this bounds every $F_\eta(p)$ by $\log_2C$.
+No assertion about attaining the infimum at $C=\Omega_d(w)$ is
+needed. $\square$
+

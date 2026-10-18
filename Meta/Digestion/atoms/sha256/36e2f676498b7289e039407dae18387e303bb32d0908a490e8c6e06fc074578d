@@ -1,0 +1,30 @@
+**Definition 2.1 (Full original protocol class).** Let
+$(\mathsf U,\mathcal U,\nu)$ be any probability space independent of
+the whole $J_p$ source, with its law unchanged. All random public data
+and internal randomness belong to the same auxiliary variable $u$;
+fixed public data are constants. An acquired record is a finite ordered
+list $r=((t_1,x_1),\ldots,(t_n,x_n))$ of integer addresses and binary
+replies. A measurable next-event rule, using only $u$, the fixed public
+data and $r$, requests an integer address, returns a label in
+$\mathcal A$, or continues internally forever without another read or
+return. Finite events can follow internal waiting, whose finite
+duration and occurrence depend measurably only on the same data.
+
+Every requested address returns the actual $X_t$ of (1.1), and every
+actual request costs one call. Repetitions, ignored replies,
+separators, negative coordinates, disconnected sets and arbitrary
+distances are all charged. The return time is $\tau$, with
+$\tau=\infty$ on nonreturn, and $N$ counts all actual calls, allowing
+$N=\infty$. The full class allows internal nonreturn after any finite
+number of calls, including zero, and infinite-read nonreturn. A finite
+return has finite $N$, and its label and time are measurable functions
+of the available data and terminal record. Zero-read returns and
+wrong-phase labels are permitted. Measurable completions on null sets
+are allowed.
+
+There is no hidden-state, half-line or tail read, source-dependent seed
+or timing, reset, law switch, endpoint movement, or erased-coordinate
+substitution. This is the contract of Original, Definition 9.1, also
+given in Risk, Definition 1.2 and Endpoint, Definition 1.2. Write
+$\mathbb P_p=J_p\otimes\nu$.
+

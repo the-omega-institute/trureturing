@@ -1,0 +1,15 @@
+**Definition 1.2 (Actual endpoint).** The target remains the actual $H_j$. Write $H_j=h_{j,\varphi,S_{q_{j,\varphi}}}$. The complete table is
+
+$$
+\begin{array}{c|c|c|c|c}
+j&\phi&q_{j,\phi}&h_{j,\phi,s}&B_{j,\phi}=2q_{j,\phi}+\phi\\ \hline
+0&0&0&a_s&0\\
+0&1&0&b_s&1\\
+1&0&1&b_s&2\\
+1&1&0&a_s&1
+\end{array}
+\tag{1.2}
+$$
+
+Hence $q_{j,0}=j$, $q_{j,1}=0$, and $B_{j,\phi}\in\{j,j+1\}$. For example, at $j=0,\phi=1$, coordinate zero is the separator after active address $-1$, so $H_0=b_{S_0}$. The table is Original (9.4). At fixed $j$, the endpoint's state class determines the phase as a mathematical event; a protocol does not observe that class or phase for free.
+

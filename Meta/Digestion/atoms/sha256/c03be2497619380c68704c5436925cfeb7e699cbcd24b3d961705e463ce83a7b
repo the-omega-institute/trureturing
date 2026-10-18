@@ -1,0 +1,28 @@
+**Definition 4.1 (finite adaptive skeleton and exact path).** For given
+$q,d\in\mathbb N$, a skeleton is a finite rooted tree with at most $q$
+read nodes on a root-to-leaf path. Each read has four reply children,
+an epoch numeral $j_v\in\{N,\ldots,N+d\}$, and one of the address forms
+$\varepsilon$, $(L,z_v)$ or $(R,z_v)$. Epochs are nondecreasing along
+paths. Each leaf is an absorbing halt with a label in $\mathscr R$.
+The same $z_v$ is used by every source reaching that read node.
+
+For a leaf $t$, let $\mathsf{Path}_t(Y;\mathbf z)$ be the conjunction of
+its edge-reply formulas (GRS.9). Define
+
+$$
+\begin{aligned}
+E_t(\mathbf z)&=\exists Y\,
+  [\mathsf{Adm}(Y)\land\mathsf{Path}_t(Y;\mathbf z)],\\
+k_t&=\#\{v:v\prec t\},\qquad
+d_t=\begin{cases}j_{\rm last}-N,&k_t>0,\\0,&k_t=0,\end{cases}\\
+L_t(\mathbf z)&=\sum_{\substack{v\prec t\\\text{form }L\text{ or }R}}
+                    (1+|z_v|).
+\end{aligned}
+\tag{GRS.14}
+$$
+
+Here $Y$ denotes the three finite label sets; all read ancestors are
+counted in $k_t$, including root reads. The formula for $L_t$ is a
+mathematical cost expression, not a claim that arbitrary variable-length
+arithmetic is definable in WS2S. Unreachable leaves have no actual cost.
+

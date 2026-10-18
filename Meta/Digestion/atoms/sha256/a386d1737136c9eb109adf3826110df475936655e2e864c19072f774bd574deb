@@ -1,0 +1,34 @@
+**Lemma 72.3 (the source-specific signs).** Put
+
+$$
+\begin{gathered}
+c_z=c_*(1/\alpha)>c_w=c_*(0),\qquad t_{\rm ax}=W/c_w,\\
+a_z=g_0+g_1/\alpha,\quad b_z=2x_G/\sqrt\alpha,\quad
+ a_w=g_0+g_2/\beta,\quad b_w=2y_G/\sqrt\beta,\\
+k_w=11d^2/(64h_2^2\beta).
+\end{gathered}
+\tag{RC.81}
+$$
+
+Then $0<a_z<b_z$, $0<b_w<a_w$, $\beta Wk_w=d_f$,
+$f(h_{z,\pm})=0$, $f(h_{w,\pm})=-k_w$, and
+$Wk_w>a_w+b_w$.
+
+**Proof.** (RC.71) gives the first sign. The rational source bounds
+$1/9<\beta<1/8$ give
+$a_w>(1269+8\cdot1677)10^{-6}>6\cdot2209\,10^{-6}>b_w>0$.
+Substitution in $f$ and $W$ gives the failure identities. At the
+conditional root trace preservation gives
+$d_f=N_{00}+g_1+g_2$. Hence
+
+$$
+d_f-\beta(a_w+b_w)
+=N_{00}(1-\beta\delta)+g_1-2y_G\sqrt\beta>0,
+\tag{RC.82}
+$$
+
+because $N_{00}>0$, $\beta\delta<1$, $2\sqrt\beta<1$ and
+$g_1>y_G>0$. All coarse inequalities are consequences of (RC.4)–(RC.5)
+and the positive-pivot formulas; no TP identity is imposed off root.
+The monotonicity of $c_*$ gives $c_z>c_w$. $\square$
+

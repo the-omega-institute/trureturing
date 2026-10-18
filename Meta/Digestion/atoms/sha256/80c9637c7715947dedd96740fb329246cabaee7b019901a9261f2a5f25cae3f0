@@ -1,0 +1,87 @@
+### 58.3 Three distinct phases: necessary equations without lost zero factors
+
+Let \(u=x-t\mathbf1\) and \(\xi=x_0x_1x_2\). The elementary
+symmetric functions of the three unit phases give the coordinatewise
+identities
+
+\[
+ u^2=t u+\xi\bar u+2t(t-\xi)\mathbf1,
+ \qquad |u|^2=(1-t^2)\mathbf1-t(u+\bar u).       \tag{58.5}
+\]
+
+The vectors \(u,\bar u\) are linearly independent: otherwise the
+three distinct unit-circle points \(x_j\) would lie on a real affine
+line. They form a basis of the complex zero-sum plane. Therefore there
+are unique complex \(c,d\) with
+
+\[
+ y=gt\mathbf1+c u+d\bar u.
+\]
+
+For a channel \(kt\mathbf1+C u+D_1\bar u\), the coefficient of \(u\)
+in its squared-modulus vector is
+
+\[
+ t(\bar k C+k\bar D_1-|C|^2-|D_1|^2+C\bar D_1)
+       +\bar\xi\bar C D_1.                    \tag{58.6}
+\]
+
+Both this coefficient and its conjugate must vanish for a flat channel.
+Apply (58.6) to the actual triples
+
+\[
+ (k,C,D_1)=(g,c,d),\quad
+ (U,P+Qc,Qd),\quad(V,\bar Q-\bar Pc,-\bar Pd).
+\]
+
+The sum of the last two equations minus six times the first gives
+
+\[
+ L_0+L_1c+\bar L_1\bar d=0.
+\]
+
+Hence write, with real \(X_1,Y_1\),
+
+\[
+ d=D(X_1+iY_1),\qquad c=i\rho-D(X_1-iY_1).     \tag{58.7}
+\]
+
+This is an invertible real-linear parameterization since \(D\ne0\).
+Put \(e=\bar\xi/t\), and define
+
+\[
+ \begin{aligned}
+ Y_c&=\bar g c+g\bar d-|c|^2-|d|^2+c\bar d,\\
+ T_c&=\bar U(P+Qc)+U\bar Q\bar d-|P+Qc|^2-|Qd|^2
+                                  +(P+Qc)\bar Q\bar d,\\
+ E_c&=\bar c(T_c-|Q|^2Y_c)-Q\bar P Y_c,\\
+ Z(X_1,Y_1)&=iD E_c.
+ \end{aligned}                                               \tag{58.8}
+\]
+
+The first two equations (58.6), divided only by \(t>0\), are
+
+\[
+ Y_c+e\bar c d=0,\qquad
+ T_c+e(|Q|^2\bar c+Q\bar P)d=0.
+\]
+
+Multiplying their difference by \(\bar c\) and subtracting
+\(Q\bar P\) times the first proves \(E_c=0\). No division by
+\(c\) or \(d\) occurs; their zero cases remain included.
+
+There is one more necessary polynomial, from the constant coefficient
+of the original \(|y_j|^2=1\) equations. Write
+\(A_c=|c|^2+|d|^2\), \(B_c=|cd|^2\), and set
+
+\[
+ \mathcal N=(A_c-1)(|Y_c|^2-B_c)
+                   +4B_c\operatorname{Re}(c\bar d+Y_c).       \tag{58.9}
+\]
+
+Then \(\mathcal N=0\). Indeed the original constant equation is
+\((A_c-1)(1-t^2)+4t\operatorname{Re}(c\bar d(t-\xi))=0\).
+Use \(|e|^2=t^{-2}\) and \(Y_c=-e\bar c d\), then multiply by
+\(B_c\), to obtain (58.9). This is only a necessary implication and does
+not divide by \(B_c\). Thus it introduces no excluded zero branch.
+

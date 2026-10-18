@@ -1,0 +1,8 @@
+# 实际奇 Möbius 调和率与固定尺度 Robin 尾合同
+
+本卷续接 [原曲率逼近卷](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_CURVATURE_APPROXIMATION.md) §471，保留连续的条目编号。
+
+§453 的原核、可积性、求导与 DP.13–DP.15 取自 [素数前缀卷](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md) §453。§464 的 RLB.7、§466 的 HG.2–HG.10 与命题 466.1–466.2，以及 §§468–469 的有限运输均取自 [原曲率逼近卷](FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_CURVATURE_APPROXIMATION.md) 的对应章节。
+
+实际未加权有限配对的形式化来源见 [ActualOddMobiusFinitePairing.lean](../../../D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.lean)；其完整 dyadic 与 clipped 身份不提供奇调和衰减。
+

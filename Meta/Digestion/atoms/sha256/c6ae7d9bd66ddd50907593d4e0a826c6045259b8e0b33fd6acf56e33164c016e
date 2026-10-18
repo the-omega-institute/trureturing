@@ -1,0 +1,78 @@
+**Theorem 5.2 (exact correspondence in both directions).** For every
+$d,n\ge1$ the following statements hold.
+
+1. Every complete native template gives an owned-seed network with
+   a bijection $C_\Theta\leftrightarrow\mathcal S_{\rm real}$.
+   Its seed coordinate is the actual reply at its existing owner port.
+2. Every owned-seed network in Definition 5.1 gives a complete native
+   representative template on the same $n$ blocks, whose solution
+   set is in bijection with $\mathcal S_{\rm real}$ by those same
+   actual owner replies.
+3. Under either correspondence, for all nonnegative $w_i$,
+
+$$
+\sum_{x\in C_\Theta}\prod_iw_i(x_i)
+       =Z(\mathcal N;w_1,\ldots,w_n).
+\tag{RRN.19}
+$$
+
+For a general nonnegative correlated weight $W$ the corresponding
+identity is
+
+$$
+\sum_{x\in C_\Theta}W(x)
+       =\sum_{s\in\mathcal S_{\rm real}}W(x(s)).
+\tag{RRN.20}
+$$
+
+Proof. For the first direction apply Theorem 4.2. Give each surviving
+star one seed with its domain $T$ from (RRN.10), let its center be
+the owner, and use the tables $b_v$ of (RRN.12). Constantized ports
+remain constants. The owner identity is Lemma 3.2. If a component has
+empty $T$, retain its empty seed and owner; no seed tuple and no
+native solution exist.
+
+For any solution, the actual owner replies lie in their domains and
+determine all its factors by Theorem 4.2. Each block is then uniquely
+determined by Lemma 2.4. Conversely, a realizable seed assignment
+reconstructs one actual tuple. The owner identity makes the actual
+owner replies exactly those seeds, so all star equations hold.
+Theorem 4.2 returns an original solution. These maps are inverse.
+They also cover the case with no surviving seeds: the empty seed
+tuple reconstructs either one actual tuple or none.
+
+For the converse, extend every table $B_v$ at a nonowner assigned
+to $c$ arbitrarily from $T_c$ to $\mathcal A$, with values still
+in its $G_q$. At the owner $o_c$ retain $B_{o_c}$ on $T_c$ and
+choose its other entries to satisfy
+
+$$
+h(\widehat B_{o_c}(a))\ne a\qquad(a\notin T_c).
+\tag{RRN.21}
+$$
+
+Lemma 2.4 again supplies the guard, including at a root port. Every
+port assigned to $c$ queries the actual owner port $o_c$ and uses
+its extended table. A constant prescription becomes a constant
+equation. This is a complete representative template.
+
+In any native solution, the equation at $o_c$ forces its actual
+reply $s_c$ into $T_c$ by (RRN.21). The other equations give
+precisely all prescribed $z_v(s)$, so the actual tuple is $x(s)$
+and $s$ is realizable. Conversely a realizable $s$ gives a unique
+actual tuple, and (RRN.16) makes its owner replies equal $s_c$.
+Every extended decoder is consequently evaluated on its original
+domain, and every equation holds. Different seed tuples cannot give
+the same actual tuple, since its owner replies recover all their
+coordinates. This proves the second bijection without a missing
+shared-realization premise.
+
+For (RRN.19), expand the finite products of sums in (RRN.18).
+A nonrealizable seed assignment has at least one empty compatibility
+set, hence contributes zero even if some weights vanish. A realizable
+assignment contributes exactly $\prod_iw_i(x_i(s))$. The bijection
+counts each solution once. Every whole-block weight occurs in exactly
+one factor; it is never attached separately to its reply occurrences.
+Equation (RRN.20) follows from the same bijection without any product
+assumption on $W$. $\square$
+

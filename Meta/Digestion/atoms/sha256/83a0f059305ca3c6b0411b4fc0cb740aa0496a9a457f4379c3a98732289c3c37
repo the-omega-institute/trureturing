@@ -1,0 +1,31 @@
+**定理 481.1（非单位整数的严格整段比较）。** 对每个 $x>1$ 和每个整数 $n>1$，
+
+$$
+J_x(n)<F(x).
+$$
+
+**证明。** 写 $a_p=v_p(n)$，并沿用 §87 的
+
+$$
+Q_p(a)=\sum_{k=1}^a\frac1{kp^k},\qquad
+G_p(a)=\sum_{k=0}^ap^{-k},\qquad
+v_p(x)=\max\bigl(\{0\}\cup\{k\ge1:p^k\le x\}\bigr).
+$$
+
+实际分解给
+
+$$
+J_x(n)=\sum_{p\mid n}
+\bigl(\log G_p(a_p)-\lambda_xa_p\log p\bigr).
+$$
+
+在 $n$ 的素因子与 $p\le x$ 的素数的有限并集上补零。对每个方向先用完整前缀比较，再用参考目标最大化：
+
+$$
+\log G_p(a_p)-\lambda_xa_p\log p
+\le Q_p(a_p)-\lambda_xa_p\log p
+\le Q_p(v_p(x))-\lambda_xv_p(x)\log p.
+$$
+
+$n>1$ 保证至少有一个素因子且其 $a_p\ge1$；§87.5 的严格前缀不等式使该方向的第一个比较严格。因此有限和严格小于参考最优值之和，即 $F(x)$。这一论证比较整个前缀，不要求实际边际逐层小于参考边际。$\square$
+

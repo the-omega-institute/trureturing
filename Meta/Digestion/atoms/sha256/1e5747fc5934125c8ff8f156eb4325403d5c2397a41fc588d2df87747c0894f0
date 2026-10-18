@@ -1,0 +1,41 @@
+**Convention 1.2 (One stationary law and its exterior).** Let $P$ be a
+normalized two-sided stationary law on
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+$$
+
+Write $[w]$ for an interval cylinder, $P_n$ for its actual length-$n$
+marginal, and $X_i$ for the coordinate bits. Stationarity makes cylinder
+probabilities independent of the interval's starting point. Define
+
+$$
+\begin{aligned}
+\mathcal E_0&=\sigma(X_j:j\ne0),&
+q_P&=\mathbb E_P[X_0\mid\mathcal E_0],\\
+\mathcal F_r&=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),&
+D_r(P)&=\mathbb E_P[(X_0-\mathbb E_P[X_0\mid\mathcal F_r])^2].
+\end{aligned}
+$$
+
+[Stationary, §2][P1] and [Growth, Theorem 5.2][P6] supply, without support,
+memory or mixing assumptions,
+
+$$
+\begin{aligned}
+d(P)&:=\lim_{n\to\infty}\Phi_n(P_n)/n
+=\mathbb E_P[(X_0-q_P)^2]=\inf_{r\ge1}D_r(P)\le c_\star,\\
+D_r(P)&=\sum_{\substack{u,v\in B_r\\u_r=v_1=0}}
+h(P([u0v]),P([u1v])),\\
+c_\star&=\lim_{n\to\infty}\kappa_n/n,\qquad
+nc_\star\le\kappa_n\le(n+1)c_\star.
+\end{aligned}
+\tag{1.1}
+$$
+
+A neighboring one forces the center to zero. A zero-total fiber contributes
+zero, irrespective of its chosen conditional-probability version. The
+open-word density identity keeps endpoint contributions and also holds
+along $n=3N$. Every expectation in a model calculation below belongs to
+that model's single actual law.
+

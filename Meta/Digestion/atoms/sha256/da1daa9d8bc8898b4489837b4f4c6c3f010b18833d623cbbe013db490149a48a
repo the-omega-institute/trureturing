@@ -1,0 +1,36 @@
+**Proposition 6.3 (exact size and full native admissibility).**
+
+$$
+|B_G|=5^{2N},
+\tag{NDR.28}
+$$
+
+and $B_G$ is jointly admissible for all targets in $W_5$, with every finite
+experiment word allowed. A target $wLL$ in an edge's module can only have
+the opposite endpoint as its donor block on the full $B_G$.
+
+**Proof.** All five module trees are distinct and $\tau$ is a bijection.
+The tuple of actual module states mathematically recovers every edge
+label, proving injectivity and (NDR.28). Targets strictly above the module
+frontier are constantly branch. Every remaining target is $wq$ with
+$|w|=2$ and $q\in W_3$. Apply (NDR.23) in its module. Its mate is the
+opposite endpoint's port for the same edge; querying that port followed
+by $RL$ is one allowed depth-five experiment. All other nonconstant
+targets use the specified own-module experiment. The factors give every
+later $k$ by (NDR.4).
+
+For the donor assertion, vary only the edge label at the tested port.
+An experiment above a module is constant. An experiment in any unrelated
+module depends on a different label, which can be held fixed, and cannot
+recover the varying target. A query in the target's own module fails by
+Lemma 4.2. A word enters at most one module, including an arbitrarily long
+word. The only remaining possible block is the opposite endpoint.
+Independence of edge parameters is used to prove this statement about the
+constructed family; no independence assumption is made about replacement
+sets or general competitors. $\square$
+
+The forced-donor property excludes a bounded-component enclosure of
+$B_G$. Theorem 7.2 bounds its intersection with every bounded-component
+replacement, including different equations and additional rows outside
+$B_G$.
+

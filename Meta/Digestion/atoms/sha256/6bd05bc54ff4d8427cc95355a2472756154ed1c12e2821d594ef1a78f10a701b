@@ -1,0 +1,7 @@
+## 4. A specified two-exponential perturbation with a uniform margin
+
+The negative radial error at the unique interior contact must be increased,
+while the positive errors at both ends must be decreased. The following
+single perturbation accomplishes these three signed changes and remains
+a sum of two exponential modes.
+

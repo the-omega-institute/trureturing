@@ -1,0 +1,9 @@
+**Example 10.2 (small accepted-update balanced witness).** At $s=1$ the words
+$\alpha\alpha\beta\beta$, $\beta\beta\alpha\alpha$ and
+$\beta\alpha\alpha\beta$ have the common windows
+$E_0=N(1,0,0)$, $E_1=N(1,2,0)$. Their five bracketings each give 15 actual
+initial trees. At $H=8$, the first actual $\rho$ has six leaves and accepts;
+the next has ten and rejects. Their hidden $E_2$ values need not agree and are
+not published on reject. Literal answers still separate their distinct current
+trees. This witnesses the target and outcome distinctions in the finite bound.
+

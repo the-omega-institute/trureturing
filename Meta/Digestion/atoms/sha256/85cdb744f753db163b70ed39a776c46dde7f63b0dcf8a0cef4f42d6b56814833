@@ -1,0 +1,53 @@
+**Definition 5.1 (Residuals and coefficient data).** For every singleton
+or pair $J\subseteq\mathsf S$, define
+
+$$
+H_J=\Pi_J-\mathcal A(\Pi_J).
+\tag{5.1}
+$$
+
+Use $L=(N,25)$ and $V=(2,3,5)$. All these matrices are block diagonal
+in $L\oplus V$ by (1.6) and (4.6), and have entries in $\mathbb Q(r)$.
+Here is complete singleton data, making the finite certificate independent
+of numerical evaluation. Set $m=1263571104$, and write
+
+$$
+m\mathcal A(\Pi_s)=
+\begin{pmatrix}a&b\\b&c\end{pmatrix}_L
+\oplus\begin{pmatrix}d&e&f\\e&g&h\\f&h&k\end{pmatrix}_V.
+\tag{5.2}
+$$
+
+Each pair $(u,v)$ below denotes $u+vr$, not two matrix entries.
+
+| $s$ | $a$ | $b$ | $c$ |
+| --- | --- | --- | --- |
+| $N$ | $(621151364,-3608532)$ | $(-31225496,-7936840)$ | $(129035856,359888)$ |
+| $2$ | $(147948012,1742676)$ | $(-15621420,9499572)$ | $(155758722,-3007110)$ |
+| $3$ | $(217487860,483068)$ | $(31242840,-3125464)$ | $(201866440,2045800)$ |
+| $5$ | $(147948012,1742676)$ | $(-15621420,9499572)$ | $(155758722,-3007110)$ |
+| $25$ | $(129035856,-359888)$ | $(31225496,-7936840)$ | $(621151364,3608532)$ |
+
+| $s$ | $d$ | $e$ | $f$ |
+| --- | --- | --- | --- |
+| $N$ | $(188357420,3759812)$ | $(-5207140,-1562732)$ | $(13509020,-6525388)$ |
+| $2$ | $(476161125,31783305)$ | $(-23419122,18631902)$ | $(-21573987,-6271935)$ |
+| $3$ | $(183167624,-15967632)$ | $(46838244,-3968420)$ | $(8319224,14887968)$ |
+| $5$ | $(219716805,-13471575)$ | $(-23419122,-11538018)$ | $(-21573987,-6271935)$ |
+| $25$ | $(196168130,-6103910)$ | $(5207140,-1562732)$ | $(21319730,4181290)$ |
+
+| $s$ | $g$ | $h$ | $k$ |
+| --- | --- | --- | --- |
+| $N$ | $(217487860,1922620)$ | $(-5207140,-1562732)$ | $(188357420,3759812)$ |
+| $2$ | $(142758216,-7756896)$ | $(-23419122,-11538018)$ | $(219716805,-13471575)$ |
+| $3$ | $(558700372,10825596)$ | $(46838244,-3968420)$ | $(183167624,-15967632)$ |
+| $5$ | $(142758216,-7756896)$ | $(-23419122,18631902)$ | $(476161125,31783305)$ |
+| $25$ | $(201866440,2765576)$ | $(5207140,-1562732)$ | $(196168130,-6103910)$ |
+
+These entries follow by substituting $t_i=(R_i)_{ss}$ and
+$R_i\Pi_sR_j=(R_ie_s)(R_je_s)^T$ into (4.6), followed by
+$r^2=17$. They sum to $mI$ over $s$, also checking
+$\mathcal A(I)=I$. For every pair, add its two singleton matrices
+and subtract from $m\Pi_J$. In particular, the same channel supplies
+all fifteen event tests.
+

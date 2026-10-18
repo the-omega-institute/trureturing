@@ -1,0 +1,50 @@
+**Definition 11.2 (complete positioning schemata).** These are native
+schemata, not unit-cost word instructions. A symbol test is the testing
+RD of PR57.D1. Every displayed append is EX; WR; MR.
+Unless a row explicitly names another latch, these public routines use
+latch 4 for RD and its matching latched-bit WR. A multi-symbol alternative
+uses that same read followed by finite testing CTLs on latch 4. Latch 5
+is the ingress length-test latch and latch 6 the ingress input latch.
+The compiler, imports and metadata copies use none of latches 0–3 or 7.
+There is no live unbounded register or return address in a latch.
+
+1. `LastBank(p)` executes Tail; ML; ML, then RD and, unless the symbol is
+   F, ML and repeat. At the preceding F it executes MR. It has reached
+   the active version's first field. The final F and preceding sentinel
+   or bank F already exist. From entry distance $d$ to R, on a bank with
+   $\ell$ payload cells it costs $2d+2\ell+5$.
+2. `Field(p,i)` executes LastBank, then skips $i$ fields. A skip executes
+   RD; MR until and including that field's sep. The number $i<r$ is a
+   static finite compiler choice, so those $i$ skips are unrolled. If the
+   preceding fields have lengths $l_j$, its extra cost is
+   $2\sum_{j<i}(l_j+1)$. No dynamic index selects a native state.
+3. Scratch words have format $U(m)\mathsf{sep}$; scratch head returns to
+   R after each append. `LastScratch(t,e)` starts with Tail; ML, at the
+   last sep. Repeat the following exactly $e+1$ times: ML, then RD; on
+   sep stop this backwards scan; otherwise testing CTL for L; on L stop
+   this scan, otherwise ML and repeat its RD. After the final scan MR.
+   Here $e$ is a fixed finite call-site offset (0, 1 or 2 in these
+   recipes), unrolled into control. Every skipped earlier word exists. Thus all marker and L
+   tests are paid, including a first word whose preceding boundary is L.
+4. `SegmentCopy(p,t)` starts with $p$ at its first bit and $t$ at R.
+   RD tests for sep. On a bit it executes EX(t); WR(t,latched bit);
+   MR(t); MR(p) and repeats; on sep it exits without copying it.
+   The exact count is $5l+1$. `SegmentCount` uses Append(t,1) in place
+   of the bit append, with the same count. A unary copy includes the
+   terminal zero and has count $5(m+1)$, as in §5.
+5. `ScratchStart(t)` executes Tail, so appending to nonempty scratch
+   never assumes that its head was already at R. Every public stream
+   scan executes Home; MR, then RD; MR through its actual delimiter or
+   R. Each test and move is a primitive. Finite alternatives to distinguish
+   L, R, sep, F, 0 and 1 use one testing RD followed by the needed testing
+   CTLs, in that displayed order. No such alternative is a free test.
+
+Home; MR in this schema reaches the first ordinary cell. A stream's
+leading F sentinel is still that cell. The full manifest-field importer
+has Definition 13.2's explicit second MR before its field loop; it does
+not identify either Home's L or that first ordinary F with a field bit.
+
+The active-bank scan need test only F: its payload alphabet is
+$\{0,1,\mathsf{sep}\}$ and a preceding F is guaranteed. In contrast,
+scratch backwards scans really do need the displayed L alternative.
+

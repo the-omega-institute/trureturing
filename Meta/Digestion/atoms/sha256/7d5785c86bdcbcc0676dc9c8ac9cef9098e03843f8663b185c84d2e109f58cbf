@@ -1,0 +1,73 @@
+## 27. 有限结构与外部桥接的边界
+
+本节涉及的有限对象与结论为：
+
+1. 有限图概率场 \(\mathcal C_G\)；
+2. 节点势与边耦合能量；
+3. 场能量的非负分解；
+4. 概率场到能量分布的推前；
+5. 梯度轨迹的能量耗散；
+6. 五态载体的精确维数分解
+   \[
+   5=2+3;
+   \]
+7. 无相邻支持的反射 involution；
+8. \(|\mathcal W_1|=2\)、\(|\mathcal W_2|=3\)、\(|\mathcal W_3|=5\)；
+9. Fibonacci 支持递推；
+10. 三位窗口到五态载体的编码；
+11. 无限支持场到五态轨迹的局部推前；
+12. 局部势产生经验能量分布的定义。
+
+以下对象仍然是显式桥接目标：
+
+1. 素数分类到支持场 \(\mathcal W_\infty\) 的具体编码；
+2. 素数权重到局部势 \(\varphi\) 的唯一构造；
+3. FIB transfer operator 到 completed \(L\)-function 的谱行列式；
+4. 局部反向读取到 \(s\mapsto1-\overline{s}\) 的复反射；
+5. Fisher/Dirichlet 正定度量到 Hilbert–Pólya 自伴算子的构造；
+6. 无限轨迹空间的连续流形结构；
+7. 物理能量、时间、引力或量子 Hamiltonian 的解释。
+
+因此，本节的核心结论是：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{场配置决定局部势和耦合，}\\
+&\text{势决定能量分布，}\\
+&\text{场上的 shift 或梯度生成元决定轨迹，}\\
+&\text{观察映射决定可见流形，}\\
+&\text{镜像与 Fibonacci 递推决定局部状态的闭包方式。}
+\end{aligned}
+}
+\]
+
+对当前 Auric FIB ATOM 载体，最严格的数字结构是
+
+\[
+\boxed{
+\dim(\text{unobserved linear sector})
++
+\dim(\text{visible quotient})
+=
+2+3=5,
+}
+\]
+
+以及
+
+\[
+\boxed{
+|\mathcal W_1|=2,\qquad
+|\mathcal W_2|=3,\qquad
+|\mathcal W_3|=5,
+\qquad
+|\mathcal W_n|=F_{n+2}.
+}
+\]
+
+“镜像、三维视角、联合隐藏关系、无限轨迹和 Fibonacci”因此可以放进同一个有限到无限的组合场框架。把它们继续连接到 RH，需要完成算术编码、正定谱度量和完成 \(L\)-函数的 trace/determinant bridge。
+
+
+---
+

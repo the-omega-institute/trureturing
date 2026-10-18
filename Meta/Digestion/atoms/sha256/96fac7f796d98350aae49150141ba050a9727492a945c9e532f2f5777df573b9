@@ -1,0 +1,88 @@
+**Theorem 7.1 (no SI12, SI13 or SI14 representation).** The complete
+actual-live behavior of $P_g$ admits no representation satisfying
+[SI, Definition 13.1][SI] and no representation satisfying
+[SI, Definition 14.1][SI], even with different common prefix, block
+length, number of blocks, block names, common lists and descriptive
+selector, or with additional unused modes. Consequently it admits no
+SI12 representation either.
+
+Proof, actual orders fix every weight. For every assignment $\eta$
+on $\mathsf I$, put $a=\operatorname{wt}(\eta)$ and set its early
+block to $00$. Among the $p$ coordinates of $\mathsf U$ and the
+first coordinate of its late block, place exactly $p-a$ ones, and set
+the last coordinate to zero. This is possible since $0\le p-a\le p$.
+It avoids every redirected prefix: each listed early word in
+Definition 4.1 is different from $00$. Thus it stays in the parent
+tree, reads its entire prescribed permutation, and has total weight
+$p=k-1$. Immediately before the last query its counts are $(p,p+3)$.
+Every earlier prefix has counts bounded by these, so every query is
+preceded by a live history. We have thereby pinned the complete actual
+live permutation for every $\eta$, not merely for one assignment at
+each weight. There are exactly two possible complete live permutations,
+$\pi_X,\pi_Y$, and both occur. Any full-length entirely live run
+must obey (IC.14) by Theorem 5.1.
+
+Consider a hypothetical star or cyclic representation, and let $p'$
+be its common-prefix length. It cannot exceed $p$: the two pinned
+permutations already have different next coordinates at depth $p$.
+It cannot be less than $p$ either. At its first block coordinate, all
+these pinned runs would still have the same next coordinate from the
+original $\mathsf I$. Distinct star modes or distinct cyclic modes
+have different first coordinates, since their early blocks are disjoint.
+They would therefore all have to use a single mode. One fixed mode
+would force a single complete permutation on these entirely live runs,
+contradicting $\pi_X\ne\pi_Y$. Hence $p'=p$, and the new ordered
+prefix is exactly $\mathsf I$.
+
+Proof, all star reblockings. The permutations $\pi_X$ and $\pi_Y$
+change the positions of exactly the four coordinates in
+$\mathsf X\cup\mathsf Y$; every other coordinate keeps its position.
+In an SI13 representation with block length $b'$, a center mode and
+a noncenter mode differ at exactly $2b'$ coordinates. Two different
+noncenter modes differ at exactly $3b'$ coordinates: the central
+block and the two exchanged noncentral blocks form three moved slots.
+All these coordinates change position, since the ordered blocks are
+disjoint. The latter number cannot equal four. Thus one of the two
+actually used modes is the center, the other is a noncenter mode, and
+$2b'=4$, so $b'=2$.
+
+Their two early ordered blocks must be the actual first two labels
+after $\mathsf I$, namely $\mathsf X$ and $\mathsf Y$. The
+center block is therefore one of those two, and its exchanged block is
+the other. SI13's componentwise increasing costs make the center block
+cheaper. It cannot be $\mathsf X=(4,5)$ rather than
+$\mathsf Y=(2,3)$, since each coordinate of $\mathsf X$ is more
+expensive. Hence $\mathsf Y$ must be center mode zero, and
+$\mathsf X$ a mode $j>0$.
+
+But at weight zero the unique $\mathsf I$ assignment selects
+$\mathsf X$, whereas every weight-one assignment selects
+$\mathsf Y$, by (IC.22). The pinned entirely live runs force those
+values also in the proposed representation. Any nondecreasing
+transversal $\gamma$ required by SI13 would have to satisfy
+$\gamma(0)=j>0=\gamma(1)$, a contradiction. Extra unused blocks
+or unused modes cannot alter the first two actual labels or these
+forced mode values. This excludes all SI13 reblockings. SI13 Definition
+13.1 explicitly contains SI12's two-mode proper-switch class, so the
+same conclusion excludes every SI12 reblocking.
+
+Proof, all cyclic reblockings. In an SI14 representation with $v'\ge3$
+blocks of length $b'$, two different cyclic modes move every coordinate
+of those $v'b'$ blocks. In fact a nonzero cyclic shift changes the
+slot of each block, regardless of whether the shift is relatively prime
+to $v'$. Coordinates in the common lists keep their positions. The two
+actual permutations therefore force $v'b'=4$, whence
+$v'=4$, $b'=1$.
+
+If its common list $\mathsf U'$ is nonempty, both modes must have
+the same coordinate at query position $p+2$, immediately after their
+one-coordinate early block. The actual positions there are $x_2=5$
+and $y_2=3$, which differ. If $\mathsf U'$ is empty, all four
+rotating coordinates occupy the four consecutive positions after
+$\mathsf I$, and different cyclic modes differ at each one. In
+particular they must differ at position $p+3$. The actual permutations
+both query the original first coordinate of the nonempty $\mathsf U$
+there. Both possibilities are contradictory. No cost-transversal choice
+can repair these position contradictions. This proves the cyclic
+exclusion with all possible reblockings allowed. $\square$
+

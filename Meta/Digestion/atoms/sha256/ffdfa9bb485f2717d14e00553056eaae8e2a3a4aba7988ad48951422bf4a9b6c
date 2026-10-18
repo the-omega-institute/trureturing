@@ -1,0 +1,17 @@
+**Open Question 11.2 (The actual finite optimizers).** Nothing in (11.1) evaluates
+
+$$
+V_2(\pi_n;n),\qquad \mathcal R_{N,n}=\mathscr R_{N,n}(\pi_n).
+\tag{11.3}
+$$
+
+In particular, no vanishing, positive-density minor, posterior concentration or threshold-crossing assertion for $\pi_n$ follows by replacing $\mu_n$ in the proofs. The original conditional budget from [Guarded, Corollary 6.4] is
+
+$$
+\mathcal R_{N,n}\le(n+2)c_\star-\kappa_n-\frac1{24}
+\le\tau:=2(3-2\sqrt2)-\frac1{24}
+\tag{11.4}
+$$
+
+when an actual $\theta\in\Theta_N$ satisfies $\mathsf B(P_\theta)$, $A_{P_\theta}<\infty$ and $\mathsf Z_\Delta(P_\theta)$. The reference marginals in (11.1) do not replace the optimizer in (11.4). Whether the actual optimizer supplies a sufficiently large reset variance or another rank discrepancy remains unresolved here.
+

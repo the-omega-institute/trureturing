@@ -1,0 +1,118 @@
+**Proposition 15.1 (comparison with paid ray and full-source capture).**
+For the single target of Definition 13.1, the exact initial call and
+peak prices are (AAR.80)–(AAR.81). The sufficient acquisition bounds in
+Proposition 11.8 and Theorem 12.9 retain their stated contracts:
+
+| Acquired object and contract | Sufficient initial Reads | Peak submitted length |
+| --- | ---: | ---: |
+| Single-target code, promised stationary source, Theorem 13.4 | $h(n)$ | $n$ |
+| Fixed public ray table with the two equal-alpha guards of Proposition 11.8 | $|Q|(D+2)+2$ | $D+1$ |
+| Full initial right subtree with the two guards of Theorem 12.9 | $2^{D+1}+1$ | $D+1$ |
+
+For a single right-ending target Corollary 11.6 requires one ray; for a
+left-ending target it requires two. This is a count of retained ray
+coordinates under that interface, not a Read-count lower bound.
+
+Proof. The first line is already attained. The other two lines are the
+respective supplied bounds, with their guards included. For a
+right-ending target the required set $B(\{p\})$ is just $\{pR\}$.
+For $p=aL$ it is $\{pR,aR\}$, whose two cylinders are disjoint;
+Corollary 11.6 gives two. The ray construction finds actual leaves by
+successive prefixes and acquires their scores. The full-source
+construction visits the actual right-subtree nodes. They obtain richer
+objects than the task requires and have their separate capture
+validation costs. Neither is silently reinterpreted as an optimal
+single-target code acquisition.
+
+If one additionally wants the equal-alpha capture test for the prefix
+scheme, an actual $L$ Read before its body and another after it can be
+used. Conditional on both returning alpha, the supplied rigidity law
+excludes intervening updates and validates the one source. A successful
+such attempt uses at most $h(n)+2$ Reads and $nh(n)+2$ letters, with peak
+$n$. Failed attempts and retries remain paid, and this conditional
+statement promises neither a bounded number of retries nor continued
+membership of a source in $\mathcal F_D$ after it has advanced. The two
+extra guard calls belong to this added capture contract, not to the
+promised-stationarity minimum of Definition 13.1. $\square$
+
+**Mathematical citation 15.2 (exact supplier correspondence and the native
+gap).** The following are the sources and limits of the argument.
+
+| Published supplier | Exact use and nontransfer boundary |
+| --- | --- |
+| This volume, Definition 11.1, Proposition 11.8 and Open problem 11.12 | The root/height family is identical. The fixed-ray capture bounds are sufficient acquisition bounds, not the arbitrary-code call optimum. The declared single target and supplied count specialize the recovery task without changing its source domain. |
+| This volume, Theorems 12.3–12.7 and 12.9 | Reuse the exact predictive factor, its guarded future decoder, its boundary factorization and the arbitrary-code minimum. The sufficient full-source capture is not minimized there. The acquisition proof is not a new generic behavior quotient or a repeat of its joint code count. |
+| [Sparse Literal History Transport, §§35–38 and 43](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#35-达到切点上的任意地址未来任务) | Reuse the first-leaf future semantics, all-count passive decoding and actual-label evidence argument. Theorem 36.1 starts with a target probe; Theorem 37.2 gives a general four-way logarithmic lower bound and leaves exact minimax open. Lemma 43.2 and Theorem 43.5 concern evidence and terminal-record range. Lemma 13.5 checks the needed source modifications inside the bounded family; terminal-record cardinality alone does not give (AAR.80). |
+| [Concurrent Native Cut Acquisition, §§17–19](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md#17-executing-an-ordered-cover-within-its-budget) | Reuse ordinary successful-search capacity $2^h-1$ and actual acquisition of the equality label. Its protected invocation-row recovery and later capture differ from this passive future-value task. Lemma 18.1 pads beyond all submitted addresses; those sources need not lie in $\mathcal F_D$. The bounded witness classification (AAR.79) is needed before the same capacity applies here. The comb formula in Corollary 19.2 alone does not discharge that obligation. |
+| [Literal Query Frontier, §§3–5](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md#5-the-peak-projection-and-shortest-pair-separators), and [Acquired Orbit Resource Frontier, §§4–6](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#6-a-signed-guard-sensitive-family-of-entire-rows) | Finite decision trees, same-history resource vectors and shortest-pair separators are existing methods. Their acquired entries, hidden clock slots or atomic orbit rows have different feasible query partitions. Their generic finite minimization is not a structural solution of (AAR.75); the new input is the native bounded all-word classification and its safe projection. |
+| [Atomic Generation Acquisition, §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | Its adaptive and fixed passive threshold prices have the same numerical forms in (AA.40)–(AA.41). The objects are phase/tail candidates with an actual root archive and a different passive test interface. The constant-composition presentation of its replies does not identify the whole source family or unrestricted literal tests in (AAR.73). Numerical agreement is not an operation-preserving reduction. |
+| [NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean), `original_present_transport`, `original_prefix_locality` | The first declaration transports only a present subtree, here the actual first leaf. The second gives finite-depth dependence of future replies. Neither is a native acquisition lower bound or permission to use an unobserved boundary. The ordinary argument supplies the necessary bounded witnesses and their actual replies. |
+| [NativeLiteralPathConstraints](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeLiteralPathConstraints.lean), `compile_exact`, and [NativeIndependentExecution](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.lean), `native_history_correspondence`, `effective_native_correspondence` | These supply exact literal constraints and same-source execution correspondences, including absence and all four continuations. A run's source, control and chronology are joint inputs. They do not prove a Read optimum, and no new compilation or kernel-verification claim is attached to their source correspondence here. |
+
+The focused ordinary addition is the bounded all-native-address lower
+bound matched by acquisition, its exact peak price, and the valid
+resource normalization with its pointwise obstruction. These are
+`repo-derived` results. The capacity recurrence and decision-tree
+principles are reused. Their value for the recovery programme is to
+price obtaining an initial sufficient spatial distinction, not merely
+to name that distinction once available.
+
+**Mathematical citation 15.3 (primary search literature and correspondence
+limits).** Three relevant primary sources place the search methods at
+their proper scope.
+
+[Robert D. Nowak, *The Geometry of Generalized Binary Search*,
+§§I–II, Definition 1 and Lemma 1](https://arxiv.org/html/0910.4397v5)
+uses a finite class of distinct binary-valued hypotheses on a query
+space, with one fixed unknown hypothesis. Its noiseless decision-tree
+view and query-space partition by response vectors correspond to a
+stationary source and its literal reply functions. Its geometric and
+coherence assumptions support near-optimal logarithmic bounds for a
+greedy splitting procedure. Here tests have four replies, the target
+is a future-behavior class rather than source identification, and no
+such coherence hypothesis is imposed. Neither the binary information
+bound nor its noisy-query results yield the exact constant in (AAR.80).
+The native proof identifies why the two label replies terminate a hit
+rather than supplying four arbitrary continuing subdivisions.
+
+[Ferdinando Cicalese, Eduardo Laber and Aline Medeiros Saettler,
+*Diagnosis determination: decision trees optimizing simultaneously
+worst and expected testing cost*, §1's DFEP definition and decision-tree
+costs, §2's different-class pairs](https://proceedings.mlr.press/v32/cicalese14.pdf)
+provide a closer class-identification model. The correspondences are
+$S=\mathcal F_D$, classes equal to the trajectories at the declared $p$,
+and tests $w\mapsto\operatorname{readout}(w,t)$ with four outcomes.
+For a finite test presentation one can keep words through depth $D+1$;
+all deeper words are constant absent on initial sources and provide no
+class distinction. These finite tests separate distinct trees. Unit
+test costs give the Read objective; after removing the public constant
+root test, costs $|w|$ give the separate letter objective with positive
+costs. The paper also supplies a distribution and optimizes expected
+cost, and its algorithm gives logarithmic approximation guarantees.
+No distribution is supplied here and the objective is an exact worst
+count. Its general framework explains why objects in one target class
+may be merged, but does not provide the bounded native pair geometry
+or its exact acquisition cost. In particular it does not identify the
+minimum retained alphabet with the optimal test depth.
+
+[R. Bruno, R. De Prisco, A. De Santis and U. Vaccaro,
+*Bounds and Algorithms for Alphabetic Codes and Binary Search Trees*,
+§§I–II](https://arxiv.org/html/2407.16443v1)
+distinguish binary-result alphabetic searches from ternary comparisons
+in binary search trees. Their internal nodes represent successful
+searches at ordered keys, and external leaves represent gaps; the
+objective uses probabilities of successful and unsuccessful searches
+to minimize average cost. Our prefix test has the corresponding
+less/equal/greater geometry, with equality further returning its
+necessary alpha/beta label and only the final above-all-keys gap
+attained. This is the ordinary search-tree structure used in
+(AAR.78). No probability distribution, entropy-rate claim or
+average-cost bound is transferred. Submitted word lengths are the
+actual costs of native operands; Proposition 14.3 proves its particular
+worst-cost tradeoff directly.
+
+These inspected correspondences establish methodological reuse and
+its limits. They do not assert worldwide originality, a new general
+search capacity theorem, or an efficient algorithm for optimizing all
+other resource coordinates.
+

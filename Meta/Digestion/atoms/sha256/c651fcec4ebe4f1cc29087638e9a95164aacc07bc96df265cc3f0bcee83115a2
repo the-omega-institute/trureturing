@@ -1,0 +1,18 @@
+## Appendix D. Direct rational evaluation bounds
+
+These are additional mathematical interval enclosures for the written evaluation order in §§3–5, rather than execution receipts. For each cell `q,inclusion` are the absolute rational bounds from (6). Every inclusion here is strictly smaller than that cell's independent image factor in Appendix C. Thus Appendix C image contraction is valid using these bounds alone. Each `bernstein_lower` below is the absolute minimum enclosing control endpoint after double division on that contracted image and exact power-to-Bernstein conversion on all 35 original leaves. All fifty exceed `0.00016650`.
+
+Exact JSON data (50 records): [appendix-d-direct-cell-bounds.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-d-direct-cell-bounds.json).
+
+The next four contraction records apply respectively to both uniform edge boxes and both separate midpoint boxes, in Appendix B edge order.
+
+Exact JSON data (4 records): [appendix-d-direct-edge-bounds.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-d-direct-edge-bounds.json).
+
+The following direct contracted-image geometry records use scale `2^210`. `geometry_min` is ordered weight, signed height, signed report, angular curvature; separation and wedge entries are lower endpoints. The seven-column minor and tangent are endpoint pairs. For each `minor_preconditioner`, `midpoint_determinant` is the exact rational determinant of the integer-midpoint matrix and `inverse` encloses its exact inverse on the same grid, row by row. These give the explicit preconditioned determinant calculation of Lemma 4.2. `T` is the signed primal value interval.
+
+Exact JSON data (50 records): [appendix-d-direct-cell-geometry.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-d-direct-cell-geometry.json).
+
+The explicit fixed rational edge tangents use singleton integer pairs on scale `2^210`. `residual_norm` is the absolute rational `e` of (12), `q` is its whole-edge weighted bound, and `s_t` is the resulting whole-edge derivative enclosure. The tangent selection rule in §8 uses the original nine-coordinate source box and the displayed positive-pivot construction; these constants remove any need for an unspecified approximate solve. Their derivative intervals are contained in the rational outward bounds `(1.1638,2.3196)10^-7` and `(1.1544,2.3111)10^-7`, respectively. Integration with Appendix C midpoint intervals proves (11) independently of its tighter derivative displays.
+
+Exact JSON data (2 records): [appendix-d-direct-edge-tangents.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/two-parameter-strip/appendix-d-direct-edge-tangents.json).
+

@@ -1,0 +1,13 @@
+**Boundary 10.2 (What completeness does and does not specify).**
+Completeness here means the exact feasible return masses and the
+lower risk frontier in the two-paid-read problem for every
+specified auxiliary law. The set $\mathcal B_\nu$ is attainable
+and provides a same-mass risk-dominating representative for every
+original protocol. It is not asserted to be the entire attainable
+region, including all higher-risk pairs. The infinite atomic
+formulae give existence and exact constraints, not a uniform finite
+algorithm for arbitrary probability laws without an effective
+description. No simplified list of every bias-dependent total-mass
+collision is needed or asserted; the indexed finite maximum
+retains all of them.
+

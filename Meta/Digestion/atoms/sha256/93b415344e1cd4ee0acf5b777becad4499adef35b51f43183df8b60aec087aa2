@@ -1,0 +1,28 @@
+**Theorem 67.7 (finite whole-rho histories retaining the actual field).** Fix an actual finite legal history with accepted whole-rho and original services, without an accepted Left/Right graft in the compared prefix. Let $q$ count only accepted renewals with a nonempty beta mask, and let $T$ be its total nonnegative idle comparison time. Use the one fixed bank $\mathcal F_H$, density, $\Omega$, moment bound and normal-ordering convention throughout. At a genuine renewal use the full inclusion $\mathsf T_{D'D}\otimes I_{\mathcal F_H\otimes\mathcal A}$ of Theorem66.3; the field vector and every field correlation are literally retained. At identity-domain acceptances, Read and refusal use identity on the retained quantum factors and keep the original actual classical record. On each idle interval evolve the producer by $\mathbb M_D$ and the ideal target by $\mathbb H_D^0$ of the actual current version. The target cut uses $\jmath_{D'D}\otimes I$. Denote these complete histories by $\mathbb P_h$ and $\mathbb V_h^0$.
+
+For every initial input(67.15) and every checkpoint,
+
+$$
+\begin{aligned}
+&\|\mathbb P_h(W_{D_0}\otimes I)\Psi
+ -(W_{D_h}\otimes I)\mathbb V_h^0\Psi\|\\
+&\quad\le (TR\sqrt\delta+2q\omega)\|\Psi\|
++\left([4(q+1)+12aT]\rho+
+4T\kappa\omega(1+\rho)\right)b(\Psi).
+\end{aligned}
+\tag{67.19}
+$$
+
+Use each checkpoint's actual prefix $q,T$. In particular the choice $\delta=\Omega^{-2}$ gives
+
+$$
+\frac{\|\text{full history difference}\|}{\|\Psi\|}
+\le\frac{TR+288q}{\Omega}
++\frac{\{[4(q+1)+12aT]c+576T\sqrt\nu(1+c)\}\sqrt{E+1}}{\sqrt\Omega}.
+\tag{67.20}
+$$
+
+Proof. Combine all idle pieces separated only by identity-domain source services: their geometric particle/field generators agree, so no extra endpoint estimate is charged merely for another Read or a label-changing identity version. There are at most $q+1$ remaining idle blocks. Ideal idle evolution commutes with $\mathsf n$, and each ideal occurrence injection is an isometry tensored with identity on the field, so $b(\Psi)$ and its norm remain fixed along the ideal history. Apply (67.16) to each ideal current input. Previously accumulated producer error is carried by the full unitary or inclusion; no bound on the actual field excitation of that error, and no return to the prepared range, is assumed. At an enlargement Lemma66.5 gives the additional full calibration mismatch $2\omega\|\Psi\|$ after tensoring with field identity. Summation gives (67.19), and (67.20) follows as in (67.18). The fibrewise form of Theorem66.3 preserves all Hilbert-valued particle traces at a cut; (67.3) makes the field-number form domain common to both source versions. Thus a supplied form-admissible initial component remains form-admissible as well. An arbitrary extra initial vector of norm at most $\eta$ adds at most $\eta$ and is retained in full. $\square$
+
+The whole-rho field change here is a change of the commissioned local generator on the same bank, including its boundary pinning and on-site compensation, not re-preparation of a vacuum or deletion of an old oscillator. The common and killed updates keep their different actual pair laws, including (66.5); compression is still not exact dynamic intertwining. The field comparison explicitly includes the time-ordered free field on the reference and target. Refusals do not install a refused candidate or release a candidate Read. A source-owned execution certificate for these inclusions, stiffness switches, compensation updates and all service/locking/hold durations is not furnished by (67.19). If such actual full-map certificates are separately supplied, their norm errors and an ingress error may be added by the same isometric telescoping. An unrecorded service evolution or missing mode is not such a certificate.
+

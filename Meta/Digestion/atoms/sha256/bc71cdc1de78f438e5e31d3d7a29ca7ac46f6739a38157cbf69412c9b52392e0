@@ -1,0 +1,25 @@
+**定义 C-145.1（同一物理零假设的精确输运）。** 令
+$\mathcal F=E^\dagger\mathcal F_QE$，其含义为 C-129.1 已分类的整个逻辑凸包，
+并令 $\mathcal F_p=L^\dagger\mathcal FL$。
+记 $P_x=|x\rangle\langle x|$，则
+
+$$
+\begin{aligned}
+u_t^p&=\sqrt{2/3}|0\rangle-\frac{it}{\sqrt3}|2\rangle,\\
+v_{st}^p&=\sqrt{2/5}(|0\rangle-is|1\rangle)
+-\frac{it}{\sqrt5}|2\rangle,\qquad s,t\in\{-1,1\},\\
+\mathcal F_p&=\operatorname{conv}\{P_1,P_2,P_{u_+^p},P_{u_-^p},
+P_{v_{++}^p},P_{v_{+-}^p},P_{v_{-+}^p},P_{v_{--}^p}\}.
+\end{aligned}
+\tag{C145.1}
+$$
+
+这里复用 C-129.1 对任意复振幅与全部有限混态分解的完整分类，不重新分类源。
+被动输入 $\rho_p$ 对应物理源 $EL\rho_pL^\dagger E^\dagger$，而
+$N^{\rm ph}(L\rho_pL^\dagger)=DN(\rho_p)D^\dagger$。
+此对应是 $Q$ 上的坐标识别，不供应 $E^\dagger$ 预处理、源制备或门。
+相干数仍在固定物理 $\mathcal B$ 中定义，不在逻辑列基中定义。
+特别地，$EP_0E^\dagger=P$ 仍是四相干目标。
+通道输出零假设只取实际像 $\mathcal F_N=N(\mathcal F_p)$，
+未改定义为某个输出基中的相干数凸包。
+

@@ -1,0 +1,24 @@
+**Corollary 4.2 (the complete NCE fiber).** For every input of Definition
+1.1 there is a finite description as in Section 2 and a decoding map
+$D_I$ whose image is exactly $\mathscr H_I$. There is an effective
+extraction map on supplied members of $\mathscr H_I$ with
+
+$$
+D_I(\operatorname{Extract}_I(t,\mathbf n))=(t,\mathbf n).
+\tag{SFP.17}
+$$
+
+Proof. Malformed input has the empty description. On valid input apply
+Theorem 4.1 to (SFP.3), keeping $t$ and every class variable as designated
+variables and using chronology as the guard. Project the decoded output
+to its one $t$ and its original epoch tuple. NCE Proposition 2.2 makes
+soundness exactly membership in (SFP.2).
+
+For reverse extraction, take the actual subtree at a representative
+reached hole of every class in every actual $\rho^{n_i}t$. The NCE
+supplier gives its unique joint valuation satisfying (SFP.3). Apply the
+extraction in Theorem 4.1 to that valuation. It retains precisely $t$
+and $\mathbf n$, proving (SFP.17). Entire iterate equations handle
+later-born endpoints, rather than transporting them backward to an
+originally nonexistent subtree. $\square$
+

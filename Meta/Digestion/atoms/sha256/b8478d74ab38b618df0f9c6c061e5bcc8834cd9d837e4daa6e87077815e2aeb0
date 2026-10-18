@@ -1,0 +1,63 @@
+**Proposition 219.8 (One detector mixture for every guard subset).**
+Under Theorem 219.5, let $\varnothing\ne S\subseteq I$,
+$s=|S|$, and choose $p<q<r$ in $J$.
+Put $d(S)=\sum_{i\in S}d_i$ and
+$G_3=\gamma_p+\gamma_q+\gamma_r$.
+Every unrestricted full score in the fiber satisfies
+
+$$
+(2s-1)(\Delta_O-E)\ge
+d(S)+(s-1)G_3+\gamma_p-sD,
+\qquad \Delta_N\ge\Delta_O.
+\tag{219.19}
+$$
+
+This is a necessary cut, without a sufficiency or sharp-minimum assertion.
+
+**Proof.** Give weight $s-1$ to $(p,q;0,q,r)$ and weight one to
+each $(i,p;0,p,0)$, $i\in S$. Total weight is $2s-1$.
+An $A$ word with $w_p=1$ earns $s$ units of base reward.
+With $w_p=0$, it earns $s-1$ plus the number of its zero bits in $S$.
+This is at least $s$ if its first zero lies in $S$, and at least
+$s-1$ otherwise. Its aggregate contribution is at least
+$(s-1)D+d(S)$. Correct class $p$ earns $s\gamma_p$ and classes
+$q,r$ earn $(s-1)(\gamma_q+\gamma_r)$; other correct contributions
+are nonnegative. Subtract $(2s-1)D$ and use
+$\Delta_O-E=B_O-D$. This argument is pointwise on all words,
+without a suffix restriction. The unqueried output $r$ is legal. ∎
+
+For zero surplus $c_0=\Delta_O-E=0$, the table $(i,p;0,p,0)$
+requires $A\{w_p=0\}\ge\gamma_p$, while $(p,q;0,q,r)$ requires
+$A\{w_p=0\}\le D-\gamma_q-\gamma_r$.
+Therefore $D\ge G_3$. Write $X=D-G_3\ge0$.
+All subset cuts for this triple are equivalent to
+
+$$
+\sum_{i\in I}\min(d_i,X)\ge\gamma_p+X.
+\tag{219.20}
+$$
+
+Indeed, the subset inequality is
+$d(S)-sX\le\gamma_q+\gamma_r$; maximizing its left side over
+subsets gives $\sum_i(d_i-X)_+$.
+Using $D-\sum_i(d_i-X)_+=\sum_i\min(d_i,X)$ proves the equivalence.
+The empty subset adds only a true zero bound. Condition (219.20) is
+still necessary only.
+
+For a concentration example, take $L=8$, $I=\{1,2,3,4,5\}$,
+$J=\{6,7,8\}$, $d=(3/40,3/40,1,1,1)$ and
+$\gamma=(1,19/20,9/10)$. Then
+$D=63/20$, $G_3=57/20$, $K=6$, $E=3/20$.
+Subset $\{3,4,5\}$ forces $c_0\ge1/20$ and $\Delta_O\ge1/5$;
+the full subset gives only $c_0\ge-1/45$.
+This distinguishes concentration from the aggregate cut, without
+claiming exclusion from every pre-existing conic combination.
+
+Normalizing the detector weights by $2s-1$ gives one probability law
+on whole legal tables, implemented by one source-independent uniform
+seed. For an actual first zero beyond $H=\max J$, its base mass is
+$s/(2s-1)$ and exact marked-law tail error is
+$\max\{(s-1)/(2s-1),a_n\}$.
+This execution uses at most two actual requests, rather than executing
+all conic detectors on one source. It is not an amplitude-cap theorem.
+

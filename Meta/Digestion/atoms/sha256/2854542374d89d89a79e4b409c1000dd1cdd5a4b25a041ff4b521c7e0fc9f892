@@ -1,0 +1,52 @@
+**Corollary 5.2 (precise partial-operation version).** Theorem 5.1 applies
+to partial self-operations on $X$ if the transports are total bijections
+and the conjugacy is exact:
+
+$$
+h(D_a)=D_{h.a},\qquad
+h(T_ax)=T_{h.a}(hx)\quad(x\in D_a).
+\tag{5.4}
+$$
+
+Totalize each operation on $\widehat X=X\sqcup\{\bot\}$ by sending an
+illegal input to the new absorbing $\bot$; let every transport fix $\bot$.
+Use an observation equivalence $\widehat K$ that isolates $\bot$ and records
+the actual complete response of every name, including legal failures and
+task-visible illegal rejections. If these observations have the required
+invertible response covariance, (5.3) on $\widehat X$, restricted to $X$,
+gives the greatest complete-response-preserving equivalence compatible with
+both partial actions and those transports **among equivalences contained
+in $\widehat K|_{X\times X}$**. Thus its boundary is coarsest subject to
+that ambient restriction. An exact task-observation kernel is an additional
+hypothesis for deriving absolute task minimality by this argument; an
+arbitrarily finer $\widehat K$ does not supply it.
+
+**Proof.** Exact domain conjugacy makes the totalized maps satisfy (5.2)
+on both legal and illegal inputs, and on $\bot$. Apply Theorem 5.1. The
+isolated sink makes legality visible in the word tests; the other observation
+fields retain the complete response at each actual prefix. A legal failure
+has its actual successor in $X$, possibly a stopped state, and is never
+identified with $\bot$. Restricting the greatest stable relation to actual
+states gives the asserted pairwise semantics and retains containment in
+$\widehat K|_{X\times X}$, since the empty word is one of the tests.
+Conversely, any complete-response-preserving equivalence $S$ on $X$ inside
+that restriction, invariant under legal successors and transports, extends
+to $\widehat S=S\cup\{(\bot,\bot)\}$. Identical legality makes it invariant
+under the totalized actions, and the transports fix its isolated sink.
+It is contained in $\widehat K$, so Theorem 5.1 puts it inside the joint
+core. This proves exactly the relative maximality claimed.
+
+The restriction cannot be discarded: take two actual points with the same
+initial observation, one total identity action with identical complete
+responses, and only the identity transport. If $\widehat K$ is equality
+on $X\sqcup\{\bot\}$, the joint core restricted to $X$ is equality.
+Yet the universal equivalence on the two actual points preserves this
+entire task and its transports. Thus a finer ambient observation can force
+distinctions beyond the task. The auxiliary sink is an interpretation of
+illegality, not a newly executable state. $\square$
+
+This corollary concerns global transports and exact conjugacy. General
+partial-chart tasks use the residual routes of §3; Proposition 3.3 proves
+that fixed-route normalization is a sufficient special case rather than a
+necessary condition for those tasks.
+

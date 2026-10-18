@@ -1,0 +1,16 @@
+**定义 15.4.1（可见—隐藏分块）。** 把 $x=(x_V,x_H)$、$b=Bu+\xi=(b_V,b_H)$ 分块，写
+
+$$
+\begin{pmatrix}M_{VV}&M_{VH}\\M_{HV}&M_{HH}\end{pmatrix}
+\begin{pmatrix}x_V\\x_H\end{pmatrix}
+=\begin{pmatrix}b_V\\b_H\end{pmatrix}.
+$$
+
+假定 $M_{HH}$ 可逆，定义对隐藏块的 Schur 补
+
+$$
+S_V(M)=M_{VV}-M_{VH}M_{HH}^{-1}M_{HV}.
+$$
+
+<a id="claim-15-4-2"></a>
+

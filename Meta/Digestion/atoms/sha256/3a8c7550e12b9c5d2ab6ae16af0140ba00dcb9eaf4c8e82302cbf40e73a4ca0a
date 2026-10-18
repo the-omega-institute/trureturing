@@ -1,0 +1,4 @@
+**Proposition 7.3 (The one-gap degeneracy).** For $m=1$, define the quantities of Section 2 using its single-part compositions. Then $G_{0,1,n}=G_{1,1,n}=1$, both conditional divergences and $I^{\mathrm{paid}}_{i,1}$ are zero, and the threshold rule with $b>1$ never stops.
+
+Proof. A legal total $n$ determines the sole gap $K=n$, so both conditional laws are the same point mass. Exactly $w_n=c_n=r_n$ and hence every factor is one. The accumulated product remains one, strictly between the two boundaries. Thus $J=\infty$; the positive-drift and finite-mean assertions of Theorem 7.2 expressly require $m\ge2$. $\square$
+

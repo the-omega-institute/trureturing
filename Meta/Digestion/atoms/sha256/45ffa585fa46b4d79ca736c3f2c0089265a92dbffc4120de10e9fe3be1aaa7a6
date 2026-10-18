@@ -1,0 +1,21 @@
+**Deterministic certificate for the full factorization.** We use the following elementary primality criterion. Suppose $n>1$, $n-1=FR$, all prime factors of $F$ are proved prime, $F^2>n$, and for each prime $p\mid F$ there is an integer $a$ such that
+
+$$a^{n-1}\equiv1\pmod n,\qquad
+\gcd\bigl(a^{(n-1)/p}-1,n\bigr)=1.$$
+
+Then $n$ is prime. Indeed, for any prime divisor $\ell$ of $n$, the order of $a$ modulo $\ell$ divides $n-1$ and does not divide $(n-1)/p$. Its $p$-adic valuation is exactly $v_p(n-1)$, so $p^{v_p(F)}\mid\ell-1$. Applying this for every $p\mid F$ gives $F\mid\ell-1$. Every prime divisor of $n$ would therefore exceed $F>\sqrt n$, which is impossible for composite $n$.
+
+The base primes $3,5,113,587$ are verified by trial division through their integer square roots. Apply the following rows in their displayed order. In each row, $a^{n-1}\equiv1\pmod n$. The final column records $a^{(n-1)/p}\bmod n$, whose difference from $1$ has gcd $1$ with $n$.
+
+| $n$ | $F$ | $R=(n-1)/F$ | $p$ | $a$ | Modular residue |
+|---|---|---|---|---|---|
+| 59779 | $3^6=729$ | 82 | 3 | 5 | 3307 |
+| 3955001 | $5^4\cdot113=70625$ | 56 | 5 | 2 | 1851186 |
+| 3955001 | $5^4\cdot113=70625$ | 56 | 113 | 2 | 589905 |
+| 142380037 | 3955001 | 36 | 3955001 | 2 | 92298902 |
+| 56563464519948259 | $142380037\cdot587=83577081719$ | 676782 | 142380037 | 2 | 44969241392553102 |
+| 56563464519948259 | $142380037\cdot587=83577081719$ | 676782 | 587 | 2 | 8097665163801458 |
+| 120074026624398979403194983601 | 56563464519948259 | 2122819520400 | 56563464519948259 | 2 | 101756090298249446324490326895 |
+
+For every distinct $n$ in the table, $F^2>n$. Each prime factor used in $F$ is a base prime or a prime proved by an earlier row. The table therefore certifies both $A$ and $Q$.
+

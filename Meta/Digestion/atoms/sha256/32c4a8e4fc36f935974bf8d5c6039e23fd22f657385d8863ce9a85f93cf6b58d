@@ -1,0 +1,15 @@
+**Proposition 1.6 (Known product phases preserve the calibrated identity).**
+Let
+$U_\varphi=\bigotimes_i\operatorname{diag}(1,e^{i\varphi_i})$.
+Replace the reference and parent by $U_\varphi\psi_+$ and
+$U_\varphi H_{\rm loc}U_\varphi^\dagger$, and use pulse phase
+$\beta_i=\varphi_i-\pi$ at site $i$. Then Theorem 1.3 and (1.13)
+hold with these replacements.
+
+Proof. The diagonal unitary preserves $\mathcal K_n$, commutes with
+the diagonal signal generator and leaves complete-word outcome
+probabilities invariant. Direct conjugation of (8.6) gives
+$U_\varphi H_i(\beta)U_\varphi^\dagger=H_i(\beta+\varphi_i)$.
+Hence the entire calibrated experiment has the original joint outcome
+law, while parent spectra and energies are unchanged. $\square$
+

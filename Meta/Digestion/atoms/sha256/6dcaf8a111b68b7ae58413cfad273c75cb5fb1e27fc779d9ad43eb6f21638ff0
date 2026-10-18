@@ -1,0 +1,11 @@
+**Convention 6.4 (distinct resource accounts).** COMPLETE includes the
+original control, private labels, all installed table numerics and
+programs, selectors, addresses, sampler states, workspace, output
+cursors and persistent randomness. The offline evaluator has its own
+charged input, exact arithmetic and workspace; none becomes a free
+online register. The maximum completed p word length used by (6.5) is
+eight; the suspended feature lengths are one, three, five and seven.
+These word lengths are not source sample counts, acquisition prices,
+random-bit bounds, execution-time bounds or COMPLETE bounds. The full
+program and infinite complete carrier have not been truncated.
+

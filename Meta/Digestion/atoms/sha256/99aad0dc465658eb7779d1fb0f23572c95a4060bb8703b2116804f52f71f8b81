@@ -1,0 +1,123 @@
+**Theorem 87.1 (uniform prime-factor bound).** Let $j,C,c,k$ be positive integers, let $N=3^j$, and suppose $k$ is odd and $3\nmid k$. Write $B_n=L_n^2+3$ for positive odd $n$. Suppose
+
+$$B_N=D C^2,\qquad B_{Nk}=D c^2,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Then every prime $p\mid k$ satisfies
+
+$$\boxed{40p>N-1.}$$
+
+In particular, if $k>1$, its least prime factor $P^-(k)$ and the index $n=Nk$ satisfy
+
+$$P^-(k)>\frac{N-1}{40},\qquad n>\frac{N(N-1)}{40}.$$
+
+For each fixed prime $p\ge5$, all $j$ with $3^j\ge40p+1$ therefore exclude $p\mid k$. The same threshold for the largest prime in a fixed finite set excludes every factor from that set. The primes two and three are already excluded by the hypotheses. Theorem 86.1 remains stronger for five and seven at small $j$.
+
+**Proof.** We give the polynomial, denominator and size estimates explicitly.
+
+**Lucas quotient and gcd.** Define $V_0(X)=2$, $V_1(X)=X$, and $V_{m+2}(X)=XV_{m+1}(X)+V_m(X)$. For odd $t$, the Binet roots have product $-1$, so $L_{tm}=V_m(L_t)$. As in §86, the residues of $V_0,\ldots,V_5$ modulo $X^2+3$ are $2,X,-1,0,-1,-X$, with $V_6=2,V_7=X$. The period-six recurrence gives $V_m\equiv\pm X$ for odd $m$ with $3\nmid m$. Consequently $B_t\mid B_{tm}$ for such $m$.
+
+For a prime $p\ge5$, put
+
+$$Q_p(X)=\frac{V_p(X)^2+3}{X^2+3}\in\mathbb Z[X].$$
+
+It is monic of degree $2p-2$ and positive for every real $X$. Its remainder modulo $X^2+3$ is $\varepsilon_p p$, where $\varepsilon_p=1$ for $p\equiv1\pmod6$ and $\varepsilon_p=-1$ for $p\equiv5\pmod6$. To check this exact constant, set $X=z-z^{-1}$. For odd $p$,
+
+$$V_p(X)=z^p-z^{-p},\qquad V_p'(X)=p\frac{z^p+z^{-p}}{z+z^{-1}}.$$
+
+At $z=\exp(i\pi/3)$, one has $X=i\sqrt3$, $z+z^{-1}=1$, $V_p'(X)=p$, and $V_p(X)=\varepsilon_p X$. Division at this simple root of $X^2+3$ gives
+
+$$Q_p(i\sqrt3)=\frac{V_p(i\sqrt3)V_p'(i\sqrt3)}{i\sqrt3}=\varepsilon_p p.$$
+
+The conjugate root has the same value, proving the remainder formula. Thus
+
+$$\gcd\bigl(B_t,Q_p(L_t)\bigr)\mid p. \tag{87.1}$$
+
+The derivative formula also gives the polynomial identity
+
+$$(X^2+4)(V_p')^2=p^2(V_p^2+4). \tag{87.2}$$
+
+At a root of $V_p^2+3$, its right side is $p^2\ne0$, so $V_p'$ is nonzero. Since $V_p$ is also nonzero there, all roots of $V_p^2+3$ are simple. Removing the two roots of $X^2+3$ leaves $Q_p$ squarefree of positive degree. In particular $Q_p$ is not a square in $\mathbb Q[X]$.
+
+**An effective bound for square values.** Let $f\in\mathbb Z[X]$ be monic of degree $2d$, positive for real $x\ge1$, and not a square in $\mathbb Q[X]$. Matching coefficients from degree $2d-1$ down to degree $d$ gives a unique monic polynomial $A\in\mathbb Q[X]$ of degree $d$ for which
+
+$$g=f-A^2\ne0,\qquad \deg g\le d-1.$$
+
+Let $H$ be the sum of absolute values of the nonleading coefficients of $A$, and let $M$ be a positive integer clearing their denominators. Let $G$ be the sum of absolute values of the coefficients of $g$. If $e=\deg g$ and $g_e$ is its leading coefficient, put
+
+$$R_0=1+\sum_{i<e}\left|\frac{g_i}{g_e}\right|,\qquad T=2+\left\lceil\max(1,2H,2MG,R_0)\right\rceil,$$
+
+where the empty sum is zero. For an integer $x\ge T$, one has $A(x)>x^d/2$ and $|g(x)|\le Gx^{d-1}$. Therefore
+
+$$\left|\sqrt{f(x)}-A(x)\right|=\frac{|g(x)|}{\sqrt{f(x)}+A(x)}<\frac{2G}{x}<\frac1M.$$
+
+If $\sqrt{f(x)}$ were an integer, the difference would belong to $M^{-1}\mathbb Z$ and hence vanish. This would give $g(x)=0$, impossible for $x>R_0$, where its leading term dominates the lower terms. Thus $f(x)$ is nonsquare for every integer $x\ge T$.
+
+This is an elementary polynomial form of Runge's method; see [Levin, *Variations on a theme of Runge: effective determination of integral points on certain varieties*, Journal de Théorie des Nombres de Bordeaux 20 (2008), 385–417, introduction and Theorem 1.2](https://jtnb.centre-mersenne.org/item/10.5802/jtnb.634.pdf). The argument here supplies its own explicit bounds.
+
+**Root location and uniform coefficient bounds.** Every complex root $r$ of $Q_p$ has modulus at most two. Choose a nonzero $z$ with $r=z-z^{-1}$ and put $w=z^p$. Since $V_p(r)=w-w^{-1}=\pm i\sqrt3$, one has
+
+$$w^2\mp i\sqrt3\,w-1=0.$$
+
+Its roots $(\pm i\sqrt3\pm1)/2$ have modulus one. Thus $|z|=1$, and $r=z-\bar z$ has $|r|\le2$.
+
+Write $\|P\|_1$ for the sum of absolute coefficient values. The coefficients of $V_p$ are nonnegative, and $\|V_p\|_1=L_p\le2^p$. Regarding $V_p(X)^2+3$ as a polynomial in $Y=X^2$, synthetic division by $Y+3$ gives
+
+$$\begin{aligned}
+\|Q_p\|_1&\le(4^p+3)(1+3+\cdots+3^{p-1})\\
+&<(4^p+3)3^p/2\le12^p<2^{4p}.
+\end{aligned}$$
+
+The penultimate inequality uses $4^p\ge3$.
+
+Apply the square-root construction to $f=Q_p$ and $d=p-1$. If $r_1,\ldots,r_{2d}$ are the roots of $f$, then
+
+$$Z^{2d}f(1/Z)=\prod_{h=1}^{2d}(1-r_hZ).$$
+
+The formal square root with constant term one is the product of the series $(1-r_hZ)^{1/2}$. Its coefficients through degree $d$ are exactly those in $A=X^d+a_1X^{d-1}+\cdots+a_d$. The coefficient of degree $m$ in each factor has modulus at most $2^m$, because $|\binom{1/2}{m}|\le1$ and $|r_h|\le2$. Counting weak compositions of $i$ into $2d$ nonnegative parts therefore gives, for $1\le i\le d$,
+
+$$|a_i|\le2^i\binom{2d+i-1}{i}\le2^{2d+2i}\le2^{4d}<2^{4p}.$$
+
+The complex factorization is used only to bound coefficients. Its product is the unique normalized formal square root of a rational polynomial, so the coefficients agree with the rational coefficient-matching construction above.
+
+For the denominator bound, expand the square root of the original reversed polynomial with integer coefficients. The Catalan-number formula
+
+$$\binom{1/2}{m}=\frac{(-1)^{m-1}\operatorname{Cat}_{m-1}}{2^{2m-1}}$$
+
+shows that $M=2^{2d}$ clears every coefficient through degree $d$. Hence
+
+$$\|A\|_1\le1+d\,2^{4p}\le p\,2^{4p}\le2^{5p},\qquad H\le2^{5p},\qquad G\le\|f\|_1+\|A\|_1^2\le2^{11p}.$$
+
+Since $M^2g$ has integer coefficients and $g_e\ne0$, one has $|g_e|\ge M^{-2}$. Thus
+
+$$R_0\le1+M^2G\le1+2^{15p},\qquad 2MG\le2^{1+2p+11p}\le2^{14p},\qquad 2H\le2^{5p+1}\le2^{6p}.$$
+
+All inequalities hold for $p\ge5$. The integer threshold consequently satisfies
+
+$$T\le3+2^{15p}\le2^{16p}<2^{20p}. \tag{87.3}$$
+
+Thus $Q_p(x)$ is nonsquare for every integer $x\ge2^{20p}$. The universal root and coefficient estimates prove this for all $p\ge5$; no finite list of tested primes enters the argument.
+
+**The exceptional gcd prime and the original index.** Suppose $p\mid k$ and $40p\le N-1$. Then $p\ge5$ and $p<N$. Put $t=Nk/p$. It is odd, $t\ge N$, and $v_3(t)=j$. Since $t/N$ is odd and coprime to three, $B_N\mid B_t$.
+
+We claim $p\nmid B_t$. For $p=5$, this follows because $-3$ is a nonsquare modulo five. For $p>5$, suppose instead that $p\mid B_t$. The identity $5F_t^2=B_t+1$ makes five a square in $\mathbb F_p$. Choose $\phi=(1+\sqrt5)/2$ in that field and put $a=\phi^2$. The odd-index Binet formula gives
+
+$$B_t=a^t+a^{-t}+1\pmod p.$$
+
+Thus $a^t$ is a nontrivial cube root of unity. If $h=\operatorname{ord}(a)$, then $h/\gcd(h,t)=3$, and therefore
+
+$$v_3(h)=v_3(t)+1=j+1.$$
+
+Since $h\mid p-1$, this forces $3^{j+1}\mid p-1$, contradicting $p<N=3^j$. This proves the claim. Equation (87.1) now yields $\gcd(B_t,Q_p(L_t))=1$.
+
+Every prime in $D$ divides $B_t$. The assumed equality
+
+$$B_{Nk}=B_{pt}=B_tQ_p(L_t)=D c^2$$
+
+therefore forces $Q_p(L_t)$ to be a square: each of its prime factors is outside both $B_t$ and $D$ and must have even valuation.
+
+Finally, for odd $N\ge3$, Binet gives $L_N=\phi^N-\phi^{-N}>\phi^{N-1}$. After division by $\phi^{N-1}$, this follows from $\phi-1=\phi^{-1}$ and $1-2N<-1$. Since $\phi>\sqrt2$,
+
+$$L_t\ge L_N>2^{(N-1)/2}\ge2^{20p}.$$
+
+Equation (87.3) says that $Q_p(L_t)$ is not a square, a contradiction. Thus $40p>N-1$ for every prime divisor of $k$, proving all stated consequences. ∎
+

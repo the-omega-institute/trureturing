@@ -1,0 +1,30 @@
+**Corollary 13.2 (a precise component-repair premise fails).** Consider
+the proposed repair premise that, at fixed local depth, seed incidence,
+owner-update budget and bounded number of owner components, supplying
+the exact actual component label and every exact component normalizer
+always makes the remaining common-law COK defect $o(n)$. Here the
+remaining law is the exact conditional Gibbs law, the original owners
+and incoming groups remain as prescribed, and no block or whole weight
+is removed. This premise is false already at
+$d=3,L=2,r=3,c=4$.
+
+Proof. For every $m\ge7$ the four internally $r$-owner-connected
+components and their exact weights are known. Complete resolution
+conditions on $\chi=h$. Nevertheless for every attained $h$,
+
+$$
+\frac{\Delta(P_h)}{n}=\frac23+\frac1n\longrightarrow\frac23.
+\tag{OCC.40}
+$$
+
+This contradicts the proposed vanishing normalized defect, even when
+the source descriptor has been fully paid for. $\square$
+
+The premise just defined is not attributed to $V_{\rm cond}$,
+$V_{\rm swap}$, the full recursive grammar or its range extension.
+It is stronger than the uniqueness statement in Lemma 3.2 and is not
+one of its conclusions. Exact weighted component summation, actual
+component acquisition and correlations inside a component are separate
+obligations. Unlike a coordinate pin, conditioning on $\chi$ fixes no
+individual seed here; none has been deleted from the entropy accounting.
+

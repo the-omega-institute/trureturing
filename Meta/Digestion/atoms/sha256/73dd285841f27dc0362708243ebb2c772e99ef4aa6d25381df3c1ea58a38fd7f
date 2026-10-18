@@ -1,0 +1,59 @@
+**Theorem 6.4 (full copy loop count and conditional remaining suffix).** For
+each $\ell\ge1$ the two loop executions in Definition 6.3, including their
+terminating tests, seals and token occurrences, use exactly $12\ell+6$
+primitives. Their complete cost is
+
+$$
+C_{\mathrm{copy}}=
+C_{\mathrm{alloc/init/descriptor}}
++C_{\mathrm{first\ position}}+(6\ell+3)
++C_{\mathrm{reposition}}+(6\ell+3).
+\tag{AIF.11}
+$$
+
+The positioning and construction terms are the exact graph evaluations of
+Definition 3.4. They do not include the two loop terms again. Relative to
+the supplied $8\ell+4$ payload/seal/handoff bodies, this implementation adds
+exactly $4\ell+2$ length-test and length-head movement occurrences.
+
+Across all $2^\ell$ sender payloads with common length, layout and origin
+metadata, the schedule is value independent. At a fixed receiver-copy phase
+just after its $c$th payload RD, $1\le c\le\ell$, its acquired payload is
+the prefix $z\in\{0,1\}^c$, including the current read latch. At the
+corresponding pre-payload-read phase take $c=0$. Conditional on this prefix
+and the common schedule, exactly $2^{\ell-c}$ sender payloads remain.
+A supplement enabling reconstruction of the original payload, or of its
+later complete request-audit behavior, needs $\ell-c$ fixed-width bits;
+the remaining suffix attains the bound. This necessity is for decoding
+from already materialized receiver data without further payload reads.
+
+Proof. Each copied bit executes exactly the six loop rows, followed by one
+terminal RD(0), one CTL seal and one TOK at stage end. Thus each stage is
+$6\ell+3$. Subtracting the four data occurrences per bit and the seal/TOK
+pair per stage leaves $2\ell+1$ counter occurrences per stage. Setup and
+repositioning do not depend on payload values, and their actual lengths
+are separately added as in AIF.11. Each stage has a complete finite bound,
+so the supplied tape progress argument applies.
+
+Induction through the first stage shows that the sealed mailbox is exactly
+the original sender payload with its preserved binding. Induction through
+the receiver stage shows that before its next payload RD no not-yet-read
+payload bit has affected its local materialized record. Its control, heads,
+test latch, receipt count and tokens follow the common schedule. After
+the $c$th RD, the previous $c-1$ payload bits are written in its destination
+and the current bit is in the data latch; hence its acquired prefix is
+exactly $z$. At later phases before the next RD the same prefix is merely
+materialized by WR. A stale latch is not counted as a new acquisition.
+
+For any fixed $z$, each of the $2^{\ell-c}$ suffixes is realized by the
+same lawful input actor, with the same source. Taking $\ell\ge2$ and the
+TagRead use of the payload in Theorem 5.2, these distinct completed
+requests have different authentic request fields, even though their
+literal source replies are all absent. For $\ell=1$, the two possible
+addresses still give distinct request fields, whether or not their source
+replies differ. Thus that audit task also requires all the suffix
+distinctions. A sufficient binary supplement must have at least that many
+values. Keeping the suffix reconstructs the full sender payload, all
+previous copy operands, and the deterministic copy remainder, and attains
+the stated conditional width. ∎
+

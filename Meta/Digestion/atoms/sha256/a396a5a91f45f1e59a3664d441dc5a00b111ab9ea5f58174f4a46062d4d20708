@@ -1,0 +1,59 @@
+**Proposition 5.1 (complete specialization of the canonical instrument).**
+Fix $d,L>0$, $v=d/L$, and $0<x<c-d$. For the request
+$k(t)=x+vt$, constant relative phase, the reduced live operators on
+$(+,-,2)$, with an arbitrary untouched reference, are
+
+$$
+\begin{aligned}
+S_x(t)&=\frac{x}{x+vt},\qquad
+f_x(t)=\frac{vx}{(x+vt)^2},\qquad s_x=\frac{x}{x+d},\\
+K_{x,t}&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c-x-vt)}{(x+vt)(c-x)}},\sqrt{\frac{x}{x+vt}}\right),\\
+J_{x,2}(t)&=\sqrt{f_x(t)}|f\rangle\langle2|,\\
+J_{x,1}(t)&=\sqrt{\frac{c f_x(t)}{2(c-x)}}|f\rangle\langle-|,
+\qquad
+J_{x,3}(t)=\sqrt{\frac{c f_x(t)}{2(c-x)}}|f\rangle\langle-|,\\
+J_{x,0}(t)&=J_{x,4}(t)=0.
+\end{aligned}
+\tag{FH.13}
+$$
+
+The two equal Kraus fields retain different original labels. On (FH.3)
+the terminal live output is $s_x\rho_{x+d,\beta,m}$, and the five
+scalar failure densities are
+
+$$
+(0,c,Z,c,0)f_x(t),\qquad 0<t\leq L,
+\tag{FH.14}
+$$
+
+each with its exact time, original mode and absorbing $f$. Consequently
+the unconditional probability of failure during this request by $u/v$ is
+
+$$
+G_x(u)=\frac{u}{x+u},\qquad 0<u\leq d.
+\tag{FH.15}
+$$
+
+Proof. The positive ramp has $\lambda=v/(x+vt)$, so integrating gives
+$S_x$. Insert this and $p(k)$ into (FH.5). The constant plus attenuation
+has zero loss. The middle squared attenuation has negative derivative
+$f_x$; the minus squared attenuation has negative derivative
+$c f_x/(c-x)$. Its two source modes contribute half each after compression
+to $V$. This gives all of (FH.13), as in [IB][IB] Proposition 17.2.
+Their integrated effects, together with $K_{x,L}^\dagger K_{x,L}$,
+sum to $I_V$ entry by entry. Thus these are complete CP operations on
+arbitrary reference inputs, not just assigned scalar probabilities.
+
+Multiplying the three source amplitudes by $K_{x,L}$ gives
+$\sqrt{s_x}\psi_{x+d,\beta,m}$. The middle input population is $Z$;
+the minus population is $2(c-x)$, so each labelled minus failure has
+trace $cf_x$. Since $Z+2c=1$, total failure density is
+$f_x=-S_x'$, with mass $1-s_x$. Its integral through $u/v$ equals
+$1-x/(x+u)$, proving (FH.15). All five mode fields and absorbing
+successors have been specified even though the scalar lower test forgets
+their labels. $\square$
+
+The CDF in (FH.15) is a prescribed law of the operation. A single actual
+failure is one outcome, not a delivered CDF, whole density or height sensor.
+

@@ -1,0 +1,61 @@
+### 76.2. Two three-distinct-channel representatives
+
+For one solution of (75.13)–(75.15), use \(q,e,g,c,d\), set
+\(t=\sqrt q\), \(E=\bar e\), and define
+\[
+\begin{aligned}
+ f(Z)&=Z^3-3Z^2+3EZ-E/q,\\
+ B(Z)&=(Z^2-3Z+3E)/E,\\
+ L(Z)&=g+c(Z-1)+d(B(Z)-1),\\
+ L^c(Z)&=\bar g+\bar c(B(Z)-1)+\bar d(Z-1).
+\end{aligned}                                                   \tag{76.3}
+\]
+The original upper entries are \(tZ_j\), where the \(Z_j\) are the
+three roots of \(f\); the lower entries are \(tL(Z_j)\).
+On the strict single-ray domain, \(B(Z_j)=\bar Z_j\) and
+\(L^c(Z_j)=\overline{L(Z_j)}\). In particular \(qZ_jB(Z_j)=1\).
+
+Here is an explicit algebra containing every root order. Let
+\[
+ C=\begin{pmatrix}0&0&E/q\\1&0&-3E\\0&1&3\end{pmatrix},\quad
+ X_1=\operatorname{diag}(C,C),\quad
+ X_2=\begin{pmatrix}0&-C^2+3C-3EI_3\\I_3&3I_3-C\end{pmatrix},\quad
+ X_3=3I_6-X_1-X_2.                                             \tag{76.4}
+\]
+The matrices commute and each satisfies \(f(X_j)=0\). The quadratic
+for the second root is
+\[
+ X_2^2+(X_1-3I_6)X_2+X_1^2-3X_1+3EI_6=0.
+\]
+Its two roots are exactly the two roots of \(f\) different from the
+selected first root. Since the strict discriminant condition makes all
+three roots distinct, this algebra is a product of six copies of
+\(\mathbb C\), one for each ordered triple. Equivalently, evaluation in
+the basis \(1,Z_1,Z_1^2,Z_2,Z_1Z_2,Z_1^2Z_2\) gives the six distinct
+characters. No cyclic-order restriction has been imposed.
+
+For a second quotient point use \(Y_j,B',L'\), with mean ratio \(k\).
+Define the \(36\times36\) matrices
+\[
+\begin{aligned}
+ \mathsf O_{gg}&=\sum_{j=1}^3
+     [B(X_j)\otimes Y_j+L^c(X_j)\otimes L'(Y_j)],\\
+ \mathsf S_{gg}&=\sum_{j=1}^3
+     [X_j\otimes L'(Y_j)-L(X_j)\otimes Y_j].
+\end{aligned}                                                   \tag{76.5}
+\]
+Their evaluations are precisely the original cross expressions divided
+by \(tt'\), for all 36 pairs of root orders. Thus each determinant
+vanishes if and only if some relative order satisfies its cross equation.
+Simultaneous permutation invariance also shows that each determinant is
+the sixth power of the product over the six relative orders.
+The corresponding mean targets, after removing the nonzero factor
+\(9tt'\), are
+\[
+ 1+\bar gk=0,\qquad k-g=0.                                    \tag{76.6}
+\]
+Consequently failure of (76.1) in this case is exactly the union of two
+systems: both complete strict single-ray quotients, the applicable
+complex determinant equation in (76.5), and a strictly positive squared
+modulus of the corresponding expression in (76.6).
+

@@ -1,0 +1,71 @@
+**Theorem 51.2 (minimal realization and boundary-fixing uniqueness).**
+On $\widehat{\mathscr H}_b=L^2(\mu_b;\mathscr H_B)$ put
+
+$$
+\begin{aligned}
+(\widehat H_bv)(c)&=(K-cM)v(c),& (\widehat Jh)(c)&=h,\\
+D(\widehat H_b)&=\left\{v:v(c)\in D(K)\text{ a.e.},\quad
+                    \int\|Kv(c)\|^2d\mu_b(c)<\infty\right\},\\
+(Uv)(D)&=(2\pi)^{-1/2}v(c_b(D)).
+\end{aligned}
+\tag{51.6}
+$$
+
+Then $U$ is unitary from $\widehat{\mathscr H}_b$ onto
+$\mathscr C$, $U\widehat J=J$, and it intertwines the generators
+with their domains. The semibounded selfadjoint realization
+$(\widehat{\mathscr H}_b,\widehat H_b,\widehat J)$ is minimal:
+the closed span of $e^{-t\widehat H_b}\widehat J\mathscr H_B$
+is its whole Hilbert space. Its compressed response is $B_b(t)$.
+For every $v\in\widehat{\mathscr H}_b$ its actual full-input
+readout is
+
+$$
+Q_tUv=\widehat J^*e^{-t\widehat H_b}v
+     =\int T_c(t)v(c)\,d\mu_b(c).
+$$
+
+Within the category of semibounded selfadjoint generators with a
+specified isometric boundary copy of $\mathscr H_B$, any two
+minimal realizations of this same response are related by a
+unique unitary that fixes that boundary and intertwines the
+generators. Every such realization has a reducing boundary-cyclic
+part with this minimal realization; an orthogonal invisible
+summand is not determined by the compressed response.
+
+Proof. The pushforward definition proves
+$\|Uv\|_{\mathscr H}^2=\int\|v(c)\|^2d\mu_b(c)$, with precisely
+the raw factor in (51.6). Theorem 50.2 and (51.2) prove that its
+range is $\mathscr C$. The displayed domains and pointwise action
+give the intertwining, including domain equality. Minimality and
+the response formula follow from Theorem 51.1 and (50.3).
+Substitution of $Uv$ in (50.2), with both factors
+$(2\pi)^{-1/2}$, gives the stated full-input readout.
+
+For completeness, let $(\mathscr L_i,A_i,I_i)$, $i=1,2$, be two
+minimal triples in the declared category, with
+$I_i^*e^{-tA_i}I_i=B_b(t)$. On their algebraic cyclic spans send
+
+$$
+\sum_j e^{-t_jA_1}I_1h_j
+ \longmapsto\sum_j e^{-t_jA_2}I_2h_j.
+\tag{51.7}
+$$
+
+The squared norm of either side is the same sum of inner products
+with $B_b(t_j+t_k)$, since each $A_i$ is selfadjoint. Thus the map
+is well defined and isometric. Minimality makes its extension
+unitary and makes that extension unique. Increasing every $t_j$
+by $u\ge0$ shows that it intertwines the semigroups; strong
+generator difference quotients then give intertwining of the
+generators and their domains. Taking $t_j=0$ gives boundary fixing.
+For a nonminimal triple its closed cyclic span reduces the
+semigroup, as in the proof of Theorem 51.1, and the same argument
+applies there. An orthogonal reducing summand with zero boundary
+overlap makes no contribution to $B_b$.
+
+This uniqueness is a selfadjoint supplied-boundary assertion.
+It does not minimize branches over arbitrary latent generators,
+identify raw compensated $A_s$ with a normalized realization, or
+give a physical hidden-state dimension. $\square$
+

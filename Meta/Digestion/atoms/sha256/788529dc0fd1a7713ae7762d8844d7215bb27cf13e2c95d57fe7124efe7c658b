@@ -1,0 +1,43 @@
+#### 17.2.1 Fisher Hessian 的原生层
+
+在内部概率单纯形
+
+\[
+\Delta(\Sigma)^\circ
+=
+\{p_s>0:\sum_sp_s=1\}
+\]
+
+上，负 Shannon 熵
+
+\[
+\mathcal V(p)=\sum_sp_s\log p_s
+\]
+
+的 Hessian 是
+
+\[
+D^2\mathcal V(p)[u,u]
+=
+\sum_s\frac{u_s^2}{p_s}.
+\]
+
+这是 FIB 文档中 \(\mathcal I(\kappa)\) 的数学来源。它不需要状态能量、温度或物理时间。
+
+需要分开记录三种结构：
+
+\[
+D^2\mathcal V
+\quad\text{是静态 Fisher 曲率},
+\]
+
+\[
+\mathsf M D^2\mathcal V
+\quad\text{是声明 mobility 后的耗散生成元},
+\]
+
+\[
+J D^2\mathcal V
+\quad\text{是声明辛结构后的线性 Hamiltonian 生成元}.
+\]
+

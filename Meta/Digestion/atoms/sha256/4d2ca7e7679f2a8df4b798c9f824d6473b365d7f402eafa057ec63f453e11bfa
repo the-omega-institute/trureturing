@@ -1,0 +1,12 @@
+**Proposition 4.3 (semantic identification does not authenticate an
+event).** Neither acceptance nor uniqueness in Theorems 3.3 and 4.1
+certifies the physical identity of a register or an alleged past
+acquisition or execution.
+
+Proof. The decision input is the same finite tuple whether it was
+truthfully acquired, copied from another register with the same tree
+value, or written without an acquisition. A function of that tuple
+has the same result in these situations. The latter distinctions are
+not predicates of its semantic input. The acquisition and continuity
+premises in Corollary 4.2 cannot be deduced from its output. $\square$
+

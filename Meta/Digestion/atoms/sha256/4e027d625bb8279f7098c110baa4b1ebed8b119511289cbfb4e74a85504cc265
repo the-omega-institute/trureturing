@@ -1,0 +1,37 @@
+**Definition 2.2 (Complete installed controller).** An installed table
+is $(K,\lambda,\delta,c_{\rm init})$, where $K$ is nonempty and finite,
+
+$$
+\begin{aligned}
+\lambda &:K\longrightarrow
+\{\operatorname{Read}(t):t\in\mathbb Z\}
+\sqcup\{\operatorname{Halt}(h):h\in\mathcal A\},\\
+\delta &:K_{\rm R}\times\{0,1\}\longrightarrow K,
+&c_{\rm init}&:\mathsf U\longrightarrow K
+\end{aligned}
+\tag{2.1}
+$$
+
+and $c_{\rm init}$ is measurable for discrete $K$.
+The sets $K_{\rm R},K_{\rm H}$ are the read and halt rows. Initialize
+the current row to $c_{\rm init}(u)$. At a read row with literal
+address $t$, make one paid call to $X_t$ and set the current row to
+$\delta(r,X_t)$. At a halt row return its fixed label and end.
+Each instruction takes finite duration; there are no silent
+instructions. An execution that does not reach a halt makes charged
+reads forever.
+
+The current row is the entire runtime state after initialization.
+There is no extra program position, counter, phase bit, clock port,
+archive, stack, output latch, saved last reply, runtime address
+computation or seed reaccess. A reply is available only for its
+immediate transition. Durations provide no observation or additional
+branching. All installed rows count in $|K|$, including duplicate
+instructions, unused rows and rows on null paths. The fixed public
+$p,j$ can determine the table and its integer literals.
+
+This is Endpoint, Definition 8.1, literally. Such a table is a legal
+protocol of Definition 2.1. It is a specified subclass; the original
+protocol class is larger. Cycles and arbitrarily long formal paths
+are allowed in the installed class.
+

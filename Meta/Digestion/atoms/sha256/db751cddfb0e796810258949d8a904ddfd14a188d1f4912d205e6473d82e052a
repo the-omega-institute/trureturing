@@ -1,0 +1,13 @@
+## 19. Equal capacities with guards and all prescribed paths
+
+For $n=2,3$, write $\mathfrak F_{\le n}^{\rm lit}$,
+$\mathfrak F_{\le n}^{\rm g}$,
+$\mathfrak F_{\le n}^{\rm p}$, and
+$\mathfrak F_{\le n}^{\rm gp}$ for the four classes of
+Definition 2.2: literal, recoverable straight guards, all prescribed
+paths, and both guard and path requirements. In the combined class,
+the full path guards are recoverable as well. Every path is a
+prescribed finite simultaneous native path with its velocities
+fixed independently of the starting ray. Its domain is its full
+all-times guard.
+

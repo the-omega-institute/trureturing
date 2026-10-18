@@ -1,0 +1,70 @@
+**Theorem 4.2 (one-cut feasibility and complete attainment).** Fix the
+source, helper and $k,l$ above. A common success probability $p\in[0,1]$
+is attainable in C if and only if some $x\in\mathbb C$ satisfies
+
+$$
+|x|\leq p,\qquad |\mu-x|\leq1-p,\qquad
+|\mu u-vx|\leq1-p.
+\tag{PR.10}
+$$
+
+It is attainable in R if and only if some $x\in\mathbb C$ satisfies
+
+$$
+|x|\leq p,\qquad |\mu-\mu x|\leq1-p,\qquad
+|\mu u-\mu vx|\leq1-p.
+\tag{PR.11}
+$$
+
+In either criterion real $x$ suffices for the existence of a given $p$.
+Every feasible point has a finite-dimensional complete success/failure
+instrument with all failure mass and its actual residue retained.
+
+Proof. By Lemma 4.1 put $x=\langle a_+,a_-\rangle$ and
+$\|a_\pm\|^2=p$. Their Gram matrix is positive if and only if $|x|\leq p$.
+Define $y=x$ in C and $y=\mu x$ in R. The successful images of the
+generators have two orthogonal Gram blocks with diagonal $p$ and
+off-diagonal $y$ and $vy$. A contraction exists precisely when the two
+residual blocks are positive:
+
+$$
+H_A=\begin{pmatrix}1-p&\mu-y\\\mu-\bar y&1-p\end{pmatrix},\qquad
+H_B=\begin{pmatrix}1-p&\mu u-vy\\\mu u-v\bar y&1-p\end{pmatrix}.
+\tag{PR.12}
+$$
+
+Their eigenvalues are the diagonal plus or minus the modulus of the
+off-diagonal entry. This gives exactly (PR.10) or (PR.11).
+
+For sufficiency realize the success Gram by vectors $a_\pm$ in a space of
+dimension at most two. Realize $H_A,H_B$ as Gram matrices of
+$F_{A,\pm},F_{B,\pm}$ in two orthogonal failure spaces of dimension at
+most two each. Send each generator to its prescribed success image plus
+$f$ tensored with the corresponding failure vector, using orthogonal
+success/failure sectors. The total output Gram matrix equals the input
+Gram matrix. This gives an isometry on their actual span, including
+dependent frames: any input linear relation has zero Gram norm and hence
+zero assigned output norm.
+
+Equivalently, the prescribed success map $B$ on the frame is a contraction;
+extend $B$ by zero on its orthogonal complement. With
+$F=(I-B^\dagger B)^{1/2}$, use the whole-domain isometry
+
+$$
+\zeta\longmapsto
+ (B\zeta)_{\mathsf s}\ \oplus\ (f\otimes F\zeta)_{\mathsf f}.
+\tag{PR.13}
+$$
+
+Reading the binary flag gives CP operations whose effects sum to identity.
+On the promised span the actual failure vector can be written
+$\sqrt Z F_{A,\epsilon}+z\sqrt r F_{B,\epsilon}$; its squared norm is
+$1-p$. It can retain phase/history information. It is kept with $f$, not
+discarded or replaced by a blank failure bit. The complementary construction
+need not return $\eta_\epsilon$ unchanged on failure, including in R.
+
+Since $\mu,u,v$ are real, replacing any feasible $x$ by $\operatorname{Re}x$
+decreases each displayed modulus and preserves feasibility. This replacement
+may change the success record; it establishes existence and optimization,
+not equality of two specified complex record outputs. $\square$
+

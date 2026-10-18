@@ -1,0 +1,36 @@
+**Definition 7.4 (all accessible retained information).** At the live cut,
+every history-bearing system available to recovery or a request handler
+factors jointly through a finite algebra
+
+$$
+\mathcal B=\bigoplus_{\alpha=1}^n M_{d_\alpha},\qquad
+\mathcal H_B=\bigoplus_\alpha\mathbb C^{d_\alpha},\qquad
+D=\sum_\alpha d_\alpha<\infty.
+\tag{QC.40}
+$$
+
+This includes the specimen, accessible archives, controller, source/epoch
+and programme fields, calibration, clock latches, source-sensitive timing,
+returned environments, receiver entanglement shares and every other
+accessible assistance or bypass. A common deterministic CPTP decoder
+$\mathcal R:\mathcal B\to M_3$ must recover the exact identity-cut
+specimen for all $j,\beta,m$. For a full joint implementation it must also
+preserve its actual reference and archive correlations. Each request handler
+uses only $\mathcal B$ and the same public request. No coding abort,
+postselection or source-dependent installed decoder configuration is allowed.
+An inaccessible reference may remain untouched and cannot assist a handler.
+
+For the lower bound allow arbitrary normalized code states
+$\sigma_{j,\beta,m}$ on $\mathcal B$ obeying
+
+$$
+\mathcal R(\sigma_{j,\beta,m})
+ =|\psi_{k_j,\beta,m}\rangle\langle\psi_{k_j,\beta,m}|.
+\tag{QC.41}
+$$
+
+There is no assumption that these states were acquired by a specimen-only
+channel, or that the supplied assistance is phase independent. This grants
+more inputs than an acquisition protocol and makes the lower bound apply
+also to arbitrary assistance when all of it is included in (QC.40).
+

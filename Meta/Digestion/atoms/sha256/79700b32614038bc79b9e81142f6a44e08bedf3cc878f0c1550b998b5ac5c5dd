@@ -1,0 +1,29 @@
+**Proposition 6.1 (a sufficient paid finite-source entry producer).**
+Fix public $D$ and public effective finite-output maps $e$ and $g$
+of the complete syntax of $t\in\mathcal F_D$. An entry producer
+can acquire both using the credited
+$\operatorname{Acquire}(R,D)$ of [PPF, Lemma 4.1][PPF], with at
+most $2^D$ actual calls, $(D+1)2^D$ letters and peak length
+$D+1$. It can then export only the complete intended joint name
+through the declared paid isolation service. If the full syntax has
+already been acquired, computing these maps requires no additional
+Read.
+
+Proof. The acquired depth-$D$ table reconstructs the entire right
+subtree under $h(v)\le D$, including its terminal leaf labels.
+The wrapper is public. Evaluate the specified effective maps on
+that reconstructed finite syntax and retain their joint value.
+Other source-bearing work is removed from access by the supplied
+isolation contract. The bounds and their actual original-root
+implementation are the supplier's, not new optima. $\square$
+
+For an arbitrary unbounded finite source, an actual reached-node
+traversal similarly acquires its syntax before computing such maps;
+it terminates pointwise but has no uniform source-size bound.
+An arbitrary noncomputable finite-range entry map is not covered.
+Neither reconstruction nor a proof of existence grants a free
+source-specific installed program. If both Proposition 6.1 and the
+guard construction are used, compute guards from the already acquired
+syntax instead of charging a second compulsory acquisition that is
+not needed.
+

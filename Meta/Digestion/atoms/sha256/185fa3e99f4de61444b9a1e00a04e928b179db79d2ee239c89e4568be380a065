@@ -1,0 +1,74 @@
+4. If $P$ is all-unit, then $N\ne P$, $g_N\ge3$, and $g_N=3$
+   implies $D_N\cap\mathbb Z_{>0}=\{1,2,3\}$.
+   If $N$ is all-unit, then $g_P\ge3$, and $g_P=3$ implies
+   $D_P\cap\mathbb Z_{<0}=\{-1,-2,-3\}$.
+
+**Proof.** A corner difference is extremal in the square and therefore
+an endpoint of its class. Since $m=19$, Definition 2.1 gives the
+four endpoint identities and the same-class value eighteen.
+
+Suppose a class ends at $(t,t)$. Its nine positive $A$ lengths
+and nonnegative starting first coordinate give $t\ge9$. Its nine
+positive $B$ lengths and starting second coordinate at most eighteen
+give $t\le9$. Equality forces start $(0,18)$ and every edge
+unit. Conversely $g_N=0$ makes $U_N=0$, so it is exactly this
+case. If a class starts at $(t,t)$, the terminal bounds instead
+give $t\le9$ from its $A$ changes and $t\ge9$ from its $B$
+changes. Its endpoint is $(18,0)$ and every edge is unit. The
+converse is again the corner endpoint formula. Both unit cases
+would have anchor nine. If they coincided their gap count would
+be eighteen, not zero, and if they were distinct they would share
+the anchor. Neither is possible. Finally Theorem 2.2 gives
+$B_0=1-h_1$ and $A_0=1-h_{-1}$. The just established unique
+possibilities for these endpoints give (NAGC.4.2).
+
+For the small-budget claim consider $N$. If $g_N=1$, its span
+is $[-18,1]$ with exactly one missing integer. Difference $1$
+is its endpoint. If $-1$ were the missing integer, its last three
+vertices would have differences $-2,0,1$. Edge seventeen would
+then have length two, contradicting its unit middle position.
+If $g_N=2$ and both $-1,1$ were missing, these would be its only
+omissions in $[-18,2]$. Its last three differences would be
+$-2,0,2$, giving the same contradiction at edge seventeen.
+
+For the assertions concerning $P$, use coordinate complementation
+$(a,b)\mapsto(18-a,18-b)$ and reverse each vertex list. This
+bijection sends $d$ to $-d$, exchanges the two corners, relabels
+anchor $t$ by $18-t$, preserves every edge length and every pure
+triple, and preserves the unit middle positions. It preserves a
+disjoint geometric saturated cover. It therefore transfers the
+small-budget statements just proved. This is a transformation of
+the positive geometric cover domain, not a claim that the
+nonnegative native first-step test is invariant under it.
+
+For part 4 suppose $P$ is all-unit. It is $C_9$ and has no
+negative differences, so the unique negative-band missing label
+is $m_-=9$. The other corner has a different anchor $t\ne9$
+and $g_N>0$. Put $r=\#(D_N\cap\mathbb Z_{>0})$; its positive
+endpoint $U_N=g_N$ gives $1\le r\le g_N$. Because only $C_9$
+misses difference $-1$, $N$ contains that difference immediately
+before its anchor in $d$ order. The gate formula locates it as
+
+$$
+\begin{cases}
+(t,t+1),&t<9,\\
+(t-1,t),&t>9.
+\end{cases}
+\tag{NAGC.4.3}
+$$
+
+If $r=1$ or $2$, the anchor has vertex index $18-r$, namely
+seventeen or sixteen. The edge entering it and all remaining edges
+then belong to the last pure triple, with the same direction $X$.
+If $X=A$, all nine $B$ changes have already occurred at the
+anchor. Starting from $b=18$ gives $t\le9$, and hence $t<9$.
+But (NAGC.4.3) requires a $B$ edge into that anchor, contrary to
+$X=A$. If $X=B$, all nine $A$ changes have already occurred;
+starting from $a=0$ gives $t\ge9$, and hence $t>9$. Formula
+(NAGC.4.3) requires an $A$ edge into the anchor, another
+contradiction. Thus $r\ge3$ with no assumption on the other
+classes' budgets. Consequently $g_N\ge3$, and at equality its
+three positive differences must be precisely $1,2,3$.
+The same coordinate complementation transfers this geometric
+statement to the case that $N$ is all-unit. $\square$
+

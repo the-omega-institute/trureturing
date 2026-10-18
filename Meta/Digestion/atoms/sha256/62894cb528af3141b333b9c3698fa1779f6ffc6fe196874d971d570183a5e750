@@ -1,0 +1,10 @@
+若
+\[
+\rho_{n+1}=\Phi_n(\rho_n),
+\qquad
+\Phi_n(\sigma)=\sigma
+\]
+且每个 \(\Phi_n\) 为 CPTP，则
+\[
+\Delta\tau_n
+=

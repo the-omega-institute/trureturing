@@ -1,0 +1,22 @@
+**Lemma 2.3 (locator correctness and termination).** For every valid public $z$
+and every finite address $p$,
+
+$$
+\operatorname{loc}(z,p)=\operatorname{tag}(p,\operatorname{decode}(z)).
+$$
+
+Its computation is finite, including for the root and arbitrarily long absent
+addresses.
+
+**Proof.** The preorder word of a branch is PAIR followed by the complete left
+word and then the complete right word. In a nonempty subtree word, need counts
+unfilled child slots. Before its final token there is a slot still to fill, and
+at its final token need becomes zero. Consequently the scan stops exactly at the
+end of the left word, within the valid packet, and the next token is the right
+root. The left-root step is immediate. Induction on the consumed address letters
+therefore preserves the correct subtree root. At a leaf, any further descent is
+absent by the definition of `readout`; at the end the token kind is exactly the
+root response of the remaining subtree. Each scan consumes part of a finite
+candidate, and there are at most $|p|$ scans. Unary operations terminate by
+PR57.L1. This proves both assertions. $\square$
+

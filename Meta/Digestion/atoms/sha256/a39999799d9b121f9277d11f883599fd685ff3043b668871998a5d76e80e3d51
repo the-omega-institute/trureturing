@@ -1,0 +1,67 @@
+**Corollary 69.5 (A calibration ladder with a retained expected-query bound).**
+Use exactly the original-source, signature-cylinder and measurable handoff data
+of Theorem 69.2. Let $P_{\mathcal R}$ be the density range of (68.8) for one
+fixed supplied law range $\mathcal R$ of Theorem 68.5. For each $r\ge0$ let
+$g^{(r)}:Q\to P_{\mathcal R}$ satisfy, for $\eta_r\in[0,1]$,
+
+$$
+\operatorname{TV}(g^{(r)}_q\sigma,\mu_y)\le\eta_r
+\quad(y\in X,\ [y]=q),
+\qquad\eta_r\to\eta.
+\tag{69.20}
+$$
+
+Assume coordinatewise $L^1(\sigma)$ convergence to $g$, and (69.11) for one
+summable nonincreasing $\varpi$ tending to zero. If the fixed law range
+$\mathcal R$ is closed in TV, as supplied by Theorem 68.4, then
+$g_q\in P_{\mathcal R}$, the limit satisfies the original target cap $\eta$,
+and it has a lawful original-tape realization with
+
+$$
+\sup_{x\in X}\mathbb E[N_x]\le\sum_{m\ge0}\varpi(m).
+\tag{69.21}
+$$
+
+**Proof.** The isometric image of the complete space
+$L^1(\sigma|_{\mathcal G})$ is closed in $L^1(\sigma)$, and its nonnegative
+integral-one subset is closed, as in Theorem 59.2. Thus each fixed $q$ has a
+nonnegative $\mathcal G$-measurable limit representative of integral one.
+The equality
+$\operatorname{TV}(g^{(r)}_q\sigma,g_q\sigma)
+=\tfrac12\|g^{(r)}_q-g_q\|_1$ shows that its law is the TV limit of elements
+of the one closed range $\mathcal R$, so $g_q\in P_{\mathcal R}$.
+For each original label $y$ with $[y]=q$,
+
+$$
+\operatorname{TV}(g_q\sigma,\mu_y)
+\le\tfrac12\|g_q-g^{(r)}_q\|_1+\eta_r.
+$$
+
+Letting $r\to\infty$ gives the cap $\eta$ at every label, including all
+labels sharing a signature. The coordinatewise $L^1$ part of Theorem 69.3
+preserves (69.11); Theorem 69.2 then realizes exactly these limit laws on the
+original tapes with the same static source and consumer, and proves (69.21).
+Neither coordinatewise convergence nor closedness asserts an effective method
+for selecting laws or evaluating their cylinder infima. $\square$
+
+Closedness of the one fixed range gives the range-membership conclusion in this
+ladder; varying ranges require a separate condition placing the limit laws in
+the declared limit range. Pointwise cylinder exhaustion gives sourcewise
+almost-sure handoff by Theorem 69.2, whereas a shared decaying modulus
+and its summability give the respective uniform tail and expected-query bounds.
+Theorem 68.5 alone supplies no such quantitative modulus. Without (69.11), even
+uniform $L^1$ convergence and a finite cutoff at each stage do not preserve the
+order conclusion, as Theorem 69.4 shows. With (69.11), coordinatewise $L^1$
+convergence suffices.
+
+The mature inputs are Radon--Nikodym domination and the countable probability
+product on arbitrary measurable carriers, reused with their precise hypotheses
+from Theorem 46.4, together with dominated convergence and Tonelli's theorem.
+The lower-envelope literature cited in Sections 46 and 68 has its stated
+stationary-chain or bounded-rate hypotheses; no conclusion requiring those
+hypotheses is applied here. The original-source query bounds, shared-modulus
+limit passage and fixed-range cap ladder are their combination in this
+repository's prescribed acquisition problem, without a literature-priority
+assertion. These conditional results do not settle Question 62.1 on unrestricted
+measurable inputs and do not provide an effective sampler or modulus algorithm.
+

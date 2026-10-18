@@ -1,0 +1,39 @@
+**定理 2.1（一致 minimax 余项与 Bayes 比较）。** 对每个定义 1.1–1.2 的原整数合同，若 $0\le nx\le1/4$，则
+
+$$
+\boxed{
+\kappa_nx^2-\frac18n^2x^3
+\le\delta_n(L,q)
+\le\kappa_nx^2+\frac{21}{4}n^2x^3,
+\qquad
+|\delta_n(L,q)-\kappa_nx^2|\le6n^2x^3.
+}
+\tag{2.1}
+$$
+
+下界对任意共同准备、任意有限参考、源无关随机化和共同联合 POVM 成立。上界由一次 $|+\rangle^{\otimes n}$ 准备、恰好 $q$ 次普通调用及一个服务全部原标签的共同末端接收器达到；不要求输入参考，不对图份额加严格正性条件。
+
+同一范围内，既有 Bayes 有限夹逼给出
+
+$$
+\boxed{
+C_nx^2-\frac18n^2x^3
+\le\varepsilon_n^\star(L,q)
+\le C_nx^2+\frac34n^2x^3.
+}
+\tag{2.2}
+$$
+
+令 $g_n=\beta_n-\beta_n^{\mathrm{mm}}=\delta_n-\varepsilon_n^\star$，则
+
+$$
+-\frac78n^2x^3
+\le g_n-(\kappa_n-C_n)x^2
+\le\frac{43}{8}n^2x^3.
+\tag{2.3}
+$$
+
+因而 Bayes 绝对余项至多 $\frac34n^2x^3$，分离绝对余项至多 $6n^2x^3$；特别也满足较宽的常数 $3$ 与 $9$。Bayes 上界由未旋转 SRM 达到，minimax 上界由图最小化分配的旋转接收器达到。这里的“达到上界”是接收器错误不超过该界，不断言有限参数精确最优，也不把两个不同目标的策略视为同一优化器。
+
+在 $x=0$，即 $q=L$ 时，两种最优错误和 $g_n$ 恰为零。
+

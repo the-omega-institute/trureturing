@@ -1,0 +1,77 @@
+**Theorem 6.2 (An exact twelve-coordinate separable-cone minimax).**
+The original unrestricted complex scalar-port value is exactly
+
+$$
+\boxed{
+\varepsilon_1=
+\min\left\{r_0\ge0:
+\begin{array}{l}
+(M,\eta)\in\mathcal K,\quad M^T\tau=\tau,\\
+-r_0I_5\preceq\mathcal H_{J'}(M,\eta)\preceq r_0I_5
+\quad\text{for every }J'\in\mathcal J_{15}
+\end{array}\right\}.}
+\tag{6.5}
+$$
+
+The threshold predicate in braces is equivalent to the existence of
+an original legal complex scalar port with $e(T)\le r_0$.
+Every feasible coordinate tuple has an original finite realization
+with at most $225$ flags and exact error
+$\max_{J'\in\mathcal J_{15}}\|\mathcal H_{J'}(M,\eta)\|_{\rm op}$.
+That error is attained at actual wait zero. All fifteen event
+constraints are kept.
+
+Proof. On the invariant three-dimensional part the adjoint of (4.3)
+has matrix $M^T$. On every nontrivial orthonormal pair it has scalar
+$\eta_\nu$, because those blocks are scalar and real. Expanding
+$\Pi_{J'}$ in the complete basis gives
+
+$$
+\Pi_{J'}-S_{M,\eta}^\dagger(\Pi_{J'})
+=\mathcal H_{J'}(M,\eta).
+\tag{6.6}
+$$
+
+For a real symmetric matrix the two Loewner inequalities in (6.5)
+are equivalent to its operator norm being at most $r_0$.
+Theorem 5.2 makes every feasible tuple a legal fixed port, and
+Theorem 3.2 makes its norm maximum exactly the error for all complex
+inputs and all original finite histories. The attaining input and
+zero-wait full-read protocol are those in Theorem 3.2; no limiting
+angle needs to be synthesized as an actual wait.
+
+Conversely, given any original complex competitor with error at most
+$r_0$, Theorem 3.2 constructs a no-worse real stationary reflected
+channel. Theorems 4.2 and 5.2 give its feasible coordinates, and
+(6.6) supplies every required inequality. This proves the threshold
+equivalence and equality of infima. The original minimum exists;
+alternatively (5.7) makes the coefficient slice compact, because it
+is five times the compact generator hull intersected with closed
+TP equations. The residual maximum is continuous. Thus the displayed
+minimum is attained.
+
+Explicitly, the events retained are the five singletons and
+$\{N,2\},\{N,3\},\{N,5\},\{N,25\},\{2,3\},\{2,5\},\{2,25\},
+\{3,5\},\{3,25\},\{5,25\}$. Pair constraints are sums of singleton
+residual matrices, but their norm constraints have not been discarded.
+Complementation uses TP, not unitality.
+
+Equation (6.5) retains the exact product-atom cone. The PPT symmetric
+extension tests of
+[Doherty–Parrilo–Spedalieri, §§II–VI](https://arxiv.org/html/quant-ph/0308032)
+give outer separability approximations and dual witnesses, not a
+replacement of this cone by one finite SDP level. With TP and all
+event inequalities retained, an outer feasible set can yield a
+necessary lower bound when minimizing $r_0$; its feasible point does
+not by itself construct a scalar port. The affine-constrained
+separability formulations in
+[Ohst et al., §3.3 and Appendix C](https://arxiv.org/html/2411.08110v2)
+provide a related framework, but their channel-discrimination testers
+have different input/output normalization and can include memory and
+joint measurements. Here the exact normalization is (5.6), and the
+performance tests are exactly (6.2). Similarly,
+[Watrous, Theorems 1–2 and §3](https://arxiv.org/html/0901.4709v2)
+supports SDP duality for the specified SDP; its completely bounded
+norm objective is different from (1.3). No such alternative objective
+or unevaluated relaxed optimum is used in (6.5). $\square$
+

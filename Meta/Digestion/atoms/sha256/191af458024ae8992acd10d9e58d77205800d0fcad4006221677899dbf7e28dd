@@ -1,0 +1,28 @@
+**Theorem 17.4.** Any tuple satisfying both original global inequalities
+must satisfy
+$$
+\delta\le\Phi(\chi)-L_p\tau_p(r_\star)
+                         -L_\beta\tau_\beta(r_\star).       \tag{17.15}
+$$
+Consequently a tuple violating (17.15) has an explicit violating point in
+one of its original outer products. In particular, no positive tuple
+can have
+$$
+\Phi(\chi)\le\sigma_pL_p+\sigma_\beta L_\beta.               \tag{17.16}
+$$
+This is a constraint on all seven input coefficients of the six named
+B output multipliers. It imposes no condition on possible observer
+shapes or full-law marginals.
+
+**Proof.** Evaluate $G_B$ at $(\pi_5Q,\pi_5W)$ and $G_A$ at its
+reverse. Proposition 17.1 proves these points belong to the full original
+domains, including their boundary face $Q(w_{3,1})=P_{p,b}(w_{3,1})$.
+The potentials cancel exactly. Both centered events vanish. Proposition
+17.3 evaluates every residual term, including tails, to (17.14). Proposition
+17.2 makes all four endpoint loss terms zero. Hence the sum of the two
+evaluations is exactly the right side of (17.15). If that sum is less than
+$\delta_B+\delta_A$, at least one of the two required bounds fails at
+the displayed point. Finally $\tau_s(r_\star)>\sigma_s>0$, proving (17.16).
+This argument evaluates absolute values themselves; it assumes no
+sampled or omitted TV sign regions. $\square$
+

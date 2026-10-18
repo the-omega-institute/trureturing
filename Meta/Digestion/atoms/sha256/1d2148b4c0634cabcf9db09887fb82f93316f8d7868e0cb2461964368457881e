@@ -1,0 +1,46 @@
+**Proposition 5.2 (paid meaning of the matching block upper).** Suppose
+the depth-two blocks occur at public prefix-free actual addresses
+$Ra_i$, with $|a_i|\le H$. The rounded cover used in Theorem 4.1
+has a deterministic source-blind preparation using at most
+
+$$
+3n\text{ Reads},\qquad
+H+2\text{ maximum literal length},\qquad
+n(3H+5)\text{ submitted letters}.
+\tag{NCM.24}
+$$
+
+Its late reader needs at most one original-root Read of length at most
+$H+2$. The construction uses one complete retained name and preserves
+all targets and all authentic subsequent counts.
+
+Proof. Reuse the finite codebook and witness installation in FMR
+Lemma 6.2. Actually submit $Ra_i$, $Ra_iL$, $Ra_iR$ for each block,
+including words returning absent. For actual $S_2$ blocks these
+replies identify the block exactly; for height-at-most-two blocks
+they identify its canonical representative and preserve every selected
+factor by FMR Lemma 2.2. Compute the first-containing-cover-member
+index from this genuinely acquired tuple, and export only its complete
+fixed-width name. The separately paid isolation removes access to all
+other acquired data and selectors. The lengths sum to at most
+$(H+1)+2(H+2)=3H+5$ per block.
+
+After the request, the installed table chooses one coordinate and one
+boundary word, or zero Reads. Submit its full literal $Ra_jw$.
+Constant virtual-wrapper probes are computed from public constants;
+every source-bearing probe is a charged literal on the same tree.
+No constituent subtree or copied source is an operational input.
+The reply decoder gives the factor, and (NCM.6) answers every later
+$k$. On $S_2^n$ every greedy choice covers a previously uncovered
+tuple, so its first-membership index is attained. Thus this is an
+acquired alphabet, not an oracle providing a preassigned color.
+$\square$
+
+The existing whole-family FMR constructions retain their separate
+preparation bounds $2^D-1$ Reads, maximum literal length $D$, and
+$(D-1)2^D+1$ submitted letters. Neither those sufficient bounds nor
+(NCM.24) optimize acquisition. Codebook generation, cover search,
+membership work, temporary buffers and final predictors remain
+separate resources. The lower bound assumes none of these costs is
+small and does not infer free total efficiency from retained memory.
+

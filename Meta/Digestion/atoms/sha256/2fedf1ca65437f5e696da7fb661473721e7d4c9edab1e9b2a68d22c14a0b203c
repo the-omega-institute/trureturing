@@ -1,0 +1,50 @@
+**Definition 9.1 (Admissible arbitrary-address protocol).** Fix $0<p<1$ with
+$p\ne1/2$, $j\in\{0,1\}$, and let $(\mathsf U,\mathcal U,\nu)$ be one
+arbitrary probability space independent of the complete joint law $J_p$. Fixed
+public data may be included as a constant in $\mathsf U$; any random public
+data are included in the same source-independent variable with its unchanged
+law $\nu$. A protocol is a measurable next-event rule which, given
+$u\in\mathsf U$ and each finite acquired ordered record
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))\in(\mathbb Z\times\{0,1\})^n,
+$$
+
+either chooses the next integer address $t_{n+1}$, returns a state
+$A\in\{a_0,a_1,b_0,b_1\}$, or continues internally indefinitely without any
+further read or return. Finite next events may follow internal waiting:
+their occurrence, type, address or output, and finite waiting time depend
+measurably only on the fixed public data, $u$ and $r$. All internal
+randomness is included in $u$. If an address is chosen, the only reply is
+the actual source bit $x_{n+1}=X_{t_{n+1}}$ from the same stationary source.
+Every such read is charged: repetitions, separator zeros, negative, positive,
+disconnected and arbitrarily distant addresses all count once.
+
+The return time $\tau$ and the charged read count
+$N\in\mathbb N_0\cup\{\infty\}$ are separate random variables. Set
+$\tau=\infty$ on every nonreturning path, and let $N$ count all actual reads.
+Thus $\tau=\infty$ with any finite $N$, including $N=0$, is permitted by
+indefinite internal continuation after that finite record. Infinite read
+paths are also permitted. On a return, $N$ is finite; the output and $\tau$
+depend measurably only on the fixed public data, $u$, and the acquired
+ordered address/reply record. On $\{\tau<\infty\}$, write $\mathsf R$ for that
+terminal ordered record.
+
+There is no hidden-state, half-line or tail read, source-dependent seed or
+timing, reset, law switch, moving endpoint, or erased-coordinate substitution.
+The rule may return before any read and may output a state from the wrong
+phase. Null records and versions completed by null sets are included through
+the usual measurable completion. Put
+
+$$
+\mathbb P_p=J_p\otimes\nu,
+\qquad
+E_k=\{\tau<\infty,\ N\le k\},
+\qquad
+R=\frac{\max(p,1-p)}{\min(p,1-p)}>1.
+\tag{9.1}
+$$
+
+The public and auxiliary variables are independent of the original hidden
+endpoint $H_j$ and of every $X_t$.
+

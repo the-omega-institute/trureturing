@@ -1,0 +1,89 @@
+**Definition 205.15 (Attribution and the cutoff application).** The
+support group 205.2--205.4 and early-credit group 205.5--205.6 are
+restrictions on methods for producing certificates; their displayed
+inputs already have unrestricted certificates. The positive-cell group
+205.8--205.11 and conditional-terminal group 205.12--205.14 give two
+sufficient regions with the stated overlap. Their minima, cores and
+worked families are consequences within those groups, not separately
+counted coverage families. These relations are repository-derived.
+The probability rule of 87.1, fair-suffix membership of 198.2/203.6,
+chain support of 198.4, signed hull of 198.5, complete alternatives
+and recession absorption of 199.3--199.6, guards of 200, subset blocks
+of 201.2, threshold union proof of 203.2, conditional densities of
+203.8, and fixed-projection extraction and terminal completion of
+204.2/204.8 retain their own attribution.
+
+The cutoff construction is another application of existing suppliers,
+not a fifth new group. Specifically, for $q\in[0,\mu]$, put
+$\eta_j=\min(\gamma_j,q)$, $r_j=(\gamma_j-q)_+$ and
+$\Lambda_q=\Lambda(\eta)$ as in 201.1. If $B=S+t\ge\Lambda_q$,
+retain the actual early correct rows, use the finite layer sum of
+201.2's blocks for $\eta$, and take $T=B-\Lambda_q$. Explicitly,
+for each layer of height $\Delta$ on $J_\ell$, let $z_\ell=\max J_\ell$;
+place correct weight $\Delta$ at each $w(\{j,z_\ell\})$, and pair
+weight $\Delta\nu_{J_\ell}(Z)/2$ at each
+$w(\{a,z_\ell\}\cup Z)$, $a=1,2$, with the coefficients (201.10).
+Then 201.3 gives
+
+$$
+\Delta_N(V_q)=(q-B+\Lambda_q)_+,\qquad
+\sigma_H(Q(y)-Q(V_q))=
+ s_q:=\max_{3\le k\le L}\frac{3\sum_{j=3}^kr_j}{k+1}.
+\tag{205.43}
+$$
+
+To verify the latter identity directly, the early quotient difference
+is zero and the residual $K$ is $\sum_jr_j$; $o,p$ give zero,
+$u_k$ gives $R_k/(k-1)$, and $v_k$ gives $3R_k/(k+1)$, which dominates
+for $k\ge3$. The exact support formula of 198.5 gives (205.43).
+Thus $(q-B+\Lambda_q)_++s_q\le1$ uses one budget.
+
+For an explicit overlap, take $L=5$, $q=14/3$, correct weight five at
+$w(\{3,5\}),w(\{4,5\}),w(\{5\})$, pair weight $q/2$ at each
+$w(\{a,3,5\}),w(\{a,4,5\}),w(\{a,3,4,5\})$, $a=1,2$, and $T=q$.
+Its anchor is $4q=56/3$. On $(3,4)$ the $N$ maxima are
+$(q,5,5,5)$ and the $O$ maxima $(2q,5,5)$, giving excesses one and
+$2/3$. On $(1,2)$ the excess is $1/3$; on early/interior and
+interior/terminal pairs it is at most $1/3$, and on early/terminal it
+is zero, by their pair baselines $q$ and $3q/2$. Constants and
+singletons embed in these pairs. Hence these are the complete excesses.
+Reducing each correct total to $q$ gives a zero core and residual
+$1/2$. Its actual extraction capacities in 204.2 are all $q$, so that
+method gives the identical core totals and residual. The full-profile
+201 threshold at allowance one is 19, but this cutoff example is not
+additional coverage beyond 204.2.
+
+The relevant external background has narrower conclusions. In
+Kaniewski, Lee and de Wolf, [*Query complexity in expectation*,
+Definition 8 and Theorem 9](https://arxiv.org/html/1411.7280v1), the
+output is a nonnegative scalar computed in expectation and the cost is
+the maximum depth among trees of positive mixture weight. Their literal
+sampler outputs total coefficient mass times an indicator; this does
+not give a common normalized vector kernel or increasing first-zero
+stopping. Kaibel's [*Basic Polyhedral Theory*, Theorems 4, 8 and
+10](https://arxiv.org/html/1001.2161v1) gives conic Caratheodory,
+point-plus-cone representation and recession for finite-dimensional
+polyhedra. The generator bound depends on ambient dimension, not a
+uniform number of late labels within each generator, and recession
+inclusion alone does not imply positive-slice inclusion.
+
+Šámal's [*Cubical coloring — fractional covering by cuts and semidefinite
+programming*, Lemma 2.1 and Corollary 2.2](https://arxiv.org/html/0911.2589v3)
+gives the reciprocal maximum-cut-density bound and equality for
+edge-transitive undirected graphs, including complete graphs. This is
+the cut-cover background for the reused subset coefficients; the
+specific directed cells and half-marginals still require the moment
+computations above. Proença, de Carli Silva, Sato and Tunçel's
+[*A Primal-Dual Extension of the Goemans–Williamson Algorithm for the
+Weighted Fractional Cut-Covering Problem*, Proposition
+8](https://arxiv.org/html/2311.15346v2) concerns nonnegative undirected
+edge weights and gauge duality, with an approximation framework; it
+does not supply the exact directed acquisition conversion. Leskelä's
+[*Stochastic relations of random variables and processes*, Theorem 2.5
+and Remark 2.7](https://arxiv.org/html/0806.3562v1) requires two fixed
+probability measures on Polish spaces, a closed relation and all
+qualifying-set Hall inequalities (finite-set tests in the countable
+case). Separately feasible partial-row laws do not verify those common
+coupling hypotheses. No exhaustive novelty or priority assertion, or
+unproved acquisition bridge from unrelated results, is made here.
+

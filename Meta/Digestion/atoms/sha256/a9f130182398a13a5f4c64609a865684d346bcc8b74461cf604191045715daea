@@ -1,0 +1,15 @@
+**Definition 4.2 (Forest sums).** A directed forest $\phi$ chooses one successor $\phi(u)\in\mathcal S\setminus\{u\}$ for each $u\in V$, using common positive-support edges, with no directed cycle contained in $V$. Iteration must then terminate in $\partial$. Each forest selects exactly $n$ edges. For $P$ put
+
+$$
+\begin{aligned}
+w_P(\phi)&=\prod_{u\in V}P(u,\phi(u)),
+&\mathcal D_P&=\sum_\phi w_P(\phi),\\
+\mathcal A_P(x)&=\sum_{\substack{\phi:\text{the path from }x\text{ ends at }t}}w_P(\phi),
+&\mathcal C_P(x)&=\sum_{\substack{\phi:\text{the path from }x\text{ ends in }\mathcal Z}}w_P(\phi)
+\quad(x\in V).
+\end{aligned}
+\tag{4.3}
+$$
+
+Thus $\mathcal D_P=\mathcal A_P(x)+\mathcal C_P(x)$, with all three quantities positive sums except that the complementary sum may be zero. Use the identical forest family for $Q$. The symbols $\mathcal A_P,\mathcal C_P$ are forest sums, distinct from the bit matrices $A,C$.
+

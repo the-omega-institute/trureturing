@@ -1,0 +1,4 @@
+**Proposition 6.1 (Local marginals need a common-factor bridge).** A harmonic term of window marginals need not equal the sum of the corresponding full-word harmonic terms, even on the original legal domain.
+
+Proof. On $B_4$ place mass $1/2$ at each of $0000$ and $0101$, and zero at all other vertices. At coordinate two the original edge pairs are $0000$–$0100$ and $0001$–$0101$. Each has a zero-mass endpoint, so their harmonic sum is zero. The marginal on positions one through three instead has masses $1/2$ at $000$ and $010$, whose harmonic term is $1/4$. This is a finite-prior counterexample to unproved marginal grouping, not a counterexample to (1.4). Lemma 2.4 supplies the specific equality missing in that shortcut. $\square$
+

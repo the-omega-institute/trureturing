@@ -1,0 +1,33 @@
+**Definition 5.1 (a finite recognizable producer pattern).** Put
+
+$$
+V(t,x,w)=\langle t,\langle x,\langle w,
+                       \langle\rho t,t\rangle\rangle\rangle\rangle,
+\qquad Q=\{L,RL,RRL,RRRL,RRRR\}.
+\tag{TOS.8}
+$$
+
+Take $P=\{\varepsilon\}$ with its attained one-hole row. The retained
+epoch-zero literals are branch at $\varepsilon,R,RR,RRR$. Retain
+the following whole-subtree records:
+
+$$
+\begin{gathered}
+(0,RRRL,1,L,=),\quad(0,RRRR,0,L,=),\quad
+(0,RRR,2,L,=),\\
+(0,RRL,0,L,\ne),\quad(0,RRL,1,L,\ne).
+\end{gathered}
+\tag{TOS.9}
+$$
+
+Allow also any finite list $\mathcal H$ of negative records whose
+endpoints are *structural*: each original word follows this four-node
+outer skeleton and stops at one of its nodes or five holes, without
+entering an unspecified hole. Their epochs are any fixed finite numbers.
+Every such endpoint remains reached under its recorded iterate, and
+its whole value is a fixed native expression in the five hole values.
+Let $N$ authentically be at least two and every additional epoch.
+The finite recognizer checks these coordinates, signs, cut and complete
+root row; repetitions are permitted and retained. The case
+$\mathcal H=\varnothing$ will give the explicit inhabited example.
+

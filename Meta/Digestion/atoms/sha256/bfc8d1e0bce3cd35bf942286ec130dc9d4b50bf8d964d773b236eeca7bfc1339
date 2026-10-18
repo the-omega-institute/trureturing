@@ -1,0 +1,36 @@
+**Definition 1.3 (One fixed port).** For $1\le q\le5$, $\mathfrak C_q$ consists
+of channels $T=\operatorname{Dec}\circ\operatorname{Enc}$ with a finite fixed
+flag set $F$ and fixed CPTP maps
+
+$$
+\begin{aligned}
+\operatorname{Enc}&:M_5\longrightarrow\bigoplus_{f\in F}M_q,\\
+\operatorname{Dec}((Y_f)_f)&=\sum_f\operatorname{Dec}_f(Y_f),\qquad
+\operatorname{Dec}_f:M_q\longrightarrow M_5.
+\end{aligned}
+$$
+
+Every $\operatorname{Dec}_f$ is CPTP on its whole block. The design precedes
+the unknown input and the choice of future protocol. Every quantum path goes
+through this port: no original-input retention, entangled assistance or
+bypass is allowed. Finite classical flags are free in the $q$ criterion;
+their values can depend on the input, are used in decoding, and are not
+additionally exposed to the later policy. Competitors are arbitrary complex
+CPTP designs, with no assumed unitality, real Kraus operators, covariance,
+projection form, or protocol dependence.
+
+For the retained-history laws $P_\rho^\pi$, define
+
+$$
+e(T)=\sup_{\rho\in\mathcal D(\mathcal H)}\sup_{\pi\text{ actual, finite}}
+\operatorname{TV}(P_\rho^\pi,P_{T(\rho)}^\pi),\qquad
+\varepsilon_q=\inf_{T\in\mathfrak C_q}e(T).
+\tag{1.1}
+$$
+
+The replacement occurs once, before the common future protocol. Total
+variation is half the $\ell^1$ difference, or its measure-theoretic extension
+for randomized controls. This is a system-menu criterion. CPTP legality is
+required on all reference extensions, but the performance test includes no
+joint-reference measurement and is not defined by trace or diamond distance.
+

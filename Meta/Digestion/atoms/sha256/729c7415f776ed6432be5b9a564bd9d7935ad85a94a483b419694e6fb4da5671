@@ -1,0 +1,27 @@
+**Proposition 5.2 (content reconstruction cannot supply an omitted
+past-event distinction).** Suppose an enriched history task permits
+two actual histories with the same stationary source, same complete
+recovery entry and public inputs, but different required past-event
+receipts or timing data. Suppose every later permitted observation
+depends only on that source and the recovery procedure's acquired
+state. No deterministic procedure using that interface can recover
+the enriched history on both realizations, even with arbitrarily many
+later Reads.
+
+Proof. Inductively the two recoveries start equally, select the same
+next address, receive the same reply from the same source, and take
+the same successor. They have identical later observations and
+outputs. The two required enriched histories are different, so at
+least one output is incorrect. $\square$
+
+For example, an independently issued historical receipt identifier
+with two possible values is such an omitted distinction if neither
+the current source nor the entry retains it. A past timestamp is
+another example when the enriched contract permits different schedules
+with identical address/reply content. These examples specify enriched
+domains; the deterministic content target (NPH.3) contains neither
+field. Theorem 4.3 recovers that content, and does not assert its
+cryptographic or physical authenticity. Supplying a source-bound
+authenticated writer and callable persistent record is a new service
+whose implementation and price require their own contract.
+

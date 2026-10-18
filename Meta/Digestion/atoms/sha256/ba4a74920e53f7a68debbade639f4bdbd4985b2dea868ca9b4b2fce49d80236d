@@ -1,0 +1,39 @@
+**Theorem 9.1 (sharp four-sign laws at all three heights).** Define
+
+$$
+g_y(s)=p_s\sum_{i=0}^2h_i^2p_{yi}
+ +q_s\left(b^2\frac y{128}+a^2\frac{64-y}{128}\right).
+\tag{IR.54}
+$$
+
+For every original design and each $y\in\{5,16,27\}$,
+
+$$
+\frac14\sum_{e,n=\pm1}
+ p_H^{\rm acq}(\rho_{y,e,n};\mathfrak F)\geq g_y(s).
+\tag{IR.55}
+$$
+
+One common design, Definition 7.1, attains all three inequalities, with
+value $g_y(s)$ separately on each of the four signs at that height.
+These are exact inequalities among original conditional laws, with no
+source prior and no averaged-to-individual lower-bound inference.
+
+Proof. The signs in (IR.2) cancel each off-diagonal entry, giving the
+linear identity
+
+$$
+\frac14\sum_{e,n}\rho_{y,e,n}=\operatorname{diag}(p_y).
+\tag{IR.56}
+$$
+
+Each actual acquired high probability is a linear functional of the
+input. Thus its four-sign mean is its value on this diagonal matrix.
+Apply Theorem 6.2 to that matrix, and evaluate the diagonal operator
+$p_sD^\dagger D+q_sT^\dagger T$ to obtain (IR.54)–(IR.55).
+The same operator is the acquired effect of Definition 7.1, and its
+value is independent of $e,n$. This proves simultaneous equality with
+one actual finite common instrument, without any selection of history
+or independently chosen output laws. All twelve original inputs and
+their full canonical targets remain prescribed. $\square$
+

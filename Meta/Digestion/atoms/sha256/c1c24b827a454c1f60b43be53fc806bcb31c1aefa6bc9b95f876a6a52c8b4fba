@@ -1,0 +1,113 @@
+**Theorem 7.1 (a zero of the transfer form obstructs recovery).** Fix a real $a$ such that $\mathcal T_a$ is invertible, and put $H=\mathcal T_a^{-1}\mathcal C$. If $Q_H(S_*)=0$ at any positive rank-one $S_*$, the prescribed history has two distinct actual effective targets with identical observations. Consequently a uniformly recovering history must satisfy, at every such slope, either
+
+$$
+Q_H(S)>0\quad\hbox{for every }S\in\mathcal R_+,
+\qquad\hbox{or}\qquad
+Q_H(S)<0\quad\hbox{for every }S\in\mathcal R_+.
+\tag{7.1}
+$$
+
+This excludes zeros of a one-sided form as well as an identically zero form.
+
+**Proof.** If $R_H(S_*)=0$, then for every sufficiently small nonzero $\varepsilon$ the matrix
+$S_0=S_*+\varepsilon H(S_*)$ has positive entries and zero determinant. Set $S_1=S_*$. The exact transfer equality is
+
+$$
+\mathcal T_a S_0
+ =\mathcal T_a S_1+\varepsilon\mathcal C S_1
+ =\mathcal T_{a+\varepsilon}S_1.
+\tag{7.2}
+$$
+
+The bridge of Section 6 gives the complete collision, including the case $H(S_*)=0$.
+
+Suppose next that $R_H(S_*)\ne0$ and that $Q_H$ is not identically zero on $\mathcal R_+$. Choose $S_b$ with $q_b=Q_H(S_b)\ne0$ and write $\sigma=\operatorname{sign}(q_b)$. Connect $S_*$ to $S_b$ by linear interpolation of their three positive coordinates $(r,x,y)$. Along the resulting compact positive rank-one path $S(\theta)$ let $m>0$ be a common lower bound for its entries and put
+
+$$
+K=1+\max_{\theta,j,k}|H(S(\theta))_{jk}|.
+$$
+
+Choose any nonzero $\varepsilon$ of the sign specified by
+$\operatorname{sign}(\varepsilon R_H(S_*))=-\sigma$, with
+
+$$
+|\varepsilon|<
+\min\left(\frac{m}{2K},
+ \frac{|q_b|}{2(1+|R_H(S_b)|)}\right).
+$$
+
+Then $F_\varepsilon(\theta)=Q_H(S(\theta))+\varepsilon R_H(S(\theta))$ has sign $-\sigma$ at zero and sign $\sigma$ at one. Continuity gives an interior zero. At that source $S_1$, put $S_0=S_1+\varepsilon H(S_1)$. Every entry of $S_0$ exceeds $m/2$, and its determinant is $\varepsilon F_\varepsilon=0$. Equality (7.2) again applies. This works for every sufficiently small magnitude of the specified sign, without assuming a nonzero derivative of $Q_H$ at its zero. In particular it applies to an interior minimum or maximum of a one-sided form.
+
+It remains to treat a form that vanishes identically on $\mathcal R_+$. As a homogeneous quadratic polynomial in $(p,q,r,s)$ it then satisfies
+
+$$
+Q_H(X)=\rho\det X
+\quad\hbox{for every real matrix }X
+\tag{7.3}
+$$
+
+for some real $\rho$. To prove this identity, substitute $(p,q,r,s)=(x,xy,1,y)$ into its ten quadratic monomials:
+
+$$
+\begin{array}{c|cccccccccc}
+ &p^2&q^2&r^2&s^2&pq&pr&ps&qr&qs&rs\\ \hline
+ &x^2&x^2y^2&1&y^2&x^2y&x&xy&xy&xy^2&y .
+\end{array}
+$$
+
+Only $ps$ and $qr$ coincide. A polynomial vanishing for every positive $x,y$ has all coefficients zero, by fixing one variable and applying the polynomial root bound in each variable. Thus the two coincident coefficients sum to zero and every other coefficient vanishes, proving (7.3).
+
+Let $H^*$ denote the adjoint for $\mathfrak b$, defined by
+$\mathfrak b(HX,Y)=\mathfrak b(X,H^*Y)$. It exists uniquely by nondegeneracy. Polarizing (7.3) gives
+
+$$
+\mathfrak b(X,HY)+\mathfrak b(HX,Y)
+ =\rho\mathfrak b(X,Y),
+\qquad H+H^*=\rho\operatorname{Id}.
+\tag{7.4}
+$$
+
+In particular $H^*=\rho\operatorname{Id}-H$ commutes with $H$.
+
+For sufficiently small nonzero $t$, define
+
+$$
+\gamma=1+\rho t,\qquad
+t'=-\frac{t}{1+\rho t},\qquad
+A_t=\operatorname{Id}+tH,\qquad
+G=A_{t'}^{-1}A_t .
+\tag{7.5}
+$$
+
+If $\rho\ne0$, require $|\rho t|<1$. Both $A_t$ and $A_{t'}$ are invertible near zero, and $\gamma\ne0$. Formula (7.4) gives
+$A_{t'}=\gamma^{-1}A_t^*$, hence
+
+$$
+G=\gamma(A_t^*)^{-1}A_t,\qquad
+G^*=\gamma A_t^*A_t^{-1},\qquad
+G^*G=\gamma^2\operatorname{Id}.
+$$
+
+The last identity follows because all these factors commute. Therefore
+
+$$
+\det(GX)=\tfrac12\mathfrak b(GX,GX)
+ =\tfrac12\mathfrak b(X,G^*GX)=\gamma^2\det X.
+\tag{7.6}
+$$
+
+For any fixed $S\in\mathcal R_+$, $G$ tends to the identity as $t$ tends to zero. Thus $S'=GS$ is strictly positive and has determinant zero for all sufficiently small $t$. Moreover $t'\ne t$: equality for nonzero $t$ would force $\rho t=-2$, excluded by the stated smallness condition, and when $\rho=0$ one has $t'=-t$. This transformation of slopes is an involution, since
+$1+\rho t'=1/(1+\rho t)$ and applying (7.5) again returns $t$.
+
+Finally $\mathcal T_{a+t}=\mathcal T_a A_t$, so
+
+$$
+\mathcal T_{a+t'}S'
+ =\mathcal T_a A_{t'}A_{t'}^{-1}A_tS
+ =\mathcal T_{a+t}S.
+$$
+
+The bridge supplies actual runs with these different slopes and with the entire compensating drift. This argument does not require $\det(H(S))=0$ and covers $\rho=0$.
+
+All possible zeros have now been excluded for a recovering history. The positive source domain is connected in $(r,x,y)$, so a continuous form with no zeros has one strict sign there. This proves (7.1). The opposite-strict-sign obstruction in Theorem 3.1 remains a credited result; the additional conclusions concern zeros and the explicit involution. ∎
+

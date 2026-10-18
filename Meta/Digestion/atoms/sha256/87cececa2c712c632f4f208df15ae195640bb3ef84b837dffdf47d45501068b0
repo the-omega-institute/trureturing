@@ -1,0 +1,24 @@
+**Definition 1.3 (regular selection).** Fix a public finite nonempty
+state set $Q$, states $q_\alpha,q_\beta\in Q$, a total function
+$\delta:Q^2\to Q$ and $F\subseteq Q$. Write
+$A=(Q,q_\alpha,q_\beta,\delta,F)$ and
+
+$$
+q_A(\alpha)=q_\alpha,\qquad q_A(\beta)=q_\beta,\qquad
+q_A(\langle x,y\rangle)=\delta(q_A(x),q_A(y)).
+\tag{NRF.3}
+$$
+
+For $v\in\mathcal T$ let $P_A(v)$ contain precisely the positions $p$
+with $q_A(v|_p)\in F$ and $q_A(v|_a)\notin F$ at every strict ancestor
+$a$ of $p$. The output is
+
+$$
+\mathcal O_A(v)=\bigl(P_A(v),R_{P_A(v)}(v)\bigr).
+\tag{NRF.4}
+$$
+
+This is a finite cut, possibly empty or the root singleton. It includes
+no blocked requested positions. Its cardinality and address lengths
+need not be bounded uniformly over $v$.
+

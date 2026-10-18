@@ -1,0 +1,31 @@
+**Definition 16.5 (unresolved rooted obligations and terminal caps).**
+A rooted obligation tree $T$ is a finite nonempty prefix tree with at
+most two children per vertex, retaining its original addresses through
+an embedding into $K$. Its root is known present. An internal vertex
+may be a stopping alpha/beta leaf or a branch. A terminal vertex may
+be open, allowing alpha, beta or branch, or capped, allowing only
+alpha or beta if reached. A cap never asserts that its vertex is
+present: an earlier stopping leaf can make it absent. Relevant leaf
+labels not yet acquired are unrestricted. The task is to determine
+all replies on $T$.
+
+For $x\in T$, let $A_T(x)$ be the inclusive root-to-$x$ path and
+$\operatorname{Desc}_T(x)$ its inclusive descendant cone. Let
+$\mathscr F_T(x)$ be the rooted connected components of
+$T\setminus A_T(x)$. For nonroot $x$ with parent $p$, put
+
+$$
+ T_x^- = T\setminus\operatorname{Desc}_T^+(p),
+ \qquad
+ \operatorname{Desc}_T^+(p)=\operatorname{Desc}_T(p)\setminus\{p\}.
+\tag{AAR.92}
+$$
+
+This retains $p$ and deletes all its strict descendants in both child
+directions. Operationally the new terminal $p$ is capped. A forest of
+obligations consists of disjoint components attached below already
+certified branch paths, together with the fixed acquired replies
+outside them. It keeps each component's original-root embedding and
+its current terminal marks. Relabelling an embedding as a relative
+root for a numerical calculation grants no navigation operation.
+

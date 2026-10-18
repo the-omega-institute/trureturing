@@ -1,0 +1,35 @@
+**Definition 4.1 (dependency graph and two orders).** Form a simple
+undirected graph $G$ on original blocks, with $ij$ an edge precisely
+when a seed owned by either endpoint is prescribed at the other.
+This includes prescribed occurrences whose table happens to be constant;
+self occurrences add no edge. For $e=ij$ put
+$W_e=N_G[i]\cup N_G[j]$. Given
+$P\subseteq W_e\setminus\{i,j\}$ and full owner values
+$u\in\prod_{v\in P}\Omega_v$, define
+
+$$
+\begin{aligned}
+K_e^+(a,b\mid u)
+&=Q_{i,I_i\cap P}(a\mid B_{i,I_i\cap P}(u))\,
+  Q_{j,I_j\cap(P\cup\{i\})}(b\mid B_{j,I_j\cap(P\cup\{i\})}(u,a)),\\
+K_e^-(a,b\mid u)
+&=Q_{j,I_j\cap P}(b\mid B_{j,I_j\cap P}(u))\,
+  Q_{i,I_i\cap(P\cup\{j\})}(a\mid B_{i,I_i\cap(P\cup\{j\})}(u,b)).
+\end{aligned}
+\tag{OOA.15}
+$$
+
+Irrelevant components are ignored; repeated seed references select the
+same component of their actual full owner tuple. Both are normalized
+joint laws on $\Omega_i\times\Omega_j$. Define a uniform edge loss
+$\delta_e\in[0,1]$ by the requirement
+
+$$
+\sum_{a,b}\sqrt{K_e^+(a,b\mid u)K_e^-(a,b\mid u)}\le1-\delta_e
+\quad\text{for every }P,u.
+\tag{OOA.16}
+$$
+
+The test includes unrealizable contexts. It is a stronger, finitely
+testable premise than a statement only under an unknown Gibbs marginal.
+

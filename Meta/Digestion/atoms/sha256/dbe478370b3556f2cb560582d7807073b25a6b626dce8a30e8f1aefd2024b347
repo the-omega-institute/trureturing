@@ -1,0 +1,25 @@
+**定义 13.2（Condition $\mathsf P$: an early final query reused after a middle word）。** There are $i\in\mathbb F_2$, a bijection $G:\mathbb F_2\to U_Y$, and full supports $E,F$ as above, such that
+
+$$
+\lambda_i(j)=G(i\oplus q_1(j))\quad(j\in J),\qquad
+\tau(B_E)+\alpha(D_F)<k.
+\tag{13.2}
+$$
+
+Set $w=1-i$, let $d$ be the constant value of $q_1$ on $M_i$, and put $e=w\oplus d$, $h_e=1-e$. Require
+
+$$
+\lambda_w(j)=G(e\oplus q_3^B(j))
+\quad(j\in M_i,\ q_2^D(j)=0).
+\tag{13.3}
+$$
+
+On $M_i\cap\{q_2^D=1\}$ require either constancy of $\lambda_w$, with any literal value in $U_Y$, or
+
+$$
+\lambda_w(j)=G(h_e\oplus q_3^B(j)).
+\tag{13.4}
+$$
+
+Empty-set constancy is allowed. The charge at the last query is translated from $E$, not selected independently. The middle word remains arbitrary, including zero waits and safe all-one words.
+

@@ -1,0 +1,85 @@
+**Theorem 13.2 (uniform reference lower amplitude).** There is $g_0>0$, depending only on the fixed datum and its antecedents, such that for every $0<g<g_0$ and every $v_g$ just specified,
+
+$$
+v_g(k,q)\ge c_*g^{3/2}\phi(k)
+\quad\text{for almost every }(k,q)\in I\times\mathbb B_g.
+\tag{13.2}
+$$
+
+The height range is the whole original interval, with both Dirichlet faces retained.
+
+Proof. Put $f_g=\mathcal D_gv_g\ge0$. Its fixed-cutoff variational deficit is exactly zero. P Theorems 72.1 and 73.1, applied with $\tau=1$ fixed, give
+
+$$
+e_1(g)/g^2\longrightarrow e_C=-a\varrho^2,
+\qquad \|f_g-\phi h_C\|_2\longrightarrow0.
+\tag{13.3}
+$$
+
+For the second assertion, apply the pointwise modulus inequality to P's phase-orbit conclusion, since $|e^{i\theta}\phi h_C|=\phi h_C$. Both conclusions are uniform over nonnegative actual reference choices: a failure of uniformity supplies $g_n\downarrow0$ and failing choices, contradicting the same sequencewise theorems. Thus, since $\phi\mathbf1_{\mathbb B_\varrho}\in L^2(dk\,d\mathbf z)$ and $\int_I\phi^2=1$,
+
+$$
+\begin{aligned}
+I_g&:=\int_{I\times\mathbb B_\varrho}\phi(k)f_g(k,\mathbf z)dk\,d\mathbf z
+ \longrightarrow\int_{\mathbb B_\varrho}h_C(\mathbf z)d\mathbf z,\\
+I_g&\ge\tfrac12 e^{-1}h_0V_\varrho
+\quad\text{for all sufficiently small }g\text{ and all these choices}.
+\end{aligned}
+\tag{13.4}
+$$
+
+Here $h_C\ge e^{-1}h_0$ on the indicated ball. This step extracts an integral on a fixed macroscopic set, without inferring point values from $L^2$ convergence.
+
+Write $\mathscr K_T(Y,Y')=e^{\lambda T}p_T^B(Y,Y')$, the raw kernel of $e^{-TS}$. L Lemma 41.2, with its complete height factors, implies for every $T\ge1$ and all interior heights and phase endpoints
+
+$$
+\left|\mathscr K_T((k,q),(k',q'))
+ -\phi(k)\phi(k')\frac{e^{-d(q'-q)^2/(4T)}}{(4\pi T)^{3/2}\sqrt{\det M}}\right|
+ \le C\phi(k)\phi(k')T^{-5/2}.
+\tag{13.5}
+$$
+
+Only the spatial exponential, which is at most one, has been discarded from that error. For $q,q'\in\mathbb B_g$, the triangle inequality for $d$ gives $d(q'-q)\le2/(\varrho g)$. Choose the native heat time and the Hamiltonian semigroup time to be
+
+$$
+T_g=(\varrho g)^{-2},\qquad t_g=T_g/a,
+\qquad \gamma_0=\frac{e^{-1}}{(4\pi)^{3/2}\sqrt{\det M}}.
+\tag{13.6}
+$$
+
+The Gaussian in (13.5) is at least $\gamma_0(\varrho g)^3$ on these endpoints. Take $g$ small enough that $T_g\ge1$ and $C/T_g\le\gamma_0/2$. Equation (13.5) then gives, uniformly over the entire height interval,
+
+$$
+\mathscr K_{T_g}((k,q),(k',q'))
+ \ge\tfrac12\gamma_0(\varrho g)^3\phi(k)\phi(k')
+\quad(q,q'\in\mathbb B_g).
+\tag{13.7}
+$$
+
+The relative height factor in the error is essential for this conclusion near either absorbing face.
+
+For completeness, the bounded nonnegative multiplier $W_1$ of P Proposition 70.2 gives the order inequality
+
+$$
+e^{-tH_{g,1}}f\ge e^{-taS}f\qquad(f\ge0,\ f\in L^2,\ t\ge0).
+\tag{13.8}
+$$
+
+Indeed its bounded-perturbation Dyson expansion has zeroth term $e^{-taS}$ and subsequent terms consisting of positive free semigroups and $gW_1$. The $n$th term has operator norm at most $(tg\|W_1\|_\infty)^n/n!$, because $S\ge0$. The series converges in operator norm at every finite $t$, and the positive cone of $L^2$ is closed. This proves (13.8) on the entire complex Hilbert space as an order assertion for nonnegative inputs. It remains valid at each finite $t=t_g$; no uniform series limit as $g\to0$ is required.
+
+The actual eigen-equation gives $v_g=e^{t_ge_1(g)}e^{-t_gH_{g,1}}v_g$. Equation (13.3) yields $t_ge_1(g)\to-1$, so $e^{t_ge_1(g)}\ge e^{-2}$ for small $g$. Positivity permits restricting the input to $I\times\mathbb B_g$. This restriction of $v_g$ is in $L^1\cap L^2$, since that set has finite measure at each $g>0$. The raw kernel integral is consequently legitimate, without assuming $v_g\in L^1$ globally. Combining (13.7)–(13.8), for almost every $(k,q)\in I\times\mathbb B_g$,
+
+$$
+\begin{aligned}
+v_g(k,q)
+&\ge e^{-2}\tfrac12\gamma_0(\varrho g)^3\phi(k)
+ \int_{I\times\mathbb B_g}\phi(k')v_g(k',q')dk'\,dq'\\
+&=e^{-2}\tfrac12\gamma_0\varrho^3g^{3/2}\phi(k)I_g\\
+&\ge\frac{e^{-3}\gamma_0\varrho^3h_0V_\varrho}{4}
+ g^{3/2}\phi(k)=c_*g^{3/2}\phi(k).
+\end{aligned}
+\tag{13.9}
+$$
+
+The equality uses exactly $\mathbf z'=gq'$ and $v_g(k',q')=g^{3/2}f_g(k',gq')$. Substitution of (13.1) and (13.6) gives $e^{-3}\gamma_0\varrho^3h_0V_\varrho/4=e^{-4}h_0/(24\sqrt\pi)$. All thresholds used above depend only on the fixed datum, and are uniform over the reference choices. The kernel of $e^{-t_gaS}$ is $\mathscr K_{a t_g}=\mathscr K_{T_g}$: this is a time chosen for a semigroup estimate, leaving the defining field clock of $W_1$ equal to $B$. $\square$
+

@@ -1,0 +1,28 @@
+**Corollary 13.9 (exact peak and nonadaptive prices).** Under the same
+contract,
+
+$$
+ \boxed{Q_D(p)=|p|,}\qquad
+ \boxed{C_D^{\mathrm{nonadaptive}}(p)=|p|.}
+\tag{AAR.81}
+$$
+
+One common strategy attains both the call minimum (AAR.80) and the peak
+minimum. Nonadaptive here means a fixed source-independent ordered list
+of literal queries, optionally stopped when the acquired information
+already suffices; it does not allow reply-dependent address selection.
+
+Proof. The two actual sources $t_{n,0},t_{n,1}$ have different replies
+only at the literal $p$ and require different answers at $k=0$. Both
+executions must therefore eventually query that literal, of length $n$.
+This proves the peak bound even for strategies allowed arbitrarily many
+other queries. Theorem 13.4 attains it and the call optimum together.
+
+A fixed query list must contain every $p_j$, by the corresponding pair
+$t_{j,0},t_{j,1}$. Early stopping cannot remove this requirement on the
+run with that leaf. Consider the $p_j$ whose first occurrence in the
+list is latest; its leaf sources require at least $n$ calls. Conversely,
+query $p_1,\ldots,p_n$ in order, stopping at a leaf, or returning $B$
+after branch at $p_n$. This acquires the descriptor in at most $n$ actual
+Reads, with worst total letters $n(n+1)/2$ and peak $n$. $\square$
+

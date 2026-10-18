@@ -1,0 +1,27 @@
+**Theorem 283.2 (Reserve and stability for the 28-row natural score).**
+Use exactly $Y=Y^{\rm n}_{J_*}$ from Definition 281.1. For every one
+full feasible $\lambda$, set $\delta_D=21/5-Yz_D$ and let
+$\tau_Y=\sum_{D:\delta_D>0}\lambda_D$. Then
+
+$$
+\frac{46}{5}e-\sum_{j\in J_*}b_j
+ =\sum_D\lambda_D\delta_D+Y(G_N\lambda-h),\qquad
+\tau_Y\le20\left(\frac{46}{5}e-\sum_{j\in J_*}b_j\right).
+\tag{283.4}
+$$
+The constant 20 is sharp for the column-deficit estimate
+$[\delta_D>0]\le20\delta_D$. No sharpness among cap-feasible
+reserve ratios is asserted.
+
+**Proof.** Expand $YG_N\lambda=-\sum\lambda_D\delta_D$ and
+$Yh=\sum_{J_*}b_j-(46/5)e$, keeping the same allocation.
+The remaining term is the nonnegative full-row slack. By 281.2 every
+positive $\delta_D$ is at least $1/20$, giving (283.4).
+$N(1,j_5;0,0,j_2,0)=O(1,j_5;0,j_2,0)$ has exactly that deficit,
+so no smaller column constant works. Reserve zero forces supported
+columns to be optimal and every positively scored row to be tight;
+it does not force an unscored row tight. The fidelity and proportional
+scores have their own different gaps, $1/30$ and $1/15$.
+Their optimal faces and constants are not substituted into (283.4).
+$\square$
+

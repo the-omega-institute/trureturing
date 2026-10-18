@@ -1,0 +1,24 @@
+## 197. Statement and exact dependencies
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths, and original 2*pi
+edge equations. Assume exactly five reservoir labels and a nonempty flat set.
+Choose the maximal-selected escape tau=(Z,M,C,D,M,C) and write the five cosh
+lengths as z,m,c,d,u. The existing five-witness theorem and exact upper-gap
+result give m>3, z>m+2, c,d<m-2, M's genuine budget pi, all Z slots genuine,
+and
+
+ s=sqrt((z-1)/(z+1)),
+ T=2*sqrt(m^2-1)*s-m,
+ m-2<T<m, u>T.
+
+Use the proved forced-return proposition: if u<=m, the complete Z circle
+contains tau as its one-slot dominant {M,C} run, with both boundary slots
+in rho=(C,Z,M,U,Z,M). Those two Z angles exceed pi/2. Every owner with
+fixed pair {Z,M} is rho. The original tau and rho each consume more than
+pi of the total actual M/Z capacity 3*pi.
+
+Define the exact second-role threshold
+
+ T2=2*sqrt(z^2-1)*sqrt((m-1)/(m+1))-z.
+

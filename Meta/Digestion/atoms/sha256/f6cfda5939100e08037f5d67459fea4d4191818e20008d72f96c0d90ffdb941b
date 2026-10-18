@@ -1,0 +1,44 @@
+**Definition 2.2 (one common bridge and all coefficient terms).** For a height bridge $H_v$ with generator $\partial_r^2$, from $0$ to $r$ in time $t$, put
+
+$$
+\begin{aligned}
+u(h)&=(1,h,h^2/2),& M_j&=\int_0^tH_v^j u(H_v)u(H_v)^{\mathsf T}dv\quad(j=0,1,2),\\
+h_t(r)&=(4\pi t)^{-1/2}e^{-r^2/(4t)},&
+\gamma_M(\mathbf z)&=(4\pi)^{-3/2}(\det M)^{-1/2}e^{-\mathbf z^{\mathsf T}M^{-1}\mathbf z/4},\\
+p_0(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[\gamma_{M_0}(\mathbf z)]=k_t(r,\mathbf z),\\
+p_1(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[-2D\gamma_{M_0}(\mathbf z)[M_1]],\\
+p_2(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t[3D\gamma_{M_0}(\mathbf z)[M_2]
+                   +2D^2\gamma_{M_0}(\mathbf z)[M_1,M_1]],\\
+V_j&=j_0^{-1}\int_1^\infty p_j(t;\cdot)dt\quad(j=1,2),&
+V_{\rm t}&=j_0^{-1}\int_1^\infty t k_tdt>0.
+\end{aligned}
+\tag{2.5}
+$$
+
+In the first line $u(h)$ is the displayed vector; $D$ differentiates in the positive definite matrix at fixed $\mathbf z$. Every matrix comes from this same bridge. P §107 supplies absolute convergence, the parity of $V_1$ as odd and $V_2,V_{\rm t}$ as even, and
+
+$$
+\begin{gathered}
+\widetilde U_s=V+\beta_sV_1+\beta_s^2V_2+\lambda s^2V_{\rm t}+\mathcal R_s,
+\qquad \|\mathcal R_s\|_\infty\le Cs^{5/2},\\
+|V_1|\le C(1+|r|)^{-4},\qquad |V_2|+V_{\rm t}\le C(1+|r|)^{-3}.
+\end{gathered}
+\tag{2.6}
+$$
+
+This is a full-space expansion including all real phases, both moving faces, zero extension and the original infinite-time tail. R additionally supplies $V_j^2\le K_jV$, $V_{\rm t}^2\le K_{\rm t}V$ and $\int V^{1/2}|v|^2\le\Gamma b[v]$. These fields use the heat clock of $B$; $a$ does not enter it.
+
+Define the jointly realized finite numbers
+
+$$
+\begin{aligned}
+A&=\int r^2|Yp|^2,&B_1&=\int rV_1p^2,&C_2&=\int V_2p^2,&T&=\int V_{\rm t}p^2>0,\\
+K_{\rm base}&=3aA-\chi C_2,&D_{\rm clock}&=a+\chi T,\\
+t_0&=2A+\gamma B_1,&
+C_{108}&=\nu^2\{a(1-A)-\chi(C_2+2B_1)\}-\lambda(a+\chi T).
+\end{aligned}
+\tag{2.7}
+$$
+
+Thus $A=A_2$, $C_2+2B_1=J_2$ and $T=J_{\rm t}$ in P §108. The complete original affine coefficient includes every rational kinetic, $V_1$, $V_2$, source, time-weighted field and threshold term.
+

@@ -1,0 +1,37 @@
+**Proposition 3.1 (all signed source histories from one preparation).**
+Fix $a_0,q_0\in(0,c)$ with $a_0\ne q_0$ before selecting $x,\beta,m$.
+From the common preparation at $a_0$, use a unit fixed-height phase leg
+of increment $2\pi m$, then four unit rectangle legs with relative vertices
+
+$$
+(a_0,0),\quad(q_0,0),\quad(q_0,B),\quad(a_0,B),\quad(a_0,0),
+\qquad
+B=\frac{r(\pi m-\beta)-2\pi m a_0}{q_0-a_0},
+\tag{FH.4}
+$$
+
+and a final unit zero-relative-phase leg $a_0\to x$. Translate the
+rectangle's relation phase and transported lift by the preceding leg's
+actual endpoint. This six-unit history realizes (FH.3) and its stated real
+residual. It has strict positive support, finite phase variation
+$2\pi|m|+2|B|$, and both original regularity alternatives. It gives no
+unknown generator word or parameter to the observer.
+
+Proof. The first leg has residual $2\pi m w(a_0)$. The rectangle has
+residual $B(w(q_0)-w(a_0))$, by the actual polygon of [FRT][FRT] and
+the all-signed-sector application in [its Scribe][FRTB]. Directly,
+
+$$
+w(q_0)-w(a_0)=-\frac{q_0-a_0}{r}(1,1,0,1,1).
+$$
+
+The positive grouped component of their sum is
+$\pi m-2\pi m a_0/r-B(q_0-a_0)/r=\beta$; the negative grouped
+component is smaller by $\pi m$, and the middle component is zero.
+The final leg transports no phase. Thus the endpoint vector and real lift
+are exactly (FH.3). All heights lie between the three strict heights;
+the finitely many affine pieces join continuously and have finite variation.
+They are absolutely continuous and satisfy the finite-piecewise-$C^1$
+alternative. Chronological composition is precisely [OCC][OCC], with
+no prefix replacement or old-lift read. $\square$
+

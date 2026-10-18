@@ -1,0 +1,40 @@
+**Lemma 7.1 (the $F$ indefinite conics).** For
+
+$$
+q_{37}=X^2+2XY-Y^2+2X,
+$$
+
+use
+
+$$
+D=t^2-2t-1,\qquad X=\frac{2}{D},\qquad Y=\frac{2t}{D},
+$$
+
+so that
+
+$$
+X+1=\frac{(t-1)^2}{D},\qquad
+Y+1=\frac{(t-1)(t+1)}{D}.
+$$
+
+The roots of $D$ are simple and are distinct from $t=0,-1,1$. The orders of
+$X^{k_1}Y^{m_1}$ at a root of $D$ and at $t=0$ are respectively
+$-(k_1+m_1)$ and $m_1$. Therefore $n_1$ divides $k_1+m_1$ and $m_1$;
+the primitive gcd of all three exponents gives $n_1=1$. In the $F$ branch,
+the shifted orders at a root of $D$ and at $t=-1$ give divisibility by
+$k_2+m_2$ and $m_2$, hence $n_2=1$.
+
+At $t=1$, $X=Y=-1$. If $k_1+m_1$ is even, $z+1$ has order zero. If it
+is odd, its logarithmic derivative is nonzero and it has order one. In either
+case, the shifted monomial has order $2k_2+m_2\ge3$, a contradiction.
+
+The exchanged conic is
+
+$$
+q_{22}=X^2-2XY-Y^2-2Y.
+$$
+
+Exchanging $X$ and $Y$ in the preceding parametrization gives the same
+argument, with shifted order $k_2+2m_2\ge3$ and the nonzero derivative
+coming from the $k_1$ term. Thus neither $F$ exception admits a positive lift.
+

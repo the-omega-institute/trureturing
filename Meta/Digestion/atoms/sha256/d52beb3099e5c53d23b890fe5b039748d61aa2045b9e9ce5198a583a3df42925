@@ -1,0 +1,33 @@
+**Proposition 5.3 (unbounded actual counterfamily and exact excluded
+premise).** For every integer $n\ge5$, let $G_n$ have vertices
+modulo $n$ and edges $\{i,i+1\}$ and $\{i,i+2\}$ for all $i$.
+It satisfies Definition 1.4. Consequently there is no function
+$\eta(n)\to0$ such that every actual template in this family has
+a certificate of Definition 2.1 with
+
+$$
+\log_2F-\log_2Z_{G_n}\le n\eta(n).
+\tag{WBF.27}
+$$
+
+This remains false if only arbitrarily large dyadic lengths are
+required.
+
+Proof. For $n\ge5$, the neighbors $i\pm1,i\pm2$ are four
+distinct vertices and the displayed unordered edges have no unwanted
+duplication. The graph is simple and 4-regular. Its step-one cycle
+proves connectedness; deleting any vertex from that cycle leaves a
+path through all remaining vertices. Orient $i\to i+1,i+2$ to
+obtain two incoming and two outgoing edges as required by the native
+carrier. Apply Theorem 5.2 to every $G_n$. Its optimized per-block
+excess is greater than $\kappa-1/n$, so cannot be bounded above
+by a function tending to zero. The same proof holds along $n=2^j$.
+$\square$
+
+The excluded premise is a mandatory uniformly vanishing per-template
+loss for this one norm class. The allowed data already optimize every
+product reference, exponent and global positive whole-star majorant;
+altering only those choices cannot repair (WBF.27). This statement
+does not quantify over extensions of the class or over pressure-optimal
+laws.
+

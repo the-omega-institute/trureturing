@@ -1,0 +1,37 @@
+**Theorem 17.1 (one shifted constructor graph is not synchronous).**
+The relation
+
+$$
+G=\{(x,z)\in\mathcal T^2:z=\langle x,\alpha\rangle\}
+\tag{ARH.17.1}
+$$
+
+is not recognized by any finite bottom-up tree automaton on the
+same-root convolution of Definition 11.1. This is a boundary of this
+coordinate representation, not of the decidability of Definition 9.1.
+
+Proof. Suppose such an automaton exists and determinize it by the finite
+subset construction. For every finite tree $b$ take
+
+$$
+x_b=\langle\alpha,b\rangle,\qquad
+z_b=\langle\langle\alpha,b\rangle,\alpha\rangle.
+\tag{ARH.17.2}
+$$
+
+Its convolution is accepted. The right child of its root is exactly
+$\operatorname{conv}(b,\alpha)$; the left child is the valid partial
+convolution of $\alpha$ and $\langle\alpha,b\rangle$ with the mandated
+padding. Infinitely many distinct $b$ and finitely many states give
+distinct $b,c$ having the same state on $\operatorname{conv}(b,\alpha)$
+and $\operatorname{conv}(c,\alpha)$.
+
+Replace only that right child in the accepted term for $b$. The left
+child and root label are unchanged, and the right state is unchanged,
+so the deterministic root state remains accepting. The result is still
+a valid convolution: its two whole coordinates are
+$\langle\alpha,c\rangle$ and
+$\langle\langle\alpha,b\rangle,\alpha\rangle$.
+They violate (ARH.17.1) since $b\ne c$. This contradiction uses only
+finite well-formed trees and proves the claim. $\square$
+

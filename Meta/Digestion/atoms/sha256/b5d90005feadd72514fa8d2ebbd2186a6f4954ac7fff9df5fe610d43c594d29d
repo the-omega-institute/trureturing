@@ -1,0 +1,14 @@
+### 32.5. 任意基数、停止与同一完整共同合同
+
+**definition and monotonicity.**
+
+L0(K,H) means at least two distinct complete worlds. L(s+1)(K,H) requires that same cardinal guard and, for each E in {J,M}, an actual response a for which the FULL slice K intersect F(H,E,a) has Ls at the extended full history. For same-history inclusion K contained in K', L0 persists by cardinality; inductively retain each old witness response and use inclusion of its child slices to preserve Ls. This proves upward monotonicity without extracting a failing pair from a nonterminal family.
+
+**whole plane no L7 proof.**
+
+Suppose any finite or infinite K contained in C_V(a0) had L7. Follow the fixed first action J and its actual witnessing response, obtaining a full compatible slice with L6. Next follow M and its witness within that slice, obtaining L5; then J,M,J,J,J successively give L4,L3,L2,L1,L0. All seven selections retain the same nested ancestors and the same fixed worlds. Only at terminal L0 choose two distinct complete worlds. They have identical initial reading and all seven actual responses along the fixed word, contradicting injectivity on the entire promised class. Thus every such K has no L7, irrespective of cardinality. The contradiction never assumes a finite prefix fiber.
+
+**stopping and scope.**
+
+Every parent and child cardinal guard remains part of the recursive construction. A successful decoder may take all eight reads; early stopping is optional only at an entire promised singleton. This excludes gains lying collectively in any one of these particular known planes from supporting unrestricted root failure. It does not authorize deleting recoverable members from a mixed failing family, combining separate plane inverses, or selecting a same-depth failing pair at a nonterminal node.
+

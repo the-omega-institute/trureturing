@@ -1,0 +1,60 @@
+**定理 24.2（从零延迟起成立的二阶相关递推）。**
+
+$$
+C_0=t(1-t),\qquad C_1=-t^2,\qquad C_2=\kappa-t^2,
+\tag{24.2}
+$$
+
+并且对所有 $\ell\ge0$，
+
+$$
+C_{\ell+2}+\alpha C_{\ell+1}+(\alpha-\beta)C_\ell=0.
+\tag{24.3}
+$$
+
+转移矩阵的特征多项式为
+
+$$
+\det(\lambda I-K)
+=(\lambda-1)\big(\lambda^2+\alpha\lambda+\alpha-\beta\big).
+\tag{24.4}
+$$
+
+证明。$\pi g=0$，而 Markov 条件期望给
+$\mathbb E[g(S_\ell)\mid S_0=s]=(K^\ell g)_s$，所以
+
+$$
+C_\ell=\sum_s\pi_sg_s(K^\ell g)_s.
+\tag{24.5}
+$$
+
+第零延迟由 Bernoulli 方差给出；no11 给 $\mathbb E B_0B_1=0$；
+第二延迟由 $\mathbb E B_0B_2=\kappa$ 给出，故有 (24.2)。
+展开 $\det(\lambda I-K)$ 得 (24.4)。
+为了证明递推从 $\ell=0$ 已成立，而非只在丢弃平稳模后形式推断，
+直接计算矩阵恒等式
+
+$$
+K^2+\alpha K+(\alpha-\beta)I
+=\begin{pmatrix}
+1-\beta&\alpha&\alpha\\
+1-\beta&\alpha&\alpha\\
+1-\beta&\alpha&\alpha
+\end{pmatrix}.
+\tag{24.6}
+$$
+
+(18.3) 等价于
+$\alpha(1-2t)=t(1-\beta)$，即
+$t=\alpha/(1+2\alpha-\beta)$。于是 (24.6) 的每一行乘 $g$ 都是
+
+$$
+-(1-\beta)t-\alpha t+\alpha(1-t)
+=\alpha-t(1+2\alpha-\beta)=0.
+$$
+
+故 $[K^2+\alpha K+(\alpha-\beta)I]g=0$。
+左乘 $K^\ell$，再取 (24.5) 的平稳内积，得到所有 $\ell\ge0$ 的 (24.3)。
+一般同三位律的非 Markov 来源不满足这个矩阵条件期望，
+所以不能由相同 $C_0,C_1,C_2$ 推出相同的后续递推。证毕。
+

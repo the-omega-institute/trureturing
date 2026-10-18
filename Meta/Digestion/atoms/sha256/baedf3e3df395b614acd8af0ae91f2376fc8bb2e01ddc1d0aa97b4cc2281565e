@@ -1,0 +1,15 @@
+**Assumption 1.1 (unchanged source and analytical domain).** Use the source
+of [PAIR, Sections 2 and 11][PAIR], with $(m,d,\ell,n)=(2,1,2,4)$.
+One depth $K$ is drawn before the first paid Read from a fixed finite or
+countable prior $\mu$, with $\mu(1),\mu(2)>0$. Conditional on this same
+$K=k$, the letters have alpha probability $r_k=F_{k+1}/F_{k+3}$,
+where $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$. Every supported depth remains
+a target. Both seeds, paid rejections, partial parses, all finite returns,
+marker triples, held records, third write before latch, fourth completion
+and matching Stop retain their original meaning. Acquired and synthetic
+updates are the same. Configuration TV is taken before averaging.
+COMPLETE charges the original control, installed program and numbers,
+sampler states, selectors, workspace and persistent randomness.
+The descriptor measures below are analytical objects, not extra accessible
+registers or source operations.
+

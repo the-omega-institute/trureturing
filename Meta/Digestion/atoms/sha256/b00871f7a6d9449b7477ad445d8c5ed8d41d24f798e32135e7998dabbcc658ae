@@ -1,0 +1,9 @@
+**Definition 5.1 (The stronger radius objective).** For $k\ge1$, let
+$\rho_{k,j}^{\mathrm{sig}}$ be the least nonnegative integer $R$ such
+that every normalized integer-labeled tree of height at most $k$ has an
+address assignment with all addresses satisfying $|t-j|\le R$ and with
+exactly the same Definition 2.2 signature. The original target index,
+ordered reply branches, node-slot positions and orientations, parities,
+leaf labels, and depths are retained. This is a requirement on the
+whole tree, beyond equality of its executed $Z$-law.
+

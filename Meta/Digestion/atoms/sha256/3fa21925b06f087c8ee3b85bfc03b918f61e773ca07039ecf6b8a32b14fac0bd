@@ -1,0 +1,30 @@
+**Corollary 6.2 (finite known-set policy under the ratio promise).**
+A known $K\subseteq\mathcal F^{\ne0}_7(H)$ with at most three
+members, common drift and common nonzero $q$ has one deterministic
+two-further-reading complete-target policy.
+
+Proof. A set of two distinct worlds cannot have $L_2$: its two
+losing sixth children would have to be that same pair and require
+all four terminal equalities, contradicting Lemma 2.3. Three
+members are excluded by Theorem 6.1. Empty sets are unreachable
+and singletons can stop. Therefore choose the first sixth action
+$E$ in the order $J,M$ for which every raw-response child
+$K_{E,w}$ fails $L_1$. Such an action exists by the negation
+of (1.9). For each real raw $w$, stop on a singleton or choose
+the first terminal action $F_w$ in the order $J,M$ injective
+on the whole child. This is possible because that child fails
+$L_1$. For every real $w,v$ the retained set
+
+$$
+K_{E,w}\cap\mathcal F(H,E,w,F_w,v)
+\tag{6.9}
+$$
+
+has at most one member. At every reachable value return that
+unique complete world. All choices are functions of the same
+known $K$ and the actual sixth response. Each selected atom
+is immediately read, giving at most eight total readings.
+The last action may depend on that actual sixth child; unlike
+Corollary 4.2, no single fixed terminal coordinate is asserted.
+Neither theorem makes an arbitrary-cardinality class claim. ∎
+

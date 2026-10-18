@@ -1,0 +1,10 @@
+**Definition 6.2 (concrete next relation).** For each primitive opcode, the
+next relation rewrites precisely its addressed adjacent cells, latch, head,
+finite PC and token as in PR57.D1; appends the one mandatory receipt; and applies
+the phase transitions of §§4–5 at commitment and seal. All other cells and
+descriptors remain unchanged, except the specifically written counter/row/copy
+prefix. At semantic calls the relation is the finite prescribed fragment
+through row seal/delivery, labelled with its complete response and complete
+endpoint, including work, archive, reference and permission changes. Illegal
+requests have no admitted fragment.
+

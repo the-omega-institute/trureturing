@@ -1,0 +1,28 @@
+**Definition 5.1 (context limit and original prefixes).** A finite
+original constructor context $C$ is a finite ordered tree of pairs,
+concrete leaves $\alpha,\beta$ and holes $\square_1,\ldots,\square_m$,
+each occurring exactly once. Its hole addresses $p_1,\ldots,p_m$ are
+distinct and prefix-free. Distinct hole names do not require different
+values: all equalities and disequalities among their fillings come from
+the full constraints. Let $d_C$ be the maximum depth of any node of this
+finite context, including its holes and concrete leaves.
+
+For describing limits only, allow finite or infinite ordered trees in
+which each reached node is a leaf or has exactly two children. Replies
+at missing addresses are $\mathsf{absent}$. Write $v\equiv_h w$ for
+equality of their replies at every original-root word of length at
+most $h$. Let $\Omega$ be the unique all-branch infinite tree, and set
+
+$$
+K_C=C[\Omega,\ldots,\Omega].
+\tag{NLC.13}
+$$
+
+There is no infinite source in (NLC.4), and $K_C$ is never a register,
+a source witness or an observer query. A finite tree is isolated by its
+prefix through its maximum leaf depth. For a set $S$ of finite trees,
+write $K\in\overline S$ to mean exactly
+$\forall h\ \exists u\in S\ (u\equiv_h K)$. This is the only use of
+prefix closure in the contact decision; its effectiveness will come
+from §4, not from the notation.
+

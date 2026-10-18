@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-phase-coherent-full-tail-minimax"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

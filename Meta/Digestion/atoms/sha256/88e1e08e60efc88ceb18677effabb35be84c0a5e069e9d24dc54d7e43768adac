@@ -1,0 +1,13 @@
+**定义 63.2（部分细化的实际来源像）。** 对任意 $R,V\subseteq K$，令 $h_{n,S;R,V}$ 为 $T_n$ 上按62.2的 $A_{R,V}$ 请求得到的实际前缀，$g_{n,S;R,V}=\kappa_{\rm hist}h_{n,S;R,V}$，$J_{n,S;R,V}$ 为其地址支持。定义整个固定词域上的粗相容来源与实际缓存映射
+
+$$
+\begin{aligned}
+\mathcal F_{n,S;R,V}&=\{U\in W_n:\forall q\in J_{n,S;R,V},\ \kappa r(q,U)=\kappa r(q,T_n)\},\\
+\Gamma_{n,S;R,V}(U)&=[(q,r(q,U)):q\text{ 按 }A_{R,V}\text{ 的原次序}],\\
+\operatorname{ActCache}_{n,S;R,V}&=\Gamma_{n,S;R,V}[\mathcal F_{n,S;R,V}].
+\end{aligned}
+\tag{JM.195}
+$$
+
+这是同一粗实际前缀下的来源到保留缓存之像，不是来源数，也不是全体名义原始提升。62.2的观察者对每个 $U\in\mathcal F_{n,S;R,V}$ 都从共同空缓存实际完成这同一地址前缀；其解码恰为 $\Gamma(U)$。无需把该缓存预装为来源相关初态。
+

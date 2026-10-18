@@ -1,0 +1,41 @@
+### 2.3. Observable consequences and scope
+
+If $\omega_2=0$, state $2$ is isolated. If $\omega_1=0$,
+$\{1,13\}$ separates from the remaining states; if $\omega_3=0$,
+$\{3,13\}$ separates. The graph is disconnected throughout the
+simplex boundary, and $\gamma(\omega)=0$ there.
+
+The center weight at the optimum is larger than either endpoint
+weight. Indeed $y-x=[1+2\tau-4\tau^2-4\tau^3]/D>0$:
+the numerator decreases on the isolating interval and its value at
+$13/25$ is $6187/15625>0$. Uniqueness then shows that uniform
+site sampling is strictly suboptimal. Its gap is approximately
+$0.13831892$, compared with (2.7).
+
+The worst reference-phase direction at the optimum is explicitly
+
+$$
+g^\star=\frac v{\sqrt{N_v}},\qquad
+f^\star=\frac{\sqrt5\,v}{\sqrt{N_v}},\qquad
+\mathbb E_pf^\star=0,\qquad
+\mathcal Q_p[f^\star]=4,\qquad
+\mathcal J_{\omega^\star}[f^\star]=4\gamma^\star.
+\tag{2.21}
+$$
+
+The factor $1/2$ in (2.1) is retained throughout. A graph
+Laplacian that instead gives each selected edge weight $\omega_i$
+is $L_\omega=2H_\omega$ and has twice this gap. The sampled
+Fisher/QFI ratio uses $H_\omega$, hence (2.6).
+
+The conclusion concerns the fixed uniform five-state law, the
+recorded-site measurement menu and the calibrated reference phase.
+It proves neither optimality among arbitrary quantum measurements
+nor a result away from that reference. Unequal sampling changes
+this menu's information operator; it does not change the occupation
+law or identify dimensionless information with physical energy.
+The activity-matched distribution of §1 supplies an exact parent
+spectrum correspondence, while (2.6) separately optimizes this
+five-state sampling budget. General activities and longer legal
+chains require their own optimality certificates.
+

@@ -1,0 +1,47 @@
+## 144. An actual dual cycle and a conditional realization theorem
+
+Form the dual multigraph of the original face pairing: its vertices are
+the actual tetrahedra and its edges are paired face pairs. Self-loops and
+parallel edges are retained.
+
+The g owners of I are distinct, and rho is different from every one of
+them. The consecutive faces crossed by the Z normal circle give a dual
+cycle through those g owners and rho, of length g+1. For g=1 it consists
+of two distinct face pairings between rho and the single run owner. For
+g=2 it is a triangle on three distinct tetrahedra.
+
+Here the face pairings really are distinct. Each run owner has exactly
+one local Z slot, axial, and its two incident faces are different. Its
+other axis cannot also be Z because that would make the owner flat.
+The two boundary transverse Z slots of rho are opposite local edges;
+no tetrahedral face contains both. Hence the two return faces in rho
+are different as well. The cycle is therefore an actual dual cycle,
+not a repeated traversal of one paired face caused by a repeated label.
+
+**Theorem 144.1.** Under Section 137's hypotheses, a nonempty flat set forces
+either two distinct tetrahedra joined by two different face pairings,
+or three distinct tetrahedra forming a dual triangle.
+
+**Corollary 144.2.** In an actual finite ideal face pairing with complete circular edge links,
+suppose |H|<=4, every edge degree is at least six, and
+the fixed paired frames and common positive zero-curvature length field
+exist. If no two distinct tetrahedra share two paired faces and no three
+distinct tetrahedra form a dual triangle, every tetrahedron is genuine.
+Self-loops elsewhere in the dual multigraph are allowed.
+
+For |H|=4 this is the contrapositive of Theorem 144.1. For |H|<=3 it follows
+from the maximal-selected four-label escape theorem already in the source.
+
+Under the standard original-manifold hypotheses used by the source
+realization theorem (a finite connected orientable ideal triangulation
+of a compact 3-manifold with all boundary components of genus at least
+two), this gives a conditional hyper-ideal realization of the original
+triangulation. The existing strict-angle-structure and Luo--Yang inputs
+supply the common positive generalized zero-curvature field. Corollary
+144.2 removes its flat blocks. Common edge lengths make paired truncated
+faces isometric, the full 2*pi equations remove edge singularities, and
+the truncation triangles give totally geodesic boundary.
+
+This criterion does not assert that every four-reservoir pairing avoids
+these dual cycles, or that the unrestricted four-reservoir case is realized.
+

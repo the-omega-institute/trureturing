@@ -1,0 +1,50 @@
+**Theorem 5.4 (sharp persistent calibration alphabet).** For a known
+$D\in\mathbb N_0$, restrict preparation to
+
+$$
+U_D=\{u\in\mathcal T:d(u)\le D\},
+$$
+
+and still allow every unknown $k\ge0$. Under the same complete cut and
+right-spine competitor contract, the minimum cardinality of an attained
+calibration alphabet is
+
+$$
+M(D)=
+\begin{cases}
+1,&D=0\text{ or }D=1,\\
+D,&D\ge2.
+\end{cases}
+\tag{IDC.5.5}
+$$
+
+Without a defect bound, no finite calibration alphabet suffices.
+With known $D$, a minimal fixed-length binary calibration payload has
+$\lceil\log_2 M(D)\rceil$ bits, before framing, authentication and
+retention costs.
+
+**Proof.** Theorem 3.1 and its concrete witnesses give
+
+$$
+d[U_D]=
+\begin{cases}
+\{0\},&D\le1,\\
+\{0,2,\ldots,D\},&D\ge2.
+\end{cases}
+$$
+
+The necessity proof of Theorem 5.2 restricts without change to any pair
+in $U_D$: both lags in (IDC.5.2) remain allowed and defect invariance
+keeps both presentations in the same defect-bounded domain. Thus a
+sufficient label must distinguish all these defect values. Their number
+is (IDC.5.5). Retaining $d$ attains this bound.
+
+For $D\ge2$, encode $d=0$ by rank zero and $d=m\ge2$ by rank $m-1$;
+these are exactly the $D$ ranks $0,\ldots,D-1$. A binary field of width
+$\lceil\log_2D\rceil$ holds them all, and $b$ fixed-length bits cannot
+hold more than $2^b$ values. For $D=0,1$, the single calibration value
+requires zero payload bits; this does not erase its invocation or
+physical-service costs. Since the actual witnesses $p_m$ realize
+arbitrarily many distinct defect values, the same necessary refinement
+excludes every finite alphabet on the unbounded domain. $\square$
+

@@ -1,0 +1,72 @@
+**定理 452.2（同一递归的统一临界逆成本）。** 对每个固定整数 \(j\ge0\)、
+每个整数 \(m\ge0\)，\(T_{a_m}\) 和 \(T_{\eta_m}\) 是互逆有界算子，且
+\[
+\boxed{
+\left(\frac b{\mathcal B(1/2)}\right)^m
+\le\|T_{\eta_m}\|_{\mathcal X_j\to\mathcal X_j}
+=\|\eta_m\|_{1,1/2}
+\le\left(\frac b{\delta_\beta}\right)^m.
+}
+\tag{IC.8}
+\]
+其中
+\[
+\lambda:=\log\frac b{\mathcal B(1/2)}
+\ge\lambda_0:=\frac{187q^2}{1323b\sqrt2}>0.
+\tag{IC.9}
+\]
+这是整个增长空间上的最坏成本；不声称未知的实际 \(M\) 或 \(H_m\)
+必然取得该下界。
+
+**证明：有界性与真实逆。** 完整正双和按乘积分组，且
+\((dk)^{-1/2}=d^{-1/2}k^{-1/2}\)，故
+\(\|v*w\|_{1,1/2}\le\|v\|_{1,1/2}\|w\|_{1,1/2}\)。于是
+\[
+\|\eta_m\|_{1,1/2}
+\le\|b\gamma\|_{1,1/2}^{\,m}\le(b/\delta_\beta)^m<\infty.
+\]
+\(a_m\) 也有完整有限范数。每个 \(N\) 上的双和是有限和，
+\(\lfloor\lfloor N/d\rfloor/k\rfloor=\lfloor N/(dk)\rfloor\)，所以
+\(T_vT_w=T_{v*w}\)。结合 \(a_m*\eta_m=\varepsilon\) 和（IC.7）
+即得真实互逆、范数等式及完整上界。
+
+**证明：正临界测试与完整尾 DCT。** 取同一个正序列
+\(f_j(0)=0\)、\(f_j(N)=W_j(N)\)（\(N\ge1\)），其范数恰为一。
+固定 \(m\)。令
+\[
+R_{N,d}=
+\begin{cases}
+W_j(\lfloor N/d\rfloor)/W_j(N),&d\le N,\\
+0,&d>N.
+\end{cases}
+\]
+对每个固定 \(d\)，\(R_{N,d}\to d^{-1/2}\)，并且对全部 \(N,d\) 有
+\(0\le R_{N,d}\le d^{-1/2}\)。在整个计数测度上，
+\[
+|\eta_{m,d}R_{N,d}|\le|\eta_{m,d}|d^{-1/2},\qquad
+\sum_{d\ge1}|\eta_{m,d}|d^{-1/2}<\infty.
+\]
+因此完整支配收敛与绝对收敛的 Dirichlet 卷积乘法给
+\[
+\frac{(T_{\eta_m}f_j)(N)}{W_j(N)}
+\longrightarrow\sum_{d\ge1}\eta_{m,d}d^{-1/2}
+=\left(\frac b{\mathcal B(1/2)}\right)^m.
+\tag{IC.10}
+\]
+最后的身份复用同一 \(\gamma\) 的完整逆级数。全部 \(d>N\) 的补集
+保留在共同可求和主导中，未把有限头当完整尾。范数至少为这个正极限，
+给（IC.8）左界。本证明对每个 \(m\) 分别成立；应用于 \(m=m(x)\)
+时使用已证明的全称界，不偷换成 \(m,N\) 的未经支付联合 DCT。
+
+**证明：\(\lambda\) 的完整积分下界。** 对有限 \(R>1/2\)，（IC.2）给
+\[
+\mathcal B(R)-\mathcal B(1/2)
+\ge c_*q^2(\log2)\int_{1/2}^{R}2^{-s}ds
+=c_*q^2(2^{-1/2}-2^{-R}).
+\]
+令 \(R\to\infty\)，由 \(\mathcal B(R)\to b\) 得
+\(b-\mathcal B(1/2)\ge c_*q^2/\sqrt2\)。令
+\(z=(b-\mathcal B(1/2))/b\in(0,1)\)，由 \(-\log(1-z)\ge z\)
+得到（IC.9）。积分端点准确为 **\(1/2\) 到 \(\infty\)**，
+没有把 \(\mathcal B(1)\) 当作 \(b\)。证毕。
+

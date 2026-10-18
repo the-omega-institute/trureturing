@@ -1,0 +1,26 @@
+### 完整 prefix/suffix 读出
+
+固定所有长度 $n-1$ 的 prefix 和 suffix 边缘，隐藏维数为
+
+$$
+\boxed{
+g_n=N_n-2N_{n-1}+N_{n-2}.
+}
+$$
+
+对于 $n\ge4$，
+
+$$
+g_n=N_{n-4}.
+$$
+
+因此：
+
+$$
+g_3=1,\qquad
+g_4=1,\qquad
+g_5=2,\qquad
+g_6=3,\qquad
+g_7=5.
+$$
+

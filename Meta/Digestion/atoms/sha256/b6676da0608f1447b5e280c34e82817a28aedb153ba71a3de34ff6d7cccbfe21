@@ -1,0 +1,17 @@
+**Definition 5.1 (finite complete-tail partition).** At p, $\mathcal P_{p,L}$ distinguishes $w_{j,0},w_{j,1}$ for $0\le j<L$ and places every other outcome, including infinite noncompletion, into a single residual cell. At suspension, $\mathcal P_{\beta,L}$ also distinguishes $\beta$ and $\alpha w_{j,b}$ for $0\le j<L$, with one residual cell. These are mathematical partitions of the original legal tail, not added runtime operations.
+
+Let $z_{i,x}^{p,L}$ be the probability vector of $Q_{i,x}$ on this partition: its entries are (2.3) and $t_i^{(L)}(x)$. Let $z_{i,y}^{\beta,L}$ be its suspended counterpart using (2.4) and $V_iA_it_{i+1}^{(L)}$. The corresponding actual vectors $p_{s,r}^{L}$ are given by (1.1) and residual masses $a_r^L,r a_r^L$.
+
+For $s=p,\beta$, define the finite configuration and law errors
+
+$$
+F_{p,i,L}(r)=\frac12\sum_x\pi_i(x)\|z_{i,x}^{p,L}-p_{p,r}^{L}\|_1,
+$$
+
+$$
+G_{p,i,L}(r)=\frac12\left\|\sum_x\pi_i(x)z_{i,x}^{p,L}-p_{p,r}^{L}\right\|_1,
+\tag{5.1}
+$$
+
+and likewise with $\tau_i,z^{\beta,L}$. Write $F_{s,i}(r),G_{s,i}(r)$ for their complete-tail counterparts.
+

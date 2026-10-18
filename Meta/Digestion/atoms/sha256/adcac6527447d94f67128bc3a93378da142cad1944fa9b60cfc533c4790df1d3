@@ -1,0 +1,66 @@
+**Proposition 14.2 (feasible supports and exact hard cells).** All
+nonempty supports omitting a root leaf are locally admissible and
+range-feasible. If a support contains both root leaves, write
+
+$$
+P=\{\alpha,\beta\}\cup T,\qquad T\subseteq\mathcal G,
+\qquad I=\{x:g_{xy}\in T\},\quad J=\{y:g_{xy}\in T\}.
+\tag{RCE.49}
+$$
+
+It is range-feasible exactly when $|I|,|J|\le2$, with empty $T$
+allowed. It is locally inadmissible exactly when $|T|\ge2$.
+On every nonlocal feasible support, $L$ is hard exactly when
+$|I|=2$, and $R$ is hard exactly when $|J|=2$. The root target
+is easy. The complete hard vector is injective on $P$, so
+
+$$
+4\le|P|\le6,\qquad
+\kappa(w,P)^2=\sum_{x\in P}w(x)^2.
+\tag{RCE.50}
+$$
+
+On every local support the hard vector is empty and
+$\kappa(w,P)=w(P)$. All classifications refer to the whole declared
+support, including states of weight zero.
+
+Proof. For a support missing one root leaf, query the same side as
+each side target. The absent reply identifies its sole possible root
+leaf, and the other replies identify the selected child in $Q_1$.
+The root target uses the root reply. This verifies the inherited local
+witnesses, and target ranges are at most four. For a support with
+both leaves and at most one branch, the root reply identifies all
+states, again giving local admissibility and feasibility.
+
+For (RCE.49), the side target ranges have sizes $2+|I|$ and
+$2+|J|$, because of the disjoint values in Convention 14.1. The
+root range has size at most three. This proves precisely the stated
+feasibility condition. If $|T|\ge2$, two branches differ in some
+child coordinate. That side target is not determined by the root
+reply, which merges the two branches; neither side reply determines
+it, since both side experiments merge the two root leaves with
+different target values. A constant also fails. These are every
+boundary experiment at depth two. Every longer experiment is a
+function of one of them or a constant by Convention 1.2, so cannot
+repair that failure. This proves nonlocality and exhausts the local
+classification (RCE.47).
+
+On a nonlocal feasible support $T\ne\varnothing$. If $|I|=1$,
+the root reply determines $\Gamma_L$: its branch class has one
+$f$ value, and its two leaf classes are singletons. If $|I|=2$,
+the root reply merges branches with different $f$ values, and
+every other experiment merges the two different root-leaf values.
+Thus $L$ is hard exactly in this case. The proof for $R$ is the
+same with $J$ and its explicitly given factor row. At least one
+side is hard because $T$ has two distinct ordered pairs.
+
+Any hard side distinguishes the two root leaves from each other
+and from every branch. Any two distinct branches differ in some
+child coordinate; that coordinate varies on $T$, so its side is
+hard and separates those branches, since $f$ is injective. Hence
+the full hard vector is injective on all of $P$. Its cells are
+singletons irrespective of the weights. Finally
+$2\le|T|\le|I||J|\le4$, giving the size bounds in (RCE.50).
+On a local support each target has an own experiment, so there
+are no hard targets and there is a single cell. $\square$
+

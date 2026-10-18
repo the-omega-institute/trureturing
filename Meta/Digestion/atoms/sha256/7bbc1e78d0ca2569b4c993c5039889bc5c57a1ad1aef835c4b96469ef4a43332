@@ -1,0 +1,107 @@
+**定义 202.1（完整行域与混合评分族）。** 固定整数 $L\ge6$ 及实参数
+
+$$
+s>1,\qquad 0\le\eta\le1,\qquad c>2-\eta.
+\tag{202.1}
+$$
+
+沿用定义 199.1—199.2、200.1 的全部 $B_L=\{0,1\}^L$ 字及
+$J_L=\{0,\ldots,L\}$ 标签。对每个含零字 $w$，令
+$n(w)=\min\{i:w_i=0\}$，$\Omega_j=\{w:n(w)=j\}$。
+基行 $\{0\}$、正确行 $\{n(w)\}$、独立 pair 行 $\{0,n(w)\}$ 的需求依次为
+
+$$
+1-b_{n(w)}-e,\qquad b_{n(w)}-e,\qquad1-e;
+$$
+
+全正字 $1^L$ 的基行需求为 $1-e$。这 $3(2^L-1)+1$ 条行组成 $d(b)$，
+包括全部多零字、可能为负的单点需求和零评分行。评分为零不删除行。
+
+完整目录 $\mathcal D_N,\mathcal D_O$ 均保留空日程、单日程和所有
+$i<j$ 的双日程，每个终端胞允许全部 $J_L$ 标签。双日程的 $N$ 胞为
+$00,01,10,11$，$O$ 胞为 $0,10,11$。令
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0;0),&
+\mathbf r&=z_R=d(\alpha),\\
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z_D,&
+\Delta_C(y)&=B_C(y)-y\cdot\mathbf r&& (C=N,O),\\
+\beta_j(y)&=\sum_{w\in\Omega_j}(C_w-A_w),&
+K_y&=\sum_{w\ne1^L}(A_w+C_w+P_w)+T,&
+Q(y)&=(\beta_1,\ldots,\beta_L;K_y).
+\end{aligned}
+\tag{202.2}
+$$
+
+$R$ 的标签按停止胞排列；在 $N$ 中，$00,01$ 都输出 $1$。
+对任意有符号 $q=(\beta_1,\ldots,\beta_L;K)$，写
+
+$$
+F_q(b)=\sum_{j=1}^L\beta_j(b_j-\alpha_j)-Ke,\qquad
+F_y=F_{Q(y)}.
+$$
+
+下列评分只指定非零行，其余行权重均为零：
+
+$$
+\begin{aligned}
+z_1&=010\,1^{L-3},&z_2&=100\,1^{L-3},&z_3&=110\,1^{L-3},\\
+w_1&=011100\,1^{L-6},&
+w_2&=101101\,1^{L-6},&
+w_3&=110110\,1^{L-6}.
+\end{aligned}
+$$
+
+$Z$ 在 $z_1,z_2$ 的 pair 行、$z_3$ 的正确行以及 $1^L$ 的基行各放单位权重。
+这正是定理 198.7 的零成本评分，不重新定义其供应结论。
+$W$ 在 $w_1,w_2,w_3$ 的正确行及 $1^L$ 的基行各放单位权重。
+$E$ 只在 $0^L$ 的基行放单位权重。定义
+
+$$
+Y=cZ+sW+(s+\eta)E.
+\tag{202.3}
+$$
+
+特别地，$Y$ 的正字权重为 $c+s$，而 $A_{0^L}=s+\eta$、
+$C_{0^L}=P_{0^L}=0$。$Z,W,E,Y$ 是事件评分，不是来源分布或表概率。
+
+辅助闭域及带符号支持沿用
+
+$$
+\begin{aligned}
+H=H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+\sigma_H(q)&=\max_{b\in H}F_q(b).
+\end{aligned}
+\tag{202.4}
+$$
+
+定理 198.5 供应其完整凸包顶点；在本节记为
+
+$$
+\begin{aligned}
+o&=(0,\ldots,0;0),&p&=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{(k-1)^{-1},\ldots,(k-1)^{-1}}_{k},
+                0,\ldots,0;0),\\
+v_k&=(\underbrace{1,\ldots,1}_{k},
+                \underbrace{e_k,\ldots,e_k}_{L-k};e_k),
+& e_k&=\frac{k-2}{k+1},\qquad 3\le k\le L.
+\end{aligned}
+\tag{202.5}
+$$
+
+沿用 $P_H=\{q:\sigma_H(q)\le0\}$、
+$D_N(t)=\{Q(V):V\ge0,\Delta_N(V)\le t\}$ 及完整证书域
+
+$$
+E_N=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\
+             \Delta_N(V)\le1-\theta,\
+             \sigma_H(q-Q(V))\le\theta\}.
+\tag{202.6}
+$$
+
+残差允许全部符号；证书不要求 $V\le Y$。守卫量
+$\kappa_j(i;y),c_j(y),\Gamma_k(y),\Gamma(y)$ 按定义 200.2 取完整评分的值。
+

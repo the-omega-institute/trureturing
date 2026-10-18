@@ -1,0 +1,58 @@
+**Proposition 6.2 (lawful individual tails and retained preparation failures).**
+At the cut in Theorem 6.1, each individual actual original tail from $x_j$
+back to $a$ with constant relative phase is legal for every finite duration
+$L>0$. Its endpoint is $\psi(a,z,0)$. With current height supplied exactly,
+the credited canonical instrument has survival probabilities
+
+$$
+7/8,\qquad 1,\qquad 7/8
+\tag{RB.25}
+$$
+
+on the three respective tails. Under canonical execution of the preparation
+and arrival paths, the five-unit prefix has survival $1/3$ and the live-cut
+probabilities at time six are
+
+$$
+8/27,\qquad 1/3,\qquad 8/27.
+\tag{RB.26}
+$$
+
+They are positive and independent of the chosen $\beta$. Earlier failures
+keep their exact first time, original mode and absorbing successor $f$;
+no failed specimen is reused.
+
+Proof. For each candidate, take
+$k_{\rm tail}(u)=x_j+(a-x_j)u/L$ and zero relative phase on $[0,L]$.
+It stays in the strict fiber and has both regularity alternatives.
+`concatenate_original` preserves the existing six-unit prefix and gives
+the matching real-phase join, keeping its phase residual unchanged.
+The middle case is an idle matching leg. Zero duration is legal only
+for that matching identity, not an instantaneous nontrivial return.
+
+On a monotone zero-phase leg the credited canonical survival is
+$s_*(x,l)=\min\{1,x/l,(c-x)/(c-l)\}$. Substituting the three current
+heights and $l=a$ gives (RB.25), independently of $L>0$.
+The rectangle's descent $a\to q$ has survival $2/3$, and its return
+$q\to a$ has survival $1/2$; constant-height phase legs have survival
+one. This gives $1/3$. The arrival legs $a\to x_-$ and $a\to x_+$
+each have survival $8/9$, while the middle idle leg has one. Composition
+gives (RB.26). The canonical completion retains every earlier first-failure
+time and original mode with absorbing $f$. Conditioning the reanchoring
+task on an actual live cut does not create a specimen or supply a table:
+these are the positive live branches of that complete execution. $\square$
+
+The common live flag and clock coincide, although their source-dependent
+probabilities need not coincide. Knowledge of the flag can change prior
+weights, but all three heights still have positive support there. The
+obstruction does not assert equality of those different arrival laws.
+
+The request “return to $a$” is a proposed reanchoring macro, not an already
+supplied primitive that reads its unknown starting height. Each tail in
+Proposition 6.2 is individually a legal original waveform; choosing the
+correct one still needs a source-bound relation. In particular, their
+existence does not give one literal prescribed waveform with three
+different initial heights. The impossibility grants the macro the larger
+class of common CP endpoint attempts and still rules out its exact success.
+It introduces no total legality-rejection oracle for arbitrary requests.
+

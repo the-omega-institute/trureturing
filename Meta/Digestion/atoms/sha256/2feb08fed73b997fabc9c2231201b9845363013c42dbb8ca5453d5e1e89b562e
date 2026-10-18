@@ -1,0 +1,58 @@
+### 18.5 SpectralBridgeRH
+
+输入：
+
+\[
+\mathcal H_{\mathrm{field}},
+\quad
+H_{\mathrm{field}},
+\quad
+D(H_{\mathrm{field}}),
+\quad
+\mathcal Z.
+\]
+
+必需假设：
+
+1. \(H_{\mathrm{field}}\) 在显式 domain 上自伴；
+2. 存在零点索引和重数保持的谱映射；
+3. 零点没有被遗漏，也没有引入额外谱；
+4. 存在 secular determinant、trace formula 或等价的完整谱身份；
+5. 若使用 Cayley 形式，还需证明 resolvent/domain 条件；
+6. 若使用正则化行列式，还需给出正则化方案、收敛域和 continuation。
+
+输出：
+
+\[
+H_{\mathrm{field}}=H_{\mathrm{field}}^*,
+\quad
+\forall\rho\in\mathcal Z,\ 
+-i(\rho-\tfrac12)\in\operatorname{Spec}(H_{\mathrm{field}})
+\quad\Longrightarrow\quad
+\mathrm{RH}.
+\]
+
+这里必须使用完整复零点的对应。对每个非平凡零点 \(\rho\)，例如构造非零
+\[
+\psi_\rho\in D(H_{\mathrm{field}}),\qquad
+H_{\mathrm{field}}\psi_\rho=-i(\rho-\tfrac12)\psi_\rho
+\]
+即可证明所需谱包含。自伴性给出 \(-i(\rho-\tfrac12)\in\mathbb R\)，故 \(\operatorname{Re}\rho=\tfrac12\)。覆盖全部非平凡零点的谱包含已经足以推出 RH；重数匹配和全谱等价是更强的识别目标。
+
+仅证明
+\[
+\operatorname{Spec}(H_{\mathrm{field}})\cong\{\operatorname{Im}\rho\}
+\]
+不能推出 RH，因为每个复数的虚部本来就是实数。若使用行列式版本，必须证明整个复变量恒等式
+\[
+\xi(\tfrac12+iz)=C(z)D_H(z),\qquad z\in\mathbb C,
+\]
+其中 \(C\) 无零，且 \(D_H\) 的全部零点来自自伴算子 \(H\) 的实谱。只在已知临界线零点上匹配数据不足以证明全局恒等式。
+
+不能推出：
+
+- 仅有数值零点拟合；
+- 仅有形式 Hamiltonian；
+- 仅有非自伴谱实现；
+- 仅有 Cayley 系数有限截面酉性。
+

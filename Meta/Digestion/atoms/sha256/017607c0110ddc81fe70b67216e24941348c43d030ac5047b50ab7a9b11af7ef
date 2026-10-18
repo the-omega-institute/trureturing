@@ -1,0 +1,113 @@
+**定理 448.5（同一正概率密度不能成为正 Laplace 原子）。** 记
+\(f_\mu=g'\)、\(f_{\rm Fib}=\mathsf F'\)，并令
+
+\[
+u_m=\frac{m}{\log6}-1\quad(m\text{ 为充分大的正整数}).
+\]
+
+原实际来源满足两个严格负的高阶导数极限：
+
+\[
+\boxed{
+\begin{aligned}
+\frac{(-1)^{m-1}f_\mu^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow-1,\\
+\frac{(-1)^{m-1}f_{\rm Fib}^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}&\longrightarrow
+-\frac{\log(1+q+q^2)}b<0.
+\end{aligned}}
+\tag{PM.14}
+\]
+
+因此这两个严格正密度均不完全单调，均不存在在全部 \(u>0\) 上有效的
+正测度表示 \(f(u)=\int_{[0,\infty)}e^{-ut}\,d\nu(t)\)。
+
+**证明：实际复合原子的局部化与整个无穷尾。** 在固定 \(u>0\) 的紧区间上，
+两个绝对 Dirichlet 级数可作任意固定阶微分。对
+\(a=\mu\) 或 \(a=e\)，其密度为
+
+\[
+f_a(u)=-\frac1{a_1}\sum_{n\ge2}
+a_n\frac{\log n}{n}e^{-u\log n}.
+\]
+
+代入 \(u_m\)，精确得到
+
+\[
+\frac{(-1)^{m-1}f_a^{(m-1)}(u_m)}
+     {(\log6)^m e^{-m}}
+=-\frac1{a_1}\sum_{n\ge2}a_n\rho_n^m,\qquad
+\rho_n=\frac{\log n}{\log6}
+\exp\!\left(1-\frac{\log n}{\log6}\right).
+\tag{PM.15}
+\]
+
+\(x e^{1-x}\le1\)，且仅在 \(x=1\) 等号成立，所以 \(\rho_6=1\)，
+其余全部 \(\rho_n<1\)。选择一个固定整数 \(m_0>\log6\)。那么
+
+\[
+\sum_{n\ge2}\rho_n^{m_0}
+=\frac{e^{m_0}}{(\log6)^{m_0}}
+\sum_{n\ge2}\frac{(\log n)^{m_0}}{n^{m_0/\log6}}<\infty.
+\tag{PM.16}
+\]
+
+该完整整数尾由指数 \(m_0/\log6>1\) 的积分检验支付。
+\(\mu\) 与 \(e\) 的系数均有界；对全部 \(m\ge m_0\)，
+\(|a_n|\rho_n^m\) 被同一个可求和主导支付。因此计数测度上的支配收敛
+给 \(\sum a_n\rho_n^m\to a_6\)，没有只比较有限个竞争项。
+
+真实 Möbius 原子为 \(\mu(6)=1\)。对实际 Fibonacci 原子，有限卷积恰给
+
+\[
+\begin{aligned}
+e_6&=\beta_6-\beta_3-\beta_2+\beta_1\\
+&=\log\frac{(1-q^6)(1+q)}{(1+q^3)(1-q^2)}
+=\log(1+q+q^2)>0.
+\end{aligned}
+\tag{PM.17}
+\]
+
+这证明（PM.14）。若存在所述正 Laplace 测度，任意固定 \(u>0\) 和
+整数 \(k\ge0\) 都有
+\((-1)^kf^{(k)}(u)=\int t^ke^{-ut}d\nu(t)\ge0\)；
+微分由 \(t^ke^{-ut}\le C_{k,u}e^{-ut/2}\) 支付。它与（PM.14）
+矛盾。证毕。
+
+**原 Robin 来源中的精确边界。** 正极值分布与正密度是原来源在
+实数 \(1+u>1\) 上的概率读出；（PM.14）直接排除了把同一密度改写为
+正 Laplace 原子的做法。其复域来源仍是
+
+\[
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}.
+\]
+
+由（385.4）的既有无零乘子，任意非平凡 ζ 零点 \(\rho\) 的重数为 \(h\)
+时，这一来源在 \(u=\rho-1\) 的极点阶仍恰为 \(h\)，其密度的极点阶为
+\(h+1\)。极值实现没有消去这些实际算术极点。
+
+原完整 Robin 尾项仍保留（424.6）的全部商纤维，
+
+\[
+I_\psi(x)=\sum_{n\ge1}M(n)J_x^\eta(n),\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]\frac{1+\log t}{t^2\log^2t}\,dt.
+\]
+
+这不是（PM.6）的正损失期望。（PM.4）只给同一有限 \(J_z\) 内
+\(\mathcal D_z\) 的精确读出；（PM.12）–（PM.13）只给上述已支付
+自然截止的对数权矩。它们没有估计原 \(I_\psi\) 的完整有符号临界余量，
+也没有把 \(|H_{\rm raw}(N)|\) 的已付对数界提升到平方根尺度。
+
+**来源。** 实轴 Euler 乘积、可数独立乘积、概率连续性、Borel–Cantelli、
+非负 Tonelli、指数积分和 Gamma 矩、Abel 求和及解析恒等定理为经典
+供应；Dirichlet 与 Gamma 接口参见
+[NIST DLMF 25.2.1](https://dlmf.nist.gov/25.2.E1) 和
+[NIST DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1)。
+Mertens 的定量供应复用 §424 引用的
+[Ng 作者稿 p. 5](https://www.cs.uleth.ca/~nathanng/RESEARCH/mobius2b.pdf)，
+实际 Fibonacci 系数、无零乘子及对数转移复用 §§384–385、414。
+Euler 乘积的极值解释和倒数 ζ 的非完全单调性不作全局原创性断言；
+原有限阻尼的精确对数矩及带方向余量、同一实际 Fibonacci 概率读出、
+其完整 signed 对数矩比较与由 \(e_6\) 支付的正 Laplace 原子失效边界
+为本仓推导（repo-derived）。
+

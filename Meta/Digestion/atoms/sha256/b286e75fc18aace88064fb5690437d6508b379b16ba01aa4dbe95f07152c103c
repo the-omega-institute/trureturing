@@ -1,0 +1,18 @@
+**Global uniqueness.** For fixed $u$, (9.8) has the form $Ay+kBy+kue_1$, with $y=(t,v)^{\mathsf T}$. Its exact bilinear midpoint identity is
+
+$$
+F_u(y_0,k_0)-F_u(y_1,k_1)
+=DF_u(\bar y,\bar k)
+(\Delta t,\Delta v,\Delta k)^{\mathsf T},
+\tag{9.12}
+$$
+
+because $k_0y_0-k_1y_1=\bar k\Delta y+\bar y\Delta k$. The fixed-$u$ positive domain in (9.4) is convex; its midpoint has positive $p,q,r$, and its fourth entry is reconstructed as $qr/p$. The midpoint derivative is invertible by (9.10). Equal reduced data therefore force equal $t,v,k$. Equal complete data first give equal $P,u,W,Y,Z$, so (9.4) gives equal $p,q,r,s$, and
+
+$$
+D(\tau)=P(\tau)-(p+s+u)(1+k\tau)
+\tag{9.13}
+$$
+
+gives the same entire original polynomial. This proves recovery globally, using the finite midpoint identity rather than local nonsingularity alone.
+

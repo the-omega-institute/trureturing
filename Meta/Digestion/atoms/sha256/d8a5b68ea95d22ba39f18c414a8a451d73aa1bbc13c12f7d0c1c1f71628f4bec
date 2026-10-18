@@ -1,0 +1,24 @@
+**Proposition 3.3 (native constructor, hidden positions and absence).**
+The following boundary statements hold on the native source class.
+
+1. $J([1],[0])=[2]$, but $F([1],[0])\ne[2]$ in $\mathcal K$.
+   Both ambient terms expand to $T_2$; only $[2]$ is normal.
+2. The code $B(T_2)=[2]$ has only its root as an ambient syntactic
+   position, while $T_2$ has positions $\varepsilon,L,R$.
+3. A nonnegative atomic residual index alone is not an existence test:
+   $2-w(LL)=0$, but $LL\notin\operatorname{Pos}(T_2)$, where
+   $w(p)=\#_L(p)+2\#_R(p)$.
+4. For the original source $\beta$, $L$ is absent originally and reached
+   after one update. The signed comparison $(0,L,1,R,\ne)$ is false.
+
+Proof. The first two assertions follow from the recurrence
+$T_2=\langle\beta,\alpha\rangle$ and (ABC.2.1)–(ABC.2.3). For the third,
+the original $L$ child is the leaf $\beta$, which blocks $LL$.
+Equivalently the supplied [ARH, (4.3)][ARH] requires, for nonempty $p$,
+$j\ge w(p^-)+2$ before using $T_{j-w(p)}$. At $j=2,p=LL$ this guard
+fails. For the fourth, $\rho\beta=\langle\beta,\alpha\rangle$, so the
+second endpoint exists and the first does not. Assumption 1.2 requires
+both and therefore rejects either sign. These facts preclude replacing
+physical cuts by code positions or interpreting an absent endpoint as a
+negative equality certificate. $\square$
+

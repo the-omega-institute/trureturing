@@ -1,0 +1,22 @@
+**Definition 6.1 (unnormalized differences).** Put
+$\Delta=\rho_{27,+,+}-\rho_{5,+,+}$ and
+
+$$
+\begin{gathered}
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\\
+f(z,w)=(1,z,w)G(1,z,w)^T,\qquad h(z,w)=n(z,w)^T\Delta n(z,w),\\
+d_f=11m_1/64,\quad
+z_f=\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})/16,\\
+L_f=\sqrt{d_f^2+4z_f^2},\quad\gamma_f=(L_f-d_f)/2>0,\quad
+H_\Delta=(1-\delta)\Delta A,
+\quad\Delta A=\operatorname{tr}(D^\dagger D\Delta)>0,\\
+T_0=\mathcal T(s_0)
+=\frac12\left[H_\Delta+\frac14\sum_{\sigma,\eta=\pm1}|f(\sigma,\eta)|+L_f\right].
+\end{gathered}
+\tag{WE.44}
+$$
+
+The endpoint identity is the credited JR43/51 endpoint. These are
+unnormalized differences, not distances conditioned on failure.
+

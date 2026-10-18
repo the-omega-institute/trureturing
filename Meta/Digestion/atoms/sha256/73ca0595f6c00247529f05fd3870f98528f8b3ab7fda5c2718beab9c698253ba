@@ -1,0 +1,24 @@
+**Definition 3.1 (Fixed-loss tilt).** On the good exterior fibers above put
+
+$$
+\begin{aligned}
+d_C(w;y)&=\Delta_P(wy,0^Ly),\\
+Z_C(t;y)&=\sum_w p_C(w;y)e^{t d_C(w;y)},\\
+\pi_C^t(w;y)&=\frac{p_C(w;y)e^{t d_C(w;y)}}{Z_C(t;y)},\qquad t\in\mathbb R.
+\end{aligned}
+\tag{3.1}
+$$
+
+In these finite sums take $d_C(w;y)=0$ on incompatible coordinates,
+whose probabilities are zero. Compatible contrasts are finite by (2.4),
+so $0<Z_C(t;y)<\infty$ for every real $t$ at each good fiber.
+For fixed $t$ these are measurable conditional kernels, with positive
+mass on exactly the compatible words. No expectation of an exponential
+over exteriors is needed. On a null exterior set choose any legal
+probability vector, without imposing compatibility statements there.
+
+Cocycle additivity makes (3.1) independent of the reference completion:
+using a compatible $z$ instead of $0^L$ changes every compatible score
+by the common constant $-\Delta_P(zy,0^Ly)$. That factor cancels in the
+normalization. This invariance of the kernel does not require $f$.
+

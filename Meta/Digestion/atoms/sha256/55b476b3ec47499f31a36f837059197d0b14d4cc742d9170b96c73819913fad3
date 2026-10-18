@@ -1,0 +1,54 @@
+**Theorem 5.2 (exact forward transport and sourcewise reverse dominance).**
+For every such coordinate tree $T$ there is a native reader $A_T$ with
+
+$$
+\operatorname{out}_{A_T}(a(b),\ell_b)=\lambda_0+f(b),\qquad
+c_{A_T}(a(b),\ell_b)=c_T(b)\quad\text{for every }b.
+\tag{NTL.18}
+$$
+
+Conversely every native comparator $A$ for $E_*$ has a coordinate
+tree $T_A$ with output $f(b)$ and
+
+$$
+c_{T_A}(b)\le c_A(a(b),\ell_b)
+\quad\text{coordinatewise for every same actual history.}
+\tag{NTL.19}
+$$
+
+**Proof, forward.** Replace each request for $b_i$ by the actual
+literal word $p_i$ on $Y_b$, and decode its two possible replies
+using Theorem 4.2. Induction on the run preserves the coordinate
+answers, adaptive choices and termination. Return $\lambda_0$ plus
+the tree's output. There is exactly one physical call of length $d_i$
+per coordinate request, even for repetitions. Summing and taking the
+peak along that one run gives all three equalities in (NTL.18).
+
+**Proof, reverse.** Simulate $A$'s complete control and its received
+reply history, with the public fixed entry $E_*$. For each requested
+word, compute its case and the two possible replies of Theorem 4.2.
+If constant, supply that reply locally. If it depends on $b_i$ and
+that bit has already been queried, supply the reply from its actual
+cached coordinate value. Otherwise query coordinate $i$ once, retain
+that acquired bit, and supply the corresponding reply. This includes
+constant absent words, visible rereads, repeated words, and different
+words that expose the same bit. A nonconstant query may itself have
+an absent reply on one of the inputs; that branch is processed by the
+same two-entry table.
+
+On the particular $b$, induction gives exactly the replies $A$ would
+receive from the actual unchanged $Y_b$. It therefore makes the
+same simulated choices and eventually outputs $\ell_b$. Subtract
+$\lambda_0$ for the coordinate output. Each coordinate query is
+matched to a distinct actual native invocation on that same history;
+Theorem 4.2 gives $d_i\le|p|$ for the matched word. Unmatched native
+calls cost nonnegative amounts. This proves the call, sum and peak
+inequalities together, rather than matching separate optimizing runs.
+
+Pointwise termination suffices. There are finitely many actual inputs,
+and the simulated run is finite on each, so the resulting reachable
+coordinate decision tree is finite. No source-dependent runtime cutoff
+or hidden input is installed. Locally simulated replies are control
+data, not newly acquired physical receipts at the skipped words.
+$\square$
+

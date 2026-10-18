@@ -1,0 +1,70 @@
+**Definition 5.1 (bounded patterns, image test and whole-class negatives).**
+For each installed Read word of length at least three, write it as
+$pw$, $p\in P$, and retain its queried class and suffix. Set
+
+$$
+b=\max\bigl(\{0\}\cup
+ \{|w|:\operatorname{addr}(k)=pw,\ p\in P,\ k\in Q\}\bigr).
+\tag{TCR.14}
+$$
+
+The maximum includes every installed Read, even unused states,
+duplicate words and states queried only from a wrong entry. Words
+shorter than three are exterior-constant. No bound on actual source
+size follows from this finite menu bound.
+
+At each class enumerate all finite prefix patterns through inclusive
+relative depth $b$. At a node before depth $b$, choose alpha, beta,
+or a branch with two recursively patterned children. A leaf stops
+descent; every strict descendant reply is forced absent. At depth
+$b$, choose alpha, beta, or a live symbol $z_{d,w}$ recording a
+branch at that occurrence. Its eventual value must be a branch image.
+The pair $(d,w)$ names that symbol, so different frontier occurrences
+have independent names. This construction is finite: recursion has
+bounded depth and three choices at each reached node. It enumerates
+only consistent leaf-stopping patterns, rather than allowing an
+independent absent label at a reached child of a branch.
+
+Let $T_d$ be the resulting free term for class $d$. Both occurrences
+of a repeated class in $\mathscr S(T)$ use exactly the same term
+and symbols. Different live names need not have different values;
+no equality or disequality of unobserved residuals is part of a
+profile. The required negatives are exactly the whole-class list
+
+$$
+T_d\ne T_e\qquad(d,e\in D,\ d\ne e).
+\tag{TCR.15}
+$$
+
+These are inequalities of entire terms, including every concrete
+piece, not childwise inequalities. Expand any fixed ground pieces
+in the ordered alpha/beta signature when testing syntax. Define
+
+$$
+\begin{aligned}
+\operatorname{Im}(\alpha)&=\mathsf{false},&
+\operatorname{Im}(\beta)&=\mathsf{true},&
+\operatorname{Im}(z_{d,w})&=\mathsf{true},\\
+\operatorname{Im}(\langle A,B\rangle)
+&\Longleftrightarrow
+ (A\text{ is literally }\beta\ \land\ B\text{ is literally }\alpha)
+ \ \lor\ (\operatorname{Im}(A)\land\operatorname{Im}(B)).
+\end{aligned}
+\tag{TCR.16}
+$$
+
+Retain exactly the pattern tuples $\eta$ satisfying
+
+$$
+\operatorname{Im}(\mathscr S(T))
+\quad\land\quad
+\forall d\ne e,\quad T_d\text{ and }T_e
+                    \text{ have different free syntax}.
+\tag{TCR.17}
+$$
+
+Call this finite family $\Omega_b$. Its representation and tests are
+the image-profile construction of PCA Definition 11.1 and Theorem
+11.2, used here for the installed reader menu. No code-determining
+certificate occurs in (TCR.14)–(TCR.17).
+

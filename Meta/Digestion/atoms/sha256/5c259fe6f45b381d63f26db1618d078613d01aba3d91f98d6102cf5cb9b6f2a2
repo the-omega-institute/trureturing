@@ -1,0 +1,58 @@
+**Corollary 11.1 (unconditional consequences with unchanged prefixes).**
+Suppose the actual original prefixes of Proposition 3.3 and all their
+earlier stopped outputs remain unchanged, and only the reached live cut
+is replaced by a §4 acquisition/processing protocol. For a selected actual
+history write $e_h(q)$ for its complete cut-to-output error and $E_h(q)$
+for the full preparation-to-output error. After retaining the prefix status,
+the reduced distance is exactly $q_h e_h(q)$; any further required fields
+can only enlarge it. Therefore a common lower survival bound $q_{\min}$
+transfers every cut lower bound by that factor. For the horizontal assertion
+take the tested heights in $I_0$. In particular:
+
+$$
+\begin{aligned}
+\max_j E_{h_j}(q_{\rm horizontal})&\geq\frac{2}{9K(C)}
+ &&\text{for the six-unit witnesses of Theorem 7.1},\\
+\sup_{x\in I_0,\alpha\in\mathbb R} E_{x,0,0}(\alpha)&\geq\frac13
+ &&\text{for the simple prefixes of Theorem 8.2 at }Z=1/2.
+\end{aligned}
+\tag{FH.35}
+$$
+
+Proof. Earlier failure blocks in the two experiments coincide exactly.
+The live-prefix flag is a retained classical sector, and the same live
+probability $q_h$ multiplies the two normalized later outputs. The
+trace norm on this direct sum is homogeneous and additive across its
+sectors. Thus its later contribution is exactly $q_he_h(q)$. Use
+(FH.8), (FH.9), (FH.23), and (FH.27). Acquisition stops remain inside
+the later normalized output; earlier actual failures are never relaunched.
+$\square$
+
+This multiplier is asserted only for unchanged prefixes. Arbitrary earlier
+interventions that change preparation survival or the prefix experiment
+need their own joint comparison. The general finite-handoff theorems allow
+arbitrary earlier encodings but supply no fixed preparation-survival
+multiplier for such a different experiment.
+
+**Resource statement 11.2 (what is supplied, tested and still absent).**
+
+| Object or service | Actual correspondence and cost boundary |
+| --- | --- |
+| Source and preparation | One positive five-mode source, one fixed base and preparation, actual source/epoch, and calibrated preparation directions where supplied. Proposition 3.1 constructs actual mathematical paths; it never gives their unknown parameters to the controller. |
+| Requested action | One public promised-legal horizontal or phase increment, on the same still-live specimen, with literal chronological phase translation. These are necessary subrequests of the existing canonical over-menu, without an added total guard. |
+| Actual outcomes | Terminal quantum live state, every original failure mode, exact first time and absorbing $f$; all acquisition aborts, refusals, partial records and controller updates remain counted. Earlier failures cannot inform a new live trial. |
+| Incoming quantum and classical memory | $R=\sum n_\alpha^2$, total Hilbert embedding dimension $D=\sum n_\alpha$, number of classical alternatives, and largest block dimension are separate resources. An exact real-valued source-bearing register is outside a fixed finite algebra. |
+| Clock and archive | Aligned cuts occur at common finite times in the witnesses. An independent clock and unlimited future exact-time output recorder are granted. A readable source-sensitive continuous clock, old waveform log or unknown installed setting must instead enter the input count. |
+| Precision and descriptions | The displayed finite catalogues use rational heights/times and finitely described multiples of $\pi$; exact execution and calibration remain ideal. Arbitrary real histories need not have finite effective descriptions. Descriptions/actions are not uniformly bounded in the phase compactness limit. |
+| Common processing | Arbitrary common CPTP processing is a relaxation of original lawful operations. A genuinely available later source-bound processor or producer port invalidates the no-later-access premise and must have its own source/action/resource map. |
+| New positive construction | Section 9 gives a common comparison channel for the phase-only output task. It obtains no height, old lift, winding, waveform, calibration token, helper overlap or new readable source port. |
+
+No acquisition, certification, calibration, preparation or physical hardware
+upper is proved. The obstruction is before the future event and grants
+unlimited storage of that future event; it is separate from the already
+proved finite storage obstruction for an actually emitted timestamp.
+Infinite or growing archives, a genuinely implemented continuing source
+interaction, pointwise unbounded resources, changing menus, or a restricted
+accuracy/horizon target are different contracts. They are not excluded
+merely by the finite-handoff conclusions.
+

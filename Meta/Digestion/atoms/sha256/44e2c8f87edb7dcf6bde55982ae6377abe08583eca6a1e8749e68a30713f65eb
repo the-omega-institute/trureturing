@@ -1,0 +1,47 @@
+**Definition 10.2 (charged digital boundary).** A finite implementation
+needs finite effective descriptions or enclosing certificates for public
+parameters, duration, support, $L,V,W$, the clock and phase reference.
+On rational numerical grids the $n+1$ rows have bounded height range and
+relative-phase range within $[-V-d_x,V+d_x]$. Height resolution of order
+$n^{-2}$ and phase resolution of order $n^{-1}$ require $O(\log n)$ bits
+per value for fixed ranges. Nominal mesh indices and uncertainty tags also
+take $O(\log n)$ bits under the stated allocation. Thus one sufficient
+table storage is $O(n\log n)$ bits, plus actual raw sensor payloads and
+all metadata. This table estimate excludes any extra exact measured
+timestamps and the original canonical exact failure time, which remains an
+ideal real-valued record without a claimed finite-bit encoding.
+
+Retain source/preparation/epoch identity, actual archives, calibration and
+units, clock/reference certificates, permission data, generator/recorder
+and pending-programme state, selectors, updates and all failure payloads.
+The table is neither the whole archive nor the quantum state. Use the
+credited fixed calibrated $M_3$ live carrier and absorbing sector only
+when their actual encoding/decoding and operations are supplied. Its upper
+correspondence preserves correlated archives; its unassisted dimension lower
+does not apply to a code given such archives. No new quantum minimum or
+minimum total observer memory is asserted.
+
+For rational height/phase grids the trapezoid sum in (SC.13) can be
+accumulated exactly with common denominator $2D_kD_x$, using $n$
+multiplications and linearly many additions/subtractions at charged bit
+widths. Retaining input values and a proved accumulator bound avoids
+unreported overflow. The certificate itself uses rational bounds when the
+public bounds are rational. The signed-loop version also uses an integer
+of bounded magnitude and a finite symbolic $\pi$ description; certified
+interval arithmetic evaluates its irrational quantities to paid precision.
+Transcendental gate synthesis and waveform actuation are different costs.
+Actual sampler calls, source preparation, simultaneous calibration,
+unwrapping, programme generation, computing and storing certificates are
+all separate resources. Continuing the command source after specimen
+failure is charged through $T$ without executing a new positive specimen.
+
+The source-side regularity promise is substantive. Finite values cannot
+certify it on the full original class: in any unqueried interval of length
+$\ell$, put $p$ small triangular excursions at fixed speed below $L$.
+Their excess is proportional to $\ell/p$, while derivative variation grows
+proportionally to $p$. For sufficiently large finite $p$ they stay in the
+positive band, agree with waiting at all queried times and exceed any
+proposed $W$. The record must therefore obtain its $W$ justification from
+a generator constraint or a separate trusted certificate, rather than
+estimate a universal bound from the same samples.
+

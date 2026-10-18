@@ -1,0 +1,21 @@
+**Definition 368.2 (Complete finite allocations).** For an integer $L\ge0$ put $B_L=\{0,1\}^L$ and $J_L=\{0,\ldots,L\}$. The complete finite $N$ catalog has the empty schedule, every singleton and every pair $i<j$. A pair has cells $00,01,10,11$. The complete finite $O$ catalog instead has pair cells
+
+$$
+0=\{w:w_i=0\},\qquad
+10=\{w:w_i=1,w_j=0\},\qquad
+11=\{w:w_i=w_j=1\}.
+\tag{368.3}
+$$
+
+A deterministic table assigns an arbitrary label in $J_L$ to every cell. Earlier and unqueried labels are included. A complete allocation assigns a nonnegative vector $X_c\in\mathbb R^{J_L}$ to every terminal cell $c$ of every schedule $s$. All cells of $s$ have its same owning mass $m_s$. The masses, counted once per schedule, sum to a finite $M\ge0$. The whole word vector is
+
+$$
+p_w=\sum_s X_{s,\operatorname{cell}_s(w)},\qquad
+\sum_{z\in J_L}p_w(z)=M\quad(w\in B_L).
+\tag{368.4}
+$$
+
+Zero-mass schedules and all their cells are retained as zero vectors. The catalogs include every word, not only words with a single zero. Sorting a static preselected pair merely permutes its complete table; a repeated query has singleton information. These finite representation facts do not erase the charge of an actual repeated or ignored request.
+
+At mass one, the inherited common-table realization partitions one uniform seed interval into schedule masses. Within each interval the same rescaled coordinate supplies every cell's label partition; their finite common refinement fixes the entire table before replies. It introduces no randomness after a reply. This is the allocation/realization interface of [109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget), [XIX 341.1–341.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#341-the-complete-preselected-coefficient-cone) and XXII 363.3. We use that interface without requiring preservation of an input allocation's whole law.
+

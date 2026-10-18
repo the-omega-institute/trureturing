@@ -1,0 +1,34 @@
+**Definition 44.3 (parameters).** For $0<\eta\le1$ set
+
+$$
+\begin{aligned}
+A_0&=32(1+r^{-1}),\\
+\rho&=\min\{\eta/A_0,1,(u-l)/8,\min(k-l,u-k)/2,\sqrt T\},\\
+c&=[2^{30}(1+|\lambda|+\nu^2)]^{-1},\qquad
+q=1/64,\qquad m=c/2,\\
+N_0&=(T+\rho^2)/(m\rho^2),\qquad
+b_0=[2^{24}c(1+\nu^2)]^{-1},\\
+\mathcal R_\rho(\Lambda)&=
+ \frac{T\Lambda}{c\rho^2}+1+
+ N_0\left(1+\frac{\Lambda}{1-q}+\frac{q}{(1-q)^2}\right).
+\end{aligned}
+\tag{44.6}
+$$
+
+Choose any integer $\Lambda\ge1$ satisfying
+
+$$
+10e^{-b_0\Lambda}\mathcal R_\rho(\Lambda)\le\delta,
+\qquad d_0=c\rho^2/\Lambda.
+\tag{44.7}
+$$
+
+The least such $\Lambda$ exists, and is
+$O(\log(e/(\rho\delta)))$ as $\rho\downarrow0$, uniformly for
+$0<\delta<1/4$, with fixed source data. Indeed
+$\mathcal R_\rho(\Lambda)\le C\rho^{-2}(\Lambda+1)$, while the exponential in
+(44.7) dominates that affine factor. Taking a sufficiently large fixed
+multiple of $\log(e/(\rho\delta))$ verifies the inequality directly.
+All constants below may depend on the fixed native data, $\lambda,\nu,T$;
+they do not depend on $\eta,\delta$.
+

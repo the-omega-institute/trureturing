@@ -1,0 +1,72 @@
+**Theorem 40.1 (seed rate on the full endpoint spaces).** With $\alpha_s,\beta_s$ as in (33.1),
+
+$$
+|\alpha_s-s^5Z_d|+
+ |\beta_s-j_0a_0^2s^5Z_d|\le C_ds^{41/8}.
+\tag{40.1}
+$$
+
+More precisely, for every $s^2<\delta<\delta_0<1$ and sufficiently small $s$, uniformly over those split points,
+
+$$
+\begin{aligned}
+&|\alpha_s-s^5Z_d|+|\beta_s-j_0a_0^2s^5Z_d|\\
+&\quad\le Cs^5\left\{\sqrt\delta+\Psi_\ell(\delta)
+               +s\delta^{-3}+s(1+|\log s|)\right\},
+\end{aligned}
+\tag{40.2}
+$$
+
+where $\Psi_\ell$ is (33.3).
+
+Proof. Split at $D=\delta/s^2$, keeping the safe strip fixed during differentiation. The sixth finite derivative estimate (33.5), multiplied by $s^6$, is bounded uniformly by
+
+$$
+C\{s^5\sqrt\delta+s^6(1+|\log s|)\}.
+\tag{40.3}
+$$
+
+Indeed $1<D<T$ and $\log(2+D)\le C(1+|\log s|)$. Odd fifth scalar derivatives vanish on this symmetric estimating strip for both tests. They are not discarded on the original nonsymmetric interval by a parity assumption on an actual state.
+
+Restore the full kernels on the short interval as in the proof of Theorem 33.1, retaining the exit event. The $n=0$ field and relative-return deleted paths cost $Cs^5\Psi_\ell(\delta)$: the bound is $Ct^{(j-7)/2}e^{-cL^2/t}$ at degree $j$, including the native degree zero, and substitution $v=s^2t$ gives precisely that expression. The outer seed input has supremum $O(L^{-10})$ and mass $O(L^{-3})$; J (31.7), (31.9) bound its native/safe and retained coefficient returns, after their factors, by $Cs^8$. These are full-output bounds.
+
+For inner inputs of height degree $n\ge1$, (33.6) before taking a limit gives the uniform bound
+
+$$
+Cs^5\sum_{n=1}^4s^nM_n(L),\qquad
+M_1,M_2\le C,\quad M_3\le C(1+\log L),\quad M_4\le CL.
+\tag{40.4}
+$$
+
+It is at most $Cs^6(1+|\log s|)$. The original covariance comparison remains valid after a path leaves the safe strip by the fixed denominator margins. Safe paths cannot end beyond either original face. Thus these estimates include every deleted input, output and face contribution, not just outputs on a compact set.
+
+For the native middle interval $v\in[\delta,1]$, apply (39.2) in the two exact expressions (33.7). Their endpoint tests have finite first moments, so their differences from the exact source diagonal are at most
+
+$$
+Cs^6\int_\delta^1v^{-4}dv\le Cs^6\delta^{-3}.
+\tag{40.5}
+$$
+
+For each canonical $n=0$ tail, (39.3) similarly gives
+
+$$
+Cs^6\int_\delta^\infty v^{(j-8)/2}dv
+\le Cs^6\delta^{-3},\qquad0\le j\le4.
+\tag{40.6}
+$$
+
+Here the factor $s^j$ and the exact heat rescaling have both been included. All five integrals converge at infinity. Odd diagonal coefficients are zero; the even diagonal integrals are exactly the three quantities in (33.9), with their original clock terms and $j_0$ factors.
+
+For $n\ge1$ retain the entire ordered kernel (33.11). After division by $s^5$ its bound is
+
+$$
+Cs^{7/p_n-7+n}\,
+ \delta^{(j-n)/2-7/(2p_n)+1},\qquad
+(p_1,p_2,p_3,p_4)=(1,1,7/6,7/5),\quad n\le j\le4.
+\tag{40.7}
+$$
+
+For $n=1,2$, the most negative $\delta$ exponent is $-5/2$; for $n=3,4$ it is respectively $-2,-3/2$. The corresponding powers of $s$ are $1,2,2,2$. Thus the sum of (40.7) is at most $Cs\delta^{-3}$. This accounts for every nonzero input-height degree without an absolute fourth $L^1$ height moment.
+
+Combining (40.3)–(40.7) identifies the two scalars with $s^5B_d(\delta)$ and $j_0a_0^2s^5B_d(\delta)$ up to the displayed errors. Theorem 32.3 gives $|B_d(\delta)-Z_d|\le C\sqrt\delta$, proving (40.2). That inequality is uniform on the whole stated range. It therefore permits the substitution $\delta=s^{1/4}$. Since $\Psi_\ell(\delta)$ is bounded by every positive power of $\delta$ as $\delta\downarrow0$, its terms are bounded by $Cs^{1/8}$ after division by $s^5$; so are $\sqrt\delta$, $s\delta^{-3}=s^{1/4}$ and $s(1+|\log s|)$. This proves (40.1). $\square$
+

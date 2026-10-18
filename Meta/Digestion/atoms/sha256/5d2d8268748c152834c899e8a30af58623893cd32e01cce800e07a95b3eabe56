@@ -1,0 +1,57 @@
+### 2.5 第三个返回圈之后的一个完整词冲突
+
+置 $a_\star=db_\star /(c-b_\star)$。不动点等式和该定义给
+
+$$
+b_\star[1+a_\star+a_\star^2]=c_p,
+\qquad f(a_\star):=ca_\star(1+a_\star+a_\star^2)-c_p(a_\star+d)=0.
+\tag{2.14}
+$$
+
+对 $a\ge0$，$f'(a)=c(1+2a+3a^2)-c_p>0$。以下有理符号精确成立：
+
+$$
+f(233/1000)=-\frac{1703748888347}{4920750000000000}<0,
+\qquad
+f(234/1000)=\frac{251260555397}{615093750000000}>0.
+\tag{2.15}
+$$
+
+故 $233/1000<a_\star<234/1000$，从而
+
+$$
+b_\star a_\star^3>
+\frac{c_p(233/1000)^3}{1+234/1000+(234/1000)^2}
+=\frac{1944}{390625}+\sigma.
+\tag{2.16}
+$$
+
+右边第一项正是两个实际端点在 $w_{3,1}$ 上的较大质量；$\sigma$ 是式(2.1)中的精确正有理数。
+
+式(2.7)中 $t_n$ 对 $b_n,b_{n+1},d_n$ 的偏导绝对值分别小于 $1,1,5$：这由同一 $9/20,9/40,13/40$ 矩形直接得到。故
+
+$$
+|t_n-a_\star|\le2\Delta+5\epsilon_\beta,
+\qquad 0\le t_n,a_\star<1/3.
+$$
+
+相容性把完整词质量写成 $Q_n(w_{3,1})=t_nt_{n+1}t_{n+2}b_{n+3}$。望远镜展开乘积，使用 $b_\star\le4/9$，有
+
+$$
+|Q_n(w_{3,1})-b_\star a_\star^3|
+\le\frac\Delta{27}+\frac4{27}(2\Delta+5\epsilon_\beta)
+=\frac\Delta3+\frac{20}{27}\epsilon_\beta.
+\tag{2.17}
+$$
+
+另一方面，式(2.3)的逐词近中心约束给 $Q_n(w_{3,1})\le1944/390625+2\epsilon_p$。合并式(2.13)、(2.16)、(2.17)，得到
+
+$$
+\sigma<\frac{199}{12}\epsilon_p+
+\frac{755}{108}\epsilon_\beta
+\le17\epsilon_p+7\epsilon_\beta.
+\tag{2.18}
+$$
+
+这证明 law 情形。任意所选 conf 风险超额逐坐标不小于 law 超额，故同一不等式适用于全部四个风险组合。式(2.2)由 $17\epsilon_p+7\epsilon_\beta\le24\max(\epsilon_p,\epsilon_\beta)$ 与取下确界得到；$\sigma/24>3/10^6$ 是正分母的有理比较。证毕。
+

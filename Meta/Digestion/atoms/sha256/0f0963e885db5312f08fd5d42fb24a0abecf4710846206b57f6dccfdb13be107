@@ -1,0 +1,22 @@
+**Corollary 2.3 (the original-coordinate decoder cannot cover this pair).**
+There is no history decoder from $O^+$ on a domain containing both
+$x_0,x_1$, even when $P$ is supplied as the same fixed mathematical
+parameter. The same conclusion holds for their successors under the
+actual next EX70. In particular, extending SOURCECALL's endpoint
+13/latch5/meter decoder to these added cuts by retaining just those
+endpoint inputs fails.
+
+Proof. A function of the common $O^+$ value has one value, whereas the
+required histories are different. For the next EX70 the two prestates
+have the same current R, authority, control and latch values. EX makes
+the same blank and new R and appends the same ordinary receipt. It
+does not read either differing retained symbol. Its original-coordinate
+successors are consequently still equal and its histories still
+different. SOURCECALL's decoder inputs are a further projection of
+these equal coordinates. ∎
+
+This is a failure of that endpoint recovery method on a literal
+canonical added phase. It asserts neither $x_0\sim_Q x_1$ nor the
+impossibility of contextual recovery. An original experiment can expose
+retained information later even when these endpoint coordinates agree.
+

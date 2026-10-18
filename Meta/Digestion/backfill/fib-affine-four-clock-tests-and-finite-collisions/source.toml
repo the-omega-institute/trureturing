@@ -1,0 +1,5 @@
+source_id = "fib-affine-four-clock-tests-and-finite-collisions"
+path = "docs/develop/theory/FIB_AFFINE_FOUR_CLOCK_TESTS_AND_FINITE_COLLISIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

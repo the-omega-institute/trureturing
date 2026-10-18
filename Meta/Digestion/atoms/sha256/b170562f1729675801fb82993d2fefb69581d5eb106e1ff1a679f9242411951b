@@ -1,0 +1,94 @@
+**Proposition 4.1 (credited canonical CP law and its specialization).**
+Put $\nu=d/L=d$ and, for $0<x<c-d$, define
+
+$$
+S_x(t)=\frac{x}{x+\nu t},\qquad
+f_x(t)=\frac{\nu x}{(x+\nu t)^2},\qquad s_x=S_x(1)=\frac{x}{x+d}.
+\tag{CG.13}
+$$
+
+In basis $(+,-,2)$ the terminal no-failure operator and separate original
+failure CP densities supplied by [AC, Proposition 4.1, (AC.8)][AC] are
+
+$$
+\begin{aligned}
+K_x&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c-x-d)}{(x+d)(c-x)}},\sqrt{\frac{x}{x+d}}\right),\\
+\mathcal I_{x,2}(dt)(\rho)
+ &=f_x(t)|f\rangle\langle2|\rho|2\rangle\langle f|\,dt,\\
+\mathcal I_{x,i}(dt)(\rho)
+ &=\frac{c f_x(t)}{2(c-x)}
+            |f\rangle\langle-|\rho|-\rangle\langle f|\,dt
+                 \quad(i=1,3),\\
+\mathcal I_{x,0}(dt)&=\mathcal I_{x,4}(dt)=0.
+\end{aligned}
+\tag{CG.14}
+$$
+
+On the actual state (CG.7) the complete normalized target
+$\Omega_{x,\beta,m}$ consequently has live block and five separate
+mode densities
+
+$$
+\begin{aligned}
+(\Omega_{x,\beta,m})_{\rm live}&=s_x\rho_{x+d,\beta,m},\\
+\bigl((\Omega_{x,\beta,m})_i(t)\bigr)_{i=0}^4
+   &=(0,c,Z,c,0)f_x(t)P_f.
+\end{aligned}
+\tag{CG.15}
+$$
+
+In particular the two equal minus-mode densities remain distinct original
+modes $1,3$, and the last zero-density sector retains the name $13$.
+
+Proof. The underlying calibrated CP transport and jump laws are premises
+credited in [AC] to its instrument supplier. Their displayed correspondence
+also checks (CG.14) directly. On this ramp put $k=x+\nu t$. The canonical
+hazard is $\lambda=\nu/k$, and
+$\gamma_i=\lambda-(\log p_b(k)_i)'$ gives
+
+$$
+\gamma_0=\gamma_4=0,\qquad
+\gamma_1=\gamma_3=\frac\nu k+\frac\nu{c-k},\qquad
+\gamma_2=\frac\nu k.
+\tag{CG.16}
+$$
+
+The no-failure transport is
+$\sqrt{S_x(t)}\operatorname{diag}_i
+\sqrt{p_b(k)_i/p_b(x)_i}$, and the mode-$i$ jump is
+$\sqrt{\gamma_i}|f\rangle\langle i|$ after that transport.
+Each of the original modes $1,3$ has squared projection $1/2$ from
+$|-\rangle$. Their reduced jump effects therefore have coefficient
+
+$$
+\frac12\left(\frac\nu k+\frac\nu{c-k}\right)
+ \frac{x(c-k)}{k(c-x)}=\frac{c}{2(c-x)}f_x(t),
+\tag{CG.17}
+$$
+
+while the mode-$2$ coefficient is $f_x(t)$. This recovers all five
+separate CP densities, not just total survival.
+
+The input populations in $(+,-,2)$ are $2x,2(c-x),Z$. Thus the traces
+of these densities are exactly (CG.15), with weights $0,c,Z,c,0$
+summing to $2c+Z=1$. Also
+
+$$
+K_x\psi_{x,\beta,m}=\sqrt{s_x}\psi_{x+d,\beta,m},\qquad
+\int_0^1 f_x(t)\,dt=1-s_x.
+\tag{CG.18}
+$$
+
+The phases are unchanged, so (CG.18) fixes the entire coherent live block.
+For completeness on all of $V$, the integrated jump effects sum to
+
+$$
+(1-s_x)\left(P_2+\frac{c}{c-x}P_-\right)=I_V-K_x^*K_x.
+\tag{CG.19}
+$$
+
+Hence the full law is trace preserving, the live trace is $s_x$, and the
+failure trace is $1-s_x$. None of this identifies the different $K_x$
+with one common processor available at an unresolved cut. $\square$
+

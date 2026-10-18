@@ -1,0 +1,52 @@
+### 3.1 合法词壳层与 Gram 矩阵
+
+**证明（逐列计数）。** 取一个公开的最小化分配 $a^{\mathrm{opt}}$。以下 $\mathbf e_b$ 表示以 $B_n$ 为坐标集的单位向量，矩阵行对应输出标签，列对应真实标签。范数为 Euclidean 范数及其诱导算子范数。置
+
+$$
+D_{cb}=a^{\mathrm{opt}}_{c\leftarrow b}\,\mathbf1_{\{c\sim b\}},
+\qquad K=D-\frac A2.
+\tag{3.1}
+$$
+
+于是 $D+D^T=A$、$K^T=-K$，而且
+
+$$
+\|D\mathbf e_b\|^2=L_b(a^{\mathrm{opt}})\le\kappa_n\le\frac n4,
+\quad \|K\|\le\frac n2,
+\quad \|K\mathbf e_b\|\le\frac{\sqrt n}{2},
+\quad \|A\mathbf e_b\|\le\sqrt n.
+\tag{3.2}
+$$
+
+后面三个界来自 $|K_{cb}|\le1/2$、各度数至多为 $n$，以及绝对行和、列和的算子范数界。零份额不影响这些估计。
+
+令 $\phi_b=U_b^q|+\rangle^{\otimes n}$，$\Phi$ 以 $\phi_b$ 为列。[Recovery][Recovery] §3.4 的乘积内积公式给出
+
+$$
+G=\Phi^\dagger\Phi,\qquad G_{bc}=x^{h(b,c)},\qquad G_{bb}=1.
+\tag{3.3}
+$$
+
+在 $x=0$ 时仍按对角值一解释。置
+
+$$
+y=nx\le\frac14,\qquad z=nx^2\le\frac1{16},\qquad
+H=G-I,\qquad E=H-xA.
+$$
+
+从任一固定合法词出发，距离 $j$ 的合法词至多有 $\binom nj$ 个。以完整二元立方体作计数上界不改变实际合法来源域。由 $\binom nj\le n^j/j!$ 及 $j!\ge2$（$j\ge2$），同时得到
+
+$$
+\begin{aligned}
+\|H\|&\le(1+x)^n-1
+ \le\frac y{1-y}\le2nx\le\frac12,\\
+\|H\mathbf e_b\|^2&\le(1+x^2)^n-1
+ \le\frac z{1-z}\le2nx^2,\\
+\|E\mathbf e_b\|^2&\le\sum_{j=2}^n\binom njx^{2j}
+ \le\frac{z^2}{2(1-z)}\le n^2x^4.
+\end{aligned}
+\tag{3.4}
+$$
+
+这里 $\|H\|$ 的第一步使用实对称矩阵的绝对行和界。因此 $G\ge I/2$，逆平方根在整个所述范围内存在。实际 $n\ge3$，故此范围也排除了 $q=0$。
+

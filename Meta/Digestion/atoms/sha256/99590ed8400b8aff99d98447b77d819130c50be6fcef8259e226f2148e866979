@@ -1,0 +1,19 @@
+### 定理 2.4（乘积产生隐藏项）
+
+若
+
+\[
+f=f_0+a_xx+a_yy+a_zz,\qquad
+g=g_0+b_xx+b_yy+b_zz,
+\]
+
+则
+
+\[
+J_{fg}=a_xb_y+a_yb_x.
+\]
+
+证明：只有 \(a_xx\cdot b_yy\) 与 \(a_yy\cdot b_xx\) 产生 \(xy\)，其余交叉项因 \(xz=yz=0\) 消失。证毕。
+
+---
+

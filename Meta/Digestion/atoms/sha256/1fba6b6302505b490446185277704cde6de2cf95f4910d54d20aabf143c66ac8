@@ -1,0 +1,40 @@
+**Open problem 11.1 (all original optima and saturated groups).** Let
+$\mathcal P$ be the complete endpoint polytope with moment target
+$B(t)$, let $\gamma(w)$ count occupied compatible groups, and let
+$\kappa_i=|u_i|$. The original minimum low count on a supplied face is
+
+$$
+n_t(r)=\min\{\gamma(w):w\in\mathcal P,\ \kappa^Tw=r\}.
+\tag{PC.44}
+$$
+
+FC Theorems 5.2–6.1 identify $U_m$, the union of the contrast images
+of all coordinate faces using at most $m$ groups, with
+$\{r:n_t(r)\le m\}$. In particular
+
+$$
+n_t(r)=8\iff r\in U_8\setminus U_7,\qquad
+n_t(r)=9\iff r\in[r_-,r_+]\setminus U_8.
+\tag{PC.45}
+$$
+
+Universal seven-low compression still requires $U_7=[r_-,r_+]$ at
+every required attained-face scope. Universal $U_8$ coverage and an
+actual eight-/nine-low necessity seed also remain unresolved here.
+A necessity seed needs the same-root attained primal/dual tuple,
+global entire-cylinder feasibility, complete circle zeros of all eight
+tests, multiplicities, weak-sign groups, positive weights and exclusion
+of every shorter alternative optimal representation. A pure-contact
+cap, a mandatory singleton, one positive table or its ranks do not
+provide those all-family exclusions. GC's minimum total count is
+$1+n_t(r)$ under its weak coherent-completion premises; this is an
+equality of minima, not every instrument's count identity.
+
+Theorem 5.2 applies only to finite $\lambda>0$, finite jointly attained
+duals and $t\ge\max(t_0,800)$. Corollary 6.2 additionally requires
+$t\ge30000$ and the nonzero rank-one negative-semidefinite branch.
+Neither result supplies a saturated-count bound, a finite-dual
+existence theorem, an assertion at $\lambda=0$, nonfinite/unattained
+limits or an unsupplied boundary attainment. No forbidden-inventory
+attained tuple is exhibited by its conditional exclusion.
+

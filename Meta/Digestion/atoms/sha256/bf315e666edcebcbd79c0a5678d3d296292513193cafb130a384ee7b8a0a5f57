@@ -1,0 +1,147 @@
+**Theorem 4.1 (Uniform finite-paid-read address compression).** For
+$k\ge1$, define
+
+$$
+M=2^k-1,\qquad
+W_{k,j}=[j-2M,j+2M+1]\cap\mathbb Z,\qquad
+R_k=2M+1=2^{k+1}-1.
+\tag{4.1}
+$$
+
+Every rule of Definition 1.3 with pathwise hard total budget $k$ has a
+lawful representative on the same unchanged independent seed space
+whose read addresses all belong to $W_{k,j}$ and whose cap holds on
+every formal reply branch. Its joint law of $(u,H_j,O,D,N)$ is exactly
+the original one. For a supplied normalized finite integer-labeled tree
+of height at most $k$, one relabeling independent of $p$ preserves its entire Definition 2.2
+signature, ordered shape, leaf labels, and all paid terminal depths;
+its law identity holds for every allowed $p$ simultaneously. For $k=0$
+the address set is empty.
+
+Proof. First fix a supplied normalized tree $T$. For each phase label
+$\phi$, collect the distinct active edge left endpoints
+
+$$
+E_\phi=\{(t_v-\phi)/2:\epsilon_v=\phi\},\qquad
+m_\phi=|E_\phi|\le M,
+\tag{4.2}
+$$
+
+and adjoin the actual target index $q_{j,\phi}$. This uses all nodes of
+that parity in the whole tree. Apply Lemma 3.2 to obtain $f_\phi$ fixing
+that target, and let $e'_v=f_\phi((t_v-\phi)/2)$ for a node of parity
+$\phi$. Define its one new actual address by
+
+$$
+t'_v=2e'_v+\epsilon_v.
+\tag{4.3}
+$$
+
+This is one assignment of integers to all nodes. It does not ask the
+runtime protocol for the hidden phase. In actual conditional phase
+$\phi$, nodes of parity $\phi$ are active and have exactly the packed
+slot relation, while all other nodes remain compulsory zero separators.
+Each node has an active-edge constraint in only its own parity. There
+is no cross-phase slot relation in Definition 2.2, because the two phases
+are mutually exclusive alternatives in the source mixture. In particular,
+adjacent even and odd original addresses supply no omitted conditional
+shared-spin constraint: in each fixed phase one of those addresses is
+inactive. Thus the two packings are simultaneously realized by (4.3),
+with exactly the full original signature in each phase.
+
+Lemma 3.2 gives
+
+$$
+2q_{j,\phi}+\phi-2m_\phi
+\le t'_v\le
+2q_{j,\phi}+\phi+2m_\phi
+\qquad(\epsilon_v=\phi).
+\tag{4.4}
+$$
+
+The actual target table (1.2), rather than a shifted target, puts the
+base $2q_{j,\phi}+\phi$ at $j$ or $j+1$. Since $m_\phi\le M$, (4.4)
+lies inside $W_{k,j}$; hence $|t'_v-j|\le R_k$. Negative and remote
+original addresses, incidence on either side of the target, disconnected
+components, overlaps, and repeated reads are all included in the graph
+and its injective map. Lemma 2.3 now proves equality of the complete
+finite potential-reply law and then of $Z$. The tree shape and leaf
+labels are unchanged, so terminal paid depth is retained also on
+nonreturn. The packing uses integer geometry and $j$, without using $p$.
+This proves the fixed-tree assertion for all allowed $p$ with the same
+relabeling.
+
+It remains to construct one measurable rule for the arbitrary given
+seed, rather than choosing unrelated deterministic laws. Normalize the
+original rule by Lemma 2.1 and denote its fixed-seed tree by $T(u)$. The
+space $\mathcal T_k$ of all such trees is countable: there are finitely
+many binary shapes through depth $k$, finitely many leaf-label patterns,
+and a finite tuple of integer labels for each shape. Give it the discrete
+sigma-algebra.
+
+The map $u\mapsto T(u)$ is measurable. For each potential node position,
+its previous acquired record has countable range. If that record is
+$r(u)$ and $F(u,r)$ is a measurable next-event condition, the event in
+question is the countable union
+
+$$
+\bigcup_r\bigl(\{u:r(u)=r\}\cap\{u:F(u,r)\}\bigr).
+\tag{4.5}
+$$
+
+Thus evaluation at a varying record is measurable. Induction through the
+finitely many possible node positions proves the assertion; a position
+absent because of an earlier leaf can be assigned a fixed dummy label
+for this induction. Finite event type and indefinite continuation are
+already measurably distinguished by the contract. No decision procedure
+for internal divergence is being presumed.
+
+Use exactly the ordering, split, and placement in Lemmas 3.1--3.2.
+They make the relabeling a specified map $C_j:\mathcal T_k\to\mathcal T_k$.
+Any map between these countable discrete tree spaces is
+measurable, so $u\mapsto C_j(T(u))$ is measurable. At seed $u$, run that
+compressed tree using its actual source replies. On acquired records
+inconsistent with it, choose internal nonreturn to make the next-event
+rule total. This is a measurable rule: partition the seed space into
+its countably many selected-tree cells, and on each cell test the finite
+record against that fixed tree. All its reads are actual addresses from
+$W_{k,j}$ and every formal branch is capped. The initial tree selection
+uses only $u$ and public data, with no added random variable or source
+access.
+
+For a fixed tree $T$ let
+
+$$
+a_{T,p}(z)=J_p(Z^T=z),\qquad z\in\mathcal Z_k.
+\tag{4.6}
+$$
+
+The finite-product argument proves $a_{T,p}(z)=a_{C_j(T),p}(z)$ for each
+$T$ and $z$. Independence of the source and the original seed, followed
+by product-measure integration, therefore gives for every
+$B\in\mathcal U$,
+
+$$
+\begin{aligned}
+\mathbb P_p(u\in B,Z^{\mathrm{original}}=z)
+&=\int_B a_{T(u),p}(z)\,d\nu(u)\\
+&=\int_B a_{C_j(T(u)),p}(z)\,d\nu(u)\\
+&=\mathbb P_p(u\in B,Z^{\mathrm{compressed}}=z).
+\end{aligned}
+\tag{4.7}
+$$
+
+In the first equality normalization retains $Z$ for the pathwise-capped
+input. These are integrations of source sections, not regular conditional
+probabilities given singleton seeds. Since $\mathcal Z_k$ is finite,
+equality on all such rectangles is exactly equality of the full joint
+laws on $\mathsf U\times\mathcal Z_k$. This works for arbitrary atomic
+or nonstandard seed spaces. For the permitted completion versions,
+choose measurable versions together over the countably many acquired
+records; null changes do not affect the integrated identities. The
+constructed tree rule still has its formal cap on every branch.
+
+When $k=0$, normalization has no read nodes. Its seed-dependent return
+state or internal nonreturn can be kept directly with the same joint
+law, and it uses no address. $\square$
+

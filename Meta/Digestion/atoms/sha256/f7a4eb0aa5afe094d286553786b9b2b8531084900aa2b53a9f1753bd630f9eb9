@@ -1,0 +1,8 @@
+**Definition 92.3 (mandatory evidence and infrastructure).** Extend [supplier Definition 76.4](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md)'s wrapper to accept either endpoint core in addition to its existing core modes. The wrapper consists of its eight-bit mode, gamma of the natural $M$, exactly $M$ literal evidence bits, and one core consuming the remaining framed word. The gamma convention is [supplier Definition 76.1](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md). Invalid or truncated evidence and an invalid core are rejected. The exact additional length is
+
+$$
+8+2\lfloor\log_2(M+1)\rfloor+1+M.
+$$
+
+All mandatory source identity, certificates, transcripts, alternate programs or provenance are retained if the interface requires them. There is no assumed bound on $M$. A source-dependent alternate interpreter belongs to these paid fields, whereas one shared finite interpreter has a fixed additive description cost; transmitting that common description adds its actual fixed length. Parsing evidence does not certify truth. Numerical compression licenses discarding original evidence only under an interface that permits it. Theorem 89.2 is consequently not an $N$-only total upper for arbitrary evidence mandates.
+

@@ -1,0 +1,14 @@
+**定义 1.2（Repeated band target）。** Set $I=\{1,\ldots,m-1\}$. Let $Y$ be a label set, let $\lambda:I\to Y$ be any nonconstant map, let $A\in Y$ be an outside label, and choose $R\in Y\setminus(\{A\}\cup\lambda[I])$. Repetitions and arbitrary ordering in $\lambda$ are allowed, and $A$ may be a band label. For $j=-\theta_{\rm INITIAL}\pmod T$ define, on both legal initial-value fibres,
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge k-m,\\
+\lambda(j),&s<k-m,\ j\in I,\\
+A,&s<k-m,\ j\notin I.
+\end{cases}
+\tag{1.6}
+$$
+
+The label at initial $\bot$ is arbitrary and separately specified. Call $s\ge k-m$ high and $s<k-m$ low. This is the full-block threshold target of [S18, Convention 1.2], with a general repeated band table. The binary layouts, first returning-frontier classification, and injective tables in [S18, Theorems 3.1, 4.1, 5.1] are supplied special cases, not additional claims of this volume.
+

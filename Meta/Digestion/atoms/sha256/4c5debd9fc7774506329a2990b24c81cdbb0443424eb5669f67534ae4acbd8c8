@@ -1,0 +1,12 @@
+**Definition 5.3 (normal-form code invariant and monotone cutoffs).** Use the encoding (LRD.14), with value $1$ initially on a ground chart. After a local continuation allow any in-range code value on a ground chart; on every chart with an unresolved $\star$ require exactly $E=\nu(u)+1$. In the no-anchor case use the complete countable field $E=\nu(u)+1$ on every source.
+
+Use canonical relative depths $d$ that never decrease. Along each actual cell refinement, $W_{\eta'}$ is obtained by replacing old frontier names by finite patterns, so
+
+$$
+H_{\eta'}\ge H_\eta,\qquad
+A_{\eta'}=4H_{\eta'}+1\ge A_\eta
+\tag{LRD.16}
+$$
+
+whenever the old boundary is anchored. There is no demand that cutoffs in different unrelated cells coincide. Once an anchor is retained it stays retained. After the local update a complete cut exposes exactly $(R,h',E')$: obsolete code values, old code-buffer lengths, temporary tables, workspace and source-bearing control outside this tuple are inaccessible or factor through it. This is the same accessible-information condition as the preparation cut, without another traversal or a requirement of physical erasure.
+

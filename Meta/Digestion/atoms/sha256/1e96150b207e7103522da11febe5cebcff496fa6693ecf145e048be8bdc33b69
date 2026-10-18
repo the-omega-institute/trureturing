@@ -1,0 +1,27 @@
+**Definition 1.2 (supplied complete row).** For a finite prefix-free cut
+$P$, reuse the complete literal row
+
+$$
+R_P(v)=(C_P(v),\pi_P(v)),\qquad
+p\sim_{\pi_P(v)}q\ \Longleftrightarrow\ v|_p=v|_q
+\quad(p,q\in P\cap\operatorname{Pos}(v)).
+\tag{NRF.2}
+$$
+
+The exterior $C_P(v)$ replaces each reached cut subtree by its
+addressed hole, retaining every other constructor and concrete leaf.
+A requested but unreached cut position has its concrete strict-prefix
+blocking leaf in the exterior. The partition is complete: different
+classes assert disequality. It contains no additional comparisons of
+hidden values with concrete exterior subtrees.
+
+This is the record of [NUE, Definition 1.1][NUE], identified with canonical
+class syntax by [ActualCutPartitionDecoder, `canonicalRow_record_iff`][ROW].
+For a valid proposed row $(C,\pi)$, one actual tree $z_c$ is shared by
+all holes of class $c$, and values of different classes are distinct.
+The exact filling equivalence, including its inverse on a supplied
+source, is [NUE, Proposition 1.3][NUE] and
+[NativeCutFibers, `rowFiberEquiv`][CUT]. Its private `recover_fill`,
+`fill_injective` and `classValue_distinct` establish the same entire
+fiber; they are not extra hypotheses about independent holes.
+

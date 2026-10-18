@@ -1,0 +1,19 @@
+**定义 2.3（固定产生器剖面）。** 若存在不相容非空支撑对，定义
+
+$$
+\zeta=
+\min_{\substack{S,T\ne\varnothing\\(S,T)\ \mathrm{不相容}}}
+\ \min_{\alpha\in D(S),\ \beta\in D(T)}
+\operatorname{TV}(Q_L(\alpha),Q_L(\beta)),
+\qquad
+\kappa=1-\frac{\zeta^2}{2},
+$$
+
+其中有限概率向量的 $\operatorname{TV}(p,q)=\frac12\sum_j|p_j-q_j|$。每对不相容闭面的像是紧且不相交的集合，故其距离最小值严格为正。非空支撑对只有有限多个，于是
+
+$$
+0<\zeta\leq1,\qquad \frac12\leq\kappa<1.
+$$
+
+这是一条固定产生器内由最大剥离产生的正量，不是附加的正性假设。其定义未要求有限预测状态空间，也未给出跨参数族的正下界。
+

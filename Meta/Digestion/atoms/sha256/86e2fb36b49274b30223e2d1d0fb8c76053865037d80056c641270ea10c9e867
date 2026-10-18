@@ -1,0 +1,35 @@
+**定义 1.2（当前窗口的三个位置）。** 对每个非负整数 $`j`$，窗口的低、中、高三个位置对应
+
+<table><tbody><tr><td>
+
+```math
+A_j=T_{3j},\qquad B_j=T_{3j+1},\qquad C_j=T_{3j+2},
+\qquad C_j=\langle B_j,A_j\rangle.
+```
+
+</td></tr></tbody></table>
+
+合法选择集合为三位置路径的独立集：
+
+```math
+\mathcal{\text{𝒮}}=\{I\subseteq\{1,2,3\}:I\text{ 不含相邻位置}\}.
+```
+
+选择项 $`\mathsf{\text{𝖥}}_j[I]`$ 是附有尺度和来源位置的模式，不自动指定任意组合的执行次序。选择关系与生成关系分别为
+
+<table><tbody><tr><td>
+
+```math
+\text{选择关系：第一、第三位置能够共同出现；}
+```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
+
+```math
+\text{生成关系：第三位置由第二、第一位置有序组合生成。}
+```
+
+</td></tr></tbody></table>
+

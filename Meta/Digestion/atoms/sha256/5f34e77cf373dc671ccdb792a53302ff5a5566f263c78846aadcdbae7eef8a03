@@ -1,0 +1,45 @@
+**Definition 341.1 (Mass cone and coefficient data).** Let $L\ge0$,
+$J=\{0,\ldots,L\}$, and $M\ge0$ be finite. Write
+$m(v)=\sum_{z\in J}v(z)$, with $v_+$ taken coordinatewise.
+A mass-$M$ complete $N$ allocation has an empty vector $z\ge0$,
+singleton vectors $x_i,y_i\ge0$ of equal mass, and pair vectors
+$a_{ij},b_{ij},d_{ij},e_{ij}\ge0$ of a common mass $w_{ij}$,
+for every $i<j$. Their cells are $00,01,10,11$ in that order.
+The empty mass, singleton masses, and pair masses sum to $M$,
+counting each schedule once. Its entire word law is
+
+$$
+\begin{aligned}
+k(w)={}&z+\sum_i((1-w_i)x_i+w_i y_i)\\
+&+\sum_{i<j}\bigl((1-w_i)(1-w_j)a_{ij}
+ +(1-w_i)w_j b_{ij}+w_i(1-w_j)d_{ij}+w_iw_j e_{ij}\bigr).
+\end{aligned}
+\tag{341.1}
+$$
+
+This is the mass cone of the complete model in II 140.2, without
+separate normalizations for labels, words or cells. We seek an exact
+criterion for a prescribed entire multilinear function
+
+$$
+k(w)=c+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j,
+\qquad m(c)=M,\quad m(\ell_i)=m(Q_{ij})=0.
+\tag{341.2}
+$$
+
+For one family of signed vectors $g_{ij}$ with $m(g_{ij})=0$, set
+
+$$
+\begin{aligned}
+r_{ij}&=(-g_{ij})_+,&s_{ij}&=(-g_{ij}-Q_{ij})_+,\\
+t_{ij}&=\max\{m(r_{ij}),m(s_{ij})\},&
+D_i&=\ell_i-\sum_{h<i}g_{hi},\\
+R_i&=\sum_{j>i}r_{ij},&S_i&=\sum_{j>i}s_{ij},\\
+T_i&=\sum_{j>i}t_{ij},&U_i&=\max\{R_i,S_i-D_i\},\qquad u_i=m(U_i).
+\end{aligned}
+\tag{341.3}
+$$
+
+The maximum defining $U_i$ is coordinatewise. All pairs have a
+$g_{ij}$ variable, including those with $Q_{ij}=0$.
+

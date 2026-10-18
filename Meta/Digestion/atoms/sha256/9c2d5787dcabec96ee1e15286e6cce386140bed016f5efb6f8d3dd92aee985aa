@@ -1,0 +1,8 @@
+**定理 150.2（父先子后的串行表达史）。** 在定义150.1的形式菜单中，任意有限简单无向有根连通图都存在有限串行登记史，解码后得到该图及其根；每条事件只引用已经登记的地址。根已登记时，可以用恰好 $|\mathcal A|$ 个事件，每条图边登记一次。对单顶点图，历史为空。
+
+证明（150.2）。使用经典生成树结果作中间步骤：钉版 Mathlib [Combinatorics/SimpleGraph/Acyclic.lean，`SimpleGraph.Connected.exists_isTree_le`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Combinatorics/SimpleGraph/Acyclic.lean)在简单图连通条件下给 $T\le G$ 且 $T$ 为树。本节把其域限制为有限有根图，不从生成树的存在推断未知图已经取得。
+
+以 $v_0$ 为树根，把其余顶点按树距离非减排序；同层可任选固定次序。每个非根顶点有唯一通向根的树路径，其父顶点距离小一，已经在它之前登记。因此逐个使用第一类事件，登记新顶点地址及父边，得到全部顶点和恰好 $|V|-1$ 条树边。再以任意固定次序遍历 $\mathcal A\setminus\mathcal A(T)$，对每条边使用第二类事件；两端此时都已有地址，且边尚未登记，动作满足菜单条件。
+
+简单性保证每条无向边只需登记一次。全部父边和余边的并恰为 $\mathcal A$，无多余边；地址到顶点的双射及根地址保存有根图的重构。事件数为 $(|V|-1)+(|\mathcal A|-|V|+1)=|\mathcal A|$。单顶点连通简单图没有边，所以无需事件。每次都可以按第144章追加一个完整码，形成唯一已发生前缀链。$\square$
+

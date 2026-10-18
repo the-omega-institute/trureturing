@@ -1,0 +1,132 @@
+**Corollary 245.2 (A nested near-unit domain).** For $m\ge7$, choose
+
+$$
+0\le\tau\le6/P_m,\quad t=1-(m-2)\tau,\quad
+z_2=z_3=0,\quad0\le z_4\le\cdots\le z_m\le\tau.
+\tag{245.3}
+$$
+
+Set $a_1=h\in[t,1]$, $a_n=t-z_n$ for $2\le n\le m$,
+$S=\sum_{n=3}^m a_n$. The exact attained optimum of both original
+classes is
+$e_* =\max\{[S-(m-3)\tau]/(m+1),(S+h-1)/(m+1)\}$,
+for every permitted entire actual tail $a_{m+1}\le e_*$ and every
+positive closed cap as in Theorem 244.2.
+
+Proof. Put $Z=\sum_{n=3}^m z_n$, and use subscript $f$ for the flat
+values at this $t$. Set
+
+$$
+B=\frac{(m-3)(m-4)\tau}{2},\qquad
+C=\frac{(m-2)(m-3)\tau}{2},\qquad
+A=t-e-(m-3)\tau.
+$$
+
+The capacity degrees are $A-z_n$ through $m-2$ (with $z_1=0$),
+$B-z_{m-1}$ and $C-z_m$. Direct substitution gives
+
+$$
+R_f-\tau=\frac{6-P_m\tau}{2(m+1)}\ge0,\quad
+R=R_f+\frac Z{m+1},\quad A=R_f+B+\frac Z{m+1}.
+\tag{245.4}
+$$
+
+Since $B\ge6\tau$, $C\ge10\tau$ and $z_n\le\tau$, all degrees
+are nonnegative. For their upper bounds,
+
+$$
+\begin{aligned}
+e-A&=\frac{(m-5)+(3m-7)\tau-2Z}{m+1}>0,\\
+e-C&\ge\frac{(m-1)(m-5)(m^2-3m-2)}{(m+1)P_m}>0.
+\end{aligned}
+\tag{245.5}
+$$
+
+The first uses $Z\le(m-3)\tau$. The second follows by substituting
+that same bound and $\tau\le6/P_m$ in $e-C$; its numerator
+factorization is
+$(m-2)P_m-3(m^3-2m^2-3m+2)=(m-1)(m-5)(m^2-3m-2)$.
+Because $B\le C$, these bound every degree above by $e$ and imply
+$e>0$. The amplitude floors follow from
+$z_n\le\tau\le\binom{n-2}{2}\tau$ for $n\ge4$, with equalities
+at two and three. Thus all hypotheses of Theorem 244.2 hold.
+This is a subregion of that theorem, with no independent capacity
+principle. The alternative transfer layout $c_{i,m-1}=\tau$ for
+$2\le i\le m-2$ and $c_{m-1,m}=\tau$ has the same first-index
+transfer totals, base polynomial and proof. ∎
+
+For example, $m=8$, $\tau=3/157$, $h=142/157$,
+$t=139/157$ and $z_4=\cdots=z_8=3/157$ give
+
+$$
+a=(142,139,139,136,136,136,136,136)/157,\qquad e_*=268/471,
+$$
+
+with degrees $(104,104,104,95,95,95,81,126)/471$.
+Equations (244.6)–(244.7), with the finite interval triple measure,
+specify every cell of a complete law at this point. Any actual tail
+below $268/471$ is allowed, including equality at coordinate nine.
+
+An explicit law at this same point uses the alternative transfer layout
+of Corollary 245.2. Put $k=3/157$ and define the following unnormalized
+exhaustion vectors:
+
+$$
+\begin{aligned}
+E_{13}&=k\mathbf e_0+\frac{671}{55107}\mathbf e_6
+ +\frac{1903}{140829}\mathbf e_7+\frac{26642}{1267461}\mathbf e_8,\\
+E_{14}&=k\mathbf e_0+\frac{237595}{12343968}\mathbf e_6
+ +\frac{673835}{31545696}\mathbf e_7
+ +\frac{673835}{20279376}\mathbf e_8,\\
+E_{16}&=k\mathbf e_0+\frac{2091}{202216}\mathbf e_7
+ +\frac{697}{43332}\mathbf e_8,\\
+E_{34}&=k\mathbf e_0+\frac{28975}{2057328}\mathbf e_6
+ +\frac{82175}{5257616}\mathbf e_7+\frac{82175}{3379896}\mathbf e_8,\\
+E_{36}&=k\mathbf e_0+\frac{765}{101108}\mathbf e_7
+ +\frac{85}{7222}\mathbf e_8.
+\end{aligned}
+\tag{245.5a}
+$$
+
+In the table below $w$ is the schedule mass in that row; its occurrence
+in a cell denotes that same mass. These are all twenty-two schedules.
+
+| Pair | $w$ | Cell $0$ | Cell $10$ | Cell $11$ |
+| --- | ---: | --- | --- | --- |
+| $12$ | $k$ | $k\mathbf e_1$ | $k\mathbf e_2$ | $k\mathbf e_0$ |
+| $13$ | $31/471$ | $w\mathbf e_1$ | $w\mathbf e_3$ | $E_{13}$ |
+| $14$ | $4903/52752$ | $w\mathbf e_1$ | $w\mathbf e_4$ | $E_{14}$ |
+| $15$ | $4903/52752$ | $w\mathbf e_1$ | $w\mathbf e_5$ | $E_{14}$ |
+| $16$ | $1201/26376$ | $w\mathbf e_1$ | $w\mathbf e_6$ | $E_{16}$ |
+| $17$ | $k$ | $k\mathbf e_1$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $23$ | $31/471$ | $w\mathbf e_2$ | $w\mathbf e_3$ | $E_{13}$ |
+| $24$ | $4903/52752$ | $w\mathbf e_2$ | $w\mathbf e_4$ | $E_{14}$ |
+| $25$ | $4903/52752$ | $w\mathbf e_2$ | $w\mathbf e_5$ | $E_{14}$ |
+| $26$ | $1201/26376$ | $w\mathbf e_2$ | $w\mathbf e_6$ | $E_{16}$ |
+| $27$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $34$ | $643/8792$ | $w\mathbf e_3$ | $w\mathbf e_4$ | $E_{34}$ |
+| $35$ | $643/8792$ | $w\mathbf e_3$ | $w\mathbf e_5$ | $E_{34}$ |
+| $36$ | $169/4396$ | $w\mathbf e_3$ | $w\mathbf e_6$ | $E_{36}$ |
+| $37$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $45$ | $k$ | $k\mathbf e_4$ | $k\mathbf e_5$ | $k\mathbf e_0$ |
+| $46$ | $k$ | $k\mathbf e_4$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $47$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $56$ | $k$ | $k\mathbf e_5$ | $k\mathbf e_6$ | $k\mathbf e_0$ |
+| $57$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $67$ | $k$ | $k\mathbf e_0$ | $k\mathbf e_7$ | $k\mathbf e_0$ |
+| $78$ | $14/471$ | $k\mathbf e_0+(5/471)\mathbf e_7$ | $w\mathbf e_8$ | $w\mathbf e_0$ |
+
+For a direct ordinary verification, subtract base mass $k$ from each
+$11$ cell inside $[7]$, and base mass $14/471$ on $78$.
+The remaining masses are numerical triples, with total $268/471$
+and inclusion degrees $(104,104,104,95,95,95,81,126)/471$.
+For example, each term at label $r$ in $E_{ij}-k\mathbf e_0$
+is the mass of triple $\{i,j,r\}$. Summing the displayed fractions
+gives exactly those eight degrees. The base edges and transfers are
+precisely the alternative layout of Corollary 245.2. Thus its all-word
+correctness and base-polynomial proof applies verbatim to this law.
+Every cell has its printed schedule mass, those masses sum to one,
+and the whole-table coupling (244.7) fixes all counterfactual outputs
+using the same source-independent seed. No additional feasibility
+claim is attributed to this explicit instance.
+

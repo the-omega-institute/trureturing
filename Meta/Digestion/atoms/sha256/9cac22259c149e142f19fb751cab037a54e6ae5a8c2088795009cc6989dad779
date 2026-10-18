@@ -1,0 +1,54 @@
+**Definition 11.1 (shifted input and ordinary regular trees).** The symbols
+$D,U,K,r_i$ in §§11–12 are local to these sections. Retain the native
+laws (NLC.1), the inclusive four-reply prefixes of Definition 5.1, and
+Assumption 1.2 with an authentic common handoff $N\ge1$. Take the old
+cut $P=\{\varepsilon\}$ and its complete row: one reached hole, exterior
+$\square_1$ and singleton partition. The entire retained history is
+
+$$
+\begin{aligned}
+H_0={}&\{(0,\varepsilon,\mathsf{branch}),
+ (0,R,\mathsf{branch}),(0,RR,\mathsf{branch}),(0,RRL,\alpha)\},\\
+H_{\rm rel}={}&\{(0,RRR,1,RL,=)\}.
+\end{aligned}
+\tag{NLC.32}
+$$
+
+Both endpoints of the positive record must be reached. There are no
+further records in this instance. Let $D$ be the entire fiber (NLC.4)
+of these data, and put
+
+$$
+G(y)=\langle\alpha,\rho(y)\rangle,\qquad
+U(x,y)=\langle x,\langle y,G(y)\rangle\rangle,\qquad
+Q=\{L,RL,RR\}.
+\tag{NLC.33}
+$$
+
+Use that order for the target holes. The full labels $r_0,r_1,r_2$ all
+have reached set $Q$ and numbered exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$; their
+partitions are respectively
+
+$$
+\{\{1,2\},\{3\}\},\qquad
+\{\{1,3\},\{2\}\},\qquad
+\{\{1\},\{2\},\{3\}\}.
+\tag{NLC.34}
+$$
+
+Write $D_i=\{u\in D:R_Q(u)=r_i\}$, retaining every field of the row.
+
+An ordinary regular, or rational, tree is a finite-or-infinite ordered
+tree over the ranked signature $\alpha:0,\beta:0,\langle\, ,\,\rangle:2$
+having only finitely many distinct rooted subtrees. This is the
+literature-attested definition in [Comon–Lescanne, §2.1, pp. 4–5][CL],
+with their child positions $1,2$ identified with $L,R$, and with no
+variables. A missing position supplies the reply $\mathsf{absent}$;
+it is not another constructor. Equality retains both labels and order.
+Equivalently such a tree unfolds a finite rooted constructor graph:
+each graph vertex supplies at most one subtree, and conversely the
+finitely many subtree types supply vertices with their actual ordered
+child edges. This representation does not add $\rho$ as a free
+constructor.
+

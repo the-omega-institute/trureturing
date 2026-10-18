@@ -1,0 +1,112 @@
+**Corollary 278.3 (Existence of a full zero-cost score on the improved cone).**
+Let $\beta^*_j=1$ for $j\in J$, $\beta^*_1=\beta^*_2=0$, and
+$K^*=m+c_m+1-\epsilon_m$. There exists a full nonnegative score
+$V_m$ with
+
+$$
+Q(V_m)=(\beta^*;K^*),\qquad\Delta_N(V_m)=0.
+\tag{278.9}
+$$
+
+For every full input $y\ge0$ with
+$Qy=(t\beta^*;K)$, $t\ge0$, $K\ge tK^*$, there exists one
+full $V\ge0$ with $QV=Qy$, $\Delta_N(V)=0$ and $\theta=0$.
+It is an existence conclusion on this entire quotient cone, without
+a specified row-coefficient selector outside or inside it.
+
+**Proof.** Put $u=b-\alpha$, with $u$ free in $\mathbb R^L$,
+and write $h=\mathcal H u-e\mathbf1$. The finite matrix
+$\mathcal H$ has coefficient $-1$ in each base row of its
+first-zero coordinate, $+1$ in each correct row, and zero in
+pair and positive rows. Consider the entire finite cone
+
+$$
+\mathcal P=\{(u,e,\lambda):
+G_N\lambda-\mathcal H u+e\mathbf1\ge0,
+\quad e\ge0,\ \lambda\ge0,\ u\text{ free}\}.
+\tag{278.10}
+$$
+
+It contains zero. Theorem 278.2, valid for every real $b$ on
+these full rows, says
+$\beta^*\cdot u-K^*e\le0$ throughout $\mathcal P$.
+Apply the valid-inequality multiplier theorem for a nonempty finite
+polyhedron, Kaibel, *Basic Polyhedral Theory*,
+[Theorem 12, arXiv:1001.2161v1](https://arxiv.org/html/1001.2161v1).
+In its notation a valid $a^Tx\le\beta$ on a nonempty
+$\{x:Ax\le b\}$ has multipliers $v\ge0$ with
+$v^TA=a^T$ and $v^Tb\le\beta$.
+The cone (278.10) is nonempty and all dimensions are finite.
+Coefficient matching for free $u$, nonnegative $\lambda$ and
+nonnegative $e$ gives one $V\ge0$ on the original event rows with
+
+$$
+\mathcal H^TV=\beta^*,\qquad G_N^TV\le0,
+\qquad\sum V\le K^*.
+\tag{278.11}
+$$
+
+Explicitly, express the first constraint as
+$-G_N\lambda+\mathcal H u-e\mathbf1\le0$ and also include
+$-\lambda\le0,-e\le0$. The latter multipliers are
+$-G_N^TV\ge0$ and $K^*-\sum V\ge0$, respectively.
+This checks all multiplier signs without restricting $u$ to the
+hard hull or replacing the full cone by deleted columns.
+
+Add $K^*-\sum V$ to the original positive-row coefficient $T$.
+That row has quotient increment $(0;1)$ and $G_N$ entries
+$[D(+)=0]-1\le0$. Thus the resulting $V_m$ has exact $Q$
+as in (278.9) and $G_N^TV_m\le0$.
+The anchor column is zero, so its maximal excess is exactly zero.
+For the stated input use
+$V=tV_m+(K-tK^*)T_+$, where $T_+$ denotes unit positive-row
+score. It has exact $Q$, is nonnegative, and has zero cost by
+the same column argument. The residual is zero on the whole
+$H_L$, so $\theta=0$ suffices.
+This consumes the standard finite Farkas conclusion; it supplies
+neither individual coefficient formulas nor an arbitrary-query
+acquisition from that dual score. $\square$
+
+**Mathematical comparison 278.4 (Parity and an excluded actual profile).**
+The protected shared-terminal supplier of
+[Theorem 207.13](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md)
+already gives the all-late capacity coefficient $c_{m-1}$.
+Indeed take its $m-1$ internal addresses to be $J\setminus\{L\}$,
+its common terminal address to be $L$, its correct masses $s=1$
+and its positive-row mass $T=1$, with no early correct scores.
+Its protection conditions are the actual unary capacities at least
+two and every directed capacity at least one. The attaining
+balanced measure has stock $c_{m-1}$, so that existing score has
+$\beta=1_J$, $K=m+c_{m-1}+1$ and zero $N$ cost. Pairing with
+the same full feasible allocation yields
+$E_b\le(c_{m-1}-2)e$.
+For odd $m\ge5$, $c_{m-1}=c_m$; hence (278.2) improves that
+specific inequality by $\epsilon_me$.
+For even $m=2q\ge4$, $c_m-c_{m-1}=2/(q(q+1))$.
+The old inequality is stronger: $w_m\le1/3$,
+$C_m\ge m(m+1)$, so
+$\epsilon_m<1/(3m(m+1))<2/(q(q+1))$.
+Thus no additional numerical or quotient coverage is asserted
+there relative to that supplier. The comparison concerns this
+checked predecessor, without a claim about every possible older
+consequence or sharp constants.
+
+For a concrete odd case take $L=7$ and the entire profile
+
+$$
+e=1/20,\qquad a_1=\cdots=a_7=7/75,\qquad
+a_n=\frac1{20(n-7)}\quad(n\ge8).
+\tag{278.12}
+$$
+
+It is positive, nonincreasing and vanishing, with actual active
+length seven and closed tail tie $a_8=e$.
+Its finite point belongs to $H_7$ and has
+$E_b=5(7/75)-8/20=1/15=(c_5-2)e$.
+But (278.2) requires $E_b\le1/15-1/751200$.
+Consequently no original $N_2$, hence no $O_2$, acquisition
+attains this cap: exact closed-cap necessity of Theorem 110.2
+would otherwise supply a full finite mass-one witness.
+It is an excluded candidate profile, not a same-feasible-point
+$N/O$ separator; in particular it has no original $N$ attainer.
+

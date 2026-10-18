@@ -1,0 +1,57 @@
+### 88.5. Gauge invariance of the flat quartic form
+
+We need an identity on the whole nearby M, not just the classified base points:
+
+\[
+ Q_m(R_\flat)=Q_m(R_D),
+ \quad (R_D)_{f0}=0,\quad (R_D)_{f1}=D_R b_{f1},
+ \quad (R_D)_{\rm wrong}=0.                              \tag{16}
+\]
+
+Here the dimensions remain two old environment coordinates and one new coordinate. To prove (16), consider any smooth old comparison curve with x(t)=m+t²X+O(t⁴) in local coordinates and new sector tR_flat. The physical square-root parameterization (4) gives a coefficient of t⁴ equal to q_H(X)+b(X,R_flat)+q_N(R_flat), because R_flat lies in the quadratic kernel.
+
+Apply the environment unitary exp(tΩ) with
+
+\[
+ \Omega=\begin{bmatrix}0&L_0^*\\-L_0&0\end{bmatrix}
+                                                               \tag{17}
+\]
+
+on the old-two/new-one environment, identically on the output. The physical B channel is unchanged. The transformed new sector is t(R_flat−L₀U_m)+O(t³)=tR_D+O(t³), and the transformed old polar comparison tangent is X+Z for a fixed tangent Z depending on m,R_flat but not on X. The old and new parity in this construction gives no t² term in the new sector. The translation X↦X+Z is bijective on the full old tangent space.
+
+Terms of order t³ in the new sector do not affect the t⁴ coefficient: the differential of the nonnegative quadratic form L_m at R_D∈K_m is zero. Likewise any tangential shift in the comparison point has zero mixed derivative, by the last paragraph of section 88.4. Thus minimization over all old tangents before and after this physical environment rotation gives (16). This argument uses a genuine unitary gauge of the physical channel, not error monotonicity under polar replacement.
+
+At the base m₀, section 87 computes the right side of (16). If E=conjugate(D*D)=r₀I+r·σ and u_a are the squared disphenoid coordinates, then
+
+\[
+ Q_{m_0}(R_D)=\sum_a{(1-u_a)(7u_a-1)^2\over256u_a^2}r_a^2
+       \ge {35\over4096}\|D\|_F^4.                     \tag{18}
+\]
+
+The last step uses that D has one row: E has rank at most one and |r|²=‖D‖⁴/4. This is precisely where the rank-three restriction is substantive.
+
+Fix κ as in (2), and choose κ<c₁<35/4096. The construction D↦R_D is smooth in m and linear in D. By compactness of the unit sphere in C^{1×2}, continuity of Q_m and (18) give, after shrinking the m-neighborhood,
+
+\[
+ Q_m(R_\flat)\ge c_1\|D_R\|_F^4
+ \quad\text{for every }m\text{ nearby and every }R_\flat\in K_m.
+                                                               \tag{19}
+\]
+
+Homogeneity handles arbitrary D, including D=0. The exact gauge identity (16) is needed here: continuity alone would not control an arbitrary common L₀=L₁ component, which is a true zero mode.
+
+Because Q_m is a smoothly varying quartic polynomial and Π_m is an orthogonal projection, there is a uniform finite C such that
+
+\[
+ |Q_m(R)-Q_m(R_\flat)|\le C e r^3.                      \tag{20}
+\]
+
+Combining (13)–(14), (19)–(20), and L_m=e²/8, then using Ce r³≤e²/16+4C²r⁶, gives a uniform estimate
+
+\[
+ f(m,n,R)\ge\tfrac14+e^2/16+c_1\|D_R\|_F^4-C_2r^6.
+                                                               \tag{21}
+\]
+
+This holds for every nearby original comparison point and every small R. It is not yet a positive lower bound in the total tail, because the common gauge component could carry r. We next use the original Choi split to exclude that possibility quantitatively.
+

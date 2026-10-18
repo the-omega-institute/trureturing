@@ -1,0 +1,31 @@
+**Lemma 4.1 (full-phase rigidity with retained records).** For either
+contract, the successful dilation on each actual input factors as the exact
+target specimen times one auxiliary vector independent of $\beta$. In C
+write it as $\psi_{l,\beta,m}\otimes a_\epsilon$; in R write it as
+$\psi_{l,\beta,m}\otimes\eta_\epsilon\otimes a_\epsilon$.
+Thus $p_\epsilon=\|a_\epsilon\|^2$ is phase independent. The same fact
+holds for every successful Kraus component and for zero success amplitude.
+
+Proof. Purity of the required specimen output forces every successful Kraus
+image into its one-dimensional specimen ray tensored with the auxiliary
+space. Project onto any auxiliary basis vector, obtaining a linear map
+$K$ whose image of the actual input is collinear with
+$\sqrt Z e_2+z\sqrt r n_\epsilon(l)$. In R first regard the specimen and
+returned helper together as the required pure output. Its two corresponding
+directions are $e_2\otimes\eta_\epsilon$ and
+$n_\epsilon(l)\otimes\eta_\epsilon$.
+
+The wedge of the input image with this target is a vector-valued polynomial
+of degree at most two in $z$. It vanishes for every $|z|=1$, so its constant,
+linear and quadratic coefficients vanish. The constant term makes
+$KA_\epsilon$ a scalar times the output reference direction. The quadratic
+term makes $KB_\epsilon$ a scalar times the output bottom direction.
+The linear term makes these scalars equal, because $Z,r>0$ and the two
+directions are independent. Collect all auxiliary components and successful
+Kraus labels into $a_\epsilon$. This proves the factorization and probability
+claim without a phase estimate or covariance assumption. $\square$
+
+Projection onto auxiliary components is essential here: an output vector
+with a retained auxiliary need not itself be collinear with a specimen ket.
+The proof applies collinearity only after that projection.
+

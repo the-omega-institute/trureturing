@@ -1,0 +1,19 @@
+**Lemma 44.2 (matrix square-root comparison).** For positive
+semidefinite $A$ and positive definite $B$,
+
+$$
+\|A^{1/2}-B^{1/2}\|_F
+\le\frac{\|A-B\|_F}{\sqrt{\lambda_{\min}(B)}}.
+\tag{44.4}
+$$
+
+Proof. Set $S=A^{1/2}$, $R=B^{1/2}$, and $E=S-R$. The exact
+identity $SE+ER=A-B$ needs no commutativity. Its Frobenius inner
+product with $E$ is
+$\operatorname{tr}(E^{\mathsf T}SE)+\operatorname{tr}(E^{\mathsf T}ER)$,
+which is at least $\sqrt{\lambda_{\min}(B)}\|E\|_F^2$. Cauchy--Schwarz
+then proves (44.4). For a standard Gaussian vector $Z$, the same
+square-root coupling satisfies
+$\mathbb E|(A^{1/2}-B^{1/2})Z|^2=\|A^{1/2}-B^{1/2}\|_F^2$.
+Singular $A$ is allowed. $\square$
+

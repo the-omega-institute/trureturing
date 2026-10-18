@@ -1,0 +1,63 @@
+### 命题 453.1（高阶库存核心的仿射余类）
+
+若
+
+$$
+N^-(t)=1+F_rg,\qquad r\ge3,\quad g\ge1,
+$$
+
+则
+
+$$
+\boxed{
+g\equiv -F_r^{-1}\pmod {H_t}.
+}
+\tag{453.1}
+$$
+
+并且
+
+$$
+\boxed{
+\log H_t=\sqrt2\,\sqrt t+o(\sqrt t).
+}
+\tag{453.2}
+$$
+
+**证明。** 首层边际价格随素数严格递减，故实际支撑为全部 $p\le P(t)$，
+$H_t$ 是整数并整除 $N^-(t)$。仿射来源直接给
+$\gcd(F_r,N^-(t))=1$，故 $\gcd(F_r,H_t)=1$。由
+$H_t\mid N^-(t)=1+F_rg$，
+
+$$
+F_rg\equiv-1\pmod {H_t},
+$$
+
+乘以 $F_r$ 的逆元即得（453.1）。
+
+再用命题 111.2 的已有尺度式
+
+$$
+\log N^-(t)=\psi(t)+(\sqrt2-1)\sqrt t+o(\sqrt t)
+$$
+
+以及素数定理，
+
+$$
+\psi(t)-\vartheta(t)
+=\vartheta(\sqrt t)+O(t^{1/3}\log t)
+=\sqrt t+o(\sqrt t).
+$$
+
+命题 450.1 的首层比较保证全部 $p\le t-1$ 均在支撑中，而命题 447.1
+排除 $p\ge t$。因此 $0\le\vartheta(t)-\log R_t\le\log t$，
+包括非整数时钟的可能边界素数。相减得到
+
+$$
+\log H_t
+=\log N^-(t)-\log R_t
+=\sqrt2\,\sqrt t+o(\sqrt t),
+$$
+
+证明（453.2）。$\square$
+

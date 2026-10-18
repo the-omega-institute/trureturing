@@ -1,0 +1,73 @@
+**Lemma 6.1 (The full finite-$q$ coefficient chain).** For every $q\in(0,1)$ and every finite integer $L\ge1$,
+
+$$
+\begin{aligned}
+\kappa_L
+&\le\frac{\max\{G_L,\varepsilon R_9^L\}}{Z_1}\\
+&\le\frac\delta{Z_1}
+       \max\left\{R_8^L,\frac{R_8}{R_9}R_9^L\right\}\\
+&\le\frac\delta{Z_0}\max\{R_8^L,(1-q)R_9^L\}\\
+&\le\frac\delta{Z_0}L^9\max\{1,(1-q)L\}.
+\end{aligned}
+\tag{6.1}
+$$
+
+In particular $R_8/R_9\le1-q$ holds at every interior $q$, independently of $L$.
+
+Proof. The envelope (2.3) gives
+
+$$
+0\le\Delta_H(k)\le\delta k^8,\qquad G\ge0,\qquad
+\varepsilon\ge0.
+\tag{6.2}
+$$
+
+In (5.5) both $\Delta_H(k)$ and $\varepsilon k^9$ are nonnegative. Thus
+
+$$
+(w_k)_+\le\frac{\Delta_H(k)q^k}{Z_1},\qquad
+(-w_k)_+\le\frac{\varepsilon k^9q^k}{Z_1}.
+\tag{6.3}
+$$
+
+Sum these separately, then use (5.12). This proves the first line of (6.1). It is the maximum of the two bounds, not their sum. The same envelope gives
+
+$$
+G_L\le\delta R_8^L,\qquad G\le\delta R_8,\qquad
+\varepsilon=\frac{G}{Z_0}\le\delta\frac{R_8}{R_9},
+\tag{6.4}
+$$
+
+proving the second line.
+
+To control the normalization term without any cutoff asymptotic, absolute convergence of the polynomial-geometric series permits an index shift:
+
+$$
+\begin{aligned}
+(1-q)R_9(q)
+&=\sum_{k\ge1}\bigl(k^9-(k-1)^9\bigr)q^k.
+\end{aligned}
+\tag{6.5}
+$$
+
+The $k=1$ term uses $0^9=0$. For every integer $k\ge1$,
+
+$$
+(k-1)^9=(k-1)(k-1)^8\le(k-1)k^8,
+\qquad k^9-(k-1)^9\ge k^8.
+\tag{6.6}
+$$
+
+The latter inequality holds also at $k=1$. Sum it in (6.5) to get $R_8\le(1-q)R_9$. Since $R_9>0$, division proves the asserted ratio bound with the needed direction. Also $Z_1\ge Z_0>0$. Insert both facts into the second line of (6.1) to obtain its third line.
+
+For the last line there are exactly $L$ short summands, each with $q^k\le1$, $k^8\le L^8$ and $k^9\le L^9$. Therefore
+
+$$
+R_8^L\le L^9,\qquad R_9^L\le L^{10}.
+\tag{6.7}
+$$
+
+Their maximum gives the last line of (6.1). Every step was a finite-$q$ identity or inequality valid for all finite $L$. In particular $L=1$ is included. No premise that $(1-q)L$ is small was used. If the upper coefficient exceeds one it remains a valid upper bound; it is not being identified with a probability. $\square$
+
+The term $(1-q)L$ records the cost of retaining normalization drift when the cutoff is large. Removing that term would not follow from (6.1). This is why the simultaneous theorem below carries a maximum rather than only $L^9$.
+

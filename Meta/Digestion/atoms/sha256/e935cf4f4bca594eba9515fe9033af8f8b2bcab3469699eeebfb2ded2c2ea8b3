@@ -1,0 +1,25 @@
+**Definition 2.1 (coupled native expressions).** Define
+
+$$
+\begin{aligned}
+W(a,x,v,y,z,w)
+ &=\langle a,\langle x,\langle v,\langle y,\langle z,w\rangle\rangle\rangle\rangle\rangle,\\
+F_a(y)&=\langle\alpha,\langle a,\rho y\rangle\rangle,\\
+G_a(y)&=\langle\alpha,\langle\rho a,\rho y\rangle\rangle,\\
+U(a,x,v,y)&=W(a,x,v,y,F_a(y),G_a(y)).
+\end{aligned}
+\tag{CRE.6}
+$$
+
+The six original cut addresses, in lexicographic order, are
+
+$$
+(q_a,q_x,q_v,q_y,q_z,q_w)=(L,RL,RRL,RRRL,RRRRL,RRRRR),\qquad
+Q=\{q_a,q_x,q_v,q_y,q_z,q_w\}.
+\tag{CRE.7}
+$$
+
+They are prefix-free. Take $P=\{\varepsilon\}$ and its reached one-hole
+old row, exterior $\square_1$ and singleton partition. Thus the old row
+itself imposes no extra restriction on a nonempty finite original.
+

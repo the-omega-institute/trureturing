@@ -1,0 +1,19 @@
+## 10. Sources, mathematical ownership and scope
+
+The finite-size comparison, the reset-slice internal-edge and anchor identities, and the nonnegative-probe inequalities in §§3--7 are the substantive source-level development of this volume. Their proofs retain the full finite objective and its original law. The endpoint result in Corollary 8.5 is a conditional composition of supplied interfaces. It adds no new rank-to-producer or attainment-to-strong-zero implication.
+
+| Canonical source | Exact interface used and its scope |
+| --- | --- |
+| [FIB legal-edge-load growth constant][G], `FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md` | Lemma 3.1 and Theorems 3.2 and 5.2, as supplied in Universal Convention 1.3: the elementary properties of $h$ and the original growth bounds. |
+| [FIB legal-edge-load positive unique optimizer][O], `FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md` | Theorem 3.1 and equation (3.11), as identified in Universal Convention 1.3 and Lemma 2.1: optimizer positivity, insertion inequalities and the original whole-simplex square-gap identity. Existence, uniqueness and that identity are not new claims of this volume. |
+| [FIB 合法边调和负载：普适后验缺陷与有限隐藏维数分离][U], `FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md` | Definition 1.1, Convention 1.3 and Lemma 2.1: complete objective and optimizer interfaces. Equation (1.5), Theorem 3.1, Definition 4.1 and Proposition 4.2: density, necessary band, entire parameter domain and actual joint/visible law. Theorem 6.2 and Open Problem 7.4: the unchanged compact-domain separation alternative. |
+| [Guarded] *FIB harmonic-edge load: guarded replacement, attainment and conditional-rank obstruction* | Definition 1.1: the ceiling $\bar c$. Definitions 2.1 and 2.3 and Lemma 2.2: band, erasure sum and strong-zero cocycle. Lemma 3.3 and Definition 6.3: rank families. Theorem 6.2: conditional rank from the actual matrices. Theorem 5.1, Corollaries 5.3 and 6.4: the sufficient endpoint and finite discrepancy budget, including the $1/24$ guard cost. Theorem 7.1 keeps all conditionals tied to one optimizer. |
+| [FIB harmonic-edge load: global and local rank compatibility and the reset-variance obstruction][R], `FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md` | Lemmas 2.1--2.2, Theorem 2.3 and Corollary 2.4: the rank-two reset necessity, $\mathcal R_{2,n}\ge V_2(n)$ and its conditional threshold consumer. Theorems 4.4 and 5.1: the coherent comparison-process warning, used only within that process's stated scope. |
+
+Finite-simplex differentiation, concavity, the interval-variance bound, conditional least squares, convex tangent inequalities, graph matchings and weighted Cauchy--Schwarz are classical tools. The needed finite calculations are displayed here. This source-level synthesis makes no claim of worldwide originality, exhaustive literature coverage, independently diverse priors, empirical learning benefit, formal verification or completion of the original attainment problem.
+
+[G]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[O]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md
+

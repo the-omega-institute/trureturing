@@ -1,0 +1,10 @@
+**定义 78.2（系数规范）。** 对 $A>0$ 置
+
+$$
+b_A=e^A-1,\qquad \eta_A=b_A^{-1},\qquad
+K(s)=\lim_{A\to\infty}b_A[\mathcal T(s)-\mathcal T_A(s)].
+\tag{RC.105}
+$$
+
+$\mathcal T$ 是无活动上界的 sharp-cost 原误差最优类的最大实际记录 TV，$\mathcal T_A$ 加上上述活动约束。FA80 已供应固定强度系数的存在性；以 $e^A$ 代替 $b_A$ 得到同一极限。以下给出接触前的具体源值、谱取向及跨接触的一致余项，不把存在性本身作为新增结果。
+

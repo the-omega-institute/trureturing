@@ -1,0 +1,12 @@
+## 181. Exact unresolved boundary
+
+The new constraint forces a fifth upper-range reservoir, but does not
+control whether it is unwitnessed, pi-selected, below Z, or above Z.
+The sharper threshold is proved in Section 182. Above that threshold the
+uniform response inequalities needed for residual closure are no longer
+established by these estimates. This is a limitation of the proof, not
+an assertion that an inequality fails at every larger value. If U is
+larger than Z, the H-valued upper-axis bound used to make both return
+endpoints obtuse is also no longer established. No full five-label
+closure or unrestricted ascent is claimed.
+

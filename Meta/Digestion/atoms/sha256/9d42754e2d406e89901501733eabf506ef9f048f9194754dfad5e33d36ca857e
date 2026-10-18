@@ -1,0 +1,60 @@
+## 2. 同一 JM 的两个第三动作与字面矩阵
+
+固定已取得的历史与其互补第三 $J$ 分支：
+
+$$
+H_{JM}=(0,J,24,M,48),\qquad
+H_3(c)=(0,J,24,M,48,J,c),\quad c\in\mathbb R,
+\qquad \mathcal F_3(c)=\mathcal F(H_3(c)).
+\tag{2.1}
+$$
+
+它们分别停在原时钟二、三。本文的 JMJ 分支不是 [V，第 9–15 节](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的 JMMJ 父历史。令
+
+$$
+\begin{aligned}
+L&=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},&
+N&=JL=\begin{pmatrix}1&1\\1&0\end{pmatrix},\\
+U&=MN=\begin{pmatrix}1&0\\2&1\end{pmatrix}=2L-I,&
+V&=JU=\begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad JV=U.
+\end{aligned}
+\tag{2.2}
+$$
+
+在 $H_3(c)$ 后执行第四 $M$、第五 $J$、第六 $J$，原时钟 $0,\ldots,6$ 的累积矩阵依次为
+
+$$
+I,\ J,\ L,\ N,\ U,\ V,\ U.
+\tag{2.3}
+$$
+
+重复的是物理迹函数 $U$，原时钟四、六仍不同，每个动作均立即读取。第四 $J$ 的矩阵则是 $JN=L$。
+
+对 $P=\left(\begin{smallmatrix}a&b\\e&1-a\end{smallmatrix}\right)$，
+
+$$
+\operatorname{tr}(JP)=b+e,\quad
+\operatorname{tr}(LP)=1+b,\quad
+\operatorname{tr}(NP)=a+b+e.
+\tag{2.4}
+$$
+
+这三个迹与迹一条件确定整个 $P$。对未归一矩阵
+
+$$
+R=\begin{pmatrix}A&B\\C&D\end{pmatrix},\quad
+s=A+D,\quad j=B+C,\quad \ell=s+B,
+$$
+
+相应恒等式为
+
+$$
+\operatorname{tr}(JR)=j,\quad \operatorname{tr}(LR)=\ell,\quad
+\operatorname{tr}(NR)=A+j,\quad
+\operatorname{tr}(UR)=2\ell-s,\quad
+\operatorname{tr}(VR)=2A+j.
+\tag{2.5}
+$$
+
+它们直接来自式 (2.2) 的矩阵乘法，不涉及任何源对称性假设。
+

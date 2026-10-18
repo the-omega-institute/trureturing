@@ -1,0 +1,14 @@
+**Corollary 14.6 (unchanged complete configuration risks).** For the installations of Theorem 14.4, at every original fourth-phase history the full configuration losses remain exactly
+
+$$
+
+\frac16\sum_{\sigma,i}\operatorname{TV}((I_c)_*Q_{\sigma,i},T_h^\mu),\qquad
+\frac12\sum_\sigma\operatorname{TV}((I_c)_*W_\sigma,T_h^\mu),
+\tag{14.13}
+
+$$
+
+with the respective phase's $c$ and original posterior target (1.2). TV stays inside the average.
+
+**Proof.** Theorem 14.4 supplies the same six p masses $1/6$ and total suspended mass $1/2$ for each law, at every positive original history. Applying that history's own TV isometry $I_c$ proves (14.13); this also discharges the hypotheses of Corollary 13.7 for the refined middle labels. The posterior uses every paid letter and is only an analysis quantity. These equalities hold for every finite or countable installed prior and all histories; hence their full original risk suprema agree. The common uniform latch and identical subsequent full laws also preserve corresponding pre-latch laws and deterministic terminal laws. Internal sampler laws can differ across programs; they are not added queried histories. $\square$
+

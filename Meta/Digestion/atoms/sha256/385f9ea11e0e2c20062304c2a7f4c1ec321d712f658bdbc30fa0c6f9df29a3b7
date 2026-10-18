@@ -1,0 +1,92 @@
+**Proposition 70.2 (field, source, domains and compactness).** There are
+constants depending on the fixed data, including $\tau$, such that
+
+$$
+0\le W_\tau(k,q)\le\frac{C_\tau\phi_0\phi(k)}{1+|q|},\qquad
+W_\tau(k,q)=\frac{\phi_0\phi(k)}{4\pi\sqrt{\det M}\,d(q)}
+                  +O(\phi_0\phi(k)|q|^{-3})\quad(|q|\to\infty).
+\tag{70.3}
+$$
+
+The error is uniform in height. In distributions, its exact source is
+
+$$
+SW_\tau=\rho_\tau:=F(\tau;\cdot),\qquad
+\int\rho_\tau\,dk\,dq=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),
+\qquad \int\phi(k)\rho_\tau(k,q)\,dk\,dq=\phi_0.
+\tag{70.4}
+$$
+
+The bounded multiplier $W_\tau$ is compact from $\mathcal Q$, with its
+form norm, to $\mathcal H$; the same holds for $W_\tau^{1/2}$.
+The form (70.2) is closed and bounded below on precisely $\mathcal Q$.
+Its selfadjoint operator is $H_g=aS-gW_\tau$ on precisely $D(S)$,
+with the direct-integral operator domain of L §48. Moreover
+$\sigma(S)=\sigma_{\rm ess}(S)=[0,\infty)$ and
+$\sigma_{\rm ess}(H_g)=[0,\infty)$.
+
+Proof. Integrate the first two bounds of L Lemma 41.2 from the fixed
+positive time $\tau$. On bounded $q$ the integral is bounded by
+$C_\tau\phi_0\phi(k)$. On $|q|\ge1$ the integral over a bounded time
+interval has Gaussian decay, and
+$\int_1^\infty t^{-3/2}e^{-c|q|^2/t}dt\le C/|q|$.
+L Theorem 42.1 gives the tail in (70.3): removing the interval
+$(0,\tau)$ changes its large-$q$ value by an exponentially decaying
+quantity, by those same heat bounds. In particular no singular point
+value of the unregularized field was used.
+
+The heat equation $\partial_tF=-SF$ and the large-time bound of L (41.2)
+give the distributional equation in (70.4) by integration against a
+compactly supported smooth test function. Integrating the phase heat
+kernel leaves the killed height heat kernel. Its total mass is the
+survival probability; pairing it with the height eigenfunction gives
+$e^{-\lambda\tau}\phi_0$. This proves both source charges. They are
+different charges. The factor $(2\pi)^{-3}$ in L (36.5) is already
+included in $4\pi\sqrt{\det M}$ in (70.3). The field itself is not an
+$L^2$ vector: its nonzero $|q|^{-1}$ tail has infinite squared integral.
+Equation (70.4) is not an assertion that it lies in $D(S)$.
+
+Here is the needed local compactness on the full native domain.
+G (26.6), including its complex-test version, and the height part of the
+form give, with the unitary phase Fourier transform,
+
+$$
+\int_{\mathbb R^3}\Psi(|\eta|)\|\widehat\psi(\eta)\|_{L^2(I)}^2d\eta
+ \le CT[\psi],\qquad
+\varepsilon^2\|\partial_k\psi\|_2^2\le T[\psi]+\lambda\|\psi\|_2^2,
+\tag{70.5}
+$$
+
+where $\Psi(r)=r^2$ for $r\le1$ and $r^{2/3}$ for $r\ge1$.
+Consequently a bounded set in $\mathcal Q$ is bounded in phase
+$H^{1/3}$ and height $H_0^1$. On a bounded phase set its restriction is
+precompact in $L^2$: after a smooth spatial cutoff, height translations
+are uniformly small by the derivative bound and phase translations by
+the fractional Fourier bound. Zero extension in height is allowed by
+the Dirichlet trace. The supports are bounded, so the
+Fréchet--Kolmogorov compactness criterion applies. This also proves the
+claim for restrictions approaching the height faces. Multiplication by
+a bounded compactly supported function is therefore compact from
+$\mathcal Q$ to $\mathcal H$. Uniform decay in (70.3) approximates
+$W_\tau$ and $W_\tau^{1/2}$ in multiplier norm by such functions.
+Bounded selfadjoint perturbation and the form representation theorem
+now give the stated form and operator domains, without any additional
+phase $H^1$ requirement.
+
+For the essential-spectrum statement, the bottom fibre eigenvalue
+$\Lambda(re)-\lambda$ is continuous in $r\ge0$, starts at zero and
+tends to infinity by G (26.6), for any fixed unit vector $e$.
+For any prescribed $\mu\ge0$ choose $\eta_0$ with
+$\Lambda(\eta_0)-\lambda=\mu$ and its normalized height eigenfunction
+$v_{\eta_0}$. If $\chi\in C_c^\infty(\mathbb R^3)$ is normalized, then
+$v_{\eta_0}(k)R^{-3/2}\chi(q/R)e^{i\eta_0\cdot q}$ is in $D(S)$,
+tends weakly to zero and has $(S-\mu)$ norm $O(R^{-1})+O(R^{-2})$.
+This follows by differentiating only the phase cutoff, since all
+coefficients are bounded on $I$. These are Weyl sequences for every
+$\mu\ge0$; nonnegativity excludes negative spectrum. Finally the
+compactness just proved makes $W_\tau^{1/2}(S+1)^{-1/2}$ compact.
+The resolvent identity and Weyl's compact-perturbation theorem give the
+same essential spectrum for $H_g$. These are classical spectral and
+compactness tools used here after verifying their native hypotheses.
+$\square$
+

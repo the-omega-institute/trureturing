@@ -1,0 +1,29 @@
+**定理 20.3.1（全读出交换当且仅当选择似然秩一）。** 假设 $s_x(u)>0$。以下条件等价：
+
+1. 对任意满支撑先验 $\pi$、任意满支撑基线策略 $q$、任意 $x$，以及任意有限输出字母表和输出核族 $K_x(\cdot\mid u)$（特别包括取 $\mathcal Y=\mathcal U$ 的恒等读出），都有
+
+$$
+D_{\mathrm{select}\to\mathrm{do}}^{q,z,x}
+=
+D_{\mathrm{do}\to\mathrm{select}}^{z,x}.
+$$
+
+2. 对每个 $x$，存在正数 $\alpha_x$ 与同一个正函数 $\beta:\mathcal U\to(0,\infty)$，使
+
+$$
+\boxed{s_x(u)=\alpha_x\beta(u)\quad\text{对所有 }x,u.}
+$$
+
+3. 选择似然矩阵 $S=(s_x(u))_{x,u}$ 的所有二阶行列式为零：
+
+$$
+\boxed{
+ s_x(u)s_{x'}(u')=s_x(u')s_{x'}(u)
+ \quad\text{对所有 }x,x',u,u'.
+}
+$$
+
+换言之，选择事件对输入和潜变量的依赖必须分离为一个输入因子与一个潜变量因子；这正是正矩阵的秩一条件。
+
+**证明。**
+

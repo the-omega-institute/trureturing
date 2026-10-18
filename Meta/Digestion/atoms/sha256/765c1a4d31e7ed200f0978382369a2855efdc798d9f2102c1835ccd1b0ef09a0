@@ -1,0 +1,51 @@
+**Definition 26.1 (fixed target, observations and tolerance).** Retain
+exactly Definitions 2.1–2.2, 11.1–11.3, 13.1 and 20.2–20.3. In
+particular the fixed data are $0<Z<1$, $r=1-Z$, $H=r/2$,
+$0<l<k<u<H$, $T>0$, arbitrary fixed preparation phases, the negative
+amplitude convention, probabilities $(k,H-k,Z,H-k,k)$, both $2\pi$
+periods, and the original fields
+$P=\partial_k$ and
+$Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta$.
+The target on one fixed original Wiener probability space is the
+covariance-$2$ pair $W$ with
+$J^\lambda_t=\int_0^t W^1_s\,dW^2_s+\lambda t$, for any fixed real
+$\lambda$. Write $z=(W^1,W^2,J^\lambda)$,
+$\tau=\inf\{t:k+W^1_t\notin(l,u)\}$, $S=\tau\wedge T$, and use
+$\zeta$ and $\bar q^\lambda$ from (11.6). An independent initial seed
+may be adjoined to the usual Brownian filtration $\mathcal F$ as in
+Definition 20.1; the construction below does not need a seed.
+
+The supplied ideal observation filtration $\mathcal K$ is the usual
+augmentation of the history of $z_{t\wedge\tau}$ together with that
+seed. Only times at most $T$ are used. The boundary value of its height
+reveals whether $\tau\le t$. Thus $\tau$ is an observable stopping
+time, without supplying it in advance. This filtration is contained in
+$\mathcal F$; before target death it supplies the entire target past,
+including its jointly specified chronological integral. Independent
+initial enlargement leaves $W$ Brownian in $\mathcal F$. All
+conditional estimates below use this Brownian filtration, without
+conditioning the underlying law on survival. After $\tau$ the policy
+uses only its stopped observation. Exact observations and real
+numerical instructions are mathematical premises, not a method of
+acquiring the observations or a finite-bit realization of them.
+
+For every deterministic $\eta>0$ put
+
+$$
+\begin{aligned}
+d_*&=\min(k-l,u-k),&K_*&=\max(k-l,u-k),\\
+\rho&=\min\{\eta/8,r/38,(u-l)/8,d_*/2,\sqrt T\},&
+\delta&=\rho^2,&c_\lambda&=\frac1{1024(1+|\lambda|)}.
+\end{aligned}
+\tag{26.1}
+$$
+
+In particular $\rho>0$, $\delta\le T$, and $\rho=\eta/8$ for
+all sufficiently small $\eta$. The numerical-command class is the
+complete class $\mathcal C_T$ of Definition 20.2, with this supplied
+observation. Each issuance chooses its entire numerical AC profile
+from issuance-time information. Subsequent stopping-time interruptions
+may replace only its unexecuted continuation. There is no dwell,
+speed, deterministic count, or observation-resolution bound. Continuous
+joins, own-height death and the original extrema guard are required.
+

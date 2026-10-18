@@ -1,0 +1,79 @@
+**Lemma 28.2 (An odd polynomial geometric law has no finite scalar recurrence amplitude).**
+Let p be a real polynomial of odd degree m with
+positive leading coefficient, and let q be positive.
+There is no complex sequence $z_n$ satisfying an
+eventual finite constant-coefficient linear recurrence
+and
+
+$$
+|z_n|^2=p(n)q^n
+\quad\text{for all sufficiently large }n.
+\tag{28.3}
+$$
+
+Proof. The existing recurrence characterization is
+[Stanley, *Enumerative Combinatorics*, Volume 1,
+second-edition author draft, Theorem 4.1.1,
+equation (4.3), and Proposition 4.2.2](https://math.mit.edu/~rstan/ec/ec1.pdf).
+The theorem gives the exponential-polynomial form;
+the proposition permits a finite initial transient.
+After discarding that transient and zero terms, write
+
+$$
+z_n=\sum_j P_j(n)\lambda_j^n,
+\tag{28.4}
+$$
+
+with distinct nonzero $\lambda_j$ and nonzero
+polynomials $P_j$. The sequence is not eventually
+zero by (28.3). Let $\rho=\max_j|\lambda_j|>0$,
+and let e be the greatest polynomial degree among
+terms on that maximal radius. Dividing by
+$\rho^n n^e$ gives
+
+$$
+\frac{z_n}{\rho^n n^e}=T_n+o(1),\qquad
+T_n=\sum_{j\in J}a_j\omega_j^n,
+\quad |\omega_j|=1,
+\tag{28.5}
+$$
+
+where J selects the maximal-degree terms on that
+radius, the $a_j$ are their nonzero leading
+coefficients and the $\omega_j$ are distinct.
+Every smaller-radius polynomial term tends to zero
+after this division, as does each smaller-degree
+term on the same radius.
+
+The finite geometric sum proves, for $|\omega|=1$
+and $\omega\ne1$,
+$N^{-1}\sum_{n=0}^{N-1}\omega^n\to0$.
+Expand $|T_n|^2$ and apply that identity to each
+off-diagonal ratio. It follows that
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n=0}^{N-1}|T_n|^2
+=\sum_{j\in J}|a_j|^2>0.
+\tag{28.6}
+$$
+
+Both $T_n$ and the left side of (28.5) are bounded,
+and their difference tends to zero. Their squared
+moduli therefore have the same positive Cesàro
+limit. But (28.3) makes the latter sequence exactly
+
+$$
+\frac{p(n)}{n^{2e}}\left(\frac q{\rho^2}\right)^n
+\quad\text{for all large }n.
+\tag{28.7}
+$$
+
+If $q<\rho^2$, this tends to zero, contradicting
+the positive Cesàro limit. If $q>\rho^2$, it
+diverges, contradicting boundedness. For equality,
+the positive leading coefficient and odd m imply
+$m\ne2e$: the sequence either tends to zero or
+diverges. Both are again impossible. This proves
+the lemma without assuming a pointwise lower bound
+on an oscillatory sum. $\square$
+

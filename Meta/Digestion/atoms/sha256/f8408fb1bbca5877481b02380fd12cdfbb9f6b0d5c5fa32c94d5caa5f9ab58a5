@@ -1,0 +1,50 @@
+**Theorem 52.2 (joint source-preservation counterexample).** On the one common realization (52.1)–(52.9), outward propagation (52.5), the uniform certificate (52.10) and finite attained negative normalized minima coexist with failure of normalized ground-state preservation. More precisely, writing $m_j^b=\min_{\|f\|=1}\mathcal E_j^b(f)$,
+
+$$
+\begin{aligned}
+m_j^{\mathrm N}&=-g,\qquad
+f_j=N_j^{-1/2}\mathbf1_{V_j}\text{ is its ground state},\\
+-g<m_j^{\mathrm D}&\le-g+a/N_j,\qquad
+m_j^{\mathrm D}\longrightarrow-g,\\
+\inf_{\|f\|=1}\langle f,\mathcal H_\infty f\rangle&=-g,
+\qquad\text{this infimum is not attained.}
+\end{aligned}
+\tag{52.11}
+$$
+
+D minima are negative whenever $N_j>a/g$; N minima are negative at every layer. For eight-leaf initial sources and $a=g=1$, every D layer is negative as well. After zero extension into the common Hilbert space, both the displayed N ground states and every sequence of normalized D ground states converge weakly to zero and have no strongly convergent subsequence. The infinite bottom $-g$ is an essential spectral point, not a normalizable bound state.
+
+Proof. Finite-dimensional compactness of the unit sphere gives each finite minimum. For N, $Q_j^{\mathrm N}\ge0$ and a constant has zero gradient; connectivity makes every zero-gradient vector constant. For D, a zero-gradient vector must be constant and the killing forces its root value to be zero, hence the vector is zero. The minimum of $Q_j^{\mathrm D}$ on the finite unit sphere is therefore strictly positive. The normalized constant trial has $Q_j^{\mathrm D}=1/N_j$, yielding the finite inequalities and negativity. These statements use one actual tree and its potential, not independently optimized fields on different sources.
+
+Zero extension of $f_j$ has exactly one nonzero seam difference: the outgoing seam. Hence its infinite energy is $-g+a/N_j$. The common lower bound gives the limiting infimum $-g$. If a unit vector attained it, every nonnegative summand in $Q_\infty$ would vanish. Connectivity would make it constant on an infinite counting-measure graph, which is incompatible with unit $\ell^2$ norm. This proves nonattainment without an exchange of finite and infinite minima.
+
+Each fixed occurrence has $f_j(x)=N_j^{-1/2}$ for all sufficiently large $j$, so $f_j$ converges weakly to zero by testing finite-support vectors and using their density. Its norm remains one. For a normalized D minimizer $u_j$, its zero extension has the same infinite energy as its D energy, so $Q_\infty(u_j)\le1/N_j$. Every weak subsequential limit $u$ satisfies $Q_\infty(u)=0$: use weak lower semicontinuity of $\|L_\infty^{1/2}u\|^2$. Such a limit is zero by the same connectivity argument. Bounded sequences in this separable Hilbert space have weakly convergent subsequences; if any fixed-coordinate functional failed to tend to zero, a subsequence witnessing that failure would have a nonzero weak limit. Consequently the entire sequence converges weakly to zero. A strongly convergent subsequence would have norm-one limit, contradicting its weak limit zero.
+
+Finally, the actual source inclusion gives the exact residual
+
+$$
+(\mathcal H_\infty+gI)f_j
+=\frac{a}{\sqrt{N_j}}(\mathbf1_{r_j}-\mathbf1_{r_{j+1}}),
+\qquad
+\|(\mathcal H_\infty+gI)f_j\|^2=\frac{2a^2}{N_j}.
+\tag{52.12}
+$$
+
+Together with weak convergence to zero this is a singular Weyl sequence at $-g$. It establishes the stated essential spectral point. The proof also shows that every normalized infinite near-minimizing sequence converges weakly to zero. No sequence of such vectors is strongly precompact. □
+
+For every fixed finite-support test vector, all its occurrences and adjacent seams eventually lie inside $V_j$, away from $r_j$. Both finite matrix actions then agree exactly with the infinite action on that test. For D, the energy of every zero-extended vector is exactly its infinite energy; truncations to $V_j$ provide strongly convergent recovery vectors, with normalization restored by dividing by their norms. Strong convergence of such vectors also gives convergence of their energies, because $\mathcal H_\infty$ is bounded. Thus local operator correspondence and this strong variational correspondence are present, and the minimum values even converge to the infinite infimum. What fails is strong precompactness of the normalized near-minimizers, not these correspondences.
+
+This is mass dilution/escape through actual increasing occurrence volume, not movement of the potential center: the source density, potential, coefficients and occurrence inclusions are fixed throughout. There is no loss of a uniform lower bound and no collapse to $-\infty$ for normalized states. Conversely unrestricted amplitude energy has infimum $-\infty$ as soon as a negative trial is available, by multiplying that trial by an arbitrary scalar. The certificate is $\mathcal E(f)\ge-g\|f\|^2$, not a finite amplitude-independent lower bound.
+
+The negative finite value is below the conventionally chosen zero, but the infinite essential threshold is already $-g$. Thus a negative trial by itself is not a trial strictly below the escape threshold. This actual realization identifies the missing connection in a certificate→finite binding→continuation argument: tightness or an appropriate binding gap still has to be proved on the common source embeddings. It is not supplied by $h_j>0$, uniform lower stability, finite-dimensional attainment or the Fibonacci count.
+
+There is a second field obstruction on these same seams. If the supplied field is changed to the *unscreened isolated-source* contract $L_\infty\Phi=\mathbf1_o$, with $o$ the root occurrence of the initial $t$, then for every finite $V_k$ summation of the equation gives
+
+$$
+\Phi(r_k)-\Phi(r_{k+1})
+=\sum_{x\in V_k}(L_\infty\Phi)(x)=1.
+\tag{52.13}
+$$
+
+Interior seams cancel and the unique actual outgoing seam carries unit flux. This pointwise source equation is not inconsistent: set $\Phi=0$ on $V_0$, set $\Phi(r_k)=-k$, and set $\Phi=-k$ throughout the finite $T_{k-1}$ branch attached to $r_k$ for each $k\ge1$. At $o=r_0$ the outgoing difference is one; at every later spine root the two spine differences cancel; all other differences vanish. Thus this is an actual pointwise solution. The infinitely many distinct spine seams nevertheless contribute infinitely many units to $Q_\infty(\Phi)$, even outside any fixed finite core. No solution of this contract has finite far-field gradient energy. This conclusion is not asserted for different conductances, extra connections or a screened/localized source. In particular, positive diffusion propagation on actual FIB occurrences does not establish the finite isolated-source far-field premise of the Euclidean three-dimensional classification.
+

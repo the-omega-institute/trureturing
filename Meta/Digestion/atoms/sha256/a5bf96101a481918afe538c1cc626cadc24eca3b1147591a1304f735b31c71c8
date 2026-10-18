@@ -1,0 +1,22 @@
+### 重要区别
+
+以下两个条件并不等价：
+
+$$
+K_a\mathcal B\subseteq\mathcal B,
+$$
+
+以及
+
+$$
+M_{a,o}\mathcal B\subseteq\mathcal B
+\quad
+\forall o.
+$$
+
+第二个条件比第一个强得多。
+
+平均核只保留输出支路的总和；真实未来记录保留每一条输出支路。
+
+---
+

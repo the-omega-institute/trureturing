@@ -1,0 +1,58 @@
+**Definition 2.1 (normal codes and effective branch data).** Reuse the
+native normal-code bijection $B:\mathcal T\to\mathcal N$ and its inverse
+$E$ from [ABC, Theorems 2.2–2.3][ABC]. A primitive $[r]$ expands to
+$T_r=\rho^r\alpha$. A constructor code $F(X,Y)$ is normal exactly when
+its children are normal and are not $[r+1],[r]$ for any $r\ge0$.
+Native pairing uses the smart constructor that collapses exactly that
+exceptional pair to $[r+2]$. Native $\rho^k$ adds $k$ to every primitive
+rank and preserves the constructor nodes of a normal code.
+
+Apply [NSF, §§2–4][NSF] to $\Phi$, after naming each designated output
+and imposing its positive defining equation. Naming is a definitional
+extension: evaluating an original assignment supplies the names, and
+forgetting them recovers that same assignment. No output value is fixed
+by the act of naming it.
+
+The effective finite branch list includes Boolean and smart-constructor
+cases, finite-tree shape unification with its occurs check, and the
+negative disjunct choices for identical-shape disequalities. On a
+successful shape branch each name has a finite shape term over primitive
+shape $c$, constructor shape $f$, and residual shape variables
+$w_1,\ldots,w_m$. Each explicit $c$ occurrence has a scalar rank. Each
+$w_j$ occurrence has a rank-function block on that common, as yet
+unspecified, nonempty finite shape. Repeated uses of a name reuse its
+whole decorated template; two occurrences of a residual shape need not
+have the same rank function.
+
+The remaining positive comparisons have only the forms
+
+$$
+r=r'+d,\qquad r=d,\qquad U=V+d,
+\qquad d\in\mathbb Z.
+\tag{NLC.6}
+$$
+
+The third comparison is of whole blocks of the same residual sort,
+with pointwise offset. There is no scalar/block comparison and no
+comparison between blocks of different residual sorts. Scalar ranks
+are natural. Explicit primitive cherries impose the scalar disequation
+$r_L\ne r_R+1$. Negative branches also retain scalar and whole-block
+offset disequations. A disequality between syntactically different
+shape terms is retained as a disequality of the original decorated
+codes: actual substitutions making their ground shapes equal are not
+excluded merely by a syntactic test.
+
+Add a scalar vertex $o=0$ and write every constant equation as an edge
+to $o$. Consistent component potentials give
+
+$$
+r=b_C+\delta_r.
+\tag{NLC.7}
+$$
+
+The component containing $o$ is anchored, and all its scalar ranks have
+fixed computable values. Every other scalar component is free. The
+block equation graphs have potentials separately for each residual
+sort. They have no anchored vertex. These are exactly the data of
+[NPL, Definitions 2.1–2.2][NPL].
+

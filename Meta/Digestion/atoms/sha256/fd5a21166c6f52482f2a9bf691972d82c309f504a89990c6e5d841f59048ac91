@@ -1,0 +1,85 @@
+**Proposition 53.4 (full output, actual laws and the TV direction).**
+This is one finite common instrument with $m+8$ generated labels for
+$m$ low atoms. At the conditional source root it has full TP decoders
+and total encoder effect $I_5$. On each of the twelve actual histories,
+
+$$
+p(j\mid y,e,n)=\pi_j\|(s_0D+u_jT+v_jS)U_{e,n}a_y\|^2,
+\quad p_H(y,e,n)=(1-\delta)A_y,
+\quad\mathsf W=(1-\delta)A_{27}=\mathsf C(s).
+\tag{JR.135}
+$$
+
+The coefficient weights $\pi_j$ are not these acquisition probabilities
+and are not a source prior. Reports outside the low part are fair and
+
+$$
+\mathsf V(F)=s_0\sum_jr_j\pi_ju_j.
+\tag{JR.136}
+$$
+
+**Proof.** Nullity gives $\det K_j=0$, whereas its $1,2$ minor is
+$\pi_js_0^2h_1h_2\ne0$; its rank is exactly two. The image isometry
+therefore exists and its decoder is TP on the entire declared fibre.
+This reuses the finite image factorization of IR Lemma 4.2, not a new
+compression theorem. The coefficient Gram is
+
+$$
+\sum_jc_jc_j^T=\operatorname{diag}(\delta,1,1),\qquad
+\operatorname{diag}(\delta,1,1)+(1-\delta)e_0e_0^T=I.
+\tag{JR.137}
+$$
+
+Thus low plus high effect is $I_3-M$. The spectral rows add $M$ and the
+complement adds $I_5-P$. Every finite branch is CP/TNI. Scalar decoders
+are TP because $\int_0^1g(t)dt=1$ and $\sum_\ell w_\ell=1$.
+For every complex $A\in M_5$, $A_V=E^\dagger AE$, forgetting the labels
+gives exactly
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger)E^\dagger,\\
+\Phi^f_\ell(A)(B)&=\left(\int_B\frac{2\,dt}{(1+t)^2}\right)
+\left[w_\ell\operatorname{tr}(MA_V)
++\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]P_f
+\quad(\ell=0,\ldots,4).
+\end{aligned}
+\tag{JR.138}
+$$
+
+This holds for every Borel $B\subseteq[0,1]$, separately for all five
+labels including the two zero-weight ones; there are no extra or singular
+measures. Cross-support terms vanish. Tensor the finite Kraus identities
+with $I_R$ for any passive reference. In the failure identity the scalar
+traces become the exact conditional reference operators
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$ and
+$\operatorname{Tr}_5[((I_5-P)\otimes I_R)X]$, not the unconditional
+reference marginal. These algebraic identities establish the full complex,
+reference and Borel scope, not only twelve probability identities.
+They preserve the original HALF complete-cq error $E_*$ conditionally
+on CG; the ideal densities remain $f_y(t)=6y/(y+6t)^2$, not $g(t)$.
+
+Only the high pair has jointly counted dimension at least three; its
+effect is $(1-\delta)ED^\dagger DE^\dagger$. This proves (JR.135),
+including the worst height $27$, using JR §§34–40. The low $DT$ moment
+gives (JR.136); no other effect coordinate is fixed. The actual retained
+TV of this spectral realization is
+
+$$
+T_{\rm can}=\frac{(1-\delta)\Delta A+L_f+
+\sum_j\pi_j|f_G(u_j,v_j)|}2.
+\tag{JR.139}
+$$
+
+For an arbitrary original realization, separating live/failure products
+and resolving their null atoms can increase TV. Its actual TV is at most
+the corresponding right side, not equal to it in general. The equality
+in (JR.139) belongs to the construction which generates these atom labels
+and uses the optimal spectral failure readout. All choices precede the
+sole unknown input. Precisely the declared dephased labels and full
+quantum fibres remain accessible; any retained input-bearing specimen,
+memory, controller, environment or entanglement share must be jointly
+counted at the same cut. Other dilation systems are permanently discarded.
+No prior, readable history, helper, postselection, acceptance division,
+copy, reset, retry or bypass is supplied. $\square$
+

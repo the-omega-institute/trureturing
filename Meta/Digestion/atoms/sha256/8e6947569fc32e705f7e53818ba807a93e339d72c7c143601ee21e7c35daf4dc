@@ -1,0 +1,43 @@
+**Definition 1.2 (activity and original constraints).** On each whole
+finite-dimensional decoder fibre let $R_j(u)\succeq0$ be a measurable
+first-event rate with integrable operator norm. Between events,
+Hamiltonian and unobserved TP survivor controls are allowed, and
+trace loss occurs only through $R_j$. Terminal processing on survivors
+is TP. A first failure is absorbing: no later positive-carrier action
+and no forced terminal absorption is allowed. Put
+
+$$
+\mathsf A=\max_j\int_0^1\|R_j(u)\|\,du.
+\tag{AC.4}
+$$
+
+The cost $\mathsf W$ is the maximum over the twelve histories of
+the probability that the jointly acquired quantum dimension is at
+least three. It is neither expected dimension nor expected activity.
+Let $F$ be the plus effect of a binary report from that acquisition,
+$\kappa=h_0a+h_1b_{\rm src}$, and
+$\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa$ on the supported
+qutrit. The source amplitudes $h_0,a$ are defined in §2.
+The class $\mathfrak F_{s,A}$ imposes exactly
+
+$$
+E(\Phi)=E_*,\qquad \mathsf V(F)\ge s,\qquad
+\mathsf W=\mathsf C(s),\qquad \mathsf A\le A,
+\tag{AC.5}
+$$
+
+with JR's original sharp cost $\mathsf C$. Its objective is actual
+acquisition-record total variation between histories $(5,+,+)$ and
+$(27,+,+)$, with the HALF convention. Denote its maximum by
+$\mathcal T_A(s)$ when nonempty; $\mathcal T(s)$ denotes the
+unbudgeted counterpart. No complete binary effect is prescribed.
+
+The principal class has finitely many actual labels. Necessity also
+covers the convergent countable and expressly measurable/integrable
+finite-fibre extensions of CG Convention 21.3 and JR41: measurable
+fibre dimensions and Kraus fields, integrable effects and Choi
+matrices, full-output TP decoders almost everywhere. There one uses
+supremum or essential supremum in AC.4. No general disintegration or
+infinite-dimensional coding theorem is assumed. All attainments used
+here have finite actual alphabets.
+

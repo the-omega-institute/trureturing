@@ -1,0 +1,26 @@
+**Definition 2.2 (double-wall live family).** Fix
+$0<c<1/2$, $Z=1-2c$, $r=2c$ and $b=(c,c,Z)$. Fix common calibrated
+preparation phases with $\theta_2=0$, and put
+
+$$
+\begin{aligned}
+|+\rangle&=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2,\\
+|-\rangle&=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2,
+\qquad |2\rangle=e_2,\\
+V&=\operatorname{span}\{|+\rangle,|-\rangle,|2\rangle\},\qquad
+P_j=|j\rangle\langle j|,\\
+\psi_{x,\beta,m}&=\sqrt Z\,|2\rangle+
+ e^{-i\beta}\bigl(\sqrt{2x}\,|+\rangle+
+ (-1)^m\sqrt{2(c-x)}\,|-\rangle\bigr),\\
+\rho_{x,\beta,m}&=|\psi_{x,\beta,m}\rangle\langle\psi_{x,\beta,m}|,
+\qquad 0<x<c,\quad\beta\in\mathbb R,\quad m\in\mathbb Z.
+\end{aligned}
+\tag{AC.3}
+$$
+
+The three displayed directions are orthonormal. These are the actual
+states (OC.10) of the credited supplier, not newly postulated preparations.
+Their real residual is
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$.
+The ray sees parity; the source history retains the whole signed $m$.
+

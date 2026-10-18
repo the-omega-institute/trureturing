@@ -1,0 +1,32 @@
+**定义 C-144.1（完整 Kraus 列与物理坐标）。** 固定 $0<\beta\le1/2$、
+$a=1-\beta$，令 $H=\mathbb C^3$、$K=\mathbb C^5$。
+本批中 $P_j=|j\rangle\langle j|$ 是 $H$ 上的投影，
+$R_j=|e_j\rangle\langle e_j|$ 是 $K$ 上的投影；
+物理五态顺序、$\mathcal B$、$E=(\psi,\eta,e_2)$ 仍为 C-128.1 的对象。
+定义两个被动坐标通道 $N\in\{\mathcal A,\mathcal B_c\}$：
+
+$$
+\begin{aligned}
+A_0&=(\sqrt a\,e_0,\sqrt a\,e_1,e_4),&
+A_1&=(\sqrt\beta\,e_2,\sqrt\beta\,e_3,0),\\
+B_0&=(\sqrt a\,e_0,\sqrt a\,e_1,\sqrt a\,e_2),&
+B_1&=(\sqrt\beta\,e_3,\sqrt\beta\,e_4,\sqrt\beta\,e_1),\\
+\mathcal A(X)&=\sum_{j=0}^1A_jXA_j^\dagger,&
+\mathcal B_c(X)&=\sum_{j=0}^1B_jXB_j^\dagger.
+\end{aligned}
+\tag{C144.1}
+$$
+
+下标 $c$ 只将通道 $\mathcal B_c$ 与固定能量基 $\mathcal B$ 区分。
+两者的物理 Kraus 矩阵均为 $DK_jL^\dagger$，其中
+$D=\operatorname{diag}(1,i,i,i,1)$、$L=\operatorname{diag}(1,i,i)$，即
+
+$$
+N^{\rm ph}=\operatorname{Ad}_D\circ N\circ\operatorname{Ad}_{L^\dagger}.
+\tag{C144.2}
+$$
+
+这是[相位恢复卷 (P.1)、(P.5)](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#1-actual-channels-physical-coordinates-and-the-native-contract)
+的同一坐标合同，未安装 $L^\dagger$ 或 $D$ 为物理门。
+以下始终保留 (C144.1) 的全部原始 Kraus 项与第三列。
+

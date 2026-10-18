@@ -1,0 +1,14 @@
+**Theorem 4.1 (exact erasure interpolation kernel).** For every legal fixed history,
+
+$$
+\mathcal E_j=\mathcal K(-1/j,d).
+$$
+
+If $n\ge d+1$, recovery of $(S,D)$ at that gain-zero slope is equivalent to $\mathcal E_j$ being zero or being a line with a generator in $\mathcal C\cup(-\mathcal C)$. Any element of $\mathcal E_j$ outside those cones gives an actual collision for the original unknown-slope target.
+
+Proof. Put $g(t)=1-t/j$. For $\Delta\in\mathcal K(-1/j,d)$ its polynomial $H$ satisfies $H(j)=0$, because the actual gain is zero at that recorded index. If $d\ge1$, the factor theorem writes $H(t)=g(t)Q(t)$ with $\deg Q\le d-1$: divide by $t-j$ and multiply the quotient by $-j$. At each survivor $g(i)\ne0$, so the defining equations give $\operatorname{tr}(A_i\Delta)=Q(i)$. If $d=0$, $H$ is constant and its value at $j$ makes it zero, yielding precisely $Q=0$ and zero surviving traces.
+
+Conversely let $\Delta,Q$ satisfy the surviving equations. The polynomial $H=gQ$ has degree at most $d$ and satisfies $H(i)=g(i)\operatorname{tr}(A_i\Delta)$ at every survivor. Both sides vanish at $j$. This proves equality of the two spaces, without dividing by the erased gain. Theorem 3.1 proves the stated exact criterion.
+
+For the actual collision take endpoints $S_1-S_0=\Delta$ from Theorem 2.1, the shared parameters $\alpha=1,\beta=-1/j$, and drifts $D_0=0,D_1=-gQ$. At a survivor their observation difference is $g(i)(\operatorname{tr}(A_i\Delta)-Q(i))=0$; at $j$ both the gain and the drift difference vanish. The two entire drift polynomials meet the declared bound, and Proposition 1.1 realizes both complete histories. ∎
+

@@ -1,0 +1,121 @@
+## 7. A complete conditional joint-feasibility system
+
+The following system retains every same-world condition and all six
+ancestor equations. It is a necessary-and-sufficient interface for the
+remaining three-world TT question, without a feasibility verdict.
+Fix $D_0,\lambda,Y,z$ as above and choose one common real $d$.
+For $i=1,2,3$, choose
+
+$$
+0<r_i<1,\quad u_i>0,\quad v_i>0,\quad
+u_iv_i=r_i(1-r_i),\qquad
+(r_i,u_i,v_i)\ne(r_j,u_j,v_j)\ (i\ne j).
+\tag{7.1}
+$$
+
+Put $j_i=u_i+v_i>0$, $\ell_i=1+u_i>1$ and set
+
+$$
+\alpha_{i,0}=-d,\quad
+\alpha_{i,1}=\frac{24-d}{j_i},\quad
+\alpha_{i,2}=\frac{48-d}{\ell_i},\quad
+\alpha_{i,3}=\frac{312/5-d}{j_i+\ell_i}.
+\tag{7.2}
+$$
+
+Every denominator is strictly positive. The four exact Lagrange
+polynomials and the gain are
+
+$$
+\begin{aligned}
+\mathcal L_0(T)&=-(T-1)(T-2)(T-3)/6,\\
+\mathcal L_1(T)&=T(T-2)(T-3)/2,\\
+\mathcal L_2(T)&=-T(T-1)(T-3)/2,\\
+\mathcal L_3(T)&=T(T-1)(T-2)/6,\\
+f_i(T)&=\sum_{k=0}^3\alpha_{i,k}\mathcal L_k(T).
+\end{aligned}
+\tag{7.3}
+$$
+
+For each row of four sample values $(\alpha_0,\ldots,\alpha_3)$,
+the full increasing-power coefficient vector is
+
+$$
+\left(
+\alpha_0,
+-\frac{11}6\alpha_0+3\alpha_1-\frac32\alpha_2+\frac13\alpha_3,
+\alpha_0-\frac52\alpha_1+2\alpha_2-\frac12\alpha_3,
+-\frac16\alpha_0+\frac12\alpha_1-\frac12\alpha_2+\frac16\alpha_3
+\right).
+\tag{7.4}
+$$
+
+The complete sample rows are
+
+$$
+\begin{pmatrix}f_i(4)\\f_i(5)\\f_i(6)\\f_i(7)\end{pmatrix}
+=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}\alpha_{i,0}\\\alpha_{i,1}\\\alpha_{i,2}\\\alpha_{i,3}\end{pmatrix}.
+\tag{7.5}
+$$
+
+For explicit coefficient verification, the increasing-power vectors
+of $\mathcal L_0,\ldots,\mathcal L_3$ are respectively
+
+$$
+(1,-11/6,1,-1/6),\quad(0,3,-5/2,1/2),\quad
+(0,-3/2,2,-1/2),\quad(0,1/3,-1/2,1/6).
+\tag{7.6}
+$$
+
+Expanding the four factored products in (7.3) gives (7.6), and their
+linear combination gives (7.4). Substituting each of $4,5,6,7$
+into those same products gives the four rows of (7.5). At $0,1,2,3$
+they satisfy $\mathcal L_k(m)=1$ for $k=m$ and zero otherwise,
+which proves the asserted interpolation including every degree drop.
+
+Retain both actual late readings for each of the same three worlds:
+
+$$
+\begin{aligned}
+d+f_i(4)(1+r_i+u_i+v_i)&=\widehat Y,\\
+d+f_i(5)(2-r_i+3u_i+v_i)&=\widehat z.
+\end{aligned}
+\tag{7.7}
+$$
+
+Impose also exactly
+
+$$
+\begin{aligned}
+-10\alpha_{i,0}+36\alpha_{i,1}-45\alpha_{i,2}
+                         +20\alpha_{i,3}&=0,\\
+-20\alpha_{i,0}+70\alpha_{i,1}-84\alpha_{i,2}
+                         +35\alpha_{i,3}&\ne0.
+\end{aligned}
+\tag{7.8}
+$$
+
+These are precisely the sixth zero and seventh nonzero conditions.
+Form
+
+$$
+P_i=\begin{pmatrix}r_i&u_i\\v_i&1-r_i\end{pmatrix},\quad
+g_i=\lambda f_i,\quad \delta_i=D_0+\lambda d,\quad
+X_i=f_i(7)QP_i,
+\tag{7.9}
+$$
+
+and its four columns $A_i,B_i,C_i,D_i$ by (3.2). The last conditions
+are the four simultaneous collision products
+
+$$
+\Delta(A)=\Delta(B)=\Delta(C)=\Delta(D)=0.
+\tag{7.10}
+$$
+

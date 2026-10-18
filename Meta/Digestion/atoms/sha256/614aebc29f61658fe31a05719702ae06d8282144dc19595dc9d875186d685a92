@@ -1,0 +1,44 @@
+**Definition 275.1 (Potentials of the same complete table).**
+Let $L\ge6$, so $c>3$. Use the same balanced $\nu$ and define
+
+$$
+\begin{aligned}
+t_D&=\sum_{j\in J}([D(v^j)=j]-[D(+)=j]),\\
+a_D&=\tfrac12\int([D(01z)\in J]+[D(10z)\in J])\,d\nu,\\
+g_D&=a_D-t_D,\qquad
+x_D=\tfrac12\int([D(01z)=2]+[D(10z)=1])\,d\nu,\\
+\ell_D&=\sum_{3\le i<j\le L}
+                  ([D(v^i)=i]-[D(v^{ij})=i]).
+\end{aligned}
+\tag{275.1}
+$$
+
+For a late pair let $H_D=[u\ne0]+[v\ne0]$; for other schedules
+let $H_D=0$. Set $H_\lambda=\sum_D\lambda_DH_D$,
+$G=\sum_D\lambda_Dg_D$ and $X=\sum_D\lambda_Dx_D$.
+For a full feasible allocation also put
+
+$$
+s_i=\mu_{v^i}(i)-(b_i-e),\qquad
+s_{ij}=\mu_{v^{ij}}(i)-(b_i-e)\quad(3\le i<j\le L).
+\tag{275.2}
+$$
+
+These nonnegative quantities are their own full correct-row slacks.
+The same-allocation identity of Theorem 271.2, consumed here, is
+
+$$
+\delta_b=s_++\sum_{j\in J}s_j+\eta+R_{\rm pair}+X+G,
+\qquad R_{\rm pair}=\tfrac12\int(r_1+r_2)\,d\nu.
+\tag{275.3}
+$$
+
+For clarity, its equal-mass cancellation is
+$\mu_{01z}(J)=e-r_1(z)-\mu_{01z}(2)$ and
+$\mu_{10z}(J)=e-r_2(z)-\mu_{10z}(1)$, so
+$\sum_D\lambda_Dt_D+G+R_{\rm pair}+X=ce$.
+The positive and sole-zero rows give
+$\sum_D\lambda_Dt_D=E_b+2e+s_++\sum_js_j+\eta$.
+Subtraction is (275.3). The identity and balanced moments are used
+as existing results, without a second scalar capacity theorem.
+

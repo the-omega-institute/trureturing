@@ -1,0 +1,18 @@
+**Open problem 6.3 (The same joint obligation).** The original exact
+$\varepsilon_1$ remains open inside (6.1). A matching solution requires
+one normalized set of all signed-event multipliers and all three TP
+multipliers, global product positivity including degenerate and interior
+populations, and one legal positive-weight port on its actual kernel
+face satisfying the same TP and complementary event equations.
+The port in Section 4 is not asserted to lie on the kernel of another
+valid tuple. The lower and upper have not been made complementary.
+
+The upper changes the encoder population and both independent decoder
+ratios together. Its active representatives are the splitting singletons
+$\{2\},\{5\}$, rather than the keep-only active set of the credited QSD
+ports. This is a sufficient design within a known construction family;
+it supplies no no-loss restriction of original competitors or proof of
+an optimizer in that family. Positive boundary atoms, separate TP
+feasibility, pair saturation, cycle compatibility and a feasible PPT
+point do not supply the missing common equality.
+

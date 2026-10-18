@@ -1,0 +1,37 @@
+**Corollary 206.8 (Restricted fixed-data minima and existing membership).**
+If $q-E\le d_0$, both fixed-data minima in the family of 206.7 equal
+$d_0$ and are attained by $V^{\rm ch}$. In particular this condition
+holds when $E\ge\min(S,\mu)$. If the input has $\delta\le1$, either
+this last condition or $q\le E+1$ gives $D\le1$ and the certificate
+$(V^{\rm ch},0)$. Thus any remaining nonmember in the unit-input
+family must satisfy both $E<\min(S,\mu)$ and $q>E+1$.
+These are necessary exclusions, not a separator.
+
+**Proof.** The lower bound and matching value in 206.7 prove the
+minimum assertion. If $E\ge S$, then $c_0\le(E+S)/2\le E$, so
+$q-E\le q-c_0\le d_0$. If $E\ge\mu$, use $M_2\le2\mu$ to get
+$q-E\le\max(0,\mu-t)\le d_0$. These two cases exhaust
+$E\ge\min(S,\mu)$. Also $d_0\le\delta$, so the asserted unit
+conditions give (206.22) at most one.
+
+This unit region already has an existing zero-score certificate.
+Indeed $D\le1$ implies $\mu-E\le q-E\le1$. At $u_k$,
+
+$$
+F_{Q(y)}(u_k)=
+ \frac{\sum_{j=3}^k\gamma_j-(k-2)E}{k-1}
+ \le\frac{k-2}{k-1}(\mu-E)\le1.
+\tag{206.26}
+$$
+
+The $o,p$ values are $-E,-\gamma_2\le0$. The complete subset-table
+law in [200.4](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md)
+already gives $F_{Q(y)}(v_k)\le\delta\le1$. That law selects three
+labels from $\{1,\ldots,k,\infty\}$, queries the first two numerical
+labels and interprets $\infty$ as output zero; it is a full stopped
+law with every event row retained. Hence the reused hull gives
+$(V=0,\theta=1)$. The contribution of 206.7 is its attained exact-$Q$
+optimization and restricted minima, not additional unit-region
+membership. No global minimum is asserted outside $q-E\le d_0$.
+$\square$
+

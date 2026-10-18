@@ -1,0 +1,75 @@
+## 6. One fixed M decodes the entire exterior-drift class
+
+**Theorem 6.1.** Fix any full ancestor (1.2) and any fixed normalized
+drift $d<0$ or $d>312/5$. The sixth response under the single fixed
+action $M$ is injective on the entire known class
+
+$$
+\mathcal K_d^7=\{W\in\mathcal F(H):d_W=d,\ f_W(7)=0\}.
+\tag{6.1}
+$$
+
+There is no restriction on $y,\zeta$, cardinality, gain degree,
+gain sign, ancestor zeros or future zeros. One immediate sixth read
+recovers the complete actual target, and the same action works on
+every known subset. Both $L_1$ and $L_2$ are false on every such subset.
+
+**Proof, injectivity.** Suppose two distinct worlds share the $M$
+response $d+c$. Here $A,B\ne0$, $AB>0$, $d\ne0$ and $dC_*<0$.
+Lemma 4.2 gives $t_1\ne t_2$. The early secant (5.4) gives $dc<0$;
+hence $c$ and $C_*$ have the same nonzero sign. In both worlds,
+
+$$
+f(3)f(6)=\frac{C_*c}{t(1+2t)}>0.
+\tag{6.2}
+$$
+
+The zero late branches of Lemma 5.2 are impossible since $dC_*<0$.
+Thus (5.8) applies. Both $b_4,b_5$ have the same nonzero sign as
+$d$. If $Y_*,Z_*$ had the same sign, both summands of (5.8) would
+have that same nonzero sign after multiplication by $\operatorname{sgn}d$,
+an impossibility. They therefore have opposite signs. The positive
+late traces imply $f(4)f(5)<0$ in each world. Theorem 3.1 gives
+$f(3)f(6)<0$, contradicting (6.2). No distinct pair shares the
+response. This excludes every collision on the whole class at once,
+including putative collisions involving disjoint pairs. ∎
+
+**Actual-read inverse and legality.** Choose $M$, immediately read its
+raw value $w$ at original clock six, and set
+
+$$
+c=(w-D_0)/\lambda-d.
+\tag{6.3}
+$$
+
+The actual candidate supplies a legal $t>1$ in the fiber defined by
+(4.2), all six equations (1.6), and source legality. Theorem 6.1
+and Lemma 4.2 give uniqueness of this legal parameter: equal parameters
+already give equal worlds, while different worlds cannot share this
+response. Recover the full gain by (4.2), then $j,\ell,u,v,r$ by
+(4.6)–(4.7), then $P,g=\lambda f,\delta=D_0+\lambda d$.
+An arbitrary root of an eliminated equation, or arbitrary $t$ obeying
+only a secant bound, is not an inverse candidate. All original
+constraints, the nonzero gain and degree bound remain imposed. The
+actual candidate supplies existence; injectivity supplies uniqueness.
+No sign of $\lambda$ is excluded, and no zero sixth sample is divided
+out. Empty classes are unreachable; a known singleton may stop.
+
+For every known $K\subseteq\mathcal K_d^7$ and every real raw $w$,
+
+$$
+K_w=\{W\in K:D_0+\lambda[d+f_W(6)(1+2t_W)]=w\}
+\quad\text{has }|K_w|\le1.
+\tag{6.4}
+$$
+
+Consequently $L_0(K_w,(H,M,w))$ and $L_1(K_w,(H,M,w))$ are both
+false for every $w$. The $M$ conjunct in (1.9) fails for both
+$L_1(K,H)$ and $L_2(K,H)$; empty and singleton parents fail their
+cardinality clause as well. At most seven total readings are used,
+and every executed atom has its immediate read. This inverse is a
+known-class inverse: root seven and fixed drift are hypotheses, not
+consequences of observed equalities. The endpoint drifts $0,312/5$
+and the internal drifts $24,48$ are the already established cases of
+the terminal-root companion, not new exterior cases.
+

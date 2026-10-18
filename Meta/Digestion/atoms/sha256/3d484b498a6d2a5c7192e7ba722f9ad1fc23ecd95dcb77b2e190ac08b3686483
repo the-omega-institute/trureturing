@@ -1,0 +1,4 @@
+## 38. 有限量子网络的 detailed-balance Dirichlet 曲率
+
+本节使用有限维矩阵定义量子层。为了避免把经典 \(CD_G\) 不加证明地推广到非交换代数，量子曲率先定义为 detailed-balance 生成元上的二次型谱证书。
+

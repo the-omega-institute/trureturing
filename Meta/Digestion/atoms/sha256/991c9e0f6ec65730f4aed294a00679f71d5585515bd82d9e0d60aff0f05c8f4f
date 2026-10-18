@@ -1,0 +1,36 @@
+**Definition 3.4 (B contour codec and parser).** For a nonempty finite
+terminal antichain $B$, take its unique prefix trie. Encode its depth-first
+left-before-right contour by two-bit tokens
+
+$$
+D_0=00,\quad D_1=01,\quad U=10,\quad E=11.
+$$
+
+Emit $D_b$ on descent to child $b$, $U$ on the matching return, and $E$
+at a terminal. In particular a root-only antichain has body $E$. A unary
+left tree has body $D_0EU$, and a unary right tree $D_1EU$.
+
+The parser keeps a path and a stack of frames `[path,leftSeen,rightSeen,
+leafClosed]`. At a $D_0$ require no previous child and no E; at a $D_1$
+require no previous right child and no E; mark that child and push a fresh
+frame at the extended path. At E require no child and no prior E; emit
+this path and close the frame. At U require a nonroot frame which is either
+closed by E or has at least one completely returned child; pop it. A frame
+closed by E admits only U, or EOF when root. EOF requires exactly the root
+frame and a valid completed root. D0 after D1, duplicate edges, underflow,
+odd bit count, missing E and unreturned descent fail. Lexicographic
+Insert of the emitted terminals fixes their canonical list order.
+
+Thus the parsed object is the terminal set, rather than a purported old
+permission or an endpoint description. A trie with $V$ vertices and $L$
+terminals has exactly $V-1$ descents, $V-1$ returns and $L$ E tokens, hence
+body length $4(V-1)+2L$.
+
+Its finite encoder uses work jobs Visit(path) and EmitToken(token). On a
+Visit with no child emit E. Otherwise form, in left/right order, the three
+jobs EmitToken(Db), Visit(path-b), EmitToken(U) for each existing child.
+Prepend that finite job list to the old work list by reverse-item traversal
+and Push. Starting with Visit(root) gives exactly the stated contour.
+Child membership is Find in the finite trie; no recursive native call or
+unpriced contour constructor is used.
+

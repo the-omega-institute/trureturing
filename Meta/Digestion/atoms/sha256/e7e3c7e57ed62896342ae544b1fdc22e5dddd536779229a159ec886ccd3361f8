@@ -1,0 +1,14 @@
+### 59.5 Damping, dephasing, and thermal specialization
+
+The damping/dephasing family fixes α=1, β=t and allows |λ|≤sqrt(t). Its exact error is (8/9)max(0,|λ|−t), with §58 recovered at λ=sqrt(t). This is a corollary of the full channel theorem, rather than a separate mathematical increment.
+
+For generalized amplitude damping followed by dephasing, let t∈[0,1], g∈[0,1] be the ground-state equilibrium population, and ζ∈[0,1] the coherence attenuation. The parameters are
+
+    α=g+(1−g)t, β=(1−g)+gt, c=ζ sqrt(t).
+
+They are physical because αβ=t+g(1−g)(1−t)²≥t≥c². The exact unrestricted physical-LOSR error is
+
+    (8/9) max(0, ζ sqrt(t) − [min(g,1−g)+max(g,1−g)t]).
+
+Thus sufficient dephasing gives exact common implementation, while the positive branch is attained by the three physical branches above after the appropriate flip. At thermal balance g=1/2, (1+t)/2≥sqrt(t), so the entire family is exactly implementable. Away from balance it may have a strict obstruction. For example g=9/10,t=1/4,ζ=1 gives α=37/40,β=13/40,c=1/2 and exact error 7/45. The optimal logical parameters are (37/40,23/60,23/60), physically implemented with identity weight 23/60, classical flip weight3/40 and reset-to-zero weight13/24. Both directions of thermal population transfer are present, so this example is not on the reset axis.
+

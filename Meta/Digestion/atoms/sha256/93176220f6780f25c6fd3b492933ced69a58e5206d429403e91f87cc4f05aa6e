@@ -1,0 +1,42 @@
+**定理 51.3（全部高预算与无上限控制的统一尖锐首项）。** 对每个整数 $N\ge3$、
+$0<\delta\le1$，
+
+$$
+5\sqrt\delta\le R_\infty(\delta)\le R_N(\delta)
+\le\sqrt{2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2}.
+\tag{51.11}
+$$
+
+而且有统一极限
+
+$$
+\begin{aligned}
+\lim_{\delta\downarrow0}\frac{R_\infty(\delta)}{\sqrt\delta}&=5,\\
+\lim_{\delta\downarrow0}
+\sup_{N\in\mathbb N,\ N\ge3}
+\left|\frac{R_N(\delta)}{\sqrt\delta}-5\right|&=0.
+\end{aligned}
+\tag{51.12}
+$$
+
+特别地，任意整数预算函数 $N(\delta)\ge3$，无论是否有界，都给
+$R_{N(\delta)}(\delta)/\sqrt\delta\to5$。
+
+证明。全控制器下界直接复用定理46.2，不由本节选定的固定词推成。
+其共同记录构造覆盖无锚、零内部积、全部首锚方向及所有后续动作，
+允许重复Read、任意有限停止和可数历史：逐分量差不超过 $2\delta$ 的不变量使
+每次中点报告合法，相同有限前缀迫使同一动作和停止；不存在可数事件以后的新事件。
+因此它确实约束整个 $\mathcal P_\infty$。包含关系
+$\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$ 与定理51.2给（51.11）。
+除以 $\sqrt\delta$ 得对全部这些预算共同成立的界
+
+$$
+0\le\frac{R_N(\delta)}{\sqrt\delta}-5
+\le\sqrt{2\delta+\bigl(5+(5/2)\sqrt\delta\bigr)^2}-5,
+\tag{51.13}
+$$
+
+右端趋零；同界也适用于 $R_\infty$。这给（51.12）和任意变量预算的结论。
+尖锐首项描述风险下确界的渐近，不假定固定正噪声下有最优控制器。
+证毕。
+

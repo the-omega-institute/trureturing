@@ -1,0 +1,7 @@
+## Orientation presentation
+
+Put x=ab, y=bc, z=cd. Reidemeister–Schreier gives
+W+=<x,y,z | x^4=y^9=z^3=(xy)^2=(yz)^2=(xyz)^2=1>.
+Here xy=ac, yz=bd, and xyz=ad. The three maximal finite standard parabolics have orientation subgroups
+<x,yz> ≅ D8, <xy,z> ≅ S3, and <y> ≅ C9, of orders 8, 6, and 9. The middle group is S3, not cyclic.
+

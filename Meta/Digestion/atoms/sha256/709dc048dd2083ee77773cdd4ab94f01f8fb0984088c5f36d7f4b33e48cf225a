@@ -1,0 +1,93 @@
+**Definition 1.2 (source coefficients).** Use JS.6--JS.8:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad S=ce_0e_2^T+de_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\qquad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad\kappa=h_0a+h_1b,\\
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad U=1/\alpha,\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad
+\mu=\alpha V+\beta W,\quad r=V/\mu.
+\end{gathered}
+\tag{SC.4}
+$$
+
+All seven amplitudes and $m_i$ are positive; $0<\delta<1$,
+$\alpha+\beta=1$, and $0<r<1<U$. The undecorated $d$ is the source
+amplitude. On the entire closed interval $[0,U]$ set
+
+$$
+\begin{aligned}
+Y(x)&=(1-\alpha x)/\beta,& H(x)&=(\sqrt x-1)^2/2,\\
+D_c(x)&=D_0+D_1x=\delta h_0^2+b^2x+d^2Y(x),\\
+N_c(x)&=N_0+N_1x=\delta h_1^2h_2^2+a^2h_2^2x+c^2h_1^2Y(x),\\
+c_*(x)&=N_c(x)/D_c(x),& \rho_c(x)&=D_c(x)/N_c(x),\\
+\mathcal F(x)&=H(x)\rho_c(x),& C_{\rm end}&=\mu\mathcal F(r).
+\end{aligned}
+\tag{SC.5}
+$$
+
+Both affine functions $D_c,N_c$ are strictly positive, including the
+axes. The radial $x$ is unrelated to history height.
+
+On $\mathcal E=\{(z,w):\alpha z^2+\beta w^2=1\}$ put
+
+$$
+\begin{gathered}
+h(z,w)=(1,z,w)^T,\quad K(z,w)=s_0D+zT+wS,\\
+n(z,w)=(0,dw/h_2,-bz/h_1)^T,\quad
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad k(z,w)=n^T\Delta n,\\
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad L=\operatorname{diag}(s_0,1,1),\\
+G=LNL,\qquad f(z,w)=h(z,w)^TGh(z,w),\\
+d_f=11m_1/64,\quad z_f=\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})/16<0,\\
+\Xi=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\quad
+L_f=\sqrt{d_f^2+4z_f^2},\quad
+\gamma=(L_f-d_f)/2>0,\quad b_f=(L_f+d_f)/2>0,\\
+u_f=\frac{-2z_f}{d_f+L_f}\in(0,1),\quad
+e_+=\frac{(u_f,-1)^T}{\sqrt{1+u_f^2}},\quad
+e_-=\frac{(1,u_f)^T}{\sqrt{1+u_f^2}}.
+\end{gathered}
+\tag{SC.6}
+$$
+
+Thus $\Xi e_+=\gamma e_+$, $\Xi e_-=-b_fe_-$ and
+$\gamma+b_f=L_f$. For a nonnegative ellipse measure write
+$C_\nu=\int\mathcal F(z^2)d\nu$. The limiting problem is exactly JS.20:
+
+$$
+\Phi(\lambda)=\max\left\{\int k_+d\nu:
+\int nn^Td\nu=M,\quad C_\nu\le\lambda\right\}.
+\tag{SC.7}
+$$
+
+Its covariance fixes mass $\mu$, $z^2$ moment $V$ and $zw$ moment zero;
+the $w^2$ moment is $W$. JS Lemma 4.2 supplies compact attainment and
+an at-most-five-atom representative, including axes. These are credited
+facts, not new support bounds here.
+
+For explicit endpoint values set
+
+$$
+\begin{gathered}
+a_+=\frac{\alpha V+\beta Wu_f^2}{1+u_f^2},\quad
+a_-=\frac{\alpha Vu_f^2+\beta W}{1+u_f^2},\\
+x_+=\frac{V}{\alpha V+\beta Wu_f^2},\quad
+x_-=\frac{Vu_f^2}{\alpha Vu_f^2+\beta W},\\
+C_{\rm sat}=a_+\mathcal F(x_+)+a_-\mathcal F(x_-),\\
+H_{\rm live}=(1-\delta)\Delta A,\quad
+\Delta A=\operatorname{tr}(D^\dagger D\Delta)>0,\\
+S_{\rm corner}=\tfrac14\sum_{\sigma,\eta=\pm1}|f(\sigma,\eta)|,\quad
+T_0=(H_{\rm live}+S_{\rm corner}+L_f)/2,\quad B_0=T_0-\gamma.
+\end{gathered}
+\tag{SC.8}
+$$
+
+JS Theorems 8.2 and 9.2 give $C_{\rm end}<C_{\rm sat}$,
+$\Phi(C_{\rm end})=0$, $\Phi(C_{\rm sat})=\gamma$, continuity,
+concavity and strict increase between them. The formula for $C_{\rm sat}$
+and the spectral equality cases are credited JS results.
+

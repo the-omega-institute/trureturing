@@ -1,0 +1,18 @@
+**lemma 3.3 (Positive short executions of an actual table).** Consider
+a deterministic start with $q(r)=1$. If the initial row $R$ reads
+at $t$, both first replies have positive masses $1-\eta,\eta$.
+Every positive section immediately after two calls must have a halt
+as its current row. Neither first successor can equal $R$.
+
+Proof. Each integer $t$ is active in exactly one phase, with
+conditional probability $2ab$ of reply one; this gives the two stated
+masses. A read after two calls incurs a third call before any return
+on the entire section. If that section has positive mass, it
+contradicts $q(r)=1$. If $\delta(R,x)=R$, then on first reply $x$
+the controller rereads the same static coordinate, gets the same
+reply, and repeats this transition forever. That first-reply section
+is positive and cannot return. Thus this equality is impossible.
+Other cycles and all instructions confined to source-null sections
+remain allowed. These statements concern the actual table and do
+not replace it by a tree. $\square$
+

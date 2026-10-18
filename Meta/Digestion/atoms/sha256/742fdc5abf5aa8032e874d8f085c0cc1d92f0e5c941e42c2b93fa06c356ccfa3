@@ -1,0 +1,35 @@
+**Definition 20.3 (globally compensating positive reweightings).**
+Choose finitely many proper subsets $F_j\subsetneq V$, positive rational
+numbers $\theta_j$ summing to one, and arbitrary strictly positive
+tables $\psi_{jv}:\mathbb F_2^{\operatorname{st}(v)}\to(0,\infty)$ for
+$v\in F_j$. Require the single global identity
+
+$$
+\prod_j\left[\prod_{v\in F_j}
+       \psi_{jv}(s_{\operatorname{st}(v)})\right]^{\theta_j}
+= W(s)\qquad\text{for every }s\in\mathbb F_2^E.
+\tag{GDB.85}
+$$
+
+This allows compensation between different original scopes and different
+submodels. It does not impose a separate identity at each vertex.
+Empty subsets are allowed and their products are one. Set
+
+$$
+Z_j=\sum_{s\in\mathbb F_2^E}\prod_{v\in F_j}
+      \psi_{jv}(s_{\operatorname{st}(v)}),\qquad
+U=\sum_j\theta_j\log_2 Z_j,\qquad
+\rho_v=\sum_{j:v\in F_j}\theta_j.
+\tag{GDB.86}
+$$
+
+Every sum retains all $2n$ original variables, including those free in
+that submodel. The forest subclass additionally requires $G[F_j]$ to
+be a forest for every $j$. Its selected factor-variable incidence graph
+is acyclic after isolated variables are set aside: shared variables
+subdivide exactly the edges of $G[F_j]$, and its other incidences are
+leaves. Thus each $Z_j$ admits exact finite tree sum-product evaluation
+for arbitrary full four-bit tables. The class includes no scope splitting,
+auxiliary variables, cyclic residual correction or additional certificate
+rule. These are analytical sums, not source operations.
+

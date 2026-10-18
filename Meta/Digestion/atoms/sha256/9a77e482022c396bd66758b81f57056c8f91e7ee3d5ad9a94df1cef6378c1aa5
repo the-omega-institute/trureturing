@@ -1,0 +1,26 @@
+**Definition 10.2 (all nonprimitive recurrence terms).** The finite expansion
+which determines each component of $V$ is as follows.
+
+| Term | Full recurrence leaves |
+| --- | --- |
+| Boot/activation | Original extended boot/source/acquisition/client writes; twenty new ordinary boundary constructors; every old/new finite control/token bit; activation CTL; the two actual five-state bootstraps; native capture ingress, descriptor and seal. |
+| Bank instruction | Definition 2.1's Base, dry emission, real emission, separators/F/seals, descriptor count/write, parity/purpose CTLs, all Last/Field/scratch scans, exactly as RCA Definition 11.5. |
+| Old-tape import | Every Save RD/ML and compiled distance cons; initial source MR; each Scan RD/finite CTL, three literal cons assignments and MR; Reverse; Home, compiled distance tests/tails and each restore MR. |
+| Parser/lookup | Every triple Take, symbol test, field accumulator and Reverse; ReadUnary/ReadFrame/ReadList; unary cancellation, Nth/Equal, complete count/predecessor/availability checks and their actual failure branches. |
+| Outer/history ingress | Saved Base, all native IN/EX/WR/MR and length tests, actual payload bounds, delimiter/seal, length construction, descriptor count/fields, native Import and branch/token CTLs. |
+| CaptureCAP | Actual closed imports and row/dependency parser, external/computed site classification, all complete cycle copies/Appends and return CTL. |
+| Boundary/Prefix | Each literal Step74 row lookup, marked-cell scan, replacement, boot/control/latch/token update, receipt/event serialization and tally, plus actual stop/countdown tests. Earlier recovery work has these same native leaves. |
+| Binding | Row/origin lookup, whole actual replay to its matching Zero PC, bound extraction, $4(J-K)$ construction, five copies of $z$, all Cats, $s$ cases, wire zero and $a,b$ comparisons. |
+| Cover/Issue/Call | Every immutable list/archive record copy, creation count, Prefix, full-state/history serializer, Frame/Cat, measured sender export, descriptor and seal. |
+| Each publication | Sender/mailbox/receiver Base, length copies, initialized allocation and single delimiters, setup descriptors and three staged placement records, both positioned tested copies, completion records, all TOKs, print, callback import/parse, ACK and availability return. |
+| Original continuation | Actual twelve workspace loans/returns, state/table/packet work, original terminal dependencies/rows, snapshot, verifier enumeration/prior/replay, receipt route, consumer checks/target copy/OUT, final ACK and halt. |
+
+The word macros in this table are precisely Definition 2.1's finite acyclic
+list, with no string-operation leaves. Native scratch staging uses the
+actual source offsets specified by RCA Definition 13.2: Stage66 increases
+its old scratch offset after new Base; Stage67 constructs its copied
+wire length on distinct scratch. Descriptor-source positioning precedes
+dry counting/copy, and each complete stage is described once. Thus
+setup, copies of $c,p$, parsing, ACK and return have recurrence leaves;
+they are not unnamed constant overheads.
+

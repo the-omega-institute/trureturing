@@ -1,0 +1,26 @@
+### 91.3. Arbitrary bases and the normalized MUB transport
+
+Take any complete common-flat input basis. If it contains a canonical ray,
+Proposition 60.1 identifies every common-flat ray orthogonal to that ray
+with one of the other five canonical rays. Hence the whole basis is
+canonical, up to column phases and permutation. If it contains no canonical
+ray, any three of its six columns contradict assertion 1. Thus assertion 2
+holds without assuming a canonical intersection in advance.
+
+A unitary output matrix \(B\) is unbiased to \(I_6,H_0(b)\) exactly
+when both \(B\) and \(H_0(b)^*B\) have entry moduli \(1/\sqrt6\).
+Set \(W=H_0(b)^*B\). Then \(W\) is unitary and both \(W\) and
+\(H_0(b)W=B\) are flat. It is precisely a common-flat input basis in
+the convention above. Assertion 2 therefore gives
+\[
+ W=C(b)/\sqrt6,\qquad B=H_0(b)C(b)/\sqrt6              \tag{91.2}
+\]
+up to the same column phases and permutation. Conversely these canonical
+identities give both required flatness conditions.
+
+A quartet extending the fixed pair would supply two further common-unbiased
+bases. Both would have the same column-ray set (91.2), so their relative
+unitary would be monomial, with entry moduli zero or one. They could not
+be mutually unbiased. This proves assertion 3 with the original input/output
+normalization explicit.
+

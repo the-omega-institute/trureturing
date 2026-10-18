@@ -1,0 +1,38 @@
+**Definition 9.1 (path constants and selected root).** Define
+
+$$
+v_\theta=\frac{b_{\rm rec}}{c_{\rm curv}D_{\rm onset}}<0,\qquad
+t_x=\frac1{a_{\rm curv}D_{\rm onset}}>0,\qquad
+t_x+b_{\rm rec}v_\theta=1 .
+\tag{QO.44}
+$$
+
+For $s=s_*+\epsilon$ put
+
+$$
+\begin{aligned}
+\zeta_\epsilon&=\xi+\frac{1+\xi^2}{2}v_\theta\epsilon,&
+c_\epsilon&=\frac{1-\zeta_\epsilon^2}{1+\zeta_\epsilon^2},&
+\sigma_\epsilon&=\frac{2\zeta_\epsilon}{1+\zeta_\epsilon^2},\\
+\theta_\epsilon&=2\arctan\zeta_\epsilon,&
+\delta_\epsilon&=1-\alpha-\beta c_\epsilon,&
+R_\epsilon&=\frac{\beta\sigma_\epsilon}{2\sqrt\alpha},\\
+a_2&=4\alpha s^2-(1+\alpha)^2,\\
+a_1&=2s[2\alpha(1-s^2)+(1-\alpha)\delta_\epsilon],\\
+a_0&=\alpha(1-s^2)^2+
+ (1-\alpha)\delta_\epsilon(1-s^2)-\delta_\epsilon^2
+ -(1+\alpha)^2R_\epsilon^2,\\
+x_\epsilon&=\frac{-2a_0}{a_1+\sqrt{a_1^2-4a_2a_0}},&
+w_\epsilon&=1-s^2+2s x_\epsilon,\\
+P_\epsilon&=\frac{\alpha w_\epsilon+\delta_\epsilon}{1+\alpha},&
+Q_\epsilon&=\frac{w_\epsilon-\delta_\epsilon}{1+\alpha},\\
+U_\epsilon&=1-P_\epsilon,&V_\epsilon&=1-Q_\epsilon,&
+v_\epsilon&=s-x_\epsilon .
+\end{aligned}
+\tag{QO.45}
+$$
+
+The letters $a_i$ here are polynomial coefficients, not source
+amplitudes. The actual path uses rational functions and radicals;
+the angle is an auxiliary notation.
+

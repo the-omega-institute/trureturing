@@ -1,0 +1,39 @@
+**Definition 20.1 (one target and the information ceiling).** Retain
+Definitions 2.1, 11.1 and 11.3, including $0<l<k<u<H$, $T>0$,
+arbitrary fixed preparation phases and arbitrary fixed $\lambda$.
+Thus the probabilities, negative phase convention, both $2\pi$ periods,
+fields $P,Q$, covariance $2I_2$ and original clock are unchanged.
+Write $Y_t=k+W^1_t$ and
+$\tau=\inf\{t\ge0:Y_t\notin(l,u)\}$. The target is the same jointly
+specified $(W^1,W^2,J^\lambda)$, not a newly sampled copy. Its natural
+completed filtration is $\mathcal F^W$. The enhancement is adapted to
+this filtration; giving its past does not give its future.
+
+On any probability space carrying this target, allow an initial random
+seed $U$, independent of the entire Brownian pair. Let $\mathcal F_t$
+be the usual augmentation of
+$\sigma(U,W^1_s,W^2_s:0\le s\le t)$. The issuer's knowledge may be any
+usual subfiltration $\mathcal K_t\subseteq\mathcal F_t$. Its issue and
+interruption times must be $\mathcal K$ stopping times, and its numerical
+choices at a time $\sigma$ must be $\mathcal K_\sigma$ measurable.
+The issuer knows the specified start, clock and its own previous
+commands. Additional independent randomization can be included in $U$.
+The maximal choice $\mathcal K=\mathcal F$ grants exact observation of
+the whole target past. A smaller observation interface restricts this
+class. No observation of $W$, of its enhancement, or of its death is
+supplied by N's command syntax itself: these are explicitly additional
+acquisition inputs. In particular $\tau$ is not initially supplied.
+
+Independence of $U$ leaves $W$ Brownian in $\mathcal F$. The classical
+strong Markov property therefore applies at its finite stopping times.
+One can also obtain this enlargement directly from its usual proof:
+future increments are independent of $\sigma(U,W_s:s\le t)$ at
+deterministic $t$, and approximation of a stopping time from above by
+dyadic stopping times, followed by path continuity, gives the same
+independent future Brownian path. The result used here is Mörters–Peres,
+*Brownian Motion*, the public draft dated May 25, 2008, Theorem 2.14,
+pp. 47–48 ([consulted text](https://www.stat.berkeley.edu/~aldous/205B/bmbook.pdf)).
+This numbering refers to that draft, not to an unverified numbering in
+another edition. Multiplying its standard Brownian motion by $\sqrt2$
+gives the present covariance convention.
+

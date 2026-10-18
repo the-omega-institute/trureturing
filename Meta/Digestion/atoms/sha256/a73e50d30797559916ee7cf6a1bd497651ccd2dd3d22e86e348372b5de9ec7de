@@ -1,0 +1,25 @@
+### 76.4. Two aligned representatives and completeness
+
+Write \(w=(1,1,z;g,g,gr)\), \(v=(1,1,Z;k,k,kR)\), where \(R\) here
+is a unit phase ratio. The two relative positions are matched or different.
+Their cross expressions are
+\[
+\begin{aligned}
+ O_m&=2+\bar zZ+\bar gk(2+\bar rR),\\
+ O_d&=1+\bar z+Z+\bar gk(1+\bar r+R),\\
+ S_m&=k(2+zR)-g(2+rZ),\\
+ S_d&=k(1+R+z)-g(1+Z+r).
+\end{aligned}                                                   \tag{76.9}
+\]
+The respective mean targets are
+\[
+\begin{aligned}
+ (2+\bar z)(2+Z)+\bar gk(2+\bar r)(2+R)&=O_m+2O_d,\\
+ (2+z)k(2+R)-g(2+r)(2+Z)&=S_m+2S_d.
+\end{aligned}                                                   \tag{76.10}
+\]
+For each parity and relative position, impose one cross expression to
+vanish and the corresponding mean target to have nonzero squared modulus.
+Retain both complete aligned quotients, every finite/pole combination,
+and every recorded \(\Theta\) choice.
+

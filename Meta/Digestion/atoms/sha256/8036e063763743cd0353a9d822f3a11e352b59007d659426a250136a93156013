@@ -1,0 +1,41 @@
+**Proposition 11.4 (compiler and entry theorem).** Every finite word program
+has a specified finite PR57 expansion using these eight owned ports. At
+every word boundary its represented registers equal the word program's
+registers, its parity identifies the most recent completely sealed bank,
+and its descriptors name the actual payloads. Each word step has a finite
+nonempty paid expansion. No stored length, head position, code fetch or
+call/return is an extra atomic operation.
+
+Proof. Assign variables their indices in first-occurrence order, after
+hygienic expansion of the finite acyclic helper list of Definition 12.1.
+Allocate no native states indexed by a variable's value. Unroll the finite
+field numbers in Field. Sequence joins finite exits; tests use the displayed
+RD rows; while joins the final edge to its testing entry. Fixed calls are
+inlined, as PR57.D1 requires. Thus the result is one finite graph.
+
+For an assignment, the old source bank is immutable throughout both
+passes. Each copied field therefore has exactly the intended old value,
+even for self assignment, self cons and self tail. The first pass counts
+one physical payload cell per symbol that the second pass constructs.
+Base was measured before either pass appended to the destination. Only
+after payload, F and seal does parity change, and its descriptor copies
+those actual counted words. Induction over assignments and tests proves
+the register and descriptor assertions. LastBank stops at its existing F;
+Field consumes a fixed finite number of finite fields; Base and descriptor
+counting have closed unchanged ends; both emissions consume sealed source
+fields. All these loops terminate by those explicit bounds. The argument
+also establishes the actual entry positions required by every append and
+copy. Partially built banks, scratch words and descriptors remain real
+busy-state data at interior cuts. ∎
+
+The initial empty bank is constructed without calling a word assignment.
+After the two literal bank sentinels, Base(A) obtains its actual start.
+Construct the literal $U(r)$ on length scratch by $r$ unrolled Append(1)
+rows, Append(0), sep and seal; append $r$ literal seps and F to A and
+seal it. Count preceding descriptors and append its full descriptor exactly
+as in Definition 11.3. One CTL sets parity A. All registers then really
+are empty and the compiled Initialize can run. The $r$ here is a finite
+syntactic compiler constant, whose every written bit/cell is counted;
+it is not an unacquired data-dependent bound. In particular no uninitialized
+source bank is assumed in order to construct the first bank.
+

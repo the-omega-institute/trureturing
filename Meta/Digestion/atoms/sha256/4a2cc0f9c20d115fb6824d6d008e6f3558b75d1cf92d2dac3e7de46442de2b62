@@ -1,0 +1,15 @@
+**Lemma 3.2 (Same-budget read-ready normal form).** At the selected $q$, such a design is represented by a common row distribution $\eta$ and common row-stochastic zero and one matrices $A,C$ on a finite set $\mathcal S$, with $|\mathcal S|\le M$. Two distinct configurations $d_0,d_1$ carry the decisions and are absorbing for both matrices. Every other configuration is committed to its next paid read. This preserves the joint law of $(T,D)$ under both sources.
+
+Proof. Compose initialization with the state-based choice to read or stop, placing stopping probability on its emitted label. After a bit read, compose the update with the ensuing choice to read or stop. All information retained through that choice is already in the complete configuration, so these stochastic compositions add no persistent state. Merge terminal configurations with the same label, retaining distinct labels $d_0,d_1$, and fix their rows under both bit matrices. Before a label is reached, the read sequence and decision agree with the original design. Holding the label fixed on unused future bits changes neither actual $T$ nor $D$. Fresh update randomness is marginalized into each stochastic row; it is not replaced by a deterministic machine with an accessible random tape. This is the continuation's Lemma 23.4 as applied pointwise by the uniform companion's Lemma 3.2. $\square$
+
+Suppress $q$ in $f_i,S_i,\mu_i$ and the actual machine when convenient. For analytical purposes define
+
+$$
+K_k=A^kC,
+\qquad U_i=\sum_{k\ge1}f_i(k)K_k,
+\qquad \nu_i=\sum_{u\ge0}\frac{S_i(u)}{\mu_i}\eta A^uC.
+\tag{3.2}
+$$
+
+These stochastic averages retain the absorbing labels. The map $k\mapsto K_k$ is common to both source laws; the first-wait map $u\mapsto\eta A^uC$ is also common. The analytical continuation after a stop supplies no new operational observation or paid read.
+

@@ -1,0 +1,23 @@
+**Open problem 8.2 (richer retained relations).** Consider finite terms
+with the explicit grammar
+
+$$
+A::=\alpha\mid\beta\mid z_j\mid\langle A,A\rangle
+       \mid\rho^k(A)\mid\rho^{n_i}(A),
+\qquad k\in\mathbb N\text{ a supplied numeral}.
+\tag{NUE.24}
+$$
+
+For a finite Boolean combination of equalities between these terms,
+with repeated names shared, all $z_j$ existentially ranging over
+$\mathcal T$, and free natural parameters $n_i$ subject to chronology,
+give an exact effective parameter projection and finite native witnesses.
+No quantified addresses, arbitrary replacement operation, rational
+trees or alternating tree quantifiers are included in this question.
+A solution must prove both directions at the identical parameter tuple.
+Proposition 6.3 shows why the present
+sourcewise coordinate cap is insufficient. It does not show that
+such a richer solver is impossible. A parameter-uniform extension
+of the fixed-power witness reduction is a possible separate route;
+its uniformity and admissible-language proof are not supplied here.
+

@@ -1,0 +1,16 @@
+**定理 32.2.2（结果 reduced form）。** 在同一假设下，
+
+$$
+\boxed{
+\Delta_Y
+:=\mathbb E[Y\mid Z=1]-\mathbb E[Y\mid Z=0]
+=\pi_C\tau_C.
+}
+$$
+
+**证明。**
+
+对 never-taker，两种工具值都使 $A=0$，排除限制下两项结果都是 $Y_0$；差为零。对 always-taker，两种工具值都使 $A=1$；差也为零。对 complier，$Z=1$ 产生 $Y_1$，$Z=0$ 产生 $Y_0$，差为 $Y_1-Y_0$。按主层质量加权并取期望即可。证毕。
+
+<a id="section-32-3"></a>
+

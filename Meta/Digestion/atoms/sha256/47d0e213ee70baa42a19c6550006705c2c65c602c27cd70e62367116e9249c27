@@ -1,0 +1,111 @@
+### 104.7. Regularized separation from the unbiased boundary
+
+The unit-norm equation gives
+\[
+|z|^2=\frac{1+m^2-2mpr}{4q^2},\qquad
+\tfrac12<v<\tfrac{25}2,\quad |z|,|w|,|g|<\tfrac{25}2.
+\tag{104.42}
+\]
+For \(g\), use \(g^2<\eta\zeta<|z|^2/m\); and \(v>A>1/2\) also implies \(|z|^2>1/4\).
+Set \(\kappa=(m-1)/d\) and \(\xi=[p(Am-B/m)-d]/d\). Multiplying the second endpoint inequality in Lemma 104.5 by \(2m\) gives
+\[
+0<\kappa<m+2/p<139/14<10.
+\tag{104.43}
+\]
+The commutator rearranges exactly to
+\[
+g+p=\frac{p^2(Am^2+B)}{m\xi}>0.
+\tag{104.44}
+\]
+Since \(Am^2+B-m=(m-1)(Am-B)>0\), (104.42) yields
+\(\xi>2c_*/27>1/80\). The last inequality follows from
+\(c_*>27/160\), equivalently \(\sqrt{33}>227/40\).
+With \(m=1+d\kappa\), the apparent factors \(d\) cancel:
+\[
+\begin{aligned}
+C_*&=m-p[1+A\kappa(m+1)]=-m\xi<-1/80,\\
+g&=\frac{2ABp^2\kappa(m+1)-mp}{C_*},\\
+\lambda&=1-r+p(m+1/m)-\kappa(m+1)(g+p)/m.
+\end{aligned}
+\tag{104.45}
+\]
+These are regular expressions on the indicated bounded coordinates. No division by \(\Delta\) or \(j\) enters the following margin.
+
+**Lemma 104.6.** Every actual point satisfies
+\[
+d>10^{-6},\qquad
+\kappa>1/32,\qquad
+m-1>1/32000000.
+\tag{104.46}
+\]
+
+**Proof.** At \(d=0,m=1\), the closure of the positive cross-stress and unit-norm conditions would give
+\[
+v=w,\quad \eta=\zeta=v-1/2,\quad g=v-p+r/2,
+\quad r\le2p-1,\quad
+4(1-p)v^2=1-pr,
+\quad v\ge v_0:=\sqrt{1+2p}/2>1/2.
+\]
+The actual complex expression (104.24) then becomes
+\[
+j_0(v,p)=v-\frac{v^2(1+2p)}{p(1+p)}.
+\tag{104.47}
+\]
+For \(0<p<1\),
+\[
+4(1+2p)^3-25p^2(1+p)^2
+=4+24p+23p^2-18p^3-25p^4
+\ge4+24p-20p^2\ge4+4p>0.
+\]
+Hence \(j_0(v_0,p)<-v_0/4<-1/8\). This function is decreasing for \(v\ge1/2\), since \((1+2p)/(p(1+p))>3/2\).
+
+For an explicit margin suppose \(0<d\le10^{-6}\). From (104.43), \(m-1<10d\). The two linear identities in (104.21) and (104.42) give
+\[
+|w-v|<146d,\qquad r<2p-1+145d.
+\tag{104.48}
+\]
+For the first, the three contributions are bounded by \(125d,12d,17d/2\). For the second, test \(M_0\) on \((1,-1)\) and use
+\((m-1)^2/m<m-1\), \(|g|<25/2\), and
+\(|Bm+A/m-1|<m-1\).
+Writing \(e=w-v\), the exact unit-norm expansion is
+\[
+4(1-p)v^2=1-pr+(m^2-1)/2-p(m-1)r
+-4(1-p)ve-2e^2.
+\]
+As \(1-p>1/32\), (104.48) implies
+\[
+4v^2\ge1+2p-E_d,\qquad
+E_d=12260d+1364224d^2.
+\tag{104.49}
+\]
+Indeed a lower bound before division is
+\((1-p)(1+2p)-155d-7300(1-p)d-42632d^2\).
+
+Set \(z_0=-v+i(p-1)v/q\), \(h_0=p\overline u\). Then
+\[
+|z-z_0|<584d,\quad |z_0|<25,\quad|h-h_0|\le d,
+\quad |h|\ge p>2/5.
+\]
+Comparison of the squared, linear and reciprocal-quadratic terms of (104.24) with their values at \((z_0,m=1,h_0)\) gives, respectively, bounds
+\(21900d,1950d,29329d\). For the last one, use
+\[
+\left|\frac{z^2}{\overline h}-\frac{z_0^2}{\overline h_0}\right|
+\le\frac{(|z|+|z_0|)|z-z_0|}{|h|}
++\frac{|z_0|^2|h-h_0|}{|h|p}
+<(54750+15625/4)d.
+\]
+Consequently \(|j-j_0(v,p)|<54000d\).
+If \(v<v_0\), (104.49) gives \(v_0-v\le E_d/4\), and the absolute derivative of \(j_0\) on this intervening interval is less than 7. If \(v\ge v_0\), its monotonicity is enough. In both cases
+\[
+j<-1/8+75455d+2387392d^2<0
+\qquad(0<d\le10^{-6}).
+\tag{104.50}
+\]
+The final comparison is exact at the right endpoint, where its value is
+\(-387051661/7812500000\). This contradicts \(j>0\).
+Finally
+\(p(Am-B/m)-pd=p(m-1)(A+B/m)<m-1\).
+The first endpoint inequality and \(1-p>1/32\) give
+\(m-1>d/32\), proving the other claims. In addition
+\(|dm+p(B-Am^2)|=md\xi>1/80000000\). \(\square\)
+

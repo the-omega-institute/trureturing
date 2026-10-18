@@ -1,0 +1,42 @@
+**Definition 4.1 (the three-value fiber).** Let $P=\{\varepsilon\}$ with its
+complete one-hole old row and let
+
+$$
+Q=\{L,RL,RRL,RRR\}.
+\tag{SJM.13}
+$$
+
+Use the epoch-zero literals
+
+$$
+(0,\varepsilon,\mathsf{branch}),\quad
+(0,R,\mathsf{branch}),\quad
+(0,RR,\mathsf{branch}),\quad
+(0,RRR,\mathsf{branch}),\quad
+(0,RRRL,\beta),
+\tag{SJM.14}
+$$
+
+and the positive records
+
+$$
+(1,RL,0,RRL,=),\qquad (0,RRL,0,RRRR,=).
+\tag{SJM.15}
+$$
+
+Add the reached negative records
+
+$$
+(0,RL,0,RRL,\ne),\qquad
+(0,RL,0,RRR,\ne),\qquad
+(0,RRL,0,RRR,\ne).
+\tag{SJM.16}
+$$
+
+Take any common certified final epoch $N\ge1$. Define
+
+$$
+U(y,z)=\langle z,\langle y,\langle\rho y,Fy\rangle\rangle\rangle .
+\tag{SJM.17}
+$$
+

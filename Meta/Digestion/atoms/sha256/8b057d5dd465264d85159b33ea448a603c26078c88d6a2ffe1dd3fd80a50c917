@@ -1,0 +1,103 @@
+**Proposition 19.2 (a strictly positive actual-law separation).**
+Reuse exactly the states of [NWO, Definitions 4.1 and 4.3,
+Theorems 4.2 and 4.4][COKNwoJoint]. For precision, let
+$Z=\{0,\ldots,15\}$ and, for each four-set
+$Q=\{z_0<z_1<z_2<z_3\}$, put $f_Q(z_i)=i$ and
+$f_Q(z)=0$ outside $Q$. Define $T_0=\alpha$ and
+$T_{h+1}=\langle T_h,\alpha\rangle$. In a fixed perfect
+ordered scaffold of height eleven, its $2048$ slots have public
+addresses $a$. Use $1820=\binom{16}{4}$ distinct slots $a_Q$
+for the $T_{f_Q(z)}$, four further slots for the binary digits
+of $z$, one for a fixed alpha marker, and alpha at all remaining
+slots. These are NWO's sixteen distinct states $x_z\in S_{15}$,
+of height at most fourteen. Let $\mu_0$ be uniform on them and
+zero elsewhere, and let $u$ be uniform on the entire $S_{15}$.
+Put
+
+$$
+s=|S_{15}|,\qquad
+\mu_* =\frac{63}{64}\mu_0+\frac1{64}u.
+\tag{COK.93}
+$$
+
+This is a rational probability positive at every original canonical
+state, including every variable shape. It satisfies
+
+$$
+\begin{aligned}
+\Omega_{15}(\mu_*)&\ge\frac{63}{256}+\frac1{16s}
+                                  >\frac{252}{1024},\\
+\ell_{15}(\mu_*)&\le\beta_{15}(\mu_*)\le\frac{205}{1024}.
+\end{aligned}
+\tag{COK.94}
+$$
+
+For every actual network of every size and every rational positive
+matching population at this one law,
+
+$$
+\log_2\Omega_{15}(\mu_*)-\mathcal U/n
+             +\mathcal I_{\rm cov}/n
+ >\log_2(252/205)>0.
+\tag{COK.95}
+$$
+
+Proof with the credited witness distinguished. NWO Theorem 4.2
+proves the entire finite-envelope value
+$\Omega_{15}(\mu_0)=3/16$ and gives a lawful one-block
+three-state attaining set. The sandwich (COK.84) therefore gives
+$\ell_{15}(\mu_0)=\beta_{15}(\mu_0)=3/16$.
+
+NWO's actual entering witnesses use
+
+$$
+E_0=\alpha,\quad E_1=\langle\alpha,\alpha\rangle,\quad
+E_2=\langle\beta,\alpha\rangle,\quad
+E_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle.
+$$
+
+Their actual $L$ replies are, respectively, absent, alpha, beta,
+branch. In the same scaffold, put $E_{f_Q(z)}$ in slot $a_Q$,
+alpha at the digit slots, beta at the marker and alpha elsewhere,
+obtaining the actual $u_z\in S_{15}$. One outside-owner group
+uses all the distinct ports $a_QL$ together. For each $z$ the
+single tree $u_z$ supplies its whole simultaneous group image;
+these are not independent coordinate witnesses. Both $x_z$ and
+$u_z$ have positive $\mu_*$ weight. Thus NWO Theorem 4.4 applies
+to the original complete decoration list and gives
+
+$$
+\Omega_{15}(\mu_*)\ge
+4\left(\frac{63}{64\cdot16}+\frac1{64s}\right).
+$$
+
+The external witness's weight is used for its support test, not
+inserted as a second local potential. Its local law has the
+owned digit tuple and the single incoming tuple each determining
+$z$, so its $k=1$ entropies are exactly $4$ and $0$, as in that
+supplier. This is the first inequality in (COK.94).
+
+For the other direction use homogeneity and the additive native
+pressure stability of [NPC, Theorem 6.1][COKNpcJoint]:
+
+$$
+\beta_{15}(\mu_*)
+ \le\frac{63}{64}\frac3{16}+\frac1{64}
+ =\frac{205}{1024}.
+$$
+
+No convexity of $\Omega$ is used; NWO disproves it. Corollary
+19.1 now gives (COK.95), because the strictly positive term
+$1/(16s)$ makes $\Omega_{15}(\mu_*)/\ell_{15}(\mu_*)$
+strictly greater than $252/205$. $\square$
+
+This is a consequence for the specified matching-population route
+on an existing credited actual witness, not a second hash
+construction or a new rate endpoint. Larger populations, covers
+or sheet counts cannot remove (COK.95). It does not exclude
+stability-closed or richer cap rules; the proof itself uses NPC
+stability for a bypass cap. Moreover
+$a_{15}\le\Omega_{15}(\mu_0)=3/16<\Omega_{15}(\mu_*)$,
+so this positive law is not an envelope minimizer. Pointwise
+separation does not refute optimizer-cofinality.
+

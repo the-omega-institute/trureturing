@@ -1,0 +1,16 @@
+**reachable-witness-installed** when
+
+$$
+\begin{aligned}
+\forall\eta\in\mathcal A\;\forall\mathbf n\in\mathbb N^{d_\eta}\;\forall h\in E_H\quad
+&\left(\operatorname{Adm}_\eta(\mathbf n)\land
+H_{\eta,h}(\mathbf n;\boldsymbol\delta)\right)\\
+&\Longrightarrow Y_h=R(\Theta_\eta(\mathbf n)).
+\end{aligned}
+\tag{UDB.22a}
+$$
+
+The reachable-witness construction in Theorem 4.2 installs halt rows with
+this property: it chooses a complete row from one admitted witness for every
+reachable halt, while **Shared** and (UDB.2) show that every source reaching
+that halt has the same row. An unreachable halt receives $Y_*$. **Total** and

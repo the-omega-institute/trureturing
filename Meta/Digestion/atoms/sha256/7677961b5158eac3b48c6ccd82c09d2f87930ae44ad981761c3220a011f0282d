@@ -1,0 +1,20 @@
+**Definition 3.1 (A compliant observer at a known common parameter).** Fix an integer $M\ge2$, a risk $0<\alpha<1/2$ and $q\in(0,1)$. A machine may depend arbitrarily on $(q,H,\alpha,M)$, including in its state set, initialization and real transition probabilities. Its initialization is independent of the source and its design is the same under the two true labels. Every action reads the next actual bit or stops with an internally emitted label $D\in\{0,1\}$. Updates use the current configuration, the bit just read and fresh independent randomness. There is no continuity assumption across $q$, bound on immutable transition-description precision, spectral gap, or positive lower bound on nonzero transitions.
+
+The total number of persistent configurations is at most $M$. This counts initialization configurations, active states, both decision labels, all control phases, registers and retained random choices. A stored seed or a counter selecting random updates belongs to the configuration. A supply of fresh independent coins supplies no additional retained information. Known $q$ is an immutable design input; every mutable use of information still passes through the counted configuration set.
+
+The only source access is the single consecutive history in Definition 2.2. There is no external clock, time, age, action counter, program counter, archive, read-length decoder, hidden true label, skipped bit, free gap, reset, second source or probability response. In particular the mathematical cost tally is not an input, and an external recipient does not decode $D$ from the time of stopping.
+
+The paid cost is $T$ when the machine reads $X_0,\ldots,X_{T-1}$. It includes initial zeros, ticks, every subsequent zero and any terminal partial gap. Initial stopping has $T=0$. Compliance requires just the two selected risks and the two separate pointwise termination and mean conditions:
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad \mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,
+\qquad \mathbb E_{i,q}T<\infty\quad(i=0,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+Write $\mathfrak A_M(q,\alpha)$ for this class. Unlike the source's one fixed $q$-free observer over two separate nuisance families, an element of this class may be chosen anew at each known common $q$. Full-family correctness is a sufficient stronger condition and is not required for the converse.
+

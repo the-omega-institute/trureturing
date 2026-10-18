@@ -1,0 +1,104 @@
+**Theorem 9.1 (strong optimal upper bound).** At every finite feasible
+strong point (GC.16) an original height-optimal instrument exists with
+at most six supported low and two high actual labels, hence
+$n\le8$. At $t/t_0=1$ or $2$ this construction needs at most four
+supported low and two high. No exact strong optimal minimum-count
+classification follows.
+
+Proof. Write $(u_d,v_d)$ as in (GC.16). JR's sharp-cost equality
+gives low and high coefficient Grams
+$\operatorname{diag}(u_d,v_d,1)$ and
+$\operatorname{diag}(1-u_d,1-v_d,0)$.
+Their contrast upper bounds are
+$\sqrt{u_dv_d}$ and $\sqrt{(1-u_d)(1-v_d)}$.
+Their sum is the requested $s^\dagger$, so the original contrast
+inequality forces equality in both Cauchy bounds and their alignment.
+
+The full complex equality face removes a common phase. On a low
+product Cauchy equality gives
+$|z|=\sqrt{v_d/u_d}|x|$, and the singular equation
+$x^2=\theta z^2+\omega w^2$ then fixes the remaining real ratio.
+Consequently all nonzero supported low products are proportional to
+the four rays
+$$
+\mathbf c_{\sigma,\upsilon}
+ =(\sqrt{u_d},\sigma\sqrt{v_d},\upsilon),\qquad
+K_{\sigma,\upsilon}
+ =\sqrt{u_d}D+\sigma\sqrt{v_d}T+\upsilon S.
+\tag{GC.37}
+$$
+The complete low Gram kills the first and mixed sign moments and
+forces total coefficient weight $1/4$ on each ray.
+For a fixed actual report, equality also aligns every supported
+high hidden Kraus direction with the corresponding ray. Proportional
+subdivision does not increase the absolute height. Thus the two
+actual high matrices
+$$
+H_\sigma=
+ \frac{\sqrt{1-u_d}D+\sigma\sqrt{1-v_d}T}{\sqrt2},
+\qquad \sigma\in\{\pm1\},
+\tag{GC.38}
+$$
+attain the high part's universal upper bound. They are invertible
+at this fixed source.
+
+The strong ray is $1/\sqrt{v_F}$ times the weak $F$ coefficient
+ray, since $u_d=\delta/v_F$ and $v_d=u_F/v_F$.
+Its physical null vector is
+$$
+n_{\sigma,\upsilon}
+ =(0,d\upsilon/h_2,-b\sigma\sqrt{v_d}/h_1)^T.
+\tag{GC.39}
+$$
+The homogeneous capacity is therefore still $\mathfrak c_f$.
+Let $C=t\mathfrak c_f$, $r=t/t_0\ge1$.
+Endpoint splitting bounds every original low height sum above while
+preserving all joint moments. If $a_{\sigma,\upsilon}$ is the
+saturated coefficient mass, the complete feasible conditions are
+$$
+0\le a_{\sigma,\upsilon}\le\tfrac14,\qquad
+\sum_{\sigma\upsilon=+1}a_{\sigma,\upsilon}=\frac1{2r},\qquad
+\sum_{\sigma\upsilon=-1}a_{\sigma,\upsilon}=\frac1{2r}.
+\tag{GC.40}
+$$
+Indeed, the diagonal failure moment is $\sum pb=W$ and the
+off-diagonal one is $\sum pb\,\sigma\upsilon=0$;
+$W/(t\mathfrak c_f)=1/r$. The second diagonal follows from
+$v_d=V/W$. Each ray's remaining pure mass is $1/4-a_{\sigma,\upsilon}$.
+
+Define the actual strong payoffs
+$$
+\ell_{\sigma,\upsilon}=\mathbf c_{\sigma,\upsilon}^TN
+                                      \mathbf c_{\sigma,\upsilon},\qquad
+f_{\sigma,\upsilon}=n_{\sigma,\upsilon}^T\Delta n_{\sigma,\upsilon}.
+\tag{GC.41}
+$$
+The low height is a linear function of the four saturated masses,
+with coefficient
+$|\ell_{\sigma,\upsilon}+Cf_{\sigma,\upsilon}|-
+ |\ell_{\sigma,\upsilon}|$ on each $a_{\sigma,\upsilon}$.
+The high part is the fixed sum
+$\sum_\sigma|\operatorname{tr}(H_\sigma\Delta H_\sigma^\dagger)|$.
+Thus a maximizing vertex of the product of the two parity intervals
+attains a universal upper bound for all original decompositions.
+
+Explicitly put $S_r=1/(2r)$,
+$L_r=\max(0,S_r-1/4)$ and $U_r=\min(1/4,S_r)$.
+In either parity pair choose its first saturated mass to be $U_r$
+when its coefficient is at least the second coefficient, and $L_r$
+otherwise; give the second mass $S_r$ minus the first. This
+maximizes that pair, including ties. At a vertex at least one ray
+has either zero saturated or zero pure mass, so there are at most
+three occupied pure/saturated pieces per parity. At $r=1$ both
+masses are $1/4$; at $r=2$ a vertex has masses $0,1/4$.
+There are then at most two pieces per parity.
+
+These finite families satisfy the exact common Gram, failure
+covariance and contrast equalities. Section 10 constructs them with
+the two high labels in (GC.38), the complement in the plus fibre,
+and the original cost and outputs. Their height matches the
+universal endpoint bound, hence they are optimal. The inherited
+four/five-low **feasibility** counts have not been promoted to
+height-optimal counts, and six low have not been proved necessary.
+$\square$
+

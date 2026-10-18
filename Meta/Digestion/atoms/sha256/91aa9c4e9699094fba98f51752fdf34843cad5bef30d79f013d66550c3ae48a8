@@ -1,0 +1,31 @@
+### The existing complete average and its positive tail mass
+
+For \(x>0\), let
+\[
+ E_1(x)=\int_{y>x}\frac{e^{-y}}y\,dy,\qquad
+ G(x)=k(\log(x/2)+\gamma)+Ce^x E_1(x).
+\]
+The actual \(Q(u)\ge1+u/2\) gives
+\((1/Q(u)-1)/u\le-1/(u+2)\); the complete affine substitution
+\(y=t(u+2)\) therefore gives \(K(t)\le A-G(2t)\).
+The full logarithmic FTC identity and \(C=1+k\) give the unit-mass average
+\[
+ G(x)=e^x\int_{y>x}e^{-y}
+ \left[k(\log(y/2)+\gamma)+\frac1y\right]dy.
+\]
+All integrals above are over their full specified domains and are absolutely
+integrable. Let
+\[
+ \Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right],\qquad
+ m(k)=ke^{-2/k}(\log2-1/2)=3k\delta e^{-2/k}.
+\]
+The scalar gap equals \(k[\log(ky)+1/(ky)-1]\ge0\).
+For \(y>x+2/k\), its value is at least \(k(\log2-1/2)\),
+and that part of the normalized complete average has mass \(e^{-2/k}\).
+Consequently, for every \(x>0\),
+\[
+ G(x)\ge\Lambda(k)+m(k),\qquad
+ K(t)\le R:=A-\Lambda(k)-m(k).
+\]
+The number \(R\) is independent of \(t\).
+

@@ -1,0 +1,65 @@
+**Theorem 80.2 (conditional all-positive-beta actual consequence).** Under all the premises of Definition 80.1, every such actual $N$, with all admissible third columns and every actual minimal Kraus rank $r\leq9$, satisfies
+
+$$
+\begin{gathered}
+g_N=\max_{R:M_5\to M_3\ {\rm CPTP}}F(RN,\mathrm{id}_3),
+\qquad g_N^2\leq T,\\
+\delta_N=\inf_{R:M_5\to M_3\ {\rm CPTP}}
+\|RN-\mathrm{id}_3\|_\diamond
+\geq1-\sqrt{1-\beta}.
+\tag{S.186}
+\end{gathered}
+$$
+
+The recovery optimization is over all complex CPTP maps on the whole five-dimensional output. The norm is unhalved, with every finite complex reference allowed.
+
+Proof. Keep the actual $V$ fixed. For any center $\omega$ on its actual environment, take its exact support $S$ of rank $k$ and then any one complex rectangular contraction $U:\mathbb C^5\to\mathbb C^3\otimes\mathbb C^k$. Use $A_{\omega,U}$ and $r_\psi$ of (S.5).
+
+For $k=1$, actual domination (S.8) gives $\|x_\psi\|^2\leq a$ for each complex unit $\psi\in\mathcal C$, so $r_\psi\leq\sqrt a<v$. The strict last comparison follows from $T-a=(1-u)(2u+1)/2>0$. No rank-five projection is inserted into the three-dimensional supported target.
+
+For $k\geq2$, $3k\geq6$ and $\operatorname{rank}U\leq5$. Complete its range to one five-dimensional subspace and choose its projection $P$ with $PU=U$. This is a completion after taking the center support, not a compression of a previously chosen larger projection presumed to retain its rank; $P=UU^\dagger$ is not required. Fix $D=I-P$ and its conjugated defect $E=\overline D$. The transpose identities (S.10), (S.12), (S.60) and actual cap domination give the same $M_\psi$ with
+
+$$
+r_\psi\leq f(Q_\psi,M_\psi)\leq H_a(M_\psi)
+\quad(\psi\in\mathcal C,\ \|\psi\|=1).
+$$
+
+For the same $V,\omega,U,P$, the third-input overlap $r_2>v$ would imply $q_2<d$ by (S.21). Hence simultaneous strict inequalities $r_\psi>v$ for every complex phase direction and $r_2>v$ would produce precisely (S.158). Theorem 76.2 excludes it for each $k\geq2$, including the full-support $k=2$ construction. Consequently
+
+$$
+\forall\omega\ \forall U:\quad
+\min\left\{\min_{\substack{\psi\in\mathcal C\\\|\psi\|=1}}r_\psi,\ r_2\right\}
+\leq v.
+\tag{S.187}
+$$
+
+The center and contraction, then the projection and common $\eta,L$, precede the directional tests. A direction witnessing (S.187) may depend on the center and contraction. This order does not supply a common input witness before $U$, nor exchange a direction-dependent contraction for a common recovery.
+
+For each fixed center, input densities and the complex rectangular-contraction ball are nonempty compact convex sets in finite real coordinates. The pairing $\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})$ is continuous and affine in each variable. Apply exactly (S.6) and (S.26), with the center held fixed:
+
+$$
+\begin{aligned}
+\min_\rho F_\rho(\Gamma,\mathcal C_\omega)
+&=\min_\rho\max_U\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_U\min_\rho\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_U\lambda_{\min}(\operatorname{Herm}A_{\omega,U})\leq v.
+\end{aligned}
+\tag{S.188}
+$$
+
+The last step uses (S.187): a least eigenvalue is at most that restricted test minimum. Only after this per-center conclusion take the center maximum in (S.7), obtaining $g_N\leq v$. There is no exchange of the center maximum with an input minimum. The Uhlmann contraction and the center rank impose no Kraus-number restriction on the physical recovery.
+
+Finally, for each allowed recovery $R$ and qutrit density $\rho$, choose a purification $|\Psi_\rho\rangle$ and measure the output against its pure identity target. The probability deficit yields trace distance at least $2(1-F_e(\rho,RN))$. This purification supplies a witness inside the original supremum over all finite complex references. The assumed interface (S.27) and the recovery infimum give
+
+$$
+\begin{aligned}
+\|RN-\mathrm{id}_3\|_\diamond
+&\geq2\left(1-\min_\rho F_e(\rho,RN)\right)
+=2\left(1-F(RN,\mathrm{id}_3)^2\right),\\
+\delta_N&\geq2(1-g_N^2)\geq2(1-T)=1-\sqrt{1-\beta}.
+\end{aligned}
+\tag{S.189}
+$$
+
+This uses a one-sided pure-target lower bound, not an equality between optimized diamond and fidelity objectives. The subset of input tests used in (S.187) restricts neither the recovery class nor the reference supremum. All actual-domain conclusions remain conditional on every interface in Definition 80.1. $\square$
+

@@ -1,0 +1,78 @@
+### 97.2. A nonlinear lift retaining the complete product
+
+**Theorem 97.1.** Let D be a Hermitian principal matrix on S with D_ff=0 on each original fibre intersection and D ker K=0. Put D_G=−overline R⊙D. There are feasible full Grams G_s,H_s for all sufficiently small real s of either sign such that
+
+\[
+ (G_s)_S=P+sD_G,\qquad (H_s)_S=K+sD,\qquad
+ T-G_s\odot H_s=L+s^2\overline R\odot D\odot D,
+ \quad L=T-G\odot H.                                            \tag{4}
+\]
+
+Every expression involving the principal R and D in a full coefficient is extended by zero outside S×S. In particular the complete original product is unchanged outside that set. The squares in (4) are ordinary entrywise complex squares.
+
+**Proof.** By (3), range((P_B)_S)⊆ker K. Hence D(P_B)_S=0. All coordinates of a_S are nonzero, so
+
+\[
+ D\operatorname{diag}(a_S)R=0,\qquad
+ (D_Ga_S)_i
+   =-\sum_jD_{ij}a_jR_{ji}
+   =-\bigl(D\operatorname{diag}(a_S)R\bigr)_{ii}=0.               \tag{5}
+\]
+
+The Hermitian matrix D_G has zero original fibre blocks. Equation (3) also gives
+
+\[
+ D_G\odot K+P\odot D=0,\qquad
+ (P+sD_G)\odot(K+sD)
+     =P\odot K-s^2\overline R\odot D\odot D.                    \tag{6}
+\]
+
+In the S,O partition write
+
+\[
+ G=\begin{pmatrix}P&B\\B^*&C\end{pmatrix},\qquad
+ H=\begin{pmatrix}K&E\\E^*&J\end{pmatrix}.
+                                                                    \tag{7}
+\]
+
+The generalized Schur criterion gives range E⊆range K and J−E*K⁺E≥0. It does not require J to be invertible: when the range condition holds, the exact factorization is
+
+\[
+ \begin{pmatrix}K&E\\E^*&J\end{pmatrix}
+ =
+ \begin{pmatrix}I&0\\E^*K^+&I\end{pmatrix}
+ \begin{pmatrix}K&0\\0&J-E^*K^+E\end{pmatrix}
+ \begin{pmatrix}I&K^+E\\0&I\end{pmatrix}.                       \tag{8}
+\]
+
+Conversely, positivity forces the range condition by testing kernel vectors, and completing the square gives the Schur inequality.
+
+Since D is Hermitian and annihilates ker K, it acts only on range K, where K is positive definite. Choose c>0 with −cK≤D≤cK. For |s|<1/c put d=c|s| and λ=1−d. The matrices K+sD and K have the same range and kernel. Inverting on that common range gives
+
+\[
+ K+sD\ge(1-d)K,\qquad
+ (K+sD)^+\le(1-d)^{-1}K^+,\qquad
+ \lambda^2(K+sD)^+\le K^+.                                  \tag{9}
+\]
+
+Define
+
+\[
+ G_s=\begin{pmatrix}P+sD_G&\lambda^{-1}B\\
+                    \lambda^{-1}B^*&C\end{pmatrix},\qquad
+ H_s=\begin{pmatrix}K+sD&\lambda E\\
+                    \lambda E^*&J\end{pmatrix}.              \tag{10}
+\]
+
+The range condition for H_s is unchanged, and
+
+\[
+ J-\lambda^2E^*(K+sD)^+E\ge J-E^*K^+E\ge0.                  \tag{11}
+\]
+
+Thus H_s≥0 even when J is singular and H has additional full kernel vectors.
+
+For G_s, extend a_S by zero on O. Equation (5), Pa_S=0 and B*a_S=0 show G_s a=0 exactly. Also G_s−G=O(|s|). The restriction of G to a⊥ has a strictly positive least eigenvalue because rank G=7. For all sufficiently small |s| of either sign, G_s is therefore positive definite on a⊥ and has the same full kernel span(a). Every original fibre block remains I₂, including fibres meeting both S and O: their cross entries were zero and remain zero under scalar multiplication.
+
+Across S,O the multipliers λ and λ⁻¹ cancel entrywise, and the O×O blocks do not change. Equation (6) proves (4). If O is empty, the cross blocks are absent and the same proof reduces to the ordinary face paths. No rank preservation for H_s is needed. ∎
+

@@ -1,0 +1,13 @@
+**Corollary 6.5 (exact post-update image on the full balanced slice).** As $t$
+ranges over $\mathcal B_s$, the current boundary $q_H(\rho t)$ has exactly
+$2s+1$ values, indexed by
+$k_1\in\{-2s,-2s+2,\ldots,2s\}$. This is a coarser partition than the initial
+two-window boundary. The family in Theorem 6.4 retains the stronger requirement
+that the entire initial boundary is already common.
+
+Proof. The current boundary is $(0,E_1,6s)$. Formula (DAF.15) makes its phase
+a function of $k_1$, and (DAF.13) realizes every displayed sum $P+Q$. Normal-form
+uniqueness separates these sums. Initial pairs with the same sum can have
+different $k_0$, so the post-update image alone must not be substituted for a
+common supplied initial boundary in Theorem 6.4.
+

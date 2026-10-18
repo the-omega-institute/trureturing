@@ -1,0 +1,35 @@
+**引理 3.3（Four nonnegative spectral weights）。** In the notation of Lemma 3.2,
+for $\epsilon,\delta\in\{+1,-1\}$ put
+
+$$
+\begin{aligned}
+p_{\epsilon\delta}&=\frac{(1+\epsilon a)(1+\delta b)}4,\\
+u_{\epsilon\delta}&=h_{1,\epsilon},\qquad
+v_{\epsilon\delta}=h_{2,\delta},\\
+Q_{\epsilon\delta}&=2u_{\epsilon\delta}u_{\epsilon\delta}^\dagger
+ +2v_{\epsilon\delta}v_{\epsilon\delta}^\dagger+ww^\dagger.
+\end{aligned}
+\tag{3.4}
+$$
+
+All $p_{\epsilon\delta}$ are nonnegative, sum to one, and satisfy
+
+$$
+I_5+iX=\sum_{\epsilon,\delta}p_{\epsilon\delta}Q_{\epsilon\delta}.
+\tag{3.5}
+$$
+
+Proof. Every factor $1\pm a,1\pm b$ is nonnegative. Summing their products
+gives $\sum p_{\epsilon\delta}=1$. For a fixed $\epsilon$, the coefficient
+of $h_{1,\epsilon}h_{1,\epsilon}^\dagger$ on the right of (3.5) is
+
+$$
+2\sum_\delta p_{\epsilon\delta}=1+\epsilon a.
+$$
+
+The coefficient of $h_{2,\delta}h_{2,\delta}^\dagger$ is likewise
+$1+\delta b$, and the coefficient of $ww^\dagger$ is one. These are exactly
+the spectral coefficients of $I_5+iX$. Equality of these coefficients in
+an orthonormal basis proves the matrix identity (3.5), also when some of
+the coefficients coincide or vanish. $\square$
+

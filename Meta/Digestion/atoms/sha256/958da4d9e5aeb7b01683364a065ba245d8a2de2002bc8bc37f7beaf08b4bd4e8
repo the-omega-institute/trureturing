@@ -1,0 +1,114 @@
+**Theorem 15.1 (two-companion whole-group deletion on the original face).**
+Retain Assumptions 1.1 and 1.4 and $t>T_3$. Suppose
+$w^0\in\mathcal P(r)$ has nine positive coordinates $I$ in
+nine distinct complete groups, $H_I$ invertible, and exactly four
+pure and five saturated coordinates. Suppose two distinct occupied
+pure coordinates $p_1,p_2$ have available zero-weight saturated
+companions $j_1,j_2$ in their own compatible groups. Then another
+finite law in $\mathcal P(r)$ uses at most eight complete groups,
+with the same $B(t)$, $K=r$, $J_t$ and original absolute height.
+The condition $C(1+1/m)<1$ also suffices, and the sufficient
+original range of Corollary 14.3 supplies $t>T_3$.
+
+Proof. Retain every column and set, for $z_1,z_2\ge0$,
+
+$$
+\begin{gathered}
+w_{j_1}(z)=z_1,\qquad w_{j_2}(z)=z_2,\\
+w_I(z)=w_I^0-H_I^{-1}(H_{j_1}z_1+H_{j_2}z_2),\qquad
+w_i(z)=0\quad(i\notin I\cup\{j_1,j_2\}),\\
+\mathcal D=\{z\in\mathbb R_{\ge0}^2:w_I(z)\ge0\}.
+\end{gathered}
+\tag{IC.66}
+$$
+
+Strict old positivity gives a small feasible quadrant. The set is
+closed, and the mass row gives $z_1+z_2\le1$ on it, so it is
+bounded. Every feasible point preserves $H w=(B,r)^T$; contact
+equality preserves $J_t$. No pure coordinate is activated.
+A nonselected old coordinate dying empties its group, since its
+unused companions stay zero. A selected parent $p_i$ dying with
+$z_i=0$ also empties its group. Any positive satellite belongs to
+an original group, so either event leaves at most eight groups.
+
+Follow each coordinate axis to its finite first exit. Existence and
+strict positivity of the exit time follow from the mass row, exactly
+as in (IC.63). Unless an exit already empties a group, on the first
+axis the only dying coordinate is $p_1$, and on the second it is
+$p_2$. Ties with any other old coordinate empty a group: on that
+axis the other selected satellite is still zero. Thus it remains
+only to consider these two exclusive exits.
+
+Write the selected parent weights as
+
+$$
+w_{p_1}=u_1-c_{11}z_1-c_{12}z_2,\qquad
+w_{p_2}=u_2-c_{21}z_1-c_{22}z_2,\qquad u_1,u_2>0,
+\quad C_p=(c_{ij})_{i,j=1}^2.
+\tag{IC.67}
+$$
+
+The exclusive axis exits imply, with $u_1,u_2$ retaining their
+original intercept meanings from (IC.67),
+
+$$
+c_{11},c_{22}>0,\qquad
+r_2:=u_2-c_{21}u_1/c_{11}>0,\qquad
+r_1:=u_1-c_{12}u_2/c_{22}>0.
+\tag{IC.68}
+$$
+
+These strict inequalities include zero or negative off-diagonal
+coefficients; no sign is presumed for them.
+
+If $\det C_p>0$, solve both parent equations:
+
+$$
+z^*=\frac1{\det C_p}
+\begin{pmatrix}u_1c_{22}-c_{12}u_2\\c_{11}u_2-c_{21}u_1\end{pmatrix}
+\in\mathbb R_{>0}^2.
+\tag{IC.69}
+$$
+
+The numerators are $u_1c_{22}-c_{12}u_2=c_{22}r_1>0$ and
+$c_{11}u_2-c_{21}u_1=c_{11}r_2>0$ by (IC.68).
+Along $z=s z^*$,
+$0\le s\le1$, the selected weights are exactly $(1-s)u_i$.
+If any nonselected old coordinate first reaches zero at or before
+$s=1$, that event empties its group, with all preceding weights
+nonnegative. If none does, the endpoint is feasible and both selected
+parents vanish, leaving only the two other pure coordinates. This
+contradicts the uniform same-$B(t)$ rigidity of Theorem 14.2.
+A simultaneous nonselected zero at $s=1$ is already the required
+whole-group exit, whether or not both parents also vanish.
+
+If $\det C_p\le0$, then
+$c_{12}c_{21}\ge c_{11}c_{22}>0$. The off-diagonal entries
+are nonzero and have the same sign. They cannot both be positive:
+(IC.68) would imply
+$c_{21}<u_2c_{11}/u_1$ and
+$c_{12}<u_1c_{22}/u_2$, whose product contradicts that inequality.
+Hence both are strictly negative. The direction
+
+$$
+d=(-c_{12},c_{11})^T\in\mathbb R_{>0}^2,\qquad
+C_p d=(0,\det C_p)^T
+\tag{IC.70}
+$$
+
+keeps $p_1$ constant and makes $p_2$ nondecreasing on $z=sd$.
+This includes $\det C_p=0$, when both parents are constant.
+Along this ray the old total mass is $1-s(d_1+d_2)$, while the
+selected parents retain their positive initial masses. Thus at least
+one nonselected old coordinate has negative derivative. Its finite
+positive first-exit minimum gives a feasible endpoint with a dead
+nonselected coordinate, hence a whole-group deletion. Zero
+coefficients and determinant zero introduce no missing case.
+
+In every case an entire original group disappears, and only satellites
+of already occupied groups were activated. Every remaining paired
+fraction is its saturated mass divided by its positive total mass,
+so is legal. FC Theorem 3.3 merges the endpoint law without height
+loss. The finite surviving coefficient masses are strictly positive
+after zero coordinates and zero groups are omitted. $\square$
+

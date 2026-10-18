@@ -1,0 +1,27 @@
+**Definition 1.3 (complete targets and error).** Define the target live matrix $B_y^{\rm tar}$ and the separate failure measures by
+
+$$
+\begin{gathered}
+d_y=\left(\frac y{128},\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),
+\qquad (B_y^{\rm tar})_{ij}=\sqrt{d_{yi}d_{yj}},\\
+f_y(t)=\frac{6y}{(y+6t)^2},\qquad
+w=(0,1/4,1/2,1/4,0),\qquad P_f=|f\rangle\langle f|,\\
+\Omega_{y,e,n}^L=EU_{e,n}B_y^{\rm tar}U_{e,n}^\dagger E^\dagger,
+\qquad \Omega_{y,e,n,j}^f(dt)=w_j f_y(t)dt\,P_f.
+\end{gathered}
+\tag{RG.4}
+$$
+
+The live trace is $y/(y+6)$; total failure trace is its complement. Exact elapsed time $t$ means absolute time $6+t$. Labels $1,3$ remain distinct; $0$ and $13$ remain named zero-density sectors. First executed failure is absorbing; old stopped archives remain in their own branches.
+
+The processor receives the sole specimen and fixed common metadata, blanks, calibration, source/epoch identity, permissions, controller state and aligned clock. It receives no history record, source-dependent installed programme, waveform or helper specimen. Its original error remains
+
+$$
+\mathcal E(\Phi)=\max_{y,e,n}\frac12
+ \|\Phi(E\rho_{y,e,n}E^\dagger)-\Omega_{y,e,n}\|_{1,\mathrm{cq}},
+\qquad \mathcal E_* =\inf_{\Phi\ \mathrm{common\ CPTP}}\mathcal E(\Phi).
+\tag{RG.5}
+$$
+
+The full cq norm adds the coherent live trace norm and variation trace norms in all separately labelled exact-time sectors, using a common dominating measure that includes atoms and singular parts. Abort, rejection, wrong support, singular additions and every zero-target extra outcome count. There is no conditioning on any new acquisition or survival event.
+

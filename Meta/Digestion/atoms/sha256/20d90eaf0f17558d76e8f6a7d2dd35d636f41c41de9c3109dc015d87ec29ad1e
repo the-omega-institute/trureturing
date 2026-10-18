@@ -1,0 +1,21 @@
+**Corollary 8.2 (extended budgets).** Allowing infinite coordinates in an
+upper budget, the feasible set in the bounded case is the upward closure
+of the same $\mathcal B$. In the unbounded case it is exactly
+
+$$
+\{(\infty,d,\infty):d\in\mathbb N\cup\{\infty\}\},
+\tag{CAR.37}
+$$
+
+with the minimal extended vector $(\infty,0,\infty)$ attained by the
+static whole-source traversal.
+
+Proof. This is the argument of JRF Corollary 5.5 with the matched suppliers
+in Theorem 8.1. A finite raw bound gives a finite reachable reply tree and
+therefore finite worst lengths and deterministic update segments. A finite
+length bound gives a finite raw bound after cap and cleanup. If both raw
+and length bounds are infinite, the static supplier in the bounded case
+fits any nonnegative update bound. In the unbounded case both indicated
+coordinates must be infinite and the zero-update traversal attains the
+remaining bound. $\square$
+

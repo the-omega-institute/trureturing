@@ -1,0 +1,44 @@
+**Proposition 56.2 (unique root, explicit value and order).** The root in (56.2) exists uniquely in $[0,1/10]$. With $m=7+2\delta$ it is
+
+$$
+\rho_*=
+\frac{24m-7\sqrt{625-m^2}}{625}
+=\frac{4\delta(7+\delta)}
+ {24m+7\sqrt{625-m^2}}.
+\tag{56.3}
+$$
+
+Furthermore $B(\rho_*,\delta)<1$, and $B(\rho,\delta)$ is strictly increasing in $\rho$ on $[0,1/10]$.
+
+Proof. On this interval $K\ge99/100$ and
+$g'(\rho)=24-7\rho/K>23$. At the lower comparison point,
+$g(\rho_-)-2\delta=-7(1-K(\rho_-))<0$.
+Use the unchanged endpoint estimate (54.16), whose assumptions are precisely $\rho=\rho_+$ and $0<\delta\le1/100$:
+
+$$
+g(\rho_+)-2\delta
+\ge\frac{551}{3025}\delta^2>0,\qquad
+0<\rho_+\le\delta/11<1/10.
+\tag{56.4}
+$$
+
+Continuity and strict monotonicity give the asserted root and both strict orders. The unsquared root equation is $24\rho+7K=m$. Squaring gives
+$625\rho^2-48m\rho+m^2-49=0$, with roots
+$(24m\pm7\sqrt{625-m^2})/625$.
+The plus root has $m-24\rho<0$: here $7<m\le351/50$ and $\sqrt{625-m^2}>23$, so $7m-24\sqrt{625-m^2}<0$.
+It cannot satisfy the unsquared equation. For the minus root,
+$m-24\rho=7(7m+24\sqrt{625-m^2})/625>0$, so it has the required sign. Rationalizing its numerator gives the second expression in (56.3), using $m^2-49=4\delta(7+\delta)$.
+
+Strict increase of $B$ is exactly the derivative calculation (54.11), not a new envelope. For the needed comparison with the large-error witnesses, $\rho_+\le\delta/11$ gives
+$25\rho_+\le1/44$ and
+$t_{25}(\rho_+,\delta)^2\le100\delta+625\delta^2/121<121/100$.
+Consequently
+
+$$
+B(\rho_*,\delta)^2\le B(\rho_+,\delta)^2
+<\frac1{5000}+\left(\frac{247}{440}\right)^2<1.
+\tag{56.5}
+$$
+
+These statements use only the public $\delta$. They supply neither a source observation nor a radius label. □
+

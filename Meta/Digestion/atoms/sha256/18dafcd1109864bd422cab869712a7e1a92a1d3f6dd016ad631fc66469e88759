@@ -1,0 +1,11 @@
+**Example 7.1 (actual entry and elapsed lag remain erased).** Preparation
+at $u=\alpha$ followed by lag $k=1$, and preparation at $v=\beta$
+followed by lag zero, both give current $y=\beta$ and retained $d=0$.
+Their current intrinsic depth is correctly decoded as one. Their actual
+entries and lags differ. Even the complete current tree and its entire
+raw interface agree. This is the existing true-entry obstruction of
+[JM, §37][JM] restricted to this calibration scheme; it supplies no new
+entry-recovery result. Adding a retained $\nu(u)$ would permit
+$k=\nu(y)-\nu(u)$, but would be additional retained preparation
+information outside the least-$d$ scheme.
+

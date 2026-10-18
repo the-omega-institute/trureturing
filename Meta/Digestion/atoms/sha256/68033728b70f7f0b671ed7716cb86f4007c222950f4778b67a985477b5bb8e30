@@ -1,0 +1,31 @@
+**Theorem 8.1 (strict original-code projection profile).** Retain $w,P_0$
+from Proposition 5.2 and put $a=\sqrt{11472}/169<1$. For every admissible
+$B\subseteq S_3^n$, let $r$ count its positive-weight coordinate
+projections that equal $P_0$. Then
+
+$$
+\Omega_w(B)\le169^n a^r.
+$$
+
+For the actual depth-$D$ perfect-scaffold slice with $n=2^{D-3}$,
+$D\ge3$, let $r_e$ be that count for each nonempty restricted fiber of
+any original correct complete code. Then
+
+$$
+\sum_e a^{r_e}\ge(33/13)^n.
+$$
+
+In particular, if every such fiber has $r_e\ge r_*$, the complete
+attained alphabet is at least $\lceil(33/13)^n a^{-r_*}\rceil$.
+
+**Proof.** On $P_0$ the joint hard-target partition is injective and
+has squared cell mass $11472$. Every other range-feasible projection
+has joint cap at most $169$: a light support has norm at most its total
+mass, while on a heavy support the joint partition refines the hard
+target supplied by [NCE, Theorem 4.3], whose squared cell mass is below
+$169^2$. Theorem 2.2 proves the first inequality. The original slice
+has total mass $429^n$ and its unchanged code fibers are admissible by
+[NPC, Theorem 7.1]. Sum their masses and divide by $169^n$. There is
+no premise that every fiber has a $P_0$ projection in the summed
+inequality. The last statement follows from $a<1$. $\square$
+

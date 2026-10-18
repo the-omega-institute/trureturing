@@ -1,0 +1,45 @@
+**Definition 44.1 (a local coordinate computed from paid points).**
+For two acquired points $q=(h,\alpha,\beta)$ and
+$q'=(h',\alpha',\beta')$, let $\operatorname{pv}$ be the fixed principal
+representative in $(-\pi,\pi]$ and compute
+
+$$
+\begin{aligned}
+X(q,q')&=h'-h,\\
+Y(q,q')&=2\operatorname{pv}(\alpha'-\alpha),\\
+D(q,q')&=r\left\{(\tfrac12-h/r)Y(q,q')
+                         -\operatorname{pv}(\beta'-\beta)\right\}.
+\end{aligned}
+\tag{44.1}
+$$
+
+These are computed numbers, not acquired deck labels. The connector
+of Definition 34.1, at scale $\rho$, starting at $q$ and using these
+numbers, ends exactly at the wrapped point $q'$: its real beta increment
+is $(1/2-h/r)Y-D/r=\operatorname{pv}(\beta'-\beta)$, with the original
+minus sign of the chronology. Its translated ordinary chronological
+increment remains $a_{\rm start}Y+D$.
+
+For analytic comparisons put $\bar A=W^1_{\cdot\wedge S}$,
+$\bar B=W^2_{\cdot\wedge S}$ and $\bar K=K_{\cdot\wedge S}$, and
+
+$$
+D^*_{s,t}=\bar K_t-\bar K_s-\bar A_s(\bar B_t-\bar B_s).
+\tag{44.2}
+$$
+
+If $|\bar B_t-\bar B_s|/2<\pi$ and
+$|(1/2-\bar h_s/r)(\bar B_t-\bar B_s)-D^*_{s,t}/r|<\pi$,
+then (44.1), on these two target points, equals
+$(\bar A_t-\bar A_s,\bar B_t-\bar B_s,D^*_{s,t})$.
+This is a verified local branch condition, not a global phase lift
+supplied by a Read. The exact composition rule is
+
+$$
+D^*_{s,t}=D^*_{s,v}+D^*_{v,t}
+                    +(\bar A_v-\bar A_s)(\bar B_t-\bar B_v).
+\tag{44.3}
+$$
+
+It follows by subtracting (44.2), including its stopped holds.
+

@@ -1,0 +1,29 @@
+**Definition 1.2 (supplied inputs and strict partial actions).** For every
+$a\in\mathbb F_q$, the same action names $\operatorname{append}_a$ and
+$\operatorname{delete}_a$ are supplied as common inputs to every comparison.
+They have the following partial semantics:
+
+$$
+\begin{aligned}
+\operatorname{append}_a(k,d,u)&=(k+1,d,ua),
+&&k<n\ \text{and}\ ua\in U_{k+1},\\
+\operatorname{delete}_a(k,d,u)&=(k-1,d-1,u_1\cdots u_{k-1}),
+&&d>0\ \text{and}\ u_k=a.
+\end{aligned}
+\tag{1.4}
+$$
+
+A false guard is a missing edge. There is no executable failure state,
+no budget replenishment, no arbitrary old-coordinate deletion, and no
+operation that reads a prescribed hidden next symbol. A successful edge's
+label is its requested action name and supplied value. The root readout is
+$(k,d,s)$, where $s=H_P^{(k)}u$. The entire prefix, a source identifier and
+an ordered operation archive are not additional root readouts.
+
+The state is an extendable current word. The input $a$ supplies a new value;
+legality asks whether that value leaves an extendable word. No tagged full
+codeword is carried through an execution. In particular, a deleted value
+may be replaced by a different supplied value when the new word is
+extendable. Existence of a completion in (1.2) does not give permission to
+read, predict or replace the unseen coordinates of one fixed hidden source.
+

@@ -1,0 +1,24 @@
+**Proposition 13.2 (scope of the three-coordinate conclusion).** Within
+Definition 10.1, a stable same-field restricted energy and its two-sign
+native limit exist on the declared $D$-independent analytic state class.
+They do not imply stability of the original nearby full point-source
+model or invariance of that state class under its attractive expression.
+They imply neither physical spatial dimension three nor an operation
+that realizes the restriction.
+
+Proof. Theorem 11.1 gives the restricted statement, and Theorem 12.1
+fixes its exact same-field and unit-source meaning and proves both the
+surviving full instability and the local noninvariance.
+A $q$-only free evolution, an energy evaluated on $Jz$, the energy of a
+different smeared source, and the full original point-source energy are
+therefore distinct mathematical tasks even when some restricted numerical
+values agree. The native full coherence menu still distinguishes the
+omitted phase. No projection/reset controller, amplitude preparation,
+acquired observation, finite precision law, spatial-axis map or mean
+selection appears among the premises. None can consequently be inferred
+as a realization of these analytic conclusions. All diffusion, attraction,
+covariance, density, clock, killing and amplitude-space assumptions remain
+explicit added mathematics. The sufficient window is not sharp; critical
+coupling equality, moving-data uniformity and $\varepsilon\to0$ uniformity
+are outside the assertions. $\square$
+

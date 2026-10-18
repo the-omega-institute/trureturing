@@ -1,0 +1,8 @@
+**Scope 10.4.** The result is finite: $\mathcal W$ is finite, all maps share
+one source and one $SO(3)$ action, and the source moments and projection class
+are those explicitly stated in Theorem 9.4. An infinite path closure requires
+its own operator convergence and summability hypotheses. The theorem still
+does not establish that the FIB source has this rotation action, that its
+paths are metric transports, or that the multiplicity rank is an ambient
+space dimension.
+

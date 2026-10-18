@@ -1,0 +1,38 @@
+**Definition 5.1 (transported-graft extension).** Fix public $m,r\ge0$,
+and set $T_j=\rho^j(\alpha)$ for $j\ge0$. Replace the fixed graft menu
+by the following bounded work protocol. After $j$ actual substitution
+commits and $a$ actual graft commits, $0\le j\le r$, $0\le a\le m$,
+the legal next actions are a substitution if $j<r$, and a left graft
+$G_{T_j}$ if $a<m$. A terminal work history has exactly $r$
+substitutions and $m$ grafts. Each graft requires a freshly prepared
+actual copy of $T_j$ with its construction and delivery charged. A simple
+preparation starts with a fresh alpha and performs $j$ substitutions on
+that known constant; none is an update of the unknown original source.
+
+Work action outputs are the committed action, direction, exact constant
+syntax when present, $\mathsf{ok}$ and successor work tree. No further
+timestamps or opaque preparation identities are part of this mathematical
+label. The same binding, access, successful-execution and isolation
+conditions as Assumption 2.1 apply. Actual receipts confirm commits; a
+requested but uncommitted action does not increment a counter or archive.
+All other operations are undefined. The target is the ordered successful
+work word, with each graft's constant determined by its actual prefix.
+The preparation history of that constant is a separate excluded history.
+
+Write $\mathcal W_{m,r}$ for all binary words with $m$ letters
+$\mathsf G$ and $r$ letters $\mathsf S$. These are actual selector
+inputs, not a retained common script. Let $X_{m,r}(t,w)$ be the endpoint
+under the prefix-dependent graft rule.
+
+For all prefixes of these words, the complete displayed code will be
+$(x,g,b,R)$, with remaining counts $g=m-a$, $b=r-j$ and the actual
+commit-updated record $R$ of (ER.18)–(ER.19). Its joint state includes
+the same source/session/work-type fields, work tree $x$, public reference
+$(m,r)$, permissions
+$P_{g,b}=\{\mathsf G:g>0\}\cup\{\mathsf S:b>0\}$ and archive/counter
+record $(g,b,R)$. The state domain is the image of actual acquired
+initialization and these paired work/record commits. No tuple with an
+unrelated tree, counter or record is admitted merely because each field
+occurs somewhere separately. Theorem 5.2 proves recovery and closure on
+this image.
+

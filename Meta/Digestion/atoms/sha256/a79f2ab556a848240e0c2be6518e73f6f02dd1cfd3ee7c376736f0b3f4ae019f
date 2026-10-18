@@ -1,0 +1,148 @@
+**Proposition 218.5 (An attained optimum over every real affine repair).**
+Let $L\ge5$, $0<\gamma<1/3$. Reuse the 111.1–112.2 family:
+P selects uniformly a three-subset of $\{1,\ldots,L,\star\}$, with
+$\star$ last and interpreted as label zero. It queries the first two
+numerical members increasingly, emits the first queried zero, or the
+third selected label on exhaustion. Let
+$R_0=(4,5;1,2,2,1)$ be a full N table and put
+
+$$
+p=(1-\gamma)P+\gamma R_0,\qquad
+d=\frac{3(1-\gamma)}{L+1},\qquad\varepsilon=1-d.
+$$
+
+Against targets $e_n$ on $\Omega_n$ and $e_0$ on $w_+$, the minimum
+TV error over every stopped $q_w=tp_w+z$, all real t and all signed
+constant z with total $1-t$, is attained and equals
+
+$$
+E_{\rm line}=1-\max\left\{\frac d{1+2\gamma},
+ \frac{d+\gamma}{1+(L+1)\gamma}\right\}.
+\tag{218.18}
+$$
+
+The two candidates attaining the two branches are
+
+$$
+q^A=\frac{p+\gamma(e_1+e_2)}{1+2\gamma},\qquad
+q^B=\frac{p+\gamma\sum_{j=0}^Le_j}{1+(L+1)\gamma}.
+\tag{218.19}
+$$
+
+In particular
+
+$$
+E_{\rm line}-\varepsilon
+ =\min\left\{\frac{2\gamma d}{1+2\gamma},
+ \frac{\gamma(2-3\gamma)}{1+(L+1)\gamma}\right\}>0.
+\tag{218.20}
+$$
+
+This is a quantitative obstruction to this reconstruction family.
+It gives no original hard-region separator or new amplitude classification.
+
+**Proof.** On every word in $\Omega_n$, P emits n exactly when its
+subset contains n, with probability $3/(L+1)$; the all-positive base
+has the same probability. For $n\ge3$, $R_0$ never emits n.
+For $n=1$, unequal bits at 4,5 make $R_0$ avoid 1; for $n=2$,
+equal bits make it avoid 2. Hence
+$\min_{\Omega_n}p_w(n)=d$ for every n and $p_{w_+}(0)=d$.
+These are attained readings on actual finite words.
+
+For completeness, the kernel coefficient calculation is explicit.
+With $C=\binom{L+1}{3}$ and $k_j=L-j+1$,
+
+$$
+\begin{aligned}
+P_w(j)&=C^{-1}\left[
+ \binom{k_j}{2}(1-w_j)+k_j\sum_{i<j}w_i(1-w_j)
+ +\sum_{i<h<j}w_iw_h\right]\quad(j\ge1),\\
+P_w(0)&=C^{-1}\sum_{i<j}w_iw_j.
+\end{aligned}
+$$
+
+For label j the sole nonzero positive-part contribution to H(P) is
+$h_j(j)=\binom{k_j}{2}/C$; label zero has none. Thus $H(P)=c(P)$.
+The $R_0$ coordinates are
+$R_{0,w}(1)=1-w_4-w_5+2w_4w_5$ and
+$R_{0,w}(2)=w_4+w_5-2w_4w_5$.
+The first two P coordinates use only addresses 1,2, so these terms do
+not overlap their old coefficients. Label 1 adds $2\gamma$ to H and
+$\gamma$ to c; label 2 adds $\gamma$ to H and zero to c.
+No other coordinate changes. Therefore
+$H(p)-c(p)=\gamma(e_1+e_2)$ exactly.
+
+For $t>0$, stopped membership is precisely
+$z\ge t\gamma(e_1+e_2)$ with $\sum z=1-t$.
+Thus z is nonnegative and $t\le1/(1+2\gamma)$.
+Set $s=(1-t)/t$, $v=z/t$. Then
+$s\ge2\gamma$, $\sum v=s$, $v_1,v_2\ge\gamma$ and all other
+coordinates are nonnegative. The exact error is
+$1-(d+\min_jv_j)/(1+s)$, including the positive coordinate.
+
+For fixed s, the largest common floor $m=\min_jv_j$ is characterized
+by $2\max(\gamma,m)+(L-1)m\le s$. It is attained by allocating
+the two mandatory floors and distributing the rest. Its value is
+
+$$
+m=\begin{cases}
+(s-2\gamma)/(L-1),&2\gamma\le s\le(L+1)\gamma,\\
+s/(L+1),&s\ge(L+1)\gamma.
+\end{cases}
+$$
+
+On the first interval $(d+m)/(1+s)$ has constant derivative sign.
+On the second it decreases since $d>1/(L+1)$.
+The maximum is therefore at $s=2\gamma$ or $(L+1)\gamma$,
+giving (218.19) and (218.18).
+
+For $t\le0$, choose for each label its attained d-reading, using $w_+$
+for zero. The least q reading among these $L+1$ tests is at most
+
+$$
+\frac{t(L+1)d+1-t}{L+1}\le\frac1{L+1}.
+$$
+
+So error is at least $L/(L+1)$, strictly worse than $q^A$, because
+$d/(1+2\gamma)>1/(L+1)$ when $\gamma<1/3$.
+All negative t and signed translations are thus included.
+For pure targets TV is one minus the correct probability; positivity
+then also meets the retained negative base and independent pair rows.
+Both endpoint kernels satisfy the constructive stopped conditions, so
+their normalized whole-table realizations exist at equality.
+Subtract $\varepsilon$ to obtain (218.20). $\square$
+
+At $L=5,\gamma=1/5$, the original error is $3/5$ and the best affine
+error is $5/7$, a gap $4/35$, attained by $q^A$.
+The different stopped law P meets the original cap.
+Moreover the plateau point is outside $H_L$:
+$(L+1)\varepsilon=L-2+3\gamma>L-2=\sum_{n\ge3}a_n$.
+The example defeats automatic affordability of the entire affine line,
+not the unrestricted comparison.
+
+Choose actual tails $a_{L+r}=\varepsilon2^{1-r}$, $r\ge1$, while
+$a_1=\cdots=a_L=1$. The original p tail error is exactly
+$\max(1-p_{w_+}(0),a_n)=\varepsilon$, including $a_{L+1}=\varepsilon$.
+For $q^A$ the positive-word zero probability is $d/(1+2\gamma)$;
+for $q^B$ it is $(d+\gamma)/(1+(L+1)\gamma)$.
+Each equals that candidate's attained finite success floor. Thus its
+positive-word error is its finite worst error. Both errors exceed
+$\varepsilon$, and every $a_n\le\varepsilon$ beyond L, so the exact
+max-tail identity gives that same candidate error at every actual tail,
+including $a_{L+1}=\varepsilon$. At the better branch the uniform
+original error is exactly $E_{\rm line}$.
+
+The lower bound also concerns original stopped rules in the explicitly
+restricted affine family whose full-carrier laws are
+$t\nu_x^p+\eta$, with one fixed signed measure $\eta$ independent of x.
+Project every other tape to zero while fixing marks $0,\ldots,L$.
+The law becomes $tp_w+z$, depending only on the low word.
+The class-preserving extraction in 110.2, with this fixed low-word law,
+approximates that law and takes a limit in the finite stopped simplex;
+it therefore preserves the law in this restricted extraction.
+Sources with increasingly late first zero supply the positive-word
+bound as the target tail vanishes. Projection cannot increase TV.
+This proves the affine-family lower bound for arbitrary addresses and
+full-carrier outputs within that family. It imposes no affine restriction
+on the unrestricted original competitors.
+

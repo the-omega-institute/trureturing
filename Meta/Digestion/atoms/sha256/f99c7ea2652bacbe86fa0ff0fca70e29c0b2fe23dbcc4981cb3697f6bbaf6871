@@ -1,0 +1,25 @@
+### 101.7. Scope
+
+Theorem 101.1 allows arbitrary complex \(G\) and outside records, unequal
+positive singleton weights and unequal positive angles, so it includes
+the positive exchange geometry without a separate symmetry assumption.
+Its strict rank conclusion at quarter error requires the explicit quotient
+in (17); no uniform positive gap follows.
+
+Theorem 101.5 is stronger than a restriction to two real principal Grams:
+only a real gauge of \(H_S\) is required, and the reality of the same common
+kernel is proved using principal best-response and normer uniqueness.
+This does not establish that every complex \(H_S\) has such a gauge.
+Theorem 101.6 extends the obstruction to a real gauge of either principal Gram.
+No rank preservation under averaging and no joint principal local-minimum
+transfer has been used.
+
+General complex phases, the other support patterns and the unrestricted
+global quarter problem remain open. In particular, none of the seven
+rank-\((7,6)\) support patterns has been excluded in full.
+The unrestricted global interval is still \([\sqrt3-\tfrac32,\tfrac14]\).
+All local-minimum statements concern the full calibrated domain.
+Global calibration may enlarge ranks and does not transfer local minimality
+from physical channels with leakage.
+
+

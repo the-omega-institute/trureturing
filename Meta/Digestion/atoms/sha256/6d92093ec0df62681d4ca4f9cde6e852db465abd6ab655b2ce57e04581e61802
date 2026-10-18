@@ -1,0 +1,32 @@
+## 185. Flat transverse U occurrences cannot have angle zero
+
+If u>m, U is not pi-selected by the choice of M. A flat transverse U
+occurrence cannot arise from selecting its companion A: the transverse
+flat inequality would imply a>u>m while A is pi-selected. It cannot
+arise from selecting the axes either. For pair {U,A}, every H-valued
+selected axis has value at most m<u, and every special selected axis
+has shifted value strictly below u+a by the fixed-pair special-edge
+barrier. Their shifted product is strictly below (u+a)^2 in all cases,
+contrary to axial flatness. Selecting U itself is excluded by p_U=0.
+Thus every transverse U occurrence is genuine in this case.
+
+Now suppose u<=m. The upper-gap theorem of Section 182 gives m-u<2. In a flat owner
+with reservoir pair {U,A}, selecting A transversely would require
+
+ a-u>=sqrt((r+1)(o+1))>2.
+
+But selected A belongs to H and has a<=m, so a-u<=m-u<2. This is
+impossible. If instead its axes were selected, every H-valued selected
+axis would have shifted value at most m-1, while
+
+ m-1<u+1<u+a.
+
+Every special selected axis again has shifted value <u+a. Thus the
+product of the two shifted axis values would be strictly below (u+a)^2,
+contradicting axial flatness. The only remaining flat selection is the
+transverse U,U pair. Therefore every flat transverse U occurrence has
+angle pi, never zero.
+
+This proves the required assertion for either ordering of u and m.
+It does not assume that arbitrary H labels have genuine witnesses.
+

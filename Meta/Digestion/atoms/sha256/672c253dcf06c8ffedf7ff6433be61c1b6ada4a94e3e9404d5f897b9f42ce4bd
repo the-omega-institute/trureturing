@@ -1,0 +1,53 @@
+**定理 32.1（已知二维零平面的充分逆）。** 外部预先给定二维实多项式平面 V，次数均至多三，记 e_i 为在 i 的评价泛函。对任意基 f,h 令
+
+$$
+\Delta_{ij}=f(i)h(j)-f(j)h(i).
+\tag{32.3}
+$$
+
+若 e_6 在 V 上恒零，且
+
+$$
+\Delta_{57}\Delta_{24}\Delta_{13}\Delta_{15}\Delta_{35}
+\Delta_{02}\Delta_{04}\ne0,
+\tag{32.4}
+$$
+
+则固定时间词 J,M,J,M,J,J,J 的八次总读，在所有严格源、所有整个非零 g 属于 V、所有 d=a_0-g(0) 的完整类上单射，并有必要且充分的完整逆。这是充分条件，不主张其必要性或最小性。
+
+For any basis f,h, Deltaij=f(i)h(j)-f(j)h(i). Replacing the basis by an invertible two-by-two coefficient change multiplies every such determinant by the same nonzero determinant. Thus each nonvanishing requirement is basis independent. Deltaij nonzero means that the evaluation map q -> (q(i),q(j)) on the entire V is bijective. Its simultaneous kernel contains only the zero polynomial. These are sufficient assumptions; no minimality or necessity assertion is approved.
+
+**trace identity.**
+
+For A=[[a,u],[v,e]], tr(AP)=e+(a-e)r+v b+u c. This follows by taking the two diagonal entries of AP and collecting coefficients. In particular, the coefficient of b is the lower-left entry of A; left multiplication and source transposition must not be confused.
+
+**complete table.**
+
+clock: 0 ; action: initial ; Q: [[1,0],[0,1]] ; trace: 1
+
+clock: 1 ; action: J ; Q: [[0,1],[1,0]] ; trace: j=b+c
+
+clock: 2 ; action: M ; Q: [[1,0],[1,1]] ; trace: 1+b
+
+clock: 3 ; action: J ; Q: [[1,1],[1,0]] ; trace: j+r
+
+clock: 4 ; action: M ; Q: [[1,0],[2,1]] ; trace: 1+2b
+
+clock: 5 ; action: J ; Q: [[2,1],[1,0]] ; trace: j+2r
+
+clock: 6 ; action: J ; Q: [[1,0],[2,1]] ; trace: 1+2b
+
+clock: 7 ; action: J ; Q: [[2,1],[1,0]] ; trace: j+2r
+
+**independent multiplication check.**
+
+Starting at I, J gives J; M applied to J gives [[1,0],[1,1]]; J exchanges its rows to give [[1,1],[1,0]]; M applied there gives [[1,0],[2,1]]; J gives [[2,1],[1,0]]; the last two J actions alternate these last two matrices. Applying the trace identity to each displayed matrix gives exactly the table. Consequently Q6=Q4 and Q7=Q5 as matrices, while their gains are still evaluated at 6 and 7 respectively.
+
+**strict trace check.**
+
+J and M are nonnegative invertible matrices. A product remains nonnegative and invertible, hence has no zero row. Pairing each of its rows with a strictly positive column of P gives a strictly positive entry of QP. Thus every actual trace is strictly positive. In the table this also follows directly from 0<r<1 and b,c>0. No assertion about the sign of the gain follows or is needed.
+
+**clock and drift check.**
+
+The actual read at clock 6 is always y6=d, because every gain in V vanishes there. The clock-6 action and acquisition are both required and retained. Q7=Q5 permits a repeated-source-trace identity using two distinct gain samples; it never permits replacing g(7) by g(5). Interpreting saved earlier responses after y6 reveals d is legal because all earlier actions were fixed.
+

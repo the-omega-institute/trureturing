@@ -1,0 +1,62 @@
+**约定 220.26（Full-row transport and exact actual tails）。**
+The suppliers 109.1, 110.1–110.2 and IX 207.20 are reused at their
+stated scopes. The degree-two stopped-kernel criterion 109.1 is for
+probability-vector kernels with $c\ge H$ and a common schedule-mass
+budget, not arbitrary scores. Exact closed-cap transport 110.2 retains
+arbitrary-address and full-carrier competitors in both directions.
+Its necessity uses measurable projection, countability to choose one
+common conull finite-handoff seed event over sources, vanishing tails
+of the maximum address of the same whole preselected schedule, actual
+finite witnesses, finite-execution cutoffs and finite-catalog compactness.
+Its sufficiency executes one normalized complete allocation satisfying
+all independent base, correct, pair and positive rows.
+
+If the actual output law $p_x$ is supported on
+$\{\theta_0,\ldots,\theta_H\}$ and the actual first zero is
+$n=n(x)>H$, its exact marked-law error is
+
+$$
+ \operatorname{TV}(p_x,\lambda_x^a)
+                   =\max(1-p_x(0),a_n).\tag{220.23}
+$$
+
+The two laws can overlap only at $\theta_0$, so their total common
+mass is $\min(p_x(0),1-a_n)$; its complement gives (220.23).
+Thus this tail error is at most $\varepsilon$ exactly when
+$p_x(0)\ge1-\varepsilon$ and $a_n\le\varepsilon$.
+Finite output support alone does not identify the laws at different
+actual sources with the same low prefix.
+
+A sufficient additional hypothesis for a common tail law is execution
+of one finite probability-vector kernel $P$ on $\{0,1\}^H$: its
+source-independent seed selects the whole schedule and table, all
+observed coordinates lie in $\{1,\ldots,H\}$, and its output uses
+only that seed and the acquired replies. Then
+$p_x=P(q_1(x),\ldots,q_H(x))$. Every actual $n(x)>H$ has low word
+$1^H$; for the same seed the executed low transcripts and outputs
+therefore agree on all these sources. Hence
+$p_x=P(1^H)=p_{1^H}$ and (220.23) becomes
+$\max(1-p_{1^H}(0),a_n)$ under this additional hypothesis.
+Here $1^H$ denotes a finite input word, not an infinite all-positive
+source. In particular the laws in 220.23 observe only addresses
+$1,\ldots,6$, so this substitution at $H=6$ yields (220.22).
+The low-coordinate hypothesis qualifies this substitution only;
+the original arbitrary-address/full-carrier competitors retain the
+entire scope of 90.1 and 110.2.
+
+The equality case $a_n=\varepsilon$ is retained. The active length
+is the strict threshold $L_a=\max(\{i:a_i>\varepsilon\}\cup\{0\})$.
+No chosen address is assumed at most $L_a$. The two horizon orderings
+use 207.20: extend a shorter active representation with actual tail
+rows when its amplitudes are at most the cap; restrict a longer
+representation and project surplus labels when making a shorter
+comparison. A restricted kernel is not thereby an original attainer
+on removed active tails. Neither score operation extends this supplier.
+
+The earlier-output regression remains literal. At $0100$,
+$N(3,4;1,0,0,0)$ outputs the earlier unqueried label one.
+Its base/correct/pair event readings are $(0,1,1)$; replacing this
+output by zero gives $(1,0,1)$. The original source $(19,436)$ has
+$N=1822917$ and realizes that four-bit pattern. Labels are not pruned
+to queried or later labels in the full catalog.
+

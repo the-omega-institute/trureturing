@@ -1,0 +1,41 @@
+**Lemma 64.2 (a three-channel one-calibration metric floor).** Let $x,y,o$ be three
+distinct points in an injectively metrized space, and suppose one positive calibration
+$\kappa$ is used for all three pair readings,
+\[
+\widehat G(p,q)=\frac{\kappa}{d(\iota p,\iota q)}.
+\]
+If $w,u,v>0$, $w=G(o,o)$, $G(o,x)=wu$, $G(o,y)=wv$, and $G(x,y)=wuv$ with
+$u+v<1$, then the maximum relative error on these three readings obeys
+\[
+\max_{pq\in\{ox,oy,xy\}}
+\frac{|\widehat G(p,q)-G(p,q)|}{G(p,q)}
+\ \ge\ \frac{1-u-v}{1+u+v}.                                      \tag{64.1}
+\]
+If the error is measured in the Green units themselves, then
+\[
+\max_{pq}|\widehat G(p,q)-G(p,q)|
+\ \ge\delta(A,B,C),\qquad
+\delta(A,B,C)=\frac{2(A+B-C)-\sqrt{4(A+B-C)^2-12(AB-C(A+B))}}{6},
+\tag{64.2}
+\]
+where $A=G(o,x)$, $B=G(o,y)$, and $C=G(x,y)$.
+
+Proof. Put $r_{pq}=\kappa/\widehat G(p,q)$. The metric triangle inequality is
+$r_{xy}\le r_{ox}+r_{oy}$. For $\epsilon\ge1$ the claimed lower bound is immediate. Under a relative error $0\le\epsilon<1$, the most favorable
+choice for this inequality has $\widehat G(x,y)=(1+\epsilon)wuv$ and
+$\widehat G(o,x),\widehat G(o,y)$ equal to $(1-\epsilon)wu,(1-\epsilon)wv$.
+Therefore
+\[
+\frac1{(1+\epsilon)uv}\le\frac1{(1-\epsilon)u}
++\frac1{(1-\epsilon)v},
+\]
+which is equivalent to (64.1). For an additive error at most $\delta$, the favorable
+endpoints are $x_1=A-\delta$, $x_2=B-\delta$, $x_3=C+\delta$; positivity holds at the
+smaller root below. The reciprocal triangle inequality is
+$x_3\ge x_1x_2/(x_1+x_2)$. Equality gives
+\[
+3\delta^2-2(A+B-C)\delta+\bigl(AB-C(A+B)\bigr)=0,
+\]
+and the smaller root is (64.2). No choice of the common $\kappa$ or of the three
+distances can evade this argument. $\square$
+

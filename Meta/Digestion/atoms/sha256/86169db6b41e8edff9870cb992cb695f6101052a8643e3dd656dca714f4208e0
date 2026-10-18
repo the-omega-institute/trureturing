@@ -1,0 +1,33 @@
+**Definition 57.1 (source, target, actual replies and the two costs).** The source is one unknown complete, nonempty, finite ordered binary tree $U$ whose leaves have the literal labels $\alpha,\beta$. Brackets, left/right order, and distinct occurrences are retained. Use exactly
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=(\beta,\alpha),\qquad
+\rho(S,T)=(\rho S,\rho T),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{57.1}
+$$
+
+Fix public integers $d=3k$, $k\ge1$, $a,b\ge0$, $n=a+b\ge1$. The exact composition promise is
+
+$$
+C=(A,B)=M^d(a,b)
+=\bigl(F_{d-1}a+F_db,\ F_da+F_{d+1}b\bigr),
+\qquad N=A+B,
+\tag{57.2}
+$$
+
+where $F_0=0,F_1=1$. Let $\mathcal T_C$ contain *every* complete ordered tree of this composition and let
+$\mathcal P=\mathcal T_C\cap\operatorname{im}\rho^d$.
+The Boolean target is literal membership in $\operatorname{im}\rho^d$, on all of $\mathcal T_C$. There is no promise that a negative source has the height of a positive source. The structural fact that an $N$-leaf complete binary tree has height at most $N-1$ is available; replacing the negative domain by trees of positive height is not.
+
+An address is any finite word in $L,R$, with root $\varepsilon$ at depth zero. Its exact endpoint reply is $\alpha$ or $\beta$ at that labelled leaf, $\mathsf{br}$ at a branch, and $\varnothing$ after crossing a leaf. A legal query requests the endpoint of one such word with $|u|\le h$. It neither changes the tree nor requires a preceding query of its ancestors. This is the address port specified by `ActualTreeReadoutAcquisition.readout`; it is not a physical navigation operation. A policy has common source-independent initialization and empty acquired history. Each next address or Boolean return depends only on its own finite chronological actual query/reply history and the public parameters. It must halt correctly on every $U\in\mathcal T_C$.
+
+For an actual terminal transcript $T$, its primary cost is $|Q(T)|$, where $Q(T)$ is the set of *distinct requested addresses*. Every reply type is paid. Its query-action count is the length of $T$, including repeats. Repeating an address can add an action without adding a paid address. Let
+
+$$
+D_h(a,b;d)=\min_\pi\max_{V\in\mathcal P}|Q(T_\pi(V))|,
+\tag{57.3}
+$$
+
+with value $+\infty$ if no correct depth-$h$ policy exists. The maximum prices positive inputs; correctness and finite termination also include all negative inputs. $D_\infty$ allows arbitrary finite address depths, with the same finite-run requirement. Neither quantity is the original globally correct third-image `Strategy` optimization over every composition. Control computation, candidate tables, memory, word encoding, output events, and physical traversal have no price assigned by (57.3). The constructions below specify and pay every actual address request; they do not claim these other resources are free or have a runtime bound.
+

@@ -1,0 +1,67 @@
+**Proposition 301.5 (Exact bounded non-implications).**
+For each omitted relation in the following table, the specified rational
+point satisfies all 135 other inequalities in 301.4 and violates that
+omitted relation by the final column.
+
+| Omitted relation | $b$ | $e$ | Positive reading |
+| --- | --- | --- | --- |
+| $F_1\le0$ | $(20299,12873,12873,12873,12873,12873,12873)/28584$ | $3505/14292$ | $425/9528$ |
+| $F_2\le0$ | $(347,347,347,347,347,347,176)/555$ | $176/555$ | $49/555$ |
+| $D\le72R$ | $(653,653,653,653,636,636,636)/1434$ | $175/717$ | $2/239$ |
+| $F_C\le0$ | $(532,532,532,293,293,293,293)/807$ | $371/1614$ | $391/1614$ |
+
+These are non-implications from the expressly named finite basis. They
+are compatible with the reduction (301.1), whose consumed prior
+consequence is absent from that basis. No point is claimed $N$-feasible.
+
+**Proof.** The following tables give exact certificates for all the
+families, in the same order of points as above. For any subset size $k$,
+monotonicity makes $t_k=\sum_{j=3}^{k+2}b_j$ the largest subset sum.
+Hence maxima over subsets are obtained from the explicit expressions
+
+$$
+\begin{array}{ll}
+W_k=t_k-(k+21/5)e,&1\le k\le5,\\
+A_k=b_1+t_k-1-(k+3)e,&1\le k\le5,\\
+B_k=(k-1)b_2+kt_k-(k-1)-k(k+3)e,&2\le k\le5,\\
+P_k=t_k-c_ke,&k=1,3,4,5.
+\end{array}
+\tag{301.4}
+$$
+
+Taking the maximum of these finite lists, and of the ten ratio readings,
+gives:
+
+| Point | $R$ | $E$ | $b_1+E$ | $\max_a(|v_a|-B_aR)$ |
+| --- | --- | --- | --- | --- |
+| First | $127/28584$ | $8285/28584$ | $1$ | $-37/9528$ |
+| Second | $92/925$ | $52/185$ | $503/555$ | $-1547/925$ |
+| Third | $1/239$ | $69/239$ | $1067/1434$ | $0$ |
+| Fourth | $13/4035$ | $220/807$ | $752/807$ | $0$ |
+
+| Point | $\max W_k$ | $\max A_k$ | $\max B_k$ | $\max P_k$ |
+| --- | --- | --- | --- | --- |
+| First | $-127/28584$ | $0$ | $-21419/28584$ | $-3185/85752$ |
+| Second | $-92/925$ | $-52/555$ | $0$ | $-4/111$ |
+| Third | $-1/239$ | $-367/1434$ | $-527/717$ | $-79/2151$ |
+| Fourth | $-13/4035$ | $-55/807$ | $0$ | $-82/2421$ |
+
+The remaining hull order and $0\le e\le b_7$ conditions follow
+directly from the displayed coordinates. The four selected readings are:
+
+| Point | $F_1$ | $F_2$ | $F_C$ | $D-72R$ |
+| --- | --- | --- | --- | --- |
+| First | $425/9528$ | $-4/3573$ | $0$ | $0$ |
+| Second | $-24/185$ | $49/555$ | $0$ | $-19427/2775$ |
+| Third | $-101/478$ | $0$ | $0$ | $2/239$ |
+| Fourth | $-41/1614$ | $0$ | $391/1614$ | $-206/4035$ |
+
+All these fractions follow by substitution into (299.1), (301.1) and
+(301.4), which specify every coefficient. The positive omitted readings
+and nonpositive remaining maxima prove the finite non-implications.
+For the third point the excluded prior consequence has reading
+$v_5-33R=3/239>0$, explicitly showing why it cannot refute the stronger
+reduction. By Theorem 299.1 and the reduction, the points possess no full
+feasible $N$ allocation. They give no separator, exhaustive independence
+or novelty assertion. $\square$
+

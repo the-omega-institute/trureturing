@@ -1,0 +1,112 @@
+**Theorem 73.3 (explicit separation from the unchanged comparator).**
+Let $E:\mathcal K_{D,2}^{\rm hc}\to\mathcal H_2^{\rm fr}$ be the isometry
+identifying all slice/cell $L^2$ coordinates and inserting zero at every
+$(p,p)$. Its range is precisely $\{F:F_{pp}=0\text{ for all }p\}$.
+Under $E$, Definition64.5's form domain is exactly
+
+$$
+\{F\in\mathcal Q_2^{\rm fr}:F_{pp}=0\ (p\in D),\quad
+           \operatorname{Tr}_{x=y}F_{ee}=0\ (e\in\mathcal E_D)\}.
+                                                               \tag{73.8}
+$$
+
+Indeed zero diagonal traces glue the two triangles into an $H^1$ square;
+the converse is restriction to those triangles. Slice endpoints at the
+missing atoms are zero, including shared-port collisions. Other rectangles,
+both slice orders, all grounded traces and every kinetic coefficient remain
+exactly (64.7). No rectangle-corner trace is introduced.
+Keep the original operators $A_{\delta,D,2}$ and
+$\mathcal T^\diamond_{\delta,D,2}=A_{\delta,D,2}+U^\diamond_{D,2}$,
+separately for $\diamond\in\{\mathrm c,\mathrm k\}$, with precisely
+
+$$
+U^\diamond_{D,2}(x,y)=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q). \tag{73.9}
+$$
+
+Here $\phi_A$ is zero on open cables. Both complete pair prescriptions,
+all ten coefficients of Definition64.1, including
+$G^{\rm c}(LL,LR)=3/16$, and every original parameter are unchanged.
+For any port $p$, let $k=d_p$ be its actual incidence and define
+
+$$
+N_p=1+\frac{13}{35}\delta k,\qquad
+c_p=\left(N_p^2+\frac{24a^2kN_p}{\delta}
+                    +\frac{72a^2k^2}{25}\right)^{-1/2}>0. \tag{73.10}
+$$
+
+For each $C\in\{A_{\delta,D,2},\mathcal T^{\rm c}_{\delta,D,2},
+\mathcal T^{\rm k}_{\delta,D,2}\}$, at the specified nonreal parameter $i$,
+
+$$
+\begin{aligned}
+\|(B-i)^{-1}-E(C-i)^{-1}E^*\|&\ge c_p,\\
+\liminf_{\varepsilon\downarrow0}
+ \|(B_\varepsilon-i)^{-1}
+  -J_{\varepsilon,2}E(C-i)^{-1}E^*J_{\varepsilon,2}^*\|&\ge c_p.
+\end{aligned}                                                    \tag{73.11}
+$$
+
+**Proof.** Let $e_{pp}$ be the normalized mass-one atomic basis vector.
+Then $E^*e_{pp}=0$ for every comparator above. Construct
+$f\in\operatorname{Dom}L$ with atomic value one at $p$ and zero at other
+ports. On each cable incident at $p$, in distance $x$ from $p$, take
+$b(x)=1-3x^2+2x^3$; all other cables are zero. The authentic tree has no
+loops. The conditions $b(0)=1$, $b(1)=0$ and $b'(0)=b'(1)=0$ meet every
+port/ground condition and give zero atomic output of $Lf$. Direct integration
+and (72.3) give
+
+$$
+\|f\|^2=N_p,\qquad
+\langle Lf,f\rangle=\frac65ak,\qquad
+\|Lf\|^2=\frac{12a^2k}{\delta}.                         \tag{73.12}
+$$
+
+The symmetric $v=f\otimes f$ belongs to $\operatorname{Dom}B$ and
+$\langle e_{pp},v\rangle=1$. Self-adjointness gives
+
+$$
+\begin{aligned}
+1&=|\langle(B-i)^{-1}e_{pp},(B+i)v\rangle|
+ \le\|(B-i)^{-1}e_{pp}\|\,\|(B+i)v\|,\\
+\|(B+i)v\|^2
+ &=N_p^2+2\|Lf\|^2N_p+2|\langle Lf,f\rangle|^2=c_p^{-2}.
+\end{aligned}                                                    \tag{73.13}
+$$
+
+Thus the first discrepancy, tested on $e_{pp}$, is at least $c_p$.
+No hypothesis on the comparator's potential beyond its declared
+self-adjointness is needed; its resolvent annihilates this input after
+embedding. Isometric conjugation preserves operator norms, so the second
+bound follows from (73.3) and the reverse triangle inequality.
+The witness supplies the positive gap after the full-space convergence
+proof; it does not substitute a test subclass for that theorem. $\square$
+
+**Scope and references.** The one-particle premise is precisely72.10,
+with its fixed-source applicability checks for Cherednichenko–Ershova–Kiselev,
+arXiv:2205.04397v4, Theorem4.5. The fixed-thickness capacity premise is the
+mixed-ground symmetric smooth-core conclusion supported by Evans–Gariepy,
+*Measure Theory and Fine Properties of Functions* (1992), §4.7.2, Theorem3,
+pp.154–156; it is used only within its stated scope. The product inference
+and constant (73.10) are proved above. No N1 rate is transferred, no
+finite-radius/contact model is analyzed, and no source-growth uniformity
+or uniquely three-dimensional conclusion follows.
+
+The free comparison includes atomic double occupation and all continuum
+strata; it leaves Definition64.5 as the literal hard-core target.
+Equation (73.11) obstructs the compatible free-kinetic/exact-coincidence
+route to that target, including its declared bounded operators. It
+constructs no physical potential, field mediator or switching mechanism.
+Every obligation of72.13,66.10,67.11 and68.7 remains: the complete literal
+source, INITIAL/cap, original actor parameters and initialization, whole
+contexts/candidates/guards, native acceptance/refusal/Read/absorbing Stop
+and acquired records; every field mode, spectator and unknown correlation,
+full norm, common reference and clock; ingress/recovery and actual
+operation/domain/dynamic correspondence; all distinct acquisition promises,
+fees, protected records and actual service rights; packing, leakage,
+preparation, control, precision and total lifetime resources. A different
+interaction, occupation penalty, identification or native carrier would
+require its own proofs of all these bridges. This ordinary fixed-source
+composition supplies neither physical validation nor completion of the
+sustained programme.
+

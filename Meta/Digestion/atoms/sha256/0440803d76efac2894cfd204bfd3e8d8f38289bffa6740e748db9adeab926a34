@@ -1,0 +1,40 @@
+**Definition 2.1 (unchanged source and restricted examples).** For a valid
+base $b=(X,Y,Z)$ put $r=1-Z$. The source of
+`FiniteRectangleTransport` has
+
+$$
+\begin{aligned}
+&0<Z<1,\quad 0<X,Y<r,\qquad
+J(b)=(\max(0,X+Y-r),\min(X,Y)),\\
+&p_b(k)=(r-X-Y+k,X-k,Z,Y-k,k),\qquad
+d=(1,-1,0,-1,1),\\
+&I_b(k)=\sum_{i\in\{0,1,3,4\}}p_b(k)_i^{-1},\qquad
+w_b(k)_i=\frac{d_i}{p_b(k)_i I_b(k)}.
+\end{aligned}
+\tag{EM.1}
+$$
+
+Index $4$ denotes original mode $13$. An original control has finite
+$T\geq0$, continuous real $k,\chi$ on $[0,T]$, strict $k(t)\in J(b)$,
+finite variation of $\chi$, and either absolute continuity of both
+coordinates or the supplied finite-piecewise-$C^1$ alternative with
+continuous rates on the closed pieces. The latter also implies absolute
+continuity by piecewise integration and telescoping. With a common
+compatible initial real lift $\theta$, the actual transported lift is
+$\theta_i+\int_0^t w_b(k(u))_i\chi'(u)\,du$; the state convention uses
+its negative complex phase. A based phase loop retains every signed integer
+$m$ in $\chi(T)-\chi(0)=2\pi m$.
+
+The theorems here select the double wall
+
+$$
+b=(c,c,Z),\qquad 0<c<1/2,\qquad Z=1-2c,
+\qquad p(k)=(k,c-k,Z,c-k,k),\quad 0<k<c.
+\tag{EM.2}
+$$
+
+They select constant current phase, not a replacement for the original
+all-sector class. The source, preparation, base, clock and calibrated
+reference where supplied are common within each comparison. Unknown past
+phase, winding and preparation parameters are never decoder inputs.
+

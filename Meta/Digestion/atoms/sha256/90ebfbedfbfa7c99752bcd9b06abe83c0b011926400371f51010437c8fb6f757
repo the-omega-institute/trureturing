@@ -1,0 +1,75 @@
+## 11.5 Dimension zero, the transition, and guard recovery
+
+For $n=0$ the encoder has no coordinates and every decoder is a constant
+$c\in\mathbb R^{10}$. At each fixed height, the state obtained by replacing
+$(\alpha,\beta)$ with $(\alpha+\pi,\beta+\pi)$ has output $-y$. Hence
+$$
+\frac{\|c-y\|_2^2+\|c+y\|_2^2}{2}
+ =\|c\|_2^2+\|y\|_2^2.
+$$
+Taking the supremum proves that $c=0$ is optimal among constants and
+$$
+e_0^{\mathrm{aff}}(Z)^2
+ =\sup_{0<k<H}\left(16k(H-k)+4Zk\right).
+\tag{11.22}
+$$
+Writing
+$$
+f(k)=-16k^2+(16H+4Z)k
+$$
+shows that its vertex is $k_*=H/2+Z/8$. If $Z<4H$ this vertex is
+interior and
+$$
+e_0^{\mathrm{aff}}(Z)=\frac{4H+Z}{2}=1-\frac Z2,
+\qquad
+\left(e_0^{\mathrm{aff}}(Z)\right)^2-e_*^2
+ =\frac{(4H-Z)^2}{4}>0.
+\tag{11.23}
+$$
+The zero-dimensional infimum is attained by the zero constant decoder.
+
+If $Z\ge4H$ then for every interior $k$,
+$$
+f(k)=4ZH+4(H-k)(4k-Z)<4ZH,
+$$
+and its supremum is $4ZH$ as $k$ tends to $H$ through interior heights.
+At $Z=4H$ the difference is exactly $-16(H-k)^2$. Therefore, under
+literal Definition 2.1,
+$$
+e_n^{\mathrm{aff}}(Z)=e_*
+\quad\text{and}\quad
+\mathcal A_{\le n,Z}=[e_*,\infty)
+\qquad(2/3\le Z<1,\ n\ge0),
+\tag{11.24}
+$$
+with the zero-dimensional constant model already attaining the infimum.
+The supremum need not be realized by a lawful state.
+
+Consequently
+$$
+\mathcal A_{\le0,Z}
+ =[e_0^{\mathrm{aff}}(Z),\infty)
+\quad(0<Z<2/3),
+$$
+whereas for $Z\ge2/3$ the preceding display gives the endpoint for every
+dimension bound. For positive fixed $n$ below the transition, (11.1)
+proves a strict gap above $e_*$ but does not decide whether the infimum
+$e_n^{\mathrm{aff}}(Z)$ is attained at its own value.
+
+Guard recovery is a separate contract. Suppose the encoded state must
+decide, for every command, whether its native straight segment is lawful.
+A zero-dimensional encoder cannot do this: for $k_1<k_2$ choose
+$s=H-(k_1+k_2)/2$. Then
+$$
+0<k_1+s<H,\qquad k_2+s>H,
+$$
+although both states have the same singleton encoding. The
+guard-recoverable zero-dimensional class is therefore empty, with
+infimum $+\infty$ and no finite tolerance. For $n\ge1$, the height encoder
+$E(k,\alpha,\beta)=k$ has exact guards and finite error, so the subclass
+is nonempty. The lower gap and the finite certificate remain valid on this
+smaller class because it is a subclass of $\mathfrak F_{\le n}(Z)$.
+When $Z\ge2/3$, the height model attains $e_*$ in the guard-recoverable
+class for every $n\ge1$. These guard statements do not alter the literal
+dimension-zero conclusions above.
+

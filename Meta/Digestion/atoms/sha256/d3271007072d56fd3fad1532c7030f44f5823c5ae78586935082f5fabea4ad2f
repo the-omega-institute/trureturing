@@ -1,0 +1,58 @@
+**Lemma 2.2 (a whole-bank sweep before another IN).** From every
+$h=h(P,\mu)\in\mathcal H_{\mathrm{mode}}$, the existing native continuation
+without another IN reaches the first Field call in the dry pass of its
+first subsequent word assignment. Let $p_h\in\{64,65\}$ be that call's
+active source bank. If its complete latest version has payload
+
+$$
+u_h=x_0\,\mathsf{sep}\;x_1\,\mathsf{sep}\;\cdots\;
+x_{r_{\mathrm{gc}}-1}\,\mathsf{sep},
+$$
+
+then the backward part of this Field's LastBank reads exactly
+$\operatorname{rev}(u_h)\mathsf F$ into latch4, stopping at the preceding
+F and then executing its existing MR. This version contains exactly
+$M(P)$ and the unchanged acquired manifest in their designated fields.
+The first row of the continuation is EX70 and its successor still has
+latch6 equal to $\mu$.
+
+Proof. GCA Definition 3.1 first executes EX70; WR70,6; MR70 and the
+unchanged-latch mode test. F/seal, the literal length-one scratch word,
+closed descriptor count and actual descriptor write are finite native
+scans/appends. The sealed mode block is then positioned on70 and imported
+by RCA Definition 13.2's clear-accumulator, RD/finite-bit-case/compiled-cons,
+MR and Reverse recipe, relocated by ARC. All that work precedes the next
+history-header IN. The current read token and completed seal authorize
+this read; a descriptor alone does not authorize it.
+
+In particular the import's accumulator clear is a word assignment, so a
+first such assignment exists before that header. Until its final parity
+CTL, RCA Definition 11.3 keeps the old source bank immutable and active.
+The clear modifies one field. Manifest and completed $M$ are distinct
+persistent service fields; at least one unchanged field therefore invokes
+Field in the dry emission. Even if the updated field is first and emits
+only its sep, the first unchanged field supplies the asserted call. Base
+and the earlier scratch operations do not append a version to this active
+source bank.
+
+By RCA Definitions 11.1–11.2, the latest active version is the most recent
+complete sealed bank on $p_h$. Tail reaches its actual R; the two MLs
+cross its final F and reach its last payload cell. The following RD/ML
+loop crosses every payload symbol, including all seps and empty fields,
+until the preceding F. Payload symbols are only 0, 1 and sep; none is F.
+Thus the first F encountered by that backward loop is precisely the
+previous version's terminal F or the initial sentinel. The scan reads
+all of $u_h$ in reverse, irrespective of the field that Field will next
+select. No prefix of an older version is included. Its final MR reaches
+the first field, as specified by LastBank.
+
+The gate import, mode reception and this accumulator clear have not
+appended a completed cycle. ARC Definitions 5.1, 5.4 and 7.3, GCA
+Definitions 2.1 and 3.3, and GENERAL Definitions 2.1 and 7.2 preserve
+completed $M$ and manifest through these assignments. The source bank
+therefore contains $M(P)$ and the manifest, even though its other fields
+and its physical append position can depend on $P$. EX70 changes neither
+latch6 nor those fields. Each preceding scan has a finite closed endpoint,
+and LastBank has finite existing payload; all work to this stopping point
+is finite without a later supply or source computation. ∎
+

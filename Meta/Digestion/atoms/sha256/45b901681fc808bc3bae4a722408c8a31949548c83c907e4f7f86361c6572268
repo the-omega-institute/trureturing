@@ -1,0 +1,52 @@
+**theorem 5.1 (A complete thinned first-hit protocol).**
+For every $t,\eta\in[0,1]$ one finite real LOCC processor has the
+response action (4.6) with $G_F=\min\{c,F_3\}$ and hence error
+$[c-F_3]_+$ simultaneously on all four labels.
+
+Proof. Use the data-sector instrument of Definition 4.1. In a pair
+sector test copies in order until the first local pair-product
+acceptance. Unused copies are discarded. Before any data Bell
+measurement, Bell-use this hit with the label-independent real coin
+probability
+
+$$
+L=1+r+r^2,\qquad a_F=\min\{1,5/(2L)\}.
+\tag{5.1}
+$$
+
+If the coin rejects, use the total-failure action; if there is no hit,
+also use that action. All membership and coin outcomes are included.
+For the promised iid batch the three possible first-hit positions
+contribute $(1+r+r^2)\mathcal T_{\tau_v}$ before the coin. Thus the
+paid populations and active coefficient after the coin are
+
+$$
+\alpha_F=2a_FwL,\qquad\beta_F=2a_FnL,\qquad
+G_F=2a_FuL=\min\{F_3,c\}.
+\tag{5.2}
+$$
+
+Both diagonal budgets hold directly: $\alpha_F\le5w=s$ and
+$\beta_F\le5n$. The total failure mass on the promised batch is
+
+$$
+z_F=1-a_FqL\ge r^3\ge27/125>0,
+\qquad qL=1-r^3.
+\tag{5.3}
+$$
+
+Consequently Definition 4.2 applies with
+$(\alpha,\beta,z_0)=(\alpha_F,\beta_F,z_F)$, and fills every
+target population, including the three outputs outside the data pair.
+The only surviving coherence is $i\sigma G_F$ on the active pair;
+on the inactive pair $v=0$ and the coefficient is zero. The singleton
+and cross-sector actions were already fixed. This proves (4.6) on
+all 25 complex matrix units, and Definition 4.3 gives the error.
+
+The thinning is required for this construction. Omitting the coin
+would demand $2L\le5$ from the stay budget, which fails at some allowed
+noise values. In that region (5.1) reduces the paid populations and
+joins the rejected hit to the specified normalized fallback. No
+failure or unmatched mode is removed. Whole-algebra completeness is
+proved together with the second protocol in Section 7. QED.
+

@@ -1,0 +1,56 @@
+**Theorem 17.1 (geometric upper construction).**
+For complete $P$, every covering sequence from Definition 14.3 gives a
+universally correct procedure using at most its cost $K$ protected Reads.
+It retains only actual protected replies and public derived control before
+Release; its subsequent tree is acquired through paid native Reads.
+
+**Proof.** The root cut uses its constant shortcut. Otherwise keep the
+ordered transcript $\tau$, the public sequence, the current index and
+the set $B$ certified by earlier branch replies. While all scheduled
+replies are branch, actually query the successive $a_i$.
+
+A leaf reply supplies the literal and label for Lemma 15.1; mark leaf
+mode and Release. A branch reply replaces $B$ by $B_i$. If it is the
+last scheduled query, mark cover mode and Release. The remaining case
+is the first absent reply, at $a_i$. Every previously certified prefix
+is a branch in the still unchanged invocation source. Its unique first
+blocking leaf therefore lies in the ordered list
+
+$$
+\bigl(A(a_i)\setminus B_{i-1}\bigr)\setminus\{a_i\},
+\tag{CNA.27}
+$$
+
+which has exactly $d_i-1$ vertices. These are actual candidate positions
+on one chain, not candidate source trees or supplied leaf labels. When
+$d_i=1$, absent is impossible.
+
+Query a middle candidate literal. A leaf reply records the actual label
+and ends the search. Branch means that the blocker is deeper; absent
+means it is shallower. Keep the corresponding subinterval and repeat.
+An ordered successful search among $n$ candidates needs at most
+$\lceil\log_2(n+1)\rceil$ actual queries: a search tree of height $s$
+can contain $2^s-1$ candidate vertices, with one at the root and at most
+$2^{s-1}-1$ on each side. Choosing middle vertices realizes that bound.
+Here $n=d_i-1$, so a leaf is actually read within
+$\lceil\log_2 d_i\rceil$ additional Reads. Merely inferring a leaf's
+position does not waive its label Read.
+
+Consequently this absent branch costs at most
+$i+\lceil\log_2 d_i\rceil\leq K$. A direct leaf costs $i\leq K$;
+the all-branch path costs $m\leq K$. All local searches and all literals
+are finite. Each queried literal belongs to $I$, but this is a property
+of the construction, not a restriction on competing observers.
+
+After Release execute the continuation selected by the retained mode.
+Leaf mode keeps an index to the authentic $(a,\ell)$ in $\tau$; cover
+mode keeps the completed branch certificate. In both modes start the
+CNA acquisition from a fresh record, paying its root Read again, all
+traversal Reads and all failed and successful validations. The decoder
+receives exactly the public $P$, public control, the actual $\tau$ and
+mode, and this newly acquired transcript and tree $T$. It receives no
+historical register, epoch, hidden equality, source-walk handle or
+notification that the writer has stopped. Lemmas 15.1–15.2 establish
+complete invocation-row safety. Theorem 5.2 and finite local decoding
+establish termination on every allowed history. $\square$
+

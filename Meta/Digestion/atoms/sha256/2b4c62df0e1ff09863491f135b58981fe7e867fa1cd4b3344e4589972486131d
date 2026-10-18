@@ -1,0 +1,9 @@
+**Verification boundary 12.2 (finite decisive arithmetic).** Rational arithmetic
+and integer square-root enclosures verify the three squares in (CP.24) at
+(CP.26), the two squared suffix attenuations, the strict radical comparison
+(CP.29), both terminal candidates in (CP.27) using (CP.28), and final live
+masses $4/15,4/21$. The dissipation determinant and derivative (CP.25) are
+algebraic identities proved above. No numerical experiment substitutes for
+their universal proofs, and no experiment programme or data file is needed
+for these finite exact checks.
+

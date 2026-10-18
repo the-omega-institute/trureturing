@@ -1,0 +1,32 @@
+**Theorem 6.2 (exact pointwise extendible labels).** Fix any actual
+$u\in\mathcal U_\eta$. A bit $z$ equals $\sigma(u)$ for some
+$\sigma\in\mathcal C_L(T)$ if and only if
+
+$$
+\mathrm{(A)},\qquad z\in G_\eta,\qquad
+\exists\xi\in\Omega_b,\quad
+1-z\in G_\xi,\quad
+\bigl(\xi\ne\eta\ \lor\ m_\eta\ge2\bigr).
+\tag{FCS.24}
+$$
+
+Thus the exact extendible-label set is computable from the finite data
+and is the same for all points of one cell.
+
+Proof. A compatible code gives (A) and its selected bit is good. Its
+opposite bit must occur at a different actual point $v$. The cell of
+$v$ either differs from $\eta$ or contains at least two points. This
+gives necessity by Theorem 4.4.
+
+Conversely assume (FCS.24). If $\xi\ne\eta$, any constructed point
+of $\mathcal U_\xi$ differs from $u$. If $\xi=\eta$ is live, the
+two explicit fillings from Theorem 4.4 ensure that at least one differs
+from $u$; take it as $v$. Store the finite actual current tuples of
+$u,v$, assign $z,1-z$ at them and use $\min G$ elsewhere. The same
+finite acquired-term comparison and profile lookup as (FCS.23) are lawful,
+correct and both-attained. They realize the desired value at $u$.
+This is existence for the specified finite point, with its finite tuple
+as a constant, and asserts no free acquisition of an unknown $u$.
+The condition depends on a cell only through its good sets and exact
+multiplicity, proving the final assertion. $\square$
+

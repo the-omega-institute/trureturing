@@ -1,0 +1,7 @@
+## 6. Limits and remaining obligations
+
+1. The calculation is restricted to the fixed finite cell $H$ and the three selected histories $\Omega$. It does not prove the same commuting identities for every source cell, seed, scope family or selector.
+2. `hold` is a projected event class. The result records what these events do to the retained boundary fields; it does not reconstruct their internal order, retry count, hidden depth or return-cycle history.
+3. The mutual recovery is for the supplied selected-past consumer. It does not establish total-memory optimality, arbitrary-protocol recovery, metric distance, absolute duration or a global completion.
+4. All claims here are ordinary mathematical derivations from the stated finite source contract. No Lean theorem, physical law or unrestricted implementation claim is asserted.
+

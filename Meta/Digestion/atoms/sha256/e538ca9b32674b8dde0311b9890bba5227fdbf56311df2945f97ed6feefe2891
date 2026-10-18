@@ -1,0 +1,11 @@
+**Convention 1.1 (scope and mathematical suppliers).** This volume concerns
+ordinary mathematics for the native operations at public revision
+`73671b9d9b6dd4de26089c3699ca0bfcb72f2315`. It is reference input, without
+Lean kernel certification. Published text and append anchors are immutable;
+extensions belong after the terminal append anchor. The task is exactly
+[Late Target One Read Memory, Definitions 1.2–1.4](RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_ONE_READ_MEMORY.md),
+abbreviated LTR. Its full-family bounds, initial cases and attained
+off-target example are suppliers, rather than new results here. The
+numerical sharp rate, general exact finite optimum and broader
+minimal-relations programme remain open.
+

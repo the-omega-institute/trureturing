@@ -1,0 +1,38 @@
+**Convention 28.2 (primary literature and applicable scope).**
+Ding–Udell, [*A Strict Complementarity Approach to Error Bound and
+Sensitivity of Solution of Conic Programs*, arXiv:2012.00183v2](https://arxiv.org/pdf/2012.00183v2),
+Theorem 1, Corollary 1 and §3.3, give complementary-face error bounds.
+Their hypotheses include their strong-duality and dual-strict-
+complementarity conditions; their SDP projection estimates concern
+finite real symmetric matrices with the indicated norm conventions.
+These are mature antecedents of the projection-plus-face strategy.
+Their conic error bound is not invoked as a theorem about the present
+full cq objective. In particular, the single fixed lower payoff does
+not itself isolate $J_*$ on its entire complementary face: the
+quantitative endpoint effect deficits and injective matrix $G$ are
+needed in (CG.214)–(CG.220).
+
+Nishijima–Li–Lourenço, [*Radial-type error bounds for semidefinite
+feasibility problems without strict feasibility: qualitative estimates
+and asymptotic tightness*, arXiv:2608.09013v2](https://arxiv.org/pdf/2608.09013v2),
+Theorems 3.17 and 3.19, provide explicit moduli involving facial-reduction
+data and potentially exponents $1/2^j$. Their Theorem 5.2 provides
+linear-plus-square-root optimality-system bounds under Assumption 5.1's
+strict-complementarity premises. None automatically proves a
+square-root modulus for an unencoded complete-output benchmark.
+Definition 26.2 instead fixes all constants directly from the credited
+source, and (CG.208)–(CG.220) justify the required exponent without
+assuming a new SDP representation, Slater point or exact-time feasible
+law. The full complex matrix scope follows from the Hermitian
+compression, trace pairing and spectral argument used here.
+
+The Schmidt-number and Choi/Kraus literature cited in Theorem 22.1
+continues to supply exactly its homogeneous overlap and factorization
+facts. The compatible-ecosystem search includes physlib's trace norm
+and trace distance, QICLean's trace pairing, positive compression and
+semidefinite duality, and lean-quantum's trace inequalities. Their
+examined upstream toolchain/mathlib pairs differ from this repository's
+pin; no new dependency or transplant is used. No source-specific
+near-optimal theorem was identified in those examined sources. This
+search scope does not establish literature absence or worldwide novelty.
+

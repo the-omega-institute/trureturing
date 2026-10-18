@@ -1,0 +1,8 @@
+**定义 2.1（完整来源族）。** 固定带类型的关系语言和约束，令 $\Omega$ 为满足约束的完整实现集合，$\omega\in\Omega$ 为实际实现。其关系图为 $\mathcal G_\omega$，观察者的完整过程为子结构
+
+$$
+\mathcal O_\omega\subseteq\mathcal G_\omega.
+$$
+
+局部式 $s'=F_a(s)$ 表示两个事件位置之间的相容关系；先后属于图的内部结构。“静态”指不另引入推动整个图变化的外部参数，不指内部没有先后。实际配置、允许操作与全部合法续接的区别采用 [过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 第 1、2 节。
+

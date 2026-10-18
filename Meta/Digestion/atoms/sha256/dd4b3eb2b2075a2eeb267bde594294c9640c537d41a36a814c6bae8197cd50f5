@@ -1,0 +1,26 @@
+**Definition 1.4 (native feasibility).** A preparer has one finite
+installed set consisting of running states, the two original-entry
+latches and all $r$ further mandated distinct latches. A running state
+has one fixed absolute word and four fixed successors. There is one
+source-independent running start and no silent running transition.
+Its sole changing configuration is its counted current state. It must
+terminate correctly on every $u\in\mathcal U_*$. Count all installed
+states, including unused states and unused latches. Every running visit
+costs one invocation and its actual word length, including constants,
+roots, absence, repeated words and visits after a threshold certificate.
+
+For integers $H,p,L$, let $\mathsf N_{A,k,r}(H,p,L)$ mean existence of
+such a preparer with at most $H$ installed states and, simultaneously,
+
+$$
+q_P(u)\le p,\qquad \ell_P(u)\le L
+\quad\text{for every }u\in\mathcal U_*.
+\tag{WTF.7}
+$$
+
+Any negative resource bound means infeasible. Arbitrary stationary
+sharing, repeated variables and union-graph cycles remain admitted.
+Only each actual source run must terminate. There is no free
+source/target/history archive, counter, phase, reset, work register,
+computed address, source copy, subtree, equality or inverse port.
+

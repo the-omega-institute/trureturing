@@ -1,0 +1,19 @@
+**Definition 2.1 (Product row profile).** For $x_i>0$ define
+
+$$
+g_x(S)=\prod_{i\in S}x_i,
+\qquad
+R_x(S)=\sum_{i\in S}d_i(1+x_i^{-1})
++\sum_{\substack{i\notin S\\S\cap N(i)=\varnothing}}
+a_i(1+x_i).
+\tag{2.1}
+$$
+
+Set
+
+$$
+L_{\rm prod}=\inf_{x>0}\max_{S\in\Omega_G}R_x(S),
+\qquad B_{\rm prod}=W-L_{\rm prod}.
+\tag{2.2}
+$$
+

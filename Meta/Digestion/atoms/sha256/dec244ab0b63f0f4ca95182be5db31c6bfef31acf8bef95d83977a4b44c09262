@@ -1,0 +1,27 @@
+**Corollary 7.3 (strict separation with a singleton private side).**
+Under Definition 7.1, if $D>0$ then
+
+$$
+\Delta-b\ge2-\min(a,b).                              \tag{PE.30}
+$$
+
+In particular $\Delta=b$ with $D>0$ requires $a,b\ge2$.
+Every collision with $\min(a,b)=1$, including the $D=0$ alternative,
+satisfies the stronger necessary separation
+
+$$
+\Delta\ge b+1.                                      \tag{PE.31}
+$$
+
+Proof. Add the two certificate inequalities in (PE.26) to obtain
+$K\ge b+u-Q+1+V=u+1-\varepsilon$. Its count inequality gives
+$K+1\le u+\min(a,b)$, proving (PE.30). Now suppose
+$\min(a,b)=1$ and $\Delta=b$. If $D>0$, (PE.30) is impossible.
+If $D=0$, the exact boundary in Theorem 7.2 gives $p=0,y=b$:
+all old $X$ bits on the first history are zero and all old $Y$ bits
+on the second are one. Theorem 3.1 then gives $a=b$ and $C_X=C_Y$.
+The sets must be disjoint singletons. Their original individual costs
+are distinct because $s_1<\cdots<s_n$, a contradiction. Finally
+$\Delta\ge b$ by (PE.24), so integrality yields (PE.31). No distinct
+subset-sum hypothesis is needed. $\square$
+

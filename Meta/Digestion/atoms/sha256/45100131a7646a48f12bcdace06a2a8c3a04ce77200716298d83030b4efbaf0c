@@ -1,0 +1,6 @@
+### 63.6. Relation to prior results and boundaries
+
+Section54 supplies the general physical normal-form perspective, while §§61–62 exhibit a qutrit obstruction and unrestricted leakage bounds. This family gives a complete all-dimensional common-implementation criterion and an exact coherent diamond projection under a stated basis-output constraint. Pure-output forcing, Bessel/Cauchy–Schwarz, Choi positivity, and Euclidean ℓ₁-ball projection are standard ingredients. The physical conclusion concerns the same pair of local channels on the entire input algebra, not independent state conversions.
+
+For standard channel, dilation and diamond facts see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . PIO and zero-communication MC constructions are established background, as discussed by Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These citations are not claimed to state the exact family characterization above, and no literature-priority claim is made. This is paper mathematics, not a compiled formal theorem or a full RT recovery result.
+

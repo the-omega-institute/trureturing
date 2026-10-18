@@ -1,0 +1,39 @@
+### 216.9 The remaining universal obligation
+
+For every actual full score y with $\Delta_O(y)\le1$, the unresolved
+positive statement still asks for one unrestricted full V and one
+$\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad
+\sigma_H\bigl(Q(y)-Q(V)\bigr)\le\theta.
+\tag{216.31}
+$$
+
+Every bound is evaluated with the same full score, and with the same
+complete feasible $\lambda$ and residual budget at a given b. For
+instance, the zero cores of 216.3 give $F_{Q(V)}(b)\le0$ for that
+same $\lambda$; adding a residual of charge $\theta$ gives at most
+$\theta$. No separate optimum or shared stock is counted twice.
+
+A genuine negative alternative requires one actual $b\in H_N$,
+one actual full unit-O y and one complete feasible $\lambda$ of mass
+$M\ge1$ for that b, with $F_{Q(y)}(b)>M$, together with the original
+source, law and resource correspondence. An auxiliary affine test or
+hull point without that full feasible realization is insufficient.
+Neither alternative follows for unrestricted multi-positive signed
+quotients or general low-terminal scores from the domains above.
+
+In particular, (216.5) and (216.15) are sufficient capacity domains;
+their failure is not nonmembership. The signed conversion threshold
+in 216.8 is sufficient, while (216.7)'s iff concerns its precise
+two-positive zero-cost fiber. It is not a positive-cost classification.
+Coordinate deletion and separately funded or bounded-surplus additive
+decomposition have the specific failures proved above; they are not
+failures of arbitrary joint V. The complete unit inputs of 216.10
+already admit V=y and $\theta=0$. Affordability always retains the
+actual full-unit-O premise or an independently established cost at most
+one, and $\theta=1$ may retain a nonzero zero-cost core. The original
+universal implication and a genuine same-realization separator remain
+unresolved.
+

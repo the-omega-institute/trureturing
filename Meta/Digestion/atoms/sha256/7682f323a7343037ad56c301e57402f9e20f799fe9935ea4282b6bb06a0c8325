@@ -1,0 +1,22 @@
+**Definition 2.1 (typed refinement).** Let $K_0$ be a typed equivalence:
+related points have the same type and the same declared initial observation.
+It may impose additional restrictions on identification. For a typed equivalence
+$R$, let $\operatorname{Ref}_{A,E_{\mathrm{probe}}}(R)$ consist of its pairs
+$xRy$ such that, for every executable action or probe,
+
+1. the pair has identical legality and complete response, including legal
+   failures and any task-visible illegal rejection;
+2. if legal, the two successors are $R$-related;
+3. every task-required selector, namespace and record-update readout agrees
+   for the pair, for each matched external input.
+
+These are pairwise conditions on actual states. In particular they do not
+assume that a selector factors through an equivalence merely because the
+selector's name has been declared. Set
+
+$$
+R_0=K_0,\qquad R_{n+1}=\operatorname{Ref}_{A,E_{\mathrm{probe}}}(R_n),
+\qquad R_\infty=\bigcap_{n\ge0}R_n.
+\tag{2.1}
+$$
+

@@ -1,0 +1,36 @@
+**Definition 2.1 (the unchanged original class).** For a valid base
+$b=(X,Y,Z)$ set $r=1-Z$ and
+
+$$
+\begin{aligned}
+&0<Z<1,\qquad 0<X,Y<r,\\
+&J_b=(\ell_b,u_b)=(\max(0,X+Y-r),\min(X,Y)),\\
+&p_b(k)=(r-X-Y+k,X-k,Z,Y-k,k),\qquad
+\mathbf d=(1,-1,0,-1,1),\\
+&I_b(k)=\sum_{i\in\{0,1,3,4\}}p_b(k)_i^{-1},\qquad
+w_b(k)_i=\frac{\mathbf d_i}{p_b(k)_i I_b(k)}.
+\end{aligned}
+\tag{FH.1}
+$$
+
+The original mode order is $(0,1,2,3,13)$; index $4$ means mode $13$.
+An original control has finite $T\geq0$, continuous real $k,\chi$ on
+$[0,T]$, strict $k(t)\in J_b$, finite variation of $\chi$, and either
+absolute continuity of both coordinates or continuous finite-piecewise-$C^1$
+coordinates whose derivative rates extend continuously to each closed
+partition piece. Repeated partition times are permitted. Integrating those
+rates and telescoping proves absolute continuity in the latter case too.
+For a common compatible preparation lift $\theta$, the actual state uses
+
+$$
+H_i(t)=\int_0^t w_b(k(s))_i\chi'(s)\,ds,
+\qquad
+\psi_i(t)=\sqrt{p_b(k(t))_i}\,e^{-i(\theta_i+H_i(t))}.
+\tag{FH.2}
+$$
+
+The real lift precedes any reduction modulo $2\pi$. Every signed integer
+$m$ in a loop increment $2\pi m$ remains in the source history. The
+double-wall examples below do not replace other bases, either regularity
+alternative, any finite duration or any signed sector of this original class.
+

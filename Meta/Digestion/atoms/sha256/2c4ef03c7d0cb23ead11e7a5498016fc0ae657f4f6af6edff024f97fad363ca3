@@ -1,0 +1,82 @@
+**Assumption 9.1 (original source, prescribed code and paid native
+apparatus).** Retain the ordered finite-tree algebra
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\quad \rho\alpha=\beta,\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+At $P=\{L,R\}^3$, the current complete row $R_*$ has the perfect
+ordered exterior and whole-subtree classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,\quad
+\{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4,
+$$
+
+with different classes disequal. Use the entire fiber
+
+$$
+\mathcal U_*=\{u\in\mathcal T:R_P(\rho u)=R_*\},
+$$
+
+with no bound on source size, depth or branch shape. The complete
+predecessor row retains ordered exterior, all reached occurrences,
+canonical equality partition, repetitions, surviving disequalities and
+strict-prefix blocking guards.
+
+The image algebra has the disjoint cases
+$\beta$, $E=\langle\beta,\alpha\rangle$, and pairs of image children;
+$\alpha$ itself is not an image. Its recursive inverse sends $\beta$
+to $\alpha$, $E$ to $\beta$, and an image-child pair to the pair of
+inverses. Structural induction proves both inverse identities. Applied
+at the four depth-two parents, these cases give the eleven profiles exposed
+in [SB, Definition 1.1][SB]. On $\Pi_j$, right class $b_j$ is alpha,
+its left class is beta ($a$ for $j=1,2$, $c$ for $j=3,4$), and the
+other classes are branches. On $Z_d$ only class $d$ is beta, for one of
+the six classes; on $Z_*$ all six roots are branches. Different-class
+disequalities remain in force. An alpha must be the right child of $E$;
+the distinct right classes allow at most one such collapse. Without a
+collapse each class is an image root, beta or branch, with at most one beta
+class. This explains exhaustiveness without restricting branch interiors.
+
+For the original positions define
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad
+\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}.
+$$
+
+Alpha, beta and absent separately give zero. The required literal code is
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in any other zero profile}.
+\end{cases}
+\tag{TS.34}
+$$
+
+Each native running state has one fixed finite absolute query word and four
+separately fixed successors, in reply order alpha, beta, branch, absent.
+A query at or below any finite word, including the empty word, is permitted;
+descent beyond a leaf gives absent. Every running visit makes a query and
+pays one call and its full word length. Constant, root, absent, repeated
+and certified invocations all count. There are no silent running edges.
+The current counted state is the entire changing configuration. All
+installed running states, the two original distinct latches
+$\widehat e_0,\widehat e_1$ and every one of the $r$ further mandated
+distinct latches count, including unused ones. Every source terminates
+at precisely $\widehat e_{\sigma_{A,k}(u)}$.
+
+Register binding, acquired authenticated same-version row, lawful original
+root permission, actual export, complete access isolation, paid code-only
+handoff, lawful complete entry and stationary truthful service are separate
+supplied assumptions. No free source copy, archive, inverse evaluation,
+history, clock, counter, computed address, restriction, reset, entry
+reselection or service is added.
+

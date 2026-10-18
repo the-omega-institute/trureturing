@@ -1,0 +1,32 @@
+**Corollary 310.3 (One allowance for two positive residuals).**
+For the same seven ordered late addresses put
+
+$$
+s_J=1+40e-b_2-4b_{j_1}-5b_{j_2}-5b_{j_3}-5b_{j_4}-4b_{j_5}.
+$$
+
+Under the same complete-allocation hypotheses,
+
+$$
+s_J\ge4\bigl[(b_{j_6}-e)_++(b_{j_7}-e)_+\bigr].
+\tag{310.4}
+$$
+
+It holds at every positive original closed cap, with $b=a$.
+
+**Proof.** The reused $Y_2$ relation 299.1 gives $s_J\ge0$.
+Apply the reused six-late relation 305.2 once with sixth address
+$j_6$ and once with sixth address $j_7$; these give
+$s_J\ge4(b_{j_6}-e)$ and $s_J\ge4(b_{j_7}-e)$.
+Equation (310.2) gives
+$s_J\ge4[(b_{j_6}-e)+(b_{j_7}-e)]$.
+All four are necessary inequalities of the very same profile and
+full allocation. For real $u,v$,
+$\max\{0,u,v,u+v\}=u_++v_+$, proving (310.4).
+Only score selection clips a residual; no demand was clipped.
+No independently attainable laws or budgets have been added.
+Original necessity follows from the same one-representative argument.
+The arbitrary-set half-sum bound (304.6) is separately reused and
+is not replaced by a claim about more than these two coefficient-four
+residuals. $\square$
+

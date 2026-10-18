@@ -1,0 +1,51 @@
+### 1.3 The ten outputs, preparation rotations and their Gram matrix
+
+The ordered edge menu is
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)).
+$$
+
+For each edge use the original Hermitian observables
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,
+\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+Write $\delta_{ij}=\theta_i^{\rm in}-\theta_j^{\rm in}$. Their
+ordered expectation pair is
+
+$$
+y_{ij}=2\sqrt{p_ip_j}
+\begin{pmatrix}
+\cos(\delta_{ij}+h_i-h_j)\\
+\sin(\delta_{ij}+h_i-h_j)
+\end{pmatrix}.
+$$
+
+Concatenating these five pairs defines $y:\mathcal M\to\mathbb R^{10}$.
+All errors in this volume are measured by the ordinary Euclidean norm on
+these ten entries, including their original factors of two.
+
+For later use define
+
+$$
+U(a)=\binom{\cos a}{\sin a},\qquad
+R_a=\begin{pmatrix}\cos a&-\sin a\\\sin a&\cos a\end{pmatrix},
+\qquad J=\operatorname{diag}(1,-1),
+$$
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B(k)=2\sqrt{Zk},
+$$
+
+$$
+D_0(a,b)=(a,b,a,Ja,Ja),\qquad
+O=\bigoplus_{(i,j)\in\mathcal E}R_{\delta_{ij}},\qquad D=OD_0.
+$$
+
+Here $a,b\in\mathbb R^2$, so $D$ maps $\mathbb R^4$ into
+$\mathbb R^{10}$.
+

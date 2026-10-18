@@ -1,0 +1,65 @@
+### 3.3 全部邻边共用同一整体错误预算
+
+设末端 POVM 为 $(Q_b)_{b\in B_n}$。显式定义等距映射
+
+$$
+Vv=\sum_b|b\rangle\otimes\sqrt{Q_b}v,
+\qquad
+\Pi_b=|b\rangle\langle b|\otimes I.
+$$
+
+因为 $\sum_bQ_b=I$，$V^\dagger V=I$；此映射保持内积，并把测量写成互相正交的结果空间。以下仍把 $V\psi_b$ 记为 $\psi_b$。令
+
+$$
+c_b=\Pi_b\psi_b,
+\quad r_b=\psi_b-c_b,
+\quad \eta_b=\|r_b\|^2,
+\quad E=\sum_b\eta_b.
+$$
+
+$\eta_b$ 是真实标签 $b$ 下的错误率。以 $\psi_b,c_b,r_b$ 为列分别组成 $\Psi,C,R$，则 $\Psi=C+R$，且
+
+$$
+C^\dagger C=\operatorname{diag}(1-\eta_b),
+\qquad \|R\|_{\mathrm{HS}}^2=E.
+$$
+
+利用 $A_n$ 的零对角、式（3.2）及其对称性，全部有向邻边的虚部成对抵消，得到一个实数恒等式
+
+$$
+2e_nx=\operatorname{Tr}(A_n\Psi^\dagger\Psi)
+=2\operatorname{Re}\operatorname{Tr}(A_nC^\dagger R)
++\operatorname{Tr}(A_nR^\dagger R).
+\tag{3.3}
+$$
+
+Hilbert–Schmidt Cauchy 不等式给出
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(A_nC^\dagger R)|
+&\le\|CA_n\|_{\mathrm{HS}}\|R\|_{\mathrm{HS}},\\
+\|CA_n\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}(A_nC^\dagger CA_n)
+=\sum_b d_b(1-\eta_b)\le2e_n.
+\end{aligned}
+$$
+
+又因 $A_n\le nI$ 且 $R^\dagger R\ge0$，有 $\operatorname{Tr}(A_nR^\dagger R)\le nE$。所以
+
+$$
+2e_nx\le2\sqrt{2e_nE}+nE.
+\tag{3.4}
+$$
+
+这里的 $E$ 只计每个真实标签的分类错误一次；没有把同一个错误当成多个互相独立的二元失败。图的度数仅出现在同一个迹估计中。正确答案的正交结果空间约束重叠是已有量子查询下界方法，见 [Ambainis，*Quantum lower bounds by quantum arguments*](https://arxiv.org/abs/quant-ph/0002066)，§3、引理 1；式（3.2）与全邻边迹汇总是此固定源下的具体推导。
+
+由于 $e_n>0$，令 $y=\sqrt{E/(2e_n)}$，式（3.4）等价于 $x\le2y+ny^2$。右侧在 $y\ge0$ 单调，解得
+
+$$
+y\ge\frac{\sqrt{1+nx}-1}{n}
+=\frac{x}{1+\sqrt{1+nx}}.
+$$
+
+于是 $E/M_n\ge\ell_n(x)$。常数不依赖探针、测量或源无关随机种子；对每个种子应用再平均，包含全部随机化协议。取协议错误率的下确界，证明 (A)。
+

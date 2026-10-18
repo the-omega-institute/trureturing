@@ -1,0 +1,19 @@
+## 8. Same-graph collective consequence and the residual target
+
+Partition the consecutive gaps as
+
+$$
+\mathcal L_*=\{B=(a,b):\beta_B\ge5,\ b>\max(K,L)\},\qquad
+\mathcal A_*=\mathcal B\setminus\mathcal L_*,
+$$
+
+and put
+
+$$
+R=E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B)\ge0.
+\tag{CL.31}
+$$
+
+The sign follows from Lemmas 7.1–7.3 and the nonnegativity of cut
+excess and $u$. These are the precise credited signs used in SI.59.
+

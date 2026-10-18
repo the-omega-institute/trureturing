@@ -1,0 +1,8 @@
+### Corollary 3.2. One is necessary and sufficient for this fixed encoding and action task
+
+With computational-word initialization and no additional state or operation breaking the original parity-conjugation symmetry, zero second-quadrature addresses cannot implement every complex qubit unitary under J_m. One data address suffices with the bound (3.2).
+
+Proof. The parent Proposition 11.1 gives the antiunitary A=Z_par K commuting with every phase-zero pulse. The input |0^(2m-1)> is fixed by A. Every reachable ray from it is therefore A-invariant. The encoded target |+> on one data qubit and zeros elsewhere is sent by A to the orthogonal encoded |-> state, so it is unreachable even up to global phase. A compiler realizing all standard complex qubit actions must implement this preparation and hence cannot use the zero-address menu. Sufficiency is Theorem 3.1. QED.
+
+The minimality is only for this fixed complex encoding, initialization and all-input action task. It is not a statement that real-amplitude computing lacks quantum computational power. Real-amplitude simulations with altered encodings are established [RG02]; extra coherent reference states or a different encoding change the resource contract. No minimal-pulse, optimal-time or all-hardware actuator theorem is claimed.
+

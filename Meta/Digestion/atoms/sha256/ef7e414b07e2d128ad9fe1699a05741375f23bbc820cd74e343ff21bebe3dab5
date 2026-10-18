@@ -1,0 +1,13 @@
+**约定 9.3（候选范围逐项承担）。** 下表将提案的范围与本文确实证明的结论分开；各结论以相应正文条件为前提。
+
+| 所提范围或机制 | 保留结果与精确边界 |
+| --- | --- |
+| 固定实际 reached entry，完整 unchanged source-call body | 定理 3.3–3.4：含 ingress 所有部分状态、七标签全部结果及原始 ACK/source TOK；排除 next changed idle CTL，固定共同 entry 不免费变成任意滚动 entry。 |
+| 多次 source flight、postseal | 定理 4.3：固定共同 $P$、此后仅 `01`，封口原始非 IN 行，跨不同已完成调用数；不需容量上界，不含中途 history。 |
+| 固定 beta 的 source-only 与原始 INITIAL 后缀 | 定理 4.6：使用实际请求类型/来源及 gate 超前缀，保留完整原始 stopping 路径；不含新增 setup 或终端纤维。 |
+| 更广原始源/任意客户端的后缀 | 定理 3.4、4.3 已与 beta 无关；后缀推广仅在命题 4.7 三个实际条件下成立。一般 computed read/rho 的三块反驳纯块计数规则；不据此否定一切 generic 恢复。 |
+| 历史 `111` 与七标签源 parser 恒等转接 | 命题 7.1 精确否定保持 header/site 的恒等转接，不否定所有编码协议；新增输入域桥仍 open。 |
+| 额外 native driver 后忽略其 meter | 命题 7.2 否定完整后继逐前缀相等；非 native staged receipt 不在这一反证类中，仍须源/权限实现。 |
+| 将全部 exposed fine cut 选成旧原始前缀/端点 | 定理 8.3 在实际 consumer EX 的显式细化前提下否定；不否定 stable completion，也不宣称已实现细引擎。 |
+| 扩大已返回历史目标服务 | 第 6 节直接复用匹配初始化的 GCA；不再实现 selector，不把它当 UAS/Cycle 共用实例或当前 Busy 权限。 |
+

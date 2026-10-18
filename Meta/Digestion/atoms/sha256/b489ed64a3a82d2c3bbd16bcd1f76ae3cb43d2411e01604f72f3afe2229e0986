@@ -1,0 +1,24 @@
+**Corollary 39.2 (complete inverse resource budget).** Let
+$c_0=(1-\delta)A_{27}$ and
+$c_1=k(A_{27}+B_{27})/(1-\theta)$. Among original optimal processors
+with an actual factorization and worst-history cost at most $c$, none
+exists if $c<c_0$. For $c_0\leq c\leq c_1$ the largest feasible
+normalized binary contrast is
+
+$$
+\mathsf V_{\max}(c)=\mathfrak f\!\left(
+ \frac{A_{27}(1-\omega)+B_{27}-c}{\theta A_{27}+B_{27}}
+                         \right).
+\tag{JR.42}
+$$
+
+For $c\geq c_1$ it is $1$. In particular at the minimum resource
+budget $c_0$ the entire interval $[0,s_0]$ is attainable.
+
+Proof. Theorem 37.2 gives the constant minimum and strict increase
+thereafter, as well as the maximal contrast $1$. On its increasing
+part its cost is affine in $v_s$ with slope
+$-(\theta A_{27}+B_{27})<0$; solving that affine equation gives
+(JR.42). The finite instruments in §38 attain each case, including
+both budget endpoints. $\square$
+

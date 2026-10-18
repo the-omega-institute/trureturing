@@ -1,0 +1,14 @@
+**Definition 7.3 (conditions for a further source or physical interpretation).**
+A source-faithful interpretation in another relational system requires a
+specified common source carrier and a map preserving the compared states,
+root readouts, operation names and parameters, each strict legal domain,
+labels and successors. If inverse recovery of that source is sought, the
+map must additionally be injective on the declared source carrier. An
+interpretation of an ordered past must also carry the requisite history
+record. An interpretation in physical space or time must specify spatial
+and temporal readouts and their relationship to those same transitions;
+any acquisition, precision, storage or energy assertion needs its own
+resource relation. Without these additional data the finite-field
+interface correspondence of Theorem 7.2 is not a recovery map for another
+source, an ordered past or a physical realization.
+

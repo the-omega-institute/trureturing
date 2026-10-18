@@ -1,0 +1,4 @@
+# Shared affine gain and zero-crossing recovery
+
+This companion works in the common-source model of Definition 38.1. It gives a fixed forward path that recovers the effective relation, the relative affine-gain slope, and the complete bounded-degree additive drift for every real gain slope, including every gain-zero case. The only remaining ambiguity is the positive relation/gain scale.
+

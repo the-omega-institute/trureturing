@@ -1,0 +1,36 @@
+**定理 36.1（全部达到族的可执行未来取得）。** 在假设35.1下，有一个共同确定的有限取得过程，对每个 $u\in\mathcal V(H)$ 实际算出 $(\sigma_q(y_u))_{q\in Q}$，并且
+
+$$
+E_q(\sigma_q(y_u),k)=r_{\rho^{N+k}u}(q)
+\quad(q\in Q,\ k\in\mathbb N).
+\tag{SLH.36.1}
+$$
+
+令 $b_q=1+\lceil\log_2(|q|+1)\rceil$。每个地址的取得至多请求 $b_q$ 次，每个请求都是 $q$ 的前缀，故请求词长至多 $|q|$。整个菜单满足
+
+$$
+\operatorname{Req}\le\sum_{q\in Q}b_q,
+\qquad
+\operatorname{SentLetters}\le\sum_{q\in Q}|q|b_q.
+\tag{SLH.36.2}
+$$
+
+此界在全部 $\mathcal V(H)$ 上统一，不限制原形、原树大小、$N$ 或未来偏移。只为这一界，过程可以不使用 $\Sigma_H$；可访问的真实同版本缓存只影响未命中数。
+
+证明。固定 $q$。先实际请求 $q$。若回复不缺席，直接给对应的 $\mathsf C,\mathsf A,\mathsf B$。分支永久为分支，叶的根分别沿 $\alpha\mapsto\beta\mapsto\mathsf{branch}$ 演化，故 (SLH.36.1) 由原替换成立。根永不缺席，因此 $d=0$ 时一次请求完成。
+
+若 $q$ 缺席，唯一首叶索引 $j$ 属于 $\{0,\ldots,d-1\}$。保持整数区间 $[\ell,h]$，初值 $[0,d-1]$，每次取 $m=\lfloor(\ell+h)/2\rfloor$，请求 $q_m$。回复分支说明 $j>m$，置 $\ell=m+1$；回复缺席说明 $j<m$，置 $h=m-1$；回复叶 $\lambda_b$ 则取得 $j=m,b$，按 (SLH.35.5) 输出。真实首叶始终留在区间；非叶分支每次严格缩小区间，所以最终真实读到那个叶。相邻区间不含刚请求的索引，故单地址过程不重复请求。
+
+当区间有 $s$ 个候选时，未终止的一侧最多有 $\lfloor s/2\rfloor$ 个。若 $T(0)=0$，有
+
+$$
+T(s)\le1+T(\lfloor s/2\rfloor),\qquad
+T(s)\le\lfloor\log_2 s\rfloor+1=\lceil\log_2(s+1)\rceil
+\quad(s\ge1).
+\tag{SLH.36.3}
+$$
+
+加上首次 $q$ 请求即得 $b_q$。取得首叶后，既有叶扇区式以种子 $\lambda_b$、后缀 $s=q\setminus q_j$、偏移 $k$ 求值。它恰在 $t=2-b+w(s^-)$ 出生，随后按末字母走定义35.2的序列；$1\le t\le w(q^-)+2$。因 $\rho$ 对配对分配，在首叶上方的实际祖先保持原地址，不需要读其兄弟子树，故这确是原 $y_u$ 的回复，而不是另选种子的猜测。又 $\rho^k y_u=\rho^{N+k}u$，给全体偏移的等式。
+
+对不同 $q$ 按安装的固定次序重复该过程。所有请求都发生在同一静止版本，均得到同一实际 $y_u$ 的真值，因此可以逐项相加；同一原来源的条件不因不同任务而改变。空菜单不发请求。重复任务只复用已取得的码，并按保留的位置字典输出。普通有序二分是成熟方法：Nowak，*The Geometry of Generalized Binary Search*，§I，[arXiv:0910.4397v5](https://arxiv.org/abs/0910.4397v5)，[DOI](https://doi.org/10.1109/TIT.2011.2169298)，以有限假设的查询分割描述其一般背景。这里没有借用该文二值函数类的几何／不相干性定理；能用真实四值地址读实现首叶比较，以及首叶足以给整个 $\rho$ 未来，是上述源特定对应。$\square$
+

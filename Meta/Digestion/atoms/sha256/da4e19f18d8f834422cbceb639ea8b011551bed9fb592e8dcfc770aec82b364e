@@ -1,0 +1,43 @@
+**定义 5.1（已有条件结论的接口）。** The source coordinate in
+Theorem 3.1 is a supplied coordinate, not a class label acquired
+from the readings. The whole fixed-shape and fixed-source inverses
+of the [whole-class companion, Theorems 4.1 and 5.1](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md)
+are conditional on the respective known class. Theorem 3.1 strengthens
+the fixed-source conclusion at this ancestor to an empty or singleton
+class before any further read. The common interpolation formula is
+reused; the additional ingredient is Theorem 2.1.
+
+The known-initial-root inverse of
+[VIII, Theorem 2.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md)
+retains its promise $g(0)=0$, equivalent here to $\delta=D_0$.
+VIII, Theorem 4.2 and Corollary 4.3 give an uncountable mixed-drift
+fiber at
+
+$$
+H_*=(0,J,24,M,48,M,312/5,J,48/5,M,-532/5).
+\tag{5.1}
+$$
+
+In particular those six readings do not identify the initial-root
+label or the drift. This is consistent with (3.4), which leaves the
+source to be determined. At this same $H_*$,
+[VII, Theorem 8.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md)
+gives at most one world per gain ray on the whole fiber; its
+Theorems 9.1 and 10.2 give an exact closed $u=1$ slice and an
+injective sixth-$J$ response on the whole known band
+$|u-1|<\eta$ for some $\eta>0$. These are neither ray labels nor
+band-membership information extracted from $H_*$. Theorem 4.1 supplies
+a no-unbounded-drift conclusion on every positive finite trace
+corridor for fixed readings; it supplies no injective sixth response
+outside that known band.
+
+The [late-root companion, Theorems 3.1, 6.1 and 7.1](FIB_JMMJM_LATE_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_REDUCTIONS.md)
+concerns respectively the known class $f(4)=f(5)=0$, triples with
+exactly two terminal roots, and common-drift triples with different
+terminal signs. Those strata are distinct from the rank-one-free
+inequality in Theorem 2.1 and are not premises of it. The pair
+exclusion in VII, Theorem 4.1 likewise remains a separate result;
+the present proofs do not require it. Pair exclusion and conditional
+class inverses do not by themselves exclude different collision
+pairs in different actual children of a larger set.
+

@@ -1,0 +1,26 @@
+### 100.1. Exact statement
+
+**Theorem 100.1.**
+
+Let j,C,s be positive integers, N=3^j>=81, and B_N=L_N^2+3=D C^2, with D=p_0 p_1 ... p_s the full positive squarefree kernel and all p_i distinct primes. Suppose p_0 is 19 modulo 24, every p_i with i>=1 is 1 modulo 24, and every mutual Legendre symbol between distinct support primes is +1. Actual support also supplies p_i>5 and (5/p_i)=1.
+
+For each i=1,...,s there exist primitive integers a_i,b_i,c_i with c_i>0 and
+
+ a_i^2-p_i b_i^2=5D c_i^2,
+ p_j not dividing b_i c_i for every j in {1,...,s} different from i.
+
+Define the s-by-s matrix H over F_2 by
+
+ H_ii=[(-5D/p_i / p_i)_4],
+ H_ij=[(b_i/p_j)] for i different from j.
+
+In the diagonal expression the numerator is the integer -5(D/p_i). The rational quartic symbol is evaluated only on nonzero quadratic residues modulo p_i. For any sign T, [T]=(1-T)/2 in F_2. All symbols are defined. The off-diagonal entries are independent of every permitted primitive certificate choice, so H is a well-defined arithmetic matrix for this ordered support.
+
+The rational rank satisfies
+
+ rank E_D(Q) <= 1+2 dim ker H.
+
+In particular det H=1 forces rank E_D(Q)=1. Under that condition there is no admissible repetition B_(Nk)=D c'^2 with k>1 odd, 3 not dividing k and c' a positive integer. Equivalently, any such actual repetition under the support hypotheses necessarily has det H=0.
+
+This is a conditional arbitrary-support-size criterion. It makes no numerical realization, converse, infinitude, independence from all previous tests, or universal WSS claim. No finiteness of Sha or Mordell–Weil rank parity is assumed.
+

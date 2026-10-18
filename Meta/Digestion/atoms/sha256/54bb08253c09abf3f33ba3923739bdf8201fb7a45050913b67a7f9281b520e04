@@ -1,0 +1,14 @@
+**Definition 1.3 (the simultaneous question).** Put
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists (u_r)_{r\in B}\in\prod_{r\in B}D_r\quad
+\forall r,s\in B\quad u_r\equiv_h u_s.
+\tag{NAC.3}
+$$
+
+The tuple is simultaneous. Its components are alternative originals with
+separate parameter tuples. No equality between different originals' hidden
+values is an input condition. Within any one original all sharing remains.
+The witnesses may change with $h$.
+

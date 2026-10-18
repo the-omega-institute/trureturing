@@ -1,0 +1,83 @@
+**引理 2.1（固定漂移的五、七双根注入性）。** For every real $Y,d$, there
+is at most one target in $\mathcal F(H_4(Y))$ with
+$\delta=d$ and $g(5)=g(7)=0$.
+
+Proof. Set
+$u=\operatorname{tr}(MP)>0$, $v=\operatorname{tr}(BP)>0$ and
+$w=\operatorname{tr}(DP)>0$. Trace one and strict entrywise positivity give
+
+$$
+v=1+P_{12}+2P_{21}<1+2u,
+\qquad 1+2u-v=P_{12}+2P_{22}>0.                              \tag{2.1}
+$$
+
+Factor
+
+$$
+g(t)=(t-5)(t-7)(a+bt),\qquad
+a=-d/35,\qquad b=\frac{1-d}{24u}+\frac d{35}.                 \tag{2.2}
+$$
+
+The first two equations of the parent give these coefficients. This
+factorization includes all lower degrees and all further root
+multiplicities. The clock-two equation is exactly
+
+$$
+Q_5(u)=12du^2+(5d-57)u+35(1-d)=0.                            \tag{2.3}
+$$
+
+Suppose $0<d<1$. Then
+
+$$
+g(3)=\frac{1-d}{u}+\frac{16d}{35}>0,\qquad
+du<\frac{57-5d}{12}.
+$$
+
+Using (2.3), direct substitution reduces the relevant upper expression to
+
+$$
+d+g(3)(1+2u)=\frac{127-24d+20du}{35}
+<\frac{222-97d/3}{35}<\frac{222}{35}.                        \tag{2.4}
+$$
+
+But the actual clock-three reading and (2.1) require
+$331/35=d+g(3)v<d+g(3)(1+2u)$, a contradiction.
+
+For $d<0$ or $d>1$, the quadratic (2.3) has negative root product
+$35(1-d)/(12d)$, so it has at most one positive root. At $d=0$ its unique
+positive root is $35/57$; at $d=1$ its unique positive root is $13/3$.
+Thus each drift admitting a target determines at most one $u$, hence the
+entire polynomial in (2.2). No discriminant or sampled gain was divided
+out in this argument.
+
+For source reconstruction, $g(3)$ and $g(4)$ are nonzero. Indeed, an
+additional root three makes $g$ a nonzero multiple of
+$(t-3)(t-5)(t-7)$. The first three readings and $T=I+M$ then give
+$61d=333$, whereas the clock-three root requires $d=331/35$.
+An additional root four makes $g$ a nonzero multiple of
+$(t-4)(t-5)(t-7)$. The first three readings instead force
+$d=241/31$ and $g(3)=-2d/35<0$. Since $241/31<331/35$ and $v>0$, this
+cannot give the clock-three reading. In either triple-root factorization
+$d=0$ would force the whole polynomial to vanish and is forbidden, rather
+than an omitted solution.
+
+Consequently
+
+$$
+v=\frac{331/35-d}{g(3)},\qquad w=\frac{Y-d}{g(4)}.
+$$
+
+The existing four-trace inverse [II, equation (52.5)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md)
+now gives the unique matrix
+
+$$
+P=\begin{pmatrix}
+-1-3u+v+w&-3-4u+v+2w\\
+1+2u-w&2+3u-v-w
+\end{pmatrix}.                                                 \tag{2.5}
+$$
+
+All divisions used a nonzero fixed integer, $u>0$, or the two samples
+just proved nonzero. Existence was not asserted for an empty drift class.
+This proves uniqueness of the complete target. ∎
+

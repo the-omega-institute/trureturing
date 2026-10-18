@@ -1,0 +1,31 @@
+**Proposition 4.3 (the domain includes degenerate and conflicting data).**
+Corollary 4.2 retains empty, root, mixed and blocked cuts, rows with no
+holes, ties, repeated endpoints, every old-class disequality and
+inconsistent input.
+
+Proof. A zero-hole row gives a ground $W_i$ and the unique empty class
+valuation. An empty cut has that meaning; a root cut instead supplies
+one unrestricted class variable. Mixed and blocked rows keep all
+concrete constructors and blockers in $W_i$. Prefix-free validated
+exteriors cannot lose those blockers when filled. Every distinct class
+pair enters the negative list, even when neither class is linked to
+another row. Class labels printed in different rows are different
+variables unless a constraint relates them.
+
+Non-strict chronology includes ties. At a tie two rows constrain the
+same iterate of the same source, so incompatible rows yield no admitted
+coordinates. A reflexive equality contributes tautological edges; a
+reflexive negative gives the impossible condition in Lemma 3.3.
+Contradictory signs on a repeated pair force a forbidden zero difference.
+The empty link list contributes no extra instructions. Well-formed
+inconsistency can appear as failed shape unification or an empty
+arithmetic fiber, without requiring an inhabitation promise.
+
+For a concrete born-hole case, take the first cut $\{LL\}$ with exterior
+$\alpha$ and zero holes, and the later cut $\{L,R\}$ with two distinct
+classes and no links. The exact histories are $(\alpha,(0,n))$ for
+$n\ge2$: $T_n=\langle T_{n-1},T_{n-2}\rangle$ has distinct children
+for exactly these $n$. Both later holes were absent originally. A link
+purporting to use the first row's $LL$ is malformed and cannot be made
+valid by assigning it a default value. $\square$
+

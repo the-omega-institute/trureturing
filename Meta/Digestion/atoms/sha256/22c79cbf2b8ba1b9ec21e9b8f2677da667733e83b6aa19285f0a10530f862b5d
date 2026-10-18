@@ -1,0 +1,31 @@
+**Assumption 1.3 (fixed original source, with separate logical suppliers).** Use the isolated nine-coordinate source root of [CG, Proposition 13.2 and §§13–17][CG], the source correspondence of FA Convention 67.1 at revision `e35db6260a4bd66b11e6b36cbece55650c937e70`, and RC.2–RC.5. Its coordinate order is $(\lambda_{\rm CG},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm CG},\eta_0,\eta_1,\eta_2)$; its box has radius $10^{-24}$ in every coordinate and the following exact centres:
+
+| Coordinate | Centre |
+| --- | --- |
+| $\lambda_{\rm CG}$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z_{\rm CG}$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+The source-root isolation, its positive pivots and exact ranks, and the derived source dictionary and TP identity are inherited source premises. Complete-output minimax identification and precisely CG17's averaged-live/preaverage consequences are a separate inherited premise. The original sharp worst-history jointly acquired cost and the unaveraged supported real equality-face bridge are further JR premises; they are not inferred from CG17 alone or from TP. No premise here recertifies any of these suppliers. In particular source-root identities hold at the isolated root, not at arbitrary off-root interval points.
+
+At that root define
+
+$$
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad
+S=ce_0e_2^T+de_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),
+$$
+
+$$
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\qquad
+\Lambda_*=\operatorname{Ad}_D+\operatorname{Ad}_T+\operatorname{Ad}_S.
+$$
+
+The seven amplitudes and $m_1,m_2$ are positive; $D$ has rank three, $T,S,M$ have rank two and the three source live Kraus matrices are linearly independent. The adjugate/positive-pivot definitions in RC.5 specify them from the original root without inverting singular source matrices. The exact dyadic enclosures in §10 specify all source expressions used in the present certificates. Their input identity is SHA256 `210bd09d6dfad81d2179b4c91418b90f160aec604119a825b4063f82070039ed`, with recorded parent certificate identity `cfea57666a799df3d74adfbdc624c32705219e214cfb85840b5d3d125ad5d346`. These identities bind the assumed data; they do not prove source isolation, minimax or cost.
+

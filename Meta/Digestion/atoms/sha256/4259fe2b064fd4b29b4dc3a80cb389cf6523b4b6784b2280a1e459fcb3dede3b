@@ -1,0 +1,36 @@
+**Definition 1.4 (one late Read and the retained-alphabet objective).**
+Only after export, a public source-independent $p\in\mathcal P_D$ is
+supplied. One common deterministic effective reader, given $E(t),D,p$
+and the installed tables, makes at most one fresh Read of that same
+stationary $t$. Its word may be any finite original-root word, chosen
+from those inputs. It then produces a final predictor state $Z$.
+For every subsequently supplied authentic $k\ge0$, a passive decoder
+must satisfy
+
+$$
+\mathsf{Dec}(Z,D,p,k)=r_{\rho^k t}(p)
+\qquad(t\in\mathcal F_D, p\in\mathcal P_D, k\ge0).
+\tag{LTR.1}
+$$
+
+No $k$ is supplied before the query, and there are no further Reads.
+Zero-Read branches are permitted. Each statement is uniform over the
+entire family, all late targets and all authentic counts; it is not a
+source-dependent request or a separate preparation for each target.
+Define
+
+$$
+M_1(D)=\min_{E,\mathsf{Reader},\mathsf{Dec}}|E[\mathcal F_D]|,
+\qquad B_1(D)=\lceil\log_2 M_1(D)\rceil.
+\tag{LTR.2}
+$$
+
+The minimization is over preparations and readers satisfying the whole
+contract. It counts the complete attained source-dependent alphabet.
+$B_1$ is its fixed-width binary naming capacity, not total physical
+storage. Preparation Read count, submitted letters and maximum word
+length will be bounded for the constructions. Preparation work and
+control, installation, temporary and post-request workspace, final
+predictor size, count representation, addressing overhead, isolation,
+entry and physical time remain separate resource coordinates.
+

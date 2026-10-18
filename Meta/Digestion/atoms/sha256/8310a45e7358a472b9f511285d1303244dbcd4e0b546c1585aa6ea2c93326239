@@ -1,0 +1,63 @@
+## 13. Uniform interior excess and the rational constant
+
+**Proof of Theorem 9.2, the unchanged closed interior interval.** Consume the full-word interior excess of [NATIVE, (6.1)–(6.2)]. Its word is $w_{3,1}$, with source mass
+
+$$
+J(r)=r^3(1-r)^5,\qquad
+J'(r)=r^2(1-r)^4(3-8r).
+$$
+
+Thus $J$ is nonincreasing on the entire closed $I_0=[3/8,5/13]$, including its zero derivative at the left boundary. The larger endpoint mass is $J(t_2)>J(t_1)$, and
+
+$$
+\begin{aligned}
+J(r)&\ge J(5/13)=J(t_2)+\eta,\\
+\eta&=(5/13)^3(8/13)^5-(2/5)^3(3/5)^5\\
+&=\frac{14219478376}{318644812890625}>0.
+\end{aligned}
+\tag{13.1}
+$$
+
+Apply (9.6) with $D=P_{p,r}$. This one full coordinate is outside the endpoint box by at least $\eta$, so
+
+$$
+\tfrac12\operatorname{TV}(P_{p,t_1},P_{p,r})
++\tfrac12\operatorname{TV}(P_{p,t_2},P_{p,r})
+\ge\rho_p+\eta/2.
+\tag{13.2}
+$$
+
+Let $f_i=\operatorname{TV}(P_{p,t_i},P_{p,r})$. Reverse triangle inequalities imply $|f_1-f_2|\le d_p$. The selected endpoint comparison (12.4) and (12.6) now give
+
+$$
+\begin{aligned}
+\rho_p+e
+&\ge\int\operatorname{TV}(G_p^{u,v},P_{p,r})\,d\omega\\
+&\ge\lambda f_1+(1-\lambda)f_2-2m\\
+&\ge\rho_p+\eta/2-d_p|\lambda-1/2|-2m\\
+&\ge\rho_p+\eta/2-e-4m.
+\end{aligned}
+\tag{13.3}
+$$
+
+Consequently $4e+8m\ge\eta$. Using (12.3) proves the exact identities and strict rational comparison
+
+$$
+e\ge\frac{\eta}{4+8(2914912)}
+=\frac{\eta}{23319300}
+=\frac{3554869594}{1857643496310087890625}=c_*>
+\frac1{10^{12}},
+$$
+
+$$
+3554869594\cdot10^{12}-1857643496310087890625
+=1697226097689912109375>0.
+\tag{13.4}
+$$
+
+The suspended interior constraint remains in (9.3), although this lower estimate only needs the p interior constraint and both phases' endpoint constraints. Every bound applies before minimization, on the entire phase-asymmetric rectangle and the entire Borel class; neither $u=v$, a finite preset support nor a modified risk order is imposed.
+
+For completeness, the minimum in (9.3) is the original minimum rather than an infimum over a replacement class. Finite-coordinate probabilities are continuous, and the bounds $(4/15)^L,(6/25)^L$ make finite-partition TV distances converge uniformly to complete TV. Joint continuity on $S\times[t_1,t_2]$ follows. Probability measures on compact $S$ are weakly compact; uniform continuity in $r$ and weak continuity of integration make all six expected distances, and their maximum, continuous on $\mathcal P(S)\times I_0$. This is the compactness step already used in Lemma 4.1. The minimum therefore exists and inherits (13.4). Its attainment inside this enlarged comparison class does not construct a common optimal finite observer. This completes the proof of Theorem 9.2. $\square$
+
+The complete-law viewpoint also occurs in Taolue Chen and Stefan Kiefer, *On the Total Variation Distance of Labelled Markov Chains*, CSL-LICS, DOI [10.1145/2603088.2603099](https://doi.org/10.1145/2603088.2603099), [author preprint](https://arxiv.org/html/1405.2852v1), Theorem 7 and Corollary 8. Their two converging bounds and rational approximation concern a supplied pair of labelled-chain laws. They do not optimize (9.3) or transfer configuration risk along an acquired return. Here the complete-coordinate identity, tails and rational enclosures provide the elementary intermediate arguments; the additional quantitative content is (10.2), (12.3) and (13.4).
+

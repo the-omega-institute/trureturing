@@ -1,0 +1,11 @@
+**Lemma 6.2 (all forty-nine joins).** Adjacent cells define the same analytic law and dual on their whole shared $t$ edge.
+
+Proof. Fix any $t$ on a shared edge and its common $\lambda$. Each root is a primal/dual optimum of the **same** penalized moment problem
+
+$$
+\max_{\sum p\Gamma_\eta=B(t)}\sum p\bigl(|H_\eta|+\lambda|u|\bigr).
+\tag{9}
+$$
+
+No strength is fixed in (9). This avoids assuming that adjacent roots have equal strengths before proving they are the same law. Each law attains its own globally feasible dual $Y\cdot B(t)$, so both have the same optimal value and mutual zero slack. Either finite strict zero set forces the other law onto its same seven endpoints; the minor fixes weights. Their dual difference annihilates every contact value and angular derivative. The vector consisting of zero angle/weight differences and this dual difference is then in the kernel of the nonsingular contact Jacobian, so it vanishes. Local analytic uniqueness gives agreement on neighborhoods of the edge. The argument holds for every $t$, identifying all 49 joins. No prior connected one-parameter source is needed. ∎
+

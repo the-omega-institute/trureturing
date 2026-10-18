@@ -1,0 +1,78 @@
+**Proposition 4.1 (Actual product membership with the full marginal).**
+With output/preparation row and input/measurement column order $(0,+,-)$,
+the joint population matrix is
+
+$$
+\Lambda=\begin{pmatrix}
+599879/1271415&383116/1271415&0\\
+671536/1271415&1280547842618/1422104377215&4626882/5592605\\
+0&4464072/5592605&6558328/5592605
+\end{pmatrix}.
+\tag{4.1}
+$$
+
+In QRC's coordinates, with $\tau=(1,\sqrt2,\sqrt2)^T$ and its
+six-plane order $(+,-,2+,2-,\Delta,\Sigma)$,
+
+$$
+M_{ij}=\frac{\Lambda_{ij}}{\sqrt{d_id_j}},\qquad
+\eta=\left(\frac{507224}{1271415},0,
+\frac{\Lambda_{++}}4,\frac{\Lambda_{--}}4,
+\frac{2272374}{5592605},\frac{2272374}{5592605}\right).
+\tag{4.2}
+$$
+
+This point belongs to the exact independent real-product cone, satisfies
+$M^T\tau=\tau$, and describes the same channel as (3.3).
+
+Proof. The sector populations of the two representative atoms are
+
+$$
+\begin{aligned}
+p_{a\mathrm A}&=(0,2313441/5592605,3279164/5592605)^T,&
+p_{b\mathrm A}&=(0,81/200,119/200)^T,\\
+p_{a\mathrm B}&=(599879/1271415,671536/1271415,0)^T,&
+p_{b\mathrm B}&=(119/195,76/195,0)^T.
+\end{aligned}
+\tag{4.3}
+$$
+
+Their outer products give
+$\Lambda=(400/119)p_{a\mathrm A}p_{b\mathrm A}^T
+ +(195/119)p_{a\mathrm B}p_{b\mathrm B}^T$.
+This proves (4.1); its three column sums are exactly $(1,2,2)$.
+In QRC Definition 5.1 let $k(a,b)$ be the atom with independent
+real unit factors, trivial block $h(a)h(b)^T$ and plane coefficients
+$z_\nu(a)^Tz_\nu(b)/2$. Lemma 3.3 identifies the point here as
+
+$$
+(M,\eta)=\frac{400}{119}
+k(a_{\mathrm A}(0,0),b_{\mathrm A}(0,0))
++\frac{195}{119}k(a_{\mathrm B}(0),b_{\mathrm B}(0)).
+\tag{4.4}
+$$
+
+The dark/plus coefficient is
+$(195/119)(71\cdot94\cdot119\cdot76)/(1271415\cdot195)
+=507224/1271415$. Each mixed-plane coefficient is
+$(400/119)(1521\cdot166\cdot9\cdot119)/(2\cdot5592605\cdot200)
+=2272374/5592605$. The planar traceless coefficient is
+$\Lambda_{jj}/4$, and dark/minus is zero. These give (4.2) by
+QRC's normalized orthonormal basis, with actual product atoms rather
+than a relaxation.
+
+The full normalized Choi state is
+
+$$
+\chi_S=\frac15\sum_fc_f(a_fa_f^T)\otimes(b_fb_f^T),\qquad
+\operatorname{Tr}_{\rm out}\chi_S=I_5/5.
+\tag{4.5}
+$$
+
+In particular the three TP coordinate equations represent the whole
+matrix marginal, not merely its trace. The dark row sum of $\Lambda$
+is $982995/1271415\ne1$, and
+$\Lambda_{0+}=383116/1271415\ne671536/1271415=\Lambda_{+0}$.
+Thus this channel is nonunital and not self-adjoint. These are properties
+of the sufficient example, with no restriction on competitors. $\square$
+

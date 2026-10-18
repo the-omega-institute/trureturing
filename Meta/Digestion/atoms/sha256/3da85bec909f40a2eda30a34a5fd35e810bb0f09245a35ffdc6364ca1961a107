@@ -1,0 +1,18 @@
+**Definition 2.4 (the retained zero face).** Let $j_c=\min_{\mathfrak C}\mathcal J$, with the supplied compact domain in Definition 2.2. The original question is whether $j_c=0$ or $j_c>0$. At zero level, and conversely under compatibility, its endpoint constraints are the complete coordinate boxes
+
+$$
+P_{s,a}(\omega)\wedge P_{s,b}(\omega)
+\le D_s(\omega)\le
+P_{s,a}(\omega)\vee P_{s,b}(\omega)
+\quad\text{for every }\omega\in\Omega_s,\quad\nu_s\text{-almost surely},
+$$
+
+where $D_p=Q,D_\beta=W$, together with the two endpoint-event midpoint means specified in (3.1). They must hold alongside
+
+$$
+\mathcal L_p(P_{p,3/8})\le\rho_p,\qquad
+\mathcal L_\beta(P_{\beta,3/8})\le\rho_\beta.
+$$
+
+The coordinate boxes include every completed word and the infinite outcome. All these constraints belong to the same unweighted phase marginals and both full-descriptor residual equations. Three installed depths do not imply finitely many forecast descriptors, and the original source parameter $n=4$ is neither a descriptor-support bound nor a COMPLETE cap. Theorem 4.1 uses fewer risk hypotheses to prove a necessary relation; the original decision retains all of them.
+

@@ -1,0 +1,18 @@
+**Definition 1.3 (separate acquisition charges).**
+For a finite acquired record $h$, let $Q(h)$ be its set of distinct
+addresses and let $R(h)$ be its length. The charges
+
+$$
+D(h)=|Q(h)|,\qquad R(h),\qquad
+B(h)=\sum_{(a,y)\text{ in }h}\ell(y),\qquad
+\ell(0)=1,\quad \ell(n)=1+\lfloor\log_2 n\rfloor\ (n>0)
+\tag{1.3}
+$$
+
+measure distinct addresses, actual query calls and binary response
+length, respectively. They are different from $T_x$, random-bit use,
+working memory and the representation length of a proposal. Equation
+(1.2) constrains only $D$. A numerical response $n$ has finite length
+for each $n$, but no uniform length bound over the source space.
+No uniform finite-bit implementation is part of $\mathcal P_s$.
+

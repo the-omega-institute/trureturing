@@ -1,0 +1,33 @@
+**Proposition 8.3 (finite refutations and the remaining quantifier).**
+For rational $\mu,C$, invalidity of (NPC.28) is semidecidable by a
+finite violating template. For every $N$, $\beta_N(\mu)$ is a
+computable real, and $\beta_N(\mu)\uparrow\beta(\mu)$. These facts
+and the explicit weight modulus in (NPC.24) specify no modulus of
+this length convergence and no verifier satisfying Definition 8.1.
+
+Proof. Enumerate $n$ and its finitely many complete templates. At a
+fixed template, its mass and $C^n$ are exact rationals; a strict
+violation is decidable. If (NPC.28) is false, some finite pair
+$(n,\Theta)$ violates it, and enumeration eventually finds it.
+At fixed $N$, all maxima $A_n(\mu)$ are finite rational computations;
+their roots and finite maximum admit computable real enclosures.
+The increasing-limit claim is the definition of $\beta$.
+
+These conclusions provide lower enclosures of $\beta$, whereas a cap
+requires an upper bound at every length. The proof of (NPC.14) uses
+unquantified near-optimal rational-type block lengths and compactness.
+Neither that proof nor (NPC.24), whose variables are weights at a fixed
+native depth, provides a computable tail error in $N$. A cap verifier
+is accordingly an additional hypothesis in Theorem 8.2, with its
+soundness and cofinality separately required. This identifies a missing
+premise, not a noncomputability or impossibility assertion. $\square$
+
+The distinction between a Fekete limit and an effective error bound
+is also discussed for graph/channel capacities in [Boche–Deppe,
+Theorem 12 and Remarks 13 and 38][BD]. No reduction from this native
+rate to a noncomputable graph/channel quantity is assumed. The effective
+length error in NDR's (NDR.37), sharp $\lambda$, general exact
+$M_1(D)$, and the wider mutual-recovery problem are distinct remaining
+mathematical questions. Formula (NPC.34) is a semantic completeness
+identity, and Theorem 8.2 is conditional on (NPC.35).
+

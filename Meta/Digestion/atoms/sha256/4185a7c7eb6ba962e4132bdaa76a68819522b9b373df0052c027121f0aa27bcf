@@ -1,0 +1,25 @@
+**Definition 3.1 (explicit finite evaluation).** On a finite native
+tree, whole equality is defined recursively: equal leaves agree,
+different leaf labels disagree, a leaf and a branch disagree, and
+two branches agree exactly when both ordered children agree. Its
+negation is whole disequality. Both recursions terminate on finite
+trees. For a fixed word $p$, navigation recursively follows its
+letters through branches; reaching a leaf before the word ends
+returns absent. For a supplied numeral $a$, first form the entire
+finite tree $\rho^a u$ by the laws of Definition 1.1, and then navigate
+in that tree.
+
+In particular, epoch-$a$ navigation is not replaced by applying
+$\rho^a$ to a nonexistent original subtree. An originally absent
+address can be born in an epoch view. Source slot $(i,0)$ keeps its
+original absence, independently of any such birth.
+
+Compute a complete row at $A$ by navigating all members of $A$,
+replacing exactly the reached subtrees by their numbered holes, and
+recursively comparing each pair of reached subtrees. Equality with a
+fixed row compares the reached subset, the whole hole context and
+every partition bit. It includes all different-class disequalities.
+The finite context comparison keeps every uncut concrete subtree.
+Boolean complements are taken after evaluating the reach guards;
+flipping a sign alone does not complement a guarded record.
+

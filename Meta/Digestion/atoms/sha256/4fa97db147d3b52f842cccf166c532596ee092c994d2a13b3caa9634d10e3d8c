@@ -1,0 +1,18 @@
+### 64.1. Statement and scope
+
+Use §63's m-leaf star-compression channel E_z, with m≥1, logical input C^(m+1) labelled1,...,m,h, logical output C², and ||z||₂≤1. Its basis action sends every leaf to0 and the hub to1; E_z(ih)=z_i01, with distinct leaf–leaf coherences killed. The input and output MC encodings are J_in and J_out.
+
+For all finite physical LOSR channels Φ from the two local (m+1)-dimensional inputs to the two local qubit outputs, without restrictions on their populations, code support, or other matrix-unit coefficients,
+
+    inf_Φ ||Φ∘J_in−J_out∘E_z||_diamond
+       = min_{||w||₁≤1} ||z−w||₂.                         (1)
+
+The norm is the unhalved diamond norm, including arbitrary passive references. The optimum is attained by one product of local CPTP maps. Thus the exact-basis-output restriction in §63's projection calculation can be removed for this entire family: a calibrated optimizer exists even among unrestricted physical competitors. This is not an assertion that arbitrary physical competitors are calibrated.
+
+Explicitly, if ||z||₁≤1 the optimum is zero. Otherwise let τ>0 solve Σ_i max(|z_i|−τ,0)=1. Then
+
+    w_i=exp(i arg z_i)max(|z_i|−τ,0),
+    optimum=sqrt(Σ_i min(|z_i|,τ)²).                      (2)
+
+For z_i=1/sqrt(m), the unrestricted optimum is exactly1−1/sqrt(m), attained by w_i=1/m. This includes m=1, when the value is zero. Every coordinate pair nevertheless has an exact physical implementation, as in §63.
+

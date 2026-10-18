@@ -1,0 +1,22 @@
+**Assumption 1.1 (The original five-mode source).** Let $\mathcal H=\mathbb C^5$
+with ordered orthonormal basis $\mathsf S=(N,2,3,5,25)$ and
+$\Pi_s=e_se_s^\dagger$. Every complex density matrix on $\mathcal H$ is
+an allowed input. Set
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\quad t\ge0.
+\tag{1.1}
+$$
+
+This is precisely
+[QMB Assumption 1.1](https://github.com/the-omega-institute/trureturing/blob/720d8d9671ab19dbd8be12bc17d238eb4201fa5d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+It is an independent quantum preparation hypothesis; $N$ denotes a unit
+basis vector. No preparation map from the native $\alpha/\beta$ tree or
+from a tensor-cut source is part of this assumption.
+

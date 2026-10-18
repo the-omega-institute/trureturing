@@ -1,0 +1,14 @@
+### 106.4. Companion curve and its actual rational point
+
+The quartic M v^2=zG(z) is birational, away from z=0, to
+
+ F_M: y^2=x^3-9M^2 x+9M^3
+
+by x=3M/z and y=3M^2 v/z^2. The inverse is z=3M/x and v=3y/x^2. Its discriminant is 2^4*3^6*M^6, which is nonzero.
+
+Substituting z=B, v=C C' yields the rational point
+
+ P_N=(3D'/C^2, 3D'^2 C'/C^3).
+
+Indeed x^3-9M^2x+9M^3=9M^3 G(B)/B^3, and the square of the displayed y has that value because B B'=M C^2 C'^2. Every denominator has been retained. No common-prime factor between D and C, or between D' and C', is cancelled without accounting for its valuation.
+

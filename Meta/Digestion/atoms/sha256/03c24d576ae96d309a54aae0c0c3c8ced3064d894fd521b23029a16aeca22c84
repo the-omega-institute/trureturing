@@ -1,0 +1,26 @@
+**Corollary 7.2 (exact rational-cap expression for the original rate).**
+With validity as in Definition 6.3,
+
+$$
+\boxed{\displaystyle
+\lambda=\sup_{d\ge1}
+\sup_{\substack{\mu\in\Delta(S_d)\cap\mathbb Q^{S_d},\ C\in\mathbb Q_{>0}\\
+                         (\mu,C)\text{ valid}}}
+-2^{-d}\log_2C.}
+\tag{NPC.34}
+$$
+
+The same supremum results if every $\mu$ is required strictly positive
+and $C\le1$. For any $\epsilon>0$, one may first choose $d$ with
+$2^{-d}\phi<\epsilon/2$ and then choose the rational mesh and cap
+rounding with
+$2^{-d}\log_2(1+s(\delta+\eta))<\epsilon/2$; the resulting valid
+pair has original-rate endpoint greater than $\lambda-\epsilon$.
+
+Proof. Theorem 7.1 bounds every endpoint by $\lambda$. Theorem 6.4
+makes valid rational endpoints cofinal in $2^{-d}\sigma_d$, also
+with strictly positive weights and $C\le1$. Apply (NPC.8); its
+geometric error gives precisely the stated two contributions.
+The depth choice can use $\phi\le1$. Mesh finiteness and this
+choice do not decide the universal validity condition. $\square$
+

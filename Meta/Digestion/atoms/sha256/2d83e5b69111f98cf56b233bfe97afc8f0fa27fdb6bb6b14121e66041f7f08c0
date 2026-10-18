@@ -1,0 +1,22 @@
+**Definition 8.5 (total finite failure routing and raw states).** Inherited
+history/source parse, range, dependency and invocation failures retain
+ARC's exact typed routes. A new handler failure occurs with idle mailbox
+and handler invocation: retain literal binding/range failure 1000 and the
+actual request; use ARC's full Rejection publication and its original
+ClientImage rejection/ACK/failed-cycle/Ready route. A callback failure
+already holding a receiver does not publish: retain 1000, append the
+tagged actual fault on 71, ACK that channel once, return mailbox availability,
+append failed cycle, return invocation and Ready. First failing test in
+the written order determines the failure. No decoder fallback or retry
+exists. Authentic publications cannot reach these failures by §9.
+
+Withheld input is not a failure response. Busy second entry, missing token,
+unsealed read or disabled boundary move executes no edge or receipt.
+Enabled wrong IN has its real latch/control/receipt successor. Wrong
+bootstrap stores remain raw; unique well-typed noncanonical decoded rows
+execute their real effects, and ill-typed/ambiguous rows have no enabled
+main successor. All original invalid preparation/source packets, pending
+IN-before-WR, EX blanks, partial banks/descriptors/allocations/copies,
+version transitions, loan cuts, cursor/meter heads and halt remain physical
+states. No positive conversion theorem is assigned to arbitrary raw input.
+

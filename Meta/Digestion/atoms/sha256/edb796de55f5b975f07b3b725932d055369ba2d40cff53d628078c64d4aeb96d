@@ -1,0 +1,22 @@
+**Proposition 4.6 (attained encoders and current-epoch consumers).** The value
+three in $D_3$ is attained by a three-value complete field, and the value four in
+$D_4$ by a four-value complete field.
+
+*Proof.* For $D_3$ use $h=3$ in (SJM.11). During the paid pre-cut traversal
+of ARH Proposition 2.1, the common producer computes the full $Q$-row and
+original depth-three table from the actually acquired descriptions, then stores
+the rank in the canonical $S_3(p_3(u))$ list. Its successful complete cut
+retains only the declared input and this code; the traversal descriptions,
+lengths and control distinctions are no longer accessible. Proposition 4.5 shows
+that some attained depth-three prefix has exactly three rows, so all three ranks
+occur. The consumer reconstructs the inclusive original depth-three table at the
+actual register epoch $N$ using [SLH, Theorem 2.2][SLH] and returns the whole
+exterior and partition from the rank. This is a real current-register consumer,
+with at most $2(2^4-1)=30$ reads and no old-version access.
+
+For $D_4$, store the rank of the complete row in the fixed ordered list
+$(r_0,r_1,r_2,r_3)$. It has four attained values and the consumer returns that
+row with zero post-entry reads. The lower bounds in Proposition 4.5 apply to
+all complete encodings and all legal adaptive serial competitors, so these are
+exact minima rather than properties of a chosen label field. $\square$
+

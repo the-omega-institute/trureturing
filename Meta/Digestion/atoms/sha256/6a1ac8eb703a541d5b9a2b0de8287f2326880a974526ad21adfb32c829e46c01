@@ -1,0 +1,25 @@
+**Lemma 7.2 (Finite convex minima and two-policy remainder
+realizations).** The minimum in (7.1) exists for every
+$x\in[0,1]$. A minimizing vector can be chosen with at most two
+positive entries. For $d>0$, the corresponding combination is
+realized by cutting the original $\mathsf U_0$ into at most two
+parts, without changing its law.
+
+Proof. The set $K$ contains policies of masses zero and one, so
+the constraint set in (7.1) is nonempty for every $x$. It is a
+closed subset of the finite simplex, hence compact. Its continuous
+linear objective attains a minimum.
+
+If a minimizing vector has at least three positive entries, their
+vectors $(1,q_k)$ are linearly dependent. There is a nonzero
+direction $h$ supported on those entries with
+$\sum_kh_k=\sum_kh_kq_k=0$. Both sufficiently small positive
+and negative movements along $h$ preserve nonnegativity and the
+constraints. Optimality forces $\sum_kh_k\ell_k=0$; otherwise
+one of these two movements lowers the objective. Move until a
+positive entry first becomes zero. The vector is still minimizing
+and has smaller support. Finitely many repetitions leave at most
+two positive entries. Lemma 6.2 cuts masses $dt_k$ inside the
+original remainder, and Theorem 5.1 gives the paid realization.
+$\square$
+

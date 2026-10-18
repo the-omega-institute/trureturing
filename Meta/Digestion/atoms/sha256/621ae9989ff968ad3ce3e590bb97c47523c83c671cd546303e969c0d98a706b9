@@ -1,0 +1,37 @@
+**Definition 7.1 (credited motif and paired template).** Use precisely
+the five actual states of [NCM, Proposition 6.1][NCM]:
+
+$$
+A=\alpha,\ B=\beta,\ C=\langle A,A\rangle,\ J=\langle B,A\rangle,
+\ Q_0=\langle C,A\rangle,
+$$
+
+$$
+(u_0,u_1,u_2,u_3,u_4)
+=(C,J,\langle C,C\rangle,\langle J,J\rangle,\langle A,Q_0\rangle),
+\qquad P=\{u_0,\ldots,u_4\}\subset S_3.
+\tag{INB.27}
+$$
+
+For two blocks take the complete paired witness template from that
+proposition. Root is constant $(0,0)$; targets $L,R,LR,RL,RR$
+query own $L,R,L,RL,R$, respectively. For $L,R$ decode alpha,
+beta, branch as $(2,1),(1,0),(0,0)$. For $LR$ decode alpha,
+beta, branch as $(4,1),(3,1),(2,1)$. For $RL$ decode absent,
+alpha, beta, branch as $(3,0),(2,1),(1,0),(0,0)$. For $RR$
+decode alpha and branch as $(4,1),(2,1)$. Extend unused replies
+by any displayed value in that target's actual attained range.
+Each $LL$ queries the other block's $RL$, with decoder
+
+$$
+\mathsf{absent}\mapsto(3,0),\quad
+\alpha\mapsto(2,1),\quad\beta\mapsto(1,0),\quad
+\mathsf{branch}\mapsto(2,0).
+\tag{INB.28}
+$$
+
+Every decoder is total into $\Gamma_q(S_3)$: each specified output
+is attained in $S_3$. In particular,
+$\Gamma_R(\langle\alpha,\beta\rangle)=(1,0)$.
+Let $\Theta_m$ be the product of $m\ge1$ such templates, on $n=2m$ blocks.
+

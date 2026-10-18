@@ -1,0 +1,13 @@
+**Definition 2.3 (complete face interval and original count).** Let
+$\mathcal F$ be the set of common laws attaining $C_t(\lambda)$.
+Let $r_-$ and $r_+$ be the least and greatest achieved $K$ on
+$\mathcal F$; their attainment and interval property follow below.
+For each request $r\in[r_-,r_+]$, let $n_t(r)$ be the minimum
+number of supported-nonzero low actual labels among **all original
+height-optimal instruments** at $s=s_0r/\sqrt\alpha$ and this
+budget. Counts include every alternative optimal direction, weight
+and fractional-capacity table, rather than the support of a chosen
+multiplier optimizer. GC's minimum total count is denoted
+$n_{\rm tot}(s,t)$. Its equality to $1+n_t(r)$ will use GC.10;
+it is not a count identity for every instrument.
+

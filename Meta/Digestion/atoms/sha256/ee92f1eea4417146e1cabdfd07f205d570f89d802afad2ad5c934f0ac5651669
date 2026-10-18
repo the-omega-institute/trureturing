@@ -1,0 +1,18 @@
+**定义 6.1（窗口位置计数与关联记录）。** 采用 [原卷定理58.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#theorem-581-叶子计数加关联数的可逆性) 的坐标接口：
+
+$$
+u=a+k,\quad v=b,\quad w=c+k,\quad\kappa=k,
+\qquad q(s)=(u,v,w).
+$$
+
+引用其逆式与数值恢复式为
+
+$$
+(a,b,c,k)=(u-\kappa,v,w-\kappa,\kappa),\qquad
+d=2^u3^v5^w\left(\frac7{10}\right)^\kappa.
+$$
+
+此处 $u,v,w$ 数的是三个窗口位置的块出现次数。若继续展开 $5$ 位置的原始树 $\rho^2\alpha=\langle\beta,\alpha\rangle$，两类原始叶子的组成是 $(u+w,v+w)$，与三位置计数不同。逆式恢复交换块配置，仍不恢复排列、括号或树历史。
+
+引用 [原卷 §60及定理60.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#60-60-个因子48-个叶子纤维与一位补充记录)，$q(\mathcal B_H)$ 有 $48$ 个点，其中 $12$ 条纤维大小为二、$36$ 条大小为一。下述几何结论在此已有配置接口上推导。
+

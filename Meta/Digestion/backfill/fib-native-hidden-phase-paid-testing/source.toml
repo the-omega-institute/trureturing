@@ -1,0 +1,5 @@
+source_id = "fib-native-hidden-phase-paid-testing"
+path = "docs/develop/theory/FIB_NATIVE_HIDDEN_PHASE_PAID_TESTING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,32 @@
+**定义 10.3（交替高标签扇区与动作菜单）。** 在一百二十五维 $\mathcal H_A\otimes\mathcal H_B\otimes\mathcal H_C$ 中，固定
+
+$$
+(y_A,y_B,y_C)=(0,1,0),\qquad z_A=z_B=z_C=0.
+$$
+
+定义局部等距映射
+
+$$
+E_A|0\rangle=|0\rangle_A,\quad E_A|1\rangle=|1\rangle_A,
+$$
+
+$$
+E_B|0\rangle=|3\rangle_B,\quad E_B|1\rangle=|13\rangle_B,
+$$
+
+$$
+E_C|0\rangle=|0\rangle_C,\quad E_C|1\rangle=|1\rangle_C,
+\qquad E=E_A\otimes E_B\otimes E_C.
+$$
+
+令 $\mathcal I_3=\operatorname{im}E$。其八个正交基记为 $|abc\rangle$，表示三个低占据，而非原五标签的三个数字。特别地，逻辑 $B=0$ 是物理标签 $3$，逻辑 $B=1$ 是物理标签 $13$。
+
+在逻辑二态空间中重新用
+
+$$
+R=|1\rangle\langle0|,\quad L=R^\dagger=|0\rangle\langle1|,
+\quad n=|1\rangle\langle1|,\quad Z^{\rm sf}=I-2n
+$$
+
+表示限制后的算子。$Z^{\rm sf}$ 是自旋符号算子，不是前节的中占据均值 $Z$，也不是五态的 $N_z$。
+

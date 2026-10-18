@@ -1,0 +1,21 @@
+**Lemma 6.1 (Simultaneous finite averages of nontrivial characters).**
+For any finite list $\psi_1,\ldots,\psi_d$ of nontrivial unitary
+characters of an abelian group, there are finite probability averages
+of group points under which every listed character has average tending
+to zero.
+
+**Proof of Lemma 6.1.** Choose $h_j$ with $\psi_j(h_j)\ne1$.
+Average over the multiset of points
+$\sum_{j=1}^d n_jh_j$, $0\le n_j<N$, with equal weights.
+For any character $\psi$ its average is
+
+$$
+\prod_{j=1}^d\left(\frac1N\sum_{n=0}^{N-1}\psi(h_j)^n\right).
+$$
+
+Each factor has modulus at most one. For $\psi=\psi_j$, its
+$j$th factor is
+$(1-\psi_j(h_j)^N)/(N(1-\psi_j(h_j)))$, tending to zero.
+This is a finite geometric-sum identity followed by a scalar limit,
+requiring neither integration nor measurability. $\square$
+

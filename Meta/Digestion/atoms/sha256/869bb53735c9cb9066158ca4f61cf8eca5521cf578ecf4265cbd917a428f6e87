@@ -1,0 +1,81 @@
+**Theorem 16.2 (the particular free response and three form representatives).** Define
+
+$$
+F=rYp,\qquad g_1=\gamma V_1p,\qquad
+w_{\rm f}=-2F*(Y^{\rm R}\mathcal G)+g_1*\mathcal G.
+\tag{16.5}
+$$
+
+The integrals converge absolutely, $w_{\rm f}=O((1+\mathfrak d)^{-4})$, and
+
+$$
+w_{\rm f}\in\mathcal Q_E\cap\dot{\mathcal H}_-,\qquad
+b(w_{\rm f},u)=\mathcal L(u)\quad(u\in\dot{\mathcal H}_-).
+\tag{16.6}
+$$
+
+For the particular Riesz response $\Psi$ of Theorem 5.3,
+
+$$
+U_h,\ \Psi,\ v:=\Psi-U_h\in\mathcal Q_E\subset L^2.
+\tag{16.7}
+$$
+
+Proof. Theorem 4.1 and (16.3) give $F=O((1+\mathfrak d)^{-5})$ and $g_1=O((1+\mathfrak d)^{-15/2})$. Thus $F,g_1\in L^2$ and $g_1\in L^1$. Homogeneity and smoothness off zero give $|Y^{\rm R}\mathcal G|\le C\mathfrak d^{-6}$. This is also its distributional derivative at zero: cutting out a ball of radius $\epsilon$ leaves an integration-by-parts error bounded by $C\epsilon^{-1}\int_{\mathbb B_{C\epsilon}}\mathfrak d^{-5}=O(\epsilon)$.
+
+At an output with $\mathfrak d=R\ge2$, split the first convolution into inputs within $R/2$ of zero, within $R/2$ of the output, and the remaining set. The first two contributions are bounded by
+
+$$
+CR^{-6}\int_{\mathbb B_{R/2}}(1+\mathfrak d)^{-5}\le CR^{-4},\qquad
+CR^{-5}\int_{\mathbb B_{R/2}}\mathfrak d^{-6}\le CR^{-4}.
+$$
+
+On the remainder with input radius at most $2R$, the volume is $O(R^7)$ and the product is $O(R^{-11})$. Beyond $2R$ the triangle inequality bounds the product by $C\mathfrak d^{-11}$, whose integral is $O(R^{-4})$. The same split for $g_1*\mathcal G$ gives $O(R^{-5})$: the input near zero uses $\|g_1\|_1$, the input near the output costs $CR^{-15/2}R^2$, and the remaining annuli are smaller. Local kernel integrability gives boundedness for bounded outputs. This proves the decay and $w_{\rm f}\in L^2$, since $\int_1^\infty R^6R^{-8}dR<\infty$.
+
+Using (16.4), the commutation of left and right invariant fields and $\mathcal E\mathcal G=\delta_0$ gives
+
+$$
+\mathcal Ew_{\rm f}=-2YF+g_1,\qquad
+\langle\mathcal Ew_{\rm f},u\rangle
+ =2\int r(Yp)(Yu)+\gamma\int V_1pu=\mathcal L(u).
+\tag{16.8}
+$$
+
+For noncompact inputs these are distributional identities obtained by input cutoffs and the preceding bounds. To verify the minimal closed form domain, take a smooth compact group approximate identity $\omega_\epsilon$ and set $w_\epsilon=\omega_\epsilon*w_{\rm f}$, $F_\epsilon=\omega_\epsilon*F$, $g_\epsilon=\omega_\epsilon*g_1$. Output differentiation commutes with this left convolution, so $\mathcal Ew_\epsilon=-2YF_\epsilon+g_\epsilon$. All three $L^2$ norms are uniformly bounded. With smooth compact dilated cutoffs $\eta_R$, equal to one near zero and $|\nabla_H\eta_R|\le C/R$, test with $\eta_R^2w_\epsilon$. Integration by parts and Young's inequality give
+
+$$
+b[\eta_Rw_\epsilon]\le C\left(\|F\|_2^2+
+ \|g_1\|_2\|w_{\rm f}\|_2+R^{-2}\|w_{\rm f}\|_2^2\right),
+\tag{16.9}
+$$
+
+uniformly in $R,\epsilon$. Weak closedness, first as $R\to\infty$ and then $\epsilon\downarrow0$, puts $w_{\rm f}$ in $\mathcal Q_E$. The inputs $F,g_1$ are real odd and the kernels in (16.5) are real even under $\sigma$; change of variables in the group automorphism proves oddness. Odd core approximation and continuity extend (16.8) to (16.6).
+
+Bounded $q_*$ and (2.10) give
+
+$$
+pF_*\in L^2,\qquad F_*Xp+pq_*\in L^2,\qquad F_*Yp\in L^2.
+\tag{16.10}
+$$
+
+The vectors $p\eta(r/R)F_*(r)$ belong to $\mathcal Q_E$ by smooth approximation of the bounded height multiplier and its derivative. Their full form norms converge to the vector and derivatives in (16.10), by dominated convergence. The local representative injection identifies the limit with $U_h$.
+
+On $\dot{\mathcal H}_-$ let $\mathsf K$ be defined by
+
+$$
+b(\mathsf Ku,u')=\gamma\int Vuu',\qquad 0\le\mathsf K\le q_KI,
+\quad q_K=1-\theta<1.
+\tag{16.11}
+$$
+
+The order and norm here use the $b$ inner product. Let $M_V$ be multiplication by $\sqrt V$, as in §2, and $\mathsf R_V=\int_0^\infty P_tM_Vdt$. The specified reconstruction of [Native full-state weak binding](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md), Theorem 87.2, gives
+
+$$
+\mathsf Ku=\gamma\mathsf R_V(M_Vu)\in D(\mathcal E),\qquad
+\|\mathsf Ku\|_2\le C_{\rm rec}\sqrt{b[u]},\quad
+C_{\rm rec}=\gamma\|\mathsf R_V\|\sqrt{C_*}.
+\tag{16.12}
+$$
+
+Indeed $\|M_Vu\|_2^2\le C_*b[u]$; the reconstructed vector is odd and its weak equation identifies it with (16.11). The Riesz equation and (16.6) imply $(I-\mathsf K)\Psi=w_{\rm f}$. Thus $\Psi=w_{\rm f}+\mathsf K\Psi$ has a $\mathcal Q_E$ representative, and subtraction gives (16.7). This proves only these particular response memberships. It does not prove $\Psi\in D(\mathcal E)$, arbitrary response membership, a bounded all-$L^2$ threshold inverse, a positive $L^2$ gap or native-domain membership. $\square$
+

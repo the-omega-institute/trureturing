@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-prior-acquisition-boundary"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PRIOR_ACQUISITION_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

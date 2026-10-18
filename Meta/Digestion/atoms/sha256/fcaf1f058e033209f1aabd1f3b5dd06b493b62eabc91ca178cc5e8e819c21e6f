@@ -1,0 +1,74 @@
+**定理 35.1（A 记录）。** 以下量词遍及全部严格来源、所有非零次数至多二的整个增益和任意漂移；根一、根五以及 b=1/4 均由完整记录导出，不是外部承诺。
+
+**precise statement.**
+
+For each a0 in R and kappa!=0, the entire degree<=2 compatible fiber of (y0,...,y6)=a0+kappa\*(0,-5,-35/4,-12,-19/2,-5,5/2) under JMJMJJ is exactly {(P_A1,kappa(t-1)(t-5),a0-5kappa),(P_A2,kappa(t-1)(t-5),a0-5kappa)}, where P_A1=[[1/2,1/4],[1,1/2]] and P_A2=[[3/4,1/4],[3/4,1/4]].
+
+**even coefficient check.**
+
+The record gives C=(-19/2+35/2)/4=2 and D=5/2+19/2=12, hence L=6/(1+2b). At b=1/2, L=3, so C=L/2 would require 2=3/2, impossible. In the other branch put T=(1-2b)(1+2b)=1-4b^2, which is nonzero. Substituting into the even inverse gives nu=(1-b)/T and mu=[6(1-2b)-10(1-b)]/T=-2(b+2)/T. Further, mu+2nu=-2(1+2b)/T=-2/(1-2b), so the non-lambda part of z2 is -4(1+b)/(1-2b). Therefore b lambda=-35/4+4(1+b)/(1-2b), giving lambda=(86b-19)/[4b(1-2b)]. These are the proposed coefficients, derived for an arbitrary competitor.
+
+**odd coefficients and factors.**
+
+Over the common nonzero denominator H=4bT, the coefficient numerators of lambda, mu, nu are respectively 172b^2+48b-19, -8b^2-16b, and -4b^2+4b. Adding them with weights (1,1,1), (1,3,9), (1,5,25) gives G(1)=[160b^2+36b-19]/H=(4b-1)(40b+19)/H, G(3)=[112b^2+36b-19]/H, and G(5)=[32b^2+68b-19]/H=(4b-1)(8b+19)/H. Also lambda-5=[40b^2+66b-19]/[4b(1-2b)]=(4b-1)(10b+19)/[4b(1-2b)], and lambda-12=[96b^2+38b-19]/[4b(1-2b)]. Thus the first and fifth samples vanish precisely at b=1/4, since b>0 and 40b+19,8b+19 are positive. No root condition was imposed on competitors.
+
+**nonexceptional odd equations.**
+
+Assume b!=1/4. The factorizations have proved G(1),G(5) nonzero. The actual equations are jG(1)=lambda-5 and (j+2r)G(5)=lambda-5. Division on this branch forces j=N/(40b+19), j+2r=N/(8b+19), with N=(10b+19)(1+2b). Their average gives j+r=N(24b+19)/[(40b+19)(8b+19)]. Keep the third equation (j+r)G(3)=lambda-12 undivided, even when G(3) or lambda-12 might be zero. Clearing only known nonzero factors, including the common 1+2b, yields (10b+19)(24b+19)(112b^2+36b-19)=(96b^2+38b-19)(40b+19)(8b+19). This is necessary for every nonexceptional legal competitor.
+
+**full elimination expansion.**
+
+**left intermediate.**
+
+(10b+19)(24b+19)=240b^2+646b+361
+
+**right intermediate.**
+
+(40b+19)(8b+19)=320b^2+912b+361
+
+**left descending coefficients.**
+
+26880
+
+80992
+
+59128
+
+722
+
+-6859
+
+**right descending coefficients.**
+
+30720
+
+99712
+
+63232
+
+-3610
+
+-6859
+
+**independent coefficient account.**
+
+The left b^3 coefficient is 8640+72352=80992; its b^2 coefficient is -4560+23256+40432=59128 and b coefficient is -12274+12996=722. The right b^3 coefficient is 12160+87552=99712; its b^2 coefficient is -6080+34656+34656=63232 and b coefficient is -17328+13718=-3610. The leading and constant coefficients are respectively 240\*112=26880 and 361\*(-19)=-6859 on the left, 320\*96=30720 and 361\*(-19)=-6859 on the right. Thus left minus right is -3840b^4-18720b^3-4104b^2+4332b=-12b(320b^3+1560b^2+342b-361). Because b>0, equality requires f_A(b)=320b^3+1560b^2+342b-361=0. All these expressions are inert, unexecuted symbolic checks.
+
+**all positive roots and source exclusion.**
+
+The formal derivative f_A'(b)=960b^2+3120b+342 is strictly positive on b>0; the same strict monotonicity follows by subtracting values of its positive-coefficient nonconstant terms. The endpoint substitutions give f_A(1/3)=(320+4680+3078-9747)/27=-1669/27<0 and f_A(2/5)=(512+6240+3420-9025)/25=1147/25>0. Continuity and strict monotonicity establish exactly one positive root, lying in (1/3,2/5). For any candidate at that root, its already-forced j gives c=j-b=(-20b^2+29b+19)/(40b+19). Hence c-3/4=(-80b^2-4b+19)/[4(40b+19)]. The denominator is positive, and throughout the root interval the numerator is greater than 19-80\*(2/5)^2-4\*(2/5)=23/5>0. Thus c>3/4 and b>1/3 imply bc>1/4, contradicting every legal rank-one source, including the midpoint case. All positive nonexceptional b are therefore excluded; no conclusion about r needed a hidden diagonal choice.
+
+**retained branch and complete source count.**
+
+At b=1/4 the forced coefficients are lambda=5, mu=-6, nu=1, delta=-5. Thus the entire gain is G_A=(t-1)(t-5), its first and fifth samples are zero, and those response equations remain the identities -5=-5. The proved nonzero G_A(3)=-4 gives j+r=(lambda+z3)/G_A(3)=7/4. Consequently c=3/2-r. Rank one gives (3/2-r)/4=r(1-r), or r^2-(5/4)r+3/8=(r-1/2)(r-3/4)=0. These are all source roots. Both lie in (0,1), and their c values are respectively 1 and 3/4. There is exactly one whole gain and drift at this b and exactly these two legal sources; all other b have been excluded.
+
+**survivor legality.**
+
+For P_A1, bc=1/4=(1/2)(1/2); for P_A2, bc=3/16=(3/4)(1/4). All four entries of each are positive and the trace is one. The rank-one identity gives determinant zero, and the nonzero trace makes the rank exactly one. The sources differ in r, so the targets differ. G_A=t^2-6t+5 is a fixed nonzero quadratic; scaling by either nonzero sign of kappa preserves that fact.
+
+**full samples and response sufficiency.**
+
+**gain samples at 0 through 7.**
+
+(5,0,-3,-4,-3,0,5,12)
+

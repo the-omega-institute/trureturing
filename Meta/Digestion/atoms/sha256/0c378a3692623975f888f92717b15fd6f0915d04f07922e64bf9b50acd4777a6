@@ -1,0 +1,9 @@
+**Corollary 56.4 (an explicit strict actual rank-three consumer).** At $\beta=a=1/2$, $(w,u,v)=(3/4,1/5,1/20)$, the actual channel (R.298) has minimal Kraus rank three and
+
+$$
+\delta_N\geq\frac98-\sqrt{\frac{19}{40}}>1-\frac1{\sqrt2}.
+\tag{R.309}
+$$
+
+**Proof.** Here $S=3/10+9/20=3/4$ and $q=3/8+1/10=19/40$. Substitute into (R.302). Since $19/40<1/2$, the lower bound exceeds $9/8-1/\sqrt2>1-1/\sqrt2$. Minimal rank follows from $v>0$ and Proposition 56.2. $\square$
+

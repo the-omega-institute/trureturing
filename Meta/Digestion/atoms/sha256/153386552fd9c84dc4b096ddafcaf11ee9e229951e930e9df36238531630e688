@@ -1,0 +1,74 @@
+**Proposition 10.4 (effective certificate verification).** All the
+requirements of Definition 10.1, and its whole-chart row-constancy
+tests, reduce effectively to the existential decision of Theorem 4.3
+via Lemma 5.1. The certificate's selector depth and chart templates
+are supplied finite data. The proposition does not search for a
+certificate for every arbitrary fiber.
+
+Proof. Membership of a source $u$ in $D_i$ is a finite deterministic
+pattern-matching predicate. Match the fixed constructor term $W_i$,
+its concrete leaves and its repeated coordinate occurrences. At a
+representative occurrence $p_j$ recover the mathematical whole subtree
+$u|_{p_j}$ and substitute it into $\Phi_i$. Every other occurrence
+of that variable must be reached and equal to the representative.
+When all tests hold, filling those recovered values reconstructs $u$,
+and those values belong to $V_i$. Conversely every chart filling
+passes them. This proves both source directions of membership.
+Absence at a required occurrence makes matching fail; it is not an
+extra value for the coordinate.
+
+These matching predicates, and their complements, compile by Lemma
+5.1's deterministic prefix cases. First split the source beyond all
+representative occurrence positions. Each recovered coordinate is
+then a native expression in that case's residual variables.
+Substitute those expressions into $\Phi_i$ and perform any further
+finite prefix splitting demanded by its fixed observations. The
+finite supplied expressions and fixed navigation depths make this
+a finite composition of the compiler. Therefore a counterexample to either
+inclusion in $D=\bigcup_iD_i$ is an existential finite-observation
+query on one source, including every original retained constraint.
+No arbitrary negation of an existential projection is used; the
+original occurrence inverses provide the actual coordinate terms.
+Empty chart domains are tested by $\exists\mathbf x\,\Phi_i$.
+
+Invariance fails exactly when
+
+$$
+\exists\mathbf x\quad
+\Phi_i(\mathbf x)\land\neg\Phi_i(\rho\mathbf x).
+\tag{NSF.23}
+$$
+
+Geometry differs from the asserted finite $J_i$ by one fixed reached
+test. Preservation or reflection of a bit fails by the exclusive-or
+of the two guarded comparisons in (NSF.22), with $\Phi_i$ retained.
+All are queries of Lemma 5.1. One witness may be used to compute $J_i$
+and then verify it; an empty chart needs no such geometry.
+
+For the selector, there are finitely many depth-$s$ prefix patterns.
+For each pattern with table value $i$, test for a source in $D$ with
+that prefix and outside $D_i$. Their absence is precisely selector
+correctness. An invalid index on a nonempty pattern is rejected.
+No semantic chart label is added to the input.
+
+Finally row nonconstancy is
+
+$$
+\exists\mathbf x,\mathbf y\quad
+\Phi_i(\mathbf x)\land\Phi_i(\mathbf y)\land
+R_Q(W_i[\mathbf x])\ne R_Q(W_i[\mathbf y]).
+\tag{NSF.24}
+$$
+
+It is an existential native observation query and keeps all fields of
+the row. Its failure on a nonempty chart allows a returned source
+witness to label that chart's output. The construction is finite and
+each positive or negative subquery terminates. $\square$
+
+The chart criterion allows fixed concrete outside pieces, unequal
+residual-coordinate depths, repeated coordinates and arbitrary
+non-atomic residual trees. Global forward closure is not required.
+The finiteness and observable selection of the cover, and invariance
+of each *whole* domain, are hypotheses with effective checks; they
+are not assumed consequences of a finite normal-form decomposition.
+

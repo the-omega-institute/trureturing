@@ -1,0 +1,90 @@
+**Lemma 3.4 (Exact strict positivity evidence).** The matrix $P$ is positive
+definite, as a real symmetric and hence complex Hermitian matrix.
+
+**Proof.** Here is a rational interval certificate for every block in Lemma
+3.3. Set $S_0=10^{18}$. In the next display, replacing every integer $k$ by
+$[k,k+1]/S_0$ encloses the corresponding exact matrix entry:
+
+$$
+N:\quad
+\begin{pmatrix}
+4804846375909143&-5697541416591817&3958250582249144\\
+-5697541416591817&6756290549986033&-4693766868413287\\
+3958250582249144&-4693766868413287&3260950040838118
+\end{pmatrix},
+\tag{3.11}
+$$
+
+$$
+D_{0+}:\quad
+\begin{pmatrix}
+71778638263756656&-54332559616591817\\
+-54332559616591817&41126976818631650
+\end{pmatrix},
+$$
+
+$$
+D_{0-}:\quad
+\begin{pmatrix}
+88162126048288771&-15742157217750856\\
+-15742157217750856&64387240669322921
+\end{pmatrix},
+\quad
+D_{+-}:\quad
+\begin{pmatrix}
+63653805247019027&-64897693268413287\\
+-64897693268413287&66166091718179535
+\end{pmatrix}.
+\tag{3.12}
+$$
+
+These enclosures follow by (2.9)–(2.11) applied to (2.3)–(2.4) and (3.6)–(3.8).
+For example the exact first entry is the rational number
+
+$$
+N_{00}=\frac{48048463661219644318657}
+{9999999979630610000000000};
+\tag{3.13}
+$$
+
+multiplication by its positive denominator proves the two endpoints in
+(3.11). Every other entry is specified by the same explicit rational-pair
+operations; no unknown channel or optimization variable occurs.
+
+For additional finite determinant evidence, the following are the integer
+lower endpoints obtained by substituting the intervals (3.11)–(3.12) into
+(2.12). A degree-$k$ entry is divided by $S_0^k$.
+
+| Block | First leading minor, degree 1 | Second leading minor, degree 2 | Third leading minor, degree 3 |
+| --- | ---: | ---: | ---: |
+| $N$ | $4804846375909143$ | $959969910492427430335638230$ | $64208938768507794453579842791584226953$ |
+| $D_{0+}$ | $71778638263756656$ | $11357455962805439627708400911$ | — |
+| $D_{0-}$ | $88162126048288771$ | $5428700513921967044404647968487355$ | — |
+| $D_{+-}$ | $63653805247019027$ | $12924624343406758667308868076$ | — |
+
+For instance the degree-two entry for $D_{0+}$ is exactly
+
+$$
+71778638263756656\cdot41126976818631650
+-54332559616591817^2
+=11357455962805439627708400911.
+\tag{3.14}
+$$
+
+The four scalar blocks, in order
+$(a_{++}+t_+,a_{--}+t_-,a_{++}+d_+/2-t_+,
+a_{--}+d_-/2-t_-)$, lie respectively in $[k,k+1]/S_0$ with
+
+$$
+k=(100349986033,\ 99440838118,\
+143708463600000000,\ 130354382800000000).
+\tag{3.15}
+$$
+
+Thus all three leading minors of $N$, both leading minors of each
+$D_{ij}$, and every scalar block are strictly positive. The congruence
+in the trace block preserves positive definiteness. Sylvester's
+criterion and Lemma 3.3 prove the assertion on all twenty-five dimensions.
+In particular no restriction to a boundary product face is involved.
+$\square$
+

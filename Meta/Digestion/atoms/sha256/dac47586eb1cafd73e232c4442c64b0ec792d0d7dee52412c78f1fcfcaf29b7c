@@ -1,0 +1,25 @@
+**Definition 4.1 (evaluated derivative coefficient).** For $x>0$ put
+
+$$
+\begin{aligned}
+\mathcal F_1(x)
+&=\frac{(1-1/\sqrt x)(D_0+D_1x)}{2(N_0+N_1x)}
++\frac{(\sqrt x-1)^2(D_1N_0-D_0N_1)}{2(N_0+N_1x)^2},\\
+\mathcal J_1(p)
+&=(A_*-B_*)\mathcal F(x(p))+
+\frac{VB_*}{A(p)}\mathcal F_1(x(p)),\\
+\boxed{D_{\rm sat}}
+&=\boxed{\frac{2u_f}{1+u_f^2}
+[\mathcal J_1(p_s)-\mathcal J_1(1-p_s)]>0},\\
+\boxed{K_{\rm sat}}&=\boxed{L_f/D_{\rm sat}^2>0}.
+\end{aligned}
+\tag{SC.21}
+$$
+
+These are finite source rational/radical expressions. In particular no
+differentiation or minimization remains unevaluated in their definition.
+The arguments $x(p_s),x(1-p_s)$ lie strictly between $0$ and $U$.
+Differentiation gives $\mathcal F_1=\mathcal F'$,
+$\mathcal J_1=\mathcal J'$. Strict positivity of $D_{\rm sat}$ follows
+from (SC.17), $p_s>1/2$ and $u_f>0$.
+

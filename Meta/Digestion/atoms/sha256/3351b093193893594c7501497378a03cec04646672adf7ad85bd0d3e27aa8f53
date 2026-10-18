@@ -1,0 +1,47 @@
+#### FMR.2 Exact square-free extraction
+
+For a non-root-of-unity (alphainmathcal O_K), write the principal ideal
+[
+(alpha^n-1)=U_nV_n,qquad
+U_n=prod_{mathfrak q:,v_{mathfrak q}(alpha^n-1)=1}mathfrak q,quad
+V_n=prod_{mathfrak q:,v_{mathfrak q}(alpha^n-1)ge2}
+       mathfrak q^{v_{mathfrak q}(alpha^n-1)}.
+]
+Thus (U_n) is the exact valuation-one factor and (V_n) is powerful; the
+two ideals are coprime. Fellini--Murty, arXiv:2508.08472v2, Theorems 1.2,
+1.4 and Lemmas 5.4--5.6, prove under Masser's number-field abc that
+(N(U_n)) cannot remain bounded. The needed quantifier is all sufficiently
+large (n), not merely a selected subsequence: if an infinite subsequence
+had bounded (N(U_n)), the number-field abc inequality applied to
+(1+(alpha^n-1)=alpha^n), together with
+(operatorname{rad}(V_n)le N(V_n)^{1/2}), would bound (N(V_n)) on that
+subsequence. This contradicts their norm-growth proposition
+(N(alpha^n-1)	oinfty). Hence (N(U_n)	oinfty).
+
+Their extraction argument then applies to each sufficiently large rational
+prime index (ell). Since (N(U_ell)>1), choose
+(mathfrak pmid U_ell). A valuation-one factor is non-Wieferich:
+[
+v_{mathfrak p}(alpha^{Nmathfrak p-1}-1)=1.
+]
+For an unramified prime with residue characteristic (p), their cyclotomic
+valuation lemma gives
+[
+ell=p^i f_alpha(mathfrak p),qquad
+f_alpha(mathfrak p)=operatorname{ord}_{mathfrak p}(alphamodmathfrak p).
+]
+The finite exceptional characteristics are removed below. Once (p
+eell),
+this forces (i=0), so the residue order is exactly (ell). Their
+coprime-index lemma shows that prime ideals extracted from distinct prime
+indices cannot repeat.
+
+Apply this with (alpha=v). Since (v-1=phi) is a unit of norm (-1),
+no prime ideal divides (A_1=(v-1)). Remove the finite primes above (2,3,5)
+and finitely many initial indices. Also (p=ell) cannot occur: if a
+valuation-one divisor above (p=ell) had residue order (1), then it would
+divide (v-1), while an order-(ell) divisor is impossible because the
+residue-field unit group has order prime to (ell). Thus every sufficiently
+large prime (ell) supplies a prime (mathfrak pmid U_ell) above a
+rational (p>5) with (operatorname{ord}_{mathfrak p}(v)=ell).
+

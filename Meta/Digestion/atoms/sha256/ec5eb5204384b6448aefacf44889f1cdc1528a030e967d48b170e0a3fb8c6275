@@ -1,0 +1,37 @@
+**Theorem 2.2 (cycle-forced atomicity).** In every finite-tree solution of
+the mandatory equations, all variables in the forward closure of positive
+constructor cycles are atomic. The closure is effectively computable
+from the finite equations. A cycle is not rejected as an occurs-check
+failure.
+
+Proof. Native pairing cannot hide a non-atomic child. If one child has
+positive $\gamma$, the exceptional case of (CAR.6) cannot occur, and
+
+$$
+\gamma(\langle s,t\rangle)=1+\gamma(s)+\gamma(t).
+\tag{CAR.9}
+$$
+
+If both children are atomic, the parent has mass zero or one, so its mass
+is still at least each child mass. Along any descendant path, mass is
+therefore nonincreasing. A proper descendant of positive mass has strictly
+smaller mass than its ancestor: every pair above it is non-atomic and
+contributes an additional $F$.
+
+For an occurrence edge in (CAR.8), invariance under the decorations gives
+
+$$
+\gamma(x)\ge\gamma(y),
+\quad\text{strictly if the edge is strict and }\gamma(y)>0.
+\tag{CAR.10}
+$$
+
+On a directed cycle all these nonnegative integers must be equal. A
+strict edge forces their common value to be zero. Every vertex downstream
+then has mass at most zero. This proves the assertion simultaneously for
+all solutions, with no bound on any tree. A finite directed graph has
+finitely many strongly connected components. A strict edge whose endpoints
+lie in one component lies on a directed cycle; mark those components and
+take ordinary forward reachability. This computes exactly the indicated
+closure. $\square$
+

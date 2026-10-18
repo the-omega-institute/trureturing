@@ -1,0 +1,18 @@
+### 2. CirculationBasis
+
+对任意支持运输图 $G$，定义其独立环流基：
+
+$$
+\mathrm{CirculationBasis}(G).
+$$
+
+Fibonacci 长窗口中，每个自由内部词 $q$ 对应一个：
+
+$$
+h_q=
+\delta_{0q0}
+-\delta_{0q1}
+-\delta_{1q0}
++\delta_{1q1}.
+$$
+

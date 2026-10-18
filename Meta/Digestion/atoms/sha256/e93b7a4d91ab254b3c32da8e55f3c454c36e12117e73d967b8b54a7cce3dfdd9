@@ -1,0 +1,65 @@
+**Theorem 62.2 (a row-space factor used by the finite constructions).**
+The constructions in §63, §64 and §65 are legal on entire decoder
+fibres, including unused input directions.
+
+Proof. The common factorization step is elementary positive-operator
+algebra, used here inside the construction. Let $K:\mathbb C^3\to
+\mathbb C^3$ have rank $r$, let $N\succeq0$ satisfy
+$\ker K\subseteq\ker N$, and choose an isometry
+$J:\mathbb C^r\to\operatorname{ran}K^\dagger$. Put
+
+$$
+\begin{gathered}
+Q=J^\dagger(K^\dagger K+N)J,\quad C=Q^{1/2}J^\dagger,\quad
+B=KJQ^{-1/2},\quad F=Q^{-1/2}J^\dagger NJQ^{-1/2}.\\
+BC=K,\quad C^\dagger FC=N,\quad
+B^\dagger B+F=I_r,\qquad B^\dagger B\succ0.
+\end{gathered}
+\tag{JRH.30}
+$$
+
+Indeed $K^\dagger K$ is strictly positive on its row space, so
+$Q\succ0$. With $P_K=JJ^\dagger$ the kernel condition gives
+$KP_K=K$ and $P_KNP_K=N$. Multiplication proves the first two
+identities. The live effect is
+$Q^{-1/2}J^\dagger K^\dagger KJQ^{-1/2}\succ0$ and its sum
+with $F$ is $I_r$. Consequently $0\preceq F\prec I_r$ on the
+whole fibre, not only on reached states. When $N=0$ this is the
+usual fixed-image compression with a TP isometric live decoder.
+
+Use encoder $A\mapsto CAC^\dagger$ and live decoder
+$X\mapsto EBXB^\dagger E^\dagger$.
+For clarity, its five failure measures, for every Borel set $\mathcal B$,
+are
+
+$$
+\mathcal R^f_\ell(\mathcal B)(X)=
+w_\ell\left(\int_{\mathcal B}g(t)dt\right)
+ \operatorname{tr}(FX)P_f,\qquad
+g(t)=\frac2{(1+t)^2},\quad G(t)=\frac{2t}{1+t}.
+\tag{JRH.31}
+$$
+
+Their integral effect is $F$, since $G(1)=1$ and $\sum w_\ell=1$;
+thus the entire decoder is TP. The weights in JRH.2 are kept separately.
+For any passive reference and joint complex input $X$, the failure
+reference factor is exactly
+
+$$
+P_f\otimes\operatorname{Tr}_{\mathbb C^r}[(F\otimes I_R)X]
+=P_f\otimes\operatorname{Tr}_{\mathbb C^r}
+ [(\sqrt F\otimes I_R)X(\sqrt F\otimes I_R)].
+\tag{JRH.32}
+$$
+
+The second form proves complete positivity; the identity follows from
+cyclicity of the partial trace on the traced factor. Multiplying by
+the separate scalar weights and Borel integrals gives the complete
+amplified measures. The pullback is exactly $N$ by JRH.30. Thus
+$\sum K_\alpha(\cdot)K_\alpha^\dagger=\Lambda_*$ and
+$\sum N_\alpha=M$ prove all complex supported map identities,
+all references and every Borel set at once. They are stronger than a
+fit on the twelve states. Total encoder effect is $I_3$ at the
+conditional root; each individual positive effect is then at most $I_3$,
+so every branch is TNI. $\square$
+

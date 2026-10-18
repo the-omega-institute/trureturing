@@ -1,0 +1,43 @@
+**定理 30.5.1（上下文漂移的锐利界）。**
+
+$$
+\boxed{
+|\theta_t-\theta_s|
+\le
+\operatorname{TV}(\mu_t,\mu_s)\,
+\operatorname{osc}(\delta).
+}
+$$
+
+**证明。**
+
+令 $\nu=\mu_t-\mu_s$。因为两者都是概率分布，
+
+$$
+\sum_z\nu(z)=0.
+$$
+
+取任意常数 $c$，有
+
+$$
+\sum_z\nu(z)\delta(z)
+=
+\sum_z\nu(z)(\delta(z)-c).
+$$
+
+令 $\nu^+$、$\nu^-$ 为 $\nu$ 的正、负变差，则
+
+$$
+\nu^+(Z)=\nu^-(Z)=\operatorname{TV}(\mu_t,\mu_s).
+$$
+
+取 $c=\min\delta$ 或 $c=\max\delta$ 并分别在正负支撑上估计，得到
+
+$$
+\sum_z\nu(z)\delta(z)
+\le
+\nu^+(Z)\,[\max\delta-\min\delta],
+$$
+
+以及反向不等式。合并即得结论。证毕。
+

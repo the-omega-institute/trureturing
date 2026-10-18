@@ -1,0 +1,37 @@
+### 60.3 A contractive global retraction with a separately physical output implementation
+
+Let P=|00><00|+|11><11| and Q=I−P on X⊗Y, and set ω=(|00><00|+|11><11|)/2. Define the global CPTP map
+
+    R(T)=PTP+Tr(QT)ω.
+
+Complete positivity follows, for example, from Kraus operator P and the four operators |ii><jk|/sqrt(2), with i∈{0,1} and jk∈{01,10}; their adjoint products sum to P+Q=I. The map fixes every code-supported operator and kills code/leak cross terms. It is used only as a mathematical contraction, not claimed to be an LOSR operation.
+
+Let U=Z⊗I on the physical output. For any physical Φ define the two-term physical twirl
+
+    Φbar=(Φ+Ad_U∘Φ∘Ad_U)/2.
+
+This remains finite LOSR, since U is local, and U V=V Z. The target J∘E is fixed by the corresponding input/output symmetry. Unitary invariance and convexity of diamond norm give ||Φbar∘J−J∘E||diamond≤||Φ∘J−J∘E||diamond. The map R commutes with Ad_U, so R∘Φbar∘J is a code-supported parity-covariant channel.
+
+Consider one arbitrary product branch A⊗B before this twirl. Put a0=<0|A(00)|0>, a1=<1|A(11)|1>, and b0,b1 similarly. Let z_A=<0|A(01)|1>, v_A=<1|A(01)|0>, with analogous coefficients for B. Choi principal minors give
+
+    |z_A|²≤a0a1, |v_A|²≤(1−a0)(1−a1),
+
+and the same for B. Retraction and twirling give logical parameters
+
+    α'=(a0+b0)/2, β'=(a1+b1)/2,
+    λ'=z_A z_B, μ'=v_A v_B.
+
+For example the new 00 probability on input00 is a0b0+[a0(1−b0)+(1−a0)b0]/2=(a0+b0)/2. Twirling removes all diagonal-to-off-diagonal and off-diagonal-to-diagonal coefficients; it preserves the two displayed coherence directions. Moreover
+
+    |λ'|≤sqrt(a0a1b0b1)≤min((a0+b0)/2,(a1+b1)/2),
+    |μ'|≤sqrt((1−a0)(1−a1)(1−b0)(1−b1))
+         ≤min(1−(a0+b0)/2,1−(a1+b1)/2).
+
+The first line follows by dropping a1b1≤1 and then applying the arithmetic-geometric mean bound, or dropping a0b0≤1; the second is identical with complemented probabilities. For mixtures the same inequalities follow from the triangle inequality and affinity of the populations. Thus R∘Φbar∘J=J∘E' for a channel E' in the exact feasible class above, and that class supplies an actual finite physical implementation Ψ of E'. Complete trace-norm contractivity of R now gives
+
+    ||Ψ∘J−J∘E||diamond
+      =||R∘Φbar∘J−R∘J∘E||diamond
+      ≤||Φ∘J−J∘E||diamond.
+
+This proves leakage removal for optimization without pretending that R itself is a physical local protocol. Both twirling and retraction act on one common channel, not on separately optimized inputs. Since the feasible parameters form a compact set and diamond norm is continuous, an optimal parameter choice exists and is physically attained by at most four branches.
+

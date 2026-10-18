@@ -1,0 +1,17 @@
+**Definition 1.3 (what is constructed).** $D_2$ retains RCA's original
+source handlers, Cover, Next, Select, Call, native ingress and channel.
+It additionally has completed-image and completed-view descriptor lists,
+one disjoint Convert payload grammar, and finite word algorithms implementing
+
+$$
+S\longrightarrow B\longrightarrow M\longrightarrow T\longrightarrow S.
+\tag{PVC.1}
+$$
+
+The operands are sealed serialized observations of an acquired historical
+cut. Publication includes actual copies, printing, ACK, registry work and
+return. The cycle is an installed finite program in the declared extension,
+not an extra opcode of the old controller. The present consumer is RCA
+Definition 13.4's actual length-controlled receiver-40 printer; the next
+Convert additionally consumes the completed previous result.
+

@@ -1,0 +1,51 @@
+**数学引文 1.2（同一已付根档案的 KBonacci 供应）。** 使用[《生成签名与同档案任务取得》固定版本，定义1.1–1.2、命题3.1](https://github.com/the-omega-institute/trureturing/blob/0ae3e14e9800c1cb27b0e29d589b14a202f07576/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md)。其参数为
+
+$$
+3\le m<k<2m,\quad T=k+1,\quad \gcd(m,T)=1,
+\quad h_{\mathrm{tail}}=k-m\ge2.
+$$
+
+这里 $h_{\mathrm{tail}}$ 是原文的尾参数，区别于本卷的档案 $h$。成功内部记录为 $(v,\theta,s)$，$v\in\mathbb F_2$、$\theta\in\mathbb Z/T\mathbb Z$、$0\le s<k$。置
+
+$$
+c_i=\mathbf1_{\{0,T-1\}}(i\bmod T),
+\qquad \delta_0(v,\theta,s)=(v,\theta+1,0),
+$$
+
+$$
+\delta_1(v,\theta,s)=
+\begin{cases}
+(v\oplus c_\theta,\theta+1,s+1),&s+1<k,\\
+\bot,&s+1=k,
+\end{cases}
+\qquad \delta_b(\bot)=\bot.
+$$
+
+初读只免费返回 $v$ 或 $\bot$。之后每次发出一个完整 $m$ 位块，费用一，只在块末读取标量或拒绝；中间拒绝时刻不可见，拒绝后的余位仍计入该块。INITIAL 指开始时的不可变记录，不随当前状态更新。控制器仅依自己取得的动作与端点回复选择后续、停止和输出；没有重置、复制、外借分支记录、免费初始时钟或中间位读口。
+
+固定一个初值 $v$，已经发出并付费的根块为 $1^m$，实际根回复成功且标量差为一。该档案上的全部候选为
+
+$$
+Q_v=\{0,m\}\times\{0,\ldots,h_{\mathrm{tail}}-1\}.
+$$
+
+候选 $(j,s)$ 的 INITIAL 是 $(v,-j,s)$，根后当前状态是 $(v\oplus1,-j+m,s+m)$。这些候选确实来自原共同历史域：取
+
+$$
+\ell\equiv0\pmod m,\quad \ell\equiv-j\pmod T,
+\quad \ell\ge s+2,\quad
+d=\bigoplus_{i=\ell-s}^{\ell-1}c_i,
+$$
+
+则原合法历史 $(v\oplus d)0^{\ell-s-1}1^s$ 实现所需 INITIAL，再接同一根块。历史长度不是免费观察。每一候选比较是在相应的一个真实源上运行同一个控制器，不拼接不同源的回复。
+
+定义1.2的切口分割由下列集合中的非空成员组成（$H_0=\varnothing$，不作为分割胞）：
+
+$$
+H_r=\{0,m\}\times\{h_{\mathrm{tail}}-r,\ldots,h_{\mathrm{tail}}-1\},
+\quad L_{j,r}=\{j\}\times\{0,\ldots,h_{\mathrm{tail}}-r-1\},
+\quad 0\le r<h_{\mathrm{tail}}.
+$$
+
+目标在某个切口的每个胞上恒定，才可由该切口的一块取得。已有供应给出的极大可取得分割共有 $h_{\mathrm{tail}}$ 个，两两不可比；所以取得方式没有普遍的“恰好两个”上限。
+

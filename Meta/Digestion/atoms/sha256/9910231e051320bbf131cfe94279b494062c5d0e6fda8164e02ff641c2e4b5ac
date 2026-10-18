@@ -1,0 +1,134 @@
+**Convention 2.1 (saturation and local separation).** The following are
+the actual-history laws of [SB, Lemmas 2.2--2.4][SB] and
+[SI, Theorem 2.2][SI]. Their ordinary arguments are included to specify
+precisely which paid and actual-path premises enter the new local proof.
+Every live query is fresh; a live history with support $S$ has exactly
+$|S|$ preceding queries and charge $C_S$. At a common state, properly
+nested supports are excluded, equal supports force equal hits, and
+different supports cannot have equal hits. Distinct hosted cells, oriented
+by $h<g$, satisfy
+
+$$
+g-h\ge2,\qquad z-w\ge2.
+\tag{TS.3}
+$$
+
+Proof of the reused laws. From a live history, put $q=k-h$ and
+$N=n-|S|$. Give one on the first $q-1$ distinct new exposures and zero
+on the rest, preserving old answers on repeats. Before the last distinct
+exposure both outputs remain possible. Correctness forbids a terminal;
+finiteness and actual termination forbid an indefinitely repeating state
+sequence. Thus all coordinates are exposed. A repeat at this or any
+preceding live prefix would make this one actual completion pay more than
+$n$ queries. All live queries and their ancestors are therefore fresh.
+The completion has weight $k-1$, pays exactly $n,W$, and must halt
+immediately after the last query. Giving zero on the first $N-q$ new
+exposures and then one gives the dual saturated weight-$k$ completion.
+This conclusion about immediate halting applies to these saturated runs;
+it does not erase arbitrary paid certified traffic.
+
+Suppose histories at one state have $S\subseteq T$ and hits $h,g$.
+Replay a negative saturated suffix from $T$ after the $S$ history,
+putting one on $T\setminus S$. The suffix queries only outside $T$
+and halts; determinism makes it identical. Correctness gives
+$h+|T\setminus S|\le g$. Replay the positive saturated suffix with
+$T\setminus S$ zero to obtain $g\le h$. Thus $S=T$ and $g=h$.
+Reverse containment is symmetric.
+
+For incomparable supports put
+
+$$
+I=S\cap T,\quad X=S\setminus T,\quad Y=T\setminus S,
+\quad U=[n]\setminus(S\cup T),\quad
+ a=|X|,\ b=|Y|,\ u=|U|,
+\quad Q_0=k-h,\quad V_0=k-g.
+$$
+
+The nonempty integer intervals
+
+$$
+[0,u]\cap[Q_0-b,Q_0-1],\qquad
+[0,u]\cap[V_0-a,V_0-1]
+\tag{TS.4}
+$$
+
+are disjoint. Otherwise choose a common $U$ assignment with weight in
+both intervals. Each history stays live even after all $U$ is exposed.
+Until then a common next state must query a coordinate fresh for both,
+hence unread in $U$. Afterwards no such query remains, while a terminal
+is still impossible. This contradicts correctness and termination on each
+of the two separate actual completions. Their old $I$ assignments need
+not agree. Equal hits would give the same clipped upper endpoint in
+(TS.4), so cannot occur. For $h<g$, with $\Delta=g-h=Q_0-V_0$,
+disjointness puts the second interval strictly below the first, giving
+
+$$
+u\ge1,\qquad Q_0\ge b+1,\qquad 1\le V_0\le u,
+\qquad \Delta\ge b.
+\tag{TS.5}
+$$
+
+Here and below $u=|U|$; it is distinct from the never-live count $\nu$.
+If the old $X$ values are all zero, complete $T$ with $X$ zero,
+its first $V_0-1$ fresh $U$ exposures one and the rest zero. This is a
+negative saturated suffix reading all $X\cup U$ and halting. Replayed
+after $S$, with any $Y$ assignment, it is still negative and has charges
+$n+a-b$ and $W+C_X-C_Y$. Its own caps imply
+
+$$
+a\le b,\qquad C_X\le C_Y.
+\tag{TS.6}
+$$
+
+If the old $Y$ values are all one, the dual positive saturated suffix
+from $S$, with its first $b+u-Q_0$ new $U$ exposures zero and the
+rest one, replays after $T$. Its charges give
+$b\le a$ and $C_Y\le C_X$. These are paid private-polarity exchanges;
+no charge from one input is added to a charge from another.
+
+For completeness, let $\xi,\eta$ be the old one counts on $X,Y$ and put
+
+$$
+\delta_I=\Delta+\xi-\eta=(\Delta-b)+\xi+(b-\eta)\ge0,
+\qquad \lambda=b+u-Q_0+1.
+$$
+
+If $\delta_I>0$, choose an integer
+
+$$
+\max(0,V_0-\xi)\le t\le\min(u,Q_0-\eta-1).
+\tag{TS.7}
+$$
+
+The interval is nonempty by (TS.5), $\eta\le b$, and
+$V_0-\xi\le Q_0-\eta-1$. Use the old $X$ values, old $Y$ values and
+one common $U$ assignment of weight $t$ on both completions; retain each
+history's own values on $I$. Their total weights are respectively at
+most $k-1$ and at least $k$. Their common suffix must first split at an
+old coordinate of $I$. Both histories are certified before that old query,
+by live freshness. The negative certificate needs $\lambda$ new zeros
+in $Y_0\cup U_0$; the positive one needs $V_0$ new ones in
+$X_1\cup U_1$. Those sets and the discriminator coordinate are disjoint.
+Thus, separately on each completed run, their suffix uses at least
+$\lambda+V_0+1$ calls. If $A_-,A_+$ are these certificate coordinates
+and $i$ the discriminator, the two caps give
+
+$$
+\begin{aligned}
+\lambda+V_0+1&\le u+\min(a,b),\\
+C_{A_-}+C_{A_+}+c_i&\le C_U+\min(C_X,C_Y).
+\end{aligned}
+\tag{TS.8}
+$$
+
+The calls proving the two certificates occur on the common suffix, so
+both are paid on each of those runs. Substituting
+$\lambda+V_0+1=b+u-\Delta+2$ yields
+$\Delta\ge2+\max(0,b-a)$ and $z-w=\Delta+a-b\ge2$.
+If $\delta_I=0$, then $\Delta=b$, $\xi=0$, $\eta=b$. Both
+private-polarity exchanges apply, forcing $a=b=\Delta$ and $C_X=C_Y$.
+Distinct individual costs exclude disjoint singleton private sets with
+that equality; hence $\Delta\ge2$, again giving both gaps. Equality
+of larger subset sums has not been excluded. This proves (TS.3).
+$\square$
+

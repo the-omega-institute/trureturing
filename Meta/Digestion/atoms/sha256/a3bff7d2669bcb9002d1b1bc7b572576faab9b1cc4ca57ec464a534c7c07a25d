@@ -1,0 +1,12 @@
+**定义 33.1.3（干预签名）。** 对合法干预族 $\mathcal I$，定义
+
+$$
+\mathsf I_{\mathcal I}(M)
+=
+\bigl(\operatorname{Law}_M(E\mid\operatorname{do}(i))\bigr)_{i\in\mathcal I,E\in\mathcal E_i},
+$$
+
+其中 $\mathcal E_i$ 是该干预下声明的结果读出族。只把实际允许的干预与读出放入签名；未声明的反事实不自动成为可用证据。
+
+<a id="section-33-2"></a>
+

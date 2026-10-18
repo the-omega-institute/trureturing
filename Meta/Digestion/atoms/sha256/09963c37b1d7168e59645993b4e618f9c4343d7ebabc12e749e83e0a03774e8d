@@ -1,0 +1,15 @@
+**Definition 2.5 (full state and actual histories).** The endpoint $X(h)$
+retains the source and scratch bits, every constructed cell including retired
+versions, native and dynamic code, PC, marked heads, latches, request and
+reply work, current and prepared counter versions, source token, pending
+semantic event, partial producer rows, sender/mailbox/receiver contents,
+origin and predecessor references, seals, permissions and actual meter.
+The full prefix $h$ retains every actual primitive and its actual operands
+and outcomes. The mathematical task's complete-successor coordinate is not
+a new permission for the controller to inspect hidden coordinates.
+
+During a modifying service the source block is unavailable and can be a
+partial invalid packet. $X(h)$ then contains raw bits and phase, not a
+fictional current decoded tree. The full-state carrier does not require a
+tree at that cut.
+

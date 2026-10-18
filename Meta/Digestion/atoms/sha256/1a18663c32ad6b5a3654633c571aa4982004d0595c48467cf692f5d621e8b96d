@@ -1,0 +1,42 @@
+**定义 53.1（完整命令合同与两组有限界）。** 全部来源、执行、记录、估计与费用条件采用定义47.1。特别地，
+
+$$
+\begin{aligned}
+W&=E\oplus\mathbb H,\qquad E=\operatorname{Im}\mathbb H,\qquad C=P_E,\qquad d=e_4,\\
+\mathcal D_2&=E\times\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\},\\
+A_{\gamma c}(a',b')&=(\gamma(c\times a'),\gamma b'c),\quad
+ c\in E,\quad |c|\le1,\quad \gamma\in[1-\eta,1],\\
+A_d(a',b')&=(\operatorname{Im}b',-a'),\qquad
+\operatorname{Read}(z)=Cz+e,\quad |e|\le\delta.
+\end{aligned}
+\tag{53.1}
+$$
+
+初始 $a$ 独立、任意且无界，包括零；两个初始半径未标记，每次运行始终保持自己的同一个来源。来源制备、公共参数、共同定向标架、命令方向、单位锚及其执行精确供应。内部调用各有自己的隐藏增益，同一次增益作用于两个槽；不同调用不要求恒定或独立。增益与各实际Read误差可联合对抗、相关且依赖历史。Read不改状态，重复Read不缩小误差界。
+
+可访问的 $M^{\rm cmd}$ 完整保留全部实际Read、有序命令、操作种类、每次公共区间证书及Stop；已实现增益和数值执行参数不在记录中。控制器共同初始化、源无关、确定且因果，下一事件只依赖实际已见的有限前缀。唯一当前寄存器被更新覆盖，不供应标签、初态副本、复位、混合控制、独立重抽样、反事实端口、增益遥测或极限Read。有限或自然数索引的可数完整记录都须输出一个 $W$ 值；输出不必在来源中，可数前缀以后没有额外事件。目标始终为 INITIAL $(a,b)$，损失为 $W$ 中欧氏距离。预算 $N$ 只计破坏性更新，包括锚，不另限制Read数量；$\mathcal E_\pi,R_N^{\rm cmd},R_\infty^{\rm cmd}$ 原样取（47.3）。
+
+记
+
+$$
+\begin{aligned}
+m&=(1-\eta)^2,\qquad \zeta=1-m=2\eta-\eta^2,\qquad D=\delta+25\zeta,\\
+L_0&=25\sqrt{\zeta/2}=25\sqrt{\eta-\eta^2/2}.
+\end{aligned}
+\tag{53.2}
+$$
+
+精确Read轴取 $\delta=0$、$0<\eta\le1/100$。联合域取 $\delta>0$、$0<\eta<1$、$D\le1$，并在该域定义
+
+$$
+\begin{aligned}
+H^2&=25\delta+625\zeta/2,\qquad H=\sqrt{25\delta+625\zeta/2},\\
+L&=\sqrt{\delta^2+H^2},\qquad \rho=D/10,\\
+J&=\frac{25\rho+\sqrt{(25\rho)^2+4H^2}}2,\qquad
+U=\sqrt{\delta^2+D^2+J^2}.
+\end{aligned}
+\tag{53.3}
+$$
+
+$H,J,L,U$ 是风险界的公共计算量，不是新增证书、观测或已实现增益。
+

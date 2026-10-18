@@ -1,0 +1,17 @@
+**Proposition 7.3 (the accepted-input cut has real work and no completed
+receipt).** Under the scan/marker convention of Proposition 7.2,
+Proposition 2.1's admission costs
+
+$$
+1+3+6M+P_{\rm admit}=4+6M+P_{\rm admit},
+$$
+
+has no births and leaves completed original rows at $n$, while
+increasing actual consumed input by exactly $(\tau,0)$.
+
+Proof. Its only endpoint assignments relocate the marker. Its actual
+guard/capture reads have the specified probe sum $P_{\rm admit}$.
+No native field, receipt or append constructor has yet changed.
+The actual IN occurred in this same admission, giving the stated
+input letter. ∎
+

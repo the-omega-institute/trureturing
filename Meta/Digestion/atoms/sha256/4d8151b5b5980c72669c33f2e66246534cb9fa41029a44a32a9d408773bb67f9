@@ -1,0 +1,39 @@
+**Theorem 5.1 (entire endpoint $W,T,v$ domain).** At $\beta=1/2$ every block datum in Theorem 1.2, and only such a datum, has the representation
+
+$$
+\begin{gathered}
+W\in\mathbb C^{r\times2},\quad W^\dagger W=I_2,\quad
+T\in\mathbb C^{2\times r},\quad v\in\mathbb R^r,\\
+\operatorname{Tr}(WT)=0,\qquad 2\|T\|_F^2+\|v\|^2=1,\\
+\tau=WW^\dagger/2,\qquad C=WT/\sqrt2,\qquad
+\sigma=T^\dagger T+T^T\bar T+vv^T,\qquad S=vv^T.
+\end{gathered}
+\tag{R.22}
+$$
+
+There is no restriction on the direction of $T$ or deletion of third-input coherences. In an internal column basis one may impose $W^TW=\operatorname{diag}(c_1,c_2)$, $0\leq c_j\leq1$, and then
+
+$$
+W_j=\sqrt{(1+c_j)/2}\,u_j+i\sqrt{(1-c_j)/2}\,v_j,\qquad
+f(\tau,\bar\tau)=(c_1+c_2)/2.
+\tag{R.23}
+$$
+
+All real vectors actually used in (R.23) are mutually orthonormal. The $u_j$ always occur; $v_j$ is omitted when $c_j=1$. The real dimension condition is exactly $r\geq2+\#\{j:c_j<1\}$.
+
+**Proof.** Since $\tau$ is half a rank-two projection, take any isometric frame $W$ for its range. The range condition gives $T=\sqrt2W^\dagger C$ and $C=WT/\sqrt2$. The support inverse is $\tau^+=2WW^\dagger$, hence $C^\dagger\tau^+C=T^\dagger T$. Its conjugate and the real rank-one residual supply $\sigma$ in (R.22). Trace and cross-trace conditions give exactly the remaining equations. Conversely these equations give (R.3)–(R.4); the full Gram factor below verifies PSD and rank, so Theorem 1.2 supplies an actual encoder.
+
+For completeness, the required two-dimensional Takagi step follows without distinctness or nonzero singular values. For any symmetric complex $2\times2$ matrix $A$, maximize $\operatorname{Re}(z^TAz)$ over complex unit $z$. A phase makes the maximum nonnegative real. Choose a unit $w$ Hermitian-orthogonal to a maximizer. Variations $z\cos t+w\sin t$ and $z\cos t+iw\sin t$ force $z^TAw=0$. Choose the phase of $w$ to make $w^TAw$ nonnegative. Thus the unitary with columns $z,w$ gives $U^TAU=\operatorname{diag}(c_1,c_2)$, $c_j\geq0$. If the maximum is zero, phase variation and polarization force $A=0$. These $c_j$ are the singular values by unitary congruence, including zero and repeated values.
+
+Apply this inside the proof to $A=W^TW$ and replace $W$ by $WU$ while cotransforming $T$ as below. Its norm is at most one, so $c_j\in[0,1]$. Write $W_j=x_j+iy_j$ with real vectors. The equations $W^\dagger W=I$ and $W^TW=\operatorname{diag}(c_j)$ give
+
+$$
+x_j\cdot x_k=(1+c_j)\delta_{jk}/2,\quad
+y_j\cdot y_k=(1-c_j)\delta_{jk}/2,\quad
+x_j\cdot y_k=0.
+$$
+
+For the last equation the sum and difference of the two imaginary-part identities vanish, including the off-diagonal cases. Normalization gives (R.23). The required number of real directions is exactly the stated dimension; conversely mutually orthonormal directions of that number construct $W$. In particular $r=2$ forces both $c_j=1$, while $r=3$ permits at most one $c_j<1$. Values $c_j=0$, $c_j=1$ and repeated values need no inverse. Equivalently $c_j=\cos(2\vartheta_j)$ with $\vartheta_j\in[0,\pi/4]$.
+
+As $W$ and $\bar W$ are isometries, the nonzero singular values of $\sqrt\tau\sqrt{\bar\tau}$ are those of $W^\dagger\bar W/2$. The latter is conjugate to $W^TW/2$ in singular values. This proves the fidelity formula. It does not determine $T$ or the kernel Schmidt data from the $c_j$ alone. $\square$
+

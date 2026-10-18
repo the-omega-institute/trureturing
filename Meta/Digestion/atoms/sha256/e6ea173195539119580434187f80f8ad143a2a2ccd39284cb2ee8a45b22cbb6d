@@ -1,0 +1,57 @@
+**Theorem 4.2 (strict positivity, including at the base pole).** The
+continuous representative in Theorem 4.1 satisfies
+
+$$
+v(k,\alpha)>0\qquad((k,\alpha)\in D).
+\tag{4.5}
+$$
+
+This statement holds for positive, zero or negative $E$. On every compact
+subset of $D$, $v$ has a strictly positive minimum. In particular $1/v$
+is smooth with bounded derivatives on each compact subset away from
+$x_o$.
+
+Proof. Choose $s>\max\{0,-E\}$, so $E+s>0$. Equation (4.1) gives the
+$L^2$ identity
+
+$$
+v=(\overline L+s)^{-1}\bigl[(E+s+gW)v\bigr].
+\tag{4.6}
+$$
+
+The bracketed vector is nonnegative almost everywhere and is at least
+$(E+s)v$. The free resolvent is positivity preserving because
+
+$$
+(\overline L+s)^{-1}F
+  =\int_0^\infty e^{-st}e^{-t\overline L}F\,dt
+\tag{4.7}
+$$
+
+as an $L^2$ integral, and the free heat kernel is positive. Positive
+cones are closed in $L^2$, so truncation of this integral preserves its
+order inequalities. Equations (4.6)--(4.7) imply almost everywhere
+
+$$
+v\ge\Psi,\qquad
+\Psi(x)=(E+s)\int_1^2 e^{-st}
+           \int_D\overline p_t(x,y)v(y)d\nu(y)dt.
+\tag{4.8}
+$$
+
+For each interior $x$ and $1\le t\le2$ the kernel is strictly positive,
+and $v\ge0$ has norm one. The inner integral is therefore strictly
+positive. The base Fourier heat series and its derivatives converge
+uniformly for these times when applied to an $L^2$ vector, so $\Psi$
+is smooth and finite in the interior. Thus $\Psi(x)>0$ for every
+$x\in D$.
+
+The function $v-\Psi$ is continuous and is nonnegative almost everywhere.
+If it were negative at an interior point it would be negative on an open
+set of positive measure, a contradiction. Hence (4.8) holds at every
+interior point, including $x_o$, and proves (4.5). This proof does not
+evaluate the singular eigen-equation pointwise at $x_o$. Compactness
+and continuity give the positive minimum assertion; away from $x_o$
+Theorem 4.1 and differentiation of a reciprocal give the last assertion.
+$\square$
+

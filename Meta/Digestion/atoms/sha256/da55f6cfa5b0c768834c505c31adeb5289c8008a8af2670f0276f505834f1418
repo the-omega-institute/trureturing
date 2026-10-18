@@ -1,0 +1,87 @@
+**Proposition 60.2 (root, sign and denominator bounds).** Put
+
+$$
+\begin{aligned}
+N_Q&=\beta W_1^2+\alpha W_2^2-\alpha\beta W_0^2,\\
+D_\kappa&=\beta Z_2\ell_1,\\
+N_\kappa&=(GZ)_2\ell_1+g(2\beta^2kV)\mathcal E.
+\end{aligned}
+\tag{RC.15}
+$$
+
+With bidegree $(N,M)=(40,10)$, every Bernstein coefficient on the
+specified rectangle exceeds the corresponding bound in the following
+tables, uniformly over the entire $\mathcal B_7$.
+
+| Polynomial on $\mathcal R$ | Strict lower bound |
+| --- | --- |
+| $D,-U,V$ | $.44,.37,.79$, respectively |
+| $H,R,\mathcal E$ | $.012,.0016,.0003$, respectively |
+| $-Z_0,Z_1,Z_2$ | $.0016,.0016,.0013$, respectively |
+| $W_1$ | $.08$ |
+| $N_Q$ | $2\cdot10^{-6}$ |
+| $\beta W_0^2-W_2^2$ | $.001$ |
+| $n^TGn$ | $.0025$ |
+| $-g$ | $8\cdot10^{-9}$ |
+| $-\ell_1$ | $10^{-8}$ |
+| $gD^2\sigma+\ell/25$ | $3\cdot10^{-11}$ |
+| $-N_\kappa-(3/1000)D_\kappa$ | $3\cdot10^{-15}$ |
+| $N_\kappa-(3/1000)D_\kappa$ | $8\cdot10^{-15}$ |
+| $\mathcal P(a,7/20)$ | $10^{-14}$ |
+| $-\mathcal P(a,2/5)$ | $10^{-15}$ |
+| $-\mathcal P_k$ | $10^{-13}$ |
+
+Define
+
+$$
+\begin{aligned}
+\Omega&=-4D\sigma H\mathcal E-R\mathcal E n^Tn+D\sigma Z^TZ,\\
+\mathscr D&=-2D\sigma H\mathcal E>0,\qquad \omega=\Omega/\mathscr D.
+\end{aligned}
+\tag{RC.16}
+$$
+
+The additional comparisons are:
+
+| Rectangle | Polynomial | Strict lower bound |
+| --- | --- | --- |
+| $[0,7/25]\times[7/20,2/5]$ | $\Omega$ | $9\cdot10^{-9}$ |
+| $[7/25,37/125]\times[39/100,79/200]$ | $\mathcal P(a,.39)$ | $6\cdot10^{-16}$ |
+| same | $-\mathcal P(a,.395)$ | $3\cdot10^{-16}$ |
+| same | $\mathcal P_a$ | $10^{-14}$ |
+
+On the second rectangle put
+$N_a=\Omega_a\mathscr D-\Omega\mathscr D_a$ and
+$N_k=\Omega_k\mathscr D-\Omega\mathscr D_k$.
+At degree $(60,12)$, all Bernstein coefficients of the four polynomials
+
+$$
+N_a+4\mathscr D^2,\quad
+-\tfrac9{10}\mathscr D^2-N_a,\quad
+N_k+6\mathscr D^2,\quad -3\mathscr D^2-N_k
+\tag{RC.17}
+$$
+
+are strictly positive. In particular
+
+$$
+-4<\omega_a<-.9,\qquad -6<\omega_k<-3.
+\tag{RC.18}
+$$
+
+Proof. These are finite coefficient certificates using exactly (RC.14),
+(RC.8), (RC.15)–(RC.17) and the integer box of Definition 58.3.
+The degrees of $\ell_1$ and $\mathcal P$ are at most $(26,6)$ and
+$(36,8)$; the table fits $(40,10)$ and (RC.17) fits $(60,12)$.
+For specificity, strictly smaller rational lower bounds than the
+coefficient minima for the two $\kappa$ rows and the last root derivative
+row are $3.1488\cdot10^{-15}$, $8.1964\cdot10^{-15}$ and
+$2.0459\cdot10^{-13}$. For the four expressions in (RC.17), smaller
+positive lower bounds are, in order,
+$6.1323\cdot10^{-13}$, $5.5156\cdot10^{-13}$,
+$5.4370\cdot10^{-13}$ and $6.2266\cdot10^{-13}$.
+All comparisons are lower endpoints of (RC.14)'s finite sums, so rounding
+cannot turn an unproved sign into a positive one. The positivity of the
+Bernstein basis proves the assertions for every point in each rectangle.
+Dividing (RC.17) by $\mathscr D^2>0$ proves (RC.18). $\square$
+

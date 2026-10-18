@@ -1,0 +1,28 @@
+**定义 3.1（来源的完整仿射签名）。** 置
+
+$$
+\sigma=b+c=\operatorname{tr}(JP)>0,\qquad
+\tau=b+c+1-a=\operatorname{tr}(MP),\qquad\eta=b+2c.
+\tag{3.1}
+$$
+
+其精确逆为
+
+$$
+P=\begin{pmatrix}
+1-\tau+\sigma&2\sigma-\eta\\
+\eta-\sigma&\tau-\sigma
+\end{pmatrix}.
+\tag{3.2}
+$$
+
+合法签名像恰满足 $0<\tau-\sigma<1$、$\sigma<\eta<2\sigma$ 及
+
+$$
+(2\sigma-\eta)(\eta-\sigma)
+=(1-\tau+\sigma)(\tau-\sigma).
+\tag{3.3}
+$$
+
+**证明。** $\eta-\sigma=c$、$2\sigma-\eta=b$、$\tau-\sigma=1-a$ 逐项给出逆。正性和行列式零给 (3.3) 及其不等式，反向代入恢复 (1.2)。所以完整签名相同当且仅当来源相同。签名是数学来源变量，不是附加观测。∎
+

@@ -1,0 +1,30 @@
+**Proposition 67.8 (why unrestricted unknown-field operator norm does not follow).** For $\nu>0$ the finite-clock comparison above cannot be upgraded to a vanishing full operator-norm estimate over all normalized unknown field inputs, even on the legal singleton and even when $\delta=\Omega^{-2}$. This is a counterexample within the commissioned field model, not a universal obstruction to all mediated physical models.
+
+Proof. Fix either singleton prescription $F=[f]$, $f=1$ for common and $f=2$ for killed. In the discrete one-particle block $H_1=2a-g$, write $\alpha=\sqrt{\nu/(2\Omega)}/f>0$. There is no hopping. Equation(67.7), with its compensation, gives exactly
+
+$$
+\mathbb M^{\rm d}=D(\alpha)[H_1+\Omega f\mathsf n]D(\alpha)^*.
+$$
+
+At $t_\Omega=\pi/(\Omega f)$ the relative field unitary against the ideal free evolution is $D(2\alpha)$; its Weyl scalar is one because the rotation angle is $\pi$. Choose the initial coherent vector $|iy_\Omega\rangle$ with $y_\Omega=\pi/(4\alpha)$. The ideal output is, up to the common particle phase, $|-iy_\Omega\rangle$. The coherent-vector identity yields
+
+$$
+\langle-iy_\Omega|D(2\alpha)|-iy_\Omega\rangle
+=-e^{-2\alpha^2},\qquad
+\|[e^{-it_\Omega\mathbb M^{\rm d}}-e^{-it_\Omega\mathbb H^0}]
+(e_o\otimes|iy_\Omega\rangle)\|^2=2+2e^{-2\alpha^2}\longrightarrow4.
+\tag{67.21}
+$$
+
+The field moment is $y_\Omega^2=\pi^2\Omega f^2/(8\nu)$, which is outside every fixed class(67.15). This already diagnoses the precise unknown-input boundary of the finite discrete supplier. It also survives the actual stratified lift. Along this exact discrete evolution the field amplitude is
+$\alpha+e^{-is\Omega f}(iy_\Omega-\alpha)$, so its $B$ norm is at most $b_\Omega+2\alpha$, where $b_\Omega=\sqrt{y_\Omega^2+1}$. Integrating the domain-valid residual(67.12), now directly against this discrete evolution, bounds the difference between its lifted output and the full stratified output by
+
+$$
+t_\Omega\left[R\sqrt\delta+4\kappa\omega(b_\Omega+2\alpha)\right].
+\tag{67.22}
+$$
+
+For $\delta=\Omega^{-2}$ this tends to zero: $t_\Omega=O(\Omega^{-1})$, $\kappa=O(\Omega^{1/2})$, $b_\Omega=O(\Omega^{1/2})$ and $\omega=O(\Omega^{-1})$, with the fixed constants displayed above. Since $W$ is an isometry, (67.21) therefore gives a full stratified discrepancy tending to two, at times lying in every fixed positive horizon for all sufficiently large $\Omega$. If a relative-phase witness is desired, use $(r+e_o)/\sqrt2$ with the same field input; the reference discrepancy is zero and the joint discrepancy tends to $\sqrt2$. No auxiliary trace or global-phase identification removes that witness. $\square$
+
+The example neither excludes the fixed-$E$ estimate nor shows failure for every fixed unknown field vector: it selects a growing-energy family. It disproves the stronger uniform quantifier. Unknown-state ingress without a verified moment/energy promise consequently remains unresolved. A promised vacuum is the $E=0$ subfamily, not an arbitrary unknown field state.
+

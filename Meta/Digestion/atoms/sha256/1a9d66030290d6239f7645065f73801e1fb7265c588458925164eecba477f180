@@ -1,0 +1,31 @@
+## 6. Refinement completion and individual four-view recovery
+
+**Mathematical ingredient 6.1 (inverse-limit realization).** Let
+$Q_n=X/R_n$ and $\rho_n([x]_{R_{n+1}})=[x]_{R_n}$. The canonical map
+
+$$
+\Theta:X\to\varprojlim_nQ_n,\qquad
+\Theta(x)=([x]_{R_n})_{n\ge0}
+\tag{6.1}
+$$
+
+has kernel $R_\infty$. Its factor from $X/R_\infty$ is injective and is
+surjective precisely under ThreadComplete: every coherent thread has one
+actual representative in $X$. These are the inverse-limit and actual-image
+ingredients of
+[InverseLimitCompletion](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean),
+`stateThread_injective_iff_separates` and
+`stateThread_bijective_iff_complete_and_separates`, applied after quotienting
+by all-stage agreement. If the chain stabilizes at a finite stage, its
+threads are actual stable classes, so ThreadComplete holds. In particular
+this holds for finite $X$.
+
+The kernel assertion follows because two points have the same thread
+exactly when they are $R_n$-related for every $n$. Surjectivity is precisely
+the stated actual-representative condition. In a stabilized chain the later
+bonding maps are bijections and a stable class supplies every thread.
+These are reused completion ingredients rather than new atlas sufficiency
+conditions. A transport must additionally descend at each compared stage
+and commute with its bonding maps; descent only at the limiting core does
+not establish finite-stage descent.
+

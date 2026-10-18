@@ -1,0 +1,22 @@
+### 103.1. Canonical positive selected squareclasses
+
+**Theorem 103.1.** Let j>=1, N=3^j and B_N=L_N^2+3=D C^2, where D is the complete positive squarefree kernel and C is an arbitrary positive integer. Put
+
+ zeta=zeta_(3N), t=zeta+zeta^(-1), L=Q(t), G=Gal(L/Q).
+
+For every prime q|B_N there is a distinguished prime P_q=(q,t-3) of L. For every d|D there is a unique totally positive squareclass delta_d in L*/L*2 with odd valuation exactly at the P_q for q|d and even valuation at every other finite prime. These classes satisfy
+
+ delta_1=1, delta_d delta_e=delta_(de) for coprime d,e|D,
+ delta_D=[3-t], Norm_(L/Q)(delta_d)=[d].
+
+If h is the number of primes dividing D, all hN classes g(delta_q), q|D and g in G, are independent. For positive representatives A_q, let
+
+ T=L(sqrt(g(A_q)):q|D, g in G).
+
+Then
+
+ [T:L]=2^(hN), Gal(T/Q)=(F_2[G])^h semidirect G,
+ T_ab=L(sqrt(q):q|D).
+
+Here T_ab denotes the maximal abelian subfield over Q. No assertion that the selected ideals themselves are principal is required.
+

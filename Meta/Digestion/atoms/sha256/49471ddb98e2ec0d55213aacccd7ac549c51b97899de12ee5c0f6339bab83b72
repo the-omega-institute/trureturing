@@ -1,0 +1,80 @@
+**Theorem 3.2 (strict whole-class lower bound and concentration).**
+Every feasible finite weak budget satisfies
+
+$$
+tq>C_{\rm end}.
+\tag{WE.22}
+$$
+
+For any feasible sequence $q_n\downarrow0$,
+$t_nq_n\to C_{\rm end}$, its failure-weighted squared $T$ coefficient
+measures converge to $\mu\delta_r$.
+
+Proof. For an arbitrary actual competitor define its scalar coefficient
+law $P_x=\sum\pi_j\delta_{z_j^2}$ and its failure-weighted law
+$\nu_x=\sum\pi_j\upsilon_j\delta_{z_j^2}$, with the same definitions
+by integration when stipulated. They obey
+
+$$
+\int x\,dP_x=1,\quad \nu_x([0,U])=\mu,\quad
+\int x\,d\nu_x=V,\quad
+\nu_x\le tc_*P_x.
+\tag{WE.23}
+$$
+
+These are coefficient measures, never source priors or Born
+acquisition probabilities. By the first identity,
+
+$$
+e:=\int H\,dP_x=1-\int\sqrt x\,dP_x,\qquad 0\le e\le q.
+\tag{WE.24}
+$$
+
+Capacity and Lemma 3.1 yield
+
+$$
+tq\ge te\ge\int\mathcal F\,d\nu_x\ge C_{\rm end}.
+\tag{WE.25}
+$$
+
+If equality held throughout, $\nu_x=\mu\delta_r$, and the positive
+measure $tP_x-\nu_x/c_*$ would have zero $H$ integral, hence be supported
+at $1$. Normalization would force
+$P_x=(B_*/t)\delta_r+(1-B_*/t)\delta_1$. Its first moment would be
+$1-(B_*/t)(1-r)<1$, a contradiction. This proves strictness. The
+attained threshold of FA73 consequently also satisfies (WE.22).
+
+For completeness the limiting constraints are compact, including the
+axes. From (WE.24), for every $\epsilon>0$,
+
+$$
+P_x\{|\sqrt x-1|\ge\epsilon\}\le 2q/\epsilon^2.
+\tag{WE.26}
+$$
+
+Thus $P_{x,n}\Rightarrow\delta_1$. The $\nu_{x,n}$ have fixed mass
+on the fixed compact interval; their subsequential limits retain mass
+$\mu$ and moment $V$. The function $\mathcal F$ is continuous even at
+zero, so its integral passes to these limits. This supplies the actual
+lower-limit compactness, rather than only a formally rescaled SDP.
+The multipliers $\upsilon_j$ need not remain bounded as $n$ varies;
+the weighted measures do. No finite-mass compactness is asserted for
+$t_nP_{x,n}$, whose total mass diverges.
+
+Let $g_r(x)=\mathcal F(x)-\mathcal F(r)-\mathcal F'(r)(x-r)$.
+It is continuous and positive except at $r$. Equations (WE.23)–(WE.25)
+give the quantitative estimate
+
+$$
+\nu_x\{|x-r|\ge\epsilon\}
+\le\frac{tq-C_{\rm end}}
+{\min_{x\in[0,U],\ |x-r|\ge\epsilon}g_r(x)}
+\tag{WE.27}
+$$
+
+whenever the indicated set is nonempty. Thus sharp scaling forces
+$\nu_{x,n}\Rightarrow\mu\delta_r$, including all possible singular
+limit measures and axis mass. This necessity has used FA69 over the
+whole class, never a chosen $g$-law, static support family or
+TV symmetrization. $\square$
+

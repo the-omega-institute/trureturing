@@ -1,0 +1,43 @@
+**Definition 2.1 (normal atomic-block trees).** Let $\mathcal K$ be the
+ordinary finite term algebra with primitive terms $[j]$, $j\in\mathbb N$,
+and one ordered binary constructor $F$. Define $\mathcal N\subseteq\mathcal K$
+recursively by
+
+$$
+[j]\in\mathcal N,\qquad
+F(X,Y)\in\mathcal N\ \Longleftrightarrow\
+ X,Y\in\mathcal N\ \land\
+ \neg\exists j\ge0\ (X=[j+1]\land Y=[j]).
+\tag{ABC.2.1}
+$$
+
+Thus the forbidden pattern is a pair of primitive children whose left
+rank is one more than the right rank. The condition applies at every
+constructor occurrence, not just the root. On normal arguments define
+the native pairing operation
+
+$$
+J(X,Y)=
+\begin{cases}
+[j+2],&X=[j+1],\ Y=[j]\text{ for some }j\ge0,\\
+F(X,Y),&\text{otherwise}.
+\end{cases}
+\tag{ABC.2.2}
+$$
+
+Define expansion $E:\mathcal K\to\mathcal T$ and canonical coding
+$B:\mathcal T\to\mathcal N$ by
+
+$$
+\begin{aligned}
+E([j])&=T_j,& E(F(X,Y))&=\langle E(X),E(Y)\rangle,\\
+B(\alpha)&=[0],&B(\beta)&=[1],&
+B(\langle u,v\rangle)&=J(B(u),B(v)).
+\end{aligned}
+\tag{ABC.2.3}
+$$
+
+The two different constructors $F$ and $J$ will remain distinguished.
+The former belongs to the ambient free algebra; the latter represents
+native pairing in canonical coordinates.
+

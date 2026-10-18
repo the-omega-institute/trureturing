@@ -1,0 +1,44 @@
+**Definition 3.2 (fixed apparatus and naming).** A full ordered binary
+scaffold $F_m$ with $m\ge1$ sockets is chosen recursively by splitting
+the ordered socket list into $\lfloor m/2\rfloor$ and
+$\lceil m/2\rceil$ nonempty parts when $m>1$; $F_1$ is one socket.
+The outer scaffold is $F_{65}$: ports 0–63 in order, then the register
+component. The register scaffold is $F_b$. These are finite fixed apparatus.
+Their orientation, root, seven endpoint-slot types, finite rule mechanism,
+and original symbol/register encodings are explicit model structure.
+
+The rule apparatus is the finite table constructed in Definition 5.2. Its
+literal description size $d_{\mathrm{patch}}$ and finite primitive
+mechanism are additional fixed infrastructure. No mutable unrepresented
+driver tape is present between patch events; the bounded temporary work
+is internal to the declared atomic primitive. The fixed rule table is not
+source-specific storage and is included in the apparatus resource bill.
+Choose its description encoding as follows. Number the seven ports in
+their displayed order and number bounded local roles by first occurrence
+in the row's walks, old roles before new template roles. Flatten each
+table entry into its original row number, finite tested pattern, guarded
+walk lists, finite output-label code, endpoint-assignment lists, and new
+template incidence lists, in that order. Encode a natural by $U(n)$ and
+a finite list by $U(\text{length})$ followed by its entries, recursively.
+Endpoint entries are the two local role/port indices or the empty-slot
+tag. Thus $d_{\mathrm{patch}}$ is the bit length of this completely
+specified finite table encoding. These indices are fixed finite rule
+roles, not runtime numeric addresses. Installing this additional immutable
+description, when it is material rather than primitive backing, requires
+ingress and writing of all $d_{\mathrm{patch}}$ bits, together with its
+actual allocation, movement, receipt, descriptor and token work and backing;
+such a preparatory implementation must retain its own cuts. The theorem
+uses the explicitly endowed finite rule mechanism as its primitive basis.
+
+Original cell names are their actual port/creation occurrences. Auxiliary
+vertices are the fixed ordered template occurrences of that same creation.
+The terminal that is expanded by a cell append retains its occurrence.
+A bit's fork and three terminals retain their occurrences on reassignment.
+There is no independent fresh numeric name input. Equivariant descriptions
+may rename auxiliary vertices consistently while preserving ports, root,
+cell provenance, and template roles. Such renaming is not permission to
+alter an original descriptor or preparation/version reference. Equalities
+of tree supports below use rooted ordered positions; exact original names
+are recovered by the original canonical replay, not guessed from an
+arbitrary graph isomorphism.
+

@@ -1,0 +1,9 @@
+**Open Problem 9.2 (Quantitative growth not supplied by rank alone).** For each intended $N$, prove (9.1), or an adequate common-transfer violation in (6.9), or construct an actual finite law satisfying the strong endpoint. None is supplied here. One sufficient growth statement would give fixed $m$, positive $\varepsilon,\beta$, and arbitrarily large $n$ with disjoint length-$m$ blocks satisfying $J\ge\beta n$ and
+
+$$
+\frac1J\sum_j\mathbb E_{\pi_n}|\det A_{p_j^\eta}|^2\ge\varepsilon.
+\tag{9.3}
+$$
+
+Then (8.4) would diverge along those $n$ and eventually exceed the fixed threshold. Positivity, finite dimension, strict propriety, or a single nonzero minor do not prove (9.3). The conditionals in (9.3) still use the complete complement under the same $\pi_n$; no uniform bulk limit or lower bound is assumed. Failure of this relaxation to exclude the endpoint would not construct a common producer.
+

@@ -1,0 +1,47 @@
+### 定理 20.8（相容恢复序列的能量识别）
+
+假设 \(\overline{\mathcal Q}_j\) 满足 (M1) 和 (M2)。若相容场族 \(f_j\) 满足
+
+\[
+\iota_jf_j\longrightarrow f
+\quad\text{强收敛},
+\]
+
+并且它本身是一个恢复序列，即
+
+\[
+\limsup_j\overline{\mathcal Q}_j(\iota_jf_j)
+\le
+\mathcal Q(f),
+\]
+
+则
+
+\[
+\lim_j\mathcal Q_j(f_j)
+=
+\mathcal Q(f).
+\]
+
+#### 证明
+
+由强收敛推出弱收敛，再由 (M1) 得到
+
+\[
+\mathcal Q(f)
+\le
+\liminf_j\mathcal Q_j(f_j).
+\]
+
+由恢复条件得到
+
+\[
+\limsup_j\mathcal Q_j(f_j)
+\le
+\mathcal Q(f).
+\]
+
+两式合并即得极限存在且等于 \(\mathcal Q(f)\)。证毕。
+
+这个定理明确指出：逆极限相容性本身不等于 Dirichlet 能量收敛。还必须证明相容族在共同宿主空间中是恢复序列。
+

@@ -1,0 +1,69 @@
+## 324. The source D angle exceeds 2*pi/3
+
+The exact axial M cosine of eta is N_e/D_e, where
+
+    D_e=m^2+v^2+d^2+2*m*v*d-1,
+    N_e=2*v*d+m*(v^2+d^2)-(m^2-1)*z.
+
+Its v-derivative has sign numerator
+
+    (N_e)_v*D_e-N_e*(D_e)_v
+      =2*(m^2-1)*[-d^3+d*m*z+d*v^2+d+m*v+v*z]>0. (324.1)
+
+Indeed d<m-2<m and z>m. Increasing v to m-2 decreases theta_M(eta)
+and preserves the M budget. Le increases, and Je stays positive since
+1<v,d<m and z>m. Tau is unchanged. For this lemma only, take v=m-2;
+no bad-eta or flat-product premise is needed along this interpolation.
+
+Put q=tan(theta_D(tau)/2)^2 and
+
+    delta=(m-c)*(d-1)/[(m+c)*(d+1)], 0<delta<1.
+
+The positive branch Ht>0 in (322.7) gives q>delta. Solving
+q=(d-1)*Jt/[(d+1)*Lt] for z gives z=Zn/Zd, with
+
+    Zd=(d^2-1)*(q+1),
+    Zn=q*(m+c)^2*(d+1)+(m-c)^2*(d-1)+(q-1)*(d^2-1),
+    LeN=(m+d-2)^2*Zd-(m-1)*(Zn-Zd),
+    JeN=(m+1)*(Zn+Zd)-(m-d-2)^2*Zd,
+    Bq=(m+c)*(d+1)*q-(m-c)*(d-1),
+    F(q)=Bq^2*LeN-4*(m-1)^2*(d^2-1)*q*JeN.       (324.2)
+
+The full M budget implies F(q)>=0. More explicitly, if
+G=Ht^2*Le-4*(m-1)^2*Lt*Jt*Je, substitution gives the identity
+
+    F(q)=G*(d-1)^2*Zd/Lt^2,
+
+whose multiplier is positive. F is a cubic polynomial in q; write
+F(q)=sum_{j=0}^3 f_j(m,c,d)*q^j.
+
+If q<=3, put h=(3-q)/(q-delta)>=0. Then q=Qn/Qd, where
+
+    Qn=(m-c)*(d-1)*h+3*(m+c)*(d+1),
+    Qd=(m+c)*(d+1)*(1+h)>0.
+
+Define the following polynomial after the indicated substitutions:
+
+    PD(a,b,e,h)=-sum_{j=0}^3 f_j*Qn^j*Qd^(3-j),
+    c=1+a, d=1+b, m=3+a+b+e.                      (324.3)
+
+Here a,b,e>0. The complete coefficient identity in Section 331
+expresses PD as 1,450 monomials with positive integer coefficients,
+including constant 56623104. Consequently PD>0 even when h=0.
+Since PD=-Qd^3*F(Qn/Qd), this contradicts F(q)>=0. Thus q>3 and
+
+    theta_D(tau)>2*pi/3, w>sqrt(3).                (324.4)
+
+We will also use a simpler consequence of (324.1). Its d counterpart
+is obtained by interchanging v,d, and the z derivative of N_e/D_e
+is negative. Increasing v,d to m-2 and decreasing z to m increases
+this algebraic cosine. The derivative signs hold on that entire
+comparison rectangle, with positive D_e; no genuine endpoint is
+required. At the endpoint
+
+    D_e-2*N_e=(m+1)*(7*m-9)>0.
+
+Hence theta_M(eta)>pi/3, and the retained M budget gives
+
+    beta_M(tau)<pi/3.                             (324.5)
+

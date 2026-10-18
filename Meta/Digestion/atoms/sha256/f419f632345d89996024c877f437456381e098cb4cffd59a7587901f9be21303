@@ -1,0 +1,2 @@
+**Open Problem 5.1 (Exact growth constant).** Determine the exact value of $c_\star$ from (1.1), or give a matching upper bound for the supremum over all full-domain priors. Theorem 4.1 excludes the hard-core equality alternative of [Growth], Open Problem 9.4. It supplies a strict lower witness, not an equality $c_\star=d$. Whether $d$ is optimal even within stationary two-step priors is also undetermined.
+

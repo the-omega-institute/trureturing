@@ -1,0 +1,61 @@
+**Definition 1.4 (the exact source and word interfaces).** The
+suppliers [CAR, Theorem 3.2, Lemma 4.1 and Theorem 6.2][CAR] give a
+finite chart family $\mathcal A$ and a bijection
+
+$$
+\coprod_{\eta\in\mathcal A}
+\{\mathbf n\in\mathbb N^{d_\eta}:
+                  \operatorname{Adm}_\eta(\mathbf n)\}
+\ \xrightarrow[\text{bijection}]{\Theta}\ D.
+\tag{NRF.7}
+$$
+
+They give effective first-order Presburger predicates
+$\operatorname{Adm}_\eta$ and
+$\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)$, the latter
+equivalent to equality of the two entire original $Q$ rows.
+Admission includes every conjunct of (NRF.2) and every guard of
+(NRF.3). Charts of dimension zero are allowed.
+
+For the common finite skeleton depth $H$, physical descriptors have
+finitely many types: a literal word of length at most $H$, or a pair
+$(z,e)$ with $|z|=H$ and $e\in\{L,R\}$ and natural parameters
+$(t,l)$ satisfying
+
+$$
+l\ge1,\qquad
+l-1\le t-\omega(e)\le2(l-1),\qquad
+\omega(L)=1,\quad\omega(R)=2.
+\tag{NRF.8}
+$$
+
+The long descriptor represents a word $zs$ with suffix length $l$,
+weight $t$ and final letter $e$, and has exact literal length $H+l$.
+The subtractions in (NRF.8) are integer notation for equivalent
+addition inequalities. Let $V(\delta)$ be validity and
+$|\delta|$ its length. Every physical word has such a descriptor.
+Every valid descriptor has an effectively constructible literal
+realization of exactly that length.
+
+For each reply $c$ the effective Presburger predicate satisfies
+
+$$
+\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta)
+\ \Longleftrightarrow\
+r_{\rho^j\Theta_\eta(\mathbf n)}(p)=c
+\tag{NRF.9}
+$$
+
+for every admitted tuple, every natural epoch $j$, and every literal
+realization $p$ of $\delta$. One realization works simultaneously on
+all charts and epochs. In particular an absent response is not
+replaced by a reached subtree, and a suffix ending in $L$ retains its
+endpoint threshold.
+
+For later all-infinite budgets, [NPS, Theorems 3.2 and 4.2][NPS]
+supply exact unbounded finite-halting support and a terminating
+decision of $\mathcal C_K\ne\varnothing$, with literal extraction.
+They use exactly (NRF.7)--(NRF.9), one shared instruction per state
+and one complete row per halt. The result permits arbitrary finite
+installation, with no action or address horizon.
+

@@ -1,0 +1,51 @@
+### 93.3. Stationary equations and repeated magnitudes
+
+Write q₁=|a|², q₂=|b|², q₃=|c|² and P=abc. The determinant condition and the conjugate-coordinate Lagrange equations are
+
+\[
+ \begin{aligned}
+ 1-q_1-q_2-q_3+2\operatorname{Re}P&=0,\\
+ (2q_1+\lambda)a-\overline a&=\lambda\overline{bc},
+ \end{aligned}                                               \tag{4}
+\]
+
+with cyclic versions of the second equation and a single real multiplier λ. The derivative conventions are ∂E/∂ā=2q₁a−ā and ∂det(G)/∂ā=−a+overline(bc). Dividing by the nonzero a gives
+
+\[
+ \frac{\overline a}{a}
+       =2q_1+\lambda-\frac{\lambda\overline P}{q_1},          \tag{5}
+\]
+
+and similarly for b,c. The multiplier is nonzero. Otherwise all q_i=1/2 and all entries are real, so their determinant would be −1/2±1/√2, never zero.
+
+Taking squared moduli in (5) shows that every q_i is a positive root of
+
+\[
+ \begin{split}
+ F(X)={}&4X^4+4\lambda X^3+
+       (\lambda^2-4\lambda\operatorname{Re}P-1)X^2\\
+       &-2\lambda^2\operatorname{Re}P\,X+\lambda^2|P|^2.
+ \end{split}                                                   \tag{6}
+\]
+
+The three q_i cannot be distinct. If they were, the fourth root, counted with multiplicity, would be r₀=λ²/4>0 by the constant term and |P|²=q₁q₂q₃. Vieta's sum and third symmetric coefficient would give
+
+\[
+ \begin{aligned}
+ U:=q_1+q_2+q_3
+    &=-\lambda-\frac{\lambda^2}{4}
+       =1-\frac{(\lambda+2)^2}{4}\le1,\\
+ q_1q_2q_3+r_0(q_1q_2+q_2q_3+q_3q_1)
+    &=\frac{\lambda^2\operatorname{Re}P}{2}
+      =r_0(U-1)\le0.
+ \end{aligned}                                                 \tag{7}
+\]
+
+The second line contradicts its strictly positive left side. It also covers a fourth root equal to one of the first three; no distinctness of all four roots was assumed.
+
+Relabel so q₁=q₂=q. Equation (5) implies a²=b². A diagonal sign conjugation of G can therefore arrange a=b, preserving positivity, rank, and every squared entry. This uses only signs, not an unrestricted phase gauge. Put r=|c|² and B=2q+λ. Multiplication of the first equation in (4) by a gives
+
+\[
+ B a^2=q(1+\lambda\overline c).                              \tag{8}
+\]
+

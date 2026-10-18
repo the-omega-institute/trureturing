@@ -1,0 +1,62 @@
+**Proposition 11.1 (cost vector of this one construction).** Define
+$C(Z)=2^{50}(Z+1)^{10}$. There are choices of the indicated sequential
+scan routines such that, on every promised run,
+
+$$
+\begin{aligned}
+Q_{\rm serial}&=Q,& U_{\rm serial}&=U=0,&
+A_{\rm serial}&=E_{\rm receiver}=A,\\
+E_{\rm two\ channels}&=2A,& P_{\rm run}^{\rm serial}&=P_{\rm run},&
+P_{\rm inst}^{\rm comp}&=P,\\
+M_{\rm comp}&=|\operatorname{Pref}(\mathcal M_{\rm comp})|
+ =2^H(J+2)-1,\\
+I+I_{\rm init}&\le(Q+U+2)C(Z).
+\tag{11.1}
+\end{aligned}
+$$
+
+Here $Q,A$ have simultaneously the explicit native bounds in Corollary
+5.1: its $T=0$ row or (5.2). In particular the native $Q$ is polynomial
+in $h+\log(T+1)$ for the positive-$T$ choice. The local work bound is
+polynomial in **expanded installation size** $Z$, not in that binary
+parameter size. Immutable bits are (10.2), writable cells are $b$,
+reserved encoded span is $L$, and the materialized lane has $H+J$
+physical letter cells of which exactly $H$ are writable.
+
+Proof. One PUT has the following four distinguished paid occurrences:
+mailbox letter write/seal, ownership handoff, receiver arrival, and
+acknowledgement. Preparation of its transfer bit, all ROM fetches,
+seeks, tests, receiver normalization and graph transitions are additional
+paid occurrences. A Read frame also has end-marker handoff, receiver
+end acceptance and final material seal. Under this explicit convention,
+
+$$
+I_{\rm handoff}=4A+3Q.
+\tag{11.2}
+$$
+
+There are exactly $A$ letter events in each channel; end markers are
+not letters. Materialization separately has $\sum_i\min(|p_i|,H)$
+prefix-copy writes, $\sum_i\max(|p_i|-H,0)$ tail-check reads and
+$A$ final interval-verification visits, with all positioning and
+comparisons additional. RESET makes $2HQ$ array-clear writes on the
+Read frames. These counts do not inherit the old $8A+4Q$, whose two
+full-buffer copy bodies are absent here.
+
+For a coarse work bound, sequential field operations and full seeks
+cost at most $2^{16}(Z+1)^3$ bit/move/control steps each: slot widths
+are $O(\log Z)$, physical extents $O(Z+r)$, and offsets can be
+obtained by scans of the at most $Z$ graph bits. Each macro frame
+visits at most $P+16$ graph nodes, has at most $P$ receipt loops,
+clears $2H$ letter cells and runs bounded copy/compare/materialization
+loops of length at most $P+H+48r+96$. Even allowing full-field scans
+and repeated-addition offset work inside each, fewer than
+$2^{16}(Z+1)^3$ such routine invocations suffice per frame.
+Initialization satisfies the same estimate. Their product is below
+$C(Z)$. The graph writer of Theorem 4.7 uses at most five native-table
+scans per row plus $N$ record writes; two extra nested loops bounded
+by $Z$ still fit $C(Z)$. Manufacturing the $J$ literal $R$ cells and
+checking them is a further bounded sequential loop, also covered.
+These are analytic upper bounds for finite routines, not unit-cost
+arithmetic or measurements of a compiled interpreter. ∎
+

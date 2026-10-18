@@ -1,0 +1,34 @@
+#### 17.3.2 Inflation 的有限证书
+
+Wolfe、Spekkens 和 Fritz 的 [The Inflation Technique for Causal Inference with Latent Variables](https://arxiv.org/abs/1609.00672) 通过复制潜变量因果结构，要求 inflated distribution 的某些 marginal 和 symmetry 满足线性约束。若目标分布无法扩张到某一级 inflation，则可以证明其与指定因果结构不相容。
+
+Navascués 和 Wolfe 的 [The Inflation Technique Completely Solves the Causal Compatibility Problem](https://arxiv.org/abs/1707.06476) 证明 inflation 层级 asymptotically tight。通过第 \(n\) 阶检验的分布距离 causal-compatible set 为
+
+\[
+O(n^{-1/2})
+\]
+
+量级，且某些因果结构在低阶就已经精确。
+
+这要求我们把
+
+\[
+\mathrm{TriangleLift}(p)
+\]
+
+从一个存在性占位符细分为：
+
+\[
+\mathrm{InflationFeasible}(p,N,q),
+\]
+
+其中：
+
+- \(N\) 是有限 inflation 图；
+- \(q\) 是 inflated output law；
+- \(q\) 满足非负性和归一化；
+- \(q\) 满足所有 marginal constraints；
+- \(q\) 满足所有 source-induced symmetry constraints。
+
+有限 infeasibility 是严格的非局部证书。有限 feasibility 只说明通过了该级松弛，不能推出真正 triangle-local。
+

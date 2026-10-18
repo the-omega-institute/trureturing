@@ -1,0 +1,24 @@
+**Definition 1.4 (four original objectives with acquired cap only).** For a fixed installed observer $M$ let $\rho_h$ be its conditional complete configuration row and $D_z$ its full normalized residual decoder law. On the actual current record fiber put
+
+$$
+\begin{aligned}
+\overline D_h&=\sum_z\rho_h(z)D_z,&
+e_{\rm law}(h)&=\operatorname{TV}(\overline D_h,T_h^\mu),\\
+e_{\rm conf}(h)&=\sum_z\rho_h(z)\operatorname{TV}(D_z,T_h^\mu),&
+R_{j,s,H}&=\sup_{\substack{h\in\mathcal H_s\\N_R(h)\le H}}e_j(h),\\
+\Phi_H^{j_p,j_\beta}(M,\mu)&=
+\max\{R_{j_p,p,H}-\rho_p,R_{j_\beta,\beta,H}-\rho_\beta\},
+\end{aligned}
+\tag{1.2}
+$$
+
+where $s\in\{p,\beta\}$, $j_p,j_\beta\in\{\mathrm{law},\mathrm{conf}\}$ and the existing single-phase radii are
+
+$$
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750}.
+\tag{1.3}
+$$
+
+Remove the acquired cap to obtain $R_{j,s,\infty}$ and $\Phi_\infty$, exactly [PH] Definition 20.1. Every $e_j$ uses the entire unbounded legal future: future Read letters, original record and permission events, completion, held records, sole Stop and delivery, and legal infinite noncompletion. The cap in (1.2) only restricts which already acquired histories are queried. Law/law, law/conf, conf/law and conf/conf are four distinct objectives in general. A risk averaged over actual random histories is a different consumer.
+

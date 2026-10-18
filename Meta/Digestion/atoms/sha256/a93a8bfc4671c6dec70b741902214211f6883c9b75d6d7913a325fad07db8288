@@ -1,0 +1,30 @@
+**Lemma 3.2 (exact whitening and line equivalence).** With
+$M_2=\operatorname{diag}(m_1,m_2)$, let
+$t=M_2^{-1/2}n$, $e=t/\|t\|$ and $dm=\|t\|^2d\nu$. Then
+
+$$
+\int ee^Tdm=I_2,\quad \int dm=2,\quad
+C_\nu=\int d(e)dm,\quad \int k_+d\nu=\int(e^T\Xi e)_+dm,
+\tag{SC.15}
+$$
+
+where, for a unit whitened vector $e=(e_1,e_2)^T$,
+
+$$
+a_e=\alpha Ve_2^2+\beta We_1^2,\quad
+z_e=-\sqrt V e_2/\sqrt{a_e},\quad
+w_e=\sqrt W e_1/\sqrt{a_e},\quad
+d(e)=a_e\mathcal F(Ve_2^2/a_e)=\mathcal J(e_2^2).
+\tag{SC.16}
+$$
+
+Conversely $d\nu=a_e dm$ at these ellipse points. A failure line
+corresponds to the two antipodal ellipse points. Proportional splitting
+and antipodal reversal change neither cost nor objective.
+
+Proof. Directly $t=(w/\sqrt W,-z/\sqrt V)^T$, and the ellipse equation
+implies $a_e=1/\|t\|^2$. Also
+$n(z_e,w_e)=M_2^{1/2}e/\sqrt{a_e}$. Thus (SC.15) follows by
+congruence, including at both axes. The inverse formulas are unique up
+to simultaneous reversal. $\square$
+

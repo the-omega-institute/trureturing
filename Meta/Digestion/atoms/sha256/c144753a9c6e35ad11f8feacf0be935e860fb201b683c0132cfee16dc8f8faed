@@ -1,0 +1,53 @@
+**命题 11.2（实际 MJ 图及 Jacobian）。** 固定 $(A,D,R)$，在非单位分支置
+
+$$
+\begin{gathered}
+K=R-5A/6,\quad u=s-1,\quad
+\alpha_6=5A/6,\quad\alpha_7=8A/3,\\
+q_6=8D,\qquad q_7=35D/2,\\
+k=K/u-\alpha_6,\qquad
+G_6=\alpha_6+K/u-q_6/s,\qquad
+G_7=\alpha_7+K/u-q_7/s.
+\end{gathered}
+\tag{11.2}
+$$
+
+以 $a,b$ 为来源坐标，$c=a(1-a)/b$、$s=b+c$。实际第六 $M$、第七 $J$ 的响应图 $f=(X,Y)$ 为
+
+$$
+\begin{aligned}
+X&=(1+b)G_6-k=5A/3-q_6/s+bG_6,\\
+Y&=(s+a)G_7-k=R+\alpha_7s-q_7+aG_7.
+\end{aligned}
+\tag{11.3}
+$$
+
+暂把 $s$ 当作独立变量，在 $a,b$ 固定时记
+
+$$
+X_s=-\frac{bK}{u^2}+\frac{q_6(1+b)}{s^2},\qquad
+Y_s=\alpha_7-\frac{aK}{u^2}+\frac{a q_7}{s^2}.
+\tag{11.4}
+$$
+
+那么对实际来源坐标的 Jacobian 行列式恰为
+
+$$
+\begin{gathered}
+s_a=(1-2a)/b,\qquad s_b=1-a(1-a)/b^2,\\
+\mathcal J:=\det Df
+=-G_6G_7-G_6Y_s s_a-G_7X_s s_b.
+\end{gathered}
+\tag{11.5}
+$$
+
+**证明。** 将 (10.3) 在 $6,7$ 代入并加上 (10.4)，得到 (11.2)；结合 (11.1) 得 (11.3)。从最后两个表达式对独立的 $s$ 求偏导得 (11.4)。在实际 $s=b+a(1-a)/b$ 上，链式法则给
+
+$$
+X_a=X_s s_a,\quad X_b=G_6+X_s s_b,\quad
+Y_a=G_7+Y_s s_a,\quad Y_b=Y_s s_b.
+\tag{11.6}
+$$
+
+展开 $X_aY_b-X_bY_a$，两个含 $X_sY_ss_as_b$ 的项抵消，正得 (11.5)。此处仅除以 $b,s,s-1$，均在所用非单位合法坐标域中非零；没有除以 $G_6,G_7$ 或任何响应。∎
+

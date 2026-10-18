@@ -1,0 +1,22 @@
+## 284. The precise class and theorem
+
+Let N be a connected orientable compact 3-manifold with nonempty
+boundary, every boundary component a closed surface of genus at least
+two. Fix an actual finite ideal face-pairing triangulation of N, whose
+ideal vertex links are exactly those boundary surfaces. Let E be its
+actual global edge set, and suppose every original edge degree is at
+least six, counting all local edge occurrences.
+
+Suppose E=H disjoint union S with |H|<=5. In every tetrahedron choose
+an actual vertex frame whose six global labels, in order
+(12,13,14,34,24,23), are
+ (R,A,B,O,A,B), with A,B in H, A!=B, R,O in E.
+The chosen transverse pair can vary between tetrahedra. Axes may repeat
+or also belong to H. Self-gluings and parallel face pairs are allowed
+subject to the stated actual manifold conditions.
+
+Then the same original triangulation has a genuine nondegenerate
+hyperideal realization with totally geodesic boundary. This is a theorem
+for the displayed paired-frame class with at most five actual reservoir
+labels. It is not a theorem for arbitrary minimum-six triangulations.
+

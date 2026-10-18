@@ -1,0 +1,135 @@
+**Theorem 223.1 (All-erasure conic minimum).** For every $L\ge4$,
+pad each displayed four-bit zero word by $1^{L-4}$, put $T=2$ at
+$1^L$, and define $y$ by
+
+$$
+C_{1101}=C_{1110}=3,\qquad
+P_{0100}=P_{0101}=P_{0110}=P_{1000}=P_{1001}=P_{1010}=1.
+$$
+
+Then $\Delta_O(y)=1$ and
+
+$$
+\min_{V\in\mathcal M_L(y)}J_{Q(y)}(V)=\frac43.
+$$
+
+The minimum allows arbitrary nonnegative weights on every early/late
+erasure. The input nevertheless has unrestricted unit certificates.
+Its lower-bound point lies in $H_L\setminus H_N$.
+
+**Proof.** In schedule order
+$\varnothing;1,2,3,4;12,13,14,23,24,34$, the complete supports are
+
+$$
+\begin{aligned}
+B_N^S(y)&=(8;8,8,8,8;9,9,9,9,9,10),\\
+B_O^S(y)&=(8;8,8,8,8;9,9,9,9,9,9).
+\end{aligned}
+$$
+
+Every entry sums all-label cell maxima of the displayed rows.
+Thus $W_y=8$, $Q(y)=(0,0,3,3,0,\ldots;14)$ and the stopped excess
+is one. Put
+
+$$
+b_*=(11/18,11/18,11/18,11/18,1/6,\ldots,1/6;1/6)
+ =\frac7{12}u_4+\frac5{12}v_4.
+$$
+
+This proves membership in $H_L$, and $F_{Q(y)}(b_*)=4/3$.
+Use these fixed full tables:
+
+$$
+D_1=N(2,3;0,0,3,0),\quad
+D_2=N(2,4;0,0,4,0),\quad
+D_3=N(3,4;0,3,4,0).
+$$
+
+For $g_i(V)=V\cdot(z_{D_i}-r)$ set
+$\ell(V)=(g_1(V)+g_2(V)+g_3(V))/3$.
+The full support gives $\Delta_N(V)\ge\ell(V)$ for every $V\ge0$.
+The following table is the complete erasure basis. It records $W=8$
+in every row, the three actual excesses, the same hull reading, and
+$k_E=\ell(T_Ey)-F_{Q(T_Ey)}(b_*)$.
+
+| $E$ | $(g_1,g_2,g_3)(T_Ey)$ | $F_{Q(T_Ey)}(b_*)$ | $k_E$ |
+| --- | --- | --- | --- |
+| $\varnothing$ | $(1,1,2)$ | $4/3$ | $0$ |
+| $\{4\}$ | $(1,0,-1)$ | $0$ | $0$ |
+| $\{3\}$ | $(0,1,-1)$ | $0$ | $0$ |
+| $\{3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{2\}$ | $(-1,-1,2)$ | $-1/2$ | $1/2$ |
+| $\{2,4\}$ | $(-1,0,-1)$ | $-11/9$ | $5/9$ |
+| $\{2,3\}$ | $(0,-1,-1)$ | $-11/9$ | $5/9$ |
+| $\{2,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{1\}$ | $(1,1,2)$ | $-1/2$ | $11/6$ |
+| $\{1,4\}$ | $(1,0,-1)$ | $-11/9$ | $11/9$ |
+| $\{1,3\}$ | $(0,1,-1)$ | $-11/9$ | $11/9$ |
+| $\{1,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+| $\{1,2\}$ | $(-1,-1,2)$ | $-7/3$ | $7/3$ |
+| $\{1,2,4\}$ | $(-1,0,-1)$ | $-22/9$ | $16/9$ |
+| $\{1,2,3\}$ | $(0,-1,-1)$ | $-22/9$ | $16/9$ |
+| $\{1,2,3,4\}$ | $(0,0,0)$ | $-4/3$ | $4/3$ |
+
+For example erasing bit 3 deletes $C_{1101}$, moves the two early
+pair rows ending $00$ to their $10$ counterparts, and retains the
+other early pair rows and $C_{1110}$. Evaluating the three displayed
+tables gives $(0,1,-1)$ and reading zero. The same routing rule on the
+nine original nonzero coefficients gives every entry of the table;
+there is no optimization premise in these linear calculations.
+
+All $k_E\ge0$. Masks above four fix every scored atom, so this basis
+covers every mask for every $L\ge4$. For arbitrary conic coefficients,
+without requiring their sum to be one,
+
+$$
+\ell(V)-F_{Q(V)}(b_*)=\sum_Et_Ek_E\ge0.
+$$
+
+The one residual charge is at least
+$4/3-F_{Q(V)}(b_*)$. Adding gives $J_{Q(y)}(V)\ge4/3$.
+This also includes $V=0$ and all conic scales.
+
+For attainment take
+
+$$
+V_*=\frac12y+\frac16T_{\{3\}}y+\frac16T_{\{4\}}y.
+$$
+
+The coefficients sum to $5/6$, which is allowed in the cone.
+Its literal rows are $C_{1101}=C_{1110}=2$, $T=5/3$, and
+
+| Word | $P$ in $V_*$ |
+| --- | --- |
+| $0100,1000$ | $1/2$ each |
+| $0101,0110,1001,1010$ | $5/6$ each |
+| $0111,1011$ | $1/3$ each |
+
+Consequently $W_{V_*}=20/3$, $Q(V_*)=(0,0,2,2,0,\ldots;32/3)$,
+and its full $N$ support vector in the same order is
+
+$$
+(20/3;20/3,20/3,20/3,20/3;7,22/3,22/3,22/3,22/3,22/3).
+$$
+
+Thus $\Delta_N(V_*)=2/3$. The residual has late coordinates $1,1$
+and charge $K=10/3$. Its readings at $o,p,u_3,v_3$ are
+$0,0,1/2,5/12$; for every $k\ge4$ they are
+
+$$
+F(u_k)=\frac2{k-1},\qquad
+F(v_k)=2-\frac{10}3\frac{k-2}{k+1}.
+$$
+
+Both latter sequences decrease from $2/3$ at four. Its residual charge
+is $2/3$, proving attainment of $4/3$.
+
+For completeness, the support vectors remain complete after padding.
+Every extra queried bit is constantly one on every weighted original
+or transformed atom. Fixing that reply folds its observation to a legal
+low empty, singleton or pair partition. Extra numerical labels earn
+zero, and a zero reward is already available in each cell. Conversely
+each low table embeds at the larger length. Thus no high-address table
+increases these support maxima. All new hull vertices were evaluated
+by the displayed formulas; no unscored event row is discarded. $\square$
+

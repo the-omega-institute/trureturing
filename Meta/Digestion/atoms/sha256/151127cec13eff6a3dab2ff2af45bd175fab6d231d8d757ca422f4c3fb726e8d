@@ -1,0 +1,139 @@
+**Theorem 10.2 (actual ranks, TP, every input, reference and time label).**
+Definition 10.1 is a normalized original finite competitor. Every high
+physical $K(h_r)$ has rank three, every low physical $K(z_{r,\pm})$
+has rank two, and every decoder is TP on its whole fibre. Its actual
+high effect is supported on $V$ and has selected cost
+
+$$
+W_\epsilon=AP_\epsilon+BQ_\epsilon-2\gamma R_\epsilon .
+\tag{QO.50}
+$$
+
+It preserves (QO.11) on all complex inputs, at every passive reference,
+and on every separate labelled Borel time set, with all zero sectors.
+
+Proof. By (QO.46),
+
+$$
+\begin{aligned}
+H_r&=h_rh_r^\dagger=
+\frac12\begin{pmatrix}
+P_\epsilon&r x_\epsilon-iR_\epsilon&0\\
+r x_\epsilon+iR_\epsilon&Q_\epsilon&0\\0&0&0
+\end{pmatrix},\\
+L_r&=\sum_{\pm}z_{r,\pm}z_{r,\pm}^\dagger=
+\frac12\begin{pmatrix}
+U_\epsilon&r v_\epsilon+iR_\epsilon&0\\
+r v_\epsilon-iR_\epsilon&V_\epsilon&0\\0&0&1
+\end{pmatrix}.
+\end{aligned}
+\tag{QO.51}
+$$
+
+For the low identity, before congruence the sum is
+$\frac12\left(\begin{smallmatrix}
+\widehat u_L&r v_\epsilon&0\\r v_\epsilon&\widehat v_L&0\\0&0&1
+\end{smallmatrix}\right)$.
+Its DT determinant is zero, its diagonal difference is $\beta$,
+and $\widehat u_L\widehat v_L=v_\epsilon^2$.
+After congruence Lemma 5.2 gives difference $\beta c_\epsilon$,
+imaginary entry $iR_\epsilon$ and real entry $r v_\epsilon$.
+The positive diagonals with that determinant and difference are
+uniquely $U_\epsilon,V_\epsilon$: solving the positive quadratic
+for either diagonal proves uniqueness. This proves (QO.51).
+
+Each precongruence low vector is $B_0$ null because
+$\widehat u_L-\alpha\widehat v_L=\beta$. Its transformed first
+coefficient has real part
+$\cos(\theta_\epsilon/2)\sqrt{\widehat u_L}/2>0$.
+Thus (QO.17) makes it rank two and its columns one and two independent.
+Both denominators in (QO.49) are positive,
+$U_z^\dagger U_z=I_2$, and $U_zU_z^\dagger K(z)=K(z)$.
+The range decoder is a TP isometry on its entire two-dimensional
+fibre, and the encoder-decoder product is $EK(z)E^\dagger$.
+
+For the high vector, the T/D ratio is
+$(r x_\epsilon+iR_\epsilon)/P_\epsilon$ with strictly positive
+imaginary part. With zero S coefficient, singularity would require
+this ratio to be one of the real numbers $\pm1/\sqrt\alpha$.
+It is therefore invertible, and the dimension-three live decoder is
+TP. This proof includes $\epsilon=0$, where the ratio is
+$i r_0/p$: the physical high rank stays three. The two low physical
+products stay rank two; their complete low coefficient block in
+(QO.51) has rank two because its DT block has rank one and its SS
+entry is positive. The high coefficient blocks have rank one.
+
+The scalar decoders are TP on their whole one-dimensional inputs since
+$\sum_jw_j=1$ and $\int_0^1g=1$. The sum of coefficient moments at
+report $r$ is
+
+$$
+H_r+L_r=(I+r sX_c)/2,\qquad
+\Theta(I)=I-M,\qquad\Theta(X_c)=\kappa X_{01}.
+\tag{QO.52}
+$$
+
+Consequently all encoder effects at that report sum to
+
+$$
+E[\Theta(H_r+L_r)+M/2]E^\dagger+Q_5/2
+=F_r(s).
+\tag{QO.53}
+$$
+
+Summing reports gives $E[\Theta(I)+M]E^\dagger+Q_5=I_5$.
+Each individual effect is positive and bounded by this sum, so each
+encoder is TNI and the total instrument TP. This includes all scalar
+failure and complement branches; no live-only normalization was used.
+
+The total decoded live coefficient moment is $I_3$. Expanding its
+Kraus sum therefore gives exactly the D,T,S live map in (QO.11) on
+every complex matrix, including imaginary matrix units. The supported
+scalar rows sum to $M/2$ at each report, and the complement effect is
+$Q_5/2$. Their decoded measures give each original label its
+specified failure measure. Supported rows precompose $E^\dagger$;
+the complement scalar trace kills cross-support entries. Thus all
+$V$--$V^\perp$ cross operators, complement live maps and every
+extra-sector map vanish. There are no endpoint atoms or singular
+time additions. Labels $1$ and $3$ stay separate, and labels $0$
+and mode $13$ remain named zero measures.
+
+For completeness let $X$ be any joint complex operator with passive
+reference $\mathcal H_R$. The scalar row sums produce the conditional
+reference operators
+
+$$
+R_{f,r}(X)=\operatorname{Tr}_5[(E(M/2)E^\dagger\otimes I_R)X],
+\qquad
+R_{\perp,r}(X)=\tfrac12\operatorname{Tr}_5[(Q_5\otimes I_R)X].
+\tag{QO.54}
+$$
+
+In each original label $j$ and every Borel set $B_{\rm time}$,
+the record-$r$ output is
+
+$$
+P_f\otimes
+[w_jR_{f,r}(X)+\mathbf1_{j=2}R_{\perp,r}(X)]
+ \int_{B_{\rm time}}g(t)\,dt .
+\tag{QO.55}
+$$
+
+These are the Kraus-row conditional operators, not an unconditional
+reference marginal. Summing reports gives the reference amplification
+of (QO.11). The live Kraus identity tensors with $I_R$ as well.
+Finite matrix identities give every finite amplification; trace-class
+infinite-reference versions follow by finite-rank approximation.
+This proves all complex, reference, separate-time and zero-sector
+identities simultaneously. Fixed common metadata stay identical.
+
+Finally only the two high branches have dimension at least three.
+Their whole decoders are live, so their actual acquired effect is
+$E\Theta(H_++H_-)E^\dagger$, giving (QO.50).
+This equality belongs to this construction. The universal lower
+continued to allow high acquisition followed by failure. Every one
+of the twelve encoders is nonzero on its full input algebra, including
+the endpoint limit. These are actual generated branches of a new
+finite instrument, not an assertion that an old Kraus index is readable.
+$\square$
+

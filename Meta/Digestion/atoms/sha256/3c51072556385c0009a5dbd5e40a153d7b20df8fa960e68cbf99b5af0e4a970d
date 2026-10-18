@@ -1,0 +1,18 @@
+**定理 2.4（Sharp maximum on the entire fiber）。** For every $X\in\mathcal X$,
+$C(X)$ has a finite complex Gram decomposition into at most sixty nonzero
+vectors, every one of support at most four in $B$. There is an explicit
+$X_*\in\mathcal X$ such that no finite complex Gram decomposition of
+$C(X_*)$ has every vector supported on at most three coordinates. In
+particular,
+
+$$
+\boxed{\quad\max_{X\in\mathcal X} k\!\left(\frac{I_5+iX}{5}\right)=4.\quad}
+\tag{2.4}
+$$
+
+Proof. Section 3 constructs the universal decomposition. Section 4 verifies
+the explicit state's legality and its inherited spectral facts. Section 5
+excludes every finite complex three-support decomposition of that same
+state. These yield both inequalities and actual attainment in (2.4).
+$\square$
+

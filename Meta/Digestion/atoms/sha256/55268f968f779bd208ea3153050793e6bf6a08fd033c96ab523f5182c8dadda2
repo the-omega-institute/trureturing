@@ -1,0 +1,20 @@
+**约定 2.1（二标签及首遍护栏）。** 以下固定不同标签 $A,B$，允许目标实际上只取 $A$。令
+
+$$
+A=\lambda(0),\quad x_j=\mathbf1_{\{\lambda(j)\ne A\}},\quad
+H=\{j:x_j=1\}\subseteq\{1,\ldots,k\},\quad
+h=\left\lfloor\frac{k}{m}\right\rfloor.
+\tag{2.1}
+$$
+
+所有截止断言只对整数 $0\le d\le h$ 提出，即实际续接的前 $dm\le k$ 位。$H=\varnothing$ 时目标恒定，费用零。否则令 $J=\max H$。若 $J\le hm$，定义
+
+$$
+D=\left\lceil\frac Jm\right\rceil,\qquad
+b_t=\sum_{tm\le j<(t+1)m}x_j\quad(0\le t<D),\qquad
+z=x_{Dm},
+\tag{2.2}
+$$
+
+并令 $R$ 表示存在 $0\le t<D-1$，使 $b_t=0$ 或 $b_t$ 为奇数。$D=1$ 时这个范围为空，故 $R$ 为假。窗口采用左闭右开区间；右前沿 $Dm$ 单独由 $z$ 计入。
+

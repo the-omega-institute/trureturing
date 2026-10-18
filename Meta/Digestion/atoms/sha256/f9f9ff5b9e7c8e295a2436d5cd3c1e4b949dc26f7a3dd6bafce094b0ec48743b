@@ -1,0 +1,39 @@
+**Definition 8.2 (initial foundation bill and cumulative resources).** At
+native ordinal zero there are the two original meter cells, all other
+tape words empty, the fixed registers, and two meter head links. Its tree
+has
+
+$$
+V_0=223+6b
+$$
+
+vertices and $L(0)=112+3b$ terminals. Count its construction/endowment as $V_0$ vertex units,
+$7V_0$ endpoint-slot initialization units, and one foundation commitment,
+so $g_0=1+8V_0$. The fixed literal rule apparatus contributes
+$d_{\mathrm{patch}}$ description bits and its declared finite mechanism.
+This fixed foundation replaces an irreducible port convention; it is not
+a source-dependent execution before ordinal zero. A model constructing
+this foundation from smaller observable steps needs its own initial
+construction domain and cuts.
+
+For one run of $n$ original primitives, including boot, define
+
+$$
+\begin{aligned}
+G(n)&=g_0+\sum_{j=1}^n g_j,&
+K_{\mathrm{cell}}(n)&=2+\sum_{j=1}^n e_j,\\
+V(n)&=V_0+48\sum_{j=1}^n e_j,&
+L(n)&=L(0)+24\sum_{j=1}^n e_j.
+\end{aligned}
+\tag{SSA.14}
+$$
+
+The original reference coordinates are $n$ logical primitive events and
+$2n$ PR57 fee units. If an accounting convention charges both the original
+service fees and structural work, its total is $2n+G(n)$ plus fixed rule
+apparatus; if it substitutes the structural primitive price, its charge is
+$G(n)$. These are explicitly different price conventions. Neither is an
+automatic numeral stored by the meter. The actual meter is still its
+original one-receipt-per-event chain, structurally represented and included
+in $K_{\mathrm{cell}}$.
+

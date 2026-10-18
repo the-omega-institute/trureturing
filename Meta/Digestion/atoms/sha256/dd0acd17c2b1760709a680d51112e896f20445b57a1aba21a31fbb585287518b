@@ -1,0 +1,74 @@
+**Theorem 7.5 (Strict concavity, unique contact and tangency system).**
+For each $T>\tau$, $g_T$ is strictly concave on $(0,1)$ and has one
+interior maximizer. At $T=T_\tau$, denote it by $x_\tau$. Then
+
+$$
+\frac{1+\tau}{2}<x_\tau<1.
+$$
+
+The pair $(T_\tau,x_\tau)$ is the unique solution in
+$\tau<T<T_0$, $(1+\tau)/2<x<1$ of
+
+$$
+\sqrt{x(1-x)}-\sqrt{T-\tau x}
+=\sqrt T\,e^{\lambda_Tx},
+$$
+
+$$
+\frac{1-2x}{2\sqrt{x(1-x)}}
++\frac{\tau}{2\sqrt{T-\tau x}}
+-\lambda_T\sqrt T\,e^{\lambda_Tx}=0.
+$$
+
+**Proof of Theorem 7.5.** On the open interval write $s=s(x)$ and
+$v=v_T(x)$. Direct differentiation of these explicit smooth functions
+gives
+
+$$
+s'=\frac{1-2x}{2s},\qquad s''=-\frac1{4s^3},\qquad
+v'=-\frac{\tau}{2v},\qquad v''=-\frac{\tau^2}{4v^3},
+$$
+
+$$
+g_T'=\frac{1-2x}{2s}+\frac{\tau}{2v}-\lambda_Tf_T,\qquad
+g_T''=-\frac1{4s^3}+\frac{\tau^2}{4v^3}-\lambda_T^2f_T.
+$$
+
+Because $T>\tau$ and $0<\tau<1$,
+
+$$
+v^2>\tau(1-x),\qquad
+\frac{\tau^2}{v^3}
+<\frac{\sqrt\tau}{(1-x)^{3/2}}
+<\frac1{[x(1-x)]^{3/2}}=\frac1{s^3}.
+$$
+
+Consequently $g_T''<0$. For fixed $T>\tau$, the terms other than
+$s'$ in $g_T'$ have finite endpoint limits, while $s'$ tends to
+$+\infty$ at zero and $-\infty$ at one. The derivative is strictly
+decreasing and has exactly one zero; this is the unique maximizer.
+The endpoint values are
+
+$$
+g_T(0)=-2\sqrt T,\qquad g_T(1)=-2\sqrt{T-\tau},
+$$
+
+both negative.
+
+If $\tau<T<T_0$, at $x_0=(1+\tau)/2$ the square-completion identity
+gives $v_T(x_0)<s(x_0)$, and $\lambda_T<0$. Therefore
+
+$$
+g_T'(x_0)=
+\frac{\tau}{2}\left(\frac1{v_T(x_0)}-\frac1{s(x_0)}\right)
+-\lambda_Tf_T(x_0)>0.
+$$
+
+The maximizer at the root is strictly to the right of $x_0$.
+At that maximizer $g_{T_\tau}=0$ and $g_{T_\tau}'=0$,
+which are the two displayed equations. Conversely, any pair in the
+specified ranges satisfying them is the unique maximizer of $g_T$
+and has maximum zero. The unique root of Theorem 7.4 and strict
+concavity then force that pair to be $(T_\tau,x_\tau)$.
+$\square$
+

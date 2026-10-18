@@ -1,0 +1,36 @@
+**Theorem 4.3 (sharp one-step memory increments).** For $0\le d<k$,
+
+$$
+\mu_{d+1}-\mu_d=\lambda_{d+1}-\lambda_d
+=1+r_A(k,d+1)-r_A(k,d)\in\{0,1\}.
+\tag{4.6}
+$$
+
+The increment is zero exactly when the column $h_{k-d}$ is independent
+modulo the span of columns $1,\ldots,k-d-1$. It is one exactly when that
+column belongs to their span. Thus an additional permitted suffix recut
+can require either no extra alphabet symbols or an exact factor $q$.
+Both cases occur in one nontrivial admissible prefix family.
+
+Proof. Removing $h_{k-d}$ from $H_A^{(k,d)}$ reduces rank by zero or one.
+Equation (4.6) and the span criteria follow from (3.1) and (3.3). If the
+column is independent modulo the older columns, its newly retained value
+is already determined by the syndrome and known tail through (4.4).
+If it is dependent, a nonzero change in that value can be compensated by
+older coordinates, so its new distinction was previously lost.
+
+For sharpness take $H=[1\ 0\ 1]$ at $k=2$ over any $\mathbb F_q$.
+Every prefix $(u_1,u_2)$ has completion $-u_1$. The successive boundaries are
+
+$$
+B_{2,0}(u)=(u_1,()),\qquad
+B_{2,1}(u)=(u_1,(u_2)),\qquad
+B_{2,2}(u)=(u_1,(u_1,u_2)).
+\tag{4.7}
+$$
+
+Their dimensions are $1,2,2$, and their supplemental dimensions over the
+forward summary are $0,1,1$. The first new value $u_2$ costs a factor $q$;
+the second new value $u_1$ is already determined. Hence both bounds are
+attained without a singleton prefix family. $\square$
+

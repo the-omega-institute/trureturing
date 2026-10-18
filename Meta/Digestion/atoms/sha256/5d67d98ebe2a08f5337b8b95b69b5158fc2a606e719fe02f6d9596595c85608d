@@ -1,0 +1,20 @@
+**Theorem 134.1 (four-label genuine escape).** Under the assumptions of
+§130, if F is nonempty, there are four distinct actual H labels
+M,C,D,Z and a genuine tetrahedron tau with frame
+
+       (Z,M,C,D,M,C),
+
+such that M is maximal in value among all pi-selected H labels, p_M=1,
+Z has no flat pi occurrence, and
+
+       x_M >= 1+x_C+x_D,
+       x_Z >= 1+x_M+x_C > x_M.
+
+In particular x_Z>x_M>x_C,x_D. The source flat block has M as an axial
+label outside its reservoir pair {C,D}; the genuine escape block has two
+distinct axial H labels D,Z outside its reservoir pair {M,C}.
+
+Every equation and budget used above belongs to the same global length
+field and the complete actual occurrence quotient. The theorem is not a
+local-star construction and does not prescribe independent local angles.
+

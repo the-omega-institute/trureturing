@@ -1,0 +1,11 @@
+## 150. An actual parallel face pair and realization consequence
+
+The two faces of tau containing its axial Z edge are paired respectively
+to the two return faces of rho containing its two transverse Z slots.
+They are two different actual face pairings between the distinct owners
+tau and rho. The faces of tau are different because they are the two
+faces incident to one local edge. The transverse Z slots of rho are
+opposite local edges, so no face contains both; its return faces are
+different as well. This is a dual pair of parallel edges, not a repeated
+traversal of one face pairing due to repeated labels or self-gluing.
+

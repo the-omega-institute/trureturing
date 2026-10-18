@@ -1,0 +1,78 @@
+**Proposition 14.1 (Endpoint-mass and additive filtering bounds).**
+In Definition 12.1 let $s^+$ occupy every odd site and $s^-$
+every even site, and put $p_+=p(s^+)$, $p_-=p(s^-)$.
+Then Theorem 12.2's overlap satisfies
+
+$$
+\eta\ge\frac{p_+p_-}{(p_++p_-)\operatorname{Var}_p(S)}
+\ge\frac{2p_{\min}}{n^2}.
+\tag{14.1}
+$$
+
+For $t>0$, the effective imaginary-time rate obeys the bound
+independent of the next distinct eigenvalue:
+
+$$
+0\le-\frac{d}{dt}\log C(t)-\gamma
+\le\frac{\log(1/\eta)}{t}.
+\tag{14.2}
+$$
+
+For $n\ge2$ and $k\ge1$, the power-filtering quotient satisfies
+
+$$
+0\le R_k-\gamma
+\le(1-\gamma)\bigl(1-\eta^{1/(2k)}\bigr)
+\le\frac{(1-\gamma)\log(1/\eta)}{2k}.
+\tag{14.3}
+$$
+
+Proof. The legal particle-hole poset has minimum $s^-$ and
+maximum $s^+$. For the normalized increasing gap eigenfunction
+in (12.6), its range is therefore
+
+$$
+R=\left\langle h,
+\frac{\mathbf1_{s^+}}{p_+}-\frac{\mathbf1_{s^-}}{p_-}
+\right\rangle_p,\qquad
+R^2\le\frac1{p_+}+\frac1{p_-}.
+\tag{14.4}
+$$
+
+Combine (12.8) with orthogonal projection. This gives the first
+bound in (14.1). The harmonic product of the endpoint masses
+is at least $p_{\min}/2$, and $\operatorname{Var}_p(S)\le n^2/4$.
+
+Let $\nu_\ell=a_\ell/\operatorname{Var}_p(S)$ and
+$F(t)=e^{\gamma t}C(t)/\operatorname{Var}_p(S)$.
+The spectral expansion gives $\eta\le F(t)\le1$. Its negative
+logarithmic derivative $g(t)$ is the exponentially tilted mean
+of $\ell-\gamma$, and
+$g'(t)=-\operatorname{Var}_t(\ell)\le0$.
+Thus
+
+$$
+t g(t)\le\int_0^t g(u)\,du
+=-\log F(t)\le\log(1/\eta),
+\tag{14.5}
+$$
+
+proving (14.2).
+
+For the power bound retain only eigenvalues with $\ell<1$;
+the others vanish after one power. Put
+$x_\ell=-\log((1-\ell)/(1-\gamma))\ge0$ and use the tilted
+weights $\nu_\ell e^{-2kx_\ell}$. Their total mass before
+tilting is at most one, and the mass at $x_\gamma=0$ is $\eta$.
+The same logarithmic-partition argument bounds their tilted
+mean of $x$ by $\log(1/\eta)/(2k)$; if the initial mass is
+less than one, its logarithm only decreases this upper bound.
+Since $\ell-\gamma=(1-\gamma)(1-e^{-x_\ell})$ and
+$1-e^{-x}$ is concave, Jensen's inequality proves (14.3).
+The inequality $1-e^{-x}\le x$ gives its last form. $\square$
+
+These estimates answer additive energy approximation. They do
+not estimate the projector onto an isolated gap eigenspace;
+that stronger task retains a separation requirement. The rate
+still depends on the actual spectral overlap.
+

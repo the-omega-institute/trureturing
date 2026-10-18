@@ -1,0 +1,19 @@
+## Role separation and necessary topology counts
+
+The three peripheral low edges form the unique LLL face opposite `c`.
+The other faces are LHH, with a unique low edge opposite the center vertex.
+Because degrees 8 and 9 are distinct, face maps preserve low and high classes,
+so LLL pairs only with LLL and LHH only with LHH; every LHH map preserves
+the center role. Center vertices therefore cannot identify with peripheral
+vertices.
+
+For a center-link component `S`, let `N_S` be its number of center triangles
+and `h_S` its number of incident high quotient edges. Each high edge has one
+center endpoint and contributes one link vertex. Hence
+`F=N_S`, `E=3*N_S/2`, `V=h_S`, and `9*h_S=3*N_S`. Therefore
+`chi(S)=-N_S/6=2-2*g_S`, so `N_S=12*(g_S-1)`.
+Globally the low-edge count is `3*N/8`, which is integral and forces `8|N`.
+Summing the center counts gives `12|N`; thus `24|N`.
+These counts are necessary conditions only; the construction below supplies
+existence at some finite count, without asserting that N=24 is attained.
+

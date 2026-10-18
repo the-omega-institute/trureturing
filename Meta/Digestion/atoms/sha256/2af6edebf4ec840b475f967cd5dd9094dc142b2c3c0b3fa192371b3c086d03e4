@@ -1,0 +1,6 @@
+#### 82.4.3. Both singular values are one
+
+The two preceding cases exhaust every nonunitary 2-by-2 contraction. Hence each H_f is unitary. As in the argument for A, norm preservation of each correct-output block forces all original B wrong-output components to vanish. Both original maps are therefore fibre-calibrated.
+
+The proof of B calibration did not infer absence of leakage merely from equality in trace-norm pinching; it used the equality identities for the actual contraction blocks.
+

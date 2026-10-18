@@ -1,0 +1,29 @@
+**定义 25.2.1（多状态公共种子）。** 取私有状态集 $H=\{1,\ldots,m\}$、有限种子集 $\mathcal U$、有限动作集 $\mathcal A$。种子 $U$ 的分布为 $\mu$，与私有状态独立。确定响应计划为
+
+$$
+f:H\times\mathcal U\to\mathcal A.
+$$
+
+令
+
+$$
+A_h=f(h,U),
+\qquad
+p_h(a)=\Pr(A_h=a).
+$$
+
+对每一对私有状态定义公共种子分歧
+
+$$
+d_{ij}=\Pr(A_i\ne A_j),
+\qquad 1\le i<j\le m.
+$$
+
+隐藏动作接口只看到某一行 $p_h$；公共接口若看到 $U$，则看到整条响应向量
+
+$$
+(A_1,\ldots,A_m).
+$$
+
+<a id="section-25-3"></a>
+

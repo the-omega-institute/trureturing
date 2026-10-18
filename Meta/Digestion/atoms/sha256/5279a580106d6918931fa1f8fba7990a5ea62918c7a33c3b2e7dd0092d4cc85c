@@ -1,0 +1,57 @@
+**引理 4.2（投影幂包围）。** 保持 $0<\delta\le1/8$，设 $|x|\le1,|y-x|\le\delta,|u|=1$，$p=x\cdot u\in[0,1]$，整数 $b\ge2$，以及 $0\le q\le p^b$。则
+
+$$
+|qu-C_\delta(y)|
+\le\sqrt{f_\delta^2+\frac{3\delta^2}{b-1}}+2^{-b}.
+$$
+
+证明。若 $p<1/2$，则 $q\le2^{-b}$，三角不等式和引理 4.1 的中心范数界立即给结论。以下取 $p\ge1/2$，令 $h=p-q\ge0$。$q\le p^b\le p^2$ 给
+
+$$
+1-q\le3h,\qquad (b-1)q(1-p)\le h.
+$$
+
+第一式来自 $3p-1-2q\ge3p-1-2p^2=(2p-1)(1-p)\ge0$。第二式先在 $q=p^b$ 使用
+
+$$
+p-p^b=p(1-p)\sum_{i=0}^{b-2}p^i
+\ge(b-1)p^b(1-p),
+$$
+
+再减小 $q$：左边 $(b-1)q(1-p)$ 减少，右边 $p-q$ 增加。两式包括 $p=1,h=0$。
+
+写 $e=y-x$。$|e|^2\le\delta^2$ 使 $k\le1+|x|^2+2x\cdot e$，所以
+
+$$
+kq-2y\cdot u\le-2h+2\delta|qx-u|.
+$$
+
+这里 $q(1+|x|^2)-2p\le2q-2p=-2h$，余项用 Cauchy–Schwarz。并且
+
+$$
+|qx-u|^2\le(1-q)^2+2q(1-p)
+\le9h^2+\frac{2h}{b-1}.
+$$
+
+故 $|qx-u|\le3h+\sqrt{2h/(b-1)}$。由 $\delta\le1/8$，有
+
+$$
+\begin{aligned}
+kq-2y\cdot u
+&\le-h+2\delta\sqrt{\frac{2h}{b-1}}\\
+&\le\frac{2\delta^2}{b-1}.
+\end{aligned}
+$$
+
+末步在 $\sqrt h$ 中配方。最后 $q\le1,k\ge63/64$，给
+
+$$
+\begin{aligned}
+|qu-C_\delta(y)|^2
+&=|C_\delta(y)|^2+\frac qk(kq-2y\cdot u)\\
+&\le f_\delta^2+\frac{3\delta^2}{b-1},
+\end{aligned}
+$$
+
+因为 $2q/k\le128/63<3$。加上非负的 $2^{-b}$ 即可统一两个 $p$ 分支。这是对全部 $p,q,b$ 的估计，没有将固定参数的 Taylor 余项用于移动的极大点，也没有假设 $q$ 远离零。
+

@@ -1,0 +1,14 @@
+**Lemma 105.1.** The map U4 -> (K intersect K')/<1> induced by inclusion is an isomorphism. Explicitly, a vector v in K belongs to K' precisely when all its coordinates at primes 3 modulo 4 have the same value. For v in K intersect K', its unique representative in U4 modulo <1> is v+(delta^T v)1.
+
+**Proof.** For v in K, reciprocity gives
+
+ A^T v=diag(delta)v+delta(delta^T v).
+
+At a coordinate with delta_i=1 this vanishes exactly when v_i=delta^T v; at a coordinate with delta_i=0 it vanishes automatically. Because delta^T1=1, the set of delta_i=1 coordinates is nonempty and has odd size. A constant value c on them therefore has delta^T v=c. Complementing by c1 makes all those coordinates zero, and only one of v,v+1 can do so. Conversely every vector in U4 belongs to K'. This proves every assertion. In particular dim U4<=r. ∎
+
+For v in U0, the full local Selmer formula above yields the classes
+
+ lambda_v=(d_v,1),  mu_v=(1,d_v).                    (105.2)
+
+Their parameters are (0,v,0) and (0,0,v). Both maps are linear, because multiplying squarefree products corresponds to adding their indicators modulo rational squares. For any subspace U of U0, S and these two copies of U are independent modulo the torsion: a relation in parameters forces a vector of U to equal a multiple of 1, hence to be zero, and then forces the coefficient of S to be zero. Here 1 is not in U4.
+

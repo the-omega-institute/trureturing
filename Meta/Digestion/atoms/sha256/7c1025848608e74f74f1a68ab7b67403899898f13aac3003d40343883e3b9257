@@ -1,0 +1,32 @@
+**Proposition 5.3 (retained-anchor continuation costs).** For
+Construction 2.4 without a row, let $v_0$ be the old anchor capture,
+let $K_f$ count all updates from $v_0$ through this call's Return,
+and put $r_f=\lfloor(K_f+e)/2\rfloor$. The entire moving search obeys
+
+$$
+T\le r_f+1,\quad
+Q\le |a|+r_f,\quad
+A\le(r_f+1)|a|+\frac{r_f(r_f+1)}2.
+\tag{AAR.19}
+$$
+
+On a quiescent later call with lag $k$, these are equalities with
+$r_f$ replaced by $r=\lfloor(k+e)/2\rfloor$. With a row body and
+$b$ updates during the call, there are at most $b+1$ attempts; on
+each attempt add $q_PN+1$ Reads and at most $Hq_PN+|a|+r_f$ letters
+to (AAR.19), with $N,H$ from the final tree. The last summand charges
+the extra guard validation. The row can require operands longer
+than the shortest clock operand.
+
+Proof. Every branch encountered on the right suffix persists in
+the final subtree $T_{K_f+e}$. Its rightmost leaf depth equals
+$\lfloor(K_f+e)/2\rfloor$ by (AAR.4) and the supplied right-reply
+intervals. Consecutive suffix lengths are $0,1,\ldots,r$ on a
+stationary call; sum their lengths after the literal prefix $a$.
+For the row variant use the disjoint failed validation intervals
+from Construction 2.4. Workspace consists of the retained prefix,
+current suffix/path, binary counters and a separate materialized
+operand, in addition to the CWS body and row candidate when present.
+An optional output of only the scalar lag still pays those transient
+regions and the retained old anchor. $\square$
+

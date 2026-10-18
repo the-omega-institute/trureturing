@@ -1,0 +1,27 @@
+**Theorem 349.1 (Nested-capacity formula).** A $W_N$ complete allocation of total mass exactly $M$ realizes the prescribed entire vector kernel if and only if
+
+$$
+\begin{gathered}
+Z_k\ge0,\qquad c_k\ge Z_k,\\
+\ell_{j,k}=-Q_{kj,k}\quad(k<j),\\
+Q_{ij,k}=0\ (k<i),\qquad Q_{ij,j}\le0,\qquad Q_{ij,k}\ge0\ (k>j),\\
+Z_i\ge\sum_{j>i}(\xi_{ij})_+,\qquad S_{i,k}\ge0,
+\end{gathered}
+\tag{349.3}
+$$
+
+and $M\ge B_W$. Under these conditions $B_W$ is attained. A minimizing allocation uses pair mass $m^0_{ij}$, singleton mass $\max\{A_i,D_i\}$ and empty label-$k$ mass $c_k-Z_k$, with excess mass put on the empty zero output. Zero-$Q$ pairs can be omitted by this restricted minimizer; the zero-$Q$ variables in the accepted complete $g$ cone are still retained in T below.
+
+*Proof.* In a pair $(i,j)$ let $a,b$ be the label-$i$ masses in cells $00,01$, let $d_k$ be the label-$k$ mass in cell $10$ for $i<k\le j$, and let $e_k$ be its cell-$11$ mass. Then
+$\xi_{ij}=a-b$, $Q_{ij,k}=e_k-d_k$ for $i<k<j$,
+$Q_{ij,j}=-d_j$, and $Q_{ij,k}=e_k$ for $k>j$. Labels below $i$ are absent. Hence $d_k\ge d^0_{ij,k}$ and the required pair mass is at least $m^0_{ij}$. The only pair contribution to $\ell_{j,k}$, with $j>k$, is $-Q_{kj,k}$; the remaining stock is therefore $S_{i,k}$.
+
+For a fixed root $i$, the first-cell extra label-$i$ capacities are $m_{ij}-|\xi_{ij}|$. The positive-cell capacities for label $k$ are $m_{ij}-t_{ij}$ and are available only in columns $j>k$. Filling the first capacities leaves exactly
+$A_i(m)$ as the least singleton-zero stock. The second capacities form nested suffixes: the stock with labels at least $h$ can enter only columns $j>h$. Therefore every allocation leaves at least
+
+$$
+\max_{h>i}\left(\sum_{k=h}^LS_{i,k}-\sum_{j>h}(m_{ij}-t_{ij})\right)_+
+$$
+
+unmatched. Filling columns in decreasing $k$ attains all these suffix bounds by induction, so the least singleton-positive stock is $D_i(m)$. The two stocks share one singleton schedule and hence require their maximum, not their sum. Increasing a pair mass by $\delta$ enlarges each usable capacity by at most $\delta$ and cannot lower the total pair mass plus this maximum; thus $m_{ij}=m^0_{ij}$ is optimal. The displayed construction fills the two independent cell families, reconstructs every coefficient and puts the remaining $c_k-Z_k$ in the empty schedule. The zero label follows from the same total mass. Finally, normalize each positive schedule cell by one common local uniform coordinate, refine all label intervals together, and use one global uniform seed to select the schedule. Every counterfactual cell is fixed before replies and has the same schedule mass. Degenerate zero masses and $M=0,L=0,1$ require no division and are included. $\square$
+

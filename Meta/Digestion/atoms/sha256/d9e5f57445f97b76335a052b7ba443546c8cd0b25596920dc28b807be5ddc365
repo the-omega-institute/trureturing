@@ -1,0 +1,8 @@
+**数学引文 50.1（直接供应和成熟中间结果）。** 本批承重结论是固定 PH 来源的端点行到定量原 paid-history 的桥、其 COMPLETE 预算余量消费者，以及原来源中的两类安装延迟和瞬态极限反例，归为 `repo-derived`。有限链循环分解、子概率行收缩、二值似然积分和有限求和 TV 不等式是成熟中间工具，不另主张通用定理新意。具体对应如下。
+
+- 本卷定义1.2–1.5和§21给唯一共同 $K$、原取得过滤、PH 实际合法字、整个可数后验及两项精确相容性；§37给全数字且完整收费类别，§38.1给服务分母，§39给恰当的端点极限行，§42给这些行自己的预算余量。定理45.2新增收敛模量和付费长度，不重复§42的整数分离、存储必要性或§43的程序上界。[ST] §3.1已有不同的相近行碰撞有限见证，故这里不把它改写为新结果。
+- Richard Weber，[*Markov Chains*][MC]，Lemmas9.5–9.6和Theorem9.8。全步收敛的原定理要求不可约、非周期和正常返；这里只复用循环分解，在闭循环子类上使用收缩。可约暂态与明确模量由(45.5)单独处理，不把原输入链宣布不可约。
+- Taolue Chen、Stefan Kiefer，[*On the Total Variation Distance of Labelled Markov Chains*][PHDBCK]，Theorem7和Proposition12。前者给完整迹 TV 的上下近似序列收敛；后者给有理标记链的无理 TV。未来迹截断的极限不是已取得 PH 历史的 cutoff，也不使 PH 原风险自动可精确求值。
+- Nicholas Travers、James Crutchfield，[*Exact Synchronization for Finite-State Sources*][PHACTC]，Theorem1。其 $\Pr(\mathrm{NSYN}_L)\le K\alpha^L$ 使用 exact $\epsilon$-machine 的同步字和强连通图。PH 的共同隐藏深度混合没有被安装成这种有限 unifilar 来源，且本批损失条件于每个正历史；不能把同步出现概率移植为本批的见证长度、重试或等待保证。
+- Tomer Berg、Or Ordentlich、Ofer Shayevitz，[*Deterministic Finite-Memory Bias Estimation*][PHACBO]，Theorem1和Corollary2。其 $\Theta(1/S)$ 结论是确定性 $S$ 状态 Bernoulli 估计的长期平均平方风险，非原 acquired-history 条件完整停止尾 TV，也未以 COMPLETE 位计代码和数字提供者。这里只用于区分统计损失和资源类别，不转用其界。
+

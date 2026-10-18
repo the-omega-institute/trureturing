@@ -1,0 +1,26 @@
+**差矩阵命题。** 对不同的 $BC$、$BD$ 或 $CD$ 碰撞世界，令 $w=\Delta(a+e)$、$\epsilon=\Delta e$。先有 $w\ne0$：若 $w=0$，$BC$ 或 $BD$ 对还共享 $AB$，$CD$ 对还共享 $AD$，与以上注入性矛盾。现在才可置 $\theta=\epsilon/w$。完整差证书为
+
+$$
+\begin{array}{c|c|l}
+&\Delta X&(\Delta\sigma_0,\ldots,\Delta\sigma_5)\\\hline
+BC&\begin{pmatrix}w-\epsilon&-w\\-w&\epsilon\end{pmatrix}
+&(-6w+\epsilon,6w-2\epsilon,-4w+2\epsilon,2w,-3w+\epsilon,w)\\
+BD&\begin{pmatrix}w-\epsilon&-w\\-\epsilon&\epsilon\end{pmatrix}
+&(-5w,5w-\epsilon,-3w+\epsilon,2w,-2w,w)\\
+CD&\begin{pmatrix}w-\epsilon&-\epsilon\\-w&\epsilon\end{pmatrix}
+&(-3w-2\epsilon,4w,-3w+\epsilon,w+\epsilon,-2w,w).
+\end{array}
+\tag{3.9}
+$$
+
+证明是解 (3.4)：$\Delta a=w-\epsilon$；共享 $BC$ 给 $\Delta b=\Delta c=-w$；共享 $BD$ 给 $\Delta b=-w,\Delta c=-\epsilon$；共享 $CD$ 给 $\Delta c=-w,\Delta b=-\epsilon$。逐行代入 (3.3) 即给出全部十八个迹差。例如 $BC$ 首行为 $-2(w-\epsilon)+3(-w)-w-\epsilon=-6w+\epsilon$，后三种情形的末两行分别为 $(-3w+\epsilon,w)$、$(-2w,w)$、$(-2w,w)$。以 $w$ 为单位，记
+
+$$
+\begin{aligned}
+F^{BC}&=(\theta-6,6-2\theta,2\theta-4,2,\theta-3,1),\\
+F^{BD}&=(-5,5-\theta,\theta-3,2,-2,1),\\
+F^{CD}&=(-3-2\theta,4,\theta-3,1+\theta,-2,1).
+\end{aligned}
+\tag{3.10}
+$$
+

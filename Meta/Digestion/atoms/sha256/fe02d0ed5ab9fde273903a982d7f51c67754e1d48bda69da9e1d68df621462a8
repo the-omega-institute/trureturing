@@ -1,0 +1,93 @@
+**Theorem 10.4 (compensation for every span-four gap).** For every
+consecutive common-support interval $B=(a,a+4)$, without any
+restriction on the other gaps,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge |V_B|.
+\tag{SI.46}
+$$
+
+Proof. Put $d=a+1$ and let
+
+$$
+e_j=\sum_{p\in V_{d+j-1}}(b_p-1)\qquad(1\le j\le3).
+$$
+
+Each of these depths is internal to a consecutive gap, so it is not
+common-support. Definition 9.1 and $b_p\ge a_p$ give $e_j\ge1$.
+In particular $E_B=e_1+e_2+e_3\ge3$.
+
+By Lemma 10.3, every multiply hosted state has exactly two cell
+incidences. Let $s$ be the number of these states, so $D_B=s$.
+Regard each as an edge between its two cells in (SI.45), retaining
+parallel edges when distinct installed states have the same pair.
+Let $v$ be the number of cells incident to these edges. Then $v\le6$,
+and at each incident cell its number of hosts is at least its degree.
+The last internal layer has none of these incident cells and has
+excess at least one. All other cells have nonnegative excess.
+Consequently
+
+$$
+E_B\ge2s-v+1\ge2s-5.
+\tag{SI.47}
+$$
+
+These inequalities include empty sharing: no assumption of positive
+degree is imposed on a cell absent from the edge relation.
+
+Suppose $E_B<s$. The bounds $E_B\ge3$ and $E_B\ge2s-5$
+force $s=4$ and $E_B=3$. Equation (SI.47) then forces $v=6$.
+Thus all six cells in (SI.44) are distinct and valid. Furthermore
+$e_1=e_2=e_3=1$. The excess at the six incident cells is at least
+$2s-v=2$, while the last layer already contributes one. Equality
+forces every incident cell to have exactly its degree many hosts,
+and every other cell on the first two layers to have exactly one
+host. This also handles every boundary deletion: if even one of the
+six formal vertices is missing or identified with another, the
+assumed strict deficit has already become impossible.
+
+Let $x,y,z_*,u_*,v_*,w_*$ be the edge multiplicities of
+$CZ,AY,UV',AZ,AV',ZU$, respectively. Since all six vertices
+are incident and $C,Y$ have only their displayed pendant edges,
+$x,y\ge1$. The successor assertion of Lemma 10.3 forces
+$z_*\ge1$. Counting degrees separately on the first two layers,
+using the just established equality between degree and host count,
+gives
+
+$$
+\begin{aligned}
+x+y+z_*+u_*+v_*+w_*&=4,\\
+2x+2y+2u_*+v_*+w_*-4&=e_1=1,\\
+2z_*+v_*+w_*-2&=e_2=1.
+\end{aligned}
+\tag{SI.48}
+$$
+
+The last equation and $z_*\ge1$ imply $z_*=1$ and
+$v_*+w_*=1$: the alternative $z_*\ge2$ is impossible, and
+$z_*=1$ fixes that sum. The middle equation now gives
+$x+y+u_*=2$, whence $x=y=1$ and $u_*=0$.
+
+If $v_*=1$, only $A$ among the depth-$d$ cells has more
+than one host. All cells from $C$ through $Z$ on that diagonal
+therefore have singleton support families. Consecutive such cells
+have equal supports: they are the two live children of a common
+parent, and Theorem 2.2 gives those children equal supports. This
+is the local diagonal argument of Theorem 4.1; no singleton
+condition on their parents is needed. The admissible hit counts
+form an integer interval, so the supports at $C$ and $Z$
+coincide. But $x=1$ gives a state shared by these unequal-hit
+cells, contradicting the equal-support exclusion.
+
+If $w_*=1$, only $Z$ has more than one host on that first
+diagonal. The same argument from $A$ through $Y$ makes their
+supports equal, contradicting the shared $AY$ state given by
+$y=1$. These are the only possibilities since $v_*+w_*=1$.
+The assumed deficit is impossible, proving $D_B\le E_B$.
+Equation (SI.33) gives the equivalent host lower bound.
+
+Every edge and successor used here is witnessed by actual live
+histories of the original graph. No certified successor is prescribed,
+and no post-certificate invocation is deleted or counted as a fresh
+allocation. $\square$
+

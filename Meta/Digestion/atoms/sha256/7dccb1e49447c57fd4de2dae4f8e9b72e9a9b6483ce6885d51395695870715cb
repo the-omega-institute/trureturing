@@ -1,0 +1,40 @@
+**Theorem 7.2 (exact native graph partition identity).** The network
+$\mathcal N_d(G)$ of Definition 7.1 is a complete actual native
+competitor in $\mathfrak N_{d,3}(3e)$. It has exactly $2^v$ actual
+tuples, one per vertex spin assignment $b:V(G)\to\{0,1\}$, and
+
+$$
+Z(\mathcal N_d(G);\mu_d,\ldots,\mu_d)
+ =(W_d^{\rm wt})^{-3e}\sum_b t^{m_G(b)},
+\tag{GDB.35}
+$$
+
+where $m_G(b)$ is the number of monochromatic edges. Both maps of
+solutions are bijective. Every original whole-block potential is counted
+once. The raw identity holds for arbitrary $t\ge0$, with $0^0=1$;
+the fixed positive $t$ gives positive mass and an ordinary logarithm.
+
+Proof. A connector root forces that actual block to be its own seed's
+leaf. Injectivity of the two leaf left factors makes (GDB.32) hold
+exactly when $s_{u,a}=s_{u,\operatorname{next}(a)}$. Traversing the
+public cyclic order forces one common bit at vertex $u$. This includes
+the degree-one tautology; no equality oracle or independent-copy
+assumption is used. All other connector targets are then correct.
+
+The edge root is branch. Its immediate child factors identify precisely
+its two endpoint leaves, and all longer factors in (GDB.33) are their
+actual factors. Thus the edge block is exactly the ordered pair of
+these leaves. Conversely any vertex assignment fills every connector
+and edge block uniquely and satisfies every equation. The actual
+connector roots recover all seeds. This proves both bijections and
+the solution count, including disconnected graphs.
+
+Every connector has raw weight one. An edge block has raw weight $t$
+exactly for a monochromatic edge, otherwise one. Multiplication of the
+original $3e$ weights once gives $t^{m_G(b)}$, and normalization gives
+(GDB.35). This is an explicitly charged enlargement by $2e$ original
+connector blocks, not a lossless recut of arbitrary competitors. It
+provides a graph subfamily of actual native networks; a theorem about
+all graphs in this subfamily alone would not cover all native templates.
+$\square$
+

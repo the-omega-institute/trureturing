@@ -1,0 +1,53 @@
+### 84.2. Complete preliminary charts and the strengthened finite minor
+
+In the finite phase chart put
+\[
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\quad
+ s=u+v,\quad D=u-v,\quad T=uv,\quad K=s^2=D^2+4T.
+\]
+The complete original-equation chart analysis of §75 gives the following
+facts, including its rank-deficient cases.
+
+- If \(s=0\), the only inputs have \(z=r=1\) and the two antipodal
+  canonical values of \(g\). The other finite candidate
+  \(u=b,v=-b\) violates \(p^2+t^2=\rho\).
+- The simultaneous phase poles \(z=r=-1\) are impossible: an original
+  norm-sum residual is \(-8\).
+- The upper pole \(z=-1\) has exactly
+  \[
+   v=b,\qquad t=\frac{b(5b^4+12b^2-1)}{1-b^4},\qquad
+   p=bt+3b^2+1.                                         \tag{84.4}
+  \]
+  It exists precisely at the one root in \((0,1)\) of
+  \[
+   f(B)=2B^5+33B^4+90B^3+4B-1,\qquad B=b^2.
+  \]
+  The lower pole is its \(\Theta\) partner. Their product Cayley
+  coordinates are respectively \(-1/b\) and \(1/b\).
+
+For finite nonconstant inputs, write \(p=sa,t=sc\). The first two
+affine equations of the aligned quotient of §75 are
+\[
+\begin{aligned}
+ P_0={}&K[Da-(T+1)c]+bD(1-T)-D^2-2T(T+1),\\
+ P_1={}&[bD^2-DT(b^2+1)+D(b^2-3)+b(T^2-2T-3)]a\\
+       &+[-b^2D^2-4bD+T^2-2b^2(T+1)+4T+3]c\\
+       &+(b^2-3)(T+1-bD).
+\end{aligned}                                                    \tag{84.5}
+\]
+Their coefficient determinant is
+\[
+ -Kb(Db-T+3)[D^2+(T+1)^2].                               \tag{84.6}
+\]
+Here \(K>0\), and the final bracket is positive for real finite
+\(u,v\). At the remaining possible zero \(T=bD+3\), the two
+augmented consistency minors are
+\[
+ -6D(b^2-3)[D^2+(bD+4)^2],\qquad
+ 6(b^2-3)(bD+4)[D^2+(bD+4)^2].                          \tag{84.7}
+\]
+They cannot both vanish: \(D=0\) and \(bD+4=0\) are incompatible,
+and the common sum of squares is positive. Thus (84.6) is nonzero at
+every finite nonconstant original solution. This strengthens the chart
+without assuming generic rank at exceptional parameters.
+

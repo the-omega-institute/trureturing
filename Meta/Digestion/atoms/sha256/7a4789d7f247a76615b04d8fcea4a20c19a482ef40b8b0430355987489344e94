@@ -1,0 +1,42 @@
+## 150. 相同观察签名中的严格恢复差
+
+**定义 C-150.1（所保留的观察及完整恢复范数）。** $\mathcal O(N)$ 只包含
+相位增益 $\beta$，以及 (C146.1) 六个具名源域和 (C149.1) 两个另行具名输出域的
+所有优化单目标前沿数值，指标为全部 $n\ge1$、$\delta\in[0,1]$。
+域名指各通道自身的上述精确源像或另行输出域，不将两个通道的输出态集合认作相同。
+该签名不保存全部原始目标统计、全部效果或每个有限区分任务。
+按相位恢复卷定义 1.4，记
+
+$$
+\Delta_N=\inf_{\substack{\mathcal R:M_5\to M_3\\\mathcal R\ {\rm complex\ CPTP}}}
+\|\mathcal R\circ N-\mathrm{id}_3\|_\diamond,
+\quad
+\|\Phi\|_\diamond=
+\sup_{\substack{R\ {\rm finite}\\\rho\in\mathsf D(H\otimes R)}}
+\|(\Phi\otimes\mathrm{id}_R)(\rho)\|_1
+\tag{C150.1}
+$$
+
+（后一式用于这里的通道差）。迹范数与 diamond 范数均不除以二；
+一个共同恢复作用于整个复输入代数，包含全部有限参考，不按输入或系综另选恢复。
+
+**定理 C-150.2（实际观察纤维与恢复分离）。** 两个实际通道满足
+
+$$
+\mathcal O(\mathcal A)=\mathcal O(\mathcal B_c),\qquad
+\Delta_{\mathcal A}=1-\sqrt a,\qquad
+\Delta_{\mathcal B_c}\ge\beta,\qquad
+\Delta_{\mathcal B_c}-\Delta_{\mathcal A}\ge\sqrt a-a>0.
+\tag{C150.2}
+$$
+
+证明。观察相同由 C-144.2、C-147.1、C-148.1、C-149.2 给出。
+$\mathcal A$ 恰为[相位恢复卷 (P.11)](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#4-an-actual-upper-family-and-its-individual-optimum)，
+故直接使用其定理 4.1／(P.12) 的个体最优值，参数 $u=\sqrt a$。
+$\mathcal B_c$ 恰为[完整恢复卷定理 9.1／(R.38)](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#9-an-actual-entangled-kernel-and-an-exact-all-input-endpoint-value)，
+故直接使用该定理对每个共同复 CPTP 恢复的下界 $\beta$。
+物理恢复与被动恢复按相位恢复卷 (P.16) 一一对应，
+连同所有参考保持 diamond 范数，故此差也属于同一物理通道比较。
+相减得 $\beta-(1-\sqrt a)=\sqrt a-a$，因 $0<a<1$ 而严格为正。
+这里不重证既有恢复定理，不计算或宣称 $\mathcal B_c$ 的精确最优值。证毕。
+

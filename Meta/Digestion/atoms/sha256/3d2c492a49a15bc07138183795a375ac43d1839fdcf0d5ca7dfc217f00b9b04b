@@ -1,0 +1,73 @@
+**Theorem 9.17 (Full-gradient local variance tradeoff).** Let
+$(\widehat\kappa,\widehat\chi)$ have finite positive variances
+$V_\kappa,V_\chi$ under a measurement covered by Proposition 9.16.
+Require, in the family (9.44),
+
+$$
+\mathbb E_0
+\begin{pmatrix}\widehat\kappa\\\widehat\chi\end{pmatrix}
+=\begin{pmatrix}\kappa_0\\0\end{pmatrix},\qquad
+\left.\frac{\partial(\mathbb E\widehat\kappa,
+                    \mathbb E\widehat\chi)}
+{\partial(\kappa,\chi)}\right|_0=I_2.
+\tag{9.57}
+$$
+
+Thus each estimator has derivative zero in the other parameter's
+direction. Then
+
+$$
+\frac1{NI_0V_\kappa}
++\frac{I_0}{4NV_\chi}\le1,\qquad
+V_\kappa V_\chi\ge\frac1{N^2}.
+\tag{9.58}
+$$
+
+Proof. With $S_\kappa,S_\chi$ the scores of the full record,
+regularity and (9.57) give
+
+$$
+\begin{aligned}
+\operatorname{Cov}_0(\widehat\kappa,S_\kappa)&=1,&
+\operatorname{Cov}_0(\widehat\kappa,S_\chi)&=0,\\
+\operatorname{Cov}_0(\widehat\chi,S_\chi)&=1,&
+\operatorname{Cov}_0(\widehat\chi,S_\kappa)&=0.
+\end{aligned}
+\tag{9.59}
+$$
+
+In particular $F_{\kappa\kappa},F_{\chi\chi}>0$, since otherwise
+a score of variance zero could not have covariance one.
+Two scalar Cauchy–Schwarz inequalities give
+
+$$
+V_\kappa F_{\kappa\kappa}\ge1,\qquad
+V_\chi F_{\chi\chi}\ge1.
+$$
+
+They remain necessary even when the other parameter is unknown.
+They neither invert $F$ nor assume a zero off-diagonal entry.
+Insert the reciprocal lower bounds for its diagonals into
+(9.50) to obtain the first inequality in (9.58).
+
+For the product define positive dimensionless numbers
+
+$$
+a=NI_0V_\kappa,\qquad b=\frac{4N}{I_0}V_\chi.
+$$
+
+Then $1/a+1/b\le1$, so $a+b\le ab$.
+Also $a+b\ge2\sqrt{ab}$, hence $ab\ge4$.
+Since $ab=4N^2V_\kappa V_\chi$, the product bound follows.
+Equality in this last bound requires $a=b=2$. $\square$
+
+No assumption about the covariance of the estimators removes
+these necessary scalar bounds. Simultaneously obtaining the
+two separate single-target variances $1/(NI_0)$ and
+$I_0/(4N)$ would instead give normalized reciprocal sum two
+and product $1/(4N^2)$, contradicting (9.58).
+The constants concern this normalization of $\kappa,\chi$
+and the number of independent copies. They do not assert a
+universal Planck constant, a physical time cost, or a new
+uncertainty law for arbitrary observables.
+

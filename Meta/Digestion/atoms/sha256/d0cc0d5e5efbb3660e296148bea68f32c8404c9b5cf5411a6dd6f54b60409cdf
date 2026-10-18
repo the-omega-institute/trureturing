@@ -1,0 +1,29 @@
+**Lemma 16.4 (finite realization licenses adversarial reply paths).**
+For a procedure with the entry contract of Assumption 14.1, its all-branch
+reply path reaches Release or Return after at most $k$ Reads and finite
+local work. The following additional construction is legitimate in a
+lower bound: fix a prospective blocking address $t$, answer absent at
+strict descendants of $t$, branch outside its cone, and leave a query
+at $t$ as a leaf hit. Every finite prefix before a hit has a finite
+native realization, with a leaf at $t$ and no other queried leaf.
+
+**Proof.** Any finite all-branch prefix is realized by a complete finite
+binary tree of depth strictly larger than all its queried literal
+lengths. If after any such prefix the next local computation never
+finished, the same finite source would violate entry termination. If
+the path issued a $(k+1)$st Read, its preceding finite prefix would give
+a finite source violating the Read bound. Thus the path terminates as
+claimed; no infinite tree is an allowed input or is needed.
+
+For the blocking rule, choose a depth $H$ strictly larger than $|t|$ and
+all literal lengths in the finite prefix. Take the complete depth-$H$
+tree, truncate the cone at $t$ to a leaf, and label every leaf $\alpha$.
+A query strictly below $t$ is absent, and a query not prefixed by $t$ is
+a branch. The only queried leaf can be $t$ itself. This constructs one
+actual finite source realizing all the replies simultaneously. The same
+local-termination and Read-bound argument applies at every finite
+prefix. After any completed finite adversarial path, choose $H$ once
+for that path; the resulting source realizes the entire path from its
+invocation. Its one-step successor has the same shape and all leaves
+$\beta$. Address lengths need not have any a priori bound. $\square$
+

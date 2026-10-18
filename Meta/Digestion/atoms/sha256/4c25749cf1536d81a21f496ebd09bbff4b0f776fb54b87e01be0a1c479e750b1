@@ -1,0 +1,24 @@
+**Lucas quotient and gcd.** Define $V_0(X)=2$, $V_1(X)=X$, and $V_{m+2}(X)=XV_{m+1}(X)+V_m(X)$. For odd $t$, the Binet roots have product $-1$, so $L_{tm}=V_m(L_t)$. As in §86, the residues of $V_0,\ldots,V_5$ modulo $X^2+3$ are $2,X,-1,0,-1,-X$, with $V_6=2,V_7=X$. The period-six recurrence gives $V_m\equiv\pm X$ for odd $m$ with $3\nmid m$. Consequently $B_t\mid B_{tm}$ for such $m$.
+
+For a prime $p\ge5$, put
+
+$$Q_p(X)=\frac{V_p(X)^2+3}{X^2+3}\in\mathbb Z[X].$$
+
+It is monic of degree $2p-2$ and positive for every real $X$. Its remainder modulo $X^2+3$ is $\varepsilon_p p$, where $\varepsilon_p=1$ for $p\equiv1\pmod6$ and $\varepsilon_p=-1$ for $p\equiv5\pmod6$. To check this exact constant, set $X=z-z^{-1}$. For odd $p$,
+
+$$V_p(X)=z^p-z^{-p},\qquad V_p'(X)=p\frac{z^p+z^{-p}}{z+z^{-1}}.$$
+
+At $z=\exp(i\pi/3)$, one has $X=i\sqrt3$, $z+z^{-1}=1$, $V_p'(X)=p$, and $V_p(X)=\varepsilon_p X$. Division at this simple root of $X^2+3$ gives
+
+$$Q_p(i\sqrt3)=\frac{V_p(i\sqrt3)V_p'(i\sqrt3)}{i\sqrt3}=\varepsilon_p p.$$
+
+The conjugate root has the same value, proving the remainder formula. Thus
+
+$$\gcd\bigl(B_t,Q_p(L_t)\bigr)\mid p. \tag{87.1}$$
+
+The derivative formula also gives the polynomial identity
+
+$$(X^2+4)(V_p')^2=p^2(V_p^2+4). \tag{87.2}$$
+
+At a root of $V_p^2+3$, its right side is $p^2\ne0$, so $V_p'$ is nonzero. Since $V_p$ is also nonzero there, all roots of $V_p^2+3$ are simple. Removing the two roots of $X^2+3$ leaves $Q_p$ squarefree of positive degree. In particular $Q_p$ is not a square in $\mathbb Q[X]$.
+

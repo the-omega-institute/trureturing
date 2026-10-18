@@ -1,0 +1,139 @@
+**Theorem 248.2 (Full normalized repair and its all-word allowance).**
+For every $p$ and every decomposition in Definition 248.1, $q\in\mathscr O_L$,
+
+$$
+\begin{gathered}
+q_{v^+}=p_{v^+},\qquad q_{v^i}=p_{v^i}\quad(1\le i\le L),\\
+\sup_{w\in\{0,1\}^L}\operatorname{TV}(p_w,q_w)
+ \le\mu\le\min\{1,B(p)\}\le\min\{1,c_LD(a,\varepsilon)\}.
+\end{gathered}
+\tag{248.3}
+$$
+
+The equalities preserve the entire probability vectors.
+The repaired kernel satisfies every independent TV row at cap
+$\varepsilon+\mu$, hence at $\varepsilon+\min\{1,B(p)\}$.
+If every affected base, correct and pair event has actual row slack
+at least $\mu$, it is feasible at the original cap as well.
+In particular $D=0$ implies $\mu=0$ in every decomposition and
+$p\in\mathscr O_L$.
+
+Proof. For a deterministic pair $T$ on $a<b$, put
+
+$$
+t_a=[\ell_{01}=a],\quad t_b=[\ell_{10}=b],\quad
+z=[\ell_{11}=0\text{ or }\ell_{11}\in[L]\setminus\{a,b\}].
+$$
+
+Its positive-base indicator plus its number of correct sole-zero words
+is exactly $t_a+t_b+z$. Indeed every unqueried sole-zero word has
+transcript $11$, as does $v^+$; its one output can give at most one
+unqueried correct label or the positive base. Thus its deterministic
+defect
+
+$$
+d_T=3-T(v^+)(0)-\sum_i[T(v^i)=i]=3-t_a-t_b-z
+\tag{248.4}
+$$
+
+is a nonnegative integer. Empty and singleton forms have this count at
+most one and two, respectively, so their defects are positive.
+Integrating the one normalized distribution gives
+$\delta=\mathbb E_\pi d_T\ge0$.
+Zero-defect tables are distinct pairs with
+$\ell_{01}=a$, $\ell_{10}=b$, and $\ell_{11}$ zero or unqueried;
+the $00$ output is not yet restricted.
+
+For $i<j$, define the signed correctness loss
+
+$$
+g_{ij}(T)=[T(v^i)=i]-[T(v^{ij})=i].
+\tag{248.5}
+$$
+
+On a zero-defect table every $g_{ij}\ge0$. If $i$ is queried, its
+sole-zero correctness is already one. If it is unqueried, adding a
+later queried zero can only replace exhaustion by an output equal to
+that queried label, so cannot gain $i$. If neither zero is queried the
+transcript stays fixed. In particular, for its own pair,
+$g_{ab}=1-[\ell_{00}=a]$.
+
+For an arbitrary pair table, all negative $g_{ij}$ have just three
+possible forms. An earlier unqueried first zero $i$ can gain its one
+label $\ell_{01}$ when a later zero at $a$ is added, requiring
+$t_a=0$. It can similarly gain the one label $\ell_{10}$ when a later
+zero at $b$ is added, requiring $t_b=0$. Finally, the own pair
+$\{a,b\}$ can gain first-zero $a$ through $\ell_{00}=a$ only if
+$t_a=0$. Each of the first two types has at most one index $i$,
+since the output label is fixed. These exhaust transcript changes.
+Consequently
+
+$$
+\sum_{i<j}(-g_{ij}(T))_+
+ \le2(1-t_a)+(1-t_b)\le2d_T.
+\tag{248.6}
+$$
+
+A singleton has at most one gain: a later zero at its queried index
+can supply just one earlier unqueried label; its defect is at least
+one. An empty table has no gain. Thus (248.6) holds throughout the
+complete catalog, retaining earlier and unqueried numerical labels.
+
+Let $\beta_{\rm bad}=\pi\{d_T\ge1\}\le\delta$, and let $\Lambda$
+be the mass of zero-defect pairs with $\ell_{00}\ne a$.
+Their own-pair loss and the nonnegativity of all their other losses give
+
+$$
+\Lambda\le\mathbb E_\pi\left[\mathbf1_{d_T=0}\sum_{i<j}g_{ij}(T)\right].
+$$
+
+For the full mixture, the correct row at $v^{ij}$ has first zero $i$,
+so
+$\mathbb E g_{ij}=p_{v^i}(i)-p_{v^{ij}}(i)\le s_i$.
+Compensating only the possible gains from positive-defect tables,
+(248.6) yields
+
+$$
+\begin{aligned}
+\Lambda&\le\sum_i(L-i)s_i+
+ \mathbb E_\pi\left[\mathbf1_{d_T\ge1}\sum_{i<j}(-g_{ij}(T))_+\right]\\
+&\le\sum_i(L-i)s_i+2\delta,\\
+\mu&\le\Lambda+\beta_{\rm bad}
+ \le\sum_i(L-i)s_i+3\delta=B(p).
+\end{aligned}
+\tag{248.7}
+$$
+
+All terms use this same decomposition; no separate table optimizer
+or independent marginal realization has been substituted.
+
+The repair never changes a sole-zero or positive transcript, since
+none visits pair cell $00$. Their outputs agree at each seed.
+At every other word they can differ only on the single event (248.2).
+For any output event $E$, coupling by that same seed gives
+$|p_w(E)-q_w(E)|\le\mu$. Taking the supremum proves the TV bound
+simultaneously on all words, including arbitrary multiple zeros.
+The repaired first cell is measurable on the stopped transcript and
+all three output choices were fixed before replies, so $q\in\mathscr O_L$.
+Each independent base, correct and pair probability drops by at most
+$\mu$ as its own event inequality. Hence all three rows hold at
+$\varepsilon+\mu$; the positive row is unchanged. This also proves
+the stated sufficient actual-slack condition at the original cap.
+
+The original rows give $s_0,s_i\ge0$, and direct substitution gives
+
+$$
+\delta+s_0+\sum_i s_i=D(a,\varepsilon),\qquad
+B(p)\le c_L(D-s_0)\le c_LD.
+\tag{248.8}
+$$
+
+Together with $\mu\le1$, this proves (248.3). At $D=0$ all these
+nonnegative quantities vanish, forcing $\mu=0$ in every decomposition.
+The original full table functions are then already stopped almost surely.
+
+The local gain coefficient two in (248.6) is sharp: at $L=3$ the legal
+$N(2,3;2,1,3,0)$ has defect one and gains first-zero correctness on
+$\{1,2\}$ and $\{2,3\}$, and nowhere else. Its gain sum is two.
+This claims no sharpness of $c_L$ or the coefficient $3\delta$. ∎
+

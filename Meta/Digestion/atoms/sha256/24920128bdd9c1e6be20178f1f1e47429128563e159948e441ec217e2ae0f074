@@ -1,0 +1,30 @@
+**Lemma 2.4 (Exact full-word grouping, including zeros).** For every stationary law represented by (2.1), every $n\ge2m+1$ and every $m+1\le i\le n-m$,
+
+$$
+\Phi_{n,i}(Q_n)=D_m(Q).
+\tag{2.5}
+$$
+
+Proof. Fix $a,v\in B_m$ with $a_m=v_1=0$, and write $w^z=azv$ for $z=0,1$. Let
+
+$$
+A_z=\prod_{j=m+1}^{2m+1}
+k(w^z_j\mid w^z_{j-m}\cdots w^z_{j-1}).
+\tag{2.6}
+$$
+
+Then $Q_{2m+1}(w^z)=\pi(a)A_z$. In a full-word pair differing at $i$, precisely the transition factors with indices $j=i,\ldots,i+m$ can change. They have product $A_z$. The initial factor and all other transition factors have a common nonnegative product $C_\omega$, depending on the outside completion $\omega$. The legal outside completions are identical for the two central words: their first and last bits agree, and the center's two neighbors are zero. Thus the actual endpoint masses are $C_\omega A_0,C_\omega A_1$.
+
+Summing $C_\omega$ over all such completions gives $\pi(a)$. Indeed, summing the right-side transition products gives one by row normalization, while summing the left-side products gives the stationary probability of the context $a$ immediately before position $i$. Therefore homogeneity gives
+
+$$
+\begin{aligned}
+\sum_\omega h(C_\omega A_0,C_\omega A_1)
+&=\pi(a)h(A_0,A_1)\\
+&=h\bigl(Q_{2m+1}(a0v),Q_{2m+1}(a1v)\bigr).
+\end{aligned}
+\tag{2.7}
+$$
+
+This argument divides by no probability and includes $\pi(a)=0$ and $A_0=A_1=0$. Summing the contexts proves (2.5). It is a grouping of actual paired full words, justified by their common factors. $\square$
+

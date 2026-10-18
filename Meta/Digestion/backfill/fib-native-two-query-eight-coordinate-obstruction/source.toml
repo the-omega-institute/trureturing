@@ -1,0 +1,5 @@
+source_id = "fib-native-two-query-eight-coordinate-obstruction"
+path = "docs/develop/theory/FIB_NATIVE_TWO_QUERY_EIGHT_COORDINATE_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

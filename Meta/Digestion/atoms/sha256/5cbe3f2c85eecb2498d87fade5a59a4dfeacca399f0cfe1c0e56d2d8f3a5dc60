@@ -1,0 +1,33 @@
+**Corollary 9.2 (Sharp minimum dimension at every finite tolerance).**
+Let $d^{\rm arb}(\epsilon;Z)$ be the least ambient real dimension
+of any literal model with error at most $\epsilon$, with value
+$+\infty$ if none exists. Define $d_g^{\rm arb}$ similarly with
+guard recovery. For finite $\epsilon\ge0$,
+
+| Tolerance | $d^{\rm arb}(\epsilon;Z)$ | $d_g^{\rm arb}(\epsilon;Z)$ |
+| --- | --- | --- |
+| $0\le\epsilon<e_*$ | $+\infty$ | $+\infty$ |
+| $e_*\le\epsilon<R_0$ | $2$ | $2$ |
+| $\epsilon\ge R_0$ | $0$ | $1$ |
+
+The middle interval is empty when $Z\ge2/3$. At the floor itself,
+
+| Parameter range | Literal minimum dimension at $e_*$ | Guard-recoverable minimum at $e_*$ |
+| --- | --- | --- |
+| $0<Z<2/3$ | $2$ | $2$ |
+| $2/3\le Z<1$ | $0$ | $1$ |
+
+The same statements hold with all prescribed paths. In both literal
+and guard classes the infimum over all finite dimensions is $e_*$
+and is attained for every allowed $Z$.
+
+**Proof of Corollary 9.2.** Below $e_*$, Theorem 4.1 excludes
+every finite dimension. Between $e_*$ and $R_0$, Theorem 6.2 excludes
+dimensions zero and one, and Theorem 5.4 supplies dimension two.
+At or above $R_0$, Proposition 7.3 gives the constant literal model
+and the height guard model, while Proposition 7.1 excludes dimension
+zero in the guard class. These are actual witnesses at the stated
+dimensions; padding does not change the least dimension. Theorem 9.1
+and Lemma 7.2 give the floor specialization, path assertions and
+all-finite infimum. $\square$
+

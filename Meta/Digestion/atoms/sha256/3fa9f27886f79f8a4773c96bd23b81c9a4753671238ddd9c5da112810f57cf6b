@@ -1,0 +1,13 @@
+**Proposition 7.3 (binary parity witness).** For $H=(1,1,1)$ over
+$\mathbb F_2$ at $k=2$, the forward boundary has two states and the append/delete
+boundary has four. The pair $00,11$ has one forward state but unequal
+$\operatorname{delete}_1$ legality.
+
+**Proof.** Here $r_P=r_F=r=1$ and every length-two word is extendable by its
+parity bit. The syndrome classes are $\{00,11\}$ and $\{01,10\}$.
+Deleting one is legal at $11$, with successor $1$, but is illegal at $00$.
+Theorem 7.2 then gives $2^1=2$ and $2^2=4$, with factor $2$. The forward
+minimal state has deliberately not retained a full original-prefix archive;
+an observer already possessing that archive has a different contract.
+$\square$
+

@@ -1,0 +1,72 @@
+**Theorem 13.2 (exact run defect and the ten-run equality condition).**
+For every class two-readable at all positive lags, $d$ is injective,
+$r_a,r_b\le10$, and
+
+$$
+\begin{aligned}
+|C|&=r_a+r_b-1-\sigma,\\
+\delta(C)&=(10-r_a)+(10-r_b)+\sigma.
+\end{aligned}
+\tag{NARC.13.2}
+$$
+
+For either coordinate having ten runs, its nine change positions are
+three disjoint intervals of three consecutive edge positions. The
+middle edge of each interval has $d$ increment one. Conversely,
+for a $d$-injective class, these conditions for a particular ten-run
+coordinate give a two-read full-reference certificate for that target.
+If they hold for both coordinate targets, Theorem 10.2 gives both-cut
+service at every positive lag. These statements allow repeated
+nonadjacent coordinate values.
+
+**Proof.** Use the collision and ordered-leaf argument of Theorem 9.2,
+with $k=2$ and its genuine full fibers at $Z=q+1$. It supplies
+$d$ injectivity and at most $L_2=10$ ordered interval leaves for
+each target. Every coordinate change must be a leaf boundary, so
+$r_a,r_b\le10$. Distinct consecutive origins change at least one
+coordinate. Hence $I_a\cup I_b$ is the whole set of $m-1$ edge
+positions. Inclusion-exclusion gives
+$m-1=(r_a-1)+(r_b-1)-\sigma$, proving both identities. This uses
+the supplied bound without introducing another general-$k$ result.
+
+Consider a target with ten runs, ordered by increasing hidden age.
+At the reference entry every age is at least two. Ten runs require
+at least ten ordered leaves, and the supplied capacity permits exactly
+ten. Consequently each leaf is exactly one maximal target run: no run
+can be split and no two consecutive different runs can be merged.
+After removal of entry-constant requests, a ten-leaf tree must have
+a $P_t$ first request and a $P$ request on each of its two tails.
+Indeed, an $S$ root has at most $4+1+4=9$ leaves, an $E$ root
+is constant on these reference ages, and a missing root cell or a
+tail with fewer than four cells also loses a leaf. Each singleton
+root cell contains one origin by $d$ injectivity. A tail with four
+cells must use $P$, with both adjacent singleton cells occupied.
+Thus the ten run cardinalities, in this order, are
+
+$$
+(x_1,1,1,x_4,1,1,x_7,1,1,x_{10}),
+\qquad x_1,x_4,x_7,x_{10}\ge1.
+\tag{NARC.13.3}
+$$
+
+The ages of runs $2,3$ are consecutive, as are those of runs $5,6$
+and $8,9$. Incoming, middle and outgoing edges around the two
+singleton runs of each pair are three consecutive target changes.
+These are exactly changes $1,2,3$, then $4,5,6$, then $7,8,9$.
+The middle edge joins adjacent singleton ages and has $d$ increment
+one. For the left target, increasing hidden age reverses the $d$
+list. Reversal of ten runs preserves the three paired positions and
+the middle-increment condition in the original $d$ order.
+
+Conversely, the three change intervals make runs $2,3,5,6,8,9$
+singletons. The unit middle increments make each indicated pair
+consecutive in hidden age, in either orientation. At the full reference
+query $P$ at the age of run $5$; after absence query at the age of
+run $2$, and after branch at the age of run $8$. All thresholds
+are at least two. The resulting leaves are precisely runs $1$ through
+$10$, with their constant targets. This is an actual finite native
+certificate using Definition 5.3, rather than an arbitrary ten-cell
+partition. The positive translation and restriction in Theorem 10.2
+serve every complete actual positive-lag fiber without additional
+calls, including fibers that are not intervals in $d$. $\square$
+

@@ -1,0 +1,2 @@
+**定义 7.1（已替换来源的尾记录）。** 取 $\mathcal X_1=\rho(\mathcal T)\times\mathcal P$，当前源的向量及下一向量记为 $y,z$。非零尾的单位标签符号记为 $\epsilon\in\{\pm1\}$；若 $z\times y=0$ 则统一记 $\epsilon=+1$。目标为当前及全部后续向量，记录为 $\theta=(y,z,\epsilon)$。
+

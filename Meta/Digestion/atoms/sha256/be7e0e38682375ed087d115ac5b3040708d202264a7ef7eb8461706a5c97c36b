@@ -1,0 +1,35 @@
+**Definition 17.1 (The actual three-sector rectangle averages).**
+Partition the full internally legal half-chain words into
+$L_a,R_b$ by their cut-boundary occupations. Write the
+same original law as
+
+$$
+p(\ell,r)=p_{ab}\mu_a(\ell)\nu_b(r),\qquad
+\alpha=p_{00},\quad\beta=p_{01},\quad\zeta=p_{10},
+\quad\alpha+\beta+\zeta=1.
+\tag{17.1}
+$$
+
+All three masses are positive; the sector $11$ is absent.
+The measures $\mu_a,\nu_b$ are the normalized product
+weights on actual words with the specified boundary bit.
+They do not depend on the opposite boundary bit. Retain an
+arbitrary unit phase $\chi(\ell,r)$ on every legal pair,
+without requiring it to be constant within a sector.
+
+For four legal corners put
+
+$$
+Q(\ell,\ell';r,r')=
+\frac{\chi(\ell,r)\chi(\ell',r')}
+{\chi(\ell',r)\chi(\ell,r')}.
+\tag{17.2}
+$$
+
+Let $T_{ab}$ be the mean of $|1-Q|^2$ for two independent
+rows sampled from $\mu_a$ and two independent columns
+from $\nu_b$. Let $T_L$ sample row types $0,1$ and two
+columns from $\nu_0$; let $T_R$ sample two rows from
+$\mu_0$ and column types $0,1$. Every mean uses the
+original conditional laws in (17.1).
+

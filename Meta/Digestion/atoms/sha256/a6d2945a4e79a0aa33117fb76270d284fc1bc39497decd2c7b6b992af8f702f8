@@ -1,0 +1,44 @@
+**Theorem 16.2 (the terminal evidence obligation on the bounded family).**
+For every correct encoder in Definition 16.1, its actual terminal
+address-reply transcript determines $B_K(t)$ among sources in
+$\mathcal F_D$. For each $p\in P$ it must contain the following evidence:
+
+1. If the initial path toward $p$ meets a leaf $a\preceq p$, including
+   a leaf at $p$, it contains an actual Read of $a$ with that leaf's
+   alpha or beta label.
+2. If $p$ is initially branch, it contains the branch reply at $p$ or
+   a nonabsent reply at a strict descendant of $p$.
+
+Conversely, a truthful transcript with these witnesses determines the
+whole table (AAR.88), and hence the joint prediction task. The complete
+export may subsequently forget some distinctions of this table.
+
+Proof. Reuse the evidence criterion of SLH Lemma 43.2 and its
+terminating-record consequence in SLH Theorem 43.3, with the bounded
+competitors checked as in Lemma 13.5. A blocking leaf $a$ lies in the
+$R$ cone. Flipping only its label preserves the ordered shape, its
+height and the fixed outer left alpha. Every literal reply except the
+one at $a$ stays unchanged. If $a=p$, the requested reply differs
+already at count zero. If $p=ar$ with $r\ne\varepsilon$, the first
+branch count in (AAR.57) differs by one. Thus some common supplied
+count distinguishes the two requested trajectories. Omitting $a$
+would replay the identical terminal transcript and complete export on
+this other member of $\mathcal F_D$, contradicting (AAR.86).
+
+If the branch witness is missing, replace the subtree at $p$ by alpha.
+No Read at $p$ occurred, and all queried strict descendants were absent;
+they stay absent. Queries outside its cone stay unchanged. This
+competitor lowers height and preserves the outer left alpha, so it is
+also in $\mathcal F_D$. Deterministic replay again gives the same
+termination and export, but the target replies at count zero differ.
+Neither comparison changes a source within an execution.
+
+A labelled leaf certifies all its strict ancestors as branches and all
+its strict descendants as absent. A nonabsent descendant certifies all
+its strict ancestors as branches. Applying these facts to every target
+covers every vertex of $K$, because each is on a path to a target.
+They prove the converse and the determination of (AAR.88). Its
+predictive factor then uses the existing guarded decoder (AAR.59).
+The leaf flip is indispensable even when two different boundary tables
+have equal predictive factors. $\square$
+

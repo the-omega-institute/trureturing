@@ -1,0 +1,38 @@
+**Proposition 1.7 (Reference, support and locality boundaries).** The
+reference information identity need not hold away from its calibrated
+phase. The legal-space restriction and positive-support restriction
+cannot be dropped from the spectral correspondence. Arbitrary positive
+laws need not give parents on three consecutive tensor positions.
+
+Proof. To test the reference condition,
+take $n=1$, $p=(1/3,2/3)$, $f=(0,1)$ and keep the fixed reference pulse.
+The two probabilities along (1.3) are
+$q_\pm(\theta)=1/2\pm(\sqrt2/3)\sin\theta$.
+At $\theta=\pi/2$ both are positive but their derivatives vanish;
+classical information is zero, although $\mathcal Q_p[f]=8/9$.
+Thus (1.6) is local at the calibrated reference.
+
+For $n=1$ the spectra are $\{0,1\}$ for $H_{\rm hb}$ and
+$\{0,1+a_1\}$ for $H_{\rm loc}$, so the matched information ratio is
+$1$. On the unrestricted tensor space, $n=2$ has the additional zero
+vector $|11\rangle$; the legal-space restriction cannot be omitted.
+If a law has zero masses, the invertible transform applies only after
+restricting to its positive support. Disconnected support has
+zero global variance-normalized gap; this is different from its
+smallest strictly positive energy above a degenerate zero space.
+Singleton support has no positive-variance phase direction.
+
+The three-position locality in (1.2) uses the activity insertion ratio.
+An arbitrary positive law need not have that locality. On $B_4$, for
+$p(u)\propto e^{\kappa u_1u_4}$ with $\kappa>0$, the insertion ratio at
+site $1$ is $1$ or $e^\kappa$ according to $u_4$. Its normalized
+off-diagonal coefficient has magnitude respectively
+$1/2$ or $e^{\kappa/2}/(1+e^\kappa)<1/2$.
+No sum of terms on at most three consecutive sites can reproduce
+these site-$1$ matrix elements: every term that changes site $1$
+has identical action for the two remote values of site $4$.
+The matrix transform survives, but the stated tensor locality does not.
+$\square$
+
+[SMF1]: ../../../Library/StatisticalMechanics/castelnovo2005stochasticmatrixform.md
+

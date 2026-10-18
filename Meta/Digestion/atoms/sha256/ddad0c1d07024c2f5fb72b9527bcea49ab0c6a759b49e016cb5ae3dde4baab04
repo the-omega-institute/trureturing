@@ -1,0 +1,4 @@
+**来源与边界 139.6（经典定向背景及实际取得）。** 钉版 Mathlib [Analysis/InnerProductSpace/Orientation.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Orientation.lean)的 `Orientation.volumeForm` 以实内积、给定定向和维数等于索引数为条件；`volumeForm_robust` 用兼容的正交单位基行列式表示体积，`abs_volumeForm_apply_of_orthonormal` 给单位基绝对体积一。`volumeForm_map` 共同运输定向；在同一定向上使用 `volumeForm_comp_linearIsometryEquiv` 还要求等距自同构的行列式为正。这些是经典中间条件，不直接供应本章的原生树几何实现。
+
+组成读出 $c(\langle s,t\rangle)=c(s)+c(t)$ 是另一个接口；它不等于叉积。相同输入时和为两倍输入，叉积却为零，故不能把同一节点的和直接当法向。本章的三维载体、标定体积、来源到 $q_{\mathrm{cross}}$ 的实际读出和对应操作的取得均须各自承担；全树数学相容没有选出物理空间的三维。
+

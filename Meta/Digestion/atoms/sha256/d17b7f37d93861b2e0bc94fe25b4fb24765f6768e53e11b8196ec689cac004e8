@@ -1,0 +1,36 @@
+**Lemma 2.2 (existence and common-prefix provenance).** Under
+Definitions 1.1–1.2, every witness in Definition 2.1 exists and has
+actual finite original-source completions for every assignment of its
+unexposed bits. Its selected queries are fresh shortest occurrence-root
+queries. All $Z(h,z)$ have initial zero histories on one common
+all-zero spine; all $O(h,z)$ have initial one histories on one common
+all-one spine. In particular:
+
+1. If $z\ge w$, the first $w$ zero exposures of $Z(h,z)$ and
+   $Z(g,w)$ query the same coordinates with the same replies.
+2. If $g\ge h$, the first $h$ one exposures of $O(h,z)$ and
+   $O(g,w)$ query the same coordinates with the same replies.
+
+Proof. The actual simultaneous cube and classification of every finite
+address are [WTF, Supplier 2.1][WTF], from [PCA, Lemma 24.1][PCA].
+The live-prefix facts used here are [PCA, Theorem 34.3][PCA], as
+collected in WTF Convention 6.1: a live selected query is fresh and
+has word $LLLw_i$ or $LRLw_i$; the only live nonselected word is
+$RLR$, at most once, with its cube-constant beta reply.
+
+Every prefix of either prescribed reply sequence satisfies (CP.7).
+Freshness makes its partial assignment consistent, and all of its
+Boolean completions are actual cube sources following that history.
+A live history cannot latch, since completions require both prescribed
+entries. Following the possible $RLR$ call therefore reaches a
+selected state. Equivalently, failure to progress would contradict
+termination on a cube completion. This also proves that the final
+selected state exists when the prescribed sequence is empty or has
+length $n-1$.
+
+Determinism, the common start and the fixed cube replies on nonselected
+calls make two equal selected reply prefixes literally the same full
+native history, including their profile invocations. This proves both
+common-prefix assertions. These witnesses give no reply-selection
+facility, counter or saved history to the apparatus. $\square$
+

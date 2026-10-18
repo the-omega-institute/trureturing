@@ -1,0 +1,98 @@
+**Theorem 286.2 (All-column ownership and its same-allocation form).**
+For every $L\ge4$, every legal table, and each $i\in J$,
+
+$$
+g_i(D)\ge0,\qquad p_i(D)\le\ell_i(D)+g_i(D).
+\tag{286.3}
+$$
+Consequently every one full feasible $\lambda$, of any finite mass,
+satisfies
+
+$$
+\Pi_i+t_i\le s_i+G_i,\qquad
+\sum_iw_i(\Pi_i+t_i)\le\sum_iw_i(s_i+G_i)
+\quad(w_i\ge0).
+\tag{286.4}
+$$
+All displayed slacks and $G_i,\Pi_i$ are nonnegative. For $L\ge6$,
+with the common reserve of 275.3,
+
+$$
+\sum_i\Pi_i\le\sum_i s_i+G\le\delta_b,
+\qquad G=\sum_iG_i.
+\tag{286.5}
+$$
+
+**Proof.** The balanced moments are mass $c$, unary zero mass two,
+and pair masses $(1,1,1,c-3)$, by 274.1. No late query makes
+$D(v^i)=D(u^i)=D(+)$, so $\ell_i=0$ and $g_i=a_i\ge0$.
+This includes every early-only, empty and early singleton table.
+For a late singleton $j$, with outputs $u,v$ on replies zero, one,
+
+$$
+a_i=2[u=i]+(c-2)[v=i].
+$$
+If $i=j$, $g_i=[u=i]+(c-1)[v=i]$ and $\ell_i=0$.
+If $i<j$, the trace in $g_i$ cancels and
+$\ell_i=[v=i]-[u=i]$, so
+$\ell_i+g_i=[u=i]+(c-1)[v=i]\ge0$.
+If $i>j$, both comparison differences vanish. In all cases $p_i=0$.
+For a mixed pair $(h,j;u,v,s,t)$, $h\in\{1,2\}$, put
+$A=(c-2)/2$; then
+
+$$
+a_i=[u=i]+A[v=i]+[s=i]+A[t=i].
+$$
+At $i=j$, $g_i=[u=i]+A[v=i]+(A+1)[t=i]$ and $\ell_i=0$.
+At $i<j$, the trace cancels and $\ell_i=[t=i]-[s=i]$,
+giving the same nonnegative expression for $\ell_i+g_i$.
+At $i>j$ the comparison differences vanish. Again $p_i=0$.
+
+For a late pair $(a,b;u,v,s,t)$, $a<b$,
+$a_i=[u=i]+[v=i]+[s=i]+(c-3)[t=i]$.
+Only $i=a,b$ have nonzero trace, respectively
+$[v=i]-[t=i]$ and $[s=i]-[t=i]$.
+Subtracting them gives nonnegative grouped terms for every $g_i$.
+In the five relative positions the sum with $\ell_i$ is
+
+$$
+\begin{array}{c|l}
+i<a &[v=i]+[s=i]+(c-2)[t=i]\\
+i=a &[v=i]+[s=i]+(c-2)[t=i]\\
+a<i<b &[u=i]+[v=i]+(c-2)[t=i]\\
+i=b &[u=i]+[v=i]+(c-2)[t=i]\\
+i>b &a_i.
+\end{array}
+\tag{286.6}
+$$
+Only the second case has $p_i=[v=i]$, paid by its own term.
+This exhausts every label, including earlier, opposite-head and
+unqueried outputs; sorting or repeating a query changes only its
+information partition, never the actual request count.
+Thus (286.3) holds on the whole catalog.
+
+Integrate against the same $\lambda$. Both comparison words have
+first zero $i$, so $\sum\lambda_D\ell_i=s_i-t_i$.
+Their own complete correct rows make $s_i,t_i\ge0$, proving (286.4)
+and its arbitrary nonnegative weighted sums without optimizing any part.
+For completeness the common reserve follows from equal mass and the
+independent early union rows. With $r_h,\eta,X,R_{\rm pair},s_+$
+as in 274.5 and 275.3,
+
+$$
+\begin{aligned}
+\sum_D\lambda_D\sum_i a_i(D)&=ce-R_{\rm pair}-X,\\
+\sum_D\lambda_D\sum_i([D(v^i)=i]-[D(+)=i])
+ &=E_b+2e+s_++\sum_i s_i+\eta.
+\end{aligned}
+$$
+Subtracting gives the existing same-allocation identity
+
+$$
+\delta_b=s_++\sum_i s_i+\eta+R_{\rm pair}+X+G.
+\tag{286.7}
+$$
+All terms are nonnegative and calculated at that same allocation.
+Drop $t_i$ in (286.4) and then use (286.7) for (286.5).
+No independent union demand is replaced by singleton estimates. $\square$
+

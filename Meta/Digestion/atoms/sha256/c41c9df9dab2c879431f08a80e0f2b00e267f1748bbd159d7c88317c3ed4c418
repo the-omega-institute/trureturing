@@ -1,0 +1,18 @@
+**Definition 3.1 (whole-source tuple laws).** Take $\ell$ disjoint
+copies of Definition 2.2, retaining $N=11m\ell$ original blocks.
+Let $G_j$ be the full tuple in copy $j$, $F_j\in\{0,1\}$ its
+phase, and $W$ the unchanged product of all $N$ block factors.
+Let $P=W/Z$ on the Cartesian product of the actual gadget relations.
+Define a second law by its full phase law and full conditional law:
+
+$$
+q=(1-\epsilon)\frac{\delta_{0^\ell}+\delta_{1^\ell}}2
+      +\epsilon\operatorname{Unif}(\{0,1\}^\ell),
+\qquad Q_F=q,\qquad Q(\,\cdot\mid F)=P(\,\cdot\mid F).
+$$
+
+This last equality specifies the entire joint conditional law, rather
+than only its individual marginals. $Q$ is the alternative completion
+of OCC §5.3. It is not asserted to be the Gibbs law of the unchanged
+$W$.
+

@@ -1,0 +1,70 @@
+### 40.1. 固定完整世界、全部实际账与符号
+
+一个完整世界从开始固定为
+
+$$
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),
+\qquad 0\ne g(t)=\lambda+\mu t+\nu t^2,\quad d\in\mathbb R.
+\tag{40.1}
+$$
+
+四个源元严格正，迹为一，行列式为零；非零迹使秩恰为一。目标相等指整个 $P,g,d$ 相等。增益只要求整个多项式非零、次数至多二，允许常数、非恒定仿射、真正二次、零截距或其他零系数、任意采样和非采样零、重根及正负尺度。漂移是任意固定实数，正非对角元没有预设上界，不预选对角侧或对称性。
+
+实际左动作与原时钟读数为
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\qquad
+y_i=d+g(i)\operatorname{tr}(Q_iP).
+\tag{40.2}
+$$
+
+固定已经取得的六动作 $JMJMJJ$ 和记录 $\mathcal H=(y_0,\ldots,y_6)$。记 $\mathcal K(\mathcal H)$ 为满足全部七个实际方程的所有式 (40.1) 世界，包括全部次数、源和漂移竞争者。任意数据的纤维可以为空；可达数据由真实世界保证非空。新切片和联合单射结论不要求纤维有限。
+
+对任意 $A=(A_{ij})$，由 $AP$ 的两个对角元相加得到
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r+A_{21}b+A_{12}c.
+\tag{40.3}
+$$
+
+因此左下元乘 $b$。左乘 $J$ 交换旧两行；左乘 $M$ 以旧第二行为新第一行，以旧两行之和为新第二行。从 $I$ 应用这些规则，令 $j=b+c$、$u=1+2b$，全部实际账为下表，每个已取得行均保留 $y_i=d+T_i g(i)$。
+
+| 原时钟与动作 | 实际左乘积 $Q$ | 迹 $T$ 或末响应 |
+| --- | --- | --- |
+| $0$ 初读 | $\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ | $1$，$y_0=d+g(0)$ |
+| $1,J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ |
+| $2,M$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ |
+| $3,J$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $j+r$ |
+| $4,M$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ |
+| $5,J$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $j+2r$ |
+| $6,J$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $u$ |
+| $7$ 互择 $J$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $f_J=d+(j+2r)g(7)$ |
+| $7$ 互择 $M$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $f_M=d+(j+r+u)g(7)$ |
+
+这些乘积由行规则逐项得到，迹由式 (40.3) 给出。$J,M$ 非负、可逆，其乘积无零行。非零非负行与 $P$ 的严格正列配对为正，故 $QP$ 各元正、所有实际迹正；不需要增益符号条件，也不求逆奇异源。$Q_6=Q_4$ 仍配新的原时钟样本 $g(6)$，不把它替换为 $g(4)$。
+
+原时钟零至六已经取得七次 TOTAL 读数；此后只选一个即时 $J$ 或 $M$，在原时钟七立即读取，才有八次 TOTAL。两个末函数是同一批固定世界的互择预测，不是同时取得的两个端口。没有重置、复制、跳读、空动作、时钟改名、额外端口或在选择中使用未选响应。
+
+以下统一定义
+
+$$
+\begin{gathered}
+a_0=y_0,\quad x_i=y_i-a_0,\quad \lambda=g(0),\quad d=a_0-\lambda,\\
+a=x_2,\quad C=\frac{x_4-2x_2}{4},\quad K=\frac{x_6-x_4}{2},\quad
+G=g(7),\\
+u=1+2b,\qquad j=b+\frac{r(1-r)}b,\qquad
+\Theta=\frac72(2x_6-x_4)=7(a+2C+2K),\\
+\eta_{\mathcal H}(b)=a_0+\frac{\Theta}{b+4},\quad
+k_b=\frac{4u}{b+4},\quad
+h_b(r)=j+2r-k_b,\quad
+\ell_b(r)=j+r+\frac{bu}{b+4}.
+\end{gathered}
+\tag{40.4}
+$$
+
+初读归零是整个世界的平移双射，逆向把 $a_0$ 加回漂移，不揭示物理漂移或隐藏承诺。偶数坐标可逆：$x_2=a,x_4=2a+4C,x_6=2a+4C+2K$。这里 $C,K$ 只具有式 (40.4) 的意义，不是五动作父的同名字母；$\ell_b$ 是末 $M$ 系数，也不是第 39.3 节奇异图谱中局部的 $\ell=2a-3K$。若使用该图谱参数，另写 $z=\nu$。
+

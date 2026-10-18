@@ -1,0 +1,42 @@
+## 167. Every owner with fixed pair {Z,M} is rho
+
+Every such owner is genuine because it contains Z. Neither axis can be
+special, by the global special-pair exclusion. Both axes are in H.
+They cannot both be in {M,Z}, by the all-M/Z-owner exclusion. Hence one
+axis has value b in {c,d}, so 1<b<m-2; write the other value r<=z.
+Set k=z+m and
+
+ L=k^2-(b-1)(r-1)>0,
+ J=(b+1)(r+1)-(z-m)^2>0,
+ kappa=[sqrt(z^2-1)+sqrt(m^2-1)]/(z+m).
+
+Positivity of L,J follows from genuineness. Since z,m>3, kappa^2>8/9>1/2.
+The exact paired-angle response, eliminating the axial angle at b,
+gives for the transverse Z and M angles gamma,delta
+
+ gamma+delta=2 atan(kappa sqrt(L/J)).
+
+Indeed lambda_plus=kappa sqrt((b-1)/(b+1)), and
+ tan(theta_b/2)^2=((b-1)/(b+1))*J/L.
+We now show L>2J. Direct expansion gives
+
+ L-2J=3z^2-2zm+3m^2-3br-b-r-3.
+
+The expression subtracted is strictly increasing in each of b,r>1.
+Using b<m-2 and r<=z therefore gives
+
+ L-2J >3z^2-5zm+3m^2+5z-m-1.
+
+Writing z=m+s with s>0, the last polynomial is
+ m^2+ms+3s^2+4m+5s-1>0,
+because m>3. Thus kappa sqrt(L/J)>1, and
+
+ gamma+delta>pi/2.
+
+Every such owner consequently consumes more than pi of the actual M/Z
+budget through its four transverse slots alone. Any such owner distinct
+from rho also differs from tau, whose fixed pair is {M,C}. Combining
+its contribution with tau's contribution greater than pi and rho's two
+Z angles greater than pi would exceed the complete M/Z budget 3*pi.
+Hence the only owner with fixed pair {Z,M} is rho.
+

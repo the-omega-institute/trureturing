@@ -1,0 +1,22 @@
+**Theorem 2.3 (exact remaining path length).** From any state of type
+$(k,d)$ the longest legal word has length
+
+$$
+V(k,d)=n-k+2d.
+\tag{2.8}
+$$
+
+Every legal step reduces $V$ by exactly one. Hence all-finite-word equality
+in Theorem 2.2 can also be tested mathematically by words of length at most
+$V(k,d)$.
+
+Proof. An append raises $k$ by one; a delete lowers both $k$ and $d$ by one.
+Substitution in $V$ gives the asserted decrease in both cases. Since $V$
+is nonnegative at every type, no legal word can be longer. Conversely,
+delete all $d$ current-last entries with their actual values. This leaves
+an extendable prefix at cut $k-d$ with budget zero. Choose any completion
+and append its $n-k+d$ values. The total length is $d+(n-k+d)=V(k,d)$.
+Words beyond this bound are absent from every state of the original type.
+The count is a combinatorial path length; no physical clock or price is
+specified by it. $\square$
+

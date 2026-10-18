@@ -1,0 +1,4 @@
+**Proposition 7.2 (Two labels and nonemptiness boundaries).** For $M=2$, the class $\mathfrak A_2(q,\alpha)$ is empty. The universal lower theorem supplies no nonemptiness conclusion for any budget.
+
+Proof. The two internally emitted labels exhaust two complete configurations. A common initial choice emits one with some probability $p$, and the two risks would require $p\le\alpha$ and $1-p\le\alpha$, impossible when $2\alpha<1$. A statement universally quantified over an empty class is vacuous. For larger budgets, nonemptiness will follow from a constructed table at the stated sufficient threshold; this does not classify the minimum threshold or intermediate budgets. $\square$
+

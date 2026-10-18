@@ -1,0 +1,18 @@
+## Theorem 7. Exact parity membership
+
+For every \(q>0\),
+\[
+\boxed{\quad
+\bigl(\exists h\in\operatorname{Aut}(X_q,S):
+       \rho_q(h)=\mathrm{id}+\Theta_q\bigr)
+\quad\Longleftrightarrow\quad q\text{ is even}.
+\quad}
+\]
+
+Proof. At even order, Proposition 6 supplies the actual witness \(H_q\).
+At odd order, Proposition 4 gives a nonzero class killed by
+\(\mathrm{id}+\Theta_q\). Every \(\rho_q(h)\) is injective, so it
+cannot equal that map. The dichotomy covers all positive orders, including
+\(q=1\), without a mixing, entropy, injective-transition or torsion-free
+premise.
+

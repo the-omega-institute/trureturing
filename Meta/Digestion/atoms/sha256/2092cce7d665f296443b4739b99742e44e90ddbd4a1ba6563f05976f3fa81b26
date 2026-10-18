@@ -1,0 +1,41 @@
+**$Q$ 的两次有序实际拆分。** 在 $Q$ 中以 $u$ 为剩余标记，顺序 $S,\overline S$ 的端口记为 $Z_i^t,W_i^t$。恢复顺序 1 的 $u$ 标记 $b$，再加入内部顺序 0 的 $c$，上一小节给出完整路径
+
+$$
+\Lambda:Z_0^0\longrightarrow W_k^0.
+\tag{58.35}
+$$
+
+记新指标 0 的 $v$ 端口为 $r_t=R_0^t,\ell_t=L_0^t$。直接计算
+
+$$
+\begin{aligned}
+W_0^0&=(v,A^-,S^-,u)
+\xrightarrow a r_1=(u,S,A,v)\xrightarrow b\ell_1,\\
+W_0^1&=(v,A^-,(\overline S)^-,u)
+\xrightarrow a r_0=(u,\overline S,A,v)\xrightarrow b\ell_0.
+\end{aligned}
+\tag{58.36}
+$$
+
+两个 $a$ 的端点末标签为 $u,v$，两个 $b$ 是 $Q$ 中末标签为剩余 $v$ 的边，所以都是保留的实际前缀。
+
+$k\ge3$ 时，上一阶 (58.21) 给出 $(Z_0^0,W_0^1)$。因此 $\Lambda$ 的第一条 $B$ 路径先以 $\ell_0\xrightarrow b r_0$ 的方向越过第二行新 $b$。另一条新 $b$ 位于结束于 $W_0^0$ 的不同 $B$ 路径；上一小节的穷尽序列通过该 $B$ 路径到达 $W_0^0$，故后来才以 $\ell_1\xrightarrow b r_1$ 的方向越过它。$k=2$ 时，恢复基例中另一顺序的 $b$ 给出实际片段
+
+$$
+W_1^0-J_2-W_0^1-b-Z_0^1-J_2-Z_1^1-b-W_1^1-J_2-W_0^0,
+\tag{58.37}
+$$
+
+连同 (58.36) 得到同一先后次序。
+
+因此从已经获得的完整 $\Lambda$ 删除这两条有序 $b$ 后，恰得
+
+$$
+Z_0^0\longrightarrow\ell_0,\qquad
+r_0\longrightarrow\ell_1,\qquad
+r_1\longrightarrow W_k^0.
+\tag{58.38}
+$$
+
+这是同一条实际完整路径的三个片段，已经穷尽 $Q$，无额外闭合分量。
+

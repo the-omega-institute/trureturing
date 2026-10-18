@@ -1,0 +1,50 @@
+**Proposition 23.3 (Explicit four-dimensional stationary purity separation).** Take $H=3$, $K=\{1,2,3\}$ and $p_1=p_2=p_3=1/3$. Then $\mu=3$, every phase has stationary diagonal $(1,2,3,3)/9$, and
+
+$$
+\delta=\theta_1-2\theta_2+\theta_3,\qquad
+\operatorname{Tr}(\rho_\theta^2)=\frac{37+8\cos\delta}{81}.
+\tag{23.20}
+$$
+
+In particular, $\theta^+=(0,0,0)$ and $\theta^-=(\pi,0,0)$ give
+
+$$
+9\rho_+=
+\begin{pmatrix}
+1&1&1&0\\1&2&2&1\\1&2&3&2\\0&1&2&3
+\end{pmatrix},\qquad
+9\rho_-=
+\begin{pmatrix}
+1&1&-1&0\\1&2&0&-1\\-1&0&3&0\\0&-1&0&3
+\end{pmatrix},
+\tag{23.21}
+$$
+
+with purities $5/9$ and $29/81$, respectively. Their complete stationary binary laws coincide, and both averaged channels on $M_4(\mathbb C)$ have
+
+$$
+\chi_{\mathcal E_\pm}(\lambda)
+=\lambda^{12}\left[\lambda^4-\frac{\lambda^2+\lambda+1}{3}\right].
+\tag{23.22}
+$$
+
+The actual stationary-family purity range is exactly $[29/81,5/9]$. The larger set of all densities with the same diagonal, without requiring stationarity for any member of this instrument family, has purity range $[23/81,1]$.
+
+Proof. Write $z_k=e^{i\theta_k}$, $a=z_3\overline z_2$, $b=z_3\overline z_1$ and $c=z_2\overline z_1$. Summing the four shifted outer products in (23.5) gives
+
+$$
+9\rho_\theta=
+\begin{pmatrix}
+1&a&b&0\\
+\overline a&2&a+c&b\\
+\overline b&\overline a+\overline c&3&a+c\\
+0&\overline b&\overline a+\overline c&3
+\end{pmatrix}.
+\tag{23.23}
+$$
+
+Here $|a|=|b|=|c|=1$ and $|a+c|^2=2+2\cos\delta$. The squared diagonal sum is $23$ and the sum of squared moduli strictly above the diagonal is $7+4\cos\delta$. Hermiticity therefore gives $81\operatorname{Tr}\rho_\theta^2=23+2(7+4\cos\delta)$, proving (23.20). Substituting the two phase triples yields exactly (23.21); faithfulness and stationarity follow from (23.5). Theorem 23.2 supplies their equal complete laws and (23.22).
+
+Varying $\delta$ attains every value in $[29/81,5/9]$. To distinguish this stationary family from the arbitrary fixed-diagonal fiber, put $w=(1,2,3,3)/9$. For any density $\sigma$ with diagonal $w$,
+$\operatorname{Tr}\sigma^2=\sum_iw_i^2+\sum_{i\ne j}|\sigma_{ij}|^2\ge23/81$, while positivity and trace one give $\operatorname{Tr}\sigma^2\le1$. The lower endpoint is $\operatorname{diag}w$ and the upper is $vv^*$ with $v_i=\sqrt{w_i}$. The segment $(1-s)\operatorname{diag}w+s vv^*$, $0\le s\le1$, has purity $23/81+(1-23/81)s^2$, so it fills that larger interval. It does not enlarge the stationary range (23.20). $\square$
+

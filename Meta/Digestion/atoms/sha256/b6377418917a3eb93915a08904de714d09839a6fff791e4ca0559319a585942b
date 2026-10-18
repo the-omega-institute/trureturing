@@ -1,0 +1,29 @@
+**Definition 2.2 (Capacities and tolerances).** For an integer $n\ge0$
+let $\mathfrak F_{\le n}^{\rm arb}(Z)$ be the models of Definition 2.1
+with some $0\le m\le n$. Set
+
+$$
+e_n^{\rm arb}(Z)=
+\inf_{F\in\mathfrak F_{\le n}^{\rm arb}(Z)}\operatorname{err}(F),
+$$
+
+$$
+\mathcal A_n^{\rm arb}(Z)=
+\{\epsilon\in[0,\infty):
+\exists F\in\mathfrak F_{\le n}^{\rm arb}(Z),\quad
+\operatorname{err}(F)\le\epsilon\}.
+$$
+
+The infimum of an empty class is $+\infty$. Preparation is fixed in
+each class and arbitrary in all results; it is suppressed in the notation.
+Its phases change only the fixed orthogonal $O$, and its height changes
+producing paths, not $\mathcal M$.
+
+These are dimension-at-most budgets. A model in $\mathbb R^m$ can be
+padded into $\mathbb R^n$ by $E'(x)=(E(x),0)$, extending every update
+by the identity on unused coordinates and making readout ignore them.
+This preserves the error and every identity. It does not enlarge the
+actual affine hull of the image. No assertion is made about a different
+class requiring that hull to have dimension exactly $n$. No identification
+of these capacities with the original finite-hidden-$N$ objective is assumed.
+

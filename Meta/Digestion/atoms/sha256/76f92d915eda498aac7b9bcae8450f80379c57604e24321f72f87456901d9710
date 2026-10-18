@@ -1,0 +1,69 @@
+**Construction 337.1 (Unnormalized core vectors).**
+Let
+
+$$
+0<\tau\le\frac1{24},\qquad0\le\kappa\le\frac\tau{253},
+\qquad E=5\tau+24\kappa.
+\tag{337.1}
+$$
+
+Each row gives schedule mass $m$ and three unnormalized terminal
+vectors $f,v,z$ on stopped cells $0,10,11$. A range row supplies
+one copy for each listed schedule. Thus the table has nineteen
+schedules, and its total mass is $24\tau$.
+
+| Schedule | $m$ | $f$ | $v$ | $z$ |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $8\tau-85\kappa$ | $m e_1$ | $m e_2$ | $(4\tau-27\kappa)e_0+(2\tau-20\kappa)e_3+(\tau-35\kappa)e_4+(\tau-3\kappa)e_5$ |
+| $(h,3)$, $h=1,2$ | $3\tau-2\kappa$ | $m e_0$ | $m e_3$ | $m e_0$ |
+| $(h,4)$, $h=1,2$ | $\tau+13\kappa$ | $(\tau-48\kappa)e_0+61\kappa e_h$ | $m e_4$ | $m e_0$ |
+| $(h,5)$, $h=1,2$ | $21\kappa$ | $m e_0$ | $m e_5$ | $m e_0$ |
+| $(3,4)$ | $2\tau-15\kappa$ | $m e_0$ | $m e_4$ | $(\tau+32\kappa)e_0+(\tau-47\kappa)e_5$ |
+| $(3,5),(3,6),(4,5),(4,6),(5,6)$ | $\tau-8\kappa$ | $m e_0$ | $m e_j$ for $(i,j)$ | $m e_0$ |
+| $(3,7),(4,7),(5,7),(7,8)$ | $21\kappa$ | $m e_0$ | $m e_j$ for $(i,j)$ | $m e_0$ |
+| $(6,7)$ | $\tau-87\kappa$ | $m e_0$ | $m e_7$ | $(\tau-216\kappa)e_0+129\kappa e_8$ |
+| $(6,8)$ | $79\kappa$ | $m e_0$ | $m e_8$ | $m e_0$ |
+
+Each terminal vector has its row's mass $m$. Every entry is
+nonnegative under (337.1); in particular
+$\tau-216\kappa\ge37\tau/253>0$. Add one complete anchor
+$R=O(1,2;1,2,0)$ of mass $1-24\tau$, omitting it if its mass
+is zero. Its two counterfactual correct stocks do not double its
+schedule mass. The total schedule mass is now one.
+
+Let
+
+$$
+a_2=1-11\tau,\qquad a_2\le a_1\le1-7\tau-29\kappa,
+\qquad d=a_1-a_2,\qquad Q=4\tau-29\kappa.
+\tag{337.2}
+$$
+
+Then $Q>0$ and $0\le d\le Q$. In the first cells of schedules
+$(1,3),(1,4),(1,5)$ move the common fraction $d/Q$ of their
+label-zero stocks to label one. Their available base stocks sum to
+
+$$
+(3\tau-2\kappa)+(\tau-48\kappa)+21\kappa=Q.
+\tag{337.3}
+$$
+
+Thus the full cube law changes by exactly
+$d[w_1=0](e_1-e_0)$. All other first-zero classes and the positive
+law are unchanged. This transfer uses the full head interval (337.2).
+
+For every positive-mass row after this transfer give a complete
+$O(i,j;r,s,t)$ table mass
+
+$$
+\frac{f(r)v(s)z(t)}{m^2}.
+\tag{337.4}
+$$
+
+Its sum over all labels is $m$, and summing over either two labels
+recovers the remaining terminal vector. Omit zero-mass rows and add
+the anchor branch. Hence (337.4) is one normalized complete-table
+distribution with equal schedule mass in all counterfactual cells.
+A single uniform seed, partitioned into its finitely many table
+intervals, selects the schedule and every output before replies.
+

@@ -1,0 +1,89 @@
+**Theorem 15.1 (all defect allocations and the precise fusion case).**
+For any encoder satisfying Definition 13.1,
+
+$$
+\sum_{\gamma}\delta(C_\gamma)=q(19-q).
+\tag{NARC.15.1}
+$$
+
+At $q=18$ the total defect is eighteen. If no class is saturated,
+all eighteen classes have size eighteen. More generally,
+
+$$
+\#\{\gamma:\delta(C_\gamma)=0\}
+=\sum_{\gamma:\delta(C_\gamma)\ge2}
+       (\delta(C_\gamma)-1).
+\tag{NARC.15.2}
+$$
+
+An eighteen-point readable class has exactly one of
+
+$$
+(r_a,r_b,\sigma)=(9,10,0),\quad(10,9,0),\quad(10,10,1).
+\tag{NARC.15.3}
+$$
+
+The first two cases are axis-monotone. The ten-run coordinate has
+the three change triples and unit middle increments of Theorem 13.2;
+readability of that coordinate alone does not assert readability of
+the other nine-run target.
+
+For a $d$-injective eighteen-point class with $(r_a,r_b,\sigma)=
+(10,10,1)$, positive-lag two-readability on both cuts is equivalent
+to the following normal form. Its seventeen edges consist of four
+pure triples, two $AAA$ and two $BBB$, and one fused block
+
+$$
+AA\,D\,BB\qquad\text{or}\qquad BB\,D\,AA.
+\tag{NARC.15.4}
+$$
+
+Before the one-edge overlap, there are three coordinate-change triples
+of each kind. All six middle edges are unshared pure unit edges.
+Every other pure length is an arbitrary positive integer. The shared
+edge $D$ changes both coordinates and has
+$\Delta a-\Delta b>0$; its coordinate changes need not have the
+monotone signs. All vertices must belong to the source square.
+If the class also has $a\ge1$ everywhere, this form suffices for
+nonnegative lags. No general zero-origin iff for fused classes is
+asserted by (NARC.15.4).
+
+**Proof.** Sum $19-|C_\gamma|$ over the $q$ classes that partition
+$q^2$ points. This gives (NARC.15.1). All defects are nonnegative
+by Theorem 13.2. At $q=18$ they sum to eighteen over eighteen
+nonempty classes. With no zero defect, each is at least one and
+therefore exactly one. Subtracting eighteen from the defect sum
+gives (NARC.15.2). It leaves saturated classes, both defect-one
+geometries and every higher-defect allocation in the domain.
+
+At size eighteen, (NARC.13.2) expresses one as three nonnegative
+integers, giving exactly (NARC.15.3). When $\sigma=0$ every edge
+is pure, so its sign follows from increasing $d$ and the class is
+axis-monotone. The coordinate with ten runs obeys Theorem 13.2.
+
+In the $(10,10,1)$ case that theorem gives three disjoint length-three
+intervals of change positions for each coordinate. Their union has
+seventeen positions and their intersection has one. Exactly one
+$a$ interval and one $b$ interval overlap, at a single edge.
+Two intervals of length three can intersect in exactly one position
+only when it is the last position of one and the first of the other.
+Thus this pair contributes one five-edge fused block of (NARC.15.4),
+and the remaining four intervals are pure triples. The shared edge
+is not a middle edge of either triple. Theorem 13.2 supplies all
+six middle increments, which on pure edges are unit coordinate steps.
+The sole conditions on the shared signs are that both changes are
+nonzero and the difference increases.
+
+Conversely, the fused diagram gives each coordinate three disjoint
+consecutive triples of changes with unit middle increments. It has
+nine changes of each coordinate, seventeen total edges and exactly
+one double change. Increasing $d$ follows from the pure signs and
+the stated condition on $D$. The full-reference trees of Theorem
+13.2 separate each coordinate's ten runs, even if the shared edge
+causes a coordinate to revisit a previous value. Theorem 10.2
+translates them to every complete positive-lag fiber; no suffix
+assumption is needed for nonmonotone classes. If $a\ge1$ everywhere,
+right-hidden ages $a+\ell$ are positive also at zero lag, and left-hidden
+ages are always positive. The same supplied translation then serves
+both cuts under $\lambda=0$. $\square$
+

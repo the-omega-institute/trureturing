@@ -1,0 +1,17 @@
+## 455. 严格自匹配库存是同一价格源上的 CA 子列
+
+本节只做一个来源识别，不把任意仿射整数都标成极大丰数。对 $\lambda>0$，
+令
+
+$$
+\mathcal P_\lambda(n)
+=\log\frac{\sigma(n)}n-\lambda\log n
+=\log\frac{\sigma(n)}{n^{1+\lambda}}.
+\tag{455.1}
+$$
+
+经典定义中的 colossally abundant (CA) 数，正是存在某个 $\varepsilon>0$，
+使 $\sigma(n)/n^{1+\varepsilon}$ 在所有正整数上取得全局最大值的整数。
+因此，CA 的参数 $\varepsilon$ 与本卷价格 $\lambda$ 是同一个参数，
+不是两个不同的优化问题。
+

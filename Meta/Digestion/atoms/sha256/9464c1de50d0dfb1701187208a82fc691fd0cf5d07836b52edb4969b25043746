@@ -1,0 +1,101 @@
+**Theorem 178.2 (Exact augmented-catalog suffix criterion).** For every
+probability mixture on $E_L$, there are real $C_n,\beta_{nj}$ and
+nonnegative $\kappa_{nj},Q_{jk}$ such that on its entire first-zero
+class $n$,
+
+$$
+\begin{aligned}
+p_b(0)&=C_n+\sum_{j>n}\beta_{nj}v_j
+                    +\sum_{n<j<k\le L}Q_{jk}v_jv_k,\\
+p_b(n)&=\gamma_n+\sum_{j>n}\kappa_{nj}(1-v_j),\qquad
+\gamma_n=p_{1^{n-1}0\,1^{L-n}}(n).
+\end{aligned}
+\tag{178.2}
+$$
+
+All finite cap rows (110.6) are equivalent to the joint conditions
+
+$$
+\begin{aligned}
+\gamma_n&\ge a_n-\varepsilon,\\
+C_n+\mathcal M_n(\beta_n)&\ge1-a_n-\varepsilon,\\
+C_n+\gamma_n+\sum_{j>n}\kappa_{nj}
+  +\mathcal M_n(\beta_n-\kappa_n)&\ge1-\varepsilon
+                         &&(1\le n\le L),\\
+p_{1^L}(0)&\ge1-\varepsilon.
+\end{aligned}
+\tag{178.3}
+$$
+
+In particular the base and pair constraints retain two Boolean
+quadratic minima. Their endpoint coefficients and total probability
+budget are shared; neither minimum replaces the other.
+
+**Proof.** For each endpoint the global base indicator has the following
+multilinear polynomial:
+
+$$
+\begin{array}{c|c}
+\text{endpoint}&D_b(0)\\\hline
+\text{immediate base}&1\\
+(i;i,0)&b_i\\
+(i,j;i,j,0)&b_ib_j\\
+(i,j;i,j,k),\ i<j<k&0\\
+(1,2;s,r,0)&A+(B-A)b_1+(1-B)b_1b_2\\
+(i,j;0,r,\ell)\in Z_L&1-b_i+\mathbf1_{\ell=0}b_ib_j
+\end{array}
+\tag{178.4}
+$$
+
+Here $A=\mathbf1_{s=0}$ and $B=\mathbf1_{r=0}$ in the prefix row.
+All quadratic coefficients are nonnegative. Summing with the one
+mixture's weights gives
+
+$$
+p_b(0)=C+\sum_i l_i b_i+\sum_{i<j}q_{ij}b_ib_j,
+\qquad q_{ij}\ge0.
+$$
+
+After fixing the prefix and its zero, this has the first form (178.2),
+with explicit coefficients
+
+$$
+\begin{aligned}
+C_n&=C+\sum_{i<n}l_i+\sum_{i<j<n}q_{ij},\\
+\beta_{nj}&=l_j+\sum_{i<n}q_{ij}\quad(j>n),\qquad
+Q_{jk}=q_{jk}\quad(n<j<k).
+\end{aligned}
+\tag{178.5}
+$$
+
+Every canonical singleton, pair, triple and prefix contribution to
+the correct label $n$ is constant within its first-zero class. For
+example a canonical first label $n$ sees $b_n=0$, a canonical middle
+label $n$ has its earlier queried bit positive, and a numerical last
+label $n$ has both earlier queried bits positive. A zero-first endpoint
+can emit $n$ in its exhaustion cell only when $\ell=n>j$, in which
+case both queried bits are fixed positive and its contribution is
+constant. It can emit $n$ in its middle cell only when $r=n$ and
+$i<n\le j$. If $j=n$ it is constant; if $j>n$ its indicator is
+$1-v_j$. It cannot emit a positive $n$ in its first cell.
+Consequently $\kappa_{nj}$ is the sum of nonnegative masses of the
+endpoints with $r=n$, $i<n$, $j>n$. All remaining correct contributions
+form the constant $\gamma_n$, obtained by taking the all-one suffix.
+This proves the second form (178.2) and its coefficient signs.
+
+The minimum correct probability is $\gamma_n$. The minimum base
+probability is $C_n+\mathcal M_n(\beta_n)$. Adding the two expressions
+in (178.2) makes the pair probability
+
+$$
+C_n+\gamma_n+\sum_{j>n}\kappa_{nj}
+ +\sum_{j>n}(\beta_{nj}-\kappa_{nj})v_j
+ +\sum_{n<j<k}Q_{jk}v_jv_k.
+$$
+
+Its minimum is precisely the third left side of (178.3). The three
+TV rows must each hold at every suffix, so taking their individual
+minima is necessary and sufficient, with the separate positive-word
+base row retained. This enumerates every multiple-zero word, as well
+as the empty suffix, and proves the exact equivalence. $\square$
+

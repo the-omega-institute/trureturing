@@ -1,0 +1,5 @@
+source_id = "fibonacci-atomic-relation-generation-robin-curvature-approximation"
+path = "docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_CURVATURE_APPROXIMATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

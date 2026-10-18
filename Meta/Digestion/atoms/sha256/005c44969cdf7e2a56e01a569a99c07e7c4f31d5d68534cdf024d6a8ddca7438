@@ -1,0 +1,47 @@
+**Definition 1.1 (native source algebra).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\rho\alpha=\beta,
+\quad
+\rho\beta=\langle\beta,\alpha\rangle,
+\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle .
+\tag{SJM.1}
+$$
+
+The trees are nonempty, finite, free and ordered. Every occurrence is retained;
+there is no sharing, associativity or commutativity quotient. Put
+$T_j=\rho^j\alpha$. The atomic recurrence supplied by the native algebra is
+$T_{j+2}=\langle T_{j+1},T_j\rangle$. For a finite address $p\in\{L,R\}^*$,
+$r_u(p)$ is the four-valued reply
+$\alpha,\beta,\mathsf{branch},\mathsf{absent}$, with absence below a leaf.
+The operation $\rho$ is interpreted by (SJM.1) and used only through finite
+native transport; no free unary symbol or contracting metric is assumed.
+
+We use the finite right-spine clock
+
+$$
+\kappa(\alpha)=0,\qquad \kappa(\beta)=1,\qquad
+\kappa(\langle s,t\rangle)=2+\kappa(t).
+\tag{SJM.2}
+$$
+
+Structural induction gives $\kappa(\rho u)=\kappa(u)+1$. Define
+
+$$
+F(u)=\langle\beta,\rho u\rangle .
+\tag{SJM.3}
+$$
+
+Then $\kappa(Fu)=\kappa(u)+3$, so, for every finite $u$,
+
+$$
+ u\ne\rho u,\qquad u\ne Fu,\qquad \rho u\ne Fu.
+\tag{SJM.4}
+$$
+
+The clock is used only as a finite-tree inequality witness; it is not a source
+clock or an extra observation port.
+

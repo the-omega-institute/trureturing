@@ -1,0 +1,36 @@
+**Theorem 3.3 (both whole-stratum correspondences).** For $i=0,1$,
+
+$$
+D_i=\{\Theta_i(j,y):j\in A_m,\ y\in\mathcal T,\ C_i(j,y)\}.
+\tag{CRE.17}
+$$
+
+All cross-class inequalities of both full partitions hold exactly; none is
+replaced by selected equality bits. Before negatives each chart has the full
+product $A_m\times\mathcal T$.
+
+**Proof.** For finite $y$, the height of $\rho y$ is at least the height of
+$y$, since original branches persist. Both $F_a(y)$ and $G_a(y)$ have
+height strictly greater than that of $y$. Hence they both differ from $y$.
+For $a=T_j$, $j\ge2$, their left children are $\alpha$ whereas the left
+child of $a$ is $T_{j-1}\ne\alpha$, so they both differ from $a$.
+They differ from one another by their inner left children
+$T_j\ne T_{j+1}$. Together with the retained $y\ne a$, the four
+values $a,y,F_a(y),G_a(y)$ are pairwise distinct.
+
+In $\Theta_0$ the six holes are
+$(a,y,y,y,F_a(y),G_a(y))$; in $\Theta_1$ they are
+$(a,F_a(y),G_a(y),y,F_a(y),G_a(y))$.
+The pairwise distinctions prove every different-class inequality, and the
+displayed repetitions prove every within-class equality, in (CRE.15).
+The entire exterior and reached set follow from Theorem 3.1. The
+substituted negative conjunction preserves all additional signed records.
+Thus each displayed chart point lies in its stated complete stratum.
+
+Conversely, in a source from (CRE.12), $r_0$ forces $x=v=y$, and $r_1$
+forces $x=F_a(y),v=G_a(y)$. These reconstruct that same source as its
+respective $\Theta_i$. Its original negative list becomes precisely
+$C_i(j,y)$. This proves the other inclusion without dropping any row
+field. It also establishes the Cartesian domains directly, independently
+of a choice of feasibility witness. $\square$
+

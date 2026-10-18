@@ -1,0 +1,51 @@
+## 1. 一、定义：观察读出与信息逃逸
+
+设 $\Omega$ 是合法局部状态集合，$\mathcal M(\Omega)$ 是其上的有限 signed measure 空间。
+
+对任意线性读出
+
+$$
+R:\mathcal M(\Omega)\to V_R,
+$$
+
+定义读出 $R$ 的隐藏空间为
+
+$$
+\mathcal K_R=
+\ker R\cap
+\left\{
+h:\sum_{\omega\in\Omega}h(\omega)=0
+\right\}.
+$$
+
+若两个概率律 $p,q$ 满足
+
+$$
+R(p)=R(q),
+$$
+
+则它们的差
+
+$$
+h=p-q
+$$
+
+属于 $\mathcal K_R$。
+
+因此，固定读出值后的概率纤维是
+
+$$
+\mathcal F_R(b)=
+\left\{
+p\in\Delta(\Omega):R(p)=b
+\right\}.
+$$
+
+在一般内部点附近，其仿射维数就是
+
+$$
+\dim \mathcal K_R.
+$$
+
+---
+

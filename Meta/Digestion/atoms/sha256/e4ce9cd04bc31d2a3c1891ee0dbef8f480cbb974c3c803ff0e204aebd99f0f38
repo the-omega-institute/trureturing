@@ -1,0 +1,51 @@
+**Proposition 11.3 (native equal-output separation by ready direction).**
+There is a complete total three-bit table, with source-independent
+entry, on which two quiescent native sources give the same fixed
+Boolean output and the same root-cut row, but leave different ready
+directions under the actual two-bank construction. Hence zero flags
+and an erased inactive bank do not suffice for row-only handoff.
+
+Proof. Name the eight three-bit controls
+$s,l,a_\varepsilon,b_\varepsilon,a_L,b_L,h,e$, respectively, by the
+codes $000,001,010,011,100,101,110,111$. Let $s$ Read the root and
+send $\alpha,\beta,\mathsf{branch},\mathsf{absent}$ respectively to
+$a_\varepsilon,b_\varepsilon,l,e$. Let $l$ Read $L$, sending
+$\alpha,\beta$ to $a_L,b_L$ and the other Read replies to $e$.
+For $p\in\{\varepsilon,L\}$, let $a_p$ and $b_p$ Read $p$:
+their matching leaf reply goes to $h$ and every other Read reply
+goes to $s$. Let $h$ halt with Boolean zero and $e$ halt with Boolean
+one. Assign every unused acknowledgement successor and every
+halt-state successor to $e$. This defines the complete total table;
+those assignments do not create typed responses at halt.
+
+Start in $\operatorname{ready}(0,s)$. On $u=\alpha$, the designated
+control path is
+$s\to a_\varepsilon\to h$, with exactly two Reads. On
+$u'=\langle\alpha,\alpha\rangle$, it is
+$s\to l\to a_L\to h$, with exactly three Reads. These are also the
+guard-search and validation Read sequences of RA for the root cut
+on these two stationary sources; the intervening root-hole candidate
+is constant. No encoding of arbitrary RA configurations is assumed.
+
+Theorem 10.2 forces one ready-direction toggle per designated
+nonhalt instruction, independently of all routing replies. The
+terminal words are therefore respectively
+$\operatorname{ready}(0,h)$ and $\operatorname{ready}(1,h)$.
+Their phase bits are 000 and 010, so they are distinct even though
+the halt control code is the same, all flag bits are zero and both
+inactive banks are empty. Zero interleaving preserves this difference.
+Both original instructions at the terminal words halt with Boolean
+zero. Moreover $R_{\{\varepsilon\}}(u)=
+R_{\{\varepsilon\}}(u')$ by Definition 1.2. If the declared output
+is this row, supply a paid output service that, on these histories,
+emits the four fixed cells H, semicolon, exterior-end and row-end
+of Definition 2.2 while leaving the ready word accessible. Its row
+payload occupies sixteen bits; the four cell writes and its output
+control are additional costs. It needs no source query.
+
+A later observer of the phase distinguishes these executions, while
+their declared output and public cut do not. Thus no function in
+(CWS.17) can include that phase for both histories. This is a
+specified native finite-table witness, not an assertion about the
+parity of an unspecified finite encoding of all-finite RA. $\square$
+

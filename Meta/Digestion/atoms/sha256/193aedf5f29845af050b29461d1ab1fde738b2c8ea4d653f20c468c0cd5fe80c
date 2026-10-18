@@ -1,0 +1,21 @@
+**Definition 2.1 (The specified face coordinates).** For real
+$\Lambda\in M_3(\mathbb R)$ and real symmetric
+$\Gamma\in M_3(\mathbb R)$ with $\Gamma_{ii}=\Lambda_{ii}$,
+let $x(\Lambda,\Gamma)$ have
+
+$$
+\begin{gathered}
+M_{ij}=\Lambda_{ij}/\sqrt{n_in_j},\qquad
+\eta_+=\Gamma_{0+},\quad\eta_-=\Gamma_{0-},\\
+\eta_{2+}=\Lambda_{++}/4,\quad
+\eta_{2-}=\Lambda_{--}/4,\qquad
+\eta_\Delta=\eta_\Sigma=\Gamma_{+-}/2.
+\end{gathered}
+\tag{2.1}
+$$
+
+The planar saturation equations on a general tuple are
+$\Lambda_{++}-4\eta_{2+}=\Lambda_{--}-4\eta_{2-}=0$.
+They describe a face of $\mathcal K$, because the two functionals
+are nonnegative on every product generator.
+

@@ -1,0 +1,94 @@
+## 8. A quotient bridge from sign changes to finite collisions
+
+For a five-read history define linear maps on real $2\times2$ matrices by
+
+$$
+\mathcal L(X)_i=\operatorname{tr}(A_iX),\qquad
+(\mathcal I v)_i=iv_i,\qquad
+\mathcal Qv=(v_i-v_0)_{i=1}^4,
+$$
+
+$$
+\mathsf B=\mathcal Q\mathcal L,\qquad
+\mathsf C=\mathcal Q\mathcal I\mathcal L,\qquad
+\mathsf T_k=\mathsf B+k\mathsf C.
+\tag{8.1}
+$$
+
+The kernel of $\mathcal Q$ is exactly the constant vectors. Write
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$,
+
+$$
+\mathfrak b(S,Y)=sY_{11}+pY_{22}-rY_{12}-qY_{21}.
+\tag{8.2}
+$$
+
+**Lemma 8.1.** Suppose $\mathsf T_a$ is invertible and $\mathsf H=\mathsf T_a^{-1}\mathsf C$. If $\mathfrak b(S,\mathsf H S)$ takes both strict signs on positive rank-one sources, there are actual collisions with slopes $a,a+\epsilon$, for arbitrarily small $\epsilon>0$, and one entire constant drift per run.
+
+**Proof.** Parameterize all positive rank-one sources as
+
+$$
+S=\sigma\begin{pmatrix}uv&u\\v&1\end{pmatrix},\qquad\sigma,u,v>0.
+\tag{8.3}
+$$
+
+Connect two strictly signed sources by straight interpolation of their positive parameters. This is a compact positive rank-one path $S(\theta)$. Let $m>0$ bound all entries from below, put
+
+$$
+K=1+\max_{\theta,a,b}|(\mathsf H S(\theta))_{ab}|,
+$$
+
+and let $\eta>0$ be the smaller magnitude of the endpoint values of $\mathfrak b(S,\mathsf H S)$. Since $|\det(\mathsf H S)|\le2K^2$, choose
+
+$$
+0<\epsilon<\min\{m/(2K),\eta/(4K^2)\},
+$$
+
+with any additional prescribed positive upper bound. The entries of $S+\epsilon\mathsf H S$ remain positive. The continuous function
+
+$$
+\mathfrak b(S,\mathsf H S)+\epsilon\det(\mathsf H S)
+$$
+
+still has opposite endpoint signs and has a zero. At that zero set
+
+$$
+S_1=S,\qquad S_0=S+\epsilon\mathsf H S.
+$$
+
+The determinant identity
+
+$$
+\det(S+\epsilon\mathsf H S)
+=\epsilon\mathfrak b(S,\mathsf H S)+\epsilon^2\det(\mathsf H S)
+$$
+
+makes $S_0$ rank one. Moreover
+
+$$
+\mathsf T_aS_0=\mathsf T_aS_1+\epsilon\mathsf C S_1
+=\mathsf T_{a+\epsilon}S_1.
+\tag{8.4}
+$$
+
+Thus the five-vector
+
+$$
+u_i=(1+ai)\operatorname{tr}(A_iS_0)
+-(1+(a+\epsilon)i)\operatorname{tr}(A_iS_1)
+$$
+
+is constant, with value $u_0=\operatorname{tr}(S_0-S_1)$. Take the whole drifts
+
+$$
+D_0(\tau)=0,\qquad D_1(\tau)=u_0.
+\tag{8.5}
+$$
+
+Every original reading then agrees, including the initial one. The slopes differ, so the targets differ even if their sources coincide. Equations (1.2)–(1.4) give the original positive factors, fixed rows, and positive unread states on the prescribed words. No gain was divided out. If $|a|<1/16$ and $0<\epsilon<1/16$, both slopes have magnitude less than $1/8$, so all gains at $i\le4$ are strictly positive. ∎
+

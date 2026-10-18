@@ -1,0 +1,46 @@
+**Theorem 7.1 (lawful recovery and dynamic transport).** Put
+$R_{VW}=W\circ H_V$ on the actual image of $V$. These maps are inverse in
+pairs, preserve source identity, and satisfy triangle identities. The next
+selector input, enabled action, complete response and original joint successor
+factor through each $V$. Their induced transitions commute:
+
+$$
+R_{VW}\,\overline{\operatorname{Advance}}_V
+=\overline{\operatorname{Advance}}_W\,R_{VW}
+\tag{NCR.8}
+$$
+
+on their common enabled domain. Illegal-unexecuted and executed-reject cases
+keep their distinct types.
+
+Proof. Theorem 5.3 reconstructs the same actual $x_h$, so $R_{VW}(V(h))=W(h)$;
+applying a reverse or a third transport proves both identities. The
+controller's entire input is in its reconstructed control/tapes/latches.
+Thus its selected primitive, admission token and reply-dependent continuation
+are identical in every presentation. A busy cut admits only that primitive;
+a halted cut admits no `Advance`. By Theorem 4.2 the actual successor is
+$x_{h'}$ in the same joint image. Decoding before stepping or stepping after
+decoding therefore gives that very same successor and all its response
+fields, which proves NCR.8. A rejection commitment still has its actual
+successor and pending row; it is `some(reject,successor)`. An illegal request
+has no transition and is `none`. Neither is replaced by the other. ∎
+
+There is also a direct tree meaning to the source part of transport. On local,
+Fetch and literal Read occurrences, support and frontier are unchanged. On a
+Native update, the supplied shape transport gives
+
+$$
+\operatorname{sh}(r_{h'})=\Theta(\operatorname{sh}(r_h)),\quad
+e_{h'}=e_h+1,\quad n_{h'}=n_h+1.
+\tag{NCR.9}
+$$
+
+The new boundary is the terminal antichain of this shape. Alternatively decode
+the current labelled tree using NCR.6 and forward substitution, then replace
+each $(p,\alpha)$ by $(p,\beta)$ and each $(p,\beta)$ by
+$\{(pL,\beta),(pR,\alpha)\}$ before erasing colours. At a literal request,
+the recovered current labelled frontier gives exactly a colour at a frontier
+address, branch at a proper prefix and absent otherwise. These formulas keep
+the original root and ordered occurrences; no reroot or free parent handle is
+introduced.
+

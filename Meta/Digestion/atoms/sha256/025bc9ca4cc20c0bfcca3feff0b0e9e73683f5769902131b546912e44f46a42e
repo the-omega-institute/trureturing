@@ -1,0 +1,11 @@
+### 命题 12.8（二阶矩恢复）
+
+对任意满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，记 $(X,Y,Z)=V(p)$，则
+
+$$
+\kappa(p)=\frac{\sum_s p_sW(s)^2-\left(\sum_s p_sW(s)\right)^2
++(2X+3Z+5Y)^2-4X-9Z-25Y}{20}.
+$$
+
+证明：由定理 3.2，$W^2=4x+9z+25y+20xy$、$\sum_s p_sW(s)=2X+3Z+5Y$、$\sum_s p_sW(s)^2=4X+9Z+25Y+20\kappa(p)$。代入即得；分子前两项正是方差。证毕。
+

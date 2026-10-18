@@ -1,0 +1,73 @@
+**Theorem 10.1.** For every integer $d\ge1$, take
+
+$$
+w=2d+2,\quad h=d,\quad a=d+3,\quad b=d+4,\quad m=d+1.
+\tag{10.1}
+$$
+
+Then (9.1), (9.3)–(9.8), and (9.13)–(9.14) give another globally recovering $d+5$-read history and whole-image inverse. Its nonempty multipliers are $L^d$, $UL^{d+1}$, $U^{d+1}J$, and $U$, with $d$ empty repeats at $Q_w$. Their lengths $2d,2d+4,2d+3,2$ total $6d+9$.
+
+**Proof.** Legality, the actual-source realization, the coordinate inverse, interpolation, and the cubic rank argument in Section 9 only require $w-2=2h>0$ and $m=a-2\ge2$, and still apply. To prove the missing determinant sign, substitute (10.1) in (9.11). With
+
+$$
+B=(d+3)(d+4),\quad A=B(2d+1),
+$$
+
+one obtains
+
+$$
+\begin{aligned}
+-\mathcal J={}&p[Ak^2-(3d^2+3d+1)k+2d^3+4d^2-1]\\
+&+q[Ak^2+(3d^2+11d-1)k+2d-1]\\
+&+r[Bk^2-(2d+1)k+d^2+d-1].
+\end{aligned}
+$$
+
+Put $x=d-1\ge0$. The positive discriminant margins for the $q$ and $r$ brackets are
+
+$$
+\begin{aligned}
+4A(2d-1)-(3d^2+11d-1)^2
+&=7x^4+74x^3+253x^2+306x+71>0,\\
+4B(d^2+d-1)-(2d+1)^2
+&=4x^4+48x^3+188x^2+264x+71>0.
+\end{aligned}
+$$
+
+For the $p$ bracket, its constant exceeds the $q$ constant by $2d(d^2+2d-1)>0$, while
+
+$$
+0<3d^2+3d+1<3d^2+11d-1
+$$
+
+because the difference is $8d-2>0$. Its discriminant margin is therefore strictly larger than the $q$ margin. All leading coefficients are positive, so completing squares gives positivity of all three brackets for every real slope. The same midpoint proof and cubic inverse now apply in full. ∎
+
+Both families have an exact common safe kernel. Let $n=d+5$ and let $\Lambda_d$ consist of the four shifted $(d+1)$-st forward differences on these $n$ readings. A first difference lowers polynomial degree, so it kills every degree-at-most-$d$ evaluation vector. The four rows are independent: in any nonzero row combination, the greatest row index has a last nonzero coordinate absent from earlier rows. Polynomial evaluations have dimension $d+1$ by interpolation. Thus the kernel of $\Lambda_d$ is exactly that evaluation space.
+
+Write $\mathcal L(X)_i=\operatorname{tr}(A_iX)$ and $(\mathcal I v)_i=iv_i$. Every endpoint has lower-right entry one, so $E_{22}$ has constant trace signal one and
+
+$$
+\mathcal T_k=\Lambda_d(\operatorname{Id}+k\mathcal I)\mathcal L,
+\qquad E_{22}\in\ker\mathcal T_k.
+$$
+
+Conversely, if a full real matrix $X$ belongs to this kernel, the exact quotient supplies one degree-at-most-$d$ compensating polynomial with all observations zero. The coordinate and interpolation identities of Section 9 hold without rank or positivity. Zero observations give $P=u=W=Y=Z=0$. Rank two of $P_k$ gives $t=v=0$; (9.4) gives $p=q=r=0$. The remaining $s$ is free, with compensator $-s(1+k\tau)$. Hence for both families
+
+$$
+\ker\mathcal T_k=\mathbb RE_{22},\qquad
+\operatorname{rank}\mathcal T_k=3\quad(k\in\mathbb R).
+$$
+
+The safe signal is the constant one; it lies in degree at most $d-1$ for every $d\ge1$. This full-matrix quotient is an auxiliary rank assertion. Actual-source recovery was separately established above.
+
+The conjugation argument of Section 6 applies to each family: replace every endpoint and multiplier by $JA_iJ$ and $JW_iJ$. These remain finite legal words, and $S=JS'J$, with positive factors $Jc$ and $\ell J$, preserves all actual observations. The mirrored kernels are $\mathbb RE_{11}$, and $k,D$ are unchanged. No physical conjugation step or extra read is inserted. The full positive relation/gain fibre for every family is exactly (6.3), with the same internal factor scale proved there.
+
+Section 7 supplies the credited lower bound on the identical actual target for all predetermined histories. Together with either attaining family it gives
+
+$$
+\boxed{C_{\mathrm{fix}}(d)=d+5\qquad\text{for every integer }d\ge1.}
+\tag{10.2}
+$$
+
+For $d=0$ the same lower bound is five, and the $d=1$ six-read inverse also works when the true drift is constant. Thus $5\le C_{\mathrm{fix}}(0)\le6$. No five-read construction or universal five-read collision is supplied. The positive-degree proof uses both polynomial absorption with $d\ge1$ and a positive coordinate divisor; it does not settle this endpoint.
+

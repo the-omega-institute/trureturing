@@ -1,0 +1,31 @@
+**Theorem 187.3 (An exact seven-active sparse example).** Set
+$L=7$, $g_6=1/100$, $g_7=1/200$. For the core of Definition 187.1,
+
+$$
+\begin{aligned}
+W&=\frac1{40},&E&=\frac3{200},&r&=\frac{39}{40},&
+\varepsilon&=\frac{3149}{8000},\\
+a&=\left(\frac{683}{800},\frac{683}{800},\frac{683}{800},
+\frac{3337}{4000},\frac{121}{160},
+\frac{3229}{8000},\frac{3189}{8000}\right).
+\end{aligned}
+\tag{187.6}
+$$
+
+With any retained positive monotone vanishing tail below this cap,
+the original same-seed $O_2$ and $N_2$ laws have uniform error exactly
+$3149/8000$ and one $E_7$ conic allocation of mass $99/100$.
+The literal conditioned system has sixteen base/pair energy systems,
+in addition to its seven correct rows and its all-positive row.
+
+**Proof.** Equations (186.1)--(186.2) give
+$w_6=7/600$, $w_7=1/75$ and the displayed exact values.
+Both late residuals are positive, so the active length is seven.
+Theorems 186.2--187.2 give all words, the independent pair row,
+the exact tails and the common budget $1-g_6=99/100$.
+Theorem 184.2 gives $2(7)+2=16$ systems.
+This is a different amplitude and cap instance from Proposition
+180.1: that proposition uses the core $(175.1)$ and cap $233/800$.
+No equality of these laws, cap optimality or full-class gap follows
+from either example. $\square$
+

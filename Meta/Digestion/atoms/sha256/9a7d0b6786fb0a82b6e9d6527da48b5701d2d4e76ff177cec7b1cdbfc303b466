@@ -1,0 +1,49 @@
+**Proposition 27.2 (literal cylinders with both source inclusions).**
+There is an effective finite list $\mathcal L$ of depth-$d$ patterns
+such that
+
+$$
+V=\coprod_{t\in\mathcal L}\mathcal C(t),\qquad
+U=\coprod_{t\in\mathcal L}\{F(t[v]):v:X_t\to\mathcal T\}.
+\tag{ARH.27.4}
+$$
+
+Every listed pattern has all its finite fillings, without residual
+constraints. The displayed maps are bijective when the pattern and its
+frontier valuation are included. In particular $U$ is empty exactly when
+$\mathcal L$ is empty. Pattern identity has a bounded original-prefix
+selector.
+
+Proof. The finite depth-pattern construction is the one in Definition
+74.2 of [SLH][SLH], applied to the single parameter tree. Enumerate all its
+patterns and, in each, fill every frontier variable by $\alpha$ to get a
+finite test tree. Keep the pattern if and only if this test tree, after
+applying $F$, satisfies every literal in $H_0$.
+
+This finite test is exact on the whole cylinder. Two fillings of the same
+pattern are $\equiv_d$. Lemma 19.2 gives the same agreement after $F$.
+The address-locality statement (SLH.74.7) then makes their replies at each
+specified epoch and address identical, since $|p|<d$. In particular
+arbitrarily large retained epochs do not require deeper original
+patterns. The known finite iterates used in the test include all
+leaf-sector reach guards. Each occurrence in the history list is tested,
+so a repeated incompatible record rejects the pattern and an absent
+reply retains its exact meaning.
+
+Every finite $y$ has a unique depth-$d$ pattern and unique frontier
+subtrees. If $y\in V$, the test tree of that pattern has the same retained
+replies, so the pattern is listed. Conversely every filling of a listed
+pattern has all the required replies. This proves both inclusions for
+$V$. Apply the supplied bijection (ARH.27.2) to get both inclusions for
+$U$, with its complete old row and guarded relation. Recovering $y$ at
+original $R$ and its frontier subtrees proves uniqueness. Every pattern
+has a finite filling, including the empty valuation of a ground pattern;
+therefore the emptiness assertion follows.
+
+The selector consists only of the original replies of $y$ at $|s|<d$,
+which are original replies of $u$ at $Rs$. They have physical original
+length at most $d$. At a current epoch these are decoded by the paid
+literal supplier, not obtained by inspecting a hidden parameter. Distinct
+patterns differ at one such reply. This also rules out an unobserved
+semantic branch between the cylinders. $\square$
+

@@ -1,0 +1,36 @@
+**Corollary 7.3 (no subnative-order NULL155 lower-tail repair).** The two
+p descriptors in [NULL155, Definition 2.1][NULL-STABILITY] have the same
+marker-one masses $c_az_a^n$ for every $n\ge5$. Let a proposed repair
+supply a single compatible pair in the original domain, satisfying
+either $\mathcal J=0$ or the separate boxed p-midpoint condition of
+Definition 7.1. If its corrected mean is
+$d_n=c_az_a^n+\Delta_n$ for $n\ge5$, then
+
+$$
+\Delta_n\ge\frac{c_a\rho_p}{H_a}z_a^n>0
+\qquad(n\ge5).
+\tag{7.8}
+$$
+
+In particular $\Delta_n=o(z_a^n)$ is impossible, even if that
+asymptotic condition is required only along an unbounded subsequence.
+The conclusion allows arbitrary changes to support, mixture weights,
+earlier coordinates and conditional branching, subject to the same
+complete compatibility and face hypotheses.
+
+**Proof.** Every probability mixture of those two specified p laws has
+the displayed original tail means. For any repaired pair with the stated
+hypotheses, $\Delta_n=e_{a,n}$, and (7.4) gives (7.8). If
+$n_j\to\infty$, then every $n_j\ge5$ obeys
+$\Delta_{n_j}/z_a^{n_j}\ge c_a\rho_p/H_a>0$, which contradicts
+convergence of that ratio to zero. The same bound also applies termwise
+to a family of proposed repairs, each satisfying the stated hypotheses,
+when the return indices tend to infinity across the family.
+
+The NULL155 measures themselves fail common full marginals and omitted
+complete residual equations [NULL155, Proposition 5.1][NULL-STABILITY].
+They are not inputs to Theorem 6.3. The conclusion constrains their
+proposed compatible repairs, not merely their retained feature moments.
+Meeting (7.8) alone supplies none of the remaining compatibility or
+loss conditions. $\square$
+

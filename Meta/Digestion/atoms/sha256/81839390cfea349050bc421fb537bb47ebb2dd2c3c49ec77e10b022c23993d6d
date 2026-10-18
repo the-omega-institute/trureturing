@@ -1,0 +1,58 @@
+**Definition 75.1 (fixed source, geometry and literal target).** Fix every item of Definition72.1: one authentic nonempty finite full binary source $D$, its actual occurrence identities and inherited seams, its two distinct unit grounded stubs at each current leaf, commissioned $a>0$, $0<\delta\le1$, one integer $s\ge3$, the positive reference volumes of the distinct ground chambers, and one chosen separated assembly of72.3–72.6. Fix also the original commissioned $g>0$ and $\nu\ge0$. All these data remain fixed as $\varepsilon\downarrow0$. Write
+
+$$
+d=|D|,\qquad r_\varepsilon=\varepsilon^{(s-1)/s},\qquad
+\beta=\frac a\delta,\qquad \lambda=3-2\sqrt2.
+\tag{75.1}
+$$
+
+Let $X_D$ be exactly Definition64.5's compact unit-cable tree, including its distinct ground tips, with path metric $d_X$ and measure $\mu_\delta$. A ground tip has no atomic mass. Put $\mathcal H^{\rm fr}=\mathcal H_2^{\rm fr}$, $\mathcal Q^{\rm fr}=\mathcal Q_2^{\rm fr}$, and let $B$ and $q^{\rm fr}$ be precisely the complete free product operator and form of73.1–73.2. Let $\mathcal K=\mathcal K_{D,2}^{\rm hc}$ and $\mathcal Q^{\rm hc}=\mathcal Q_{D,2}$ be the unchanged literal target. The isometry $E:\mathcal K\to\mathcal H^{\rm fr}$ identifies every slice and cell coordinate and inserts zero at every atomic $(p,p)$; its adjoint deletes those atomic coordinates. The exact domain identification supplied by(73.8) is
+
+$$
+E\mathcal Q^{\rm hc}
+=\{F\in\mathcal Q^{\rm fr}:F_{pp}=0\ (p\in D),\quad
+       \operatorname{Tr}_{x=y}F_{ee}=0\ (e\in\mathcal E_D)\}.
+\tag{75.2}
+$$
+
+This is an equality of complete form domains. The two triangles of a same-cable square glue to an $H^1$ square because their diagonal traces are both zero. Every different-cable rectangle remains. Cell boundary traces equal the appropriate atom/cable slices, whose endpoints equal the atomic pair coordinates. Grounded traces vanish in either coordinate. At a collision port the missing atomic value is zero, so every incident collision slice ends at zero, including approaches along different cables. No point trace at a rectangle corner is imposed.
+
+Before exchange restriction the norm and kinetic form are
+
+$$
+\begin{aligned}
+\|F\|^2={}&\sum_{p\ne q}|F_{pq}|^2
+ +\delta\sum_{p,e}\bigl(\|F_{pe}\|_2^2+\|F_{ep}\|_2^2\bigr)
+ +\delta^2\sum_{e,f}\|F_{ef}\|_2^2,\\
+a k_{\delta,2}[F]={}&a\sum_{e,q}\|\partial_xF_{eq}\|_2^2
+ +a\sum_{p,f}\|\partial_yF_{pf}\|_2^2
+ +a\delta\sum_{e,f}\int\bigl(|\partial_xF_{ef}|^2+|\partial_yF_{ef}|^2\bigr).
+\end{aligned}
+\tag{75.3}
+$$
+
+The same-cable integrals include both triangles. There are $d(d-1)$ ordered distinct atomic coordinates, $4d^2$ mixed slices and $4d^2$ cells, with each of the $2d$ same-cable cells dissected. Symmetry restricts these spaces without an additional factor or ordering sign. Every interval and cell keeps its entire infinite-dimensional space. In particular the singleton source retains a nonzero continuum two-position target even though it has no distinct atomic pair.
+
+The three target operators, considered separately, are
+
+$$
+\begin{aligned}
+C_0&=A_{\delta,D,2},\quad U_0=0,\qquad
+C_\diamond=\mathcal T^\diamond_{\delta,D,2}=C_0+U_\diamond,
+\quad \diamond\in\{\mathrm c,\mathrm k\},\\
+U_\diamond(x,y)&=-g\bigl(\phi_A(x)+\phi_A(y)\bigr)
+-\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q).
+\end{aligned}
+\tag{75.4}
+$$
+
+Here $\phi(p)=2^{-|p|}$ and $\phi_A$ is zero on open cables. For every $D$ the complete original prescriptions are
+
+$$
+G_D^{\rm c}(p,q)=\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},
+\qquad G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle.
+\tag{75.5}
+$$
+
+In(75.5), $d(p,q)=|p|+|q|-2|p\wedge q|$, with $p\wedge q$ the longest common occurrence prefix. The first expression is the restriction of the same infinite source kernel $L^{-1}$, not a refitted finite kernel. The source matrix is $(L_D)_{pq}=d_p\mathbf1_{p=q}-\mathbf1_{p\sim q}$, where $p\sim q$ is an inherited seam, $d_o=2$ and every other $d_p=3$; these diagonals retain all exterior terms. Equivalently(67.2) gives $G_D^{\rm c}=(L_D-P_{\operatorname{Leaf}(D)})^{-1}$ and $G_D^{\rm k}=L_D^{-1}$. The bounds $\lambda I\le F_D^\diamond\le6I$ and $0<G_D^\diamond(p,q)\le\lambda^{-1}$ are the already supplied source bounds. Killing changes the pair prescription and leaves the original one-body field $\phi$ unchanged.
+

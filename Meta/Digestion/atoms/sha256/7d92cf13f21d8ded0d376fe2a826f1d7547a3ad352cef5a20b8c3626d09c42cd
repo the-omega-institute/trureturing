@@ -1,0 +1,12 @@
+**命题 58.4（混合原形、无限来源与不同有限性）。** 以下都是同一原生字面口可实际达到的历史；重复其任一条证据不改变所列语言或 $D_H$。
+
+- $H=\varnothing$ 时，$\mathcal V(H)=\mathcal T$、$D_H=\mathcal T$，故没有统一有限后来调用界。
+- $H=((0,L,\mathsf{absent}))$ 时，$\mathcal V(H)=\{\alpha,\beta\}$、$D_H=\varnothing$，故零读；历史有一项而原根均为叶。
+- $H=((0,LL,\mathsf{absent}))$ 时，$C_H=\{\alpha,\beta\}$、$A_H=\{\alpha,\beta\}$、$B_H=\mathcal T$，所以整个来源族无限且包含不同原形，$D_H=\{\alpha,\beta\}$ 却有限。
+- $H=((0,LL,\mathsf{absent}),(1,L,\beta))$ 时，$\mathcal V(H)=\{\beta\}\sqcup\{\langle\alpha,z\rangle:z\in\mathcal T\}$，所以 $D_H=\{\alpha\}$；这是祖先地址与后代地址重叠、纪元不同的混合原形纤维。真实原来源 $\beta$ 与 $\langle\alpha,\alpha\rangle$ 给同一已获记录而 $E$ 相反。
+- $H=((0,L,\alpha))$ 时，$\mathcal V(H)=\{\langle\alpha,z\rangle:z\in\mathcal T\}$、$D_H=\{\alpha\}$。每个认证 $N$ 的后来最坏 raw 调用数恰为一。
+- $H=((0,L,\mathsf{branch}),(0,R,\alpha))$ 时，$A_H$ 为全部原分支、$B_H=\{\alpha\}$、$D_H=\varnothing$；来源族无限而零读足够。
+- $H=((0,L,\alpha),(0,R,\alpha))$ 时，来源族为 $\{\langle\alpha,\alpha\rangle\}$；$D_H$ 非空但零读输出一。
+
+**证明。** 这些列表分别由共同程序按所列纪元与地址串行读取、在对应回复行交接而达到，无大小许诺。叶根下全部非空地址缺席；原分支下，$LL$ 缺席恰当左孩子是叶。这给前三种准确分解。第四种先读 $LL$，实际更新一次再读 $L$；在此前允许的原叶中只有 $\beta$ 的一次像在 $L$ 回复 $\beta$，在此前允许的原分支中只有原左孩子 $\alpha$ 的一次像给该回复。其余三种直接由构造符回复给出。第五种用定理55.3对原右孩子核对模板 $\alpha$，只需在当前 $RR^{\lfloor N/2\rfloor}$ 读一次并比较 $c_N(\alpha)$。两棵真实原来源 $\langle\alpha,\alpha\rangle$、$\langle\alpha,\beta\rangle$ 满足同一旧 $H$ 而 $E$ 相反，所以零读不可能；定理53.4保证延迟与继续更新不改变该答案差异。第六种所有左孩子为分支，不能等于右叶；第七种两个孩子都已固定。重复项只重复同一约束，不改变交集，实际重复调用和档案费用仍保留。$\square$
+

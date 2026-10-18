@@ -1,0 +1,19 @@
+### 定义 54.9（量子度量极限的附加数据）
+
+有限量子层
+
+\[
+\mathfrak Q_j=(\mathcal A_j,\sigma_j,\mathcal L_j)
+\]
+
+中的 \(QCD(K)\) 只约束 GNS Hilbert 空间中的二次型。要得到 metric-measure 极限，还必须给出量子 Lipschitz 半范数 \(\operatorname{Lip}_j\)，或状态空间距离
+
+\[
+d_j(\varphi,\psi)
+=
+\sup_{\operatorname{Lip}_j(a)\le1}
+|\varphi(a)-\psi(a)|,
+\]
+
+并证明归一化 Lipschitz 球统一全有界、状态空间具有 quantum-GH 子列紧性、GNS resolvent 或量子 Dirichlet 形式满足 Mosco 条件，以及半范数与极限测度相容。没有这些附加数据，\(QCD(K)\) 只能给出非交换 Hilbert 空间的谱稳定性，不能推出 metric-measure 极限。
+

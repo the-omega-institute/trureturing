@@ -1,0 +1,17 @@
+**Lemma 99.1.** The singleton records \(\psi,\phi\) are linearly independent.
+
+**Proof.** Let \(o\notin S\) be the actual original fibre partner of coordinate 3 in a full Gram realization of \(H\). Its record is orthogonal to \(\psi\), because \(H_{o3}=0\). If \(\phi\) were collinear with \(\psi\), then \(H_{o4}=0\) too. Coordinates \(o,4\) are in different original fibres, so the matrix-unit bound would give \(t\ge1/2\), a contradiction. No new completion or unit-length projection is used. \(\square\)
+
+For any common pair write
+\[
+\rho_S=\operatorname{diag}(\rho_F,p_3,p_4),\qquad
+W_S=\begin{pmatrix}A&C\\C^*&D\end{pmatrix},\qquad
+L_S=\begin{pmatrix}0&E\\E^*&L_{\mathcal J}\end{pmatrix}.\tag{3}
+\]
+Here \(L_{\mathcal J}\) has zero diagonal. Every entry of \(H_{F\mathcal J}=[\psi\ \phi]\) is nonzero, and for a \(2\times2\) matrix with nonzero entries,
+\[
+\det\bigl((1/\overline{M_{ij}})_{ij}\bigr)
+=-\frac{\overline{\det M}}{\prod_{i,j}\overline{M_{ij}}}.\tag{4}
+\]
+Lemma 99.1 and (2) therefore make \(C\) invertible, with no restriction on complex phases.
+

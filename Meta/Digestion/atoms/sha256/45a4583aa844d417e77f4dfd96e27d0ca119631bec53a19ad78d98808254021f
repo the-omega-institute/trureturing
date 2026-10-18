@@ -1,0 +1,30 @@
+**Theorem 12.1 (host saturation or ambiguity in both children).**
+If $\nu_v>\kappa_v$, then
+
+$$
+e_v\ge\kappa_v
+\quad\hbox{or}\quad
+a_{v_0}\ge2\ \hbox{and}\ a_{v_1}\ge2.
+\tag{CL.46}
+$$
+
+In particular $b_v=\kappa_v$ forces the second alternative. For either
+child $w$ whose demand graph is edgeless,
+
+$$
+\bigl(e_v-(\kappa_v-1)\bigr)+e_w\ge1.
+\tag{CL.47}
+$$
+
+Proof. The premise cannot hold for an edgeless graph, where
+$\nu_v=0,\kappa_v=1$. Both children are therefore live and internal
+by Lemma 11.2. Capacity (CL.20) gives $b_v\ge a_v\ge\kappa_v$.
+If the first alternative fails, integrality gives
+$b_v=a_v=\kappa_v$. Apply (CL.41) with $j=1$ separately to the two
+children: $\nu_v>a_v$ forbids a singleton support family at either.
+This proves (CL.46). In its first alternative the parent difference in
+(CL.47) is at least one; if that difference is zero, both children have
+$e_w\ge1$. The difference and all other excess terms are nonnegative,
+which proves (CL.47). No separate charge is assigned to an edge witness.
+$\square$
+

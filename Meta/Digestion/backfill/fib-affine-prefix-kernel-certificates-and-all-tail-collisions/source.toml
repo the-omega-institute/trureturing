@@ -1,0 +1,5 @@
+source_id = "fib-affine-prefix-kernel-certificates-and-all-tail-collisions"
+path = "docs/develop/theory/FIB_AFFINE_PREFIX_KERNEL_CERTIFICATES_AND_ALL_TAIL_COLLISIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

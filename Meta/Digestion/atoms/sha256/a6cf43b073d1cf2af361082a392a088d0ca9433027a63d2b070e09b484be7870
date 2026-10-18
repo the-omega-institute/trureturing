@@ -1,0 +1,190 @@
+**Theorem 27.2 (One proper law, with minima three and two).**
+Fix $0<r<1$ and put
+
+$$
+q=r^2,\qquad d=1-q,\qquad
+b=\sqrt{\frac d{1+q}},\qquad
+\psi=\frac{(r,1)^{\mathsf T}}{\sqrt{1+q}}.
+\tag{27.1}
+$$
+
+On a two-dimensional complex memory, use the real matrices
+
+$$
+A=\begin{pmatrix}r&d\\0&r\end{pmatrix},\qquad
+B=b\begin{pmatrix}r&-q\\1&-r\end{pmatrix},\qquad
+\mathcal E_0(\rho)=A\rho A^*,\quad
+\mathcal E_1(\rho)=B\rho B^*.
+\tag{27.2}
+$$
+
+They define a complete quantum instrument. After every
+positive-probability one-emission the memory resets to
+$|\psi\rangle\langle\psi|$. Its proper stationary
+visible law $P_q$ is renewal, with gap probabilities
+
+$$
+\gamma_0=0,\qquad
+\gamma_k=\frac{d^3}{1+q}k^2q^{k-1}\quad(k\ge1).
+\tag{27.3}
+$$
+
+For this same stationary output law, the minimum
+classical dimension in Definition 27.1 is exactly
+three, whereas the minimum quantum dimension is
+exactly two.
+
+Proof. Write $v=(r,1)^{\mathsf T}$ and
+$\ell=(1,-r)$, so $B=bv\ell$ and
+$\ell v=0$. Direct multiplication gives
+
+$$
+I-A^*A=d\ell^*\ell=B^*B,\qquad
+B\psi=0.
+\tag{27.4}
+$$
+
+Thus the two branch maps are completely positive
+and their sum preserves trace. B has range
+$\mathbb C\psi$, proving pure reset. The power
+formula for every $j\ge0$ is
+
+$$
+A^{j+1}=
+\begin{pmatrix}
+r^{j+1}&(j+1)d r^j\\0&r^{j+1}
+\end{pmatrix}.
+\tag{27.5}
+$$
+
+Consequently
+
+$$
+B A^{j+1}\psi=b(j+1)d r^j\psi.
+\tag{27.6}
+$$
+
+The squared norm gives (27.3), including k=0
+by (27.4). Since $A^n\to0$, telescoping the
+completeness identity proves $\sum_k\gamma_k=1$.
+All legal gaps are positive and their mean is finite.
+Geometric moment sums give
+
+$$
+\mu=\sum_{k\ge0}(k+1)\gamma_k
+=\frac{2(1+2q)}{1-q^2},\qquad \nu=\mu^{-1}.
+\tag{27.7}
+$$
+
+To exhibit the stationary initialization explicitly, put
+
+$$
+\rho_*=\nu\sum_{k\ge0}
+A^k|\psi\rangle\langle\psi|(A^*)^k.
+\tag{27.8}
+$$
+
+The series converges and is positive. The survival
+probability $\|A^k\psi\|^2=S_k$ follows by
+telescoping future click probabilities and using
+$A^n\to0$. Thus $\operatorname{Tr}\rho_*
+=\nu\sum_kS_k=1$. Shifting the sum and using
+(27.6) gives
+$\mathcal E_0(\rho_*)=\rho_*-\nu|\psi\rangle\langle\psi|$
+and $\mathcal E_1(\rho_*)=\nu|\psi\rangle\langle\psi|$.
+This proves stationarity. Reset, the gap law and
+vanishing infinite survival identify the actual law
+as the proper stationary renewal law (24.3).
+
+For a classical presentation, take
+
+$$
+M_0=\begin{pmatrix}q&d&0\\0&q&d\\0&0&q\end{pmatrix},\quad
+\alpha=\left(\frac{2q}{1+q},\frac d{1+q},0\right),\quad
+\beta=(0,0,d)^{\mathsf T},\quad M_1=\beta\alpha,
+\quad
+\lambda=\frac{(\alpha_1,1,1)}{\alpha_1+2}.
+\tag{27.9}
+$$
+
+The total matrix is stochastic, irreducible and
+aperiodic, and $\lambda$ is stationary. Also
+$\alpha\beta=0$, so $M_1^2=0$. Its rank-one
+one-emission resets to $\alpha$. The nilpotent
+upper shift in $M_0$ has order three, and its
+binomial power formula gives
+
+$$
+\alpha M_0^k\beta
+=\frac{d^3}{1+q}k^2q^{k-1}\quad(k\ge1),\qquad
+\alpha\beta=0.
+\tag{27.10}
+$$
+
+It therefore has the same proper stationary renewal
+law, rather than just the same one-time marginals.
+This supplies a classical dimension-three upper bound.
+
+For the lower bound, set $C=d^3/(1+q)>0$.
+The actual gap Hankel minor is
+
+$$
+\det[\gamma_{i+j}]_{i,j=0}^2
+=C^3\det\begin{pmatrix}
+0&1&4q\\1&4q&9q^2\\4q&9q^2&16q^3
+\end{pmatrix}
+=-8C^3q^3\ne0.
+\tag{27.11}
+$$
+
+Any h-state classical presentation of the same
+stationary law has, conditional on a one, a posterior
+row $a=\lambda M_1/P_q(1)$ and next-one column
+$c=M_1\mathbf1$. Its actual interevent probabilities
+are $\gamma_k=a M_0^k c$. The gap Hankel factors
+through the h-dimensional hidden space, so its rank
+is at most h. Equation (27.11) forces $h\ge3$;
+no rank-one assumption on that competing $M_1$ was
+used. This proves the classical minimum.
+
+Finally, a one-dimensional quantum memory has a unique
+density operator; each fixed branch map multiplies it
+by one scalar probability. Its output is iid.
+It cannot have both $P_q(1)>0$ and $P_q(11)=0$.
+The displayed quantum model supplies the matching
+dimension-two upper bound. $\square$
+
+For this family $\sqrt{\gamma_k}$ is a constant
+times $k r^{k-1}$, including its zero at k=0.
+Its scalar Hankel rank is two: it has a two-term
+separable expansion, and its $2\times2$ minor at
+indices zero and one has nonzero determinant.
+Corollary 24.3 therefore also bounds the exact
+positive coherent finite-window bond by four.
+The quantum generator, the pure finite-window
+embedding and its boundary factors remain distinct
+objects despite their shared gap sequence.
+
+The comparison is an exact dimension comparison
+for the specified generation task. It does not
+claim minimal stationary Shannon/von Neumann entropy,
+work advantage, robustness under error, preparation
+of the coherent output vector, or transport to
+the product-activity law and parent of §1.
+The quantum model may start in the mixed stationary
+state (27.8); after a recorded one its conditional
+trajectory is pure. No infinite jointly pure
+output state is asserted.
+
+Quantum stochastic generators and memory advantages
+are established literature, including
+[Elliott, *Memory compression and thermal efficiency
+of quantum implementations of non-deterministic
+hidden Markov models*, arXiv:2105.06285v2,
+§§II–III, equations (5)–(6)](https://arxiv.org/abs/2105.06285v2).
+The displayed operator family, matching stationary
+three-state presentation and all-presentation minor
+bound give the comparison here. No literature
+priority is claimed for this construction or for
+quantum/classical dimension separation in general.
+

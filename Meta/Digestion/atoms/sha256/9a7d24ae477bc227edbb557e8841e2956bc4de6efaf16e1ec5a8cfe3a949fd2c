@@ -1,0 +1,49 @@
+**Definition 3.1 (actual finite instruments and resource).** Put
+$X_{01}=|0\rangle\langle1|+|1\rangle\langle0|$. At strength $s\in[0,1]$
+the prescribed binary effects, on EVERY input, are
+
+$$
+F_r(s)=\frac{I_5+r s\kappa EX_{01}E^\dagger}{2},\qquad r=\pm1.
+\tag{NP.13}
+$$
+
+A competitor consists of any finite actually generated accessible label
+set $\Xi$, report function $r:\Xi\to\{\pm1\}$, finite positive integer
+joint fibre dimensions $d_\xi$, common CP encoders
+$\mathcal C_\xi:M_5\to M_{d_\xi}$, and common full-output CPTP decoders
+$\mathcal R_\xi$. They satisfy
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I)=I_5,\qquad
+\sum_{\xi:r(\xi)=r}\mathcal C_\xi^\dagger(I)=F_r(s),\qquad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\Phi_*.
+\tag{NP.14}
+$$
+
+Randomized report postprocessing can be absorbed into generated finite
+labels. Every decoder is TP on its WHOLE carrier; only its supported live
+restriction is TNI. All future-accessible input-dependent specimen parts,
+memories, controller/environment parts, returned systems and entanglement
+shares count JOINTLY in $d_\xi$. Other dilation systems are permanently
+inaccessible before this cut. A receiver's retained entangled share is
+not an independent blank; a coherent flag is quantum payload until an
+actual classical direct sum is generated. Passive references remain
+inaccessible. No helper, bypass, hidden share, history programme, prior,
+second specimen, callback, copy, reset, retry or postselection is supplied.
+
+The high acquired effect and its unnormalized cost are
+
+$$
+G_{\rm acq}=\sum_{\xi:d_\xi\geq3}\mathcal C_\xi^\dagger(I),\qquad
+E_s(\sigma)=\inf_{\text{(NP.14)}}\operatorname{tr}(G_{\rm acq}\sigma).
+\tag{NP.15}
+$$
+
+High acquisition later failing is included. Define $E_s^L$ using only its
+later supported-live mass. For supported $\rho$ write $E_s(\rho)$ for
+$E_s(E\rho E^\dagger)$. Constants may be chosen from a public test state
+before execution; each resulting instrument remains common on every
+unknown input. Separate test-state minima are not one simultaneous
+minimizer. No real, covariant, isometric, JR-conditioned, wholly-live or
+chosen-failure restriction is placed on these competitors.
+

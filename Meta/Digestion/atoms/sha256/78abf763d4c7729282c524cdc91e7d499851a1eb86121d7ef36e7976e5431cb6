@@ -1,0 +1,2 @@
+**Limitation 5.3 (Missing weighted finiteness).** An unweighted summable sequence need not have a finite first weighted moment. Consequently (5.1) alone does not activate Corollary 4.2. Finiteness of $T_{P_\theta}$ for every member of every $\Theta_N$ is unresolved here. Failure of this sufficient moment condition would not itself imply divergence of $\tau_{P_\theta}(0)$, since (4.2) is only an upper bound. No fixed-$N$ uniform allowance is supplied.
+

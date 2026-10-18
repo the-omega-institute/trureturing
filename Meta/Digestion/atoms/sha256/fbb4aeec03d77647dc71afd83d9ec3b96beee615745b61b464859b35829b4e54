@@ -1,0 +1,35 @@
+**Definition 16.1 (classical record-only calibration score).** Only for
+this score, give $X=a,b$ equal prior. The old nuisance parameters and
+joint states remain arbitrary; return survival does not depend on them.
+On every completed live branch a decoder outputs a guess
+$\widehat X\in\{a,b\}$ using $U$ and the live flag alone.
+Independent decoding randomness can be retained in $U$. There is no
+extra specimen measurement, readable archive or silently discarded
+completed-live record.
+
+Let $\mathsf L$ mean completion of the entire return while live, and put
+
+$$
+\begin{aligned}
+P&=\Pr(\mathsf L)
+  =\frac12\sum_u\nu(u)(q_a(u)+q_b(u)),\\
+B_*&=\inf_{\widehat X}\Pr(\mathsf L,\widehat X\ne X)
+  =\frac12\sum_u\nu(u)\min\{q_a(u),q_b(u)\},\\
+R_*&=B_*/P,\qquad P_0=H/2=\frac{b-a}{4b}.
+\end{aligned}
+\tag{AC.56}
+$$
+
+The decoder chooses the larger unnormalized live prior weight at each
+seed, proving the formula for $B_*$. Here $P>0$ automatically.
+These quantities are measured from the actually reached live cut.
+$B_*$ is an unconditional wrong-live mass, whereas $R_*$ conditions
+on $\mathsf L$. Neither is the trace distance of a complete instrument,
+and a prior in a score is not an acquired source label.
+
+All failed and rejected sectors retain their actual outputs in
+(AC.45) and Definition 14.4. They are not successful guesses, retries
+or missing probability. In particular, an extra postselection cannot
+redefine $P$ while suppressing its discarded sectors. The theorem below
+concerns the commonly permitted executions already specified.
+

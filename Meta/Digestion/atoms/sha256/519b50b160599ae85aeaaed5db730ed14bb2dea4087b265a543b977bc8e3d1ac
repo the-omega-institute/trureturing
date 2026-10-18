@@ -1,0 +1,82 @@
+**Theorem 5.1 (uniform completion of every described acquired family).**
+For every finite description of §4, apply Definition 2.2 to its whole
+list $\mathcal L_C$. It computes one finite tuple $\mathbf z_C^\star$
+and, by Corollary 3.2, a Presburger formula $\Psi_C$ such that the
+exact rank support of the entire fiber $U$ is
+
+$$
+S_C=\{\mathbf n:K(\mathbf n)\land\Psi_C(\mathbf n)\}.
+\tag{URR.22}
+$$
+
+For every $\mathbf n\in S_C$ the source
+$s_C(\mathbf n)=\Theta(\mathbf n,\mathbf z_C^\star)$ belongs to $U$.
+The rank map $\pi_C:U\to S_C$ supplied by the unique coordinates
+satisfies $\pi_C\circ s_C=\operatorname{id}_{S_C}$. The residual tuple
+is independent of $\mathbf n$, $K$, and any optional rank policy once
+the finite negative templates have been fixed.
+For nonempty $U$, under Assumption 6.1's complete accessible-state cut,
+this is the entire successful output fiber of the paid producer of
+[ARH, Proposition 2.1][ARH], at any authentic final epoch $N$ at least
+every recorded epoch. The common section therefore applies to that
+acquired fiber, with the producer's full sourcewise correspondence and
+its separately charged acquisition costs.
+
+Proof. Theorem 4.6 supplies precisely the full Cartesian residual
+hypothesis of Corollary 3.2. Thus the existence of a source of rank
+$\mathbf n$ is equivalent to
+$K(\mathbf n)\land D_C(\mathbf n,\mathbf z_C^\star)$, whose exact
+arithmetic formula is (URR.22). The same equivalence proves membership
+of every displayed $s_C(\mathbf n)$. Coordinate uniqueness proves the
+section identity. The construction consults only $\mathcal L_C$;
+rank-only refinements can change $K$ without changing that tuple.
+The section is defined on the whole support, even if infinite or empty.
+
+For any policy $P$, Corollary 3.3 applies to $D_C$ on $P\cap\{K\}$.
+Equivalently, if the requirement is to realize *each* rank of $P$ as a
+source satisfying every record, then
+
+$$
+\begin{aligned}
+&\forall\mathbf n\in P\ \exists\mathbf z\quad
+K(\mathbf n)\land D_C(\mathbf n,\mathbf z)\\
+\Longleftrightarrow\;&\exists\mathbf z\ \forall\mathbf n\in P\quad
+K(\mathbf n)\land D_C(\mathbf n,\mathbf z)\\
+\Longleftrightarrow\;&\forall\mathbf n\in P\quad
+K(\mathbf n)\land D_C(\mathbf n,\mathbf z_C^\star).
+\end{aligned}
+\tag{URR.23}
+$$
+
+If $P$ contains a rank violating $K$, all three statements are false;
+if $P$ is empty all three are true. Thus changing the policy does not
+require choosing a new residual background.
+
+For the acquired-input assertion, apply [ARH, Proposition 2.1][ARH]
+with public old cut $A$, every literal of Definitions 4.2 and 4.4,
+every endpoint occurrence of Definitions 4.2–4.4, retaining repetitions,
+and final $N$ at least all their epochs. These are finite public lists
+independent of the unknown source. The supplier traverses the actual
+finite original source to obtain the whole old row, performs forward
+updates on the same register, and acquires every requested literal and
+whole comparison endpoint by paid original-root reads with its actual
+prefix. Both endpoint guards are required: an absent endpoint gives the
+supplier's distinct invalid outcome, never a successful negative.
+
+Every $u\in U$ gives the stipulated row, literals and signs by
+(URR.20), reaches actual epoch $N$, and yields the same retained state
+under the complete cut. Conversely every original source yielding that
+retained state has exactly the old row and every guarded predicate in
+(URR.20), hence belongs to $U$. The cut includes authentic $N$ and the
+common ready state and excludes no still accessible source-bearing
+field. This proves both directions of the retained-state correspondence
+for the application, with nonempty $U$ as required for service entry.
+
+The supplier terminates on each finite source; its fixed public list of
+requested coordinates does not impose a uniform bound on traversal
+costs over $U$. Pre-cut finite descriptions are paid memory, not physical
+register clones; comparisons, updates, authentication and retention have
+their separate costs. Forgetting a traversal or retaining a short sign
+refunds none of those costs. The common tuple is not used to obtain or
+replace any actual reply. $\square$
+

@@ -1,0 +1,70 @@
+**定理 463.9（完整显式误差）。** 对任意 n≥0、V≥1，
+
+$$
+\begin{aligned}
+\ell_n\le{}&c_n\left[
+ \frac1{(3n+1)^2}
+ +\frac{\log V\,(V^{3n+1}-1)}{3n+1}\right]
+ +C(V+1)e^{-V},\\
+m_n\le{}&\frac{c_nV^{3n+2}}{3n+2}+C(V+1)e^{-V}.
+\end{aligned}
+\tag{RVF.36}
+$$
+
+因而
+
+$$
+\begin{aligned}
+0<A-L_n\le{}&c_n\left[
+ \frac1{(3n+1)^2}
+ +\frac{\log V\,(V^{3n+1}-1)}{3n+1}
+ +\frac{V^{3n+2}}{e(3n+2)}\right]\\
+ &+C(V+1)(1+1/e)e^{-V}.
+\end{aligned}
+\tag{RVF.37}
+$$
+
+特别地，令 $q=e^3/81<1/3$。对每个 n≥1 取 V=n，得到
+
+$$
+\boxed{\begin{aligned}
+0<A-L_n\le{}&\frac{q^n}{2}\left[
+ \frac1{(3n+1)^2}
+ +\frac{n\log n}{3n+1}
+ +\frac{n^2}{e(3n+2)}\right]\\
+ &+C(n+1)(1+1/e)e^{-n}.
+\end{aligned}}
+\tag{RVF.38}
+$$
+
+这是同一原 A 的完整轴误差；右侧每一项都有准确的来源。
+
+**证明。** RVF.3 与 RVF.19 同时给
+
+$$
+0\le R_n(v)\le\min\{c_nv^{3n},Ce^{-v}\}\quad(v>0).
+\tag{RVF.39}
+$$
+
+把绝对对数积分分成 (0,1)、[1,V] 与 (V,∞)。第一段用准确积分
+$\int_0^1(-\log v)v^{3n}dv=1/(3n+1)^2$；第二段用
+$\log v\le\log V$；第三段用 $\log v\le v$ 和
+$\int_V^\infty ve^{-v}dv=(V+1)e^{-V}$。这给 RVF.36 第一行。
+一阶矩在 (0,V) 使用幂界，在 (V,∞) 使用同一完整指数尾，给第二行。
+代入 RVF.34 得 RVF.37。
+
+经典阶乘界 $N!\ge(N/e)^N$ 可由
+$\log(N!)\ge\int_1^N\log x\,dx=N\log N-N+1$ 直接得到。
+对 N=3n、n≥1 使用它，得
+
+$$
+c_n\le\frac{q^n}{2n^{3n}}.
+$$
+
+将 V=n 代入 RVF.37，使用 $n^{3n}\ge1$ 并在中段舍去负的 −1，
+逐项得到 RVF.38。经典 e<3 给 $q<27/81=1/3$；例如指数级数与
+$j!\ge2^{j-1}$（j≥1，j=3 时严格）给
+$e=1+\sum_{j\ge1}1/j!<1+\sum_{j\ge1}2^{1-j}=3$。
+几何衰减压过括号内的多项式和对数增长，另一完整尾项也趋零。
+没有截断后丢掉尾部。证毕。
+

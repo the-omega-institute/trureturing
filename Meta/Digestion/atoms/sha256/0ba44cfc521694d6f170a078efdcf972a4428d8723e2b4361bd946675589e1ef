@@ -1,0 +1,35 @@
+**Corollary 100.2 (Exact counts in the separating and infeasible regions).**
+Suppose $a_5\le\varepsilon<z$. If
+$F_A\le\varepsilon<F_R$, then
+
+$$
+(\kappa^{\mathcal A}_\varepsilon,
+ \kappa^{\mathcal N}_\varepsilon,
+ \kappa^{\mathcal O}_\varepsilon)=(2,3,3).
+\tag{100.2}
+$$
+
+If $\varepsilon<F_A$, all three counts equal three when
+$z\le5\varepsilon$, and all three equal four when $z>5\varepsilon$.
+
+**Proof.** The active length is exactly $L=4$, including the endpoint
+$a_5=\varepsilon$. In the separating region, (96.2) gives adaptive
+hard two and excludes restricted hard two. If adaptive budget zero or
+one were feasible, Proposition 93.1's common feasibility at those
+budgets would give restricted budget at most one, a contradiction.
+Thus its count is exactly two. Moreover
+$\varepsilon\ge F_A\ge(w+z)/6\ge z/3$, whence
+$z\le3\varepsilon\le5\varepsilon$. The near-full-depth bridge
+(93.1), with this actual active length $L=4$ and $k=3$, supplies an
+ordered hard-three attainer. It pads to $\mathcal N_3$ and belongs to
+$\mathcal A_3$, yielding (100.2).
+
+If $\varepsilon<F_A$, all classes fail at hard two. The same bridge
+states feasibility of hard three exactly when $a_4\le(4+1)\varepsilon$,
+and supplies its ordered attainer in that case. If the inequality fails,
+Theorem 85.1 at $n=4,k=3$ excludes even adaptive hard three. The
+ordered full-active-prefix sampler of Theorem 83.3 has hard four and
+covers the tail since $a_5\le\varepsilon$. Containment then gives the
+three exact fours. These are hard-count deductions with all supplier
+hypotheses instantiated, not deductions from mean count alone. $\square$
+

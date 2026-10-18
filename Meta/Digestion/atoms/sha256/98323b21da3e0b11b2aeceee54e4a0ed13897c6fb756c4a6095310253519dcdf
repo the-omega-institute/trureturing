@@ -1,0 +1,31 @@
+**Definition 2.1 (span statistics).** For every class set
+
+$$
+\begin{aligned}
+D_t&=\{d(a,b):(a,b)\in C_t\},&
+L_t&=\min D_t,&U_t&=\max D_t,\\
+g_t&=U_t-L_t+1-m_t,&G&=\sum_t g_t.
+\end{aligned}
+\tag{NAGC.2.1}
+$$
+
+These extrema exist because $(t,t)\in C_t$, and
+$-(q-1)\le L_t\le0\le U_t\le q-1$. Difference injectivity
+gives $|D_t|=m_t$, so $g_t$ counts the missing integers of
+$[L_t,U_t]\cap\mathbb Z$. Define, for every integer $j$,
+
+$$
+\begin{aligned}
+h_j&=\#\{t:L_t\le j\le U_t,\ j\notin D_t\},\\
+\nu_j&=\#\{t:L_t\le j\le U_t\},\\
+A_j&=\#\{t:L_t=j\},&B_j&=\#\{t:U_t=j\}.
+\end{aligned}
+\tag{NAGC.2.2}
+$$
+
+All these counts vanish outside the possible spans. A missing
+membership $(t,j)$ is not an uncovered source cell: every cell of
+the square belongs to a class. Both $g_t$ and $h_j$ retain class
+multiplicity, and $G$ is a combinatorial gap count, not a resource
+charge on a decoder.
+

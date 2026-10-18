@@ -1,0 +1,38 @@
+**Theorem 6.1 (all four original objectives, fixed source).** For the constructed observer and every installed $\mu\in\mathcal P_{S,b_{\rm src}}$,
+
+$$
+\begin{aligned}
+R_{\rm law,p}=R_{\rm conf,p}&=\rho_p+e+\Delta V_{\mathcal A},\\
+R_{\rm law,\beta}=R_{\rm conf,\beta}&=\rho_\beta+f,\\
+\Phi_\infty^{j_p,j_\beta}&=e+\Delta V_{\mathcal A}
+\quad\text{for each of the four pairs}.
+\end{aligned}
+\tag{6.1}
+$$
+
+These equalities compare suprema; they do not assert law/conf equality at every finite mixed-posterior history or attainment at one finite history. For every fixed finite automaton word $w$, the positive actual histories (4.1), within this same source, have accepting probability $p_{\mathcal A}(w)$ and their two complete errors tend to $\rho_p+e+\Delta p_{\mathcal A}(w)$ as $n\to\infty$.
+
+**Proof.** At a gate history decoding $w$, write $\theta=p_{\mathcal A}(w)$. Per-label reports are $Q^0$ and $Q^\lambda$, so the law report is $Q^{\lambda\theta}$ by (3.5)'s affine formula. Convexity against the actual posterior in (2.1), then Lemma 3.2, gives
+
+$$
+e_{\rm law}(h)\le\rho_p+e+\Delta\theta.
+\tag{6.2}
+$$
+
+For conf first bound each label's distance to that same actual target by the posterior-weighted pure-source distances, obtaining bounds $\rho_p+e$ and $\rho_p+e+\Delta$; average with weights $1-\theta,\theta$ to obtain exactly the same upper bound. At every other $p$ cut the report is $Q$, and PH15 gives $e_j\le\rho_p+e$. Every suspended cut has report $V$ and PH15 gives $e_j\le\rho_\beta+f$. This covers all actual seeds, tree-record fibers and arbitrary returns, not just the witness grammar. Terminal errors vanish.
+
+For the reverse $p$ bound, fix $w$ first. Write $A_0,B_0$ for the fixed counts in $\operatorname{enc}(w)\operatorname{enc}(\diamond)S_0$. At (4.1) the entire common-source posterior has odds
+
+$$
+\frac{\nu_{h(w,n)}(k)}{\nu_{h(w,n)}(1)}=
+\frac{\mu(k)r_k^{A_0}(1-r_k)^{B_0}}{\mu(1)r_1^{A_0}(1-r_1)^{B_0}}
+\left(\frac{1-r_k}{2/3}\right)^{2n}.
+\tag{6.3}
+$$
+
+For every $k\ne1$ in $S$, $r_k>1/3$, so the final factor tends to zero. The finite sum of all these odds tends to zero, yielding $\nu(1)\to1$ for the entire posterior. In fact the other factors are at most $(15/16)^{2n}$, times a finite constant depending on the fixed word and installed prior. Formula (2.1) then gives TV distance to $P_{p,r_1}$ at most $1-\nu(1)\to0$. There was no selection of a free posterior or change of prior.
+
+The retained accepting probability stays exactly $\theta$, independent of $n$. TV is 1-Lipschitz in its target. For law, (3.6) at $x=\lambda\theta$ therefore gives the stated error limit. For conf apply the same Lipschitz estimate to $Q^0,Q^\lambda$ separately, then average: (3.6) gives the identical limit. For any positive accuracy choose a finite $n$ making the target discrepancy smaller; this is a finite actual positive history, not an infinite acquired input. Supremizing first over $n$ for each fixed $w$, then over finite $w$, gives the lower $p$ equality in (6.1). Every word is positive under every supported $k$ because all letter probabilities are strictly between zero and one.
+
+For the suspended phase, its reports are baseline for every actual history. PH15.12's legal endpoint-2 training histories followed by one fourth $\beta$ have true complete suspended law tending to $P_{\beta,r_2}$, and their reports are $V$ because that first fourth Read clears any gate. Reusing PH15.9 and its reachable-history bridge supplies the reverse equality $\rho_\beta+f$ for both orders. The domain is the same original fixed source and records; no new endpoint input is installed. Since $f<e$ and $\Delta V_{\mathcal A}\ge0$, subtracting the two respective radii and taking the original maximum proves the last line. $\square$
+

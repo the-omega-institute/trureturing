@@ -1,0 +1,102 @@
+## 1. Original graph and conditional support interfaces
+
+Fix the original threshold parameters
+
+$$
+n\ge6,\qquad 3\le k\le n-2,\qquad
+K=k,\quad L=n-k+1,\quad n=K+L-1,
+$$
+
+and distinct positive integer positions $A=\{s_1<\cdots<s_n\}$. Write
+
+$$
+c_i=s_i+4,\qquad C_X=\sum_{i\in X}c_i,\qquad W=C_{[n]},
+\qquad V=\{0,\ldots,K-1\}\times\{0,\ldots,L-1\},\quad G=KL.
+\tag{CL.1}
+$$
+
+One graph has a finite installed running-state set $Q$, a fixed running
+start, two distinct terminals $\mathsf0,\mathsf1$, and at every $q\in Q$
+one fixed coordinate $i(q)\in[n]$ and two fixed successors
+$\delta(q,0),\delta(q,1)$. Its entire changing configuration is its
+current state. On every $\theta\in\{0,1\}^n$ the actual run terminates
+with $\mathbf1_{\{|\theta|\ge k\}}$ and satisfies, on that same run,
+
+$$
+t_P(\theta)\le n,\qquad
+J_P(\theta)=\sum_{\text{actual visits to }q}c_{i(q)}\le W.
+\tag{CL.2}
+$$
+
+Every installed running state counts in $m=|Q|$, including unused states
+and states reached only after certification. Every actual invocation,
+including a repeated or certified query, is paid. Adaptive coordinate
+orders, sharing and syntactic cycles are allowed; only actual runs must
+terminate. A syntactic path with inconsistent replies to one coordinate
+need not be actual. No order, clock, counter, history, computed address,
+block entry or auxiliary changing register is supplied.
+
+Let **SI** denote *Actual support incidence and the exact count relaxation
+in native threshold preparation*. The following local interfaces are
+those explicitly stated in SI Section 2, with its original full-fiber
+and double-cap hypotheses. Their nested attributions are PCA Theorems
+34.3 and 35.1, PE Lemma 4.1, and WTF Convention 6.1 and Theorem 9.1.
+They are conditional suppliers here; the nested texts are not additional
+premises authenticated independently by this companion.
+
+A history ends immediately before a query and is an actual finite prefix.
+Its support $S$ is the set of already read coordinates; its exposed
+assignment has $h$ ones and $z$ zeros. It is live precisely when
+$(h,z)\in V$. At live histories the next query is fresh. Properly nested
+supports cannot occur at a common live state. Different supports with
+equal hits cannot occur at a common state, and equal supports with
+unequal hits cannot occur there. Finally distinct hosted count cells can
+be oriented as
+
+$$
+p=(h,z),\quad p'=(g,w),\quad h<g,
+\qquad g-h\ge2,\quad z-w\ge2.
+\tag{CL.3}
+$$
+
+The deductions below use these displayed interfaces on the one original
+graph. They impose no further class hypothesis on that graph.
+
+For $p=(h,z)\in V$, let $F_p$ be its set of actual live ending states,
+and $\mathcal S_p$ its family of actual exposed supports. Put
+
+$$
+b_p=|F_p|,\qquad a_p=|\mathcal S_p|,\qquad e_p=b_p-1.
+\tag{CL.4}
+$$
+
+Every earlier prefix of a live history is live. Freshness therefore gives
+depth $d=h+z$ and $|S|=d$. Any reply word with final live counts is actual:
+inductively every partial count is live, the current query is fresh, and
+the requested reply can be fixed on that unread coordinate. Any completion
+of the resulting exposed assignment follows the entire prefix by
+determinism. In particular every cell has a history. At fixed $p,q$, two
+different supports would contradict the equal-hit exclusion, so its support
+is unique; denote it by $S_p(q)$. The resulting surjection from hosts to
+supports gives
+
+$$
+b_p\ge a_p\ge1.
+\tag{CL.5}
+$$
+
+If $(p,S,q)$ is an actual live occurrence, put
+$p_\varepsilon=(h+\varepsilon,z+1-\varepsilon)$. Whenever
+$p_\varepsilon\in V$, fixing the fresh reply $\varepsilon$ produces
+an actual live occurrence
+
+$$
+(p_\varepsilon,S\cup\{i(q)\},\delta(q,\varepsilon)).
+\tag{CL.6}
+$$
+
+A live child cannot be a terminal, since both outputs have completions.
+This is the fixed-successor assertion of SI Theorem 2.2. Each occurrence
+is realized separately on a completion of its own exposed assignment;
+no common completing input for different old histories is required.
+

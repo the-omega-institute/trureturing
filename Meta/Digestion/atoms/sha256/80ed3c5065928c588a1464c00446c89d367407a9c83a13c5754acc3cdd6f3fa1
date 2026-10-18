@@ -1,0 +1,42 @@
+### 18.2 DirichletToGeometry
+
+输入：
+
+\[
+(\mathcal X,d,\mu,\mathcal Q).
+\]
+
+弱输出需要证明 \(\mathcal X\) 是合适的 metric-measure space，并满足 RCD 或同类综合曲率条件。强输出若要成为光滑黎曼流形，还需增加：
+
+\[
+\text{finite-dimensional regularity},
+\quad
+\text{non-collapsing},
+\quad
+\text{injectivity/coordinate regularity},
+\quad
+\text{smooth convergence or reconstruction theorem}.
+\]
+
+输出可以是：
+
+\[
+\mathrm{RCDLimitSpace}
+\]
+
+或在更强假设下：
+
+\[
+\mathrm{SmoothRiemannianManifold}(M,g).
+\]
+
+不能推出：
+
+\[
+\mathrm{DirichletForm}
+\not\Rightarrow
+\mathrm{SmoothRiemannianManifold}
+\]
+
+除非额外 regularity 定理已经证明。
+

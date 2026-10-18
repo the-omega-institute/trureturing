@@ -1,0 +1,4 @@
+**Corollary 5.2 (failure of finite uniform existence).** No finite-valued horizon depending only on $(B,a,\epsilon)$ can guarantee $\Phi_\infty-\Phi_H\le\epsilon$ over the original priors and complete digital observers. In particular no total computable such function exists.
+
+**Proof.** Evaluate any proposed horizon at $(B_0,1/4,1/1000)$, call the result $H$, and take $N=\max\{H,7\}$. The one fixed observer is allowed, its prior (5.1) obeys the positive endpoint floor, and monotonicity gives $\Phi_H\le\Phi_N<L-\epsilon_0$. The same contradiction applies for any larger at-most budget. It settles no smaller budget that excludes this machine. For this particular prior family every fixed positive $\delta$ still has finite individual witnesses by (5.5). No generic automata undecidability, absent individual horizons or failure of PH's scoped endpoint transfers is inferred. $\square$
+

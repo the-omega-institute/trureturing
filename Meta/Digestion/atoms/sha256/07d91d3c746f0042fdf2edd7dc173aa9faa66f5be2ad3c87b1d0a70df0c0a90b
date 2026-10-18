@@ -1,0 +1,2 @@
+**开放边界 7.3（changed return 不在未变行方块）。** 最后 idle CTL 在旧 raw graph 后继下一帧 IN，在 $F^A$ 后继 InnerReturn。故引理 2.3 的直接对应不能穿过该行；第 3 节删去的正是 next row 为此行的切口。第 4 节重建历史时仍执行这个真实 changed return 及后续额外工作，没有恢复旧快照或擦掉事件。GCA 对其已完成旧发生的取回不自动给当前原始实验桥。为 changed return、gate、history、银行、activation 和其他新增阶段建立原始输入域及完整后继对应仍为 open；这里的 source-grounded 排除不是证明这些阶段不能由任何更合适接口处理。
+

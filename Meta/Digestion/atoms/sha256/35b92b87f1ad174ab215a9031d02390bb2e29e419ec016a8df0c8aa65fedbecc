@@ -1,0 +1,38 @@
+**Definition 2.1 (finite joint factors and degenerate cases).** Let $J$
+be a finite set of variables with finite domains $T_c$. Each factor $f$
+has a declared scope $I_f\subseteq J$ and a finite nonnegative table
+$\Phi_f$ on $T_{I_f}=\prod_{c\in I_f}T_c$. Define
+
+$$
+Z(\Phi)=\sum_{s\in\prod_{c\in J}T_c}\prod_f\Phi_f(s_{I_f}).
+\tag{INB.6}
+$$
+
+An empty domain makes the sum zero. With no variables there is one empty
+assignment. A constant factor on an empty scope multiplies the sum by
+its scalar; a zero scalar or an identically zero factor gives zero mass.
+An isolated variable contributes $|T_c|$ and is removed with this exact
+multiplier. The subsequent formulas apply to the remaining nonempty
+scopes and domains, with every variable incident to a factor. If none
+remain the constant product already evaluates the sum.
+
+A table originally written with several occurrences of one coordinate
+is first restricted to their diagonal, using that one variable. Thus
+$I_f$ is a set of distinct variables. A constraint on two references
+that coincide becomes its unary diagonal restriction. Its degree counts
+one incidence. Distinct factor occurrences remain distinct factor vertices
+even if their tables agree. Singleton domains and arguments on which a
+table happens to be constant can remain in the declared scopes; they
+are not silently deleted when comparing estimates. Zeros are not filled
+or divided out. These conventions retain feasible hard supports and all
+shared equalities.
+
+RRN Theorem 5.2 supplies exactly (INB.6) for native owned-seed potentials:
+each factor is zero or the weight of its uniquely reconstructed actual
+block, each seed is an actual owner reply, and each original whole-block
+weight occurs once. CBN Theorem 6.2 supplies another such sum, with one
+whole-array owner factor per block and unary/binary indicator factors.
+Both are equality-aware correspondences in both directions. Arbitrary
+finite tables in this section have a native interpretation only when such
+a correspondence or an explicit native realization is given.
+

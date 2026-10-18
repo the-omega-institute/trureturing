@@ -1,0 +1,28 @@
+**Lemma 9.2 (actual triangular loops and complete distance).** At the
+source (SC.25), an affine up/down excursion from $a$ to $a+\alpha$ and
+back, $0<\alpha<a$, with constant phase, has survival
+
+$$
+q(\alpha)=\frac{a-\alpha}{a+\alpha}.
+\tag{SC.26}
+$$
+
+For a finite sequence of such excursions, possibly of different amplitudes
+and durations, followed by or separated by waits, put
+$S=\prod_jq(\alpha_j)$. Its complete instrument has distance exactly
+$1-S$ from waiting, on every normalized live input with arbitrary unchanged
+reference. All excursions are genuine original finite-piecewise-affine
+controls from the same preparation, with zero phase, winding, area and
+terminal normalized-state change.
+
+Proof. Integrate the original hazard on the upward leg to get survival
+$a/(a+\alpha)$; on the downward leg it is
+$(c-a-\alpha)/(c-a)=(a-\alpha)/a$. Their product is (SC.26).
+Chronological composition multiplies them. The final height and real
+transport phases are unchanged, hence $K_T=\sqrt S I_5$. Completeness
+gives total failure effect $(1-S)I_5$. Against waiting, the success
+difference has norm $1-S$ and the positive failure blocks together have
+trace $1-S$ on every normalized joint input. Their half-sum is $1-S$;
+the failure event alone also attains it. All time/mode labels remain in the
+comparison. $\square$
+

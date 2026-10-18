@@ -1,0 +1,16 @@
+**Definition 5.2 (Original open-path optimization).** Let $B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\}$ and let $E(\Gamma_n)$ contain all unordered legal Hamming-one edges, with the endpoint convention of Definition 1.1. Put $\gamma(u,v)=uv/(u+v)$ for $u+v>0$ and $\gamma(0,0)=0$, and
+
+$$
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}\gamma(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\kappa_n/n.
+$$
+
+Use the stationary risk identity cited in [MW, §1]: $d(P)=\mathbb E_P(X_0-q)^2\le c_\star$. Define
+
+$$
+D_r(P)=\mathbb E_P(X_0-q_{r,0})^2,\qquad
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+

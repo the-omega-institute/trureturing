@@ -1,0 +1,37 @@
+**Theorem 92.2.** Suppose (G,H) is a calibrated local minimum, rank G=rank H=7, and 0<t=F(G,H)<1/2. Its common stresses have rank one, say P_A=aa* and P_B=bb*. Their coordinate supports coincide in a set S meeting at least two fibres. Every common norming density and witness is supported on S and has strictly positive diagonal entries on S. For one such stress pair there is a diagonal unitary D on S with
+
+\[
+ H_S=D^*G_SD,\qquad
+ \operatorname{rank}G_S=\operatorname{rank}H_S=|S|-1.           \tag{16}
+\]
+
+A reciprocal diagonal phase change preserving the full product G⊙H makes G_S=H_S and the two kernel lines coincide. The adaptive norm of the principal input restriction to S is exactly t. This does not assert that S is the whole input or that the full Grams coincide outside S.
+
+**Proof.** The nonzero stresses in (4) are supported in one-dimensional kernels, so they have rank one. Neither a nor b can be supported in only one fibre, because its diagonal Gram block is I₂. Across different fibres, (4) reads
+
+\[
+ 2\overline{H_{xy}}W_{xy}=-a_x\overline{a_y},\qquad
+ 2\overline{G_{xy}}W_{xy}=-b_x\overline{b_y}.                    \tag{17}
+\]
+
+For x∈supp(a), choose y∈supp(a) in another fibre. Nonzero cross entries and (17) imply W_xy≠0 and then b_x≠0. Reversing parties proves equality of supports.
+
+If x∉S, (17) gives W_xy=0 for every y in a different fibre. Delete coordinate x with a fibre-block projection Q. The compressed pair QρQ,QWQ is feasible except that its density has trace 1−ρ_xx. Its objective is still t, because L has zero fibre blocks and all discarded cross entries of W vanish. If ρ_xx>0, normalizing by 1−ρ_xx would increase the value above t. The denominator is positive since t>0. Thus ρ_xx=0; positivity and 0≤W≤ρ make the corresponding rows and columns of both matrices vanish. Conversely each x∈S has a nonzero cross entry W_xy by (17), so W_xx>0 and ρ_xx>0. This argument applies to every common norming witness, since the two kernel lines and their supports are fixed.
+
+For x∈S put c_x=a_x/b_x and D=diag(c_x). Dividing (17), and retaining the unit diagonals and zero within-fibre off-diagonals, gives
+
+\[
+ H_S=D^*G_SD+\operatorname{diag}(1-|c_x|^2).                    \tag{18}
+\]
+
+Since Db_S=a_S, G_Sa_S=0 and H_Sb_S=0, equation (18) forces (1−|c_x|²)b_x=0. Every b_x on S is nonzero, hence D is unitary and (16)'s first identity holds. If z∈ker G_S, its extension by zero has quadratic form zero against G. Positivity puts that extension in the one-dimensional ker G. Thus ker G_S=span(a_S), proving its rank; the other side is identical.
+
+Choose diagonal unitary E on S with E²=D and extend it by arbitrary unit phases elsewhere. Then
+
+\[
+ G'=E^*GE,\qquad H'=EHE^*,\qquad
+ G'\odot H'=G\odot H,\qquad G'_S=H'_S.                        \tag{19}
+\]
+
+The transformed kernel vectors E*a and Eb coincide because a=Db=E²b. This reciprocal phase transformation is a homeomorphism of ℰ×ℰ and preserves F and local minimality. Finally the norming ρ,W are supported on S. Conversely any feasible principal witness extends by zeros to a full feasible witness. These two observations give equality of the principal adaptive norm and t, completing the proof.
+

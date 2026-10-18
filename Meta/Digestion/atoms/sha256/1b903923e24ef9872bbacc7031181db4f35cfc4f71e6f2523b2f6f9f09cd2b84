@@ -1,0 +1,14 @@
+### 80.6. Fixed-marker subclass
+
+For any four qubit bases u_fj, let n_f be their Bloch axes, let the other party use conjugate(u_fj), and attach arbitrary fixed bit markers m_0,m_1 with forward overlap eta=<m_0,m_1>, |eta|<=1. This eta is the complex conjugate of section 79's reverse-overlap parameter; their real optimizing value 3/4 agrees. Set
+
+    R_fg=n_f dot n_g,
+    A_eta=[[1,eta],[conjugate(eta),1]],
+    B_eta=[[1,-eta],[-conjugate(eta),1]].
+
+Then K=(J_4 tensor A_eta+R tensor B_eta)/2, while
+
+    T=(J_4 tensor J_2)/2+I_4 tensor(I_2-J_2/2).
+
+For any unit v in ker R, the rank-two projection P_v=|v><v| tensor I_2 satisfies Tr P_v(K-T)=-1 exactly. This is a simpler special-case dual witness; it requires neither tetrahedral geometry nor real eta. The broader Pauli-kernel theorem above does not require this marker structure at all.
+

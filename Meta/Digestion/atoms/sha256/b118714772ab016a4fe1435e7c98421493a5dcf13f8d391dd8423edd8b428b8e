@@ -1,0 +1,18 @@
+**Inherited interpretation 373.1 (Positive caps and the actual entire tail).** Let $a$ be an entire sequence (368.2), let $0<e\le1$, and suppose $a_{L+1}\le e$. A normalized complete finite allocation satisfying every row at $b=(a_1,\ldots,a_L)$ executes in its own original class using the common seed of Definition 368.2. If it is a stopped allocation, select one increasing schedule before replies and stop at its first queried zero. If it is an $N$ allocation, acquire both requests of a selected pair, including any reply that the table then ignores. Every emitted label names its actual original mark, and handoff is finite and measurable.
+
+For an actual first absence $n\le L$, the full low word satisfies all three independent cap rows. For an actual $n>L$, the low word is $1^L$ and no tail mark is emitted. If $v=p_{1^L}$, the mass deficit at $0$ is $1-a_n-v(0)$ and the missing tail mass is $a_n$. Summing the positive deficits yields the exact identity
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Lv(j)\delta_{\theta_j},
+          (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =a_n+\max\{1-a_n-v(0),0\}
+ =\max\{1-v(0),a_n\}\le e.
+\tag{373.1}
+$$
+
+The positive row supplies $1-v(0)\le e$ and the ordered tail supplies $a_n\le e$. This includes $a_{L+1}=e$ and all later ties, without summability. The finite positive word is not an infinite all-positive source. This is the reused realization and transport of 109.1–110.2 and Source-Correlated Laws 45; no evaluation of all Boolean words is performed as a source observation.
+
+In particular, for an entire sequence (368.2), a positive cap $e$, $a_8\le e$ and prefix $(a_1,\ldots,a_7,e)\in H_7$, either membership of that prefix in $P$ or a complete finite affine $N$ witness as in Theorem 370.2 supplies a normalized finite stopped lift and hence an original $\mathcal O_2$ acquisition of error at most $e$. These feasibility premises are essential. If also $a_7>e$, the active length is seven; the arbitrary-address, full-carrier necessity theorem 110.2 and XIX 345.2 identify original $N$ feasibility with membership in $P$ and thus with original $O$ feasibility there. This last normalized original equivalence is inherited.
+
+Theorem 371.2 has the same conditional execution interpretation only when its input is a normalized feasible finite allocation with an entire positive ordered vanishing profile, positive cap and $a_{L+1}\le e$. It then produces another actual acquisition in that same class. At $M\ne1$, its conclusion and Theorem 370.2's padded conclusion are statements about literal affine allocations; division does not turn them into acquisitions for the same profile. The closed finite boundary $e=0$ in $H_7$ supplies no positive-tail zero-error rule.
+

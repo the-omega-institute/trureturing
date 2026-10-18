@@ -1,0 +1,61 @@
+**Assumption 8.3 (mathematical sources and transfer conditions).**
+Rectangular support and primitive-positive closure have the standard
+meanings of [Dyer–Richerby, §§3–4][DR]. The disjoint-fiber description
+of a single rectangular relation is a mature ingredient of Theorem
+2.2. Strong rectangularity requires the corresponding property after
+all primitive-positive definitions; Theorem 3.2 gives the exact native
+failure of that extra premise. No counting dichotomy is transferred
+to regularized native pressure.
+
+The entropy and relative-entropy identities in Theorems 4.3 and 6.2
+are mature finite common-law tools; [Madiman–Tetali, Proposition II][MT]
+uses actual fractional covers or packings of a specified family of
+subsets of one law. Arbitrary native incidences supply no fixed
+fractional-cover premise or optimizer coverage. Theorem 7.2 instead
+uses the credited native product/type profile on the actual fibers.
+The finite LP duality in Theorem 4.4 and sum-product elimination in
+Theorem 3.2 are also ingredients, not standalone novelty claims.
+
+[Gaubert–Stott, Theorem 7][GS] assumes a finite family of fixed-size
+nonnegative matrices and positive irreducibility to obtain its explicit
+approximation factor. No representation of every overlapping native
+joint potential by such fixed-dimension matrix products, with both
+pressure inequalities and the paid same-source correspondence, is
+assumed here. Finite alphabets, binary primitive relations and exact
+finite sums alone supply neither that representation nor (OCB.56).
+
+The source declaration [FiniteNaturalJoin, `join_covers`][D5J] requires
+both input relations to cover the same full assignment. It proves no
+automatic global realization or all-size estimate. The actual realization
+and unique lifts used here are proved in Theorems 2.2, 3.2 and 3.3.
+[NativeFiniteRootMinimax, `finite_root_minimax`][D5M] concerns an
+attained three-reply chart and complete predecessor-row recovery.
+[NativeEffectiveRootCriterion, `effective_native_birth_provenance` and
+`returned_native_reader`][D5E] requires a prefix-free cut, a complete
+row with nonempty `OriginFiber`, $r\ge1$, a returned package and
+compatible acquired image values; its source is the substituted one.
+Those target and handoff conditions differ from (OCB.1)–(OCB.2).
+Neither declaration is used as an all-length cap verifier.
+
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[RCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[JTC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[D5N]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[D5J]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[D5M]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[D5E]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[DR]: https://arxiv.org/html/1003.3879v4 "Martin Dyer and David Richerby, An Effective Dichotomy for the Counting Constraint Satisfaction Problem, §§3–4"
+[MT]: https://arxiv.org/html/0901.0044v2 "Mokshay Madiman and Prasad Tetali, Information Inequalities for Joint Distributions, with Interpretations and Applications, Proposition II"
+[GS]: https://arxiv.org/html/1805.03284v1 "Stéphane Gaubert and Nikolas Stott, A convergent hierarchy of non-linear eigenproblems to compute the joint spectral radius of nonnegative matrices, Theorem 7"
+

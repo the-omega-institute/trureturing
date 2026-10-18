@@ -1,0 +1,103 @@
+**Theorem 9.8 (No finite shared affine encoder for all future outputs).**
+For every mean satisfying Definition 2.1, every fixed preparation
+phase vector, and every nonempty open interval $I\subset J_b$, there
+is no finite $n$ and no factorization (9.27). Nonexistence holds even
+when the continuation menu consists only of the universally lawful
+phase commands
+
+$$
+\gamma_t(s)=(0,ts),\qquad 0\le s\le1,\quad t\in\mathbb R.
+\tag{9.30}
+$$
+
+More precisely, for any $N$ distinct real values $t_1,\ldots,t_N$,
+the constant function and the $2N$ real future $02$ output functions
+for these commands are linearly independent on $\mathcal D$.
+Thus any shared affine encoder for just these $N$ future pairs
+already requires $n\ge2N$. No regularity of the encoder is required.
+
+Proof. The $02$ character is the increment of the pole group containing
+mode $0$, since $h_2=0$. For (9.30) the complex number whose real and
+imaginary parts are the two original doubled outputs is exactly
+
+$$
+Y_t(k,h)=2\sqrt{Zp_0(k)}\,
+ e^{i(\delta_{02}^0+h_0)}e^{itw_0(k)}.
+\tag{9.31}
+$$
+
+This uses the original negative state-phase convention:
+$\overline\psi_0\psi_2$ has positive phase
+$\delta_{02}^0+h_0+tw_0(k)$. The command fixes every current probability,
+is lawful for all of $J_b$ and every real $t$, and preserves
+$\mathcal D$ exactly. It is one original phase leg, with variation
+$|t|$; it assumes neither unknown-state feedback nor a new operation.
+
+The grouped expression (9.21) proves that $w_0$ is nonconstant on
+every nonempty open interval. Its numerator has degree $g-1$ and its
+denominator degree $g-2$, with nonzero leading coefficient $-r$.
+They have no common root by (9.23). A constant equality on an interval
+would imply a polynomial identity between these unequal degrees.
+This argument includes both individual walls and $g=2$, where
+$w_0=1/2-k/r$. The function is real analytic on $J_b$; hence every
+nonempty open interval contains a smaller one on which $w_0'$ is
+nonzero and $w_0$ ranges over an open real interval.
+
+Suppose real constants $c,a_j,b_j$ satisfy
+
+$$
+c+\sum_{j=1}^N\{a_j\operatorname{Re}Y_{t_j}
+                   +b_j\operatorname{Im}Y_{t_j}\}=0
+\quad\text{on }\mathcal D.
+\tag{9.32}
+$$
+
+At a fixed $k$, vary the phase coordinate $h_0$ over its full circle,
+which is independent in $U_b/\Lambda_b$ even when mode $0$ belongs
+to a multiple-mode group. The zeroth Fourier coefficient gives $c=0$.
+The first Fourier coefficient, after dividing by the nonzero factor
+$2\sqrt{Zp_0(k)}e^{i\delta_{02}^0}$, gives
+
+$$
+\sum_{j=1}^N(a_j-i b_j)e^{it_jw_0(k)}=0.
+\tag{9.33}
+$$
+
+On a smaller interval set $x=w_0(k)$. Differentiating this identity
+with respect to $x$ through orders $0,\ldots,N-1$ at any point $x_*$
+gives the matrix $((it_j)^q e^{it_jx_*})_{q,j}$. Its determinant is
+
+$$
+\left(\prod_j e^{it_jx_*}\right)
+ i^{N(N-1)/2}\prod_{j<l}(t_l-t_j)\ne0.
+\tag{9.34}
+$$
+
+Thus $a_j-i b_j=0$ for every $j$, proving the claimed real independence
+and including the constant. Arbitrary preparation only multiplies
+(9.33) by a fixed unit complex factor, so cannot change this conclusion.
+This proof works for any finite set of distinct $t_j$, even chosen
+inside one bounded open interval of phase increments.
+
+If (9.27) held, all scalar future outputs and the constant would lie
+in the real vector space of functions
+$\operatorname{span}_{\mathbb R}\{1,z_1,\ldots,z_n\}$, of dimension
+at most $n+1$. The independence just proved shows that these $N$ commands
+already require dimension at least $2N+1$. Therefore $n\ge2N$ for
+every $N$, an impossibility for finite $n$. This is a statement about
+functions on the same realized domain, so arbitrary nonlinear or
+discontinuous encoders and all continuation-dependent fixed offsets
+are still in scope.
+
+The observable-span viewpoint is the classical supplier, as in
+Brunton, Brunton, Proctor and Kutz,
+[*Koopman invariant subspaces and finite linear representations of nonlinear dynamical systems for control*, §2](https://arxiv.org/html/1510.03007v2),
+and [Observer closure, §7](OBSERVER_CLOSURE_SPECTRUM.md).
+Here the pullbacks are $f\mapsto f\circ T_{\gamma_t}$, the same source
+is (9.26), and the measured functions are the original pair (9.31).
+The general viewpoint alone does not supply the nonconstant native
+frequency, universal lawfulness, or the arbitrary-encoder obstruction;
+those are established above. No linear state-update assumption was
+used, so requiring fixed affine updates as well cannot evade the
+lower bound. $\square$
+

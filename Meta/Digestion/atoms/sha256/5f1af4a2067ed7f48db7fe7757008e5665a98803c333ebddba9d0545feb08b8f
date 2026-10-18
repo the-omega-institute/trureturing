@@ -1,0 +1,46 @@
+**Theorem 10.2 (Exact formula retaining every party).** For every datum of Convention 10.1, put $\varepsilon=\varepsilon(a)$ and
+
+$$
+\begin{aligned}
+b_k&=(1-\varepsilon)^2x_k(1-x_k),\\
+d_k(\varepsilon)&=\prod_{c=1}^{n-1}\left(\varepsilon+b_k\sin^2\frac{\pi c}{n}\right)
+=4^{1-n}b_k^n\varepsilon^{-1}\sinh^2\left(n\,\mathrm{arsinh}\sqrt{\varepsilon/b_k}\right),\\
+\mathcal O_n&=\{(j_1,j_2)\in\mathbb Z_n^2:0,j_1,j_2\text{ are pairwise distinct}\},\\
+\nu_{j_1,j_2}&=x_Ax_C\sin^2\frac{\pi j_1}{n}+x_Bx_C\sin^2\frac{\pi j_2}{n}
++x_Ax_B\sin^2\frac{\pi(j_1-j_2)}{n},\\
+\Omega(\varepsilon)&=\prod_{j\in\mathcal O_n}\left(\varepsilon+(1-\varepsilon)^2\nu_j\right).
+\end{aligned}
+$$
+
+Then, with genuine tripartite multi-entropy defined by Definition 6.3,
+
+$$
+\mathrm{GM}^{(3)}_n
+=\frac{n-2}{4n}\log\varepsilon
++\frac{\log\Omega(\varepsilon)}{2n(n-1)}
++\frac{2-n}{4n(n-1)}\sum_{k\in I}\log d_k(\varepsilon).
+$$
+
+Here $d_k=D_2^{(x_k)}$, $\Omega=\Omega_3$, and the empty product is $1$. The formula holds with any ties among the $x_k$.
+
+**Proof.** Proposition 5.1 gives $D_3=\prod_{j\ne(0,0)}(\varepsilon+(1-\varepsilon)^2\nu_j)$. Its indices split into the three disjoint punctured lines $(c,0)$, $(0,c)$, $(c,c)$, $c\ne0$, and $\mathcal O_n$. The line factors have weights $x_A(1-x_A)$, $x_B(1-x_B)$, and $x_C(1-x_C)$, respectively. Thus
+
+$$
+D_3(\varepsilon)=d_A(\varepsilon)d_B(\varepsilon)d_C(\varepsilon)\Omega(\varepsilon).
+$$
+
+This is Corollary 5.4, with its distinct lines retained even when their factors agree. The closed form of $d_k$ is Theorem 5.2 divided by $\varepsilon$, since $b_k>0$. Every factor is positive for $\varepsilon>0$, so logarithms of these products are sums of the logarithms of all their factors.
+
+Theorem 3.8 gives $Z_n^{(3)}=(\varepsilon^{n^2-1}/D_3)^{1/2}$ and, for the cut $k{:}I\setminus\{k\}$, $Z_{n,k}^{(2)}=(\varepsilon^{n-1}/d_k)^{1/2}$. Inserting the normalizations $S_n^{(3)}=\log Z_n^{(3)}/(n(1-n))$ and $S_{n,k}^{(2)}=\log Z_{n,k}^{(2)}/(1-n)$ gives
+
+$$
+\begin{aligned}
+S_n^{(3)}&=-\frac{n+1}{2n}\log\varepsilon+\frac{\log D_3}{2n(n-1)},\\
+S_{n,k}^{(2)}&=-\frac12\log\varepsilon+\frac{\log d_k}{2(n-1)},\\
+\mathrm{GM}^{(3)}_n&=S_n^{(3)}-\frac12\sum_{k\in I}S_{n,k}^{(2)}
+=\frac{n-2}{4n}\log\varepsilon+\frac{\log D_3}{2n(n-1)}-\frac{\sum_{k\in I}\log d_k}{4(n-1)}.
+\end{aligned}
+$$
+
+Substitute the displayed factorization and combine the two coefficients of each $\log d_k$. This gives the asserted coefficient $(2-n)/(4n(n-1))$. ∎
+

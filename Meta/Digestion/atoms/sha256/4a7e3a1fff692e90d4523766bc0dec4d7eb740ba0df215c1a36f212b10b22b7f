@@ -1,0 +1,159 @@
+**Theorem 396.1 (Strict budget overrun for every fixed-total shared-product completion).** For every finite $L\ge8$, Definitions 395.1–395.2 satisfy
+
+$$
+\Delta_O(y)=t,\qquad \Delta_N(y)=2t,\qquad
+\sigma_{H_L}(Q(y))=\frac{m}{m+1}.
+\tag{396.1}
+$$
+
+For every $h\in[0,1]$ and every $p\in[0,1]^m$, the full-catalog cost $D=\Delta_O(z_{p,h})$ obeys
+
+$$
+\Delta_N(z_{p,h})\ge D\ge r_m
+ :=\frac{3(m-1)-\sqrt{(m-1)(m+7)}}{4(m-2)}>t.
+\tag{396.2}
+$$
+
+Thus no $z_{p,h}/t$, with any $\theta\in[0,1]$, certifies $Q(y/t)$. Nevertheless the existing comparable-measure construction of [IX 209.7–209.8](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md) supplies a correlated full score $V$, with the same $P,T$ as $y$ and
+
+$$
+C^V_{1^{n-1}0v}
+ =\frac{\rho\{X_n=0,\ X_{n+1..L}=v\}}{a}\quad(3\le n\le L),
+\qquad A^V=0,
+\tag{396.3}
+$$
+
+whose $W_V=3$, $Q(V)=q$ and $\Delta_N(V)=\Delta_O(V)=t$. In particular $(V/t,0)$ is one certificate for $Q(y/t)$.
+
+The bound $r_m$ is necessary, with no assertion that it is attained or optimal. Strictness is for each finite $L$; no positive gap uniform in unbounded $L$ is asserted. The exclusion concerns exactly (395.5), not changed row-type totals even at the same $Q$, correlated or class-dependent suffix laws, general common Markov laws, mixtures of product completions, or unrestricted full $V$ with signed residual payment. The correlated score (396.3) is the IX 209.8 specialization below.
+
+*Proof.* The subset measure in IX 207.4 gives (395.2) for the one full $\rho$ in both parity cases; no separately realizable pair marginals are substituted for it. The base rewards of $y$ at a late pair $i<j$ are $(a,a,a,3t)$, including $T$ in $11$. An absorbing correct word with index $n\le i$ lies in $00$, one with $i<n\le j$ lies in $10$, and one with $n>j$ lies in $11$. Each such label has reward one in that cell, and no late correct label contributes in $01$. Each early label earns half the corresponding union base reward. Since $2a>1$ and $3t>1$, the complete cell maxima are as follows; tuples are in their catalog's cell order.
+
+| Schedule | $N$ cell maxima | $O$ cell maxima |
+| --- | --- | --- |
+| Empty | $(3)$ | $(3)$ |
+| Singleton $1$ or $2$ | $(1,2)$ | $(1,2)$ |
+| Singleton $i\in I$ | $(2a,1+2t)$ | $(2a,1+2t)$ |
+| Head pair $(1,2)$ | $(0,1,1,1)$ | $(1,1,1)$ |
+| Early/late pair $(b,i)$, $b\in\{1,2\}$, $i\in I$ | $(a,t,1,1+t)$ | $(1,1,1+t)$ |
+| Late pair $(i,j)$ | $(1,a,1,3t)$ | $(2a,1,3t)$ |
+
+For an early/late pair, the split early-zero rewards sum to one. In $10$, label $i$ has reward one and every other candidate has reward at most one; in $11$, the base reward $1+t$ dominates all late correct labels. For a late singleton, the zero-branch base $2a$ dominates every earlier correct label, and the one-branch base $1+2t$ dominates every future label. The head and empty readings follow from the two early union masses and $T$. Thus the table checks all labels, including earlier and unqueried labels, on all schedule types. It uses the full score on every word, rather than a single-zero restriction. The late $N$ pair has support $3+2t$, every late $O$ pair has support $3+t$, and early/late pairs also have support $3+t$. All shorter schedules and the head have support three. Hence $B_N(y)=3+2t$ and $B_O(y)=3+t$; for example $O(i,j;0,j,0)$ and $O(1,i;1,i,0)$ attain the stopped maximum.
+
+For the hull reading, apply the vertex description already supplied by IX 207.3. Besides $o=0$ and $p=(1,0,\ldots,0;0)$, its vertices are $u_r$, with the first $r$ amplitudes $1/(r-1)$ and all remaining coordinates zero, and $v_r$, with the first $r$ amplitudes one and all remaining coordinates, including $e$, equal to $(r-2)/(r+1)$, for $3\le r\le L$. Direct substitution of this $q$ gives
+
+$$
+\begin{aligned}
+F_q(o)&=F_q(p)=0,\qquad F_q(u_r)=\frac{r-2}{r-1},\\
+F_q(v_r)&=(r-2)+(L-r)\frac{r-2}{r+1}
+                   -(L+1)\frac{r-2}{r+1}=0.
+\end{aligned}
+\tag{396.4}
+$$
+
+The largest value is $(L-2)/(L-1)=m/(m+1)$. This proves (396.1) using every vertex family and the inherited signed functional. In particular the normalized input itself has $N$ excess two, while choosing the zero score leaves hull charge $m/((m+1)t)>1$.
+
+Fix now one entire product score $z=z_{p,h}$ and its one full-catalog $D$. On stopped schedule $(1,i)$ the first-cell maximum is one, regardless of $h$: it contains the whole first union class. In $10$, correct label $i$ contributes one; earlier late correct labels contribute $1-p_i$, the second early label contributes $1-p_i$, and every other label contributes at most one. In $11$, the base reward is $1+p_i$, dominating every correct label. Its support is therefore exactly $3+p_i$, so
+
+$$
+D\ge p_i\qquad(i\in I).
+\tag{396.5}
+$$
+
+For every late stopped pair $i<j$, the exact three maxima are
+
+$$
+\max\{2(1-p_i),1\},\qquad
+\max\{2p_i(1-p_j),1\},\qquad 1+2p_ip_j.
+\tag{396.6}
+$$
+
+Indeed the first cell contains the entire correct class $i$; earlier late labels have mass at most one, and each early label is bounded by its union base reward. In $10$, the whole class $j$ contributes one; intermediate classes contribute $1-p_j$, earlier classes contribute $p_i(1-p_j)$, and neither exceeds one. In $11$, future classes contribute at most one, intermediate classes at most $p_j$ and earlier classes at most $p_ip_j$; all are dominated by the displayed base reward. Summing (396.6) and subtracting $W_z=3$ yields the simultaneous necessary inequalities
+
+$$
+D\ge(2p_i-1)_++(1-2p_i+2p_ip_j)_+
+\qquad(3\le i<j\le L),
+\tag{396.7}
+$$
+
+where $u_+=\max\{u,0\}$. These are readings of the same score and biases as (396.5). Every remaining schedule is still included in $D$ and can only strengthen these lower bounds. Equality of complete $N/O$ support for the common Markov family, including these independent suffixes, is already [VI 198.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md); it is not an upper bound by the input's old cost $t$.
+
+Define
+
+$$
+g_m(u)=2(m-2)u^2-3(m-1)u+(m-1).
+\tag{396.8}
+$$
+
+On $[0,1/2]$ it is strictly decreasing, since $g_m'(u)\le-m-1<0$, while $g_m(0)=m-1>0$ and $g_m(1/2)=-1/2$. Its unique root in this interval is the $r_m$ in (396.2), so $0<r_m<1/2$. If $D\ge1/2$, then already $D>r_m$. If $D=0$, (396.5) forces all $p_i=0$, contradicting (396.7) for any adjacent late pair.
+
+It remains to consider $0<D<1/2$. By (396.5), $0\le p_i\le D$. In (396.7) the first positive part vanishes and the second argument is positive. Thus every adjacent pair forces
+
+$$
+p_i(1-p_{i+1})\ge c_D:=\frac{1-D}{2}>0
+\qquad(3\le i<L).
+\tag{396.9}
+$$
+
+In particular each $p_i$ used below as a denominator is positive. On $(0,D]$, the function $u-1+c_D/u$ decreases, because $c_D>1/4>D^2$. Consequently
+
+$$
+\begin{aligned}
+p_i-p_{i+1}
+&\ge p_i-1+\frac{c_D}{p_i}
+ \ge D-1+\frac{c_D}{D}
+ =d(D):=\frac{(1-D)(1-2D)}{2D}>0,\\
+D&\ge p_3-p_L\ge(m-1)d(D).
+\end{aligned}
+\tag{396.10}
+$$
+
+The second line uses $p_3\le D$ and $p_L\ge0$. Multiplying it by $2D$ gives $g_m(D)\le0$, hence $D\ge r_m$.
+
+To compare with the correlated benchmark, use $m\ge2k$ and compute
+
+$$
+\begin{aligned}
+d(t)&=\frac{k+1}{2k(2k+1)},\\
+t-(m-1)d(t)&\le t-(2k-1)d(t)
+ =\frac{1-k}{2k(2k+1)}<0.
+\end{aligned}
+\tag{396.11}
+$$
+
+Therefore $g_m(t)=2t((m-1)d(t)-t)>0$, and the strict decrease of $g_m$ gives $t<r_m$. This proves (396.2) for both $m=2k$ and $m=2k+1$. A zero bias used in (396.9) would violate that inequality before division; a bias equal to one gives $D\ge1$ in (396.5). The last bias may be zero without being divided by, and both endpoints of $h$ were included in the support readings. Thus no boundary point of the closed bias cube has been removed.
+
+For the surviving payer, apply IX 209.7–209.8 directly. Take $\nu=2\rho$, of mass $S=2$, early correct totals $c_1=c_2=0$, terminal mass one, late totals $\eta_n=1$, and whole-cube measures
+
+$$
+\mu_n=\frac{\rho|_{\{X_n=0\}}}{a}
+      =\frac{\nu_n}{2a}\le\nu_n\le\nu.
+\tag{396.12}
+$$
+
+Each $\mu_n$ has mass one and is comparable to $\nu_n$ as a measure, not merely in total mass. Resetting coordinates before $n$ to one and coordinate $n$ to zero is precisely the map $R_n$ in that theorem; its pushforward gives (396.3). The proportional early rows give $P_{01x}=P_{10x}=\nu(x)/2=\rho(x)$, as required. For every $n<j$ in $I$, (395.2) gives $\mu_n\{X_j=0\}=1/2$. Thus, in the notation of IX (209.13)–(209.14),
+
+$$
+\begin{gathered}
+m_j=2a,\quad d_{ij}=a,\quad h_{ij}=2-3a,\quad
+H=p_1=p_2=p_*=1,\\
+U_j=U_{ij}=1,\qquad 0\le Z_j,Z_{ij}\le1,\\
+D_j=\max\{a,1\}+\max\{2t,1+t,Z_j\}-2=t,\\
+D_{ij}=(1-2a)_++(1-a)_++(Z_{ij}-3t)_+=t.
+\end{gathered}
+\tag{396.13}
+$$
+
+The last line uses $3t>1$. The other terms in IX (209.14) are zero, so that existing theorem gives the exact complete costs $\Delta_N(V)=\Delta_O(V)=t$. The unchanged individual totals give $Q(V)=q$ and $W_V=3$. The full-catalog cost conclusion is therefore the stated application of IX 209.8. The auxiliary conditioning in (396.12) changes score weights only; it is no conditioning of an acquisition on a free source observation.
+
+Finally, positive homogeneity gives
+
+$$
+\Delta_O(y/t)=1,\qquad
+\Delta_N(V/t)+0=1,\qquad
+\sigma_{H_L}(Q(y/t)-Q(V/t))=0.
+\tag{396.14}
+$$
+
+For every product completion, $\Delta_N(z_{p,h}/t)\ge r_m/t>1$, so adding any nonnegative $\theta$ cannot pay (394.8), even though its residual quotient is zero. This is a restriction on completion at fixed totals, whereas (396.14) is an unrestricted certificate for this family. $\square$
+

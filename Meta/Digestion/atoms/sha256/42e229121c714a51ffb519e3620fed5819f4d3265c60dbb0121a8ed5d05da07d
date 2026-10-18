@@ -1,0 +1,91 @@
+**Proposition 10.1 (exact correspondence with JS).** For each fixed finite $\lambda>C_{\rm end}$ and every prescribed $q_n>0$, $q_n\to0$, $t_n=e^{A_n}-1$, $q_nt_n\to\lambda$, JS Theorems 4.3, 5.1, 6.1 and 7.1 apply with exactly the coefficients, ellipse, $c_*,F_c,n,k$ of Definition 1.2. Thus
+
+$$
+\mathcal R(\lambda):=\lim_n\mathcal T_{A_n}(s_0(1-q_n))=B_0+\Phi(\lambda).
+\tag{TB.25}
+$$
+
+There is one common finite recovery sequence for the complete original outputs and every passive reference. The selected values and all actual-source local support/regularity statements above transfer through (TB.25). The different-cost construction of Theorem 9.1 has no such transfer.
+
+Proof. This correspondence specifies the whole-class upper bound and common realization without introducing a new constructor. JR42 fixes the supported error-optimal live map $D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$, failure effect $M$, zero other supported output and zero high failure, with weak low Gram $\operatorname{diag}(\delta,1,1)$. These are all-complex equality consequences, not a restriction to real processors or fixed full channels.
+
+For arbitrary FA67.2 survivor controls, trace balance and Gronwall give survival effect at least $e^{-A}I$ on the whole fibre. Terminal TP processing preserves trace. FA69's existing-label double rigidity applies to every nonzero supported low label: its rank-two live product has an onto encoder and an injective live decoder. For a null product $xD+zT+wS$, the kernel and adjoint kernel are respectively
+
+$$
+\mathbb C(1,-bz/(h_1x),-dw/(h_2x)),\qquad
+\mathbb C(1,-az/(h_1x),-cw/(h_2x)).
+$$
+
+A common image or kernel fixes both ratios, forcing proportional nonzero products within that actual label. This supplies no readable discarded Kraus index. Consequently each low label is
+
+$$
+K_j=\sqrt{\pi_j}K(z_j,w_j),\qquad N_j=\pi_jv_jn_jn_j^T,\qquad0\le v_j\le t c_*(z_j^2),\quad t=e^A-1.
+$$
+
+The capacity bound is FA69's Schur complement of the positive $00$ pivot of $K^\dagger K$, equal to $c_*nn^T$; equivalently $N_j\le tK_j^\dagger K_j$. Full decoder TP gives acquisition effect $K_j^\dagger K_j+N_j$, including later failure.
+
+With actual coefficient masses $\pi_j$ in $P_{\rm coef}$ and $d\nu=v_jdP_{\rm coef}$, retaining each multiplier at coincident points, the exact identities are
+
+$$
+\int hh^TdP_{\rm coef}=I_3,\quad\int nn^Td\nu=M,\quad
+\int H_c(z^2)dP_{\rm coef}=1-\int|z|dP_{\rm coef}\le q_n,\quad
+\int F_cd\nu\le t_nq_n.
+$$
+
+Full-label height TV is $[H_{\rm live}+\int|f+v_jk|dP_{\rm coef}]/2$; coarsening decreases it. As $q_n\to0$, $\int(|z|-1)^2dP_{\rm coef}\le2q_n$ forces the four corners, and zero first/cross moments force weights $1/4$. Failure measures have fixed mass $\mu$ on the compact whole ellipse. Their subsequential limits retain covariance and cost at most $\lambda$. The triangle inequality and $\int k d\nu=-d_0$ give JS4.3's bound $\limsup T_{\rm instr}\le B_0+\Phi(\lambda)$. No commutativity was assumed in necessity; the stipulated countable/integrable extensions use the same trace and moment identities.
+
+For matching recovery take an actual optimizing $\nu_*$, with at most three lines in the strict interior by TC and with two spectral lines at or above saturation by JS, and critical $\nu_0$ with masses $\mu/2$ at $(\sqrt r,\pm\sqrt{Y(r)})$. They have the same covariance; $\nu_0$ has cost $C_{\rm end}$ and zero objective. Put
+
+$$
+\begin{gathered}
+c_{\min}=\min_{[0,U]}c_*>0,\quad B_{\rm rec}=\mu(1+U+1/\beta)/c_{\min},\quad K_{\rm rec}=B_{\rm rec}^2/4,\\
+\lambda_n=q_nt_n,\quad\epsilon_n=\frac{2(|\lambda_n-\lambda|+K_{\rm rec}/t_n)}{\lambda-C_{\rm end}},\quad
+\nu_n=(1-\epsilon_n)\nu_*+\epsilon_n\nu_0.
+\end{gathered}
+\tag{TB.26}
+$$
+
+Eventually $0<\epsilon_n<1$, covariance is exactly $M$ and cost at most $\lambda-\epsilon_n(\lambda-C_{\rm end})$. This is the finite strict margin needed for an arbitrary prescribed sequence, with a fixed union of at most five points.
+
+For masses $a_i$ at $(z_i,w_i)$ set $c_i=c_*(z_i^2)$. JS5.1's matrix $U_{\rm rec}=\sum_i(a_i/c_i)h_ih_i^T$ has trace at most $B_{\rm rec}$. Its rare labels have coefficient weights $a_i/(t_nc_i)$, attached failures $a_in_in_i^T$ and saturated multipliers $t_nc_i$. JS5.1's four pure-live bulk labels repair all six live moments exactly. For $t_n\ge16B_{\rm rec}$ their radicals and weights are positive. Writing $b_0,b_{11}$ for the $00,11$ entries of $U_{\rm rec}$, the exact contrast deficit is
+
+$$
+e_t=\frac{C_{\nu_n}}t+
+\frac{(b_0-b_{11})^2}{4t^2[1-(b_0+b_{11})/(2t)+\sqrt{(1-b_0/t)(1-b_{11}/t)}]}.
+$$
+
+The bracket is at least one at these large $t$, so
+
+$$
+t_ne_{t_n}\le C_{\nu_n}+K_{\rm rec}/t_n
+\le\lambda-2|\lambda_n-\lambda|-K_{\rm rec}/t_n\le\lambda_n.
+$$
+
+Thus the original finite contrast inequality holds at every sufficiently large index. No limiting cost equality is used as finite slack. An optional retained report coin can attenuate to exact contrast without reducing full-label TV.
+
+JS6.1, namely the FA70/75 chronological constructor, realizes this same finite list on entire two-dimensional low fibres, with integrated rate $\log(1+v_j/c_i)\le A_n$, actual absorbing first failure and whole-fibre TP terminal live isometries. Its commuting rate path is sufficient only. Add two fair dimension-three high encoders $\sqrt{(1-\delta)/2}DE^\dagger$ and two counted dimension-two coherent-complement encoders $W_\perp^\dagger/\sqrt2$, with TP decoder $EJ_0$, where $W_\perp:\mathbb C^2\to\operatorname{ran}(P)^\perp$ and $J_0:\mathbb C^2\to\mathbb C^3$ are isometries. The repaired Gram, failure sum and source TP identity give total encoder effect $I_5$.
+
+For every complex $A\in M_5$, $A_V=E^\dagger AE$, the forgotten live map is exactly
+
+$$
+E[D A_VD^\dagger+T A_VT^\dagger+S A_VS^\dagger+J_0W_\perp^\dagger A W_\perp J_0^\dagger]E^\dagger.
+$$
+
+For each of the five original labels and every Borel $\mathcal B\subset[0,1]$, its failure map is separately
+
+$$
+w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)\operatorname{tr}(EME^\dagger A)P_f.
+$$
+
+At every passive reference, live matrices tensor with $I_R$ and the failure trace is the exact conditional operator $\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$. Labels $0,13$ are separately zero; other labels remain separate. All complex coherences, including complementary-qubit coherences, are retained as specified, with no extra or singular sector.
+
+The twelve errors remain $e_5=e_{27}=E_*$ and $e_{16}<71/484<37/250<E_*$ under the conditional antecedents. Only the high pair has dimension at least three; its acquired mass on each sign history is $(1-\delta)A_y$, $A_y=\sum_i h_i^2p_{yi}$, maximized at $27$ and equal to JR's sharp weak-regime cost. Low acquisition includes attached failure. All other dilation shares are discarded before the cut. Rare signed height differences converge to $a_ik_i$, and the bulk converges to four corners. This single common sequence has TV tending to $B_0+\Phi(\lambda)$, matching necessity. No separately optimized marginals are glued. $\square$
+
+The transfer is iterated: first $q_n\to0$ at a fixed finite $\lambda$, then any $\epsilon=\lambda-C_{\rm end}\downarrow0$ or $h=C_{\rm sat}-\lambda\downarrow0$. In particular TC's credited initial Taylor law and SC's credited quadratic saturation law remain valid for $\mathcal R-B_0$. The selected final formula also gives
+
+$$
+\mathcal R(C_{\rm sat}-h)=T_0-\frac{-g''(p_s)}{2C'(p_s)^2}h^2+O(h^3),
+$$
+
+whose coefficient is SC's $K_{\rm sat}$. This follows by the simple inverse of $C$ at $p_s$ and $g'(p_s)=0$. Neither this formula nor local transition derivatives supply a simultaneous finite-$q$ estimate, a product limit with $\lambda\to\infty$, finite-$A$ saturation attainment or a native operation. The unbounded-product optimal-value limit is independently proved in FA Theorem 81.3 and credited below. Its proof uses a fixed spectral failure measure and exact finite repair, rather than an interchange of the iterated limits in this paragraph.
+

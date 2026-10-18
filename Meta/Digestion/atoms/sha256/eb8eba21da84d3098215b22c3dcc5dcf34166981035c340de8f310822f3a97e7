@@ -1,0 +1,22 @@
+**定义 78.6（Complete paid onto selector）。** For $n\ge2$, list $A=\{a_1,\ldots,a_n\}$ and let $L=\lceil\log_2 n\rceil$. Choose a surjection $\sigma:\{0,1\}^L\to A$. For example, if $\operatorname{rank}(w)$ is its zero-based binary rank, take $\sigma(w)=a_{\min(\operatorname{rank}(w)+1,n)}$. Define
+
+$$
+Q_\sigma=\{(a,u):a\in A,\ u\text{ binary},\ |u|<L\},
+\qquad j(a)=(a,\varepsilon),\qquad T=\{\mathsf{hit},\mathsf{miss}\},
+$$
+
+with distinct terminal colours, and for every active state and both bits define
+
+$$
+\delta((a,u),b)=
+\begin{cases}
+(a,ub),&|u|+1<L,\\
+\mathsf{hit},&|u|+1=L\text{ and }\sigma(ub)=a,\\
+\mathsf{miss},&|u|+1=L\text{ and }\sigma(ub)\ne a.
+\end{cases}
+$$
+
+These exhaustive cases give a finite complete stationary deterministic table with $n(2^L-1)$ raw active states. No report reveals $a,u$ or a selector label. From a root the first $L-1$ reports are active, and the $L$th bit stops with hit exactly on the named original. All $L$ bits, including known selection bits and the terminal bit, are paid. A shorter prefix conveys no original information; restoration discards it. A declared word end without restoration does not start a new experiment.
+
+Surjectivity separates every two roots by a word naming one of them. Every proper prefix state and both terminal colours are reachable from the family roots. Thus the family is response-identifiable and its singleton-membership tests are actual bit executions.
+

@@ -1,0 +1,94 @@
+**Definition 8.1 (The credited finite upper observer).** The continuation's Definition 26.1 and Lemmas 26.2–26.3 supply a deterministic $q$-free observer with the following exact constants and realization. Define
+
+$$
+\begin{aligned}
+C_i&=F_i(2)^2+2F_i(1)F_i(3),
+&\theta_i&=\frac{F_i(2)^2}{C_i},\\
+\Delta_\theta&=\theta_0-\theta_1,
+&V&=\max_{i=0,1}\theta_i(1-\theta_i).
+\end{aligned}
+\tag{8.1}
+$$
+
+Its supplied exact sum-four premise, attributed there to Theorem 20.2, is, with $r_k=H(k)/k^9$,
+
+$$
+r_1r_3-r_2^2
+=\frac{520040714516414119558257878908551006355871}
+ {331776\cdot10^{48}}>0,
+\qquad 0<\theta_1<\theta_0<1.
+\tag{8.2}
+$$
+
+This equality is credited rather than independently recalculated. In particular $\Delta_\theta,V>0$. Choose once a rational $0<\alpha_0\le\alpha$ and set
+
+$$
+n_\alpha=\left\lceil\frac{8V}{\alpha_0\Delta_\theta^2}\right\rceil,
+\qquad b_{n_\alpha}=\left\lceil\frac{n_\alpha(\theta_0+\theta_1)}2\right\rceil,
+\qquad S_\alpha=10n_\alpha(n_\alpha+1)+3.
+\tag{8.3}
+$$
+
+The sample-count integer called $M$ in the source's (26.3) is $n_\alpha$ here; it is distinct from this volume's total state budget $M$.
+
+The supplied observer reads through the first actual tick, then reads every raw gap through its closing tick. It retains categories $1,2,3$ only, preserves a pending category across all intervening long gaps, and pairs consecutive retained categories. A pair is accepted when its categories sum to four; its mark is one for $(2,2)$ and zero for $(1,3)$ or $(3,1)$. Pending memory is cleared after each retained pair. At the $n_\alpha$th accepted pair it emits zero if its one-mark count is at least $b_{n_\alpha}$, and one otherwise.
+
+The full source state set comprises a first-tick waiting state, both labels, and active configurations
+
+$$
+(z,p,m,v),\qquad z\in\{0,1,2,3,4\},\quad
+p\in\{\varnothing,1,2,3\},\quad
+0\le m<n_\alpha,\quad0\le v\le m.
+\tag{8.4}
+$$
+
+Here $z$ is the zero count saturated at four, $p$ the pending category, $m$ the accepted-pair count and $v$ the one-mark count. Updates and the terminal threshold are compiled into the fixed deterministic table. There is no additional program state or elapsed-read counter. The supplied bound counts all of these configurations:
+
+$$
+5\cdot4\sum_{m=0}^{n_\alpha-1}(m+1)+3
+=10n_\alpha(n_\alpha+1)+3=S_\alpha.
+\tag{8.5}
+$$
+
+The following are the exact source-owned laws and paid-mean identities used for this application, not new upper-construction claims. Put
+
+$$
+A_i^{\rm sh}(q)=\sum_{k=1}^3F_i(k)q^k,
+\qquad \rho_i(q)=\frac{A_i^{\rm sh}(q)}{Z_i(q)},
+\qquad \zeta_i(q)=\frac{C_iq^4}{A_i^{\rm sh}(q)^2}.
+\tag{8.6}
+$$
+
+Retained categories have iid law $F_i(k)q^k/A_i^{\rm sh}(q)$ for $k=1,2,3$. Retention waiting counts are iid geometric of mean $1/\rho_i$ and independent of the entire retained category sequence. Acceptance probabilities are $\zeta_i>0$, and accepted marks are iid Bernoulli$(\theta_i)$: every accepted composition contributes the same factor $q^4$. The supplied midpoint confidence calculation gives both separate full-family errors at most
+
+$$
+\frac{4V}{n_\alpha\Delta_\theta^2}\le\frac{\alpha_0}{2}\le\alpha.
+\tag{8.7}
+$$
+
+The continuation's Theorem 26.4 supplies almost-sure termination and finite pointwise means at every $q$. If $G$ denotes the number of raw post-first-tick gaps read to completion, its identities are
+
+$$
+\mathbb E_iG=\frac{2n_\alpha}{\rho_i\zeta_i}
+=\frac{2n_\alpha Z_iA_i^{\rm sh}}{C_iq^4},
+\qquad T=1+\tau+\sum_{r=1}^G(K_r+1),
+\tag{8.8}
+$$
+
+and
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}T
+&=1+\beta_i(q)+\frac{2n_\alpha\mu_i(q)Z_i(q)A_i^{\rm sh}(q)}{C_iq^4},\\
+\mathbb E_{i,e^{-s}}T
+&\sim\kappa_i s^{-11},
+\qquad \kappa_i=\frac{20n_\alpha\,9!\,A_i^{\rm sh}(1)}{C_i}>0.
+\end{aligned}
+\tag{8.9}
+$$
+
+For exact correspondence, the same source supplies $C_0=301510$ and $A_0^{\rm sh}(1)=20196$; $A_1^{\rm sh}(1)=H(1)+H(2)+H(3)$ is fixed by (2.1). The displayed leading coefficients are therefore the source's exact positive coefficients, with its sample-count symbol replaced by $n_\alpha$.
+
+These source identities include all discarded long gaps, rejected pairs, the initial wait and the terminal tick. Their payment justification is predictable inclusion: $\{G\ge r\}$ depends only on preceding raw gaps and is independent of $K_r$. Thus the source prices the completed sum by $\mu_i\mathbb E_iG$, without assuming that a gap duration is independent of the acceptance decision made after that gap. No raw gap is skipped when its saturated category becomes ineligible. The fixed transition description is separate from the mutable state count; no optimal description-length claim is used.
+

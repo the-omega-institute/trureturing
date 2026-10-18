@@ -1,0 +1,19 @@
+**Definition 1.3 (five local boxes).** The subclass used in the main
+theorem requires exactly these additional almost-sure restrictions:
+
+$$
+\begin{array}{c|c}
+\nu_p\text{-almost surely}&
+ \dfrac9{25}\le Q(w_{0,1})\le\dfrac49,\quad
+ Q(w_{2,1})\le\dfrac{16}{729},\quad
+ Q(w_{3,1})\le\dfrac{1944}{390625}\\[2mm]
+\nu_\beta\text{-almost surely}&
+ \dfrac{18}{125}\le W(\alpha w_{0,1})\le\dfrac4{27},\quad
+ \dfrac8{243}\le W(\alpha w_{1,1})\le\dfrac{108}{3125}.
+\end{array}
+\tag{1.6}
+$$
+
+No other coordinate box, finite support, reversibility, deterministic
+successor, mixing or recurrence hypothesis is imposed in Theorem 2.1.
+

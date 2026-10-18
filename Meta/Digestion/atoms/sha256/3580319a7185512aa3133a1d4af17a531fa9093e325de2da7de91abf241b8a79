@@ -1,0 +1,38 @@
+**Definition 8.1 (the remaining universal certificate problem).** At
+each $d\ge1$, the missing premise remains a total computable
+predicate $V(d,\mu,C,\pi)$ on rational probabilities, positive
+rational caps and finite strings, satisfying both
+
+$$
+V(d,\mu,C,\pi)\Longrightarrow
+ \forall n\ge1\ \forall\Theta\quad
+ \sum_{x\in C_\Theta}\prod_i\mu(x_i)\le C^n
+\tag{OCB.55}
+$$
+
+and, for every positive rational $\epsilon$, existence of an accepted
+pair with $-\log_2C>\sigma_d-\epsilon$. The equivalent temporal
+carrier of Theorem 2.3 retains every actual owner, guard, seed incidence,
+compatibility zero and arbitrary full joint block weight. Multi-owner
+joint relations of unbounded size are explicitly permitted; the
+owner-only language of Definition 5.1 is a restricted sufficient
+method, not a replacement definition of admissibility or success.
+
+An alternative sufficient bridge is an effective bound
+
+$$
+\sigma_d\ge n^{-1}\log_2K_d(n)-\eta_d(n),\qquad
+\eta_d(n)\longrightarrow0,
+\tag{OCB.56}
+$$
+
+uniform over the original complete arbitrary-donor competitors at the
+specified depth. Neither (OCB.55)'s cofinality nor (OCB.56) is asserted
+here. In the entropy route, a finitely checkable cofinal family of
+ceilings (OCB.61) is likewise unconstructed; Theorem 7.4 is the
+quantified conditional transfer, not such a family. Theorem 2.3 proves an exact carrier, Theorem 3.2 rejects a specified
+exact elimination class, and Theorem 5.2 characterizes a specified
+sound cap class. Their quantifiers give no stronger impossibility
+conclusion. A failure at a fixed $\mu$ does not disprove cofinality
+whose optimization varies $\mu$.
+

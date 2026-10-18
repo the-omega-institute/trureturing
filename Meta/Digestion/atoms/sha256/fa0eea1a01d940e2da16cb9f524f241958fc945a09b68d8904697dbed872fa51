@@ -1,0 +1,49 @@
+**Theorem 13.3 (five complete states with paid updates).**
+On the entire $\mathcal D_m$ at entry $N_m$ there is a successful native
+table with five states and exact worst costs
+
+$$
+b(C_m)=(m,2m-2,B_m).
+\tag{CAR.63}
+$$
+
+It has one read state $r$, two update states $v_1,v_2$, and two halt
+states $h_0,h_1$. Its initial state is $r$. The read word is
+$p=LLR^{2m}$. Its absent successor is $v_1$, its $\alpha$ successor
+is $h_0$, and its $\beta$ successor is $h_1$; choose $h_0$ for its
+branch successor. The update successors are $v_1\to v_2\to r$.
+State $h_e$ carries the complete row $Y_e$.
+
+Proof. The first $L$ of $p$ enters $x=T_n$. Its remaining suffix
+$LR^{2m}$ has weight $4m+1$ and last edge $R$. After $t$ actual
+post-entry updates, the residual in (CAR.23) is
+
+$$
+n+N_m+t-(4m+1)=n-2m+t.
+\tag{CAR.64}
+$$
+
+Since the last edge is $R$, a negative residual gives absence, zero
+gives $\alpha$, one gives $\beta$, and a value at least two gives
+branch. The first residual is at most one. Each return to $r$ adds
+exactly two through two real updates, so the first nonnegative
+residual is zero for even $n$ and one for odd $n$. Branch is never
+returned on an admitted execution. The controller halts at the correct
+full row, without a retained count or parity variable.
+
+Writing $n=2j$ or $2j+1$, where $1\le j\le m$, the number of
+two-update loops is $m-j$. Hence the sourcewise costs are
+
+$$
+q=m-j+1,\qquad a=2(m-j),\qquad
+\ell=(2m+2)(m-j+1).
+\tag{CAR.65}
+$$
+
+They are independent of $h$, but correctness still applies to every
+allowed $h$. At $n=2$ or $3$ all three maxima in (CAR.63) are
+attained by the same actual source. Every state is reached on the
+whole fiber. All literal words and both complete rows are installed
+in the five-state table; their sizes are not bounded by five.
+$\square$
+

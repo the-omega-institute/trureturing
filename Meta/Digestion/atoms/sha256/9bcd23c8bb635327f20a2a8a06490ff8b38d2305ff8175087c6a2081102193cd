@@ -1,0 +1,30 @@
+**Proposition 39.3 (Degenerate boundaries and the two gluing questions).**
+The criterion (39.4) includes $b=1$, $m=0$, and the empty
+separator. These cases do not extend the universal converse to
+$b=1$ or to a test restricted to degree zero. Compatible
+prescribed histograms and compatible total fibres are distinct
+questions even for the same graphs.
+
+Proof. For $b=1$, (39.4) says precisely that the supplied local
+totals are realizable, regardless of $H$. For $m=0$, realizability
+forces every total and histogram entry to be zero; the empty
+array is global for every $H$. If $q=0$, the separator has only
+the empty pattern and $h_{\varnothing}=m$; arbitrary local arrays
+can be aligned. The empty graph on zero vertices is complete
+under the pairwise adjacency convention, consistently with
+Theorem 39.2. A noncomplete separator can also have compatible
+particular totals, for example all-zero occupancies in any
+degree; its failure is failure of the universal guarantee.
+
+For prescribed local arrays, row permutations align their
+separator patterns exactly when their full histograms agree.
+For totals alone one may choose another array in each fibre,
+and the correct condition is the intersection (39.4). Neither
+criterion identifies an unknown original array. The joint
+coordinate and quantitative mismatch for the three-position
+separator are developed in §40 of the
+[same-subject continuation](AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS_CONTINUATION_2.md),
+followed there by the shared-edge canonical application. $\square$
+
+[MOS39]: https://arxiv.org/html/1603.01850v1
+

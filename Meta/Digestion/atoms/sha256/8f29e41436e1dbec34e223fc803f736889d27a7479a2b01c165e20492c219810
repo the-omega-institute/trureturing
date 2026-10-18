@@ -1,0 +1,105 @@
+**Theorem 6.1 (all-length cycle family).** On the full attained
+$RL$ reply domain $\{\mathsf{absent},\alpha,\beta,\mathsf{branch}\}$
+define
+
+$$
+\delta(\mathsf{absent})=a,\qquad
+\delta(\alpha)=c_*,\qquad
+\delta(\beta)=d,\qquad
+\delta(\mathsf{branch})=b,
+\qquad f(u)=\delta(r_u(RL)),\quad h(u)=\Gamma_{LL}(u).
+\tag{CIT.27}
+$$
+
+For every integer $\ell\ge2$ put
+
+$$
+B_\ell=\{x\in P^\ell:h(x_i)=f(x_{i+1})
+\text{ for all }i\in\mathbb Z/\ell\mathbb Z\}.
+\tag{CIT.28}
+$$
+
+This is jointly admissible for the complete native interface. Each
+of its coordinate projections equals $P$, hence is locally
+inadmissible. The $LL$ witnesses have exactly the successor cycle
+as their donor graph. With (CIT.24), the exact mass is
+
+$$
+\Omega_\theta(B_\ell)=\operatorname{tr}(T_\theta^\ell)
+=R_\ell(\theta)+2,
+\qquad
+T_\theta=
+\begin{pmatrix}
+1&\theta&0&0\\
+1&0&0&0\\
+0&0&1&0\\
+0&0&0&1
+\end{pmatrix},
+\tag{CIT.29}
+$$
+
+where
+
+$$
+R_0(\theta)=2,\qquad R_1(\theta)=1,\qquad
+R_\ell(\theta)=R_{\ell-1}(\theta)+\theta R_{\ell-2}(\theta)
+\quad(\ell\ge2).
+\tag{CIT.30}
+$$
+
+Proof. The pairs $(h(u_s),f(u_s))$ for $s=0,1,2,3,4$ are
+respectively
+
+$$
+(a,a),\quad(b,a),\quad(c_*,c_*),\quad(d,d),\quad(a,b).
+\tag{CIT.31}
+$$
+
+For an $LL$ request in coordinate $i$, read $RL$ in its successor
+coordinate and apply $\delta$. Equation (CIT.28) proves correctness
+on the same $B_\ell$. For each of the other six targets, use the
+own-coordinate witness of Lemma 4.4. Every target is therefore served
+separately with zero or one experiment. These words have length at most
+two, and all longer native words remain allowed by Lemma 4.3.
+
+The constant tuples $u_0^\ell,u_2^\ell,u_3^\ell$ belong to
+$B_\ell$. To realize the other two symbols at every position, put
+$u_1$ at any chosen position, $u_4$ at its successor, and $u_0$
+everywhere else. The equation at $u_1$ is $b=f(u_4)$, and the
+equation at $u_4$ is $a=f(u_0)$ if $\ell>2$ or $a=f(u_1)$
+if $\ell=2$. Every remaining position has target $a$ and successor
+with $f$-value $a$. Thus the tuple belongs to the relation for every
+$\ell\ge2$. Rotating it realizes $u_1$ and $u_4$ at any
+coordinate. All projections consequently equal $P$, without a hidden
+locally admissible donor. The selected missing target is $LL$ at
+every coordinate and its donor is the successor, giving the asserted
+cycle of length $\ell$.
+
+Order states as $(a,b,c_*,d)$. A symbol $u$ contributes its weight
+in row $h(u)$ and column $f(u)$ of the local transfer matrix.
+The five pairs in (CIT.31) give exactly $T_\theta$ in (CIT.29).
+The cycle equation identifies the column state at coordinate $i$
+with the row state at its predecessor. Summing the products of local
+entries over these cyclic state choices gives the trace, by the same
+finite-sum identity as (CIT.9). Here it is equality for the actual
+relation (CIT.28), since that relation imposes exactly these equations.
+
+Let
+
+$$
+A_\theta=\begin{pmatrix}1&\theta\\1&0\end{pmatrix}.
+\qquad
+A_\theta^2=
+\begin{pmatrix}1+\theta&\theta\\1&\theta\end{pmatrix}
+=A_\theta+\theta I_2.
+\tag{CIT.32}
+$$
+
+Define $R_j(\theta)=\operatorname{tr}(A_\theta^j)$ for
+$j\ge0$. The identity matrix has trace two and $A_\theta$ has
+trace one. Multiplying (CIT.32) by $A_\theta^{\ell-2}$ and
+taking traces proves (CIT.30). The two scalar unit blocks in
+$T_\theta$ each contribute one to every positive power, proving
+(CIT.29) for every $\ell\ge2$. No enumeration or limiting
+argument is needed. $\square$
+

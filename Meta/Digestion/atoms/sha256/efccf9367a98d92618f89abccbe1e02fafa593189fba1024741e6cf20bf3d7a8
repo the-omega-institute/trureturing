@@ -1,0 +1,22 @@
+**Definition 3.2 (matcher and generator).** Write
+
+$$
+W=\alpha^6\beta^{10}=(\alpha\alpha)^3(\beta\beta)^5,
+\qquad S=\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad h_n=W^nS\quad(n\ge0).
+\tag{3.2}
+$$
+
+The vertical bar is punctuation, not an operation. Use matcher states $q_0,\ldots,q_{15},t_1,\ldots,t_6,\mathrm{dead}$, initially $q_0$. From $q_0$, $\alpha$ goes to $q_1$ and $\beta$ to $t_1$. For $1\le i\le5$, $\alpha$ takes $q_i$ to $q_{i+1}$; for $6\le i\le14$, $\beta$ takes $q_i$ to $q_{i+1}$; $\beta$ takes $q_{15}$ to $q_0$. The suffix transitions are
+
+$$
+t_1\xrightarrow\alpha t_2\xrightarrow\beta t_3\xrightarrow\beta t_4
+\xrightarrow\alpha t_5\xrightarrow\alpha t_6.
+$$
+
+Every unspecified letter transition goes to dead; dead is absorbing; either letter from $t_6$ goes to dead. Stop also sends the matcher to dead. Unused padded table rows are dead. In every actual operation, execute the original $\delta_0$ and its ordered event block, then the matcher update. The matcher changes no original field, record, permission or source behavior.
+
+At every active synthetic configuration, choose $\alpha$ with probability $1/3$, except at $p_4$ with matcher $t_6$, where choose it with probability $5/8$. Use the same combined deterministic letter update as actual holding. Pending emits only the unique original Stop and delivery, then delivered has empty residual. Define $D_z$ as this generator's complete legal transcript law. A finite descriptor is its charged program and current configuration; no infinite probability table is stored.
+
+Sample $1/3$ with two fresh fair bits: reject candidate 3, emit $\alpha$ for 0 and $\beta$ for 1 or 2. Sample $5/8$ with three fresh fair bits and emit $\alpha$ for candidates below 5. Clear scratch before letter commit and normalize synthetic fields, cursors and PC before returning. The actual configuration remains held during report consumption. Only the already acquired finite configuration is copied into the separately charged synthetic cursor; the source and its $K$ are not copied.
+

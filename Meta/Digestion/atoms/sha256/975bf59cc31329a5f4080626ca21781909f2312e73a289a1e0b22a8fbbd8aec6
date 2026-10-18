@@ -1,0 +1,22 @@
+**Theorem 3.5 (The complete three-point active set).** The exact
+two-dimensional profile has
+
+$$
+F_0(x)\le T\quad(0\le x\le1),\qquad
+\{x\in[0,1]:F_0(x)=T\}=\{0,x_*,1\}.
+$$
+
+At $x_*$ the signed radial error is $f-s=-v<0$, whereas its limits
+at $0$ and $1$ are $\sqrt T>0$ and $\sqrt{T-\tau}>0$.
+
+Proof. Lemma 3.2 gives both corridor inequalities at the root, and so
+gives $F_0\le T$. Direct evaluation of the scalar limits gives
+$F_0(0)=T$ and $F_0(1)=(T-\tau)+\tau=T$.
+At an interior point, equality $F_0=T$ is equivalent to
+$f=s+v$ or $f=s-v$. Lemma 3.2 excludes the first equality strictly
+at every interior point. Lemma 3.4 leaves exactly $x_*$ for the
+second. These exhaust all equality possibilities. In particular, there
+is no unexamined fourth active point. At $x_*$, $v>0$ and $f>0$,
+and the claimed signs follow. The two boundary points describe scalar
+error limits, not additional rays or encodings. $\square$
+

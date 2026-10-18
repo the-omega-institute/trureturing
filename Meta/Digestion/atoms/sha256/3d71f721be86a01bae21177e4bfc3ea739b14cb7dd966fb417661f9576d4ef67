@@ -1,0 +1,26 @@
+**定义 20.1（固定任务、完整行与两个比较类）。** 固定定义10.1的公共 $M,F=((n_i,p_i))_{i=1}^a$ 及整数 $n\ge1$。来源仍是约定1.1的全部 $u\in\mathcal T$，当前唯一静止服务是 $y_u=\rho^M u$，输出是有序向量 $\tau_F(u)\in\mathcal A^a$。空族的输出类型是单点 $\mathcal A^0$；重复项仍占各自位置，全部 $n_i$ 属于同一认证执行计数。以下安装的选择先于未知来源：
+
+$$
+\mathcal O=(E,e_0,a,\delta,c),\qquad
+1\le m=|E|\le n,\qquad
+ a:E\longrightarrow\mathcal P\sqcup\mathcal A^a,
+\quad \delta:E\times\mathcal A\longrightarrow E.
+\tag{SLH.20.1}
+$$
+
+$c(e)$ 是有限有序原始地址／回复列表，每个名义行的地址均无重复。所有可用于控制、保留或选择动作的动态字段都在完整行 $e$ 内；安装表和公共任务只读。$c$ 是行的确定解码，不是独立可写寄存器。动作、四项原始转移和解码均为总函数，包括不可达行。停止行的有效转移 $\bar\delta$ 吸收，原始 $\delta$ 的未用停止项可以另有值。外部报告历史不作为控制器输入；其有效 fold 只取回复词，正如 (SLH.16.3)。没有隐藏时钟、来源行、答案、档案或可变程序。
+
+实际执行在查询行请求该行安装的字面 $q$。`queryReply` 命中 $c(e)$ 时取其已存原始值，否则读取 $r_{y_u}(q)$；每次请求，包括命中，都记一个实际事件并应用 $\delta$。要求空初态缓存、每个实际前缀上的同一当前服务缓存真值，以及每条实际边的 (SLH.16.4) 精确 first-occurrence 更新。缓存记录的是当前服务回复，不把目标向量中的旧纪元回复写成当前原始记录。称 $\mathcal R_{M,F}$ 为对每个原来源都实际合法、逐源有限停止且输出 $\tau_F(u)$ 的安装类；称 $\mathcal C_{M,F}$ 为其中另满足 (SLH.16.6) 的类，等式余域换为整个请求／向量停止动作。该粗条件仍量化全部报告历史，独立于真实来源和缓存合法性。
+
+这里明确把原 `Observer` 的 Boolean 停止槽换为 $\mathcal A^a$，把服务换为 $\rho^M u$，把 `Positive` 换为 $\tau_F$，并取消 `Allowed N` 的叶数限制。它不是既有 Lean `Admissible` 的已编译实例。以下对应为普通数学。
+
+对固定安装和固定来源，完整行确定服务后继；若停止前重复一个完整行，就永久重复而不能停止。因此每个上述比较者满足
+
+$$
+Q_u<m,\qquad D_u=S_u=|c(e_{\rm halt})|\le Q_u,
+\qquad |c(e)|\le m-1\quad(e\text{ 实际到达}).
+\tag{SLH.20.2}
+$$
+
+最后一个界只约束实际到达行。它不约束给定安装中不可达解码列表的长度或字面词长。轨道界直接复用 `run_length_bound` 的静止、确定、完整有限轨道论证；缓存支撑及命中不增长复用 `actualPrefix_semantics` 和 `ActualObserverBoundedLowerBounds` 的私有 `prefix_cache_spectrum`／`run_cache_spectrum` 在 `Legal` 实际前缀／运行下的论证。后两项本身没有 `Allowed` 前提；其精确首次出现缓存等式的证明不依赖停止值，故在本声明的向量输出和当前服务下照同一归纳使用。它们不供应无界来源的叶覆盖或原 Boolean 目标下界，亦不使用有界来源地址正规化。
+

@@ -1,0 +1,12 @@
+**Lemma 5.3 (exact recurrence and substitution).** At an explicit root let $K$ be its ending indices, $J_L,J_R$ the disjoint child index sets, and restrict $r$ accordingly. The type-$\mathsf A$ count is one exactly when every ending index requests alpha and every strict-descendant index requests absent; otherwise it is zero. The type-$\mathsf H$ rule replaces alpha by beta. For a branch all ending indices must request branch. Subject to that condition, its type-$\mathsf I$ entry is
+
+$$
+\bigoplus_{(s,t)\in\mathcal C_I}
+ f_L(s,r|_{J_L})\otimes f_R(t,r|_{J_R}),
+\tag{BPS.15}
+$$
+
+and its type-$\mathsf O$ entry uses all ordered type pairs outside $\mathcal C_I$. A failed branch condition gives zero. Equal summaries on the same index set may be substituted inside any surrounding trie without changing its root summary.
+
+Proof. A root leaf is a single tree, with exactly the stated root and continuation replies. A branch has its unique ordered pair of child trees, whose indexed conditions are independent because the child index sets are disjoint. Child types partition the possibilities, so the summands are disjoint; (BPS.11) is exactly image membership. Lemma 4.2 therefore gives the exact capped counts. Induction on the finite trie proves (BPS.14) and the recurrence. Each parent uses only the identified child summary and restricted requested vector, so equal-summary replacement propagates inductively to the root. Duplicate indices requesting inconsistent replies correctly give zero. This includes early leaves, absent continuations and markers at the root. $\square$
+

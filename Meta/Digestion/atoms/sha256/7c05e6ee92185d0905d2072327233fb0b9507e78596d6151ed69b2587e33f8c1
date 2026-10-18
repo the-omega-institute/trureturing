@@ -1,0 +1,30 @@
+**定义 18.1（齐次父响应与全部实际迹）。** 本节不限制 $z,Y$ 位于 E 曲线。用齐次变量 $a$ 表示原时钟一的响应，父历史写为
+$(0,J,a,M,2a,J,z,M,Y)$，最后固定 $a=24$。每个第五动作 $F\in\{J,M\}$ 各有八个源槽 $s_{FEGk}$，$E,G\in\{J,M\},k=1,2$，共三十二个源坐标。每槽采用式 (16.2) 的严格源条件，每个 $(F,E,G)$ 保留式 (16.3) 的不同源对条件。第五迹为 $s_J=n+r$、$s_M=n+u$。后两步的全部迹为
+
+$$
+\begin{array}{c|c|c|c|c}
+F&E&\tau_6&\tau_{7,J}&\tau_{7,M}\\ \hline
+J&J&u&n+r&n+u\\
+J&M&1+3b&n+2r&n+r+1+3b\\
+M&J&n+r+t&n+u&n+4t-2-r\\
+M&M&n+2u&2n+t+2r&2n+3u
+\end{array}
+\tag{18.1}
+$$
+
+所有列都在该槽自己的源上计算。对应第五之后的左乘矩阵分别为
+
+$$
+\begin{aligned}
+A_{5,J}&=\begin{pmatrix}2&1\\1&0\end{pmatrix},&
+A_{5,M}&=\begin{pmatrix}2&1\\3&1\end{pmatrix},\\
+A_{6,JJ}&=\begin{pmatrix}1&0\\2&1\end{pmatrix},&
+A_{6,JM}&=\begin{pmatrix}1&0\\3&1\end{pmatrix},\\
+A_{6,MJ}&=\begin{pmatrix}3&1\\2&1\end{pmatrix},&
+A_{6,MM}&=\begin{pmatrix}3&1\\5&2\end{pmatrix}.
+\end{aligned}
+\tag{18.2}
+$$
+
+各 $A_7$ 是 $JA_6$ 或 $MA_6$；代入式 (1.7) 直接给表 (18.1)。这些矩阵只计算原动作后的迹，不表示同时获取两个反事实读数。
+

@@ -1,0 +1,23 @@
+### 10.2 Prior observation and purity results retain their own tasks
+
+The following are credited comparison results of [O], not additional
+claims of reconstruction, certification or stability proved here.
+They are not premises of Theorems 4.1, 6.2 or 9.1.
+
+| Prior observation result | Menu and comparison class | Relation to this volume |
+| --- | --- | --- |
+| Pure reconstruction and base quotient, Proposition 10.4 and Theorems 10.5–10.6 | Calibrated full-support pure current rays; full native menu recovers the ray, whereas bottom edges with lawfulness have quotient $(k,e^{i\alpha})$ | The quotient and its guarded path action are reused and credited; our prediction retains its base response and incurs reference-pair error. |
+| Native purity threshold, Theorem 11.5 | All PSD trace-one candidates with the same means and native coherences as a calibrated double-wall pure target of height $k_{\rm tar}$ | The compatible heights are $[k_{\rm tar},\max(k_{\rm tar},H-k_{\rm tar})]$; native certification holds for $k_{\rm tar}\ge H/2$. This target-height threshold differs from the parameter threshold $Z=2/3$ here. |
+| Native menu plus $12$, Theorem 11.8 | Original five complex edges plus the additional complex coherence $12$, with fixed legal means, compared against arbitrary PSD trace-one matrices | This larger menu certifies a full-support pure target. The extra edge is not supplied to our decoder or included in our original ten-output metric. |
+| Native inverse instability, Proposition 11.9 | Whole open calibrated pure source, also any fixed finite stack of globally lawful native commands | This is an inverse-recovery limitation, not a perturbed-latent-state estimate for the annular model. |
+| Two-reference stable recovery, Theorem 11.10 | Coherences $02,12$ within the known calibrated pure family, with doubled real outputs | Its trace-distance bound has constant $1/\sqrt{2Z}$. The extra $12$ edge and the pure-family comparison are distinct from our observation and approximation task. |
+| Full reference-star certificate, Theorem 11.11 | All four complex reference coherences $C_{i2}$ for $i\ne2$, and known $Z$, against arbitrary PSD trace-one states | Its exact residual purity certificate and trace-distance bound use a different menu and comparison class; no such certificate is inferred from our quotient coordinates. |
+
+Proposition 10.9 of [O] already distinguishes pure reconstruction from
+mixed-state tomography. Its Proposition 11.7 applies native commands
+componentwise to specified ensembles, with their preparation labels;
+it does not define a universal nonlinear dynamics on arbitrary mixed
+matrices. Our source and all error suprema contain only the declared
+actual pure rays. No mixed-state transport or learning-performance
+transfer is assumed or obtained.
+

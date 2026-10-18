@@ -1,0 +1,86 @@
+**Convention 10.2 (credited FA §§77–86 and exact correspondence).** The supplied FA continuation uses precisely Definition 67.2's original class, without fixing the unrequested binary-effect entries, a five-mode completion, commuting survivor controls or competing time densities. The correspondence with Definitions 1.2–1.3 is
+
+| This companion | FA §§77–86 |
+| --- | --- |
+| $D,T,S,M,E,\rho_{y,e,n},\Delta_{\rm hist},\kappa$ | The identical source operators, twelve histories, height difference and winding normalization of FA.35–.37. |
+| $\alpha,\beta,U,V,W,\mu,r$ | $\alpha,\beta,u_m,V_f,W_f,\mu_f,u_f$; $u_f$ here is the radial mean, distinct from any spectral ratio. |
+| $D_c(x),N_c(x),c_*(x),F_c(x),H_c(x)$ | $C_c+D_cx,A_c+B_cx,c_*(x),d(\mathbf c)/\mathfrak c(\mathbf c),d(\mathbf c)$ for $x=z^2$, $\mathbf c=(s_0,z,w)$. FA's affine coefficient $D_c$ is not this companion's affine function $D_c(x)$. |
+| $K(z,w),n(z,w),f(z,w),k(z,w)$ | $K(\mathbf c),n(\mathbf c),\ell(\mathbf c),f(\mathbf c)$ respectively; live and failure height functions remain distinct. |
+| $P_{\rm coef},\pi_j,v_j,\nu$ | FA.37's coefficient law $p$, masses $p_j$, failure ratios $b_j$, and failure measure $\sigma$ with $d\sigma=b_jdp$. FA.38's scalar $\nu=\mu_f/c_f$ instead equals $\mu/c_*(r)$. |
+| $d_0,\zeta,\Xi,L_f,\gamma$ | $d_f,-z_f,\Xi,L_f,\gamma_f$, with identical physical whitening; this companion's $\zeta>0$ is not FA's product variable. |
+| $q=1-s/s_0,t=e^A-1,\lambda,C_{\rm end},C_{\rm sat}$ | $q_{\rm end},t,\zeta,\kappa_0,\zeta_{\rm sp}$ in FA81. The local coefficient mass $q=\nu/t$ in FA.43 is a different quantity. |
+| $H_{\rm live},S_{\rm corner},T_0,B_0,\Phi(\lambda)$ | $H_0,j(1),\mathcal T(s_0),\mathcal T(s_0)-\gamma_f,[F_{\rm lim}(\lambda)-d_f]/2$. |
+
+To check the correspondence, substitute $\mathbf c=(s_0,z,w)$ into FA.6. Its numerator and denominator become exactly $N_c(z^2)$ and $D_c(z^2)$, including both axes, so capacity and radial cost agree on the whole ellipse. The common normalized live Gram and failure effect are exactly
+
+$$
+\int hh^Tdp=I_3,\qquad \int nn^Td\sigma=M,\qquad
+0\le b_j\le t c_*(z_j^2),\qquad d\sigma=b_jdp.
+$$
+
+Their failure moments are $V,W,\mu$ of Definition 1.2; no symmetrization of an existing record is used. Moreover $\Delta_{12}=-(\sqrt{59}-\sqrt{37})/16$, hence $z_f=-\zeta$ and FA's whitened matrix is exactly $\Xi$. Taking the trace of the failure covariance against $\Delta_{\rm hist}$ gives $\int k\,d\sigma=-d_0$. Consequently
+
+$$
+\int|k|d\sigma=d_0+2\int k_+d\sigma,\qquad
+F_{\rm lim}(\lambda)=d_0+2\Phi(\lambda),\qquad
+\mathcal T(s_0)-\frac{L_f-F_{\rm lim}(\lambda)}2=B_0+\Phi(\lambda).
+$$
+
+This verifies the entire feasible domain and objective, as well as the threshold names. FA86's factorization, total encoder effect $I_5$, whole-fibre TP maps, five separate Borel components, conditional passive-reference operators and sharp acquired cost are exactly the common realization used in Proposition 10.1. Thus the following conclusions are existing conditional FA results for the same original problem, not additional B/O deductions.
+
+For the entire feasibility set, put
+
+$$
+\begin{gathered}
+c_f=c_*(r),\quad \nu_f=\mu/c_f,\quad q_m=\mu/W,\quad
+ t_0=W/c_f=\nu_f/q_m,\quad A_0=\log(1+t_0),\\
+\tau=s/s_0,\qquad
+\tau_*=q_m\sqrt r+\sqrt{(1-q_m)(1-q_mr)}.
+\end{gathered}
+$$
+
+FA Theorem 78.3 evaluates and attains
+
+$$
+t_{\min}(s)=
+\begin{cases}
+t_0,&0\le\tau\le\tau_*,\\
+\displaystyle\nu_f\frac{1+r-2\tau\sqrt r}{1-\tau^2},&\tau_*<\tau<1,
+\end{cases}
+\qquad
+\mathfrak F_{s,A}\ne\varnothing\ \Longleftrightarrow\ A\ge\log(1+t_{\min}(s)).
+$$
+
+This includes the attained positive floor, its join and the entire rising branch. In the strong domain FA71 gives exactly $s=s^\dagger$, $A\ge A_0$, with $v^\dagger=V/W$, $u^\dagger=\delta\mu/W$ and $\mathfrak c_\dagger=c_f$; all other $s\in[s_0,1]$ are infeasible at finite activity. The identity of the threshold data follows because $(\sqrt{u^\dagger},\sqrt{v^\dagger},1)=\sqrt{\mu/W}(s_0,\sqrt r,\sqrt{W/\mu})$ and capacity is homogeneous of degree zero. These are the credited entire threshold and strong results, rather than merely implicit bounds or endpoint asymptotics.
+
+FA Theorem 79.1 also evaluates and attains the height on the entire weak minimum-budget boundary: $t=t_0$, $0\le\tau\le\tau_*$, and $t>t_0$, $\tau=\tau_{\max}(t)$, where
+
+$$
+q_F=\nu_f/t,\quad u_R=\frac{1-q_Fr}{1-q_F},\qquad
+\tau_{\max}(t)=q_F\sqrt r+\sqrt{(1-q_F)(1-q_Fr)}.
+$$
+
+Its FA.45–.47 formula optimizes the actual sign weights of the saturated $z^2=r$ family and pure-live $z^2=u_R$ family, including both polygon regimes, floor collapse, ties, zero differences and vanishing weights. This is a full actual-record result; feasibility-only balanced signs do not preserve an arbitrary record's TV. FA Theorem 80.1 proves existence of a positive finite fixed-strength coefficient $K(s)=\lim_{A\to\infty}e^A[\mathcal T(s)-\mathcal T_A(s)]$ for every fixed real $0\le s<s_0$. Proposition 80.2 supplies a strictly positive lower bound from any finite attained matching static dual at its valid scope. Neither statement evaluates $K(s)$ or proves its continuity; the finite-static-dual bound is not asserted at $s=s_0$.
+
+FA Theorem 81.2 additionally supplies the exact finite feasibility test and positive next term
+
+$$
+C_{\rm end}=\frac{\nu_f(1-\sqrt r)^2}{2},\quad
+\kappa_1=\frac{\nu_f^2(1-r)^2}{8}>0,\qquad
+1-\tau_{\max}(t)=\frac{C_{\rm end}}t+\frac{\kappa_1}{t^2}+O(t^{-3}).
+$$
+
+Thus the path $q=C_{\rm end}/t$ is eventually infeasible, despite equality of the leading product. At the critical product every eventually feasible full-record instrument sequence has height limit $B_0$, as credited to WE; coarsening gives only an upper-limit bound. JS supplies the prescribed fixed finite-product optimal-value limit, exact finite repair and common recovery, including equality at $C_{\rm sat}$. Independently of that fixed-product theorem, FA Theorem 81.3 proves eventual feasibility and
+
+$$
+q_n>0,\quad q_n\to0,\quad t_nq_n\to\infty
+\quad\Longrightarrow\quad
+\mathcal T_{\log(1+t_n)}(s_0(1-q_n))\to T_0.
+$$
+
+This is an optimal-value limit with common recovering instruments, not a universal equality for nonoptimizers, an evaluated rate or a uniform crossover estimate. Its lower construction fixes the spectral failure measure and uses its finite repair deficit $t_ne_{t_n}=C_{\rm sat}+O(t_n^{-1})$; its upper bound uses corner concentration and the spectral trace-norm bound. These are the separately supplied FA proof interfaces, not an inference from the iterated Taylor laws.
+
+FA §§82–84 also supply actual low live-bearing label conclusions. Their $n_{\rm feas},n_{\rm opt}$ count supported-nonzero acquired qubit labels, rather than equality-measure lines, discarded Kraus indices, total physical alphabets or the five terminal failure labels. The entire floor has both minima exactly four. FA Theorem 82.3 gives the full at-most-three-label feasibility criterion $A\ge A_3$, $\tau\le\widehat\tau_3$, with its explicit constants FA.62–.63 and simultaneous attainment; $A_3>A_0$ and $\widehat\tau_3<\tau_*$. Together with a floor witness this gives the three/four feasible-count regions FA.65, not a global partition. The strict four-label endpoint obstruction, explicit five-label feasible region, global upper bounds $n_{\rm feas}\le8$, $n_{\rm opt}\le9$, and the conditional eventual optimal-count lower bounds are FA82.4–83.3. The five-label family is not asserted height optimal at every feasible budget. At the isolated strong point, FA84.1 gives $n_{\rm feas}=4$ at every feasible budget and $n_{\rm opt}=4$ precisely at $t/t_0=1,2$, with $n_{\rm opt}=5$ at all other feasible budgets. None of these counts is inferred from this companion's failure-line uniqueness.
+
+FA §§85–86 retain full-component implementation conditions. In a fixed implementation, erasing fine control labels requires one admitted whole-fibre TP decoder agreeing with each old composite on all complex matrices and separately on live and all five labelled Borel CP measures. Supported-nonzero low rays that differ cannot be aggregated into a single low qubit label. On the same ray, equality of normalized supported failure CP measures is the criterion up to fibre-unitary identifications; it determines the entire decoder by the onto supported encoder, without identifying arbitrary normalized full-$M_5$ encoders. Redesigned same-ray aggregation in the specified completion is a separate factorization; arbitrary action outside the support requires FA85.2's full-component factorization criterion. Merging signed label differences $x_1,x_2$ loses exactly $(|x_1|+|x_2|-|x_1+x_2|)/2$ of TV. A refinement of the same supported rank-one encoder with the same decoder is only an input-independent proportional split and preserves TV, activity and capacity. Endpoint redesign can increase TV, and an orthogonal direct sum of two entire qubit blocks is dimension four, charged as high on acquisition. These existing results supply no discarded-index read right, native permission or free resource.
+

@@ -1,0 +1,26 @@
+**Definition 69.1 (native observer and histories).** For a fixed $n\ge4$, let $M$ be the
+original finite complete [Observer][Native] on all rows of $E$, with source-independent
+$e_0$, action $E\to\mathcal A+\mathrm{Bool}$, transition
+$E\times\{\alpha,\beta,\mathsf{br},\mathsf{abs}\}\to E$, and decoder
+$E\to\mathrm{RawHistory}$. A raw history is an ordered list of literal-address/raw-reply
+pairs, retaining repetitions; every row's decoded address list is duplicate-free. On a
+query $q$, `queryReply` returns its stored raw value on a cache hit and $r(q,U)$ on a
+miss. `cacheUpdate` leaves a hit unchanged and appends $(q,y)$ on a miss. Let $C(h)$
+fold this update through $h$ from the empty cache.
+
+The native `barStep` uses the response transition at a query row and fixes a halt row.
+`historyState` folds `barStep` from $e_0$ through the replies of $h$, ignoring reported
+address labels; `historyAction` is the action at that row. $\kappa_{\rm hist}$ keeps all
+address labels and order and applies $\kappa$ to each reply. `ActualPrefix(M,U,e,h)`
+starts at $(e_0,[])$ and extends only when the current action queries $q$, using
+`queryReply(decoder(e),q,U)` for the next transition and appended report. It has no step
+after halt. This is separate from native `Run`, which records finite execution ending at
+a Boolean halt row.
+
+`Legal(M,U)` asserts the empty initial decoder and, at every actual prefix, truth of
+every decoded raw reply about the same immutable $U$ and the exact `cacheUpdate` decoder
+law for the current queried address. Truth is required at actual prefixes; decoded
+address distinctness is required on all nominal rows. Thus repeated and absent replies
+remain raw evidence, while counterfactual response folds after halt are absorbing. All
+these definitions retain their exact [native meanings][Native].
+

@@ -1,0 +1,40 @@
+### 80.3 从强度直接恢复 $r$
+
+对 $0\le\tau\le\tau_{\rm p}$，置 $r(\tau)=r_\star$。对 $\tau_{\rm p}<\tau\le\tau_{\rm c}$，可以直接使用根式
+
+$$
+\kappa_\tau=
+\frac{\beta+\sqrt{\beta^2+(\alpha-\beta)(1+\beta)\tau^2}}
+{(1+\beta)\tau},
+$$
+
+$$
+u_\tau=\sqrt{\frac{\kappa_\tau^2-\alpha}{\beta}},\qquad
+\mathcal R_\tau=
+\sqrt{\beta^2(1+\alpha)+\alpha^2(1+\beta)u_\tau^2},
+$$
+
+$$
+\boxed{\quad
+r(\tau)=
+\frac{1-\alpha\kappa_\tau^2}
+{u_\tau+\kappa_\tau\mathcal R_\tau}.
+\quad}
+\tag{RC.122}
+$$
+
+在所列区间，根式取正根、分母严格正。这是 $h_{\rm fr}(r)=\tau$ 的选定分支。为核对选根，令 $u=-v_1/u_1>0$ 和 $\kappa=\sqrt{\alpha+\beta u^2}$。由 $H(u)=\tau$ 得
+
+$$
+\tau[(1+\beta)\kappa^2+(\beta-\alpha)]=2\beta\kappa.
+$$
+
+$\alpha>\beta$ 和 $\tau>0$ 使该二次式只有一个正 $\kappa$，正是上式的 $\kappa_\tau$。正交关系 $k_r\kappa+ru=1$ 对正 $r$ 严格递增；平方并有理化其选定根得到 (RC.122)。§81 证明 $h_{\rm fr}'(r)>0$，故不存在同一分支的第二个 $r$。$\tau=0$ 单独用平台分支，不使用含 $1/\tau$ 的式子。静态值供应因而可写为
+
+$$
+j(\tau)=\operatorname{tr}G-2\psi(r(\tau)),
+\qquad
+\mathcal T(s_0\tau)=\frac{H_0+L_f+j(\tau)}2.
+\tag{RC.123}
+$$
+

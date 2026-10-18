@@ -1,0 +1,53 @@
+## 1. Model, actual realization, and target
+
+Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+A legal predetermined history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a finite word in $M,J$, including the empty word. Matrices act on the left. A displayed product is executed from right to left; the chronological pair $(M,J)$ implements $U$, and $(J,M)$ implements $L$. The consecutive recorded indices are $i=0,1,\ldots$. Every scalar read advances this index, including a repeat after an empty word. Unread atoms do not advance it.
+
+The effective source and observations are
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,
+$$
+
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+D(i),\qquad
+k\in\mathbb R,\qquad D(\tau)=\sum_{h=0}^d\delta_h\tau^h,\qquad d\ge0.
+\tag{1.1}
+$$
+
+Let $C_{\mathrm{fix}}(d)$ be the smallest uniform exact-read bound over all legal predetermined finite-word histories that recover the whole target. The integer upper degree $d$ is known. Sections 2–6 and 8 specialize to $d=1$, so there $D(\tau)=\delta_0+\delta_1\tau$; Sections 9–10 treat every $d\ge1$, and Sections 11–15 concern stability of the six-read $d=1$ history. The target is exactly $(S,k,D)$, including the entire polynomial $D$. In original parameters $S=\alpha R$, $k=\beta/\alpha$, $\alpha>0$, and $R=c\ell$ with $c$ a strictly positive column and $\ell$ a strictly positive row fixed during its run. Negative gains, sampled gain zeros, zero drift, and constant drift are included. No reset, copy, inverse acquisition, instrument change, extra clock, independently lifted sources, or combination of unexecuted histories is permitted.
+
+Every allowed effective source has the actual realization
+
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,\qquad
+c=\binom p r,\qquad \ell=(1,q/p).
+\tag{1.2}
+$$
+
+Indeed $rq/p=s$, so $c\ell=S$. For any $A=(\begin{smallmatrix}a&b\\c_0&e\end{smallmatrix})$,
+
+$$
+\ell Ac=\operatorname{tr}(AS)=ap+br+c_0q+es.
+\tag{1.3}
+$$
+
+At every atom the positive column stays positive:
+
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0).
+\tag{1.4}
+$$
+
+Thus (1.2) supplies one source and one unchanged row at all recorded and unread states on any prescribed legal history. Different candidate runs may have different fixed rows. Every cumulative word matrix is nonnegative integral with determinant $1$ or $-1$, because both atoms have these properties and the empty word is $I$.
+

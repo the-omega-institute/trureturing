@@ -1,0 +1,28 @@
+### 69.5 Actual-family parameter interval and scope
+
+For the parameterization in §49, let
+\(h=\sqrt{(3-b^2)/(1+b^2)}\), \(a=bh\), and retain its coefficients
+\(P=(a-3+i(h+b))/2\), \(Q=(-a-3+i(h-b))/2\).
+Only twelve diagonal block entries change with \(b\), so
+
+\[
+ \|H_0(b)-H_\star\|_{\mathrm F}^2
+ =|P(b)-P(0)|^2+|Q(b)-Q(0)|^2
+ =\frac{b^2h^2+(h-\sqrt3)^2+b^2}{2}.
+\tag{69.12}
+\]
+
+For \(|b|\le1/2\), \(0<h\le\sqrt3\) and
+
+\[
+ |h-\sqrt3|=\frac{4b^2}{(1+b^2)(h+\sqrt3)}
+ \le\frac{4b^2}{\sqrt3}.
+\]
+
+Thus (69.12) is at most
+\(2b^2+(8/3)b^4\le(8/3)b^2\le4b^2\). It follows that
+\(\|H_0(b)-H_\star\|_{\mathrm F}\le2|b|\).
+Since \(\beta=\rho/2<1/2\), every \(|b|\le\beta\) is inside the
+certified ambient ball. This establishes effectiveness of the local
+exclusion, while the status of the rest of the open branch remains unchanged.
+

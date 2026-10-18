@@ -1,0 +1,63 @@
+**Definition 1.1 (one persistent source and globally correct acquisition).**
+Use [AAR, Definitions 1.1, 1.3–1.4 and 13.1–13.2][AAR]. A source is a
+finite nonempty ordered full binary tree with leaves $\alpha,\beta$.
+Its height is zero at a leaf and one plus the maximum child height at
+a branch. Fix public $D\ge1$ and a word $p$ beginning with $R$, with
+$1\le |p|\le D$. The source family is exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:\operatorname{height}(v)\le D\}.
+\tag{NCO.1}
+$$
+
+One unknown $t\in\mathcal F_D$ is sampled once from a public law and
+remains stationary throughout acquisition. Every finite original-root
+word $w$ is a legal Read, returning one of
+$\{\alpha,\beta,\mathsf b,\bot\}$: the two leaf labels, branch and
+absent. The empty word reads the root; every strict extension of a leaf
+is absent. In particular $\bot$ is not an alpha label. There is no
+source identity, subtree operation, free navigation or additional port.
+
+An admissible encoder is a deterministic effective procedure with
+source-blind initialization, terminating and correct on every member of
+the whole family (NCO.1). Its complete accessible source dependence at
+handoff, denoted $E_A(t)$, includes any surviving operands, selectors,
+reply latches, histories, control and allocation distinctions. One
+passive decoder must, without further Reads, satisfy
+
+$$
+\mathsf D_A(E_A(t),D,p,k)=\operatorname{Read}_{\rho^k t}(p)
+\quad(t\in\mathcal F_D,\ k\in\mathbb N),
+\tag{NCO.2}
+$$
+
+where the supplied $k$ is authentic for this same source and initial
+version, and
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{NCO.3}
+$$
+
+Only the number $T_A(t)$ of actual initial Read invocations is optimized;
+constant, repeated, absent and off-path invocations all count. Write
+
+$$
+V_{D,p}(\mu)=\inf_A\mathbb E_\mu T_A.
+\tag{NCO.4}
+$$
+
+The competitor class in this infimum is the same for every law on
+$\mathcal F_D$. Public laws can inform installation, but installation
+reveals no sampled source. Local computation, memory, complete operand
+lengths, installation, clearing, validation of stationarity and
+authentication and representation of $k$ are separate resources.
+
+Let $p_j$ denote the length-$j$ prefix of $p$. The published boundary
+descriptor $d=\partial_p(t)$ is $B$ if $p$ is branch, and otherwise
+$(j,e)$ if the first leaf on its path is at $p_j$, with label
+$\lambda_e$, where $\lambda_0=\alpha$ and $\lambda_1=\beta$.
+This descriptor is a mathematical function, not a supplied input.
+

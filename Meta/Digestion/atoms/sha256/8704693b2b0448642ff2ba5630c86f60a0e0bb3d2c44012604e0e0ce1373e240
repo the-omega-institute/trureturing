@@ -1,0 +1,58 @@
+**Corollary 10.3 (concurrent finite-table costs and scope).** Consider
+a finite actual history segment from a ready entry to a ready exit,
+consisting of $n$ completed nonhalting transfers and their interleaved
+writer events. Write $z_i,r_i,d_i$ for their controls, actual typed
+responses and directions. If $R_0,U_0,A_0$ count the
+designated table's Reads, observer Updates and address letters, then
+
+$$
+\begin{aligned}
+n&=R_0+U_0,&
+D&=\sum_{i=1}^n m_{d_i}(z_i,r_i)\le(2k+6)n,\\
+R_{\rm ext}&=R_0+D,&
+U_{\rm obs,ext}&=U_0,&
+A_{\rm ext}&=A_0,\\
+R_{\rm ext}+U_{\rm obs,ext}&\le(2k+7)n,&
+U_{\rm writer,ext}&=U_{\rm writer,0}.
+\end{aligned}
+\tag{CWS.16}
+$$
+
+The logical word has $2k+8$ bits, its zero-interleaved physical width
+is $4k+15$, and the full installed set has exactly $2^{2k+8}$ words.
+Each actual nonhalting observer response in these transfers changes
+exactly one physical bit. All installed typed rows, including
+unsupported words, hold or change one bit and preserve the no-$11$
+condition. The complete installed set includes unsupported flag and
+phase patterns; its hold completion supplies no termination claim
+from those patterns.
+
+Proof. Sum (CWS.15), using $|z_i|,|\delta(z_i,r_i)|\le k$.
+A transfer includes one original primitive in addition to its $m_{d_i}$
+root Reads. Writers are a disjoint event class and are retained.
+The literal statements follow because all added operands are empty.
+The flag setting, each fill or erase, and each Gray phase change flip
+one logical bit. Zero interleaving carries this to one physical bit.
+The width, full installed count and global hold/one-bit property are
+exactly the physical, installedWords, physical_rows and
+installed_halt structural conclusions of [CWS-TBI], and the count
+in [SLHC, Construction 11.6, (SLHC.11.9)–(SLHC.11.11)][CWS-SLHC].
+No installation cost is derived merely by counting words: the fixed
+instructions, expanded literals and response-choice rows also require
+their declared representation and service.
+
+By Theorem 10.2, if the concurrent designated table terminates on
+every observer-progressing history with finite total writer interference,
+the installed table also terminates on every such history: deletion
+preserves the update total, and finite routing preserves progress.
+The same argument applies to another stated history class only if
+that class is preserved by deleting service events. This is conditional
+inheritance, not termination of an arbitrary total table or preservation
+of a scheduling policy. The serial
+installed_halt remaining-call rank assumes its fixed serial observation
+and terminating run. Under a concurrent writer, equal current
+$(U,w)$ can have different future update schedules; the argument here
+does not assign a deterministic total remaining-call rank to them.
+Only the current routing episode has the response-uniform finite
+measure just proved. $\square$
+

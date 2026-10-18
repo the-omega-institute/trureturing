@@ -1,0 +1,4 @@
+**定义 59.1（有限字原语及固定展开）。** 全部数据存于 $W$ 位字。原语为 CONST、COPY、ADD、SUB、EQ、LT、NOT、AND、OR、SEL。加减按模 $2^W$，比较为无符号比较，布尔值为零或一，$\mathrm{SEL}(c,x,y)$ 在 $c=1$ 时选 $x$。第 64 节选取足够 $W$，使所有被解释为整数的中间量不溢出；未被选用的 SUB 可以回绕，但没有整数语义用途。两布尔输入和 SEL 的三个输入均执行，无依赖数据的短路。
+
+写 $\mathrm{LE}(x,y)=\mathrm{NOT}(\mathrm{LT}(y,x))$、$\mathrm{NE}(x,y)=\mathrm{NOT}(\mathrm{EQ}(x,y))$、$\mathrm{MIN}(x,y)=\mathrm{SEL}(\mathrm{LT}(x,y),x,y)$；有限 AND／OR 左结合。除法、gcd、目标正确性和来源真实性均不是原语。
+

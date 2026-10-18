@@ -1,0 +1,85 @@
+**Definition 13.1 (mathematical sources and conditional synthesis).**
+The strict norm gap combines the original attained target and its full
+failure covariance with four nonnegative sign-corner evaluations and
+the negative failure height at the source direction
+$(\sqrt\alpha,-\sqrt\beta)$. The PSD trace bound,
+Cauchy–Schwarz and sign averaging are standard intermediate tools.
+RB Proposition 5.1, especially RB.31, supplies the prior original
+target/failure-trace mechanism; RB.22–RB.23 supplies the uniform-height
+mechanism. The different substitution and trace sign in (IC.40) are
+essential. RB's own cutoffs and rank-one conclusion are unchanged.
+Corollary 9.1 credits RC70.1 and FC34.3 for the local kernel and
+negative-pair arguments; rank-nullity itself is standard.
+
+The capacity-slack and interpolation statements use FC.26/FC.57,
+GC12.2's joint moments, FC3.3's complete compatible groups and FC4.2's
+contact equality. GC Proposition 19.1 already supplies positive
+capacity reweighting and the polynomial-quadrature boundary;
+(IC.48)–(IC.51) keep the remaining directed and height tags explicitly
+in a fixed original support calculation. The source nondegeneracy and
+strict slack in Theorem 10.1 are conditional expression consequences
+of GC6.1's actual nine source rows. The leading-coefficient and
+divided-difference identities are reused from de Boor, Example 9,
+(41); the zero-integral support and finite-dimensional moment
+interfaces retain the di Dio–Schmüdgen attribution in Definition 6.1.
+No generic interpolation, convexity, quadrature, stationarity or
+rank theorem is claimed as new. These are repo-derived conditional
+source-specific deductions and a method obstruction, with no worldwide
+priority claim.
+
+**Open problem 13.2 (mixed signs, slack transfer and complete original coverage).**
+It remains to supply a relation forcing the mixed-tag determinant to
+vanish on each face that needs this fixed-support removal, or a different
+original-law construction preserving all joint rows and deleting whole
+groups. Singularity is not established for mixed signs; nonsingularity
+would exclude only that particular fixed-support direction, not every
+alternative law, direction or activation of unused contacts. Equal
+slopes, antipodes, pure groups, paired groups and simultaneous pair
+exit remain in the full problem. The positive slack requires another
+pure-bearing group beside eight saturated singletons. Starting with
+nine occupied groups and deleting only one leaves eight, so that pivot
+alone cannot establish seven groups. Universal $U_7$, universal $U_8$
+where required, and all-alternative eight-/nine-low necessity remain
+the complete-group problems of §7.
+
+Theorem 8.1 constructs neither a finite dual nor a jointly attaining
+tuple. It does not extend to $\lambda=0$, absent or nonfinite duals,
+unattained values, unsupplied boundaries or infinite budget. Its
+paired-group consequence also requires the separate indefinite $R_-$
+premise. The algebraic possibility of zero $R_+$ below the stated
+domain is not resolved. Neither result bounds saturated singletons or
+the total original alphabet.
+
+All restrictions concern the same law. A permitted pivot changes that
+law's selected coefficient masses while preserving its complete eight
+moments, achieved $K$, within-label absolute $J_t$ and pointwise
+capacity. Under the inherited common constructor it therefore preserves
+the complete complex forgotten-label live map and each of the five
+Borel failure maps, with arbitrary passive-reference conditional
+operators. It does not say that the labelled acquisition instrument
+or its probability measure stays identical. The resulting height
+remains $(H_0+J_t)/2$, with the original HALF factor. One specimen,
+twelve histories, both zero failure targets, all supported-zero
+competitors and the counted coherent high completion remain as in
+Assumption 1.1. The $1+$ minimum-count identity is still an equality
+of minima under its supplier, not of counts of every instrument.
+
+All source/root/isolation/Jacobian/rank/TP, stopped-cq minimax,
+sharp worst-history JOINT cost, separate unaveraged equality,
+full-complex multi-Kraus necessity, physical capacity and constructor
+suppliers remain distinct conditional premises. Accessible shares and
+the whole counted fibre stay in the resource accounting; survivors
+are strictly positive at finite budget, controls are TP, FIRST is
+absolute $6+a$, and no positive-carrier action follows failure.
+No copy, helper, oracle, reset, retry, postselection, acceptance or
+survival division is supplied. All-budget/all-contrast evaluated
+roofs, branch ordering and coverage, complete root/multiplicity and
+collision data, coefficients and orientations, capacity/rank/count
+transitions, endpoint/threshold/budget/degenerate gluing, next terms
+and uniform joint limits remain required. Native access/calibration,
+coherently counted storage, whole-fibre actuation, duration, absolute
+clock alignment, archive/source/epoch/controller permissions and the
+general native-instrument/count bridge remain unsupplied. These
+ordinary conditional arguments assert no kernel, physical or native
+certification of those remaining premises.
+

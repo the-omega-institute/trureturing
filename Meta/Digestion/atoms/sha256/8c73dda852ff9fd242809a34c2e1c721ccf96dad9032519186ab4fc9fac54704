@@ -1,0 +1,35 @@
+**Lemma 8.2 (entire original fiber and exact strata).** The complete
+fiber of (NLC.21)–(NLC.22) is exactly
+
+$$
+D^*=\{U(x,y):x,y\in\mathcal T\}.
+\tag{NLC.23}
+$$
+
+Its two designated whole-row strata are exactly
+
+$$
+\begin{aligned}
+D_0^*&=\{U(y,y):y\in\mathcal T\},\\
+D_1^*&=\{U(F(y),y):y\in\mathcal T\}.
+\end{aligned}
+\tag{NLC.24}
+$$
+
+Proof. The four literals decompose every original source as
+$\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$.
+Both endpoints of (NLC.22) are reached there and its whole equality
+says $y=z$. This gives (NLC.23). Conversely every displayed $U(x,y)$
+has that old row, each literal and both reached equal endpoints.
+The two inclusions retain the actual source, not just a tuple model.
+
+At the target holes the complete subtree values are $x,y,F(y)$.
+A finite tree $y$ cannot equal $F(y)$: the latter has one more leaf.
+Therefore the first exact partition holds if and only if $x=y$,
+and the second holds if and only if $x=F(y)$. All other cross-class
+inequalities in those partitions follow from $y\ne F(y)$. The
+reached set and concrete exterior are fixed on the entire fiber,
+proving (NLC.24) and attainment of both labels. The acquired record
+is a genuine whole-subtree link; it is not a literal-history substitute.
+$\square$
+

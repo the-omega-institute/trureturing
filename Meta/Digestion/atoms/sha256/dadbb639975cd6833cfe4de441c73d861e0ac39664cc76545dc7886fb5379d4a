@@ -1,0 +1,29 @@
+**Definition 2.2 (Whole-tree oriented spin-slot signature).** Fix a
+normalized tree $T$ and its read-node positions $v$. Write $t_v$ for a
+node's integer address and $\epsilon_v\in\{0,1\}$ for its parity. For
+each $\phi\in\{0,1\}$ introduce the slots
+
+$$
+\mathcal I_\phi=\{*\}\cup
+\{(v,-),(v,+):\epsilon_v=\phi\},
+\tag{2.2}
+$$
+
+with actual integer indices
+
+$$
+\iota_\phi(*)=q_{j,\phi},\qquad
+\iota_\phi(v,-)=\frac{t_v-\phi}{2},\qquad
+\iota_\phi(v,+)=\frac{t_v-\phi}{2}+1.
+\tag{2.3}
+$$
+
+The signature records the ordered binary tree shape, its leaf labels,
+all node parities, and, separately in each $\mathcal I_\phi$, the
+complete equivalence relation of equality of these indices. The slot
+$*$ is distinguished, and the minus and plus slots are not
+interchangeable. Leaf depths are retained by the shape. This is the
+entire signature of [Original, Theorem 12.2][Original], over all potential nodes
+at once, including mutually incompatible reply branches. It contains no
+relation between slots from different phase alternatives.
+

@@ -1,0 +1,80 @@
+**Theorem 16.1 (mandatory pure-coordinate activation covers the rank-one face).**
+Retain Assumptions 1.1 and 1.4, finite
+$t\ge\max(t_0,30000)$, and the same symmetric original remainder
+$R_-=Q+t\mathsf F$ of (IC.8). Suppose $R_-$ is nonzero rank-one
+negative semidefinite. Then its supplied complete attained face has
+
+$$
+U_8=[r_-,r_+],\qquad n_t(r)\le8
+\quad\text{for every }r\in[r_-,r_+].
+\tag{IC.71}
+$$
+
+Here $n_t$ is FC Definition 2.3's minimum supported-nonzero low
+actual count, under its original suppliers. No existence of a
+rank-one attained face is assumed beyond the stated conditional
+entry, or inferred from this conclusion. No pure-rank lower bound
+is required in this theorem.
+
+Proof. FC Proposition 34.2 gives $S<300/t\le1/100$ for every
+same-$B(t)$ law. Every $w\in\mathcal P$ is height optimal at
+its own achieved $K$ by FC Theorem 4.2. Apply FC Theorems 34.1
+and 34.3 at precisely this scope. There is a unique directed
+negative-height pure contact $x_*$ on $\ker R_-$. Its saturated
+endpoint is also a contact with $\eta_1(x_*)\le0$, including zero,
+and the two endpoints form a compatible complete group $G_*$.
+Every $w\in\mathcal P$ has the quantitative pure-coordinate bound
+
+$$
+w_{*,0}\,\ell_-(x_*)>1/30000,\qquad
+\ell_-(x_*)=\max\{-\ell(x_*),0\}>0.
+\tag{IC.72}
+$$
+
+This is FC (FC.149): after merging, $w_{*,0}=p(1-\xi)$.
+It applies to the pure coordinate, not merely to total mass of $G_*$.
+Uniqueness uses the source positivity on $u\ge0$ and the two
+directed points of the kernel line; it does not identify antipodes.
+
+The endpoints of the attained contrast interval already belong to
+$U_8$, as FC Theorem 6.1 explicitly states and proves. Indeed a
+minimizing or maximizing vertex of $\mathcal P$ has independent
+positive columns of $A$, since a nonzero kernel vector on positive
+support gives opposite feasible perturbations. It therefore has at
+most $\operatorname{rank}A\le8$ positive coordinates and at most
+eight groups. This also handles a singleton interval and a
+constant-$K$ face without any contrast division.
+
+Suppose some other $r\in[r_-,r_+]$ were outside $U_8$.
+FC Theorem 6.1 supplies a nonconstant edge strictly bracketing $r$
+and its relative-interior law $w^0$ at $K=r$. Its support $I$
+consists of exactly nine strictly positive columns in nine distinct
+groups, with rank $A_I=8$ and invertible $H_I$. By (IC.72) its
+pure column $p=(x_*,0)$ is in $I$. Its saturated companion
+$j=(x_*,1)$ has zero weight, because two occupied coordinates
+of $G_*$ would violate the distinct-group property. The companion
+remains available in the complete inventory.
+
+Activate it by (IC.63). The mass row again supplies a nonempty
+negative old-coordinate set and a finite positive first exit
+$\tau$. Throughout the segment all weights are nonnegative,
+$H w=(B(t),r)^T$, and contact equality preserves $J_t$.
+At the endpoint $w(\tau)\in\mathcal P$, (IC.72) still holds.
+Thus the selected pure parent $p$ cannot die. At least one other
+old coordinate dies. Its group differs from $G_*$, and every
+unused coordinate of that group remains zero: $j$ is the only
+activated coordinate. Consequently this death empties a whole group.
+The surviving activated group $G_*$ has a positive pure parent
+and legal fraction, and no new group was created. There are at most
+eight occupied groups at the same $(B,r,J_t)$.
+
+FC Theorems 3.3 and 5.2 now put $r$ in $U_8$, a contradiction.
+This proves (IC.71) on the entire attained interval, with its
+endpoints already covered. Other old pure coordinates are allowed
+to die: each such death empties its own distinct original group.
+Only the selected parent could leave a newly activated companion
+behind, and that parent's pure mass is mandatory. A hypothesis
+that only the total mass of $G_*$ is positive would not prevent
+the parent from dying while its satellite survives; it is not a
+substitute for (IC.72). $\square$
+

@@ -1,0 +1,97 @@
+**Lemma 2.2 (exact membership, including every tail).** The four objects
+in Definition 2.1 are normalized nonnegative complete laws. Every atom
+lies in its native endpoint interval, their emissions lie in $[a,b]$,
+and they obey all the complete tail bounds defining
+$\mathcal K_p,\mathcal K_\beta$. In particular,
+
+$$
+\pi_5Q_B,\pi_5Q_A\in Z_p,\qquad
+\pi_5W_B,\pi_5W_A\in Z_\beta.
+\tag{2.5}
+$$
+
+**Proof.** The geometric tails satisfy
+
+$$
+\sum_{j\ge J}(x_j+y_j)=t^J,
+\qquad a(y_4+t^5)=t^5.
+\tag{2.6}
+$$
+
+The definitions of $s_A,s_B$ therefore normalize $Q_A,Q_B$. In particular,
+$Q_A(T_p(4))=t^4$ and both p tails at level five equal $t^5$.
+Equations (2.3)--(2.6) give
+
+$$
+W_B(T_\beta(4))=\frac{t^5}{U},\qquad
+W_A(T_\beta(4))=vt^4,
+\qquad W_B(T_\beta(5))=W_A(T_\beta(5))=at^5.
+\tag{2.7}
+$$
+
+Also $q=U(1-v)$. Hence the mass of $W_B$ through depth three, including
+standalone beta, is
+
+$$
+\frac{q+\sum_{j=1}^{4}\sum_iQ_B(w_{j,i})}{U}
+=1-\frac{t^5}{U}.
+$$
+
+Together with (2.7), this normalizes $W_B$. The mass of $W_A$ through
+depth three is $1-v+v(1-t^4)$, which normalizes $W_A$ as well.
+
+Here is a finite rational enclosure of every exceptional endpoint-box
+comparison. For a phase cell with native endpoint masses $l<h$, let
+$\theta(D)=(D-l)/(h-l)$. Each entry is an enclosure of $10000\theta(D)$;
+a single integer denotes equality. The suspended entries in row $(j,i)$
+refer to $\alpha w_{j,i}$. Every entry follows from (2.1)--(2.4) by
+positive-denominator cross multiplication.
+
+| Cell | $Q_B$ | $Q_A$ | $W_B$ | $W_A$ |
+|---|---:|---:|---:|---:|
+| standalone $\beta$ | — | — | $[4736,4737]$ | $[4736,4737]$ |
+| $(0,0)$ | $[4703,4704]$ | $[4703,4704]$ | $[4755,4756]$ | $[4755,4756]$ |
+| $(0,1)$ | $[4884,4885]$ | $[4884,4885]$ | $[9229,9230]$ | $[9229,9230]$ |
+| $(1,0)$ | $[5147,5148]$ | $[8051,8052]$ | $[8135,8136]$ | $[6640,6641]$ |
+| $(1,1)$ | $[6079,6080]$ | $[5297,5298]$ | $[630,631]$ | $[8076,8077]$ |
+| $(2,0)$ | $[9592,9593]$ | $0$ | $[726,727]$ | $[1548,1549]$ |
+| $(2,1)$ | $[2023,2024]$ | $10000$ | $[3690,3691]$ | $[7870,7871]$ |
+| $(3,0)$ | $0$ | $0$ | $[606,607]$ | $[1293,1294]$ |
+| $(3,1)$ | $0$ | $0$ | $[4690,4691]$ | $[4690,4691]$ |
+| $(4,0)$ | $0$ | $0$ | $[1543,1544]$ | $[3292,3293]$ |
+| $(4,1)$ | $[5223,5224]$ | $0$ | $0$ | $0$ |
+| level-five tail | $0$ | $0$ | $0$ | $0$ |
+
+All finite endpoint masses are positive. The table proves nonnegativity
+and endpoint-box membership for every exceptional coordinate, including
+$a<u,v<b$. Every coordinate at depth at least five is its native
+$a$ coordinate; infinity has mass zero in both native laws and in the
+four constructed laws. Thus the full endpoint boxes hold.
+
+For completeness, put $t_b=6/25$. On the p zero branch the larger
+endpoint is always $b$. On its one branch the larger endpoint is $a$
+for $j=0,1,2$ and $b$ for $j\ge3$: the endpoint ratio is
+$(81/100)(27/25)^j$. On the suspended one branch the ratio is
+$(243/250)(27/25)^j$, so the larger endpoint is $b$ for $j\ge1$;
+the suspended zero branch also has larger endpoint $b$.
+Consequently either p law obeys
+
+$$
+\begin{aligned}
+Q(T_p(1))&\le t_b+(y_1-P_{p,b}(w_{1,1}))
+                         +(y_2-P_{p,b}(w_{2,1}))
+ =\frac{2888404}{11390625}<\frac4{15},\\
+Q(T_p(2))&\le t_b^2+y_2-P_{p,b}(w_{2,1})
+ =\frac{669904}{11390625}<\left(\frac4{15}\right)^2,\\
+Q(T_p(j))&\le t_b^j<\left(\frac4{15}\right)^j\quad(j\ge3).
+\end{aligned}
+\tag{2.8}
+$$
+
+For either suspended law, $W(T_\beta(0))=v<b$ and
+$W(T_\beta(j))\le b t_b^j<b(4/15)^j$ for $j\ge1$.
+The p tail at level zero is one. These estimates include all longer
+words and infinity, and prove every required tail inequality.
+The level-five tail intervals follow either from (2.7) or by summing the
+same-order endpoint intervals beyond that level. $\square$
+

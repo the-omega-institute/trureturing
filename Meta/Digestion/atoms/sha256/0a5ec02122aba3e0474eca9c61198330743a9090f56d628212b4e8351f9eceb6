@@ -1,0 +1,9 @@
+**Corollary 4.4 (A nonexponential sufficient profile).** If $a_k\le C(k+1)^{-2-\delta}$ for $C<\infty$ and $\delta>0$, then $T_P<\infty$ and, for $R\ge1$,
+
+$$
+\tau_P(R)\le\eta_{H,P}(R)\le\frac{C}{\delta}R^{-\delta}.
+\tag{4.5}
+$$
+
+Proof. Bound $(k-R+1)a_k\le C(k+1)^{-1-\delta}$ and compare the decreasing positive series with $\int_R^\infty x^{-1-\delta}\,dx$. The initial term is finite. This is a conditional entropy profile, without asserting its realization by a particular finite producer. $\square$
+

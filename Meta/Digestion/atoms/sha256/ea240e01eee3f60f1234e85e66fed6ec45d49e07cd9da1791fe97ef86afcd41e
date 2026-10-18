@@ -1,0 +1,32 @@
+**Definition 2.1 (finite interfaces and full support tests).** A finite
+interface $I$ consists of a nonempty finite state set $S$, finite target
+maps $g_q:S\to G_q$, and finitely many experiments $r_a:S\to A_a$,
+each with at most four replies, including a constant experiment.
+A nonempty $P\subseteq S$ is range-feasible when $|g_q(P)|\le4$
+for every target. A target is hard on $P$ when no single experiment
+determines it there. Write
+
+$$
+H_I(P)=\{q:\nexists a\ \forall x,x'\in P,
+             \ r_a(x)=r_a(x')\Rightarrow g_q(x)=g_q(x')\},
+\qquad U_P(x)=(g_q(x))_{q\in H_I(P)}.
+$$
+
+For every nonnegative $w:S\to[0,\infty)$ define
+
+$$
+\begin{aligned}
+\kappa_I(w,P)^2
+ &=\sum_y\left(\sum_{x\in P:U_P(x)=y}w(x)\right)^2,\\
+J_I(w)&=\max_{\substack{\varnothing\ne P\subseteq S\\
+                                  P\text{ range-feasible}}}
+                                  \kappa_I(w,P).
+\end{aligned}
+\tag{RCE.10}
+$$
+
+An empty hard-target vector has one cell. For the native depth-$d$
+interface write $J_d$. This is the exhaustive joint functional of
+[JTC, Definition 2.1 and Corollary 2.3], with every feasible support
+retained in its maximum.
+

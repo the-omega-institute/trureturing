@@ -1,0 +1,36 @@
+**Assumption 5.1 (regular nonmerging contact certificate).** At the fixed
+source and feasible request of §§1–2 choose $\lambda>0$ and
+$Y=(Y_0,\ldots,Y_7)\in\mathbb R^8$ such that
+
+$$
+D_\eta(\phi):=Y\cdot\Gamma_\eta(\phi)-|H_\eta(\phi)|-
+                         \lambda|\cos\phi|\ge0
+\quad(\phi\in\mathbb T,\ \eta=0,1).
+\tag{QS.22}
+$$
+
+These are inequalities on both **entire** endpoint circles. Their complete
+equality set is exactly $m\ge1$ distinct endpoint pairs
+$z_i=(\phi_i,\eta_i)$, with angles taken modulo $2\pi$ and sheets
+$\eta_i\in\{0,1\}$. At every contact,
+
+$$
+u_i\ne0,\qquad H_{\eta_i}(\phi_i)\ne0,\qquad
+\gamma_i=D_{\eta_i}''(\phi_i)>0.
+\tag{QS.23}
+$$
+
+There is one strictly positive common contact law
+$\pi^*=\sum_{i=1}^mp_i^*\delta_{z_i}$ with
+
+$$
+p_i^*>0,\qquad\sum_i p_i^*\Gamma(z_i)=B,\qquad
+\sum_i p_i^*k(z_i)=r.
+\tag{QS.24}
+$$
+
+No contact has a contact on the other sheet at the same angle with
+$H_0H_1\ge0$. Same-angle contacts of strictly opposite nonzero height
+are permitted as distinct pairs. These are hypotheses on this certificate;
+they do not remove degenerate strata from the original programme.
+

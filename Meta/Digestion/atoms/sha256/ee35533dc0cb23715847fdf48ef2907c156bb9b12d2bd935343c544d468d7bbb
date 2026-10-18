@@ -1,0 +1,19 @@
+**定义 50.1（只读深度的构造上下文）。** 取所有有限单孔表达式
+
+$$
+C::=\square\mid\rho C\mid(C,c)\mid(c,C),\qquad c\in\mathcal T.
+\tag{JM.138}
+$$
+
+每个常量均为实际原树，左右位置保留；孔出现一次，允许任意有限嵌套。$C[t]$ 是数学代入。
+定义指定任务等价
+
+$$
+s\equiv_\nu t
+\quad\Longleftrightarrow\quad
+\forall C\text{ 满足（JM.138）},\quad \nu(C[s])=\nu(C[t]).
+\tag{JM.139}
+$$
+
+任务的唯一终端读数是内在深度。此定义没有地址回复、实际入口选择、动作费用、权限或档案字段；构造表达式的存在不供应未知只读来源上的构造动作。
+

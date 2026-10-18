@@ -1,0 +1,28 @@
+### 84.4. An explicit joint high-rank path missed by every transversal norm test
+
+The following physical path has ranks (4,4) for every positive parameter, all 32 party/transversal Gram operator norms strictly greater than two, and error strictly above but converging to 1/4. It is nevertheless certified by the qubit-core transfer theorem throughout. This shows that the section-83 necessary spectral condition is not sufficient, even arbitrarily close to the equality family.
+
+Start with the tetrahedral axes
+
+    n_1=(1,1,1)/sqrt(3), n_2=(1,-1,-1)/sqrt(3),
+    n_3=(-1,1,-1)/sqrt(3), n_4=(-1,-1,1)/sqrt(3).
+
+Choose unitary qubit frames U_f whose column projectors are (I+(-1)^i n_f dot sigma)/2. For
+
+    0<t<=1/100,
+    D(t)=diag((1+i t)/(1-i t),1),
+
+let U_f(t)=U_f for f=1,2,3 and U_4(t)=D(t)U_4. Write u_fi(t) for their columns. Choose fixed A markers and varying B markers
+
+    m_0=e_0,  m_1=(3/4)e_0+(sqrt(7)/4)e_1,
+    r_0(t)=e_0, r_1(t)=sqrt(1-t^2)e_0+t e_1.
+
+Define calibrated Stinespring isometries on the complete local inputs by
+
+    V_A(t)|f,i>=|f> tensor u_fi(t) tensor m_i,
+    V_B(t)|f,i>=|f> tensor conjugate(u_fi(t)) tensor r_i(t).   (12)
+
+Within each fibre the qubit columns are orthonormal; distinct fibres have orthogonal output labels. Thus these are actual CPTP maps for every stated t. Each party's correct-output Gram has (1), so (3) gives delta(t)>=1/4.
+
+For each bit, the first three tetrahedral qubit records already span C^2. The two markers of A are independent, and those of B are independent for t>0. Each party's records therefore span exactly C^2 tensor C^2, so both minimal Kraus ranks are exactly four.
+

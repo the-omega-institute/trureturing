@@ -1,0 +1,12 @@
+## 5. The entire fixed-source class
+
+For a fixed known legal source $P_*$, define
+
+$$
+K_{P_*}=\{W\in\mathcal F(H):P=P_*\}.                              \tag{5.1}
+$$
+
+The source promise is candidate information. It is not inferred from
+the ancestor. Gains may have different shapes, arbitrary drift and all
+legal root patterns; the class has no cardinality bound.
+

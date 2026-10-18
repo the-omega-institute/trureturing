@@ -1,0 +1,213 @@
+## 121. Actual original-source copies as programs on the whole complex algebra
+
+**Definition C-121.1 (Prescribed programs and access services).**
+Retain (C116.1)–(C116.2), in particular $B=(0,1,2,3,13)$,
+$f=(0\ 13)(1\ 3)$, $f(2)=2$, $Je_j=|B_j,f(B_j)\rangle$, the original
+$A\mid B$ cut and the normalized output-first Choi operator. Put
+
+$$
+X_a=i(E_{04}-E_{40}),\quad X_b=i(E_{13}-E_{31}),\quad
+U_4=\{X_a,-X_a,X_b,-X_b\}.
+\tag{C121.1}
+$$
+
+One unknown $X\in U_4$ is fixed. The known parameters are $t,\eta\in[0,1]$.
+A batch of size $m\in\mathbb N_0$ consists of the actual state
+$\rho_{t,\eta}(X)^{\otimes m}$ on $P_m=(\mathbb C^5\otimes\mathbb C^5)^{\otimes m}$,
+conditionally independent across copies and initially independent of every data
+system and external reference. For $m=0$ the program space is $\mathbb C$.
+No classical source name, selected eigenstate or freely chosen program replaces
+this batch. There is no distributional assumption on $X$.
+
+A processor is one complex CPTP map
+$\mathcal P_m:M_{5\cdot25^m}\to M_5$, with data first, independent of $X$.
+It must be defined on the entire joint matrix algebra, including program inputs
+outside the promised family and inputs correlated with the data. Its induced
+channel on the promised batch is
+
+$$
+N_X(Y)=\mathcal P_m\bigl(Y\otimes\rho_{t,\eta}(X)^{\otimes m}\bigr),\qquad
+ e_m(t,\eta)=\inf_{\mathcal P_m\ {\rm CPTP}}\max_{X\in U_4}
+ \|N_X-\Phi_{t,\eta,X}\|_\diamond.
+\tag{C121.2}
+$$
+
+Diamond error is unhalved and stabilizes over all finite complex references.
+The reference is untouched. Only the stated product program/data inputs are
+used to evaluate (C121.2); whole-algebra validity of the processor is a stronger
+requirement on its definition.
+
+The batch supply, joint measurement below, calibrated local channel controls,
+blank ancillas, discarding and any spatial routing are additional mathematical
+services. Their counts are given in C-124. They are not consequences of the
+native local menu in C-108.1. Mathematical access to a density operator,
+physical preparation of it, and native acquisition are distinct assertions.
+In particular, exact known real control amplitudes and a phase reference for
+$i$ must be supplied; a finite classical code naming them is not their exact
+physical preparation or calibration.
+
+**Proposition C-121.2 (The exact commuting experiment supplied by those copies).**
+Set
+
+$$
+\begin{aligned}
+ c&=(1-\eta)t,& w&=(1-\eta)/5+\eta/25=(5-4\eta)/25,\\
+ u&=c/5,& s&=5w=1-4\eta/5,&
+ \gamma&=s-c=(1-\eta)(1-t)+\eta/5.
+\end{aligned}
+\tag{C121.3}
+$$
+
+The symbols $c,w,u$ in this increment have the meanings (C121.3); they do not
+redefine C-114.1's local symbols. Define five orthonormal vectors on the original
+matching subspace and one complementary projection by
+
+$$
+|a_\epsilon\rangle=J(e_0-i\epsilon e_4)/\sqrt2,\qquad
+|b_\epsilon\rangle=J(e_1-i\epsilon e_3)/\sqrt2\quad(\epsilon=\pm1),\qquad
+|o\rangle=Je_2,\qquad Q=I_{25}-JJ^\dagger.
+\tag{C121.4}
+$$
+
+Measure the six projections onto these five vectors and $Q$, denoting the
+outcomes by $a_+,a_-,b_+,b_-,o,*$. For $X=\sigma X_a$, $\sigma=\pm1$,
+the law in this order is
+
+$$
+p_{a,\sigma}=(w+\sigma u,w-\sigma u,w,w,w,20\eta/25);
+\tag{C121.5}
+$$
+
+$p_{b,\sigma}$ interchanges the two $a$ entries with the two $b$ entries.
+The measurement is fixed and label independent. All four source states commute.
+For their tensor powers, this classical experiment loses no trace distance.
+In particular, define
+
+$$
+\begin{aligned}
+D_m(t,\eta)&=\tfrac12\|
+ \rho_{t,\eta}(X_a)^{\otimes m}-\rho_{t,\eta}(-X_a)^{\otimes m}\|_1\\
+&=\frac12\sum_{r+q+k=m}\frac{m!}{r!q!k!}(1-2w)^k
+ \left|(w+u)^r(w-u)^q-(w-u)^r(w+u)^q\right|.
+\end{aligned}
+\tag{C121.6}
+$$
+
+The sum is finite, includes $m=0$, and uses $0^0=1$. The opposite-$b$ quantity
+is the same. Thus (C121.6) is an explicit source-copy resource quantity, with no
+optimization over hypothetical programs.
+
+Proof. $X_a(e_0-i\epsilon e_4)=\epsilon(e_0-i\epsilon e_4)$,
+and similarly for $b$. The two matrices act on disjoint pairs, so the five
+vectors diagonalize every matching contribution at once. The complementary
+contribution is the same scalar $\eta/25$ on all twenty orthogonal modes.
+This proves (C121.5) and simultaneous diagonalization. The trace norm of a
+Hermitian diagonal matrix is the sum of the absolute values of its entries;
+tensoring preserves this common eigenbasis. Within the $*$ outcome all twenty
+conditional probabilities coincide for all labels, so grouping them changes
+no trace distance. For the opposite-$a$ comparison every outcome other than
+$a_+,a_-$ has the same probability under both hypotheses. Group those outcomes
+into total mass $1-2w$, and count the two distinguished outcomes as $r,q$.
+The multinomial expansion gives (C121.6), including all zero probabilities.
+The empty products at $m=0$ agree, so $D_0=0$. QED.
+
+**Proposition C-121.3 (Admissible response channels, exact norm and one processor).**
+For any real $v_a,v_b$ with $|v_a|,|v_b|\le s$, define on all $M_5(\mathbb C)$
+
+$$
+T_\eta(v_a,v_b)(Y)=(1-\eta)\sum_jY_{jj}E_{jj}
+ +\eta\operatorname{tr}(Y)I_5/5
+ +v_a(X_a\circ Y)+v_b(X_b\circ Y).
+\tag{C121.7}
+$$
+
+These maps are CPTP, with the same diagonal action as the target. Moreover
+
+$$
+\|T_\eta(v_a,v_b)-T_\eta(v'_a,v'_b)\|_\diamond
+ =\max\{|v_a-v'_a|,|v_b-v'_b|\}.
+\tag{C121.8}
+$$
+
+For a length-$m$ outcome string $z$, let
+$h_a(z)=\operatorname{sgn}(n_{a_+}(z)-n_{a_-}(z))$ and define $h_b$ similarly,
+with $\operatorname{sgn}(0)=0$. Put $D=D_m(t,\eta)$ and
+
+$$
+ r_m=\begin{cases}\min\{s,c/D\},&D>0,\\0,&D=0.\end{cases}
+\qquad T_z=T_\eta(r_mh_a(z),r_mh_b(z)).
+\tag{C121.9}
+$$
+
+Let $M_z$ be the product of the six-outcome projections in (C121.4). The formula
+
+$$
+\mathcal P_m(\Omega)=\sum_z T_z\left(
+ \operatorname{tr}_{P_m}\bigl[(I_5\otimes M_z)\Omega(I_5\otimes M_z)\bigr]
+ \right)
+\tag{C121.10}
+$$
+
+defines one label-independent CPTP processor on the whole joint algebra.
+It has, for every label, the exact error
+
+$$
+\max_{X\in U_4}\|N_X-\Phi_{t,\eta,X}\|_\diamond
+ =[c-sD_m(t,\eta)]_+,
+\qquad [x]_+=\max\{0,x\}.
+\tag{C121.11}
+$$
+
+Proof. The normalized output-first Choi matrix of $T_\eta(v_a,v_b)$ has, on the
+matching subspace, diagonal $w=s/5$ and the two imaginary off-diagonal pairs
+$v_aX_a/5$, $v_bX_b/5$. Its two block eigenvalue pairs are
+$(s\pm v_a)/5$, $(s\pm v_b)/5$; the singleton eigenvalue is $s/5$.
+On the twenty unmatched modes it is $\eta/25$. They are nonnegative and sum
+to one. Tracing over output gives $I_5/5$: every off-diagonal pair has different
+input and output indices, and each input's diagonal sum is
+$s/5+4\eta/25=1/5$. Choi's CP criterion and this marginal give CPTP.
+This is the original output-first normalization, not an input transpose.
+
+For (C121.8), pinch the data into the orthogonal sectors $\{0,4\}$,
+$\{1,3\}$ and $\{2\}$. The difference vanishes on cross-sector entries and
+on sector diagonals. On a two-dimensional sector, the off-diagonal extraction
+is $(Y-ZYZ)/2$, where $Z=\operatorname{diag}(1,-1)$; hence it is a contraction
+in trace norm even after tensoring with any identity. Multiplication of its
+$jk,kj$ entries by $i,-i$ is unitary conjugation on that off-diagonal space.
+For any reference/data state the two pinched sector blocks are positive, with
+traces summing to at most one. Their contributions therefore have total trace
+norm at most $\max(|v_a-v'_a|,|v_b-v'_b|)$. A balanced pure input on the pair
+with the larger coefficient gives an off-diagonal Hermitian output with
+trace norm equal to that coefficient. This proves the equality with every
+finite complex reference included.
+
+The instrument in (C121.10), partial trace and each response channel are CP;
+$\sum_zM_z=I$ and trace preservation of the responses give TP on every input.
+At $m=0$ there is one empty string, $h_a=h_b=0$ and $T_z=T_\eta(0,0)$.
+No assumption about an unpromised program is required for this validity.
+
+For $u>0$, the sign of
+$p_{a,+}^{\otimes m}(z)-p_{a,-}^{\otimes m}(z)$, wherever it is nonzero,
+is $h_a(z)$. This follows by comparing the powers of $w+u$ and $w-u$;
+if $w-u=0$, the same conclusion holds on either nonzero support and the other
+strings contribute zero. Swapping $a_+,a_-$ exchanges these two laws and
+negates $h_a$. Therefore
+
+$$
+\mathbb E_{a,\sigma}h_a=\sigma D,\quad
+\mathbb E_{a,\sigma}h_b=0,\quad
+\mathbb E_{b,\sigma}h_b=\sigma D,\quad
+\mathbb E_{b,\sigma}h_a=0.
+\tag{C121.12}
+$$
+
+The zero expectations use the swap of the inactive pair, which leaves the
+actual source law fixed. If $u=0$, all laws coincide and each sign has zero
+expectation by the same symmetry. Since (C121.7) is affine in its coefficients,
+$N_{\sigma X_a}=T_\eta(\sigma r_mD,0)$ and
+$N_{\sigma X_b}=T_\eta(0,\sigma r_mD)$.
+The respective target coefficients are $(\sigma c,0)$ and $(0,\sigma c)$.
+Equation (C121.8), $r_mD=\min(c,sD)$, and the $D=0$ case prove (C121.11).
+The two signs are read together from the same fixed commuting experiment;
+there is no choice of measurement depending on the unknown active pair. QED.
+

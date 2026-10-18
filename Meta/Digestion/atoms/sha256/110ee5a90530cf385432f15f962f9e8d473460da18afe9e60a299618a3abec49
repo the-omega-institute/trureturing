@@ -1,0 +1,35 @@
+## 302. Every such owner uses U or the larger low label
+
+Every axial-flat owner has at least one selected H axis: two special
+axes violate the fixed-pair special barrier. None of the k owners has
+a selected M axis, since sigma already uses the unique M pi slot.
+None has selected Z, since p_Z=0. Their selected H axes therefore lie
+in {C,D,U,V}.
+
+Consider one without a U axis, with pair {V,L}, where L=C or D. Let
+X be its selected H axis of largest cosh value x. Its other axis is
+either H-valued and at most x, or special and has shifted value less
+than v+l. The axial-flat product implies respectively
+
+    (x-1)^2 >= (v+l)^2, or (x-1)*(v+l) > (v+l)^2.
+
+In either case x>=1+v+l. Thus X is neither V nor L; it must be the
+other member of {C,D}. The latter is strictly larger than L and V.
+Such an owner therefore selects the larger low label A and has pair
+{V,B}, with a>=1+v+b.
+
+Since A is witnessed by tau, p_A<=1. There is at most one owner of
+this kind. Since U is witnessed, p_U<=1, and there is at most one of
+the k owners with a U axis. These two possibilities exhaust them.
+Thus k<=2. Together with k>=2 this forces exactly one of each kind.
+In particular A and U each supply one selected slot and no others.
+The selected U value is at most m by maximality of M, giving
+m-2<u<=m. The precise frames in the statement follow by interchanging
+the axial positions when necessary.
+
+Substituting k=2 into the exact degree formulas proves degree(V)=6 or7,
+and degree(V)=6 if F_V is absent. If F_V exists its companion is C orD,
+since the other three reservoirs cannot be transverse in any flat.
+It cannot be A, because transverse selection would require v>a,
+whereas a>=1+v+b. Its companion is therefore B.
+

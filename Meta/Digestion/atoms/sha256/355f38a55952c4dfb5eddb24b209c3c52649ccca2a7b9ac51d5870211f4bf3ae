@@ -1,0 +1,22 @@
+**Theorem 5.1 (averaged bound on the actual record).** Under
+Definitions 2.3–2.4, let $p_j(m)$ be the probability of exact reanchoring
+success from height $x_j$, including the actually delivered record. Then
+for every signed $m$,
+
+$$
+p_j(m)\leq\sum_{y:Q_j(y)>0}Q_j(y)\kappa(S_y).
+\tag{RB.18}
+$$
+
+In the enlarged calibrated endpoint contract with a separately supplied
+exact parity label, equality holds for every $j,m$ simultaneously.
+It is an upper bound without an attainment assertion for the stricter
+canonical complete-instrument task.
+
+Proof. Conditional on each positive-probability actual $y$, Lemma 3.2
+gives the common branch probability and Theorems 3.3–4.1 bound it by
+$\kappa(S_y)$. Multiply by that same source's $Q_j(y)$ and sum.
+No product of independently chosen record and specimen marginals is used.
+The common record-controlled endpoint construction attains each summand
+when the exact parity label is supplied. $\square$
+

@@ -1,0 +1,79 @@
+### 74.3. Real poles, axis, and parallel exceptions
+
+If \(F\) is real, \(F=\pm1\) and \(L=\pm B\).
+The first two input and output equations become
+\[
+ n\cdot(e\times v)=n\cdot(e_B\times v)=0,\quad
+ n\cdot(3(e\cdot v)v-e)=n\cdot(3(e_B\cdot v)v-e_B)=0.
+\]
+The axes are independent, since \(e\cdot e_B=-bh/3\) and
+\(|bh|\le1\). These equations force
+\(v\perp e,e_B\) and \(n=\pm v\). Indeed, outside the axes' plane
+the first two equations force \(n\parallel v\), and the last two
+then give the perpendicularities. Inside that plane they force \(n\)
+inside it and \(n-3(n\cdot v)v=0\), contradicting \(|n|=1\).
+
+For \(F=1\), (74.5) gives \(\mathcal Q=1\) and \(T_0=B\).
+Since \(V\eta=\pm\eta e\), (74.7) gives the two nonzero Fourier
+patterns \((f_m,gf_m)\). Original flatness requires
+\(\Re(P\bar Q\bar g)=0\); the identity
+\[
+ P\bar Q=\frac{(b^2+3)(1-ib)}{1+b^2}
+\]
+gives exactly (74.2). For \(F=-1\),
+\(\mathcal Q=(-1-\boldsymbol K)/2\), whereas
+\[
+ (e\times e_B)\cdot\mathcal Q^*e\mathcal Q
+       =-\frac{h(b^2+3)}6\ne0.
+\]
+This contradicts the third input equation. Both pole arguments include
+\(v=\pm e\).
+
+Assume henceforth \(\Im F\ne0\). Rotate about \(e\) so that
+\(\boldsymbol K=(-b,k,0)\), \(k=\sqrt{3-b^2}>0\). Put
+\[
+ \rho=\frac{3b}{b^2+3},\qquad d_0=\boldsymbol K+2\rho e,
+ \qquad e_B=-\frac{b^2+3}{3h(1+b^2)}d_0.                  \tag{74.11}
+\]
+The scalar multiplier is nonzero.
+If \(v=\pm e\), write \(F=a+(0,0,kt)\),
+\(a^2+k^2t^2=1\), and \(n=(0,n_y,n_z)\). With
+\(D_1=2\rho-b=b(3-b^2)/(b^2+3)\), the output equations give
+\[
+ n_z(a+D_1t)=0,\qquad n_y[a(a+D_1t)-2]=0.
+\]
+Because \(|D_1|<k\), \(|D_1at|<1/2\); hence the second bracket
+cannot vanish. Thus \(n_y=0\), \(n_z=\pm1\), and \(a+D_1t=0\).
+The third input equation is \(a+2bt=1\). At \(b=0\) these are
+inconsistent. Otherwise they give
+\[
+ t=\frac{b^2+3}{3b(1+b^2)},\qquad
+ a=-\frac{3-b^2}{3(1+b^2)},\qquad
+ a^2+k^2t^2=\frac{3-b^2}{b^2(1+b^2)}.
+\]
+The sphere condition forces \((b^2-1)(b^2+3)=0\).
+In particular neither half parameter survives. This argument excludes
+the axis on the open branch, without making an endpoint claim.
+
+If \(v\parallel\boldsymbol K\), write
+\(F=a+(kp,bp,kq)\), \(a^2+3p^2+k^2q^2=1\).
+Here \(n\) is proportional to
+\(N_0=(1-b^2)\boldsymbol K-2be\ne0\). The output-pair sum becomes
+\[
+\begin{aligned}
+0&=N_0\cdot[F d_0F^*-3d_0+2(d_0\cdot\boldsymbol K)\boldsymbol K]\\
+ &=\frac{2(3-b^2)}{b^2+3}
+       [(3-b^2)(a+2bq)^2+3(1+b^2)]>0.
+\end{aligned}                                                     \tag{74.12}
+\]
+Thus this full stratum is impossible. We may now write
+\[
+ F=a+t(\boldsymbol K\times v),\quad t\ne0,\quad
+ d=\boldsymbol K\cdot v,\quad\Delta=e\cdot(\boldsymbol K\times v),
+\]
+\[
+ \Delta^2=3-b^2-3c^2-d^2-2bcd,\qquad
+ a^2+t^2(3-d^2)=1.                                     \tag{74.13}
+\]
+The excluded parallel case was essential for this parametrization.
+

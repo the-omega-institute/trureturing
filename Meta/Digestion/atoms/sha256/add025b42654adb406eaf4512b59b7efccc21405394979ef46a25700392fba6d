@@ -1,0 +1,31 @@
+**Lemma 3.1 (the native closure premises).** The families $\mathcal B_n$
+are closed under nonempty restriction, coordinate permutations, products
+on disjoint coordinate sets and adjoining fixed coordinates. If
+$B\in\mathcal B_n$, $I\subseteq[n]$ and $z\in S^I$ is fixed, then
+the section
+
+$$
+B[I=z]=\{x_{I^c}:x\in B,\ x_I=z\}
+\tag{NPC.9}
+$$
+
+belongs to $\mathcal B_{n-|I|}$ whenever it is nonempty.
+
+Proof. Choose one witness equation for each target on $B$. On a
+nonempty restriction the same equations hold. A permutation merely
+renames their coordinate indices. In a product, each coordinate uses
+the witness in its own factor. A fixed coordinate has constant targets.
+
+For a section, consider a target at a remaining coordinate. If its donor
+is also remaining, its original equation still holds and is an allowed
+one-donor equation. If its donor is $j\in I$, its right-hand side is
+the fixed value $\delta(r_a(z_j))$, giving an allowed constant target.
+An originally constant target remains constant. These statements exhaust
+every target, including self donors and cyclic dependencies. When no
+coordinates remain the nonempty section is $\{()\}$. $\square$
+
+The fixed values in (NPC.9) are mathematical conditions on rows. They
+are not supplied to an original reader, exported without charge, or
+queried at an extra port. In particular the lemma asserts no deletion
+or replacement of an actual stationary source.
+

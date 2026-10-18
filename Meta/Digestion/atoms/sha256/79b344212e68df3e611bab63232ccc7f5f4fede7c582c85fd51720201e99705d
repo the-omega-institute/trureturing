@@ -1,0 +1,197 @@
+**Lemma 39.1 (visible error, hidden symmetry and differentiated limits).**
+For the data of Definition 38.1, write $h=h_{\sigma,\kappa}$ and
+$d=d_{\sigma,\kappa}$. Then
+
+$$
+\|W_\kappa-U_\kappa\|_\infty=o(h),
+\qquad
+U_\kappa(k,0)-U_\kappa(k,D)\ge0.
+\tag{39.1}
+$$
+
+The second difference is even in $D$. For every integer $0\le p\le4$,
+with $D$ represented in $[-\pi,\pi]$,
+
+$$
+\begin{aligned}
+\sup_{k,\ |x|\le\pi/r_s}
+\left|\partial_x^p U_{\rm raw,\kappa}(k,r_sx)
+       -c_s\phi(k)\partial_x^p e^{-x^2/(4\beta)}\right|&\longrightarrow0,\\
+\sup_{k,\ D\in\mathbb T}
+\left|\partial_D^p U_{\rm unit,\kappa}(k,D)
+       -c_0\phi(k)G_{\beta b}^{(p)}(D)\right|&\longrightarrow0.
+\end{aligned}
+\tag{39.2}
+$$
+
+Consequently, on each bounded $y$ interval, uniformly in $k$,
+
+$$
+\frac g h\bigl[U_\kappa(k,0)
+             -U_\kappa(k,d\sqrt h\,y)\bigr]
+       \longrightarrow C_\sigma(k)y^2,
+\quad
+C_\sigma(k)=
+\begin{cases}
+ gc_s\phi(k)/(4\beta),&\mathrm{raw},\\
+ -gc_0G_{\beta b}''(0)\phi(k)/2,&\mathrm{unit}.
+\end{cases}
+\tag{39.3}
+$$
+
+In addition, for every closed nonempty interval $J\Subset I$, there is
+$\eta_J>0$ such that for all sufficiently small $a$,
+
+$$
+U_\kappa(k,0)-U_\kappa(k,dx)
+ \ge\eta_J\min\{x^2,1\}
+\quad(k\in J,\ |x|\le\pi/d).
+\tag{39.4}
+$$
+
+All these assertions hold through both signs, without a restriction on
+the fixed positive coupling.
+
+Proof. Throughout this proof $K_{\kappa,q}$ abbreviates the exact
+scalar kernel $K_{\kappa,(0,0,q)}$ of (32.4)--(32.5). The complete
+Fourier identity [G, (26.13)] gives
+
+$$
+U_\kappa(k,D)
+ =\frac1{(2\pi)^3Z_\kappa}
+     \sum_{j\in\mathbb Z}e^{ijD}
+           \int_\tau^\infty K_{\kappa,\kappa j}(t;k_0,k)\,dt,
+\quad
+Z_\kappa=
+\begin{cases}1,&\mathrm{raw},\\S(\tau_b),&\mathrm{unit}.
+\end{cases}
+\tag{39.5}
+$$
+
+The time is $\tau_s$ or $\tau_b$, respectively. The scalar potential
+is $q^2b_\kappa^2$. Since $0<m\le b_\kappa\le M$ on the entire
+closed height interval for small parameters, positivity and the
+bounded-potential Trotter formula imply, for all large $t$,
+
+$$
+0<K_{\kappa,q}(t;k_0,k)
+ \le e^{-m^2q^2t}h_I(t;k_0,k)
+ \le C e^{-\lambda t}e^{-m^2q^2t}.
+\tag{39.6}
+$$
+
+The last inequality is uniform in height by the killed sine series.
+It is used only for the visible-zero kernels; no estimate of a general
+compensated frequency by $q^2$ is made. Every coefficient in (39.5)
+is positive and invariant under $j\mapsto-j$. Subtracting its cosine
+series at $D$ from its value at zero proves the second assertion in
+(39.1), including evenness. Gaussian summability also justifies each
+fixed finite number of derivatives and the time integrals.
+
+For completeness, the differentiated local limit follows directly
+from the existing scalar perturbation (32.4), rather than from
+formal differentiation of an $o(1)$ field error. Put $r=a\sqrt t$.
+For each fixed $p\le4$, whenever $t\to\infty$ and $r\to0$,
+
+$$
+r\sum_j|rj|^p\sup_k
+ \left|e^{\lambda t}K_{\kappa,\kappa j}(t;k_0,k)
+            -\phi(k_0)\phi(k)e^{-\beta r^2j^2}\right|
+ \longrightarrow0.
+\tag{39.7}
+$$
+
+Indeed, on $|rj|\le R$ one has $q^2=(rj)^2/t$. Equations
+(32.4)--(32.5) make the difference tend uniformly to zero there;
+the number of lattice points times $r$ is bounded. The weighted
+Gaussian majorant (39.6) makes both tails bounded by a constant times
+$\int_{|z|>R-1}(1+|z|^p)e^{-c z^2}\,dz$, for small $r$.
+Take the parameter limit and then $R\to\infty$. The nonsummed
+remainder in (32.5) has only been used on the bounded lattice window,
+so no infinite multiple of that remainder has occurred.
+
+Multiplying each Fourier summand by $(irj)^p$ now proves the
+corresponding derivative version of (32.1), with the differentiated
+periodized Gaussian. For $t=\tau_s+v$ in a fixed bounded $v$ interval,
+$r/r_s\to1$ and (32.14) supplies its amplitude. To integrate beyond
+such an interval, (39.6) and the Gaussian lattice estimate give
+
+$$
+\sum_j(r_s|j|)^p K_{\kappa,\kappa j}(t;k_0,k)
+ \le C_p e^{-\lambda t}(1+r_s^{-1}),\qquad t\ge\tau_s.
+\tag{39.8}
+$$
+
+For $p=0$ this includes the zero summand; for $p>0$ it is the same
+Gaussian moment estimate, using $r_s/(a\sqrt t)\le1$.
+Since $e^{-\lambda\tau_s}/r_s$ is bounded, the omitted integral
+from $\tau_s+R$ onward is at most $C_pe^{-\lambda R}$ in every
+rescaled derivative norm. Integrating first on a bounded window,
+then sending $R\to\infty$, gives the first line of (39.2), with
+exactly the coefficient $c_s$ of (31.1). On the expanding chart,
+all nonnearest Gaussian translates and their first four derivatives
+tend uniformly to zero. The nearest term is the displayed Gaussian.
+
+For the unit family, each fixed $j$ in (32.4)--(32.5), at
+$t=\tau_b+v$, gives
+
+$$
+\frac{K_{\kappa,\kappa j}(\tau_b+v;k_0,k)}{S(\tau_b)}
+ \longrightarrow
+ \frac{\phi(k)}{J_\phi}e^{-\lambda v}e^{-\beta b j^2}.
+\tag{39.9}
+$$
+
+Equation (39.6), (32.13), and $a^2\tau_b=b$ dominate its $p$th
+Fourier derivative by $C_b|j|^p e^{-\lambda v}e^{-m^2b j^2}$
+(with the zero term interpreted separately when $p=0$).
+This majorant is summable in $j$ and integrable in $v$. Thus dominated
+summation and integration prove the second line of (39.2).
+The raw factor $(2\pi)^{-3}$ in (39.5), the Fourier normalization
+of $G$, and $\int_0^\infty e^{-\lambda v}dv=1/\lambda$ give
+$c_0$, without a change of measure.
+
+The nonzero visible modes obey exactly (32.3). Integrating that
+bound, and dividing by $Z_\kappa$ where appropriate, yields
+
+$$
+\|W_\kappa-U_\kappa\|_\infty
+ \le
+\begin{cases}
+ C e^{-d_*\tau_s},&\mathrm{raw},\\
+ C_b e^{-d_*\tau_b},&\mathrm{unit},
+\end{cases}
+\tag{39.10}
+$$
+
+for a fixed $d_*>0$. In the raw case this uses
+$e^{-\lambda\tau_s}(1+r_s^{-1})=O(1)$; in the unit case it uses
+$S(\tau_b)\asymp e^{-\lambda\tau_b}$.
+These errors are respectively $o(\tau_s^{-1/2})$ and $o(a)$,
+proving the first assertion of (39.1).
+
+Write $\widetilde U_\kappa(k,x)=U_\kappa(k,dx)$. Exact evenness
+gives $\partial_x\widetilde U_\kappa(k,0)=0$, so the centered
+Taylor identity is
+
+$$
+\frac g h[\widetilde U_\kappa(k,0)
+              -\widetilde U_\kappa(k,\sqrt h\,y)]
+ =-g y^2\int_0^1(1-t)
+       \partial_x^2\widetilde U_\kappa(k,t\sqrt h\,y)\,dt.
+\tag{39.11}
+$$
+
+Equation (39.2) in this identity proves (39.3). In particular no
+undifferentiated global field error has been divided by $h$.
+On $J$, the limiting negative second derivative at zero is
+bounded away from zero. The same formula gives (39.4) on a fixed
+small $|x|\le\delta$. Outside that interval, the raw limiting deficit
+is at least
+$c_s\min_J\phi\,(1-e^{-\delta^2/(4\beta)})$ on its entire expanding
+chart, by the uniform first line of (39.2). In the unit case, (33.2)
+makes $G_{\beta b}(0)-G_{\beta b}(D)$ strictly positive off zero;
+its minimum on $\delta\le|D|\le\pi$ is positive. The uniform limits
+then give a positive lower bound outside $\delta$ in both cases.
+Decreasing $\eta_J$ combines these bounds into (39.4). $\square$
+

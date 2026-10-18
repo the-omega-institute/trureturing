@@ -1,0 +1,219 @@
+**Theorem 3.1 (occupied reverse anchor, all-tag compatibility and same-law target).**
+Under Assumptions 1.1 and 1.4, fix any $r\in[r_-,r_+]$ and any
+height-optimal law at that request. Its endpoint representation has
+an occupied reverse saturated contact $a$ in $T_{\rm rev}^{\circ}$
+and another occupied saturated contact $b$ with different slope.
+The latter is the saturated endpoint of a failure-bearing direction
+of that very law, in its original group. Write their finite slopes
+as $z_a,z_b$, put $h=z_b-z_a\ne0$, and retain their actual tags.
+For any maximizing height tags define
+
+$$
+g_a=G_{\epsilon_a,\sigma_a}(z_a),\quad
+m_a=G_{\epsilon_a,\sigma_a}'(z_a),\qquad
+g_b=G_{\epsilon_b,\sigma_b}(z_b),\quad
+m_b=G_{\epsilon_b,\sigma_b}'(z_b).
+$$
+
+The two tags need not agree; all choices must obey
+
+$$
+\begin{gathered}
+m_a+m_b=2\frac{g_b-g_a}{h},\\
+q_2=\frac{m_b-m_a}{2h},\qquad
+q_1=m_a-2z_aq_2,\qquad
+q_0=g_a-z_am_a+z_a^2q_2,\\
+y_5=q_2,\qquad y_6=q_0-q_2,\qquad y_7=q_1.
+\end{gathered}
+\tag{IC.12}
+$$
+
+These are restrictions on one common $Q$ across the directed and
+height branches, without a same-branch assumption or an assertion
+that the selected two tags must differ. Globally, for every real $z$
+and every one of the four tags,
+
+$$
+q(z)\ge G_{\epsilon,\sigma}(z).
+\tag{IC.13}
+$$
+
+Every saturated contact $i$ in the complete inventory, occupied or
+unused, satisfies for all its maximizing tags
+
+$$
+q(z_i)=G_{\epsilon_i,\sigma_i}(z_i),\qquad
+q'(z_i)=G_{\epsilon_i,\sigma_i}'(z_i).
+\tag{IC.14}
+$$
+
+Thus (IC.12) reconstructs the only possible three failure coefficients,
+and every other saturated contact must pass both constraints with those
+same coefficients. Distinct directed labels at an equal slope must
+have equal $G$ values and derivatives there; equality does not identify
+the labels. Weak-zero contacts retain both height-tag conditions.
+The same law also obeys the target equality
+
+$$
+J_t(\pi)+\lambda r
+=y_0+\alpha y_3+\frac{Uq_0+V_2q_2}{t}.
+\tag{IC.15}
+$$
+
+No root, weight, fraction or group is removed by these restrictions.
+
+Proof. Reuse the nonnegative-gap support argument in FC Theorems 3.3
+and 4.2. Its measure-theoretic intermediate step is the standard
+zero-integral support principle of di Dio–Schmüdgen,
+[*The multidimensional truncated Moment Problem: Atoms, Determinacy,
+and Core Variety*, Lemma 3](https://arxiv.org/html/1703.01497v2).
+All positive coordinates are contacts, and all original optimal laws
+at $r$ have $K=r$. FC Theorem 12.1 excludes $u=0$ from the complete
+endpoint inventory: otherwise both report tests would vanish there,
+whereas the difference of their angular derivatives is a nonzero
+multiple of $\lambda u'$. FC Proposition 20.1 gives the same exclusion
+for actual fractional contacts. Hence the chart covers all contacts,
+including the left horizontal point, without a genericity assumption.
+
+Direct substitution of (IC.2)–(IC.3) into the exact signed tests (IC.8)
+gives, for each actual report tag $\epsilon$ and both $\sigma$,
+
+$$
+\begin{aligned}
+F_{0,\epsilon,\sigma}(x_\epsilon(z))
+ &=\frac{T_{\epsilon,\sigma}(z)}{1+z^2},\\
+F_{1,\epsilon,\sigma}(x_\epsilon(z))
+ &=\frac{n_c(z)}{(1+z^2)^2}
+                         \big[q(z)-G_{\epsilon,\sigma}(z)\big].
+\end{aligned}
+\tag{IC.16}
+$$
+
+Entire-cylinder feasibility implies nonnegativity of every signed
+endpoint test. The prefactor in the second line is strictly positive.
+This proves (IC.13). For completeness the opposite report sign at the
+same directed point has the strictly larger signed gap
+
+$$
+\begin{aligned}
+F_{0,-\epsilon,\sigma}-F_{0,\epsilon,\sigma}
+ &=\frac{2\lambda}{s(z)},\\
+F_{1,-\epsilon,\sigma}-F_{1,\epsilon,\sigma}
+ &=\frac{2\lambda d_c(z)}{s(z)^3}>0.
+\end{aligned}
+\tag{IC.17}
+$$
+
+It cannot be a second report description of that contact. At any
+maximizing height tag of a saturated contact, (IC.16) vanishes.
+The elementary tangency principle for a smooth nonnegative function
+at an interior zero gives $q-G=0$ and $(q-G)'=0$. This is the standard
+contact-stationarity step, applied to the actual rational source tests,
+and proves (IC.14). It applies to every zero, not only to selected or
+occupied roots. At zero height both signed tests vanish and give both
+pairs of equations.
+
+There really are two occupied, nonparallel directions available for
+this calculation. FC Theorem 26.1 and Corollary 27.2, in the complete
+face form of Proposition 28.2, give saturated reverse coefficient mass
+strictly greater than $4/(5t)$ in every optimal representation. These
+contacts are singleton groups because FC Theorem 25.1 gives
+$\eta_0>1/20000>0> -1/250>\eta_1$ throughout $T_{\rm rev}$.
+Choose any occupied such direction $x_a$. The failure intensity of
+this same law satisfies, by FC Proposition 17.3,
+
+$$
+\int_X b_x\,xx^T\,d\pi=\operatorname{diag}(U,V_2)\succ0.
+\tag{IC.18}
+$$
+
+If every failure-bearing direction were parallel to $x_a$, pairing
+(IC.18) with a nonzero vector perpendicular to $x_a$ would give zero
+on the left and a strictly positive number on the right. Thus another
+failure-bearing direction $x_b$ is nonparallel. FC Proposition 20.1
+puts its saturated endpoint in contact. In an endpoint representation
+it has positive coordinate mass, supplied by $p\xi>0$ for any
+corresponding finite atom. If that atom was fractional, this is the
+endpoint in its existing compatible group, not an extra counted
+original label. For the admitted integral laws, collection into the
+finite complete groups gives the same positive-coordinate argument;
+no atom of an arbitrary uncollected measure is presumed. Since no
+contact has $u=0$, nonparallel directions have distinct finite slopes.
+
+The rest of (IC.12) is the classical two-node quadratic Hermite
+interpolation calculation, used here only as an intermediate step.
+For $q=q_0+q_1z+q_2z^2$,
+
+$$
+q'(z_a)+q'(z_b)=2\frac{q(z_b)-q(z_a)}{z_b-z_a},\qquad
+q'(z_b)-q'(z_a)=2q_2(z_b-z_a).
+$$
+
+Substitute (IC.14), solve first for $q_2$, then $q_1$ and $q_0$,
+and use the last line of (IC.9). This gives (IC.12) with no weight
+variables. If four proposed value/derivative data fail its first
+equality, no quadratic can fit them all; otherwise these coefficients
+are the unique fit. The calculation does not solve the other dual
+coefficients, the original roots or their weights.
+
+The all-tag constraints can also be read without identifying any
+directions. Put $Y(z)=y_1+y_2z$ and $L_\ell(z)=l_u+l_vz$.
+For any two tags $i=(\epsilon,\sigma)$ and
+$j=(\widetilde\epsilon,\widetilde\sigma)$,
+
+$$
+\begin{aligned}
+T_i-T_j
+ &=-(\sigma-\widetilde\sigma)E
+ +s\big[(\epsilon-\widetilde\epsilon)Y
+ -(\epsilon\sigma-\widetilde\epsilon\widetilde\sigma)L_\ell\big],\\
+G_i-G_j
+ &=(\sigma-\widetilde\sigma)t\bar f
+                         -(d_c/n_c)(T_i-T_j).
+\end{aligned}
+\tag{IC.19}
+$$
+
+At an equal slope occupied by both descriptions, the last expression
+and its derivative must both vanish. These identities apply to all
+six unordered pairs of tags. They retain, in particular, opposite
+directed labels and opposite-height descriptions of a weak-zero point.
+
+Integrating the original eight moments, rather than combining marginal
+optima, gives
+
+$$
+\begin{aligned}
+y\cdot B
+ &=y_0+\alpha y_3+\frac{\mu y_5+Uy_6}{t}\\
+ &=y_0+\alpha y_3+\frac{Uq_0+V_2q_2}{t}.
+\end{aligned}
+$$
+
+Joint attainment and the already established $K=r$ prove (IC.15).
+The zero failure cross moment is essential: it is why the $q_1$ term
+does not appear in this target pairing.
+
+There is a further conditional test within this source-specific
+compatibility argument. For two contacts $a<b$ on one fixed tag put
+$H=(d_c/n_c)T_{\epsilon,\sigma}$. Since $G=\sigma t\bar f-H$ and
+$\bar f$ is quadratic, their compatibility requires
+
+$$
+\begin{aligned}
+0&=H'(a)+H'(b)-2\frac{H(b)-H(a)}{b-a}\\
+ &=(b-a)^2\int_0^1\tau(1-\tau)H'''(a+\tau(b-a))\,d\tau.
+\end{aligned}
+\tag{IC.20}
+$$
+
+This is the ordinary integration-by-parts identity for the two-node
+Hermite residual: for $\varphi(\tau)=H(a+\tau(b-a))$, integrate
+$\tau(1-\tau)\varphi'''$ twice, obtaining
+$\varphi'(0)+\varphi'(1)-2(\varphi(1)-\varphi(0))$, and divide
+by $b-a$. Consequently a strictly constant sign of this particular
+$H'''$ on $[a,b]$ would exclude those two same-tag contacts. No
+uniform sign for the source- and dual-dependent $H'''$ is supplied.
+There is no contact-count or group-removal conclusion from (IC.20).
+$\square$
+

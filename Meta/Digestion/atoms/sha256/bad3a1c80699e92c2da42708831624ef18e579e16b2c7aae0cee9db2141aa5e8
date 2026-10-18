@@ -1,0 +1,22 @@
+### 106.1. Actual hypotheses and the companion theorem
+
+**Theorem 106.1.**
+
+Let F_n and L_n be the Fibonacci and Lucas sequences, with F_0=0, F_1=1, L_0=2, L_1=1 and the usual common recurrence. Let j>=1, N=3^j, and put
+
+ B=B_N=L_N^2+3,  B'=B_(3N)=L_(3N)^2+3.
+
+Write their complete positive squarefree-kernel decompositions as B=D C^2 and B'=D' C'^2, with C,C'>0 arbitrary. In particular, primes may divide both D and C, or both D' and C'; no squarefreeness of either block is assumed. Set M=D D'.
+
+The actual original support conditions are retained: for q|B the Fibonacci rank and golden-matrix order are rho(q)=tau_q=6N, and the squared golden unit has order 3N; for q|B' the corresponding orders are 18N and 9N. These are the actual blocks of the continuation, not arbitrary integers satisfying congruences. The proof below does not need a stronger order hypothesis or an all-positive Legendre matrix.
+
+Then D,D' are coprime and both are 19 modulo 120. The integer M is squarefree, M>1, M=1 modulo 120, and the curve
+
+ F_M: y^2=x^3-9M^2 x+9M^3
+
+has trivial rational torsion and the non-torsion rational point
+
+ P_N=(3D'/C^2, 3D'^2 C'/C^3).
+
+It admits the rational three-isogeny described in section 106.5. The degree-three polynomial B_(3N)=G(B_N), G(z)=z^3-3z^2+3, does not lift to a morphism between the normalized original twists by substituting z -> G(z). These conclusions concern the companion curve; they assert no transfer of rank between the original E_D and E_(D'), and no exclusion of an original golden support prime or initial-quotient zero.
+

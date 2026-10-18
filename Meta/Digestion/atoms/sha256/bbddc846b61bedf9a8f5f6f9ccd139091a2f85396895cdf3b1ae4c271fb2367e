@@ -1,0 +1,101 @@
+**定理 4.1（负二次幂相消与完整三次式）。** 置
+
+$$
+\begin{aligned}
+h_2&=AN-BK,\\
+h_1&=(3A+6)N-(3B+17)K+z(5B-16A),\\
+h_0&=(2A+17)N-(2B+49)K+z(-48A+15B-11),\\
+h_{-1}&=10N-32K+z(10B-32A-27).
+\end{aligned}
+\tag{4.1}
+$$
+
+收集为 $t,Y,z$ 的显式形式是
+
+$$
+\begin{aligned}
+h_2={}&-(48+3Y)t+24Y-1032+\frac{2112-45Y}{4t},\\
+h_1={}&-(144+9Y)t+\frac{249Y}{4}-1992
+ +\frac{4128-135Y}{4t}+z\left(2t+4+\frac5t\right),\\
+h_0={}&-(96+6Y)t+\frac{69Y}{4}+864
+ -\frac{1632+90Y}{4t}+z\left(6t+1+\frac{15}t\right),\\
+h_{-1}={}&960-\frac{480}t-30Y+z\left(4t-19+\frac{10}t\right).
+\end{aligned}
+\tag{4.2}
+$$
+
+定义
+
+$$
+\begin{aligned}
+\mathcal C(t,x;p,v)={}&-h_2x^3+(Av-Bp-h_1)x^2\\
+&+\bigl((A+6)v-(2B+17)p-h_0\bigr)x
+ +5v-32p-h_{-1}.
+\end{aligned}
+\tag{4.3}
+$$
+
+则 $\mathcal C=x\Xi$。因此在 $x>0$ 上，三次式为零与实际 $p,v$ 的漂移相容性完全等价。
+
+证明。将四个 Laurent 式完整写出：
+
+$$
+\begin{aligned}
+p_1&=Ax+(A+6)+5/x,&v_1&=Bx+(2B+17)+32/x,\\
+p_0&=Kx+(K-5z)-5z/x,&v_0&=Nx+(2N-16z)-32z/x.
+\end{aligned}
+\tag{4.4}
+$$
+
+令 $\mathscr H=p_1v_0-v_1p_0$。乘积最低只能出现 $x^{-2}$；其系数恰是
+
+$$
+5(-32z)-32(-5z)=0.
+\tag{4.5}
+$$
+
+其余四个系数逐项为
+
+$$
+\begin{aligned}
+[x^2]\mathscr H={}&AN-BK,\\
+[x]\mathscr H={}&A(2N-16z)+(A+6)N-B(K-5z)-(2B+17)K,\\
+[x^0]\mathscr H={}&-32Az+(A+6)(2N-16z)+5N\\
+&+5Bz-(2B+17)(K-5z)-32K,\\
+[x^{-1}]\mathscr H={}&-32z(A+6)+5(2N-16z)
+ +5z(2B+17)-32(K-5z).
+\end{aligned}
+\tag{4.6}
+$$
+
+收集这些项就是式 (4.1)，故
+
+$$
+\mathscr H=h_2x^2+h_1x+h_0+h_{-1}/x.
+\tag{4.7}
+$$
+
+为核对式 (4.2)，先用
+
+$$
+\begin{aligned}
+432A-120B&=-24(t+22),\\
+9A-\frac{15}4B&=-3t+24-\frac{45}{4t},
+\end{aligned}
+$$
+
+以及 $K=120u/t+15Y/4$、$N=432u/t+9Y$ 得到所列 $h_2$。再用
+
+$$
+\begin{aligned}
+h_1&=3h_2+6N-17K+z(5B-16A),\\
+h_0&=2h_2+17N-49K+z(-48A+15B-11),\\
+5B-16A&=2t+4+5/t,\\
+-48A+15B-11&=6t+1+15/t,\\
+10B-32A-27&=4t-19+10/t
+\end{aligned}
+$$
+
+代入式 (2.7)，分别给式 (4.2) 的其余三行。最后
+$\Xi=p_1v-v_1p-\mathscr H$；乘以 $x$ 即得式 (4.3) 的全部四个系数及其符号。由于 $x>0$，清除此分母不引入正坐标赘根。∎
+

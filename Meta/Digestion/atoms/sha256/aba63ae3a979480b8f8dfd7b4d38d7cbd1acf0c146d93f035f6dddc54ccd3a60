@@ -1,0 +1,64 @@
+**Theorem 9.1 (sharpness in the common-CPTP phase comparison class).**
+Fix the source and nondegenerate height interval of Theorem 8.2. For its
+phase-only output task, if retention of the actual live qutrit is allowed,
+then
+
+$$
+\inf_{\substack{\text{fixed finite handoffs}\\
+                 \text{common CPTP phase processors}}}
+ \ \sup_{x,\beta,m,\alpha} e_{x,\beta,m}(\alpha)=\sqrt{Zr}.
+\tag{FH.30}
+$$
+
+Here the error is for the complete stopped phase-only source-family output;
+arbitrary unread conditional spectator archives/references may be
+retained. The infimum is attained by an explicit comparison channel. The
+claim does not assert that this channel is executable from the original
+canonical menu, or that it implements the full future menu.
+
+Proof. The lower bound is Theorem 8.2. For the upper take no additional
+acquisition and retain $\rho_{x,\beta,m}$ unchanged in $M_3$. Put
+
+$$
+P_B=P_++P_-,\qquad
+D_\alpha=\operatorname{diag}(e^{-i\alpha/2},1,1),\qquad
+\mathcal E_\alpha(X)=D_\alpha(P_BXP_B+P_2XP_2)D_\alpha^\dagger.
+\tag{FH.31}
+$$
+
+Its two Kraus operators are $D_\alpha P_B,D_\alpha P_2$, whose
+effects sum to $I_V$, so it is CPTP and has no failure output.
+Since $U_x(\alpha)=D_\alpha e^{ix\alpha P_B/r}$, (FH.31) is
+exactly the two-sector pinching of the ideal target state. Write the
+target vector as $\sqrt Z|2\rangle+\sqrt r|b\rangle$ with a
+normalized bottom vector $|b\rangle$, including its actual phases.
+The difference between the target and its pinching is
+
+$$
+\sqrt{Zr}(|2\rangle\langle b|+|b\rangle\langle2|).
+$$
+
+On the orthonormal pair $|2\rangle,|b\rangle$ this has eigenvalues
+$\pm\sqrt{Zr}$, and it vanishes on the remaining direction. Its half
+trace norm is exactly $\sqrt{Zr}$ for every $x,\beta,m,\alpha$.
+One may use the identity channel at $\alpha=0$ to give exact waits
+without changing the supremum. Matching zero-duration identities can
+likewise remain exact.
+
+At a fixed actual history the ideal specimen is pure. Any joint extension
+of that pure marginal factors as $\rho_h\otimes\tau_h$: positivity
+annihilates the orthogonal specimen subspace, leaving only that one
+specimen ray. Tensor (FH.31) with identity on $\tau_h$. The same error
+holds, and arbitrary actual classical mixtures of histories satisfy the
+upper bound by trace-norm convexity. No accessible archive is read or
+replaced. This constructs the stated relaxed attainment. $\square$
+
+The common pinching deliberately loses the unknown middle/bottom phase
+coherence; it is not exact recovery. Its common controlled rotation and
+pinching are mathematical CPTP maps, without an original-menu synthesis,
+permission or physical hardware theorem here. A programmable-processor
+paper that supplies its programme parameter cannot install the unknown
+$x\alpha/r$ in an original controller. No acquisition, calibration,
+total-guard, repeated-feedback or complete full-menu upper follows from
+(FH.30). The full original lawful optimum can exceed this relaxed value.
+

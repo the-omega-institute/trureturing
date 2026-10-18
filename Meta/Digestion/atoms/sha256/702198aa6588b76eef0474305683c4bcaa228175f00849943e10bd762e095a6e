@@ -1,0 +1,20 @@
+**Assumption 1.1 (Independent quantum preparation).** Let
+$\mathcal H=\mathbb C^5$ with ordered unit basis
+$\mathsf S=(N,2,3,5,25)$ and projections $\Pi_s=e_se_s^\dagger$.
+All complex density matrices on this space are allowed inputs. The label $N$
+denotes a unit vector, not a zero vector, absence of a read, or Stop. Set
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad U(t)=e^{-itK},\quad t\ge0.
+$$
+
+This is exactly QMB Assumption 1.1, an independent preparation hypothesis.
+It is not a construction of quantum states from the native $\alpha/\beta$
+tree, and it is not the different tensor-cut source.
+

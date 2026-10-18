@@ -1,0 +1,18 @@
+**命题 13.1（相同二阶矩而筛选后的二阶响应不同）。** 取 $b=1$，来源 $P$ 的 $a$ 在 $1,3$ 上分别有概率 $1/4,3/4$；来源 $Q$ 的 $a$ 在 $2,4$ 上分别有概率 $3/4,1/4$。两者全部总次数至多二的联合矩相同，但按 $a^2$ 重权后归一化的新二阶响应不同。
+
+证明。两者都有
+
+$$
+m_0=1,\quad m_a=5/2,\quad m_b=1,\quad
+S_{aa}=7,\quad S_{ab}=5/2,\quad S_{bb}=1.
+$$
+
+而
+
+$$
+\mathbb E_Pa^4=\tfrac14+\tfrac34\,81=61,\qquad
+\mathbb E_Qa^4=\tfrac34\,16+\tfrac14\,256=76.
+$$
+
+重权概率定义为 $p_i'=p_i a_i^2/7$，因而新的 $a$ 二阶矩分别为 $61/7,76/7$。所有 $(a,1)$ 均是可实现的非空树组成。这一筛选是新增任务，不是裸 $M$ 推进或固定嫁接；它要求四阶信息。因此第十二章的动态闭包不能在不改任务合同的情况下扩展为筛选充分性。相关的“动态充分不等于拼接充分”区分见 [FIB 关系延拓几何，定理 5.4](https://github.com/the-omega-institute/trureturing/blob/b19dc63ed2b2007d8d6de4c50366815f0d032ba4/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)。$\square$
+

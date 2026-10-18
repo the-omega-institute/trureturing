@@ -1,0 +1,64 @@
+**Definition 1.1 (unchanged original problem).** Fix one admitted signed $\kappa\ne0$, $H$, $I=(l,u)$, $k_0\in I$ and $a,\varepsilon>0$ satisfying every original probability, denominator, interval and parameter applicability condition of Source Definitions 1.1, 2.2, 10.1, 13.1 and 17.1, including the condition cited there as L Definition 35.1. These data remain fixed before every limit. Set
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,&d_0&=k_0-\alpha_\kappa>0,\\
+L_I&=u-l,&\lambda&=\varepsilon^2\pi^2/L_I^2,&
+\phi(k)&=(2/L_I)^{1/2}\sin\frac{\pi(k-l)}{L_I},\\
+c_j&=c_\kappa^{(j)}(k_0),&j_0&=\varepsilon^4|\det(c_0,c_1,c_2)|>0.
+\end{aligned}
+$$
+
+All components of the same original vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ are retained:
+
+$$
+\begin{aligned}
+c_\kappa(k_0+h)&=c_0+hc_1+\frac{h^2}{2(1+h/d_0)}c_2,\\
+b_\kappa(k_0+h)&=b_0+hb_1+\frac{h^2b_2}{2(1+h/d_0)},\\
+(A_\kappa(k),B_\kappa(k))
+ &=\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k),\\
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ &=-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\end{aligned}
+$$
+
+The denominator has a positive margin on $\overline I$. In raw measure $dY=dk\,dq$, $q=(\theta,v,x)\in\mathbb R^3$, the unchanged native operators and domains are
+
+$$
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0,
+\qquad B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2,
+$$
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi\in L^2(I\times\mathbb R^3;\mathbb C):
+ \widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+ \int\!\int_I\bigl(\varepsilon^2|\partial_k\widehat\psi|^2
+ +|\eta\cdot c_\kappa|^2|\widehat\psi|^2\bigr)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi\in L^2(I\times\mathbb R^3;\mathbb C):
+ \widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\quad
+ \int\|B_\eta\widehat\psi(\cdot,\eta)\|_{L^2(I)}^2d\eta<\infty\right\}.
+\end{aligned}
+$$
+
+The Fourier factor is $(2\pi)^{-3/2}$ and all real $\eta$ are admitted. Both height faces are Dirichlet. There is no additional ordinary phase-$H^1$, reality, parity or affine restriction on actual states. With $o=(k_0,0)$, the field and charges are exactly
+
+$$
+\begin{aligned}
+W_\tau&=\int_\tau^\infty e^{\lambda T}p_T^B(o,\cdot)dT,&
+\rho_\tau&=e^{\lambda\tau}p_\tau^B(o,\cdot),&SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0).
+\end{aligned}
+$$
+
+Neither charge is divided by survival probability. The defining field clock is $B$, independently of $a$. Write $E_\tau(g)=\inf\sigma(aS-gW_\tau)$; Source supplies its negative attained bottom and the common operator domain $D(S)$ at each positive cutoff. For every prescribed sequence $s_n\downarrow0$, each $\psi_{s_n}$ may be any normalized complex actual ground state of $aS-g_sW_{s^2}$ in the complete $D(S)$, with
+
+$$
+g_s=\chi_cs^3,\qquad E_s=E_{s^2}(g_s)<0,\qquad
+\epsilon_c(s)=s^2E_s,\qquad r_s=-E_s/s^6.
+$$
+

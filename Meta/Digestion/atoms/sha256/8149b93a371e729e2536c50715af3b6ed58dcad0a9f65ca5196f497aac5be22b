@@ -1,0 +1,19 @@
+**Lemma 6.1 (finite Bayes identity).** For finite observation laws
+$p,q$ and equal priors, the minimum error over all randomized decisions
+is
+
+$$
+\frac12\sum_y\min\{p(y),q(y)\}
+       =\frac{1-\operatorname{TV}(p,q)}2.
+$$
+
+A minimizing rule chooses $Q$ where $q(y)>p(y)$, chooses $P$
+where $p(y)>q(y)$, and can break ties arbitrarily.
+
+Proof. At outcome $y$, choosing $P$ contributes $q(y)/2$ to
+the prior-averaged error, whereas choosing $Q$ contributes $p(y)/2$.
+Randomization forms a convex combination of these contributions and
+cannot beat their minimum. Sum the pointwise minima. Finally
+$\min\{p,q\}=(p+q-|p-q|)/2$ pointwise, and both laws sum to
+one, yielding the stated total variation identity. $\square$
+

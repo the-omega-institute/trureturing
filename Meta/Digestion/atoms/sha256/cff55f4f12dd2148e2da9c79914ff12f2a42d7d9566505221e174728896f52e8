@@ -1,0 +1,14 @@
+**Lemma 6.2 (a concrete separating subtask).** On this domain, equality of even
+the weaker observations consisting only of running/halt status, availability
+of each `Advance`, and full terminal $O(u)$ forces equal $(u,n)$.
+
+Proof. The truthful acquisition subarchive in $O(u)$ reconstructs $u$.
+Consequently $O(u)=O(v)$ implies $u=v$, even though neither output contains
+its subsequent transmission events. Let the remaining primitive counts at
+two cuts be $r=L(u)-n$ and $s=L(v)-m$. If $r<s$, after $r$ advances one cut
+has root readout halt while the other has running; $r=0$ is the empty
+experiment case. The case $s<r$ is symmetric. If $r=s$, that common finite
+continuation reaches both terminal outputs. Equal observations force
+$O(u)=O(v)$ and hence $u=v$. Determinism then gives the same total $L(u)$,
+so $L(u)-n=L(u)-m$ implies $n=m$. ∎
+

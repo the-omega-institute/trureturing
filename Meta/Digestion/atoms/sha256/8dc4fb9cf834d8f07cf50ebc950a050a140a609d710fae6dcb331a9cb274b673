@@ -1,0 +1,26 @@
+**Definition 5.1 (binary-output correspondence instances).** A PCP
+instance consists of a finite nonempty alphabet $\Sigma$ and two
+morphisms $f,g:\Sigma^*\to\{0,1\}^*$. A solution is a nonempty
+word $w\in\Sigma^+$ with $f(w)=g(w)$. This is exactly the binary
+codomain and nonempty-input convention of [Nicolas, §1.1][NICOLAS].
+Its §1.3 supplies the mature undecidability premise, in particular
+already for seven input letters. Empty tile images are not excluded
+by the construction below.
+
+Encode a binary word as a finite native tree:
+
+$$
+W(\varepsilon)=\alpha,\qquad
+W(0v)=\langle\alpha,W(v)\rangle,
+\qquad W(1v)=\langle\beta,W(v)\rangle.
+$$
+
+For a fixed binary word $a$, let $C_a:o\to o$ be its unary
+context, with $C_\varepsilon x=x$ and
+$C_{0a}x=\mathsf p\,\alpha\,(C_ax)$,
+$C_{1a}x=\mathsf p\,\beta\,(C_ax)$.
+Induction proves $C_a(W(b))=W(ab)$. The code $W$ is injective:
+an empty word has a leaf root, while a nonempty code has a branch
+whose left leaf specifies its first bit and whose right subtree
+recursively specifies its remainder.
+

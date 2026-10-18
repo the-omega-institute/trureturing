@@ -1,0 +1,57 @@
+**Definition 2.1 (depth-$d$ original masks).** Put
+
+$$
+ d=1+\max\bigl(\{0\}\cup\{|q|:q\in Q\}
+ \cup\{|p|:(c,p,d)\in H_0\}
+ \cup\{|s|,|t|:(a,s,b,t,\ne)\in H^{-}\}\bigr).
+\tag{RNL.5}
+$$
+
+For each old equality class $b$ choose its representative original hole $a_b$.
+A depth-$d$ mask $t_b$ records all original constructors at relative depth
+less than $d$ and puts a distinct frontier variable at every reached depth-$d
+position. The same $t_b$ is used at every repeated occurrence of $b$; different
+classes and frontier addresses use different variable names. For a finite mask
+choice $\eta$ write
+
+$$
+W_\eta=C[(t_{[i]})_i],
+\qquad
+\Delta_\eta=\{t_b\ne t_c:b<c\}.
+\tag{RNL.6}
+$$
+
+The variables in all $t_b$ form $X_\eta$. If $x$ is the frontier variable
+at relative address $s_x$ in $t_b$, fix its full original representative
+position
+
+$$
+p_x=a_b s_x,\qquad |s_x|=d,\qquad
+(W_\eta[v])|_{p_x}=v(x).
+\tag{RNL.6a}
+$$
+
+Thus $a_b$ represents the old hole, whereas $p_x$ recovers the residual
+coordinate. A valuation $v:X_\eta\to\mathcal T$ is allowed only when every
+old inequality in $\Delta_\eta$, every literal
+condition and every old existence guard is true. These literal and guard
+conditions are structurally fixed by the selected prefix cell.
+
+For an endpoint in a negative record, [ARH, Proposition 3.2][ARH] gives two
+possibilities. If the address reaches an original frontier term $A$, the
+endpoint is $\rho^a(A[v])$. If it meets a known leaf sector, the supplied
+leaf-sector guard is tested and the endpoint is a concrete tree $T_j$; a failed
+guard rejects the whole cell for either sign. After evaluating concrete
+sectors, every surviving negative record has the form
+
+$$
+\rho^a A(v)\ne\rho^b B(v),
+\tag{RNL.7}
+$$
+
+where $A,B$ are ordinary finite constructor terms over $X_\eta$ and the
+constants $\alpha,\beta$. A ground side is represented by its concrete term
+with outer exponent $0$. No interpreted iterate is treated as a new free
+constructor. Let $\Omega^-_\eta$ be the valuations satisfying all retained
+conditions and all instances of (RNL.7).
+

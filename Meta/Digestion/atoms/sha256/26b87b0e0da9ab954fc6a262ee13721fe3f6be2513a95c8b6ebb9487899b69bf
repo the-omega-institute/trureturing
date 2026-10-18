@@ -1,0 +1,25 @@
+### 99.1. Original domain and the supported common pair
+
+Retain the original local CPTP maps \(\mathbb C^8\to\mathbb C^4\), four two-coordinate fibres, fixed correlated encodings, arbitrary reference, and unhalved diamond normalization. On the full calibrated domain,
+\[
+\begin{aligned}
+\mathcal E&=\{G\succeq0:G_{ff}=I_2\},\qquad L=T-G\odot H,\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}(LW),\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ fibre-block diagonal},
+\ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}\tag{1}
+\]
+Throughout this section assume \((G,H)\) is a local minimum on the **full** domain \(\mathcal E^2\), with ranks \((7,6)\), and \(0<t=F(G,H)<1/4\). Fix a nonzero \(a\) spanning \(\ker G\), and assume \(S=\operatorname{supp}a\) has occupancy \((2,1,1,0)\). Label its coordinates as a whole original fibre \(F=\{1,2\}\) and singleton coordinates \(3,4\) from two other fibres; put \(\mathcal J=\{3,4\}\).
+
+The exact norm and common-stress theory of §§91–95 supply a nonempty canonical set of common normers, satisfying both simultaneous first-order best-response inequalities. For each such normer,
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}
+ {2\overline{H_{ij}}},\qquad \alpha>0
+\quad(i,j\text{ in different original fibres}).\tag{2}
+\]
+Every cross-fibre entry of \(G,H\) is nonzero by
+\(|1/2-G_{ij}H_{ij}|\le t<1/2\). Lemma 96.1 says that every common pair is supported on \(S\), and its principal complete norm equals \(t\). The frontier in §97 gives \(\operatorname{rank}H_S=2\).
+
+These facts do not assume that a full-domain local minimum projects to a joint local minimum of the principal Gram pair.
+

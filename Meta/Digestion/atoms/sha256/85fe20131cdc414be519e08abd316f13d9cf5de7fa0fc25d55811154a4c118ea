@@ -1,0 +1,12 @@
+**Definition 2.3 (the common-prefix rectangle).** Fix finite $N\ge1$ and $r\ge1$. Starting at $P$, form the baseline by repeating $H$ followed by a complete $A_r(0^r)$ source cycle, including original dependency delivery/ACK, source return, normalization, CaptureCAP and Ready. Only the finite number of rounds needed for a specified endpoint is required.
+
+Let $H_j$ be the $j$th history flight along this baseline, $b_j$ its frozen predecessor tally, and $P_j$ the Ready after its full return. To form $x_{j,w}$, follow exactly the baseline through $P_j$, then supply $A_r(w)$ and stop at Definition 2.2's final-IN/pre-WR cut. Thus all earlier completed probes on this branch used $0^r$.
+
+Write
+
+$$
+\mathcal X_{P,N,r}=\{x_{j,w}:1\le j\le N,\ w\in\{0,1\}^r\}.
+$$
+
+All members are actual admissible prefixes from the same initialized source. For fixed $j$, different $w$ are alternative lawful continuations from the same $P_j$. They are not simultaneously acquired inputs. The endpoints $x_{j,0^r}$ occur along one common baseline execution. No assertion makes the other alternatives jointly actual on that execution.
+

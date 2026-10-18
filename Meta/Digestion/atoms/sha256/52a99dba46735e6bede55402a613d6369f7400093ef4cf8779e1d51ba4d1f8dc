@@ -1,0 +1,39 @@
+### 88.3. The exact quadratic noise kernel
+
+For m∈M write B_i^m=[b_{1i},…,b_{4i}], a 2×4 matrix satisfying B_i^m(B_i^m)*=2I₂, and P_i^m=(B_i^m)*B_i^m/2. A new one-environment operator R is a 4×8 matrix. Its correct-output bit-i row is R_i=(r_{1i},…,r_{4i}); all other entries form R_wrong.
+
+The degree-two coefficient of f(m,R) is exactly
+
+\[
+ L_m(R)={1\over8}\left(\|R_{\rm wrong}\|_F^2+
+                   \sum_i\|R_i(I-P_i^m)\|_F^2\right).
+                                                               \tag{8}
+\]
+
+To derive this, the old attenuation U_m√(I−R*R) contributes Tr(R*R)/8 to dF. The new correct Gram contributes −Σ_iTr(H_i^m R_i*R_i)/16=−Σ_i‖R_iP_i^m‖²/8. Their sum is (8). This uses only the same-bit tightness in (7), so h and β do not affect it.
+
+Let K_m be the complex kernel of L_m in the Hilbert space of 4×8 matrices. It consists precisely of calibrated records
+
+\[
+ r_{fi}=L_i b_{fi},\qquad L_i\in\mathbb C^{1\times2},
+ \quad i=0,1.                                           \tag{9}
+\]
+
+The orthogonal projection Π_m onto K_m is smooth in m: its correct rows are R_iP_i^m and its wrong entries vanish. Set
+
+\[
+ R_\flat=\Pi_mR,\quad R_\perp=(I-\Pi_m)R,\quad
+ e=\|R_\perp\|_F,
+ \quad S_R=L_0+L_1,\quad D_R=L_1-L_0.
+                                                               \tag{10}
+\]
+
+The coefficients in (9) for R_flat are uniquely L_i=R_i(B_i^m)*/2. In particular
+
+\[
+ L_m(R)=e^2/8,\qquad
+ r^2=e^2+\|S_R\|_F^2+\|D_R\|_F^2.                     \tag{11}
+\]
+
+The second identity follows from ‖R_flat‖²=2(‖L₀‖²+‖L₁‖²) and the parallelogram identity. The common coefficient S_R is an environment-gauge direction; it will be quantitatively controlled, not discarded.
+

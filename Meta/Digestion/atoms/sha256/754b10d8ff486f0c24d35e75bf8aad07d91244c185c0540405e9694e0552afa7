@@ -1,0 +1,41 @@
+**定理 28.2.2（格反演）。** 对任意 $A\subseteq N$，
+
+$$
+\boxed{
+\mu_A=\sum_{T\subseteq A}\Gamma_T.
+}
+$$
+
+**证明。**
+
+代入定义并交换有限求和：
+
+$$
+\begin{aligned}
+\sum_{T\subseteq A}\Gamma_T
+&=
+\sum_{T\subseteq A}
+\sum_{S\subseteq T}
+(-1)^{|T|-|S|}\mu_S\\
+&=
+\sum_{S\subseteq A}\mu_S
+\sum_{S\subseteq T\subseteq A}
+(-1)^{|T|-|S|}.
+\end{aligned}
+$$
+
+令 $R=T\setminus S$。内层和为
+
+$$
+\sum_{R\subseteq A\setminus S}(-1)^{|R|}
+=
+\begin{cases}
+1,&S=A,\\
+0,&S\ne A.
+\end{cases}
+$$
+
+故只剩 $\mu_A$。证毕。
+
+<a id="claim-28-2-3"></a>
+

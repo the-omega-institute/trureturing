@@ -1,0 +1,17 @@
+**Theorem 3.3 (exact feasible chart spectra).** A chart of Definition 3.1 is attained by a source in its exact cell if and only if none of its substituted negatives has identical sides. For every retained chart its exact attainable root-depth set is $V_{\eta,\theta}$. In particular the interval endpoint in (LRD.9) satisfies $c_{\eta,\theta}\le B_\eta$. This assertion includes every actual high atomic value in $\star$, not just chosen non-atomic representatives.
+
+**Proof.** Identical negative sides are impossible under any filling. If no residual remains, all negatives are concrete unequal trees, so the ground source is legal and gives the singleton in (LRD.9). If residuals remain and all negatives are nontrivial, Theorem 2.2 realizes them simultaneously by non-atomic trees at any independently prescribed ranks. Such trees avoid every $T_0,\ldots,T_{A_\eta}$ and therefore satisfy the entire chart.
+
+For non-atomic residual values, every ancestor containing a residual has atomic flag zero by (LRD.1). Induction gives
+
+$$
+\nu(W_{\eta,\theta}[z])
+=\min\bigl(\{\nu(z_i):i\text{ a remaining name}\}
+             \cup\{\nu(g):g\in G_{\eta,\theta}\}\bigr).
+\tag{LRD.10}
+$$
+
+Thus all these values lie in $\{0,\ldots,c_{\eta,\theta}\}$. Conversely for any $k$ in that interval prescribe rank $k$ to every remaining name and use Theorem 2.2 on the entire negative list. The result is a legal same-source realization of root depth $k$. Prescribing all ranks greater than $c_{\eta,\theta}$ also realizes the endpoint, whose leaf bound proves $c_{\eta,\theta}\le B_\eta$.
+
+Now take an arbitrary actual filling of the chart. A $\star$ value is either non-atomic or an atomic $T_j$ with $j>A_\eta$. Use Theorem 3.2 to replace every such high atomic value by a non-atomic value of the same rank. The resulting evaluation has the same root depth and is governed by (LRD.10). If replacement broke a negative, apply Theorem 2.2 again, with precisely these residual ranks and the fixed ground substitutions, to restore all negatives simultaneously. The new tuple remains in this chart and preserves (LRD.10). Hence no actual filling contributes a further root value, and every enumerated value has a genuinely legal source. Repeated residuals were never assigned separate values. Finally (LRD.3) turns these legal ground fillings into actual producer/controller realizations of the same $R,h$. $\square$
+

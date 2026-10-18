@@ -1,0 +1,28 @@
+**Realization interface 2.1 (every same-slope exclusion).** If $0\ne X\in\ker T_a$ is unsafe, take the endpoints (2.5), ordered $S_1-S_0=X$. Put
+
+$$
+u_i=(1+ai)\operatorname{tr}(A_iX),\qquad
+D_0=0,\quad D_1=-P_u,\quad k_0=k_1=a.
+\tag{2.6}
+$$
+
+Equation (2.2) gives $u_i=P_u(i)$ at every recorded node, since $\Lambda u=T_aX=0$. Therefore
+
+$$
+z_i^{(1)}-z_i^{(0)}=(1+ai)\operatorname{tr}(A_iX)-P_u(i)=0
+\tag{2.7}
+$$
+
+at all $n$ positions. Each $D_b$ is one entire polynomial of degree at most $d$. Apply (1.2) to each endpoint and execute exactly the given words with its own fixed row. This gives the actual positive realizations, including every unread state, sampled gain zero, and negative gain. The sources differ, so this is a target collision, not a representation scale. Every exclusion below uses this same explicit bridge.
+
+For later comparison, if $T_aS_0=T_bS_1$ for positive rank-one sources, use instead
+
+$$
+u_i=(1+ai)\operatorname{tr}(A_iS_0)
+ -(1+bi)\operatorname{tr}(A_iS_1),\qquad
+D_0=0,\quad D_1=P_u.
+\tag{2.8}
+$$
+
+The identical quotient and factorization interfaces give all observations on that same history. The sign in (2.8) differs from (2.6) because $u$ is now ordered as run zero minus run one.
+

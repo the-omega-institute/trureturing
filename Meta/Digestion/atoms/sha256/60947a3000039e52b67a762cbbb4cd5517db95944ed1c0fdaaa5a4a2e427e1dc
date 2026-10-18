@@ -1,0 +1,135 @@
+**Theorem 16.2 (full-class upper bound and one common attaining family).**
+Put
+
+$$
+s_t(\xi)=s_0\left(1-\frac{C_{\rm sat}}t-
+\frac{\xi}{t^{4/3}}\right).
+\tag{JS.80}
+$$
+
+For every finite $R$, these points are feasible for all sufficiently
+large $t$, uniformly for $|\xi|\le R$, and
+
+$$
+\lim_{t\to\infty}\sup_{|\xi|\le R}
+\left|t^{2/3}[\mathcal T_{\log(1+t)}(s_t(\xi))-T_0]
+-\mathcal V_{\rm sp}(\xi)\right|=0.
+\tag{JS.81}
+$$
+
+Thus the product width is $t^{-1/3}$, the strength displacement beyond
+$s_0(1-C_{\rm sat}/t)$ is $t^{-4/3}$, and the value correction is
+$t^{-2/3}$. At $\xi=0$ and $\mathsf a>0$ it equals
+
+$$
+\mathcal T_{\log(1+t)}(s_0(1-C_{\rm sat}/t))
+=T_0+3\mathsf b\left(\frac{\mathsf a}{4\mathsf b}\right)^{4/3}
+t^{-2/3}+o(t^{-2/3}).
+\tag{JS.82}
+$$
+
+Proof. The same-label split, (JS.74), and the exact failure upper
+bound yield for every competitor, with $z_\nu\le\zeta=tq$,
+
+$$
+T_{\rm instr}-T_0\le
+\mathsf a\sqrt{(\zeta-z_\nu)/t}
+-[\gamma_f-\Phi(z_\nu)]
++O((\zeta-z_\nu)/t+t^{-1}).
+\tag{JS.83}
+$$
+
+Here $\zeta=C_{\rm sat}+\xi t^{-1/3}$ stays in a fixed compact
+interval. For $z_\nu\ge C_{\rm sat}$ the scaled gain is at most
+$\mathsf a\sqrt{\xi_+}+o(1)$. For smaller cost write
+$z_\nu=C_{\rm sat}-y t^{-1/3}$; budget requires
+$y\ge\max\{0,-\xi\}$. Costs a fixed distance below saturation
+lose a fixed positive amount while their live gain tends to zero.
+For costs close to saturation, (JS.78) bounds the loss below by
+$\mathsf b h^2/2$ after shrinking its fixed neighborhood.
+Consequently unbounded $y$ cannot be near maximal: its quadratic loss
+dominates its $\sqrt{\xi+y}$ gain, uniformly for $|\xi|\le R$.
+On bounded $y$ the cubic remainder is uniform. The limiting upper
+bound is therefore
+
+$$
+\sup_{y\ge\max\{0,-\xi\}}
+\{\mathsf a\sqrt{\xi+y}-\mathsf b y^2\}.
+\tag{JS.84}
+$$
+
+The discarded $z_\nu\ge C_{\rm sat}$ bound is included by $y=0$
+when $\xi\ge0$. For $\mathsf a>0$, substitute
+$r=\sqrt{\xi+y}$. The derivative is
+$\mathsf a-4\mathsf b r(r^2-\xi)$; it is positive at the left
+endpoint and changes sign exactly once because $r^3-\xi r$ is
+strictly increasing for $r>\sqrt{\max\{\xi,0\}}$.
+This evaluates (JS.84) as (JS.79). With $\mathsf a=0$ it is
+maximized by $y=\max\{0,-\xi\}$, giving the stated degeneration.
+The compact restriction of $y$ and the uniform remainders prove
+a compact-uniform upper bound, including arbitrary original time laws.
+
+For the matching construction suppose first $\mathsf a>0$ and put
+$y_\xi=r_\xi^2-\xi>0$ and
+$\lambda_t=C_{\rm sat}-y_\xi t^{-1/3}$. On each compact $\xi$
+interval $r_\xi$ is positive, continuous and bounded; the same holds
+for $y_\xi$. For large $t$, TC Corollary 4.2's selected final branch
+contains $\lambda_t$. Choose its unique $p_t<p_s$ with
+$C(p_t)=\lambda_t$. Use the two orthogonal unit vectors
+
+$$
+e_P(t)=(\sqrt{1-p_t},-\sqrt{p_t})^T,\qquad
+e_N(t)=(\sqrt{p_t},\sqrt{1-p_t})^T.
+\tag{JS.85}
+$$
+
+For each vector use (JS.48) and generate one actual saturated low
+label with coefficient weight
+
+$$
+\pi_e=\frac{a(e_2^2)}{tc_*(z_e^2)},\qquad
+N_e=M_2^{1/2}ee^TM_2^{1/2},\qquad v_e=tc_*(z_e^2).
+\tag{JS.86}
+$$
+
+The physical effects sum exactly to $M_2$. Their live Gram consumption
+is $O(t^{-1})$, and their exact $H$ cost is $\lambda_t/t$.
+Repair that very Gram with Lemma 15.2's pure-live atoms. For example
+choose their amplitude
+$\varepsilon_t=(r_\xi-t^{-1/6})t^{-2/3}$, positive for large $t$.
+The unused energy margin is of order $t^{-3/2}$, whereas the errors
+in (JS.75) are $O(t^{-5/3})+O(t^{-2})$, uniformly on the compact
+interval. Hence
+
+$$
+E_{\rm rem}\le r_\xi^2t^{-4/3},\qquad
+\lambda_t/t+E_{\rm rem}\le
+C_{\rm sat}/t+\xi t^{-4/3}=q.
+\tag{JS.87}
+$$
+
+This proves the original contrast inequality at each sufficiently
+large finite parameter. The live HALF-TV gain is
+$\mathsf a r_\xi t^{-2/3}+o(t^{-2/3})$, and the failure loss is
+$\mathsf b y_\xi^2t^{-2/3}+o(t^{-2/3})$ by (JS.78).
+The actual live/failure grouping loss on the two saturated labels
+is at most $2\|f\|_\infty\sum\pi_e=O(t^{-1})$, below this scale.
+Thus this one common instrument attains (JS.79), with §17's actual
+reports, original errors, sharp joint cost and FIRST process.
+
+If $\Gamma=0$, take the final-branch cost
+$\lambda_t=\min\{\zeta,C_{\rm sat}\}-D/t$ with a fixed sufficiently
+large $D$. Lemma 15.2 at zero motion repairs the consumed Gram with
+energy at most $D/t^2$ and live change $O(t^{-1})$. Its finite contrast
+is therefore admissible; (JS.78) gives scaled value
+$-\mathsf b\max\{-\xi,0\}^2+o(1)$. All charts, cost inverses and
+remainders are uniform on $|\xi|\le R$. These constructions prove
+both feasibility and the lower bound in (JS.81). Substitution of
+$r_0^3=\mathsf a/(4\mathsf b)$ proves (JS.82). $\square$
+
+The correction is relative to $T_0=\mathcal T(s_0)$, not to the
+unbudgeted value at the varying strength $s_t(\xi)$. The static
+square-root gain at that strength has order $t^{-1/2}$ when its
+coefficient is positive. Thus (JS.82) preserves FA's strict finite
+deficit below $\mathcal T(s_t(\xi))$.
+

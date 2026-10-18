@@ -1,0 +1,42 @@
+**Assumption 1.3 (complete paid export and late entry).** Preparation is
+one deterministic effective procedure with common source-independent
+initialization, public $D$ and common installed tables. It does not know
+the later request. Every acquired source distinction comes from charged
+literal Reads, and preparation terminates on every source. It exports
+one finite code $E(t)$. All accessible surviving source dependence is
+part of that code, including selectors, control, operands, buffers,
+lengths, allocation, handles, counters and accessible timing distinctions.
+Any other surviving field is a fixed function of the code and public
+data. A separately supplied paid handoff isolates all other preparation
+material and supplies lawful reader entry. Earlier transcripts and
+acquired descriptions are inaccessible. Isolation, export, entry,
+source continuity and authentication are declared services; they are
+not inferred physical operations or free erasure.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. A common deterministic effective reader, given $E(t),D,p$
+and the installed tables, makes at most one fresh Read of that same
+stationary $t$, at any finite word chosen from those inputs. Zero-Read
+branches are permitted. It then exports a final predictor $Z$. For
+every subsequently supplied authentic integer $k\ge0$, with no further
+Reads, correctness means
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad\text{for every }t\in\mathcal F_D, p\in\mathcal P_D, k\ge0.
+\tag{FMR.2}
+$$
+
+Neither a supplied $k$ nor a source-dependent request may guide that
+one query. Define the unchanged objective
+
+$$
+m_D=M_1(D)=\min |E[\mathcal F_D]|.
+\tag{FMR.3}
+$$
+
+Only this complete attained alphabet is optimized. Preparation cost,
+installed codebooks, temporary and post-request workspace, final
+predictor size, address length, submitted letters, count representation,
+handoff, authentication and physical time are separate resources.
+

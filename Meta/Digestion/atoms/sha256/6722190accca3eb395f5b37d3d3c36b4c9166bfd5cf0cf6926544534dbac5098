@@ -1,0 +1,67 @@
+## 80. 续接预算的嵌套可行过滤
+
+沿用定义79.1的同一来源、原目标、完整当前状态、档案／视图、允许操作、响应、更新和停止—输出合同。记原合同在至多 $n$ 个单位动作内准许的完整共同协议为 $\mathcal P_n$，并令
+
+$$
+\mathcal P_n\subseteq\mathcal P_{n+1},\qquad
+\mathcal P_{\infty}=\bigcup_{n\in\mathbb N}\mathcal P_n.
+$$
+
+这里的 $\infty$ 只表示“存在某个有限预算的成功协议”，不表示允许无限运行后取极限。对定义79.1的 $B_S$，定义
+
+$$
+\begin{aligned}
+\mathsf F_n(S)&\iff S=\varnothing\ \text{或}\ \exists\pi\in\mathcal P_n\;\forall(t,x)\in B_S,\;
+\pi\text{ 合法、在同一合同内停止并输出 }t,\\
+\mathsf F_\infty(S)&\iff \exists n\;\mathsf F_n(S),\\
+\mathcal K_n&=\{S\subseteq I:\mathsf F_n(S)\},\qquad
+\mathcal K_\infty=\bigcup_n\mathcal K_n.
+\end{aligned}
+\tag{80.1}
+$$
+
+空集的真值只为无实际运行的记账约定；它不产生空历史类、免费动作或终止来源。每个候选仍带原目标 $t$ 和完整 $x$，控制器不把隐藏的 $i,t,x$ 当运行时输入。由同一共同协议的限制和预算包含，$\mathcal K_n$ 是向下封闭的，且
+
+$$
+S'\subseteq S\land S\in\mathcal K_n\Rightarrow S'\in\mathcal K_n,
+\qquad
+n\le m\land S\in\mathcal K_n\Rightarrow S\in\mathcal K_m.
+\tag{80.2}
+$$
+
+令
+
+$$
+\tau(S)=\min\{n:S\in\mathcal K_n\},\qquad \min\varnothing=\infty.
+\tag{80.3}
+$$
+
+则 $\tau(\varnothing)=0$，并且 $S'\subseteq S$ 时 $\tau(S')\le\tau(S)$。零预算层仍须对每个初始块 $S$ 按原 $\mathcal P_0$ 检查，保留该块已取得的标签、全部原允许的免费输入及原停止、输出、记忆和组合限制；空集约定不能代替这些检查。在没有其它免费取证行为、允许免费直接停止并任选目标值输出的接口中，零步成功要求 $B_S$ 在每个相同允许初始输入的非空纤维上目标恒定；若原合同还允许按这些纤维选择并接合输出协议，这一条件也充分。若原输出或停止收费、相应目标输出不合法、原组合限制阻止接合，或原合同另有免费行为，仍须核对同一 $\pi\in\mathcal P_0$ 是否能在整个 $B_S$ 上成功，不增设权限。没有其它免费取证途径时，同一输入纤维中的不同原目标阻止零步成功；原合同禁止一切零动作成功端点时，所有非空块的阈值也都大于零。未按历史块条件化的原视图不含目标信息，本身不足以推出正阈值。一个单点在预算 $n$ 不可行，只说明 $\tau(\{i\})>n$；只有阈值为 $\infty$ 才说明它在所有有限预算都不可行。
+
+例如固定两个允许来源，原目标分别为 $0,1$，先前合法取得的历史类别分别为 $1,2$，当前候选为 $B_1=\{(0,u_0)\}$、$B_2=\{(1,u_1)\}$。两个完整态的原公开视图同为 $v_0$；没有续接动作，在每个态均原本允许免费停止并输出任一比特。类别块 $\{1\}$ 可以选择恒输出 $0$ 的协议，块 $\{2\}$ 可以选择恒输出 $1$ 的协议，故两单点阈值都为零。合并块的同一输入仍含不同目标，且没有动作可增加信息，故 $\tau(\{1,2\})=\infty$，$\mathcal K_0=\mathcal K_\infty=\{\varnothing,\{1\},\{2\}\}$。这些协议只从已取得的初始块标签选择，不读取隐藏来源、目标或完整状态；共同原视图不会消除历史块已经提供的信息。这是定义8.4及命题79.4原免费停止接口的直接应用。
+
+若 $I$ 有 $h$ 个元素，有限集 $2^I$ 使得 $\mathcal K_n$ 最终稳定。具体地，令
+
+$$
+N=\max\{\tau(S):\tau(S)<\infty\},
+$$
+
+在集合为空时取 $N=0$，则 $\mathcal K_n=\mathcal K_\infty$ 对所有 $n\ge N$ 成立。有限读数中的一段不变平台本身不是稳定证明，必须覆盖所有有限阈值；$\infty$ 阈值永远不被有限预算误报为已进入。
+
+在全部单点已经进入时，令 $G_n$ 的边为满足 $\tau(\{i,j\})\le n$ 的二点集，记其分量分划为 $\mathcal C_n$。定理79.3给出
+
+$$
+\text{存在最大可行初始核}\iff
+\forall C\in\mathcal C_n,\ \tau(C)\le n.
+\tag{80.4}
+$$
+
+同理在 $\infty$ 层把右侧改为 $\tau(C)<\infty$。最少标签数是
+
+$$
+\lambda_n=\min\{|\Pi|:\Pi\text{ 是 }I\text{ 的分划且每个 }C\in\Pi\text{ 满足 }\tau(C)\le n\},
+\tag{80.5}
+$$
+
+无可行分划时记为 $\infty$。$\lambda_n$、一个局部不可再合并的分划、式(80.4)的最大核和能在所有响应分支上运行的完整控制器是四个不同对象。
+

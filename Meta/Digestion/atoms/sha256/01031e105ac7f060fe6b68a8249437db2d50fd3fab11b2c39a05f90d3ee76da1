@@ -1,0 +1,25 @@
+**定理 9.4（有界方向与共振跃变）。** 对全部 $\theta$，
+
+$$
+V_N(\theta)\longrightarrow V(\theta),\qquad |V(\theta)|\le\frac{\pi}{4},
+$$
+
+其中
+
+$$
+V(\theta)=\frac2\pi\sum_{m\ {\rm odd}}
+\frac{\chi_4(m)}{m^2}\operatorname{sgn}(\sin m\theta),
+\qquad\operatorname{sgn}(0)=0.
+$$
+
+令 $G=\sum_{\ell\ {\rm odd}}\chi_4(\ell)/\ell^2$。对既约有理点 $\theta=\pi p/q$、$q$ 奇，
+
+$$
+V(\theta+)-V(\theta-)
+=\frac{4G}{\pi}\frac{(-1)^p\chi_4(q)}{q^2}.
+$$
+
+**证明。** $S_N$ 对 $x,N$ 一致有界。令 $\delta=\operatorname{dist}(x,\pi\mathbb Z)$，在 $n\delta\le1$ 的部分用 $|\sin nx|\le n\delta$；余下部分用奇数等比和的 $O(1/\delta)$ 界及分部求和，得到统一常数。逐点有 $S_N(x)\to(\pi/4)\operatorname{sgn}(\sin x)$；可求和的 $m^{-2}$ 因而允许交换极限。上界来自 $\sum_{m\ {\rm odd}}m^{-2}=\pi^2/8$。
+
+符号级数的尾部一致小，故单侧极限逐项计算。仅 $q\mid m$ 的项跳变；写 $m=q\ell$，跳变为 $2(-1)^{p\ell}=2(-1)^p$，且 $\chi_4(q\ell)=\chi_4(q)\chi_4(\ell)$，求和得到公式。$\square$
+

@@ -1,0 +1,5 @@
+**Definition 4.1 (depth-two coordinates).** At depth two write
+$S_2=\{A,B\}\sqcup\{\langle x,y\rangle:x,y\in\{A,B,C\}\}$. For a residual
+component containing both root leaves, write $a=w(A)$, $b=w(B)$, let $T$ be
+the total branch weight and let $c_{\max}$ be the largest branch weight.
+

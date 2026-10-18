@@ -1,0 +1,18 @@
+**Convention 9.4 (limits of interpretation).** The proved recovery
+relation, conditionally interpreted in the native task, is
+
+$$
+(E(t),D,p,\text{zero or one actual reply})
+\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{CIT.44}
+$$
+
+It does not recover the full unknown source, an unknown age,
+provenance, hidden history, physical storage, or physical space and
+time. There is no neural, machine-learning, training, generalization,
+pure critical-renewal or physical-transfer theorem here, and no
+completion of the broader minimal-relations/internal-observer
+programme. The statements are ordinary mathematical proofs with
+explicit conditional interfaces, without Lean/kernel certification.
+

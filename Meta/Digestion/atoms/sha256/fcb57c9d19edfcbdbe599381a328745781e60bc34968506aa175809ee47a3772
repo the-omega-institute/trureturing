@@ -1,0 +1,54 @@
+**Definition 2.3 (return weight and its dispersion).** On $\Gamma_B$ define
+
+$$
+Z(Q,W)=U(Q)v(W),\qquad
+c=\int Z\,d\Gamma_B,\qquad
+D=\int|Z-c|\,d\Gamma_B.
+\tag{2.7}
+$$
+
+Always
+
+$$
+\frac15\le Z,c\le\lambda=\frac4{15}.
+\tag{2.8}
+$$
+
+The constant-return-weight subfamily means $D=0$, equivalently $Z=c$ almost surely on this edge flow. It does not mean that the average return probability is constant merely after averaging the $B$ row. Nor does it mean that each recurrent component has its own possibly different constant. These weaker conditions are not covered by the subfamily conclusion.
+
+For a finite table this statistic is exactly
+
+$$
+c=\sum_{x,y}\pi_xB_{xy}(1-u_x)v_y,
+\qquad
+D=\sum_{x,y}\pi_xB_{xy}|(1-u_x)v_y-c|.
+\tag{2.9}
+$$
+
+If $D=0$, the synthetic return matrix satisfies
+
+$$
+\operatorname{diag}(1-u)B\operatorname{diag}(v)A=cBA.
+\tag{2.10}
+$$
+
+The actual kernel is still $BA$. Equation (2.10) is a consequence of the edge condition, not a replacement for it.
+
+Keep the complete configuration losses
+
+$$
+\mathcal L_p(T)=\int\operatorname{TV}(Q,T)\,d\nu_p,
+\qquad
+\mathcal L_\beta(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta,
+$$
+
+and the unchanged objective
+
+$$
+\mathcal J=\max_{s\in\{p,\beta\},\ k\in\{1,2,3\}}
+\bigl\{\mathcal L_s(P_{s,r_k})-\rho_s\bigr\}.
+\tag{2.11}
+$$
+
+The positive installed masses do not disappear from the source. [CLIP, Proposition 2.3; PAID, Lemma 14.1] justify the pure-target supremum using positive finite paid histories in that one prior. They do not supply free pure-source experiments.
+

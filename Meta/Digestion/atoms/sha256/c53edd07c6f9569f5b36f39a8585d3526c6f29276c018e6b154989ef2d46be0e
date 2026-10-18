@@ -1,0 +1,8 @@
+**Proposition 12.3 (homogeneity and distinct uniqueness levels).** Multiplication of a nonzero supported test by $c>0$ multiplies $C,\lambda,\mu,F$ and $F_{\rm rel}$ by $c$, leaving the normalized selected eigenvector, coefficient matrices, exact endpoints and their branch ranks unchanged. Global specimen phase is irrelevant; relative phases remain in (PG.19)–(PG.21) and (PG.59). Arbitrary mixed positive tests of rank at least two have positive-definite Gram; no limit from them was used to infer the singular value law.
+
+Proof. Substitute $cC,c\lambda,c\mu$ in the eigenpair and certificate identities. The $B$-normalization and all lift formulas depend only on the selected unit vector and the fixed channel. Positive scale preserves rank and positivity, proving all statements. $\square$
+
+For a pure selected test, equality of acquired and live costs says only
+$\operatorname{tr}(\sigma[G_{\rm acq}-E\Theta(H)E^\dagger])=0$.
+The positive slack kills that tested support but can be nonzero on other inputs. Even when (PG.38) forces the supported live coefficient splits and integrated failure effects, it does not determine the instrument's Kraus refinements, dilation, labels, full acquired effect, complement acquisition or finer failure-time allocation. The displayed constructions choose zero acquired-to-live slack on all inputs; the necessity theorem does not impose that choice on competitors. Finite label counts likewise do not assert minimal labels, finite exact-time storage or an actual timing device.
+

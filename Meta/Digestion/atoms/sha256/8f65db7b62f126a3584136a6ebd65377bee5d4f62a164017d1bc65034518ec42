@@ -1,0 +1,33 @@
+### Proposition 2.1: the FIB conditional-independence surface
+
+Assume \(Z<1\), so that the event \(z=0\) has positive probability. On that event, the two features \(x\) and \(y\) are conditionally independent exactly when
+
+\[
+\Delta_{\mathrm{FIB}}
+:=
+(1-Z)\kappa-XY
+=0.
+\tag{2.5}
+\]
+
+**Proof.** Since \(P(z=0)=1-Z\),
+
+\[
+P(x=1\mid z=0)=\frac{X}{1-Z},\quad
+P(y=1\mid z=0)=\frac{Y}{1-Z},\quad
+P(x=y=1\mid z=0)=\frac{\kappa}{1-Z}.
+\]
+
+The equality of the last expression with the product of the first two is exactly (2.5). If \(Z=1\), the conditioning event has probability zero: the polynomial equation still vanishes, but does not define a conditional-independence claim. ∎
+
+The equation \(\Delta_{\mathrm{FIB}}=0\) is a local two-feature conditional-independence relation. It is not the triangle source condition
+
+\[
+\mu_{\alpha\beta\gamma}
+=
+\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma.
+\tag{2.6}
+\]
+
+The former concerns two features after a conditioning event. The latter concerns three hidden edge variables before the response map. Confusing them would identify a visible response fiber with the causal source layer.
+

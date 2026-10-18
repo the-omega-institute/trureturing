@@ -1,0 +1,41 @@
+**Definition 3.1 (the thirteen equations).** Index
+$j=(\sigma,\eta)$ in the order $(++),(+-),(-+),(--)$ and put
+
+$$
+\begin{gathered}
+\varphi(d)=\sqrt{1-2\gamma d-\gamma d^2},\quad
+u_j(d)=\sigma(1+d),\quad v_j(d)=\eta\varphi(d),\\
+m_j(d)=(1,u_j(d),v_j(d),u_j(d)v_j(d),u_j(d)^2),\quad
+f_j(d)=f(u_j(d),v_j(d)),\\
+k_j(d)=0\quad(j\ne(--)),\qquad k_{--}(d)=-f_{--}(d).
+\end{gathered}
+\tag{EP.19}
+$$
+
+The square root is the positive analytic branch near zero. Strict corner
+signs make $k_j$ the local analytic expression of $[-f]_+$.
+For $a=(a_0,a_1,a_2,a_3,a_4)$ define
+$P_a(u,v)=a_0+a_1u+a_2v+a_3uv+a_4u^2$. For a real parameter $p$
+solve for four $\pi_j$, four $d_j$ and five $a_i$:
+
+$$
+\begin{aligned}
+\sum_j\pi_jm_j(d_j)&=(1,0,0,0,1),\\
+a\cdot m_j(d_j)&=1+d_j+p k_j(d_j)\quad\text{for every }j,\\
+a\cdot m_j'(d_j)&=1+p k_j'(d_j)\quad\text{for every }j,
+\end{aligned}
+\tag{EP.20}
+$$
+
+selecting the limit
+
+$$
+\pi_j(0)=1/4,\quad d_j(0)=0,\quad
+ a(0)=(1/2,0,0,0,1/2).
+\tag{EP.21}
+$$
+
+The scalar $p$ is an analytic parameter, not a source prior, specimen
+coordinate or acquired probability. A prime on $m_j,k_j$ denotes its
+scalar $d$ derivative.
+

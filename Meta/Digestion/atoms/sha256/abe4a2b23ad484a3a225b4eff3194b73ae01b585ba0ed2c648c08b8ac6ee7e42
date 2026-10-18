@@ -1,0 +1,77 @@
+**Lemma 10.2 (last-layer exclusivity and universal right-cut
+separation).** Let $B=(a,b)\in\mathcal B$. Every host at depth
+$b-1$ hosts no other count cell in $V_B$. If distinct
+$p=(h,z),p'=(g,w)\in V_B$ share a host, orient them by $h<g$.
+Then
+
+$$
+g-h\ge\max(2,n-b+1),\qquad
+z-w\ge\max(2,n-b+1).
+\tag{SI.41}
+$$
+
+Put $d_*=\min(K,L)$ and $e_*=\max(K,L)$. Every interval ending
+at $b\le e_*$ has $D_B=0$, regardless of its length.
+
+Proof. At a live occurrence $(p,S,q)$ of depth $b-1$, (SI.31)
+and freshness imply
+
+$$
+S=T_b\setminus\{i(q)\}.
+\tag{SI.42}
+$$
+
+Any other live occurrence of this state inside $B$ has a support
+$S'$ contained in $T_b\setminus\{i(q)\}$. At an earlier depth
+this containment is proper, contradicting the nested-support
+exclusion of Section 2. At the same depth the supports coincide;
+a different cell has unequal hits, contradicting the equal-support
+exclusion. This proves exclusivity. It also applies when $b=n$:
+then $T_b=[n]$, with no need for a live history at depth $n$.
+
+The supplied separation (SI.7) gives $g-h,z-w\ge2$. Suppose,
+toward the stronger assertion, that
+$\min(g-h,z-w)\le n-b$. Set
+
+$$
+M=\max(h+z,g+w),\quad t=b-1-M,\quad
+A_1=K-1-g,\quad A_0=L-1-z.
+$$
+
+Here $t,A_1,A_0$ are nonnegative. Since $n=K+L-1$,
+
+$$
+\begin{aligned}
+g+z-M&=\min(g-h,z-w),\\
+A_1+A_0-t&=n-b-(g+z-M)\ge0.
+\end{aligned}
+\tag{SI.43}
+$$
+
+Choose nonnegative integers $t_1\le A_1$ and $t_0\le A_0$
+with $t_1+t_0=t$; for example take
+$t_1=\min(t,A_1)$ and $t_0=t-t_1$. Append the same reply word
+$1^{t_1}0^{t_0}$ to the two histories. All its partial count pairs
+are live for both histories, since the final counts satisfy their
+live bounds and counts only increase. This word is actual for each
+history separately. Indeed, at every step the two occurrences have
+the same installed state, its label is fresh for both by Theorem
+2.2, and either requested reply has a completion following that
+history. Their fixed successors are identical. Induction therefore
+produces two actual live extensions at the same state after every
+step. Agreement of their previously exposed assignments is unnecessary.
+
+At the end the larger depth is $b-1$. The count differences are
+unchanged and nonzero, so this gives a host at depth $b-1$ shared
+with another cell in $V_B$, contradicting exclusivity. The case
+$t=0$ is the same immediate contradiction without an extension.
+Thus both integer differences exceed $n-b$, proving (SI.41).
+This argument realizes just the constructed paired live extensions;
+it makes no assertion about arbitrary syntactic paths.
+
+If $b\le e_*$, then
+$n-b+1\ge n-e_*+1=d_*$. One of the hit and zero ranges has
+diameter $d_*-1$. The two differences in (SI.41) cannot both
+exist in those ranges. Hence no two cells in $V_B$ share a state
+and $D_B=0$. $\square$
+

@@ -1,0 +1,50 @@
+**Theorem 58.7 (source-composed finite-clock fidelity).** At an actually reached version $j_0$ of any original finite source, put $R=\lfloor j_0/2\rfloor$ and suppose $\ell_R<1$. Supply a common unit state $f\in\operatorname{ran}Q_c$ and expressly prepare on the actual domain $D_0=D_{j_0}(t)$ the unit state
+
+$$
+ f_0=I_{D_0}^*f/\|P_{D_0}f\|.
+\tag{58.16}
+$$
+
+Continue through any finite legal whole-rho history and any supplied clock partition as in Definition58.1, with total duration $S\le T$. Let $u(\tau)$ be its actual amplitude embedded by the same addresses in $\ell^2(\mathcal P)$. Then
+
+$$
+\sup_{0\le\tau\le S}\|u(\tau)-e^{-i\tau\mathsf H}f\|
+\le(\sqrt2+2MT)\ell_R,\qquad M=6a+g.
+\tag{58.17}
+$$
+
+The bound is uniform over all those original sources, actual irregular domains, finite renewal counts and partitions. Both amplitudes have full norm one. It bounds every supplied contraction response by the same number, and every supplied effect probability by twice that number. It does not require projecting the renewed state into a finite spectral window at each switch; such projections would introduce another state law.
+
+Proof. TM23.2 and (55.2) give $B_R\subset D_0$, and actual whole-rho persistence gives $D_0\subset D(\tau)$ throughout. Balls are only contained comparison sets; every generator remains the compression on its actual $D(\tau)$. If $\alpha=\|(I-P_{D_0})f\|\le\ell_R$, then
+
+$$
+\left\|\frac{P_{D_0}f}{\|P_{D_0}f\|}-f\right\|^2
+ =2(1-\sqrt{1-\alpha^2})\le2\alpha^2.
+\tag{58.18}
+$$
+
+Thus (58.16) exists and the initial norm error is at most $\sqrt2\ell_R$.
+
+On the common Hilbert space set $A_D=P_D\mathsf H P_D$. It is bounded self-adjoint, has norm at most $M$, and its unitary flow restricted to the support $D$ is exactly the finite flow. Forced zero extension makes $u$ continuous in this space at every renewal. Put $v(\tau)=e^{-i\tau\mathsf H}f$. The spectral projection commutes with the common flow and generator, so both $v$ and $\mathsf Hv$ lie in $\operatorname{ran}Q_c$. Theorem58.6 gives, on every installed domain,
+
+$$
+\begin{aligned}
+\|(A_D-\mathsf H)v\|
+&\le\|P_D\mathsf H(P_D-I)v\|+\|(P_D-I)\mathsf Hv\|\\
+&\le M\ell_R+\ell_R\|\mathsf Hv\|\le2M\ell_R.
+\end{aligned}
+\tag{58.19}
+$$
+
+Apply the unitary Duhamel bound of Causal Response13.6.2 on each supplied interval, or concatenate those finite propagators in time order. Unitarity carries an earlier error without amplification, and continuity at the switches adds no jump error. Integration of (58.19) over the total interval and (58.18) proves (58.17). This is not a sum of the all-state defects in (58.2), which would grow with the number of switches. Finally $\|C(u-v)\|\le\|u-v\|$, and for unit states $|\langle u,Eu\rangle-\langle v,Ev\rangle|\le2\|u-v\|$. □
+
+Consequently, for every supplied finite $T$ and positive accuracy $\varepsilon$, a finite radius $R$ with $(\sqrt2+2MT)\ell_R<\varepsilon$ suffices, if the source actually reaches an accepted index $j_0\ge2R$ and the preparation in (58.16) is supplied. For a concrete finite instance, take $a=1,g=16,c=-1,T=1$. Then $d>1$, $q<5/7$ because $3-2\sqrt2>1/6$, and $\sqrt2+2MT<46$. At $R=66$,
+
+$$
+ (\sqrt2+2MT)\ell_{66}
+ <736\left((5/7)^{34}+2^{-34}\right)<1/100.
+\tag{58.17a}
+$$
+
+The final inequality is an exact rational inequality. Thus an actually reached $j_0\ge132$ and the expressly supplied preparation suffice for norm error below $1/100$ throughout this clock window, including the hidden channel ground directions. This is an explicit sufficient relation among accepted depth, full-state accuracy and clock length. It supplies neither the number or prices of original Reads needed to authenticate that version nor a physical preparation method. A fixed-$H$ run unable to reach that index gets no additional acceptance permission from the inequality.
+

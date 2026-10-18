@@ -1,0 +1,65 @@
+**Definition 1.1 (source fiber and complete target).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E=\langle\beta,\alpha\rangle,\quad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+A query reads the root type on the fixed current tree $\rho u$ at one
+finite absolute word in $\{L,R\}^*$, including the empty word. Its four
+replies are alpha, beta, branch and
+absent; descent past a leaf gives absent. At $P=\{L,R\}^3$ the fixed
+current row $R_*$ has whole-subtree equality classes
+
+$$
+\{LLL,LRL\}=a,\quad \{LLR\}=b_1,\quad \{LRR\}=b_2,
+\quad \{RLL,RRL\}=c,\quad \{RLR\}=b_3,\quad \{RRR\}=b_4.
+$$
+
+Different classes are whole-subtree disequal. The source domain is exactly
+
+$$
+\mathcal U_* = \{u\in\mathcal T:R_P(\rho u)=R_*\},
+$$
+
+with no bound on finite size, depth or interior shape. The output to be
+recovered is the complete predecessor row $R_P(u)$, including its ordered
+exterior, every reached occurrence hole, canonical equality partition,
+every surviving disequality and every concrete strict-prefix blocking guard.
+Neither source selection nor a restriction to cube-shaped sources is allowed.
+
+The image algebra is
+
+$$
+\mathcal I=\{\beta,E\}\ \cup
+ \{\langle y,z\rangle:y,z\in\mathcal I\}.
+$$
+
+These are disjoint cases because $\alpha\notin\mathcal I$. Its recursive
+inverse sends $\beta$ to $\alpha$, $E$ to $\beta$, and an image-child
+pair to the pair of inverses. Induction gives both inverse identities.
+In the fixed cut row the resulting eleven profiles are as follows.
+For $j=1,2,3,4$, the positive profile $\Pi_j$ has right class $b_j$
+equal to alpha, its left class equal to beta ($a$ for $j=1,2$ and $c$
+for $j=3,4$, at both repeated occurrences), and all other classes branch.
+For each $d\in\{a,b_1,b_2,c,b_3,b_4\}$, the zero profile $Z_d$ has
+class $d$ beta and the other classes branch; $Z_*$ has all classes branch.
+All class values must still satisfy the original disequalities and image
+conditions. The classification follows by applying the disjoint image cases
+at the four depth-two parents: an alpha child must be the right child of
+$E$, with beta on its left, and distinct classes allow at most one such
+collapse. Without a collapse the cut classes are image roots, hence beta
+or branch, with at most one beta class.
+
+Put $(q_1,q_2,q_3,q_4)=(LL,LR,RL,RR)$. On every zero profile the
+complete predecessor row is $R_0=R_*$. On $\Pi_j$, it is $R_j$: replace
+the two sibling holes at $q_jL,q_jR$ by the concrete beta at $q_j$,
+canonically restrict the old equality partition to the surviving occurrences,
+and retain all surviving disequalities and blocking guards. The other
+occurrence of the repeated left class remains a hole. These complete rows
+are the original five reader outputs; a root-type summary is insufficient.
+This is the image/profile interface exposed in [WTF, Section 1][WTF].
+

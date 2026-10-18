@@ -1,0 +1,44 @@
+**Lemma 4.2 (Disjoint zero edges).** If $e,f$ are vertex-disjoint
+active zero edges, the maximal full-law state mass on (4.1), for every
+third active edge and target position, is at most $a^2c\eta$.
+
+Proof. Each zero pair has weights $a^2,b^2$ and probability $c$.
+Repeated $g$ is contradictory. A $g$ disjoint from both zero pairs gives
+
+| Target position | Maximal state mass |
+| --- | --- |
+| In either zero pair | $a^2c\eta$ |
+| In $g$ | $c^2\eta/2$ |
+| Outside all three pairs | $ac^2\eta$ |
+
+The last two are at most $a^2c\eta$ by $c\le2a^2$ and $c\le a$.
+
+If $g$ extends one zero pair, that mixed triple has weights
+$a^2b=a\eta,ab^2=b\eta$, total $\eta$. The untouched zero pair
+still contributes its full factor. Thus
+
+| Target position | Maximal state mass |
+| --- | --- |
+| In the mixed triple | $ac\eta/2$ |
+| In the untouched zero pair | $a^2\eta/2$ |
+| Outside both components | $ac\eta/2$ |
+
+These are at most $a^2c\eta$ because $a\ge1/2$ and $c\ge1/2$.
+The first row includes a target at the newly introduced vertex.
+
+If $g$ joins the two zero pairs, its one label forces their constant
+spins to be opposite. The two four-spin assignments each have weight
+$\eta^2$. An internal target gives full-law mass $\eta^2/2$ and an
+exterior target gives $a\eta^2$. Since $a\ge1/2$, the latter bounds
+both; and
+
+$$
+a\eta^2\le a^2c\eta,
+\qquad \eta\le ac\ \Longleftrightarrow\ b\le c.
+\tag{4.2}
+$$
+
+This is (3.1). Repeat, extension, join and disjointness exhaust the
+third edge, proving the result. A separator could not give its required
+one reply either. $\square$
+

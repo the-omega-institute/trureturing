@@ -1,0 +1,52 @@
+**构造 16.1（Completed siblings and physical parity compensation）。** Choose an injective label code
+
+$$
+c:\eta[S]\longrightarrow\{0,1\}^L,\qquad c(A)=0^L,
+\qquad F_\ell=\{j\in S:c_\ell(\eta(j))=1\},\quad 1\le\ell\le L.
+\tag{16.1}
+$$
+
+The zero code is reserved for the default label, not for a presumed absent source. All actual low sources outside $S\cup\{0,m\}$ have that label.
+
+The following complete-block stream is fixed in advance and ends at index $LQ$, hence has total length $LQ+1$ blocks. First issue $1^m$ at indices $0,\ldots,d-1$. If $a>0$, at index $d$ issue
+
+$$
+1^a0^{m-a}.
+\tag{16.2}
+$$
+
+All remaining non-main indices are $0^m$, except for the special prescription below. This gives a single stream for both values; stopping and decoding use each source's own observed endpoint differences.
+
+Call $d=1,a=0$ the endpoint-retaining case. In this case replace the non-main block at index $Q-1$ by
+
+$$
+0^{m-1}1.
+\tag{16.3}
+$$
+
+Its full physical charge support is $\{Qm-1,Qm\}$. Both vertices are actual only if they belong to $P$; neither belongs to $S$ or $\{0,m\}$, and every actual low source there has label $A$. A positive response on the root-zero archive therefore returns $A$. This pulse is paid even when it detects no actual source.
+
+At the main indices $\ell Q$, prescribe even full-path supports as follows. Outside the endpoint-retaining case, set
+
+$$
+E_\ell=F_\ell\cup
+\begin{cases}
+\{0\},&|F_\ell|\text{ odd},\\
+\varnothing,&|F_\ell|\text{ even}.
+\end{cases}
+\tag{16.4}
+$$
+
+In the endpoint-retaining case, the first main support instead is
+
+$$
+E_1=F_1\cup\{0\}\cup
+\begin{cases}
+\{Qm\},&|F_1|\text{ even},\\
+\varnothing,&|F_1|\text{ odd}.
+\end{cases}
+\tag{16.5}
+$$
+
+For its later main indices use (16.4). Issue the actual word $\mathcal B_{\ell Q}(E_\ell)$ given by the ordered literal inverse (1.5). The compensation vertex $0$ belongs to every main window, including when $Lr=m$ and it is the final path vertex. The extra vertex $Qm$ in (16.5) is the first vertex of $W_Q$. Equations (15.8) and (15.3) put every $F_\ell$ in its prescribed path. Thus every row is even on the full physical path and has a unique literal inverse; no algebraic span is used as an action.
+

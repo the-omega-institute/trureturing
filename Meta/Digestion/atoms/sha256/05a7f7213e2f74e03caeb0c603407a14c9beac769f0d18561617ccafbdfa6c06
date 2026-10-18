@@ -1,0 +1,91 @@
+**Theorem 14.2 (Positive two-site vanishing-overlap family).**
+On the original two-site legal carrier, take
+
+$$
+\omega_1=\frac14,\qquad\omega_2=\frac34,\qquad
+\lambda_1=\varepsilon>0,\qquad\lambda_2=1,
+\qquad S=1+s_1-s_2.
+\tag{14.6}
+$$
+
+For each fixed finite $t\ge0$ and each fixed integer $k\ge0$,
+
+$$
+\lim_{\varepsilon\downarrow0}\gamma_\varepsilon=\frac14,
+\qquad
+\lim_{\varepsilon\downarrow0}\left[-\frac{d}{dt}
+\log C_\varepsilon(t)\right]=\frac34,
+\qquad
+\lim_{\varepsilon\downarrow0}R_{k,\varepsilon}=\frac34.
+\tag{14.7}
+$$
+
+Consequently no fixed parameter-independent $t$ or $k$ gives
+additive gap error at most $1/4$ for this prescribed signal
+over all positive activities, even at length two.
+
+Proof. The state masses at $00,10,01$ are proportional to
+$1,\varepsilon,1$. In that order the function-generator parent
+is
+
+$$
+H_{\rm cl}=\begin{pmatrix}
+\omega_1q_1+\omega_2q_2&-\omega_1q_1&-\omega_2q_2\\
+-\omega_1(1-q_1)&\omega_1(1-q_1)&0\\
+-\omega_2(1-q_2)&0&\omega_2(1-q_2)
+\end{pmatrix}.
+\tag{14.8}
+$$
+
+Its zero eigenvector is constant. Its trace is one, and the
+product of the two positive eigenvalues is
+$\omega_1\omega_2(1-q_1q_2)$. Therefore, writing
+
+$$
+d_\varepsilon=\sqrt{\frac14+
+\frac{3\varepsilon}{8(1+\varepsilon)}},\qquad
+\gamma_\varepsilon=\frac{1-d_\varepsilon}{2},\qquad
+\Lambda_\varepsilon=\frac{1+d_\varepsilon}{2},
+\tag{14.9}
+$$
+
+both are positive and distinct. Direct evaluation on the same
+three states gives
+
+$$
+\operatorname{Var}_p(S)=\frac{1+5\varepsilon}{(2+\varepsilon)^2},
+\qquad
+R_{0,\varepsilon}=
+\frac{(2+\varepsilon)(3+5\varepsilon)}
+{8(1+\varepsilon)(1+5\varepsilon)}.
+\tag{14.10}
+$$
+
+There are just two positive spectral weights, so
+
+$$
+\eta_\varepsilon=
+\frac{\Lambda_\varepsilon-R_{0,\varepsilon}}
+{\Lambda_\varepsilon-\gamma_\varepsilon}\longrightarrow0.
+\tag{14.11}
+$$
+
+The gap and upper edge tend to $1/4$ and $3/4$, respectively.
+The separation tends to $1/2$. For finite $t$, the tilted gap
+weight is proportional to
+$\eta_\varepsilon e^{-t\gamma_\varepsilon}$; for finite $k$
+it is proportional to
+$\eta_\varepsilon(1-\gamma_\varepsilon)^{2k}$.
+The corresponding faster weights have strictly positive limits.
+Hence both tilted means tend to $3/4$, proving (14.7).
+Every model used has positive activities. The excluded boundary
+$\varepsilon=0$ evaluates a limit only. $\square$
+
+This is a vanishing spectral-weight obstruction, with no closing
+separation. It concerns the prescribed staggered readout, not
+every optimally chosen linear or joint signal. Moreover,
+$\gamma_\varepsilon=1-\Lambda_\varepsilon$ at this length.
+Whenever the signal also has faster weight, finite filtering
+does not attain that non-strict threshold, even though its
+quotient converges to the gap.
+

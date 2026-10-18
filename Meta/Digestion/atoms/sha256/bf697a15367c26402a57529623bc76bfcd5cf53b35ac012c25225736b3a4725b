@@ -1,0 +1,11 @@
+**定义 9.1（缩写、遗忘及带守卫的有效像）。** $\gamma:=\rho^2\alpha$ 是可展开的定义，本身没有合并来源；反之，组成摘要使
+
+$$
+\eta(\langle\alpha,\beta\rangle)
+=\eta(\langle\beta,\alpha\rangle)=(1,1),
+$$
+
+才产生非单射遗忘。是否妨碍后续任务，须对实际输出、菜单和更新检验，而不以“定义藏了东西”代替检验。
+
+令实际状态域为 $\Omega$，动作 $a$ 的 enabled 域为 $D_a\subseteq\Omega$，更新 $T_a:D_a\to\Omega$，当前输出为 $o$，摘要为 $\eta:\Omega\to B$。若另有可请求菜单 $O(\omega)$、守卫拒绝或执行失败分支，也把这些标签、输出及更新包含在合同。摘要层只取有效像 $B_{\mathrm{act}}=\eta(\Omega)$。
+

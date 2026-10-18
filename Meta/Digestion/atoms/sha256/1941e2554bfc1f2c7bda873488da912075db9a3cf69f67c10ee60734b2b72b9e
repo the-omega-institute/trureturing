@@ -1,0 +1,63 @@
+**原对象与记号。** 本节保持原自然数 von Mangoldt 函数和原实数截断
+\(x>1\)：
+
+\[
+\Lambda(n)=
+\begin{cases}
+\log r,&n=r^j,\ r\text{ 为素数},\ j\ge1,\\
+0,&\text{其余情形},
+\end{cases}
+\qquad
+\psi(t)=\sum_{n\le t}\Lambda(n),
+\]
+
+\[
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+I_\psi(x)=\int_x^\infty[\psi(t)-t]w(t)\,dt.
+\tag{HT.1}
+\]
+
+\(\psi\) 与 \(I_\psi\) 的全部整数和及完整无穷尾均保留；原绝对存在性
+复用 §424。仍取 §§384–385 的同一实际 Fibonacci 来源
+
+\[
+q=\varphi_{\rm gold}^{-2}\in(0,2/5),\quad
+\beta_d=\log(1-(-q)^d),\quad
+b=\beta_1=\log(1+q),\quad
+\mathcal B(s)=\sum_{d\ge1}\beta_dd^{-s},\quad e=\mu*\beta.
+\]
+
+这里 \(\gamma=(\gamma_d)_{d\ge1}=\beta^{-1}\) 专指正整数上的
+Dirichlet 卷积逆，不是 Euler 常数 \(\gamma_E\)。卷积单位记为
+\(\varepsilon_1=1,\varepsilon_n=0\)（\(n>1\)）。复用（384.5）的正间隙
+
+\[
+\delta=b-\sum_{d\ge2}|\beta_d|
+\ge\delta_0:=\frac{94q}{2205}>0.
+\tag{HT.2}
+\]
+
+保持 §448 的同一概率分布函数
+
+\[
+g(u)=\zeta(1+u)^{-1},\qquad
+\mathsf F(u)=\frac{\mathcal B(1+u)}{b\,\zeta(1+u)}.
+\]
+
+定义实际乘子的算术对数导数系数、累积和及其规范读出：
+
+\[
+c=-\,(\beta\cdot\log)*\gamma,\qquad
+(\beta\cdot\log)_d=\beta_d\log d,\qquad
+C_\beta(t)=\sum_{n\le t}c_n,
+\]
+
+\[
+\psi_{\mathsf F}(t)=\psi(t)+C_\beta(t),\qquad
+I_{\mathsf F}(x)=\int_x^\infty[\psi_{\mathsf F}(t)-t]w(t)\,dt.
+\tag{HT.3}
+\]
+
+\(\psi_{\mathsf F}\) 是原实际 \(\mathsf F\) 的对数导数所确定的读出；
+它不重新定义（HT.1）的原 \(\psi\)。
+

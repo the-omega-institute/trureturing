@@ -1,0 +1,108 @@
+**定理 47.3（三更新四实际Read的隐藏增益稳定取得）。** 在定义47.1的小参数域
+$0<D\le1$，存在源无关初始化的有限控制器，恰用三次原菜单更新、四次实际Read后
+停止，对所有合法联合历史满足
+
+$$
+\mathcal E_\pi(\delta,\eta)
+\le\sqrt{\delta^2+D^2+(5D+\sqrt{50D})^2}
+<14\sqrt D.
+\tag{47.12}
+$$
+
+证明。只按公共 $D$ 选择§46的有限方向族，具体为
+
+$$
+\begin{aligned}
+\rho&=D/10,\quad K=\sqrt{1-\rho^2},\\
+\alpha&=(3/5)K-(4/5)\rho,\quad
+\nu=(4/5)K+(3/5)\rho,\quad q=\alpha+\nu i,\\
+c_1&=j,\quad c_2=-\alpha j+\nu k,\quad c_1c_2=q,\\
+h&=(4/5)\nu-(3/5)\alpha,\qquad T=(7+25h)/2.
+\end{aligned}
+\tag{47.13}
+$$
+
+两个命令均为单位纯虚元，实际调用仍为内部操作、内部操作、锚。按（46.16）的
+原事件次序取得并保留全部四个实际报告 $(y_0,y_1,y_2,y_3)$，包括两个中间Read、
+三个调用种类、两个有序命令及其区间证书，然后停止。令
+$w=\operatorname{Im}(bq)$、$\mu=\gamma_1\gamma_2$。由原状态律直接得到
+
+$$
+y_0=a+e_0,\qquad y_3=\mu w+e_3,\qquad
+(1-\eta)^2\le\mu\le1.
+\tag{47.14}
+$$
+
+这里锚之前的隐藏分量为 $\mu bq$。两次内部执行还改变了任意无界的 $a$，但该
+分量在锚之后位于隐藏槽，未进入 $y_3$；初始 $a$ 用实际初读取得。
+因为 $|w|\le|b|\le25$，有统一的目标相关界
+
+$$
+|y_3-w|\le(1-\mu)|w|+|e_3|
+\le25\zeta+\delta=D.
+\tag{47.15}
+$$
+
+这个界没有把整个无界INITIAL当作有界信号，也没有用中间读数估计已实现增益。
+
+§45的源合法投影范围和（46.14）以 $D$ 代替读误差参数给
+
+$$
+|b|=7\Longrightarrow |w|\le7,\qquad
+|b|=25\Longrightarrow |w|\ge25h,
+\qquad g=25h-7=24\rho-7(1-K)\ge\frac{233}{100}D>2D.
+\tag{47.16}
+$$
+
+因此两层在全部允许衰减和Read误差下仍可由 $|y_3|$ 与 $T$ 比较：
+内层 $|y_3|\le7+D<T$，外层 $|y_3|\ge25h-D>T$。
+实际半径由报告判得，不是另行提供的半径标签。
+
+在整个 $E^4$ 报告空间上使用（46.17）的全定义估计，明确写为
+
+$$
+\begin{aligned}
+\widehat R&=\begin{cases}7,&|y_3|\le T,\\25,&|y_3|>T,\end{cases}\\
+v&=P_{\widehat R}(y_3),\qquad
+\widehat s=\sqrt{\widehat R^2-|v|^2},\\
+\widehat a&=y_0,\qquad
+\widehat b=(\widehat s+v)q^{-1},\qquad
+\widehat x=(\widehat a,\widehat b),
+\end{aligned}
+\tag{47.17}
+$$
+
+其中 $P_R$ 是（46.17）的闭欧氏球投影；零向量用其第一分支，根号恒非负。
+保留但不用于数值解码的 $y_1,y_2$ 仍是实际取得记录的组成部分。
+
+合法记录总有 $\widehat R=R=|b|$。复用（46.19）的投影与根号模量，结合
+（47.15），得到
+
+$$
+|v-w|\le D,\qquad
+\left|\sqrt{R^2-|v|^2}-\sqrt{R^2-|w|^2}\right|\le\sqrt{2RD}.
+\tag{47.18}
+$$
+
+真实 $bq=s+w$ 的负实部分支仍按§45界为 $s\ge-R\rho$，故（46.20）的同一
+符号估计给
+
+$$
+|\widehat s-s|\le2R\rho+\sqrt{2RD}
+\le5D+\sqrt{50D}.
+\tag{47.19}
+$$
+
+右乘 $q^{-1}$ 等距，实部、虚部及初态可见槽正交，且
+$|\widehat a-a|\le\delta$，得到（47.12）的第一界。又因 $\delta\le D\le1$，
+
+$$
+\delta^2+D^2+(5D+\sqrt{50D})^2
+\le(77+50\sqrt2)D<196D.
+\tag{47.20}
+$$
+
+全部估计逐历史成立，未平均任何Read，也未推断增益独立。
+三次更新的实际执行参数幅度都不超过1；锚精确而非新动作。
+这给真正有限的数学取得程序，且其全部实际中间Read都留在记录中。证毕。
+

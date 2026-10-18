@@ -1,0 +1,41 @@
+**Theorem 1.4 (endpoint result).** Under the conditional premises above
+there exists $\varepsilon_*>0$ such that, for every
+$0<\varepsilon<\varepsilon_*$ and $s=s_0(1-\varepsilon)$, the original
+optimum is parametrized by the unique analytic germ of Section 3.
+Its four real-null contact rays have positive masses. The unique
+optimal grouped tuple has ranks
+
+$$
+\operatorname{rank}X_{+,+}=2,\quad
+\operatorname{rank}X_{-,+}=\operatorname{rank}X_{-,-}=1,\quad X_{+,-}=0.
+\tag{EP.8}
+$$
+
+All four original dual slacks are finite PSD matrices; their ranks can
+be chosen as $1,2,2,3$ in the corresponding order. With the explicit
+algebraic $K_1$ in EP.35 and the credited leading coefficient $\Gamma$,
+
+$$
+\begin{aligned}
+\mathcal T(s_0(1-\varepsilon))
+ &=T_0+\Gamma\sqrt\varepsilon+K_1\varepsilon
+                                      +O(\varepsilon^{3/2}),\\
+\lambda(\varepsilon)
+ &=\frac{\Gamma}{\sqrt\varepsilon}+2K_1+O(\sqrt\varepsilon).
+\end{aligned}
+\tag{EP.9}
+$$
+
+Here EVERY optimal normalized contrast multiplier equals the same
+$\lambda(\varepsilon)$. Exactly four actual low live-bearing labels
+are necessary and sufficient; a common twelve-label instrument attains
+value, contrast, sharp acquired cost and the entire original complete
+output simultaneously. Uniqueness means the grouped tuple and contact
+ray masses, allowing proportional splitting. It does not mean unique
+Kraus representation, apparatus, complete channel or failure-time law.
+Sections 3–9 prove all parts. The local proof supplies no numerical
+neighborhood radius. The maximal post-contact branch, its join to the
+initial branch and the single genuine interior transition are supplied
+by RC, as recorded in Proposition 2.4, rather than newly asserted from
+this germ.
+

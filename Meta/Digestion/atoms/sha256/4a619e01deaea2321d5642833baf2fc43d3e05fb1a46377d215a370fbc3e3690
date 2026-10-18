@@ -1,0 +1,63 @@
+**Theorem 14.1 (eight compatible groups on the entire supplied face).**
+Under Assumption 10.1 and the additional conditions
+
+$$
+R_-\succeq0,\qquad a_o^2+b_o^2>0,\qquad
+w_o^TR_+w_o\ge0,
+\tag{FC.48}
+$$
+
+the complete contact partition $\mathscr G$ has at most eight
+groups. Every multiplier-optimal common law can be replaced by
+one with at most eight supported-nonzero low labels, preserving
+its full $\Gamma$ moment vector, achieved $K$ and actual $J_t$.
+For the entire supplied multiplier face,
+
+$$
+U_8=[r_-(t,\lambda),r_+(t,\lambda)],\qquad
+n_t(r)\le8\quad(r\in[r_-,r_+]).
+\tag{FC.49}
+$$
+
+This includes single-point contrast intervals, zero weights,
+zero heights, repeated branch zeros and singular semidefinite matrices.
+
+Proof. Each pure contact belongs to its own group, possibly paired
+with its saturated endpoint. Theorem 12.2 bounds these groups by
+five. By Theorem 13.1 every other group is a positive-height
+saturated singleton with $x^TR_+x<0$. By Theorem 13.2 all these
+singletons have the same report sign $\epsilon$ and height sign
+$\sigma=+1$. They are zeros of one and the same complete
+$F_{1,\epsilon,+}$, so Theorem 12.3 bounds them by three.
+Therefore the entire partition, including unused contacts, has
+at most $5+3=8$ groups. The two numbers arise from whole-circle
+zero restrictions and their common coefficients, not from adding
+five live coordinates to three failure coordinates.
+
+For completeness about the quantifier over laws, integrate (FC.5)
+against any multiplier-optimal law. Its nonnegative gap has zero
+integral, so the law is on the full contact set. Theorem 3.3,
+using (FC.8), says that any occupied interior fraction splits into
+its two contact endpoints with weakly same-sign heights. Opposite
+strict signs with two positive split masses would incur a positive
+triangle defect and cannot occur. Split the entire law and collect
+its endpoint masses in each of the at most eight complete groups.
+For a paired group of masses $a_0,a_1$ the replacement has
+$p=a_0+a_1$, $\xi=a_1/p$ if $p>0$; for $p=0$ omit it.
+For a singleton keep its total mass. The same group operation
+works for the admitted integral laws by their group masses and
+first fraction moments, as in Theorem 3.3. It preserves every
+component of $\Gamma$, $K$, and, by the original weak-sign
+merge identity (FC.9), $J_t$ exactly. Thus this is a replacement
+for every law, not a bound on the labels in every unmerged instrument.
+
+Theorem 4.2 gives the complete face's compact contrast interval and
+activity $K=r$ at each original optimal inequality request in it.
+Applying the just-established replacement to any law at each such
+$r$ gives $n_t(r)\le8$. The exact owner criterion Theorem 5.2
+then gives (FC.49). Equivalently all vertices and edges of the
+complete $\mathcal P$ use at most these eight groups, so the
+same criterion covers their whole contrast image. This uses the
+existing criterion without a new face, rank, or Farkas argument.
+$\square$
+

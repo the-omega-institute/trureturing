@@ -1,0 +1,28 @@
+**Definition 246.1 (Affine terminal stocks).** Choose
+$0<z\le w\le v\le u\le t\le1$ and put
+
+$$
+\begin{aligned}
+k&=(1-t)/5,&S&=t+u+v+w+z,\\
+e&=\frac{9t+5(u+v+w+z)-4}{40},&h_0&=(1+4t)/5,\\
+A&=6k+(t-v+z)/2-e,&B&=e+(t-v-z)/2,\\
+C&=v-8k-e,&D&=(t+v-z)/2-8k,\\
+F&=2e-1+3k,&G&=(u-w)/2-k,\\
+H&=t-v-2k,&I&=e+(u+v-w-z-t)/2-3k.
+\end{aligned}
+\tag{246.1}
+$$
+
+These letters are terminal masses, distinct from the full score
+coordinates. Define the region $\mathcal P$ by all of
+
+$$
+\begin{gathered}
+e>0,\quad e\ge k,\quad S/8<z,\\
+A\ge k,\quad B\ge k+G,\quad C\ge0,\quad D\ge H+I,\quad
+F\ge k,\quad G\ge0,\quad H\ge k,\quad I\ge0,\\
+u\ge v+2k,\qquad w\ge v-3k,\qquad z\ge v-7k.
+\end{gathered}
+\tag{246.2}
+$$
+

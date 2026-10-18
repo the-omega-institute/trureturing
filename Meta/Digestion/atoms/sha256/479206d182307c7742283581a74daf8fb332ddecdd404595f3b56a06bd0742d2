@@ -1,0 +1,12 @@
+**Lemma 3.3 (Band compactness floor).** Call $p$ band-compatible on $K$ when it is a probability satisfying $p_u/3\le p_v\le p_u$ on every insertion edge. These closed inequalities force positivity throughout $K$ and give
+
+$$
+p_{0^m}\ge|K|^{-1},\qquad
+p_w\ge3^{-k(w)}p_{0^m}\ge\alpha_m:=6^{-m}.
+\tag{3.3}
+$$
+
+Proof. Delete ones to see that every mass is at most $p_{0^m}$. Normalization gives the first inequality; insert them back to get the second. Use $|K|\le2^m$ and $k(w)\le m$ for the final bound. Thus band-compatible probabilities form a compact subset of the strictly positive simplex on $K$. Their free posteriors are exactly in $[1/4,1/2]$. $\square$
+
+The projection identity and squared conditional discrepancy are mature conditional-scoring tools; [Dawid–Lauritzen–Parry, §4.2, Example 4.4 and (14)][DLP] gives this Brier score. That paper's full-product strict-propriety argument assumes everywhere-positive distributions. The graph argument above supplies the equality case needed for each constrained completion set, including forced fibers.
+

@@ -1,0 +1,48 @@
+**定义 27.2（实际四 Kraus 通道与恰好 $r$ 次使用）。** 在 $V$ 上取
+
+$$
+K_0=E_{20}+E_{42},\qquad
+K_1=E_{41},\qquad
+K_2=E_{43},\qquad
+K_3=E_{44},\qquad
+\Phi(X)=\sum_{\alpha=0}^3K_\alpha X K_\alpha^\dagger,
+\qquad
+\Psi_k=\Phi^{\otimes k}.
+\tag{27.5}
+$$
+
+每次噪声在全部 $k$ 份上同时使用 $\Psi_k$。
+允许的控制 $U_1,\ldots,U_{r-1}$ 是 $S$ 上的复酉矩阵，满足
+
+$$
+[U_j,N_{\mathrm{tot}}]=0.
+\tag{27.6}
+$$
+
+它们可以是全局控制，不要求逐份因子化。
+复合通道按时间从右向左为
+
+$$
+\mathcal C_{k,r;\mathbf U}
+=\Psi_k\circ\operatorname{Ad}_{U_{r-1}}\circ\Psi_k
+ \circ\cdots\circ\operatorname{Ad}_{U_1}\circ\Psi_k,
+\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger.
+\tag{27.7}
+$$
+
+恰有 $r$ 次噪声和 $r-1$ 个中间控制，没有初始控制，也没有末端控制；
+$r=1$ 时就是 $\Psi_k$。
+若所有槽使用同一个 $U$，记为 $\mathcal C_{k,r;U}$。
+必要性结论允许各槽选择不同的守恒复酉矩阵；
+充分性构造则给出一个固定 $U$，在每个中间槽重复使用。
+守恒非相干置换指 $U|a\rangle=|\pi(a)\rangle$，其中 $\pi$ 为全部
+$5^k$ 个字的双射，且每个字的总电荷不变；未列出的基字一律固定。
+
+(27.5)–(27.7) 是一个给定的开放系统数学模型。
+只有控制被要求数目守恒，噪声只要求协变；
+不假设系统加环境的闭合数目守恒，不把数目等同于 Hamiltonian 能量。
+通道及控制的数学存在性不提供自由浴、原生实现、LOCC、物理制备、
+相位取得或重复来源供应。
+以下证明为普通有限维解析证明，不赋予其 Lean kernel 认证。
+

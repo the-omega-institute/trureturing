@@ -1,0 +1,138 @@
+**Theorem 22.1 (a strict homogeneous Schmidt witness for every optimizer).**
+Use the output-input, unnormalized Choi convention (CG.125), and put
+
+$$
+\begin{aligned}
+|\Omega\rangle&=|00\rangle+|11\rangle+|22\rangle,
+&W_3&=|\Omega\rangle\langle\Omega|-2I_9,\\
+t_*&=\operatorname{tr}H_*+\operatorname{tr}Q_*^{01}
+                             +\operatorname{tr}Q_*^{02},
+&\delta_*&=\mathbf1^TH_*\mathbf1-2t_*.
+\end{aligned}
+\tag{CG.184}
+$$
+
+For every optimal full-output common processor, and also every optimal
+finite-test channel in (CG.155), its actual live Choi matrix satisfies
+
+$$
+\operatorname{tr}(W_3J_\Lambda)=\delta_*>\frac{19}{10}.
+\tag{CG.185}
+$$
+
+In particular its live Choi matrix has Schmidt number exactly three:
+it admits no decomposition into positive rank-one terms whose vectors,
+viewed as $3$ by $3$ matrices, all have rank at most two. Equivalently,
+every Kraus representation of the live CP map contains a rank-three
+operator. This is a coherent bottleneck dimension statement; it is not
+an entropic coherent-information or capacity formula.
+
+Proof. The mature Schmidt-number definition and maximally-entangled
+overlap bound are Terhal–Horodecki,
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/pdf/quant-ph/9911117v4),
+Definition 1 and Lemma 1. For the present unnormalized convention,
+write $|L\rangle\!\rangle=\sum_{a,i}L_{ai}|ai\rangle$. The exact
+homogeneous bound is
+
+$$
+\operatorname{rank}L\leq2
+\quad\Longrightarrow\quad
+|\operatorname{tr}L|^2\leq2\|L\|_F^2
+\quad\Longrightarrow\quad
+\langle\!\langle L|W_3|L\rangle\!\rangle\leq0.
+\tag{CG.186}
+$$
+
+Indeed $|\operatorname{tr}L|$ is at most the sum of its singular values,
+and Cauchy–Schwarz bounds their squared sum by twice their sum of
+squares when at most two are nonzero. This holds for arbitrary complex
+$L$. Summing gives the bound on the entire homogeneous cone
+
+$$
+\mathfrak S_2=\left\{\sum_s|L_s\rangle\!\rangle
+ \langle\!\langle L_s|:\operatorname{rank}L_s\leq2\right\}.
+\tag{CG.187}
+$$
+
+There is no trace-one condition in (CG.186)–(CG.187). The
+Choi/Kraus–Schmidt equivalence is the standard vectorization identity;
+Chruściński–Kossakowski,
+[*On partially entanglement breaking channels*, quant-ph/0511244v1](https://arxiv.org/pdf/quant-ph/0511244v1),
+§2, (6)–(13), give it for TP channels with normalized Choi states.
+Here it is applied directly to positive rank-one Choi sums, so no TP
+assumption is imposed on the live map or an individual branch. Sekatski,
+[*The bottleneck dimension of quantum operations*, arXiv:2608.25010v1](https://arxiv.org/pdf/2608.25010v1),
+§II.A, (2) and Definition 1, states the corresponding classical-assisted
+single-channel bottleneck and CP-map Schmidt number. No independently
+programmable family of instruments is supplied here.
+
+Theorem 17.2 fixes $\overline J_\Lambda=J_*$ for every channel in the
+statement. Each actual sign satisfies
+$(U_{e,n}\otimes U_{e,n})|\Omega\rangle=|\Omega\rangle$.
+Consequently its conjugation fixes $W_3$, and hence
+
+$$
+\operatorname{tr}(W_3J_\Lambda)
+ =\operatorname{tr}(W_3\overline J_\Lambda)
+ =\mathbf1^TH_*\mathbf1
+    -2(\operatorname{tr}H_*+\operatorname{tr}Q_*^{01}
+                              +\operatorname{tr}Q_*^{02}).
+\tag{CG.188}
+$$
+
+The two off-diagonal character blocks have zero pairing with
+$|\Omega\rangle$. Its squared norm is $3$, not $1$; dividing the Choi
+matrix by $3$ would divide both sides of (CG.185) by $3$. The real-sign
+input representation is $\overline U=U$, as in §14. This invariance is
+why the averaged live matrix constrains every unaveraged optimizer,
+without asserting their equality.
+
+The following additional coarse rational enclosures follow from the
+credited box $C$ in Proposition 13.2, using just (CG.112), (CG.113) and
+the adjugate formulas (CG.116). They hold throughout that box; no root
+identity is needed for these new inequalities.
+
+| Quantity | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $(H)_{00}$ | $968/1000$ | $970/1000$ |
+| $(H)_{11}$ | $498/1000$ | $500/1000$ |
+| $(H)_{22}$ | $655/1000$ | $656/1000$ |
+| $(H)_{01}$ | $695/1000$ | $696/1000$ |
+| $(H)_{02}$ | $796/1000$ | $798/1000$ |
+| $(H)_{12}$ | $571/1000$ | $573/1000$ |
+| $\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}$ | $35/1000$ | $36/1000$ |
+
+For an exact arithmetic specification of these comparisons, embed
+each endpoint $c_i\pm10^{-24}$ on the directed grid with denominator
+$D=2^{224}$, as in (CG.118). Form $v_yv_y^T/(v_y^Tv_y)$ for
+$y=5,27$, then $A_y,N,\zeta,S_0,S_{01},S_{02}$ in their displayed
+order. Embed the rational diagonal entries of $\rho_y$ directly and
+its off-diagonal entries as directed square roots of $p_{yi}p_{yj}$.
+For each adjugate entry use the signed transposed minor: for a $3$ by
+$3$ matrix $\operatorname{adj}(S)_{ij}=(-1)^{i+j}
+\det S[\widehat j,\widehat i]$, with each two-dimensional determinant
+evaluated as $ad-bc$. For a two-dimensional adjugate use
+$\left(\begin{smallmatrix}d&-b\\-c&a\end{smallmatrix}\right)$.
+Multiply by $1000\eta_0,\eta_1,\eta_2$ respectively. Round every
+product and quotient outwards on that same grid; square roots use
+(CG.118). All divided chart denominators are positive. These operations
+give the seven strict comparisons in the table. Their coarse endpoints
+alone give the new margin
+
+$$
+\begin{aligned}
+\delta_*
+ &=2(H_{01}+H_{02}+H_{12})
+       -(H_{00}+H_{11}+H_{22})
+       -2(\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02})\\
+ &>\frac{2(695+796+571)-(970+500+656)-2\cdot36}{1000}
+   =\frac{963}{500}>\frac{19}{10}.
+\end{aligned}
+\tag{CG.189}
+$$
+
+By (CG.186), (CG.185) excludes $J_\Lambda\in\mathfrak S_2$.
+Every vector in $\mathbb C^3\otimes\mathbb C^3$ has Schmidt rank
+at most three, so the Schmidt number is exactly three. No whole-channel
+or exact-time failure-law uniqueness is used or obtained. $\square$
+

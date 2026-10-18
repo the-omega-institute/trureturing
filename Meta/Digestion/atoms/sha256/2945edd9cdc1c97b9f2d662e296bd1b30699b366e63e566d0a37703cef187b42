@@ -1,0 +1,2 @@
+**定义 37.4（另行指定的单位置切换图）。** 对整数 $m\ge0$，$\Gamma_m$ 的顶点为没有相邻两个一的长度 $m$ 二进制词；两个顶点之间有无向边，当且仅当恰有一位不同。$\Gamma_0$ 只有空词一个顶点。这个图是 [togglecycles 定义 5.1、定理 5.2](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md#5-n-窗口切换图中的两种隐藏维数) 的独立支持图；它没有把这些边声明为原生历史推进或概率凸包的全部棱。
+

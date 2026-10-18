@@ -1,0 +1,25 @@
+### 2.1 Finite installed rows and the unchanged actual update
+
+Fix integers $N\ge1$ and $b\ge4$, and set $\delta=2^{-b}$. For each of the finitely many $(a,d)$ with $a+d<N$, choose an installed dyadic number $q_{a,d}$, with denominator $2^b$, such that
+
+$$
+\frac14\le q_{a,d}\le\frac12,
+\qquad |q_{a,d}-\lambda_\mu(a,d)|\le\delta.
+\tag{2.2}
+$$
+
+For example, $q_{a,d}=2^{-b}\lfloor2^b\lambda_\mu(a,d)\rfloor$ provides such a value, since the true row lies in $[1/3,2/5]$. The finitely many selected integers are installed data. The machine does not retain or consult $\mu$, $K$, an exact posterior or any real-valued register at runtime.
+
+The monitor alphabet is
+
+$$
+\mathcal V_N=\{(a,d)\in\mathbb N^2:a+d<N\}\cup\{\bot\}.
+\tag{2.3}
+$$
+
+Initialize $(C_{0,\mathrm{initial}},(0,0))$ before the first paid Read. On every actual Read, perform the unchanged original update $\Delta(c,x)$ and increment the corresponding monitor count if the new sum is below $N$. The Read reaching $N$ changes the monitor to permanent overflow $\bot$. Overflow holds thereafter while all original control and record updates continue. Original Stop performs its prescribed update and leaves the monitor alone. This deterministic augmented update $U$ is time-homogeneous and source-independent. Every paid seed rejection and return is counted until overflow; afterwards every such Read still executes the original process. Overflow restricts retained calibration information, not execution or the benchmark histories.
+
+At an active nonoverflow configuration, the predictive generator chooses $\alpha$ with probability $q_{a,d}$. At overflow it uses fixed $\alpha$ probability $r_1=1/3$ at every active phase. Each synthetic letter executes that same $U$. At pending it generates precisely the original $\mathrm{Stop}_b$ and its update; at delivered it generates the empty residual. Define $D_z$ to be the full law of this generator from $z$, with current original $c$ and all original derived events included. At earlier phases it describes the remaining original stages through Stop, so generation is defined before as well as after $H_3$.
+
+This continuation is the already supplied depth1 stopped law and original parser, not a new optimized fallback. Before overflow the generator either completes or reaches $\bot$ after finitely many Reads. A partially read seed pair resolves on the next Read. Thereafter the seed rejection probability per full pair is $5/9<1$ and the payload return probability per circle is $2/9<1$. A partial payload circle likewise completes or returns after one Read. The remaining number of stages is finite. Thus every $D_z$ is normalized, completes almost surely, and assigns zero mass to the original infinite noncompletion paths without removing them. It includes arbitrarily long finite tails; a finite horizon is never substituted.
+

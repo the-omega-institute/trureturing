@@ -1,0 +1,22 @@
+**Corollary 12.1 (actual interpolation of prefix quotients).** For $S_0,S_1\in\mathcal A$ and $0\le\theta\le1$, set $X_\theta=(1-\theta)S_0+\theta S_1$. Then
+$$
+S_\theta=\rho_N(X_\theta)
+=X_\theta-
+\frac{\theta(1-\theta)\mathfrak b(S_0,S_1)}
+{(1-\theta)\mathfrak b(S_0,N)+\theta\mathfrak b(S_1,N)}N
+\tag{12.1}
+$$
+is an actual source, with $S_\theta=S_j$ at $\theta=j$ for $j=0,1$, and
+$$
+\mathsf B_{\rm pre}S_\theta
+=(1-\theta)\mathsf B_{\rm pre}S_0
++\theta\mathsf B_{\rm pre}S_1.
+\tag{12.2}
+$$
+
+**Proof.** Every entry of $X_\theta$ is strictly positive, including at both endpoints. Bilinearity of the determinant polar and $\det S_j=0$ give
+$$
+\det X_\theta=\theta(1-\theta)\mathfrak b(S_0,S_1),
+$$
+while linearity of $h$ gives the denominator in (12.1). Both endpoint values of $h$ are positive, so its convex combination is positive on the whole closed parameter interval. Theorem 10.2 gives (12.1), actual positivity, the endpoints and (12.2). Each source has its own positive factors of Proposition 1.2 and one unchanged row during its run on the same fixed history. This interpolates mathematical targets and their prefix quotients; it does not combine unexecuted histories into one acquisition. ∎
+

@@ -1,0 +1,30 @@
+**Definition 1.3 (actual actions and costs).** A comparator is any common
+deterministic effective controller that terminates correctly on every
+$u\in D$, using actual original-root $\mathsf{Read}(p)$, forward
+same-register $\mathsf{ApplyRho}$ and absorbing $\mathsf{Halt}$.
+Reply-dependent control and every finite physical word are allowed,
+including absent addresses. There is no reset, reroot, clone, equality,
+source-identity, chart-membership or unknown-tree port. Computation and
+updates reveal no unlisted source-dependent side information.
+
+For a service $A$ use
+
+$$
+\begin{aligned}
+c_A(u)&=(q_A(u),a_A(u),\ell_A(u)),
+&\ell_A(u)&=\sum_{\text{actual reads at }p}|p|,\\
+b(A)&=(\sup_Dq_A,\sup_Da_A,\sup_D\ell_A),
+&W_\lambda(A)&=\sup_{u\in D}\lambda\cdot c_A(u),
+\quad\lambda\in\mathbb Q_{\ge0}^3.
+\end{aligned}
+\tag{NPL.4}
+$$
+
+Here $q$ counts every actual raw Read call, including repeated calls and
+absent replies; $a$ counts post-entry actual updates. Root reads have
+length zero but cost one call. Same-source sums precede their supremum;
+$W_\lambda(A)$ need not equal $\lambda\cdot b(A)$. Installation, local
+computation, address generation, memory, retention, authentication,
+output work and physical time are separate resources. A computed
+hypothetical source or simulated action produces no physical receipt.
+

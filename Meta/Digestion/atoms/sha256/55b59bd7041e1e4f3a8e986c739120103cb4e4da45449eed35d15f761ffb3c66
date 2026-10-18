@@ -1,0 +1,69 @@
+**Theorem 4.2 (exact acquired root-certificate fiber).** For arbitrary
+$n,m\ge0$ and nonempty $p$, the guarded record (ARH.4.1) has a source if
+and only if $m=n+w(p)$. More precisely, its entire fiber before intersection
+with other retained conditions is empty unless this equality holds, and
+otherwise is
+
+$$
+\{T_k:k\ge e\},\qquad
+ e=\begin{cases}1,&n=0\text{ and the last letter of }p\text{ is }L,\\
+                 0,&\text{otherwise}.
+   \end{cases}
+\tag{ARH.4.5}
+$$
+
+This is a consequence of an acquired predicate on all finite original
+trees; membership in an orbit is not an additional source promise.
+
+Proof. If $m\le n$, each application of $\rho$ weakly increases node count,
+as follows immediately from its two leaf images and distribution over a
+pair. But the reached nonroot subtree of $\rho^m u$ has strictly fewer
+nodes than $\rho^m u$. It cannot equal $\rho^n u$. This rules out these
+epoch orders and agrees with $w(p)>0$.
+
+Suppose $m>n$ and put $d=m-n$. We first establish the interface to
+(ARH.4.4). For any finite $v$, if $p$ is reached in $\rho^d v$ and
+$v=(\rho^d v)|_p$, then $\operatorname{Stab}(v)$. Use strong induction on
+the node count of $v$, keeping $d,p$ fixed. If $p$ is an original reached
+address of $v$, let $z=v|_p$, a strict subtree. Original-address transport
+[TRANSPORT, (RA.2205)–(RA.2206)][TRANSPORT] gives $v=\rho^d z$.
+Consequently $z=(\rho^d z)|_p$: indeed $\rho^d z=v$ and $v|_p=z$.
+The induction hypothesis yields $\operatorname{Stab}(z)$. Apply $\rho^d$
+to its equation and distribute over pairing to obtain
+$\operatorname{Stab}(\rho^d z)=\operatorname{Stab}(v)$.
+
+If $p$ is not an original address of $v$, a known original leaf
+$\lambda_b$ blocks it at a strict prefix $a$, so $p=as$ with $s\ne\varepsilon$.
+Its reached later endpoint belongs to that leaf sector. By (ARH.4.3) and
+the reach guard it is $T_{d+b-w(s)}$ with a nonnegative index. It equals
+$v$ by hypothesis. The reverse implication of the supplied (ARH.4.4)
+gives $\operatorname{Stab}(v)$. This includes the case that $v$ is a leaf.
+The only recursive call was on the strictly smaller $z$, completing the
+induction. We have proved a certificate-to-stability bridge, without
+reproving the supplied stability classification.
+
+Apply the bridge and (ARH.4.4) to the mathematical tree $v=\rho^n u$.
+This changes no physical register. Thus $v=T_j$ for some $j$. By (ARH.4.3),
+its record is now exactly
+
+$$
+T_j=T_{j+d-w(p)},\qquad j+d\ge w(p^-)+2.
+\tag{ARH.4.6}
+$$
+
+Index injectivity gives $d=w(p)$. Under this equality the reach condition
+is $j\ge2-w(a)$, where $a$ is the last letter of $p$.
+The clock gives $j=\kappa(u)+n\ge n$. Injectivity of $\rho^n$ and
+$T_j=\rho^nT_{j-n}$ imply $u=T_{j-n}$. Writing $k=j-n$, the two lower
+bounds are exactly $k\ge e$ in (ARH.4.5): the last-letter requirement is
+one for $L$ and zero for $R$, and a positive $n$ already supplies the one.
+Conversely every listed $T_k$ satisfies both the reach guard and equality
+in (ARH.4.6). Proposition 2.1 acquires that record by paid traversal at its
+two epochs. Every and only these sources produce its positive outcome;
+no retained index, size or traversal count is needed. $\square$
+
+The instance $(a,\varepsilon,a+2,R,=)$ selects the entire orbit for every
+$a\ge0$. The instance $(0,\varepsilon,1,L,=)$ selects $k\ge1$.
+In the first instance the descendant can be born after epoch zero even
+when $u$ is a leaf. These are uses of the same guarded statement.
+

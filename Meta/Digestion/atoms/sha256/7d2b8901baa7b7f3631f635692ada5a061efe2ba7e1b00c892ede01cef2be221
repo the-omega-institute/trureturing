@@ -1,0 +1,88 @@
+**Theorem 26.1 (full-domain construction and its charged resources).**
+For every $1\le k\le n$, a preparer for the prescribed $\sigma_{A,k}$
+on the entire original $\mathcal U_*$ has
+
+$$
+H=k(n-k+1)+4+r,\qquad
+p=n+1,\qquad \ell=3+W_A.
+\tag{PCA.60}
+$$
+
+These are attained uniform call and literal maxima for this table,
+not only loose upper bounds. The reader, both literal entries and
+whole-row outputs remain those of Convention 23.2.
+
+Proof. Install the two original-entry latches, running states $D,T$,
+and a distinct running state $Q_{h,m}$ for every pair
+
+$$
+0\le h\le k-1,\qquad 0\le m\le n-k.
+\tag{PCA.61}
+$$
+
+Each such pair has $h+m\le n-1$. In the following table let
+
+$$
+U^+_{h,m}=\begin{cases}
+\widehat e_1,&h=k-1,\\
+Q_{h+1,m},&h<k-1,
+\end{cases}
+\qquad
+U^-_{h,m}=\begin{cases}
+\widehat e_0,&m=n-k,\\
+Q_{h,m+1},&m<n-k.
+\end{cases}
+\tag{PCA.62}
+$$
+
+The symbols in (PCA.62) are fixed successor names in a finite
+installed table. They are not functions evaluated during execution.
+Start at $D$ and install all four successors as follows.
+
+| Running state | Absolute literal | alpha successor | beta successor | branch successor | absent successor |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $\widehat e_1$ | $Q_{0,0}$ | $T$ | $\widehat e_0$ |
+| $T$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+| $Q_{h,m}$ | $LLL L^{s_{h+m+1}}R$ | $U^-_{h,m}$ | $U^-_{h,m}$ | $U^+_{h,m}$ | $U^-_{h,m}$ |
+
+There are $k(n-k+1)$ grid states. Their subscripts name separately
+installed states and their displayed words are installed literals.
+The only changing configuration is the current counted state;
+there is no additional hit counter, miss counter, cursor, address
+calculation, phase coordinate or saved source. Every transition out
+of a running state is preceded by its one paid native invocation.
+Any $r$ mandated further latches are unreachable and still count.
+
+Check the full eleven-profile partition, not just the lower family.
+Alpha at $b_3$ is exactly $\Pi_3$ and latches one. Beta there is
+exactly $Z_{b_3}$ and enters the grid. By the occurrence identity,
+its actual selected reply at $LLLw_i$ is $r_{x_a}(w_i)$ even when
+the selected node is absent. The grid state $Q_{h,m}$ means only
+that the first $h+m$ selected tests have produced $h$ branch replies
+and $m$ other replies. This invariant is proved by induction on that
+actual run; it is not an accessible second register. A branch makes
+the $k$th hit exactly when $h=k-1$. A false test makes
+$n-k+1$ false replies exactly when $m=n-k$, leaving fewer than
+$k$ possible hits. Otherwise the next separately installed state
+queries the next literal. Thus every branch image, of arbitrary
+size and shape, receives exactly its value (PCA.53).
+
+If $b_3$ is branch, the only remaining code-one profile is $\Pi_4$,
+detected by alpha at $b_4$ in state $T$. All other profiles on this
+path latch zero. This verifies every $\Pi_j$, every $Z_d$ and $Z_*$.
+The absent successor at a class root is installed although that root
+is reached throughout this domain. All other false replies in the
+grid, including alpha and absent, have their specified zero-test
+meaning. No native word or reply has been deleted from the apparatus.
+
+On the grid path, $h+m$ increases at every step, so at most $n$
+selected calls occur, each at most once in the fixed order. Including
+$D$ gives at most $n+1$ calls and $3+W_A$ letters. The other path
+has at most two calls and six letters. Since $n\ge3$ and each
+$s_i\ge1$, the grid bounds dominate these other-path bounds.
+For equality choose the actual cube vector with its first $k-1$
+bits one and all remaining bits zero. The grid cannot reach either
+terminal condition before the $n$th selected test, and then latches
+zero. This one actual source attains both maxima. Counting the two
+root-test states and all latches gives (PCA.60). $\square$
+

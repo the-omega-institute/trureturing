@@ -1,0 +1,32 @@
+**Convention 11.2 (source-verified primary correspondences).** The
+following citations attest only the stated intermediates and
+comparison hypotheses. None supplies the missing optimizer equality.
+
+| Primary source | Correspondence and applicability limit |
+| --- | --- |
+| Guruswami–Riazanov, *Beating Fredman–Komlós for perfect $k$-hashing*, [arXiv:1805.04151v1, §1][GR] | Defines a $k$-hash or $k$-separated code by a coordinate displaying distinct symbols on every $k$ rows. This is Definition 6.3 at $k=4$. Its asymptotic hash-rate bounds are not transferred to the native rate. Proposition 7.1 independently proves the binary family used here. |
+| Madiman–Tetali, *Information Inequalities for Joint Distributions, with Interpretations and Applications*, [arXiv:0901.0044v2, Proposition II][MT] | Finite common-law fractional entropy bounds use the same chain-rule and conditioning principles as Lemma 3.1. The additional boundary-vector inequality is proved here; no independence premise is imported. |
+| Liu–Courtade–Cuff–Verdú, *Information-Theoretic Perspectives on Brascamp–Lieb Inequality and Its Reverse*, [arXiv:1702.06260v3, §V-B, Proposition 9][LCCV] | Tensorization uses fixed product reference measures/channels and relative-entropy chain rules. This is a proof pattern; it does not directly cover support-dependent native hard maps. Lemmas 3.1–3.2 discharge that extra step. |
+| Wang–Gohari, *Ribbons from Independence Structure: Hypercontractivity, $\Phi$-Mutual Information, and Matrix $\Phi$-Entropy*, [arXiv:2601.18516v1, §§1–3][WG] | Its ribbon bounds depend on specified independent subcollections. Native template laws may be arbitrarily correlated; no such independence is supplied here, and no native cofinality follows from those bounds. |
+| Gaubert–Stott, *A convergent hierarchy of non-linear eigenproblems to compute the joint spectral radius of nonnegative matrices*, [arXiv:1805.03284v1, Theorems 3 and 7][GS] | The approximation factor uses a finite family of fixed-size nonnegative matrices and positive irreducibility. No two-direction representation of arbitrary native weighted templates by those matrix products is proved here, so its effective convergence is not transferred. |
+
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[NCM]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CORRELATED_MEMORY_LOWER.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NDR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DONOR_NETWORKS_AND_REPAIR_COST.md
+[JTC]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[SRP]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SINGLE_RESIDUAL_PRESSURE.md
+[GCB]: https://github.com/the-omega-institute/trureturing/blob/7ab6d62df2a8206382bc9152d4e27c28ddcee6af/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GRAPH_COVER_BETHE_BOUNDARIES.md
+[FNJ]: ../../../D5/S0/Certificates/FiniteNaturalJoin.lean
+[FRM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.lean
+[ERC]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeEffectiveRootCriterion.lean
+[GR]: https://arxiv.org/html/1805.04151v1
+[MT]: https://arxiv.org/html/0901.0044v2
+[LCCV]: https://arxiv.org/html/1702.06260v3
+[WG]: https://arxiv.org/html/2601.18516v1
+[GS]: https://arxiv.org/html/1805.03284v1
+

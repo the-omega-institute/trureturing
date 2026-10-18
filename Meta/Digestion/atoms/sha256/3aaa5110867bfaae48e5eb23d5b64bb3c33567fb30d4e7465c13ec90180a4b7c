@@ -1,0 +1,9 @@
+## 16. 多锚点交替多边形与一次切边性质
+
+本节取 $n\ge6$、$L=n-1$。令 $U$ 是 $L$ 个非零标签的圆序，$X$ 是其圆圈上的独立标签集，$r=|X|$。记 $E_0=(0,[U])$，并对 $x\in X$ 记 $E_x=(x,[U[x\leftarrow0]])$；$C_0,C_x$ 是相应完整 $b/c$ 圈，$O_x$ 是第 11 节连接这两个陪集的八圈。定义
+
+$$
+Z(U,X)=C_0\triangle\mathop{\triangle}_{x\in X}C_x
+\triangle\mathop{\triangle}_{x\in X}O_x.
+$$
+

@@ -1,0 +1,72 @@
+**Theorem 4.3 (sufficiency for a particular reduced exact-time channel).**
+Suppose the ENTIRE specified channel on $M_3$ consists of live map
+$C\odot X$ and scalar nonlive record measures
+
+$$
+\mu_X(B)=\operatorname{tr}(E(B)X),\quad
+K=\coprod_{\ell=0}^4(\{\ell\}\times[0,1])\sqcup\{o\},\quad
+E(K)=I-\operatorname{diag}(d),
+\tag{JG.28}
+$$
+
+where $E$ is a positive entrywise countably additive matrix-valued finite
+Borel measure. Each stopped record has fixed state $P_f$; the other
+point is scalar. For THIS full channel, (JG.10) is necessary and
+sufficient for a factorization with fibres at most two in the specified
+integral model. Finite or countably atomic $E$ permits the corresponding
+finite or countable nonlive alphabet.
+
+Proof. Keep the finite live encoders and TP decoders (JG.25). Define
+$\nu(B)=\operatorname{tr}E(B)$, a finite positive measure. A positive
+matrix with zero trace vanishes. Thus a $\nu$-null set and all its
+subsets have zero $E$, and every component measure is absolutely
+continuous with respect to $\nu$. Positivity bounds its component
+variation, for a finite partition $(B_j)$, by
+
+$$
+\sum_j|E_{ab}(B_j)|\leq
+ \sqrt{E_{aa}(K)E_{bb}(K)}.
+\tag{JG.29}
+$$
+
+Entrywise scalar Radon–Nikodym representation therefore gives a
+measurable Hermitian matrix density $F(z)$ with
+$E(B)=\int_B F(z)d\nu(z)$. For a countable dense family of complex
+vectors $v$, positivity of the measure $v^\dagger E v$ implies
+$v^\dagger F(z)v\geq0$ outside a common null set; continuity in $v$
+then gives $F(z)\succeq0$ almost everywhere. Also
+$\operatorname{tr}F=1$ almost everywhere when $\nu\ne0$.
+
+At each $z$ use the scalar encoder density
+$X\mapsto\operatorname{tr}(F(z)X)$. Its full TP decoder prepares the
+EXACT labelled record $z$ and $P_f$, or the isolated scalar other flag.
+The output on every Borel $B$ is exactly $\operatorname{tr}(E(B)X)$.
+Measurable encoder Kraus rows are the rows of the continuous positive
+square root $F(z)^{1/2}$; their effect sum is $F(z)$. The nonlive
+branches have zero live-decoder Kraus field. With the finite live tags
+adjoined as discrete atoms, the integrated total effect is
+$\operatorname{diag}(d)+\int Fd\nu=I$, and all effect and live Choi
+integrals are finite. Delta-record preparation is a measurable decoder
+on Borel events. If $E=0$ omit these branches. For atomic measures the
+same construction is a sum over their atoms.
+
+At reference amplification the scalar encoder outputs
+$\operatorname{Tr}_{\rm in}[(F(z)\otimes I)X]$; its Kraus expression
+shows positivity and the prescribed reference operation. Thus the
+entire joint channel is reproduced, not just record probabilities.
+Necessity is the product-rank proof in Theorem 4.2.
+
+The measure representation used here is the mature scalar
+Radon–Nikodym theorem applied to finitely many entries. General exact-time
+measures require the explicitly stated integral alphabet; no automatic
+finite/countable compression, finite-bit event storage or arbitrary
+quantum-output disintegration follows. $\square$
+
+The full-output hypothesis in Theorem 4.3 excludes extra accessible
+quantum records, quantum wrong-support sectors, live-complement
+coherences and unspecified five-mode action outside $V$. The canonical
+target-fixing contraction of CG8.2 can remove such information while
+preserving the live compression and contracting task error. It therefore
+does not reverse the factorization inference for a particular actual
+joint output. The next complete pair makes that distinction explicit.
+

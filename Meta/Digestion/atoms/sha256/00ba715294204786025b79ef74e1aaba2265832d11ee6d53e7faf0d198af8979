@@ -1,0 +1,45 @@
+## 343. Global exclusion of the opposite-M exit
+
+For transverse pair {V,C}, (341.3) is already Theorem 332.1 with r=u>m.
+It remains to consider a genuine
+
+    eta=(Z,V,D,U,V,D)
+
+and suppose, for contradiction,
+
+    theta_Z(eta)+theta_U(eta)<=pi.                 (343.1)
+
+We first exclude any actual owner with fixed frame, up to exchanging
+axes or transverse labels,
+
+    kappa=(W,M,D,C,M,D).                          (343.2)
+
+Such an owner is not sigma and is therefore genuine. Four distinct
+labels give W in {V,Z,U}. Let w be its cosh. The exact transverse-M
+cosine formula has positive denominator sqrt(D(w)*D(c)), where
+
+    D(t)=t^2+m^2+d^2+2*t*m*d-1>0,
+
+and numerator
+
+    N(w)=d*(w+c)+m*(w*c+d^2-m^2+1).              (343.3)
+
+By (342.1), beta_M(kappa)<=pi/2, hence N(w)>=0. Its slope is
+d+m*c>0. At w0=1+m+d, exact expansion gives
+
+    N(w0)=[d+m*(1+m+d)]*(1+c+d-m)<0,             (343.4)
+
+the final inequality following from m>1+c+d. Thus
+
+    w>1+m+d.                                    (343.5)
+
+Since v<=m-2, W is Z or U. Apply Theorem 332.1 after interchanging the
+low labels C,D, using W as its first high axis and the other member
+of {Z,U} as its second high axis. Indeed its first axial value is
+w>1+m+d, its second is greater than m, its transverse pair is {V,D},
+and its remaining scalar and genuine hypotheses are precisely (341.1)
+and those of eta. This gives (341.3), contrary to (343.1).
+
+Therefore no owner of type (343.2) exists anywhere in the quotient under
+(343.1). No premise that kappa is a source-face partner was used.
+

@@ -1,0 +1,37 @@
+**定义 229.3（Hull and feasible conic configurations）。** Use the closed
+domain of VI, Theorem 198.5,
+
+$$
+\begin{aligned}
+H_L=\{(b,e):{}&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+&(L+1)e\le\sum_{n=3}^Lb_n,\quad
+b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\}.
+\end{aligned}
+$$
+
+Write $H_N$ for those members with one complete configuration
+$\lambda\ge0$ satisfying $G_N\lambda\ge h(b,e)$. Its mass
+$M=\sum_D\lambda_D$ can be any finite nonnegative number. It is a
+probability law only when normalized appropriately; $H_L$ membership
+alone does not supply $\lambda$. Define $H_O$ by the same condition
+with $G_O$ in place of $G_N$. Define
+
+$$
+\sigma_H(q)=\max_{(b,e)\in H_L}F_q(b,e),\qquad
+P_H=\{q:\sigma_H(q)\le0\}.
+$$
+
+For clarity the complete vertex formula from 198.5 is retained as an
+interface. Let $B=\beta_1+\beta_2$, $S_k=\sum_{j=1}^k\beta_j$,
+and $\kappa=K-S_L$. The vertices are $o=0$, $p=(1,0,\ldots,0;0)$,
+and, for $3\le k\le L$, $u_k$ with first $k$ entries $1/(k-1)$ and
+remaining entries and $e$ zero, and $v_k$ with first $k$ entries one
+and all remaining entries and $e$ equal to $(k-2)/(k+1)$. Their readings
+are, respectively,
+
+$$
+-B,\quad-\beta_2,\quad
+\frac{S_k}{k-1}-B,\quad
+\frac{3S_k-(k-2)\kappa}{k+1}-B.
+$$
+

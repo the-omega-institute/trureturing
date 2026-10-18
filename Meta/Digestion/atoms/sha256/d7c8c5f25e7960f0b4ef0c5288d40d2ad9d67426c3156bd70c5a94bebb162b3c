@@ -1,0 +1,26 @@
+**Proposition 2.3 (literal and retained cost of the stamp).** RA$\ell$
+has the bounds (CAB.4). Its auxiliary writable storage, excluding the
+row and operand payloads, is
+$O(H+1+\log(K_P+2))$ bits, including all heads and control. The dedicated
+operand region uses at most $4(H+1)$ bits; the row candidate at most
+$4F$ bits. Forming the stamp needs $O(\log(H+2))$ temporary bits.
+For the retained natural $k$, Elias gamma coding of $k+1$ uses
+
+$$
+g(k)=2\lfloor\log_2(k+1)\rfloor+1
+\tag{CAB.7}
+$$
+
+payload bits, with any container framing charged separately. Immutable
+input and code cost $4K_P+I_{\rm code}+O(1)$ bits. On return only
+the actual $4s$ row bits, the stamp and their framing remain.
+
+Proof. The extra arithmetic uses the already stored guard length and
+label, and $k\le H+1$. RA's resource proof applies to every failed
+candidate and path. No stamp is appended for a failed validation.
+Gamma coding and clearing use finite bit operations and do not alter
+the query trace. A direct implementation adds
+$O((1+\log(H+2))^2)$ local bit operations to the successful attempt,
+in addition to RA's charged local work. Candidate and output ownership
+are not simultaneous copies. $\square$
+

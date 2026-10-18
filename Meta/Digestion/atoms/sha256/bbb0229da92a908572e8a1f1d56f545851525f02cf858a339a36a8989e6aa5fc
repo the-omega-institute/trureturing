@@ -1,0 +1,2 @@
+**Definition 3.1 (Masked adjacency and partition rank).** For $\pi\in\Pi(\mathtt q)$ let $\Gamma^\pi\in\mathbb F_2^{N\times N}$ be given by $\Gamma^\pi_{uv}=\Gamma_{uv}$ if $\mathrm{col}(u)$ and $\mathrm{col}(v)$ lie in different blocks of $\pi$, and $\Gamma^\pi_{uv}=0$ otherwise. Put $r(\pi)=\operatorname{rank}_{\mathbb F_2}\Gamma^\pi$. Stance: repo-derived.
+

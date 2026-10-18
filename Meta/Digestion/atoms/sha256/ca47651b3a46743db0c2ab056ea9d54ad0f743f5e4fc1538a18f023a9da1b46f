@@ -1,0 +1,81 @@
+**Definition 49.1 (explicit residual atoms and actual branches).**
+All choices below depend only on public constants and $\tau$ before
+the unknown specimen arrives. Put
+$p=\sqrt\tau$, $q=\sqrt{Y_\tau}$, $r=\sqrt{Z_\tau}$,
+$n_0=\sqrt{\tau+Y_\tau}$ and
+
+$$
+\begin{gathered}
+U_\tau=\left(
+ \frac{(q,p,0)^T}{n_0},\,
+ \frac{(pr,-qr,n_0^2)^T}{n_0}\right),\qquad
+B_\tau=L_0^{1/2}U_\tau,\\
+B_\tau^TQ_0B_\tau=\begin{pmatrix}u&v\\v&-u\end{pmatrix},\qquad
+u=\frac{\delta Y_\tau-\theta\tau}{\tau+Y_\tau},\quad
+v=\frac{(\delta+\theta)\sqrt{\tau Y_\tau Z_\tau}}
+ {\tau+Y_\tau}>0,\\
+k_\tau=-\frac{u}{v+\sqrt{u^2+v^2}},\qquad
+O_\tau=\frac1{\sqrt{1+k_\tau^2}}
+ \begin{pmatrix}1&-k_\tau\\k_\tau&1\end{pmatrix},\\
+c_0=c_\tau,\qquad (c_1,c_2)=B_\tau O_\tau.
+\end{gathered}
+\tag{JR.76}
+$$
+
+The letter $u$ here is only a residual $2\times2$ matrix entry, not
+the strength-dependent $u$ of Convention 41.2.
+One has $U_\tau^TU_\tau=I_2$ and
+$U_\tau U_\tau^T=I-a_\tau a_\tau^T$.
+The identity $u(1-k_\tau^2)+2vk_\tau=0$ makes both diagonal
+entries of $O_\tau^TB_\tau^TQ_0B_\tau O_\tau$ zero. Consequently
+
+$$
+\sum_{j=0}^2c_jc_j^T=L_0,\qquad
+c_j^TQ_0c_j=0,\qquad c_j\ne0.
+\tag{JR.77}
+$$
+
+For $c_j=(x_j,z_j,w_j)^T$ write $K_j=x_jD+z_jT+w_jS$.
+Nullity and $\theta,\omega>0$ imply $x_j\ne0$.
+The determinant formula (JR.22) gives $\det K_j=0$, whereas the
+rows/columns $1,2$ minor is $x_j^2h_1h_2\ne0$. Thus $K_j$ has
+rank exactly two. Fix an isometry $V_j:\mathbb C^2\to\mathbb C^3$
+onto its image by Gram–Schmidt on columns $1,2$; their independence
+makes every denominator positive. This specializes the credited image
+factorization of IR Lemma 4.2.
+
+Use these three actual low encoders and whole-fibre live decoders:
+
+$$
+C_j=V_j^\dagger K_jE^\dagger,\qquad
+\mathcal R_j(X)=EV_jXV_j^\dagger E^\dagger,
+\quad j=0,1,2.
+\tag{JR.78}
+$$
+
+Their declared fibres have dimension two. Report $r(0)=-1$ and
+$r(1)=r(2)=+1$, retaining $j$ in $R$. Add the two high encoders
+$\sqrt{(1-\delta)/2}\,DE^\dagger$, with actual fair labels
+$r=\pm1$, dimension-three fibres and decoder $X\mapsto EXE^\dagger$.
+Add all four scalar spectral failure rows $C_{f,\epsilon,r}E^\dagger$
+of (JR.54), retaining both $\epsilon$ and $r$; their whole-fibre
+decoders send scalar mass $z$ to $zw_\ell g(t)dt\,P_f$ at each
+original label $\ell=0,\ldots,4$. Finally retain the two complement
+labels $r=\pm1$, encoder $A\mapsto\operatorname{tr}((I_5-P)A)/2$
+into a scalar fibre, decoded to $zg(t)dt\,P_f$ only at original
+label $2$. Their two Kraus rows are discarded multiplicity as in
+Definition 44.1, not an additional accessible payload.
+
+These are eleven actual acquisition labels with joint quantum fibre
+dimensions $(2,2,2,3,3,1,1,1,1,1,1)$. Define $R$ to retain the full
+label $\alpha$, and $F$ to report its designated $r(\alpha)$.
+An instrument dilation dephases this label by copying its branch and
+Kraus multiplicity to a discarded orthogonal environment; that
+environment is permanently inaccessible before the counted cut.
+Only the stated classical label and its entire declared quantum fibre
+remain accessible. Every other future-accessible input-bearing share,
+including any retained specimen, controller, memory, environment or
+entanglement share, would have to be counted jointly at this same cut.
+The specification supplies a mathematical CP operation, not access to
+a label or port of a previously discarded environment.
+

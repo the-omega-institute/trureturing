@@ -1,0 +1,15 @@
+**定义 8.2（所选隐藏基的响应列）。** 对合法 $A\subseteq\{1,\ldots,n\}$，定义
+
+$$
+d_A=\sum_{B\subseteq A}(-1)^{|A|-|B|}e_B.
+$$
+
+前置的包含关系反演给出 $\langle x_C,d_A\rangle=\mathbf1_{C=A}$。所以只固定质量和一阶矩时，$\{d_A:|A|\ge2\}$ 是 $N_1\subseteq T_n$ 的基；固定所有至多 $r$ 阶矩时，余下基为 $|A|>r$。对共同源上的线性读出 $R:H_n\to W$，令
+
+$$
+\mathcal S_R=(R(d_A))_{A\in\mathcal B},\qquad
+R\left(\sum_{A\in\mathcal B}a_Ad_A\right)=\sum_{A\in\mathcal B}a_AR(d_A),
+$$
+
+其中 $\mathcal B$ 是所选隐藏基的索引集。若 $W=\mathbb R^m$，这些列组成响应矩阵；对向量或测度值读出，它们组成同一值空间内的线性列族。源系数与响应列的配对可称为源响应张量，但需要保留两端的载体和基。
+

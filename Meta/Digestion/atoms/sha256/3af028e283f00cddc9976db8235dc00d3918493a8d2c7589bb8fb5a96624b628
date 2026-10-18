@@ -1,0 +1,43 @@
+**引理 22.2（实际动作乘积的仿射证书）。** 令 $\mathscr S_j$ 是全部长度 $j$ 的实际左乘积的集合。对任意实 $2\times2$ 矩阵 $H$ 和实数 $\Delta$，
+
+$$
+\begin{aligned}
+\operatorname{tr}(BH)=\Delta\ (B\in\mathscr S_2)
+&\iff H=\Delta E_{11},\\
+\operatorname{tr}(BH)=\Delta\ (B\in\mathscr S_j),\ j\ge3
+&\iff H=0,\ \Delta=0.
+\end{aligned}
+\tag{22.3}
+$$
+
+特别，$\mathscr S_j$ 在 $j\ge3$ 时的仿射包是全部实 $2\times2$ 矩阵空间。
+
+证明。$E_{ab}$ 表示第 $a$ 行第 $b$ 列的初等矩阵，$\operatorname{tr}(E_{ab}H)=H_{ba}$。下表直接列实际乘积与按时间排列的动作词；乘积中最右边的动作最早执行。
+
+| 时间顺序 | 实际乘积 | 初等矩阵表示 |
+| --- | --- | --- |
+| $(J,J)$ | $JJ=I$ | $I$ |
+| $(J,M)$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $I+E_{21}$ |
+| $(M,J)$ | $JM=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ | $I+E_{12}$ |
+| $(M,M)$ | $M^2=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)$ | $I+E_{12}+E_{21}+E_{22}$ |
+
+从后三行的迹方程减去第一行，依次得 $H_{12}=H_{21}=0$ 和 $H_{22}=0$。第一行再给 $H_{11}=\Delta$。反向这些乘积的 $(1,1)$ 元都为一，故 $\Delta E_{11}$ 确给共同 $\Delta$。
+
+长度三只需以下五个实际乘积，而非一个未说明的秩断言：
+
+$$
+\begin{array}{c|c|c}
+\text{时间顺序}&\text{实际乘积}&\text{相对 }J\text{ 的表示}\\ \hline
+(J,J,J)&JJJ=J&J\\
+(J,J,M)&MJJ=M&J+E_{22}\\
+(J,M,J)&JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)&J+E_{11}\\
+(J,M,M)&M^2J=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)&J+E_{11}+E_{21}+E_{22}\\
+(M,M,J)&JM^2=\left(\begin{smallmatrix}1&2\\1&1\end{smallmatrix}\right)&J+E_{11}+E_{12}+E_{22}
+\end{array}
+\tag{22.4}
+$$
+
+相对基点 $J$ 的差先给 $E_{22},E_{11}$；从末两行的差分别再减去这两个矩阵，给 $E_{21},E_{12}$。因此差向量张成全部矩阵空间，证明的是完整仿射包。共同迹等式使四个初等差的迹全为零，故 $H$ 四个元全零；基点方程随后给 $\Delta=0$。
+
+若 $\mathscr S_j$ 的仿射包已满，则 $\mathscr S_{j+1}$ 包含 $J\mathscr S_j$，对应在每个已有时间词末尾再执行 $J$。可逆左乘 $J$ 是全矩阵空间的线性双射，保持满仿射包。由长度三归纳得全部 $j\ge3$，同样推出式 (22.3)。证明没有对 $H$ 使用秩一假设，也没有执行枚举、矩阵运算或秩计算。∎
+

@@ -1,0 +1,22 @@
+### Lemma 8.3. Both orientations and no other orbit
+
+For V in SU(2), the collective operation V tensor V fixes s and acts on (q_x,q_y,q_z) by the real rotation R_V determined by
+
+$$V\sigma_jV^\dagger=\sum_k(R_V)_{kj}\sigma_k.$$
+
+Every R in SO(3) occurs. For a direct construction, take its axis n and angle theta and set V=cos(theta/2)I-i sin(theta/2)n dot sigma. The Pauli product rule gives Rodrigues' formula. Equivalently, for real a,b,c,d with a^2+b^2+c^2+d^2=1 and V=aI-i(b sigma_x+c sigma_y+d sigma_z), its rotation matrix is
+
+$$R_V=\begin{pmatrix}
+a^2+b^2-c^2-d^2&2(bc-ad)&2(bd+ac)\\
+2(bc+ad)&a^2-b^2+c^2-d^2&2(cd-ab)\\
+2(bd-ac)&2(cd+ab)&a^2-b^2-c^2+d^2
+\end{pmatrix}. \tag{8.3}$$
+
+Before imposing the unit-quaternion equation, direct polynomial identities give R_V R_V^T=(a^2+b^2+c^2+d^2)^2 I and det R_V=(a^2+b^2+c^2+d^2)^3. Every real orthogonal three by three matrix with determinant one has a unit eigenvector of eigenvalue one; its orthogonal plane carries a planar rotation. This supplies the axis-angle representation, including the identity and angle pi cases.
+
+Apply such a collective rotation only on AB. If det O=+1, take R_V=O^T; if det O=-1, take R_V=-O^T. The triplet block becomes respectively +I_3/sqrt(6) or -I_3/sqrt(6). An overall minus sign in the second case gives the representatives
+
+$$\widetilde m_\pm=\frac{\pm i}{\sqrt2}q_0\otimes q_0+\frac1{\sqrt6}\sum_{j=x,y,z}q_j\otimes q_j.$$
+
+In the fixed computational coordinates, direct substitution gives tilde m_+=-H_+ and tilde m_-=-H_-. The determinant invariant (3.2) distinguishes the two labelled-party LU orbits. Thus the orientation of the real triplet block is exactly the remaining discrete branch after allowable local rotations.
+

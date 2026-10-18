@@ -1,0 +1,18 @@
+### 2.16 Interpretation of the three geometric objects
+
+The Fisher connection of §2.2 transports probability across visible means
+while preserving the real log odds $\tau$. Its global horizontal leaves give
+exact probability return. The phase connection of §2.4 instead moves within a
+fixed-mean probability fiber and updates the locally optimal phase velocity
+$w$. Its finite residual measures the dependence on the chosen control path.
+The metric of §2.10 belongs to the quotient by occupation phases; its intrinsic
+Gaussian curvature and cone angles describe that quotient's geometry.
+
+These three objects coexist without sharing a curvature assertion. The phase
+menu of Proposition 2.7 retains information deliberately removed by the quotient.
+The matrix $W$ ties a local least-cost phase response to a finite residual when
+the reference probability changes, but an arbitrary real matrix does not
+supply a periodic angle lattice. All continuous controls and readouts in this
+proof unit are declared mathematical operations; they do not follow from the
+finite occupation alphabet alone.
+

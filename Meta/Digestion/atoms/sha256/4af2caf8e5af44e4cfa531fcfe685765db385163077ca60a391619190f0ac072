@@ -1,0 +1,106 @@
+**定理 21.2（Sharp all-gcd batch law）。** For every target in Definition 21.1,
+
+$$
+C_{\rm ad}(f)=N,
+\qquad
+C_{\rm pre}(f)=N+
+\mathbf1_{\{g=1,\ O_t\ne\varnothing\ (1\le t\le Q),\ B\text{ even}\}}.
+\tag{21.2}
+$$
+
+Proof. The lower bound $N$ is (20.1); it applies regardless of label coincidences. We first construct adaptive attainment and then compare the common streams, because parity of a proposed row alone does not establish preset optimality.
+
+For $g=1$, take on the zero-continuation archive the following even supports:
+
+$$
+E_t=O_t\cup
+\begin{cases}
+\{h_t\},&|O_t|\text{ odd},\\
+\varnothing,&|O_t|\text{ even},
+\end{cases}
+\quad(1\le t<Q),
+$$
+$$
+E_Q=O_Q\cup
+\begin{cases}
+\{0\},&|O_Q|\text{ odd},\\
+\varnothing,&|O_Q|\text{ even}.
+\end{cases}
+\tag{21.3}
+$$
+
+All left-boundary charges are zero, including the compulsory charge at $m$. Every selected strict-slot source has label $B_t$. The only additional selected actual source at a nonterminal index is $h_t$, with label $A$. If present alongside a nonempty $O_t$, it is separated by (20.5) on that positive child at the next paid endpoint. If $O_t$ is empty there is no selected boundary in (21.3). A left boundary previously removed from the continuing zero archive can have zero charge in the following scan word: the repair of its other actual child is an adaptive word, not a constraint on this word. At the final index, only $O_Q$ is selected inside $Z$. The final zero archive consists solely of baseline sources. Thus (21.3) has the retirement property and Theorem 20.1 supplies a legal adaptive controller of fee $N$, including its separately acquired endpoint sibling. This construction also covers empty terminal or earlier batches, and repeated $B_t$.
+
+For $g>1$ prescribe actual charges exactly $O_t$ at indices $t<Q$, and $O_Q\cup\{0\}$ at index $Q$. Compensate an odd total on a nonactual vertex of that same window. This gives one literal common stream with first post-root bit zero. No actual adjacent boundary is selected. Each positive scan child returns $B_t$ immediately, the terminal zero child returns $A$, and the final row separates $D,E$ on the root-positive archive. Theorem 20.1 proves simultaneous literal validity and fee $N$. This argument does not require any frozen actual phase or a positive-size actual complement of a batch.
+
+Now suppose $g=1$, every $O_t$ is nonempty, and a preset controller had fee $N$. Since $F$ contains an actual phase with label $A$ and has no post-root opportunity, its zero-difference archive fixes the terminal zero label to be $A$. Every $j\in O_t$ has its only opportunity at $t$, so its charge must be one: leaving it on the zero archive would permanently merge $B_t\ne A$ with that frozen phase. Any baseline phase in $K_t$ must have charge zero, since otherwise it shares the positive child with the nonempty $B_t$ core and has no later opportunity to separate. These assertions apply equally when $B_t$ equals a different batch label or an endpoint label.
+
+Let $a_t=e_t(h_t)$ for $1\le t<Q$, and let $a_0=0$. At the next index the charge at the left boundary obeys
+
+$$
+e_{t+1}(h_t)=a_t.
+\tag{21.4}
+$$
+
+If $a_t=1$, the root-zero archive's positive child contains the nonempty $B_t$ core and the boundary labelled $A$. The common stream must repair them at the boundary's sole remaining opportunity, forcing the next charge one. If $a_t=0$, that boundary is still on the zero-continuation archive; selecting it at the next index would join the nonempty $B_{t+1}$ core as a permanently silent different label, so the next charge must be zero. This proves both directions of (21.4) from actual leaf obligations, rather than choosing favourable parity orientations independently on different branches.
+
+Full-path parity now gives
+
+$$
+a_{t-1}\oplus(|O_t|\bmod2)\oplus a_t=0
+\quad(1\le t<Q).
+\tag{21.5}
+$$
+
+On the terminal path, the charge at $Qm$ is $a_{Q-1}$ by the same argument, the actual terminal-slot charges are the indicator of $O_Q$, and the charge at zero is one for the unequal endpoint sibling. Hence
+
+$$
+a_{Q-1}\oplus(|O_Q|\bmod2)\oplus1=0.
+\tag{21.6}
+$$
+
+Adding (21.5)–(21.6) in $\mathbb F_2$ cancels all boundaries and yields $B\bmod2=1$. Thus $B$ even excludes every preset stream of fee $N$, not just (21.3). The forced parent comparison and endpoint lower bound already excluded every cheaper fee.
+
+To attain fee $N$ in all the remaining coprime cases, select sets $J_t$ as follows. If $B$ is odd, let $J_t=O_t$ for all $t$. If $B$ is even and some $O_h$ is empty, choose any $z\in K_h$ and put
+
+$$
+J_h=\{z\},\qquad J_t=O_t\quad(t\ne h).
+\tag{21.7}
+$$
+
+Such a vertex exists: for $g=1$ each $K_t$, including $K_Q$, has $m-1\ge2$ vertices. It has label $A$. In both cases the total $\sum|J_t|$ is odd. Define
+
+$$
+a_0=0,\qquad a_t=\bigoplus_{i=1}^t(|J_i|\bmod2)\quad(1\le t<Q),
+$$
+$$
+E_t=J_t\cup\{tm:a_{t-1}=1\}\cup\{(t+1)m:a_t=1\}
+\quad(1\le t<Q),
+$$
+$$
+E_Q=J_Q\cup\{Qm:a_{Q-1}=1\}\cup\{0\}.
+\tag{21.8}
+$$
+
+The conditional singleton notation means the empty set when its condition fails. These supports have even full-path parity; their first row omits $m$, so every word is the literal inverse (1.5) and the first post-root bit is zero.
+
+If the left charge at an index is one, that boundary was already selected by the previous right charge and is absent from this index's zero-continuation archive. If the previous right charge was zero, the boundary is still present and the present left charge is zero. Therefore the retired positive core is exactly $J_t$, whose label is $B_t$ for a nonempty original batch and $A$ for the compensation singleton. Every selected right boundary has label $A$. A positive core of label $B_t$ repairs that boundary using the next row's left charge one. A positive child containing only baseline sources returns $A$ immediately, with no repair obligation. The terminal positive core is again $J_Q$, and the terminal zero archive contains only baseline labels. The charge at zero is one on the very same final word, so the endpoint sibling returns $D,E$ correctly. Thus (21.8) satisfies the common-stream criterion (19.9) on all actual branches. Every paid scan, wait, and necessary repair is within fee $N$, with the strict safety bound (20.4). In particular an empty terminal batch can supply the compensation singleton just as an earlier empty batch can; it cannot be silently omitted from the criterion.
+
+Finally suppose $g=1$, every batch is nonempty, and $B$ is even. Take $J_t=O_t$ and the cumulative $a_t$ just defined. Keep the nonterminal rows of (21.8), and replace its last row by
+
+$$
+E_Q=O_Q\cup\{Qm:a_{Q-1}=1\}.
+\tag{21.9}
+$$
+
+Its full parity is even because the total $B$ is even. The same common-stream scan and repair decoder finishes every root-zero source by fee $N$. Only the root-positive endpoint sibling is unresolved: its final zero-phase charge is now zero. Append at index $Q+1$ the one literal block
+
+$$
+0^{r-1}1\,0^{m-r}.
+\tag{21.10}
+$$
+
+Its starting residue is $(Q+1)m\equiv m-r\pmod T$; its isolated pulse has support $\{m-1,m\}$. On the still-live $H$ archive this selects exactly $m$, returning $E$ on difference one and $D$ on difference zero. The leading $r-1\ge1$ zeros clear any current tail before the pulse; the trailing $m-r\ge1$ zeros leave tail zero. There is no additional cleanup fee. The whole prefix through fee $N$ was safe by (20.4), and (21.10) is safe on the same histories. The outside sources may stop by fee $N$; the endpoint sources actually pay $N+1$. This is one fixed global stream and one paid final repair. Together with the all-action exclusion of $N$, it proves the exact surcharge in (21.2). ∎
+
+The support of each word above is assigned on its own full physical path. A nonactual compensation vertex in the noncoprime case, an already removed boundary in (21.8), and a baseline-labelled compensation phase in an empty batch have different roles. Only the first is not a source. The latter two require the explicit acquired-archive and leaf arguments in the proof; they cannot be borrowed freely from another branch.
+

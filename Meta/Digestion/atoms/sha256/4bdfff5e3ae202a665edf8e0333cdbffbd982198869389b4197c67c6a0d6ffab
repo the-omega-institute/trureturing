@@ -1,0 +1,20 @@
+**Definition 1.1 (Original lawful producer and clock).** For every finite $N\ge1$, let
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,\ M_0,M_1\ge0,
+\ A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.1}
+$$
+
+The row $\lambda$ and matrices have dimensions $N$ and $N\times N$. For $\theta\in\Theta_N$, use its actual two-sided stationary marked joint $J=J_\theta$, with hidden state $H_i$ just before emitting $X_i$:
+
+$$
+J(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}).
+\tag{1.2}
+$$
+
+Its visible law is $P=P_\theta$, with $P([w])=\lambda M_w\mathbf1$ and $M_\varnothing=I$. Equation (1.1) implies $P(X_iX_{i+1}=0)=1$ at every integer $i$. It does not require entrywise $M_1^2=0$ on states of zero stationary mass. Structural zeros, reducibility, periods, deterministic outputs and noncontractive marked products are allowed.
+
+Every integer coordinate is one emitted bit. Finite paths have endpoint insertion convention $w_0=w_{n+1}=0$, without a first-to-last constraint. Ordered matrix products preserve every original seam. Conditioning and expectation always refer to this $J$ and its visible marginal $P$; a change of presentation does not change their meaning.
+

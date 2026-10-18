@@ -1,0 +1,52 @@
+**Definition 75.1 (unchanged native family).** Retain all the data of
+Definition 70.1, in particular one fixed admissible signed $\kappa\ne0$,
+the original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ of
+G (25.4), $I=(l,u)$, $k_0\in I$, $\varepsilon>0$, $a>0$, and the
+all-real cover $\mathcal C=I\times\mathbb R^3$ with raw measure
+$dY=dk\,dq$. Write $o=(k_0,0)$,
+$B=B_\kappa=-\varepsilon^2\partial_k^2-(c_\kappa\cdot\partial_q)^2$
+and $S=B-\lambda\ge0$. Both height endpoints remain Dirichlet.
+The unitary phase Fourier transform has factor $(2\pi)^{-3/2}$.
+The entire complex form domain is
+
+$$
+\mathcal Q=\left\{\psi\in L^2(dY):
+\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+\int_{\mathbb R^3}\int_I
+\left(\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa(k)|^2|\widehat\psi|^2\right)dk\,d\eta<\infty
+\right\}.
+\tag{75.1}
+$$
+
+Thus $D(B^{1/2})=D(S^{1/2})=\mathcal Q$, and the integral in
+(75.1) is $T[\psi]+\lambda\|\psi\|_2^2$. No phase $H^1$ condition
+is imposed on $\psi$.
+Let $p_t(Y,Z)$ denote the killed heat kernel of $B$ relative to $dZ$.
+In the notation of (70.1), $F(t;Y)=e^{\lambda t}p_t(o,Y)$.
+For $0<\tau\le1$ put
+
+$$
+D_\tau(Y)=W_\tau(Y)-W_1(Y)
+       =\int_\tau^1e^{\lambda t}p_t(o,Y)dt,\qquad
+\mathfrak e_{g,\tau}[\psi]=aT[\psi]-gV_\tau[\psi].
+\tag{75.2}
+$$
+
+A joint family consists of $g\downarrow0$ and an arbitrary declared
+function $\tau(g)>0$ with $\tau(g)\to0$. Its dimensionless comparison
+parameter and energy are
+
+$$
+\chi(g)=g\tau(g)^{-3/2},\qquad
+E_{\tau(g)}(g)=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}
+                  \mathfrak e_{g,\tau(g)}[\psi].
+\tag{75.3}
+$$
+
+The restriction $\tau\le1$ holds eventually in every such family;
+there is no fixed positive lower bound on its cutoff. All constants
+below may depend on the fixed native data, including $\kappa$ and
+$a$, but not on $g$, $\tau\in(0,1]$, or the tested vector.
+The heat clock remains $e^{-tB}$, without rescaling by $a$.
+

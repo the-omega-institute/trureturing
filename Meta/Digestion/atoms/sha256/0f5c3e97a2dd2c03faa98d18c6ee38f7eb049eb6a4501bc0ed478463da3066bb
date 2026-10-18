@@ -1,0 +1,88 @@
+**Theorem 96.2.** At any positive calibrated local minimum on the full domain with rank G=7 and |S|≤3,
+
+\[
+ F(G,H)\ge\kappa:=\frac{\sqrt{21-9\sqrt[3]{9}}}{6}>\frac14.
+                                                                    \tag{3}
+\]
+
+In particular, a hypothetical subquarter minimum with one rank-seven side must have at least four coordinates in that side's kernel support. The same conclusions hold with the parties interchanged.
+
+**Proof.** The case t≥1/2 is immediate, since κ<1/3 as verified below. Assume 0<t<1/2. Lemma 95.2 supplies a PSD unit-diagonal quotient R with
+
+\[
+ G_S=H_S\odot\overline R,\qquad
+ \operatorname{rank}G_S=n-1,\qquad h+r\le n,\qquad n-1\le hr,
+ \quad n=|S|,\ h=\operatorname{rank}H_S,\ r=\operatorname{rank}R.
+                                                                    \tag{4}
+\]
+
+The integers h,r are positive. If n=1, rank G_S=0 contradicts its unit diagonal. If n=2 and both coordinates lie in one fibre, G_S=I₂ contradicts rank G_S=1. Otherwise the two coordinates lie in different fibres, and (4) forces h=r=1.
+
+We will use the following normalized principal witness whenever S has at most one coordinate in each fibre. Set K_S=(G⊙H)_S and L_S=T_S−K_S. Then T_S=(I_n+J_n)/2 and Tr L_S=0. The original block-diagonal density I_n/n on S, extended by zero, gives
+
+\[
+ t\ge\frac{2}{n}\operatorname{Tr}((L_S)_+)
+       =\frac{\|L_S\|_1}{n}.                                  \tag{5}
+\]
+
+If H_S has rank one, write H_S=vv* with |v_i|=1. Then K_S=diag(v)G_Sdiag(overline v) has rank n−1. For a unit vector x in its kernel,
+
+\[
+ x^*L_Sx=x^*T_Sx\ge\frac12,\qquad
+ \operatorname{Tr}((L_S)_+)\ge\frac12,\qquad \|L_S\|_1\ge1.
+                                                                    \tag{6}
+\]
+
+For n=2, this gives t≥1/2, a contradiction.
+
+Now let n=3. Equation (4) leaves exactly (h,r)=(1,2) or (2,1). First suppose the three coordinates are in three different fibres. If h=1, (5)–(6) give t≥1/3. If r=1, write R=uu* with |u_i|=1 and choose a diagonal unitary V with V²=diag(u). The reciprocal gauge
+
+\[
+ G'_S=VG_SV^*,\qquad H'_S=V^*H_SV                         \tag{7}
+\]
+
+makes G′_S=H′_S=:Q, preserves their entrywise product, and extends by arbitrary diagonal phases outside S to the full original domain. The common principal matrix Q is PSD with diagonal one and rank two. The sharp complex three-vector theorem of section 93 gives
+
+\[
+ E:=\sum_{i<j}|1/2-Q_{ij}^{\,2}|^2
+       \ge\frac{21-9\sqrt[3]{9}}{16}.                         \tag{8}
+\]
+
+Here L_S has squared Frobenius norm 2E. If its positive and negative eigenvalues each have total absolute mass s, their squared sums are each at most s². Hence ∥L_S∥₁=2s≥2√E. Equation (5) now gives t≥κ.
+
+It remains to treat the genuinely different three-coordinate occupancy (2,1). Here H_S contains I₂, so h≥2 and (4) forces (h,r)=(2,1). The same reciprocal gauge (7) makes the principal Grams equal. This gauge is a homeomorphism of the full domain and preserves F and local minimality. In this one fixed gauge write
+
+\[
+ G_S=H_S=Q=
+ \begin{pmatrix}
+ 1&0&x\\0&1&y\\\overline x&\overline y&1
+ \end{pmatrix},
+ \qquad |x|^2+|y|^2=1,\qquad a_S=a_3(-x,-y,1).
+                                                                    \tag{9}
+\]
+
+The norm equality follows from positivity and rank two. All three kernel coordinates are nonzero, so a₃,x,y are nonzero. A common witness in this fixed gauge satisfies
+
+\[
+ W_{13}=\frac{\alpha|a_3|^2x}{2\overline x},\qquad
+ W_{23}=\frac{\alpha|a_3|^2y}{2\overline y},\qquad \alpha>0.
+                                                                    \tag{10}
+\]
+
+All other cross-fibre entries contributing to its full eight-coordinate objective vanish. The target has zero entry 12, rather than the three-singleton value 1/2. Consequently
+
+\[
+ \begin{aligned}
+ t&=4\operatorname{Re}\left[
+      (1/2-x^2)\overline{W_{13}}+
+      (1/2-y^2)\overline{W_{23}}\right]\\
+  &=\alpha|a_3|^2\left[
+       \operatorname{Re}\frac{\overline x}{x}
+       +\operatorname{Re}\frac{\overline y}{y}-2\right]\le0.
+ \end{aligned}                                                     \tag{11}
+\]
+
+The factor four is the factor two in (1) and the two orientations of each Hermitian edge. Each ratio in the last line has modulus one, so this contradiction to t>0 retains arbitrary complex phases. The reversed occupancy is identical after interchanging the fibres.
+
+Finally κ>1/4 follows from 9<(25/12)³, and κ<1/3 follows from 9>(17/9)³. The preceding cases prove (3). ∎
+

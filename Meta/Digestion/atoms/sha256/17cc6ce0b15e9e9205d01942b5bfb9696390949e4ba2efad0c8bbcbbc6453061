@@ -1,0 +1,59 @@
+**Lemma 2.2 (the uniquely forced double-leaf projection).** Suppose
+$H_1,H_2,H_3\subseteq S_3$ cover $S_3$, and
+
+$$
+|\Gamma_q[H_i]|\le4\qquad(i=1,2,3,\ q\in W_3).
+\tag{D3.14}
+$$
+
+Define projections of their branch parts by
+
+$$
+X_i=\{x:\exists y,\ \langle x,y\rangle\in H_i\},\qquad
+Y_i=\{y:\exists x,\ \langle x,y\rangle\in H_i\}.
+$$
+
+There is exactly one index $j$ for which $A,B\in Y_j$. For each
+$i\ne j$, $Y_i$ contains exactly one of $A,B$, contains at least five
+members of $\mathcal G$, and
+
+$$
+\max\{d_L(Y_i),d_R(Y_i)\}=4.
+\tag{D3.15}
+$$
+
+Proof. Since $\Gamma_{LL}(\langle x,y\rangle)=\Gamma_L(x)$,
+(D3.14) gives $d_L(X_i)\le4$, whereas $d_L(S)=5$. Hence $X_i\ne S$.
+Similarly the targets $RL,RR$ give
+$d_L(Y_i),d_R(Y_i)\le4$.
+
+Fix $y\in S$. If it belonged to only one $Y_i$, all eleven actual
+trees $\langle x,y\rangle$, $x\in S$, would have to lie in $H_i$.
+This would force $X_i=S$. It cannot belong to no $Y_i$ either.
+Thus every $y$ lies in at least two right projections, equivalently
+
+$$
+Y_i\cup Y_k=S\qquad(i\ne k).
+\tag{D3.16}
+$$
+
+In particular each of $A,B$ occurs in at least two projections, so
+some projection contains both. When $A,B\in Y_j$, (D3.13) gives
+$|J_L(Y_j)|,|J_R(Y_j)|\le2$, and thus
+
+$$
+|Y_j\cap\mathcal G|\le4.
+\tag{D3.17}
+$$
+
+Two such projections could together cover at most eight of the nine
+members of $\mathcal G$, contradicting (D3.16). The index $j$ is
+therefore unique. To give each leaf its second occurrence, the other
+two projections must each contain one leaf, with different labels.
+Their unions with $Y_j$ cover $S$, so each contains at least $9-4=5$
+branches. If both its side ranges were at most three, (D3.13), with
+$\ell=1$, would allow at most $2\cdot2=4$ branches. At least one
+side range is therefore four, proving (D3.15). This uses the complete
+actual branch grid $S\times S$ only for coverage; no $H_i$ is replaced
+by a Cartesian product. $\square$
+

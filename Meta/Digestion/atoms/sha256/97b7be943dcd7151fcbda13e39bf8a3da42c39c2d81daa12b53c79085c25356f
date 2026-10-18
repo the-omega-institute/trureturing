@@ -1,0 +1,85 @@
+**Proposition 78.4 (the authentic cap-qualified common-length obstruction).** The
+original ordered substitution family $T_n=\rho^n(\alpha)$ obeys
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+\tag{78.9}
+$$
+
+For its authentic $T_5$, $E_2^\lambda(\operatorname{Pos}(T_5))$ is impossible for
+every $\lambda\in I$. This source is admitted from INITIAL $\alpha$ at a separately
+fixed cap $H=8$, and by the same finite prefix at each separately fixed $H\ge8$.
+
+**Proof.** Apply (78.2) to ordered brackets to obtain (78.9). More explicitly,
+
+$$
+\begin{aligned}
+T_2&=\langle\beta,\alpha\rangle,\qquad
+T_3=\langle T_2,\beta\rangle,\qquad T_4=\langle T_3,T_2\rangle,\\
+T_5&=\langle T_4,T_3\rangle
+ =\big\langle
+ \langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+              \langle\beta,\alpha\rangle\rangle,
+ \langle\langle\beta,\alpha\rangle,\beta\rangle
+ \big\rangle.
+\end{aligned}
+\tag{78.10}
+$$
+
+Every displayed repetition is a distinct ordered occurrence; this syntax identity
+authorizes no copying operation. The recurrences $\ell_{n+2}=\ell_{n+1}+\ell_n$ and
+$h_{n+2}=1+\max\{h_{n+1},h_n\}$ give the following values.
+
+| $n$ | $\ell(T_n)$ | $h(T_n)$ | alpha leaves | beta leaves |
+| --- | --- | --- | --- | --- |
+| $0$ | $1$ | $0$ | $1$ | $0$ |
+| $1$ | $1$ | $0$ | $0$ | $1$ |
+| $2$ | $2$ | $1$ | $1$ | $1$ |
+| $3$ | $3$ | $2$ | $1$ | $2$ |
+| $4$ | $5$ | $3$ | $2$ | $3$ |
+| $5$ | $8$ | $4$ | $3$ | $5$ |
+
+The ordered leaf addresses and labels of $T_5$ are
+
+$$
+\begin{array}{c|cccccccc}
+p&LLLL&LLLR&LLR&LRL&LRR&RLL&RLR&RR\\ \hline
+\operatorname{label}(p)&\beta&\alpha&\beta&\beta&\alpha&\beta&\alpha&\beta
+\end{array}.
+\tag{78.11}
+$$
+
+There are fifteen source vertices, fourteen unit inherited seams and sixteen ground
+stubs of length $\lambda$. With INITIAL $\alpha$ and $H=8$ fixed before execution,
+the five complete rho candidates have $1,2,3,5,8$ leaves and all pass $\ell\le H$.
+The first acceptance changes the label even though INITIAL contains no beta leaf and
+its geometric address domain does not grow. Final equality with the cap is allowed.
+A sixth candidate has thirteen leaves and is refused at $H=8$, retaining $T_5$ with
+no candidate Read. Stop remains absorbing. The five acceptances also pass at any
+separately fixed $H\ge8$. This is mathematical source admissibility, not an acquired
+execution or a change to the distinct stopped INITIAL $T_2$, $H=3$ history of76.5.
+
+For this source, (78.7) would require
+
+$$
+16\sqrt{\lambda^2-9/16}<8+2\lambda.
+\tag{78.12}
+$$
+
+Both sides are positive, but their squared difference is
+
+$$
+\bigl(16\sqrt{\lambda^2-9/16}\bigr)^2-(8+2\lambda)^2
+ =4(63\lambda^2-8\lambda-52)=4P(\lambda)\ge0
+ \quad(\lambda\in I).
+\tag{78.13}
+$$
+
+The last inequality follows from the two roots of $P$. It contradicts the strict
+necessity, including $\lambda=\lambda_*$ where the squared difference is zero. The
+upper endpoint is covered by the strict parent exclusion in78.2. At $\lambda=1$ the
+contradiction is the original $4\sqrt7<10$, whose squared sides are $112>100$. No
+maximal common-length interval, smallest obstruction or lower-cap classification is
+asserted. $\square$
+

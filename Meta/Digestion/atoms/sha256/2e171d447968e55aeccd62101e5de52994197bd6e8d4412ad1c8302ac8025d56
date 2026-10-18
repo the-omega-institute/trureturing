@@ -1,0 +1,55 @@
+**Proposition 6.1 (which finite information is recoverable).** In the
+flat refinement, the following recoveries and failures refer to the
+same actual source and cut.
+
+At every paid partial delivery cut, (4.4a) recovers exactly the arrived
+address prefix from the receiver cells and the already counted
+head/phase/length fields. The restricted view $(D,a)$ suffices after
+RESET has completed and before the first arrival, at ready cuts, after
+each length increment has returned and through the following head moves,
+and at sealed cuts. It need not suffice during an unfinished increment
+or partial RESET. In particular, on the $h=2,T=0$ all-$\alpha$ source,
+the first delivery of $L$ with $P=1$ has $(D,a)=([0],0)$ both just before
+and just after the receiver write. The prefix is respectively empty
+and $L$. The phase changes from ready to written, with $q=0$, so (4.4a)
+gives lengths zero and one at those very cuts. Arrival is the write,
+not the later increment or seal. At a carry such as $3\mapsto4$, the
+length may pass through $2$ and $0$, while $q=3$ and the written phase
+continue to decode four arrived letters. Complete configurations are
+different in the zero-write pair, so the nonrepetition bound is unaffected.
+
+The sender's sealed cells can recover the whole selected literal
+locally, but the receiver has no source reply for any prefix. At the
+completed receiver seal, $(D,a)$ recovers the whole committed literal.
+At actual source receipt,
+the one set flag recovers the actual one of four raw replies or the
+Update acknowledgement; together with the retained native row it
+selects its legal macro successor. Later cleanup may erase this flag
+and the old payload. The firstHalt output is only parity;
+it does not recover the transcript, current tree or initial epoch.
+This refinement may still retain the last payload in allocated cells
+at that cut; those cells are not an additional output port.
+
+In the active alignment construction, the accepted poll certifies the
+current right clock $B_0$. In the capped construction, acquired cell
+$j$ and accepted alpha/beta reply certify current clock $B_j$ or
+$B_j+1$, where $B_j=(j+1)\Delta-2$. Cell search alone certifies only
+the cell. With $\Delta=2$ there were no Updates, so this is the entry
+clock; with larger cells it need not determine the entry clock or the
+unretained number of Updates. None is automatically the historical
+lag $t$.
+
+Proof. The phase-indexed invariant and carry argument of Theorem 4.7
+prove recovery through each write, length update, movement and
+continuation cut; the displayed pairs evaluate that decoder directly.
+At source receipt use the definition of the one-hot flags. The clock
+statements use
+`DelayedOriginalReadout.right_clock_iterate` and `right_clock_readout`
+and exactly SLHC §§11.4, 12.5. A finite right-ray profile is mutually
+recoverable with $\kappa(y)=2d+e$: it has branch before depth $d$,
+leaf $\alpha$ or $\beta$ according to $e\in\{0,1\}$ at $d$, and absence
+afterward. This is a representation of a **current** coordinate. Its
+identity $\kappa(y)=t+U+\kappa(u)$ does not split the summands without
+additional information. Proof annotations of absolute epochs or source
+versions are not observer registers. ∎
+

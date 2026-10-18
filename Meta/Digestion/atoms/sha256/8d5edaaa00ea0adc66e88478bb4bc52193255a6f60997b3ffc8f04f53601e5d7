@@ -1,0 +1,14 @@
+**Lemma 6.2 (Second entry and tail types).** Let $n\ge5$ and let $\pi$ be admissible and indecomposable with $\pi(1)=4$. Then $\pi(2)=3$, and $(\pi(n-3),\pi(n-2),\pi(n-1))$ is one of
+
+$$
+T_1=(n,\ n-1,\ 2),\qquad T_2=(n-1,\ n,\ 2),\qquad T_3=(n-2,\ 2,\ n).
+$$
+
+Stance: suspected-novel (see §9).
+
+**Proof.** Put $s_3=\mathrm{pos}(3)$ and $s_2=\mathrm{pos}(2)$. By Lemma 3.2(b), $2\le s_3<s_2\le n-1$. By Lemma 6.1 the values $s_3$ and $s_2$ lie at positions in $\{n-3,n-2,n-1\}$.
+
+The second entry. Suppose $s_3\ge4$. If the value $s_3$ lies right of position $s_3$, then an entry $e>s_3$ left of position $s_3$ would form the occurrence $e,3,s_3$ of $312$, so the $s_3-1$ positions left of $s_3$ carry values in $\{4,\dots,s_3-1\}$ (the values $1,2,3$ lie at $n$, $s_2>s_3$ and $s_3$), of which there are $s_3-4$; impossible. If it lies left of $s_3$, then $s_3>n-3$, so $s_3=n-2$, $s_2=n-1$, and the value $n-2$ lies at position $n-3$; then $\pi(n-2)=3$ and $\pi(n-1)=2$, so $\{\pi(n-3),\pi(n-2),\pi(n-1)\}=\{n-2,3,2\}$, which by Lemma 6.1 must equal $\{n,n-1,n-2\}$; impossible for $n\ge5$. Suppose $s_3=3$, that is $\pi(3)=3$. By Lemma 6.1, $q(3)=3$ lies in the last four positions, so $n\le6$. Put $v=\pi(2)\ge5$. A value $e\in\{5,\dots,v-1\}$ cannot follow the entry $3$, since $v,3,e$ would be an occurrence of $312$; and they cannot occupy positions $1,2$; so $v=5$, and $q(2)=\pi(5)$. For $n=5$ this gives $q(2)=\pi(5)=1$ and $q(3)=3$ inside the tail $q(2),\dots,q(5)$ with $q(5)=4$, so $q(4)=2$ and $1,3,2$ is an occurrence of $132$. For $n=6$ the entries $q(1),q(2)$ are $5,6$ in some order; $q(2)=\pi(5)\ne5$ because $\pi(2)=5$, so $\pi(5)=6$ and $q(1)=\pi(4)=5=\pi(2)$; impossible. Hence $s_3=2$, that is $\pi(2)=3$.
+
+The tail. As $s_2\ge3$, if the value $s_2$ lay right of position $s_2$, then, as an entry $e>s_2$ left of position $s_2$ would form the occurrence $e,2,s_2$ of $312$, the $s_2-1$ positions left of $s_2$ would carry values in $\{3,\dots,s_2-1\}$, of which there are $s_2-3$; impossible. So the value $s_2$ lies left of position $s_2$ and at a position at least $n-3$, whence $s_2\in\{n-2,n-1\}$. By Lemma 6.1 the last three positions before $n$ carry $\{n,s_2,2\}$. If $s_2=n-1$, then $\pi(n-1)=2$ and positions $n-3,n-2$ carry $n$ and $n-1$: this is $T_1$ or $T_2$. If $s_2=n-2$, then $\pi(n-2)=2$, the value $n-2$ lies left of $n-2$ and at least at $n-3$, so $\pi(n-3)=n-2$, and $\pi(n-1)=n$: this is $T_3$. ∎
+

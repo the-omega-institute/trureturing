@@ -1,0 +1,17 @@
+#### FMR.4 Translation to the fixed Fibonacci quotient
+
+The fixed-golden first-lift identity from CG.1/SJC.6 in the WSS dossier is
+[
+v^{N_p}-1equiv p,chi_p q_psqrt5
+       pmod {p^2mathcal O_K}.
+]
+For the split (mathfrak p) above (p), (Nmathfrak p=p), so the
+Fellini--Murty non-Wieferich condition is
+(v^{p-1}
+otequiv1pmod{mathfrak p^2}). Since (p) splits, this is
+equivalent to (v^{N_p}
+otequiv1pmod{p^2mathcal O_K}), and the displayed
+identity is equivalent to (q_p
+e0). Thus each extracted ideal contracts to
+a rational non-Wall-Sun-Sun prime of exact rank (2ell).
+

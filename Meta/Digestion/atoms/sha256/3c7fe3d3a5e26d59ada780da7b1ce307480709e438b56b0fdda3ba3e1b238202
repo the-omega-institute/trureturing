@@ -1,0 +1,77 @@
+**Definition 222.2 (Full demands and one signed charge).** For a finite
+profile $(b,e)$ let $d(b,e)$ contain the three separate demands
+
+$$
+1-b_n-e,\qquad b_n-e,\qquad1-e
+$$
+
+on the events $\{0\},\{n\},\{0,n\}$ at every $w\in\Omega_n$,
+and the demand $1-e$ on $\{0\}$ at $1^L$.
+There are $3(2^L-1)+1$ rows. Negative singleton demands remain literal;
+the pair row is independent. Write $z_D$ for a complete table's event
+vector, $\alpha=(1,1,0,\ldots,0;0)$, $r=z_R=d(\alpha)$,
+$h=d-r$ and $G_{\mathcal C}=(z_D-r)_{D\in\mathcal D_{\mathcal C}}$.
+Use the closed hull of 198.5:
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+$$
+
+For any signed $q=(\beta;K)$ define
+
+$$
+F_q(b,e)=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad
+\sigma_H(q)=\max_{H_L}F_q.
+$$
+
+In particular $V\cdot h=F_{Q(V)}$. The complete vertex list is
+$o=(0,\ldots,0;0)$, $p=(1,0,\ldots,0;0)$ and
+
+$$
+u_k=(\underbrace{1/(k-1),\ldots,1/(k-1)}_k,0,\ldots,0;0),\qquad
+v_k=(\underbrace{1,\ldots,1}_k,e_k,\ldots,e_k;e_k),\quad
+e_k=\frac{k-2}{k+1},\quad3\le k\le L.
+$$
+
+For $B=\beta_1+\beta_2$, $S_k=\sum_{j\le k}\beta_j$ and
+$\kappa=K-S_L$, all residual readings are
+
+$$
+F_q(o)=-B,\quad F_q(p)=-\beta_2,\quad
+F_q(u_k)=\frac{S_k}{k-1}-B,\quad
+F_q(v_k)=\frac{3S_k-(k-2)\kappa}{k+1}-B.
+$$
+
+A full unrestricted certificate for $q$ is one $V\ge0$ and one
+$\theta\in[0,1]$ satisfying
+
+$$
+\Delta_N(V)+\theta\le1,\qquad \sigma_H(q-Q(V))\le\theta.
+$$
+
+Its objective before imposing the unit bound is
+
+$$
+J_q(V)=\Delta_N(V)+\max\{0,\sigma_H(q-Q(V))\}.
+$$
+
+Set $H_N=\{(b,e)\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b,e)\}$.
+For the same complete feasible $\lambda$ at that same point, put
+$M=\sum_D\lambda_D$. Nonnegativity gives the reused weak-duality chain
+
+$$
+F_q(b,e)\le V\cdot h+\theta
+ \le V\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+$$
+
+For $M\le1$ use $M\Delta_N\le\Delta_N$; for $M\ge1$ use
+$\theta\le M\theta$. A mass-one $\lambda$ is a normalized law,
+whereas a general conic $\lambda$ is not. In particular $\theta=1$
+permits nonzero scores with $\Delta_N(V)=0$. No component, mask, cell
+or demand receives an additional budget.
+

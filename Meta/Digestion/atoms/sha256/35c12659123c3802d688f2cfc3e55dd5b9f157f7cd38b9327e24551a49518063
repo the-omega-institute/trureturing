@@ -1,0 +1,37 @@
+**Proposition 228.2 (Finite patterns and lawful common execution).** Every
+finite Boolean pattern at arbitrary finite prime addresses has an actual
+source witness, fixed before the seed. A normalized common law on the
+complete finite tables executes on those sources with zero advice, one
+source-independent seed and at most two actual requests.
+
+**Proof.** Boundaries 35.2 supplies arbitrarily large prime $r$ for which
+$F_r$ is coprime to all specified primes. For a desired one impose
+$g=-F_r^{-1}$ modulo that prime; for a desired zero impose $g=0$.
+CRT supplies a residue modulo their product. Take $r$ with its Fibonacci
+window longer than that product and choose the first representative at
+or above its lower endpoint; it remains below the upper endpoint.
+This realizes all words, including multiple zeros and positive prefixes
+with a prescribed later zero, on the original labeled source.
+
+Partition one source-independent $U\sim\mathrm{Unif}[0,1)$ into the
+table masses. Its interval fixes the whole schedule and every output
+before replies. N obtains the entire preselected schedule; O preselects
+an increasing schedule and stops at its first queried zero or exhaustion.
+On completion N actually obtains the reply that O would ignore.
+Output the selected original mark and hand it to the unchanged consumer.
+Handoff is finite for every source and seed. Repeated requests and ignored
+replies count toward the hard bound of TWO ACTUAL requests. No adaptive
+second address, extra probe, seed conditioning, address charge, depth or
+runtime bound, expected-count budget or source distribution is introduced.
+Original competitors retain arbitrary addresses and full-carrier outputs.
+The error requirement remains uniform over all actual sources and all
+Borel events. Nonnegative scores and conic multipliers are not themselves
+acquisition probabilities. $\square$
+
+The legal earlier output is indispensable: on $0100$ the table
+$N(3,4;1,0,0,0)$ emits the correct unqueried label one. The actual source
+$r=19,g=436,N_x=1822917$ has this low word. Its base, correct and pair
+readings are $(0,1,1)$; replacing that output by zero gives $(1,0,1)$.
+The plateau restriction on earlier exhaustion guesses in 224.2 therefore
+does not authorize their deletion from the general catalog.
+

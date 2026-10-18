@@ -1,0 +1,38 @@
+**定理 17.6.1（分支路径预算）。**
+
+$$
+\boxed{
+\operatorname{TV}(\nu_\mu,\nu_{\mu'})
+\le
+\operatorname{TV}(\mu,\mu')
+\sum_{p\in\mathcal P}\omega_p\alpha(K_p).
+}
+$$
+
+若 $K_p$ 是路径接口的串联复合，则进一步有
+
+$$
+\operatorname{TV}(\nu_\mu,\nu_{\mu'})
+\le
+\operatorname{TV}(\mu,\mu')
+\sum_{p\in\mathcal P}
+\omega_p\prod_{i\in p}\alpha(K_{p,i}).
+$$
+
+**证明。**
+
+由三角不等式，
+
+$$
+\operatorname{TV}(\nu_\mu,\nu_{\mu'})
+\le
+\sum_p\omega_p
+\operatorname{TV}(\mu K_p,\mu'K_p).
+$$
+
+对每一项应用定理 17.2.3，再用定理 17.3.1 得到结论。证毕。
+
+路径混合权重必须与干预无关。若干预同时改变了路径选择概率，差异还有一项来自 $\omega_p(\mu)-\omega_p(\mu')$，不能直接套用本定理。这个限制正是把「传播收缩」与「路由改变」分开的条件。
+
+<a id="section-17-7"></a>
+

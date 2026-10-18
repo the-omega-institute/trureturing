@@ -1,0 +1,58 @@
+**Lemma 334.1 (repo-derived).** Under (333.1)–(333.5), if H=max(z,u)
+and Q=v^2+d^2, then H<Q/(m-1) and Q>(m-1)*(m+c+1).
+
+**Proof and angle notation.**
+
+For the common transverse pair V,D, put
+
+    K=[sqrt(v^2-1)+sqrt(d^2-1)]/(v+d),
+    x=K*sqrt(Lr/Jr), y=K*sqrt(Le/Je),
+    w=sqrt((d-1)*Jt/[(d+1)*Lt]).                  (334.1)
+
+Then the exact genuine paired formulas are
+
+    theta_D(tau)=2*atan(w),
+    S(rho)=2*atan(x), S(eta)=2*atan(y).           (334.2)
+
+For a frame with transverse pair V,D and t=sqrt(L/J), write
+
+    A=[sqrt(v^2-1)+sqrt(d^2-1)]/(v+d)=K,
+    B=[sqrt(v^2-1)-sqrt(d^2-1)]/(v+d).
+
+Its transverse angles satisfy
+
+    beta_V=atan(A*t)+atan(B*t),
+    beta_D=atan(A*t)-atan(B*t).                  (334.3)
+
+All angles and square roots have their genuine positive branches.
+In particular, if v>=d then B>=0 and beta_V>=S/2.
+
+Define also
+
+    Q=v^2+d^2, T=v*d, H=max(z,u),
+    p=sqrt((z-1)*(u-1)), q=sqrt((z+1)*(u+1)).
+
+The axial half-angle product makes (333.5) equivalent to q*Le>=p*Je,
+or, after exact expansion,
+
+    p*q<=Q+2*T*(q-p)/(q+p).                     (334.4)
+
+Both z,u exceed m. Consequently
+
+    0<(q-p)/(q+p)<1/m,
+    Le/Je>=p/q>(m-1)/(m+1).                    (334.5)
+
+Furthermore, with h=min(z,u)>m,
+
+    p*q=sqrt((H^2-1)*(h^2-1))
+         > H*(m^2-1)/m.
+
+Indeed sqrt(1-H^(-2))>sqrt(1-m^(-2)), and
+sqrt(h^2-1)>sqrt(m^2-1). Using 2*T<=Q in (334.4) therefore gives
+
+    H<Q/(m-1),
+    Q>(m-1)*(m+c+1).                            (334.6)
+
+The second inequality follows from H>=z>m+c+1. Notice that (334.6)
+controls both possible high receiver axes at once, and also r=m<H. QED.
+

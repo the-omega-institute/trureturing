@@ -1,0 +1,51 @@
+**Proposition 4.2 (charged acquisition and the scope of certification).**
+For each installed hypothesis, the complete original episode has finite
+expected paid Read count
+
+$$
+\mathbb E_\mu N_R
+ =\sum_k\mu(k)\left[
+  \frac1{r_k(1-r_k)}+
+ 4\frac{2-r_k}{1-r_k(1-r_k)}\right]
+ \le\frac92+\frac{500}{57}=\frac{1513}{114}.
+\tag{4.5}
+$$
+
+All Read counts, private random-bit uses, finite representations,
+workspace and emitted output lengths are charged. No deterministic
+maximum episode length or private rejection time is asserted. No
+repeated episode or repeatable synthetic query is part of (3.2)–(4.3).
+The supplied candidate generator can be evaluated or sampled offline,
+with its costs charged, but this gives no installed B transitions:
+its public input and resulting conditional law are the same under every
+hypothesis.
+
+The impossibility concerns certification of supplied forecasts against
+the actual own configured laws. Every observer in the family has a true
+own-law decoder satisfying its own exact recursion. The statements make
+no claim of inability to certify that structural recursion, supported
+native-target excess, a sign of the common-flow objective $j_c$,
+training attainment, or network generalization.
+
+**Proof.** Conditional on $K=k$, seed pairs are independent trials with
+success probability $2r_k(1-r_k)$ and cost two Reads, giving the first
+term of (4.5). A payload stage's expected Read count $d_k$ satisfies
+$d_k=1+(1-r_k)(1+r_kd_k)$, hence
+$d_k=(2-r_k)/(1-r_k(1-r_k))$. All four stages occur; conditional
+independence after their finite stopping times justifies addition.
+Use $r_k(1-r_k)\ge2/9$, $2-r_k\le5/3$ and
+$1-r_k(1-r_k)\ge19/25$, then average over the same $K$.
+Fresh private services have the finite representations and almost-sure
+termination proved in Theorem 2.2; their work was not counted as free
+source access. Adding a calculation or simulated output depending only
+on the common public input and independent evaluator randomness is
+hypothesis-independent postprocessing and cannot increase TV.
+
+Full installed-table access would instead reveal $B^\theta$, allowing
+direct evaluation of (1.6) and the recursions; it is expressly excluded
+by Definition 3.1. True own generation holds under every hypothesis by
+Theorem 2.2. The parameter in (4.4) compares supplied and own forecasts,
+not either forecast with the native target (2.15). Accordingly no native
+risk inequality or learning conclusion follows from this parameter
+identification. $\square$
+

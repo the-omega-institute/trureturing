@@ -1,0 +1,8 @@
+**定义 7.1（没有旧父存在许诺的兄弟任务）。** 公共输入为任意有限 $q\in\mathcal P$、认证滞后 $k\ge0$。未知原树仍为任意 $u\in\mathcal T$，当前只读 $y=\rho^k u$，任务为
+
+$$
+W_q(u)=\bigl(r_u(qL),r_u(qR)\bigr).
+$$
+
+控制器及两个最坏价格沿用定义 6.1 的空记录、来源无关和静止条件，记为 $P_q(k),P_q^{\mathrm{dist}}(k)$。满二叉树使答案像恰为 $\{(\mathsf{absent},\mathsf{absent})\}\cup\{\alpha,\beta,\mathsf{branch}\}^2$，共十值；不把父或任一孩子的旧存在当作已取得证据。
+

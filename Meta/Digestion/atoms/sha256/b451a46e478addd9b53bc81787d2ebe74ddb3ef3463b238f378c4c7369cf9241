@@ -1,0 +1,36 @@
+**Theorem 430.1 (source-normal-form exclusion).** No finite actual
+paired quotient satisfies all the hypotheses of Section 413.
+
+Indeed the numerical orders v<=min(c,d), v>=max(c,d), and
+min(c,d)<v<max(c,d) cover every case, including ties. The first is
+excluded by Sections 382-385, the second by Theorem 418.1, and the
+third by Theorem 422.1. The last contradiction uses the actual
+face-pairing transitions of original normal intervals, after the
+exact owner and per-label inventories have been proved.
+
+The complete dependency chain is explicit: the paired scalar
+compensation in Sections 407-412 combines with the original-slot role
+charges of Sections 402-403, the degree and owner bounds of Sections
+404-405, and the source hypotheses of Section 413. These give the
+weighted high-V contradiction and the two middle-V inventories.
+The seven per-label profiles force an M-axis five-slot owner; its
+low-axis face pair forces the other five-slot owner to have the same
+role; their M-face pairs close a proper collection of actual normal
+intervals, contradicting the connected-circle hypothesis.
+
+This resolves the source-normal-form boundary recorded in Sections
+401-406. It retains six distinct actual labels, one four-distinct
+fixed frame per owner, the unique flat sigma and named genuine tau,
+both explicitly scoped maximum gaps, all original degree and angle
+conditions, and the face-occurrence and connected-circle hypotheses.
+Loops, distinct-face self-gluings, repeated role vectors, and numerical
+ties at distinct labels were included throughout.
+
+Any broader intrinsic six-edge flat-exclusion or general CFMP
+geometric-realization theorem additionally requires a valid reduction
+to this exact normal form under that theorem's own hypotheses. No
+omitted reduction, source-face existence assertion, complete-star
+premise, or lower-reservoir theorem is silently promoted here. The
+arguments are pure mathematical derivations and do not constitute
+Lean or kernel verification.
+

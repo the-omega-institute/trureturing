@@ -1,0 +1,68 @@
+## 4. An exact sharp two-world example
+
+**Theorem 4.1.** The bound two in Theorem 3.1 is sharp. On the
+normalized ancestor $D_0=0$, $\lambda=1$, $Y=z=178/3$, the entire
+class $\mathcal Z_{45}$ consists of the following two worlds:
+
+$$
+\begin{gathered}
+d=\delta=178/3,\qquad
+f(T)=g(T)=-\frac{89}{30}(T-4)(T-5)(1-3T/8),\\
+u=413/267,\quad v=11/267,\quad
+r_\pm=\frac{267\pm\sqrt{53117}}{534},\qquad
+P_\pm=\begin{pmatrix}r_\pm&413/267\\11/267&1-r_\pm\end{pmatrix}.
+\end{gathered}                                                       \tag{4.1}
+$$
+
+**Proof.** Since $0<53117<267^2=71289$,
+$0<r_-<r_+<1$. Moreover
+
+$$
+r_\pm(1-r_\pm)
+=\frac{71289-53117}{4\cdot71289}
+=\frac{4543}{71289}
+=\frac{413}{267}\frac{11}{267}=uv.
+$$
+
+Thus both matrices are strictly positive, rank one and trace one.
+They are nonsymmetric because $413\ne11$. They are distinct because
+$r_+\ne r_-$. The gain is nonzero cubic with the three distinct roots
+$4,5,8/3$. The drifts and gains agree, but the complete targets differ.
+
+For both sources the first four traces and gain samples are
+
+$$
+\begin{array}{c|c|c|c}
+i&\operatorname{tr}(A_iP_\pm)&f(i)&
+                  d+f(i)\operatorname{tr}(A_iP_\pm)\\ \hline
+0&1&-178/3&0\\
+1&424/267&-89/4&178/3-106/3=24\\
+2&680/267&-89/20&178/3-34/3=48\\
+3&1104/267=368/89&89/120&178/3+46/15=312/5
+\end{array}                                                       \tag{4.2}
+$$
+
+Here the traces are respectively $1,j,\ell,j+\ell$ from (1.9).
+At clock four the actual cumulative matrix is $C$, and at clock
+five it is $Q$. The gain is zero at both, so the two remaining
+actual equations, for each of the two sources, are exactly
+
+$$
+f(4)(1+r_\pm+u+v)+d=178/3,\qquad
+f(5)(2-r_\pm+3u+v)+d=178/3.                                  \tag{4.3}
+$$
+
+Thus both worlds satisfy all six equations of the same entire
+$JMMJM$ history. Theorem 3.1 gives at most two such worlds; these two
+are therefore the whole root class on this ancestor.
+
+Finally $f(6)=89/12$, so their sixth $J$ responses differ by
+
+$$
+2f(6)(r_+-r_-)
+=\frac{89}{6}(r_+-r_-)=\frac{\sqrt{53117}}{18}\ne0.            \tag{4.4}
+$$
+
+This proves both sharpness and one-read separation. It is not an
+$L_2$ witness: the fixed $J$ action separates this pair immediately. ∎
+

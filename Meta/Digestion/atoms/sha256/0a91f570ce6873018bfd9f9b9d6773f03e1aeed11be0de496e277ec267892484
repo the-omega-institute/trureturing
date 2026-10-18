@@ -1,0 +1,49 @@
+**Theorem 27.1 (equal retry multiplicities and unequal return placement at whole degree three).** For every integer $t\ge0$ and every installed $\mu$, the following are distinct positive original third-latch histories:
+
+$$
+\begin{aligned}
+h_t&=(XY^3X)s_1c_1T^4c_1T^tc_0,
+&\mathbf J(h_t)&=(0,4,t),\\
+g_t&=(YXYXY)s_1T^2c_1c_1T^{2+t}c_0,
+&\mathbf J(g_t)&=(2,0,2+t).
+\end{aligned}
+\tag{SC.70}
+$$
+
+They have the same retry multiplicities $(2,3)$, total returns $4+t$, acquired boundary
+$(R,w,Q^+,Z,A,B)=(1,2,(da,b),1,10+t,15+t)$ and length $25+2t$. Their entire raw $G_3$ and full original future laws agree, whereas
+$c_{\alpha\alpha\alpha\beta}(h_t)-c_{\alpha\alpha\alpha\beta}(g_t)=40$.
+
+Proof. The normal forms give seed 1 and marker triple $110$ with the displayed retry and return parameters. Theorems 6.2–6.3 give the boundary, length, positivity and distinctness. For $t=0$, in the free associative algebra with $x=x_\alpha,y=x_\beta$, direct multiplication of the actual raw Magnus factors gives the following complete common degree-three polynomial:
+
+$$
+\begin{aligned}
+\mathcal P_{\le3}(h_0)=\mathcal P_{\le3}(g_0)
+={}&1+10x+15y+45x^2+70xy+80yx+105y^2\\
+&+120x^3+178x^2y+274xyx+330xy^2\\
+&+223yx^2+320yxy+400y^2x+455y^3.
+\end{aligned}
+\tag{SC.71}
+$$
+
+The pure-letter coefficients are $\binom{10}{r},\binom{15}{r}$. The six mixed degree-three entries in (SC.71) can be obtained by expanding the displayed factors, or by $c_{va}(za)=c_{va}(z)+c_v(z)$ with old shorter coefficients. An additional exact check for the separating pattern is its beta-position formula $c_{\alpha^3\beta}=\sum_{\text{beta }r}\binom{a_r}{3}$. The preceding-alpha counts at those positions are
+
+$$
+\begin{aligned}
+h_0:&\quad 2,2,2,2,2,2,4,5,5,5,6,7,8,9,9,\\
+g_0:&\quad 0,0,2,2,4,4,4,5,6,7,7,7,7,7,8.
+\end{aligned}
+$$
+
+Their binomial sums are respectively $313$ and $273$. Thus (SC.71) includes all fifteen cutoff coordinates and the first nonzero degree is four.
+
+Both base words end in $c_0=\alpha$. In the degree filtration write
+
+$$
+\mathcal P(h_t)-\mathcal P(g_t)
+=[\mathcal P(h_0)-\mathcal P(g_0)]\mathcal P(c_0)^{-1}\mathcal P(T)^t\mathcal P(c_0).
+\tag{SC.72}
+$$
+
+The inverse is the formal series of a known common suffix, evaluated at any finite cutoff. Every factor on the right of the difference has constant term one, so its leading degree-four difference is unchanged and all lower differences remain zero. This proves the claims for every $t$, rather than extrapolating a finite table. Equal acquired counts and the common seed/marker/control give the same conditional probability $Z_{10+t+a_z,15+t+b_z}/Z_{10+t,15+t}$ for each original future cylinder or completed $z\mathrm{Stop}_e$. These probabilities are positive on every common legal finite future. The entire future law, its deterministic parser events and the original delivery therefore agree, with no post-Stop Read or newly delivered past report. $\square$
+

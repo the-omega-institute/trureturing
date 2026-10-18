@@ -1,0 +1,16 @@
+### 5. HigherBlockCycleBasis
+
+对 $W_n$ 构造 prefix-suffix 二部图，证明
+
+$$
+\dim\ker A=
+N_n-2N_{n-1}+N_{n-2}.
+$$
+
+然后为每个自由内部词 $q$ 构造
+
+$$
+h_q=
+\delta_{0q0}-\delta_{0q1}-\delta_{1q0}+\delta_{1q1}.
+$$
+

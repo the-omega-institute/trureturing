@@ -1,0 +1,20 @@
+**Corollary 4.2 (uniform normalization with the original code).**
+Every finite correct native preparer admits a profile-first,
+selected-root-only preparer with no larger installed-state count or
+uniform call and letter maxima, and the identical pointwise original
+code and complete entries on all sources.
+
+Proof. A terminating stationary finite table has finite maxima, by the
+no-revisit principle in §2. Apply both constructions of Theorem 4.1 at
+those maxima and its installed count. The resulting table has exactly
+the profile front and selected literals displayed there. $\square$
+
+This comparison is uniform. For a particular arbitrary $u$, the proof
+compares its normalized selected route to the old run on
+$u_{\theta(x_a)}$, not necessarily to the old run on that same $u$.
+It asserts neither pointwise path preservation nor
+$q_{\rm new}(u)\le q_{\rm old}(u)$ or
+$\ell_{\rm new}(u)\le\ell_{\rm old}(u)$ for each original source.
+The code itself is pointwise unchanged. The selected graph remains
+unrestricted, so this is not a read-once or grid normalization.
+

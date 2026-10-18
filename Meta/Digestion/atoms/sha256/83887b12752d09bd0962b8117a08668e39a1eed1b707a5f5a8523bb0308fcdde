@@ -1,0 +1,48 @@
+**Lemma 4.2 (orbit rigidity at each actual live cut).** In any such realization,
+let $W_t$ be its successful dilation contraction from the initial specimen and
+programme to the cut specimen and all dilation residues. There are unit vectors
+$e_j(t)$, independent of $\beta,m$ and of the specimen input vector, such that
+
+$$
+W_t(q\otimes r_j)=\widetilde K_j(t,0)q\otimes e_j(t)
+\quad(q\in V),\qquad
+\langle e_1(t),e_2(t)\rangle=\mu.
+\tag{CP.11}
+$$
+
+This statement permits arbitrary memory updates; it concerns their whole
+purified residue, not only one selected helper marginal.
+
+Proof. Fix $j,t$. Put $z=e^{-i\beta}$ and $\epsilon=(-1)^m$. The input has
+form $d+zv_\epsilon$, where $d=\sqrt Z|2\rangle$ and
+$v_\epsilon=\sqrt{2x_j}|+\rangle+\epsilon\sqrt{2(c-x_j)}|-\rangle$.
+Purity of the prescribed specimen output makes its successful dilation the
+normalized target tensor a residue $u_\epsilon(z)$. The target has a constant
+nonzero middle coefficient, so projection onto $|2\rangle$ gives
+$u_\epsilon(z)=u_0+zu_{1,\epsilon}$. Its constant $u_0$ comes from the same
+input $d\otimes r_j$ for both signs. The target's plus coefficient is a
+nonzero constant times $z$. Therefore the plus projection of the tensor product
+has a $z^2$ term, whereas the linear map on the input is affine in $z$.
+Coefficient comparison on the entire unit circle gives $u_{1,\epsilon}=0$.
+Vector-valued comparison follows by applying continuous linear functionals.
+
+The remaining constant and linear coefficients, followed by adding and
+subtracting the two sign identities, force
+$W_t(q\otimes r_j)=D_j(t)q\otimes u_0$ for all three basis directions,
+where $D_j(t)$ maps the initial family to its normalized target. Since the
+target has norm one, the prescribed survival probability fixes
+$\|u_0\|^2=S_j(t)>0$. Absorb its phase according to (CP.8) and divide by
+$\sqrt{S_j(t)}$ to obtain the first identity in (CP.11). This is the
+full-orbit rigidity mechanism already used in [IB], Theorem 24.3, here with
+the transported target. The artificial basis vectors are tests of one linear
+map forced by actual histories, not extra allowed source preparations.
+
+For $q=|+\rangle$, (CP.8) has unit modulus and the same phase for both
+indices. Hence $W_t$ preserves the norms of $|+\rangle\otimes r_1$ and
+$|+\rangle\otimes r_2$. Positivity of $I-W_t^\dagger W_t$ makes it
+annihilate both vectors: zero quadratic form of a positive operator implies
+zero square-root image. Their cross inner product is consequently preserved,
+giving $\langle e_1(t),e_2(t)\rangle=\langle r_1,r_2\rangle=\mu$.
+The argument keeps every success record and discarded environment in the
+residue and does not presuppose unchanged accessible memory. $\square$
+

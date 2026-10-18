@@ -1,0 +1,14 @@
+##### 定义 1.4.6： 实现对的分辨率谱
+
+对实现对 $(M,N)$，定义其最小分辨率集合
+
+$$
+\mathsf{Res}(M,N)=
+\operatorname{Min}_{\le}
+\{r\in\mathsf R:\exists q\in\mathcal Q_r,\ R_M(q)\ne R_N(q)\}.
+$$
+
+若集合为空，记 $\mathsf{Res}(M,N)=\varnothing$。这表示在声明的资源宇宙内，两实现仍不可区分，而不是它们在所有可能理论中绝对相同。
+
+<a id="claim-1-4-7"></a>
+

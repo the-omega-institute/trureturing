@@ -1,0 +1,67 @@
+**Theorem 69.2 (source-uniform gap on the actual reserve intersection).** For
+every $z\in\mathcal E_D\cap Q_DX_D$,
+
+$$
+q_D[z]\ge
+\left(\frac{a}{9\delta}-2g\right)\|z\|^2+\mathfrak f_D[z]
+\ge\left(\frac{a}{9\delta}-2g\right)\|z\|^2.
+\tag{69.3}
+$$
+
+The constant is independent of the source, fixed cap, bank and auxiliary sizes,
+$\Omega\ge1$ and the input's field moments. The restriction is the closed form
+restriction supplied by Lemma68.2; no self-adjoint operator compression is an
+additional hypothesis.
+
+**Proof.** Work first in particle sector $N=1$ or $N=2$, with all retained
+field/auxiliary coefficients. Let $R_N$ be the atomic restriction of
+Lemma64.5b and $E_N$ the kinetic minimizing lift of Theorem64.6, tensored with
+identity on those coefficients. For $u=R_Nz$, put
+
+$$
+v=z-E_Nu.
+\tag{69.4}
+$$
+
+The identities $R_NE_N=I$ and $\operatorname{Ran}E_N=
+\operatorname{Ran}W_N$ give $R_Nv=0$ and $Q_Dv=z$. The minimizing property of
+$E_N$ gives kinetic-form orthogonality to every zero-atomic vector, so
+
+$$
+k_{\delta,N}(z)=k_{\delta,N}(E_Nu)+k_{\delta,N}(v)
+\ge k_{\delta,N}(v).
+\tag{69.5}
+$$
+
+Apply the full zero-atomic estimate (64.9) to $v$, then use that $Q_D$ is an
+orthogonal projection:
+
+$$
+\|z\|^2=\|Q_Dv\|^2\le\|v\|^2
+\le9\delta\,k_{\delta,N}(v)
+\le9\delta\,k_{\delta,N}(z).
+\tag{69.6}
+$$
+
+Here $z$ need not have zero atomic data. The zero-atomic vector is $v$ in
+(69.4), not an identification of $Q_DX_D$ with $\ker R_N$.
+
+All these operations preserve the stated intersection. Indeed $R_N$ is a
+bounded restriction to mass-one atomic coordinates, $E_N$ has finite particle
+operator-domain range and both commute with the number operator. Subtraction
+preserves every Hilbert-valued linear trace condition. The minimizing
+orthogonality and (64.9) extend to Hilbert-valued coefficients by tensoring their
+quadratic-form inequalities with identity, or by finite coefficient projections
+and form-norm limits. This does not bound or discard a field excitation.
+The estimate (64.9) already includes mixed slices, rectangles, both dissected
+triangles and all their ground/collision traces; these are the same domains
+used in (69.4)–(69.6).
+
+On a singleton $R_2$ has zero target and $E_2=W_2=0$. Thus $Q_2=I$ on its
+nonzero continuum sector, and the same argument uses $v=z$. On the reference
+$W_D=I$, so a reserve has zero reference component. Summing the two particle
+sector inequalities therefore gives
+$\|(A_D^{1/2}\otimes I)z\|^2\ge a\|z\|^2/(9\delta)$ on the entire reserve.
+Finally $0\le\sum_p\phi(p)m_p\le2I$ on every stratum, and
+$\mathfrak f_D\ge0$. Substitution in (69.2) proves (69.3). $\square$
+

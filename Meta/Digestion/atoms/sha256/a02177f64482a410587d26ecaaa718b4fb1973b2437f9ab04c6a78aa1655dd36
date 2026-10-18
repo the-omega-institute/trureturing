@@ -1,0 +1,16 @@
+**Definition 2.3 (Complete epsilon curve).** For real $\epsilon$ put
+$v=(-3/14,1,0)^\mathsf T$ and
+
+$$
+K^\epsilon_{ij}=\pi_j(1+\epsilon v_iv_j)
+=\begin{pmatrix}
+7/10+9\epsilon/280&3/20-9\epsilon/280&3/20\\
+7/10-3\epsilon/20&3(1+\epsilon)/20&3/20\\
+7/10&3/20&3/20
+\end{pmatrix}_{ij}.
+\tag{2.4}
+$$
+
+Use exactly the constructor (2.1), denoting its triple by $\theta_\epsilon$
+and its law, whenever admissible, by $P_\epsilon$.
+

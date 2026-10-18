@@ -1,0 +1,54 @@
+**定理 463.2（原对象的递归方程）。** 对任意连续
+$f:[0,\infty)\to\mathbb R$，定义仅涉及有限连续积分的
+
+$$
+b(v)=e^{-v}\left[\frac12+\int_0^v a(s)(1+s)\,ds\right],
+$$
+
+$$
+(Tf)(v)=e^{-v}\int_0^v a(s)
+ \int_0^s(s-t)f(t)\,dt\,ds.
+\tag{RVF.10}
+$$
+
+则 b 和 Tf 连续，$b(v)>0$ 对全部 v≥0 成立，并且
+
+$$
+\boxed{\qquad B=b+TB.\qquad}
+\tag{RVF.11}
+$$
+
+**证明。** 原 $\Phi(0)=\Phi'(0)=1$ 和 $\Phi''=B$ 的两次有限 FTC 给
+
+$$
+\Phi(s)=1+s+\int_0^s(s-t)B(t)\,dt\qquad(s\ge0).
+\tag{RVF.12}
+$$
+
+RVF.4 在正轴上是 $F'=a\Phi$。对 $0<\varepsilon<v$ 用 FTC，再令
+ε↓0。F 的实际连续性和 aΦ 在 [0,v] 的连续性分别支付两端极限，得到
+
+$$
+B(v)=e^{-v}\left[\frac12+\int_0^v a(s)\Phi(s)\,ds\right].
+\tag{RVF.13}
+$$
+
+v=0 时此式同样由 B(0)=1/2 成立；不向 RVF.4 的除式代入零点。
+把 RVF.12 代入 RVF.13，准确得到 RVF.10–RVF.11。
+连续性来自有限参数积分，b 的正性来自括号内的正常数和非负积分。
+证毕。
+
+有限三角域上的 Fubini 给同一个算子的核表示
+
+$$
+(Tf)(v)=\int_0^vK(v,t)f(t)\,dt,\qquad
+K(v,t)=e^{-v}\int_t^v a(s)(s-t)\,ds.
+\tag{RVF.14}
+$$
+
+K 在 $0\le t\le v$ 的每个紧三角域连续，K(v,v)=0，且
+K(v,t)>0 对 $0\le t<v$ 成立。特别地，T 是线性正算子；若
+f 在整个正轴严格正，则 Tf(v)>0 对每个 v>0 成立。
+最后的严格性可在 $t\in[v/4,v/2]$ 上积分连续严格正函数支付。
+这里只交换有限积分，未要求一般 f 在无穷轴可积。
+

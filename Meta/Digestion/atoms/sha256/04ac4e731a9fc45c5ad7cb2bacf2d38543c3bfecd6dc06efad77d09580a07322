@@ -1,0 +1,15 @@
+**定义 4.3（下侧谱分支的复线性群）。** 在 $`\mathbb C^2`$ 上令
+
+```math
+P_\pm=\frac{I\pm S}{2},\qquad
+U(t)=e^{at}P_++e^{(-a-i\pi)t}P_-.
+```
+
+由 $`P_\pm^2=P_\pm`$、$`P_+P_-=0`$、$`P_++P_-=I`$，完整得到
+
+```math
+U(0)=I,\qquad U(s+t)=U(s)U(t),\qquad U(1)=M,\qquad U(n)=M^n.
+```
+
+最后一个等式对所有正负整数成立，因为群律也给逆。指数群是 [Higham §3](../../../Library/Quantum/higham2006eigenstate.md) 的自治矩阵指数应用，其生成元是 $`aP_++(-a-i\pi)P_-`$。
+

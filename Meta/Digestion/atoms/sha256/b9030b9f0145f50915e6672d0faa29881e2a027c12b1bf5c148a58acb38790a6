@@ -1,0 +1,2 @@
+**Definition 3.1 (retained chronology register).** Supply one persistent register $z\in\{0,1\}$, initialized to 0 before seed acquisition. At the actual first completed payload marker, write that marker's value to $z$. Every other raw event holds it, including seed retries, return cycles, partial parsing, later markers, the bookmark and Stop. The same register is retained through decoding; there is no additional frozen output copy. The original parser's old completed count $t=0$ identifies this write, so the register needs no private first-marker flag.
+

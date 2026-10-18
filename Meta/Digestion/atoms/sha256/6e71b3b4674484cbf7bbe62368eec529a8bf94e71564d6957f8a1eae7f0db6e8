@@ -1,0 +1,37 @@
+**定义 3.1（finite fields and outputs）。** For $n\ge0$, let gamma$(n)$ consist of $\operatorname{bitlength}(n+1)-1$ zeros followed by the canonical binary expansion of $n+1$. Its length is
+$2\lfloor\log_2(n+1)\rfloor+1$. A signed integer $z$ is gamma-coded through
+$\zeta(z)=2z$ for $z\ge0$ and $\zeta(z)=-2z-1$ otherwise. A decoder counts leading zeros, then reads the initial one and exactly the indicated number of further bits. It rejects truncation, nonbinary data and trailing fields.
+
+A deficit word has the fixed eight-bit mode $10111001$, followed by gamma$(K)$, gamma$(h)$, two positive mantissa/signed-exponent pairs $(M_0,v_0),(M_1,v_1)$, and nine signed coordinate integers in phase order $0,1,2$ and coordinate order $1,2,3$, then end-of-word. These are fifteen integer fields. Put
+
+$$
+\begin{aligned}
+\epsilon&=2^{-K},&R&=h+K+12,&T&=2R,&S&=K+12,\\
+P&=2K+\left\lceil\log_2(T+2)\right\rceil+32,
+&\alpha&=2^{1-P}.
+\end{aligned}
+$$
+
+Require $K\ge1,h\ge0$, $1\le M_i<2^{P+2}$,
+$-h-P-2\le v_i\le0$,
+$2^{-h-2}\le M_i2^{v_i}\le1$, and the first value no greater than the second. Each coordinate integer has absolute value at most $2^S+1$. Comparisons with dyadic powers use integer lengths before shifting; no string of $h$ zeros is constructed for a range test.
+
+The numerical semantics are stronger than these syntax tests:
+$\sigma=2^{-h}\le D\le4\sigma$, and the represented positive seeds
+$\widehat\delta_3,\widehat\delta_4$ satisfy
+
+$$
+(1-\alpha)\delta_i\le\widehat\delta_i\le(1+\alpha)\delta_i
+\quad(i=3,4).
+$$
+
+The three represented $S$-grid vectors $\widehat\xi_r$ approximate, within $4\,2^{-S}$ in Euclidean norm, the true directions
+
+$$
+\xi_0=x_3/q_3,\qquad \xi_1=x_1/q_1,\qquad \xi_2=x_2/q_2.
+$$
+
+This branch requires $q_3>0$. Zero and tiny futures use the disjoint fixed mode $10110110$ with no numerical fields. Its semantic premise is $\sup_{j\ge3}q_j\le\epsilon/4$, or an exact zero-future promise; mere recognition of its mode does not establish that premise. A periodic mode, when justified by a neutral promise, retains three finite vectors and a counted residue; it is treated in §10.
+
+Each numerical output is a leading V, gamma of a precision, three gamma-coded signed numerators representing that dyadic vector, and a terminator. The zero mode emits the precision-zero zero frame. There are no implicit coordinates or free precision fields. The current full frame is buffered and charged, emitted once, and can then be erased. Malformed finite words or request frames are consumed through their declared end and return the fixed finite error frame without advancing position. The bounds below concern semantically valid compact words; a materialized oversized or malformed word pays its entire actual input length.
+

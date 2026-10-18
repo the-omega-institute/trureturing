@@ -1,0 +1,16 @@
+**References 11.1 (repository deductions and supplied interfaces).**
+Repository sources are read at the immutable [baseline][BASE]. The
+following table separates reused statements from the new deductions.
+
+| Source | Exact use and scope |
+| --- | --- |
+| [NSF §§2–4][NSF] | Finite native flattening, complete shape factorization, explicit scalar/block offset constraints and terminating existential feasibility. Its witnesses are not a parametrization of original solutions. |
+| [NSF §§5–7][NSF] | Full guarded fixed-navigation compiler, entire signed-fiber feasibility and all-source operational restriction. Finite boxes and supplied-prefix decisions remain reused results. |
+| [ABC Theorems 2.2–2.3 and 4.2][ABC] | Normal native codes, injective expansion, forward translation with its actual image condition, and exact reached-set/mask/partition reconstruction. |
+| [ARH Assumption 1.3, Proposition 2.1, (2.3), Proposition 3.2][ARH] | Entire actually acquired fiber, source-total paid producer conditional on the complete cut, serial/static/prefix existence correspondence and both guarded source-cell directions. |
+| [SLH Theorem 2.2][SLH] | Current physical decoding of original replies, including the one-read known-reached form used in (NPL.14). Historical decoded values are not past receipts. |
+| [JRF Lemma 2.2, Theorem 3.1, Lemma 3.2][JRF] | All-source nonexpansive late probes, epoch-five cap retaining early actions, and constant/cached-reply cleanup. Its literal-only logical compiler is not applied to arbitrary signed histories. |
+| [NSF Proposition 11.4][NSF]; [CAR Propositions 5.3 and 9.1][CAR] | Finite row image does not imply uniform physical observability. Their counterexamples retain their force. |
+| §§3–4 of this volume | repo-derived: arbitrarily large original-solution marker families, free-rank pumping, universal output rigidity, the branch dichotomy and exact native projection-image decision. |
+| §§5–8 of this volume | repo-derived: whole-row image classification from that decision, exterior limitedness with an actual consumer, whole-source classification, and complete finite-domain paid comparator/resource synthesis. |
+

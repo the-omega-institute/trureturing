@@ -1,0 +1,10 @@
+**Definition 5.3 (other resource coordinates).** Phase address transmission is
+
+$$
+\ell_A(T)=\sum_{j=1}^{n_A(T)}|q_j|.
+$$
+
+It counts repeated transmissions if raw calls transmit literal addresses. For the hole traversal this is $\sum_i\sum_{q\in\operatorname{Pos}(U_i)}(|p_i|+|q|)$. Encoding each four-valued reply by two bits gives reply payload $2n_A(T)$, without specifying framing. Retained context bytes, temporary evidence, complete tree or parser-code storage, installed parameters, internal computation, output, entry, isolation and source-service charges are separate coordinates. A lifetime-first-address tariff would charge the last line of (NDR.10), whereas a raw-call tariff charges $n_1$ and a phase-distinct-address tariff charges $d_1$. They describe different contracts.
+
+SLH Proposition 53.2 supplies this address/reply separation. Process Geometry §44.9 supplies the possibility of quadratic literal-address sums on combs and distinguishes node work from the actual `restore` history scans and `finiteDecision` candidate enumeration. Neither source-call count nor the factor in (NDR.7) is an executable runtime, physical memory, energy or total-price bound.
+

@@ -1,0 +1,54 @@
+**Definition 1.5 (Four affine contracts).** For $n\ge0$, an at-most-$n$
+literal model chooses $0\le m\le n$, an arbitrary encoder
+$E:\mathcal M\to\mathbb R^m$, one fixed affine decoder
+$\mathcal D(z)=q_0+Lz$, and one fixed affine ambient map
+$\mathcal U_a$ for each $P_a$ and $\mathcal V_t$ for each $Q_t$.
+They satisfy
+
+$$
+E(P_a\zeta)=\mathcal U_a(E(\zeta))
+\quad(\zeta\in\operatorname{dom}P_a),\qquad
+E(Q_t\zeta)=\mathcal V_t(E(\zeta))
+\quad(\zeta\in\mathcal M).
+$$
+
+All affine offsets are allowed. Parameters may depend on the fixed
+source, preparation, model and prescribed command, but not on the
+current ray or history. No regularity, measurability, boundedness,
+injectivity or computability of $E$ is assumed, and no parameter
+regularity, ambient inverse or ambient composition law is assumed.
+Empty domains still have assigned ambient maps and impose no identity.
+Decoded vectors need not belong to the native physical output image.
+
+Denote this contract by $\mathsf L$. Contract $\mathsf G$ additionally
+requires each straight-command domain to be saturated under encoder
+fibers: it is the inverse image of a subset of the actual encoded
+image. Contract $\mathsf P$ additionally requires a fixed affine update
+for every prescribed simultaneous native path on its full all-times
+domain. The velocities and duration of each prescribed path are fixed
+independently of its starting ray. Contract $\mathsf{GP}$ requires
+both properties, including saturation of each full path domain.
+Guard-recovery functions are not required to be affine.
+
+Write $\mathfrak F_{\le n,\mathsf C}$ for the corresponding class and
+
+$$
+\operatorname{err}(E,\mathcal D)
+=\sup_{\zeta\in\mathcal M}\|\mathcal D(E(\zeta))-y(\zeta)\|_2,\qquad
+e_{n,\mathsf C}^{\rm aff}(Z)
+=\inf_{\mathfrak F_{\le n,\mathsf C}}\operatorname{err}(E,\mathcal D).
+$$
+
+The infimum of an empty class is $+\infty$; infinite-error models are
+permitted. A finite tolerance is achievable if some model's error is
+at most that tolerance. Write $e_n$ when the four values have been
+proved equal. Stored dimension, actual affine-hull dimension and
+decoder rank are separate notions. The class inclusions are
+
+$$
+\mathfrak F_{\le n,\mathsf{GP}}\subseteq
+\mathfrak F_{\le n,\mathsf G}\subseteq\mathfrak F_{\le n,\mathsf L},\qquad
+\mathfrak F_{\le n,\mathsf{GP}}\subseteq
+\mathfrak F_{\le n,\mathsf P}\subseteq\mathfrak F_{\le n,\mathsf L}.
+$$
+

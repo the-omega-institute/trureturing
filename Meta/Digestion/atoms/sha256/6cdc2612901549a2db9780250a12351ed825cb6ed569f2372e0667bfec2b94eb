@@ -1,0 +1,39 @@
+### 66.5 Exact projective phase counting and attainment
+
+Fix one possible ordered ratio triple. The numbers \(B_j,K_j\) from
+§66.3 are nonzero and fixed. The phase equations imply
+
+\[
+ e_j=\lambda K_j/B_j,\qquad
+ \lambda^3=\frac{B_0B_1B_2}{K_0K_1K_2}\ne0.
+\tag{66.13}
+\]
+
+There are exactly three distinct complex roots of the cubic, hence
+at most three admissible phase lifts. Each root determines at most
+one projective input ray: dephase \(x_0=\alpha_0=1\), then set
+\(\alpha_1=e_0\), \(\alpha_2=e_0e_1\). The third cyclic relation
+is precisely \(e_0e_1e_2=1\). These determine \(x=D^{-1}\alpha\)
+and \(y_j=t_jx_j\) uniquely. Unit-modulus requirements can remove
+cubic roots but cannot add any. Thus this counts projective rays,
+not algebraic multiplicities or different global phases.
+
+The all-equal sector has at most \(2\cdot3=6\) rays. The other
+sector has at most \(3\cdot4\cdot3=36\) rays. The sectors are
+disjoint, and a non-all-equal triple has only one equal pair, so no
+positional ambiguity affects this upper bound. The entire original
+locus has at most 42 rays; in particular, finiteness is a conclusion.
+
+The six canonical rays \((f_m,\pm if_m)\), \(m=0,1,2\), attain
+the first count. Section 65.2 constructs 36 distinct noncanonical
+rays, verifies original common flatness by the explicit seed and
+exact symmetries, and proves their distinctness and disjointness
+from the canonical set. They attain the other count. This proves
+Theorem 66.1. \(\square\)
+
+The exact central count now follows from the original equations and
+the displayed construction, independently of the numerical counts
+discussed in §64. It does not resolve how the external reported
+count was obtained or interpreted, and no external count is used as
+an upper-bound premise.
+

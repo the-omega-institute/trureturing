@@ -1,0 +1,46 @@
+### 93.3. Generic component and a new primitive element
+
+Let \(F=P_0\) be the old decic and \(P_{\rm other}=\prod_{j=1}^5P_j\)
+the other five component polynomials. Their product annihilates \(K\),
+by the same transported rational identity. Their degrees are 10 and 20,
+and
+\[
+ \operatorname{Res}_k(F,P_{\rm other})=56\pmod{61}.
+\]
+Construct
+\[
+ e(k)=P_{\rm other}(k)[P_{\rm other}^{-1}\bmod F]
+          \pmod{F P_{\rm other}},\qquad E=e(K).
+\]
+The identities \(E^2=E\), \(\operatorname{tr}E=10\) hold generically and
+specialize by the resultant unit. In characteristic zero they imply
+\(\operatorname{rank}E=10\).
+
+Take the first ten columns \(J=E_{[:,0:10]}\), and their first ten rows
+\(J_0\). One has \(\det J_0=15\bmod61\). Define
+\[
+\begin{split}
+ K_g&=J_0^{-1}(KJ)_{[0:10,:]},\qquad
+ T_g=J_0^{-1}(TJ)_{[0:10,:]},\\
+ {\bf1}_g&=J_0^{-1}(E{\bf1})_{[0:10]}.
+\end{split}
+\]
+The five other homogeneous components have no real projective points
+on the entire puncture, by §88.3. Therefore every original generic
+physical source point belongs to this image.
+
+Put \(W=K_g+T_g\). The ten columns
+\({\bf1}_g,W{\bf1}_g,\ldots,W^9{\bf1}_g\) have determinant \(56\bmod61\).
+Thus \(W\) is a primitive element. Its characteristic polynomial has
+residue
+\[
+ z^{10}-19z^9+16z^8-23z^7-12z^6-25z^5+
+ 6z^4+27z^3-22z^2+27z-2,
+\]
+with discriminant \(23\bmod61\). In particular the ten source points are
+distinct in characteristic zero. Reconstruct \(k(z),t(z)\), each of
+degree at most nine, by expressing \(K_g{\bf1}_g,T_g{\bf1}_g\) in these
+power columns. This exact finite construction never divides by \(F_k\).
+The repeated direction root is separated by the coordinate \(k+t\);
+completeness follows from the full source algebra, not from that diagnostic.
+

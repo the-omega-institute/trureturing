@@ -1,0 +1,18 @@
+**Supplied interface 4.4 (Predictable actual-bit payment).** Fixed-observer-source Lemma 25.3, lower-source Lemma 7.2 and uniform-source Lemma 6.2 give
+
+$$
+\mathbb E_iQ_T\le B(1-q)\mathbb E_iT.
+\tag{4.8}
+$$
+
+The source-history hazards used there are $f_i(b)/S_i(b)$ after a tick and $b\ge1$ ensuing zeros, zero just after a tick, and $S_i(b)/\sum_{v\ge b}S_i(v)$ before the first tick. The envelope bounds each by $B(1-q)$, including the stationary first-wait hazard. With independent proof coins exposed for predictability, $\{T>t\}$ is known before $X_t$, and the supplier sums $\mathbf1_{\{T>t\}}X_t$ over precisely the undertaken reads. Those coins are not retained observer information. That enlarged payment filtration is not used to condition epoch drifts on future update coins.
+
+Consequently (4.7)–(4.8) give, separately under each actual source,
+
+$$
+\mathbb E_iN\le B(1-q)\mathbb E_iT.
+\tag{4.9}
+$$
+
+This is the only conversion from epochs to reads used below. It neither multiplies a random number of interrupted epochs by a full mean gap nor assumes independence between a terminal decision and its current gap duration. The initial interval and terminal partial interval remain paid through the actual $T$.
+

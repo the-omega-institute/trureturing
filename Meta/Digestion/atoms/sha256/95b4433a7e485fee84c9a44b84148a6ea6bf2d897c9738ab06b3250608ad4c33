@@ -1,0 +1,40 @@
+## 429. Two original M intervals form a closed subcollection
+
+The face table shows that MZU faces occur only in rho and rho'.
+In both owners the unique original M occurrence is axial. Every
+endpoint of each of their two original M normal intervals belongs to
+an MZU face. Its paired face is again an MZU face in rho or rho', and
+the unique M edge in that face is the selected axial M edge.
+
+Hence these two original intervals are closed under every endpoint
+pairing. Their endpoint quotient is a nonempty union of closed
+components of the actual M normal circle. This statement allows any
+pairing of the four endpoints, including self-gluings, and any
+orientation of the face maps. No transition can leave the selected
+two-interval set.
+
+For completeness, write the two intervals' endpoint sets as
+{i0,i1} and {j0,j1}. The three possible pairings are
+
+    {i0-i1, j0-j1}, {i0-j0, i1-j1}, {i0-j1, i1-j0}.
+
+The first gives two separate one-interval circles; either cross-pairing
+gives a two-interval circle. Reversing an edge orientation changes no
+endpoint incidence in this list. Thus internal self-gluings and both
+cross-gluing alternatives are included explicitly.
+
+Since the actual M normal quotient is a connected circle, a nonempty
+closed collection of its original intervals must be the whole circle:
+all endpoint pairings stay inside it and every normal-link vertex has
+the two incidences prescribed by the interval pairing. Its original
+degree would therefore be at most two; the internal-pairing case
+already contradicts connectedness. This contradicts degree at least six;
+also sigma and tau already supply original M intervals outside this
+set. The selected subcollection cannot be joined to those intervals
+without an endpoint pairing absent from the exhaustive face table.
+
+This completes the middle-V contradiction. The last two topological
+steps only need original degree(L)>=2 and degree(M)>=3 once the
+inventory is known; the full source hypotheses supply much more and
+are retained because the preceding expense results need them.
+

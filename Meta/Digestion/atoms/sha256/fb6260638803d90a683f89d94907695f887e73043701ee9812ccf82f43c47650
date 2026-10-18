@@ -1,0 +1,37 @@
+**Definition 7.1 (the credited complete reconstruction).** Use Source's exact isometries
+
+$$
+\begin{aligned}
+\Xi_s(r,y,z,w)&=(k_0+\varepsilon sr,\mathbf q_s(r,y,z,w)),\\
+\mathbf q_s(r,y,z,w)&=sc_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w,\\
+\Omega_s&=((l-k_0)/(\varepsilon s),(u-k_0)/(\varepsilon s))\times\mathbb R^3,\\
+\mathcal U_s\psi&=\sqrt{j_0s^7}\,\psi\circ\Xi_s,\qquad
+(\mathcal D_g\psi)(k,\mathbf z)=g^{-3/2}\psi(k,\mathbf z/g),\\
+\iota h(k,\mathbf z)&=\phi(k)h(\mathbf z),\qquad
+\mathcal M_sh=\mathcal U_s\mathcal D_{g_s}^{-1}\iota h.
+\end{aligned}
+$$
+
+Put $F_s=\mathcal U_s\psi_s$. Outputs in microscopic space are zero extended. In particular $\|\mathcal M_sh\|_2=\|h\|_2$. Both original deaths and the rational third component persist in Source's transported native operator, whose horizontal field is
+
+$$
+Y_s=\partial_y+r\partial_z+
+ \frac{r^2}{2(1+\varepsilon sr/d_0)}\partial_w.
+$$
+
+For every prescribed sequence and every actual complex ground-state choice, Source Theorems 19.1 and 20.1 give, conditional on $r_s\to R\in(r_C,\infty)$, the whole-sequence phase-orbit reconstruction
+
+$$
+\inf_{\theta\in\mathbb R}\|F_s-e^{i\theta}\alpha_R(p+\mathcal M_s\zeta_R)\|_2\to0,
+\qquad \alpha_R=(1+\|\zeta_R\|_2^2)^{-1/2}.
+$$
+
+On a subsequence with $F_s\rightharpoonup cp$, they give the stronger fixed-phase statement
+
+$$
+\|F_s-cp-c\mathcal M_s\zeta_R\|_2\to0,\qquad
+1=|c|^2(1+\|\zeta_R\|_2^2).
+$$
+
+These are supplied complete-output $L^2$ conclusions. Source §18 obtains the early compact core and late free column from the actual short-field source; §19 applies the bounded native inverse at a fixed separated parameter and the full-output macroscopic comparison. The resulting common complex factor, asymptotic orthogonality and exact norm accounting are Source credit. Local convergence or a trial state alone would not imply these conclusions.
+

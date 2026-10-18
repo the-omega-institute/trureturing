@@ -1,0 +1,4 @@
+### 80.8. Attribution and boundary
+
+The proof uses the standard Pauli-space dimension, Hilbert--Schmidt projection contraction, and trace-norm duality; see [Watrous, The Theory of Quantum Information, Chapters 1 and 3](https://cs.uwaterloo.ca/~watrous/TQI/) for matrix-norm and channel-norm background. The full-reference Gram norm and one-sided reference-tag comparison use the framework proved in section 72. The attaining physical product and exact arbitrary-reference norm are section 79's tetrahedral-marker theorem. No external numerical optimizer or numerical nonfinding is used as evidence for (1)--(3). The unrestricted four-fibre optimum with both environments arbitrary remains open between sqrt(3)-3/2 and 1/4.
+

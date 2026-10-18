@@ -1,0 +1,90 @@
+**定理 C-112.5（同一系数载体的固定参考对数能量）。** 固定 $\beta>0$，在
+$H=\mathbb C^5$ 上定义一次且不随 $D,t$ 改变的参考
+
+$$
+\begin{aligned}
+Z_\beta&=e^{-4\beta/3}+1+e^\beta+2e^{-21\beta},\\
+R_\beta&=Z_\beta^{-1}e^{-\beta\mathsf W}\\
+&=Z_\beta^{-1}\bigl(e^{-4\beta/3}P_0+P_1+e^\beta P_2
+                         +e^{-21\beta}(P_3+P_4)\bigr).
+\end{aligned}
+\tag{C112.16}
+$$
+
+它是正定、迹一、$0\prec R_\beta\preceq I_5$ 的有限维迹类参考。
+对任意迹一 PSD 系数矩阵 $D$，定义
+$E_{R_\beta}(D)=\operatorname{tr}(D[-\log R_\beta])$，则
+
+$$
+E_{R_\beta}(D)=\log Z_\beta+\beta\operatorname{tr}(\mathsf W D).
+\tag{C112.17}
+$$
+
+因此 $k(D)\le3$ 蕴含 $E_{R_\beta}(D)\ge\log Z_\beta$，而
+$127/129<t\le1$ 时
+
+$$
+E_{R_\beta}(C_t^{\rm F})=\log Z_\beta-\beta\delta_t
+ <\log Z_\beta\le E_{R_\beta}(C_t^{\rm E}).
+\tag{C112.18}
+$$
+
+两族的自参考谱能量相等，并不使此固定非均匀交叉参考能量相等。
+对任意正定迹一参考 $R$ 与任意两个迹一 PSD 矩阵 $D_1,D_2$，
+交叉能量相等的充要条件是
+$\operatorname{tr}((D_1-D_2)\log R)=0$。
+
+证明。谱投影 $P_m$ 完备正交，各指数系数严格正，和为 $Z_\beta$。
+归一化后每个本征值严格介于零和一之间，这证明参考的全部条件。
+有限维正谱函数演算给
+$-\log R_\beta=\beta\mathsf W+\log Z_\beta I_5$，从而得 (C112.17)。
+这个等式不要求 $D$ 与 $R_\beta$ 对易；迹只取 $D$ 在参考本征基上的对角。
+C-112.2 和 $k(C_t^{\rm E})\le2$ 给 (C112.18)。
+对不同参考 $D$ 本身，自能量是其本征值的 $-\lambda\log\lambda$ 之和。
+由 (C112.10)，两族自能量同为
+
+$$
+-2\frac{1+t}{5}\log\frac{1+t}{5}
+-\frac15\log\frac15
+-2\frac{1-t}{5}\log\frac{1-t}{5},
+\tag{C112.19}
+$$
+
+端点按 $0\log0=0$ 解释。
+一般固定 $R$ 时两迹之差正是
+$-\operatorname{tr}((D_1-D_2)\log R)$，给所述充要条件。
+均匀参考 $I_5/5$ 的能量对所有迹一 $D$ 都是 $\log5$；
+(C112.18) 则是同谱而固定非均匀交叉能量不等的具体例子。
+
+将矩阵视为 $H$ 上的连续线性算子，它们在有限维自动为迹类。
+对应 [LogRegularization](../../../D5/S3/Quantum/Analysis/TraceClass/LogRegularization.lean)
+的 `Reference`，参考参数是 $T=R_\beta$，可变迹类参数是 $\rho=D$；
+`Reference` 本身只要求 $0\preceq T\preceq I$，本条还给出了迹一与严格正性。
+其实际正则化和能量是
+
+$$
+\begin{aligned}
+L_\varepsilon(R_\beta)&=\log(1+\varepsilon)I_5-
+                             \log(R_\beta+\varepsilon I_5),\\
+E_\varepsilon(R_\beta,D)&=\operatorname{tr}(D L_\varepsilon(R_\beta)),
+\qquad\varepsilon>0.
+\end{aligned}
+\tag{C112.20}
+$$
+
+令 $r_m>0$ 为 (C112.16) 的五个本征值，则
+$E_\varepsilon=\sum_m p_m(D)
+ [\log(1+\varepsilon)-\log(r_m+\varepsilon)]$。
+这是非负有限和；$\varepsilon\downarrow0$ 时单调增加到
+$\sum_m p_m(D)(-\log r_m)=E_{R_\beta}(D)$。
+所以在 $\varepsilon=(n+1)^{-1}$ 的网格上取非负扩展实上确界，也得到同一有限值。
+这正对应 [SpectralEnergy](../../../D5/S3/Quantum/Analysis/TraceClass/SpectralEnergy.lean)
+中 `regularizedSupremum T rho`、`spectralEnergy T rho` 的变量朝向及全本征基级数；
+参考正定使零本征值的无穷对数情形不出现。
+该源中 `lowerSemicontinuous_spectralEnergy` 固定 $\rho$ 而变化参考 $T$。
+本条固定 $T=R_\beta$ 而变化 $D$ 的证书来自 (C112.7)、(C112.17)，
+不由参考变量的下半连续性推出。特别地
+$|E_{R_\beta}(D)-E_{R_\beta}(C_t^{\rm F})|
+\le11\beta\|D-C_t^{\rm F}\|_1$ 是 (C112.9) 的同迹对偶估计。
+指数参考是谱函数演算的数学构造，不是原菜单授予的参考读出。证毕。
+

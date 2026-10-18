@@ -1,0 +1,38 @@
+**定理 450.5（复用 Dickman 变换后的同对象方差关系）。** 取 §433、§434
+已有的经典 Dickman 函数 \(\rho_D\)，满足
+\(\widehat\rho_D(v)=C/\Phi(v)\)。归一密度
+\(\rho_D(y)/C\) 定义随机变量 \(Y\)，故其 Laplace 变换为
+
+\[
+\ell(v)=\mathbb E e^{-vY}=\frac1{\Phi(v)}\qquad(v>0).
+\tag{CVP.13}
+\]
+
+对任意 \(v>0\)，用 \(e^{-vY}/\ell(v)\) 倾斜这同一概率律，记
+倾斜期望和方差为 \(\mathbb E_v\)、\(\operatorname{Var}_v\)。则
+
+\[
+\boxed{\quad
+\Phi''(v)=\Phi(v)
+\left[(\mathbb E_vY)^2-\operatorname{Var}_v(Y)\right]>0,
+\qquad
+\operatorname{Var}_v(Y)<(\mathbb E_vY)^2.
+\quad}
+\tag{CVP.14}
+\]
+
+**证明。** 经典身份在 \(v\downarrow0\) 的单调收敛给
+\(\int_0^\infty\rho_D(y)\,dy=C\)，所以归一密度确实有质量一。
+对任意固定正 \(v\) 的紧邻域，\(y^je^{-vy}\) 由固定常数乘
+\(e^{-(v/2)y}\) 支配，右侧对 Dickman 律可积。这支付前两阶
+Laplace 求导及倾斜矩的完整无穷尾。
+写 \(a=-\ell'/\ell=\mathbb E_vY\)、
+\(b=\ell''/\ell=\mathbb E_vY^2\)，准确求倒数的二阶导数得
+
+\[
+\Phi''=2(\ell')^2/\ell^3-\ell''/\ell^2
+=\Phi(2a^2-b)=\Phi(a^2-\operatorname{Var}_v(Y)).
+\]
+
+原 \(\Phi''>0\) 和 \(\Phi>0\) 给（CVP.14）。证毕。
+

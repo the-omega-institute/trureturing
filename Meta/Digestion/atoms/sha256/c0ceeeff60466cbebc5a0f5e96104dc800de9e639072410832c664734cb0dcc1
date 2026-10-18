@@ -1,0 +1,64 @@
+## 5. A short exact L5 illustration and its cheaper exclusion
+
+Use the free/tail constructor of [Five-state Slice, §2][V], with the following specified base law, for $0\le t\le10^{-6}$:
+
+$$
+K=\begin{pmatrix}7/10+9t/40&3/20&3/20-9t/40\\2/3&1/6&1/6\\2/3-t&1/6&1/6+t\end{pmatrix}
+=\begin{pmatrix}a&u\\q&G\end{pmatrix},\qquad
+\pi=(20/29,9/58,9/58),\quad \eta=10/19.
+$$
+
+In state order $(1,2,3,2',3')$, $M_0$ has rows $(a,u,0,0)$, two zero rows, and the last two rows of $K$ padded by two zeros; $M_1$ has just entries $(2,4)=(3,5)=1$. Take $\lambda=(10/19,9/76,9/76,9/76,9/76)$. The base entries are positive, rows sum to one, and detailed balance with $\pi$ holds. With $b=9/29$, direct multiplication gives $\lambda=(\pi,\pi_2,\pi_3)/(1+b)$, $A\mathbf1=\mathbf1$, $M_1^2=0$, $\lambda M_0=(\pi K,0,0)/(1+b)$ and $\lambda M_1=(0,0,0,\pi_2,\pi_3)/(1+b)$. Thus $\theta_t\in\Theta_5$ on the emitted-bit clock; write $P_t=P_{\theta_t}$ and $\mathbb E_t=\mathbb E_{P_t}$. Every legal word has a positive path using state $3$ for a one, $3'$ for its following zero and state $1$ for other zeros, including initial zeros, final ones and all-zero words.
+
+Put $v=(a,0,0,q_2,q_3)^{\mathsf T}$, $w=(a,u_2,u_3,0,0)$ and $z=uq=1/5-3t/10+9t^2/40$. Direct products give $M_{00}=vw$, $wM_0=aw$, $w\mathbf1=1$, $\lambda v=\eta$, and
+
+$$
+M_{00000}=a^3vw,\qquad M_{00100}=zvw,
+\qquad f(00000)=z,\quad f(00100)=-a^3,\quad f=0\text{ on all other }B_5.
+$$
+
+The two masses are $\eta a^3,\eta z$, and $J=\eta a^3z>0$. Proposition 4.1 proves actual full-law conditional nullity. Theorem 2.1 cancels all exterior sites, including $0,6$; the entire response is $JH_t$, where
+
+$$
+H_t=\sum_{i=1}^5\bigl(\mathbb E_t[\ell_i\mid00000]-\mathbb E_t[\ell_i\mid00100]\bigr).
+\tag{5.1}
+$$
+
+At $t=0$, the visible law is exactly [TwoStep, Definition 2.1][T]: after $00$ and $10$ its next-one probabilities are $3/10$ and $1/3$, and after a one it forces zero; its stationary pair row is $(10/19,9/38,9/38)$. Define a local function $g_i=0$ on forced fibers and $g_i=p_{xy}$ on free fibers, where $x=X_{i-2},y=X_{i+2}$ and
+
+$$
+(p_{00},p_{01},p_{10},p_{11})=(200/543,100/247,100/247,50/113),
+\qquad (R_{00},R_{01},R_{10},R_{11})=(200/343,100/147,100/147,50/63).
+$$
+
+At zero, $uG=u/3$, $Gq=q/3$ and $G^2=(50/63)aqu$. Together with $M_{00}=vw$ these imply all four matrix identities $M_{x010y}(0)=R_{xy}M_{x000y}(0)$. Arbitrary farther exterior products preserve them. Finite-window conditioning followed by increasing-field convergence identifies $g_i$ as the actual full posterior at zero, consistently with [TwoStep, Proposition 2.4][T].
+
+For the actual $t$ law, put $s=6t$. Entrywise $(1-s)M_x(0)\le M_x(t)\le(1+s)M_x(0)$ for both letters. Nonnegative multiplication gives the corresponding $n$-factor word bounds. In any radius-$r$ exterior atom with $r\ge2$, keep all farther factors at $t$ and compare only the central five factors. Its actual insertion odds lie between $R_{xy}/U$ and $R_{xy}U$, where $U=((1+s)/(1-s))^5$. For $s\le1/100$, binomial expansion and Bernoulli's inequality give $(1+s)^5\le1+6s$, $(1-s)^5\ge1-5s$, and $U\le1+12s$. Since $R_{xy}<1$ and odds-to-probability is 1-Lipschitz,
+
+$$
+|q_{r,i}(P_t)-g_i|\le72t\quad(r\ge2),\qquad |q_i(P_t)-g_i|\le72t\quad P_t\text{-almost surely}.
+\tag{5.2}
+$$
+
+The latter follows by conditional convergence under $P_t$ itself, with a common conull set for all integer sites. Zero-total atoms are not divided by and forced fibers remain zero. Thus (5.2) uses a globally specified comparison function, not an untransferred almost-sure version from another law.
+
+For the complete reference calculation set $p_0=200/543$, $p_1=100/247$, $p_2=50/113$. Conditional on $00000$, the left exterior pair $(-1,0)$ has masses $(49,30,21)/100$ at $(00,01,10)$; the right pair $(6,7)$ has $(49,21,30)/100$. These follow from the stationary pair products entering and leaving $00$. The same exterior law holds under $00100$. The center difference is $2p_0-1$. Each neighbor difference is $(7/10)p_0^2+(3/10)p_1^2$, because the second word forces its loss to zero. Each endpoint difference is $(49/100)(p_0^2-p_1^2)+(21/100)(p_1^2-p_2^2)$; the remaining exterior case forces zero on both words. Hence all five terms give
+
+$$
+H_0=2p_0-1+\frac{119}{50}p_0^2+\frac1{25}p_1^2-\frac{21}{50}p_2^2
+<-\frac{134287}{10^7}<-\frac1{100},
+\tag{5.3}
+$$
+
+using $p_0<369/1000$, $p_1<405/1000$, $p_2>442/1000$. Both endpoint terms are included.
+
+Each comparison loss $(X_i-g_i)^2$, $1\le i\le5$, lies in $[0,1]$ and depends only on the nine coordinates $[-1,7]$. Conditional on either block word, every such nine-word mass ratio between $P_t$ and $P_0$ lies between $(1-s)^9/(1+s)^5$ and $(1+s)^9/(1-s)^5$. The bounds $(1+s)^9\le1+10s$, $(1-s)^9\ge1-9s$ put these ratios in $[1-16s,1+16s]$. Each comparison expectation therefore changes by at most $96t$. Equation (5.2) changes each actual squared loss by at most $144t$. There are ten conditional expectations, giving
+
+$$
+|H_t-H_0|\le2400t,\qquad H_t<-19/2500,\qquad S_{P_t}(f)<-19J/2500<0
+\quad(0<t\le10^{-6}).
+\tag{5.4}
+$$
+
+This is the actual total response, with absolute sum at most $5J$, rather than an identification of a finite $T$ with $S$. It consumes Theorem 3.1's finite-detectability conclusion. No numerical program or rate assertion is needed.
+

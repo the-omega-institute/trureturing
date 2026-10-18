@@ -1,0 +1,44 @@
+**Proposition 9.1 (Universal convex envelope and support values;
+inherited comparison).** The function $F$ in (7.1) is the attained
+minimum risk when the independent auxiliary probability space may
+be chosen. If
+
+$$
+\mathscr B(\lambda)=\max_{k\in K}
+\bigl[(1-\lambda)q_k-\ell_k\bigr],\qquad \lambda\in\mathbb R,
+\tag{9.1}
+$$
+
+then it is the maximum of $C-\lambda q$ under every specified
+auxiliary law, attained by a deterministic paid policy, and
+
+$$
+F(q)=\sup_{\lambda\in\mathbb R}
+\bigl[(1-\lambda)q-\mathscr B(\lambda)\bigr].
+\tag{9.2}
+$$
+
+This complete universal support curve is the result of
+[Universal Support][Support]; the formula here expresses it through
+the mass-preserving tables.
+
+Proof. Theorem 5.1 bounds any supporting objective by the maximum
+over its finite representatives, and a maximizing $K$ policy
+attains it without using the seed. For any protocol at mass $q$,
+its dominating pair is a convex combination of $K$ pairs, and so
+has risk at least $F(q)$. An atomless space realizes a minimizing
+combination by Lemmas 6.2 and 7.2, proving attained universal
+optimality.
+
+For completeness of the support representation, the convex hull
+of the finitely many $(q_k,\ell_k)$ is a compact polygon. Its
+lower section is $F$, defined at every $q\in[0,1]$. Each of
+its lower edges has an affine supporting line; at an endpoint a
+finite slope beyond the slopes of the finitely many edges suffices.
+A lower vertex also admits such a slope. A line of slope
+$1-\lambda$ below all the vertices has intercept at most
+$-\mathscr B(\lambda)$. A supporting line at each lower point
+attains that intercept, proving (9.2). This uses finite convex
+geometry, with the actual paid realizations already established.
+$\square$
+

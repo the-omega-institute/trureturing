@@ -1,0 +1,24 @@
+**引理 4.1（one rounded update）。** Suppose $0<x,y\le1$ are represented finite positive dyadics. Let $e$ be the leading binary exponent of $\max(x,y)$ and keep $d=2^{e-P}$ as a signed binary exponent. Define finite integers
+
+$$
+A=\lfloor x/d\rfloor,\qquad B=\lfloor y/d\rfloor,\qquad
+C=A+B-\lfloor ABd\rfloor,
+\qquad G_P(x,y)=\min(1,Cd).
+$$
+
+Then
+
+$$
+|G_P(x,y)-g(x,y)|\le2d\le\alpha g(x,y).
+$$
+
+The integers satisfy $A,B<2^{P+1}$, $AB<2^{2P+2}$,
+$C<2^{P+2}$ and $C\ge\max(A,B)\ge2^P$. The returned value is stored exactly as $(C,e-P)$, or $(1,0)$ if clipped. There is no further unaccounted normalization rounding.
+
+**证明。** Put $x'=Ad,y'=Bd$. Both lie in $[0,1]$ and differ from the inputs by less than $d$. Since both partial derivatives of $g$ lie in $[0,1]$,
+$0\le g(x,y)-g(x',y')\le2d$. Also
+$0\le Cd-g(x',y')<d$. Clipping at one cannot increase the distance to $g(x,y)\in[0,1]$, proving the absolute error bound. Since
+$g(x,y)\ge\max(x,y)\ge2^e$, it implies the relative bound.
+
+The leading bin gives $A,B<2^{P+1}$ and at least one is at least $2^P$. Further, $ABd\le\min(A,B)$ because $Ad,Bd\le1$; this proves $C\ge\max(A,B)$. Its upper bound follows from $C\le A+B$. All products have the displayed widths.
+

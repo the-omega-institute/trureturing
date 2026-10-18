@@ -1,0 +1,131 @@
+**Definition 3.2 (paid setup used for the equal-clock family).** Fix the
+public controller's owner code to $U(0)$ and reserve ordinary public ports
+0, 1, 2, 3 and 4 for tag, length, payload, descriptor stream and metadata
+template, respectively. All five are initially empty, with their heads at
+R. The common paid prefix has installed their boundary pairs, the finite
+native graph below and the controller's exclusive read/write tokens. It
+has also copied the actual next source-request ordinal into otherwise
+empty public port 5 by the paid unary copy below, sealed that copy and
+executed Home; MR. Thus port 5 contains exactly $U(q)$, with its head at
+the first bit; preceding counter versions remain retained elsewhere.
+Positioning at the actual current counter version uses its real Base/Seek
+reference and is part of that prefix; once positioned, copying, sealing
+and positioning port 5 cost $5(q+1)+1+(2q+6)=7q+12$ occurrences.
+Source-request ordinals start at 0 and advance once per actual source
+call, including acquisition calls and rejects. They do not count archive
+lookup as a source call. Ports 6, 7 and 8 are the respective initially
+empty Base-counter destinations.
+Here $q$ is acquired counter data, not a meter numeral, future input or
+native instruction parameter.
+
+Before appending anything to tag, length or payload, execute PR57.D2's
+Base on each empty arena into a distinct empty public counter port. Each
+Base executes Home; MR on its arena, RD(R), then EX; WR(0); MR on its
+counter: eight occurrences. Seal that counter at R by one CTL. Home; MR
+on it costs six more and puts its head on the actual $U(0)$. Thus this
+Base preamble costs exactly 45 occurrences and leaves the three arena
+heads at R and their three sealed Base heads at their first bits. Let
+$n_-$ be its actual final ordinal. All other preceding boot, acquisition,
+warm-up and request-counter work is included in that paid prefix. The
+five frame/work ports and three Base-counter ports have not been used by
+acquisition or warm-up.
+
+A zero-terminated unary copy uses RD and two finite successor arms: for
+1, execute EX(destination); WR(destination,read-bit); MR(destination);
+MR(source) and return to RD; for 0, execute the same four occurrences and
+continue to the next routine. It copies the terminal 0 too, so its cost is
+$5(k+1)$ on $U(k)$ and its source head ends one cell past that zero,
+at R when this is the port's sole word. A segment copy uses the same
+five-row body on each bit, with RD testing for sep instead; the final
+RD(sep) exits without copying or moving. It costs $5k+1$ on a $k$-bit
+segment. These are explicit finite expansions of AppendWord's body, with
+their terminal tests included. A literal bit or separator is appended by
+EX; WR; MR, costing three occurrences. All source ports are sealed,
+readable by this owner, and distinct from the destination. Data/test
+latches are distinct from the retained input latch.
+
+The setup from $n_-$ is the following one finite native graph.
+
+1. Execute one reserve-phase CTL, setting the input-supply purpose tag.
+   For each of the three tag bits execute IN; EX(tag); WR(tag,input);
+   MR(tag). Seal the tag by one CTL. Execute Home(tag); MR(tag), and three
+   unrolled RD(tag); MR(tag) pairs to recognize the finite port code.
+   For the family below this code is `010`.
+2. Receive $U(d)$ on the initially empty length port. For each supplied bit
+   execute IN; EX(length); WR(length,input); RD(length,test); MR(length).
+   The RD branches to two identical MR opcodes: the 1 case returns to IN,
+   the 0 case goes to a one-CTL seal. Run Home(length); MR(length).
+3. Execute one CTL entering the allocation/descriptor purpose. Construct
+   the following template on port 4, in the displayed order; each sep is
+   a real cell:
+
+   $$
+   \begin{aligned}
+   D_t&=U(0)U(0)U(0)U(3)\,10\,U(q),\\
+   P_l&=U(0)U(1)U(0),& S_l&=10\,U(q),\\
+   P_p&=U(0)U(2)U(0),& S_p&=11\,U(q),\\
+   W&=D_t\,\mathsf{sep}\,P_l\,\mathsf{sep}\,S_l\,
+       \mathsf{sep}\,P_p\,\mathsf{sep}\,S_p\,\mathsf{sep}.
+   \end{aligned}
+   $$
+
+   In each of the three prefix fields, obtain the base $U(0)$ by the
+   unary copy from that arena's actual sealed Base counter. Obtain every
+   $U(q)$ by the unary copy from the actual request counter, using
+   Home; MR before its second and third copies. All remaining fields are
+   the displayed fixed literal bits, appended by their finite unrolled
+   rows. Seal W by one CTL, then Home(template); MR(template). The segment
+   lengths are $q+10,4,q+3,5,q+3$, respectively.
+4. Starting with length at its first bit and payload at R, execute the
+   following zero-reservation graph: RD(length,test); on 1 execute
+   EX(payload); WR(payload,0); MR(payload); MR(length) and return to RD;
+   on 0 exit. Append exactly one sep to payload. This graph is specified
+   directly by PR57.D1 primitives; it is not a call of PR57.D2's complete
+   Allocate service. Its zero-fill body costs $5d+1$ and its one delimiter
+   costs three more occurrences.
+5. Construct three complete descriptor records on the initially empty
+   descriptor stream. Copy segment $D_t$, append sep, and seal that record
+   by one CTL. Move the template head once to $P_l$, copy that segment,
+   and move once to $S_l$. Append a literal 1 to the descriptor stream.
+   Execute Home(length); MR(length), and copy its whole $U(d)$, terminal
+   zero included. Copy $S_l$, append sep and seal by one CTL. Move once
+   to $P_p$, copy it and move once to $S_p$. Execute Home(length);
+   MR(length), copy $U(d)$ again, then copy $S_p$, append sep and seal
+   by one CTL. A segment copy leaves the template head at that segment's
+   actual sep; exactly four template MR occurrences join the five copies.
+6. Execute Home(length); MR(length), then Home(payload); MR(payload).
+   Execute one CTL restoring the input-supply purpose and enter Definition
+   3.1's first test. No token changes owner during setup.
+
+The descriptors have PR57.D2's field order: unary owner, arena port,
+actual Base offset, length, initialization bit, mutability bit and actual
+request ordinal. They are, in full,
+
+$$
+\begin{aligned}
+D_t&=U(0)U(0)U(0)U(3)\,10\,U(q),\\
+D_l&=U(0)U(1)U(0)U(d+1)\,10\,U(q),\\
+D_p&=U(0)U(2)U(0)U(d)\,11\,U(q).
+\end{aligned}
+$$
+
+Appending 1 before the first length copy constructs $U(d+1)$ without
+arithmetic advice. The tag and length data are initialized and immutable;
+the payload's $d$ data cells are initialized to zero and remain writable.
+Its sep is outside those $d$ cells. The descriptor records are immutable,
+terminated by sep and bound to these actual construction/seal occurrences;
+they do not assert that the mutable payload is already a complete request.
+Their shared request ordinal does not alias their distinct arena ports.
+The descriptor stream and template are fixed owner-local work ports, not
+exported newly allocated data arenas. No descriptor grants another owner
+access, and the payload's eventual seal and source dispatch remain later
+service work.
+
+No ordinal is used as a primitive operand. Every variable copy scans an
+actual sealed source or actual terminating unary word. The Base offsets
+are measured before construction, and every head movement, field bit,
+terminal test, seal and accounting-tag change in this setup is displayed.
+For subsequent frames in nonempty arenas use the general supplier's real
+Base/Seek and complete Allocate/descriptor graphs, evaluated by Definition
+3.4; the following empty-port formula is not their price.
+

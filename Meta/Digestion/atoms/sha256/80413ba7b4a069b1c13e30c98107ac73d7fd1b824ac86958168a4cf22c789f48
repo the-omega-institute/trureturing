@@ -1,0 +1,32 @@
+**Definition 260.3 (Mature comparisons and mathematical boundaries).**
+Blackwell's *Comparison of Experiments*, Sections 2–5,
+supplies the comparison and randomization frame: a common kernel
+and all decision events must be considered jointly. It does not
+supply the increasing stopped hard-two theorem here.
+Kaniewski, Lee and de Wolf,
+[*Query complexity in expectation*, Definition 8 and Theorem 9](https://arxiv.org/html/1411.7280v1),
+concern nonnegative scalar expectation and worst positive-mixture
+path depth. Their characterization does not impose this one
+probability-vector mass budget, the three equal-mass stopped cells,
+or increasing first-zero stopping. The general polyhedral alternative
+used in Section 199 is the finite Farkas framework in Kaibel,
+[*Basic Polyhedral Theory*, Theorems 1, 7, 8 and 10](https://arxiv.org/abs/1001.2161).
+
+The additional results here are ordinary suffix, score and
+whole-table arguments relative to those named suppliers. Their
+construction principles are concrete: a fair suffix exposes a
+quarter-unit loss from each noncanonical transcript, a biased suffix
+chooses the best balance of slack and counting defect, a midpoint
+splits a cell disagreement evenly, and the event identity compares
+signed mass transfer with slack at the same legal word. These
+principles motivate the formulas; the displayed inequalities and
+cell proofs establish their claimed ranges. Each endpoint mixture
+has one probability budget and one common seed; each score
+certificate uses one joint allowance.
+They make no exhaustive literary-priority claim or unrestricted
+closure claim about previously named constructors. Existing lower
+cuts, saturated and plateau laws, the normalized $D=0$ face,
+terminal coupling and exact source/tail transport retain their own
+mathematical ownership and are not additional results of these
+arguments.
+

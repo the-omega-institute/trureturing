@@ -1,0 +1,73 @@
+**Definition 2.4 (rereading acquisition, RA).** The following is an executable
+finite-string specification. `Read` is the sole source operation. `put` appends
+tokens, `clear` overwrites and retracts a region, and `release` removes a local
+record after clearing it. Scans and sequence operations expand to finite cell
+steps under Definition 2.1. `cut_member` compares a path to successive cut
+words in place, with indices and an equality flag; it never copies the cut
+or materializes an absent long cut address. `hole(B,i)` scans only the exterior
+prefix, counts `H` markers and copies the address of its $i$th hole. It skips
+other hole addresses in place. It neither constructs a hole list nor parses
+a tree into memory.
+
+```text
+after(x):
+    while x ends in R: remove its last letter
+    if x is empty: return DONE
+    replace its last L by R
+    return x
+
+same(p,q):
+    z := empty
+    repeat:
+        materialize p followed by z in the operand region
+        a := Read(operand)
+        materialize q followed by z in the operand region
+        b := Read(operand)
+        if a != b: release z,a,b; return false
+        if a == branch: append L to z
+        else if a == alpha or a == beta:
+            z := after(z)
+            if z == DONE: release z,a,b; return true
+        else: reject the purported port history
+
+RA(P):
+    repeat:
+        g := empty
+        repeat:
+            ell := Read(materialize(g))
+            if ell == branch: append L to g
+            else if ell == alpha or ell == beta: break
+            else: reject the purported port history
+        B := empty; x := empty; r := 0
+        repeat:
+            if cut_member(x,P):
+                put(B,H,x,semicolon); r := r+1
+                x := after(x)
+            else:
+                a := Read(materialize(x))
+                if a == branch: put(B,B_token); append L to x
+                else if a == alpha or a == beta:
+                    put(B,the corresponding leaf token); x := after(x)
+                else: reject the purported port history
+            if x == DONE: break
+        put(B,exterior_end)
+        for i := 0,...,r-1:
+            for j := i+1,...,r-1:
+                p := hole(B,i); q := hole(B,j)
+                bit := same(p,q); put(B,bit); release p,q,bit
+        put(B,row_end)
+        v := Read(materialize(g))
+        if v == ell:
+            clear/release every local region and scalar except B
+            transfer the canonical readable B object; Return
+        clear/release B and every local region and scalar
+```
+
+The impossible `absent` cases specify rejection of an invalid purported
+history, not an additional retry on a legal source. Scalars `i,j,r` and scans
+use binary registers. Loop bounds are computed from the actual candidate,
+not from the source or a bound on interference. RA keeps no attempt count,
+Read count, history or timestamp. A separate root-cut shortcut is available
+from [CNA, Proposition 4.3][CNA], but all bounds here concern this same RA
+program, including its guard search on the root cut.
+

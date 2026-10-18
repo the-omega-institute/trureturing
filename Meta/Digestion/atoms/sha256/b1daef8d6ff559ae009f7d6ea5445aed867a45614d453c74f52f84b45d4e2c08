@@ -1,0 +1,98 @@
+**Lemma 10.2 (local saturation, no cancellation and class budgets).**
+Under Assumption 10.1 the following properties hold on each axis.
+For $S=S_t^\xi$, $s=\min S$, $u=\max S$ and
+$\gamma=\gamma_t^\xi$, every pair of representatives available
+inside its span is occupied:
+
+$$
+\{j,j+10\}\subseteq S
+\quad\text{for every }j\in[s,u-10]_{\mathbb Z}.
+\tag{NAGC.10.4}
+$$
+
+Each missing integer in $[s,u]_{\mathbb Z}\setminus S$ has a
+residue absent from $S$ altogether, and distinct such integers have
+distinct residues modulo ten. If a residue is duplicated in one
+projection on that axis, it is duplicated in exactly one class and
+is absent from no class. In particular it cannot be the residue of
+a span omission in any other class. The aggregate values are
+
+$$
+\begin{array}{c|c|c|c}
+\text{axis}&\text{positive }W_j\ (0\le j\le8)
+ &\text{negative }W_j\ (0\le j\le8)&W_9\\ \hline
+a&\text{six values }1&\text{three values }-2&0\\
+b&\text{seven values }1&\text{two values }-2&-3.
+\end{array}
+\tag{NAGC.10.5}
+$$
+
+Consequently
+
+$$
+0\le\gamma_t^a\le3,\qquad 0\le\gamma_t^b\le3
+\quad(0\le t\le18).
+\tag{NAGC.10.6}
+$$
+
+If $\gamma>0$, the projection duplicates both residue $s$ and
+residue $u-10$, which may be the same residue.
+
+**Proof.** Set $D_t^\xi=\sum_{j=0}^9(\varepsilon_{t,j}^\xi)_+$.
+The charge proof in Lemma 7.2 gives $D_t^\xi\le\gamma_t^\xi$.
+Proposition 8.3 gives equality in
+
+$$
+\Gamma_\xi\ge\sum_tD_t^\xi\ge Q_\xi.
+\tag{NAGC.10.7}
+$$
+
+All the first differences $\gamma_t^\xi-D_t^\xi$ are
+nonnegative, so every one vanishes. Within $[0,18]_{\mathbb Z}$,
+$D_t^\xi$ counts exactly the pairs $j,j+10$ occupied by $S$.
+The possible lower representatives in its span are precisely
+$[s,u-10]_{\mathbb Z}$, containing $\gamma=u-s-9$ integers.
+Equality of their count with $D_t^\xi$ proves (NAGC.10.4).
+
+If a span omission had another representative of its residue inside
+the span, that pair would be required by (NAGC.10.4), a contradiction.
+Representatives outside the span do not belong to $S$ either. Thus
+the omission's residue is absent from $S$. Two omissions with one
+residue would themselves form one of the required pairs, so this
+map from omissions to absent residues is injective.
+
+For a fixed residue and axis, let $P_j$ count classes with
+$\varepsilon_{t,j}^\xi=1$ and let $Z_j$ count classes with
+$\varepsilon_{t,j}^\xi=-1$. These are the only nonzero values
+of $\varepsilon$, and $W_j^\xi=P_j-Z_j$. Hence
+
+$$
+\sum_tD_t^\xi-Q_\xi
+=\sum_{j=0}^9\bigl(P_j-(P_j-Z_j)_+\bigr)
+=\sum_{j=0}^9\min(P_j,Z_j)=0.
+\tag{NAGC.10.8}
+$$
+
+Each summand is nonnegative. Therefore no residue has both a
+duplicating class and an omitting class.
+
+To determine the magnitudes, use (NAGC.7.10)--(NAGC.7.11) at
+the supplied values $(Q_a,\eta_a)=(6,0)$ and
+$(Q_b,\eta_b)=(7,3)$. On axis $a$, the number $k$ of positive
+entries among the first nine obeys $k\le6$ and
+$6\ge2(9-k)$, so $k=6$. Their total is six, forcing all six
+to be one. The remaining three have total minus six and each is
+at most minus two, so all are minus two. Also $W_9^a=0$.
+On axis $b$, the inequalities are $k\le7$ and
+$7-3\ge2(9-k)$, giving $k=7$. The positive entries are all one,
+the other two are minus two, and $W_9^b=-3$. This proves
+(NAGC.10.5). At a duplicated residue, no cancellation and
+$W_j^\xi=1$ now give $P_j=1$ and $Z_j=0$.
+
+Each axis has precisely three residue types with negative aggregate
+value. The injective omission-to-residue map above must take its
+values in those types, by no cancellation. Since a projection has
+exactly $\gamma_t^\xi$ omissions in its span, (NAGC.10.6) follows.
+Finally $\gamma>0$ makes $s\le u-10$, so both endpoints of
+this interval supply pairs in (NAGC.10.4). $\square$
+

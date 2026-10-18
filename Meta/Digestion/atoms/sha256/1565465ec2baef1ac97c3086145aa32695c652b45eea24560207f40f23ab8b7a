@@ -1,0 +1,126 @@
+**定理 444.2（完整肩部的统一严格负界）。** 对所有 \(t>0\)，
+
+\[
+K(t)\le A-\Lambda(C-1)<-\delta
+=\frac{1-2\log2}{6}<0,
+\qquad
+\Lambda(k)=k\left[1+\log\frac{1+k}{2k}\right]\quad(k>0).
+\tag{NS.6}
+\]
+
+因此 \(\sup_{t>0}K(t)<-\delta\)。
+
+**证明：真实斜率与完整比较积分。** §441 通过经典 Gamma 质量、
+一阶矩及密度比单交点比较支付了
+\(Q(b)-Q(a)>(b-a)/2\)（\(0<a<b\)）。保持原归一化
+\(Q(0+)=1\)，固定 \(u>0\) 并令 \(a\downarrow0\)，得到
+非严格的极限界
+
+\[
+Q(u)\ge1+u/2,\qquad
+\frac{1/Q(u)-1}{u}\le-\frac1{u+2}.
+\tag{NS.7}
+\]
+
+所有分母正；这里没有将严格割线不等式在端点极限中仍宣称为严格。
+对任意 \(t>0\)，原肩部积分和比较积分均在整个正轴绝对收敛。
+积分比较及完整换元 \(w=t(u+2)\) 给
+
+\[
+\begin{aligned}
+K(t)&\le A-(C-1)(\log t+\gamma_E)
+ -C\int_0^\infty\frac{e^{-tu}}{u+2}\,du\\
+&=A-(C-1)(\log t+\gamma_E)-Ce^{2t}E_1(2t).
+\end{aligned}
+\tag{NS.8}
+\]
+
+指数积分的下限为 \(2t\)，上限仍为无穷。
+
+**证明：比较函数的两端与全局最小值。** 写 \(k=C-1>0\)，定义
+
+\[
+H(x)=e^xE_1(x),\qquad
+\mathcal G(x)=k(\log(x/2)+\gamma_E)+CH(x)\quad(x>0).
+\]
+
+（NS.8）即 \(K(t)\le A-\mathcal G(2t)\)。经典指数积分的基本
+微积分公式给 \(H'(x)=H(x)-1/x\)，从而导数中的边际系数准确取消为
+
+\[
+\mathcal G'(x)=\frac kx+C\left[H(x)-\frac1x\right]
+=CH(x)-\frac1x,
+\tag{NS.9}
+\]
+
+因为 \(k-C=-1\)。
+
+在零端，\(E_1(x)=-\log x-\gamma_E+O(x)\)，所以
+\(H(x)=-\log x-\gamma_E+o(1)\)，其中使用
+\(x|\log x|\to0\)。于是
+
+\[
+\mathcal G(x)=-\log x-\gamma_E-k\log2+o(1)
+\longrightarrow+\infty\qquad(x\downarrow0).
+\]
+
+在远端，正的 \(H\) 已给
+\(\mathcal G(x)\ge k(\log(x/2)+\gamma_E)\to+\infty\)。两端均趋
+正无穷的连续函数因而在某个内部点 \(x_0>0\) 取得全局最小值。
+（NS.9）给 \(CH(x_0)=1/x_0\)，故
+
+\[
+\min_{x>0}\mathcal G(x)
+=k(\log(x_0/2)+\gamma_E)+1/x_0.
+\]
+
+函数 \(x\mapsto k(\log(x/2)+\gamma_E)+1/x\) 的导数为
+\((kx-1)/x^2\)，在 \(x=1/k\) 取得其全局最小值。因此
+
+\[
+\min_{x>0}\mathcal G(x)
+\ge k[1+\gamma_E-\log(2k)]
+=k\left[1+\log\frac{1+k}{2k}\right]=\Lambda(k).
+\tag{NS.10}
+\]
+
+最后一步保持原 Euler 幅度关系 \(\gamma_E=\log C=\log(1+k)\)。
+该全局下界不需要定位 \(x_0\)。
+
+**证明：Euler 常数的经典调和序列界。** 记
+\(H_n=\sum_{j=1}^n1/j\)，并用经典下调和序列
+\(\gamma_n^-=H_n-\log(n+1)\)。它趋于 \(\gamma_E\)，且
+
+\[
+\gamma_{n+1}^--\gamma_n^-
+=\frac1{n+1}-\log\left(1+\frac1{n+1}\right)>0.
+\]
+
+所以 \(\gamma_E\ge\gamma_1^-=1-\log2\)。再由指数函数的正项
+级数 \(e>1+1+1/2+1/6=8/3\)，得到
+
+\[
+C=e^{\gamma_E}\ge e/2>4/3,\qquad k>1/3.
+\tag{NS.11}
+\]
+
+对 \(k>0\)，令 \(r=k/(1+k)\in(0,1)\)。经典对数界
+\(\log y\le y-1\) 给
+
+\[
+\Lambda'(k)=r-\log(2r)\ge1-r>0.
+\]
+
+故
+
+\[
+\Lambda(C-1)>\Lambda(1/3)=\frac{1+\log2}{3}
+=\frac12+\delta.
+\tag{NS.12}
+\]
+
+严格积分比较 \(\log2=\int_1^2dw/w>1/2\) 同时支付 \(\delta>0\)。
+结合 \(A<1/2\)、（NS.8）与（NS.10），得到（NS.6）。同一上界
+\(A-\Lambda(C-1)\) 对所有 \(t>0\) 成立，故其上确界也严格小于
+\(-\delta\)。证毕。
+

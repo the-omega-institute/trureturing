@@ -1,0 +1,65 @@
+**Theorem 205.6 (Exact early-free cost on a chain family).** For
+$L\ge z\ge4$, $c,d\ge0$, define $Y(c,d,z)$ by correct weight $c$ at
+$w(\{1,\ldots,z\})$ and $w(\{2,\ldots,z\})$, weight $c+d$ at each
+$w(\{n,\ldots,z\})$, $3\le n\le z$, and $T=c$, with $A=P=0$.
+All bits after $z$ are one. Its complete $N/O$ excess is $2d$ if $z=4$
+and $3d$ if $z\ge5$. Every full $V\ge0$ with $E_V=0$ and
+$B_V=2(c+d)$ satisfies
+
+$$
+\mathcal J_{Y(c,d,z)}(V)\ge c/4+d.
+\tag{205.18}
+$$
+
+For $z=4$ and $c\ge8d$, this bound is the attained minimum over all such
+$V$, including arbitrary base and pair rows, arbitrary $K_V$, and any
+signed residual.
+
+**Proof.** The chain has at most three nonempty scored cells under any
+pair schedule, even after constant appended addresses are allowed.
+The three largest weights in $\{c,c,c+d,\ldots,c+d,T=c\}$ bound its
+support, as in 198.4. The stopped tables $(3,4;3,4,0)$ for $z=4$ and
+$(3,4;3,4,5)$ for $z\ge5$ attain respectively $3c+2d$ and $3c+3d$.
+The anchor is $3c$. Also $B_y=2(c+d)$, $W=3c$, $f_y=6d/5$;
+(205.16) proves (205.18).
+
+For the matching $z=4$ construction let $p=3c/4$ and $h=c+d$.
+For each $a=1,2$, put pair weight $p/2$ at each of
+$w(\{a,3\}),w(\{a,4\}),w(\{a,3,4\})$. Put correct weights
+
+$$
+C_{\{3\}}=p,\qquad C_{\{3,4\}}=h-p,\qquad
+C_{\{4\}}=h,\qquad T=p.
+\tag{205.19}
+$$
+
+Its early correct total is zero, its late totals are $h,h$, its pair
+mass is $3p$, its anchor is $4p=3c$, and $K_V=2h+4p=K_y$.
+The residual is exactly $-c(1-b_1)-c(1-b_2)$, nonpositive on $H$
+and zero at the $v_k$. Here $p\le h\le3p/2$ and $h-p\le p$;
+$h\le3p/2$ is exactly $c\ge8d$. The complete cell maxima are
+
+| Schedule | $N$ cell maxima | $O$ cell maxima |
+| --- | --- | --- |
+| $(1,2)$ | $(0,3p/2,3p/2,h)$ | $(3p/2,3p/2,h)$ |
+| $(a,3)$ or $(a,4)$ | $(p,p/2,h,3p/2)$ | $(3p/2,h,3p/2)$ |
+| $(3,4)$ | $(p,p,h,p)$ | $(2p,h,p)$ |
+
+Early labels never exceed the zero-label pair baseline; the only late
+labels with rewards are 3 and 4. For $(3,4)$ the correct rewards before
+maximization are $(h-p,p,h,0)$ and the pair masses are $(p,p,p,0)$,
+with $T=p$ in $11$. On early/3, the other late correct total $h$ in
+$11$ is covered by $3p/2$; on early/4 that reward is only $p$.
+All extra addresses are constant one, so constants and singletons
+are covered by these pairs. Both excesses equal $h-p=c/4+d$, attained
+by a stopped table, proving the minimum. This includes $c=8d$, $d=0$
+and $c=d=0$.
+
+In particular $Y(4,1/2,4)$ has unrestricted excess one and restricted
+minimum $3/2$. Retaining $B=9$ in a unit certificate requires
+$E_V\ge2/3$, whereas $E_V=0$ forces $B_V\le5$ by (205.15).
+For every $z\ge5$, $Y(4,1/3,z)$ has excess one and the restricted
+lower bound $4/3$; no matching minimum is asserted there. At $d=0$
+the input is zero-cost but the restriction costs at least $c/4$.
+Each input still has its unrestricted certificate $V=Y$. $\square$
+

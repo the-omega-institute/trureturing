@@ -1,0 +1,104 @@
+**Theorem 4.1 (two radial families and an explicit recovery budget).**
+Put
+
+$$
+\begin{gathered}
+p_{\rm cap}=\frac{\beta}{2(1-\alpha r)},\qquad
+R(p)=\frac{1-pr}{1-p},\\
+Q(p)=1-pk-\sqrt{(1-p)(1-pr)},\qquad
+q_0=Q(p_{\rm cap}).
+\end{gathered}
+\tag{WE.29}
+$$
+
+Then $0<p_{\rm cap}<1/2$ and $0<q_0<1$. For $0<q\le q_0$, define
+
+$$
+\begin{gathered}
+p(q)=\frac{q(2-q)}{(1-k)^2+2qk},\qquad
+t_{\rm rec}(q)=B_*/p(q)\\
+=\frac{C_{\rm end}}q+\frac{B_*(1+k)^2}{2(2-q)}.
+\end{gathered}
+\tag{WE.30}
+$$
+
+One common twelve-label original instrument has exact contrast
+$s=s_0(1-q)$, sharp acquired cost, original error and uniform activity
+$\log(1+t_{\rm rec})$. Consequently
+
+$$
+\boxed{\frac{C_{\rm end}}q<t_{\min}(s)
+\le\frac{C_{\rm end}}q+\frac{B_*(1+k)^2}{2(2-q)},\quad 0<q\le q_0,}
+\tag{WE.31}
+$$
+
+and
+
+$$
+\lim_{s\uparrow s_0}q t_{\min}(s)=C_{\rm end},\qquad
+A_{\min}(s)=\log(1/q)+\log C_{\rm end}+O(q).
+\tag{WE.32}
+$$
+
+Proof. Since $1-\alpha r>\beta$, $p_{\rm cap}<1/2$. On its entire
+interval $R(p)\ge1$ and $R(p)<U$: the latter inequality is exactly
+$p<\beta/(1-\alpha r)$. For $p>0$, $R(p)>1$. The radicals in (WE.29)
+are positive. Differentiation gives
+
+$$
+Q'(p)=-k+\frac{1+r-2pr}{2\sqrt{(1-p)(1-pr)}}>0,
+\tag{WE.33}
+$$
+
+because its numerator is positive and
+$(1+r-2pr)^2-4r(1-p)(1-pr)=(1-r)^2>0$.
+Thus $Q$ is a continuous increasing bijection from $[0,p_{\rm cap}]$
+onto $[0,q_0]$, with $q_0>0$. Its defining positive mean square-root
+term gives $q_0<1$. Squaring $1-q-pk=\sqrt{(1-p)(1-pr)}$ gives
+$p((1-k)^2+2qk)=q(2-q)$. Existence on this bijective branch proves
+that (WE.30) selects the unsquared positive root, with no extraneous
+solution.
+
+Consider the two-atom scalar law
+
+$$
+\lambda_q=p\delta_{(r,t_{\rm rec}c_*(r))}
+ +(1-p)\delta_{(R(p),0)}.
+\tag{WE.34}
+$$
+
+Its first $x$ moment is one, its $v$ moment is $\mu$, and its $xv$
+moment is $V$. Its mean square root is
+$pk+(1-p)\sqrt{R(p)}=1-q$. Apply the four-sign construction (WE.15)
+to each atom. This gives eight actually generated low labels. The four
+failure-carrying labels have
+
+$$
+\pi=p/4,\quad z=\sigma\sqrt r,\quad w=\eta\sqrt{W/\mu},\quad
+N=\frac\mu4 nn^T,
+\tag{WE.35}
+$$
+
+whereas the four pure-live labels have $\pi=(1-p)/4$, $z^2=R(p)$,
+$w^2=w_2(R(p))$, and $N=0$. Both radial families have strictly
+positive squared coordinates. All live cross moments vanish; their
+Gram is exactly $\operatorname{diag}(\delta,1,1)$. The four effects
+in (WE.35) sum exactly to $M$: their diagonal sums are
+$d^2W/h_2^2=m_1$ and $b^2V/h_1^2=m_2$, and the off-diagonal cancels.
+Reports $\sigma$ give exact contrast $s_0(1-q)$.
+
+Use Section 5's whole-fibre construction, adding two fair high and two
+fair coherent-complement labels. Each carrying label saturates its
+capacity at $t_{\rm rec}$, so its activity is $\log(1+t_{\rm rec})$;
+all other rates vanish. Small $p$ is small live coefficient mass,
+not small acquisition mass: the nonzero effects (WE.35), and hence all
+later-failure acquisition, remain included. Every matrix and report
+choice is fixed before receiving the sole specimen.
+
+Finally divide $B_*$ by the displayed $p(q)$ to obtain the exact second
+line of (WE.30). Theorem 3.2 gives the strict lower bound. The additive
+upper term is uniformly bounded by
+$B_*(1+k)^2/[2(2-q_0)]$. Factoring $C_{\rm end}/q$ out of
+$1+t_{\min}$ and using $\log(1+O(q))=O(q)$ proves (WE.32).
+$\square$
+

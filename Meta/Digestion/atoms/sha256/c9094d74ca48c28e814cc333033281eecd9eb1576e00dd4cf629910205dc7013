@@ -1,0 +1,11 @@
+## 360. Complete finite bounds for one fixed partition
+
+Let
+
+$$
+b=(43,34,34,29,27,25,22)/64.
+\tag{360.1}
+$$
+
+The inherited unrestricted optimum at this prefix is $15/64$, by [XIX 346.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIX.md#346-a-complete-original-attainer-at-error-fifteen-sixty-fourths). The result below concerns a smaller class.
+

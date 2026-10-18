@@ -1,0 +1,24 @@
+**Theorem 22.3 (evaluated original HALF loss and same-strength short-alphabet optimum).** Under $\mathsf H_{\rm root}$, $\mathsf H_{\rm original}$, $\mathsf H_{\rm sections}$ and $\mathsf H_{\rm contacts}$, for exactly $t=1000$, $A=\log1001$ and
+
+$$
+s_e-2\cdot10^{-153}<s<s_e,\qquad
+s_e=\frac{k_e}{\sqrt\alpha/s_0},
+$$
+
+every global maximizing fractional law represented by at most six supported atoms, with all eight original moments and $K\ge a_ss$, equals the endpoint six branch at its own target strength, up to permutation. Its contrast is active. In the original full-complex multi-Kraus comparison class,
+
+$$
+\begin{gathered}
+\mathcal T_A^{\rm full}(s)=V_7(s),\\
+\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)
+=\mathcal T_A^{(\le6\ {\rm supported\ nonzero\ low})}(s)=V_6(s),\\
+394256130000\,(s-s_e)^2
+\le\mathcal T_A^{\rm full}(s)-\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)
+\le657236410000\,(s-s_e)^2.
+\end{gathered}
+$$
+
+Proof. Proposition 22.2 puts $d=a_s(s_e-s)$ strictly inside every gate of the already proved Theorem 14.2, with the conservative rational majorants justified in Proposition 19.3. Apply that theorem; Proposition 22.1 weakens its loss constants in the correct directions. This instantiates the five-part sufficiency result rather than adding another symbolic sufficiency proof.
+
+The short-alphabet transfer is the original compulsory-high-label sandwich of Theorem 14.2: at most seven TOTAL permits at most six supported nonzero low labels, while the common six-law constructor has those six low fibres and one counted high fibre, including its supported-zero complementary subspace in that same high label. The full left-side branch has seven supported low labels plus one high label. Hidden terminal Kraus multiplicity and saturated failure-line groups supply no additional or free actual labels. Both $V_6,V_7$ are evaluated at this same $s$, using their separate inverse multipliers. Uniqueness here is of the fractional coefficient law, not of every full instrument, time law or physical implementation. $\square$
+

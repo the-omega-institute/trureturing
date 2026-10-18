@@ -1,0 +1,4 @@
+**Definition 13.2 (the six-contact crossing band).** These two records cover $[9/2,91/20]$. The unused gap derivative is the field `tangent.derivative`; `preconditioned_residual` encloses $R(Jv+F_\lambda)$ and `error` is the weighted Neumann residual bound. The signed gap is used physically only at or below the event.
+
+Exact JSONL data (2 records): [section-13-six-band-final-cells.jsonl](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/connected-interval/section-13-six-band-final-cells.jsonl).
+

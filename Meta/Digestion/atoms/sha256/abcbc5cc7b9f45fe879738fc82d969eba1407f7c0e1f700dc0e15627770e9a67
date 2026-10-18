@@ -1,0 +1,36 @@
+**Definition 368.3 (Independent event rows and the affine anchor).** At a zero word let $n(w)=\min\{i:w_i=0\}$. The canonical event vector $z(p)$ has the separate coordinates
+
+$$
+z_{A,w}=p_w(0),\quad z_{C,w}=p_w(n(w)),\quad
+z_{P,w}=p_w(0)+p_w(n(w)),\quad z_T=p_{1^L}(0).
+\tag{368.5}
+$$
+
+For $b\in[0,1]^L$ and $e\in\mathbb R$, their literal demand vector $d(b,e)$ is
+
+$$
+d_{A,w}=1-b_{n(w)}-e,\quad d_{C,w}=b_{n(w)}-e,\quad
+d_{P,w}=1-e,\quad d_T=1-e.
+\tag{368.6}
+$$
+
+No singleton demand is clipped to zero. The union row is imposed independently. For probability vectors these are exactly the TV cap rows: at first zero $n$,
+
+$$
+\operatorname{TV}\bigl(p_w,(1-b_n)e_0+b_ne_n\bigr)
+=\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{368.7}
+$$
+
+Indeed the deficits at $0,n$ sum to the mass outside $\{0,n\}$; the sum of their positive parts is the displayed maximum. The positive-word target is $e_0$. This reuses the event convention of IX 207.1–207.3 and XXII 363.4.
+
+For $L\ge3$ let $R=O(1,2;1,2,0)$ in stopped-cell order, let $r=z(R)$ and put $\alpha=(1,1,0,\ldots,0)$. Then $r=d(\alpha,0)$. For a mass-$M$ allocation the affine demands mean literally
+
+$$
+z(p)\ge d(b,e)+(M-1)r,
+\qquad z(p)-Mr\ge h(b,e):=d(b,e)-r.
+\tag{368.8}
+$$
+
+These equivalent forms retain the same anchor. For $M>0$, dividing by $M$ would change the profile to $\alpha+(b-\alpha)/M$ and the cap to $e/M$; that operation is not used below. In particular it changes $b_2=b_3$ into a difference $1-1/M$ between those two normalized coordinates, as in XIX 341.3 and XXII 367.2.
+

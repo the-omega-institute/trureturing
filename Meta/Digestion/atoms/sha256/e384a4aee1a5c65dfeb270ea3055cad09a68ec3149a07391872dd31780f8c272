@@ -1,0 +1,33 @@
+**Corollary 6.3 (positive floors with their exact quantifiers).** For
+$\eta\ge0$, replace the analytical factors by $\Phi_i+\eta$ and
+use the same straight-line path from the all-one factors. Its polynomial is
+
+$$
+P_{n,\eta}(z)=z^nf_n(1/z-1+\eta).
+\tag{GDB.30}
+$$
+
+Whenever $\eta+t_n<1$, it has a real zero in
+
+$$
+\left((1-\eta)^{-1},(1-\eta-t_n)^{-1}\right).
+\tag{GDB.31}
+$$
+
+For every fixed $r>1$ and $\eta_0>0$, some $0<\eta<\eta_0$
+and some $n\ge4$ give strictly positive local factors and a zero
+with $1<z<r$. Thus a disk radius $r>1$ independent of the
+vanishing floor cannot be used for this specified interpolation.
+This does not exclude a radius depending on a fixed positive $\eta$,
+a different path, or a direct all-size bound.
+
+Proof. Substitute $v_n$ from Theorem 6.2 in
+$z=(1-\eta+v_n)^{-1}$ to obtain (GDB.31). First choose a positive
+$\eta<\eta_0$ small enough that $(1-\eta)^{-1}<r$, then choose
+$n$ large enough that $(1-\eta-t_n)^{-1}<r$. For positive
+$\eta$ every entry $\Phi_i+\eta$ is positive, but the off-relation
+assignments being summed are analytical soft assignments. They are
+not additional actual source tuples or correct predictor executions.
+The $\eta$-dependent lower endpoint in (GDB.31) is why no stronger
+fixed-floor conclusion follows. $\square$
+

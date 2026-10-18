@@ -1,0 +1,26 @@
+**Definition 79.1 (Residual mass and cumulative weights).** Fix
+$0<\varepsilon\le1$ and put
+
+$$
+\begin{aligned}
+u_i&=(a_i-\varepsilon)_+,&
+S&=\sum_{i\ge1}u_i,& D&=(S-\varepsilon)_+,\\
+d_i&=\min\left\{u_i,\left(D-\sum_{j<i}u_j\right)_+\right\},&
+b_i&=u_i-d_i,& B&=\sum_{i\ge1}b_i.
+\end{aligned}
+\tag{79.1}
+$$
+
+All sums in (79.1) have finite support. Let $w_1,w_2,\ldots$ be any
+nondecreasing sequence of finite real weights with $w_1>0$. At finite
+handoff define
+
+$$
+W_{w,A,x}=\sum_{j=1}^{K_{A,x}}w_{I_{A,x,j}},
+\tag{79.2}
+$$
+
+and put $W_{w,A,x}=\infty$ on nonhandoff. Taking $w_i=1$ gives $K$;
+taking $w_i=c(i)$ for a charge of Definition 72.1 with $c(1)>0$ gives
+$S_c$. Repetitions contribute repeatedly in (79.2).
+

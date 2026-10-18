@@ -1,0 +1,23 @@
+**Proposition 11.2 (ordinary request exposing an invalid promotion).**
+If a row of the actual $B_N$ fiber is falsely treated as satisfying
+the pinned final constant prescription, the legal request
+$p=Ra_{2N}R$ and subsequent authentic count $k=1$ distinguish the
+prescribed answer from the actual one.
+
+Proof. The $Y_N$ block in that actual row is $f$, whereas the
+pinned constant uses $h$. The request has length
+$1+H_{\rm sc}+1=D$ and starts with $R$. The exact temporal
+factors in (SCP.26) give
+
+$$
+\operatorname{Pred}(\Gamma_R(A),1)=\mathsf{absent},\qquad
+\operatorname{Pred}(\Gamma_R(B),1)=\alpha.
+\tag{SCP.40}
+$$
+
+Since $h,f$ are opposite leaves, the two answers differ. Presence
+transport (SCP.39) identifies this with the original source request.
+The code in Theorem 11.1 uses the correct unpinned witnesses;
+this is a conditional test of an invalid promotion, not a failure
+of that code or a claim about existing certificate rules. $\square$
+

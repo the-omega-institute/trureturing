@@ -1,0 +1,84 @@
+## 142. 任意有限参考的精确半定规划与缺失差二模式的结论
+
+**定理 C-142.1（固定有限参考的精确优化及最大值存在）。** 对 C-136.2
+中的每个固定有限参考态和整数电荷表示，定义线性有效效果映射
+
+$$
+\Phi_\zeta(\mathsf E)
+=\operatorname{Tr}_R\!\left[(I\otimes\sqrt\zeta)\mathsf E(I\otimes\sqrt\zeta)\right].
+\tag{C142.1}
+$$
+
+令 $\Gamma_q$ 为 $L$ 的谱投影，$I_q$ 为其子空间恒等算符。
+$A^\zeta_{\mathcal F_{\rm all}}(\delta)$ 精确等于下列有限 Hermitian 半定规划的最大值：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Tr}(P\Phi_\zeta(\mathsf E)),\\
+\text{约束}\quad&\mathsf E=\bigoplus_q\mathsf E_q,\qquad0\preceq\mathsf E_q\preceq I_q,\\
+&\Pi_J\Phi_\zeta(\mathsf E)\Pi_J\preceq\delta\Pi_J
+\quad\text{对每个 }J\subseteq\{1,\ldots,5\},\ |J|=3.
+\end{aligned}
+\tag{C142.2}
+$$
+
+承诺域将十个压缩约束换成 C-129.1 八射线 $w$ 的八个标量约束
+$\langle w|\Phi_\zeta(\mathsf E)|w\rangle\le\delta$，其最大值恒为
+$\min\{1,3\delta/2\}$。
+
+证明。正夹心和偏迹给 $0\preceq\Phi_\zeta(\mathsf E)\preceq I$；
+上界使用 $\Phi_\zeta(I)=\operatorname{Tr}_R(I\otimes\zeta)=I$。
+迹的循环性给每个系统密度态的恒等式
+
+$$
+\operatorname{Tr}(\Phi_\zeta(\mathsf E)\rho)
+=\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C142.3}
+$$
+
+不要求 $\zeta$ 满秩、纯或与 $\mathsf E$ 对易。
+(C139.3) 的复主压缩条件使十个 LMI 精确等价于全部有限混合全零假设的风险约束；
+总电荷块条件精确等价于 (C136.2)。固定 $\zeta$ 后，所有映射和约束均为线性或半定的。
+有限个正收缩块的直积是紧集，十个 LMI 切出闭子集，且零效果在全部 $\delta\in[0,1]$ 可行。
+连续线性目标在非空紧集上取得最大值，不需严格可行性前提。
+承诺域的八个约束由 (C129.3) 精确给出；其值和达到效果已由 C-137.1 证明。
+这给任意混参考及简并电荷的精确有限优化，不给一般 $\zeta$ 的全域闭式公式。证毕。
+
+**定理 C-142.2（无参考差二模式时的全域前沿）。** 若固定参考满足
+
+$$
+R_{\ell+2}\zeta R_\ell=0\qquad\text{对所有整数 }\ell,
+\tag{C142.4}
+$$
+
+则对全部 $\delta\in[0,1]$，有 $A^\zeta_{\mathcal F_{\rm all}}(\delta)=\delta$。
+
+证明。选参考电荷本征基 $f_\alpha$，电荷为 $\ell_\alpha$，
+简并指标保留在 $\alpha$ 中。由 (C142.3)，有效矩阵元为
+
+$$
+T_{ij}=\sum_{\alpha,\beta}\mathsf E_{i\alpha,j\beta}\zeta_{\beta\alpha},
+\qquad
+\mathsf E_{i\alpha,j\beta}\ne0\ \Longrightarrow\
+n_i+\ell_\alpha=n_j+\ell_\beta,
+\tag{C142.5}
+$$
+
+其中 $(n_0,n_1,n_2,n_3,n_4)=(0,1,1,1,2)$。
+$i=0,j=4$ 时，允许项须有 $\ell_\alpha=\ell_\beta+2$。
+(C142.4) 及其伴随使相应 $\zeta_{\beta\alpha}$ 全为零，故 $T_{04}=0$。
+于是目标功效与风险满足
+
+$$
+\operatorname{Tr}(TP)=\tfrac12(T_{00}+T_{44})
+\le\max\{T_{00},T_{44}\}\le\beta_{\mathcal F_{\rm all}}(T),
+\tag{C142.6}
+$$
+
+最后一步只用 $P_{e_0},P_{e_4}\in\mathcal F_{\rm all}$。
+即使参考有差一模式，其他有效矩阵元也不改变此论证。
+$\mathsf E=\delta\Pi_S\otimes I_R$ 给风险和功效均为 $\delta$ 的守恒达到。
+指定参考 $P_r$ 去相位后满足 (C142.4)，故其全域增益消失。
+此结论只有所写方向；存在差二模式本身不在此推出任意参考的严格增益、
+某条统一闭式曲线或充分实现条件。一般情形保留 (C142.2) 的精确有限规划。证毕。
+

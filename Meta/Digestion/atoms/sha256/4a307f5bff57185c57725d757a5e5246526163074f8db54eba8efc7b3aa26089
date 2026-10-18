@@ -1,0 +1,43 @@
+**Assumption 1.1 (the native retained-origin contract).** Use [NAR,
+Assumption 16.1 and Reuse 16.2][NAR], including its initial acquisition,
+complete early handoff, export and discard, and later stationary capture.
+Thus $D,H\ge0$, $r=2^D$, $q=H+1$, $I=\{0,\ldots,r-1\}$,
+$\lambda_0\in\{0,1\}$, and $W_D=(w_j)_{j\in I}$ is the ordered
+list of depth-$D$ words. The original sources and their continuations are
+
+$$
+X_a=\mathcal B_D[(T_{jq+a_j})_{j\in I}],\qquad
+Y_h=\rho^\ell X_a=\mathcal B_D[(T_{n_j(h)})_{j\in I}],\qquad
+n_j(h)=jq+a_j+\ell,
+\tag{LQF.1}
+$$
+
+where $a\in\{0,\ldots,H\}^I$, $\ell\in\mathbb N$, $\ell\ge\lambda_0$ and
+$h=(a,\ell)$. Here $T_n=\rho^n\alpha$ and $\mathcal B_D$ is the
+complete ordered binary skeleton. Each alternative history has its own
+one fixed original source and its own pure-$\rho$ continuation.
+
+An arbitrary installed encoder $e$ is a function on this finite age cube.
+It is computed from the genuinely acquired initial literal row, before
+the displayed set and lag are chosen. The supplied clock formula
+$c(T_n)=n$ makes this possible. Its label is the entire surviving
+source-bearing state after discard. A source-dependent table selection,
+pointer, clock, log, epoch or controller state is not additional free
+information. Installed tables common to all sources are allowed.
+
+Fix a nonempty public menu of nonempty displayed sets, and a received
+entry $\eta=(S,c,V)$, where $S$ belongs to that menu. Put
+$Q_S=\{w_j:j\notin S\}$. The datum $V$ is the entire acquired
+$R_{Q_S}$ row: literal exterior, labels, brackets, reached and absent
+cut guards, and the full equality and disequality partition of hidden
+subtrees. It supplies no hidden values or cross-row comparison.
+
+Only a fresh original-root literal $\mathsf{Read}(p)$ on the stationary
+current $Y_h$ is permitted. Its replies are
+$\bot,\alpha,\beta,\mathsf b$, meaning absent, the two leaves and
+branch. Every finite word is legal; every invocation costs one call,
+including absence, repetition and a root query. Word lengths count
+actual letters, including the whole prefix $w_j$. Local computations
+and storage are unrestricted in the three prices below. There is no
+update, reroot, old-source reread, subtree port or age oracle.
+

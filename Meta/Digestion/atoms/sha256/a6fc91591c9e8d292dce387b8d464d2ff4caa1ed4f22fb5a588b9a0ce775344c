@@ -1,0 +1,21 @@
+### 104.7. The two-direction determinant and the higher-dimensional boundary
+
+For s=2 write H=[[h_1,x],[y,h_2]] and t=t_12. Equation (104.2) gives y=x+t, so over F_2
+
+ det H=h_1 h_2+x(x+t)=h_1 h_2+(1+t)x.
+
+When the mutual quartic signs are opposite, t=1 and det H=h_1 h_2. Conditions (104.5) therefore force determinant one without evaluating either off-diagonal norm-certificate sign. Theorem 100.1 gives rank at most one; the actual original non-torsion point gives rank exactly one, and Corollary 94.2 excludes the stated repetitions. If t=0, the unknown bit x remains. If t=1 and either h_i=0, this proves a singular H, not the existence of a repetition or higher rational rank.
+
+For arbitrary s, ker H is totally singular for q: q vanishes there, and its polarization is H+H^T, which also vanishes on two right-kernel vectors. Thus dim ker H<=w(q), proving (104.4) from Theorem 100.1. All of q is computable from rational quartic data, with no conic certificate needed for this bound.
+
+The bound from q alone has an exact algebraic limit. Given any quadratic form q on F_2^s, choose a basis starting with a maximum totally singular subspace U. Construct a bilinear refinement A with columns on U zero, their transposed entries equal to the prescribed polar coefficients, and any refinement of q on the remaining block. This is consistent because q and its polarization vanish on U. Then U is contained in ker A, while every refinement's kernel is totally singular. Consequently dim ker A=w(q). Thus one cannot improve this bound using q alone for arbitrary matrices; this is not a claim that all such matrices occur on actual support.
+
+For example, the matrices
+
+ [[1,1,1],[0,1,1],[0,0,1]],
+ [[1,1,0],[0,1,1],[1,0,1]]
+
+have the same h_i=1 and t_ij=1, but determinants one and zero. Opposite mutual quartic signs and negative diagonal signs in three directions therefore do not by themselves imply full rank. If all t_ij and h_i vanish, H is alternating and must be singular for odd s. These observations describe the determinant criterion's limits, not rational-point existence. This completes the proof. ∎
+
+To obtain a concrete new golden-prime exclusion from (104.5), one still needs a certified original N=3^j>=81 and a complete factorization B_N=p_0 p_1 p_2 C^2 with exactly the stipulated three odd-depth primes, residue types, mutual Legendre signs and quartic signs. Primes of even depth and overlap between D and C cannot be omitted. No such instance, independence from all previous golden-support restrictions, finiteness of Sha, or rational-rank parity is asserted here. The theorem preserves a conditional certificate-free determinant test and the exact field-theoretic boundary, rather than a new solved WSS family.
+

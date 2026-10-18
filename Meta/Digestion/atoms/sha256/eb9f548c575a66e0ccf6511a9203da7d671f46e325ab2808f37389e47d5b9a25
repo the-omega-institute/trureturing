@@ -1,0 +1,7 @@
+**定义 9.1（Gram 多项式记录）。** 本节将基向量记为 $h=a\times b$，避免与组成 $\nu$ 混用。令 $\mathscr R=\mathbb Z[A,B,C]$。每棵树递归生成三多项式 $z(t)=(P_t,Q_t,T_t)$，叶记录为 $(1,0,0),(0,1,0)$。对 $u,v\in\mathscr R^3$ 置 $d_{ij}=u_iv_j-u_jv_i$，定义
+
+$$
+J(u,v)=(Bd_{23}-Cd_{31},\ -Cd_{23}+Ad_{31},\ d_{12}),
+\qquad z(\langle s,t\rangle)=J(z(s),z(t)).
+$$
+

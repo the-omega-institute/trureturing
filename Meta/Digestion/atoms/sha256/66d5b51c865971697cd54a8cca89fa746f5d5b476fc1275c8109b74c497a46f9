@@ -1,0 +1,50 @@
+**Definition 251.1 (Words, complete tables and independent cap rows).**
+Fix $L\ge3$, $B_L=\{0,1\}^L$ and $J_L=\{0,\ldots,L\}$.
+Write $w^+=1^L$, $\Omega_n=\{w:n=\min\{i:w_i=0\}\}$,
+$v^i$ for the sole-zero word at $i$, and $v^{ij}$ for the word
+whose zeros are exactly $i<j$. The output unit vector at label $r$
+is $e_r$. All labels in $J_L$, including earlier unqueried labels,
+are allowed on every terminal cell.
+
+The complete $N$ catalog contains every constant, singleton and
+sorted distinct-pair table. Write
+$N(i,j;u,v,s,t)$ for its outputs on cells $00,01,10,11$, respectively.
+The complete $O$ catalog contains every constant, singleton and
+$O(i,j;v,s,t)$, with outputs on stopped cells $0,10,11$.
+The schedule is fixed before replies. An $N$ table obtains its whole
+schedule; an $O$ table stops at its first queried zero or exhaustion.
+Static reversal or deletion of a repeated observation normalizes an
+information partition only: every repeated or ignored actual request
+still counts against the hard budget of two.
+
+A normalized kernel $p$ is one probability distribution $\pi$ on
+whole deterministic tables, including all counterfactual cell outputs.
+It is not a collection of separately optimized word laws. For
+$1\ge a_1\ge\cdots\ge a_L\ge0$ and $e\ge0$, its cap rows are
+
+$$
+\begin{split}
+p_w(0)&\ge1-a_n-e,\\
+p_w(n)&\ge a_n-e,\\
+p_w(0)+p_w(n)&\ge1-e\qquad(w\in\Omega_n),\\
+p_{w^+}(0)&\ge1-e.
+\end{split}
+\tag{251.1}
+$$
+
+All words, all multiple-zero suffixes, negative singleton demands
+and zero-score rows remain present. The union row is independent.
+For any probability vector on the full label set,
+
+$$
+\operatorname{TV}\bigl(p_w,(1-a_n)e_0+a_ne_n\bigr)
+=\max\{1-a_n-p_w(0),\ a_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{251.2}
+$$
+
+Indeed the mass outside $\{0,n\}$ is nonnegative, and the positive
+and negative parts of the signed difference have equal total mass.
+Separating the signs of its two supported coordinates gives exactly
+these three candidates. In particular no sum of singleton estimates
+can replace the union event.
+

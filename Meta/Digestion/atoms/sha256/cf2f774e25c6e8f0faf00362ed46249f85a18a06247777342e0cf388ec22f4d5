@@ -1,0 +1,69 @@
+### 87.7. From the coefficient to arbitrary C² amplitude paths
+
+We now prove (9), retaining the possibility of moving old tangents and higher new-environment derivatives. Write the actual B isometry in its fixed old/new split as V_B(t)=W(t)⊕R(t). Near zero W is square and has polar unitary U(t), so
+
+\[
+ V_B(t)=U(t)\sqrt{I-R(t)^*R(t)}\oplus R(t).
+\]
+
+The comparison point x(t)=(V_A(t),U(t)) is C². Choose smooth tubular coordinates near M, write its nearest point as m(t), and write its normal coordinate as n(t). These coordinates may be chosen in any fixed smooth local metric. The section-86 result gives a uniformly positive normal quadratic form and F_old=1/4 on M.
+
+For arbitrary small R put D_R=R*R. The physical polar expansion through degree four in R is
+
+\[
+ \begin{split}
+ B-B_U&=\Psi_{U,R}+\Theta_{U,R}+O(\|R\|_F^6),\\
+ \Psi_{U,R}(Y)&=\operatorname{Tr}_{\rm new}(RYR^*)
+                        -\tfrac12B_U(D_RY+YD_R),\\
+ \Theta_{U,R}(Y)&=\tfrac14B_U(D_RYD_R)
+                        -\tfrac18B_U(D_R^2Y+YD_R^2).
+ \end{split}                                             \tag{28}
+\]
+
+The estimates hold in any fixed finite-dimensional channel norm, uniformly for U near the base. Let ℓ_x=d_BF at the old comparison channel. Smoothness of the isolated cluster gives
+
+\[
+ F_{\rm full}=F_{\rm old}+\ell_x\Psi_{U,R}
+       +\ell_x\Theta_{U,R}
+       +\tfrac12d_B^2F_x(\Psi_{U,R},\Psi_{U,R})
+       +O(\|R\|_F^6).                                   \tag{29}
+\]
+
+For every m∈M and every R, the physical one-sided curve U_m√(I−sR*R)⊕√sR and the fixed-A_m best-response property imply the exact inequality
+
+\[
+ \ell_m\Psi_{U_m,R}\ge0.                               \tag{30}
+\]
+
+In normal coordinates, expand the middle term of (29) as
+
+\[
+ \ell_x\Psi_{U,R}=\ell_m\Psi_{U_m,R}
+                  +\mathcal B_m(n,R)+O(\|n\|^2\|R\|_F^2),
+                                                               \tag{31}
+\]
+
+where ℬ is linear in n and quadratic in R. This is an ordinary smooth Taylor expansion; its derivative includes both the change in ℓ and the change in U. Dropping the first term by (30) is crucial. It requires no Taylor expansion of R beyond its first derivative and introduces no possibly negative terms from R'' or from motion along M.
+
+If n'(0)≠0, normal coercivity, (29)–(31), and R=O(t) give a strictly positive t² lower coefficient; the remaining possibly negative terms are O(t³)+O(t⁴). The liminf in (9) is then +∞. If R'(0) is not flat, the positive degree-two noise coefficient from section 85 gives the same conclusion (and the old normal quadratic coefficient is nonnegative).
+
+It remains to consider n'(0)=0 and flat R₁=R'(0). A smooth environment rotation with first generator [[0,L₀*],[−L₀,0]] removes the common L₀ from R₁. It leaves the physical channels unchanged, keeps the paths C², and leaves the first old comparison derivative unchanged. We may therefore assume (5). Recompute the smooth split and normal coordinates after this rotation. Since they are C²,
+
+\[
+ n(t)=t^2n_2+o(t^2),\qquad R(t)=tR_1+o(t),\qquad m(t)\longrightarrow m_0.
+                                                               \tag{32}
+\]
+
+Taylor expansion in normal coordinates gives F_old=1/4+q_{H,m}(n)+O(‖n‖³). Insert (32) into (29)–(31), drop (30), and use continuity of all coefficient forms. The result is
+
+\[
+ F_{\rm full}(t)\ge\tfrac14+t^4\{
+       q_{H,0}(n_2)+\mathcal B_0(n_2,R_1)+q_{\rm noise,0}(R_1)
+                         \}+o(t^4).                    \tag{33}
+\]
+
+The three terms in braces are exactly the old Hessian, mixed source, and fixed-noise constant calculated in (12)–(25). This identification follows either from (28)–(29) or by taking the probability path (6) with old tangent n₂. The tangent component along M has no effect because both Hessian and source vanish there. By (7) the braces are at least Σ_a c(u_a)r_a². Finally δ≥F from the full original pinching inequality (4) proves (9).
+
+All estimates here are local about the chosen equality pair; the explicit coefficient bound (8) is uniform over the entire classified disphenoid region, but no uniform radius for the channel neighborhoods is asserted. Nonnegative fourth-order liminf does not imply a local minimum. Simultaneous arbitrary-channel approaches without these C² finite-amplitude lifts, and possible higher-order improvements in the remaining flat directions, are not settled by this theorem. The unrestricted quarter-optimum conjecture remains open.
+
+The rank-at-most-three, path-free local Choi-tail bound continuing sections 86–87 is proved in [section 88 of the next continuation](ARITHMETIC_HOLOGRAPHIC_RT_III.md#88-a-path-free-local-quarter-minimum-for-a-party-of-kraus-rank-at-most-three).

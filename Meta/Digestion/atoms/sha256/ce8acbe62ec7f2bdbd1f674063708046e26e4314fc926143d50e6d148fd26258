@@ -1,0 +1,57 @@
+**Definition 6.1 (complete bounded-incidence neighborhood list).** Fix
+$d,L\ge1$. Prescribed incidence is the number of original blocks
+having a port assigned to a seed, including constant assigned tables;
+multiple occurrences within a block count once. Enumerate the complete
+COK decoration list $\mathcal E_d$ with its canonical ordering and
+support-aware relations $R_\eta(\mu)$, for a rational probability on
+the full $S_d$. Write $A_{d,L,n}(\mu)$ for the maximum mass over
+all valid owned-seed networks on $n$ original blocks with prescribed
+incidence at most $L$, and put
+$\beta_{d,L}(\mu)=\sup_{n\ge1}A_{d,L,n}(\mu)^{1/n}$.
+This is the credited SIR restricted pressure, with full actual guards
+and joint block weights. Let
+
+$$
+m=m_d,\qquad \Delta=mL,\qquad B=2\Delta^2(\Delta+1).
+\tag{OOA.20}
+$$
+
+Every actual incidence-$L$ network has dependency degree at most
+$m+m(L-1)=\Delta$: there are at most $m$ incoming owners, and at
+most $m$ owned seeds, each used in at most $L-1$ other blocks.
+
+Use the following finite outer list of rooted radius-two patterns.
+Enumerate simple rooted graphs on at most $1+\Delta^2$ vertices,
+all within distance two of the root and of maximum visible degree at
+most $\Delta$. Decorate every vertex by one element of $\mathcal E_d$.
+Match local seed occurrences to actual owner-port names, domains and
+owner tables, identifying repeated references. At vertices of distance
+zero or one, every incoming owner group has its owner among the listed
+neighbors. Every edge incident to such a vertex is witnessed by an
+assigned seed in at least one direction. Its listed star is declared
+complete; no further incident edge is allowed there. At distance two,
+incoming groups may instead have formal unlisted owner names; identify
+these names in every possible way consistent with distinct actual owner
+ports and group identities. Allow further unlisted consumers of boundary
+owned seeds without imposing their completion. Check every visible seed
+incidence is at most $L$, and every internal reference agrees with its
+owner decoration and is an edge of the displayed graph. Keep all
+internally consistent patterns, without a
+global realizability or positive-mass extension test.
+
+This is an explicit finite enumeration: there are boundedly many vertices,
+at most $m$ local seeds and groups at each vertex, finite ports/domains/
+tables, and finitely many equality patterns on their external names.
+Take least encodings under vertex and seed renaming, using the COK
+orders for replies, words and factors. A boundary formal name supplies
+only the owner-port/domain/table data already in its incoming group;
+no kernel at an unlisted vertex is needed. Every actual rooted
+radius-two neighborhood occurs in this outer list, with all root and
+neighbor incidences intact. No converse completion statement is used.
+
+For an edge at the root, its entire $W_e$ is listed, and full owner
+domains at these vertices are known. Thus all tests (OOA.15)–(OOA.16)
+for that edge are determined by the pattern, even when its boundary
+has unlisted neighbors. The kernels of the two endpoints use only their
+complete listed incoming groups.
+

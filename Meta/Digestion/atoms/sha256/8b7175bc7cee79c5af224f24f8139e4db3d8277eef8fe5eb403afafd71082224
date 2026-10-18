@@ -1,0 +1,18 @@
+**Example 11.4 (an equality-menu defect of the prefix-only mixture).** Take
+
+$$
+\vartheta=(1/10,1/10,1/5),\qquad
+\varphi=(1/5,1/5,2/5).
+$$
+
+Both are strictly admissible and satisfy $p=q$ and $r=p+q$. In the two-member construction (10.9)–(10.10), after the actual history $[0]$ the decoded law is $Q_{R_0}=(F_{\vartheta,0}+F_{\varphi,0})/2$ and $U(R_0,B)=R_4$. The actual two-step path $0\to4\to0$ gives
+
+$$
+Q_{R_0}^2(B0)=\tfrac12((1/5)^2+(2/5)^2)=\frac1{10},
+\qquad
+Q_{R_0}^1(B)Q_{R_4}^1(0)
+=\left(\tfrac12(1/5+2/5)\right)^2=\frac9{100}.
+$$
+
+The defect is exactly $1/100$. Report $B$ has positive true and forecast probability. Correct conditioning of this mixture reweights the two models to $1/3,2/3$, whereas its retained pure-tag decoder reinstalls equal weights. The original prefix-only radius $1/2$ remains Theorem 10.3. Theorem 11.3 excludes every replacement satisfying (11.1) at any tolerance below one in this unresolved cell, including a cell wholly on $r=p+q$.
+

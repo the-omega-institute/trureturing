@@ -1,0 +1,57 @@
+**Proposition 16.2 (generator, coefficient and first circle excursion).**
+The Itô and Stratonovich versions of (16.4) agree. Their killed generator
+is exactly $-L_A=\varepsilon^2P^2+Q_\kappa^2$ on the smooth interior
+core, with the boundary and clock of Definition 1.3. Put
+
+$$
+\alpha_\kappa=\kappa+\kappa^2/H,\qquad
+b_\kappa(k)=\frac{H+\kappa-k}{H(k-\alpha_\kappa)},\qquad
+b_0(k)=\frac{H-k}{Hk}.
+\tag{16.7}
+$$
+
+Then $b_\kappa$ is smooth and strictly positive on the common closed
+parameter-height rectangle, and
+
+$$
+w_0-w_{13}=\kappa b_\kappa,\qquad
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)\,dB_s^2.
+\tag{16.8}
+$$
+
+For $\kappa\ne0$, (16.6) is exactly first hitting of either real level
+$\delta=\pm\chi$ before $\tau_I$. At $\kappa=0$ one has $\delta_t=0$
+for the entire lifetime, and $P_0(\chi)=0$.
+
+**Proof.** On the single-wall leaf the reduced field is
+$Q_\kappa=w_0\partial_{h_0}+w_{13}\partial_{h_{13}}+w_1\partial_v$.
+There is one $v$ coordinate, so its coefficient is $w_1$, not $2w_1$.
+Both $P$ and $Q_\kappa$ are divergence free for the stated unnormalized
+measure. Moreover $Q_\kappa k=0$ and every coefficient depends only on
+$k$. Hence the self-corrections $D_PP$ and $D_{Q_\kappa}Q_\kappa$
+vanish. The drivers are independent and the covariance diagonal, so
+there is no mixed correction. The generator of (16.4) is consequently
+$\varepsilon^2P^2+Q_\kappa^2$, with no extra drift. This verifies the
+common-operator correspondence, including the factor $\sqrt2$.
+
+Calculation 12.2 gives $w_0-w_{13}=\kappa g_\kappa$ with
+$g_\kappa=b_\kappa$ in (16.7). Equivalently, subtracting the two original
+reciprocals gives $2\kappa/(\mathcal I_\kappa k(k-2\kappa))$.
+The positive information sum and (16.2) ensure that its reduced
+denominator has no zero on the closed rectangle. Subtraction of the
+two stochastic integrals proves (16.8). The pair $(K,\delta)$ has
+interior generator
+
+$$
+\varepsilon^2\partial_k^2+
+\kappa^2b_\kappa(k)^2\partial_\delta^2.
+\tag{16.9}
+$$
+
+The integer phase change in (12.4) preserves the actual circle period.
+A continuous real lift starting at zero cannot reach circle distance
+$\chi<\pi$ without first hitting $+\chi$ or $-\chi$; either first hit
+has that circle distance. This proves the event identity, including
+all later windings. Equation (16.8) proves the exact zero assertion.
+Preparations cancel from increments and do not enter this law. $\square$
+

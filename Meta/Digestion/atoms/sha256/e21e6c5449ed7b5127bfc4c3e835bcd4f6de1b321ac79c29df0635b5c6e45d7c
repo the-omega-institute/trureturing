@@ -1,0 +1,25 @@
+## 467. A source-specific maximum bound with repeated axes
+
+Use a finite actual ideal face-pairing quotient. Every original tetrahedron
+has one fixed vertex-induced frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), with distinct actual transverse labels A,B. Axes
+may repeat each other or transverse labels. The original face pairing
+is a fixed-point-free involution on original face occurrences. Retain
+its vertex maps and every original normal interval.
+A common positive generalized length field supplies the usual paired
+responses. Let M,Z,C,D be four distinct actual labels with
+
+    c,d>1, m>=1+c+d, z>=1+m+c,
+    tau=(Z,M,C,D,M,C) genuine.
+
+Every owner containing Z is genuine. Its complete original Z-angle sum
+is 2*pi and its normal link is one connected circle of original degree
+at least six. The total genuine M-angle expense is at most pi. Thus
+actual genuine M/Z expense is at most 3*pi. Define
+
+    w=max{x_e : e is an actual label different from Z}.
+
+This maximum exists because the actual edge set is finite and contains
+M,C,D. In particular w>=m>3. No label-count, unique-flat, special-edge
+barrier, four-distinct-frame or degree condition for M is imposed.
+

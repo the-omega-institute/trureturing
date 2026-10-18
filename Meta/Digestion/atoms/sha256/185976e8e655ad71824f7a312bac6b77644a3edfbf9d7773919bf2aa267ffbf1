@@ -1,0 +1,52 @@
+### 480.2. 每一步保留切线成本与新价格亏损
+
+对 $x,y>1$，定义
+
+$$
+B_h(y,x)=h(x)+\lambda_x(y-x)-h(y),\qquad
+d_y(n)=M(\lambda_y)-[W(n)-\lambda_yE(n)].
+$$
+
+它们分别非负。把既有完整裕量身份用于 $y=F(x)>1$，旧价格下的最优性给出
+
+$$
+\boxed{\Delta(x)-\Delta(F(x))=B_h(F(x),x)+d_{F(x)}(n_x).}
+$$
+
+证明。旧尺度处
+$\Delta(x)=h(x)+\lambda_x(F(x)-x)-W(n_x)$；
+新尺度处
+$\Delta(F(x))=h(F(x))-W(n_x)-d_{F(x)}(n_x)$。
+两式相减。这是同一完整压力的切线主导更新；两个成本都保留在准确端点之间。
+
+令 $w(t)=(1+\log t)/(t^2\log^2t)$。因为
+
+$$
+w'(t)=-\frac1{t^3}\left(\frac2{\log t}+\frac3{\log^2t}
++\frac2{\log^3t}\right)<0,
+$$
+
+对 $x,y\in[a,b]$，切线差的二阶积分余项给出
+
+$$
+B_h(y,x)\ge\frac{w(b)}2(y-x)^2.
+$$
+
+当 $y\ge x$ 时余项为 $\int_x^y(y-t)w(t)\,dt$；
+当 $y\le x$ 时为 $\int_y^x(t-y)w(t)\,dt$。
+逐点用 $w(t)\ge w(b)$ 即得两种方向的同一个估计。
+
+因此从第一个整数对数状态开始，每次非恒定更新至少消耗
+$c_b=w(b)(\log2)^2/2$ 的实际裕量。
+对首次固定指标 $K\ge1$，完整求和为
+
+$$
+\Delta(x_1)-\Delta(x_K)
+=\sum_{j=1}^{K-1}\bigl[B_h(x_{j+1},x_j)+d_{x_{j+1}}(n_{x_j})\bigr]
+\ge(K-1)c_b.
+$$
+
+若另有同一区间的下界 $\Delta\ge L$，便得到
+$(K-1)c_b\le\Delta(x_1)-L$。
+这个成本估计没有给出正的 $L$。
+

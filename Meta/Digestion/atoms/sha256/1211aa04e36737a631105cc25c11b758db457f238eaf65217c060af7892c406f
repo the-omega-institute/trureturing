@@ -1,0 +1,9 @@
+**定义 17.1（完整取得历史与当前记忆）。** 固定共同来源 $\Omega$，完整取得历史为 $H:\Omega\to\mathcal H$，当前可访问记忆为 $M=E\circ H$，其中 $E:\mathcal H\to\mathcal M$ 为编码。$M$ 仍包含所有可查询内外部档案。令
+
+$$
+\Omega_h=\{\omega:H(\omega)=h\},\qquad
+\Omega_m=\{\omega:M(\omega)=m\}.
+$$
+
+这里历史纤维不等同于定义 4.1 的任意事件包含域；前者要求精确历史值，后者要求包含指定事件。
+

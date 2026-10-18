@@ -1,0 +1,20 @@
+#### 7.7　有限观测窗造成的暂时沉默
+
+现实实验常只允许观察 $T$ 个未来步。定义有限窗不可观测空间：
+
+$$
+\mathcal N_T
+=
+\bigcap_{0\le k<T}\ker(CA^k),
+$$
+
+以及有限窗因果维数：
+
+$$
+d_T
+=
+\dim\mathcal R-\dim(\mathcal R\cap\mathcal N_T).
+$$
+
+<a id="claim-7-7-1"></a>
+

@@ -1,0 +1,16 @@
+**Definition 4.1 (serial phases).** A source request is admitted only at an idle
+cut with the source token and the completed previous row available. Its phase
+sequence is request ingress/validation, busy generation/execution, complete
+response commitment, counter/row construction, row seal, serial delivery and
+acknowledgement, then idle. Only the prescribed next primitive transition is
+enabled at an unfinished service cut. A scheduler does not admit a second
+semantic event before row seal, and this implementation additionally waits for
+delivery acknowledgement before the next source request.
+
+A modifying source block is unavailable from its first write until the complete
+successor block is written. During those writes it need not decode as a tree.
+Its actual bits, remaining code, heads, latches and phase are part of the busy
+state. The old and candidate trees used in a correctness proof are proof
+parameters, not automatically available second source registers. At idle and
+response-commit cuts the source block again decodes to a valid tree.
+

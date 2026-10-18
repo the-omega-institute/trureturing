@@ -1,0 +1,109 @@
+**Proposition 3.1 (Actual coverage outside the fixed-entry slice).** The
+member
+
+$$
+K_\dagger=\begin{pmatrix}
+7/10&1/10&1/5\\
+7/15&1/2&1/30\\
+14/15&1/30&1/30
+\end{pmatrix}
+\tag{3.1}
+$$
+
+gives a full-support visible law $P_\dagger$ outside the entire visible-law
+set of the fixed-entry slice, including its relabeling of states $2,3$.
+It fails event independence, has no finite visible Markov order, and
+nevertheless satisfies the uniform actual-risk bound (2.2).
+
+Proof. It is the point $(x,y,\tau)=(1/10,1/5,1/30)$ of (2.4).
+All base entries are positive; the normalized constructor is unchanged.
+Every legal word has a positive hidden path: use free state $3$ for each
+one and its tail for the following zero, and free state $1$ for remaining
+zeros. The positive initial masses and base transitions also cover an
+initial zero, a final one and every all-zero word.
+
+Here $\rho=3/10$ and $z=7/30$. The observable cylinder
+$P_K([000])=\eta(1-\rho)$ determines $\rho$. On the old slice
+$y=3/20$, the same $\rho$ forces $x=3/20$ and $z=21/100$.
+But $P_K([00100])=\eta z$, so the two laws differ. Swapping the equal-mass
+states leaves $\rho,z$ unchanged and gives the same slice comparison.
+This distinguishes actual visible laws, beyond merely distinguishing
+parameter presentations.
+
+For [Renewal, Definition 5.1][P7]'s aligned event residual, (2.8) gives
+
+$$
+\begin{aligned}
+\Gamma_{10,01}(P_K)
+&:=P_K([10101])P_K([1])-P_K([101])^2\\
+&=\eta^2(mz-\rho^2)=\eta^2(x-y)^2.
+\end{aligned}
+$$
+
+For (3.1) it is $49/16900>0$. Thus $P_\dagger$ is outside the
+event-independent renewal family and its weak closure identified in
+[Renewal, Theorems 5.2 and 6.1][P7]. In this presentation $M_1$ has rank
+two. The lower two rows of $M_0M_1$ contain
+
+$$
+C=\begin{pmatrix}1/2&1/30\\1/30&1/30\end{pmatrix},\qquad
+\det C=7/450>0,
+$$
+
+so $M_0M_1$ also has rank two. The two rank-one reset conditions of
+[Renewal, Theorem 8.3][P7] do not hold in this presentation.
+
+For visible memory, define $A_n=uC^n\mathbf1$ for $n\ge0$ and
+$H_n=00(10)^n$ for $n\ge1$. Direct products from (2.1) give
+
+$$
+P_\dagger([H_n])=\eta A_{n-1},\qquad
+P_\dagger([H_n1])=\eta A_n,
+\qquad
+P_\dagger(X_0=1\mid X_{-|H_n|}\cdots X_{-1}=H_n)
+=\frac{A_n}{A_{n-1}}.
+\tag{3.2}
+$$
+
+Indeed, after $00$ the unnormalized hidden row is $\eta w$. The first
+$10$ uses its $R$ row $u$; each further $10$ retains the $R$ row by
+multiplication with $C$. A final zero has total continuation mass one;
+an appended one selects the $R$ coordinates. This proves both products
+with their stated indices.
+
+The symmetric matrix $C$ has distinct eigenvalues
+
+$$
+\ell_\pm=\frac4{15}\pm\frac{\sqrt2}{6},\qquad
+0<\ell_-<\ell_+<1.
+$$
+
+Their product is $7/450$ and their sum is $8/15$, which verify the stated
+positive bounds. The unequal row sums $8/15$ and $1/15$ mean that
+$\mathbf1$ is not an eigenvector; its orthogonal projections $v_\pm$ onto
+both eigenspaces are nonzero. Since
+$u=(3/14)\mathbf1^{\mathsf T}(I-C)$, spectral decomposition gives
+
+$$
+A_n=b_+\ell_+^n+b_-\ell_-^n,\qquad
+b_\pm=(3/14)(1-\ell_\pm)\|v_\pm\|^2>0.
+$$
+
+For every $n\ge1$,
+
+$$
+A_{n+1}A_{n-1}-A_n^2
+=b_+b_-(\ell_+\ell_-)^{n-1}(\ell_+-\ell_-)^2>0.
+\tag{3.3}
+$$
+
+Thus the next-one probabilities in (3.2) strictly increase with $n$.
+For any proposed finite visible order $r$, all sufficiently long $H_n$
+have the same last $r$ bits. The tower property for that order would make
+all their positive-mass next-one probabilities equal to the same suffix
+row, contradicting (3.3). Order zero is excluded as well by positive
+one-bit mass and the forbidden $11$ cylinder. Hence the law has infinite
+visible memory. The eigenvalue properties used for this example are not
+conditions on $\mathcal K$. Finally apply Theorem 2.2. These facts give
+coverage evidence without a claim of minimal hidden dimension. $\square$
+

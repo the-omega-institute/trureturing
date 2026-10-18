@@ -1,0 +1,21 @@
+**Corollary 7.1 (uniform new-read obstruction).** Under Assumption 1.4,
+a positive contact outcome of Theorem 5.1 excludes every deterministic
+source-total static or serial forward service with a uniform finite number
+of new raw reads for the entire original target row on $D$. This applies
+to the acquired input in §6 at authentic $N=1$.
+
+Proof. Choose any distinct $r,s\in B$. The actual finite witnesses at
+every depth disprove determining-prefix existence on the entire $D$.
+Consume [ARH, (ARH.2.3)][ARH] at its operational scope. More explicitly,
+a controller with at most $K$ actual reads has finitely many realized reply
+histories. At each one, common deterministic control fixes its finite
+computation and update segment until the next read or halt; source-total
+termination makes every realized segment finite. Its finite reply tree
+therefore submits finitely many physical words, with a maximum length $h$.
+The two witnesses at that $h$ give the same replies at every common actual
+epoch by original-prefix locality, including originally absent and born
+addresses. They take the same control branches and halt with one output,
+contradicting their distinct complete rows. Mathematical description
+inversion and witness generation introduce no lawful service port.
+$\square$
+

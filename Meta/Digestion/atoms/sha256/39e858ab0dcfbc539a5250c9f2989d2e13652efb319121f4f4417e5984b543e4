@@ -1,0 +1,36 @@
+**Theorem 9.3 (Exact spectral boundary capacity).** Let the nonzero
+eigenvalues of $A$ be
+
+$$
+\lambda_1\ge\cdots\ge\lambda_s>0.
+$$
+
+Then
+
+$$
+\boxed{\operatorname{rank}\mathscr R=3s.}
+\tag{9.3}
+$$
+
+Every exact linear boundary $S:\mathcal V\to\mathbb R^k$ for which there
+exists a linear decoder $D:\mathbb R^k\to\mathcal Y$ satisfying
+$$
+\mathscr R=DS
+$$
+for all $v$ satisfies
+
+$$
+k\ge3s.
+$$
+
+Conversely, $3s$ coordinates suffice by retaining a basis of
+$\operatorname{im}\mathscr R$. Thus each nonzero spectral mode is a complete
+three-component response; the additional capacity is a multiplicity space,
+not a fourth local spatial direction.
+
+**Proof.** The rank of $A\otimes I_3$ is $3\operatorname{rank}A$. If
+$\mathscr R=DS$ for some linear decoder $D$, then
+$\operatorname{rank}\mathscr R\le\operatorname{rank}S\le k$. Choosing a
+row-space basis of $\mathscr R$ gives a summary with $k=\operatorname{rank}
+\mathscr R$. $\square$
+

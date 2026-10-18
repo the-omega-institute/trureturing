@@ -1,0 +1,30 @@
+**Proposition 24.1 (interaction changes the supported write geometry).**
+The attained five-bit strategy changes the first literal function from
+$P_{27}$ to $P_{28}$. It changes the native supports and the required
+immediate-write graph while keeping all original histories and numeric
+targets fixed. It is not a relabeling of the two-Read certificate.
+
+**Proof.** In §19 the first $P_{27}$ directly halts at ages twenty-seven
+and twenty-eight, routes $D_L$ to $P_{16}$, and routes
+$D_U=\{29,30,31,32\}$ to $P_{30}$. The universally forced lower
+and upper running neighborhoods have degrees at least four and five
+by Theorem 18.1. Theorem 20.1 excludes their common-predecessor path
+from $\Gamma_5$, regardless of recoding or added installed states.
+
+With first $P_{28}$, age twenty-nine instead has a first halt, and the
+upper support becomes $\{30,31,32\}$. Its $P_{30}$ running word
+requires only three halt neighbors plus its predecessor; these fit
+at `10000`. Age twenty-seven joins $D_L$ at `00001`. The fixed
+$P_{16}$ Read there merges ages eighteen and twenty-seven in branch,
+but their complete outputs are seventeen and twelve. The actual
+additional $P_{18}$ Read at `00101` distinguishes them. This is a new
+source observation; postprocessing the earlier branch reply could not
+separate the pair. Output sixteen is shared at `10001`, while output
+seventeen is duplicated at `00100` and `10100`.
+
+The changed first query alters both the arriving sources and which
+successor distinctions must be written. The legal words in Definition
+22.1 realize that altered graph. A word renaming that preserved the
+old actual query/reply paths would still face the two-Read obstruction;
+it could not supply the new five-bit capability. $\square$
+

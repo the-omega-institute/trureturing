@@ -1,0 +1,89 @@
+**Theorem 56.3 (strict bound for every original policy).** Every individual authorized original policy, including the entire finite/countable class $\mathcal P_\infty$, satisfies
+
+$$
+\mathcal E_\pi(\delta)>B(\rho_*,\delta).
+\tag{56.6}
+$$
+
+Each lower bound below comes from two fixed original INITIAL sources and a common actual complete history.
+
+Proof. Fix $\pi$. Before the first anchor, follow the common zero-report branch. For $a=0$ all those reports are exact. For either $a=\delta v$ or $a=-\delta v$, with any fixed unit $v\in E$, every internal prefix still has visible norm at most $\delta$, so its opposite is a legal error yielding the same zero report. Thus this branch, its action identities and its stopping decision are determined without the hidden source or a radius tag.
+
+Reuse the first-anchor state law and contraction argument from original §§40,46 and Theorem54.2. If a first anchor occurs, it is a finite event. Before it the actual internal product and visible map are
+
+$$
+p=c_1\cdots c_k,\qquad
+M=(c_k\times)\cdots(c_1\times),\qquad
+(a',b')=(Ma,bp).
+\tag{56.7}
+$$
+
+The empty product is one and the empty $M$ is the identity. If $p\ne0$, write
+$p=\sigma\lambda q$ with $0<\lambda=|p|\le1$,
+$\sigma\in\{1,-1\}$,
+$q=\alpha+\nu u$, $\alpha\ge0$, $\nu=\sqrt{1-\alpha^2}$ and $|u|=1$.
+The sign is retained in the actual response, and $\|M\|\le\lambda\le1$.
+The first anchor gives $(\sigma\lambda\operatorname{Im}(bq),-Ma)$.
+
+The original continuation argument applies whenever, just after this anchor, both current difference slots have norm at most $2\delta$.
+Every common $A_c$ contracts them separately. Every common $A_d$ sends them to
+$(\operatorname{Im}\Delta b',-\Delta a')$, preserving that bound.
+At each actual Read use the midpoint of the two current visible values; its two errors are opposite half differences and lie in the closed $\delta$ balls.
+Equal actual report prefixes force the same next event, control and Stop.
+The complete finite records coincide; for a countable history every finite prefix coincides. This adds no event after an infinite prefix and uses only the output already assigned to that complete record by the original contract.
+Two-run comparison here is a proof of a lower bound, not a second register supplied to $\pi$.
+
+The following cases exhaust the common zero-report branch.
+
+1. **No anchor, or an erased register before the first anchor.** Take $a=0$ in both runs and $b_0=20-15i$, $b_1=20+15i$. These are actual radius25 cap points. Without an anchor every Read remains zero, including an infinite internal/Read history or a finite Stop. If $p=0$ at a finite first anchor, one earlier internal control was zero; with $a=0$ that action erased the whole register, so subsequent states and records agree. The INITIAL half-distance is $15>B(\rho_*,\delta)$.
+
+2. **A nonzero product with $\alpha\ge3/5$.** Take $a=0$ and exactly the two different-radius same-projection sources of original Lemma45.2(ii): for $3/5\le\alpha<4/5$ set its $h=(4/5)\nu-(3/5)\alpha$, $H=(4/5)\nu+(3/5)\alpha$, choose $r=(25h+7H)/2\in[25h,7H]$ and $b_R=(\sqrt{R^2-r^2}+ru)q^{-1}$; for $\alpha\ge4/5$ choose $b_R=Rq^{-1}$, $R=7,25$. Their source legality and identical projections are the unchanged lemma. Both full states agree after the first anchor. Their INITIAL distance is at least $25-7=18$, hence the half-distance is at least $9>B(\rho_*,\delta)$. Zero future errors give a common record.
+
+3. **A nonzero product with $0\le\alpha<3/5$ and $\rho>1/10$.** Use original (45.4),
+$\rho=(3/5)\nu-(4/5)\alpha>0$ and
+$K=(3/5)\alpha+(4/5)\nu=\sqrt{1-\rho^2}$.
+Take $a=0$ and the original Lemma45.2(i) sources
+$b_\pm=(\pm25\rho+25Ku)q^{-1}$.
+They have identical first-anchor projections and identical full states thereafter. Their INITIAL half-distance is $25\rho>5/2>B(\rho_*,\delta)$.
+
+4. **The same direction range, with $0<\rho\le\rho_*$.** Instantiate exactly the original cross-layer cap witnesses (54.7):
+
+$$
+h=(4/5)\nu-(3/5)\alpha=\frac{7K+24\rho}{25},\qquad
+l=(4/5)\alpha+(3/5)\nu,\qquad
+b_7=(7u)q^{-1},\quad b_{25}=(25l+25hu)q^{-1}.
+\tag{56.8}
+$$
+
+Use $a=0$ in both runs. The original cap check gives $|b_7|=7$,
+$\operatorname{Re}b_7=7\nu\ge28/5$, $|b_{25}|=25$ and
+$\operatorname{Re}b_{25}=20$; $l^2+h^2=1$.
+Monotonicity of $g$ gives
+$0<g=25h-7\le2\delta$.
+The first-anchor difference is $(\sigma\lambda gu,0)$, so the common midpoint continuation above is legal. The actual INITIAL half-distance, rather than a distance between later visible states, is
+
+$$
+\frac{|b_{25}-b_7|}{2}
+=\sqrt{\frac{(25l)^2+(25h-7)^2}{4}}
+=\sqrt{144-\frac72g}
+\ge\sqrt{144-7\delta}>1>B(\rho_*,\delta).
+\tag{56.9}
+$$
+
+5. **The remaining range $\rho_*<\rho\le1/10$.** Use the unchanged same-layer witnesses (54.8), now in their already proved range $\rho\ge\rho_->0$:
+
+$$
+t=t_{25}(\rho,\delta),\qquad
+x_0=(\delta v,(-25\rho+25Ku)q^{-1}),\qquad
+x_1=(-\delta v,(t+(25K-2\delta)u)q^{-1}).
+\tag{56.10}
+$$
+
+Both hidden points are original radius25 cap points by (54.9), and the independent initial $a$ contract allows both full sources.
+Every pre-anchor Read has the same zero report with error norm at most $\delta$. Immediately after the anchor the visible difference has norm $2\lambda\delta\le2\delta$, and the hidden difference has norm $2\delta|Mv|\le2\delta$.
+The same common continuation therefore supplies an actual complete record. Original (54.10), including the initial $a$ difference, gives
+$|x_1-x_0|/2=B(\rho,\delta)>B(\rho_*,\delta)$ by strict monotonicity.
+
+In each case both sources can be fixed before the run: the pre-anchor zero branch determining the case and $q$ does not depend on $b$, and the selected $a$ values legally realize that branch. Sources are not changed during continuation. The common complete record has one estimate in $W$; the original same-data half-distance argument forces loss at least the stated half-distance for one of its two fixed INITIAL sources.
+This proves the strict inequality separately for every $\pi$, without a uniform positive excess over all policies. Contractions, extra anchors, adaptive future controls, repeated Reads, early Stops and countable histories are all included. □
+

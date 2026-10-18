@@ -1,0 +1,15 @@
+## 290. Actual global edge equivalence classes
+
+The exact classes below are computed from the face identifications. They are
+also proved directly by the first-return cycles in Section 291: every displayed
+occurrence is visited, while label preservation prevents classes from merging.
+There is consequently no gap between a prescribed color and an actual edge.
+
+- Edge `0`, degree 16: `M0:13`, `M0:24`, `P0:13`, `P0:24`, `M1:13`, `M1:24`, `P1:13`, `P1:24`, `M2:13`, `M2:24`, `P2:13`, `P2:24`, `M3:13`, `M3:24`, `P3:13`, `P3:24`.
+- Edge `1`, degree 8: `M0:14`, `M0:23`, `P0:14`, `P0:23`, `M1:12`, `P1:12`, `M3:34`, `P3:34`.
+- Edge `2`, degree 8: `M0:34`, `P0:34`, `M1:14`, `M1:23`, `P1:14`, `P1:23`, `M2:12`, `P2:12`.
+- Edge `3`, degree 8: `M1:34`, `P1:34`, `M2:14`, `M2:23`, `P2:14`, `P2:23`, `M3:12`, `P3:12`.
+- Edge `4`, degree 8: `M0:12`, `P0:12`, `M2:34`, `P2:34`, `M3:14`, `M3:23`, `P3:14`, `P3:23`.
+
+The five lists are disjoint and exhaust all 48 local edges.
+

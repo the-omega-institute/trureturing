@@ -1,0 +1,94 @@
+**定理 220.4（Fixed-schedule contraction and exact edge criterion）。**
+For every full nonnegative $y$ and every $I\subseteq E(y)$,
+$\rho_I$ is idempotent and preserves $Q,W$. For each fixed schedule
+$S$ and each $C=N,O$,
+
+$$
+ B_C^S(\rho_Iy)\le B_C^S(y).
+$$
+
+Every cell-label reading of a schedule avoiding $I$ is unchanged.
+Every pair touching $I$ has equal $N$ and $O$ supports after the reset.
+Consequently
+
+$$
+ B_N(\rho_Iy)=\max\left(B_O(\rho_Iy),
+       \max_{i<j,\ i,j\notin I}B_N^{ij}(y)\right),\tag{220.2}
+$$
+
+where the empty outside maximum may be zero.
+If $d\ge0$ and $\Delta_O(y)\le d$, then
+
+$$
+ \Delta_N(\rho_Iy)\le d
+ \quad\Longleftrightarrow\quad
+ B_N^{ij}(y)\le W_y+d\text{ for every pair disjoint from }I.
+ \tag{220.3}
+$$
+
+Thus $I$ must cover every edge of the graph of original pairs
+$B_N^{ij}(y)>W_y+d$. Some eligible reset is affordable precisely when
+no such edge lies wholly outside $E(y)$; the maximal reset then works.
+At $d=1$ it supplies $(V,\theta)=(\rho_{E(y)}y,0)$ in (220.1).
+A failed edge criterion rules out these resets at that budget only.
+
+**证明。** First-zero preservation follows because the earlier bits
+were already one and the first zero is kept. All first-zero class totals
+and $T$ therefore persist, proving $Q,W$ preservation. The reset bits
+already have their final values, proving idempotence.
+
+Put $U(w)=A_w+P_w$ on zero words and $U(1^L)=T$.
+For a numerical label $\ell\ge1$ the surplus above label zero is
+
+$$
+ s_\ell(w)=g_y(w,\ell)-U(w)=
+ \begin{cases}
+ C_w-A_w,&n(w)=\ell,\\
+ -(A_w+P_w),&n(w)\ne\ell,
+ \end{cases}
+ \qquad s_\ell(1^L)=-T.
+$$
+
+For any partition $\Pi$ its support is
+
+$$
+ \sum_wU(w)+\sum_{H\in\Pi}
+          \max\left(0,\max_{\ell\ge1}\sum_{w\in H}s_\ell(w)\right).
+ \tag{220.4}
+$$
+
+On the zero face of an eligible coordinate every surplus is
+nonpositive. Reset one eligible $a$, except when $n(w)=a$.
+A schedule avoiding $a$ preserves its observation cell and the
+first-zero label, so each reward reading is identical. In an $N$
+schedule querying $a$, the moved vectors leave the corresponding
+$a=0$ cell and enter its $a=1$ cell with the other reply fixed.
+The source cell is zero-dominated before and after: all remaining
+surpluses there are nonpositive. The destination receives only
+nonpositive surpluses, so its maximum surplus cannot increase.
+The total $U$ is unchanged, and (220.4) proves contraction.
+
+For $O$ with $a$ first, the source is the stopped zero cell and the
+destinations are its positive cells. If $a$ is second, the already
+stopped first-zero cell is unchanged and the same argument applies to
+the two first-positive cells. It applies to singleton and empty
+partitions as well. No numerical label has been pruned.
+
+Eligibility survives earlier resets: an output word with an unreset
+coordinate $b=0$ receives only old words with $b=0$, so the sums of
+$C-A$ there remain nonpositive. The coordinates of $I$ can therefore
+be reset successively. These commuting first-zero-preserving word maps
+compose to $f_I$, proving simultaneous contraction and exact reading
+preservation away from $I$.
+
+Afterward $w_a=0$ implies $n(w)=a$ for every $a\in I$.
+For a pair $i<j$, if $i\in I$ its $00,01$ cells are each
+zero-dominated: their only possibly rewarded numerical label is $i$
+and $C\le A$. Their maxima add to the maximum of the merged stopped
+cell. If $j\in I$, the $00$ cell is empty, since $w_j=0$ forces
+$n=j$ and hence $w_i=1$. In either case $N=O$ on this pair.
+All other $N$ entries are pairs avoiding $I$, whose original readings
+persist. This proves (220.2). Since the repaired $O$ support is at most
+$W_y+d$, (220.2) proves both directions of (220.3). A subset of $E$
+covers all bad edges if and only if $E$ does. $\square$
+

@@ -1,0 +1,62 @@
+**Definition 143.2 (Initial simplex and exact ordering).** The rows 0--6
+form the ordered six-simplex with these seven vertices. The index $k$
+means $k$ initial ones followed by $6-k$ zeros.
+
+<!-- mathematical-data: simplex7 -->
+
+| Index | Initial vertex |
+| --- | --- |
+| 0 | (0,0,0,0,0,0) |
+| 1 | (1,0,0,0,0,0) |
+| 2 | (1,1,0,0,0,0) |
+| 3 | (1,1,1,0,0,0) |
+| 4 | (1,1,1,1,0,0) |
+| 5 | (1,1,1,1,1,0) |
+| 6 | (1,1,1,1,1,1) |
+
+Use increasing exact lexicographic order of the six rational coordinates
+after every cut, including when a new intersection coincides with another
+vertex. No numeric tolerance defines a tie.
+A strict interior point and its ordered slacks are supplied below.
+All its 22 slacks are positive, with minimum $1/36$. Thus $P$ is
+six-dimensional; every prefix of the 22 halfspaces is also full-dimensional.
+All prefixes are bounded because they lie in $D_5$.
+
+<!-- mathematical-data: strict-center -->
+
+| Coordinate | Value |
+| --- | --- |
+| 0 | 6590836349/9012079440 |
+| 1 | 2878571719/4506039720 |
+| 2 | 2753403949/4506039720 |
+| 3 | 923069047/1802415888 |
+| 4 | 1240164407/3004026480 |
+| 5 | 2042516029/9012079440 |
+
+<!-- mathematical-data: strict-center-slacks -->
+
+| Halfspace | Slack |
+| --- | --- |
+| 0 | 2421243091/9012079440 |
+| 1 | 277897637/3004026480 |
+| 2 | 1/36 |
+| 3 | 1088477/11003760 |
+| 4 | 71099/716040 |
+| 5 | 209747149/1126509930 |
+| 6 | 2042516029/9012079440 |
+| 7 | 277897637/3004026480 |
+| 8 | 79377509/450603972 |
+| 9 | 10031591/44394480 |
+| 10 | 7531127/38845170 |
+| 11 | 1400782057/3004026480 |
+| 12 | 227444927/1001342160 |
+| 13 | 76247/1510320 |
+| 14 | 41448503/160929990 |
+| 15 | 35649743/103587120 |
+| 16 | 190232587/643719960 |
+| 17 | 912133811/2253019860 |
+| 18 | 572631671/1502013240 |
+| 19 | 388804217/901207944 |
+| 20 | 878906417/4506039720 |
+| 21 | 557105/1294839 |
+

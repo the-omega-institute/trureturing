@@ -1,0 +1,36 @@
+**Corollary 7.2 (resource consequences at a positive contact).** Under
+the same hypotheses, every correct source-total controller has
+
+$$
+\sup_Dq_A=\infty,
+\qquad \sup_D\ell_A=\infty.
+\tag{NLC.20}
+$$
+
+For every rational nonnegative weight vector with
+$\lambda_q+\lambda_\ell>0$, every correct controller has
+$W_\lambda(A)=\infty$. If both observation weights vanish, the infimum
+is zero and is attained by an existing static source-total recovery
+service. These are scoped consequences of a positive contact, not a
+decision of resources on every signed fiber.
+
+Proof. The first claim is Theorem 7.1. The sourcewise cleanup in
+[JRF, Lemma 3.2][JRF], whose all-source transfer is recorded by
+[NSF, Proposition 7.4][NSF] and [NFO, §2][NFO], preserves replies,
+termination and output and gives $q(u)\le\ell(u)+\max(0,2-N)$ without
+increasing either coordinate or actual updates. It relies on repeated
+same-epoch caching and the source-independent branch root at epochs
+at least two, not on literal-only GB or WS2S. If $A$ had bounded
+$\ell$, this cleanup would contradict Theorem 7.1. Thus both separate
+suprema in (NLC.20) are infinite.
+
+For a positive observation weight, the same-run nonnegative sum is at
+least that weighted coordinate on every source; its supremum is
+therefore infinite. No equality with a sum of coordinate suprema is
+used. With only update weight, the existing historical-literal decoder
+and finite original-tree traversal of [JRF, Theorem 7.1][JRF] recover
+$u$ at the authentic static epoch $N$, compute its full $Q$ row and
+halt, using zero actual updates. Each original tree is finite, so this
+service is source-total; its unbounded read costs do not enter those
+weights. Nonnegativity proves the zero minimum. $\square$
+

@@ -1,0 +1,15 @@
+**Definition 3.1 (independent geometric and chronological views).** On
+$\mathcal R$ define $S(h)$ to be the set of root-relative L/R child paths
+of the actual storage tree layer $U(W(h))$. Define $B(h)$ independently
+as the child paths ending at an actual terminal, meaning both child
+slots empty. Access links are not child edges. This boundary is a
+geometric terminal antichain, not a source-tree leaf set or a halt output.
+
+Define $T(h)$ as the chronological word of actual $\Pi_U$ primitive patch
+occurrences from the charged entrance, with native operands,
+read/written/supplied/emitted values, actual constructor roles and
+receipts. It is an order relation on actual operations, not an installed
+transcript tape. Its native erasure is exactly $h$ by Theorem 2.4.
+These definitions use support, terminal incidence and actual chronology
+respectively; none is defined by a replay key or an intersection of kernels.
+

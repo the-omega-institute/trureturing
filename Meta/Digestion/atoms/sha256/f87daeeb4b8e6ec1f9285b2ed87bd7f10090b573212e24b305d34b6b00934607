@@ -1,0 +1,29 @@
+**Theorem 11.5 (the compact flow value is the regular infimum).** With exactly the unrestricted source-specific risk scope above,
+
+$$
+j_c=J(\mathfrak S_\mu)=J(\mathfrak E_\mu),
+\qquad
+\frac{11}{61}j_c\le J(\mathfrak M_\mu)\le j_c.
+\tag{11.23}
+$$
+
+In particular $J(\mathfrak M_\mu)=0$ if and only if a compatible pair has $\mathcal J=0$. A strictly positive $j_c$ is equivalent to a strictly positive unrestricted original gap. These are equivalences without an evaluation of either alternative.
+
+**Proof.** Start with one finite stationary regular table on positive labels. Its own laws belong to (11.2) by the regular survival bound. Push the two finite acquired flows forward to laws:
+
+$$
+\Gamma_B=\sum_{x,y}\pi_xB_{xy}\delta_{(Q_x,W_y)},\qquad
+\Gamma_A=\sum_{y,x}\tau_yA_{yx}\delta_{(W_y,Q_x)}.
+\tag{11.24}
+$$
+
+Both are probability measures. Their shared marginals are $\sum_x\pi_x\delta_{Q_x}$ and $\sum_y\tau_y\delta_{W_y}$. The exact same-update recursions (3.2), divided by their positive continuation probabilities, give (11.7), including when different labels have identical laws. Configuration-before-TV risks are unchanged by this pushforward. The all-history equality just cited gives $\mathcal J=e(M)$. Taking the infimum over every finite shape proves $j_c\le J(\mathfrak S_\mu)$.
+
+Conversely, take one compatible pair, without a finite-support assumption. For each $\varepsilon>0$, Theorem 11.4 and its original product realization give one finite same-update observer with
+
+$$
+e(\widehat M)\le\mathcal J(\Gamma_B,\Gamma_A)+\frac{81}{44}\varepsilon.
+$$
+
+Taking $\varepsilon\downarrow0$ proves $J(\mathfrak S_\mu)\le\mathcal J$ for this pair, hence $J(\mathfrak S_\mu)\le j_c$. This converse starts with measure-valued law flows rather than a supplied finite observer. The stationary/periodic equality and the two original-class inequalities are exactly [PAID, Corollary 2.3], which uses [CLIP, Theorem 4.2]. Their hypotheses retain the original complete-law targets, paid histories and same-update observer class; they impose no resource or hard-defect preservation. The equivalences follow from these inequalities, nonnegativity and Lemma 11.3. $\square$
+

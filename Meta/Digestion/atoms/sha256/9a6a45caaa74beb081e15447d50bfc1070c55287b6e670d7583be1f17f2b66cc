@@ -1,0 +1,34 @@
+**定理 15.9（开放有限来源的压力与每位 Fisher）。**
+
+
+令 h=logλ、S_N=∑_{i=1}^N X_i。开放 N 位合法词法则为 exp(h S_N)/Z_N(h)，两端无额外权。固定支持、有限和可以直接求导：∂_h log Z_N=E_open S_N，∂²_h log Z_N=Var_open(S_N)。首位分解给 Z₀=1、Z₁=1+λ、Z_N=Z_{N-1}+λ Z_{N-2}。
+
+令 ρ=1-Λ=-ηΛ。解这个实际开放链递推得
+
+$$
+Z_N=\frac{\Lambda^{N+2}-\rho^{N+2}}D,\qquad
+\frac{\log Z_N}N=\frac{N+2}N\log\Lambda-\frac{\log D}N
++\frac1N\log(1-(-\eta)^{N+2}).
+$$
+
+在每个紧 h 区间上，0<η≤q<1，D,Λ,η 的前二阶导数有界，末项及其前二阶 h 导数受常数倍 N² q^N/N 控制并趋零；中间项的导数是 O(1/N)。这是极限求导的显式一致控制，不是未经证明交换导数与极限。因此
+
+$$
+\psi(h)=\lim_{N\to\infty}N^{-1}\log Z_N=\log\Lambda,\quad
+\psi'(h)=\mu=\tfrac12(1-1/D),\quad
+\psi''(h)=\frac\lambda{(1+4\lambda)^{3/2}}
+=\frac{\eta(1-\eta)}{(1+\eta)^3}
+=\lim_{N\to\infty}\frac{\operatorname{Var}_{\rm open}(S_N)}N.
+$$
+
+对另一个明确平稳抽样的 N 位段，才有有限精确式
+
+$$
+\operatorname{Var}_{\rm stat}(S_N)=N\operatorname{Var}(X_0)
++2\sum_{d=1}^{N-1}(N-d)\operatorname{Cov}(X_0,X_d).
+$$
+
+固定 λ 下绝对可和的 (-η)^d 允许除 N 后取极限；几何级数给 Var(X₀)+2∑_{d≥1}Cov(X₀,X_d)=η(1-η)/(1+η)³=ψ''。开放有限 Gibbs 律一般不平稳，不能把这项仅依赖 d 的协方差公式作为其精确有限恒等式。两者每位极限相同已由真实开放 partition 递推证明。
+
+同一有限统计族的 score 为 S_N-E S_N，Fisher 信息是 Var_open S_N；在 h 坐标的每位极限为 ψ''。在 λ=1 时单点平稳方差为 1/5，而每位 Fisher 极限为 1/(5√5)。这是一参数统计度量；换参数须按导数平方变换。若谈 KL 的二阶展开，仅对固定有限 N 的这个共同正支持族有 D_KL(P_h||P_{h+t})=½Var_h(S_N)t²+o(t²)；这不推出无限体量统一 KL 界、物理曲率或 RH。
+

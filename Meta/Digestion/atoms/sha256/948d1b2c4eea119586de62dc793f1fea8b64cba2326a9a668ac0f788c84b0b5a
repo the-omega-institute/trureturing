@@ -1,0 +1,42 @@
+**Theorem 2.2 (equal original coordinates, different canonical histories).**
+Under Assumption 1.2, the cuts of Definition 2.1 satisfy
+
+$$
+n(x_0)=n(x_1),\qquad O^+(x_0)=O^+(x_1),\qquad x_0\ne x_1.
+$$
+
+More strongly, their raw records differ only in the two symbol fields
+on70 at $c+7,c+8$, which are respectively $01$ and $10$. For each
+$V\in\{S,B,M_J,T\}$ separately, $V(x_0)\ne V(x_1)$.
+
+Proof. The gate, mode, header and length are identical. RCA Definition
+13.2, relocated by ARC Definition 5.3 and preserved by GCA Definition
+3.1, gives each positive payload iteration as
+
+$$
+\mathrm{RD}(\text{length},5);\ \mathrm{IN}(6);\ \mathrm{EX}(70);
+\ \mathrm{WR}(70,6);\ \mathrm{MR}(70);\ \mathrm{MR}(\text{length}).
+$$
+
+It tests the already supplied length, not the payload bit. No bank
+assignment, payload import or payload-dependent branch occurs inside
+this loop. Both lengths are three. The first two iterations therefore
+have identical row/PC, allocation, cursor, token and receipt schedules.
+Their differing inputs affect only latch6 and its matching70 writes.
+Their third positive length test is also the same. Its common IN0
+overwrites latch6 with0 before the chosen cuts. Latch5 contains the
+same length-test result; every other latch is preserved. Thus all
+finite slots agree, all heads agree, all tapes other than the stated
+two70 symbols agree, and the incomplete frame has the same extent
+and seal status.
+
+TMC PR57.D1 appends an ordinary receipt for these rows, not a transcript
+of their operands. The differing IN/WR values therefore do not change
+the meter symbols, its extent or either meter head. This verifies the
+meter equality as well as equality of its count. The external supplier
+returns to its common ready state after each bit, as in AIF Definition
+2.2; its future choices are not an endpoint coordinate. The two histories
+differ at their first payload IN and remain different histories. They
+are acquired canonical pre-outer00 prefixes by GENERAL Definition 1.4.
+Apply its Corollary 4.4 separately to the four views. ∎
+

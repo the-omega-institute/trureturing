@@ -1,0 +1,47 @@
+**Definition 4.1 (the NCM native motif).** Reuse [NCM, Proposition 6.1][NCM].
+Put
+
+$$
+\begin{aligned}
+A&=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,\quad
+J=\langle B,A\rangle,\quad Q_0=\langle C,A\rangle,\\
+(u_0,u_1,u_2,u_3,u_4)
+&=(C,J,\langle C,C\rangle,\langle J,J\rangle,\langle A,Q_0\rangle),\\
+P&=\{u_0,u_1,u_2,u_3,u_4\}\subset S_3.
+\end{aligned}
+\tag{NDR.19}
+$$
+
+Let $\tau$ exchange $1,4$ and fix $0,2,3$. The credited two-module
+relation is $B_* =\{(u_s,u_{\tau(s)}):0\le s\le4\}$.
+For this interface, the reply and factor
+tables, with columns $0,1,2,3,4$, are
+
+$$
+\begin{array}{c|ccccc}
+\text{reply}&0&1&2&3&4\\\hline
+\varepsilon&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}&\alpha\\
+R&\alpha&\alpha&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+LL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{absent}\\
+LR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\mathsf{absent}\\
+RL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\
+RR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\alpha
+\end{array}
+\tag{NDR.20}
+$$
+
+$$
+\begin{array}{c|ccccc}
+\text{factor}&0&1&2&3&4\\\hline
+\varepsilon&(0,0)&(0,0)&(0,0)&(0,0)&(0,0)\\
+L&(2,1)&(1,0)&(0,0)&(0,0)&(2,1)\\
+R&(2,1)&(2,1)&(0,0)&(0,0)&(0,0)\\
+LL&(3,0)&(2,0)&(2,1)&(1,0)&(3,0)\\
+LR&(4,1)&(3,1)&(2,1)&(2,1)&(4,1)\\
+RL&(3,0)&(3,0)&(2,1)&(1,0)&(0,0)\\
+RR&(4,1)&(4,1)&(2,1)&(2,1)&(2,1)
+\end{array}
+\tag{NDR.21}
+$$
+

@@ -1,0 +1,41 @@
+**Theorem 6.1 (exact unbounded acquired-history supremum).** Fix any finite $S$ containing depths 1 and 2 and any installed prior with exact support $S$ and positive masses. For the same compiled observer,
+
+$$
+\Phi_\infty^{j_p,j_\beta}(M_A,\mu)=C+\lambda V_A
+\quad\text{for all four orders.}
+\tag{6.1}
+$$
+
+No finite actual query attains this supremum. For each $\theta\in[0,1]$, the following strict statements are equivalent:
+
+$$
+\Phi_\infty>C+\lambda\theta
+\quad\Longleftrightarrow\quad
+\exists w\in\Gamma^*:p_A(w)>\theta
+\quad\Longleftrightarrow\quad
+\exists h\in\mathcal H_p:
+ e_j(h)-\rho_p>C+\lambda\theta.
+\tag{6.2}
+$$
+
+The last equivalence uses the actual positive-history domain of this one installed prior. It does not introduce arbitrary posterior mixtures or a supremum-attaining history.
+
+**Proof.** The all-history upper bound is Theorem 5.3. For each fixed finite automaton word $w$, append $n$ identity letters and use the actual history $h_n=h(wI^n)$ from (3.3). Its length is $L(|w|+n)+6$, its acceptance probability remains $p_A(w)$, and its balanced letter counts are
+
+$$
+N_n=2t(|w|+n)+3.
+\tag{6.3}
+$$
+
+Its *reachable* posterior, computed using that single installed prior, is
+
+$$
+\nu_{h_n}(k)=
+\frac{\mu(k)a_{r_k}^{N_n}}{\sum_{\ell\in S}\mu(\ell)a_{r_\ell}^{N_n}}.
+\tag{6.4}
+$$
+
+On $[1/3,2/5]$, $r(1-r)$ is strictly increasing. Depth 2 has $r_2=2/5$; depth 1 is smaller, and every $k\ge3$ has $r_k\le5/13<2/5$. It is therefore the unique maximizer of $a_{r_k}$. In a finite support with $\mu(2)>0$, each ratio to its depth-2 term in (6.4) tends to zero. Thus $\nu_{h_n}(2)\to1$ and $z_{h_n}\to9/25$. Equation (5.3) shows these finite positive-history scores tend to $C+\lambda p_A(w)$. Taking the supremum over finite $w$ gives (6.1), whether or not $V_A$ is attained.
+
+For every finite history $\nu_h(1)>0$, so $z_h>9/25$. Every $p$ score is therefore strictly below $C+\lambda V_A$. The $\beta$ scores have the strict smaller bound (5.5). This proves nonattainment. A supremum of $p_A(w)$ exceeds $\theta$ exactly when some finite word exceeds it. For such a word with slack $\delta=p_A(w)-\theta>0$, choose finite identity padding making $z_{h_n}-9/25<\lambda\delta$; (5.3) then gives the strict actual witness. Conversely such a history, using the all-history upper formula and $z_h\ge9/25$, requires a valid word with acceptance greater than $\theta$. Equality $V_A=\theta$ creates no strict witness. ∎
+

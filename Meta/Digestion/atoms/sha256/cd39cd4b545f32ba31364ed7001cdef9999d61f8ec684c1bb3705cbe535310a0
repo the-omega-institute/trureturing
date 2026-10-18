@@ -1,0 +1,80 @@
+**Construction 3.2 (The precise reused law $P^\star$).**
+The deterministic part of XVIII 320.1 consists of these sixteen rows,
+with masses $k/3072$.
+
+| $i$ | $j$ | $r_0$ | $r_{10}$ | $r_{11}$ | $k$ |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 4 | 0 | 4 | 0 | 110 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 5 | 0 | 5 | 0 | 132 |
+| 3 | 6 | 0 | 6 | 0 | 125 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 117 |
+| 4 | 6 | 0 | 6 | 0 | 110 |
+| 5 | 6 | 0 | 6 | 0 | 127 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+| 8 | 9 | 0 | 9 | 0 | 17 |
+
+The five remaining schedule rows have these unnormalized label vectors;
+all counts are divided by 3072, and $e_j$ is the label unit vector.
+Each vector in a row has the same schedule count $m$.
+
+| Schedule | $m$ | First vector | Middle vector | Exhaustion vector |
+| --- | ---: | --- | --- | --- |
+| $(1,2)$ | 944 | $944e_1$ | $944e_2$ | $463e_0+220e_3+162e_4+99e_5$ |
+| $(2,3)$ | 391 | $333e_0+58e_2$ | $391e_3$ | $391e_0$ |
+| $(3,4)$ | 236 | $236e_0$ | $236e_4$ | $148e_0+88e_5$ |
+| $(6,7)$ | 74 | $74e_0$ | $74e_7$ | $17e_0+4e_8+53e_9$ |
+| $(6,8)$ | 53 | $53e_0$ | $53e_8$ | $17e_0+36e_9$ |
+
+The deterministic counts total 1374 and these schedule counts total
+1698, giving the single total 3072. Counterfactual cell masses are not
+added to that schedule budget.
+
+For full-table weights, in each cell partition $[0,1)$ in label order,
+with interval lengths equal to vector entries divided by $m$. Assign to
+$O(i,j;r_0,r_{10},r_{11})$ mass
+
+$$
+\frac{m}{3072}
+ |I_0(r_0)\cap I_{10}(r_{10})\cap I_{11}(r_{11})|.
+\tag{3.1}
+$$
+
+The intersections partition one interval and recover every marginal.
+Each displayed row has only one nonconstant cell, so equivalently split
+its count by that cell's entries while retaining the other two labels.
+This is exactly the supplied coupling: one local seed coordinate fixes
+all counterfactual labels before replies.
+
+**Reused endpoint facts 3.3 (Entire first-zero fibres).**
+XVIII 319.2 proves all rows of $P^0$ at target
+$(13,13,13,10,9,8,6,5,5)/24$ and cap $5/24$.
+XVIII 320.2 proves all rows of $P^\star$ at target
+$(13,13,13,10,9,8,6,6,6)/24$ and cap $662/3072$.
+These cover every Boolean suffix. The exact correct counts needed here
+are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+n&1&2&3&4&5&6&7&8&9\\\hline
+24P^0_w(n)&11&8&8&5&4&3&1&0&0\\
+3072P^\star_w(n)&1081&1002&1002&618&490&362&106&106&106
+\end{array}
+\tag{3.2}
+$$
+
+All independent outside-$\{0,n\}$ masses obey their respective caps.
+The positive nonbase masses are $5/24$ and $662/3072$.
+On the entire first-zero-8 and first-zero-9 fibres the $P^\star$
+nonbase counts are respectively 728 and 679, by the restricted
+polynomial identities of XVIII 320.5–320.7.
+The complete endpoint proofs are reused, including their independent
+union rows; these facts are not extrapolations from sole-zero words.
+

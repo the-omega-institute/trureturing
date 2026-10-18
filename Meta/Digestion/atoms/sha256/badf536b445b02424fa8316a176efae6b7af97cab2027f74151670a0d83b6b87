@@ -1,0 +1,48 @@
+**定理 10.11（全密度域的最小线性期望记录）。** 在 $\mathcal D_3$ 上，预测定义 10.9 的全部未来单点占据期望，至少需要六个独立的非归一化实线性期望坐标。定理 10.10 的六坐标记录达到此界。
+
+证明。任意候选记录可写成 $\operatorname{Tr}(\rho F_1),\ldots,\operatorname{Tr}(\rho F_r)$，其中 $F_i$ 为 Hermitian；加入已知归一化，令
+
+$$
+V=\operatorname{span}_{\mathbb R}\{I,F_1,\ldots,F_r\}.
+$$
+
+即使允许从这些数进行任意非线性后处理，只要两个准备的记录相同，预测也必须相同。若 $\mathcal O_3\not\subseteq V$，其轨道生成集中至少有一个真实未来测试 $F=W^\dagger n_jW$ 不在 $V$，否则整个张成空间已包含于 $V$。
+
+在 Hermitian 实空间上使用 Hilbert–Schmidt 内积 $\langle A,B\rangle=\operatorname{Tr}(AB)$。令 $P_V$ 为正交投影，取
+
+$$
+D=F-P_VF.
+$$
+
+则 $D\ne0,D=D^\dagger,D\perp V$。由于 $I\in V$，有 $\operatorname{Tr}D=0$，并且
+
+$$
+\operatorname{Tr}(DF)=\|D\|_{\rm HS}^2>0.
+$$
+
+选 $0<\varepsilon<1/(8\|D\|_{\rm op})$，令
+
+$$
+\sigma_\pm=I_8/8\pm\varepsilon D.
+$$
+
+任意单位向量 $v$ 满足
+
+$$
+\langle v,\sigma_\pm v\rangle
+\ge1/8-\varepsilon\|D\|_{\rm op}>0,
+$$
+
+故两者正定且迹一，都在完整准备域内。因为 $D\perp V$，它们的所有候选记录相同；但实际未来测试差为
+
+$$
+\operatorname{Tr}((\sigma_+-\sigma_-)F)
+=2\varepsilon\|D\|_{\rm HS}^2>0.
+$$
+
+这与未来充分性矛盾。所以任何充分记录都必须满足 $\mathcal O_3\subseteq V$，从而 $r+1\ge\dim V\ge7$，即 $r\ge6$。反向充分性已由定理 10.10 给出。证毕。
+
+正定基点 $I_8/8$ 是必要的域内工具：若只允许纯态、一个固定激发数扇区或某个特殊准备族，两个微扰未必仍在该族中，不能直接沿用这个下界。例如固定 $n_A+n_B+n_C$ 的值，会使三个占据记录之间多一个已知关系，须重新计算限制后的观察空间及其正性域。
+
+“六个实线性坐标”不是六比特、六个样本、六次仪器操作，也不是一次测量即可精确取得全部数值的承诺。任意实数的集合论编码不在本最小性比较类中。该结论既不主张全态层析，也不提供制备成本或统计精度的资源定理。
+

@@ -1,0 +1,27 @@
+**Definition 4.1 (scalar parameters).** Put
+$$
+\begin{gathered}
+V=\frac{m_2h_1^2}{b^2},\qquad
+W=\frac{m_1h_2^2}{d^2},\qquad \mu=\alpha V+\beta W,\\
+u_F=V/\mu,\quad v_F=W/\mu,\quad
+\mathfrak c_f=\mathfrak c(1,\sqrt{u_F},\sqrt{v_F}),\quad
+\nu=\mu/\mathfrak c_f,\quad t_0=W/\mathfrak c_f=\nu v_F.
+\end{gathered}
+\tag{GC.12}
+$$
+At this fixed source,
+$0<u_F<1<v_F$ and $\alpha u_F+\beta v_F=1$.
+For finite $t\ge t_0$ define
+$$
+\begin{gathered}
+q=\nu/t,\quad
+u_R=\frac{1-qu_F}{1-q},\quad
+v_R=\frac{1-qv_F}{1-q},\\
+\tau_{\max}(t)=q\sqrt{u_F}+\sqrt{(1-q)(1-qu_F)},\qquad
+\tau_*=\tau_{\max}(t_0).
+\end{gathered}
+\tag{GC.13}
+$$
+Thus $0<q\le1/v_F<1$, $u_R>1$, $v_R\ge0$, and $v_R=0$
+exactly on the floor $t=t_0$.
+

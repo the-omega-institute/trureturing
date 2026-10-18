@@ -1,0 +1,6 @@
+**命题 7.2（逐前缀原始收据刚性）。** 设一个机制从同一个实际原始切口的 $n$ 个 receipts 开始，将每个成功原始 primitive 实验依次解释为 $d_i$ 条真实 native 行，且声称在每个解释前缀结束时完整原始后继、原始 meter 及 receipt 对应均相等。不允许删改这些真实收据，也不引入另一计量链。则每个 $d_i=1$。原始禁用尝试若也保持它未执行的完整响应，就不能解释为任何正数的 native 行。
+
+证明。完成前 $i$ 次原始实验后的要求为 $n+\sum_{j\le i}d_j=n+i$。相邻两个等式相减给 $d_i=1$；$i=1$ 同样成立。原始禁用尝试保持 $n$，而每一实际 native 行添一个 receipt，所以其解释行数只能为零。特别，在第 8 节实际 INITIAL consumer 的一条 EX 前插入 $k>0$ 条 native 检查/驱动行再执行 EX，后继有 $n+k+1$ 个 receipts、额外 $k$ ticks、$2k$ fees 及至少 $8k$ meter bits，不能等于要求的 $n+1$ 收据后继。$\square$
+
+它不要求隐藏 primitive-query schedule 相同，也不否定带一个 staged original receipt 的非 native 细步骤机制。若外层任务仅比较 trace projection 或完成后的抽象状态，可能允许 stutter；但那不是本命题中带实际完整原始 meter 的逐前缀相等。OR 的 completion interpretation 与当前可执行 driver 必须分别承担这一步。
+

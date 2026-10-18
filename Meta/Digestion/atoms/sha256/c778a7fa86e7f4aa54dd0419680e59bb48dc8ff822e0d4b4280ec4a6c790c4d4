@@ -1,0 +1,53 @@
+**Theorem 10.1 (one instrument for all original requirements).** For every physical parameter in Theorem 2.1, the low encoders of §9 together with one high label define a common CP/TP original acquisition and decoder on $M_5(\mathbb C)$. They attain the certified height, contrast, original errors and sharp joint cost simultaneously, with every passive-reference and five-component Borel identity.
+
+Proof. Choose fixed isometries $W_\perp:\mathbb C^2\to\operatorname{ran}(P)^\perp$ and $J_0:\mathbb C^2\to\mathbb C^3$. The single high encoder is
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\W_\perp^\dagger\end{pmatrix}
+:\mathbb C^5\longrightarrow\mathbb C^3\oplus\mathbb C^2.
+$$
+
+Its joint counted dimension is FIVE, its rate is zero and its report is plus. Its terminal decoder has hidden Kraus matrices $E[I_3\ 0]$ and $EJ_0[0\ I_2]$, whose effects sum to $I_5$. These are not two readable acquisition labels. The complementary share is counted within the same high fibre, including on inputs beyond the twelve supported histories.
+
+The first covariance identity of Theorem 3.3 cancels all cross Kraus coefficients and gives
+
+$$
+\sum_i K_i^\dagger K_i=\delta D^\dagger D+T^\dagger T+S^\dagger S,
+\qquad\sum_iN_i=M.
+$$
+
+Adding the high effect and using the root's TP identity proves $\sum_i C_i^\dagger C_i+C_H^\dagger C_H=I_5$. Every branch is CP/TNI and the acquisition is TP. For EVERY complex $X\in M_5$ the forgotten-label maps are
+
+$$
+\begin{aligned}
+\Phi_{\rm live}(X)&=E[\Lambda_*(E^\dagger XE)+J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,\\
+\Lambda_*(Y)&=DYD^\dagger+TYT^\dagger+SYS^\dagger,\\
+\Phi_{{\rm fail},\ell}(\mathcal B)(X)&=
+ w_\ell\left(\int_{\mathcal B}g(a)\,da\right)\operatorname{tr}(EME^\dagger X)P_f.
+\end{aligned}
+$$
+
+The first equality is the complete coefficient-Gram identity, not only an effect or a diagonal-input identity. It preserves the actual live off-diagonals, including complex reverse-coherence terms already present in $\Lambda_*$. The second equality follows from the CP density in §9 and $\sum N_i=M$. Equality of densities proves equality on EVERY Borel set. In particular the two zero measures at original labels $0,13$ remain distinct components.
+
+For any passive reference Hilbert space, all live Kraus matrices tensor with $I_R$. The failure conditional operator from a joint trace-class input $X$ is exactly
+
+$$
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+$$
+
+This follows by finite input matrix expansion and continuity, with no replacement by an unconditional reference marginal. The CP/Borel equalities include all complex cross operators and zero extra output sectors. On the twelve original states the complement has zero input mass. The complete HALF error for an unsigned history is
+
+$$
+e_y=\frac12\left[\|\Lambda_*(\rho_y)-\xi_y\xi_y^T\|_1+
+\sum_\ell w_\ell\int_0^1|\operatorname{tr}(M\rho_y)g(a)-f_y(a)|\,da\right].
+$$
+
+The inherited CG.143 therefore gives $e_{5,e,n}=e_{27,e,n}=E_*$ and $e_{16,e,n}<71/484<37/250<E_*$. All twelve errors are preserved; they are not all equal. This use of the complete-output minimax supplier does not follow from live or failure marginals alone.
+
+Give low label $i$ its certified deterministic report $\sigma_i=\operatorname{sgn}z_i$. Its acquired effect is $E(K_i^\dagger K_i+N_i)E^\dagger$, so eventual failure mass is counted at acquisition without survival division. Failure effects annihilate coordinate zero and the high report has no $01$ interference. Consequently original contrast is exactly $s_0\sum p_i|z_i|=s$. The acquired signed height mass of a low label is $p_iH_{\eta_i}(h_i)$; the high signed height is $H_{\rm high}>0$. This gives exactly the attained total variation in §7.
+
+Only $C_H$ has dimension at least three. On each original height-$y$ state its probability is $(1-\delta)A_y$, where $A_y=\sum_jh_j^2p_{yj}$ increases strictly with $y$. Its worst value is $(1-\delta)A_{27}$, the inherited sharp weak $\mathsf C(s)$ of JR37. It is a worst-history joint cost, not a sign average asserted for an arbitrary unaveraged competitor. All low fibres, the coherent high complement and every later-accessible share have been counted at the same acquisition cut.
+
+The operations are fixed for the prescribed frontier parameter before receiving the sole unknown specimen and are common to every history and reference input. The construction is a family with one common instrument at each parameter, not one instrument attaining all contrasts at once. Whole-fibre survival, TP controls, FIRST clock and the absence of post-failure carrier actions were proved in §9. These are mathematical operations, without a native access, calibration, clock or actuator entitlement. $\square$
+

@@ -1,0 +1,43 @@
+**Proposition 5.5 (four separate conditional kernel statements).** On each
+fixed family of Definition 5.1, define the old bases
+
+$$
+\begin{aligned}
+S_0(h)&=(\operatorname{Pos}(t_*),2,n(h)),\\
+B_0(h)&=(\operatorname{LeafPos}(t_*),2,n(h)),\\
+M_0(h)&=(\operatorname{code}(\alpha),n(h);\text{fixed interpreter}),
+\end{aligned}
+\tag{AIF.10}
+$$
+
+and let $T_{\mathrm{full}}(h)$ be the full actual ordered primitive word,
+retaining acquired input values. For $r>0$, each of $S_0,B_0,M_0$ separately
+fails task sufficiency. Each of $(S_0,x)$, $(B_0,x)$, $(M_0,x)$, and
+$T_{\mathrm{full}}$ separately has exactly the restricted task kernel.
+The opcode-only word and the ordinary receipt word fail sufficiency there.
+
+Proof. The source support is $\{\varepsilon,L,R\}$ and its leaf frontier
+is $\{L,R\}$. AIF.1–2 fix $n$, so each base in AIF.10 is constant. The
+separating experiment in Theorem 5.2 proves that its kernel strictly
+contains the task kernel when $r>0$.
+
+For $(S_0,x)$, equal values force equal $x$, whence identical actual cuts
+and equal experiment domains and all task responses. Task equivalence
+forces equal $x$ by the fetched request fields, and its common $S_0$ is
+already equal. These are both
+kernel inclusions for this view. The same two arguments apply independently
+to $(B_0,x)$ with its common frontier and to $(M_0,x)$ with its common seed
+and position. None uses an intersection of the views' kernels.
+
+An equal full primitive word gives equal actual input values and therefore
+equal $x$; equal $x$ gives that same full word by the deterministic prefix
+argument. AIF.8 supplies the two kernel inclusions for $T_{\mathrm{full}}$.
+Deleting input values leaves a common opcode word, and these ingress
+receipts have the same ordinary/fence pattern. Their common words merge
+task-distinct $x$. ∎
+
+The supplemented expressions in Proposition 5.5 are conditional fiber
+repairs. They are not proposed as a global spatial or boundary atlas, nor
+as four copies of AIF.5. The all-cut sufficiency of AIF.5 does not add the
+missing full-domain reverse inclusions to any natural view.
+

@@ -1,0 +1,71 @@
+**Proposition 5.2 (actual phase-paired inputs and their exact distance).**
+Use the four histories
+
+$$
+\left(\frac5{256},0,0\right),\quad
+\left(\frac5{256},\pi,0\right),\quad
+\left(\frac{27}{256},0,0\right),\quad
+\left(\frac{27}{256},\pi,0\right).
+\tag{CG.22}
+$$
+
+For $0<y<64$ put
+
+$$
+b_y=\frac{\sqrt y\,|+\rangle+\sqrt{64-y}\,|-\rangle}{8},
+\qquad Q_y=|b_y\rangle\langle b_y|.
+\tag{CG.23}
+$$
+
+For $y=5,27$ define the mathematical phase averages
+
+$$
+\Gamma_y=\frac12\left(\rho_{y/256,0,0}+
+                            \rho_{y/256,\pi,0}\right)
+         =\frac{P_2+Q_y}{2}.
+\tag{CG.24}
+$$
+
+They retain the $(+,-)$ coherence, and their input distance is exactly
+
+$$
+u=\frac{\sqrt{135}+\sqrt{2183}}{64},\qquad
+\delta_{\rm in}=\operatorname{dist}(\Gamma_5,\Gamma_{27})
+                   =\frac{\sqrt{1-u^2}}{2}.
+\tag{CG.25}
+$$
+
+Proof. Each $b_y$ has norm one. From (CG.7), for $m=0$,
+$\psi_{y/256,\beta,0}=(|2\rangle+e^{-i\beta}b_y)/\sqrt2$.
+Averaging only $\beta=0,\pi$ cancels the entries between $|2\rangle$
+and the other two directions. In the ordered basis $(+,-,2)$ it gives
+
+$$
+\Gamma_y=\frac1{128}
+\begin{pmatrix}
+y&\sqrt{y(64-y)}&0\\
+\sqrt{y(64-y)}&64-y&0\\
+0&0&64
+\end{pmatrix}.
+\tag{CG.26}
+$$
+
+In particular no diagonalization of the coherent $(+,-)$ block has been
+imposed. The overlap is
+$\langle b_5,b_{27}\rangle=(\sqrt{5\cdot27}+\sqrt{59\cdot37})/64=u$.
+These positive unit vectors are not parallel, so $0<u<1$.
+The common $P_2/2$ terms cancel. Lemma 5.1 gives
+
+$$
+\frac12\|\Gamma_5-\Gamma_{27}\|_1
+ =\frac14\|Q_5-Q_{27}\|_1
+ =\frac12\sqrt{1-u^2}.
+\tag{CG.27}
+$$
+
+Adding a fixed independent state and discarding it are CPTP operations;
+equivalently trace norms multiply under tensoring. Thus tensoring $\tau$
+does not change this input distance. The averages are convex witnesses
+among the actual histories of Proposition 2.2, not additional preparations,
+extra specimens or readable mixture labels. $\square$
+

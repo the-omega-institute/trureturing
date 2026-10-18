@@ -1,0 +1,55 @@
+**Assumption 8.1 (stationary source, complete export and lawful entry).**
+For public $D\ge1$ use the unchanged source and request families
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+\mathcal P_D=\{Rq:|q|\le D-1\}.
+\tag{CIT.38}
+$$
+
+One actual initial tree remains stationary throughout preparation and
+the later Read. Its formal iterates under $\rho$ are prediction
+targets, not source evolution. A common deterministic effective
+preparation starts source-blind with public $D$ and installed common
+tables, terminates on every source, and acquires all source distinctions
+through charged original-root literal Reads. It receives neither a
+later request nor a later count. Before those are supplied it exports
+a finite complete name $E(t)$. Every accessible surviving
+source-dependent distinction is included in that name: control,
+selectors, buffers, operands, lengths, allocation, handles, counters
+and accessible timing distinctions. Every other accessible field is a
+fixed function of this name and public data. A separately paid handoff
+and isolation service makes all earlier transcripts and other acquired
+descriptions inaccessible and supplies lawful reader entry.
+
+After export, a public source-independent request $p\in\mathcal P_D$
+is supplied. One common deterministic effective reader receives
+$E(t),D,p$ and public installed tables, chooses zero Reads or one
+finite original-root literal, and obtains at most one actual reply
+from the same stationary tree. It then exports a predictor $Z$.
+For every subsequently supplied authentic $k\ge0$, with no further
+Reads, correctness requires
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p).
+\tag{CIT.39}
+$$
+
+The authentic count is not available before the Read. Neither a
+source-dependent request nor inaccessible preparation information is
+a reader input. There is no native subtree, equality, source-identity,
+age, reset, copying, navigation or free-advice port. Local computation
+on actually acquired finite descriptions is distinguished from such
+ports. Handoff, complete isolation, authentication, source continuity
+and entry are service premises, not physical operations established
+by the following mathematics.
+
+We retain the exact factor/trajectory interface (CIT.19)--(CIT.20)
+and the supplied actual-occurrence transport: at a present original
+subtree occurrence $u$ at address $a$, every subsequent predicted
+reply at $aq$ is the predicted reply of that subtree at $q$.
+For the wrapper, $\Gamma_{Rq}(\langle\alpha,v\rangle)
+=\Gamma_q(v)$. These are the conditional interfaces of NCM,
+attributed there to AAR and its native transport suppliers. No
+recertification of their underlying interfaces is part of this volume.
+

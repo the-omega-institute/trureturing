@@ -1,0 +1,52 @@
+**Definition 10.2 (allocation and readonly protection).** Let $I_1$
+be the bit length of fixed sequential interpreter, initializer and
+nonrecursive routines implementing Constructions 8.3, 9.1 and 10.1;
+let $I_c$ include the fixed graph writer and tail manufacturer. These
+are fixed finite bit programs independent of $h,T$. Put
+
+$$
+\begin{aligned}
+Z&=T_G+I_1+I_c+N+W_*+P+\ell+H+J+64,\\
+r&=\left\lceil\log_2\bigl(2^{20}(Z+1)^2+1\bigr)\right\rceil,\\
+b&=2H+48r+96,\qquad L=2b-1,\qquad S_{\rm inst}=2^b.
+\tag{10.1}
+\end{aligned}
+$$
+
+Install the zero-interleaving image of **all** $b$-bit valuations.
+Separators are fixed zero. Thus $b$ is the number of independently
+writable bit cells physically reserved, $L$ is the no-$11$ configuration
+encoding width, and $2^b$ counts all installed composite states.
+Neither unreachable states nor dirty scratch arrays are quotiented out.
+The two $H$-cell letter lanes can be physically consecutive letter
+positions while the configuration has this abstract zero-interleaving
+encoding: separators encode states, not extra address letters. If
+separators are physically realized as well, charge their $b-1$ fixed
+cells separately; they do not create writable tail cells.
+
+A self-delimiting allocation header $J_r$ declares the forty-eight
+slot widths, ninety-six Boolean cells and two array lengths. A fixed
+gamma format, with zero array lengths encoded by their value plus
+one, has $|J_r|\le256r+256$. The resident immutable image has
+
+$$
+B_{\rm ro}=T_G+I_1+|J_r|+J
+\tag{10.2}
+$$
+
+bits, before optional physical zero separators. The last summand is
+the actual $R$ lane; it is additional to every literal copy in $T_G$.
+The permission map is fixed by physical region, not a mutable owner
+bit: every write addressed to code, headers, the $R$ lane or a fixed
+separator holds that cell on **all** controls. The error continuation
+may change counted local control, never readonly content.
+
+All heads, counters, offsets, header scans and bounded arithmetic
+intermediates used on lawful executions are below the slot bound
+$2^{20}(Z+1)^2$. Indeed the original graph/table extents are at most
+$Z$, extra readonly and writable lengths are at most
+$2Z+400r+512$, and row-offset arithmetic is bounded by $Z^2$.
+Here $Z\ge160$ and $r\le22+2\log_2(Z+1)\le24+2Z$; these inequalities
+put the stated extents strictly below the chosen squared bound.
+No numeric register is an unbounded natural-number workspace.
+

@@ -1,0 +1,8 @@
+**Open problem 9.2 (costs beyond the initial payload).** Determine
+exact costs for forming and using the minimal code when query count,
+total literal letters, maximum operand length, public installation,
+communication, local bit/cell work, transient workspace and cleanup
+are jointly charged. The attained state and fixed-width minima do not
+supply those optima. Citation 8.1 is a conditional finite acquisition,
+not a joint or interference-optimal procedure.
+

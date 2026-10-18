@@ -1,0 +1,44 @@
+**Theorem 6.2 (same-chart prefix correspondence).** For all
+$a,b\in\mathcal C_i$ and every $h\ge0$,
+
+$$
+\begin{aligned}
+\operatorname{coord}(a)\sim_h\operatorname{coord}(b)
+   &\Longrightarrow \Theta_i(a)\sim_h\Theta_i(b),\\
+\Theta_i(a)\sim_{h+c_i}\Theta_i(b)
+   &\Longrightarrow \operatorname{coord}(a)\sim_h
+                         \operatorname{coord}(b).
+\end{aligned}
+\tag{PDC.18}
+$$
+
+Proof. In (PDC.14), $T_{n_j+c}$ is $\rho^c(T_{n_j})$.
+Consequently $\Theta_i$ is a fixed native expression in the trees
+(PDC.16). [ARH, Lemma 19.2][ARH] says that pairing and fixed interpreted
+powers preserve original-prefix agreement. Its strict-depth notation
+is applied at $h+1$ here. This proves the first implication, including
+absent replies and early leaves.
+
+For the second, take any free sink. Its representative was a named
+native expression $A_C(w)$ before weighted coordinate changes.
+On the admitted domain it equals $\rho^{L_C}(z_C)$, or
+$\rho^{L_C}(T_{n_C})$ in the primitive case. The original source prefix
+through $h+c_i$ gives the prefix of every unbound original frontier
+through $h+\lceil L_i/2\rceil$, since its representative address has
+length at most $d_i$. Native expression locality gives that same
+prefix of $A_C(w)$.
+
+The image promise just stated is established by Theorem 5.2.
+[SLH, Theorem 2.2][SLH] recovers every reply of its preimage at a word
+$p$ from image replies at lengths at most
+$|p|+\lceil L_C/2\rceil$. Thus all replies of this coordinate through
+$h$ agree. Do this for every free sink. The empty-coordinate case is
+vacuous. This proves the second implication using the original
+four-reply meaning, not a normal-code depth metric. $\square$
+
+The constants in (PDC.17) are proof bounds for one chart. A mathematical
+inverse evaluates a supplied source, and is not an actual post-cut
+operation. No bounded reply test for membership in an algebraic chart,
+no cross-chart coordinate identification, and no scalar rank readout
+follows from (PDC.18).
+

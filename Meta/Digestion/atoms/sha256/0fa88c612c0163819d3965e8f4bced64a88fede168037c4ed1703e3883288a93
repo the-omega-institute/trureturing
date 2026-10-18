@@ -1,0 +1,73 @@
+**complete** live Gram $\sum phh^T=I_3$, including all cross
+entries. The last three equations give
+
+$$
+\sum pb_x=\mu,\qquad \sum pb_xz^2=V,\qquad
+\sum pb_xzw=0,\qquad \sum pb_xw^2=W.
+\tag{FC.25}
+$$
+
+The fourth follows from $\alpha z^2+\beta w^2=1$ and
+$\mu=\alpha V+\beta W$. Thus
+$\sum pb_x n_hn_h^T=M$: its lower diagonals are
+$d^2W/h_2^2=m_1$ and $b^2V/h_1^2=m_2$, and its off-diagonal
+vanishes. Pointwise $b_x=t\mathfrak c(h)\xi$ is legal physical
+capacity. These are the GC Proposition 12.2 equations for one
+joint law, not separately optimized marginal moment tables.
+Merging preserved them all and preserved absolute height by
+Theorem 3.3. Theorem 4.2 gives exact contrast and global optimality.
+
+Apply the **same** GC Proposition 10.1 constructor to that finite
+law. Each occupied low acquisition has supported live product
+$\sqrt p K_h$ and failure effect $pb_xn_hn_h^T$. Its actual
+effect includes both, namely
+$pK_h^\dagger K_h+pb_xn_hn_h^T$; coefficient weight $p$ is
+not the probability of acquisition. Rank two on every occupied
+ellipse ray, including axes, is supplied there. The complete live
+Gram gives its common live CP map on all complex inputs, preserving
+coherences. The full $M$ gives each of the five original failure
+Borel CP maps separately, including the zero-target ones.
+Tensoring with arbitrary passive references retains their conditional
+operators. These common maps preserve the complete twelve-history
+stopped-cq HALF errors: the inherited minimax has the $5$ and $27$
+errors equal to $E_*$ and the $16$ error strictly smaller, not
+twelve equal scalar errors.
+
+For specificity, the inherited chronological construction uses
+$g(a)=2/(1+a)^2$, $G_{\rm time}(a)=2a/(1+a)$ and the low
+failure operator $F_i$ on its entire qubit, with
+$Z_i(a)=\sqrt{I-G_{\rm time}(a)F_i}$ and
+$R_i(a)=g(a)F_i[I-G_{\rm time}(a)F_i]^{-1}$. Its integrated
+rate norm is $\log(1+b_i/\mathfrak c(h_i))\le A$ and terminal
+survivor effect is at least $e^{-A}I>0$. The pulled-back jump
+and survivor effects sum to identity at every cut. Its terminal
+survivor map is TP/isometric, there is no terminal absorption,
+and chronological FIRST is $6+a$. The construction uses that
+density as a sufficiency witness while necessity keeps all admitted
+original time laws.
+
+The coherent complement lies inside one weak high actual label,
+whose entire joint fibre has dimension five, even though its
+supported-history part has rank three. Its rate is zero. Its
+worst-history acquisition probability is the inherited sharp
+$\mathsf C(s)$; no controller, correlated accessible share or
+part of that joint fibre is hidden from the cost. Hidden terminal
+Kraus indices are discarded, not new readable labels. Low reports
+give $\mathsf V=s_0K/\sqrt\alpha=s$. The high signed height
+is $H_0>0$, giving the value formula with HALF. Each law has its
+own instrument fixed before the sole unknown input and common to
+the twelve histories; it is not one instrument for every request.
+
+Actual-label rigidity supplies the reverse count bound for full
+complex multi-Kraus competitors: distinct supported live rays
+cannot be concealed in one low actual outcome. Supported-zero
+full encoders remain admissible and count when generated, but
+cannot lower the minimum; the constructor absorbs the complement
+in its one high fibre. GC.10 is exactly the equality of minimum
+total count and one plus minimum supported-low count. Combining
+that credited equality with (FC.12), (FC.16) and (FC.17) gives
+(FC.24). No claim is made that every instrument with $L$ supported
+low labels has exactly $L+1$ total labels. The physical slope
+follows by differentiating the affine expression with
+$dr/ds=\sqrt\alpha/s_0$. $\square$
+

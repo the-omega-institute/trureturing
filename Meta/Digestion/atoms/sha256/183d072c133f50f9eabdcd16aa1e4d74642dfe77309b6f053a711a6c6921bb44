@@ -1,0 +1,18 @@
+**Convention 7.1 (Evidence and literature scope).** The particular normalized
+certificate, coefficient tables, port parameters, bracket and strict-slack
+obstruction are repo-derived ordinary mathematics. The first-read theorem,
+finite quadrature mechanism, independent-factor constructions and the
+distinction between full TP and eventwise contact are credited in
+Convention 1.3. There is no worldwide-originality claim.
+
+| Primary source | Supported ingredient and boundary |
+| --- | --- |
+| [Horodecki–Shor–Ruskai, quant-ph/0302031v2, Theorem 4](https://arxiv.org/html/quant-ph/0302031v2) | Literature-attested measure/prepare, separable-Choi and rank-one Kraus equivalences; the CPTP version separately imposes a POVM or Kraus completeness. Equations (4.6)–(4.8) prove that condition for the actual port. It does not evaluate the present menu optimum. |
+| [Doherty–Parrilo–Spedalieri, quant-ph/0308032v3, Section VI](https://arxiv.org/html/quant-ph/0308032v3) | Literature-attested decomposable witnesses and PSD/PPT pairing. Here (3.9) and (3.21) give the full explicit elementary argument. No hierarchy or PPT sufficiency is inferred. |
+| [Bluhm–Rauber–Wolf, 1708.04898v4, Definition 4.1](https://arxiv.org/html/1708.04898v4) | Fixed CPTP encoder/decoder compression with all-state quantifiers provides related context. Its observation contract does not replace (1.3). |
+| [Gulati–Nechita–Park, 2509.15201v4](https://arxiv.org/html/2509.15201v4) | Pairwise copositivity, symmetry and extension methods concern their specified classes. No matching event/TP certificate or no-loss support theorem for (1.3) is imported. |
+
+The stated literature does not supply the particular common equality
+missing in Open problem 6.3. That limited correspondence statement is
+not an impossibility, noncomputability or originality assertion.
+

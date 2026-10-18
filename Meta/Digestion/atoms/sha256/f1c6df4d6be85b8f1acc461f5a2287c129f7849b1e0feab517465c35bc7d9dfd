@@ -1,0 +1,63 @@
+**Theorem 7.1 (a paid full-family fiber with off-target recovery).** At
+$D=3$ there is a complete actually acquired encoder on all of
+$\mathcal F_3$ with a four-source fiber on which one off-target
+literal serves every late target. On that same fiber no single prefix
+literal serves the particular target $p=RLL$.
+
+Proof. Let $(u_0,u_1,u_2,u_3)$ be the four gadgets in (LTR.18), and
+put
+
+$$
+(z_0,z_1,z_2,z_3)=
+(\alpha,\langle\alpha,\alpha\rangle,
+ \langle\beta,\alpha\rangle,
+ \langle\langle\alpha,\alpha\rangle,\alpha\rangle),
+\qquad t_i=\langle\alpha,\langle u_i,z_i\rangle\rangle.
+\tag{LTR.23}
+$$
+
+Every right subtree has height at most three. The literal $RRL$
+has replies $(\mathsf{absent},\alpha,\beta,\mathsf{branch})$ on
+these four sources. It therefore identifies the actual $t_i$ in
+one Read. Common installed representatives then supply $G_p(t_i)$
+for every late $p$, and (LTR.4) supplies every authentic count.
+
+At $RLL$, the four factors are $(3,0),(2,0),(2,1),(1,0)$, all
+different. The prefix replies are
+
+| Prefix of $RLL$ | Reply vector on $t_0,t_1,t_2,t_3$ |
+| --- | --- |
+| $\varepsilon$ or $R$ | $(\mathsf{branch},\mathsf{branch},\mathsf{branch},\mathsf{branch})$ |
+| $RL$ | $(\alpha,\beta,\mathsf{branch},\mathsf{branch})$ |
+| $RLL$ | $(\mathsf{absent},\mathsf{absent},\alpha,\beta)$ |
+
+Each prefix merges distinct trajectories. Before its one query a
+deterministic prefix-only reader sees the same code and target on
+the entire fiber, so it must choose one of those words and cannot
+be correct. Zero Reads fail as well.
+
+For actual whole-family attainment, prepare by a branch-guided
+literal traversal of the entire $v$ from $R$. Query every reached
+node once, scheduling children only on branch. This obtains its
+finite labelled description in at most $15$ Reads, with maximum
+submitted length $4$ and total letters at most
+$1+2\cdot2+3\cdot4+4\cdot8=49$. Locally assign one common code
+to exactly the four acquired trees (LTR.23), and a distinct singleton
+code to every other member of $\mathcal F_3$. No equality or identity
+port is used: comparisons concern the already paid finite description.
+Export that complete code and isolate every other field. On the
+four-source code use $RRL$; singleton codes need zero Reads. This
+common reader is correct on all $\mathcal F_3$, all late targets
+and all counts. The right-subtree count is $1446$, from
+$f_0=2$, $f_{j+1}=2+f_j^2$; this deliberately large supporting
+encoder has $1443$ attained codes. It is not an upper-bound competitor.
+$\square$
+
+The counterexample refutes replacement by a prefix query on an
+unchanged attained fiber. It does not prove that a globally different
+prefix-only partition requires more codes, refute the published
+known-menu worst-budget projection of AAR Theorem 16.4, or determine
+$M_1(3)$. Projecting the correlated off-path subtrees to fixed
+completions can change $E$ and destroy this fiber, so such a projection
+does not establish a fiberwise reduction.
+

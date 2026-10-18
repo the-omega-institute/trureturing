@@ -1,0 +1,5 @@
+source_id = "krasniqiboundarycontact"
+path = "docs/develop/theory/KrasniqiBoundaryContact.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

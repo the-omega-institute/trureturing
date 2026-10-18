@@ -1,0 +1,25 @@
+**Definition 52.1 (occurrence continuation with explicit extra structure).** Use the unchanged free nonempty ordered source algebra and substitution from this volume §1 and [Continuation §§1–4](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md). Put $T_k=\rho^k\alpha$, so $T_{k+2}=\langle T_{k+1},T_k\rangle$. For an actual initial tree $t$, set
+
+$$
+U_0(t)=t,\qquad U_{j+1}(t)=\langle U_j(t),T_j\rangle.
+\tag{52.1}
+$$
+
+Each step is the original whole-source `Right(T_j)` operation. Its known context is a newly prepared occurrence of $T_j$; constructing, delivering and consuming that occurrence is additional work. Preparing it by the known-source substitution does not copy the unknown source. The unknown $t$ appears exactly once throughout. No subtree navigation or inverse graft is performed.
+
+Let $V_j$ be the actual node occurrences of $U_j(t)$, with a finite address in $\{L,R\}^*$ naming each occurrence relative to its current root $r_j$. The inclusion $V_j\hookrightarrow V_{j+1}$ is literally $w\mapsto Lw$. Old labels, brackets and parent–child seams are preserved by this inclusion; the new root has the old tree as its left child and the freshly prepared $T_j$ as its right child. In the common direct limit, equal occurrences mean equality under these specified inclusions, not equality of subtree values. Repeated isomorphic subtrees remain different occurrences. Let $\Gamma_\infty$ be the union of these occurrence trees and seams. It is connected, countably infinite and of maximum degree three. The only edge from $V_j$ to its complement is the actual seam $\{r_j,r_{j+1}\}$.
+
+The following are explicit model contracts, not permissions or measurements inferred from the tree: every occurrence has measure $\mu=1$; each existing seam has symmetric conductance $c_{xy}=c_{yx}=1$; seam length is one; complex scalar amplitudes have the counting-measure norm; the propagation parameter has a declared common unit; and two fixed public constants $a,g>0$ specify kinetic and attractive energy units. No extra edge is inserted between equal labels or nearby encodings. Symmetric propagation on a seam is an additional field law, not an executable reverse tree operation. Its directed occurrence name and original legal graft are still retained.
+
+Write $\ell(t)$ for the initial number of leaves and $F_0=0,F_1=1$. The existing structural Fibonacci law gives
+
+$$
+\ell(U_j)=\ell(t)+F_{j+2}-1,\qquad
+N_j:=|V_j|=2\ell(t)+2F_{j+2}-3.
+\tag{52.2}
+$$
+
+Indeed $T_k$ has $F_{k+1}$ leaves, and $\sum_{k=0}^{j-1}F_{k+1}=F_{j+2}-1$; a full binary tree with $\ell$ leaves has $2\ell-1$ nodes. This count describes actual domain growth. It is not a decreasing mesh size or an increase of precision on one fixed spatial domain.
+
+The unbounded graft menu of [Process §44](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) permits every finite prefix of (52.1). Under the original TM30/57 fixed-cap menu, a call instead accepts exactly when the whole candidate has at most $H$ leaves and otherwise rejects while retaining the entire old tree. At fixed $H$ the accepted tower therefore ends. The all-level analysis is a mathematical family of finite legal uncapped prefixes, or finite prefixes individually admitted by sufficiently large externally declared caps. It is not a free cap increase during a fixed-$H$ execution. The infinite union is not a finite source in $\mathcal T$ and is not a new action after an infinite prefix. In particular no limit Read is added.
+

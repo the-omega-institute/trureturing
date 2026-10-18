@@ -1,0 +1,17 @@
+**Definition 9.2 (The existing rank discrepancy).** For a probability $r$ on $B_n$, extend it by zero to every binary word and let its cut at $1\le k<n$ be
+
+$$
+\mathsf F_k(r)(s,t)=r(st),\qquad
+s\in\{0,1\}^k,\quad t\in\{0,1\}^{n-k}.
+$$
+
+Nonnegative rank is the least number of nonnegative rank-one matrix summands. Let $\mathscr F_{N,n}^{0,0}$ be the band-compatible probabilities on $B_n=K_n^{0,0}$ whose every internal cut has nonnegative rank at most $N$. With the positive optimizer $\pi_n$, use [Guarded, Definition 6.3][G]'s unchanged quantity
+
+$$
+\mathcal R_{N,n}=\min_{r\in\mathscr F_{N,n}^{0,0}}
+\mathcal D_{B_n}(\pi_n\Vert r),\qquad \min\varnothing=+\infty.
+\tag{9.3}
+$$
+
+For $n=1$ there are no internal cuts. All illegal seams remain zero entries of the flattenings. The minimizing family is the existing compact relaxation, not a family asserted to share a stationary realization or common matrices across lengths.
+

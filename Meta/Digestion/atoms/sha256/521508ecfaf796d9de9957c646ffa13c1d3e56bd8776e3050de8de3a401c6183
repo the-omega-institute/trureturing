@@ -1,0 +1,41 @@
+**Proposition 31.2 (bounded exact readings).** The grouping ranges and
+distinct within-group replies of (GDB.109) hold by exact integer checks
+for $1\le n\le256$. Across all $R$-starting words of lengths one
+through eight, the $3841$ word/descriptor pairs in Lemma 26.3 give
+the specified actual witness descriptors and the unique replies in
+Theorem 27.2. For the explicit grouping map (GDB.109), complete
+variable-shape enumeration gives:
+
+| $D$ | Actual sources in $\mathcal F_D$ | Original targets | Attained full tuple $J_{\mathcal P_D}$ | Direct trajectory comparisons, $0\le k\le6$ |
+| --- | ---: | ---: | ---: | ---: |
+| $1$ | $6$ | $1$ | $1$ | $42$ |
+| $2$ | $38$ | $3$ | $4$ | $798$ |
+| $3$ | $1446$ | $7$ | $25$ | $70854$ |
+
+All those comparisons agree with direct iteration of $\rho$ and
+literal traversal. The displayed tuple construction is an upper
+construction, not an optimal full-menu code; its $25$ at depth three
+does not replace the credited optimum four. Exact integer arithmetic
+also gives
+
+$$
+1873\cdot3038031^8<7792603^8\le1874\cdot3038031^8,
+\tag{GDB.126}
+$$
+
+the credited NCE finite ceiling used in (GDB.125).
+
+Proof. For a fixed $n$, compute $m,a,b$ and (GDB.109); list every
+descriptor and its reply (GDB.106) at its assigned center. For the
+witness readings use the recursive actual trees (GDB.105). For the
+full families start from the two height-zero leaves and repeatedly
+adjoin all ordered pairs of preceding trees. Wrap each right subtree
+by $\langle\alpha,\cdot\rangle$, compute its acquired prefix replies,
+its tuple by (GDB.114), and each selected late reply. For counts zero
+through six, compare (GDB.107) followed by (GDB.4) with direct tree
+substitution and traversal. These finite enumerations give exactly
+the table. The last inequality is an integer-power comparison.
+All checks are bounded computations in memory; no experimental file
+is a source premise. The universal claims rest on §§26–30's ordinary
+proofs, separately from these bounded readings. $\square$
+

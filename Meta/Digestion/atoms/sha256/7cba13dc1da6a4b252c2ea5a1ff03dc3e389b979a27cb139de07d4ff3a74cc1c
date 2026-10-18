@@ -1,0 +1,44 @@
+**Theorem 7.1 (all adaptive competitors excluded by a positive
+contact).** Assume the authentic acquired input of Assumption 1.2.
+If Theorem 6.1 returns YES, no legal controller of Definition 1.3 has
+a uniform finite raw-read bound while recovering the full $R_Q$ on the
+entire $D$. The conclusion allows arbitrary finite physical addresses,
+reply-dependent serial updates, early and zero epochs, absent reads,
+sourcewise finite computation and genuine absorbing halt.
+
+Proof. The witnesses (NLC.18) show that no original prefix depth
+determines $R_Q$ on $D$. Apply the serial/static/prefix existence
+correspondence [ARH, (2.3)][ARH]. Its relevant hypotheses are common
+complete state, four-valued replies, source-total termination and
+original-prefix locality, all preserved here; its literal-only
+source-language decision is not used.
+
+For the direct all-comparator argument underlying that application,
+suppose a legal $A$ has at most $K$ reads on every source. There are
+finitely many realized reply histories of length at most $K$. From a
+realized history, deterministic common control fixes the computation
+and update segment up to the next read or halt. That segment is finite:
+some original source realizes the history, and the controller terminates
+on that source. Neither updates nor local computation introduce another
+source observation. Consequently the realized executions form a finite
+reply tree, with finitely many submitted physical words. Let $h$ be the
+maximum of their lengths, taking $h=0$ if there are no reads.
+
+Use the finite original witnesses (NLC.18) at this $h$. The native
+locality supplier [NativeDepthPatterns, `original_prefix_locality`][DEPTH]
+states that agreement of original replies through $|p|$ makes the
+reply at $p$ equal at every common epoch. It includes originally
+absent and subsequently born addresses. Inductively the two witnesses
+therefore give the same next reply at the same actual epoch, the same
+subsequent common control, and the same terminal output in the finite
+reply tree. Their full row labels differ, a contradiction.
+
+The finite reply tree in this contradiction need not be effectively
+extracted from arbitrary controller code; the theorem quantifies over
+every such realized tree. For a supplied finite controller tree its
+maximum word length is directly available, and (NLC.18) constructs a
+finite counterpair to that tree. No assumption bounds competing word
+lengths or updates in advance. No actual action is performed on a limit
+tree, and no reconstructed source is used as the unknown source.
+$\square$
+

@@ -1,0 +1,48 @@
+**命题 C-106.6（同一见证的局部 $X/Y$ 乘积期望对应）。** 在两份空间分别定义
+
+$$
+\begin{aligned}
+A&=|0\rangle\langle13|,&X_1&=A+A^\dagger,&Y_1&=-i(A-A^\dagger),\\
+B'&=|13\rangle\langle0|,&X_2&=B'+B'^\dagger,&Y_2&=-i(B'-B'^\dagger).
+\end{aligned}
+\tag{C106.22}
+$$
+
+对任意复密度 $\Gamma$ 和 (C106.10) 的同一个 $c$，有
+
+$$
+\begin{aligned}
+R_+&=\tfrac12(P_0\otimes P_{13}+P_{13}\otimes P_0)
+       +\tfrac14(X_1\otimes X_2-Y_1\otimes Y_2),\\
+\operatorname{Re}c&=\tfrac14\bigl(\langle X_1\otimes X_2\rangle_\Gamma
+                                  -\langle Y_1\otimes Y_2\rangle_\Gamma\bigr),\\
+\operatorname{Im}c&=-\tfrac14\bigl(\langle X_1\otimes Y_2\rangle_\Gamma
+                                   +\langle Y_1\otimes X_2\rangle_\Gamma\bigr).
+\end{aligned}
+\tag{C106.23}
+$$
+
+若各局部设置确实可用上述算子的全部谱效果，局部相位参照按 (C106.22) 对齐，
+且各设置采样同一实际稳定来源 $\Gamma$，则乘积结果的平均值可重建同一见证期望。
+这里要求的谱结果为 $-1,0,+1$，包含该两维子空间外的零结果；每个谱效果须是实际可用的测量效果。
+
+证明。$A\otimes B'=|e_0\rangle\langle e_{13}|$。
+展开 $X_1\otimes X_2-Y_1\otimes Y_2$ 得
+$2(A\otimes B'+A^\dagger\otimes B'^\dagger)$，
+展开 $X_1\otimes Y_2+Y_1\otimes X_2$ 得
+$-2i(A\otimes B'-A^\dagger\otimes B'^\dagger)$。
+而 $\operatorname{tr}((A\otimes B')\Gamma)=\overline c$，
+所以实部与虚部的符号如 (C106.23) 所列。
+$X_j,Y_j$ 在所选两维空间上为 Pauli 算子，在其正交补上为零。
+若 $E^{(1)}_\lambda,E^{(2)}_\mu$ 为实际可用的局部谱效果，
+联合结果概率为 $\operatorname{tr}((E^{(1)}_\lambda\otimes E^{(2)}_\mu)\Gamma)$，
+按 $\lambda\mu$ 加权求和恰为相应乘积算子的期望。
+这个恒等式不要求两份独立；它要求各设置的概率来自同一实际状态，
+否则不同来源的四个期望不能组合成某一个 $c$。证毕。
+
+期望的这种线性重建不等于 $R_+$ 二元投影仪器的选择后状态或扰动合同。
+谱效果的数学存在亦不证明 AURIC FIB 原生控制具备这些设置、相位对齐或物理实现。
+这些结论不改变每份底面 concurrence 的分割，也不把非零来源协方差直接当作纠缠。
+C-104 的全输入 flagged CPTP 编解码与通用端口维数合同仍须各自证明；
+局部乘积期望对应没有供应这些全称映射。
+

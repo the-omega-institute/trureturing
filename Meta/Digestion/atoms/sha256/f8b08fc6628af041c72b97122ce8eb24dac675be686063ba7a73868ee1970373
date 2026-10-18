@@ -1,0 +1,48 @@
+**Definition 1.1 (actual common source).**  Let $\Omega$ be a set of
+actual jointly generated source instances and let
+
+$$
+s:\Omega\longrightarrow S
+$$
+
+be the source map.  The working state is the actual image
+$X=\operatorname{im}(s)$.  A declared forward-closed reachable carrier
+$X_{\rm reach}\subseteq X$ may be used; whenever $X_{\rm reach}$ is written
+below, all operations are required to preserve that carrier.  If no smaller
+carrier is declared, set $X_{\rm reach}=X$.  A product such as an archive coordinate times a clock coordinate
+is only notation for components of $s(\omega)$; independently realizable
+coordinates may not be joined without a common $\omega$.  Every quantifier
+below is over this one source and its actual reachable image.
+
+Let $I$ be a set of interface types and $\kappa:X\to I$ the type map.
+An action name $a$ has source type $i(a)$, target type $j(a)$, a
+partial legal domain $D_a\subseteq X_{i(a)}$, and a successor
+
+$$
+T_a:D_a\longrightarrow X_{j(a)}.
+$$
+
+For a compatible word $u=a_1\cdots a_n$, write
+$i(u)=i(a_1)$, $j(u)=j(a_n)$, and define its partial successor by
+$T_\varepsilon=\mathrm{id}$ and
+$T_{ua}=T_a\circ T_u$ on the states where every prefix is legal.  The same
+word-composition convention is used for typed meter transports and charges.
+Legal failures with declared successors are included in these partial
+compositions.
+
+Its complete one-step response is a typed record
+
+$$
+\operatorname{step}_a(x)=
+\bigl(\mathsf{status},\mathsf{event},\mathsf{out},
+       \mathsf{failure},\mathsf{record},\mathsf{clock},\mathsf{meter}\bigr).
+\tag{1.1}
+$$
+
+The status distinguishes legal success, a legal executed failure with a
+declared successor, and an illegal operation with no successor.  The record
+contains every field declared observable by the task, including a selector
+decision when the observer chooses the next name.  A legal failure is not
+silently replaced by an illegal edge, and an absent operation is not an
+executed failure.
+

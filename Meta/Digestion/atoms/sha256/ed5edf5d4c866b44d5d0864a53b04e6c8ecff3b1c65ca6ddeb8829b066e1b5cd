@@ -1,0 +1,36 @@
+**Proposition 9.3 (The inherited almost-sure-return slice).** For
+every fixed auxiliary law,
+
+$$
+\mathcal L_{2,\nu}(1)
+=1-\frac a2-a\eta-a^2\eta
+=1-\frac a2-a^2b(1+a).
+\tag{9.6}
+$$
+
+This is Slice, Theorem 6.1. Original, Theorem 11.4, and Risk,
+Theorem 4.1, supply the one-read value
+$1-a/2-a^2b$; it is also inherited.
+
+Proof. The only total mass one in (4.3) uses $r=\eta,s=z$.
+Its type-$I$ correct mass is (4.6), and its type-$D$ correct
+mass is $a/2+a\eta+a\eta c$, smaller by
+$a\eta(a-c)=D>0$. A convex combination of masses in $[0,1]$
+can have mass one only by using mass-one policies almost
+everywhere. Thus Theorem 5.1 bounds the correctness of any
+full-return competitor by (4.6). Definition 4.1 with type $I$,
+$r=\eta,s=z$ attains it, paying exactly twice and returning
+on every path. Its disjoint first-zero second edge $f$ may be
+replaced by $2(j+2)$, the attainer used in Slice; the leaf
+products are the same. Since $a\eta=a^2b$, (9.6) follows.
+$\square$
+
+These comparisons identify the overlap: universal support and
+its face classify convex envelope values and certain equality
+partitions; the full-return slice supplies one mass independent
+of seed availability. Theorem 7.4 additionally determines every
+feasible mass and the minimum above the envelope when the
+specified law cannot attain it. The point in Theorem 8.3 is a
+strict witness to information lost by retaining only supporting
+values.
+

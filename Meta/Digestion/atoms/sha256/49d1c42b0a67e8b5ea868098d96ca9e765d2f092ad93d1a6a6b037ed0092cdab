@@ -1,0 +1,33 @@
+**Lemma 13.1 (Restriction to the actual affine hull).** Let
+$\mathscr H=\operatorname{aff}E(\mathcal M)$ and
+$d=\dim\mathscr H\le m$. One may replace the ambient stored space
+by affine coordinates on $\mathscr H$, retaining the same source,
+decoder values, and all lawful affine identities. This does not require
+a probability command to preserve $\mathscr H$ away from its lawful
+encoded states.
+
+**Proof of Lemma 13.1.** Choose an affine retraction
+$\mathcal P:\mathbb R^m\to\mathscr H$ that is the identity on
+$\mathscr H$. Such a retraction is obtained by choosing an origin in
+$\mathscr H$, extending a basis of its direction space to the ambient
+space, and projecting along the added directions. Replace an ambient
+update $\mathcal U$ by
+$\mathcal P\circ\mathcal U|_{\mathscr H}$. On a lawful encoded
+state the original update equals another actual encoding, so the
+retraction changes nothing there. Restrict the affine decoder to
+$\mathscr H$ and choose affine coordinates on this hull. These maps
+include all their affine offsets. Empty domains still impose no
+identity. In the resulting $\mathbb R^d$, the encoded image has full
+affine hull. $\square$
+
+Use these actual-hull coordinates from now on, and write the useful
+observable as
+
+$$
+a(x)=a_0+L E(x),\qquad L:\mathbb R^d\to\mathbb R^2.
+$$
+
+The rank here is the rank of this useful readout on the direction
+space of the actual hull. It is neither the stored dimension nor the
+rank of the entire ten-output decoder.
+

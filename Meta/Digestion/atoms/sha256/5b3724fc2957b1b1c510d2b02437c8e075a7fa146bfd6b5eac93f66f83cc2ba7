@@ -1,0 +1,73 @@
+**Theorem 46.1 (second- and third-charge early remainders).** With restriction to the original $\Omega_s$ and zero extension as in Definition 29.1,
+
+$$
+\left\|\mathcal N_sg_i-\sum_{j=0}^{4-i}s^j\mathcal N_jg_i\right\|_2
+ =o(s^{4-i}),\qquad i=2,3.
+\tag{46.1}
+$$
+
+The norms are on the entire common $L^2(\mathbb R^4)$ space, with all real phases.
+
+Proof. Fix sufficiently small $\ell>0$ so $(-L,L)\Subset I_s$, $L=\ell/s$, and $\nu\ell<1/4$. Put $T=s^{-2}$. Auxiliary killing at $\pm L$ is used only to estimate the original heat. On safe paths differentiate the combined shifted Gaussian; clock derivatives have the same relative-degree count as in §39.
+
+For $g_2$, expand the return through degree two. On $(0,1)$, weighted $L^2$ inputs through degree three and kernel $L^1$ give integrable powers $t^{m/2}$; multiply by bounded $F_s$. On $(1,T)$ use return output $L^\infty$, $F_s\in L^2$, and (43.4). At derivative degree three the four powers
+
+$$
+\frac{3-n}{2}-\frac7{2p_n}=-2
+\qquad(n=0,1,2,3)
+\tag{46.2}
+$$
+
+are integrable. The Taylor remainder in the joint product is therefore $O(s^3)$.
+
+For $g_3$ expand through degree one. The analogous second-derivative inputs are
+$(p_0,p_1,p_2)=(6/5,18/13,18/11)$.
+Their large-time powers are
+
+$$
+-\frac{23}{12},\qquad-\frac{73}{36},\qquad-\frac{77}{36}.
+\tag{46.3}
+$$
+
+Small times use weighted $L^2$ and kernel $L^1$ as before. Hence this safe Taylor remainder is $O(s^2)$.
+
+We account separately for all noncompact input, deleted paths and coefficient time tails. Let $w=6-i$ and
+
+$$
+e_i(L)=\|\mathbf1_{|r|>L/4}\omega^wg_i\|_2\longrightarrow0.
+\tag{46.4}
+$$
+
+The original shifted heat and its extra-killed restriction are $L^2$ contractions because their nonnegative forms are $C_s$ and its Dirichlet restriction. On $(0,T)$ the outer-input return is therefore at most
+$TL^{-w}e_i(L)$.
+For an outer coefficient of relative degree $m$ and input degree $n$, multiply its $L^2$ bound by its factor $s^{m+n}$ to obtain
+
+$$
+Cs^{m+n}T^{1+m/2}L^{n-w}e_i(L)
+ \le Cs^{w-2}e_i(L).
+\tag{46.5}
+$$
+
+This includes input outside $\Omega_s$, which is absent from the native restriction. Since $w-2=4-i$, it is precisely the required little-o.
+
+For inner input, a path deleted at an auxiliary face has relative height supremum at least a fixed multiple of $L$. The relative-degree-$m$ inflated kernel, retaining that exit event, has $L^p$-to-$L^\infty$ bound
+
+$$
+Ct^{m/2-7/(2p)}e^{-cL^2/t}.
+\tag{46.6}
+$$
+
+To obtain it, retain the exit event in the phase-integration bound (30.3); the inverse-determinant moment estimate supplies the exponential, its $L^1$ bound supplies the relative moment, and interpolation gives the indicated convolution-kernel norm. The input factor remains $r^ng_i$. Its deleted-path time integral and its coefficient tail above $T$, after the coefficient factor, are each bounded by
+
+$$
+Cs^{m+n}L^{m+2-7/p}\|r^ng_i\|_p
+ =Cs^{7/p-2+n}\|r^ng_i\|_p.
+\tag{46.7}
+$$
+
+The substitution $t=L^2u$ proves the first bound; direct integration above $T$ proves the second, with a strictly integrable power in every used case.
+
+For $g_2$, use $n=0,1,2$ and the corresponding exponents in (43.4): all powers in (46.7) equal five. For $g_3$, use $n=0,1$ and exponents $6/5,18/13$: the powers are $23/6,73/18$. They exceed the required orders two and one. The unexpanded native deletion is (46.6) with $m=n=0$ and input $L^1$ or $L^{6/5}$. Original surviving covariances remain uniformly comparable even after leaving the auxiliary strip, by the fixed original denominator margins. Safe paths cannot end outside either original face. Thus these same bounds cover the zero-extended output everywhere, without a phase cutoff or a replacement operator.
+
+We have proved the joint return estimate multiplied by $F_s$. For each retained $s^jG_jg_i$ use its $L^4$ norm and expand $F_s$ only through degree $4-i-j$. Lemma 32.1 with $p=4$ gives remainder orders $s^3,s^2,s$ for $g_2$ at $j=0,1,2$, and $s^2,s$ for $g_3$ at $j=0,1$. Multiplication by $s^j$ makes these $O(s^{5-i})$. Hölder restores all complete-field cross terms and proves (46.1). No $L^p$ integrability has been assigned to the full long Coulomb multiplier. $\square$
+

@@ -1,0 +1,12 @@
+**Assumption 1.6 (Priced preparation and restricted angle variation).** The attaining protocol is allowed one preparation of $|0\rangle^{\otimes n}$, known single-qubit $H$ and $S^\dagger$ gates and ideal computational measurements, with $S=\operatorname{diag}(1,i)$. Its calibration inputs include all the signed standards of Definition 1.1, known $L$, the stated angle promise and correct preparation and readout. Their acquisition carries an unspecified separate price $C_{\mathrm{cal}}$; the archive does not supply them.
+
+For the angle-tolerance clause only, replace the source by
+
+$$
+\widetilde U_{s,\varepsilon}
+=\bigotimes_{i=1}^n\exp\big(i(s_i\theta+\varepsilon_i)Z\big),
+\qquad |\varepsilon_i|\le\eta,
+$$
+
+where each $\varepsilon_i$ is constant over all calls to that device. Product structure and ideal preparation, known gates and readout are retained. These hypotheses describe systematic product-angle variation, not general state-preparation or measurement noise.
+

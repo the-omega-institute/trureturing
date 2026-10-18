@@ -1,0 +1,16 @@
+**Lemma 4.3 (The cubic in the coordinates $a,b$).** With $a,b$ as in Definition 4.2,
+
+$$
+c(\lambda,t)=-\,k(a,b),\qquad k(a,b)=a^2b-2a-b+1 .
+$$
+
+The polynomial $k$ is irreducible in $\mathbb R[a,b]$, and $c$ is irreducible in $\mathbb R(t)[\lambda]$. Stance: repo-derived.
+
+**Proof.** Put $\mu=2-\lambda$, so $a=\mu+t$, $b=\mu-t$. Then $a^2b=(\mu+t)^2(\mu-t)=\mu^3+\mu^2t-\mu t^2-t^3$ and $-2a-b+1=-3\mu-t+1$. Substituting $\mu=2-\lambda$, the cubic part is $(2-\lambda)^3=8-12\lambda+6\lambda^2-\lambda^3$, the term $(2-\lambda)^2t=4t-4\lambda t+\lambda^2t$, the term $-(2-\lambda)t^2=-2t^2+\lambda t^2$, and $-3(2-\lambda)=-6+3\lambda$. Summing,
+
+$$
+k=-\lambda^3+6\lambda^2+\lambda^2t-9\lambda-4\lambda t+\lambda t^2+3+3t-2t^2-t^3=-c .
+$$
+
+For irreducibility write $k=(a^2-1)\,b-(2a-1)$, of degree one in $b$. A factorization into two nonconstant factors would have one factor $f(a)$ free of $b$ and of positive degree, and $f$ would divide both $a^2-1$ and $2a-1$; but $2a-1$ has the single root $\tfrac12$, at which $a^2-1=-\tfrac34\ne0$. So $k$ is irreducible in $\mathbb R[a,b]$. The substitution $(\lambda,t)\mapsto(a,b)$ is an invertible affine change of variables, so $c$ is irreducible in $\mathbb R[\lambda,t]$; since $c$ is monic in $\lambda$, it is primitive over $\mathbb R[t]$, and Gauss's lemma gives irreducibility in $\mathbb R(t)[\lambda]$. ∎
+

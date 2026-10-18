@@ -1,0 +1,60 @@
+**Theorem 96.1 (a separate original-domain quantum obstruction).** Fix any
+$g,\tau>0$ and the original selfadjoint
+$H=a(B-\lambda)-gW_\tau$ on $D(B)$. There are normalized smooth compact
+vectors with the same partial trace over the hidden real line whose
+retained quantum position expectations under $e^{-itH}$ differ at
+arbitrarily small positive times. This already holds for $g=0$.
+It is distinct from classical probability-heat factorization (92.5).
+
+Proof. Choose normalized real
+$u\in C_c^\infty(I\times\mathbb R^2)$ and
+$h\in C_c^\infty(\mathbb R)$, and put
+
+$$
+\Psi_\nu(k,\theta,v,x)=u(k,\theta,v)h(x)e^{i\nu x},
+\qquad \nu\in\mathbb R.
+\tag{96.1}
+$$
+
+All these vectors are in $D(B)=D(H)$, with both height traces zero;
+their partial traces are the same rank-one retained state
+$|u\rangle\langle u|$. Let $M_\varphi$ multiply by the bounded real
+function $\varphi(\theta)=\arctan\theta$. It maps these core vectors
+to the core. Use inner products conjugate linear in the first slot.
+For a vector in $D(H)$ the derivative of its bounded-observable
+expectation is $i\langle\Psi,[H,M_\varphi]\Psi\rangle$, interpreted
+as the difference of its two well-defined domain pairings.
+Here the potential and the threshold constant commute with
+$M_\varphi$. If $Q=A_\kappa\partial_\theta+B_\kappa\partial_v
++b_\kappa\partial_x$, the remaining commutator on the core is
+
+$$
+[B,M_\varphi]=-M_{Q^2\varphi}-2M_{Q\varphi}Q,
+\qquad Q\varphi=\frac{A_\kappa(k)}{1+\theta^2}.
+\tag{96.2}
+$$
+
+The height commutator vanishes since $\varphi$ is independent of height.
+Integration over $x$ eliminates the real term $\int hh'=0$.
+All terms independent of $\nu$ cancel on subtracting the $\nu=0$
+expectation. The result is exactly
+
+$$
+\left.\frac d{dt}\right|_{t=0}
+ \left(\langle e^{-itH}\Psi_\nu,M_\varphi e^{-itH}\Psi_\nu\rangle
+      -\langle e^{-itH}\Psi_0,M_\varphi e^{-itH}\Psi_0\rangle\right)
+ =2a\nu\int_{\mathcal B}
+      \frac{b_\kappa(k)A_\kappa(k)}{1+\theta^2}|u|^2d\bar Y.
+\tag{96.3}
+$$
+
+On the fixed admissible interval both $b_\kappa$ and $A_\kappa$ in
+G (25.4) are strictly positive. The integral is therefore positive.
+For any $\nu\ne0$ the derivative is nonzero, while the difference at
+time zero is zero, proving separation for all sufficiently small
+positive times. This proves failure of a universal autonomous reduced
+quantum evolution for this partial trace directly, without inferring it
+from an energy difference. It does not claim that the particular
+translation pair (95.2) has different reduced quantum futures.
+$\square$
+

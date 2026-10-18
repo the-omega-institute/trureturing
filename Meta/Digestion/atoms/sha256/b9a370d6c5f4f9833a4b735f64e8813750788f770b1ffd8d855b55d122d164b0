@@ -1,0 +1,41 @@
+### 74.4. The remaining scalar equations
+
+For \(\lambda=1,3\), define
+\[
+\begin{gathered}
+ A_c=1-3c^2,\quad V_c=1-c^2,\quad Z=3cV_c,\quad
+ W=A_cd-2bc,\quad J=3-d^2,\quad u_0=a-1-td,\\
+ E_\lambda=-bu_0+3tc-\lambda t\Delta,\quad
+ N_\lambda=u_0W+3tV_c-2\lambda ct\Delta,\\
+ P_\lambda=3u_0^2+9t^2+\lambda^2t^2J+6u_0td,\quad
+ C_\lambda=-u_0A_c\Delta+\lambda t(bV_c+cW).
+\end{gathered}
+\]
+The four remaining equations, after replacing \(n\) by its nonzero
+multiple \(N(v)\), are
+\[
+\begin{aligned}
+ I={}&[(1+3a)^2-P_3]Z+2E_3N_3-2(1+3a)C_3=0,\\
+ D_f={}&2\Delta[ca-t\{\rho(1+c^2)+cd\}]=0,\\
+ S_f={}&[a^2-t^2J-3](W+2\rho Z)+8\rho ct^2\Delta^2\\
+      &+2at[(3-2\rho b)V_c-(d+2\rho c)W]
+         +6(d+2\rho c)V_c=0,\\
+ O_f={}&[(3+a)^2-P_1](W+2\rho Z)
+       +2[3(a-1)+2\rho E_1]N_1\\
+      &-2(3+a)[-6ct\Delta-t(3V_c-dW)+2\rho C_1]=0.
+\end{aligned}                                                     \tag{74.14}
+\]
+For direct reconstruction from (74.8)–(74.9), use
+\[
+ \mathcal Q=\frac{1+3F^*+\boldsymbol K(F^*-1)}4,\qquad
+ G=B^*T_0=\frac{3+F^*+\boldsymbol K(F^*-1)}4.             \tag{74.15}
+\]
+Then \(I=16N\cdot\mathcal Q^*e\mathcal Q\), \(S_f\) is
+\(N\cdot[F d_0F^*-3d_0+6(d_0\cdot v)v]\), and
+\(O_f=16N\cdot G^*d_0G\). The difference equation is \(D_f=0\).
+Expansion by scalar and vector quaternion multiplication proves these
+identities; (74.13) supplies only the unit-vector and Gram relations.
+
+We now fix \(b=1/2\), so \(k^2=11/4\) and \(\rho=6/13\).
+Two exact ideal certificates exclude the remaining plane and nonplane charts.
+

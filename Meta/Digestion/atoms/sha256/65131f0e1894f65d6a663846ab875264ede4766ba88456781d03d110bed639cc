@@ -1,0 +1,6 @@
+## 8. Boundaries and open questions
+
+**Scope.** The results concern only the chain $(312,54321:132)$; the recurrence of Corollary 7.4 is asserted only for $n\ge12$.
+
+**Open question 8.2 (Other chains).** In Section 5 of the paper in cited fact (a), Archer and Bourne propose as a further direction to enumerate the permutations avoiding the chain $(312,k\cdots21:\sigma)$ for some $\sigma\in\mathcal S_3$ and some $k\ge5$; for $k=5$ and $\sigma=132$ they state only the conjectured recurrence. For $k=5$ and $\sigma=132$ this volume answers the question through the classification above. The open question posed here is the case $\sigma=132$ with $k\ge6$: the analogous classification of the indecomposable members for $k\ge6$, where the first entry of an indecomposable member may be as large as $k-1$ by the argument of Lemma 3.2(b), is open. Stance: repo-derived (question posed in this volume).
+

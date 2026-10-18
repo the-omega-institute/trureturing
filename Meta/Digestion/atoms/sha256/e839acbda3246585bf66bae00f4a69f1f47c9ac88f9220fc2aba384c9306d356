@@ -1,0 +1,38 @@
+**Proposition 13.2 (the latest height-TV results concern a distinct
+constraint).** JR §§41–49 supply the original all-error-optimizer,
+sharp worst-history-cost, actual-record height-TV task. Its binary
+constraint is the contrast inequality
+$2|\operatorname{Re}F_{01}|/\kappa\geq s$, with other effect entries
+free. It does not prescribe (QO.13) or fix (QO.11) for every competitor.
+Its results are credited without moving their optimality to this task.
+
+Explanation of the exact boundary. JR §42 proves supported live and
+aggregate-effect rigidity at simultaneous original error and sharp
+worst-history cost, and excludes high-fibre later nonlive mass there.
+It does not classify full five-mode channels or each labelled failure
+CP measure. JR §§43–44 evaluate the strong-regime height-TV law,
+including its transition to a flat part, and give actual common
+attainment using a spectral scalar failure readout, with strict gain
+over coordinate failure readout. These necessity results retain their
+finite/countable/stipulated-integral scopes; their arithmetic signs
+remain conditional on their source box.
+
+JR §45 gives an exact compact four-real-PSD optimization and finite
+attainment on its weak cost plateau, without evaluating the full weak
+law. Section 46 gives a strict three-low-branch comparison retaining
+every comparator label. Sections 48–49 evaluate that specified
+symmetric point and improve it locally by another three-low-branch
+instrument; retaining all labels under classical attenuation preserves
+TV and can restore exact contrast. They do not prove optimality of
+the improving point, nonoptimality of every three-low construction,
+or a complete weak-plateau evaluation.
+
+The local JR improving effect has a strictly positive $02$ entry,
+whereas (QO.13) has zero $02$ entry. Its optimization is a
+height-TV objective under sharp worst-history equality; the present
+objective is selected nonreal-input acquired mass with the full binary
+effect fixed. The present matching vector is strictly above JR's weak
+common resource vector on all twelve histories. Thus neither JR's
+rigidity nor its local improvement is a shortcut to the onset theorem,
+and the onset does not settle its unevaluated weak TV law. $\square$
+

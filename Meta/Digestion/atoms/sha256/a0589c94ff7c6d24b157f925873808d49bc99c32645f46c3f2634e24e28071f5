@@ -1,0 +1,12 @@
+## 487. A six-high-slot owner would be the only transverse X owner
+
+Consider either remaining intermediate profile with n_6=1, and call its six-high owner rho. Its charge exceeds 11*pi/6, while each of the other four multi-high owners costs more than pi. If a five-high owner had transverse X, (485.1) would give total H expense greater than
+
+    11*pi/6+4*pi+pi/3>6*pi.
+
+Thus no five-high owner is transverse at X. There is no h=4 owner in these profiles, and Section 485 excludes transverse X in h=3 owners. Therefore rho is the only possible transverse X owner.
+
+There must be a transverse X occurrence. If X=U and the whole X circle were axial, tau contributes no X and the other owners supply at most n_3-1+n_5+2<=5 X intervals. If X=Z and its circle were wholly axial, actual face transport preserves tau's fixed pair {M,C} around that connected circle. No h=5 or h=6 owner has this pair, since both transverse labels of such owners are high. The remaining h=3 owners number at most two and supply at most one X axis each, again below degree six. This also handles a numerical tie z=u if X=Z is chosen.
+
+Consequently rho is the unique actual transverse X owner. Every other X interval is axial. Each maximal axial run is proper and its fixed pair is read from a boundary face of rho. All labels of rho belong to H, so every such pair is contained in H. Tau's axial Z interval has fixed pair {M,C}, with C outside H. Connectedness therefore excludes X=Z. It follows that X=U, u>z, and no h=3 owner contributes an X interval: an axial h=3 owner has a high/low pair, incompatible with the boundary-pair conclusion.
+

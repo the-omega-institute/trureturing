@@ -1,0 +1,32 @@
+**Construction 8.2 (complement completion inside one high label).**
+For any selected invertible high matrix $H_0$, enlarge its one fibre
+from $\mathbb C^3$ to $\mathbb C^3\oplus\mathbb C$, dimension four.
+Fix an orthonormal basis $t_1,t_2$ of $\operatorname{ran}(I_5-P)$.
+Use, in this same actual label, the three encoder Kraus matrices
+
+$$
+C_{H,0}=\begin{pmatrix}H_0E^\dagger\\0\end{pmatrix},\qquad
+C_{H,j}=\begin{pmatrix}0_{3\times5}\\\langle t_j|\end{pmatrix}
+\quad(j=1,2).
+\tag{TA.43}
+$$
+
+For arbitrary complex input $A$ the encoder outputs
+$\operatorname{diag}(H_0A_VH_0^\dagger,
+\operatorname{tr}((I_5-P)A))$, where $A_V=E^\dagger AE$.
+Its one full decoder pinches the fibre into its $3+1$ blocks, embeds
+the $3\times3$ block by $E$ in live, and sends the scalar block
+to $g(t)dt\,P_f$ only at original failure label $2$. This map is
+CP and TP on all $M_4$, including fibre cross matrices. The routing
+degree of freedom is counted inside the dimension-four joint quantum
+fibre. Neither an extra acquisition outcome nor an uncounted share
+is present. The two complement rows are inaccessible multiplicity.
+Its high acquired effect is
+$EH_0^\dagger H_0E^\dagger+(I_5-P)$; the entire complementary
+probability is charged as high on inputs with complementary support.
+It vanishes on all twelve original supported specimens.
+
+Constructions 8.1–8.2 have $m+3$ actual outcomes, namely six or seven.
+They preserve the canonical full completion itself, rather than using
+freedom to change the channel on $P^\perp$.
+

@@ -1,0 +1,16 @@
+**Corollary 4.5 (Zero/one constraint without another call).** A
+specified active zero and active one constraint has individual-state
+maximum at most $K$. A repeated edge is contradictory; adjacent edges
+give $a\eta/2$; disjoint edges give respectively
+
+$$
+a^2\eta,\quad c\eta/2,\quad ac\eta
+\tag{4.5}
+$$
+
+for the target in the zero pair, in the one pair, or outside both.
+
+Proof. These are the products in Lemmas 4.2–4.3 before making a
+further call. The comparisons are $a/2<a^2$, $c<2a^2$ and
+$c<a$ from (1.4). $\square$
+

@@ -1,0 +1,8 @@
+**Scope 1.2.** Fix a finite observation horizon $T>0$ and a specified
+starting ray. The results distinguish existence of approximating command
+laws, uniqueness after the additional joint stochastic law is chosen,
+and failure of the native syntax to choose that law. They do not classify
+all samplers or optimal costs. Their convergence assertions concern a
+fixed starting state and fixed horizons; they are not uniform-in-start,
+total-variation, all-Borel-test or heat-kernel convergence assertions.
+

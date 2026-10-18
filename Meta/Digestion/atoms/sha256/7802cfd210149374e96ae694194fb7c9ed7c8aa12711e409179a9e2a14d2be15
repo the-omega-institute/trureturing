@@ -1,0 +1,14 @@
+### 75.6. Coverage and the remaining orthogonality problem
+
+**Proof of Theorem 75.1.** If a channel mean vanishes, Theorem 75.2
+gives the first class. Otherwise both means are nonzero. If either
+channel has three distinct entries, select it as the upper channel,
+using \(\Theta\) if necessary, and apply Theorem 75.3. If neither
+does, each has a repeated pair. When both channels are nonconstant
+and their repeated pairs differ, common phase and synchronous
+permutation give exactly (75.18), excluded by Theorem 75.4. If their
+pairs agree, the input is of form (75.24). A constant channel also
+permits (75.24), by choosing the other channel's repeated pair.
+Theorem 75.5 supplies every finite and pole case of this remaining
+chart. This proves complete coverage. \(\square\)
+

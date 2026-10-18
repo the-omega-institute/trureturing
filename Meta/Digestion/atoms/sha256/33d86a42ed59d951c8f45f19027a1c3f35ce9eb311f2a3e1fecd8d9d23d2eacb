@@ -1,0 +1,11 @@
+**Definition 6.3 (Closed rank family and nonlinear minimum).** Let $\mathscr F_{N,m}^{a,b}$ be the band-compatible probabilities on $K_m^{a,b}$ for which every internal cut has nonnegative rank at most $N$. It is compact by (3.3), closed band inequalities and (6.5). It may be empty. For a band-compatible $p$ on $K_m^{a,b}$ put
+
+$$
+\delta_{N,m}^{a,b}(p)=\min_{r\in\mathscr F_{N,m}^{a,b}}
+\mathcal D_{K_m^{a,b}}(p\Vert r),\qquad
+\mathcal R_{N,n}=\delta_{N,n}^{0,0}(\pi_n),\qquad \min\varnothing:=+\infty.
+\tag{6.6}
+$$
+
+All denominators on compatible edges have the positive floor (3.3), so the discrepancy is continuous and a nonempty minimum is attained. For $m=1$ there are no internal cuts. A singleton completion set has its unique probability and zero discrepancy. Unsupported complement slices have zero weight and no conditional denominator. For nonempty $\mathscr F$, strict equality in Lemma 3.2 gives $\delta(p)=0$ exactly when $p\in\mathscr F$; empty sets have the stated infinite value.
+

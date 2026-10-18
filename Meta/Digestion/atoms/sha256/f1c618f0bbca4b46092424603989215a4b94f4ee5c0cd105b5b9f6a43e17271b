@@ -1,0 +1,58 @@
+**Definition 18.2 (report normalization and selected root).** Write
+$u=\cos\phi$, $v=\sin\phi$, $z=u/\sqrt\alpha$,
+$w=v/\sqrt\beta$, and set
+
+$$
+k_u=\sum_i p_i|u_i|,\qquad
+C_s=s_0/\sqrt\alpha,\qquad s_\lambda=C_s k_u.
+\tag{AC.93}
+$$
+
+Thus $k_u=\sqrt\alpha\,k_z$, where $k_z=\sum p_i|z_i|$
+is the contrast moment in AC.11. Here $\lambda$ multiplies $|u|$;
+the corresponding multiplier of $|z|$ is $\lambda\sqrt\alpha$,
+and the multiplier of physical requested contrast is
+$\lambda/C_s=\lambda\sqrt\alpha/s_0$. None is a CG root coordinate.
+The five contacts have the following fixed charts and signs:
+
+| $i$ | Sheet $\eta_i$ | Height sign $\epsilon_i$ | Maximum-report sign $\sigma_i$ | Chart base |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $+$ | $+$ | $0$ |
+| $1$ | $0$ | $+$ | $-$ | $\pi$ |
+| $2$ | $0$ | $-$ | $-$ | $\pi$ |
+| $3$ | $1$ | $+$ | $+$ | $0$ |
+| $4$ | $1$ | $-$ | $+$ | $3\pi/2$ |
+
+For $\phi=b^{\rm chart}+2\arctan x$, put $r=1+x^2$ and
+use $(U,V_c)=(1-x^2,2x)$, $(-1+x^2,-2x)$ or
+$(2x,-1+x^2)$ in the respective charts. With the numerator
+dictionary AC.81–.82, define
+
+$$
+\begin{gathered}
+D_0=r^2,\quad D_1=D_cr^2,\qquad
+W_0=rU,\quad W_1=D_crU,\\
+P_{\eta,\epsilon,\sigma;\lambda}
+ =d\cdot\Gamma_\eta^{\rm num}
+  -\epsilon H_\eta^{\rm num}-\lambda\sigma W_\eta.
+\end{gathered}
+\tag{AC.94}
+$$
+
+In particular $W_\eta=D_\eta u$. The ordered equations
+$\mathcal F(X;t,\lambda)=0$ are the eight components of
+$\sum_i p_i\Gamma_{\eta_i}(\phi_i)-B(t)$, followed, in increasing
+$i$, by
+
+$$
+P_{\eta_i,\epsilon_i,\sigma_i;\lambda}(x_i)=0,\qquad
+P'_{\eta_i,\epsilon_i,\sigma_i;\lambda}(x_i)=0.
+\tag{AC.95}
+$$
+
+The unknown order is $(x_0,\ldots,x_4,p_0,\ldots,p_4,d_0,\ldots,d_7)$.
+All denominators are positive on the real charts. At a zero, clearing
+them preserves value and stationarity exactly. Pure and saturated
+degrees are at most four and eight. Their homogeneous values also
+specify each chart's point at infinity.
+

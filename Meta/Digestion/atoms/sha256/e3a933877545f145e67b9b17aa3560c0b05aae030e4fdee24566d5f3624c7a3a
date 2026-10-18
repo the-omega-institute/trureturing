@@ -1,0 +1,51 @@
+**定理 21.8.1（等吞吐投影边界）。** 令 $f,g:\mathcal U\to(0,1]$ 是同一先验 $\pi$ 下的两个选择函数，并设它们有相同的接受率
+
+$$
+A=\sum_u\pi(u)f(u)=\sum_u\pi(u)g(u)>0.
+$$
+
+令选择后的后验为
+
+$$
+\mu_f(u)=\frac{\pi(u)f(u)}A,
+\qquad
+\mu_g(u)=\frac{\pi(u)g(u)}A,
+$$
+
+并令
+
+$$
+\tau=\operatorname{TV}(\mu_f,\mu_g),
+\qquad
+B=\max_u\log\frac{f(u)}{g(u)}-\min_u\log\frac{f(u)}{g(u)}.
+$$
+
+则
+
+$$
+\boxed{
+\tau\le\min\left\{\tanh(B/4),\frac{1-A}{A}\right\}.
+}
+$$
+
+**证明。** 第一项是投影扩张的锐利总变差界。又因为 $0\le f,g\le1$，逐点有
+
+$$
+|f(u)-g(u)|\le 2-f(u)-g(u).
+$$
+
+故
+
+$$
+\begin{aligned}
+\tau
+&=\frac1{2A}\sum_u\pi(u)|f(u)-g(u)|\\
+&\le\frac1{2A}\sum_u\pi(u)(2-f(u)-g(u))\\
+&=\frac{1-A}{A}.
+\end{aligned}
+$$
+
+两项同时成立，取其较小者。证毕。
+
+<a id="claim-21-8-2"></a>
+

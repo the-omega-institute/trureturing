@@ -1,0 +1,16 @@
+**Definition 5.1 (exact calibration schemes and refinement).** A label
+scheme is a map $\lambda:\mathcal T\to\Lambda$ effectively computed by
+an allowed prepared producer, with the complete cut of Assumption 4.1.
+It admits exact right-spine continuation if one common effective
+consumer, using only that label, common public inputs, paid local
+computation and raw $R^j$ replies, terminates and returns
+$\nu(\rho^k u)$ for every $u\in\mathcal T$, $k\ge0$.
+There is no uniform read or workspace bound in this definition.
+
+A label $\lambda$ refines $d$ when
+$\lambda(u)=\lambda(v)\Rightarrow d(u)=d(v)$. This compares persistent
+preparation distinctions, not complete controller states or encoding
+lengths. It allows $\lambda$ to depend on any part of the full acquired
+$u$. A semantic factor on an arbitrary encoded label is not automatically
+an effective decoder.
+

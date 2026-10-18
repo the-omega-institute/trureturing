@@ -1,0 +1,20 @@
+**推论 21.4（较宽域的条件有限读后果）。** 若定义20.1的同一准确制备／准确动作／联合读误差合同改用 $\mathcal D_H$，同一直接恢复器满足
+
+$$
+|\widehat x_3-x_3|\le b_\delta+2H\sqrt{p_\delta},\qquad
+b_\delta=(2H+\delta)\delta,\quad
+p_\delta=H^2\delta+(H+\delta)b_\delta.
+$$
+
+固定三读完整误差球下的最小最坏风险为 $\Theta(\sqrt\delta)$。
+
+证明。若计算符号错误或为零而实际规则符号非零，则
+
+$$
+q_2^2\le|x_0\cdot w|
+\le|x_0\cdot w-y_0\cdot\widetilde w|
+\le\delta|w|+(H+\delta)b_\delta\le p_\delta.
+$$
+
+故 $|w|\le Hq_2\le H\sqrt{p_\delta}$，误差至多所列界；零或同符号分支有更小的 $b_\delta$ 界。对实际尖锐对在记录距 $2\delta$ 时使用共同中点回复，推论20.3的同一纤维论证给匹配下界。Dyadic 解码的读数／更新／位阶保持命题20.5所列，但有效输出容差需要平方量级的读误差预算。此处没有可用的统一 $c$，不能套用主域的线性系数。
+

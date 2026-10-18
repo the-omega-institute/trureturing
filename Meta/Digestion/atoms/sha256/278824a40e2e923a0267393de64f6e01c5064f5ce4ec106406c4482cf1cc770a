@@ -1,0 +1,51 @@
+**Proposition 22.2 (resources, acquisition and boundary cases).** Theorem
+22.1 preserves the actual acquisition/full-access-cut contract and all
+separately charged resource coordinates. Empty cuts, absent original
+endpoints and zero-parameter charts introduce no extra operation.
+
+Proof. If $Q$ is empty, Bad compares the entire exterior, which is the
+entire original tree. If $Q$ is the root cut, Bad is empty. An absent
+original $Q$ address is omitted only after its finite original guard has
+been resolved; a later birth does not create an original hole. If there
+are no old classes, the old context already fixes the source; all checks
+are ground. If elimination leaves no parameters, a consistent chart has
+one reconstructed finite source. The same proofs cover each case.
+
+The raw bound (CE.22.2) depends only on common retained input and the chosen
+finite calculation, not on the unknown source or on the allowed $N$.
+$N$ changes physical decoder addresses. The prefix phase has maximum
+address length at most
+
+$$
+\max\bigl(\{|p|:p\text{ a selector question}\}
+ \cup\{|a_{\eta,y}|+h_\eta-1:h_\eta>0,\ y\in Y_\eta\}\cup\{0\}\bigr)
+ +\lceil N/2\rceil.
+\tag{CE.22.3}
+$$
+
+Actual address construction and transmission, local computation, finite
+images and substitutions, automata determinization, witness construction,
+working memory, installation, entry, certification, versions, updates,
+archives and full output are separately charged. They may be large.
+No practical complexity or joint-resource optimum follows from finiteness.
+
+The formal constraints do not certify that any record was acquired.
+Assumption 1.3 remains necessary. Proposition 2.1 supplies a compatible
+producer: paid traversal of the original source computes its complete
+old row; paid traversals acquire each existing endpoint at its stipulated
+epoch; every requested literal, including repeats and absence, is actually
+read; real updates take place on the same register; comparisons use only
+those already paid finite descriptions. An absent relation endpoint gives
+a distinct invalid outcome. The producer is finite on each finite source.
+Under the stipulated complete cut it retains exactly the declared records,
+certified epoch and common control, making every other source-bearing
+value, count, timing field, handle and archive inaccessible. Its successful
+output fiber is exactly the conjunction used here, in both directions.
+This is a conditional mathematical access correspondence, not a physical
+erasure guarantee or a uniform acquisition-price claim. No consumer can
+recover forgotten trees for free from a retained comparison sign.
+
+The resulting output row does not automatically define a new complete
+access cut: all newly acquired replies and remaining old information
+must be accounted for by any subsequent forgetting contract. $\square$
+

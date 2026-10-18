@@ -1,0 +1,21 @@
+**Theorem 5.3 (least budget presentation recovering the prefix).** At a
+fixed cut define
+
+$$
+\ell_k=\max\{j\in\{0,\ldots,k\}:\operatorname{rank}[h_1\ \cdots\ h_j]=j\}.
+\tag{5.8}
+$$
+
+Then the least $d$ for which $B_{k,d}$ recovers every current prefix is
+$d_{\min}=k-\ell_k$. If $H_F^{(k)}$ has full column rank, this is also the
+least budget presentation recovering every full source snapshot. If it
+does not, no $d\le k$ recovers every full source snapshot.
+
+Proof. Linear independence of an initial set of columns implies
+independence of every smaller initial set. Thus the indices satisfying
+the condition in (5.8) are exactly $0,\ldots,\ell_k$. Equation (5.4) holds
+exactly when $k-d\le\ell_k$, giving the least $d$. Equation (5.5) supplies
+the independent completion condition. This is a threshold for summaries
+under declared budgets; it does not create deletion credit or recover
+past operations. $\square$
+

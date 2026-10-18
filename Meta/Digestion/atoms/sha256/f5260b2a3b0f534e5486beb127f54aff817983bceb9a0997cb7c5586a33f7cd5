@@ -1,0 +1,63 @@
+**引理 4.2（Two orthogonal active planes）。** The matrix $X_*$ has two unit
+skew blocks on perpendicular real two-planes and vanishes on their
+one-dimensional orthogonal complement. In particular
+
+$$
+\operatorname{spec}(iX_*)=\{1,-1,1,-1,0\}.
+\tag{4.3}
+$$
+
+Proof. Let
+
+$$
+r=(1,0,0,0,-1)^T,\qquad
+s=(1/2,1,1,1,1/2)^T.
+$$
+
+The entry formula $G=rs^T-sr^T$ gives exactly the seven unit upper
+entries in the $\alpha$ positions of (4.1), and zero in its three
+$\beta$ positions. Moreover
+
+$$
+r^Ts=0,\quad r^Tr=2,\quad s^Ts=7/2,\quad
+Gr=-2s,\quad Gs=(7/2)r.
+\tag{4.4}
+$$
+
+It follows directly from the same outer-product formula that $G$ kills
+$\operatorname{span}(r,s)^\perp$. On the orthonormal basis
+$r/\sqrt2,s/\sqrt{7/2}$ of $U=\operatorname{span}(r,s)$ its block is
+
+$$
+\begin{pmatrix}0&\sqrt7\\-\sqrt7&0\end{pmatrix}.
+\tag{4.5}
+$$
+
+The matrix $K$ is zero outside its middle three coordinates, where its block
+is
+
+$$
+K_3=\begin{pmatrix}0&1&-1\\-1&0&1\\1&-1&0\end{pmatrix},
+\qquad K_3\mathbf1=0,\qquad K_3^2=\mathbf1\mathbf1^T-3I_3.
+\tag{4.6}
+$$
+
+Consequently it acts on
+
+$$
+W=\{x\in\mathbb R^5:x_1=x_5=0,\ x_2+x_3+x_4=0\}
+\tag{4.7}
+$$
+
+with $K^2=-3I$, and it kills $W^\perp$, which is spanned by the two outer
+coordinate axes and the middle all-ones vector. Both $r$ and $s$ are
+orthogonal to $W$: their middle coordinates are respectively zero and
+all one. Thus $U$ and $W$ are perpendicular real two-planes. The action
+of $G/\sqrt7$ is a unit skew block on $U$ and zero on $U^\perp$; the
+action of $K/\sqrt3$ is a unit skew block on $W$ and zero on $W^\perp$.
+For the latter statement, a unit vector $x\in W$ and
+$y=-Kx/\sqrt3$ are orthonormal, and $Kx=-\sqrt3y$, $Ky=\sqrt3x$.
+Their sum $X_*$ therefore has the asserted block structure. Multiplication
+of each unit skew block by $i$ gives Hermitian eigenvalues $1,-1$,
+proving (4.3). $\square$
+

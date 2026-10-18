@@ -1,0 +1,92 @@
+**Theorem 4.1 (whole-class $AB$ and $AD$ injection).** For every fixed
+arbitrary ancestor (1.2) and common $d$, each of
+
+$$
+W\longmapsto(A(W),B(W)),\qquad W\longmapsto(A(W),D(W))
+\tag{4.1}
+$$
+
+is injective on the entire $\mathcal K_{\mathbf c,d}$.
+Equivalently the associated rational pair maps are injective on all
+of $\mathcal Z_{\mathbf c,d}$. Sources and gain shapes may differ;
+no common source sum or additional sign condition is assumed.
+
+**Proof for $AB$.** Suppose two worlds agree in $A,B$, and use their
+first row in (3.7). Their traces $\sigma_{i,3}$ agree and their
+traces $\sigma_{i,5}$ agree. All these traces are nonzero.
+The actual equations (3.2) give $h_1(3)=h_2(3)$ and
+$h_1(5)=h_2(5)$, even if either sample is zero. The difference
+$h_2-h_1$ also vanishes at six and seven. Its degree is at most
+three and it has the four distinct roots $3,5,6,7$, so
+$h_1=h_2=h$.
+
+Subtract (3.2) at clocks one and two. It gives
+
+$$
+h(1)(-2\epsilon-\gamma)=0,\qquad
+h(2)(2\epsilon+\gamma)=0.
+\tag{4.2}
+$$
+
+If $h(1)=0$, the actual first reading forces $d=24$; if
+$h(2)=0$, the actual second reading forces $d=48$. They cannot
+both vanish. Thus when both are nonzero either equation applies;
+when $h(1)=0$ the second applies; and when $h(2)=0$ the first
+applies. In every case $\gamma=-2\epsilon$.
+If $\epsilon=0$, then $\gamma=0$ and $X_1=X_2$, giving equal
+complete worlds as proved after (3.7).
+
+If $\epsilon\ne0$, the trace differences at clocks zero and four
+are both $-\epsilon$. Hence $h(0)=h(4)=0$, and the actual
+clock-zero equation gives $d=0$ (the fourth also gives $y=d$).
+Together with $h(6)=0$ and $h(7)=1$ these distinct roots force
+
+$$
+h(T)=\frac{T(T-4)(T-6)}{21}
+ =\frac{T^3-10T^2+24T}{21}.
+\tag{4.3}
+$$
+
+The normalizing divisor is $7(7-4)(7-6)=21\ne0$; three distinct
+roots and a nonzero value exclude every lower degree in this branch.
+The increasing-power coefficient row is $(0,24/21,-10/21,1/21)$.
+The required rational samples are
+
+$$
+h(1)=15/21=5/7,\qquad h(2)=16/21,\qquad h(3)=9/21=3/7.
+\tag{4.4}
+$$
+
+They follow by evaluating the three factors in (4.3), and all are
+nonzero. For either world the actual readings at $d=0$ therefore give
+
+$$
+\sigma_1=\frac{24}{5/7}=\frac{168}{5},\quad
+\sigma_2=\frac{48}{16/21}=63,\quad
+\sigma_3=\frac{312/5}{3/7}=\frac{728}{5}.
+\tag{4.5}
+$$
+
+But (3.6) would require $728/5=168/5+63=483/5$, with discrepancy
+$245/5=49\ne0$. This contradiction excludes $\epsilon\ne0$.
+Thus the $AB$ map is injective, including every sampled-zero branch.
+
+**Proof for $AD$.** Its row of (3.7) gives equal nonzero traces at
+clocks four and five. The two actual late equations give equal $h$
+values there. Together with six and seven, four distinct roots
+$4,5,6,7$ force $h_1=h_2=h$.
+
+If $\beta\ne0$, trace differences $2\beta$ at zero and
+$-\beta$ at three force $h(0)=h(3)=0$. The actual readings
+would give $d=0$ and $d=312/5$, a contradiction. Hence
+$\beta=0$. Now if $\epsilon\ne0$, the trace differences at
+one and two are $-\epsilon$ and $\epsilon$. They force
+$h(1)=h(2)=0$ and the incompatible values $d=24$ and $d=48$.
+Thus $\epsilon=0$ as well. The matrices and complete worlds agree.
+No nonzero ancestor gain, leading coefficient or root-separation
+premise has been added. This proves both injections. ∎
+
+These are stronger than G's three-coordinate injections at the same
+whole-class quantifiers. Their two alternative coordinates are still
+functions on fixed worlds, not jointly acquired terminal observations.
+

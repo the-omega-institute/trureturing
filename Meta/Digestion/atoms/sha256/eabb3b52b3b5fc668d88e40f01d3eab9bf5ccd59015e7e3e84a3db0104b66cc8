@@ -1,0 +1,55 @@
+**Theorem 103.2.** Every such remaining candidate necessarily satisfies
+\[
+pd\left[d\left(m-\frac1m\right)+2p\right]
+\left[d-p\left(Am-\frac Bm\right)\right]<0.
+\tag{20}
+\]
+This is a strict exclusion of a region of scaled kernel ratios; it is not an exclusion of all equal-polar records.
+
+Put
+\[
+F=d\left(m-\frac1m\right)+2p,\quad
+\Xi=d-p\left(Am-\frac Bm\right),\quad \tau=\operatorname{Tr}M>0.
+\]
+The explicit entries of \(M\) give
+\[
+\tau+r+1=g\left(m+\frac1m\right)
++2p\left(Bm+\frac Am\right)>0.
+\tag{21}
+\]
+Dividing (17) only by nonzero \(m\) yields
+\[
+\Xi g=2ABp^2\left(m-\frac1m\right)-dp.
+\tag{22}
+\]
+Multiplying (21) by \(\Xi\), and substituting (22), gives the exact identity
+\[
+\Xi(\tau+r+1)=-pdF.
+\tag{23}
+\]
+If \(\Xi=0\) then \(F=0\), since \(p,d\) are nonzero. Substituting \(p=-d(m-1/m)/2\) from \(F=0\) into \(\Xi=0\) gives
+\[
+Am^2+\frac{B}{m^2}=-1,
+\]
+which is impossible because \(A,B>0\). Hence \(\Xi\ne0\). Multiplying (23) by \(\Xi\) proves
+\[
+pdF\Xi=-\Xi^2(\tau+r+1)<0,
+\]
+which is (20). No uncontrolled division by a vanishing coefficient occurs.
+
+For an explicit interval, suppose \(A>1/2\) and \(m>0\); this is an optional orientation for reading the bound, not an additional hypothesis for (20). Define
+\[
+m_F=\sqrt{1+(p/d)^2}-p/d,\qquad
+m_C=\frac{d/p+\sqrt{(d/p)^2+4AB}}{2A}.
+\tag{24}
+\]
+Both are positive. If \(p>0\), then \(m_F<1<m_C\); if \(p<0\), then \(m_C<1<m_F\). In either case (20) forces
+\[
+m<\min\{m_F,m_C\}\quad\hbox{or}\quad
+m>\max\{m_F,m_C\}.
+\tag{25}
+\]
+To check this, \(F\) is strictly increasing on \(m>0\) and has its unique zero at \(m_F\). The function \(\Xi\) has its unique positive zero at \(m_C\) and derivative \(-p(A+B/m^2)\). Reading the signs on the three intervals gives (25), with both endpoints excluded by (20). The strict placement around 1 follows from \(F(1)=2p\) and \(\Xi(1)=d(1-p)\), with \(|p|<1\). Thus Theorem 103.2 supplies an explicit open forbidden neighbourhood of the positive balanced ratio, depending on \(A,p\). The negative balanced ratio is already excluded by the universal inequality (20), whose value there is \(2p^2d^2(1+p)>0\); at \(m=1\) it is \(2p^2d^2(1-p)>0\).
+
+For example, substitution of \(A=3/4\) and \(p=1/2\) into (24)–(25) gives \(m<\sqrt2-1\) or \(m>(2+\sqrt7)/3\). This is a necessary bound and does not assert existence of a physical point with those parameter values.
+

@@ -1,0 +1,35 @@
+**Definition 8.4 (structural substitution tariff).** Let $K(z)$ count all
+constructed native tape cells including the meter, and $c(z)$ actual
+constructed finite locations among $q_2$. The sole-storage carrier has
+
+$$
+V=127+2q_2+4c+48K,\qquad
+\ell=64+q_2+2c+24K,\qquad E_{\rm tree}=V-1.
+\tag{PVC.12}
+$$
+
+Access links are the actual constructed head links, 65 after acquisition;
+occupied endpoint slots are $2(V-1+\ell_{\rm head})$ and capacity $7V$.
+Use CSA Definition 8.2's ordered route/probe prescription, with $q_2$
+and the actual $D_2$ location/row sets. For actual row $j$, if $e_j$ counts
+cell appends, $s_j$ fresh finite bits, $t_j$ existing bit targets after
+alias combination, $r_j$ retargeted links and $a_j$ first head activations,
+then
+
+$$
+v_j=48e_j+4s_j,\quad
+w_j=4t_j+2e_j+2s_j+3r_j+2a_j+7v_j,\quad
+g_j=1+p_j+w_j+v_j.
+\tag{PVC.13}
+$$
+
+$p_j$ is the sum of CSA.11's actual ordered walks, full finite-component
+inspection, cell inspections, append/head walks and fresh-slot checks.
+Repeated probes and unchanged assignments are charged again. With
+$V_0=223+2q_2+4c_0$, the foundation tariff is $g_0=1+8V_0$ and
+$G(z)=g_0+\sum_{j\le C(z)}g_j$, with finite $d_{\Pi_2}$ and mechanism
+additional. These are structural replacement charges on the same rows.
+Charging both native fee and structural work means the separately declared
+tariff $2C+G$; it is not automatically the model's fee. This gives no
+physical time, energy, optimum or saving claim.
+

@@ -1,0 +1,30 @@
+**Definition 3.1 (endpoint-exact paths).** For $v\in\mathcal C^{E_R}$, let
+$F_v$ be the partial function on $E$ that takes $s_R(e,v(e))$ at a read
+state and $s_U(e)$ at an update state, and is undefined at a halt. Give a
+read edge weight zero and an update edge weight one. Let $P_v(x,y,d)$
+mean that a finite path of this partial function starts at $x$, ends at
+$y$ and has total update weight $d\in\mathbb N$. Include the empty path
+exactly for $x=y,d=0$. Its edges are nonhalt instructions; an absorbing
+halt self-loop is deliberately excluded from this first-arrival graph.
+
+The effective Presburger formula for $P_v$ is obtained from the unique
+orbit of $x$. Follow it until halt or first vertex repetition. A transient
+occurrence of $y$ gives the singleton $d=a$, where $a$ is its computed
+update count. If $y$ occurs on the eventual simple cycle, its first count
+is $a$ and the cycle has computed update weight $b$. Its possible counts
+are exactly
+
+$$
+\exists z\in\mathbb N\quad d=a+bz.
+\tag{UDB.9}
+$$
+
+Take the finite disjunction of the applicable singleton and progression
+formulas. The numerals $a,b$ depend on the fixed graph and fixed vector,
+not on source, descriptor or epoch variables. For $b=0$ the progression
+is just $d=a$. An orbit trapped in a zero-weight cycle cannot reach an
+external vertex merely by choosing a positive $z$. The orbit construction
+retains entry and endpoint; it does not combine cycles that no single
+path traverses. This is the functional-path construction used within
+[NPS, Definition 2.2][NPS].
+

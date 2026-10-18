@@ -1,0 +1,35 @@
+**Definition 2.1 (input data).** Let $G_B,G_A$ be arbitrary Borel probability
+measures on the same ordered products as $\Gamma_B,\Gamma_A$.
+They are supplied analytical data. They need not satisfy (1.5) or (1.6).
+Set
+
+$$
+\sigma_p=(G_B)_1,\quad \tau_\beta=(G_B)_2,\qquad
+\sigma_\beta=(G_A)_1,\quad \tau_p=(G_A)_2.
+\tag{2.1}
+$$
+
+Disintegrate on these compact metric spaces:
+
+$$
+G_B(dQ,dW)=\sigma_p(dQ)B_0(Q,dW),\qquad
+G_A(dW,dQ)=\sigma_\beta(dW)A_0(W,dQ).
+\tag{2.2}
+$$
+
+Versions at null inputs can be any Borel probability versions. Define
+
+$$
+\begin{aligned}
+e_B&=\int d_\beta\left(\mathcal R_B(Q),\int W B_0(Q,dW)\right)d\sigma_p(Q),\\
+e_A&=\int d_p\left(\mathcal R_A(W),\int Q A_0(W,dQ)\right)d\sigma_\beta(W).
+\end{aligned}
+\tag{2.3}
+$$
+
+Here the notation $d_s$ also denotes TV on the full probability simplex.
+The norm is taken after conditioning on the entire outgoing descriptor
+and before averaging over that descriptor. These values are independent
+of conditional versions. Barycentres are defined coordinatewise;
+countable summation proves normalization and measurability.
+

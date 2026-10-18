@@ -1,0 +1,47 @@
+**Definition 27.1 (graph input and prefix convention).** Keep
+$P=\{L,R\}$, $C=\langle\square_1,\square_2\rangle$, the two distinct old
+classes, and the retained guarded record $(0,L,1,R,=)$ exactly as in
+(ARH.8.5). Let $H_0$ be any finite list of literal records, with their
+epochs, repetitions and absent replies. Let $Q$ be any finite prefix-free
+set of original addresses. Use Assumption 1.3, in particular the complete
+accessible input and the same actual original-root register at certified
+
+$$
+N\ge\max\bigl(\{1\}\cup\operatorname{epochs}(H_0)\bigr).
+\tag{ARH.27.1}
+$$
+
+The entire source parameterization is the supplier Theorem 8.2, not an
+additional assumption or a new parameterization theorem:
+
+$$
+F(y)=\langle\rho(y),y\rangle,\qquad
+V=\{y\in\mathcal T:
+       r_{\rho^a F(y)}(p)=c\ \text{for every }(a,p,c)\in H_0\},
+\qquad U=F[V].
+\tag{ARH.27.2}
+$$
+
+Here $y$ ranges over all finite nonempty free ordered trees satisfying the
+displayed conjunction. The old inequality holds at every such value by
+$\kappa(\rho(y))=\kappa(y)+1$; both endpoints of the retained equality
+exist. These are consequences already used in (ARH.8.5), not permissions
+to discard a possibly false old constraint. The inverse parameter is the
+mathematical original subtree $u|_R$. It is not freely accessible data.
+
+Write $s\equiv_h t$ for agreement of all original replies at addresses of
+length strictly less than $h$, as in Definition 19.1. Thus agreement
+through inclusive depth $b$ is $\equiv_{b+1}$. Put
+
+$$
+d=1+\max\bigl(\{0\}\cup\{|p|:(a,p,c)\in H_0\}
+                         \cup\{|q|:q\in Q\}\bigr).
+\tag{ARH.27.3}
+$$
+
+A depth-$d$ pattern records every constructor at depth less than $d$,
+stops at each concrete leaf, and places a distinct variable at every
+reached depth-$d$ position. Its variables occur once in the pattern.
+They range independently over all of $\mathcal T$. For a pattern $t$,
+write $\mathcal C(t)$ for its set of finite fillings.
+

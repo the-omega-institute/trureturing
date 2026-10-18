@@ -1,0 +1,21 @@
+**Specification 17.2 (the limiting scalar problem).** In particular
+
+$$
+\lambda_1(0)=\varepsilon^2
+\inf_{0\ne f\in H_0^1(I)}
+\frac{\int_I|f'|^2\,dk}
+ {\int_I ((H-k)/(Hk))^2|f|^2\,dk}.
+\tag{17.19}
+$$
+
+Equivalently, solve
+$-\varepsilon^2F_\lambda''=\lambda((H-k)/(Hk))^2F_\lambda$ with
+$F_\lambda(l)=0$, $F_\lambda'(l)=1$; $\lambda_1(0)$ is the smallest
+positive root of $F_\lambda(u)=0$. Regular Dirichlet oscillation theory
+gives this equivalence. The exponent depends on the whole fixed interval
+and this weight, not just its maximum at $l$. The initial height enters
+the matching constants, while the leading rate is the same for every
+fixed interior $k_0$. The dependence on $\varepsilon$ is explicit:
+$\sqrt{\lambda_1(0)}$ is $\varepsilon$ times the square root of the
+quotient infimum without $\varepsilon^2$.
+

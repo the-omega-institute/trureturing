@@ -1,0 +1,51 @@
+### 41.2 Universal Halt and active-root lower bounds
+
+For every $a\in Y_{\rm act}$ an actual source has INITIAL target $a$. Successful finite stopping must visit a state whose fixed instruction is $\operatorname{Halt}(a)$. Distinct labels require distinct such states, since $u$ assigns one instruction to a state. Hence at least $L$ persistent literal Halts are necessary, irrespective of how those states are reached or shared. Every $A_v$ is realized outside $U$, every active $B_v$ is realized on $H_v$, and $y_\bot$ is realized at initial bottom by (41.10) and (41.4).
+
+Every controller state actually reached immediately after an emission must have a Halt instruction. An Emit instruction there would execute a second full block and violate the fee bound on that source; no uncharged internal transition is available. This excludes reachable running cycles or a further running-state reuse on such executions by the contract itself. Unreachable cycles are allowed. It also allows constant-fibre and bottom continuations, but forces their reached first-emission successors to Halt.
+
+Fix an active fibre $v$, so $H_v\ne\varnothing$. All of its live sources initialize to $R_v=c(v)$. Actual phases in $H_v$ and outside $U$ require the unequal labels $B_v$ and $A_v$. A literal Halt at $R_v$ cannot serve both, so $u(R_v)=\operatorname{Emit}(X)$ for some fixed word $X$.
+
+First, $X_0=0$ is forced. If $X_0=1$, every actual record $(v,-j,k-1)$ rejects at the first bit. Choose $j\in H_v$ and $j_*=m+1$. The latter is an actual phase outside $W_0$ and outside $U$, since $m+1<T$ for $m\ge5$. These sources require $B_v$ and $A_v$ respectively. They start at the same controller state and, after the entire paid word including its post-rejection remainder, give the same absolute endpoint $\bot$. Their common successor cannot return both unequal labels. Absorption would preserve their indistinguishability even at a larger horizon. Thus every active root starts zero.
+
+This first zero clears every inherited tail inside the paid word. Its remaining $m-1<k$ bits cannot form a forbidden run. Therefore $X$ succeeds on every live source in this fibre, including all old tails, and gives absolute endpoint $v\oplus q_X(j)$.
+
+At the actual phase $j_*=m+1$, (41.12) gives $q_X(j_*)=0$. Correctness and the fee bound force
+
+$$
+u(\Delta(R_v,v))=\operatorname{Halt}(A_v).
+\tag{41.15}
+$$
+
+Now take any phase in $H_v$. It must return $B_v\ne A_v$, so it cannot give endpoint $v$. It gives endpoint $1-v$ and forces the second absolute-response constraint
+
+$$
+u(\Delta(R_v,1-v))=\operatorname{Halt}(B_v).
+\tag{41.16}
+$$
+
+Both binary response rows are reached on actual sources. They now force the entire charge assignment: if $j\in H_v$ had charge zero, (41.15) would return $A_v$ incorrectly; if $j\notin H_v$ had charge one, (41.16) would return $B_v$ incorrectly. Consequently
+
+$$
+q_X(j)=\mathbf1_{H_v}(j)\quad(j\in P),
+\qquad X=\mathcal B_0(H_v)
+\tag{41.17}
+$$
+
+by the unique inverse (41.13). There is no choice of a different root word that avoids either fixed successor requirement. This argument uses absolute responses throughout: it has not supplied an external remembered INITIAL value or an increment register.
+
+If both fibres are active and their roots share one state, its fixed emitted word is the same. Equation (41.17) forces $H_0=H_1$. The common absolute response zero must satisfy (41.15) for INITIAL value zero and (41.16) for INITIAL value one. Its single literal Halt instruction therefore forces $A_0=B_1$. Similarly its absolute response one forces $B_0=A_1$. These necessary conditions are precisely
+
+$$
+R_0=R_1\quad\Longrightarrow\quad
+H_0=H_1\ne\varnothing,
+\quad A_0=B_1,\quad B_0=A_1.
+\tag{41.18}
+$$
+
+If the supports differ, the emitted words conflict; if they agree but the crossed equalities fail, at least one absolute-response output instruction conflicts. Equality of output sets alone does not suffice. Conversely, under both crossed equalities and equal supports, the two root words and both binary successor requirements agree, as the construction below shows.
+
+Thus the mandatory active roots require at least $n-\epsilon$ distinct running states. These are disjoint from the $L$ Halt states because one state has one fixed instruction. This proves $|K|\ge L+n-\epsilon$ for every complete successful controller.
+
+No free-stop assumption on inactive fibres or bottom entered the lower bound. In fact they can be normalized to free stopping without adding states: success already provides a Halt for each $A_v$ and $y_\bot$, so change only their once-used initialization entries to those states. Leave $u$ and every $\Delta$ entry unchanged. The targets on these initial fibres are constant, and the modification cannot increase fee. This optional normalization also does not restrict arbitrary sharing or cycles in the original controller.
+

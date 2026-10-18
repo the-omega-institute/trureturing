@@ -1,0 +1,35 @@
+**Theorem 3.4 (entire signed acceptance and both source directions).**
+The effective finite scheme of Theorem 2.5 and the explicit finite
+checker of Definition 3.3 satisfy
+
+$$
+\begin{aligned}
+\mathcal W_{I,B}
+&:=\mathcal L(\mathcal G_{m,\mathcal V})
+                       \cap\{t:\mathsf A_{I,B}(t)\}\\
+&=\bigl\{\mathsf{tick}^n\operatorname{Payload}_{\mathcal V}(\mathbf u):
+ n\in\mathbb N,\ \mathbf u\in\prod_{i=1}^mD_i,
+ \ \forall i,j\ u_i\simeq_nu_j\bigr\}.
+\end{aligned}
+$$
+
+The equality retains every original finite source tuple satisfying
+these conditions, not merely an existence-equivalent subfamily.
+
+Proof. For a member of the left side, Theorem 2.5 supplies its finite
+original sources, its certified common original prefix and every
+faithful slot. The checker tests the old full row, every literal at
+its actual epoch, both guards of each signed comparison, its whole
+value sign, every remaining constraint and the complete target row.
+Thus its coordinate $u_i$ lies in the entire $D_i$.
+
+Conversely take a tuple and numeral on the right side. The completeness
+direction of Theorem 2.5 generates those very sources with those very
+epoch views. Membership in $D_i$ means all finite tests in
+Definition 3.3 hold. All recomputed slots coincide with the generated
+slots, so the output is accepted. This also preserves every accidental
+equality of different parameter names in an original source. No
+normal-coordinate witness replacement, limit tree or selected contact
+is used. Distinct $r_i$ imply distinct source values in these accepted
+tuples, because one source has one complete $Q$-row. $\square$
+

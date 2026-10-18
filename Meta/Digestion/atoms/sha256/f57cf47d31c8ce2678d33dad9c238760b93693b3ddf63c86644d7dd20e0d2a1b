@@ -1,0 +1,49 @@
+**Definition 390.1 (Complete affine allocations and their stock projection).** Fix a finite integer $L\ge3$, a catalog $\mathcal C\in\{N,O\}$, a real prefix $b_1,\ldots,b_{L-1}\in[0,1]$ and $e\ge0$. Use the complete schedules, cell maps $c_s(w)$, owning masses and literal affine demands of [XXV 384.1–384.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXV.md#384-complete-allocations-at-literal-affine-mass). Thus every schedule is empty, a singleton, or a pair $i<j$; its nonnegative cell vectors all have the same mass $m_s$, and $\sum_s m_s=M\ge0$. Pair cells are $00,01,10,11$ for $N$ and $0,10,11$ for $O$. All addresses $1,\ldots,L$, all output labels, and every Boolean word, including every multiple-zero word, remain in the catalog.
+
+Write $B_L=\{0,1\}^L$, $J_L=\{0,\ldots,L\}$, $w^*=1^{L-1}0$, $w^+=1^L$ and $c_s^*=c_s(w^*)$. The collapsed set $K_{\mathcal C}(M)$ consists of complete allocations $k$ on labels $0,\ldots,L-1$ satisfying, at every word with first zero $n<L$, the three independent floors
+
+$$
+\begin{array}{c|cc}
+ &d_A(w)&d_C(w)\\ \hline
+n\le2&1-b_n-e&M-1+b_n-e\\
+3\le n<L&M-b_n-e&b_n-e
+\end{array}
+\qquad d_P(w)=M-e,
+\tag{390.1}
+$$
+
+and the two base floors $k_{w^*}(0),k_{w^+}(0)\ge M-e$. Here $k_w=\sum_s k_{s,c_s(w)}$. The singleton floors are signed; none is replaced by its positive part. Every cell and owning mass varies in $K_{\mathcal C}(M)$.
+
+For one such allocation define
+
+$$
+\begin{aligned}
+a_s(k)&=k_{s,c_s^*}(0),& I_s(w)&=\mathbf1_{c_s(w)=c_s^*},\\
+s_w(k)&=\min\{k_w(0)-d_A(w),\ k_w(0)+k_w(n(w))-d_P(w)\}
+&& (n(w)<L),\\
+s_+(k)&=k_{w^+}(0)-(M-e).
+\end{aligned}
+\tag{390.2}
+$$
+
+Let $\mathcal J_{\mathcal C}(M)$ be the joint pairs $(k,x)$ with $k\in K_{\mathcal C}(M)$ and
+
+$$
+0\le x_s\le a_s(k),\qquad
+\sum_s I_s(w)x_s\le s_w(k)\quad(n(w)<L),\qquad
+\sum_s I_s(w^+)x_s\le s_+(k).
+\tag{390.3}
+$$
+
+The entire stock projection and its capacity are
+
+$$
+\mathcal X_{\mathcal C}(M)
+=\{x:\exists k\ (k,x)\in\mathcal J_{\mathcal C}(M)\},
+\qquad
+\nu_{\mathcal C}(M)=\max_{x\in\mathcal X_{\mathcal C}(M)}\sum_s x_s.
+\tag{390.4}
+$$
+
+The maximum is attained when the set is nonempty, by [XXV 385.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXV.md#385-whole-allocation-capacity-and-the-hull-slice). If $K_{\mathcal C}(M)$ is empty, both joint sets are empty and $\nu_{\mathcal C}(M)=-\infty$. Conversely $x=0$ is admissible whenever $K_{\mathcal C}(M)$ is nonempty. A zero capacity and an empty complementary set are different cases.
+

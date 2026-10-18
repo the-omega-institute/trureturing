@@ -1,0 +1,14 @@
+**Lemma 2.2 (legality and equal boundary fibres).** All sixteen $t_{j,e}$
+and all sixteen $s_{j,e}$ are distinct members of $\mathcal F_8$. Moreover
+
+$$
+\partial_p(t_{j,e})=\partial_p(s_{j,e})=(j,e).
+\tag{2.4}
+$$
+
+**Proof.** Every strict prefix of $p_j$ is a branch and the path label is
+unchanged by (2.3), so (2.4) holds. The canonical right-subtree height is
+at most $7$. The inserted trees in (2.3) have height at most $1$, and the
+longest path still has right-subtree height at most $7$. The fixed left root
+child is $\alpha$, so every representative satisfies (1.1). $\square$
+

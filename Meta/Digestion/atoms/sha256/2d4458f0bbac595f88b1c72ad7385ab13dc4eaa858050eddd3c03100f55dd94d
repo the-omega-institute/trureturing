@@ -1,0 +1,81 @@
+**Theorem 21.1 (all PSD attained configurations are excluded).**
+Under Assumption 17.1, every jointly attained finite positive-multiplier
+entire-cylinder feasible dual satisfies
+
+$$
+R_-=Q+t\mathsf F\not\succeq0.
+\tag{FC.76}
+$$
+
+This quantifies over every alternative finite dual and every common
+original law satisfying (FC.54), for every finite $t\ge t_0>0$
+and $\lambda>0$. Positive definite, rank-one PSD and zero
+remainders are all excluded without assumptions on $L_o$ or $w_o$.
+
+Proof. Suppose $R_-\succeq0$. On only the failure-bearing subset
+of the actual law introduce auxiliary probability weights
+
+$$
+w_i=\frac{p_i b_i u_i^2}{m_u},\qquad z_i=\frac{v_i}{u_i}.
+\tag{FC.77}
+$$
+
+Propositions 17.3 and 20.1 show that the denominators are positive
+and every retained $w_i>0$. Labels with $b_i=0$ contribute zero
+to all failure moments and receive no auxiliary mass. The actual
+weights $p_i$, intensities $b_i$, directions, fractions and label
+count are not replaced by $w_i$. For this auxiliary distribution,
+
+$$
+\sum_iw_i=1,\qquad
+\mathbb E_w z=\frac{\sum_i p_i b_i u_iv_i}{m_u}=0,\qquad
+\mathbb E_w z^2=\frac{\sum_i p_i b_i v_i^2}{m_u}
+=\frac{m_v}{m_u}=\mathcal R>0.
+\tag{FC.78}
+$$
+
+There is a negative-slope subset of positive auxiliary weight.
+Otherwise $z\ge0$ almost surely, and $\mathbb E_wz=0$ would
+force $z=0$ almost surely, contradicting $\mathbb E_wz^2>0$.
+For a finite or countable law this gives at least one negative
+$z_i$ of positive weight; in the stipulated integral case it
+gives a set of positive auxiliary measure.
+
+By Proposition 20.2, $-\kappa_U<z\le B_*$ almost surely.
+Therefore $(z+\kappa_U)(B_*-z)\ge0$ everywhere on the support,
+and it is strictly positive on the negative-slope subset, since
+$B_*>0$. It has strictly positive expectation. Expanding the
+quadratic and using (FC.78) yields the strict support/variance
+inequality
+
+$$
+\begin{aligned}
+0&<\mathbb E_w[(z+\kappa_U)(B_*-z)]\\
+ &=\kappa_U B_*+(B_*-\kappa_U)\mathbb E_wz-\mathbb E_wz^2
+ =\kappa_U B_*-\mathcal R.
+\end{aligned}
+\tag{FC.79}
+$$
+
+The strictness comes from an actual positive-weight negative subset,
+not from an unproved strict sign of each dual quadratic. For integral
+laws, $d\widehat\pi=b u^2\,d\pi/m_u$ is the auxiliary probability
+measure. The same moment identities and bounded slope interval make
+all integrals finite; a nonnegative function positive on a set of
+positive measure has positive integral. This gives the same strict
+inequality without presuming an atom exists.
+
+Propositions 18.1 and Theorem 19.1 give simultaneously
+
+$$
+\mathcal R>\frac12,\qquad
+\mathcal R<\kappa_U\max(\kappa_L,\chi)
+ <\frac1{20}\,4=\frac15,
+\tag{FC.80}
+$$
+
+because $\kappa_U<1/20$, $\kappa_L<4$ and $\chi<1$.
+This contradiction proves (FC.76). Neither a fitted primal table,
+a selected numerical dual, a root-box corner, nor a separately
+optimized failure marginal enters the argument. $\square$
+

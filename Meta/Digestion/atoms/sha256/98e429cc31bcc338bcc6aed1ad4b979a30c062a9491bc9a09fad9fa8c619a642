@@ -1,0 +1,60 @@
+## 2. The ancestor-root exclusion used below
+
+**Lemma 2.1.** No legal world on (1.1) has three distinct gain roots
+among original clocks zero through five.
+
+This is Theorem 3.1 of
+*FIB JMMJM Whole-Class Affine Decoders*.
+Its complete elementary proof is included here.
+
+**Proof.** A nonzero polynomial of degree at most three has at most
+three distinct roots, by successive division by their linear factors.
+At every sampled root, (1.4) says $c_i=d$. The four readings
+$0,24,48,312/5$ are distinct. Thus three ancestor roots would be
+exactly $q,4,5$ for one $q\in\{0,1,2,3\}$, and necessarily
+
+$$
+d=c_q=\widehat Y=\widehat z,\qquad
+f(T)=a(T-q)(T-4)(T-5),\quad a\ne0.                            \tag{2.1}
+$$
+
+If $q=0$, then $d=0$ and the gains at one, two and three are
+$12a,12a,6a$. Equations (1.4) require
+
+$$
+j=2/a,\quad \ell=4/a,\quad j+\ell=52/(5a).
+$$
+
+The first two sum to $6/a$, a contradiction.
+
+If $q=1$, the initial reading gives $-20a=-24$, hence $a=6/5$.
+The gains at two and three are $36/5,24/5$. Therefore
+
+$$
+\ell=10/3,\quad j+\ell=8,\quad j=14/3,\quad u=v=7/3,
+$$
+
+contrary to $uv\le1/4$.
+
+If $q=2$, then $d=48$ and $-40a=-48$ gives $a=6/5$.
+The gains at one and three are $-72/5,12/5$, so
+
+$$
+j=5/3,\quad j+\ell=6,\quad \ell=13/3,\quad
+u=10/3,\quad v=-5/3,
+$$
+
+contrary to positivity.
+
+If $q=3$, then $d=312/5$ and $-60a=-312/5$ gives $a=26/25$.
+The gains at one and two are $-624/25,-156/25$, giving
+
+$$
+j=20/13,\quad \ell=30/13,\quad u=17/13,\quad v=3/13.
+$$
+
+Now $uv=51/169>1/4$, since $204>169$. These exhaust the possibilities.
+Three distinct roots already force the cubic (2.1); no lower-degree
+or repeated-root alternative with those three roots is omitted.
+Both late readings are retained as the common drift in every case. ∎
+

@@ -1,0 +1,24 @@
+**Definition 6.1 (conditional ownership on an original source slice).**
+Fix $d\ge1$, $H\ge0$, $n=2^H$ and $D=d+H$. Place canonical
+blocks $X_i$ at the fixed actual frontier of $T_H$ in the right
+subtree of one source. Give them any analytical product law
+$\prod_i\mu_i$, and restrict an arbitrary original correct complete
+code $E$ to this slice. No law or seed vector is given to its reader.
+For each nonempty name fiber $B_e$, choose any complete native witnesses
+containing it and apply RRN normalization. Let $O_i$ be the tuple of all
+actual seed-owner replies in block $i$, in a fixed public order for
+that name. Owner choices can depend on $e$ and the tuple can be empty.
+Tuples of different lengths can be regarded as elements of a finite
+disjoint union; all statements below are conditional on $E$.
+
+For each name, $O_i$ is a function of $(X_i,E)$, and $(E,O_1,\ldots,O_n)$
+determines $X$ on the actual fiber. This holds even when the complete
+witness solution set strictly contains the fiber. Define
+
+$$
+B_{\rm local}=\sum_i I(X_i;E),\qquad
+B_{\rm import}=\sum_iH(X_i\mid O_i,E),\qquad
+\operatorname{TC}(O\mid E)=\sum_iH(O_i\mid E)-H(O\mid E).
+\tag{OCB.44}
+$$
+

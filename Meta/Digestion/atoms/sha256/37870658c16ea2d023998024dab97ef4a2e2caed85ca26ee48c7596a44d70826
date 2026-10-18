@@ -1,0 +1,31 @@
+#### 467.1 原完整误差的概率读法
+
+令 $C=e^\gamma$、$k=C-1>0$，保持同一个原完整常数
+
+$$
+\begin{aligned}
+A
+&=\int_0^1\frac{\Phi(v)(1-e^{-v})-v}{v^2}\,dv
+ +\int_1^\infty\left[\frac{\Phi(v)(1-e^{-v})}{v^2}-\frac C v\right]dv\\
+&=-\int_0^\infty\log(v)B(v)\,dv.
+\end{aligned}
+\tag{RSK.1}
+$$
+
+§465 给每个自然数 $n$ 的完整预算
+
+$$
+r_n=\int_0^\infty R_n(v)\,dv>0,\qquad
+m_n=\int_0^\infty vR_n(v)\,dv>0,\qquad
+\ell_n=\int_0^\infty|\log v|R_n(v)\,dv<\infty.
+$$
+
+实际 $R_n(v)>0$ 对每个 $v>0$ 成立。定义同一完整下界
+
+$$
+L_n=-\int_0^\infty\log(v)B_n(v)\,dv
+      -r_n\log(m_n/r_n),
+\qquad \mu_n=m_n/r_n.
+\tag{RSK.2}
+$$
+

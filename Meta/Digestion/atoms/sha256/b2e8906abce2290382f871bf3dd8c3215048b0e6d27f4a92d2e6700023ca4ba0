@@ -1,0 +1,44 @@
+**Proposition 8.2 (Guarded cocycle and failure of preservation).** Put
+$D(x)=\Delta_P(x,Rx)$. On $E\cap\Omega$, only losses at $-1,0,1$
+change, and
+
+$$
+D(x)=2r_{H(x)}-1+2r_{H(x)}^2
+=\begin{cases}
+11/49,&H(x)=1/3,\\
+-33/169,&H(x)=1/4.
+\end{cases}
+\qquad
+R^{1/3}(E)=\frac4{27},\quad R^{1/4}(E)=\frac{81}{320}.
+\tag{8.3}
+$$
+
+Consequently, under (2.1), checked here in ordinary mathematics, and
+Standing interface 2.2,
+Theorem 4.1 implies $\neg\mathsf{RP}(P)$.
+
+Proof. For any nontrivial legal insertion, $x_{-1}=x_0=x_1=0$.
+Write $r=r_{H(x)}$ and
+$m(x)=\mathbf1_{\{x_{-2}=0\}}+\mathbf1_{\{x_2=0\}}$.
+The center loss difference is $r^2-(1-r)^2=2r-1$. Each adjacent
+site has visible bit zero; its predictor changes from $r$ to zero
+exactly when its other neighbor is zero, contributing $r^2$ in that
+case. For $|i|\ge2$, the bit, its neighbors and $H$ are unchanged,
+so its loss is unchanged by (8.1). Hence legality alone yields
+
+$$
+D(x)=2r_{H(x)}-1+m(x)r_{H(x)}^2,
+\qquad m(x)\in\{0,1,2\}.
+\tag{8.4}
+$$
+
+The radius-two guard in $E$ is required to set $m=2$; legality does
+not do so. When $Rx=x$, $D(x)=0$. The component transition probabilities
+in [Universal, (7.1)][U] give
+$R^a(E)=(1-a)^4/(1+a)$, yielding the two positive probabilities in
+(8.3). Substitution gives its two distinct, nonzero cocycle values.
+If $\mathsf{RP}(P)$ held, Theorem 4.1 would supply a saturated conull
+$\Omega_0$ on which all finite-change cocycles vanish. But
+$E\cap\Omega_0$ has positive probability, and saturation places
+$Rx$ in $\Omega_0$ there, contradicting (8.3). $\square$
+

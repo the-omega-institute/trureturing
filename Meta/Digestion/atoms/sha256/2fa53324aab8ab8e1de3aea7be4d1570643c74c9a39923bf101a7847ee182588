@@ -1,0 +1,29 @@
+**Convention 11.4 (mathematical attribution).** The graphical inequality
+and complete-bipartite norm convention are literature-attested:
+Sah, Sawhney, Stoner and Zhao, *A reverse Sidorenko inequality*,
+[arXiv:1809.09462v3, Theorem 1.12][GCBSSSZ], source labels
+`thm:graph-BL` and `defn:graph-norm`. Its hypotheses are a triangle-free
+graph, vertex measure spaces and nonnegative heterogeneous binary edge
+functions, with $K_{d_v,d_u}$ on edge $uv$. This use requires no
+hypergraph, source-loop or multigraph extension. Positivity and finiteness
+of our two-point measures ensure every displayed integral is finite.
+
+The native cycle, full-support law, trace identity and paid realization
+are the credited GCB/COK suppliers identified above. Finite log-sum-exp
+convexity and mixed finite differences are standard intermediates. The
+complete compensation characterization, the convex symmetry optimum
+and its exact $82/81$ residual are repository-derived ordinary
+deductions in Sections 8--9. They carry no Lean certification,
+worldwide-originality, exhaustive-literature or unrestricted
+computability assertion. No finite common-extension, predecessor-row
+controller or natural-join theorem is used to supply a missing native
+acquisition or all-size pressure premise.
+
+[GCBSSSZ]: https://arxiv.org/src/1809.09462v3
+[GCBNPC]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[GCBCOK]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[GCBRRN]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[GCBRCE]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[GCBGDB]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[GCBCURRENTNCE]: https://github.com/the-omega-institute/trureturing/blob/3f89a8fc073a859012fba13e652362e5aebc16b8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+

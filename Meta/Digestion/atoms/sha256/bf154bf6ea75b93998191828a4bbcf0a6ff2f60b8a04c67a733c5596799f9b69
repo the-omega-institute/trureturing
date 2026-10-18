@@ -1,0 +1,38 @@
+**Theorem 47.2 (both full moving inputs).** At every separately fixed probe (46.2),
+
+$$
+\begin{aligned}
+\|J_s^{1/2}Lx_s\|_2^2
+ &=B_{\log}s^8\log(1/b)+o_{d,M}(s^8\log(1/b)),\\
+B_{\log}&=\frac{j_0A_p^2\phi_0^3 I_3}{32\pi^2\Delta}>0.
+\end{aligned}
+\tag{47.8}
+$$
+
+Proof. The exact late scaling (35.9) and the full output change $Y=Y_s\xi$ give, by Tonelli,
+
+$$
+\|J_s^{1/2}Lx_s\|_2^2
+ =j_0s^8\iint x_s(\eta)x_s(\eta')
+ \mathcal I_b(Y_s\eta,Y_s\eta')d\eta\,d\eta'.
+\tag{47.9}
+$$
+
+Indeed the three factors are $s^5$ from $J_s$, $(j_0s^5)^2$ from the two late kernels, and $(j_0s^7)^{-1}$ from output volume. Each input retains its complete microscopic measure; neither is restricted to an annulus or compact set.
+
+Divide the bilinear kernel by $\log(1/b)$. Lemma 47.1 bounds it uniformly on the entire two-input space for small $s$. Since $x_s\to Vp$ in $L^1$, replacing either input by $Vp$ costs at most
+
+$$
+C\|x_s-Vp\|_1(\|x_s\|_1+\|Vp\|_1)=o(1).
+\tag{47.10}
+$$
+
+For each fixed $\eta,\eta'$, the physical inputs $Y_s\eta,Y_s\eta'$ tend to $o$, so (47.3) gives the limit $\phi_0^3I_3/(32\pi^2\Delta)$. Dominated convergence against $(Vp)(\eta)(Vp)(\eta')$ is legitimate by the same global bound. Their two masses give $A_p^2$, proving (47.8). At $b=Ms^6$, the upper physical radius is $b^{-1/2}=M^{-1/2}s^{-3}$ and
+
+$$
+\log(1/b)=6\log(1/s)-\log M.
+\tag{47.11}
+$$
+
+Consequently the coefficient with $\log(1/s)$ is six times the coefficient displayed with $\log(1/b)$. $\square$
+

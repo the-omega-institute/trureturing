@@ -1,0 +1,15 @@
+### 63.3. Necessity from the actual common local channels
+
+Suppose a finite physical LOSR channel realizes E_z. On every basis input |ii>, its output is the pure product |00>, and on |hh> its output is |11>. A convex combination of density matrices equals a pure state only if every positive-weight summand is that same pure state. Consequently every positive-weight product branch has local output |0> on each leaf and |1> on the hub, on both parties.
+
+Take a Stinespring isometry for each local map in a branch. Purity of these local basis outputs forces the forms
+
+    U_A|i>=|0>a_i,    U_A|h>=|1>a_h,
+    U_B|i>=|0>b_i,    U_B|h>=|1>b_h,
+
+with all environment vectors unit. Isometry of U_A implies that a_1,...,a_m are orthonormal, and similarly b_1,...,b_m. Put α_i=<a_h,a_i>, β_i=<b_h,b_i>. The branch's retained leaf–hub coefficient is α_iβ_i. Bessel's inequality gives Σ|α_i|²≤1 and Σ|β_i|²≤1, so
+
+    Σ_i |α_iβ_i|≤1.
+
+For the common mixture, z_i=Σ_b w_b α_(b,i)β_(b,i). The triangle inequality and the preceding branch estimate give ||z||₁≤1. This uses unrestricted local CPTP maps and their actual dilations, not an incoherent-operation ansatz. It also shows that any physical competitor with the same exact basis outputs necessarily equals J_out∘E_w on the full encoded input for some ||w||₁≤1: same-fiber orthogonality kills every distinct leaf–leaf matrix unit, and all remaining units have the displayed form.
+

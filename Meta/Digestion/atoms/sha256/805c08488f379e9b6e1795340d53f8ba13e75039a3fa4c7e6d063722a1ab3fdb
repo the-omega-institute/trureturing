@@ -1,0 +1,33 @@
+### 74.5. Finite polynomial-operation convention
+
+Both certificates below are fully specified by their printed seeds and
+operation tables. Over \(\mathbb Q\), use graded reverse lexicographic
+order in the displayed variable order: larger total degree is larger;
+at equal degree, at the last differing coordinate the smaller exponent
+is larger. Write \(\operatorname{LM},\operatorname{LC}\) for leading
+monomial and coefficient. Define
+\[
+ \mathsf S(f,g)=\frac{m}{\operatorname{LM}(f)}
+                    \frac f{\operatorname{LC}(f)}
+              -\frac{m}{\operatorname{LM}(g)}
+                    \frac g{\operatorname{LC}(g)},\qquad
+ m=\operatorname{lcm}(\operatorname{LM}(f),\operatorname{LM}(g)).
+\]
+Define \(\mathsf R(f;g_1,\ldots,g_s)\) by ordinary ordered multivariate
+division: repeatedly cancel the leading term using the first listed
+\(g_j\) whose leading monomial divides it; if none divides it, transfer
+that term to the remainder. Normalize the final nonzero remainder by
+its leading coefficient. An empty divisor list just makes \(f\) monic.
+All displayed uses have nonzero divisors and nonzero final remainder.
+
+In each table, row \(j\) defines polynomial \(z_j\). The notation
+\(\mathsf I(i)\) means seed \(i\), \(\mathsf S(p,q)\) means
+\(\mathsf S(z_p,z_q)\), and \(\mathsf R(p;q_1,\ldots,q_s)\)
+means \(\mathsf R(z_p;z_{q_1},\ldots,z_{q_s})\).
+Every reference points backward. By induction every row lies in the
+seed ideal: an S-polynomial is a polynomial combination, and a division
+remainder differs from its input by polynomial multiples of divisors.
+Thus no theorem asserting correctness of a Gröbner-basis implementation
+is needed. The tables specify finite rational calculations, including
+the divisor order, rather than a choice of elimination strategy.
+

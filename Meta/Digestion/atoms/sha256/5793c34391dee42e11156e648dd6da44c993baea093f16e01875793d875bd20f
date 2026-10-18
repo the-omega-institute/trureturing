@@ -1,0 +1,10 @@
+### 1. Separator 记忆
+
+记录当前窗口边界或 pair-state 分布，例如
+
+$$
+\Sigma_{\mathrm{sep}}.
+$$
+
+如果只关心“能否继续”，支持语言往往可以压缩为末尾连续 $1$ 的长度；对 Fibonacci 禁止 $11$ 的情形，只需两个 run-length 状态。
+

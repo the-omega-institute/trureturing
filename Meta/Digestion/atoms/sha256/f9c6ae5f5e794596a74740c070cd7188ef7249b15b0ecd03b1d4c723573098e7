@@ -1,0 +1,15 @@
+**引理 10.2（Global parent, immutable labels, and binary lower bound）。** Every correct controller for (10.3), on either free value and with any finite worst fee, starts with $1^m$. That parent rejects exactly the high tails. On its successful positive-difference archive the actual INITIAL phases are precisely $H$, and on its zero-difference archive they are precisely $Z$, in both cases with all low INITIAL tails. Consequently
+
+$$
+C_{\rm ad}(f)\ge1+d,\qquad C_{\rm pre}(f)\ge1+d.
+\tag{10.4}
+$$
+
+The first post-parent block on the $Z$ archive must start zero. The same holds on the $H$ archive if $C\ne D$.
+
+Proof. Since $n\ge3$ distinct outside labels occur, choose an actual phase $j\in Z$ with $\lambda(j)\ne R$. At this phase and one fixed free value, take INITIAL tails $r-2$ and $r-1$. Free stopping cannot return both labels. A root whose first zero follows $b<m$ leading ones lets both reach that zero, because $(r-1)+b\le m+r-2=k-1$. The zero merges their current records and their acquired archives, although their INITIAL labels differ. No later action can restore the distinction. Thus every correct root is $1^m$, without a freshness assumption on $R$.
+
+That root rejects precisely $s+m\ge k$, or $s\ge r-1$. Its successful charge support is exactly $H$, by Interface 1.4. Each low source keeps its original label: the new record is $(v\oplus\mathbf1_H(j),-j+m,s+m)$, with its original $s$ still recorded only through the INITIAL target. The stated archive descriptions therefore follow from the full joint sources, not separately reachable coordinates.
+
+For each $j\in Z$, select the actual source at INITIAL tail $r-2$. At the root these $n$ sources have common current value and tail $k-1$ and pairwise different INITIAL labels. A first post-parent bit one rejects them all without separating any label, so a correct second block starts zero. Afterwards their tail is common; within each acquired branch it remains common under every literal action. A later rejecting action therefore merges all remaining candidates of that branch and cannot resolve different labels. Successful observations are binary. A tree of at most $h$ further blocks has at most $2^h$ distinct-label leaves, even with early stopping and paid waits. Since $2^{d-1}<n$, at least $d$ post-parent blocks are necessary. This is an all-action lower bound from the INITIAL endpoint, including the forced parent's fee. The two endpoint sources at INITIAL tail $r-2$ give the same compulsory second zero on a nonconstant $H$ archive. ∎
+

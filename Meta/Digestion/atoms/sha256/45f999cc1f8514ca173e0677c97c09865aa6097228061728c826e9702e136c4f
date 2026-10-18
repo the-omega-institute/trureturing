@@ -1,0 +1,55 @@
+## 9. Mathematical contribution and unresolved boundaries
+
+The sharp approximation result combines classical finite
+function-space arguments, total boundedness in finite-dimensional
+normed spaces, Bernstein polynomial weights and moments, and
+finite polynomial closure under translation. Their needed
+forms are proved in §7. The source-specific result is the exact
+threshold $2\sqrt{Zb}$ for the original ten-output Euclidean
+task with both affine offsets, no encoder regularity assumption,
+the same relative commands at all heights, and all finite
+valid histories. Its equality witness uses the anchored
+derivative approximation, $2m+5$ explicit real features,
+saturated native guards and an allowed phase quotient.
+The separate general-fixed-means statement is a necessary
+one-pair bound with an explicitly nonconstant native rational
+frequency, not an off-wall sharpness theorem.
+
+The decoder-free result combines elementary periodic-orbit
+arithmetic with affine spanning and common multiples of finitely
+many periods. Its source-specific bridge is that the real
+native command $4\pi$ has unbounded prime periods on actual rays
+in every positive-width band, while one finite-dimensional
+affine map fixes all its periodic points after a common
+iterate. The minimal theorem needs neither a probability-update
+map nor a decoder. The rational-step obstruction, irrational-step
+choice construction and retained-lift affine model state which
+operation and source quantifiers matter. These uses of classical
+ingredients carry no claim of worldwide originality or formal
+verification.
+
+For Definition 7.1, phase and simultaneous-control continuation
+have the sharp finite approximation threshold proved in
+Theorem 7.11. Additional injectivity, native-output realizability,
+regularity, finite-precision or robustness requirements specify
+different problems; the equality witness does not solve them.
+The sufficient feature counts are not minimum dimensions.
+The lossless theorem neither determines approximate-action
+error bounds nor proves that every finite affine quotient must
+forget the entire $\beta$ circle. The band equality result
+does not provide a full-open-domain equality attainer, and the
+general-fixed-means lower bound does not provide its own
+matching upper construction.
+
+The original alternative of an attainer at some finite $N$
+versus a strict gap for every finite $N$ remains open.
+No identification of that objective and its admissible
+realizations with either contract here has been proved.
+Finite feature dimension and arbitrary finite execution length
+are not that optimization's finite-$N$ attainment, and neither
+affine obstruction is its strict-gap proof.
+Exact-real initialization, source access and ideal output
+functions are mathematical interfaces, without a supplied
+finite-measurement acquisition, training, implementation or
+task-transfer guarantee.
+

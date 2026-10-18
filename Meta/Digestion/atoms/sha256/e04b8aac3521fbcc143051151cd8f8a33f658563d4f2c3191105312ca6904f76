@@ -1,0 +1,5 @@
+## Mathematical context
+
+The local AME/MDS correspondence is standard, for example Raissi et al., [arXiv:1701.03359](https://arxiv.org/abs/1701.03359). The contribution here is the explicit simultaneous central direction certificate for this fixed cyclic wiring, not a new construction of isolated AME states or a minimum field-size theorem.
+
+The connected-region result of [HaPPY, arXiv:1503.06237](https://arxiv.org/abs/1503.06237) has additional geometric assumptions. The designated-cut optimization in [Cui et al., arXiv:1508.04644](https://arxiv.org/abs/1508.04644) does not itself supply one perfect-tensor assignment for all cuts. Random-stabilizer constructions in [Hayden et al., arXiv:1601.01694](https://arxiv.org/abs/1601.01694) and [Apel et al., arXiv:2105.12067](https://arxiv.org/abs/2105.12067) already supply large-dimension probabilistic exact-RT results. [Bao et al., arXiv:2002.05317](https://arxiv.org/abs/2002.05317) give a broader AME/GHZ hypergraph framework. The theorem above is a concrete positive-uniform F13 witness; it makes no universal-topology or gravitational-dual assertion.

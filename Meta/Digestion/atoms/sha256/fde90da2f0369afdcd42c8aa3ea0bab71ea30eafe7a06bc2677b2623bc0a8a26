@@ -1,0 +1,15 @@
+**Theorem 1.1.** On every allowed fixed finite or countable prior with positive endpoint masses and a supported nonendpoint, every allowed finite COMPLETE observer satisfies
+
+$$
+240e(M)+30\mathcal D(M)>\kappa>0.
+\tag{1.3}
+$$
+
+Consequently exact common conf/conf attainment requires $\mathcal D>\kappa/30$. Any sequence with both excesses tending to zero has $\liminf\mathcal D\ge\kappa/30$. In the entire class whose every reachable actual alpha edge obeys $u_x\ge v_y$, the joint excess infimum is at least $\kappa/240$. This class can have positive absolute alpha change, positive complete-return motion, nonnative decoders and noncollapsed successor laws.
+
+The new ingredient is the directional stationary calibration relation in Theorem 3.1, including its positive cost for forecast increases. Equation (1.3) is its full-observer consequence. The numerical constants deliberately retain conservative supplied scales; the contribution is the direction restriction, not an improved coefficient.
+
+No finite exact common attainer, vanishing-excess family or positive unrestricted gap is asserted. The free statistic $\mathcal D$ remains unconstrained in the original question.
+
+The theorem concerns conf/conf. The supplied law/law and law/conf attainments [MIXED] and conf/law attainment [SWITCH] keep their stated unchanged-source scopes. No corresponding new direction obstruction is proved for those three combinations: Section 5 needs p configuration risk, and arbitrary-emission clipping in Section 6 uses both configuration risks. Marginalized loss, configuration loss, averaged-history loss and worst-positive-history loss are never exchanged.
+

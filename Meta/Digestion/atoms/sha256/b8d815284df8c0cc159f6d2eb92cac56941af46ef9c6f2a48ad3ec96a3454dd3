@@ -1,0 +1,57 @@
+**推论 70.3（符号基线与更强必要系数）。** 对上述原任务，$d=0$ 项恰为定理 68.4 的增长下界，且
+
+$$
+\begin{aligned}
+\left\lceil\frac{RS}{k}\right\rceil
+&=\left\lfloor\frac{h+10}{8}\right\rfloor,\\
+L_F(H)&=\frac{2-\sqrt2}{16}H+O(1),\\
+A_U(H)&\ge\frac{2-\sqrt2}{16}H-O(1),\\
+L_F(H)&=4\qquad(72\le H\le87).
+\end{aligned}
+\tag{70.15}
+$$
+
+最后一行给 $A_U(H)\ge4$，不确定该区间的精确 $A_U(H)$；第二行只描述显式必要界 $L_F$ 的首项，不描述 $A_U$ 的精确首项或匹配上界。
+
+证明。$RS=\lfloor(k+1)^2/4\rfloor$。写 $k=4u+e$、$0\le e\le3$，则 $\lceil RS/k\rceil$ 对四个剩余类依次为 $u+1,u+1,u+1,u+2$，即 $\lfloor(k+5)/4\rfloor$；$h=2k$ 和 $h=2k+1$ 都使它等于 $\lfloor(h+10)/8\rfloor$。所有分母正，且 $k\ge7$ 保留各端点。该值已至少为3，故定理 68.4 的另一个下界2不再影响本范围。
+
+令 $\gamma=1-1/\sqrt2$，并写 $x=d/k$。由 $RS=k^2/4+k/2+(k\bmod2)/4$，有准确恒等式
+
+$$
+\begin{aligned}
+\frac{N_d}{k-d}
+&=k f(x)+\frac12+\frac{k\bmod2}{4(k-d)},\\
+f(x)&=\frac{1/4-x^2/2}{1-x}
+=\gamma-\frac{(x-\gamma)^2}{2(1-x)}.
+\end{aligned}
+\tag{70.16}
+$$
+
+允许范围有 $0\le x<1/2$、$k-d\ge k/2$，所以误差项一致有界，$f(x)\le\gamma$。又 $0<\gamma<1/3$，对 $k\ge7$ 有 $\gamma k<k/3\le k/2-1\le R-1$，故 $d_* =\lfloor\gamma k\rfloor$ 是允许整数。此时 $|d_*/k-\gamma|<1/k$，(70.16) 给 $kf(d_*/k)=\gamma k+O(1/k)$。向上取整增加不到1，由上下两侧得到 $L_F=\gamma k+O(1)$。最后 $k=\lfloor H/8\rfloor$，所以 $\gamma/8=(2-\sqrt2)/16$。这是全部 $H\ge56$ 的符号估计，不由有限区间外推。相对原 $1/32$ 下界系数，系数比为 $4-2\sqrt2$，只属于必要字母表界。
+
+当 $72\le H\le79$ 时，$h=18$ 或19，$(k,R,S)=(9,5,5)$；当 $80\le H\le87$ 时，$h=20$ 或21，$(k,R,S)=(10,5,6)$。按 $d=0,1,2,3,4$ 顺序，全部项分别为
+
+$$
+\begin{aligned}
+k=9:&\quad
+\left(
+\left\lceil\frac{25}{9}\right\rceil,
+\left\lceil\frac{24}{8}\right\rceil,
+\left\lceil\frac{22}{7}\right\rceil,
+\left\lceil\frac{19}{6}\right\rceil,
+\left\lceil\frac{15}{5}\right\rceil
+\right)=(3,3,4,4,3),\\
+k=10:&\quad
+\left(
+\left\lceil\frac{30}{10}\right\rceil,
+\left\lceil\frac{29}{9}\right\rceil,
+\left\lceil\frac{27}{8}\right\rceil,
+\left\lceil\frac{24}{7}\right\rceil,
+\left\lceil\frac{20}{6}\right\rceil
+\right)=(3,4,4,4,4).
+\end{aligned}
+\tag{70.17}
+$$
+
+因此两段的最大值都恰为4，原 $d=0$ 下界均为3；这排除全部三值 authentic 执行前标签，而非给出四值全族恢复方案。所有 $H$ 的四个剩余类已包含在各段，未把不同 $H$ 的不同来源域与初始目标当成同一个固定任务。证毕。
+

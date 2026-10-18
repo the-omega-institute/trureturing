@@ -1,0 +1,29 @@
+**Definition 9.3 (unresolved interpretation and parameter boundaries).**
+The full native source has ray dimension three, direct control rank two,
+bracket growth $(2,3)$ and local volume exponent four. The base behavioral
+quotient has dimension two. These are distinct from affine predictive
+capacity, the amount of data in a probability density, acquisition or
+precision resources, and the number of physical spatial axes. None of the
+proved correspondences supplies a source-to-physical-space map.
+
+The free covariance, density, analytic clock, Dirichlet killing, attractive
+coupling and $L^2$ state space remain explicit additions. No CPTP map is
+inferred from the original nonlinear pure-source command law. No proof of
+preparation, measurement or finite-resource acquisition of the amplitudes,
+conditional densities or response coefficients is supplied. Including the
+reference coherence would enlarge the original observation task; ignoring
+it does not remove the corresponding rays from the source.
+
+The strict stability condition (3.8) and the separate periodic binding
+condition (7.3) retain their supplier scopes. The value of $C_H$ is
+sufficient, not sharp. Critical equality, a complete coupling classification,
+a strict full-versus-restricted ground-energy gap, an operator at
+$\varepsilon=0$, and estimates uniform as $\varepsilon\downarrow0$ are
+not established. In particular all quantitative lower estimates in this
+volume are statements for each fixed positive $\varepsilon$. The
+point-source field is never replaced by a weighted Hardy surrogate, a
+Euclidean potential or a finite-time field. A globally valid closed
+attractive base model would need an additional sufficient state restriction
+or a proved retention mechanism; free Markov sufficiency alone fails by
+(6.7).
+

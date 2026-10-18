@@ -1,0 +1,42 @@
+**Convention 2.3 (Finite arithmetic certificate).** Write elements of
+$\mathbb Q(r)$ as pairs $(a,b)=a+br$. Addition is componentwise and
+
+$$
+(a,b)(c,d)=(ac+17bd,ad+bc).
+\tag{2.9}
+$$
+
+The integer inequalities
+
+$$
+4123105625617660549^2<17\cdot10^{36}
+<4123105625617660550^2
+\tag{2.10}
+$$
+
+give rational endpoints $r_-,r_+$ with denominator $10^{18}$. Define
+
+$$
+\operatorname{lb}(a+br)=
+\begin{cases}a+br_-,&b\geq0,\\a+br_+,&b<0,\end{cases}
+\qquad
+\operatorname{ub}(x)=-\operatorname{lb}(-x).
+\tag{2.11}
+$$
+
+All interval endpoints below are rational. Interval sums and differences
+use endpoint arithmetic; the product of $[a,b]$ and $[c,d]$ has endpoints
+$\min(ac,ad,bc,bd)$ and $\max(ac,ad,bc,bd)$. In particular, symmetric
+determinants are evaluated by
+
+$$
+\det\begin{pmatrix}x&u\\u&y\end{pmatrix}=xy-u^2,\qquad
+\det\begin{pmatrix}x&u&v\\u&y&w\\v&w&z\end{pmatrix}
+=xyz+2uvw-xw^2-yv^2-zu^2.
+\tag{2.12}
+$$
+
+Intervals in (2.12) may repeat an uncertain entry independently; this
+only enlarges the enclosing interval. These rules and the integer tables
+below specify finite certificates, including their rounding directions.
+

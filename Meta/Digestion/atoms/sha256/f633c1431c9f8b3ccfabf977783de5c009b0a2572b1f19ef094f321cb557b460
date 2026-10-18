@@ -1,0 +1,93 @@
+## 26. 固定秩素因子支撑的计数界
+
+**定义 A-26.1（固定支撑的秩族）。** 固定非空有限素数集 $S$，记 $s=|S|$，并令
+
+```math
+\mathcal H_S=\left\{\prod_{r\in S}r^{e_r}:e_r\in\mathbb Z_{\ge0}\right\},
+\qquad
+N_S(x)=\#\{p\le x:p\text{ 为素数且 }z(p)\in\mathcal H_S\}.
+```
+
+等价地，$N_S(x)$ 要求 $\operatorname{supp}z(p)\subseteq S$；$1\in\mathcal H_S$。以下 $\log$ 为自然对数，$O_S$ 的常数只依赖固定的 $S$。
+
+**定理 A-26.2（固定秩支撑的平方根计数界；`repo-derived`）。** 当 $x\to\infty$ 时，
+
+```math
+N_S(x)=O_S\!\left(\sqrt{x}(\log x)^{s-1}\right).
+```
+
+因此此素数集合在全部素数中具有相对自然密度零，即 $N_S(x)/\pi(x)\to0$。
+
+**证明。** 先估计本定义中的指数格点。固定 $r_0\in S$。若 $d\in\mathcal H_S\cap(t,2t]$，$t\ge1$，则除 $r_0$ 外每个指数均有 $O_S(1+\log t)$ 种选择。固定这些指数后，$e_{r_0}\log r_0$ 落在长度 $\log2$ 的区间内，故剩余指数只有有界多个选择。因此
+
+```math
+\#(\mathcal H_S\cap(t,2t])
+=O_S((1+\log t)^{s-1}).\tag{26.1}
+```
+
+该论证也包括 $s=1$：此时不需要预先选择任何指数。按二进区间求和，得到对 $y\ge2$ 的三个界
+
+```math
+\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}),\tag{26.2}
+```
+
+```math
+\sum_{\substack{d>y\\d\in\mathcal H_S}}\frac1d
+=O_S\!\left(\frac{(1+\log y)^{s-1}}y\right),\tag{26.3}
+```
+
+```math
+\#(\mathcal H_S\cap[1,y])=O_S((1+\log y)^s).\tag{26.4}
+```
+
+为明确求和方向，(26.2) 在 $(y/2^{j+1},y/2^j]$ 上用 $d\le y/2^j$ 与 (26.1)，再单独计入 $d=1$；所得几何级数收敛。(26.3) 在 $(2^jy,2^{j+1}y]$ 上用 $1/d\le2^{-j}/y$；其总和由
+
+```math
+\frac{(1+\log y)^{s-1}}y
+\sum_{j\ge0}2^{-j}(1+j\log2)^{s-1}
+```
+
+的常数倍控制。(26.4) 也可由每个指数至多 $\log y/\log r$ 直接得到。
+
+现在固定 $2\le y\le x$，按 $z(p)\le y$ 和 $z(p)>y$ 分开计数。小秩部分中的每个不同素数都整除正整数
+
+```math
+P_S(y)=\prod_{\substack{d\le y\\d\in\mathcal H_S}}F_d.
+```
+
+因为 $F_d\le2^d$（由递推归纳即得），一个有 $k$ 个不同素因子的正整数至少为 $2^k$，所以小秩素数的数目不超过
+
+```math
+\frac{\log P_S(y)}{\log2}
+\le\sum_{\substack{d\le y\\d\in\mathcal H_S}}d
+=O_S(y(1+\log y)^{s-1}).\tag{26.5}
+```
+
+若乘积等于 $1$，其素因子集合为空，同一不等式仍成立。
+
+大秩部分先单独计入至多两个例外素数 $2,5$。对其余素数，A-8.2 的经典整除关系给出
+
+```math
+d=z(p)\mid p-(p/5),\qquad d\le x+1,\qquad p\equiv1\text{ 或 }-1\pmod d.
+```
+
+每个固定 $d$ 的这两个整数剩余类在 $[1,x]$ 内至多有 $2x/d+2$ 个元素；以整数总数上界素数数目，利用 (26.3)–(26.4)，大秩部分至多为
+
+```math
+2+\sum_{\substack{y<d\le x+1\\d\in\mathcal H_S}}
+\left(\frac{2x}{d}+2\right)
+=O_S\!\left(\frac{x}{y}(1+\log y)^{s-1}+(1+\log x)^s\right).\tag{26.6}
+```
+
+合并 (26.5)–(26.6)，取 $y=\sqrt x$，并用 $\log x=O(\sqrt x)$，即得所述计数界。这里没有把不同秩的可达性当作共同可达，也没有使用等差数列素数渐近。
+
+最后引用经典的 $\pi(x)>x/\log x$（$x\ge17$），来源为 Rosser–Schoenfeld，*Approximate formulas for some functions of prime numbers*，Corollary 1、式 (3.5)，见[文献注](https://github.com/the-omega-institute/trureturing/blob/53e40fe0314f4d531ab10a37f3e30b859034b2cb/Library/Arith/rosser1962approximate.md)。于是
+
+```math
+0\le\frac{N_S(x)}{\pi(x)}
+=O_S\!\left(\frac{(\log x)^s}{\sqrt x}\right)\longrightarrow0.
+```
+
+该经典素数下界仅用于相对密度的最后一步；平方根计数界由上述秩分桶与固定支撑指数格点估计给出。证毕。
+

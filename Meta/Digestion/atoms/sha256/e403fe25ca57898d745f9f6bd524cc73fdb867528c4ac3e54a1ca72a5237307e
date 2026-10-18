@@ -1,0 +1,18 @@
+**Corollary 8.1 (a usable weighted collision test).** For a coordinate
+set $B$, let $L_j(B)$ be the least $C_F$ among its $j$-element subsets,
+with $L_0(B)=0$ and $L_j(B)=+\infty$ when none exists. For each allowed
+$\omega$ in Theorem 7.1, necessarily
+
+$$
+L_\lambda(Y_0\cup U_0)+L_v(X_1\cup U_1)
+       +\min_{i\in D_I}c_i
+\le C_U+\min(C_X,C_Y).
+\tag{WTF.28}
+$$
+
+Proof. Lower-bound each actual certificate charge in (WTF.24) by its
+defining minimum, and use $|a_*|\ge c_i$ at the first differing word.
+Thus a single violating allowed $\omega$ excludes that actual collision.
+The actual word in (WTF.24) can be a longer selected child; its extra
+letter is never free. $\square$
+

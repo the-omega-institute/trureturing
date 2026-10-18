@@ -1,0 +1,39 @@
+**Definition 8.1 (Current source task).** Fix the means of Definition 2.1,
+one initial height $\kappa_0\in J_b:=(\kappa_-,\kappa_+)$, and arbitrary
+fixed preparation phases $\theta^{\rm in}$. Every history starts from this
+same preparation. Use exactly Definition 3.1 controls on finite compact
+intervals, with finite phase variation and full support throughout. Query
+the current ray at any terminal time, without imposing the base/phase
+closing condition at that time. This is a new prefix query on the existing
+controls; the endpoint query in §§3–7 continues to require its original
+closing condition.
+
+Write the real phase increment and real control increment as
+
+$$
+h(t)=\theta(t)-\theta^{\rm in},\qquad
+L(t)=\chi(t)-\chi(0).
+\tag{8.1}
+$$
+
+Choose the initial relation lift consistently with
+$d^{\mathsf T}\theta^{\rm in}$; only increments will matter. Then
+$h_2=0$ and $d^{\mathsf T}h=L$ on every admissible history. A common
+constant gauge change makes the middle amplitude positive, with initial
+relative phases $\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$ and
+$\eta_2=0$. It does not set any of the other preparation phases to zero.
+
+Use the walls $E_-:X+Y=r$ and $E_+:X=Y$ and the grouped space $U_b$
+from the proof of Theorem 3.2. Thus $h_2=0$, with the additional increment
+equalities $h_0=h_{13}$ on $E_-$ and $h_1=h_3$ on $E_+$. Let
+
+$$
+g=4-\mathbf1_{E_-}-\mathbf1_{E_+},\qquad
+\Lambda_b=U_b\cap 2\pi\mathbb Z^5.
+\tag{8.2}
+$$
+
+The equalities concern increments, not equality of arbitrary initial
+phases. The current source, a history producing it, and the controller's
+real lifted record are separate objects in this task.
+

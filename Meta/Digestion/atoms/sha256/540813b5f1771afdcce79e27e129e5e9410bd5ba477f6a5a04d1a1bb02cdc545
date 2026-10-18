@@ -1,0 +1,41 @@
+**Definition 4.2 (compatible-code template).** For any specified Boolean
+function $f$ given by a lawful finite computation on acquired branch
+images, prescribe on the entire domain
+
+$$
+\sigma_f(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+f(x_a),&u\in Z_{b_3},\\
+0,&u\text{ is in any other zero profile}.
+\end{cases}
+\tag{PCA.12}
+$$
+
+Here “other zero profile” includes every $Z_d$ with $d\ne b_3$ and
+$Z_*$. In $Z_{b_3}$ the value $x_a$ is a branch image, different from
+the beta at $b_3$. Both code values are attained already on the positive
+profiles. All references to profile membership in (PCA.12) specify the
+function on acquired data; they do not grant a membership query.
+
+**Supplier application 4.3 (one fixed eight-state reader).** Apply
+[NBP, Theorem 15.5][NBP] with its parameters
+
+$$
+z=0,\quad (\varepsilon_1,\varepsilon_2,\varepsilon_3,
+\varepsilon_4)=(0,0,1,1),\quad
+S_{15}=\{1,2\},\quad T_{15}=\{3,4\},\quad W_{15}\subseteq\{3\}.
+\tag{PCA.13}
+$$
+
+Its sufficiency construction with the distinguished test $3$ supplies
+one common reader for every function in (PCA.12), including variation
+within the entire $Z_{b_3}$. Fix this reader and its two different,
+recoverable complete entry states $e_0=\iota(0),e_1=\iota(1)$ once and
+for all. It has $K=8$, at most two actual calls and literal sum at most
+six: its representative root addresses have length three. These are
+credited existing reader results, not new compatibility proofs or new
+resource gains in this volume. Every preparer below must latch exactly
+$e_{\sigma_f(u)}$, with no reselection of those entries or reader latches.
+

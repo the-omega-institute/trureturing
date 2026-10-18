@@ -1,0 +1,47 @@
+**Theorem 28.4 (Separate risks, finite mean and fully paid band order).** The uncapped rounded rule has each full-family error at most $\rho/2$, terminates almost surely, and has finite paid mean at every fixed parameter. On the supplied band its mean is at most $\mathcal B$. The capped rule satisfies
+
+$$
+\begin{gathered}
+\sup_{q\in I_\varepsilon}\mathsf P_{0,q}(D=1)\le\rho\le\alpha,
+\qquad
+\sup_{q'\in I_\varepsilon}\mathsf P_{1,q'}(D=0)\le\rho\le\alpha,\\
+L_\varepsilon=\min\{L_\infty,W\}\le W,\qquad
+c_{H,\alpha}\varepsilon^{-3}
+\le\mathbb E_{i,q}L_\varepsilon\le\mathcal B
+\quad(i=0,1,\ q\in I_\varepsilon)
+\end{gathered}
+\tag{28.5}
+$$
+
+for all sufficiently small rational $\varepsilon$, where $c_{H,\alpha}>0$. The upper constants have the dependencies in Definition 28.1.
+
+Proof. Reuse the pair-time conditional cancellation and Ville argument of Theorem 22.3: $e^{S_n}$ is a mean-one nonnegative martingale under each $\mathsf P_{0,q}$, and $e^{-S_n}$ under each $\mathsf P_{1,q'}$. These are separate assertions under the two laws' own pair-sum distributions, not an unconditional likelihood ratio between equal nuisance parameters. Lemma 28.3 puts each erroneous rounded crossing inside the corresponding true-product crossing of height $2^be^{-\kappa}$. Either error is therefore at most
+
+$$
+e^\kappa2^{-b}\le e^{1/32}\rho/4<\rho/2.
+\tag{28.6}
+$$
+
+For the stopped-mean argument set $Z_n=-S_n$ in family zero and $Z_n=+S_n$ in family one. The supplier (22.2) gives $\mathbb E_{0,q}\log\ell=-\mathfrak d_0(q)$ and $\mathbb E_{1,q'}\log\ell=+\mathfrak d_1(q')$. Thus the directed increments have positive mean $\mathfrak d_i$ and absolute size at most $2\delta_9$. Before exit, $|S_n|<b\log2+\kappa<h+2$; the last increment adds at most $2\delta_9$. Consequently $|Z_{N\wedge n}|\le R$ pathwise. The inclusion event $\{N\ge j\}$ is determined before pair $j$. Independence of that pair, followed only by a finite sum, yields
+
+$$
+\mathbb E_{i,q}Z_{N\wedge n}
+=\mathfrak d_i(q)\sum_{j=1}^n\mathsf P_{i,q}(N\ge j)
+=\mathfrak d_i(q)\mathbb E_{i,q}(N\wedge n)\le R.
+\tag{28.7}
+$$
+
+Monotone convergence proves $\mathbb E N\le R/\mathfrak d_i(q)<\infty$, and hence $N<\infty$ almost surely. Every acquired gap and the stationary initial interval are finite almost surely by the source supplier. Reuse the predictable acquisition identity (22.24), with this rule's predictable inclusion events: a pair duration need not be independent of its own score. It gives
+
+$$
+\begin{aligned}
+L_\infty&=1+\tau+\sum_{j=1}^N(K_{2j-1}+K_{2j}+2),\\
+\mathbb E_{i,q}L_\infty
+&=1+\beta_i(q)+2\mu_i(q)\mathbb E_{i,q}N
+\le\mathcal B\quad(q\in I_\varepsilon).
+\end{aligned}
+\tag{28.8}
+$$
+
+This counts the stationary first interval and every complete acquired pair. Couple the capped and uncapped rules on the same history. They agree through the deadline, including completion of any pair computation on its last read. Their decisions can differ only when $L_\infty>W$, whose probability is at most $\mathcal B/W\le\rho/2$. Adding (28.6) proves the separate capped risks. Their paid counts obey the minimum identity in (28.5), also on histories timing out in the initial wait or a partial pair. The controller is consequently in the band class of owner Corollary 22.11; its uniform per-family, per-parameter mean lower bound applies directly at risk $\alpha$. No fixed-machine eleventh-order bound is used across band retuning. $\square$
+

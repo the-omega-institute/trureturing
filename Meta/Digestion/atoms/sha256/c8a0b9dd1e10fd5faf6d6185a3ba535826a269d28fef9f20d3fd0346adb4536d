@@ -1,0 +1,28 @@
+**Proposition 4.3 (complete comparisons, domains and labels).** In Theorem
+4.1 condition 2 can be tested on a selected loop family $\Gamma$ if a
+domain-aware generation proof is supplied: every closed actual word must,
+at each point of its domain, be a legal finite composite of conjugates of
+loops in $\Gamma$ and their inverses, and partial identity restrictions.
+Each conjugation and each intermediate value must be in its actual domain.
+Then identity of all selected loops on their domains implies condition 2.
+An arbitrary selected family has no such implication.
+
+For strict endpoint-only equality of full routes an additional comparison
+requirement is necessary: every compared parallel pair must have equal
+actual domains, equal complete transported labels and equal successors.
+It suffices to check a family generating all those pairs by strict
+compositional relations. Flat partial holonomy alone proves only equality
+of successors where both routes are defined.
+
+**Proof.** A conjugate of a partial identity is identity wherever the
+conjugation is defined; a legal finite composite of such maps is identity
+on its domain. The assumed generation gives the first implication. For
+parallel paths $p,q$ both defined at $x$, the actual closed word $p q^{-1}$
+starting at $x$ is not always defined: $H_px$ might not be in the image of
+$q$. Instead, the reverse of $p$ followed by $q$ is defined at $H_px$ and
+returns to the target chart with output $H_qx$. Flatness there yields
+$H_px=H_qx$. This establishes equality on the common domain without an
+unsupported domain inclusion. Equal domains and full labels still require
+the additional strict comparison data. Sufficiency of a complete generating
+comparison family is Process Geometry Theorem 1.4. $\square$
+

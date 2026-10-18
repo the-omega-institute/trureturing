@@ -1,0 +1,60 @@
+### 63.1 四维概率场与三维固定子流形
+
+五态概率单纯形内点
+
+\[
+\Delta^\circ_5
+=
+\left\{
+p_s>0:\sum_{s\in\Sigma}p_s=1
+\right\}
+\]
+
+的仿射维数是 \(4\)。Fisher 度量平方根嵌入
+
+\[
+h(p)=(2\sqrt{p_s})_{s\in\Sigma}
+\]
+
+把它等距嵌入半径 \(2\) 的正球面片 \(S^4_+(2)\)，因为
+
+\[
+\sum_sh_s^2=4,
+\qquad
+\langle dh_p(a),dh_p(b)\rangle
+=
+\sum_s\frac{a_sb_s}{p_s}
+=
+g_p^F(a,b).
+\tag{63.1}
+\]
+
+令 \(\tau\) 交换 \(2\) 与 \(5\)，固定 \(0,3,25\)。则
+
+\[
+\operatorname{Fix}(\tau)
+=
+\{p\in\Delta^\circ_5:p_2=p_5\}
+\]
+
+是三维子流形。反对称法向坐标可以取
+
+\[
+\eta(p)=\frac12\log\frac{p_2}{p_5},
+\qquad
+\eta(\tau p)=-\eta(p).
+\tag{63.2}
+\]
+
+所以这里存在一个严格的
+
+\[
+4\text{ 维场}
+\longrightarrow
+3\text{ 维固定/可见流形}
++
+1\text{ 维镜像法向缺陷}
+\]
+
+分解。当前 FIB 投影核 \(d\) 是镜像偶的隐藏纤维，不能直接当作这里的奇法向 \(\eta\)。后者是一个新的功能方程候选坐标。
+

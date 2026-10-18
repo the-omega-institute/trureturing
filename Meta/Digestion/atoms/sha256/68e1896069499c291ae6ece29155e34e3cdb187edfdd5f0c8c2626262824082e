@@ -1,0 +1,48 @@
+#### Möbius seam 展开
+
+对于任意状态函数
+
+```math
+f:\Sigma_n\to\mathbb R,
+```
+
+定义其 $A$-阶混合差分
+
+```math
+\Delta_Af
+=
+\sum_{B\subseteq A}
+(-1)^{|A|-|B|}
+f(s_B).
+```
+
+其中 $A$ 必须是合法集合，因此 $A$ 的所有子集也都合法。
+
+则有反演公式
+
+```math
+f(s_I)
+=
+\sum_{A\subseteq I}\Delta_Af.
+```
+
+这说明任意局部观测都可以分解成：
+
+- 零阶部分：$\Delta_{\varnothing}f$；
+- 一阶部分：$\Delta_{\{i\}}f$；
+- 二阶 seam：$\Delta_{\{i,j\}}f$；
+- 三阶 seam：$\Delta_{\{i,j,k\}}f$；
+- 更高阶 seam。
+
+在三态窗口中，唯一非平凡的高阶项是
+
+```math
+\Delta_{\{1,3\}}f
+=
+f(s_{13})-f(s_1)-f(s_3)+f(s_{\varnothing}).
+```
+
+这正是先前出现的四角混合量。
+
+---
+

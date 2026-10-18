@@ -1,0 +1,42 @@
+**实例 84.6（The $d=3$ original-reader full target）。** Here
+
+$$
+(h,m,k,T,g)=(6,62,64,65,1),\qquad
+(a,\nu,\omega)=(000001,000010,000011).
+\tag{84.28}
+$$
+
+There are nine low labels per component, 63 joined low classes on 65 actual phases, and the two repeated codes are $000010$ at phases $1,3$ and $000011$ at phases $63,64$. The latter is the fresh shared label $C$. The omission pairs at slots $1,\ldots,5$ are
+
+$$
+\{60,61\},\quad\{57,58\},\quad\{54,55\},\quad
+\{51,52\},\quad\{48,49\}.
+\tag{84.29}
+$$
+
+Their codes, in the same order within each pair, are respectively
+
+$$
+(001110,101110),\ (000111,100111),\ (010011,110011),\
+(011001,111001),\ (011100,111100).
+\tag{84.30}
+$$
+
+Phases $0,1,2,3$ have codes $100000,000010,110000,000010$. Assign the remaining allowed vectors to the remaining phases by Construction 84.4. This fixes the whole target: the first three digits select $A_i$, the last three select $D_\ell$, except that phases 63 and 64 have $C$ on both fibres; INITIAL tails 62 and 63 have $R$ at every phase, and all other INITIAL tails use these low tables.
+
+At actual starts $0,62,59,56,53,50\pmod{65}$, the prescribed inverse gives the following one stream:
+
+$$
+\begin{aligned}
+B_0&=11000000000000000000000000001010101010101010101001001001001001,\\
+B_1&=11111000000000000010101010101011111111111111010101010101010111,\\
+B_2&=10100000000000101010111111110101011111110101010000000101010111,\\
+B_3&=10101011111111010000010111101011110100001011111010001010010000,\\
+B_4&=10110101010110011110001000111000100100100100011101110011101111,\\
+B_5&=01010101000010111111100011001001110011101101100111001101000110.
+\end{aligned}
+\tag{84.31}
+$$
+
+Each word has exactly 62 bits. The consecutive terminal/leading run pairs are $(1,5),(3,1),(3,1),(0,1),(4,0)$, with sums $6,4,4,1,4$, all strictly below 64. Each common charged-phase intersection has at least sixteen phases. The own-endpoint decoder is (84.18) with the preceding table. The exact GLOBAL fee is six blocks and 372 emitted bits; the supported adaptive interval is four to six blocks and 248 to 372 bits. High sources emit and pay all 62 bits of the rejecting root; initial bottom emits none.
+

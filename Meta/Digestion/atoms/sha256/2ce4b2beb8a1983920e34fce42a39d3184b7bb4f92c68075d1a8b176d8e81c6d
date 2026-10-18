@@ -1,0 +1,56 @@
+**Proposition 3.3 (exact priced application of bounded synthesis).**
+The sentence (NRF.16) is effectively decidable and extracts a literal
+table with at most $K$ complete states when true. Its finite outer
+disjunction is equivalent to the existence of a table in
+$\mathcal C_K$ whose runs have at most $T$ nonhalt actions and
+satisfy the specified path cost inequalities on every source.
+Unvisited installed words remain unbounded.
+
+Proof. Reuse the shared-instruction and shared-whole-halt path
+construction in [CAR, Theorem 12.1][CAR], with fixed horizon $T$.
+The following identifies the additional price predicate and both
+operational directions.
+
+For fixed paths, (NRF.14) is Presburger by (NRF.9).
+Each $m_{\pi,e}$ is a numeral. Length is constant for a short
+descriptor and $H+l_e$ for a long one, so the third coordinate
+of $v_\pi$ and every prescribed $\Psi_\pi$ are linear. The source
+dimensions and all chart and path disjunctions are finite.
+Consequently (NRF.16), including the cross-source shared-halt
+condition, is first-order Presburger over nonnegative integers.
+[Ginsburg--Spanier, Theorem 1.2][GS] decides its truth or falsity;
+arbitrary first-order quantifier alternation is allowed.
+
+A successful original candidate with the claimed horizon supplies
+one enumerated graph by relabeling states only. Give each read
+state the descriptor of its actual word. This keeps every successor
+and every word's responses and length on all sources. Its actual
+trace on $\Theta_\eta(\mathbf n)$ satisfies $A_{\eta,\pi}$.
+Conversely, for this fixed descriptor valuation every satisfied
+$A_{\eta,\pi}$ describes the unique actual trace: induct on
+actions using (NRF.9) at $N+a_{\pi,i}$. No earlier halt is crossed.
+Its cost is exactly $v_\pi$. This proves totality and all cost
+clauses. Two sources ending at the same installed halt have the
+same whole output, proving the shared clause.
+
+For a true sentence, extract a common natural descriptor tuple.
+This can be done by enumerating tuples and deciding each remaining
+formula after truth of the existential sentence has been decided.
+Positive existence guarantees this extraction terminates; a
+negative answer never depends on that enumeration. Realize one
+literal word per read state. For each halt $h$, decide whether
+some $S_{\eta,h}$ is nonempty. If it is, extract an admitted tuple,
+expand its actual finite source and compute its entire original
+$Q$ row. Install that row at $h$. The shared clause makes it
+correct for every source and every path reaching $h$. For an
+unreachable halt use the row of any source in the nonempty $D$.
+
+Every original source has its tuple by (NRF.7); totality supplies
+a terminal compatible path, and action induction identifies it
+with the actual run of the installed graph. Its cost inequalities
+and whole output follow from (NRF.15). No witness, path position,
+epoch or chart becomes online control. Literal installation is
+finite and separately paid. Only reachable terminal paths impose
+prices, so an instruction never visited by any source has no
+induced length bound. $\square$
+

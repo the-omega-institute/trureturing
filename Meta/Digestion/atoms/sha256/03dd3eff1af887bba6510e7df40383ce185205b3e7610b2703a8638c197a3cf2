@@ -1,0 +1,28 @@
+**Definition 56.1 (unchanged INITIAL contract and contact parameter).** This chapter uses exactly original Boundary Definitions54.1,45.1,46.1,51.1, with
+
+$$
+E=\operatorname{Im}\mathbb H,\qquad W=E\oplus\mathbb H,\qquad
+\mathcal D_2=E\times
+\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{56.1}
+$$
+
+The initial $a$ is independent of $b$, arbitrary and unbounded, including zero. Both radius caps are closed and unlabelled. The sole overwritten register has only the original exact updates
+$A_c(a',b')=(c\times a',b'c)$ for pure imaginary $|c|\le1$, and
+$A_d(a',b')=(\operatorname{Im}b',-a')$.
+Every nondestructive Read returns $a'+e$ with $|e|\le\delta$; the closed error balls may be jointly adversarial, correlated and history dependent. Repeated Reads confer no averaging guarantee.
+The controller has common source-independent initialization, is deterministic and causal on actual finite prefixes, and retains every actual Read, ordered action identity and Stop. Every original finite or natural-number-indexed countable complete history remains in scope, with its original $W$-valued estimate and no event after an infinite prefix. The target is the full INITIAL $(a,b)$ with its Euclidean distance, not a later state, a hidden coordinate alone or a radius label. There is no reset, copy, hidden tag, new archive or observation port, limit Read or native realization privilege.
+
+Fix $0<\delta\le1/100$. Keep $K,t_R,S_R,B,\rho_-,\rho_+$ exactly as defined in original (54.2); in particular
+$B(\rho,\delta)=\sqrt{2\delta^2+S_{25}(\rho,\delta)^2}$,
+$\rho_-=\delta/12$ and $\rho_+=\delta/12+\delta^2/100$.
+The new public parameter is the contact root
+
+$$
+g(\rho):=24\rho-7(1-K(\rho)),\qquad
+g(\rho_*)=2\delta,\qquad \rho_-<\rho_*<\rho_+.
+\tag{56.2}
+$$
+
+The risks $\mathcal E_\pi(\delta),R_N(\delta),R_\infty(\delta)$ and policy classes are the unchanged original (46.3). The budget counts only original destructive updates; Reads, control descriptions, arithmetic, records and physical costs are separate resources.
+

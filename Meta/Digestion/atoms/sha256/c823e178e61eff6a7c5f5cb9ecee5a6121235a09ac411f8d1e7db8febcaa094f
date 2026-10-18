@@ -1,0 +1,28 @@
+#### 467.4 倾斜测度先例与原算术尾的数学边界
+
+上述通用恒等式属于经典相对熵与变换测度理论。当前钉版 Mathlib 的 [`Measure.Tilted`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Tilted.lean) 定义
+
+$$
+\frac{d(P^{\mathrm{tilt},g})}{dP}(v)
+=\frac{e^{g(v)}}{\int e^g\,dP}.
+$$
+
+其 [`LogLikelihoodRatio`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/LogLikelihoodRatio.lean) 已有 `llr_tilted_right`、`integrable_llr_tilted_right` 和 `integral_llr_tilted_right`：在原概率测度 $P$ 下，取基测度同为 $P$，便在 $P$ 几乎处处意义下及完整积分意义下得到
+
+$$
+\log\frac{dP}{dP^{\mathrm{tilt},g}}
+=-g+\log\int e^g\,dP,
+\qquad
+D(P\Vert P^{\mathrm{tilt},g})
+=-\int g\,dP+\log\int e^g\,dP,
+\tag{RSK.14}
+$$
+
+其输入是 $g$ 与 $e^g$ 的相应完整可积性。这里取实际 $P_n=p_n(v)dv$、$g(v)=\log v$：正轴上 $e^g=v$，且 $\int e^g\,dP_n=m_n/r_n$，所以其倾斜测度准确为 $Q_n=q_n(v)dv$。§465 的完整对数矩与一阶矩已给出所需纸面输入。
+
+Mathlib 的 [`KullbackLeibler.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/Basic.lean) 使用扩展非负实数值的 `klDiv`；有限测度的公式另有总质量修正，概率测度时修正为零。RSK.6 给出实际对数似然比的完整可积性，故上述实际概率测度的相对熵有限，并且 $Q_n=P_n^{\mathrm{tilt},\log}$。
+
+有限分类也有现成先例：[`KullbackLeibler.ChainRule`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 的 `klDiv_compProd_left` 给共同条件核下的相对熵不变，`klDiv_compProd_eq_add` 给完整链律。上述经典链式公式在这里的对象为 RSK.3 的原残差归一化与 RSK.8 的实际正分解；RSK.10–RSK.12 进一步把同一原 $A-L_n$ 的分类精确写成真实相邻层及实际五分类的收益。
+
+上述概率构造依赖真实非负密度和准确正预算。算术 Möbius 原子的系数有符号，不能直接归一成这里的概率密度；改为绝对值也会改变原有符号问题。若要控制原 Robin 尾，仍需保持同一来源、同一截止及完整端点的算术运输定理。§466 的固定尺度尾合同和共同临界精度要求继续承担各自的算术义务。RSK.4–RSK.13 解释了实际解析储备怎样随递归与分类变化；原无限算术尾的最终符号仍是独立未决问题。
+

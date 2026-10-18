@@ -1,0 +1,10 @@
+**Theorem 41.1 (Exact legal-word relation and dimension savings).** The stationary law just constructed assigns positive probability to every finite binary word with no adjacent ones, and zero to every word containing adjacent ones. On this actual renewal family the sharp dimension comparison, with the finite-CP growth dependency of Theorem 40.1, is
+
+$$
+h_{\min}=n+1,\qquad D_{\min}=\lceil n/2\rceil+1,\qquad h_{\min}-D_{\min}=\lfloor n/2\rfloor. \tag{41.1}
+$$
+
+Thus $n=1$ has equal classical and quantum dimensions two, while every $n\ge2$ has a strict quantum dimension saving for the same complete stationary output. The minimum zero Kraus rank is separately the even/odd value of Theorem 40.2; the tick in each quantum upper construction has one rank-one Kraus operator.
+
+Proof. An internal zero gap of length zero contributes $\gamma_0=0$ in (39.2), excluding adjacent ones. Every legal word containing a one has positive boundary tails $S_A,S_B$ and positive internal gap factors; every all-zero word has $R_N>0$ because arbitrarily long gaps have positive probability. These are exactly the path-independent-set words of Convention 1.3, with no restriction on the unobserved outside symbols. For a length-$N$ window their number $b_N$ satisfies $b_N=b_{N-1}+b_{N-2}$, $b_0=1,b_1=2$: a word begins with zero followed by a legal $(N-1)$-word, or with one-zero followed by a legal $(N-2)$-word. Hence $b_N=F_{N+2}$ under $F_0=0,F_1=1$. This proves the Fibonacci legal-language relation. Equation (41.1) combines the achieved upper instruments with Theorems 38.1 and 40.1, and elementary even/odd arithmetic gives the saving. $\square$
+

@@ -1,0 +1,18 @@
+### Proposition 4.2. A three-body observable resolves the fiber
+
+With epsilon_{xyz}=1 and Pauli operators in the fixed bases, define
+
+$$K_{ABC}=\sum_{a,b,c\in\{x,y,z\}}\epsilon_{abc}\,\sigma_A^a\sigma_B^b\sigma_C^c\otimes I_D.$$
+
+The exact identities are
+
+$$K_{ABC}=2i(P_{AB}P_{BC}-P_{BC}P_{AB}),\qquad K_{ABC}^3=12K_{ABC},$$
+
+$$K_{ABC}H_+=-2\sqrt3H_+,\qquad K_{ABC}H_-=2\sqrt3H_-.$$
+
+Thus C_{ABC}=-K_{ABC}/(2sqrt(3)) has deterministic outcomes +1 and -1 on the two endpoints, and Tr(sigma C_{ABC})=2t-1 on the full fiber. All observable expectations supported on at most two qubits agree between the endpoints; this calibrated three-body observable distinguishes them perfectly.
+
+The Pauli identity follows from P_{XY}=(I+sigma_X dot sigma_Y)/2 and [sigma_a,sigma_b]=2i epsilon_{abc}sigma_c. The cubic follows by setting V=P_{AB}P_{BC}, using V^3=I and V^dagger=V^2. On (e_0,e_1), K is [[0,2sqrt(3)i],[-2sqrt(3)i,0]], giving the displayed eigenvectors.
+
+This is an expectation/tomography statement. It does not exclude sequential protocols whose complete recorded outcomes reveal three-body correlations, and it is not a quantum-error-correcting-code claim for the entire two-dimensional span. K is a calibrated observable, whereas chi in (3.2) is a local-basis invariant; they serve different roles.
+

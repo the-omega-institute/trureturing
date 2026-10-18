@@ -1,0 +1,30 @@
+**Definition 3.1 (normalized owner kernels).** For a nonempty-domain
+network choose, independently for each block, a probability kernel
+
+$$
+q_i:\prod_{c\in O_i}T_c\longrightarrow[0,1],\qquad
+\sum_aq_i(a)=1,
+\tag{SCP.8}
+$$
+
+where the empty owner product has its single empty tuple. The uniform
+choice is strictly positive and satisfies $q_i(a)\ge4^{-m_d}$. For
+$\varepsilon_i\ge0$ put
+
+$$
+\Phi_i^{\mathrm{ker},\varepsilon_i}(s)=\Phi_i^w(s)+\varepsilon_iq_i(s|_{O_i}),\qquad
+Z^{\mathrm{ker},\boldsymbol\varepsilon}_{\mathcal N}
+=\sum_s\prod_i\Phi_i^{\mathrm{ker},\varepsilon_i}(s).
+\tag{SCP.9}
+$$
+
+This keeps exactly the old seeds, scopes, owners, and block weights.
+For $\varepsilon_i>0$, the softened local table is positive at $s$
+if and only if $\Phi_i^w(s)>0$ or $q_i(s|_{O_i})>0$. Hence full
+support of every $q_i$ and positivity of every $\varepsilon_i$ suffice
+for strictly positive local tables on the entire nonempty seed domain.
+In particular, uniform kernels and a common $\varepsilon>0$ give
+$\Phi_i^{\mathrm{ker},\varepsilon}(s)\ge\varepsilon4^{-m_d}$.
+Normalization alone does not ensure this support condition.
+Empty-domain networks still have value zero.
+

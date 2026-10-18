@@ -1,0 +1,17 @@
+**Definition 11.4 (group-permutation cover).** For $m\ge1$, choose
+one permutation $\sigma_e\in\operatorname{Sym}([m])$ independently
+for every $e\in E$. The cover $\mathcal N^\sigma$ has blocks $(i,k)$,
+$k\in[m]$. Block $(i,k)$ owns a copy $c_k$ of each $c\in O_i$ at
+the copied actual owner port. Its own-seed references use these
+copies. If $e=(j,i)$, all occurrences of all seeds in $B_{ji}$ at
+$(i,k)$ use their copies owned together at $(j,\sigma_e(k))$.
+Every copied table and constant is unchanged, and block $(i,k)$
+receives the one whole weight $w_i$.
+
+Distinct copied seeds still have distinct actual owner ports and obey
+(COK.7). Hence [RRN, Theorem 5.2][RRNbase] translates every such
+cover back to a complete native template on $nm$ actual blocks,
+with one lift per actual tuple and exactly its original product
+weight. Here a cover describes a family of possible tuples; it is
+not an operation copying an unknown physical source.
+

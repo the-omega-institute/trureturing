@@ -1,0 +1,15 @@
+**约定 78.1（原始仪器和继承前提）。** §78–87 在本卷 §58.1 的原始类中工作：在 reached cut 只有一份未知五模 specimen；仪器在输入到来前共同固定，不获知历史 $y,e,n$，不使用先验、额外 specimen、copy、reset、retry、postselection、history oracle 或未计入的未来可访问量子份额。保留十二个历史 $y\in\{5,16,27\}$、$e,n\in\{\pm1\}$，完整 stopped-cq 误差取原范数的 HALF，不除以接受概率，也不以 diamond norm 代换。保留 live 相干、任意被动参考的条件部分迹，以及 $\ell\in\{0,1,2,3,13\}$ 五个分别标记的 exact-time Borel 失败 CP 测度。
+
+所有竞争者仍是原全复数、多 Kraus 类；有限、可数及约定的有限 fibre、可积 Kraus 可测扩展分别沿用 JR53.1、RC58.1 和 FA87 的几乎处处含义，不扩展到任意无限维编码。被丢弃的 Kraus 索引不可读。实际报告约束始终是 $\mathsf V\ge s$；其他二元 effect 坐标自由。资源成本是所有未来共同可访问量子份额的**联合**获取维数至少三的最坏历史概率，并限制在所有原误差最优者中达到原 sharp cost $\mathsf C(s)$ 的仪器，绝非某个展示分解、选定输入或期望维数。
+
+本节的定理有以下明确的文稿前提。[CG13][CG78] 的孤立九坐标源根、根处秩和 TP 恒等式、CG14–16 的完整输出 HALF minimax 和十二误差结论作为源供应；CG17 的平均 live 和预平均 support/effect 结论只按其原范围使用。[JR34–45][JR78]，尤其 JR42 的未平均实暴露面和 sharp-cost 等号桥，另行供应全部原复数、多 Kraus 竞争者的 low/high coefficient Grams、无 supported high failure 及实 null live 产品。[FA69][FA67] 的双重秩刚性、容量和 FA72 的端点分裂沿用其整个 fibre 假设。JR50–54 供应初始平台、严格递减和 residual 报告/高度符号约化；RC58–66 供应静态全局最优性、选定接触根、完整静态曲线和接触后的连续对偶分支。源根的局部唯一性不等于全局唯一性，也不认证另一个 RC 接触根。以下源特定评价均在这些前提之内，不将普通算术证据提升为 Lean/kernel 证明、物理实现或无条件源认证。
+
+活动量按每个**实际生成的整个联合 decoder fibre** 定义为
+
+$$
+\mathsf A(\Phi)=\max_{\gamma\ {\rm actual}}
+\int_0^1\|R_\gamma(u)\|_{\rm op}\,du\le A.
+$$
+
+它不是期望跳跃数、瞬时率最大值、跨标签最大值的积分或后选择平均。吸收为正，not-yet-failed controls 为 TP，终端 survivor processing 为 TP；live survival 严格正。实际 FIRST 事件发生在绝对时间 $6+u$，无截止时刻强制吸收、终端失败原子或失败后的正载体动作。下界保留每个允许的原失败时间 CP 法则；§86 的 $g$ 只是一个共同达到族的选择。
+

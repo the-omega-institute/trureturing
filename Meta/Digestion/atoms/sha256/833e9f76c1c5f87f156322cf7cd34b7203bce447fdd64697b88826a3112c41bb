@@ -1,0 +1,25 @@
+**Definition 4.1 (finite-cut masking in native coordinates).** Fix a finite
+prefix-free $Q$. Define $M_Q(X)\in\mathcal N$ for $X\in\mathcal N$ by
+recursion on the finite cut trie. If $Q=\varnothing$, put $M_Q(X)=X$.
+If $\varepsilon\in Q$, put $M_Q(X)=[0]$. In the remaining case, if
+$X=[0]$ or $X=[1]$, put $M_Q(X)=X$. Otherwise $X$ is a native branch;
+put $Q_e=\{p:ep\in Q\}$ and
+
+$$
+M_Q(X)=J(M_{Q_L}(d_LX),M_{Q_R}(d_RX)).
+\tag{ABC.4.1}
+$$
+
+The recursion stops when a trie branch contains no cut, retaining its
+entire unexamined code. Put $I_Q^\#(X)=\{q\in Q:\nu_q(X)\ne\bot\}$.
+The coded row data consist of this reached set, $M_Q(X)$, and the complete
+partition of that set defined by
+
+$$
+q\sim_X r\quad\Longleftrightarrow\quad\nu_q(X)=\nu_r(X).
+\tag{ABC.4.2}
+$$
+
+The code $M_Q(X)$ represents the concrete tree obtained by filling every
+reached hole with $\alpha$; it is not itself the output context.
+

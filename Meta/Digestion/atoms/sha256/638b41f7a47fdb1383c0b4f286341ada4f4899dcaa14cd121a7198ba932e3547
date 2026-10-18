@@ -1,0 +1,9 @@
+**定义 6.1（关系量的内积读法）。** 在一个实内积空间中，对两个向量 $u,v$ 令
+
+$$
+U=\|u\|^2,\quad V=\langle u,v\rangle,\quad W=\|v\|^2,
+\qquad G(u,v)=\begin{pmatrix}U&V\\V&W\end{pmatrix}.
+$$
+
+定义三角形 $(0,u,v)$ 的面积为所张平行四边形面积的一半，即 $\operatorname{Area}(0,u,v)=\tfrac12\sqrt{UW-V^2}$。这是经典 Gram 与 Cauchy–Schwarz 结构在本卷二阶关系中的读法；Cauchy–Schwarz 的文献背景见 [Axler《Linear Algebra Done Right》的仓内条目](../../../Library/Quantum/axler2024innerproduct.md)。平方可积实随机变量构成的 $L^2$ 空间也是这样的内积空间。
+

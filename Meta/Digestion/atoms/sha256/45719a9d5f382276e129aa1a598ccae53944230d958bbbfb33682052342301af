@@ -1,0 +1,56 @@
+**Definition 207.2 (Complete scores and fixed totals).** Fix $L\ge3$.
+For every $w\in\{0,1\}^L\setminus\{1^L\}$, put
+$n(w)=\min\{j:w_j=0\}$ and $\Omega_j=\{w:n(w)=j\}$. A full score
+has independent coefficients $A_w,C_w,P_w\ge0$ and $T\ge0$ at $1^L$.
+At a zero word label $\ell\in\{0,\ldots,L\}$ earns
+
+$$
+g_V(w,\ell)=A_w\mathbf1_{\ell=0}
+ +C_w\mathbf1_{\ell=n(w)}+P_w\mathbf1_{\ell\in\{0,n(w)\}};
+\qquad g_V(1^L,\ell)=T\mathbf1_{\ell=0}.
+\tag{207.4}
+$$
+
+For each schedule, sum rewards inside each cell, maximize over **all**
+labels in that cell, then sum the maxima. $B_N(V)$ maximizes over empty,
+singleton and distinct-pair schedules, the latter with cells
+$00,01,10,11$. $B_O(V)$ uses increasing pairs and cells $0,10,11$.
+Unqueried and earlier labels remain available. With anchor
+$R=(1,2;1,2,0)$ in stopped-cell order, write
+
+$$
+\begin{aligned}
+W_V&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+\Delta_C(V)&=B_C(V)-W_V\ge0\quad(C=N,O),\\
+Q(V)&=(\beta,K),\quad
+\beta_j=\sum_{w\in\Omega_j}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{207.5}
+$$
+
+The input family has $A=0$, arbitrary correct rows, pair support in
+$\Omega_1\cup\Omega_2$ (including early prefix $00$), and $T=t$.
+Set
+
+$$
+\gamma_j=\sum_{\Omega_j}C_w,\quad E=\gamma_1+\gamma_2,\quad
+G=\sum_{j=3}^L\gamma_j,\quad\mu=\max_{j\ge3}\gamma_j,\quad
+S=\sum_wP_w,\quad W=E+S+t.
+\tag{207.6}
+$$
+
+Then $Q=(\gamma,G+W)$. Unless stated otherwise, fixed totals mean each
+individual $\gamma_j$, as well as $S,t$. Write $w(Z)$ for the word
+whose zero set is exactly $Z$. In every construction, unspecified
+coefficients are zero and coincident coefficients are added.
+
+An empty or singleton output function embeds in a distinct-pair $N$
+table by ignoring answers. Reversal permutes cells; repetition gives
+singleton information. Thus bounds for all distinct $N$ pairs cover the
+whole catalog. These information identities do not exempt any actual
+request from the hard count. Every $O$ table is an $N$ function, so
+$B_O\le B_N$. Adding any early $C$ row, early $P$ row or $T$ row
+increases each fixed-table reward by at most its weight and the anchor
+by exactly its weight. Such additions cannot increase either excess.
+

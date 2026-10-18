@@ -1,0 +1,47 @@
+**Example 223.2 (Unrestricted escapes and the infeasible lower point).**
+The exact-$Q$ score supplied by 214.5 is
+
+$$
+\widehat V:\quad C_{1100}=C_{1110}=3,\quad
+P_{0100}=P_{1000}=2,\quad P_{0110}=P_{1010}=1,\quad T=2.
+$$
+
+It has $Q(\widehat V)=Q(y)$, $W=8$, and both complete support vectors
+
+$$
+(8;8,8,8,8;9,9,8,9,8,9).
+$$
+
+Thus $(\widehat V,0)$ is an unrestricted unit certificate.
+Erasure can only change zero bits to ones: it cannot create the correct
+row $1100$ from the original class-three correct row $1101$.
+Hence $\widehat V\notin\mathcal M_L(y)$.
+
+The zero-cost score supplied by 204.4–204.5 is
+
+$$
+V_0:\quad C_{1101}=C_{1110}=3/2,\quad
+P_w=3/4\ (w=0100,0101,0110,1000,1001,1010),\quad T=3/2.
+$$
+
+Here $W=B_N=B_O=6$ and $Q(V_0)=(0,0,3/2,3/2,0,\ldots;9)$.
+Its residual against $y$ reads $0,0,3/4,5/8$ at $o,p,u_3,v_3$ and
+
+$$
+\frac3{k-1},\qquad3-5\frac{k-2}{k+1}\quad(k\ge4),
+$$
+
+with maximum one at $u_4,v_4$. Thus $(V_0,1)$ is another unrestricted
+unit certificate, including the nonzero zero-cost endpoint. Theorem
+223.1 also excludes this $V_0$ from the cone.
+
+At the same lower point $F_{Q(V_0)}(b_*)=1/3>0$.
+Any complete feasible conic $\lambda$ there would give
+$1/3\le M\Delta_N(V_0)=0$. Therefore $b_*\notin H_N$ for every
+possible conic mass. Independently, the equal mixture of $D_1,D_2,D_3$
+has law $(1/3,0,0,1/3,1/3)$ at word $1100$. Its correct probability
+$1/3$ is below $4/9$, and its pair probability $2/3$ is below $5/6$.
+Its TV from $(7/18)\delta_0+(11/18)\delta_3$ is $1/3>1/6$.
+The lower functional is a legal rule but is not a full feasible allocation
+at that point. This cone obstruction supplies no original separation.
+

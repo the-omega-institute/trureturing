@@ -1,0 +1,78 @@
+**定理 51.2（三更新四实际Read的改进全记录上界）。** 定义51.1的有限控制器在
+整个原来源及全部合法联合读误差上满足
+
+$$
+\mathcal E_\pi(\delta)
+\le\sqrt{2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2},
+\qquad 0<\delta\le1.
+\tag{51.5}
+$$
+
+证明。控制及层判别完全复用定理46.3。具体地，$0<\alpha<3/5$、$\nu>4/5$，
+$|c_1|=|c_2|=|q|=1$，且 $\rho=(3/5)\nu-(4/5)\alpha$。
+对真实 $bq=s+w$、$R=|b|$，定理45.4给内层 $|w|\le7$、外层 $|w|\ge25h$。
+原间隙仍为
+
+$$
+g=25h-7=24\rho-7(1-K)\ge(233/100)\delta>2\delta.
+\tag{51.6}
+$$
+
+真实报告 $y_3=w+e_3$ 因而在内层满足 $|y_3|\le7+\delta=A$，在外层满足 $|y_3|\ge25h-\delta=B$。
+于是合法内层记录有 $\theta(r)=0$、合法外层记录有 $\theta(r)=1$，故 $\mathscr D$ 在每条合法记录上
+分别等于 $D_7$ 或 $D_{25}$；原判别阈值 $T$ 只保留为证明层身份的中间量，不再出现在全部报告的解码定义中。
+
+由 $||w|-r|\le\delta$ 及 $|w|\le R$ 得
+$t_R^-\le|w|\le t_R^+$，于是球面身份给
+
+$$
+\ell_R\le|s|=\sqrt{R^2-|w|^2}\le u_R.
+\tag{51.7}
+$$
+
+若 $s\ge0$，它已在 $[\ell_R,u_R]$ 中。若 $s=-t<0$，原帽条件为
+$-\alpha t+\nu\langle w,i\rangle\ge(4/5)R$，所以
+$\nu\sqrt{R^2-t^2}-\alpha t\ge(4/5)R$。
+定理45.4的严格递减函数 $G(z)=\nu\sqrt{1-z^2}-\alpha z$ 满足
+$G(\rho)=4/5$，故 $t\le R\rho$。再由（51.7）有 $\ell_R\le t$，从而
+$\ell_R+t\le2R\rho$，即 $s=-t\ge\ell_R-2R\rho$。
+两种符号都给 $s\in I_R(y_3)$，于是
+
+$$
+|m_R(y_3)-s|\le (u_R-\ell_R)/2+R\rho.
+\tag{51.8}
+$$
+
+截断函数 $t\mapsto\min\{R,\max(0,t)\}$ 不扩张；因 $r+\delta\ge0$，
+两个径向端点相差至多 $2\delta$。由 $u_R\ge\ell_R\ge0$ 得
+
+$$
+\begin{aligned}
+(u_R-\ell_R)^2
+&\le u_R^2-\ell_R^2
+=(t_R^+)^2-(t_R^-)^2\\
+&=(t_R^+-t_R^-)(t_R^++t_R^-)\le4R\delta.
+\end{aligned}
+\tag{51.9}
+$$
+
+因此 $|m_R-s|\le\sqrt{R\delta}+R\rho\le5\sqrt\delta+(5/2)\delta$。
+这是原径向不确定性区间的宽度估计，保留了合法负分支；没有假定真实 $s$ 非负。
+经典标量区间中点的半宽性质只作为（51.8）的中间步骤。
+
+闭球投影不增大到真实 $w$ 的距离，直接复用（42.16）、（46.19），故
+$|v-w|\le\delta$。初读给 $|y_0-a|\le\delta$；右乘 $q^{-1}$ 保持范数，
+实部与虚部正交，遂有
+
+$$
+|\widehat x-x|^2
+=|y_0-a|^2+|m_R-s|^2+|v-w|^2
+\le2\delta^2+\bigl(5\sqrt\delta+(5/2)\delta\bigr)^2.
+\tag{51.10}
+$$
+
+该估计逐记录成立，$a$ 的大小不参与任何常数。全部动作、实际Read及停止均预定，
+没有沿误差修改来源；只使用各误差自己的范数界，没有独立、平均或重复采样前提。
+控制器恰用三个原菜单更新和四次实际Read，在同一寄存器上有限停止，证明全称上界。
+证毕。
+

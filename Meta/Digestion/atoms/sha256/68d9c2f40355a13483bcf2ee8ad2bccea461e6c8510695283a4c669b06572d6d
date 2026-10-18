@@ -1,0 +1,30 @@
+**Corollary 2.14 (Smooth curvature and endpoint deficits).** The endpoint
+slopes and total smooth curvature are
+
+$$
+b'(\kappa_-)=\frac2{\nu_-},\qquad
+b'(\kappa_+)=-\frac2{\nu_+},
+$$
+
+$$
+\int_{\rm interior}K\,d\mathrm{Area}
+=2\pi\left(\frac1{\nu_-}+\frac1{\nu_+}\right).
+$$
+
+Adding the two cone deficits gives $4\pi$. The area is
+$2\pi(\kappa_+-\kappa_-)$.
+
+Proof. The endpoint expansions in Theorem 2.13 differentiate to the stated
+one-sided slopes; the coefficients are rational smooth functions after the
+pole is removed. Integration of $-b''/2$ against $d\kappa\,d\chi$ gives
+
+$$
+-\pi\bigl[b'(\kappa_+)-b'(\kappa_-)\bigr]
+=2\pi\left(\nu_-^{-1}+\nu_+^{-1}\right).
+$$
+
+Each deficit is $2\pi-2\pi/\nu$, and their sum with the smooth integral is
+$4\pi$. Integrating the unit area density gives the area formula. In
+particular, curvature is strictly positive throughout the interior; it is not
+concentrated only at the endpoints. $\square$
+

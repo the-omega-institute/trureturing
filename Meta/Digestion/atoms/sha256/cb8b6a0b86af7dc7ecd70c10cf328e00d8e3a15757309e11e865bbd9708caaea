@@ -1,0 +1,42 @@
+**Proposition 5.4 (Every signed command and exact initialization).** For
+every real $s,t$, assign the ambient maps
+
+$$
+\mathcal U_s^\varepsilon(z)
+=\begin{pmatrix}
+e^{\nu_1s/H}I_2&0\\0&e^{\nu_2s/H}I_2
+\end{pmatrix}z+0_4,
+\qquad
+\mathcal V_t^\varepsilon(z)
+=\begin{pmatrix}R_{t/2}&0\\0&R_{t/2}\end{pmatrix}z+0_4.
+$$
+
+They intertwine $P_s,Q_t$ on their entire original domains. The exact
+initial encoded state at the original preparation is
+
+$$
+z^{\rm in}=
+\left(e^{\nu_1 k_0/H},0,e^{\nu_2 k_0/H},0\right).
+$$
+
+Proof. In either block, the two substitutions are
+
+$$
+e^{\nu_j(k+s)/H}U(\alpha)
+=e^{\nu_js/H}e^{\nu_jk/H}U(\alpha),
+$$
+
+$$
+e^{\nu_jk/H}U(\alpha+t/2)
+=R_{t/2}e^{\nu_jk/H}U(\alpha)\qquad(j=1,2).
+$$
+
+These are the exact encodings of the source formulas in Proposition 1.2.
+The true $\beta$ change under $Q_t$ remains in the source and is
+forgotten only by this encoder. All signs and zero commands are
+included. For $|s|\ge H$, the probability domain is empty but the
+displayed ambient map is still assigned. No real command parameter has
+been bounded or identified modulo a period. The preparation increments
+are zero, hence $\alpha=\beta=0$ there, yielding $z^{\rm in}$ for
+arbitrary preparation phases. $\square$
+

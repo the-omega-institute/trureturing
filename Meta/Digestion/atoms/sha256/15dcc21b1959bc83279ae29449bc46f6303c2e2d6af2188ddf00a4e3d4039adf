@@ -1,0 +1,35 @@
+**Convention 9.3 (regularity and exactness boundaries).** Height-zero
+contacts make $\varepsilon_i$ undefined and may create absolute-value
+corners. Contacts with $u_i=0$ have a contrast corner. The Lipschitz
+rounding step remains valid at axes, but its regular-contact coercivity
+premise does not automatically extend through such contacts. The physical
+rank-two label reduction and capacity in §§2–4 include both axes without
+an exception.
+
+Zero weights must be omitted and give no count necessity:
+$p_{\min}=0$ makes the stated positive deficit unavailable. Collisions,
+rank loss, infinite equality sets, zero arcs, and height/report sign
+changes require their own analysis. When $\lambda=0$ the nine-contact
+argument loses overshoot control; the $m\le8$ argument can still apply
+under its own remaining certificate and rank conditions, because it does
+not use a contrast row in its left inverse. None of these cases is deleted
+from the original domain by the regular theorem.
+
+Endpoint feasibility on a grid, an incomplete zero inventory, positivity
+inferred from small stationarity residuals, or a rank test for auxiliary
+moments, PPT matrices or unrelated marginals does not satisfy Assumption
+5.1 or the stated original column-rank hypotheses. Without the unaveraged
+JR42 equality face or whole-fibre survival, Theorem 3.1's actual-label
+transfer is unavailable. The abstract common-law estimate alone then gives
+no theorem for general original instruments. Approximate minimax,
+approximate sharp cost and approximate common moments require additional
+rigidity and error estimates; they are outside this theorem.
+
+The constants are for this fixed source, request and certificate. No
+numerical value or parameter-uniform bound is asserted. Uniform constants
+on a parameter patch would require uniform positive curvature, inward
+slopes, weights, rank singular values and off-contact margins, bounded
+Lipschitz constants and a complete compatible contact cover; for the
+nine-contact estimate the multiplier must also be bounded away from zero.
+Pointwise positivity supplies none of those uniform hypotheses by itself.
+

@@ -1,0 +1,24 @@
+## 6. Attribution, boundaries and the unchanged open quantifier
+
+The contribution is `repo-derived`: Theorem 2.1's full-law posterior restriction and Theorem 3.1's removal of the constant term are a synthesis relative to the inspected suppliers. [Stationary][S] owns the risk identity and projection tools; [Universal][U] owns the entire producer domain and actual-law correspondence; [Conditional Response][R] owns attained-law zero response and its budget. [Five-state Slice][V] supplies the free/tail constructor and rank-one $00$ algebra, and [TwoStep][T] supplies the reference law and finite-order grouping. Their numerical class bounds are not transferred to a different base stationary row.
+
+The conditional Brier score and squared posterior discrepancy are `literature-attested` in [Dawid–Lauritzen–Parry][DLP], *Proper Local Scoring Rules on Discrete Sample Spaces*, arXiv:1104.2224v2, §4.2, especially Example 4.4 and equation (14). Its full-product strict-propriety argument assumes everywhere-positive distributions; that argument is not imported into the no11 domain. [Van Enter–Verbitskiy][EV], *Erasure entropies and Gibbs Measures*, arXiv:1001.3122v1, Definition 4 and Theorems 5–6, gives exterior Shannon uncertainty; Theorem 6 adds a Gibbs hypothesis. Neither these inspected passages nor the cited supplier interfaces supplies universal productive pairs. The ordinary proofs here use conditional-expectation uniqueness and squared-loss projection directly. This bounded comparison makes no worldwide novelty or exhaustive literature claim.
+
+All original zero masses, structural zeros, reducible and periodic laws remain in (1.2). The cancellation theorem has no mixing, finite-memory or rank hypothesis; the guarded construction is only sufficient. Positive pair existence and a nonzero interior response remain distinct gaps beyond the exhibited producer. There is no universal pair existence, hidden-minimality conclusion, efficient-radius guarantee or empirical machine-learning benefit.
+
+**Open Problem 6.1 (Original arbitrary-finite attainment).** With $C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and $U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$, still decide whether some exact finite $\theta$ attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2][U], the latter is equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+$$
+
+A pair-conditional certificate or this proper five-state family does not bound that full compact-domain maximum. To use this route on every hypothetical finite attainer requires an actual positive exterior-equivalent pair with productive interior response, or another proved response mechanism; matrix dimension counting supplies neither. The arbitrary-finite problem remains open.
+
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[T]: FIB_LEGAL_EDGE_LOAD_TWO_STEP_BULK_SEPARATION.md
+[V]: FIB_LEGAL_EDGE_LOAD_REVERSIBLE_FIVE_STATE_SLICE_UNIFORM_SEPARATION.md
+[DLP]: https://arxiv.org/html/1104.2224v2
+[EV]: https://arxiv.org/html/1001.3122v1
+

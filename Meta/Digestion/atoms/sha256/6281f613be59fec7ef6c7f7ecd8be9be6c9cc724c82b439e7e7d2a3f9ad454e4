@@ -1,0 +1,6 @@
+### 命题 12.10（缺陷恒等式）
+
+对任意满足 $\operatorname{Prob}(p)$ 的 $p\in\mathcal L$，有 $p_0p_{25}-p_2p_5=\Delta(p)$。
+
+证明：用定理 1.2 写成 $(1-X-Y-Z+\kappa)\kappa-(X-\kappa)(Y-\kappa)=(1-Z)\kappa-XY$，与定义 4.1 一致。此恒等式不要求 $1-Z>0$；条件独立的解释仍受第 4 节的条件限制。证毕。
+

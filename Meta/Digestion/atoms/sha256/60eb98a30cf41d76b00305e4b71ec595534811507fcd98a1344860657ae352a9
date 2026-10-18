@@ -1,0 +1,23 @@
+**命题 6.1（词、首边界与完整几何的严格层次）。** 仅保留词不能恢复首樱桃边界；保留词及首樱桃边界一般仍不能恢复树或完整回复。
+
+证明。三叶树
+
+$$
+\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+\qquad
+\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+$$
+
+同词 $\alpha^3$，首边界分别为一、二，左孩子回复分别为 $\mathsf{br},\alpha$。因此词相同未保留边界区别。
+
+再取四叶树
+
+$$
+S=\langle\langle\alpha,\alpha\rangle,
+         \langle\alpha,\alpha\rangle\rangle,
+\qquad
+U=\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,\alpha\rangle.
+$$
+
+它们同词 $\alpha^4$，坐标分别为 $[1,4,1]$ 与 $[1,2,3]$，均有 $\tau=1$。但 $r_S(LL)=\alpha$，$r_U(LL)=\mathsf{br}$。首边界没有决定完整坐标、树或回复。定理3.2中首边界等价于完整来源是该受限族的额外事实，不能推广到 $\mathcal W_m$。$\square$
+

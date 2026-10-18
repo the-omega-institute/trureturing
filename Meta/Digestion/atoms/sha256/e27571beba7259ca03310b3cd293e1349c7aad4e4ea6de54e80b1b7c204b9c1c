@@ -1,0 +1,20 @@
+**Definition 2.5 (continued decoder inputs and rebasing).** The passive
+decoder receives the literal old record $(a,e)$, literal new record
+$(b,f)$, their order, the genuine history promise, and any explicitly
+requested complete rows and public cuts. It computes (AAR.6), with
+no source access. Additional retained outputs and controls must be
+charged under Definition 1.3, whether or not this formula uses them.
+Keeping $(a,e)$ supports later references anywhere inside that old
+cylinder. Replacing it by $(b,f)$ narrows the supported cylinder to
+$[b]$; retaining also the acquired accumulated count $K$ gives the
+next absolute-from-first count
+
+$$
+K+s(c)-s(b)+g-f\qquad(c\succeq b).
+\tag{AAR.7}
+$$
+
+Discarding $K$ changes the retained origin to the capture at $b$.
+This baseline has no global-minimum certification requirement. It
+can start with any leaf already paid for by CNA, CWS or CAB.
+

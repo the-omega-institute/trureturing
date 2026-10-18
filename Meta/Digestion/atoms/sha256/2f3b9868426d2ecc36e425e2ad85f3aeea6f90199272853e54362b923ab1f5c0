@@ -1,0 +1,53 @@
+**Corollary 12.7 (the prescribed-return analytic inequality consumed by Proposition 11.4).** Fix the original finite or countable prior with $\mu(1),\mu(2)>0$ and at least one supported $k\ge3$. Let $\Xi$ be any admissible return measure satisfying, for every depth supported by this same prior,
+
+$$
+\mathcal L_p^\Xi(P_{p,r_k})\le\rho_p+\epsilon_p,\qquad
+\mathcal L_\beta^\Xi(P_{\beta,r_k})\le\rho_\beta+\epsilon_\beta,
+\qquad
+\epsilon_p,\epsilon_\beta\ge0,\quad
+\epsilon=\max\{\epsilon_p,\epsilon_\beta\}.
+\tag{12.33}
+$$
+
+Then
+
+$$
+\frac{2901611\epsilon+4519890V_\Xi}{11}
+ \ge \frac{\eta}{400000},\qquad
+\eta=\frac{14219478376}{318644812890625}.
+\tag{12.34}
+$$
+
+This is a nonstrict joint loss–return-variation inequality on the prescribed measure. It assumes the same supported-depth bounds as (2.4), not just endpoint bounds.
+
+**Proof.** Use the rational tables of Corollary 12.5, all generated with their own same acquired and synthetic updates. For each $h$ their losses satisfy (2.4), with the nonnegative slacks
+
+$$
+\epsilon_p^h=\epsilon_p+C_ph,\qquad
+\epsilon_\beta^h=\epsilon_\beta+C_\beta h,\qquad
+\epsilon^h=\max\{\epsilon_p^h,\epsilon_\beta^h\}
+ \le\epsilon+C_\beta h.
+\tag{12.35}
+$$
+
+Uniformity over targets ensures that these are bounds for every depth in the one fixed installed support. Each is a regular finite table, so Proposition 11.4, with its supported-nonendpoint hypothesis, gives
+
+$$
+\frac{2901611\epsilon^h+4519890V_{\Xi_{F_h^r}}}{11}
+ >\frac{\eta}{400000}.
+$$
+
+By (12.30) the variation tends to the prescribed $V_\Xi$, and (12.35) gives $\epsilon^h\to\epsilon$. Passing to the limit proves (12.34), with $\ge$; strictness of each finite-table inequality need not survive the limit. No sampler premise is needed for this algebraic application of Proposition 11.4. Where the original sampling bridge of Proposition 12.6 holds, these same rational tables also have its original-history realization.
+
+The quantity $J$ in (11.1) and (11.12) is the endpoint moment $\int(u-a)(b-u)\,d\nu_p$, rather than the supported-depth loss slack in (12.33). The substitution above uses precisely the $\epsilon$ of (2.4) and (11.15), and does not identify these two quantities. The prior's supported nonendpoint is indispensable to invoking the conserved-class gap inside Proposition 11.4; no endpoint-only version of that positive right-hand side is asserted.
+
+This consumer leaves $V_\Xi$ free and supplies no unrestricted positive risk-only gap. It asserts neither existence of a zero-level admissible $\Xi$ nor an optimizer, attainment or resource optimum. $\square$
+
+**Mathematical citation 12.8 (suppliers and applicability).** The compact law spaces, normalized residual continuity, own complete-law generation and stopping contraction are PAIRED, Lemma 11.1 and (11.19)–(11.20). Its Theorem 11.4, Theorem 11.8 and Chapter 13 preserve their stated pair-flow and marginal scopes; none is used to identify a prescribed triple from two flows. Its Chapter 14 supplies the separate four-moment loss comparison and exclusion, without replacing the present incoming-pair condition. Proposition 11.9 supplies the distinct actual triples consumed in the proof of Theorem 12.2. Proposition 11.4 supplies the finite-table strict inequality consumed in Corollary 12.7. The original source, exact sampler convention and full-history adapter are the suppliers cited in Proposition 12.6. The new source-relative deduction here is regeneration of each specified actual triple, including its finite rational closure and the joint analytic consumer. These are ordinary mathematical proofs, with no new formal certification or literature-priority assertion.
+
+For a primary comparison, Benjamin Jourdain and Gilles Pagès, [*Quantization and martingale couplings*, arXiv:2012.10370v1, Theorem 3.1](https://arxiv.org/html/2012.10370v1), assumes probability measures $\mu\le_{\rm cx}\nu$ on $\mathbb R^d$ with compactly supported $\nu$, quadratic optimal primal quantization of $\mu$ and optimal dual quantization of $\nu$. For every prescribed two-time martingale coupling its construction (3.21) gives quantized martingale couplings; at $p=1$ its Wasserstein error is bounded by the sum of the primal quadratic and dual first-order quantization errors. Finite coordinate projections of $(\mathcal R_B(Q),W)$ in (12.1) satisfy a two-time martingale relation by conditional expectation, have bounded support, and therefore meet the relevant finite-dimensional convex-order hypotheses. That statement concerns those projected two-time marginals and their prescribed coupling. It does not preserve the incoming $Q$ descriptor through projection, identify a cyclic full-law triple, or provide the same finite generator with equal end marginals here. Its term stationary quantization is a conditional-centroid property, not the acquired balance $\pi BA=\pi$.
+
+Lasse Leskelä and Matti Vihola, [*Conditional convex orders and measurable martingale couplings*, arXiv:1404.0999v3, Theorem 1.3](https://arxiv.org/html/1404.0999v3), concerns probability kernels from a measurable parameter space to $\mathbb R^d$, with finite first moments at every parameter. Pointwise convex order is equivalent to existence of a measurable pointwise martingale-coupling kernel. For a finite coordinate projection $\Pi$, the second equality in (12.1) provides, almost surely in the parameter $(Q,W)$, a projected law of $Q'$ with barycentre $\Pi\mathcal R_A(W)$. To obtain a pointwise comparison on every parameter, outside a Borel full-measure set define this projected law to be $\delta_{\Pi\mathcal R_A(W)}$ and compare it with that same point mass. These bounded projected kernels meet the stated first-moment and convex-order hypotheses. This extension is a finite-dimensional context comparison, not an assertion of a new prescribed full-law kernel off the original full set. Selecting some coupling under that theorem would not retain this specified conditional measure, its common end marginal or its finite same-update realization. Neither primary theorem is invoked as a supplier of (12.11), (12.22) or (12.34); the whole-descriptor cyclic bridge and its constants are proved above. Conditioning, the scalar chord bound, cycle decomposition, maximal coupling and finite rational sampling are mature intermediate tools rather than new general results.
+
+The interface is one noncompleting return on the original stopped domain, together with complete predictive laws and target-uniform configuration losses. It does not assert fidelity of arbitrary-length acquired joint paths or reconstruction of $\Xi$ from its two directional flows. The spatial research retains separate obligations for ordered and symmetric mixed traces, both cross blocks, arbitrary correlations and LINEAR compensation by the same actual inverse. No map establishing those obligations is supplied by this probabilistic construction; its label counts, state counts and sampling operations imply no physical-space dimension.
+

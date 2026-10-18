@@ -1,0 +1,5 @@
+source_id = "fib-finite-paid-read-address-compression-and-signature-radius"
+path = "docs/develop/theory/FIB_FINITE_PAID_READ_ADDRESS_COMPRESSION_AND_SIGNATURE_RADIUS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

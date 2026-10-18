@@ -1,0 +1,33 @@
+**Theorem 5.5 (exact source anchors).** On an authentic cover, each
+completed source01 item selected by Definition 5.2 has exactly one entry
+and one later exit in Definition 5.3. The locator constructs their actual
+$e,f$ in at most $b$ Step calls, with $a<e<f<b$. It works for every
+returning auxiliary tag and outcome without a strict-Reserve premise.
+
+Proof. $M_j$ is a completed cycle, so its predecessor Ready has exactly
+$j$ completed cycles. Its actual retained choice is01. The native outer
+receiver has one such dispatch and enters the separately inlined $F^A$
+before the first header IN. This fragment consumes one frame and returns
+only after its actual row/dependency checks, final ACK, source TOK and
+idle CTL. Its final successor is InnerReturn, not the raw caller's
+next-frame IN. It therefore traverses the indicated entry and exit once.
+The completed-cycle annotation remains $j$ until CaptureCAP appends the
+cycle and its actual outer Ready is reached. Other cycles have another
+annotation. Internal callbacks and nested represented rows cannot have
+this outer control test. CAP's increasing unified chain makes the
+resolved old $m$ unique, while ARC's acquired origin checks bind that row
+to this same item and its actual input.
+
+By Theorem 4.2, after $n$ locator Steps its state is $X_n$, rem has
+$b-n$ marks, and saved tests concern precisely the last executed physical
+row. Copying the successor tally at the two transitions consequently
+gives exactly $e$ and $f$, not their pre-row ordinals. Both are after
+initial acquisition. The header prelude and full frame/return give
+$e<f$. Normalization, both Tail scans, closed CaptureCAP import, cycle
+append and return occur after $f$ and before the covering Ready, so
+$f<b$. The loop thus finds the actual endpoints before its finite budget
+expires. Its invariant also proves finite exhaustion on any absent
+predicate. The argument uses no accepted maintenance publication and
+applies unchanged to Reserve equality/refusal, Raise outcomes and each
+of the five original source services when they actually return. ∎
+

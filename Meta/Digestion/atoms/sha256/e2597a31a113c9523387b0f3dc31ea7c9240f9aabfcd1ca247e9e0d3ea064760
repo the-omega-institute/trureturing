@@ -1,0 +1,29 @@
+## 480. Hypotheses and conclusions
+
+Retain the full six-actual-edge repeated-frame ambient of Section 466 and suppose there are exactly two flat owners. Use the source labels M,C,D,Z,U,V, with the source tau=(Z,M,C,D,M,C), m>=1+c+d, z>=1+m+c, u>m. Assume v>m-2. Sections 476-479 then give distinct labels Q,B with {Q,B}={C,D} and
+
+    sigma=(M,C,D,Q,C,D),
+    phi has axes {V,B} and pair {C,D},
+    m>=v>m-2,
+    T=(q+b)^2,
+    (m-1)*(q-1)>=T, (v-1)*(b-1)>=T.             (480.1)
+
+The source tau is unchanged when Q=D. Only the two flat products are expressed with Q,B. Put H={M,V,Z,U}; all its values are at least v. Let h(rho) count an actual genuine owner's original slots labeled in H, and E_H(rho) sum their actual angles. H has genuine capacity 6*pi. Its individual original degrees satisfy
+
+    deg(M),deg(V),deg(Z),deg(U)>=6,
+    genuine H-slot deficits (5,5,6,6),            (480.2)
+
+because the two flats supply precisely one M and one V slot, and no Z or U slot.
+
+**Theorem 480.1.** Exactly five genuine owners meet H. One is tau, with h=3. Their only possible high-slot count profiles (n_3,n_4,n_5,n_6) are
+
+    (1,0,4,0), (1,1,3,0).                        (480.3)
+
+There are no genuine owners with h=1,2 or 6. Any additional genuine owner uses only C,D and is not counted in (480.3). This is not a bound on the whole genuine-owner count.
+
+The four owners other than tau have individual H-slot requirements, in order M,V,Z,U,
+
+    (3,5,5,6).                                  (480.4)
+
+In profile (1,1,3,0), their vector is exactly (3,5,5,6), so all four original H degrees equal six. In profile (1,0,4,0), their vector is (3,5,5,6)+e_X for exactly one H label X, so exactly one original H degree is seven and the other three are six. Repeated copies of a role remain separate actual owners.
+

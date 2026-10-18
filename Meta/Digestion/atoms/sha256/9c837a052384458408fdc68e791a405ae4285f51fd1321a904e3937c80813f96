@@ -1,0 +1,48 @@
+**Convention 11.2 (primary literature correspondence).** The following
+primary sources provide mature conceptual or methodological precedents.
+Their identified hypotheses and interfaces were checked. None supplies
+paid original native acquisition, authentication, task-specific sharpness
+or an installed four-view observer.
+
+| Primary source and location | Verified contract and transfer boundary |
+| --- | --- |
+| Foster, Greenwald, Moore, Pierce and Schmitt, *Combinators for Bi-Directional Tree Transformations*, TOPLAS 29(3), article 17, [author PDF][Lens], Definitions 3.2–3.3, PDF pp.6–7 | GetPut/PutGet are partial-lens laws; totality is a separate property. Putback receives the new abstract value and the old concrete value. The missing native labels cannot be obtained from the abstract boundary by invoking these laws. No source-edit permission is transferred. |
+| Hofmann, Pierce and Wagner, *Symmetric Lenses*, [author PDF][SymLens], §§2–3, PDF pp.2–4 | A complement stores information discarded by a view, and update propagation uses and updates that complement. Here (CCF.13), terminal labels and actual order are different explicitly acquired complements; the literature supplies none of their native prices. |
+| Shalizi and Crutchfield, *Computational Mechanics: Pattern and Prediction, Structure and Simplicity*, [arXiv:cond-mat/9907176v2][SC], §III.1, Definition 5 and Theorems 1–2 | Stationary discrete-time stochastic processes with a countable observation alphabet; causal states preserve future conditional distributions, and statistical-complexity minimality is an entropy comparison with almost-sure qualifications. This separates prediction from raw past recall conceptually. It is not a deterministic worst-case name or acquisition theorem on (CCF.2). |
+| Winskel, *Event Structures*, [author chapter][Winskel], Definitions 1.1.1–1.1.2, PDF pp.2–3 | Consistency and enabling define configurations as secured consistent sets of event occurrences. A set of executed sweep occurrences does not select their actual linear order. The order count and its acquisition interface are proved here directly. |
+| Cicalese, Laber and Saettler, *Decision Trees for Function Evaluation: Simultaneous Optimization of Worst and Expected Cost*, [arXiv:1309.2796v2][DFEP], §1, PDF p.2 | Finite objects, a partition into output classes, complete multivalued tests, positive test costs and a prior define function evaluation. Here actual source fibers are objects and literal words are tests; only finitely many nonconstant tests remain. The proofs use worst-case unit call costs without a prior; no approximation or expected-cost theorem is transferred. |
+| Garg, He, Li, Papakonstantinou and Yang, *Systematic Data Structure Lower Bounds via the Query-with-Sketch Model*, [arXiv:2609.18024v1][QWS], Definition 2.1 and model comparison | A given sketch and current coordinate-probe transcript determine the next probe or halt; repeated probes count with multiplicity. The sketch's formation has no paid-acquisition contract there. Native literal tests here are proved to be particular functions of the six-state fiber, rather than free six-valued coordinate probes. No matrix or min-entropy bound is imported. |
+| Salamatian, Cohen and Médard, *Efficient Coding for Multi-source Networks using Gács–Körner Common Information*, [arXiv:1601.06882v1][GK], Definitions 2–3 and Lemma 1 | A common variable is the component index of one joint support graph and is recoverable separately from each source. Residual dependence may remain; an iid product assertion has its own iid premise. A common factor is not an acquired whole native answer table, and no source-distribution or network-capacity result is used. |
+| van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2][VV], §4 and Figure 3 | Adaptive distinguishing graphs use supplied finite input/output transition systems and need not exist: possible initial states can merge under every first experiment. This cautions against promoting separate distinguishing continuations to one executable test. Our stationary coordinate construction establishes its own legal tests and source preservation. |
+
+The source-specific fiber descriptions and sharp resource frontiers are
+`repo-derived` ordinary deductions. Counting terminal decision-tree
+branches, complement coding, permutation ranking and replay are mature
+methods and are not claimed as new general results. The literature
+comparison includes recent sketch/probe work but is not an exhaustive
+absence search; no `suspected-novel` or global originality claim is made.
+The exact additions affect a specified route to original label completion
+and acquired order recall. They establish no universal physical or
+ontological generation theorem and leave Open problem 9.3 intact.
+
+[AAR]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[PPF]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PREPARATION_FRONTIERS.md
+[SCE]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SELECTOR_COMMON_EXTENSION.md
+[PG]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[Atlas]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
+[ATR]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[ATRB]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/Blueprint/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.scribe.cs
+[FTE]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[FTEB]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[NLM]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[NLMB]: https://github.com/the-omega-institute/trureturing/blob/5fe79351d430d929eb588422fdf31364c82d9363/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[Lens]: https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf
+[SymLens]: https://www.cis.upenn.edu/~bcpierce/papers/symmetric.pdf
+[SC]: https://arxiv.org/html/cond-mat/9907176v2
+[Winskel]: https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf
+[DFEP]: https://arxiv.org/pdf/1309.2796v2
+[QWS]: https://arxiv.org/html/2609.18024v1
+[GK]: https://arxiv.org/html/1601.06882v1
+[VV]: https://arxiv.org/html/1907.11034v2
+

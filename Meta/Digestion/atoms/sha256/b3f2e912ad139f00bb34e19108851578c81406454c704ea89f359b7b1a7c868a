@@ -1,0 +1,151 @@
+**Theorem 216.10 (A quantitative surplus requirement).**
+Let $L\ge3$, $m=L-2$, and let $h\ge0$ be an integer with $m\ge3h$.
+Put
+
+$$
+c=\frac1{m-2h+1},\qquad a=(h+1)c,\qquad e=hc,
+\qquad x_h=(a,\ldots,a;e).
+$$
+
+Let $S_h(\beta)$ be the sum of the h largest positive late entries
+$\beta_3,\ldots,\beta_L$, using all positive entries if fewer exist,
+and put $\tau_h(\beta)=\sum_{j\ge3}\beta_j-S_h(\beta)$.
+For every unrestricted full score,
+
+$$
+F_{Q(V)}(x_h)\le\Delta_O(V)+c\tau_h(\beta(V))
+ \le\Delta_N(V)+c\tau_h(\beta(V)).
+\tag{216.19}
+$$
+
+For any finite decomposition
+$q=\sum_iQ(V_i)+q_{\rm res}$ with full $V_i\ge0$, any signed residual
+and $\theta\ge0$ satisfying $\sigma_H(q_{\rm res})\le\theta$,
+
+$$
+F_q(x_h)\le\sum_i\Delta_N(V_i)+\theta+c\sum_i\tau_h(\beta(V_i)).
+\tag{216.20}
+$$
+
+Consequently additive charge at most one requires
+$\sum_i\tau_h(\beta(V_i))\ge(F_q(x_h)-1)/c$.
+Components all satisfying $\tau_h\le0$ obey $F_q(x_h)\le B$ at total
+additive charge at most B, as do limits of those quotient sets at fixed
+L,h and uniformly bounded charge B. This applies even when components
+are chosen nonlinearly from q and when zero-cost components are nonzero.
+
+**Proof.** The point $x_h$ belongs to the same $H_L$: its order bounds
+hold, $b_2=b_3$, and its two capacity expressions are
+$(m-3h)c\ge0$ and $(m-2h+1)c=1$.
+Choose a set J of positive late coordinates attaining $S_h$, and write
+$r_J=|J|\le h$. Reuse the stopped law of 205.3, with the same form
+but the present parameters,
+
+$$
+\Pi_J=cR+c\sum_{j\in J}\operatorname{Const}_j
+       +[1-(r_J+1)c]\operatorname{Const}_0.
+\tag{216.21}
+$$
+
+It is normalized and nonnegative since $m\ge3h$. The whole table is
+chosen before replies; constants use zero requests. Its base/correct/pair
+probabilities on every word are
+
+| First-zero class | Base | Correct | Pair |
+| --- | --- | --- | --- |
+| $n=1,2$ | $1-(r_J+1)c$ | c | $1-r_Jc$ |
+| $n\in J$ | $1-r_Jc$ | c | $1-(r_J-1)c$ |
+| $n\ge3,\ n\notin J$ | $1-r_Jc$ | 0 | $1-r_Jc$ |
+
+At the positive word the base is $1-r_Jc$; remaining mass is c at
+each other label in J. Thus this is one law, not separately specified
+event marginals. Let $A_J,P_J$ denote totals in classes J and let
+$A_{\rm tot},P_{\rm tot}$ be the complete totals.
+Subtract these probabilities from the full demands at $x_h$.
+The A/C/P deficits divided by c are
+
+$$
+(r_J-2h,0,r_J-h)\quad(n\le2),\qquad
+(r_J-2h-1,0,r_J-h-1)\quad(n\in J),
+$$
+
+and $(r_J-2h-1,1,r_J-h)$ at omitted late classes; the terminal
+deficit is $r_J-h$. Hence the exact identity is
+
+$$
+V\cdot(d(x_h)-z_{\Pi_J})
+=c\left[\tau_h(\beta)-(2h-r_J)A_{\rm tot}-A_J
+ -(h-r_J)(P_{\rm tot}+T)-P_J\right].
+\tag{216.22}
+$$
+
+All terms after $\tau_h$ are nonpositive. This accounts for arbitrary
+cross-word A/C cancellations and every late P row. Since
+$V\cdot z_{\Pi_J}\le B_O(V)$, subtracting W proves (216.19).
+Evaluate every component and the one residual at the same $x_h\in H_L$
+to get (216.20). Continuity of the linear functional $F_q(x_h)$ proves
+the bounded-charge closure assertion. The formulas include h=0 and
+$m=3h$. For a single certificate (216.1) the same surplus requirement
+holds even at $\theta=1,\Delta_N(V)=0$. $\square$
+
+The domain $\tau_h\le0$ contains both scores with at most h positive
+late beta entries and the narrower correct-class-support domain of 205.3.
+It can also contain more than h positive beta entries when negative
+late entries compensate the omitted positive sum. For example, at h=1
+late beta $(2,1,-1,0,\ldots)$ has $\tau_1=0$.
+To see the distinction from C support on actual words, at L=8 place
+A=C=1 in each class 3 through 7 on two different suffix words, and C=1
+in class 8; add any late P, for example mass two in class 4.
+Then six C-class totals are positive while only $\beta_8=1$ is positive
+and $\tau_1=0$. Pointwise A domination of C was not assumed.
+
+The obstruction has actual complete unit inputs. Fix $\mu\ge2$ and
+$0\le\gamma_j\le\mu$, $j=3,\ldots,L$, with maximum $\mu$.
+Use the fair-suffix score of 205.4 with each late C total reduced to
+$\gamma_j$:
+
+$$
+C_{1^{j-1}0v}=\frac{\gamma_j}{2^{L-j}},\qquad
+P_{01v}=P_{10v}=\frac{2(\mu-1)}{2^{L-2}},\qquad
+T=\mu-1,\qquad A=0.
+\tag{216.23}
+$$
+
+Here v ranges over the whole indicated suffix cube. Let G=$\sum\gamma_j$.
+The supplier gives the complete N support upper bound W+1, with
+W=$5(\mu-1)$. Decreasing C totals leaves W fixed and cannot increase
+any table reward. A stopped head $(1,2;1,2,j_*)$ at a maximal total
+still attains $4(\mu-1)+\mu=W+1$. Thus both costs are exactly one,
+K=$G+5(\mu-1)$, and the early beta vanish. The supplier is used for
+$L\ge4$; at L=3 the head has maxima
+$(0,2(\mu-1),2(\mu-1),\mu)$, and each early/3 pair has maxima
+$(\mu-1,\mu-1,\mu,2(\mu-1))$, giving the same result directly.
+
+Substitution into the new surplus inequality gives
+
+$$
+F_{Q(Y)}(x_h)=\frac{G-5h(\mu-1)}{m-2h+1}.
+\tag{216.24}
+$$
+
+Every additive certificate using only $\tau_h\le0$ components costs
+at least this amount. For fixed $\gamma_j=\mu\eta_j$ with
+$0\le\eta_j\le1$, $\max\eta_j=1$ and $\sum\eta_j>5h$, it tends
+to infinity with $\mu$. The last condition requires enough late
+coordinates and is not asserted at every fixed L,h. Unequal profiles
+and inactive addresses are allowed.
+
+At $L=10,h=1,\mu=10$ take late totals
+$(10,9,0,10,8,9,10,0)$. Then W=45, K=101, both costs are one,
+$x_1=(2/7,\ldots,2/7;1/7)$ and $F_Q(x_1)=11/7$.
+Any unit additive charge therefore requires $\sum_i\tau_1\ge4$;
+restricting all components to nonpositive surplus costs at least $11/7$.
+For the equal profile at $L=8,h=1,\mu=3$, the same formula gives
+$G=18,W=10,K=28$ and $F_Q(x_1)=8/5$, again with both costs one.
+This is a failure of additive component charging, not of evaluating
+one joint score: every such input already has the certificate $(Y,0)$.
+For every actual $b\in H_N$ and the same full feasible $\lambda$,
+$F_{Q(Y)}(b)\le M\Delta_N(Y)=M$. Thus this family cannot supply
+the required strict separator; no full feasible $\lambda$ is asserted
+at the auxiliary point $x_h$.
+

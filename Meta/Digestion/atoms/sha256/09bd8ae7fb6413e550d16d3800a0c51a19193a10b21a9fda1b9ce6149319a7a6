@@ -1,0 +1,27 @@
+**Convention 9.2 (precise existing Lean interfaces).** In
+[NativeDepthPatterns][D5N], `original_present_transport` assumes
+`subtree a u = some t`; Proposition 7.3 uses that actual presence
+condition. `original_prefix_locality` assumes equality of original
+replies through the requested word length. Neither declaration
+supplies a subtree or constructor array to the reader.
+
+In [FiniteNaturalJoin][D5J], `join_covers` takes both `Covers left e`
+and `Covers right e` for the same total assignment `e`. Its join
+retains compatible rows; it gives no automatic existence of a global
+assignment, no weighted all-size estimate and no native operational
+bridge. Theorem 5.2 instead proves its actual realization and
+one-lift correspondence explicitly.
+
+The declarations `finite_root_minimax` in [NativeFiniteRootMinimax][D5M]
+and `effective_native_birth_provenance` and `returned_native_reader`
+in [NativeEffectiveRootCriterion][D5E], together with their
+[minimax Blueprint][BM] and [criterion Blueprint][BE], concern
+the complete predecessor row after a certified actual substitution.
+The latter criterion assumes a prefix-free cut, a complete row with
+nonempty `OriginFiber` and $r\ge1$, and its installed reader runs
+on the substituted source with compatible acquired image values.
+Its finite attained root chart and same-$r,q$ decision supply no
+all-length cap for the stationary original task. No transfer of that
+endpoint is claimed. These are source correspondences, not new Lean
+verification of this volume.
+

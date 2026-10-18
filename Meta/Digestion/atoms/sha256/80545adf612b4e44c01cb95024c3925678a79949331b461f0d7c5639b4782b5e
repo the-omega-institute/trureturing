@@ -1,0 +1,20 @@
+**反例 13.8.1（首阶不变不等于全时不变）。** 取两模式
+
+$$
+H=\hbar g\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad
+\rho_0=|0\rangle\langle0|.
+$$
+
+则
+
+$$
+p_0(t)=\cos^2(gt),
+\qquad
+\frac{d}{dt}p_0(0)=0,
+$$
+
+但 $p_0(t)$ 在任意非零小时间通常改变。导数为零只排除了线性项。
+
+<a id="claim-13-8-2"></a>
+

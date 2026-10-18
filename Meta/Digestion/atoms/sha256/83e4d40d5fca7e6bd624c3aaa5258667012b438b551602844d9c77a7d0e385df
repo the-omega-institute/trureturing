@@ -1,0 +1,83 @@
+**Theorem 10.11 (Recorded random settings attain the matrix cost).**
+For any real $0<t<1$ and any integer $N\ge1$, independently choose
+setting $A$ with probability $t$ on each copy and otherwise choose $B$;
+record both the setting and the complete mode. Then
+
+$$
+F_t=N\begin{pmatrix}tG&0\\0&4(1-t)G^{-1}\end{pmatrix}
+\tag{10.36}
+$$
+
+is the exact reference Fisher matrix. The fixed-reference estimates
+
+$$
+\widehat\xi=\frac{G^{-1}}{Nt}\sum_{\nu:A_\nu}s(I_\nu),\qquad
+\widehat\Phi=\frac{G}{4N(1-t)}\sum_{\nu:B_\nu}2h(I_\nu)
+\tag{10.37}
+$$
+
+have full local Jacobian $I_{2r}$, zero reference means, and
+
+$$
+\Sigma_\xi=\frac{G^{-1}}{Nt},\qquad
+\Sigma_\Phi=\frac{G}{4N(1-t)},\qquad
+\operatorname{Cov}_0(\widehat\xi,\widehat\Phi)=0.
+\tag{10.38}
+$$
+
+At $t=1/2$, (10.31) is attained for every $N\ge1$.
+
+Proof. The observed-setting likelihood is $tq_A(I)$ or
+$(1-t)q_B(I)$; $t$ is parameter independent. Its scores are exactly
+the two block vectors in the proof of Proposition 10.10. Their means
+are zero and their covariance is the one-copy version of (10.36).
+Independence multiplies it by $N$. If $S_N$ is the joint vector score
+evaluated at the reference, (10.37) is $F_t^{-1}S_N$.
+Differentiating the sampling law while holding this statistic fixed
+gives expectation Jacobian $F_t^{-1}F_t=I_{2r}$.
+Its covariance is $F_t^{-1}F_tF_t^{-1}=F_t^{-1}$, proving (10.38).
+Equivalently, each one-copy product of an $A$ contribution and a $B$
+contribution is zero, and contributions from different copies have
+zero cross expectation by independence. This explains the vanishing
+cross covariance for this particular construction.
+The weighted trace equals
+$r/[Nt]+r/[N(1-t)]$, whose minimum is $4r/N$ at $t=1/2$. $\square$
+
+The denominators in (10.37) use the fixed design probabilities and
+total $N$. They never divide by the observed random setting counts.
+Empty sums are zero. The events with no $A$ observations or no $B$
+observations, of probabilities $(1-t)^N$ and $t^N$, are included in the
+expectations above, so the assertion includes $N=1$.
+
+For a deterministic schedule with $m$ copies assigned to $A$,
+$1\le m\le N-1$, the independent score calculation instead gives
+
+$$
+F_{\rm det}=\operatorname{diag}(mG,4(N-m)G^{-1}),\qquad
+\widehat\xi=\frac{G^{-1}}m\sum_A s,\quad
+\widehat\Phi=\frac{G}{4(N-m)}\sum_B2h.
+\tag{10.39}
+$$
+
+It attains (10.38) only with $t=m/N$. Balanced deterministic allocation
+requires even $N$, and $N=1$ has no deterministic two-setting allocation.
+At $t=0$ or $t=1$ one entire score block vanishes, precluding joint
+local unbiasedness with finite covariance.
+
+The two-basis method has its primary precedent in Nan Li, Christopher
+Ferrie, Jonathan A. Gross, Amir Kalev and Carlton M. Caves,
+*Fisher-symmetric informationally complete measurements for pure
+states*, [equation (18) and Supplemental Material §II,
+(A.10)–(A.13)][FisherSymmetric10]. Their dimension is $d=d_n$ and
+their fiducial $|0\rangle$ is $\psi_0$. Choose a real orthonormal
+completion of $\psi_0$; the original mode basis has strictly positive
+fiducial overlaps $\sqrt{p^0_I}$. Their two bases differ by a quarter
+turn of the fiducial component, equivalently a relative quarter turn
+of the orthogonal complement as in (10.34). Their setting probabilities
+$p_\chi,p_\tau$ map to $t,1-t$. Conjugating the imaginary-coordinate
+convention accounts for the negative phases here and leaves Fisher
+information unchanged. Their full pure-state tangent dimension is
+$2d_n-2$; our $2r$ directions form the specified subspace (10.23).
+The score computation and fixed-reference statistics above establish
+the exact finite-$N$ application, including its recorded random design.
+

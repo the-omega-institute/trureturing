@@ -1,0 +1,52 @@
+**Lemma 24.4 (fixed residual and early-vector rate).** For this fixed datum,
+
+$$
+\|(L_s-C_*)p\|_2\le Cs,\qquad \|u_s-p\|_2\le Cs.
+\tag{24.13}
+$$
+
+Proof. J (29.5) gives, uniformly for the original return and its extra-killed restriction,
+
+$$
+\|H_sf\|_2+\|H_s^Lf\|_2\le C(\|f\|_1+\|f\|_2).
+\tag{24.14}
+$$
+
+Use contraction below time one and integrate $t^{-7/4}$ above it. On the strip, the first derivative applied to $g_0$ has bounds
+
+$$
+\begin{cases}
+C(\|rg_0\|_2+\sqrt t\,\|g_0\|_2),&0<t\le1,\\
+C(t^{-7/4}\|rg_0\|_1+t^{-5/4}\|g_0\|_1),&1\le t\le T.
+\end{cases}
+\tag{24.15}
+$$
+
+They are time integrable uniformly, so $\|(H_s^L-H_0^L)g_0\|_2\le Cs$.
+
+To restore both original faces, split input by height $|A|\le L/4$. The deleted-path kernel on this inner input has supremum $Ct^{-7/2}e^{-cL^2/t}$ by J (31.6), for every output height and phase. Its column mass is at most a fixed constant for $t\le T$ (the shifted mass is at most $e^\lambda$). Thus its column $L^2$ norm is at most $Ct^{-7/4}e^{-c'L^2/t}$, with time integral $O(L^{-3/2})$. Integrate this against the inner input's $L^1$ norm. The outer seed has $L^2$ norm $O(L^{-13/2})$ by (24.4); native, canonical and restricted contractions on $(0,T)$ cost at most $CT L^{-13/2}=O(s^{9/2})$. The remaining canonical time tail costs $CT^{-3/4}=O(s^{3/2})$. These full-output estimates show
+
+$$
+\|H_sg_0-G_0g_0\|_2=O(s).
+\tag{24.16}
+$$
+
+They include outputs outside the original interval by zero extension. Since $Vp=\mu g_0$ and $\mu G_0g_0=C_*p$,
+
+$$
+(L_s-C_*)p=H_s((F_s-V)p)+\mu(H_s-G_0)g_0.
+\tag{24.17}
+$$
+
+The first input has $L^1+L^2$ norm $O(s)$ by (24.6), proving the first assertion.
+
+J Lemma 53.3 supplies $L_s\to K_{\rm rec}$ in norm, with isolated algebraically simple eigenvalue $C_*$ and right vector $p$. On one fixed surrounding contour the resolvents of $L_s$ are uniformly bounded. The exact identity
+
+$$
+(z-L_s)^{-1}p-(z-C_*)^{-1}p
+=(z-C_*)^{-1}(z-L_s)^{-1}(L_s-C_*)p
+\tag{24.18}
+$$
+
+gives $P_sp-p=O_{L^2}(s)$ for its rank-one Riesz projection. Its range is spanned by $u_s$. The projection is real, and its scalar multiple of $u_s$ is positive for small $s$, since both converge to $p$. Normalizing $P_sp$ proves the second assertion. The spectral isolation here belongs to a compact reconstruction operator; no positive $L^2$ gap for the critical Hamiltonian is used. $\square$
+

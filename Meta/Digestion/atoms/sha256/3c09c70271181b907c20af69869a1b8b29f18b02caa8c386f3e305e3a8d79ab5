@@ -1,0 +1,14 @@
+**Definition 2.1 (reply transforms).** Define a total map
+$F:\mathcal A\to\mathcal A$ and the two branch-created replies by
+
+$$
+F(\alpha)=\beta,\quad F(\beta)=\mathsf{branch},\quad
+F(\mathsf{branch})=\mathsf{branch},\quad
+F(\mathsf{absent})=\mathsf{absent},\qquad
+J_L=\beta,\quad J_R=\alpha.
+\tag{NVC.6}
+$$
+
+The absent value of $F$ totalizes the finite tables; a truthful
+empty-word Read or a child of a truthful branch cannot be absent.
+

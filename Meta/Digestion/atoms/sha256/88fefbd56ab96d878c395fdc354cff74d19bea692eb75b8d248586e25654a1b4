@@ -1,0 +1,14 @@
+**Definition 2.2 (physical word instructions).** Every assignment in §2.1
+has ARC §2/RCA Definition 11.3's two-pass bank emission: actual Base, dry
+length, fixed field scans and actual copies, separators and F, seal,
+closed descriptor count, descriptor write and parity CTL. All source and
+destination accumulators are distinct; all old banks and scratch versions
+remain. Public reads use latch4 unless explicitly stated. Ingress uses
+latch6, its length test latch5; the old source caller uses its own latch5.
+A read bit is selected into a literal branch before compiler work can
+overwrite it. Compiler work on64–68 preserves a positioned importer head
+on69,70 or73. It never imports scratch66/67 through a head that its own
+bank rebuild moves: native scratch needing import is staged on69 by ARC
+Definition 4.3's relocated Stage66/Stage67. Ordinary whole-frame imports
+from70 instead use its own F-bounded block directly.
+

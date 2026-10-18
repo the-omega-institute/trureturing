@@ -1,0 +1,49 @@
+**Theorem 28.1 (exact right-ray singleton and worst target).** For every
+$D\ge n\ge1$,
+
+$$
+M_D(\{R^n\})=m(n),\qquad
+\max_{p\in\mathcal P_D}M_D(\{p\})=m(D).
+\tag{GDB.111}
+$$
+
+The lower bound allows arbitrary correlated code fibers, all original
+variable shapes, arbitrary finite off-target original-root queries and
+zero-Read branches.
+
+Proof. On the $2n+1$ actual witnesses of Lemma 26.3 for $p=R^n$,
+(GDB.107) has first-branch count
+
+$$
+b(B)=0,\qquad b(j,0)=2(n-j)+2,\qquad b(j,1)=2(n-j)+1.
+\tag{GDB.112}
+$$
+
+These are exactly the integers $0,1,\ldots,2n$, without repetition.
+The witnesses therefore have distinct full trajectories: the first
+branch count is already recovered from a trajectory. This uses all
+subsequent authentic counts, rather than only the initial reply.
+
+Fix any lawful competitor for this singleton task and one attained
+complete export value $e$. At $e,D,p$ its deterministic decision to
+make zero Reads, or its entire query word, is fixed before a reply
+and every count. In the query case there are at most four replies,
+regardless of the length or location of that word. Equal replies at
+this same complete name produce identical final predictors and hence
+the same full decoded trajectory. At most four of these pairwise
+distinct witness trajectories can therefore have name $e$. A zero-Read
+branch accommodates at most one. Arbitrary post-request computation
+or predictor storage cannot distinguish identical inputs.
+
+The $2n+1$ witnesses all belong to the mandatory original family.
+Thus every complete export has at least
+$\lceil(2n+1)/4\rceil=m(n)$ attained values. No prefix-query
+normalization or projection of a correlated fiber was used in this
+count. Theorem 27.2 supplies the matching upper. For an arbitrary
+$p$ of length $n\le D$, that same upper is at most $m(D)$.
+Taking $p=R^D$ proves the worst-target equality. $\square$
+
+This is an exact maximum over singleton tasks, not a formula asserted
+for every individual word. The proof permits the real descriptor
+collisions in Convention 26.4.
+

@@ -1,0 +1,38 @@
+##### 推论 2.2.3： 纠缠本身不允许远端任意控制本地读数
+
+对任意联合态 $\rho_{AB}$ 和任意 $A$ 上的通道 $\mathcal E_A$：
+
+$$
+\boxed{
+\operatorname{Tr}_A
+[(\mathcal E_A\otimes\operatorname{id}_B)(\rho_{AB})]
+=
+\operatorname{Tr}_A\rho_{AB}.
+}
+$$
+
+**证明。**
+
+写：
+
+$$
+\mathcal E_A(X)=\sum_jK_jXK_j^\dagger,
+\qquad
+\sum_jK_j^\dagger K_j=I_A.
+$$
+
+对任意 $B$ 效果 $F$，操作后的概率为：
+
+$$
+\sum_j
+\operatorname{Tr}[\rho_{AB}(K_j^\dagger K_j\otimes F)]
+=
+\operatorname{Tr}[\rho_{AB}(I_A\otimes F)].
+$$
+
+全部 $B$ 效果的概率相同，故边缘相同。证毕。
+
+条件于 $A$ 的特定结果，$B$ 的条件态可以改变；但这不是无条件的远端信号。结果标签仍须通过允许的关系传递。
+
+<a id="section-2-3"></a>
+

@@ -1,0 +1,85 @@
+**Proposition 209.15 (Strict matching and its boundary).** There are
+unary-preserving replacements (209.28) that reduce complete $N$
+support, and the matching conditions can fail for scores already of
+zero cost in both catalogs.
+
+**Proof.** For the strict example let $L=6$. Give each late word
+$ab01$ and $ab10$, $a,b\in\{0,1\}$, pair-projection mass one,
+and lift it equally to early prefixes $01,10$. Thus $S=8$.
+Take $t=2$, no early correct rows, and the only late correct rows
+
+$$
+C_{110000}=C_{110011}=1,\quad
+C_{110100}=C_{110111}=1/2,\quad
+C_{111000}=C_{111011}=3/2.
+\tag{209.34}
+$$
+
+Replace them by
+
+$$
+C'_{110001}=C'_{110010}=1,\quad
+C'_{110101}=C'_{110110}=1/2,\quad
+C'_{111001}=C'_{111010}=3/2.
+\tag{209.35}
+$$
+
+Both have late totals $(3,3,0,0)$, $E=0$ and $W=10$.
+The new class 3 takes full pair-carrier density when $x_4=0$ and
+half when $x_4=1$; class 4 takes three quarters of its carrier.
+They are simultaneously dominated, and every unary correct marginal
+is unchanged. In particular $c_{34}=2$, whereas constant conditional
+density would give $3/2$. The common maximizer is label zero.
+
+All empty and singleton supports are $10$. Pairs
+$12,13,14,23,24,34$ have support $11$ in both catalogs for both
+scores; pairs $15,16,25,26,35,36,45,46$ have support $10$.
+For example pair $34$ has $N$ maxima $(2,2,3,4)$, and early/3
+or early/4 has first-zero contribution $4$ and other maxima $3,4$.
+The remaining pair $56$ has original $N$ maxima
+$(3/2,4,4,2)$ and new maxima $(0,4,4,2)$; the merged first-zero
+maximum is $4$ in both scores, so both stopped supports are $10$.
+The other listed pair values follow by their preserved unary rewards,
+at most $3/2$ in those suffix cells. These exhaust all pairs.
+Thus the input excesses are $(3/2,1)$ and the output excesses $(1,1)$.
+This changes second-order correct correlations, unlike the
+pair-moment compression of 206.5, which preserves both supports.
+Its quotient is already in the old fair region, using 203.6 with
+$\kappa_f=4,\tau=2$, so no new quotient coverage is implied.
+
+For a retained-credit example above pair stock, take $L=4$ and
+
+$$
+P_{0100}=2/3,\quad C_{0100}=2/3,\quad
+C_{1100}=1,\quad C_{1110}=1/3,\quad t=1/3.
+\tag{209.36}
+$$
+
+Here $m_3=2/3<\gamma_3=1$, but $\zeta_1$ has mass $4/3$
+at late $00$, dominating the required class-3 row and class-4 suffix.
+The early common-maximizer condition holds. The head has support
+$7/3$ and pair $34$ has support $2$; pairs $13,14$ have support
+$8/3$, and pairs $23,24$ have support $5/3$, with the same values
+in both catalogs.
+The anchor is $5/3$, giving both costs one.
+This distinguishes mixed early reward stock from pair stock alone.
+At a fixed carrier, constant-density conditional measures are contained
+in arbitrary dominated measures, which are contained in mixed-carrier
+measures by selecting $r=0$. Equations (209.34)–(209.36) make these
+representation inclusions strict. Original unary matching remains an
+additional hypothesis, so these are not blanket inclusions of the
+input domains of earlier conditional theorems.
+
+Finally let $L=5$, $\nu_{001}=\nu_{010}=1$, balanced early lifts,
+$C_{11011}=1$, and $t=1$, all other correct rows zero.
+The threshold cutoffs $a_{34}=a_{35}=1$ in 203.2 put the whole
+class-3 row at suffix $11$ and give both costs zero:
+$m_3=2,m_4=m_5=1$, $\kappa=0$ and $t\ge\mu=1$.
+But the actual class-3 pair carrier has suffix support $\{01,10\}$.
+In (209.31) choose $(a_0,a_4,a_5)=(1,-1,-1)$.
+The desired moment side is one and every carrier support side is zero.
+So no permitted unary-preserving replacement exists for that class.
+Conversely its half-density conditional row on $01,10$ is dominated
+but is not this threshold row. A route obstruction can therefore occur
+inside the old zero-cost region. $\square$
+

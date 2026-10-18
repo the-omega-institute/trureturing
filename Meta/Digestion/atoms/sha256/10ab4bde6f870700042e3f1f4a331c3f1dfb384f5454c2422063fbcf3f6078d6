@@ -1,0 +1,12 @@
+**Definition 6.4 (remaining unrestricted quantifier).** By Theorem 4.2, full-class endpoint attainment with defect bound $D$ is equivalent to
+
+$$
+\exists\text{ one finite shape }\quad
+\forall L\ge1:\ \mathcal F_L(D)\ne\varnothing.
+\tag{6.8}
+$$
+
+The fixed-shape theorem does not license interchanging this with $\forall L\,\exists$ a finite shape; the reverse implication from that weaker pattern is unproved. It gives no uniform cutoff in $L$, no universal finite state bound and no all-shape infeasibility certificate. Excluding one shape or every fixed finite grid does not establish full-class nonattainment or a positive gap. Equation (6.7) concerns a fixed charged macro shape; it is not a total-program, sampler-workspace or physical-resource optimum.
+
+The finite vectors in Definition 5.1 also give the law-order coordinates $G$ on the same table. Thus all four phase/risk coordinates can be compared without joining different models or posteriors. The common conf/conf feasibility claim (6.8) makes no new attainment assertion for the other three combinations, which are supplied by [FOUR], [SWITCH] and the two-endpoint case of [ST].
+

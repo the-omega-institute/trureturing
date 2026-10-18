@@ -1,0 +1,19 @@
+## 5. Reconciliation and the stronger hypotheses actually used
+
+Theorem 3.2 is a discontinuity from **uniform control or signed-curve
+topology to output law**. It already has survival at least $1/2$ and
+uniform speed, variation and support bounds. Its complete marked laws
+stay distance $1/2$ from waiting, so it does not meet a small-output-error
+hypothesis of Theorem 2.3. Theorem 4.1 is an obstruction in the opposite
+direction, from **small output distance to uniform height recovery** over
+a class without a common survival floor. It does not have uniformly bounded
+speed or variation. Neither construction refutes (IS.11) or (IS.12).
+
+For (IS.12), both a bound on the *joint marked-law error* and a certified
+floor are sufficient data. A common support margin and height-variation
+bound supply the floor by Corollary 2.4, but do not themselves supply
+small marked-law error. Given only the two CDF errors, use (IS.11).
+Replacing these hypotheses with a failure-time marginal, a conditional
+survival probability, a uniform error in $C$, a terminal holonomy error,
+or a finite number of acquired events is unsupported.
+

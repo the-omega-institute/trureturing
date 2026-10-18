@@ -1,0 +1,111 @@
+**Theorem 23.2 (common-index residual and the full complex restricted action).** For the data in Definition 23.1,
+
+$$
+\begin{gathered}
+B\succeq0,\quad Bh=0,\quad B+JBJ^T=Q,\quad
+\operatorname{Tr}B=\operatorname{Tr}D=1,\\
+\operatorname{Tr}C_{\rm out}=\operatorname{Tr}(JC_{\rm out})=0,\qquad
+0\preceq B\preceq Q\preceq aI_5,\qquad
+2\leq k:=\operatorname{rank}B\leq4.
+\end{gathered}
+\tag{R.100}
+$$
+
+The Moore–Penrose inverse $B^+$ is taken on the actual support, including singular $B$. The matrix $P_A=A^TB^+A$ is the orthogonal projection onto $\operatorname{ran}(A^T)$ in the original real Kraus-index space. In particular,
+
+$$
+\begin{gathered}
+AP_A=A,\qquad \operatorname{ran}C_{\rm out}\subseteq\operatorname{ran}B,\\
+D=C_{\rm out}^TB^+C_{\rm out}+D_\perp,\qquad
+D_\perp=T(I-P_A)T^T\succeq0,\\
+q:=\operatorname{Tr}(C_{\rm out}^TB^+C_{\rm out})
+ =\|TP_A\|_F^2\in[0,1],\qquad
+\operatorname{Tr}D_\perp=1-q.
+\end{gathered}
+\tag{R.101}
+$$
+
+Use the real seven-dimensional space and its associated minima
+
+$$
+\begin{gathered}
+\mathcal H_0=\{X=X^\dagger:\operatorname{Tr}X=0,\ X_{22}=0\}
+ =\left\{\begin{pmatrix}
+\eta&z&w\\ \bar z&-\eta&v\\ \bar w&\bar v&0
+\end{pmatrix}:\eta\in\mathbb R,\ z,w,v\in\mathbb C\right\},\\
+m_0(N)=\min_{0\ne X\in\mathcal H_0}\frac{\|N(X)\|_1}{\|X\|_1},\qquad
+m_{\min}(N)=\min_{\substack{0\ne X=X^\dagger\\\operatorname{Tr}X=0}}
+\frac{\|N(X)\|_1}{\|X\|_1}.
+\end{gathered}
+\tag{R.102}
+$$
+
+Both minima exist by normalizing to the compact unit sphere in the indicated real vector space. In particular $m_{\min}(N)\leq m_0(N)$. All complex coordinates $z,w,v$ are retained. The nine original matrix-unit images are
+
+$$
+\left[N(E_{ij})\right]_{i,j=0}^2
+=\begin{pmatrix}
+B&BJ^T&C_{\rm out}\\
+JB&JBJ^T&JC_{\rm out}\\
+C_{\rm out}^T&C_{\rm out}^TJ^T&D
+\end{pmatrix},
+\qquad E_{ij}=|i\rangle\langle j|.
+\tag{R.103}
+$$
+
+Consequently, on precisely $\mathcal H_0$, the channel action is
+
+$$
+\begin{aligned}
+\mathcal L_{B,C_{\rm out}}(X)
+={}&\eta(B-JBJ^T)+zBJ^T+\bar zJB\\
+&+wC_{\rm out}+\bar wC_{\rm out}^T
+ +vJC_{\rm out}+\bar vC_{\rm out}^TJ^T
+=N(X).
+\end{aligned}
+\tag{R.104}
+$$
+
+The following estimates are ingredients for reducing this same-channel witness problem:
+
+$$
+\begin{gathered}
+c_{\rm pl}:=\tfrac12\|B-JBJ^T\|_1=\|ZZ^T\|_1,\\
+m_{\min}(N)\leq m_0(N)
+\leq\min\{c_{\rm pl},\|C_{\rm out}\|_1\}
+\leq\min\{c_{\rm pl},\sqrt q\}.
+\end{gathered}
+\tag{R.105}
+$$
+
+Thus $c_{\rm pl}\leq\sqrt a$ or $q\leq a$ already gives an $\mathcal H_0$ witness at most $\sqrt a$. The same conclusion holds when $\operatorname{rank}C_{\rm out}\leq1$.
+
+**Proof.** The phase relation (R.8) gives $B+JBJ^T=Q$ and $Bh=0$. The first two column norms are equal because $J$ is an isometry on $U$; tracing the phase identity gives $\operatorname{Tr}B=1$. Equation (R.9) gives $\operatorname{Tr}D=1$ and exactly the two displayed cross traces. Positivity gives $B\preceq Q$, and $a\geq\beta$ gives $Q\preceq aI_5$. Since $Q$ has rank four, $4\leq2\operatorname{rank}B$, while $Bh=0$ gives the upper rank bound. No nondegeneracy of $a-\beta$ is used, so $\beta=1/2$ is included.
+
+Take a real thin singular-value decomposition $A=U_A\Sigma V_A^T$, with $k$ positive singular values. Then $B^+=U_A\Sigma^{-2}U_A^T$ on its support and $P_A=V_AV_A^T$. This proves the projection and support assertions even when $B$ is singular. Orthogonal splitting of $T=TP_A+T(I-P_A)$ gives
+
+$$
+\begin{aligned}
+C_{\rm out}^TB^+C_{\rm out}
+ &=TA^TB^+AT^T=TP_AT^T=(TP_A)(TP_A)^T,\\
+TT^T&=(TP_A)(TP_A)^T+
+       [T(I-P_A)][T(I-P_A)]^T.
+\end{aligned}
+$$
+
+Tracing proves (R.101). In particular $\operatorname{rank}D_\perp\leq\min(5,n-k)$, with no rank-one restriction. The original Kraus Choi rank is the rank of the stacked real matrix $(A;JA;T)$. Its row space is the orthogonal sum of $\operatorname{ran}(A^T)$ and the row space of $T(I-P_A)$: the rows of $JA$ and $TP_A$ already lie in the former. Thus the original rank is $k+\operatorname{rank}D_\perp\leq9$, consistent with Theorem 1.3, rather than bounded by four. At $q=0$, $TP_A=0$ and $C_{\rm out}=0$; at $q=1$, $D_\perp=0$ and $T=TP_A$. These are exact endpoint statements.
+
+Each entry of (R.103) follows by expanding the original Kraus sum on $E_{ij}$; substitution gives (R.104). On a general input the third diagonal contribution is $X_{22}D$, including $X_{22}D_\perp$. It vanishes in (R.104) because $X_{22}=0$, not because the original channel lacks a residual. The real dimension in (R.102) is $1+2+2+2=7$.
+
+For (R.105), $E_{00}-E_{11}$ has trace norm two. In the complex phase frame $(f_1^+,f_2^+,f_1^-,f_2^-,h)$ of (R.7), its output has off-diagonal block $ZZ^T$ and the adjoint block, with zero diagonal blocks. The singular values are therefore doubled, proving the expression for $c_{\rm pl}$. This is exactly the $0$-versus-$1$ distance already used in Theorem 4.3, so $c_{\rm pl}=f(\tau,\bar\tau)$ in the owning complementary notation; no additional plane certificate is being assumed.
+
+The input $E_{02}+E_{20}\in\mathcal H_0$ also has trace norm two and output $C_{\rm out}+C_{\rm out}^T$. Triangle inequality bounds its ratio by $\|C_{\rm out}\|_1$. The common factorization $C_{\rm out}=A(TP_A)^T$ and Schatten Hölder give
+
+$$
+\|C_{\rm out}\|_1\leq\|A\|_F\|TP_A\|_F=\sqrt q,
+\qquad
+\|C_{\rm out}\|_F^2\leq\|A\|_{\rm op}^2\|TP_A\|_F^2\leq aq.
+$$
+
+When $\operatorname{rank}C_{\rm out}\leq1$, its trace and Frobenius norms agree, giving $\|C_{\rm out}\|_1\leq\sqrt{aq}\leq\sqrt a$. These standard norm steps are used only inside the common-Gram reduction. The condition $q\leq a$ is equivalent to $\operatorname{Tr}D_\perp\geq\beta$ and is not a condition on $\operatorname{Tr}S$. At $q=0$, the displayed cross input is a nonzero zero-output witness, so $m_0(N)=m_{\min}(N)=0$ without any normalization. $\square$
+

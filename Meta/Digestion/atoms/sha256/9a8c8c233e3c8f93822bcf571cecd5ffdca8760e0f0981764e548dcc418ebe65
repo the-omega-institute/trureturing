@@ -1,0 +1,50 @@
+**Theorem 9.2 (the original universal obligation at the current frontier).** For every
+$n\ge7$, $4\le k\le n-3$, every original position set $A$ and all $r\ge0$,
+the unresolved lower-bound assertion is
+
+$$
+D\le E+\nu,
+\quad\text{equivalently}\quad
+\sum_{I\in\mathcal L_*}(D_I-E_I)
+\le\nu+E_{\rm reg}+\sum_{I\in\mathcal A_*}(E_I-D_I)
+ =\nu+E_{\rm reg}+b_{\rm short}+2\tau+\Xi
+\tag{9.1}
+$$
+
+for every correct terminating unrestricted graph at the simultaneous caps
+$n,W$. The contrary alternative requires one complete graph with $m<G$,
+all fixed labels and successors, correctness and termination on every
+Boolean input, both caps on every same input, and the faithful full-fiber
+lift preserving the original code, entries, reader and latches.
+
+Proof. Theorem 3.3 gives the exact identity, and Theorem 5.6 gives (9.1),
+the late-gap partition of [SI, Proposition 10.9][SI] with the proved
+short-block units and credited terminal margin exposed. The older sum
+(5.5) is still equivalent, but SI10 already proves nonnegative compensation
+for every span-four gap and rules out sharing at all gaps ending at
+$b\le e_*$. Thus an actual local deficit must have span at least five
+and right endpoint greater than $e_*$. It has at least four internal
+ambiguous depths and obeys (5.16). No upper bound on the total of those
+late deficits is supplied by the nonnegative right side of (9.1).
+
+In a four-coordinate window, abstract supports
+$T_-\cup\{x\}$ and $T_-\cup\{y,z\}$ can leave a fourth
+coordinate fresh for both. That pattern only defeats the simplest
+nested-or-forced-old-label argument: the actual fixed-successor analysis
+of Lemma 5.3 and Theorem 5.4 nevertheless compensates every such span-four gap.
+At span at least five there are further internal support layers, so a
+common live reply can reach another shareable internal layer. The six-cell
+classification above supplies no compensation theorem there. Abstract
+support sets alone provide no count-compatible histories or correct
+counterexample; fixed labels and successors, old assignments, certified
+exits and both whole-input budgets must still be jointly handled.
+
+Theorems 6.2 and 6.4 concern individual actual prefixes on the same
+installed vector. Their restrictions can overlap, so their lower bounds
+cannot be summed or subtracted to allocate distinct states. Section 8
+concerns above-grid graphs only and supplies no universal separator-capacity
+premise. Theorem 1.4 transfers the two actual alternatives to the unchanged
+native question at $G+4+r$, caps $n+1,W+3$, on the entire original
+fiber. Neither alternative is settled by this volume.
+$\square$
+

@@ -1,0 +1,50 @@
+**Theorem 116.2 (finite positive endpoint contracts).** All four maps in
+(116.3) are order-positive and supported within occurrence distance one.
+Their exact contracts, for every signed $f,g\in H$ and $h\in H'$, are
+
+$$
+\begin{aligned}
+E\mathbf1&=\mathbf1,& (Ef)(x)&=f(x)\quad(x\in V),\\
+D\mathbf1&=m/r,&
+(C\mathbf1)(y)&=r/m(\pi(y)),&
+DC&=I_H,\\
+\int Dh\,d\mu&=\int h\,d\mu',&
+\int Cf\,d\mu'&=\int f\,d\mu,&
+\sum_{y\in V'}(Ff)(y)&=\sum_{x\in V}f(x),\\
+\langle Eg,Cf\rangle_{\mu'}&=\langle g,f\rangle_\mu,&
+\mathfrak a'(Ef,Eg)&=\mathfrak a(f,g).
+\end{aligned}
+\tag{116.4}
+$$
+
+Furthermore $1\le r\le3$ and
+
+$$
+\|E\|=\|D\|\le\sqrt3,\qquad
+\|C\|\le\sqrt3,\qquad
+\|Cf\|_{\mu'}\ge3^{-1/2}\|f\|_\mu.
+\tag{116.5}
+$$
+
+Thus $D$ reverses $C$ on its attained range. It is not a recovery of
+arbitrary successor inputs.
+
+Proof. Every fibre has one old member and either zero or two born
+children. Direct summation on these actual fibres gives
+
+$$
+E^{\mathsf T}E=\operatorname{diag}(m),\qquad
+W:=DE=\operatorname{diag}(m/r),\qquad
+\|Ef\|_{\mu'}^2=\frac1N\sum_x\frac{m(x)}r f(x)^2,\qquad
+\|Cf\|_{\mu'}^2=\frac1N\sum_x\frac r{m(x)}f(x)^2.
+\tag{116.6}
+$$
+
+The same summation proves the integrals, pairing and $DC=I$ in (116.4).
+All nonzero coefficients are positive and join either equal addresses
+or a newborn and its parent. Born-edge differences of $Ef$ vanish;
+every old-edge difference is retained, proving the form identity.
+The actual count $N'=N+2|\mathcal B|$ gives $1\le r\le3$.
+Since $1\le m\le3$, (116.6) proves every norm and lower bound.
+No inverse on the additional successor directions follows. $\square$
+

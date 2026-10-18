@@ -1,0 +1,37 @@
+**Proposition 8.4 (menu acquisition and retention bills).** Put
+$e=c_0-1$. With first-call parameters (CAB.3), Theorem 8.3 adds at
+most $e(\min(D,H)+1+S_H)$ Reads per attempt to RA and uses operands
+of length at most $2H+1$. All attempts number at most $b+1$.
+The supplement candidate costs $O(e\log(H+2))$ bits, separate from
+the row candidate. Additional working registers need
+$O(\log(e+D+H+2))$ bits beyond RA paths and a reused full operand.
+Final payload is the actual complete rows and the signed calibrations;
+later arithmetic and outputs are additional.
+
+Proof. Prefix traversal reads at most $\min(D,H)+1$ positions; if
+it reaches a branch endpoint the right search adds at most $S_H$.
+Re-reading that endpoint is allowed and included in this loose sum.
+Its base length plus twice its descendant right depth is at most
+$2H$; the displayed $2H+1$ is a uniform safe bound. On a successful
+source $0\le J_w\le2H+1$, since the prefix weight is at most twice
+its length and the remaining clock is at most twice the remaining
+height plus one. Failed provisional quantities have the same finite
+height bounds, so logarithmic signed fields suffice. Endpoints are
+processed sequentially, not by storing all hidden trees.
+
+The public menu and selected endpoints are separately paid literal
+input/control. For example, an elementary finite realization enumerates
+all $2^D$ frontier words, stores their $m$ incidence bits and their
+length-$D$ words, constructs the $m^2$ adjacency bits, and selects
+representatives and a forest. This has a finite explicit public
+workspace bound
+$O(2^D(D+m)+m^2+mD+m\log(m+1))$ bits, besides the cut tapes.
+One can discard this geometry after extracting the needed public plan,
+or retain and charge it. No compact-menu optimization is assumed.
+Local endpoint work includes full word construction and binary
+arithmetic, bounded for example by
+$O(e((D+1)+(H+1)S_H)L^2+eF L^2)$ per attempt with
+$L=1+\lceil\log_2(F+K_P+D+e+H+2)\rceil$, added to RA's work.
+Source-independent menu preprocessing and source-dependent candidates
+are distinct accounts. $\square$
+

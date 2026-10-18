@@ -1,0 +1,3 @@
+**Definition 12.1 (matrices).** $R_S$ acts on the 22 seam equations, $R_8$ on the 22 point equations, $R_6$ on the 20 fixed-multiplier six-contact equations, $R_{7S}$ on the 22 fixed-multiplier seven-contact equations at the seam, and $R_{7,8}$ on the 22 fixed-multiplier equations at the point. The separate point-response matrix is retained in full; its rational entries are not silently replaced by those of $R_8$.
+
+

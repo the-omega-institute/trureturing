@@ -1,0 +1,12 @@
+**Theorem 2.1 (all admitted priors, both original risks and both compatibilities).** For every prior in Convention 1.1 and each $j\in\{\mathrm{law},\mathrm{conf}\}$,
+
+$$
+\inf_{O\in\mathcal F_{\rm coh}}\mathcal A_j^\mu(O)
+=\inf_{O\in\mathcal F_{\rm det}}\mathcal A_j^\mu(O)=0.
+\tag{2.1}
+$$
+
+Every individual $O\in\mathcal F_{\rm coh}$ has strictly positive values of both averages. Hence all four infima are unattained. For every fixed $\mu$ and $\varepsilon>0$, one finite deterministic observer, installed before the first actual Read, simultaneously has $\mathcal A_{\rm law}^\mu=\mathcal A_{\rm conf}^\mu<\varepsilon$. No rationality, finite-support, computability, entropy or mean-depth assumption on $\mu$ is needed for this ordinary existence statement.
+
+Proof. We construct a complete finite generator and bound its complete-law error, then use the existing worst-history obstruction for nonattainment.
+

@@ -1,0 +1,39 @@
+**定理 34.4.1（可行性与最大分离）。** 有
+
+$$
+\mathcal A(B,h)\ne\varnothing
+\quad\Longleftrightarrow\quad
+B\ge2a^2.
+$$
+
+当 $B\ge2a^2$ 时，对每个 $(u,v)\in\mathcal A(B,h)$ 有
+
+$$
+|u-v|\le d_B:=\sqrt{B-a^2}-a,
+$$
+
+从而
+
+$$
+|k(u,v)|\le k_*:=
+\frac{\rho(\sqrt{B-a^2}-a)}{2\sigma}.
+$$
+
+等号由 $(u_*,v_*)=(\sqrt{B-a^2},a)$ 或交换两坐标取得。
+
+**证明。**
+
+若动作可行，则 $u,v\ge a$，所以 $B\ge u^2+v^2\ge2a^2$。反过来，当
+$B\ge2a^2$ 时 $(a,a)$ 可行。
+
+设 $u\ge v$。则
+
+$$
+u\le\sqrt{B-v^2}\le\sqrt{B-a^2},
+$$
+
+故 $u-v\le\sqrt{B-a^2}-a$。交换 $u,v$ 得到另一种次序。把界乘以
+$\rho/(2\sigma)$ 即得 $k_*$，而指定动作达到等号。证毕。
+
+<a id="section-34-5"></a>
+

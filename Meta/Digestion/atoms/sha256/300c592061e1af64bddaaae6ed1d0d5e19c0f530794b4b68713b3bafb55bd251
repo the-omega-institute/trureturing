@@ -1,0 +1,51 @@
+**Application 26.2 ((ARH.4.3): guarded addresses and replies).** Let
+$w(L)=1$, $w(R)=2$, and let $w$ add along a word, with $w(\varepsilon)=0$.
+For a nonempty address $p=\ell s$, $\ell\in\{L,R\}$, define
+
+$$
+\begin{aligned}
+h(Ls)&=1+w(s),& h(Rs)&=w(s),\\
+g(\ell s)&=\begin{cases}
+0,&s=\varepsilon,\\
+h(\ell s)-w(b),&s=t b\ne\varepsilon,
+\end{cases}
+\end{aligned}
+\tag{CS.26.6}
+$$
+
+where $b$ is the last letter of $s$. Then $0\le g(p)\le h(p)$, and
+
+$$
+\begin{aligned}
+p\in\operatorname{Pos}(\rho^a u_j)
+ &\Longleftrightarrow j+a\ge g(p),\\
+(\rho^a u_j)|_p&=T_{j+a+2-h(p)}
+                 \quad\text{when reached}.
+\end{aligned}
+\tag{CS.26.7}
+$$
+
+At the root the subtree is $u_{j+a}$, always reached with reply
+$\mathsf{Pair}$.
+
+Parameter substitution. Equation (ARH.4.3) already supplies, for nonempty
+$s$ with parent word $s^-$,
+
+$$
+s\in\operatorname{Pos}(T_n)
+ \Longleftrightarrow n\ge w(s^-)+2,
+\qquad T_n|_s=T_{n-w(s)}\quad\text{when reached}.
+\tag{CS.26.8}
+$$
+
+Apply it to $T_{j+a+1}$ on the left and $T_{j+a+2}$ on the right.
+For $s\ne\varepsilon$ the guards become respectively
+$j+a\ge1+w(s^-)$ and $j+a\ge w(s^-)$, precisely (CS.26.6).
+For $p=L,R$ both child roots always exist. Subtracting $w(s)$ gives
+(CS.26.7) in all reached cases; no nonnegative-index convention replaces
+the supplied reach guard.
+
+In particular, a nonnegative proposed subtree index is not by itself a
+reach test. For example $p=LL,j=a=0$ proposes index zero but is absent:
+$g(LL)=1$. The guard must be checked first.
+

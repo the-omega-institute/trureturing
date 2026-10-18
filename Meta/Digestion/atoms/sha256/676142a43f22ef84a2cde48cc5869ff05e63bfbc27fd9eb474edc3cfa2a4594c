@@ -1,0 +1,19 @@
+**Definition 8.1 (complete pair relations).** Before any row
+classification, retain for every pair of charts their entire product
+$\mathcal C_i\times\mathcal C_j$ and the relations
+
+$$
+\begin{aligned}
+P_{ij,h}(a,b)&\ \Longleftrightarrow\
+                   \Theta_i(a)\sim_h\Theta_j(b),\\
+B_{ij,h}(a,b)&\ \Longleftrightarrow\
+ P_{ij,h}(a,b)\ \land\
+ R_Q(\Theta_i(a))\ne R_Q(\Theta_j(b)).
+\end{aligned}
+\tag{PDC.21}
+$$
+
+Full row inequality uses all fields from Theorem 5.2. It includes
+within-chart as well as cross-chart pairs and is never tested merely
+on the sections of §7.
+

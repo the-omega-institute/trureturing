@@ -1,0 +1,50 @@
+**Notation 301.1 (Only named finite comparison bases).**
+In this section only, $L=7$, $J=(3,4,5,6,7)$,
+$S=\sum_{j=3}^7b_j$, $R=(46/5)e-S$,
+$v_a=b_{a+2}-r^\star_ae$, and $B=(72,30,18,18,36)$.
+The reused relations are $R\ge0$ and $\pm v_a\le B_aR$ from
+[293.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md).
+They also imply every necessary inequality supplied by the stated cone
+in 294.1: if $\gamma=t\mathbf1+d$, $t\ge\sum_aB_a|d_a|$ and
+$K\ge\gamma\cdot r^\star$, then
+
+$$
+\gamma\cdot b_J-Ke
+\le-tR+\sum_a d_av_a
+\le\left(-t+\sum_aB_a|d_a|\right)R\le0
+$$
+
+on these nonnegative-$e$ comparison points. This is a consequence of
+the ten printed generators, not a claim about all possible uses of the
+earlier full scores.
+
+For recording a finite comparison, set
+
+$$
+D=b_2-1+2b_3+3b_4+3b_5+3b_6+4b_7-24e.
+$$
+
+Two weaker candidate relations are disposed of by exact reductions.
+The first has left side $F_1$, so $F_1\le0$, $R\ge0$ imply
+$F_1\le45R$. For the second,
+
+$$
+D=F_2+2R+2v_5.
+\tag{301.1}
+$$
+
+The already specified coefficients $Z,H_7$ of
+[292.1 and 292.8–292.9](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md)
+give the nonnegative zero-cost score $11Z-H_7$. Indeed the largest
+positive coefficient ratio $H_7/Z$ is $5$, while its cell-gap estimate
+is $|H_{7,ij,c}(\ell)-H_{7,ij,c}(0)|\le11D_{ij,c}$ with
+$D_{ij,c}=Z_{ij,c}(0)-Z_{ij,c}(\ell)\ge0$. Hence both its coefficients
+and its zero-label cell gaps are nonnegative. Its quotient is
+$(0,0,33,33,33,33,34;1524/5)$, and its anchor is $694/5$.
+Pairing this already available score with the same allocation gives
+$v_5\le33R$. Together with $F_2\le0$, (301.1) yields
+$D\le68R\le72R$. The auxiliary bound is consumed in this reduction;
+neither residual relation is retained as a separate result. In particular,
+non-implication within a finite basis omitting $v_5\le33R$ says nothing
+about non-implication after this explicit prior consequence is included.
+

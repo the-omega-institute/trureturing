@@ -1,0 +1,182 @@
+**Theorem 26.2 (Universal exact horizon for three supported gaps).** Let $K=\{a<b<c\}$ with positive integer labels, $H=c$, and any fixed known positive $p_a,p_b,p_c$ of sum one. Put
+
+$$
+g=\gcd(b-a,c-a),\qquad
+A=\frac{c-b}{g},\qquad B=\frac{b-a}{g},\qquad
+d=A+B=\frac{c-a}{g},\qquad
+\phi=A\theta_a-d\theta_b+B\theta_c.
+\tag{26.1}
+$$
+
+The integer $d$ here is an arithmetic parameter; the memory dimension is $c+1$. The least complete single post-tick horizon in Definition 26.1 is exactly
+
+$$
+\boxed{N=(d-1)(b+1).}
+\tag{26.2}
+$$
+
+For every $0\le n<N$ the entire $T_n(\theta)$ is phase independent. At $N$ the distinct actual words
+
+$$
+u=(0^a1)^A(0^c1)^{B-1}0^{c-b},\qquad
+v=(0^b1)^{d-1}
+\tag{26.3}
+$$
+
+have equal length and count, and their exact coherence is
+
+$$
+\boxed{C_\theta:=\langle u|T_N(\theta)|v\rangle
+=R e^{i\phi}+\mathbf1_{\{d=2\}}p_ap_b,\qquad
+R=p_a^{A/2}p_b^{d/2}p_c^{B/2}>0.}
+\tag{26.4}
+$$
+
+For every $n\ge N$ and any two phases, the following are equivalent: equality of $T_n$, equality of $e^{i\phi}$, affine phase difference in $\Gamma_K$, memory-unitary equivalence of the averaged channels, and outcome-labeled instrument equivalence. One fixed six-label terminal law at $N$, retaining its quadrature setting, has exactly the same equivalences. All its signed probabilities are strictly positive at every phase. The shorter-horizon obstruction also holds for the independent repeated and classically adaptive readouts of Definition 26.1. Actual heralding gives a sufficient total bound of $c+1+N$ uses per trial, including the herald; the asserted optimum is the post-tick horizon.
+
+**Proof.** The normalization and CP operators are precisely (23.2)–(23.3). Equation (23.11) gives $`S^*S+J_\theta^*J_\theta=I`$, so the proposed coherent applications are isometric and their flag states have trace one. No stationary initialization is imposed.
+
+Use the all-history supplier (25.13)–(25.16), including its terminal tails, with the following parameter correspondence. Let $w,v'$ be any length-$n$, count-$m$ words of nonzero amplitude, let $f,h\in\mathbb N^K$ be their completed-gap multiplicities, and let $\rho,\sigma$ be their terminal zero-run lengths. Thus $f,h$ are the vectors denoted $a,b$ in (25.15), and $\rho,\sigma$ are its $t,u$. That formula gives
+
+$$
+\begin{aligned}
+n&=m+\sum_j j f_j+\rho=m+\sum_j j h_j+\sigma,\\
+\langle w|T_n|v'\rangle
+&=c^f\overline{c^h}
+\sum_{\substack{k,l\in K\\k\ge\rho,\ l\ge\sigma\\k-\rho=l-\sigma}}
+c_k\overline{c_l},\qquad c^f=\prod_jc_j^{f_j}.
+\end{aligned}
+\tag{26.5}
+$$
+
+For each individual summand put $\alpha=f+\mathbf e_k$ and $\beta=h+\mathbf e_l$, where $\mathbf e_k$ is the multiplicity coordinate vector. Equation (25.16) states that its exponent $z=\alpha-\beta$ belongs to $L_K$, and its value is
+
+$$
+\left(\prod_{j\in K}p_j^{(\alpha_j+\beta_j)/2}\right)e^{iz\cdot\theta}.
+\tag{26.6}
+$$
+
+This use of the published formula includes every ordering of completed gaps, every terminal tail and every count sector. A completed gap outside $K$, a vanishing tail, or an empty tail sum contributes zero; unequal-count entries are zero. The no-tick case uses the empty product in (25.14).
+
+The two equations defining $L_K$ reduce, after eliminating $z_a$, to
+
+$$
+Bz_b+dz_c=0.
+$$
+
+Since $\gcd(A,B)=\gcd(B,d)=1$, their integral solutions, in coordinate order $(a,b,c)$, are exactly
+
+$$
+L_K=\mathbb Z(A,-d,B).
+\tag{26.7}
+$$
+
+Suppose a summand in (26.5) has $z=t(A,-d,B)$ for an integer $t>0$. Its $b$ coordinate gives $\beta_b-\alpha_b=dt$, hence $\beta_b\ge dt$. Only one of these $b$ factors can come from its tail index $l$. The actual word $v'$ must therefore have at least $dt-1$ completed $b$-gap blocks. Their length alone gives
+
+$$
+n\ge (dt-1)(b+1)\ge(d-1)(b+1)=N.
+\tag{26.8}
+$$
+
+For $t<0$, exchange the two words and obtain $n\ge(d|t|-1)(b+1)$. Common multiplicity factors do not change this inequality: the augmented multiplicities remain nonnegative, and all other completed blocks and the terminal tail consume nonnegative length. Thus the argument covers all nonzero multiples, with arbitrary common parts, orderings and tails. For $n<N$ every surviving summand has $z=0$ and is phase independent before any coefficient aggregation. All entries of the whole density are consequently phase independent.
+
+For the witness, $Aa+Bc=db$. The words (26.3) have count $A+B-1=d-1$, and
+
+$$
+|u|=A(a+1)+(B-1)(c+1)+(c-b)=(d-1)(b+1)=|v|.
+$$
+
+Their first ticks occur at different positions, so they are distinct. The actual amplitude formula (25.14), with completed multiplicities $(A,0,B-1)$ and $(0,d-1,0)$ and tails $c-b,0$, gives
+
+$$
+K_ux=c_a^Ac_c^{B-1}S^{c-b}x,\qquad K_vx=c_b^{d-1}x.
+\tag{26.9}
+$$
+
+In the tail sum (25.15) the support pairs must have difference $c-b>0$. The pair $(c,b)$ always survives. The only other possible pair is $(b,a)$, and it survives exactly when $b-a=c-b$. The pair $(c,a)$ has a larger difference. Therefore
+
+$$
+\langle x,S^{c-b}x\rangle
+=\overline c_b c_c+\mathbf1_{\{b-a=c-b\}}\overline c_a c_b.
+\tag{26.10}
+$$
+
+Multiplying by $c_a^Ac_c^{B-1}\overline c_b^{\,d-1}$ gives the term $c_a^Ac_c^B\overline c_b^{\,d}=Re^{i\phi}$. Equal spacings are equivalent to $A=B=1$, or $d=2$; exactly in that case the second term is $p_ap_b$. This proves (26.4), including its phase-independent offset and the absence of further terms in that entry.
+
+For completeness on the circle, suppose the characters in (26.4) agree and write $\Delta_k=\theta'_k-\theta_k\in\mathbb T$. Put $X=\Delta_b-\Delta_a$ and $Y=\Delta_c-\Delta_a$. Character equality gives $dX=BY$ in $\mathbb T$. Choose integers $r_0,s_0$ with $r_0B+s_0d=1$ and set $\eta=r_0X+s_0Y$. Then
+
+$$
+B\eta=X,\qquad d\eta=Y.
+$$
+
+Multiplication by $g$ on $\mathbb T$ is surjective. Choose $\nu$ with $g\nu=\eta$ and put $\lambda=\Delta_a-a\nu$. Since $b-a=gB$ and $c-a=gd$, these identities give
+
+$$
+\Delta_k=\lambda+\nu k\quad(k=a,b,c).
+\tag{26.11}
+$$
+
+Conversely every such affine difference annihilates (26.7). This integral Bézout calculation includes $g>1$ and introduces no unobserved finite-index phase classes. The character is nonconstant and ranges over the circle, so the phase independence below $N$ obstructs completeness for a nontrivial quotient. The lattice and Laurent-character background is [Eisenbud–Sturmfels, *Binomial Ideals*, arXiv:alg-geom/9401001v1, Section 2 and Theorem 2.1(b)–(d), PDF pp. 10–11](https://arxiv.org/pdf/alg-geom/9401001v1): over $\mathbb C$ an integer lattice basis generates the Laurent binomial ideal, saturation controls primeness, and finite-index enlargements have distinct character extensions in characteristic zero. Here all amplitude coordinates are nonzero by positivity of $p$; (26.7) is the full integer kernel. The compact-circle conclusion needed for the measured coefficient is the explicit calculation (26.11), rather than an inference from a real nullspace.
+
+Apply the supplied-family classification in the proof of Theorem 24.2, (24.7)–(24.9), as already applied to sparse supports in Theorem 25.2. Its hypotheses here are $H=c\ge3$, the same single nilpotent shift on $\mathbb C^{c+1}$, the same rank-one reset $`x e_c^*`$ with $\|x\|=1$, and $c_H=c_c\ne0$. The Kraus operators are independent: the first $c$ columns of $S$ are nonzero, while those of $J$ are zero. The determinant (24.7) is $(-1)^c u^c v c_c$, with only the singular lines of ranks $c$ and one, which are distinct. The exact Choi identity and left-inverse step in that proof therefore force a diagonal unitary Kraus mixing, and the shift-normalizer identity (24.8) forces the affine difference (24.9) on the supported indices. Conversely its specified diagonal memory unitary implements every difference (26.11) separately on the labeled CP branches. Missing interior coefficients cause no failure of these hypotheses. Thus the actual averaged-channel and labeled-instrument orbits in this supplied family are precisely the affine orbits recovered above.
+
+Equation (26.4) extracts the character by subtracting the known offset and dividing only by $R>0$. Affine differences preserve every summand of (26.5) by (25.16), hence every $T_n$. For $n\ge N$, (25.18) gives the terminal prefix marginal $\operatorname{Tr}_{N+1,\ldots,n}T_n=T_N$. Equality at any such horizon therefore implies equality of (26.4), and the converse follows from affine invariance. This proves all the asserted equivalences and the exact horizon.
+
+The full stationary quantum-output equivalences in [Guță–Kiukas, arXiv:1402.3535v1, Definition 2, PDF pp. 6–7, Theorem 2 and equation (7), p. 8](https://arxiv.org/pdf/1402.3535v1), for primitive finite-dimensional isometries, and [Girotti–Kiukas–Guță, arXiv:2603.20761v1, Definition 4, PDF p. 30, Theorem 6, p. 32](https://arxiv.org/pdf/2603.20761v1), for irreducible chains, compare untwirled stationary outputs and use one common Kraus phase. Guță–Kiukas, Remark 1, PDF p. 9, also supplies finite full-output determination under its primitive hypotheses. Those are different initialization, data and phase constraints from the prepared count-twirled window here; neither those hypotheses nor their horizon conclusions are premises for (26.8). The needed orbit implication comes from the supplied-family calculation (24.7)–(24.9) with the hypotheses just mapped.
+
+For the fixed six-label law, define on the $N$ flags
+
+$$
+F=|v\rangle\langle u|,\qquad X=F+F^*,\qquad Y=(F-F^*)/i.
+$$
+
+Each observable commutes with $Q_N$ and has eigenvalues $+1,-1,0$. Write
+
+$$
+\begin{aligned}
+D_u&=\langle u|T_N|u\rangle
+=p_a^Ap_c^{B-1}\sum_{\substack{k\in K\\k\ge c-b}}p_k,\\
+D_v&=\langle v|T_N|v\rangle=p_b^{d-1},\qquad M=D_u+D_v.
+\end{aligned}
+\tag{26.12}
+$$
+
+These diagonal weights follow from (26.9) and $\|S^r x\|^2=\sum_{k\ge r}p_k$ in (23.12). Choose $X$ or $Y$ independently with probability $1/2$, retain the setting, and perform its spectral measurement. In outcome order $(+1,-1,0)$ the joint laws are
+
+$$
+\begin{aligned}
+\Pr(X,\cdot)&=\tfrac12\left(M/2+\operatorname{Re}C_\theta,
+M/2-\operatorname{Re}C_\theta,1-M\right),\\
+\Pr(Y,\cdot)&=\tfrac12\left(M/2+\operatorname{Im}C_\theta,
+M/2-\operatorname{Im}C_\theta,1-M\right).
+\end{aligned}
+\tag{26.13}
+$$
+
+Their differences recover both components of $C_\theta$; the offset in (26.4) is retained in these probabilities and removed only in the stated inversion. This is a single POVM with six labels, whose effects are one half of the corresponding spectral projections and sum to the identity. It uses only within-count-sector control.
+
+Both $x$ and $S^{c-b}x$ are nonzero, the latter because $c_c\ne0$. They cannot be proportional: a nonzero proportionality scalar would be a nonzero eigenvalue of the nilpotent operator $S^{c-b}$. Strict Cauchy–Schwarz and (26.9) give
+
+$$
+|C_\theta|<\sqrt{D_uD_v}\le M/2.
+\tag{26.14}
+$$
+
+Thus all four signed probabilities in (26.13) are strictly positive. In fact $M<1$ too. If $N\le c$, the word $0^N$ has positive weight and is distinct from $u,v$. If $N\ge c+1$, write $N-c-1=q(a+1)+s$ with $q\ge0$ and $0\le s\le a$. The word $(0^c1)(0^a1)^q0^s$ is distinct from $u,v$ by its first tick and has nonzero amplitude $c_c c_a^qS^s x$. In either case another positive diagonal weight exists. Hence all six probabilities are positive. A finite record from this law has the same possible labels at every phase and cannot give zero-error discrimination of distinct phases. The exact probability-law map nevertheless separates their orbits.
+
+The lower bound already concerns every allowed effect, since the whole $T_n$ is phase independent for $n<N$. In a repeated classically adaptive readout, at each previous transcript the next chosen shorter length and measurement have the same conditional law for all phases. Multiplication of these conditional laws gives identical transcript laws for any finite number of trials. This establishes the repeated-access lower bound in Definition 26.1's class.
+
+If $B=1$, the witness contains no completed $c$-block: its necessary $c$ coefficient comes from the terminal pair $(c,b)$, and $N=A(b+1)$, $u=(0^a1)^A0^{c-b}$. If $A=1$, the same argument gives $N=B(b+1)$ and the displayed witness with $B-1$ completed $c$-blocks. For every arithmetic progression $\{a,a+g,a+2g\}$, including $g>1$, $A=B=1$, $N=b+1$ and
+
+$$
+C_\theta=p_ap_b+p_b\sqrt{p_ap_c}\,e^{i(\theta_a-2\theta_b+\theta_c)}.
+$$
+
+For a nonprogression with $g>1$, $K=\{1,3,7\}$ gives $A=2,B=1,N=8$ and the words $(01)^2 0^4,(0001)^2$. Large terminal gaps remain allowed: $K=\{1,2,10\}$ gives $A=8,B=1,N=24$ and $(01)^8 0^8,(001)^8$; even though $c-b=8>b$, the pair $(c,b)$ still survives the memory trace. As specializations, $K=\{1,2,3\}$ gives Theorem 24.2's horizon three and its offset, while $K=\{1,2,4\}$ gives Theorem 25.3's horizon six, words $010100,001001$, and coefficient $p_1p_2^{3/2}\sqrt{p_4}$. These are instances of (26.2), with the uniform lower bound (26.8) supplying the general conclusion.
+
+For preparation, apply the already established herald bound (25.27) with $H=c$ and the reset identity (23.3). From any initial density, an actual first tick prepares $`xx^*`$ in at most $c+1$ uses almost surely, including that tick. The subsequent window uses $N$ coherent applications, giving the sufficient total $c+1+N$. Reheralding supplies the prescribed preparation for each subsequent window even after a terminal measurement changes memory. The waiting time is auxiliary preparation information as specified in Definition 26.1.
+
+A sufficient logical apparatus for (26.13) consists of memory dimension $c+1$, $N$ stored two-dimensional flags of joint dimension $2^N$, a reusable two-level herald detector, an $N+3$-state controller, a two-valued setting register and a three-level outcome pointer, all separately counted. The controller states may be $\mathrm{wait},\mathrm{captured}_0,\ldots,\mathrm{captured}_N,\mathrm{done}$. Retaining settings and outcomes requires a six-valued classical record per trial, or processing of those data; retaining the herald time additionally requires a $c+1$-valued record. For the spectral projections $P_o$ of either new quadrature, apply the pointer construction (25.28) with these $P_o$: $W=\sum_oP_o\otimes R_o$, where the pointer unitaries send its ready state to distinct outcomes. Its count commutator is zero because every $P_o$ commutes with $Q_N$. These dimensions and use counts are sufficient logical resources, without an optimum for energy, elapsed time or hardware.
+
+The phase-enhanced classical-model precedent is [Liu–Elliott–Binder–Di Franco–Gu, *Optimal stochastic modelling with unitary quantum dynamics*, arXiv:1810.09668v1, equation (6), PDF pp. 2–3, and Theorem 1, p. 3](https://arxiv.org/pdf/1810.09668v1): its supplied unitary phase enhancements preserve computational-basis output statistics. In this family Theorem 23.2 already supplies the same classical renewal law at the real choice $\theta=0$. The present measured phase quotient and its sharp restricted horizon concern identification of the specified devices, without a complex-over-real advantage for generating that law or a classification of all minimum-memory realizations. $\square$
+

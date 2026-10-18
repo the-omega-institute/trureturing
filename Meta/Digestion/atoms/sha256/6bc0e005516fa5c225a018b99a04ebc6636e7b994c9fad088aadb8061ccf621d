@@ -1,0 +1,16 @@
+**定义 26.1（实际纤维的确定性风险）。** $X\ne\varnothing$，$Z$ 为度量空间，$F:X\to Z$。估计器 $\widehat F:q(X)\to Z$ 的最坏误差为
+
+$$
+\mathcal R(\widehat F;q,F)=\sup_{x\in X}d\bigl(F(x),\widehat F(q(x))\bigr)\in[0,+\infty],
+\qquad \mathcal R_*(q,F)=\inf_{\widehat F}\mathcal R(\widehat F;q,F).
+$$
+
+纤维直径允许为无穷；它是对实际来源的统一风险，不是平均风险。三角不等式给通用中间界
+
+$$
+\mathcal R_*(q,F)\geq\frac12\sup_{b\in q(X)}
+\operatorname{diam}F(q^{-1}\{b\}).
+$$
+
+因为一条纤维上两目标距离不超过到同一估计值的两误差和；对所有实际对取上确界再对估计器取下确界即得，未假设上确界达到。
+

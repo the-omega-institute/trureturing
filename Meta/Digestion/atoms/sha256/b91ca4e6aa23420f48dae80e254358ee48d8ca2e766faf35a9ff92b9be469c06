@@ -1,0 +1,42 @@
+**定理 56.3（从既有端点得到对角有限性的准确判据）。** 取定理50.3的规范两端 $L_H,U_H$。若 $U_H$ 是叶，则 $A_H=B_H=D_H=\varnothing$。否则把 $U_H=\langle u_L,u_R\rangle$，其中 $U_H=\Omega$ 时语义上取 $u_L=u_R=\Omega$。若 $L_H$ 是叶，置 $a_L=a_R=\alpha$；否则取 $L_H=\langle a_L,a_R\rangle$。则
+
+$$
+\begin{aligned}
+A_H&=[a_L,u_L]\cap\mathcal T,&
+B_H&=[a_R,u_R]\cap\mathcal T,\\
+a_H&=a_L\vee a_R,&
+\nu_H&=u_L\wedge u_R,\\
+D_H&=[a_H,\nu_H]\cap\mathcal T.
+\end{aligned}
+\tag{SLH.56.4}
+$$
+
+最后区间在 $a_H\not\le\nu_H$ 时为空。若非空，则
+
+$$
+|D_H|<\infty\quad\Longleftrightarrow\quad
+\nu_H\text{ 的规范有限表达式不含 }\Omega.
+\tag{SLH.56.5}
+$$
+
+全部分支、比较、交并及有限情形的候选枚举都由已取得历史的既有端点有效计算，无新来源读。
+
+**证明。** 定理50.3给整个原来源区间。上端为叶时不可能容纳原分支。上端为分支时，一个原分支在上界以下恰当两孩子逐项在 $u_L,u_R$ 以下；若下端为叶，任何分支都在它之上，两孩子的最小允许值都是 $\alpha$；若下端为分支，下界亦逐孩子分解。这给前两式，并与定理56.2的实际投影一致。由引理50.2的交并泛性质，两个孩子区间的交恰为最后式。$a_H$ 是有限树，故 $a_H\le\nu_H$ 时它自己就是一个有限见证，反向显然。
+
+若 $\nu_H$ 不含 $\Omega$，它是有限原树。有限树 $U$ 的全下集可递归枚举：
+
+$$
+\begin{aligned}
+\downarrow\alpha&=\{\alpha\},\qquad
+\downarrow\beta=\{\alpha,\beta\},\\
+\downarrow\langle U,V\rangle
+&=\{\alpha,\beta\}\cup
+\{\langle x,y\rangle:x\in\downarrow U, y\in\downarrow V\}.
+\end{aligned}
+\tag{SLH.56.6}
+$$
+
+再过滤 $a_H\le t$ 就枚举全部 $D_H$，不假定它们具有相同形状。
+
+若 $\nu_H$ 含 $\Omega$，使用定理50.3证明中的有限上端逼近：令 $B_0=\beta$、$B_{j+1}=\langle B_j,B_j\rangle$，把每个 $\Omega$ 出现替成同一 $B_j$，得到 $v_j$。每个 $v_j\le\nu_H$；当 $j$ 足够大时，有限 $a_H\le\nu_H$ 蕴含 $a_H\le v_j$，因为比较只需检查 $a_H$ 的有限节点。至少一个实际表达式位置含 $\Omega$，所以这些 $v_j$ 的高度无界，彼此不同。因此 $D_H$ 无限，且 $\langle v_i,v_j\rangle$ 对任意充分大的 $i,j$ 都是满足全部 $H$ 的真实原来源。这给有限性反向和共同来源见证；没有把 $\Omega$ 当成实际来源。判据复用已证端点代数，新增对应是根分支相等候选及其原来源实现。$\square$
+

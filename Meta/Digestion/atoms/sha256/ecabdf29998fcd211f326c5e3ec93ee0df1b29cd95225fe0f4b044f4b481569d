@@ -1,0 +1,40 @@
+**Theorem 7.2 (strict pointwise failure of the complete old calculus).**
+Let $\mu_0$ be uniform on the sixteen actual states $P$ of
+Proposition 7.1 and zero elsewhere in $S_9$. Then
+
+$$
+\beta_9(\mu_0)=\frac3{16},\qquad
+F_9(\mu_0)=\frac14,
+\qquad
+V_{\mathrm{rec}}(9,\mu_0,C,\pi)\Longrightarrow C\ge\frac14.
+\tag{RCE.29}
+$$
+
+Let $u$ be uniform on the entire $S_9$, put $\delta=1/128$ and
+$\mu_\delta=(1-\delta)\mu_0+\delta u$. This is a strictly positive
+rational probability on the full native alphabet. It satisfies
+
+$$
+\beta_9(\mu_\delta)\le\frac{25}{128}
+ <\frac7{32}<\frac{127}{512}
+ \le F_9(\mu_\delta).
+\tag{RCE.30}
+$$
+
+Thus the valid strict rational cap $C=7/32$ on this full-support
+probability is rejected by every finite old $V_{\mathrm{rec}}$
+certificate, including all grouping, support and stability rules.
+
+Proof. Theorem 6.4 gives $\beta_9(\mu_0)=3/16$, attained at
+length one by any triple. The full $P$ is feasible, so its
+Euclidean norm is $\sqrt{16}/16=1/4$. No restriction can have a
+larger norm, giving the exact floor. Apply Theorem 5.2.
+
+Now $\operatorname{TV}(\mu_\delta,\mu_0)\le\delta$, so
+(RCE.9) gives $\beta_9(\mu_\delta)\le3/16+1/128=25/128$.
+Every state of the full alphabet has mass at least $\delta/|S_9|$.
+On the feasible support $P$, monotonicity gives
+$F_9(\mu_\delta)\ge(1-\delta)F_9(\mu_0)=127/512$.
+The two strict comparisons in (RCE.30) are rational inequalities.
+Theorem 5.2 again excludes every old proof of this cap. $\square$
+

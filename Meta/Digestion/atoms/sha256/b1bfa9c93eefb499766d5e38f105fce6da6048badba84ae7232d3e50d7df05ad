@@ -1,0 +1,37 @@
+**Definition 2.3 (whitening and auxiliary dictionary).** On failure support let
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),\quad
+\Delta_f=\begin{pmatrix}-11/64&\Delta_{12}\\\Delta_{12}&0\end{pmatrix},\quad
+\Xi=M_2^{1/2}\Delta_fM_2^{1/2}
+=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+$$
+
+$$
+d_f=11m_1/64,\quad z_f=\sqrt{m_1m_2}\Delta_{12}<0,\quad
+L_f=\sqrt{d_f^2+4z_f^2},\quad
+\lambda_-^f=-(L_f+d_f)/2,\quad\lambda_+^f=(L_f-d_f)/2.
+$$
+
+If $e_\pm$ are unit eigenvectors of $\Xi$, their physical effects are $M_2^{1/2}e_\pm e_\pm^TM_2^{1/2}$. Conversely a physical effect $B_f$ is whitened as $M_2^{-1/2}B_fM_2^{-1/2}$. Bare eigenprojectors are not physical failure effects. The selected finite saturated directions below are not restricted to $e_\pm$.
+
+For correspondence with FA's separate fixed-strength auxiliary family, let $L_0=\operatorname{diag}(\delta,1,1)$,
+
+$$
+r_\epsilon^{\rm aux}=\frac{dh_1}{bh_2}\sqrt{\frac{m_2}{m_1}}
+\frac{(e_\epsilon)_2}{(e_\epsilon)_1},\quad
+\mathbf c_\epsilon=(\sqrt{\theta(r_\epsilon^{\rm aux})^2+\omega},-r_\epsilon^{\rm aux},1)^T,
+$$
+
+$$
+a_0=\left(4\sum_\epsilon\mathbf c_\epsilon^TL_0^{-1}\mathbf c_\epsilon\right)^{-1},\qquad
+\nu_\star^{\rm aux}=\max_\epsilon
+\frac{m_1h_2^2(e_\epsilon)_1^2}{a_0d^2\mathfrak c(\mathbf c_\epsilon)}.
+$$
+
+Here $\mathfrak c(x,z,w)=(h_1^2h_2^2x^2+a^2h_2^2z^2+c^2h_1^2w^2)/(h_0^2x^2+b^2z^2+d^2w^2)$ is FA69's homogeneous capacity. The family has two vectors $\sqrt{a_0}\mathbf c_\epsilon$ and a support-restricted null decomposition of the residual Gram into at most three vectors. This dictionary is credited to FA/JS and is not used to infer optimality of the seven contacts. In particular $\nu_\star^{\rm aux}$ is neither the radial constant $\nu=\mu/c_f$ nor a measure. Define $c_*(r)=\operatorname{cap}(1,\sqrt r,\sqrt{(1-\alpha r)/\beta})$, $u_f=V/\mu$, $c_f=c_*(u_f)$, $\nu=\mu/c_f$, $t_0=W/c_f$ and $q=\nu/t$. The reused FA78 feasibility boundary is
+
+$$
+\tau_{\max}(t)=q\sqrt{u_f}+\sqrt{(1-q)(1-qu_f)},\qquad \tau=s/s_0.
+$$
+

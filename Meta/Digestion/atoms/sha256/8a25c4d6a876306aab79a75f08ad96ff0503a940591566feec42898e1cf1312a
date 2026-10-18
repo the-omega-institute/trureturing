@@ -1,0 +1,42 @@
+### 8.13. Exact supplier correspondence and scope of the result
+
+The contribution of this chapter is the concrete finite-law application
+and its specified legal control construction. The following
+correspondences identify which hypotheses are supplied and which
+conclusions are actually consumed. Classical graph counting,
+polarization, Gram equality, Fisher theory, reversible-chain energy,
+Cramér–Rao and finite Fourier orthogonality are not reissued as new
+discoveries.
+
+| Actual supplier | Parameter and hypothesis map | Consumed conclusion and retained boundary |
+| --- | --- | --- |
+| Definition 1.1; [Growth, Lemma 3.1 and Theorems 3.2, 5.2][G] | Its entire finite legal simplex is $\mathcal P(B_n)$ here; its masses are $p$ and its edge function is $h$, including $(0,0)$. | The existing $\Phi_n$ and $\kappa_n$ become (8.22)–(8.23). The growth constant and stationary attaining-law question are not inferred from this local information identity. |
+| [Stationary, §2, equations (2.1)–(2.3)][S] | Its finite two-completion masses are $(p_u,p_v)$; its $\Phi_{n,i}(p)$ is $R_i(p)$ with all other bits of this finite word retained. | Actual harmonic/Brier fiber risk is consumed in (8.20). Its double-infinite exterior and martingale limits retain their different conditioning fields. |
+| [Word Recovery, Theorem 2.1(C), (2.4), §3.1][WR8]; Michel Mollard, *Edges in Fibonacci cubes, Lucas cubes and complements*, arXiv:2102.04086v1, Propositions 1.1–1.2 and Remark 1.3 | Their open-boundary no11 strings, dimension $n$, Fibonacci convention and Hamming-one edges map exactly to $B_n,D_n,\Gamma_n,E_n$. | Only vertex/edge counts are consumed in (8.3) and (8.17). Lucas cyclic seams, graph irregularity and word-discrimination bounds are not transferred. |
+| [Boundary Calculus, §3, §10 and §13][BC8] | The five labels map by (8.2); its geometric coordinates are $(u_1,u_3,u_2)$ here. Its explicit coherent-control requirement is supplied here by (8.6) and its output carrier by $\mathcal K_n$. | Its pyramid and operation graph are distinct existing objects. Its §13 warning that ordinary channel names omit cross-branch phases is respected by specifying each Hamiltonian and phase. Its Pauli/tree representation is not identified with occupancy pulses. |
+| [Output-Resolved Instrument, §§15–17, editorial Q3, Q5][OR8] | On diagonal input, states $x,y\in B_n$, action $(i,\alpha)$, output $w$, terminal test $1$ and branch matrix are precisely (8.12). Positive event normalization and feasible affine parameters are retained in (8.13). | Resolved branch probabilities and the resolved-versus-averaged distinction are consumed. Coherent inputs require (8.11); nonnegative matrices carry no phase. The affine posterior criterion is not asserted for trigonometric phase likelihoods. |
+| Boris Alexeev, Afonso S. Bandeira, Matthew Fickus and Dustin G. Mixon, *Phase Retrieval with Polarization*, arXiv:1210.7752v2, §2, (2.4)–(2.6) | Coordinate amplitudes and coordinate frame vectors give the vertex coefficients; orienting their conjugate cross product reverses (8.15). Only positive endpoint amplitudes allow normalization. | Polarization and path propagation are consumed in (8.10), (8.15). Their full-spark spanning, expander pruning and quantitative stability conditions are not assumed, and no arbitrary mixed-state completion theorem is credited to them. |
+| Matteo G. A. Paris, *Quantum Estimation for Quantum Technology*, arXiv:0804.2981v3, §2, (1)–(3), (7)–(8); §4.1, (26)–(27) | Its pure unitary family is $e^{-itF}|\psi_0\rangle$, $F=\sum_uf_u\Pi_u$, and its independent preparation count is $N$. The scalar regular, locally unbiased setting of (8.32) is explicit. | The pure QFI normalization and scalar estimation bound are consumed, with direct derivative and score proofs here. No multiparameter attainability or finite-sample saturation is imported. |
+| Samuel L. Braunstein and Carlton M. Caves, *Statistical distance and the geometry of quantum states*, Physical Review Letters 72, 3439–3443, DOI [10.1103/PhysRevLett.72.3439][BCaves8] | Historical quantum statistical-distance/Fisher attribution, also cited in Paris's quantum-measurement comparison. | The formulas used here are Paris's formulas and their direct specialization. This Braunstein–Caves citation supplies historical attribution, without a separate numbered-formula dependency. |
+| Classical PSD Gram representation, reversible finite Markov chains and finite character orthogonality | Finite Hermitian $\rho\ge0$ gives Gram vectors; the same positive $p$ gives detailed balance $p_ur_{uv}=h(p_u,p_v)$; binary differences lie in $\{-1,0,1\}$ for the three-point characters. | The explicit proofs (8.16), (8.25), (8.38) apply these tools. Their generic mechanisms retain classical ownership; the occupancy maps and legal-path coefficients are the concrete application. |
+
+The results give exact identifiability within the supplied menu and local
+information at its specified reference. They do not certify a native
+command, physical apparatus, coherence reference, laboratory error rate
+or hardware implementation. Settings, independent preparations and
+sequential pulse depth remain different resources. The static menu
+recovers arbitrary pure connected-support phases but has the mixed blind
+space (8.17); the longer phase-cycle menu is mixed-state complete, with
+no efficiency or uniform stability claim. All zero fibers, zero-amplitude
+coordinates, singleton supports and the $n=1$ experiment remain within
+the stated cases. The finite-risk identity and its information
+interpretation leave Open Problem 7.2 unchanged.
+
+[BC8]: AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md
+[OR8]: AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md
+[WR8]: FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[Mol8]: https://arxiv.org/abs/2102.04086v1
+[ABFM8]: https://arxiv.org/abs/1210.7752v2
+[Paris8]: https://arxiv.org/abs/0804.2981v3
+[BCaves8]: https://doi.org/10.1103/PhysRevLett.72.3439
+

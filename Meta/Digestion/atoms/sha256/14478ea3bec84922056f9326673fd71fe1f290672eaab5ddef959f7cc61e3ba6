@@ -1,0 +1,89 @@
+**Theorem 6.1 (vanishing balance error does not control the old stationary row).**
+For each rational $0<\varepsilon<1$ there is one two-label-per-phase
+regular generator and input edges made from its own complete laws such
+that $e_A=e_B=m_\beta=0$ and $m_p\le\varepsilon$, but every balanced
+pair using its unchanged acquired kernels has p and suspended law
+marginals at $W_1$ distance at least $1/15$ from the two outgoing input
+marginals. Therefore no modulus tending to zero with these four defects
+can replace Theorem 3.1 by a stationary-row claim for the unchanged
+installation.
+
+**Proof.** Label both phases by $0,1$. Take
+
+$$
+B_0=I_2,\qquad
+A_\varepsilon=\begin{pmatrix}1-\varepsilon&\varepsilon\\0&1\end{pmatrix},
+\qquad (u_0,u_1)=(v_0,v_1)=(a,b).
+\tag{6.1}
+$$
+
+Let $Q_i,W_i$ be its own complete laws, constructed by the same normalized
+series (3.10)–(3.12). All belong to (1.3),
+$Q_1=P_{p,b},W_1=P_{\beta,b}$, and the two laws in each phase are
+distinct by their emission coordinates. Use
+
+$$
+G_B=\delta_{(Q_0,W_0)},\qquad
+G_A=(1-\varepsilon)\delta_{(W_0,Q_0)}+
+              \varepsilon\delta_{(W_0,Q_1)}.
+\tag{6.2}
+$$
+
+Both conditional residual equations hold exactly, so $e_A=e_B=0$.
+The outgoing rows are $\sigma_p=\delta_{Q_0}$ and
+$\sigma_\beta=\delta_{W_0}$. Thus $m_\beta=0$ and
+
+$$
+m_p=\varepsilon d_p(Q_0,Q_1)\le\varepsilon.
+\tag{6.3}
+$$
+
+A stationary row $\pi$ for the unchanged acquired return kernel
+$B_0A_\varepsilon=A_\varepsilon$ satisfies
+$\pi_0=(1-\varepsilon)\pi_0$, so $\pi=\delta_1$.
+Its suspended row is also $\delta_1$. Hence the only corresponding law
+marginals are $\delta_{Q_1},\delta_{W_1}$, and their distances from the
+input marginals are at least $|u_1-u_0|=|v_1-v_0|=1/15$.
+
+The original-domain product construction [PAID, Lemma 2.1.1] can instead
+be initialized at label 0 in its original third-write/latch update,
+independently of the once-sampled $K$. After the actual positive history
+of $n$ fourth returns, its p row is exactly
+
+$$
+\eta_n=(1-\varepsilon)^n\delta_0+
+       [1-(1-\varepsilon)^n]\delta_1.
+\tag{6.4}
+$$
+
+This follows by multiplying the same acquired kernels, not by weighting
+by synthetic continuation. Every such finite history is allowed and
+positive for the fixed original prior. Source conditioning leaves the
+private ordered kernel row as in (6.4), by the source-independent product
+construction, also expressed by [NATIVE, `conditional_history_product`].
+
+The loss against the original supported complete target $P_{p,a}$ tends
+along these rows to $\Delta=d_p(P_{p,b},P_{p,a})=2\rho_p>0$.
+At the outgoing input row it is small: comparison of the state-0
+recursions with the native $a$ pair gives
+
+$$
+d_p(Q_0,P_{p,a})\le
+ \frac{2\varepsilon}{7+2\varepsilon}\Delta.
+\tag{6.5}
+$$
+
+Indeed its p error is at most $(1-a)$ times its suspended error, while
+the suspended error is at most
+$a[(1-\varepsilon)d_p(Q_0,P_{p,a})+\varepsilon\Delta]$.
+Solve the resulting scalar inequality. Thus even complete-target loss
+at the designated outgoing row cannot stand for loss along all actual
+rows. This statement uses one supported pure target as an analytical
+test; it does not assert that every finite history has that pure posterior.
+
+The repaired table on the positive outgoing labels has both transitions
+fixed at label 0 and therefore generates $P_{p,a},P_{\beta,a}$.
+It changes the acquired kernel $A_\varepsilon$. Equations (3.3) and
+(3.6) concern that new table. No small-balance premise can identify the
+two installations, as the stationary-row lower bounds show. $\square$
+

@@ -1,0 +1,44 @@
+**Lemma 5.3 (phase-total extraction).** For every $h\in\Omega$, there
+is a finite mathematical extraction $\mathcal E(M(h))=K_+(h)$.
+
+Proof. SSA Proposition 2.1, LJA's immutable authentic acquisition rows and
+the no-update producer's exact preorder recover the original $u$, even
+after its current packet is overwritten. The original acquisition segment
+is identified by its template/fence and preparation chain; it is not
+selected by a later source value. Count the actual one-per-row meter
+receipts for $n$.
+
+Before Install, AIF Theorem 4.2 gives $J_0$ as the written chronological
+original ingress plus precisely the occupied input bit. Here $A=\bot$
+and $J_1$ is empty. During installation no variable source/service frame
+is admitted. Install was at a completed-frame Ready, so all old ingress
+material is complete and unchanged, including while copy routines move
+its public head marks. Its canonical parsed frame count is exactly $j_A$,
+and its retained bits are exactly $J_0$. The actual new mode/active-version
+phase witnesses that Install has occurred even immediately after its CTL,
+before any manifest bit exists. Thus $A=j_A$, not $\bot$, throughout
+that interval. Fixed code/capture IN bits supply neither $J_0$ nor $J_1$.
+
+After installed Ready, the actual immutable manifest and its imported
+frozen bank word give the same old frame prefix and $j_A$. This is the
+installation prefix with its actual binding, never a later staging block
+on 37. RCA Lemma 13.2a supplies exactly its field order, excluding the
+sentinel and retaining empty fields. No new external frame is admitted
+before that manifest is complete, so there is no gap between the two
+extraction cases. Later original-clone writes may extend old ingress;
+they do not change which frozen prefix is $J_0$.
+
+For $J_1$, use the actual port-38 ingress blocks in chronological order,
+including the currently written prefix. RCA Definition 13.2 keeps latch 6
+through the intervening EX and its matching WR, with length tests in
+latch 5. Add that one bit only in the occupied variable-input interval.
+After WR it is already in the retained written prefix and is not added
+again. The actual PC/phase determines the written frontier when a block
+or descriptor is unsealed; this is a mathematical finite extraction,
+not a claim of early read authority. Imports, source-clone RD/MR and
+service computation acquire no further external input. The serial protocol
+prevents a second outstanding variable bit. This is AIF's frontier identity
+instantiated on the new physical ingress. These finite inspections yield
+all five fields of CSA.4. None is assumed already available as a freely
+readable serialized numeral or complete package. ∎
+

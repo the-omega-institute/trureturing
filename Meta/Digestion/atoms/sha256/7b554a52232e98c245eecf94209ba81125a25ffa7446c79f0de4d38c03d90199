@@ -1,0 +1,9 @@
+**引理 6.1（两个损失的共同连续性）。** 固定同一个完整原 $c$ 及其全部 $D_z,T_{c,k}$。对两行实际配置分布 $\rho,\rho'$ 及两来源后验 $\nu,\nu'$，两种损失的绝对差均至多
+
+$$
+\operatorname{TV}(\rho,\rho')+\operatorname{TV}(\nu,\nu').
+\tag{6.1}
+$$
+
+**证明。** 随机映射 $z\mapsto D_z$、$k\mapsto T_{c,k}$ 不增加 TV；再用 TV 距离的三角不等式得到 law。conf 中，每项 $\operatorname{TV}(D_z,T)$ 随 $T$ 变化至多 $\operatorname{TV}(T,T')$；固定 $T'$ 时各项在 $[0,1]$，换配置行的期望差至多 $\operatorname{TV}(\rho,\rho')$。二者相加得结论。所有量比较完整无界未来测度，不是比较有限尾投影。∎
+

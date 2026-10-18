@@ -1,0 +1,36 @@
+**Proposition 87.1 (finite activity excludes a nonzero failure-only label).**
+Consider one generated actual label whose entire decoder fibre has activity at
+most $A<\infty$. If its survivor rate is any measurable positive operator rate
+and its terminal processing is trace preserving on survivors, then
+
+$$
+L_{\mathrm{dec}}\succeq e^{-A}I.
+\tag{FA.89}
+$$
+Consequently every nonzero positive encoded state has strictly positive terminal
+live mass. A nonzero actual label carrying only failure mass is therefore not in
+the finite-$A$ class.
+
+**Proof.** For a positive encoded state $Y$, let
+$p(u)=\operatorname{tr}\mathcal S_u(Y)$. Trace balance and the operator norm give
+$p'(u)\ge-\|R(u)\|p(u)$. Gronwall's inequality and terminal trace preservation
+therefore give
+$p(1)\ge\exp(-\int_0^1\|R(u)\|du)p(0)\ge e^{-A}p(0)$.
+Since this holds for every $Y\succeq0$, the operator inequality follows. A
+nonzero failure-only label would have zero terminal live mass on a nonzero
+positive input, contradicting the inequality. This argument permits
+noncommuting Hamiltonians, unobserved trace-preserving survivor controls and
+multiple Kraus operators. $\square$
+
+For example, the scalar failure density $g(u)=2/(1+u)^2$ with total failure one
+has survival $(1-u)/(1+u)$ and hazard
+
+$$
+r(u)=\frac{2}{1-u^2},\qquad
+\int_0^1r(u)\,du=\infty.
+\tag{FA.90}
+$$
+Thus the absence of a terminal failure atom does not make that row finite
+activity. The same obstruction applies to a completion that sends the entire
+complement to failure.
+

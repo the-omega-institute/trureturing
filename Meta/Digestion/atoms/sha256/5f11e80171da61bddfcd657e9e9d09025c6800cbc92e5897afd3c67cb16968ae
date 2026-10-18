@@ -1,0 +1,11 @@
+**Definition 3.2 (compatible contact groups).** At a fixed directed
+angle whose two endpoints both belong to $Z$, put them into one
+two-coordinate group exactly when
+$\eta_0(\phi)\eta_1(\phi)\ge0$. Otherwise each present endpoint
+is its own singleton group. Denote the resulting partition by
+$\mathscr G=\{G_1,\ldots,G_g\}$; $g\le |Z|\le24$.
+Each paired group represents the whole segment $0\le\xi\le1$
+at that angle, and a singleton represents just its endpoint. Both
+coordinates of a paired group remain available independently; the
+group is not replaced by one fixed column.
+

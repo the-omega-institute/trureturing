@@ -1,0 +1,16 @@
+**Definition 3.1 (phase-sensitive terminal score).** For $u\in\mathcal T$
+let $F(u)$ be its finite leaf-address set and put
+
+$$
+\mu(u)=\min_{p\in F(u)}|p|,\qquad
+m(u)=\min_{p\in F(u)}\bigl(2|p|+e(u|_p)\bigr).
+\tag{AAR.8}
+$$
+
+The associated recurrence is $m(\alpha)=0$, $m(\beta)=1$ and
+$m(\langle x,y\rangle)=2+\min(m(x),m(y))$.
+A certified minimizing anchor is an actually acquired leaf $(a,e)$
+with $2|a|+e=m(U_v)$ at its designated validation. Certification means
+the program's all-source correctness property, not a free certificate
+port or an independently authenticating output string.
+

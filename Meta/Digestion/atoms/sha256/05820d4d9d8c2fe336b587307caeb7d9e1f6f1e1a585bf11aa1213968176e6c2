@@ -1,0 +1,4 @@
+## 1. Original reader, joint sources, and the cost contract
+
+This volume gives ordinary mathematical proofs for a restricted family of immutable INITIAL targets. It is reference theory, without Lean compilation or kernel verification. The general objective remains the exact minimum worst-branch emitted-complete-block cost for every attainable INITIAL target and every original order and block width. The family below supplies a global parent-action comparison and a sharp calendar cost; it does not replace that objective.
+

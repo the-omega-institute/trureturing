@@ -1,0 +1,159 @@
+**Lemma 24.6 (all tested ordered charge projections).** For $i=0,1,2,3$ put $m_i=4-i$ and
+
+$$
+\begin{aligned}
+R_{i,s}&=H_sg_i-\sum_{j=0}^{m_i}s^jG_jg_i,\\
+E_{i,s}&=N_sg_i-\sum_{j=0}^{m_i}s^jN_jg_i,\\
+\mathfrak F_{n,s}&=F_s-\sum_{k=0}^ns^kV_k.
+\end{aligned}
+\tag{24.24}
+$$
+
+Then
+
+$$
+|\langle p,E_{i,s}\rangle|\le Cs^{5-i}\qquad(0\le i\le3).
+\tag{24.25}
+$$
+
+Proof. Preserve factor order throughout:
+
+$$
+E_{i,s}=F_sR_{i,s}
+ +\sum_{j=0}^{m_i}s^j\mathfrak F_{m_i-j,s}(G_jg_i).
+\tag{24.26}
+$$
+
+For the seed return, the required test is $F_sp$, not merely $g_0$. Its exact decomposition is
+
+$$
+\langle F_sp,R_{0,s}\rangle
+=\mu\langle g_0,R_{0,s}\rangle
+ +\langle(F_s-V)p,R_{0,s}\rangle.
+\tag{24.27}
+$$
+
+The first term is $O(s^5)$ by Lemma 24.5. The second is at most
+
+$$
+\|(F_s-V)p\|_1\|R_{0,s}\|_\infty
+\le Cs\,s^5(1+|\log s|)=o(s^5),
+\tag{24.28}
+$$
+
+using (24.6) and J (31.4). Thus the complete seed return summand is paid.
+
+The five seed field summands in (24.26) have the following separate estimates. The $j=0$ scalar is $(\gamma\mu)^{-1}\int p^2\mathfrak F_{4,s}$ and is $O(s^5)$ by (24.19). For $j=1$ use $p,G_1g_0\in L^2$ and $\|\mathfrak F_{3,s}\|_\infty=O(s^4)$. For $j=2,3$ use $p\in L^2$, $G_jg_0\in L^4$ and $\|\mathfrak F_{4-j,s}\|_4=O(s^{5-j})$. For $j=4$ use $G_4g_0\in L^\infty$, $p\in L^2$ and $\|\mathfrak F_{0,s}\|_2=O(s)$. The prefactor $s^j$ makes each of these four terms $O(s^5)$. The return norms are J §§31 and 43; in particular $G_1g_0\in L^2$ follows by the degree-one seed estimate in J (43.2). This proves (24.25) for $i=0$.
+
+For the lower charges first improve the tested outer-input returns. Their owning weights are
+
+$$
+\omega^5g_1\in L^2,\qquad\omega^4g_2\in L^2,\qquad
+\omega^3g_3\in L^2,
+\qquad \|g_i^{\rm out}\|_2\le CL^{-(6-i)},
+\tag{24.29}
+$$
+
+where $g_i^{\rm out}=\mathbf1_{|r|>L/4}g_i$. Selfadjointness and (24.14) applied to $w_s=F_sp$, whose $L^1+L^2$ norms are bounded, give
+
+$$
+|\langle w_s,H_sg_i^{\rm out}\rangle|
+ +|\langle w_s,H_s^Lg_i^{\rm out}\rangle|
+\le CL^{-(6-i)}.
+\tag{24.30}
+$$
+
+This avoids a factor $T$ in the tested native/safe outer returns.
+
+Each complete coefficient kernel $\mathsf q_j(t;\eta,\xi)$ is symmetric in its two endpoints. Reverse the height bridge from $A$ to $B$; its covariance integral is unchanged. Reverse the phase displacement; the centered Gaussian is unchanged. Differentiation at zero preserves this equality, including the clock. Therefore
+
+$$
+\left\langle w_s,\int_0^T\mathsf Q_j(t)g_i^{\rm out}dt\right\rangle
+=\left\langle\int_0^T\mathsf Q_j(t)w_sdt,g_i^{\rm out}\right\rangle.
+\tag{24.31}
+$$
+
+This transposes the complete kernel, without commuting any ordered convolution factors or assuming positivity of a coefficient. First prove it for compact inputs and then pass by the finite weighted $L^2$ bounds J (30.4); all integrated vectors are in $L^2$ at finite $T$.
+
+For $j\le3$, write $n+m=j$. On $t<1$ apply the $L^2$ moment bounds of (24.5). On $t\ge1$ apply the $L^{3/2}$ moments with output $L^2$. The latter time power is $m/2-7/12$, so
+
+$$
+\begin{aligned}
+\sum_{j=0}^{m_i}s^j\left\|\int_0^T\mathsf Q_j(t)w_sdt\right\|_2
+&\le C\sum_{n+m\le m_i}s^{n+m}(1+T^{m/2+5/12})\\
+&\le Cs^{-5/6}.
+\end{aligned}
+\tag{24.32}
+$$
+
+Combining with (24.29), all outer complete-coefficient returns, after the exterior charge factor $s^i$, cost
+
+$$
+s^iL^{-(6-i)}s^{-5/6}=O(s^{31/6})=o(s^5).
+\tag{24.33}
+$$
+
+The corresponding native and safe returns cost $O(s^6)$ by (24.30).
+
+For completeness account for the remaining pieces of $R_{i,s}$. Apply strip Taylor only to the inner input $\mathbf1_{|r|\le L/4}g_i$. On $t<1$, multiply return output $L^2$ by bounded $F_s$ and use the weighted $L^2$ input moments. On $t\ge1$, multiply return output $L^\infty$ by $F_s\in L^2$. At derivative order $5-i$, the full list of input exponents and time powers is
+
+$$
+\begin{array}{c|c|c|c}
+i&5-i&(p_n)_{n=0}^{5-i}&
+((5-i-n)/2-7/(2p_n))_{n=0}^{5-i}\\ \hline
+1&4&(1,1,7/6,7/5,7/4)&(-3/2,-2,-2,-2,-2)\\
+2&3&(1,7/6,7/5,7/4)&(-2,-2,-2,-2)\\
+3&2&(6/5,18/13,18/11)&(-23/12,-73/36,-77/36)
+\end{array}
+\tag{24.34}
+$$
+
+These memberships are exactly J (38.1), (43.4), (44.3) and (45.3), and all long-time powers are strictly integrable. The safe Taylor product thus has $L^2$ norm $O(s^{5-i})$ and its pairing with $p$ has the same order.
+
+For $i=1$, original inner path deletion costs $O(s^5)$ using $g_1\in L^1$. A retained degree-$j$ coefficient, $j\le3$, with input degree $n$ and relative degree $m=j-n$, has integrated deletion bound $CL^{m-5}M_n(L)$, where
+
+$$
+M_0(L)\le C,\qquad M_n(L)\le CL^{n-1}\|rg_1\|_1\quad(n\ge1).
+\tag{24.35}
+$$
+
+After $s^j$ its cost is $O(s^5)$ for $n=0$ and $O(s^6)$ otherwise. The complete time tails $t>T$ use input exponents $(1,1,7/6,7/5)$ at $n=0,1,2,3$ and give the same respective orders. These are precisely the restoration pieces in J (39.7)–(39.9); their earlier outer-input norm loss is replaced here by (24.30)–(24.33).
+
+For $i=2,3$, retain the exit event in the relative degree-$m$ majorant. Its input-$L^p$ to output-$L^\infty$ bound is $Ct^{m/2-7/(2p)}e^{-cL^2/t}$. Its deletion integral and coefficient time tail, including $s^{m+n}$, are each at most
+
+$$
+Cs^{m+n}L^{m+2-7/p}\|r^ng_i\|_p
+=Cs^{7/p-2+n}\|r^ng_i\|_p.
+\tag{24.36}
+$$
+
+The substitution $t=L^2v$ gives the deletion bound; direct integration gives the time tail, with strictly integrable exponents in every case. For $i=2$, $n=0,1,2$, take $p=1,7/6,7/5$, respectively: all three powers are five. For $i=3$, $n=0,1$, take $p=6/5,18/13$: the powers are $23/6,73/18$, respectively. Unexpanded native deletion uses $n=m=0$, with $g_2\in L^1$ or $g_3\in L^{6/5}$. These powers exceed the required orders three and two. Multiply by bounded $\|F_s\|_2$ and then pair with $p\in L^2$.
+
+Original surviving covariances remain comparable outside the estimating strip by the fixed denominator margins. Safe paths cannot end outside either original face, so these bounds include all zero-extended outputs. Together with the outer-input estimates this proves
+
+$$
+|\langle F_sp,R_{i,s}\rangle|\le Cs^{5-i},\qquad i=1,2,3.
+\tag{24.37}
+$$
+
+Finally the lower-charge field products in (24.26) are all as follows. Every line also uses $p\in L^2$; the displayed order includes its prefactor $s^j$.
+
+$$
+\begin{array}{c|c|c|c|c}
+i&j&G_jg_i\text{ norm}&\mathfrak F_{4-i-j,s}\text{ norm and order}&
+\text{scalar order after }s^j\\ \hline
+1&0&L^2&L^\infty:O(s^4)&O(s^4)\\
+1&1&L^4&L^4:O(s^3)&O(s^4)\\
+1&2&L^4&L^4:O(s^2)&O(s^4)\\
+1&3&L^4&L^4:O(s)&O(s^4)\\
+2&0&L^4&L^4:O(s^3)&O(s^3)\\
+2&1&L^4&L^4:O(s^2)&O(s^3)\\
+2&2&L^4&L^4:O(s)&O(s^3)\\
+3&0&L^4&L^4:O(s^2)&O(s^2)\\
+3&1&L^4&L^4:O(s)&O(s^2)
+\end{array}
+\tag{24.38}
+$$
+
+For the exceptional first line, $G_0g_1\in L^2$ follows from J Lemma 43.1 using $g_1\in L^1$ and $\omega^4g_1\in L^2$. The other return norms are J Theorem 38.2 and Lemma 43.1 on the particular $g_2,g_3$ inputs. Equation (24.6) supplies all field remainders. Hölder now proves every listed scalar bound. Adding them to (24.37) closes (24.25) for each lower charge. None of these improved scalar orders is inferred from the earlier, weaker full-row norm remainder. $\square$
+

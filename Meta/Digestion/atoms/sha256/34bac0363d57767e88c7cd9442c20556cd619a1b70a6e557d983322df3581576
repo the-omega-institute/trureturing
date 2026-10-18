@@ -1,0 +1,23 @@
+#### FMR.1 Statement
+
+Let (K=mathbb Q(sqrt5)), (mathcal O_K=mathbb Z[phi]),
+(phi=(1+sqrt5)/2), and (v=phi^2). For (p>5), put
+(chi_p=(5/p)), (N_p=p-chi_p),
+(q_p=F_{N_p}/ppmod p), and let (ho(p)) be the first positive
+Fibonacci zero rank. Assume Masser's number-field abc conjecture for (K).
+Then there is (ell_0) such that every prime (ellgeell_0) has a
+rational prime (p>5) with
+[
+q_p
+e0,qquad ho(p)=2ell,qquad ellmid p-chi_p.
+]
+The (p)'s for different (ell)'s are distinct. Every witness is split,
+so in fact (pequiv1pmod{2ell}). Consequently
+[
+#{ple X:p>5, q_p
+e0, ho(p)/2 {m prime}}
+gg_{K,v}{log Xoverloglog X}.
+]
+This is conditional on abc and is a fixed-golden specialization of the
+number-field extraction theorem; it is not an unconditional WSS result.
+

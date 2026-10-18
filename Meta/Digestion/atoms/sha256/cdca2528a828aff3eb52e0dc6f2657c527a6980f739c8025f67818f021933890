@@ -1,0 +1,66 @@
+**Theorem 4.2 (Mandatory splitting-event mass).** Suppose the normalized
+certificate (4.2)–(4.3) is globally product-positive. Let
+
+$$
+\alpha_s=\sum_{J\in\{\{2\},\{5\}\}}
+\operatorname{tr}(A_J^++A_J^-),\qquad
+\alpha_p=\sum_{J\in\mathcal J_{\rm split}\setminus\{\{2\},\{5\}\}}
+\operatorname{tr}(A_J^++A_J^-),\qquad \alpha=\alpha_s+\alpha_p.
+\tag{4.6}
+$$
+
+Then
+
+$$
+\begin{aligned}
+c_{\rm cert}
+&\le\frac12+\frac{\sqrt{17}-3}{8}\alpha_s
++\frac{\sqrt{145}-11}{24}\alpha_p\\
+&\le\frac12+\frac{\sqrt{17}-3}{8}\alpha.
+\end{aligned}
+\tag{4.7}
+$$
+
+In particular a value $c_{\rm cert}\ge L_*=129931/250000$ requires
+
+$$
+\alpha\ge\frac{4931(\sqrt{17}+3)}{250000}>\frac7{50}.
+\tag{4.8}
+$$
+
+If $\alpha_s=0$, it requires the stronger pair-mass condition
+
+$$
+\alpha_p\ge\frac{4931(\sqrt{145}+11)}{250000}>\frac9{20}.
+\tag{4.9}
+$$
+
+Proof. Express the actual thirteen-flag channel $\mathcal B$ by its
+real product factors. It is invariant under $\mathcal G$, so twirling
+that finite sum gives the same channel. Its full TP marginal is the
+one in (4.5). Global atom positivity therefore gives
+
+$$
+c_{\rm cert}\le
+\sum_J\operatorname{tr}(Z_JH_J(\mathcal B))
+\le\sum_J\|H_J(\mathcal B)\|_{\rm op}
+\operatorname{tr}(A_J^++A_J^-).
+\tag{4.10}
+$$
+
+The last inequality follows from PSD trace pairing with both signed
+Loewner bounds. Apply the simultaneous event table of Theorem 3.2:
+every keep-event norm is at most $1/2$, singleton split norms are
+$(1+\sqrt{17})/8$, and pair split norms are
+$(1+\sqrt{145})/24$. Normalization proves (4.7).
+
+Since $L_*-1/2=4931/250000$, rationalizing with
+$(\sqrt{17}-3)(\sqrt{17}+3)=8$ proves (4.8).
+The comparison $\sqrt{17}>41/10$ gives its strict rational bound.
+If $\alpha_s=0$, rationalize using $145-121=24$ to obtain (4.9).
+Its strict bound follows from $\sqrt{145}>12$ and
+$4931\cdot23/250000>9/20$. This concerns normalized QJM-form
+certificates, not every possible representation of a lower-bound
+proof. It supplies no multipliers or sufficient positivity condition.
+$\square$
+

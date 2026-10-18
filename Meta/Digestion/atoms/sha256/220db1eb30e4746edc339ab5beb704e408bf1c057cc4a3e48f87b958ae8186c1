@@ -1,0 +1,72 @@
+**Theorem 16.1 (exact pressure at the asymmetric law).** For
+every $n\ge1$ and every jointly admissible
+$H\subseteq S_3^n$,
+
+$$
+\sum_{x\in H}\prod_{i=1}^n w_{\rm a}(x_i)
+\le C_{\rm a}^n.
+\tag{NCE.96}
+$$
+
+At every $n$ equality is attained by the full solution set of
+an actual complete template. In the notation of Definition 13.3,
+
+$$
+\boxed{\displaystyle
+A_n(\mu_{\rm a})=\left(\frac{3038031}{7792603}\right)^n,
+\qquad \beta_3(\mu_{\rm a})=\frac{3038031}{7792603}.}
+\tag{NCE.97}
+$$
+
+Proof of the upper. Apply the credited Theorem 2.2 with
+$S=S_3$, the seven full temporal targets, all finite literal
+experiments and the constant experiment, reply capacity four,
+weight $w_{\rm a}$ and cap $C_{\rm a}$. Theorem 15.3
+checks its entire hypothesis. Equivalently canonical all-word
+simulation reduces the experiments to a finite boundary menu.
+The conclusion holds for every correlated admissible relation
+and therefore for every full complete-template solution set.
+The entropy proof uses its one actual Gibbs law and permits
+arbitrary donor cycles. It does not assume a completion oracle
+or independent coordinates inside the relation.
+
+Proof of attainment. Use the credited set from (NCE.68),
+
+$$
+P_B=H_B\boxdot H_B,\qquad |P_B|=100.
+\tag{NCE.98}
+$$
+
+Here are its existing literal witnesses. On $H_B$ the root
+reply determines the root factor. At side $s$, an absent
+reply identifies the known root leaf $B$ and hence
+$\Gamma_s(B)$. A present reply comes from a branch
+$\langle u,v\rangle\in\mathcal G$ and identifies its
+addressed child's constructor, hence the factor among
+$(2,1),(1,0),(0,0)$. Thus every target in $W_2$ on
+$H_B$ is determined by its own literal. On $P_B$ the
+root factor is constant branch, and at $sq$, $q\in W_2$,
+the same literal $sq$ determines its target. These serve
+all seven targets. Under the new weights its exact mass is
+
+$$
+\begin{aligned}
+w_{\rm a}(P_B)
+&=1347714+9\cdot215358+9\cdot214934+81\cdot48071\\
+&=9114093=C_{\rm a}.
+\end{aligned}
+\tag{NCE.99}
+$$
+
+The product $P_B^n$ has those same-coordinate witnesses and
+mass $C_{\rm a}^n$. Complete each attained reply decoder
+arbitrarily on unused replies, always into its actual target
+range. The resulting complete template contains $P_B^n$.
+Its mass is at most $C_{\rm a}^n$ by the upper just proved.
+Every state weight is positive, so any additional solution
+would increase the mass strictly. Its full solution set is
+therefore exactly $P_B^n$. Division by $W_{\rm a}^n$
+proves (NCE.97). This reuses the known equality fiber and
+its paid native meaning; the new input is its exact mass
+and the exhaustive upper at this law. $\square$
+

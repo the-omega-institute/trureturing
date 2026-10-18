@@ -1,0 +1,83 @@
+**Theorem 2.9 (One lifted winding with and without ray closure).** Fix any
+positive $p$ and define the dimensionless quadratic action on absolutely
+continuous real phase paths on $[0,1]$ by
+
+$$
+\mathcal A(\theta)=\int_0^1
+\operatorname{Var}_p(\dot\theta(t))\,dt,
+\qquad
+\operatorname{Var}_p(v)=\sum_s p_sv_s^2-(p^{\mathsf T}v)^2.
+$$
+
+Require $d^{\mathsf T}(\theta(1)-\theta(0))=2\pi$ as a real equation.
+Without ray closure the minimum is $4\pi^2/I$. With full ray closure the
+minimum is
+
+$$
+4\pi^2\min_{\substack{k\in\mathbb Z^5\\d^{\mathsf T}k=1}}
+\operatorname{Var}_p(k),
+$$
+
+and the lattice minimum is attained. These paths are not restricted to the
+transport law of Theorem 2.5.
+
+Proof. Put $\bar v=\int_0^1\dot\theta\,dt$. The quadratic identity
+
+$$
+\int_0^1\operatorname{Var}_p(\dot\theta)\,dt
+=\operatorname{Var}_p(\bar v)
+ +\int_0^1\operatorname{Var}_p(\dot\theta-\bar v)\,dt
+$$
+
+is obtained by expanding and canceling the mean cross term. Equality with the
+first term holds precisely when $\dot\theta-\bar v$ is a common vector almost
+everywhere. Thus Jensen equality allows an arbitrary common-phase velocity;
+it does not require each component velocity to be constant in a fixed gauge.
+Proposition 2.4 applied after subtracting $p^{\mathsf T}\bar v\,\mathbf1$
+gives the unconstrained minimum, attained by $\dot\theta=2\pi w$.
+
+Full ray closure is equivalent to
+
+$$
+\theta(1)-\theta(0)=2\pi k+\gamma\mathbf1,
+\qquad k\in\mathbb Z^5,\quad\gamma\in\mathbb R.
+$$
+
+Since $d^{\mathsf T}\mathbf1=0$, the winding condition is exactly
+$d^{\mathsf T}k=1$. Variance ignores $\gamma\mathbf1$, and the constant-velocity
+path realizes each such endpoint and its Jensen lower bound.
+
+To prove attainment, integer translation by $k_2\mathbf1$ allows $k_2=0$
+without changing the constraint or cost. The identity
+
+$$
+\operatorname{Var}_p(k)=\sum_{i<j}p_ip_j(k_i-k_j)^2
+\ge p_2\sum_{i\ne2}p_i k_i^2
+$$
+
+makes every bounded-cost lattice sublevel finite. The admissible set is
+nonempty, for example $k=e_0$, so minimizing over the finite sublevel below
+that candidate proves attainment. $\square$
+
+At uniform probability, $d^{\mathsf T}k=1$ implies that the integer tuple is
+nonconstant. A nonconstant five-tuple has at least four unequal unordered
+pairs: a class of size $a\in\{1,2,3,4\}$ and its complement contribute
+$a(5-a)\ge4$ pairs. Every unequal integer pair has squared difference at least
+one. Hence $\operatorname{Var}_p(k)\ge4/25$, with equality for $e_0$ or
+$e_{13}$, and also for $-e_1$ or $-e_3$. Therefore
+
+$$
+\mathcal A_{\rm closed}=\frac{16\pi^2}{25},\qquad
+\mathcal A_{\rm horizontal}=\frac{\pi^2}{5},\qquad
+\frac{\mathcal A_{\rm closed}}{\mathcal A_{\rm horizontal}}=\frac{16}{5}.
+$$
+
+The horizontal one-winding path itself is not ray closed. More generally, at
+double symmetry the transport law in §3.1 cannot execute any odd-winding ray
+return: it keeps the two positive-$d$ phase increments equal and the two
+negative-$d$ increments equal, so a ray return with middle increment zero has
+even winding. The finite closed minimum above belongs to the larger
+variational class. If one required only $\Delta\chi=0\bmod2\pi$ without the
+real one-winding condition, a constant path would give zero instead. No
+physical energy or time unit is specified by this quadratic action.
+

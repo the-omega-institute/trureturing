@@ -1,0 +1,71 @@
+**Theorem 8.3 (correct weighted feasibility and exact above-grid count).**
+The table $B_M$ terminates correctly on every Boolean input and satisfies
+both same-input caps $n,W$. It has
+
+$$
+m_B=2^{3M+5}-16(2^M-1)+5M+1>G=2(M+4)(M+1).
+\tag{8.2}
+$$
+
+One untouched input attains both caps. Its full-fiber native lift has
+exactly $m_B+4+r$ preparation states and simultaneously attained maxima
+$n+1,W+3$, with the original code and separate complete reader.
+
+Proof. The unit cylinders are disjoint, and within each the two deleted
+subtrees differ at $t$. All deletions are below routing depth $M$ and avoid
+$R=0^M$, so $J$ remains. The low prefix has
+$1+(M-j)+1=M-j+2=k-j-2$ ones, leaving AND on $Y\cup U_j$. The high
+prefix has $1+1+M+1=M+3=k-1$ ones, leaving OR on $X\cup U_j$.
+Both are live. The scan sends all-zero $U_j$ to $B_X$, all-one $U_j$
+to $B_Y$, and any mixed assignment to $J$ at its first change.
+
+For mixed $U_j$, low AND is zero and high OR is one, exactly their
+respective old $t$ values queried at $J$. For all zeros, low has old $x=1$
+and follows $B_X,J$ to zero; high computes $x\lor x'$, going through
+$J$ to one when $x=1$, and otherwise reading $x'$. For all ones, low
+computes $y\land y'$, going through $J$ to zero when $y=0$, and otherwise
+reading $y'$; high has old $y=0$ and follows $B_Y,J$ to one. These six
+cases exhaust every extension of either replaced prefix. Other inputs
+follow the original full threshold tree. Scan indices increase and every
+exit has at most two further calls, so termination follows too.
+
+A replaced run makes $n-j-2$ prefix calls, at most $j$ scan calls and
+at most two tail calls. Its prefix charge is $C_{I_j}+C_X$ or
+$C_{I_j}+C_Y$, and the scan charge is at most $C_{U_j}$. With the fixed
+$i(J)=t$, the exhaustive tail bounds are
+
+| scan exit | low-prefix tail bound | high-prefix tail bound |
+| --- | --- | --- |
+| all zero | $c_x+c_t\le C_Y$ | $\max(C_X,c_x+c_t)=C_X$ |
+| all one | $\max(C_Y,c_y+c_t)=C_Y$ | $c_y+c_t\le C_X$ |
+| mixed | $c_t\le C_Y$ | $c_t\le C_X$ |
+
+The maximum equalities use $c_t\le c_{x'}$ and $c_t\le c_{y'}$.
+The mixed bounds follow from these inequalities as well. Hence each run
+costs at most $C_{I_j}+C_X+C_Y+C_{U_j}=W$ and at most $n$ calls.
+Repeated $t,x,y$ and all certified work are included. Every untouched
+$R=0^M$ input still queries all coordinates exactly once and attains
+$n,W$ together.
+
+The original tree has $2^n-1$ running vertices. Exactly
+$2\sum_{j=1}^M(2^{j+2}-1)$ vertices are deleted. The new vertices number
+$M+2(M-1)+4=3M+2$, giving
+
+$$
+m_B=(2^n-1)-2\sum_{j=1}^M(2^{j+2}-1)+(3M+2)
+=2^n-16(2^M-1)+5M+1.
+$$
+
+The existing $J$ is counted only in the retained tree. The untouched
+zero-routing subtree alone has $2^{2M+5}-1$ vertices. Induction gives
+$2^M\ge M+1$ for $M\ge0$, so this subtree has at least
+$32(M+1)^2-1>2(M+4)(M+1)$ vertices for $M\ge2$. Thus $m_B>G$.
+Finally apply Theorem 1.4 to this complete correct graph, retaining every
+installed vertex. Its all-vector proof applies to the static indicators of
+every arbitrary branch image in $Z_{b_3}$; the profile front covers the
+other ten profiles. Actual cube origins realize the untouched inputs
+attaining both caps. The complete predecessor rows, original literal
+entries, four replies, $2+r$ latches and separate eight-state reader are
+preserved. This is the feasible construction of [WTF, Theorem 11.3][WTF].
+$\square$
+

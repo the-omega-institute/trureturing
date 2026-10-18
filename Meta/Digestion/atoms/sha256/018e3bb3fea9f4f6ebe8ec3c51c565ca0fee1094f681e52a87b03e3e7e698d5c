@@ -1,0 +1,20 @@
+**Proposition 7.1 (failure of an identity-port substitution).** For every
+$D\ge1$,
+
+$$
+\mathcal F_D\cap\rho(\mathcal T)=\varnothing.
+\tag{PPF.24}
+$$
+
+Consequently one cannot instantiate a predecessor-recovery service whose
+actual runtime source is $\rho(u)$ by identifying that very runtime
+source with any unchanged original $t\in\mathcal F_D$.
+
+Proof. For every $u$, $\rho(u)\ne\alpha$: an alpha maps to beta,
+a beta maps to a pair, and a pair maps to a pair. If $u=\alpha$,
+its image is a leaf and cannot have the required original shape. If
+$u=\beta$, its image is $\langle\beta,\alpha\rangle$, with left
+child beta. If $u=\langle x,y\rangle$, its image has left child
+$\rho(x)\ne\alpha$. None equals $\langle\alpha,v\rangle$.
+$\square$
+

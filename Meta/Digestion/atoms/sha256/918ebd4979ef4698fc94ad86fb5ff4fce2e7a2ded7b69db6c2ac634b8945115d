@@ -1,0 +1,28 @@
+**Definition 2.2 (Guard and prescribed-path contracts).** The class
+$\mathsf G$ additionally requires each straight-command domain to be
+the inverse image under $E$ of a subset of the actual encoded image.
+Equivalently, all rays in an encoder fiber must agree on lawfulness.
+The class $\mathsf P$ additionally requires a state-independent affine
+update for every prescribed simultaneous native path on a finite compact
+interval, with integrable prescribed velocities independent of the
+starting ray, on that path's full all-times source domain. The class
+$\mathsf{GP}$ imposes both requirements, including recovery of full path
+guards. Section 6 specifies these paths and domains directly.
+
+For $\mathsf C\in\{\mathsf L,\mathsf G,\mathsf P,\mathsf{GP}\}$ define
+$\mathfrak F_{\le n,\mathsf C}$ and $e_{n,\mathsf C}^{\rm aff}$ by the
+same at-most-dimension convention and the same original error. An empty
+class has infimum $+\infty$. The inclusions used below are
+
+$$
+\mathfrak F_{\le n,\mathsf{GP}}\subseteq
+\mathfrak F_{\le n,\mathsf G}\subseteq\mathfrak F_{\le n,\mathsf L},
+\qquad
+\mathfrak F_{\le n,\mathsf{GP}}\subseteq
+\mathfrak F_{\le n,\mathsf P}\subseteq\mathfrak F_{\le n,\mathsf L}.
+$$
+
+Stored dimension, manifold dimension of the actual image, dimension of
+its affine hull, and rank of an affine readout are separate quantities.
+The dimension budget here counts stored real coordinates.
+

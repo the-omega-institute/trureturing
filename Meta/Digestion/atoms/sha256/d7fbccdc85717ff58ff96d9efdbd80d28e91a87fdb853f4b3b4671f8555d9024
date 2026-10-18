@@ -1,0 +1,215 @@
+**Theorem 3.1 (one repair on the original input-label measures).** For every
+pair in Definition 2.1 there are Borel probability kernels
+$B:\mathcal K_p\to\operatorname{Prob}(\mathcal K_\beta)$ and
+$A:\mathcal K_\beta\to\operatorname{Prob}(\mathcal K_p)$, and Borel maps
+$F_p:\mathcal K_p\to\mathcal K_p$,
+$F_\beta:\mathcal K_\beta\to\mathcal K_\beta$, with the following properties.
+
+The label measures are exactly balanced:
+
+$$
+\sigma_pB=\sigma_\beta,\qquad \sigma_\beta A=\sigma_p.
+\tag{3.1}
+$$
+
+The maps are the normalized own complete laws of these kernels with the
+original input emission coordinates, so that at every input
+
+$$
+\begin{aligned}
+F_p(Q)&=u(Q)\delta_\alpha+
+ U(Q)\beta\int F_\beta(W)B(Q,dW),\\
+F_\beta(W)&=(1-v(W))\delta_\beta+
+ v(W)\alpha\int F_p(Q)A(W,dQ).
+\end{aligned}
+\tag{3.2}
+$$
+
+In particular $u(F_p(Q))=u(Q)$ and $v(F_\beta(W))=v(W)$. Their errors obey
+
+$$
+\int d_p(F_p(Q),Q)d\sigma_p\le D_p,\qquad
+\int d_\beta(F_\beta(W),W)d\sigma_\beta\le D_\beta.
+\tag{3.3}
+$$
+
+Define the balanced label edges and their generated-law pushforwards by
+
+$$
+\begin{aligned}
+H_B&=\sigma_p\otimes B,& H_A&=\sigma_\beta\otimes A,\\
+\widehat G_B&=(F_p,F_\beta)_\#H_B,&
+\widehat G_A&=(F_\beta,F_p)_\#H_A.
+\end{aligned}
+\tag{3.4}
+$$
+
+Then $(\widehat G_B,\widehat G_A)\in\mathfrak C$, and
+
+$$
+\begin{aligned}
+\mathsf W_{p\beta}(G_B,\widehat G_B)&\le m_\beta+D_p+D_\beta,\\
+\mathsf W_{\beta p}(G_A,\widehat G_A)&\le m_p+D_p+D_\beta.
+\end{aligned}
+\tag{3.5}
+$$
+
+The generated marginals are $(F_p)_\#\sigma_p,(F_\beta)_\#\sigma_\beta$;
+they need not equal the original descriptor marginals. The same maps and
+kernels work for every normalized complete probability target $T$
+simultaneously:
+
+$$
+\left|\int d_s(F_s(D),T)d\sigma_s(D)
+            -\int d_s(D,T)d\sigma_s(D)\right|\le D_s,
+\qquad s=p,\beta.
+\tag{3.6}
+$$
+
+Targets with positive infinite mass are included. No deterministic
+successor, finite-support, irreducibility, mixing or recurrence hypothesis
+is required.
+
+**Proof.** Choose optimal couplings $C_\beta$ of
+$(\tau_\beta,\sigma_\beta)$ and $C_p$ of $(\tau_p,\sigma_p)$.
+Disintegrate them as
+$C_s(dD,dD')=\tau_s(dD)K_s(D,dD')$. Glue only the incoming label:
+
+$$
+\begin{aligned}
+\Lambda_B(dQ,dW,dW')&=G_B(dQ,dW)K_\beta(W,dW'),\\
+\Lambda_A(dW,dQ,dQ')&=G_A(dW,dQ)K_p(Q,dQ').
+\end{aligned}
+\tag{3.7}
+$$
+
+Their $(Q,W')$ and $(W,Q')$ marginals, respectively, have marginals
+$(\sigma_p,\sigma_\beta)$ and $(\sigma_\beta,\sigma_p)$.
+Take these to be $H_B,H_A$ and disintegrate to obtain $B,A$.
+This is the one-coordinate case of the shadow construction of
+Eckstein–Nutz, Definition 3.1 and Lemma 3.2 [EN]. The relevant spaces
+are compact Polish with bounded metric, so their first moments are finite.
+The unchanged coordinate uses its diagonal coupling. Directly from (3.7),
+
+$$
+\int d_\beta(W,W')d\Lambda_B=m_\beta,\qquad
+\int d_p(Q,Q')d\Lambda_A=m_p.
+\tag{3.8}
+$$
+
+These equalities also prove (3.1). Versions of $B,A$ on null outgoing
+sets can be filled with a Dirac measure at any fixed opposite-space
+descriptor, making them probability kernels everywhere.
+
+Conditional Jensen for the half-$\ell^1$ norm gives
+
+$$
+\begin{aligned}
+\widetilde e_B&:=\int d_\beta\left(\mathcal R_B(Q),\int W'B(Q,dW')\right)d\sigma_p
+ \le e_B+m_\beta=x,\\
+\widetilde e_A&:=\int d_p\left(\mathcal R_A(W),\int Q'A(W,dQ')\right)d\sigma_\beta
+ \le e_A+m_p=y.
+\end{aligned}
+\tag{3.9}
+$$
+
+For example, condition $\Lambda_B$ on $Q$. Its old and new successor
+barycentres differ in TV by at most the conditional mean of
+$d_\beta(W,W')$. Integrating gives (3.9). This step retains the full
+outgoing descriptor and does not replace (2.3) by a norm of an averaged
+signed residual.
+
+To construct the own laws without a path recurrence assumption, let $L$
+act on bounded Borel functions on $\mathcal K_p$ by
+
+$$
+Lf(Q)=U(Q)\int v(W)\int f(Q')A(W,dQ')B(Q,dW),\qquad
+g(Q)=U(Q)\int(1-v(W))B(Q,dW).
+\tag{3.10}
+$$
+
+Then $L\mathbf1\le\lambda\mathbf1$ and $u+g+L\mathbf1=\mathbf1$.
+Define
+
+$$
+F_p(Q)(w_{n,0})=(L^nu)(Q),\qquad
+F_p(Q)(w_{n,1})=(L^ng)(Q),\qquad F_p(Q)(\infty_p)=0.
+\tag{3.11}
+$$
+
+Every coordinate is nonnegative and Borel. Telescoping gives
+
+$$
+\sum_{n<N}L^n(u+g)=\mathbf1-L^N\mathbf1,
+\qquad L^N\mathbf1\le\lambda^N\mathbf1.
+\tag{3.12}
+$$
+
+Thus (3.11) is normalized and has p tail at depth $j$ exactly
+$L^j\mathbf1$, at most $\lambda^j$. Define $F_\beta$ by the second
+line of (3.2). Its tail is at most $v(W)\lambda^j\le b\lambda^j$;
+it too is normalized, retains infinity with mass zero, and has the required
+emission. Substitution into (3.11) proves the first line of (3.2).
+Coordinate measurability implies TV-Borel measurability here: a ball's
+distance function is a countable sum of measurable coordinates, and the
+target metric spaces are separable. Consequently both maps have the
+asserted codomains and measurability.
+
+The recursions have a unique normalized solution. If two solutions have
+supremum phase distances $z_p,z_\beta\le1$, (3.2) gives
+$z_p\le(2/3)z_\beta$ and $z_\beta\le(2/5)z_p$; hence both vanish.
+This contraction is due to synthetic stopping, even for reducible kernels.
+
+Write $d_p^*,d_\beta^*$ for the two actual integrals in (3.3).
+The original descriptor identities are
+$Q=u(Q)\delta_\alpha+U(Q)\beta\mathcal R_B(Q)$ and their suspended
+counterparts. Comparison with (3.2), then (3.1) and (3.9), gives
+
+$$
+d_p^*\le\frac23(x+d_\beta^*),\qquad
+d_\beta^*\le\frac25(y+d_p^*).
+\tag{3.13}
+$$
+
+The averaging uses the balanced **label** edges $H_B,H_A$:
+for example $\int\!\int d_\beta(F_\beta(W),W)B(Q,dW)d\sigma_p=d_\beta^*$.
+Solving the two inequalities, with $1-(2/3)(2/5)=11/15$, gives exactly
+(3.3). The coefficient matrix is the already used two-phase contraction
+matrix [REV, (17.12)]; the new inputs to it are the full-descriptor defects
+plus the incoming marginal transport costs.
+
+The two pushforwards in (3.4) share the stated generated marginals.
+For each bounded Borel $\phi$ on $\mathcal K_p$ and complete atom $\eta$,
+the first equation in (3.2), divided by its unchanged $U(Q)>0$, yields
+
+$$
+\int\phi(F_p(Q))
+ [\mathcal R_B(F_p(Q))(\eta)-F_\beta(W)(\eta)]dH_B(Q,W)=0.
+\tag{3.14}
+$$
+
+This is precisely the first test in (1.6) for $\widehat G_B$.
+The other test follows from the second equation of (3.2).
+The proof covers a many-to-one $F_p$ or $F_\beta$: (3.14) is conditioned
+on the entire generated input law after pushforward, and never chooses an
+inverse label or a successor of a representative of its fibre. There is
+one common full-measure set for all complete coordinates, since there are
+countably many. Thus the pair lies in the exact original $\mathfrak C$.
+
+For (3.5), couple $(Q,W)$ under $G_B$ with
+$(F_p(Q),F_\beta(W'))$ using $\Lambda_B$. Its cost is at most
+
+$$
+\int\bigl[d_p(Q,F_p(Q))+d_\beta(W,W')
+                  +d_\beta(W',F_\beta(W'))\bigr]d\Lambda_B
+ =d_p^*+m_\beta+d_\beta^*.
+\tag{3.15}
+$$
+
+Use $\Lambda_A$ for the reversed product. Finally
+$|d_s(F_s(D),T)-d_s(D,T)|\le d_s(F_s(D),D)$ for every complete target,
+proving (3.6) with no target-dependent construction or exceptional set.
+The same inequalities hold after any common measurable projection by TV
+contraction; injective current-record rendering preserves the distances.
+$\square$
+

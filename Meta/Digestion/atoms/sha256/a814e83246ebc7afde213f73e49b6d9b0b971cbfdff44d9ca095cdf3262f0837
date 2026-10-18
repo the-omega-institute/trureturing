@@ -1,0 +1,28 @@
+**定理 10.7.1（交换缺陷的未来核判据）。** 对固定动作对 $a,b$，以下两条件等价：
+
+1. 对所有 $w\in\mathcal W$ 和所有初态 $s$，
+
+$$
+\pi T_wT_bT_a(s)=\pi T_wT_aT_b(s);
+$$
+
+2. 对每个 $s$，交换缺陷 $\Delta_{a,b}(s)$ 落入所有允许续接读出的等价核：
+
+$$
+T_bT_a(s)\sim_{\mathcal W}T_aT_b(s),
+$$
+
+其中
+
+$$
+r\sim_{\mathcal W}r'
+\Longleftrightarrow
+\pi T_w(r)=\pi T_w(r')\quad\forall w\in\mathcal W.
+$$
+
+**证明。**
+
+把 $r=T_bT_a(s)$ 与 $r'=T_aT_b(s)$ 代入定义，条件 2 对所有 $w$ 的等式正是条件 1。证毕。
+
+<a id="claim-10-7-2"></a>
+

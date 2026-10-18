@@ -1,0 +1,39 @@
+**Mathematical citation 7.1 (owners and literature).** The external
+arithmetic and automata facts below are `literature-attested` at the
+specified scope. The consumed native phase correspondence, its
+unrestricted prescribed-$K$ synthesis consequence and the source-specific
+ray calculation are `repo-derived` ordinary mathematical deductions.
+They make no global novelty claim.
+
+| Source | Exact use in this volume |
+| --- | --- |
+| [CAR §§1, 3–4][CAR] | Original acquired input, cycle recognition, both directions of the entire-source coordinate bijection, all retained joint constraints, and original complete-row equality in (NPS.2)–(NPS.3). |
+| [CAR §§6–7][CAR] | One globally realized word for each descriptor and its all-chart, all-epoch reply predicates; common design quantifiers and whole-row extraction. No resource cap is invoked as a state-preserving transformation. |
+| [CAR §§11–12, 14][CAR], [PR15494][CAR-PR] | Complete native instructions and state accounting; the per-installed-table stopping bridge; bounded synthesis's shared-instruction/shared-output construction. The new relation (NPS.11) supplies the unrestricted support needed by that consumer. |
+| [CAR §13][CAR] | Both acquired-domain directions and the complete rows for the infinite family in §5. Its particular $t=2m$ controller and its length-constrained static lower bound retain their scopes; neither is claimed as a new result here. |
+| [Continuation II §§26–30][CII] | Complete observable state, fixed instructions and output distinctions, and proof-only support/rank. No finite-plant synthesis theorem is applied to the infinite native register. |
+| [NativeDepthPatterns, `original_present_transport`][TRANSPORT] | Reached-subtree transport, applied at the actual epoch of reach in (NPS.13). This is not a transport assertion for an absent subtree. |
+| [Ginsburg–Spanier, Theorems 1.2–1.3][GS] | Theorem 1.2 decides the explicit first-order natural-addition sentences. Theorem 1.3 supplies the mature effective semilinear/Presburger correspondence; no arbitrary-tree decision is inferred. |
+| [To, §§1–2][TO] | Unary regular paths and finite unions of arithmetic progressions. Here the fixed-response graph is functional with weights $0,1$, so its actual orbit gives the constants in (NPS.6). No bound for general counter machines, independent mixing of cycles, or automata complexity claim is imported. |
+
+Seymour Ginsburg and Edwin H. Spanier, *Semigroups, Presburger Formulas,
+and Languages*, Pacific Journal of Mathematics **16**(2), 285–296,
+Theorems 1.2–1.3, supplies the decision theorem after the native
+interpretation, not the interpretation itself. Anthony Widjaja To,
+*Unary finite automata vs. arithmetic progressions*, arXiv:0812.1291v1,
+§§1–2, supplies the mature automata context for the finite path arithmetic.
+Its warning about dependencies between cycles is respected by using the
+unique orbit of $F_v$ with its specified entry and endpoint.
+
+The proofs here are ordinary mathematical proofs. They assert no new
+Lean compilation, kernel certification, executed synthesis solver or
+physical realization. The effective algorithm in Theorem 4.2 is
+justified by the displayed reduction and the cited decision theorem.
+
+[CAR]: https://github.com/the-omega-institute/trureturing/blob/ac159239a7c999bf163bd244eb18ba0a49c0de81/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[CAR-PR]: https://github.com/the-omega-institute/trureturing/pull/15494
+[CII]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[TRANSPORT]: https://github.com/the-omega-institute/trureturing/blob/906b8a1d479e36f432622e868d871503dec19fde/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[TO]: https://arxiv.org/pdf/0812.1291v1
+

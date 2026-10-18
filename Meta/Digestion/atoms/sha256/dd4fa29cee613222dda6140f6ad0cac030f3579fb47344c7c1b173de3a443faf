@@ -1,0 +1,176 @@
+**Theorem 75.5 (complete aligned reduction).** Fix \(0<|b|<1\) and a
+repeated pair of positions. The common-flat inputs
+\[
+ w=(1,1,z;g,g,gr),\qquad |z|=|r|=|g|=1             \tag{75.24}
+\]
+are precisely the constant rays (75.28), the finite reconstructions
+(75.31)–(75.32) with both signs, and the pole pair (75.36)–(75.37).
+The finite system parametrizes \(\Theta\) pairs bijectively.
+
+**Proof.** Put \(R=3-b^2\), \(\kappa=(b-i)h\), and
+\(\kappa g=p+iq\), with real \(p,q\). Then
+\[
+ |g|=1\quad\Longleftrightarrow\quad p^2+q^2=R.       \tag{75.25}
+\]
+If \(z,r\ne-1\), use real Cayley coordinates
+\[
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\qquad
+ s=u+v,\quad D=u-v,\quad T=uv,\quad K=D^2+4T=s^2.
+\]
+For \(s\ne0\), write \(p=sa\), \(q=sc\). The symbol \(D\) here
+is a real coordinate. Define three affine-linear polynomials in \(a,c\):
+\[
+\begin{aligned}
+ P_0={}&K[Da-(T+1)c]+bD(1-T)-D^2-2T(T+1),\\
+ P_1={}&[bD^2-DT(b^2+1)+D(b^2-3)+b(T^2-2T-3)]a\\
+       &+[-b^2D^2-4bD+T^2-2b^2(T+1)+4T+3]c
+                              +(b^2-3)(T+1-bD),\\
+ P_2={}&[5bD^2+2DT(b^2+2)-2Db^2+3b(T+1)^2]a\\
+       &+[-3D^2-2bD(T+1)-(2b^2+7)T^2-10T+2b^2-3]c
+                              +2(b^2-3)(T+1+bD).  \tag{75.26}
+\end{aligned}
+\]
+Write \(N_j=|a_j|^2-6\), \(L_j=|\ell_j|^2-6\) for the original
+outputs (75.1), where \(j=0\) is a repeated position and \(j=2\)
+is the unique position. With \(Z=(u+i)^2(v+i)^2\), substitution gives
+\[
+ zr(N_0+L_0)=4P_0/Z,\qquad
+ zr(1+b^2)h(N_0-L_0)=-4sP_1/Z,\qquad
+ zr(1+b^2)h(N_2-L_2)=4sP_2/Z.                       \tag{75.27}
+\]
+These identities use (75.25). Original unitarity gives
+\(2(N_0+L_0)+(N_2+L_2)=0\). Thus, for \(s\ne0\), all original
+flatness equations are equivalent to \(P_0=P_1=P_2=0\) and
+\(K(a^2+c^2)=R\).
+
+Before dividing by \(s\), the first numerator is
+\(s[Dp-(T+1)q]+bD(1-T)-D^2-2T(T+1)\); the second and third
+numerators are their coefficient rows in (75.26) dotted with \((p,q)\),
+plus \(s\) times their constant terms. This is a polynomial extension
+of (75.27) to \(s=0\). At \(v=-u\), the first reduces to
+\(-2u(u-b)(1+u^2)=0\). If \(u=0\), then \(z=r=1\), and the
+remaining equation is \(-3bp+(3-2b^2)q=0\). Its intersection with
+(75.25) consists of exactly
+\[
+ (p,q)=\pm\frac{\sqrt R(3-2b^2,3b)}
+                        {\sqrt{(3-2b^2)^2+9b^2}},\qquad
+ g=(p+iq)/\kappa.                                  \tag{75.28}
+\]
+These are the two constant canonical rays. If \(u=b\ne0\), the other
+two original equations are homogeneous linear equations in \(p,q\)
+with coefficient determinant
+\(-6b(b^2-1)(b^2+1)^3(b^2+3)\ne0\). They force \(p=q=0\), contrary
+to (75.25). Every nonconstant finite ray therefore has \(K>0\).
+
+Write (75.26) as \(M_1(a,c)^T+k_1=0\), where \(M_1\) is a real
+\(3\times2\) polynomial matrix and \(k_1\) its constant column.
+Put \(F_0=D^2+(T+1)^2\). On \(K>0\), \(F_0>0\) and the first
+row is nonzero. Its minors with the second and third rows are
+\[
+ \det(M_1)_{01}=-Kb(Db-T+3)F_0,\qquad
+ \det(M_1)_{02}=3K[-D+b(T+1)]F_0.                  \tag{75.29}
+\]
+Rank less than two would force
+\(D=4b/(1-b^2)\), \(T=(b^2+3)/(1-b^2)\). At that point, with
+\(d_1=-k_1\), the augmented consistency minor is
+\[
+ (M_1)_{00}(d_1)_1-(M_1)_{10}(d_1)_0
+          =\frac{384b(b^2-3)(b^2+1)}{(b^2-1)^3}\ne0.        \tag{75.30}
+\]
+Thus no actual solution has deficient rank.
+
+Define, polynomially in the two real variables \(D,T\),
+\[
+\begin{gathered}
+ G_1=M_1^TM_1,\quad \Delta=\det G_1,\quad
+ \eta=-\operatorname{adj}(G_1)M_1^Tk_1,\\
+ F=\det[k_1\mid M_1],\qquad
+ N=K(\eta_0^2+\eta_1^2)-R\Delta^2.
+\end{gathered}
+\]
+The complete finite nonconstant quotient is
+\[
+ F=0,\quad N=0,\quad K>0,\quad\Delta>0.             \tag{75.31}
+\]
+Indeed \(\Delta\) is the sum of squares of the three \(2\times2\)
+minors, so \(\Delta>0\) is exactly rank two. In that rank, \(F=0\)
+is consistency, its unique solution is \((a,c)=\eta/\Delta\),
+and \(N=0\) imposes the circle equation (75.25). Choose
+\[
+\begin{gathered}
+ s=\sqrt K>0,\qquad u=(s+D)/2,\quad v=(s-D)/2,\\
+ p=sa,\quad q=sc,\quad g=(p+iq)/\kappa,\qquad
+ z=(1+iu)/(1-iu),\quad r=(1+iv)/(1-iv).              \tag{75.32}
+\end{gathered}
+\]
+Then (75.25) and (75.27) give every original input and output modulus.
+Conversely every nonconstant finite ray reconstructs this solution.
+Changing \(s\) to \(-s\) sends \((u,v,g)\) to \((-v,-u,-g)\),
+which is exactly \(\Theta\) followed by dephasing the first coordinate.
+The parameters \(D,T\) are unchanged, proving the stated bijection
+modulo \(\Theta\). All matrices in (75.31) have at most three rows;
+(75.26) completely specifies the polynomial system.
+
+It remains to treat the Cayley poles. If \(z=r=-1\), then the original
+norm-sum residual \(N_0+L_0=-8\), impossible. For \(z=-1\),
+\(r=(1+iv)/(1-iv)\ne-1\), direct original substitution gives
+\[
+\begin{aligned}
+ p={}&v(b+q)+2v^2+1,\\
+ 0={}&(v-b)[b^2(v^2+1)+bq(v^2+1)+2bv^3-2v^2-4],\\
+ 0={}&2b^3v^2+2b^3+7b^2v^3+9b^2v+3bqv^3+3bqv\\
+     &\hspace{6mm}+6bv^4+17bv^2-b-3qv^2-3q+8v^3-2v.       \tag{75.33}
+\end{aligned}
+\]
+For \(v\ne b\), the second solves
+\[
+ q=-\frac{b^2(v^2+1)+2bv^3-2v^2-4}{b(v^2+1)}.
+\]
+The third equation and the norm circle respectively require \(H=J=0\),
+where
+\[
+\begin{aligned}
+ H={}&b^4v^2+b^4+2b^3v^3+3b^3v+10b^2v^2+b^2
+                                      +10bv^3+5bv-3v^2-6,\\
+ J={}&b^4v^2+b^4+2b^3v^3+2b^2v^4-b^2v^2-5b^2
+                                      +2bv^3+4bv+2v^4+8v^2+8.
+                                                               \tag{75.34}
+\end{aligned}
+\]
+The determinant of their \(7\times7\) Sylvester matrix is
+\[
+ \operatorname{Res}_v(H,J)=2b^4(b^2-1)^2(b^2-3)^2(b^4+22b^2+25)
+          (9b^8+28b^6-170b^4-612b^2+2025).          \tag{75.35}
+\]
+Every factor is nonzero on \(0<|b|<1\); the last is at least
+\(2025-170-612=1243\). Hence the case \(v\ne b\) is impossible.
+
+For \(v=b\), the third equation in (75.33) instead gives
+\[
+ q=\frac{b(5b^4+12b^2-1)}{1-b^4},\qquad p=bq+3b^2+1,\qquad
+ p^2+q^2-R=\frac{2f(b^2)}{(b^2-1)^2(b^2+1)},
+\]
+\[
+ f(t)=2t^5+33t^4+90t^3+4t-1.                       \tag{75.36}
+\]
+This polynomial is strictly increasing on \([0,1]\); its signs at
+\(0,1\) are opposite, and its unique root \(t_0\) lies in
+\((3/20,4/25)\). At exactly \(b=\pm\sqrt{t_0}\), the displayed
+\(p,q\) give an actual upper-pole ray with
+\[
+ z=-1,\qquad r=\frac{1+ib}{1-ib},\qquad
+ g_\mathrm{up}=(p+iq)/\kappa.
+\]
+Substitution into (75.33) and (75.25) proves sufficiency directly.
+The lower-pole ray is precisely its dephased \(\Theta\) partner,
+\[
+ (z,r,g)=\left(\frac{1-ib}{1+ib},-1,-g_\mathrm{up}\right).   \tag{75.37}
+\]
+This exhausts the poles. For the fixed repeated positions it is one
+\(\Theta\) pair; its synchronous permutation union consists of six
+rays, since each nonconstant aligned ray has orbit size three and the
+two \(\Theta\) orbits are disjoint. Disjointness follows from the
+antiunitary projective-fixed-point argument following Corollary 74.2.
+The pole pair is a coordinate exception; no orthogonality transition
+is implied. \(\square\)
+

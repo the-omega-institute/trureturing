@@ -1,0 +1,32 @@
+**Convention 2.1 (normal-code supply).** Reuse [ABC, Theorems 2.2–2.3][ABC].
+The maps $B:\mathcal T\to\mathcal N$ and $E:\mathcal N\to\mathcal T$ are
+inverse bijections. Normal codes have primitive leaves $[r]$,
+$r\in\mathbb N$, and constructor $F$, with every occurrence of
+$F([r+1],[r])$ forbidden. Thus
+
+$$
+\begin{aligned}
+B(T_r)&=[r],&
+E(F(X,Y))&=\langle E(X),E(Y)\rangle,\\
+J(X,Y)&=
+\begin{cases}
+[r+2],&X=[r+1],\ Y=[r],\\
+F(X,Y),&\text{otherwise},
+\end{cases}\\
+B(\rho^a u)&=\tau_a B(u).
+\end{aligned}
+\tag{PDC.5}
+$$
+
+Translation $\tau_a$ adds $a$ to every rank. For $a\ge0$ it preserves
+normality. Its image is exactly the normal codes with all ranks at
+least $a$, and subtraction is its unique inverse on that image.
+Atomic indices are injective. These are supplier results.
+
+For intermediate algebra only, let $\mathcal K_{\mathbb Z}$ be the
+free finite $F$-trees with integer-labelled leaves. On this auxiliary
+set $\tau_d$ is defined for every $d\in\mathbb Z$, commutes with $F$,
+and is bijective. A negative integer label has no native expansion.
+No negative power of $\rho$ is introduced. Sections 4–5 impose exactly
+the conditions that return every named value to $\mathcal N$.
+

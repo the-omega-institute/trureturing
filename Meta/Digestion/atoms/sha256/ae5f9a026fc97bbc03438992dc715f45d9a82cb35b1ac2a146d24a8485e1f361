@@ -1,0 +1,23 @@
+## 8. Cheaper risk exclusion and attribution
+
+Write $W=d(Q)=D_2(Q)=\frac1{38}(1372/543+588/247+63/113)$ from [TwoStep, Theorem 3.1][T] and its full-word localization. Both partial derivatives of $h$ lie in $[0,1]$ off the origin; continuity extends its coordinate Lipschitz bound to all nonnegative masses. The free radius-two fibers are disjoint pairs of five-word masses. Equation (7.2) therefore gives $|D_2(P_t)-W|\le1900t$.
+
+Reuse [Two-word, §5, equation (5.6)][W]'s actual comparator $\widehat Q$: its pair transition rows are $(7/10,3/10,0)$, $(0,0,1)$, $(33/50,17/50,0)$ and stationary row $(11/21,5/21,5/21)$. That source verifies its full-posterior localization and actual risk, including forced and zero fibers. Thus
+
+$$
+d(\widehat Q)=\frac1{21000}\left(\frac{8217594}{5951}+\frac{3628548}{2739}+\frac{400554}{1271}\right)>\frac{15103}{105000},\qquad d(\widehat Q)\le c_\star.
+$$
+
+The positive cross-products $353,79,89$ bound the three summands of $38W$ by $252671/10^5,238057/10^5,55753/10^5$, respectively. Consequently $W<546481/3800000<14382/100000$, since $38\cdot14382-546481=35$. At the single exact candidate $1900t<1/100000$, so
+
+$$
+d(P_t)\le D_2(P_t)\le W+1900t<\frac{14383}{100000}<\frac{15103}{105000}<d(\widehat Q)\le c_\star.
+\tag{8.1}
+$$
+
+The middle strict gap has numerator $85000$ over $10500000000$. This cheaper exclusion does not identify $D_2(P_t)$ with actual $d(P_t)$. The auxiliary interval supplies additive continuity and transfer estimates; no whole-interval risk exclusion or relative-to-zero mass bound is asserted here.
+
+The contribution is a `repo-derived` synthesis relative to these suppliers: independently summable actual exterior defects extend the response route beyond every positive pair on this law and produce the expanded finite certificate. [Stationary][S] owns the actual risk identity; [Universal][U] owns the complete producer domain, posterior-defect interface and compact separation criterion; [Conditional Response][R] owns the attained-law zero response and projection budget. [TwoStep][T] owns the reference law and ratios. [Two-word][W] owns exact pair cancellation and the stronger comparator. [Renewal, §8][P7] retains its separate reset and effective-three-state exclusions.
+
+Conditional Brier scoring and squared posterior discrepancy are mature tools in [Dawid–Lauritzen–Parry][DLP], §4.2, especially Example 4.4 and equation (14). Its everywhere-positive full-product strict-propriety argument is not transplanted to hard no11. Hilbert contraction and the positive-matrix cross-ratio diameter are mature tools in [Lemmens–Nussbaum][LN], §2.1, Theorem 2.9; Lemma 6.2 proves the needed two-dimensional specialization directly. Conditional projection, Cayley–Hamilton, alternating minors and uniformly summable-series continuity are established mathematics. This bounded comparison supports scoped application attribution, without worldwide priority or exhaustive absence claims.
+

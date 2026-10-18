@@ -1,0 +1,28 @@
+**Definition 2.4 (complete information and costs).** All policies are common,
+deterministic and causal, and terminate sourcewise on the stated finite family.
+Public prior, scaffold, program and initialization are fixed independently of
+the hidden member. Supplementary source information, if allowed, is a complete
+label $\ell(t)$ in an attained alphabet $L$. Every other accessible initial
+source-dependent field must factor through that label: code selection, control,
+buffers, retained archives, handles, names and timing included. A $b$-bit budget
+means $|L|\le2^b$, not merely that one chosen payload has $b$ bits. Authenticity
+and source binding of an allowed label are separate channel hypotheses.
+
+Raw query count charges every literal invocation, including repetitions and
+`absent`. Literal-address work is the sum of all submitted $L/R$ letters from
+the current original register root, with no free focus navigation. These are
+coordinates of a resource account, separate from source/material acquisition,
+code installation, address generation/serialization/seeking, names and reference
+widths, archive reads/append/seal/copy, decoder work, simultaneous storage,
+workspace and runtime. Granting free computation or word observations in a
+lower-bound comparison does not assert zero physical cost for those actions.
+
+In TM57, $N=2H-1$ source token slots are allocated and zeroed, and private
+installation supplies exactly $2N$ bit ingress occurrences with their actual
+writes and movements; validation uses fixed public scans. An owned $k$-bit copy
+has the PR57.D7 body cost $8k+4$ core occurrences, with allocation, positioning,
+length/identity descriptors and serial output additional. Sender, mailbox and
+destination coexist and their storage is counted. These concrete service costs
+are retained when the information lower bound grants unlimited archive work;
+an unlimited work allowance is not a zero-cost archive implementation.
+

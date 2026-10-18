@@ -1,0 +1,51 @@
+**Proposition 8.2 (six rows and all native target witnesses).** Put
+$C=\langle A,A\rangle$, $J=\langle B,A\rangle$,
+$Q=\langle C,A\rangle$ and $(t_0,t_1,t_2,t_3)=(A,C,J,Q)$,
+where $A=\alpha$, $B=\beta$. For $s=L,R$ define on $P_0$
+
+$$
+\ell_s(A)=0,\quad\ell_s(B)=1,\quad
+\ell_s(\langle x,y\rangle)=
+\begin{cases}2,&\text{the }s\text{-child is }A,\\
+3,&\text{the }s\text{-child is }B.\end{cases}
+$$
+
+The following six rows form an actual admissible $B_6\subset S_3^3$:
+
+$$
+\begin{array}{c|cc}
+x&t_{\ell_L(x)}&t_{\ell_R(x)}\\\hline
+A&A&A\\
+B&C&C\\
+\langle A,A\rangle&J&J\\
+\langle A,B\rangle&J&Q\\
+\langle B,A\rangle&Q&J\\
+\langle B,B\rangle&Q&Q
+\end{array}
+$$
+
+Its first projection is $P_0$, and both donor projections are
+$\{A,C,J,Q\}$, of weight $124$ and with no hard targets. Its product
+mass is $701184$, and its joint-profile squared upper bound is
+$11472\cdot124^4=2712226025472$.
+
+**Proof.** On $(t_0,t_1,t_2,t_3)$ the experiment $L$ gives respectively
+absent, alpha, beta and branch. It identifies the four states and hence
+determines each of their seven targets. For the first coordinate the
+root target uses its own root reply. A nonroot target $sq$, $|q|\le1$,
+depends only on $\ell_s(x)$: for indices zero and one its value is
+$\Gamma_{sq}(A)$ and $\Gamma_{sq}(B)$; for indices two and three it
+is $\Gamma_q(A)$ and $\Gamma_q(B)$. Read $L$ in the corresponding
+donor coordinate and use these four values as the decoder. This gives
+all 21 target witnesses on the same six tuples, including initially
+absent targets and every authentic count via the factor law. The six
+product weights sum to
+
+$$
+88^3+52\cdot16^2+16(16+4)^2=701184.
+$$
+
+The donor weights are $88,16,16,4$. Applying Theorem 2.2 to its three
+projections gives the stated squared bound; equality is not asserted.
+$\square$
+

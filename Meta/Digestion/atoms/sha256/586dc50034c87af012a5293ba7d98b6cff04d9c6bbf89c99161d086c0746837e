@@ -1,0 +1,19 @@
+## 7. A rising true posterior and a necessary opposing private response
+
+The posterior-increase identity in [SIMPLEX, Section 9] is a covered source ingredient. At any positive suspended history let $m_h=\sum_k\nu_h(k)r_k$. Bayes conditioning on that same acquired alpha gives $\nu_{h\alpha}(k)=\nu_h(k)r_k/m_h$, and hence
+
+$$
+m_{h\alpha}-m_h=
+\frac{\sum_k\nu_h(k)r_k^2}{m_h}-m_h
+=\frac{\operatorname{Var}_{\nu_h}(r)}{m_h}>0.
+\tag{7.1}
+$$
+
+Both endpoint posterior masses remain positive after every finite history, so the variance is strictly positive. All sums are bounded and countable. Equation (7.1) describes the same acquired alpha as (1.2), not a synthetic sample or an added observation.
+
+When $240e<\kappa$, Theorem 1.1 gives $\mathcal D>(\kappa-240e)/30>0$. Some finite positive suspended history therefore has positive acquired edge mass with $v_y>u_x$, even though (7.1) holds there. Exact attainment, if it exists, has such a history with $\mathcal D_h>\kappa/30$. This does **not** require the predictor's marginalized emission mean to fall: increases on other private outcomes may dominate. It does not claim that every actual alpha, every history or the one realized source run exhibits a decrease. No uniform paid length or occurrence probability is supplied.
+
+The excluded direction class is nonempty beyond ALPHA's emission-conserving class. Use X=Y={0,1}, fair rows, $A=I$, B the swap, $u=(1/3,2/5)$, $v=(1/3,1/3)$. Install this rational product observer on, for example, the original prior $\mu(1)=\mu(2)=\mu(3)=1/3$. Both acquired flows hold, all original histories and records remain, and the same-update laws are normalized by regular survival. Here $J_+=0$, $J_-=1/30$. Absolute alpha change is positive. The actual return swaps p labels, whose immediate-alpha coordinates differ by 1/15, so complete-return motion is at least 1/15. Neither interface is a complete redraw. Both phase law diameters are positive; their lower bounds are 1/15 and 1/45. Positive emissions, irreducible actual return and distinct p laws also place this example outside the all-native-mixture class by the supplied NATIVE rigidity. This is a lawful example of the excluded update direction, not a near-optimal witness.
+
+For task-relative whitebox quality $W_s=1-R_{\rm conf,s}$, simultaneous $W_s\ge1-\rho_s-e$ forces $\mathcal D\ge(\kappa-240e)_+/30$, with strictness for a positive right side. This constrains a semantic forecast and its actual causal update jointly. It identifies neither an internal implementation nor a classification of arbitrary trained networks by FIB windows.
+

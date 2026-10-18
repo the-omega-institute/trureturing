@@ -1,0 +1,128 @@
+**Theorem 5.2 (Exact cone, finite quadrature and marginal).** The maps
+in $\mathcal C_{\mathbb R,J}$ correspond bijectively to
+
+$$
+\mathcal F=\{(M,\eta)\in\mathcal K:M^T\tau=\tau\}.
+\tag{5.3}
+$$
+
+The cone $\mathcal K$ is closed. Every point of $\mathcal F$ yields
+one legal original scalar port with at most $225$ fixed flags and
+whole-block CPTP decoding. The normalized Choi marginal is exactly
+$\operatorname{Tr}_{\rm out}(Z/5)=I_5/5$.
+
+For each generator in (5.1), its full unnormalized Choi matrix has
+the explicit finite expression
+
+$$
+Z(k(a,b))=\frac1{50}\sum_{\epsilon=0}^1\sum_{k,l=0}^4
+(g_{\epsilon kl}aa^Tg_{\epsilon kl}^T)
+\otimes(g_{\epsilon kl}bb^Tg_{\epsilon kl}^T),\qquad
+g_{\epsilon kl}=J^\epsilon G(2\pi k/5,2\pi l/5).
+\tag{5.4}
+$$
+
+Proof. Start with the atom
+$\Gamma_{a,b}(X)=aa^T\operatorname{tr}(bb^TX)$, without imposing
+TP on this single atom. Average
+$\operatorname{Ad}_g\Gamma_{a,b}\operatorname{Ad}_{g^{-1}}$
+over the two-angle torus and then over $I,J$. It is an average of
+real product atoms with vectors $ga,gb$. It annihilates the
+transpose-antisymmetric part and lies in the commutant of Theorem 4.2.
+
+On the trivial three-dimensional part the atom's matrix is
+$h(a)h(b)^T$, unchanged by the average. On a nontrivial orthonormal
+pair the unaveraged block is $z_\nu(a)z_\nu(b)^T$. Its rotation
+average is a scalar plus a skew matrix. The scalar is half its trace,
+namely $z_\nu(a)^Tz_\nu(b)/2$. Averaging the reflection removes the
+skew matrix. Cross blocks between distinct characters average to
+zero. This proves exactly (5.1), including the factor $1/2$ in every
+nontrivial plane. Since all the matrix bases in (5.2) are real
+symmetric, vectorizing the map $P\operatorname{tr}(QX)$ gives
+unnormalized Choi matrix $P\otimes Q^T=P\otimes Q$. This proves the
+normalization in (5.2).
+
+For the finite equality (5.4), each coordinate of $G(\theta,\phi)a$
+or $G(\theta,\phi)b$ is a linear combination of a constant and
+frequencies $\pm e_1,\pm e_2$. A product-projector entry uses four
+such factors. Its Fourier support is contained in
+$\{(m,n):|m|+|n|\le4\}$. The product of the two five-point circle
+sums preserves exactly the zero Fourier coefficient: the only pair
+in this support with both entries divisible by five is $(0,0)$.
+Thus the $25$-point sum equals the full two-circle integral entry by
+entry. The extra two-point sum implements the reflection average.
+This proves (5.4) on all matrix coefficients and hence on every
+complex matrix input. Its angle constants have exact algebraic
+coefficients, for example
+
+$$
+\cos(2\pi/5)=\frac{\sqrt5-1}{4},\quad
+\cos(4\pi/5)=-\frac{\sqrt5+1}{4},\quad
+\sin(2\pi/5)=\frac{\sqrt{10+2\sqrt5}}4,\quad
+\sin(4\pi/5)=\frac{\sqrt{10-2\sqrt5}}4.
+\tag{5.5}
+$$
+
+The other values follow by reflection. No continuous flag or physical
+choice of independent angles is needed in this finite identity.
+
+For necessity in (5.3), write a real product channel in
+$\mathcal C_{\mathbb R,J}$ as a finite sum
+$\sum_fw_f\Gamma_{a_f,b_f}$. It is unchanged by the preceding average.
+Linearity makes its coordinates $\sum_fw_fk(a_f,b_f)\in\mathcal K$.
+Theorem 4.2 gives its TP equations. Conversely, a finite nonnegative
+sum of the generators is, by (5.4), a finite real product CP map.
+It has exactly the coefficients in that sum; imposing (4.4) makes
+it TP. Theorem 4.2 supplies stationarity and reflection commutation.
+This proves both directions and, by uniqueness of (4.3), bijectivity.
+
+For clarity the matrix marginal follows directly from (5.2):
+
+$$
+\operatorname{Tr}_{\rm out} Z(M,\eta)
+=\sum_j(M^T\tau)_jH_j.
+\tag{5.6}
+$$
+
+There are no omitted marginal components, since every
+$F_{\nu a}$ is traceless. Equation (4.4) is therefore exactly the
+full marginal $I_5$, or $I_5/5$ after normalization.
+
+Let $\ell(M,\eta)=\tau^TM\tau$. On every generator,
+$\tau^Th(a)=\|a\|^2=1$ and $\tau^Th(b)=1$, so $\ell(k(a,b))=1$.
+The generator set is compact, being a continuous image of two unit
+spheres. Its convex hull is compact in this fifteen-dimensional
+space. If a sequence in its cone converges, its total weights are
+the convergent nonnegative numbers $\ell(M,\eta)$. After taking a
+subsequence, the normalized convex combinations converge in that
+compact hull. Multiplying by the limiting weight proves membership
+of the limit in the cone, including zero limiting weight. Hence
+$\mathcal K$ is closed. On the TP slice,
+
+$$
+\ell(M,\eta)=\tau^T\tau=5.
+\tag{5.7}
+$$
+
+Thus $Z/5$ is in the compact convex hull of normalized real product
+projectors. The real-product Carathéodory argument of Theorem 2.2
+replaces the entire finite sum (5.4), across all its generators, by
+at most $225$ product projectors without changing $Z/5$. Writing
+their coefficients as $w_f/5$ gives
+$\sum_fw_fb_fb_f^T=I_5$ from (5.6). Formula (2.8) then realizes
+exactly this channel. The finite decomposition need not transform
+character by character; only its summed channel has the symmetries.
+
+The separable Choi and rank-one Kraus framework is the credited
+Horodecki–Shor–Ruskai correspondence. The averaging framework also
+appears in
+[Nechita–Park, §2.1](https://arxiv.org/html/2403.03667v2).
+Their orthogonal and diagonal-orthogonal covariance classes are
+different from the present walk torus with $J$. Likewise the Cartan
+symmetric-pair groups in
+[Prudhoe, §§2–4](https://arxiv.org/html/2501.03959v3)
+do not license enlarging this actual menu's symmetry. The cone and
+the exact marginal above are retained together, rather than importing
+an entanglement threshold from either of those other classes.
+$\square$
+

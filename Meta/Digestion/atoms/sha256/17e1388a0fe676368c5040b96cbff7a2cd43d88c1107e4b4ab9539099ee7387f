@@ -1,0 +1,11 @@
+## 5. Remaining extremal questions and citation limits
+
+**Open Problem 5.1 (Exact growth constant).** Determine the exact value of $c_\star$ from (1.1), or give a matching upper bound for the supremum over all full-domain priors. Theorem 4.1 excludes the hard-core equality alternative of [Growth], Open Problem 9.4. It supplies a strict lower witness, not an equality $c_\star=d$. Whether $d$ is optimal even within stationary two-step priors is also undetermined.
+
+**Open Problem 5.2 (Optimizers and constant terms).** Determine the structure of the maximizing priors for $\Phi_n$: uniqueness, full support, dependence on $k(b)$ and possible additional word relations. Determine whether $\kappa_n-c_\star n$ converges, or converges separately along even and odd lengths. These are the optimizer and constant-term questions of [Growth], Open Problem 9.5; the bounded remainder for the specific prior in Theorem 3.1 does not determine the remainder for $\kappa_n$.
+
+**Citation scope 5.3.** [Growth], Definitions 2.1–2.6 and Theorems 3.2, 5.2 and 7.3, own the graph objective, harmonic duality, existence and near-linear bounds for $c_\star$, and exact optimized hard-core comparator. Its Proposition 9.3 proves finite-length hard-core nonoptimality, with no strict bulk conclusion. The new comparison is Theorems 3.1 and 4.1 for the explicit law (2.2). Alexander D. Scott and Alan D. Sokal, *The repulsive lattice gas, the independent-set polynomial, and the Lovász local lemma*, arXiv:cond-mat/0309352v2 [SS], supplies the independent-set and path-partition formulas cited in Definition 1.4 and the proof of Theorem 4.1. Its repulsive-interaction hypothesis $0\le W\le1$ does not supply the distance-two factor $7/6$ in (2.9); normalization and edge ratios of this prior are proved in §2. Stationary finite-state cylinders and homogeneous harmonic grouping are elementary probability machinery. No worldwide priority assertion for the strict comparison is part of these mathematical conclusions.
+
+[Growth]: https://github.com/the-omega-institute/trureturing/blob/409f27ebed169a35fa000f22ed56a2f154cb9c93/docs/develop/theory/FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[SS]: https://arxiv.org/html/cond-mat/0309352v2
+

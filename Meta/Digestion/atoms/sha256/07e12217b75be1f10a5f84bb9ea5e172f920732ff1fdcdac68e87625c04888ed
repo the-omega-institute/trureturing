@@ -1,0 +1,19 @@
+### 63.1. Channel family and physical model
+
+Let m≥1 and let the logical input have orthonormal labels 1,...,m,h. The output is a qubit with labels0,1. Fix the MC encodings V_in|i>=|ii> and V_out|a>=|aa>. For z∈C^m define E_z on input matrix units by
+
+    E_z(ii)=00 (1≤i≤m),    E_z(hh)=11,
+    E_z(ij)=0 (i≠j≤m),
+    E_z(ih)=z_i 01,    E_z(hi)=conj(z_i)10.
+
+Physical competitors are finite LOSR mixtures of arbitrary local CPTP maps from C^(m+1) to C². The same physical channel must act on every coherent input and every reference extension.
+
+Then:
+
+1. E_z is CPTP exactly when ||z||₂≤1.
+2. There exists a physical LOSR channel Φ with Φ∘J_in=J_out∘E_z exactly when ||z||₁≤1. Whenever feasible, a single product of two local CPTP maps suffices; shared randomness adds no implementability in this family.
+3. Every coordinate two-label restriction of every CPTP E_z has an exact physical product-channel implementation. Thus for m≥2 any z with ||z||₂≤1<||z||₁ gives a pairwise/global coherent separation. The symmetric example z_i=1/sqrt(m) has this property.
+4. Among all physical LOSR competitors constrained to reproduce the displayed basis outputs exactly, the optimal unhalved diamond error is the Euclidean distance from z to the complex unit ℓ₁ ball. A single product channel attains it, with the explicit threshold formula below.
+
+The basis-output constraint in item4 is essential to its claimed scope. No equality with the unrestricted leakage-allowing diamond optimum is asserted. Item2, being exact implementation, has no extra constraint: equality itself enforces those basis outputs.
+

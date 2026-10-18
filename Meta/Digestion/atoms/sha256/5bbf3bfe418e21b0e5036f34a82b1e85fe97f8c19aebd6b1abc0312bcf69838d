@@ -1,0 +1,55 @@
+**Corollary 14.2 (explicit necessary motion with all original hypotheses).** Every observer in Definition 14.1 satisfies
+
+$$
+\boxed{\mathcal V(M)\ge\frac{11}{6}
+\left(c_*-\frac{1183}{121}e_M\right)_+.}
+\tag{14.3}
+$$
+
+If common exact conf/conf attainment exists in this class, it requires
+
+$$
+\mathcal V(M)\ge\frac{11c_*}{6}
+=\frac{19551782767}{5572930488930263671875}
+>\frac{11}{6\cdot10^{12}}.
+\tag{14.4}
+$$
+
+Every sequence of allowed observers on allowed priors with $e_M\to0$ satisfies $\liminf\mathcal V(M)\ge11c_*/6$. Finite shapes and priors may vary while each retains every condition of Definition 14.1. Neither such a sequence nor a common exact optimizer is asserted to exist.
+
+**Proof.** The conditioning in (14.2) is the original actual-return conditioning, not synthetic sampling. Given an acquired $h$, source-independent initialization and updates factor observer randomness from the source likelihood; $K$ and the actual configuration are conditionally independent. The joint probability is precisely (2.1a):
+
+$$
+\Pr(K=k,Z_h=x,\text{next actual word}=\beta\alpha,
+Z_{h\beta\alpha}=z\mid h)
+=\nu_h(k)\rho_h(x)a_{r_k}C_h(x,z).
+\tag{14.5}
+$$
+
+Summing in $k$ and dividing by the positive actual word probability $\sum_k\nu_h(k)a_{r_k}$ leaves $\rho_h(x)C_h(x,z)$. There is no tilt by the decoder's synthetic emissions. The original source posterior can change on this return, but $\mathcal V$ measures the actual joint configurations' decoded-law motion.
+
+Apply Theorem 2.1, under its exact extraction, realization and clipping suppliers [MIXSEP], [PAID], [CLIP], to this observer and the same source. It gives
+
+$$
+\gamma\le\frac{1183}{121}e_M+\frac6{11}\mathcal V(M).
+\tag{14.6}
+$$
+
+The coefficient is the source's simultaneous propagation, not a law-risk substitution: with $T_p=(30\varepsilon_p+20\varepsilon_\beta)/11$ and $T_\beta=(12\varepsilon_p+30\varepsilon_\beta)/11$, its two bounds are
+
+$$
+\varepsilon_p+T_p+\tfrac4{11}(V+2T_p)
+=\frac{691\varepsilon_p+380\varepsilon_\beta}{121}+\frac4{11}V,
+$$
+
+$$
+\varepsilon_\beta+T_\beta+\tfrac6{11}(V+2T_p)
+=\frac{492\varepsilon_p+691\varepsilon_\beta}{121}+\frac6{11}V,
+\qquad V\le\mathcal V(M).
+\tag{14.7}
+$$
+
+This preserves the placement of configuration TV; $492+691=1183$ is the larger excess coefficient sum. The arbitrary original observer is not narrowed to $S$: the supplied extraction and clipping comparison in §6, including zero/unit emissions and original infinite mass, is what links it to (9.3). Combining (14.6) with Theorem 9.2 and $\mathcal V(M)\ge0$ gives (14.3); exact attainment and liminf give (14.4) and the sequence consequence.
+
+No positive unrestricted common risk gap follows from (14.3) while acquired motion is unrestricted. It also does not restore zero marginalized defect, preserve a defect or fee budget, replace either conf coordinate by law risk, prove a minimum COMPLETE resource, or transfer to a static no11 label, immutable-address cache, FIB window archive, KBonacci process or physical time/energy model. Such consequences require additional joint source, operation, update, full-law and cost hypotheses. In particular the deterministic fixed-law all-cut result of [future-response sufficiency](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) §§43–44 has neither the arbitrary stochastic configuration contract nor individual same-update generation; it cannot replace Theorem 2.1 in this proof. The qualitative comparison, sign polynomials, endpoint fractions, triangle slack, interior excess and source motion relation remain the credited suppliers of this quantitative extension. $\square$
+

@@ -1,0 +1,31 @@
+**Definition 8.2 (the model-checking transfer obligation).** The
+required effective translation would supply a finite recursion scheme
+and a legal full WMSO+$\mathsf U_{\mathrm{tup}}$ sentence whose truth
+is equivalent to the accepted tick unboundedness of Theorem 4.1 for
+each entire native input $I,B$. Its decision consequence would be
+the following application of [Badyl–Parys, Theorem 2][BP]; it is not
+an additional construction of the translation. Theorems 2.5–4.1
+do not supply it.
+
+Given such a translation, apply the supplied model-checking theorem to that finite
+scheme and legal sentence. Truth gives $\forall h\ J_B(h)$ by
+Theorem 4.1; the existing NSF finite supplier gives actual original
+tuples at each requested depth. Falsity gives existence of a failed
+finite depth. Enumerate $h$ using that same terminating supplied-depth
+decision and stop at its first failure; the proven existence of
+such a depth makes this search terminate. This distinguishes the
+positive logical decision from a supplied numerical bound. If a
+bound on accepted tick counts is also provided, Theorem 4.1 gives
+the direct offset $H=M$.
+
+Badyl–Parys requires the finite scheme and legal sentence as input.
+Its SUP reflection, Theorem 8, reflects the actual unfiltered finite
+language of a supplied scheme. Its finite-transducer closure,
+Theorem 10, requires the stated finite transducer, including its
+no-output-cycle condition. Neither theorem inserts an arbitrary
+computable whole-value test into node labels. Theorem 5.2 excludes
+a generic equality-filter transfer, and Theorem 6.3 excludes the
+specified fixed separated validator. A native-specific correlated
+translation can meet neither obstruction's hypotheses and remains
+a distinct possibility.
+

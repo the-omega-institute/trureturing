@@ -1,0 +1,5 @@
+source_id = "fib-native-exterior-response-gain-bound"
+path = "docs/develop/theory/FIB_NATIVE_EXTERIOR_RESPONSE_GAIN_BOUND.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

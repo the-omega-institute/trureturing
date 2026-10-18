@@ -1,0 +1,14 @@
+**Corollary 6.2 (one fixed threshold also fails uniformly).** Set $\tau=199/1000$, $\epsilon=1/1000$. For every $N\ge7$, the prior (5.1) has $\Phi_\infty>\tau+\epsilon$ but $\Phi_N<\tau$, for all four objective pairs. Thus even a horizon also allowed to depend on this fixed threshold and slack cannot be uniform over the stated family.
+
+**Proof.** The exact rational comparisons are $L>1/5$ and $L-g/2<199/1000$. Theorem 5.1 applies. For each fixed prior the sequence $h_n$ eventually has score above $\tau+\epsilon$ by its strict limiting margin, so actual finite longer histories supply the uncapped inequality. None under the chosen cap does. $\square$
+
+The PH optimum-relative consumer can also be left numerically unchanged. PH17/20 supply $0<t_*<1/10000$. With the fixed requested gap $\gamma=99/500$, this family satisfies
+
+$$
+\Phi_\infty>t_*+\gamma+1/1000,\qquad
+\Phi_N<\gamma<t_*+\gamma.
+\tag{6.1}
+$$
+
+These follow from $L>\gamma+1/1000+1/10000$ and $L-g/2<\gamma$. Thus the obstruction is a specified original gap with its original slack, rather than an endpoint certificate of a smaller numerical value. The ordinary counterexample proof does not use PH's optimal-generator construction or its implementation as a supplier.
+

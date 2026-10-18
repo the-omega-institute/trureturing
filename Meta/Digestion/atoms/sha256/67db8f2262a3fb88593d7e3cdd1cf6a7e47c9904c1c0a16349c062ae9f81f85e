@@ -1,0 +1,43 @@
+**Proposition 100.1 (One seed and unchanged actual tails).** A finite
+scheme from Lemma 99.1 at allowance $t$ gives an original acquisition
+with $K\le2$, $M\le4$ everywhere and uniform selected-law error at
+most $\max\{t,a_5\}$. The adaptive scheme belongs to $\mathcal A_2$;
+the ordered scheme belongs to $\mathcal O_2$ and has a law-preserving
+$\mathcal N_2$ padding.
+
+**Proof.** Combine its component probabilities and each component's tree
+probabilities into a single finite probability list. Partition one
+source-independent uniform seed space $[0,1)$ into half-open categorical
+intervals of those lengths. Empty intervals from zero weights are
+omitted; every seed belongs to an interval. After fixing the seed, execute
+its chosen tree on the actual static prime replies and hand its original
+marked tape to the unchanged consumer. This is one common deterministic
+rule with zero advice and no source label, source distribution, first
+absence observation, restart or discarded failure. Every path makes at
+most two actual requests with indices at most four and hands off.
+Records and output events are measurable finite unions of intervals.
+The real amplitude parameters determine fixed seed intervals before any
+source is run; they are not observations of the actual source.
+
+When $n(x)\le4$, its actual word, with arbitrary suffix replies, has
+exactly the finite target $\eta_b^a=\lambda_x^a$. All sixteen words
+were checked. When $n(x)>4$, the output is the common $1111$ law $p$,
+supported on $\theta_0,\ldots,\theta_4$ and emitting no $\theta_{n(x)}$.
+The existing full-carrier identity (83.9) gives
+
+$$
+\operatorname{TV}(p,\lambda_x^a)
+ =\max\{1-p(0),a_{n(x)}\}\le\max\{t,a_5\}.
+\tag{100.1}
+$$
+
+Monotonicity bounds all real tail amplitudes by the unchanged $a_5$.
+No auxiliary component tail has been interpolated with another one.
+Equality $a_5=t$ is included, as is $a_5=\varepsilon$ in (96.2).
+Every ordered component preselects an increasing sequence and stops at
+its first queried zero or exhaustion. Proposition 90.2 acquires its
+whole sequence and reconstructs its original output to give the same
+laws in $\mathcal N_2$. This padding preserves the hard bound and may
+change sourcewise means; it is not an $\mathcal N$-to-$\mathcal O$
+normalization. $\square$
+

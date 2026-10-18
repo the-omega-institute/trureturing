@@ -1,0 +1,27 @@
+**Lemma 7.1 (The same-law inactive-coordinate bridge).**
+Suppose a complete normalized eight-bit $N$ allocation satisfies all
+rows (2.1) at $b_i\in[0,1]$ and $e\in[0,1]$. No order, active-length,
+hull or $b_2=b_3$ hypothesis is needed. Then
+
+$$
+2b_2+11b_3+13b_4+13b_5+12b_6+11b_7+11b_8\le2+117e.
+\tag{7.1}
+$$
+
+Proof. Extend each table to nine inputs by ignoring input nine, with
+identical weights, schedules and outputs in $0,\ldots,8$.
+Use $b'_i=b_i$ for $i\le8$ and the auxiliary amplitude $b'_9=e$.
+Each old first-zero word, for either ninth bit, copies all three old
+event probabilities and demands. At the new first-zero word $1^8 0$,
+put $q=p_+(0)\ge1-e$. Its $A,C,P$ probabilities are $(q,0,q)$ and
+demands $(1-2e,0,1-e)$. All hold separately. At $1^9$ the positive
+row remains $q\ge1-e$. Thus one complete mass-one law satisfies every
+nine-bit row. At $e=0$ one has $q=1$; at $e=1$ the new demands are
+$(-1,0,0)$. No condition $b_8\ge e$ is used.
+
+Apply the existing full inequality (2.4) to this law and subtract its
+last term $11b'_9=11e$. This proves (7.1).
+The ninth coordinate costs no query because every table ignores it.
+This is a same-law application of XVIII 318.2, not a new score or an
+unchanged-profile extension for arbitrary conic mass. $\square$
+

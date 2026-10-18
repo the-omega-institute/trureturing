@@ -1,0 +1,8 @@
+**约定 1.3（强任务的已有对应）。** 字面树描述可计算 $w(T)$、$a(T)$ 及每个 $r_T(q)$。反方向，已有 [NativeAncestorUniqueness](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestorUniqueness.lean) 的 `native_ancestor_uniqueness` 给出
+
+$$
+w(S)=w(T),\quad a(S)=a(T)\quad\Longrightarrow\quad S=T.
+$$
+
+在固定叶词的有限域上，完整坐标的消费者可枚举该词的有限括号形并选择唯一匹配者。这只给有限终止的数学恢复，不给执行时间价格。所谓恢复完整回复，指输出一个有限描述，之后对任意有限地址都能准确求值且不再请求来源；不要求输出一张无限表。给定这种完整求值描述，可从根按真实分支回复递归枚举节点，有限终止并恢复树。故固定词下的字面树、完整坐标、完整回复描述是可互恢复的强任务；从其中任一描述还能求 $\tau$。这些逆向供应和前沿刚性均复用既有结果，不作为新的几何唯一性命题。
+

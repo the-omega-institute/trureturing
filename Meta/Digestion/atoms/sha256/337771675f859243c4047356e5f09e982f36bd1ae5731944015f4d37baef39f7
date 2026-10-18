@@ -1,0 +1,16 @@
+## 8. Source correspondence, attribution and the remaining bridge
+
+All repository references below use the fixed mathematical snapshot
+`782ca801d00c48d48e3b08553333b786bcf3e65e`. Source reading supplies statement
+and parameter correspondence; it is not a fresh compilation or an axiom
+closure audit.
+
+| Supplier | Exact use and limit |
+| --- | --- |
+| [JM, §§36–37, 49–50, 65.1][JM] | Unique primitive rays, exact forward depth, finite image parsing, the flag $e$ and pair $Q$, the existing context composition, and erased-entry impossibility. These are reused, not re-established as new contributions. Fixed-word certificates in §§52–64 concern different observation fibers and are not granted as prepared inputs here. |
+| [CLOCK], including private `clock_step` and `clock_at_step` | `rightClock`, exact advancement and four-reply right-spine intervals. The acquired service uses actual reads; later epoch-guarded original-address decoders from that module are not invoked because no epoch $k$ is supplied. |
+| [ACQ], including the local suppliers of `source_foundation`, `acquisitionTrace`, `restore` and `acquisition_foundation`; [SLH, §§50, 53, 74–75][SLH] | Full native preparation, node/address costs and complete retention-cut discipline. Their complete old rows, relation fibers, authentic known epochs, original recut tasks and source-update menus are not the inputs or menu of the calibration consumer. |
+| [ABC, §§1–2, 8][ABC] | All-source canonical atomic-block representation, advancing minimum rank and stationary structure. It already supplies a stronger mathematical representation than $Q$. It is not installed at the consumer's retained cut; its unrestricted acquired-relation decision obligation is not solved by this calibration. |
+| [ARH, §6][ARH]; [TEMPLATE], including private `leaf_separation` and `right_tip_leaf`; [ANCESTOR] | Atomic-orbit right-spine consumers, known-template delayed certificates and full-word ancestor uniqueness. The first has an atomic-orbit promise, the second a known template and certified epoch, and the third full word and ancestor-coordinate inputs. None of those inputs is delivered here. Their exact results remain suppliers in their original domains. |
+| [ALPHA, §§1–2][ALPHA]; [DIRECTION, §§1–3][DIRECTION] | Common finite stochastic generators, actual acquired alpha kernels and complete-law configuration risk for a stopped Fibonacci source. Their Read draws iid letters conditional on one random depth; repeating a native address here repeats a stationary literal-tree reply. Their risks, signed update statistics, priors and finite COMPLETE carriers do not supply the present defect-retention theorem. No probabilistic source correspondence is asserted. |
+

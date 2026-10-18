@@ -1,0 +1,66 @@
+### 80.2 平台端点的确切选择
+
+令 $r_\star$  为方程
+
+$$
+d_rP'(r)-2(1+\beta)rP(r)=0
+\tag{RC.119}
+$$
+
+的唯一正根，其中
+
+$$
+P'(r)=
+2r(\beta g_0+g_2)+2\mathsf z
+-\frac{2\beta r(\mathsf x+\mathsf y r)}{k_r}
+-2\mathsf y k_r.
+$$
+
+原静态供应给出选择区间
+
+$$
+\frac{17}{20}<r_\star<\frac9{10}.
+\tag{RC.120}
+$$
+
+这里的唯一性也有直接解析解释。置 $p=(f_0)_2^2$，则
+
+$$
+(f_0)_1^2=\frac{1-(1+\beta)p}{1+\alpha},\qquad
+(f_0)_0^2=\frac{\alpha+(\beta-\alpha)p}{1+\alpha}.
+$$
+
+这里 $p_0=(f_0)_0^2$、$p_1=(f_0)_1^2$ 都是 $p$ 的正仿射函数。$\psi$ 是一个线性函数，加上
+
+$$
+-2\mathsf x\sqrt{p_0p_1}
+-2\mathsf y\sqrt{p_0p}
+-2|\mathsf z|\sqrt{p_1p}.
+$$
+
+对正仿射函数 $u,v$，
+
+$$
+(\sqrt{uv})''
+=-\frac{(u'v-uv')^2}{4(uv)^{3/2}}.
+$$
+
+故 $\psi$  在 $0<p<1/(1+\beta)$  上严格凸，其两端导数分别趋于 $-\infty,+\infty$。这确定唯一根，而不是留下一个待优化的最小化。源给出的有理区间 (RC.120) 用于选定实际静态分支。记
+
+$$
+\tau_{\rm p}=h_{\rm fr}(r_\star),\qquad s_{\rm p}=s_0\tau_{\rm p}.
+$$
+
+实际静态接触参数 $r_{\rm c}$  在 §84.1 用 RC 选根完全绑定；其供应区间为
+
+$$
+1.04175447537<r_{\rm c}<1.04175447539,
+$$
+
+$$
+\tau_{\rm c}=h_{\rm fr}(r_{\rm c}),\qquad
+.9962433511188<\tau_{\rm c}<.9962433511192,
+\qquad s_{\rm c}=s_0\tau_{\rm c}.
+\tag{RC.121}
+$$
+

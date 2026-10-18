@@ -1,0 +1,16 @@
+### 68.1 Pairwise gap and neighborhood theorem
+
+Let \(H_\star=H_0(0)\). For a unitary matrix \(H\), define
+
+\[
+ \mathcal F(H)=\left\{v\in\mathbb C^6:
+ |v_r|^2=|(Hv)_r|^2=\frac16\text{ for }r=0,\ldots,5\right\}.
+\tag{68.1}
+\]
+
+These are normalized common-flat input vectors. Put
+
+\[
+ \delta=\frac{9\sqrt7-21}{14}>0.
+\]
+

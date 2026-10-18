@@ -1,0 +1,27 @@
+**Theorem 6.2 (effective full lag test).** The support $D_{ab}(I)$
+has an effective Presburger description. Nonemptiness and uniqueness
+of each lag are decidable. On consistent input, unique lags are
+recoverable; for each nonunique lag two complete realizing histories
+with different values can be returned. Inconsistent input is not
+classified as unique by vacuity.
+
+Proof. Use $\exists\mathbf n\,[F_I(\mathbf n)\land
+d=n_b-n_a]$ as the description, with an integer $d$ or the two
+nonnegative coordinates of an integer encoding when needed. First
+decide $E_I\ne\varnothing$ and extract $\mathbf n_*$. Let
+$d_*=n_{*,b}-n_{*,a}$. Decide
+
+$$
+\exists\mathbf n\quad F_I(\mathbf n)
+                         \land n_b-n_a\ne d_*.
+\tag{NCE.16}
+$$
+
+A negative answer gives the unique lag. A positive answer gives
+another tuple, and Theorem 5.1 supplies a common finite source for
+each of the two alternative histories. The sources may differ
+between alternatives; each history separately has one source shared
+by all its records. Two different lag values on the same input
+exclude a deterministic exact lag decoder from those data alone.
+$\square$
+

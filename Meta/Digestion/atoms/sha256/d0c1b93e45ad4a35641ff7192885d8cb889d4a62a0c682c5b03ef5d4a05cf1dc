@@ -1,0 +1,27 @@
+**Proposition 63.12 (actual coescape distinguishes a retained pair from separated particles).** In separately legal finite prefixes of the same INITIAL of (63.30), let
+
+$$
+S_h^{\rm adj}=\{L^h,L^{h+1}\},\qquad
+S_h^{\rm sep}=\{L^h,R^h\},\qquad h\ge1.
+\tag{63.33}
+$$
+
+Commission a finite cap sufficient to reach an index $j_h\ge2(h+1+b_h)$, where $b_h\to\infty$, and use the authentic $D_{j_h}(t)$. Both known occupation preparations are within that same source-domain family. These are separate finite commissions with this INITIAL, not continuations of the stopped $H=3$ history. Their common, and buffered killed, basis-trial energies have limits
+
+$$
+E_h^{\rm adj}\longrightarrow6a-\nu/3,
+\qquad E_h^{\rm sep}\longrightarrow6a.
+\tag{63.34}
+$$
+
+Proof. All occupied sites are nonroot, so both inherited kinetic diagonals are six. Their root potentials tend to zero. Formula(62.3) gives
+
+$$
+G^{\rm c}(L^h,L^{h+1})=\frac13+\frac13\,2^{-(2h+1)},
+\qquad
+G^{\rm c}(L^h,R^h)=2^{-2h}.
+\tag{63.35}
+$$
+
+The contained global ball supplies the stated buffers; Lemma63.6 makes the killed/common differences tend to zero. Thus (63.34) follows. Each family of basis vectors is weakly null, but no operator-residual estimate or Weyl eigenvector claim is made. For (63.31), these limits are $-114$ and $6$, while the root pair trial lies strictly below the lower certificate $-114-4\sqrt2$. The retained attraction of the adjacent escape family explains why the one-particle essential threshold alone cannot establish pair binding. $\square$
+

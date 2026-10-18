@@ -1,0 +1,18 @@
+### 35.5. 从已取得读数定义局部实际逆并处理停止
+
+**A.**
+
+Use the actual readings to set a0=y0 and kappa=(y0-y1)/5, require kappa!=0 and check the entire A pattern for clocks 0 through 6. The entire acquired fiber is then K_A by the proof above. Choose J, acquire only its clock-7 response and return (P_A1,kappa(t-1)(t-5),a0-5kappa) if y7=a0+22kappa, or (P_A2,kappa(t-1)(t-5),a0-5kappa) if y7=a0+25kappa. The responses differ by 3kappa!=0. Recheck the returned strict triple and all eight actual equations; any other last response is incompatible in this class. If instead the last action is M, its response a0+34kappa retains exactly the entire K_A, since adding an equation cannot admit a world outside the already-complete prefix fiber.
+
+**B.**
+
+Use a0=y0 and kappa=(y0-y1)/3, require kappa!=0 and verify every B prefix entry. The entire acquired fiber is K_B. Choose M and read once at clock 7. Return (P_B1,kappa(t-1)(t-3),a0-3kappa) at a0+90kappa, or (P_B2,kappa(t-1)(t-3),a0-3kappa) at a0+84kappa; their difference is 6kappa!=0. Verify the strict triple and all eight actual equations. An unlisted response is incompatible. The alternative actual last J at a0+72kappa retains exactly K_B.
+
+**no hidden label.**
+
+Both scale and translation are recovered from already-acquired data; no unknown factor, source label or unchosen response is supplied. The two pattern families cannot conflict: A requires y2-a0=(7/4)(y1-a0), whereas B requires y2-a0=(11/8)(y1-a0), with y1-a0 nonzero in each. These parent-pattern equalities are different. The local inverse is exact-real mathematics within the declared quadratic class, with no claim of an effective or finite-precision algorithm.
+
+**stop and failure recursion.**
+
+Before the last read, each served acquired ancestor contains both fixed distinct worlds, hence cannot identify a unique complete target in the declared class. At clock 6 each entire fiber has L0 because it has two targets, but has NOT L1: A's J response slices are singletons and B's M response slices are singletons, so one required action existential in L1 fails. The separating last action permits a singleton return. The nonseparating last action leaves two targets and prevents a successful terminal stop. No earlier-parent L2 follows from either result.
+

@@ -1,0 +1,19 @@
+**Theorem 9.1 (unrestricted critical nineteen lower bound).** Every complete correct original graph for $n=8,k=4$ satisfying both caps $8,W$ on every actual input run has
+
+$$
+m\ge19.
+\tag{34}
+$$
+
+**Proof.** Fix that one installed graph. Gaps of span at most four have $E_B-D_B\ge0$ by the reused short-gap theorem. Gaps ending at five or earlier have $D_B=0$. A potentially negative gap therefore has span at least five, lower endpoint at least one, and upper endpoint six, seven or eight; the lower-endpoint restriction follows from the common-support cut at depth one.
+
+An endpoint-six gap is compensated by Lemma 8.3. An endpoint-seven long gap has lower endpoint one or two, and Lemmas 8.1–8.2 bound its deficit by one. An endpoint-eight long gap has lower endpoint one, two or three; Lemmas 8.1–8.3 compensate all three possibilities. These cases exhaust the integer endpoints. There is at most one consecutive gap ending at seven, since a cut has a unique preceding cut. Thus at most one pool term is negative, and that term is at least minus one.
+
+The exact identity (4) now yields
+
+$$
+m-20=E_{\rm cut}+u+\sum_B(E_B-D_B)\ge-1.
+$$
+
+This proves (34). Unused states, certified-only states and all paid visits remain counted. Live sharing across depths, multiple histories at one cell and state, arbitrary adaptive orders and syntactic cycles are covered by the same actual-incidence interfaces; no arbitrary graph path is assumed realizable. $\square$
+

@@ -1,0 +1,47 @@
+**Arithmetic example 8.3 (bounded exact instances).** Rational arithmetic on
+the nine choices (RB.22) verifies (RB.5), the support and velocity bounds,
+the prefix/arrival survivals (RB.26) and individual return factors (RB.25).
+As a separate exact unit-circle instance, the three bottom-coordinate pairs
+
+$$
+(3/5,4/5),\quad(4/5,3/5),\quad(5/13,12/13)
+\tag{RB.29}
+$$
+
+have affine difference determinant $-6/325$. The first pair has $g=24/25$,
+so (RB.15) gives $p=49/50$; its vector $w$ obeys both unit-functional
+constraints and $p\|w\|^2=1$. These are original heights
+$x=c(3/5)^2,c(4/5)^2,c(5/13)^2$ at any fixed allowed $c$.
+The finite checks support the displayed arithmetic. The universal
+conclusions rest on the ordinary polynomial, linear-algebra and counting
+proofs, without retained experiments.
+
+**Open boundary 8.4 (the missing acquisition and actuation relation).**
+The obstruction isolates a joint requirement for this exact consumer:
+actual acquisition must yield inputs compatible with a phase-preserving
+matching-height action. A generator's exact return invariant can supply
+the match; an actually acquired height- or phase-dependent record/token
+could instead change (RB.7), but needs its own same-source preparation,
+calibration, permission, precision, action and complete successor proof.
+A phase-bearing prehistory archive can also change the premise. This
+volume does not privilege height measurement as the only possible escape.
+
+Reducing a noisy height error without eliminating the three-height support,
+retaining a sampled table, or adding the same supplied parity helper does
+not implement this exact reanchoring macro. Conversely the result does not
+exclude approximate reanchoring, every alternative live action, an observer
+with richer actual correlated data, or a boundary protected by a generator
+invariant. Positive endpoint constructions do not close the canonical full
+instrument task.
+
+The source-bound helper and its overlap/calibration are not acquired here.
+Neither are the common-port observations, unknown joint-overlap estimates,
+all legal controller/selector/update inputs, complete archive, spatial or
+temporal reconstruction, or a closed observer for the whole original menu.
+Full space/time/boundary/memory mutual recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality, and the distinct fixed-Hamiltonian
+quantum minimax task retain their original unresolved bridges. The static
+arithmetic, C114 mixed-state, twisted-ground and two-clock span models
+supply no source/action/observation/resource correspondence for this
+reanchoring task merely by sharing terminology or dimensions.
+

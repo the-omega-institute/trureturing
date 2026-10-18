@@ -1,0 +1,40 @@
+**Assumption 3.1 (priced atomic structural patches).** The alternative
+storage machine has vertices with the finite port alphabet
+
+$$
+\{\mathsf P,\mathsf L,\mathsf R,
+  \mathsf O_0,\mathsf O_1,\mathsf H_0,\mathsf H_1\}.
+$$
+
+An occupied port is joined to exactly one occupied partner port; the two
+endpoint slots agree. An unoccupied port is local empty incidence, not an
+address integer. The ports $\mathsf L,\mathsf R$ connect to a child's
+$\mathsf P$. The remaining ports give origin/head access links. A known
+endpoint permits a local partner probe. This includes traversal of
+$\mathsf P$; there is no global incoming-edge search.
+
+The irreducible mechanism admits a bounded atomic patch: follow a specified
+finite list of port walks from its distinguished root; inspect the stated
+finite components; compute one finite truth-table result; assign a bounded
+list of endpoint slots; create a bounded finite template; and commit the
+native control, core effect, and receipt effect together. All these
+suboperations are charged. Their internal partial edge assignments are
+not separately observable cuts. The bounds and finite truth tables may
+depend on the fixed installed controller, but not on $H$, source values,
+context length, tape length, input history, or elapsed ordinal.
+
+Only the patch for the original prescribed row, with its original authority
+and guards, is enabled. The core's internal structural access is confined
+to the original addressed cells, adjacent moved-to cells, finite registers,
+and meter footprint, together with their finite routing scaffold. It does
+not release an additional private value. A private switch has exactly the
+privacy of the bit it replaces. The distinguished root is a primitive
+access location, not an unbounded selected matching site.
+
+A patch costs one commitment unit, one unit per port probe, one per endpoint
+slot assignment, and one per new vertex. Assignments of an unchanged value
+and initialization of empty slots are charged. This is an additional ideal
+primitive and price convention. It is not an assertion that ordinary PR57
+bit operations already perform atomic graph patches, or that its probes
+have a particular physical duration.
+

@@ -1,0 +1,27 @@
+### 62.1 Actual input bases and the local statement
+
+Retain the real branch \(|b|<1\), the matrix \(M(b)=\sqrt6H_0(b)\),
+and the positive radicals \(c,d,k\) of (60.1). Put
+\(\omega=(-1+i\sqrt3)/2\), \(f_l=(1,\omega^l,\omega^{2l})\), and
+
+\[
+ g_0(b)=\frac{-2b^3+i(b^2+3)}{ck},\qquad
+ g_1(b)=g_2(b)=\frac{b+i}{c}.
+\]
+
+Write \(C(b)\) for the **unnormalized common-flat input matrix** whose
+columns, in this fixed order, are
+
+\[
+ C(b)=\bigl((f_0,g_0f_0),(f_0,-g_0f_0),
+ (f_1,g_1f_1),(f_1,-g_1f_1),
+ (f_2,g_1f_2),(f_2,-g_1f_2)\bigr).
+\tag{62.1}
+\]
+
+By (60.2), \(C(b)^*C(b)=6I_6\), every entry of \(C(b)\) has modulus
+one, and every entry of \(M(b)C(b)\) has squared modulus six. The
+normalized common-flat input basis is \(C(b)/\sqrt6\); the associated
+ordinary common-unbiased column basis for \((I,H_0(b))\) is
+\(H_0(b)C(b)/\sqrt6\). Set \(V=C(0)\). Its first row is identically one.
+

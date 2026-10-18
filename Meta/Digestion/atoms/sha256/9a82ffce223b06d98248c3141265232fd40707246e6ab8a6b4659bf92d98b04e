@@ -1,0 +1,21 @@
+**Corollary 10.3 (Exact tolerance sets for all solved small budgets).**
+In the following table each finite entry $v$ means capacity $v$
+and finite achievable tolerance set exactly $[v,\infty)$. The
+notation “empty” means no models, capacity $+\infty$, and no finite
+tolerance. A path requirement always means every prescribed native
+path on its full all-times guard.
+
+| Dimension budget | Contract | $0<Z<2/3$ | $2/3\le Z<1$ |
+|---|---|---|---|
+| At most $0$ | Literal, or with paths | $1-Z/2$ | $2\sqrt{ZH}$ |
+| At most $0$ | Guard recovery, with or without paths | Empty | Empty |
+| At most $1$ | Any of the four variants | $1-Z/2$ | $2\sqrt{ZH}$ |
+| At most $2$ | Any of the four variants | $4H\sqrt{T_\tau}$ | $2\sqrt{ZH}$ |
+
+**Proof of Corollary 10.3.** Theorems 7.6 and 9.2 give the strict
+subtransition two-dimensional endpoint and its attainment in every
+variant. Theorems 10.1–10.2 give the other entries and the empty
+case. Each nonempty class has the displayed attaining model, and
+the same model satisfies every larger tolerance. The lower bounds
+exclude every smaller tolerance. $\square$
+

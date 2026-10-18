@@ -1,0 +1,18 @@
+**Theorem 3.3 (T2: scalar minimum and actual unguarded attainment).**
+For every $\tau>0$, some $R\in\mathcal E_2$ satisfies
+$J_\tau(R)=T_4(\tau)$. For all $0<Z<1$,
+
+$$
+e_{4,\mathsf L}^{\rm aff}(Z)=e_{4,\mathsf P}^{\rm aff}(Z)
+=4H\sqrt{T_4(\tau)},
+$$
+
+and both infima are attained by actual models. For $0<\tau<1$ every
+scalar minimizer has minimal order two. For any fixed real
+$a<T_2(\tau)$, the characteristic roots of all minimal-order-two
+profiles with $J_\tau\le a$ are bounded by a finite constant depending
+on $a,\tau$. This is vacuous for an empty sublevel; in particular
+such sublevels are empty for $\tau\ge1$. Root collisions are allowed,
+and no uniform bound on separate exponential coefficients near a
+collision is asserted.
+

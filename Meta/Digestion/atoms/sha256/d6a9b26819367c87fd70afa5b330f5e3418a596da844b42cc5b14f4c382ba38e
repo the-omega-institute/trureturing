@@ -1,0 +1,43 @@
+## 续篇：把 AURIC FIB ATOM 金字塔提升为“观察分辨率—隐藏环流—信息逃逸”理论
+
+这一轮继续推进的核心不是再增加一个新的符号，而是把此前的五态结构放进一个更一般的框架：
+
+$$
+\boxed{
+\text{观察分辨率}
+\longrightarrow
+\text{隐藏关系}
+\longrightarrow
+\text{可见响应}
+\longrightarrow
+\text{全局闭合}.
+}
+$$
+
+当前 trureturing 的公开研究方向已经明确把“信息在哪里逃逸、增加什么读出可以找回、还剩哪些不可区分状态”作为一个独立判据系统。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com) 当前开放工作列表中也仍然包含 AURIC FIB 金字塔与 escape dynamics、thermodynamic action 以及 typed bridge 的连接任务。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+这与 AURIC 的隐藏坐标 $\kappa$ 正好对应：
+
+- $\kappa$ 是信息逃逸的位置；
+- $S^2$、$\chi$ 或未来响应律是新增读出；
+- $J_{\mathscr L}$ 是新增读出对逃逸信息的灵敏度；
+- 环路 holonomy 是信息在全局拼接后是否仍然闭合的条件。
+
+仍然使用固定约定：
+
+$$
+F[\mathrm{null}]=\mathrm{null},
+\qquad
+F[1]=[2],
+\qquad
+F[2]=[3],
+\qquad
+F[3]=[5],
+\qquad
+F[1,3]=[2,5].
+$$
+
+其中 $1,2,3$ 是索引，$2,3,5$ 是 Fibonacci 取值。
+
+---
+

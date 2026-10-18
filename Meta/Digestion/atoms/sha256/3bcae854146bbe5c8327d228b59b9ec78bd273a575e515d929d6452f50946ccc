@@ -1,0 +1,4 @@
+# Terminal repetition and recorded-clock obstructions with affine gain
+
+For every positive declared additive degree, terminal repetition gives a recovering history with the sharp $d+5$ exact reads and seventeen literal $M/J$ atoms, independently of $d$. This improves the two credited growing atom counts for $d\ge2$; the credited fifteen-atom construction remains better at $d=1$. A separate constant-drift theorem gives two necessary recorded-clock determinants in a specified diagonal endpoint stratum and constructs actual positive-gain collisions when either fails under the stated erasure-span hypothesis. The original constant-drift question remains $5\le C_{\mathrm{fix}}(0)\le6$.
+

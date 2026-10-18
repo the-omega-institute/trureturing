@@ -1,0 +1,16 @@
+**Definition 42.1 (Basic exponents and the local canonical supplier).**
+An interior exponent $p$ is basic if there is no nonzero
+$s\in\mathcal S^e_{k,b}$ for which $p-s$ is still interior.
+For a single cycle use the same definition with $\mathcal S_k$.
+Its distinguished exponents are
+
+$$
+\nu_j=(2j+1;j\mathbf1),\qquad 1\le j\le k-1.
+\tag{42.1}
+$$
+
+Their ordinary degree is $2j+1$, and their two endpoint totals
+are both $j$. A global tuple whose every restriction is $\nu_j$
+is $(2j+1;j\mathbf1_V)$; a general basic global tuple need not
+be constant on every branch.
+

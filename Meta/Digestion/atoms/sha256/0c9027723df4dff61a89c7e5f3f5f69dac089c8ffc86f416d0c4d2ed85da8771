@@ -1,0 +1,90 @@
+### 92.2. One norming witness for both Gram faces
+
+**Theorem 92.1.** If (G,H) is a local minimum of F, there is one feasible pair (ρ,W)∈𝒞 that attains (2) and simultaneously satisfies
+
+\[
+ \begin{aligned}
+ \operatorname{Tr}(C_A G')&\le\operatorname{Tr}(C_A G)
+                                      &&(G'\in\mathcal E),\\
+ \operatorname{Tr}(C_B H')&\le\operatorname{Tr}(C_B H)
+                                      &&(H'\in\mathcal E),\\
+ C_A&=2(\overline H\odot W),\qquad
+ C_B=2(\overline G\odot W).
+ \end{aligned}                                                   \tag{3}
+\]
+
+Consequently Hermitian 2×2 blocks Λ_A,f,Λ_B,f can be chosen so that
+
+\[
+ \begin{aligned}
+ P_A&=\bigoplus_f\Lambda_{A,f}-C_A\ge0,
+       &P_AG=GP_A&=0,\\
+ P_B&=\bigoplus_f\Lambda_{B,f}-C_B\ge0,
+       &P_BH=HP_B&=0.
+ \end{aligned}                                                   \tag{4}
+\]
+
+The same W appears in both equations. If 0<F(G,H)<1/2, both stresses are nonzero and both Grams are singular.
+
+**Proof.** Put L=T−G⊙H and t=F(G,H). The set
+
+\[
+ \mathcal A=\{(\rho,W)\in\mathcal C:
+                          2\operatorname{Tr}(LW)=t\}          \tag{5}
+\]
+
+is a nonempty compact convex exposed face. For arbitrary G′,H′∈ℰ, let D_G=G′−G and D_H=H′−H. The feasible joint segment has exact coefficient expansion
+
+\[
+ T-(G+sD_G)\odot(H+sD_H)
+   =L-s(D_G\odot H+G\odot D_H)-s^2D_G\odot D_H.                \tag{6}
+\]
+
+Uniformity over compact 𝒞 gives the one-sided derivative
+
+\[
+ \left.\frac{d}{ds}\right|_{0+}F(G+sD_G,H+sD_H)
+   =\max_{(\rho,W)\in\mathcal A} b(W;G',H'),
+ \quad
+ b=-2\operatorname{Tr}[(D_G\odot H+G\odot D_H)W].              \tag{7}
+\]
+
+Indeed every active witness gives the lower derivative bound. For the upper bound choose a maximizer at each s>0 and pass to a convergent subsequence as s decreases to zero. Its limit is active by continuity. Its value at s=0 is at most t, and (6) supplies the upper derivative bound. This argument does not require a unique norming witness or differentiability of F.
+
+Local minimality makes the maximum in (7) nonnegative for every feasible pair. There is a single point of 𝒜 for which b≥0 for all such pairs. To prove this directly, suppose the corresponding closed half-spaces had empty intersection in 𝒜. Compactness would give finitely many pairs whose half-spaces already have empty intersection. Their compact convex vector image under b is disjoint from the nonnegative orthant. Strict separation gives nonnegative coefficients λ_j, summing to one, for which the maximum of the corresponding weighted sum of b is negative. The separating coefficients are nonnegative because the orthant is unbounded in each positive coordinate. Averaging the feasible pairs with these λ_j contradicts (7), since b is affine in the pair. This proves the common-witness assertion. Set H′=H or G′=G to obtain the two support inequalities in (3).
+
+For Hermitian D,H,W, the precise coefficient identity is
+
+\[
+ \operatorname{Tr}[(D\odot H)W]
+    =\operatorname{Tr}[D(\overline H\odot W)].                 \tag{8}
+\]
+
+The (y,x) entry of the second factor on the right is H_xy W_yx, which verifies both the conjugation and the sign in (3). The matrices C_A,C_B are positive by the Schur product theorem.
+
+For any Hermitian C, the support problem max{Tr(CX):X∈ℰ} has dual
+
+\[
+ \min\left\{\sum_f\operatorname{Tr}\Lambda_f:
+                    \bigoplus_f\Lambda_f-C\ge0\right\}.       \tag{9}
+\]
+
+The primal has strictly feasible X=I₈ and bounded optimum; a sufficiently large scalar diagonal matrix is strictly dual feasible. Semidefinite strong duality and attainment apply. At equality the positive primal and slack matrices satisfy Tr(PX)=0, hence PX=XP=0. Applying this to both support problems proves (4).
+
+The matrix-unit test gives
+
+\[
+ |1/2-G_{xy}H_{xy}|\le t
+                 \qquad(x,y\text{ in different fibres}).     \tag{10}
+\]
+
+If 0<t<1/2, every cross-fibre entry of G and H is nonzero. If P_A=0, the off-diagonal fibre blocks of (4) then force W_fg=0 for every f≠g. Since L_ff=0, this would give t=2Tr(LW)=0. Thus P_A≠0 and similarly P_B≠0. Equation (4) proves singularity and, more precisely,
+
+\[
+ \operatorname{rank}G+\operatorname{rank}P_A\le8,
+ \qquad
+ \operatorname{rank}H+\operatorname{rank}P_B\le8.               \tag{11}
+\]
+
+This concludes the proof.
+

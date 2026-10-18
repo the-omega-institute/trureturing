@@ -1,0 +1,28 @@
+**Definition 8.1 (parameters and physical meaning).** Retain Definitions
+1.1–1.4, including whole materialization before the source call. Put
+$H=h-1$. For $T=0$ choose the complete native table of SLHC Construction
+11.6 with candidate width zero, and put $J=0$. For even $h$ and finite
+$T>0$ choose SLHC Theorem 12.2 with $\Delta=2$, and put
+$J=\lceil(T+2h)/2\rceil$. In both cases write $P=H+J$ and use the
+corresponding $k,\ell,W_*,Q,U$ from Corollary 5.1. In particular $U=0$
+on all promised runs, although the second native installation includes
+unreachable Update rows.
+
+A materialized letter cell need not be writable. A fixed cell containing
+$R$ is an actual letter, whereas a binary integer meaning “repeat $R$”
+is not a materialized string. The construction below has **$J$ distinct,
+permanently read-only letter cells**, each containing $R$, on the receiver
+side of the source boundary. They are physically installed and billed.
+Their contents and protection are invariant on every installed control
+valuation. Their allocation is not $\log J$ physical cells. The online
+mutable count and the total physical storage are different quantities.
+
+The operand will be one contiguous interval of actual letter cells:
+a bounded writable prefix immediately followed by some of those fixed
+$R$ cells. Its endpoints, every head used to produce it, and the retained
+received information are mutable and counted. The source receives that
+whole interval as its literal operand, just as (4.4) supplies a flat
+array interval. It receives neither a repeat instruction nor a request
+to follow a pointer into a compressed representation. There is no
+source call while this interval is being prepared.
+

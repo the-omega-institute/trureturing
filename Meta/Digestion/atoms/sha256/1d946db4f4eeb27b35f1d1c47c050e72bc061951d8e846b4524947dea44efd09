@@ -1,0 +1,34 @@
+**定理 463.3（严格正的实际分层）。** 对每个 n≥0，
+
+$$
+R_n=T^nB,\qquad D_n=T^nb,\qquad
+R_n=R_{n+1}+D_n,
+\tag{RVF.16}
+$$
+
+$$
+0\le B_n(v)<B_{n+1}(v)<B(v)\quad(v>0),\qquad
+R_n(v)>0,\quad D_n(v)>0\quad(v>0).
+\tag{RVF.17}
+$$
+
+全部函数连续。零端点准确为
+
+$$
+\begin{gathered}
+B_0(0)=0,\quad B_n(0)=\tfrac12\ (n\ge1),\\
+R_0(0)=\tfrac12,\quad R_n(0)=0\ (n\ge1),\\
+D_0(0)=\tfrac12,\quad D_n(0)=0\ (n\ge1).
+\end{gathered}
+\tag{RVF.18}
+$$
+
+**证明。** RVF.11 和线性性给
+$R_{n+1}=T(B-B_n)=TR_n$；R0=B，故 $R_n=T^nB$。
+同理 D0=b、$D_{n+1}=TD_n$，得到第二个身份。第三个身份由定义相减。
+原 B 和 b 在正轴严格正，RVF.14 的严格正算子性质归纳给所有
+R_n、D_n 的正性。B0=0，$B_{n+1}=B_n+D_n$，故 Bn 非负且严格递增；
+Rn>0 给对 B 的严格上界。连续性逐层由 RVF.10 得到。
+最后 $(Tf)(0)=0$、b(0)=1/2 给 RVF.18 的每一项。
+所有有限层的严格不等式均明确位于 v>0。证毕。
+

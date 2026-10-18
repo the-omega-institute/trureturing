@@ -1,0 +1,18 @@
+**有限实例 34.8.2。** 取
+
+$$
+\rho=\frac35,\quad \sigma=\frac45,\quad h=\frac35,
+\quad a=1,\quad n=1,\quad B=4.
+$$
+
+动作式定理给出
+
+$$
+k_* = \frac{3(\sqrt3-1)}8,
+\qquad R_1=\Phi\left(-\frac{3(\sqrt3-1)}8\right),
+$$
+
+而动作平均的变体给出 $\Phi(-3/4)$。两者不同，说明“平均约束”不是无害的措辞替换。
+
+<a id="section-34-9"></a>
+

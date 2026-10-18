@@ -1,0 +1,10 @@
+**文献背景。** 碰撞器与选择偏差、干预与条件化的语义区分、以及条件独立的图模型判据都是成熟主题。本章的秩一交换判据、二状态锐利见证和“固定读出可见性”分层，是这些成分的有限代数重组候选，不申报原创优先权。
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| Berkson, 1946, *Limitations of the application of fourfold table analysis to hospital data*, `doi:10.1038/152309a0` | 选择条件能够制造关联；不用于本章的秩一充要式。 |
+| Pearl, *Causality*, 2nd ed., UCLA 在线版 <https://bayes.cs.ucla.edu/BOOK-2K/> | 观察、条件化与干预的语义差异及选择图；不用于本章的有限见证优先权。 |
+| Dawid, 1979, *Conditional independence in statistical theory*, `doi:10.1111/j.2517-6161.1979.tb01052.x` | 条件独立的概率语义；不替代本章的有限后验计算。 |
+| Cohen and Fausti, *A sharp bound on the total variation distance between probability measures*, <https://arxiv.org/abs/2309.02413> | Hilbert 投影距离控制总变差的锐利双曲正切界；本章把它代入有限 Bayes 选择行的似然比。 |
+| — | 定理 20.3.1、推论 20.3.2、定理 20.4.1、命题 20.4.2、定理 20.5.1、命题 20.6.2 与命题 20.6.3 的自包含推导。 |
+

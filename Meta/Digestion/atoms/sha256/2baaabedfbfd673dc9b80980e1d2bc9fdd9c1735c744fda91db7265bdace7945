@@ -1,0 +1,20 @@
+**Lemma 6.4 (truth is constant on each residual cell).** For every
+$\mathbf y\in\Omega_{S,\theta,\sigma}$ and every $r\in J$,
+
+$$
+\begin{aligned}
+H_b(\operatorname{Dec}_{S,\theta}(\mathbf y),r)&\longleftrightarrow h_r,\\
+E_b(\operatorname{Dec}_{S,\theta}(\mathbf y),r)&\longleftrightarrow e_r.
+\end{aligned}
+\tag{NRF.25}
+$$
+
+Proof. Geometry is independent of the residual values by Lemma 5.4.
+When it succeeds, the complete equality type makes every comparison
+in (NRF.18) constant, so $h_r$ is exactly the bare-row truth. The
+product state specifies every $q_{A_r}(y_i)$, and the forced values
+and born trees have the computed states. Equation (NRF.19) then
+gives exactly the actual capture states. Theorem 2.2 gives $e_r$.
+This uses complete actual sharing and disequality; it does not replace
+them by the state constraints. $\square$
+

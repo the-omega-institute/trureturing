@@ -1,0 +1,55 @@
+**Theorem 253.2 (One full $\lambda$, its actual slacks and its gap).**
+Fix $(b,e)\in H_L$ and one full $\lambda\ge0$ with
+$G_N\lambda\ge h(b,e)$ and mass $M\ge1$. For every full $y\ge0$,
+define
+
+$$
+\begin{gathered}
+S_y=y\cdot(G_N\lambda-h)\ge0,\qquad
+S_\zeta=\zeta\cdot(G_N\lambda-h)\ge0,\\
+D_b=2-\sum_i b_i+(L+1)e,\qquad
+J_\lambda=D_b-S_\zeta
+       =\sum_D\lambda_D(3-\zeta\cdot z_D)\ge0.
+\end{gathered}
+\tag{253.2}
+$$
+
+Then
+
+$$
+F_y(b,e)+S_y
+\le M\Delta_O(y)+\omega_y\min\{M,4J_\lambda\}.
+\tag{253.3}
+$$
+
+In particular a strict gap $F_y(b,e)>M$ with $\Delta_O(y)\le1$
+requires $J_\lambda>0$ and $\omega_y>0$, and satisfies
+
+$$
+F_y-M+S_y+M(1-\Delta_O(y))
+\le\omega_y\min\{M,4J_\lambda\}.
+\tag{253.4}
+$$
+
+**Proof.** Since $\zeta\cdot\mathbf r=3$ and $F_\zeta=-D_b$,
+expanding $S_\zeta$ gives (253.2). For each pair table, its old
+score minus its repaired score is exactly
+$H_{ij}^y(u)-H_{ij}^y(v)$, hence at most
+$\omega_y[u\ne v]$. Other schedules have no difference.
+The fair quarter-gap proof gives the column inequality
+$[u\ne v]\le4(3-\zeta\cdot z_D)$ on pairs, and zero on
+the other schedules. Integrating this inequality under the same
+unnormalized $\lambda$ bounds changed mass by
+$\min\{M,4J_\lambda\}$. Every repaired column is an $O$ column,
+whose excess score is at most $\Delta_O(y)$. Thus
+
+$$
+y\cdot G_N\lambda
+\le M\Delta_O(y)+\omega_y\min\{M,4J_\lambda\}.
+$$
+
+Its left side is exactly $F_y+S_y$, not just a lower estimate.
+Rearrangement proves the strict-gap formula. Its left side is
+positive when the gap is strict and the input is unit-$O$, so both
+factors on the right must be positive. $\square$
+

@@ -1,0 +1,12 @@
+**定义 177.2（三个固定任务等价关系）。** 在 $\widehat W$ 上分别定义
+
+$$
+\begin{aligned}
+h\sim_1 k&\iff q(h)=q(k),\\
+h\sim_2 k&\iff (q(h),A(h))=(q(k),A(k)),\\
+h\sim_3 k&\iff (q(h),A(h),m(h))=(q(k),A(k),m(k)).
+\end{aligned}
+$$
+
+树域上的关系是这些关系经叶词映射的拉回；不把任何一个关系等同于树身份。$\sim_3$ 也恰是五量相同，因为 $D,E,F_m$ 与 $A,m$ 的固定放大可逆。
+

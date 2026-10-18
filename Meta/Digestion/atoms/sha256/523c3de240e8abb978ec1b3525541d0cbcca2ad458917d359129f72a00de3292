@@ -1,0 +1,16 @@
+**Definition 8.3 (five-phase selection).** Require $0\le z\le d$ and
+$s\in\{0,1,2,3,4\}$. Construct five actual word copies of $1^z$, concatenate
+them to a copy of $1^{n_0}$, then concatenate the literal unary natural
+$s$. Append its wire zero to obtain the actual $U(k)$ for
+
+$$
+k=n_0+5z+s.
+$$
+
+For $z<d$ the five cuts are respectively before bound RD, after that RD,
+after source EX and before WR(0), after WR and before source MR, and
+after source MR and before bound MR. For $z=d$ they are before terminal
+RD(0), after it and before delimiter EX, after delimiter EX and before
+WR(sep), after WR and before MR, and after that delimiter MR. The last
+cut is the Zero return, before the subsequent reservation-field work.
+

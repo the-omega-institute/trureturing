@@ -1,0 +1,115 @@
+**Theorem 6.1 (nonzero second response with justified domains).** Assume
+(3.8), keep the same pole, and let
+
+$$
+v(k,\alpha)=\frac{\phi(k)}{\sqrt{2\pi}},\qquad
+h_0=Jv=\frac{\phi(k)}{2\pi},\qquad
+\sigma_o^2(k,\alpha)=\frac1{2\pi}\int_{\mathbb T}
+ |\Gamma_o(k,\alpha,\beta)-W_o(k,\alpha)|^2d\beta.
+\tag{6.1}
+$$
+
+The variance is used only on the compact height support of $\phi$, where
+it is smooth and finite. Let
+$C_g(t)=J^*e^{-tH_g}J$ on the base Hilbert space. On this particular
+unit vector $v$, the exact second derivative defect is
+
+$$
+\begin{aligned}
+J^*H_g^2Jv-\overline H_g^{\,2}v&=g^2\sigma_o^2v,\\
+C_g(t)v-e^{-t\overline H_g}v
+ &=\tfrac12t^2g^2\sigma_o^2v+o_{L^2}(t^2)
+ \quad(t\downarrow0).
+\end{aligned}
+\tag{6.2}
+$$
+
+In particular, with $\mathcal D_g(v)$ denoting its scalar second
+coefficient before the factor $1/2$,
+
+$$
+\begin{aligned}
+\mathcal D_g(v)
+&=\|H_gh_0\|_2^2-\|\overline H_gv\|_2^2\\
+&=g^2\|(1-\Pi)\Gamma_oh_0\|_2^2
+ =g^2\int_D\sigma_o^2|v|^2d\nu\\
+&\ge\frac{g^2}{8\pi^4}
+       \int_I|\phi(k)|^2 C_1(k)^2dk>0.
+\end{aligned}
+\tag{6.3}
+$$
+
+Thus $\operatorname{Ran}J$ reduces the free operator but does not remain
+invariant under the full attractive evolution. The compressed family
+$C_g(t)$ is not the semigroup of the restricted same-field form.
+In fact it fails the semigroup identity itself for sufficiently small
+equal positive time steps.
+
+Proof. Definition 3.2 puts $h_0$ and $v$ in the domains of all powers of
+their operators. Multiplying by $\Gamma_o$, averaging in $\beta$, and
+applying either differential expression preserves smoothness and the same
+compact height support. Consequently every product in the following
+calculation is an actual $L^2$ operator product on these tests. Free
+reduction and (3.11) give
+
+$$
+J^*H_gJv=\overline H_gv,\qquad
+(1-\Pi)H_gh_0=-g(1-\Pi)\Gamma_oh_0.
+\tag{6.4}
+$$
+
+Insert $1=\Pi+(1-\Pi)$ between the two $H_g$ factors. The projected
+factor gives $\overline H_g^2v$. In the other factor the free part
+vanishes after $J^*$, since $L$ reduces $\Pi$. The remaining product is
+
+$$
+g^2J^*M_{\Gamma_o}(1-\Pi)M_{\Gamma_o}Jv
+ =g^2\sigma_o^2v.
+\tag{6.5}
+$$
+
+Here $M_{\Gamma_o}$ means multiplication by the actual full field.
+The last identity uses the conditional average in (3.3), so
+$\operatorname{avg}_\beta(\Gamma_o(\Gamma_o-W_o))
+=\operatorname{avg}_\beta(\Gamma_o-W_o)^2$.
+Semibounded spectral calculus has a strong second-order Taylor expansion
+on $D(H_g^2)$ and $D(\overline H_g^2)$ for $t\downarrow0$.
+Their zero and first terms agree by (6.4), proving (6.2).
+
+Orthogonality of $\Pi$ and the first identity of (6.4) give the first
+three expressions of (6.3). For its strict lower bound, at each height in
+the support,
+
+$$
+\begin{aligned}
+C_1(k)&=\int_{\mathbb T^2}(\Gamma_o-W_o)
+                         \cos(\beta-\beta_o)d\alpha d\beta,\\
+\int_{\mathbb T^2}|\Gamma_o-W_o|^2d\alpha d\beta
+&\ge\frac{C_1(k)^2}{2\pi^2},
+\end{aligned}
+\tag{6.6}
+$$
+
+because the cosine has squared norm $2\pi^2$ on the actual phase torus.
+Since $|h_0|^2=|\phi|^2/(4\pi^2)$, this is exactly (6.3).
+The lower bound in (4.4) could further replace $C_1$ by $R^{(c_+)}$.
+
+There is also an exact semigroup-law test, with no unbounded block
+exponentials. For $t>0$,
+
+$$
+\begin{aligned}
+\langle(C_g(2t)-C_g(t)^2)v,v\rangle
+ &=\|(1-\Pi)e^{-tH_g}Jv\|_2^2\\
+ &=t^2\mathcal D_g(v)+o(t^2)>0
+ \quad\text{for sufficiently small }t>0.
+\end{aligned}
+\tag{6.7}
+$$
+
+The exact identity follows by inserting $1-\Pi$ between two bounded
+selfadjoint heat operators. The first-order strong expansion on $h_0$
+and (6.4) give its last line. This proves the failure of the semigroup
+law and the actual leakage, without a formal global decomposition of an
+unbounded singular generator. $\square$
+

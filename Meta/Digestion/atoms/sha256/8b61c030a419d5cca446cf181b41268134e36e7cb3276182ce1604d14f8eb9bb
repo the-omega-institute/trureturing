@@ -1,0 +1,52 @@
+**Definition 2.2 (deterministic native builders).** The following
+equations define finite typed terms:
+
+$$
+\begin{aligned}
+\mathsf A\,a\,b&=a,&
+\mathsf B\,a\,b&=b,\\
+\mathsf P\,v\,w\,a\,b
+&=\mathsf p\,(v\,a\,b)\,(w\,a\,b),&
+\mathsf R\,v\,a\,b&=v\,b\,(\mathsf p\,b\,a).
+\end{aligned}
+$$
+
+Here $\mathsf A,\mathsf B:V$ and
+$\mathsf P:V\to V\to V$, $\mathsf R:V\to V$.
+For $u\in\mathcal T$ define its closed builder $[u]:V$ recursively by
+
+$$
+[\alpha]=\mathsf A,\qquad [\beta]=\mathsf B,
+\qquad [\langle s,t\rangle]=\mathsf P\,[s]\,[t].
+$$
+
+Every such builder is finite and contains no choice terminal or
+generator call. Structural induction gives
+$[u]\,a\,b$ as the tree obtained from $u$ by replacing its
+$\alpha$ and $\beta$ leaves by $a$ and $b$. Substituting $b$ and
+$\mathsf p\,b\,a$ gives the displayed native $\rho$ laws, so
+$\mathsf R[u]$ is a deterministic builder of $\rho u$.
+In particular,
+
+$$
+[u]\,T_a\,T_{a+1}=\rho^a u.
+$$
+
+This follows on the two leaves from
+$\rho^a\alpha=T_a$ and $\rho^a\beta=T_{a+1}$, and on a pair from
+distribution of $\rho^a$. The right sides $T_a,T_{a+1}$ here are
+ground output trees. The numeral $a$ is expanded into a finite term.
+
+For a fixed native expression $E$, its builder $E^{\sharp}(\mathbf v)$
+is defined by substituting $v_i$ for variable $x_i$, $[g]$ for a
+ground $g$, $\mathsf P$ for pairing and $\mathsf R^a$ for
+$\rho^a$. Induction on $E$ proves
+
+$$
+E^{\sharp}([u_1],\ldots,[u_m])\,\alpha\,\beta
+=E(u_1,\ldots,u_m).
+$$
+
+Thus fixed expressions and all required fixed epoch views can be
+serialized from the same selected builders.
+

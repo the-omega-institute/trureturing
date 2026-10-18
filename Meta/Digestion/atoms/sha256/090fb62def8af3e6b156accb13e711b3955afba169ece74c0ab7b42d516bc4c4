@@ -1,0 +1,48 @@
+**Proposition 7.4 (signs and complete local remainders).** For every
+fixed admitted input,
+$p_1,q_1,a_{\rm curv},c_{\rm curv},D_{\rm onset}>0$,
+$b_{\rm rec}<0$ and $0<K_{\rm onset}<a_{\rm curv}$. Uniformly in
+the fixed neighborhood,
+
+$$
+\begin{aligned}
+W-F={}&\lambda\eta+a_{\rm curv}x^2+c_{\rm curv}u^2\\
+ &+O\!\left(\eta^2+\eta|u|+|u|^3+
+                  (\eta+|u|)x^2+x^4\right),\\
+s-s_* \leq{}&x+b_{\rm rec}u+O(\eta+x^2+u^2).
+\end{aligned}
+\tag{QO.39}
+$$
+
+Proof. At $m=\beta,x=0$ differentiate
+$\delta=1-\alpha-\beta\cos\theta$ and
+$Z^2=(1-\alpha)^2+\beta^2-2\beta(1-\alpha)\cos\theta$.
+They give $\delta'=\beta\sin\theta$ and
+$Z'=\beta(1-\alpha)\sin\theta/Z$, hence exactly $p_1,q_1,r_1$.
+Also
+$d_{\rm cert}Z_0=B(p+\alpha q)+\alpha(Ap-Bq)
+=p(B+\alpha A)$, proving the second expression for $a_{\rm curv}$.
+
+Admission gives $\beta<(1-\alpha)c_0$, so
+$Z_0^2<(1-\alpha)^2$. Thus $p_1,q_1>0$ and $b_{\rm rec}<0$.
+All other positive signs follow from (QO.21), and the nonzero
+$b_{\rm rec}$ makes $K_{\rm onset}<a_{\rm curv}$ strict.
+These expressions are algebraic when the public parameters and
+conditional source are algebraic.
+
+For the remainders, the coordinates are smooth in $\eta,u,x^2$.
+Since $l_0p=r_0$,
+$l_0P-R=(l_0p_1-r_1)u+O(\eta+u^2+x^2)$.
+Insert this in (QO.37), expand $1/P$ about $1/p$ and
+$1-\cos u=u^2/2+O(u^4)$. The retained terms are exactly
+$\lambda\eta,a_{\rm curv}x^2,c_{\rm curv}u^2$; products of
+remaining terms are bounded by the displayed first remainder after
+shrinking the neighborhood. In particular even dependence on $x$
+prevents an omitted term linear in $x$.
+
+The function $\sqrt{1-P-Q+x^2}$ has base value $s_*$,
+angular derivative $-(p_1+q_1)/(2s_*)=b_{\rm rec}$ and zero
+$x$ derivative. Taylor's formula and $s\leq x+\sqrt g$ give the
+second remainder. Bounded derivatives on the one closed neighborhood
+provide common constants for all arrays in it. $\square$
+

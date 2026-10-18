@@ -1,0 +1,36 @@
+**Corollary 8.5 (Any deterministic exact current-output decoder).**
+There is no finite current-ray encoder with the affine
+$Q_{4\pi}$ identity and a deterministic decoder of its current
+encoded state that returns all original ten outputs exactly.
+The decoder may be arbitrarily nonlinear or irregular.
+
+**Proof.** The original output separates current rays, as in
+Proposition 2.3. Explicitly, remove the fixed preparation
+rotations from the $02$ and $01$ blocks to recover
+
+$$
+z_\beta=B(k)U(\beta),\qquad z_\alpha=A(k)U(\alpha).
+$$
+
+Then $k=\|z_\beta\|_2^2/(4Z)$, and positivity of both radii
+recovers the two circle classes by normalization. Finally
+$u=\beta$ and $v=\beta-\alpha$ recover the ray. This holds for
+arbitrary preparation; it chooses no global real-angle branch.
+
+If $\mathcal R(E(x))=y(x)$ with a single deterministic
+current-state decoder $\mathcal R$, equality of two encodings
+gives equality of outputs and hence equality of rays.
+Thus $E$ is injective, contradicting Theorem 8.4.
+The decoder is allowed fixed task parameters but not an
+additional current height or producing history input.
+$\square$
+
+The static affine-output capacity remains four by Proposition 2.3.
+It concerns readout without the affine continuation requirement.
+Approximate readout need not force injection, and approximate
+equivariance would not give the periodic equalities in Theorem 8.4.
+Theorem 7.4 supplies its own quantitative lower bound by a different
+argument. No approximation bound follows merely from the
+decoder-free period theorem, and the equality construction of
+Definition 7.7 is not lossless.
+

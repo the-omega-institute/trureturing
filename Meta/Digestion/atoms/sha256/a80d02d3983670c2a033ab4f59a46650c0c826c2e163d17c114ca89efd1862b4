@@ -1,0 +1,32 @@
+## 386. A weaker actual-incidence theorem for the source VCD faces
+
+The low-V exclusion of Sections 382–385 also follows from a local
+incidence argument with fewer hypotheses. The result below derives
+actual receiving owners; it does not assume an inventory of them.
+
+Consider a finite tetrahedral face pairing with exactly six distinct
+actual edge labels M,V,C,D,Z,U. Each original owner has a fixed
+vertex-induced paired frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), with four distinct actual labels. Each original
+face is paired to a distinct other original face occurrence by a
+label-preserving vertex map. Distinct-face self-gluings, loops and
+repeated role vectors are allowed. A face paired to itself is outside
+this convention. Distinct labels may have equal numerical coshes.
+
+There is a distinguished flat owner
+
+    sigma=(M,C,D,V,C,D).
+
+Every other owner is genuine. For axes r,o and pair a,b its strict
+genuine tests are L=(a+b)^2-(r-1)*(o-1)>0 and
+J=(r+1)*(o+1)-(a-b)^2>0. Assume only
+
+    z,u>=m>v>1, c,d>1,
+    (m-1)*(v-1)>=(c+d)^2.                            (386.1)
+
+The actual V normal link is the quotient of the original local V-edge
+intervals by the endpoint identifications induced by the face pairing.
+Assume that this quotient is one connected circle and has original
+degree at least two. Here original degree counts original intervals,
+not graph valence; no intervals are collapsed when roles repeat.
+

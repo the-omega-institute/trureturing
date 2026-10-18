@@ -1,0 +1,216 @@
+**Proposition 75.1 (simultaneous original-class realization).** Every
+finite supported-nonzero low family in (RC.66), in particular the axis
+and eight-atom families, has one common instrument on the original unknown five-mode specimen
+which attains its actual height and contrast, all twelve required errors,
+the sharp weak worst-history joint cost, and the stated finite activity.
+It has precisely one additional actual high acquisition label, with
+the complementary subspace included in that label. The five failure
+labels and every Borel component and passive-reference
+conditional operator retain their original meanings.
+
+**Proof.** This is the full-fibre constructor of FA70 and FA86 applied
+to these moment families, with the complement aggregated into one high
+fibre as permitted in the original JR class. The formulas below specify
+the common realization rather than separate optima. Omit zero weights
+before taking inverses. For each supported-nonzero low label set
+
+$$
+\begin{gathered}
+K_j=\sqrt{p_j}K_{h_j},\quad N_j=p_jb_jn_{h_j}n_{h_j}^T,\quad
+J_j:\mathbb C^2\longrightarrow\operatorname{ran}K_j^\dagger
+\text{ an isometry},\\
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,\quad
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\\
+B_j=K_jJ_jQ_j^{-1/2},\qquad
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2}.
+\end{gathered}
+\tag{RC.95}
+$$
+
+The ellipse makes $K_h$ rank two. Its kernel is spanned by
+$(s_0,-bz/h_1,-dw/h_2)^T$, which is orthogonal to $n_h$.
+Thus $Q_j\succ0$, $B_jC_j=K_jE^\dagger$ and
+$C_j^\dagger F_jC_j=EN_jE^\dagger$. Direct multiplication gives
+
+$$
+B_j^\dagger B_j+F_j=I_2,\quad
+I_2-F_j\succ0,\qquad
+\frac{\lambda_{\max}(F_j)}{1-\lambda_{\max}(F_j)}
+=\frac{b_j}{c(h_j)}.
+\tag{RC.96}
+$$
+
+The final identity is FA69's rank-one generalized Rayleigh/capacity
+formula, with the same positive $\mathcal N/\mathcal D$ in (RC.64).
+It holds at both axes as well as off axis. For $b_j=0$, $F_j=0$.
+
+Use relative time $u\in[0,1]$ on the original clock, with
+
+$$
+\begin{gathered}
+g(u)=2/(1+u)^2,\quad G_{\rm time}(u)=2u/(1+u),\\
+Z_j(u)=\sqrt{I_2-G_{\rm time}(u)F_j},\qquad
+R_j(u)=g(u)F_j[I_2-G_{\rm time}(u)F_j]^{-1}.
+\end{gathered}
+\tag{RC.97}
+$$
+
+All these commuting functions are defined on the entire counted qubit.
+The not-yet-failed propagator from $u$ to $v$ is
+$\operatorname{Ad}_{Z_j(v)Z_j(u)^{-1}}$. Its instantaneous loss effect
+is $R_j(u)$. On the current survivor matrix $Y$, the jump into original
+label $\ell$ has density
+
+$$
+Y\longmapsto w_\ell g(u)
+\operatorname{tr}(F_jZ_j(u)^{-1}YZ_j(u)^{-1})P_f,
+\quad (w_0,w_1,w_2,w_3,w_{13})=(0,1/4,1/2,1/4,0).
+\tag{RC.98}
+$$
+
+This positive functional is CP, including with passive references.
+Its sum over $\ell$ is the loss effect of the survivor propagator.
+At every cut the survivor effect plus the integrated preceding jump
+effects is $I_2$. Survivors at $u=1$ receive the terminal isometry
+$EB_j(I_2-F_j)^{-1/2}$; its cumulative live map is
+$\operatorname{Ad}_{EB_j}$. There is no terminal failure atom.
+Since the largest eigenvalue of $F_j$ stays fixed along (RC.97),
+
+$$
+\int_0^1\|R_j(u)\|\,du
+=-\log(1-\lambda_{\max}(F_j))
+=\log(1+b_j/c(h_j))\le A.
+\tag{RC.99}
+$$
+
+Pure rows have zero activity and saturated rows have activity $A$.
+Terminal survivor effect is at least $e^{-A}I_2$, for every qubit
+input, including those not supplied by the original histories.
+
+Choose isometries $W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The single high label has encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\
+W_\perp^\dagger\end{pmatrix}:\mathbb C^5\to\mathbb C^3\oplus\mathbb C^2,
+\tag{RC.100}
+$$
+
+zero rate and deterministic report $+$. Its terminal decoder has the
+two hidden Kraus operators $E[I_3\ 0]$ and $EJ_0[0\ I_2]$.
+Their effects sum to $I_5$. The high fibre is the entire five-dimensional
+joint space, although its supported original-history part has rank
+three. The hidden Kraus index is not a readable acquisition label.
+This coherent completion differs from the fixed CA.10 certain-failure
+completion and has finite zero activity on its whole fibre.
+
+The same supported family also permits the separate FA70.2/FA86.1
+completion: replace $C_H$ by a high encoder
+$\sqrt{1-\delta}\,DE^\dagger$ into $\mathbb C^3$, with decoder $E$,
+and an actual low encoder $C_\perp=W_\perp^\dagger$ into
+$\mathbb C^2$, with decoder $EJ_0$. Give both deterministic report $+$
+and zero rate. The latter full encoder is nonzero with effect $I_5-P$,
+but $C_\perp E=0$; it belongs to $\mathcal J_0$ and has no $p,h,b$
+coordinates. Its survivor effect is $I_2$ at every time. The two
+encoders' effects sum to $C_H^\dagger C_H$, and their composed live
+CP maps sum to the high branch's composed live map in (RC.102).
+Consequently the total acquisition effect (RC.101), the forgotten-label
+live map, all five failure-labelled Borel output maps (RC.102), their
+passive-reference amplifications (RC.103), and all errors (RC.104)
+are unchanged for all complex $M_5$ inputs. The supported histories give the complementary label probability
+zero, so height TV, contrast and sharp high acquisition cost are also
+unchanged. The separate completion has one more actual low label and
+one more total label; its complementary qubit is fully counted and obeys the same
+activity bound. Neither completion excludes the other from the original
+class. The minimum-count witnesses use (RC.100).
+
+The low live coefficient Gram is $\operatorname{diag}(\delta,1,1)$;
+the high part adds $(1-\delta)D$ in squared-coefficient weight. Thus
+summing encoder effects gives, using the conditional root TP identity,
+
+$$
+\sum_jC_j^\dagger C_j+C_H^\dagger C_H=I_5.
+\tag{RC.101}
+$$
+
+Each acquisition is CP/TNI and their sum is TP. The same instrument,
+on every complex $X\in M_5$, has forgotten-label outputs
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^\dagger XE)
+       +J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,\\
+\Phi^f_\ell(\mathcal B)(X)&=
+ w_\ell\left(\int_{\mathcal B}g(u)\,du\right)
+ \operatorname{tr}(EME^\dagger X)P_f,\qquad M=\operatorname{diag}(0,m_1,m_2).
+\end{aligned}
+\tag{RC.102}
+$$
+
+Here $\Lambda_*(A)=DAD^\dagger+TAT^\dagger+SAS^\dagger$.
+The first identity follows from the full coefficient Gram, not just
+its diagonal or its action on twelve states. The second follows from
+$\sum N_j=M$ and the pulled-back jump density. It proves equality on
+every Borel subset, including separate zero components at labels $0,13$.
+At a passive reference the live Kraus operators are tensored with $I_R$;
+the failure output on any joint matrix $X$ is precisely
+
+$$
+w_\ell\left(\int_{\mathcal B}g(u)\,du\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{RC.103}
+$$
+
+The reference operator is conditional; it is not replaced by an
+unconditional marginal. Cross coherences inside the live output are
+retained. No abort, wrong-support, singular-time or extra uncounted
+sector occurs in these witnesses.
+
+Give low label $j$ the deterministic report $\operatorname{sgn}z_j$
+with $+$ at zero. Its acquisition effect includes $N_j$ as well as
+$K_j^\dagger K_j$, including mass that later fails. Failure effects
+annihilate coordinate zero, and the high report has no relevant
+interference term. Therefore $\mathsf V=s_0\sum p_j|z_j|\ge s$.
+The actual acquisition-height TV is (RC.66); live and failure height
+are combined inside each generated label before the absolute value.
+For the original specimens the complement term in (RC.102) vanishes.
+If $B_y^{\rm ideal}=\xi_y\xi_y^T$ with
+
+$$
+(\xi_{yi}^2)_i=
+\left(y/128,\ y(58-y)/(128(y+6)),\ y/(2(y+6))\right),
+$$
+
+the complete stopped-cq HALF error for each sign pair is
+
+$$
+e_y=\frac12\left[\|\Lambda_*(\rho_y)-B_y^{\rm ideal}\|_1+
+\sum_\ell w_\ell\int_0^1
+\left|\operatorname{tr}(M\rho_y)g(u)-\frac{6y}{(y+6u)^2}\right|du\right].
+\tag{RC.104}
+$$
+
+Covariance supplies every $e,n\in\{\pm1\}$.
+CG.143 gives $e_{5,e,n}=e_{27,e,n}=E_*$ and
+$e_{16,e,n}<71/484<37/250<E_*$. All twelve errors are preserved;
+they are not all equal to $E_*$, and simulator $g$ is not ideal $f_y$.
+
+Only the high acquisition has joint dimension at least three. On each
+height-$y$ specimen its probability is
+$(1-\delta)\operatorname{tr}(D^\dagger D\rho_y)$, maximized at $27$,
+which is JR34–40's sharp weak $\mathsf C(s)$. The complementary
+coherent share in (RC.100) is counted in the same high fibre even though the
+original specimens have zero probability in it. Resource is the maximum
+over actual labels of (RC.99) on each entire joint fibre, not an expected
+activity, instantaneous maximum or integral of a cross-label maximum.
+
+The construction fixes every operation before the sole unknown input.
+There is no helper specimen, copy, history oracle, reset, retry,
+postselection or acceptance division. At relative time $u$ the first
+executed failure is at absolute time $6+u$. The cutwise trace balance
+already proved supplies a chronological FIRST instrument. Only survivors
+receive the terminal isometry; failed carriers receive no later
+positive-carrier action and there is no forced deadline absorption.
+This is a mathematical CP/TP instrument; it supplies no native access,
+actuator, calibration or clock permission. $\square$
+

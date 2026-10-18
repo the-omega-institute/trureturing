@@ -1,0 +1,67 @@
+**Definition 9.1 (single-slot model and comparison).** In §§9–13, let
+$d\geq2$, $M_d=M_d(\mathbb C)$, $P_i=|i\rangle\langle i|$ and
+$E_{ij}=|i\rangle\langle j|$, with indices $1,\ldots,d$. These local
+indices do not rename the qutrit or five stopped modes of §1. A Schur
+channel is $\Lambda_C(X)=C\odot X$, where $C\succeq0$ and $C_{ii}=1$.
+Write $\mathsf{Sch}_d$ for this whole class of complex CPTP channels.
+In particular, both $\operatorname{id}$ and the dephasing channel
+$\Delta(X)=\sum_iX_{ii}P_i$ belong to it, and every member fixes every
+$P_i$.
+
+A supplied deterministic single-slot supermap has a finite or countable
+ACTUAL classical branch set $A$, finite positive integer dimensions
+$m_c$, common CP encoders $\mathcal E_c:M_d\to M_d\otimes M_{m_c}$,
+and common decoders $\mathcal D_c:M_d\otimes M_{m_c}\to M_d$ such that
+
+$$
+\mathcal S(\Phi)=\sum_{c\in A}\mathcal D_c
+       (\Phi\otimes\operatorname{id}_{m_c})\mathcal E_c,
+\qquad \sum_c\mathcal E_c^*(I_{dm_c})=I_d.
+\tag{JG.51}
+$$
+
+Every conditional decoder is TP on its ENTIRE input algebra, including
+off-code inputs. The encoder sum is TP; an individual encoder need
+not be TP. In the countable case the positive effect sums converge to
+$I_d$, and the CP channel sums have their corresponding norm limits.
+There is one use of the slot $\Phi$. All maps and flags are fixed
+independently of its input, and the identity of an unknown slot channel
+is not a classical input to the decoder.
+
+The bypass $M_{m_c}$ counts JOINTLY every input-dependent quantum
+system that can be accessed after the slot: stored specimen parts,
+controller or environment parts, returned systems, and later-accessible
+entanglement shares. A receiver's retained entanglement share belongs
+to this joint count. Independent blank ancillas supplied later are
+different. A discarded dilation system must remain inaccessible.
+The label $c$ is classical only if it is actually generated and retained
+as such; a coherent label is part of the quantum bypass. An abstract
+Kraus or Choi decomposition alone supplies no actual flag or permission
+to decode it. A passive inaccessible reference is allowed, with the
+identity acting on it throughout. All equations are complex-linear
+identities and retain every such amplification.
+
+Let $\mathfrak C_r$, $1\leq r\leq d$, denote the supermaps with a
+realization (JG.51), all nonzero branches satisfying $m_c\leq r$, and
+the exact fixing property
+
+$$
+\mathcal S(\Lambda)=\Lambda\quad(\Lambda\in\mathsf{Sch}_d).
+\tag{JG.52}
+$$
+
+Fixing Schur channels does not require that every output already be
+Schur. For a channel $T$, define its distance to the WHOLE Schur class by
+
+$$
+\delta(T)=\inf_{\Lambda\in\mathsf{Sch}_d}\|T-\Lambda\|_\diamond,
+\qquad
+\|L\|_\diamond=\sup_{k\geq1}\sup_{X\ne0}
+       \frac{\|(L\otimes\operatorname{id}_k)(X)\|_1}{\|X\|_1}.
+\tag{JG.53}
+$$
+
+Here $X$ ranges over all complex operators, not just states or Hermitian
+operators. This diamond norm is UNHALVED. It is an auxiliary channel
+comparison, distinct from (JG.7).
+

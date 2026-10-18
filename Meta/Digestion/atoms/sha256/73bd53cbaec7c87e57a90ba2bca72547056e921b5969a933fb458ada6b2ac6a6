@@ -1,0 +1,67 @@
+**Theorem 8.2 (Direct affine path realizations by all optimal witnesses).**
+For every prescribed path the annular model has the fixed ambient
+linear map
+
+$$
+\mathcal W_{\rm path}^{(2)}(z)=\exp(\Delta/H)R_{L/2}z.
+$$
+
+Its exact guard on $\mathscr S_2$ is
+
+$$
+0<H\log\|z\|_2+\rho(\tau)<H\quad(0\le\tau\le T),
+$$
+
+or, equivalently,
+
+$$
+1<\exp(\rho(\tau)/H)\|z\|_2<\exp(1)
+\quad(0\le\tau\le T).
+$$
+
+The height witness has the affine map $K\mapsto K+\Delta$ with
+guard $0<K+\rho(\tau)<H$ at all times. The constant witness has
+the unique literal affine map on the actual source guard. Each witness
+is exactly encoded at every intermediate truncation and every prefix
+of every finite lawful concatenation, with its previously proved
+uniform output error.
+
+**Proof of Theorem 8.2.** On an encoded source point,
+
+$$
+\exp(\Delta/H)R_{L/2}\bigl(\exp(k/H)U(\alpha)\bigr)
+=\exp((k+\Delta)/H)U(\alpha+L/2).
+$$
+
+By Proposition 8.1 this is exactly $E_2$ of the true endpoint.
+The mixed term $C$ is present in that true endpoint and disappears
+only because this particular encoder forgets $\beta$. The coefficient
+matrix depends on the prescribed path and $H$, not on the starting
+ray. The recovered height in Proposition 5.2 proves the two equivalent
+guard formulas. Endpoint image preservation follows from the exact
+identity on this full guard. Substitution proves the height and
+constant identities as well; the latter supplies no guard recovery.
+
+For an intermediate time $\tau$, use $\Delta_\tau=\rho(\tau)$,
+$L_\tau=\int_0^\tau b_c$ and
+$C_\tau=\int_0^\tau\rho b_c$. The same calculation directly gives
+the exact encoding of the current ray at that time. This is not a
+limit of split commands evaluated through an irregular encoder.
+
+For chronological concatenation the annular matrices multiply to
+
+$$
+\exp((\Delta_1+\Delta_2)/H)R_{(L_1+L_2)/2},
+$$
+
+because scalar dilations commute with planar rotations. The actual
+source has the combined mixed integral from Proposition 8.1; the
+encoding consistently discards it. The combined guard is the first
+path's guard followed by the second path's guard at the actual new
+height $k+\Delta_1$, equivalently the combined extrema in that
+proposition. Height translations and constant maps compose consistently
+too. Induction gives every finite concatenation and prefix. At each
+exactly encoded ray the same readout error formula is applied afresh.
+No perturbed initialization, rounding or approximate latent propagation
+is covered by this exact-real assertion. $\square$
+

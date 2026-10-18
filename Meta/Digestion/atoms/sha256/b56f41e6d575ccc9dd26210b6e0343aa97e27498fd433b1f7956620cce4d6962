@@ -1,0 +1,43 @@
+**Proposition 9.2 (existing actual energy and all-state bridges).** Under their original hypotheses, R11.1 gives $E_s\to\min(0,C_{\rm resp})$. P105.1 gives, for every prescribed sequence and every actual normalized complex ground-state choice,
+
+$$
+r_{s_n}\to\infty\quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2}(\mathcal U_{s_n}\psi_{s_n},\{e^{i\theta}p\})\to0.
+\tag{9.4}
+$$
+
+A5.1 gives $c(L-C_{\rm resp})=0$ whenever the actual unscaled energies tend to $L$ and actual microscopic states tend weakly to $cp$. If $C_{\rm resp}<0$, R11.2 gives $E_s\to C_{\rm resp}$, $\epsilon_c(s)=C_{\rm resp}s^2+o(s^2)$ and $r_s\sim(-C_{\rm resp})s^{-6}\to\infty$, hence the microscopic unit orbit for every actual choice.
+
+For a fixed original datum define the complete long-time tensor and normalized Coulomb data
+
+$$
+\begin{aligned}
+M&=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0,&d_M(z)&=(z^{\mathsf T}M^{-1}z)^{1/2},\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi^3dk}{4\pi\sqrt{\det M}},&
+e_C&=-\frac{\beta_C^2}{4a},&\varrho&=\frac{\beta_C}{2a},\\
+h_C(z)&=(\det M)^{-1/4}(\varrho^3/\pi)^{1/2}e^{-\varrho d_M(z)},&
+\mathcal D_gv(k,z)&=g^{-3/2}v(k,z/g).
+\end{aligned}
+\tag{9.5}
+$$
+
+A10.2 and A11.1 already prove, for each such actual sequence and choice, equivalence of microscopic weak zero with the source-centred full-mass Coulomb orbit, and either implies
+
+$$
+\frac{E_s}{g_s^2}\to e_C,\qquad r_s\to-\chi_c^2e_C>0,\qquad
+\inf_\theta\|\mathcal D_{g_s}\psi_s-e^{i\theta}\phi h_C\|_2\to0.
+\tag{9.6}
+$$
+
+At $C_{\rm resp}>0$, A6.1 supplies microscopic global weak zero, local strong zero, vanishing rescaled horizontal and potential energies and orbit distance $\sqrt2$, while norms remain one. A12.1 consequently gives (9.6) for every actual choice, with
+
+$$
+E_s=\chi_c^2e_Cs^6+o(s^6),\qquad
+\epsilon_c(s)=\chi_c^2e_Cs^8+o(s^8).
+\tag{9.7}
+$$
+
+The exact coefficient, mass-carrying macroscopic scale and normalized full-mass profile on that conditional branch are resolved credit. The same conclusions apply on any actual weak-zero subsequence at response zero, without asserting that any or every actual choice has one.
+
+Credit and proof scope. R's matching law uses its full-complex-domain lower estimate, actual negative attainment and P's actual resolvent equivalence, beyond its corrected-core trial upper construction. A's solvability uses the actual bilinear equation and compact tests fixed before homogeneous approximation. Its weak-zero transfer removes the short field in the actual resolvent and derives an $o(g_s^2)$ fixed-cutoff variational deficit before invoking P72–73. Norm proximity alone would not provide that energy precision. The macroscopic-orbit converse is a microscopic/macroscopic norm comparison. A15.2 supplies the energy-endpoint converse through the strict core margin recorded below. None of these actual-state theorems is proved from, or strengthened by substituting an exterior homogeneous correction into, the actual eigen-equation.
+

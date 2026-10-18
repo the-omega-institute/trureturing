@@ -1,0 +1,275 @@
+## 9. Sharp recovery for every positive upper degree
+
+**Theorem 9.1.** For every integer $d\ge1$, put
+
+$$
+a=d+3,\qquad b=a+1,\qquad m=a-2,
+$$
+
+and choose the smallest even integer $w\ge a$. Thus $w=a$ for even $a$ and $w=a+1$ for odd $a$. Set $h=(w-2)/2$. Define
+
+$$
+Q_w=UL^{w-1}=\begin{pmatrix}w&1\\w-1&1\end{pmatrix},\qquad
+T_\nu=U^{\nu-1}JQ_w=\begin{pmatrix}\nu w-1&\nu\\w&1\end{pmatrix}.
+$$
+
+The $d+5$ consecutive recorded endpoints
+
+$$
+A_0=I,\quad A_1=L^h,\quad
+A_i=Q_w\ (2\le i\le d+2),\quad
+A_a=T_{a-1},\quad A_b=T_a
+\tag{9.1}
+$$
+
+recover exactly $(S,k,D)$ for all sources in (1.1), all real $k$, and every whole polynomial $D$ of degree at most $d$. A literal implementation uses $2w+2a-1$ atoms.
+
+**Legal realization.** Powers of the shears are
+
+$$
+U^j=\begin{pmatrix}1&j\\0&1\end{pmatrix},\qquad
+L^j=\begin{pmatrix}1&0\\j&1\end{pmatrix}\quad(j\ge0).
+$$
+
+The successive nonempty multipliers are
+
+$$
+L^h,\quad UL^{w-1-h},\quad U^{a-2}J,\quad U,
+\tag{9.2}
+$$
+
+with $d$ empty words between the $d+1$ consecutive $Q_w$ reads. In particular $w-1-h=w/2\ge0$. Chronologically $L$ is $(J,M)$, $U$ is $(M,J)$, and $U^{a-2}J$ is one $J$ followed by $a-2$ pairs $(M,J)$. Their lengths are $2h$, $2+2(w-1-h)$, $1+2(a-2)$, and $2$, giving the stated total. There is no interior read in any word. Equations (1.2)–(1.4) realize these exact words with one positive source, one unchanged row, and positive unread states.
+
+**Coordinates and polynomial reduction.** Write $a_S=p+s$ and set
+
+$$
+u=(w-1)(p+q)+r,\qquad t=wp+r,\qquad v=q-p.
+\tag{9.3}
+$$
+
+The exact linear inverse is
+
+$$
+p=\frac{u-t-(w-1)v}{w-2},\qquad
+q=\frac{u-t-v}{w-2},\qquad r=t-wp.
+\tag{9.4}
+$$
+
+Indeed $u-t=-p+(w-1)q=(w-2)p+(w-1)v$. The fixed divisor $w-2$ is positive. Positivity means exactly that these three expressions are positive, followed by $s=qr/p$. Thus $u>0$ and the fixed-$u$ domain of $(t,v)$ is convex.
+
+Direct trace expansion gives
+
+$$
+\operatorname{tr}(L^hS)=a_S+hq,\quad
+\operatorname{tr}(Q_wS)=a_S+u,\quad
+\operatorname{tr}(T_\nu S)=a_S+u+(\nu-1)t+v.
+$$
+
+The single polynomial
+
+$$
+P(\tau)=D(\tau)+(a_S+u)(1+k\tau)
+\tag{9.5}
+$$
+
+has degree at most $d$, because $d\ge1$. At the actual $Q_w$ indices $j=2,\ldots,d+2$, it equals $z_j$. Consequently its entire value is determined by
+
+$$
+P(\tau)=\sum_{j=2}^{d+2}z_j
+\prod_{\substack{2\le e\le d+2\\e\ne j}}
+\frac{\tau-e}{j-e}.
+\tag{9.6}
+$$
+
+Every denominator is a fixed nonzero integer. Uniqueness follows because successive division by distinct linear root factors makes a degree-at-most-$d$ polynomial with $d+1$ distinct roots zero. Lower actual degrees, cancellations, and $P=0$ are included.
+
+Form the residual coordinates, using $E$ as an auxiliary quantity
+
+$$
+u=P(0)-z_0,\quad E=z_1-P(1),\quad W=-2E-u,
+\qquad Y=z_a-P(a),\quad Z=z_b-P(b).
+\tag{9.7}
+$$
+
+For actual data the first coordinate agrees with (9.3), and
+
+$$
+E=(1+k)(hq-u),\qquad hq-u=-\frac{u+t+v}{2}.
+$$
+
+Therefore
+
+$$
+(W,Y,Z)=F_u(t,v,k)
+=\bigl((1+k)(t+v)+ku,\ (1+ak)(mt+v),\ (1+bk)((m+1)t+v)\bigr).
+\tag{9.8}
+$$
+
+The data change to $(P,u,W,Y,Z)$ is a linear isomorphism: its inverse has $z_j=P(j)$ on the $Q_w$ block and
+
+$$
+z_0=P(0)-u,\quad z_1=P(1)-(W+u)/2,\quad
+z_a=P(a)+Y,\quad z_b=P(b)+Z.
+$$
+
+Polynomial evaluation here is decoding, not a virtual read. All reductions are undivided identities at gain zeros as well.
+
+**Determinant and its sign.** At fixed $u$, write $g_j=1+jk$. Differentiating (9.8) in the order $(t,v,k)$ gives
+
+$$
+DF_u=\begin{pmatrix}
+g_1&g_1&t+v+u\\
+mg_a&g_a&a(mt+v)\\
+(m+1)g_b&g_b&b((m+1)t+v)
+\end{pmatrix}.
+$$
+
+Expansion along its last column gives
+
+$$
+\begin{aligned}
+\mathcal J&=-(t+v+u)g_ag_b
+ +am(mt+v)g_1g_b-b(m-1)((m+1)t+v)g_1g_a\\
+&=[(a-m^2)t+(a-m)v-u]\\
+&\quad+[(a^2-m^2)t+(a^2-m)v-(2a+1)u]k-abuk^2.
+\end{aligned}
+\tag{9.9}
+$$
+
+Let $R_0=a^2-5a+5$ and $R_1=-2a+5$. Substitution of (9.3), with $m=a-2$, gives the exact identity
+
+$$
+-\mathcal J=pP_p(k)+qP_q(k)+rP_r(k),
+\tag{9.10}
+$$
+
+where
+
+$$
+\begin{aligned}
+P_p(k)&=(w-1)abk^2+[wR_1+a^2-3a+1]k+wR_0+1,\\
+P_q(k)&=(w-1)abk^2+[(2a+1)w-a^2-a-3]k+w-3,\\
+P_r(k)&=abk^2+R_1k+R_0.
+\end{aligned}
+\tag{9.11}
+$$
+
+For clarity, the constant part of $-\mathcal J$ before substitution is $(R_0-1)t-2v+u$, and its linear part is $-(4a-4)t-(a^2-a+2)v+(2a+1)u$, which give exactly the coefficients displayed in (9.11).
+
+All three quadratics are strictly positive for every real $k$. At $a=w=4$, they are precisely the three completed squares in (4.2). For $a\ge5$, $R_0=a(a-5)+5\ge5$, and
+
+$$
+4abR_0-R_1^2\ge20a(a+1)-(2a-5)^2
+=16a^2+40a-25>0.
+$$
+
+For even $a\ge6$, $w=a$, the leading, linear, and constant coefficients of $P_q$ are
+
+$$
+(a^3-a,\ a^2-3,\ a-3).
+$$
+
+Its discriminant is
+
+$$
+-3a^4+12a^3-2a^2-12a+9
+=-3a^3(a-4)-2a^2-12a+9<0.
+$$
+
+For odd $a\ge5$, $w=a+1$, the corresponding coefficients are
+
+$$
+(a^2(a+1),\ a^2+2a-2,\ a-2),
+$$
+
+and its discriminant is
+
+$$
+-3a^4+8a^3+8a^2-8a+4
+=-a^2(3a^2-8a-8)-8a+4<0,
+$$
+
+since $3a^2-8a-8=27+(a-5)(3a+7)\ge27$.
+
+For $P_p$ in the even case, its coefficients are
+
+$$
+A=a^3-a>a^2,\quad B=-a^2+2a+1,\quad
+C=a^2(a-5)+5a+1>a^2.
+$$
+
+Here $|B|<a^2$, so $B^2-4AC<a^4-4a^4<0$. In the odd case they are
+
+$$
+A=a^2(a+1)>a^2,\quad B=-a^2+6,\quad
+C=a^2(a-4)+6>a^2,
+$$
+
+and the same strict discriminant bound applies. In every case the leading coefficient is positive. The identity
+
+$$
+4A(Ak^2+Bk+C)=(2Ak+B)^2+4AC-B^2
+$$
+
+then proves positivity. Since $p,q,r>0$, (9.10) proves $\mathcal J<0$ throughout the full domain, without a gain-sign restriction.
+
+**Global uniqueness.** For fixed $u$, (9.8) has the form $Ay+kBy+kue_1$, with $y=(t,v)^{\mathsf T}$. Its exact bilinear midpoint identity is
+
+$$
+F_u(y_0,k_0)-F_u(y_1,k_1)
+=DF_u(\bar y,\bar k)
+(\Delta t,\Delta v,\Delta k)^{\mathsf T},
+\tag{9.12}
+$$
+
+because $k_0y_0-k_1y_1=\bar k\Delta y+\bar y\Delta k$. The fixed-$u$ positive domain in (9.4) is convex; its midpoint has positive $p,q,r$, and its fourth entry is reconstructed as $qr/p$. The midpoint derivative is invertible by (9.10). Equal reduced data therefore force equal $t,v,k$. Equal complete data first give equal $P,u,W,Y,Z$, so (9.4) gives equal $p,q,r,s$, and
+
+$$
+D(\tau)=P(\tau)-(p+s+u)(1+k\tau)
+\tag{9.13}
+$$
+
+gives the same entire original polynomial. This proves recovery globally, using the finite midpoint identity rather than local nonsingularity alone.
+
+**Whole-image inverse.** For arbitrary proposed data compute (9.6)–(9.7) and require $u>0$. Consider the distinct real roots of
+
+$$
+H(k)=-(W-ku)(1+ak)(1+bk)
++mY(1+k)(1+bk)-(m-1)Z(1+k)(1+ak).
+\tag{9.14}
+$$
+
+Its leading coefficient is $abu>0$, so it is a nonzero cubic. It has at most three distinct real roots by successive root factorization, and at least one by continuity and its opposite limits. This finite exact algebraic prescription requires no numerical root approximation.
+
+At each root form
+
+$$
+P_k=\begin{pmatrix}
+g_1&g_1\\mg_a&g_a\\(m+1)g_b&g_b
+\end{pmatrix},\qquad b_k=(W-ku,Y,Z)^{\mathsf T}.
+$$
+
+The coefficient labels $c_1=1,c_2=m,c_3=m+1$ are distinct, as are their clock indices $j_1=1,j_2=a,j_3=b$. At most one gain vanishes. Any two surviving rows have determinant $g_{j_e}g_{j_f}(c_e-c_f)\ne0$, so $P_k$ has rank two at every real slope. Cofactor expansion gives
+
+$$
+H(k)=\det[P_k^{(1)},P_k^{(2)},b_k].
+$$
+
+Consequently $H=0$ is exactly consistency of all three rows, including the right-hand side of an erased row. Select any two surviving row labels $e<f$ and form only their quotients from
+
+$$
+V_1=(W-ku)/g_1,\quad V_2=Y/g_a,\quad V_3=Z/g_b.
+$$
+
+Then
+
+$$
+t=\frac{V_f-V_e}{c_f-c_e},\qquad v=V_e-c_et.
+$$
+
+The selected gains and the positive integer divisor are nonzero. Use (9.4), require $p,q,r>0$, set $s=qr/p$, and form (9.13). Require its degree bound and every original observation equation at all $d+5$ actual positions. A passing candidate is sufficient: (1.2)–(1.4) realize its positive source and fixed row on exactly (9.2), with this one whole polynomial. Actual data necessarily supply a passing candidate, and (9.12) excludes two passing targets.
+
+This proves an exact common-source membership test and inverse on the entire image. A gain zero within the repeated $Q_w$ block still gives the value of $P$ at that node. At a zero of $g_1$, $g_a$, or $g_b$, the determinant and final check retain the erased equation while the other two rows survive. Repeated cubic roots are considered once. Both signs of nonzero gains, $k=0$, lower actual drift degrees, zero polynomial $P$, and arbitrary signs of readings are covered.
+
+At $d=1$, $a=w=4$ and $h=1$; (9.1) is exactly (2.1), with its fifteen atoms. The source coordinates, reduced map, and cubic also coincide. This member is the credited sharp-six result.
+

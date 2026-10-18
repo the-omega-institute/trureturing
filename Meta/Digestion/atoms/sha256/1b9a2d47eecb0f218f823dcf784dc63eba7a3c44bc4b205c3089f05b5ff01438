@@ -1,0 +1,53 @@
+### 命题 28.3（Kraus 表示与 Choi 判据）
+
+有限维线性映射 \(\mathcal E\) 是 CPTP，当且仅当存在有限个算子 \(K_i:H_A\to H_B\)，使
+
+\[
+\mathcal E(X)=\sum_iK_iXK_i^\ast,
+\qquad
+\sum_iK_i^\ast K_i=I_{H_A}.
+\]
+
+等价地，其 Choi 矩阵
+
+\[
+J(\mathcal E)
+=
+\sum_{i,j}|i\rangle\langle j|
+\otimes
+\mathcal E(|i\rangle\langle j|)
+\]
+
+满足
+
+\[
+J(\mathcal E)\succeq0,
+\qquad
+\operatorname{tr}_{H_B}J(\mathcal E)=I_{H_A}.
+\]
+
+#### 证明
+
+Kraus 表示给出完全正性，因为
+
+\[
+(\mathcal E\otimes\operatorname{id}_K)(X)
+=
+\sum_i(K_i\otimes I_K)X(K_i^\ast\otimes I_K)
+\]
+
+保持正半定性。且
+
+\[
+\operatorname{tr}\mathcal E(X)
+=
+\operatorname{tr}
+\left(
+\sum_iK_i^\ast K_iX
+\right)
+=
+\operatorname{tr}X.
+\]
+
+反向方向是有限维 Choi 定理。完全正性等价于 \(J(\mathcal E)\succeq0\)，保迹性等价于部分迹条件。证毕。
+

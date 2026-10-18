@@ -1,0 +1,32 @@
+**Theorem 2.2 (Complete full-open classification).** For every fixed
+preparation and $0<Z<1$, Definition 2.1 has achievable tolerance set
+
+$$
+\mathcal A_Z=
+\begin{cases}
+(e_0,\infty),&Z<2/3,\\
+[e_0,\infty),&Z\ge2/3,
+\end{cases}
+\qquad e_0=2\sqrt{ZH}=\sqrt{2Z(1-Z)}.
+$$
+
+Consequently the infimum of errors over all finite models is $e_0$.
+For every $\epsilon>e_0$, one explicit sufficient dimension is $2m+3$,
+where
+
+$$
+\Delta_\epsilon=\epsilon^2-4ZH,\qquad
+m=\max\left\{1,\left\lceil
+\left(\frac{8H^2}{\Delta_\epsilon}\right)^2
+\right\rceil\right\}.
+$$
+
+For $Z\ge2/3$, a one-coordinate height encoder with zero decoder
+attains the infimum. These are sufficient dimensions, with no
+minimum-dimension assertion. The conclusions persist under the larger
+prescribed-path contract in §9.
+
+The proof is assembled from the bounded-observable result in §3, the
+metric floor in §4, the nonattainment proof in §§5–6, and the constructions
+in §§7–9.
+

@@ -1,0 +1,13 @@
+**定理 10.2（FIB 方向接入两通道状态的精确条件）。** 定义 10.1 给
+
+$$
+\det H=\tau^2-x^2-y^2-z^2,\qquad
+\rho\geq0\Longleftrightarrow\|r\|\leq1,
+$$
+
+其中后式限于 $\tau=1$；纯态恰为 $\|r\|=1$。当 $\|r\|=1$ 时，相反 Bloch 点 $r$ 与 $-r$ 对应正交纯态，不是同一全局相位射线。若将第七章的方向值接入这一合同，则还须指定尺度、正性域与两复振幅的实现；两个 FIB 来源标签本身不足以提供这些条件。
+
+证明。矩阵行列式直接给第一式；特征值为 $\tau\pm\|r\|$，所以迹一的 $\rho$ 特征值为 $(1\pm\|r\|)/2$，给正性和秩一条件。这是 [IBM 的 Bloch 球教材](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere) 中的标准中间输入。单位向量 $\psi$ 与 $e^{i\theta}\psi$ 有相同密度矩阵 $\psi\psi^*$；而对单位 $r$，Pauli 乘法给 $\rho(r)\rho(-r)=0$，所以二者的像为正交射线。
+
+第七章只规定树与实三维叉积值，并未给复振幅、归一化测量或实施通道。若高维复合系统确有一个两通道可观察代数，其迹一 Hermitian 接口也可使用这个三维球，但完整态的关联留在观察纤维中，第三章的外部上下文仍可要求更细边界。因此代数表示不能替代完整量子来源或空间运输合同。证毕。
+

@@ -1,0 +1,29 @@
+**定义 146.1（共同有限实现与参考内积）。** 固定同一个非空有限候选集合 $\Omega$、有限协议阶段 $0,\ldots,N$ 及严格正权 $\mu(\omega)>0$。候选含这一视界需要的初态、来源、控制和返回机制；若协议涉及随机性，也将其所需的种子或噪声来源纳入这个共同实现。种子属于模型不表示观察者已读到种子。$\mu$ 是声明的参考权，不是唯一宇宙先验；除以总权可归一成概率，以下投影不变。
+
+在每个候选上，协议定义实际会纳入档案的记录
+
+$$
+R_n:\Omega\longrightarrow B_n=R_n(\Omega),\qquad
+R_n=d_n\circ R_{n+1}.
+$$
+
+$R_n$ 同时描述全部候选的档案映射，不表示全部候选历史都已发生。观察者只有实际候选 $\omega_*$ 的记录 $R_n(\omega_*)$。阶段 $n$ 若不是统一的事件次数，须保留该候选实际事件次数字段；已经停止的候选不因阶段推进而被填入 $\mathrm{null}$。在每个候选恰执行 $n$ 次追加的合同中，$R_n$ 可取定义144.4的完整档案，$d_n$ 就是左前缀读取。
+
+取同一实 Hilbert 空间及可见子空间
+
+$$
+\mathcal L=\mathbb R^\Omega,\qquad
+\langle f,g\rangle_\mu=\sum_{\omega\in\Omega}\mu(\omega)f(\omega)g(\omega),
+\qquad V_n=\{b\circ R_n:b:B_n\to\mathbb R\}.
+$$
+
+对纤维 $C_n(\omega)=R_n^{-1}(R_n(\omega))$，使用有限条件期望
+
+$$
+(P_nf)(\omega)=
+\frac{\sum_{\eta\in C_n(\omega)}\mu(\eta)f(\eta)}
+{\sum_{\eta\in C_n(\omega)}\mu(\eta)}.
+$$
+
+严格正权保证分母正并保留所有候选区别。$P_n$ 是到 $V_n$ 的正交投影。这里直接使用[《递归关系的观察商、严格拼接与相容完备化》，版本86577a9c5c0e1a38bf7e6d6a69bf473725402289，§121.1–121.6](https://raw.githubusercontent.com/the-omega-institute/trureturing/86577a9c5c0e1a38bf7e6d6a69bf473725402289/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的档案塔，而不另立一般投影定理。其经典接口为钉版 Mathlib [CondexpL2.lean，`MeasureTheory.condExpL2` 与 `inner_condExpL2_eq_inner_fun`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Function/ConditionalExpectation/CondexpL2.lean)：条件为子 $\sigma$ 代数包含关系、$L^2$ 输入及完备实或复内积目标；本节有限正权实模型满足这些条件。此处按普通数学使用该经典中间结果。
+

@@ -1,0 +1,15 @@
+**Corollary 4.3 (retained increment over short nonnegative compensation).**
+Every nonempty maximal ambiguity block with $|B|\le2$ satisfies
+$E_B-D_B\ge1$. Current [SI, Theorem 9.4][SI] states $E_B-D_B\ge0$
+for the corresponding spacing-two and spacing-three intervals. Its
+classification and fixed-successor proof are retained; the strict bound here
+uses the positive excess on every internal ambiguous diagonal, including
+the last diagonal in the spacing-three case. Current SI Section 10 advances
+the surrounding compensation and residual frontier, but states no strict
+unit for each such nonempty span-two/three interval. Its early-ending
+no-sharing result does imply positive excess there; the bound here also
+covers the late-ending short intervals without that hypothesis. This is
+the additional bounded inequality retained relative to the supplied SI10
+statements, with no worldwide priority assertion or independent separator
+charge. $\square$
+

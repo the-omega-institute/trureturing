@@ -1,0 +1,59 @@
+**Definition 1.2 (native apparatus, code and feasibility).** Fix $n\ge6$,
+$3\le k\le n-2$, original positions $A=\{s_1<\cdots<s_n\}$ that are
+positive integers, and an integer $r\ge0$. Put
+
+$$
+w_i=L^{s_i}R,\qquad a_i=LLLw_i,\qquad c_i=s_i+4,
+\qquad C_B=\sum_{i\in B}c_i,\qquad W=C_{[n]}.
+$$
+
+For a branch image $B$ set
+$\theta_i(B)=\mathbf1_{\{r_B(w_i)=\mathsf{branch}\}}$; alpha, beta and
+absent each give zero. Keep the literal original prescription
+
+$$
+\sigma_{A,k}(u)=
+\begin{cases}
+0,&u\in\Pi_1\cup\Pi_2,\\
+1,&u\in\Pi_3\cup\Pi_4,\\
+\mathbf1_{\{\sum_i\theta_i(x_a)\ge k\}},&u\in Z_{b_3},\\
+0,&u\text{ is in another zero profile}.
+\end{cases}
+$$
+
+A native preparer has finitely many installed running states, one
+source-independent running start, one fixed finite absolute word at each
+running state, and four separately specified fixed successors in reply order
+alpha, beta, branch, absent. The current counted state is its entire changing
+configuration. There are no silent running transitions: each running visit
+makes and pays for its query before taking the indicated successor.
+The installed set consists of these running states and the $2+r$ distinct
+latches, with the running states disjoint from the latches; every successor
+belongs to this installed set.
+The register is fixed throughout. No free history, clock, counter, phase,
+archive, source copy, equality test, inverse evaluation, reset, computed
+address or source-dependent selection port is supplied.
+
+Every actual source run must terminate at the original latch
+$\widehat e_{\sigma_{A,k}(u)}$. Every installed running state, the two
+original distinct latches and all $r$ further mandated distinct latches count,
+including unused states. An invocation costs one call and its full absolute
+word length. All visits count, including roots, constants, absent replies,
+repeated words and work after certification. Sharing, repeats, union cycles
+and inconsistent syntactic paths are permitted; termination is required on
+every actual fixed input. A terminating stationary run cannot revisit a
+running state, since its reply and subsequent suffix would then repeat forever.
+
+For integer bounds, $\mathsf N_{A,k,r}(H,p,\ell)$ means existence of such
+a complete correct preparer with at most $H$ installed preparation states
+and, simultaneously on every $u\in\mathcal U_*$, at most $p$ calls and
+$\ell$ letters. A negative bound is infeasible. The original execution caps
+are $p=n+1$, $\ell=W+3$. Preparation ends at the latch $\widehat e_\sigma$;
+the separately supplied code-only handoff then enters the original complete
+reader entry $e_\sigma$ on this same current register.
+Original register binding, same-version row acquisition and authentication,
+pre-cut native permission, actual export, complete access isolation, paid
+code-only handoff, lawful complete entry and stationary truthful service remain
+separate supplied services, as in [WTF, Assumption 1.5][WTF]. Their costs
+and physical implementations do not follow from installed-state cardinality.
+

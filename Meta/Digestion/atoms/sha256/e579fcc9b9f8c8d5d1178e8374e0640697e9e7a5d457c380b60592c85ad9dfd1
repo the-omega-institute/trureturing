@@ -1,0 +1,33 @@
+**Theorem 5.2 (all-cut local inverse, with both directions).** With the
+actual exterior attachment and owner/guard interface held fixed,
+either the local support below $z$ or its independently defined local
+terminal boundary determines the complete local incidence at every
+$C_j(h)$, the exact phase $j$, and the specified next constructor
+operation/readout. Encoding after decoding and decoding after observing
+are identities on each respective actual image.
+
+Proof. Apply the supplied finite-tree inversion of UAS Theorem 3.2
+and SSA Proposition 13.3, which permits unary vertices:
+
+$$
+S_{\rm loc}=\operatorname{Pref}(B_{\rm loc}),\qquad
+B_{\rm loc}=\operatorname{Max}_{\preceq}(S_{\rm loc}).
+$$
+
+Place a vertex at each support path; join each nonempty path to its
+immediate prefix by the corresponding child endpoint and reciprocal
+P endpoint. Give all local O/H slots their stipulated empty values,
+and keep the supplied exterior attachment of the root. This
+reconstructs precisely the local graph. Its cardinality gives
+$j=|S_{\rm loc}|-1$. The fixed literal table selects $w_{j+1}$ when
+$j<24$, or the append-complete readout when $j=24$.
+
+Thus this decoder applied to an actual observation returns the
+observed state. Conversely an actual-image support is exactly its
+set of reconstructed paths, so observing that reconstruction gives
+the same support. For a boundary, first take prefix closure and use
+the same decoder; taking maximal paths again returns the same
+actual-image boundary. These prove both identities separately.
+Current exterior permission is a fixed boundary parameter of this
+local statement; it is not inferred from the local tree. ∎
+

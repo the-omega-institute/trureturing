@@ -1,0 +1,28 @@
+**约定 2.2（Responses and actual inverse）。** Absolute block index $t$ starts at zero; the endpoint of block $t$ has total fee $t+1$ on a continuing branch. Write $u_t=tm\pmod T$ and use the ordered window $W_t=[u_t,u_t+m]\pmod T$. For a successful word $x_0\cdots x_{m-1}$, its endpoint difference as a function of INITIAL phase index $j$ is supported in this window and satisfies
+
+$$
+q_t(u_t)=x_0,\qquad
+q_t(u_t+i)=x_{i-1}\oplus x_i\ (1\le i<m),\qquad
+q_t(u_t+m)=x_{m-1}.
+\tag{2.4}
+$$
+
+For every even-cardinality set $E\subseteq W_t$, the actual inverse is
+
+$$
+\mathcal B_t(E)_i=\bigoplus_{a=0}^{i}\mathbf1_E(u_t+a),
+\qquad 0\le i<m.
+\tag{2.5}
+$$
+
+It emits exactly $m$ literal bits and has response support exactly $E$, including the right endpoint. The charge condition and inverse are reused from [S10, Interface 2.1; S15, Section 1]. Safety must additionally be proved from the current tail. An algebraic span is not substituted for an action. A parity donor below is a phase absent from the actual archive where it is used.
+
+The calendar [S16, Section 2; S18, equation (1.8)] is
+
+$$
+W_{rQ+b}=[bm-r,(b+1)m-r]\pmod T,\qquad 0\le b<Q,
+\tag{2.6}
+$$
+
+since $Qm\equiv-1\pmod T$. For all tours used below, $r\le h\le m-2$. Main indices are $rQ$ with $1\le r\le h$; frontier indices are $rQ+1$. They refer to the number of blocks this protocol has emitted, not to the unobserved length of an INITIAL history.
+

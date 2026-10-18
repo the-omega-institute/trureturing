@@ -1,0 +1,16 @@
+**An effective bound for square values.** Let $f\in\mathbb Z[X]$ be monic of degree $2d$, positive for real $x\ge1$, and not a square in $\mathbb Q[X]$. Matching coefficients from degree $2d-1$ down to degree $d$ gives a unique monic polynomial $A\in\mathbb Q[X]$ of degree $d$ for which
+
+$$g=f-A^2\ne0,\qquad \deg g\le d-1.$$
+
+Let $H$ be the sum of absolute values of the nonleading coefficients of $A$, and let $M$ be a positive integer clearing their denominators. Let $G$ be the sum of absolute values of the coefficients of $g$. If $e=\deg g$ and $g_e$ is its leading coefficient, put
+
+$$R_0=1+\sum_{i<e}\left|\frac{g_i}{g_e}\right|,\qquad T=2+\left\lceil\max(1,2H,2MG,R_0)\right\rceil,$$
+
+where the empty sum is zero. For an integer $x\ge T$, one has $A(x)>x^d/2$ and $|g(x)|\le Gx^{d-1}$. Therefore
+
+$$\left|\sqrt{f(x)}-A(x)\right|=\frac{|g(x)|}{\sqrt{f(x)}+A(x)}<\frac{2G}{x}<\frac1M.$$
+
+If $\sqrt{f(x)}$ were an integer, the difference would belong to $M^{-1}\mathbb Z$ and hence vanish. This would give $g(x)=0$, impossible for $x>R_0$, where its leading term dominates the lower terms. Thus $f(x)$ is nonsquare for every integer $x\ge T$.
+
+This is an elementary polynomial form of Runge's method; see [Levin, *Variations on a theme of Runge: effective determination of integral points on certain varieties*, Journal de Théorie des Nombres de Bordeaux 20 (2008), 385–417, introduction and Theorem 1.2](https://jtnb.centre-mersenne.org/item/10.5802/jtnb.634.pdf). The argument here supplies its own explicit bounds.
+

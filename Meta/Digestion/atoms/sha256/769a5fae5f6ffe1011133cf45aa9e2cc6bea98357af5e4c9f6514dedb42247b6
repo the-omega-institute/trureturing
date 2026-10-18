@@ -1,0 +1,25 @@
+**Definition 1.4 (The fixed unequal family).**
+The original amplitudes are exactly
+
+$$
+\begin{gathered}
+0<\tau\le1/24,\qquad0\le v\le u\le\tau,\qquad
+a_1=a_2=1-11\tau,\\
+(a_3,a_4,a_5,a_6,a_7)=(13,10,9,8,6)\tau,\qquad
+a_8=5\tau+u,\quad a_9=5\tau+v,\\
+a_{10}\ge a_{11}\ge\cdots>0,\qquad a_{10}\le5\tau,\qquad
+a_n\longrightarrow0.
+\tag{1.4}
+\end{gathered}
+$$
+
+These give $1\ge a_1\ge a_2\ge\cdots>0$, since $24\tau\le1$ and
+$a_8\le6\tau=a_7$. No summability is required. Write
+
+$$
+E_{\rm sum}=5\tau+\frac{11(u+v)}{128},\qquad
+L_8=5\tau+\frac{11u}{117},\qquad
+U=5\tau+\max\left\{\frac{22u}{181},\frac{11(u+v)}{128}\right\}.
+\tag{1.5}
+$$
+

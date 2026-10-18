@@ -1,0 +1,12 @@
+**Verification scope.** The actual readout computation recursively
+replaces an alpha by beta and a beta by $\langle\beta,\alpha\rangle$
+when a positive substitution count reaches a leaf, and otherwise
+traverses the original ordered branch. It does not use the factor
+formula to compute the actual reply. Separately compute (LTR.3) and
+(LTR.4), and check equality and the selected literal's reply partition
+on each finite list above. The scaffold checks use the actual wrapper
+and full root-prefixed literal addresses. These are bounded exact
+checks only; the universal assertions for every $m,h,q,k$ and every
+competing fiber rest on the ordinary proofs, not extrapolation or an
+empirical convergence claim.
+

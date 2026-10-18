@@ -1,0 +1,91 @@
+**Definition 11.3 (Nested legal phase menus).** Let $\mathcal P_d$ be the span of legal
+monomials of cardinality at most $d$, and define for $d\ge1$
+
+$$
+\gamma^{(d)}=
+\min_{\substack{f\in\mathcal P_d\\\operatorname{Var}_p(f)>0}}
+\frac{\mathcal E_G(f,f)}{\operatorname{Var}_p(f)}.
+\tag{11.6}
+$$
+
+The exact matrices (11.4) admit the following standard finite-basis
+derivation. The functions $(m_I)_{I\in\Omega_G}$ form a basis of all
+real functions on $\Omega_G$. For a nonempty graph vertex set,
+
+$$
+\gamma\le\gamma^{(d+1)}\le\gamma^{(d)},\qquad
+\gamma^{(\alpha(G))}=\gamma,
+\tag{11.7}
+$$
+
+where $\alpha(G)$ is the independence number. For a nonempty
+$T\subseteq V$, the zero-cylinder indicator has exact legal
+polynomial degree $\alpha(G[T])$.
+
+Order legal sets by nondecreasing cardinality, using any
+fixed ordering for ties. The evaluation matrix has entries
+$m_I(s)=\mathbf1_{I\subseteq s}$. A nonzero entry with distinct
+indices requires $|I|<|s|$. The matrix is triangular with diagonal
+one, hence invertible. This proves the basis statement and the
+uniqueness of every legal monomial expansion.
+
+For $f=\sum_Ic_Im_I$, bilinearity and the monomial calculation in Definition 11.2 give
+
+$$
+\operatorname{Var}_p(f)=c^{\mathsf T}Vc,\qquad
+\mathcal E_G(f,f)=c^{\mathsf T}Ac.
+\tag{11.8}
+$$
+
+Constants are omitted from the quotient, or equivalently one
+works modulo their one-dimensional subspace. Positivity of $p$
+makes variance positive on every remaining nonzero function.
+The nested finite-dimensional spaces prove (11.7), and the full
+basis is reached at degree $\alpha(G)$.
+
+Boolean expansion gives
+
+$$
+\mathbf1_{A_T}(s)
+=\prod_{i\in T}(1-s_i)
+=\sum_{\substack{I\subseteq T\\I\in\Omega_G}}(-1)^{|I|}m_I(s).
+\tag{11.9}
+$$
+
+Every legal coefficient in this expansion is nonzero, and some
+legal subset of $T$ has size $\alpha(G[T])$. Uniqueness of the
+basis expansion precludes a lower-degree representation.
+Centering changes only the constant coefficient. These inclusion
+and variational steps are classical ingredients in the application
+of the actual energy matrix, rather than new general basis theorems.
+
+For the original open path, $\alpha(G)=\lceil n/2\rceil$.
+Theorem 10.2 supplies the strict separation
+
+$$
+\gamma^{(2)}<\frac1{10}\le\gamma^{(1)}
+\quad\text{for the law and weights (10.1)}.
+\tag{11.10}
+$$
+
+It does not identify $\gamma^{(2)}$ with the full gap. The degree
+of a particular cylinder can grow with length; that fact does not
+exclude every other uniformly bounded-degree family of slow
+directions.
+
+For the diagonal occupation operator
+$\hat M_I=\prod_{i\in I}\hat n_i$, its centered phase tangent is
+$v_I=D(m_I-\mu_I)$. The stochastic-parent correspondence of
+Chapter 1 gives the same Gram and parent matrices:
+
+$$
+\langle v_I,v_J\rangle=V_{IJ},\qquad
+\langle v_I,H_{\lambda,\omega}v_J\rangle=A_{IJ}.
+\tag{11.11}
+$$
+
+Thus joint occupation extends the phase-generator menu inside
+one common preparation. Equation (11.11) neither changes the
+occupation law nor supplies a physical energy scale or control
+implementation.
+

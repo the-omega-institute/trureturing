@@ -1,0 +1,21 @@
+### 定义 57.3（完整事件时钟与一维代码）
+
+按 full-event trace 对叶按字典序编号 \(p_1,\ldots,p_m\)，定义
+\[
+e_0(1)=1,\quad
+e_{r+1}(j)=
+\begin{cases}1+e_r(j),&j\le2^r,\\
+4\cdot2^r-1+e_r(j-2^r),&j>2^r,\end{cases}
+\quad n_h(j)=2+e_h(j).
+\]
+对 \(\omega\ne\omega'\)，令 \(j(\omega,\omega')\) 为最小不同叶索引，定义
+\[
+d_h^E(\omega,\omega')=3^{-n_h(j)},\qquad
+Z_h^E(\omega)=\sum_{j=1}^m2\omega(p_j)3^{-n_h(j)}.
+\]
+则
+\[
+d_h^E(\omega,\omega')\le|Z_h^E(\omega)-Z_h^E(\omega')|\le3d_h^E(\omega,\omega'),
+\]
+并且 \(n_h(1)=h+3\)、\(n_h(m)=4m-h-1\)。
+

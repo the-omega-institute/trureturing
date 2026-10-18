@@ -1,0 +1,67 @@
+**Lemma 4.2 (all complex low-rank directions and fixed compressions).**
+For arbitrary complex coefficients put
+
+$$
+K(u,v,w)=uD+vT+wS=
+\begin{pmatrix}
+h_0u&av&cw\\bv&h_1u&0\\dw&0&h_2u
+\end{pmatrix}.
+\tag{IR.19}
+$$
+
+Then
+
+$$
+\det K(u,v,w)=h_0h_1h_2\,u(u^2-\alpha v^2-\beta w^2).
+\tag{IR.20}
+$$
+
+Every nonzero singular matrix in this span has rank exactly two.
+The full complex singular locus is the union of the plane $u=0$ and
+the quadratic cone $u^2=\alpha v^2+\beta w^2$. Every singular
+direction obeys
+
+$$
+|u|^2\leq\alpha|v|^2+\beta|w|^2.
+\tag{IR.21}
+$$
+
+Proof. The determinant identity (IR.20) and low-rank inequality (IR.21)
+are (JR.22) and the complex triangle step of JR Theorem 36.1 under
+Comparison 2.5. We retain their derivation together with the exhaustive
+rank and range statements needed for the actual finite reduction.
+Expanding the determinant in (IR.19) gives
+$h_0h_1h_2u^3-abh_2uv^2-cdh_1uw^2$, proving (IR.20).
+When $u\ne0$, the minor in rows and columns $1,2$ is
+$h_1h_2u^2\ne0$, so a singular such matrix has rank two.
+When $u=0$ and $(v,w)\ne(0,0)$, its first row is nonzero and its
+first column is nonzero. The first column has range in
+$\operatorname{span}\{|1\rangle,|2\rangle\}$; a nonzero other
+column has range in $|0\rangle$. These are independent, and the
+remaining columns are parallel, so again the rank is two. There are
+no nonzero rank-one directions. On the quadratic cone, absolute
+values and the triangle inequality prove (IR.21); on the entire
+plane $u=0$ it is immediate. No reality restriction was used.
+
+For later actual encoders, fix range isometries by the following
+formula. For $u\ne0$, choose columns $z_1,z_2$ numbered $1,2$ of
+$K(u,v,w)$. They are independent by the same minor. If $u=0$, choose
+column $0$ and column $1$ when $v\ne0$, and columns $0,2$ otherwise.
+The preceding range argument proves independence. Define
+
+$$
+q_1=z_1/\|z_1\|,\qquad
+q_2=\frac{z_2-q_1(q_1^\dagger z_2)}
+ {\|z_2-q_1(q_1^\dagger z_2)\|},\qquad U_K=(q_1,q_2).
+\tag{IR.22}
+$$
+
+Both denominators are nonzero. For each nonzero singular $K$,
+$U_K^\dagger U_K=I_2$ and $U_KU_K^\dagger K=K$.
+Thus encoder $U_K^\dagger K$ and full TP isometric decoder
+$X\mapsto EU_KXU_K^\dagger E^\dagger$ have composite live matrix
+$EK$. These are fixed matrices chosen before receiving the input.
+The encoder map is CP and is TNI whenever $K^\dagger K\preceq I$,
+as guaranteed by the joint effect identities in each construction below.
+A zero matrix is simply omitted. $\square$
+

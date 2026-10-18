@@ -1,0 +1,35 @@
+**Proposition 26.6 (Finite zero spaces and a wrong-map comparison).**
+On the Bargmann degree $m$ space in eight variables define
+
+$$
+H_{4,m}=\sum_{j=1}^5 f_j(\partial)^\dagger f_j(\partial).
+$$
+
+Then $\ker H_{4,m}=I_m^\perp\simeq(R_{4,\mathbb C})_m$.
+This identification and (26.9) use the common quotient, not equality of
+metrics or complete spectra. At $m=3$, replacing all relation arrows
+in (26.7) by zero leaves its principal symbol and index $85$ unchanged,
+but its positive kernel dimension becomes $125$ and its negative kernel
+dimension becomes $40$, instead of $85$ and zero.
+
+Proof. The quadratic form of the sum is
+$\sum_j\|f_j(\partial)v\|^2$, so its kernel is the intersection of the
+five annihilation kernels. The finite adjoint of $f_j(\partial)$ is
+multiplication by $f_j$, whose image is $f_jS_{m-2}$.
+The orthogonal complement of their sum is exactly $I_m^\perp$.
+Orthogonal projection gives its quotient isomorphism, as in §25.1.
+The self-adjoint finite map $H_{4,m}$ still has Fredholm index zero.
+
+If all relation arrows vanish, the total cohomology is the direct sum
+of the bundles' Dolbeault cohomologies. At $m=3$ its even spaces are
+$H^0(\mathcal O(3))$ of dimension $120$ and five copies of
+$H^0(\mathcal O(0))$, giving $125$. Its odd spaces are five copies of
+$H^0(\mathcal O(1))$ of total dimension $40$, and
+$H^0(\mathcal O(-2))=0$. Higher cohomology vanishes. Thus the index is
+still $125-40=85$. Atiyah–Singer alone controls this difference;
+exactness and vanishing were essential to the particular zero spaces
+in (26.9). $\square$
+
+[BE73]: https://eisenbud.github.io/papers/pdfs/1973-002.pdf
+[AC26]: https://stacks.math.columbia.edu/tag/00N1
+

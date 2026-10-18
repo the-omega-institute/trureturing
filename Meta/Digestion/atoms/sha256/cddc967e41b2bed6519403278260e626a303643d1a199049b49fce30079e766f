@@ -1,0 +1,44 @@
+**Assumption 1.1 (actual native input and complete handoff).** Use exactly
+[ARH, Assumption 1.3][ARH], with
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle x,y\rangle&=\langle\rho x,\rho y\rangle .
+\end{aligned}
+\tag{NFO.1}
+$$
+
+The sources are all nonempty finite ordered free trees, without a common
+size, depth or shape promise. Put $\mathcal W=\{L,R\}^{*}$ and
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+The physical literal reply at an original-root address $p$ is $r_t(p)$.
+For arbitrary finite prefix-free original cuts $P,Q$, a full old row
+$R$, a finite literal history $H_0$, and a finite signed relation history
+$H_{\rm rel}$, the nonempty admitted domain is exactly
+
+$$
+D=\mathcal U_R(H_0,H_{\rm rel})
+ =\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{NFO.2}
+$$
+
+For a relation record $(i,s,j,t,\bowtie)$, both endpoints must exist and
+$(\rho^iu)|_s\bowtie(\rho^ju)|_t$ compares entire reached trees.
+Either sign is false if an endpoint is absent. Every record, old repeated
+class, cross-class or off-task disequality, old existence guard and
+concrete exterior is imposed on the same $u$.
+
+The complete accessible entry has exactly this fiber. Every accessible
+source-bearing cache, address, count, length, program counter, timing
+field, reference, permission and archive belongs to the retained input.
+The records were actually acquired before the cut. Their acquisition may
+be finite sourcewise without a uniform bound. The same original-root
+register is actually $\rho^Nu$, for supplied authentic $N$ at least every
+acquired epoch. No new source identity or equality port is provided by
+this authentication. The target throughout is the full original
+$R_Q(u)$: reached original holes, complete concrete exterior and the
+entire equality partition of the reached subtrees.
+

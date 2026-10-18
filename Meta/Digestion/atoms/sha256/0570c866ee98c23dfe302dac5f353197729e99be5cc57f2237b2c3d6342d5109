@@ -1,0 +1,50 @@
+**Lemma 6.2 (Predictable tick payment, including the stationary first wait).** Every legal read/stop rule for Definition 2.2, including a retuned observer, satisfies
+
+$$
+\mathbb E_{i,q}Q_T\le B(1-q)\mathbb E_{i,q}T.
+\tag{6.9}
+$$
+
+Proof. This is the pointwise payment bound of the continuation's Lemma 25.3. Its argument is retained to identify the exact access filtration and the paid actions. After an observed tick and $b\ge1$ ensuing zeros, the probability that the next bit is one is
+
+$$
+\frac{f_i(b)}{S_i(b)}
+=\frac{F_i(b)q^b}{\sum_{k\ge b}F_i(k)q^k}
+\le\frac{Bb^9q^b}{\sum_{k\ge b}b^9q^k}
+=B(1-q).
+\tag{6.10}
+$$
+
+At $b=0$ it is zero because $K\ge1$. Earlier complete gaps are independent of the current gap, so the bound holds conditional on the entire preceding bit history.
+
+Before the first observed tick, $b$ zeros give the event $\tau\ge b$. The next-one hazard is
+
+$$
+\frac{S_i(b)}{\sum_{v\ge b}S_i(v)}.
+\tag{6.11}
+$$
+
+For integers $k\ge1$ and $r\ge0$, premise (2.3) gives $F_i(k+r)\ge(k+r)^9\ge k^9\ge B^{-1}F_i(k)$. Shifting tail terms therefore gives
+
+$$
+S_i(b+r)\ge B^{-1}q^rS_i(b)\quad(b,r\ge0).
+\tag{6.12}
+$$
+
+For $b=0$, the shifted terms begin at $r+1$ and are a subset of the tail defining $S_i(r)$; this suffices for the same inequality. Sum (6.12) over $r$ to bound (6.11) by $B(1-q)$. The stationary first wait has thus been treated with its own law.
+
+Expose an independent supply of observer coins on the analytical probability space and let $\mathcal F_t$ contain those coins and the prefix $X_0,\ldots,X_{t-1}$. They leave the source hazards unchanged. The event $\{T>t\}$ that the next read is undertaken is $\mathcal F_t$-measurable. By Tonelli and the conditional hazard bound,
+
+$$
+\begin{aligned}
+\mathbb E_iQ_T
+&=\sum_{t\ge0}\mathbb E_i\left[
+ \mathbf1_{\{T>t\}}\mathbb E_i(X_t\mid\mathcal F_t)\right]\\
+&\le B(1-q)\sum_{t\ge0}\mathsf P_i(T>t)
+=B(1-q)\mathbb E_iT.
+\end{aligned}
+\tag{6.13}
+$$
+
+Only actual reads appear, including the terminal read. Exposed proof coins are not a retained machine register. No unread closing tick or full mean gap is charged to an interrupted gap. $\square$
+

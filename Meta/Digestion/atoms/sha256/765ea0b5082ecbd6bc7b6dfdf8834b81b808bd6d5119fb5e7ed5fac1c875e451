@@ -1,0 +1,117 @@
+**Theorem 15.1 (all-return envelope).** For every path in Definition 14.3
+put $q_a=e^{-\Lambda_a}$ and $q_b=e^{-\Lambda_b}$, with
+$\Lambda_x=\int_0^T\lambda_x$. Define
+
+$$
+H=\frac{b-a}{2b},\qquad
+f(v)=\frac{(b-a)+2av}{2b-(b-a)v},\qquad 0\leq v\leq1.
+\tag{AC.47}
+$$
+
+Then
+
+$$
+q_a\leq f(q_b),\qquad q_b\leq f(q_a).
+\tag{AC.48}
+$$
+
+Both upper envelopes are exact: for each $0<v\leq1$ a positive
+triangle has $(q_a,q_b)=(f(v),v)$, and its negative mirror has the
+swapped pair. At $v=1$ the triangle is the zero-amplitude wait.
+The endpoint $v=0$ is only a limit and is not an admissible finite path.
+
+Proof. For $-a<s<a$ set
+
+$$
+h_x(s)=\frac{c}{(x+s)(c-x-s)}.
+$$
+
+Since $z(0)=z(T)=0$, the AC chain rule gives zero integral for
+$z'/(x+z)$ and for $z'/(c-x-z)$. Splitting $z'$ into positive
+and negative parts and using these equalities yields
+
+$$
+\Lambda_x=\frac12\int_0^T|z'(t)|h_x(z(t))\,dt.
+\tag{AC.49}
+$$
+
+This closed-path identity holds even with infinitely many reversals.
+Let $A=\Lambda_a$, $C=\Lambda_b$ and $d=\max z\in[0,a)$.
+For $0\leq t<a$ define
+
+$$
+F(t)=\log\frac{(a+t)b}{a(b-t)},\qquad
+G(t)=\log\frac{(b+t)a}{b(a-t)}.
+\tag{AC.50}
+$$
+
+Their derivatives are $h_a(t)$ and $h_b(t)$. The function $G$ is an
+increasing bijection from $[0,a)$ onto $[0,\infty)$. The ratio
+
+$$
+\begin{aligned}
+r(s)&=\frac{h_a(s)}{h_b(s)}
+ =\frac{(b+s)(a-s)}{(a+s)(b-s)},\\
+(\log r)'(s)&=\frac{2b}{b^2-s^2}-\frac{2a}{a^2-s^2}<0
+\qquad(-a<s<a)
+\end{aligned}
+\tag{AC.51}
+$$
+
+is strictly decreasing: after multiplication by the positive
+denominators, the sign is that of $(a-b)(ab+s^2)$.
+Consequently $g(s)=h_a(s)-r(d)h_b(s)$ is nonnegative on the whole
+visited range $s\leq d$.
+
+Put $\Phi(t)=\int_0^t g(s)\,ds$. The AC chain rule and (AC.49)
+identify $A-r(d)C$ with half the total variation of $\Phi\circ z$.
+Split the time interval at a time when $z=d$. Each of the two parts
+has variation at least $\Phi(d)-\Phi(0)$, so
+
+$$
+A-r(d)C\geq F(d)-r(d)G(d).
+\tag{AC.52}
+$$
+
+The same variation argument for a primitive of $h_b$ gives
+$C\geq G(d)$. All primitives used here are continuously differentiable
+on a compact interval containing the visited range; the AC chain rule
+therefore applies without a monotone-piece decomposition.
+
+Define $\mathcal K(C)=F(G^{-1}(C))$ on $[0,\infty)$.
+Its derivative is $r(G^{-1}(C))$, which is positive and decreasing.
+Thus $\mathcal K$ is increasing and concave. Its tangent at $G(d)$
+majorizes it, including the right tangent when $d=0$:
+
+$$
+\mathcal K(C)\leq F(d)+r(d)(C-G(d))\leq A.
+\tag{AC.53}
+$$
+
+Exponentiate. Solving $v=e^{-G(d)}$ and substituting into $e^{-F(d)}$
+gives
+
+$$
+d(v)=\frac{ab(1-v)}{b+av},\qquad e^{-F(d(v))}=f(v).
+\tag{AC.54}
+$$
+
+Therefore $q_a\leq f(q_b)$. Reflection $z\mapsto-z$ interchanges
+$\Lambda_a$ and $\Lambda_b$, proving the other inequality.
+
+For sharpness use $z(t)=d(v)t$ on $[0,1]$ and
+$z(t)=d(v)(2-t)$ on $[1,2]$. Its two charges are exactly
+$F(d(v)),G(d(v))$, by the credited monotone survival formula.
+For $v>0$, $d(v)<a$, so it is a strict legal original path in both
+regularity alternatives. Its mirror swaps the pair. Finally
+
+$$
+f(v)-v=\frac{(b-a)(1-v)^2}{2b-(b-a)v}\geq0,
+\qquad
+a-d(v)=\frac{acv}{b+av}>0.
+\tag{AC.55}
+$$
+
+Thus the positive triangle's larger likelihood is at $a$, and the
+limiting wall $d=a$ is excluded. $\square$
+

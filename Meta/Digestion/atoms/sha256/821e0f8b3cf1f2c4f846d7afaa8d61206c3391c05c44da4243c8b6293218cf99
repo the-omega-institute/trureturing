@@ -1,0 +1,15 @@
+#### 9.4　共同准备障碍
+
+对一个终端目标变换 $g:S\to S$，定义共同准备证书大小
+
+$$
+\kappa_R(g)=
+\min\bigl\{|D|:D\subseteq S,\;
+\nexists h\in M^-\;\forall x\in D,\ h(x)=g(x)\bigr\},
+$$
+
+若 $g\in M^-$，约定 $\kappa_R(g)=\infty$。这里的 $D$ 代表同一程序必须同时通过的
+若干次独立准备；不要求把互斥反事实状态放在同一份物理样本中。
+
+<a id="claim-9-4-1"></a>
+

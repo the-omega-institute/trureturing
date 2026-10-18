@@ -1,0 +1,55 @@
+**Proposition 24.1 (a common unbounded parameter can be irrelevant).** Let
+$g=B_3$, the perfect height-three all-$\alpha$ tree. Set
+
+$$
+P=\{LL,RL,RR\},\qquad
+C=\langle\langle\square_x,g\rangle,
+              \langle\square_x,\square_y\rangle\rangle,
+\qquad H_0=H_{\rm rel}=\varnothing,
+\tag{CE.24.1}
+$$
+
+with old classes $\{LL,RL\}$ and $\{RR\}$ distinct. Its entire fiber is
+$u(x,y)=\langle\langle x,g\rangle,\langle x,y\rangle\rangle$ with
+$x\ne y$. For $Q=\{L,R\}$ the complete original row is determined by
+the sole condition $y=g$: its outside is $\langle\square_1,\square_2\rangle$
+and the two holes are equal exactly under that condition. The input is
+in $\mathcal E_{\rm CE}$ and the criterion answers positively, although
+$x$ remains unbounded and appears in both compared trees.
+
+Proof. This is the exact old-row correspondence with a repeated class.
+Free constructor cancellation gives
+
+$$
+\langle x,g\rangle=\langle x,y\rangle
+                 \quad\Longleftrightarrow\quad y=g.
+\tag{CE.24.2}
+$$
+
+In the uniform depth-two cover, every old inequality reduces to ordinary
+synchronous equalities under negation: both patterns have the same
+frontier depth, and a shorter concrete leaf produces a ground test or
+constructor clash. Each target equality cancels the common $x$ pattern
+and compares the $y$ pattern with ground $g$, again yielding only ground
+tests. Thus every chart is eligible with no elimination. The outside
+has no surviving variable. In its Bad formula $x$ can affect feasibility
+via $x\ne y$ but has no independent output-disagreement term.
+
+Agreement through the four relative levels $|p|<4$ of $y$ decides whether
+$y=g$: the eight matching depth-three leaf replies force the entire
+finite tree, including its shape, by complete-leaf rigidity. Therefore
+Bad has no pair with that coordinate-prefix agreement, and Lemma 21.4
+answers positively. Alternatively, eight actual delayed-leaf probes
+below the originally reached $RR$ node, as in [SLH, Theorem 55.3][SLH],
+test $y=g$ at any certified $N$ and output the stated entire row.
+All costs other than these eight raw calls remain separate.
+
+The equality and inequality rows both occur while $x$ remains large:
+choose $x=B_4$ and take $y=g$ or $g$ with one deepest leaf changed to
+$\beta$. Thus requiring every parameter occurring in the two compared
+terms to become ground would be false. Only actual exterior dependence
+and the exact reduced equality status belong in (CE.21.2). This example
+checks fidelity to the already supplied literal-history result
+[SLH, Definitions 74.3–74.4][SLH]; it is not a new literal-price theorem.
+$\square$
+

@@ -1,0 +1,33 @@
+**Definition 18.2 (the unrestricted residual obligation).** For
+arbitrary original graphs, without (SI.134), the collective target
+(SI.59), equivalently (SI.83) and [CL, (CL.34)][CL15], remains
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\mathrm{cut}}+u+
+\sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{SI.150}
+$$
+
+Theorem 15.2 proves $D\le E$ only in its displayed class.
+It gives no normalization into that class, no compensation of
+each late pool separately and no universal pointwise-capacity law.
+The alternative remains one complete correct strict-subgrid graph
+at both original caps. Equivalently [TC, Theorem 9.1][TC15]
+still needs installed shortage to force a nonnegative rational
+combination of actual length-$n$ suffix-excess rows of that same
+graph with a coordinatewise nonnegative, nonzero resultant.
+Its alternative and sparsity are supplied
+by TC Theorem 7.3; separately actual histories, zero-resultant
+combinations and shorter replays do not discharge this implication.
+Corollary 15.3 localizes a necessary ambiguity inside the two-live-reply
+rectangle but supplies no charge for its full successor domains.
+The unrestricted-budget $H_{\min}$ remains a separate open optimum.
+
+[IC15]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ATTAINABLE_WEIGHT_INTERVAL_COVER.md
+[TS15]: FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md
+[TC15]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_THRESHOLD_COST_CERTIFICATES.md
+[CL15]: RECURSIVE_RELATIONAL_OBSERVATION_COMMON_LIVE_CONES_AND_PRIVATE_DEMAND_CAPACITY.md
+[SW15]: https://people.maths.ox.ac.uk/scott/Papers/twofamilies.pdf
+[KN15]: https://doi.org/10.3233/FI-2012-695
+

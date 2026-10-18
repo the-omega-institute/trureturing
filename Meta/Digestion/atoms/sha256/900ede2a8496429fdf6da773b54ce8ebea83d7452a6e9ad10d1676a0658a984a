@@ -1,0 +1,20 @@
+## 14. Full-observer law-diameter noncollapse on a held-record fibre
+
+Fix the positive paid suffix
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{14.1}
+$$
+
+It accepts seed 1, writes the marker triple $100$, and reaches the third write-before-latch with one fixed held-record fibre. For an arbitrary finite observer $M$, let $\mathcal Z_p^*(M)$ and $\mathcal Z_\beta^*(M)$ be the unions of configurations having positive probability after some positive finite original history on this fibre, at the p and suspended cuts respectively. Pull every complete decoder back through its own current $I_c$ to the common raw carrier, so that the current deterministic record, permission, completion, Stop and delivery block is removed from the comparison. Define
+
+$$
+D_s(M)=\sup\{\operatorname{TV}(D,D'):
+ D,D'\text{ are pulled-back laws from }\mathcal Z_s^*(M)\},
+\qquad s\in\{p,\beta\}.
+\tag{14.2}
+$$
+
+The supremum is over the union of reachable configurations across all positive finite histories on this one held-record fibre. It is not a claim that all those configurations coexist after one history.
+

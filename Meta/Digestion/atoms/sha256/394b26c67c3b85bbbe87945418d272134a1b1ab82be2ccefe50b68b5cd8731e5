@@ -1,0 +1,21 @@
+**Definition 31.1 (the weighted joint-coordinate problem).** Retain the original real class and all complex recovery and finite-reference conventions of Definitions 1.1 and 23.1. Throughout Sections 31–35, $0<\beta\leq1/2$, $a=1-\beta$, $U=h^\perp$, and $Q,J$ are exactly (R.99). The normalized pairs are those of (R.108). For rank two, the full-column factor in (R.109) has two columns. The allowed coordinate transformations are a common real orthogonal output matrix $O_{\rm out}$ with $O_{\rm out}QO_{\rm out}^T=Q$, $O_{\rm out}J=JO_{\rm out}$, and a real Kraus matrix $O_K\in O(2)$. They act on both column matrices as
+
+$$
+(A,T)\longmapsto(O_{\rm out}AO_K,O_{\rm out}TO_K).
+\tag{R.143}
+$$
+
+For $c=\cos\theta$, $s=\sin\theta$, define in the original output order $(b_1,g_1,b_2,g_2,h)$
+
+$$
+\begin{gathered}
+v_1=c b_1+s g_2,\qquad v_2=s g_1+c b_2,\\
+A_{\beta,\theta}=Q^{1/2}(v_1,v_2)
+=\begin{pmatrix}
+\sqrt a c&0\\0&\sqrt a s\\0&\sqrt\beta c\\
+\sqrt\beta s&0\\0&0
+\end{pmatrix},\qquad 0\leq\theta\leq\pi/4.
+\end{gathered}
+\tag{R.144}
+$$
+

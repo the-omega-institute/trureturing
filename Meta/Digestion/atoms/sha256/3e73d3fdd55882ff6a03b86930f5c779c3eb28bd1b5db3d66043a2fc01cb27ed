@@ -1,0 +1,63 @@
+**Definition 3.2 (the canonical interval instrument).** For $s\le t$ put
+
+$$
+\begin{aligned}
+\lambda_j&=\frac{v}{k_j},&
+\gamma_j&=\frac{vc}{k_j(c-k_j)},&
+\delta&=\frac{(x_2-x_1)\omega}{r},\\
+A_j(t,s)&=\exp\left(-\frac12\int_s^t\lambda_j\right)
+           =\sqrt{\frac{k_j(s)}{k_j(t)}},\\
+B_j(t,s)&=\exp\left(-\frac12\int_s^t\gamma_j\right)
+           =\sqrt{\frac{k_j(s)(c-k_j(t))}{k_j(t)(c-k_j(s))}},\\
+\Phi_j(t,s)&=\int_s^t k_j(u)\omega(u)/r\,du.
+\end{aligned}
+\tag{CP.7}
+$$
+
+All functions are integrable. In order $(+,-,2)$, use the gauged successful
+operator
+
+$$
+\widetilde K_j(t,s)=\operatorname{diag}
+ \bigl(e^{-i(b(t)-b(s))/2},\ B_j(t,s),\
+            A_j(t,s)e^{-i\Phi_j(t,s)}\bigr).
+\tag{CP.8}
+$$
+
+The ungauged original operator has entries
+$(e^{-i\Delta b/2+i\Phi_j},B_je^{i\Phi_j},A_j)$.
+Multiplication by $e^{-i\Phi_j}$ gives (CP.8), without changing its CP map.
+This uses the negative state-phase convention and the actual weights (CP.2).
+The scalar gauge is only a proof convention, not a source-dependent operation
+performed by the controller.
+
+Write $\rho^R_{\alpha\alpha}=\langle\alpha|\rho_{VR}|\alpha\rangle$. The
+prescribed failure densities on $[s,t]$, with the exact clock time retained,
+are
+
+$$
+\begin{aligned}
+\mathcal I_{j,2}(du)(\rho_{VR})
+ &=\lambda_j(u)A_j(u,s)^2\,|f\rangle\langle f|
+       \otimes\rho^R_{22}\,du,\\
+\mathcal I_{j,i}(du)(\rho_{VR})
+ &=\frac12\gamma_j(u)B_j(u,s)^2\,|f\rangle\langle f|
+       \otimes\rho^R_{--}\,du\quad(i=1,3),\\
+\mathcal I_{j,0}(du)&=\mathcal I_{j,13}(du)=0.
+\end{aligned}
+\tag{CP.9}
+$$
+
+These are the credited canonical instrument of [Instrument Boundaries][IB],
+Section 5.2, and its full five-label restriction to $M_3$ in [QCM], Section 2.
+The two minus-mode labels remain separate. A stopped input keeps its old
+first-failure record and has only stopped continuation.
+
+On the actual source family, survival from $0$ to $t$ is
+$S_j(t)=A_j(t,0)^2=x_j/k_j(t)$. The normalized live target is the state
+obtained from $\psi_{k_j(t),\beta,m}$ by its transported original phases.
+Its $|2\rangle$ coefficient is $\sqrt Z$; its two other coefficients are
+nonzero multiples of $e^{-i\beta}$, with the minus sign $(-1)^m$ retained.
+The operator (CP.8) maps the initial specimen to
+$\sqrt{S_j(t)}e^{-i\Phi_j(t,0)}$ times this target.
+

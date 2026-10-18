@@ -1,0 +1,13 @@
+### 6.2 A sharp generic six-dimensional separation
+
+The following comparison is restricted to generic position, where the active
+support is six-dimensional. Let $G$ denote the Gram in (5.5), let
+$x\le y\le z$ be the sorted values among
+$\lambda_\alpha,\lambda_\beta,\lambda_\gamma$, and define
+
+$$
+\mathcal T_6=\{Q(A\otimes I_3)Q^{\mathsf T}:Q\in O(6),\;
+ A=A^{\mathsf T}\succeq0\text{ is }2\times2\}.
+\tag{6.7}
+$$
+

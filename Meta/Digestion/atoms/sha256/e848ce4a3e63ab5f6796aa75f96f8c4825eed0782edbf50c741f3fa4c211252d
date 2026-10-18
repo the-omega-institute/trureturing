@@ -1,0 +1,65 @@
+**Theorem 5.2 (exact hidden fibers and recovery boundaries).** Every point
+of $Q_{k,d}$ has exactly
+
+$$
+q^{k-d-r_A(k,d)}\quad\text{current-prefix preimages},
+\tag{5.2}
+$$
+
+and exactly
+
+$$
+q^{(k-d-r_A(k,d))+(n-k-r_F(k))}\quad\text{full-codeword preimages}.
+\tag{5.3}
+$$
+
+Consequently current-prefix recovery is possible exactly when
+
+$$
+\operatorname{rank}H_A^{(k,d)}=k-d,
+\tag{5.4}
+$$
+
+whereas full-source snapshot recovery is possible exactly when BOTH
+
+$$
+\operatorname{rank}H_A^{(k,d)}=k-d,
+\qquad \operatorname{rank}H_F^{(k)}=n-k.
+\tag{5.5}
+$$
+
+If supplemental records are allowed in addition to $B$, their least
+alphabet sizes for these two tasks are respectively the quantities in
+(5.2) and (5.3). At $d=k$ the prefix is always recoverable, but the unseen
+completion is recoverable only when $H_F^{(k)}$ is injective. At $k=n$ the
+two recovery questions coincide. At $n=0$ both decoders are the unique maps
+between singleton carriers.
+
+Proof. For $(s,t)\in Q_{k,d}$, the older prefix block satisfies
+
+$$
+H_A^{(k,d)}v=s-H_D^{(k,d)}t.
+\tag{5.6}
+$$
+
+There is at least one solution and its solution set is an affine translate
+of $\ker H_A^{(k,d)}$. Every such $v$ gives an admissible prefix with the
+same $s,t$, because a completion of $s$ also completes this prefix. This
+proves (5.2). For a full codeword, independently solve
+
+$$
+H_F^{(k)}f=-s.
+\tag{5.7}
+$$
+
+Its nonempty solution set has $q^{n-k-r_F(k)}$ elements. Every pair of a
+solution of (5.6) and a solution of (5.7), together with $t$, is a codeword;
+there is no additional joint constraint. Multiplication gives (5.3).
+These fiber dimensions are nonnegative. The injective-record recovery
+principle cited in Theorem 4.2 yields (5.4) and (5.5); its finite
+maximum-fiber counterpart yields the two least supplemental alphabets.
+For $d=k$ the older block is empty, and for $k=n$ the completion block is
+empty, proving the endpoints. These are ordinary exact reconstruction
+conditions, not claims that a decoder or its input has been acquired.
+$\square$
+

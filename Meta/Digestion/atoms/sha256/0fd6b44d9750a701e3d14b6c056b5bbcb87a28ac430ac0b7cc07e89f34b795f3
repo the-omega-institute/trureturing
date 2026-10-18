@@ -1,0 +1,29 @@
+**Convention 1.3 (Supplier roles).** The following existing results supply
+definitions and reusable mathematics. The particular certificates in Sections
+3–6 are derived here; the supplier results are credited as such.
+
+| Name | Source and exact use |
+| --- | --- |
+| QMB | [Measurement-relative quantum boundary](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md), Assumption 1.1 and Theorem 2.1: the contract and exact first-read reduction. |
+| QPC | [Port covariance and certified frontier](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md): stationary event reduction and the limits on stronger no-loss symmetry claims. |
+| QFA | [Finite port attainment](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md), Lemma 2.2: the three-by-three and five-point quadrature mechanism. |
+| QEC | [Classical-port exact certificates](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md): decomposable/TP certificates and exact event-minor methods. |
+| QRC | [Real-port boundary coordinates](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_REAL_PORT_BOUNDARY_COORDINATES.md): passive sector coordinates, independent factors and the full three-equation TP marginal. |
+| QWS | [Witness slack and independent decoding](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_WITNESS_SLACK_AND_INDEPENDENT_DECODING.md): independent measurement/preparation factors and the adjoint orientation. |
+| QJM | [Joint marginal and attaining port](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_MARGINAL_AND_ATTAINING_PORT.md), Sections 4 and 6: all-event/TP coupling and the remaining common-kernel obligation; its lower is $129931/250000$. |
+| QAP | [Atom positivity and support](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_ATOM_POSITIVITY_AND_SUPPORT.md): full product-atom positivity and equality-face boundaries, without an optimizer-support classification. |
+| QSD | [Splitting events and decoder descent](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_SPLITTING_EVENTS_AND_DECODER_DESCENT.md), Theorem 5.2: a legal port of error $e_{\rm mix}>52417598/10^8$. |
+| QME | [Marginal-preserving extension repair](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_MARGINAL_PRESERVING_EXTENSION_REPAIR.md): conditional extraction, not an instantiated matching endpoint. |
+| QCB | [Cycle compatibility and PPT boundaries](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CYCLE_COMPATIBILITY_AND_PPT_BOUNDARIES.md): full-space factorization and conditional compatibility, without unrestricted PPT sufficiency. |
+
+The finite-Kraus theorem in
+[D5/S3/Quantum/Foundation/FiniteKrausChannel.lean](../../../D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
+gives an existing CP/TP interface for finite rectangular Kraus families with
+$\sum K_f^\dagger K_f=I$. The channel and Born-marginal definitions in
+[FiniteStateChannel.lean](../../../D5/S3/Quantum/Foundation/FiniteStateChannel.lean)
+and
+[FiniteKrausInstrumentBornMarginal.lean](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean)
+have the corresponding all-complex state and complete-instrument meanings.
+These interface correspondences do not certify the present coefficients or
+norm calculations.
+

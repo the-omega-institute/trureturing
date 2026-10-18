@@ -1,0 +1,39 @@
+**Proposition 6.3 (Exceptions and locality of the supplied law).**
+Deleting the vacuum disconnects the legal-toggle graph at
+$n=2$ and $n=3$. Every positive law at $n=2$ satisfies
+$\Gamma(r,\omega)=r\gamma(\omega)$. At $n=1$ the sole quadrature setting has
+$\gamma=1$ and $\Gamma(r)=\min\{r,1-r\}$, so mixing with
+the mode basis improves the joint criterion by a different
+mechanism. For $n\ge3$ and $\epsilon\ne1$, (6.1) is not
+a single-site activity law
+$p(s)\propto\prod_i\lambda_i^{s_i}$ on $B_n$.
+
+Proof. At $n=2$ only two isolated singleton words remain
+after deletion. At $n=3$ the center singleton is isolated,
+while the endpoint singletons connect through their pair.
+This prevents the positive $g_n$ argument of Theorem 6.2
+at those lengths. Theorem 5.2 nevertheless treats every
+positive law at $n=3$ directly.
+
+At $n=2$ the two site projections each have rank one
+and annihilate $\psi$. Their weighted sum on the
+two-dimensional $V$ has trace one, so its two eigenvalues
+$\gamma,\Lambda$ satisfy $\gamma+\Lambda=1$.
+Equation (5.8) proves the stated identity for every $r$.
+
+At $n=1$ the one legal pair spans the entire two-state
+space. Its $K_1$ is identity on the one-dimensional $V$,
+so (5.8) gives the asserted ratios.
+
+For the activity claim, the singleton-to-vacuum ratios
+would force $\lambda_i=1/\epsilon$ for every site. A legal
+nonadjacent pair exists at $n\ge3$. Its actual ratio to
+the vacuum is $1/\epsilon$, whereas the product formula
+would give $1/\epsilon^2$. Equality requires
+$\epsilon=1$. $\square$
+
+Theorem 6.2 thus distinguishes general positive supplied
+laws from a restricted local activity family. It does
+not establish the same separation inside that family,
+or supply a local preparation Hamiltonian for (6.1).
+

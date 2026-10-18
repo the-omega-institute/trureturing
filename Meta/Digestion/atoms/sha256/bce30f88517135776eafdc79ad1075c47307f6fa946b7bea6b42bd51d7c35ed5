@@ -1,0 +1,38 @@
+**Definition 7.1 (collision data and common-coordinate discrepancy).**
+Retain Definitions 1.1–2.1 and Assumptions 1.3–1.4 in their entirety.
+In particular the domain is the full finite-tree domain $\mathcal U_*$,
+the handoff is the literal prescribed complete entry, the reader has its
+original eight states, and both inequalities (PE.1) hold on every actual
+source. All installed states and all invocations remain charged,
+including unused states, the $r$ further mandated latches, repeats and
+post-certification queries. No variable order, read-once property or
+acyclicity of the union of source paths is assumed.
+
+Let $n\ge6$ and $3\le k\le n-2$. Consider two actual live cube
+histories ending at one installed selected running state. Their supports
+$S,T$ are incomparable and their hit counts satisfy $h<g$. Write their
+old assignments as $s:S\to\{0,1\}$ and $t:T\to\{0,1\}$, and use
+$X,Y,I,U,a,b,u$ from Definition 2.1. Put
+
+$$
+\begin{gathered}
+Q=k-h,\qquad V=k-g,\qquad \Delta=g-h=Q-V,\\
+p=|\{j\in X:s_j=1\}|,\qquad y=|\{j\in Y:t_j=1\}|,\\
+\varepsilon=\Delta-b,\qquad e=p+b-y,\qquad
+D=\Delta+p-y=\varepsilon+e.                         \tag{PE.23}
+\end{gathered}
+$$
+
+These sets and numbers describe mathematical histories; none is a
+runtime register. The old hit counts on $I$ are $h-p$ and $g-y$, so
+$D=(g-y)-(h-p)$. Theorem 3.1, specifically (PE.6), gives
+
+$$
+Q\ge b+1,\qquad 1\le V\le u,\qquad
+\varepsilon\ge0.                                  \tag{PE.24}
+$$
+
+Also $e\ge0$, and $e>0$ means precisely that there is an old one in
+$X$ on the first history or an old zero in $Y$ on the second. Thus
+$D>0$ is equivalent to $\Delta>b$ or such a private polarity defect.
+

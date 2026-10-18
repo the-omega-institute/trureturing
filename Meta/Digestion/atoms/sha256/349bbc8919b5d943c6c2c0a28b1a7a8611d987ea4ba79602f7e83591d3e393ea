@@ -1,0 +1,23 @@
+## 295. Genuine realization of this original triangulation
+
+The verified truncation is a connected orientable compact 3-manifold with
+one nonempty boundary component, a closed surface of genus four. Every
+original edge degree is at least eight, hence at least six. Taking H to be
+the five actual global edges and S empty gives the required vertex-induced
+paired frames with distinct transverse labels. All hypotheses of the
+realization theorem in Sections 284–287 are therefore satisfied.
+
+Applying Section 287 gives a genuine nondegenerate hyperideal realization
+of this same eight-tetrahedron face pairing with totally geodesic boundary.
+No subdivision or separate per-tetrahedron length assignment is introduced.
+The explicit strict angle structure in Section 293 is consistent with that
+application, while the common-length and nondegeneracy conclusions use the
+completed realization theorem.
+
+This example requires five reservoirs under every simultaneous choice of
+paired vertex frames and has minimum degree eight. It consequently separates
+the displayed five-reservoir paired class from the at-most-four-reservoir
+paired class on this original triangulation, and does not satisfy a blanket
+minimum-degree-at-least-nine hypothesis. No claim of census novelty, global
+minimality, or separation from every earlier geometric criterion is made.
+

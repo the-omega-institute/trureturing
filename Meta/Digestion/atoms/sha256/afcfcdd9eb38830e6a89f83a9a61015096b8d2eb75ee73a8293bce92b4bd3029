@@ -1,0 +1,44 @@
+## 6. Attribution and remaining scope
+
+For an entire sequence define
+
+$$
+R_N(a)=\inf_{N\in\mathcal N_2}e_a(N),\qquad
+R_O(a)=\inf_{O\in\mathcal O_2}e_a(O).
+$$
+
+Counted completion and Theorem 5.1 give
+$R_*\le R_N(a)\le R_O(a)$ on (5.1) with every declared tail.
+There is no matching upper law or assertion that $R_*$ is attained,
+that $4/117$ is sharp, or that either infimum equals this bound.
+
+The arithmetic source, original objects, exact positive-cap transport,
+finite event rows and old six-late bound are reused at their stated
+scopes in XVII297, 305, 309 and XVIII315. The complete $Y_{128}$
+score and its broad finite supporting theorem are XVIII318 content;
+the narrower attained family in XVIII321 is not a premise for the
+bridge. The same-law extension, its eight-coordinate formulation
+$g\le2s$, and (5.2) with the enlarged tail scope are one application
+of that score. They are not independent new supporting-score results.
+
+The literature framework retains the scope stated in
+[XVII303.3 and 314](https://github.com/the-omega-institute/trureturing/blob/07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md)
+and
+[XVIII323.2](https://github.com/the-omega-institute/trureturing/blob/24e09b5c/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md#323-target-literature-and-unrestricted-boundaries):
+Blackwell's comparison concerns whole attainable loss vectors, while
+Kaniewski–Lee–de Wolf's literal-degree characterization concerns
+nonnegative scalar expectation. Scalar output rescaling does not
+supply normalized vector probabilities or equal counterfactual schedule
+masses. Here those requirements are supplied by (2.1) and (3.1).
+No exhaustive external-priority or global-originality assertion is made.
+
+The unrestricted whole-allocation comparison of XVII303.1, XVII314.1
+and XVIII323.3 remains unresolved. A lower bound against both classes
+supplies neither a replacement stopped law for every feasible $N$
+profile nor an original $N/O$ separator. These results do not classify
+general unequal-tail optima. Their accuracy concerns the selected
+marked laws, with the original nonatomic targets and consumer retained.
+The arguments are ordinary mathematics; they assert no formal kernel
+verification, physical efficiency, general neural-network consequence
+or empirical-learning conclusion.
+

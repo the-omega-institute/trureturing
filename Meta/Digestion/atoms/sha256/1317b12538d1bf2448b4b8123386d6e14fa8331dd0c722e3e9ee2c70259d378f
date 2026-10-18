@@ -1,0 +1,28 @@
+**Lemma 7.3 (explicit positive-semidefinite correction).** For
+$0\leq r\leq\tau_{\rm q}$,
+
+$$
+S_0(x(r))+b_{\rm q}r^2 I_3\succeq0.
+\tag{ZG.38}
+$$
+
+Proof. Put $c_{\rm q}=2k^2/\gamma$. In the decomposition
+$\operatorname{ran}P\oplus\operatorname{ran}Q$, consider
+$S+rK+c_{\rm q}r^2I$. Its $P$ block is $c_{\rm q}r^2P$, since $PKP=0$.
+Its $Q$ block is at least $(\gamma-rk)Q\succeq(\gamma/2)Q$, since
+$\|K\|_{\rm op}\leq\sqrt{\operatorname{tr}(K^2)}=k$. The off-diagonal
+block is $rPKQ$, of norm at most $rk$. The Schur complement of the positive
+$Q$ block is therefore at least
+
+$$
+\left(c_{\rm q}-\frac{2k^2}{\gamma}\right)r^2P=0.
+\tag{ZG.39}
+$$
+
+Thus $S+rK+c_{\rm q}r^2I\succeq0$, including $r=0$ and $k=0$.
+The first Taylor bound in (ZG.33) gives
+$S_0(x(r))\succeq S+rK-Mr^2I$. Adding
+$b_{\rm q}r^2I=(M+c_{\rm q})r^2I$ proves (ZG.38). Only the diagonal
+Choi-support block is required for zero transfer. The perturbed
+$S_{01},S_{02},S_{12}$ are not required to remain positive. $\square$
+

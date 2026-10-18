@@ -1,0 +1,42 @@
+## 2. 二、隐藏 seam 不是一个普通坐标，而是乘法曲率
+
+定义线性观察空间
+
+$$
+\mathcal B=\operatorname{span}\{1,x,y,z\}.
+$$
+
+这是一个四维空间，而整个五态函数空间是
+
+$$
+\mathbb R^S=
+\operatorname{span}\{1,x,y,z,xy\}.
+$$
+
+所以
+
+$$
+\mathbb R^S/\mathcal B
+$$
+
+是一维空间，其唯一方向可以用 $[xy]$ 表示。
+
+现在定义一个双线性形式：
+
+$$
+\Omega(f,g)=
+J_{fg},
+$$
+
+其中
+
+$$
+J_h=
+h(F[1,3])
+-h(F[1])
+-h(F[3])
++h(F[\mathrm{null}]).
+$$
+
+---
+

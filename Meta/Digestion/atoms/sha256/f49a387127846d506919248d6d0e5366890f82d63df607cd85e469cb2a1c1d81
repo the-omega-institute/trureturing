@@ -1,0 +1,44 @@
+**Proposition 5.2 (exact current signed sector with paid arithmetic).**
+Suppose in addition the current executed/generator control is promised to
+have $\xi(T)=2\pi m$, $m\in\mathbb Z$. The credited Record Acquisition
+Theorem 7.3 certifies this signed $m$ from the endpoint readings: with exact
+$\pi$ the sufficient condition is $d_x<\pi/2$. With rational arithmetic
+choose an integer $M_\pi\geq V/6$, a positive rational $\pi_*$ and a
+certified $|\pi_*-\pi|\leq\varepsilon_\pi$, and require
+
+$$
+2d_x+2M_\pi\varepsilon_\pi<\pi_*.
+\tag{SC.16}
+$$
+
+Retain an inconclusive result if the separated-cell test fails. Once $m$
+is certified, build a phase polygon with endpoints $0,2\pi m$ and the
+unmodified internal $x_j^{\rm raw}$. The height polygon is unchanged. It
+has exactly the current signed winding $m$, and its phase bound can use
+
+$$
+E_A^{\rm loop}=(Lh_*/2+d_k)V+d_xM,\qquad
+P_{\rm loop}=E_A^{\rm loop}/r.
+\tag{SC.17}
+$$
+
+Proof. The credited rounding argument uses
+$|x_n^{\rm raw}-x_0^{\rm raw}-2\pi m|\leq2d_x$ and
+$2\pi|m|\leq V$, hence $|m|\leq M_\pi$ because $\pi>3$.
+(SC.16) keeps the measured difference strictly inside its unique rational
+nearest-integer cell. Negative integers obey the identical separation test.
+This uses the integer-loop promise; it does not infer that promise from
+samples. The new endpoint errors in (SC.14) are exactly zero. Internal
+errors remain at most $d_x$, leaving only $d_xM$. The endpoint real phase
+increments now agree, so (SC.15) gives (SC.17). The new phase polygon is an
+original control, with finite variation and a finite symbolic description
+of its $2\pi m$ endpoint. $\square$
+
+This certifies a current loop, not winding before the initial event. Its
+surrogate does not overwrite the actual programme label or a permission
+field. Exact mathematical $\pi$ in a programme description does not supply
+an exact gate. For numerical bounds, use certified interval evaluation.
+An arithmetic area error $\rho_A$ adds $\rho_A/r$ to $P$; an additional
+phase-evaluation error $\rho_H$ adds $\rho_H$. Rational rounding in (SC.16)
+and transcendental evaluation have separately charged precision.
+

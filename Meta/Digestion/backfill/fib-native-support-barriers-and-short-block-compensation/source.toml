@@ -1,0 +1,5 @@
+source_id = "fib-native-support-barriers-and-short-block-compensation"
+path = "docs/develop/theory/FIB_NATIVE_SUPPORT_BARRIERS_AND_SHORT_BLOCK_COMPENSATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

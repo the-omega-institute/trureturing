@@ -1,0 +1,27 @@
+**Convention 1.4 (Passive coordinates).** Use exactly the QMB frame
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(1,i,i,i,1),\qquad
+A=-iD^\dagger KD=
+\begin{pmatrix}
+0&1&1&1&0\\
+-1&0&0&0&-1\\
+-1&0&0&0&0\\
+-1&0&0&0&-1\\
+0&1&0&1&0
+\end{pmatrix},\\
+O(t)=e^{tA}=D^\dagger U(t)D,\qquad
+Q_J(t)=O(t)^T\Pi_JO(t),\qquad \Pi_J=\sum_{s\in J}\Pi_s,\\
+E_J(t)=DQ_J(t)D^\dagger,\qquad
+\widehat T(X)=D^\dagger T(DXD^\dagger)D.
+\end{gathered}
+\tag{1.2}
+$$
+
+Thus $A^T=-A$ and $O(t)$ is real orthogonal. A superscript $T$ denotes
+transpose in this frame; $\dagger$ denotes adjoint, or the trace-pairing dual
+when applied to a map. The frame is a coordinate identification, not a new
+future control. Below channel calculations are in this frame unless stated
+otherwise, so $e(\widehat T)$ means the transported original criterion.
+

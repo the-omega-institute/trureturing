@@ -1,0 +1,4 @@
+## 7. Primary strict premise, separated values and non-effectivity
+
+**Mathematical reference 7.1 (strict primary premise).** Reuse EA7.1's attested Gimbert–Oualhadj premise: strict emptiness at cutpoint $1/2$ is undecidable for finite simple probabilistic automata, with finite state/alphabet, point initial state and stochastic transition entries in $\{0,1/2,1\}$. The original primary is *Probabilistic Automata on Finite Words: Decidable and Undecidable Problems*, ICALP author full version, [HAL v3](https://hal.science/hal-00456538v3), Definition 1, §2.1 Definition 2 and Theorem 1. Its problem is existence of a finite word with acceptance strictly greater than $1/2$, not equality of the supremum to one. No value oracle follows from this premise.
+

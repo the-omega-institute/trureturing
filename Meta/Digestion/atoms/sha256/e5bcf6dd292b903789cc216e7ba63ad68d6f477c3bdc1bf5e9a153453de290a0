@@ -1,0 +1,86 @@
+**Theorem 5.1 (Uniform original lower bound).**
+Let
+
+$$
+\begin{gathered}
+0<\tau\le1/24,\qquad0<\delta\le\tau/11,\\
+a_2=1-11\tau,\qquad
+(a_3,a_4,a_5,a_6,a_7)=(13,10,9,8,6)\tau,\\
+a_2\le a_1\le1-7\tau,\qquad
+a_8=5\tau+11\delta,\qquad r_0=5\tau+\delta.
+\end{gathered}
+\tag{5.1}
+$$
+
+Append **any** positive nonincreasing vanishing continuation with
+$a_9\le a_8$. On the original source, full carrier and resource
+contract of Section 1, using the credited correspondence 4.1, every
+$A\in\mathcal N_2\cup\mathcal O_2$ satisfies
+
+$$
+e_a(A)\ge R_*:=5\tau+\frac{121}{117}\delta
+               =r_0+\frac4{117}\delta>r_0.
+\tag{5.2}
+$$
+
+No condition $a_9\le r_0$ is imposed. The conclusion is uniform
+over both heads and every permitted continuation, including ties and
+nonsummable tails.
+
+**Proof.** The entire sequence is valid throughout (5.1).
+The scale bound gives $a_2\ge13\tau=a_3>0$; the head interval
+is nonempty and below one. The width bound gives
+$a_8\le6\tau=a_7$. All prescribed amplitudes are positive and
+ordered, and the stipulated tail preserves order, positivity and
+vanishing.
+
+In the left side of (4.2) the contributions are
+
+$$
+\begin{aligned}
+2a_2&=2-22\tau,\\
+11a_3+13a_4+13a_5+12a_6+11a_7
+ &=(143+130+117+96+66)\tau=552\tau,\\
+11a_8&=55\tau+121\delta.
+\end{aligned}
+$$
+
+Thus (4.2) gives $117e_a(A)\ge585\tau+121\delta$,
+which is (5.2). Equivalently, at any met cap $E$ set $t=E-r_0$.
+The residuals of (3.4) are
+
+$$
+S=51\tau+11\delta,\qquad s=44t,\qquad g=4\delta-29t.
+$$
+
+Consequently $g\le2s$ reads $4\delta\le117t$.
+The old six-late inequality in XVII305.2–305.3 gives only
+$e_a(A)\ge r_0$ on this family; its score and that initial lower
+bound remain credited there.
+
+Proposition 4.2 includes every positive closed cap and actual error
+zero or one. In particular the endpoint $r=1$ also follows from
+
+$$
+R_*<5\tau+2\delta\le19/88<1.
+$$
+
+The proof includes $\tau=1/24$ with $a_2=a_3$,
+$\delta=\tau/11$ with $a_8=a_7$, both head endpoints
+$a_1=a_2$ and $a_1=1-7\tau$, and every later amplitude tie.
+No strict order or summability is required. Finite positive prefixes
+and multiple-zero words retain their actual witnesses from 1.3.
+
+At the lower threshold,
+
+$$
+a_8-R_* =\frac{1166}{117}\delta>0.
+$$
+
+The first eight coordinates are therefore active. Higher coordinates
+may also be active: exactly eight are active at $R_*$ iff
+$a_9\le R_*$. No such restriction is assumed in (5.1)–(5.2).
+An actual $a_9>R_*$ changes the finite horizon before the prefix
+restriction in Proposition 4.2; it does not obstruct that restriction.
+This proves the bound on the entire declared tail family. $\square$
+

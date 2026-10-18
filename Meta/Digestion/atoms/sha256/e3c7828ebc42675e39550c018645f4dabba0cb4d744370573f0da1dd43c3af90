@@ -1,0 +1,17 @@
+**定义 1.1（完整开放路径目标；[增长卷][G] 定义 2.2、2.4）。** 对 $n\ge1$ 令
+
+$$
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\ (1\le j<n)\},\qquad k(b)=\sum_{j=1}^n b_j.
+$$
+
+$\Gamma_n$ 的顶点是全部 $B_n$，边是全部合法 Hamming 一位差词对。测试插入时约定 $b_0=b_{n+1}=0$，但不把首尾相接。对整个概率单纯形 $\mathcal P(B_n)$ 定义
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu_b,\mu_c),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+\tag{1.1}
+$$
+
+零质量不删除顶点或边；全零词、合法端点 $1$ 及任意分组接缝上的边都保留。
+

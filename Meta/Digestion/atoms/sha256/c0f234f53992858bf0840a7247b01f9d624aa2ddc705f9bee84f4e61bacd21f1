@@ -1,0 +1,63 @@
+**Theorem 5.1 (finite exact quadrature and projection).** Define
+
+$$
+I_h=\int_{\mathbb R}\frac{J(r)^2}{\rho(r)}dr.
+\tag{5.1}
+$$
+
+Then $0\le I_h\le D_{\rm resp}/a<\infty$. The $h$-orthogonal projection $U_h$ of $\Psi$ onto the entire closed subspace $\mathcal H_h$ is the image of
+
+$$
+F_*(r)=\int_0^r\frac{J(t)}{\rho(t)}dt.
+\tag{5.2}
+$$
+
+Its local representative is $pF_*$, and
+
+$$
+\begin{aligned}
+h(U_h,pF)&=\ell(pF)\quad(F\in\mathscr W_o),&h[U_h]&=a I_h,\\
+\sup_{0\ne F\in\mathscr F_o}\frac{\ell(pF)^2}{h[pF]}&=a I_h,&
+\sup_{F\in\mathscr W_o}\{2\ell(pF)-h[pF]\}&=a I_h.
+\end{aligned}
+\tag{5.3}
+$$
+
+In the second supremum the unique maximizer is $F_*$ as an element of the completion. If $I_h>0$, equality in the quotient for a nonzero completed multiplier holds exactly when $F'=cJ/\rho$ almost everywhere for a real $c\ne0$. If $I_h=0$, the restricted functional is zero and every nonzero quotient is zero. There is no claim that a maximizing compact smooth multiplier exists.
+
+Proof. By the Riesz equation for $\Psi$ and (4.5),
+
+$$
+\left|\int JF'\right|=|\ell(pF)/a|
+ \le\sqrt{D_{\rm resp}/a}\left(\int\rho|F'|^2\right)^{1/2}.
+\tag{5.4}
+$$
+
+Theorem 4.1 makes this a bounded functional on all of $L^2_{\rm even}(\rho dr)$. Let $q$ be its weighted Riesz representative. For every odd compact smooth $F$,
+
+$$
+\int(\rho q-J)F'=0.
+\tag{5.5}
+$$
+
+Both $\rho q$ and $J$ are even and locally integrable. The parity-distribution argument from Theorem 4.1 gives $\rho q-J=c$ for some constant. Since $J(r)\to0$ at both ends and $\int\rho q^2<\infty$, $c\ne0$ would give
+
+$$
+\int\rho q^2=\int\frac{(J+c)^2}{\rho}=\infty,
+\tag{5.6}
+$$
+
+using the divergent reciprocal-weight tails. Therefore $q=J/\rho$. This proves finiteness in (5.1), and (5.4) gives its stated upper bound. Thus the quadrature is the actual dual norm, rather than a candidate variational expression whose finiteness or density is unproved.
+
+Choose $F_n\in\mathscr F_o$ with $F_n'\to J/\rho$ in the weighted space. Their image limit is an element $U_h\in\mathcal H_h$, with squared $h$ norm $aI_h$. Equation (4.4) passes by continuity to $h(U_h,pF)=\ell(pF)=h(\Psi,pF)$, first on the core and then on the entire closed subspace. Consequently $\Psi-U_h$ is orthogonal to $\mathcal H_h$, proving the projection assertion. Equation (4.6) identifies its local representative with (5.2).
+
+Finally the completed scalar identity is
+
+$$
+2\ell(pF)-h[pF]
+ =a I_h-a\int\rho\left|F'-J/\rho\right|^2.
+\tag{5.7}
+$$
+
+It proves the maximization and its uniqueness. Cauchy–Schwarz in $L^2(\rho dr)$ gives the quotient, its equality conditions and its zero case. Derivative-range density proves that the supremum over the compact core has the same value as the completed supremum. The products $pF_*$ and $U_h$ have only the local/homogeneous meaning just proved; they are not used as native or global $L^2$ trials. $\square$
+

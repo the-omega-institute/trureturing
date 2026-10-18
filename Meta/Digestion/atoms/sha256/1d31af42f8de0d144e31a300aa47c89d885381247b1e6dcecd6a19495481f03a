@@ -1,0 +1,41 @@
+**定理 9.3（同边界 FIB 切面的体积下界与参数化维护成本）。** 对定义 9.1 的曲面，有
+
+$$
+\operatorname{Vol}_3(\Sigma)\geq\operatorname{Vol}_3(\Sigma_0),\qquad
+D:=\operatorname{Vol}_3(\Sigma)-\operatorname{Vol}_3(\Sigma_0)
+=\int_\Sigma\delta(T_x\Sigma)\,d\operatorname{vol}.
+$$
+
+其积分泄漏满足精确关系
+
+$$
+\int_\Sigma L(T_x\Sigma)\,d\operatorname{vol}
+=6D-3\int_\Sigma\delta(T_x\Sigma)^2\,d\operatorname{vol}
+\leq6D.
+$$
+
+若所有切平面 $t\geq0$，还有 $3D\leq\int_\Sigma L\leq6D$。令相容单位的三维维护成本为
+
+$$
+\mathcal J_3(\Sigma)=\int_\Sigma(3\lambda+\gamma L(T_x\Sigma))\,d\operatorname{vol},
+$$
+
+则
+
+$$
+\mathcal J_3(\Sigma)-\mathcal J_3(\Sigma_0)
+=3\lambda D+\gamma\left(6D-3\int_\Sigma\delta^2\,d\operatorname{vol}\right)\geq0.
+$$
+
+这是定义 8.1 的方向维护与泄漏惩罚在固定三维几何类型中的关系；它不比较不同维数的长度、面积与体积。
+
+证明。对任意正向单位切三元组，$\Phi\leq1$，在 $\Sigma_0$ 上等于一。$\Phi$ 常系数故闭；在整个 $\mathbb R^7$ 上还可写 $\Phi=d\eta$，其中 $\eta=\frac13\iota_\mathcal R\Phi$、$\mathcal R$ 是径向向量场。径向缩放对三形式的权重为三，Cartan 公式给 $d\iota_\mathcal R\Phi=3\Phi$。Stokes 定理和相同有向边界给
+
+$$
+\int_\Sigma\Phi=\int_{\partial\Sigma}\eta
+=\int_{\partial\Sigma_0}\eta=\int_{\Sigma_0}\Phi
+=\operatorname{Vol}_3(\Sigma_0).
+$$
+
+这就是所引校准原则在本载体的直接证明，不依赖未知的物理作用量。用 $\Phi|_{T_x\Sigma}=t(x)d\operatorname{vol}$ 得 $D=\int(1-t)$。逐点代入定理 9.2 即得积分精确式和上界。若 $t\geq0$，则 $0\leq\delta\leq1$，有 $6\delta-3\delta^2\geq3\delta$，得下界；允许反向 $t=-1$ 时 $\delta=2,L=0$，所以该点态下界会失败。最后将成本积分相减，使用 $D\geq0,L\geq0$ 即得非负性。二生成闭包解决“需要多少方向”，本定理解决“同边界、同三维类型下怎样实现”；二者的优化域不同。证毕。
+

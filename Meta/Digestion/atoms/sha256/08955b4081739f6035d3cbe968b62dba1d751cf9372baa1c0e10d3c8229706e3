@@ -1,0 +1,86 @@
+## 316. A unique strict upper label is impossible
+
+Suppose, for contradiction, every actual edge other than Z has value
+at most m. Every Z slot is genuine. Along the maximal axial Z run
+through tau the pair is {M,C}. At each owner the individual response
+has positive coefficients whose sum exceeds one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The same elementary arctangent comparison gives theta_Z+2*beta_M>pi.
+Four-distinctness gives one axial Z slot per such owner. If the whole
+Z circle were axial, degree at least six would contradict the entire
+M/Z capacity 3*pi. Hence the run is proper.
+
+At each of its transverse boundary slots, write the receiver as
+(B,Z,A,Q,Z,A), with {A,B}={M,C}. Its other axis obeys q<=m<z.
+The transverse-Z cosine numerator increases with q. At q=1+z+a it
+is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Since the actual q is strictly below this endpoint, its Z angle is
+strictly greater than pi/2. Each such owner has two equal transverse
+Z slots. The two distinct run boundaries therefore belong to a single
+actual owner rho; two distinct owners would exceed Z's total 2*pi.
+The original rho Z expense exceeds pi. Every run owner costs more
+than pi in M/Z, so the remaining capacity below 2*pi forces the run
+to consist of exactly tau.
+
+The possible companion-C return (M,Z,C,Q,Z,C) has
+
+    (m+1)*(q+1)>(z-c)^2>=(m+1)^2,
+
+so q>m. The only possible label would be Z, but four-distinctness
+forbids that repeated label. Therefore
+
+    rho=(C,Z,M,Q,Z,M),
+
+where Q is distinct from M,Z,C and q<=m. All owners with fixed pair
+{Z,M} have their two axes at most m. For any such genuine owner with
+axis values r,s<=m, put
+
+    L=(z+m)^2-(r-1)*(s-1),
+    J=(r+1)*(s+1)-(z-m)^2.
+
+Then
+
+    L-2*J=3*z*z-2*z*m+3*m*m-3*r*s-r-s-3
+          >=3*z*z-2*z*m-2*m-3>0.
+
+Define the squared paired coefficient
+
+    K=((sqrt(z*z-1)+sqrt(m*m-1))/(z+m))^2.
+
+The transverse angle sum is beta_Z+beta_M=2*atan(sqrt(K*L/J)),
+and K>8/9 since m,z>3. Hence
+K*L/J>16/9, and its four transverse M/Z slots cost more than pi.
+Tau already costs more than pi. Two distinct pair-{Z,M} owners
+would consequently exceed 3*pi. Thus rho is the unique such owner,
+and all owners other than tau,rho have M/Z capacity strictly below pi.
+
+The unused rho faces have labels {Z,M,Q}. Across such a face, a Z
+slot is axial with pair {M,Q}, transverse with pair {Z,M}, or
+transverse with pair {Z,Q} and an M axis. The second role can only
+be rho. Every owner of the third role is genuine and satisfies (315.1),
+so it is impossible under the remaining capacity below pi.
+
+Actual continuation now makes the other arc between rho's two Z
+slots one axial run with fixed pair {M,Q}. It contains
+n=degree(Z)-3>=3 original Z intervals, and all its owners are genuine.
+For any such slot of angle theta and its transverse M angle beta,
+
+    beta=atan(A*cot(theta/2))+atan(B*cot(theta/2)),
+    A=[sqrt(m*m-1)+sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m*m-1)-sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1))>=0.
+
+Because q>1 and q<=m,
+sqrt(q*q-1)>sqrt((m-1)/(m+1))*(q-1), giving A>1/2.
+For theta>=pi/2, theta+beta>pi/2 is immediate. For theta<pi/2,
+t=cot(theta/2)>1 and cot(theta)=(t-1/t)/2<t/2<A*t, giving the same
+strict bound. Four-distinctness makes these n owners distinct and
+each charge theta+beta uses only one of its two original M slots.
+Their actual M/Z expense exceeds n*pi/2>=3*pi/2, contradicting the
+remaining capacity below pi. The supposed unique upper label cannot
+exist. This proves the first assertion.
+

@@ -1,0 +1,42 @@
+**Definition 12.1 (the two-order class on actual live histories).**
+Retain Definitions 1.1–1.2 and Convention 1.3, including $n\ge6$,
+$3\le k\le n-2$, the original distinct positive integer positions
+$s_1<\cdots<s_n$, $c_i=s_i+4$, and both bounds (SI.3) on every
+input of one complete correct terminating graph. Partition $[n]$
+into fixed disjoint ordered lists
+$\mathsf I,\mathsf X,\mathsf U,\mathsf Y,\mathsf V$, where
+
+$$
+|\mathsf I|=p\ge1,\qquad
+\mathsf X=(x_1,\ldots,x_b),\quad
+\mathsf Y=(y_1,\ldots,y_b),\quad b\ge1,
+\qquad 1\le B\le p,\qquad c_{x_j}<c_{y_j}\ (1\le j\le b).
+\tag{SI.84}
+$$
+
+The lists $\mathsf U,\mathsf V$ may be empty. A list used in a set
+expression denotes its underlying set; $V$ without the sans-serif
+font continues to denote the count rectangle (SI.4). Define the two
+permutations by concatenation:
+
+$$
+\pi_0=(\mathsf I,\mathsf X,\mathsf U,\mathsf Y,\mathsf V),
+\qquad
+\pi_1=(\mathsf I,\mathsf Y,\mathsf U,\mathsf X,\mathsf V).
+\tag{SI.85}
+$$
+
+The class condition quantifies over every actual live history of the
+given installed graph. Before $\mathsf I$ has been completely read,
+its next query is the next member of $\mathsf I$. Thereafter, writing
+$h_{\mathsf I}$ for the number of its exposed ones in that block,
+its next query at depth $d$ is $\pi_0(d+1)$ if
+$h_{\mathsf I}<B$, and $\pi_1(d+1)$ if $h_{\mathsf I}\ge B$.
+Thus every live portion follows the corresponding permutation prefix.
+This is a property of actual histories, not an available operation for
+choosing an order or computing a count. No selector, counter, phase,
+archive or extra changing register is installed. After certification
+there is no order restriction: all original paid repeats, certified/live
+reuse, sharing and syntactic cycles remain permitted, subject to actual
+termination and both bounds on each complete input run.
+

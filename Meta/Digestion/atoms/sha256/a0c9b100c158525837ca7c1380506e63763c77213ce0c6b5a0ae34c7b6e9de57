@@ -1,0 +1,17 @@
+**Corollary 5.3 (source-value uniqueness remains decidable).** Even
+with signed unknown-epoch input, one can decide whether the original
+tree value is identical in all realizing histories, after first
+checking nonemptiness. If unique it is recoverable; otherwise two
+different originals and their full realizing epoch tuples can be
+returned.
+
+Proof. Extract $(t_*,\mathbf n_*)$ from Theorem 5.1. Add the ground
+native disequality $t\ne t_*$ to (NCE.4), and apply Theorem 4.2 with
+the same chronology guard. A positive answer returns a different
+original and its joint history. A negative answer proves that all
+originals equal $t_*$. The added finite ground term belongs to
+(NCE.9); no free unknown tree parameter or all-source template
+parametrization is needed. This extends the row-only uniqueness
+consumer [NUE, Theorem 4.1][NUE] through the new support theorem.
+$\square$
+

@@ -1,0 +1,80 @@
+**Theorem 13.4 (finite incoming-pair criterion, including arbitrary initialized refinements).** Under Hypotheses 13.1 and Definitions 13.2–13.3, an abstract finite original-domain realization of (13.5) exists if and only if
+
+$$
+x_{ijk}\ge0,\qquad \sum_kx_{ijk}=b_{ij},\qquad
+\sum_ix_{ijk}=a_{jk},
+\tag{13.6}
+$$
+
+and the following equality holds for every $i,j$ and every $\omega\in\Omega_p$, including $\infty_p$:
+
+$$
+\boxed{\ \sum_kx_{ijk}Q_k(\omega)
+       =b_{ij}\mathcal R_A(W_j)(\omega).\ }
+\tag{13.7}
+$$
+
+Necessity already holds at any single such original history, with arbitrary finite COMPLETE refinements and nonstationary history rows. Sufficiency reuses the exact atomic construction of Theorem 12.2. Its represented original installation uses Proposition 12.6 when its specified sampling premise holds. Rational latch, update and emission probabilities satisfy that premise under the supplied fresh private fair-bit convention. The algebraic iff is not an unconditional effective-sampling theorem for arbitrary real data.
+
+**Proof of necessity.** Use the observer's complete-state kernels $B_{xy},A_{yz}$ and actual conditional row $\rho_h(x)$. For a fixed acquired history its private evolution is independent of $K$: source-independent initialization and the applied kernels depend on that word and the complete private state, not on source depth. The same statement includes all persistent random state; no private seed correlated with the source is permitted. The probability of the next actual beta-alpha, with $\nu_h$ exactly the paid-history posterior (1.2), is
+
+$$
+s_h=\sum_k\nu_h(k)r_k(1-r_k)>0.
+\tag{13.8}
+$$
+
+This factor is the same for every current private state and private update path, so conditioning cancels it. Consequently
+
+$$
+\Pr(X=x,Y=y,Z=z\mid h,\beta\alpha)
+       =\rho_h(x)B_{xy}A_{yz}.
+\tag{13.9}
+$$
+
+There are no synthetic factors $(1-u_x)v_y$ in this actual acquired probability. All original paid letters, including rejected pairs and partial parses, remain in $\nu_h$; it is an analysis posterior, not an observer input.
+
+At each complete suspended configuration reached with positive mass, the exact cylinder identity (1.3), pulled back through its own renderer, gives
+
+$$
+W_y=(1-v_y)\delta_\beta+
+           v_y\alpha\sum_zA_{yz}Q_z,
+\qquad
+\sum_zA_{yz}Q_z=\mathcal R_A(W_y).
+\tag{13.10}
+$$
+
+The analogous p identity is $\sum_yB_{xy}W_y=\mathcal R_B(Q_x)$. These are equalities of normalized full measures, including infinity, and their denominators are positive by the prescribed regular laws. Every positive successor contribution in (13.9) belongs to the specified supports. A zero contribution needs no descriptor assignment.
+
+Push (13.9) to descriptors. The exact two joint marginals give (13.6). For a fixed incoming pair $(i,j)$ and complete atom $\omega$, (13.10) gives
+
+$$
+\begin{aligned}
+\sum_kx_{ijk}Q_k(\omega)
+ &=\sum_{\substack{x,y:Q_x=Q_i\\ W_y=W_j}}
+        \rho_h(x)B_{xy}\sum_zA_{yz}Q_z(\omega)\\
+ &=b_{ij}\mathcal R_A(W_j)(\omega).
+\end{aligned}
+$$
+
+All retained incoming memory is already in $y$. Averaging complete states having the same law $W_j$ leaves its residual unchanged, even when their conditional mixture depends on the incoming $Q_i$. Thus no conditional independence of descriptor coordinates, stationary latent row, reversibility or mixing has been assumed. This proves (13.7) under every finite COMPLETE refinement. At $b_{ij}=0$, nonnegativity in (13.6) forces the entire cell to be zero and (13.7) is the undivided equality $0=0$. Likewise $a_{jk}=0$ forces all its incident masses to vanish and is never a divisor.
+
+**Proof of sufficiency by the prescribed-triple supplier.** The finite tensor (13.6) has total mass one. Its first and third marginals both equal $\sum_i\pi_i\delta_{Q_i}$ by (13.3), and its middle marginal is $\sum_j\tau_j\delta_{W_j}$. Its first-two marginal and the first equation of (13.4) give $\mathbb E[W\mid Q]=\mathcal R_B(Q)$. Equation (13.7), divided only on positive incoming cells, gives $\mathbb E[Q'\mid Q,W]=\mathcal R_A(W)$. The laws belong to the exact descriptor spaces of Definition 12.1, and all the identities hold at every finite and infinite atom. Hence every hypothesis of admissibility (12.1) is discharged.
+
+Apply Theorem 12.2 with its $t_{ijk}=x_{ijk}$ and its incoming-pair mass $\tau_{ij}=b_{ij}$. In its notation (12.6) specializes to
+
+$$
+\widetilde B_{i,(r,j)}=\mathbf1_{\{r=i\}}\frac{b_{ij}}{\pi_i},\qquad
+\widetilde A_{(i,j),k}=\frac{x_{ijk}}{b_{ij}},\qquad
+\widetilde u_i=u(Q_i),\qquad
+\widetilde v_{(i,j)}=v(W_j),\qquad b_{ij}>0.
+\tag{13.11}
+$$
+
+These are the supplier's rows, not a second regeneration procedure. Theorem 12.2 supplies their stochasticity, exact balances $\pi\widetilde B=(b_{ij})$ and $(b_{ij})\widetilde A=\pi$, own-law identification with $Q_i,W_j$, and exact tensor $x_{ijk}$. In particular its generated-law uniqueness uses finite stochastic rows and $\widetilde u,\widetilde v\in[a,b]$, all verified here; the two-step contraction is $4/15<1$. It retains the infinite outcomes at zero mass and needs no recurrence or mixing hypothesis. There are at most $|\operatorname{supp}x|$ labels at either phase, before charging original control and representation.
+
+For the algebraic initialized-source conclusion, this table satisfies every hypothesis of [PAID, Definition 2.1 and Lemma 2.1.1](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md): use observer period one, the finite nonempty positive label sets in (13.11), normalized latch row $\pi$, the two exact flow balances, emissions in $[a,b]$, fair pre-latch synthesis on full $C_0$, and the same fixed source-independent latch row after the original third record write and latch. The acquired updates are precisely $\widetilde B$ on p-beta and $\widetilde A$ on suspended-alpha; they also generate the synthetic laws. Completing letters clear labels and use their original pendingStop, followed only by the matching original Stop. These are exactly the adapter conditions, with no change to source $d=1$.
+
+For a represented installation, require each primitive service in (13.11), the latch row and pre-latch fairness to return its specified conditional distribution at every allowed entrance, use source-independent randomness, return almost surely and restore canonical service workspace at the original operation cut. This is exactly Proposition 12.6's premise. Its proof and PAID, Lemma 2.1.1, then supply one initialized observer on all original histories, both seeds and every record fiber, with exact individual generation at every original cut. They preserve all paid rejections, held records, write-before-latch, finite returns, completion and Stop, including the full infinite-tail carrier. The actual rows are $\pi,(b_{ij}),\pi$ through each return and the mass in (13.9) is $\pi_i\widetilde B_{i,(i,j)}\widetilde A_{(i,j),k}=x_{ijk}$. Its two descriptor marginals are the exact whole measures (13.2). No source query, posterior service or future conditioning enters the construction.
+
+Rational primitive data meet this sampling premise by the finite rejection service in Proposition 12.6: finite installed thresholds, fresh independent private fair bits, reusable finite candidate and cursor storage, almost-sure return and clearing of workspace before the operation cut. Independent emission and update draws give the required product cylinder. All installed data, program, arithmetic, workspace, service microstates and persistent randomness are charged alongside $C_0$; the service adds no actual Read or observable cut. Under a narrower randomness convention the stated service premise remains required. Arbitrary real entries alone provide no represented sampler, and no sampler-preserving extraction from an arbitrary observer is asserted. This proves both the algebraic iff and the conditional represented converse. $\square$
+

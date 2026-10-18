@@ -1,0 +1,55 @@
+**定理 3.1（全达到者后验与支撑；由定理 2.2 及 [平稳卷][S] §4 的插入论证）。** 若平稳 $P$ 满足 $d(P)=c_\star$，则对每个 $i\in\mathbb Z$，其实际外部后验 $q_i$ 满足
+
+$$
+q_i=0\ \text{于 }F_i^c,\qquad \tfrac14\le q_i\le\tfrac12\ \text{于 }F_i,
+\quad P\text{-几乎处处}.
+\tag{3.1}
+$$
+
+对 $A\in\mathcal E_i$ 有 $P(A,X_i=0)\ge P(A)/2$；若 $A\subseteq F_i$，则
+
+$$
+\tfrac13P(A,X_i=0)\le P(A,X_i=1)\le P(A,X_i=0).
+\tag{3.2}
+$$
+
+对每个 $a\in\mathbb Z$、$m,n\ge1$、$w\in B_n$，
+
+$$
+P([0^m]_a)\ge2^{-m},\qquad
+P([w]_a)\ge2^{-(n+2)}3^{-k(w)}>0,
+\tag{3.3}
+$$
+
+且
+
+$$
+n c_\star\le\Phi_n(P_n)\le\kappa_n\le(n+1)c_\star.
+\tag{3.4}
+$$
+
+证明。定理 2.2 使 $\Delta(P)=0$，即中心后验在自由事件上属于 $I$；强制事件上合法性使它为零。平稳性将这项结论转移到所有坐标，可同时取一个对可数坐标成立的满测集。积分恒等式
+
+$$
+P(A,X_i=1)=\int_A q_i\,dP,\qquad P(A,X_i=0)=\int_A(1-q_i)\,dP
+$$
+
+与 $1-q_i\ge1/2$、自由部分的 $(1-q_i)/3\le q_i\le1-q_i$ 给出（3.2）及其零事件情形。
+
+现在对 $m$ 个位置依次施加 $P(A,X_i=0)\ge P(A)/2$；已经指定的其他位置形成下一位置的外部事件，故得到全零界。从 $[0^{n+2}]_{a-1}$ 起，在中间 $n$ 位逐个插入 $w$ 中的 $1$。插入位置彼此不相邻，每一步的其余指定位置属于 $\mathcal E_i$ 且强制两邻为零；两端也有补零保护。沿（3.2）相乘，
+
+$$
+P([w]_a)\ge P([0w0]_{a-1})\ge3^{-k(w)}P([0^{n+2}]_{a-1}),
+$$
+
+得到（3.3）。这正是供应卷的插入机制；新增前提是（3.1）已对任意达到者成立。没有从某个混合律的支撑推断其分量支撑。
+
+对有限区间中每个 $i$，$\mathcal G_{n,i}\subseteq\mathcal E_i$，正交分解给出
+
+$$
+\mathbb E_P[(X_i-\mathbb E_P[X_i\mid\mathcal G_{n,i}])^2]
+=d(P)+\mathbb E_P[(q_i-\mathbb E_P[X_i\mid\mathcal G_{n,i}])^2]\ge c_\star.
+$$
+
+左侧是原坐标纤维风险；相加并用（1.3）得（3.4），包括 $n=1$ 与全部开放端点。$\square$
+

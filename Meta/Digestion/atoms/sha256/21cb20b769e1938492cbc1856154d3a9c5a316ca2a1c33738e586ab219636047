@@ -1,0 +1,65 @@
+**Theorem 8.11 (Local classical Fisher matrix).** Fix known $p$ and the
+pure phase family (8.14), locally at the reference where all occupied
+modes have the same phase. On each independent preparation choose $i$
+uniformly from $1,\ldots,n$, use the basis phase $\alpha=\pi/2$ of
+Proposition 8.5, and retain $(i,w)$. In the fixed mode-phase coordinates
+$e_u$, define
+
+$$
+\begin{aligned}
+w_{uv}&=h(p_u,p_v),\\
+L_p&=\sum_{\{u,v\}\in E(\Gamma_n)}
+w_{uv}(e_u-e_v)(e_u-e_v)^{\mathsf T},\\
+J_p&=\frac4nL_p.
+\end{aligned}
+\tag{8.21}
+$$
+
+Then $J_p$ is exactly the local classical Fisher matrix per preparation,
+and
+
+$$
+J_p[f]:=f^{\mathsf T}J_pf
+=\frac4n\sum_{\{u,v\}}h(p_u,p_v)(f_u-f_v)^2,
+\qquad
+\operatorname{tr}J_p=\frac8n\Phi_n(p).
+\tag{8.22}
+$$
+
+Proof. Along $\theta_u=t f_u$, an oriented edge has
+
+$$
+q_{\pm,e}(t)=\frac T2
+\pm\sqrt{p_up_v}\sin(t(f_v-f_u)),\qquad T=p_u+p_v.
+$$
+
+At $t=0$, if $T>0$, $q_{\pm,e}=T/2$ and
+$q'_{\pm,e}=\pm\sqrt{p_up_v}(f_v-f_u)$. Its two outcomes contribute
+
+$$
+\frac{(q'_{+,e})^2}{q_{+,e}}
++\frac{(q'_{-,e})^2}{q_{-,e}}
+=4h(p_u,p_v)(f_v-f_u)^2.
+$$
+
+When one endpoint has mass zero both derivatives vanish. When both
+masses are zero the outcomes have probability identically zero in this
+fixed-$p$ family; omit them from the Fisher sum, equivalently assign
+zero contribution. Blocked-vertex probabilities are fixed $p_u$ and
+have derivative zero. In the joint experiment the site label has
+probability $1/n$ independent of $t$, so these block contributions are
+averaged with that factor. Applying the calculation to every real
+$f$ determines the quadratic form and matrix (8.21). Finally
+$\operatorname{tr}(e_u-e_v)(e_u-e_v)^{\mathsf T}=2$ for each edge,
+giving the trace formula. $\square$
+
+This is a local experiment at a supplied same-phase reference with
+known amplitudes and a fixed measurement phase. It does not calibrate
+an arbitrary unknown collection of phases for free. Away from that
+reference the probabilities and their denominators must be reevaluated;
+(8.21) is not asserted as a global constant Fisher matrix. The quantity
+is classical information of this particular resolved measurement, not
+quantum Fisher information or an optimization over every possible
+measurement. Keeping the site label is what permits the average of the
+individual information matrices in this proof.
+

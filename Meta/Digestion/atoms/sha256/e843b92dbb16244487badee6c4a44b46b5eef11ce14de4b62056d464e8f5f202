@@ -1,0 +1,50 @@
+**Proposition 9.9 (Counts, all phase nuisances and sine bias).** Choose
+$\eta_1=1$. Let $n_{(u,v,\pm)}$ count the indicated site-$1$ outcome
+among all $N$ samples, retaining the blocked word $2$ as well.
+At $\theta^0=0$ the statistic
+
+$$
+\widehat\chi
+=\frac{n_{(3,13,+)}-n_{(3,13,-)}}{2N\sqrt{p_3p_{13}}}
+-\frac{n_{(0,1,+)}-n_{(0,1,-)}}{2N\sqrt{p_0p_1}}
+\tag{9.29}
+$$
+
+has mean zero, full phase expectation gradient $d$, and variance
+$I_\kappa/(4N)$.
+
+Proof. On one sample define $W$ to be
+$+1/(2\sqrt{p_3p_{13}})$ or its negative on the respective
+$(3,13,+)$ or $(3,13,-)$ outcome;
+on $(0,1,+)$ use $-1/(2\sqrt{p_0p_1})$ and on
+$(0,1,-)$ its negative. Put $W=0$ on the blocked outcome.
+Then $\widehat\chi=N^{-1}\sum_rW_r$ and (9.4) gives its exact mean
+
+$$
+\mathbb E_\theta\widehat\chi
+=\sin(\theta_{13}-\theta_3)-\sin(\theta_1-\theta_0).
+\tag{9.30}
+$$
+
+At zero this vanishes. Differentiating with respect to all five
+coordinates gives $(1,-1,0,-1,1)$, including zero response in every
+phase direction orthogonal to $d$. At the reference each signed
+pair contribution has mean zero. The two pairs are mutually
+exclusive on one sample, so their product is zero and their
+covariance is zero. Their second moments give
+
+$$
+\mathbb E_0W^2
+=\frac{p_3+p_{13}}{4p_3p_{13}}
+ +\frac{p_0+p_1}{4p_0p_1}
+=\frac{I_\kappa}{4}.
+\tag{9.31}
+$$
+
+Equivalently, for categorical counts
+$\operatorname{Cov}(n_a,n_b)=N(q_a\delta_{ab}-q_aq_b)$;
+the signed means cancel its cross terms here. Independence of
+preparations divides (9.31) by $N$. Equation (9.30) also displays
+why this fixed calibrated statistic is not globally unbiased for
+the linear phase contrast. $\square$
+

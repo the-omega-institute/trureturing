@@ -1,0 +1,29 @@
+**Definition 69.1 (the fixed constructor and its unchanged target).**
+Retain Convention 59.1 and its separate source/minimax/unaveraged-face
+suppliers. Let GC denote
+[the global-actual-count owner](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md).
+Fix one finite weak law satisfying (GC.9) and let $\Psi$ be its
+complete normalized constructor of GC Proposition 10.1, including the
+full five-mode coherent completion. On native coordinates use exactly
+GC §21's complex-linear dictionary. The ideal twelve outputs and HALF
+objective $E$ remain those of (JRH.1)–(JRH.2); $\Psi$ is the
+approximate constructor, not that ideal output.
+
+The chronological decoder used by $\Psi$ is DIRECT REUSE of Theorem
+66.1 and (JRH.54)–(JRH.56), with the full-domain factors in (GC.44)–
+(GC.46). Those factors have rank-one $0\preceq F_j\prec I_2$,
+so the existing theorem's hypotheses apply; pure pieces use its pure
+live case. The no-event, activity, Kraus, conditional-reference and
+Borel identities are precisely those existing identities, together
+with (GC.53)–(GC.54). No new monitor synthesis is asserted. Access to
+a causal reservoir, independently initialized environment, calibrated
+couplings, survivor outputs and the original aligned clock remains an
+added assumption as in §68 and GC Assumption 25.1.
+
+A causal prefix at absolute time $6+a$ retains every actual failure
+already recorded, with its original label and actual event time, and
+retains the unnormalized not-yet-failed branch as a separate component.
+The complete prefix, including both parts and any abort/wrong sectors,
+is normalized. FIRST is the time when absorbing failure actually occurs;
+a scalar field written later and named a timestamp is different data.
+

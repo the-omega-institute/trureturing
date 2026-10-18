@@ -1,0 +1,33 @@
+### 3.3 A fixed command has a finite spectrum across all heights
+
+For each $k$, define the surjection
+
+$$
+\pi_k:\mathbb C^N\longrightarrow V,\qquad
+\pi_k(a)(\theta)=a^{\mathsf T}F(k,\theta).
+$$
+
+The phase update gives the intertwining identity
+
+$$
+\tau_{v(k,t)}\pi_k=\pi_k S_t^{\mathsf T}.
+$$
+
+The kernel of $\pi_k$ is consequently invariant under $S_t^{\mathsf T}$.
+Choose a basis adapted to this kernel and then to the quotient. In this
+basis the matrix is block triangular, and the quotient block represents
+$\tau_{v(k,t)}$ on $V$. Factoring the characteristic polynomial of that
+block triangular matrix proves that every eigenvalue of this translation
+on $V$ belongs to the finite spectrum of $S_t$. The kernel can vary
+with height, but $S_t$ and its spectrum are fixed for the command $t$.
+
+In particular, a character from Lemma 3.1 obeys
+
+$$
+\lambda_1(t/2)\lambda_2(c(k)t)\in\operatorname{spec}(S_t)
+\quad\hbox{for every }0<k<H.
+$$
+
+Here circle arguments are understood modulo $2\pi$. No relation between
+ambient matrices for different commands has been assumed.
+

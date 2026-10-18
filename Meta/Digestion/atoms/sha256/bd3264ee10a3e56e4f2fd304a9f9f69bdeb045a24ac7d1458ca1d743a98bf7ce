@@ -1,0 +1,2 @@
+**Convention 2.3 (Characteristic polynomials).** For an $n\times n$ real symmetric matrix family $H_t$, $n\ge2$, put $p(\lambda,t)=\det(\lambda I-H_t)$, and for a site $j$ let $H_t^{(j)}$ be the principal submatrix obtained by deleting row and column $j$, with $q_j(\lambda,t)=\det(\lambda I-H_t^{(j)})$. When the entries of $H_t$ are polynomials in $t$, both $p$ and $q_j$ lie in $\mathbb R[t][\lambda]$ and are monic in $\lambda$, of degrees $n$ and $n-1$. $\operatorname{Res}_\lambda$ is the resultant in $\lambda$.
+

@@ -1,0 +1,116 @@
+**Theorem 6.1 (Four-part partition criterion).** Fix any specified
+unchanged independent auxiliary space $(\mathsf U,\mathcal U,\nu)$.
+For a given $q\in[0,1]$, an admissible protocol with this mass
+attains $L=bq-D$ if and only if there is a measurable partition
+$(G_0,G_h,G_c,G_1)$ of $\mathsf U$, up to null sets, such that
+
+$$
+q=q_H+\frac\eta2\nu(G_h)+\eta c\nu(G_c)+\eta\nu(G_1).
+\tag{6.1}
+$$
+
+Empty parts are allowed. In particular equality forces
+$q_H\le q\le Q$. This interval is exactly the universal
+exposed face for slope $a$. With a constant seed the equality
+masses are exactly the four in Proposition 5.4.
+
+Proof of necessity. Let $q(u),C(u)$ be the measurable source-section
+masses of the original protocol. Theorem 5.2 applies at every
+eligible fixed seed, so its nonnegative deficit satisfies
+
+$$
+D-[C(u)-a q(u)]\ge0,\qquad
+\int\bigl(D-[C(u)-a q(u)]\bigr)\,d\nu(u)=0.
+\tag{6.2}
+$$
+
+A nonnegative measurable function of zero integral is zero
+almost everywhere: for each positive integer $m$ the set where
+it is at least $1/m$ must have measure zero, and the positive
+set is their countable union. Thus almost every seed itself
+attains $C(u)-a q(u)=D$.
+
+At such a seed Lemma 5.1 forces the unique exceptional leaf
+to exist, to be accepted, and to have its maximizing output.
+Without it the objective is at most zero; losing any part of
+its excess cannot be compensated by another leaf. Every other
+accepted positive leaf must have confidence exactly $a$ and
+use a maximizing output, because a smaller confidence or output
+would cause a strict deficit. The exception itself has a
+strictly larger majority-spin mass, since $a^2>b^2$.
+
+We check early returns in the original rule as well as its
+two-call representation. A zero-call return has confidence
+$a/2<a$. A first-zero return has mass $z>1/2$ and maximum state
+mass $a/2$, so its confidence is below $a$. A first-one return
+at a type-$I$ root has confidence $1/2<a$. At a type-$D$ root
+it has confidence $a$, but it consumes the first-one branch
+on which the required exceptional descendant must occur.
+None can occur at an equality seed. Thus paid padding has
+not supplied an unobserved selection within an early-return
+section. Rejecting short branches still supplies no positive
+contribution.
+
+For a type-$I$ root the exception uses the first-zero branch
+with a disjoint second one. The other leaf there is $00$,
+of confidence strictly below $a$. On the first-one branch
+a repeat, separator or disjoint edge leaves the target fair;
+only an adjacent active edge gives confidence-$a$ leaves.
+Its two leaves each have mass $\eta/2$. The accepted addition
+is therefore $0$, $\eta/2$ or $\eta$.
+
+For a type-$D$ root the exception uses first one and a disjoint
+target-touching second zero. Its other leaf has confidence
+$1/2<a$. On the first-zero branch all $00$ leaves have strict
+confidence below $a$. A repeat gives no other positive leaf.
+Adjacency supplies one confidence-$a$ leaf of mass $\eta/2$.
+A disjoint same-parity edge avoiding the target supplies one
+of mass $\eta c$; if it touches the target instead, its
+one-containing leaf has confidence $1/2<a$. An opposite-parity
+edge avoiding that phase's target supplies one of mass $\eta$;
+if it touches the target, that leaf again has confidence
+$1/2<a$. Lemma 2.3 exhausts all alternatives.
+
+It follows that almost everywhere
+
+$$
+q(u)=q_H+d(u),\qquad
+d(u)\in\{0,\eta/2,\eta c,\eta\}.
+\tag{6.3}
+$$
+
+The four numbers are distinct by $1/2<c<1$. Since $q(u)$ is
+measurable by (3.8), its four level sets in (6.3) define
+measurable $G_0,G_h,G_c,G_1$ on the full-measure equality set.
+Assign its null complement to $G_0$, using completed versions
+or measurable representatives as appropriate. Their measures
+are unaffected. Integrating (6.3) proves (6.1). This proof
+uses source sections and integration, without disintegration
+of an arbitrary auxiliary space.
+
+Proof of sufficiency. Given the partition, run $K_0,K_h,K_c,K_1$
+on its corresponding parts. Selection depends only on the
+original seed; it does not change its law or observe the
+source. The rules of Definition 5.3 are measurable and make
+their actual two paid calls. Their masses in Proposition 5.4
+integrate to (6.1), and their common excess is $C-aq=D$.
+Thus $L=bq-D$, proving sufficiency.
+
+The partition formula is a convex combination of the four
+deterministic masses, whose smallest and largest values are
+$q_H,Q$. With a uniform law all intermediate masses are
+available by (5.7), so the face has exactly this extent.
+For a constant seed each measurable part has probability
+zero or one, and one part has probability one; hence exactly
+the four listed masses occur. At $q=q_H$ the partition has
+only $G_0$ of positive measure; at $q=Q$ only $G_1$ can have
+positive measure, by the strict ordering (5.5). $\square$
+
+The event condition (5.7) is a sufficient special case of
+Theorem 6.1, obtained by taking $G_h=G_c=\varnothing$.
+Necessity requires the whole partition condition, rather
+than that particular gate. All strict classifications above
+use $0<\eta$, $\delta>0$ and $1/2<c<1$. The fair and endpoint
+parameters are excluded; their extra ties or zero masses
+cannot be treated by this necessity argument.
+

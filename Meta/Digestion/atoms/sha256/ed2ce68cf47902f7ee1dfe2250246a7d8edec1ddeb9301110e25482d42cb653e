@@ -1,0 +1,26 @@
+**Definition 2.1 (ordered source and literal reply).** Let $\mathcal T$ be the
+free algebra of nonempty finite ordered full binary trees
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle.
+$$
+
+The atoms are distinct. Ordered pairing and the following substitution are
+additional declared structure:
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle t,u\rangle=\langle\rho t,\rho u\rangle.
+\tag{DAF.1}
+$$
+
+Write $w(t)$ for the left-to-right leaf word, $c(t)=(a(t),b(t))$ for composition,
+and $\lambda(t)=a(t)+b(t)$. A literal address is a word over $\{L,R\}$ starting
+at the current register root. The total reply $\operatorname{Lit}(t,p)$ is
+$\alpha$, $\beta$, `branch` or `absent`: the root reports its constructor;
+descent through a branch follows its named child; descent through a leaf reports
+`absent`. Every finite address, including the empty address, is a legal query.
+This is exactly `ActualTreeReadoutAcquisition.Address`, `Reply` and `readout`,
+with false denoting $L$, true denoting $R$, and true leaves denoting $\alpha$.
+

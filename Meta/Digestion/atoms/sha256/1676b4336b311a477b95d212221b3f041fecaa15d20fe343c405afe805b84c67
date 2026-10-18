@@ -1,0 +1,27 @@
+**定义 55.1（Full source and the actual chronological coordinates）。** In Chapters 55–59 fix
+
+$$
+k=2p\ge4,\qquad m=2,\qquad T=2p+1,\qquad
+P=\mathbb Z/T\mathbb Z,\qquad F_v(j,s)=f(v,-j,s).
+\tag{55.1}
+$$
+
+The target $f:Q\to Y$ is arbitrary on the full INITIAL record set of Chapter 1. Every phase, every INITIAL tail $0\le s<k$, both free values, and independent initial bottom are retained. Initial bottom returns $f(\bot)$ freely. Since $2<k$, both original alphabets contain exactly $00,01,10,11$; cross-block rejection is still an actual operation. The fee counts complete emitted blocks, including waits and clearing words. A chronological index counts blocks issued by this controller, rather than an unobserved length of the initial history.
+
+At index $t$, write $u=2t\pmod T$. Formula (1.4) gives the actual successful charge sets and tail updates:
+
+$$
+\begin{array}{c|c|c|c}
+B&E_t(B)&\text{safety from common tail }\sigma&\text{new tail}\\ \hline
+00&\varnothing&\text{always}&0\\
+01&\{u+1,u+2\}&\text{always}&1\\
+10&\{u,u+1\}&\sigma+1<k&0\\
+11&\{u,u+2\}&\sigma+2<k&\sigma+2.
+\end{array}
+\tag{55.2}
+$$
+
+All vertices in a row are actual and distinct. Each row is the charge of its displayed literal word, with full physical charges $(x,x\oplus y,y)$ for $B=xy$. A rejected endpoint is bottom, not a binary charge.
+
+A *recorded-zero archive* has paid depth $b\ge1$, has successfully observed every issued endpoint, and contains a zero in its own issued prefix. Its candidates have common observed current value and common current tail $\sigma<k$. Their INITIAL phase support is $S\subseteq P$. Assume one well-defined immutable label $\lambda(j)$ for each $j\in S$: all retained INITIAL tails and histories at that phase have that label. This last assumption is necessary for completion once those histories have merged. Every candidate shares this archive and is an actual continuation of its own original history. No condition is imposed on its original tail except the conditions that produced the archive. Denote its minimum worst-branch additional adaptive fee by $D_{\rm ad}(b,S,\sigma,\lambda)$, excluding the already-paid $b$ blocks; an empty archive has additional fee zero.
+

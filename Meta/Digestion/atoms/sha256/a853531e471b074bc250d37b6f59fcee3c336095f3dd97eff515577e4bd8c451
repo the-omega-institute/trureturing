@@ -1,0 +1,40 @@
+**Proposition 9.2 (what the gate and copy counts actually price).** The gate
+bill inside a literal call is the sum of PR57.06 over its $G(H)$ gate records,
+plus the end-header read and exit. For a gate with $v=(a,b,c,d)$ it is
+
+$$
+I(g)=18+5\sum_{r=1}^4(v_r+1)
++\sum_{r=1}^4(2h_{g,r}+3v_r+3)+4+1+P_g,
+$$
+
+where $P_g$ consists of its actual address-field positioning and sealing
+occurrences. Its code-record length is $13+d+a+b+c$, not one cell. Public
+enumeration/parser/locator work, materialization of $p,H$, instruction generation,
+allocation/zeroing, descriptors, final response framing/commitment and all archive
+or output services are additional disjoint occurrence counts.
+
+A $k$-bit sealed sender/mailbox/receiver copy has the reused exact body
+$8k+4$, with allocation, homes/seeks, descriptors, identity fields and serial
+printing additional. Private source ingress has $2N$ actual `IN; WR; MR` bodies,
+plus boot, allocation and validation. Literal raw-call count, gate count, full
+runtime, retained name width, simultaneous storage and archive access count are
+separate resource coordinates.
+
+**Proof.** Directly expand the interpreter: header/truth-table fetch, copying
+all four unary fields, four seeks, three operand reads, one result write, one
+`BF` and the explicitly prescribed positioning give PR57.06. The direct
+generator of §3 emits exactly the gate records counted in Theorem 3.3; every
+code bit is actually appended. The two channel loops copy each of $k$ bits
+using four occurrences per side, followed by seal/token and seal/acknowledgement,
+giving $8k+4$ as in PR57.13. None includes earlier destination construction or
+later printing. Each ingress bit has its separate input, write and move. The
+purpose partition places every other executed occurrence in its own actual
+routine exactly once. Summing those finite event words proves the accounting
+without replacing it by gate count. $\square$
+
+The circuit is exponentially inefficient and has large unary-address overhead.
+This volume supplies a finite correct bridge, with no query/runtime optimality
+or polynomial-resource assertion. A memory allowed to retain the live TagRead
+permission can pay for later queries; it is a different contract from acquiring
+the entire source before handoff.
+

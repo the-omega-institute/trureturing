@@ -1,0 +1,112 @@
+**Lemma.** In the same actual framework suppose the reservoir set is
+{M,Z,U} disjoint union L, where C,D belong to L, every B in L has
+1<b<=m-2, and U is genuinely witnessed with u>m-2. Suppose the escape
+and pi data of Section304 hold and Z has no flat transverse occurrence.
+Then u>m. Labels in L need not be genuinely witnessed.
+
+**Proof.** Suppose u<=m. Every H value except Z is at most m, so Z is
+largest. We have m>3,z>m+2,c,d<m-2. All transverse Z owners are genuine.
+An owner with axial Z and pair {M,B}, b<m, is genuine: axial selection
+would select Z, transverse M selection would spend two pi slots of M,
+and transverse B selection would require b>m. An axial Z owner with
+pair {M,U} is also genuine, since both M and U are witnessed and hence
+neither can be selected transversely. These are all axial Z owners
+whose genuineness will be used. Other axial Z zero slots are not
+assumed absent.
+
+Take the maximal axial Z run through tau with pair {M,C}. Each owner
+is genuine and has at most one Z axis, since (z-1)^2>=(m+c)^2 would
+make two Z axes flat. At each such slot the exact individual response
+has positive coefficients with sum greater than one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The arctangent addition formula gives theta_Z+2*beta_M>pi.
+A wholly axial Z circle would have at least six such owners and exceed
+the complete M/Z genuine capacity 3*pi. Thus the run is proper.
+Each boundary owner has frame (B,Z,A,Q,Z,A), {A,B}={M,C}.
+For H axes q<=z; for special axes q<1+z+a. Hence q<1+z+a.
+The transverse Z cosine numerator is strictly increasing in q and at
+1+z+a equals
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Each boundary Z angle exceeds pi/2. Both distinct boundary slots must
+belong to one owner rho, since two owners would exceed Z's 2*pi budget.
+Their total is greater than pi. The run's axial angle sum is less than
+pi and its doubled transverse M sum is at most pi; summing its strict
+per-owner inequality forces exactly one run owner, tau.
+The return is (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+The complete special-star exclusions of Section176 apply to pairs
+{Z,M} and {Z,C}. Their required inputs are: genuine transverse Z
+owners, m,z>3, z>2*c+3, actual M/Z capacities pi and 2*pi, special
+minimum degree six, and every other axis below 1+z+a. All hold here.
+Those weighted-star arguments make no claim that all L labels are
+witnessed. Thus no special axis occurs in an owner of either pair.
+
+For the companion-C return, genuineness gives
+q>(z-c)^2/(m+1)-1>=m, so Q=Z. Any owner of pair {Z,C} with an axis
+other than Z has that value at most m; the same cosine numerator bound
+makes its two Z angles obtuse, so it must be rho. The alternative with
+both axes Z has four Z angles of cosine
+z*(c+1)/(2*z*z+c-1)<1/2; its expense exceeds 4*pi/3 and cannot coexist
+with rho. Thus rho is the only owner with that pair. Its residual
+{Z,Z,C} faces transport every Z slot back into rho, in either axial or
+transverse role. Together with tau this closes at most four original
+Z intervals, contradicting connectedness and degree six.
+Hence rho=(C,Z,M,Q,Z,M), with Q in H and q>c.
+
+No owner uses only M and Z: the standard two-value vertex response of
+Section157, with all values greater than three, makes its six-angle
+M/Z expense greater than pi. It would differ from tau and rho, each
+already costing more than pi of M/Z. Now any owner with pair {Z,M}
+has only H axes and at least one axis B other than M,Z, with b<=m.
+Its other axis r<=z. Put
+
+    L0=(z+m)^2-(b-1)*(r-1),
+    J0=(b+1)*(r+1)-(z-m)^2.
+
+Both are positive, and the exact expansion gives
+
+    L0-2*J0 >= (m-3)*(m+1)+(z-m)*(m-1)+3*(z-m)^2 >0.
+
+The transverse-sum coefficient kappa squared exceeds 8/9, so its four
+M/Z transverse slots cost more than pi. Together with tau and rho,
+this forbids every such owner other than rho itself.
+
+If Q=M or Z, the residual face multiset {Z,M,Q} forces its next Z slot
+back into this unique pair-{Z,M} owner, closing at most four intervals.
+If Q=B in L, B!=C because q>c. An axial Z target would have pair {M,B};
+it is genuine as checked above and costs theta_Z+2*beta_M>pi by b<=m-2.
+A transverse Z target either has pair {Z,M}, hence is rho, or pair
+{Z,B} with an M axis. The latter is genuine and costs
+
+    theta_M+2*gamma_Z>pi,
+
+since its positive response coefficients have sum
+2*sqrt(z*z-1)/(z+b)*sqrt((m-1)/(m+1))>1.
+Either new role differs from tau and rho by its fixed pair and violates
+the remaining M/Z budget. Thus this Q case also closes the short circle.
+These exclusions hold for every B in L, including an unwitnessed one.
+Only Q=U remains: rho=(C,Z,M,U,Z,M).
+
+Across rho's residual {Z,M,U} faces, the Z roles are axial with pair
+{M,U}, transverse with pair {Z,M} (only rho), or transverse with pair
+{Z,U} and an M axis. If the third role never occurs, the complementary
+arc of the complete Z circle is a single axial {M,U} run with
+n=degree(Z)-3>=3 original intervals. All are genuine as checked above.
+At each such interval its M response is
+
+    beta=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A=(sqrt(m*m-1)+sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>1/2,
+    B=(sqrt(m*m-1)-sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>=0.
+
+For theta>=pi/2, theta+beta>pi/2. Otherwise t>1 and
+cot(theta)=(t-1/t)/2<t/2<A*t, giving the same strict bound.
+Assigning one beta per axial Z interval uses at most the two actual
+M slots in its owner, including an owner with both axes Z. Therefore
+these intervals cost more than 3*pi/2 of M/Z, while tau and rho leave
+less than pi. This contradiction forces a third distinct genuine owner
+eta=(M,Z,U,Q,Z,U). Its actual M/Z expense obeys theta_M+2*gamma_Z<pi.
+

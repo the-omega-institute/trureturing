@@ -1,0 +1,33 @@
+**定义 66.1（原维数、实帧与至多调用合同）。** 固定 $\mathcal H=\mathbb C^d$ 的一组实正交基及其中的逐坐标共轭，$d\geq2$。设 $P=P^T=P^2$ 是非零、非恒等的实投影，$\operatorname{rank}P=p$，唯一收费门为正向固定相位 $S=\exp(i\pi P/2)$。实控制允许任意有限个 $SO(d)$ 元素；终端只读一个固定实投影 $R=R^T=R^2$ 的二值 PVM $\{R,I-R\}$，$\operatorname{rank}R=r\in\{0,\ldots,d\}$。令
+
+$$
+\begin{aligned}
+q&=\min(p,d-p),& h&=\min(r,d-r),&m&=\lfloor d/2\rfloor,\\
+\mathcal U_{\leq k}
+ &=\bigcup_{j=0}^{k}
+   \{O_j S O_{j-1}S\cdots S O_0:O_0,\ldots,O_j\in SO(d)\},\\
+B_k(\rho,\sigma)
+ &=\max_{U\in\mathcal U_{\leq k}}
+       |\operatorname{tr}((\rho-\sigma)U^\dagger R U)|,
+\qquad k\in\mathbb Z_{\geq0}.
+\end{aligned}
+\tag{IX.11}
+$$
+
+$j=0$ 项为 $SO(d)$。每次 $S$ 计一次，$S^{-1}=S^3$ 若实际采用则计三次；不另供负向相位或连续可调相位。每个固定 $j$ 的参数空间是紧空间 $SO(d)^{j+1}$，有限并仍紧，故 (IX.11) 的最大值确实存在于有限字中。控制字可依赖已知候选对 $(\rho,\sigma)$ 和预先固定的共同经典记录，但对两个未知输入标签必须相同；不提供标签相关旁信息。不使用辅助量子系统、可访问参考、中途测量、后选择或任何非酉 CPTP 预处理。
+
+输入域为全部满足 $\operatorname{Re}\rho=\operatorname{Re}\sigma$ 的密度态对，实部按上述同一实帧逐项取得。因此 $\Delta=\rho-\sigma=iA$，其中 $A$ 为实反对称矩阵。以降序非负数 $a_1\geq\cdots\geq a_m\geq0$ 表示其反对称块权重，包含零块；于是
+
+$$
+\operatorname{spec}(\Delta)
+ =\{a_1,-a_1,\ldots,a_m,-a_m\}
+   \cup\{0\ \text{若 }d\text{ 为奇数}\},
+\qquad
+D(\rho,\sigma)=\tfrac12\|\Delta\|_1=\sum_{j=1}^{m}a_j.
+\tag{IX.12}
+$$
+
+这种实部与反对称块分解是既有工具，见 Wu 等，[*Resource theory of imaginarity: quantification and state conversion*，arXiv:2103.01805v1，式 (36)–(37)](https://arxiv.org/html/2103.01805v1#S3.E36)。此输入域称为旧盲态对：每个实对称效果与 $iA$ 的迹配对均为零，因而任何零相位字的读数相同。该定义只约束态对，不授予任意态的原生制备权限。
+
+$B_k$ 是二值概率分布的总变差，即同一事件的概率差绝对值；它采用定义 60.1 的受限测量对比口径。一般框架及其与迹距离的归一化见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*，arXiv:0810.2327v2，引言式 (1)–(3) 及 §1](https://arxiv.org/html/0810.2327v2)。相对于固定实基的实 Kraus 操作比这里的实酉控制更宽；Wu 等，[*Operational Resource Theory of Imaginarity*，arXiv:2007.14847v2，Theorem 2、式 (5) 及随后关于二维像的论述](https://arxiv.org/html/2007.14847v2#Thmtheorem2)，采用的是该更宽菜单。参考文稿《AURIC 受限量子读出与相位资源理论》P.6 的单相位合同与此处相接；P.8/C4 中的实 CPTP 反对称平面合并不在 (IX.11) 的操作类内。
+

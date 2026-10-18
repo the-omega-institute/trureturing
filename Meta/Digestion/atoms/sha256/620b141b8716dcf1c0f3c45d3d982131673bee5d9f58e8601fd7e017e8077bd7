@@ -1,0 +1,2 @@
+**Hypothesis 22.1 (exact refinement acquisition).** In addition to Hypothesis 18.1, acquire the exact integer $C$ from zero. On an actual $\alpha$ hold $C$; on an actual $\beta$ write $C'=C+A_{\rm old}$. Include seed/retry/return and completing letters, and finish its write before the same third latch. Hold $C$ thereafter with the selected bank. This is the ordered-pair count (SC.7), with $0\le C\le AB$. Its $O(\log(n+2))$-bit count representation, updates and delivery are paid. It is not inferred from counts, a law, approximate moments or a future readout.
+

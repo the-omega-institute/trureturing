@@ -1,0 +1,20 @@
+**Corollary 7.2 (whole-row decision when every pair is covered).** Suppose
+the entire exact attained image $R_Q(D)$ is finite, with its exact distinct
+row list supplied by [NPL, Theorem 5.3][NPL]. Suppose every pair of distinct
+rows has an anchor of Assumption 2.1, or has already been settled by another
+applicable exact prefix supplier. Then whole-row uniform-finite-read
+existence is decidable: a positive pair contact excludes it; otherwise the
+maximum of all pair exclusion depths determines the whole row. Zero or one
+attained row is constant and needs zero new reads.
+
+Proof. There are finitely many distinct pairs. A depth excluding a common
+prefix for each pair also excludes any row-disagreeing source pair when
+all these depths are replaced by their maximum. Conversely a single
+positive pair supplies arbitrarily deep disagreements. Apply ARH's
+operational equivalence. For more than two selected rows, exclusion of
+$J_B(H)$ alone is not enough: two different rows can still share a prefix
+while another row is excluded. The complete exact image and all distinct
+pairs are therefore necessary in this use. An infinite full-row image is
+the separate existing finite-output obstruction of NPL, not a conclusion
+from one selected $B$. $\square$
+

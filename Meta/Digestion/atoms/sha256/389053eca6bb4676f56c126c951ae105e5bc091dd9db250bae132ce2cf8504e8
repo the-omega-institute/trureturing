@@ -1,0 +1,17 @@
+**An effective cutoff.** For $s\ge\log144$, the function
+
+$$\frac{\exp(s/2)}{(3s+\log945000)^{5/2}}$$
+
+is increasing, since its logarithmic derivative is
+
+$$\frac12-\frac{15/2}{3s+\log945000}>0.$$
+
+It tends to infinity. We can therefore effectively choose $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2}.$$
+
+These strict inequalities persist for every $s\ge s_0$. Set $D_0=\lceil\exp(s_0)\rceil$. If $D>D_0$, (91.5) is impossible. The sequence $B_{3^j}$ is strictly increasing and effectively computable, so $D\le D_0$ leaves an effectively bounded finite set of possible original indices $j$. ∎
+
+This is eventual uniqueness within the actual squarefree rank-one stratum. It neither classifies the finite exceptions nor supplies a numerical cutoff or an additional exclusion at $N=81$. Higher-rank curves and nonsquarefree original blocks are outside the theorem. No infinitude of squarefree rank-one blocks or universal WSS exclusion is asserted.
+

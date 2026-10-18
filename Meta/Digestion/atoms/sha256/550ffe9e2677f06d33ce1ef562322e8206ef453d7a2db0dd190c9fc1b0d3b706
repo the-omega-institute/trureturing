@@ -1,0 +1,95 @@
+**Definition 205.1 (One complete score and one budget).** Fix $L\ge3$.
+Use the complete event space of 198.1, 199.1 and 204.1: for every
+$w\in\{0,1\}^L\setminus\{1^L\}$ with first zero $n(w)=n$, a nonnegative
+score $V$ has three independent coefficients $A_w,C_w,P_w$, with demands
+$1-b_n-e,b_n-e,1-e$. The positive word has coefficient $T$ and demand
+$1-e$. Its reward at label $\ell$ is
+
+$$
+A_w\mathbf1_{\ell=0}+C_w\mathbf1_{\ell=n}
+ +P_w\mathbf1_{\ell\in\{0,n\}},
+$$
+
+and only label zero earns $T$. All $3(2^L-1)+1$ rows remain, including
+negative singleton demands, zero-score rows and every multiple-zero word.
+Every cell permits every label $0,\ldots,L$, including unqueried and
+previous labels. The complete $N$ catalog has empty, singleton and
+preselected pair tables with cells $00,01,10,11$; the complete $O$
+catalog has increasing pairs with cells $0,10,11$. Static repetitions
+have singleton information and reversed $N$ schedules permute cells;
+this identification does not exempt any actual request from the count.
+Write
+
+$$
+\begin{aligned}
+R&=(1,2;1,2,0),&\alpha&=(1,1,0,\ldots,0;0),&r&=z_R=d(\alpha),\\
+h(b)&=d(b)-r,&G_C&=(z_D-r)_{D\in\mathcal D_C},&
+\Delta_C(V)&=\max_{D\in\mathcal D_C}V\cdot(z_D-r),\\
+\beta_n(V)&=\sum_{n(w)=n}(C_w-A_w),&
+K_V&=\sum_w(A_w+C_w+P_w)+T,&Q(V)&=(\beta(V);K_V),\\
+F_q(b)&=\sum_n\beta_n(b_n-\alpha_n)-Ke&&
+(q=(\beta;K),\ C=N,O).
+\end{aligned}
+\tag{205.1}
+$$
+
+In $R$, labels are listed in stopped-cell order. Its column in $G_C$
+is zero, so $\Delta_C\ge0$. For fixed addresses the support is the sum
+of the cell maxima over all labels; stopped cells are merged before
+maximization. The auxiliary domain and certificate set remain
+
+$$
+\begin{aligned}
+H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\},\\
+\sigma_H(q)&=\max_{b\in H_L}F_q(b),\qquad P_H=\{q:\sigma_H(q)\le0\},\\
+E_N&=\{q:\exists V\ge0,\ \exists\theta\in[0,1],\quad
+ \Delta_N(V)\le1-\theta,\quad\sigma_H(q-Q(V))\le\theta\}.
+\end{aligned}
+\tag{205.2}
+$$
+
+The residual may have either sign; $\theta=1$ allows nonzero zero-cost
+scores. We reuse 198.5's exact hull
+$H_L=\operatorname{conv}\{o,p,u_k,v_k:3\le k\le L\}$, where $o=0$,
+$p=(1,0,\ldots;0)$, $u_k$ has its first $k$ entries $1/(k-1)$ and all
+others, including $e$, zero, while $v_k$ has its first $k$ entries one
+and all remaining entries and $e$ equal to $e_k=(k-2)/(k+1)$.
+These auxiliary zero-cap endpoints are not original positive-tail models.
+
+For the input family only, require $A=0$ and pair support in first-zero
+classes 1 and 2, with arbitrary correct rows and $t=T\ge0$. Put
+
+$$
+\gamma_j=\sum_{n(w)=j}C_w,\quad E=\gamma_1+\gamma_2,\quad
+S=\sum_wP_w,\quad G=\sum_{j\ge3}\gamma_j,\quad
+W=E+S+t,\quad\mu=\max_{j\ge3}\gamma_j,\quad\delta=\Delta_O(y).
+\tag{205.3}
+$$
+
+Then $y\cdot r=W$ and $K_y=G+W$. A representative in (205.2) need not
+belong to this input family. Write $w(Z)$ for the word with zero set
+exactly $Z$. Every construction below sets unlisted coefficients to
+zero and adds coincident coefficients. Inactive bits in a constructed
+score are explicitly set to one; original words and competitors are
+never restricted by that convention.
+
+The use of a certificate is the existing single-budget argument of
+199.3--199.4. For the same complete $\lambda\ge0$ satisfying
+$G_N\lambda\ge h(b)$, with $M=\sum_D\lambda_D$, nonnegativity gives
+
+$$
+F_q(b)\le V\cdot h(b)+\theta
+ \le M\Delta_N(V)+\theta\le\max\{1,M\}.
+\tag{205.4}
+$$
+
+The following four groups calibrate, respectively, growing retained
+label support, early correct credit, positive cells of one common
+measure, and a conditional common terminal. Partial-row probability
+laws, separate component maxima and dual moment measures cannot replace
+the one complete allocation in (205.4).
+
+### 205.1 Growing support and the failure of additive component budgets
+

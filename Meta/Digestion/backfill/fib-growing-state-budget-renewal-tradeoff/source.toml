@@ -1,0 +1,5 @@
+source_id = "fib-growing-state-budget-renewal-tradeoff"
+path = "docs/develop/theory/FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

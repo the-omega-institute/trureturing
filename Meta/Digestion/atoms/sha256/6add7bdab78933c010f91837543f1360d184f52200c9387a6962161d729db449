@@ -1,0 +1,47 @@
+**Theorem 5.1 (N2: root, masses and converse).** For each $0<q<1/2$ there is exactly one $p=p(q)\in(p_z,p_s)$ satisfying
+
+$$
+T(p,q)=g'(p)B_J(p,q)-g(p)[J'(p)-J'(q)]=0.
+\tag{TC.12}
+$$
+
+Use (TC.7) for $m,\omega_+,\omega_-$ and define
+
+$$
+\Lambda(q)=mJ(p)+(2-m)J(q),\qquad V_\Phi(q)=mg(p).
+\tag{TC.13}
+$$
+
+Whenever $m\le1$, the line $e_P$ in (TC.9) of mass $m$ and the lines $(\sqrt{1-q},\pm\sqrt q)$ of masses $\omega_+,\omega_-$ form a globally optimal measure at budget $\Lambda(q)$, with value $V_\Phi(q)$. Zero masses are omitted. Every nonprojective strict-interior optimizer belongs to this family. On the whole formal interval $0<q<1/2$, $p'(q)<0$ and $\Lambda'(q)<0$; the budget equation thus has at most one $q$ on the feasible family.
+
+Proof. At $p_z$, $T=g'(p_z)B_J>0$; at $p_s$, $T=-\gamma[J'(p_s)-J'(q)]<0$. Also
+
+$$
+T_p=g''(p)B_J-g(p)J''(p)<0.
+$$
+
+Existence, uniqueness and the implicit-function theorem follow. At this root put $\eta=g'(p)/(J'(p)-J'(q))=g(p)/B_J>0$, $c=0$, $\ell=-\eta J'(q)$ and $a=-\eta J(q)-\ell q$. The whole-interval gaps are
+
+$$
+\psi_0(t)=\eta[J(t)-J(q)-J'(q)(t-q)],\qquad
+\psi_1(t)=\psi_0(t)-g(t).
+$$
+
+The first is nonnegative globally with unique zero $q$. The second is strictly convex and has value and derivative zero at $p$ by (TC.12), hence is nonnegative on all $[0,1]$. These are the complete inequalities (TC.6), including axes. If $m\le1$, (TC.7) gives nonnegative masses, exact covariance and the stated cost/value. The $q$ lines have negative expectation since $q<1/2<p_z$. Every used gap is zero, so the dual matches. Conversely a three-line optimum has $c=0$ by Theorem 3.1; its contact value/derivative equations are exactly (TC.12), and covariance forces (TC.7).
+
+Write $B=B_J$, $\Delta_J=J'(p)-J'(q)$ and $d=p-q$. Strict convexity gives $B<d\Delta_J$, whence at the root
+
+$$
+T_q=J''(q)[g(p)-d g'(p)]<0,
+\qquad p'(q)=-T_q/T_p<0.
+$$
+
+Differentiating $mp+(2-m)q=1$ gives
+
+$$
+V_\Phi'(q)=g(p)\left[-\frac{2-m}{p-q}
++m p'(q)\left(\frac{\Delta_J}{B}-\frac1{p-q}\right)\right]<0.
+$$
+
+Direct differentiation of (TC.13), using the same moment equation, gives $\Lambda'=V_\Phi'/\eta<0$. This remains valid on the formal portions where $m>1$, which do not give positive measures. For each permitted unit line $e$ with whitened mass $\omega$, (TC.3) gives its ellipse direction and failure mass $\omega A(e_2^2)$. Thus the theorem includes actual reduced-measure attainment rather than only contact equations. $\square$
+

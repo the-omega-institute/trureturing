@@ -1,0 +1,5 @@
+source_id = "auric-omega-phase-gain-and-qutrit-recovery"
+path = "docs/develop/theory/AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

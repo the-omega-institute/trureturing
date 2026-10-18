@@ -1,0 +1,17 @@
+**Theorem 8.1 (global original-class bound and equality).** At every physical parameter of Theorem 1.4, the displayed contact law maximizes actual-label height TV over the entire class of Definition 1.3 at its represented strength. This includes originally fractional, complex and multi-Kraus competitors under the retained interfaces.
+
+Proof. Take any admitted original competitor and its same fractional law of Proposition 3.2. Apply Theorem 6.3 separately at the two endpoints of each existing atom, multiply by $1-\xi$ and $\xi$, and use endpoint convexity. Because $\Gamma_\xi=(1-\xi)\Gamma_0+\xi\Gamma_1$, integration gives
+
+$$
+\begin{aligned}
+\sum p|\ell_h+1000c_h\xi f_h|
+&\le\sum p\big((1-\xi)|H_0|+\xi|H_1|\big)\\
+&\le Y\cdot B(1000)-\lambda k\\
+&\le Y\cdot B(1000)-\lambda\sqrt\alpha\,s/s_0.
+\end{aligned}
+$$
+
+Every step concerns the same original law, including both covariance constraints and the attached failure mass. The last direction uses $\lambda>0$ and the original contrast inequality. It yields a bound for every original admitted time law and acquired label, not just for stationary contact candidates or endpoint-only competitors. Nonnegative slack integration is legitimate under exactly the convergence and measurability assumptions in Assumption 1.2.
+
+On the physical selected law every weight is nonnegative, every occupied gap vanishes and every indicated height/report sign is strict. It satisfies all eight moments, and its deterministic reports give $s=s_0k/\sqrt\alpha$. Thus every inequality is equality. Theorem 9.2 constructs this same law as one common original instrument, proving attainment and the asserted global optimum. No finite-dimensional relaxation or separate optimization of marginal objectives is used. $\square$
+

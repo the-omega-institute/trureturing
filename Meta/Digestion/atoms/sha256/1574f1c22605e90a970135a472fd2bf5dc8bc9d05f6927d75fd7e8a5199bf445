@@ -1,0 +1,46 @@
+**定义 6.1（先例与所用数学工具）。** The mathematical interfaces to
+the series and its companions have the following scopes.
+
+| Mathematical source | Correspondence and hypothesis limit |
+| --- | --- |
+| [I](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md), Definitions 39.1 and 44.1; [II](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), Definitions 51.1 and 56.1 | Complete targets, the counted initial reading, original clocks and the whole-set actual-child recursion used in Definitions 1.1 and 5.2. |
+| [III](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md); [IV](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md); [V](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md); [VI](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md) | The earlier gain-shape, continuation and actual-history theory supplies the surrounding complete-target problem. The literal $JMMJ$ history is V, Definition 5.1. No decoder or obstruction on a different literal ancestor is a premise of Theorem 2.1. |
+| [VII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), Definitions 1.1–1.3 and 8.1; Theorems 8.2, 9.1 and 10.2 | The exact $JMMJM$ and $H_*$ histories, first-four-reading interpolation, the full-$H_*$ gain-ray exclusion, closed $u=1$ slice and known source-band inverse. The slice and band hypotheses are retained in Definition 5.1. |
+| [VIII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md), Theorems 2.1 and 4.2; Corollary 4.3 | Known-initial-root recovery and the mixed-drift $H_*$ family. Initial-root membership is not observation-derived, and six-read compatibility is not $L_2$. |
+| [Whole-class affine decoders](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md), Sections 1–2, Theorems 4.1 and 5.1, equations (5.2)–(5.3) | Normalization, trace coordinates, whole known-shape/source decoders and $f=U-dV$. Theorem 2.1 supplies nonvanishing already at ancestor clocks four and five, without terminal-slope selection. |
+| [Late-root rigidity and terminal collision reductions](FIB_JMMJM_LATE_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_REDUCTIONS.md), Theorems 3.1, 6.1 and 7.1 | The specified late-double-root class and the two terminal-pattern reductions of Definition 5.1, rather than a full mixed-source/mixed-shape exclusion. |
+
+The inequality in Theorem 2.1 and its rank-five, source-graph and
+trace-corridor consequences are `repo-derived` deductions in this
+prescribed model. Four-node Lagrange interpolation, Vandermonde
+invertibility, polynomial root counting and compactness are established
+tools used inside their proofs; no new general interpolation or
+compactness theorem is intended.
+
+For comparison with conditional identifiability, Yanjun Li, Kiryung Lee
+and Yoram Bresler, *A Unified Framework for Identifiability Analysis in
+Bilinear Inverse Problems with Applications to Subspace and Sparsity
+Models*, [Theorem 2.8, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1),
+is `literature-attested`: for a constrained bilinear problem with
+nonzero factors and a specified ambiguity transformation group, it
+requires both identification of the first factor's orbit among all
+compatible pairs and identification of the pair's orbit conditional on
+that first factor. Theorem 3.1 establishes only the conditional
+gain/drift statement for a supplied source in the present model. The
+affine drift and prescribed sequential actions are retained here; no
+identification of the first factor, ambiguity-group equivalence or
+adaptive sampling conclusion is imported from that bilinear theorem.
+
+Sunav Choudhary and Urbashi Mitra, *Identifiability Scaling Laws in
+Bilinear Inverse Problems*,
+[Proposition 1 and Remark 5, arXiv:1402.2637v2](https://arxiv.org/html/1402.2637v2),
+are `literature-attested`: their lifted universal criterion uses the
+specified linear measurement map and the difference set of realizable
+constrained rank-one products. Remark 5 retains observations realizable
+in the original factor model. The correspondence here is the need for
+one common realizable history, expressed explicitly by (5.2)–(5.6).
+No lifted-map criterion, random-map threshold or independently
+realized pair is substituted for that system. These citations are
+comparisons of hypotheses, not premises for Theorem 2.1 or claims of
+external originality or an exhaustive classification.
+

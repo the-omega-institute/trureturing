@@ -1,0 +1,14 @@
+**Comparison 12.2 (the full prescribed-code frontier).** PCA Theorem 3.2 characterizes generation of the same independently prescribed code by finite observation; PCA Theorem 8.2 gives a compatible alpha-containing acquired-term code with no finite installed native preparer. Its obstruction occurs inside one whole-target fiber. PCA Theorem 15.2 excludes uniform extraction of a determining depth, menu or original-entry preparer even from total, finitely preparable code-program descriptions. Those conclusions remain intact because this volume chooses SOME usable bit rather than recovering the prescribed one.
+
+The current PCA scope also includes §§17–22, not just its certificate-relative results. For the sparse selected-address OR family, Theorem 19.1 gives, with finite support $A$, $n=|A|$ and $W=\sum_{s\in A}(s+4)$, the exact simultaneous minima
+
+$$
+H\ge n+4,\qquad p\ge\max(2,n+1),\qquad
+\ell\ge\max(6,3+W),
+\tag{BPS.27}
+$$
+
+and excludes finite preparation for infinite support. Additional mandated latches add to the installed-state minimum. PCA Theorems 20.2–20.3 distinguish finite supply, validity and bounded feasibility: on their total-description presentation finite preparability is $\Sigma^0_2$-complete, while the stated certificate-validity and baseline bounded-feasibility problems are $\Pi^0_1$-complete. On the total Boolean predicate promise neither side of finite preparability has a uniform semidecision. PCA §21 obtains its positive effective interface only with an explicit applicable finite automaton and exact equivalence to the prescribed function. No such program-verification or certificate-supply step is implicit in the present finite search.
+
+PCA §§23–28 further treat prescribed second-hit and near-unanimity codes on a supplied finite selected set of size $n\ge3$. Theorem 27.1 gives minima $2n+2+r,n+1,3+W$, where $r$ counts additional mandated latches, and Corollary 27.2 gives the unbounded installed-state premium $n-2$ over sparse OR at unchanged execution minima. Corollary 27.3 gives bounds, not a full installed-state optimum for every other interior threshold. These are fixed-code resource statements with the original eight-state reader and literal entries held fixed. The constants in (BPS.24) bound necessary observation depth for existence of some generated usable bit; they neither replace these prescribed-code minima nor generate any excluded original code.
+

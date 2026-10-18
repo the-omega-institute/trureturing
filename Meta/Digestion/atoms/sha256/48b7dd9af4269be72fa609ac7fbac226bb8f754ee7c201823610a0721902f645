@@ -1,0 +1,17 @@
+**适用命题 Q14。** 采用有限状态 $\Omega$、有限动作与观察模型、声明的初始非空 belief $B_0\subseteq K$，以及精确观察更新。状态、动作、观察三者的有限性分别声明；仅动作与观察有限不保证 belief 枚举有限。每个 belief 的可选动作须在其全部状态共同启用。供文的 $\delta(s,a)$ 是确定转移；取总转移语义，或明确将死锁作为失败，将已声明安全终止编码为安全吸收态。
+
+定义安全非空 belief 空间 $\mathfrak B=\{B:\varnothing\ne B\subseteq K\}$，算子在集合族 $S\subseteq\mathfrak B$ 上取
+
+~~~math
+\mathcal F(S)=
+\left\{B\in\mathfrak B:
+\exists a\in\bigcap_{s\in B}\operatorname{Enabled}(s),\quad
+\delta_a(B)\subseteq K,\quad
+\forall y,\ B_{a,y}\ne\varnothing\Rightarrow B_{a,y}\in S
+\right\}.
+~~~
+
+策略取依赖已取得观察历史的确定策略。一个共同控制动作之后，要对全部可实现的非空观察后继成立，不能每个隐藏状态另选动作；对手的状态与输出选择须符合该合同。若 $S\subseteq S'$，同一个动作见证仍成立，故 $\mathcal F$ 单调。最大不动点刻画从 $B_0$ 中每个可能真态、每条可实现观察分支都保持安全的 sure safety。在有限 $\mathfrak B$ 中从全空间迭代删除失败 belief 可有限稳定；胜出选择器无记忆于 belief，未必无记忆于原始观察。
+
+非确定或随机转移扩展须用全部允许后继支持更新，不沿用单一 $\delta$ 冒充一般合同。随机策略、almost-sure 而非 sure 目标、扰动与终止约定均需另定。无限载体不继承有限迭代、有限表示或有界记忆结论。这个集合安全结论没有证明物理无限时长、非 Zeno、能量、排热、资源、校准或生理功能，也不认证生物学生命。
+

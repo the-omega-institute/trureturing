@@ -1,0 +1,48 @@
+**Proposition (compulsory scale of the occupied subtraction).** There
+is one finite common start such that every qualifying original witness
+beyond it, with its complete unchanged \(S_X\), satisfies
+\[
+ L_{\rm occ}(X)\ge\frac1{32}\int_{S_X}t^{1/5}\,dt
+ \ge\frac{\ell^{1/5}}{32}M_X.
+\tag{EL.6}
+\]
+
+*Proof.* Fix a classical PNT start \(Y\) (see the
+[existing PNT error input](../../../Library/Weil/trudgian2014pnt.md);
+only \(\theta(y)/y\to1\) is used) such that
+\(99y/100\le\theta(y)\le101y/100\) for every \(y\ge Y\).
+Take \(t\ge\max(243,Y^2)\), write \(y=\sqrt t\), and put
+\(c=2/\sqrt3>23/20\). The actual primes \(y<q\le cy\) have
+\(t<q^2\le4t/3\); (EL.2) gives \(\tau_{q,2}<t\).
+Their exact mass is
+\[
+ \theta(cy)-\theta(y)
+ \ge\left(\frac{99c}{100}-\frac{101}{100}\right)y
+ >\frac{257}{2000}y>\frac18\sqrt t.
+\]
+For \(x\ge243\), the exact logarithmic derivative is
+\[
+ -xw'(x)/w(x)=2+2/\log x-1/(1+\log x)<4.
+\]
+Integrating this bound gives
+\(w(B_t)/w(t)\ge(t/B_t)^4\ge(3/4)^4>1/4\).
+Since \(w\) decreases,
+\[
+ b(t)=\frac{\int_t^{B_t}w(x)dx}{w(t)t^{11/10}}
+ \ge\tfrac14 t^{-3/10}.
+\]
+Every square just counted occurs in the integrand of (EL.5), even if
+it lies beyond \(B_t\). Their contribution is at least
+\(t^{1/5}/32\); the remaining terms are nonnegative. Integration over
+exactly \(S_X\) proves (EL.6). The start is finite and unspecified;
+its enlargement for the original source premises is retained. \(\square\)
+
+Thus treating this raw subtraction as \(o(M_X)\), or as bounded by
+\(CM_X\) for a fixed \(C\) along the cofinal original family, has
+the wrong scale. The positive \(wA_S\) term contains the corresponding
+large cancellation. This does not make the centered net response large:
+the already proved reference estimate is
+\(H_{\rm ref}=(1/4+o(1))M_X\). Formula (EL.4) locates its entire
+negative phase in layers already occupied in the same edge's \(U\).
+The raw subtraction and that negative-phase mass are distinct quantities.
+

@@ -1,0 +1,11 @@
+**定义 220.14（Interior erasure without renumbering）。** For any
+$E\subseteq\{3,\ldots,L\}$ let $f_E$ set exactly these bits to one,
+without changing the addresses. Put $k_E(w)=n(f_E(w))$, or $\infty$
+if the image is $1^L$. Define $z=\mathcal T_Ey$ as follows.
+If the original first zero is retained, push $A,C,P$ separately to
+$f_E(w)$. If it is erased, discard $C_w$ and route $A_w+P_w$ as
+$A$ to the new first-zero word, or as $T$ if terminal. Keep original
+$T$ and add coincident contributions. The ambient $L$ addresses,
+all words, labels and independent event rows remain. This transforms
+proof weights, not sources or acquisition probability laws.
+

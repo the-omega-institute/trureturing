@@ -1,0 +1,70 @@
+**定理 448.4（原 signed 来源的完整对数矩）。** 以下级数均按自然前缀
+\(n\le N\) 取极限。对每个实数 \(r>-1\)，有
+
+\[
+\boxed{
+\sum_{n\ge2}\frac{\mu(n)}{n(\log n)^r}
+=-\frac{\mathbb EU^r}{\Gamma(1+r)}<0,\qquad
+\sum_{n\ge2}\frac{e_n}{n(\log n)^r}
+=-\frac{b\,\mathbb EW^r}{\Gamma(1+r)}<0.
+}
+\tag{PM.12}
+\]
+
+在零阶对 \(r\) 微分，得到
+
+\[
+\boxed{
+\begin{aligned}
+\mathbb E\log U&=-\gamma_E+
+\sum_{n\ge2}\frac{\mu(n)\log\log n}{n},\\
+\mathbb E\log W&=-\gamma_E+
+\frac1b\sum_{n\ge2}\frac{e_n\log\log n}{n},\\
+d_*&=1-\sum_{n\ge2}\frac{\mu(n)\log\log n}{n}.
+\end{aligned}}
+\tag{PM.13}
+\]
+
+因此（PM.10）是同一实际 Fibonacci 与 Möbius 系数的严格完整比较，而非
+有限素原子的数值巧合。
+
+**证明：条件矩、共同解析域与自然截止。** 复用 §424 的无条件定量
+Mertens 供应及 §414 的实际 Fibonacci 转移；扩大有限头后，
+\(|M(N)|,|H_{\rm raw}(N)|\) 分别不超过固定常数乘
+\(N/(1+\log N)^4\)。对 \(a=\mu\) 或 \(a=e\)，Abel 求和因此使
+
+\[
+S_a(r)=\sum_{n\ge2}a_n/[n(\log n)^r]
+\]
+
+在 \(\Re r>-3\) 局部一致收敛并全纯。删去 \(n=1\) 只改变固定常数。
+具体地，原部分和乘末项趋零；
+导数权重与部分和的乘积由常数倍
+
+\[
+\frac{1}{x(\log x)^{4+\Re r}}
+\left(1+\frac{1+|r|}{\log x}\right)
+\]
+
+支配。每个紧域的下端 \(\Re r>-3\) 支付尾积分；对 \(r\) 求导只增加
+有限次 \(\log\log x\)，仍可积。这里没有对条件级数作无偿无限重排。
+
+\(U,W\) 的分布函数在近端均不超过 \(u\)，远端生存函数均为指数小量，
+故其矩函数 \(\mathbb EU^r,\mathbb EW^r\) 在 \(\Re r>-1\) 全纯。
+近端负矩由积分分部
+\(\int_0^1u^{-a}dF(u)\le1+a\int_0^1u^{-a}du\)（\(0<a<1\)）
+支付；紧域上的对数导数由稍扩大的同一指数区间支配。
+
+先在实数 \(r>1\) 使用尾积分矩公式。由于 \(|e_n|\) 有界，
+\(\sum_{n\ge2}|a_n|/[n(\log n)^r]<\infty\)，可以绝对交换，从
+\(1-F(u)=-a_1^{-1}\sum_{n\ge2}a_nn^{-1-u}\) 得
+
+\[
+\mathbb EX^r=-\frac{\Gamma(1+r)}{a_1}S_a(r),
+\]
+
+其中 \((X,a_1)=(U,1)\) 或 \((W,b)\)。
+在共同半平面 \(\Re r>-1\) 使用解析恒等定理，得到（PM.12）。
+\(S_a(0)=-a_1\)、\(\Gamma'(1)=-\gamma_E\) 及局部一致逐项求导给
+（PM.13）。证毕。
+

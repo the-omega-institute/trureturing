@@ -1,0 +1,49 @@
+**Definition 2.2 (declared hybrid primitive model).** The source is a Native
+register, not TM57's private Clifford source port. It admits literal Read and
+unconditional actual $\rho$ as in Definition 2.1. Ordinary workspace, archives,
+mailboxes, references and outputs use the finite-symbol constructed tapes and
+core occurrences of PR57.D1–D2. There is one serial prescribed next primitive;
+no concurrent actor, random bit, external scheduler choice, unrecorded interrupt
+or imported archive is present.
+
+The following primitive assumptions are explicit parts of this model.
+
+1. The initial source is actually installed at root $\xi$, with native epoch
+   zero and empty native trace. Source supply is charged separately: any finite
+   source code and its private ingress, construction and installation are a
+   source-supply bill, not public controller advice. For a definite logical
+   representation one may use `AtomicPrefixParser.code`, whose length on an
+   $m$-leaf tree is $3m-1$. A canonical supplied packet is a function of $u$;
+   any additional installer choices or scratch residue would be extra state
+   and are excluded here. This is a specified Native input boundary, not a
+   proof of a TM57 literal-port implementation or of free physical source
+   assembly. Histories under study start at this boundary.
+2. Fixed public boot bits, $H,J,\xi$, tape boundaries, interpreter instructions
+   and initial tokens are actually installed by paid finite bit writes using
+   the PR57 boot convention. Their descriptions are fixed before $u$ and are
+   not source-specific programs. Only the constant primitive bootstrap is
+   irreducible initial machinery. No unbounded numeric register is primitive.
+3. Every selected primitive, including a Native source invocation, appends one
+   receipt cell atomically with its declared effect. This extends PR57.D1's
+   receipt convention to the two Native source opcodes. A source-update receipt
+   has a distinguished finite symbol $\mathsf U$; ordinary and fence receipts
+   have their own symbols. A receipt contains no address, reply, private value
+   or choice word. Source calls have a separate source-operation price and one
+   receipt-construction price. Tape occurrences retain PR57's two fee units.
+4. Native Read commits its one finite reply and source update commits its
+   actual successor atomically at this primitive granularity. The source has
+   no partially rewritten tree at an intervening tape cut. A bit-level
+   implementation of either source call would require a different simulation
+   theorem retaining its additional source-busy cuts.
+5. Ownership, immutable seals and token transfers have the ideal exclusive
+   meaning of PR57.D7. Fresh block placement uses deterministic `Base` and
+   allocation, never an allocator-selected fresh name. The controller sees
+   only its acquired reply latches and tapes, not the source or inaccessible
+   native trace.
+
+Thus the native part has the exact `Op`/`nativeStep` meaning on projection;
+every paid tape primitive is a native `localStep`. The projection does not
+erase native Reads or actual updates. The rich tape label and receipt side
+effect are extra runtime structure, with their separate costs. No original
+TM57 source call, guarded graft, candidate value or source rejection is used.
+

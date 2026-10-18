@@ -1,0 +1,61 @@
+**Proposition 392.3 (An original cap-feasible stopped input at every horizon).** Fix any integer $L\ge8$, set
+
+$$
+e=\frac25,\qquad \eta=\frac1{10(L-3)},\qquad
+a_1=a_2=a_3=1,\qquad a_4=\cdots=a_L=e+\eta,
+\tag{392.5}
+$$
+
+and append any entire positive nonincreasing vanishing tail with $a_{L+1}\le e$. There is one complete original $A\in\mathcal O_2$ with $e_a(A)=e$ such that, for its finite low-word law $p$, every class-constant average satisfies
+
+$$
+\deg(\Pi p)=D_{\mathrm{hard}}(\Pi p)=L.
+\tag{392.6}
+$$
+
+Thus the averaging obstruction occurs on actual cap-feasible stopped input laws, with every multiple-zero word and closed tail tie included.
+
+*Proof.* With one uniform seed choose each of
+
+$$
+O(1,2;1,2,0),\quad O(1,3;1,3,0),\quad O(2,3;2,3,0)
+$$
+
+with mass $3/10$, and each singleton $(j;j,0)$, $4\le j\le L$, with mass $\eta$. The pair labels are in cell order $0,10,11$, and singleton labels in reply order $0,1$. Their owning masses sum to $9/10+(L-3)\eta=1$. The common seed selects the entire deterministic table before replies. Execute its actual prime requests, stop at the first queried zero, and hand off the corresponding original mark $\theta_j$ to the unchanged consumer. This is the inherited common-seed realization of [108–110](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#108-common-probability-vector-kernels-and-stopped-schedules), with zero advice, finite handoff and at most two actual requests.
+
+If the first zero is $n\le3$, the two early pairs containing $n$ both output $n$, and no other schedule does. Thus $p_w(n)=3/5$ and the TV distance to $e_n$ is exactly $2/5$, irrespective of all suffix bits.
+
+If $4\le n\le L$, all early pairs output base, singleton $n$ contributes $\eta$ at $n$, and later zero singletons contribute wrong-label mass $z$ with
+
+$$
+0\le z\le(L-n)\eta\le\frac1{10}-\eta,\qquad
+p_w(0)=1-\eta-z,
+\quad p_w(n)=\eta.
+$$
+
+For the target $(1-e-\eta)e_0+(e+\eta)e_n$, the base, correct and union deficits are respectively
+
+$$
+z-e,\qquad e,\qquad z.
+\tag{392.7}
+$$
+
+Their maximum is $e$. This verifies all three independent rows on every suffix, not only on single-zero words. At $1^L$ every schedule outputs base. At every actual first absence $n(x)>L$, the same low transcript therefore emits $\theta_0$ and has error $a_{n(x)}\le e$. Every finite word has an actual source witness, so the attained early-fiber error proves $e_a(A)=e$.
+
+Finally
+
+$$
+p_{w^*}=(1-\eta)e_0+\eta e_L,\qquad p_{w^+}=e_0.
+\tag{392.8}
+$$
+
+These singleton classes are unchanged by any averaging weights. Formula (392.4) has label-$L$ top coefficient $-\eta$, proving degree $L$; the hard-cost argument and terminal-class sampler of Theorem 392.2 give the matching exact cost. For example $a_{L+r}=2/(5r)$ supplies an entire permitted tail with the closed tie $a_{L+1}=e$.
+
+The prefix/cap in (392.5) is not in $H_L$: the lower hull difference is
+
+$$
+(L+1)e-\sum_{j=3}^L a_j=\frac12>0.
+$$
+
+The constructed input is already stopped, so this is a failure of a proposed law transformation, not a separation from all stopped competitors. Its original realization uses the stated finite schedule; the lower bound in (392.6) remains a finite-contract statement. $\square$
+

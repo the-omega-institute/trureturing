@@ -1,0 +1,18 @@
+**Corollary 8.4 (Pareto status and simultaneous sharp averages).** Every
+vector in Theorem 8.1 is undominated in the full original twelve-cost
+problem. In an exceptional segment, distinct parameters give incomparable
+vectors. The equality set of any one original sharp mean is exactly the
+equality set of all three sharp means.
+
+Proof. Each displayed vector has four-sign average $g_y(s)$ at every
+height, since $\sum_{e,n}en=0$. If another full-class design weakly
+lowered every coordinate and strictly lowered at least one, its average
+at that coordinate's height would be strictly below the universal sharp
+mean, a contradiction. In an exceptional segment $t\kappa>0$ and
+$\sqrt{y(64-y)}/128>0$ at every original height. Increasing $\theta$
+strictly raises every $en=+1$ coordinate and strictly lowers every
+$en=-1$ coordinate. Distinct segment vectors are therefore incomparable.
+Necessity in Theorem 8.1 and sufficiency in Theorem 8.2 prove the last
+assertion. This is a statement about twelve resource costs and their
+three averages, not a unique full implementation. $\square$
+

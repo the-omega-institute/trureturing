@@ -1,0 +1,8 @@
+**约定 7.1（推导所属与中间供应）。** 定理3.2、4.2、5.2及其具体价格和分离属于 `repo-derived` 的源特定普通数学推导。来源全地址分类、第一樱桃间隙和加权地址下界在同一个实际 $T_i$ 上组合，得到的不只是一个通用有限假设计数。不存在从“输出目标少”自动推出“二分可取得”的步骤。
+
+中间供应的对应是：原生 `readout` 提供真实回复关系；已付费 `acquisitionTrace` 和 `restore` 提供生产者可用描述；`coordinates` 提供消费者的间隙表达；`native_ancestor_uniqueness` 提供固定词下的强恢复桥。全前沿恢复、坐标唯一性、梳构造和 Catalan 计数都直接复用。上述 Lean 文件在证明链中作为已有供应引用，本卷的新价格证明不成为它们的反向理论依赖。
+
+[Ancestry Cube and Acquisition Cost](AURIC_FIB_ATOM_ANCESTRY_CUBE_AND_ACQUISITION_COST.md) §7–§10已研究实际地址的局部缺陷支持及单缺陷先验；[Joint Moment Fibers](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md) §28–§30给完整前沿任务取得及有限原型价格，§57–§63给 Fibonacci 词纤维证书和原缓存续读；[Mixed Actual Address Partial Bounds](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md) §12给同色宏来源的首请求下降。这些结果的既有局部性、共同控制和不可区分方法作为中间供应，不另认领。这里的具体区别是单叶展开常词族、首樱桃几何消费者、词仅保留切口后的重复调用与完整绝对地址载荷，不是原缓存中尚未首次取得地址的计数。
+
+经典确定决策树、证书及等式搜索中间步骤分别按第3、4章的 Buhrman–de Wolf 和 Nowak 文献归属，属于 `literature-attested` 的方法供应；不作为独立新增承重定理。Nowak 定理1的对数查询界要求邻接性及相干参数给一致分裂率。本卷族的可变查询只有一个下标与其余下标的分裂，不能通过援引该结论获得免费子集询问。新的源特定组合不主张文献优先权或全局原创性。
+

@@ -1,0 +1,8 @@
+**Theorem 91.1 (effective finite-exception theorem).** There is an effectively computable absolute constant $D_0$ with the following property. Let $j$ be a positive integer, let $N=3^j\ge81$, and suppose the actual block $D=B_N=L_N^2+3$ is squarefree and $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $D>D_0$, then there are no odd integer $k>1$ and positive integer $c$ satisfying
+
+$$3\nmid k,\qquad B_{Nk}=Dc^2.$$
+
+Thus only finitely many squarefree rank-one original ternary blocks can have an admissible repeated full squarefree kernel, and their possible original indices are effectively bounded. The constant $D_0$ is not numerically computed here; in particular, no assertion that $B_{81}>D_0$ follows.
+
+**Proof.** We combine the first-return lower bound from §90 with an effective upper bound for integral multiples on a fixed quadratic-twist family.
+

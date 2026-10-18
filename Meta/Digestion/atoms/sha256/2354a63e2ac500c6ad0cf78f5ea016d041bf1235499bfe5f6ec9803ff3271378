@@ -1,0 +1,53 @@
+**Realization 6.1 (Common seed and counted requests).**
+Partition one source-independent uniform seed in $[0,1)$ into the
+complete-table intervals of (4.1), omitting zero weights. Equivalently,
+choose its branch and schedule interval and use the same rescaled
+coordinate for every quantile partition in (3.1). Half-open intervals
+specify endpoints. The seed fixes the entire schedule and all
+counterfactual labels before any reply.
+
+Execute the selected increasing schedule in $O$ until its first queried
+zero or exhaustion, then hand off its actual $\theta_j$ to the unchanged
+consumer. Every source and seed terminates finitely and measurably,
+with zero advice and at most two actual calls. Its $N$ completion obtains
+the whole same schedule on the same actual source and seed and reconstructs
+the stopped output; ignored replies count. This construction gives equal
+laws without stopping an arbitrary competing $N$ rule.
+
+**Boundary statement 6.2 (Closed parameters and active horizons).**
+At $181v=75u$ the prescriptions (5.2) and (5.5) coincide and $y=0$.
+At $v=u$, $x=0$ and $y=24u$, exactly the reused equal-tail law of XVIII
+321.1. At $u=v=0$ both later branches vanish and the reused seven-active
+law attains $5\tau$. At $\tau=1/24$ the $R$ branch vanishes.
+At $u=v=\tau$ the $P^0$ branch vanishes. The cases $u=\tau$, $v=0$,
+$a_8=a_7$, $a_{10}=5\tau$ and all other allowed tail ties are included.
+There is no division by $u$, $v$ or a vanishing branch mass.
+The algebraic $\tau=0$ degeneration is outside the original positive
+sequence assertion.
+
+On the exact wedge with $u>0$,
+$a_9-E_{\rm sum}=(117v-11u)/128>0$, since $v\ge75u/181$.
+The active horizon is nine; at $u=v=0$ it is seven.
+At the complementary displayed upper cap with $u>0$, $a_8$ is active;
+the horizon is eight for $v\le22u/181$ and nine for $v>22u/181$.
+Equality is inactive under the convention $a_i>c$.
+All later amplitudes are inactive at these upper caps.
+These statements do not describe the unknown complementary minimizing
+horizons.
+
+As a concrete single-budget boundary, take $\tau=u=1/24$ and
+$v=75u/181$. The branch weights on $R,P^0,P^\star,Q$ are
+$0,53/181,0,128/181$. The combined $(6,7)$ schedule has mass
+$127/4344$ and vectors
+
+$$
+\frac{127}{4344}e_0,\qquad\frac{127}{4344}e_7,\qquad
+\frac{70e_0+57e_8}{4344}.
+\tag{6.1}
+$$
+
+Each counterfactual cell has the same schedule mass, counted once.
+Every finite positive prefix and later first-zero fibre used above is
+actual. Arbitrarily slow positive vanishing tails are allowed, without
+an infinite all-positive actual source or an extra request.
+

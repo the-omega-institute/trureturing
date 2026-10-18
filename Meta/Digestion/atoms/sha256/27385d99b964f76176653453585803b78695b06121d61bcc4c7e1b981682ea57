@@ -1,0 +1,47 @@
+**Theorem 2.5 (The variable-reference phase connection).** At fixed means,
+declare transport by
+
+$$
+d\theta=w(\kappa)\,d\chi.
+$$
+
+Thus a pure $\kappa$ displacement leaves all phases fixed. For derivatives in
+this open fiber,
+
+$$
+d^{\mathsf T}w'=0,\qquad p_\kappa^{\mathsf T}w'=-1.
+$$
+
+The vector-valued connection form and its curvature in this abelian real
+phase description are
+
+$$
+A=d\theta-w(\kappa)d\chi,
+\qquad F=dA=-w'(\kappa)d\kappa\wedge d\chi.
+$$
+
+In particular $w'$ is never zero, and there is no potential $f$ on a nonempty
+open $(\kappa,\chi)$ rectangle with $df=w\,d\chi$.
+
+Proof. Differentiate the identities of Proposition 2.4, using $p'=d$:
+
+$$
+0=(d^{\mathsf T}w)'=d^{\mathsf T}w',\qquad
+0=(p^{\mathsf T}w)'=d^{\mathsf T}w+p^{\mathsf T}w'=1+p^{\mathsf T}w'.
+$$
+
+The exterior derivative gives $F$. If $df=w\,d\chi$, then
+$\partial_\kappa f=0$ and $\partial_\chi f=w$, so equality of mixed partials
+would force $w'=0$, a contradiction. The tempting section
+$\theta=w(\kappa)\chi$ instead has
+
+$$
+d\theta=w\,d\chi+\chi w'\,d\kappa.
+$$
+
+Its second term is essential and it does not define the declared transport.
+In this five-mode gauge $w_2=w'_2=0$, so a nonzero $w'$ cannot be pure common
+phase: a common vector with zero middle component is zero. In the general
+matrix setting of §2.9 nonzero ambient curvature can, in contrast, be only
+common phase. $\square$
+

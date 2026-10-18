@@ -1,0 +1,21 @@
+**Definition 278.1 (Explicit constants).**
+Let $L\ge6$, $m=L-2\ge4$, $c=c_m$ and $k=\lceil m/2\rceil$.
+In the balanced measure of Definition 274.1 every $k$-subset has
+the same positive weight
+
+$$
+w_m=\begin{cases}
+c/\binom mk,&m\text{ odd},\\
+2/\binom mk,&m\text{ even}.
+\end{cases}
+\quad
+C_m=\frac{(m+1)!}{(m-k+1)!},\quad
+\gamma_m=\frac{w_m}{C_m},\quad
+a_m=\frac{c-3}{2},\quad B_m=1+\frac m{a_m},\quad
+\epsilon_m=\frac{\gamma_m}{1+cB_m}>0.
+\tag{278.1}
+$$
+
+For example $\epsilon_4=1/5060$ and $\epsilon_5=1/37560$.
+These constants are conservative, without a sharpness assertion.
+

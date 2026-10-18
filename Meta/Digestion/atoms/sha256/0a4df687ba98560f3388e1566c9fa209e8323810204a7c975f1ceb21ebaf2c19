@@ -1,0 +1,11 @@
+**Corollary 4.2 (increasing input-multiplier degree alone cannot suffice).**
+Keep the original potential spaces, output partitions and centered events.
+Replacing the input multipliers by arbitrary real-valued functions defined
+at the two relevant input nodes still permits no positive-sum pair of
+universal inequalities with nonnegative risk weights as in Theorem 4.1.
+
+**Proof.** Equations (3.3)--(3.4) and their atomic counterparts say that
+every retained raw residual is zero pointwise at its node. Its product
+with any real-valued input multiplier is therefore zero. The potential,
+event and risk terms still satisfy (4.1). $\square$
+

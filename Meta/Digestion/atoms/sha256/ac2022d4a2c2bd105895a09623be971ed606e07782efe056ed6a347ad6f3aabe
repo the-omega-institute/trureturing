@@ -1,0 +1,44 @@
+**定理 7.5（四个底角全部具有三角形顶点图）。** 对任意 $`a,b\in\{0,1\}`$，设 $`B_{ab}=(a,b,0)`$，相邻三棱的进入向量为
+
+```math
+e_1=(1-2a,0,0),\qquad
+e_2=(0,1-2b,0),\qquad
+e_3=(-a,-b,1).
+```
+
+它们线性独立，切锥恰为 $`\mathrm{cone}\{e_1,e_2,e_3\}`$。令
+
+```math
+h_{ab}=(1-2a,1-2b,1-a-b).
+```
+
+对全部 $`0\lt\varepsilon\lt1`$，横截平面 $`\langle h_{ab},P-B_{ab}\rangle=\varepsilon`$ 在凸体内截出
+
+```math
+\mathrm{conv}\{B_{ab}+\varepsilon e_1,
+B_{ab}+\varepsilon e_2,B_{ab}+\varepsilon e_3\},
+```
+
+因此四个底角的顶点图都是非退化三角形。
+
+证明。任意位移 $`d=P-B_{ab}`$ 有唯一分解 $`d=s_1e_1+s_2e_2+s_3e_3`$，其中
+
+```math
+s_3=Z,\quad
+s_1=(1-2a)(d_X+aZ),\quad
+s_2=(1-2b)(d_Y+bZ).
+```
+
+当 $`a=0`$，$`s_1=X`$；当 $`a=1`$，$`s_1=1-X-Z`$；$`s_2`$ 同理取 $`Y`$ 或 $`1-Y-Z`$。故在对应角的活动三约束恰为 $`s_i\ge0`$，其他侧面约束为 $`s_1+s_3\le1`$、$`s_2+s_3\le1`$。每个非负组合经足够小缩放满足后两式，证明切锥精确等于所列锥。
+
+直接计算 $`\langle h_{ab},e_i\rangle=1`$，于是横截方程是 $`s_1+s_2+s_3=\varepsilon`$。当 $`\varepsilon\lt1`$，后两条约束自动严格成立；截面因此恰为三个非负系数之和固定的单纯形，三个顶点如上。三向量独立保证三角形不退化。∎
+
+| 底角 | 横截平面 | 三个截面顶点 |
+| --- | --- | --- |
+| $`B_{00}`$ | $`X+Y+Z=\varepsilon`$ | $`(\varepsilon,0,0),(0,\varepsilon,0),(0,0,\varepsilon)`$ |
+| $`B_{10}`$ | $`1-X+Y=\varepsilon`$ | $`(1-\varepsilon,0,0),(1,\varepsilon,0),(1-\varepsilon,0,\varepsilon)`$ |
+| $`B_{01}`$ | $`X+1-Y=\varepsilon`$ | $`(\varepsilon,1,0),(0,1-\varepsilon,0),(0,1-\varepsilon,\varepsilon)`$ |
+| $`B_{11}`$ | $`2-X-Y-Z=\varepsilon`$ | $`(1-\varepsilon,1,0),(1,1-\varepsilon,0),(1-\varepsilon,1-\varepsilon,\varepsilon)`$ |
+
+这组横截中，$`B_{00}`$、$`B_{11}`$ 的三角形边长均为 $`\sqrt2\varepsilon`$，是正三角形；$`B_{10}`$、$`B_{01}`$ 的边长为 $`\varepsilon,\sqrt2\varepsilon,\sqrt3\varepsilon`$，是直角三角形。边数为三的结论不宣称全部正则。与顶部横截正方形对照，本例真正得到“一处四边形、四处三角形”的完整局部图形。
+

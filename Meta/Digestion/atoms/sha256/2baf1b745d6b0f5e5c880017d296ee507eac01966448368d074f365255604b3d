@@ -1,0 +1,44 @@
+**Definition 66.1 (Original-target common monotone rank).** Fix the entire labeled source, zero advice, common consumer, original nonempty measurable tape carrier $(\Theta,\mathcal F)$ and all original target laws exactly as in Definitions 50.1 and 59.1. As an additional input condition, designate one actual label $x_\circ$, put $\tau=\mu_{x_\circ}$, and specify a measurable map
+
+$$
+ t:\Theta\longrightarrow I=(0,1),\qquad t_*\tau=\lambda,
+\tag{66.1}
+$$
+
+where $\lambda$ is Lebesgue probability. Require every original target to satisfy
+
+$$
+ \mu_y\ll\tau,\qquad
+ \frac{d\mu_y}{d\tau}=f_y\circ t,\qquad
+ f_y\ge0,\quad \int_I f_y\,d\lambda=1,
+\tag{66.2}
+$$
+
+with a nondecreasing representative $f_y$. Thus $f_{x_\circ}=1$ almost everywhere. The anchor and rank are fixed from the original target input and measurable structure before varying the preparation; they are not chosen from an unknown prepared family. The rank is a function on tapes, not an observation of the source. This is an explicit subclass condition on the entire original family, and does not follow from countability of $X$, separability of a likelihood range or nonatomicity alone. All original labels remain, and equal complete prime signatures may still have different prescribed $f_y$. The full $\mathcal F$ need not be countably generated. A countable tape carrier cannot satisfy (66.1), since its rank image is countable whereas $\lambda$ gives every countable set mass zero.
+
+Let $\mathcal M$ be the set of $L^1(\lambda)$ classes with a nonnegative nondecreasing representative and integral one. Choose their right-continuous representatives on $I$ when evaluating them pointwise. Such representatives are finite at every $u<1$: normalization and monotonicity give $g(u)\le(1-u)^{-1}$. Define
+
+$$
+ \iota(g)(A)=\int_A g(t(\theta))\,d\tau(\theta)
+ \quad(A\in\mathcal F),\qquad
+ d_{\mathcal M}(g,k)=\frac12\|g-k\|_1.
+\tag{66.3}
+$$
+
+These are laws on the entire original $\mathcal F$, not laws only on the rank sigma algebra. Their event-TV distance is $d_{\mathcal M}(g,k)$ by (59.7) and $t_*\tau=\lambda$.
+
+For $a\in L^1_+(\lambda)$, let $a^\uparrow$ be its increasing rearrangement: the quantile of the distribution of $a$ under $\lambda$, with the same right-continuous convention. Changes at the countably many quantile discontinuities do not change the density class. For a finite positive measure $\nu$ on the original tapes, write
+
+$$
+ \nu=h_\nu\tau+\nu_\perp,
+ \qquad
+ \mathsf E_\tau[h_\nu\mid\sigma(t)]=\bar h_\nu\circ t,
+ \qquad
+ a_\nu=\bar h_\nu+\nu_\perp(\Theta),
+ \qquad
+ \mathfrak R\nu=(a_\nu^\uparrow\circ t)\tau.
+\tag{66.4}
+$$
+
+The conditional expectation is taken on tapes, and its $\sigma(t)$-measurable version factors through the real-valued rank. This factorization follows by measurable simple-function approximation; it uses no conditional sampling kernel or disintegration. Its class in $L^1(\lambda)$ is unique. Rearrangement depends only on that class, so $\mathfrak R$ is well-defined as a map on measures.
+

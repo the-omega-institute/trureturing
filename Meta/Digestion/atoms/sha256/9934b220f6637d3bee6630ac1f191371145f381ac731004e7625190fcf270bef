@@ -1,0 +1,88 @@
+### 89.1. A degree-twenty coefficient field
+
+Work over \(K=\mathbb Q(i)(b)\). Use the literal \(F,T\) of §88,
+and set
+\[
+ t=T/F_k,\qquad
+ \mathcal A=K[k,X]/(F,(1+k^2)X^2-tX-R).                \tag{89.1}
+\]
+The notation first takes the quotient by the monic normalization of
+\(F\), inverts \(F_k\) and \(1+k^2\), then adjoins the monic radial
+quadratic. These are legitimate operations: their norms at \(b=1/2\)
+are nonzero, as certified below. A fixed basis is
+\[
+ \mathcal B_{20}=(1,k,\ldots,k^9,X,kX,\ldots,k^9X).
+\]
+Put \(Y=kX\), \(G=X+iY\), and let bar fix \(b,k,X\) and conjugate
+\(i\). Define the involution
+\[
+ \iota(k)=k,\qquad \iota(X)=t/(1+k^2)-X.
+\]
+The radial relation proves
+\[
+ X\iota(X)=-R/(1+k^2),\qquad
+ \iota(G)=-R/\bar G.                                  \tag{89.2}
+\]
+Indeed \(X((1+k^2)X-t)=R\) makes \(X\) a unit, and
+\(G\bar G=(1+k^2)X^2\) makes both mean elements units.
+
+Here is an exact half specialization, using only the already printed
+coefficient lists in §78.A. Let \(f=f_{1,20}\), with
+\((x,u,v)=(P_x,P_u,P_v)/f'(y)\) in \(\mathbb Q[y]/(f)\). Set
+\[
+ k=y/x,\qquad t=(x^2+y^2-11/4)/x.
+\]
+Homogeneous substitution and exact univariate division give
+\[
+ F(1/2,k)=0,\qquad tF_k(1/2,k)=T(1/2,k).               \tag{89.3}
+\]
+The required denominators are units. These identities define a surjection
+from the half specialization of (89.1) onto \(\mathbb Q(i)[y]/(f)\):
+its image contains \(y=kX\). Both algebras have dimension twenty, so this
+is an exact isomorphism. The coordinates \(x,u,v\) are the original
+scaled input coordinates of §§78,87; no phase convention changes here.
+
+For completeness, the following two-prime certificate proves that \(f\)
+is irreducible. Its leading coefficients modulo 7 and 73 are 5 and 44.
+After dividing by those constants, its respective factorizations are
+
+```text
+mod 7:
+y^10 + 3*y^8 - 3*y^7 + 3*y^6 + 2*y^5 + 3*y^4 - y^2 + 1
+y^10 + 2*y^9 + 3*y^8 - y^7 + 3*y^6 + 3*y^5 - 2*y^4 + 3*y^3 - 2
+
+mod 73:
+y^2 + 20*y - 6
+y^2 + 31*y - 36
+y^16 + 18*y^15 + 35*y^13 + 28*y^12 - 7*y^11 + 15*y^10 - 8*y^9
+ + 19*y^8 + 29*y^7 + 31*y^6 - 31*y^5 - 11*y^4 + 28*y^3
+ - 18*y^2 - 21*y - 30
+```
+
+Multiplication gives the exact reductions of the printed \(f\).
+For each degree-\(n\) factor \(g\) over \(\mathbb F_p\), repeated
+modular squaring and exact Euclidean gcd give
+\(y^{p^n}=y\pmod g\) and
+\(\gcd(g,y^{p^{n/\ell}}-y)=1\) for every prime \(\ell\mid n\).
+The required smaller Frobenius exponents \(n/\ell\) are 2,5 for each
+decic, 1 for the quadratics, and 8 for the degree-sixteen factor.
+Thus all displayed factors are irreducible. A proper rational factor of
+\(f\) would have degree 10 from the first prime, but one of
+2,4,16,18 from the second, which is impossible.
+
+The exact Sturm count in §78.6 is eight real roots. Hence the number
+field \(\mathbb Q[y]/(f)\) has a real embedding and does not contain
+\(i\). Since \(\mathbb Q(i)/\mathbb Q\) is quadratic Galois, \(f\)
+remains irreducible over \(\mathbb Q(i)\).
+
+The characteristic polynomial of multiplication by \(Y\) in (89.1)
+is monic of degree twenty, regular at \(b=1/2\), and specializes by
+(89.3) to the monic \(f\). It is irreducible over \(K\). Otherwise
+monic proper factors would have coefficients integral over the local
+ring \(\mathbb Q(i)[b]_{(b-1/2)}\): their coefficients are symmetric
+functions of integral roots. This ring is integrally closed, so the factor
+coefficients lie in it. Specialization preserves the two positive monic
+degrees and contradicts the irreducibility of \(f\). Consequently
+\(\mathcal A=K[Y]\) is a field, with basis \(1,Y,\ldots,Y^{19}\).
+No claim that every individual specialization remains a field is needed.
+

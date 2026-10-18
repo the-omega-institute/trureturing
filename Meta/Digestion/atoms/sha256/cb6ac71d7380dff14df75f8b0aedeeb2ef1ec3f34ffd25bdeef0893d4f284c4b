@@ -1,0 +1,173 @@
+**Theorem 61.1 (matching original primal and dual).** For every
+$0<a\leq a_\dagger$ the tuple $(A,0,B,C_0)$ of (RC.12) is feasible
+for the original problem at $\tau(a)$ and has a matching finite original
+four-block dual. Its active slack ranks, in $(A,B,C_0)$ order, are
+$(1,2,2)$; the fourth slack can be positive definite. Formula (RC.13)
+is the global optimum over the original competitor class.
+
+Proof. The signs in (RC.9) make $B,C_0$ positive rank-one null matrices.
+Equations (RC.10) give
+
+$$
+BW=-\frac R{2H}n,\quad C_0W=\frac Z{2H},\quad AW=0.
+\tag{RC.21}
+$$
+
+The vectors $n,Z$ are independent by $n^TQZ=-2H^2\ne0$.
+Thus $B+C_0$ has rank two and $A$ has an eigenvalue $1$ on its
+orthogonal complement. Equation (RC.21) gives an eigenvalue $0$, so
+
+$$
+\operatorname{spec}A=(1,\omega,0).
+\tag{RC.22}
+$$
+
+Since $\omega\geq0$, $A\succeq0$. Also $\operatorname{tr}Q=0$ gives
+$\operatorname{tr}(QA)=0$. This establishes primal feasibility, without
+assuming an optimal rank pattern.
+
+For the dual define
+
+$$
+\begin{aligned}
+\mathcal H&=C-\frac{WW^T}{D^2\sigma},&r_0&=\frac{2\beta ak}{D},\\
+\lambda&=-\frac{gD^2\sigma}{\ell},&\kappa_0&=\frac{N_\kappa}{D_\kappa},\\
+S_A&=-\frac{2\lambda}{D^2\sigma}WW^T,&
+Y&=G+\lambda C+S_A,\\
+\nu_A&=0,&\nu_B&=-2\lambda r_0,&\nu_C&=2\kappa_0.
+\end{aligned}
+\tag{RC.23}
+$$
+
+Proposition 60.2 proves $\lambda>1/25$ and $|\kappa_0|<3/1000$;
+$D_\kappa<0$, and $\ell=a\ell_1<0$ for $a>0$. Hence these are finite.
+The original dual slacks, with exactly JR.126's normalization, are
+
+$$
+\begin{aligned}
+S_{+,+}&=Y-G-\lambda C+\nu_AQ=S_A,\\
+S_{-,+}&=Y-G+\lambda C+\nu_BQ
+       =S_A+2\lambda C-2\lambda r_0Q,\\
+S_{-,-}&=Y+G+\lambda C+\nu_CQ
+       =2(G+\lambda\mathcal H+\kappa_0Q),\\
+S_{+,-}&=Y+G-\lambda C+\nu_4Q=S_A+2G+\nu_4Q.
+\end{aligned}
+\tag{RC.24}
+$$
+
+First consider $K=C-r_0Q$. Its third diagonal block is $r_0\beta>0$;
+the determinant of its first two coordinates is
+$-r_0^2\alpha-1/4<0$. Its inertia is therefore $(2+,1-)$.
+Moreover $Kn=W/D$ and $n^TKn=\sigma<0$. The elementary negative-direction
+removal identity is
+
+$$
+M-\frac{Mvv^TM}{v^TMv}\succeq0,\quad
+\operatorname{rank}=2,\quad\ker=\mathbb Rv
+\quad\text{if }\operatorname{inertia}M=(2+,1-),\ v^TMv<0.
+\tag{RC.25}
+$$
+
+Indeed take $v$ as the first basis vector and choose the other two in
+its $M$-orthogonal complement. Congruence gives a negative scalar block
+and a positive definite $2\times2$ block; the displayed subtraction
+removes exactly the former. Applying this to $K,n$ gives
+
+$$
+\frac{S_{-,+}}{2\lambda}
+=K-\frac{Knn^TK}{n^TKn},\qquad \ker S_{-,+}=\mathbb Rn.
+\tag{RC.26}
+$$
+
+Next $Z^T\mathcal HZ=\ell/(D^2\sigma)>0$, whereas $Z^TQZ=0$.
+Thus $\mathcal HZ$ and $QZ$ are independent. The determinant equation
+$\mathcal P=0$ puts $GZ$ in their span. Pairing with $Z$ determines
+$\lambda$, and coordinate $2$ determines $\kappa_0$, because
+
+$$
+W_2=2\beta^2akV,\qquad
+(G+\lambda\mathcal H+\kappa_0Q)Z=0.
+\tag{RC.27}
+$$
+
+This also derives (RC.23)'s $\kappa_0$ formula with no extra singularity.
+Put $M_0=G+\lambda C+\kappa_0Q$. The source box and the preceding
+multiplier bounds imply
+
+$$
+(M_0)_{22}>.001310,\quad(M_0)_{11}>0,\quad(M_0)_{01}>.022370,
+$$
+
+and $|(M_0)_{00}|<.00427$,
+$(M_0)_{11}<.005556$, $(M_0)_{22}<.002045$.
+Using $y>0,z<0$ in the determinant expansion gives
+
+$$
+\begin{aligned}
+\det M_0
+&=(M_0)_{00}(M_0)_{11}(M_0)_{22}
+ +2(M_0)_{01}yz-(M_0)_{00}z^2
+ -(M_0)_{11}y^2-(M_0)_{22}(M_0)_{01}^2\\
+&<.00427\cdot.005556\cdot.002045
+ +.00427(.000102)^2-.001310(.022370)^2<-6\cdot10^{-7}.
+\end{aligned}
+\tag{RC.28}
+$$
+
+A positive diagonal entry excludes three negative eigenvalues, and the
+negative determinant excludes zero eigenvalues, so $M_0$ has inertia
+$(2+,1-)$. Set $\zeta=-\lambda/(D^2\sigma)>0$.
+Equation (RC.27) says $(M_0+\zeta WW^T)Z=0$;
+$Z^TM_0Z=-\zeta\mathcal E^2<0$. Consequently
+$M_0+\zeta WW^T$ is exactly the subtraction in (RC.25), applied to
+$M_0,Z$. This proves $S_{-,-}\succeq0$, rank two and kernel
+$\mathbb RZ$. The slack $S_A$ is rank-one PSD with kernel $W^\perp$.
+
+The fourth original block remains necessary. Let $R_4=S_A+2G$.
+For a nonzero real $Q$-null vector $v$, if $v^TCv\geq0$, JR.133's
+strict right-half-ellipse positivity gives $v^TGv>0$, hence
+$v^TR_4v>0$. This includes $v^TCv=0$: normalize its nonzero coordinate
+$0$ to one and its $u$ coordinate is nonnegative. If $v^TCv<0$ then
+
+$$
+v^TR_4v=v^TS_{-,-}v-2\lambda v^TCv>0.
+$$
+
+The unit null set is compact, so its $R_4$ minimum $m_0$ is positive.
+Choose any $0<e<m_0$. Apply Xia–Wang–Sheu's equality S-lemma,
+[Theorem 3, arXiv:1403.2816v3][SLEM], to the homogeneous pair
+$v^T(R_4-eI)v$ and $v^TQv$. Its Assumption 1 holds because $Q$ takes
+both signs. The only exceptional case requires a zero quadratic
+constraint matrix and nonzero linear constraint; our constraint matrix
+is the nonzero $Q$. It supplies finite $\nu_4$ with
+
+$$
+R_4+\nu_4Q\succeq eI\succ0.
+\tag{RC.29}
+$$
+
+There is also a precise algebraic choice: sort the distinct real roots
+of the cubic $\det(R_4+\nu Q)$, test the three leading Sylvester minors
+at each adjacent midpoint, and take the midpoint whose three minors
+are positive. The PD set is a nonempty convex open interval. It is
+bounded since $Q$ has both signs; its finite endpoints are consecutive
+determinant roots. Since $\det Q\ne0$, the cubic is not identically
+zero. Thus this prescription selects a finite scalar for every $a>0$
+in the claimed domain, rather than omitting a dual block.
+
+Complementarity now gives $S_AA=S_{-,+}B=S_{-,-}C_0=0$.
+Taking traces, using all three null constraints, yields
+
+$$
+\operatorname{tr}Y-\lambda\tau(a)
+=\operatorname{tr}G-2\operatorname{tr}(GC_0)
+=\operatorname{tr}G-\frac{g}{H\mathcal E}.
+\tag{RC.30}
+$$
+
+The left side bounds every feasible original four-tuple above: its gap
+is the sum of the four nonnegative slack pairings plus
+$\lambda(\sum r(X_{r,\epsilon})_{01}-\tau)$. Equality proves the
+original global optimum and (RC.13), without restricting competitors
+to the proposed ranks or canonical channel. $\square$
+

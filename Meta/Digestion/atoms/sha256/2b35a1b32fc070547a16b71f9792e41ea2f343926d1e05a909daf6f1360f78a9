@@ -1,0 +1,29 @@
+**Corollary 6.1 (strict entire-height comparison).** Set
+
+$$
+C_h:=\nu^2(K_{\rm base}-aI_h)-\lambda D_{\rm clock},\qquad
+\epsilon_R:=\frac{c_\infty^2L_\varphi^2}{4b[\varphi]R^3}>0\quad(R\ge R_0).
+\tag{6.1}
+$$
+
+The number $C_h$ is the entire-height second-order comparison: its correction is the infimum of $h[pF]-2\ell(pF)$ over the completed height space, equal to $-aI_h$ by H Theorem 5.1. Then
+
+$$
+\begin{gathered}
+C_{\rm resp}=C_h-a\nu^2\delta_h<C_h,\\
+G_{\rm resp}=3A-\gamma C_2-I_h-\delta_h
+\le3A-\gamma C_2-I_h-\epsilon_R<3A-\gamma C_2-I_h,\\
+G_{\rm resp}=G_{108}-(t_0-1)^2-(I_h-t_0^2)-\delta_h,\\
+\frac{C_{\rm resp}}{a\nu^2}
+\le3A-\gamma C_2-I_h-\epsilon_R-\mathscr R\overline D
+<3A-\gamma C_2-I_h-\epsilon_R-\mathscr R(1+b[p]).
+\end{gathered}
+\tag{6.2}
+$$
+
+An admitted datum with $C_h\le0$, including its equality boundary, has $C_{\rm resp}<0$ and all the credited actual negative-response consequences. No additional datum satisfying this condition is asserted to occur.
+
+Proof. Substitute (5.7) into the exact decomposition (2.3) and the full coefficient formula (1.16). H Theorem 8.1 gives $\mu<T<3\mu$, where $\mu=\int Vp^2$ and $b[p]=\gamma\mu$, hence $1+b[p]<\overline D<1+3b[p]$. Since $\mathscr R>0$, the strict final bound has the indicated direction. The condition on $C_h$ and the negative branch from R Theorem 11.2 give the last assertion directly. This invokes the existing actual-state bridge and does not add a transfer theorem. $\square$
+
+Under the canonical normalization $W=j_0V$, $W_j=j_0V_j$, $W_{\rm t}=j_0V_{\rm t}$ and $\overline C=j_0C_*$, one has $\gamma=j_0/\overline C$. Thus $p$, $\mathcal G$, $c_\infty$, $t_\infty$, $\delta_h$ and the witness bound $\epsilon_R$ are canonical; the full original coefficients still retain $\nu^2$ and $\lambda$ as in (1.16). The strictly positive subtraction is an upper-bound improvement on $G_{\rm resp}$. It proves neither $G_{\rm resp}>0$ nor $G_{\rm resp}\le0$. The still unevaluated comparison is $\gamma C_2+I_h+\delta_h$ against $3A$; $G_{108}$ is also unevaluated. These fixed quantities are not independent scalar choices, and an unresolved comparison is not logical underdetermination of the source.
+

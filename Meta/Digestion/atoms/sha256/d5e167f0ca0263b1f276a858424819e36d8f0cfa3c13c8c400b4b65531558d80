@@ -1,0 +1,23 @@
+**定义 4.1（保留全部旧类关系的来源编码）。** 令 $B$ 是 $\pi$ 的类集，为每类取最小孔序号的地址 $a_b$。取有限 $L\ge\max(\{N,5\}\cup\{n_i\})$。沿用 SLH 定义69.3：对每类 $b$ 和 $0\le j\le L$，用三个有限地址集合
+
+$$
+X_{b,j}=(X^\alpha_{b,j},X^\beta_{b,j},X^{\mathsf{branch}}_{b,j})
+$$
+
+编码一棵非空有限满树。$\operatorname{Chain}_L$ 按 SLH 引理11.2约束相邻编码恰为 $\rho$，$\operatorname{Reply}_c(X_{b,j},s)$ 表示实际四值回复，缺席指三个集合均不含 $s$。用 SLH 定义60.1的完整类证据 $H_b$ 及孔外条件 $o_C(H)$，置
+
+$$
+\begin{aligned}
+\operatorname{Adm}(X)={}&o_C(H)\ \land\
+\bigwedge_{b\in B}\operatorname{Chain}_L(X_{b,0},\ldots,X_{b,L})\\
+&\land\bigwedge_{b<b'}\neg\operatorname{Eq}(X_{b,0},X_{b',0})\\
+&\land\bigwedge_{b\in B}\bigwedge_{(j,s,c)\in H_b}
+                         \operatorname{Reply}_c(X_{b,j},s),
+\end{aligned}
+\tag{SCR.4.1}
+$$
+
+其中 $\operatorname{Eq}$ 是三个对应有限集合分别相等。不同类共用同一个后缀地址宇宙，但不要求不同类的集合互不相交。这些链是逻辑量化的确定替换像，不给消费者增加可访问副本或旧版本端口。
+
+SLH 定理60.2及定理69.4的来源对应给出：$\operatorname{Adm}$ 的满足赋值与 $D$ 双射，类树元组 $(z_b)_b$ 对应 $C[(z_{[i]})_i]$，全部版本链由原树唯一决定。所有旧类间不等式都在 (SCR.4.1) 内，包括没有新任务进入的类；同类重复出现使用相同集合。这里没有把填充映射的复制说成保正规，也没有引入一般的可变前缀子树相等谓词。
+

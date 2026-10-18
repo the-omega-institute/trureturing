@@ -1,0 +1,17 @@
+**Definition 4.4 (failure and availability types).** An idle legal source call
+has a total finite service under this model. Its complete step is
+`some(label, actual successor)`, including reject. A busy semantic source call,
+an unavailable destination read, or a write without its ownership token is
+illegal and unexecuted: its step is `none`, with no event or row. A request
+waiting before response commitment is pending work, not a completed event.
+TagRead absent is a valid response, not a missing source or an illegal operation.
+
+Before valid installation the state is `uninstalled` or `boot-busy`, with no
+source-call permission. Malformed preparation finishes in a separate
+`invalid-preparation` outcome and yields no valid-source receipt. A bounded
+evaluator miss is local control work and may lead to another attempt, without
+an external reject. Stop is a complete typed terminal output; Native
+`nativeStep` returning `none` at Stop expresses termination and must not be
+read as the adapter's illegal-call convention. No crash-recovery or arbitrary
+interruption-resume service is assumed.
+

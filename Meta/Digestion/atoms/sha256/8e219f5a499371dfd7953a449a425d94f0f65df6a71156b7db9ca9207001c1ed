@@ -1,0 +1,54 @@
+**Proposition 13.3 (actual support and terminal-boundary inverses).**
+For each component cut of Theorem 13.2 let $S_{\rm loc}$ be its actual
+root-relative child-path support, including the empty path, and
+$B_{\rm loc}$ its paths ending at vertices with neither child occupied.
+Each view separately reconstructs its current incidence with the fixed
+external root attachment as boundary parameter, and, under the same
+supplied authorization interface, determines the local structural operation
+relation of Definition 13.1. The same tree-layer
+claim holds when this component is grafted at its original socket in a
+fixed rooted ordered context.
+
+Proof. These are spatial reachability and the terminal limit of actual
+child descent. The finite-tree argument of Theorem 4.4 also applies to
+unary vertices: every position extends a terminal position. Hence
+
+$$
+S_{\rm loc}=\operatorname{Pref}(B_{\rm loc}),\qquad
+B_{\rm loc}=\operatorname{Max}_{\preceq}(S_{\rm loc}).
+\tag{SSA.18}
+$$
+
+From support, place a vertex at each path, join $w.a$ to $w$ through
+child port $a$ and the child's $\mathsf P$, and leave absent child
+extensions vacant. The empty path is $r$. In this family $f$ is the
+unique nonroot vertex with two children, whose order identifies $v_0,v_1$;
+the remaining nonroot occurrence is $t$. Thus the fixed roles are recovered.
+Arbitrary external creation names are not inferred from paths.
+
+For this decoder $D_S$, $D_S(S_{\rm loc}(C))=C$ under the fixed role
+and attachment convention, and $S_{\rm loc}(D_S(A))=A$ for every support
+$A$ in its actual image. Define $D_B=D_S\circ\operatorname{Pref}$.
+SSA.18 gives $D_B(B_{\rm loc}(C))=C$ and
+$B_{\rm loc}(D_B(F))=F$ for every actual-image frontier $F$.
+These are both inverse directions for each view separately. All incidence
+slots needed to evaluate a specified guarded command are thereby recovered;
+the external authorization interface is not recovered from these views.
+
+The actual terminal sets at the four successive cuts are:
+
+| Old and desired bit | Entrance | After first move | After second move | Exit |
+| --- | --- | --- | --- | --- |
+| $0\to0$ | $\{00,01,1\}$ | $\{100,101\}$ | $\{110,111\}$ | $\{00,01,1\}$ |
+| $0\to1$ | $\{00,01,1\}$ | $\{100,101\}$ | $\{000,001\}$ | $\{0,10,11\}$ |
+| $1\to0$ | $\{0,10,11\}$ | $\{000,001\}$ | $\{100,101\}$ | $\{00,01,1\}$ |
+| $1\to1$ | $\{0,10,11\}$ | $\{000,001\}$ | $\{010,011\}$ | $\{0,10,11\}$ |
+
+Every cut has five vertices and four tree edges, with terminal counts
+$3,2,2,3$. In a graft the root attachment, scaffold and exterior incidences
+stay fixed; all modified slots remain in the original field owner's
+region. Apply prefix reconstruction to the whole tree and restrict at the
+known socket. All exterior retained material stays present. This is a
+frame property of incidence and ownership footprint; it neither extends
+permissions nor decodes the whole runtime during a noncanonical bit phase. ∎
+

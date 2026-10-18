@@ -1,0 +1,50 @@
+**Definition 2.2 (credited canonical complete instrument).** Fix
+$k(0)=a\in(0,c)$. For one prescribed original control define
+
+$$
+\begin{aligned}
+H_i(t)&=\int_0^t w_b(k(u))_i\chi'(u)\,du,\\
+\lambda(t)&=\frac{(k'(t))_+}{k(t)}
+             +\frac{(-k'(t))_+}{c-k(t)},\qquad
+S(t)=\exp\left(-\int_0^t\lambda(u)\,du\right),\\
+K_t&=\sqrt{S(t)}\operatorname{diag}_i
+ \left(\sqrt{\frac{p_i(k(t))}{p_i(a)}}e^{-iH_i(t)}\right),\\
+g_i(t)&=\lambda(t)-(\log p_i(k(t)))',\qquad
+J_i(t)=\sqrt{g_i(t)}\,|f\rangle\langle i|K_t.
+\end{aligned}
+\tag{EM.3}
+$$
+
+Here $g_i\geq0$ almost everywhere and $f$ is the absorbing stopped
+successor. The complete terminal output is either success, with
+$K_T\rho K_T^\dagger$, or the exact first failure time $t$, original mode
+$i$, and $f$, with CP density $J_i(t)\rho J_i(t)^\dagger$. Every Borel
+time/mode event is retained. On a common joint reference $R$ write
+$\rho_{ii}^R=\langle i|\rho_{LR}|i\rangle\geq0$.
+
+The credited loss identity, for every common input with diagonal $p(a)$,
+and its full-reference CP consequence are
+
+$$
+\begin{aligned}
+F_i(t)&=p_i(a)-S(t)p_i(k(t)),\qquad f_i=F_i',\\
+\mathcal I_i(E)(\rho_{LR})
+ &=\frac{\int_E f_i(t)\,dt}{p_i(a)}
+       |f\rangle\langle f|\otimes\rho_{ii}^R.
+\end{aligned}
+\tag{EM.4}
+$$
+
+The first line describes a whole law, not one emitted sample. For the
+second line arbitrary common live inputs and normal trace-class references
+are allowed. It follows directly by cancelling the phase of the single
+nonzero jump column. Both identities are supplied by Instrument Boundaries
+§§9–11 and are reused here.
+
+Prescribed waveforms, calibrated Kraus operations, blank ancillas and exact
+time/mode recording remain declared ideal services. No waveform sensor,
+free environment port, whole-law oracle, repeated same-history copies,
+tomography, reset, reversal or post-failure retry is supplied. A failed run
+has its executed prefix and then $f$; its unperformed live tail is not an
+executed history.
+

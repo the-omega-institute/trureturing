@@ -1,0 +1,40 @@
+**Corollary 4.5 (compatibility of the optimized envelopes).** Let
+$c_{\mathrm{rec}}(d)$ be the infimum of caps of accepted rational
+labels at depth $d$, optimizing over their rational probabilities.
+Then
+
+$$
+\begin{aligned}
+c_{\mathrm{rec}}(d)
+ &=j_d
+  =\min_{1\le k\le d}j_k^{\,2^{d-k}},\\
+L_d:=-2^{-d}\log_2j_d
+ &=\max_{1\le k\le d}[-2^{-k}\log_2j_k].
+\end{aligned}
+\tag{RCE.20}
+$$
+
+In particular $L_d$ is nondecreasing and uniformly computable.
+These are infimum and supremum statements; rational optimizing
+labels need not attain them.
+
+Proof. Theorem 4.4 and rational density, with continuity, give
+$c_{\mathrm{rec}}(d)=j_d$. Lift a minimizing depth-$k$
+probability to depth $d$ and use (RCE.18) to obtain
+$j_d\le j_k^{2^{d-k}}$ for every $k\le d$. The list includes
+$k=d$, so its minimum is exactly $j_d$. Taking negative logarithms
+proves the endpoint formula and monotonicity. Computability follows
+from Proposition 2.3 and $j_d\ge1/|S_d|$.
+
+One can also obtain the displayed minimum without first using the
+pointwise scaffold identity: grouped and bundle leaves reduce to
+ungrouped leaves, every nonleaf node has one parent, stability
+never reduces its cap, and the scaffold heights on a parent path
+sum to $d-k$. Such a path has final cap at least
+$j_k^{2^{d-k}}$. Conversely a near-minimizing rational depth-$k$
+joint leaf followed by one scaffold attains that infimum in the
+limit. The exact tensorization theorem strengthens this ancestry
+description by showing that its minimum always equals the
+depth-$d$ term. There is no conflict between the two formulas.
+$\square$
+

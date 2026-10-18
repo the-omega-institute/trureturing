@@ -1,0 +1,56 @@
+**Lemma 13.1 (capacity and remaining live measures).** On the actual
+label space of any original finite-budget competitor put
+$\zeta=tq$, $z_\nu=\int F_c(z^2)d\nu$ and
+
+$$
+dP_{\rm cap}=\frac{d\nu}{tc_*(z^2)},\qquad
+dP_{\rm rem}=dP-dP_{\rm cap}\ge0,\qquad
+E_{\rm rem}=\int H(z^2)dP_{\rm rem}.
+\tag{JS.61}
+$$
+
+Then, uniformly over that whole class,
+
+$$
+C_{\rm end}\le z_\nu\le\zeta,\qquad
+E_{\rm rem}\le(\zeta-z_\nu)/t,\qquad
+P_{\rm cap}(\mathcal E)\le\mu/(tc_{\min}),\quad c_{\min}=\min c_*>0,
+\tag{JS.62}
+$$
+
+and for a source constant $K$,
+
+$$
+\left|\int|f|dP-S_{\rm corner}\right|
+\le K\left[t^{-1}+\sqrt{(\zeta-z_\nu)/t}\right].
+\tag{JS.63}
+$$
+
+This is an analytic decomposition on existing labels. It generates no
+new record, report, readable Kraus index or free physical refinement.
+
+Proof. Capacity (JS.9) gives positivity in (JS.61), and
+$\int H\,dP_{\rm cap}=z_\nu/t$. Subtract this from (JS.11);
+Lemma 3.1 gives the other cost bound. Fixed failure mass gives the
+last inequality in (JS.62).
+
+Push a remaining point to its nearest signed corner. With
+$u=|z|-1$, the ellipse gives
+
+$$
+\bigl||w|-1\bigr|
+\le\frac{\alpha}{\beta}(1+\alpha^{-1/2})|u|,
+\qquad \int u^2dP_{\rm rem}=2E_{\rm rem}.
+\tag{JS.64}
+$$
+
+The lost capacity mass has every moment $O(t^{-1})$. Thus the
+remaining total and three cross moments differ from those of $I_3$
+by $O(t^{-1})$. After the push their errors are
+$O(t^{-1}+\sqrt{E_{\rm rem}})$ by Cauchy–Schwarz. Four-sign Fourier
+inversion fixes each pushed mass to
+$1/4+O(t^{-1}+\sqrt{E_{\rm rem}})$. The function $|f|$ is Lipschitz
+on the compact ellipse, giving (JS.63). At an axis choose either sign;
+there $|u|$ is bounded away from zero unless already at a corner,
+so the same estimate includes that mass. $\square$
+

@@ -1,0 +1,60 @@
+**Theorem 5.1 (Exact reset-split decomposition).** For any vector $r=(r_y)_{y\in S_i}\in(0,1)^{S_i}$ define a law $p^r$ on the complete $B_n$ by
+
+$$
+p^r(w^1(y))=m_yr_y,\qquad
+p^r(w^0(y))=m_y(1-r_y),
+\tag{5.1}
+$$
+
+and leave every word outside $E_i$ at its original $\pi_n$ mass. Then $p^r$ is positive and normalized, and for a constant $K_i$ independent of $r$,
+
+$$
+\begin{aligned}
+\Phi_n(p^r)
+={}&K_i+\sum_{y\in S_i}m_yr_y(1-r_y)\\
+&+\sum_{e=\{y,z\}\in\mathcal E_i^{\mathrm{int}}}
+\bigl[h(m_y,m_z)-J_e(r_y,r_z)\bigr]\\
+&+\sum_{y\in S_i}\sum_{j\in\{i-2,i+2\}}
+\bigl[h(m_y(1-r_y),\beta_{j,0}(y))
++h(m_yr_y,\beta_{j,1}(y))\bigr].
+\end{aligned}
+\tag{5.2}
+$$
+
+The function in (5.2) is strictly concave in $r$. At $r=q$ its derivative vanishes in every coordinate and gives
+
+$$
+m_y\bigl(1-2q_y-H_i(y)\bigr)
+=\sum_{e\ni y}\partial_{q_y}J_e(q_y,q_z)
+\qquad(y\in S_i).
+\tag{5.3}
+$$
+
+Proof. Each pair in (5.1) retains its sum $m_y$, so the total mass remains one; every displayed mass is positive. The law therefore defines a legitimate full-simplex variation through $\pi_n$, with every non-reset mass fixed.
+
+Partition all original edges as follows. Edges with no endpoint in $E_i$ have unchanged masses and make up $K_i$. An edge at coordinate $i$ joins $w^0(y)$ to $w^1(y)$ and contributes $m_yr_y(1-r_y)$. A legal flip at any other coordinate that preserves both anchors gives an edge $\{y,z\}$ of $\mathcal G_i$. It is legal with either central value: the sites adjacent to the center cannot flip because they have an occupied anchor as a neighbor. The two center-slice contributions are exactly $h(m_y,m_z)-J_e(r_y,r_z)$.
+
+An edge leaving $E_i$ from one of its words must delete one of the two anchor ones. These are exactly the last line of (5.2). Their other endpoints have the fixed masses $\beta_{j,x}(y)$. No edge inserting an anchor can join two words inside $E_i$, since both anchors there are already one. There are no additional boundary edges at the center's neighbors, which are blocked, or at the open ends, where the original endpoint convention still applies. Each original edge has thus been counted exactly once.
+
+The center sum is strictly concave because $m_y>0$ for every $y$. The internal sums and boundary terms are concave by concavity of $h$ and the affine dependence on $r$. Their sum is strictly concave. Since $\pi_n$ maximizes the full objective, $r=q$ maximizes this restriction; it lies in its open cube and hence has zero derivative in every $r_y$.
+
+For the boundary terms, differentiation at $r=q$ gives exactly
+
+$$
+\begin{aligned}
+&\left.\frac{\partial}{\partial r_y}
+\sum_{j\in\{i-2,i+2\}}
+\bigl[h(m_y(1-r_y),\beta_{j,0})+h(m_yr_y,\beta_{j,1})\bigr]
+\right|_{r=q}\\
+&\quad=m_y\sum_j
+\left[-\frac{\beta_{j,0}^2}{(m_y(1-q_y)+\beta_{j,0})^2}
++\frac{\beta_{j,1}^2}{(m_yq_y+\beta_{j,1})^2}\right]
+=-m_yH_i(y).
+\end{aligned}
+\tag{5.4}
+$$
+
+Together with the center derivative $m_y(1-2q_y)$ and the internal derivatives $-\partial J_e$, this proves (5.3). In particular anchor-deletion edges are present, with their sign fixed by (5.4). $\square$
+
+The strict concavity concerns this restriction with the actual masses and actual deletion boundaries held fixed. It does not give permission to prescribe arbitrary boundary responses or replace the restricted problem by a smaller stand-alone optimizer. Equation (5.3) is also the difference of the two full vertex-score equations (2.2), multiplied by $m_y$.
+

@@ -1,0 +1,12 @@
+**Lemma 4.5 (strict prefix selection).** For every $a\le k\le b$, a
+literal replay stopped at $k$, with $J_s$ available as an input reservoir,
+consumes exactly $I(s[0:k])$ and returns the full original
+$s[0:k],X(s[0:k])$. Its unused reservoir suffix has no effect.
+
+Proof. Apply the prefix of AIF's actual-image replay through original
+ordinal $k$. At any simulated IN before that stop, the next consumed bit
+is the next actual bit in $I(s[0:k])$, which is a prefix of $J_s$ by
+(RCA.3). The other rows are determined by the equal prior complete state.
+Thus no later input bit is used. This is a prefix application of the
+supplied replay theorem; it is not a new generic replay theorem. ∎
+

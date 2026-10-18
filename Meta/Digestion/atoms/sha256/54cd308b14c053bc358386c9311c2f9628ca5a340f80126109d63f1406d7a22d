@@ -1,0 +1,17 @@
+**约定 11.1（原时钟的全部续行接口）。** 直接使用引理 5.2 的左乘矩阵：
+
+$$
+\begin{array}{c|c|c}
+\text{原时钟及后续时间词}&\text{累计矩阵}&\text{迹因子}\\\hline
+6:J&I=\begin{pmatrix}1&0\\0&1\end{pmatrix}&1\\
+6:M&MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix}&1+b\\
+7:JJ&J=\begin{pmatrix}0&1\\1&0\end{pmatrix}&s\\
+7:JM&M=\begin{pmatrix}0&1\\1&1\end{pmatrix}&s+1-a\\
+7:MJ&JMJ=\begin{pmatrix}1&1\\1&0\end{pmatrix}&s+a\\
+7:MM&M^2J=\begin{pmatrix}1&1\\2&1\end{pmatrix}&1+s+b.
+\end{array}
+\tag{11.1}
+$$
+
+对任一世界，令 $G_i=g(i)$、$k=g(0)$，该行的归一化响应是所示迹因子乘 $G_i$ 再减 $k$。每个二字母时间词各有两次单独动作和两次立即读数，起点仍是原 $A_5=J$。
+

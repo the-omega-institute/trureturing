@@ -1,0 +1,15 @@
+**Definition 75.2 (scope of the reduction).** The four-real system keeps
+all six root orders; the aligned system keeps both \(\Theta\) choices,
+all synchronous permutations and its explicit exceptional parameter.
+For a pair of candidate rays, independently selecting channels by
+\(\Theta\) is not an orthogonality-preserving operation on just one
+member. Both types of cross equation must be retained in the pair
+problem, selecting ordinary orthogonality for equal relative \(\Theta\)
+parity and the symplectic bilinear equation for opposite parity; they
+are not imposed simultaneously on one selected pair.
+No pair-spinor implication, finite ray count, arbitrary noncanonical
+orthogonal-triple obstruction or whole-branch basis classification is
+a consequence asserted by this section. Those questions require joint
+constraints across the reconstructed rays, beyond the single-ray
+necessity and sufficiency proved here.
+

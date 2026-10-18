@@ -1,0 +1,58 @@
+**Proposition 7.3 (joint implementation at actual occurrences).** Suppose
+$Ra_1,\ldots,Ra_n$ are public prefix-free, actually present block
+roots in one stationary original source, with $|a_i|\le H$ and
+block height at most $d$. A finite joint cover by complete solution sets,
+with its templates normalized by Theorem 4.2, is implemented by charged
+original-root preparation
+words $Ra_iw$, $w\in W_d$, and by zero Reads or one actual late
+word $Ra_jw_c$ at a representative port. Sufficient joint scan bounds
+are
+
+$$
+\begin{aligned}
+T&\le n(2^d-1),\qquad Q\le H+d,\\
+A&\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+\end{aligned}
+\tag{RRN.32}
+$$
+
+When $H+d\le D$, all block targets $Ra_iq$, $q\in W_d$,
+are permitted original late targets. A cover code for these block
+targets is not by itself a reader for other targets of the full
+source; Theorem 7.1 supplies the full-family assertion.
+
+Proof. Each preparation word obtains exactly the specified boundary
+reply of its actual block, including absent suffixes. Acquire the
+whole tuple of canonical blocks and export its joint first-containing-
+cover-member index; no block is independently recolored. Theorem 4.2
+preserves each complete cover member exactly. Starting with an arbitrary
+admissible cover instead, Convention 2.3 first enlarges its members to
+complete solution sets with no increase in their number. Their targets
+can therefore
+use the installed center port, translated to the single literal
+$Ra_jw_c$ on the actual source.
+
+The original occurrences are present, so pairing homomorphism gives
+
+$$
+r_{\rho^kt}(Ra_iq)
+   =r_{\rho^k(t|_{Ra_i})}(q)\qquad(k\ge0).
+\tag{RRN.33}
+$$
+
+This is the precise presence premise of `original_present_transport`
+in [NativeDepthPatterns][D5N]. The notation $t|_{Ra_i}$ identifies
+an actual subtree mathematically; it supplies no subtree input.
+A virtual wrapper's root and left cone are public constants, while
+its $Rw$ is implemented only by the original word at the occurrence
+followed by $w$, as in [FMR, Lemma 3.1][FMR].
+
+There are $2^d-1$ words per block and their suffix lengths sum to
+$\sum_{l=0}^{d-1}l2^l=(d-2)2^d+2$, including $d=1$.
+Adding prefixes of length at most $H+1$ proves (RRN.32).
+The actual target length is at most $H+d$. These are exactly the
+paid occurrence bounds of [CBN, Proposition 7.2][CBN], now with
+representative witnesses. An absent block root is never transported
+as a subtree. A source-varying cut descriptor would need its own
+acquisition and retained alphabet accounting. $\square$
+

@@ -1,0 +1,36 @@
+**Lemma 8.3 (Common exponent on affine periodic points).**
+Let $F:\mathbb R^n\to\mathbb R^n$ be any affine map in finite
+dimension, and let $S$ be any nonempty subset of its periodic
+points. There is one positive integer $N$ such that $F^N$
+fixes every point of $\operatorname{aff}(S)$, hence every point
+of $S$.
+
+**Proof.** Start with $z_0\in S$ and repeatedly select a point of
+$S$ outside the affine hull of those already selected, if one
+exists. Each selection increases affine dimension. After at
+most $n$ additions this gives $z_0,\ldots,z_d$ with
+$d\le n$ and affine hull equal to $\operatorname{aff}(S)$.
+Choose a positive period $m_i$ for each selected point and put
+$N=\prod_{i=0}^d m_i$. Then $F^N$ fixes each $z_i$.
+
+The offset causes no difficulty: if $F(z)=Az+c$, induction gives
+
+$$
+F^N(z)=A^Nz+\sum_{j=0}^{N-1}A^jc,
+$$
+
+so the iterate is affine. For any affine combination
+$z=\sum_i\lambda_i z_i$ with $\sum_i\lambda_i=1$,
+
+$$
+F^N(z)=\sum_i\lambda_i F^N(z_i)=\sum_i\lambda_i z_i=z.
+$$
+
+This proves the assertion. It includes singleton sets and
+$n=0$, and does not require $S$ to be affine, bounded, regular
+or invariant under $F$. No spectrum or ambient inverse is used.
+The exponent depends on the map and its periodic points; there
+is no bound solely in terms of dimension. For example, planar
+rotations through $2\pi/q$ have nonzero points of exact period
+$q$ for arbitrarily large $q$ as the map varies. $\square$
+

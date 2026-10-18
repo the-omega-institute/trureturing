@@ -1,0 +1,28 @@
+**Convention 11.2 (selection, verification and generation are separate).**
+Theorem 6.1 chooses some new lawful code for an explicit table. It
+neither verifies a separately supplied program nor recovers its original
+pointwise values. Theorem 10.2 proves the strict verification obstruction
+even under the stated strong promises. Finite correct-entry sets need
+not determine which good bit an independently prescribed program chooses.
+
+PCA Theorem 8.2 concerns a compatible original code whose varying
+$Z_{b_3}$ predicate asks whether an entire acquired branch image contains
+alpha. No finite stationary fixed-address common-start preparer generates
+that original code on the whole domain, even with sourcewise termination
+alone. PCA Theorem 15.2 concerns total, finitely preparable original code
+programs sharing the fixed eight-state reader, for which no uniform
+extractor returns a determining depth, menu or original-entry preparer.
+Both conclusions retain their full original-code scope. This volume
+does not generate the former code or extract the latter certificates.
+The verifier separation in §10 uses its own explicit program family;
+its finite-preparability promise is code generation, not whole-row
+success for an incompatible program.
+
+The new code (FCS.23) uses acquired whole-tuple exceptions and is not
+assigned any bounded native preparation implementation by this theorem.
+A preparer denied the acquired values is not granted them. Supplying
+a determining certificate for an original code, bounding a preparer's
+states, calls or literal submissions, and optimizing correlated
+preparation/reader costs remain distinct questions with the permissions
+of PCA §§10–14. No pending bounded-preparer result is a premise here.
+

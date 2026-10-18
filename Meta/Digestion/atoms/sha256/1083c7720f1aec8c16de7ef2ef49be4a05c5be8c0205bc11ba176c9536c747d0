@@ -1,0 +1,23 @@
+**约定 11.2（所用数学结果的精确对应）。** The interpolation and
+trace-coordinate methods above use the following interfaces with
+their stated scopes.
+
+| Mathematical source | Correspondence and restriction |
+| --- | --- |
+| Definitions 1.1–1.3 and Lemma 2.1 of this volume | Complete targets, original-clock acquisition, the six actual matrices and their every-five spanning property; only this algebraic spanning fact is used in the proportional-gain proof. Theorem 4.1 already excludes two-target $L_2$ on every specified fifth-$M$ fiber, without a gain-ray promise; it is not reproved as a larger-family theorem. |
+| [VI, Theorem 3.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md) | Recovery of every known set of at most three targets at its distinct $MMJM$ parent. Its size hypothesis and literal history are retained; it imposes no bound on the cardinality of $\mathcal F_*$. |
+| [FIB Moving-Trace Recovery and Sharp Calibrated Continuations, Lemmas 3.1–3.2 and Theorems 5.1–5.2](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md) | Trace bases and the two-branch spectral crossing are existing structures. Here (9.5) evaluates the $J$ crossing against every $H_*$ ancestor. The moving-trace pure-$M$ calibration and its prescribed-prefix sharpness are not hypotheses for an unrestricted eight-reading bound. |
+| Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems*, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1) | Identification requires every compatible solution to belong to the specified transformation orbit, with factor-orbit and conditional-fiber conditions. Here trace one removes positive source/gain scaling and leaves drift as a separate coordinate. The proportional-gain exclusion does not acquire the gain orbit. No bilinear sampling threshold is applied. |
+| Breiding–Gesmundo–Michałek–Vannieuwenhoven, *Algebraic compressed sensing*, [Answers 7–9](https://arxiv.org/html/2108.13208v2) | The generic-map and generic-point identification statements have different quantifiers from everywhere identification for prescribed atoms. No dimension threshold from those results is used here; the passage from local inverses to the entire band is the explicit compactness argument of Theorem 10.2. |
+
+The base world and the implicit-function construction are supporting
+examples and standard methods. The substantive compatibility
+calculations are the full-fiber positive quadratic certificate, the
+exhaustive two-branch ancestor calculation with its remote target,
+and the closed-source and unbounded-drift exclusion that joins both
+local inverses on the whole band. Polynomial interpolation, the
+implicit and inverse function theorems, elementary trace linear
+algebra, rational interval bounds and finite-dimensional compactness
+are established mathematical tools. These applications carry no
+external-priority assertion.
+

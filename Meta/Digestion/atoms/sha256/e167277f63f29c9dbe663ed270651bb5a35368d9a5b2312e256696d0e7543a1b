@@ -1,0 +1,27 @@
+## 195. Uniqueness of the actual pair-{Z,M} owner
+
+No owner can use only M and Z: all six lengths have cosh greater than
+three, so the exact vertex response has lambda>2/3 and each vertex
+angle sum exceeds pi/2. Its six-angle sum exceeds pi. Such an owner
+would differ from tau and rho, each of which has a C slot; together
+with their separate M/Z expenditures greater than pi, it would exceed
+3*pi. This is the same full two-value argument as Section 157.
+
+Any owner with pair {Z,M} is genuine and has no special axes. Therefore
+one axis is B in {C,D,U}, with b<=m, and its other axis has value r<=z.
+Set k=z+m, L=k^2-(b-1)(r-1)>0 and
+J=(b+1)(r+1)-(z-m)^2>0. Its transverse sum is
+
+ gamma+delta=2*atan(kappa*sqrt(L/J)),
+ kappa=(sqrt(z^2-1)+sqrt(m^2-1))/(z+m), kappa^2>8/9.
+
+The exact expansion and the bounds b<=m,r<=z yield
+
+ L-2J>=3z^2-5zm+3m^2-m-z-3
+       =(m-3)(m+1)+(z-m)(m-1)+3(z-m)^2>0.
+
+Thus gamma+delta>pi/2 and its four transverse M/Z slots consume more
+than pi. Any such owner other than rho would be distinct from tau,
+whose fixed pair is {M,C}, and would exceed 3*pi together with tau and
+rho. Hence rho is the only owner with fixed pair {Z,M}.
+

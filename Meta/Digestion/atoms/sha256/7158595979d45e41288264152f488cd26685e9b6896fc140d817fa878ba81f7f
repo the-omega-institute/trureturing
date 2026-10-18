@@ -1,0 +1,13 @@
+**约定 11.1（固定仓内来源）。** 下表均取同一源快照 `db2225af354815a069ce1daa607706f3a9ded2fa`。这些是来源地址。
+
+| 简称及来源 | 本卷使用、既有重叠及不承担部分 |
+| --- | --- |
+| [AIF](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md) 2.2–2.6、4.4 | 原始实际输入、部分任务和确定性回放；不新增 replay 定理。 |
+| [SSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md) 4.4、7.2、12.1 | 已有固定容量自然视图/原任务核，作为已覆盖范围，不重做。 |
+| [CAP](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md) 4.6–4.7、6.1–6.7、7.4、8.1、12.2 | literal reader、保留描述符/请求行、原始消费及实际来源分类；借用 replay/superprefix，不借文献或解释授予权限。第 13、16–18 节的 old-memory、终端、horizon、资源界均直接复用。 |
+| [ARC](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md) 4.1、5.2–5.5、6.1–6.5、9–11 | 实际 source inlining、gate、返回、输入 reservoir、固定 beta 初始化/consumer 及价格；最后 changed CTL 不冒充未变。 |
+| [UAS](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md) 1.4、2、3.1–3.5、6.2–6.4 | 已有独立自然表达、raw 逆、规范历史核和 strict-Reserve Zero 原任务核；本文新增的是 Zero 之外具体源调用的旧坐标输入/原始后继桥，不将这些旧核计作新增。 |
+| [Cycle](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md) 7.4、9.2 | 已有 acquired strict-Zero 转换及 receiver/cost；不借它产生任意 fine-cut codec。 |
+| [OR](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md) 4、5.5、6.1–6.2、7.2 | before-image/权限/收据条件、stable completion、条件 fine-history、真实 INITIAL consumer 与 birth 计数；均保留尚未实例化的全行条件。 |
+| [GCA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_CUT_ACQUISITION.md) 2–6、8.3、9.4 | 已有更广历史 selector 和真实交付；精确参数/初始化见第 6 节，不重新实现，不暗移四视图核。 |
+

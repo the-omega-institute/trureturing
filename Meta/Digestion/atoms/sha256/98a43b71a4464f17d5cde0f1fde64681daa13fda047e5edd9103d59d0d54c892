@@ -1,0 +1,29 @@
+**命题 10.1（Exact obstruction to the Cauchy–Schwarz branch）。** For $s>0$,
+the equality $L=\sqrt{10s}$ is attainable in the legal class exactly when
+$s\le10/7$. In purity coordinates the exact upper crossover is $p=11/35$.
+The lower crossover is $s=1$, equivalently $p=7/25$.
+
+Proof. Applied directly to the ten absolute upper entries, Cauchy–Schwarz
+has equality exactly when all ten are $\sqrt{s/10}$. Thus any such equality
+matrix is $X=\sqrt{s/10}\,T$ for a skew sign matrix $T$. Lemma 6.1 gives
+
+$$
+\|X\|_{\mathrm{op}}^2=\frac{s}{10}\alpha^2\ge\frac{7s}{10}.
+$$
+
+It is illegal when $s>10/7$. Section 8 realizes equality for every
+$s\le10/7$, including the boundary. This rules out all possible sign
+patterns above the crossover, not just the displayed family. At the join,
+
+$$
+\mathcal N_{\max}(10/7)
+ =\frac{10}{5\sqrt7}=\frac2{\sqrt7},\qquad
+\frac15+\frac{2(10/7)}{25}=\frac{11}{35}.
+$$
+
+The lower proof also identifies its exact change: for $s>1$ an equality
+$L=\sqrt{s}$ would require a single entry larger than one, violating the
+entry cap. The second lower branch is attained and is strictly larger
+there. At $s=1$ both lower formulas are one before division by five, and
+the corresponding purity is $7/25$. $\square$
+

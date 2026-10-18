@@ -1,0 +1,92 @@
+**Proposition 145.3 (Normalization, every word and the base equality).**
+Every lift in Definition 145.2 is one complete stopped allocation at its
+vertex profile, obeys all 94 TV rows, and satisfies
+$p^v_{11111}(0)=1-e_v$.
+
+**Proof.** Write $A^v_i,E^v$ for the six profile numerators and
+$t^v_{S,c,r}$ for terminal numerators reconstructed from the sparse list.
+For each schedule and each of its stopped cells, summation gives the same
+integer $m^v_S=\sum_r t^v_{S,c,r}$. The 16 masses, in schedule order,
+are in the table below. Their sum is $d_v$. Thus all 26 independent
+common-mass and global-normalization equations hold; nonnegativity is
+explicit in the sparse data.
+
+For every word reconstruct
+
+$$
+u^v_b(r)=\sum_{S\in\mathcal S_5}t^v_{S,c_O(b,S),r},\qquad
+p^v_b(r)=u^v_b(r)/d_v.
+\tag{145.1}
+$$
+
+Each law has total numerator $d_v$. At every zero-containing word with
+first zero $n$, its three exact integer row slacks are
+
+$$
+\begin{aligned}
+\sigma^v_{b,0}&=u^v_b(0)-d_v+A^v_n+E^v,\\
+\sigma^v_{b,n}&=u^v_b(n)-A^v_n+E^v,\\
+\sigma^v_{b,\mathrm{pair}}&=u^v_b(0)+u^v_b(n)-d_v+E^v.
+\end{aligned}
+\tag{145.2}
+$$
+
+The last slack is $u^v_{11111}(0)-d_v+E^v=0$.
+For the given integer tables all these slacks are nonnegative; the minimum
+in each vertex's set of 94 is zero. Formula (145.2) and the 94-row ordering
+reconstruct every entry without an additional law or slack archive.
+Equivalently direct event-TV evaluation is
+$[d_v-\min(u^v_b(0),d_v-A^v_n)-\min(u^v_b(n),A^v_n)]/d_v$.
+This is at most $E^v/d_v$ by the same exact inequalities.
+These finite integer identities establish feasibility at each vertex,
+including plateaus, zero amplitudes, $E^v=0$ and $a_{5,v}=e_v$.
+There are 1152 reconstructible word laws and 3384 separate row slacks;
+they are consequences of the primitive tables and not further independent
+data. Proposition 141.2 proves their TV sufficiency. $\square$
+
+<!-- mathematical-data: schedule-masses36 -->
+
+| Vertex $v$ | $(m^v_S)_{S=0}^{15}$ | Sum | Minimum row slack numerator |
+| --- | --- | --- | --- |
+| 0 | (0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0) | 1 | 0 |
+| 1 | (0,0,0,0,0,0,4,2,1,0,2,1,0,2,0,1) | 13 | 0 |
+| 2 | (0,0,0,0,0,0,5,3,1,0,3,1,0,3,0,1) | 17 | 0 |
+| 3 | (0,0,0,0,0,0,5,3,1,0,3,1,0,3,0,1) | 17 | 0 |
+| 4 | (0,0,0,0,0,0,2,1,0,0,1,0,0,1,0,0) | 5 | 0 |
+| 5 | (0,0,0,0,0,0,9,6,3,0,6,3,0,6,0,2) | 35 | 0 |
+| 6 | (0,0,0,0,0,0,4,2,1,0,2,1,0,2,0,1) | 13 | 0 |
+| 7 | (0,0,0,0,0,0,15,7,3,0,7,3,0,5,2,3) | 45 | 0 |
+| 8 | (0,0,0,0,0,0,4,2,1,0,2,1,0,3,0,1) | 14 | 0 |
+| 9 | (0,0,0,0,0,0,13,5,1,0,5,1,0,3,2,1) | 31 | 0 |
+| 10 | (0,0,0,0,0,0,8,3,0,0,3,0,0,2,1,0) | 17 | 0 |
+| 11 | (0,0,0,0,0,0,3,1,0,0,1,0,0,1,0,0) | 6 | 0 |
+| 12 | (0,0,0,0,0,0,3,1,1,0,1,1,0,1,0,1) | 9 | 0 |
+| 13 | (0,0,0,0,0,0,8,4,3,0,4,3,0,3,0,3) | 28 | 0 |
+| 14 | (0,0,0,0,0,0,7,5,3,0,5,3,0,3,0,3) | 29 | 0 |
+| 15 | (0,0,0,0,0,0,8,4,3,0,4,3,0,6,0,3) | 31 | 0 |
+| 16 | (0,0,0,0,0,0,5,3,1,0,3,1,0,3,0,1) | 17 | 0 |
+| 17 | (0,0,0,0,0,0,5,3,1,0,3,1,0,3,0,1) | 17 | 0 |
+| 18 | (0,0,0,0,0,0,4,2,1,0,2,1,0,2,0,1) | 13 | 0 |
+| 19 | (0,0,0,0,0,0,4,2,1,0,2,1,0,2,0,1) | 13 | 0 |
+| 20 | (0,0,0,0,0,0,9,6,3,0,6,3,0,6,0,2) | 35 | 0 |
+| 21 | (0,0,0,0,0,0,15,7,3,0,7,3,0,5,2,3) | 45 | 0 |
+| 22 | (0,0,0,0,0,0,3,1,1,0,1,1,0,1,0,1) | 9 | 0 |
+| 23 | (0,0,0,0,0,0,4,2,1,0,2,1,0,3,0,1) | 14 | 0 |
+| 24 | (0,0,0,0,0,0,8,4,3,0,4,3,0,3,0,3) | 28 | 0 |
+| 25 | (0,0,0,0,0,0,7,5,3,0,5,3,0,3,0,3) | 29 | 0 |
+| 26 | (0,0,0,0,0,0,2,1,0,0,1,0,0,1,0,0) | 5 | 0 |
+| 27 | (0,0,0,0,0,0,13,5,1,0,5,1,0,3,2,1) | 31 | 0 |
+| 28 | (0,0,0,0,0,0,5,4,6,0,7,3,0,3,0,3) | 31 | 0 |
+| 29 | (0,0,0,0,0,0,8,3,0,0,3,0,0,2,1,0) | 17 | 0 |
+| 30 | (0,0,0,0,0,0,3,1,0,0,1,0,0,1,0,0) | 6 | 0 |
+| 31 | (0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0) | 1 | 0 |
+| 32 | (0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0) | 1 | 0 |
+| 33 | (0,0,0,0,0,0,2,1,0,0,1,0,0,0,0,0) | 4 | 0 |
+| 34 | (0,0,0,0,0,0,3,0,0,0,0,0,0,2,0,0) | 5 | 0 |
+| 35 | (0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1) | 2 | 0 |
+
+The finite endpoints at $e=0$ or $a_5=e$ are auxiliary affine certificates.
+They are not invented original positive infinite-tail sources. The original
+construction uses only strict active profiles, while convex combinations
+of these endpoint tables prove all their closed boundaries.
+

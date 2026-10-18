@@ -1,0 +1,22 @@
+**Definition 1.4 (actual placement).** Keep CAP ports 0–63, their owners,
+origins and routes. In particular verifier32–39, consumer40–47 and routes50–51
+remain occupied. Reuse exactly ARC's $A$-owned annex:
+
+| Ports | Use |
+| --- | --- |
+| 64,65 | Immutable alternating word banks, with actual parity. |
+| 66,67 | Native base/ordinal and length scratch, respectively. |
+| 68 | RCA-format, zero-based descriptors, with F and seal. |
+| 69 | Actual code capture, initial manifest fields and later staging. |
+| 70 | Retained gate, HistoryMode and history-frame ingress. |
+| 71 | Immutable cover/package/image backing and sender blocks. |
+| 72,73 | Dedicated mailbox and actual receiver. |
+
+The handler, client and mailbox availability slots are distinct even though
+their principal is $A$. The new compiler never borrows the producer's twelve
+workspace tokens. Closed reads of 26/28/29 use ARC §3's actual read rights
+and restore those heads. CAP29's ten sep-delimited fields and one-based
+creation ordinals are parsed separately from annex68's RCA unary/flags/F
+grammar. Port number, native base, complete reference, event ordinal,
+cycle index, cover/package number and primitive tally have separate types.
+

@@ -1,0 +1,64 @@
+**Proposition 15.3 (actual prehistory, finite resources and earlier failures).**
+Every state quantified in Theorem 15.2 is reached from the same positive
+preparation by Proposition 2.2 with auxiliary height $a=L$. Its rectangle
+coefficient and phase variation are
+
+$$
+B_{\beta,m}=\frac{24}{5}\beta-\frac45\pi m,
+\qquad \operatorname{TV}(\chi)=2\pi|m|+2|B_{\beta,m}|.
+\tag{PR.60}
+$$
+
+The prehistory takes five units. The acquisition (PR.54) and final target
+leg satisfy both original regularity alternatives, strict support at least
+$1/20$, zero additional phase variation and speed at most $1/8$.
+Acquisition alone has height variation $n/4$, coordinate quadratic cost
+$\int(k_g')^2=n/32$, and a common BV-velocity bound
+$\operatorname{TV}(k_g')\leq n/2$, without artificial exterior jumps.
+The target leg adds one time unit and height variation $1/8$.
+If the five-unit preparation is itself implemented with the canonical
+stopped instrument, its live mass is $1/7$; retaining its failures too,
+the all-success probability from that earlier preparation is
+$2/7^{n+2}$.
+
+Proof. (PR.60) is the credited source map (PR.33), with all real lifts
+retained. Acquisition and target heights lie in $[1/8,1/4]$, where the
+smallest $x,c-x,Z$ is $1/20$. They are finite affine pieces and waits,
+joined continuously. Each loop travels distance $1/4$ at speed $1/8$
+for two time units, giving the variation and quadratic cost. At its
+velocity changes the total variation is at most
+$1/8+1/4+1/8=1/2$ per block; the initial moving leg for $g=0$ can
+only remove the first jump from this upper bound. The preparation has the
+same two nontrivial height legs as one loop, while phase-only legs add no
+hazard, so its survival is $1/7$. Its canonical failures remain separate
+absorbing branches. Conditional on surviving it, the specimen, no-failure
+record and terminal clock are precisely the live starting cut used above.
+Multiplication by that actual positive live mass proves the last value.
+$\square$
+
+The public rational schedule and repeat count have finite descriptions;
+$n$ needs $O(\log(n+1))$ bits in a loop programme. The source-side $g$
+and emitted latch each cost one classical bit. Source preparation also
+carries the actual integer/phase programme. Arbitrary real $\beta$ need
+not admit a finite effective encoding. The dense subfamily
+$\beta/\pi\in\mathbb Q$, $m\in\mathbb Z$ has finite symbolic
+programmes, with separately paid integer/rational bit lengths, and already
+forces the same bound by continuity of each common CP map. This observation
+does not replace the full real source theorem by a rational-source theorem.
+There is no uniform finite past variation or programme width for all histories.
+
+The calibrated clock, source-start alignment, reference, permissions,
+installed source executor, selector/update state and actual archives are
+separate resources. The exact continuous failure-time archive is the
+supplier's ideal recording resource, with no fixed finite-bit implementation
+claimed. An observer reading $g$, the installed schedule or any equivalent
+source-sensitive port would acquire extra live assistance and leave the
+obstruction's premises. The deliberately restricted delivered boundary
+here is not asserted to be a complete acquired observer.
+
+As $n\to\infty$, (PR.56) tends to one while (PR.57) tends to zero.
+This is a sequence of finite experiments with growing horizon and variation,
+not an executed infinite acquisition or a universal acquisition tradeoff.
+It proves that a high calibration probability in the complete output can
+coexist with zero calibration mass on its usable live branches.
+

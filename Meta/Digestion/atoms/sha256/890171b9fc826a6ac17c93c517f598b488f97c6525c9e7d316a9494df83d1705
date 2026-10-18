@@ -1,0 +1,38 @@
+**Proposition 7.1.** Solutions of (7.1)–(7.10) are in bijection with
+ordered triples of distinct worlds in $\mathcal C_d(H)$ having
+$L_2(K,H)$. Thus the existence question, allowing arbitrary $d$ and
+arbitrary fixed common late readings, is exactly the simultaneous
+solvability of this system.
+
+**Proof of necessity.** A legal world gives (7.1) and the positive
+denominators in (7.2). The first four ancestor equations force the
+four samples (7.2), and uniqueness of degree-at-most-three
+interpolation gives precisely (7.3). The actual last two ancestor
+equations are (7.7), and the two future sample conditions are (7.8)
+by (7.5). If two sources agreed at the common $d$, their first four
+gain samples would agree by (7.2), hence their gains and original
+drifts would agree. Complete-world distinctness therefore gives
+exactly the distinct sources required in (7.1). Definitions give
+(7.9), and Proposition 5.1 gives (7.10).
+
+**Proof of sufficiency.** Conditions (7.1) give strictly positive
+rank-one trace-one sources. The polynomial (7.3) has degree at most
+three and exactly the four samples (7.2), so all first four ancestor
+equations hold. It is nonzero: an identically zero gain would force
+the distinct readings zero and 24 both to equal $d$.
+Conditions (7.7) give the remaining two actual equations for the same
+worlds, and (7.8) gives $f_i(6)=0$, $f_i(7)\ne0$.
+The affine inverse (7.9) works for either sign of $\lambda$.
+Distinct sources ensure distinct complete worlds. Finally (7.10)
+and Proposition 5.1 give $L_2(K,H)$ with its actual raw-response
+witnesses, permitting a different pair in each terminal column.
+The construction and extraction are inverse because all source
+entries, gain samples and original drift are fixed by them. ∎
+
+Theorem 2.1 and Theorems 4.1 and 6.1 can be imposed as additional
+necessary restrictions without changing this equivalence. No solution
+of the system, and no contradiction for all its solutions, is asserted.
+This conditional interface does not assemble three worlds from
+separately compatible pairs or from separately attainable parameter
+extrema.
+

@@ -1,0 +1,13 @@
+**Corollary 4.2 (exact randomized minimax floor on a specified class).** In
+the source (3.4), fix $\delta=1/10$, $a=4\pi$ and hence $S=\pi/2$.
+On the zero-winding class with exactly
+$\operatorname{TV}(k)=1/5$, $\operatorname{TV}(\chi)=8\pi$, and no common
+speed bound, the normalized-character minimax expected absolute error is
+one for every finite uniform query budget. Indeed, for each $M$ Theorem
+4.1 gives risk at least $1-q/M$, so the supremum over fixed histories is
+at least one. The constant estimator zero gives the matching upper bound.
+This is a supremum statement; it need not be attained by one pair of
+histories for all seeds. It is not a randomized $1/N$ theorem for a bounded
+speed class, and it does not cover source-dependent seeds or fresh
+source-dependent side inputs.
+

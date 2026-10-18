@@ -1,0 +1,195 @@
+**Theorem 8.6 (Exact prefix capacities and the double-wall decoder).**
+For Definition 8.5,
+
+$$
+\operatorname{cap}^{\rm pre}_{\rm aff}(b)=
+\begin{cases}
+10,&\text{neither wall},\\
+6,&\text{exactly one wall},\\
+4,&\text{both walls}.
+\end{cases}
+\tag{8.11}
+$$
+
+All upper bounds use offset zero and one decoder fixed on the whole
+variable-probability domain. The lower bounds allow arbitrary fixed
+offsets and arbitrary nonlinear encoders.
+
+Proof. Let $\upsilon(t)=(\cos t,\sin t)^{\mathsf T}$,
+$J=\operatorname{diag}(1,-1)$, and let
+
+$$
+O=\bigoplus_{e\in\mathcal E}R_{\delta_e^0},\qquad
+\widetilde y=O^{\mathsf T}y.
+\tag{8.12}
+$$
+
+This fixed orthogonal change merely exposes the preparation phases in
+the proof; the final decoder into the original outputs includes $O$.
+It neither whitens nor rescales the output metric.
+
+At no wall the five phase characters are, on the full $\mathbb T^4$,
+
+$$
+h_0-h_1,\quad h_0,\quad h_0-h_3,\quad
+h_1-h_{13},\quad h_3-h_{13}.
+\tag{8.13}
+$$
+
+Their integer coefficient vectors, in order $(h_0,h_1,h_3,h_{13})$, are
+
+$$
+(1,-1,0,0),\ (1,0,0,0),\ (1,0,-1,0),\
+(0,1,0,-1),\ (0,0,1,-1).
+\tag{8.14}
+$$
+
+They are nonzero and pairwise distinct even up to sign. Fix any interior
+$\kappa_*$. Theorem 8.2 realizes the entire phase torus at this one
+height; every amplitude in (8.8) is strictly positive. Distinct torus
+characters, including the constant and both signs of (8.14), are linearly
+independent. Hence the constant and the ten real sine/cosine output
+functions on this slice are independent. Its affine hull is all of
+$\mathbb R^{10}$, proving the lower bound ten for the whole prefix
+family. The identity decoder gives the upper bound.
+
+For $E_-$ only, write $h_0=h_{13}=x$, $h_1=y$, $h_3=z$ and use the
+three independent angles
+
+$$
+\alpha=x-y,\qquad\beta=x,\qquad\gamma=x-z.
+$$
+
+The change of circle coordinates has the integer inverse
+$(x,y,z)=(\beta,\beta-\alpha,\beta-\gamma)$. Here
+$p_0=p_{13}=\kappa$. Set
+
+$$
+z_\alpha=2\sqrt{\kappa(X-\kappa)}\,\upsilon(\alpha),\quad
+z_\beta=2\sqrt{\kappa Z}\,\upsilon(\beta),\quad
+z_\gamma=2\sqrt{\kappa(Y-\kappa)}\,\upsilon(\gamma).
+$$
+
+Then, in the edge order (8.7),
+
+$$
+\widetilde y=(z_\alpha,z_\beta,z_\gamma,Jz_\alpha,Jz_\gamma).
+\tag{8.15}
+$$
+
+This is a fixed rank-six linear map of the three displayed pairs,
+independent of $\kappa$. At a fixed interior height the three pairs
+range over a product of three circles of positive radii. Its affine hull
+is $\mathbb R^6$, giving the matching lower bound.
+
+For $E_+$ only, write $h_0=x$, $h_1=h_3=y$, $h_{13}=z$ and use
+
+$$
+\alpha=x-y,\qquad\beta=x,\qquad\gamma=y-z.
+$$
+
+Their integer inverse is
+$(x,y,z)=(\beta,\beta-\alpha,\beta-\alpha-\gamma)$.
+Here $p_1=p_3=X-\kappa$. Define
+
+$$
+z_\alpha=2\sqrt{p_0(X-\kappa)}\,\upsilon(\alpha),\quad
+z_\beta=2\sqrt{p_0Z}\,\upsilon(\beta),\quad
+z_\gamma=2\sqrt{\kappa(X-\kappa)}\,\upsilon(\gamma).
+$$
+
+The full response is now
+
+$$
+\widetilde y=(z_\alpha,z_\beta,z_\alpha,z_\gamma,z_\gamma).
+\tag{8.16}
+$$
+
+Again the map is fixed and rank six across every probability, and the
+fixed-height three-circle slice proves sharpness. The two individual
+walls thus have the same capacity for explicitly different edge
+identifications.
+
+At both walls let
+
+$$
+B=r/2-\kappa>0,\qquad h_0=h_{13}=u,\quad h_1=h_3=v,
+\qquad \alpha=u-v,\quad\beta=u.
+\tag{8.17}
+$$
+
+The two circle coordinates are independent, with inverse
+$(u,v)=(\beta,\beta-\alpha)$. Define four real response coordinates by
+the two pairs
+
+$$
+z_a=2\sqrt{\kappa B}\,\upsilon(\alpha),\qquad
+z_b=2\sqrt{\kappa Z}\,\upsilon(\beta),\qquad z=(z_a,z_b).
+\tag{8.18}
+$$
+
+With $I_2$ the two-by-two identity, an explicit decoder into the original
+ten outputs is
+
+$$
+D=O D_0,\qquad
+D_0=
+\begin{pmatrix}
+I_2&0\\
+0&I_2\\
+I_2&0\\
+J&0\\
+J&0
+\end{pmatrix},\qquad y=Dz,
+\qquad D^{\mathsf T}D=4I_2\oplus I_2.
+\tag{8.19}
+$$
+
+All dependence on the current probability is in the encoder (8.18),
+not in $D$ or an offset. The two radii are nonzero at every interior
+height. At any such height the full product of two circles is reachable,
+so its affine hull is $\mathbb R^4$. Injectivity of $D$ gives a
+four-dimensional affine hull of the outputs, proving that no fixed
+affine decoder with three input coordinates can serve this domain.
+
+For completeness, the character-independence step is the classical
+theorem for distinct homomorphisms to $\mathbb C^\times$, with
+$G=\mathbb T^g$, as in Keith Conrad,
+[*Linear Independence of Characters*, Theorem 2.1](https://kconrad.math.uconn.edu/blurbs/galoistheory/linearchar.pdf).
+For these characters the same conclusion follows from the torus
+orthogonality used in §4: multiply by a conjugate character and integrate
+over the phase torus. Sine and cosine are the two linear combinations
+of a nonzero character and its inverse. Including the trivial character
+rules out a nonzero constant affine relation. This is a test of
+functional independence on the realized slice, not an assumption about
+the probability distribution of histories.
+
+Finally, the affine hull of $c+D z(\mathcal M_b)$ has dimension at most
+$\operatorname{rank}D\le n$, regardless of the encoder. This supplies
+all stated lower bounds even when a nonzero fixed offset is allowed.
+$\square$
+
+The four coordinates (8.18) carry a three-dimensional curved source
+image rather than an open subset of $\mathbb R^4$. Explicitly, if
+$a=\|z_a\|^2$ and $b=\|z_b\|^2$, that exact image is
+
+$$
+0<b<2rZ,\qquad
+a=\frac{rb}{2Z}-\frac{b^2}{4Z^2},
+\tag{8.20}
+$$
+
+with arbitrary angles of the two nonzero pairs. Indeed
+$\kappa=b/(4Z)$, and substitution gives
+$a=4\kappa(r/2-\kappa)$; Theorem 8.2 realizes every such point. This
+description explains why intrinsic dimension three and affine capacity
+four coexist for the same source. Equation (8.19) also retains the
+original output distance exactly:
+
+$$
+\|y-y'\|^2=4\|z_a-z_a'\|^2+\|z_b-z_b'\|^2.
+\tag{8.21}
+$$
+
+No additional metric choice is involved in this decoder identity.
+

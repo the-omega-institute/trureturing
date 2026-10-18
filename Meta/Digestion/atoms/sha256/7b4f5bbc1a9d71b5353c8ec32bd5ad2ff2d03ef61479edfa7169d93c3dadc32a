@@ -1,0 +1,62 @@
+**Theorem 16.3 (platform endpoint and non-affine requests).** Every
+request on the height-maximizing platform, including its right
+endpoint, has an original optimum with at most eight supported low
+atoms. At an interior strict weak request, the same bound holds
+whenever the request is not in the interior of any nontrivial
+strictly decreasing affine segment of $R_t$.
+
+Proof. At $\lambda=0$ let $r_P=r_+(t,0)$, the largest achieved
+contrast among all unrestricted height maximizers. Theorem 16.2
+provides such a maximizer with at most eight low atoms. It meets
+every request $0\le r\le r_P$ and attains the unrestricted height
+$C_t(0)$, proving the assertion also at $r=r_P$. Conversely if
+$R_t(r)=C_t(0)$, its attained law is on this same face, so
+$r\le r_P$. This identifies the entire platform, including a
+platform consisting of a single request or extending to the whole
+request interval.
+
+Now let $r_P<r<r_{\max}(t)$. Finiteness and concavity of $R_t$
+on the interval give a finite supporting slope $-\lambda$:
+$$
+R_t(q)\le R_t(r)-\lambda(q-r)\qquad(0\le q\le r_{\max}(t)).
+\tag{GC.75}
+$$
+Monotonicity permits $\lambda\ge0$; comparison with $q=r_P$
+forces $\lambda>0$, because $R_t(r)<C_t(0)$.
+Every optimizer at request $r$ has $K=r$. Indeed if $K>r$, its
+height is at most $R_t(K)$, which (GC.75) makes strictly less than
+$R_t(r)$. For any common law with achieved $K$ and height $J$,
+$J\le R_t(K)$, so (GC.75) yields
+$J+\lambda K\le R_t(r)+\lambda r$. Equality at the request
+optimizer proves
+$C_t(\lambda)=R_t(r)+\lambda r$ and multiplier optimality of
+that same law.
+
+Write $r_-=r_-(t,\lambda)$ and $r_+=r_+(t,\lambda)$.
+The active optimizer shows $r\in[r_-,r_+]$. The endpoint laws
+of Theorem 16.2 have heights $C_t(\lambda)-\lambda r_\pm$.
+For each $q\in[r_-,r_+]$, a mixture of the two laws achieves
+exact contrast $q$ and height $C_t(\lambda)-\lambda q$.
+Every competitor with achieved $K'\ge q$ obeys
+$$
+J'\le C_t(\lambda)-\lambda K'
+                  \le C_t(\lambda)-\lambda q.
+\tag{GC.76}
+$$
+Consequently
+$$
+R_t(q)=C_t(\lambda)-\lambda q
+               \quad(q\in[r_-,r_+]).
+\tag{GC.77}
+$$
+Both endpoints are global optima for their own requested contrasts
+and have at most eight low atoms. If $r$ is not interior to a
+nontrivial strictly decreasing affine segment, it must be one of
+these endpoints (possibly both), and has the same eight-low bound.
+If such an affine segment exists, this proof supplies only its two
+contrast endpoints. It supplies no universal eight-low bound for
+the segment's interior. Every finite law here satisfies (GC.56)
+and the pointwise fractional capacity condition, so its realization
+is by Proposition 12.2 with the original contrast inequality.
+$\square$
+

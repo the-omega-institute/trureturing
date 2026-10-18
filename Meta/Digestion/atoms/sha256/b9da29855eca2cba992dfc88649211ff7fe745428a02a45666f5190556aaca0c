@@ -1,0 +1,27 @@
+## 138. Inputs used in the proof
+
+For a paired block (r,a,b,o,a,b):
+
+* Axial flatness is equivalent to (r-1)(o-1)>=(a+b)^2.
+* Genuine blocks satisfy (r+1)(o+1)>(a-b)^2.
+* A transverse-selected flat block contributes two pi occurrences to its
+  selected actual reservoir label.
+* Every special edge q in S has a fixed actual reservoir pair {A,B}
+  around its complete star and x_q<1+x_A+x_B.
+* In a genuine block with r>=1+a+b, if theta is the axial r angle and
+  beta,delta are the a,b transverse angles, then
+
+      2*theta+beta+delta > pi.                    (137.1)
+
+* For genuine paired blocks, a>b implies beta>delta, by (95.5).
+* In a genuine block (q,z,a,b,z,a), the cosine numerator for either
+  transverse Z angle is
+
+      N(q)=a(q+b)+z(qb+a^2-z^2+1),                (137.2)
+
+  with positive denominator. Its coefficient of q is a+zb>0, and
+
+      N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z).           (137.3)
+
+These facts concern original angles of the same common length field.
+

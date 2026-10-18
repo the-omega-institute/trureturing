@@ -1,0 +1,25 @@
+## 390. A stronger charge for two transverse P labels
+
+Retain the six-edge source-normal-form scalar conditions
+
+    c,d,v>1, m>1+c+d, v<=m-2, z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.                              (390.1)
+
+The labels M,V,C,D,Z,U are distinct actual labels; equal numerical
+coshes at different labels are allowed. Every owner has its fixed
+four-distinct paired frame (R,A,B,O,A,B), with edge order
+(12,13,14,34,24,23). Put P={M,Z,U} and low={V,C,D}.
+
+For a genuine owner with axes r,o and pair a,b, use its original slots
+and the paired formulas
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0,
+    K=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+    S=beta_a+beta_b=2*atan(K*sqrt(L/J)),
+    tan(theta_r/2)=sqrt((r-1)/(r+1))*sqrt(J/L).     (390.2)
+
+Every genuine angle is in (0,pi). P expense counts each original
+transverse occurrence twice and each axial occurrence once.
+

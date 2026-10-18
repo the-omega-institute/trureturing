@@ -1,0 +1,33 @@
+### 定理 6.2（动态短正合列）
+
+令
+
+\[
+\mathbf c=(1,1,1,1,0),\qquad
+\mathbf d=(1,-1,0,-1,1).
+\]
+
+则
+
+\[
+\ker B=\mathbb R\mathbf c,
+\]
+
+\[
+\ker(AB)=\{(a,b,a,b,0):a,b\in\mathbb R\},
+\]
+
+并有短正合列
+
+\[
+0\longrightarrow\mathbb R\mathbf c
+\longrightarrow\ker(AB)
+\xrightarrow{B}
+\mathbb R\mathbf d
+\longrightarrow0.
+\]
+
+证明：直接计算 \(Bf\) 和 \(ABf=(a-c,e,b-d)\)。由 \(Bf=0\) 得 \(e=0,a=b=c=d\)，所以 \(\ker B=\mathbb R\mathbf c\)。由 \(ABf=0\) 得 \(c=a,e=0,d=b\)。代入 \(B\) 得 \(B(a,b,a,b,0)=(b-a)\mathbf d\)。证毕。
+
+---
+

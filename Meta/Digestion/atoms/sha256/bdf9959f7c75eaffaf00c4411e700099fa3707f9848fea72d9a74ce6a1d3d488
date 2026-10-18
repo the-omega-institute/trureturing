@@ -1,0 +1,43 @@
+**定义 233.1（A joint finite measure and two full scores）。** For an
+integer $m\ge4$ put
+
+$$
+d_m=\frac{m(m-3)}2,\quad b_m=d_m-m+2,\quad
+s_m=d_m+m-1,\quad t_m=d_m-1,
+$$
+
+and set $\gamma_1=0$, $\gamma_2=b_m$, $\gamma_3=d_m-1$,
+$\gamma_n=d_m$ for $4\le n\le m$. Within this section write
+$d,b,s,t$ for these four parameters. This $b_m$ is a score
+coefficient, not the $m$-th coordinate of a hull point.
+
+Define one measure $\mu_m$ with unit mass at every word $(x,0)$
+such that $x\in\{0,1\}^{m-1}$ has Hamming weight one or two,
+except for the singleton $x=(0,\ldots,0,1)$. This measure is a
+deterministic dual score measure, not a distribution of original
+sources or an acquisition law.
+
+Both scores below have $A=0$, $P=\mu_m$, and $T=t$.
+The score $Y_m$ puts correct mass $\gamma_n$ at the absorbing-chain
+word $1^{n-1}0^{m-n+1}$ for each $n$.
+
+For the simultaneous score $Z_m$, define
+
+$$
+E_n=\{w\in\operatorname{supp}\mu_m:n(w)<n,\ w_n=0\},
+\quad c_n=\mu_m(E_n),\quad
+\tau_n(w)=(1,\ldots,1,w_n,\ldots,w_m).
+$$
+
+For every $n$ with $\gamma_n>0$, put correct measure
+$C^{(n)}=(\gamma_n/c_n)(\tau_n)_*(\mu_m|_{E_n})$ on first-zero
+class $n$. For $\gamma_n=0$, put $C^{(n)}=0$ without division.
+Add all coinciding coefficients. Keep the same $P,T$.
+Thus $Z_m$ is one full score defined jointly from the same $\mu_m$
+for all labels; it is not a collection of independently chosen
+cell or label optimizers.
+
+For every $L\ge m$, append $1^{L-m}$ to every scored zero word
+and retain $T$ at $1^L$. Denote the scores by $Y_m^L,Z_m^L$.
+All ambient zero-word demands and output labels are still present.
+

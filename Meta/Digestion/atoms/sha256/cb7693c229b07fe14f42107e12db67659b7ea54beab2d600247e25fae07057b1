@@ -1,0 +1,53 @@
+**Corollary 3.1 (zero excess requires one of the seven variances).** For
+the fixed positive three-depth prior,
+
+$$
+\mathcal J=0\ \Longrightarrow\ V>0.
+\tag{3.1}
+$$
+
+More precisely, the restricted value
+
+$$
+j_7:=\min_{\Gamma\in\mathfrak C_7}\mathcal J(\Gamma)>0
+\tag{3.2}
+$$
+
+exists. The minimum ranges over the whole $\mathfrak C_7$, with no box
+constraint, finite-support bound, reversibility or eventual-tail hypothesis.
+No numerical value of $j_7$ is asserted.
+
+**Proof.** If $V=0$ and $\mathcal J=0$, the four endpoint configuration
+losses give (1.7)--(1.8). Since $M_p=\kappa M_\beta+\zeta$,
+Theorem 2.2 forces the fair matched endpoint pair. For its p marginal the
+depth-3 target $R=P_{p,3/8}$ violates the budget. Explicitly,
+
+$$
+R(w_{3,1})-P_{p,b}(w_{3,1})
+=\frac{344076471}{6553600000000}=:\delta_3>0.
+\tag{3.3}
+$$
+
+The b endpoint is the upper endpoint at this coordinate. The supplied
+coordinate triangle identity therefore gives
+
+$$
+\tfrac12\operatorname{TV}(P_{p,a},R)
++\tfrac12\operatorname{TV}(P_{p,b},R)
+\ge\rho_p+\tfrac12\delta_3>\rho_p.
+\tag{3.4}
+$$
+
+This one violated loss suffices; the suspended depth-3 budget has not been
+removed from (1.6). Formula (3.3) is the existing complete-word gap [REV,
+(16.41)], not a new optimized constant.
+
+For (3.2), [PAIR, Lemmas 11.1 and 11.3] supply compactness of
+$\mathfrak C$ and continuity of each complete-coordinate residual.
+Consequently $V$ is continuous under weak convergence of the two flows,
+so $\mathfrak C_7$ is closed and compact. A native singleton makes it
+nonempty. The finite maximum (1.6) is continuous and nonnegative. Its
+attained minimum is positive by the zero exclusion. This last compactness
+argument is a supplied method applied after the new exclusion, not an
+independent mathematical contribution. $\square$
+

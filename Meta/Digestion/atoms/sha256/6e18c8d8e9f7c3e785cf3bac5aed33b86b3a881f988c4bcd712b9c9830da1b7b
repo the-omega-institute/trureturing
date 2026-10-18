@@ -1,0 +1,31 @@
+**定理 9.1（极性随可逆线性映射反向运输）。** 设 $`C\subset\mathbb{ℝ}^d`$ 为包含原点于内部的凸体，$`A\in\mathrm{GL}(d,\mathbb{ℝ})`$，配对在同一个 $`d`$ 维向量空间中取标准内积，则
+
+<table><tr><td>
+
+```math
+(AC)^\circ=A^{-\mathsf{𝖳}}C^\circ.
+```
+
+</td></tr></table>
+
+证明。逐项保持维数与量词，有
+
+```math
+\begin{aligned}
+y\in(AC)^\circ &\Longleftrightarrow\langle y,Ax\rangle\le1\quad\text{对所有 }x\in C\\ &\Longleftrightarrow\langle A^{\mathsf{𝖳}}y,x\rangle\le1\quad\text{对所有 }x\in C\\ &\Longleftrightarrow A^{\mathsf{𝖳}}y\in C^\circ\\ &\Longleftrightarrow y\in A^{-\mathsf{𝖳}}C^\circ.
+\end{aligned}
+```
+
+可逆性保证最后一步双向成立。这一经典结果也见 Jensen Lemma 2.2；这里给出完整普通证明。∎
+
+对匹配类型的列向量 $`c`$ 和行探针 $`\ell`$，共同运输为
+
+```math
+c'=Ac,\qquad\ell'=\ell A^{-1},\qquad
+\ell'c'=\ell A^{-1}Ac=\ell c.
+```
+
+它保持的是声明的线性配对任务。固定原探针读 $`\ell Ac`$ 是另一项明确可选的任务；坐标协变不要求经验仪器一定随真实来源变动。
+
+### 九的三维极性消费者：原生拒绝率就是侧面测试余量
+

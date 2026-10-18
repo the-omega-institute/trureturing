@@ -1,0 +1,12 @@
+**Theorem 98.5.** The exact effective quadratic form is
+\[
+q_{\mathrm{eff}}(X)
+=m(X)+\|(I-\Pi)\mathcal L(X^0)\|^2
+=\min_{\substack{D\in\mathcal V\\D_S=X}}q(D). \tag{30}
+\]
+The minimum is attained. Thus \(q\ge0\) on \(\mathcal V\) if and only if \(q_{\mathrm{eff}}\ge0\) on \(\mathcal V_S\).
+
+**Proof.** Every extension is \(X^0+Z\) with \(Z\in\mathcal Z\), and its mixed term is the same \(m(X)\). Minimizing the sum of the two squared costs is exactly orthogonal projection onto the finite-dimensional closed real subspace \(\mathcal L(\mathcal Z)\). This proves the formula, attainment and equivalence. \(\square\)
+
+In particular an exact negative value of \(q_{\mathrm{eff}}\) produces an actual full eight-coordinate paired tangent contradicting Theorem 98.2. The map \(\mathcal L\) retains the full reciprocal ratios and full pseudoinverses. The minimization couples the two costs; it neither minimizes them independently nor replaces them by principal pseudoinverses. The coefficients of \(q_{\mathrm{eff}}\) may depend on every outside Gram entry.
+

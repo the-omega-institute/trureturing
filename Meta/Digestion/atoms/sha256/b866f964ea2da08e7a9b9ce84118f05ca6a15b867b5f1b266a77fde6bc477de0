@@ -1,0 +1,59 @@
+## 2. Four-hash supports and the tagged product
+
+For $h\ge0$, define the perfect ordered scaffold by $T_0(x)=x$ and
+
+$$
+T_{h+1}(x_1,\ldots,x_{2^{h+1}})
+=\langle T_h(x_1,\ldots,x_{2^h}),
+          T_h(x_{2^h+1},\ldots,x_{2^{h+1}})\rangle.
+$$
+
+All its $2^h$ frontier occurrences are actually present, with public addresses of length $h$, and ordered parsing makes its filling map injective. This is the scaffold of [RCE, Definition 4.1][RCE].
+
+Let $m$ be even with $m\ge10$. Choose $h$ and a map
+
+$$
+H:[m]\times[2^h]\longrightarrow\{0,1,2,3\}
+$$
+
+such that every four distinct rows have a column on which all four symbols occur. A finite explicit choice is the construction of [RCE, Corollary 7.3][RCE]: take one column for each four-element subset of $[m]$, assign its four rows in increasing order the symbols $0,1,2,3$ and all other rows zero, then pad with constant-zero columns to a power of two. Each four-set is separated by its own column. No probabilistic hashing result is needed.
+
+Let `c_j` be the public word of length `h` addressing column `j`, and put
+
+$$
+z_s=T_h(u_{H(s,1)},\ldots,u_{H(s,2^h)})\in S_{h+3}.
+$$
+
+A pair of different rows differs in a separating column after extending the pair to four rows, so the `z_s` are distinct actual trees. Put
+
+$$
+ a_s=\langle z_s,A\rangle,
+ \qquad b_s=\langle z_s,B\rangle\in S_{h+4},
+$$
+
+and finally
+
+$$
+ v_{st}=\langle a_s,b_t\rangle,
+ \qquad R=\{v_{st}:s,t\in[m]\}\subseteq S_d,
+ \qquad d=h+5.
+$$
+
+Name the actual tagged sets
+
+$$
+P_A=\{a_s:s\in[m]\}=\{\langle z_s,A\rangle:s\in[m]\},\qquad
+P_B=\{b_s:s\in[m]\}=\{\langle z_s,B\rangle:s\in[m]\}.
+$$
+
+Both lie in $S_{d-1}$ and have size $m$. They are disjoint because their right children have different leaf labels. The $m^2$ trees $v_{st}$ are distinct by ordered parsing, and $R=\{\langle a,b\rangle:a\in P_A,b\in P_B\}$. Let $\mu$ be uniform on $R$, so $\mu(v_{st})=1/m^2$ and it is zero elsewhere in $S_d$.
+
+Every target on $R$ is constant, a function of the left row $s$, or a function of the right row $t$. A target entering a variable module has public prefix $LLc_j$ or $RLc_j$ and remaining suffix in $W_3$. Removing that prefix of actual branch nodes leaves the same blocking leaf and suffix in the factor formula, so its factor is exactly the core factor. A target stopping in fixed structure has branch factor $(0,0)$; one entering a fixed tag has a fixed factor, including when it passes that tag leaf. Hence every target has at most four values on all of $R$. Every finite literal likewise stops in fixed structure, enters a fixed tag, or returns one core reply, so it has at most three replies on $R$, including the empty word and words beyond a leaf. The four-valued separating targets are
+
+$$
+q^L_j=LLc_jLL,
+\qquad q^R_j=RLc_jLL,
+$$
+
+of length `h+4=d-1`. A core-identifying query is obtained by replacing the final `LL` with `L` or `RL`. In the original source, prefixing by the initial `R` gives a charged original-root literal; no navigation operation is being added.
+

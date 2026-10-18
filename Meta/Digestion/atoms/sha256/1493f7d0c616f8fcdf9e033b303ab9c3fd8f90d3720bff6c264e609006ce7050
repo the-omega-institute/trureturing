@@ -1,0 +1,26 @@
+**Corollary 6.3 (relations among identifiable relations).** On
+consistent input, $\sim_I$ is an effectively computable equivalence
+relation, and its offsets satisfy
+
+$$
+d_{aa}=0,\qquad d_{ba}=-d_{ab},\qquad
+d_{ac}=d_{ab}+d_{bc}\quad(a\sim_I b\sim_I c).
+\tag{NCE.17}
+$$
+
+Its component containing record zero identifies exactly the individual
+epochs fixed by the input. Adding signed links shrinks $E_I$ and
+every lag support. The added memory newly identifies $n_b-n_a$
+exactly when its refined support is nonempty and singleton while
+the lag support after deleting those links has at least two values.
+
+Proof. Every difference identity in (NCE.17) holds at each common
+epoch tuple, and nonemptiness gives at least one such tuple. Constancy
+therefore gives reflexivity, symmetry and transitivity with those
+offsets. Since $n_0=0$, $d_{0b}=n_b$ precisely when that epoch is
+constant. Link addition is conjunction on the same history set, so
+gives the stated inclusions and the exact criterion for new recovery.
+After one feasibility query and witness, at most $\binom m2$ queries
+of (NCE.16) compute all components. Connectivity of the input link
+graph is not this computed equivalence relation. $\square$
+

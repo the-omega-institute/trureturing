@@ -1,0 +1,32 @@
+## 213. Hypotheses and exact inputs
+
+Retain all hypotheses and notation of the five-reservoir opposite-star
+capacity theorem (publication §§205–212). These include the actual finite
+paired-frame quotient, complete circular edge links, degree at least six,
+common positive lengths, and every original edge angle equation 2*pi.
+We argue under the remaining mixed-flat hypothesis. The five reservoirs
+are H={M,C,D,Z,U}, with cosh values satisfying
+ m>1+c+d>3, c,d<m-2, z>1+m+c, u>m.
+The only flat owner is sigma=(M,C,D,O,C,D), O=C,D, or special.
+All other owners are genuine. Put P={M,Z,U}. Its total genuine original
+angle capacity is pi+2*pi+2*pi=5*pi. The genuine escape owner
+ tau=(Z,M,C,D,M,C)
+has P expense greater than pi. No special edge has fixed pair {Z,U}.
+Every special edge occurs only axially and has one fixed reservoir pair
+throughout its complete star, with value less than one plus the pair sum.
+
+For a genuine frame (r,a,b,o,a,b), put
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ K=(sqrt(a^2-1)+sqrt(b^2-1))^2/(a+b)^2.
+The paired response is
+ (beta_a+beta_b)/2=B_lambda(theta_r),
+ B_lambda(theta)=atan(lambda*cot(theta/2)),
+ lambda^2=K*(r-1)/(r+1),
+ beta_a+beta_b=2*atan(sqrt(K*L/J)).
+B_lambda is positive, decreasing, and convex for 0<lambda<1.
+If a,b>3, then K>8/9. If additionally r>3, then lambda>2/3,
+and the five original slots obey
+ theta_r+2*beta_a+2*beta_b>pi.
+This remains an original-slot statement when labels repeat.
+

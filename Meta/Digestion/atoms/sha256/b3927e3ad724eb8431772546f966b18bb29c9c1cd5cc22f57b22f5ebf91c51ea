@@ -1,0 +1,17 @@
+**Definition 13.3 (cover entropy and energy).** For any positive
+matching laws, define
+
+$$
+\begin{aligned}
+H_{\rm cov}(p)&=\sum_i H(p_i)-\sum_{e\in E}H(\pi_e),\\
+\mathcal B_{\mathcal N}(p;\boldsymbol w)
+ &=H_{\rm cov}(p)+\sum_i\mathbb E_{p_i}\log_2w_i(x_i),\\
+r(p)&=\sum_i|\operatorname{supp}p_i|,\qquad
+t(p)=\sum_{e\in E}|\operatorname{supp}\pi_e|.
+\end{aligned}
+\tag{COK.66}
+$$
+
+The first quantity can be negative. Log weights are evaluated only
+on their positive support, so the second is finite there.
+

@@ -1,0 +1,43 @@
+**Definition 1.3 (competitors, actual record and resources).** An acquisition
+is one common full complex CP instrument, followed by conditional full-output
+TP decoders. All hidden Kraus multiplicities and all time laws admitted by
+[FA, Definition 67.2][FA] are allowed. Its retained acquisition label is the
+actual record. Its binary report is obtained by an existing common classical
+kernel; a discarded Kraus index is not an extra acquired label. For a plus
+report effect $F$ on the supported qutrit, the contrast requirement is
+$\mathsf V(F)=2|\operatorname{Re}F_{01}|/\kappa\ge s$, where
+$\kappa=h_0a+h_1b$.
+
+Fix a finite feasible weak request, with $t=e^A-1\ge t_0>0$ and
+$0\le s<s_0$. The class under consideration satisfies exactly
+
+$$
+\mathsf E(\Phi)=E_*,\qquad \mathsf V(F)\ge s,\qquad
+\mathsf W=\mathsf C(s),\qquad
+\sup_{j\ {\rm generated}}\int_0^1\|R_j(a)\|\,da\le A.
+\tag{QS.5}
+$$
+
+The cost $\mathsf W$ is the maximum over the twelve histories of the
+probability of a **joint**, future-accessible, input-dependent acquisition
+fibre of dimension at least three. Specimen, memory, controller, accessible
+environments and entangled shares are counted together. Activity is the
+integrated operator norm on each **entire** fibre, with essential supremum
+in the stipulated measurable class. Survivor controls and terminal survivor
+processing are TP; loss is only through the positive integrable rate.
+There is no terminal forced absorption or later positive-carrier action on
+a failed carrier. No helper, copy, history oracle, reset, retry, bypass,
+postselection, acceptance division or survival division is available.
+
+Necessity concerns finite instruments, convergent countable instruments,
+and only the measurable finite-dimensional-fibre, encoder/live-Kraus-field,
+integrable-effect and live-Choi extension stipulated in [CG, Convention
+21.3][CG] and [JR, Definition 41.1][JR]. Integral CP densities need not be
+individually TNI; their integrated effect is the identity. No unrestricted
+physical disintegration or infinite-dimensional coding statement is used.
+Every attainer used below is finite. Write $T_{\rm actual}$ for HALF the
+variation of the actual acquisition distributions between histories
+$(5,+,+)$ and $(27,+,+)$, and $\mathcal T(s,t)$ for its optimum in (QS.5).
+An error/cost optimizer means a member of (QS.5), without a height-optimality
+assumption.
+

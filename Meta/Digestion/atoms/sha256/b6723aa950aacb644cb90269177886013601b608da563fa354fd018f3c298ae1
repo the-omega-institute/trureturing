@@ -1,0 +1,58 @@
+**Theorem 5.1 (History register at each prescribed bound).** For every
+finite row-unifilar $\theta\in\Theta_N$ and every prescribed integer
+$m\ge1$, there is a row-unifilar $\widehat\theta\in\Theta_{\widehat N}$
+with $\widehat N\le N|B_m|$ and $P_{\widehat\theta}=P_\theta$ such that,
+for every $1\le\ell\le m$ and every $f\in\mathbb R^{B_\ell}$,
+
+$$
+\sum_{w\in B_\ell}f(w)\widehat M_w=0
+\quad\Longrightarrow\quad
+f(w)=0\ \text{whenever }P_\theta([w])>0.
+\tag{5.1}
+$$
+
+Every such direction has zero actual finite and full response.
+
+Proof. Row-unifilarity means each row of each $M_x$ has at most one
+positive successor. Write its symbol probability as $p_h(x)$ and that
+successor as $\delta(h,x)$ only when $p_h(x)>0$. Inside the same stationary
+$J_\theta$, set
+
+$$
+U_i=X_{[i-m,i-1]},\qquad Y_i=(H_i,U_i),\qquad
+\widehat\lambda(h,u)=(\lambda M_u)_h.
+$$
+
+Retain precisely pairs of positive stationary mass. Conditional on
+$Y_i=(h,u)$, the actual marked transition emits $x$ with probability
+$p_h(x)$ and goes to $(\delta(h,x),\operatorname{shift}(u,x))$.
+Markov factorization of $J_\theta$ justifies the transition even though
+the register records past emissions.
+
+Any positive transition out of a positive-mass pair has positive actual
+stationary incoming mass at its target, so the retained set is closed.
+An illegal seam from such a pair would give positive actual probability
+to adjacent ones, contradicting the original law. All retained rows
+therefore sum to one. The displayed masses are normalized and stationary
+because $Y$ is a stationary function of the original joint process.
+This proves a lawful finite marked presentation; its output cylinders
+are unchanged, so its $11$ cylinder remains zero. No irreducibility,
+aperiodicity or full visible support is required.
+
+After any emitted word $w$ of length $\ell\le m$, every possible final
+register has last $\ell$ coordinates equal to $w$. Different words have
+disjoint sets of final columns. In a zero matrix sum, a positive entry
+of $\widehat M_w$ can therefore cancel with no other word coefficient.
+If $P([w])>0$, the nonnegative cylinder product guarantees such a positive
+entry, so its coefficient is zero. Thus $f(X_{[1,\ell]})=0$ almost surely.
+Every finite response term and every full-response summand is zero.
+$\square$
+
+The quantifiers are $\forall\theta\ \forall m\ \exists\widehat\theta$
+obstructing all lengths through that $m$. The presentation and state
+count may grow with $m$. This proves neither one fixed presentation
+obstructing every length nor a fixed-$N$ budget-preserving obstruction.
+It does not rule out longer matrix-null directions, quotient-first or
+minimal-realization searches. Adding a visible register to a hidden
+state also does not make that state a function of finite visible history.
+

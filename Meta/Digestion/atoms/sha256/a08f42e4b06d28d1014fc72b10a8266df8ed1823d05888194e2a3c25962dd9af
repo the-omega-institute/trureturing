@@ -1,0 +1,27 @@
+**Proposition 14.4 (zero budgets, graph structure and conditional finiteness).**
+At $p=0$, feasibility means the fixed common start is already the
+correct literal latch on the entire fiber. At $\ell=0$, running
+visits are permitted but can submit only $\varepsilon$; its repeated
+reply is stationary and each visit is charged. All other code
+distinctions must fail (PCA.35). Empty cuts, a root cut and zero
+classes need no additional convention beyond §§10–11.
+
+For a supplied valid certificate, Definitions 12.3 and 14.2 give
+finite mathematical table tasks with the original state identities,
+actual word prices and complete latch labels. One can check a proposed
+table on the finite attained response family, stopping any nonterminal
+path at its first repeated running state. This is a finite table
+criterion conditional on its literal code assignment. It is not a
+uniform method for finding a determining certificate for arbitrary
+acquired-term programs, even when finite preparability is promised.
+
+Proof. The budget claims follow from the nonnegative execution
+charges and the absence of silent running transitions. A repeated
+running state on a fixed response tuple repeats its entire stationary
+suffix forever, by Lemma 2.3, so it cannot be on a terminating path.
+Different profiles can nevertheless traverse shared states differently;
+cycles in the union of all four-successor edges and unused states are
+permitted. Neither finite task imposes Bryant's variable ordering or
+global acyclicity. The nonuniformity assertion is Theorem 15.2 below.
+$\square$
+

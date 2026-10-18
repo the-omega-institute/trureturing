@@ -1,0 +1,29 @@
+**Definition 8.3 (Legal Hilbert space and conditional pulses).** Embed
+occupancies in $(\mathbb C^2)^{\otimes n}$ and take
+
+$$
+\mathcal K_n=\operatorname{span}\{|u\rangle:u\in B_n\},\qquad
+N_i=|1\rangle\langle1|_i,\qquad P_i=I-N_i.
+\tag{8.5}
+$$
+
+Operators on unmentioned sites are identities. Set $P_0=P_{n+1}=I$.
+For a generator phase $\beta\in\mathbb R/(2\pi\mathbb Z)$, let
+
+$$
+\begin{aligned}
+H_i(\beta)&=P_{i-1}
+\bigl(e^{i\beta}|1\rangle\langle0|_i
+      +e^{-i\beta}|0\rangle\langle1|_i\bigr)P_{i+1},\\
+R_i(\beta,t)&=\exp(-itH_i(\beta)).
+\end{aligned}
+\tag{8.6}
+$$
+
+The menu permits each such single-position pulse, sequential compositions,
+and a final measurement in the complete word basis of $\mathcal K_n$.
+A setting specifies every pulse position, phase, angle and order. Where a
+position is chosen randomly, its label is recorded. The final word is
+recorded in full. The operator uses the center and at most its two neighbors;
+this locality statement does not bound the degree of $\Gamma_n$ by three.
+

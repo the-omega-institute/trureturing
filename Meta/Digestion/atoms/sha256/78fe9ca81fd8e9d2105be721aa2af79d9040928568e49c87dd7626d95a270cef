@@ -1,0 +1,93 @@
+**Theorem 6.1 (No finite equality model when $Z<2/3$).** If
+$Z<4H$, no finite model of Definition 2.1 has error at most $e_0$.
+Since $4H=2(1-Z)$, this is exactly $Z<2/3$.
+
+**Proof.** Assume there is such a model, and use the fixed homogeneous
+size $N=n+1$ and the scalar $g$ from (4.3). For each integer $l\ge1$
+put
+
+$$
+h_l=\frac H{l+1},\qquad
+u_j^{(l)}=\frac{g(H-jh_l)}{\sqrt{h_l}}
+\quad(1\le j\le l).
+$$
+
+All the heights $H-jh_l$ are strictly interior; the last is $h_l>0$.
+Substituting $x=jh_l$ in (4.3) gives
+
+$$
+\left|u_j^{(l)}-2\sqrt{j(H-jh_l)}\right|\le\sqrt{Zj},
+\qquad |u_j^{(l)}|\le C\sqrt j,
+\quad C=2\sqrt H+\sqrt Z.
+\tag{6.1}
+$$
+
+Each starting ray $(H-h_l,0,0)$ is produced from the fixed preparation
+by a single lawful phase-free probability leg. Repeating the one
+command $P_{-h_l}$ at most $l-1$ times gives exactly the finite list
+of heights above. Write
+
+$$
+M_l=T_{-h_l},\qquad v_l=F(H-h_l,0,0).
+$$
+
+The exact update identity along that lawful list yields
+
+$$
+u_j^{(l)}=\ell M_l^{j-1}v_l/\sqrt{h_l}\qquad(1\le j\le l).
+\tag{6.2}
+$$
+
+For nonnegative integers $p,q$ with $p+q+1\le l$, the corresponding
+Hankel entry factors as
+
+$$
+u_{p+q+1}^{(l)}=(\ell M_l^p)(M_l^qv_l/\sqrt{h_l}).
+\tag{6.3}
+$$
+
+Hence every finite submatrix for which all these entries exist has
+rank at most the same number $N$. Both update and readout offsets are
+already included in (6.2) by homogenization.
+
+For each fixed positive integer $j$, the scalars $u_j^{(l)}$ for
+$l\ge j$ lie in the compact real interval $[-C\sqrt j,C\sqrt j]$.
+Choose an infinite subsequence on which the first coordinate converges,
+then an infinite subsequence of it on which the second converges, and
+continue. Removing finitely many indices at each stage ensures the
+coordinate is defined. Choose a strictly increasing diagonal sequence of
+indices, with its $j$th index in the $j$th nested subsequence and at
+least $j$. Along that diagonal every fixed coordinate converges. Denote
+the limits by $u_j$.
+
+Because $h_l\to0$, (6.1) passes at each fixed $j$ to
+
+$$
+(2\sqrt H-\sqrt Z)\sqrt j\le u_j
+\le(2\sqrt H+\sqrt Z)\sqrt j.
+\tag{6.4}
+$$
+
+No value or continuity of $g$ at $H$ is invoked: only these bounded
+scalar sequences have been passed to a limit.
+
+Now fix any finite row and column sets in the infinite array
+$(u_{p+q+1})_{p,q\ge0}$. For all sufficiently large diagonal indices,
+every required entry of (6.3) exists. All its $(N+1)$ by $(N+1)$
+minors vanish. A determinant is a finite sum of products of entries,
+so scalar convergence preserves those zero minors. Thus the limiting
+finite matrix has rank at most $N$. This holds for every finite choice
+of indices.
+
+Apply Lemma 5.1 to $b_j=u_{j+1}$. Its square-root bound follows from
+(6.4), and all its finite Hankel ranks are at most $N$. The lemma says
+that $(u_j)$ is bounded. But $Z<4H$ makes
+$2\sqrt H-\sqrt Z>0$, so the lower bound in (6.4) is unbounded.
+This contradiction proves the theorem.
+
+Each list used in (6.2) is a separately finite lawful history. The
+infinite sequence $(u_j)$ is a proof object obtained from scalar
+limits of different finite histories. There is no infinite executed
+history, no endpoint encoding, no limiting latent vector, and no common
+limit or bound assumed for the matrices $M_l$. $\square$
+

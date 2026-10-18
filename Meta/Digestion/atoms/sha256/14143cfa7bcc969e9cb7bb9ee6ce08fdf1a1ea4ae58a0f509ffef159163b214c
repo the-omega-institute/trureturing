@@ -1,0 +1,2 @@
+**Remark 7.3 (The conjectured recurrence).** By cited fact (b), $a_n=a_{n-1}+a_{n-2}+a_{n-3}+a_{n-4}+b_n$ for $n\ge5$, so the recurrence of cited fact (a) holds at a given $n\ge6$ exactly when $b_n=n-1$. Theorem 7.2 gives $b_n=n-1$ for $6\le n\le10$ and $b_n=\lfloor n/2\rfloor+4<n-1$ for every $n\ge11$, so the conjectured recurrence holds for $6\le n\le10$ and fails for every $n\ge11$. Stance: the failure at $n=11$ and $n=12$ and the reduction to $b_n=n-1$ are repo-derived (cited fact (b)); the failure for every $n\ge13$ is suspected-novel (see §9).
+

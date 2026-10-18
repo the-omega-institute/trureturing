@@ -1,0 +1,33 @@
+## 378. At least two genuine owners remain outside those classes
+
+Every genuine paired owner has total angle less than 2*pi. Indeed,
+with transverse sum S=2*atan(K*sqrt(L/J)) and K<1, each axial angle
+obeys
+
+    tan(theta_r/2)*tan(S/2)=K*sqrt((r-1)/(r+1))<1.
+
+Both angles belong to (0,pi), so theta_r+S<pi. Apply this to both
+axes and add. The unique flat sigma has total angle exactly 2*pi.
+
+If there are N actual owners, the six complete edge sums give total
+angle 12*pi. Therefore 12*pi<2*N*pi, so N>=7. There are at least
+six genuine owners. Section 377 accounts for at most four of them.
+
+Each of the remaining at least two owners has exactly one P label,
+because four distinct labels cannot all lie in the three-element L.
+Its pair cannot be CD (the unique owner of that pair is sigma), PC
+or PD. Thus it has one of exactly these forms, up to exchanging the
+axes or the two transverse positions within its fixed frame:
+
+    (P,V,C,D,V,C),
+    (P,V,D,C,V,D),
+    (C,P,V,D,P,V),   P in {M,Z,U}.                      (378.1)
+
+Every such owner has V transverse. They are distinct actual owners;
+repeated copies of the same role still count separately.
+
+This is the residual obstruction to the proposed global sum. Proving
+that all two-P owners cost more than pi does not eliminate (378.1).
+Further actual-circle or joint-angle work is needed to rule out the
+required collection of at least two such owners.
+

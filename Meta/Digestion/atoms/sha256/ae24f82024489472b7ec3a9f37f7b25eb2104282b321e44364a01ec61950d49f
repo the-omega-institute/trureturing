@@ -1,0 +1,104 @@
+**Theorem 336.2 (All affine masses, all ordered skeletons).**
+For every $L\ge8$, every $3\le j_1<\cdots<j_6\le L$,
+every real finite profile $(b,e)$ and one complete feasible
+allocation in either class of any finite mass,
+
+$$
+3b_2+27b_{j_1}+24b_{j_2}+27b_{j_3}
+          +25b_{j_4}+24b_{j_5}+24b_{j_6}\le3+253e.
+\tag{336.1}
+$$
+
+No order, hull or probability normalization hypothesis on $(b,e)$
+is needed for this affine implication. For every entire original
+sequence and every original $A\in\mathcal N_2$, hence also every
+$A\in\mathcal O_2$,
+
+$$
+253e_a(A)\ge3a_2+27a_{j_1}+24a_{j_2}+27a_{j_3}
+                     +25a_{j_4}+24a_{j_5}+24a_{j_6}-3.
+\tag{336.2}
+$$
+
+**Proof.** At the consecutive skeleton the invariants are
+
+$$
+\beta=(0,3,27,24,27,25,24,24),\quad
+\sum P=75,\quad\sum C=154,\quad T=24,\quad K=253.
+\tag{336.3}
+$$
+
+For each increasing pair, the four independent $N$-cell maxima of
+(315.8), maximizing over all nine labels $0,\ldots,8$, are:
+
+| Pair | Maxima in $00,01,10,11$ |
+| --- | --- |
+| $(1,2)$ | $(3,32,40,27)$ |
+| $(1,3)$ | $(24,11,27,40)$ |
+| $(1,4)$ | $(21,14,27,40)$ |
+| $(1,5)$ | $(24,11,27,40)$ |
+| $(1,6)$ | $(22,13,32,32)$ |
+| $(1,7)$ | $(30,5,24,40)$ |
+| $(1,8)$ | $(35,0,39,25)$ |
+| $(2,3)$ | $(24,16,27,35)$ |
+| $(2,4)$ | $(21,19,27,35)$ |
+| $(2,5)$ | $(24,16,27,35)$ |
+| $(2,6)$ | $(32,8,25,37)$ |
+| $(2,7)$ | $(24,16,30,29)$ |
+| $(2,8)$ | $(39,1,35,24)$ |
+| $(3,4)$ | $(21,27,27,27)$ |
+| $(3,5)$ | $(24,24,27,27)$ |
+| $(3,6)$ | $(32,16,25,29)$ |
+| $(3,7)$ | $(33,15,24,30)$ |
+| $(3,8)$ | $(47,1,27,24)$ |
+| $(4,5)$ | $(24,21,27,30)$ |
+| $(4,6)$ | $(32,13,25,32)$ |
+| $(4,7)$ | $(33,12,24,33)$ |
+| $(4,8)$ | $(45,1,29,25)$ |
+| $(5,6)$ | $(32,16,25,29)$ |
+| $(5,7)$ | $(33,15,24,30)$ |
+| $(5,8)$ | $(47,4,27,24)$ |
+| $(6,7)$ | $(33,21,24,24)$ |
+| $(6,8)$ | $(53,1,24,24)$ |
+| $(7,8)$ | $(53,1,24,24)$ |
+
+Each sum is at most $102$. This maximizes separately over the
+four cells of the complete $N$ table. In particular the pair
+$(3,8)$ has maxima $(47,1,27,24)$; its first two cells are not
+merged. Constants, singletons and repetitions coarsen such a
+partition; reversal permutes cells. No earlier or unqueried output
+label is pruned. The stopped anchor $R$ earns all $75$ union
+units, $24$ positive units and the class-two correct weight $3$.
+Therefore
+
+$$
+W_{Y_{253}}=B_N(Y_{253})=B_O(Y_{253})=102,
+\qquad\Delta_N(Y_{253})=\Delta_O(Y_{253})=0.
+\tag{336.4}
+$$
+
+At a normalized law the demanded reward is
+$99+\beta\cdot b-253e$. At a general affine allocation, the
+same entire $\lambda$ instead gives directly
+
+$$
+\beta\cdot b-3-253e
+ =Y_{253}h\le Y_{253}G_N\lambda
+ =\sum_D\lambda_D(Y_{253}z_D-102)\le0.
+\tag{336.5}
+$$
+
+There is no division by its mass and no separate rowwise law.
+For the skeleton $(1,2,j_1,\ldots,j_6)$, set every nonskeleton
+input bit to one on scored words and map output labels along the
+same ordered embedding. Outside queries give only constant
+information and outside labels earn zero. The complete support
+bound and (336.5) remain valid, proving (336.1).
+
+Apply 331.2 at every positive met cap for an original competitor,
+using prefix restriction or ignored-coordinate extension as needed.
+For gaps use that same ordered embedding. This proves (336.2)
+with arbitrary original addresses, full-carrier outputs and whole
+tails. Error zero follows by decreasing positive caps. At error one
+the right side is at most $151<253$. $\square$
+

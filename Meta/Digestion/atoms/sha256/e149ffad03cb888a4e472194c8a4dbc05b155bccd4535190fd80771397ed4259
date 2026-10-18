@@ -1,0 +1,26 @@
+**Convention 1.1 (two operation contracts).** The upper bounds allow any
+common trace-nonincreasing CP endpoint operation on the stated accessible
+joint input. Every finite adaptive quantum protocol with a recorded success
+event induces such an operation. Success must have the exact requested pure
+specimen marginal; all its actual auxiliary outputs can be retained.
+
+The attaining operations are additional calibrated endpoint instruments,
+with their own success/failure flags, retained failure residues and absorbing
+stopped specimen. They are not the canonical exact-time, five-original-mode
+instrument (OC.19)–(OC.19b) of
+[Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md).
+Endpoint feasibility neither reproduces that instrument's failure law nor
+implements its intervening successful path. Conversely an implementation of
+that stricter task would have to satisfy its endpoint requirement, so an
+endpoint impossibility also obstructs that implementation under the same
+input restrictions.
+
+The concrete consumer is the interface before a later original tail based at
+a declared height. An original tail has an actual matching initial height;
+a noisy estimate supplies no equality certificate for that guard.
+The exact return guarantee in
+[Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md),
+Definition 2.1 and Proposition 8.4, is a generator promise that supplies such
+a match. The present question concerns a cut without that promise. It does
+not replace the original task by a known-height task or refute that supplier.
+

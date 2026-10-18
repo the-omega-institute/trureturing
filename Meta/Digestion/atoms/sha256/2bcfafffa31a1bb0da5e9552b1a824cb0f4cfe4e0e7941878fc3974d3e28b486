@@ -1,0 +1,53 @@
+**Proposition 4.1 (specialization of the credited CP laws).** Fix $d,L>0$,
+$v=d/L$ and $0<x<c-d$. For $k_x(t)=x+vt$, constant relative phase,
+the reduced live operator and failure CP densities in the ordered basis
+$(+,-,2)$ are
+
+$$
+\begin{aligned}
+S_x(t)&=\frac{x}{x+vt},\qquad
+f_x(t)=\frac{vx}{(x+vt)^2},\qquad s_x=S_x(L),\\
+K_x&=\operatorname{diag}\left(1,
+ \sqrt{\frac{x(c-x-d)}{(x+d)(c-x)}},
+ \sqrt{\frac{x}{x+d}}\right),\\
+\mathcal I_{x,2}(dt)(\rho)&=f_x(t)|f\rangle\langle2|\rho|2\rangle\langle f|\,dt,\\
+\mathcal I_{x,i}(dt)(\rho)&=
+ \frac{c}{2(c-x)}f_x(t)|f\rangle\langle-|\rho|-\rangle\langle f|\,dt
+ \quad(i=1,3),\\
+\mathcal I_{x,0}(dt)&=\mathcal I_{x,4}(dt)=0.
+\end{aligned}
+\tag{AC.8}
+$$
+
+The target on (AC.3) has live block $s_x\rho_{x+d,\beta,m}$ and
+five scalar failure densities
+
+$$
+(0,c,Z,c,0)f_x(t),
+\tag{AC.9}
+$$
+
+each with successor $f$. All exact times and original mode names remain.
+
+Proof. These are (OC.55)–(OC.58) of Instrument Boundaries. To verify the
+source-family weights rather than assume a waveform-specific example,
+the input populations in the reduced basis are $2x,2(c-x),Z$.
+The middle CP density in (AC.8) therefore has trace $Zf_x$; each minus
+density has trace $[c/(2(c-x))]2(c-x)f_x=cf_x$.
+The weights sum to $2c+Z=1$. Thus total failure density is $f_x=-S_x'$
+and its mass is $1-s_x$. Multiplying the three amplitudes by $K_x$
+gives $\sqrt{s_x}\psi_{x+d,\beta,m}$, with the same phases.
+This also checks normalization and the actual live successor. The full
+CP maps, not just their traces, are those of the supplier. $\square$
+
+Write $\bar\Omega_x$ for the four-history average of this complete ideal
+output. Its live block is
+
+$$
+B(x)=2xP_++(2cs_x-2x)P_-+Zs_xP_2.
+\tag{AC.10}
+$$
+
+Its failure densities are still (AC.9). None of these whole laws is an
+additional acquired reading.
+

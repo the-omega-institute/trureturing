@@ -1,0 +1,24 @@
+**推论 34.7.1（达到指定风险的最小预算）。** 给定 $0<\varepsilon<1/2$ 和 $n\ge1$，令
+
+$$
+q_\varepsilon=\Phi^{-1}(1-\varepsilon).
+$$
+
+则达到 $R_n(B,h)\le\varepsilon$ 的最小每轮平方预算为
+
+$$
+\boxed{
+B_{\min}(n,h,\varepsilon)
+=a^2+
+\left(a+\frac{2\sigma q_\varepsilon}{\rho\sqrt n}\right)^2.
+}
+$$
+
+**证明。**
+
+由定理 34.6.1 和 $\Phi$ 的严格单调性，要求
+$\sqrt n k_*\ge q_\varepsilon$。代入 $k_*$ 并移项、平方，得到公式。由于
+$q_\varepsilon>0$，该预算自动严格超过可行性门槛 $2a^2$。证毕。
+
+<a id="claim-34-7-2"></a>
+

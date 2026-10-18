@@ -1,0 +1,16 @@
+**定义 42.1（临界中心）。** 对 $\varepsilon\in\{-1,1\}$，置
+
+$$
+\begin{aligned}
+s_\varepsilon&=\frac{14076+36\varepsilon\sqrt{1241}}{223},\\
+b_\varepsilon&=\frac{51+\varepsilon\sqrt{1241}}{68},\qquad
+c_\varepsilon=\frac{51-\varepsilon\sqrt{1241}}{80},\\
+\lambda_s&=(s,59s/45-16,s,s),\qquad
+W_s=\left(\begin{pmatrix}1/2&b_s\\c_s&1/2\end{pmatrix},
+ \frac{s}{90}(X-3)(X-5)(X-6),s\right).
+\end{aligned}
+\tag{42.1}
+$$
+
+以下每次固定其中一个 $s$。$\Omega(z,Y,p,h)$ 仍指式 (35.1) 的整个原世界纤维，但不采用该定义中对非临界参数 $s$ 的限制。
+

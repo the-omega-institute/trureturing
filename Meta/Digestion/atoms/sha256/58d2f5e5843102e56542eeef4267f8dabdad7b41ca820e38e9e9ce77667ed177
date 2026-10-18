@@ -1,0 +1,36 @@
+**Proposition 6.2 (Simultaneous strict event feasibility in the interior).**
+Let $T_s$ be the physical channel with Choi matrix (5.1). Then
+
+$$
+\frac{31}{50}<e(T_{1/10})<\frac{17}{25}<\frac{49}{50}.
+\tag{6.7}
+$$
+
+It is a full-rank, PPT, full-TP point satisfying every event
+constraint at threshold $17/25$, but has no scalar-port realization.
+
+Proof. The other summand in (5.1) is the depolarizing channel
+$\Delta(X)=\operatorname{tr}(X)I_5/5$. Its adjoint residuals
+have norm $4/5$ on singletons and $3/5$ on pairs. For each of the
+same fifteen events, linearity gives
+
+$$
+H_J(T_s)=(1-s)H_J(T_{1/2})
+                  +s(\Pi_J-|J|I_5/5).
+\tag{6.8}
+$$
+
+Proposition 6.1 and norm convexity give, at $s=1/10$, strict
+bounds $17/25$ on singletons and $33/50$ on pairs. All are
+simultaneous bounds on this one channel. The first-read argument
+therefore gives the strict upper in (6.7). The coarser $49/50$
+also follows directly from the generic CPTP event bound one and
+the depolarizing singleton bound, without the determinant certificate.
+
+For the actual input and read used in (6.5), the mixed channel's
+survival is less than $(9/10)(2/5)+(1/10)(1/5)=19/50$.
+Its TV is consequently greater than $31/50$. Theorem 5.1 supplies
+full rank, PPT, the full marginal and complex nonseparability.
+Thus these event LMIs, even with strict positivity and the exact
+marginal, do not extract an unperturbed scalar port. $\square$
+

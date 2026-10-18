@@ -1,0 +1,39 @@
+**Example 10.2 (a finite-precision budget including timing).** In source
+(3.4), set $L=1/5$, $V=20$, $T=1$, $n=512$ and
+
+$$
+d_k=2^{-18},\quad d_c=\varepsilon_t=\rho_A=2^{-20},\quad
+\varepsilon_\pi=2^{-24},\quad M=4,\quad\rho_\beta=0.
+$$
+
+Then the rational expressions in (7.2) and (7.5) are
+
+$$
+E_A=\frac{5427431931}{687194767360},\qquad
+B_0=\frac{5427563003}{549755813888}<\frac1{64}.
+$$
+
+For any certified $\widetilde\pi\geq3$ with this approximation error,
+$2d_c+2M\varepsilon_\pi<3$ proves (7.4). Every signed winding actually
+consistent with $V=20$ is therefore recovered exactly; the candidate list
+includes both signs and zero, and candidates excluded by the promise are
+not declared realizable. With exact decoder calibration the response error
+is at most $(\sqrt2/5)/64$. Additional decoder or future-loop errors use
+(7.7) and (9.1), without being absorbed into this number.
+
+Bounded exact in-memory rational checks verify the weight identities at
+$k=1/10,1/5,3/20,7/25$, Example 10.1, Example 10.2 and (7.3) on 360
+finite error-sign cases with $1\leq n\leq4$. These checks verify the
+displayed finite arithmetic. The universal statements rest on their
+ordinary proofs. No experiment files or computational certification are
+needed for these examples.
+
+Rational alternating-series bounds in Machin's identity
+$\pi=16\arctan(1/5)-4\arctan(1/239)$ also certify the stated precision
+of the rational value $3141592653589793/10^{15}$. The winding-cell inclusion
+is checked for all 65 signed integers in $[-32,32]$ with
+$d_c=2^{-12}$ and $\varepsilon_\pi=2^{-24}$. Finite rational checks of
+(8.1) cover 81 positive parameter allocations; 60 rational lift-grid cases
+check the value-count bound in (8.2). These are bounded certificate examples,
+not substitutes for the all-parameter proofs.
+

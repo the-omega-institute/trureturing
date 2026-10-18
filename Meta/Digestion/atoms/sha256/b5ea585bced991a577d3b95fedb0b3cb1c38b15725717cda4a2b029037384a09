@@ -1,0 +1,25 @@
+**Theorem 4.3 (unique event law and forced localization).** At $\kappa_e=k(\lambda_e)$ the event law is the unique merged equality law in $\mathcal Q_6$. For every sequence $\kappa_n\to\kappa_e$ from below, every sequence of global maximizers in $\mathcal Q_6$ converges weakly to that law. Consequently, after shrinking the neighborhood, every maximizer has exactly one positive atom near each of the six old contacts and no atom near contact $4$.
+
+**Proof.** The event dual inequality of [OE, Theorem 6.3] gives, for each endpoint sheet,
+$$
+Y_e\cdot\Gamma_\eta\ge |H_\eta|+\lambda_e|u|.
+$$
+Convexity in $\xi$ and $\Gamma_\xi=(1-\xi)\Gamma_0+\xi\Gamma_1$ give
+$$
+|H_\xi|
+\le (1-\xi)|H_0|+\xi|H_1|
+\le Y_e\cdot\Gamma_\xi-\lambda_e|u|.
+$$
+After integration,
+$$
+J(\mu)\le Y_e\cdot B(1000)-\lambda_eK(\mu)
+\le Y_e\cdot B(1000)-\lambda_e\kappa_e=J_e
+$$
+at the event, where $J_e$ denotes the event low-label objective. Equality forces $K=\kappa_e$, equality in both endpoint inequalities wherever the law has mass, and zero endpoint gaps.
+
+A strictly fractional atom would require both endpoint sheets to vanish at the same direction. The event zero sets are disjoint, so no such atom occurs. Equality laws therefore use only the seven event rays. Seven-column independence from [OE, Proposition 7.1] makes the merged moment weights unique; they are the six positive old weights together with $p_4=0$. Thus the merged event law is unique.
+
+For $\kappa_n<\kappa_e$ close to the event, the analytic six section, including its continuation below the event, has positive old weights and supplies a feasible six-atom comparator with $K=\kappa_n$ and value tending to $J_e$. Let $\mu_n$ be global maximizers. By Lemma 4.2, a subsequence converges to $\mu_*$. The dual upper bound tends to $J_e$, while the comparator gives the matching lower limit, so $\mu_*$ is an event equality law and hence equals the unique event law. Every maximizer sequence therefore localizes.
+
+Choose six disjoint neighborhoods of the old rays, excluding contact $4$. Weak convergence gives positive mass in each neighborhood. At most six atoms then forces exactly one atom in each neighborhood and none elsewhere. In particular, a seventh small atom cannot appear and mass cannot move to contact $4$. $\square$
+

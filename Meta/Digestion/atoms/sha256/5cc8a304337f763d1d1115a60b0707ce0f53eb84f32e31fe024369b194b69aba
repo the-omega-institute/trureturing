@@ -1,0 +1,19 @@
+**Definition 10.1 (one fixed eight-state table).** Install exactly
+$\mathsf B_1,\mathsf B_2,\mathsf B_3,H_0,H_1,H_2,H_3,H_4$, with the
+three Reads and five whole-row Halts below, and fix
+$e_0=\mathsf B_1$, $e_1=\mathsf B_3$, $L=2$. The upright Read names
+are distinct from the ground image trees $B_n$ of (FCS.8).
+
+| Read | Literal | On alpha | On beta | On branch | On absent |
+| --- | --- | --- | --- | --- | --- |
+| $\mathsf B_1$ | $LLR$ | $H_1$ | $H_0$ | $\mathsf B_2$ | $H_0$ |
+| $\mathsf B_2$ | $LRR$ | $H_2$ | $H_0$ | $H_0$ | $H_0$ |
+| $\mathsf B_3$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |
+
+Each $H_j$ stores literally the entire $R_j$ of (FCS.9)–(FCS.10),
+including its hole order, recomputed names, every different-class
+disequality and its concrete beta guards. No Halt issues a target
+index for a source-dependent decoder. These are PCA Supplier application
+4.3 and NBP Theorem 15.5's entries with $S=\{1,2\}$ and distinguished
+test $3$, specified here with every successor.
+

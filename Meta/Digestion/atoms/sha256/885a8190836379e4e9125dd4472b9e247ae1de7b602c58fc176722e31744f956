@@ -1,0 +1,28 @@
+**Proposition 66.4 (complete potential update, without dynamic intertwining).** Let $q^\diamond_{D,N}=a k_{\delta,D,N}+\langle\cdot,U^\diamond_{D,N}\cdot\rangle$ be the full form of (64.8). For the common prescription,
+
+$$
+U^{\rm c}_{D',N}\mathsf T_{D'D,N}=\mathsf T_{D'D,N}U^{\rm c}_{D,N},\qquad
+q^{\rm c}_{D',N}(\mathsf TF)=q^{\rm c}_{D,N}(F).     \tag{66.3}
+$$
+
+For the killed prescription the one-particle equality is the same, while for $N=2$,
+
+$$
+q^{\rm k}_{D',2}(\mathsf TF)-q^{\rm k}_{D,2}(F)
+=-\nu\sum_{\{p,q\}\subset D}\Delta G(p,q)
+       |(R_{D,2}F)(\{p,q\})|^2,                  \tag{66.4}
+$$
+
+where the entire actual update, not a selected pair fit, is
+
+$$
+\Delta G=GU\left(\tfrac32 I-U^*GU\right)^{-1}U^*G,
+\qquad G=L_D^{-1},\quad U=(e_p)_{p\in\mathcal B(s)}. \tag{66.5}
+$$
+
+An empty beta mask means zero update. All inverse and positivity conditions in (66.5) are supplied by Theorem62.4.
+
+Proof. Every old atomic depth is unchanged. A copied mixed slice has precisely its old additive one-body potential, and a copied cell still has zero atomic one-body multiplier. New strata have zero state. The common inverse is the same infinite $L^{-1}$ at every version, so all old atomic pair multipliers coincide. Theorem66.3 proves the remaining kinetic equality. For the killed choice only the old atomic pair coefficients change on the transferred state. Apply (62.8) with its authentic beta mask and the normalized symmetric atomic coordinates of Lemma64.5b to obtain (66.4)–(66.5). No positive-mass coordinate or trace is dropped in this computation. $\square$
+
+Form equality on the isometric image is a compression statement. After release, the new generator acts on the larger space and may move amplitude out of that image. The actual born-child hopping of (60.7),(62.7) persists. For the killed choice the old pair energy change in (62.9) persists as well; it is not a small-$\delta$ calibration error. Proposition58.3's failure of all-time rho intertwining and Proposition62.5's growing-population killed-energy defect are inherited, not contradicted. The full-space inclusion alone grants neither a physical switching law nor a new common exterior dynamic state.
+

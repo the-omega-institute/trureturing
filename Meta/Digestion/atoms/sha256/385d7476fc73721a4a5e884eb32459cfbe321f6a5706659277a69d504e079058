@@ -1,0 +1,27 @@
+**Definition 5.1 (Normalized event multipliers and all TP multipliers).**
+For the fifteen residuals (1.11) choose real positive semidefinite
+$A_J^\pm$ with
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$. Define
+
+$$
+\begin{gathered}
+Z_J=A_J^+-A_J^-,\qquad
+\beta=\sum_J\operatorname{tr}(Z_J\Pi_J),\qquad
+h(E)=(\operatorname{tr}(H_iE))_i,\\
+C=\sum_Jt_Jh(Z_J)^T,\qquad
+\delta_\nu=\sum_J\operatorname{tr}(Z_JP_\nu(\Pi_J)),\qquad
+y\in\mathbb R^3.
+\end{gathered}
+\tag{5.1}
+$$
+
+These are precisely the data in
+[QJM, Convention 6.3](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_JOINT_MARGINAL_AND_ATTAINING_PORT.md),
+with $\delta_\nu$ denoting its $d_\nu$. Matrix (3.1) is its
+$B_y(a)$. The same $C,\delta,y$ must be used in every population,
+atom and event calculation; they are not chosen separately on
+different faces. Real multipliers suffice for these real event
+matrices: replacing a Hermitian PSD multiplier by its entrywise
+real part preserves PSD on real vectors and every trace pairing
+with real symmetric matrices, as well as its trace.
+

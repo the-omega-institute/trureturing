@@ -1,0 +1,68 @@
+## 13. Mathematical antecedents and the next recovery question
+
+**Mathematical citation 13.1 (snapshot and prefix-tree correspondence).**
+The history and linearization definitions of Herlihy and Wing cited in
+§9 distinguish an invocation, a response and a permitted instant between
+them. Lemma 10.2 uses equality of an observer's local history under two
+actual executions. It does not infer equality of their invocation states
+from a linearizable later scan. Proposition 12.1 additionally uses the
+separate response event. These are source-specific indistinguishability
+arguments, not new definitions of linearizability.
+
+Afek, Attiya, Dolev, Gafni, Merritt and Shavit's atomic snapshot construction,
+§§2–3 and §3.1 of the authors' manuscript cited in §9, makes unsuccessful
+double collects reveal movement through sequence fields; its wait-free
+completion can borrow a view stored by a writer. Here a raw reply has only
+four possible constructor values, and the writer only applies $\rho$.
+The positive call uses the existing native leaf-validation certificate
+and its finite-interference progress theorem. The snapshot theorem
+supplies neither an invocation-time scan nor those missing register fields.
+The literature's arbitrary-writer-progress quantifier is also stronger
+than the finite-total-interference termination used in Theorem 10.4.
+
+Shannon, *A Mathematical Theory of Communication*, §9's second coding
+construction and §10's binary example
+([text, pp. 17–18](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)),
+uses finite binary descriptions whose earlier codewords differ within
+their own lengths from later ones; the recursive subdivision description
+terminates at single-message groups. This gives the classical prefix-tree
+interpretation relevant here. Its explicit code $\{0,10,110,111\}$ becomes
+$P=\{L,RL,RRL,RRR\}$ under $0\mapsto L$, $1\mapsto R$.
+These are terminal addresses of a finite full binary code tree and cover
+every infinite ray. On $\langle\alpha,\alpha\rangle$, however, the native
+source stops at $R$ before the last three codewords, so the same cut has
+the changing guard of Theorem 10.3. The code tree and the actual source
+are different objects. Shannon's source probabilities and mean coding
+lengths give neither a native-source reachability promise nor a concurrent
+Read protocol. Only the prefix relation and finite code-tree interpretation
+are used; no coding theorem is republished as a new cut-recovery result.
+
+**Mathematical citation 13.2 (repository derivation and its limits).**
+The classification and the uniform four-tree first-literal separation
+are repo-derived additions. Their necessity is not the uncovered-ray
+clock of Theorem 7.2: it applies also to complete deep prefix cuts, using
+an exposed early leaf and a lawful merge of two histories. The prescribed
+first-literal characterization and the exactly-one comparison retain
+all source-blind control, full-row and endpoint conditions stated above.
+The positive procedure, native injectivity and homomorphism, complete-row
+encoding and finite-interference capture retain their suppliers
+Propositions 4.3 and 7.3, Theorems 3.3 and 5.2–5.4, [GFT], [STC] and
+[ACPD], including its *literalRecord* and *canonicalRow_record_iff*.
+
+The public *transfer* of [NativeSerialDepth][NSD] transfers an actual
+*NativeSerialMachine.Run* using truth of every recorded Read at its
+recorded controller epoch. Its updates are that same controller's
+*applyRho* actions. The private replay arguments and public
+*parity_read_lower_bound* and *literal_parity_lower_bounds* of
+[SparseLiteralParityReadLowerBound][SPR] likewise concern serial Runs
+and their installed source families. They supply no unrecorded writer
+transition, concurrent workspace optimum or entry-cut classification.
+The event induction in Lemma 10.2 explicitly handles the extra writer;
+matching notation alone would not justify invoking a serial Run theorem.
+
+The mathematical statements here are prose consequences in the declared
+native model. Literature attribution is limited to the stated primary
+results and their ports and quantifiers; no worldwide originality or
+new kernel certificate is asserted. Spatial cuts, relative time and
+memory refer to these finite relational objects, not physical spacetime.
+

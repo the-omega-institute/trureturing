@@ -1,0 +1,101 @@
+**Corollary 7.1 (risk, midpoint and necessary tail corrections).** Use
+exactly the functional $\mathcal J$ of [PAIR, (11.9)], equivalently
+(3.2), with its supremum over every $k$ with $\mu(k)>0$ and its
+configuration-before-integration losses. For every boxed compatible
+pair, every $n\ge4$ and $r\in\{a,b\}$,
+
+$$
+\mathcal J+C_{r,n}e_{r,n}\ge\rho_p,
+\qquad \rho_p=\frac{1116529}{22781250}.
+\tag{7.1}
+$$
+
+For a compatible pair with $\mathcal J=0$, or for a boxed compatible
+pair with the exact p midpoint $\int Q(E_p)\,d\nu_p=C$ of (3.1),
+
+$$
+e_{r,n}\ge\delta_{r,n}:=\frac{\rho_p}{C_{r,n}}>0,
+\qquad
+c_az_a^n+\delta_{a,n}\le d_n\le c_bz_b^n-\delta_{b,n}.
+\tag{7.2}
+$$
+
+Thus any genuinely compatible completion satisfying either of these
+face conditions must increase the retained NULL155 a-tail mean by at
+least $\delta_{a,n}$ at every $n\ge5$. This is a necessary minimum
+correction bound, with no assertion that the bound is sharp or attained.
+
+**Proof.** Let $r^{\mathrm{opp}}$ be the other endpoint. It is a
+supported target because $\mu(1),\mu(2)>0$. The exact definition
+[PAIR, (11.9)] and the integrated complete-law triangle inequality give
+
+$$
+\begin{aligned}
+\mathcal J
+ &\ge\int\operatorname{TV}(Q,P_{p,r^{\mathrm{opp}}})\,d\nu_p-\rho_p\\
+ &\ge\rho_p-\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p\\
+ &\ge\rho_p-C_{r,n}e_{r,n}.
+\end{aligned}
+\tag{7.3}
+$$
+
+Here $\operatorname{TV}(P_{p,a},P_{p,b})=2\rho_p$, as follows
+from (6.10) or [PAIR, Section 2]. The supremum in $\mathcal J$ was
+bounded below by one supported target, not replaced by the two-endpoint
+supremum. In particular every supported nonendpoint loss remains
+required in the zero-level assertion.
+
+At $\mathcal J=0$, [PAIR, (11.29)--(11.30)] supplies the full boxes
+and both midpoint means, so (7.1) applies. For the separate boxed
+p-midpoint hypothesis, the signs in (6.10) give directly
+
+$$
+\int\operatorname{TV}(Q,P_{p,a})\,d\nu_p=C+\rho_p-C=\rho_p,
+\qquad
+\int\operatorname{TV}(Q,P_{p,b})\,d\nu_p=C-(C-\rho_p)=\rho_p.
+\tag{7.4}
+$$
+
+Apply (6.2) to each equality and substitute the two definitions of
+$e_{r,n}$ to obtain (7.2). This second route requires neither the
+suspended midpoint nor the supported-target budgets; it does not
+assert them.
+
+Both p descriptors in [NULL155, Definition 2.1] have
+$Q(w_{n,1})=(4/9)(2/9)^n=c_az_a^n$ for $n\ge5$, so every mixture
+of them has that mean. Any proposed completion on the stated face,
+even with different support, weights, earlier coordinates and
+conditional branching, must instead satisfy
+$d_n-c_az_a^n\ge\delta_{a,n}$. The incompatible NULL155 object itself
+has unequal full marginals and nonzero omitted residuals
+[NULL155, Proposition 5.1]; it is not an input to (6.2) or (7.1).
+Changing its tail means by these amounts alone is not sufficient
+for compatibility or for any of the other face conditions. $\square$
+
+**Exact substitution 7.2 (word index five).** Ordinary rational
+substitution in (6.1) gives
+
+$$
+\begin{aligned}
+\sum_{j=1}^4(\lambda/z_a)^j&=\frac{4026}{625},&
+C_{a,5}&=\frac{4534618}{135},&
+\delta_{a,5}&=\frac{1116529}{765216787500},\\
+\sum_{j=1}^4(\lambda/z_b)^j&=\frac{34390}{6561},&
+C_{b,5}&=\frac{1643670050}{59049},&
+\delta_{b,5}&=\frac{90438849}{51364689062500}.
+\end{aligned}
+\tag{7.5}
+$$
+
+Under either face hypothesis of Corollary 7.1, its interval becomes
+
+$$
+\frac{128}{531441}+\frac{1116529}{765216787500}
+\le d_5\le
+\frac{69984}{244140625}-\frac{90438849}{51364689062500}.
+\tag{7.6}
+$$
+
+These are substitutions into the universal proof, not independent
+mathematical claims or evidence for its Borel quantifiers.
+

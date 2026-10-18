@@ -1,0 +1,47 @@
+**Definition 11.1 (the native instance of complete observable control).**
+Keep Assumption 1.1, the entire nonempty domain (CAR.3), its common
+authenticated entry at epoch $N$, and the complete original target
+$R_Q(u)$. Instantiate [Continuation II, Definitions 26.1–26.2][MEM-CII]
+as follows. A table $C$ has a finite nonempty set $E$, one common initial
+state $e_0$, and one instruction at each state:
+
+$$
+\mathsf{Read}(p_e),\qquad \mathsf{ApplyRho},\qquad
+\mathsf{Halt}(Y_e).
+\tag{CAR.45}
+$$
+
+A read instruction contains a fixed finite physical word and has one
+successor for each of the four literal replies. An update instruction
+has one successor, since the update supplies no source-dependent reply.
+A halt contains one concrete complete row and is absorbing. At a read
+the register is unchanged; an update really replaces the same register
+by its $\rho$ image. All addresses, including absent addresses, remain
+legal. A successful table halts with $R_Q(u)$ on every $u\in D$.
+
+The cardinality $|E|$ counts all installed states, including unreachable
+ones. Program position, retained replies, running/halting distinctions,
+mutable selectors and retained output choices are part of this same
+state. There is no other readable epoch, chart, rank, history, cache,
+address generator or output decoder. An instruction and its response
+successors are identical on every visit, even when visits arise from
+different sources, histories or actual epochs. The physical register is
+the plant; its unobserved contents are not controller state. In proofs a
+configuration can be indexed by $(u,j,e)$, with register $\rho^j u$ and
+original target $R_Q(u)$; neither $u$ nor $j$ is an extra observation.
+
+This is the native synchronous whole-word request and whole-row halt
+contract. A response is consumed in selecting the next state, without a
+separately accessible response buffer. Every actual read, including a
+repetition or absence, contributes to (CAR.4). Halt contributes no read
+or update. Bitwise address emission, waiting states, output serialization
+and a serial physical realization require their own state and cost
+accounting. The state cardinality here does not price those mechanisms.
+
+Fixed instructions, literal words, complete output rows and the common
+retained input have a separate installation charge. In particular a
+small $|E|$ does not bound the sizes of $p_e$ or $Y_e$. Definition 12.3
+gives one explicit complete literal encoding. Acquisition, retention,
+authentication and the complete access cut keep their original ARH
+contracts; installation does not erase or pay those obligations.
+

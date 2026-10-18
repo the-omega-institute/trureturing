@@ -1,0 +1,42 @@
+## 245. Exhaustion of Q and the target frame
+
+If Q=M or Z, the face {Q,M,Z} has only the two distinct high labels
+M,Z. Distinct transverse labels therefore force eta's transverse pair
+to be {M,Z}, with axes Q and U. Its U faces are {U,M,Z}. A matching
+face in xi forces two high transverse labels and the third high axis;
+every U face of xi is marked, and xi has at most three U slots. Together
+with eta's one, all U slots in K close with degree at most four.
+
+It remains that Q=C or D is low. Eta has one of three roles:
+ (i)  (Q,M,Z,U,M,Z),
+ (ii) (Z,M,Q,U,M,Q),
+ (iii)(M,Z,Q,U,Z,Q).
+In (i), its U faces are again {U,M,Z}. The same xi role and closed-U
+argument gives degree(U)<=4.
+
+In (ii), every Z face in tau, rho, and eta is marked. Their original Z
+counts are respectively one, two, and one. Xi has a face {U,M,Q}, so
+it can contain Z only as its other axis, at most once. If present, that
+Z axis has a transverse pair containing U or M, hence both its faces
+are marked. All Z slots in K therefore close, with at most 1+2+1+1=5
+slots. This contradicts minimum degree six.
+
+In (iii), use the exact M/Z angle expenses. Tau consumes more than pi.
+Eta has axis M and pair {Z,Q}, with q<m-2 and z>m+2, so its individual
+response gives theta_M+2*beta_Z>pi, as in the established Section210
+role estimate (replace its low C by Q). Rho has pair {M,Z} and both
+axes low, C and Q. Write a=z>b=m>3 and r=c,o=q. Then
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0,
+using r<=b and o<=a. Also K_pair>8/9. Hence its transverse sum
+beta_M+beta_Z=2*atan(sqrt(K_pair*L/J)) exceeds pi/2, and its four
+original M/Z slots consume more than pi. The three distinct owners
+tau,rho,eta exceed the entire genuine M/Z budget 3*pi, contradiction.
+
+All Q other than U are excluded in the axial-C role. This leaves
+precisely (B), together with the unexcluded axial-M family (A).
+The argument retains repeated low axes, arbitrary other labels in xi,
+and self-pairings. It does not replace the external low-only boundary
+by closed equations or prove five-reservoir realization.
+
+Continuation: [Five-reservoir exceptional return chains, Sections 246–253](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).

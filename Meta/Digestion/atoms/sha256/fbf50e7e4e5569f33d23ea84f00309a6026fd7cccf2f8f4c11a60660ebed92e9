@@ -1,0 +1,42 @@
+**注记 236.4（Reused members and precise intersections）。** The
+uniform construction and hierarchy in 233–235 include every
+$m\ge7$ with one parameterized proof. The members at $m=4,5,6$
+are included for compatibility and receive zero repeated credit:
+$q_4=(0,0,1,2;9)$ is a base member,
+$q_5=(0,2,4,5,5;29)$ is already
+[XI, 213.16](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XI.md#213-terminal-normalization-coupled-reward-fibers-and-full-score-minima),
+and $q_6=(0,5,8,9,9,9;62)$ is the coefficient direction in
+[III, 156–157, row 54](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_III.md#156-sixty-five-full-class-event-scores).
+The latter has anchor and full $N/O$ support $27$ and necessary
+inequality $5a_2+8a_3+9a_4+9a_5+9a_6-62e\le5$.
+No separate contribution is attached to those old members.
+
+The parameters and count formulas of 233.1–233.2 extend to
+$m=5,6$ with $c_{m-1}=d+1-p_{m-1}$; for the base $m=4$,
+$c_3=2\ge\gamma_3=1$ and $c_1=\gamma_1=0$ involves no division.
+Those boundary checks only identify the old members. The proper-prefix
+proof includes all of them and gives no new individual credit to
+their inequalities or zero-cost availability.
+
+Generic hull geometry, full LP alternatives, duality and zero-cost
+closure are VI, 198.5 and 199.3–199.6. Unit plateau existence
+and triple laws are 87, 176 and 200.4; the whole normalized
+unit-$O$ face is XIII, 224. None is a new assertion here. In
+particular the seven-unit plateau has cap $5/8$, whose radial
+mixture with $E_0$ gives $5t/8$, not the $5t/9$ law of 231.1.
+The normalized equality-face hypotheses do not apply to
+$a_1=\cdots=a_7=t<1$. The five- and six-active comparisons
+148 and 161 retain their original scopes and do not classify
+the present seven-active family.
+
+The early-$P$ and half-density hypotheses of VII, 205.12–205.13
+are not hypotheses of 233: here $P$ has first-zero-three mass
+one and some reset densities equal one. The high-terminal
+early-$P$ construction XI, 213.11 does not directly apply to
+the terminal $t_m=d_m-1<\max_n\gamma_n=d_m$ used here.
+These are comparisons of explicit hypotheses, not a claim of
+exclusion from every older signed or conic consequence or of
+worldwide priority. The derivations are ordinary finite score
+and probability mathematics. Standard support subadditivity
+and weak duality have no additional mathematical credit.
+

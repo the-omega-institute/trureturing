@@ -1,0 +1,43 @@
+**Convention 33.1 (mathematical inputs and new content).** The channel,
+its original five-mode completion, strict coefficient enclosures and
+complete-output minimax value are reused from [CG, §§13–17]. Its
+Schmidt-number and every-input necessity statements in §§22–24, its
+unmixed sufficient factorization in §25 and its near-optimal stability
+in §§26–28 are also credited. The additional `repo-derived` statements
+here are the original-winding laws (JR.8)–(JR.9), their simultaneous
+complete-channel realization, the exact every-input family accounting
+(JR.12)–(JR.13), and the sharp fixed-channel compatibility and
+worst-case parity ceilings (JR.15). None is a new minimax certificate.
+
+The general mechanisms used inside these source-specific deductions
+are `literature-attested`. Muñoz-Moller, Leppäjärvi and Heinosaari,
+[*Adversarial Information Gain in Non-ideal Quantum Measurements*,
+arXiv:2602.20941v1](https://arxiv.org/html/2602.20941v1), Definition 1
+and Proposition 1, characterize meter/instrument compatibility by a
+joint instrument and meters on a conjugate instrument. Leppäjärvi and
+Sedlák, [*Incompatibility of quantum instruments*,
+arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Definition 8,
+Remark 3 and Proposition 7, give dilation and complementary-instrument
+postprocessing descriptions. These finite-dimensional results substantiate
+the joint-operation requirement and the finite Choi domination mechanism.
+Their qubit tradeoff formulas, numerical examples and implied environment
+access are not premises here. The proof of Theorem 32.2 applies its
+domination argument only to the finite live Choi matrix and treats the
+continuous failure measure directly; it assumes no unproved
+continuous-outcome extension of their finite-outcome statements.
+
+The repository's `UnitaryKrausMixingInvariance` and
+`FiniteKrausInstrumentBornMarginal` supply the generic unchanged-channel
+and branch-effect trace identities. `FiniteKrausRepresentation`, with
+its selected Physlib declarations at
+`6a09b2d1761a0d4430083045a247eb121d8da260`, supplies finite Choi/Kraus
+correspondence. `AntidistinguishabilityGram.psd_summand_projection`
+and its private kernel lemma express the positive-support mechanism
+used in (JR.17); its antidistinguishing POVM is a different conclusion.
+Pinned mathlib's matrix positivity, Gram and trace identities provide
+the underlying finite linear algebra. These are source references, not
+newly compiled applications. The examined compatible Lean sources and
+these primary articles do not provide this channel's coefficient
+$\kappa$, original-winding law or resource accounting as stated here.
+That bounded comparison makes no worldwide novelty assertion.
+

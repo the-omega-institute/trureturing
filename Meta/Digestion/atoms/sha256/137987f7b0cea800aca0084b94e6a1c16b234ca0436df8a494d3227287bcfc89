@@ -1,0 +1,71 @@
+### 90.4. Exact half bridge and the mixed multiplication determinant
+
+At \(b=1/2\), the printed \(Q_5\) is \(1/131072\) times the
+quintic of §77. Exact univariate division in that quintic algebra gives
+\(U/V=\tau(d)\) of (77.5); the two Cramer values coincide with
+\(A(d,\tau),C_a(d,\tau)\) from (77.3). These are equalities of rational
+algebra elements, not comparisons of approximate roots.
+
+Over \(K=\mathbb Q(i)(b)\), construct the free ten-dimensional algebra
+\[
+ \mathcal B=K[d,s]/(Q_5,s^2-K_a(d)),\qquad
+ \theta=U/V,\quad K_a(d)=d^2+4U/V,                    \tag{90.12}
+\]
+using the monic quintic and basis
+\((1,d,\ldots,d^4,s,sd,\ldots,sd^4)\).
+Its construction needs no irreducibility or real-root assumption.
+The exact multiplication norms in the degree-five half quotient, modulo
+97 with \(i=22\), are
+\[
+\begin{aligned}
+ &\operatorname{Nm}(d)=76,\quad\operatorname{Nm}(V)=74,
+ \quad\operatorname{Nm}(K_a)=51,\quad\operatorname{Nm}(J_a)=83,\\
+ &\operatorname{Nm}(F_a)=90,\quad
+ \operatorname{Nm}((2-id)^2+K_a)=15,\quad
+ \operatorname{Nm}((2+id)^2+K_a)=36.                  \tag{90.13}
+\end{aligned}
+\]
+Each is the determinant of the actual reduced multiplication matrix in
+\(1,d,\ldots,d^4\). In particular the residue for \(V\) is 74 with
+this norm convention. The last two certify the phase denominators in
+\(\mathcal B\). All these norms and all scalar denominators are included
+in the guard below.
+
+In \(\mathcal A\otimes_K\mathcal B\), use the scaled aligned phase
+\(H=s(A_a+iC_a)\) and phases
+\[
+ z=\frac{2+i(s+d)}{2-i(s+d)},\qquad
+ r=\frac{2+i(s-d)}{2-i(s-d)}.
+\]
+The original lower phase is \(H/\kappa\). With \(E=\bar e\), put
+\[
+\begin{aligned}
+ A_m&=(z-1)/E+(H/R)(r-1)\bar C/E,\\
+ B_m&=-3(z-1)/E+(H/R)(r-1)(\bar D-3\bar C/E),\\
+ C_m&=3z+3\bar GH/R+(H/R)(r-1)(\bar G+2\bar C-\bar D),\\
+ C_Z&=\begin{pmatrix}0&0&E/q\\1&0&-3E\\0&1&3\end{pmatrix},
+ \qquad N_m=\det(A_mC_Z^2+B_mC_Z+C_mI_3).
+\end{aligned}                                                    \tag{90.14}
+\]
+The derivation of (79.13) is symbolic in \(R\), so it applies verbatim:
+for the generic normalized upper root \(Z\) at the singleton position,
+the ordinary mixed overlap divided by \(\sqrt q\) is
+\(A_mZ^2+B_mZ+C_m\). The companion determinant is its product over
+all three relative positions. Thus any actual mixed orthogonal pair
+annihilates \(N_m\). Both signs of \(s\), all six generic orders and
+all optional \(\Theta\) choices are retained.
+
+Let \(h_m(b)\) be the full multiplication determinant of \(N_m\) in
+basis \(s^\epsilon Y^id^j\), indexed by \(100\epsilon+5i+j\),
+\(\epsilon=0,1\), \(0\le i<20\), \(0\le j<5\).
+The exact half bridges identify this with the already reconstructed
+matrix (79.15), giving
+\[
+ h_m(1/2)=57\pmod{97}.                               \tag{90.15}
+\]
+Therefore \(h_m\) is a nonzero rational function. Its numerator,
+denominator and coefficient-conjugates are retained in the guard.
+Where that guard is nonzero, multiplication by \(N_m\) is invertible,
+so \(N_m\) cannot vanish at any pair of complex evaluations, and in
+particular at any physical mixed pair.
+

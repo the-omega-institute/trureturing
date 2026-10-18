@@ -1,0 +1,165 @@
+**Theorem 3.1 (constant suspended emission separator).** Let a regular stationary table satisfy (2.4) and $v_y=s$ for every positive-row suspended label, for one $s\in[a,b]$. Put $\epsilon=\max(\epsilon_p,\epsilon_\beta)$. Then
+
+$$
+\epsilon>\frac1{35200}.
+\tag{3.1}
+$$
+
+More precisely the same $s$ must satisfy the two joint constraints
+
+$$
+C_p-F(s)\le\epsilon_p+5\epsilon_\beta,
+\qquad
+G(s)-q_*\le2\epsilon_p+\epsilon_\beta/5,
+\tag{3.2}
+$$
+
+where
+
+$$
+F(s)=\left(1-\frac cs\right)
+ \left(1+\frac{19}{15}s+\frac{271}{225}s^2\right)
+ -\frac25s(1-s)\left(1+\frac{19}{15}s\right),
+$$
+
+$$
+G(s)=\frac4{15}\left(\frac{31}{15}s^3
+ +\frac{29}{15}s^4-4cs^2\right).
+\tag{3.3}
+$$
+
+These constraints use the same complete laws and the same unweighted acquired circulation. Their incompatibility at small $\epsilon$ is evaluated below.
+
+Proof. Put $C=BA$, $U_x=1-u_x$, $L=3/5$, $H=2/3$. Thus $U_x\in[L,H]$ and $\pi C=\pi$. Let $X_0,X_1,\ldots$ be the finite analysis Markov chain with initial row $\pi$ and kernel $C$, and write $U_i=U_{X_i}$. All its one-time marginals agree. Define
+
+$$
+m=\mathbb E U_0,\qquad
+M_j=\mathbb E\prod_{i=0}^{j-1}U_i\quad(j\ge1),\qquad M_0=1.
+$$
+
+This chain is an analysis coupling of actual private updates. Its index is not a runtime clock. The $U_i$ are private configuration statistics, not source posterior variables.
+
+Since $v=s$, the actual p-return kernel is still $C$, while its synthetic survival matrix is $s\operatorname{diag}(U)C$. The marker-1 completion vector is $(1-s)U$. Expanding the same-update equations (2.3) therefore gives the exact complete-word identities
+
+$$
+\overline Q(w_{j,1})=(1-s)s^jM_{j+1},\qquad j\ge0.
+\tag{3.4}
+$$
+
+The other actual flow $\tau A=\pi$ gives, on entire complete laws,
+
+$$
+\overline W=(1-s)\delta_\beta+s\alpha\overline Q.
+\tag{3.5}
+$$
+
+It follows in particular that
+
+$$
+\overline W(E_\beta)=1-s+s(1-s)m.
+$$
+
+Set $d=\overline W(E_\beta)-C_\beta$. Equations (2.6) and (2.5) give
+
+$$
+|d|\le\epsilon_\beta,\qquad s(1-s)m=s-c+d.
+\tag{3.6}
+$$
+
+There is one common $m$ in all four moments. No separately attainable moment extremum is assumed jointly attainable.
+
+Here are elementary bounds used inside this source-specific proof. Stationarity and $xy\le(x^2+y^2)/2$ give $M_2\le\mathbb E U_0^2$. The identity
+
+$$
+x^3+y^3+z^3-3xyz
+=\frac{x+y+z}{2}\bigl((x-y)^2+(y-z)^2+(z-x)^2\bigr)
+$$
+
+gives $M_3\le\mathbb E U_0^3$. On $[L,H]$ the quadratic and cubic chords give
+
+$$
+M_2\le(L+H)m-LH,\qquad
+M_3\le(L^2+LH+H^2)m-LH(L+H).
+\tag{3.7}
+$$
+
+The chord differences factor as $(t-L)(t-H)$ and $(t-L)(t-H)(t+L+H)$, respectively, and are nonpositive.
+
+For four numbers $x_i\in[L,H]$ one also has
+
+$$
+\prod_{i=0}^3x_i\ge LH^2\left(\sum_{i=0}^3x_i-L-2H\right).
+\tag{3.8}
+$$
+
+The difference is affine in each coordinate, so its minimum over the box is attained at a vertex; equivalently it is a convex combination of vertex values. With $k$ coordinates equal to $H$, its five possible values are
+
+$$
+\begin{array}{c|ccccc}
+k&0&1&2&3&4\\ \hline
+\text{difference}&L(H-L)^2(L+2H)&LH(H-L)^2&0&0&H^2(H-L)^2.
+\end{array}
+$$
+
+All are nonnegative. Taking expectations on the same stationary path gives
+
+$$
+M_4\ge LH^2(4m-L-2H).
+\tag{3.9}
+$$
+
+Bounds (3.7)–(3.9) are elementary product estimates, not separate new general inequalities.
+
+Now (3.4), (3.7) and $\overline Q(E_p)\ge C_p-\epsilon_p$ imply
+
+$$
+C_p-\epsilon_p
+\le(1-s)(m+sM_2+s^2M_3)
+\le F(s)+\left(\frac1s+\frac{19}{15}+\frac{271}{225}s\right)d.
+$$
+
+The last equality uses (3.6), $L+H=19/15$, $LH=2/5$ and $L^2+LH+H^2=271/225$. The displayed coefficient is positive and less than $5$ on $[a,b]$. For example it is at most $3+19/15+(271/225)(2/5)<5$. This proves the first inequality in (3.2).
+
+Likewise (3.4) at $j=3$, (3.9) and (3.6) give
+
+$$
+\overline Q(w_{3,1})
+\ge(1-s)s^3LH^2(4m-L-2H)
+=G(s)+4LH^2s^2d
+\ge G(s)-\epsilon_\beta/5.
+$$
+
+Here $LH^2=4/15$, $L+2H=29/15$ and $4LH^2s^2\le64/375<1/5$. Combine with (2.8) to obtain the second inequality in (3.2).
+
+Both $F$ and $G$ are strictly increasing on $[a,b]$. For $F$, expansion yields
+
+$$
+F'(s)=\frac c{s^2}+\left(\frac{13}{15}-\frac{271}{225}c\right)
+ +\frac{494}{225}s+\frac{38}{25}s^2>0.
+$$
+
+Indeed $0<c<1/4$, so the parenthesized coefficient exceeds $509/900$. For $G$,
+
+$$
+G'(s)=\frac4{15}s\left(\frac{31}{5}s+\frac{116}{15}s^2-8c\right)>0,
+$$
+
+because $s\ge1/3$ and $c<1/4$ make even $31s/5-8c>1/15$.
+
+Take the single rational cut $s_*=3679/10000$. Exact substitution gives
+
+$$
+C_p-F(s_*)-\frac1{4000}
+=\frac{12788985483823}{33524887500000000000}>0,
+$$
+
+$$
+G(s_*)-q_*-\frac1{16000}
+=\frac{3659950318741}{5062500000000000000}>0.
+\tag{3.10}
+$$
+
+If $s\le s_*$, monotonicity and (3.2) imply $6\epsilon>1/4000$, so $\epsilon>1/24000>1/35200$. If $s\ge s_*$, they imply $(11/5)\epsilon>1/16000$, so $\epsilon>1/35200$. These cases exhaust the entire interval, including its endpoints. This proves (3.1). ∎
+
+The four-word constraint does not assert log-convexity of complete-word masses, independence of private chain coordinates, reversibility or a constant successor mean. Only the one-time marginal of the actual analysis chain is stationary. The full laws in (2.3) remain those of the same finite generator.
+

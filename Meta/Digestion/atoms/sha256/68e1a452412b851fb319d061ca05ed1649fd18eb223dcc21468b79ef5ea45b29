@@ -1,0 +1,32 @@
+**定义 42.1（同一初态的球帽来源）。** 沿用定义37.1、40.1的 $W=E\oplus\mathbb H$、$C=P_E$、单位锚 $d=e_4$、原菜单 $\Gamma_d$ 和实际逐事件合同。公开供应 $R>0$、单位四元数 $n=r+v$ 及 $-1\le\tau<1$，声明初始来源为
+
+$$
+\mathcal D(n,R,\tau)
+ =E\times B(n,R,\tau),\qquad
+B(n,R,\tau)=\{b\in\mathbb H:|b|=R,\ \langle b,n\rangle\ge R\tau\}.
+\tag{42.1}
+$$
+
+可见 $a\in E$ 与球帽内的 $b$ 独立且任意。球帽制备、$n,R,\tau$ 的精确公共校准是来源合同的前提，初始控制器记录对所有来源相同，不另含每态标签。球帽约束只施于初态；原更新后的当前状态不必仍在球帽。目标始终为原初态 $(a,b)$，也即由定理37.2分离的原完整词响应，不能改为后来当前状态。实际取得、可达状态和未执行词的反事实响应分别按定义40.1区分。
+
+若首次锚前非零内部控制积为 $p=c_1\cdots c_k\ne0$，空积为1，置
+
+$$
+\lambda=|p|,\qquad \widehat p=p/|p|,\qquad
+\gamma=\operatorname{Re}(n\widehat p),\quad
+\beta=\operatorname{Im}(n\widehat p),\quad
+\alpha=|\gamma|,\quad \nu=|\beta|=\sqrt{1-\alpha^2}.
+\tag{42.2}
+$$
+
+选 $\epsilon\in\{1,-1\}$ 使 $\epsilon\gamma=\alpha$；$\gamma=0$ 时固定选1。令 $\ell=\epsilon\widehat p^{-1}$，则 $|\ell|=1$、$\langle n,\ell\rangle=\alpha$。将 $b\widehat p=\epsilon s+w$，$s\in\mathbb R$、$w\in E$，得到
+
+$$
+ s=\langle b,\ell\rangle,\qquad
+ s^2+|w|^2=R^2,\qquad
+ \alpha s+\langle\beta,w\rangle\ge R\tau.
+\tag{42.3}
+$$
+
+首次锚实际读到的是 $\lambda w$。由定理40.2，保留初读、实际控制及首锚读时，完整迹的初态纤维恰是固定 $a,w$ 的盲线与 (42.1) 的交；锚后整个当前状态为 $(\lambda w,-a_k)$，其中 $a_k$ 由共同初读和已记内部控制确定。这里仍用该一般状态式，只有另行取 $a=0$ 的例子才把第二分量写成零。
+

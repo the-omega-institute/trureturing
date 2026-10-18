@@ -1,0 +1,28 @@
+**Proposition 8.2 (target-fixing canonical reduction).** The infimum in
+(CG.20) is unchanged if the output consists of a live matrix on $V$, five
+scalar measures on the separately labelled time intervals $[0,1]$, each
+with stopped state $P_f$, and one scalar other outcome. All zero-target
+output mass, including abort and rejection, remains counted.
+
+Proof. Apply the same output operation to every candidate. In its live
+sector compress to $V$, sending the trace of the orthogonal compression
+to other; discard cross terms between these orthogonal subspaces. This
+is a CP trace-preserving operation: its retained branch is a compression
+and its other branch is a positive trace functional. At each stopped
+mode and exact time, replace the quantum state by its trace times $P_f$,
+keeping that mode and time. Pool all further zero-target sectors into the
+scalar other outcome. Fixed common metadata may be discarded and
+reappended in their same fixed state. These operations compose to one
+common CPTP map and fix each target (CG.15).
+
+The output contraction argument (CG.40), applied to this common operation,
+shows that none of the twelve errors increases. Pooling zero-target
+positive sectors retains their entire trace contribution: their norm is
+the sum of their masses before pooling and the same total mass afterwards.
+No outcome is deleted and no branch is normalized by success. The five
+original stopped intervals are not pooled or binned. Conversely a reduced
+channel is a candidate in the enlarged class, with its other outcome
+embedded as a declared zero-target event and the fixed metadata appended.
+Thus reduced candidates have infimum at least the full infimum, whereas
+the reduction gives the reverse inequality. $\square$
+

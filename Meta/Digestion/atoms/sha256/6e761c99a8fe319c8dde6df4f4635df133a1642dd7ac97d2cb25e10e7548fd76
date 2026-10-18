@@ -1,0 +1,15 @@
+**Definition 284.1 (One product coefficient measure).**
+Fix $k\ge2$ and $6k-1$ ordered actual late addresses, partitioned into
+consecutive blocks $A,B,\{z\}$ of sizes $4k-1,2k-1,1$.
+All addresses of $A$ precede all of $B$, and $z$ is last. Choose a
+uniform $2k$-subset of $A$ and, independently, a uniform $k$-subset of
+$B$, and always include $z$ in the zero set. Multiply this one joint
+probability measure by
+
+$$
+c=4-1/k,\qquad b=\frac{4k-1}{2k-1}.
+\tag{284.1}
+$$
+Call the resulting zero-set measure $\nu$. It is a coefficient measure,
+not a prior on actual sources.
+

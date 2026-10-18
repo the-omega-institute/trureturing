@@ -1,0 +1,27 @@
+### 109.5. Full-support rank-seven examples and scope
+
+Keep the rational fixture. Define calibrated auxiliary coefficients
+
+$$
+\begin{aligned}
+a^{\rm aux}&=(1/4,0,1/8,1/8),&M^{\rm aux}&=I_2/4,\\
+b^{\rm aux}&=\left(1/4,0,\frac{1-q/2}{4},\frac{1-q/2}{4}\right),
+&N^{\rm aux}&=N/2.
+\end{aligned}\tag{109.23}
+$$
+
+The corresponding Grams have ranks seven and five. Their diagonals equal one and partner entries vanish. With $\varepsilon=1/1000$, mix each separately with its original Gram to obtain $G_\varepsilon,H_\varepsilon$. The first has rank seven and unique kernel $\chi_{-,+}$, all of whose entries are nonzero; the second has rank five. Keeping $H$ instead gives rank pair $(7,4)$.
+
+Every calibrated Gram lies between $0$ and $8I$. Schur multiplication by a correlation Gram contracts the operator norm on Hermitian matrices. A calibrated product-coefficient difference $D$ has zero original fibre blocks and original complete norm at most $\|D\|_{\rm op}$, using the majorant $\|D\|_{\rm op}I$. The triangle inequality and the actual two-Gram product expansion therefore give
+
+$$
+\delta(G_\varepsilon,H)\leq\frac{23}{49}+8\varepsilon<\frac12,
+\qquad
+\delta(G_\varepsilon,H_\varepsilon)\leq\frac{23}{49}+16\varepsilon<\frac12.
+\tag{109.24}
+$$
+
+For the latter bound use $(G_\varepsilon-G)\odot H_\varepsilon+G\odot(H_\varepsilon-H)$. These are separately realized original physical Grams, without shared randomness between the local channels. Theorem 109.1 also bounds their errors below by $\sqrt2-1>1/4$.
+
+Theorem 109.1 supplies a common lower bound for the noncentral action, while Proposition 109.2 proves that the sharper central conclusion needs its central-partner hypothesis. The interval between $\sqrt2-1$ and $2\sqrt3-3$ is not closed here. None of the examples is asserted to be a local minimum or a common-stress solution. The finite representation and spectral intermediates retain the primary attribution of §§107–108; the original input normalizations are proved above. No unrestricted global-quarter conclusion follows.
+

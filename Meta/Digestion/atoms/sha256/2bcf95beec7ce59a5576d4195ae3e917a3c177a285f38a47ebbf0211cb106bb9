@@ -1,0 +1,14 @@
+**Proposition 6.4 (constant subdomains and degenerate rows).**
+Nonroot rows can be constant along particular trajectories without
+contradicting the all-source classification.
+
+**Proof.** At $P=\{L,R\}$ and source $\langle\alpha,\alpha\rangle$,
+every row is the two-hole pair with a single equality class.
+At a root cut such constancy holds for all sources.
+An empty cut exposes the whole changing tree: its right clock increases
+at every update. A cut blocked at alpha retains a concrete alpha guard,
+which changes to beta at the next update even if no hole is reached.
+Constant root rows, empty partitions, blocked rows and trajectory-specific
+constant rows therefore have distinct meanings. Theorem 6.2 includes
+the separating pair for its fixed cut among its all-source inputs. $\square$
+

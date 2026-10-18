@@ -1,0 +1,16 @@
+**Attribution 8.7 (Application and added correspondence).**
+Real-basis Fisher saturation uses [FSIC5]; reconstruction
+from actual diagonals and complex edges uses
+Parent/Readout Theorem 8.6 and its polarization source.
+The paired local controls have close predecessors in
+[HPS6] and the broader $X,Y,Z$ menu of [MCHPZ6].
+The source-specific correspondence here is replacement
+of the mode setting by recorded real-site settings
+without changing the local Fisher blocks, together
+with a fixed-length inverse through the nonvacuum tree
+and the associated menu-attainment boundary. It does
+not assign new ownership to basis saturation, phase
+propagation or Lipschitz estimates, and no literature
+priority is claimed.
+
+

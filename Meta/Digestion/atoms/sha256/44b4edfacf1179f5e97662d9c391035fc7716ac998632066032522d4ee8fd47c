@@ -1,0 +1,27 @@
+**Definition 4.3 (normalized complete-output error).** The ideal output
+$\Omega_h^q$ retains the terminal live quantum block or exact first new
+failure time/mode and $f$. It has no acquisition abort or erroneous
+rejection sectors. For normalized full classical–quantum outputs use
+
+$$
+\operatorname{dist}(\omega,\eta)=\tfrac12\|\omega-\eta\|_{1,\rm cq}.
+\tag{FH.12}
+$$
+
+The norm sums/integrates trace norms over all classical sectors, using a
+common dominating measure when needed. Exact time is a measurable variable,
+not an uncountable orthonormal basis or finite-bit archive. Let $e_h(q)$
+be the full error, including retained joint fields whenever required.
+It dominates
+$\operatorname{dist}(\Phi_q(\sigma_h),\Omega_h^q)$ after the stated
+forgetting maps. Hence every declared output event differs in probability
+by at most $e_h(q)$. No probability below is conditioned on successful
+acquisition. Conditioning on the already reached original live cut is
+the separately named starting experiment.
+
+These are source-family comparisons, with the same actual history label
+and its prescribed target on both sides. They are not an identification
+of different unknown inputs inside the common-input instrument metric
+of [Instrument Stability][IS]. A complete common-map/reference guarantee
+would imply these necessary tests, which already use trivial references.
+

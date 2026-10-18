@@ -1,0 +1,44 @@
+**Theorem 11.5 (exact pointwise minimum and finite attainment).** For every
+positive five-mode test input $\sigma$,
+
+$$
+\min_{\mathfrak F\ \mathrm{original\ finite\ class}}
+ p_H^{\rm acq}(\sigma;\mathfrak F)
+ =\mathsf E_s(E^\dagger\sigma E).
+\tag{IR.74}
+$$
+
+The same equality holds with $p_H^L$ as objective. For each test input
+there is one common input-independent attaining design with at most
+thirty actual branches, fibre dimensions at most three, and no high
+acquisition loss to nonlive output.
+
+Proof. Theorem 11.3 gives the lower bound for every original design.
+Lemma 11.2 gives compact nonempty $\mathcal K_s$ and the objective is
+continuous, so a minimizing coefficient point exists. Its literal
+realization in Theorem 11.4 attains the value. If any high spectral atom
+there is singular, its reassignment cannot decrease the chosen positive
+objective strictly: a strict decrease would produce another feasible
+coefficient point below the minimum. Thus every such reassignment
+preserves this chosen value. The final realization has only genuine
+rank-three high branches, the bound (IR.73), and all high acquisition
+is live. This proves equality and attainment for both objectives.
+
+This uses the unnormalized compression even if $\sigma$ has complement
+mass or cross-support coherence. The constructed high effect is
+supported on $V$ and has no such extra cost; necessity used the full
+operator domination (IR.71). A zero compression gives minimum zero,
+attained with the scalar complement completion. Zero input, singular
+compression and subnormalized inputs all use continuity and linear
+homogeneity; there is no inverse of a density or acceptance probability.
+Rank-zero $N_r,H_r,L_r$ simply contributes no branch.
+
+The quantifier is $\forall\sigma\succeq0\ \exists\mathfrak F_\sigma$:
+constants can be selected from a fixed public test state for this
+mathematical optimization, and the resulting operations are common on
+every unknown input. It is not $\exists\mathfrak F\ \forall\sigma$.
+Corollary 10.5 excludes the latter already on the twelve original
+inputs in the interior. This theorem evaluates no new coherent-input
+closed formula; it proves an exact finite reduction and existence.
+$\square$
+

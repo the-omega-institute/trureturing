@@ -1,0 +1,4 @@
+**Corollary 12.2 (Necessary structure of a finite attainer).** If some finite $\theta\in\Theta_N$ attains $c_\star$, every positive-weight actual closed irreducible hidden component must itself attain, must have at least four states, must have $\operatorname{rank}M_1^C\ge2$, and must have a nonrenewal visible law. Zero stationary states may remain in the original presentation.
+
+**Proof.** The affinity in Lemma 11.1 and the common upper bound force every positive component to attain. A zero-emission component is all-zero and cannot attain. A nonzero rank-one component is proper renewal by Proposition 3.4 and is excluded by Theorem 10.3; any proper renewal component is excluded regardless of the rank of its representation. Theorem 11.4 excludes class sizes at most three. These implications give all the stated necessary conditions. $\square$
+

@@ -1,0 +1,47 @@
+**Corollary 7.4 (complete response and calibration budget).** Recover $m$ by
+Theorem 7.3 and form
+
+$$
+\widetilde\beta=\widetilde\pi m-\widetilde A/r,
+\qquad \widetilde\epsilon=(-1)^m,\qquad
+B_0=E_A/r+M\varepsilon_\pi+\rho_\beta,
+\tag{7.5}
+$$
+
+where $\rho_\beta$ bounds additional phase arithmetic error. With the exact
+supplied decoder the full ten-response error is at most
+
+$$
+a_{02}\min(2,B_0).
+\tag{7.6}
+$$
+
+For a calibrated decoder let $G_e=a_e\exp(i\delta_e)$ and suppose the
+stored calibration obeys $|\widehat G_e-G_e|\leq\gamma_e$ simultaneously.
+With certified output-evaluation error $\rho_C$ in Euclidean norm, the bound
+becomes
+
+$$
+\|\gamma\|_2+a_{02}\min(2,B_0)+\rho_C.
+\tag{7.7}
+$$
+
+Proof. Formula (1.3) gives phase error at most $B_0$ on $02$ and exact
+parity on all bottom edges. The unit-circle chord bound proves (7.6).
+For each calibrated complex gain, insert $G_e$ times the predicted unit
+character; its gain error is at most $\gamma_e$. Minkowski's inequality
+and the additional output budget give (7.7). For example certified
+$|\widehat a_e-a_e|\leq\eta_{a,e}$ and
+$|\widehat\delta_e-\delta_e|\leq\eta_{\delta,e}$ permit
+$\gamma_e=\eta_{a,e}+a_e\min(2,\eta_{\delta,e})$. $\square$
+
+Clock error appears in $h_*$, sensor gain/bias/drift and digitization must
+appear in $d_k,d_c$, and preparation/reference calibration appears in
+$\gamma$. These are different budgets. In particular, a small timestamp
+error between a height reading and a phase reading cannot be converted to
+a small phase error using only total variation: a compressed phase pulse
+can fit between those readings. Asynchronous acquisition needs an added
+phase modulus or an independently justified simultaneous-error certificate.
+Uncertified departures from the exact symmetric source law, or unknown
+environmental overlap, are not covered by (7.2) or (7.7).
+

@@ -1,0 +1,40 @@
+**Definition 17.1 (total selected-address descriptions).** Retain the
+entire original $\mathcal U_*$, its six injective class values, both
+occurrences of $a,c$, the eleven profiles and the five complete canonical
+rows of Definition 4.1. Retain exactly the code template (PCA.12) and
+the one fixed reader of Supplier application 4.3. In particular its
+alphabet consists of three running states and five whole-row halts,
+its two distinct complete entries are the same $e_0,e_1$, and its
+table, entry map and complete halt outputs are immutable. Its separate
+upper budgets remain $K=8,q_R\le2,\ell_R\le6$.
+
+Let $a:\mathbb N_{\ge1}\to\{0,1\}$ be a specified total computable
+predicate, with no known support bound. Set
+
+$$
+\begin{aligned}
+A&=\{s\ge1:a(s)=1\},& w_s&=L^sR,\\
+f_a(B)&=\bigvee_{1\le s\le h(B)}
+ \bigl(a(s)=1\ \land\ r_B(w_s)=\mathsf{branch}\bigr),&
+\sigma_a&=\sigma_{f_a}\text{ of (PCA.12)}.
+\end{aligned}
+\tag{PCA.41}
+$$
+
+Here $h(B)$ is maximum leaf depth and an empty disjunction is false.
+The argument $B$ is an acquired finite branch image. This specifies a
+total computation on acquired data: only finitely many evaluations of
+the total $a$ are needed on each input. There is no uniform bound on
+their work or on input height. A branch reply at $w_s$ implies
+$h(B)\ge s+2$, so the height cutoff removes no true disjunct.
+Equivalently, $f_a$ tests whether any selected $w_s$ has branch reply;
+alpha, beta and absence are all false. This equivalence holds for
+arbitrary branch images, including shapes other than combs.
+
+Only this predicate and the resulting prescribed code vary with $a$.
+The cut, current row, source fiber, target, native words and replies,
+reader and its original complete entries do not vary. The computation
+in (PCA.41) specifies the code; it is not a runtime operation available
+to a preparer. In particular it supplies neither a height register nor
+an address operation, simulation workspace or copy of the acquired term.
+

@@ -1,0 +1,86 @@
+**Lemma 2.4 (Full complex positivity certificate).** The matrix $P$ in
+(2.9) is positive semidefinite on $\mathbb C^5\otimes\mathbb C^5$, and
+
+$$
+I_5\otimes Y-\mathcal W=\frac{P+P^\Gamma}{2}.
+\tag{2.10}
+$$
+
+Proof. Equation (2.10) follows immediately from Proposition 2.2 and the
+partial-transpose oddness of every added difference in (2.9).
+For positivity, first decompose the tensor space using the real orthogonal
+sectors $\mathcal H_j$. In each plane's same-sector tensor square the
+symmetric traceless subspace has eigenvalue
+$\ell_j-2\kappa_j+t_j=0$. The antisymmetric line has eigenvalue
+$\ell_j-t_j=2(\ell_j-\kappa_j)$.
+The remaining three trace directions are $\eta_j/\sqrt{d_j}$.
+Their matrix is $\operatorname{diag}(\sqrt d)\,N\,
+\operatorname{diag}(\sqrt d)$, where
+
+$$
+\begin{aligned}
+N_{jj}&=\ell_j-h_j,&N_{jk}&=-(b_{jk}+u_{jk}),\\
+N&=\begin{pmatrix}
+11/400&2829/100000-9r/544&-251/6250+9r/544\\
+2829/100000-9r/544&55839/1360000+9r/2176&-8663/212500\\
+-251/6250+9r/544&-8663/212500&62231/1360000-9r/2176
+\end{pmatrix}.
+\end{aligned}
+\tag{2.11}
+$$
+
+For each $j<k$, the cross-sector spaces give $d_jd_k$ copies of
+
+$$
+D_{jk}=\begin{pmatrix}
+\ell_k-b_{jk}&u_{jk}-b_{jk}\\
+u_{jk}-b_{jk}&\ell_j-b_{jk}
+\end{pmatrix}.
+\tag{2.12}
+$$
+
+The following table gives exact determinants $(a+br)/D$ and a positive
+rational lower bound. For $N$ use its leading principal submatrices.
+
+| Determinant | $a$ | $b$ | $D$ | Lower bound |
+| --- | --- | --- | --- | --- |
+| $N_1$ | $11$ | $0$ | $400$ | $11/400$ |
+| $N_2$ | $-1470248319$ | $356934375$ | $340000000000$ | $22844841/5440000000000$ |
+| $N_3$ | $-10641427272359$ | $2581015359375$ | $1156000000000000000$ | $5714494081/18496000000000000000$ |
+| $D_{0+}$ | $6635237139$ | $-1608721875$ | $85000000000$ | $73596447/2720000000000$ |
+| $D_{0-}$ | $17742727773$ | $2845631250$ | $170000000000$ | $235804399839/1360000000000$ |
+| $D_{+-}$ | $228311$ | $0$ | $5312500000$ | $228311/5312500000$ |
+
+Every denominator is positive. Squaring integers gives
+
+$$
+\left(\frac{41231}{10000}\right)^2<17
+<\left(\frac{412311}{100000}\right)^2.
+\tag{2.13}
+$$
+
+For $b>0$ insert the left endpoint into $(a+br)/D$, and for $b<0$
+insert the right endpoint. For $b=0$ the last column is the exact value.
+This gives exactly the displayed lower bounds, strictly when $b\ne0$.
+The determinant identities follow from $r^2=17$ and
+
+$$
+\det\begin{pmatrix}x&u&v\\u&y&w\\v&w&z\end{pmatrix}
+=xyz+2uvw-xw^2-yv^2-zu^2.
+\tag{2.14}
+$$
+
+The first and second leading determinants are $x$ and $xy-u^2$.
+Thus (2.11)–(2.14) specify the arithmetic of all six rows.
+Positive leading pivots show $N>0$, hence $\ell_j>h_j=3\kappa_j$.
+The antisymmetric eigenvalues are consequently positive.
+All $\ell_j>2/5$ and $0<b_{jk}<1/5$, so both diagonals in (2.12)
+are positive. Their determinants are positive, giving $D_{jk}>0$.
+The trace block, symmetric traceless blocks, antisymmetric blocks and
+cross-sector blocks have dimensions $3,4,2,16$, respectively, totaling
+25. This proves $P\ge0$ on the real tensor space and hence on its complexification:
+for real symmetric $P$ and $z=x+iy$,
+$z^\dagger Pz=x^TPx+y^TPy\ge0$.
+This is an orthogonal decomposition of a witness, not a decomposition
+restriction on any competing channel. $\square$
+

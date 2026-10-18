@@ -1,0 +1,40 @@
+**Lemma 2.2 (finite sign transfer).** Suppose $\mathsf T_a$ is invertible and $\mathsf H=\mathsf T_a^{-1}\mathsf C$. If $\mathfrak b(S,\mathsf H S)$ takes both strict signs on positive rank-one sources, there are actual collisions with slopes $a,a+\epsilon$ for arbitrarily small $\epsilon>0$ and one entire constant drift per run.
+
+**Proof.** Write every positive rank-one source as
+
+$$
+S=\sigma E(u,v),\qquad
+E(u,v)=\begin{pmatrix}uv&u\\v&1\end{pmatrix},\qquad\sigma,u,v>0.
+\tag{2.3}
+$$
+
+Interpolate the positive parameters of two strictly signed sources. This gives a compact path of positive rank-one sources $S(\theta)$. Let $m>0$ be a common lower bound for its entries, let $K=1+\max_{\theta,a,b}|(\mathsf H S(\theta))_{ab}|$, and let $\eta>0$ be the smaller magnitude of the endpoint transfer-form values. For
+
+$$
+0<\epsilon<\min\{m/(2K),\eta/(4K^2)\},
+$$
+
+with any further prescribed positive upper bound, $S+\epsilon\mathsf H S$ remains positive. Also $|\det(\mathsf H S)|\le2K^2$, so the continuous function
+
+$$
+\mathfrak b(S,\mathsf H S)+\epsilon\det(\mathsf H S)
+$$
+
+retains opposite endpoint signs and has a zero. At that zero set $S_1=S$ and $S_0=S+\epsilon\mathsf H S$. The determinant expansion makes both sources rank one, and
+
+$$
+\mathsf T_aS_0=\mathsf T_aS_1+\epsilon\mathsf CS_1
+=\mathsf T_{a+\epsilon}S_1.
+\tag{2.4}
+$$
+
+Therefore their undrifted five-vectors differ by one constant, whose initial value is $u_0=\operatorname{tr}(S_0-S_1)$. Taking
+
+$$
+k_0=a,\quad k_1=a+\epsilon,\qquad
+D_0(\tau)=0,\quad D_1(\tau)=u_0
+\tag{2.5}
+$$
+
+makes every original reading agree, including the initial reading. The slopes differ, so the effective targets differ. Equation (1.2) realizes both runs with positive unread states and fixed positive rows. If $|a|<1/16$ and $\epsilon<1/16$, both slope magnitudes are less than $1/8$, and every gain at $0\le i\le4$ exceeds $1/2$. No gain division is used. ∎
+

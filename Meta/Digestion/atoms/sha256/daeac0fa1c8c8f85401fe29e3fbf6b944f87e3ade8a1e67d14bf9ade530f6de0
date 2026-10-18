@@ -1,0 +1,61 @@
+**命题 490.3（共同锚的联合下界）。** 固定 $1<a\le b$。沿用
+$$
+h(t)=\gamma+\log\log t,\qquad
+J_b(m)=W(m)-\lambda_b\log m,\qquad
+d_b(n)=M(\lambda_b)-J_b(n).
+$$
+设取得实际下界
+$$
+I_\psi(b)\ge\iota_b,\qquad R(b)\ge r_b,
+$$
+并选定一个非空有限正整数集合 $\mathcal C$。定义
+$$
+q_b(n)=
+\max\left\{0,\ \max_{m\in\mathcal C}\bigl(J_b(m)-J_b(n)\bigr)\right\},
+$$
+以及只依赖区间端点的成本
+$$
+C_h(a,b)=h(b)+\lambda_b(a-b)-h(a)
+=\int_a^b(t-a)w(t)\,dt.
+$$
+则对每个 $n>5040$ 且 $E=\log n\in[a,b]$，
+$$
+\boxed{
+\log\frac{e^\gamma\log\log n}{\sigma(n)/n}
+\ge\iota_b+r_b+q_b(n)-C_h(a,b),
+}
+\tag{490.11}
+$$
+并且
+$$
+0\le C_h(a,b)\le\frac{(b-a)^2}{2}
+\frac{1+\log a}{a^2\log^2a}.
+\tag{490.12}
+$$
+
+**证明。** 完整正整数压力同时给出
+$d_b(n)\ge0$ 和
+$d_b(n)\ge J_b(m)-J_b(n)$，所以 $d_b(n)\ge q_b(n)$。
+§481 的同源余量身份给
+$$
+\log\frac{e^\gamma\log\log n}{\sigma(n)/n}
+=I_\psi(b)+R(b)+d_b(n)-B_h(E,b),
+$$
+其中
+$$
+B_h(E,b)=h(b)+\lambda_b(E-b)-h(E)
+=\int_E^b(t-E)w(t)\,dt.
+$$
+因为 $a\le E\le b$ 且 $w>0$，有
+$0\le B_h(E,b)\le C_h(a,b)$，得到式 (490.11)。
+最后
+$$
+w'(t)=-\frac{2(\log t)^2+3\log t+2}{t^3(\log t)^3}<0
+\qquad(t>1),
+$$
+故 $C_h(a,b)\le w(a)\int_a^b(t-a)\,dt$，即式 (490.12)。$\square$
+
+在每个指定有限区间，式 (490.1) 只涉及不超过 $b$ 的有限素数幂；式 (490.2)–(490.3) 提供对数与 $\gamma$ 的有理误差预算。因此 $\iota_b$ 可以由有限证书给出。$b\ge8$ 时可取定理 486.2 供应的 $r_b=1/(50\sqrt b\log b)$，或使用更强的同源储备界。有限集合 $\mathcal C$ 只给完整压力亏损的下界；没有把其有限最大值宣告为完整压力。
+
+若式 (490.11) 右侧在所讨论的整数上严格为正，便得到该有限尺度区间的 Robin 结论。区间缩窄时切线成本按式 (490.12) 至多二次缩小；仍需实际供应锚点预算、整数任务的压力差及整个所需范围的覆盖。这里未给无限范围的统一正裕量，也未把有限可核验性改称 RH 的证明。
+

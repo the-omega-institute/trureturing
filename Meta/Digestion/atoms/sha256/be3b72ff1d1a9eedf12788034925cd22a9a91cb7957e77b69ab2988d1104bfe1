@@ -1,0 +1,244 @@
+**Theorem 26.3 (source-specific square-root stability).** For every
+original common full-output processor $\Phi$ and every $0\leq\epsilon\leq1$,
+let $J$ be the unnormalized output-input Choi matrix of its compressed
+live map and let
+
+$$
+\overline J=\frac14\sum_{e,n}
+(U_{e,n}\otimes U_{e,n})J(U_{e,n}\otimes U_{e,n})^\dagger.
+\tag{CG.205}
+$$
+
+With the single constant $C$ of (CG.204),
+
+$$
+E(\Phi)\leq E_*+\epsilon
+\quad\Longrightarrow\quad
+\|\overline J-J_*\|_1\leq C\sqrt\epsilon.
+\tag{CG.206}
+$$
+
+The same implication holds for every finite-test channel (CG.155),
+with $E_c$ in the premise. No equality of the unaveraged live matrices
+or of the complete failure laws is asserted.
+
+Proof. Reduce a full-output candidate by $\mathcal C$ of Convention
+17.1, and then mathematically average the finite channel over the four
+actual signs, keeping both scalar flags fixed. Both operations contract
+the maximum error, because the signs permute the original four histories
+at each height. Write this averaged candidate as
+$(\overline\Lambda,\overline G_f,\overline G_o)$. Its live Choi matrix
+is (CG.205), its two effects are diagonal, and its errors at a fixed
+height are independent of the sign. Let $e_y$ be those finite errors,
+put $w_5=\lambda_*$, $w_{27}=1-\lambda_*$, and define
+
+$$
+\begin{aligned}
+\Delta_y&=B_y-\overline\Lambda(\rho_y),
+&\ell_y&=\operatorname{tr}(R_{y,*}\Delta_y)\quad(y=5,27),\\
+q_5&=\operatorname{tr}(\overline G_f\rho_5),
+&P_5&=\ell_5+6/11-q_5,
+&P_{27}&=\ell_{27},\\
+D&=\operatorname{tr}(S_*\overline J)
+  +c_f(\overline G_f)_{00}
+  +\operatorname{tr}(Z_{d,*}\overline G_o).
+\end{aligned}
+\tag{CG.207}
+$$
+
+The full certificate identity (CG.133) and its endpoint effects give
+
+$$
+w_5P_5+w_{27}P_{27}=E_*+D,\qquad
+P_y\leq e_y\leq E_*+\epsilon,\qquad D\geq0.
+\tag{CG.208}
+$$
+
+Consequently $D\leq\epsilon$ and
+$\sum_{y=5,27}w_y(e_y-P_y)\leq\epsilon$. Solving (CG.208) for
+each payoff using the upper bound on the other one yields
+
+$$
+0\leq e_y-P_y\leq\epsilon/w_y,
+\qquad |P_y-E_*|\leq\epsilon/w_y.
+\tag{CG.209}
+$$
+
+All quantities in $D$ are nonnegative. In particular, since
+$Z_{d,*}\succeq z_{\min}I$,
+
+$$
+\operatorname{tr}(S_*\overline J)\leq\epsilon,\qquad
+(\overline G_f)_{00}\leq\epsilon/c_f,\qquad
+\operatorname{tr}\overline G_o\leq\epsilon/z_{\min}.
+\tag{CG.210}
+$$
+
+First control the distance to the complementary face. Put
+$\widehat J=P\overline JP$. Positivity and the TNI live budget give
+$t:=\operatorname{tr}\overline J\leq3$. Spectral decomposition of
+$S_*$ gives $S_*\succeq s(I-P)$, hence
+$\operatorname{tr}((I-P)\overline J)\leq\epsilon/s$.
+Apply the existing positive compression inequality
+`TraceClassCompression.norm_sub_compress_le` in
+`D5/S3/Quantum/Analysis/TraceClass/FiniteCompression.lean` to
+$\overline J/t$ on $\mathbb C^9$, using an orthonormal basis adapted
+to $\operatorname{range}P$. Its tail mass is
+$\operatorname{tr}((I-P)\overline J)/t$. Rescaling gives
+
+$$
+\|\overline J-\widehat J\|_1
+\leq2\sqrt{t\operatorname{tr}((I-P)\overline J)}
+\leq a\sqrt\epsilon.
+\tag{CG.211}
+$$
+
+If $t=0$, positivity gives $\overline J=\widehat J=0$, and the
+inequality holds directly without division. Thus this use does not
+assume a normalized live map. The compression is an analytic matrix;
+it is not asserted to be a feasible TNI processor or a physical cut.
+
+The sign characters commute with $S_*$ and $P$. Accordingly
+$\widehat J$ is block diagonal in (CG.128), and in each of the first
+three blocks it is supported on the respective one-dimensional real
+kernel. The fourth block is zero. A Hermitian positive operator on
+one complex line is a nonnegative real multiple of its rank-one
+projection, even when the original operator is complex. Therefore
+
+$$
+\widehat J=\sum_{k=0}^2\widehat\eta_k\mathcal B_k,
+\qquad \widehat\eta_k\geq0,
+\qquad J_*=\sum_{k=0}^2\eta_{k,*}\mathcal B_k.
+\tag{CG.212}
+$$
+
+It remains to control these coefficients quantitatively. Define the
+real linear map on Hermitian matrices
+$\mathscr L(X)=(\operatorname{tr}(M_jX))_{j=1}^6$.
+The trace-pairing bound gives
+
+$$
+\|\mathscr L(X)\|_2\leq L\|X\|_1.
+\tag{CG.213}
+$$
+
+This is the direct finite-dimensional instance of
+`TraceClass.norm_tracePairingLinearMap_apply_le` in
+`D5/S3/Quantum/Analysis/TraceClass/Pairing.lean`, followed by Euclidean
+Cauchy–Schwarz. The determinant differential, including the factor
+$1000$ in $g_0$, gives
+$\mathscr L(\mathcal B_k)=\nabla g_k(x_*)$. Thus (CG.212) implies
+$\mathscr L(\widehat J)=G\widehat\eta$.
+
+For the uncompressed averaged candidate, the exact first-differential
+identity is
+
+$$
+\begin{aligned}
+\mathscr R&:=\nabla F(x_*)+\mathscr L(\overline J),\\
+\mathscr R\cdot dx
+ &=\sum_{y=5,27}\operatorname{tr}(dA_y\,\Delta_y)
+   +\sum_i(r_i-1)d\zeta_i+\frac6{11}d\lambda,\\
+r_i&=(\operatorname{Tr}_{\rm out}\overline J)_{ii}
+     =1-(\overline G_f)_{ii}-(\overline G_o)_{ii}.
+\end{aligned}
+\tag{CG.214}
+$$
+
+Indeed differentiate $F$ and $S=I\otimes Z_d-W$ while holding
+$\overline J$ fixed. In the $dW$ pairing, invariance of
+$\overline J$ removes the sign average, and (CG.126) gives
+$\operatorname{tr}(dA_y\overline\Lambda(\rho_y))$. This proves
+(CG.214) for arbitrary complex block matrices, without assuming
+stationarity or differentiating their coefficients.
+
+The $z$ coordinate of (CG.214) is $r_0-1$, of absolute value at most
+$r_z\epsilon$ by (CG.210). Its $\lambda$ coordinate is exactly
+
+$$
+\mathscr R_\lambda=P_5-P_{27}
+ +p_{50}(\overline G_f)_{00}
+ -p_{51}(\overline G_o)_{11}-p_{52}(\overline G_o)_{22}.
+\tag{CG.215}
+$$
+
+Use (CG.209), (CG.210), and $0\leq p_{51},p_{52}\leq1$ to bound
+its absolute value by $r_\lambda\epsilon$.
+
+For the four projector coordinates, a small effect deficit controls
+the off-eigenvector part. Here is the needed algebra, including
+degenerate spectra. For either endpoint put
+$u=v_{y,*}/\|v_{y,*}\|_2$, $R=uu^\dagger$, and
+$\mu=u^\dagger\Delta_yu$. Positivity and trace at most one of
+$B_y$ and $\overline\Lambda(\rho_y)$ imply
+$-I\preceq\Delta_y\preceq I$. Let $m,M$ be its extreme eigenvalues.
+Since $(MI-\Delta_y)(\Delta_y-mI)\succeq0$, its expectation gives
+
+$$
+\|(I-R)\Delta_yu\|_2^2
+ =u^\dagger\Delta_y^2u-\mu^2
+ \leq(M-\mu)(\mu-m)
+ \leq2(M-\mu).
+\tag{CG.216}
+$$
+
+Write $\Delta_+$ for the positive part. One always has
+$M\leq\operatorname{tr}\Delta_+$, including when $M\leq0$.
+The finite half norm is the total positive mass of the ideal-minus-
+simulated direct-sum difference. For the height-$5$ effect its scalar
+failure contribution is the entire signed failure difference, and for
+height $27$ it is zero. In both cases the unused scalar contribution
+to that positive mass is nonnegative. Therefore
+
+$$
+\operatorname{tr}(\Delta_y)_+-\mu\leq e_y-P_y
+\leq\epsilon/w_y,
+\qquad
+\|(I-R)\Delta_yu\|_2\leq\sqrt{2\epsilon/w_y}.
+\tag{CG.217}
+$$
+
+For a real chart coordinate $v_i$, $i=0,1$, the normalized vector has
+derivative $(I-R)e_i/\|v\|_2$. Thus, holding $\Delta_y$ fixed,
+
+$$
+\left|\frac{\partial}{\partial v_i}
+       \operatorname{tr}(R\Delta_y)\right|
+\leq\frac{2}{\|v\|_2}\sqrt{2\epsilon/w_y}.
+\tag{CG.218}
+$$
+
+The two coordinates at each endpoint in (CG.214) carry the factor
+$w_y$, so each is bounded by
+$2\sqrt{2w_y\epsilon}/\|v_{y,*}\|_2$.
+Combining the six coordinate bounds and using $\epsilon^2\leq\epsilon$
+on $[0,1]$ yields
+
+$$
+\|\mathscr R\|_2\leq A\sqrt\epsilon.
+\tag{CG.219}
+$$
+
+Finally the credited stationarity is
+$\nabla F(x_*)+G\eta_*=0$. Subtract it from
+$\nabla F(x_*)+\mathscr L(\widehat J)$ and use (CG.211),
+(CG.213), and (CG.219):
+
+$$
+\begin{aligned}
+\sigma\|\widehat\eta-\eta_*\|_2
+ &\leq\|G(\widehat\eta-\eta_*)\|_2
+ \leq(A+La)\sqrt\epsilon,\\
+\|\widehat J-J_*\|_1
+ &\leq\sum_k|\widehat\eta_k-\eta_{k,*}|\|\mathcal B_k\|_1
+ \leq\frac b\sigma(A+La)\sqrt\epsilon.
+\end{aligned}
+\tag{CG.220}
+$$
+
+The triangle inequality with (CG.211) proves (CG.206).
+The proof uses only the finite test's necessary error bound and the
+unchanged full-output lower certificate; it imposes no restriction on
+the original simulated exact-time laws. At $\epsilon=0$ all estimates
+are valid and recover the credited averaged rigidity. $\square$
+

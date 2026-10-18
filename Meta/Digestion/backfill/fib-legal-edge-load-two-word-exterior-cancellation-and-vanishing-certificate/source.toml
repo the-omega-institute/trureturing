@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-two-word-exterior-cancellation-and-vanishing-certificate"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

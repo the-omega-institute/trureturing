@@ -1,0 +1,28 @@
+**定义 1.2（原单纯形与目标）。** 对 $s,t\ge0$，置
+
+$$
+\mathcal P(B_n)=\left\{\mu\in[0,\infty)^{B_n}:\sum_{b\in B_n}\mu_b=1\right\},
+\qquad
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+$$
+
+以及
+
+$$
+\Phi_n(\mu)=\sum_{\{b,c\}\in E_n}h(\mu_b,\mu_c).
+\tag{1.1}
+$$
+
+这里的优化域允许任意零坐标。所有合法词，包括 $0^n$，以及所有原图边都参与定义。
+
+[增长常数卷][Growth] 的引理 3.1 给出 $h$ 的连续性、凹性、一次齐次性及变分恒等式
+
+$$
+s\alpha^2+t(1-\alpha)^2-h(s,t)
+=(s+t)\left(\alpha-\frac{t}{s+t}\right)^2
+\quad(s+t>0).
+\tag{1.2}
+$$
+
+当 $s=t=0$ 时，左边恒为零。该卷定理 3.2 给出有限调和对偶、最大值存在性及精确鞍点等号；其中一般 minimax 步骤使用 [Sion][Sion] 的经典定理。
+

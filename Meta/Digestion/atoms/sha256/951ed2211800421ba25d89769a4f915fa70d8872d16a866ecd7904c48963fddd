@@ -1,0 +1,23 @@
+**定理 177.1（不同八叶词仍有相同五量）。** 连接定理168.3的两词，得
+
+$$
+rs=abbabaab,\qquad sr=baababba.
+$$
+
+二者是不同的八叶正词，却均满足
+
+$$
+G(rs)=G(sr)=(4,4,0,4,-4).
+$$
+
+因而五量不恢复完整叶词，更不恢复原树括号。
+
+证明（177.1）。直接连接 $abba$ 与 $baab$ 得 $abbabaab$，反序连接得 $baababba$；第一片叶已经不同。两段端点同为 $(2,2)$，面积均零，所以定理170.2的端点接缝行列式及 $Bq-Ar$ 都为零，矩仅相加。定理169.2遂给
+
+$$
+q_{\mathrm{tot}}=(4,4),\quad A_{\mathrm{tot}}=0,\quad
+m_{\mathrm{tot}}=\left(\frac13,-\frac13\right),
+$$
+
+换坐标得到所列五量。分别为两个词选左嵌套树，得到叶序不同的原树反例；此外同一叶词的不同括号也被定义168.2合并。例如 $\langle\langle\alpha,\alpha\rangle,\beta\rangle$ 与 $\langle\alpha,\langle\alpha,\beta\rangle\rangle$ 的叶词同为 $aab$，故五量相同，但仍是不同树。$\square$
+

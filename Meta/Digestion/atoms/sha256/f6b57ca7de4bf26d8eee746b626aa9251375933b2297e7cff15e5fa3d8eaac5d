@@ -1,0 +1,69 @@
+**Definition 50.5 (the orthonormal null frame and exact endpoint).** Put
+
+$$
+\begin{gathered}
+a_0=1-\chi,\qquad q_*=q(t_*),\qquad B_*=a_0t_*^2+\chi,\\
+z_*={a_0q_*t_*-\sqrt{B_*-a_0\chi q_*^2}\over B_*},\qquad
+b_*=q_*-t_*z_*,\\
+u_*={ (1,b_*,z_*)^T\over\sqrt{1+b_*^2+z_*^2}},\qquad
+w_*=v_*\times u_*.
+\end{gathered}
+\tag{JR.107}
+$$
+
+**Proof.** The defining quadratic identity for $`z_*`$ gives $`u_*^TQu_*=0`$;
+orthogonality to $`v_*`$ is immediate, and hence $`w_*`$ is orthogonal to
+both and is also $Q$-null because the compression of $Q$ to
+$`v_*^\perp`$ is a nonzero traceless $2\times2$ form. Thus
+$`(v_*,u_*,w_*)`$ is an orthonormal real $Q$-null frame. Evaluation on
+$\mathcal B_{\rm CG}$ with (JR.99) gives
+
+$$
+-\frac1{10}<z_*<0,\qquad {49\over50}<b_*<{27\over25}.
+\tag{JR.108}
+$$
+
+The normalized $01$ products have signs
+
+$$
+(v_*)_0(v_*)_1<0,\qquad (u_*)_0(u_*)_1>0,\qquad
+(w_*)_0(w_*)_1<0.
+\tag{JR.109}
+$$
+
+Define
+
+$$
+\bar s=2s_0(u_*)_0(u_*)_1
+=s_0\left(|(v_*)_0(v_*)_1|+(u_*)_0(u_*)_1+|(w_*)_0(w_*)_1|\right).
+\tag{JR.110}
+$$
+
+The tuple
+
+$$
+Z_{+,+}=Lu_*u_*^TL,\quad Z_{-,+}=Lw_*w_*^TL,\quad
+Z_{-,-}=Lv_*v_*^TL,\quad Z_{+,-}=0
+\tag{JR.111}
+$$
+
+attains (JR.106), has contrast $\bar s$, and has $`X_-=P_*`$.
+Moreover,
+
+$$
+\frac{\bar s}{s_0}={2b_*\over1+b_*^2+z_*^2}
+=1-{(b_*-1)^2+z_*^2\over1+b_*^2+z_*^2}
+>1-{41\over4901}>{99\over100}.
+\tag{JR.112}
+$$
+
+Since $`t_*<1`$, $`q_*<1`$; equality in the two-coordinate
+Cauchy--Schwarz bound would require $`|(v_*)_0|=|(v_*)_1|`$, which is
+false. Hence $\bar s<s_0$. Evaluation on $\mathcal B_{\rm CG}$ with
+(JR.99) gives the illustrations
+
+$$
+0.993780002195346659<\frac{\bar s}{s_0}<0.993780002195346879,\qquad
+0.103298204128059321<T_{\rm flat}-\mu_*<0.103298204128059323.
+$$
+

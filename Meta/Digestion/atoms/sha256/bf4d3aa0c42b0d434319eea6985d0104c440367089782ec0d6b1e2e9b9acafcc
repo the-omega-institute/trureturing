@@ -1,0 +1,41 @@
+**Lemma 63.2 (joint occupation bounds used by the escape certificate).** Put $c_0=b_0=r_0=A_0=0$, and for $m\ge1$ define
+
+$$
+\begin{aligned}
+c_m&=\min\left\{\frac{m(m-1)}6,\frac{m}{2\lambda}-\frac m3\right\},
+&b_m&=am\lambda-\nu c_m,\\
+r_m&=\min\left\{\frac{m(m-1)}4,\frac{m}{2\lambda}-\frac m3\right\}.
+\end{aligned}
+\tag{63.2}
+$$
+
+Order the addresses by increasing depth, breaking ties by left/right lexicographic order; let $S_m$ be the first $m$ addresses and set
+
+$$
+A_m=\sum_{p\in S_m}\phi(p),\qquad
+P_m=\sum_{\{p,q\}\subset S_m}G^{\rm c}(p,q).
+\tag{63.3}
+$$
+
+In particular $A_m=h+(m-2^h+1)2^{-h}$ when $2^h\le m+1<2^{h+1}$. For every actual $m$-site occupation $Y$,
+
+$$
+\sum_{\{p,q\}\subset Y}G_0(p,q)\le c_m,
+\quad
+\sum_{\{p,q\}\subset Y}G^{\rm c}(p,q)\le r_m,
+\quad
+\sum_{p\in Y}\phi(p)\le A_m,
+\quad
+m_m\ge am\lambda-gA_m-\nu r_m.
+\tag{63.4}
+$$
+
+Proof. Off the diagonal, $G_0\le1/3$ and $G^{\rm c}\le1/2$: in the latter case $d(p,q)\ge1$ and distinct addresses satisfy $|p|+|q|\ge1$. These give the first alternatives in (63.2). For $z=\mathbf1_Y$, the already supplied inverse bound gives $z^*G^{\rm c}z\le m/\lambda$, while $G^{\rm c}(p,p)\ge2/3$. Subtracting the diagonal and dividing by two gives the second alternative for $r_m$. Also
+
+$$
+z^*G_0z=z^*G^{\rm c}z-\tfrac13\left(\sum_{p\in Y}\phi(p)\right)^2\le m/\lambda,
+\qquad G_0(p,p)=2/3,
+$$
+
+giving the second alternative for $c_m$. No new positivity assumption on a comparison kernel is needed. The depth ordering maximizes the sum of the $m$ largest field values. Combining these pointwise bounds with $K_m\ge m\lambda I$ proves the operator lower bound. These are consumed consequences of the same-L kernel and occupation bound of §62, rather than an independent stability claim. $\square$
+

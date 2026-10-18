@@ -1,0 +1,58 @@
+**Lemma 9.1 (Six distinct Read rows in all incidence cases).** The
+actual pattern of Proposition 8.1 requires at least six distinct
+installed Read rows, allowing arbitrary sharing across branches and
+execution depths.
+
+Proof. Name the actual root $r$, its second Read successors
+$r_0,r_1$, and its required third Read at $00$ by $r_{00}$.
+Their literal edges are $E,F,H,G$ respectively. Select two further
+mandatory third-read occurrences according to the target case.
+Their pairwise state distinctions are proved next, rather than
+assumed from these names.
+
+If $T\in E$, select $r_{10}$ at the join $P$ of $E,H$ and
+$r_{11}$ at a fresh extension $W$ of $E$ outside $E\cup H$.
+The edge $P$ meets $H$ and $W$ adds a vertex outside $H$,
+so they differ. Both meet $E$, whereas $G$ is disjoint from $E$.
+Thus $r_{00},r_{10},r_{11}$ are pairwise distinct by their
+literal instructions. If $r_0=r_1$, their fixed zero successors
+would identify $r_{00}$ with $r_{10}$, impossible because
+$G\ne P$. Therefore $r_0\ne r_1$, even if $F,H$ share a
+literal address.
+
+If $T\in F\cap H$, select $r_{01}$ at the join $P$ of
+$E,F$ and $r_{11}$ at a fresh extension $W$ of $H$ outside
+$E\cup H$. The edge $P$ meets $E$, while $W$ and $G$
+are disjoint from $E$. Hence $P\ne W$ and $P\ne G$.
+The only possible equality among third literals is $G=W$.
+Even then $r_{00}\ne r_{11}$: their zero replies are both
+positive, and their fixed zero successors must Halt respectively
+with $h_\beta(\sigma)$ and a phase-$\alpha$ label. One
+fixed successor row cannot have both labels. Thus these are three
+distinct actual rows even with equal literals. If $r_0=r_1$,
+their literal instructions require $F=H$, and their fixed one
+successors would identify $r_{01}$ with $r_{11}$, contradicting
+$P\ne W$. This again proves $r_0\ne r_1$.
+
+If $T\in F\setminus H$, select $r_{01}$ at the join $P$
+of $E,F$ and $r_{10}$ at the join $W$ of $T$ to $H$.
+The edge $W$ is disjoint from $E$ and meets $F$ at $T$.
+In contrast $P$ meets $E$, and $G$ is disjoint from both
+$E,F$. Thus the three third literals are pairwise different.
+Here $F$ contains $T$ and $H$ does not, so their literal
+instructions themselves give $r_0\ne r_1$.
+
+To finish, exclude every identification across depths. In each
+case $E$ differs from $F,H$ because those edges are disjoint
+from it, so $r$ differs from both second rows. Every selected
+third row has both replies positive, and both fixed successors
+Halt. Each second row has at least one fixed Read successor:
+use $r_{00}$ for $r_0$, and a mandatory third read after
+$10$ or $11$ for $r_1$. A selected third row therefore
+cannot equal either second row: on that same reply its fixed
+successor would have to be both a Read and a Halt. It cannot
+equal $r$, whose two successors Read. We have one root, two
+distinct second rows and three distinct third rows, with all
+cross-depth identifications excluded. Extra optional rows and
+arbitrary sharing elsewhere cannot reduce these six. $\square$
+

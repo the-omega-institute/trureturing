@@ -1,0 +1,5 @@
+source_id = "fib-three-read-installed-state-risk-frontier"
+path = "docs/develop/theory/FIB_THREE_READ_INSTALLED_STATE_RISK_FRONTIER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

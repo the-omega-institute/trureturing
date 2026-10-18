@@ -1,0 +1,124 @@
+**Theorem 75.1 (simultaneous whole-output constructor).** Every finite
+construction in §§70–74, except the explicitly different free completion
+in Proposition 68.2, has the following full five-mode completion.
+Fix isometries $W:\mathbb C^2\to V^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. Use one extra acquisition encoder
+$W^\dagger$ into a jointly counted dimension-two fibre and its live
+isometric decoder $EJ_0$, with rate zero; a fair report may be appended
+and retained. Thus a complementary qubit is transmitted coherently.
+For every complex $A\in M_5$ and Borel $B\subseteq[0,1]$, forgetting
+acquisition labels gives
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E\left[\Lambda_*(E^\dagger AE)
+ +J_0W^\dagger AWJ_0^\dagger\right]E^\dagger,\\
+\Phi_\ell^f(A)(B)&=w_\ell\left(\int_Bg(t)dt\right)
+ \operatorname{tr}(EME^\dagger A)P_f,
+ \qquad\ell\in\{0,1,2,3,13\}.
+\end{aligned}
+\tag{FA.34}
+$$
+
+These identities hold after identity amplification by every passive
+reference. In particular all twelve original individual errors are
+preserved, with
+$e_5=e_{27}=E_*$ and $e_{16}<71/484<37/250<E_*$ as in CG.143.
+The maximum is $E_*$. The same construction has original contrast
+inequality and sharp worst-history jointly counted cost, simultaneously
+with every labelled Borel identity. The complement is free to choose
+in the original class and is openly different from the fixed
+certain-failure completion CA.10/CG.142.
+
+**Proof.** On a low branch FA.11 gives encoder effect $K^\dagger K+N$.
+Its full-fibre decoder is TP by FA.12–.13. A high branch has encoder
+effect $H^\dagger H$ and TP live isometry on its whole three-dimensional
+fibre. The low/high live coefficient Grams sum to $I_3$ in every
+construction: $L_0+\operatorname{diag}(1-\delta,0,0)$ in the weak
+regime, and $\operatorname{diag}(u^\dagger,v^\dagger,1)+
+\operatorname{diag}(1-u^\dagger,1-v^\dagger,0)$ in the strong regime.
+Consequently the sum of live conjugations is $\Lambda_*$ on every
+complex matrix, by bilinearity of the coefficient Gram identity.
+Its effect plus $M$ is exactly $I_3$ at the conditional root (CG.141).
+The attached effects sum to $M$. After precomposition by $E^\dagger$
+and addition of $W^\dagger$, the total encoder effect is
+$E I_3 E^\dagger+WW^\dagger=I_5$.
+Each positive encoder effect is bounded by this sum, proving branchwise
+TNI rather than imposing it separately. All ranks/dimensions are whole
+payload dimensions. Every other input-bearing dilation system is
+permanently inaccessible before the acquisition cut.
+
+Each low branch, after its chronological decoder, has supported live
+matrix $K$ and separate failure map
+$w_\ell g(t)\operatorname{tr}(N\,\cdot)P_f$.
+Summing these maps and the high/complement live maps gives FA.34.
+Cross operators between $V$ and $V^\perp$ have zero image in this
+completion because the actual acquisition distinguishes those branches;
+within the complementary block all complex qubit coherences are kept.
+The equality is a finite Kraus identity on complex matrix units, not
+merely on real states or twelve selected inputs. Its passive-reference
+live map is explicitly
+
+$$
+\sum_{K=D,T,S}(EK E^\dagger\otimes I_R)X(EK^\dagger E^\dagger\otimes I_R)
+ +(EJ_0W^\dagger\otimes I_R)X(WJ_0^\dagger E^\dagger\otimes I_R).
+$$
+
+For each failure label and every Borel $B$, its reference map is
+
+$$
+w_\ell\left(\int_Bg(t)dt\right)P_f\otimes
+ \operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+$$
+
+This is the conditional partial trace; using an unconditional reference
+marginal would be a different map. The label $13$ is original index
+$4$ in CG's five-entry weight vector; it is not a sixth label.
+The maps for $0$ and $13$ are zero, separately, on every Borel set.
+The other three labels remain separate; no singular component or extra
+sector is present. Common fixed metadata are carried in their original
+state.
+
+All original inputs are in $V$, so FA.34 equals the CG.135 simulator
+on each. Explicitly their four equal errors at height $y$ are
+
+$$
+e_y=\frac12\left[\|\Lambda_*(\rho_y)-B_y\|_1
+ +\sum_\ell w_\ell\int_0^1
+ |\operatorname{tr}(M\rho_y)g(t)-f_y(t)|dt\right].
+$$
+
+Covariance under $U_{e,n}$ gives the same value for all four signs.
+Here $B_y$ is the ideal live matrix CG.111, not the scalar resource
+coefficient JR.23. This is exactly the original full error expression,
+so CG Theorem 15.2 gives the unequal height values stated above.
+Neither failure probability, $\gamma_f$, nor a TV deficit is added
+to these errors. The ideal density remains $f_y$, not $g$.
+
+Only the high branches have dimension at least three; their effect is
+$(1-u_s)D^\dagger D+(1-v_s)T^\dagger T$. Thus every original history
+at height $y$ has high probability
+$P_y(s)=(1-u_s)A_y+(1-v_s)B_y$, independent of signs.
+It is maximized at $27$ and is $\mathsf C(s)$ by JR §§34–40.
+The weak constructions have $u_s=\delta,v_s=1$; the strong construction
+has the dagger parameters. The complement, although coherent and
+counted as two, has probability zero on each original history.
+The report identity is JR.29: each low branch contributes
+$r xz$, no failure effect contributes a $01$ entry, and the high
+contribution is as specified in the strong or weak construction.
+It proves the original contrast inequality, with no constraint on
+unrequested effect entries. Appending a common report coin while
+retaining its parent label preserves TV, costs and activities, since
+its probabilities multiply both height laws by the same kernel.
+
+FA.13 generates first failures at actual times $6+t$ with the displayed
+conditional maps. Only survivors receive terminal isometry; positive
+survival is never converted into forced failure. The stopped carrier
+has no later positive-carrier action. In Proposition 68.2 replace only
+the high/complement part by its specified dimension-five coherent
+encoder and decoder; its effect normalization, complex map and time
+laws were computed there. On all supported inputs the same CG.135
+maps remain, so all twelve errors, reports and costs just proved also
+hold for that endpoint pair. These constructors prove conditional
+mathematical attainments only. $\square$
+

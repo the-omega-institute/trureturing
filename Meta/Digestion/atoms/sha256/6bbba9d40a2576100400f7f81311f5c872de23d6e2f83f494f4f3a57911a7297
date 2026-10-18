@@ -1,0 +1,48 @@
+## 4. Exact cancellation on the live synthetic return path
+
+The following finite-difference fact is classical. Its role is to construct this family's blind direction, not to claim a new general moment or factorization theorem.
+
+**Mathematical citation 4.1 (classical forward differences, used in Theorem 4.2).** For a polynomial $p$ of degree below $s$,
+
+$$
+\sum_{i=0}^s b_i p(v_i)=0.
+\tag{4.1}
+$$
+
+If $p$ has degree exactly $s$ and leading coefficient $c_p$, that sum is $c_p s!\eta^s$.
+
+The intermediate identity follows directly: the sum is the $s$-fold forward difference at $17/50$ with step $\eta$. One forward difference lowers a nonconstant polynomial's degree by one and multiplies its leading coefficient by its degree times $\eta$. Repeating annihilates every degree below $s$ and gives $s!\eta^s$ on a monic degree-$s$ polynomial. Linearity proves the identity used in Theorem 4.2; this is a classical ingredient, not a new general moment theorem.
+
+Write $g_0,L_0$ for the zero-parameter table. For a polynomial $p$, denote its sampled column by $p[v]=(p(v_i))_i$. Both $A=C$ and the unperturbed $B_0=C$ map a sampled polynomial to the sampled polynomial
+
+$$
+p(t)\longmapsto\frac12p(t)+\frac1{2N}\sum_i p(v_i).
+\tag{4.2}
+$$
+
+In this expression the finite sum is a constant in $t$. Consequently $L_0$ maps a nonconstant degree-$a$ polynomial to a degree-$(a+2)$ polynomial with leading coefficient multiplied by $-1/4$: apply $A$, multiply by $t$, apply $B_0$, and multiply by $1-t$.
+
+Moreover,
+
+$$
+g_0(t)=(1-t)\left[\frac12(1-t)+\frac12\overline U\right],
+\qquad
+\overline U=\frac1N\sum_i(1-v_i).
+\tag{4.3}
+$$
+
+It has degree two and leading coefficient $1/2$. Thus
+
+$$
+\begin{array}{c|c|c}
+\text{sampled column}&\text{polynomial degree}&\text{leading coefficient}\\
+\hline
+L_0^j g_0&2j+2&\frac12(-\frac14)^j\\
+L_0^j u&2j+1&(-\frac14)^j\\
+L_0^j U&2j+1&-(-\frac14)^j.
+\end{array}
+\tag{4.4}
+$$
+
+The identity for $U$ includes $j=0$; $U(t)=1-t$ is nonconstant. The degrees needed before the first separation are at most $s$. A polynomial representative above that degree is still usable, but no uniqueness of such a representative on $N$ nodes is asserted.
+

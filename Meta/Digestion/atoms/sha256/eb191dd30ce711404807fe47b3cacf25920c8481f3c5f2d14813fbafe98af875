@@ -1,0 +1,26 @@
+**定理 3.3（变响应整族与前一层的恢复）。** The following are sufficient
+conditions on known families; neither condition is imposed on an
+unrestricted fiber.
+
+1. Let $K\subseteq\mathcal F(H_4(Y))$, with $j(W)$ constant on all $K$.
+   If every actual fifth-$M$ response fiber of $K$ has at most two
+   distinct targets, one strategy recovers all of $K$ in at most three
+   further readings, even when $K$ is infinite and $m(W)$ varies.
+2. Let $K\subseteq\mathcal F(H_3)$. If every actual fourth-$M$ response
+   fiber of $K$ has at most three distinct targets, one strategy
+   recovers all of $K$ in at most four further readings.
+
+Proof. For the first assertion, execute fifth $M$ and read $m$. Stop
+on a singleton. Every remaining pair shares the stipulated $j$, so
+Theorem 2.2 excludes $L_2$ after this actual $M$ reading. Choose the
+first separating suffix from the four ordered two-atom words as in
+Theorem 3.2 and execute it with immediate readings. This rule is defined
+from each entire actual fiber, so the same policy serves every target,
+regardless of the number of possible $m$ values.
+
+For the second assertion execute fourth $M$ and read $Y$. The whole
+retained fiber lies in that literal $H_4(Y)$ and has at most three
+targets. Apply Theorem 3.2 to that set. The reading at clock four is
+already acquired and is not repeated. The budgets are respectively
+$5+3=8$ and $4+1+3=8$; the last possible reading is at clock seven. ∎
+

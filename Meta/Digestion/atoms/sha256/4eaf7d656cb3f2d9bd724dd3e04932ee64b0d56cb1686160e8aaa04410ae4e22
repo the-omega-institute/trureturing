@@ -1,0 +1,51 @@
+**Lemma 75.5 (full physical compactness and the free lower form bound).** Suppose $\varepsilon_j\downarrow0$ and $u_j\in\mathcal Q_{{\rm mix},\varepsilon_j}$ satisfy
+
+$$
+\sup_j\bigl(q_{0,\varepsilon_j}[u_j]+\|u_j\|^2\bigr)<\infty.
+\tag{75.17}
+$$
+
+There is a subsequence and $F\in\mathcal Q^{\rm fr}$ with
+
+$$
+\|u_j-J_{\varepsilon_j,2}F\|\longrightarrow0,
+\qquad q^{\rm fr}[F]\le\liminf_j q_{0,\varepsilon_j}[u_j].
+\tag{75.18}
+$$
+
+The conclusion concerns the entire physical norm, including the proper-range complement.
+
+**Proof.** Reuse73.2, including the negative resolvent convergence established in its proof:
+
+$$
+\eta_\varepsilon=
+\big\|(B_\varepsilon+1)^{-1}-J(B+1)^{-1}J^*\big\|\longrightarrow0.
+\tag{75.19}
+$$
+
+The complete free $B$ has compact resolvent by73.4; equivalently its finite atomic, interval and rectangle form embedding is compact. Let $P_m$ be finite spectral projections exhausting its eigenbasis, and let $\Lambda_m\to\infty$ bound the omitted eigenvalues from below. Set $Q_{\varepsilon,m}=I-JP_mJ^*$. For $v\in\mathcal Q_{{\rm mix},\varepsilon}$ write $v=(B_\varepsilon+1)^{-1/2}w$, with $\|w\|^2=q_{0,\varepsilon}[v]+\|v\|^2$. Compression of(75.19) gives
+
+$$
+\begin{aligned}
+\|Q_{\varepsilon,m}v\|^2
+&\le \big\|Q_{\varepsilon,m}(B_\varepsilon+1)^{-1}
+                         Q_{\varepsilon,m}\big\|\,\|w\|^2\\
+&\le \bigl(\eta_\varepsilon+(1+\Lambda_m)^{-1}\bigr)
+                       \bigl(q_{0,\varepsilon}[v]+\|v\|^2\bigr).
+\end{aligned}
+\tag{75.20}
+$$
+
+For each fixed $m$, the bounded vectors $P_mJ^*u_j$ have convergent subsequences. Choose one subsequence for all $m$. The tail bound(75.20) makes their limits compatible and gives a vector $F\in\mathcal H^{\rm fr}$ for which $u_j-JF\to0$. In particular $J^*u_j\to F$ and $\|u_j\|\to\|F\|$. This argument retains chamber fluctuations, transverse functions and ground half-chamber data, rather than projecting them out of the hypothesis.
+
+For every $h\in\mathcal H^{\rm fr}$ the positive form inequality is
+
+$$
+q_{0,\varepsilon}[u]+\|u\|^2
+\ge2\operatorname{Re}\langle u,Jh\rangle
+ -\langle Jh,(B_\varepsilon+1)^{-1}Jh\rangle.
+\tag{75.21}
+$$
+
+It follows by completing the square against $(B_\varepsilon+1)^{-1}Jh$ in the form norm. Pass to the limit using(75.19). The supremum over $h$ on the right equals $q^{\rm fr}[F]+\|F\|^2$, with value $+\infty$ outside $\mathcal Q^{\rm fr}$. To see the equality directly, expand in the eigenbasis of $B$ and maximize each finite sum $2\operatorname{Re}\sum F_j\overline{h_j}-\sum|h_j|^2/(1+\lambda_j)$; its supremum is $\sum(1+\lambda_j)|F_j|^2$. Subtract the converging squared norms to obtain(75.18). Selecting a subsequence attaining the energy lower limit, if necessary, proves the stated inequality. At no step are the finite-thickness averages $J^*u_j$ assumed to satisfy the global effective matching conditions. $\square$
+

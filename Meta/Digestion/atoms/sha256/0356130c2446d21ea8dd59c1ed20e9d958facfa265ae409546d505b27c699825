@@ -1,0 +1,25 @@
+**Definition 2.2 (one fixed actual scaffold).** For $h\ge0$ put
+$k=2^h$. Define $T_0(x)=x$ and
+
+$$
+T_{h+1}(x_1,\ldots,x_{2k})
+=\langle T_h(x_1,\ldots,x_k),T_h(x_{k+1},\ldots,x_{2k})\rangle.
+\tag{JPL.13}
+$$
+
+Its $k$ public frontier addresses $a_1,\ldots,a_k$ all have length
+$h$. Its modules are actual present occurrences. Define
+
+$$
+U_h=T_h(K^k)\subseteq S_{h+3},\qquad
+L_c=T_h\left(\prod_{j=1}^k(K\setminus\{u_{c_j}\})\right)
+\quad(c\in\{0,1,2,3\}^k).
+\tag{JPL.14}
+$$
+
+The scaffold and its word-prefix transport are the suppliers of
+[FMR, §6][FMR] and [JTC, Theorem 4.2][JTC]. In particular, for any
+$\nu$ on $S_d$, its product lift $\nu^\uparrow$ on $S_{d+r}$,
+supported on $T_r(S_d^{2^r})$, has
+$\beta_{d+r}(\nu^\uparrow)=\beta_d(\nu)^{2^r}$.
+

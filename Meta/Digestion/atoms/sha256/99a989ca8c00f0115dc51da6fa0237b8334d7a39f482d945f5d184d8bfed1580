@@ -1,0 +1,12 @@
+**Definition 4.2 (variables and equation order).** Let $O=(0,1,2,3,5,6)$. Use the following square systems, with moments in rows $0,\ldots,7$ and all contact value rows before all contact derivative rows.
+
+| Section | Ordered variables | Ordered equations |
+| --- | --- | --- |
+| event $\mathsf e$ | $(x_0,\ldots,x_6,p_0,p_1,p_2,p_3,p_5,p_6,Y_0,\ldots,Y_7,\lambda)$ | $\sum_{i\in O}p_i\Gamma_i-B(1000)$; $P_i(x_i)$ for $i=0,\ldots,6$; $P'_i(x_i)$ for $i=0,\ldots,6$ |
+| seven $\mathsf7$ | $(x_0,\ldots,x_6,p_0,\ldots,p_6,Y_0,\ldots,Y_7)$ | $\sum_{i=0}^6p_i\Gamma_i-B(1000)$; all seven $P_i(x_i)$; all seven $P'_i(x_i)$ |
+| six $\mathsf6$ | $((x_i)_{i\in O},(p_i)_{i\in O},Y_0,\ldots,Y_7,x_4)$ | $\sum_{i\in O}p_i\Gamma_i-B(1000)$; $P_i(x_i)$ for $i\in O$; $P'_i(x_i)$ for $i\in O$; $P'_4(x_4)$ |
+
+The event has 22 variables and $p_4=0$ identically, omitted before any inverse. Seven has 22 variables and signed $p_4$. Six has 21 variables, and $P_4(x_4)$ is not one of its equations. On the two branches $\lambda$ ranges over the entire closed interval $I$.
+
+The exact event center $c^{\mathsf e}$ is listed in Appendix 13. Seven's center is obtained by inserting $p_4=0$ and removing the final multiplier. Six's center is the corresponding $O$-sublist followed by $Y$ and then $x_4$. Event radii are $10^{-10}$ on angles and weights, $10^{-7}$ on $Y$ and $10^{-6}$ on its multiplier. Branch radii are $10^{-8}$ on every angle and weight, including unused $x_4$, and $10^{-4}$ on $Y$. The fixed branch multiplier center is exactly $190.449004333$ and its halfwidth is $10^{-6}$. These are rational boxes, not floating-point prescriptions.
+

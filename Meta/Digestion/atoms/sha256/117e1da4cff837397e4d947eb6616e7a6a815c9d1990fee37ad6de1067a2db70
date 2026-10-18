@@ -1,0 +1,25 @@
+**定义 1.3（图与占位计数）。** 令 $A$ 为 $B_n$ 上 Hamming 距离一的邻接矩阵，顶点度数记为 $d_b$，无向边数记为 $e_n$。置
+
+$$
+\begin{aligned}
+ e_n&=\sum_{b\in B_n}|b|
+ =\frac{nF_{n+1}+2(n+1)F_n}{5},\\
+ s_n&=\sum_{b\in B_n}\binom{|b|}{2},\qquad
+ t_n=\sum_{b\in B_n}\binom{|b|}{3},\\
+ C_n&=\frac{e_n}{2M},\qquad Q_n=\frac{e_n-2s_n}{8M},\\
+ R_n&=\frac{e_n-2s_n+2t_n}{16M}+\frac{e_{n-2}}{128M},\\
+ \gamma_n&=\frac{e_n-F_n}{256M}.
+\end{aligned}
+\tag{1.1}
+$$
+
+这里 $|b|$ 是占位数。$e_n,s_n,C_n,Q_n$ 的公式为既有供应。辅助计数约定 $B_0$ 包含空词，且 $e_0=s_0=t_0=0$。新增系数 $R_n$ 中不再含待求的优化量。特别地，$t_n$ 可由精确递推
+
+$$
+ t_0=t_1=0,\qquad
+ t_n=t_{n-1}+t_{n-2}+s_{n-2}\quad(n\ge2),
+\tag{1.2}
+$$
+
+计算，也可用 $t_n=\sum_k\binom{k}{3}\binom{n-k+1}{k}$。它计数三维立方体面，不增加来源标签。
+

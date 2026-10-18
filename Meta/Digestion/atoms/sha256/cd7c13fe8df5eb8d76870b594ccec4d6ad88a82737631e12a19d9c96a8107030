@@ -1,0 +1,112 @@
+**Theorem 11.3 (unique clamped root and global limiting value).**
+$\phi_\varpi'$ is strictly increasing on its interval and is negative
+at its left endpoint. Define $x_*(\varpi)$ as $x_+(\varpi)$ when
+$\phi_\varpi'(x_+)\le0$, and otherwise as the unique zero of
+(JS.50) in $(x_-,x_+)$. Set
+
+$$
+\lambda_*(\varpi)=\mathcal K(x_*(\varpi),y_\varpi(x_*(\varpi))).
+\tag{JS.51}
+$$
+
+This function is continuous and strictly increasing, with continuous
+endpoint values $\lambda_*(0)=C_{\rm end}$ and
+$\lambda_*(\gamma_f)=C_{\rm sat}$. Throughout the interval,
+
+$$
+\Phi(\lambda_*(\varpi))=\varpi,\qquad
+\mathcal R(\lambda_*(\varpi))=B_0+\varpi,
+\tag{JS.52}
+$$
+
+where $\mathcal R$ is the original prescribed-product limit in
+Theorem 7.1, with the critical endpoint supplied by Theorem 9.1.
+Thus every strict-interior limiting budget has a unique
+$\lambda_*(\varpi)=\lambda$ selection, followed by one strictly
+monotone clamped root. There is no remaining measure, instrument or
+SDP optimization in this specification.
+
+Proof. TC Theorem 3.1 supplies one positive line in every interior
+optimizer. Write its whitened effect as
+
+$$
+X=\begin{pmatrix}x&-\sqrt{xy}\\-\sqrt{xy}&y\end{pmatrix},
+\quad m=x+y\le1,\quad p=y/m>p_z.
+\tag{JS.53}
+$$
+
+Its positive contribution is
+$P_+(x,y)=-d_fx+2b_{\rm off}\sqrt{xy}=mg_+(p)$.
+The complement has trace $2-m$ and second diagonal proportion $q$.
+Strict Jensen for $J$ bounds its cost below by $(2-m)J(q)$.
+The flat two-sign complement of §12 realizes this bound; because
+$q<1/2$ both its expectations are strictly negative. Thus
+$\mathcal K$ is the exact cost for this positive effect.
+
+Coordinates $p>p_s$ can be excluded at fixed positive contribution.
+At fixed $m$, decreasing $p$ to $p_s$ raises $g_+$ and lowers cost,
+since $\partial_p\mathcal K=m[J'(p)-J'(q)]>0$.
+Then decrease $m$ to restore $mg_+=\varpi$. This lowers cost too,
+since $\partial_m\mathcal K=D_J(p,q)>0$. Hence an optimum may
+be sought with $p_z<p\le p_s$. The equation $P_+=\varpi$ gives
+$y=y_\varpi(x)$; $m\le1$ and $p\le p_s$ give exactly (JS.49)'s
+interval. In particular $0<x<y<1$ there.
+
+Each perspective term in $\mathcal K$ has PSD Hessian. Their null
+directions are $(x,y)$ and $(1-x,1-y)$, which differ when $x<y$.
+Therefore $\nabla^2\mathcal K\succ0$ on this region. Direct
+differentiation gives
+$\mathcal K_y=D_J+(1-p)\Delta_J>0$ and
+$y_\varpi''=\varpi^2/(2b_{\rm off}^2x^3)>0$. Hence
+
+$$
+\phi_\varpi''=(1,y_\varpi')\nabla^2\mathcal K(1,y_\varpi')^T
+ +\mathcal K_y y_\varpi''>0.
+\tag{JS.54}
+$$
+
+At $x_-$, $p=p_s$ and $y_\varpi'=-1$, so
+$\phi_\varpi'=-\Delta_J<0$. This proves the selected-root rule.
+
+It also supplies a global certificate, rather than only stationarity.
+At an interior root take $\eta=P_{+,y}/\mathcal K_y>0$;
+the constrained derivative gives $\nabla P_+=\eta\nabla\mathcal K$.
+At the triangular edge take
+
+$$
+\eta=g_+'(p)/C'(p)>0,\qquad
+\chi=g_+(p)-\eta D_J(p,1-p)\ge0.
+\tag{JS.55}
+$$
+
+The last sign is the selected edge derivative sign, as proved in §12.
+Here $\nabla P_+-\eta\nabla\mathcal K=\chi(1,1)$.
+Concavity of $P_+$ and convexity of $\mathcal K$ therefore give,
+over the whole nonnegative triangle $x+y\le1$,
+
+$$
+P_+-\eta\mathcal K
+\le P_{+,*}-\eta\mathcal K_*+\chi(x+y-1)
+\le P_{+,*}-\eta\mathcal K_*.
+\tag{JS.56}
+$$
+
+For an interior root use $\chi=0$. In particular no positive effect
+of cost at most $\mathcal K_*$ improves $\varpi$. The exact complement
+attains this bound. Together with TC's whole-class structure this
+proves (JS.52), not merely optimality within a proposed family.
+
+To see strict increase, scale the positive effect at $\varpi_2$ by
+$\varpi_1/\varpi_2$ for $0<\varpi_1<\varpi_2$. Its coordinate
+$p$ stays fixed, its contribution becomes $\varpi_1$, and its cost
+strictly decreases by $\partial_m\mathcal K=D_J>0$. The minimum
+cost at $\varpi_1$ is no larger than that strictly smaller cost.
+Continuous dependence of a unique minimum on its compact interval
+gives continuity in the open range. As $\varpi\downarrow0$, scaling
+the spectral line to vanishing mass gives cost tending to
+$2J(1/2)=C_{\rm end}$; the opposite bound is Lemma 3.1. As
+$\varpi\uparrow\gamma_f$, the spectral bound forces $m\to1$ and
+$p\to p_s$, giving $C_{\rm sat}$. These prove both endpoint
+extensions and coverage. The spectral and critical values themselves
+are the credited §§8–9 values. $\square$
+

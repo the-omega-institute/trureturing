@@ -1,0 +1,23 @@
+**Convention 1.1 (the original source).** Fix a probability prior supported
+exactly on $\{1,2,3\}$, with all three masses positive. The parameters are
+$(m,d,\ell_{\rm src},n)=(2,1,2,4)$ and the source rates are
+$r_1=a=1/3$, $r_2=b=2/5$, $r_3=3/8$. One $K$ is drawn before the first
+paid Read. Conditional on this same $K$, all seed and payload letters are
+independent with alpha probability $r_K$. Equal seed pairs remain two paid
+rejections and both unequal accepted seeds remain. At p, alpha completes
+marker 0 and beta suspends; at suspension, alpha returns to p and beta
+completes marker 1. The third record is written before its latch in that
+same update. Fourth completion enables only its matching original Stop.
+Pending and delivered terminals permit no Read.
+
+The original control $C_0$ retains the parser, both seeds, selectors, marker
+words and prefixes, bare and held $B,Q^+,Z$ fields, write/latch flags,
+permissions, completion and delivery. All positive finite paid rejection,
+partial-parse and return histories remain. The current-record renderer $I_c$
+retains every future letter and inserts its original operation block. Its
+inverse reads the letters; it preserves complete-law TV and deletion of
+the next operation with its block, including infinite noncompletion.
+Initialization is source-independent and synthesis uses the same acquired
+update kernels. These are the supplied interfaces [PAIR, §11.1; PAID,
+Definitions 1.1–2.1 and Lemma 2.1.1].
+

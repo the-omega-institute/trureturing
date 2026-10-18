@@ -1,0 +1,17 @@
+**Corollary 5.3 (the next start-label constraint).** For $n=8$ and
+$k=4$ or $k=5$, if $j$ is the start label, then
+
+$$
+\sum_{i\ne j}m_i\ge16.
+$$
+
+A hypothetical graph with $m=17$ must have exactly one installed
+state labelled $j$.
+
+Proof. At $k=4$ answer the first query zero; at $k=5$ answer it
+one. Either is an actual live prefix leaving seven coordinates and
+residual threshold four. Apply Corollary 5.2. The start itself gives
+$m_j\ge1$, and subtracting the inequality from $m=17$ gives
+$m_j\le1$. This does not assert existence or impossibility of such
+a seventeen-state graph. $\square$
+

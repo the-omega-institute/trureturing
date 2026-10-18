@@ -1,0 +1,16 @@
+**Definition 2.3 (joint reply table).** For any finite literal menu
+$\mathcal A$, the table is
+
+$$
+\{(h,\tau(h),(r_{Y_h}(p))_{p\in\mathcal A}):
+                      h\in\mathscr H_\eta\}.
+\tag{LQF.7}
+$$
+
+Each row comes from the one $X_a$ in that history. Separate sets of
+possible slot replies or possible lag values cannot replace this joint
+table. A function of lag alone need not describe even one query when
+two compatible sources have the same lag and different hidden ages.
+The table is common mathematical control data; only paid replies select
+the actual row during execution.
+

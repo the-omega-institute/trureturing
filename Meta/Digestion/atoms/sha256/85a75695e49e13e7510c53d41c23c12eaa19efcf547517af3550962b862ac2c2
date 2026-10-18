@@ -1,0 +1,37 @@
+**Lemma 3.1 (One common pointwise function space).** For any finite model,
+homogenize $F=(1,E)^{\mathsf T}$ and its affine updates as
+
+$$
+T_s=\begin{pmatrix}1&0\\b_s&L_s\end{pmatrix},\qquad
+S_t=\begin{pmatrix}1&0\\d_t&C_t\end{pmatrix}.
+$$
+
+The spaces
+
+$$
+V_k=\operatorname{span}_{\mathbb C}
+\{F_i(k,\cdot):1\le i\le m+1\}
+$$
+
+of pointwise functions on $\mathbb T^2$ are one common space $V$,
+invariant under every torus translation.
+
+**Proof of Lemma 3.1.** For any two interior heights $k,l$,
+$F(l,\theta)=T_{l-k}F(k,\theta)$ at every phase point. This gives
+$V_l\subseteq V_k$, and the reverse command gives equality without
+assuming either ambient matrix invertible.
+
+For $(\tau_vf)(\theta)=f(\theta+v)$, the phase command makes this
+common space invariant under translation by
+
+$$
+v(k,t)=(t/2,(1/2-k/r)t),
+$$
+
+and the negative command gives inverse invariance. Two different heights
+give two linearly independent real directions $(1/2,1/2-k/r)$.
+Every real two-vector is their real linear combination, so every torus
+translation is a composition of two such translation operators on $V$.
+This statement about a common function space introduces no new source
+command. $\square$
+

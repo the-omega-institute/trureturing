@@ -1,0 +1,61 @@
+**Theorem 3.3 (complete fractional-contact accounting).** Under
+Assumptions 1.1 and 2.2, the zero set of $d$ on $X$ is precisely
+the union of the singleton and segment sets in Definition 3.2.
+Every law supported on it can be replaced by at most one original
+fractional label per occupied group, preserving the complete moment
+vector, $K$ and $J_t$. Conversely splitting each fractional contact
+uses endpoint coordinates of its one group, preserves those same
+data and occupies no additional group. Consequently the minimum
+fractional-label count at any fixed such joint data equals the
+minimum occupied-group count over all its endpoint representations.
+
+Proof. At a fixed angle, $\Gamma$ is affine in $\xi$, $k$ is
+constant, and $\eta_\xi=(1-\xi)\eta_0+\xi\eta_1$. Hence
+
+$$
+d(\phi,\xi)=(1-\xi)d_0+\xi d_1+
+ (1-\xi)|\eta_0|+\xi|\eta_1|-|\eta_\xi|.
+\tag{FC.8}
+$$
+
+Every term on the right is nonnegative. If $0<\xi<1$, its
+vanishing requires both endpoint gaps to vanish and equality in the
+real triangle inequality. The latter is precisely
+$\eta_0\eta_1\ge0$, including one or both heights zero. These
+conditions also suffice. At an endpoint only its own gap is required
+to vanish. Thus no fractional contact outside the listed groups is
+lost, even at height zeros or repeated signed descriptions.
+
+For endpoint masses $a_0,a_1\ge0$ in one paired group put
+$p=a_0+a_1$ and, if $p>0$, $\xi=a_1/p$. The replacement
+has $p\Gamma(\phi,\xi)=a_0\Gamma(\phi,0)+
+a_1\Gamma(\phi,1)$ and the same $p|u|$. GC Theorem 15.1 gives
+the exact low-height defect
+
+$$
+D_{\rm low}=a_0|\eta_0|+a_1|\eta_1|
+                    -|a_0\eta_0+a_1\eta_1|.
+\tag{FC.9}
+$$
+
+It vanishes in a compatible group. For strictly opposite heights and
+two positive masses it is $2\min(a_0|\eta_0|,a_1|\eta_1|)$;
+the actual TV defect is HALF of (FC.9). A zero mass gives zero
+defect, regardless of the other endpoint's height; if $p=0$ the
+label is omitted. Opposite-height endpoints therefore stay in two
+singleton groups when both are occupied.
+
+Within a paired segment $g_t$ is affine. Any number of fractional
+atoms there merge by summing their masses and taking the
+mass-weighted average of $\xi$. The same argument applies to a
+probability measure on that segment: its mass and first $\xi$
+moment determine all these data. There are only finitely many
+groups. Conversely an atom of mass $p$ at $\xi$ splits into
+$p(1-\xi),p\xi$ at the two endpoints of its group, with zero
+pieces omitted. An original contact law with $L$ positive labels
+therefore gives an endpoint representation using at most $L$
+groups; an endpoint representation using $L$ groups gives an
+original law using exactly $L$ labels by merging. Taking the two
+minima proves the count equality. This does not equate label count
+with angular-node count or with a matrix-mass rank. $\square$
+

@@ -1,0 +1,29 @@
+**Proposition 13.2 (The deficient-rank and two-dimensional branches).**
+If $\operatorname{rank}L\le1$, then
+$\operatorname{err}(E,q)\ge R_0$. If
+$\operatorname{rank}L=2$ and $d=2$, the competitor is dominated by
+a budget-two model with bounded encoder $a$. These branches cover all
+$d\le2$.
+
+**Proof of Proposition 13.2.** In the first case the image of $a$
+lies in an affine line or point. Choose a unit normal $\nu$ and a
+constant $c_0$ such that $\nu\cdot a=c_0$. For every interior $k$,
+
+$$
+\sup_\alpha\|a(k,\alpha)-A(k)U(\alpha)\|
+\ge\sup_\alpha|c_0-A(k)\nu\cdot U(\alpha)|
+=|c_0|+A(k)\ge A(k).
+$$
+
+Equation (12.1) gives the lower bound
+$\sup_k\{4A(k)^2+4Zk\}=R_0^2$ in squared error.
+The radial choice $C=0$ realizes this comparison.
+
+In the second case the affine map $z\mapsto a_0+Lz$ is an
+isomorphism on $\mathbb R^2$. Conjugating each hull update by it
+makes $a$ an exact affine encoder on every original lawful domain.
+Theorem 3.4 gives its $\beta$-independence, finite error gives its
+boundedness, and Proposition 12.2 supplies the decoder $D(a,0)$ of
+no greater error. Theorem 6.4 applies. Rank cannot exceed $d$, so
+there is no other case with $d\le2$. $\square$
+

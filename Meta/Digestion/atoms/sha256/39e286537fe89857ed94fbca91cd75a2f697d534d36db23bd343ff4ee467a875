@@ -1,0 +1,20 @@
+**Convention 6.2 (falsifiable boundaries).** Lemma 2.2 would fail if its
+first unchanged-field dry emission omitted LastBank, selected an obsolete
+version rather than the active latest sealed source, admitted F inside a
+bank payload, erased completed $M$, or required another IN before that
+sweep. Those alternatives are excluded by the cited literal recipes and
+persistent-field rules, not by a generic factorization theorem. Omitting
+physical control/delimiter observations from Theorem 2.4 requires a new
+alignment argument; the theorem does not assert that an unlabelled suffix
+of latch values suffices.
+
+Lemma 3.2 would fail on an additional incoming success edge bypassing the
+Image checks, a failure cleanup edge into RenderS/FromS, or identification
+of an encoded PC with the actual outer PC. Theorem 3.3 would fail if the
+receiver changed during printing, a staging append invalidated placement
+recency, or a print began at an arbitrary receiver offset. The specified
+hygienic joins, failure exits and protected placement/copy/print invariants
+exclude precisely these cases on the canonical domain. An original
+Advance refusal or omitted original PC/OUT correspondence defeats the
+conditional original consequence while leaving the native result intact.
+

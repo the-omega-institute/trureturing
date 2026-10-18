@@ -1,0 +1,33 @@
+### 一、截至最新项目进展，理论的重点已经发生变化
+
+我核对到的最近两条直接相关提交是：
+
+- [提交 `60ebb51`](https://github.com/the-omega-institute/trureturing/commit/60ebb51c87e6496e0cab67c899c3b687ef8fd001)：把静态 FIB 隐藏 seam、输出分辨的未来观察商、仪器闭包和可维护性不动点放进同一条理论线。
+- [提交 `4da8b2e`](https://github.com/the-omega-institute/trureturing/commit/4da8b2e9c9c6439548fbbc5bea42df65ec2ae2ba)：构造取得核的盲方向，证明配对校准、有限配置数组和有限长度的未来前缀都相同，并不保证更长的回流词上的完整未来律相同。
+
+相关理论卷是：
+
+- [AURIC FIB ATOM：静态隐藏纤维、输出分辨未来商与可维护性](https://github.com/the-omega-institute/trureturing/blob/60ebb51c87e6496e0cab67c899c3b687ef8fd001/docs/develop/theory/AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md)
+- [AURIC FIB ATOM：seam 双线性结构与输出未来商](https://github.com/the-omega-institute/trureturing/blob/60ebb51c87e6496e0cab67c899c3b687ef8fd001/docs/develop/theory/AURIC_FIB_ATOM_SEAM_BILINEAR_CURVATURE_AND_OUTPUT_FUTURE_QUOTIENT.md)
+- [配对校准之后的取得核盲方向](https://github.com/the-omega-institute/trureturing/blob/4da8b2e9c9c6439548fbbc5bea42df65ec2ae2ba/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)
+
+这和仓库公开说明的方向一致：项目把数学定义、形式证明、理论参考输入和实验或物理解释分开处理，而不是把理论文字自动当成已经验证的物理定律。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com) 当前 PR 队列仍在持续推进未来律、观察闭包和信息逃逸问题。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+这两条最新进展带来一个关键转变：
+
+~~~math
+\boxed{
+\text{隐藏关系是否存在}
+\quad\longrightarrow\quad
+\text{哪一种局部读数能够看见它}
+}
+~~~
+
+以前我们主要讨论静态投影 $(X,Y,Z)$ 丢失了什么。现在更重要的问题是：
+
+> 局部时钟、局部等待时间、输出分支、回流路径和控制动作，究竟何时会把隐藏的 $\kappa$ 重新暴露出来？
+
+这可以在不引入 $3+1$ 和全局线性时间的情况下严格定义。
+
+---
+

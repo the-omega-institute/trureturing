@@ -1,0 +1,61 @@
+**Proposition 10.3 (positive certificates can miss a complete zero fiber).**
+For $q\ge13$, consider the symmetric class
+
+$$
+C_{\rm bad}=
+\{(a,b)\in[0,q-1]^2:\max(a,b)=6\}\ \cup\
+\{(A,0),(0,A):A\in\{10,11,12\}\}.
+\tag{NARC.10.6}
+$$
+
+Both of its full reference target states at $Z=q+1$ have depth-two
+native certificates. Nevertheless, if this is a code class, its
+complete right-visible entry at $z=12$ under $\lambda=0$ admits no
+two-read controller. This is an obstruction to that class and entry,
+not to every encoder on the square or to positive-lag service.
+
+**Proof.** In coordinates $u=a-b,v=b$, write $h=Z$ for the right
+reference and $h=q+Z$ for the left reference, exchanging $a,b$ for
+the latter. A $P_{h+s}$ partitions $u$ at $s,s+1$. At these reference
+clocks all of the following thresholds are at least two. Use first
+offset $1$, lower offset $-11$ after absence, and upper offset $4$
+after branch. The first alpha and beta cells have targets $5,4$.
+The lower second cells, in $(\bot,\alpha,\beta,\mathsf b)$ order,
+have targets $(12,11,10,6)$; the upper second cells have targets
+$(3,2,1,0)$. This follows from the three negative extras
+$(-12,12),(-11,11),(-10,10)$, the base arm with $u\le0,v=6$,
+and the positive base arm and target-zero extras. Symmetry supplies
+the left reference. These are actual finite certificates for this class.
+
+At $z=12$, every one of its nineteen origins has $b\le12$, so the
+whole class is the complete fiber in Theorem 5.2. The ordered
+hidden-age-to-target groups are
+
+$$
+\begin{array}{c|cccccccccc}
+n&0&1&2&[6,12]&13&14&15&16&17&\{18,22,23,24\}\\ \hline
+v&12&11&10&6&5&4&3&2&1&0.
+\end{array}
+\tag{NARC.10.7}
+$$
+
+Each target corresponds to lag $12-v$ on its own lawful fixed
+original, with the same code and entire later row, reached hole and
+singleton partition. There are ten ordered target runs. Every native
+transcript leaf is an interval in this age order, so at least ten
+nonempty target-constant leaves are required.
+
+If the first informative request is $E$, it has two singleton cells
+and one branch tail. One remaining request gives at most four leaves
+on that tail, for at most six altogether. If the first informative
+request is nonempty, Definition 5.3 makes both ages zero and one
+absent. Their different targets force the remaining request on that
+cell to be $E$: every nonempty relative word still merges them,
+and root or visible-slot requests are constant. That child has at
+most three leaves. The two possible singleton first cells contribute
+at most two leaves, and the upper tail at most four, totaling at most
+nine. An $S_t$ first request gives no more than this $P_t$ bound;
+constant requests and early halts do not improve it. Ten runs cannot
+be covered. This exhibits a necessary consumer of the complete zero
+tests in Theorem 10.2 and of the column-gap condition below. $\square$
+

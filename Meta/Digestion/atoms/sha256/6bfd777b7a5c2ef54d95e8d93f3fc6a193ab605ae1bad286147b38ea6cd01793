@@ -1,0 +1,38 @@
+**Definition 6.1 (scope of the counting method).** The witness bands
+use actual common-prefix provenance, the live-history separation of
+WTF Theorem 9.1, the oriented two-polarity exchange of PE Theorem
+3.1, and distinct individual costs. No distinct-subset-sum condition
+is assumed. In particular the equal-cost conclusion in (CP.10) is
+used only after the chosen histories force both polarity premises.
+The counting never asserts that every history at a selected state
+has the same support, count pair or residual predicate.
+
+The legal sharing in [PE, Theorem 8.1 and Corollary 8.2][PE], including
+its third-threshold specialization, is compatible with these
+statements. The separated families here consist only of the specified
+zero-first or one-first histories. Theorem 3.3 counts their actual
+distinct endpoints and adds only the already disjoint mandatory
+overhead. Other live histories and paid post-certificate visits can
+share states. No discriminator is assigned to multiple collisions
+and then counted repeatedly.
+
+The classical residual-counting reference is Wegener, *The Complexity
+of Boolean Functions*, Chapter 14 §4, Definition 4.1 and Theorems
+4.1 and 4.3, printed pp. 423–425 [WBP]. His optimal synchronous
+construction concerns read-once branching programs. The proof on
+printed p. 424 explicitly uses realization of every graph path, a
+property it says fails for general branching programs. The grid upper
+bound is reused here through PCA Theorem 26.1; that read-once lower
+bound supplies no unrestricted inequality in this volume.
+
+Restriction and canonical Boolean representations provide a second
+reference frame. Bryant, *Graph-Based Algorithms for Boolean Function
+Manipulation*, §1.1 and §2 Definition 1 [BRY], defines restriction as
+substitution of a constant and requires strictly increasing coordinate
+indices on nonterminal edges. The semantic restriction in Theorem 5.1
+is proved directly for the present possibly cyclic union graph. It
+imports neither that ordering nor a canonical residual per installed
+state. The new counting and installed-label deductions are
+repo-derived ordinary mathematics from the explicitly cited suppliers;
+no worldwide originality assertion is involved.
+

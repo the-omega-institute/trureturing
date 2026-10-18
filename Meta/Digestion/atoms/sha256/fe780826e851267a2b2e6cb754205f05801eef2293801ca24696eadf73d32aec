@@ -1,0 +1,154 @@
+**Proposition 5.3 (a genuine weaker mixing law in the same native class).**
+There are smooth positive $\rho$ and $A=I_2$ in Definition 2.1 with no
+all-start descent, and a smooth strictly positive fiber probability
+kernel $\Lambda$ for which (5.5) holds with the killed base generator
+$\partial_k^2+\tfrac14\partial_\alpha^2$. For every base start, the
+projected process started with this specified fiber distribution has
+that Markov killed path law and the same height lifetime. This kernel
+is not the conditional kernel of the reversible measure $\mu$.
+
+Proof. Let $\mathscr G_0=P^2+Q^2$, with $A=I_2,\rho=1$, and denote its
+killed semigroup by $H_t^0$. Choose $k_*\in I$ and the real solution
+$v$ of
+
+$$
+v''(k)=c(k)^2v(k),\qquad v(k_*)=1,\quad v'(k_*)=0.
+\tag{5.6}
+$$
+
+It exists smoothly on a neighbourhood of the closed interval. Choose a
+nonzero real $\epsilon$ sufficiently small that
+
+$$
+h_0(k,\beta)=1+\epsilon v(k)\cos\beta>0
+\tag{5.7}
+$$
+
+on a slightly larger closed cylinder. Direct calculation gives
+
+$$
+\mathscr G_0h_0=(v''-c^2v)\epsilon\cos\beta=0,
+\qquad \int_0^{2\pi}h_0\,d\beta=2\pi.
+\tag{5.8}
+$$
+
+Set $\rho=h_0^2$ and keep $A=I_2$. These are admissible fixed
+coefficients; $\epsilon$ is just a nonzero parameter in this construction,
+not a limiting procedure. The new generator is
+
+$$
+\mathscr G^hF
+=\mathscr G_0F+2(P\log h_0)PF+2(Q\log h_0)QF
+=h_0^{-1}\mathscr G_0(h_0F).
+\tag{5.9}
+$$
+
+The transform in (5.9) also holds for the completed killed operators.
+Indeed multiplication $J_hF=h_0F$ is a unitary map from
+$L^2(h_0^2dq)$ to $L^2(dq)$. Both it and its inverse preserve the
+horizontal Dirichlet closures, by bounded smooth coefficients and the
+product rule. For core functions, integration by parts and
+$\mathscr G_0h_0=0$ give
+
+$$
+\mathcal E_0(h_0F,h_0V)=\mathcal E_h(F,V).
+\tag{5.10}
+$$
+
+The extra terms on expansion are the explicitly defined local integral
+
+$$
+\int_\Omega\sum_{i=1}^2(X_i h_0)X_i(h_0F\overline V)\,dq
+=-\int_\Omega h_0F\overline V\,\mathscr G_0h_0\,dq=0.
+$$
+
+The tested product has compact support; $h_0$ itself is not claimed to
+belong to the zero-boundary form domain. Closing (5.10) and applying the
+variational domain definition give
+
+$$
+D(\mathcal L_h)=h_0^{-1}D(\mathcal L_0),\qquad
+H_t^hF=h_0^{-1}H_t^0(h_0F).
+\tag{5.11}
+$$
+
+There is no extra zeroth-order killing term, precisely because (5.8)
+is harmonic. The same Dirichlet height faces remain. Pointwise versions
+of (5.11) follow by the heat regularity and full-support argument used
+in Theorem 3.1.
+
+Define
+
+$$
+(\Lambda F)(k,\alpha)
+=\frac1{2\pi}\int_0^{2\pi}h_0(k,\beta)F(k,\alpha,\beta)\,d\beta.
+\tag{5.12}
+$$
+
+This is a probability kernel by (5.7)--(5.8). The original measure in
+this example is still $h_0^2dq$, whose pushforward is
+
+$$
+d\nu_h=\bigl(2\pi+\pi\epsilon^2v(k)^2\bigr)\,dk\,d\alpha.
+$$
+
+The comparison semigroup $S_t^0$ is the constant-contract base semigroup,
+with reference measure $d\nu_0=2\pi\,dk\,d\alpha$, coordinate
+covariance $2\operatorname{diag}(1,1/4)\,dt$ and the original height
+killing. In general it is not the restricted averaged semigroup for
+$\nu_h$. The weak identity below is an identity of probability kernels,
+not an isometry that replaces the original pushforward measure.
+Let $M_0$ again denote uniform fiber averaging. For the constant contract,
+Theorem 3.1 (or [N, (10.24)] and symmetry) gives
+$M_0H_t^0=S_t^0M_0$, including the killed boundary. Therefore
+
+$$
+\Lambda H_t^hF=M_0H_t^0(h_0F)
+=S_t^0M_0(h_0F)=S_t^0\Lambda F.
+\tag{5.13}
+$$
+
+This calculation applies to bounded Borel functions, since $h_0$ is
+bounded above and below on the closed cylinder and the transition
+identities hold pointwise.
+
+For completeness, the Markov path statement in this example follows
+directly from (5.13), not just from its one-time consequence. If
+$M_{Uf}$ means multiplication by a base test upstairs, then
+
+$$
+\Lambda M_{Uf}=M_f\Lambda.
+\tag{5.14}
+$$
+
+Use the upstairs Markov property to express any finite-dimensional
+expectation from $\Lambda_x$ as an alternating product of $H^h$ and
+multiplications $M_{Uf_j}$. Move $\Lambda$ successively through this
+product using (5.13)--(5.14). The result is exactly the corresponding
+product of $S^0$ and $M_{f_j}$ from $x$. The same calculation with an
+arbitrary bounded upstairs terminal test proves the conditional-kernel
+statement given the past projected observations, on survival.
+Adjoining the absorbing cemetery gives all cylinder distributions;
+continuous paths before death and their cemetery tails determine the
+killed path law. The height of a projection is the original height, so
+its lifetime is identical pathwise.
+
+Nevertheless $\rho=h_0^2$ is not basic at $k=k_*$, and its projected
+angular drift is
+
+$$
+B_2=Q\log h_0
+=-\frac{c(k)\epsilon v(k)\sin\beta}
+ {1+\epsilon v(k)\cos\beta}.
+\tag{5.15}
+$$
+
+At $k_*$, hidden phases $\pi/2$ and $3\pi/2$ give opposite nonzero
+drifts. They are the admissible same-fiber rays of Input 4.1.
+Hence Theorem 3.1 or the linear-jet test excludes all-start descent.
+The reversible conditional kernel is proportional to $h_0^2\,d\beta$,
+whereas (5.12) is proportional to $h_0\,d\beta$. Equality would force
+$h_0$ constant on each fiber, contrary to (5.7) at $k_*$. Thus this is a
+specified mixing law, not the canonical reversible conditional law.
+$\square$
+

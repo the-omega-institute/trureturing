@@ -1,0 +1,27 @@
+## 9. 供应比较与仍未解决的原问题
+
+[ST] 的终局 $13/266,9/266$、两深度完整尾值、任意随机有限保持的有限正历史见证及实际三深度公平标签配置反例保持。[PH] 的一般先验单独最优、精确相容性及条件 $D_\mu$ 范围保持；本卷不从正缺陷机器推出其确定性单模式塌缩。[PRICE] 的近相容价格保持；[FOUR] 的更强 law/law 与 law/conf 缺陷上界及其 p-conf 方法失败保持。
+
+仓内搜索对象为停止源的配置风险、相位相容、随机标签与状态交换。已读供应没有给出本卷的 $\lambda\mathsf A\mathsf B=\lambda$ 与加权合成返回矩阵(3.6)这对共同关系，或一般先验 conf/law 达到器。未发表重置候选只作路线比较，不是独立复核或已冻结前提。
+
+Berg–Ordentlich–Shayevitz 的有限记忆综述 [Survey, §§2.3、4、6.1、7.3] 使用来源独立随机性、有限状态与时间不变规则，研究长期检验、估计或累计预测损失，不能直接供应这里逐正有限停止历史的完整条件 TV。Balle–Panangaden–Precup 的 [SVA, Theorem 7.1] 对最小加权自动机、平方可和词函数及 Hankel 奇异值截断给平方词误差；它不保证原随机归一化、付费取得过滤与 COMPLETE 同更新义务。Abate–Redig–Tkachev 的 [ART] 研究条件核扰动所产生的乘积律 TV，不供应本卷的实际状态交换、端点事件校准和配置期望达到。
+
+有限随机矩阵、几何求和、TV 凸性、条件重加权、严格倒数平均和有理采样是成熟工具。新增知识由(3.6)的实际／合成矩阵区别、(5.2)与(5.8)的同机双事件校准，以及(5.3)–(5.5)的配置风险非端点余量共同承担；不把这些工具重命名为新理论。有限有理算术核对的是显示的参数与起点不等式，无界词由比例与完整几何和证明，一般先验由同一实际后验的可数凸性证明。
+
+仍未决定：一般非端点先验的 conf/conf 共同最优是否存在；本卷 conf/law 最优下的最小 $\Delta_4$ 或 $\Delta_{\rm all}$；任意随机有限核的四组合尖锐风险—缺陷前沿与全类达到性；共同切面候选的全部任意核、支持不变性及零预测事件范围；固定 COMPLETE 状态预算、最小描述和总资源；实际历史平均风险。固定维度参数紧性不能直接升级为所有有限状态数并集的前沿紧性。
+
+一条具体下一路线是保持两种同机事件校准和实际站稳关系，用多个悬置状态替代本卷的 $V_0=\delta_{[\beta]}$，要求每个活悬置解码也进入端点完整坐标盒，并控制实际非端点的配置期望距离。只平衡两条边缘事件不能完成此任务；必须重新证明其每配置同更新生成和全部无界尾约束。该路线不预先断言可行或不可能。
+
+本卷为一份普通数学原稿，未取得 Lean kernel 核验、独立新鲜评审或公开发行认证；不声称物理实现、实际训练网络定理、世界范围优先权、统计或模型先验独立性，也不结算持续到2027的研究目标。
+
+[ST]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[PH]: https://github.com/the-omega-institute/trureturing/blob/6004bfffc63af86a0d9780a092da7c6c34c79e34/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[PRICE]: https://github.com/the-omega-institute/trureturing/blob/7db69da19a9e3f5be1ba2df57c38eb2facb9ac66/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_APPROXIMATE_COHERENCE_PRICE.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[FOUR]: https://github.com/the-omega-institute/trureturing/blob/6fef0f318b2d4382d0fc5b0d594210f196a44f0e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MIXED_PHASE_DEFECT_ATTAINMENT.md
+[PG]: https://github.com/the-omega-institute/trureturing/blob/6fef0f318b2d4382d0fc5b0d594210f196a44f0e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md
+[WB]: https://github.com/the-omega-institute/trureturing/blob/b61f5e5c68557444246bef639ca3b41534f09889/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[Survey]: https://arxiv.org/html/2312.15225v1
+[SVA]: https://arxiv.org/html/1711.05994v2
+[ART]: https://arxiv.org/abs/1311.3066v1
+

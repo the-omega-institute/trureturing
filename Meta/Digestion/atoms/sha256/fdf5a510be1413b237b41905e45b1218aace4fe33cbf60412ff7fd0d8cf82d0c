@@ -1,0 +1,28 @@
+**Proposition 3.3 (the contracts are not interchangeable).** If a selector,
+legality predicate or failure response can inspect the inherited meter, a
+fresh-suffix boundary can be dynamically sufficient only after the meter is
+added to the boundary or proved irrelevant. Conversely, an inherited-meter
+quotient can be replaced by fresh suffix costs only under an explicit
+factorization hypothesis: every inherited response and legality decision must
+be a function of the fresh residual state and the declared combination law
+(3.2) for every reachable prefix. The equation is sufficient for that
+replacement, not a necessary form for every possible encoding.
+
+**Proof sketch.**  Choose two prefixes with the same residual state but
+different meters and an action whose legality threshold is between them.  The
+fresh suffixes are equal while the inherited traces differ.  For the converse,
+choose a continuation whose charge depends on the previous meter; resetting to
+$e$ changes the selector or response.  These are finite source-level
+counterexamples and do not require a physical clock interpretation. $\square$
+
+The weighted continuation discussion in [Transport--Memory Completion
+§2.17](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) uses
+the same distinction between a task-relative suffix and a memory that is
+carried into the next task.  A resource boundary must state which contract is
+being used.  From this point on, write $X_{\mathsf C}$ for the actual
+contract carrier: $X_{\mathsf C}=X_{\rm reach}$ for a fresh-suffix contract,
+and $X_{\mathsf C}=\widehat X_{\rm reach}$ for an inherited-meter contract.
+Every profile, kernel, controller and view below is formed on
+$X_{\mathsf C}$; the symbol $X$ in those formulas abbreviates this
+carrier.
+

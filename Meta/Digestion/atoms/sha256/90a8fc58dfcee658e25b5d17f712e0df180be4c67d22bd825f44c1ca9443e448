@@ -1,0 +1,10 @@
+#### 空间距离
+
+```math
+d(e,e')
+=
+\inf_h
+\sum_{r\in h}
+c\bigl(\Delta(r)\bigr).
+```
+

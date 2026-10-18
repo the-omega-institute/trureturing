@@ -1,0 +1,33 @@
+## 364. Complete finite polynomial certificates
+
+The arrays below give every coefficient of the four polynomials defined here. Every nonzero coefficient is a positive integer and each constant coefficient is positive. The identities and signs are exact; no sampled inequality is used.
+
+Write I_x[f; l,h](s)=(1+s)^n f((l+hs)/(1+s)), where n is the polynomial's degree in x and all other variables are unchanged. These are literal finite polynomial substitutions, with cancellation of the displayed denominator power.
+
+1. C certificate:
+
+       P_C(a,b)=12^6 I_c[Q_C;5m/12,m−2](a) at m=4+b.
+
+   Q_C has c-degree 6. P_C has 76 positive integer coefficients, minimum 300524, and constant 3030471671808. For 5m/12≤c<m−2, the parameter a=(c−5m/12)/(m−2−c) is nonnegative; b=m−4>0.
+
+2. Opposite-M certificate:
+
+       P_M(a,b)=9^4 I_c[Q_M;1,4m/9](a) at m=4+b.
+
+   Q_M has c-degree 4. P_M has 34 positive integer coefficients, minimum 89600, and constant 401533200. The actual domain has a,b>0.
+
+3. D lower-bound certificate:
+
+       P_D(a,b)=9^6 I_c[Q_D;1,4m/9](a) at m=14+b.
+
+   Q_D has c-degree 6. P_D has 74 positive integer coefficients, minimum 1099008, and constant 52912522611541008. Its actual domain has a,b>0.
+
+4. Opposite-V certificate:
+
+       T_V(m,v,t)=I_d[Q_V;m/2,v](t),
+       P_V(a,b,t)=10^6 I_v[T_V;4m/5,m](a) at m=14+b.
+
+   Q_V has d-degree 4, and T_V has v-degree 6. P_V has 245 positive integer coefficients, minimum 212170752, and constant 2642912638787072. For 4m/5<v<m and m/2<d<v the parameters a=(v−4m/5)/(m−v), t=(d−m/2)/(v−d), and b=m−14 are positive.
+
+All positive scaling factors and denominator powers have been stated. These identities therefore prove the indicated strict inequalities on the full continuous domains, not only on sampled values.
+

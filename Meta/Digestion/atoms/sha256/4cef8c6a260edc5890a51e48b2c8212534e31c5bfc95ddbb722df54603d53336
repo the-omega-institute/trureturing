@@ -1,0 +1,40 @@
+## 313. The actual Z circle allows at most one such dominant run
+
+All Z occurrences are genuine: every flat is axial-selected, p_Z=0,
+and flat transverse Z occurrences have already been excluded. A wholly
+axial Z circle would have one fixed pair, so cannot contain the three
+distinct pairs just obtained. Their runs are proper.
+
+At a boundary of a dominant axial Z run with pair {A,B}, the genuine
+receiver has frame (B,Z,A,Q,Z,A). Every H axis is at most z and every
+special axis has q<1+z+a, so in all cases q<1+z+a. The increasing
+transverse-Z numerator at this upper endpoint is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Thus the boundary Z angle is greater than pi/2. The complete Z budget
+permits only one actual owner rho with two such transverse slots.
+Every dominant run uses both distinct slots of rho as its boundaries.
+
+At a transverse Z slot of rho, let its companion be A and its axes
+B,Q. The two complementary face pairs are {A,B} and {A,Q}.
+If both sides bordered dominant axial runs, dominance would give
+z>=1+a+b and z>=1+a+q, hence
+
+    (z-a)^2 >= (b+1)*(q+1).
+
+This contradicts the genuine strict inequality for rho. Each of its
+two original Z slots therefore supports at most one dominant-run
+boundary incidence. One proper run already uses both. Two distinct
+proper dominant runs are impossible, a contradiction.
+
+The proposed three-flat case is excluded. Combined with Sections310–311,
+there are at most two actual flat owners, as claimed. QED.
+
+The argument allows arbitrary repeated axes, repeated visits in the
+original normal circles and distinct-face self-gluings. The remaining
+one-flat and two-flat six-reservoir configurations still require new
+joint geometric and face-transport arguments; this theorem alone does
+not assert that either residual configuration exists or is impossible.
+
+

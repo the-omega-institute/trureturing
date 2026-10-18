@@ -1,0 +1,73 @@
+**Proposition 5.1 (the acquired $3\to1$ continuation).** In the three-value
+fiber $D_3$, enter at the actual epoch $N=1$ and make the legal physical read
+
+$$
+\mathsf{Read}(RL)=\beta .
+\tag{SJM.32}
+$$
+
+This outcome is attained. First consider entry with only the declared input,
+without an extra code. A paid complete successor handoff retaining precisely
+that input and the new literal $(1,RL,\beta)$, with common ready control and
+no other source-bearing state, has source fiber
+
+$$
+D'_3=\{U(\alpha,z):z\in\mathcal T\},
+\tag{SJM.33}
+$$
+
+its complete original $Q$-row image is still exactly
+${r_0,r_1,r_2,r_3\}$, and
+
+$$
+M(D'_3,Q)=1.
+\tag{SJM.34}
+$$
+
+*Proof.* At epoch one the subtree at $RL$ is $\rho y$. From (SJM.1), the root
+reply of $\rho y$ is $\beta$ exactly when $y=\alpha$; if $y=\beta$ or a pair,
+that root is a branch. Thus the read has the exact source-fiber refinement
+(SJM.33), with both directions. It is attained, for example, by any
+$U(\alpha,z)$.
+
+For $y=\alpha$, the three fixed target templates are
+
+$$
+\alpha,\qquad \rho\alpha=\beta,\qquad F\alpha=\langle\beta,\beta\rangle.
+\tag{SJM.30}
+$$
+
+Choosing $z$ equal to these three values gives $r_0,r_1,r_2$, while
+$z=\rho^2\alpha=\langle\beta,\alpha\rangle$ gives $r_3$. Hence the full
+four-row image is preserved. The **whole original source** table $p_2$ contains
+$L,LL,LR$, namely the root and depth-one child replies relative to $z$.
+A leaf reply at $L$ identifies exactly $z=\alpha$ or $z=\beta$. If $L$ is a
+branch, replies $\beta$ at both $LL,LR$ identify exactly
+$z=\langle\beta,\beta\rangle$: leaves have no hidden descendants in the
+native algebra. Every other pattern puts $z$ in $r_3$. These three replies
+therefore determine the complete row on $D'_3$, whose other hole values and
+exterior are fixed. Thus the root-based $m_2$ equals $1$ and Theorem 2.2 gives
+(SJM.34).
+
+At the same actual epoch one, apply the SLH Theorem 2.2 decoder to all seven
+original words $|w|\le2$. This is at most $2(2^3-1)=14$ **further** physical
+reads, each of length at most $2+\lceil1/2\rceil=3$, with no updates; together
+with (SJM.32) it gives at most $15$ reads. The mathematical original replies
+are inferred from those current-register replies, not accessed at a fictional
+old version. The decoder then returns the complete exterior and partition.
+No relative depth-two $z$ table (which would reach original depth three) is
+used in this bound.
+
+If entry already retains the old three-value field $E_3$ from Proposition 4.6,
+the actual successor fiber retaining its value $e$ is
+$D'_3\cap\{u:E_3(u)=e\}$, not the unconditioned $D'_3$. The old rank and its
+old table still decode correctly on this refinement; no new preparation is
+needed merely to keep using them. A complete successor cut may discard $e$
+and any code-dependent control state and install a constant field. The resulting
+state has exactly fiber $D'_3$, and the displayed decoder is sufficient there.
+This replacement uses the actually acquired literal and a common fixed row
+table; it needs paid local preparation, installation and cut, but no fresh
+full-source traversal. A constant code is not a reinterpretation of the old
+rank. With four rows still attained, zero-read recovery would instead require
+four complete field values. $\square$
+

@@ -1,0 +1,29 @@
+#### 17.4.3 Cayley 变换
+
+对稠密定义、闭的算子 \(H\)，在适当 resolvent/domain 条件下定义 Cayley 变换
+
+\[
+U=(H-iI)(H+iI)^{-1}.
+\]
+
+标准 Cayley 定理给出：
+
+\[
+H=H^*
+\iff
+U\text{ unitary}.
+\]
+
+谱通过 Möbius 变换对应。可参考 [Encyclopedia of Mathematics: Cayley transform](https://encyclopediaofmath.org/index.php?title=Cayley_transform) 和仓库中的 [ZeroHilbertCayleyUnitarity.lean](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.lean)。
+
+该定理的适用条件与对象必须包含：
+
+- Hilbert space；
+- operator domain；
+- closedness；
+- resolvent existence；
+- exact Cayley map；
+- unitary proof。
+
+仅在有限对角矩阵上验证模长为一，不足以处理无界算子或零点重数。
+

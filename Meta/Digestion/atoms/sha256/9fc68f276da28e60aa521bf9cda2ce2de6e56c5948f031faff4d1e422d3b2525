@@ -1,0 +1,35 @@
+**Corollary 18.2 (a sufficient missing relation, not a converse).**
+If the actual strict weak optimal surface contains no rectangle of
+the form (GC.82) with continuous $a,b$ and $b>0$, then
+$M_{\max}\in\{8,9\}$ and every finite weak request has an optimum
+with at most eight supported low actual labels.
+
+Proof. Theorem 18.1 would otherwise force such a rectangle when
+$M_{\max}=10$. Theorem 9.2 leaves only eight or nine total.
+Identity (GC.10) then gives the eight-low bound on the weak domain,
+including its floor and rising boundary. $\square$
+
+**Open problem 18.3 (absence and the remaining support distinction).**
+The rectangle-absence premise of Corollary 18.2 is unproved.
+An affine rectangle by itself does not imply nine-low necessity:
+its points might admit shorter optimal laws with different atom
+tables. Thus no converse is asserted. Absence of that rectangle
+would exclude nine-low necessity, but would not prove universal
+seven-low, which is needed to force $M_{\max}=8$.
+Finite grids, curvature samples, a Sard statement in a larger moment
+space, and generic auxiliary-state lengths do not decide absence
+on this actual two-parameter constrained surface.
+
+A different sufficient eight-low statement would be that, on every
+original multiplier-optimal face with $\lambda>0$, each achieved
+contrast admits an original fractional law with at most eight low
+atoms and the same true height. Theorem 16.2 supplies only the two
+contrast extrema. A possible certificate of nine-low necessity
+would instead need a genuine actual optimal contact set, positivity
+of its nine necessary weights, augmented rank nine, and a full-circle
+original dual exclusion of every alternative optimal direction,
+together with the original fractional-label equality conditions.
+Ranks or positive weights alone are insufficient. Neither such a
+certificate nor a universal interior-face compression is supplied
+by the preceding implications.
+

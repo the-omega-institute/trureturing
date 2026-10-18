@@ -1,0 +1,41 @@
+**Lemma 2.5 (All first-zero leaves).** Given a first reply zero, the
+complete leaf table is the following. In the last two rows, $f$
+denotes the active edge of the second call in phase $\beta$.
+
+| Second-call geometry | Leaf | $W$ | $M$ |
+| --- | --- | --- | --- |
+| Same-parity repeat | $00$ | $z$ | $a/2$ |
+| Same-parity adjacent | $00$ | $w$ | $a/2$ |
+| Same-parity adjacent | $01$ | $\eta/2$ | $a\eta/2$ |
+| Same-parity disjoint; either type | $00$ | $v$ | $a/2$ |
+| Same-parity disjoint; type $I$ | $01$ | $\eta c$ | $a^2\eta$ |
+| Same-parity disjoint; type $D$, second edge meets target | $01$ | $\eta c$ | $\eta c/2$ |
+| Same-parity disjoint; type $D$, second edge avoids target | $01$ | $\eta c$ | $a\eta c$ |
+| Opposite parity | $00$ | $c$ | $a^2/2$ if $e$ meets $v_\alpha$ or $f$ meets $v_\beta$; otherwise $ac/2$ |
+| Opposite parity | $01$ | $\eta$ | $\eta/2$ if $f$ meets $v_\beta$; otherwise $a\eta$ |
+
+Proof. For two same-parity calls, phase $\beta$ sees two separators.
+Thus its entire majority-state mass $a/2$ lies on $00$. No particular
+state has prior larger than $a/2$, so this is exactly $M(00)$.
+The phase-$\alpha$ zero-constraint probabilities for a repeat,
+adjacent edges and disjoint edges are $c$, $1-3\eta$ and $c^2$.
+Adding the opposite-phase mass and dividing by two gives $z,w,v$.
+
+The adjacent $01$ leaf follows from Lemma 2.3. For disjoint $01$,
+the first zero edge contributes $a^2$ if it contains the majority
+target, while the second one contributes $2\eta$; the full-law
+maximum for type $I$ is therefore $a^2\eta$. If only the second
+edge contains the target, multiply its one-state mass $\eta$ by
+the first-zero factor $c$ and $1/2$. If neither contains it,
+multiply the leaf mass $\eta c$ by the majority prior $a$.
+
+For opposite parities, each phase has exactly one active edge on
+$00$. Each contributes total mass $c/2$. Its largest individual
+state mass is $a^2/2$ when that phase's active edge touches its
+actual target, or $ac/2$ when it does not. Since the phase state
+pairs are disjoint, take their maximum, not their sum. Identity
+$a>c$ gives the stated alternative. On $01$ only phase $\beta$
+remains; its one-edge calculation gives the last row. These are
+mutually exclusive phase sections of one source. They are not
+independently spliced observations. $\square$
+

@@ -1,0 +1,30 @@
+**命题 477.2（完整平滑修正的积分）。** 对 $1<x\le N+1$，有
+
+$$
+\int_x^{N+1}t\bigl[1-(\log t-1)h_N+\ell_N\bigr]w(t)\,dt
+=F_N(\log(N+1))-F_N(\log x).
+$$
+
+**证明。** 直接求导给出
+
+$$
+F_N'(u)=\frac{1+u}{u^2}\bigl[1+\ell_N-(u-1)h_N\bigr].
+$$
+
+链式法则于是给出
+$\frac d{dt}F_N(\log t)=t[1-(\log t-1)h_N+\ell_N]w(t)$，其中 $t>1$。
+在 $[x,N+1]$ 上应用微积分基本定理即得结论。$\square$
+
+**假设（完整无穷配对的身份）。** 若要将上述有限配对用于整个无穷物理积分，
+须另有相应积分与极限的存在性，以及身份
+
+$$
+\lim_{N\to\infty}H_N=0,\qquad
+\lim_{N\to\infty}L_N=-1,\qquad
+\lim_{N\to\infty}\int_x^\infty C_N(t)w(t)\,dt
+=\int_x^\infty(\psi(t)-t)w(t)\,dt.
+$$
+
+有限重构在物理分拆中仍保留 $t>N+1$ 的积分补区。
+本节的有限恒等式及原函数未以两个矩替代这个补区，也未假定完整首部相对于 §87 正储备的符号。
+

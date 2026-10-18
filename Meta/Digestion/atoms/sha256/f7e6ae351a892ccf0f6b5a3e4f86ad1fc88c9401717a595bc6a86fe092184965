@@ -1,0 +1,20 @@
+#### 29.8　因果网络的两阶段关系图
+
+对目标节点的一个可识别结论，至少要经过两层：
+
+$$
+\boxed{
+\text{完整 assignment profile}
+\longrightarrow
+\text{合法 exposure 商}
+\longrightarrow
+\text{设计支持下的 cell 响应}
+\longrightarrow
+\text{直接/溢出目标}.
+}
+$$
+
+第一层是结构约束：哪些 assignment 可以被同一个响应函数值代表。第二层是统计约束：这些代表是否真的在设计中以正概率出现。第一层失败时，增加样本量不能修复错误的商；第二层失败时，图上已经知道局部性也不能凭空提供未采 assignment 的响应。
+
+<a id="section-29-9"></a>
+

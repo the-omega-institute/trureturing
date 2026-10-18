@@ -1,0 +1,27 @@
+**Theorem 8.2 (four-view recovery on one actual image).** If all four maps in
+(8.1) satisfy (8.2) and (8.3) for the same $\mathcal U$, then each actual
+image $q_i(X_{\mathsf C})$ is uniquely bijective with the image of the complete
+resource profile.  The induced bijections commute with every typed action,
+failure label, selector and namespace allocator (when their maps factor
+through the view), clock transport and declared resource update.
+
+If only the joint map
+
+$$
+J=(q_{\rm sp},q_{\rm tm},q_{\rm bd},q_{\rm mem})
+$$
+
+satisfies $\ker(J)=\ker(\Phi_{\mathcal U})$, then only the joint
+view is guaranteed to recover the profile; no individual view may be called a
+complete boundary.
+
+**Proof sketch.** Define the map from an actual view value to a profile by
+choosing any representative.  Kernel equality makes it well defined, and
+surjectivity onto the actual image makes it bijective.  Equation (8.3)
+transports legality, labels and successors, so the bijection commutes with
+the typed process.  For the joint statement, apply the same factorization to
+$J$; projecting its factors can enlarge a kernel.  This is the kernel and
+transport criterion in [Boundary Dynamics §§26.2 and 26.5](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)
+and [Process Geometry §§30--34](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+$\square$
+

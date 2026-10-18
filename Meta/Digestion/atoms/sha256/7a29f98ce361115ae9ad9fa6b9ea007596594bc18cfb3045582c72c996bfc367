@@ -1,0 +1,48 @@
+**Corollary 5.3 (pooling has a different asymptotic memory rate).** Let
+$M_{\rm pool,1}(D)$ minimize the complete pre-completion alphabet
+for Definition 5.1 with at most one fresh Read. Then
+
+$$
+\lceil N_D/4\rceil\le M_{\rm pool,1}(D)\le N_D,
+\qquad
+\lim_{D\to\infty}2^{-D}\log_2M_{\rm pool,1}(D)=\chi,
+\quad \chi:=\lim_{D\to\infty}2^{-D}\log_2N_D.                 \tag{SCE.17}
+$$
+
+For any pooled compiler preserving an optimal original alphabet
+$M_1(D)$ and using at most $q(D)$ fresh Reads,
+
+$$
+\liminf_{D\to\infty}\frac{q(D)}{2^D}
+\ge\frac{\chi-\lambda}{2}
+>\frac{\log_2 123}{16}-\frac3{32}>0.                         \tag{SCE.18}
+$$
+
+Here $\lambda$ is the credited original rate. The constant $\chi$
+is the full-boundary cardinality rate, distinct from both $\lambda$
+and FMR's scaffold constant $\phi$.
+
+Proof. The lower alphabet bound is (SCE.16). For the upper, the
+credited paid scan (SCE.11) exports the entire canonical name, one
+of $N_D$ possibilities. Its factor vector and all future target
+readouts can then be computed with zero fresh Reads. This is the
+existing full-menu passive endpoint, used only as an upper here.
+
+Put $a_D=2^{-D}\log_2N_D$. The recursion in (SCE.5) gives
+
+$$
+a_{D+1}-a_D=2^{-D-1}\log_2(1+2/N_D^2)>0.
+$$
+
+Since $N_D\ge3$, these increments are bounded by the summable
+sequence $2^{-D-1}\log_2(11/9)$. Thus $a_D$ has a finite limit
+$\chi$. The two alphabet bounds differ in logarithm by at most two
+bits, giving (SCE.17). Equation (SCE.16) for optimal original names
+gives $2q(D)\ge\log_2N_D-\log_2M_1(D)$. Divide by $2^D$ and
+use the credited existence of $\lambda$ from FMR Theorem 3.3.
+Since $N_3=123$, monotonicity gives $\chi\ge\log_2 123/8$;
+the credited [D3, Theorem 4.1][D3] gives $\lambda<3/16$.
+This proves the strict middle inequality. Positivity follows already
+from $123>8$. In particular $q(D)=o(2^D)$ is excluded for this
+defined same-alphabet pooling mechanism. $\square$
+

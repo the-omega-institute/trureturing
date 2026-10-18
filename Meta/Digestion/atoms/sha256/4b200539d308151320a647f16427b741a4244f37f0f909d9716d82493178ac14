@@ -1,0 +1,16 @@
+**Corollary 15.3 (necessary change in an exact original-response bridge).**
+A proposed realization of these actual history flights that preserves
+every original physical cell and receipt in the required complete
+successors cannot replace a flight by a composition of whole services
+of Definition 13.3. More generally, any such replacement branch must
+have $E=J=0$, even if it contains arbitrary additional lawful work.
+
+Proof. Complete-original-successor equality entails equality of its
+original tape material and actual meter, hence of $A_{55}$ and $n$.
+Theorem 15.2 contradicts this necessary condition. No equality of hidden
+query traces or publication occurrences was used. A decoder that simply
+discards the additional actual original material does not retain the
+stipulated successor. For a nonempty service branch the contradiction
+already holds after selecting only $A_{55}$; this is a necessary
+projection of the unchanged full requirement, not a replacement task. ∎
+

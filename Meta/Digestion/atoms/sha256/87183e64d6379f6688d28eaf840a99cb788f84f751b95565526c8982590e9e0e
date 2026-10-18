@@ -1,0 +1,23 @@
+**定义 52.1（Joined INITIAL rejection rectangles and the no-zero option）。** Fix
+
+$$
+m=2,\qquad k=2p\ge4,\qquad T=2p+1,
+\tag{52.1}
+$$
+
+and every arbitrary target $f:Q\to Y$ on the full prior of Definition 51.1. Use $\Gamma,\Lambda,I_t,S_t,h_t$ from (51.2)–(51.3), now with $I_t(j)=\mathbf1_{\{2t,2t+2\}\bmod T}(j)$ and $h_t=2p-2t$. All $T$ phases are actual. A common cut $a=2q+r<2p$, $r\in\{0,1\}$, is eligible exactly under (51.4).
+
+Let $\mathcal A$ consist of the integers $0\le d\le p-1$ satisfying
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(j,s):j\in S_t(\beta),\ h_t-2\le s<h_t\}
+&& (t<d,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(j,s):j\in S_d(\beta),\ 0\le s<h_d\}
+&& (\beta\in\mathbb F_2^d).
+\end{aligned}
+\tag{52.2}
+$$
+
+These are the rejection and final successful sets of an actual $d$-block all-one stream. In particular $d=0$ means that the joined target is constant on all successful INITIAL records; the bottom label is independent. This option retains stopping before an unissued zero, rather than charging a nominal parent.
+

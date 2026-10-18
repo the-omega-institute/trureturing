@@ -1,0 +1,33 @@
+## 273. Exact setting and public inputs
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+272 of the return continuation. The carrier is the actual original
+finite face pairing, with positive lengths shared by global edge labels,
+complete connected circular normal links, and original degree at least
+six. All original edge angle sums are 2*pi. Chosen paired frames have
+two distinct transverse labels in H={M,C,D,Z,U}. Special labels outside
+H occur only axially. Repeated axes, repeated neighboring owners,
+parallel face pairings and self-gluings of distinct faces are allowed.
+
+There are four distinct interacting genuine owners K={tau,rho,eta,xi},
+where interacting means containing two distinct labels in P={M,Z,U}.
+Each consumes more than pi of genuine P angle. Total genuine P angle
+is 5*pi: M has pi and Z,U each have 2*pi. The unique flat owner is
+sigma=(M,C,D,O,C,D). The retained source and common return are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+The shared cosh values satisfy c,d>1,m>1+c+d,z>1+m+c,u>m.
+
+Assume for contradiction that neither eta nor xi contains M. Sections
+264–272 then supply two distinct genuine owners outside K,
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+the exact six-slot M circle, and
+ Theta=theta_M(A_1)+theta_M(A_2)<2*pi/3.
+They also prove that O is C or D, and that the four transverse C/D
+slots of each A_i together cost more than 2*pi across the two owners.
+For precision this last statement is the strict inequality
+ E_A=2*sum_i[beta_C(A_i)+beta_D(A_i)]>2*pi.
+Since sigma has its other pi axis at O in {C,D}, the total genuine C/D
+budget is 3*pi. We prove this branch impossible. The conclusion forces
+at least one of eta,xi to contain M; it does not exclude those cases
+or establish five-reservoir realization.
+

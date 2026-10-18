@@ -1,0 +1,145 @@
+**Proposition 17.1 (one original realization for every recovery list).**
+For each finite list above keep every nonzero low atom as an actually
+generated, dephased label $j$. Write its live matrix and attached
+failure effect as
+
+$$
+K_j=\sqrt{\pi_j}K(z_j,w_j),\quad
+N_j=\pi_jv_jn_jn_j^T,\quad
+\sum\pi_jh_jh_j^T=I_3,\quad \sum N_j=M,\quad
+0\le v_j\le tc_*(z_j^2).
+\tag{JS.88}
+$$
+
+Extend the effects on coordinates $1,2$ by zero on coordinate zero.
+For the limiting optimizer lists, first use (JS.48) and the exact
+finite repair of §5 or §15; a limiting failure measure by itself is
+not an acquisition. Assign deterministic binary report
+$r_j=\operatorname{sign}z_j$, choosing either report at $z_j=0$.
+Add two actual high labels $H_+,H_-$ with encoders
+$\sqrt{(1-\delta)/2}\,DE^\dagger$, whole fibre dimension three,
+zero rate, decoder $Y\mapsto EYE^\dagger$ and reports $+,-$.
+Fix isometries $W_\perp:\mathbb C^2\to\operatorname{ran}(I_5-P)$
+and $J_0:\mathbb C^2\to\mathbb C^3$. Add two actual complement
+labels $C_+,C_-$ with encoders $W_\perp^\dagger/\sqrt2$, whole
+counted fibre dimension two, zero rate, decoder
+$Y\mapsto EJ_0YJ_0^\dagger E^\dagger$ and reports $+,-$.
+All these labels and maps are fixed before the sole specimen arrives.
+
+The permitted optional report attenuation is the actual kernel
+
+$$
+\Pr(F=f\mid j)=\tfrac12(1+f\eta r_j),\qquad
+\eta=\frac{1-q}{\sum_j\pi_j|z_j|}\in[0,1],\quad f\in\{\pm1\},
+\tag{JS.89}
+$$
+
+where high/complement reports are included in the label. Retain the
+parent label and generate/dephase the coin output; this preserves
+full-record TV and changes contrast to exactly $s$. The original
+inequality uses the deterministic reports and needs no extra coin.
+The denominator is positive in these endpoint constructions; if a
+separate zero-contrast construction has zero denominator, use a fair
+kernel rather than this ratio.
+
+Proof. The physical encoders and chronological low decoders are exactly
+Theorem 6.1's row-space construction: $C_j=Q_j^{1/2}J_j^\dagger$,
+$B_j=K_jJ_jQ_j^{-1/2}$ and
+$F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2}$, where
+$Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j\succ0$ and $J_j$ is
+onto $\operatorname{ran}K_j^\dagger$. Use encoder $C_jE^\dagger$.
+Null rank is exactly two, also at axes, and
+$B_j^\dagger B_j+F_j=I_2$ with $B_j^\dagger B_j\succ0$.
+The terminal CP map $\operatorname{Ad}_{B_j}$ has prescribed effect
+$B_j^\dagger B_j$; coercivity alone is not asserted sufficient for
+arbitrary different noncommuting time laws.
+
+For the chosen attainer use $g(u)=2/(1+u)^2$,
+$G_t(u)=2u/(1+u)$, $Z_j(u)=\sqrt{I_2-G_t(u)F_j}$ and
+$R_j(u)=g(u)F_j[I_2-G_t(u)F_j]^{-1}$ on the whole fibre.
+Its current-survivor jumps are (JS.32), individually for all five
+original labels. Its survivor terminal map is the isometry
+$EB_j(I_2-F_j)^{-1/2}$. The intermediate no-event/jump effects in
+§6 sum to identity at every cut. Activity is exactly
+$\log(1+v_j/c_*(z_j^2))\le\log(1+t)$; pure-live labels have zero
+rate. Every finite carrier has positive terminal survival. First
+failure is at actual absolute time $6+u$ in this mathematical process;
+only survivors receive terminal processing, with no deadline atom,
+singular failure or later positive-carrier action. Necessity throughout
+§§13–16 allowed every admitted original CP/time law, including
+noncommuting TP controls; $g$ was used only for these attainments.
+
+The exact Gram and $\sum N_j=M$ give total supported encoder effect
+$I_3$ by root TP. The complement contributes $I_5-P$, so the total
+effect is $I_5$ and each encoder is TNI. Decoders are TP on their
+entire declared fibres. Every future-accessible input-bearing quantum
+share belongs to those joint fibres; all other dilation systems,
+including Kraus multiplicity, are permanently discarded before the
+cut. Splitting an actual fair report produces the two labels explicitly
+listed above, not a hidden record.
+
+For every complex $X\in M_5$ the same list has exactly (JS.33), and
+for every passive reference its live matrices tensor with $I_R$ and
+its failure component on each Borel $\mathcal B$ is exactly
+
+$$
+w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],
+\quad \ell\in\{0,1,2,3,13\}.
+\tag{JS.90}
+$$
+
+This follows by Kraus bilinearity of the exact Gram and by summing
+the pulled-back failures. It is the conditional reference operator.
+Both zero labels $0,13$ are individually zero; the three positive
+Borel maps remain separate. Within-complement coherences are retained,
+cross-support operators vanish, and no unlisted sector is added.
+This is the allowed JR completion freedom, distinct from fixed
+CA10's certain-failure complement. The complete outputs on the twelve
+supported histories are the same CG.135 outputs, compared against
+the original coherent ideal blocks and $f_y$, never against $g$.
+Thus the four errors at each height obey
+$e_5=e_{27}=E_*$ and $e_{16}<71/484<37/250<E_*$ simultaneously.
+
+Each low-label acquisition law is
+$\operatorname{tr}[(K_j^\dagger K_j+N_j)\rho_{y,e,n}]$.
+Each high law is $(1-\delta)A_y/2$, and complement laws vanish on
+these histories. Hence the generated-record TV and contrast are exactly
+
+$$
+T_{\rm instr}=\tfrac12[H_{\rm live}+\sum_j\pi_j|f_j+v_jk_j|],
+\qquad \mathsf V=s_0\sum_j\pi_j|z_j|\ge s.
+\tag{JS.91}
+$$
+
+Only $H_\pm$ have dimension at least three, so their worst-history
+ACQUIRED mass is $(1-\delta)A_{27}=\mathsf C(s)$, including every
+later-failure mass in the acquired probabilities. A retained report
+coin multiplies both height laws by the same conditional kernel;
+summing its outputs preserves the absolute difference at each parent
+label. It therefore preserves full TV, activity and sharp cost.
+This proves all required properties for the same instrument.
+$\square$
+
+For the spectral construction there are two saturated low labels,
+at most eight pure-live labels, two high and two complement labels
+before optional attenuation. These are upper construction counts.
+The limiting physical failure-ray count, actual low-label count,
+total acquired alphabet, hidden Kraus multiplicity and joint quantum
+dimension are different quantities. No minimum finite optimizer
+alphabet follows from these counts.
+
+The fixed-$s$ auxiliary constant $\nu_*$ retains FA.31's separate
+meaning. With $L_0=L^2$, the spectral $e_\pm$ of (JS.41),
+$r_\pm=(dh_1/(bh_2))\sqrt{m_2/m_1}(e_\pm)_2/(e_\pm)_1$,
+$\mathbf c_\pm=(\sqrt{\theta r_\pm^2+\omega},-r_\pm,1)^T$ and
+$a_0=[4\sum_\pm\mathbf c_\pm^TL_0^{-1}\mathbf c_\pm]^{-1}$,
+it is
+$\nu_*=\max_\pm m_1h_2^2(e_\pm)_1^2/
+[a_0d^2\mathfrak c(\mathbf c_\pm)]$.
+That auxiliary family consists of $\sqrt{a_0}\mathbf c_\pm$ and
+the support-restricted IR null decomposition of its residual Gram.
+It is not $\mu/c_*(r)$, a failure measure, or (JS.86)'s rare mass.
+The current constructions use (JS.86) and the corner repair directly;
+they do not borrow a uniform fixed-$s$ bound from this auxiliary family.
+

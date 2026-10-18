@@ -1,0 +1,46 @@
+**Definition 1.3 (one common fractional law and its original targets).**
+For finite $t=e^A-1\ge t_0>0$, let
+
+$$
+\begin{gathered}
+X=\{(u,v,\xi):u^2+v^2=1,\ 0\le\xi\le1\},\quad
+b_x=t\mathfrak c(x)\xi,\\
+\Gamma(x,\xi)=(1,u,v,u^2,uv,\xi\mathfrak c,
+                    \xi\mathfrak c u^2,\xi\mathfrak c uv)^T,\\
+B(t)=(1,0,0,\alpha,0,\mu/t,U/t,0)^T,\qquad
+k(x,\xi)=|u|,\quad g_t(x,\xi)=|\ell(x)+b_x f(x)|.
+\end{gathered}
+\tag{IC.5}
+$$
+
+A finite law is $\pi=\sum_i p_i\delta_{(x_i,\xi_i)}$ with $p_i>0$
+and $\int\Gamma\,d\pi=B(t)$; zero weights are omitted.
+These $p_i$ sum to one and are coefficient weights, not acquisition
+probabilities. Set
+
+$$
+\begin{aligned}
+K(\pi)&=\int k\,d\pi,& J_t(\pi)&=\int g_t\,d\pi,\\
+R_t(r)&=\max_{\int\Gamma\,d\pi=B,\ K(\pi)\ge r}J_t(\pi),&
+C_t(\lambda)&=\max_{\int\Gamma\,d\pi=B}(J_t(\pi)+\lambda K(\pi)).
+\end{aligned}
+\tag{IC.6}
+$$
+
+The original weak request is $r=\sqrt\alpha\,s/s_0$, with
+
+$$
+0\le r\le r_{\max}(t)
+=\sqrt\alpha\left[q_F\sqrt{u_F}
+ +\sqrt{(1-q_F)(1-q_Fu_F)}\right],\qquad q_F=\nu/t.
+$$
+
+GC Proposition 12.2 identifies these eight moments with the same full
+live Gram $\int hh^T\,d\pi=I_3$ and full physical failure covariance
+$\int b_x n_hn_h^T\,d\pi=M$. It identifies the original optimum with
+$\mathcal T(s,t)=(H_0+R_t(r))/2$. The absolute value is taken within
+each original label before integration. The actual acquisition effect
+of a finite low atom is $p_iK_{h_i}^\dagger K_{h_i}+p_i b_i n_{h_i}n_{h_i}^T$.
+These identifications use one common law, not a live marginal combined
+with a separately optimized failure marginal.
+

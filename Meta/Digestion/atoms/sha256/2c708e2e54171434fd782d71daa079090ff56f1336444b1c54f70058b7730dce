@@ -1,0 +1,22 @@
+**定义 190.3（完整配置、正确下包络与受限成本）。** 对任一上述目录 $\mathcal K_C$，其中 $\mathcal K=S,W$、$C=N,O$，完整配置是有限非负系数 $\lambda_D$。令
+
+$$
+s=\sum_D\lambda_D,\qquad
+q_w=\sum_D\lambda_D\mathbf e_{D(w)},\qquad
+f_w=(1-s)\mathbf e_{R(w)}+q_w,
+\qquad m_n(f)=\min_{w\in\Omega_n}f_w(n).
+\tag{190.5}
+$$
+
+同一配置用于全部字、全部胞和全部事件行。$f$ 的坐标总和为一，但 $s>1$ 时它可有负坐标，不能称为可执行概率核。令 $A_C^{\mathcal K}$ 的列为 $z_D-\mathbf r$，并定义
+
+$$
+\rho_C^{\mathcal K}(x)=
+\inf\left\{\sum_D\lambda_D:
+ \lambda_D\ge0,\ A_C^{\mathcal K}\lambda\ge h(x)\right\},
+\qquad \inf\varnothing=+\infty.
+\tag{190.6}
+$$
+
+完整闭帽可行性就是 $f$ 的各事件坐标满足 $d(x)$；正确单点行因其需求在整个 $\Omega_n$ 上相同，等价于 $m_n(f)\ge a_n-e$。原完整目录的成本仍记为 $\rho_N,\rho_O$，绝不以受限成本替换。
+

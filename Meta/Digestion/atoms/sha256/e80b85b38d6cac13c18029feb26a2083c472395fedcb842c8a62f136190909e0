@@ -1,0 +1,34 @@
+**定理 449.3（临界有符号部分保持原样）。** 在原归一化下，令
+
+\[
+Z_\psi(x)=\sqrt{x}\log x\,I_\psi(x),\qquad
+Z_{\mathsf F}(x)=\sqrt{x}\log x\,I_{\mathsf F}(x).
+\]
+
+则
+
+\[
+\boxed{
+Z_{\mathsf F}(x)-Z_\psi(x)
+=\frac{\kappa}{\sqrt{x}}
++O(M_\alpha x^{-1/2-\alpha})\longrightarrow0.
+}
+\tag{HT.16}
+\]
+
+因此两个完整尾的上极限、下极限及绝对值上极限相同，允许扩展实数值。
+特别地，
+
+\[
+I_\psi(x)=O\!\left(\frac1{\sqrt{x}\log x}\right)
+\quad\Longleftrightarrow\quad
+I_{\mathsf F}(x)=O\!\left(\frac1{\sqrt{x}\log x}\right).
+\tag{HT.17}
+\]
+
+**证明。** 乘（HT.12）以 \(\sqrt{x}\log x\) 得（HT.16）；
+趋零差保留上述全部上、下极限，且（HT.11）给
+\(|Z_{\mathsf F}-Z_\psi|\le M_0/\sqrt{x}\)，从而得到（HT.17）。
+这是在同一完整原尾上的精确运输；并未证明两边任一临界界实际成立。
+证毕。
+

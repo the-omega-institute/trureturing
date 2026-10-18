@@ -1,0 +1,5 @@
+## 5. Action-order closure and the mixed kernel
+
+Fix a finite menu $\mathcal M$ of action names, including namespace and
+type.  The menu is part of the task; enlarging it changes the theorem.
+

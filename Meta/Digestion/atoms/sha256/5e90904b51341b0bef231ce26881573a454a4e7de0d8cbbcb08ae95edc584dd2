@@ -1,0 +1,68 @@
+**Lemma 2.2 (Exact finite orbit identity and normalization).** For
+
+$$
+v_{\mathrm A}(\theta,\phi)
+=\sqrt{2/5}\,w_+(\theta)+\sqrt{3/5}\,w_-(\phi),\qquad
+v_{\mathrm B}(\theta)=\sqrt{3/5}\,d+\sqrt{2/5}\,w_+(\theta),
+\tag{2.5}
+$$
+
+let $P_{\mathrm A}=v_{\mathrm A}v_{\mathrm A}^T$ and
+$P_{\mathrm B}=v_{\mathrm B}v_{\mathrm B}^T$. Normalized circle integrals
+satisfy, for every complex matrix $X$,
+
+$$
+\begin{aligned}
+S(X)
+&=\frac{10}{3}\int P_{\mathrm A}(\theta,\phi)X
+P_{\mathrm A}(\theta,\phi)\,\frac{d\theta\,d\phi}{(2\pi)^2}\\
+&\quad+\frac53\int P_{\mathrm B}(\theta)X
+P_{\mathrm B}(\theta)\,\frac{d\theta}{2\pi},\\
+\sum_{f\in F}c_fP_f&=I_5.
+\end{aligned}
+\tag{2.6}
+$$
+
+Proof. The vector norms are one by the mutually orthogonal summands in
+(1.4). For the A-family, every entry of $PXP$ is a linear combination
+of products of four vector coordinates. Its degrees in the plus and
+minus plane coordinates are
+$(4,0),(3,1),(2,2),(1,3),(0,4)$.
+A homogeneous trigonometric monomial of degree $a$ has frequencies among
+$-a,-a+2,\ldots,a$. The three-point circle average kills every frequency
+not divisible by three. At degrees zero, two and four, the only surviving
+frequency is zero, exactly as in the circle integral. At bidegrees
+$(3,1)$ and $(1,3)$, the degree-one factor has zero three-point average
+and zero integral; both product averages therefore vanish, including
+the potentially surviving frequencies of the degree-three factor.
+This proves the A quartic identity. The same argument at total degree
+two proves its projector-average identity.
+
+For the B-family every entry of $PXP$ has circle frequency between $-4$
+and $4$. The five-point root-of-unity sum kills all its nonzero
+frequencies, so it is exactly the circle integral. The same holds for
+the quadratic entries of $P$. These are identities of coefficient
+tensors, hence apply to arbitrary complex $X$.
+The total weights are $9(10/27)=10/3$ and $5(1/3)=5/3$, giving the
+first identity of (2.6).
+
+Circle second moments are $R_\pm/2$ on either rotation plane; the mean
+plane vector is zero. Consequently the two contributions to the
+projector sum are
+
+$$
+\begin{aligned}
+\sum_{k,\ell}c_{\mathrm A,k,\ell}P_{\mathrm A,k,\ell}
+&=\frac{10}{3}\left(\frac15R_++\frac3{10}R_-\right)
+=\frac23R_++R_-,\\
+\sum_kc_{\mathrm B,k}P_{\mathrm B,k}
+&=\frac53\left(\frac35R_0+\frac15R_+\right)
+=R_0+\frac13R_+.
+\end{aligned}
+\tag{2.7}
+$$
+
+Their sum is $I_5$. Thus (2.6) identifies an already finite channel;
+its integrals introduce no continuous flag or future operation.
+$\square$
+

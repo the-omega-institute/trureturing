@@ -1,0 +1,15 @@
+### 476.2 实际 floor 窗口与临界归一化
+
+对原物理积分 $P_x$ 定义完整有符号 collar
+
+$$
+C_x(N)=\sum_{\substack{1\le m\le N\\m\text{ 奇}\\\lfloor N/2\rfloor<m}}
+\mu(m)\bigl(P_x(2m)-P_x(N+1)\bigr).
+$$
+
+完整有限配对恒等式已保留
+
+$$
+\operatorname{clippedCutoff}_x(N)-\operatorname{naturalCutoff}_x(0,N)=C_x(N).
+$$
+

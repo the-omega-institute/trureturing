@@ -1,0 +1,39 @@
+**Corollary 10.2 (a bounded shape with the necessary correction).** For every allowed prior and every rational $0<t\le1$,
+
+$$
+0\le J_t-J_S\le a(t),\qquad
+\max\{0,J_t-a(t)\}\le J_S\le J_t.
+\tag{10.2}
+$$
+
+For the exposure certificates, original actual witness families and future levels of Corollary 5.3, set $c_n=\max_sE_{s,n}+(6/25)^{L_n}$ and let
+
+$$
+k_{n,t}=\min_{M\in\mathfrak S_{\mu,t}}
+ \max\{A_{{\rm conf},p,L_n}(M)-\rho_p,
+        A_{{\rm conf},\beta,L_n}(M)-\rho_\beta\}.
+\tag{10.3}
+$$
+
+This is the same finite-query functional defining $K_n$, restricted to the padded tolerance shape. Then
+
+$$
+K_n\le k_{n,t}\le K_n+a(t),\qquad
+\max\{0,k_{n,t}-a(t)\}\le J_S\le k_{n,t}+c_n,
+\tag{10.4}
+$$
+
+and its transfer to the original full observer class is
+
+$$
+\frac{11}{61}\max\{0,k_{n,t}-a(t)\}
+\le J(\mathfrak M_\mu)\le k_{n,t}+c_n.
+\tag{10.5}
+$$
+
+In particular a rigorous bounded-shape certificate $k_{n,t}\ge a(t)+c$, $c>0$, proves the unrestricted full-class gap $J(\mathfrak M_\mu)\ge11c/61$. No positive certificate value is supplied by these inequalities alone.
+
+Proof. The padded-shape class is contained in the union of all finite stationary shapes, so $J_S\le J_t$. For any stationary table, Theorem 9.2 bounds the increase of its two configuration risks by $a(t)$, and padding does not change them. Taking its infimum proves $J_t\le J_S+a(t)$, without assuming attainment of $J_S$. The separate phase minima give $J_S\ge0$.
+
+For (10.4), inclusion gives $K_n\le k_{n,t}$. The finite-partition assertion of Theorem 9.2 applies to every history in the same $\mathcal W_p,\mathcal W_\beta$ used in $K_n$, with the same actual target. Its one-sided configuration error bounds the increase of this functional by $a(t)$. Taking the unrestricted shape infimum gives $k_{n,t}\le K_n+a(t)$. Corollary 5.3 gives $K_n\le J_S\le K_n+c_n$, yielding both corrected bounds. The fixed finite-history functional is continuous on the compact padded-shape table space, so its stated minimum exists. Finally (2.6) gives $(11/61)J_S\le J(\mathfrak M_\mu)\le J_S$, proving (10.5). The lower certificate subtracts the shape-aggregation error before applying the full-class comparison factor. ∎
+

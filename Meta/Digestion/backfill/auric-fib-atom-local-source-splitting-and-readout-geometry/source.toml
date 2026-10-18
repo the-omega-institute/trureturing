@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-local-source-splitting-and-readout-geometry"
+path = "docs/develop/theory/AURIC_FIB_ATOM_LOCAL_SOURCE_SPLITTING_AND_READOUT_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

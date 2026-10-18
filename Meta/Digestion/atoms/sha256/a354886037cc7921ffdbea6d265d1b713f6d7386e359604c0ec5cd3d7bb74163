@@ -1,0 +1,42 @@
+**Definition 10.12 (All mode phases unknown).** Fix a positive calibrated
+law $p$ on all $B_n$ and put $P=\operatorname{diag}p$,
+$G=D^{\mathsf T}P^{-1}D$. In this section and §§10.11–10.13 the state is
+
+$$
+|\psi_\theta\rangle=\sum_I\sqrt{p_I}e^{-i\theta_I}|I\rangle,\qquad
+\Phi(\theta)=D^{\mathsf T}\theta,
+\tag{10.40}
+$$
+
+where every mode phase may vary in a local real chart. The reference is
+the supplied same-phase point $\theta=0$ for the site menu. A target
+estimator has mean zero there and the full expectation derivative
+
+$$
+\left.\frac{\partial}{\partial\theta}
+\mathbb E_\theta\widehat\Phi\right|_0=D^{\mathsf T}.
+\tag{10.41}
+$$
+
+This is a task with all phase nuisance directions; its phase vector is
+not restricted to $W\Phi$. The common phase is immaterial because
+$D^{\mathsf T}\mathbf1=0$. The probability law is fixed; no probability
+nuisance gradient is part of (10.41).
+
+The recorded site menu is exactly Definition 9.1 and Proposition 9.2,
+with the same legal matching pairs, blocked outcomes, negative phases
+and calibrated quadrature basis. For fixed probabilities
+$\eta_i\ge0$, $\sum_i\eta_i=1$, its one-copy information is
+
+$$
+J_\eta=4L_\eta,\qquad
+L_\eta=\sum_i\eta_iL_i,\qquad
+L_i=\sum_{\substack{e=(u,v)\\\text{legal site-}i\text{ pair}}}
+\frac{p_up_v}{p_u+p_v}(e_u-e_v)(e_u-e_v)^{\mathsf T}.
+\tag{10.42}
+$$
+
+The correspondences to (9.4)–(9.7) are identity maps for $p,\theta,\eta$,
+the complete record $(i,e,\pm)$ or $(i,w,\mathrm{blocked})$, and sample
+count $N$. No new outcome erasure or instrument is introduced.
+

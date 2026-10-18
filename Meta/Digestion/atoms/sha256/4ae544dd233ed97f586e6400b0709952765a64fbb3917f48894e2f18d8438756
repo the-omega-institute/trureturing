@@ -1,0 +1,7 @@
+**Corollary 135.3 (at most two external labels globally).** If |X|<=2,
+every such field is genuine.
+
+Proof. The source flat block in Theorem 134.1 places M in X, while its
+escape block places D,Z in X. They are three distinct labels, since
+x_Z>x_M>x_D. QED.
+

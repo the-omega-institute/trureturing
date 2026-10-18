@@ -1,0 +1,30 @@
+## 120. 已有相干族的线性读口
+
+**推论 C-120.1（C-96 中心族的同对角读数）。**
+在 C-96.1 中取 $\nu=1/2$、$b_0=|+\rangle$、$b_1=|-\rangle$，
+保持其原参数 $0\le\gamma\le1$。则同一个族满足
+
+$$
+a(\sigma_\gamma)=\gamma,\qquad b(\sigma_\gamma)=1,
+\qquad\mathcal C(\sigma_\gamma)=\gamma,
+\qquad\operatorname{diag}\rho_\gamma=p^{(r)}.
+\tag{C120.1}
+$$
+
+C-94 实际双份乘积测量的旧对照与单份线性读数分别为
+
+$$
+q_{--}-q_{-+}=\frac{r^2\gamma^2}{4},\qquad
+\operatorname{Tr}\rho_\gamma(K_1+K_2-P_{\mathrm b})=r\gamma.
+\tag{C120.2}
+$$
+
+证明。$K_1e_0=e_1$、$K_1e_1=e_0$，而 $K_2e_j=e_j$。
+将 C-96.1 的二阶支撑矩阵代入，即得实读数 $\gamma,1$；
+所有振幅取实，故虚部为零。
+对角与 concurrence 直接分别应用 C-96.2 和 C-96.3，
+后者在 $\nu=1/2$ 给 $\mathcal C=2\gamma\sqrt{1/4}=\gamma$。
+同样直接应用 C-96.2 的 $h=r^2/4$ 给第一个对照式；
+第二个由线性期望及底面质量 $r$ 得到。
+此处的线性与二次响应比较限定在同一个已给相干族及各自实际读口上。证毕。
+

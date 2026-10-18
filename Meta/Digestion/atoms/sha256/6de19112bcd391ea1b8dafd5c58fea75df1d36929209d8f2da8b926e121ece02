@@ -1,0 +1,54 @@
+**Theorem 29.2 (late comparison at the actual spectral parameter).** For $g\in L^1\cap L^2$ complex, $0<s<s_0$ and $0<h\le1$,
+
+$$
+\| (\mathcal B_s(h)^*-\mathcal N_s)g\|_2
+ \le C(h+s^5)(\|g\|_1+\|g\|_2)
+       +Cs^7h^{-1/4}\|g\|_1.
+\tag{29.3}
+$$
+
+Consequently, on the actual path with $h_s\le1$ and P (100.3)'s $r_s\ge c>0$,
+
+$$
+\| (\mathcal B_s(h_s)^*-\mathcal N_s)g\|_2
+ \le C_g(h_s+s^5).
+\tag{29.4}
+$$
+
+Proof. P (104.4), symmetry and semigroup composition give, uniformly in both endpoints and including zero extension,
+
+$$
+\begin{aligned}
+\|Q_s(t)\|_{2\to2}&\le1,\\
+\|Q_s(t)\|_{1\to\infty}&\le
+ \begin{cases}Ct^{-7/2},&0<t\le T,\\Cs^4t^{-3/2},&t\ge T,\end{cases}\\
+\|Q_s(t)\|_{1\to2}&\le
+ \begin{cases}Ct^{-7/4},&0<t\le T,\\Cs^2t^{-3/4},&t\ge T.\end{cases}
+\end{aligned}
+\tag{29.5}
+$$
+
+For the middle line apply the column identity at time $t/2$ and Cauchy–Schwarz between the two endpoints. The overlap of the two time regimes changes only the constant. P (104.6) gives $\|F_s\|_2+\|F_s\|_\infty\le C$. The short-field part of the difference in (29.3) is
+
+$$
+F_s\int_0^T(e^{-ht}-1)Q_s(t)g\,dt
+ +F_s\int_T^\infty e^{-ht}Q_s(t)g\,dt.
+$$
+
+On $(0,1)$ use $|e^{-ht}-1|\le ht$, the multiplier supremum and $L^2$ contraction. On $(1,T)$ use the multiplier $L^2$ norm and the $1\to\infty$ bound. The first term is bounded by
+$Ch\|g\|_2+Ch\|g\|_1\int_1^\infty t^{-5/2}dt$.
+The second is at most $Cs^4\|g\|_1\int_T^\infty t^{-3/2}dt=Cs^5\|g\|_1$.
+
+The fixed-cutoff multiplier $W_1$ is bounded by Definition 1.2, so $\|U_s^{>}\|_\infty\le Cs^5$. Its return on $(0,T)$ costs
+$Cs^5(\|g\|_2+\|g\|_1\int_1^\infty t^{-7/4}dt)$.
+On $(T,\infty)$ it costs at most
+
+$$
+Cs^7\|g\|_1\int_T^\infty e^{-ht}t^{-3/4}dt
+ \le Cs^7h^{-1/4}\|g\|_1.
+$$
+
+These estimates prove (29.3). Finally
+$s^7h_s^{-1/4}=a^{1/4}s^5r_s^{-1/4}\le Cs^5$, proving (29.4). Absolute kernel bounds apply to complex inputs. Contraction uses $C_s\ge0$; the shifted heat has not been treated as a raw-measure Markov semigroup. Both native deaths remain in every heat operator. $\square$
+
+

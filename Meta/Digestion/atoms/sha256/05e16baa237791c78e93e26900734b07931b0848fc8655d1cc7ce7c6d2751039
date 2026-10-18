@@ -1,0 +1,45 @@
+**Convention 33.2 (actual operations and native obligations).** All maps
+are common: $u_*,s,E,V_T,V_S$ and the output measure are fixed before
+the sole unknown specimen is received. Neither encoder nor decoder
+uses $y,e,n,\beta,m$ as an input. The acquired record is generated
+by (JR.5), and execution is controlled only by that actual record.
+The parameter $s$ selects an actually supplied acquisition instrument;
+it is not an unknown-source-dependent calibration or a cost-free
+permission inferred from an abstract dilation. No prior, reset,
+survival conditioning, added specimen or readable old history occurs.
+The full-complex and passive-reference identities, five original labels
+and exact-time CP measures are those proved in Theorem 30.2.
+
+`OriginalControlComposition.OriginalControl` specifies continuity,
+strict-domain, variation and regularity conditions on real paths. Its
+private absolute-continuity and integral helpers, and its chronological
+concatenation theorem, construct no encoder or controlled qutrit decoder.
+[Probability/Phase Transport][PPT], Definition 10.1, includes
+$P=\partial_\kappa$ and $Q=\sum_aw_a(\kappa)\partial_{h_a}$;
+its probability-changing noncommuting fields prevent treating diagonal
+filters as an exhaustive native menu. The acquisition instrument
+(JR.5), coherent storage, actual classical flags, calibrated isometric
+decoding and their permissions remain additional services to be supplied
+under that original operation contract. Geometric reachability alone
+does not enact them. No sensor priors, action, symmetry or angle are
+identified with the actual source, and no spectral weak-binding carrier
+is substituted for it.
+
+The law $g(t)dt$ is an exact mathematical output measure. A physical
+implementation still needs the absorbing failure to occur at that
+elapsed time, no later positive-carrier operation after failure, live
+output at time one, and all original archives, aligned clocks,
+permissions and controller updates. The cut must fit that same clock;
+Definition 30.1 grants no extra acquisition time. An internal label
+destined for later failure or a timestamp drawn from $g$ supplies
+neither an absorbing event nor its timing. These obligations remain
+unresolved. The sharp ceiling concerns the PARTICULAR complete channel
+$\widehat\Phi_*$ and actual finite factorizations of it; the
+sign-averaged-live conclusions about other optimizers do not extend
+the ceiling to their full channels. The resource curve is exact for
+the displayed family and is not claimed globally sharp. The native
+acquisition/control programme therefore remains open.
+
+[CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
+[PPT]: AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+

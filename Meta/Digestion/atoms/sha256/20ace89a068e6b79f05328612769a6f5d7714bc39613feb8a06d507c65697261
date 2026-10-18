@@ -1,0 +1,55 @@
+**Theorem 6.1 (certified anchors attain the continuation operand minimum).**
+Fix any authentic first capture $v_0$, source $t=U_{v_0}$ and
+retained state produced before any future lag is known. A later
+deterministic acquisition service must recover the exact lag for
+every finite burst of updates before its invocation. It has no new
+source-bearing input other than its own native Reads. Arbitrary
+earlier information about $t$, arbitrary finite source-independent
+code and installed literals, arbitrary adaptive finite address
+queries and local computation are allowed and charged.
+
+The later designated capture must occur inside that later call.
+On a quiescent later call at $u=\rho^k t$, every such correct
+terminating service must have
+
+$$
+Q\ge\mu(u).
+\tag{AAR.20}
+$$
+
+If its earlier retained record is a certified minimizing leaf
+$(a,e)$ of $t$, Construction 2.4 without a row attains equality on
+every such $k$, using its genuine acquired relation (AAR.6).
+Its safety and finite-interference liveness do not require the
+later call to be quiescent; quiescence specifies the comparison
+on which this exact cost optimum is asserted.
+
+Proof. If every operand on the call at $u$ had length less than
+$\mu(u)$, every reply would be branch. Consider the identical
+first capture and retained state, with one additional actual
+update before the later invocation, giving $\rho u$. Branch
+persistence makes every one of those replies branch there too.
+Deterministic transcript induction makes all local state, selected
+words, outputs, chosen validation event and termination coincide.
+The later writer is paused in both histories, so the required lags
+are $k$ and $k+1$, a contradiction. The extra update occurs on the
+same register after the common prefix; there is no changed original
+source or free new row in this proof. The bound includes arbitrarily
+rich retained knowledge of that prefix. If $\mu(u)=0$ the length
+bound is zero; absence of any Read would still give the same
+contradiction for exact lag recovery.
+
+For attainment, Proposition 5.3 gives
+$Q=|a|+\lfloor(k+e)/2\rfloor$. The certified condition and
+Proposition 3.3 identify this with $\mu(\rho^k t)$. The program
+actually acquires its terminal literal and bit, and (AAR.6)
+recovers $k$. $\square$
+
+This is a one-coordinate optimum for later acquisition, after the
+earlier certification and retention have been paid. It is not an
+optimum for total lifetime queries, all-attempt work, complete rows,
+immutable installation or mutable space. If a current row or clock
+is supplied for free to the later service, the no-new-source-input
+hypothesis is false. A long mandatory operand alone is not a
+universal mutable-space lower bound.
+

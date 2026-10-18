@@ -1,0 +1,79 @@
+**Theorem 6.4 (explicit finite rational parameter approximation).**
+Fix $d$, $s=|S_d|$, and an integer $m\ge1$. The rational simplex grid
+
+$$
+G_m=\{k/m:k\in\mathbb N^S,\ \sum_xk_x=m\}
+\tag{NPC.29}
+$$
+
+has $\binom{m+s-1}{s-1}$ points and satisfies
+
+$$
+b_d\le\min_{\mu\in G_m}\beta(\mu)
+\le b_d+\frac{s-1}{m}.
+\tag{NPC.30}
+$$
+
+There is also a strictly positive rational grid
+
+$$
+G_m^+=\{((k_x+1)/(m+s))_{x\in S}:k\in\mathbb N^S,
+                                      \ \sum_xk_x=m\}
+\tag{NPC.31}
+$$
+
+of the same cardinality, with all coordinates at least $1/(m+s)$,
+for which the error in (NPC.30) is at most $2(s-1)/(m+s)$.
+For either grid let $\delta$ denote its displayed error bound.
+For every $\eta>0$ there is a grid point $\mu$ and a rational
+$0<C\le1$ giving a valid cap with
+
+$$
+b_d\le C\le b_d+\delta+\eta,\qquad
+0\le\sigma_d+\log_2C
+\le\log_2\bigl(1+s(\delta+\eta)\bigr).
+\tag{NPC.32}
+$$
+
+Thus the exact block lower endpoint can be approximated to any given
+error by a finite, explicitly specified set of rational weight
+parameters, with the all-length condition (NPC.28) retained.
+
+Proof. Start from a minimizing $\mu_d$. Round down its first $s-1$
+coordinates to multiples of $1/m$ and put the remainder in the last
+coordinate. This gives $q\in G_m$ with
+$\operatorname{TV}(q,\mu_d)<(s-1)/m$. Apply (NPC.24).
+The number of integer compositions of $m$ is the stated binomial
+coefficient.
+
+For the positive grid put $\widetilde q=(mq+\mathbf1)/(m+s)$.
+If $u$ is uniform on $S$, then
+$\widetilde q=\frac m{m+s}q+\frac s{m+s}u$.
+Since $\operatorname{TV}(u,\mu_d)\le1-1/s$, the triangle inequality
+gives
+
+$$
+\operatorname{TV}(\widetilde q,\mu_d)
+<\frac{s-1}{m+s}+\frac{s-1}{m+s}.
+$$
+
+Apply (NPC.24) again. This proves both grid estimates, without
+knowledge of which grid point is near a minimizer.
+
+Choose a rational cap at least $\beta(\mu)$ and at most
+$b_d+\delta+\eta$. If $\beta(\mu)<1$, rational density permits
+such a cap below or equal to one; if $\beta(\mu)=1$, use $C=1$.
+Definition 6.3 gives validity. Every valid cap has $C\ge b_d$;
+using $b_d\ge1/s$ gives
+
+$$
+\sigma_d+\log_2C=\log_2(C/b_d)
+\le\log_2(1+s(\delta+\eta)).
+$$
+
+For example choose $m$ with $(s-1)/m\le\delta_0$ for the first
+grid, or $2(s-1)/(m+s)\le\delta_0$ for the positive grid. Taking
+$\log_2(1+s(\delta_0+\eta))$ below the desired block tolerance
+gives the quantified approximation. No length cutoff enters this
+parameter estimate. $\square$
+

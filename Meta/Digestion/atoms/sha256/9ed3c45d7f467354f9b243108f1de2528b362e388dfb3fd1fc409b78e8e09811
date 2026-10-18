@@ -1,0 +1,45 @@
+**Theorem 6.3 (explicit joint-image and gluing feasibility).**
+Fix a candidate component profile $v$ with minimum zero in each
+component and $0\le v_i\le H$. Consider a finite ordered record
+list $(i_h,k_h)_{h=1}^N$, $N\ge1$, of acquired slot clocks. This list and $v$
+are realized by one source in a specified nonempty retained fiber
+$A_b$, at epochs $0\le\tau_1\le\cdots\le\tau_N\le2H$, if and
+only if there exist integers $u_C$ satisfying
+
+$$
+\begin{gathered}
+0\le u_C\le H-\max_{i\in C}v_i,\qquad
+ a_i=v_i+u_C\ (i\in C),\qquad a\in A_b,\\
+\tau_h=k_h-i_hq-v_{i_h}-u_{C(i_h)},\qquad
+0\le\tau_1\le\cdots\le\tau_N\le2H.
+\end{gathered}
+\tag{SCC.32}
+$$
+
+If $z=2D+c$ is retained, the additional equality is
+$u_{C_0}=c-v_0$. If proposed signed relative differences are given
+instead of $v$, they must first admit a component potential:
+closed-walk signed sums must vanish, and the resulting normalized
+profile must lie in $[0,H]^I$. Any prescribed new bridge differences
+must also be satisfied by these same $u_C$.
+
+Proof. A realizing source supplies $u_C=\min_{i\in C}a_i$ and its
+actual epochs; (SCC.2), normalization and box membership give every
+condition. Conversely take one solution of (SCC.32), form its single
+$X_a$, and capture $\rho^{\tau_h}X_a$ at each specified original
+slot. The right-clock supplier returns exactly $k_h$. The epochs
+have the required common chronological order; the old fiber and
+all bridges use the same $a$. For differences, path integration is
+well defined precisely when signed closed-walk sums vanish. An
+allowed profile has width at most $H$ and a feasible common shift;
+the remaining membership and epoch constraints are still (SCC.32).
+$\square$
+
+This is the finite-family specialization of the common-source
+obligation emphasized in [Native Cross-Epoch Relations, §§5–6][NCE].
+It does not replace that volume's all-source signed-row feasibility
+construction. Independent feasibility of each bridge, or just zero
+cycle sums, is insufficient when retained-code constraints couple
+the residual translations: all equations must have one solution in
+the same $\Lambda_b$.
+

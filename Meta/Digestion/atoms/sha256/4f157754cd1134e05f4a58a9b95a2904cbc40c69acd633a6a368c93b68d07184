@@ -1,0 +1,16 @@
+**Attribution 9.3 (Scope of the acquisition increment).** Proposition 2.1,
+Lemma 3.1, Theorem 4.1 and Lemma 8.1 supply the four-state law, its
+complement-pair products, fixed original clock and measurable endpoint
+description. The finite-energy/product-likelihood step in the proof is the
+elementary finite specialization of those displayed products. The filtering
+and synchronization results of [Chigansky--van Handel, Example 10][CVH],
+[Travers--Crutchfield, *Exact Synchronization*, Definitions 5--8 and
+Theorem 3](https://arxiv.org/html/1008.4182v3), and [Travers--Crutchfield,
+*Asymptotic Synchronization*, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) provide neighboring mechanisms but do
+not supply (9.2) for arbitrary integer-address adaptive paid reads. Equation
+(9.2) is the source-specific repo-derived quantitative bridge. It makes no
+sharpness or optimal-cost claim, and it does not assert physical storage,
+universal filtering, formal verification, or completion of the original
+attainment problem.
+

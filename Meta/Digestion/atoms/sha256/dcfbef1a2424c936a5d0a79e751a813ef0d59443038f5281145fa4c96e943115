@@ -1,0 +1,18 @@
+**Convention 9.3 (source-verified primary literature).** The following
+are credited `literature-attested` intermediates or explicit boundaries
+of transfer.
+
+| Primary source | Exact correspondence and limit |
+| --- | --- |
+| Maximilien Gadouleau, Adrien Richard and Éric Fanchon, *Reduction and Fixed Points of Boolean Networks and Linear Network Coding Solvability*, Proposition 7 and §II, [version 1][GRF] | Eliminating a loop-free coordinate of a finite-alphabet coding function preserves fixed points through reconstruction. Unary-component elimination is proved directly in §3. The native full-factor tables, same-coordinate guards and actual one-Read implementation require §§4–7 and are not inferred from a fixed-point count. |
+| G. David Forney Jr., *Codes on Graphs: Fundamentals*, §2.2, [version 2][Forney] | Equality constraints identify repeated variable occurrences. CBN §6 supplies the corresponding owned-potential identity; (RRN.18) preserves the same single ownership after the new seed elimination. No independent-replica or linear-code assumption is used. |
+| Thomas Mejstrik and Ulrich Reif, *A Hybrid Approach to Joint Spectral Radius Computation*, §1.1 and §3, [version 2][MR] | The setting is a finite family of fixed-dimension square matrices, with product growth and finite-tree/invariant-polytope certificates. No such fixed-dimension representation of all overlapping native owned-seed networks, with both required pressure inequalities, has been established here. Those certificates therefore provide no cofinal native verifier. |
+| Brigitte Mossé, Sasha Pignol and Elisabeth Remy, *On a theorem of François Robert*, Theorem 1, [version 1][Robert] | A circuit-free Boolean regulatory graph has one synchronous fixed point and convergence in at most its number of coordinates. The four-reply fixed-point propagation here is proved directly; it is not a physical-time assertion and supplies no weighted overlap bound. |
+
+The inspected functional-network and matrix-certificate sources do
+not supply the missing native all-size cofinality theorem. This is a
+bounded source correspondence, not a claim that no such theorem
+exists. The normal form uses the finite functional relation itself;
+no graph-entropy, tensor-norm or matrix-radius identity is assumed
+without its missing representation and inequality directions.
+

@@ -1,0 +1,14 @@
+**Theorem 4.2 (the pointwise traversal lower bound is false).** There exists a common effective exact policy on all $\mathcal T$ that reconstructs every two-leaf source with exactly two calls and two distinct requests. Hence the stronger assertion
+
+$$
+\forall A\in\mathcal A_{\square_1}\ \forall T\in\mathcal T,
+\qquad d_A(T)\ge2m(T)-1
+\tag{NDR.8}
+$$
+
+is false, even for a policy whose strict uniform ratio is two.
+
+**Proof.** First request $L$. If it is a labelled leaf, request $R$. If both are labelled leaves, return the pair of those labels. Such replies force a branch at the root and leaves at both children, so the returned tree is the source. In every other case use the supplied root traversal, retaining these initial reports and substituting a cached truthful reply when its address becomes pending. This skips a source call at a previously queried address, but otherwise follows the same finite reconstruction. It halts correctly on every finite tree.
+
+On each two-leaf source the first two replies are labels and the cost is two, below $2m-1=3$. On a one-leaf source the first $L$ reply is absent, and the fallback queries the root: the cost is two. On any other branch-rooted source, every preliminary address queried is an actual node; the fallback with cache reuse results in exactly one call at each actual node. Its cost is $2m-1$. Thus both ratios have supremum two. This is a counterexample to (NDR.8), not an exact size-dependent optimum for every leaf count. $\square$
+

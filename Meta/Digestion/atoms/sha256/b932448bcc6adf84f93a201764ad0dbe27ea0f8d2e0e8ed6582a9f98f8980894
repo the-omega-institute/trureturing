@@ -1,0 +1,16 @@
+**Definition 9.1 (primary analytic suppliers).** The classical tools used
+inside the source-specific proofs have the following precise scope.
+
+| Primary source | Correspondence used here |
+| --- | --- |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, [primary text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorem 2.13, Lemma 2.24, Theorem 6.24, §§7.1 and 9.1 | Closed-form representation, reducing subspaces, KLMN, Fourier and regular Sturm--Liouville tools. In (4.2) the Sturm--Liouville coefficients are $p_{\rm SL}=\varepsilon^2$, $r_{\rm SL}=1$, $q_{\rm SL}=c^2$ on a bounded interval with Dirichlet endpoints. The text's conjugate-linear first-slot inner product is conjugated to our linear-first-slot convention; energies and operator domains are unchanged. KLMN is used only with the strict relative bound in (3.8). |
+| [H] Y. Colin de Verdière, L. Hillairet and E. Trélat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, [doi:10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), §3.1.2, Theorem B and Theorem 3.2 | Free smooth heat and interior localization underlying [G]. For the present family the fields are $\varepsilon P,Q$, the density is smooth positive, the drift is zero, the bracket step is two, and the Dirichlet realizations are contraction semigroups. Theorems about smooth free operators are not applied to the singular attractive multiplier. |
+| [R] P. Ciatti, M. G. Cowling and F. Ricci, *Hardy and uncertainty inequalities on stratified Lie groups*, [arXiv:1308.2373v1](https://arxiv.org/pdf/1308.2373v1), §2 and Corollary 3.2 | The unweighted group estimate consumed by [G, Proposition 4.3]. Its substitution is $p=2$, $\alpha=1$, homogeneous dimension four, so $0<1<4/2$. Its group Green normalization is transferred by [G, Proposition 4.2], with the actual measure factor $\varepsilon^2/(2r)$ and unit-source factor $2r/\varepsilon^2$. |
+| [M] A. Gouasmi, E. J. Parish and K. Duraisamy, *A priori estimation of memory effects in coarse-grained nonlinear systems using the Mori--Zwanzig formalism*, [arXiv:1611.06277v2](https://arxiv.org/pdf/1611.06277v2), §2.1 | The distinction between a projected instantaneous term, hidden initial state and feedback memory. Exact elimination alone gives no complexity reduction. It does not supply the unbounded-domain calculation (6.5); that calculation is justified on the compact tests here. |
+
+These ingredients are `literature-attested`. The native first harmonic,
+its finite source-fiber witnesses, the simultaneous normalized amplitude
+and kinetic matching, and the quantified attractive response defect are
+`repo-derived` applications in this fixed contract. No worldwide priority
+or exhaustive literature-search claim is made.
+

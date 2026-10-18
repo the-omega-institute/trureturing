@@ -1,0 +1,61 @@
+**Definition 2.1 (source reconstruction).** Write $u=(\lambda_{\rm CG},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm CG},\eta_0,\eta_1,\eta_2)$. Its source box has radius $10^{-24}$ in every coordinate and centers
+
+| Coordinate | Exact rational center |
+| --- | --- |
+| $\lambda_{\rm CG}$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z_{\rm CG}$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+For the all-positive histories write $\rho_y=a_ya_y^T$ and $B_y^{\rm ideal}=\xi_y\xi_y^T$. Reconstruct the source by
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y^{\rm src}&=v_yv_y^T/(v_y^Tv_y),&
+A_5^{\rm src}&=\lambda_{\rm CG}R_5^{\rm src},\quad
+A_{27}^{\rm src}=(1-\lambda_{\rm CG})R_{27}^{\rm src},\\
+\zeta&=(z_{\rm CG},59\lambda_{\rm CG}/128,\lambda_{\rm CG}/2),&
+N^{\rm src}&=A_5^{\rm src}\odot\rho_5+A_{27}^{\rm src}\odot\rho_{27},\\
+S_0&=\operatorname{diag}\zeta-N^{\rm src},\\
+S_{ij}&=\begin{pmatrix}
+\zeta_j-\sum_{y=5,27}(A_y^{\rm src})_{ii}p_{yj}&-N^{\rm src}_{ij}\\
+-N^{\rm src}_{ij}&\zeta_i-\sum_{y=5,27}(A_y^{\rm src})_{jj}p_{yi}
+\end{pmatrix},\\
+H^{\rm src}&=1000\eta_0\operatorname{adj}S_0,&
+Q^{01}&=\eta_1\operatorname{adj}S_{01},\quad Q^{02}=\eta_2\operatorname{adj}S_{02}.
+\end{aligned}
+$$
+
+Here $\odot$ is entrywise multiplication. The original nine equations are $\Psi=(\nabla_x\mathcal L,g)=0$, with $x$ the first six coordinates,
+
+$$
+\begin{aligned}
+\mathcal F(x)&=\sum_{y=5,27}\operatorname{tr}(A_y^{\rm src}B_y^{\rm ideal})-\sum_i\zeta_i+6\lambda_{\rm CG}/11,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}),\qquad
+\mathcal L=\mathcal F+\sum_{j=0}^2\eta_jg_j.
+\end{aligned}
+$$
+
+All radicals are positive. With positive pivots define
+
+$$
+\begin{aligned}
+(h_0,h_1,h_2)^T&=H^{\rm src}e_0/\sqrt{H^{\rm src}_{00}},\\
+(a,b)^T&=Q^{01}e_0/\sqrt{Q^{01}_{00}},\quad
+(c,d)^T=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1&=1-H^{\rm src}_{11}-Q^{01}_{00},\quad
+m_2=1-H^{\rm src}_{22}-Q^{02}_{00},\\
+D&=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad S=ce_0e_2^T+de_2e_0^T,\quad
+M=\operatorname{diag}(0,m_1,m_2).
+\end{aligned}
+$$
+
+At $u_*$ the retained rank identities identify these factors with the source Kraus dictionary. Off root the formulas are merely comparison expressions; one must not replace their adjugate entries by factor squares using an unproved off-root rank identity.
+

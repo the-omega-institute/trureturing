@@ -1,0 +1,19 @@
+**Definition 9.4 (additional resource coordinates).** Equation (CWS.13)
+prices address letters only. Each of its $D$ root Reads still requires
+instruction selection, a port invocation, a response and a control
+transition. Its empty literal still requires the declared operand/port
+state. Service local steps, router installation, mutable word, response
+latches, selection machinery, delivery and handoff cleanup are separately
+paid. In a disjoint storage realization the instantaneous storage is
+the sum of the §4 account and these added regions; shared regions
+require an explicit nonoverlapping allocation and decoder. Peak storage
+is the maximum of this instantaneous sum. Theorem 4.4 bounds the
+protected RA representation, not an arbitrary added router.
+
+A finite value of $D$ or $\nu$ supplies no physical duration, bandwidth,
+energy or zero-cost hardware claim. If a cleanup protocol itself calls
+the source, its root Reads join $D$ and its nonroot Reads require their
+own address bill; (CWS.13) applies as written only to root-only additions.
+A retained transcript or certificate requires its own storage and changes
+the row-only handoff.
+

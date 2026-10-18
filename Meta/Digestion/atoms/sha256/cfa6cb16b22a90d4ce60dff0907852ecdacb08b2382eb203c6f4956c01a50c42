@@ -1,0 +1,17 @@
+**Assumption 3.1 (the admitted priced primitive basis).** Use SSA
+Assumption 3.1's seven ports P,L,R,$O_0,O_1,H_0,H_1$, reciprocal endpoint
+slots, distinguished root, bounded root walks, finite truth tables and
+atomic patch commitment. Charge each probe, slot assignment, newly created
+vertex and commitment. Include all seven initial slot values of a new
+vertex, including empty slots, and unchanged-value writes. Internal partial
+slot assignments are not observable cuts of this declared primitive.
+This is the sufficient stronger basis already admitted by SSA; no
+edge-at-a-time implementation or physical duration is inferred.
+
+The finite apparatus below includes the native row variants, the bounded
+fresh-bit constructor of Definition 3.3, and the already authorized Install
+guard. Its finite description and mechanism are charged apparatus. It is
+not an extra live controller or permission: only the actual active native
+row, or the one authorized Install instrument, enables its patch. In
+particular an apparatus entry for $D_1$ does not enable $D_1$ before DONE.
+

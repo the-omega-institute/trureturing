@@ -1,0 +1,41 @@
+**Definition 21.2 (the conditional width frontier).** For a positive
+integer $d$, let $\mathfrak W(k,d)$ contain every controller satisfying
+Assumption 21.1 on an arbitrary installed subset of $\Gamma_d$ of
+(NARC.17.6). Every declared successor must be installed and equal to
+its running word or differ by one legal bit. Every original must reach
+its correct first halt within $k$ Reads from the common initial word.
+Set
+
+$$
+L(k)=\min\{d\ge1:\mathfrak W(k,d)\ne\varnothing\},
+\qquad \min\varnothing=\infty.
+\tag{NARC.21.1}
+$$
+
+The family includes arbitrary finite literal lengths, every installed
+subset, repeated and constant Reads, early halts, duplicated output
+halts, shared control and cycles in the union of different-source
+transitions. There is no prescribed installed-state count. The two-Read
+case is exactly Definition 17.5's competition, so Theorem 20.1 supplies
+$L(2)=L_2=6$.
+
+The full fiber, both realization directions and target are those of
+Proposition 17.2 and Definition 17.3:
+
+$$
+\begin{aligned}
+C&=\{(1,0),(1,1),(0,1)\}
+ \cup\{(15,j),(j,15):0\le j\le5\},\\
+\ell_{a,b}&=17-b,\qquad
+Y_{a,b}=\langle T_{17+a-b},T_{33}\rangle,\qquad
+g(D)=\{2,12,13,14,15,16,17\}.
+\end{aligned}
+\tag{NARC.21.2}
+$$
+
+Every member realizes the entire acquired row at its own lag, and the
+label and entire row exclude every other history. All lags are at
+least two, so either lag convention retains the same fifteen members.
+Hidden age $n=17+a-b$ is only a proof coordinate. Reads keep that
+source stationary; the chronological budget is not the generation lag.
+

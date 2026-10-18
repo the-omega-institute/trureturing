@@ -1,0 +1,34 @@
+**Example 11.2 (a forward-closed whole signed fiber with transient
+leaves).** Take a root old cut, its unique one-hole row, no literal
+records, and the actually acquired negative record
+$(2,L,2,R,\ne)$. Its entire source fiber is
+
+$$
+D=\{\alpha,\beta\}\ \cup\
+  \{\langle x,y\rangle:x\ne y\}.
+\tag{NSF.26}
+$$
+
+Indeed $\rho^2\alpha=T_2$ has distinct children $\beta,\alpha$,
+and $\rho^2\beta=T_3$ has distinct children $T_2,\beta$.
+Both endpoints are reached. For an original pair the children are
+$\rho^2x,\rho^2y$, distinct exactly when $x\ne y$ by injectivity.
+This proves both inclusions, including the guards. The fiber is
+nonempty, includes arbitrary non-atomic residuals, and is
+forward-closed: the two leaves progress into $\beta$ and an
+unequal-child pair, and original unequal children stay unequal.
+
+For $Q=\{L,R\}$, the auxiliary $D_Q$ consists of the pairs and has
+the constant two-class partition. Theorem 9.3 recovers the original
+row with one current read at $R^{\lceil N/2\rceil}$, $N\ge2$,
+decoding the original root as $\alpha,\beta$ or branch. These are
+three different full rows: two concrete leaf rows with no holes,
+and the two-hole unequal row. A zero-read controller cannot output
+all three from one common input, so the raw upper bound one is
+attained as an optimum here. This lower bound concerns raw reads,
+not a minimum literal length.
+
+Replacing the entry domain by $D_Q$ would lose the two concrete
+outputs. For $Q=\varnothing$, the same inhabited closed fiber has
+no bounded whole-tree service, by incompleteness of that cut.
+

@@ -1,0 +1,26 @@
+**Assumption 1.2 (explicit structural primitive).** Use SSA Assumption 3.1's
+seven reciprocal endpoint slots
+$\mathsf P,\mathsf L,\mathsf R,\mathsf O_0,\mathsf O_1,
+\mathsf H_0,\mathsf H_1$ and its bounded atomic patch convention.
+A patch follows specified bounded root walks, inspects finite components,
+uses a finite truth table, assigns a bounded endpoint list, constructs a
+bounded template, and commits one native core/control/receipt occurrence.
+Charge every probe, every designated assignment including unchanged values
+and empty-slot initialization, every created vertex, and the commitment.
+Internal endpoint assignments are not additional observable cuts.
+
+The distinguished root, finite routing foundation and finite rule mechanism
+are charged primitive apparatus. They contain no initial source value or
+future capacity advice. They do not constitute an implementation of atomic
+patches by ordinary RD/WR, and provide no new actor read or history entry.
+The native guard, owner, input/output restriction and prescribed row remain
+necessary. The model's one-head ordinary-tape and two-head meter cursor
+relations, including partial boot construction, remain its actual primitive
+cursor relations. No additional raw-code opcode for creating arbitrary
+heads, runtime pointers or whole-word effects is admitted.
+
+As in ARC Assumption 1.2, completion assertions require actual finite input
+at its prescribed sites and termination of each reached original local
+controller/prior computation. A finite-prefix assertion requires only the
+actual prefix. No uniform deadline or infinite supply is assumed.
+

@@ -1,0 +1,130 @@
+**定理 10.2（整个充分小源带上的实际单读恢复）。** There exists
+$\varepsilon>0$ such that the sixth-$J$ response is injective on
+the entire set
+
+$$
+K_\varepsilon=
+\{W\in\mathcal F_*:|\operatorname{tr}(JP)-1|<\varepsilon\}.
+\tag{10.9}
+$$
+
+One fixed sixth $J$ and its immediate reading recover the complete
+target for every member of this known set, with seven total
+readings. No additional restriction on drift, gain signs, roots,
+degrees or cardinality is imposed inside the band.
+
+Proof. By Lemma 10.1 and the inverse function theorem, there are open
+coordinate neighborhoods $V_0,V_\theta$ of $x_0,x_\theta$ on each
+of which $\mathcal T_J$ is injective and has a smooth inverse onto
+its image. The distinct base responses (9.12), (9.16) allow these
+neighborhoods to be shrunk so that
+
+$$
+S_J(V_0)\subset(-400,-200),\qquad
+S_J(V_\theta)\subset(-1000,-900).                            \tag{10.10}
+$$
+
+On the compatible part of either neighborhood, $\mathcal Y,\mathcal Z$
+are fixed. Thus $S_J$ alone is injective on each such entire part,
+and the two response ranges are disjoint. It remains to prove that
+some whole band (10.9) is contained in their union.
+
+Suppose no such band is contained there. Choose compatible worlds
+$W_n=(P_n,g_n,d_n)$ outside both neighborhoods with $u_n\to1$.
+Write $P_n$ as in (8.2). Since $0<a_n<1$ and
+$0<b_n,c_n<u_n$, a subsequence of their source entries converges
+to a nonnegative matrix
+
+$$
+P_\infty=\begin{pmatrix}a&b\\1-b&1-a\end{pmatrix},\qquad
+0\le a,b\le1,\qquad a(1-a)=b(1-b).                         \tag{10.11}
+$$
+
+Here trace and determinant pass to the limit. In particular
+$v_n=1+b_n\to1+b\ge1$, and $u_n,v_n,u_n+v_n$ stay bounded away
+from zero. This compactness does not assume the source-chart
+parameters stay bounded.
+
+We first exclude unbounded drift. From (8.3)–(8.5) write
+$G_i=\gamma_i+d\kappa_i$ for $i=4,5$, where
+
+$$
+\begin{aligned}
+\gamma_4&=96/u-288/v+(1248/5)/(u+v),&
+\kappa_4&=1-4/u+6/v-4/(u+v),\\
+\gamma_5&=360/u-960/v+624/(u+v),&
+\kappa_5&=4-15/u+20/v-10/(u+v).
+\end{aligned}                                              \tag{10.12}
+$$
+
+For $t_4=1+a+u,t_5=u+2v-a$, the last two ancestor equations are
+
+$$
+d(1+t_i\kappa_i)=y_i-t_i\gamma_i,\qquad i=4,5.
+\tag{10.13}
+$$
+
+Their right sides remain bounded along the convergent sources.
+If a further subsequence had $|d_n|\to\infty$, dividing (10.13)
+by $d_n$ and passing to the limit would give
+$1+t_4\kappa_4=1+t_5\kappa_5=0$ at (10.11). At $u=1$ these
+two expressions are precisely $Q_4/D,Q_5/D$ in (9.6). Thus
+$Q_4=Q_5=0$, so the residual (9.8) vanishes. Its closed-interval
+factorization forces $b=1/2$ or $b=\theta$, with the branch
+conditions of Theorem 9.1. At these candidates $Q_4=-15/8$ or
+$Q_4>7$, respectively, a contradiction. Therefore the drift
+sequence is bounded even along subsequences whose sources approach
+the boundary.
+
+Take a further subsequence with $d_n\to d$. The first four
+interpolation samples then converge, because their trace denominators
+stay positive. The gain coefficients converge by (8.4). The limiting
+gain is nonzero: if it were zero, the limiting initial and first
+readings would give both $d=0$ and $d=24$. All six ancestor
+equations pass to the limit. The closed-source part of Theorem 9.1
+now forces this limit to be $W_0$ or $W_\theta$. Both have strictly
+positive sources. The inverse chart in Lemma 10.1 is continuous
+there, so the coordinate sequence eventually belongs to $V_0$ or
+$V_\theta$. This contradicts its choice outside both. Hence a
+positive band radius with the required containment exists.
+
+For this radius, $S_J$ is injective on each of the two retained
+parts and their ranges are disjoint by (10.10), proving injectivity
+on all of $K_\varepsilon$. An actual read $s$ selects $V_\theta$
+when $s<-800$ and $V_0$ otherwise. Apply that neighborhood's inverse
+of $\mathcal T_J$ to $(48/5,-532/5,s)$, then (10.1) and (8.4),
+to return the complete $(P,g,d)$. Actual membership supplies existence
+of this inverse value; uniqueness is on the whole promised band.
+Only sixth $J$ is executed and read, so the budget is $6+1=7$.
+
+The band contains actual nonzero-drift continua, not just the two
+slice points. Indeed the first minor in (10.3) gives, by the
+implicit function theorem, the entire local compatible fiber at
+$W_0$ as a graph $(\alpha(d),\beta(d),d)$ for $d$ in an interval
+about zero. Differentiating its fixed $\mathcal Y,\mathcal Z$
+equations gives
+
+$$
+\alpha'(0)=-\frac{81125}{197952},\qquad
+\beta'(0)=-\frac{82175}{197952},\qquad
+\frac{dS_J}{dd}(0)=-\frac{199225}{4124},\qquad
+\frac{dS_M}{dd}(0)=-\frac{29740}{1031}.                       \tag{10.14}
+$$
+
+Thus both sixth responses are locally strictly decreasing after
+shrinking the interval. This is the usual implicit-function method
+around the base world, now with its actual response transversality;
+its existence alone is not a global inverse. The identity
+
+$$
+u-1=-\frac{(\alpha-1)(\beta-1)}{1+\alpha\beta}               \tag{10.15}
+$$
+
+and the two nonzero source velocities show $u<1$ for sufficiently
+small nonzero $d$. These worlds have $g(0)=-d\ne0$ and lie in
+$K_\varepsilon$ by continuity. Thus neither the initial-root
+condition nor the exact slice label is determined by $H_*$. The
+whole-band conclusion instead uses the closed-slice classification,
+both local inverses, disjoint response ranges, and the no-escape
+argument above. ∎
+

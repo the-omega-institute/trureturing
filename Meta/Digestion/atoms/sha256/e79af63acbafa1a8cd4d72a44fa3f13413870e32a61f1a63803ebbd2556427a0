@@ -1,0 +1,127 @@
+**Theorem 3.1 (same-flow return-weight response).** Every compatible pair of Definition 2.2 satisfies
+
+$$
+T\ge F(c,P)-2D,
+\qquad
+q\ge G(c,P)-\frac D9.
+\tag{3.3}
+$$
+
+These inequalities require neither endpoint boxes nor configuration-loss bounds. The two responses, $c$ and $D$ all belong to one pair of flows.
+
+Proof. Start an alternating acquired analysis chain with $Q_0\sim\nu_p$ and use the kernels from (2.5):
+
+$$
+Q_0\xrightarrow{B}W_0\xrightarrow{A}Q_1
+\xrightarrow{B}W_1\xrightarrow{A}Q_2\longrightarrow\cdots.
+$$
+
+The shared marginals make every finite window stationary under a shift of one full pair. This is the Markov analysis chain formed from the descriptor disintegrations of these two acquired law flows. Its finite-window distribution is independent of almost-everywhere choices of disintegration versions. It is not the original source conditioned on infinite noncompletion, an available runtime clock, or an assertion that the original hidden labels are Markov after projection to descriptors. Put
+
+$$
+U_i=1-u(Q_i),\quad V_i=v(W_i),\quad
+Z_i=U_iV_i,\quad g_i=U_i(1-V_i),\quad m=\mathbb E U_0.
+$$
+
+In this notation $\mathbb E Z_i=c$, $\mathbb E|Z_i-c|=D$ and $0\le g_i\le4/9$. Iterating the conditional full-law recursions gives
+
+$$
+\int Q(w_{j,1})\,d\nu_p
+ =\mathbb E\left[\left(\prod_{i=0}^{j-1}Z_i\right)g_j\right],
+\qquad
+T=\mathbb E[1-V_0+V_0g_1].
+\tag{3.4}
+$$
+
+For each fixed finite word, all intermediate laws and kernels here are those in (2.6). Null exceptional inputs remain null along every finite stationary path. Thus (3.4) uses both conditional residual equations, not just their unconditioned barycentres. The equality follows by recursive substitution of the own complete laws. It requires no identification of the analysis chain's three-stage join with a particular original observer's hidden return coupling.
+
+Since $Z_i,c\le\lambda$, product telescoping yields, for $j\ge1$,
+
+$$
+\left|\prod_{i=0}^{j-1}Z_i-c^j\right|
+\le\lambda^{j-1}\sum_{i=0}^{j-1}|Z_i-c|.
+$$
+
+Multiplication by $g_j\le4/9$ and stationarity give
+
+$$
+\left|\int Q(w_{j,1})\,d\nu_p-c^j\mathbb E g_0\right|
+\le\frac49j\lambda^{j-1}D.
+\tag{3.5}
+$$
+
+No independence between the weight errors and $g_j$ is used. Also $g_0=U_0-Z_0$, so $\mathbb E g_0=m-c$ exactly. Summing (3.5) for $j=1,2$ and keeping $j=0$ unchanged gives
+
+$$
+|P-S(c)(m-c)|\le\frac{92}{135}D.
+\tag{3.6}
+$$
+
+At $j=3$ the coefficient in (3.5) is $64/675$. Consequently
+
+$$
+q\ge \frac{Pc^3}{S(c)}
+ -\left(\frac{92c^3}{135S(c)}+\frac{64}{675}\right)D.
+$$
+
+Using $c\le4/15$ and $S(c)\ge1$, the coefficient is at most
+
+$$
+\frac{49088}{455625}<\frac19,
+$$
+
+which proves the second inequality in (3.3).
+
+For the suspended event, write $\delta_i=Z_i-c$. Since $V_i=(c+\delta_i)/U_i$ and $g_1=U_1-c-\delta_1$, the second identity in (3.4) becomes
+
+$$
+\begin{aligned}
+T={}&1-c(1+c)\mathbb E(U_0^{-1})
+ +c\mathbb E(U_1/U_0)\\
+&-\mathbb E\left[\delta_0\frac{1+c-U_1}{U_0}\right]
+ -\mathbb E[V_0\delta_1].
+\end{aligned}
+\tag{3.7}
+$$
+
+The first line has deliberately retained the actual ratio $U_1/U_0$. Its removal by a conditional-stationarity claim would be unjustified. Instead, bounded positive $U_0,U_1$ have the same marginal, so
+
+$$
+\mathbb E\log(U_1/U_0)=0,
+\qquad \mathbb E(U_1/U_0)\ge1
+\tag{3.8}
+$$
+
+by Jensen's inequality. The error coefficients obey
+
+$$
+0\le\frac{1+c-U_1}{U_0}\le\frac{10}{9},
+\qquad 0\le V_0\le\frac25.
+$$
+
+Thus the total absolute error in the second line of (3.7) is at most $68D/45$. On $[L_0,H_0]=[3/5,2/3]$, the reciprocal chord gives
+
+$$
+\frac1t\le\frac{L_0+H_0-t}{L_0H_0},\qquad
+\mathbb E(U_0^{-1})\le\frac52\left(\frac{19}{15}-m\right).
+\tag{3.9}
+$$
+
+Combine (3.7)–(3.9), then use the lower bound for $m$ from (3.6). This yields
+
+$$
+T\ge F(c,P)
+ -\left(\frac{68}{45}
+  +\frac{5c(1+c)}{2S(c)}\frac{92}{135}\right)D.
+$$
+
+The function $c(1+c)/S(c)=1-1/S(c)$ increases with $c$. On (2.8),
+
+$$
+\frac{5c(1+c)}{2S(c)}\le\frac{190}{301}<\frac23.
+$$
+
+The last error coefficient is therefore at most $796/405<2$. This proves the first inequality in (3.3). All expectations are bounded, and all products refer to one stationary acquired chain. ∎
+
+The source-specific content is the paired response (3.3), including its shared return-weight parameter. Product telescoping, Jensen's inequality and the reciprocal chord are mature tools consumed by that relation; they are not separately new general inequalities.
+

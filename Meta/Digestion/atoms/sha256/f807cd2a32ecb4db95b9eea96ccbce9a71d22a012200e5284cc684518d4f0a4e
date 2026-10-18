@@ -1,0 +1,21 @@
+**Theorem 8.1 (finite-horizon continuity, full-risk discontinuity).** Adjoin the valid endpoint prior $\mu_0=(1/4,3/4,0)$ to the line $0\le\delta\le1/4$. This is compact even in prior TV. Every fixed $\Phi_H(M,\mu_\delta)$ is continuous on it. Nevertheless,
+
+$$
+\Phi_\infty(M,\mu_0)=5/8-m_0-\rho_p,
+\qquad m_0=432419/1120110,
+\tag{8.1}
+$$
+
+whereas every $\delta>0$ has $\Phi_\infty=L$. The upward limit jump at zero is
+
+$$
+L-\Phi_\infty(M,\mu_0)=m_0-3/8=49511/4480440>0.
+\tag{8.2}
+$$
+
+**Proof.** There are finitely many legal acquired words of at most $H$ Reads, and any optional Stop positions are determined by the original parser. Every word's likelihood denominator in (2.2) stays positive at every $\delta$, including zero. Its posterior weights vary continuously, and mixtures of fixed full residual laws vary continuously in TV, since their TV difference is at most the TV of their weights. Each error is therefore continuous; so is the finite maximum defining $\Phi_H$.
+
+At zero the endpoint odds on $h_n$ are $3(b_2/b_1)(f_2/f_1)^n$, strictly increasing in $n$. The posterior mean is minimized at $n=0$, with value $m_0$ in (8.1). The maximum special error is $5/8-m_0$ and is attained at $h_0$. The ordinary p bound and beta phase-score bound are strictly smaller than its corresponding p score. Thus (8.1) is exact. Theorem 5.1 supplies the exact value for every positive $\delta$, and rational subtraction gives (8.2).
+
+A uniform limit of the continuous $\Phi_H$ would be continuous: choose one $H$ making both function-value approximation errors less than one third of the requested continuity tolerance and use continuity of that $\Phi_H$ for the remaining third. The nonzero jump contradicts such a limit. Hence compact prior space and finitely many bounded programs alone cannot force a uniform acquisition modulus. The missing hypothesis in that compactness argument is continuity/equicontinuity of the full-history supremum; a supremum of continuous functions is only lower semicontinuous in general. The exhibited direction of the jump agrees with that fact. $\square$
+

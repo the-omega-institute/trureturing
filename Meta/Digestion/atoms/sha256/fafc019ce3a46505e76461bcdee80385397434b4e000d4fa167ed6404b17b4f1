@@ -1,0 +1,27 @@
+**定义 1.2（实际失败递归，复用）。** $\mathcal F(H)$ 是实现完整字面历史 $H$ 的全部目标。对任意基数的 $K\subseteq\mathcal F(H)$，
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:\
+L_{s-1}\bigl(K\cap\mathcal F(H,E,z),(H,E,z)\bigr).
+\end{aligned}
+\tag{1.3}
+$$
+
+每层基数分句排除停止。若同历史 $K\subseteq K'$，则归纳给 $L_s(K,H)\Rightarrow L_s(K',H)$：各动作选出的实际子集包含于较大族的同响应子集。对恰两个不同完整目标，任何非单元素子集只能保留同一对，所以 $L_s$ 要求该对在所有长度不超过 $s$ 的续行前缀上逐读相同。较大族不能据此抽出同深度失败对。以上复用[《FIB JMJ 互补碰撞支臂与增益分离》](FIB_JMJ_COMPLEMENTARY_COLLISION_ARMS_AND_GAIN_SEPARATION.md)定义 1.1–1.2，以下称规范卷。
+
+固定
+
+$$
+\begin{gathered}
+C=\frac{7560}{131}=\frac{37800}{655},\qquad X=\frac{39264}{655},\\
+H_2=(0,J,24,M,48),\quad H_3=(H_2,J,C),\quad
+H_4=(H_3,M,X),\quad H_5=(H_4,M,m).
+\end{gathered}
+\tag{1.4}
+$$
+
+$m$ 是同一父历史的实际第五 $M$ 响应。所有反事实响应只是既定世界的数学函数，未被取得，不能同时作为传感器使用。
+

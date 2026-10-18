@@ -1,0 +1,114 @@
+**Theorem 4.1 (the fractional seed gives a strict native rate upper).**
+Set
+
+$$
+u_3=\frac{760}{289},\qquad u_{D+1}=u_D^2+1\quad(D\ge3),
+\qquad H_N=\sum_{j=1}^N\frac1j.
+\tag{D3.34}
+$$
+
+For every $D\ge3$ there is a paid effective preparation on the entire
+original $\mathcal F_D$, with one common all-target, all-count reader,
+such that
+
+$$
+M_1(D)\le H_{N_D}u_D,\qquad
+T_{\rm prep}\le2^D-1,\quad Q_{\rm prep}\le D,\quad
+A_{\rm prep}\le(D-1)2^D+1.
+\tag{D3.35}
+$$
+
+The late reader makes at most one actual Read of length at most $D$.
+For the original normalized rate, whose existence is supplied by FMR,
+
+$$
+\lambda=\lim_{D\to\infty}2^{-D}\log_2M_1(D)
+\le L_u:=\lim_{D\to\infty}2^{-D}\log_2u_D
+<\frac3{16}.
+\tag{D3.36}
+$$
+
+The gluing, rounding, acquisition and rate comparison are the credited
+FMR Lemmas 3.1, 4.3–4.4 and Theorems 2.5, 4.5; the new input is the
+explicit cover in Theorem 3.2.
+
+Proof. Starting with that rational cover, apply FMR's native fractional
+gluing: pair cover members with product weights for branch roots and
+add the two-leaf set $\{A,B\}$ with weight one. A branch
+$\langle x,y\rangle$ receives the product of its two covering sums,
+which is at least one; the leaves receive one. The total follows
+(D3.34). A branch root target needs no Read. A child target uses that
+child's single witnessing literal with its actual original-root prefix;
+the two-leaf set uses its root reply to identify its label.
+
+Constituent calls are implemented only at actually present occurrences.
+For an actual occurrence $a$ of $x$, a virtual wrapper
+$\langle A,x\rangle$ has constant replies at $\varepsilon$ and
+in its left cone; a virtual literal $Rw$ is implemented by the one
+actual literal $aw$. Thus neither artificial wrappers nor recursive
+notation introduce a subtree, copying or free-navigation port.
+The original source is unchanged. This is exactly FMR Lemma 3.1's
+literal interpretation and Lemma 4.3's constructive upper, imposing
+no product restriction on competing encoders.
+
+Apply FMR's harmonic greedy rounding to the resulting public finite
+fractional cover. It gives an integral cover with at most $H_{N_D}u_D$
+members. To implement it, acquire all $Rq$, $q\in W_D$, compute
+$\pi_D(v)$ and its first-containing-member index, and export only
+that fixed-width complete name. The scan has (D3.35)'s costs. The
+installed experiment and reply-to-factor table for that index and the
+later target supplies at most one boundary Read. Canonical equality
+and (D3.6) prove correctness for every original source and authentic
+count. All selection state, acquired tables, buffers, lengths and
+other source distinctions are isolated as in Assumption 1.2.
+Installation, rounding work and workspace remain separate costs.
+
+The scalar sequence $2^{-D}\log_2u_D$ is increasing, whereas
+$2^{-D}\log_2(u_D+1)$ decreases, since
+$u_D^2+2\le(u_D+1)^2$. Their difference is at most $2^{-D}$,
+so they have a common limit $L_u$ and
+
+$$
+L_u\le2^{-D}\log_2(u_D+1).
+\tag{D3.37}
+$$
+
+The supplied estimate $N_D+1\le2^{2^D}$ gives
+$H_{N_D}\le1+(\ln2)2^D$, whose normalized logarithm vanishes.
+Equation (D3.35) therefore gives $\lambda\le L_u$.
+
+For the strict numerical claim, the rational recurrence gives exactly
+
+$$
+u_4=\frac{661121}{83521},\qquad
+u_5=\frac{444056734082}{6975757441},\qquad
+u_6=\frac{197235044275447727251205}{48661191875666868481}.
+\tag{D3.38}
+$$
+
+The positive-integer identity
+
+$$
+4096\cdot48661191875666868481
+-197283705467323394119686
+=2032536455408099178490>0
+\tag{D3.39}
+$$
+
+proves $u_6+1<4096=2^{12}$. Hence (D3.37) gives
+$L_u<12/64=3/16$, without a decimal logarithm premise.
+
+The previous FMR Theorem 5.2 seed $x_2=25/17$ gives
+$x_3=914/289$ and $x_{D+1}=x_D^2+1$. Its construction limit
+$L_{\rm old}$ satisfies $L_{\rm old}\ge\log_2(x_3)/8$.
+Since
+
+$$
+914^2=835396>668168=8\cdot289^2,
+$$
+
+this lower bound on that construction's own limit exceeds $3/16$.
+Thus the new upper improves the credited seed construction itself;
+the credited exact depth-two seed and known four-code finite upper
+are not new claims. $\square$
+

@@ -1,0 +1,10 @@
+**Definition 1.3 (original resources and height).** An acquisition has actual CP encoders $\mathcal E_j$ with $\sum_j\mathcal E_j^\dagger(I)=I_5$, and full-output TP decoders. Each $d_j$ counts the entire jointly accessible quantum fibre, including every future-accessible retained specimen, memory, controller, environment and entanglement share. Discarded Kraus indices are not readable acquisition outcomes. A binary report is classical processing of the actual label; any independent readable coin belongs to that label. If $F_+$ is its plus effect on the supported qutrit, the original requirement is
+
+$$
+\mathsf V(F_+)=\frac{2|\operatorname{Re}(F_+)_{01}|}{\kappa}\ge s,\qquad\kappa=h_0a+h_1b>0.
+$$
+
+Write $Q_H=\sum_{d_j\ge3}\mathcal E_j^\dagger(I)$ and $\mathsf W=\max_{y,e,n}\operatorname{tr}(Q_HE\rho_{y,e,n}E^\dagger)$. This is the worst-history probability of **jointly acquired dimension at least three**, including subsequent failure. The sharp cost $\mathsf C(s)$ minimizes this quantity among original error-optimal instruments satisfying the contrast inequality. Height is the total variation of the actual acquired-label laws for $\rho_{27,+,+}$ and $\rho_{5,+,+}$; $\mathcal T_A(s)$ is its maximum at error $E_*$, cost $\mathsf C(s)$ and activity at most $A$.
+
+Activity is $\sup_{j\text{ actually generated}}\int_0^1\|R_j(a)\|\,da$, on each whole fibre, for positive absorbing rates. Intervening not-yet-failed controls and terminal survivor processing are TP. Finite activity leaves strictly positive survivors; forced terminal absorption and later action on a stopped carrier are excluded. The no-jump branch itself is trace decreasing. Arbitrary admitted failure-time laws remain in the competitor class.
+

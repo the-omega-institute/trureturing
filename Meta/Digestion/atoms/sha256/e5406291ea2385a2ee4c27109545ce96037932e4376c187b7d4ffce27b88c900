@@ -1,0 +1,22 @@
+**Definition 3.1 (shape unifier).** Erase primitive ranks, writing
+$c$ for a primitive shape and $f$ for the free binary shape constructor.
+Each flattened branch has finite shape equations: primitive definitions
+force shape $c$, $Z=\tau_kX$ forces equal shapes, ordinary pairing
+forces $s_Z=f(s_X,s_Y)$, and positive code equalities force equal shapes.
+Disequalities impose no shape equation.
+
+Solve these equations by finite first-order unification over $c,f$,
+with the ordinary finite-tree occurs check. A failure rejects this
+branch. Otherwise take an idempotent most general unifier and write
+$S_Z$ for the resulting finite shape term of each name. Its remaining
+shape variables are $w_1,\ldots,w_m$. Every solution of the shape
+equations factors through these terms by ground finite shapes. This is
+ordinary syntactic unification of free shapes, not native unification.
+
+Decorate each explicit $c$ occurrence in $S_Z$ with a scalar rank
+variable $r_{Z,p}$. Decorate each occurrence of $w_j$ with a block
+variable $U_{Z,p}$ of shape $w_j$. Occurrences at different positions
+have different decorations, even if the shape variable is the same.
+Repeated use of the same code name reuses the same decorated template.
+Let this finite template be $\widehat S_Z$.
+

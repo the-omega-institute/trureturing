@@ -1,0 +1,32 @@
+**Definition 3.1 (Rotation data and reflection).** Let $r=\sqrt{17}$,
+$\lambda_\pm=(5\pm r)/2$, $\omega_\pm=\sqrt{\lambda_\pm}$, and put
+
+$$
+\begin{gathered}
+B=-A^2,\qquad
+R_\pm=\frac{B(B-\lambda_\mp I)}
+{\lambda_\pm(\lambda_\pm-\lambda_\mp)},\qquad
+R_0=I-R_+-R_-,\\
+d=(e_2-e_5)/\sqrt2,\qquad
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\qquad
+v_\pm=Au_\pm/\omega_\pm,\qquad W_\pm=AR_\pm/\omega_\pm,\\
+G(\theta,\phi)=R_0+\cos\theta R_++\sin\theta W_+
++\cos\phi R_-+\sin\phi W_-,\\
+J=\operatorname{diag}(1,-1,-1,-1,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+The supplied spectral result, QMB Theorem 4.1 and QPC Convention 6.1,
+gives mutually orthogonal projections $R_0=dd^T,R_+,R_-$ of ranks
+$1,2,2$. The vector list $(d,u_+,v_+,u_-,v_-)$ is orthonormal, and
+$Au_\pm=\omega_\pm v_\pm$, $Av_\pm=-\omega_\pm u_\pm$.
+In particular the normalizers in (3.1) are nonzero. The actual wait is
+$O(t)=G(\omega_+t,\omega_-t)$.
+
+A channel is stationary if it commutes with every
+$\operatorname{Ad}_{O(t)}$, equivalently with $X\mapsto AX-XA$.
+Let $\mathcal C_{\mathbb R,J}$ be the real measure-and-prepare TP
+channels that are stationary and commute with $\operatorname{Ad}_J$.
+Angles in (3.1) are mathematical coordinates for design identities.
+

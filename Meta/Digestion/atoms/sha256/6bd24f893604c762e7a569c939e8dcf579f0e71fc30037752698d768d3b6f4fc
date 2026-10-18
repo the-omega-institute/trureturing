@@ -1,0 +1,15 @@
+**命题 3.2（source-aware existence and description length）。** For any contracting nonzero unit-read history and any $K\ge1$, a word satisfying Definition 3.1 exists. Its length is
+
+$$
+O\!\left(1+K+\log(h+K+2)\right).
+$$
+
+The same fixed interpreter and grammar work for all sources, without $N$ or parameters encoded as unrepresented real constants.
+
+**证明。** Choose the largest dyadic $\sigma\le\min(D,1)$. This gives
+$\sigma\le D\le2\sigma$ when $D\le1$, and $\sigma=1$ otherwise. For a positive $z\le1$, let $e=\lfloor\log_2 z\rfloor$ and retain
+$\lfloor z2^{P-e}\rfloor\,2^{e-P}$. This notation defines a mathematical selection; it is not an oracle call by the closed interpreter. The downward relative loss is less than $2^{-P}<\alpha$. This rounding is monotone, including changes of leading bin. Since $\delta_3\ge\sigma/2$ and $\delta_4\ge\delta_3$, the two seeds satisfy the order and lower range tests. Round each true direction coordinate to its nearest $S$-grid point, with half ties toward positive infinity. Its vector error is less than $2^{-S}$, and its integer range is as required.
+
+The mantissas need $P+O(1)$ bits; the signed exponents have magnitude $O(h+P+1)$ and take $O(\log(h+P+2))$ bits; the nine coordinates need $S+O(1)$ bits each. Gamma$(K)$ and gamma$(h)$ have logarithmic lengths. Since
+$P=O(K+\log(h+K+2))$ and $S=O(K)$, the stated length follows. All scales and signs are finite recorded data. This is source-aware existence, not acquisition from the original finite reports.
+

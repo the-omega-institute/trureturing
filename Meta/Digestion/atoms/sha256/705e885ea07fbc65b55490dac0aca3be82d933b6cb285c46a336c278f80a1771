@@ -1,0 +1,9 @@
+**Definition 1.3 (resource response).** Let $(M,\oplus,e)$ be a declared
+resource monoid, or a typed family of monoids $M_i$ with transport maps
+along action types.  The meter component in (1.1) is a value in the relevant
+monoid and has a declared unit.  It may count reads, updates, literal length,
+memory allocation, clock ticks, archive writes, or any vector of such
+coordinates.  A resource response is part of $\mathcal L$, not an
+after-the-fact annotation.  If the resource is a vector, equality in (1.3)
+is componentwise according to the task contract.
+

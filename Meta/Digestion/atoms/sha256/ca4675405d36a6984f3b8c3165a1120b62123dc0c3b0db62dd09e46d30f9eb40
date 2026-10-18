@@ -1,0 +1,34 @@
+**Open problem 8.2 (anchorless stopping).** Give a source-faithful
+terminating exclusion-or-realization choice for arbitrary complete acquired
+signed input when no exact atomic-output full-row anchor is available.
+The missing obligation is an effective complete search for common output
+contacts of residual-visible nonfunctional source maps, with their
+finite barriers and joint supports, together with actual finite signed
+lifting. The finite generalized description of Lemma 3.2 is supplied by
+an atomic anchor and does not exhaust arbitrary residual-visible limits.
+Positive residual or navigation restrictions in a differently supplied
+piece must also be preserved or eliminated in both directions before SLP
+applies. A supplied-depth test, a fixed finite context checker or a section
+is not this missing all-depth choice. No undecidability, intrinsic anchor
+recognition, general resource optimum or completion of that larger
+research objective is asserted.
+
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[CAR]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[URR]: RECURSIVE_RELATIONAL_OBSERVATION_UNIFORM_RESIDUAL_REALIZATION.md
+[SLP]: RECURSIVE_RELATIONAL_OBSERVATION_SIGNED_LOCAL_PREFIX_LIFTING.md
+[NLC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_DEPTH_CONTACT.md
+[NPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PROJECTION_LIMITEDNESS.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[FJC]: RECURSIVE_RELATIONAL_OBSERVATION_FUNCTIONAL_JOINT_CONTACT.md
+[NDP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[NCF]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[NHC]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[NSR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSymbolicRecutting.lean
+[NGS]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeGroundSeparation.lean
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[CL]: https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf
+

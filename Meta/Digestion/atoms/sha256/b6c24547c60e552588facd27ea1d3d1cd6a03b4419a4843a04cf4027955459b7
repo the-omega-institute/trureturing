@@ -1,0 +1,38 @@
+**Proposition 6.2 (history obstruction and the unbounded-entry limit).**
+For odd $h$ and $T\ge1$, no such serial refinement solves original
+parity. For any fixed $h$ in a possible regime there is no one finite
+complete autonomous installation handling all entry lags. Neither
+larger local memory nor more faithful transport recovers an authentic
+history that the source ports have already identified.
+
+Proof. On any $h$-leaf shape let $A_S$ and $B_S$ denote the uniformly
+alpha and uniformly beta originals. The histories $(A_S,1)$ and
+$(B_S,0)$ have the same entry tree because $\rho A_S=B_S$. Under common
+initialization and deterministic local behavior they have equal
+microtraces until their next source response. Equal current sources
+then give equal responses and equal genuine successors, so induction
+keeps their entire observations equal. Their parities differ for odd
+$h$. These are precisely instances of [Atomic Boundary Trichotomy,
+Theorems 9.2–9.4][ABT], whose full fiber classification is not being
+replaced by a statement about a known shape.
+
+For even $h$ and unbounded entry, (2.3) contradicts a fixed finite
+$S_{\rm inst}$ as $T$ increases. Equivalently a finite composite has a
+finite installed decoded literal menu and the permanent-saturation
+obstruction in SLHC §10.4 applies. For odd $h$ the preceding collision
+already suffices. A pointwise terminating machine with growing counted
+workspace and literals is outside this finite-installation assertion.
+
+ABT's full-current-tree fiber theorem says more precisely that, for
+known original leaf count, all nontrivial history fibers are the pairs
+$\{(A_S,k+1),(B_S,k)\}$. Even complete acquisition of the current tree
+cannot choose the authentic member of such a pair. It does recover
+original shape and the pair, and mixed-label originals have singleton
+history fibers. A separately authenticated record separates the
+histories exactly when it takes different values on every such pair
+(ABT Theorem 9.3). A common initialization, an address payload, or a
+counter started after entry does not provide that record. In particular
+same-source post-entry counters have equal values on the colliding
+runs. Our parity controller does not acquire the whole current tree
+merely by having an observer that could in principle describe it. ∎
+

@@ -1,0 +1,120 @@
+**定理 6.2（共同 b、d 类的一条整族单射臂）。** If $\omega\ne0$, at
+least one of $a,c$ is injective on all of $\mathcal C$, even if the
+putative collision pairs are disjoint. One policy recovers every
+complete target in this known class by original clock six, with
+seven total readings. This nonzero-$\omega$ assertion allows
+$\kappa=0$ as well as $\kappa\ne0$.
+
+If $\omega=0$ and $\kappa\ne0$, the whole class is recovered by the
+fixed continuation $J,J,J$, with eight total readings.
+
+Proof. For $\omega\ne0$, apply the response-curve mechanism of
+[II, Theorem 70.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md)
+to the common-$b,d_6$ equations of II, Theorem 72.1. Its parameter
+correspondence here is
+
+$$
+t=\frac1{y+1}\in(0,1),\quad \rho=\frac\kappa\omega,\quad
+e=1-\rho,\quad K=\frac{b_0-j}\omega-\rho,\quad H(6)=\omega t.
+                                                               \tag{6.5}
+$$
+
+Substitution in (6.3) gives exactly
+
+$$
+e x=K+\rho/t-t,\qquad
+a=b_0-\omega tx,\qquad c=d_0-\omega t(x+1).                  \tag{6.6}
+$$
+
+For example $b_0-j=-\kappa(x+y)+\omega t(xy+x+1)$;
+use $y=1/t-1$ and $t(xy+x)=x$ to obtain the first identity.
+Thus this is the same curve equation as II, equation (70.2), with
+its curve constant $k$ replaced by $K$ and with the additional
+restriction $t<1$. Multiplication by either sign of $-\omega$ does
+not change collisions. The following cases give its whole-class
+consequence on this restricted curve.
+
+If $\rho=1$, the equation is $K=t-1/t$, strictly increasing for
+$t>0$, so the entire class has one value of $t$. Both remaining
+responses in (6.6) are affine in $x$ with nonzero slope. They are
+both injective, since equal $x,t$ give equal $x,y$ and complete targets.
+
+Suppose $e\ne0$. A parameter $t$ uniquely fixes $x$ and $y$, hence
+the complete target. Consequently different targets have different
+$t$. The identities
+
+$$
+tx=\frac{\rho+Kt-t^2}{e},\qquad
+t(x+1)=\frac{\rho+(K+e)t-t^2}{e}                              \tag{6.7}
+$$
+
+show that an $a$ collision at two distinct parameters requires
+$t_1+t_2=K$, and a $c$ collision requires $t_3+t_4=K+e$.
+No common endpoint between these pairs is assumed.
+If $\rho>1$, the first collision would give
+$x(t_1)=(t_2+\rho/t_1)/e<0$; the second would give
+$x(t_3)+1=(t_4+\rho/t_3)/e<0$. Thus both arms are injective.
+If $\rho<0$, then $e>1$, and a $c$ collision would instead give
+
+$$
+x(t_3)+1=\frac{t_4+\rho/t_3}{e}<\frac{t_4}{e}<1,
+$$
+
+contrary to $x>1/3$. Therefore $c$ is injective throughout this
+case. This uses the actual $t<1$ restriction in (6.5).
+
+It remains that $0\le\rho<1$, $e>0$. The function
+$x(t)=(K+\rho/t-t)/e$ is strictly decreasing on $t>0$.
+Its legal set $I=\{t\in(0,1):1/3<x(t)<1/2\}$ is an interval.
+For $t_1<t_2$ in this interval,
+
+$$
+x(t_1)-x(t_2)
+=\frac{t_2-t_1}{e}\left(1+\frac\rho{t_1t_2}\right)
+\ge\frac{t_2-t_1}{e},\qquad t_2-t_1<e/6.                    \tag{6.8}
+$$
+
+If both kinds of collision existed, their respective midpoints
+$K/2$ and $(K+e)/2$ would lie in the same interval $I$. Their
+distance $e/2$ contradicts (6.8). This is a statement about any
+two collisions on the whole curve, including four distinct
+endpoints, not merely exclusion of collisions sharing a target.
+It includes $\rho=0$.
+
+An explicit arm choice uses only the known constants. For $\rho\ge1$
+choose $a$; for $\rho<0$ choose $c$. For $0\le\rho<1$ choose $c$
+exactly when
+
+$$
+0<K<2\quad\hbox{and}\quad
+\frac13<\frac{K/2+2\rho/K}{e}<\frac12;                       \tag{6.9}
+$$
+
+otherwise choose $a$. Indeed an $a$ collision requires its midpoint
+$K/2$ to be in $I$. If it is in $I$, a $c$ collision midpoint cannot
+also be in $I$ by (6.8). Thus this rule is valid even when the
+actual candidate subset is disconnected or omits the midpoint.
+The proof concerns the containing legal interval, not convexity
+of the candidate subset.
+
+For chosen $a$, execute fifth $J$, read, then sixth $J$, read.
+For chosen $c$, execute fifth $M$, read, then sixth $J$, read.
+The chosen sixth response has a unique inverse on the whole known
+class, giving the complete target. Existence of that inverse at an
+actual reading comes from the actual candidate. No counterfactual
+read is acquired. One may equivalently solve (6.7) for the unique
+legal parameter and then interpolate the gain; arbitrary
+deterministic inverse functions are permitted by Definition 1.1.
+
+Finally suppose $\omega=0$ and $\kappa\ne0$. The identity
+$d_6-b=H(6)(y+1)$ forces every candidate to have $H(6)=0$,
+and then $\delta=b_0$. Thus $s=(j-b_0)/\kappa>0$ is common.
+[II, Lemma 71.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md)
+applies on exactly this same non-diagonal joint fifth fiber: at
+fixed drift and sixth root, $H(7)$ is injective on complete targets.
+The final $JJJ$ response is $b_0+sH(7)$, hence injective on the
+entire class. All three $J$ atoms are immediately read at clocks
+$5,6,7$. This is the zero-stratum argument already used in II,
+Theorem 72.1; its hypothesis $\kappa\ne0$ has been retained.
+No assertion about the $\omega=\kappa=0$ layer is required here. ∎
+

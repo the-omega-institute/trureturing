@@ -1,0 +1,5 @@
+**Limit 370.3 (The hull is not itself feasible).** The point
+$u_3=(1/2,1/2,1/2,0,0,0,0;0)$ belongs to $H_7$. Cut $0$ of the specified dataset has $F_{Q(\widehat c_0)}=b_3-b_6-4e$, which is $1/2$ there. Thus $u_3\notin P$. Any execution consequence of Theorem 370.2 requires its affine $N$ witness, or independently established membership in $P$; membership in $H_7$ alone is insufficient.
+
+The lower-horizon conclusions for $L=3,4,5,6$ already follow from [III 160.1 and 162.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_III.md), their zero-cost prefix cuts and stopped synthesis, together with existing finite duality and padding/restriction. They are reused lower-horizon facts. The bridge developed in Theorems 370.1–370.2 is at $H_7$; neither theorem asserts a result at $L\ge8$ or outside the stated equality slice.
+

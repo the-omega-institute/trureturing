@@ -1,0 +1,52 @@
+**Actual realization and fibres.** For every source in (14.1), take
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,\qquad
+f=\binom{p}{r},\qquad \ell=(1,q/p).
+\tag{14.2}
+$$
+Then $f\ell=S$ because $s=qr/p$. For $A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$,
+$$
+\ell Af=ap+br+cq+es=\operatorname{tr}(AS).
+$$
+The row $\ell$ is fixed throughout this run. The identities
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0)
+$$
+show, atom by atom, that every recorded and unread column is positive on every prescribed word. Different candidate runs may have different fixed rows.
+
+For a fixed effective target, its original gain/relation representations are exactly $R=S/t$, $\alpha=t>0$, $\beta=tk$, with $D$ unchanged: necessity follows from $S=\alpha R$ and $k=\beta/\alpha$, and substitution proves sufficiency. If $R=f\ell=f'\ell'$ are two positive factorizations, equality of their first columns gives $f'=\mu f$ for $\mu>0$; equality of the other column then gives $\ell'=\ell/\mu$. These are representation fibres only. Distinct $S$ or distinct $k$ give distinct effective targets.
+
+On the four-dimensional auxiliary space of real $2\times2$ matrices put
+$$
+\mathsf B X=\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^4,
+\qquad
+\mathsf C X=\bigl(i\operatorname{tr}(A_iX)\bigr)_{i=1}^4,
+\qquad \mathsf T_k=\mathsf B+k\mathsf C.
+\tag{14.3}
+$$
+Subtracting the initial reading proves the exact equivalence
+$$
+\text{equal five data}\quad\Longleftrightarrow\quad
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1,
+\qquad \delta_1-\delta_0=\operatorname{tr}(S_0-S_1).
+\tag{14.4}
+$$
+Indeed the initial equality is exactly the second equation; after subtracting it, each remaining equality is exactly one coordinate of the first. Conversely adding that initial equality to the four quotient equations recovers every original reading. Thus the quotient removes exactly one entire constant polynomial, with no independent per-reading offsets.
+
+Write
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+Expanding two-by-two determinants gives the symmetric bilinear form and the exact finite identity
+$$
+\mathfrak b\left(\begin{pmatrix}p&q\\r&s\end{pmatrix},
+\begin{pmatrix}P&Q\\R&T\end{pmatrix}\right)=sP+pT-rQ-qR,
+$$
+$$
+\det(X+tY)=\det X+t\mathfrak b(X,Y)+t^2\det Y.
+\tag{14.5}
+$$
+All operators and boundary matrices below are proof devices on this auxiliary space. They are neither acquired inverse operations nor additional sources.
+
+<a id="fixed-polar-prefix-invertibility"></a>

@@ -1,0 +1,51 @@
+**Definition 1.3 (Passive spectral coordinates).** Set
+
+$$
+\begin{gathered}
+r=\sqrt{17},\qquad D=\operatorname{diag}(1,i,i,i,1),\qquad
+A=-iD^\dagger KD,\qquad O(t)=e^{tA}=D^\dagger U(t)D,\\
+B=-A^2,\qquad \lambda_\pm=(5\pm r)/2,\qquad
+R_\pm=\frac{B(B-\lambda_\mp I)}
+{\lambda_\pm(\lambda_\pm-\lambda_\mp)},\qquad R_0=I-R_+-R_-,\\
+d=(e_2-e_5)/\sqrt2,\qquad
+W_\pm=AR_\pm/\sqrt{\lambda_\pm},\qquad
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\\
+w_\pm(\theta)=\cos\theta\,u_\pm+\sin\theta\,W_\pm u_\pm .
+\end{gathered}
+\tag{1.4}
+$$
+
+The spectral data are those of QMB Theorem 4.1 and QPC Convention 6.1:
+$R_0=dd^T,R_+,R_-$ are mutually orthogonal projections of ranks $1,2,2$,
+$W_\pm^T=-W_\pm$, $W_\pm^2=-R_\pm$, and
+$u_\pm,W_\pm u_\pm$ are orthonormal bases of their planes.
+For example, in the reordered splitting $(N,25)\mid(2,3,5)$,
+
+$$
+A=\begin{pmatrix}0&C\\-C^T&0\end{pmatrix},\qquad
+C=\begin{pmatrix}1&1&1\\1&0&1\end{pmatrix},\qquad
+CC^T=\begin{pmatrix}3&2\\2&2\end{pmatrix}.
+\tag{1.5}
+$$
+
+The two eigenvalues of $CC^T$ solve $\lambda^2-5\lambda+2=0$.
+Its plus projection $G_+$ is
+$\frac12 I_2+\frac1{2r}\left(\begin{smallmatrix}1&4\\4&-1\end{smallmatrix}\right)$;
+the right plus projection is $C^TG_+C/\lambda_+$.
+These formulas give (1.4), its nonzero normalizers, and the stated
+orthogonality identities directly.
+
+A transpose refers to this fixed real frame, and $\dagger$ denotes
+adjoint or the trace-pairing dual of a map. The matrices
+
+$$
+G(\theta,\phi)=R_0+\cos\theta R_++\sin\theta W_+
++\cos\phi R_-+\sin\phi W_-
+\tag{1.6}
+$$
+
+are mathematical coordinates for plane rotations. The actual wait is
+$O(t)=G(\sqrt{\lambda_+}t,\sqrt{\lambda_-}t)$.
+Neither $D$ nor independent choices of the two angles are additional future
+controls.
+

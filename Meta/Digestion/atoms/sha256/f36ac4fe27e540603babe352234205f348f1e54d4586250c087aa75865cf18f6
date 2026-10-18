@@ -1,0 +1,16 @@
+**定义 25.1（固定来源、观察与目标）。** 对 $q:X\to B$ 和 $F:X\to Z$，定义
+
+$$
+\mathcal E(q;F)=\{(x,x'):q(x)=q(x'),\ F(x)\ne F(x')\}.
+$$
+
+$q$ 的实际像为 $q(X)$，摘要精确充分指存在 $D:q(X)\to Z$ 使 $F=Dq$。仓内 [TargetRecoveryCriterion 的 `target_recovery_criterion`](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 给全陪域解码与纤维恒值、目标缺陷为空的等价，使用非空来源保证目标非空；此处仅在实际像解码，未用的观察值不用赋目标。直接取每条纤维唯一目标值得
+
+$$
+\mathcal E(q;F)=\varnothing
+\Longleftrightarrow F\text{ 在每个 }q\text{ 纤维恒定}
+\Longleftrightarrow F=Dq\text{ 于实际像}.
+$$
+
+$X=\varnothing$ 时三个条件亦成立，像上的空函数足够。仓内 [EscapePairs](../../../D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean) 的有限目录逃逸对对应身份目标 $F=\operatorname{id}_X$，不是任意任务的风险。
+

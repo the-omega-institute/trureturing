@@ -1,0 +1,48 @@
+**Theorem 6.1 (height contribution and orthogonal remainder).** Put
+
+$$
+\delta_h=\frac{h[\Psi-U_h]}a\ge0.
+\tag{6.1}
+$$
+
+Then
+
+$$
+\begin{aligned}
+D_{\rm resp}/a&=I_h+\delta_h,&
+G_{\rm resp}&=3A-\gamma C_2-I_h-\delta_h,\\
+I_h-t_0^2&=\frac{h[U_h-t_0rp]}a
+ =\int\frac{(J-t_0\rho)^2}{\rho}\ge0,\\
+\Delta_{\rm aff}/a&=(I_h-t_0^2)+\delta_h>0,&
+\Delta_{\rm aff}&=h[\Psi-t_0rp]=D_{\rm resp}-a t_0^2.
+\end{aligned}
+\tag{6.2}
+$$
+
+Equality $I_h=t_0^2$ holds exactly when $J=t_0\rho$ almost everywhere, equivalently $U_h=t_0rp$ in the homogeneous space. Equality $\delta_h=0$ holds exactly when $\Psi\in\mathcal H_h$. Neither summand in the strict last decomposition is individually proved positive. In particular
+
+$$
+G_{\rm resp}\le3A-\gamma C_2-I_h.
+\tag{6.3}
+$$
+
+Proof. Orthogonality from Theorem 5.1 gives $D_{\rm resp}=h[U_h]+h[\Psi-U_h]$. Substitution in (2.10) proves the first line. To include the whole affine line in the subspace, take an even smooth cutoff $\eta$, one on $[-1,1]$ and zero outside $[-2,2]$, and let $F_R(r)=r\eta(r/R)$. Its derivative is uniformly bounded and tends pointwise to one, so $F_R'\to1$ in $L^2(\rho dr)$ by dominated convergence and $\int\rho=1$. The products $pF_R$ converge in the canonical form norm to $rp$: use $rp\in\mathcal Q_E$, cutoff tails in its derivatives, and the product rule, whose extra term $r\eta_R'p$ is bounded in absolute value by a constant times $p$ on a tail. Thus the image of the constant derivative $1$ is $rp\in\mathcal H_h$.
+
+Equations (3.2) and (5.3) yield $h(U_h,rp)=a\int J=a t_0$, and $h[rp]=a$. Pythagoras for projection onto this line gives the second line of (6.2). Expanding the displayed integral gives the same expression because $\int J=t_0$ and $\int\rho=1$; its equality criterion follows from positivity of $\rho$. The vector $\Psi-U_h$ is orthogonal both to $U_h$ and to $rp$. This yields the affine-gap decomposition. N's strict nonaffinity theorem proves $\Psi\ne trp$ for every real $t$, so the existing $\Delta_{\rm aff}$ is strictly positive. That result excludes simultaneous vanishing of the two summands and gives no separate strictness. Equation (6.3) follows from $\delta_h\ge0$. $\square$
+
+The credited complete affine relations are
+
+$$
+\begin{aligned}
+C_{\rm aff}(t)&=\nu^2\{a t^2-2a t_0t+K_{\rm base}\}-\lambda D_{\rm clock},\\
+C_{\rm aff}(t)-C_{\rm resp}
+ &=\nu^2\{\Delta_{\rm aff}+a(t-t_0)^2\},\\
+C_{108}-C_{\rm resp}
+ &=\nu^2\{\Delta_{\rm aff}+a(t_0-1)^2\}>0,\\
+G_{\rm resp}&=G_{108}-(t_0-1)^2-\Delta_{\rm aff}/a.
+\end{aligned}
+\tag{6.4}
+$$
+
+N also proves, for every fixed complex slope $z_0$, $C_{\rm aff}^{\mathbb C}(z_0)-C_{\rm resp}=\nu^2\{\Delta_{\rm aff}+a|z_0-t_0|^2\}>0$. These comparisons evaluate neither absolute sign. Equation (6.2) adds the exact entire-height projection and leaves its orthogonal energy explicit. The new bound is an upper bound on $G_{\rm resp}$ and cannot prove its positivity.
+

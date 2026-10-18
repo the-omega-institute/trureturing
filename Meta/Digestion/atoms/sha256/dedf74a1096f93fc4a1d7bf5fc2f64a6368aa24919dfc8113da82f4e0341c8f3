@@ -1,0 +1,28 @@
+**Proposition 3.4 (Nonnegative rank-one emission gives an actual reset).** On a positive-weight closed irreducible hidden class, if $Q=M_1$ is nonzero and has rank one, its visible law is proper stationary renewal.
+
+**Proof.** A nonzero nonnegative rank-one matrix has a factorization
+
+$$
+Q=b\alpha,\qquad b=Q\mathbf1,\qquad \alpha\ge0,\quad\alpha\mathbf1=1.
+\tag{3.5}
+$$
+
+Indeed, normalize a nonzero row to obtain $\alpha$; every other nonzero row is a nonnegative multiple of it, and its row sum is that multiple. For every nonnegative past row $\eta$,
+
+$$
+\eta Q=(\eta b)\alpha.
+\tag{3.6}
+$$
+
+Thus conditioning on a visible one resets the next hidden-state distribution to $\alpha$, including when this distribution is not concentrated at a single state. The class has a one-emitting edge, so Lemma 3.2 makes both entirely zero half-lines null, using stationarity for the left half-line. Ones are therefore unbounded in both directions. Its stationary intensity is positive because the stationary row is positive on the class and $Q\ne0$.
+
+For any finite list of consecutive gaps, repeated factorization of the ordered products at the intervening $Q$ matrices gives
+
+$$
+P([1\,0^{g_1-1}1\cdots0^{g_t-1}1])
+=\iota\prod_{j=1}^t\alpha B^{g_j-1}b.
+\tag{3.7}
+$$
+
+The masses $f(g)=\alpha B^{g-1}b$ sum to one by the avoidance bound, and $f(1)=0$ by legality. To include gaps before a Palm one at the origin, place the earliest specified one at the negative sum of the specified preceding gaps. Stationarity and (3.7), divided by $P(X_0=1)=\iota$, give the product of $f$ over the entire specified list, on both sides of the origin. Finite-cylinder uniqueness proves the bi-infinite iid Palm gap law. This proves the distributional reset-to-renewal implication within the actual joint law. $\square$
+

@@ -1,0 +1,42 @@
+**Theorem 6.2 (same-fragment work at every cut).** Define
+$L_j=\sum_{s=1}^j|w_s|$. At $C_j(h)$ the cumulative executing work
+after the eligible entry is
+
+$$
+\begin{aligned}
+N_j&=j,&W_j&=8j,&A_j&=j,&E_j&=j,\\
+P_j^{\rm work}
+ &=j(G_h+d_z)+\frac{7j(j-1)}2+6j+L_j,\\
+g_C(j)&=10j+P_j^{\rm work}+\theta j.
+\end{aligned}
+$$
+
+At completion $L_{24}=90$, and hence
+
+$$
+\begin{aligned}
+(N,P,W,A,E)_{24}
+  &=(24,\ 2166+24(G_h+d_z),\ 192,\ 24,\ 24),\\
+g_C(24)&=2406+24(G_h+d_z)+24\theta .
+\end{aligned}
+$$
+
+Proof. Before birth $i+1$, the local pattern has $i+1$ vertices.
+Step 4 probes its two child slots and four O/H slots at each vertex,
+and P on each of $i$ nonroot returns: $7i+6$ probes. Its new
+root-to-$z$ walk costs $d_z$ even though the guard already reached
+that site. Step 5 costs $|w_{i+1}|$: its proper-parent path followed
+by the destination vacancy reprobe. Thus this event has exactly
+$G_h+d_z+7i+6+|w_{i+1}|$ probes, eight assignments, one birth,
+one commitment and one evaluation. All seven fresh-slot initializations,
+including empty ones, are in those eight assignments.
+
+Summing over $i=0,\ldots,j-1$ gives the displayed prefix formula.
+The target nonroot depths have multiplicities $2,2,4,8,8$ at depths
+$1,2,3,4,5$, respectively. Thus
+$L_{24}=2+4+12+32+40=90$ and
+$\sum_{i=0}^{23}(7i+6)=2076$. Their probe sum is 2166.
+Adding 24 commitments, 192 assignments and 24 births gives 240
+nonprobe units and the stated scalar. These are successive states
+of one fragment, without adding an old atomic subtotal. ∎
+

@@ -1,0 +1,97 @@
+**Proposition 4.5 (same pair contacts, but minima three and four).** For
+$i\ne j$ and $h\ge0$, let $J^{(3)}_{ij}(h)$ and $J^{(4)}_{ij}(h)$ be the
+pair-contact predicates (SJM.12) for $D_3$ and $D_4$. Then
+
+$$
+J^{(3)}_{ij}(h)=J^{(4)}_{ij}(h)=\mathsf{true}
+\qquad(i\ne j,\ h\ge0),
+\tag{SJM.25}
+$$
+
+but
+
+$$
+M(D_3,Q)=3,\qquad M(D_4,Q)=4.
+\tag{SJM.26}
+$$
+
+*Proof.* First establish the finite-prefix claims used by the witnesses.
+For $n\ge2h+2$, recurrence (SJM.1) makes every reply of $T_n$ through depth
+$h$ a branch: along a path of length at most $h$, its index falls by at most
+$2h$, and every remaining index is at least $2$. Thus $T_n,T_{n+1},T_{n+2}$
+agree through any prescribed depth when $n$ is large. The three sources
+
+$$
+U(T_n,T_n),\quad U(T_n,T_{n+1}),\quad U(T_n,T_{n+2})
+\tag{SJM.27}
+$$
+
+have rows $r_0,r_1,r_3$ respectively, and all retained signs hold by the
+clock. This gives the three contacts among $r_0,r_1,r_3$ in $D_3$.
+
+For the remaining contacts use $F(t)=\langle\beta,\rho t\rangle$ and
+$B(t)=\langle\alpha,t\rangle$. Locality (SLH.74.7) at epoch one gives
+$u\equiv_h v\Rightarrow\rho u\equiv_h\rho v$. Hence either $F$ or $B$
+increases agreement depth by one, since it inserts a common branch and left
+leaf above its argument or its iterate. For arbitrary finite $u,v$, $F^n(u)$
+and $F^n(v)$ agree through depth $n-1$: the case $n=1$ is the common branch
+root, and induction proves the claim. The same statement holds for $B$.
+In particular $F^n\beta$ and $F^{n+j}\beta$ agree through depth $n-1$
+for every $j\ge0$, and likewise for $B$. These stabilized compatible
+prefixes define completions $K,J$ with $F(K)=K$ and $B(J)=J$.
+Here $\rho$ on a completion means only its continuous prefix extension
+supplied by locality; no completion is asserted to satisfy a signed input.
+Since $J=\langle\alpha,J\rangle$,
+$\rho J=\langle\beta,\rho J\rangle=FJ$.
+The triples
+
+$$
+\bigl(U(F^n\beta,F^n\beta),\ U(F^n\beta,F^{n+1}\beta),\
+      U(F^n\beta,F^{n+2}\beta)\bigr)
+\tag{SJM.28}
+$$
+
+have rows $r_0,r_2,r_3$ and agree through every prescribed finite depth for
+large $n$. Likewise
+
+$$
+U(B^n\beta,\rho B^n\beta),\quad
+U(B^n\beta,\rho B^{n+1}\beta),\quad
+U(B^n\beta,\rho B^{n+2}\beta)
+\tag{SJM.29}
+$$
+
+have rows $r_1,r_2,r_3$: the offsets $1,3,5$ are distinct, while
+$\rho J=FJ$ makes their three $z$-components share the same prefix limit.
+Equations (SJM.27)–(SJM.29) cover all six row pairs. They are finite sources and
+therefore verify every negative at the finite stage; no sign is transferred to a
+limit.
+
+For $D_3$, no depth-three prefix can meet $r_0,r_1,r_2$ simultaneously. In an
+$r_2$ source, $z=Fy$ has a branch root with left reply $\beta$. A common depth-
+three prefix would therefore make the $r_0$ source satisfy that $y=z$ is a branch
+whose left reply is $\beta$. In the $r_1$ source, $z=\rho y$ has the same branch
+root and left reply. Given the common branch root of $y$, the native definition of
+$\rho$ then forces its left child to be $\alpha$ (if $y=\langle a,b\rangle$,
+its left child after applying $\rho$ is $\rho a$, and $\rho a=\beta$ implies $a=\alpha$).
+The $r_0$ source forces that left child to be $\beta$, a contradiction at the
+address $RLL$. Hence $m_3\le3$. The displayed atomic triple, with $n$ beyond any given
+$h$, gives $m_h\ge3$ for every $h$, so $\min_hm_h=3$.
+
+For $D_4$, let $y_n=F^n(\beta)$. For each $i=0,1,2,3$, the source
+$V(y_n,F^i y_n)$ has row $r_i$. All four components converge to the same
+prefix completion $V(K,K)$, and every finite source satisfies (SJM.22). Thus
+$m_h\ge4$ for every $h$. Since there are only four rows, $m_h=4$ for all $h$,
+so $\min_hm_h=4$. Theorem 2.2 now proves (SJM.26).
+
+The public lists (SJM.14)–(SJM.16) and (SJM.20)–(SJM.22) are two parameter
+instances of the same paid traversal and comparison procedure of ARH
+Proposition 2.1, at a common final epoch $N$. For either list the producer
+computes both signs, with invalid reached-endpoint outcomes kept separate;
+conditioning on the stated successful output gives exactly the fiber proved
+above. Every record on each witness is an actual reached comparison on that
+witness's same source and register. No arbitrary graph or completion substitutes
+for either original-source direction. The off-diagonal Boolean contact
+matrix is the complete graph $K_4$ in both cases, while the simultaneous contact
+number, and hence the minimum field, differs. $\square$
+

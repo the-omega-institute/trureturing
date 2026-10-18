@@ -1,0 +1,77 @@
+**Lemma 6.2 (corner derivatives and first contact variations).** On
+its selected analytic germ,
+
+$$
+d_j(p)=-\ell_jp+O(p^2),\qquad
+\pi_j(p)=1/4+w_jp+O(p^2).
+\tag{EP.36}
+$$
+
+Proof. Introduce the moment polynomial and residual
+
+$$
+P_0(u,v)=\frac B4(1-u)(1-v)+\frac m8(u^2-1),\qquad
+\mathfrak r(u,v)=\min(f(u,v),0)-P_0(u,v).
+\tag{EP.37}
+$$
+
+The exact moments EP.17 give $\mathbb EP_0=B/4$. On every corner
+arc $\mathfrak r_j(0)=0$. Direct differentiation of the positive
+radical gives
+
+$$
+\varphi'(0)=-\gamma,\quad
+\varphi''(0)=-\gamma(\gamma+1),\quad
+((1+d)\varphi(d))''\big|_{d=0}=-\gamma(\gamma+3).
+\tag{EP.38}
+$$
+
+In particular
+
+$$
+\begin{aligned}
+(P_0)'_j(0)&=\frac B4[-\sigma(1-\eta)+(1-\sigma)\eta\gamma]+\frac m4,\\
+(P_0)''_j(0)&=\frac{B\gamma\eta}{4}
+ [ (\gamma+1)(1-\sigma)-2\sigma]+\frac m4.
+\end{aligned}
+\tag{EP.39}
+$$
+
+On the first three arcs the minimum in EP.37 is zero. On the last,
+$f'_{--}(0)=2(g_1-\gamma g_2-x+\gamma y+(1-\gamma)z)=m$.
+Substitution gives the four derivatives $\mathfrak r'_j(0)=\ell_j$
+in EP.31. The second derivative of $f_j$ is the bracket in EP.33,
+so EP.39 proves
+
+$$
+\mathfrak r_j(d)=\ell_jd+\tfrac12D_jd^2+O(d^3).
+\tag{EP.40}
+$$
+
+This verifies explicitly both derivative orders used in $K_1$.
+
+Differentiate the contact values in EP.20 at zero. The derivative
+polynomial $\dot P$ has corner values $k_j(0)=-P_0(\sigma,\eta)$.
+Among the five monomials of Definition 3.1, a polynomial vanishes at
+all four corners exactly when it is a multiple of $u^2-1$. Thus
+$\dot P=-P_0+\zeta(u^2-1)$ for a scalar $\zeta$. The tangency
+equations give $d'_j(0)=-\ell_j-2\zeta$. The fifth-minus-first
+moment derivative gives $\sum_jd'_j(0)=0$. Since $\sum_j\ell_j=0$,
+$\zeta=0$. This proves the first part of EP.36.
+
+Write $\pi_j=1/4+w_jp+O(p^2)$. Differentiating the first four moments
+now gives
+
+$$
+\begin{aligned}
+\sum_jw_j&=0,&\sum_j\sigma_jw_j&=\tfrac14\sum_j\sigma_j\ell_j,\\
+\sum_j\eta_jw_j&=-\tfrac\gamma4\sum_j\eta_j\ell_j,&
+\sum_j\sigma_j\eta_jw_j&=\tfrac{1-\gamma}{4}
+                                  \sum_j\sigma_j\eta_j\ell_j.
+\end{aligned}
+\tag{EP.41}
+$$
+
+Hadamard inversion is exactly EP.32, proving the second part.
+$\square$
+

@@ -1,0 +1,14 @@
+**Example 11.7 (weighted maxima must share a source).** On the exact
+leaf fiber $\{\alpha,\beta\}$ from Example 11.5 at entry zero,
+consider a lawful whole-source service that reads the root. On
+reply $\alpha$ it performs two updates and halts with $\alpha$;
+on reply $\beta$ it reads $R$ twice and halts with $\beta$.
+Its sourcewise costs are respectively $(1,2,0)$ and $(3,0,2)$.
+For weights $(1,1,1)$ its weighted worst value is $5$, whereas
+the sum of its separate coordinate maxima is $7$. Both runs
+are actual finite runs on their respective sources. Redundant
+reads and terminal updates make this service nonoptimal, but
+do not make it an illegal comparator. Theorem 7.3's unrolling
+can delete the terminal updates; its optimum comparison uses
+sourcewise dominance, not equality of these two maximum formulas.
+

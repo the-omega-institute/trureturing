@@ -1,0 +1,36 @@
+**Proposition 4.2 (reused exact feasibility).** Under Assumption 1.2,
+all finite weak feasible parameters are exactly
+$$
+\mathcal D_w=\{(s,t):t\ge t_0,\quad
+                 0\le s\le s_0\tau_{\max}(t)\}.
+\tag{GC.14}
+$$
+Equivalently, for $0\le\tau=s/s_0<1$,
+$$
+t_{\min}(s)=
+\begin{cases}
+t_0,&0\le\tau\le\tau_*,\\
+\displaystyle\nu\frac{1+u_F-2\tau\sqrt{u_F}}{1-\tau^2},
+ &\tau_*<\tau<1.
+\end{cases}
+\tag{GC.15}
+$$
+Every threshold is attained. The remaining finite feasible parameters
+form the isolated strong line
+$$
+\begin{gathered}
+v_d=V/W,\quad u_d=\theta v_d+\omega=\delta\mu/W,\\
+s^\dagger=\sqrt{u_dv_d}+\sqrt{(1-u_d)(1-v_d)},\qquad
+s=s^\dagger,\quad t\ge t_0.
+\end{gathered}
+\tag{GC.16}
+$$
+The strong $s^\dagger$ is distinct from $s_0$ and from the static weak
+contact. Finite $A=0$, $s=s_0$ and $s=1$ are infeasible. In particular,
+$s<s_0$ at every finite weak point.
+
+Proof. These are FA Theorem 78.3, its homogeneous correspondence
+(FA.42), and Theorem 71.1, with
+$(V,W,\mu,u_F,v_F)=(V_f,W_f,\mu_f,u_f,v_f)$.
+No new feasibility or source claim is made. $\square$
+

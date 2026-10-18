@@ -1,0 +1,50 @@
+## 441. 完整素数前缀的三尺度唯一交点与阻尼常数匹配
+
+**定义与范围。** 本节回到完整的实际素数前缀。令 \(z\ge2\) 为素数，
+\(p\) 为严格大于 \(z\) 的最小素数，统一使用插入时钟 \(L=\log p\)。定义
+
+\[
+E_z(s)=\prod_{q\le z}(1-q^{-s}),\qquad
+C_z=E_z(1)^{-1},\qquad
+F_z(v)=C_zE_z(1+v/L),
+\]
+
+\[
+s_z=\frac1L\sum_{q\le z}\frac{\log q}{q-1},\qquad
+H_z(v)=F_z(v)(1-e^{-v})-v,
+\]
+
+\[
+R_z(v)=F_z(v)\frac{1-e^{-v}}v\quad(v>0),\qquad
+J_z(\sigma)=\int_0^\infty e^{-\sigma v}\frac{H_z(v)}{v^2}\,dv
+\quad(\sigma>0).
+\tag{PX.1}
+\]
+
+所有素数乘积与和均包含 \(q\le z\) 的全部素数。与 §440 的单素数基底
+不同，此处 \(z\) 之后恰好只插入 \(p\)。若
+
+\[
+I_z(\sigma)=\int_0^\infty e^{-\sigma v}
+ \frac{F_z(v)-1-s_zv}{v^2}\,dv,
+\]
+
+插入后的 \(I_p\) 也使用同一个 \(L\)，则逐点精确补偿给
+
+\[
+F_p(v)=F_z(v)\frac{p-e^{-v}}{p-1},\qquad
+s_p=s_z+\frac1{p-1},\qquad
+I_p(\sigma)-I_z(\sigma)=\frac{J_z(\sigma)}{p-1}.
+\tag{PX.2}
+\]
+
+本节只研究这一完整首积分及其零点，不将它等同于 §433 的全部阶乘密度
+或 §428 的完整 Robin 配对。记 Euler 常数为 \(\gamma_E\)，并令
+
+\[
+C=e^{\gamma_E}>1,\qquad
+\Phi(v)=\exp(\operatorname{Ein}(v)),\qquad
+\operatorname{Ein}(v)=\int_0^v\frac{1-e^{-t}}t\,dt.
+\tag{PX.3}
+\]
+

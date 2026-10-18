@@ -1,0 +1,50 @@
+**命题 4.2（Exact two-coordinate reduction and separability）。** For every
+$\Gamma(X)\in\mathfrak I$,
+
+$$
+p=\operatorname{tr}(C(X)^2)
+ =\frac15-\frac{\operatorname{tr}X^2}{25}
+ =\frac15+\frac{2s}{25},\qquad \mathcal N=\frac{L}{5}.
+\tag{4.3}
+$$
+
+Moreover $S$ is the unique separable state in this class; every nonzero $X$
+gives a non-PPT entangled state on $H^{(1)}\mid H^{(2)}$.
+
+Proof. The first equality uses $J^\dagger J=I_5$ and cyclicity of trace.
+Expanding $(I_5+iX)^2$ and using $\operatorname{tr}X=0$ gives the second,
+and $\operatorname{tr}X^2=-2s$ gives the third. Lemma 4.1 gives $0\le s\le2$.
+
+Write $C=(c_{ij})$. Partial transpose sends
+$c_{ij}|i,f(i)\rangle\langle j,f(j)|$ to
+$c_{ij}|i,f(j)\rangle\langle j,f(i)|$. On each matched vector $e_i$ there
+is a scalar block $1/5$. For each of the ten unordered pairs $i\ne j$,
+the two vectors $|i,f(j)\rangle,|j,f(i)\rangle$ give a block
+
+$$
+\begin{pmatrix}0&c_{ij}\\\overline{c_{ij}}&0\end{pmatrix},
+\qquad \det\left(zI-
+\begin{pmatrix}0&c_{ij}\\\overline{c_{ij}}&0\end{pmatrix}\right)
+ =z^2-|c_{ij}|^2.
+\tag{4.4}
+$$
+
+Its eigenvalues are $\pm|c_{ij}|$. Because $f$ is a permutation, these ten
+two-dimensional blocks and five scalar blocks are mutually orthogonal and
+exhaust the $25$ dimensions. Thus, including zero entries,
+
+$$
+\|\Gamma^{\mathsf T_2}\|_1
+ =1+2\sum_{i<j}|c_{ij}|=1+\frac{2L}{5},
+$$
+
+which proves the negativity identity. This is the inherited maximally
+correlated block calculation, with the split and normalization explicit.
+
+If $X\ne0$, some block has a strictly negative eigenvalue, so the state is
+not PPT. A product positive matrix remains positive when its second factor
+is transposed, and convex combinations preserve positivity. Every separable
+state is therefore PPT, so $X\ne0$ is entangled. At $X=0$, the explicit
+product-state mixture defining $S$ is separable. No general PPT sufficiency
+in dimension $5\times5$ has been used. $\square$
+

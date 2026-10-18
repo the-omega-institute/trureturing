@@ -1,0 +1,42 @@
+#### 定理 6：完整 FIB 列表是单射
+
+映射
+
+```math
+I\longmapsto F[I]
+```
+
+在 $\Sigma_n$ 上是单射。
+
+##### 证明
+
+由于 Fibonacci 数列
+
+```math
+\operatorname{Fib}_3,\operatorname{Fib}_4,\operatorname{Fib}_5,\ldots
+```
+
+严格递增，按递增顺序排列的标签列表唯一确定其索引集合。
+
+例如
+
+```math
+[2,5]
+```
+
+唯一对应索引集合
+
+```math
+\{1,3\}.
+```
+
+证毕。
+
+事实上，甚至可以进一步压缩为一个 Fibonacci 加权和
+
+```math
+W(I)
+=
+\sum_{i\in I}\operatorname{Fib}_{i+2}.
+```
+

@@ -1,0 +1,87 @@
+**Definition 9.1 (the unresolved unrestricted decision).** For arbitrary
+finite $R,H_0,H_{\rm rel},Q$ satisfying Assumption 1.3, the unrestricted
+question remains an effective exact decision of
+$\exists h\,\operatorname{PrefDet}(U,Q,h)$, together with a paid
+source-total full-row consumer in the positive case, or an exact negative
+theorem covering the proposed unrestricted input class. In the guarded
+representation of Proposition 3.2 this requires reasoning about all
+joint finite-tree solutions of the coupled signed morphic equations,
+including concrete outside variation and every target subtree comparison.
+
+Decidable membership of a single concrete tree, ordinary unification of
+the same-epoch part, an emptiness result for another constraint language,
+or a search that terminates only after a suitable prefix bound is supplied
+does not settle this question. Theorem 8.2 rules out one finite ordinary
+compilation; it does not prove the unrestricted question undecidable.
+Theorem 6.1 decides the recognized root-certificate fragment with arbitrary
+additional histories, without claiming that the fragment exhausts all
+solvable inputs. Equation (ARH.2.3) already establishes static/serial
+**existence** equivalence under the stated contract; general minimum raw
+budgets and equality of those minima remain unresolved. Proposition 7.1
+settles its own one-read example only.
+
+The source-relative additions are the paid signed-history and guarded
+endpoint correspondences, the root-certificate interface to the supplied
+stability classification, the exact finite/cofinite full retained fiber,
+its complete-row decision and consumer, and the two precise representation
+obstructions. These are `repo-derived` ordinary mathematical deductions.
+The atomic orbit classification, historical decoder, template certificates,
+Hall matching, finite-term unification and finite-transcript method are
+reused suppliers. No global priority claim is made.
+
+The relevant supplier boundaries are as follows, attached to the
+correspondences they support.
+
+- [SLH, §§59–62][SLH] supply actual old-row acquisition, full class
+  inequalities, local transport and complete-state continuation. [SLH,
+  §§29, 55, 69 and 74–75][SLH] supply guarded literal semantics, delayed
+  templates, finite historical VALUE minimax, and the general literal-only
+  full-row criterion. [SLH, §§70–73][SLH] keep their exact multi-hole
+  ancestor and joint-extension conditions. None is replaced by a renamed
+  ground-binding algorithm here.
+- [CENTRALIZER][CENTRALIZER] supplies (ARH.4.4), with the exact source
+  identification in Definition 4.1. [TRANSPORT][TRANSPORT] supplies the
+  actual image parser, injectivity, original-address transport, clock and
+  guarded atomic subtree formulas. Their uses here are ordinary theorem
+  applications; they do not by themselves supply an acquired mixed-history
+  decision or certify a physical cut.
+- [ActualTreeReadoutAcquisition][ACQUISITION], `source_foundation` and
+  `acquisition_foundation`, supplies the existing leaf-rigidity and finite
+  traversal correspondence consumed through [SLH, §§53, 55 and 59][SLH].
+  Its original static Boolean policy is not a serial full-row service.
+  The finite-record/counting and realized-image factor suppliers named in
+  [SLH, §75][SLH] likewise retain their own hypotheses; finite image alone
+  does not ensure bounded observation, as Proposition 7.1 without its
+  relation demonstrates.
+- Finite free-term unification is `literature-attested` by
+  [Martelli–Montanari, *An Efficient Unification Algorithm*, ACM TOPLAS
+  4(2), 258–282][MM]. The exact finite occurs-check and solved-substitution
+  argument used here is already supplied in [SLH, §74, proof (ii)][SLH].
+  It is applied only to ordinary free terms in Theorems 8.2–8.3.
+- [Hall, *On Representatives of Subsets*][HALL] and the pinned mathlib
+  [`Finset.all_card_le_biUnion_card_iff_existsInjective'`][MATHHALL]
+  supply the finite matching step used by [SLH, §61][SLH]. Its finite
+  index set is the old class set, and values are finite trees with
+  decidable equality. [Pinned `FirstOrder.Language.Term` and
+  `Term.subst`][SYNTAX] supply syntax and substitution, not a solver
+  for interpreted $\rho$ constraints. These library statements do not
+  establish an unproved mixed-epoch correspondence.
+- [Comon et al., *Tree Automata Techniques and Applications*, §1.4][TATA]
+  is the `literature-attested` tree-homomorphism background: (ARH.1.1)
+  is a fixed nondeleting linear ranked homomorphism. Injectivity here
+  comes from the specific parser, not from linearity. Ordinary image
+  or preimage language closure does not compare two coupled unknown
+  mixed-epoch endpoint trees.
+- [Barguñó–Creus–Godoy–Jacquemard–Vacher, *Decidable Classes of Tree
+  Automata Mixing Local and Global Constraints Modulo Flat Theories*,
+  LMCS 9(2:1)][TABG] supplies decidable emptiness in its stated automaton
+  language. Its fixed old-hole use is already supplied in [SLH, §61][SLH].
+  No representation of arbitrary coupled $\rho$ constraints in that
+  language, nor a decision of (ARH.2.2), follows merely from this citation.
+- [Marshall–Meadows–Narendran, *On Unification Modulo One-Sided
+  Distributivity: Algorithms, Variants and Asymmetry*, LMCS 11(2:11)][OSD]
+  studies a different specified equational theory. Its homomorphism
+  methods are a possible comparison, but no transfer to the fixed two
+  leaf images, finite original ground sources, signed guards and full-row
+  boundedness problem is asserted. No complexity claim is imported.
+

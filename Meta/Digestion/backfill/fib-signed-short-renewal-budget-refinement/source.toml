@@ -1,0 +1,5 @@
+source_id = "fib-signed-short-renewal-budget-refinement"
+path = "docs/develop/theory/FIB_SIGNED_SHORT_RENEWAL_BUDGET_REFINEMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

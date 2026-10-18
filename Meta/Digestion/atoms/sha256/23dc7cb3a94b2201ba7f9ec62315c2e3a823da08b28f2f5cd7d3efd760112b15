@@ -1,0 +1,121 @@
+**Theorem 209.8 (Exact simultaneous cost with comparable measures).**
+Use the proportional early rows
+$P_{01x}=p_1\nu(x)/S$, $P_{10x}=p_2\nu(x)/S$,
+$C_{01x}=c_1\nu(x)/S$, $C_{10x}=c_2\nu(x)/S$,
+late correct measures $(R_n)_*\mu_n$, and $T=t\ge0$.
+This single score $V$ has anchor $W_V=S+E+t$ and exact cost
+
+$$
+\begin{aligned}
+D_j={}&\max(Hm_j/S,U_j)\\
+ &+\max(H(S-m_j)/S,p_*(S-m_j)/S+t,Z_j)-H-t,\\
+D_{ij}={}&(\eta_i-m_i)_++(U_{ij}-d_{ij})_+
+                  +(Z_{ij}-h_{ij}-t)_+-E,\\
+D_N={}&\max\{0,\mu-t,\max_jD_j,\max_{i<j}D_{ij}\},\\
+\Delta_N(V)={}&\Delta_O(V)=D_N.
+\end{aligned}
+\tag{209.14}
+$$
+
+For this score the stronger equality $B_N^s(V)=B_O^s(V)$ holds
+for every increasing pair. The construction preserves the entire
+$\nu$, the declared class totals, and $t$.
+Every choice $0\le\eta_n\le S$ admits measures (209.12), for example
+
+$$
+\mu_n=\begin{cases}
+(\eta_n/m_n)\nu_n,&0<m_n,\ \eta_n\le m_n,\\
+0,&\eta_n=m_n=0,\\
+\nu_n+\dfrac{\eta_n-m_n}{S-m_n}(\nu-\nu_n),&m_n<\eta_n\le S.
+\end{cases}
+\tag{209.15}
+$$
+
+This existence assertion alone supplies no bound $D_N\le1$.
+
+**Proof.** Each early label's reward measure is $H\nu/S\le\nu$.
+On a late pair $i<j$, any earlier class $n<i$ has, in each queried
+cell, at most the corresponding $\nu$ mass: $R_n$ leaves both
+queried coordinates unchanged. No later label can occur in $00$ or
+$01$. The only potentially larger reward there is class $i$, whose
+two pieces are $\mu_i\{x_j=0\}$ and $\mu_i\{x_j=1\}$.
+By (209.12), their differences from the two pieces of $\nu_i$ have
+the same sign. Hence
+
+$$
+\begin{aligned}
+&\max(\nu\{00\},\mu_i\{x_j=0\})
+ +\max(\nu\{01\},\mu_i\{x_j=1\})\\
+&\hspace{25mm}=\max(m_i,\eta_i).
+\end{aligned}
+\tag{209.16}
+$$
+
+This also is the merged stopped-zero maximum. Comparing only masses
+$\eta_i,m_i$ would not justify (209.16).
+In $10$, earlier classes are dominated, intermediate classes supply
+$u_{nj}$, and the queried class supplies $\eta_j$; the maximum is
+$\max(d_{ij},U_{ij})$.
+In $11$, earlier classes remain dominated, intermediate classes supply
+the complementary pieces $\eta_n-u_{nj}$ and future classes supply
+their totals. Its maximum is $\max(h_{ij}+t,Z_{ij})$.
+Since $m_i+d_{ij}+h_{ij}=S$, subtracting the anchor gives $D_{ij}$
+for both catalogs on this pair.
+
+On early/late $(a,j)$ the early owner $a$ maximizes both split-zero
+cells and their rewards sum to $H$. In the other cells the maxima are
+
+$$
+\max(Hm_j/S,U_j),\qquad
+\max(H(S-m_j)/S,p_b(S-m_j)/S+t,Z_j),\quad b=3-a.
+$$
+
+Maximizing over $a$ gives $D_j$. The head contributes $(\mu-t)_+$.
+Thus every pair has equal $N/O$ support. Refine every shorter $N$
+function into a distinct-pair $N$ function, apply the pair bounds,
+and use $O\subset N$; a maximizing pair attains the full value in
+$O$. This proves (209.14), including $L=3$ when there is no late pair.
+
+In the last branch of (209.15), $S-m_n>0$ and the multiplier lies
+in $[0,1]$. Thus each displayed measure is dominated by $\nu$ and
+comparable to $\nu_n$, with exactly the required mass. They coexist
+on one carrier: write $\mu_n=f_n\nu$, $0\le f_n\le1$, and on
+$\nu(dx)\,du$, $0\le u<1$, mark class $n$ when $u<f_n(x)$.
+Overlapping marks are allowed. Their marginal marked measures are
+all the $\mu_n$ simultaneously. This auxiliary representation is of
+score weights and is not an additional acquisition seed. $\square$
+
+The conditional densities in 205.12 are a special case of (209.15),
+but their ordered profile, common terminal and half-density hypotheses
+are not assumed in (209.12). Conversely the exact minimum assertion
+of 205.12 is not inherited by (209.14).
+
+For extraction from an input $y$, use its actual $\nu$ and choose
+$c_a\le\gamma_a$, $\eta_n\le\gamma_n$ subject to (209.12).
+Write $E_{\rm lost}=E_y-E\ge0$ and
+$R_k=\sum_{n=3}^k(\gamma_n-\eta_n)\ge0$.
+The existing residual formula (207.8) reduces exactly to
+
+$$
+\Theta_N=\max\left\{0,\max_{3\le k\le L}
+ \frac{3R_k-(k-2)E_{\rm lost}}{k+1}\right\}.
+\tag{209.17}
+$$
+
+Indeed the $o,p$ readings are nonpositive, and the $v_k$ reading
+minus the $u_k$ reading is
+$2(k-2)(R_k+E_{\rm lost})/((k-1)(k+1))\ge0$.
+Only these signs permit removing the $u$ column here.
+The residual itself is
+
+$$
+-\sum_{a=1}^2(\gamma_a-c_a)(1-b_a)
+ +\sum_{n\ge3}(\gamma_n-\eta_n)(b_n-e)-E_{\rm lost}e.
+$$
+
+Thus $D_N+\Theta_N\le1$ gives one certificate by (207.10).
+Original $\gamma_n$ may exceed $m_n$ or $S$; retained
+$\eta_n\le S$ and all losses in (209.17) must still be respected.
+Retaining all totals makes the residual zero. Arbitrary original
+early $00$ rows are included in $\nu$ before its redistribution.
+

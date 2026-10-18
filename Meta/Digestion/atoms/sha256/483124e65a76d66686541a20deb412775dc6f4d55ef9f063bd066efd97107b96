@@ -1,0 +1,39 @@
+**Theorem 4.3 (automatic exclusion or finite realization).** For every
+input recognized by Definition 2.2, there is a terminating mathematical
+algorithm deciding $\forall h\ J_B(h)$ and returning exactly one of:
+
+1. A finite $H$ with $\neg J_B(H)$.
+2. An effective construction that, for each requested $h$, returns one
+   actual finite $u_r(h)\in D_r$ for every $r\in B$, all sharing $p_h$.
+
+All whole-source, full-row, rank and residual sharing requirements of
+§1 are retained. The construction takes $I,B$, not contact certificates.
+
+**Proof.** Compute the complete covers and their finite recognition
+tests. For each nonclash chart tuple and each of its finitely many scalar
+faces compute (TOS.7). Decide their finite disjunction.
+
+If one sentence is true, extract its fixed finite data and apply Theorem
+4.2's finite construction for every requested depth. The chart forward
+maps establish membership in the corresponding entire strata.
+
+For the converse, the exact covers reconstruct every joint finite
+source witness in some chart tuple. There are only finitely many tuples,
+and each tuple's prefix feasibility is downward closed in depth. If
+every tuple failed at some depth, the maximum of those failed depths
+would exclude every tuple and hence $J_B$. Thus $\forall h\ J_B(h)$
+forces one fixed tuple to have witnesses at every depth. It cannot be
+a clash tuple, and Theorem 4.2 makes one of its sentences true. This
+proves both directions of the disjunction test on the whole source fiber.
+
+If the disjunction is false, the same argument proves that some finite
+exclusion depth exists. Run the exact multi-source fixed-depth query
+for $h=0,1,2,\ldots$ and stop at its first false answer. [SJM, Theorem
+3.2, fixed-set proof][SJM], using [NSF, Lemma 5.1 and Theorem 5.2][NSF],
+decides this query on $|B|$ independent whole-source copies with their
+specified complete rows and identical four-valued prefix replies.
+Each query terminates, and the already decided negative alternative
+proves that this search terminates. Thus it is not a test sequence
+being mistaken for a persistence certificate. The two branches are
+sound, complete and terminating on the recognized class. $\square$
+

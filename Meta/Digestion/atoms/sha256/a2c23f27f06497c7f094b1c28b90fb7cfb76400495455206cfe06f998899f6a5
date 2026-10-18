@@ -1,0 +1,129 @@
+**定理 42.5（球帽逆裕量与完整因果记录的精度分界）。** 对 $\tau\ge0$，置 $\kappa=\sqrt{1-\tau^2}>0$。
+
+1. 若一个非零前缀的 $\alpha>\kappa$，则 $m=m(\alpha,\tau)>0$。球帽隐藏初态对归一化首锚读 $w$ 的最小全局逆Lipschitz常数恰为 $1/m$，对实际读 $\lambda w$ 则恰为 $1/(\lambda m)$。该常数是固定实际投影的几何逆常数，不是全部历史控制器的精确噪声minimax值。
+2. 对严格预算 $g_N>\kappa$，令 $m_N=\tau g_N-\kappa\sqrt{1-g_N^2}>0$。有全初态风险界
+
+   $$
+   \delta\le\mathcal R_N^{\rm cap}(\delta)
+   \le\delta\sqrt{1+m_N^{-2}}\qquad(\delta>0).
+   \tag{42.11}
+   $$
+
+   上界由单位控制的有限历史达到，只需至多3次更新、至多4次Read并保留其全部动作／读数／停止记录；下界只主张线性阶，未声称匹配裕量常数。
+3. 若 $g_N=\kappa$，精确恢复仍成立，但对所有控制器有
+
+   $$
+   \sqrt{R\delta}\le\mathcal R_N^{\rm cap}(\delta)
+   \le\sqrt{2\delta^2+2R\delta}
+   \le\sqrt{3R\delta},
+   \qquad 0<\delta\le\frac{R(1-\tau)}2.
+   \tag{42.12}
+   $$
+
+   中间上界在全部 $\delta>0$ 有效，由同样的有限历史达到。临界固定投影的逆在实际像上有指数 $1/2$ 的Hölder界，没有Lipschitz界，也没有任何指数大于 $1/2$ 的统一Hölder界。
+4. 若 $g_N<\kappa$，所有 $\delta>0$ 均有
+
+   $$
+   \mathcal R_N^{\rm cap}(\delta)
+   \ge\frac R2\bigl(\sqrt{1-g_N^2}-\tau\bigr)>0.
+   \tag{42.13}
+   $$
+
+   因而在 $\tau>0$ 时，统一最坏误差为 $O(\delta)$ 的最小更新预算恰为 $\min\{N\ge1:g_N>\kappa\}$；此处 $O(\delta)$ 的常数可依赖声明来源与预算，但不能依赖 $\delta$。$\tau=0$ 时任何有限预算都没有这种线性精度保证。若 $\tau<0$，对任何有限预算均有 $\mathcal R_N^{\rm cap}(\delta)\ge-R\tau/2>0$。
+
+证明。**逆的几何及尖锐性。** 记 $H=\tau\nu+\kappa\alpha$，则 $m^2+H^2=1$。式 (42.6) 给 $s\ge Rm$。因此所有合法 $w$ 均在闭球 $|w|\le RH$ 内，平方根图
+
+$$
+ f(w)=(\epsilon\sqrt{R^2-|w|^2}+w)\widehat p^{-1}
+\tag{42.14}
+$$
+
+在此球上的微分范数为 $R/\sqrt{R^2-|w|^2}\le1/m$。线段留在该球，积分微分界得全局Lipschitz上界。这里导数的三个奇异值为 $1,1,R/s$，因为旋转之前的Gram矩阵为 $I+ww^{\mathsf T}/s^2$。
+
+为检验常数确实最小，$\nu>0$ 时取上文的 $t$，$\nu=0$ 时任取单位 $t\perp\ell$。帽边缘点与进入帽内的单位切向量为
+
+$$
+ b_*=R(m\ell+Ht),\qquad z=H\ell-mt,
+ \qquad \langle n,b_*\rangle=R\tau,
+ \quad \langle n,z\rangle=\kappa>0.
+\tag{42.15}
+$$
+
+由于 $\tau<1$，$\kappa>0$。曲线 $b(\theta)=b_*\cos\theta+Rz\sin\theta$ 在充分小的 $\theta>0$ 仍在帽内；其初态速度长度为 $R$，投影速度长度为 $Rm$。两点逆比趋于 $1/m$，证明尖锐性；实际读数再乘 $\lambda$，给 $1/(\lambda m)$。该证明也包括 $\alpha=1$，此时 $m=\tau>0$、$H=\kappa$。
+
+**严格和临界的有限历史上界。** 选择达到 $g_N$ 的单位控制，所以 $\lambda=1$；保留初读 $y_0$、各内部更新后的实际读以及首锚读 $y_1$，然后停止。估计 $\widehat a=y_0$。严格情形把 $y_1$ 欧氏径向截到闭球 $|w|\le RH_N$，其中 $H_N=\sqrt{1-m_N^2}$，记为 $\widetilde w$，再令 $\widehat b=f(\widetilde w)$。对闭球的径向投影不增加到任何球内点的距离：球外 $y=tu$、$t>L$、$|w|\le L$ 时
+
+$$
+ |y-w|^2-|Lu-w|^2
+ =(t-L)(t+L-2\langle u,w\rangle)\ge0.
+\tag{42.16}
+$$
+
+故 $|\widetilde w-w|\le\delta$，由尖锐逆界得 $|\widehat b-b|\le\delta/m_N$，与 $|\widehat a-a|\le\delta$ 合并为 (42.11) 的上界。估计值可不在帽内，但在 $W$，符合 (42.10)。如果特意使用 $\lambda<1$ 的已知非零前缀，则须先除以 $\lambda$，此构造的界变为 $\delta\sqrt{1+(\lambda m)^{-2}}$，不能把收缩噪声当成免费增益。
+
+临界时 $m_N=0$，把 $y_1$ 径向截到闭球 $|w|\le R$，仍用 (42.14)。对球内任意 $u,w$，令 $s_u=\sqrt{R^2-|u|^2}$，则
+
+$$
+ |s_u-s_w|^2\le|s_u^2-s_w^2|
+ =\bigl||w|^2-|u|^2\bigr|
+ \le2R|u-w|.
+\tag{42.17}
+$$
+
+从而 $|f(u)-f(w)|^2\le|u-w|^2+2R|u-w|$。投影误差至多 $\delta$，加上可见初态的 $\delta^2$，得 (42.12) 的中间上界。其最后不等式只用该区间内 $\delta\le R/2$。没有平均误差或独立性步骤。
+
+在临界方向 $\alpha=\kappa$，有 $\nu=\tau$。取 $\tau>0$ 时的 $t$，$\tau=0$ 时任取 $t\perp\ell$。令
+
+$$
+ b_0=Rt,\qquad b_h=h\ell+\sqrt{R^2-h^2}\,t,
+ \quad 0<h\le R\kappa,
+ \qquad e=R-\sqrt{R^2-h^2}.
+\tag{42.18}
+$$
+
+这两个点均在帽内：$b_0$ 的法向读为 $R\tau$，而 $\kappa h\ge\tau e$，因为 $e=h^2/(R+\sqrt{R^2-h^2})\le h^2/R\le\kappa h$。其投影距离是 $e$，隐藏初态距离平方为 $h^2+e^2=2Re$。令 $h\downarrow0$ 即得精确的平方根退化；任意指数 $\zeta>1/2$ 的逆比为 $\sqrt{2R}\,e^{1/2-\zeta}\to\infty$。式 (42.17) 在投影实际像上给 $1/2$ 阶上界：$|u-w|\le2R$ 时 $|f(u)-f(w)|\le2\sqrt{R|u-w|}$。这证明第3项所述精确但非Lipschitz的逆。
+
+**覆盖全部记录的临界下界。** 现在固定任意 $\pi\in\mathcal P_N^{\rm cap}$，并在 $a=0$ 的共同首锚前分支上令每次报告读数为零。此前内部更新的可见分量确为零，所以这是所有隐藏来源上的合法零误差记录，控制及停止由这份共同记录决定。若该分支从不执行锚，或先有零控制，就选单位 $u\perp n$ 和帽边缘来源 $R(\tau n\pm\kappa u)$；二者相距 $2R\kappa$、整条记录相同。在 (42.12) 的区间内 $R\kappa\ge\sqrt{R\delta}$，故已给所需下界。
+
+其余情形首次锚在某个有限事件处，且 $p\ne0$。从至多 $N$ 次更新及 $g_N=\kappa$ 得 $\alpha\le\kappa$、$\lambda\le1$。若 $\nu>0$ 取 $t=(n-\alpha\ell)/\nu$；唯一 $\nu=0$ 的情形是 $\tau=0,\alpha=\kappa=1$，此时任选 $t\perp\ell$。令
+
+$$
+ e=2\delta,\qquad
+ h=\sqrt{2Re-e^2},\qquad
+ b_0=Rt,\quad b_1=h\ell+(R-e)t.
+\tag{42.19}
+$$
+
+给定区间使 $e\le R(1-\tau)\le R$、$h\le R\kappa$。两者均为半径 $R$ 的实际来源。为核对任意 $\alpha\le\kappa$ 下的帽条件，而非仅在最优方向核对，函数
+
+$$
+ F(\alpha)=\alpha h+\sqrt{1-\alpha^2}(R-e)
+\tag{42.20}
+$$
+
+在 $[0,\kappa]$ 上凹，故不小于其两个端点值的较小者。$F(0)=R-e\ge R\tau$；$F(\kappa)=\kappa h+\tau(R-e)\ge R\tau$，后一个不等式由 $e\le h^2/R\le\kappa h$ 及 $\tau\le1$ 给出。因此 $b_1$ 在帽内；$b_0$ 的法向读为 $R\nu\ge R\tau$，也在帽内。
+
+两初态取 $(0,b_0)$、$(0,b_1)$。首锚前全部实际读数和动作仍为同一零记录；首锚后的当前状态差为
+
+$$
+ \Delta z=(\lambda\Delta w,0),\qquad
+ |\Delta w|=e=2\delta,
+ \qquad |b_1-b_0|=2\sqrt{R\delta}.
+\tag{42.21}
+$$
+
+在该次及此后每次Read报告两真实读数的中点，各自误差为相反半差。原内部更新分别把 $E$ 分量作收缩叉积、把 $F$ 分量作收缩右乘；$A_d$ 把 $(a,b)$ 变成 $(\operatorname{Im}b,-a)$。所以“状态差的两个分量各不超过 $2\delta$”在所有原动作下保持；每次真实可见读差不超过 $2\delta$，中点误差均合法。相同已报告记录逐事件迫使动作、Read选择、停止标记及最终估计相同。此递推对任意重复Read、有限停止和可数记录都成立，联合误差序列可针对这两个来源分别给定，无须独立或重抽样。首锚前的方向可按共同记录决定，但不是从未执行的隐藏响应决定；后续控制身份也不携带额外初态信息。任一共同 $W$ 值输出对这两点至少一边有误差 $\sqrt{R\delta}$，证明 (42.12) 的全控制器下界。这里没有要求两来源的中点仍在球帽。
+
+**其余预算及线性阶下界。** 若 $g_N<\kappa$，令 $\nu_0=\sqrt{1-g_N^2}>\tau$、$h=R(\nu_0-\tau)/2$。在同一 $a=0$ 首锚前零分支上，任何非零积均有 $\nu\ge\nu_0$。式 (42.8) 的两个点在帽内，因为 $0<h/R\le1/2$ 且
+
+$$
+ \nu\sqrt{1-(h/R)^2}-\alpha h/R
+ \ge\nu-(\nu+\alpha)h/R
+ \ge\nu_0-2h/R=\tau.
+\tag{42.22}
+$$
+
+首锚读相同，之后状态相同，所以完整记录的初态半距为 $h$，即 (42.13)。无锚或零积时帽边缘对的半距 $R\kappa\ge h$ 也足够；这包括 $N=0$。若 $\tau<0$，取 $h=-R\tau/2$，对任意方向选 $t$ 使 $\langle n,t\rangle=\nu\ge0$；(42.8) 两点的最小法向读至少 $-h\ge R\tau$，给全预算正下界。无锚及零积可选法向赤道上的相反点，仍同记录。
+
+最后，对任意 $\tau$ 和任何预算，固定 $b=Rn$，取 $a_\pm=\pm\delta q$，$q\in E$ 为单位。初态可见差为 $2\delta q$、隐藏差为零。逐次报告两真实读数的中点，差的两个状态分量不超过 $2\delta$ 的同一不变量始终成立，故动作及停止亦相同；两初态半距为 $\delta$，给 (42.11) 的下界。严格上界、临界平方根下界和低于阈值的正下界合起来，证明所述线性精度更新阈值。证毕。
+

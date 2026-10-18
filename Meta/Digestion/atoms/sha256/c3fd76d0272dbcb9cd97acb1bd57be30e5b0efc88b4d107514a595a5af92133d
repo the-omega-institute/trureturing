@@ -1,0 +1,109 @@
+**Theorem 9.1 (Survival on the selected filtered zero face).** Let
+$x=x_H(w)$ satisfy (8.4), and put
+
+$$
+n=\frac{1+1/\sqrt{17}}2,\qquad m=1-n,\qquad
+t_+=wq_+,\quad t_-=wq_-.
+\tag{9.1}
+$$
+
+Then $nm=4/17$, $0\le t_+,t_-\le2$, and its mode-$N$ survival
+for input $\Pi_N$ at actual wait zero is
+
+$$
+\begin{aligned}
+s_N(x)&:=\operatorname{tr}(\Pi_NS_x(\Pi_N))\\
+&=\frac{nm}{2}
+ +\left(\frac{n^2}{8}-\frac{nm}{6}\right)t_+
+ +\left(\frac{m^2}{8}+\frac{nm}{12}\right)t_-
+ +\frac{nm}{3}\sqrt{t_+t_-}
+\ \le\ \frac{25}{68}.
+\end{aligned}
+\tag{9.2}
+$$
+
+Consequently the physical port in (8.12) has $e(T_x)\ge43/68$.
+For $H=I$ the stronger statements are
+
+$$
+0\le w\le3,\qquad
+s_N(x_I(w))=\frac2{17}+\frac w{24}\le\frac{33}{136},\qquad
+e(T_x)\ge\frac{103}{136}.
+\tag{9.3}
+$$
+
+Proof. By (1.4),
+$e_N=\sqrt n\,u_++\sqrt m\,u_-$ and $R_0e_N=0$.
+For the full-support seed in (8.1), expand its joint-rotation
+survival integrand as
+
+$$
+\frac13(\sqrt n\cos\theta+\sqrt m\cos\phi)^2
+       (\sqrt{nq_+}\cos\theta+\sqrt{mq_-}\cos\phi)^2.
+\tag{9.4}
+$$
+
+The independent circle moments are
+$\langle\cos^2\theta\rangle=1/2$,
+$\langle\cos^4\theta\rangle=3/8$, and zero for the odd
+powers that occur. Both the integral and the exact finite quadrature
+therefore give the full-support seed survival
+
+$$
+D(q)=\frac{n^2q_+}{8}+\frac{m^2q_-}{8}
+ +\frac{nm(q_++q_-)}{12}
+ +\frac{nm}{3}\sqrt{q_+q_-}.
+\tag{9.5}
+$$
+
+Of the other three seeds, only $k_{-+}$ survives this test.
+Its value is $nm/4$, from two independent second moments.
+The seed $k_{+0}$ has zero measurement overlap with $e_N$;
+$k_{0-}$ has zero preparation overlap. The forced TP weights in
+(8.4) give $s_N=wD(q)+(2-wq_+)nm/4$, which is exactly (9.2).
+This uses common weights fixed by the whole marginal, not separate
+eventwise optima.
+
+All three variable terms in (9.2) are nondecreasing in
+$(t_+,t_-)\in[0,2]^2$. The only coefficient requiring a sign
+check is
+
+$$
+\frac{n^2}{8}-\frac{nm}{6}
+ =\frac{n(3n-4m)}{24}>0:
+\qquad n>4/7\quad\text{since }\sqrt{17}<7.
+\tag{9.6}
+$$
+
+The remaining coefficients are positive. Substituting the upper
+corner $(2,2)$ therefore gives
+
+$$
+s_N\le\frac{n^2+m^2}{4}+nm
+      =\frac14+\frac{nm}{2}=\frac{25}{68}.
+\tag{9.7}
+$$
+
+For the allowed physical input $\rho=\Pi_N$, actual wait $0$,
+the complete five-outcome rank-one read and Stop, the unreplaced
+law is concentrated at $N$. The replaced mode-$N$ probability is
+$s_N$, since $De_N=e_N$. The TV of these full histories is
+exactly $1-s_N\ge43/68$. In adjoint notation the same event
+difference is
+
+$$
+\operatorname{tr}\bigl(\Pi_N[\Pi_N-S_x^\dagger(\Pi_N)]\bigr)
+                       =1-s_N.
+\tag{9.8}
+$$
+
+Thus no state-map substitution for a non-self-adjoint channel's
+adjoint is used. This single legitimate protocol lower-bounds the
+original supremum over all complex inputs and all actual finite
+histories. It introduces no new instrument or reference measurement.
+
+For $H=I$, $q_i=1/3$ and (8.4) requires $w\le3$.
+Substitution in (9.2), using $n+m=1$, gives
+$s_N=nm/2+w/24=2/17+w/24$. Its maximum is $33/136$,
+whose complement proves (9.3). $\square$
+

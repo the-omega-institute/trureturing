@@ -1,0 +1,48 @@
+**Theorem 21.1 (Dirichlet residual and full-response enclosure).** Let $R$ satisfy (19.3), $\Omega=\mathbb B_{3R}$, and let $z\in\mathcal H_R^c$ be real odd. Choose a real horizontal flux $\mathbf j\in L^2(\Omega;\mathbb R^2)$ whose distributional horizontal divergence $\operatorname{div}_H\mathbf j=Xj_X+Yj_Y$ belongs to $L^2(\Omega)$. Define
+
+$$
+\begin{aligned}
+\mathbf a_z&=\mathbf g-\nabla_Hz,&f_z&=k+\gamma Vz,\\
+\mathcal J(z)&=2e(z)-h_0[z],\\
+\eta_R(z,\mathbf j)&=\theta^{-1/2}\left(
+ \|\mathbf a_z+\mathbf j\|_{2,\Omega}
+ +\frac{6R}{\pi c_r}\|f_z+\operatorname{div}_H\mathbf j\|_{2,\Omega}\right).
+\end{aligned}
+\tag{21.1}
+$$
+
+With $L=3R/c_r$, take the fixed real odd witness $u_L=L^{-4}\varphi\circ\delta_{1/L}$ of Exterior response gain, Theorem 7.1, and put $\ell_L=e(u_L)^2/h_0[u_L]$. For sufficiently large $L$ it has $\ell_L\sim k_\varphi L^{-3}>0$. Then
+
+$$
+\begin{gathered}
+\mathcal J(z)\le\delta_R\le\mathcal J(z)+\eta_R(z,\mathbf j)^2,\\
+B_h-\mathcal J(z)-\eta_R(z,\mathbf j)^2-\operatorname{Err}_R
+ \le G_{\rm resp}\le B_h-\mathcal J(z)-\ell_L.
+\end{gathered}
+\tag{21.2}
+$$
+
+Proof. Zero extension of a compact core vector in $\Omega$ lies in the height slab $(-3R/c_r,3R/c_r)\times\mathbb R^3$. The one-dimensional Dirichlet Poincare inequality on that interval, integrated over phases, gives
+
+$$
+\|u\|_2\le\frac{6R}{\pi c_r}\|Xu\|_2
+ \le\frac{6R}{\pi c_r}\sqrt{b[u]}.
+\tag{21.3}
+$$
+
+It extends to $\mathcal H_R^c$ by closure and proves that this finite-region completion is a subspace of $\mathcal Q_E$. Distributional integration by parts and then (21.3) give, for its vectors,
+
+$$
+\begin{aligned}
+e(u)-h_0(z,u)
+ &=\int_\Omega(\mathbf a_z+\mathbf j)\cdot\nabla_Hu
+   +\int_\Omega(f_z+\operatorname{div}_H\mathbf j)u,\\
+|e(u)-h_0(z,u)|&\le\eta_R(z,\mathbf j)\sqrt{h_0[u]}.
+\end{aligned}
+\tag{21.4}
+$$
+
+Both plus signs are fixed by $\int\mathbf j\cdot\nabla_Hu=-\int(\operatorname{div}_H\mathbf j)u$. Testing with $v_R-z$ bounds its squared $h_0$ norm by $\eta_R^2$. The exact identity $\delta_R=\mathcal J(z)+h_0[v_R-z]$ proves the first line of (21.2). The exterior witness obeys $\ell_L\le\delta_h-\delta_R\le\operatorname{Err}_R$ by the proof of Theorem 20.3, so subtraction from $G_{\rm resp}=B_h-\delta_h$ proves its second line.
+
+The divergence hypothesis is on the whole distribution in $\Omega$. A piecewise flux with a nonzero horizontal interface jump need not have $L^2$ divergence and cannot be used after discarding its jump. No boundary trace regularity for the control ball is needed in this proof: core testing and closure supply the integration by parts. The finite slab constant (21.3) gives no global $L^2$ gap. $\square$
+

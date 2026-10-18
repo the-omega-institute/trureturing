@@ -1,0 +1,12 @@
+### 定义 14.2（有限独立源三角数据）
+
+给定任意有限集合 $\Lambda_\alpha,\Lambda_\beta,\Lambda_\gamma$，一组数据 $T$ 包括 $\mu_\alpha\in\mathcal D(\Lambda_\alpha)$、$\mu_\beta\in\mathcal D(\Lambda_\beta)$、$\mu_\gamma\in\mathcal D(\Lambda_\gamma)$，分别满足 $\operatorname{Dist}_{\Lambda_\alpha}(\mu_\alpha)$、$\operatorname{Dist}_{\Lambda_\beta}(\mu_\beta)$、$\operatorname{Dist}_{\Lambda_\gamma}(\mu_\gamma)$，以及定义 14.1 的三个二值输出概率核
+
+$$
+A:\Lambda_\beta\times\Lambda_\gamma\times\mathbb B\to\mathbb R,\qquad
+B:\Lambda_\gamma\times\Lambda_\alpha\times\mathbb B\to\mathbb R,\qquad
+C:\Lambda_\alpha\times\Lambda_\beta\times\mathbb B\to\mathbb R.
+$$
+
+每个观察者仅依赖所列的两个相邻源；三个源的联合质量是 $\mu_\alpha(\alpha)\mu_\beta(\beta)\mu_\gamma(\gamma)$。这里未额外假定源集合非空；若其中一个为空，对应归一化条件不能成立。
+

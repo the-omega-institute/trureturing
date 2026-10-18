@@ -1,0 +1,41 @@
+### 41.3 Matching total controller on every original source
+
+Create one state $h_a$ for each distinct $a\in Y_{\rm act}$. Its instruction is $\operatorname{Halt}(a)$ and all three response updates are self-loops. Create a root $R_v$ for each active fibre. Identify the two roots exactly when $\epsilon=1$, and otherwise keep them distinct. The complete instruction and update tables are
+
+| State | Fixed instruction | Response $0$ | Response $1$ | Response $\bot$ |
+| --- | --- | --- | --- | --- |
+| $h_a$, each $a\in Y_{\rm act}$ | $\operatorname{Halt}(a)$ | $h_a$ | $h_a$ | $h_a$ |
+| $R_0$, if $H_0\ne\varnothing$ | $\operatorname{Emit}(\mathcal B_0(H_0))$ | $h_{A_0}$ | $h_{B_0}$ | $h_{y_\bot}$ |
+| $R_1$, if $H_1\ne\varnothing$ | $\operatorname{Emit}(\mathcal B_0(H_1))$ | $h_{B_1}$ | $h_{A_1}$ | $h_{y_\bot}$ |
+
+When the roots are identified, every table entry agrees: the words agree by equality of supports; the response-zero labels agree by $A_0=B_1$; the response-one labels agree by $B_0=A_1$; and both bottom rows use $h_{y_\bot}$. Shared output labels always refer to the same $h_a$. Initialization is total:
+
+$$
+c(v)=
+\begin{cases}
+R_v,&H_v\ne\varnothing,\\
+h_{A_v},&H_v=\varnothing,
+\end{cases}
+\qquad c(\bot)=h_{y_\bot}.
+\tag{41.19}
+$$
+
+Each active word starts and ends zero by (41.14). Its first zero clears every old tail, including $k-1$, and the remainder has length $m-1<k$, so every live source succeeds. Its actual full-block endpoint is
+
+$$
+o(T_{\mathcal B_0(H_v)}(v,-j,s))
+=v\oplus\mathbf1_{H_v}(j).
+\tag{41.20}
+$$
+
+For INITIAL value zero, the root's zero and one responses return $A_0$ and $B_0$. For INITIAL value one they return $B_1$ and $A_1$ respectively. In either case this is exactly (41.5) for every $j$ and every original inherited tail. An inactive fibre returns $A_v$ at its initialization Halt, and initial bottom returns $y_\bot$ there. Bottom response rows from roots are defined even though the constructed active words cannot reject on live sources; they also provide a literal total update on absorbing device bottom.
+
+Every running state moves directly to a persistent Halt after its one emission, including on bottom. Termination is finite, with zero blocks on constant fibres and initial bottom, and one block on active fibres. Every emitted bit belongs to that paid complete block. All control, stopping and persistent-output storage lies in
+
+$$
+|K|=L+n-\epsilon.
+\tag{41.21}
+$$
+
+Every Halt is reached by an actual source because its label belongs to $Y_{\rm act}$, and every root is reached by an active actual fibre. If $n=0$, the same construction has only the $L$ Halts and worst fee zero. If $n>0$, an active fibre actually emits a block, so worst fee is one. This attains the unrestricted lower bound and proves (41.9). $\square$
+

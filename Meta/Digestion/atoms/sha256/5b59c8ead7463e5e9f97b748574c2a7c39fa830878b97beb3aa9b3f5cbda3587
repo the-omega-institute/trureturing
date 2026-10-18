@@ -1,0 +1,31 @@
+**Definition 2.2 (four local templates).** The following are ordered
+suboperations inside one admitted atomic patch.
+
+1. Inspect a component by depth-first child traversal, probing both child
+   slots at every visited vertex and the parent slot on each nonroot
+   return. Read a present bit from the occupied side and absence from two
+   empty child slots.
+2. Assign a designated existing bit $b$ by assigning $r.\mathsf L$,
+   $r.\mathsf R$ and $t.\mathsf P$ to their final reciprocal values.
+   All three assignments are charged even for an unchanged bit. Construct
+   a bit at an absent socket by creating just $t$, initializing its seven
+   slots and assigning both old root child slots: one birth and nine
+   assignments. Keep the socket root's external parent attachment.
+3. Append one native cell by expanding the existing trailing tape terminal
+   $z$ into $\langle C_U(c),z'\rangle$. Create 23 cell vertices and one
+   new terminal, initialize all seven slots of each, and assign $z$'s two
+   child slots. The old terminal occurrence becomes the spine node. This
+   is 24 births and $7\cdot24+2$ assignments.
+4. Retarget a head link by clearing its old target slot, assigning the
+   origin slot and assigning the new target slot. First activation uses
+   the latter two assignments. Meter lanes use different endpoint types
+   even when their targets coincide. Head-track assignments in the cell
+   components are additional designated bit assignments.
+
+Root-to-origin/head walks are SSA Definition 5.1's. From an old cell root,
+next and previous cell roots use $\mathsf P\mathsf R\mathsf L$ and
+$\mathsf P\mathsf P\mathsf L$ when the native move is enabled; the
+trailing terminal uses $\mathsf P\mathsf R$. A boot append to an empty
+word starts at its fixed origin socket. These walks do not change with
+the unary shape of a track component.
+

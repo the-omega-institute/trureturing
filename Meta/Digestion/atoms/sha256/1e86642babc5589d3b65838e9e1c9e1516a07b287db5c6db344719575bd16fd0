@@ -1,0 +1,43 @@
+**Theorem 5.4 (Attainment of the floor in two real coordinates).** The
+model $(E_2,\mathcal R_2)$ has
+
+$$
+\|\mathcal R_2(E_2(k,\alpha,\beta))-y(k,\alpha,\beta)\|_2^2
+=4Zk,
+\qquad \operatorname{err}(E_2,\mathcal R_2)=e_*.
+$$
+
+It recovers every straight-command guard. From exact initialization it
+stays exactly encoded at every finite lawful command prefix and at
+every intermediate point of each straight leg, with the same uniform
+readout error.
+
+**Proof of Theorem 5.4.** On the source the readout is exactly
+$D(A(k)U(\alpha),0)$. Lemma 1.5 makes the squared error
+$\|D(0,B(k)U(\beta))\|_2^2=B(k)^2=4Zk$. Its supremum is $4ZH$.
+Every individual lawful state has strictly smaller error than $e_*$;
+attainment refers to this model's error supremum. Neither boundary
+circle of the annulus, nor $k=0,H$, is encoded as a source state.
+
+At the fixed preparation the increments are zero, so initialize
+
+$$
+z_0=\exp(k_0/H)\binom{1}{0}.
+$$
+
+All arbitrary preparation phases remain in the fixed matrix $D$.
+Alternatively, initialize any actual current ray $x_0$ exactly at
+$E_2(x_0)$. If the current latent point is $E_2(x)$, Proposition 5.3
+makes the next lawful affine update exactly $E_2$ of the next ray.
+Induction proves every finite prefix. Applying $P_{\tau s}$ or
+$Q_{\tau t}$ for $0\le\tau\le1$ from the preceding point proves
+every intermediate state on a straight leg. The same pointwise error
+formula applies at each state. The approximate output is never
+substituted for a latent state.
+
+The four bottom-edge pairs are read exactly; the $02$ prediction is
+their omitted reference pair's center. Every native ray has a positive
+$02$ radius, so this decoded vector is outside the exact native output
+image. Definition 2.1 permits that. It changes neither the actual
+source ray nor its guard. $\square$
+

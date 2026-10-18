@@ -1,0 +1,30 @@
+**Convention 6.1 (the fixed prior and the unchanged two flows).** In this
+chapter fix any one original finite or countable installed prior $\mu$
+with $\mu(1),\mu(2)>0$, and assume that $\mu(k_*)>0$ for at least one
+$k_*\ge3$. The rates are $r_k=F_{k+1}/F_{k+3}$, with the Fibonacci
+convention giving $r_1=a=1/3$ and $r_2=b=2/5$. All other source,
+history, control and same-update conditions of Convention 1.1 remain.
+In particular K is sampled once; the prior is not changed when a target
+is tested. This is the general-prior domain of [PAIR6, Section 11.1].
+
+Use precisely the carriers, spaces, full conditional residual equations
+and common unweighted marginals (1.2)--(1.5). Those definitions do not
+depend on the size of the prior's support. For an arbitrary Borel pair
+$\Gamma=(\Gamma_B,\Gamma_A)\in\mathfrak C$, write
+
+$$
+\mathcal J_\mu(\Gamma)=
+\max_{s\in\{p,\beta\}}
+\left\{\sup_{k:\mu(k)>0}
+ \int\operatorname{TV}(D_s,P_{s,r_k})\,d\nu_s-\rho_s\right\}.
+\tag{6.1}
+$$
+
+This is exactly [PAIR6, (11.9)], retaining every supported target and TV
+inside the configuration integral. For the three-depth prior of Chapters
+1--5 it agrees with (1.6). The seven functions and their two variance
+integrals are exactly (2.1)--(2.2), evaluated on these same original flows;
+write $V=V_A+V_B$. No box, event-mean, finite-support, reversibility,
+common-rate or deterministic-successor condition is added to
+$\mathfrak C$.
+

@@ -1,0 +1,46 @@
+**Theorem 70.1 (normalized complete HALF singular-law bound).** Suppose
+$\Phi$ and $\Psi$ have the same declared complete stopped-output
+space and are both normalized. Suppose all actual failure times of
+$\Phi$ are supported on one countable set $S\subseteq[0,1]$,
+across the original labels and histories. Then on every original
+history
+
+$$
+\frac12\|\Phi(E\rho_{y,e,n}E^\dagger)
+             -\Psi(E\rho_{y,e,n}E^\dagger)\|_{1,\rm stopped\text{-}cq}
+ \ge m_y.
+\tag{JRH.72}
+$$
+
+This applies to every deterministic grid, regardless of its mesh.
+It also obstructs convergence in any complete reference-safe norm
+that includes the trivial reference.
+
+Proof. In the five failure sectors select the Borel event with relative
+time in $[0,1]\setminus S$. The constructor is absolutely continuous,
+so the total trace on this event is $m_y$; $\Phi$ assigns zero.
+Let $H$ be constructor minus simulator output and $Q$ the projection
+onto this event. Then $\operatorname{tr}(QH)=m_y$. Completeness and
+normalization give $\operatorname{tr}H=0$, so
+$\operatorname{tr}((I-Q)H)=-m_y$, where the complement includes
+live, every other failure event, abort and all zero-target sectors.
+Measuring this two-sector partition contracts trace norm, hence
+
+$$
+\|H\|_{1,\rm stopped\text{-}cq}
+ \ge |\operatorname{tr}(QH)|+|\operatorname{tr}((I-Q)H)|=2m_y.
+\tag{JRH.73}
+$$
+
+Dividing by two proves the claim. A trivial reference is already a
+permitted test in every complete norm. $\square$
+
+This is an application of singularity of atomic and absolutely
+continuous measures to the particular constructor. It is a distance
+from $\Psi$, not a lower bound $E_*+m_y$ against the IDEAL outputs.
+Triangle inequalities do not give such an additive ideal-error claim.
+Weak convergence of finer grid laws does not imply convergence in
+(JRH.72)'s total-variation/trace norm. A continuously shifted random
+grid need not have a common countable support; it falls outside this
+hypothesis and still needs its own causal event-time resource.
+

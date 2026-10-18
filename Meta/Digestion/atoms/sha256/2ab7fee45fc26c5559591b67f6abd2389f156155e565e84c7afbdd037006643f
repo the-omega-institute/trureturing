@@ -1,0 +1,81 @@
+### 96.3. The two genuine Cayley-pole fibres Q10=0
+
+Use the original aligned finite chart with coordinates D,T, the quartic
+and sextic original equations F,N of §90, and the exact projection
+factorization and subresultant \(V T-U\) from that section.
+At Q10=0, the leading D coefficient of the quintic Q5 vanishes, while
+its D-degree is exactly four. Its degree-four coefficient has residue 72.
+Let \(f_4\) be its monic normalization in \(K_{10}[D]\).
+
+The two exceptional finite cofactor resultants \(r_0,r_2\) have residues
+97 and 25. Thus D=0 and D=2b remain impossible for a physical finite
+nonconstant ray. The other projection factors are uniformly positive
+on the puncture by §90. Every such ray therefore maps to \(f_4=0\). The complete original finite
+chart here includes a constant channel whenever present; only the
+both-constant canonical case is outside the noncanonical classification.
+The original lift is still \(T=U/V\), with unit norms
+
+~~~text
+D:6; V:23; K=D^2+4T:5; J=bD-T+3:94;
+Fa=D^2+(T+1)^2:101; zden:42; rden:55.
+~~~
+
+Here zden and rden are \((2-iD)^2+K\) and \((2+iD)^2+K\).
+The monic quartic discriminant is 61 modulo 137.
+The global polynomial divisibilities
+\(Q_5\mid V^4F(D,U/V)\) and \(Q_5\mid V^6N(D,U/V)\)
+are identities in \(\mathbb Q[b,D]\); they specialize even though the
+quintic leading coefficient vanishes. They give the original finite
+reconstruction on this quartic, without pretending that a degree-four
+quotient is the original finite flat degree-five family.
+
+For both signs \(s^2=K\), put
+\[
+ u=(s+D)/2,\quad v=(s-D)/2,\quad
+ z=\frac{1+iu}{1-iu},\quad r=\frac{1+iv}{1-iv},\quad
+ h=s(a+ic),
+\tag{96.5}
+\]
+where \(a,c\) are the original Cramer functions. This retains both
+Theta-related rays at all three unique positions. Their generic/finite
+mixed norm in \(\mathcal A_{10}\otimes K_{10}[D,s]/(f_4,s^2-K)\)
+has dimension 160 and full multiplication determinant 101 modulo 137.
+Therefore no generic ray is orthogonal to a finite aligned ray.
+
+The complete original pole classification of §75 gives exactly the
+following two dephased rays, at each unique position:
+\[
+\begin{split}
+ q_p&=\frac{b(5b^4+12b^2-1)}{1-b^4},\qquad
+ p_p=bq_p+3b^2+1,\qquad h_p=p_p+iq_p,\\
+ (z,r,h)&=\left(-1,\frac{1+ib}{1-ib},h_p\right),\qquad
+ \left(\frac{1-ib}{1+ib},-1,-h_p\right).
+\end{split}
+\tag{96.6}
+\]
+The actual input is \((1,1,z;h/\kappa,h/\kappa,hr/\kappa)\).
+The original pole equations hold exactly, and
+\[
+ p_p^2+q_p^2-R=\frac{2Q_{10}}{(b^2-1)^2(b^2+1)}.
+\]
+The second ray in (96.6) is the dephased Theta partner. All other Cayley-pole
+strata were excluded in the original uniform pole classification, including
+the double pole and the finite v≠b alternative.
+
+For each triple (z,r,h), set H=h/R and E=bar e in \(\mathcal A_{10}\),
+and form the quadratic polynomial in a generic upper root Z:
+\[
+\begin{split}
+ A_m&=(z-1)/E+H(r-1)\bar C/E,\\
+ B_m&=-3(z-1)/E+H(r-1)(\bar D-3\bar C/E),\\
+ C_m&=3z+3H\bar G+H(r-1)(\bar G+2\bar C-\bar D).
+\end{split}
+\tag{96.7}
+\]
+In the positive upper-mean gauge, its value is the original overlap divided by \(\sqrt q\), which is nonzero by the original zero-channel lemma.
+The determinant of multiplication by \(A_mZ^2+B_mZ+C_m\) in
+\(Z^3-3Z^2+3EZ-E/q=0\) is the product over all three relative positions.
+Its multiplication norm in \(\mathcal A_{10}\) has residues 24 and 13
+for the two rays (96.6). Both are nonzero, so every pole mixed edge is
+excluded, in both relative Theta parities.
+

@@ -1,0 +1,28 @@
+**Convention 21.3 (alphabet, integral and closure scope).** The primary
+version is (CG.181). The same necessity statements below also cover
+countable classical $A$ with finite-dimensional fibres when (CG.182)
+converges as CP instruments and its total effect is $I_3$. They cover
+an explicitly supplied integral factorization
+
+$$
+\Phi=\int \mathcal R_\alpha\mathcal E_\alpha\,d\nu(\alpha),
+\qquad
+\int \mathcal E_\alpha^\dagger(I)\,d\nu(\alpha)=I_3,
+\tag{CG.183}
+$$
+
+provided the fibre dimensions are measurable finite integers, the encoder
+and live-decoder Kraus fields are measurable, and the effects and live
+Choi matrices are integrable. Decoders are full-output TP almost
+everywhere. Encoder densities are CP, but need not individually be TNI
+relative to $\nu$; it is their integrated instrument that has total
+effect $I_3$. Branch probabilities are integrals of unnormalized encoder
+traces. These hypotheses specify the integral model; no disintegration
+theorem or arbitrary infinite-dimensional coding theorem is presumed.
+The lower-dimensional class has $d_\alpha\leq2$ everywhere or almost
+everywhere. Its closure statement below concerns convergence of the
+reduced finite Choi/effect triples (CG.155), not compactness of the
+complete exact-time output space. A limit without an actual tagged
+factorization carries the class obstruction but no inferred branch flag
+or branch-probability interpretation.
+

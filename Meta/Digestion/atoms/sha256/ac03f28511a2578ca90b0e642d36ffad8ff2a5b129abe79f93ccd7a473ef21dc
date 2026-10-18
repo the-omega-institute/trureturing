@@ -1,0 +1,52 @@
+**Proposition 11.3 (source time, addresses and boundary information).**
+The following maps refer to one actual run, with no new observation port.
+
+1. At a sender cut, the installed native literal and counted graph
+   position determine the remaining PUT letters. The sender is not
+   represented by immutable code with an omitted moving position.
+2. At each receiver cut, (9.1) recovers precisely the arrived prefix.
+   The same prefix may occur in many native rows, so this recovery
+   need not determine the sender row or future continuation. The
+   separate retained macro bank supplies that continuation.
+3. At material seal, the receiver's $(X,a_v)$ determines $(m,n)$ and
+   the whole interval (8.4). Conversely, reading that materialized
+   interval and its counted length recovers the arrived word.
+   Irrelevant padding, inactive count bits and scratch are fibers of
+   this recovery; they remain charged configurations.
+4. At source receipt, the one-hot flag identifies the raw reply;
+   together with the old native row it determines the macro successor.
+   The reply alone generally identifies neither the address nor the
+   historical source. Cleanup can discard that flag after transferring
+   the required successor information.
+
+For the positive-$T$ table, the acquired cell and accepted polling
+reply identify the current right clock $K=2c$ or $2c+1$. Since $U=0$
+this is also the entry clock, but still $K=t+\kappa(u)$. The completed
+address code is not a certificate of either summand. Proposition 6.2's
+identical-current-tree history fibers and its odd-$h$ obstruction are
+unchanged. For even $h$, one fixed finite installation still cannot
+handle unbounded lag: its finite $J$, heads and complete state set
+contradict Theorem 2.2 as the entry bound increases.
+
+Proof. The first four assertions use respectively the graph rule,
+Theorem 9.2, Proposition 8.4 and the macro-bank receipt invariant.
+The clock statement is exactly the supplier's $\Delta=2$ right-ray
+law, not a measurement of hidden time. For example the histories
+$(A_S,1)$ and $(B_S,0)$ retain the same current source, literal arrivals
+and all future replies under common initialization. Their parity
+differs when $h$ is odd. A materialized address cannot separate these
+fibers. For unbounded even lag, Corollary 2.3 requires unbounded width
+even if arbitrarily many immutable letters have been installed at
+each separate finite parameter choice. ∎
+
+The exchange established here is precise: a source-specific arbitrary
+prefix of at most $h-1$ bits is retained, a repetitive spatial suffix
+is represented during receipt by a counted length, and paid decoding
+uses a physically present immutable run to restore the whole operand.
+The $\log(T+1)$ mutable coordinate replaces no physical tail storage
+or actual transmission time. Theorem 2.2 and (2.1) still force the
+same long-frame configurations and same-run traffic. A run's $A$
+still cannot stand in for (8.1)'s installed union. This is a resource
+comparison for the stated observer/source boundary, not an
+identification of physical space with time or memory.
+

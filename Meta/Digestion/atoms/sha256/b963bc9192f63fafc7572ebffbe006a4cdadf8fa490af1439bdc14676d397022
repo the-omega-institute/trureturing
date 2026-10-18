@@ -1,0 +1,45 @@
+## 13. Credits and nontransfer boundaries
+
+Power-sum asymptotics, equilibrium-renewal normalization, geometric residence transforms,
+tail integration, convexity, Markov's inequality, weak-$L^2$ layer cake, Cauchy--Schwarz,
+Hellinger affinity, chi-square domination, data processing, KL drift, unbiased stochastic
+rounding, finite-horizon drift, exponential supermartingales, bounded convergence, and
+Tonelli's theorem are classical methods. Geometrically slowing counters are also a
+classical approximate-counting idea. Their use here is credited rather than presented as
+an invention.
+
+The predecessor [Critical multiscale renewal attainment](FIB_CRITICAL_MULTISCALE_RENEWAL_ATTAINMENT.md)
+supplies the fixed source pair, stationary first-wait convention, complete-configuration
+contract, and reusable rounded likelihood-lattice pattern. Sections 4--9 derive the
+dyadic stochastic completed-gap kernel, its uniform weighted occupation and normalized
+affinity estimates, and their sufficient composition with that lattice. The
+arbitrary-common-kernel alphabet bound, conditional logarithmic alphabet necessity,
+and alphabet-order match are established in Sections 10--11; Section 12 gives the
+exact-pair ceiling and two-cell example.
+
+The supplied ordinary theory [Critical renewal observation: a counted logarithmic frontier](RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_RENEWAL_LOGARITHMIC_FRONTIER.md),
+Theorems 5.1, 6.1 and 7.1 and Corollaries 6.2 and 7.2, supplies the stronger counted
+controller, uniform all-sufficient-budget order theorem and eventual budget criterion
+compared in Section 11. The present arbitrary stochastic-kernel active-alphabet bound
+is a distinct statement about one completed-gap output. The stronger controller and
+order frontier are credited to that source. All these sources are fallible ordinary
+theory; citation provides no independent certification. These deductions for the stated
+pair retain the classical status of their methods. No formal-kernel certificate,
+global originality or priority claim is made.
+
+The conclusions are local in $s\downarrow0$ for fixed $r,c,\alpha$ and known common
+$q=e^{-s}$. They do not cover unknown $q$, one table independent of $q$, all interior
+$q$, changing parameters, signed or oscillating perturbations, other polynomial shapes,
+finite-precision transition probabilities, or physical implementation. The arbitrary
+real precision is explicitly unpriced. The alphabet statement is about a finite
+completed-gap output and does not imply a lower bound on total persistent memory, a
+minimum product of category and evidence states, a paid-read lower bound, or a
+total-controller budget frontier. The all-sufficient-budget order frontier and eventual
+budget criterion are supplied by the credited volume, Theorems 6.1 and 7.1. Its
+Corollary 7.2 gives a sufficient full-scale count without this construction's
+square-root logarithmic factor; the exponent $r$ is not a necessary budget exponent.
+Its Open problem 9.3 leaves minimum nonempty budgets, exact finite-budget optima, sharp
+leading paid-time constants, and least memory growth for a preassigned leading upper
+constant unresolved. Finite-precision transition probabilities, physical realization,
+and neural or empirical-ML transfer remain separate unresolved questions.
+

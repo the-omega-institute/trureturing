@@ -1,0 +1,29 @@
+**命题 39.1（A two-row optimum that must split one label cell）。** Take $k=3$, $m=7$, $T=4$ and $g=1$. On both free-value fibres, for every INITIAL tail, give phases $j=0,1,2,3$ respectively the labels $A,B,C,C$, where $A,B,C$ are distinct. Give initial bottom any independent label. Then
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=2.
+\tag{39.1}
+$$
+
+One attaining preset stream is
+
+$$
+0010000\mid0011000.
+\tag{39.2}
+$$
+
+A code assignment constant on each label cell cannot meet the full-phase XOR constraint at any dimension; thus within-label splitting is necessary here, not just a convenience of an optimal construction.
+
+Proof. The target is phase-only and admits common cut zero. It has $n=3$, $h=2$, $M=4$, $r=2$, with an even cell of size two and a spare code. Theorem 37.1 therefore gives $D_1=2$, and Corollary 38.2 gives preset fee two. The credited adaptive wide law [S26, Theorem 3.1] gives adaptive fee two as well; alternatively three tail-zero labels cannot be distinguished by the single useful binary endpoint of one block.
+
+Both words in (39.2) start zero, and their only runs of ones have lengths one and two, respectively, shorter than $k=3$. The first word has charge mask $\{2,3\}$ at offset zero. The second has charge mask $\{1,3\}$ at the known offset $7\equiv3\pmod4$. Hence the actual code columns are
+
+$$
+z_0=00,\qquad z_1=01,\qquad z_2=10,\qquad z_3=11.
+\tag{39.3}
+$$
+
+Their XOR is zero, and the two codes for $C$ are different. Every INITIAL tail is cleared by the first zero, all subsequent seams are legal, and the two scalar values use their own differences. All emitted zeros are inside the two paid blocks.
+
+If instead codes were constant on labels, let the codes of $A,B,C$ be $a,b,c$. Full-phase XOR would be $a\oplus b\oplus c\oplus c=a\oplus b$, nonzero since separation requires $a\ne b$. This excludes every such assignment regardless of code length. The actual sources for all four phases and all tails are the histories of Definition 36.1. ∎
+

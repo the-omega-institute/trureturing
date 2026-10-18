@@ -1,0 +1,36 @@
+**Definition 2.3 (real odd homogeneous response).** Let $\dot{\mathcal H}_-$ be the completion of the real $\sigma$-odd compact smooth core in $\sqrt b$. On this space $a\theta b\le h\le ab$. The potential form extends by $\int V|v|^2\le C_*b[v]$. R's continuous functional and unique Riesz vector satisfy
+
+$$
+\ell(v)=2a\int r(Yp)(Yv)+\chi\int V_1pv,\quad
+h(\Psi,v)=\ell(v),\quad
+D_{\rm resp}=h[\Psi]
+ =\sup_{0\ne v\text{ real odd compact smooth}}\frac{\ell(v)^2}{h[v]}<\infty.
+\tag{2.8}
+$$
+
+Continuity follows, for example, from
+
+$$
+|\ell(v)|\le(2a\sqrt A+\chi\sqrt{C_*S_1})\sqrt{b[v]},\qquad
+S_1=\int(V_1^2/V)p^2<\infty.
+\tag{2.9}
+$$
+
+Every odd canonical form vector belongs to this completion by parity averaging core approximants. No global $L^2$, canonical form-domain or native-domain representative of $\Psi$ is assumed. Actual competitors remain unrestricted complex vectors; the completion organizes the response only.
+
+R's response coefficient and canonical normalization are
+
+$$
+\begin{aligned}
+C_{\rm resp}&=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock},\\
+W&=j_0V,&W_j&=j_0V_j,&W_{\rm t}&=j_0V_{\rm t},&\overline C&=j_0C_*,\\
+G_{108}&=1-A-\gamma(C_2+2B_1),&G_{\rm resp}&=3A-\gamma C_2-D_{\rm resp}/a,\\
+\overline D&=1+\gamma T,&\mathscr R&=\lambda/\nu^2=\pi^2d_0^2/L_I^2>0,\\
+\frac{C_{108}}{a\nu^2}&=G_{108}-\mathscr R\overline D,&
+\frac{C_{\rm resp}}{a\nu^2}&=G_{\rm resp}-\mathscr R\overline D.
+\end{aligned}
+\tag{2.10}
+$$
+
+Since $\gamma=j_0/\overline C$, $p,\Psi,G_{108},G_{\rm resp},\overline D$ are canonical for this precise source. No constituent is independently optimized.
+

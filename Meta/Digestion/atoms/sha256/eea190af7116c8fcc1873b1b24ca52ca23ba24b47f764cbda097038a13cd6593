@@ -1,0 +1,8 @@
+**Definition 1.3 (resource and optimization conventions).** An actual acquisition has CP encoders with total effect $I_5$ and full-output TP decoders. Its classical label is generated before continuation. A binary report is processing of this label; independent report coins, if generated, are part of the actual alphabet. The contrast is JR.20's $\mathsf V=2|\operatorname{Re}F_{01}|/\kappa$, where $F$ is the supported plus effect and $\kappa=h_0a+h_1b>0$. The JOINT cost $\mathsf W$ is the worst, over the twelve histories, of the probability of acquiring a joint fibre of dimension at least three. Its original sharp value in the weak range is
+
+$$
+\mathsf C(s)=(1-\delta)\sum_{j=0}^2h_j^2p_{27,j}.
+$$
+
+Every whole decoder fibre has a positive first-event rate $R_\alpha(a)$ with integrable operator norm. Survivor controls and terminal processing on survivors are TP. Its activity is $\sup_\alpha\int_0^1\|R_\alpha(a)\|\,da$, with the stipulated essential-supremum version. No forced terminal absorption, singular first-event mass or positive-carrier action after failure is admitted. Put $t=e^A-1$. At fixed $(s,A)$ optimize actual acquired-label TV between histories $(5,+,+)$ and $(27,+,+)$ among instruments with error $E_*$, contrast at least $s$, sharp cost $\mathsf C(s)$ and activity at most $A$; call the value $\mathcal T_A(s)$. A label's acquired mass includes both its live and eventual failure mass before an absolute value is taken.
+

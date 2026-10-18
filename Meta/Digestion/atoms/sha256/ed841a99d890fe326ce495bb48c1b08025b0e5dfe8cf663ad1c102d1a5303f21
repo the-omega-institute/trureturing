@@ -1,0 +1,6 @@
+### 64.5. Relation to existing theory
+
+Section63 established exact implementability and the calibrated projection. The new step is (3) for actual unrestricted local CPTP outputs, followed by the normalized reference witness. Neither pure basis outputs nor exact code support is assumed in this step. Section62's leakage estimate is not needed for this family.
+
+Stinespring dilation, adjoint contraction, Cauchy–Schwarz, trace-norm duality and the diamond norm are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The known local incoherent-operation background and the finite constructions used in §63 retain their attribution to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No priority claim is made for these ingredients. The result concerns the stated all-dimensional coherent star family and fixed MC encodings, not all logical channels or full RT recovery; it is a paper proof without a formal-kernel claim.
+

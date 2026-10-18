@@ -1,0 +1,17 @@
+**Corollary 6.3 (a concrete failed same-alphabet pooling bridge).** At
+$D=3$, no four-name export admits pooled completion with at most two
+fresh Reads: $123>4\cdot4^2=64$. In particular a single target-free
+late Read cannot turn any four-name export into one common acquired
+state answering all targets. The credited $E_0$ nevertheless answers
+each individually selected original request with at most one Read,
+and its exact pooled worst cost is four by Theorem 6.2.
+
+Proof. Apply (SCE.16) with $m=4,N_3=123$ and then the credited
+individual-target correctness of $E_0$. $\square$
+
+This rejects precisely a target-independent, same-alphabet pooled
+compiler with the stated fresh-query budget. It attributes no such
+claim to FixedTreeCommonExtension or NativeLiteralMoore, excludes no
+other common-extension organization, and supplies no new lower bound
+for the original $M_1(D)$.
+

@@ -1,0 +1,1 @@
+2. `hold` is a projected event class. The result records what these events do to the retained boundary fields; it does not reconstruct their internal order, retry count, hidden depth or return-cycle history.

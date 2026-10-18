@@ -1,0 +1,19 @@
+**Proposition 6.3 (why a bare suffix summary is insufficient).** Weight
+and last edge alone do not determine a physical reply on arbitrary
+non-atomic sources. The finite common prefix in Definition 6.1 is part
+of the global interface.
+
+Proof. The words $LRL$ and $RLL$ both have weight four and last edge $L$.
+In
+
+$$
+u=\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+             \langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle
+$$
+
+their replies are respectively $\alpha$ and $\beta$. This source is
+non-atomic, since $LRL$ ends in $L$ and no atomic tree has an $\alpha$
+reply at a word ending in $L$, by (CAR.23). Theorem 6.2 applies the suffix
+summary only after a proved atomic skeleton leaf, and keeps the common
+prefix needed to locate that leaf in every chart. $\square$
+

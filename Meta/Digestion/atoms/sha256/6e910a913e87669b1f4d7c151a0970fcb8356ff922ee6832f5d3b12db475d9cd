@@ -1,0 +1,34 @@
+**Theorem 10.2 (no uniformly finite supplement).** For every authentic
+$P$ and every finite set $Z$, no encoding $z$ and exact deterministic
+update of Definition 10.1 exist on $\mathcal C_P$. No nondeterministic
+realization with its exact projected response sets exists either. For
+each fixed $N$, either exact contract requires at least $N$
+supplemental values already on $\{x_{N,m}:m<N\}$.
+
+Proof. If $|Z|<N$, Theorem 9.2 gives $N$ starts with identical full
+$O^+$. Two different $m,m'$ therefore have equal $z$ and equal
+$\eta$. Under a deterministic update, induction on the common row
+index forces equal augmented states, hence equal $O^+$ successors,
+throughout both actual scan continuations. The first differing RD of
+Theorem 9.2 contradicts this conclusion. This argument permits $z$ to
+change at every later cut and permits arbitrarily expensive updates;
+neither helps after two starts have merged.
+
+Under the nondeterministic contract the same augmented start has one
+set of length-$D_{P,N}$ projected responses. Exactness at each of the
+two concrete starts would make this set two different singletons,
+again contradicting Theorem 9.2. The same argument for every pair
+forces injectivity of $m\mapsto z(x_{N,m})$. Finally choose
+$N>|Z|$ on the fixed common $P$ to obtain both uniform impossibilities.
+No reachability from a newly chosen source or new installation is
+used. ∎
+
+Permissive inclusion does not have this consequence. For example, the
+relation containing precisely the projected edges
+$(O^+(s),O^+(Fs))$ for $s\in\mathcal C^-_P$ contains every actual
+chart path. From a common starting projection it contains all the
+displayed different projected paths, whereas each concrete start has
+only its own prescribed path. Such an overapproximation fails the
+exact-response contract. It is not an alternative interpretation of
+original admission or of an original refusal.
+

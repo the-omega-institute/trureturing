@@ -1,0 +1,27 @@
+**Proposition 31.5 (The first two-layer action).**
+For $n=9$, $k=4$, in the ordered basis $(e_2,e_3)$ and the
+zero-based mode $I=\{0,2,4\}$, one has
+
+$$
+\delta(s_I)=1,\quad
+a(s_I)=(0,0,0,0,0,1,1,1,0),\qquad
+\rho(X^{s_I})=
+\begin{pmatrix}0&y_5y_6y_7\\0&0\end{pmatrix}.
+\tag{31.21}
+$$
+
+Proof. Its occupied positions are pairwise nonadjacent, including
+across the seam. Every edge except $\{5,6\}$, $\{6,7\}$ and
+$\{7,8\}$ has one occupied endpoint; those three edges have none.
+This gives the displayed slack vector, and $4-|I|=1$ gives deficit.
+Formula (31.7) yields $X^{s_I}e_3=y_5y_6y_7e_2$ and
+$X^{s_I}e_2=0$, so the columns of the matrix are exactly the stated
+images. The polynomial entry has degree three and the lowering has
+degree minus two, making the action degree one as required.
+The square of this matrix is zero although the matrix is nonzero.
+It records multiplication between canonical layers; it is not a
+physical-time evolution or a native execution step. $\square$
+
+[MI31]: https://arxiv.org/html/2205.01409v1
+[BB31]: https://arxiv.org/html/2505.11402v1
+

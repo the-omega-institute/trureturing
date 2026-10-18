@@ -1,0 +1,24 @@
+**Proposition 299.2 (The exact comparison with the ratio face).**
+Put $S_J=\sum_a b_{j_a}$, $R_J=(46/5)e-S_J$ and
+$r^\star=(13,10,9,8,6)/5$. Write $F_1,F_2,F_C$ for the respective
+left-minus-right expressions in (299.1). Then identically
+
+$$
+F_C=4F_2+2b_{j_1}+b_{j_3}+b_{j_4}+2b_{j_5}-11e.
+\tag{299.2}
+$$
+
+On the ratio ray $b_J=\tau(13,10,9,8,6)$, $e=5\tau$, the last
+five terms sum to zero. More generally they vanish on the feasible
+equality face $R_J=0$: the reused stability theorem
+[293.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVI.md)
+gives $b_J=r^\star e$ there. Thus $F_C=4F_2$ on that face.
+
+**Proof.** Subtract four times the coefficients of $F_2$ from those
+of $F_C$. The remaining coefficients are $(2,0,1,1,2)$ on $J$ and
+$-11$ on $e$, since $171-4\cdot40=11$. On $r^\star e$ their value is
+$(26+9+8+12)e/5-11e=0$. This proves every assertion. In particular
+the ray consequence of $C$ supplies no second scale restriction beyond
+$Y_2$; its additional scope is the global relation away from that face.
+$\square$
+

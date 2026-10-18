@@ -1,0 +1,38 @@
+**Definition 27.1 (conditional family and fixed parameters).** Use J, P, L and E as in Definition 24.1. Fix exactly an admitted reference realization of J Definition 51.1, retaining the ordinary analytic antecedents of Definition 24.1 and J Definitions 1.1–3.2, 29.1, 42.1 and 51.1. In particular, fix $H\in(0,1/2)$, $a,\varepsilon>0$, $R_*>0$ and the prescribed nonzero sign of the sufficiently small fixed $\kappa$. Write
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,&
+x_*&=\sqrt{R_*}/\pi,&L_0&=H/[4(x_*+1)],\\
+k_0&=\alpha_\kappa+x_*L_0,&
+l_b&=k_0-\varepsilon b,&u_b&=k_0+L_0-\varepsilon b,\\
+I_b&=(l_b,u_b),&
+\lambda&=\varepsilon^2\pi^2/L_0^2,&
+\nu&=\varepsilon/(k_0-\alpha_\kappa).
+\end{aligned}
+\tag{27.1}
+$$
+
+All probability, pole and determinant margins are those of J Proposition 51.2. The one jointly realized signed rational vector is
+
+$$
+c_\kappa(k)=\left(
+\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},
+-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},
+\frac{H+\kappa-k}{H(k-\alpha_\kappa)}\right).
+\tag{27.2}
+$$
+
+Its components and jets are not separately variable. The original five probabilities are $(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$, the real lift remains $x_{\rm lift}=D/\kappa$, and the source is the unit point source at $o=(k_0,0)$ in raw $dk\,dq$, $q\in\mathbb R^3$. Only the two Dirichlet faces vary with $b$.
+
+Assume the reference satisfies $C_{\rm resp}=C_4=0$ as in (24.1). J Proposition 52.3 makes these coefficients and the canonical $p,V,C_*,\chi_c,j_0$ common to this family. Choose $b_0$ and, for each separately fixed $0<b<b_0$, a positive finite scalar $M_b$ exactly as in the proof of Theorem 25.2. Thus
+
+$$
+\Lambda_b:=A_0+\mathscr A\Delta_b
+       +C_b(M_b^{-1/4}+M_b^{-1/2})<-1,
+\qquad d_b=-\Lambda_b/2>0.
+\tag{27.3}
+$$
+
+Here $A_0,\mathscr A,\Delta_b,C_b$ are the quantities in (25.19), with its stated range $M_b\ge M_{0,b}$. The order is the fixed reference, then fixed $b>0$, then fixed finite $M_b$, and only then $s\downarrow0$. No realization of the double-zero antecedent is asserted. The scalar $M_b$ in (27.3) is a spectral probe; the Coulomb tensor will be denoted $\mathsf M_b$.
+

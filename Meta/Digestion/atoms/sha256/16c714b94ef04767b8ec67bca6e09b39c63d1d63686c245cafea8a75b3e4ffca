@@ -1,0 +1,54 @@
+**Theorem 4.2 (whole-row recovery and exact row equality).** Let $X=B(u)$.
+Expansion of $M_Q(X)$ followed by replacing the subtrees at $I_Q^\#(X)$
+by their numbered holes yields exactly $C_Q(u)$. Together with (ABC.4.2)
+this recovers the whole original $R_Q(u)$. For $X,Y\in\mathcal N$, put $I=I_Q^\#(X)$. Then
+
+$$
+\begin{aligned}
+\operatorname{Same}_Q(X,Y)\ \Longleftrightarrow\quad&
+ I_Q^\#(Y)=I,\\
+&M_Q(X)=M_Q(Y),\\
+&\forall q,r\in I,\quad
+ [\nu_q(X)=\nu_r(X)]\Longleftrightarrow
+ [\nu_q(Y)=\nu_r(Y)]
+\end{aligned}
+\tag{ABC.4.3}
+$$
+
+is equivalent to $R_Q(E(X))=R_Q(E(Y))$. This includes empty cuts, a root
+cut, all-absent cuts, repeated hole values and arbitrarily large concrete
+exteriors.
+
+Proof. Induct on the cut trie. An empty trie changes nothing. A root cut
+replaces the reached root by $\alpha$. If the current source is a leaf
+and all pending cuts are nonempty, they are absent and it remains the
+same concrete leaf. Otherwise (ABC.3.1) gives the actual two children;
+the induction hypotheses perform the appropriate masking in each, and
+(ABC.2.4) reassembles them. Thus
+
+$$
+E(M_Q(B(u)))=C_Q(u)[\alpha,\ldots,\alpha].
+\tag{ABC.4.4}
+$$
+
+Masking retains the reached root of each replaced subtree. Prefix-freeness
+ensures that replacements neither hide nor create another requested cut.
+An originally absent cut remains blocked by its concrete strict-prefix
+leaf outside all holes. The reached set therefore still specifies the
+same hole addresses in the masked tree. Replacing precisely those
+subtrees by numbered holes recovers $C_Q(u)$, even if the canonical mask
+has collapsed some surrounding atomic block.
+
+For two contexts whose holes have the same fixed address set $I$, filling
+all holes by $\alpha$ is injective: replacement at $I$ is an inverse on
+its image. Hence equality of $M_Q(X),M_Q(Y)$ is, by Theorem 2.2 and
+(ABC.4.4), exactly equality of their concrete contexts once $I$ agrees.
+Theorem 3.2 makes (ABC.4.2) exactly their complete hole partition. These
+three conditions prove both implications of (ABC.4.3).
+
+When $Q=\varnothing$, the reached set is empty and $M_Q(X)=X$, so row
+equality is full source equality. When $Q=\{\varepsilon\}$, masking is
+$[0]$ and the singleton partition is fixed. With all cuts absent the mask
+again expands to the entire source. The proof does not discard or bound
+any outside subtree. $\square$
+

@@ -1,0 +1,22 @@
+**Corollary 7.4 (a strict valid cap missed at the same law).** The
+rational pair $(d,\mu,C)=(3,\mu_+,9/10)$ is a strict all-size native
+cap. The direct constructor-incidence rule of Definition 6.1, even
+with arbitrary positive real port gauges, finite minima, geometric
+averages, cap enlargement and the trivial total-mass upper $1$,
+cannot certify any $C<1$ at this law by bounding every template.
+
+Proof. Equation (INB.31) gives $\beta_3(\mu_+)<9/10$.
+For every $m$ all raw bounds for $\Theta_m$ exceed $(11/10)^n>1$.
+The stated combinations preserve a lower bound of $1$ after the
+trivial upper is allowed. They cannot yield $C^n<1$ for these
+templates. $\square$
+
+This is a failure of the stronger pointwise-completeness premise, for
+this exact fixed lift and gauge rule. It is distinct from the
+per-template gaps in §§4–5. No stability, joint-target, range,
+scaffold, support, swap or other existing recursive inference rule
+has been included and then refuted. Such additional rules can
+bypass direct norm evaluation. No optimized-law separation
+$\min_\mu\text{(certificate envelope)}>\min_\mu\beta_d(\mu)$
+is proved.
+

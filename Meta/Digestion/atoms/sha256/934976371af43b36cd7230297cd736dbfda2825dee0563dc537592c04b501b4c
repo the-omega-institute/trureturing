@@ -1,0 +1,19 @@
+**Definition 12.1 (The fixed face and its boundary lift).** Fix one
+$\mathfrak d=(C,y,\delta)$ satisfying Theorem 3.2 and suppose
+its actual radial cubic $\mathscr F$ is not the zero polynomial.
+Use $\ell_{\mathfrak d},\mathcal E_{\mathfrak d}$ from (7.1).
+For four variables $v_j\in\mathcal P$ put
+
+$$
+x_\partial=\sum_j\Phi_j(v_j),\qquad
+\ell_{\mathfrak d}(x_\partial)=0.
+\tag{12.1}
+$$
+
+By Theorem 11.3 these are exactly the points of
+$\mathcal E_{\mathfrak d,\partial}$. The equality is linear in
+the twenty lift variables. Every seed reconstructed with positive
+weight is a zero atom: its nonnegative pairing with
+$\ell_{\mathfrak d}$ is a summand of zero. This includes singular
+binary blocks without an extra kernel assumption.
+

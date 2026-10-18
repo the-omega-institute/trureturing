@@ -1,0 +1,24 @@
+**Lemma 4.1 (P1).** Under (1.9)–(1.10), $b$ exists and $2\le b\le m$. Put $\epsilon=(-1)^{b-1}$. The signs of $u_0,\ldots,u_{b-1}$ are $(-1)^k$, and every $u_k$ for $k\ge b-1$ has sign $\epsilon$.
+
+**Proof.** Let
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2}=-\phi^{-1}.
+$$
+
+Solving the initial equations, or checking the two initial values and the recurrence, gives
+
+$$
+u_k=A\phi^k+B\psi^k,\qquad
+A=\frac{\phi^{-1}-\rho}{\sqrt5},\qquad
+B=\frac{\phi+\rho}{\sqrt5}>0.
+\tag{4.1}
+$$
+
+If no same-sign pair occurs through exponent $K$, nonvanishing forces signs to alternate at every consecutive exponent. In the retained-clock list (1.7), repeating exponent $a$ inserts an equal-sign pair and removes no sign change. There would be $K=2m-2$ disjoint retained-clock intervals with opposite endpoint signs for $R$. The intermediate value theorem supplies a distinct root in each. Since $R(0)=1$ when $a\ge0$, the polynomial is nonzero, and $\deg R\le m-1<K$ is a contradiction. In particular $A=0$, which would give perpetual alternating signs, is impossible.
+
+At the first same-sign pair, minimality gives $\operatorname{sgn}u_k=(-1)^k$ for $0\le k\le b-1$, and $\operatorname{sgn}u_b=\operatorname{sgn}u_{b-1}=\epsilon$. The recurrence preserves a common nonzero sign: the sum of two numbers of sign $\epsilon$ has that sign. This extends the sign assertion to every later exponent, including in the auxiliary infinite recurrence.
+
+There are exactly $b-1$ sign changes in (1.7), each giving a distinct real root of $R$. Hence $b-1\le\deg R\le m-1$, so $b\le m$. Finally the dominant term in (4.1) has sign $\epsilon$, because $|\psi|<1<\phi$ and the eventual sign is $\epsilon$. Thus $A\ne0$ and $\operatorname{sgn}A=\epsilon$, while $(-1)^b=-\epsilon$. $\square$
+

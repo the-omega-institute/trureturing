@@ -1,0 +1,43 @@
+**Proposition 62.11 (complete native prices of the derived words).** Use §60's separately owned actuator receipt chain, producer lock and restored original cursors. Every added classical operation is expanded into the existing PR57 finite tape primitives. Let $\mathcal G$ be the actual number of emitted flag, coefficient, division, enable and preparation-check Boolean gates, and let $B_{\rm in}$ count additional material input bits used as operands, including any supplied occupation array and parameter bits. Put $R=2+2M+B_{\rm in}+\mathcal G$ for the two constant cells, authentic input cache, those additional operand cells and fresh signal cells. Every input cell has its actual ingress/copy and initialization word. An exact code-size bound is
+
+$$
+B_{\rm code}=1+\sum_{g=1}^{\mathcal G}(13+d_g+a_g+b_g+c_g)
+\le1+\mathcal G(13+4R).
+\tag{62.30}
+$$
+
+Every record is emitted by actual `AppendWord`, all four unary operand fields are fetched, and each gate's interpreter word has exactly the count (PR57.06), with its actual tape-head positions and complete descriptor positioning. In particular $\mathcal G$ is not the native event count.
+
+Let $\omega_C$ denote the concatenation of the following finite primitive words in their actual chronological order: apparatus control/boundary construction; original private source ingress, complete source services and every original archive/copy/output actually commissioned; lock and authentic descriptor/input copy with both borrowed cursor saves/restorations; initialization and generation of the flag expressions in Theorem60.2 and the arithmetic expressions (62.19)–(62.23); their entire interpreters; public parameter and $\pi$ arithmetic; every coefficient/angle/enable reference and instruction write; every wire/catalog description write; every digit and enable fetch and Boolean AND; known preparation data/support checks; holds' classical control; terminal output/framing. Each of these words is given by PR57.3–57.5, PR57.D9, Lemma60.10 and Proposition60.11, applied to the displayed finite expressions and bounds. No private pivot, discarded arm, disabled slot, field-cache positioning or original refused candidate is omitted.
+
+Define $E_C=|\omega_C|$. More explicitly, Boolean interpreter contributions are $\sum_g I(g)+2$ per program, where $I(g)$ is (PR57.06); instruction writes contribute $3B_{\rm code}$ plus the generator's actual frame/reference/arithmetic words. The latter are the PR57 depth-first finite-forest traversal, allocating one fresh result and emitting each complete record after its children. Sequence adds word lengths, a public unary loop sums its body at every stored digit, and each `Home`, `Base`, `Seek`, `Allocate`, `Append` is counted by its already supplied primitive recurrence. This defines an effective exact integer from the material input and descriptors, rather than an unspecified charge for a word operation. For an interpreter with $A_0$ already constructed apparatus cells, the explicit upper bounds (60.20)–(60.21) apply with this $\mathcal G,R$; generator/input/catalog work is additional. They permit reuse of classical signal cells only after every current signal is rewritten; erased material remains counted.
+
+The interaction wiring has $K+3$ phase endpoints and $2K+1$ hop wires: the $K-1$ inherited seams, $K$ center/address wires and the two center/auxiliary wires. A common $J$-digit catalog therefore has
+
+$$
+2(3K+4)J
+\tag{62.31}
+$$
+
+signed kind/wire/exponent entries. Its full endpoint and control descriptions are constructed and retained. A word description stores its kind, public endpoint ordinals, sign, scale, $J$ magnitude bits and the unary enable/bit-field addresses. Their complete lengths are the sums of these literal fields, and their construction uses `AppendWord`; computed private angle bits still require their actual reads and writes. Any preparation/reference wire or fixed gate not in (62.31) adds its own description and construction slots.
+
+Here is one explicit serial fetch word, including the public descriptions. Store every instruction field in the literal unary-reference/framed-bit format of PR57.03 and PR57.05. At each digit, copy and position the complete bit and enable reference fields by the four-cache/descriptor routine of Proposition60.11, then execute `Seek(workspace,U(bit)); RD(workspace,0)`, `Seek(workspace,U(enable)); RD(workspace,1)`, and one `BF(AND)` into latch 3. Each seek uses its actual field head and current workspace head; its count is $2h+3v+3$, with the field's complete positioning counted separately. The operand latches survive these public scans. Consume the complete kind, endpoint, sign and exponent fields of the scheduled catalog entry by their paid `RD; MR` scan, driven by their constructed public lengths. The corresponding fixed local catalog row then executes one quantum occurrence with latch 3 as enable. No private bit chooses that row or an endpoint. Its finite installed control row and wire descriptions were already constructed bit by bit; their control size is in $b_{\rm ctl}$. For later use, reposition these sealed descriptions by their actual unary descriptors and the same paid seek routine. All descriptions, source bits and discarded digit slots remain retained. Literal code-bit installation contributes three append occurrences per bit; when a material bit string is copied, its additional source `RD; MR` pair makes the complete `AppendWord` cost five per bit. Those reads and moves belong to $\omega_C$ as well.
+
+This recipe is applied on every one of the $G_Q$ slots, including coefficient-zero, enable-zero and magnitude-zero slots. A supplied known-preparation bit is fetched by the same word before its fixed bit-flip slot. Terminal effect descriptions and their output framing are likewise consumed before delivery. Every requested additional idle hold tick is an explicit identity-control `CTL` occurrence with its receipt; classical service ticks already hold the complete carrier. Thus no additional clock interval, preparation/effect visit or catalog/wire fetch is absorbed into an unpriced word operation.
+
+
+Let $G_Q=\sum_\ell F_*m_\ell J_\ell$ include every enabled and disabled elementary interaction slot, and let $G_P,G_R$ be actual preparation and terminal quantum slots. All $K+4$ qubits are individually constructed and retained. With all holds represented by their actual classical control intervals, the complete logical price and storage coordinates are
+
+$$
+\begin{aligned}
+E&=E_C+(K+4)+G_Q+G_P+G_R,\qquad \mathrm{Fee}=2E,\\
+\mathrm{Storage}(z)&=\left(S_0+b_{\rm ctl}(z)+8A(z)+8E(z),\ Q(z)\right),\\
+\mathrm{Retention}&=\sum_{z\text{ logical tick}}Q(z).
+\end{aligned}
+\tag{62.32}
+$$
+
+Here $A(z)$ includes original current packet, complete rejected scratch, original rows/copies, private coefficient integers and digits, all instructions, flags, descriptors and caches simultaneously. $E(z)$ counts both disjoint receipt chains, $Q(z)$ is the constructed qubit count, and $S_0$ includes both chains' actual foundations. After full bank construction $Q(z)=K+4$ through preparation, service, arithmetic, catalog fetch, all interaction cuts and terminal delivery. Holding an auxiliary's imperfect state is included in exactly the same retention coordinate. Classical peak is the maximum at one common cut, not the sum of separate maxima.
+
+Proof. The source-copy/cursor routine is exactly Lemma60.10 on the actual current packet descriptor. The arithmetic word has finite fixed loops and positive denominators by Theorem62.8. PR57.L1–L3 expands its additions, comparisons and truth tables into terminating native words and establishes that private values never select their traces. The interpreter field lengths give (62.30); all its seeks and cache descriptors are actual constructed strings. The wire enumeration gives (62.31), with both signs and every exponent paid. A digit consumes its fixed stored bit and enable, computes their AND on actual latches, and invokes one supplied matrix; no digit or identity slot is skipped on a private zero. Each core event constructs exactly one receipt and has fee two, including the added finite quantum events of §60. Summing those disjoint actual words gives (62.32). Every parameter-supply algorithm declared effective has finite work here, but no history-independent cost bound over arbitrary effective policies or rational input lengths is asserted. These are ideal logical prices and simultaneous material counts, not physical energy, calibrated elapsed time or a minimal circuit price. $\square$
+

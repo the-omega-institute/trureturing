@@ -1,0 +1,87 @@
+**定义 80.1（三射线 frame）。** 以下静态参数记为 $r$，不与 $b_A$  混用。置
+
+$$
+k_r=\sqrt{\alpha+\beta r^2},\qquad
+d_r=1+\alpha+(1+\beta)r^2,
+$$
+
+$$
+B_r=\alpha r^2+\beta,\qquad
+R_r=\sqrt{\beta^2(1+\alpha)+\alpha^2(1+\beta)r^2},
+$$
+
+$$
+u_1=\frac{\beta k_r+rR_r}{B_r},\qquad
+v_1=\frac{\alpha k_rr-R_r}{B_r},
+$$
+
+$$
+u_2=\frac{\beta k_r-rR_r}{B_r},\qquad
+v_2=\frac{\alpha k_rr+R_r}{B_r}.
+$$
+
+定义
+
+$$
+f_0(r)=\frac{(k_r,-1,-r)^T}{\sqrt{d_r}},
+$$
+
+$$
+f_i(r)=\frac{(1,u_i,v_i)^T}{\sqrt{1+u_i^2+v_i^2}},
+\qquad i=1,2,
+\qquad F(r)=(f_0,f_1,f_2).
+\tag{RC.115}
+$$
+
+直接代入可得
+
+$$
+F^TF=I,\qquad f_i^TQf_i=0.
+$$
+
+在 $r_\star\le r\le r_{\rm c}$ 上，
+
+$$
+u_1>0,\quad v_1<0,\qquad u_2<0,\quad v_2>0.
+$$
+
+对应的 coordinate-zero-one rays 与权重为
+
+$$
+a_i=\frac{f_i}{(f_i)_0},\qquad
+\pi_i=(f_i)_0^2>0.
+\tag{RC.116}
+$$
+
+它们满足
+
+$$
+\sum_{i=0}^2\pi_i a_ia_i^T=I.
+$$
+
+原静态报告和 live height 符号分别为
+
+$$
+(r_0,r_1,r_2)=(-,+,-),\qquad
+(\operatorname{sgn}\ell(a_0),\operatorname{sgn}\ell(a_1),
+\operatorname{sgn}\ell(a_2))=(-,+,+).
+\tag{RC.117}
+$$
+
+这些符号与该族的原始全局静态最优性来自 JR50–54／RC60–63 静态供应。令
+
+$$
+h_{\rm fr}(r)=2(f_1)_0(f_1)_1
+=\frac{2u_1}{1+u_1^2+v_1^2},
+$$
+
+$$
+\psi(r)=f_0(r)^TGf_0(r)=\frac{P(r)}{d_r},
+$$
+
+$$
+P(r)=g_0k_r^2+g_1+g_2r^2
+-2\mathsf x k_r-2\mathsf y k_rr+2\mathsf z r.
+\tag{RC.118}
+$$
+

@@ -1,0 +1,4 @@
+**引理 13.4（A blank middle translation cannot repair the missed set）。** For any $B_E$ of Convention 13.1, if $q_2^B=0$ on all $J$, then $q_3^B=0$ on $O$.
+
+Proof. Translation by $-m$ sends $J$ to $P\setminus\{0,-m\}$. Consequently $E\cap P\subseteq\{0,-m\}$. Its translation by $2m$ can be nonzero on actual phases only at $2m=a$ or $m$. Both are in $W_2$, and $m\notin J$, so neither belongs to $O$. Nonactual charges stay nonactual under translation by $m\in P$. This uses the actual subgroup, not a coprime replacement. ∎
+

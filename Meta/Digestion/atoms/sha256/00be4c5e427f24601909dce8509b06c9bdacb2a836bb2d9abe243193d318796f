@@ -1,0 +1,9 @@
+**定义 9.2（共同初始载体上的线性全历史映射）。** 令 $\mathcal M(E_w)$ 为有限带符号测度的实向量空间，定义
+
+$$
+A_w:H\longrightarrow\mathcal M(E_w),\qquad
+A_w(q)=\sum_Iq_I\Gamma_{w,I}.
+$$
+
+这是对初始质量的线性映射，对 $p\in\mathcal D$ 给出精确完整记录律。对事件 $B\in\mathcal E_w$，$q\mapsto A_w(q)(B)$ 是标量线性测试。任意实值加权测试给期望，只有事件或声明的概率测试直接给概率。
+

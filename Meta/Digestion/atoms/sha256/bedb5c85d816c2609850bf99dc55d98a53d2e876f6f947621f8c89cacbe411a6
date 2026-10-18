@@ -1,0 +1,71 @@
+**Theorem 5.2 (necessary retained calibration and attainable least
+partition).** Every exact right-spine continuation scheme satisfies
+
+$$
+\forall u,v\in\mathcal T,\qquad
+\lambda(u)=\lambda(v)\ \Longrightarrow\ d(u)=d(v).
+\tag{IDC.5.1}
+$$
+
+Conversely, the acquired scheme $\lambda(u)=d(u)$ admits an exact
+consumer. Its persistent preparation partition is therefore the least
+possible distinction for this task: it is attained, and every other
+sufficient scheme refines it. The same necessity holds for randomized
+consumers that terminate with the exact answer with probability one on
+every promised input.
+
+**Proof of necessity.** Suppose two actual prepared trees $u,v$ have
+$\lambda(u)=\lambda(v)$ and $d(u)\ne d(v)$. Take a natural number
+
+$$
+C\ge\max\{c(u),c(v)\},\qquad
+k_u=C-c(u),\qquad k_v=C-c(v).
+\tag{IDC.5.2}
+$$
+
+Both lags are nonnegative and are therefore legal, separately for these
+two actual presentations. Put $y_u=\rho^{k_u}u$ and $y_v=\rho^{k_v}v$.
+The supplied coordinate advancement gives
+
+$$
+c(y_u)=c(y_v)=C.
+\tag{IDC.5.3}
+$$
+
+Formula (IDC.2.9) then gives equal replies at **every** $R^j$, including
+arbitrarily long, absent and repeated requests. The complete cut and
+common public input give equal accessible initial consumer states.
+Induct over the deterministic execution: equal current states give the
+same local computation, next address, output or halt choice; at the
+same permitted address the equal replies give equal successor states.
+Thus the complete chronological traces and answers agree, however
+many reads or how much computation are used.
+
+Nevertheless (IDC.2.3) gives
+
+$$
+\begin{aligned}
+\nu(y_u)&=\nu(u)+C-c(u)=C-d(u),\\
+\nu(y_v)&=\nu(v)+C-c(v)=C-d(v).
+\end{aligned}
+\tag{IDC.5.4}
+$$
+
+These answers differ. Exactness on both actual inputs is impossible.
+The aligned lags are chosen only to construct two admissible inputs;
+the observer receives neither lag and performs no update.
+
+For a randomized consumer, couple its source-independent random choices
+identically on the two inputs. Every permitted conditional state and reply
+law remains identical, so the output laws are identical. One law cannot
+put probability one on each of the distinct answers in (IDC.5.4).
+Probability-one termination adds no distinction and does not avoid the
+contradiction.
+
+Sufficiency is the acquired producer of Proposition 4.2 together with
+Theorem 6.2's consumer. The resulting label is exactly $d$, so its
+partition is achieved. Necessity says that the map sending an attained
+label $\lambda(u)$ to $d(u)$ is well-defined; it supplies the claimed
+refinement. An arbitrary alternative label still needs an effective
+means of decoding this map to obtain an algorithm. $\square$
+

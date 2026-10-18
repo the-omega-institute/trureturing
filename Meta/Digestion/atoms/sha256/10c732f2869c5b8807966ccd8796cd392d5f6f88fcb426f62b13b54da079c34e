@@ -1,0 +1,21 @@
+**Proposition 11.2 (the chosen law is not pressure-optimal at depth two).**
+For the law (GCB.13) at $d=2$, the credited unrestricted all-template
+pressure is $\beta_2(\mu)=12/13$, while its minimum over whole-block
+probabilities is $17/25$.
+
+Proof by the credited depth-two formula. [RCE, Convention 14.1 and
+Corollaries 15.1 and 15.3][GCBRCE] give
+
+$$
+\beta_2(w)=\max\{W-w(\alpha),W-w(\beta),
+                    w(\alpha)+w(\beta)+\max_{g\text{ branch}}w(g)\},
+\tag{GCB.34}
+$$
+
+and the probability minimum $17/25$. Here the raw total is $13$,
+both root leaves have raw weight one, and the largest branch weight is
+two. Thus the three normalized quantities are $12/13,12/13,4/13$.
+This verifies the claimed value by direct application of that supplier.
+The cycle mass has limiting root $3/13$, so this family is not near the
+unrestricted pressure maximum at this law either. $\square$
+

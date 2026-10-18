@@ -1,0 +1,28 @@
+**Corollary 9.4 (explicit current-DEV interval lifted to actual labels).**
+For every
+
+$$
+\tau\in I=[996999/10^6,997001/10^6],
+\tag{RH.89}
+$$
+
+every height-optimal original implementation needs at least four actual
+low live-bearing labels. Three labels remain inequality-feasible there.
+The inherited JR56 strict comparison uses a feasible four-real-atom
+instrument and gap $>17/5000000$ against every saturated aligned
+three-atom candidate. That margin and its source-box enclosures are
+credited conditional results, not newly evaluated arithmetic here.
+
+Proof. Suppose an optimal actual implementation had at most three such
+labels. Lemma 8.2 gives its orthonormal null frame. Its actual height
+TV is at most $V(F)$, while Section 5 attains $V(F)$ with that frame
+and contrast at least the same required value. Full optimality forces
+equality, giving an optimal three-real-atom representation. This
+contradicts JR56.1. This reasoning is essential: atom count alone does
+not count actual labels. The supplied JR56 inequalities place
+$\bar\tau<\inf I<\sup I<\tau_3$, so the cap instrument is feasible
+on $I$ by Theorem 8.3. The four-atom witness in JR56 is a strict feasible
+lower value, not the proof of pointwise optimality. Pointwise optimal
+four-label attainment on this interval instead follows from RC via
+Theorem 9.5. $\square$
+

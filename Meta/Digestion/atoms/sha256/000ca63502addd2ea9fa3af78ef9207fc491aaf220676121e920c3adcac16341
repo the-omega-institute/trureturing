@@ -1,0 +1,86 @@
+**Lemma 369.2 (Zero excess and the exact affine constants).** Every full cut score $c_i$ of $\mathcal D_7$ satisfies $\Delta_N(c_i)=0$. There is a positive rational $\kappa_i$ such that, for $\widehat c_i=\kappa_i c_i$,
+
+$$
+A_{10+i}x-B_{10+i}=F_{Q(\widehat c_i)}(x),
+\qquad
+P=H_7\cap\bigcap_{i=0}^{470}\{F_{Q(\widehat c_i)}\le0\}.
+\tag{369.4}
+$$
+
+*Proof.* The following gives the finite arithmetic verification directly from the specified score lists. For each list form $f_i=f_{c_i}$ by (368.9), and accumulate
+
+$$
+C_i^0=\sum_w(A_w+P_w)+T,\qquad
+\beta_j^i=\sum_{n(w)=j}(C_w-A_w),\qquad
+K_i=\sum_w(A_w+C_w+P_w)+T.
+\tag{369.5}
+$$
+
+The anchor identity, obtained by separating $n\le2$ from $n\ge3$, is
+
+$$
+W_i=C_i^0+\beta_1^i+\beta_2^i.
+\tag{369.6}
+$$
+
+For every one of the $29$ schedules $S=\varnothing,(j),(j,k)$, $j<k$, and each complete $N$ cell $a$, compute
+
+$$
+t_{i,S,a,z}=\sum_{w:\operatorname{cell}_S(w)=a}f_i(w,z),\qquad
+v_{i,S}=\sum_a\max_{0\le z\le7}t_{i,S,a,z}.
+\tag{369.7}
+$$
+
+For the empty schedule there is one cell; for a singleton there are two; for a pair there are four. These finite sums include all eight labels. Substitution of all $471$ weight lists gives the exact identities
+
+$$
+\begin{gathered}
+\bigl(\max_z t_{i,(j,k),ab,z}\bigr)_{ab=00,01,10,11}
+       =\text{the recorded pair cell maxima},\\
+\max_{S}v_{i,S}=\text{the recorded }BN_i
+       =C_i^0+\beta_1^i+\beta_2^i=W_i
+       \qquad(0\le i<471).
+\end{gathered}
+\tag{369.8}
+$$
+
+This is an exhaustive finite identity: the indices in (369.7) range over every supplied list, all $29$ schedules, all its cells and every label. Equivalently, to check each maximum one sums the listed weights whose row event contains $z$ and whose word has the indicated one or two bits; there is no unlisted schedule optimization. The $21$ pair tables for each score give $9891$ four-entry comparisons, and the eight empty/singleton supports are included in the maximum. Reversal only permutes cells and repeated static queries give singleton information. Consequently (369.8) is exactly $B_N(c_i)=W_i$, proving zero excess.
+
+To verify the affine constant as well as the normal, set
+
+$$
+a_i=(\beta_1^i,\beta_2^i+\beta_3^i,
+       \beta_4^i,\beta_5^i,\beta_6^i,\beta_7^i,-K_i),
+\qquad t_i=\beta_1^i+\beta_2^i.
+\tag{369.9}
+$$
+
+The recorded primitive row is a positive multiple of
+$(a_i,BN_i-C_i^0)=(a_i,t_i)$. Clearing denominators and dividing by the positive greatest common divisor gives exactly
+
+$$
+A_{10+i}=\kappa_i a_i,\qquad B_{10+i}=\kappa_i t_i.
+\tag{369.10}
+$$
+
+The positive scales, grouped to specify their full finite range, are
+
+| $\kappa_i$ | Number of scores |
+| ---: | ---: |
+| $1$ | 237 |
+| $1/2$ | 128 |
+| $1/3$ | 43 |
+| $1/4$ | 20 |
+| $1/5$ | 9 |
+| $1/6$ | 16 |
+| $1/7$ | 1 |
+| $1/8$ | 6 |
+| $1/9$ | 3 |
+| $1/10$ | 2 |
+| $1/12$ | 3 |
+| $1/14$ | 2 |
+| $1/15$ | 1 |
+
+Their counts sum to $471$. Equations (369.9)–(369.10) give
+$A_{10+i}x-B_{10+i}=\kappa_i(a_i\cdot x-t_i)=F_{Q(\widehat c_i)}(x)$. The first ten rows define $H_7$, so the second equality of (369.4) follows. This calculation uses the complete content-defined data and the support formula; the vertex enumeration and stopped lifts remain the inherited XIX 344.2 result. $\square$
+

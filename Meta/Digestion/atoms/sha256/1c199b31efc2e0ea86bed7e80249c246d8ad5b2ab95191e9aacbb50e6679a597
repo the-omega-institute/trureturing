@@ -1,0 +1,28 @@
+**定义 1.2（完整选择核）。** 置 \(H_t=t^{4/5}\)、\(B_t=t+H_t\)，并定义
+\[
+ k_t(x)=\frac{\lambda(x)-\lambda(B_t)}{w(t)t^{11/10}}
+          \mathbf1_{t<x\le B_t},\quad
+ b(t)=\frac{\lambda(t)-\lambda(B_t)}{w(t)t^{11/10}},\quad
+ \mathcal W_X(x)=\int_{S_X}k_t(x)\,dt.
+\]
+价格只在 \(x>1\) 求值，核在其余位置取零。
+以下在单个见证上省略下标 \(X\)，并令
+\(\mathcal D=\int_0^\infty\mathcal W(x)dx\)。
+令 \(\theta(x)=\sum_{q\le x}\log q\)，使用弱端点，且
+令 \(\psi(x)=\sum_{q^k\le x}\log q\) 为完整素数幂的 Chebyshev 函数，
+\(K(x)=\log\mathcal N(x)\)，并定义 \(Q(x)=K(x)-\psi(x)\)。
+核恒等式
+\[
+ k_t(x)=b(t)\mathbf1_{x>t}
+ -\frac1{w(t)t^{11/10}}\int_t^{B_t}\mathbf1_{s<x}w(s)\,ds
+\]
+给出绝对连续的 \(\mathcal W\) 及几乎处处的导数
+\[
+ \mathcal W'(x)=\mathbf1_S(x)b(x)-w(x)A_S(x),\qquad
+ A_S(x)=\int_{\substack{t\in S\\t<x<B_t}}
+              \frac{dt}{w(t)t^{11/10}}.
+\tag{EL.0.3}
+\]
+两项分别可积，支撑在 \([\ell,2\mathcal R]\)；
+\(\mathcal D>0\)，因为 \(M>0\) 且每个原核在内部严格为正。
+

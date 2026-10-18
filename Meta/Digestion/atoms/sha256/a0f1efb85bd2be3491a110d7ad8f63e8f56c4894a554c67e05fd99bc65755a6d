@@ -1,0 +1,66 @@
+**Lemma 16.2 (Nonvanishing and the partial multiplier law).**
+The vector $u_\xi(k)$ is nonzero at every interior height. For
+every $|s|<H$ there is a single $m_s\in\mathbb C^\times$ such
+that
+
+$$
+T_s|_{X_\xi}=m_sI,\qquad
+u_\xi(k+s)=m_su_\xi(k)\quad(k\in I_s).
+\tag{16.4}
+$$
+
+These scalars satisfy
+
+$$
+m_0=1,\qquad m_{-s}=m_s^{-1},\qquad
+m_{s+t}=m_tm_s
+\quad\text{if }|s|,|t|,|s+t|<H.
+\tag{16.5}
+$$
+
+These are derived local laws. There is no asserted relation for
+probability maps with empty source domain.
+
+**Proof of Lemma 16.2.** If $u_\xi(k)$ vanished at every height,
+(16.2) would make $\Pi_\xi$ vanish on every actual state, and
+therefore on their span. This contradicts $X_\xi\ne0$. Choose
+a height $k_*$ where it is nonzero. For any other interior $l$,
+the leg $P_{k_*-l}$ is lawful at height $l$. If $u_\xi(l)=0$,
+(16.1) would imply
+$u_\xi(k_*)=T_{k_*-l}u_\xi(l)=0$, a contradiction. This proves
+nonvanishing everywhere, without a regularity assertion at any
+height.
+
+Fix $|s|<H$ and choose one $k\in I_s$. The nonzero vector
+$u_\xi(k)$ spans $X_\xi$, and (16.1) takes it to the nonzero
+vector $u_\xi(k+s)$ in the same line. Thus the one fixed linear
+map $T_s$ preserves this line and acts on it by a nonzero scalar
+$m_s$. The scalar is independent of the lawful starting height,
+and (16.1) gives (16.4) at every such height. Zero and reverse
+lawful legs give $m_0=1$ and $m_{-s}m_s=1$.
+
+If $|s|,|t|,|s+t|<H$, the spread of the three real numbers
+$0,s,s+t$ is
+$\max\{|s|,|t|,|s+t|\}<H$. Choose a translation of these three
+numbers placing all of them in $(0,H)$. From the resulting
+starting height $k$, the two successive legs and the single
+summed leg are lawful and yield
+
+$$
+m_{s+t}u_\xi(k)=u_\xi(k+s+t)=m_tm_su_\xi(k).
+$$
+
+Nonvanishing gives the local product law. No partial domain was
+assumed to span $X$ or any residual hidden block. $\square$
+
+The homogeneous coordinate vanishes on $X_\xi$ by Lemma 15.2,
+so the vector being multiplied in (16.4) is a genuine direction
+vector. Nevertheless both probability and phase offsets are
+present in $T_s$ and $V_\delta$. The finite projector identity,
+not an assumption that those offsets vanish, prevents an
+additional inhomogeneous term in the native coefficient on
+lawful states. It also prevents hidden blocks from supplying such
+a term there. It imposes no general off-image block decomposition
+on $T_s$. The fixed decoder offset belongs to the trivial
+observable part.
+

@@ -1,0 +1,12 @@
+### 59.1 Statement, actual Fourier equations, and missing modes
+
+Use the actual matrix, Fourier convention, and canonical rays of §58.1.
+At the central seed,
+
+\[
+ a=b=0,\qquad h=\sqrt3,\qquad
+ P=Q=\frac{-3+i\sqrt3}{2},\qquad
+ A=B=\frac{3+i\sqrt3}{2},\qquad g_l^+=i.
+\tag{59.1}
+\]
+

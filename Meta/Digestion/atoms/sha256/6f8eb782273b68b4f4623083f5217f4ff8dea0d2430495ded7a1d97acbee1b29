@@ -1,0 +1,36 @@
+**Convention 2.1 (Finite optimizer and attained band).** [Universal, Convention 1.3 and Lemma 2.1][U] supplies, for each $n$, a positive optimizer $\pi_n$ on all of $B_n$. Its single-site predictor $a_{n,i}$ is
+
+$$
+a_{n,i}(u_{-i})=\frac{\pi_n(v)}{\pi_n(u)+\pi_n(v)}
+\quad\text{on a legal insertion edge }u\to v,
+\tag{2.1}
+$$
+
+and is zero on a forced singleton. If $p_{\nu,n,i}$ is the analogous predictor for any $\nu\in\mathcal P(B_n)$, the supplied exact identity is
+
+$$
+\kappa_n-\Phi_n(\nu)
+=\sum_{i=1}^n\mathbb E_\nu(p_{\nu,n,i}-a_{n,i})^2.
+\tag{2.2}
+$$
+
+Zero-total fibers have zero weight. The identity covers the whole simplex, all endpoint edges and $n=1$. The same source supplies
+
+$$
+\tfrac13\pi_n(u)\le\pi_n(v)\le\pi_n(u),\qquad
+nc_\star\le\kappa_n\le(n+1)c_\star.
+\tag{2.3}
+$$
+
+These optimizers and their identity retain their original ownership. They are chosen separately for each $n$; no consistency of their marginals is assumed.
+
+[Universal, Theorem 3.1][U] supplies $d(P)=c_\star\Rightarrow\mathsf B(P)$ and, for every legal word $w\in B_n$ and every location $a$,
+
+$$
+P([w]_a)\ge2^{-(n+2)}3^{-k(w)}>0,
+\qquad k(w)=\sum_iw_i.
+\tag{2.4}
+$$
+
+Thus full visible support is a derived attained-law fact. It is not an imposed restriction on $\Theta_N$.
+

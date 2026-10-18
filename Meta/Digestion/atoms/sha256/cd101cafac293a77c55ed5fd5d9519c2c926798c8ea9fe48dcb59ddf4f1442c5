@@ -1,0 +1,35 @@
+**Lemma 22.2 (exact forest maximum-entropy completion, including zeros).**
+For $F\in\mathfrak F(G)$, $\Psi_F(P)$ is exactly the maximum entropy
+of a law $Q$ with the same selected entire-star marginals as $P$ and
+the same singleton marginals at every edge. In particular
+$H(P)\le\Psi_F(P)$ and
+$\log_2Z_G\le U_{\rm exact}^{\rm ent}\le U_\theta^{\rm ent}$.
+
+Proof. Root each component of the selected-star incidence forest.
+Start with its root's whole-star marginal. Attach each successive star
+using its conditional law of the newly introduced variables given its
+one shared edge variable. The selected stars have the running
+intersection property: a child meets previously introduced variables
+only in that parent separator. All separator laws agree because they
+come from $P$. On a zero-probability separator event choose any
+conditional distribution; that event is never sampled. Uncovered
+edge variables are independent with their given singleton laws, and
+separate components are independent. Induction shows that the resulting
+law has every required marginal. Its entropy is the sum of the star
+entropies minus one singleton entropy per shared separator, plus the
+uncovered singleton entropies, which is (GDB.96).
+
+For any other $Q$ with these marginals, apply the entropy chain rule
+in the same rooted order. Conditioning on all previous variables can
+only reduce each new-star conditional entropy relative to conditioning
+on its separator alone; subadditivity bounds separate components and
+uncovered variables. This gives the same expression as an upper bound.
+The construction attains it, proving the maximum statement with no
+positivity assumption.
+
+For completeness, the positive Gibbs law $Q_G=W/Z_G$ satisfies
+$H(P)+\mathbb E_P\log_2W=\log_2Z_G-D_2(P\Vert Q_G)$.
+Maximizing gives the finite Gibbs variational identity. Replace $H(P)$
+by the upper $\min_F\Psi_F(P)$, then by its convex-mixture upper,
+to obtain the displayed inequalities. $\square$
+

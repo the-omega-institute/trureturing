@@ -1,0 +1,42 @@
+**Definition 5.4 (the unrestricted obligations).** For arbitrary data
+in Definition 5.1, write $\operatorname{PrefDet}(D,Q,h)$ for
+
+$$
+\forall u,v\in D,\quad
+ \bigl[\forall |p|\le h,\ r_u(p)=r_v(p)\bigr]
+ \ \Longrightarrow\ R_Q(u)=R_Q(v).
+\tag{TPO.18}
+$$
+
+The unrestricted obligation of [ARH, Definition 9.1][ARH] remains an
+effective necessary-and-sufficient decision of
+$\exists h\,\operatorname{PrefDet}(D,Q,h)$ with an actual paid
+source-total consumer in positive cases and a justified negative
+stopping argument. The exact-resource obligation additionally concerns
+all arbitrary finite physical address choices and all legal adaptive
+serial competitors, with exact sourcewise costs before the suprema in
+(TPO.17). A source-language decision for a supplied finite menu does not
+decide existence of unbounded-address witnesses. A finite Pareto basis
+as a set does not supply an effective stopping rule for finding it.
+
+The domain formula in (TPO.13) is an excluded supplier for one proposed
+interpretation of these obligations. Its exclusion neither decides the
+obligations negatively nor invalidates any of the recognized positive
+and negative decisions in Definition 5.3. An alternative supplier must
+supply its own two whole-fiber inclusions and actual paid consumer
+correspondence. Preservation of boundedness with multiplicative or
+additive resource distortion would not alone identify exact prices.
+The identity of sourcewise costs in ABC, the additive raw normalization
+in SCR, the sourcewise inequalities in JRF and AOF, and the scoped exact
+optimization theorems are distinct mathematical conclusions.
+
+[ABC]: https://github.com/the-omega-institute/trureturing/blob/5acc53740f311d7a854d03f793e4079aa626fe5c/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[KR]: https://arxiv.org/html/cs/0408015v1
+[ARH]: https://github.com/the-omega-institute/trureturing/blob/ce58f3e6607e4269821891c7ba7e7dad5e8066f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SCR]: https://github.com/the-omega-institute/trureturing/blob/ebeec0b680e9584d1749fe60fefb98ee1044300a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_COMPLETE_ROW_PRICE.md
+[JRF]: https://github.com/the-omega-institute/trureturing/blob/8629b924d8bd0e9d5156b933ee9947465c5aee06/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[AOF]: https://github.com/the-omega-institute/trureturing/blob/fee3e2b8ff28d5048af2e03cfd83ef522a30365b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+[CENTRALIZER]: https://github.com/the-omega-institute/trureturing/blob/5acc53740f311d7a854d03f793e4079aa626fe5c/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[ENCODING]: https://github.com/the-omega-institute/trureturing/blob/5acc53740f311d7a854d03f793e4079aa626fe5c/D5/S0/History/Spacetime/SourceTreeEncoding.lean
+[FREE]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Free.lean
+

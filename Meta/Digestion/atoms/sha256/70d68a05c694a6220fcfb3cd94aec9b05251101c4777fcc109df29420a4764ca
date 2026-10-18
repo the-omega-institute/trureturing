@@ -1,0 +1,9 @@
+**定义 3.1（有限列与独立坐标差分）。** 在整数系数多项式环中，对正整数 $m$ 写
+
+$$
+[m]_z=\sum_{j=0}^{m-1}z^j,
+\qquad \Delta_z F=(1-z)F.
+$$
+
+变量分别代表已指定的独立格点方向。所用有限几何级数是 [经典单位根多项式的初等因式分解](../../../Library/Factorization/conrad2025cyclotomicextensions.md)；$\Delta_z$ 是坐标移位差分，不是拓扑链复形的边界算子。
+

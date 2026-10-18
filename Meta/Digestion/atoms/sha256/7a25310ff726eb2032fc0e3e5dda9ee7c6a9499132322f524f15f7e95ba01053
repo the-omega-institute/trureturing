@@ -1,0 +1,37 @@
+**Lemma 5.4 (actual-image identification with the activation choice).**
+On $\Omega$, $K_+(h)=K_+(k)$ implies $h=k$. Consequently $Y(h)$ and
+the complete joint endpoint each determine the actual history, including
+its original and auxiliary occurrence identities.
+
+Proof. Apply AIF's literal replay algorithm with two additional explicit
+interfaces. It starts at the same primitive foundation and uses the
+recovered seed to reconstruct the unique padded packet and original paid
+boot/acquisition. Feed $J_0$ only at old variable-frame INs. If $A\ne\bot$,
+select the separately recorded Install at the old Ready after exactly
+$A$ complete frames, before ordinary $D_0$ row lookup there. Otherwise
+never choose Install. Follow the actual canonical $E(L)$ bootstrap,
+fixed capture frame, $E(D_1)$ bootstrap and initialization rows. Feed
+$J_1$ only at subsequent external frame INs. No other row consumes these
+variable reservoirs. Stop after exactly the supplied $n$ native events.
+
+This is the supplier's finite-prefix deterministic replay, with its
+activation and input selectors now fixed by Lemma 5.3. The usual induction
+has no missing choice: at every non-IN, other than that one recorded
+instrument selection, the prescribed row is fixed; each code IN is the
+prescribed public compilation bit; each variable IN is the next bit of
+its matching retained reservoir. Original private preparation is fixed
+by $u,H$. Equal pre-row raw fields yield the same reads, gates, writes,
+marks, constructors, tokens, descriptor origins and receipt. In particular
+an earlier Call is simulated through its actual native rows, not answered
+by a recursive semantic oracle.
+
+The induction covers every interior row of installation, banks, partial
+fields, raw source overwrite, rejects, both copies and return. Actual-image
+membership ensures that the finite reservoirs suffice up to $n$; replay
+does not consume a future bit. Thus the algorithm identifies exactly $h$,
+so equal keys identify the same prefix. $Y$ contains the selected material
+of $M$, and a complete endpoint contains $Y$. Exact native occurrence
+names follow the deterministic constructors; fixed template roles give
+the structural auxiliary names. This does not authenticate an arbitrary
+submitted key or acquire anything on behalf of a receiver. ∎
+

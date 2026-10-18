@@ -1,0 +1,4 @@
+**数学引文 50.2（形式源码和相邻关系的接口）。** 在已给来源修订 `b140bab5d04dc34ef3ceb77bcee826559ab97f31`，`D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FourthSegmentStoppedLaw.lean` 的 `legalRead`、`legalStop`、`first_completion_normal_form`、`noncompletion_fiber`、`actual_noncompletion_mass_zero` 和 `actual_fourth_segment_stopped_word_law` 对应 $\alpha=0,\beta=1$ 的原第四段完成词、无终端 Read 权限和合法非完成原始载体。其固定 $r$ Bernoulli 声明不单独供应共同隐藏 $K$ 的先验/后验、全标记树记录或付费前奏；这些仍由本卷和[ST]的原普通来源桥承担。这里复用源码的陈述范围，不宣称新的 Lean 核验证据。
+
+[有限启动记忆卷][PHACFS] §§10–11区分已取得历史长度、未来长度、校准和行为相容，其五模式 source 动作不是当前 PH 付费操作。[原生联合坐标卷][PHACAUR]命题12.1–12.2在已给同源精确统计的合同下恢复联合律，并只计仿射实观察维数；它明确没有混合矩取得仪器。两者没有到本批 Read/Stop、COMPLETE 位或质量证书的操作转移，所以其坐标单射、维数或校准供给不作(45.2)的前提。
+

@@ -1,0 +1,11 @@
+**定义 37.1（四种表示所共用的参数）。** 令 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$，并沿用 [第 36 章](SYMPLECTIC_PREDICTIVE_COMPLETION.md#36-auric-fib-atom素数精度下的切向残差周期提升与原生接续) 的原生组成 $C=(U,V)^{\mathsf T}$、HIGH-to-LOW 接缝守卫、$M,T,S,E$ 及黄金范数 $Q$。本章中 $P=F_q\ge5$ 且 $P$ 为素数时，比较四个明确给定的载体：无相邻一的长度 $q-2$ 位词图、$\mathbb Z/P\mathbb Z$ 的相位标签、指数 $P$ 的 Gaussian 整数格，以及组成余数的范数一循环。
+
+共同的 Fibonacci 值只供应基数或模数，不预先识别这些载体的边、动作或几何度量。实际单窗口仍为
+
+$$
+(s,C)\longmapsto\bigl(x(\sigma),M^3C+\delta_\sigma\bigr),
+\qquad s\,y(\sigma)=0.
+$$
+
+两次实际空窗口才给 $E=M^6=T^3$，并将接缝置零。
+

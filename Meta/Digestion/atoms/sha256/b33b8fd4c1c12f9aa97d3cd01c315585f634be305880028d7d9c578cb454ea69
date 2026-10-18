@@ -1,0 +1,37 @@
+### 命题 456.1（稳定胞腔内 residual 严格变化）
+
+在上述稳定胞腔内，
+
+$$
+\boxed{
+\mathcal F_P'(\varepsilon)=\mathcal S_P'(\varepsilon)<0.
+}
+\tag{456.6}
+$$
+
+因而同一整数 $N$、同一素数支撑、同一 CA 指数向量以及同一同余条件，
+对应一整段不同的 floor residual。
+
+**证明。** 直接微分（456.1）：
+
+$$
+Y_p'(\varepsilon)
+=\frac1{1-p^{-(1+\varepsilon)}}
+-\frac1{1-p^{-\varepsilon}}<0.
+\tag{456.7}
+$$
+
+稳定胞腔内没有分数部穿越整数，故
+$\{Y_p(\varepsilon)\}'=Y_p'(\varepsilon)$。
+逐项求和即得
+
+$$
+\mathcal F_P'=\sum_{p\le P}Y_p'\log p
+=\mathcal S_P'<0.
+$$
+
+另一方面，指数向量固定，所以（456.5）的左端 $\log N$ 和
+$\vartheta(P)$ 都固定；这也直接给出同一恒等式。若 $M\mid N-1$，
+例如 $M=F_r$ 的 FIB 仿射条件 $N=1+F_rg$，则该同余在整个胞腔内
+保持不变，而（456.6）说明 residual 仍严格变化。证毕。 $\square$
+

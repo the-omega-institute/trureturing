@@ -1,0 +1,33 @@
+**Proposition 8.4 (the original material bill is retained).** Structural
+replacement does not remove the source/input/copy and archive costs of
+AIF or make pointer width into memory capacity.
+
+Proof. Source preparation still contains $2N$ actual private INs, their
+WR/MR occurrences, allocated zeroed source slots, and the full validation
+computation. Initial acquisition still executes $2m-1$ TagReads and
+$2(m-1)$ producer branch-local markers for an $m$-leaf source, together
+with their full tape implementations, rows, framing, seals and delivery.
+The acquired prefix code has $3m-1$ payload bits before its metadata;
+the padded private block remains $2N$ bits. Canonical input parsing retains
+AIF's header, unary-length and payload work, including every unwritten
+pending input interval. None is inferred from a source epoch or event count.
+
+All Base/Allocate/Seek routines, unary counter versions, dynamic gate
+records, stack frames, scratch erasures, and retired cells remain the
+same original sequences and are included in SSA.14. AIF's explicit
+two-stage length-controlled copy costs $12\ell+6$ primitives plus actual
+allocation, initialization, descriptors and positioning. The older
+$8\ell+4$ expression counts only its payload/seal/handoff bodies and
+does not replace that total. Sender, mailbox and receiver coexist.
+They each contribute their actual cells to SSA.7. Copy payload bits and
+source-query counts are unchanged coordinates of the same run.
+
+The support counts are numbers of graph vertices, tree/access incidences,
+and finite slot capacities. They do not assign a binary width to an
+arbitrary physical endpoint. If references are serialized as strings,
+their actual widths, framing, construction, scans and copies must also
+be counted. Fixed-radius access across a head link assumes that declared
+link primitive; it supplies no constant-length physical wire. Thus neither
+SSA.7 nor a short descriptor proves storage optimality, physical embedding,
+or a numerical saving over the original machine. ∎
+

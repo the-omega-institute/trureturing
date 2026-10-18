@@ -1,0 +1,64 @@
+**定理 38.1（Room-qualified arbitrary INITIAL preset law）。** Use Definition 36.1. If $\Gamma$ is constant on successful INITIAL records, then $C_{\rm pre}(f)=0$, independently of its initial bottom label. If there is no common eligible cut (36.2), then $C_{\rm pre}(f)=+\infty$. Otherwise, whenever at least one common eligible cut $a$ satisfies
+
+$$
+a+k+2\le m,
+\tag{38.1}
+$$
+
+the exact minimum worst actual emitted complete-block fee, for both original alphabets, is
+
+$$
+C_{\rm pre}(f)=\max\{1,D_g(\Lambda)\}
+\quad\text{if }\Gamma\text{ is nonconstant}.
+\tag{38.2}
+$$
+
+Here $D_g$ is exactly (37.2)–(37.3) and the noncoprime value in Theorem 37.1. Every finite value asserted in (38.2) is attained by one fixed literal stream, common to all successful INITIAL sources and both free values, with archive-dependent stopping. If eligible cuts exist but none meets (38.1), this theorem makes no numerical finite-cost assertion from (38.2).
+
+Proof. Zero fee and its necessity were proved in Theorem 36.3. The infinite criterion is the credited Theorem 24.2 with $a<k\le m$, applied through the credited value join. For a nonconstant target with a room-qualified cut, Theorem 36.3 supplies the lower bound $\max(1,D_g)$ for every correct preset controller, including controllers that try to use rejection or stop before part of the written stream. It remains to construct an attaining stream.
+
+Let $d=\max(1,D_g(\Lambda))$. Choose the code assignment from Theorem 37.1 at length $D_g$; when that length is zero, use one all-zero coordinate. For each $0\le t<d$, prescribe the actual phase mask
+
+$$
+E_t=\{j\in P:(z_j)_t=1\}.
+\tag{38.3}
+$$
+
+For $g=1$ every $E_t$ has even cardinality by (36.5). At $t=0$ prescribe the literal prefix $1^a0$. At each later $t$ prescribe first bit zero, so its prefix parameter is zero. The remainder of each row is the credited one-block construction of [S26, proof of Theorem 3.1], whose literal realization is given below in the coordinates of (36.3). It is used for one predetermined row at every global chronological index, not for a different row on each observed branch.
+
+Write $a_t=a$ at $t=0$ and $a_t=0$ at $t>0$. Put ones at positions $0,\ldots,a_t-1$ and zero at position $a_t$. Let $A_t(j)$ be the arithmetic charge of these prescribed ones and let
+
+$$
+R_t(j)=\mathbf1_{E_t}(j)\oplus A_t(j),\qquad
+J_t=\{a_t+1,\ldots,a_t+T\}.
+\tag{38.4}
+$$
+
+The room condition is exactly $a_t+T\le m-1$, so $J_t$ is a set of actual positions within this same paid block, each residue modulo $T$ occurring once. The known displacement is $u_t=tm\pmod T$.
+
+If $g\ge2$, select optional ones only at positions $i\in J_t$ with $i\equiv-1\pmod g$. Such a one has two ambient charge vertices, $u_t+i$ and $u_t+i+1$. The former is outside $P$, and the latter is its unique actual vertex. As $i$ varies through the $T$ consecutive positions in $J_t$, these latter vertices cover $P$ once each. Set the bit at that position equal to $R_t(u_t+i+1)$. All other suffix bits are zero. These pulses are spaced by $g\ge2$, so each suffix one is isolated. This gives exactly the residual row on the actual phases. The unobserved ambient vertices supply no source or information to a branch.
+
+If $g=1$, both $E_t$ and the prefix charge have even cardinality, so $\bigoplus_{j\in P}R_t(j)=0$. Solve the cyclic equations
+
+$$
+x_r\oplus x_{r-1}=R_t(u_t+r),\qquad r\in\mathbb Z/T\mathbb Z.
+\tag{38.5}
+$$
+
+Choose $x_0$, recurse through the other residues, and use the zero total XOR to verify the final equation. The two solutions complement one another. Select one with at most $\lfloor T/2\rfloor$ ones and put bit $x_{i\bmod T}$ at each actual $i\in J_t$. Equation (36.3) proves that these positions contribute exactly $R_t$. Also
+
+$$
+\lfloor T/2\rfloor=\lfloor(k+1)/2\rfloor<k.
+\tag{38.6}
+$$
+
+Hence no suffix run reaches $k$; bounding the total number of suffix ones bounds every such run. This is a lawful representative of the response row, rather than an abstract span used as an operation.
+
+In both cases all unspecified positions are actual zeros. The first block rejects exactly the INITIAL tails $s\ge k-a$, before its first zero; they all have joined label $\rho$ by (36.2), and can return it at this first endpoint. For $s<k-a$, the leading run is safe and the first zero clears the old tail. The prefix and suffix runs are separated by that zero, every internal suffix run is shorter than $k$, and padding adds only zeros. Thus all those sources succeed and the first observed difference is precisely $\mathbf1_{E_0}(j)$. Their immutable label is already $\Lambda(j)$ by (36.2).
+
+Every subsequent block begins with zero. It clears the known terminal tail of the preceding literal block, even if that tail is nonzero; no seam can reject a surviving source. The same suffix argument proves internal legality. The selected words therefore belong to the internally legal alphabet as well as the unrestricted alphabet, and the complete literal concatenation is safe on every low-tail source. They implement (38.3) relative to INITIAL phase at their own chronological offsets. The controller never observes or reverses a hidden source clock.
+
+A surviving source records the code $z_j$ as successive differences of its own successful scalar readings, remembering its free initial value. Distinct joined labels have distinct codes, so after at most $d$ endpoints its label is determined. Return the component selected by that remembered value. Any archive already homogeneous in joined labels may stop earlier. A high-tail rejection returns its constant pair's component at fee one; initial bottom returns $f(\bot)$ at fee zero.
+
+There are exactly $d$ blocks in the global stream. All clearing zeros, prefix ones, compensating bits and suffix padding occupy positions in those same blocks. There is no separate wait, repair or final cleanup block. A stopped source emits only its own prefix. Thus the worst actual fee is at most $d$, matching the lower bound. The case $D_g=0$ but $\Gamma$ nonconstant uses the single zero-response threshold block and pays one; a coincident rejection label does not change the decoder or lower bound. ∎
+

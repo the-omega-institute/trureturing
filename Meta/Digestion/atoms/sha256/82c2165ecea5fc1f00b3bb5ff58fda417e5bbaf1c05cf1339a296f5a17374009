@@ -1,0 +1,35 @@
+**Corollary 12.5 (finite rational prescribed-return approximation with evaluated constants).** For every admissible Borel $\Xi$ and every $0<h\le1$, there is a finite rational regular table $F_h^r$ and a coupling of its own actual triple with $\Xi$ such that
+
+$$
+\mathbb E d_\Sigma\le\frac{543}{110}h<5h.
+\tag{12.29}
+$$
+
+For all complete targets simultaneously,
+
+$$
+\begin{aligned}
+|\mathcal L_p^{\Xi_{F_h^r}}(T)-\mathcal L_p^\Xi(T)|
+ &\le C_p h,\qquad C_p=\frac{2621}{1650}<\frac85,\\
+|\mathcal L_\beta^{\Xi_{F_h^r}}(T)-\mathcal L_\beta^\Xi(T)|
+ &\le C_\beta h,\qquad C_\beta=\frac{2903}{1650}<\frac95,\\
+|V_{\Xi_{F_h^r}}-V_\Xi|
+ &\le C_Vh,\qquad C_V=\frac{1531}{1500}.
+\end{aligned}
+\tag{12.30}
+$$
+
+Every generated triple satisfies (12.1) exactly, with exactly equal first and third unweighted marginals. These marginals may differ from $\nu_p$.
+
+**Proof.** Apply Theorem 12.3 and Proposition 12.4 with $\delta=\rho=h/100$. Glue their couplings through the finite old label triple; conditional restrictions to its finitely many positive cells give such a gluing directly. The cost is at most
+
+$$
+\frac{105}{22}h+\frac{180}{1100}h
+ =\frac{543}{110}h.
+$$
+
+Since $s\le1/15$, the two real loss bounds in (12.12) are at most $101h/66$ and $113h/66$. Adding respectively $64h/1100$ and $52h/1100$ gives exactly $2621h/1650$ and $2903h/1650$. Equation (12.20), $s\le h$, and the last bound of (12.23) give
+$h+2h/100+h/1500=1531h/1500$ for variation.
+
+Balance, generation and (12.9) prove the exact constraints after rationalization. The coupling costs tend to zero on the compact descriptor product, hence give weak convergence to this prescribed $\Xi$. They also control the entire triple, rather than only its two projections. Outer TV convergence is neither needed nor implied: if $\Xi$ is nonatomic, each finite triple law is supported on a finite set of $\Xi$-mass zero and its outer TV distance from $\Xi$ is one. The quantifier is existence of a finite rational table for each $\Xi,h$, not an algorithm extracting it from an unrepresented Borel measure. $\square$
+

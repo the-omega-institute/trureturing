@@ -1,0 +1,15 @@
+**Definition 207.4 (The subset measure supplied by 201.2).** On a set
+$J$ of $m\ge2$ actual addresses and for $a\ge0$, write $\mathcal L_m(a)$
+for this measure on zero subsets. If $m=2q-1$, put mass
+$2ma/[q\binom mq]$ on each $q$-subset. If $m=2q$, put mass
+$2a/\binom mq$ on each $q$-subset and
+$2qa/[(q+1)\binom m{q+1}]$ on each $(q+1)$-subset. Its total is
+$c_ma$, where $c_m=4-2/\lceil(m+1)/2\rceil$; its unary zero masses
+are $2a$ and both directed disagreement masses are $a$. Thus every
+answer pair has cells $(a,a,a,(c_m-3)a)$. These are the same atoms as
+201.2. The inclusion and directed-disagreement probabilities for a
+uniform $r$-subset are $r/m$ and $r(m-r)/(m(m-1))$; substitution proves
+the stated moments simultaneously for this one measure.
+
+### 207.1 A biased product retaining early correct credit
+

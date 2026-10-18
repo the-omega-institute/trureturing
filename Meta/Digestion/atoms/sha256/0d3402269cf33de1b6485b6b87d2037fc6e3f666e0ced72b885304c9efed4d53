@@ -1,0 +1,66 @@
+**Theorem 7.2 (entire fiber, both rows and separated-validation
+failure).** The entire original fiber of Definition 7.1 is exactly
+$\{A(x,y):x,y\in\mathcal T\}$. Its two complete target rows have
+reached set $Q$, whole exterior
+
+$$
+\langle\langle\alpha,\beta\rangle,
+                    \langle\square_1,\square_2\rangle\rangle,
+$$
+
+and respectively one partition class $r_=$ or two classes $r_\ne$.
+They are both attained, and their entire strata are
+
+$$
+D_=\{A(t,t):t\in\mathcal T\},\qquad
+D_\ne=\{A(s,t):s,t\in\mathcal T,\ s\ne t\}.
+$$
+
+For this fixed input, a fixed full WMSO+$\mathsf U_{\mathrm{tup}}$
+validator on independent canonical choices of $x,y$ cannot recognize
+the complete row $r_=$ on every candidate. With a separate clock it
+cannot recognize every requested inclusive original-prefix comparison
+between $A(c_i,c_i)$ and $A(c_i,c_j)$ either.
+
+Proof. The five literals force exactly the displayed constructor
+skeleton, leaving precisely its two reached finite native subtrees
+$x,y$. At epoch one the left child is
+$\langle\beta,\langle\beta,\alpha\rangle\rangle$, so its $LL$
+subtree is $\beta$, equal to the epoch-zero $LR$ subtree. The
+negative compares the reached original $\alpha$ and $\beta$,
+which differ. Thus every $A(x,y)$ satisfies both guards and both
+signs, as well as the old complete root row, and every legal source
+has this form. This proves both original-source directions.
+
+Both target holes are reached. Their whole subtrees are exactly
+$x,y$, so the stated context and the two partitions give all rows
+and the exact strata. The equal row is attained by $A(\alpha,\alpha)$,
+and the unequal row by $A(\alpha,\beta)$. Under Assumption 1.3 these
+are alternative originals of the same supplied acquired input; no
+additional acquisition construction or source-bearing field is used.
+
+Use the carrier obtained by inserting independent occurrences of
+$T_G$ at $x,y$ in this fixed skeleton, with any row tag in a fixed
+finite context. All other literals, old-row tests and history signs
+already hold on every finite selection. A validator for $r_=$ would
+therefore give the forbidden $E$ of Theorem 6.3. More concretely,
+its $M+1$ comb choices give $i<j\le M$ with identical second-slot
+types. Keep $x=c_i$ and an equal-row tag fixed. The valuation with
+$y=c_i$ represents a member of $D_=$; replacing only its independent
+second choice by $c_j$ gives a member of $D_\ne$. Whole-type
+composition leaves the formula's truth unchanged, so exact row
+validation fails on this actual acquired fiber.
+
+For the original-prefix version fix the first source to
+$A(c_i,c_i)$ and compare against a second source with its independent
+$y$ slot either $c_i$ or $c_j$, all other slots fixed. The first
+original discrepancy is exactly at $RRR^i$, of depth $i+2$.
+A proposed comparison formula has finitely many local types for that
+replaceable slot. After its comb collision, choose the separate clock
+for $h=i+2$. The unchanged types force equal truth on the equal and
+unequal prefix cases, which have opposite answers. For
+$M=|\operatorname{Typ}_\phi|$ the collision can be chosen with
+$i+2\le M+1$. This is a formula-dependent comparison obstruction,
+not an exclusion depth for $J_B$. The input itself still contains
+the entire two strata above. $\square$
+

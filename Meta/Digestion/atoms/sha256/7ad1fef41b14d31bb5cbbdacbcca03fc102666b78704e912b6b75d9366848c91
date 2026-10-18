@@ -1,0 +1,52 @@
+**Theorem 3.3 (Full normalized signal and noise; T3).** Use the source
+constants of Assumption 2.1 and set
+
+$$
+\xi_-=\frac1{2r\mathrm e z_+},\qquad
+\xi_+=\frac{1+c}{z_-},\qquad
+g=\xi_-D/4,\qquad v=\xi_+V.
+\tag{3.17}
+$$
+
+For every $0<s<s_*$ and every cap allowed in Theorem 3.1, under the
+full gap laws $f_i$ the increment (3.12) satisfies
+
+$$
+-\mathbb E_0U\ge g s^{2r}J,\qquad
+\mathbb E_1U\ge g s^{2r}J,\qquad
+\mathbb E_iU^2\le v s^{2r}J,\qquad |U|\le1.
+\tag{3.18}
+$$
+
+Proof. Let $\pi_i=\mathsf P_i(K\le L)=Z_i^L/Z_i$. By positivity
+and the exact shapes,
+$B_L\le Z_i^L\le(1+c)B_L$. Equations (2.1) and (3.6) therefore give
+
+$$
+\xi_-s^{2r}L^{2r}\le\pi_i
+\le\xi_+s^{2r}L^{2r}.
+\tag{3.19}
+$$
+
+Each $\pi_i$ uses its own full and truncated normalizers. They have
+not been equated. Because the actual increment is zero on every
+$K>L$, the exact return from conditioning to the full laws is
+
+$$
+\mathbb E_iU=\pi_i\mathbb E_{g_i}U,\qquad
+\mathbb E_iU^2=\pi_i\mathbb E_{g_i}U^2.
+\tag{3.20}
+$$
+
+Insert (3.13), $\Delta\ge DI$ and (3.19). Each oriented mean is at
+least $\xi_-s^{2r}L^{2r}DI/4=gs^{2r}J$, and each second moment is
+at most $\xi_+s^{2r}L^{2r}VI=vs^{2r}J$. The support bound follows
+from Theorem 3.2.
+
+In particular the reward and center quantization errors of (3.15) occur
+only on $K\le L$. Their full-law effect is multiplied by that event's
+actual probability. There is no center update on a rejected gap.
+An error of this conditional size applied on every long gap would not
+obey (3.20). Conditioning here describes a law mathematically; it
+provides no free accepted sample. $\square$
+

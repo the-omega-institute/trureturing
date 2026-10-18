@@ -1,0 +1,13 @@
+**Proposition 9.3 (a new retention cut requires its own interface).** After obtaining $r=R_Q(u)$, suppose a separately supplied retention operation makes the entire accessible source-related state precisely a recoverable encoding of $r$ and common installation. Relative to the original entry, the new source fiber is exactly
+
+$$
+ D\cap R_Q^{-1}(r).
+\tag{JRF.9.1}
+$$
+
+If acquired receipts, old $R,H$, simulation state, allocation lengths, or other distinctions remain accessible, their conditions must also be intersected. None of the cost theorems supplies that forgetting operation or a global producer that enlarges (JRF.9.1) to all trees with row $r$.
+
+Proof. This is SCR Proposition 8.1 and SLH Proposition 68.3 under the same complete-access condition. Membership in the old entry forces $u\in D$, and recovery of $r$ forces its row equation. Conversely, under the stipulated access restriction any source in that intersection produces the same complete new state. Further accessible distinctions can only refine it. The services of this volume actually perform their reads and updates, but their output correctness alone does not certify the additional access restriction. $\square$
+
+The relation added here is operational: a late probe can be represented at a bounded actual epoch without increasing any charged coordinate, while early time decisions remain available. The root/length relation then makes complete finite frontier recovery effective. Direct reuse of raw minimax gives neither relation. A transport lemma alone would leave the unbounded-address stopping obligation, and a mere finite-budget decision would leave the unknown Pareto search horizon. Theorems 4.3 and 5.3 join these missing directions. Leaving the raw result unchanged gives no test for the budgets in Theorem 8.1; this companion gives that test without replacing the source fiber or boundary task. It establishes this recovery relation for the three specified resources, not a general equivalence between physical space, elapsed time, memory, and boundary.
+

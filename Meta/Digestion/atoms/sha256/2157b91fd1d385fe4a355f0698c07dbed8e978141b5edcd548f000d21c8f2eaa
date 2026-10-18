@@ -1,0 +1,77 @@
+### 81.7. All exceptional parameter fibers
+
+For \(j=4,8\), define the polynomial
+\[
+ g_j(q)=\gcd_{\mathbb Q[q]}\bigl(
+ \operatorname{Res}_U(P_j,A_{15}),
+ \operatorname{Res}_U(P_j,B_{15}),
+ \operatorname{Res}_U(P_j,C_{19})\bigr).
+\]
+The exact Euclidean calculations from the preceding definitions give
+\[
+\begin{aligned}
+ g_4&\doteq q^{12}(q-3)^2(q-1)^6(q+1)^4(q+3)^5L_4^2,\\
+ g_8&\doteq q^{32}(q-3)^6(q-1)^{14}(q+1)^{12}
+                         L_2^3L_4^2L_{10}^2,
+\end{aligned}                                                    \tag{81.18}
+\]
+where
+\[
+\begin{aligned}
+ L_2&=5q^2-24q-9,\\
+ L_4&=q^4-8q^3+22q^2+24q+9,\\
+ L_{10}&=4q^{10}+20q^9+105q^8+74q^7+202q^6+450q^5\\
+       &\hspace{12mm}+3276q^4+6318q^3+6642q^2+1458q+2187.
+\end{aligned}
+\]
+The constants for unscaled primitive inputs may be chosen as
+\(76527504\) and \(3158920892214411264\), respectively; they have
+no effect on the zero sets. A common zero of all three resultants is
+also a zero of their gcd, because that gcd is a polynomial linear
+combination over \(\mathbb Q[q]\). This uses a polynomial identity,
+so it retains special parameter values where intermediate leading
+coefficients of an elimination might vanish.
+
+Neither gcd has a zero in \(0<q<1\). Indeed,
+\[
+ L_2<5q-24q-9<0,\qquad
+ L_4=q^2(q-4)^2+6q^2+24q+9>0,
+\]
+and every coefficient of \(L_{10}\) is positive. Thus (81.17) is
+impossible throughout the interval, not merely at generic parameters.
+
+It remains to handle \(U=b^2/3\), which has never been divided away.
+Direct substitution gives
+\[
+ S_0=\frac b3(R+b)[RB^2+b(3b^4+2b^2+3)],\qquad
+ H=2b(R+b).                                               \tag{81.19}
+\]
+The root \(R=-b\) contradicts \(H>0\). At the other root,
+\[
+ R=-\frac{b(3b^4+2b^2+3)}{B^2},
+\]
+the numerator \(E\) from (81.15) is, up to a nonzero rational constant,
+\[
+ E\doteq b^7(b^2-1)(b^2-3)^3(b^2+1)^2
+                        [KB-6b^2-6].                    \tag{81.20}
+\]
+One numerator normalization gives the multiplier \(512/9\).
+Every prefactor is nonzero. Hence \(K=6(b^2+1)/B>2\), whereas
+\[
+ K^2=G=(3-b^2)U(1-U)-(R+bU)^2<3U=b^2<1.
+\]
+This contradiction excludes the full nonplane chart.
+
+Finally direct substitution in (81.1) gives
+\[
+ H_0(-b)=(Z\otimes I_3)H_0(b)(X\otimes I_3),\qquad
+ Z=\operatorname{diag}(1,-1),\quad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.                  \tag{81.21}
+\]
+Both factors are monomial and the input channel swap commutes with
+\(R_0\). It transports the result to \(-1<b<0\), including the four
+witnesses up to projective phase. Fourier substitution verifies every
+original modulus and \(w^*R_0w=0\) in (81.2). Synchronous permutations
+commute with \(H_0\), giving the other two transpositions and completing
+the proof of Theorem 81.1.
+

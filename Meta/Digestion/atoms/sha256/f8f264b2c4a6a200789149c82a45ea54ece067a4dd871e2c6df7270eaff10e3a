@@ -1,0 +1,53 @@
+**Lemma 7.1 (interior true-cone atoms and physical ranks).** For the
+selected entries (AS.42), define
+
+$$
+\begin{gathered}
+u_L=\frac{\beta+\sqrt{\beta^2+4\alpha v^2}}2,\qquad
+v_L=\frac{-\beta+\sqrt{\beta^2+4\alpha v^2}}{2\alpha}>0,\\
+R_\theta=\begin{pmatrix}
+\cos(\theta/2)&-i\sqrt\alpha\sin(\theta/2)&0\\
+-i\sin(\theta/2)/\sqrt\alpha&\cos(\theta/2)&0\\0&0&1
+\end{pmatrix},\\
+h_r=\frac1{\sqrt2}\left(\sqrt P,\frac{rt+iR}{\sqrt P},0\right)^T,
+\qquad
+z_{r,\pm}=\frac12R_\theta(\sqrt{u_L},r\sqrt{v_L},\pm1)^T.
+\end{gathered}
+\tag{AS.49}
+$$
+
+Then $h_rh_r^\dagger=H_r$ and
+$\sum_\pm z_{r,\pm}z_{r,\pm}^\dagger=L_r$ in (AS.24).
+Every $K(z_{r,\pm})$ has physical rank two, and both $K(h_r)$
+have physical rank three.
+
+Proof. $u_L-\alpha v_L=\beta$ and $u_Lv_L=v^2$. Direct bilinear
+multiplication gives $\det R_\theta=1$,
+$R_\theta^TB_0R_\theta=B_0$, and
+$R_\theta X_cR_\theta^\dagger=X_c$. The two real precongruence
+low vectors are quadratic-null; their sum of projectors is
+
+$$
+\frac12\begin{pmatrix}u_L&r v&0\\r v&v_L&0\\0&0&1\end{pmatrix}.
+\tag{AS.50}
+$$
+
+On its $DT$ block the congruence preserves the real off-diagonal,
+sends the diagonal difference $\beta$ to $\beta\cos\theta=d_s$,
+and sends imaginary entry zero to
+$\beta\sin\theta/(2\sqrt\alpha)=R$. Its determinant remains zero.
+The positive diagonals with this difference and determinant are
+uniquely $U,V$, proving the low moment identity. Equation (AS.30)
+proves the high identity. This uses $R_\theta$ only on these
+quadratic-null atoms, and makes no full plane-plus-quadratic cone
+automorphism claim.
+
+Each low vector's $D$ coefficient has nonzero real part
+$\cos(\theta/2)\sqrt{u_L}/2$; Lemma 4.1 supplies its nonzero
+$1,2$ minor and physical rank two. Each high $T/D$ ratio is
+$(rt+iR)/P$, with nonzero imaginary part. With zero $S$ coefficient,
+singularity would require the real ratios $\pm1/\sqrt\alpha$.
+Thus the high physical matrices are invertible. All inequalities
+$P,Q,U,V,R,t,v>0$ hold throughout the open later interval.
+$\square$
+

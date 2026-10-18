@@ -1,0 +1,9 @@
+**Definition 4.1 (canonical chart test).** For a nonclash chart tuple,
+construct $\mathbf K$ by Theorem 3.1. For each chart coordinate $z_i$
+whose designated canonical state is finite, substitute its exact value
+$f_i$. Leave every other coordinate as an unrestricted finite native
+variable. Test the entire remaining conjunction $\Delta_{r,c_r}$.
+This is terminating by [URR, Theorem 3.1 and Corollary 3.2][URR], with
+no rank coordinates, or by [NSF, Theorem 4.3][NSF]. A tuple passes if
+all its chart tests are feasible. A clash tuple fails.
+

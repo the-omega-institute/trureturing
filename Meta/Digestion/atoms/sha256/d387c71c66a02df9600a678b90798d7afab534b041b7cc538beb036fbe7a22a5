@@ -1,0 +1,16 @@
+## 来源、读法与归属
+
+**开放参考输入。** 本卷保留用户提供的两部分完整来源正文，来源类型为混合用户材料，原作者与原模型未知。正文中的定义、定理标签、证明、例子、项目状态和本体措辞均归属于所提供的来源；保留不表示 Lean 核验、冻结真值、新颖性、探测器实现、物理定律或生物理论认证。Lean 声明、证明项及其内核检查的公理闭包仍是本库数学真值的载体。商分解、混合有限差分、图势、holonomy 与可观测性沿用既有数学框架的归属，不据重述或组合主张原创。
+
+**来源范围。** 来源正文为《局部钟场—因果场的内在关系理论》与《FIB-ATOM 因果纤维动力学》，依次为第一部分与第二部分。原始来源共 2,143 行，SHA256 为 `e783eaa8bbf1a855bed1e5ce497013e06bf4f0aeb843d07fb517811e57ba4be0`。全部原文、证明、例子、断言及重复推导均按原顺序保留；各部分的中文节号、定义号、定理号及其局部引用不跨部分重编号。例如“第一部分§二定理1”与“第二部分§二定理1”是不同的来源条目。
+
+**结构规范化。** 原件把第二个标题直接接在第一部分末句之后，即“近似坐标表达。# FIB-ATOM 因果纤维动力学”；此处拆成段尾、空行与第二部分标题。两个原题分别加上“第一部分”“第二部分”归属；原编号节、定义／定理／情形、证明／分项依层级调整 Markdown 标题深度，标题文字及局部编号保留。行内数学分隔符 `\(...\)` 改为 `$...$`，块级 `\[...\]` 改为独占行的 `$$`；既有 `$$` 与公式内容保留。三个不可访问的 sandbox 引文目标替换为同名的仓内相对路径，并移除三个 `:chatgpt-content-reference{index="…"}` 包装，保留链接文字：
+
+| 原 sandbox 文件名 | 仓内对应来源 |
+| --- | --- |
+| `AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md` | [FIB-ATOM 基础公式与隐藏关系](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) |
+| `AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md` | [动态未来商](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md) |
+| `RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md` | [配对校准与联合可观测性](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md) |
+
+**适用优先级。** 以下“现行适用限定”独立于来源正文，并在与来源推断冲突时优先。来源中的“严格给出”“最小”“完全同构”“必须”“永远”等措辞只能在对应限定的对象、量词与目标内使用；原证明不得越过已列反例或缺失的桥梁继续充当结论依据。来源正文中的“当前项目”属于来源自述，不据此认证仓库状态。
+

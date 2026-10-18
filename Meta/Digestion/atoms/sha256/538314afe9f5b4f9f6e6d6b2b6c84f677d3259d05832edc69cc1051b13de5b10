@@ -1,0 +1,42 @@
+**Proposition 18.1 (global normalized-function bounds).** Under the four named hypotheses the following selected rational upper bounds hold on the complete domains in §§10–12:
+
+| Input | Selected value | Domain or meaning |
+| --- | --- | --- |
+| $d_{\max}$ | $4$ | Both closed report half-circles, all eight signed endpoint cases |
+| $M_H$ | $369.125719756$ | $|\partial_\phi H_\eta|$ on each entire endpoint circle |
+| $M_3$ | $3991698.40169$ | Third angular derivative of each normalized signed event gap |
+| $M_\phi$ | $17.2182040803$ | $\|\partial_\phi\Gamma_\xi\|_2$ on $X$ |
+| $M_\xi$ | $3.7587270313$ | $\|\partial_\xi\Gamma_\xi\|_2$ on $X$ |
+| $L$ | $17.6236937289$ | At least $\sqrt{M_\phi^2+M_\xi^2}$ |
+| $K_G$ | $1059.0362612$ | Every row norm of $(S_7A_7)^{-1}S_7$ |
+
+Proof. On pure charts $d_0=(1+x^2)^2\le4$. On saturated charts
+
+$$
+d_1=D_c(1+x^2)^2\le
+16\left(h_0^2\delta+b_{\rm src}^2/\alpha+d_{\rm src}^2/\beta\right)<4.
+$$
+
+Here $|U|,|V|\le1+x^2$ and $1+x^2\le2$, and the positive denominator lower bound in Definition 17.1 excludes poles. Evaluating normalized angular jets, with the nonnegative denominator squares retained, gives
+
+$$
+\begin{gathered}
+\max_\eta\sup|H_\eta'|\le M_H,\qquad
+\max_{\eta,\epsilon,\sigma}\sup
+|Y_e\cdot\Gamma_\eta'''-\epsilon H_\eta'''-
+\lambda_e\sigma u'''|\le M_3,\\
+\operatorname{maj}(\partial_\phi\Gamma_\xi)\le M_\phi,
+\qquad \operatorname{maj}(\partial_\xi\Gamma_\xi)\le M_\xi.
+\end{gathered}
+$$
+
+These are interval comparisons using the source rows and event $Y,\lambda$, with $\xi\in[0,1]$; no cleared-polynomial derivative replaces a normalized derivative. The $L$ comparison follows by squaring its positive endpoints. For the left inverse take precisely the minor rows $S_7=(0,1,2,3,4,5,7)$. The $R_A$ witness gives
+
+$$
+q_{R_A}\le4.62721429217\cdot10^{-17},\qquad
+r_{R_A}\le151.290894457,\qquad
+\frac{7r_{R_A}}{1-q_{R_A}}<1059.0362612.
+$$
+
+Proposition 17.2 and $\|S_7\|_2=1$ bound the whole left inverse and therefore each of its rows. This supplies a finite witness for $K_G$, not just the inherited nonzero determinant. $\square$
+

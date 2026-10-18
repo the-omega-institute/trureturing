@@ -1,0 +1,27 @@
+**Definition 1.1 (finite native syntax).** The domain and operation are
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle x,y\rangle&=\langle\rho x,\rho y\rangle .
+\end{aligned}
+\tag{NSF.1}
+$$
+
+Every tree is nonempty, finite, ordered and free. A native expression is
+built from variables, these two constants, native pairing and operations
+$\rho^k$ for supplied natural numerals $k$. Expressions may nest these
+operations. An existential native problem is
+
+$$
+\exists x_1,\ldots,x_n\in\mathcal T\quad\Phi(\mathbf x),
+\tag{NSF.2}
+$$
+
+where $\Phi$ is any finite quantifier-free Boolean combination of
+equalities of native expressions. There is no bound on the variables'
+tree sizes. A numeral exponent is not an existentially quantified epoch;
+a fixed physical word used below is not a quantified arbitrary word.
+

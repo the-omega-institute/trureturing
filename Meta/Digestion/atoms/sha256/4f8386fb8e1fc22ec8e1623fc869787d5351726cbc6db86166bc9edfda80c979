@@ -1,0 +1,14 @@
+**推论 29.7.1（暴露商下的对比压缩）。** 若 $m_v=\bar m_v\circ e_v$，则
+
+$$
+e_v(a)=e_v(a')\Longrightarrow\Delta_v(a,a')=0.
+$$
+
+因此 exposure 商把一部分 assignment 对比合法地压成零；但不同 exposure cell 之间的对比仍需相应设计支持或结构假设。
+
+**证明。**
+
+相同 exposure 给出相同 $\bar m_v$ 值，直接相减即得。证毕。
+
+<a id="claim-29-7-2"></a>
+

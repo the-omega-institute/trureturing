@@ -1,0 +1,30 @@
+**Corollary 9.1 (strict clock constraints).** For every original admitted fixed datum satisfying the standing antecedents, and for either $X={\rm resp}$ or $X=108$,
+
+$$
+G_X-\mathscr R(1+3b_p)
+ <\frac{C_X}{a\nu^2}
+ <G_X-\mathscr R(1+b_p).
+\tag{9.1}
+$$
+
+In particular $C_{\rm resp}\ge0$ requires $G_{\rm resp}>\mathscr R(1+b_p)>0$. If $G_{\rm resp}>0$, its crossing ratio satisfies
+
+$$
+\frac{G_{\rm resp}}{1+3b_p}
+ <Q_{\rm resp}:=\frac{G_{\rm resp}}{\overline D}
+ <\frac{G_{\rm resp}}{1+b_p}.
+\tag{9.2}
+$$
+
+Combining the height projection with the clock gives
+
+$$
+\frac{C_{\rm resp}}{a\nu^2}
+ <3A-\gamma C_2-I_h-\mathscr R(1+b_p).
+\tag{9.3}
+$$
+
+Proof. In (2.10), subtract $\mathscr R\overline D$ with $\mathscr R>0$ and apply both strict inequalities in (8.3). This proves (9.1); its upper inequality proves the necessary positivity condition. Division of a positive $G_{\rm resp}$ by the positive strict denominator bounds gives (9.2). Equation (6.3) and the strict upper bound in (9.1) give (9.3). Each step uses quantities of the same source and mode. $\square$
+
+Neither (6.3) nor (9.3) supplies a lower bound on $G_{\rm resp}$. The unevaluated orthogonal energy $\delta_h$ remains in its exact identity. The strict affine gap compares $I_h+\delta_h$ with $t_0^2$ and gives no comparison with $3A-\gamma C_2$. Thus these deductions prove neither $G_{\rm resp}>0$ nor $G_{\rm resp}\le0$, and leave $G_{108}$ unevaluated. The source definitions fix those constants; this is an unresolved comparison, not a proof that the mathematical problem is logically underdetermined. Arbitrary scalar assignments or unrelated potentials are not admitted counterexamples.
+

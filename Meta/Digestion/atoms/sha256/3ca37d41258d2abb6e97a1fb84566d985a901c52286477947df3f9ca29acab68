@@ -1,0 +1,12 @@
+**Convention 1.4 (syntax, mechanism, encoding and execution).** FIB §2.1
+defines free ordered binary trees with distinct leaves $\alpha,\beta$;
+pairing is a separate constructor. FIB §10 adds reduction semantics.
+The seven-slot graph mechanism below is another explicitly assumed
+execution semantics. A finite encoding of its graphs or rule table by
+alpha/beta trees is mathematical data, not an installed interpreter.
+Neither two irreducible physical operations, a constructor, nor
+universal computation is deduced from $\rho$. AtomicPrefixParser
+supplies serialization; NativeSerialEffective assumes
+OriginalCodeRealization; the virtual substitution compiler supplies its
+specified acquired-entrance Read lowering. None is used as an allocator.
+

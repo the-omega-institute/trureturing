@@ -1,0 +1,36 @@
+**Attribution 28.1 (ordinary mathematical suppliers and added bridge).**
+The dependency and permission correspondences are as follows.
+
+| Supplier | Exact use and retained boundary |
+| --- | --- |
+| NBP Proposition 9.3, (NBP.9.7), Proposition 15.2 and Theorem 15.5; PCA Definitions 1.1, 4.1 and 4.2 and Supplier application 4.3 | Actual finite inverse origins, complete current and five predecessor rows, every-address occurrence reading, full eleven-profile partition, infinitely many distinct branch images, and the same eight-state reader with its original complete entries. The inverse and profile partition supply mathematical meaning, not extra runtime ports. |
+| NBP Proposition 12.5 and PCA Lemmas 2.3 and 7.1 | Stationary per-source no-revisit, menu consistency, and the two mandatory disjoint right-class query cones. Cyclic union graphs remain allowed. |
+| PCA Lemma 18.1 and Theorem 19.1 | The finite beta/pair comb and its exact local reply supports, and the already established sparse OR costs used in (PCA.64). Lemma 24.1 extends that support argument to the simultaneously varying actual cube needed for a threshold state lower bound. |
+| PCA Theorems 3.2, 10.3, 12.4 and 14.3 | Existing finite determination, certificate-relative same-state recoding and paid finite-word synthesis. They do not evaluate the unrestricted threshold optimum. The new consumer is (PCA.63) and its premium (PCA.64), proved with the actual-address cube, singleton-state obstruction and full-fiber table. |
+| NBP Theorems 12.4, 13.2 and 14.4 | Existing shared Moore and joint preparation/reader correspondences when their encoding permissions hold. Their freely chosen coloring is not substituted for the prescribed $\sigma_{A,k}$. |
+| Nine-state root normalization, Theorem 7.1; table-driven common root normalization, Theorems 6.3 and 7.1 | Same-code reader normalization under their separate reader hypotheses. A good-entry set does not supply which literal entry the acquired code prescribes. These results neither generate (PCA.53) nor pay its preparation costs. |
+
+The threshold grid is the classical success/failure construction for
+symmetric Boolean functions. Wegener, *The Complexity of Boolean
+Functions*, [Chapter 14, pp. 414–426][WBP], defines branching programs
+as directed acyclic graphs in §14.1, Definitions 1.1–1.2. His
+§14.4, Theorem 4.1 gives an ordered synchronous optimum specifically
+for read-once programs on symmetric functions; Theorem 4.3 counts
+their nonconstant residual vectors. Those results support the
+construction comparison, not an unrestricted native lower bound.
+Bryant's [§2, Definition 1][BRY] likewise requires strictly increasing
+variable indices along edges. Neither hypothesis is imposed on the
+competitors here. The three-singleton restriction argument in Lemma
+24.2 proves exactly the weaker structural property needed for the
+state lower bound without exporting either ordered or read-once
+optimality to an unrestricted graph. Generic threshold-query or
+branching-program constructions are not claimed as new mathematics.
+
+Sinha and Thathachar, *Efficient Oblivious Branching Programs for
+Threshold and Mod Functions*, [DOI 10.1006/jcss.1997.1530][STBP], is
+a comparison lead for the distinction between oblivious and read-once
+restrictions. No numerical bound or theorem from that paper is a
+premise of (PCA.57)–(PCA.65). The native conclusions here are
+repository-derived ordinary paper deductions with the supplier map
+above, without a worldwide originality or current kernel claim.
+

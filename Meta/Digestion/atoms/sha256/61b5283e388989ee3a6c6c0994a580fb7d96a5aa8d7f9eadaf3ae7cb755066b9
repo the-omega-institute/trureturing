@@ -1,0 +1,45 @@
+**接口 87.2（Joint actual histories and the literal two-omission calendar, credited reuse）。** The joint-history realization of [IC, Convention 1.2; S1, Convention 1.3] has the following explicit choice on this reader. Let $r_j$ be the representative of $6j\pmod{17}$ in $\{0,\ldots,16\}$ and set
+
+$$
+\ell_j=14(17+r_j),\qquad
+\eta_{j,s}=\bigoplus_{i=\ell_j-s}^{\ell_j-1}\gamma_i,
+\qquad
+w(v,j,s)=(v\oplus\eta_{j,s})\,0^{\ell_j-s-1}1^s.
+\tag{87.6}
+$$
+
+For every $v$, every $j$ and every $0\le s<16$, this is one actual legal complete-block history simultaneously realizing $(v,-j,s)$. Indeed $14\cdot6\equiv-1\pmod{17}$, so $\ell_j\equiv-j\pmod{17}$, and $\ell_j$ is divisible by fourteen and exceeds $s+1$. The first bit is separated from the final run by a zero, the final run has length below sixteen, and that first bit compensates its contribution to $V_{16}\bmod2$. Every constituent block belongs to both alphabets. The history lengths range from $238$ to $462$; none is revealed to the controller. The separate two-block history $1^{28}$ realizes initial $\bot$: its two fourteen-bit source words are internally legal, and their concatenation is absorbed at its sixteenth bit. These constructions include all $2\cdot17\cdot16=544$ successful records and independent bottom, rather than separate marginal witnesses for value, phase and tail.
+
+For any history with a legal record the later record and endpoint archive depend only on that record and the issued words. All histories with that record therefore follow the same controller and have the same target (87.4). Actual surjectivity (87.6) gives equality between record and history fees, as in [S1, Proposition 2.2]. The source length is used only to verify existence, never as a control input.
+
+Index issued words by $t=0,1,\ldots$. The actual ordered path and its two omissions are
+
+$$
+u_t=14t\pmod{17}=-3t\pmod{17},\qquad
+W_t=[u_t,u_t+14]\pmod{17},\qquad
+M_t=\{-3t-2,-3t-1\}\pmod{17}.
+\tag{87.7}
+$$
+
+For a complete word $B=B_0\cdots B_{13}$ its arithmetic charge is
+
+$$
+\begin{aligned}
+q_{t,B}(j)&=\bigoplus_{i=0}^{13}B_i\gamma_{-j+14t+i},\\
+q_{t,B}(u_t)&=B_0,\\
+q_{t,B}(u_t+i)&=B_{i-1}\oplus B_i &&(1\le i<14),\\
+q_{t,B}(u_t+14)&=B_{13},\qquad q_{t,B}|_{M_t}=0.
+\end{aligned}
+\tag{87.8}
+$$
+
+Its full row is even. An even row $q_t$ vanishing on $M_t$ has the unique literal inverse
+
+$$
+B_{t,i}=\bigoplus_{b=0}^{i}q_t(14t+b\bmod17),
+\qquad 0\le i<14.
+\tag{87.9}
+$$
+
+These are the original response and inverse interfaces [IC, (1.4)–(1.5); S10, Interface 2.1; S15, Section 1], with Chapter 84's two-omission calendar. They are calculations on the same actual word. On success $q_{t,B}(j)$ is that source's own completed endpoint difference; on rejection the output is bottom, not the displayed arithmetic scalar. Availability and even parity alone do not establish safe concatenation.
+

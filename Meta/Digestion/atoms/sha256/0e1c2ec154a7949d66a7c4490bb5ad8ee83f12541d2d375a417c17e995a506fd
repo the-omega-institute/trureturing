@@ -1,0 +1,40 @@
+**Theorem 7.6 (Exact capacity and uniqueness within the radial family).**
+For $0<Z<2/3$,
+
+$$
+\boxed{e_2^{\rm aff}(Z)=4H\sqrt{T_\tau}},\qquad
+2\sqrt{ZH}<e_2^{\rm aff}(Z)<1-Z/2.
+$$
+
+The unique optimal positive radial amplitude is
+
+$$
+\rho(k)=2H\sqrt{T_\tau}\,
+\exp\!\left(\lambda_{T_\tau}\frac{k}{H}\right).
+$$
+
+No uniqueness of arbitrary affine realizations is asserted.
+
+**Proof of Theorem 7.6.** Theorem 6.4, Lemma 7.2 and Theorem 7.4
+give the exact squared minimum $16H^2T_\tau$.
+The inequalities $\tau<T_\tau<T_0$ give precisely the two strict
+bounds in the original norm.
+
+Let $R(x)=ce^{\lambda x}>0$ be any optimal normalized radial
+amplitude. Lemma 7.3 puts $R\le f_{T_\tau}$. At the interior
+contact $x_\tau$, the lower corridor equals $f_{T_\tau}$, so
+$R(x_\tau)=f_{T_\tau}(x_\tau)$. The affine function
+$\log f_{T_\tau}-\log R$ is nonnegative at both endpoints and
+zero at an interior point. Its value there is a strictly positive
+convex combination of its endpoint values, so both endpoint values
+are zero. It vanishes identically. Thus
+$c=\sqrt{T_\tau}$ and $\lambda=\lambda_{T_\tau}$, giving the
+stated unique amplitude. The zero amplitude is excluded because its
+value is $T_0>T_\tau$.
+
+The lower bound holds for every finite parameter choice. Consequently
+sequences with $C$ or $\gamma$ escaping to infinity, or $C$ tending
+to zero while $\gamma$ varies, cannot lower the infimum. The same
+uniform lower bound applies to arbitrary varying encoders by Theorem
+6.4; no limiting latent object is needed. $\square$
+

@@ -1,0 +1,96 @@
+**定义 200.1（完整评分、带符号支持与证书域）。** 固定任意整数 $L\ge3$，令
+$B_L=\{0,1\}^L$、$J_L=\{0,\ldots,L\}$，对每个含零字记
+$n(w)=\min\{i:w_i=0\}$、$\Omega_n=\{w:n(w)=n\}$。
+沿用[定义 164.1—164.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#164-complete-deterministic-catalogs-and-event-demands)的完整目录
+$\mathcal D_N,\mathcal D_O$：空日程、单日程 $(i)$ 和双日程 $(i,j)$，$i<j$，
+每个终端胞允许全部 $J_L$ 标签。$N$ 的双日程胞是 $00,01,10,11$，$O$ 的胞是
+$0,10,11$，其中首胞合并 $00,01$。静态回答允许用这些代表描述重复或反序日程的
+输出函数，不把原执行中重复的实际请求免计。
+
+对每个 $w\in\Omega_n$ 保留基行 $\{0\}$、正确行 $\{n\}$ 和独立 pair 行
+$\{0,n\}$，在剖面 $b=(b_1,\ldots,b_L;e)$ 上的需求分别为
+
+$$
+1-b_n-e,\qquad b_n-e,\qquad1-e.
+\tag{200.1}
+$$
+
+全正字 $1^L$ 的基行需求为 $1-e$。这些共 $3(2^L-1)+1$ 行组成 $d(b)$；
+负的单点需求也原样保留。所有多零字都在系统中，任何评分的零权重不删除对应约束。
+令 $z_D$ 为完整表的联合事件向量；对共同概率混合 $U$，$z_U$ 是同一混合在全部
+事件行上的概率向量。置
+
+$$
+R=(1,2;1,2,0),\qquad \alpha=(1,1,0,\ldots,0;0),\qquad
+\mathbf r=z_R=d(\alpha),\qquad h(b)=d(b)-\mathbf r.
+$$
+
+$R$ 的三个标签依次对应停止胞 $0,10,11$。令 $G_C$ 的列为全部
+$z_D-\mathbf r$，$D\in\mathcal D_C$。取任意逐行非负评分
+$y=((A_w,C_w,P_w)_{w\ne1^L},T)$，其中正确权重 $C_w$ 和正字权重 $T$ 均任意。
+定义
+
+$$
+\begin{aligned}
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z_D,&
+\Delta_C(y)&=B_C(y)-y\cdot\mathbf r\ge0\quad(C=N,O),\\
+\beta_n(y)&=\sum_{w\in\Omega_n}(C_w-A_w),&
+K_y&=\sum_{w\ne1^L}(A_w+C_w+P_w)+T,\\
+Q(y)&=(\beta_1(y),\ldots,\beta_L(y);K_y).&&
+\end{aligned}
+\tag{200.2}
+$$
+
+非负性来自两个目录都含 $R$。对任意有符号 $q=(\beta_1,\ldots,\beta_L;K)$，令
+
+$$
+F_q(b)=\sum_{n=1}^L\beta_n(b_n-\alpha_n)-Ke,
+\qquad F_y=F_{Q(y)}=y\cdot h.
+\tag{200.3}
+$$
+
+定义 199.1—199.2 的完整闭域及证书记为
+
+$$
+\begin{aligned}
+H=H_L=\{b:\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{n=3}^Lb_n,\quad
+ b_1+\sum_{n=3}^Lb_n-(L+1)e\le1\},\\
+\sigma_H(q)&=\max_{b\in H}F_q(b),\qquad
+P_H=\{q:\sigma_H(q)\le0\},\\
+D_C(t)&=\{Q(V):V\ge0,\ \Delta_C(V)\le t\}\quad(t\ge0),\\
+E_N&=\{q:\exists V\ge0\ \exists\theta\in[0,1],\
+\Delta_N(V)\le1-\theta,\ \sigma_H(q-Q(V))\le\theta\}.
+\end{aligned}
+\tag{200.4}
+$$
+
+$D_C(t)$ 是评分的商像，不是评分集合。$V$ 必须逐行非负，而残差
+$F_{Q(y)-Q(V)}$ 允许全部符号；$\theta=1$ 时仍允许非零的 $\Delta_N(V)=0$ 评分。
+以下使用定理 198.5 的完整顶点表示
+
+$$
+\begin{aligned}
+H&=\operatorname{conv}\{o,p,u_k,v_k:3\le k\le L\},\\
+o&=(0,\ldots,0;0),\qquad p=(1,0,\ldots,0;0),\\
+u_k&=(\underbrace{c_k,\ldots,c_k}_{k},0,\ldots,0;0),
+       \qquad c_k=\frac1{k-1},\\
+v_k&=(\underbrace{1,\ldots,1}_{k},
+       \underbrace{e_k,\ldots,e_k}_{L-k};e_k),
+       \qquad e_k=\frac{k-2}{k+1}.
+\end{aligned}
+\tag{200.5}
+$$
+
+具体地，对任意有符号 $q$，记 $B=\beta_1+\beta_2$、$S_k=\sum_{n=1}^k\beta_n$、
+$\kappa=K-S_L$，则其支持是全部下列值的最大值：
+
+$$
+F_q(o)=-B,\quad F_q(p)=-\beta_2,\quad
+F_q(u_k)=\frac{S_k}{k-1}-B,\quad
+F_q(v_k)=\frac{3S_k-(k-2)\kappa}{k+1}-B.
+\tag{200.6}
+$$
+
+这里不删去 $o,p$ 或任何一个 $u_k,v_k$，也不对带符号商加非负条件。
+

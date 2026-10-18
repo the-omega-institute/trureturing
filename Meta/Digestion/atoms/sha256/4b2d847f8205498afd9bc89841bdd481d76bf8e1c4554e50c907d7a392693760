@@ -1,0 +1,55 @@
+**Proposition 2.2 (credited realization and positive reached-cut mass).**
+Every member of (CG.2) is realized from the same preparation at
+$a_0=1/8$ with auxiliary rectangle height $q_0=1/16$. Set
+$B=8\beta-4\pi m$. The following six legs each take one unit, with
+affine coordinates and literal chronological joins:
+
+| Leg | Height coordinate | Actual real phase coordinate |
+| --- | --- | --- |
+| 1 | $a_0$ | $0\longrightarrow2\pi m$ |
+| 2 | $a_0\longrightarrow q_0$ | $2\pi m$ |
+| 3 | $q_0$ | $2\pi m\longrightarrow2\pi m+B$ |
+| 4 | $q_0\longrightarrow a_0$ | $2\pi m+B$ |
+| 5 | $a_0$ | $2\pi m+B\longrightarrow2\pi m$ |
+| 6 | $a_0\longrightarrow x$ | $2\pi m$ |
+
+The residual is exactly
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$, giving (CG.7).
+Under the supplied canonical execution, the probabilities of reaching
+this live cut at time six are
+
+$$
+q_{5/256}=\frac{32}{177},\qquad
+q_{16/256}=\frac29,\qquad q_{27/256}=\frac{32}{111}.
+\tag{CG.8}
+$$
+
+Proof. This is [AC, Proposition 3.1, (AC.5)–(AC.6), (AC.22)][AC],
+using the original synthesis and composition credited there. Its displayed
+phase correspondence can be checked directly: the phase leg and rectangle
+contribute
+
+$$
+2\pi m\,w_b(a_0)+B\bigl(w_b(q_0)-w_b(a_0)\bigr).
+\tag{CG.9}
+$$
+
+Here $w_b(a_0)=(1/4,-1/4,0,-1/4,1/4)$ and
+$w_b(q_0)-w_b(a_0)=(1/8,1/8,0,1/8,1/8)$.
+Since $B/8=\beta-\pi m/2$, substitution gives the stated five
+residual entries. Leg 6 has $\chi'=0$ and changes only height.
+All heights are strictly internal. The finitely many affine pieces
+satisfy both regularity alternatives and have phase variation
+$2\pi|m|+2|B|$. The phase pairs used later have $m=0$ and
+$B=0$ or $8\pi$; they are actual histories, not newly chosen preparations.
+
+The supplied double-wall survival charge has rate
+$(k')_+/k+(-k')_+/(c-k)$. The phase legs contribute zero charge;
+the rectangle descent and ascent contribute survival factors $2/3$ and
+$1/2$. Since each catalogue height is below $a_0$, the final leg gives
+$(c-a_0)/(c-x)$. Their product is
+$q_x=(c-a_0)/(3(c-x))$, which gives (CG.8).
+Every earlier failure stays in its own absorbing stopped archive.
+These positive live branches require no replacement or repeated preparation.
+$\square$
+

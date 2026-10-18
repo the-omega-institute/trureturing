@@ -1,0 +1,6 @@
+**Theorem 8.5 (law-output slack).** Assume $a\ne b$ and $0<2\epsilon<\kappa$. For the common-law-decoder construction, if each decoded profile is replaced by one whose all-horizon $d$-error is at most $0\le\tau<\epsilon$, a cutoff satisfying $\delta_K/2\le\epsilon-\tau$ preserves the target $\epsilon$ guarantee. A per-entry error bound $\eta$ on a horizon-$H$ law table gives the estimate $\operatorname{TV}\le4^H\eta/2$; this estimate alone is not a horizon-independent $\epsilon$ certificate. These statements assume the exact source kernel $P$.
+
+**Proof (8.5).** Theorem 4.2 with the smaller tolerance gives retained-state error at most $\epsilon-\tau$. One triangle inequality adds at most $\tau$ at every history and horizon. A per-entry error $\eta$ on a horizon-$H$ table yields only the crude half-$\ell^1$ bound $4^H\eta/2$, and without further joint structure cannot give the required uniform profile error.
+
+The profile replacements must themselves be normalized and coherent across horizons. An independent entry-precision choice supplies neither that coherence nor a bound in the profile metric. $\square$
+

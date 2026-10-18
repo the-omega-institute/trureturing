@@ -1,0 +1,47 @@
+**约定 220.24（Unchanged source and full tape carrier）。** Reuse the
+source of Boundaries 35.2 and the resource contract of 90.1.
+With $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$, it is
+
+$$
+ X=\{(r,z):r\text{ prime},\ z\in\mathbb Z,
+          \lceil F_r/10\rceil\le z\le\lfloor F_r/5\rfloor\},
+ \quad N_x=1+F_rz,\quad q_i(x)=[p_i\mid N_x].
+$$
+
+Replies are static. Every source has finite prime support and a finite
+first absence. For every finite set of prime addresses, 35.2's entry-rank,
+CRT and Fibonacci-window construction gives every prescribed pattern.
+Choose a sufficiently large prime $r$ with $F_r$ coprime to the finite
+prime product and a window longer than that product. The residue of $z$
+is $-F_r^{-1}$ for a desired positive answer and zero for a desired
+zero answer. Select an integer in the allowed window in that CRT class.
+The resulting source witnesses are fixed before the seed. The finite
+positive word represents actual later first zeros; it is not an
+infinite all-positive source. No probability measure on $X$ is used.
+
+The tape carrier is the original full Borel disjoint union of interval
+copies $B_j,P_j$ of $(0,1)$. The unchanged consumer reports unknown on
+$B_j$ and proposes $j$ on $P_j$. The original nonatomic family remains
+
+$$
+ \mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+ \quad t(x)=\sum_i3^{-i}q_i(x),
+$$
+
+where $\nu_x$ has normalized density proportional to $\exp(t(x)u)$
+on $B_{n(x)}$ and $\pi_j$ is uniform on $P_j$.
+Distinct original marks $\theta_j=(B_1,1/(j+2))$ define the separately
+selected targets
+
+$$
+ \lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                        +a_{n(x)}\delta_{\theta_{n(x)}}.
+$$
+
+Here $1\ge a_1\ge a_2\ge\cdots>0$ and $a_n\to0$.
+A finite marked law has TV one from each original nonatomic target;
+these selected targets do not replace $\mu_x$. Competitors retain
+arbitrary full-carrier outputs. All score resets and masks act only
+on proof weights; they do not change any source bit, tape, target or
+acquired transcript.
+

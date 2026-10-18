@@ -1,0 +1,33 @@
+**Assumption 1.2 (complete paid export).** One deterministic effective
+preparation starts source-blind from $D$ and common source-independent
+tables, does not know the later request, and terminates on every
+$t\in\mathcal F_D$. Every source distinction is acquired through charged
+literal Reads. Its exported code $E(t)$ includes every accessible
+surviving source distinction: selectors, control, buffers, operands,
+lengths, allocation, handles, counters and accessible timing. Any other
+accessible field is a function of this code and public data. A separately
+paid handoff and access-isolation service removes access to all other
+preparation dependence and supplies lawful reader entry.
+
+Only after export, a public source-independent $p\in\mathcal P_D$
+arrives. A common deterministic effective reader uses $E(t),D,p$ and
+installed tables to choose zero Reads or one fresh Read of the same
+stationary source at an arbitrary finite original-root word. The choice
+precedes the reply and every supplied count. The final predictor must
+satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad\text{for every }t\in\mathcal F_D,\ p\in\mathcal P_D,
+\text{ and subsequently supplied authentic }k\ge0,
+\tag{RRN.2}
+$$
+
+without further Reads. Let $M_1(D)$ be the minimum complete attained
+cardinality $|E[\mathcal F_D]|$ among these procedures. Preparation
+Reads, work and temporary storage, table generation and installation,
+post-request workspace, final predictor size, submitted address lengths
+and letters, count representation, handoff, isolation, entry,
+authentication and physical time are separate resources. These are the
+task and service premises of [FMR, §1][FMR] and [NPC, §1][NPC].
+

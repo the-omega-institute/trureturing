@@ -1,0 +1,76 @@
+**Theorem 4.4 (unrestricted four-gap and five-gap necessities).**
+Every nineteen-label cover of Definition 1.2 satisfies
+
+$$
+G\ge4\quad(\lambda=1),\qquad
+G\ge5\quad(\lambda=0).
+\tag{NAGC.4.4}
+$$
+
+For both conventions $G^+\ge1$, $G^-\ge1$ and $H^+=H^-$.
+Their common moment is at least two for positive lags and at
+least three for nonnegative lags. The corresponding total spans
+are at least $346$ and $347$. These are necessary bounds;
+attainment of either gap bound is not asserted.
+
+**Proof, positive lags.** Every nonnegative-lag cover belongs to
+the positive geometric domain as well. First prove $G\ge4$
+there. If $N=P$, Lemma 4.2 gives $G\ge18$. Otherwise the
+corners are distinct and cannot both be unit. Suppose $G\le3$.
+
+If both corners have positive gaps, (NAGC.4.2) requires one
+omitted membership at each of $-1,1$. Their positive integer
+budgets are either $1+1$ or $1+2$ in some order. In the first
+case neither corner omits either adjacent difference by Lemma
+4.2. Supplying the two missing memberships elsewhere needs at
+least two additional gap units, although at most one remains.
+In the second case all gap units are already assigned to the
+corners. The gap-one corner omits neither adjacent difference,
+and the gap-two corner cannot omit both. Both allocations fail.
+
+If $P$ is unit, Lemma 4.2 forces $g_N\ge3$. Under $G\le3$
+it is exactly three, all other classes have gap zero, and $N$
+contains $1,2,3$. Thus no class omits $1$ inside its span,
+contradicting $h_1=1$ from (NAGC.4.2). If $N$ is unit, the
+same lemma gives $g_P=3$, containing $-1,-2,-3$, and all other
+classes have gap zero. This contradicts $h_{-1}=1$. These
+cases exhaust the corner possibilities and prove $G\ge4$.
+
+**Proof, nonnegative lags.** Suppose now $\lambda=0$ and
+$G\le4$. Lemma 4.3 gives $g_0\ge1$ and makes $C_0$
+distinct from both corner classes, since a coincidence would
+give $G\ge9$. The case $N=P$ is already impossible at this
+budget. If both corners have positive gaps, their combined
+budget is at most three, so it is $1+1$ or $1+2$.
+
+For $1+1$, neither corner supplies either required omission
+at $-1,1$. If $g_0=1$, it supplies neither by Lemma 4.3, and
+at most one gap unit remains in all other classes. If $g_0=2$,
+no other gap unit remains and $C_0$ cannot supply both omissions.
+Larger $g_0$ violates $G\le4$. For $1+2$, the entire budget
+outside the corners is $g_0=1$; it supplies neither adjacent
+omission. The gap-two corner cannot supply both, and the
+gap-one corner supplies neither. This also fails.
+
+If $P$ is unit, the other corner has gap at least three. Together
+with $g_0\ge1$ and $G\le4$, this forces $g_N=3$, $g_0=1$
+and all remaining gaps zero. The class $N$ contains difference
+$1$, and $C_0$ omits only $-9$, so $h_1=0$, a contradiction.
+If $N$ is unit, Lemma 4.2 instead forces $g_P=3$ and its
+negative differences $-1,-2,-3$. The same budget forces
+$g_0=1$ and leaves no class able to supply $h_{-1}=1$.
+Only the geometric lemma is used in this reversed case; the
+zero-origin contribution remains the actual $C_0$ of the
+original nonnegative cover. Thus no invariance of its native
+zero filter is needed. This proves $G\ge5$.
+
+**Proof, signed consequences.** Theorem 3.2 gives $H^+=H^-$.
+If $G^+=0$, every positive list has zero gap and hence zero
+moment, by its proof. Moment equality forces every negative
+list's moment, and hence gap, to vanish as well. That would
+give $G=0$, contrary to the lower bound. Exchanging signs
+gives the other strict inequality. Finally
+$2H^+=H^++H^-\ge G^++G^-=G$, so integrality gives the
+claimed common-moment bounds. The total-span equation of
+Theorem 2.2 gives $342+4=346$ and $342+5=347$. $\square$
+

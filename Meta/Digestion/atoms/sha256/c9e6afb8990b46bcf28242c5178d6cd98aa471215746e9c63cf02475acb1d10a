@@ -1,0 +1,29 @@
+**Definition 4.1 (added killing and a suitable state space).** Choose
+$I=(l,u)$ with $0<l<k<u<H$. Given a continuous comparison height
+$h_t=k+a_t$ on $[0,T]$, put
+
+$$
+\tau_T(h)=\inf\{t\in[0,T]:h_t\notin I\},
+\qquad \inf\varnothing=\infty,\qquad s_T=\tau_T\wedge T.
+\tag{4.1}
+$$
+
+The continuously held source path is $\bar q_t=q_{t\wedge s_T}$.
+It is a path in $\overline I\times\mathbb T^2\subset\mathcal M$.
+The killed observation is instead
+
+$$
+q_t^\dagger=
+\begin{cases}q_t,&t<\tau_T,\\ \dagger,&t\ge\tau_T,\end{cases}
+\tag{4.2}
+$$
+
+where $\dagger$ is isolated. Use the compact metric space
+$E=(\overline I\times\mathbb T^2)\sqcup\{\dagger\}$, with the
+product distance truncated at 1 on the first component and distance 2
+to $\dagger$. Then (4.2) belongs to $D([0,T],E)$: it has a boundary
+left limit and a jump to $\dagger$. Boundary points are included to
+represent that left limit, not to keep the killed process alive there.
+Using only the open cylinder with an isolated cemetery would omit this
+left limit and would not give the stated càdlàg path space.
+

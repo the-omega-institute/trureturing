@@ -1,0 +1,17 @@
+### 87.5. No missing original-channel directions
+
+We verify that the algebraic minimum is also the full original comparison-tangent minimum in (6).
+
+First, the eight bit-frame phase directions and every other tangent to M have zero old Hessian and zero source, as proved in section 87.2. They cannot change (24).
+
+Second, any extra A-environment direction orthogonal to the four-dimensional base support has zero source and zero Hessian cross term with the supported directions. The environment unitary which is the identity on the base support and minus the identity on its orthogonal complement fixes the base, the new B records, and F, but reverses precisely those tangent directions. Invariance forces those cross terms to vanish. Their own Hessian is nonnegative by the comparison minimum. This argument covers an arbitrary fixed finite A-environment.
+
+Third, an original wrong-output tangent has no correct-output first derivative. The mixed source (18) is therefore zero for it: the new R in (5) is calibrated, R*R is fibre-block diagonal, and the correct blocks of U'R*R vanish for a pure wrong-output U' tangent. The exact section-86 leakage Hessian identity is
+
+\[
+ q_{\rm old,full}=q_{\rm old,calibrated}
+                  +(\|L_A\|_F^2+\|L_B\|_F^2)/8.        \tag{25}
+\]
+
+Thus all leakage terms only add nonnegative cost. No relaxation of a physical Stinespring constraint is needed: every actual full tangent has the stated calibrated correct part and wrong-output part, while the minimizing calibrated tangent is itself realizable. These three observations establish the coefficient theorem with the complete original-channel scope claimed.
+

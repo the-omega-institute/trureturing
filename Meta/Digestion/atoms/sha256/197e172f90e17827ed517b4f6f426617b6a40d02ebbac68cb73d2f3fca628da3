@@ -1,0 +1,26 @@
+**Definition 8.1 (an explicit sufficient extra joint service).** Let
+$\omega$ index a classical source/generator programme and let $M_0$ contain
+all actual classical source/epoch, permission, calibration, clock, controller,
+pending-programme and selection/update fields. They can be correlated with
+an arbitrary quantum input/reference/archive state $\rho_{\omega,M_0}$.
+The label $\omega$ can be latent; using it in a mixture is not delivering it
+to a controller. Suppose the programme-source recorder supplies a measurable
+kernel $Q(dy\mid\omega,M_0)$ such that its full joint operation is
+
+$$
+\mathcal J_{\omega,M_0}(dy,do)(\rho)
+ =Q(dy\mid\omega,M_0)\,
+   (\mathcal I_{\omega}(do)\otimes\operatorname{id}_R)(\rho).
+\tag{SC.23}
+$$
+
+Here $y$ contains every actual sensor/calibration/failure payload and $o$
+the canonical quantum outcome, with exact failure time/mode. The source
+programme is fixed over this stage. Sensor randomness is independent of
+the canonical quantum process conditional on $(\omega,M_0)$, and the
+sampler does not read or disturb the quantum archive. The promise includes
+causal delivery of row $j$ only at/after its actual acquisition event. It is
+a strong, explicit passive command-sensor premise; equal sensor marginals
+or a table error bound cannot prove it. A sensor coupled to a live quantum
+read must supply its own appropriate full joint operation instead.
+

@@ -1,0 +1,156 @@
+**定理 22.1（实际五态纤维的三副本完备性）。** 在定义 20.1 的全部实际可行复纤维上，
+按假设 20.3 供应输入，并使用定义 20.4 的效果。
+对任意 $s,t\in\mathcal F_R$，以下条件等价：
+
+$$
+\begin{aligned}
+&\Omega_{s,n}=\Omega_{t,n}\quad\text{对每个有限 }n\ge1;\\
+&\Omega_{s,3}=\Omega_{t,3};\\
+&t=e^{+i\theta}s\quad\text{对某个 }\theta\in K_R.
+\end{aligned}
+\tag{22.1}
+$$
+
+因此全部有限阶不可区分关系的具体形式为
+
+| 固定背景 | 全部有限阶相等的充要条件 |
+| --- | --- |
+| $A_1\ne0$ | $s=t$ |
+| $A_1=0,\ b\ne0$ | $t\in\{s,-s\}$ |
+| $A_1=0,\ b=0$ | $\lvert s\rvert=\lvert t\rvert$ |
+
+对每个 $n$，定义 20.6 的精确归一化为
+
+$$
+b_n(s,t)=\frac12\|\Omega_{s,n}-\Omega_{t,n}\|_1,
+\qquad
+P_{\mathrm{succ}}^{(n)}(s,t)=\frac{1+b_n(s,t)}2.
+\tag{22.2}
+$$
+
+$P_{\mathrm{succ}}^{(n)}$ 是预先给定的两个假设、等先验下的最优平均成功率。
+超过随机猜测的量为 $b_n/2$。
+
+证明。先在实际张量基上使用标准 Fourier 电荷选择。
+(20.5) 积分前的 $I,J$ 元为
+$e^{-i\theta(Q(I)-Q(J))}\prod_\ell(\rho_s)_{i_\ell j_\ell}$。
+整数字符积分为零，除非总电荷相等，故
+
+$$
+(\Omega_{s,n})_{IJ}
+=\mathbf1_{Q(I)=Q(J)}
+  \prod_{\ell=1}^n(\rho_s)_{i_\ell j_\ell}.
+\tag{22.3}
+$$
+
+这正是所引关系矩式 (TM.137) 在本整数电荷上的逐元形式。
+它保留等总电荷块内的关系，没有逐份分别去相干。
+由迹一及积分线性性还有
+
+$$
+\operatorname{Tr}_{m+1,\ldots,n}\Omega_{s,n}=\Omega_{s,m}
+\quad(1\le m\le n),\qquad
+\Omega_{s,1}=\frac1{2\pi}\int U_\theta R U_\theta^\dagger\,d\theta.
+\tag{22.4}
+$$
+
+特别地，单份输入对 $s$ 恒定。
+
+令 $\Delta_n=\Omega_{s,n}-\Omega_{t,n}$。
+它是迹零 Hermitian 算子，并与 $N^{(n)}$ 对易。
+写其正、负部为 $\Delta_{n,+},\Delta_{n,-}$。
+任意效果给
+$-\operatorname{Tr}\Delta_{n,-}\le\operatorname{Tr}(E\Delta_n)
+\le\operatorname{Tr}\Delta_{n,+}$；
+迹零使两端的绝对值均为 $\|\Delta_n\|_1/2$。
+正谱投影逐总电荷块取，属于 $\mathcal E_n$，并达到上界。
+这是标准二元谱判别在实际守恒块中的应用，得到 (22.2) 的第一式；
+等先验的成功概率为
+$\tfrac12\operatorname{Tr}(E\Omega_{s,n})
++\tfrac12\operatorname{Tr}((I-E)\Omega_{t,n})$，
+再优化即得第二式。
+
+下面给出实际达到所需分离的低阶效果。
+(20.7) 的 ket 范数一且在单个总电荷扇区，
+故 $E_\phi^{I,J}\in\mathcal E_n$，并有
+
+$$
+\operatorname{Tr}(E_\phi^{I,J}\Omega_{s,n})
+=\frac{(\Omega_{s,n})_{II}+(\Omega_{s,n})_{JJ}}2
++\operatorname{Re}\!\left(e^{i\phi}(\Omega_{s,n})_{IJ}\right).
+\tag{22.5}
+$$
+
+其中对角基线是固定 $p_j$ 的乘积。
+$\phi=0$ 读实部，$\phi=-\pi/2$ 读正虚部；
+$\phi=+\pi/2$ 则读负虚部。
+若预先给定的两假设在该元上的差为 $z\ne0$，
+取同一个效果的 $\phi=-\arg z$，概率差恰为 $|z|$。
+
+若 $A_1\ne0$，选任一非零固定条目 $a=R_{ij}$，
+其中 $(i,j)$ 属于 $(0,1),(0,2),(0,3),(1,4),(3,4)$。
+取 $I=(2,j)$、$J=(4,i)$。
+它们不同，总电荷均为 $q_i+2$，且
+
+$$
+\langle2,j|\Omega_{s,2}|4,i\rangle
+=(\rho_s)_{24}(\rho_s)_{ji}=s\overline a.
+\tag{22.6}
+$$
+
+因此二副本相等即推出 $s=t$；若 $s\ne t$，
+上述配对效果给概率差 $|a|\,|s-t|>0$。
+这里识别的是相对于同一固定背景代表的关系坐标 $s\overline a$，
+不引入绝对实验室相位。一般背景下不声称此配对效果达到全局最优偏置。
+
+若 $A_1=0$，固定背景只含电荷差 $0,\pm2$。
+在二份展开中，一个隐藏的 $\pm1$ 模不能被另一个固定模抵消；
+两个同号隐藏模也不保留。
+所以，用 $\mathcal T_n$ 表示总电荷平均，有
+
+$$
+\Omega_{s,2}
+=\mathcal T_2(R^{\otimes2})
++|s|^2(H\otimes H^\dagger+H^\dagger\otimes H).
+\tag{22.7}
+$$
+
+这里的实际非空域由定理 21.1 强制 $R\succeq0$。
+尤其总电荷三的两个字符串给
+
+$$
+\langle2,4|\Omega_{s,2}|4,2\rangle=|s|^2.
+\tag{22.8}
+$$
+
+二副本相等恰当且仅当模长相等。
+若还满足 $b\ne0$，取三份字符串
+$I=(2,2,4)$、$J=(4,4,0)$，两者不同且总电荷都为四，得到
+
+$$
+\langle2,2,4|\Omega_{s,3}|4,4,0\rangle=s^2\overline b.
+\tag{22.9}
+$$
+
+其实际配对效果在 $s^2\ne t^2$ 时给概率差
+$|b|\,|s^2-t^2|>0$。
+故三副本相等推出 $s^2=t^2$，也就是 $t=\pm s$，包括零。
+若 $b=0$，二副本相等给 $|s|=|t|$；
+非零点之间存在 $\theta$ 使 $t=e^{+i\theta}s$，两者均零时也在同一轨道。
+
+反向，若 $t=e^{+i\eta}s$、$\eta\in K_R$，由 (21.2)
+及积分变量平移 $\theta\mapsto\theta+\eta$，每个 $n$ 都有
+$\Omega_{t,n}=\Omega_{s,n}$。
+三副本相等经 (22.4) 蕴含二副本相等，所列三种情形便给全部反向必要条件，
+完成 (22.1)。整个证明没有除以未知 $s$、对角概率或 Schur 半径，
+故奇异、零点及单点实际边界均在量词内；空纤维没有实际态对。证毕。
+
+数学引文。Fourier 选择及模相加消费 [Marvian–Spekkens §II][SP-MS]；
+谱判别使用 Helstrom 的二元量子检测原理，见
+[C. W. Helstrom，Quantum Detection and Estimation Theory，Chapter IV][SP-H]。
+[Brun §II，式 (3)–(10)][SP-B] 将矩阵元多项式实现为多份输入上的 Hermitian 期望；
+这里 (22.6)、(22.8)、(22.9) 又逐项验证了实际总电荷守恒及效果的正性。
+[Leifer–Linden–Winter §III.A，式 (11)–(15)][SP-LLW]
+给多份输入上的多项式不变量测量先例，
+其一般位置的局部酉轨道讨论不承担本五态纤维全部边界上的二／三阶结论。
+

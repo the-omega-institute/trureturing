@@ -1,0 +1,29 @@
+**Definition 2.6 (two rational full-support laws).** Let
+
+$$
+N_0=2,\qquad N_{h+1}=2+N_h^2,
+\tag{2.11}
+$$
+
+so $N_8=|\mathcal F_8|$. Let $U$ be the uniform law on the entire
+$\mathcal F_8$, and define the two core laws
+
+$$
+\nu_0(t)=\frac1{16}\mathbf 1_{\{t=t_{j,e}\text{ for some }j,e\}},
+\qquad
+\nu_1(t)=\frac1{16}\mathbf 1_{\{t=s_{j,e}\text{ for some }j,e\}}.
+\tag{2.12}
+$$
+
+Set
+
+$$
+\mu_0=\frac{99}{100}\nu_0+\frac1{100}U,
+\qquad
+\mu_1=\frac{99}{100}\nu_1+\frac1{100}U.
+\tag{2.13}
+$$
+
+Both are public rational laws on the same full family, and every source has
+positive mass.
+

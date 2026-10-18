@@ -1,0 +1,14 @@
+**定理 107.2（未知输入上的确定相位比较）。** 对任意归一化 $\psi$，两支 $(U,U)$ 输出 $|+\rangle\otimes U\psi$，两支 $(U,-U)$ 输出 $|-\rangle\otimes U\psi$；控制 $X$ 分别给确定的正、负结果。两种目标单系统通道却完全相同。
+
+证明（107.2）。$\operatorname{Ad}_{-U}(\varrho)=(-U)\varrho(-U)^\dagger=U\varrho U^\dagger$。对已提供的 $W$ 逐支作用 $|+\rangle\psi$，控制振幅为相同或相反，分别因子化为上述两个输出。未知 $\psi$ 不影响控制本征值；输入混合态乃至与未触及参考关联时，控制也仍是相应纯态。$\square$
+
+第106章的同组成两树在原语重相位下仍可有这个不变的相对负号，但必须已经提供两来源的同参照相干比较。第103章选定 $[3]\leftrightarrow\beta$、$[25]\leftrightarrow\langle\langle\beta,\alpha\rangle,\alpha\rangle$ 时，组成为 $(0,1)$ 与 $(2,1)$；原来 $U_{25}=-U_3$，原语重相位后变为
+
+$$
+U'_{25}=-e^{2i\theta_\alpha}U'_3.
+$$
+
+所以这种两模式比较还依赖具体实现和原语相位选择，不能援引同组成的规范不变性。
+
+Mateus Araújo、Adrien Feix、Fabio Costa、Časlav Brukner，[*Quantum circuits cannot control unknown operations*, arXiv:1309.7976v1](https://arxiv.org/abs/1309.7976v1)，讨论在标准黑盒电路内不能由任意未知酉的单次调用普遍构造受控酉，也讨论扩展载体的物理实现可提供额外结构。这支持区分通道与所供相干实现，不禁止本节明确已供应的门。Giulio Chiribella、Giacomo Mauro D’Ariano、Paolo Perinotti、Benoit Valiron，[*Quantum computations without definite causal structure*, arXiv:0912.0195v4](https://arxiv.org/abs/0912.0195v4)，将受控黑盒次序及量子开关作为额外高阶连接资源；两种作用次序可以相干比较，不等于原生有序树已免费具有该资源。
+

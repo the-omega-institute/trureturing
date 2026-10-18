@@ -1,0 +1,29 @@
+**推论 204.7（自动锥与指定聚合极小值）。** 复用已接受的容量供应器：若 $\delta\le1$、$\mu\ge3\delta$、$2\eta\le\mu+\delta$，取
+
+$$
+u=\min(\mu,W/3),\qquad \tau=W-2u.
+$$
+
+由 early-zero 与 early-one 两个不交首零类、以及 $T\ge\mu-\delta$，有 $W\ge3(\mu-\delta)_+$；故 $u\ge\mu-\delta$、$\tau\ge u$，且 (204.9) 成立，得到 $D\le\delta$。该 $V$ 保持晚总量、锚 $W$、$K_V=K_y$，残差恰为
+
+$$
+-\gamma_1(1-b_1)-\gamma_2(1-b_2)\le0,
+$$
+
+所以 $\theta=0$，允许任意原始 early 正确行、原始 $T$ 和原始支撑。若 $\mu=0$，只取 $T_V=W$，不作正 $u$ 的除法。
+
+固定晚 profile 的最后极大值 $\mu>0$，若
+
+$$
+2\mu\le W\le3\mu,\qquad \eta\le\mu-W/6,
+$$
+
+则在所有满足晚总量固定且 $E+S+T=W$ 的本参数族中，$\Delta_N$ 和 $\Delta_O$ 的极小值都为
+
+$$
+\mu-W/3.
+\tag{204.11}
+$$
+
+下界是 $W\ge3(\mu-\Delta_O)_+$；上界由 $E=0,u=\tau=W/3$ 达到，early 正确总量可以自由变化。这里不固定逐项指定的非零 early 总量，也不延伸到额外 base 行、late pair 行或另一参数族。$W=2\mu$ 时允许 $\eta\le2\mu/3$，严格超出旧 product 锥的 $\eta\le\mu/2$。例如任意 $L\ge4$，终端 $\gamma_L=3d$、其余 $\gamma_i=2d$、$W=6d$ 时取 204.6 的完整分数 $u=\tau=2d$，达到 excess $d$；$0<d\le1$ 时给出相应的完整证书。其余项 $U_{\rm split}$ 恰在每个 $w(\{j,j+1,\ldots,L\})$（$3\le j\le L$）放正确权 $d$，无 pair 与 $T$。$L\ge5$ 时该链的任意双询至多区分三个非空胞，而停止日程 $(3,4)$ 达到三个标签，故余项完整 excess 为 $3d$，联合 excess 却为 $d$。
+

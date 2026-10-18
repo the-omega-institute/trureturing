@@ -1,0 +1,127 @@
+**Theorem 22.2 (whole-fiber first-halt attainment).** Under Assumption
+21.1's conditional services, Definition 22.1 is a faithful member of
+$\mathfrak W(3,5)$. Every installed word is reached. There are twelve
+installed words, four running words, eight halts and sixteen total
+successor entries. Every actual step flips exactly one bit, and every
+original first halts with its full numeric lag after at most three Reads.
+
+For an individual run define the resource vector
+
+$$
+V=(d,r,b,p,s),
+\tag{NARC.22.2}
+$$
+
+where $d$ is the complete mutable width, $r$ the chronological Read
+count, $b$ the response bit-write count, $p$ the peak submitted literal
+length and $s$ the sum of those lengths on that same run. Initialization
+writes and immutable installation costs are separate. Number bit
+coordinates from the left by $1,\ldots,5$.
+The complete attainment certificate is:
+
+| Original $(a,b)$ | Proof age $n$ | Full lag output | Literal submissions in order | Actual replies | Word path through first halt | Flipped coordinates | Literal lengths | Same-run $V$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $(0,15)$ | $2$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(1,15)$ | $3$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(2,15)$ | $4$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(3,15)$ | $5$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(4,15)$ | $6$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(5,15)$ | $7$ | $2$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\bot$ | `00000` → `00001` → `01001` | $(5,2)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(0,1)$ | $16$ | $16$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\alpha$ | `00000` → `00001` → `10001` | $(5,1)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(1,1)$ | $17$ | $16$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR` | $\bot,\beta$ | `00000` → `00001` → `10001` | $(5,1)$ | $(15,9)$ | $(5,2,2,15,24)$ |
+| $(1,0)$ | $18$ | $17$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR`, `LRRRRRRRRR` | $\bot,\mathsf b,\alpha$ | `00000` → `00001` → `00101` → `00100` | $(5,3,5)$ | $(15,9,10)$ | $(5,3,3,15,34)$ |
+| $(15,5)$ | $27$ | $12$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRR`, `LRRRRRRRRR` | $\bot,\mathsf b,\mathsf b$ | `00000` → `00001` → `00101` → `10101` | $(5,3,1)$ | $(15,9,10)$ | $(5,3,3,15,34)$ |
+| $(15,4)$ | $28$ | $13$ | `LRRRRRRRRRRRRRR` | $\alpha$ | `00000` → `00010` | $(4)$ | $(15)$ | $(5,1,1,15,15)$ |
+| $(15,3)$ | $29$ | $14$ | `LRRRRRRRRRRRRRR` | $\beta$ | `00000` → `01000` | $(2)$ | $(15)$ | $(5,1,1,15,15)$ |
+| $(15,2)$ | $30$ | $15$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\alpha$ | `00000` → `10000` → `10010` | $(1,4)$ | $(15,16)$ | $(5,2,2,16,31)$ |
+| $(15,1)$ | $31$ | $16$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\beta$ | `00000` → `10000` → `10001` | $(1,5)$ | $(15,16)$ | $(5,2,2,16,31)$ |
+| $(15,0)$ | $32$ | $17$ | `LRRRRRRRRRRRRRR`, `LRRRRRRRRRRRRRRR` | $\mathsf b,\mathsf b$ | `00000` → `10000` → `10100` | $(1,3)$ | $(15,16)$ | $(5,2,2,16,31)$ |
+
+**Proof, native replies and full outputs.** Proposition 17.2 supplies
+the original and its own actual $Y_{a,b}$ for each row. The literal
+representatives of Definition 5.3, exhausted in (NARC.18.2), give
+the following exact reply cells on each reached running support:
+
+| Running word | Exact arriving ages | $\bot$ ages | $\alpha$ ages | $\beta$ ages | $\mathsf b$ ages |
+| --- | --- | --- | --- | --- | --- |
+| `00000` | $D$ | $\{2,3,4,5,6,7,16,17,18,27\}$ | $\{28\}$ | $\{29\}$ | $\{30,31,32\}$ |
+| `00001` | $\{2,3,4,5,6,7,16,17,18,27\}$ | $\{2,3,4,5,6,7\}$ | $\{16\}$ | $\{17\}$ | $\{18,27\}$ |
+| `00101` | $\{18,27\}$ | $\varnothing$ | $\{18\}$ | $\varnothing$ | $\{27\}$ |
+| `10000` | $\{30,31,32\}$ | $\varnothing$ | $\{30\}$ | $\{31\}$ | $\{32\}$ |
+
+The root $P_{28}$ sends age twenty-eight to output thirteen and age
+twenty-nine to output fourteen. Its absence successor executes
+$P_{16}$: ages two through seven halt with two, ages sixteen and
+seventeen halt with sixteen, and ages eighteen and twenty-seven
+continue to `00101`. Its $P_{18}$ replies there are respectively
+$\alpha$ and $\mathsf b$, selecting seventeen and twelve. The root
+branch successor executes $P_{30}$ on ages thirty, thirty-one and
+thirty-two, selecting fifteen, sixteen and seventeen. These cells
+exhaust all fifteen originals and give precisely $17-b$ in every row.
+The chronological submissions are the displayed whole-tree literals;
+no hidden-age calculation occurs during a run.
+
+**Proof, all declared writes.** All twelve words have length five and
+contain no adjacent ones. The changed coordinates for all sixteen
+entries, in reply order, are
+
+$$
+\begin{array}{c|cccc}
+ &\bot&\alpha&\beta&\mathsf b\\ \hline
+00000&5&4&2&1\\
+00001&2&1&1&3\\
+00101&0&5&0&1\\
+10000&0&4&5&3.
+\end{array}
+\tag{NARC.22.3}
+$$
+
+Here zero means staying at the same installed word. Every nonzero
+entry changes exactly that coordinate to the indicated legal installed
+word. The three self-loop completions, at `00101` on absence or
+$\beta$ and at `10000` on absence, have empty actual response
+support. Every supported entry changes one bit; none uses an extra
+phase. The total rows do not assert termination from unsupported
+source-word pairs.
+
+**Proof, exact supports and first halt.** For each installed word $w$
+take
+
+$$
+\mathcal C_w=\{(\ell_{a,b},Y_{a,b}):(a,b)\in C
+                 \text{ and its displayed path visits }w\}.
+\tag{NARC.22.4}
+$$
+
+The age coordinate is injective on $C$, so the running-cell table and
+the eight halt supports specify these sets exactly. Initially all
+fifteen sources lie in $\mathcal C_{00000}$. The cell calculation
+preserves the same pair $(\ell_{a,b},Y_{a,b})$ at its prescribed
+successor; the source transition is identity. Every reached halt has
+its correct complete constant. Assign proof rank
+
+$$
+\operatorname{rank}(00000)=3,\quad
+\operatorname{rank}(00001)=2,\quad
+\operatorname{rank}(00101)=\operatorname{rank}(10000)=1,\quad
+\operatorname{rank}(h)=0\quad(h\in H).
+\tag{NARC.22.5}
+$$
+
+Every supported Read strictly decreases rank. Thus each run has its
+correct first halt within three Reads, with exactly the displayed
+paths. This is the stationary-source specialization of [FIB, Theorem
+27.2][FIB-RW]'s initial coverage, legal action, successor closure,
+rank descent and halt correctness certificate, together with its
+immediate-write criterion in Theorem 45.4. Supports and ranks are
+proof data, never accessible control fields.
+
+Each halt and running word occurs in the fifteen-row table, proving
+that all installed words are reached. Each step contributes one Read,
+one response bit write and its displayed literal length. Taking peak
+and sum on that individual path proves every vector in (NARC.22.2).
+The undirected supported cycle
+`00000`--`00001`--`10001`--`10000`--`00000` combines edges from
+different originals; no stationary actual run follows it as a cycle.
+Global acyclicity of the union support is not a premise. $\square$
+

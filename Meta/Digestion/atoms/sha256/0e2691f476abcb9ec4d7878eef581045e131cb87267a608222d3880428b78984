@@ -1,0 +1,40 @@
+## 373. Original-face transitions and actual D-circle closure
+
+Sigma is the only owner whose fixed transverse pair is CD. Indeed the
+two distinct axes of such an owner lie in {M,V,Z,U}; since z,u>m>v,
+the smallest shifted axial product is (m-1)*(v-1)>=(c+d)^2.
+Its genuine L test therefore fails, and the unique-flat premise forces
+it to be sigma.
+
+The four original faces of (R,A,B,O,A,B) have label sets
+
+    F4=123: {R,A,B}, F3=124: {R,A,B},
+    F2=134: {O,A,B}, F1=234: {O,A,B}.
+
+A face with labels X,C,D, where X=M or V, has fixed transverse pair
+CD, XC or XD. Pair CD forces sigma. Pair XD would be an owner globally
+excluded in Sections 368 and 372. Pair XC has an axial D interval. Therefore
+its original D corner belongs precisely to sigma or to an axial D
+interval with fixed pair MC or VC. Every such face has one D corner,
+and every label-preserving face map sends it to the receiving D corner.
+
+In the actual D normal circle, select both original transverse D intervals
+of sigma (edges 14 and 23) and every axial D interval of every owner with
+fixed pair MC or VC. Each sigma interval has one endpoint on an MCD face
+and one on a VCD face. Each selected MC-pair axial interval has both
+endpoints on MCD faces; each VC-pair axial interval has both on VCD faces.
+The complete classification above makes this nonempty set endpoint-closed.
+It is consequently a union of complete connected components of the actual
+D-link graph. Connectedness makes it the whole actual D circle.
+
+Eta, however, has two original transverse D intervals with companion V
+and axes M,U. It is not sigma and its D intervals are not axial. They
+lie outside the selected set, a contradiction. This proves (365.2).
+
+All selections were by original intervals and face incidences. Repeated
+owners along the circle, equal role vectors, loops and face self-gluings
+do not merge angle slots or alter endpoint closure. No source-face
+partner count was assumed. The explicit upper gap was used in (366.5),
+(367.3) and the ensuing opposite-exit bounds; it is not inferred from bare
+connectedness. No full six-edge flat exclusion follows from this theorem.
+

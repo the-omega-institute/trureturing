@@ -1,0 +1,46 @@
+**定理 455.3（联合面板补偿）。** 固定 \(0<\alpha\le\beta<\infty\)。令 \(N=N(x)\) 为整数、\(N\ge\lceil8x\rceil\)，写
+
+\[
+m=N+1,\qquad a_x=\frac{\log(m/x)}\ell\in[\alpha,\beta].
+\tag{CC.16}
+\]
+
+则对该范围的全部 \(N,x\) 共同有
+
+\[
+\boxed{\mathscr E_x(N)=\frac{x}{N+1}
+\left[F(a_x)+O_{\alpha,\beta}(\ell^{-1})\right].}
+\tag{CC.17}
+\]
+
+进而
+
+\[
+\boxed{\sqrt x\ell\,\mathscr E_x(N)
+=\frac{x^{3/2}\ell}{N+1}
+\left[F(a_x)+O_{\alpha,\beta}(\ell^{-1})\right].}
+\tag{CC.18}
+\]
+
+**证明。** 引理 455.1 给
+
+\[
+\mathscr D_x(m)=\frac\ell{2m}
+\left[F(a_x)+\varepsilon_{x,m}\right],\qquad
+|\varepsilon_{x,m}|\le2K_\beta/\ell.
+\]
+
+引理 455.2 可写为 \(Q_x^{\mathrm p}=(2x/\ell)(1+\delta_x)\)，其中
+
+\[
+|\delta_x|\le C_{\mathrm p}/\ell\qquad(x\ge X_{\mathrm p})
+\]
+
+的有限常数与阈值不依赖 \(N\)。乘积中 \(2\) 与 \(1/2\) 精确相消。因 \(F(a_x)\le F(\beta)\)，（CC.17）的共同误差常数可取
+
+\[
+C_{\alpha,\beta}=C_{\mathrm p}F(\beta)+2K_\beta(1+C_{\mathrm p})
+\]
+
+对 \(x\ge\max(e,X_{\mathrm p})\) 使用。乘以 \(\sqrt x\ell\) 得（CC.18）。证毕。
+

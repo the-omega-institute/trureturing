@@ -1,0 +1,10 @@
+**Definition 24.1 (the original interface and a return target).** Throughout §§24–28 fix one prior $\mu$ of Definition 6.1 and retain its entire original source, acquired filtration, paid Read/Stop menu and third latch. Write $T=\beta\alpha$ and use the retry blocks $X,Y$, seeds $s_\rho$ and completions $c_b$ of Theorem 6.3. Thus
+
+$$
+h(\rho,b,u,\mathbf j)=u s_\rho T^{j_1}c_{b_1}T^{j_2}c_{b_2}T^{j_3}c_{b_3},
+\qquad u\in\{X,Y\}^{*},\quad \mathbf j\in\mathbb N^3.
+\tag{SC.55}
+$$
+
+The original acquired boundary here is $\mathcal B=(R,w,Q^+,Z,A,B)$, with its original control at $p_4$; $G_k$ always means the entire exact scattered-count cutoff (SC.24). The return target $\mathbf J(h)$ is the unique vector in (SC.55), not a newly supplied record. Every seed and marker tag remains available. All words and polynomial letters in these sections are actual raw replies or their declared retry blocks, rather than the native ordered-tree alphabet of Definition 17.2.
+

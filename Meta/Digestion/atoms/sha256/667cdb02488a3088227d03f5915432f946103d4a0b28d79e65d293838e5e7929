@@ -1,0 +1,166 @@
+**Proposition 13.1 (full-complex chronological reconstruction).** Every
+finite moment family in Proposition 2.3, including those in Theorem
+12.1, has the following simultaneous realization. For each supported
+low label choose an isometry
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$ and put
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j\succ0,\quad
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\\
+B_j=K_jJ_jQ_j^{-1/2},\qquad
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2}.
+\end{gathered}
+\tag{AC.69}
+$$
+
+The entire low fibre is a qubit. Its identities are
+
+$$
+B_jC_j=K_jE^\dagger,\qquad
+C_j^\dagger F_jC_j=EN_jE^\dagger,\qquad
+B_j^\dagger B_j+F_j=I_2,\quad I_2-F_j\succ0.
+\tag{AC.70}
+$$
+
+Use, for this attainer, the elapsed-time law
+
+$$
+g(u)=\frac2{(1+u)^2},\quad G_{\rm time}(u)=\frac{2u}{1+u},\quad
+Z_j(u)=\sqrt{I_2-G_{\rm time}(u)F_j},\quad
+R_j(u)=g(u)F_j[I_2-G_{\rm time}(u)F_j]^{-1}.
+\tag{AC.71}
+$$
+
+The current-survivor failure density at label $\ell$ is the CP map
+
+$$
+Y\longmapsto w_\ell g(u)
+\operatorname{tr}(F_j Z_j(u)^{-1}Y Z_j(u)^{-1})P_f.
+\tag{AC.72}
+$$
+
+At the end only survivors receive the fixed isometry
+$EB_j(I_2-F_j)^{-1/2}$. It composes with the no-event evolution to
+cumulative live matrix $EB_j$.
+
+For the complement take the isometries of Convention 2.2 and use one
+jointly counted five-dimensional high fibre with encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\W_\perp^\dagger\end{pmatrix}.
+\tag{AC.73}
+$$
+
+Its rate is zero, its report is $+$, and its TP terminal decoder has
+two inaccessible Kraus matrices
+$E[I_3\ 0]$ and $EJ_0[0\ I_2]$.
+
+Proof. The rank-two product and its right null vector imply that
+$K_j^\dagger K_j$ and $N_j$ are supported in
+$\operatorname{ran}K_j^\dagger$. This proves AC.70 and positivity
+of $I-F_j$. The rank-one generalized eigenvalue calculation behind
+FA69–70 gives the only possible nonzero eigenvalue
+
+$$
+\lambda(F_j)=\frac{b_j}{c(h_j)+b_j},\qquad
+\int_0^1\|R_j(u)\|du=\log(1+b_j/c(h_j)).
+\tag{AC.74}
+$$
+
+For a saturated row this is $t/(1+t)$ and activity $A$; its least
+terminal survival eigenvalue is $1/(1+t)>0$. A pure row has zero
+rate. These formulas concern the whole qubit, not only a sampled input.
+
+Since $Z_j(u)^\dagger Z_j(u)+G_{\rm time}(u)F_j=I_2$, survival
+plus all first-event effects sum to identity at every cut. Pulling
+AC.72 back through $\operatorname{Ad}_{Z_j(u)}$ gives exactly
+$w_\ell g(u)\operatorname{tr}(F_jY)P_f$. At terminal time
+$Z_j(1)=\sqrt{I-F_j}$, and AC.70 makes the stated survivor map an
+isometry. This proves full TP and chronological consistency; using
+$EB_j$ alone as terminal processing would not have that property.
+The high decoder effects sum to $I_5$ on its whole fibre.
+
+The live Gram yields
+$\sum K_j^\dagger K_j=\delta D^\dagger D+T^\dagger T+S^\dagger S$,
+and the failure sum is $M$. Together with AC.73 and root TP, the
+encoder effects sum to $I_5$. On every complex $M_5$ input $X$ the
+forgotten outputs are exactly
+
+$$
+\Phi^L(X)=E[\Lambda_*(E^\dagger XE)+
+ J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,
+\tag{AC.75}
+$$
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=
+ w_\ell\left(\int_{\mathcal B}g(u)du\right)
+ \operatorname{tr}(EME^\dagger X)P_f
+\quad(\mathcal B\subseteq[0,1]\text{ Borel}).
+\tag{AC.76}
+$$
+
+These are complex-linear Kraus identities, so for any passive
+reference and joint input $X$ the failure output is
+
+$$
+w_\ell\left(\int_{\mathcal B}g(u)du\right)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{AC.77}
+$$
+
+This is the conditional partial trace, not the unconditional reference
+marginal. The live map amplifies in the same way. The five maps remain
+separate; labels $0,13$ are individually zero. No inaccessible Kraus
+index or algebraic contact index becomes an extra free control.
+
+Give low label $j$ report $\operatorname{sgn}z_j$, arbitrary at zero.
+Failure effects have no coordinate-zero entry. The $01$ entry of the
+low acquisition effect is $p_js_0\kappa z_j$, its total is zero,
+and the plus report selects its positive half. Hence
+$\mathsf V(F)=s_0\sum p_j|z_j|\ge s$ without any additional
+actual label. The high acquisition probability on history $y$ is
+
+$$
+(1-\delta)A_y,\qquad A_y=\sum_{i=0}^2h_i^2p_{yi}.
+\tag{AC.78}
+$$
+
+Its maximum is at $y=27$ and equals the original weak sharp cost
+$\mathsf C(s)$ by JR's equality characterization. All low fibres
+have dimension two; every future-accessible share is counted in the
+high fibre. The supported encoder masses have signed height
+differences $p_j(\ell+b_jf)$ and the high difference is the fixed
+positive $H_0$, giving precisely AC.11.
+
+The supported forgotten live and failure maps agree with JR's original
+error optimizer. Relative to the ideal density $f_y$ in AC.3,
+CG/JR's conditional minimax identification therefore gives, for each
+$e,n$,
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*.
+\tag{AC.79}
+$$
+
+It does not make the twelve errors equal, or replace the ideal
+$f_y$ by the chosen $g$. All coherences and Borel sectors enter the
+same original HALF error simultaneously with cost, contrast, activity
+and actual record TV.
+
+The free coherent counted complement in AC.73–.75 is permitted by the
+JR class; it is distinct from the fixed CA10 completion that sends
+the complementary subspace to certain failure. Splitting it off as
+Convention 2.2's supported-zero low outcome is also permitted but adds
+an actual label. Aggregation attains the minimal additional one high
+label used in Theorem 12.1.
+
+Every failure in this construction is a first event on the absolute
+clock $6+u$. Only survivors receive terminal processing, all nonzero
+whole-fibre inputs retain positive terminal survival, and no deadline
+failure or postfailure positive-carrier action is introduced. These
+are mathematical CP/TP statements; no native access, actuator,
+controller or clock permission follows. Necessity in §§2–9 admitted
+every stipulated time law, not only AC.71's chosen $g$. $\square$
+

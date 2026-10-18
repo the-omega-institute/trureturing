@@ -1,0 +1,57 @@
+**定义 4.2（真实缓存、补查与全部50条运行）。** 诊断到达 $[i]$ 后按定义4.1的字典序遍历 $\mathcal A(V_i)$。若同一原字已在本次实际历史中，只检查缓存中的真实回复是否为 `a`；若未请求，必须实际请求该字，追加真实回复并要求 `a`。任一不符立即拒绝，全部通过才接受。公共 singleton 不代替这个完整检查。
+
+下表每格每源给一条完整按时序实际地址／回复清单：`D[...]` 是诊断段，紧接的 `C[...]` 是实际补查段，两段的串接就是完整 paid 请求列表，没有省略项。每个 `u:y` 发送字面 $u$ 并获得真实 $y$；分段标记本身不是动作。缓存列仅列诊断已查的 `a` 行号，这些真实记录参与最终检查，不再请求。$q_{\ne\alpha}$ 是诊断中不同非 $\alpha$ 地址数，paid 列是整个列表的不同原地址数；本构造没有重复，因此也等于完整动作数。所有 $\alpha$ 前沿都分别出现在诊断或补查段。
+
+| 格 | 源索引 | 完整 paid 时序（诊断；补查） | 已查 $\alpha$ 缓存行号 | $q_{\ne\alpha}$ | paid |
+| --- | --- | --- | --- | --- | --- |
+| $(2,2)$ | 0 | `D[LLR:b RLLR:b LRR:a RLRR:a]; C[LLLR:a RLLLR:a RRLLR:a RRRLR:a]` | `10,26` | 2 | 8 |
+| $(2,2)$ | 1 | `D[LLR:b RLLR:a LRRR:x RRLR:r]; C[LLLR:a LRR:a RRLLLR:a RRLRR:a RRRLR:a]` | `24` | 3 | 9 |
+| $(2,2)$ | 2 | `D[LLR:b RLLR:a LRRR:x RRLR:b]; C[LLLR:a LRR:a RRLLR:a RRRLLR:a RRRRR:a]` | `24` | 3 | 9 |
+| $(2,2)$ | 3 | `D[LLR:b RLLR:r]; C[LLLR:a LRR:a RLLLLR:a RLLRR:a RLRLR:a RRLR:a]` | 无 | 2 | 8 |
+| $(2,2)$ | 4 | `D[LLR:b RLLR:b LRR:a RLRR:r]; C[LLLR:a RLLLR:a RLRLLR:a RLRRR:a RRLR:a]` | `10` | 3 | 9 |
+| $(2,2)$ | 5 | `D[LLR:b RLLR:b LRR:a RLRR:b]; C[LLLR:a RLLLR:a RLRLR:a RRLLR:a RRRR:a]` | `10` | 3 | 9 |
+| $(2,2)$ | 6 | `D[LLR:r RRR:b LRR:r]; C[LLLLR:a LLRR:a LRLLR:a LRRR:a RLLR:a RRLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | 7 | `D[LLR:a RLLR:b RRRR:b]; C[RLLLR:a RLRR:a RRLLLR:a RRLRR:a RRRLR:a]` | `8` | 2 | 8 |
+| $(2,2)$ | 8 | `D[LLR:a RLLR:b RRRR:r]; C[RLLLR:a RLRR:a RRLLR:a RRRLLR:a RRRRR:a]` | `8` | 2 | 8 |
+| $(2,2)$ | 9 | `D[LLR:a RLLR:r RRR:b]; C[RLLLLR:a RLLRR:a RLRLLR:a RLRRR:a RRLR:a]` | `8` | 2 | 8 |
+| $(2,2)$ | A | `D[LLR:a RLLR:a]; C[RRLLLR:a RRLRR:a RRRLLR:a RRRRR:a]` | `8,24` | 0 | 6 |
+| $(2,2)$ | B | `D[LLR:a RLLR:r RRR:r]; C[RLLLLR:a RLLRR:a RLRLR:a RRLLR:a RRRR:a]` | `8` | 2 | 8 |
+| $(2,2)$ | C | `D[LLR:a RLLR:b RRRR:a]; C[RLLLR:a RLRLLR:a RLRRR:a RRLLR:a]` | `8,30` | 1 | 7 |
+| $(2,2)$ | D | `D[LLR:r RRR:b LRR:b]; C[LLLLR:a LLRR:a LRLR:a RLLLR:a RLRR:a RRLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | E | `D[LLR:r RRR:r]; C[LLLLR:a LLRR:a LRLR:a RLLR:a RRLLR:a RRRR:a]` | 无 | 2 | 8 |
+| $(2,2)$ | F | `D[LLR:b RLLR:b LRR:r]; C[LLLR:a LRLLR:a LRRR:a RLLLR:a RLRR:a RRLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | G | `D[LLR:b RLLR:a LRRR:a]; C[LLLR:a LRLLR:a RRLLR:a RRRR:a]` | `24,22` | 1 | 7 |
+| $(2,2)$ | H | `D[LLR:r RRR:x LRRR:b]; C[LLLLR:a LLRR:a LRLLLR:a LRLRR:a LRRLR:a RLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | I | `D[LLR:r RRR:x LRRR:r]; C[LLLLR:a LLRR:a LRLLR:a LRRLLR:a LRRRR:a RLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | J | `D[LLR:r RRR:x LRRR:x]; C[LLLLLR:a LLLRR:a LLRLLR:a LLRRR:a LRLR:a RLR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | K | `D[LLR:b RLLR:x]; C[LLLR:a LRLLLR:a LRLRR:a LRRLLR:a LRRRR:a RLR:a]` | 无 | 2 | 8 |
+| $(2,2)$ | L | `D[LLR:r RRR:x LRRR:a LLLR:r]; C[LLLLLR:a LLLRR:a LLRLR:a LRLLR:a RLR:a]` | `22` | 3 | 9 |
+| $(2,2)$ | M | `D[LLR:r RRR:x LRRR:a LLLR:b]; C[LLLLR:a LLRLLR:a LLRRR:a LRLLR:a RLR:a]` | `22` | 3 | 9 |
+| $(2,2)$ | N | `D[LLR:b RLLR:b LRR:b]; C[LLLR:a LRLR:a RLLLR:a RLRR:a RRLLR:a RRRR:a]` | 无 | 3 | 9 |
+| $(2,2)$ | O | `D[LLR:r RRR:a LLLLR:a LLRR:a]; C[LRLLR:a LRRLR:a RLLR:a]` | `14,32,18` | 1 | 7 |
+| $(2,2)$ | P | `D[LLR:b RLLR:a LRRR:b]; C[LLLR:a LRLLLR:a LRLRR:a LRRLR:a RRR:a]` | `24` | 2 | 8 |
+| $(2,2)$ | Q | `D[LLR:b RLLR:a LRRR:r]; C[LLLR:a LRLLR:a LRRLLR:a LRRRR:a RRR:a]` | `24` | 2 | 8 |
+| $(2,2)$ | R | `D[LLR:r RRR:a LLLLR:b]; C[LLLLLR:a LLLRR:a LLRLR:a LRLR:a RLLR:a]` | `14` | 2 | 8 |
+| $(2,2)$ | S | `D[LLR:r RRR:a LLLLR:a LLRR:r]; C[LLRLLR:a LLRRR:a LRLR:a RLLR:a]` | `14,32` | 2 | 8 |
+| $(2,2)$ | T | `D[LLR:r RRR:a LLLLR:a LLRR:b]; C[LLRLR:a LRLLR:a LRRR:a RLLR:a]` | `14,32` | 2 | 8 |
+| $(3,1)$ | 0 | `D[LLLR:a RRR:r LRL:b]; C[LRR:a RLLR:a RRLLR:a RRRLR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | 1 | `D[LLLR:a RRR:b LRR:a]; C[RLLLR:a RLRLR:a RRLR:a]` | `16,10` | 1 | 6 |
+| $(3,1)$ | 2 | `D[LLLR:x RLLR:b RLRR:a]; C[LLR:a RLLLR:a RRLLR:a RRRLR:a]` | `26` | 2 | 7 |
+| $(3,1)$ | 3 | `D[LLLR:x RLLR:a RRLR:r]; C[LLR:a RRLLLR:a RRLRR:a RRRLR:a]` | `24` | 2 | 7 |
+| $(3,1)$ | 4 | `D[LLLR:x RLLR:a RRLR:b]; C[LLR:a RRLLR:a RRRLLR:a RRRRR:a]` | `24` | 2 | 7 |
+| $(3,1)$ | 5 | `D[LLLR:x RLLR:r]; C[LLR:a RLLLLR:a RLLRR:a RLRLR:a RRLR:a]` | 无 | 2 | 7 |
+| $(3,1)$ | 6 | `D[LLLR:x RLLR:b RLRR:r]; C[LLR:a RLLLR:a RLRLLR:a RLRRR:a RRLR:a]` | 无 | 3 | 8 |
+| $(3,1)$ | 7 | `D[LLLR:x RLLR:b RLRR:b]; C[LLR:a RLLLR:a RLRLR:a RRLLR:a RRRR:a]` | 无 | 3 | 8 |
+| $(3,1)$ | 8 | `D[LLLR:b RRL:r]; C[LLLLR:a LLRR:a LRLR:a RLLR:a RRLR:a]` | 无 | 2 | 7 |
+| $(3,1)$ | 9 | `D[LLLR:a RRR:b LRR:r]; C[LRLLR:a LRRR:a RLLR:a RRLR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | A | `D[LLLR:a RRR:b LRR:b]; C[LRLR:a RLLLR:a RLRR:a RRLR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | B | `D[LLLR:a RRR:r LRL:r]; C[LRLR:a RLLR:a RRLLR:a RRRR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | C | `D[LLLR:b RRL:x LLRR:a]; C[LLLLR:a LRLLR:a LRRLR:a RLR:a]` | `18` | 2 | 7 |
+| $(3,1)$ | D | `D[LLLR:a RRR:x LRLR:r]; C[LRLLLR:a LRLRR:a LRRLR:a RLR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | E | `D[LLLR:a RRR:x LRLR:b]; C[LRLLR:a LRRLLR:a LRRRR:a RLR:a]` | `16` | 2 | 7 |
+| $(3,1)$ | F | `D[LLLR:r]; C[LLLLLR:a LLLRR:a LLRLR:a LRLR:a RLR:a]` | 无 | 1 | 6 |
+| $(3,1)$ | G | `D[LLLR:b RRL:x LLRR:r]; C[LLLLR:a LLRLLR:a LLRRR:a LRLR:a RLR:a]` | 无 | 3 | 8 |
+| $(3,1)$ | H | `D[LLLR:b RRL:x LLRR:b]; C[LLLLR:a LLRLR:a LRLLR:a LRRR:a RLR:a]` | 无 | 3 | 8 |
+| $(3,1)$ | I | `D[LLLR:a RRR:a]; C[LRLLR:a LRRLR:a RLLR:a]` | `16,14` | 0 | 5 |
+| $(3,1)$ | J | `D[LLLR:b RRL:b]; C[LLLLR:a LLRLR:a LRLR:a RLLR:a RRR:a]` | 无 | 2 | 7 |
+

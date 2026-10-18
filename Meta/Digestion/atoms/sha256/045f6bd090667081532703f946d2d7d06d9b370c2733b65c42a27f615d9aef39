@@ -1,0 +1,45 @@
+### 1. Dynamic Future Quotient
+
+PR #14999 中的递归闭包思想可以精确写成
+
+$$
+V^{(0)}=\mathcal B,
+$$
+
+$$
+V^{(n+1)}=
+\operatorname{span}
+\left(
+V^{(n)}
+\cup
+\bigcup_{a,o}M_{a,o}V^{(n)}
+\right).
+$$
+
+这里必须使用所有合法的 $(a,o)$，而不能只使用平均 $K_a$。
+
+五态局部模型的隐藏商为
+
+$$
+H(\mathcal B)=
+\mathbb R^S/\mathcal B
+\cong
+\mathbb R[xy].
+$$
+
+因此未来闭包只有两个可能：
+
+$$
+H(\mathcal B)=0,
+$$
+
+即 $\kappa$ 永远没有进入未来；
+
+或者
+
+$$
+H(\mathcal B)\neq0,
+$$
+
+即未来记忆必须新增一个标量方向 $\kappa$。
+

@@ -1,0 +1,45 @@
+**推论 11.2（An unbounded full-source consumer of exact root reuse）。** For every $q\ge1$, set $m=6q$, $k=11q-1$, $T=11q$, $g=q$. On
+
+$$
+J=\{q,2q,3q,4q,5q,7q,8q,9q,10q\},\quad
+H=\{2q,3q,4q,5q\},\quad O=\{8q,9q,10q\},
+\tag{11.6}
+$$
+
+take distinct literal lower labels $A,B$ and
+
+$$
+\lambda_0(j)=\begin{cases}B,&j=8q,\\ A,&j\ne8q,\end{cases}
+\qquad
+\lambda_1(j)=\begin{cases}A,&j\in\{8q,9q\},\\ B,&j\notin\{8q,9q\}.
+\end{cases}
+\tag{11.7}
+$$
+
+Use fresh $R,C$ and arbitrary bottom in the entire target (3.2). The join is $(B,A)$ at $8q$, $(A,A)$ at $9q$, and $(A,B)$ elsewhere; all three occur on $O$ and $H$ is homogeneous. With
+
+$$
+L=1^{6q},\qquad D=0^{2q}1^q0^{3q},
+\tag{11.8}
+$$
+
+the original fees are $C_{\rm ad}=2$, $C_{\rm pre}=4$, while both complete minima at their respective deadlines are $N+4$.
+
+Proof. The actual full physical supports of $L,D,L,D$ at indices zero through three are respectively
+
+$$
+\{0,6q\},\quad\{8q,9q\},\quad\{q,7q\},\quad\{9q,10q\}.
+\tag{11.9}
+$$
+
+Use $v=0$, $w=1$, $G(0)=A$, $G(1)=B$, $z=A$, and $I=\{8q,9q\}$. Translation by $-2m$ sends these two phases to $7q,8q$, with matching labels $B,A$. Thus all of (11.2) holds for the displayed word $D$, not for a substitute representative. The complete raw table is
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $D$ | $H_A$ | $a_1$ | $H_R$ |
+| $b_1$ | $D$ | $H_A$ | $H_B$ | $H_R$ |
+
+Initialize and install all actual Halt rows as in Theorem 11.1. The added root pairs are $(B,(1,4q,0))$ and $(A,(1,3q,0))$; the added query pairs are $(B,(1,10q,m))$ and $(A,(1,9q,m))$. They already occur in the full original supports at $j'=7q,8q$, original tail zero. Equations (11.5) and (5.6) are therefore the exact complete union supports. Ranks $4,3,2,1,0$ give the complete stationary certificate. All $22(11q-1)+1$ actual INITIAL records are retained, including all original tails and bottom. Theorem 11.1 gives eight complete states for an existing bottom label and nine for a fresh one; Theorems 5.2 and 3.2 give the credited adaptive minimum and the two fees. The two distinct dictionary words have $12q$ expanded bits and the four-block prefix has $24q$ bits; those representation lengths remain separate from complete states and emitted-block cost. ∎
+

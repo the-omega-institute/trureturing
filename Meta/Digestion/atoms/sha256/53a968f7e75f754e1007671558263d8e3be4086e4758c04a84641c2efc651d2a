@@ -1,0 +1,66 @@
+### 定理 37.5（曲率证书对有效电阻的控制）
+
+沿用定义 37.1，令
+
+\[
+b_{uv}(x)
+=
+\frac{\mathbf1_{\{x=u\}}}{\mu_u}
+-
+\frac{\mathbf1_{\{x=v\}}}{\mu_v}.
+\]
+
+则 \(b_{uv}\perp_\mu\mathbf1\)，并满足
+
+\[
+\langle b_{uv},f\rangle_\mu=f(u)-f(v).
+\]
+
+定义加权有效电阻
+
+\[
+R_\mu(u,v)
+=
+\langle b_{uv},A^\dagger b_{uv}\rangle_\mu,
+\]
+
+其中 \(A^\dagger\) 表示相对于 \(\langle\cdot,\cdot\rangle_\mu\) 的谱伪逆：它在 \(\mathbf1^\perp_\mu\) 上等于 \(A^{-1}\)，在常数方向上为零。若 \(CD_G(K,\infty)\) 且 \(K>0\)，则
+
+\[
+\boxed{
+R_\mu(u,v)
+\le
+\frac{\mu_u^{-1}+\mu_v^{-1}}{K}.
+}
+\]
+
+#### 证明
+
+定理 37.4 给出 \(A\ge K I\) 在常数正交子空间上的谱序。故
+
+\[
+A^\dagger\le K^{-1}I
+\]
+
+在该子空间上成立。于是
+
+\[
+R_\mu(u,v)
+\le
+K^{-1}\|b_{uv}\|_\mu^2
+=
+K^{-1}\left(\frac1{\mu_u}+\frac1{\mu_v}\right).
+\]
+
+证毕。
+
+如果令 \(\phi_{uv}=A^\dagger b_{uv}\)，则 \(A\phi_{uv}=b_{uv}\) 且
+
+\[
+R_\mu(u,v)
+=
+\mathcal E(\phi_{uv}).
+\]
+
+因此曲率下界控制有限场对点源差分的静态响应幅度。这个响应是离散 Poisson 方程的解。把它称作“引力势”需要额外的物理桥接，数学定理本身只给出有效电阻和 Dirichlet 能量界。
+

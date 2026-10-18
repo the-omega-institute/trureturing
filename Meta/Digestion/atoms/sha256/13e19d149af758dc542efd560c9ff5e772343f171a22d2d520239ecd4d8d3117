@@ -1,0 +1,6 @@
+**输入定位。** Fibonacci 原子卷的第 3、5、15 节提供 $M$、两时刻恢复、黄金操作环与判别式背景；第 17.5 节把本原共轭通道的模五幂联合核留作 open。本篇第 134 节在普通书面层面完成该联合核和显式解码分类。不可变输入为：
+
+https://github.com/the-omega-institute/trureturing/blob/409ac8ac7e6ea43a5afc318381b0af261543ca73/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+
+主 CFMP 卷第 39 节与群字符及运输卷第 122 节提供实际面配对及完整链接重构；第 137 节的几何赋值直接使用经典正则角长公式。
+

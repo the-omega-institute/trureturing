@@ -1,0 +1,6 @@
+### 83.6. Boundary of the conclusion
+
+The argument provides a full-output dual witness and exact global best-response certificates for every member of the disphenoid equality family. It permits arbitrary original leakage, dimensions, and both local ranks at least three in its comparisons. Its additional necessary condition for beating quarter is that all 32 party/transversal frame norms exceed two; its stability estimate requires both parties to change.
+
+It does not prove a universal quarter lower bound. In particular one cannot infer that every pair of local frame collections has a transversal of norm at most two, nor that the bilinear term in (15) is nonpositive. The genuinely unrestricted four-fibre optimum remains open between sqrt(3)-3/2 and 1/4. No mean-rank-two assumption, polar-completion monotonicity, or false centroid/two-test variance bound is used.
+

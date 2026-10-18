@@ -1,0 +1,79 @@
+## 10. Source credit, mathematical contribution and boundaries
+
+The source credited here is *Native FIB continuation: exact affine
+obstruction and compact-band approximation*, specifically its §§1–3
+for the native probability law, negative-phase convention, preparation,
+reachability, original output factorization and prescribed-path formulas,
+and its §7.5, Proposition 7.13, for the full-open necessary floor.
+That source situates its native conventions in *AURIC FIB-ATOM:
+Probability, Phase Transport and Holonomy*. The latter attribution is
+source context; no unquoted result of that parent is needed in the
+proofs here. Section 1 and §9 reconstruct the actual source bridges
+used by this volume.
+
+Sections 3–9 supply the proofs of the full-open classification,
+including the finite-dimensional, scalar-limit and exact native
+interfaces; the source attributions in this section supply no additional
+theorem hypothesis.
+
+The general mathematical ingredients are classical: finite-dimensional
+translation representations and abstract characters; finite Hankel
+rank, shift realizations and linear recurrences; generalized
+eigenspaces and exponential-polynomial sequences; finite geometric
+sums and Cesaro cancellation; Bernstein polynomial weights and moment
+identities; finite Cauchy–Schwarz estimates; and polynomial closure
+under translation. The forms needed here are proved explicitly.
+Finite-dimensional translation-space theory is related classical
+context, as in Engert's work on finite-dimensional translation-invariant
+spaces, cited in the native continuation source at
+[doi:10.2140/pjm.1970.32.333](https://doi.org/10.2140/pjm.1970.32.333).
+No external translation-space theorem, regularity hypothesis, or
+classification from that reference is a premise here.
+
+The source-specific synthesis is the classification for one full open
+native domain under the original ten-output Euclidean metric and full
+real control menu. It combines the bounded-observable loss of $\beta$
+with the equality residual, extracts a uniformly finite-rank scalar
+limit from separately finite lawful histories, and matches the resulting
+nonattainment boundary with full-domain polynomial and height-only
+models. It includes the arbitrary-preparation rotations, both affine
+offsets, exact guards and simultaneous-path mixed integral. This is a
+statement of mathematical content relative to the specified source,
+with no worldwide-priority claim.
+
+The following boundaries are part of the result's scope:
+
+- The parameters satisfy $0<Z<1$ and the current heights satisfy
+  $0<k<H$. At $k=0$ or $k=H$ a group loses support and its phase
+  no longer parametrizes the same ray space. At $Z=0$ the positive
+  middle reference is absent, while at $Z=1$ the open height interval
+  is empty. None of these support changes is included by taking a
+  limit in this theorem.
+- The encoders are functions of current rays. Retained real lifts or
+  arbitrary producing-history encoders are different domains. In
+  particular the bounded-observable argument uses equality of
+  current-ray function spaces and is not a nonattainment theorem
+  for unrestricted history encoders.
+- Only bounded affine observables were proved $\beta$-independent.
+  Unbounded encoder coordinates and general finite affine factor
+  fibers have not been classified. The explicit models' fibers do
+  not establish the fibers of all models.
+- Requiring injectivity, physical decoded outputs, a reduced command
+  menu, a different metric, or a finite-horizon source changes the
+  contract. The present witnesses and lower proof do not supply a
+  classification for those modified problems. All original commands
+  remain present here, and no endpoint or external height label is
+  added.
+- The displayed dimensions are sufficient. No minimum dimension or
+  quantitative positive gap at a fixed dimension is proved. In
+  particular nonattainment at $e_0$ does not by itself supply a
+  fixed-dimension lower bound strictly above $e_0$.
+- The separate original question of an attainer at some finite hidden
+  $N$ versus a strict gap for every finite $N$ remains unresolved.
+  No identification of its objective and admissible realizations
+  with Definition 2.1 has been established. The transition proved
+  here does not settle that alternative or the broader research goal.
+- Ideal exact-real source access and persistence supply no actual
+  machine-learning, acquisition, training, physical implementation,
+  robustness or task-transfer benefit without additional bridges.
+

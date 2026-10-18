@@ -1,0 +1,69 @@
+**Theorem 4.4 (persistent joint completion implies exact prefix reduction).**
+Under the joint-completion condition (4.5),
+
+$$
+\boxed{V_{\rm all}(\mu)=V_{\rm pref}(q).}
+\tag{4.8}
+$$
+
+This is a sufficient condition. It allows arbitrary correlations inside the
+completion forest and does not assert necessity.
+
+**Proof.** The inequality $V_{\rm all}(\mu)\le V_{\rm pref}(q)$ is immediate,
+because prefix encoders are legal all-word encoders. For the converse, fix
+an arbitrary globally correct all-word encoder $A$ and a fixed public forest
+$z$.
+
+Construct a prefix encoder $B_z$ that simulates $A$ on the virtual source
+$T(\partial_p(t),z)$ while the actual register remains the unchanged source
+$t$. The notation $\partial_p(t)$ is only a mathematical abbreviation:
+$B_z$ discovers the descriptor lazily through the prefix Reads below and
+never receives a free boundary value. A simulated query $p_i$ is answered by
+the actual prefix Read $p_i$.
+For a word first diverging at $a_i$, the actual Read $p_{i-1}$ tells whether
+the sibling exists. On a branch reply, return the local reply of the fixed
+subtree $z_i$ at the residual word; on a leaf or absence, return `absent`.
+For a strict extension of $p$, Read $p$ once; on a branch, answer locally
+from $z_*$, and otherwise return `absent`. The empty word, the root, and all
+words entering the fixed left child have public replies. These cases exhaust
+all finite words.
+
+The same $z$ is retained for the entire simulation. It is never resampled
+after a reply, so repeated and adaptive virtual Reads are replies of one
+stationary virtual source. Each simulated Read uses at most one actual
+prefix Read. The height guards ensure that the virtual source is in the same
+full family, so the global correctness and termination contract for $A$
+applies to it. The virtual descriptor equals the actual descriptor, hence
+the returned future decoder is correct for the actual source. Write
+$C_z(b)$ for the resulting cost; it depends on $b$ and $z$, not on the
+unexposed decorations of $t$.
+
+By induction on the simulated transcript,
+
+$$
+C_z(b)\le T_A(T(b,z)).
+\tag{4.9}
+$$
+
+Average (4.9) first over $b\sim q$ and then over the one forest
+$z\sim\nu$. The exact law correspondence (4.6) gives
+
+$$
+\sum_z\nu(z)\sum_bq(b)C_z(b)
+\le
+\sum_{t\in\mathcal F_D}\mu(t)T_A(t).
+\tag{4.10}
+$$
+
+The forest space is finite, so one public $z_0$ has $q$-mean cost no greater
+than the left side of (4.10). Hardwire that $z_0$ into the deterministic
+prefix encoder. This is a public installation choice, not the actual source
+and not a runtime source answer. Thus $V_{\rm pref}(q)\le V_{\rm all}(\mu)$.
+Together with the first inequality, (4.8) follows. $\square$
+
+The proof uses one complete joint forest and the unchanged actual law. It
+does not replace a conditional source by a fresh draw after each query, and
+it does not infer a law from one-query marginals. The condition is sufficient,
+not necessary: a law can violate (4.5) while an ordinary prefix strategy is
+still optimal.
+

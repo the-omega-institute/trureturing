@@ -1,0 +1,85 @@
+**Theorem 10.2 (Linear occupation probe insufficiency).** Implication
+(10.2) is false for the actual positive law and normalized weights
+(10.1). The function
+
+$$
+f(s)=(1-s_1)(1-s_3)+s_2
+=1-s_1-s_3+s_1s_3+s_2
+\tag{10.3}
+$$
+
+has a smaller quotient than the lower bound obeyed by every linear
+occupation phase.
+
+Proof. Write $C_{ij}=\mathbb E_p(s_is_j)-\rho_i\rho_j$ and
+$D=\operatorname{diag}(\omega_i\rho_i/(1+\lambda_i))$. Along a
+site-$i$ edge the change in $L_c$ is $c_i$, so
+
+$$
+\operatorname{Var}_p(L_c)=c^TCc,
+\qquad \mathcal E_\omega(L_c,L_c)=c^TDc.
+\tag{10.4}
+$$
+
+For $P=D-C/10$ put $S=962888835832892640$. Direct product-law
+moment evaluation gives $SP=M$, where
+
+$$
+M=\begin{pmatrix}
+400935678147200&9435442634100&-9341106705000&91579477500&-90672750000\\
+9435442634100&4008578567811&9434517772050&-92495272275&91579477500\\
+-9341106705000&9434517772050&404787065336100&9434517772050&-9341106705000\\
+91579477500&-92495272275&9434517772050&4008578567811&9435442634100\\
+-90672750000&91579477500&-9341106705000&9435442634100&400935678147200
+\end{pmatrix}.
+\tag{10.5}
+$$
+
+Let $A=\operatorname{diag}(1,10,1,10,1)$ and $B=AMA$.
+The diagonal-dominance remainders
+$r_i=B_{ii}-\sum_{j\ne i}|B_{ij}|$ are
+
+$$
+r=(296233677576200,201992930717100,197414496485100,
+201992930717100,296233677576200).
+\tag{10.6}
+$$
+
+They are all positive. For $y=A^{-1}c$ the exact square decomposition is
+
+$$
+c^TPc=\frac1S\left[
+\sum_i r_i y_i^2+
+\sum_{i<j}|B_{ij}|\bigl(y_i+\operatorname{sgn}(B_{ij})y_j\bigr)^2
+\right].
+\tag{10.7}
+$$
+
+Thus $P$ is positive definite, and the antecedent of (10.2) holds
+for the entire real coefficient family, not merely a finite sample.
+For (10.3), evaluating the same insertion edges and the same law gives
+
+$$
+\mathcal E_\omega(f,f)=\frac{8757839}{207641403480},
+\qquad
+\operatorname{Var}_p(f)=\frac{131365851}{265484623504},
+\tag{10.8}
+$$
+
+and hence
+
+$$
+\frac{\mathcal E_\omega(f,f)}{\operatorname{Var}_p(f)}
+=\frac{132720413542}{1557033067485}<\frac1{10}.
+\tag{10.9}
+$$
+
+This disproves the consequent. $\square$
+
+The joint term is necessary for this function. On the four legal
+words $0,1,4,5$, its mixed difference
+$f(0)+f(5)-f(1)-f(4)$ equals one. Every affine linear occupation
+function has mixed difference zero on these same four words.
+The failure is therefore a loss of an actual joint-occupation
+direction, with no alteration of the probability law or rates.
+

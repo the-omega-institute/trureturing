@@ -1,0 +1,17 @@
+**Definition 1.2 (conditional native observation order).** For laws on
+the same family and task, write $\mu_0\equiv_r^\partial\mu_1$ when
+their $d$ laws agree and, for every attained $d$, every $1\le q\le r$
+and every ordered tuple of arbitrary finite words $(w_1,\ldots,w_q)$,
+
+$$
+\mathcal L_{\mu_0}\bigl((\operatorname{Read}_t(w_i))_{i=1}^q\mid d\bigr)
+=\mathcal L_{\mu_1}\bigl((\operatorname{Read}_t(w_i))_{i=1}^q\mid d\bigr).
+\tag{NCO.5}
+$$
+
+Repeated and nested words are allowed. Equivalently, the joint laws of
+$(d,\operatorname{Read}_t(w_1),\ldots,\operatorname{Read}_t(w_q))$
+agree for every $0\le q\le r$, with $q=0$ denoting the boundary law.
+Indeed multiplication by the common descriptor mass gives the joint
+law, and division by a positive common descriptor mass gives (NCO.5).
+

@@ -1,0 +1,35 @@
+**Theorem 9.4 (qualified full-fiber consumers with the terminal unit).**
+Let one complete original native preparer satisfy caps $n+1,W+3$,
+and let its supplied Boolean projection be the graph in (TS.37).
+If that graph belongs to $\mathfrak C_5$ or $\mathfrak A_5$, then
+
+$$
+H\ge G+4+r+R+\rho+\eta_5
+\ge G+4+r+\nu+E_{\rm reg}+b_{\rm short}+2\tau+\rho.
+\tag{TS.38}
+$$
+
+In either projected class the exact preparation minimum is $G+4+r$.
+A projection with $I_5$ has at least one additional state; no attainment
+with that forced gap is asserted. If the projection has $I_5$ and
+$d_*\le6$, the stronger first bound holds without a separately imposed
+conflict condition on its other pools. These statements hold for every
+original $A$ and every $r\ge0$.
+
+Proof. Apply Theorem 6.4, or Corollary 5.3 in the last case, to that
+one projected graph and use $m\le H-4-r$. Its $\nu$, cuts, masses
+and excesses are properties of that graph; they are not asserted for an
+unrelated native history index. The grid in Theorem 6.4 and the complete
+four-reply upper just proved attain $G+4+r$ on the entire fiber, with
+the original code, literal latches and complete entries. The cube supplies
+one origin attaining both caps together. The eight reader states and its
+fresh costs remain separate. This proves the claimed class minima and
+preserves the forced-gap lower bound without an attainment claim.
+$\square$
+
+For $n=7,k=4$, (TS.35) applied to the existing TC optimum gives the
+already known $20+r$. Its upper has the sixteen grid states, two profile
+states, two original latches and $r$ additional latches, with both native
+caps $8,W+3$. The full-fiber and reader arguments above specify exactly
+which existing result is reused; no new native numerical optimum is claimed.
+

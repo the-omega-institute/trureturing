@@ -1,0 +1,12 @@
+**Definition 4.3 (what the sentence excludes).** The one tuple in every
+$G$ guard prevents mixing replies realizable only on different original
+sources. The common descriptor tuple and (NPS.5) prevent chart-specific
+words that no one physical request realizes. The fixed graph retains
+the same instruction and reply successors at every visit, including
+visits at different epochs. The pair of complete source tuples in
+$\operatorname{Shared}_G$ compares the entire support of one installed
+halt, rather than separate leaves of a trace expansion. Equal vectors,
+equal chart tags or individually constant trace leaves do not replace
+the required full-row equality. Quantifier order permits each source
+its own proof of termination, but permits only one installed design.
+

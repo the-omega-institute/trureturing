@@ -1,0 +1,102 @@
+### 82.3 覆盖全部原竞争者的下界
+
+证明下界。使用 FA72 的容量端点分裂上界，令 $\mu$  表示 pure-live 测度， $\sigma$  表示 saturated failure 系数测度。其必要约束为
+
+$$
+\int hh^T\,d\mu
++\eta_A\int\frac{hh^T}{\operatorname{cap}(h)}\,d\sigma=I,
+$$
+
+$$
+\int n_hn_h^T\,d\sigma=M,
+$$
+
+$$
+\int|z|\,d\mu
++\eta_A\int\frac{|z|}{\operatorname{cap}(h)}\,d\sigma\ge\tau.
+\tag{RC.138}
+$$
+
+对原来一条 $(p,b,h)$，端点分裂令 $t=b/[b_A\operatorname{cap}(h)]\in[0,1]$：pure 部分质量 $p(1-t)$，saturated 部分 live 质量 $pt$，其失败系数为 $pb$。这样保持原 Gram、失败 effect 和可用绝对对比度。标量绝对值的凸性给出原未分裂标签高度不超过分裂后的高度；可数和约定的可积可测情形逐项或积分使用同一不等式。该分裂只用于原实际 TV 的上界，不给仪器新增可读记录，也不把丢弃的 Kraus 索引变成控制记录。写
+
+$$
+f(h)=n_h^T\Delta n_h
+=\lambda_+q_+(h)+\lambda_-q_-(h),
+$$
+
+$$
+m(h)=\lambda_+q_+(h)-\lambda_-q_-(h).
+$$
+
+物理白化恒等式给出
+
+$$
+\int q_\epsilon\,d\sigma=1,\qquad
+\int m\,d\sigma=L_f.
+$$
+
+由 (RC.132)–(RC.133)，两倍 TV 缺额至少为
+
+$$
+\int
+\left[
+m-\left|f+\eta_A\ell/\operatorname{cap}\right|
++\eta_A D_r/\operatorname{cap}
+\right]d\sigma.
+\tag{RC.139}
+$$
+
+被省略的 pure-live slack 和对比度 slack 都非负。零阶谱 slack
+
+$$
+m-|f|=2\min\{\lambda_+q_+,-\lambda_-q_-\}
+$$
+
+只在四个谱相容取向处消失。$M_2$ 可逆，$n_h$ 在椭圆上从不为零；从 null 椭圆到物理射影方向的映射由一个可逆二维线性变换诱导，局部导数非零。因此在每个零点处，另一谱分量是一个具有非零线性因子的平方。可选互不相交的固定小邻域，谱 slack 在其中至少为到零点距离平方的正常数倍；离开这些邻域则由紧致性取得严格正的统一下界。令
+
+$$
+\kappa_\epsilon(r)
+=\nu_\epsilon[a_\epsilon(r)-2|b_\epsilon(r)|].
+$$
+
+在对应谱点，
+
+$$
+\frac{D_r-\epsilon\ell}{\operatorname{cap}}
+\ge \kappa_\epsilon q_\epsilon.
+$$
+
+在匹配谱点 $q_\epsilon=1/\chi_\epsilon$，另一 $q$ 为零，所以该式的常数与 (RC.112) 一致。在它的小邻域内，$f$ 的非零谱符号不变；对足够小的 $\eta_A$，$f+\eta_A\ell/\operatorname{cap}$ 也保持该符号。函数 $(D_r-\epsilon\ell)/\operatorname{cap}$ 在紧参数段上一致 Lipschitz，$\kappa_\epsilon(r)$ 一致有界，即使取向并列也不改变此界。另一谱 $q$ 在匹配点二阶消失，故减去 $\eta_A\sum\kappa_\epsilon q_\epsilon$ 后，有一个 $c d^2-\eta_A C_1d-O(\eta_A d^2)$ 下界；减小 $\eta_A$ 阈值后可吸收最后的二次项。因而配方
+
+$$
+c\,d^2-\eta_A C_1d\ge-C_2\eta_A^2
+$$
+
+给出各邻域的下界；邻域外严格正的零阶谱 gap 支配有界的 $\eta_A$ 扰动，故得到整个椭圆上的下界
+
+$$
+m-\left|f+\eta_A\ell/\operatorname{cap}\right|
++\eta_A D_r/\operatorname{cap}
+\ge
+\eta_A\sum_\epsilon\kappa_\epsilon q_\epsilon-C_3\eta_A^2.
+\tag{RC.140}
+$$
+
+ $\sigma$  的总质量被
+
+$$
+\frac{\operatorname{tr}M}
+{\min_{h\in\mathscr C}\|n_h\|^2}
+$$
+
+一致控制。积分后得到
+
+$$
+2(\mathcal T-\mathcal T_{\rm instr})
+\ge
+\eta_A(\kappa_++\kappa_-)-C_4\eta_A^2.
+\tag{RC.141}
+$$
+
+这个证明保留原全复数、多 Kraus 竞争者和任意允许的原失败时间 CP 法则。
+

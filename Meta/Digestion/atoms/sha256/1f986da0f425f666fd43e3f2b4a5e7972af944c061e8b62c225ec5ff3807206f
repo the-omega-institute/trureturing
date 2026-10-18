@@ -1,0 +1,23 @@
+## 2. 实际层与参考层的分离
+
+For an actual prime \(q\) and \(k\ge1\), write
+\[
+ h_q=\log q,\quad n_{q,k}=q^k,\quad
+ \beta_{q,k}=\log\left(1+\frac1{q+\cdots+q^k}\right),\quad
+ r_{q,k}=\beta_{q,k}/h_q,
+ \qquad\lambda(\tau_{q,k})=r_{q,k}.
+\]
+The decreasing bijection \(\lambda:(1,\infty)\to(0,\infty)\)
+defines \(\tau_{q,k}\) uniquely. The strict actual inventory uses
+\(\tau_{q,k}<x\), and the weak reference inventory uses
+\(q^k\le x\). In particular
+\[
+ q<\tau_{q,1}<q+1,\qquad \tau_{q,k}<q^k\quad(k\ge2).
+\tag{EL.1}
+\]
+Indeed \(1/(S+1)<\log(1+1/S)<1/S\) for \(S>0\).
+For \(k=1\), divide by \(\log q\) and compare with
+\(\lambda(q)\) and \(\lambda(q+1)\). For \(k\ge2\),
+\(S+1=1+q+\cdots+q^k<2q^k\le kq^k\), so
+\(r_{q,k}>1/(kq^k\log q)=\lambda(q^k)\).
+

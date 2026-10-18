@@ -1,0 +1,25 @@
+**定理 25.6.1（公开与隐藏接口的精确分解）。** 有
+
+$$
+\boxed{
+\operatorname{TV}(P_1^{U,A},P_0^{U,A})
+=\sum_u\mu(u)\operatorname{TV}(Q_{1,u},Q_{0,u}),
+}
+$$
+
+而
+
+$$
+\boxed{
+\operatorname{TV}(P_1^A,P_0^A)
+\le
+\operatorname{TV}(P_1^{U,A},P_0^{U,A}).
+}
+$$
+
+**证明。** 第一式按 $u$ 分块，$\mu(u)$ 是共同因子。第二式是从 $(U,A)$ 忘掉 $U$ 的数据处理不等式。证毕。
+
+因此公共种子可见性不是单个分歧数就能完全描述的：它还取决于类型质量 $\nu_\theta$ 在每个随机分区上的分离。
+
+<a id="section-25-7"></a>
+

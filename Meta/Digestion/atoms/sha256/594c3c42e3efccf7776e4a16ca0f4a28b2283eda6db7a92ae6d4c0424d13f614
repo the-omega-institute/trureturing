@@ -1,0 +1,49 @@
+**Definition 1.1 (the fixed supplier correspondence).** Write
+[ARC](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md)
+for the actor-local Reserve construction,
+[CAP](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md)
+for the capacity source,
+[SSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)
+for structural storage,
+[CSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md)
+for optional control storage,
+[RCA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md)
+for the literal word compiler and physical-state codec, and
+[AIF](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md)
+for the input frontier and original task. Their mathematical statements
+are used only with the correspondences specified below.
+
+Fix ARC Definitions 1.1–1.4 and 4.1–4.3: one finite preparation $\xi$,
+one actual initial $u\in\mathcal T_{H_0}$, one actual prior containing it,
+the original controller and its initial configuration, and its initialized
+pre-loan entry. Later $J$ is actual runtime input. Source 16, its append
+chain and $\phi_K$ are the same source throughout. At completed source
+boundaries $\lambda(t)\le h\le K$; strict Reserve extends backing while
+preserving $h$, and strict Raise changes $h$ within existing backing.
+An intermediate overwrite is raw source material, not necessarily a tree.
+
+The original role map is CAP Definition 2.2. In particular 13 is producer
+ingress, 16 is the private source/work arena, 17 its descriptor stream,
+24/25/26/27 are the original actor table/state/seed/waiting packet,
+28/29 are acquired archive/descriptors, 32–39 are the verifier and 40–47
+the consumer. Routes 48–51 retain their original endpoints. The twelve
+word ports 1–12 transfer only by their twelve actual TOKs and final CTL.
+Neither 13 nor 17 belongs to that loan pool.
+
+The ten added ports, all owned by $A$, are exactly
+
+| Ports | Actual role |
+| --- | --- |
+| 64, 65 | The two retained word banks |
+| 66, 67 | Base/distance/ordinal and length scratch |
+| 68 | RCA-format descriptors |
+| 69 | Captured installation fields, immutable initial prefix, later staging |
+| 70 | Retained outer choices and history ingress |
+| 71 | Immutable history archive and publication sender |
+| 72, 73 | Dedicated history mailbox and receiver |
+
+CAP descriptors on 17/29/33 have ten sep-delimited fields, a seal and
+one-based ordinals. Added descriptors on 68 use the separate RCA grammar
+and zero-based ordinals. Equal numeric fields do not identify origins
+across these grammars. No verifier lane is borrowed by the added compiler.
+

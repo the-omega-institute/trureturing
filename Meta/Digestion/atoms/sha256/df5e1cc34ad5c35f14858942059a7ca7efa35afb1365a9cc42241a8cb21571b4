@@ -1,0 +1,64 @@
+**Theorem 62.8 (finite private rational coefficients from the actual packet).** At a locked original idle cut, the fixed flag word of Theorem60.2 yields actual address bits $x_p$ and the beta mask. There is a public fixed-order arithmetic word, independent of these bit values, that computes every killed pair coefficient exactly as an unreduced rational with positive denominator. It needs neither a pair oracle, a private-address seek nor a private pivot selection.
+
+For each public address $p$, process the bank from deepest to shallowest. Set absent child pairs to $(A,B)=(1,1)$, put $d_p^x=1+x_p(d_p-1)$, and set
+
+$$
+\begin{aligned}
+B_p&=A_{pL}A_{pR},\\
+A_p&=d_p^xA_{pL}A_{pR}
+-x_{pL}B_{pL}A_{pR}-x_{pR}B_{pR}A_{pL}.
+\end{aligned}
+\tag{62.19}
+$$
+
+Then process root to leaves, retaining unreduced numerator/denominator pairs $C_p=N_p/D_p$:
+
+$$
+C_o=B_o/A_o,
+\qquad
+C_p=B_p/A_p+x_p C_{p^-}(B_p/A_p)^2\quad(p\ne o).
+\tag{62.20}
+$$
+
+For $w=p\wedge q$ the required all-bank output is
+
+$$
+\gamma_{pq}=x_px_q C_w
+\prod_{w\prec z\preceq p}\frac{B_z}{A_z}
+\prod_{w\prec z\preceq q}\frac{B_z}{A_z}.
+\tag{62.21}
+$$
+
+It is zero for an inactive endpoint and is $G_D^{\rm k}(p,q)$ otherwise. The common prescription uses (62.3) at the same public endpoints and masks. In neither prescription is a computed coefficient a public source reply.
+
+Proof. Extend $L_D$ to the full bank by identity on inactive sites. Its active edge to child $z$ is $-x_z$. Downward closure implies that an inactive parent has no active descendant. Eliminating children gives pivot $t_p=A_p/B_p=d_p^x-\sum_{z=pL,pR}x_z/t_z$. An active nonroot pivot is at least two by bottom-up induction, and the active root pivot is at least one; an inactive pivot is one. Thus all denominators are positive. More explicitly, put $T_{p,p^-}=x_p/t_p$ and all other entries zero. The extended matrix is $(I-T)^*\operatorname{diag}(t_p)(I-T)$: each off-diagonal is $-x_p$, and its diagonal is $t_p+\sum_{z=pL,pR}x_z/t_z=d_p^x$. Since $T$ is strictly triangular, $(I-T)^{-1}$ is its finite path sum. Multiplying this sum, $\operatorname{diag}(t_p^{-1})$, and its adjoint gives (62.20) for the diagonal and (62.21) for the two common-ancestor paths. This is direct finite factorization of the actual installed $L_D$, not an assumed inverse supplier.
+
+Here are finite widths and Boolean recurrences for this word. Let $B_0$ bound the bit lengths of all supplied rational parameter numerators/denominators, including interval lengths, $m$, and public coefficient approximants. Let $b,k$ be the digit bounds of Theorem62.9. A sufficient signed workspace width is
+
+$$
+W=64K(H+1)+8(B_0+b+k+1).
+\tag{62.22}
+$$
+
+No fraction reduction is necessary. If $s_p$ is the size of the public bank subtree rooted at $p$, (62.19) gives $1\le A_p,B_p\le3^{s_p}$. Expanding (62.20) as
+$N_p=B_pA_pD_{p^-}+x_pN_{p^-}B_p^2$, $D_p=A_p^2D_{p^-}$
+shows that the maximum numerator/denominator bit length increases by at most $4K+2$ per level. Multiplying the two public paths in (62.21) adds at most $4KH$ bits. Parameter multiplication and scaling by $2^b$ add at most $4B_0+b+2$ bits. All products, discarded subtraction arms and restoring-division trials therefore lie strictly inside the signed range of (62.22), with two spare bits.
+
+Use PR57.07's five-gate full adder, complement-plus-adder subtraction, PR57.08's seven-gate comparison, and a one-gate bit MUX. A schoolbook product forms every partial AND bit and adds every shifted row; fewer than $10W^2$ Boolean gates suffice, including unused high bits and copies. Every division is the $W$-step recurrence, from most significant numerator bit downward,
+
+$$
+z=2r+n_i,\quad e=[z\ge d],\quad r'=\operatorname{MUX}(e,z-d,z),
+\quad q'=2q+e,
+\tag{62.23}
+$$
+
+with zero initial remainder/quotient. Both subtraction arms and the complete comparison execute regardless of $e$. Since $0\le r<d$, the recurrence maintains the Euclidean division invariant and ends with the exact quotient and remainder. No private bit selects a code edge. Constants, copies, masks, additions, multiplications and division all expand into literal truth-table records (PR57.05). A sufficient bound on new Boolean gates for (62.19)–(62.23), all coefficient digits and all endpoint masks is
+
+$$
+G_{\rm pair}\le
+100W^2\left[20K+\binom K2(8H+20)+1\right].
+\tag{62.24}
+$$
+
+Indeed (62.19) uses at most ten integer products/masks/additions per node and (62.20) at most eight, so their combined allowance is $20K$. Each pair uses at most four products per path level plus its parameter products, mask and one restoring division. Each such operation, including its constant/copy bits, is below the allowance $100W^2$; grouping the two node recurrences and the path operations gives the displayed deliberately loose bound. The flag gates are additional. Every gate's material record, operand references, field fetches and tape execution have their separate prices in Proposition62.11. $\square$
+

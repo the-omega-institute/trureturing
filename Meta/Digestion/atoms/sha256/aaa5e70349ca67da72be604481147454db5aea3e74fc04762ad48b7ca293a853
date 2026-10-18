@@ -1,0 +1,58 @@
+**Theorem 4.1 (exact bounded adaptive-history equivalence).** For two
+persistent source laws on a common finite native family,
+$\mu_0\equiv_r^\partial\mu_1$ implies the following: every fixed common
+deterministic installed protocol has identical joint law with $d$ of
+its acquisition history through $r$ Reads. This includes earlier
+stopping, the final output on an earlier stop, the still-running flag,
+next chosen operand and all local state determined by the history.
+Equivalently, conditional history laws agree for every attained $d$.
+
+Conversely, equality of these joint bounded-experiment laws for every
+common protocol implies $\mu_0\equiv_r^\partial\mu_1$. In particular,
+for every fixed admissible encoder $A$,
+
+$$
+\Pr_{\mu_0}(T_A\le q)=\Pr_{\mu_1}(T_A\le q)\quad(0\le q\le r),
+\qquad
+\mathbb E_{\mu_0}\min(T_A,r+1)
+=\mathbb E_{\mu_1}\min(T_A,r+1).
+\tag{NCO.28}
+$$
+
+Proof. Fix a control-consistent history
+$h=((w_1,y_1),\ldots,(w_q,y_q))$ with $q\le r$. Once its earlier
+replies are specified, the deterministic protocol's words and local
+decisions along this path are fixed. Its event is exactly the
+single-source cylinder
+
+$$
+\bigcap_{i=1}^q\{t:\operatorname{Read}_t(w_i)=y_i\}.
+\tag{NCO.29}
+$$
+
+Control-inconsistent paths have probability zero under either law.
+Each consistent cylinder has equal joint probability with every $d$
+by Definition 1.2. There are at most four reply continuations per
+Read, hence finitely many paths up to depth $r$, despite the unbounded
+word vocabulary. Stopping, the next operand, retained data and any
+specified finite source-free processing of a path are deterministic
+functions of that path and the common installation. They therefore
+have the same joint distributions as well. For admissible encoders,
+termination on every source excludes an infinite local computation
+on an attained path. A stopped transcript can be padded by a fixed
+stop marker to express all these distributions on one carrier.
+
+The converse uses a protocol that nonadaptively Reads any requested
+tuple, together with the zero-Read experiment for the $d$ marginal.
+Repeated and nested words are allowed in both directions. Finally,
+the event $T_A>q$ is decided after the first $q$ replies and subsequent
+source-free control, and
+$\mathbb E\min(T_A,r+1)=\sum_{q=0}^r\Pr(T_A>q)$.
+This proves (NCO.28).
+
+This is the finite cylinder argument for a random function sampled
+once, in the language of [Maurer, Definitions 2–3 and Lemma 4][MAU].
+The input here is a native word and the output is its deterministic
+reply on one tree. No simulator redraws nuisance variables; all
+conjuncts in (NCO.29) refer to the same $t$. $\square$
+

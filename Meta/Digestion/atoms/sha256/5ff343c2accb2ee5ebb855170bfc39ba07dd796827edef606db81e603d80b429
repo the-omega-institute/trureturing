@@ -1,0 +1,15 @@
+## Theorem
+
+Every such triangulation has a number of tetrahedra divisible by `16`.
+More precisely, the center ideal-vertex links split into orientable closed
+components `S_i`, and if `N_i` tetrahedra have their center in `S_i`, then
+
+```
+F(S_i) = N_i,
+E(S_i) = 3*N_i/2,
+V(S_i) = 3*N_i/8,
+chi(S_i) = -N_i/8,
+genus(S_i) = 1 + N_i/16.
+```
+Consequently `16 | N_i` for every component and `16 | N` globally.
+

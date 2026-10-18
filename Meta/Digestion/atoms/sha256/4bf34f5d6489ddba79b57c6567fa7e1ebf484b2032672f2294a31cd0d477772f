@@ -1,0 +1,40 @@
+**Proposition 6.2 (all residuals and their exact rank coordinates).**
+The entire fiber of Definition 6.1 is
+
+$$
+\{(\langle u,\rho^d u\rangle,(0,d)):
+                     u\in\mathcal T,\ d\ge1\}.
+\tag{SFP.19}
+$$
+
+One exact source representation uses any ground shape $K$, one natural
+label $a_p$ for every leaf of $K$, the local inequalities
+$a_{qL}-a_{qR}\ne1$ at its primitive cherries, and the integer $d\ge1$.
+If $X$ is the resulting normal code, the source code is exactly
+
+$$
+F(X,\tau_dX),\qquad
+r_{L p}=a_p,\quad r_{R p}=a_p+d.
+\tag{SFP.20}
+$$
+
+Every original in (SFP.19) has these coordinates with $X=B(u)$.
+
+Proof. Write an original with the first row as $t=\langle u,v\rangle$,
+where $u\ne v$. Its second row is a pair with children $\rho^d u$ and
+$\rho^d v$. The positive link says $v=\rho^d u$. If $d=0$, this
+contradicts the first partition. If $d>0$, uniform translation of the
+nonempty rank set in $B(u)$ excludes $u=\rho^d u$ and
+$u=\rho^{2d}u$. For example their minimum ranks differ by $d$ and $2d$.
+Injectivity of $\rho^d$ then gives the second row's distinct classes,
+and the displayed negative link is satisfied. This proves both
+inclusions of (SFP.19) for arbitrary $u$.
+
+Every finite $u$ has exactly one normal $B(u)$, with precisely the local
+rank constraints stated. If $X$ is nonprimitive, neither child in
+$F(X,\tau_dX)$ is primitive. If $X=[a]$, its child ranks are $a,a+d$,
+whose difference is $-d$, never $1$. The outer pair is consequently
+normal in both cases. Equation (SFP.4) proves (SFP.20), and reading
+its left subtree and the supplied lag proves reverse extraction.
+No constant field or bounded shape is imposed on $X$. $\square$
+

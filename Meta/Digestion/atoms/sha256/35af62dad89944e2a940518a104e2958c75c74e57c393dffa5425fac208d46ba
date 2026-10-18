@@ -1,0 +1,35 @@
+**定理 C-105.4（完整菜单的一条恒定纤维）。** 对每个实数 $0\le t\le1$ 以及
+全部 $s,u\in B$，有
+
+$$
+\operatorname{tr}((P_s\otimes P_u)\Gamma_t)
+=\begin{cases}1/5,&u=f(s),\\0,&u\ne f(s),\end{cases}
+\qquad \operatorname{tr}(Q\Gamma_t)=1/5.
+\tag{C105.8}
+$$
+
+因而 $\mathcal O_{\mathcal M}(\Gamma_t)=\mathcal O_{\mathcal M}(S)$，
+而相对于具有相同边缘的乘积来源，连接读数恒为
+
+$$
+\Delta_t=\Gamma_t-I_{25}/25,\qquad
+\operatorname{tr}(Q\Delta_t)=\frac15-\frac1{25}=\frac4{25}.
+\tag{C105.9}
+$$
+
+证明。$S$ 在五个 $e_s$ 上的对角元全为 $1/5$。
+$T$ 在四个底面 $e_s$ 上的对角元为 $(4/5)|1/2|^2=1/5$，
+在 $e_2$ 上也为 $1/5$，其余计算基对角元为零。
+凸组合给全部 $25$ 个基概率。写
+
+$$
+|\Omega\rangle=\frac12(e_0+e_{13}-e_1-e_3),\qquad
+\langle\Omega|\Psi\rangle=\frac{1+1-1+1}{4}=\frac12.
+\tag{C105.10}
+$$
+
+故 $\operatorname{tr}(QS)=(1/5)\sum_s|\langle\Omega|e_s\rangle|^2=1/5$，
+$\operatorname{tr}(QT)=(4/5)|1/2|^2=1/5$；$e_2$ 对两者的 $Q$ 读数均无贡献。
+迹的线性性给整个实区间上的恒等式。$Q$ 为归一化秩一投影，
+故 $\operatorname{tr}(QI_{25}/25)=1/25$，得到 (C105.9)。证毕。
+

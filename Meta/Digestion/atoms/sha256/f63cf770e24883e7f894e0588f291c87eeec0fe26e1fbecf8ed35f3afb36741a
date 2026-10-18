@@ -1,0 +1,82 @@
+**Theorem 6.2 (automatic complete contact/support alternative).** On every
+recognized input with both designated full rows attained,
+
+$$
+\boxed{\quad\forall h\in\mathbb N\ J(h)
+       \quad\Longleftrightarrow\quad S_0,S_1\text{ are both unbounded}.\quad}
+\tag{CRE.27}
+$$
+
+The choice terminates from the acquired input. If either support is bounded
+by $M\ge2$, it returns the finite exclusion depth $H=M+4$.
+If both are unbounded, for every requested $h$ it constructs actual finite
+sources in both entire strata sharing $p_h(\Lambda)$. Moreover
+
+$$
+\overline{D_0}\cap\overline{D_1}=
+\begin{cases}
+\{\Lambda\},&S_0,S_1\text{ both unbounded},\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\tag{CRE.28}
+$$
+
+**Proof.** Theorem 4.2 computes both complete supports and decides their
+unboundedness. If one is bounded by $M$, all sources in that stratum
+have rank at most $M$, by both directions of (CRE.17) and (CRE.18).
+Theorem 6.1 excludes every depth-$M+4$ joint witness. This proves
+necessity in (CRE.27) and the quantitative NO branch. A common closure
+point at that depth would supply one approximant from each stratum
+with its same prefix, contradicting exclusion. An empty designated
+support is detected as failure of the attainment premise; without that
+premise it also gives $\neg J(0)$.
+
+Suppose both supports are unbounded. For supplied $h$, compute $p_h(K)$
+using (CRE.23). Independently extract
+
+$$
+j_i\in S_i,\qquad j_i\ge2h+4\quad(i=0,1).
+\tag{CRE.29}
+$$
+
+Fix each chosen $j_i$ before constructing its residual. Its support
+membership means the entire conjunction $C_i(j_i,y)$ has a finite witness.
+Apply [SLP, Lemma 2.1][SLP] at this same fixed rank, with its one unfixed
+residual prescribed to have the inclusive prefix $p_h(K)$. The lemma
+applies because $K$ is infinite and Theorem 3.3 proves the full product
+before the finite negative list. It supplies one finite $y_i$ satisfying
+all of $C_i(j_i,y_i)$ together, with $y_i\equiv_h K$. At fixed rank
+all atomic terms are finite grounds. Every repeated $y$ uses that same
+prefix context and frontier filling, so all signs and shared occurrences
+survive simultaneously. This uses local signed lifting after contact
+synthesis, not a claim that SLP synthesizes an unknown contact.
+
+[NLC, Lemma 3.1][NLC] gives the exact native minimum leaf depth
+$\mu(T_j)=\lfloor j/2\rfloor$. Therefore (CRE.29) makes
+$T_{j_i},T_{j_i+1}$ agree through $h$ with $\Omega$.
+Continuity with the explicit prefix-locality bound gives
+
+$$
+F_{T_{j_i}}(y_i)\equiv_h F_\Omega(K)=K,\qquad
+G_{T_{j_i}}(y_i)\equiv_h G_\Omega(K)=K.
+\tag{CRE.30}
+$$
+
+Filling the finite outer spine shows
+$\Theta_i(j_i,y_i)\equiv_h\Lambda$. Theorem 3.3 puts these finite
+sources in the exact $D_i$, and Theorem 3.1 makes them satisfy the
+entire acquired input with all guards at their recorded epochs.
+This is one common original prefix, rather than independently selected
+hole marginals. Each candidate internally uses its own single rank
+$j_i$ and its own single $y_i$. The two alternative originals need
+not have equal ranks or residuals.
+
+Every construction terminates for its supplied finite $h$: Presburger
+witness extraction, the computed contact prefix, and SLP's finite
+simultaneous separator construction. No upper bound on expanded source
+size is claimed. These constructions prove sufficiency in (CRE.27)
+and place $\Lambda$ in both closures. Theorem 5.2 proves that it is
+their only possible common point. Together with the bounded case this
+gives (CRE.28). A limit need not satisfy $y\ne T_j$ or an additional
+negative, and no finite partition is assigned to $\Lambda$. $\square$
+

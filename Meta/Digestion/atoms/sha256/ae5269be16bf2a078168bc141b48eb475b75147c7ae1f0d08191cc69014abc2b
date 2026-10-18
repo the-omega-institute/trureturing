@@ -1,0 +1,30 @@
+## Scope and baseline
+
+Let \(F_n\) and \(L_n\) be the ordinary Fibonacci and Lucas sequences,
+\(L_0=2,L_1=1\). For \(j\ge 1\), put
+\[
+ n_j=3^j,\qquad r_j=3^{j+1},\qquad
+ B_j=L_{2n_j}+1=L_{n_j}^{\,2}+3.
+\]
+The existing TBN.2--TBN.4 development in
+\`Problems/wall-sun-sun-golden-unit-lift.md\` proves
+\[
+ B_{j+1}=B_j^3-3B_j^2+3,\quad B_1=19,
+\]
+and, for every prime \(p\mid B_j\),
+\[
+ p\equiv1\pmod{2r_j},\qquad
+ v_p(B_j)=h_p,
+\]
+where \(h_p\) is the original Fibonacci depth
+\(v_p(F_{p-(5/p)})\). Thus the exponents below are the actual WSS
+depths; no index-multiplier valuation is being counted.
+
+The rank/valuation input is the classical Fibonacci valuation formula
+of Lengyel, as recorded in Medina--Rowland, *p-regularity of the
+p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly 53
+(2015), Theorem 1.4 (arXiv:0910.2907), together with the split rank
+calculation already written as TBN.3. The new statement below is an
+elementary 3-adic refinement of TBN.5, not a claim that the cited papers
+state this balance.
+

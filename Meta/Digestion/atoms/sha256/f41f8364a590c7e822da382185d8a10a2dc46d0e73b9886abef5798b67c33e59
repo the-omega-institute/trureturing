@@ -1,0 +1,10 @@
+**Corollary 6.2 (task-relative quality).** For a model with the exact source, operation, full-tail configuration-risk and counted same-update semantics of Section 1, a supported nonendpoint and (1.6), at least one task quality $W_{{\rm conf},s}=1-R_{{\rm conf},s}$ satisfies
+
+$$
+W_{{\rm conf},p}<1-\rho_p-\eta/2300000
+\quad\text{or}\quad
+W_{{\rm conf},\beta}<1-\rho_\beta-\eta/2300000.
+$$
+
+Proof. Subtract the corresponding excess bound of Theorem 1.5 from one. $\square$
+

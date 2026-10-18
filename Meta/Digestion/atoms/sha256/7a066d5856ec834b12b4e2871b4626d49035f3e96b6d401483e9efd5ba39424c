@@ -1,0 +1,53 @@
+**proposition 9.3 (Stationarity does not preserve rank under characterwise
+Kraus decomposition).** A stationary channel in $\mathfrak C_1$ need not
+have a rank-one Kraus representation in which every Kraus operator transforms
+by one character of the walk's compact torus.
+
+Proof. Consider
+
+$$
+S(X)=\frac{X+\operatorname{tr}(X)I_5}{6}.
+\tag{9.5}
+$$
+
+It is covariant under all unitaries. It belongs to $\mathfrak C_1$ because
+$S(X)=5\int PXP\,dP$, where $P=vv^\dagger$ and $v$ is uniform on the
+complex unit sphere. To check the integral, coordinate phase and permutation
+invariance leave two moments $u=\mathbb E|v_1|^4$ and
+$c=\mathbb E|v_1|^2|v_2|^2$. Replacing the first coordinate by
+$(v_1+v_2)/\sqrt2$ preserves its distribution and gives
+$u=(2u+4c)/4$, so $u=2c$. Summing
+$\mathbb E(\sum_i|v_i|^2)^2=5u+20c=1$ gives $c=1/30$.
+The full tensor is consequently
+$\mathbb E[v_i\overline v_jv_k\overline v_l]
+=c(\delta_{ij}\delta_{kl}+\delta_{il}\delta_{kj})$.
+Contracting with $X$ gives (9.5).
+Also $5\int P\,dP=I$, so it is TP. The same finite-dimensional convex
+representation used by QMB replaces its Choi integral by at most $625$
+rank-one terms, preserving the channel exactly.
+
+In a complex orthonormal eigenbasis of the two rotation planes and dark
+line, the five distinct torus characters are
+$0,+e_+,-e_+,+e_-,-e_-$. A zero-character Kraus matrix must be diagonal
+in this basis. If it is rank one, it has at most one nonzero diagonal entry.
+A nonzero-character matrix has zero diagonal, since every diagonal entry
+transforms by the zero character.
+
+In this eigenbasis write the output-first Choi vector in the conjugate
+input basis; then $w(C)=\sum C_{ij}|i,j\rangle$ and the diagonal subspace
+is $\mathcal D=\operatorname{span}\{|j,j\rangle\}$. The normalized
+Choi matrix of (9.5) is
+
+$$
+\chi_S=\frac16|\Omega\rangle\langle\Omega|+\frac1{30}I_{25}.
+\tag{9.6}
+$$
+
+Its restriction to $\mathcal D$ has off-diagonal entries $1/30$. In a
+decomposition into definite-character rank-one Kraus vectors, nonzero
+characters have no component in $\mathcal D$; zero-character rank-one
+vectors contribute only coordinate-diagonal terms there. Their sum cannot
+produce those off-diagonal entries. This contradiction proves the claim.
+Stationarity is therefore imposed on the whole superoperator in (4.4),
+never on individual low-rank Kraus characters. $\square$
+

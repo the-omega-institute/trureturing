@@ -1,0 +1,17 @@
+**定义 6.1（单位记录的完整关系合同）。** 对 $\tau\ge0$，令 $a=\sqrt\tau$，规定四份单位记录的候选 Gram 为
+
+$$
+G_\tau=
+\begin{pmatrix}
+1&a&0&0\\
+a&1&a&0\\
+0&a&1&a\\
+0&0&a&1
+\end{pmatrix}.
+\tag{6.1}
+$$
+
+共同实现是同一实或复内积空间中四个单位向量，其全部内积恰为式 (6.1)；非相邻内积为零是合同的一部分。最小载体维数指这种向量实现的最小维数。所用 Gram 分解与最小秩判据沿用 [二阶关系完成卷，定义 109.1 与定理 109.2](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)。由于此矩阵为实对称，那里记录相关矩阵的转置约定不改变本矩阵。
+
+此合同只规定共同向量。带转移概率和内部运输的完整等距约束是 [最小记录 dilation 卷，定义 1.1–1.3](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md) 中的另一合同；本定义未供应那些转移、运输或取得操作。
+

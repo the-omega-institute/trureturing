@@ -1,0 +1,30 @@
+### 95.4. The resulting rank-two algebraic problem
+
+Under the hypotheses of Theorem 95.1 with rank H=6, put
+
+\[
+ c_{ij}=\frac{\overline{R_{ij}}}{J_{ij}}
+          \quad(i,j\text{ in different fibres}),\qquad
+ \mathcal V=\{E=E^*:E_{ff}=0,\ ER=0\}.
+                                                                    \tag{22}
+\]
+
+All these coefficients are nonzero, and c_ji=overline(c_ij). Equations (19)–(21) give a single real quadratic form
+
+\[
+ q(E)=-\sum_{i,j\text{ in different fibres}}c_{ij}E_{ij}^{2}
+                         \ge0\qquad(E\in\mathcal V).        \tag{23}
+\]
+
+Here and below q(E) denotes the same form expressed in weighted coordinates. Factor R=U*U, where U is a rank-two 2×8 matrix, and write U_f for its four 2×2 fibre blocks. Then ER=0 is equivalent to EU*=0. Each U_f has rank one or two, since each column of U has norm one. We will contradict (23) in every case.
+
+We use the elementary fact that for a nonnegative real quadratic form, a zero vector of the form lies in its radical:
+
+\[
+ q(X)=0\quad\Longrightarrow\quad
+ B_q(X,Y)=0\text{ for every }Y,\qquad
+ B_q(X,Y)=\frac{q(X+Y)-q(X)-q(Y)}2.                         \tag{24}
+\]
+
+Indeed q(X+sY)=2sB_q(X,Y)+s²q(Y) is nonnegative for both signs of all sufficiently small real s, forcing its linear coefficient to vanish.
+

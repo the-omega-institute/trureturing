@@ -1,0 +1,10 @@
+## 7. Source attribution, formal boundary and continuation targets
+
+The mathematical dependencies are intentionally separate. The global moment inequalities come from the existing HS4 proof; one-uniform normal form comes from [GW10], Theorem 5; the scalar remainder estimate, phase-alignment classification, determinant separator, exact marginal-fiber argument and parent-Hamiltonian/fidelity argument are explicitly derived above. The two original conjugate candidates and their marginal spectrum are already in [HS00]. Theorem 10 of [GW10] is not used to collapse the two labelled-party branches. Its bare uniqueness wording cannot support that collapse because (3.2) separates the two explicitly.
+
+[HS25] revisits the four-qubit AME obstruction using invariant, coding and state-polynomial methods, and [HW25] treats spectral compatibility through a symmetry-reduced hierarchy. These provide context for retaining joint-state compatibility rather than optimizing three unrelated spectra. Neither source is asserted to contain the new HS4 equality-set proof written here, and no exhaustive literature-priority claim is made for the marginal or Hamiltonian consequences.
+
+The next formal targets are the deficit identity with strict equality conditions; the literal determinant covariance and conjugate values; the two-body marginal fiber and chirality operator; the operator inequality (5.2); and then the full equality classification. The last target additionally needs a formal one-uniform-to-Bell-product normal-form theorem. Existing finite eigenvalue checks do not supply that universal theorem. The current paper derivation uses the published normal-form theorem with its hypotheses, and its Lean implementation remains open.
+
+Useful remaining mathematical questions are an explicit global distance bound to the **union** O_+ union O_- from Delta, and the genuine all-state Renyi optimizer diagram. Distance to a chosen one of the two orbits cannot be controlled by entropy deficit alone: a state in the other orbit already has deficit zero. The calibrated energy witness (5.3) avoids that ambiguity by specifying which branch is tested.
+

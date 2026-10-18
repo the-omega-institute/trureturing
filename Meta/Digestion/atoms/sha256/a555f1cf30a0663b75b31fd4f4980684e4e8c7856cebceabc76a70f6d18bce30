@@ -1,0 +1,26 @@
+**Theorem 7.1 (credited one-root-Read implementation).** Once a genuine
+hard cap has been obtained from (SCP.21) and (SCP.22), the original
+late-target interface is implemented by the credited representative
+scan: before the request, read the actual original-root literals
+$Rq$ for all $q\in W_D$, including absent replies. This uses at most
+$2^D-1$ charged Reads, maximum address length $D$, and at most
+
+$$
+\sum_{\ell=0}^{D-1}(\ell+1)2^\ell=(D-1)2^D+1
+$$
+
+submitted letters. After a public target $p=Rq$ arrives, a constant
+factor uses zero Reads; otherwise one actual original-root Read $Ra$ at
+the installed representative owner is made before any authentic $k$.
+The credited temporal decoder then returns every
+$r_{\rho^k t}(p)$ without further Reads.
+
+These are paid source scans and an isolated finite export. They do not
+expose a seed vector, source identity, subtree, navigation port, ghost
+assignment, or source-dependent topology. Work, installed tables,
+workspace, final predictor size, address cost, authentication, handoff,
+isolation, and physical time remain separate resources. If exactly the
+cardinality of a nonminimal competitor must be preserved, the credited
+fuller scan uses at most $2^{D+1}-1$ Reads and may change fibers; this
+does not preserve its preparation cost.
+

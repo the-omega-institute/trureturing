@@ -1,0 +1,66 @@
+**Proposition 5.4 (Native witness, decoder, and all-times guards).** The
+trial profile has a four-real-coordinate model with squared error
+
+$$
+16H^2\left(\tau+\frac{a^7}{144}\right).
+\tag{5.4}
+$$
+
+**Proof.** Store the real and imaginary parts of
+
+$$
+z_0=e^{i\alpha},\qquad z_1=e^{Lk/H}e^{i\alpha}.
+$$
+
+Use the fixed real-linear decoder
+
+$$
+\mathcal D(z_0,z_1)=D(2H((b+c)z_0-ce^{-L}z_1),0),
+$$
+
+initialize at any prepared $k_0$ by $(z_0,z_1)=(1,e^{Lk_0/H})$, and set
+
+$$
+\mathcal U_h(z_0,z_1)=(z_0,e^{Lh/H}z_1),\qquad
+\mathcal V_t=e^{it/2}I.
+$$
+
+These satisfy the native update equations for every lawful signed command,
+including negative and zero commands; maps on empty domains are still
+assigned. On the actual image,
+
+$$
+\kappa(z_0,z_1)=H\log|z_1|/L=k.
+$$
+
+Thus the straight guard is $0<\kappa+h<H$. For a prescribed path with
+height velocity $a_c(u)$ and phase velocity $b_c(u)$, define
+
+$$
+\eta(u)=\int_0^u a_c(v)\,dv,\quad
+\Delta=\eta(T_{\rm p}),\quad
+L_{\rm path}=\int_0^{T_{\rm p}}b_c(u)\,du,\quad
+C=\int_0^{T_{\rm p}}\eta(u)b_c(u)\,du.
+$$
+
+The exact source guard is
+
+$$
+0<k+\eta(u)<H\quad(0\le u\le T_{\rm p}),
+$$
+
+and the source endpoint is
+
+$$
+k'=k+\Delta,\quad
+\alpha'=\alpha+L_{\rm path}/2,\quad
+\beta'=\beta+(1/2-k/r)L_{\rm path}-C/r.
+$$
+
+The encoded path map is the fixed affine map
+$e^{iL_{\rm path}/2}\mathcal U_\Delta$. For two successive relative paths,
+the mixed integral is $C_1+C_2+\Delta_1L_2$, exactly as in the native
+source. Every truncation uses its own integrals and full all-times guard,
+and every finite concatenation preserves the same current-state error.
+The Gram identity and (5.3) give (5.4). $\square$
+

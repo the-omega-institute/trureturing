@@ -1,0 +1,27 @@
+# Native FIB: exact two-dimensional affine minimax and an attaining annulus
+
+**Status.** Permanent reference input. The statements and proofs in this
+volume are ordinary handwritten mathematics, unverified by Lean.
+
+For the native current rays on the full open positive fiber, the optimal
+uniform error with at most two real stored coordinates and exact affine
+continuation has an exact scalar characterization. Below the transition
+$Z=2/3$, its value is strictly between the all-finite error floor and the
+best constant-readout error. A two-coordinate annulus attains it, recovers
+height and every native guard, and supports every prescribed simultaneous
+path. The lower bound permits arbitrary encoders; radial symmetry is a
+conclusion about minimax domination, not an assumption on competitors.
+
+The source and earlier results are credited to these two manuscripts:
+
+- **[F]** *Native FIB continuation: exact affine obstruction and compact-band
+  approximation*, including its sections on affine phase continuation and
+  finite affine factors.
+- **[O]** *Native FIB on the full open domain: affine approximation and
+  finite attainment*, including its section on fixed-dimension uniform gaps
+  and finite Hankel certificates.
+
+Sections 1–3 reconstruct the source bridge and the bounded-observable result
+needed from those manuscripts. The useful-readout rank analysis begins in
+§4. The precise dependency and result maps are in §11.
+

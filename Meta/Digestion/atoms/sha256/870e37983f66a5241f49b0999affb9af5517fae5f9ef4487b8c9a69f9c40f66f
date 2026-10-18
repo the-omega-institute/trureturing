@@ -1,0 +1,10 @@
+**Definition 3.1 (neighborhood exposure).** A certificate consists of rational numbers $0<\delta\le1/15$, $0<\eta<1$, $0<b\le1$, and a finite nonempty rational set $T=\{t_1,\ldots,t_m\}\subset I$, satisfying
+
+$$
+S_\mu\subset\bigcup_{t\in T}[t-\delta,t+\delta],\qquad
+\sum_{k:|r_k-t|\le\delta/4}\mu(k)\ge b\quad(t\in T).
+\tag{3.1}
+$$
+
+The first condition is a support cover; the second is mass in a smaller neighborhood. Centers need not be actual depths. The certificate is mathematical data about the same installed prior, not an observation port or runtime probability register. Supplying, verifying and representing it have separate costs.
+

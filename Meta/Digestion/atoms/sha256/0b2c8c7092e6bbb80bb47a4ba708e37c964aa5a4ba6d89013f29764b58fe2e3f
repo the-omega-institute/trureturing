@@ -1,0 +1,50 @@
+### 整数层
+
+$$
+a
+\in
+\mathbb Z_{\ge0}^4,
+$$
+
+$$
+\pi_{\mathrm{int}}(a)=(u,v,w),
+$$
+
+$$
+\ker \pi_{\mathrm{int}}=
+\mathbb Z\eta,
+$$
+
+其中
+
+$$
+\eta=(-1,0,-1,1).
+$$
+
+二者都满足：
+
+$$
+\boxed{
+\text{完整对象}=
+\text{基础投影}
++
+\text{一维纤维坐标}.
+}
+$$
+
+对应关系可以写成：
+
+| 概率 FIB 层 | 乘法 5040 层 |
+|---|---|
+| $p_{13}$ | $a_7$ |
+| $(X,Y,Z)$ | $(u,v,w)$ |
+| $7=2+5$ | $7$ 与 $10=2\cdot5$ 的碰撞 |
+| $S^2$ | Golden ring norm |
+| $\Delta$ | $v_5(|N(U)|)$ 的隐藏指数 |
+| square-cycle flow | exponent kernel move |
+| future contrast $J_{\mathscr L}$ | norm/readout contrast |
+
+需要注意，它们不是同一个数值系统，而是同一个**关系核结构**在不同代数中的表现。
+
+---
+

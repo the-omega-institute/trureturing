@@ -1,0 +1,13 @@
+**Definition 35.3 (Interior basic exponents).**
+An exponent $p\in\mathcal S_{k,b}^{\circ}$ is basic if no nonzero
+$s\in\mathcal S_{k,b}$ has $p-s\in\mathcal S_{k,b}^{\circ}$.
+Use the same definition for a single cycle. In its local coordinates put
+
+$$
+\nu_j=(2j+1;j\mathbf1),\qquad 1\le j\le k-1.
+\tag{35.7}
+$$
+
+These are local vectors; a global vector whose restrictions all equal
+$\nu_j$ will be written $(2j+1;j\mathbf1_V)$.
+

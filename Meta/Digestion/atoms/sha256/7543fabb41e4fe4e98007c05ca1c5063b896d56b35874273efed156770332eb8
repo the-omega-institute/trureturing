@@ -1,0 +1,19 @@
+**定理 78.11（All nonnegative original weights）。** In the selector of 78.6, with $n\ge2$, for arbitrary $u_a,v_a\ge0$, let $s_a=Lu_a+v_a$ and arrange the scores as $s_{[1]}\ge\cdots\ge s_{[n]}$. Then
+
+$$
+\min_P\sum_a\bigl(u_ac_P(a)+v_ar_P(a)\bigr)
+=\sum_{i=1}^n s_{[i]}\min(i,n-1)-\sum_a v_a.
+$$
+
+A descending-score permutation policy attains the value.
+
+Proof. Nonnegative weights and 78.8 reduce the minimum to the attained finite frontier. On a permutation its value is $\sum_i s_{x_i}t_i-\sum_a v_a$. For $i<j$, exchanging the originals changes the nonconstant term by
+
+$$
+(s_{x_j}-s_{x_i})(t_i-t_j).
+$$
+
+Moving a larger score to a smaller $t$ never increases the objective and decreases it when both inequalities are strict. Removing inversions yields the formula. A frontier permutation is optimal exactly when it has no score inversion across distinct $t$ values. Tied scores and the equal final two positions allow either order. A dominated policy can also minimize if all its excess costs have zero corresponding weights; it cannot lower the value. Correctness still quantifies over every original.
+
+For a prior $p_a$ and restore price $\lambda\ge0$, take $u_a=p_a,v_a=\lambda p_a$ and order by $p_a$. Since $\sum_a p_a=1$, the same formula is $(L+\lambda)\sum_i p_{[i]}t_i-\lambda$, attained by that one permutation for these parameters. This specialization does not erase originals outside the prior's support. $\square$
+

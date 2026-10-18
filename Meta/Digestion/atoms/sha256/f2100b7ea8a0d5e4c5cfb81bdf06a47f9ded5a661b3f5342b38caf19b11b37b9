@@ -1,0 +1,81 @@
+**Theorem 95.2 (same original observation and a nonzero scaled energy gap).**
+There exist a normalized real $f\in C_c^\infty(\mathbb R^4)$ and one
+finite $L>0$ with the following properties. For every sufficiently small
+$s>0$ put
+
+$$
+f_s^0=f,\qquad f_s^L(\xi)=f(\xi-Ln_s),\qquad
+\psi_s^j=\mathcal U_s^{-1}f_s^j\quad(j=0,L).
+\tag{95.2}
+$$
+
+Both vectors are normalized members of the original smooth compact core,
+hence of the entire native form and operator domains. They have exactly
+the same original retained probability marginal, the same partial trace
+over $L^2(dx)$, the same integrable amplitude marginal and the same
+kinetic energy $T$. Their projected free killed probability observations
+agree at every subsequent time and for every bounded Borel retained test.
+For the unchanged fixed-source potential, there is a number $\Delta>0$
+such that
+
+$$
+s^5\bigl(V_{s^2}[\psi_s^0]-V_{s^2}[\psi_s^L]\bigr)\longrightarrow\Delta.
+\tag{95.3}
+$$
+
+In particular, for every prescribed positive coupling family with
+$\chi_s=g_s s^{-3}\to\chi_0\in(0,\infty)$,
+
+$$
+s^2\bigl(\mathfrak e_{g_s,s^2}[\psi_s^L]
+              -\mathfrak e_{g_s,s^2}[\psi_s^0]\bigr)
+                      \longrightarrow\chi_0\Delta>0.
+\tag{95.4}
+$$
+
+This is W's prescribed microscopic energy scale and original
+observation, including at $\chi_0=\chi_c$; these vectors are not asserted
+to be ground states or near-minimizers.
+
+Proof. Choose any nonzero real compact smooth normalized $f$, with support
+away from the origin if desired. Strict positivity of $V$ gives
+$v[f]>0$. Its decay in (82.4) and dominated convergence imply
+
+$$
+v[f(\cdot-Le_w)]\longrightarrow0\quad(L\to\infty),
+\qquad e_w=(0,0,0,1).
+\tag{95.5}
+$$
+
+Choose a finite positive $L$ for which that value is smaller than
+$v[f]/2$, and set $\Delta=v[f]-v[f(\cdot-Le_w)]>0$.
+Since $n_s\to e_w$, the vectors in (95.2) have supports in one compact
+set for small $s$, strictly between the two moving height faces. They
+are smooth, compact and normalized. In original coordinates the exact
+relation (93.3) is
+
+$$
+\psi_s^L(k,u,x)=\psi_s^0(k,u,x-L\ell_s).
+\tag{95.6}
+$$
+
+An $x$ translation preserves the raw norm and every horizontal derivative,
+so it preserves $T$ on its full closed domain. It leaves both the
+probability integral $\int|\psi|^2dx$ and the amplitude integral
+$\int\psi dx$ unchanged for this integrable pair. It is a unitary acting
+only on the hidden factor in
+$L^2(\mathcal B)\otimes L^2(\mathbb R,dx)$, so it also leaves the partial
+trace unchanged. The projected probability-future assertion follows
+from (92.5), applied to their equal pushed initial probability measures.
+It refers to diffusion of those measures, not to squaring a propagated
+amplitude. The full free operator commutes with this translation as well.
+
+The exact normalization gives
+$s^5V_{s^2}[\psi_s^j]=\int U_s|f_s^j|^2$.
+Uniform convergence (82.10), convergence of the compact translations in
+$L^2$, and boundedness of $V$ prove (95.3). Equal kinetic energies make
+the difference of full energies exactly the attractive difference times
+$g_s$ with the sign displayed in (95.4). Multiplying by $s^2$ and using
+$g_ss^{-3}\to\chi_0$ proves that formula. Neither the source nor its
+centre has been translated; only the trial vector has. $\square$
+

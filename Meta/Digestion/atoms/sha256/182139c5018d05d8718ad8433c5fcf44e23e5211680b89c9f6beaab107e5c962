@@ -1,0 +1,21 @@
+**Open Problem 9.2 (Original arbitrary-finite alternative).** With the full domains (1.2), put
+
+$$
+\begin{aligned}
+C_N&=\sup_{\theta\in\Theta_N}d(P_\theta),\\
+q_{r,0}(P)&=\mathbb E_P[X_0\mid X_{-r:-1},X_{1:r}],\\
+D_r(P)&=\mathbb E_P(X_0-q_{r,0}(P))^2,\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+\end{aligned}
+$$
+
+Still decide whether an exact finite producer attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. The compact-domain equivalence retained in [Multiword, Open Problem 9.1][MW] and [Predictive, Open Problem 6.1][PQ] is
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\kappa_m/(m+1).
+\tag{9.1}
+$$
+
+The entropy allowance supplies neither an exact finite attainer nor these strict full-domain maxima. Productive actual conditional-null directions or other strict certificates covering all remaining hypothetical attainers are still missing. Universal weighted finiteness outside the specified suppliers, or an alternative proof of actual-tail summability, is also unresolved here. No fixed finite law with divergent actual tail is established. Slow convergence across a family is not such a law. The original zero-mass, reducible, periodic, noncontractive, seam, null and endpoint cases remain in this open target; no uniform-$N$ rate or original-target completion is claimed.
+

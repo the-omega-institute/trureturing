@@ -1,0 +1,42 @@
+**Definition 9.1 (Relative common-command convention).** Fix precisely the
+means, preparation and current source $\mathcal M_b$ of Definition 8.1 and
+Theorem 8.2. Write $J_b=(\ell_b,u_b)$ and $W_b=u_b-\ell_b>0$. A command
+$\gamma=(a,b):[0,T]\to\mathbb R^2$ starts at $(0,0)$ and is piecewise
+$C^1$ or absolutely continuous. Here $b(t)$ is a control increment,
+not the subscript denoting the fixed means. The two coordinates have
+finite variation; for absolutely continuous paths this follows from
+integrability of their derivatives on the compact interval. Set
+
+$$
+A_\gamma=a(T),\quad B_\gamma=b(T),\quad
+m_\gamma=\min_t a(t),\quad M_\gamma=\max_t a(t).
+\tag{9.1}
+$$
+
+For a current height $k$ and any actual current real relation lift
+$\chi_*$, this command means the original history
+
+$$
+\kappa(t)=k+a(t),\qquad \chi(t)=\chi_*+b(t),\qquad
+\theta(t)=\theta_*+\int_0^t w(k+a(s))\,db(s).
+\tag{9.2}
+$$
+
+It is admitted at that state exactly when $k+a(t)\in J_b$ for every
+$t$. Thus the common input is the pair of relative increments, or its
+prescribed velocities, and not an absolute path that assumes knowledge
+of $k$. The same numerical functions $a,b$ are used at every starting
+state. Formula (9.2) specifies a family of Definition 3.1 histories;
+it asserts no additional actuator, feedback measurement, reset or
+uniform resource bound. Its endpoint phase increment is denoted
+
+$$
+H_\gamma(k)=\int_0^T w(k+a(t))\,db(t).
+\tag{9.3}
+$$
+
+All integrals here are ordinary integrals against an absolutely
+continuous integrator, including the piecewise $C^1$ case. The
+bounded-variation signature used below describes these paths; it does
+not enlarge Definition 3.1 to all bounded-variation controls.
+

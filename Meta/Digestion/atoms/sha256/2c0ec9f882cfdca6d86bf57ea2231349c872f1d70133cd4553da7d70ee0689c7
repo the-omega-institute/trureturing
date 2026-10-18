@@ -1,0 +1,22 @@
+**Definition 2.1 (complete finite instruction table).** A controller has a
+nonempty finite set $E$, a common initial state $e_*$ and a partition
+$E=E_R\sqcup E_U\sqcup E_H$. A read state $e\in E_R$ installs one fixed
+literal $p_e\in\mathcal W$ and one successor $s_R(e,c)\in E$ for each
+$c\in\mathcal C$. An update state $e\in E_U$ has one successor
+$s_U(e)\in E$. A halt $h\in E_H$ installs one literal row $Y_h\in\mathcal Y$
+and is absorbing. The source register and epoch are respectively $U^ju$
+and $j$; they are not extra readable controller storage.
+
+All mutable reply retention, program positions, finite selectors and
+output distinctions are counted in $E$. A prescribed finite-valued
+accumulator can be incorporated by taking its product with control and
+counting the resulting states. Unbounded writable storage is not part of
+this controller class. Whole-literal reads and whole-row halt output have
+the declared primitive semantics. The cardinality $|E|$ does not charge
+their installation lengths or serialization work.
+
+For $K\in\mathbb N$, write $\mathsf{Solve}_K$ for existence of such a table
+with $|E|\le K$ which, on every original $u\in D$ from $(e_*,U^Nu)$, first
+halts after finitely many instructions with output $R(u)$. This is one
+table for the entire family, not one table for each source.
+

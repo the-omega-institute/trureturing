@@ -1,0 +1,179 @@
+**Theorem 5.1 (Exact return, risk, and paid-cost formulas).** Under the
+same law and acquisition contract, fix integers $s\ge1$ and $m\ge0$.
+Set $M=m+1$ and
+
+$$
+\beta=2\sqrt{ab},\qquad
+r_M=\frac12\sum_{r=0}^M\binom Mr
+\min\bigl(a^{M-r}b^r,\ a^rb^{M-r}\bigr).
+\tag{5.1}
+$$
+
+For either fixed original endpoint and every unchanged auxiliary law,
+there is a deterministic admissible protocol, ignoring that auxiliary
+variable, with
+
+$$
+\begin{aligned}
+\mathbb P_p(T)&=1,\\
+\mathbb P_p(A\ne H_j)
+&=c^se_0+(1-c^s)r_{m+1},\\
+N&\le2s+m,\\
+\mathbb E_pN&=2s+m(1-c^s).
+\end{aligned}
+\tag{5.2}
+$$
+
+If $m>0$, its exact read-count distribution is
+
+$$
+\mathbb P_p(N=2s)=c^s,
+\qquad
+\mathbb P_p(N=2s+m)=1-c^s.
+\tag{5.3}
+$$
+
+The maximum actual read count is exactly $2s+m$. For $m=0$, $N=2s$ on
+every path and $r_1=b$. Moreover
+
+$$
+r_M\le\frac{\beta^M}{2},\qquad
+\mathbb P_p(A\ne H_j)
+\le c^se_0+(1-c^s)\frac{\beta^{m+1}}2.
+\tag{5.4}
+$$
+
+For each fixed biased interior parameter and each $\varepsilon>0$, a
+choice of finite $s,m$ makes the error smaller than $\varepsilon$ with a
+deterministic finite maximum actual read cost. This is an attained upper
+family, without an optimality assertion or a zero-error finite-return
+claim.
+
+Proof. Put $D=m+3$. First make all $2s$ actual reads, in the indicated
+pair order,
+
+$$
+4(D+r),\quad 4(D+r)+1,
+\qquad 0\le r<s.
+\tag{5.5}
+$$
+
+All these calls are made and paid before any output or local-block
+branch, even when an early reply is one. In phase zero the even member
+of each pair is active; in phase one the odd member is active. In
+either case its active reply is
+
+$$
+Y_{2(D+r)}=S_{2(D+r)}\oplus S_{2(D+r)+1},
+\tag{5.6}
+$$
+
+and the other reply is a separator zero. The spin pairs in (5.6) are
+mutually disjoint. Their XORs are independent and each is zero with
+probability $c=a^2+b^2$. Let $Z$ be the event that every probe reply is
+zero. Then
+
+$$
+\mathbb P_p(Z)=c^s.
+\tag{5.7}
+$$
+
+The event $Z$ is the same event of these distant spin pairs in either
+phase. It is therefore independent of the uniform phase. The smallest
+probe spin index is $2m+6$, whereas every local block used below has
+largest index at most $m+1$. Thus all probe spins are also disjoint from
+every such local block. Independence here concerns spin supports in the
+same $J_p$ realization, not an independently spliced source.
+
+On $Z$, return a fixed majority-spin state in one fixed phase; for
+example use $a_\sigma$ for $j=0$ and $b_\sigma$ for $j=1$, with
+$\sigma$ as in Theorem 4.1. Conditional on $Z$, the phase remains
+uniform and the endpoint spin keeps its original Bernoulli law.
+The correct conditional probability is $a/2$, hence the conditional
+classification error is $e_0$. Exactly $2s$ reads have been made.
+
+On $Z^c$, at least one paid reply is one. Its original address parity
+identifies the actual phase $\phi$. Only after completing all probes,
+make the following $m$ actual local reads:
+
+$$
+\begin{array}{c|c|c|c}
+\text{certified phase}&\text{addresses},\ 0\le i<m
+&\text{active XORs}&\text{spin block}\\ \hline
+0&2(j+i)&Y_j,\ldots,Y_{j+m-1}&S_j,\ldots,S_{j+m}\\
+1&1+2i&Y_0,\ldots,Y_{m-1}&S_0,\ldots,S_m
+\end{array}
+\tag{5.8}
+$$
+
+Every local reply is read and paid for. The first spin in each row is
+exactly the original endpoint spin in (1.2), for both $j=0$ and $j=1$.
+For $m=0$, both local lists are empty and the phase-certified endpoint
+spin is still unobserved. There is no endpoint reset or movement.
+
+The local $m$-XOR word determines its $M=m+1$ spins up to simultaneous
+complementation. For each of its two completions compute its Bernoulli
+product mass, choose a larger-mass completion, and return its first spin
+in the certified original phase, using (1.2). A fixed deterministic
+choice resolves every likelihood tie. This is the maximum a posteriori
+choice of endpoint spin for that word: the two completions have opposite
+first spins.
+
+For an unordered complementary pair with product masses $u,v$, the
+weighted error is $\min(u,v)$, including a tie. Sum over unordered pairs.
+Equivalently sum over all spin words and divide by two, because
+complementation has no fixed word for $M\ge1$. If a word has $r$ minority
+spins, its mass is $a^{M-r}b^r$ and its complement has mass
+$a^rb^{M-r}$. Grouping by $r$ gives exactly $r_M$ in (5.1). This is a
+classification-error identity. The related complementary-pair mechanism
+in [Original, Lemma 3.1][Original] instead weights a pair by
+$uv/(u+v)$ for posterior variance; that Brier expression is not being
+substituted here.
+
+For every pair $uv=(ab)^M$. The elementary estimate
+$\min(u,v)\le\sqrt{uv}$ and the binomial identity
+$\sum_{r=0}^M\binom Mr=2^M$ imply
+
+$$
+r_M\le 2^{M-1}(ab)^{M/2}=\frac{\beta^M}{2}.
+\tag{5.9}
+$$
+
+When $m=0$, (5.1) reads $r_1=b$, as required for an unobserved
+Bernoulli spin after phase certification. All possible local likelihood
+ties are covered by the fixed tie rule and leave the minimum-mass
+formula unchanged.
+
+Given either phase, the local spin block is independent of the probe
+spins and of $Z^c$. Hence the local error on probe success is exactly
+$r_{m+1}$ in each phase. Combining success with (5.7) and the error on
+$Z$ proves the exact risk in (5.2). On $Z$ the count is $2s$; on $Z^c$
+it is $2s+m$. If $m>0$ these are distinct and give (5.3). If $m=0$ they
+coincide, so the count is always $2s$. In both cases the expectation is
+$2s+m(1-c^s)$. Since $0<c^s<1$, the success branch has positive mass,
+so the maximum count is exactly $2s+m$, also when $m=0$.
+The entire construction consists of fixed finite lists
+and a finite decision on their replies, with finite internal waits
+chosen, so it returns almost surely. Impossible records can receive
+any fixed output to make the rule total and measurable.
+
+For the stated parameter range, $0<c<1$ and $0<\beta<1$. Choose $s$
+large enough that $c^se_0<\varepsilon/2$, and then $m$ large enough
+that $\beta^{m+1}/2<\varepsilon/2$. Equation (5.4) gives error below
+$\varepsilon$ and maximum paid count $2s+m$. At every finite $s$, the
+error remains positive because $c^se_0>0$.
+
+The parameter restriction is material: at $p=1/2$ the geometric factor
+$\beta$ is one, while at $p=0,1$ the positive-mass hypotheses fail,
+$c=1$, and $R$ is not defined. Neither these boundary parameters nor a
+uniform cost bound as they are approached are part of the theorem.
+$\square$
+
+The complement-pair likelihood, maximum a posteriori rule, and geometric
+mean estimate are reused elementary mechanisms. The repo-derived
+content is the finite paid phase probing on the original separator
+clock, the local addresses for the unchanged endpoint in both phases,
+and the simultaneous exact return, classification-risk, maximum-cost,
+read-distribution, and expected-cost formulas. Complete-half-line phase
+or spin identification is not a free step in this construction.
+

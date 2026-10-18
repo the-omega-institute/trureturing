@@ -1,0 +1,13 @@
+### 定义 28.1（有限量子状态）
+
+令 \(H\) 为有限维复 Hilbert 空间，令 \(\mathsf L(H)\) 为其线性算子空间，令
+
+\[
+\mathsf D(H)
+=
+\{\rho\in\mathsf L(H):
+\rho=\rho^\ast,\ \rho\succeq0,\ \operatorname{tr}\rho=1\}.
+\]
+
+若 \(\rho\in\mathsf D(H)\)，称 \(\rho\) 为量子状态。若 \(\sigma\succeq0\) 且 \(\operatorname{tr}\sigma=1\)，则 \(\sigma\) 也是量子状态。纯状态是秩一投影 \( |\psi\rangle\langle\psi| \)。
+

@@ -1,0 +1,175 @@
+**Theorem 212.11 (Odd-cycle simultaneous attainers and full-output escape).**
+For the construction of 212.9, let $G=C_m$ with $m=2k+1\ge3$,
+and prescribe $c_{nj}=\gamma_n/2$. Then
+
+$$
+\kappa_{C_m}(\gamma_n,c_n)=\frac{\gamma_n}{2m},\qquad
+\min_{\mathcal F_{C_m}(c)}\Delta_N
+ =\frac{\gamma_*}{2m},\qquad
+\gamma_*:=\max_{n\in I_c}\gamma_n.
+\tag{212.48}
+$$
+
+All edge values and all unaries are attained by one measure per class,
+and these measures coexist with the single stock. Every proper edge
+subfamily nevertheless permits a simultaneous zero-cost repair on
+those selected pair schedules with the same unaries and stock.
+This last statement gives no zero-cost assertion on the omitted edges.
+The unit threshold $\gamma_*=2m$ is attained, including equality.
+
+More generally, for any graph in 212.9 and every full nonnegative
+score $V$ with $Q(V)=q$, drop all the other restrictions of (212.41).
+For $n\in I_c$, $U\subseteq J$, set
+
+$$
+A_n=\sum_{\Omega_n}A_w,\quad
+c^V_{nj}=\sum_{w\in\Omega_n:w_j=0}C_w,\quad
+Z_J(w)=\{j\in J:w_j=0\},\quad
+e_U(Z)=|E(G[U\cap Z])|.
+$$
+
+Writing $\alpha_U=\alpha(G[U])$ for the independence number, one has
+
+$$
+\sum_{j\in U}c^V_{nj}-\alpha_U\gamma_n
+ \le |E(G[U])|\Delta_N(V)+\alpha_U A_n
+               +\sum_{w\ne1^L}(A_w+P_w)e_U(Z_J(w)).
+\tag{212.49}
+$$
+
+In the odd-cycle case $U=J$, this reads
+
+$$
+\frac{\gamma_n}{2}\le m\Delta_N(V)+kA_n
+ +\sum_w(A_w+P_w)e_J(Z_J(w))
+ +\sum_{j\in J}\left(\frac{\gamma_n}{2}-c^V_{nj}\right).
+\tag{212.50}
+$$
+
+The last sum is signed unary drift. The stock term counts each
+actual atom with its number of induced edges; it is not an allocation
+of independent stocks to the edges.
+
+**Proof.** For any subset $Z$ of a graph, deleting at most one chosen
+endpoint for each induced edge leaves an independent set. Therefore
+$|Z\cap U|\le\alpha_U+e_U(Z)$.
+For $C_{2k+1}$ this gives $|Z|-k\le e_J(Z)$.
+Integrating against a measure of mass $\gamma$ with all unary masses
+$\gamma/2$ yields
+
+$$
+\sum_{e\in E(C_m)}\mu\{e\subseteq Z\}\ge\gamma/2.
+\tag{212.51}
+$$
+
+The largest of the $m$ edge masses is at least $\gamma/(2m)$.
+This is the classical independent-set/odd-cycle counting inequality,
+used here for the actual correct-class measure.
+
+Index the cycle by $0,\ldots,2k$ and put
+$Z_+=\{0,2,\ldots,2k\}$, $Z_-=J\setminus Z_+$.
+Give each of their $2m$ cyclic rotations mass $\gamma/(2m)$.
+Each complementary pair gives every unary mass $\gamma/(2m)$,
+so the sum has unaries $\gamma/2$ and total $\gamma$.
+Each rotation of $Z_+$ contains exactly one cycle edge, each rotation
+of $Z_-$ contains none, and every edge appears once among the former
+rotations. Thus every edge mass is exactly $\gamma/(2m)$.
+Use this same construction for each class and (212.43) proves (212.48).
+It also covers $\gamma=0$ by the zero measure.
+A proper subset of the cycle edges is bipartite; choose a bipartition
+of its vertices, including any isolated vertices, and put mass
+$\gamma/2$ on each of the two complementary color classes.
+This one measure has half unaries and no intersection on any selected
+edge. Formula (212.42) proves their simultaneous local repair.
+It also identifies why an omitted edge can retain positive cost.
+
+For the unrestricted output inequality, $\beta_1=\beta_2=0$
+implies $W_V=\sum_wA_w+\sum_wP_w+T$ even when $A$ is nonzero.
+The excess of the same legal table (212.47), with
+$E_e=\{w:w_i=w_j=0\}$, is exactly
+
+$$
+(z_{D_{n,e}}-r)\cdot V
+ =C_n(E_e)+P_n(E_e)-A(E_e)-P(E_e),
+\tag{212.52}
+$$
+
+where the subscript restricts to $\Omega_n$ and the unsubscripted
+measure sums over every zero word. The positive word is never in
+$E_e$. Since every table excess is at most $\Delta_N(V)$ and
+$P_n(E_e)\ge0$,
+
+$$
+C_n(E_e)\le\Delta_N(V)+A(E_e)+P(E_e).
+\tag{212.53}
+$$
+
+The actual class-$n$ correct measure has mass $\gamma_n+A_n$,
+because its quotient coordinate is $\gamma_n$.
+Integrate $|Z_J(w)\cap U|\le\alpha_U+e_U(Z_J(w))$ against
+this same measure and sum (212.53) over $E(G[U])$.
+Finite interchange of sums gives exactly
+$\sum_w(A_w+P_w)e_U(Z_J(w))$ for the stock incidence term.
+This proves (212.49), with its multiplicities and without changing
+any measure between edges. Substituting $|J|=m=2k+1$ and adding
+the signed drift to both sides gives (212.50).
+All zero masses, empty $U$, edgeless induced graphs, and closed cost
+endpoints are included. $\square$
+
+At half marginals, $X_j=\mathbf1_{j\in Z}$ under $\mu/\gamma$
+is a symmetric Bernoulli vector. Huber and Marić,
+[*Bernoulli Correlations and Cut Polytopes*, arXiv:1706.06182v2,
+Theorem 4 and §§4.1–4.2](https://arxiv.org/pdf/1706.06182v2),
+identify its jointly attainable agreement vectors with a switched
+cut polytope, using mixtures of complementary two-point laws.
+Here the agreement coordinate on an edge is
+$2\mu\{i,j\in Z\}/\gamma$, since its $00$ and $11$ probabilities
+are equal at half marginals. The rotation and bipartition measures
+above are concrete mixtures of that kind. This classical common-law
+mechanism does not make separately optimal edge couplings compatible;
+nor does its symmetric statement apply to arbitrary unequal marginals.
+For general $c$ the exact domain is the actual marginal polytope in
+(212.40), and (212.44) is the independent-set convex-hull criterion.
+
+For an explicit full input, take $L=8$, $I_c=\{3\}$,
+$J=\{4,5,6,7,8\}$, the cycle with edges
+$45,56,67,78,48$, and $\gamma_3=g=t=11$.
+The stock has mass 22 on the empty zero set and each singleton,
+and mass 11 on each nonedge pair of $I=\{3,\ldots,8\}$.
+Its balanced lifts specify all 34 positive pair rows and $S=264$.
+Choose $C_{11001010}=C_{11010101}=11/2$.
+Then $W=275$, $q=(11e_3,286)$ and every class-3 unary on $J$
+is $11/2$. Pair $48$ has full maxima
+$(11/2,55,55,165)$ and stopped maxima $(55,55,165)$.
+All other full pairs and all short schedules have support 275;
+all stopped schedules do as well. The input costs are $(11/2,0)$.
+The ten rotated alternating atoms, each of mass $11/10$, give
+complete costs $(11/10,0)$ and attain the full preserving-fiber
+minimum. For $\gamma_*>2m$, (212.50) shows how a unit-cost exact-$Q$
+output must pay by some combination of signed unary drift, base mass
+and edge-bearing stock; preserving them all cannot suffice.
+
+These graph obstructions do not prove $E_N$ nonmembership.
+For every quotient in 212.9, move each correct measure to
+$\mu_n=\gamma_n\delta_\varnothing$, keeping the same $\nu,t$.
+The resulting nonzero score $V_0$ has $Q(V_0)=q$ and, by the
+complete identity, $\Delta_N(V_0)=\Delta_O(V_0)=0$.
+It is directly the existing threshold score of 203.2: for each
+$n\in I_c$ and $j>n$, the stock atom $\{n\}$ alone gives
+$a_{nj}=\nu\{x_n=0,x_j=1\}\ge2g\ge\gamma_n$, so every
+threshold suffix bit is one. Its zero-cost certificate is allowed by
+199.5–199.6 and is included in the zero-$O$ endpoint of 203.3.
+Both $\theta=0$ and $\theta=1$ are permitted in (212.5).
+For every $b\in H_N$ and the same actual feasible full $\lambda$,
+
+$$
+F_q(b)=V_0\cdot h(b)\le V_0\cdot G_N\lambda\le0.
+\tag{212.54}
+$$
+
+Thus none of these quotients can satisfy the strict original-negative
+inequality $F_q(b)>M$ with $M\ge1$.
+The obstruction concerns the explicit unary/stock invariants, even
+for nonlinear choices of the full output score. Those invariants
+are not required by the unrestricted certificate definition.
+

@@ -1,0 +1,82 @@
+**定义 87.1（One full immutable target on the original reader）。** Retain the original integer reader and source semantics of [IC, Definitions 1.1–1.3 and Interface 1.4]. Here
+
+$$
+k=16,\qquad m=14,\qquad T=17,\qquad \gcd(14,17)=1.
+\tag{87.1}
+$$
+
+The integer weights, scalar reading and coefficient cycle are
+
+$$
+\begin{aligned}
+G_i&=2^i &&(0\le i<16),\\
+G_i&=\sum_{a=1}^{16}G_{i-a} &&(i\ge16),\\
+V_{16}(w)&=\sum_{i<|w|}w_iG_i,\qquad
+\gamma_i=G_i\bmod2=\mathbf1_{\{0,16\}}(i\bmod17).
+\end{aligned}
+\tag{87.2}
+$$
+
+The last equality is the matched cycle supplied by [S2, Theorem 14.1]. It also follows directly here from $G_{i+17}=2G_{i+16}-G_i$ and the initial seventeen parities. Bits are read in increasing weight position. A legal history avoids $1^{16}$. The source prior consists of all finite actual histories of complete fourteen-bit blocks, including the empty and rejected histories. For a legal history its record and free output are
+
+$$
+q(w)=(V_{16}(w)\bmod2,\ |w|\bmod17,\ s(w)),
+\qquad o(q)=v,
+\tag{87.3}
+$$
+
+where $s(w)$ is its terminal one-run length. Every rejected history has record and output $\bot$, independent of the two scalar outputs. Successful records have $v\in\mathbb F_2$, every phase $\theta\in\mathbb Z/17\mathbb Z$, and every tail $0\le s<16$. A zero sends $(v,\theta,s)$ to $(v,\theta+1,0)$; a one sends it to $(v\oplus\gamma_\theta,\theta+1,s+1)$ when $s+1<16$, and otherwise to $\bot$. Both bits preserve $\bot$. These bit transitions define execution and supply no bitwise observation.
+
+Take pairwise distinct labels $A_{00},A_{01},A_{10},A_{11},D_{00},D_{01},D_{10},D_{11},C,R$. The initial-bottom label $L_\bot$ is independently prescribed and may coincide with any of them. Write $j=-\theta_{\rm INITIAL}\pmod{17}$. The following table fixes every low-phase entry. Where a four-bit entry $z(j)$ is present, its first two bits index $A$ and its last two index $D$; $C$ is a semantic label, not a four-bit index.
+
+| INITIAL phase $j$ | $z(j)$ | $\lambda_0(j)$ | $\lambda_1(j)$ |
+| --- | --- | --- | --- |
+| $0$ | $1000$ | $A_{10}$ | $D_{00}$ |
+| $1$ | $1000$ | $A_{10}$ | $D_{00}$ |
+| $2$ | $1100$ | $A_{11}$ | $D_{00}$ |
+| $3$ | $0100$ | $A_{01}$ | $D_{00}$ |
+| $4$ | $0110$ | $A_{01}$ | $D_{10}$ |
+| $5$ | $0111$ | $A_{01}$ | $D_{11}$ |
+| $6$ | $1001$ | $A_{10}$ | $D_{01}$ |
+| $7$ | $1011$ | $A_{10}$ | $D_{11}$ |
+| $8$ | $1101$ | $A_{11}$ | $D_{01}$ |
+| $9$ | $0010$ | $A_{00}$ | $D_{10}$ |
+| $10$ | $1010$ | $A_{10}$ | $D_{10}$ |
+| $11$ | $1110$ | $A_{11}$ | $D_{10}$ |
+| $12$ | $0000$ | $A_{00}$ | $D_{00}$ |
+| $13$ | $0101$ | $A_{01}$ | $D_{01}$ |
+| $14$ | $1111$ | $A_{11}$ | $D_{11}$ |
+| $15$ | $C$ | $C$ | $C$ |
+| $16$ | $1100$ | $A_{11}$ | $D_{00}$ |
+
+Define the entire record target and its explicit history pullback by
+
+$$
+\begin{aligned}
+f_{87}(v,-j,s)&=
+\begin{cases}
+\lambda_v(j),&0\le s<14,\\
+R,&s=14\text{ or }s=15,
+\end{cases}\\
+f_{87}(\bot)&=L_\bot,\qquad
+F_{87}(w)=f_{87}(q(w)),\qquad
+\Lambda_{87}(j)=(\lambda_0(j),\lambda_1(j)).
+\end{aligned}
+\tag{87.4}
+$$
+
+Thus the low tables are independent of INITIAL tail, both high INITIAL tails have the same fresh $R$ at every phase and value, and all initially rejected histories have their independent label. The target is never reevaluated on an updated record.
+
+Each full low image has exactly five labels. The tables have genuinely different equality partitions: phases $0,2$ have unequal row labels and equal column labels, while phases $0,6$ have equal row labels and unequal column labels. Renaming the labels of either component cannot remove these differences. The full joined image has fifteen classes. Exactly two classes are doubled:
+
+$$
+X=(A_{10},D_{00}),\quad\Lambda_{87}^{-1}(X)=\{0,1\},
+\qquad
+Y=(A_{11},D_{00}),\quad\Lambda_{87}^{-1}(Y)=\{2,16\}.
+\tag{87.5}
+$$
+
+The other thirteen classes are singletons, including $(C,C)$ at phase $15$. In particular $X\ne Y$.
+
+Both original literal alphabets are kept: all fourteen-bit words, and fourteen-bit words internally avoiding $1^{16}$. They coincide as sets here because $14<16$; rejection across a block boundary remains an actual absorbing event. The free initial observation reveals only $v$ or $\bot$. Thereafter the controller sees one scalar or bottom output at each of its own completed issued-block endpoints. Every issued block costs one and emits all fourteen bits, including the part after absorption, every wait, padding or repair block. Adaptive control may use the acquired archive. ONE GLOBAL requires prefixes of one literal stream for this fixed full target on both free values and all actual sources; stopping and decoding may use their own endpoint archives. There is no reset, copy, intermediate read, hidden initial clock or borrowed sibling output. Write $C_{\rm ad}$ and $C_{\rm pre}$ for the minimum uniform worst emitted-block fees under those two controls.
+

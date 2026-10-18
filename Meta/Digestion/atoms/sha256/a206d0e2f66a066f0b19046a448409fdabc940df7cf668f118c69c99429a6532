@@ -1,0 +1,20 @@
+#### 17.4.2 已有算子构造的边界
+
+Bender、Brody 和 Müller 的 [Hamiltonian for the zeros of the Riemann zeta function](https://arxiv.org/abs/1608.03679) 构造了形式 Hamiltonian，并通过边界条件使其特征值对应 zeta 零点。作者明确指出该算子并非通常意义下的 Hermitian，若能严格证明其自伴性，才会得到 RH。
+
+Li 的 [On the spectrum of a differential operator on a Hilbert–Pólya space](https://arxiv.org/abs/2404.11902) 在特定测试函数商空间上构造微分算子，并陈述零点与特征值之间的等价。该结果把“谱实现”与“自伴性”分开，不能单独推出 RH。
+
+因此须区分下列数学条件：
+
+\[
+\mathrm{ZeroSpectrumRealization}
+\]
+
+和
+
+\[
+\mathrm{SelfAdjointness}.
+\]
+
+前者只说明零点被表示为谱，后者才控制谱是否位于实轴。
+

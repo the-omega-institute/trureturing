@@ -1,0 +1,34 @@
+**Assumption 1.2 (arbitrary original full fiber).** Fix a public cut $P$
+and complete current row $R_*$. In §§2–3 the domain is any fixed nonempty
+fiber
+
+$$
+\mathcal U=\{u\in\mathcal T:R_P(\rho u)=R_*\},
+\qquad t_u=\rho u,\qquad F(u)=R_P(u).
+\tag{PCA.2}
+$$
+
+It contains every compatible finite origin, without a size or depth
+promise. The single update, origin/register binding and current row
+acquisition are authenticated supplied premises. The current register
+remains that same $t_u$ through preparation, handoff and reading.
+
+Use [NBP, Assumptions 10.6 and 14.1][NBP] for the general acquisition
+and access contracts, with Assumption 9.2 as their repeated-partner
+specialization. In the acquired-term description,
+$A(u)$ is genuinely acquired same-version data: the complete current
+tree, or the row and one acquired finite value for each class. A lawful
+finite computation on $A(u)$ specifies the code below. In the paid
+common-start preparation description, that acquired archive is
+inaccessible: preparation starts source-independently and obtains every
+source distinction through its own paid actual native replies. The
+acquired-term description specifies which function must be generated;
+it does not put its arguments into the preparation state.
+
+Pre-cut native permission, acquisition, authentication, actual export,
+complete access isolation, lawful reader entry, handoff and stationary
+service continuity remain supplied and separately priced. They are not
+constructed from a row identity or from existence of a finite table.
+There is no update, reset, reroot, copying, equality, image-membership,
+inverse, provenance or source-identity port during the two phases.
+

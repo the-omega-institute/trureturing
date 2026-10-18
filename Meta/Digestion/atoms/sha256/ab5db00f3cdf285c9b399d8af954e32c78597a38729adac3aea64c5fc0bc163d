@@ -1,0 +1,27 @@
+**Assumption 1.1 (original source and separate suppliers).** Let FC denote
+[the finite-face alphabet criterion](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_FACE_ALPHABET_CRITERION.md)
+at revision `0512cd17cf4807864a7097fb3169847fcf3eef68`, GC denote
+[the global actual-count source](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md),
+and RTII denote [Arithmetic Holographic RT II](ARITHMETIC_HOLOGRAPHIC_RT_II.md).
+GC and RTII are used at revision
+`c9635edd5272c1183f71a44e4d199f94a741c57d`.
+Retain GC Assumption 1.2 and FC Assumptions 1.1 and 23.1, with the
+same consistent positive isolated source in all nine dyadic rows of
+GC Definition 6.1. Their original supplier objects at
+`321589a8be98de4fe179f99f6e593d8784952db1` retain their stated scopes.
+
+In particular, CG §§13–17 supplies source existence, isolation,
+Jacobian, ranks, root TP and the complete stopped-output minimax.
+JR §§34–42 supplies sharp worst-history JOINT cost and the separate
+unaveraged supported equality face of JR Theorem 42.1. The averaged
+live equality from CG17 alone is insufficient. FA §§69–72 and
+RC §§67 and 75 supply full-complex multi-Kraus actual-label rigidity,
+physical capacity and the common constructor. FA §§78–79 supplies
+the finite feasible domain. RC §68 supplies dual attainment only
+under its own strict-interior hypotheses. FA §87 and Theorem 90.1
+supply coherent completion and the nine-low existence bound; ST
+Theorem 8.2 supplies its conditional seven-low/eight-total region.
+The abbreviations and owning source paths are those in GC Assumption
+1.2. Expression bounds on a source rectangle do not replace these
+separate assumptions or assert TP away from that one root.
+

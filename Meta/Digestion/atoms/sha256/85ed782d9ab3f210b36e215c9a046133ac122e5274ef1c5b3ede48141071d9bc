@@ -1,0 +1,4 @@
+**命题 70.5（每个有符号中性三标架的两叶局部源）。** 对任意中性 $(v_0,v_1,v_2)$，$\sigma=v_0\cdot(v_2\times v_1)=\pm1$。行5 $d_0\le1$ 取 $1/L<r<1$，$a=\sigma v_1/r,b=\sigma r v_2$；若 $\sigma=1$ 取 $t=\langle\beta,\alpha\rangle$，若 $\sigma=-1$ 取 $t=\langle\alpha,\beta\rangle$。准确记录为 $(v_0,rv_1,rv_2)$，$\Delta=1$，全部未来 $x_j=r^{F_j}v_{j\bmod3}$。
+
+证明。中性三标架有 $v_2\times v_1=\sigma v_0,v_0\times v_2=\sigma v_1,v_1\times v_0=\sigma v_2$。$K=b\times a=\sigma v_0$；顺根树的前两更新值为 $K\times b=\sigma rv_1$ 及 $(K\times b)\times K=\sigma rv_2$。反转根在所有替换版本都乘 $-1$，给负定向的所需记录。两叶长 $1/r,r<L$，三读为 $1,r,r$，行列式1满足下界；递推给未来。它是 $N=2$ 的局部族，区别于上面的固定单叶 $\beta$、$(q_0,q_1,q_2)=(r,1,r)$。行3及行5 $d_0<1$ 还可同时缩放一个实际中性源的两叶：真实每时叶数 $N_j>0$ 给 $x_j(\lambda)=\lambda^{N_j}x_j(1)$，$\Delta$ 乘 $\lambda^4$ 最终仍合法；$N_j\to\infty$ 给逐源收缩。三种实际构造的用途和活跃边界不同。
+

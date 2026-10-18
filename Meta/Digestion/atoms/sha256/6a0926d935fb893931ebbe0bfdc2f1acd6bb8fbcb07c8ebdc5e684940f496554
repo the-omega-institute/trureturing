@@ -1,0 +1,24 @@
+**定义 24.1（全时间扩展距离与模量）。** 固定 $L,H>0$、$0<d_0<L^4$，取 $\mathcal D=\mathcal D_{L,H,d_0}$。对 $s=(t,p),s'=(t',p')\in\mathcal D$ 置
+
+$$
+\begin{aligned}
+d_3(s,s')&=\max_{0\le i\le2}|x_i(s)-x_i(s')|,\\
+d_\infty(s,s')&=\sup_{j\ge3}|x_j(s)-x_j(s')|\in[0,+\infty],\\
+\Omega(\varepsilon)&=\sup_{\substack{s,s'\in\mathcal D\\d_3(s,s')\le\varepsilon}}d_\infty(s,s')\qquad(\varepsilon\ge0).
+\end{aligned}
+$$
+
+空上确界取零。每对的两个成员分别满足两叶界、$\Delta\ge d_0$ 和三个读数界；不以环境三元组代替实际像。记
+
+$$
+\begin{gathered}
+\varphi=(1+\sqrt5)/2,\quad \psi=-1/\varphi,\quad
+s_0=\sqrt{d_0},\quad z=\log s_0,\quad\ell=\log L,\\
+G=\varphi^2z-\ell=\varphi^2\gamma,\qquad
+D_{\rm crit}=L^{2/\varphi^2},\qquad c=s_0/L^2\in(0,1),\\
+F_0=0,\quad F_1=1,\quad F_{n+2}=F_{n+1}+F_n.
+\end{gathered}
+$$
+
+这里 $\gamma$ 恰为定义18.1的参数，$H_*$ 恰为定理18.4的实际达到阈值，不另定义不同的阈值。$U,V$ 继续使用定义16.1的记法。
+

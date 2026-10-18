@@ -1,0 +1,4 @@
+**Proposition 25.2 (an exact omitted-term discriminator).** At $a=\beta=1/2$, $u=v=k=1/2$, $p=1/10$, the actual channel (R.123) has rank $B=\operatorname{rank}C_{\rm out}=3$, $c_{\rm pl}=9/10>1/\sqrt2$, and the squared ratio in (R.125) is $97/200$. Keeping just $K_0,K_1$ instead gives $167/400$ for that same input and fails TP.
+
+**Proof.** The parameter norm is $1/4+(1/4)/(1/2)+1/4=1$. The full numerator in (R.125) is $1/4+(1/16)(82/100)+1/16=291/800$, and its denominator is $3/4$, giving $97/200$. Deleting $K_2$ deletes the $e_3$ coefficient $\beta u(1-p)/d$ of $w_p$, so the squared ratio decreases by $\beta^2u^2(1-p)^2/d^2=27/400$. The result is $167/400$. The removed nonzero PSD contribution $K_2^TK_2$ also prevents the remaining list from being TP. The rank and plane inequalities follow from Theorem 25.1. $\square$
+

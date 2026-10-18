@@ -1,0 +1,26 @@
+**Theorem 11.1 (Same-law blindness of the two-anchor variance).** Fix once any $(a,b,p)\in\mathcal S$ and the single stationary joint law (4.1)–(4.2). All its finite marginals are positive and band-compatible on the entire open-path $B_n$. With the actual bridge, mass and constants (7.1), (7.8) and (8.3), for all $n\ge1$,
+
+$$
+\begin{gathered}
+V_2(\mu_n;n)=0,\qquad
+\left\lfloor\frac{n-1}{7}\right\rfloor\beta\delta_*
+\le\mathscr R_{2,n}(\mu_n)\le n,\qquad
+0<\frac{6^{-24}\Delta_6^2}{48}\le\delta_*\le6,\\
+\liminf_{n\to\infty}\frac{\mathscr R_{2,n}(\mu_n)}n
+\ge\frac{\beta\delta_*}{7}>0,\qquad
+\mathscr R_{3,n}(\mu_n)=0.
+\end{gathered}
+\tag{11.1}
+$$
+
+The finite minima in these statements are attained. All constants belong to the one fixed parameter triple; no uniform positive discrepancy over $\mathcal S$ or $\Theta_N$ is asserted. The minimal edge-emitting hidden dimension is exactly three. The same $P$ is visibly reversible, satisfies $\mathsf B(P)$ and the bounds (10.2)–(10.3), and obeys
+
+$$
+d(P)\le D_1(P)<c_0\le c_\star,\qquad \neg\mathsf Z_\Delta(P).
+\tag{11.2}
+$$
+
+Proof. Lemma 3.2 provides a nonempty parameter family and the subsequent fixed choice. Proposition 4.2 constructs its actual stationary joint law; Lemma 4.3 proves support and reversibility. Theorem 5.2 covers every finite edge, including both endpoints and length one. Theorem 6.1 proves exact zero variance. Proposition 7.1 identifies the bridge under both finite and infinite full-complement conditioning and computes its actual event mass. Theorem 7.2 gives the ordered determinant with its forbidden seam retained. Theorems 8.2–8.3 give attained finite minima and quantitative accumulation against a single global candidate. Theorem 9.1 gives dimension and rank-three zero discrepancy. Theorems 10.2–10.3 and Corollary 10.4 prove the remaining claims for that same law. $\square$
+
+The mechanism separating the two conclusions is precise. A visible one resets the renewal mechanism, so two anchors remove dependence of the center posterior on more distant observations. Inside a longer anchored gap, however, the two distinct geometric persistence rates leave the positive determinant (7.8). Distant observations beyond the anchors do not remove that determinant because the full-complement bridge is exactly (7.1). Its actual positive event mass permits repeated disjoint site contributions. No trajectory-wide mixture label is being learned from the complement: in (4.1) a fresh branch is chosen after each visible one. Thus the fixed bridge defect persists, unlike the disappearing fixed-block defects of the persistent-mixture example in [Global-local, Theorem 4.4]. This comparison uses the two explicitly defined mechanisms and does not identify their probability laws.
+

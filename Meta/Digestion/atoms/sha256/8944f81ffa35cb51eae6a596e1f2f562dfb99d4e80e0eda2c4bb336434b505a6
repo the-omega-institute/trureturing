@@ -1,0 +1,34 @@
+**Proposition 5.2 (rational approximation condition).** For every real
+$\mu\in\Delta(S_d)$ and every $\delta>0$, there is a rational probability
+$\nu$ supported on $\operatorname{supp}\mu$ with
+$\nu(x)\le(1+\delta)\mu(x)$ for all $x$. For each of the three soft
+carriers and every fixed rational $\varepsilon\ge0$,
+
+$$
+\beta^\star_{d,L,\varepsilon}(\nu)
+ \le(1+\delta)\beta^\star_{d,L,\varepsilon}(\mu).
+\tag{SCP.20}
+$$
+
+Thus each auxiliary infimum is unchanged when restricted to rational
+probabilities. For the kernel carrier, strictly positive local tables
+are guaranteed by full-support kernels and positive rational
+$\varepsilon$; the floor needs only positive $\varepsilon$. For the
+defect carrier, positive rational $\varepsilon\le1$ gives positivity
+on the probability support as in Definition 4.1. A rational cap may
+always be rounded upward after a semantic cap is established.
+
+**Proof.** Approximate inside the finite support simplex. In the defect
+carrier, every length-$n$ product mass gains at most
+$(1+\delta)^n$. In the seed carriers, each baseline potential gains at
+most $(1+\delta)$, and
+$\Phi+\Psi\le(1+\delta)(\Phi+\Psi)$ because $\Psi$ is independent of
+$\mu$, keeping the same kernels. The rational approximation may be
+chosen positive on every point of $\operatorname{supp}\mu$, so the
+defect carrier retains exactly that support; no original zero is filled.
+Take $n$th roots and the all-size supremum. $\square$
+
+The bounds (SCP.19) are semantic all-size statements. Finite evaluation
+at a chosen length is only a lower approximation to a soft pressure; it
+does not provide a length cutoff or a cofinal upper certificate.
+

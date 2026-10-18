@@ -1,0 +1,54 @@
+## 6. The pair span and the remaining quotient
+
+Assume (2.1), interface 2.2 and $\mathsf Z(P)$ in this section.
+Define $\mathcal K_C^{\rm pair}(P)$ to be the linear span of all
+positive two-word intrinsic directions
+$f=\alpha\mathbf1_a-\beta\mathbf1_b$ with $a\ne b$,
+$\alpha,\beta>0$ and $P(X_C=a),P(X_C=b)>0$.
+No pair is presumed to exist. Actual nullity gives
+$\alpha p_C(a;y)=\beta p_C(b;y)$ almost everywhere.
+
+Apply [Two-word, Theorem 2.1][W] directly: on the pair's common
+conditional exterior law, the original posterior restrictions agree
+at every exterior site, including both seams.
+[Cocycle, Theorem 5.1][L], using $\mathsf Z(P)$, supplies equality
+of the two finite interior loss totals. Hence, wherever the common
+conditional mass is positive, their entire loss difference is zero:
+$\Delta_P(ay,by)=0$, and so $d_C(a;y)=d_C(b;y)$.
+The pair result and its interior balance are reused, not new cancellation
+theorems here. Their original derivation needs no independent tail
+premise; (2.1) is used here to put them in the common cocycle notation.
+
+For every integer $k\ge0$ this immediately gives
+
+$$
+\sum_wp_C(w;y)f(w)d_C(w;y)^k
+=\alpha p_C(a;y)d_C(a;y)^k
+-\beta p_C(b;y)d_C(b;y)^k=0.
+\tag{6.1}
+$$
+
+When both conditional masses are zero, the same equality holds without
+evaluating a conditional pair law. Thus (6.1) holds $\mu_C$-almost
+everywhere. Choose a finite basis of the pair span from its generating
+pairs and intersect its conull sets. Linearity then proves (6.1)
+simultaneously for every vector in that span and every $k$.
+
+In particular (5.2) annihilates $\mathcal K_C^{\rm pair}(P)$ and defines
+the pointwise linear functional
+
+$$
+\overline R_{C,y}:\mathcal K_C(P)/\mathcal K_C^{\rm pair}(P)\longrightarrow
+\mathbb R,\qquad [f]\longmapsto R_{C,f}(y),
+\tag{6.2}
+$$
+
+on a common good exterior set. No integrability norm is assigned to
+this quotient functional. All moments are already paid on the pair
+span. Neither a nonzero quotient nor a nonzero $\overline R_{C,y}$
+follows from dimension counting. If the two spaces happen to coincide
+at every interval, (6.1) and (5.3) do imply $\mathsf{RP}(P)$ and hence
+(4.1), but no such spanning property is asserted for a remaining law.
+If a positive-coefficient pair uses a zero-mass word, nullity forces
+both weighted masses to vanish; it gives no positive pair or witness.
+

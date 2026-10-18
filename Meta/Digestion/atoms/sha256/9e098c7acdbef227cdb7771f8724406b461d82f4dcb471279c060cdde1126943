@@ -1,0 +1,70 @@
+**Theorem 54.2 (Intrinsic necessary-and-sufficient cap feasibility).** The refinement (54.5) stabilizes at some countable ordinal $\beta$: $K_\beta^\eta=K_{\beta+1}^\eta$. Write $K_\infty^\eta$ for its stable value. Then
+
+$$
+\begin{aligned}
+&\text{there exists a lawful preparation with }
+  \sup_{y\in X}d(\widehat\mu_y,\mu_y)\le\eta\\
+&\hspace{25mm}\Longleftrightarrow\quad
+  K_\infty^\eta(q)\ne\varnothing\quad\text{for every }q\in Q.
+\end{aligned}
+\tag{54.6}
+$$
+
+In particular, the original sharp value
+
+$$
+R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{v\in P}
+                         \sup_{y\in C_m(x)}d(v,\mu_y)
+\tag{54.7}
+$$
+
+is attained if and only if every $K_\infty^{R_\mu}(q)$ is nonempty. This is a non-effective characterization, without a finite refinement-rank bound or a uniform preparation horizon.
+
+**Proof.** First, all values in the recursion are closed. If $v_j\in\mathcal D K(q)$ and $v_j\to v$, closedness of $K(q)$ puts $v$ in $K(q)$. Given $\delta>0$, choose $j$ with $d(v,v_j)<\delta/2$ and use the neighborhood for $v_j$ at tolerance $\delta/2$. The triangle inequality gives (54.4) for $v$. Convexity also persists: for two surviving centers choose one common cylinder on which both have sufficiently close witnesses in $K(q')$, and take the corresponding convex combination. Limits preserve closedness and convexity. No compactness or nearest-point attainment is used.
+
+Fix a countable basis $\mathcal B$ of the separable metric space $P$. At any strict successor decrease, closedness supplies a pair $(q,V)\in Q\times\mathcal B$ such that $V$ meets $K_\alpha^\eta(q)$ and is disjoint from $K_{\alpha+1}^\eta(q)$. That same pair cannot witness a later decrease, because every later value is contained in $K_{\alpha+1}^\eta(q)$. The set $Q\times\mathcal B$ is countable. If no countable stabilization stage existed, there would be a distinct such pair for every $\alpha<\omega_1$, a contradiction. Equality at one successor stage makes all subsequent successor and limit stages equal. This proves stabilization and makes $K_\infty^\eta$ independent of which stabilization stage is used.
+
+Every continuous selection $v(q)\in K_0^\eta(q)$ survives every stage. Indeed, if it selects $K_\alpha^\eta$, then
+
+$$
+\operatorname{dist}(v(q),K_\alpha^\eta(q'))
+       \le d(v(q),v(q')),
+\tag{54.8}
+$$
+
+and continuity supplies the cylinder in (54.4). Limit stages follow by intersection. Lemma 45.3 says that any lawful prepared family factors through $Q$ as just such a TV-continuous selection. This proves the forward implication of (54.6).
+
+For the converse suppose all stable values are nonempty. Stability implies lower semicontinuity: if $v\in K_\infty^\eta(q)$ belongs to an open set $O\subseteq P$, choose a ball about $v$ contained in $O$. Equation (54.4) supplies a cylinder throughout which the stable values meet that ball. Equivalently, for every open $O$, the set of $q$ with $K_\infty^\eta(q)\cap O\ne\varnothing$ is open.
+
+Here the continuous-selection step can be proved directly with its full hypotheses. Every open cover of $Q$ has a disjoint clopen refinement: enumerate the basis members $V_i$ contained in a member of the cover and replace them by
+
+$$
+W_i=V_i\setminus\bigcup_{j<i}V_j.
+\tag{54.9}
+$$
+
+Discard empty members. These clopen sets cover $Q$ and refine the cover. For any nonempty closed-valued lower-semicontinuous $H:Q\to2^P$, choose $v_q\in H(q)$. Lower semicontinuity gives a neighborhood where $\operatorname{dist}(v_q,H(q'))<1$. Applying (54.9) and using the chosen center of a containing neighborhood produces a locally constant $s_0$ with $\operatorname{dist}(s_0(q),H(q))<1$ everywhere.
+
+Inductively suppose $s_n$ is locally constant and its distance to $H(q)$ is less than $2^{-n}$. At each $q$ choose $v_q\in H(q)$ with $d(v_q,s_n(q))<2^{-n}$. Restrict to a neighborhood where $s_n$ is constant and where $\operatorname{dist}(v_q,H(q'))<2^{-n-1}$. The same disjoint refinement gives a locally constant $s_{n+1}$ satisfying everywhere
+
+$$
+d(s_{n+1}(q),s_n(q))<2^{-n},
+\qquad
+\operatorname{dist}(s_{n+1}(q),H(q))<2^{-n-1}.
+\tag{54.10}
+$$
+
+The summable bounds make $(s_n)$ uniformly Cauchy. Completeness of $P$ gives a continuous uniform limit $s$, and closedness of $H(q)$ puts $s(q)$ in $H(q)$. Apply this construction to $H=K_\infty^\eta$. Neither compactness of $Q$, compactness of the values nor finite-dimensionality is required. Convexity is preserved by the refinement but is unnecessary for this clopen selection argument.
+
+To acquire the resulting selection, enumerate the actual tapes as $\theta_j$, without repetitions, stopping the enumeration in the finite case. Define $F_0=0$ and $F_j(q)=\sum_{i\le j}s(q)(\{\theta_i\})$. Use one common uniform seed $U\in(0,1)$. After reading the first $m$ actual prime answers, test the available indices $j\le m$ and emit $\theta_j$ when
+
+$$
+\sup_{q'\in U_m([y])}F_{j-1}(q')<U<
+\inf_{q'\in U_m([y])}F_j(q').
+\tag{54.11}
+$$
+
+These are fixed shared tables indexed by the acquired record, exactly the construction of Theorem 46.3. For each fixed source, outside its countable set of cumulative-mass endpoints, normalization supplies a unique containing interval and continuity certifies it at a finite prefix. Each stage uses finitely many tests and actual prime queries, so its actual execution is finite on that full-probability seed set. Finite record events are Borel interval combinations; each output event is a countable union of these events. The emitted probability law is $s([y])$, with no conditioning away of divergence. The preparation hands this tape, and no additional record input, to the same consumer on the same static source. Membership in (54.3) proves the cap for every original label. Theorem 50.2 identifies the infimum with (54.7), so at that cap the achieved uniform error equals $R_\mu$.
+
+Lower-semicontinuous selection and derived mappings are mature machinery. Michael, [*Continuous selections and countable sets*, Theorem 1.1](https://doi.org/10.4064/fm-111-1-1-10), gives a selection-extension theorem for a countable regular domain, a first-countable range and a nonempty-valued lower-semicontinuous correspondence. Here $Q$ is countable and metric, and $P$ is metric; taking the initial closed subset empty gives the selection consequence. The complete clopen/completeness argument above also supplies it directly. Brown, [*The Derived Mappings and the Order of a Set-Valued Mapping Between Topological Spaces*](https://doi.org/10.1023/A:1008618528989), supplies the established derived-mapping reference frame; no theorem from its subscription text is required here. Finite-dimensional Glaeser bounds, such as Jiang, Luli and O'Neill, [*Smooth Selection for Infinite Sets*, Theorem 1.5](https://arxiv.org/html/2109.04905v2), require a closed Euclidean domain and finite jet/shape-field hypotheses that are not instantiated here. The countable-ordinal bound above is proved separately. The deduction (54.6) is the target-defined cap criterion for this actual acquisition problem, rather than a new general selection theorem or a literature-priority assertion. $\square$
+

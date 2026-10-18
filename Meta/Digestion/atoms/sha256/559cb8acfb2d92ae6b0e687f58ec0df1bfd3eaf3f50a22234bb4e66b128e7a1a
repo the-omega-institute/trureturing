@@ -1,0 +1,102 @@
+**定理 43.3（制备误差与相关读误差的共同有限精度边界）。** 采用 (43.4) 的误差合同，控制身份和致动仍精确。对任意有限更新预算及两种来源，有全控制器下界
+
+$$
+\mathcal R_N^J(\delta;R,\epsilon,n)
+ \ge\sqrt{\delta^2+R\epsilon+L\delta},
+\qquad J\in\{2,I\},\quad 0\le\delta\le L/2.
+\tag{43.13}
+$$
+
+在 $g_N=1$ 的预算下，同一原菜单有限协议对全部 $\delta\ge0$ 还给充分上界
+
+$$
+\mathcal R_N^J(\delta;R,\epsilon,n)
+ \le\sqrt{\,2\delta^2+
+       \bigl(\sqrt{R\epsilon}+\sqrt{2U\delta}\bigr)^2\,}.
+\tag{43.14}
+$$
+
+它在 $\delta=0$ 达到 (43.6) 的精确值。若 $0<\epsilon\le R/2$、$0\le\delta\le L/2$ 且 $g_N=1$，特别有
+
+$$
+\sqrt{\frac R2(\epsilon+\delta)}
+ \le\mathcal R_N^J(\delta;R,\epsilon,n)
+ \le\sqrt{7R(\epsilon+\delta)}.
+\tag{43.15}
+$$
+
+因此制备与读取的小误差共同产生平方根阶；(43.13)–(43.14) 不声称正噪声精确minimax常数。
+
+证明。固定任意控制器，取单位 $q_0\in E$，令两可见初态为 $a_\pm=\pm\delta q_0$。首锚之前每次均报告零。任意内部前缀在 $E$ 上是叉积收缩的复合，真实可见范数不超过 $\delta$，所以这些报告对两源都是合法误差选择；它们决定同一内部前缀和Read／停止分支，与隐藏来源无关。
+
+若此分支无锚或首锚之前有零控制，选 $b_\pm=\pm Ut_0$、单位 $t_0\perp n$。隐藏区别始终不可见或被零控制消去，完整共同记录仍合法。初态半距为 $\sqrt{\delta^2+U^2}$，不小于 (43.13)，因为
+
+$$
+R\epsilon+L\delta
+ =\frac{U^2-L^2}{4}+L\delta
+ \le\frac{U^2+L^2}{4}\le U^2.
+\tag{43.16}
+$$
+
+若有非零首锚前缀，按 (43.8) 选 $\ell,t$，置
+
+$$
+\eta=\sqrt{U^2-(L-2\delta)^2},\qquad
+b_0=Lt,\qquad b_1=\eta\ell+(L-2\delta)t.
+\tag{43.17}
+$$
+
+给定 $\delta\le L/2$，$L-2\delta\ge0$ 且根号非负。两半径仍恰为 $L,U$；法向内积为 $L\nu$ 和 $\alpha\eta+\nu(L-2\delta)$，均非负。因此这又是 $\mathcal D_2$ 的实际来源对，且
+
+$$
+|b_1-b_0|^2
+ =\eta^2+4\delta^2
+ =U^2-L^2+4L\delta
+ =4(R\epsilon+L\delta).
+\tag{43.18}
+$$
+
+把 $b_0$ 与 $a_-$ 配对、$b_1$ 与 $a_+$ 配对；可见 $a$ 的独立任意供应使二者确属同一声明联合来源。首锚前记录仍为上述零报告。记内部前缀在 $E$ 上为 $T$，$|Tq_0|\le1$，并令 $\lambda=|p|\le1$。首锚后两当前状态的差为
+
+$$
+\Delta z=
+\bigl(-2\delta\lambda\operatorname{Im}(t\widehat p),
+       -2\delta Tq_0\bigr).
+\tag{43.19}
+$$
+
+$\eta\ell p$ 为实数而被锚消去，$t\widehat p$ 为单位纯虚四元数，所以差的两个分量分别不超过 $2\delta$。原内部更新对 $E$ 作叉积收缩、对 $F$ 作右乘收缩；原锚把 $(a,b)$ 变成 $(\operatorname{Im}b,-a)$。于是“两差分量各不超过 $2\delta$”在所有后续原动作下不变，每个后续真实Read差都不超过 $2\delta$。
+
+在首锚及以后每次Read报告两真实读数的中点，分别用相反半差作为误差，始终满足 (43.4)。共同已报告前缀逐事件强制同一下一动作、Read选择和停止；此递推包括重复Read、有限停止、可数记录及其共同输出。无需误差独立性、平均或重抽样，也无需把中点作为合法初始来源。两原初态的半距由 (43.18) 和可见差 $2\delta q_0$ 正交相加，恰为 $\sqrt{\delta^2+R\epsilon+L\delta}$；对同一完整记录应用既有二点风险下界，得到 (43.13)。$\delta=0$ 时两当前状态完全相同，恢复定理43.2的永久合并；$\delta>0$ 时保持的是完整报告不可分，而不是声称真实当前状态完全相同。
+
+上界采用定理43.2的公开单位对齐前缀，动作预先确定而不依赖噪声。保留该协议的全部记录，以初读 $y_0$ 估计 $\widehat a=y_0$。将首锚实际读 $y_1$ 欧氏径向投影到闭球 $|w|\le U$，记为 $\widetilde w$，置 $\widetilde q=|\widetilde w|$，并取
+
+$$
+\widehat b=(\varsigma m(\widetilde q)+\widetilde w)p^{-1},
+\qquad \widehat a=y_0.
+\tag{43.20}
+$$
+
+球投影不增加到真实 $w$ 的距离，直接复用 (42.16)，所以 $|\widetilde w-w|\le\delta$、$|\widetilde q-q|\le\delta$。式 (43.11) 的两端点各具有以下平方根模量：对 $K=L$ 或 $U$，以及 $q,q'\in[0,U]$，
+
+$$
+\begin{aligned}
+\left|\sqrt{(K^2-q^2)_+}-\sqrt{(K^2-q'^2)_+}\right|^2
+ &\le |(K^2-q^2)_+-(K^2-q'^2)_+|\\
+ &\le |q^2-q'^2|\le2U|q-q'|.
+\end{aligned}
+\tag{43.21}
+$$
+
+第一步为既有平方根不等式，第二步用正部映射的1-Lipschitz性。这不是导数在赤道的有限界；它包括下端点过 $q=L$ 的截断。对两端点取平均得到 $|m(\widetilde q)-m(q)|\le\sqrt{2U\delta}$。真实 $s$ 在 (43.11) 的区间中，故
+
+$$
+|s-m(\widetilde q)|
+ \le\sqrt{R\epsilon}+\sqrt{2U\delta}.
+\tag{43.22}
+$$
+
+右乘单位 $p^{-1}$ 保持范数，实部与虚部正交；再加可见初态误差 $|y_0-a|\le\delta$，给 (43.14)。估计规则对每个读数均定义，协议在固定有限步停止，全部中间读数仍保留，没有用可数记录替代有限取得。
+
+最后，$\epsilon\le R/2$ 给 $L\ge R/2$、$U\le3R/2$，而 $\delta\le L/2\le R/2$。下界平方至少为 $R(\epsilon+\delta)/2$；用 $(A+B)^2\le2A^2+2B^2$，上界平方不超过 $2\delta^2+2R\epsilon+4U\delta\le2R\epsilon+7R\delta\le7R(\epsilon+\delta)$，得到 (43.15)。证毕。
+

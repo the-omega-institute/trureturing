@@ -1,0 +1,28 @@
+**Convention 1.5 (The supplied exact event criterion).** For
+$\widehat T(X)=D^\dagger T(DXD^\dagger)D$, QMB Theorem 2.1 states
+
+$$
+e(T)=\sup_{t\ge0}\max_{J\subseteq\mathsf S}
+\|Q_J(t)-\widehat T^\dagger(Q_J(t))\|_{\rm op}.
+\tag{1.8}
+$$
+
+For a frame channel $S$ commuting with every
+$\operatorname{Ad}_{O(t)}$, its adjoint also commutes and hence
+
+$$
+Q_J(t)-S^\dagger(Q_J(t))
+=O(t)^T[\Pi_J-S^\dagger(\Pi_J)]O(t).
+\tag{1.9}
+$$
+
+TP gives $S^\dagger(I)=I$, so complementary residuals have opposite
+signs. Thus the stationary error equals the maximum over
+$\mathcal J_{15}=\{J:1\le|J|\le2\}$. These supplier identities
+retain every complex input and every actual finite adaptive history.
+The first rank-one read resets both conditional states to the same
+$\Pi_s$; its common suffix cannot enlarge first-result TV.
+Source-independent random controls obey the same bound. These facts
+explain the applicability of (1.8), without introducing a different
+measurement norm or reproving the general reduction.
+

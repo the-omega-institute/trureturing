@@ -1,0 +1,39 @@
+## The local blocks are strictly admissible on the whole rectangle
+
+Let `a_e = lower s e`, `b_e = upper s e`, and
+`Ω = ∏_e [a_e,b_e]`.  The merged theorem
+`fourcycle_curvature_box s hs` gives `Ω ≠ ∅`, and for every `x ∈ Ω` and every
+occurrence `o`,
+
+```
+            -1 < localCosine s x o < 1.
+```
+
+Every coordinate of `Ω` is `> 1` (`5/4` for a low edge and `1+d` for a high
+edge, with `d > 0`).  Hence each radicand
+
+```
+rad (x (coordinate o 0)) (x (coordinate o 1)) (x (coordinate o 5)),
+rad (x (coordinate o 0)) (x (coordinate o 2)) (x (coordinate o 4))
+```
+
+is strictly positive (indeed `rad(u,v,w) ≥ 4` for `u,v,w ≥ 1`).  Zhao's
+length-domain criterion (Proposition 2.4) says that a positive six-length
+vector is a genuine hyper-ideal tetrahedron exactly when its six cosines lie
+in `(-1,1)`.  Thus every block lies strictly in the geometric domain
+throughout `Ω`; if `D_t>0` denotes the usual strict-domain predicate, this is
+precisely `D_t(x)>0`.  (The merged Lean API names the criterion by the six
+strict cosine inequalities rather than by a symbol `D_t`.)  In particular,
+the argument never approaches a flat block or a square-root singularity.
+Concretely, for each of the six target edges one may record the scalar
+certificate
+
+```
+R^-_o R^+_o (1 - localCosine_o^2) > 0,
+```
+
+where `R^-_o,R^+_o` are the two radicands in the denominator of that target
+cosine.  Both radicands are at least `4`, and
+`1-localCosine_o^2=(1-localCosine_o)(1+localCosine_o)>0`.  This discharges any
+equivalent local `D_t` determinant convention used for admissibility.
+

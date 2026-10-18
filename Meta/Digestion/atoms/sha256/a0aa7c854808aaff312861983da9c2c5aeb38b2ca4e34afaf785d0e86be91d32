@@ -1,0 +1,46 @@
+**引理 2.1（配对翻转与被阻插入）。** 设 $p_b>0$ 对全部 $b\in B_n$ 成立，定义
+
+$$
+g_b(p)=\frac{\partial\Phi_n}{\partial p_b}
+=\sum_{c\sim b}\left(\frac{p_c}{p_b+p_c}\right)^2,
+\qquad f(t)=\frac{t^2}{(1+t)^2}\quad(t>0).
+\tag{2.1}
+$$
+
+对任一原图边 $y=x+e_i$，置 $r=p_y/p_x$。令
+
+$$
+T_i(x)=\{w\sim x:w\text{ 由翻转位置 }j\text{ 得到，}|j-i|\ge2\},
+$$
+
+$$
+U_i(x)=\{x+e_j:j\in N_i,\ x+e_j\in B_n\}.
+$$
+
+则 $x$ 的邻点恰为 $\{y\}\sqcup T_i(x)\sqcup U_i(x)$，$y$ 的邻点恰为 $\{x\}\sqcup\{w+e_i:w\in T_i(x)\}$，且 $|U_i(x)|\le d_i$。特别地，
+
+$$
+\begin{aligned}
+g_y(p)-g_x(p)
+&=\frac{1-r}{1+r}
+ +\sum_{w\in T_i(x)}\left[
+ f\left(\frac{p_{w+e_i}}{p_y}\right)
+ -f\left(\frac{p_w}{p_x}\right)\right]
+ -\sum_{v\in U_i(x)}f\left(\frac{p_v}{p_x}\right).
+\end{aligned}
+\tag{2.2}
+$$
+
+**证明。** $x_i=0$，$y_i=1$，且两词在 $N_i$ 上都为零。翻转 $i$ 给出彼此。翻转满足 $|j-i|\ge2$ 的位置，其合法性只取决于该位及相邻位，因而在 $x$ 与 $y$ 中相同。对每个这样的下层邻点 $w$，$w+e_i$ 合法，且为 $y$ 的邻点；这给出所述一一配对。
+
+剩余位置恰为 $N_i$。这些位置在 $x$ 中只能由零插入 $1$，满足合法条件的结果就是 $U_i(x)$；它们在 $y$ 中都被第 $i$ 位的 $1$ 阻止。没有其他翻转位置，故邻域分解完整。
+
+式（2.1）由 $\partial_s h(s,t)=t^2/(s+t)^2$ 得到。边 $xy$ 对 $g_y-g_x$ 的贡献为
+
+$$
+\frac{1}{(1+r)^2}-\frac{r^2}{(1+r)^2}
+=\frac{1-r}{1+r}.
+$$
+
+将配对邻点和剩余邻点分别相加即得（2.2）。此外 $f'(t)=2t/(1+t)^3>0$，故 $f$ 严格递增。以上导数计算是初等微积分；本引理的图结构内容是完整邻域配对及至多 $d_i\le2$ 个被阻插入。
+

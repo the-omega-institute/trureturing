@@ -1,0 +1,12 @@
+## 13. Full successor-law continuation dispersion
+
+For a finite period-one regular stationary table (the stationary class used after the existing period reduction), define the actual-flow successor dispersions
+
+$$
+b_p:=\sum_x\pi_x\operatorname{TV}(L_x,\bar W),\qquad
+b_\beta:=\sum_y\tau_y\operatorname{TV}(J_y,\bar Q).
+\tag{13.1}
+$$
+
+These are TV distances between complete successor laws, including the infinite noncompletion outcome. They are weighted by the unweighted acquired flow. They are neither marginalized conditioning defects nor distances between label distributions. Splitting a label into copies with the same decoded law and proportionally split flow leaves them unchanged.
+

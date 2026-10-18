@@ -1,0 +1,21 @@
+**Corollary 73.2 (cell averages are continuous-time laws, not grid atoms).**
+For a finite interval partition of mesh at most $\Delta$, let
+$\widetilde g$ equal the average of $g(a)=2/(1+a)^2$ in each cell.
+Then it is nonnegative, normalized and absolutely continuous as a
+measure, and
+
+$$
+\|\widetilde g-g\|_{L^1}\le4\Delta,\qquad
+ d_{\rm ref}(\widetilde\Psi,\Psi)\le2\|M\|_{\rm op}\Delta.
+\tag{JRH.82}
+$$
+
+Proof. Cell integration preserves mass and nonnegativity. Since
+$|g'(a)|=4/(1+a)^3\le4$, the difference between a point value and
+its cell average is at most four times that cell's width. Integrating
+over all cells gives $4\Delta$. Apply (JRH.80). Conditional on a
+cell, time still has a density throughout that interval. This is
+continuous jitter within cells, with its own causal implementation
+requirement, rather than an event at a selected endpoint. Hence
+Theorem 70.1 does not apply to these laws. $\square$
+

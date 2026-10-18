@@ -1,0 +1,24 @@
+**Mathematical citation 3.3 (scope of the correspondence).** The source,
+complete-row syntax, clock, causal retention and original offsets are
+the suppliers in [NAR, Definitions 1.1--1.2 and §§11, 13][NAR]. The resource proof
+is [AOF §§8--9][AOF], whose stationary interval contract requires neither
+an encoder nor a future cut. The complete-input realization and
+all-address lower-bound transfer here are `repo-derived` deductions.
+They fix one retained coordinate and a two-slot source promise; they do
+not assert a retained-alphabet minimum or arbitrary-encoder/menu optimum.
+Additional hidden slots can give additional query information, so a
+many-slot lower bound would require its own entire-fiber correspondence.
+
+For the common-side-information obstruction, compare N. Charpenay,
+M. Le Treust and A. Roumy, *Optimal Zero-Error Coding for Computing under
+Pairwise Shared Side Information*, [arXiv:2211.03649v2, Definitions II.1
+and IV.5](https://arxiv.org/html/2211.03649v2). Their adjacency requires
+different target values at a common compatible side-information value.
+That is the role played here by the same code and entire later row.
+Their expected prefix-code length per i.i.d. block and asymptotic rate
+are different objectives and provide no native call or address formula.
+These bounded mathematical comparisons make no worldwide priority claim.
+
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[AOF]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md
+

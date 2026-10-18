@@ -1,0 +1,68 @@
+**Proposition 5.3 (exact actual realization, including closed profiles).**
+Let $\eta_b(u)$ be the tuple of actual class replies through depth
+$b$, encoded as above. Then
+
+$$
+\Omega_b=\{\eta_b(u):u\in\mathcal U_*\}.
+\tag{TCR.19}
+$$
+
+Moreover every retained profile, for every finite $L$, has an actual
+finite origin realizing it with all its live symbols simultaneously
+filled by branch images of minimum leaf depth greater than $L$,
+and with all of (TCR.15) true. Every member of a profile has the
+same replies at all installed Read words and the same entire target.
+
+Proof. First, (TCR.16) is exact for image membership under every
+assignment of branch images to its variables. Literal and variable
+cases follow from (TCR.3). At a pair, the special block $E$ occurs
+exactly when its children are literally beta and alpha: a variable
+is a branch and a pair remains a branch, so neither can evaluate to
+a literal leaf. The other image case is exactly that both children
+are images. Induction on the free term proves the assertion,
+including the whole exterior $\mathscr S(T)$.
+
+Take any actual $u\in\mathcal U_*$. Its finite tree has a unique
+prefix decomposition through depth $b$, stopping at every early
+leaf. Every frontier branch subtree is an image by Definition 2.1.
+Its actual values therefore constitute an assignment of the required
+kind. Image membership implies the first test in (TCR.17). Identical
+free class terms would evaluate equally under this assignment,
+violating actual different-class disequality. Thus every actual
+profile passes the second test as well, proving inclusion in
+$\Omega_b$. Repeated occurrences use one class term and early
+leaves account for every forced absent continuation.
+
+Conversely fix a retained tuple. Apply Lemma 5.2 to its six class
+terms and all their syntactically unequal pairs. It supplies one
+simultaneous assignment, for any prescribed $L$, making every
+whole-class negative true. The first test in (TCR.17) and exactness
+of (TCR.16) put the filled $\mathscr S(x)$ in $\mathcal I$.
+Each class term has precisely its recorded prefix: fixed constructors
+are unchanged, a live frontier value is a branch, and nothing is
+filled below a recorded leaf. Supplier 2.4's legal valuation and
+inverse give the actual finite origin
+
+$$
+u_\eta=\delta(\mathscr S(x)),\qquad
+\rho u_\eta=\mathscr S(x),\qquad R_P(\rho u_\eta)=R_*.
+\tag{TCR.20}
+$$
+
+This realizes the exact profile and every original disequality.
+If there are no live symbols, all terms are closed grounds; their
+unequal syntax already gives the negatives and the empty assignment
+works. Such a retained profile can have a single actual filling.
+If a frontier branch is the only exposed constructor it may be
+deepened, but a fully exposed $E$ remains that literal closed piece.
+No accepted profile is assumed infinite, and no discarded candidate
+can be an actual profile by the first inclusion.
+
+Every installed hole suffix has length at most $b$. A recorded
+leaf or its absent cone, a visible branch, or a frontier branch
+therefore determines its exact reply. Exterior words have the fixed
+branch reply. The roots in the same profile determine its unique
+case in (TCR.8), so Supplier 2.4 fixes the entire target $R_h$ as
+well. This proves the last assertion and both directions of
+(TCR.19). $\square$
+

@@ -1,0 +1,18 @@
+**Definition 61.1 (Original correct mass in an occupied high-target tail).** For the unchanged consumer put $S_y=H_y\setminus F_y$, its measurable event of a correct finite proposal, and write
+
+$$
+s_y=\mu_y(S_y)=h_y-e_y.
+\tag{61.1}
+$$
+
+Let $\mathscr C$ consist of the occupied finite-prime-prefix cylinders, including $X$. For $C\in\mathscr C$ and an integer $K\ge0$, define
+
+$$
+D(C,K)=\{y\in C:\Omega(y)>K\},
+\qquad
+L_\mu=\sup_{C\in\mathscr C}\sup_{K\ge0}\inf_{y\in D(C,K)}s_y.
+\tag{61.2}
+$$
+
+Every such tail is nonempty by [Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows) on the actual source (59.1). Its arithmetic interface is [Fibonacci equation (363.13)](FIBONACCI_ATOMIC_RELATION_GENERATION.md), $q\mid F_n\Longleftrightarrow z(q)\mid n$, with the standard recurrence $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$. The quantity $L_\mu$ is fixed by the original targets and consumer events; it quantifies over no prepared-law family.
+

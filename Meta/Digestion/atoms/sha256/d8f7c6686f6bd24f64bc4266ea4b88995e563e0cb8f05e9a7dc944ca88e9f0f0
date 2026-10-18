@@ -1,0 +1,21 @@
+**Corollary 207.14 (The exact protected-class relaxation loss).** For
+even $h\ge4$, let
+
+$$
+g_h=S_*-S_0=\frac{4s}{(h+1)(h+2)}>0.
+\tag{207.38}
+$$
+
+If $s\ge d\ge0$ and $s-d\ge g_h$, fix $B=S_0+s-d$. The impossible
+local/PSD data (207.27) with $T=s-d$ report protected-cell cost $d$.
+Every actual protected score at this same $B$ has cost at least
+$d+g_h$, attained by $\mathcal L_h(s)$ and $T=s-d-g_h$.
+
+**Proof.** The difference in (207.38) follows by subtraction. Actual
+stock at least $S_*$ forces $T\le B-S_*=s-d-g_h$, and the head
+table forces cost at least $s-T\ge d+g_h$. Theorem 207.13 attains it.
+The stock increase is paid once by lowering $T$. Adding it to pair mass
+while keeping $T$ would change $K,Q$ and require residual accounting.
+This is a restricted-class relaxation gap, not a lower bound against
+all full-score representatives. $\square$
+

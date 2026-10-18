@@ -1,0 +1,27 @@
+**定义 5.2（保留的原目标）。** At $H_{JM}(Y,z)$, the unrestricted
+question remains whether some known compatible set of at least
+three fixed complete targets has $L_2$, or every whole unrestricted
+fiber admits a two-further-reading decoder. Theorem 2.1 excludes
+containment of a losing set in $g(0)=0$; it does not settle the
+complement or an unlabeled union. Theorem 4.2 gives an actual
+mixed-drift fiber, without establishing that different drifts or
+different root labels are necessary in a losing family.
+
+At the separate $MMJM$ parent, the unrestricted $L_3$ question for
+at least four targets and the corresponding whole-fiber decoder
+question remain. A local losing child would still have to meet the
+joint realization conditions for the other actual action children
+before determining failure at an ancestor. Neither the sixteen-slot
+nor the 256-slot feasibility question of
+[IV, Theorems 9.2–9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
+is decided by the present inverse or continuous family.
+
+With $n_{\mathrm{det}}(3,0)$ denoting the least uniform total read
+budget under Definition 1.1, the original full-domain alternative
+remains $n_{\mathrm{det}}(3,0)\ge9$ versus a lawful decoder with at
+most eight total readings on all of $\mathcal W_3$. Both initial
+actions, all actual histories, all gain and root strata, and every
+early stop belong to that problem. The results here supply neither
+an original-root nine-reading lower bound nor a universal
+eight-reading complete-target decoder.
+

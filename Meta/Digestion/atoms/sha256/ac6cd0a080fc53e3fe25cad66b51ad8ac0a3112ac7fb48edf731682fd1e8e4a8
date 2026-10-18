@@ -1,0 +1,10 @@
+## 473. 同一个素数剥离为何既可逆又会失去统一控制
+
+令 μ 为实际整数 Möbius 函数，定义有限原和
+\[
+ H_\sigma(N)=\sum_{1\le n\le N}\mu(n)n^{-\sigma},\qquad
+ G_\sigma(N)=\sum_{\substack{1\le n\le N\\n\text{ 奇}}}\mu(n)n^{-\sigma},
+ \qquad H_\sigma(0)=G_\sigma(0)=0.
+\]
+这里所有求和都是自然截断，σ 为实数。
+

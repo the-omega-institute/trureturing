@@ -1,0 +1,20 @@
+**定义 3.1（有限支撑的尺度盒）。** 对 $n\ge2$ 写唯一素因数分解
+
+$$
+n=\prod_{p\in\mathcal P(n)}p^{a_p},\qquad a_p\ge1,
+$$
+
+其中 $\mathcal P(n)$ 是有限非空的素数集，$\omega(n)=|\mathcal P(n)|$。令
+
+$$
+S_p(a)=\sum_{k=0}^a p^{-k},\qquad a\in\mathbb N_0.
+$$
+
+在第 $p$ 个方向连接长度 $1,p^{-1},\ldots,p^{-a_p}$ 的线段，所得区间记为 $I_p$，长度为 $S_p(a_p)$；端点重合不影响长度。定义配置盒
+
+$$
+\mathcal Q_n=\prod_{p\in\mathcal P(n)}I_p.
+$$
+
+方向标签是乘法素数，盒维数为 $\omega(n)$，不是预设物理空间维数。$n=1$ 时另约定空乘积及零维体积为 $1$。
+

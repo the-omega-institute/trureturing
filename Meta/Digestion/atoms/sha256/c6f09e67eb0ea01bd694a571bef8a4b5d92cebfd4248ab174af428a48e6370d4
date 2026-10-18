@@ -1,0 +1,42 @@
+**Definition 154.1 (Actual acquisition contract).** Use the source and
+carrier of [Definition 140.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_II.md#140-original-sources-and-complete-common-budget-allocations).
+Explicitly, if $F_0=0$, $F_1=1$ and $F_{r+2}=F_{r+1}+F_r$, the actual
+countable labeled source and its static answers are
+
+$$
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\qquad
+N(r,g)=1+F_rg,\qquad q_i(\xi)=\mathbf1_{p_i\mid N(\xi)},
+$$
+
+where $p_i$ is the $i$th prime and $n(\xi)=\min\{i:q_i(\xi)=0\}$.
+The labels, $N(\xi)$ and $n(\xi)$ are not observations. Each source has
+finite prime support. Every finite answer pattern has an actual source
+by [Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows).
+
+The full original measurable tape carrier is
+$\Theta=(\bigsqcup_{j\ge1}B_j)\sqcup(\bigsqcup_{j\ge1}P_j)$, with each
+block a copy of $(0,1)$ and the disjoint-union Borel sigma algebra.
+The unchanged consumer returns unknown on $B_j$ and proposes $j$ on
+$P_j$; its original nonatomic targets $\mu_\xi$ remain fixed. The points
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$, are distinct original tapes. For an
+entire sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero, separately
+select the comparison laws
+
+$$
+\lambda_\xi^a=(1-a_{n(\xi)})\delta_{\theta_0}
+                  +a_{n(\xi)}\delta_{\theta_{n(\xi)}},\qquad
+e_a(A)=\sup_{\xi\in X}\operatorname{TV}(\widehat\lambda_{A,\xi},\lambda_\xi^a).
+$$
+
+Here $\operatorname{TV}(\nu,\lambda)=\sup_{E\in\mathcal F}|\nu(E)-\lambda(E)|$.
+There is zero advice, one source-independent common seed, and actual
+sourcewise almost-sure finite handoff. The classes $\mathcal N_2$ and
+$\mathcal O_2$ mean exactly [Definition 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions):
+$N$ preselects at most two actual requests and obtains their replies;
+$O$ preselects an increasing schedule of at most two and stops at its
+first queried zero or exhaustion. Repeated and ignored requests count.
+Competitors retain arbitrary addresses and outputs anywhere in $\Theta$.
+No distribution on $X$, address budget, expected count or runtime budget
+is substituted for hard actual count two.
+

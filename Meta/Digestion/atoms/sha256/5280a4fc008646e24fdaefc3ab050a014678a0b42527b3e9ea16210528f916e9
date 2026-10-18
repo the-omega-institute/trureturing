@@ -1,0 +1,50 @@
+**Lemma 10.2 (the shared $`Z_3,\mathsf R`$ support fork).**
+If an installed state hosts both $`Z_3=(0,3)`$ and
+$`\mathsf R=(2,1)`$, then
+
+$$
+a_{\mathsf N}\ge2,\qquad b_{\mathsf N}\ge2,\qquad
+e_{\mathsf N}\ge1.
+\tag{42}
+$$
+
+This assertion has no nineteen-state or equality hypothesis.
+
+**Proof.** Choose actual live histories at their shared state $`q`$,
+with respective supports $`S,T`$. Each has size three. Their unequal
+hit counts forbid $`S=T`$. Put $`x=i(q)`$; freshness gives
+$`x\notin S\cup T`$. Define
+
+$$
+A_*=S\cup\{x\},\qquad C_*=T\cup\{x\}.
+$$
+
+These are distinct size-four sets. The actual zero successor
+$`q_0=\delta(q,0)`$ hosts $`Z_4,\mathsf M`$, with respective
+supports $`A_*,C_*`$. The actual one successor
+$`q_1=\delta(q,1)`$ hosts $`\mathsf a,\mathsf c`$, with those same
+respective supports. All four child cells lie in the live rectangle.
+
+Let $`u=i(q_0)`$, $`v=i(q_1)`$. Applying freshness at both
+occurrences of each successor gives
+
+$$
+u,v\notin A_*\cup C_*.
+$$
+
+No assumption that $`u\ne v`$ is needed. From the $`\mathsf M`$
+occurrence at $`q_0`$, take its live zero child at $`\mathsf N`$;
+its support is $`C_*\cup\{u\}`$. From the $`\mathsf a`$
+occurrence at $`q_1`$, take its live one child at $`\mathsf N`$;
+its support is $`A_*\cup\{v\}`$. Choose $`j\in A_*\setminus C_*`$,
+which exists since the two distinct sets have equal size. Then $`j`$
+belongs to the latter support and not the former, because $`u\notin A_*`$.
+Thus two distinct supports occur at $`\mathsf N`$.
+One support per fixed cell and host gives $`b_{\mathsf N}\ge
+a_{\mathsf N}\ge2`$, proving (42).
+
+All the displayed children arise at the installed successors of the
+chosen actual histories. Their separate realizations do not assert
+realizability of an arbitrary syntactic path or agreement of the two
+old assignments. $`\square`$
+

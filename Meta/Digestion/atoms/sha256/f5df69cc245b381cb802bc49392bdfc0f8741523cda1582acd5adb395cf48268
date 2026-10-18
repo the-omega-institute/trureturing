@@ -1,0 +1,28 @@
+**Definition 1.1 (original native objects).** The source algebra is the
+free algebra of finite nonempty ordered trees
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{PCA.1}
+$$
+
+Write $\mathcal W=\{L,R\}^{*}$, including the empty word. The actual
+reply $r_t(v)$ at any $v\in\mathcal W$ is in
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+It gives the constructor at a reached node, and absent after traversal
+passes a leaf. Every finite address is legal. Brackets, order, leaf
+labels and different occurrences of equal subtrees are retained.
+
+For a finite prefix-free cut $P$, the complete row $R_P(t)$ consists of
+the exterior obtained by replacing each reached cut subtree by its
+occurrence hole, together with the complete equality partition of those
+subtrees. Different classes assert disequality. Concrete exterior leaves
+give the strict-prefix blocking guards for unreached cut members.
+Class names are recomputed from first occurrences after restriction.
+These are exactly [NBP, Definitions 1.1–1.2][NBP], including the canonical
+row convention; a root-type list alone is not the required output.
+

@@ -1,0 +1,37 @@
+**Definition 1.2 (actual source, action and observation).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle u,v\rangle)=1+\max\{h(u),h(v)\}.
+\tag{PPF.1}
+$$
+
+Pairing is free and ordered. Every finite word over $L,R$, including
+$\varepsilon$, is a legal original-root literal. Its actual reply
+$r_t(w)$ is alpha or beta at that leaf, branch at a pair, and absent
+after traversal passes a leaf. Thus the observation alphabet is exactly
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{PPF.2}
+$$
+
+The homomorphic substitution and the full original families are
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho(\langle u,v\rangle)&=\langle\rho(u),\rho(v)\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:h(v)\le D\},&
+W_D&=\{q:|q|\le D-1\},&\mathcal P_D&=\{Rq:q\in W_D\},
+\end{aligned}
+\tag{PPF.3}
+$$
+
+where $D\ge1$ is public. One actual initial $t\in\mathcal F_D$
+remains stationary through preparation and late acquisition. The iterates
+$\rho^kt$ define prediction targets, rather than changes to that
+register. No subtree, equality, source-identity, age, reset, copying,
+free-navigation or advice port is available.
+

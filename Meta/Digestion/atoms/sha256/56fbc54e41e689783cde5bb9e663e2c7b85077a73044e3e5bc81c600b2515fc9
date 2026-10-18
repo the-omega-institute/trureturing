@@ -1,0 +1,36 @@
+**Corollary 17.2 (the common-law and pinning consumer).** On the
+actual scaffold slice, give the first $n$ original blocks the
+analytical product law $\mu^n$ and fix the padding. Conditional
+on the merged name, the owner-reply law is exactly $Q_G$ used
+in §§14–16. Thus the entropy obstruction concerns an attained
+fiber of a lawful full-family original code.
+
+If a deterministic depth-$r$ owner-pinning tree is used to refine
+this merged name before export, with $\ell$ attained transcript
+leaves, the complete attained alphabet is exactly
+
+$$
+|S_D|-2^{2n}+\ell,\qquad \ell\le2^r.
+\tag{GDB.82}
+$$
+
+All graph blocks and weights remain in each section. The original
+reader can ignore the refinement and still use at most one late
+Read.
+
+Proof. The unique actual lift in Theorem 12.3 preserves every
+product weight, so conditioning the original block law on precisely
+that fiber gives $Z_G^{-1}\prod_v\mu(x_v(s))$, exactly $Q_G$.
+An attained pinning transcript is the actual owner cylinder proved
+in Theorem 16.2. The SIR section identity preserves the native
+solution set and once-owned weights there. Transcript fibers
+partition the merged fiber, each is attained, and all other
+canonical names remain singleton, giving (GDB.82).
+
+These replies are already acquired by the full paid scan in
+Theorem 17.1; the refinement may compute its transcript from that
+acquired table before isolation. Here $r$ bounds revealed owner
+information in the refinement, not the preparer's total Read cost.
+Every retained transcript distinction belongs to the exported name;
+none is an extra free late observation. $\square$
+

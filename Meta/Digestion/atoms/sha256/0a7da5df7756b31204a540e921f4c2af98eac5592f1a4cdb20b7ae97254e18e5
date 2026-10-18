@@ -1,0 +1,33 @@
+### 定义 40.1（SLD 与量子 Fisher 型）
+
+令 \(\rho_\theta\) 是有限维严格正定密度矩阵族，令
+
+\[
+\dot\rho_\theta
+=
+\frac{d}{d\theta}\rho_\theta.
+\]
+
+定义对称对数导数 \(L_\theta\) 为满足
+
+\[
+\dot\rho_\theta
+=
+\frac12\left(
+\rho_\theta L_\theta+L_\theta\rho_\theta
+\right)
+\]
+
+的 Hermitian 矩阵。定义 SLD 量子 Fisher 信息
+
+\[
+F_Q(\rho_\theta)
+=
+\operatorname{tr}
+\left(
+\rho_\theta L_\theta^2
+\right).
+\]
+
+在本节中只处理严格正定有限维状态，避免支撑变化带来的额外伪逆条件。
+

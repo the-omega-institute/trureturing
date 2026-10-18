@@ -1,0 +1,51 @@
+## 152. Weighted complete-star response, retaining repeated axes
+
+Suppose Q is special, with its fixed reservoir pair {A,B}, numerical
+values a>b>1. Every owner containing Q then has a frame
+
+    (q,a,b,o,a,b).
+
+In both cases below the pair includes Z, so every such owner is genuine.
+For each owner j let w_j be its number of axial Q slots, either one or
+two. These count actual local slots, even when the owner occurs twice in
+the normal circle. Let theta_j be the angle of a Q slot. If w_j=2 the
+two angles are equal by the vertex symmetry of (q,a,b,q,a,b).
+Write beta_j,delta_j for its transverse A,B angles. Then
+
+    n=sum_j w_j=degree(Q)>=6,     sum_j w_j*theta_j=2*pi.
+
+Each owner contributes exactly two transverse A slots and two transverse
+B slots, regardless of w_j. These slots are distinct across owners.
+Thus weighting by w_j<=2 never overcounts the actual transverse cost
+that is bounded by the global reservoir budgets below.
+
+Put
+
+    k=a+b,
+    kappa=(sqrt(a^2-1)+sqrt(b^2-1))/k,
+    t=sqrt((q-1)/(q+1)),
+    lambda_plus=kappa*t,
+    lambda_minus=(sqrt(a^2-1)-sqrt(b^2-1))*t/k.
+
+Both parameters lie strictly between zero and one. Define
+
+    B_lambda(theta)=atan(lambda*cot(theta/2)),  0<theta<pi.
+
+Section 95 gives
+
+    beta+delta=2*B_lambda_plus(theta),
+    beta=B_lambda_plus(theta)+B_lambda_minus(theta).
+
+For 0<lambda<1 this function is positive, strictly decreasing, and
+strictly convex on (0,pi), as already proved in Section 95. Therefore
+weighted Jensen applies directly to the n actual Q slots. No owners are
+replaced by independently chosen shapes or lengths.
+
+The other axis always obeys
+
+    o<1+a+b.
+
+Indeed if its label is H then o<=z<1+a+b; if it is special, its fixed
+reservoir pair is the same {A,B}, so Section 112 supplies this strict
+bound. This also covers o=q in a repeated-axis owner.
+

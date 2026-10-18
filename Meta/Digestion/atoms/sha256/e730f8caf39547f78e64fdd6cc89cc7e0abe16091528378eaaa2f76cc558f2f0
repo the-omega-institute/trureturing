@@ -1,0 +1,17 @@
+**Proposition 5.3 (semantic coordinates are not acquired data).** On the
+entry with $P=\{\varepsilon\}$, its single-hole old row, empty histories
+and $N=0$, the entire fiber is $\mathcal T$. No function of the common
+retained input equals $B(u)$ on this fiber. For $Q=\{L\}$, no permitted
+zero-read service returns the complete original row on this fiber.
+
+Proof. The old row and complete initial state agree for $u=\alpha$ and
+$v=\beta$, but $B(u)=[0]\ne[1]=B(v)$. Hence no function of those common
+data gives both correct codes. The cut $L$ is absent for both sources;
+the required rows are the distinct concrete trees $\alpha$ and $\beta$.
+Without new replies, common deterministic control follows the same
+computations and forward actions on the two sources, receives no
+source-dependent input, and gives the same output at halt. This cannot
+be correct for both. Providing the code or its least rank would refine
+the entry fiber. A calculation on a hypothetical code is consequently
+not an acquisition or a physical receipt. $\square$
+

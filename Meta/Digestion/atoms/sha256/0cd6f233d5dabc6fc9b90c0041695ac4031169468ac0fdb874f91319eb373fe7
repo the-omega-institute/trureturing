@@ -1,0 +1,39 @@
+**定理 37.2（外部锚改变的精确视界秩）。** 在定义 37.1 的固定载体和当前读出下：
+
+1. 对所有 $h\geq0$，
+   $\displaystyle O_h(\Gamma_\parallel)=E$，故 $\dim O_h(\Gamma_\parallel)=3$。
+2. 对扩展权限，
+
+   $$
+   O_0(\Gamma_d)=E,\qquad
+   O_1(\Gamma_d)=E\oplus\operatorname{span}(e_5,e_6,e_7),\qquad
+   O_2(\Gamma_d)=W.
+   $$
+   因而视界 $0,1,2$ 的秩恰为 $3,6,7$，且 $O_h(\Gamma_d)=W$ 对 $h\geq2$ 稳定。
+3. 仅有锚时，
+   $\displaystyle O_h(\Gamma_{\{d\}})=E\oplus\operatorname{span}(e_5,e_6,e_7)$ 对所有 $h\geq1$，秩恰为 $6$。因此锚本身不能建立七维来源的完整恢复。
+
+**证明。** 八元数叉积的左乘算子满足 $A_u^{\mathsf T}=-A_u$。结合子代数 $E$ 对叉积闭合，且 $E$ 对每个 $A_c$ 的作用保持不变；因此从 $O_0=E$ 出发，内部控制永不离开 $E$，证明第一项。
+
+对 $d=e_4$，由 Fano 表逐项得到
+
+$$
+ A_d^{\mathsf T}E=\operatorname{span}(e_5,e_6,e_7),\qquad
+ A_d^{\mathsf T}\operatorname{span}(e_5,e_6,e_7)\subseteq E.
+$$
+
+所以 $O_1(\Gamma_d)=E\oplus\operatorname{span}(e_5,e_6,e_7)$。同一表还给出精确的二步见证
+
+$$
+ A_{e_1}^{\mathsf T}A_d^{\mathsf T}e_1=e_4=d;
+$$
+
+故 $d\in O_2(\Gamma_d)$，而 $O_2$ 已含 $E$ 以及 $e_5,e_6,e_7$，于是等于 $W$。更直接地，对 $x=\sum_{i=1}^7x_ie_i$，有
+
+$$
+ C A_d x=x_5e_1+x_6e_2+x_7e_3,\qquad
+ C A_d A_{e_1}x=x_4e_1+x_7e_2-x_6e_3.
+$$
+
+第一式配合 $Cx=x_1e_1+x_2e_2+x_3e_3$ 恢复 $x_1,x_2,x_3,x_5,x_6,x_7$，第二式的第一坐标再恢复 $x_4$。这给出秩七的显式行见证。若只用 $A_d$，反复作用只在 $E\oplus\operatorname{span}(e_5,e_6,e_7)$ 内循环，且 $d$ 始终在核中；$0$ 与 $d$ 有相同的全部当前及锚-only 线性响应，故第三项成立。证毕。
+

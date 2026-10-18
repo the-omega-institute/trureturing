@@ -1,0 +1,72 @@
+**Proposition 19.3 (One occupation law permits different quantum carriers).**
+For the same finite marginal $P_n$, $n\ge2$, put
+
+$$
+|\psi_{r,n}\rangle=\sum_{w\in B_n}\sqrt{P_{r,n}(w)}|w\rangle,
+\qquad
+\sigma_n=a|\psi_{p,n}\rangle\langle\psi_{p,n}|
++(1-a)|\psi_{q,n}\rangle\langle\psi_{q,n}|.
+\tag{19.8}
+$$
+
+The mixed state $\sigma_n$ and the pure state
+$|\Psi_n\rangle\langle\Psi_n|$ have identical occupation
+probabilities. Schmidt number is the minimum, over pure-state
+ensembles of a mixed state, of their largest cut Schmidt rank.
+At each proper cut $\sigma_n$ has Schmidt
+number at most two through its displayed ensemble, whereas
+Theorem 19.2 gives arbitrarily large pure-state Schmidt
+rank for $\Psi_n$.
+
+Proof. Both diagonals are exactly
+$aP_{p,n}(w)+(1-a)P_{q,n}(w)=P_n(w)$.
+The two component vectors are not proportional: their
+one-site occupation probabilities are $p/(1+p)$ and
+$q/(1+q)$, which differ. With both mixture weights positive,
+$\sigma_n$ is therefore mixed.
+For a legal word with k ones and endpoint bits $s_1,s_n$,
+transition counting gives
+
+$$
+P_{r,n}(w)=\frac{(1-r)^{n-1}}{1+r}
+\left(\frac{r}{(1-r)^2}\right)^k
+(1-r)^{s_1+s_n}.
+\tag{19.9}
+$$
+
+Thus each component is precisely a positive hard-core
+product-activity law: internal activities are
+$r/(1-r)^2$, and the two endpoint activities are
+$r/(1-r)$. Its positive coherent state has Schmidt rank
+two at every proper cut by the positive-reference
+factorization of §4. The ensemble in (19.8) therefore
+bounds the mixed-state Schmidt number by two. No rank
+bound is inferred for the coherent square root of the
+mixture; its explicit larger minor is (19.7). $\square$
+
+This supplies a paired same-observation example. Classical
+probability data specify neither the positive coherent
+preparation (19.2) nor the mixed preparation (19.8).
+Unbounded exact Schmidt rank gives no conclusion here about
+entropy divergence, approximate bond dimension, minimal
+quantum statistical memory or physical preparation work.
+
+Under the uniform renewal source's stated Universal and
+Direct premises, its Lemma 11.1 and Theorem 11.4 also give
+
+$$
+d(P)=a\,d(P_p)+(1-a)\,d(P_q)
+\le C_2\le C_3<c_\star.
+\tag{19.10}
+$$
+
+The two positive closed hidden components each have two
+states and are the irreducible chains (19.1), so the
+source's actual-component affinity applies with weights
+a and $1-a$. This uses its classical conclusions only
+under their supplier premises. The coherent embedding
+keeps the exact same visible probabilities and hence the
+same harmonic-edge objective. Its large Schmidt rank
+does not turn this classical mixture into an attainer or
+settle the original all-dimension question.
+

@@ -1,0 +1,27 @@
+**Definition 207.16 (Full fixed data).** Fix $L\ge4$,
+$J=\{3,\ldots,L\}$, $m=L-2$, $s>0$ and $3\le c\le4$. Stipulate
+one actual measure $\nu$ on subsets of $J$, of total $cs$, unary
+zero masses $2s$, and directed masses
+$\nu(i\notin Z,j\in Z)=s$ for $i<j$. Equal unary masses give the
+opposite directed masses too; each answer pair therefore has cells
+$(s,s,s,z)$, where $z=(c-3)s$. Existence of this measure is a premise;
+arbitrary $c\in[3,4]$ is not presumed realizable at every length.
+
+Choose $r_j\in[0,s]$ in arbitrary order, set $\gamma_j=s+r_j$,
+$T=s$ and $E=0$. The fixed-data competitors are all $A=0$/early-pair
+scores with these late totals, this entire late pair projection $\nu$
+and this $T$. Their correct suffixes and early pair allocations,
+including prefix $00$, are unrestricted. In particular the projection
+is $P_{00x}+P_{01x}+P_{10x}$, not just the last two summands. Define
+
+$$
+\begin{aligned}
+b_*&=(c-2)s/2,\qquad R_j=\max(\{r_n:n>j\}\cup\{0\}),
+\qquad r_{\max}=\max_jr_j,\\
+D&=\max\left\{r_{\max},\
+ \max_{j\ge3}[r_j+(R_j-b_*)_+],\
+ \max_{j\ge4}[r_j+(R_j-z)_+]\right\}.
+\end{aligned}
+\tag{207.40}
+$$
+

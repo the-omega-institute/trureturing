@@ -1,0 +1,67 @@
+**Corollary 8.4 (The rare-vacuum comparison with completed controls).**
+For every fixed $n\ge4$, in the laws (6.1) with
+$0<\epsilon\le1$, use $\tau=1/2$, positive fixed
+$\omega,\eta$ and $0<r<1$. The local Fisher matrix
+is exactly that of the corresponding quadrature/mode
+mixture. The states lie in the same
+$\mathcal U_{1/\sqrt{M+1}}$, so (8.9) gives a uniform
+inverse bound independent of $\epsilon$.
+
+All recorded outcome probabilities at these real
+references are at least
+
+$$
+\min\left\{\frac{a}{2(M+1)},\frac{b}{5(M+1)}\right\}>0.
+\tag{8.14}
+$$
+
+With uniform quadrature sites the joint ratio tends
+to $\min\{rg_n,1-r\}>0$. At the rational length-four
+reference (6.12), $r=9/10$ and uniform $\omega,\eta$
+retain the bound $9/500>6/707$ while the completed
+menu is globally injective on full-support pure rays.
+For this rational reference the best design in the
+completed family is attained with $0<r<1$ and every
+quadrature site weight positive. Any positive real
+site distribution then supplies global pure injection.
+
+Proof. Nonvacuum amplitudes equal
+$1/\sqrt{M+\epsilon}\ge1/\sqrt{M+1}$. The oriented
+amplitude ratio is 1 on a nonvacuum pair and
+$1/\sqrt\epsilon\ge1$ on a vacuum pair, so (8.1)
+holds with $\tau=1/2$. Here $c=2/\sqrt5,d=1/\sqrt5$.
+The conditional real probabilities are
+
+$$
+\begin{aligned}
+q_{R,+}^{\rm vac}&=\frac{(2\sqrt\epsilon+1)^2}{5(M+\epsilon)},&
+q_{R,-}^{\rm vac}&=\frac{(2-\sqrt\epsilon)^2}{5(M+\epsilon)},\\
+q_{R,+}^{\rm nonvac}&=\frac9{5(M+\epsilon)},&
+q_{R,-}^{\rm nonvac}&=\frac1{5(M+\epsilon)}.
+\end{aligned}
+\tag{8.15}
+$$
+
+Every blocked word is nonvacuum with probability
+$1/(M+\epsilon)$. The quadrature probabilities are
+$(1+\epsilon)/[2(M+\epsilon)]$ on a vacuum pair and
+$1/(M+\epsilon)$ on a nonvacuum pair. These formulas
+prove (8.14). Apply Theorems 8.2–7.3, (6.4) and (5.8).
+For (6.12) the real probabilities are $144/3505$ and
+$361/3505$ on vacuum pairs, $180/701$ and $20/701$
+on nonvacuum pairs. Actual setting probabilities are
+$9/40$ for each quadrature site and $1/40$ for each
+real site. Proposition 6.4 and (8.3) supply the same
+information bound. $\square$
+
+For attainment at the rational reference, the ratio
+in (5.8) is continuous on the compact closed
+$(r,\omega)$ domain. It is zero at $r=0$ or whenever
+a quadrature site is omitted, by the centered-bit
+kernel used below. Every $r=1$ design is bounded
+by $6/707$, strictly below the exhibited interior
+design. A global maximizer therefore lies in
+$0<r<1$ with all quadrature weights positive.
+The fixed $\tau=1/2$ is regular independently of
+these weights, and (8.3) is independent of $\eta$.
+

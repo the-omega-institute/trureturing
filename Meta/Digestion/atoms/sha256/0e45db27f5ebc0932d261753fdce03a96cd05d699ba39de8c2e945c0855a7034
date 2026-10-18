@@ -1,0 +1,23 @@
+**定义 1.1（原来源与内在深度）。** 来源域为全部非空有限自由有序满二叉树
+
+$$
+\mathcal T::=\alpha\mid\beta\mid(\mathcal T,\mathcal T).
+$$
+
+叶的不同出现、左右次序与括号均保留；不取结合律、交换律或共享子树商。固定
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=(\beta,\alpha),\qquad
+\rho((S,T))=(\rho(S),\rho(T)),
+$$
+
+并令 $I_k=\rho^k[\mathcal T]$，其中 $I_0=\mathcal T$。复用 [JM §§36.2–36.3][JM] 的互斥像解析与唯一原始射线：每个 $T$ 唯一写成 $T=\rho^{\nu(T)}P(T)$，其中 $P(T)\notin I_1$，且
+
+$$
+\nu(T)=\max\{k\in\mathbb N_0:T\in I_k\}.
+\tag{NIC.1}
+$$
+
+因此最大值有限，$T\in I_k$ 当且仅当 $\nu(T)\ge k$。这里 $\nu$ 是当前树的最大逆生成深度。它没有指定实际入口、入口后的替换次数、读取次序或物理时间。
+

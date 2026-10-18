@@ -1,0 +1,32 @@
+**Proposition 8.2 (finite words and the scope of the resource result).**
+The construction in Definition 7.2 has a finite address at every
+promised input. Its worst submitted length over all inputs is unbounded
+for every fixed $2\le q\le6$. Theorems 6.2 and 7.5 concern exactly
+$q$ attained labels and the two singleton visible regions; they give
+no exact call minimum for $q\ge7$, no larger-alphabet tradeoff and no
+arbitrary-menu optimum. Local computation and literal/output storage
+remain separate resources.
+
+**Proof.** When queried, $E$ has whole-word length one; a $P_t$
+representative has whole-word length $1+\lceil t/2\rceil$. Every
+threshold in Definition 7.2 is a finite integer computed from the
+finite acquired row. For unbounded lengths fix $q\ge2$, take
+code one, left visibility and $z\ge q+2$. Its full class contains
+$(0,1)$ and $(1,1)$ in every prefix square. Their distinct $a$
+values prevent a constant-fiber halt, and the schedule submits the
+threshold $t=q+z-1$. Both histories are legal at their respective
+lags $z$ and $z-1$ under either convention, and its length diverges
+with $z$. This is a property of the specified construction, not a
+new address optimum.
+
+The lower proof partitions the declared square into exactly $q$
+classes and uses both declared regions; changing either condition
+changes its premises. The upper proof enumerates its finite acquired
+fiber and constructs an input-dependent literal word and numeric
+output. A bound on chronological calls alone does not bound the
+lengths of those objects or the storage and work needed to obtain
+them. Assumption 5.1 imposes no finite Moore restriction, fixed state
+set, physical service law or uniform address cap. The result is
+therefore precisely an alphabet and native-call boundary for this
+acquired-input contract. $\square$
+

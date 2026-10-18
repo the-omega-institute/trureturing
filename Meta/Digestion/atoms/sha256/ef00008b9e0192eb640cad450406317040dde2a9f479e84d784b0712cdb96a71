@@ -1,0 +1,40 @@
+**Theorem 4.5 (the exact fractional structural rate).** For the unchanged
+full-family task,
+
+$$
+\boxed{\displaystyle
+\lambda=\inf_{D\ge1}2^{-D}\log_2(z_D+1).}
+\tag{FMR.21}
+$$
+
+The displayed upper endpoints are nonincreasing. Moreover
+
+$$
+0\le2^{-D}(\log_2m_D-\log_2z_D)
+\le2^{-D}\log_2\bigl(1+(\ln2)2^D\bigr)
+\longrightarrow0.
+\tag{FMR.22}
+$$
+
+Proof. The recurrence for $N_D$ implies
+$N_{D+1}+1=N_D^2+3\le(N_D+1)^2$, so
+$N_D+1\le2^{2^D}$. Since $H_N\le1+\ln N$, (FMR.20) gives
+(FMR.22). Its right side tends to zero: its numerator grows at
+most linearly in $D$, while its denominator is $2^D$.
+Consequently $2^{-D}\log_2z_D$ has the same limit as
+$2^{-D}\log_2m_D$. Also $z_D\ge1$, so shifting $z_D$ by one
+changes the normalized logarithm by at most $2^{-D}$.
+Finally (FMR.19) gives
+$z_{D+1}+1\le z_D^2+2\le(z_D+1)^2$.
+Thus the shifted fractional endpoints decrease to $\lambda$, proving
+their infimum formula. $\square$
+
+The characterization uses native reply kernels, actual canonical
+sources, effective paid attainment, proved gluing and a vanishing
+normalized integrality loss. Generic partition enumeration alone
+does not supply these correspondences. At a fixed depth (FMR.17)
+is an all-competitor lower certificate for $m_D$. Its normalized
+value is not automatically a lower bound for $\lambda$. Equation
+(FMR.21) supplies upper approximations, without a certified numerical
+convergence modulus or a shrinking computable two-sided interval.
+

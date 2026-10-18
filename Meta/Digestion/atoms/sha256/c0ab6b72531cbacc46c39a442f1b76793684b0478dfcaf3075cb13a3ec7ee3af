@@ -1,0 +1,13 @@
+## 460. 原曲率负谱最优性的精确缺口与必须保留的算术单位原子
+
+本节复用 §459 的同一实际 $B=\Phi''$、固定 $c>0$、三个节点
+$h,3h/2,2h$、共同小窗口 $0<h<h_0$ 以及 $0\le\varepsilon\le K_h$。
+沿用 $U,V,Z,r=r_\varepsilon,n=n_\varepsilon$，并记
+$$
+y(t)=e^{-ht/2},\qquad q(t)=y(t)^2(y(t)-r)^2,
+\quad M=r^4/16,\quad \alpha=r^2/4+r-1>0.
+\tag{SDD.1}
+$$
+这里 $r_*=2(\sqrt2-1)<r<1$、$M>0$ 和 $\alpha>0$ 均由 §459.1 的同一域支付。
+测度始终是非负谱率上的真实有限 signed Borel 测度，正负部始终取 Jordan 分解。
+

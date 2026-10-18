@@ -1,0 +1,25 @@
+**Definition 59.3 (aggregate, value and feasibility boundary).** All the
+following expressions are evaluated at $(a,k(a))$:
+
+$$
+\begin{aligned}
+B(a)&=-\frac{R}{2D\sigma H}nn^T,&
+C_0(a)&=\frac{ZZ^T}{2H\mathcal E},& A(a)&=I-B(a)-C_0(a),\\
+\tau(a)&=2A(a)_{01},&
+\omega(a)&=\operatorname{tr}A(a)-1
+=2-\operatorname{tr}B(a)-\operatorname{tr}C_0(a).
+\end{aligned}
+\tag{RC.12}
+$$
+
+Here $\omega(a)$ is an aggregate eigenvalue, not $\omega_{\rm src}$.
+Let $a_\dagger$ be the unique zero of $\omega$ on $[0,37/125]$.
+Its existence, uniqueness and enclosure are proved in §60. The exact
+value to be established for $0\leq a\leq a_\dagger$ is
+
+$$
+j(\tau(a))=\operatorname{tr}G-\frac{g}{H\mathcal E},\qquad
+\mathcal T(s_0\tau(a))=T_{\rm flat}-\frac{g}{2H\mathcal E}.
+\tag{RC.13}
+$$
+

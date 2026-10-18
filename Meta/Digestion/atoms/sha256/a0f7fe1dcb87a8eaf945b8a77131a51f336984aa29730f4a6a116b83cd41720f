@@ -1,0 +1,40 @@
+**构造 12.1（Actual post-parent queries）。** Choose distinct codes from Lemma 11.2, using (11.8) in the nonsaturated case. For $t=1,\ldots,d$, prescribe the full physical path charges $q_t$ as follows. For every actual outside vertex $gi\in Z\cap W_t$, set
+
+$$
+q_t(gi)=z_i[t],\qquad q_t(ga_t)=0.
+\tag{12.1}
+$$
+
+The two prescriptions agree by (11.3). All actual outside vertices not in $W_t$ have response zero and their corresponding code bit is zero. Let $X_t=\bigoplus_{i\in A}z_i[t]$.
+
+When $g=1$, prescribe the endpoint charges by
+
+$$
+\begin{array}{c|cc}
+ &q_t(0)&q_t(m)\\\hline
+t=1&X_1&0\\
+2\le t\le d&0&X_t.
+\end{array}
+\tag{12.2}
+$$
+
+A charge at an endpoint outside the path means zero there. Endpoint $m$ is in every one of these paths; zero is in the first path. For $t\ge2$ the left vertex $a_t$ lies strictly between zero and $m$, so none of the donor charges in (12.2) alters the prescribed left zero. Equation (12.2) makes the full-path sum even.
+
+When $g>1$, set $q_1(0)=1$, $q_1(m)=0$, and set both endpoint charges to zero in all later rows when they are present. Every unassigned full-path vertex is zero except the nonactual donor
+
+$$
+b_t=ga_t+1\pmod T.
+\tag{12.3}
+$$
+
+This donor is the second vertex of the full physical path and is not in $P$. Set its charge to the XOR of all other prescribed charges, making the full path even. Its nonactual status does not assert an independently reachable source or confer an unobserved output.
+
+In both cases issue precisely the full literal inverse
+
+$$
+B_t(i)=\bigoplus_{h=0}^i q_t(tm+h\pmod T),\qquad 0\le i<m.
+\tag{12.4}
+$$
+
+Each $B_t$ starts zero. By Interface 1.4 its actual endpoint differences are exactly the prescribed charges. That zero clears every surviving root tail, including $k-1$. All later queries start zero as well, so no cross-block run reaches $k$. Internally a word starting zero has run length at most $m-1<k$. Thus every query is an actual legal complete block under both alphabets, on every low INITIAL tail, not an algebraic combination of block masks. Every zero bit in (12.4) is emitted inside its charged block.
+

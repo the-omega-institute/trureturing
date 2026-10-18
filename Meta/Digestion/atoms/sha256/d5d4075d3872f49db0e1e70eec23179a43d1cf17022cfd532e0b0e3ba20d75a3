@@ -1,0 +1,21 @@
+**定理 23.2（FIB 向量份额的最优有限预测及其不闭合边界）。** 若 $G_h^{\rm mult}$ 特征值为 $\mu_1\geq\cdots\geq\mu_m\geq0$，则
+
+$$
+\mathbb E\|\mathcal R_h(x-Px)\|^2=\operatorname{tr}(G_h(I-P)),\qquad
+\min_{\operatorname{rank}P_M=s}\mathbb E\|\mathcal R_h(x-Px)\|^2
+=3\sum_{i>s}\mu_i.
+$$
+
+最优成本为
+
+$$
+J_s=3\lambda s+3\gamma\sum_{i>s}\mu_i,\qquad
+J_{s+1}<J_s\Longleftrightarrow\gamma\mu_{s+1}>\lambda.
+$$
+
+相等给并列，谱简并允许多个最优子空间。保留全部非零特征模恰能精确恢复声明的有限响应；它仍不保证反复投影更新或全部上下文充分。即便有限响应失真为零，三维预测压缩也可在下一步失效。
+
+证明。各词矩阵的张量形给 $G_h^{\rm mult}=\sum_w a_wK_w^{\mathsf T}cc^{\mathsf T}K_w$。协方差条件使损失为 $\operatorname{tr}((I-P)G_h(I-P))$；投影幂等和迹循环给所示式。最大化保留迹的经典谱极值输入归于 [Ky Fan 文献注](../../../Library/Eigenstructure/fan1949weyl.md)。在其正交特征基 $e_i$ 中，$\operatorname{tr}(G_h^{\rm mult}P_M)=\sum_i\mu_i p_i$，$p_i=\|P_Me_i\|^2\in[0,1]$ 且 $\sum p_i=s$，至多为前 $s$ 特征值之和，投影到前 $s$ 个模达到。三维张量因子给系数三；相减得边际阈值。
+
+误差零等价于 $\mathcal R_h(I-P)=0$，所以必须包含 $G_h$ 的全部正特征子空间。可是取定理 17.3 的 $\mathcal W_0=\{\varepsilon\}$、$a_\varepsilon=1$、$P(u,v)=(u,0)$，当前响应失真为零，真实一步响应为 $v$，反复使用压缩模型 $PAP$ 却给零。更一般，若 $\ker P$ 对全部 $A_a$ 不变且 $\ker P\subseteq\ker C$，则可在 $\operatorname{ran}P$ 上用 $PA_a|_{\operatorname{ran}P}$ 精确承接全部未来；这是对输出未来准确性的充分条件。若目标改为精确的自主投影状态更新，必要性属于更强的另一命题；有限视界零损失未提供此条件。协方差若改为 $\Sigma$，损失为 $\operatorname{tr}(\mathcal R_h(I-P)\Sigma(I-P)\mathcal R_h^{\mathsf T})$，非等变协方差也可破坏向量三重简并。因此视界、权重、概率律、精度与实验权限都属于成本合同。证毕。
+

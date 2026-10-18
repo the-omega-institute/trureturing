@@ -1,0 +1,19 @@
+### 490.3. 同一整数的联合修正不能被删去
+
+对整数 $n>5040$，记 $E=\log n$、
+$W(n)=\log(\sigma(n)/n)$，并保留完整正整数压力
+$$
+\lambda_E=\frac1{E\log E},\qquad
+J_E(n)=W(n)-\lambda_E\log n,\qquad
+d_n=M(\lambda_E)-J_E(n).
+$$
+由 §481 的 $R(E)=P_0(E)-\lambda_E\psi(E)-M(\lambda_E)$，直接消去同一个压力，得到
+$$
+\boxed{
+R(E)+d_n
+=P_0(E)-W(n)+\frac{E-\psi(E)}{E\log E}.
+}
+\tag{490.9}
+$$
+这是完整实际联合量的有限表达式，没有把压力最大值改成任意一个试探整数。
+

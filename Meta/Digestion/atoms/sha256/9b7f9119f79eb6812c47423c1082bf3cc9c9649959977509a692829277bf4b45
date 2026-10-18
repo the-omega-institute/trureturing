@@ -1,0 +1,33 @@
+**Theorem 4.3 (linear owner barrier and exact resampling components).**
+Between any opposite-phase solutions of $\mathcal T_{m,d}$,
+
+$$
+d_O(s,t)=4m,\qquad
+|\{j:x_j(s)\ne x_j(t)\}|=8m.
+\tag{OCC.16}
+$$
+
+For two phase-zero solutions whose edge choices differ in $k$ places,
+their owner distance is exactly $4k$. Consequently $G_r$ has two
+components, precisely the two phases, when $4\le r<4m$; for
+$1\le r<4$ every point is isolated. At $r\ge4m$ it is connected.
+In particular an update budget $r_m=o(11m)$ cannot connect this
+single growing family for all sufficiently large $m$.
+
+Proof. Across phases, $m$ of the $x$ owners change, one auxiliary
+owner per edge changes, and both selectors per edge change. Their
+owner blocks are distinct, totaling $m+m+2m=4m$. Connector leaves
+change at the two occurrences of each $x$ and the two occurrences
+of each changing auxiliary, giving $4m$ further changed actual
+blocks. The total actual-block distance is $8m$.
+
+Within phase zero, changing one edge choice swaps its two auxiliary
+owners and its two selector owners, and changes no other owner.
+Different edges affect disjoint such owners, proving the distance $4k$.
+The phase-zero edge choices therefore contain their connected
+hypercube of four-owner moves. The other phase is a singleton, and
+every crossing requires $4m$ owners. The component assertions follow
+in all ranges. For $r_m=o(11m)$, eventually $r_m<4m$, so no edge
+crosses phases. This last statement is about connectivity, not an
+extensive entropy gap at every growing update budget. $\square$
+

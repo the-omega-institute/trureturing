@@ -1,0 +1,30 @@
+**Theorem 3.2 (T1: full-class reduction and strict-improver rigidity).**
+Every at-most-four literal model is dominated in original uniform
+error by an actual model associated with some $R\in\mathcal E_2$.
+Conversely every $R\in\mathcal E_2$ has a lawful realization with at
+most four real coordinates. Thus
+
+$$
+\bigl(e_{4,\mathsf L}^{\rm aff}(Z)\bigr)^2=16H^2T_4(\tau).
+$$
+
+For $0<Z<2/3$, any individual model with error strictly below $e_2(Z)$
+has actual affine-hull dimension four and is $\beta$-independent.
+After an affine real isomorphism of its actual hull, its encoder is
+one of
+
+$$
+e^{i\alpha}(e^{\lambda_1x},e^{\lambda_2x})\quad
+(\lambda_1\ne\lambda_2),\qquad
+e^{i\alpha}(e^{\lambda x},xe^{\lambda x}).
+$$
+
+In those coordinates its decoder can be replaced, without increasing
+error or changing encoder fibers, by a fixed linear decoder whose value is
+$D(2HR(x)e^{i\alpha},0)$. This scalar profile has minimal order two:
+both distinct-mode coefficients are nonzero, or the confluent linear
+coefficient is nonzero. In particular the original strict improver's
+encoder is bounded and continuous; these are conclusions. No such
+normal-form assertion is made for non-improvers or for the original
+ambient update assignments on empty domains.
+

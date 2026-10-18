@@ -1,0 +1,10 @@
+**定理 6.4（正深度假设不能删去）。** 取 $T=(\alpha,\alpha)$ 与单读历史 $h=((L,\alpha))$。则 $h$ 准确认证 $\nu(T)=0$，但
+
+$$
+\operatorname{paid}(h)\cap\operatorname{Cone}(R)=\varnothing,\qquad
+|\operatorname{paid}(h)|=1<N(T)=2.
+\tag{NIC.20}
+$$
+
+证明。全部匹配原树恰为 $\{(\alpha,W):W\in\mathcal T\}$：非空地址 $L$ 的叶回复强制根为分支且左孩子为 $\alpha$，对右孩子没有约束。每个这样的树都有左 $\alpha$ 叶，违反一阶像必要条件，所以全部深度为零。实际 $T$ 是其中一个，故证书准确，却不接触右叶锥，且只读一个地址。$\square$
+

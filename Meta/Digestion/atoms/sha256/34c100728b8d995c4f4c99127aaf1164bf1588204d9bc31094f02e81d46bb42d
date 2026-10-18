@@ -1,0 +1,167 @@
+**Theorem 5.2 (realized finite-bin CP aliases and exact separation).** Fix
+arbitrary $0<c<1/2$, $Z=1-2c$, $a=c/2$, $T=1$, a common compatible
+preparation and the partition (EM.16). Put $v=c/2$ and, in each cell
+$[l,u]=[t_{j-1},t_j]$ with midpoint $m=(l+u)/2$, define
+
+$$
+\begin{aligned}
+C(t)&=\begin{cases}v(t-l),&l\leq t\leq m,\\
+                         v(u-t),&m\leq t\leq u,\end{cases}\\
+S_*(t)&=1-t/2,\qquad
+k_+(t)=a-\frac{C(t)}{2S_*(t)},\qquad
+k_-(t)=a+\frac{C(t)}{2S_*(t)},\qquad
+\chi_\pm(t)=\chi(0).
+\end{aligned}
+\tag{EM.17}
+$$
+
+These are original controls satisfying both regularity alternatives, with
+actual canonical survival $S_*$ and actual signed-loss curves
+$\ell_+=C$ and $\ell_-=-C$. They have the common bounds
+
+$$
+\begin{aligned}
+&k_\pm(0)=k_\pm(1)=a,\quad
+ c/4\leq k_\pm\leq3c/4,\quad S_*\geq1/2,\\
+&\min_i p_i(k_\pm)\geq\min(c/4,Z)>0,\quad
+ |k_\pm'|\leq3c/4,\quad \operatorname{TV}(\chi_\pm)=0,\\
+&\operatorname{TV}(k_\pm)=\mathcal L_\pm\leq3c/4,\qquad
+ \mathcal Q_\pm\leq9c^2/16.
+\end{aligned}
+\tag{EM.18}
+$$
+
+Here $\mathcal L=\int\sqrt{k'^2+\chi'^2}$ and
+$\mathcal Q=\int(k'^2+\chi'^2)$ are the acquisition supplier's
+coordinate costs. The two controls have equal pointwise absolute speeds
+and equal actual variation, length and quadratic totals within the pair.
+Their complete binned CP instruments are identical on every common live
+input and arbitrary common reference. Nevertheless their exact-time
+instruments satisfy
+
+$$
+D_\rho(\gamma_+,\gamma_-)
+ =\frac12\sum_{i\in\{0,1,3,4\}}\operatorname{tr}\rho_{ii}^R,
+\qquad d_{\rm op}=1/2,
+\qquad d_{\rm mark}=c.
+\tag{EM.19}
+$$
+
+For every common source-family input $D_\rho=c$ as well. No common bound
+on the variation of the height derivative is assumed.
+
+**Proof: original realization and margins.** The piecewise affine $C$
+is continuous, vanishes at each partition endpoint and has $|C'|=v$
+almost everywhere. Its accumulated variation is $V(t)=vt$. The Jordan
+parts for $\ell_\pm=\pm C$ are
+
+$$
+P_\pm(t)=(vt\pm C(t))/2,\qquad
+Q_\pm(t)=(vt\mp C(t))/2.
+\tag{EM.20}
+$$
+
+They are nondecreasing with disjoint nonzero derivative supports, and
+$P_\pm(1)=Q_\pm(1)=c/4<a=c-a=c/2$. The credited exact range theorem
+therefore gives
+$S=1-V/c=S_*$ and $k=(a-P_\pm)/S_*=k_\pm$.
+
+These formulas also verify the original control directly. On a rising
+triangle half $C'=v$ and on a falling half $C'=-v$; differentiating gives
+
+$$
+k_+'=-\frac{C'}{2S_*}-\frac{C}{4S_*^2}
+ =\begin{cases}-(c-k_+)/(2S_*),&C'=v,\\
+                         k_+/(2S_*),&C'=-v.
+          \end{cases}
+\tag{EM.21}
+$$
+
+Since $k_-=c-k_+$, its derivative is $-k_+'$. In either case the
+actual hazard of both controls is $1/(2S_*)$; its integrated survival
+is exactly $S_*$. Every piece is rational smooth with denominator at
+least $1/2$ and derivative extending continuously to the closed half-cell.
+The joined heights are continuous and hence finite-piecewise-$C^1$ and
+absolutely continuous. The constant phases satisfy the same alternatives
+and have zero transported increment.
+
+For a cell of length $h\leq1$ its peak is $vh/2=ch/4\leq c/4$.
+Thus $0\leq C/(2S_*)\leq c/4$, giving the height and probability
+margins. The derivative expression bounds its modulus by
+$c/2+c/4=3c/4$. Integrating this bound and its square proves (EM.18).
+Reflection gives equal absolute height derivatives; since the phase rates
+are zero, it gives equality of all the stated resource totals within the
+pair. These are chosen-coordinate mathematical costs, not physical energy.
+
+**Proof: equality of the entire binned operations.** Formula (EM.4)
+and (EM.20) give the actual source-family CDFs
+
+$$
+F_0^\pm=F_4^\pm=P_\pm,\qquad
+F_1^\pm=F_3^\pm=Q_\pm,\qquad F_2^\pm=Zt/2.
+\tag{EM.22}
+$$
+
+At both endpoints of a cell $C=0$. For its length $h$, the increment
+of every bottom CDF is $ch/4$, and the middle increment is $Zh/2$.
+The initial bottom probabilities are all $a=c/2$. Therefore for every
+original mode and every common joint input the binned failure map is
+exactly
+
+$$
+\mathcal I_{j,i}^\pm(\rho_{LR})
+   =\frac h2|f\rangle\langle f|\otimes\rho_{ii}^R.
+\tag{EM.23}
+$$
+
+Terminal height is $a$, $S_*(1)=1/2$ and every $H_i(1)=0$, so both
+success operators are $K_1=I_5/\sqrt2$. Thus their unnormalized success
+maps, all bin/mode CP maps and the retained successors coincide, jointly
+with arbitrary common references. This is more than equality of scalar
+marginals. On the supplier's stopped extension both no-new-failure
+operators are $(I_5/\sqrt2)\oplus1_f$ and all jumps annihilate $f$;
+equality holds there too, including live–stopped coherences.
+At every partition endpoint one also has $K_{t_j}=\sqrt{S_*(t_j)}I_5$.
+No intermediate subcell read is being asserted equal.
+
+**Proof: exact-time distance.** On each rising half-cell,
+$(P_+',Q_+')=(v,0)$; on each falling half-cell it is $(0,v)$.
+Reflection exchanges these two derivatives. After division by the
+initial bottom probability $a=v$, the CP density coefficient of a given
+bottom mode is $1$ or $0$, and the two programmes exchange them.
+Middle coefficients are both $1/2$. Therefore the successful-output
+difference and the middle-mode difference vanish, while for every bottom
+mode at almost every time the difference of failure densities is
+
+$$
+\pm |f\rangle\langle f|\otimes\rho_{ii}^R.
+\tag{EM.24}
+$$
+
+The reference block is positive. Its trace norm equals its trace, so
+integrating over the full unit interval proves the $D_\rho$ formula
+in (EM.19), for arbitrary references. Its supremum is $1/2$, attained
+by a computational bottom-mode input; this supremum uses the declared
+all-input operational metric. On any common original input the total
+bottom probability is $2c$, giving $D_\rho=c$.
+
+For marked laws define the Borel event
+
+$$
+E_+=\bigcup_{j=1}^N\left(
+ ((t_{j-1},(t_{j-1}+t_j)/2)\times\{0,4\})
+ \cup
+ (((t_{j-1}+t_j)/2,t_j)\times\{1,3\})\right).
+\tag{EM.25}
+$$
+
+Its probability under the plus programme is $c$, and under the minus
+programme is zero. The opposite event exchanges these probabilities.
+There are no endpoint atoms. Half the scalar $L^1$ density difference
+is $c$, proving $d_{\rm mark}=c$ and completing the proof. $\square$
+
+The source-family unmarked failure-time marginal is uniform, with total
+mass $1/2$, in both programmes. The original-mode marginal is also the
+same. Their differing subcell time–mode relation is essential. It cannot
+be recovered from equality of those separate marginals.
+

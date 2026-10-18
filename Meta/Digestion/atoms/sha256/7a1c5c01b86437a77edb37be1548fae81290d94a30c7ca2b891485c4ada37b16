@@ -1,0 +1,24 @@
+**Lemma 2.2 (Identical forward and backward entropy gaps).** For every $k\ge0$,
+
+$$
+H_P(X_0\mid X_{1:k})=h_k=B_P(k+1)-B_P(k).
+\tag{2.2}
+$$
+
+Consequently the stationary reversed visible process $Y_i=X_{-i}$ has exactly the entropy gaps $a_k$ of $P$.
+
+Proof. The entropy chain rule and stationarity give
+
+$$
+\begin{aligned}
+H_P(X_0\mid X_{-k:-1})
+&=H_P(X_{-k:0})-H_P(X_{-k:-1})
+=B_P(k+1)-B_P(k),\\
+H_P(X_0\mid X_{1:k})
+&=H_P(X_{0:k})-H_P(X_{1:k})
+=B_P(k+1)-B_P(k).
+\end{aligned}
+$$
+
+For $k=0$ both conditioning blocks are empty. Increasing-field limits give the common infinite conditional entropy $h$. This is a stationary block-entropy identity, without a time-reversibility assumption. $\square$
+

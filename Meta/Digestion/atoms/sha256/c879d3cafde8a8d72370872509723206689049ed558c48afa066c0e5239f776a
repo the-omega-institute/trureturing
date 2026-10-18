@@ -1,0 +1,21 @@
+**Definition 3.1 (observational constancy).** For a finite menu
+$M\subseteq\mathcal W$, let
+
+$$
+O_M(u)=(r_{t_u}(w))_{w\in M}.
+\tag{PCA.6}
+$$
+
+A common ordering of $M$ fixes the tuple notation. Say that $M$
+determines the prescribed code when
+
+$$
+O_M(u)=O_M(u')\ \Longrightarrow\ c(u)=c(u')
+\qquad(u,u'\in\mathcal U).
+\tag{PCA.7}
+$$
+
+By entry recoverability, this is equivalent to the same implication
+with $s(u)=s(u')$. It quantifies over the whole original domain, rather
+than one representative of each root profile or target fiber.
+

@@ -1,0 +1,33 @@
+## 141. The unique dominant run has one or two occurrences
+
+Let g>=1 be the number of axial Z occurrences in I, theta_i their angles,
+and beta_i,delta_i the corresponding M,C transverse angles. Put
+
+    Theta=sum(theta_i),       B=sum(beta_i).
+
+The owners of these g occurrences are distinct: a repeated owner would
+have both axes Z and would be axial-flat by (137.5). None is rho, whose
+reservoir pair contains Z. Their two transverse M slots each are therefore
+distinct actual occurrences, and the full M budget gives 2*B<=pi.
+In fact 2*B<pi: rho is genuine, contains M on the shared endpoint face,
+and is a different owner, so it supplies a further positive M occurrence.
+
+The two transverse Z slots of rho consume 2*gamma>pi. Therefore
+Theta<pi. Also m>c gives sum(beta_i+delta_i)<2*B<pi. Summing (137.1) over I,
+
+    g*pi < 2*Theta+sum(beta_i+delta_i) < 3*pi.
+
+Consequently
+
+    g is either 1 or 2.                            (137.6)
+
+For g=2 the same inequality gives Theta+B>pi. Since B<pi/2,
+
+    Theta>pi/2,          pi/2<gamma<3*pi/4.         (137.7)
+
+The second upper bound follows from 2*gamma+Theta<2*pi. That last
+inequality is strict in both cases g=1,2: the g run slots and rho's two
+transverse slots account for at most four of degree(Z)>=6 genuine
+occurrences. There remain at least 4-g additional positive Z occurrences.
+If rho has an axial Z slot as well, it is one of these residual slots.
+

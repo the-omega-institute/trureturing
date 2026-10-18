@@ -1,0 +1,32 @@
+**Definition 2.2 (terminal-overlap recognition).** Choose one remaining
+chart per $r\in B$. Compare their entire source expressions by equating
+one reference expression to each of the others. Distribute fixed powers
+through explicit pairs and evaluate fixed grounds. Cancel equal ordered
+pair constructors on both sides, and decompose a fixed ground pair when
+it faces an explicit pair. A fixed leaf facing an explicit pair, or two
+unequal fixed grounds, is a clash. A clash makes that chart tuple's
+completed common-output relation empty.
+
+For a nonclash tuple, recognition succeeds precisely when every
+remaining comparison is between terminals
+
+$$
+g,\qquad T_{n_i+c},\qquad \rho^a z_j.
+\tag{TOS.6}
+$$
+
+An atomic or residual terminal facing an explicit pair is unresolved
+by this recognizer. No occurs check treats $\rho$ as free. The
+cancellations and ground decompositions are equivalences in both
+directions on finite or completed native trees: native pair injectivity
+gives the child equalities, and pairing reconstructs the parent. Hence
+the collected terminal equations are equivalent to equality of all
+whole outputs. Their original coordinate incidence is retained.
+
+The input is recognized when every chart tuple either clashes or passes
+this finite test. There are finitely many charts and comparisons, so
+cover construction and recognition terminate. Failure of recognition
+returns **unresolved**, never a finite exclusion or an undecidability
+claim. The class is defined by this finite procedure, rather than by an
+assumption that a functional presentation exists.
+

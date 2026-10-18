@@ -1,0 +1,13 @@
+**Lemma 10.1 (exact finite joint-relation inventory with finite witnesses).** For any fixed candidate preparer and fixed serving table, its entire attained relation (BPS.21) is computable by a finite mathematical construction from the common suffix trie. The construction provides actual finite origins for every retained relation row.
+
+Proof. Compute the finite summaries of Lemma 5.3 over every requested vector. Enumerate the eleven profiles. In each profile the type of each of the six whole classes is fixed. For each class assign a full vector in $\mathcal A^m$ for all suffix indices, not merely its own-role indices. For every type/vector cell let $j$ be the number of class values assigned to it. Retain the assignment exactly when
+
+$$
+j\le f(s,v)\quad\text{for every cell occupied by the six classes}.
+\tag{BPS.25}
+$$
+
+Necessity follows by counting the six different actual class values in their disjoint cells. For sufficiency choose $j$ different finite values in each occupied cell, by Lemma 4.2. Their different cells and within-cell selections preserve all whole disequalities. The eleven-profile condition and (BPS.3) give one actual inverse origin. Projection to each observation's own role, with the short branch components restored, gives one entire triple in (BPS.21). Proposition 2.3 supplies its whole target. Every actual tuple occurs in this enumeration through its six full response vectors. Deduplicate the projected triples if desired. This proves exact coverage and attainment, rather than a product of independently attainable apparatus vectors.
+
+Finite representatives can be carried throughout the recurrence. At $\#$ retain alpha, beta, six different positive-height trees from (BPS.4), and six different $\langle\alpha,B_h\rangle$. At an explicit node retain the permitted leaves and ordered pairs of child representatives, sorted into the exact type and response entry, keeping at most six different trees. If a child capacity is below six, every possible child is retained. Otherwise any nonempty other factor provides six different ordered pairs; together the finite pair lists and disjoint type alternatives therefore supply the exact capped capacity. Unique decomposition avoids lost distinctions. Induction justifies this finite witness construction, also for singleton cells. Cell selection then yields concrete finite current tuples and their finite inverse origins. No infinite or rational tree is a witness. $\square$
+

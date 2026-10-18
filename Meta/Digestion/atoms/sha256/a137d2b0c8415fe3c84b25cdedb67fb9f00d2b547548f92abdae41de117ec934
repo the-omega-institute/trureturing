@@ -1,0 +1,19 @@
+**Corollary 8.3 (evaluated original limiting regime).** Under the
+sequences of Theorem 7.1,
+
+$$
+\lim_n\mathcal T_{A_n}(s_0(1-q_n))=T_0
+\quad\Longleftrightarrow\quad\lambda\ge C_{\rm sat}.
+\tag{JS.43}
+$$
+
+In particular equality at $\lambda=C_{\rm sat}$ has genuine common
+finite-rate recovery along every prescribed product sequence.
+
+Proof. Combine (JS.35), (JS.39) and $B_0+\gamma_f=T_0$.
+For $\lambda=C_{\rm sat}$ the spectral failure measure has no strict
+cost margin. Equations (JS.36)--(JS.37) supply that margin at each
+finite budget while converging to its value. The output, error,
+contrast and acquired-cost identities are all those of the same
+instrument in Theorem 6.1. $\square$
+

@@ -1,0 +1,33 @@
+**定义 10.1（Injective outside table and its guard）。** Fix
+
+$$
+m\ge3,\qquad 2\le r<m,\qquad T=m+r,\qquad k=T-1,
+\qquad g=\gcd(m,r),\qquad u=m/g,\qquad \rho=r/g,
+\qquad p=u+\rho.
+\tag{10.1}
+$$
+
+Then $\gcd(u,\rho)=1$, $u>\rho\ge1$, and the actual phase set is $P=g\mathbb Z/T\mathbb Z$. Put
+
+$$
+H=\{0,m\},\qquad Z=P\setminus H,\qquad n=p-2\ge3,
+\qquad d=\lceil\log_2 n\rceil,\qquad
+u\ge(d-1)\rho+1.
+\tag{10.2}
+$$
+
+Choose $\lambda:P\to Y$ injective on $Z$, and write $C=\lambda(0)$, $D=\lambda(m)$. The endpoint labels are arbitrary, including equality with each other or any outside label. Choose arbitrary labels $R,L_\bot$. On both free-value fibres define the entire target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge r-1,\\
+\lambda(j),&s<r-1,
+\end{cases}
+\quad j\in P,\quad 0\le s<k,
+\qquad f(\bot)=L_\bot.
+\tag{10.3}
+$$
+
+Thus low tails are all of $0,\ldots,r-2$, and high tails are all of $r-1,\ldots,k-1$. In particular this is not an INITIAL-tail-zero prior. Convention 1.2 supplies one whole actual history for each specified triple; all sources used below are instances of those joint witnesses. The arbitrary initial rejection label returns on the separate free rejection reading.
+

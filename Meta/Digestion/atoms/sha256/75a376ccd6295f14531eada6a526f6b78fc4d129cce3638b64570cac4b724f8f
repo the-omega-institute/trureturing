@@ -1,0 +1,67 @@
+**定义 9.1（完整有限测试与形式重建）。** 以下测试及反向重建给出同世界条件的可逆组织。定理 8.6 已证明其接受集合为空；保留完整测试是为明确全部约束、分母和整个目标的对应，而非保留未决的存在性。
+
+按以下顺序定义接受参数，不略去冗余的正性条件，因为它们也显示每个除数。
+
+1. 取不同实根 $\rho$，要求 $P(\rho)=F_0(\rho)=F_1(\rho)=0$、$ZNK\ne0$ 以及 $\rho\notin\{0,-2,-4\}$。定义式 (8.2) 的 $h,\beta,\lambda,z$，要求 $h>5/3$。
+2. 定义 $\sigma=h-1+z,\pi=h-1+z(\beta+1)$、$\Delta=\sigma^2-4\pi$，要求 $\Delta>0$。取
+
+$$
+x_-=(\sigma-\sqrt\Delta)/2,\qquad x_+=(\sigma+\sqrt\Delta)/2,
+$$
+
+并要求 $2/3<x_-<x_+<1$ 和 $y_\pm=h-1-x_\pm>0$。所有边界都是严格的。
+
+3. 用式 (8.2) 定义 $u,v,D$，再定义 $E=h^2-hu+v,L=v-\rho D$。要求 $v,D,E>0,L\ne0$。置 $\omega=(X-C)/L,d=X-\omega v$，要求 $48<d<196808/3275$ 且 $d\notin\{C,X\}$。
+4. 定义
+
+$$
+k=-\omega h(\rho+4)/4,\quad w=-\omega E(\rho+2)/3,\quad
+m=d+w,\quad r_M=d+kh,\quad r_J=d+k(h-1).
+\tag{9.1}
+$$
+
+前述条件使 $\omega,k,w$ 均非零，无剩余自由参数。
+
+对每个 $x\in\{x_-,x_+\}$，取 $y=h-1-x$、式 (3.1) 的 $R$、$s=\operatorname{tr}R$ 和 $t=(1-x)y+x$。以下 $t_{\rm other}$ 指另一源的同一个实际迹坐标。定义
+
+$$
+c=\omega\rho(h-2t_{\rm other}),\qquad r=\omega t_{\rm other},
+$$
+
+并用式 (3.6) 的 $U_g,V_g,H$。返回整个目标
+
+$$
+(P,g,d)=(R/s,sH,d).
+\tag{9.2}
+$$
+
+增益按升幂的全部四系数为
+
+$$
+(g_0,g_1,g_2,g_3)=s\left(
+14k-21r+14c,\ \frac{-61k+81r-47c}{6},\
+\frac{28k-32r+17c}{12},\ \frac{-2k+2r-c}{12}\right).
+\tag{9.3}
+$$
+
+展开式 (3.6) 即得此式；不以首项非零为过滤。
+
+完整采样和实际读数可放在同一张表中。每行的物理增益是表中 $H_i(j)$ 乘该世界的 $s_i$，物理源迹是表中 $R_i$ 迹除以 $s_i$。
+
+| 原时钟、动作与矩阵 | $\operatorname{tr}(A R_i)$ | $H_i$ 样本 | 实际读数 |
+| --- | --- | --- | --- |
+| $0:I$ | $t_i+2x_i-2$ | $\frac{7\omega}{2}[h(3\rho-4)-(6+8\rho)t_{\rm other}]$ | $0$ |
+| $1:J$ | $h-3t_i+x_i$ | $\omega[6h(\rho-1)-(10+15\rho)t_{\rm other}]$ | $24$ |
+| $2:M:MJ$ | $t_i+x_i-1$ | $\frac{5\omega}{12}[h(7\rho-4)-(8+16\rho)t_{\rm other}]$ | $48$ |
+| $3:J:N_3$ | $h-2t_i$ | $\omega\rho(h-2t_{\rm other})$ | $C$ |
+| $4:M:U$ | $t_i$ | $\omega t_{\rm other}$ | $X$ |
+| $5:M:Q$ | $h-t_i$ | $-\omega(\rho+2)(h-t_{\rm other})/3$ | $m$ |
+| $6:M:MQ$ | $h$ | $k=-\omega h(\rho+4)/4$ | $r_M$ |
+| $6:J:JQ$ | $h-1$ | $k$ | $r_J$ |
+| $7:MM:M^2Q$ | $x_iy_i+x_i+y_i+2$ | $0$ | $d$ |
+| $7:MJ:JMQ$ | $x_iy_i+y_i+1$ | $0$ | $d$ |
+| $7:JM:MJQ$ | $x_iy_i+x_i+1$ | $0$ | $d$ |
+| $7:JJ:Q$ | $x_iy_i+1$ | $0$ | $d$ |
+
+末四行的两个字母按第六、第七动作的时间顺序排列。每个原时钟属于同一整个增益；未选动作的数值是数学预测，并非额外取得的观测。
+

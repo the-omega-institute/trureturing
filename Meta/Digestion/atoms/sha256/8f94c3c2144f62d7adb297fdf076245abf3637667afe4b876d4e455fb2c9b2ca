@@ -1,0 +1,30 @@
+### 定义 22.1（边界、可见读出与 seam 空间）
+
+令 \(\Gamma=(V,E)\) 是有限连通图。取一个参考定向，并令
+
+\[
+B:\mathbb R^E\longrightarrow H:=\mathbb R^V
+\]
+
+为有向边界算子，约定每条边列为终点单位向量减起点单位向量。令
+
+\[
+T=\left\{v\in H:\sum_{x\in V}v_x=0\right\}.
+\]
+
+令
+
+\[
+A:H\longrightarrow Y
+\]
+
+为任意有限维线性可见读出，并定义
+
+\[
+K=\ker B,\qquad
+S=\ker(A|_T),\qquad
+C=\ker(AB).
+\]
+
+其中 \(K\) 是纯循环空间，\(S\) 是状态边界在可见读出下的隐藏 seam 空间，\(C\) 是产生零一步可见边界的边链空间。
+

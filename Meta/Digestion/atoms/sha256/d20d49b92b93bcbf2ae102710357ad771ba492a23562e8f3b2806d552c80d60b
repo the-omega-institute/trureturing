@@ -1,0 +1,8 @@
+### 98.7. Choice independence, rank and original-index scope
+
+The primary pairing theorem is independent of its rational tangency points and local choices. The calculation applies to every primitive certificate with the stated q-unit normalization. Thus Xi is independent of those choices. In particular b cannot be assigned a preferred character by invoking rational approximation. Replacing b by -b has no effect because (-1/q)(-1/r)=+1. The r-unit conclusion above ensures that every character in Xi is nonzero.
+
+If Xi=-1, the alternating pairing on the three-dimensional pure Selmer quotient has rank at least two and radical dimension at most one. The full rational Kummer image modulo torsion lies in this radical and has dimension equal to the rational Mordell–Weil rank. The rank is therefore at most one; the actual original point makes it exactly one. Corollary 94.2 excludes all stipulated repetitions for N>=81. ∎
+
+This uses neither rank parity nor finiteness of Sha, and does not equate Selmer classes with rational points. It addresses an actual residue stratum with genuinely different left and right directions, outside the all 1 modulo 4 cut-side restriction of section 97. Passing this sign test is not shown to imply repetition or any additional rational rank. No numerical realization, independence from every earlier residue condition, infinitude, or global WSS exclusion is asserted.
+

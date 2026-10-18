@@ -1,0 +1,38 @@
+## 五、第四定理：单步时间盲，不代表多步时间历史盲
+
+定义 $n$ 步局部历史核：
+
+```math
+\Gamma_s^{(n)}
+\in
+\operatorname{Prob}
+\left(
+(\mathbb R_{\ge0}\times\mathcal O)^n
+\right).
+```
+
+其中一条历史可以写为：
+
+```math
+(T_1,o_1,T_2,o_2,\ldots,T_n,o_n).
+```
+
+定义混合历史读出：
+
+```math
+C_\Gamma^{(n)}(p)
+=
+\sum_s p_s\Gamma_s^{(n)}.
+```
+
+定义第 $n$ 步的隐藏响应：
+
+```math
+\operatorname{Curv}_{\Gamma}^{(n)}
+=
+\Gamma_{s_0}^{(n)}
+-\Gamma_{s_1}^{(n)}
+-\Gamma_{s_3}^{(n)}
++\Gamma_{s_{13}}^{(n)}.
+```
+

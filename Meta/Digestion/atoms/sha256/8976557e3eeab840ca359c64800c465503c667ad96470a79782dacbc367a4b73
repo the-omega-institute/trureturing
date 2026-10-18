@@ -1,0 +1,7 @@
+**Definition 4.1 (representative form).** A complete template is in
+representative-reply form if every nonconstant arrow component is a
+star with a designated port $c$: its center queries itself, and every
+other port in that component queries $c$. Constant ports have no
+outgoing arrows. A star's decoder at its center may restrict which
+replies can occur there.
+

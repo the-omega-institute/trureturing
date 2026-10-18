@@ -1,0 +1,31 @@
+**Theorem 261.2 (Simultaneous minorization and distance).** For every
+normalized complete $N$ kernel $p$ with a fixed decomposition of
+changed mass $\mu$, the one stopped kernel $q=\mathcal T p$ satisfies
+
+$$
+q_w(E)\ge\frac23p_w(E)\quad(E\subseteq J_L),\qquad
+\max_{w\in B_L}\operatorname{TV}(p_w,q_w)\le\frac\mu3.
+\tag{261.2}
+$$
+
+These statements hold simultaneously for all words and events,
+including multiple zeros and all earlier unqueried terminal labels.
+Neither the positive nor the sole-zero law is required to be preserved.
+
+**Proof.** On the four cells $00,01,10,11$, respectively, (261.1)
+has laws
+
+$$
+\frac{2e_u+e_v}{3},\quad\frac{e_u+2e_v}{3},\quad
+\frac{2e_s+e_u}{3},\quad\frac{2e_t+e_v}{3}.
+\tag{261.3}
+$$
+
+Each dominates two thirds of the old point mass on every event,
+and differs from it in TV by at most one third. Unchanged tables
+have zero difference and dominate their own two-thirds multiple.
+Sum these inequalities with the same whole-table weights.
+Convexity of TV gives the changed-mass bound. This proves one
+simultaneous construction, without optimizing different events or
+words by different laws. $\square$
+

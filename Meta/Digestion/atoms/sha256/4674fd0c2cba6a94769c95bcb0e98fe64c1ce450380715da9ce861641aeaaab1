@@ -1,0 +1,46 @@
+**Lemma 211.1.** Every owner with reservoir pair {Z,U} has both axes in H.
+
+Suppose a special edge e has this pair. All its owners are genuine,
+since Z and U never occur in a flat. Write a=max(z,u), b=min(z,u),
+k=a+b>6, q=x_e>1, and use its complete original star of n>=6 slots.
+Both a,b exceed three. Its total angle is 2*pi. Every other axis r is
+<1+k: all H values are <=a, and special axes obey their fixed-pair
+barrier. Set K=(sqrt(a^2-1)+sqrt(b^2-1))^2/k^2>8/9 and
+lambda^2=K*(q-1)/(q+1).
+
+The star owners have fixed pair {Z,U}, so are disjoint from the two
+reserved owners of Section 210. Their P expense is less than 3*pi; in
+particular their total Z/U transverse expense is less than 3*pi.
+Counting a repeated e axis at most twice, and then using Jensen, gives
+
+ 3*pi> transverse Z/U expense
+      >=2*sum_i b_lambda(theta_i)
+      >=2*n*b_lambda(2*pi/n)>=12*b_lambda(pi/3).
+
+Thus lambda^2<1/3, and K>8/9 implies q<11/5.
+For any of these owners, the cosine of its axial e angle is N/D, where
+ N=2*a*b+q*(a^2+b^2)-(q^2-1)*r,
+ D=q^2+a^2+b^2+2*q*a*b-1>0.
+Using r<1+a+b and writing a=3+x,b=3+y, with x,y>0, yields
+
+ 2*N-D>
+ -3*(5*q-11)*(q+1)+(6*q+8-2*q^2)*(x+y)
+ +(2*q-1)*(x-y)^2+(2*q+2)*x*y>0.
+
+Every coefficient displayed is positive for 1<q<11/5. Hence
+0<theta_e<pi/3. Also, with L=k^2-(q-1)*(r-1) and
+J=(q+1)*(r+1)-(a-b)^2,
+
+ K*L-J>(8/9)*L-J
+ > (8/9)*k^2-((17*q+1)/9)*k-2*(q+1)+(a-b)^2
+ > (8/45)*(k-6)*(5*k+6)>0.
+
+The last step uses q<11/5 and discards the nonnegative square. Therefore
+the transverse sum beta_a+beta_b=2*atan(sqrt(K*L/J)) exceeds pi/2.
+For each actual e occurrence,
+ theta_e<(2/3)*(beta_a+beta_b).
+If an owner has multiplicity w=1 or2 in the e star, its w copies of the
+transverse sum are at most its actual two copies. Summing gives
+ 2*pi<(2/3)*(total original transverse Z/U expense)<2*pi,
+a contradiction. Thus no such special edge exists.
+

@@ -1,0 +1,35 @@
+**Lemma 5.1 (Every first-one subtree).** Uniformly over the first
+address and all adaptive later addresses,
+
+$$
+B_1\le D:=a^2\eta+2a\eta^2
+=a\eta+\delta\eta^2.
+\tag{5.2}
+$$
+
+Proof. Work in the certified phase $\alpha$, keeping its actual target
+vertex $v_\alpha$. If the second call is a separator or repeats $e$,
+there is at most one additional informative call. Lemma 3.2 bounds
+$B_1$ by $a\eta$.
+
+If the second call is a distinct adjacent active edge, each second
+reply leaves a mixed triple because the first label is one. Lemma 3.3
+bounds each remaining subtree by $a\eta/2$, so again
+$B_1\le a\eta$.
+
+If the second active edge is vertex-disjoint from $e$, its zero branch
+is bounded by Lemma 3.4 by $a^2\eta$, and its one branch is bounded
+by Lemma 3.5 by $2a\eta^2$. Each branch may choose its own third
+address. Their sum gives $D$. Finally
+
+$$
+D-a\eta
+=a\eta(a-1+2\eta)
+=\eta^2(2a-1)=\delta\eta^2>0.
+\tag{5.3}
+$$
+
+Thus $D$ also bounds the preceding cases. Both first parities, every
+second-call parity, all target incidences and every final-query geometry
+have been included. $\square$
+

@@ -1,0 +1,96 @@
+**Lemma 74.4 (scattering normalization and a local correlation).**
+For $h>0$ and radial nonnegative bounded $v$ supported in the radius-$h$ ball,
+define, with the physical $\beta$ fixed,
+
+$$
+ S(v)=\inf_{1-u\in\mathcal D^{1,2}(\mathbb R^s)}
+       \int_{\mathbb R^s}(2\beta|\nabla u|^2+v|u|^2).
+\tag{74.10}
+$$
+
+Here $\mathcal D^{1,2}$ is the completion of compactly supported smooth
+functions in the gradient norm, with its Sobolev
+$L^{2s/(s-2)}$ representative. For an ideal hard ball impose $u=0$
+a.e. on $B_h$ and omit the potential term outside that constraint.
+There is a minimizing radial $u_0$, $0\le u_0\le1$, and a number
+$0\le\alpha\le h^{s-2}$ such that
+
+$$
+ u_0(r)=1-\frac{\alpha}{r^{s-2}}\quad(r\ge h),\qquad
+ S=2\beta(s-2)|\mathbb S^{s-1}|\alpha.
+\tag{74.11}
+$$
+
+For $L=2h$ the correlation
+
+$$
+ \chi_h(r)=
+ \begin{cases}u_0(r)/u_0(L),&r<L,\\1,&r\ge L\end{cases}
+ \quad\text{satisfies}\quad
+ 0\le\chi_h\le1,\qquad
+ \int(2\beta|\nabla\chi_h|^2+v\chi_h^2)
+       =\frac{S}{1-\alpha/L^{s-2}}\le2S.
+\tag{74.12}
+$$
+
+For the hard ball $\chi_h=0$ on $B_h$, and (74.12) holds with just
+its gradient integral. Its exact strength is
+
+$$
+ S_{\rm hard}(h)=2\beta(s-2)|\mathbb S^{s-1}|h^{s-2}.
+\tag{74.13}
+$$
+
+**Proof.** Write $w=1-u$. The gradient term is coercive on
+$\mathcal D^{1,2}$; the Sobolev inequality makes restriction to $B_h$
+a bounded map into $L^2(B_h)$. Thus the bounded potential term is weakly
+lower semicontinuous there. The direct method gives a minimizer; strict
+convexity of the gradient norm gives uniqueness. Taking real parts and
+truncating $u$ to $[0,1]$ decreases the energy and preserves the affine
+space. Rotational invariance and uniqueness give radiality. The weak
+Euler equation and its radial version are
+
+$$
+ -2\beta\Delta u_0+vu_0=0,\qquad
+ (r^{s-1}u_0')'=\frac1{2\beta}r^{s-1}vu_0\ge0.
+\tag{74.14}
+$$
+
+Finite gradient energy excludes a nonzero flux singularity at zero;
+hence $r^{s-1}u_0'$ starts at zero and $u_0$ is increasing. Outside
+$B_h$ it is radial harmonic. Membership of $1-u_0$ in the Sobolev
+space fixes its constant at infinity to one, giving the first formula
+of (74.11). Nonnegativity at $h$ and $u_0\le1$ give the bounds on
+$\alpha$. Bounded $v$ also gives $u_0'(r)=O(r)$ near zero from (74.14),
+so the boundary term there vanishes. Multiplying (74.14) by $u_0$
+and integrating to any $L>h$ gives
+
+$$
+ \int_{B_L}(2\beta|\nabla u_0|^2+vu_0^2)
+ =2\beta|\mathbb S^{s-1}|L^{s-1}u_0(L)u_0'(L)
+ =2\beta(s-2)|\mathbb S^{s-1}|\alpha
+                          (1-\alpha/L^{s-2}).
+\tag{74.15}
+$$
+
+The exterior gradient energy is
+$2\beta(s-2)|\mathbb S^{s-1}|\alpha^2/L^{s-2}$.
+Adding it proves (74.11). Dividing (74.15) by $u_0(L)^2$ proves
+(74.12), since $1-\alpha/(2h)^{s-2}\ge1-2^{2-s}\ge1/2$.
+The piecewise correlation is continuous at $L$ and Lipschitz for each
+fixed $h,v$, as follows from (74.14) and the explicit exterior formula.
+
+For the hard ball the affine constraint $u=0$ on $B_h$ is nonempty
+and closed in the homogeneous Sobolev space, by its local $L^2$
+embedding. The same direct method and strict convexity give a unique
+minimizer. Rotation invariance makes it radial, and exterior variations
+make it harmonic for $r>h$. Its full local $H^1$ representative, zero
+inside the ball, has zero exterior trace at $h$. The Sobolev condition
+at infinity fixes the other constant. Hence it is zero for $r\le h$
+and $1-(h/r)^{s-2}$ for $r>h$. This function belongs to the stated
+affine space. Radial integration gives (74.13), and (74.15) has zero
+inner boundary term because $u_0(h)=0$. This proves the hard version
+of (74.12).
+The same hard function is an admissible test in (74.10), so also
+$S(v)\le S_{\rm hard}(h)$. $\square$
+

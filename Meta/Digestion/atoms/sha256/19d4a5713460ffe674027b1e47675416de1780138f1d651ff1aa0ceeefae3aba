@@ -1,0 +1,27 @@
+### 83.5. A stronger bound for local convex-noise perturbations
+
+For the fixed equality pair of section 83.4, arbitrary original CPTP maps A_1,B_1, and 0<=epsilon,eta<=1, let
+
+    A_epsilon=(1-epsilon)A_0+epsilon A_1,
+    B_eta=(1-eta)B_0+eta B_1.
+
+Then
+
+    delta(A_epsilon,B_eta)>=max{0,1/4-epsilon eta}.   (18)
+
+This is a single physical product of two local channels; it requires no shared randomness. Each local convex mixture can be represented by an orthogonal direct sum of local Stinespring environments.
+
+For proof, use the same fixed input and witness g, rather than minimizing the norm independently for the four terms. Its values on (A_0,B_0), (A_1,B_0), and (A_0,B_1) are at least 1/4 by (11)--(14). On any original product output, the expectation of Q_sigma is at most one, whereas its target expectation is 5/8. Thus
+
+    g(A_1,B_1)=2[5/8-Tr(Q_sigma omega_11)]>=-3/4.
+
+Bilinearity of the physical product output now gives
+
+    g(A_epsilon,B_eta)
+       >= (1-epsilon eta)(1/4)+(epsilon eta)(-3/4)
+        =1/4-epsilon eta,
+
+which proves (18). This improves the factor-four estimate obtained from (17) and d_A<=2epsilon, d_B<=2eta.
+
+If the two local direct-sum perturbations add equal new-environment amplitudes t, so epsilon=eta=t^2, the permitted improvement is at most t^4. This last interpretation has the explicit orthogonal-direct-sum scope. Arbitrary coherent Stinespring perturbations need not be such local mixtures, and are covered only by (15)--(17), not by an assumed mixture decomposition.
+

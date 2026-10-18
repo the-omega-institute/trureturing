@@ -1,0 +1,210 @@
+**定理 7.2（全部实漂移的同父完整世界单射与 M 色全排除）。** 对每个实数 $d,p,v$，集合
+
+$$
+\{W\in\mathcal F(H_4,M,p,M,v):d_W=d,\ g_W(7)=0\}
+\tag{7.8}
+$$
+
+至多一个完整世界。结论覆盖全部式 (1.1) 的严格正、可不对称秩一迹一源，以及所有非零三次及以下增益，不要求无额外采样零、精确三次或简单根。
+
+证明。若 $d\in[0,48]$，定理 4.1、引理 5.1 及定理 5.3 的完整证明已经给固定 $p,d$ 至多一个世界，不必使用第六响应。现反设有两个不同世界，漂移位于 $d<0$ 或 $d>48$，并共享实际第五 $p$、实际第六 $M$ 响应 $v$。下面对这两条完整外漂移分支同时证明矛盾，不使用第 6 节的核心删除、四次候选计数或来源判别式。
+
+置
+
+$$
+\kappa=\frac{d-48}{d}>0,\qquad
+\lambda=\frac{d-Y}{d},\qquad \mu=\frac{d-z}{d},\qquad
+E=-d\kappa,\ B=-d\lambda,\ A=-d\mu.
+\tag{7.9}
+$$
+
+令 $a_0=Y/48\in(11/16,17/24)$、$c_0=z/48\in(0,1)$。对每个 $\kappa>0$，
+
+$$
+\lambda=1-a_0+a_0\kappa>\frac{11}{16}\kappa,\qquad
+\lambda>1-a_0>\frac7{24},\qquad
+\mu=1-c_0+c_0\kappa>0.
+\tag{7.10}
+$$
+
+第一严格号由 $1-a_0>0$ 及 $a_0-11/16>0$ 同时保证；这些界不要求漂移有界。设两个来源的 $t$ 为 $x,y$。外漂移的第一、第三偏移 $24-d,z-d$ 都非零，所以实际奇祖先及正 $j,n$ 给 $a,e\ne0$。若 $x=y$，式 (3.1) 给相同整个 $g$，式 (5.8) 给相同整个源，连同共同漂移便是相同完整目标。因此
+
+$$
+x\ne y,\qquad x,y>1,\qquad s=x+y>2,\qquad \nu=xy>1,\qquad
+s<\nu+1,
+\tag{7.11}
+$$
+
+最后严格号正是 $(x-1)(y-1)>0$。这里用 $\nu$ 区别参数乘积与实际第六读数 $v$。
+
+对形式变量 $t$ 仍记 $u=2t-1$，定义归一多项式及完整展开
+
+$$
+\begin{aligned}
+\bar h&=42\kappa u+35\lambda t-5tu
+=-10t^2+(84\kappa+35\lambda+5)t-42\kappa,\\
+\bar q&=-14\kappa u+35\lambda t+3tu
+=6t^2+(-28\kappa+35\lambda-3)t+14\kappa,\\
+\bar k&=-21\kappa u+35\lambda t+5tu
+=10t^2+(-42\kappa+35\lambda-5)t+21\kappa.
+\end{aligned}
+\tag{7.12}
+$$
+
+于是 $H=-d\bar h,Q_5=-d\bar q,K_6=-d\bar k$。每个合法端点的实际第三祖先 $en=A=-d\mu$ 与 $e=H/(70tu)$ 给
+
+$$
+\bar h(t)=\frac{70\mu tu}{n(t)}>0,\qquad
+\mathcal T=\bar h(x)\bar h(y)>0.
+\tag{7.13}
+$$
+
+端点分母不为零，不要求两端之间无极点。令
+
+$$
+L_p=\frac\kappa5u+\lambda t,\qquad L_m=3\kappa u+10\lambda t.
+$$
+
+直接展开得 $\bar q+(3/5)\bar h=56L_p$、$\bar k+\bar h=7L_m$，因此同一完整世界的两个实际响应恰为
+
+$$
+\begin{aligned}
+\frac{\mathsf P(d,t)}d
+&=1+\frac{3\mu}2-140\mu\frac{L_p}{\bar h}-\frac{\bar q}{28t},\\
+\frac{R_M(d,t)}d
+&=1+2\mu-14\mu\frac{L_m}{\bar h}-\frac{2\bar k}{35t}.
+\end{aligned}
+\tag{7.14}
+$$
+
+第五式来自实际迹 $n+u$，第六式来自实际迹 $n+2u$；必须同时保留这两个方程，不能只用它们的一个消元式，也不能分别拟合响应。
+
+写 $\operatorname{DD}(F)=(F(x)-F(y))/(x-y)$。对一次式 $L=lt+m$ 和二次式 $H_0=at^2+bt+c$，展开给
+
+$$
+L(x)H_0(y)-L(y)H_0(x)
+=(x-y)(-al\nu-am s+lc-mb),
+$$
+
+故在非零端点分母上
+
+$$
+\operatorname{DD}(L/H_0)
+=\frac{-al\nu-am s+lc-mb}{H_0(x)H_0(y)}.
+\tag{7.15}
+$$
+
+对 $L_p$，$l=2\kappa/5+\lambda,m=-\kappa/5$，而 $\bar h$ 的系数是 $a=-10,b=84\kappa+35\lambda+5,c=-42\kappa$。其常数部分展开为
+
+$$
+-42\kappa(2\kappa/5+\lambda)
++(\kappa/5)(84\kappa+35\lambda+5)=\kappa(1-35\lambda).
+$$
+
+因此两个分式差商的完整分子为
+
+$$
+\begin{aligned}
+N&=(4\kappa+10\lambda)\nu-2\kappa s+\kappa(1-35\lambda),\\
+N_m&=(60\kappa+100\lambda)\nu-30\kappa s
+       +15\kappa-315\kappa\lambda,\\
+N_m-15N&=10\lambda(21\kappa-5\nu).
+\end{aligned}
+\tag{7.16}
+$$
+
+式 (7.12) 也直接给
+
+$$
+\operatorname{DD}(\bar q/t)=6-\frac{14\kappa}{\nu},\qquad
+\operatorname{DD}(\bar k/t)=10-\frac{21\kappa}{\nu}.
+$$
+
+把所有常数写全，式 (7.14) 的差商为
+
+$$
+\begin{aligned}
+\operatorname{DD}(\mathsf P/d)
+&=-\frac{140\mu N}{\mathcal T}+\frac{7\kappa-3\nu}{14\nu},\\
+\operatorname{DD}(R_M/d)
+&=-\frac{14\mu N_m}{\mathcal T}-\frac47+\frac{6\kappa}{5\nu},\\
+\operatorname{DD}(R_M/d)-\frac32\operatorname{DD}(\mathsf P/d)
+&=-\frac{140\mu\lambda(21\kappa-5\nu)}{\mathcal T}
+  -\frac14+\frac{9\kappa}{20\nu}.
+\end{aligned}
+\tag{7.17}
+$$
+
+最后一行的常数是 $-4/7+9/28=-1/4$，倒数系数是 $6/5-3/4=9/20$。共同实际第五 $p$ 与共同实际第六 $M$ 响应使前两行同时为零。清正的 $\nu,\mathcal T$ 后，得到两条必须同时成立的等式
+
+$$
+\begin{aligned}
+\mathcal T(7\kappa-3\nu)&=1960\mu\nu N,\qquad &&\text{共同实际第五响应},\\
+\mathcal T(9\kappa-5\nu)&=2800\mu\lambda\nu(21\kappa-5\nu),
+&&\text{共同实际第六响应的组合式}.
+\end{aligned}
+\tag{7.18}
+$$
+
+所有 $\mathcal T,\mu,\lambda,\nu,\kappa$ 严格正。第二式使 $9\kappa-5\nu$ 与 $21\kappa-5\nu$ 严格同号：两者相差 $12\kappa>0$，不可能同时为零，且任一为零会使等式另一侧非零。因此它恢复引理 7.1 的完整闭带排除，剩下且只剩下
+
+$$
+\nu<9\kappa/5\qquad\text{或}\qquad\nu>21\kappa/5.
+\tag{7.19}
+$$
+
+外漂移上式 (7.9) 的 $\kappa$ 正是 $|48-d|/|d|$；闭带两个端点均已单独排除。
+
+先排除整个无界高乘积分支。若 $\nu>21\kappa/5$，由 $s<\nu+1$，
+
+$$
+\begin{aligned}
+N&>2(\kappa+5\lambda)\nu-\kappa(1+35\lambda)\\
+ &>\kappa\left(\frac{42}5\kappa+7\lambda-1\right)>0,
+\end{aligned}
+\tag{7.20}
+$$
+
+因为 $7\lambda-1>25/24$。但同一分支有 $7\kappa-3\nu<0$。式 (7.18) 第一式左侧严格负、右侧严格正，矛盾。这个论证对任意大的 $\nu$ 及两条外漂移分支上的任意 $\kappa>0$ 都成立。
+
+再排除整个低乘积分支。置 $w=\nu/\kappa$，则 $0<w<9/5$。交叉相乘式 (7.18) 的两个等式，只消去正因子 $1960\mu\nu$，得
+
+$$
+N(9\kappa-5\nu)=\frac{10}7\lambda(21\kappa-5\nu)(7\kappa-3\nu).
+$$
+
+将 $N=\kappa[4\kappa w-2s+1+\lambda(10w-35)]$ 代入，只除正 $\kappa^2$，得到
+
+$$
+\begin{aligned}
+(9-5w)(4\kappa w-2s+1)
+&=\lambda\left[\frac{10}7(21-5w)(7-3w)-(9-5w)(10w-35)\right]\\
+&=\frac57\lambda(100w^2-567w+735).
+\end{aligned}
+\tag{7.21}
+$$
+
+括号的完整展开是 $525-405w+(500/7)w^2$。没有除 $N$ 或任一 $w$ 的一次因子。整个 $0<w<9/5$ 上，
+
+$$
+100w^2-567w+735-\frac{192}5
+=(w-9/5)(100w-387)>0.
+$$
+
+所以由 $\lambda>11\kappa/16$，式 (7.21) 右侧严格大于
+
+$$
+\frac57\frac{11\kappa}{16}\frac{192}5=\frac{132\kappa}7.
+\tag{7.22}
+$$
+
+另一方面，$s>2$ 及 $9-5w>0$ 使左侧严格小于 $4\kappa w(9-5w)$，而
+
+$$
+w(9-5w)=\frac{81}{20}-5(w-9/10)^2\le\frac{81}{20}.
+$$
+
+故左侧严格小于或等于上界 $81\kappa/5$，实际上严格小于该上界。由于 $132/7>81/5$，即 $660>567$，两侧不可能相等。此矛盾不要求 $w$ 远离零或 $9/5$；两个严格带端点已由式 (7.18) 排除，也没有有限漂移截断或未处理的渐近分支。
+
+至此 $[0,48]$ 与两条外漂移分支全部覆盖。插值始终在整个次数至多三空间进行；没有倒置第五、第六样本、物理增益首项或任何判别式。$d=0,48$ 的零偶样本在定理 5.3 保留，$d=Y,z,24$ 已由实际方程分别处理。外漂移的 $a,e,H$ 非零由实际奇偏移强制，$x-y$ 非零由完整目标恢复强制。来源的 $bc=r(1-r)$ 和 $0<r<1$ 始终属于合法域；外侧矛盾只需它们所满足的严格正源必要条件，不靠选择一个来源二次根。因此没有隐藏的秩一分支、采样零、降次或重根例外。∎
+

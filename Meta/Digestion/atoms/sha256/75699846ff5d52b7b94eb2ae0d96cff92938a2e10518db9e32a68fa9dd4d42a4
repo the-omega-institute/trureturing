@@ -1,0 +1,39 @@
+**Proposition 77.1 (the supported trace band).** Under hypothetical feasibility (S.158),
+
+$$
+3T<\operatorname{Tr}[(I_3\otimes\omega)\widehat P]
+\leq3s+2t,\qquad
+s>3T-2>a.
+\tag{S.159}
+$$
+
+Moreover $s<T$, and therefore
+
+$$
+0<\varepsilon:=T-s<2d,\qquad
+\frac32\varepsilon<t\leq1-s=d+\varepsilon,\qquad s>a.
+\tag{S.160}
+$$
+
+Proof. By (S.57), $H_a(M)^2\leq\operatorname{Tr}M$. The two basis directions in (S.158) give $q_0,q_1<d$; the third budget already gives $q_2<d$. Since $\operatorname{Tr}[(I_3\otimes\omega)\widehat P]=3-q_0-q_1-q_2$, its value is greater than $3T$. The five leading eigenvalues of $I_3\otimes\omega$ are $s,s,s,t,t$, with multiplicities, so the exact rank-five allocation (S.22) proves the upper bound. Using $t\leq1-s$ gives $s>3T-2$. Finally
+
+$$
+3T-2-a=d(2u-1)>0.
+$$
+
+For $s<T$, use the existing positive-weight fidelity inequality (S.16) and capped trace maximum (S.17), directly in (S.58): for every $X>0$,
+
+$$
+H_a(M)\leq\frac12\bigl(m_X+\operatorname{Tr}(MX^{-1})\bigr),
+\qquad m_X=a\lambda_1(X)+\beta\lambda_2(X),
+\tag{S.161}
+$$
+
+where the two eigenvalues are decreasingly ordered. Choose $X=\operatorname{diag}(v/u,1/(2v),\ldots,1/(2v))$. These positive entries are in the displayed order since $2T/u=(1+u)/u>1$. They give $m_X=uv+\beta/(2v)=v$, and hence
+
+$$
+H_a(\omega)\leq\frac{3T-s}{2v}.
+$$
+
+The order monotonicity proved in (S.68)–(S.71) and $M_\psi\preceq\omega$ give $H_a(\omega)>v$, forcing $s<T$. Now (S.159) gives $t>3\varepsilon/2$ and $\varepsilon<T-(3T-2)=2d$. This proves (S.160). No actual marginal or positive semidefinite operand has been inverted. $\square$
+

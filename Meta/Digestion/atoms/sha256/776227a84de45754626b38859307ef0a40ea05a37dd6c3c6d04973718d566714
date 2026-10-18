@@ -1,0 +1,50 @@
+**Definition 90.1 (Three classes under the original hard-count contract).**
+Retain Definitions 71.1, 73.1, 77.1 and 83.1. In particular, the entire
+countable labeled source $X$, its static prime answers, zero advice,
+original tape carrier and consumer, and positive monotone vanishing
+amplitude sequence (73.3) remain fixed. For an original lawful acquisition
+$A$, write
+
+$$
+e_a(A)=\sup_{x\in X}\operatorname{TV}
+       (\widehat\lambda_{A,x},\lambda_x^a).
+\tag{90.1}
+$$
+
+Randomness is only the one source-independent seed of $A$. After that
+seed is fixed, one deterministic rule applies to every actual source.
+No probability measure on $X$ is introduced. The output may lie anywhere
+in the full original carrier, and handoff is sourcewise almost surely
+finite. $K$ counts all actual requests, including repetitions, with the
+nonhandoff convention of Definition 71.2.
+
+For $k\in\mathbb N_0$, let $\mathcal A_k$ contain all these acquisitions
+with $\mathsf P_A\{K_{A,x}\le k\}=1$ at every $x\in X$.
+The subclass $\mathcal N_k$ selects a finite sequence of at most $k$
+prime indices measurably from its seed, before receiving any answers,
+requests that sequence, and then makes any lawful output choice using
+its seed and the acquired replies. Its preselected indices can be
+arbitrarily large and can repeat. The class $\mathcal O_k$ instead
+preselects a strictly increasing sequence of at most $k$ indices, requests
+it until its first queried zero or its exhaustion, and uses only this
+acquired transcript and its seed to choose its output. A queried zero
+need not be the actual first absence. The output need not be that zero's
+mark. All terminal randomness is already part of the same seed.
+
+Define
+
+$$
+\begin{aligned}
+E_{\mathcal C}(k;a)&=\inf_{A\in\mathcal C_k} e_a(A),\\
+\kappa^{\mathcal C}_\varepsilon(a)
+ &=\inf\{k\in\mathbb N_0:\exists A\in\mathcal C_k,
+                                  \ e_a(A)\le\varepsilon\},
+\qquad \mathcal C\in\{\mathcal A,\mathcal N,\mathcal O\},
+\end{aligned}
+\tag{90.2}
+$$
+
+with the empty-set convention $\inf\varnothing=\infty$.
+Thus $\kappa^{\mathcal A}_\varepsilon(a)$ is the original
+$\kappa_\varepsilon$, rather than an address or mean resource.
+

@@ -1,0 +1,17 @@
+**Theorem 3.1 (complete square descent).** Suppose executable data descend
+through $R_\infty$, the two coordinate routes satisfy (1.2), and the full
+contract (3.1) holds. Its induced square on the actual quotient crossing
+domain has equal legal domains, transported complete responses and equal
+successors. Conversely, a square on a quotient need not give equality of
+hidden original successors; it gives only equality of their quotient classes.
+
+**Proof.** Saturation allows a quotient class to enter the crossing or legal
+domain without choosing a privileged representative. All responses and maps
+are independent of that choice. For a legal representative $x$, the two
+successors agree by (3.1), hence have the same class. The response equation
+and simultaneous illegality descend by the same representative argument.
+Pulling a quotient square back only yields related successors, so the
+converse has exactly the stated weaker conclusion. This is the strict
+fiberwise descent argument of Process Geometry Theorem 3.2, applied to the
+declared complete square. $\square$
+

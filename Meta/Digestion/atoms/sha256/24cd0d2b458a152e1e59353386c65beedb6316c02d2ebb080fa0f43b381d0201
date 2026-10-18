@@ -1,0 +1,16 @@
+**Definition 5.1 (native completion).** Let $\widehat{\mathcal T}$ be all
+valid finite or infinite ordered trees over the same native signature.
+Every branch has two children and leaves have none. Extend $\rho$ by its
+actual leaf replacements and pairing law. For $X\subseteq\mathcal T$,
+$\xi\in\overline X$ means every finite inclusive prefix of $\xi$ is
+realized by a member of $X$. This makes no negative or finite-partition
+assertion at a limit. Let $\Omega$ be the all-branch tree.
+
+Use the prefix locality from [SPC, §4][SPC] and
+[NativeDepthPatterns, `original_prefix_locality`][DEPTH]: $\rho$ is
+nonexpanding in prefix distance. Write $\delta(s,t)$ for the least depth
+of a reply discrepancy, or $\infty$ if there is none. Thus
+$s\equiv_h t$ means $\delta(s,t)>h$. Pairing adds one level to a child
+discrepancy. These facts also hold in the completion, since original
+branches persist and each reply depends only on a finite original prefix.
+

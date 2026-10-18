@@ -1,0 +1,30 @@
+**Proposition 62.5 (jointly realized unbounded-population retention defect).** For each integer $h\ge1$, choose the authentic complete ordered depth-$h$ source with every leaf beta. Its old leaf count is $2^h$ and it has an accepted whole-rho step at public cap $H=2^{h+1}$. Put
+
+$$
+S_h=\{p:|p|=h-1\}\ \cup\ \{pL:|p|=h-1\},
+\qquad N_h=|S_h|=2^h.
+\tag{62.10}
+$$
+
+A paid known preparation of $e_{S_h}$ then has, for the killed prescription at this one actual renewal,
+
+$$
+\langle e_{S_h},H^{\rm k}_{D_h,N_h}e_{S_h}\rangle
+-\langle J_{N_h}e_{S_h},H^{\rm k}_{D_h',N_h}J_{N_h}e_{S_h}\rangle
+\ge\frac{\nu N_h}{81}.
+\tag{62.11}
+$$
+
+For the same occupation and common prescription the expectation difference is zero. Thus a cap-/population-independent absolute tolerance on retaining old-state energy through the killed renewal cannot tend to zero for $\nu>0$. The extensive lower bound (62.5) remains valid.
+
+Proof. The nonnegative series for the old inverse gives $G(p,p)\ge1/3$ and $G(p,p^-)\ge1/9$ for each beta leaf $p$. Expansion of (62.8), keeping just its first nonnegative term and the column of that very beta leaf, gives
+
+$$
+G'(p,p^-)-G(p,p^-)
+\ge\frac23G(p,p)G(p,p^-)
+\ge\frac{2}{81}.
+\tag{62.12}
+$$
+
+The $2^{h-1}$ distinct selected parent/left-leaf pairs all belong to the one occupation $S_h$. All other pair increments are nonnegative. Summing in (62.9) proves (62.11). Every tree, mask, occupation and successor used here belongs to that same realization. This is not a combination of individually optimal states, and it uses no new source copy, reset or sampling. The paid source preparation and population are part of this explicitly growing family, rather than free resources at fixed $H$. $\square$
+

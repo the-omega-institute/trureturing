@@ -1,0 +1,26 @@
+**定义 1.1（完整采集域）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+完整目标是 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}a&b\\e&1-a\end{pmatrix},\quad
+0<a<1,\quad b,e>0,\quad be=a(1-a),\quad
+0\ne g\in\mathbb R[T],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+源严格逐项正、秩一、迹一，不要求对称，非对角元没有上界。所有符号、低次数、采样零、重根和任意漂移均在域内。按时间排列动作 $E_1\cdots E_i$，
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+d.
+\tag{1.2}
+$$
+
+只有一条不可重置、不可复制的轨迹。初读计数，每个单独的 $M$ 或 $J$ 后立即读数；八次总读使用原时钟 $0,\ldots,7$。不允许跳读、空动作读数、未读复合动作、时钟平移或额外观测。确定性策略可依赖整个实际历史选择动作、停止并返回整个 $(P,g,d)$，不附加连续、可测或可计算假设。源恢复本身不是完整目标恢复。
+

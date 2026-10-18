@@ -1,0 +1,82 @@
+**Theorem 56.3 (one recovery supplies all column budgets).** Put $x_+=\max(x,0)$ and
+
+$$
+S=(a-u)_++(\beta-v)_+,\quad q=aw+\beta u,\quad
+d=\min(a,u)+\min(\beta,v),\quad T_\beta=\frac{1+\sqrt a}{2}.
+\tag{R.301}
+$$
+
+For every recovery in Definition 56.1, the single input (R.299) satisfies
+
+$$
+\begin{aligned}
+F_e(\rho,RN)&\leq\frac{1+S+2\sqrt q}{4}
+=T_\beta-\frac d4-\frac{\sqrt a-\sqrt q}{2},\\
+\delta_N&\geq L:=\frac{3-S-2\sqrt q}{2}
+=1-\sqrt a+\frac d2+\sqrt a-\sqrt q\geq1-\sqrt a.
+\end{aligned}
+\tag{R.302}
+$$
+
+The comparison $L>1-\sqrt a$ is strict whenever $u+v>0$, in particular for every actual rank-three member. Equality of this certificate with the benchmark occurs only at $(w,u,v)=(1,0,0)$.
+
+**Proof.** Choose any finite complex Kraus representation $R(Y)=\sum_kR_kYR_k^\dagger$, $\sum_kR_k^\dagger R_k=I_5$; the same finite-dimensional characterization cited above covers every complex CPTP recovery. In its complex Kraus-index Hilbert space define
+
+$$
+z(e)=(\langle0|R_ke\rangle)_k,\quad
+y(e)=(\langle2|R_ke\rangle)_k,\qquad
+A=\|z(b_1)\|^2,\quad B=\|z(b_2)\|^2.
+\tag{R.303}
+$$
+
+The pure-target overlap is $\langle\Phi|(I\otimes R_kK_\alpha)|\Phi\rangle=\operatorname{Tr}(\rho R_kK_\alpha)$. Summing its squared modulus over $k,\alpha$ is the Kraus formula for entanglement fidelity [B. Schumacher, *Sending entanglement through noisy quantum channels*, (10)](https://arxiv.org/pdf/quant-ph/9604023). For these actual columns it gives exactly
+
+$$
+4F_e=\|\sqrt a\,z(b_1)+\sqrt w\,y(h)\|^2
++\|\sqrt\beta\,z(b_2)+\sqrt u\,y(b_1)\|^2
++v\|y(b_2)\|^2.
+\tag{R.304}
+$$
+
+For every unit output vector $e$, trace preservation says $\sum_{j=0}^2\sum_k|\langle j|R_ke\rangle|^2=1$. Hence this same recovery obeys all of
+
+$$
+0\leq A,B\leq1,\qquad \|y(h)\|^2\leq1,\qquad
+\|y(b_1)\|^2\leq1-A,\qquad \|y(b_2)\|^2\leq1-B.
+\tag{R.305}
+$$
+
+Triangle inequalities in the complex Kraus-index space, followed by these shared budgets, yield
+
+$$
+\begin{aligned}
+4F_e&\leq(\sqrt{aA}+\sqrt w)^2
+ +(\sqrt{\beta B}+\sqrt{u(1-A)})^2+v(1-B)\\
+&=1+(a-u)A+(\beta-v)B
+ +2\sqrt{awA}+2\sqrt{\beta uB(1-A)}.
+\end{aligned}
+\tag{R.306}
+$$
+
+For $A,B\in[0,1]$, the two linear terms are at most $S$. Using $B\leq1$ and Cauchy–Schwarz on $(\sqrt A,\sqrt{1-A})$ gives
+
+$$
+\sqrt{awA}+\sqrt{\beta uB(1-A)}
+\leq\sqrt{aw}\sqrt A+\sqrt{\beta u}\sqrt{1-A}
+\leq\sqrt{aw+\beta u}=\sqrt q.
+\tag{R.307}
+$$
+
+Thus $4F_e\leq1+S+2\sqrt q$. Moreover $S=1-d$ and $q\leq a(w+u)\leq a$, since $\beta\leq a$. These identities prove the first line of (R.302). Positivity of $a,\beta$ makes $d>0$ exactly when $u+v>0$; when $u=v=0$, $w=1$, $d=0$ and $q=a$. This proves the stated strictness, including zero weights, without division or a parameter-uniform positive gap as $\beta\downarrow0$.
+
+Let $\sigma_R=(\mathrm{id}_2\otimes RN)(\Pi_\Phi)$, a normalized density. The binary pure-target measurement has the standard trace-distance bound [Watrous, Chapter 3, Theorem 3.4, Holevo–Helstrom](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf). Directly, $\|I-2\Pi_\Phi\|_{\rm op}=1$, so trace-norm duality gives
+
+$$
+\|\sigma_R-\Pi_\Phi\|_1
+\geq\operatorname{Tr}[(I-2\Pi_\Phi)(\sigma_R-\Pi_\Phi)]
+=2(1-F_e)\geq L.
+\tag{R.308}
+$$
+
+This single reference-two state is included in the full diamond supremum for each $R$. The number $L$ is independent of $R$, so the recovery infimum preserves it and its strict gap. No assertion that every input attains this bound is required. $\square$
+

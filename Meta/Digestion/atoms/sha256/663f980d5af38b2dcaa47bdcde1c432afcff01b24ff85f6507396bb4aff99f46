@@ -1,0 +1,33 @@
+### 定义 33.2（holonomy 与曲率缺陷）
+
+对首尾同为 \(H\) 的闭环 \(\gamma\)，定义
+
+\[
+\mathcal H_\gamma=\mathcal E_\gamma,
+\qquad
+\Omega_\gamma=\mathcal H_\gamma-\operatorname{id}_{\mathsf L(H)}.
+\]
+
+称
+
+\[
+\Omega_\gamma=0
+\]
+
+为该闭环的平坦条件。对 Hermitian 输入使用诱导范数
+
+\[
+\|T\|_{1\to1,\mathrm{Herm}}
+=
+\sup_{X=X^\ast,\ X\ne0}
+\frac{\|T(X)\|_1}{\|X\|_1}.
+\]
+
+定义曲率缺陷大小为
+
+\[
+\|\Omega_\gamma\|_{1\to1,\mathrm{Herm}}.
+\]
+
+这是网络传输的代数不一致量。它是候选几何量，不能直接宣称为 Einstein 曲率。
+

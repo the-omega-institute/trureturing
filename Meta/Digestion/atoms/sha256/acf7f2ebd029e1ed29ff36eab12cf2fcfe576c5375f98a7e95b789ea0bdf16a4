@@ -1,0 +1,13 @@
+**Theorem 10.3 (Uniform finite-hidden renewal nonattainment).** For every finite $N\ge1$ and every $\theta\in\Theta_N$, if the actual visible law $P_\theta$ is proper stationary renewal in the sense of Definition 3.1, then
+
+$$
+d(P_\theta)<c_\star.
+\tag{10.16}
+$$
+
+This quantifies over every gap support initially admitted by that definition and every finite nonnegative representation of the same law, including representations without a rank-one one-emission matrix.
+
+**Proof.** The universal upper bound is (2.2). If equality held, Corollary 4.2 would give full support and the odds band; Theorem 5.1 and Premise 2.3 would give strong zero for the actual posterior. Lemmas 6.2–6.3 and Proposition 6.4 would then give separated scores and additive gap energy with $c=c_\star$. The actual phase-type representation, the band normalization, and Lemmas 7.2–8.1 give a limit $v_n\to L$, allowing all periodic and reducible cases. Proposition 8.2 identifies its score and proves the derivative nondegeneracy. Lemma 9.1 excludes an eventually constant tail. In the remaining case Lemma 10.1 gives analytic associativity, which Lemma 10.2 contradicts. Equality is therefore impossible. $\square$
+
+The word uniform in this theorem refers to the class-wide exclusion quantifiers. The proof gives no positive gap uniform over all finite dimensions or all renewal parameters. Its avoidance constants are law dependent. Strict gaps on fixed whole domains of sizes at most three will follow separately from compact attainment.
+

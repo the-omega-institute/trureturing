@@ -1,0 +1,43 @@
+**Convention 2.1 (credited all-count factor).** Use [AAR, Definition
+12.2, Theorem 12.3 and Proposition 13.3][AAR]. Put
+$s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$.
+If $q$ ends at an original branch, set $\Gamma_q(u)=(0,0)$.
+Otherwise let the first original leaf on that path have label $\ell$
+at $a$, and write $q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{RRN.3}
+$$
+
+On attained factors, the supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{RRN.4}
+$$
+
+Here $c=1$ implies $b\ge2$, and (RRN.4) equals
+$r_{\rho^ku}(q)$ for every $k\ge0$. The trajectory recovers $b$
+as its first branch count and $c$ by the presence of an alpha stage.
+Thus $\Gamma$ classifies complete trajectories, including initially
+absent targets. Define, on all attained factor values,
+
+$$
+h(z)=\operatorname{Pred}(z,0).
+\tag{RRN.5}
+$$
+
+This $h$ is a reply map, distinct from the height notation
+$\operatorname{ht}$. In particular $h(\Gamma_q(u))=r_u(q)$.
+

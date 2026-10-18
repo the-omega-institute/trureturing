@@ -1,0 +1,25 @@
+**定理 53.4（双向永久性及全地址检验）。** 对每个原来源 $u\in\mathcal T$、每个 $N\ge0$，
+
+$$
+E(\rho^Nu)=E(u),
+\tag{SLH.53.3}
+$$
+
+并有
+
+$$
+E(u)=1\iff
+\left[
+ r_{\rho^Nu}(\varepsilon)=\mathsf{branch}
+ \ \text{且}\ \forall q\in\Sigma^*,\
+ r_{\rho^Nu}(Lq)=r_{\rho^Nu}(Rq)
+\right].
+\tag{SLH.53.4}
+$$
+
+根守卫不可删去。在根配对的两个子树坐标中，正纤维准确是对角关系 $\{(v,v):v\in\mathcal T\}$；两个投影都是全部 $\mathcal T$，但关系不是它们的乘积。替换到第 $N$ 纪元后，对应关系准确为 $\{(v,v):v\in\rho^N[\mathcal T]\}$。
+
+**证明。** 复用运输与记忆卷 (RA.2207) 的 $\rho$ 单射性。原根为配对时，$\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle$ 的孩子相等当且仅当 $x=y$。原根为 $\alpha$ 时像为叶 $\beta$；原根为 $\beta$ 时像为 $\langle\beta,\alpha\rangle$，两孩子不等。因此所有原树均满足一步 $E(\rho u)=E(u)$，迭代给任意 $N$ 的双向关系。
+
+自由有序树的全部字面回复具有外延性：两个不同有限树在第一个不同构造符地址上分别给不同标签或叶／分支回复。故一个分支根的左右孩子相等当且仅当它们的所有有限地址回复相同，给 (SLH.53.4)。取 $u=\alpha,N=0$，所有 $Lq,Rq$ 都缺席，而 $E(u)=0$，证明没有根守卫的反向错误。每棵 $\langle v,v\rangle$ 都可经命题53.2真实取得并保留一，故两个原投影均遍历全部 $\mathcal T$；$\langle\alpha,\beta\rangle$ 是乘积中不属于正纤维的实际来源。配对分配律和单射性把此对角关系双向送到所述像内对角关系。$\square$
+

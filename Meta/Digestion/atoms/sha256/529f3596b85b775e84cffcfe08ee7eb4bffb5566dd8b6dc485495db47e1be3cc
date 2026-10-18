@@ -1,0 +1,37 @@
+**Theorem 5.1 (self-generated complete laws).** Under $a\ne b$ and $0<2\epsilon<\kappa$, let $N_{\mathrm{gen}}(\epsilon)$ be the initialized minimum for the self-generated-law contract of Definition 1.3. Then
+
+$$
+\boxed{6+N_2\ \le\ N_{\mathrm{gen}}(\epsilon)\ \le\ 6+N_1}.
+$$
+
+The upper bound has a total update valid on every actual history and a simultaneous all-horizon error bound. At $a=b$ the exact seven-state initialized machine is also self-generated, and seven remains its small-error minimum. If $N_1=N_2$, the bounds coincide and determine the optimum. When the bounds differ, the general exact unequal optimum is open here.
+
+**Proof (5.1).** A self-generated decoder is a special case of a common coherent decoder, so Theorem 4.2 supplies the lower bound. For the upper bound use $I$, the five pure labels and $A_0,\ldots,A_{N_1-1}$, with the same updates except that the cutoff is $N_1$. At $R_i$ emit the true row $v_i$; at $A_k$ emit the true one-step row of $G_{\delta_k}$; at $I$ emit $(1/5,1/5,1/5,2/5)$. Decode by iterating these rows and this very update. The true pure-state visible generator is unifilar under the read: the observed symbol selects the unique next hidden state. Hence its future law is exactly $F_i$ at every pure label.
+
+Consider a current transient $A_k$, $k<N_1$, and put $m=N_1-k$. Until either a singleton occurs or $m$ further $B$ symbols have been read, the finite generator and the true conditional law agree. An earlier singleton resets to a pure state and leaves all further laws identical. The exceptional prefix $B^m$ has the same probability in both laws, namely
+
+$$
+S_k=\frac{a^{N_1}+b^{N_1}}{a^k+b^k}.
+$$
+
+Conditional on this prefix, the true posterior has law $G_{\delta_{N_1}}$, whereas the generator has replaced it by $F_d$. Thus the error at horizon $H$ is zero if $H\le m$, and if $H>m$ is exactly
+
+$$
+S_k\delta_{N_1}\bigl(1-u^{H-m}\bigr).
+$$
+
+Only words with that common prefix contribute to the signed difference. Its all-horizon supremum is
+
+$$
+S_k\delta_{N_1}
+=\frac{u^{N_1}}{a^k+b^k}
+\le\frac{u^{N_1}}{a^{N_1}+b^{N_1}}
+=\delta_{N_1}\le\epsilon.
+$$
+
+After an actually saturated history $B^{k+1}$ with $k\ge N_1$, the generator's law is $F_d$ and the true error is $\delta_k\le\epsilon$. After any singleton-containing actual history its pure label is exact. At $I$ the singleton branches are exact and the first $B$ branch has probability $2/5$ followed by $A_0$; its all-future error is $u^{N_1}/5\le\epsilon$. These cases prove the uniform bound and the online invariant together.
+
+The total singleton overwrite is essential. A saturated pure row may assign zero probability to an exit from the actual minority component. That input is nevertheless legal under the source and must reset the retained state. No division by its approximate zero likelihood is used. The generated law remains well defined on hypothetical words, while the actual-input update remains defined on the larger actual support.
+
+At equality the unsaturated half-mixture has the correct $B$ self-loop and its true one-step row, so the exact construction is self-generated. Theorem 4.3 gives its minimum. Coincident bounds determine the minimum directly. Otherwise this proof supplies no argument that every generator must use the later cutoff $N_1$. $\square$
+

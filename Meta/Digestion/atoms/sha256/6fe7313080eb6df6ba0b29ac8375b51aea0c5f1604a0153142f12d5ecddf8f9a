@@ -1,0 +1,34 @@
+### 463.1 原对象与完整供应
+
+复用 §§444、450、462 已支付的同一原对象性质：
+
+$$
+\Phi(0)=\Phi'(0)=1,\quad B(0)=\tfrac12,\quad
+0<B(v)<\tfrac12\quad(v>0),
+$$
+
+$$
+\int B=k,\qquad \int vB=1,\qquad
+\int |\log v|B<\infty,\qquad A=-\int\log v\,B(v)\,dv,
+\tag{RVF.2}
+$$
+
+$$
+\tfrac12e^{-v}<B(v)<Ce^{-v}\quad(v>0).
+\tag{RVF.3}
+$$
+
+原 $\Phi$ 及 B 的连续性、导数绑定来自 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 来自 PrimePrefixOriginalA；
+完整质量、一阶矩和绝对对数可积性来自 PrimePrefixCurvatureMoments。
+RVF.3 是 §462 的实际指数底座，非另选一个满足矩约束的密度。
+还复用 §462 已给出的同一原 F 的正轴导数身份：
+
+$$
+F(v)=e^vB(v),\qquad F(0)=\tfrac12,\qquad
+F'(v)=\Phi(v)e^{-v}\frac{e^v-e^{-v}-2v}{v^3}\quad(v>0).
+\tag{RVF.4}
+$$
+
+以下先在有限区间建立精确递归，再用 RVF.2–RVF.3 处理完整积分。
+

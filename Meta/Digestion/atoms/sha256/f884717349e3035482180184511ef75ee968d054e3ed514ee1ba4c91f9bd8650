@@ -1,0 +1,62 @@
+**Lemma 3.4 (Unique lower contact and its location).** For every trial
+level $t>\tau$, $g_t$ has exactly one interior maximizer. At the root
+$T$ it has exactly one zero, denoted $x_*$, and
+
+$$
+\frac{1+\tau}{2}<x_*<1,\qquad
+f(x_*)=s(x_*)-v(x_*)>0.
+$$
+
+The root and contact are equivalently specified by their ranges and
+
+$$
+\begin{aligned}
+s(x_*)-\sqrt{T-\tau x_*}&=\sqrt T\,e^{\lambda_Tx_*},\\
+\frac{1-2x_*}{2s(x_*)}
++\frac{\tau}{2\sqrt{T-\tau x_*}}
+-\lambda_T\sqrt T\,e^{\lambda_Tx_*}&=0.
+\end{aligned}
+$$
+
+Proof. For $0<x<1$, differentiation gives
+
+$$
+g_t'(x)=\frac{1-2x}{2s(x)}+\frac{\tau}{2v_t(x)}-\lambda_t f_t(x),
+$$
+
+$$
+g_t''(x)=-\frac1{4s(x)^3}
++\frac{\tau^2}{4v_t(x)^3}-\lambda_t^2 f_t(x).
+$$
+
+Since $v_t(x)^2>\tau(1-x)$ and $0<\tau<1$,
+
+$$
+\frac{\tau^2}{v_t(x)^3}
+<\frac{\sqrt\tau}{(1-x)^{3/2}}
+<\frac1{[x(1-x)]^{3/2}}=\frac1{s(x)^3}.
+$$
+
+Hence $g_t''<0$. The terms of $g_t'$ other than $s'$ have finite
+limits at both endpoints. Thus $g_t'\to+\infty$ as $x\downarrow0$
+and $g_t'\to-\infty$ as $x\uparrow1$. The continuous function
+$g_t'$ is strictly decreasing and has exactly one zero, which is
+the unique maximizer of $g_t$. The endpoint
+values are $g_t(0)=-2\sqrt t$ and
+$g_t(1)=-2\sqrt{t-\tau}$, both negative.
+
+At $t=T$ the maximum is zero, so only the unique maximizer is a zero.
+At $x_0=(1+\tau)/2$, the inequality $T<T_0$ implies
+$v(x_0)<s(x_0)$. Therefore
+
+$$
+g'(x_0)=\frac{\tau}{2}
+\left(\frac1{v(x_0)}-\frac1{s(x_0)}\right)-\lambda f(x_0)>0.
+$$
+
+Its zero lies to the right of $x_0$. At this zero, the maximum equation
+and the derivative equation give the displayed system. Conversely, any
+pair in the specified ranges satisfying the system gives a zero maximum
+of $g_t$; Proposition 3.3 and strict concavity force $t=T$ and $x=x_*$.
+$\square$
+

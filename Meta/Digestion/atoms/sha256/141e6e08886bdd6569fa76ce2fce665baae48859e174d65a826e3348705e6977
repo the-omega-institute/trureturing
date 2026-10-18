@@ -1,0 +1,35 @@
+**数学引文 9.4（原生组成与表示逆）。** 原生来源是自由有序二叉树
+
+```math
+T::=\alpha\mid\beta\mid\langle T,T\rangle,
+\qquad\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+```
+
+组成记录与数量行为
+
+```math
+c(\alpha)=\binom10,\qquad c(\beta)=\binom01,\qquad
+c(\langle s,t\rangle)=c(s)+c(t),\qquad \ell_0=(2,3).
+```
+
+关系延拓几何的组成桥给 $`c(\rho t)=Mc(t)`$。矩阵直接相乘得到
+
+```math
+M^2=M+I,\qquad M^{-1}=M-I=\begin{pmatrix}-1&1\\1&0\end{pmatrix},
+\qquad M^{\mathsf{𝖳}}=M.
+```
+
+非空来源树的组成非零；加法记录中的零向量表示空窗贡献，不表示这里凭空添加了一棵空的原始树。
+
+所以定理 9.1 的 FIB 特例必须另取二维凸体 $`C_2\subset\mathbb{ℝ}^2`$、$`0\in\mathrm{int}\,C_2`$，才可写
+
+```math
+(MC_2)^\circ=(M-I)C_2^\circ.
+```
+
+第五节 $`K\subset\mathbb{ℝ}^3`$ 只能接受三维线性映射；二维 $`M`$ 对那个 $`K`$ 的乘积未定义。本卷不添加任意第三轴。双曲卷已有三维谱相位表示也有自己的坐标和读口，不能因同为三维便移借为占位体动作。
+
+一个最小的真实来源比较是 $`\alpha`$ 到 $`\rho\alpha=\beta`$。其组成 $`(1,0)^{\mathsf{𝖳}}`$ 变成 $`(0,1)^{\mathsf{𝖳}}`$；运输读口为 $`\ell_0M^{-1}=(1,2)`$，在新组成上读二，恰等于旧数量。若固定原生行 $`(2,3)`$，新来源回复三，那是替换后的真实新数量。两项问题均合法，但读口合同不同；运输读口是组成记录上的数学线性功能，不宣称已有一个可免费取得的新原生或物理探针。
+

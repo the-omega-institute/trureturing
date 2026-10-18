@@ -1,0 +1,70 @@
+**Theorem 3.1 (full-support stationary attainment).** There is one normalized,
+two-sided, stationary probability law $Q_\star$ on $X$ such that, for every
+$n\geq1$ and every $w\in B_n$,
+
+$$
+Q_\star([w])\geq2^{-(n+2)}3^{-k(w)}>0,
+$$
+
+and
+
+$$
+n c_\star\leq\Phi_n((Q_\star)_n)\leq\kappa_n\leq(n+1)c_\star.
+$$
+
+Consequently $d(Q_\star)=c_\star$, including along $n=3N$.
+
+Embed $b\in B_N$ into $X$ by putting $b$ at coordinates $1,\ldots,N$ and
+zeros elsewhere, and let $P_N$ be the pushforward of $\pi^{(N)}$. With
+$(Tx)_j=x_{j+1}$ define
+
+$$
+A_N={1\over N}\sum_{i=1}^N(T^i)_*P_N.
+\tag{3.1}
+$$
+
+Each $A_N$ is a probability law on the original shift $X$. The compactness of
+$X$ and the weak compactness of its probability measures give a subsequence,
+still denoted $A_N$, converging weakly to a probability law $Q_\star$ on $X$.
+For every cylinder $C$,
+
+$$
+\left|(T_*A_N)(C)-A_N(C)\right|\leq {1\over N},
+\tag{3.2}
+$$
+
+because the two spatial sums telescope to their two endpoint terms. Hence
+$T_*Q_\star=Q_\star$; the limiting law is two-sided and stationary.
+
+Fix $r$. Under $(T^i)_*P_N$, the center coordinate is the original bit $b_i$.
+The radius-$r$ exterior reveals a subset of the other original word bits and
+some deterministic padding. Its conditional risk is therefore at least the
+risk after revealing all other original bits, namely $\Phi_{N,i}(\pi^{(N)})$.
+Using the concavity of $D_r$ and (2.1),
+
+$$
+D_r(A_N)\geq {1\over N}\sum_{i=1}^ND_r((T^i)_*P_N)
+\geq {1\over N}\sum_{i=1}^N\Phi_{N,i}(\pi^{(N)})
+= {\kappa_N\over N}.
+\tag{3.3}
+$$
+
+The first inequality is Jensen's inequality for the concave finite-cylinder
+functional $D_r$. Passing to the selected limit and using (1.1) gives
+$D_r(Q_\star)\geq c_\star$ for every $r$. Equations (2.2) and (2.6) now give
+
+$$
+d(Q_\star)=D_\infty(Q_\star)=c_\star.
+\tag{3.4}
+$$
+
+Moreover, the coordinatewise conditional-variance comparison used for the
+left side of (2.4) holds for every finite word, including $n<2r+1$. Summing it
+over coordinates and combining it with (1.1) yields
+
+$$
+n\,c_\star\leq\Phi_n((Q_\star)_n)\leq\kappa_n\leq(n+1)c_\star
+\qquad(n\geq1).
+\tag{3.5}
+$$
+

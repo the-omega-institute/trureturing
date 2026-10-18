@@ -1,0 +1,21 @@
+**Definition 5.5 (T to S).** Start the declared finite foundation as a
+word-list incidence table. An item contains its constructor identity and
+seven optional partner slots. Pop one patch record, use Find to resolve
+its old identities, check its probes and matching native-row guard, and
+check the canonical alias-combined template computed from the current
+decoded finite record. Apply the assignments by Replace and append the
+new constructor roles by AppendItem, in their fixed order. A new vertex
+initializes all seven slots, including empty ones. Retarget links and
+commit receipt/control together in this virtual record. Check the native
+erasure and its supplied/read/output labels by the same single Step rule.
+T supplies its own IN labels. No endpoint is supplied beside the patch list.
+
+Consume the complete list and require $k$ native occurrences with the bound
+target version/phase. Traverse its tree layer using a word stack of
+$(\mathrm{identity},\mathrm{path})$ and Find; emit the sorted support.
+The work graph's initial scaffold is finite, each patch creates finitely
+many nodes, and the traversal ends after its finite tree nodes. Head links
+are verified from marks, and are not traversed as tree children. This is
+virtual word computation, with every list lookup and update lowered to
+bank instructions.
+

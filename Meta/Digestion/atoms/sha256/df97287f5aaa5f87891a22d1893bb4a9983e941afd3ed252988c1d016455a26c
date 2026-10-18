@@ -1,0 +1,24 @@
+### 3.2 任意参考纯化与邻边实部恒等式
+
+任意输入混态都可在有限附加参考上纯化。原测量通过忽略该参考嵌入纯化协议，保留原成功概率。因此只需对任意共同单位纯探针 $\psi$ 证明下界。附加参考与未知 $b$ 无关。把所有失败或非法输出归给固定合法词只会增加或保持成功概率，故可设末端标签恰为 $B_n$。
+
+记 $\psi_b=(U_{s(b)}^q\otimes I)\psi$。若 $b,c$ 仅在第 $i$ 位不同，其他因子完全抵消，并有
+
+$$
+(U_{s(b)}^q)^\dagger U_{s(c)}^q=e^{\pm2iq\theta Z_i}.
+$$
+
+由于 $Z_i\otimes I$ 自伴，$\langle\psi,(Z_i\otimes I)\psi\rangle$ 为实数，故
+
+$$
+\begin{aligned}
+\langle\psi_b,\psi_c\rangle
+&=\cos(2q\theta)
+\ \pm i\sin(2q\theta)\langle\psi,(Z_i\otimes I)\psi\rangle,\\
+\operatorname{Re}\langle\psi_b,\psi_c\rangle&=x.
+\end{aligned}
+\tag{3.2}
+$$
+
+这不依赖输入、参考维数或其纠缠方式。此处采用定义 1.2 的酉代表书写向量相位，没有授予跨未知标签的相干控制，也没有使用未知 controlled-$U$。
+

@@ -1,0 +1,40 @@
+**Convention 11.1 (original model and conditional interface scope).**
+Fix one complete graph of Sections 1–2 and Convention 7.1, with
+$n=8$, $k=4$, correctness and actual termination on every Boolean
+input, and both original caps $t_P(\theta)\le8$ and
+$J_P(\theta)\le W$ on every same run. Its sole changing configuration
+is its current state. Every installed running state counts, including
+unused and certified-only states. Adaptive coordinate orders, multiple
+histories, sharing across counts or depths, repeated queries, paid
+certified traffic and syntactic cycles remain permitted.
+
+The conclusions below are ordinary symbolic deductions conditional on
+the displayed SI interfaces already used in Sections 2, 7 and 10.
+In particular we reuse actual live freshness, one support per fixed
+cell and host, equal-support unequal-hit exclusion, properly nested
+live-support exclusion, actual fixed live successors, the local
+singleton-support diagonal argument, and the exact same-graph pool
+identity and localization. No unlisted nested supplier is independently
+authenticated. No abstract count incidence is presumed realizable.
+
+Retain the cells $\mathsf a,\mathsf b,\mathsf c,\mathsf d$ of (16)
+and $\mathsf P,\mathsf R,\mathsf M,\mathsf N,\mathsf U,\mathsf V_6$
+of (40), together with the axis cells $Z_j,O_j$. Section 10 supplies
+the following previously proved actual-history facts:
+
+- A shared $Z_3,\mathsf R$ host forces
+  $e_{\mathsf N}\ge1$ (Lemma 10.2, the R1 fork).
+- A shared $\mathsf a,\mathsf c$ host, when
+  $\mathsf b,\mathsf d$ each have one support, forces
+  $e_6\ge2$ (Lemma 10.3, the R2 propagation).
+- A nineteen-state graph cannot have cut list $(0,1,7,8)$
+  (Theorem 10.4, R3).
+- Every remaining nineteen-state graph has cut list
+  $(0,1,2,7,8)$ and $\ell+r\ge1$
+  (Corollary 10.5, R4).
+
+These facts retain their complete proofs above and their original
+conditional suppliers. The two new lemmas below concern actual
+support families; singleton hosts are sufficient for their premises
+because $1\le a_p\le b_p$.
+

@@ -1,0 +1,54 @@
+**Lemma 4.4 (Internal edge deficit, convexity and derivatives).** For $e=\{y,z\}\in\mathcal E_i^{\mathrm{int}}$ set
+
+$$
+a=m_y,\quad b=m_z,\quad A=a+b,\quad
+\alpha=\frac aA,\quad C_e=\frac{a^2b^2}{A^3}.
+$$
+
+For $0<r,s<1$ set $\vartheta=\alpha r+(1-\alpha)s$ and define
+
+$$
+J_e(r,s)=h(a,b)-h(a(1-r),b(1-s))-h(ar,bs).
+\tag{4.5}
+$$
+
+Then
+
+$$
+J_e(r,s)=C_e\frac{(r-s)^2}{\vartheta(1-\vartheta)}\ge0.
+\tag{4.6}
+$$
+
+It is convex in $(r,s)$ for fixed $a,b$; for every $0<c<1$, $J_e(c,c)=0$ and $\nabla J_e(c,c)=0$. Writing $\delta=r-s$ and $d=\vartheta(1-\vartheta)$, its derivatives are
+
+$$
+\begin{aligned}
+\partial_rJ_e&=C_e\left(\frac{2\delta}{d}
+-\frac{\alpha\delta^2(1-2\vartheta)}{d^2}\right),\\
+\partial_sJ_e&=C_e\left(-\frac{2\delta}{d}
+-\frac{(1-\alpha)\delta^2(1-2\vartheta)}{d^2}\right),\\
+\partial_rJ_e+\partial_sJ_e
+&=-C_e\frac{\delta^2(1-2\vartheta)}{d^2}.
+\end{aligned}
+\tag{4.7}
+$$
+
+Proof. Divide (4.5) by $ab/A$. The remaining difference is
+
+$$
+1-\frac{rs}{\vartheta}-\frac{(1-r)(1-s)}{1-\vartheta}
+=\frac{(\vartheta-s)(r-\vartheta)}{\vartheta(1-\vartheta)}
+=\frac{\alpha(1-\alpha)(r-s)^2}{\vartheta(1-\vartheta)}.
+$$
+
+Multiplication back gives (4.6). Convexity follows directly from concavity of $h$: each of the two subtracted terms in (4.5) is a concave function of affine coordinates $(r,s)$. The displayed formula shows the value and gradient vanish on the diagonal. Differentiating (4.6), with $\partial_r\vartheta=\alpha$ and $\partial_s\vartheta=1-\alpha$, gives (4.7). All denominators are positive. Formula (4.5) also gives a continuous extension to the closed square, without interpreting a $0/0$ in (4.6). $\square$
+
+At the actual point write
+
+$$
+\delta_e=q_y-q_z,\qquad
+\theta_e=\alpha q_y+(1-\alpha)q_z\in[1/4,1/2],\qquad
+d_e=\theta_e(1-\theta_e).
+\tag{4.8}
+$$
+

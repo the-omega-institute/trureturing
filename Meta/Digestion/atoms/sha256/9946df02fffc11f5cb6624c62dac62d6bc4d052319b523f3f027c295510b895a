@@ -1,0 +1,50 @@
+**Proposition 7.1 (existing energy, occurrence and actual profiles).** The following are reused results for a fixed admitted datum under its supplied analytic antecedents. They apply sequencewise to every prescribed $s_n\downarrow0$ and every actual normalized complex ground-state choice $\psi_{s_n}\in D(S)$.
+
+R Theorem 11.1 gives $E_s\to\min(0,C_{\rm resp})$. P Theorem 105.1 gives $r_s\to\infty$ along an actual sequence if and only if $\mathcal U_s\psi_s$ converges globally to the unit phase orbit of $p$. When $C_{\rm resp}<0$, R Theorem 11.2 therefore gives
+
+$$
+E_s\to C_{\rm resp},\qquad
+\epsilon_c(s)=C_{\rm resp}s^2+o(s^2),\qquad
+r_s\sim(-C_{\rm resp})s^{-6}\to\infty,
+\qquad\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\{e^{i\theta}p\})\to0.
+\tag{7.1}
+$$
+
+A Theorem 5.1 supplies the actual solvability relation $c(L-C_{\rm resp})=0$ whenever $E_s\to L$ and $\mathcal U_s\psi_s\rightharpoonup cp$. A Theorem 6.1 gives microscopic weak zero, local strong zero, vanishing rescaled horizontal and potential energies and orbit distance $\sqrt2$ when $C_{\rm resp}>0$, while the state norms remain one.
+
+For the full original tensor and fixed-cutoff Coulomb normalization set
+
+$$
+\begin{aligned}
+M&=\int_I\phi^2c_\kappa c_\kappa^{\mathsf T}dk>0,&
+d_M(\mathbf z)&=(\mathbf z^{\mathsf T}M^{-1}\mathbf z)^{1/2},\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi^3dk}{4\pi\sqrt{\det M}},&
+e_C&=-\beta_C^2/(4a),&\varrho&=\beta_C/(2a),\\
+h_C(\mathbf z)&=(\det M)^{-1/4}(\varrho^3/\pi)^{1/2}e^{-\varrho d_M(\mathbf z)},&
+\mathcal D_gv(k,\mathbf z)&=g^{-3/2}v(k,\mathbf z/g).
+\end{aligned}
+\tag{7.2}
+$$
+
+A Theorems 10.2 and 11.1 prove that, for these actual choices, microscopic weak zero is equivalent to the unit-mass macroscopic orbit convergence
+
+$$
+\inf_\theta\|\mathcal D_{g_s}\psi_s-e^{i\theta}\phi h_C\|_2\to0,
+\tag{7.3}
+$$
+
+and either entails $E_s/g_s^2\to e_C$ and $r_s\to-\chi_c^2e_C$. In particular A Corollary 12.1 already proves, on the conditional positive-response branch,
+
+$$
+E_s=\chi_c^2e_Cs^6+o(s^6),\qquad
+\epsilon_c(s)=\chi_c^2e_Cs^8+o(s^8),\qquad
+r_s\to\frac{\chi_c^2\beta_C^2}{4a}>0,
+\tag{7.4}
+$$
+
+with (7.3) for every actual choice. The same conclusions apply to any actual weak-zero subsequence at response zero. The exact coefficient and full-mass positive-branch macroscopic profile are therefore established credit, without an assertion that positive response occurs. Their proofs are not repeated here.
+
+R Propositions 14.1 and 15.1 and Corollary 15.2 already give the exact admitted ratio images, the enlarged explicit admission neighbourhood and the full image $\mathscr R\in(0,\infty)$ across distinct fixed admitted datasets for each sign of $\kappa$. Negative response and negative $C_{108}$ occur for each sign; a sufficiently narrow fixed admitted interval gives actual negative-response unit-orbit selection. Across those datasets positive and zero response each occur if and only if $G_{\rm resp}>0$; positive and zero $C_{108}$ each occur if and only if $G_{108}>0$. Each datum is fixed before its own $s$-limit. These are existing occurrence results, not consequences newly obtained from the residual.
+
+Credit and scope. P's actual equivalence uses its full finite-native weighted resolvent and negative attainment, not a coarse near-minimizer or a trial. R's matching theorem includes its original full-complex-domain lower argument. A's weak-zero implication uses actual short-field resolvent removal and its derived $o(g_s^2)$ fixed-cutoff variational error, then directly applies P §§72–73. Its converse is an actual microscopic/macroscopic norm comparison. Thus (7.3)–(7.4) are matching energy and global unit-mass statements at exactly their hypotheses. No duplicate transfer result is asserted in this volume.
+

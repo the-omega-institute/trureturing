@@ -1,0 +1,41 @@
+**Definition 363.1 (Source and selected targets).** Use the original source and carrier of [Acquisition Resources 71.1, 73.1 and 90.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md). Explicitly,
+
+$$
+\begin{aligned}
+F_0&=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+ \ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i\ge1:q_i(x)=0\},
+\end{aligned}
+\tag{363.1}
+$$
+
+where $p_i$ is the $i$th prime. The integer $N(x)$ is static; its prime support is finite, so $n(x)$ exists. There is no probability distribution on $X$. The measurable carrier is the Borel disjoint union
+
+$$
+\mathcal T=\bigsqcup_{j\ge1}B_j\ \sqcup\ \bigsqcup_{j\ge1}P_j,
+\qquad B_j\cong P_j\cong(0,1).
+$$
+
+The consumer is unchanged: a tape in $B_j$ gives the unknown outcome, and a tape in $P_j$ proposes $j$. Its original nonatomic targets are denoted by $\mu_x$. The distinct measurable marks
+$\theta_j=(B_1,1/(j+2))$, $j\ge0$, define the separate selected targets
+
+$$
+1\ge a_1\ge a_2\ge\cdots>0,\qquad a_i\longrightarrow0,
+\qquad
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                    +a_{n(x)}\delta_{\theta_{n(x)}}.
+\tag{363.2}
+$$
+
+Write $e_j$ for the unit vector of label $j$, or for $\delta_{\theta_j}$ when interpreted on $\mathcal T$. For an acquisition $A$ with handed-tape law $\nu_{A,x}$, put
+
+$$
+\operatorname{TV}(\nu,\rho)=\sup_{E}|\nu(E)-\rho(E)|,
+\qquad e_a(A)=\sup_{x\in X}\operatorname{TV}(\nu_{A,x},\lambda_x^a).
+\tag{363.3}
+$$
+
+Every finite Boolean reply word, including every multiple-zero word and every prescribed finite continuation, is realized by an actual $x\in X$, by [Boundaries 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows). Its construction chooses a prime index above the entry ranks of the finitely many probe primes. Then $F_r$ is invertible modulo their product; the Chinese remainder conditions impose divisibility at the one bits and nondivisibility at the zero bits. Fibonacci growth makes the legal window for $g$ long enough to contain the required residue class. This finite-pattern result supplies witnesses, without supplying any observation or source prior to an acquisition.
+

@@ -1,0 +1,29 @@
+**Corollary 18.3 (effective public recurrence).** For complete $P$ and a
+prefix-closed $B\subseteq I$, define $F(I)=0$ and, for $B\ne I$,
+
+$$
+F(B)=1+\min_{a\in I\setminus B}
+\max\left\{
+\left\lceil\log_2|A(a)\setminus B|\right\rceil,
+F(B\cup A(a))
+\right\}.
+\tag{CNA.32}
+$$
+
+Then $q(P)=F(\varnothing)$. The minimum and an optimal covering sequence
+are effectively computable from $P$ alone.
+
+**Proof.** Each transition adds at least one vertex, so the recurrence
+terminates on a finite set of public states. After the first query,
+the leaf outcome has no more protected work, the absent outcome has
+cost $\lceil\log_2|A(a)\setminus B|\rceil$, and the all-branch suffix
+has the residual covering cost. Taking their maximum and then minimizing
+is exactly the first-entry decomposition of (CNA.24). Theorem 18.2
+identifies that finite optimization with the unrestricted native optimum.
+$\square$
+
+This recurrence is a finite algorithm, with no asserted polynomial
+running time or optimal installation size. It optimizes ordered public
+ancestor coverage; it is not an enumeration of a bounded native source
+family and does not receive a source-dependent signature as advice.
+

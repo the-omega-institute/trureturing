@@ -1,0 +1,51 @@
+### 72.1 Exact factorization and scope
+
+The corrected cosine relation in §71.4 is attained by the actual curve,
+not only by the isolated example there. The following product-monomial
+factorization gives a legitimate reduction of the fixed-pair problem.
+It does not use the rank-two no-quartet assertion discussed in §71.
+
+Use the ordered \(\mathbb C^2\otimes\mathbb C^3\) convention of §71.2.
+For the moment allow \(-1\le b\le1\), with the two endpoints understood
+only as algebraic limits of the actual open branch. Set
+
+\[
+ c=\sqrt{1+b^2},\qquad h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ \omega=\frac{-1+i\sqrt3}{2},
+\]
+
+\[
+ F_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+ K=\begin{pmatrix}b&h(1+ib)\\h(1-ib)&-b\end{pmatrix},\quad
+ V_0=\frac{J_3+(\omega-1)I_3}{\sqrt3},\quad
+ W_0=\frac{J_3+(\bar\omega-1)I_3}{\sqrt3}.
+ \tag{72.1}
+\]
+
+Both \(V_0,W_0\) are flat unitaries. Define positive \(p,q\) and the
+unit-modulus number \(z\) by
+
+\[
+ p=\sqrt{\frac{1+b/\sqrt3}{2}},\quad
+ q=\sqrt{\frac{1-b/\sqrt3}{2}},\quad z=\frac{1-ib}{c},\qquad
+ R_\beta=\begin{pmatrix}p&q\\q&-p\end{pmatrix},\qquad
+ U=\operatorname{diag}(1,z)R_\beta.
+ \tag{72.2}
+\]
+
+The identity \(pq=hc/(2\sqrt3)\) gives, by direct multiplication,
+\(K=U\operatorname{diag}(\sqrt3,-\sqrt3)U^*\). Therefore the tensor
+identity in §71.2 yields
+
+\[
+ H_0(b)=(A\otimes I_3)\operatorname{diag}(V_0,W_0)
+       (R_\beta\operatorname{diag}(1,\bar z)\otimes I_3),
+ \qquad A=F_2U/\sqrt2.
+ \tag{72.3}
+\]
+
+Indeed the two controlled eigenblocks before multiplication by
+\(F_2/\sqrt2\) are
+\((J_3+(-3/2\pm i\sqrt3/2)I_3)/\sqrt3=V_0,W_0\).
+Equation (72.3) holds on the whole closed algebraic interval, including zero.
+

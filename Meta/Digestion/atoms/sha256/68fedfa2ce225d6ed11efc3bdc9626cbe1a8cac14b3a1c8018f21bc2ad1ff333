@@ -1,0 +1,105 @@
+**定理 48.3（一次锚更新的显式小噪声上界）。** 对每个
+$0\le\delta\le21/10$，存在原菜单的共同固定有限控制器，恰用两次实际Read、
+一次更新后停止，满足
+
+$$
+\mathcal E_\pi(\delta)\le B(\delta).
+\tag{48.8}
+$$
+
+证明。执行实际序列
+
+$$
+\text{初Read},\quad A_d,\quad\text{Read},\quad\text{停止},
+\tag{48.9}
+$$
+
+保留两个报告 $y_0,y\in E$、动作及停止。令 $r=|y|$。对每个公开候选半径
+$R\in\{7,25\}$，置
+
+$$
+q_R=\frac{3R}{5},\qquad f_R(t)=\sqrt{R^2-t^2}\quad(0\le t\le q_R).
+\tag{48.10}
+$$
+
+写合法隐藏初态为 $b=s+w$，$s=\operatorname{Re}b>0$、$w\in E$。
+半径 $R$ 的帽等价于 $|w|\le q_R$、$s=f_R(|w|)$，而第二个报告满足
+$|w-y|\le\delta$。因而半径 $R$ 与 $y$ 相容当且仅当 $r\le q_R+\delta$。
+确实，必要性由三角不等式给出；充分性由把 $y$ 沿径向投影到闭球
+$|w|\le q_R$ 给出，$y=0$ 时取 $w=0$。对相容层有
+
+$$
+\begin{aligned}
+\max(0,r-\delta)&\le|w|\le\min(q_R,r+\delta),\\
+\ell_R&=f_R(\min(q_R,r+\delta)),\qquad
+u_R=f_R(\max(0,r-\delta)),\\
+\ell_R&\le s\le u_R.
+\end{aligned}
+\tag{48.11}
+$$
+
+这些标量区间只用于包围实际来源的实部，不把来源改成填充区间。
+在全部报告上定义
+
+$$
+m(y)=
+\begin{cases}
+(\ell_7+u_{25})/2,&0\le r\le q+\delta,\\
+(\ell_{25}+u_{25})/2,&q+\delta<r\le15+\delta,\\
+20,&r>15+\delta,
+\end{cases}
+\qquad
+\widehat x=(y_0,m(y)+y)\in W.
+\tag{48.12}
+$$
+
+每个分支只计算该处根号和区间均已定义的量；不存在的层不参与公式。
+最后分支使估计对不可能来自来源的报告也全定义。第一分支两层均相容；内层实部
+至多7，外层实部至少20，所以两层联合实部的包围区间为 $[\ell_7,u_{25}]$。
+其宽度为
+
+$$
+F_\delta(r)
+ =f_{25}(\max(0,r-\delta))-f_7(\min(q,r+\delta)),
+\qquad 0\le r\le q+\delta.
+\tag{48.13}
+$$
+
+这个宽度的最大值恰在 $r=q-\delta$ 达到。为核对，$\delta\le q/2$ 给
+$q-\delta\ge\delta$。在 $0\le r<\delta$ 且 $r<q-\delta$ 时第一项恒定、
+第二项递减，故 $F_\delta$ 非递减。在 $\delta<r<q-\delta$ 时
+
+$$
+F_\delta'(r)
+ =\frac{r+\delta}{\sqrt{49-(r+\delta)^2}}
+  -\frac{r-\delta}{\sqrt{625-(r-\delta)^2}}\ge0.
+\tag{48.14}
+$$
+
+这里 $r+\delta\ge r-\delta\ge0$，且
+$\sqrt{49-(r+\delta)^2}\le\sqrt{625-(r-\delta)^2}$，分母均正。
+在 $q-\delta<r\le q+\delta$ 时第二项已饱和为 $28/5$，第一项非递增。
+连续性处理所有端点以及空的区间，故
+
+$$
+F_\delta(r)\le F_\delta(q-\delta)
+ =\sqrt{625-(q-2\delta)^2}-\frac{28}{5}=2h(\delta).
+\tag{48.15}
+$$
+
+第二分支仅外层相容，其实部区间宽度不超过 $25-20=5$。
+由于 $0\le q-2\delta\le q<15$，有
+$h(\delta)\ge(20-28/5)/2=36/5$，所以这个宽度也不超过 $2h(\delta)$。
+第三分支不会出现在合法记录上。于是对每个实际来源及每条合法联合误差记录，
+
+$$
+|a-y_0|\le\delta,\qquad |w-y|\le\delta,\qquad
+|s-m(y)|\le h(\delta).
+\tag{48.16}
+$$
+
+三个坐标空间正交，给 $|\widehat x-x|^2\le2\delta^2+h(\delta)^2$。
+没有对两个误差使用独立性或相加后平均；初读保留的是原 $a$，锚后的当前状态
+$(w,-a)$ 不替代 INITIAL。协议和估计只依赖公开合同及实际报告，未读取半径标签。
+证毕。
+

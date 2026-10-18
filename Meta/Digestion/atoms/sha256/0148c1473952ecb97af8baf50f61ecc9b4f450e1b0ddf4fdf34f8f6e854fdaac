@@ -1,0 +1,13 @@
+**定义 4.1（事件纳入与相容来源）。** 令 $E$ 为事件集，每个实现指定事件子集 $\omega\subseteq E$。固定初始边界后，$C$ 是已发生的有限事件域，包含必要依赖。令
+
+$$
+\Omega_C=\{\omega\in\Omega:C\subseteq\omega\},\qquad
+\operatorname{Excl}(C)=E\setminus\bigcup_{\omega\in\Omega_C}\omega,
+$$
+
+$$
+\operatorname{Cl}(C)=\bigcap_{\omega\in\Omega_C}\omega.
+$$
+
+合法历史满足 $\Omega_C\ne\varnothing$。$C$ 是完整历史对象，不等于有限观察者的当前记忆。
+

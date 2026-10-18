@@ -1,0 +1,21 @@
+**Transversal bound.** For every transversal sigma,
+
+    delta >= max{0,
+       (k+1)/k - (2/k^2) Tr(G_sigma^T H_sigma)}        (1)
+
+and consequently
+
+    delta >= max{0,
+       [k+1-2 L_A,sigma t_B,sigma]/k,
+       [k+1-2 L_B,sigma t_A,sigma]/k}.                (2)
+
+In particular, with
+
+    L_* = min_(sigma, party in {A,B}) L_party,sigma,
+
+one has
+
+    delta >= max{0, [k+1-2L_*]/k}.                  (3)
+
+The maximum with zero is explicit: a negative right-side expression is a vacuous certificate, not a negative error estimate.
+

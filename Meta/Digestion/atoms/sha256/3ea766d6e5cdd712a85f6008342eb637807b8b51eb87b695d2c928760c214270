@@ -1,0 +1,56 @@
+## 357. Response formulas and the actual budgets
+
+For axes r,o and transverse values a,b, put
+
+    L=(a+b)²−(r−1)(o−1), J=(r+1)(o+1)−(a−b)²,
+    D_a,b(x)=x²+a²+b²+2xab−1,
+    N_a=b(r+o)+a(ro+b²−a²+1).
+
+Genuine responses have L,J>0,
+
+    tan²(theta_r/2)=(r−1)J/((r+1)L),
+    cos(beta_a)=N_a/sqrt(D_a,b(r)D_a,b(o)).
+
+When a>b, with t=sqrt(L/J),
+
+    beta_a=atan(A_+ t)+atan(A_− t),
+    A_±=(sqrt(a²−1)±sqrt(b²−1))/(a+b)>0.
+
+Equivalently, as a function of an axial angle theta_r,
+
+    beta_a(theta_r)=atan(lambda_+ cot(theta_r/2))
+                    +atan(lambda_− cot(theta_r/2)),
+    lambda_±=A_± sqrt((r−1)/(r+1)).
+
+This response is strictly decreasing in theta_r. At theta_r=π/2 it lies in (0,π/2), with tangent
+
+    T(a,b,r)=sqrt((a²−1)(r²−1))/(a+rb).             (357.1)
+
+T is strictly increasing in a and r and decreasing in b, for all a,b,r>1. Its angle lies below π/2 because lambda_+lambda_−<1.
+
+Sigma leaves total genuine capacities π at M and V, and 2π at D. Original slots remain separate under any self-gluing. Suppose for contradiction that a genuine eta has
+
+    theta_M(eta)+theta_U(eta)≤π.                    (357.2)
+
+Tau and eta are distinct, so their actual M slots obey
+
+    2 beta_M(tau)+theta_M(eta)≤π.                  (357.3)
+
+Flatness and v≤m−2 imply
+
+    c+d<m−2, c,d<m−3, m>4.                        (357.4)
+
+The axial eta cosine, with denominator
+
+    E=m²+v²+c²+2mvc−1,
+
+has numerator 2vc+m(v²+c²)−(m²−1)u. It increases with v,c and decreases with u on 1<v,c≤m−2,u≥m. The v derivative's numerator is
+
+    2(m²−1)[−c³+cmu+cv²+c+mv+vu]>0,
+
+and the c formula is symmetric. At v=c=m−2,u=m, E−2N=(m+1)(7m−9)>0. Therefore
+
+    theta_M(eta)>π/3, beta_M(tau)<π/3.             (357.5)
+
+These are actual eta and tau slots.
+

@@ -1,0 +1,20 @@
+**Corollary 20.2 (finite multiplicity at most fourteen, or a continuous arc).** Every fibre in Theorem 20.1 is either finite with at most fourteen actual targets or contains a nontrivial continuous arc of distinct actual targets. The empty fibre is included in the finite alternative. Fourteen is an upper bound, not a claimed sharp optimum.
+
+**Proof.** A nonzero degree-at-most-$m$ polynomial has at most $m$ distinct real roots: divide successively by the distinct root factors; a product of more than $m$ such factors cannot divide it. If $Q_y\ne0$, at most six regular slopes pass, each with exactly one auxiliary source and a uniquely attached drift. There are at most four singular slopes. At a consistent singular slope with nonzero $q_t$, at most two values of $u$ pass, so this part contributes at most eight targets.
+
+At a consistent singular slope with $q_t\equiv0$, an empty $I_t$ contributes none. If $u_0\in I_t$, strict positivity gives an open interval about $u_0$ contained in $I_t$. For an explicit neighborhood, put
+$$
+m=\min_{a,b}(X_t+u_0K_t)_{ab}>0,
+\qquad L=1+\max_{a,b}|(K_t)_{ab}|.
+$$
+For $|u-u_0|<m/(2L)$, every entry remains greater than $m/2$. All such matrices have determinant zero. Since $K_t\ne0$, different $u$ give different sources. Equations (20.4) give a continuous attached whole drift at the same slope. Restricting to this interval yields a continuous injective arc of distinct actual targets with identical data. Therefore when $Q_y\ne0$, absence of such an arc leaves at most $6+4\cdot2=14$ targets.
+
+Now suppose $Q_y\equiv0$. If a positive regular candidate exists at $t_0$, then $\Pi(t_0)\ne0$. Continuity gives an interval about $t_0$ on which $\Pi$ stays nonzero and all four entries of the rational matrix $\mathcal M_y(t)/\Pi(t)$ stay strictly positive. Its determinant is identically zero there, so every parameter value passes Theorem 20.1. The map
+$$
+t\longmapsto\bigl(S(t),t,D_t\bigr)
+$$
+is continuous; the slope coordinate makes it injective even if some sources coincide. It supplies a nontrivial continuous arc. If $Q_y\equiv0$ but there is no positive regular point, the regular branch contributes nothing. Only the singular branches remain. A singular zero polynomial with a positive point supplies the arc just proved; otherwise at most eight targets survive the nonzero singular polynomials. This includes the case where none survive. These cases exhaust all data and rule out an unclassified infinite discrete fibre. An arc contains infinitely many targets, so the finite and arc alternatives are exclusive. ∎
+
+A complete fibre description and a finite multiplicity bound are not a globally recovering inverse or a uniqueness theorem. They do not establish that a history ever has two passing targets, or that some history always has at most one.
+
+<a id="fixed-sign-prefix-zero-slope-uniqueness"></a>

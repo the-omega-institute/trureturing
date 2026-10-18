@@ -1,0 +1,20 @@
+**Theorem 2.1 (complete connection at one finite budget).** Under Convention 1.1, fix $t=e^A-1=1000$, $A=\log(1001)$. There is a continuous merged endpoint probability law parametrized by every $\lambda\in[1/4,23/5]$, with strictly increasing strength $s(\lambda)$. At each of those strengths it gives the global value $\mathcal T_A(s)$ of Definition 1.3 and one simultaneous original attaining instrument. The law and value are analytic on each side of the unique event $\lambda_S$, where
+
+$$
+4.526671570962554<\lambda_S<4.526671570962557.
+$$
+
+Before and at $\lambda_S$ the minimum actual alphabet consists of four pure and two saturated low labels, hence six low and seven TOTAL labels. Above $\lambda_S$ through $23/5$, four pure and three saturated low labels are necessary and sufficient, hence seven low and eight TOTAL labels. The three saturated projection lines are distinct. At the event the seventh possible low column has weight exactly zero; it is omitted from an attaining encoder. Every optimum has the same merged endpoint law, without an assertion of uniqueness of its entire CP instrument or failure-time law.
+
+There is no other optimizing contact creation, occupied weight loss, occupied height/report sign change, contact collision, saturated-line identification, moment-column rank loss or physical branch singularity on this interval. In particular $\lambda_S$ is the next optimizing contact event after the quarter endpoint within the covered range. The value as a function of $s$ is $C^1$ and not $C^2$ at the event.
+
+The endpoints and event are identified by the following strict rational enclosures; every terminating decimal denotes an exact rational number.
+
+| Parameter | Strength $s$ | Original value $\mathcal T_A(s)$ |
+| --- | --- | --- |
+| $1/4$ | $(.12444515769478,.12444515769479)$ | $(.10273812575329,.10273812575330)$ |
+| $\lambda_S$ | $(.12496208366098,.12496208366099)$ | $(.0996591611064,.0996591611065)$ |
+| $23/5$ | $(.12496552475291,.12496552475292)$ | $(.09960047740820,.09960047740822)$ |
+
+Proof. Sections 3–10 prove the root selection, full-circle dual inequalities, unique physical event and joins, strict strength order, original-class bound, alphabet necessity, seam regularity and full simultaneous constructor. The finite rational data in §§12–16 are part of this theorem's proof. They specify an evaluated cover of all parameters, not only selected roots, a mesh, an existence claim or an optimization prescription. Strict order and continuity show that every strength between the endpoint strengths is represented. $\square$
+

@@ -1,0 +1,18 @@
+##### 定理 1.2.2： 查询资源单调细化定理
+
+若 $\mathcal Q\subseteq\mathcal Q'$，则
+
+$$
+M\equiv_{\mathcal Q'}N
+\Longrightarrow
+M\equiv_{\mathcal Q}N.
+$$
+
+等价地，$\Pi(\mathcal Q')$ 细于或等于 $\Pi(\mathcal Q)$；增加查询只会切细不可区分纤维，不会把原本可区分的两个实现重新合并。
+
+**证明。**
+
+若 $M\equiv_{\mathcal Q'}N$，则对每个 $q\in\mathcal Q$，由于 $q$ 也属于 $\mathcal Q'$，有 $R_M(q)=R_N(q)$。这正是 $M\equiv_{\mathcal Q}N$。证毕。
+
+<a id="claim-1-2-3"></a>
+

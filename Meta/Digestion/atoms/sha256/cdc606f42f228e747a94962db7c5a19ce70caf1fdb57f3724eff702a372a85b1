@@ -1,0 +1,32 @@
+**Definition 3.2 (explicit installed table and original entries).** Fix
+any finite Moore table $T$ on a disjoint installed set $\mathcal K=Q\sqcup H$,
+with
+
+$$
+\operatorname{addr}:Q\to\mathcal W,\qquad
+\operatorname{next}:Q\times\mathcal A\to\mathcal K,\qquad
+\operatorname{out}:H\to\mathcal R_P,
+\quad
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{FCS.11}
+$$
+
+Here $\mathcal R_P$ is the set of complete canonical rows at $P$.
+Fix distinct labeled states $e_0,e_1\in\mathcal K$; entry for the
+original bit $z$ is exactly $e_z$, with its fixed inverse labeling.
+A Read state makes one actual call at its fixed finite literal and
+takes the successor for its reply. A Halt returns its fixed entire
+row without a call. Every installed state counts, including unused
+Reads, unused Halts and different Halts with the same output. All four
+successors at every Read remain installed. The input includes all states,
+addresses, transitions, outputs and the two entry labels.
+
+After entry the current state is the whole accessible mutable
+source-dependent memory. There is no extra bit, reply or address register,
+computed address, independent program counter, phase, clock, history,
+archive, source-dependent table selector, output decoder or free control
+transition. Shared states, repeated literals, early Halts, convergence
+and cycles are allowed. Nothing restricts $|\mathcal K|$ to nine or
+the call bound to two. The table and labeled entries remain unchanged
+throughout synthesis.
+

@@ -1,0 +1,18 @@
+**定义 20.1（比较范围与联合目标）。** 固定定义1.2的任意有限或可数先验 $\mu$，其中 $\mu(1),\mu(2)>0$。沿用定义1.2–1.5的唯一共同 $K$、实际取得过滤、原全部 $C_0$、两种种子、全标记树记录、付费 Read、第三次写入先于锁存、holding、completion 和原 Stop 的 pending/delivered 次序。查询域仍是全部正概率有限实际历史 $\mathcal H_p,\mathcal H_\beta$。对任意 $j_p,j_\beta\in\{\mathrm{law},\mathrm{conf}\}$，置
+
+$$
+\Phi_\mu^{j_p,j_\beta}(M)=\max\{R_{j_p}(\mathcal H_p;M)-\rho_p,
+R_{j_\beta}(\mathcal H_\beta;M)-\rho_\beta\}.
+\tag{20.1}
+$$
+
+正有限循环类严格取定义5.3，实际保持确定，故其四种目标相等，简记为 $\Phi_\mu(G)$。记
+
+$$
+b_*=b(a_*),\qquad u_*=u(a_*),\qquad v_*=v(a_*),\qquad
+B=c-t_*,\quad Y=C+2t_*,\quad W=d_0+t_*.
+\tag{20.2}
+$$
+
+$a_*,t_*$、函数和常数取定义14.2、定理17.1，不重新定义最小值。定理15.2、16.1、17.1供应完整尾达到和唯一单模式参数；定理10.2供应同一个循环的两个正权重重心。以下不把第19节保留的全实数类支配前提自动解除。
+

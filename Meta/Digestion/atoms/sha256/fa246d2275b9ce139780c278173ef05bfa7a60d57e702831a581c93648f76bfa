@@ -1,0 +1,48 @@
+### 99.5. The full dual controls the actual outside rows
+
+Now choose an optimal dual \(Z\) for the **full eight-coordinate** norm, with its original four blocks. The same strict-feasibility and complementarity argument gives
+\[
+Z\succeq0,\qquad Z-2L\succeq0,\qquad Z_{ff}\preceq tI_2,
+\qquad Z\rho=2LW.\tag{16}
+\]
+Put \(N=Z-L\succeq0\). Its supported block is independent of the chosen full dual:
+\[
+\begin{aligned}
+N_S&=L_S(2W_S\rho_S^{-1}-I)
+ =\rho_S^{-1/2}|M|\rho_S^{-1/2}\succ0,\\
+\widehat K&=N_S/t,\qquad
+\widehat K_{FF}=I_2,\qquad
+\widehat K_{33}=\widehat K_{44}=1.
+\end{aligned}\tag{17}
+\]
+The last line follows from (6) on the positive definite supported density blocks and \(L_{ff}=0\).
+
+The matrix \(J\) in (12) also satisfies
+\[
+J=N_S^{-1}L_S,\qquad J^2=I,\qquad
+L_SN_S^{-1}L_S=N_S,\qquad
+JN_S^{-1}J^*=N_S^{-1}.\tag{18}
+\]
+These follow by conjugating to \(M\) and \(|M|\). They do not make \(J\) Hermitian or unitary in the ordinary Euclidean metric.
+
+For any outside coordinate \(o\notin S\), write \(\ell=L_{oS}\) as a complex row. Equation (16) gives
+\[
+Z_{oS}=2\ell W_S\rho_S^{-1},\qquad N_{oS}=\ell J.\tag{19}
+\]
+The PSD Schur complement of \(N\) on \(S\cup\{o\}\), (18), and \(N_{oo}=Z_{oo}\le t\) yield
+\[
+\ell N_S^{-1}\ell^*
+=N_{oS}N_S^{-1}N_{So}\le N_{oo}\le t,
+\qquad
+\ell\widehat K^{-1}\ell^*\le t^2.\tag{20}
+\]
+
+If \(o\) is the original missing partner of singleton \(j\), its fibre density is \(\operatorname{diag}(p_j,0)\), with \(p_j>0\). Complementarity of \(tI_2-Z_{ff}\succeq0\) forces \(Z_{jj}=t,Z_{oj}=0\). Also \(L_{oj}=0\), by the original fibre identities. Consequently
+\[
+\ell_j=0,\qquad
+(\ell W_S)_j=0,\qquad
+\sum_{i\in S\setminus\{j\}}
+\frac{a_i}{\overline{H_{ij}}}\ell_i=0.\tag{21}
+\]
+The final equality uses the same common witness (2). It is a full-dual condition on the actual outside row, rather than a new independently chosen witness.
+

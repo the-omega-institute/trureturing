@@ -1,0 +1,30 @@
+**Convention 6.1 (scope and supplied live facts).** In §§6–9 let
+$n\ge6$, $3\le k\le n-2$, and let $P$ be any original native
+preparer correct on the whole $\mathcal U_*$ with, on every source,
+
+$$
+q_P\le n+1,\qquad \ell_P\le3+W.
+\tag{WTF.17}
+$$
+
+A cube history includes every invocation already made and ends just
+before its next invocation. Let $S$ be its exposed coordinate set,
+$\eta_S$ its old bit assignment, $h$ its exposed ones, and
+$z_S=|S|-h$ its exposed zeros. It is live exactly when
+$h<k$ and $z_S\le n-k$, or $1\le k-h\le n-|S|$.
+Every completion of its old bits is an actual cube source following
+that history, by Supplier 2.1 and deterministic induction.
+
+Reuse the following exact suppliers. PCA Theorem 34.3 forces each
+selected invocation from a live history to be a fresh shortest
+occurrence-root query. The only live nonselected word is $RLR$,
+at most once in a live portion. Every live history has negative and
+positive saturated completions of weights $k-1,k$; they read every
+coordinate once at its root and their one further call is $RLR$ before
+their last selected query, followed directly by the appropriate latch.
+PE Lemma 4.1 excludes properly nested exposed sets and different
+supports with equal hits at a common running state. PCA Theorem 35.1
+excludes equal supports with unequal hits and gives the interval
+exclusion used next. These are statements about actual histories,
+not labels assigned to shared nodes.
+

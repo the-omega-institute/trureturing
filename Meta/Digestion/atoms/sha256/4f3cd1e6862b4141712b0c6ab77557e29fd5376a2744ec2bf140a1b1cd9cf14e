@@ -1,0 +1,33 @@
+**Convention 1.3 (credited exact temporal factor).** Use [AAR,
+Definition 12.2, Theorem 12.3 and Proposition 13.3][AAR]. Put
+$s(r)=\#L(r)+2\#R(r)$ and $e(\alpha)=0,e(\beta)=1$. A branch
+endpoint has $\Gamma_q(u)=(0,0)$. Otherwise let the first original
+leaf along $q$ be $\ell$ at $a$, with $q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}                                                   \tag{SCE.3}
+$$
+
+On attained factors the supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}                                                   \tag{SCE.4}
+$$
+
+Here $c=1$ implies $b\ge2$. This equals $r_{\rho^ku}(q)$ for
+every $k\ge0$. Conversely the trajectory determines $b$ as its first
+branch count and $c$ by the presence of an alpha stage. Thus equality
+of factors is exactly equality of full trajectories, including initially
+absent targets. In the wrapper the factor at $Rq$ equals $\Gamma_q(v)$,
+and its first coordinate is at most $2D$.
+

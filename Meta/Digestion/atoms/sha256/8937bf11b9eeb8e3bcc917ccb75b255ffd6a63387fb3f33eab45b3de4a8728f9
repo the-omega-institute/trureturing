@@ -1,0 +1,13 @@
+**Theorem 12.1 (positivity precisely for nonzero compression).** For every positive five-mode test $\sigma$, $\mathsf E_s(\sigma)>0$ if and only if $E^\dagger\sigma E\ne0$. This holds at every $s\in[0,1]$, including the physical rank-two Gram strata.
+
+Proof. For a nonzero compression $C$ has zero kernel or a single kernel line with nonpositive Hermitian $B$ value, by Theorem 4.2. If scalar-feasible $H\succeq0$ had $\operatorname{tr}(CH)=0$, positivity would put $\operatorname{ran}H$ inside $\ker C$. Its $B$ trace would then be nonpositive, contradicting $\operatorname{tr}(BH)\ge k>0$. The compact nonempty scalar feasible set therefore has strictly positive minimum, which is a lower bound for every acquired cost. If the compression is zero, use any of the actual supported-high designs of Section 3 and the scalar complement completion. Its high effect is supported in $P_5$ and has zero expectation on $\sigma$. Positivity also forbids a supported/complement cross block of such a $\sigma$. This proves zero minimum without normalizing a zero compression. $\square$
+
+This qualitative argument is not stronger than the inherited CG quantitative bound for every normalized supported input in an optimal complete-channel realization,
+
+$$
+p_H^{L}\ge\delta_*^2/24>361/2400>3/20.
+\tag{PG.64}
+$$
+
+Here $t_*=\operatorname{tr}H^{\rm src}+\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}$ and $\delta_*=\mathbf1^TH^{\rm src}\mathbf1-2t_*>19/10$ are the credited CG Schmidt-witness constants. That stronger uniform obstruction, its premises and the near-optimal bounds belong to CG. Rank of $C$ measures linear independence of three tested output columns. It is not the dimension of the retained future-accessible quantum payload. A Gram of rank two does not give a dimension-two unknown-input implementation.
+

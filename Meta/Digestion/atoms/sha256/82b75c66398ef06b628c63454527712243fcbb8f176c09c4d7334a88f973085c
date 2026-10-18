@@ -1,0 +1,42 @@
+**Proposition 83.2 (full lower inequality and recovery).** If
+$\chi_n\to\chi>0$, $s_n\downarrow0$, $\|f_n\|_2\le C$, and the
+rescaled forms
+
+$$
+q_n[f_n]=a b_{s_n}[f_n]-\chi_n\int U_{s_n}|f_n|^2
+                         -a\lambda s_n^2\|f_n\|_2^2
+\tag{83.5}
+$$
+
+are bounded above, then (83.1) holds. Along every subsequence
+realizing a finite lower limit, a further subsequence satisfies
+
+$$
+\liminf_n q_n[f_n]\ge h_\chi[f]\ge e(\chi)\|f\|_2^2.
+\tag{83.6}
+$$
+
+For every $f\in\mathcal Q_E$ there are $f_n\in\mathcal Q_{s_n}$
+converging strongly to $f$ with
+$q_n[f_n]\to h_\chi[f]$ and $\|f_n\|_2\to\|f\|_2$.
+They may be chosen normalized when $f$ is normalized.
+
+Proof. Uniform boundedness of $U_s$, boundedness of $\chi_n$ and
+$a>0$ turn the upper energy bound into (83.1). Apply Lemma 83.1.
+Its kinetic lower bound and potential convergence give the first
+inequality in (83.6); the second is the homogeneous Rayleigh
+inequality, including $f=0$.
+
+For recovery first take $f\in C_c^\infty(\mathbb R^4)$. It belongs
+to $\mathcal Q_{s_n}$ eventually, both its height traces being zero.
+Coefficient convergence gives $b_{s_n}[f]\to b[f]$ and (82.10) gives
+the potential convergence. Now approximate an arbitrary $f$ by
+this core in the defining norm of $\mathcal Q_E$. Boundedness of
+$V$ gives convergence of its potential form. A diagonal choice of
+core approximants, each used only once its compact support lies
+between the two moving faces and its coefficient error is small,
+proves recovery. Renormalizing changes neither limit for a nonzero
+normalized target. This is an upper construction on the full native
+domain, paired with a lower estimate for every bounded-energy
+sequence on that domain. $\square$
+

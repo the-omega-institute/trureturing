@@ -1,0 +1,117 @@
+**Theorem 13.4 (exact nonnegative-lag first-step exclusion).**
+Let $C=(p_0,\ldots,p_{18})$ have the normal form of Theorem 13.3,
+with $p_0=(a_0,b_0)$. It is two-readable under $\lambda=0$ exactly
+when
+
+$$
+\neg\bigl(a_0=0\ \text{and the first edge is a unit }B\bigr).
+\tag{NARC.13.4}
+$$
+
+This additional condition concerns saturated classes. It is not a
+criterion for arbitrary smaller or fused classes.
+
+**Proof, the obstructed complete fiber.** In the excluded case the
+right-visible entry at $z=b_0$ has the whole class as its fiber,
+because $b$ is nonincreasing. Its first two origins are $(0,b_0)$
+at lag zero and $(0,b_0-1)$ at lag one. Their hidden ages are zero
+and one; their $b$ targets differ. Every origin gives the same complete
+row $\mathcal R^R_{b_0}$, including its actual reached guard and
+singleton partition. There are ten ordered $b$ runs with distinct
+targets, so at least ten nonempty interval leaves are required.
+
+A first $E$ gives at most two singleton leaves and four leaves on
+its branch tail, totaling six. A first $S$ gives at most nine. For
+any first $P_t$, $t\ge2$, ages zero and one are both absent.
+The remaining query in this cell must be $E$: every nonempty
+relative word still merges these two ages, and root or visible-slot
+queries are constant. This cell has at most three leaves. The root's
+two singleton cells and its other tail contribute at most $1+1+4$,
+giving at most nine altogether. Early halts and constant requests
+cannot improve these bounds. Hence no actual adaptive two-read
+controller separates the complete fiber. This is the missing-$P_1$
+obstruction, not a claim that the origins can never be distinguished
+with more reads.
+
+**Proof, all-clock sufficiency.** Left-hidden ages are always at least
+$q$, so the positive-age translation in Theorem 10.2 serves that cut
+even at lag zero. It also serves every right entry whose entire support
+has positive hidden ages. It remains to consider a right fiber with
+age zero. Such a point has $a=0$, lag zero and $b=z$ by Theorem
+5.2. In a saturated class the fiber $b\le z$ is a suffix of complete
+$b$ runs. Its zero-age point is its first point: strict increase of
+$d$ and nonnegative actual ages exclude any earlier surviving point.
+Thus the first surviving run, say $r$, begins at age zero.
+
+Number the full class's ten $b$ runs by increasing $d$. Let $u,s,v$
+be the predicted ages of singleton runs $2,5,8$, respectively,
+computed as $z+d$ from their public points. Deleted runs may have
+negative predicted ages. Their partners have ages $u+1,s+1,v+1$,
+and
+
+$$
+s\ge u+3,\qquad v\ge s+3.
+\tag{NARC.13.5}
+$$
+
+The ordinary full diagram has root $P_s$ and lower/upper tests
+$P_u,P_v$. The following table gives actual tests for every possible
+first surviving run at zero. A named tail is restricted by all previous
+actual replies and the entire fiber. A constant-target tail halts.
+
+| First surviving run $r$ | Predicted ages | Actual schedule |
+| --- | --- | --- |
+| $1$ | $u\ge2$ | $P_s$; $P_u$ on absence and $P_v$ on branch |
+| $2$ | $u=0$, $s\ge3$ | $P_s$; $E$ on absence and $P_v$ on branch |
+| $3$ | $u=-1$, $s\ge2$ | $P_s$; $E$ on absence and $P_v$ on branch |
+| $4$ | $s\ge2$ | $P_s$; absence halts and branch uses $P_v$ |
+| $4$ | $s=1$, $v\ge4$ | $P_2$; $E$ on absence and $P_v$ on branch |
+| $5$ | $s=0$, $v\ge3$ | $E$; $P_v$ on branch |
+| $6$ | $s=-1$, $v\ge2$ | $E$; $P_v$ on branch |
+| $7$ | $v\ge2$ | $P_v$ |
+| $7$ | $v=1$ | $E$; $P_2$ on branch |
+| $8$ | $v=0$ | $E$ |
+| $9$ | $v=-1$ | $E$ |
+| $10$ | unrestricted | halt |
+
+Here is the target verification and exhaustion of the table. If $r=1$,
+strict integer ages give $u\ge1$. When $u=1$, run $1$ must consist
+of the single age-zero point, and run $2$ is the next point at age
+one. Its incoming edge changes $b$ and is pure by saturation, so it
+is a unit $B$. Zero at $p_0$ gives $a_0=0,z=b_0$, exactly the
+excluded case. Otherwise $u\ge2$, and all three diagram thresholds
+are actual legal $P$ tests.
+
+For $r=2$, the lower $E$ separates run $2$ at zero, run $3$ at
+one and run $4$ at ages at least two. For $r=3$, it separates
+run $3$ at zero from the remaining constant run-$4$ tail; its beta
+and branch replies, if occupied, both have the run-$4$ target.
+When $r=4$, run $5$ begins at an integer $s\ge1$. For $s\ge2$
+the diagram's lower tail is constant. For $s=1$, actual $P_2$
+puts only run $4$ at zero and run $5$ at one into absence; $E$
+separates them. Its alpha reply is run $6$ at two, and its beta
+reply, if occupied, is run $7$ at three. Its branch is separated
+by legal $P_v$, since the run-$8,9$ pair starts at $v\ge4$.
+
+For $r=5$, $E$ isolates runs $5,6$ at zero and one; its branch
+contains runs $7$--$10$ and is separated by $P_v$. For $r=6$,
+$E$ isolates run $6$ at zero, its beta belongs to run $7$ if
+occupied, and $P_v$ separates its branch. For $r=7$, run $8$
+starts at $v\ge1$. If $v\ge2$, one $P_v$ separates the constant
+run-$7$ tail, the two singleton runs $8,9$, and run $10$. If
+$v=1$, $E$ separates run $7$ at zero and run $8$ at one;
+on its branch $P_2$ isolates run $9$ at two, while both higher
+reply cells have run-$10$ target. For $r=8$, one $E$ separates
+runs $8,9,10$. For $r=9$, its alpha isolates run $9$ and both
+positive reply cells have run-$10$ target. For $r=10$ the whole
+fiber has a constant target. These cases exhaust ranks $1$--$10$
+and every integer spacing allowed by the diagram.
+
+Each submitted $P$ has threshold at least two. Every $E$ is the
+paid hidden-slot word, and each $P$ uses the fully materialized
+hidden-slot-prefixed representative (NARC.5.8). No actual $P_1$
+is requested. At every truthful transcript the same original remains
+a candidate, and the final common $b$ is its own, giving its lag
+$z-b$. The table covers all integer clocks with a zero-containing
+fiber; Theorem 10.2 covers all remaining clocks. $\square$
+

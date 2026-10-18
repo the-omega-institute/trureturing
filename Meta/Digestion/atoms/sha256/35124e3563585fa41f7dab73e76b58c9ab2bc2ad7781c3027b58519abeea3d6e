@@ -1,0 +1,55 @@
+### 定理三：局部因果历史分辨阶
+
+在固定 $(X,Y,Z)$ 下，长度 $n$ 的局部历史能够识别 $\kappa$，当且仅当：
+
+~~~math
+\boxed{
+\operatorname{Curv}_{\Gamma}^{(n)}\neq0.
+}
+~~~
+
+如果：
+
+~~~math
+\operatorname{Curv}_{\Gamma}^{(1)}
+=
+\operatorname{Curv}_{\Gamma}^{(2)}
+=
+\cdots
+=
+\operatorname{Curv}_{\Gamma}^{(n)}
+=0,
+~~~
+
+那么任何不超过 $n$ 步的局部时钟与输出记录都无法识别 $\kappa$。
+
+定义最小分辨阶：
+
+~~~math
+\ell_\ast
+=
+\min
+\left\{
+n:
+\operatorname{Curv}_{\Gamma}^{(n)}\neq0
+\right\}.
+~~~
+
+如果存在这样的 $n$，则 $\ell_\ast$ 是这个局部因果系统首次暴露隐藏 seam 所需的最短历史长度。
+
+如果不存在有限 $n$，只能说所有有限长度记录都看不见 $\kappa$。这不等于已经证明无限历史也一定看不见，需要另行处理极限核。
+
+这个 $\ell_\ast$ 可以作为“时间形状”的一个严格候选定义：
+
+~~~math
+\boxed{
+\text{时间形状}
+=
+\text{隐藏关系进入局部因果历史所需的最小分辨阶}.
+}
+~~~
+
+它不是一条全局时间轴，而是一个局部因果分辨率。
+
+---
+

@@ -1,0 +1,14 @@
+**Data 8.1 (actual integer-history protocol execution).** Literal protocol execution was checked on both initial values, every INITIAL phase and every INITIAL tail for each target in the following finite scopes. For each record, a complete history $W(v,j,s)$ was constructed, and its legality, integer-recurrence value, length phase and actual tail were checked together. Continuations were then executed bit by bit with integer $G_i$ weights and forbidden-run detection; only complete-block endpoint values were passed to the controller. Each leaf was compared to its preserved INITIAL label. The check required the observed maximum branch length to equal the stated fee, not merely to lie below it.
+
+| Family | Exact finite input scope | Target patterns | Actual-history executions | Emitted complete blocks |
+| --- | --- | ---: | ---: | ---: |
+| Unit-width labels | $k=2,3,4,5,6$; all set partitions of $k+1$ phases | 1,152 | 88,348 | 484,332 |
+| Width-two binary labels | $T=5,7,9$; all subsets $D\subseteq\{1,\ldots,T-1\}$ | 336 | 42,880 | 117,348 |
+| First-window binary labels | $(T,m)=(5,2),(7,3),(8,3),(9,4),(10,3),(11,5),(12,5),(13,5)$; every $H\subseteq\{1,\ldots,m\}$ | 140 | 30,944 | 38,040 |
+| Nonzero singletons | Every $3\le k\le12$, $2\le m<k$, $\gcd(m,k+1)=1$, $1\le j\le k$ | 318 | 72,600 | 123,728 |
+| Wrapped first-window counterexample | $T=5,m=3,H=\{1,2,3\}$ | 1 | 40 | 64 |
+
+The table contains 234,812 executions and 763,512 actually emitted blocks, using 7,204 distinct parameterized joint-source records across 39 distinct $(k,m)$ pairs. There were no wrong INITIAL leaves, unexpected rejections, unsafe seams or fee mismatches. Constants, the $k=2$ two/three/four-block distinctions, odd/even first-window sets, boundary repairs, remote singleton waits, and the $m=k-1,r=1$ corner are included. Arbitrary names of labels are represented by their equality partitions; the protocols use no other structure on those labels. A separate integer-history execution of the two explicit histories in Counterexample 7.2 returned the stated identical archives.
+
+For each of the 39 parameter pairs, a rejected complete-block history was constructed using a sufficient number of locally legal $1^m$ blocks. Its output was checked to be the independent symbol $\bot$, and absorption was checked under all $2^m$ literal next blocks: 5,710 action checks in total. Two assigned INITIAL bottom labels per pair gave 78 depth-zero stopping checks. These checks distinguish the rejected prior from either value fiber; constants in the legal fibers are included in the table and stop at zero fee.
+

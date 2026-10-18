@@ -1,0 +1,41 @@
+## 87. Finite activity, attached records, and one complete original-class witness
+
+The following statements use the conditional source dictionary already fixed in
+FA.35--FA.37. Let
+
+$$
+\begin{gathered}
+\theta=ab/(h_0h_1),\qquad \omega=cd/(h_0h_2),\qquad
+\delta=\theta+\omega,\qquad s_0=\sqrt\delta,\\
+\alpha=\theta/\delta,\qquad \beta=\omega/\delta,\qquad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\qquad
+L=\operatorname{diag}(s_0,1,1),\\
+\mathscr C=\{(1,z,w)^T:\alpha z^2+\beta w^2=1\},\\
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad G=LNL,\\
+K_h=s_0D+zT+wS,\quad \ell(h)=h^T Gh,\quad
+H_0=(1-\delta)N_{00},\\
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad f(h)=n_h^T\Delta n_h,\\
+\mathfrak c(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+     {h_0^2\delta+b^2z^2+d^2w^2}.
+\end{gathered}
+\tag{FA.87}
+$$
+
+All source-root, null, rank, TP, minimax and sharp-cost hypotheses in these
+formulas remain conditional. The failure covariance is physically whitened by
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),\qquad
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+\quad d_f=\frac{11m_1}{64},\quad
+z_f=\sqrt{m_1m_2}\,\Delta_{12},\quad
+L_f=\sqrt{d_f^2+4z_f^2}.
+\tag{FA.88}
+$$
+The physical spectral effects are
+$M_2^{1/2}e_\pm e_\pm^TM_2^{1/2}$, where $e_\pm$ are unit spectral
+vectors of $\Xi$; the unwhitened vectors are not physical failure directions.
+

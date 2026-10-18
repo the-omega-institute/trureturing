@@ -1,0 +1,20 @@
+**Corollary 3.3 (one actual worst-case witness).** For every $D\ge2$
+and every correct original pair $A$,
+
+$$
+\max_t T_A(t)\ge2^{D-2},\qquad
+\max_t L_A(t)\ge(D-1)2^{D-2},\qquad
+\max_t H_A(t)\ge D-1.
+\tag{PPF.16}
+$$
+
+The same actual source witnesses all three bounds.
+
+Proof. Let $v$ be the perfect ordered tree of height $D-2$ whose
+frontier leaves are all alpha, and let $t=\langle\alpha,v\rangle$.
+Its $2^{D-2}$ relative frontier addresses form a prefix-free $B$,
+all actually present and of length $D-2$. Apply Theorem 3.2 on this
+source. The five-source comparison remains within $\mathcal F_D$
+even though this selected witness itself has smaller height. No
+product-fiber condition is imposed on $A$. $\square$
+

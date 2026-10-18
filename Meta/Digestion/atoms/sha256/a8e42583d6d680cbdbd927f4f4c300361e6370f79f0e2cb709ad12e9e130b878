@@ -1,0 +1,43 @@
+**Lemma 16.4 (endpoint-specialized recovery and gap).** A regular stationary return-conserved table with p emissions exactly in $\{a,b\}$, satisfying both phase inequalities (2.4) for every supported depth with common nonnegative slack $E$, obeys
+
+$$
+D_{\rm native}:=\sum_x\pi_x
+ \operatorname{TV}(Q_x,P_{p,u_x})\le\frac{340}{11}E,
+\qquad E\ge H=\frac{11\eta}{1404}.
+\tag{16.11}
+$$
+
+Proof. Return conservation partitions both acquired flows into endpoint-tag classes, as in Theorem 3.1. Suspended labels with positive mass have the same tag on all incoming and outgoing p edges. In Proposition 4.1's proof the nearest-endpoint rounding cost is now identically zero. At tag $a$, (4.4) gives $\mathbb E(v-a)\le17(t_a-T_a)_+$; at tag $b$, (4.5) gives $\mathbb E(b-v)\le14(F_b-f_b)_+$. Here $t_a,f_b$ are the respective class means of $Q(w_{2,1}),Q(w_{1,1})$. The two coordinate violations together have average at most $2E$ by (2.6), with positive parts of class means bounded by their class averages. Consequently the suspended mismatch average is at most $34E$, including empty classes and $E=0$.
+
+Compare with the generator whose emissions are its conserved tag at both phases and whose acquired kernels are unchanged. It generates exactly the native p law for that tag. There is no p-emission discrepancy. The complete-law coupling at the end of Proposition 4.1 therefore gives
+
+$$
+D_{\rm native}\le\frac23(34E)+\frac4{15}D_{\rm native},
+$$
+
+which proves $D_{\rm native}\le340E/11$. This recovery is used only on the conserved comparison, not inferred from concentration of a varying-$u$ table.
+
+Let $w=\pi\{u=a\}$ and $d_p=2\rho_p$. Endpoint event calibration (2.5), and comparison with the native laws on $E_p$, give
+
+$$
+d_p|w-1/2|\le E+D_{\rm native}.
+\tag{16.12}
+$$
+
+For any supported nonendpoint $r=r_k\in[3/8,5/13]$, the word $w_{3,1}$ has mass $r^3(1-r)^5$. Its derivative is $r^2(1-r)^4(3-8r)$, so it decreases on that interval and its minimum is at $5/13$. The exact excess over the larger endpoint coordinate is
+
+$$
+\frac{5^3\,8^5}{13^8}-\frac{1944}{390625}
+=\eta>0.
+\tag{16.13}
+$$
+
+The complete coordinate triangle identity used in (5.3) yields fair native loss at least $\rho_p+\eta/2$. Changing fair weights to $(w,1-w)$ costs at most $d_p|w-1/2|$, since the difference of the two native distances to any target is at most $\operatorname{TV}(P_{p,a},P_{p,b})=d_p$. Reverse triangle at each configuration, (16.12), and the supported-depth p upper bound now give
+
+$$
+\rho_p+E\ge\rho_p+\eta/2-E-2D_{\rm native},
+\qquad E+D_{\rm native}\ge\eta/4.
+$$
+
+Thus $(1+340/11)E\ge\eta/4$, or $E\ge11\eta/1404$. All inequalities here are closed. No equality case is declared attainable. The endpoint recovery specializes the supplied proof of Proposition 4.1; the word and event argument specializes the supplied proof of Theorem 5.1. $\square$
+

@@ -1,0 +1,18 @@
+**Corollary 10.3 (Strict separation below nine rows).** For every
+fixed $0<p<1$, $p\ne1/2$, either endpoint and each $m\le8$,
+
+$$
+C_m<S_3.
+\tag{10.5}
+$$
+
+Proof. The inherited unrestricted bound gives $C_m\le S_3$.
+Theorem 10.2 attains $C_m$ by an actual complete table. Equality
+would therefore give an $S_3$ attainer with at most eight installed
+rows, contradicting [Three Read, Theorem 12.4][E3]'s $M_3=9$.
+Both attainment and the inherited minimum are necessary for this
+argument: nonattainment alone does not exclude a supremum equal to
+$S_3$. This establishes a strict gap at each fixed stated parameter.
+It does not evaluate its size at six, seven or eight rows or give a
+uniform positive gap toward excluded parameter limits. $\square$
+

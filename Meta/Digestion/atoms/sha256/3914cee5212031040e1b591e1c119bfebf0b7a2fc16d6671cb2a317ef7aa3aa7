@@ -1,0 +1,67 @@
+**Theorem 7.2 (same-source conditional capacity and compulsory entropy).**
+For any admissible $B\subseteq S_d^n$ and any law $P$ on $B$, let
+$p=n^{-1}\sum_i\mathcal L_P(X_i)$ be its mean one-block marginal.
+Then
+
+$$
+H(P)\le n\alpha_d(p).
+\tag{OCB.50}
+$$
+
+For any deterministic complete admissible-fiber code $c$ on $S_d^n$
+and any joint law $X$ with mean marginal $p$,
+
+$$
+H(c(X))\ge H(X)-n\alpha_d(p).
+\tag{OCB.51}
+$$
+
+In particular every original complete code restricted to the actual
+perfect source slice with $n=2^{D-d}$ iid $\mu$ blocks satisfies
+
+$$
+\log_2|E[\mathcal F_D]|\ge H(E)
+\ge n\bigl(H(\mu)-\alpha_d(\mu)\bigr).
+\tag{OCB.52}
+$$
+
+Proof. Approximate $P$ by laws $P_m$ on the finite row alphabet $B$
+with denominator $m$, converging to $P$. The arrangements of $m$ rows
+with that row type concatenate injectively into $B^m$, which is
+admissible by the native product rule. All concatenations have the
+same $S_d$-symbol type with empirical law $p_m\to p$. The elementary
+multinomial type bound, also used in NPC, gives at least
+
+$$
+(m+1)^{-|B|}\,2^{mH(P_m)}
+$$
+
+distinct concatenations. Repetition of any finite type set in (OCB.49)
+therefore gives
+
+$$
+\alpha_d(p_m)\ge \frac{H(P_m)}n
+                    -\frac{|B|\log_2(m+1)}{mn}.
+$$
+
+Entropy and $\alpha_d$ are continuous on their finite simplexes.
+Taking $m\to\infty$ proves (OCB.50), including zeros in $P$.
+Conditional on each attained code, apply (OCB.50) to its actual fiber
+and actual conditional law. Concavity gives
+$H(X\mid c)\le n\sum_e\Pr(e)\alpha_d(p_e)\le n\alpha_d(p)$.
+Determinism yields (OCB.51).
+
+For the original-task assertion restrict the same code to the fixed
+actual scaffold, without recoloring any fiber. The argument in
+[NPC, Theorem 7.1][NPC] shows that each fiber is admissible: every
+original-root query is constant outside the blocks or enters exactly
+one actual block; any finite suffix reduces to one boundary reply
+in that same donor block or a constant. Equal selected replies give
+identical predictors and hence equal factors by correctness for every
+subsequent count. No donor is required to be the target block and no
+correlated fiber is replaced by a product. Under iid blocks,
+$H(X)=nH(\mu)$, proving (OCB.52).
+This is an entropy lower against every original competitor. It neither
+changes the complete attained-alphabet objective nor gives an attaining
+alphabet-minimal encoder. $\square$
+

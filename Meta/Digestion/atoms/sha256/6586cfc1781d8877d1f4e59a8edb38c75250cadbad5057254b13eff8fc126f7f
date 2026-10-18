@@ -1,0 +1,19 @@
+**Convention 4.3 (the precise grammar being characterized).**
+$V_{\mathrm{rec}}$ means exactly [JTC, Definition 9.1]. Each label
+is $(d,\mu,C)$ with $d\ge1$, a rational probability on the whole
+$S_d$, and rational $C>0$. Its only justifications are:
+
+1. An exhaustive joint leaf, an arbitrary finite grouping of that
+   leaf with one constituent reply per experiment, or any finite
+   bounded-bundle leaf, checking every feasible positive support.
+2. A one-parent scaffold node, with $d=d_0+h$,
+   $\mu=\nu^{\uparrow}$ and $C\ge C_0^{2^h}$.
+3. A one-parent stability node at the same depth, with
+   $C\ge C_0+\operatorname{TV}(\mu,\nu)$.
+
+The grouped leaf tests squared norms against $C^{2m}$. A bundle
+leaf checks a selected nonempty bundle of hard targets on each
+support with $\mu(P)>C$; supports of mass at most $C$ require no
+bundle. Malformed or incomplete tables are rejected. No finite
+superposition rule or other inference rule is implicit here.
+

@@ -1,0 +1,62 @@
+**Theorem 62.2 (bijective contrast coverage and derivatives).** Put
+$\tau_c=\tau(a_\dagger)$. The map $a\mapsto\tau(a)$ is a continuous
+strictly decreasing bijection
+
+$$
+[0,a_\dagger]\longrightarrow[\tau_c,1].
+\tag{RC.33}
+$$
+
+For every $\tau_c<\tau<1$ there is therefore one exact selected
+algebraic $a$ and one exact selected $k$, and (RC.13) evaluates the
+original optimum. The interior multiplier is continuous and
+
+$$
+j'(\tau)=-\lambda,\qquad
+\frac{d\mathcal T(s_0\tau)}{d\tau}=-\lambda/2,\qquad
+\frac{d\mathcal T(s)}{ds}=-\lambda/(2s_0).
+\tag{RC.34}
+$$
+
+Proof. At $a=0$ direct evaluation of (RC.12) gives
+
+$$
+\begin{aligned}
+B(0)&=\tfrac14(1,-1,1)(1,-1,1)^T,\\
+C_0(0)&=\tfrac14(1,-1,-1)(1,-1,-1)^T,\\
+A(0)&=\begin{pmatrix}1/2&1/2&0\\1/2&1/2&0\\0&0&1/2\end{pmatrix},
+\qquad\tau(0)=1.
+\end{aligned}
+\tag{RC.35}
+$$
+
+This endpoint is the inherited optimal endpoint primal of JR Theorem
+51.4. For $a>0$ the normalized $B$ ray has
+
+$$
+\frac UD=-1+\frac{2\beta a}D\in(-1,0),\qquad
+\frac d{da}\frac{2\beta a}D=\frac{2\beta V}{D^2}>0.
+\tag{RC.36}
+$$
+
+Its positive coefficient weight prevents equality in
+$\sum\pi|u|\leq\sqrt{(\sum\pi)(\sum\pi u^2)}=1$:
+equality would require every positive ray to have $|u|=1$.
+The reports are aligned, as in Lemma 53.2, so $\tau(a)<1$.
+Different $a$ give different $B$ rays and hence different aggregates.
+If two positive parameters had the same contrast, Theorem 62.1's
+uniqueness at that contrast would contradict this difference.
+Together with $\tau(a)<1$ this proves continuity and injectivity on
+the closed interval. A continuous injective real function on an
+interval is strictly monotone; its endpoint $1$ forces decrease.
+This proves (RC.33) with no unexamined gap in the contrast domain.
+
+Each finite certificate supplies the global support inequality
+$j(\tau')\leq j(\tau)-\lambda(\tau'-\tau)$.
+Use it at the two ends of a difference quotient. The inverse in
+(RC.33) is continuous, and (RC.23) is continuous for $a>0$, so the two
+support slopes tend to the same $-\lambda$. This proves (RC.34)
+without assuming $\tau'(a)\ne0$. These multipliers are normalized
+for $j$; neither the CG root multiplier nor JR's spectral-plateau
+multiplier is this $\lambda$. $\square$
+

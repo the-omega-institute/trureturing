@@ -1,0 +1,73 @@
+**Proposition 37.2 (finite numerical membership and exact own exit).**
+For every deterministic $\eta>0$ this policy belongs to Definition
+33.1's class almost surely, uses only finitely many piecewise linear
+numerical issuances, and satisfies
+
+$$
+\begin{aligned}
+k+\min_{[0,T]}a_\eta&\ge l>0,&
+k+\max_{[0,T]}a_\eta&\le u<H,\\
+\zeta^{\rm N}_\eta&=
+ \begin{cases}\tau+\delta,&\tau+\delta\le T,\\
+ \infty,&\tau+\delta>T,\end{cases}&
+S^{\rm N}_\eta&=T\wedge(\tau+\delta),\qquad
+0\le S^{\rm N}_\eta-S\le\delta.
+\end{aligned}
+\tag{37.2}
+$$
+
+Every retained own death is at the target's exit face.
+
+Proof. Proposition 35.2 gives finitely many knots before $S$.
+Lemma 36.2, on a countable intersection over knot indices, gives finite
+service at each, completed before the next knot unless a cutoff
+intervenes. Inductively the actual triple just before the connector
+issued at $t_i$ is exactly $(W^1,W^2,K)_{t_{i-1}}$.
+The connector's final ordinary chronological integral, translated by
+$W^1_{t_{i-1}}Y$, makes its endpoint exactly the target triple at
+$t_i$. The initial hold supplies the first induction anchor. Increasing
+suffix parametrizations preserve these integrals. In particular there
+is no resetting of any accumulated chronological value.
+
+Normal endpoints are interior target heights and every normal geometric
+prefix is interior by Lemma 34.2. Thus no own exit occurs before $\tau$.
+At $\tau$ the current height $h_0$ is still interior, even if a
+normal rectangle is interrupted. The terminal inward loops and phase
+leg are interior. Its final height leg, which has nonzero length,
+joins $h_0$ to the target boundary and reaches it only at its endpoint.
+Constant arclength parametrization assigns that endpoint the full
+prescribed duration $\delta$. Hence own death is exactly $\tau+\delta$
+when that lies on the horizon, and otherwise there is no own death on
+$[0,T]$. If the target survives to $T$, all normal prefixes stay
+interior. These facts prove (37.2) and the exit-face assertion. They
+also prove the displayed whole-height extrema guard for the entire
+actual command, including terminal movement and holds. For another
+starting-height promise the same numerical history still requires
+exactly (2.4); the policy does not enlarge its domain.
+
+Each normal connector and terminal connector has finitely many
+rectangles, each suffix has finitely many linear pieces, and the
+number of actual suffix issuances is finite almost surely. Joins are
+continuous, so the actual controls are zero-start AC and piecewise
+$C^1$. Their finite positive piece durations give finite pathwise
+energy. Numerical profiles include their holds. Simultaneous events
+are represented by the single selected replacement, so no multiple
+instantaneous instructions or accumulating issue times are required.
+
+All knot data are observed by issuance, and all retry thresholds are
+stopping times before the cutoff. The terminal profile uses only the
+stopped observations and the actual past command, whose $J_0$ is its
+known finite ordinary integral. The integer ceiling, inward choice,
+finite concatenation and arclength parameters in Definition 34.1 are
+Borel functions of their finite numerical data. Hitting times and
+stopping-time evaluations of these continuous adapted processes are
+measurable. On each finite-count event, rational-time evaluations of
+the issued and executed paths are finite compositions of these maps;
+these evaluations generate the continuous-path Borel sigma algebra.
+The countable union of the finite-count events has probability one.
+This proves the required profile and path measurability as well as
+nonanticipation. Exceptional null sets may be assigned the zero history
+in the usual completion; the operational assertions are almost sure
+for each deterministic tolerance. All commands use the original $P,Q$ and native
+chronology (2.5), with the fixed preparations and periods. $\square$
+

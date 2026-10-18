@@ -1,0 +1,34 @@
+**Proposition 15.1 (even a full terminal lift and lifetime do not force
+the tracking floors).** With additional offline access to
+$(W^1_S,W^2_S,J^\lambda_S,S,\zeta)$, there is a single original
+piecewise linear held command having exactly the target's terminal
+real lifted state and censored lifetime, and finite costs almost
+surely. Repeating this command at every stage refutes any inference
+of (12.13) or (13.2) from terminal accuracy alone, even if terminal
+chronology and death time are also exact.
+
+Proof. Put $A=W^1_S$, $B=W^2_S$, $C=J^\lambda_S$, and fix
+$0<d<u-k$. On $[0,S]$ give each of the following six legs duration
+$S/6$, with the displayed vertices in the control plane:
+
+$$
+(0,0),\ (d,0),\ (d,C/d),\ (0,C/d),\ (0,0),\ (0,B),\ (A,B).
+\tag{15.1}
+$$
+
+The rectangle has chronological integral $d(C/d)=C$. The phase leg
+at $a=0$ and the final height leg contribute zero to $\int a\,db$.
+Thus the terminal control triple is exactly $(A,B,C)$ on this same
+realization. Before the last leg, all heights lie in $[k,k+d]\Subset I$.
+On the last leg the height moves from $k$ toward $k+A\in[l,u]$.
+It first meets the killing boundary at $S$ exactly when $\zeta<\infty$;
+otherwise $S=T$ and it remains in $I$. Hold thereafter. Since $S>0$
+and $A,B,C$ are finite, all six original-velocity costs are finite.
+The whole-height guard holds strictly within $(0,H)$ throughout.
+The prescribed command has its ordinary domain (11.2); no operation
+is asserted outside it. For any positive tolerances tending to zero,
+the repeated command has zero terminal error while every normalized
+cost in (12.13) tends to zero. Its entire path is not asserted to
+track the target. Access to those terminal random variables is the
+explicit additional information used by this witness. $\square$
+

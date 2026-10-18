@@ -1,0 +1,30 @@
+**Definition 6.1 (the actual image of acquired endpoint data).**
+For a fixed actual retained fiber $A_b$, an allowed edge $(i,j)$ and
+numbers $k,l$, define
+
+$$
+\begin{aligned}
+A_b(i,k,j,l)=\{a\in A_b:\quad
+s_a&=k-iq-a_i,\\
+t_a&=l-jq-a_j,\quad 0\le s_a\le t_a\le2H\}.
+\end{aligned}
+\tag{SCC.29}
+$$
+
+All quantities are integers. A supplied tuple belongs to the actual
+service image exactly when this set is nonempty. Its calibration and
+lag supports are
+
+$$
+\begin{aligned}
+\mathcal D_b(i,k,j,l)&=\{\Delta_{ij}(a):a\in A_b(i,k,j,l)\},\\
+\mathcal L_b(i,k,j,l)&=\{t_a-s_a:a\in A_b(i,k,j,l)\}.
+\end{aligned}
+\tag{SCC.30}
+$$
+
+The relative spatial observable here is the difference of native
+slot clocks at a common epoch. It is not a Euclidean distance or a
+metric on physical space; it is signed and includes the known
+address-dependent band offset $(j-i)q$.
+

@@ -1,0 +1,71 @@
+**Theorem 4.2 (uniform refinement fibers and exact recovery criterion).**
+The map $\rho_{e,d}$ is onto. Every fiber has cardinality $q^{\delta_{d,e}}$,
+where
+
+$$
+\delta_{d,e}=e-d+r_A(k,e)-r_A(k,d),\qquad
+0\le\delta_{d,e}\le e-d.
+\tag{4.2}
+$$
+
+The least supplemental alphabet needed to recover the $e$-summary from
+the $d$-summary has size $q^{\delta_{d,e}}$. A decoder recovering $B_{k,e}(u)$
+from $B_{k,d}(u)$ for ALL $u\in U_k$ exists if and only if
+
+$$
+\delta_{d,e}=0
+\quad\Longleftrightarrow\quad
+r_A(k,d)-r_A(k,e)=e-d.
+\tag{4.3}
+$$
+
+Let $H_E$ be the columns $k-e+1,\ldots,k-d$, so
+$H_A^{(k,d)}=[H_A^{(k,e)}\ H_E]$. The equivalent structural condition is that
+
+$$
+\overline H_E:\mathbb F_q^{e-d}\longrightarrow
+\mathbb F_q^m/\operatorname{im}H_A^{(k,e)}
+\tag{4.4}
+$$
+
+is injective. The refinement increments add:
+$\delta_{d,f}=\delta_{d,e}+\delta_{e,f}$ for $d\le e\le f\le k$.
+
+Proof. Both maps in (4.1) come from the same $u$, proving surjectivity.
+It is a linear map between the actual linear images. Their dimensions
+from (3.1) differ by (4.2), so rank–nullity gives the uniform fiber size.
+Adding $e-d$ columns changes rank by an integer between zero and $e-d$,
+which proves the two bounds. The finite maximum-fiber principle cited in
+Theorem 3.1 gives the exact supplemental alphabet, now with
+$X=Q_{k,e}$ and $U=\rho_{e,d}$.
+
+If a decoder exists, two prefixes with the same $d$-summary must have the
+same $e$-summary. Since every point of $Q_{k,e}$ has a prefix representative,
+$\rho_{e,d}$ must be injective. Conversely a bijective $\rho_{e,d}$ supplies
+its inverse as a decoder. This is the injective-record recovery principle of
+[ExactRollbackInjectivityCriterion](../../../D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.lean),
+declaration `exact_rollback_iff_joint_record_injective`,
+used on the nonempty finite carrier $Q_{k,e}$; here the constant extra record
+asks whether the $d$-summary alone suffices. By the fiber size, injectivity
+is exactly $\delta_{d,e}=0$. The rank of (4.4) is
+$r_A(k,d)-r_A(k,e)$, proving the structural equivalence.
+
+For an explicit decoder when this condition holds, write the $e$-tail as
+$(w,t)$ with $t$ the known $d$-tail and put
+
+$$
+y=s-H_D^{(k,d)}t.
+\tag{4.5}
+$$
+
+In the quotient of (4.4), the equation for the older part is
+$\overline y=\overline H_Ew$. Since $\overline H_E$ is injective, its inverse
+on its image gives the unique $w$, hence $(s,(w,t))$ is the desired
+$e$-summary, with $(w,t)$ the concatenated $e$-tail.
+For $\delta_{d,e}>0$, the same equation has $q^{\delta_{d,e}}$ choices of $w$;
+each is realized by an older part and a completion, so a decoder cannot
+choose correctly for every prefix. Finally the displayed rank differences
+telescope, proving additivity. The algebraic decoder changes the
+presentation of a current prefix, not its legally remaining resource.
+$\square$
+

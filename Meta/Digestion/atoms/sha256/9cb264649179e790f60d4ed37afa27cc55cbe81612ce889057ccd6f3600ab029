@@ -1,0 +1,21 @@
+**Corollary 8.3 (conditional minimum supported and total counts).** Under
+either Theorem 8.1 or Theorem 8.2, the minimum supported-low count of a
+height-optimal original instrument is exactly $m$, and its minimum total
+actual count is exactly $m+1$. More generally every competitor with at
+most $m$ total actual labels has actual TV deficit at least
+$\Delta_m/2$, using $\Delta_9$ in the nine-contact case. This is an
+equality of minima, not a count identity for every instrument.
+
+Proof. The strictly positive contact law has $m$ atoms and the constructor
+of Proposition 4.1 realizes it with exactly those low labels and one high
+label. Equations (QS.38) or (QS.42) prohibit fewer than $m$ supported
+nonzero low labels at the optimum. Positive $H_{\rm high}$ forces at
+least one supported high actual label. Supported-zero labels remain
+counted, and extra high labels have the same fixed total high height;
+neither reduces this lower bound. Thus the contact realization attains
+both minima. If a competitor has at most $m$ total labels, at least one
+is high, so it has at most $m-1$ low labels and the quantitative bound
+applies. A competitor with fewer than $m$ relevant labels is already
+finite, so this exclusion requires no unrestricted measurable physical
+representation. $\square$
+

@@ -1,0 +1,57 @@
+## 4. 四、定理三：未来响应的隐藏方向由 $J_{\mathscr L}$ 决定
+
+设五个模式对应的未来概率律为
+
+$$
+\mathscr L_0,\quad
+\mathscr L_1,\quad
+\mathscr L_2,\quad
+\mathscr L_3,\quad
+\mathscr L_{13}.
+$$
+
+这里要求五个 $\mathscr L_I$ 定义在同一个未来事件空间中，例如同一个返回事件、同一个停止事件或同一个完整响应轨迹空间。
+
+混合未来律为
+
+$$
+\overline{\mathscr L}(p)=
+p_0\mathscr L_0
++p_1\mathscr L_1
++p_2\mathscr L_2
++p_3\mathscr L_3
++p_{13}\mathscr L_{13}.
+$$
+
+代入 $\kappa$ 参数化，得到
+
+$$
+\boxed{
+\begin{aligned}
+\overline{\mathscr L}(p)
+={}&
+\mathscr L_0
++(\mathscr L_1-\mathscr L_0)X\\
+&+(\mathscr L_3-\mathscr L_0)Y\\
+&+(\mathscr L_2-\mathscr L_0)Z\\
+&+J_{\mathscr L}\kappa,
+\end{aligned}
+}
+$$
+
+其中
+
+$$
+\boxed{
+J_{\mathscr L}=
+\mathscr L_{13}
+-\mathscr L_1
+-\mathscr L_3
++\mathscr L_0.
+}
+$$
+
+这个 $J_{\mathscr L}$ 是未来响应的二阶差分，也可以称为响应曲率或响应对比。
+
+---
+

@@ -1,0 +1,70 @@
+**Corollary 4.8 (gluing dynamics through residual routes).** Under Theorem
+4.1, choose an action $a_i:i\to j(i)$ in every chart. In this statement
+all domains and squares are the induced data on the quotient charts $Q_i$.
+Let $L_i(q)$ be its complete response decoded into common task fields,
+defined for every $q\in Q_i$: it includes legality and every task-visible
+illegal rejection as well as legal success and failure. Suppose the
+following hold for every named edge $e:i\rightsquigarrow k$ used to
+generate $\sim$ in Definition 4.1 and its declared inverse:
+
+1. the matched action is exactly $a_i^e=a_k$, and the crossing domain is
+   the entire actual edge domain, $C_{e,a_i}=U_e$;
+2. the full square (3.1) holds at every $q\in U_e$, including its legality
+   and response equations at illegal inputs, and its response dictionary
+   agrees with the common decoding, so $L_k(H_eq)=L_i(q)$;
+3. the residual output route $e/a_i$ is an actual atlas word, defined at
+   every $T_{a_i}q$ with $q\in U_e\cap D_{a_i}$, and
+   $H_{e/a_i}T_{a_i}q=T_{a_k}H_eq$;
+4. the decoded initial observations agree at every such edge
+   identification, on all of $U_e$.
+
+Then the chosen action has a saturated legal domain and well-defined
+successors, complete decoded responses and initial observations on the
+entire union carrier $Y$. Explicitly, writing $[q]=\iota_i(q)$,
+
+$$
+\begin{aligned}
+\overline D&=\{[q]:q\in D_{a_i},\ i\in I\},\\
+\overline T([q])&=[T_{a_i}q]\quad([q]\in\overline D),\\
+\overline L([q])&=L_i(q)\quad([q]\in Y).
+\end{aligned}
+\tag{4.2}
+$$
+
+Its iterates descend as well. More generally, require these whole-edge
+hypotheses for every action choice in a declared continuation menu to glue
+that menu and all its finite continuations. If the residual lifts also
+satisfy the route-presentation hypotheses of Theorem 3.2, those
+continuations descend with that presentation.
+
+**Proof.** For every generating identification $q\sim H_eq$, hypothesis
+1 puts the point in the full square's crossing domain. Hypothesis 2 gives
+identical legality and complete decoded responses even when the request is
+illegal. If legal, hypothesis 3 joins the two successors by an actual
+residual atlas word, so they have the same class in $Y$. Hypothesis 4 gives
+the initial-observation equality. Each comparison also holds in the reverse
+orientation.
+
+Any two representatives of a point of $Y$ are joined by a finite chain of
+these actual edge identifications and their inverses. Propagating legality
+along that chain makes the disjoint union of the $D_{a_i}$ saturated: either
+every representative is legal or every representative is illegal. In the
+legal case, each link gives equal successor classes, and transitivity gives
+the same class at both ends. In either case, each link gives equal complete
+decoded responses, including any rejection, and equal decoded initial
+observations. This proves every representative-independence assertion in
+(4.2); at an illegal class there is no successor. The universal property of
+$Y$ gives the descended responses and observations, and the saturated
+domain gives the partial operation. Induction on the word length proves
+the continuation assertion, retaining the full response at each legal or
+first illegal prefix and following actual successors after legal failures.
+The presentation assertion is then Theorem 3.2 under its stated hypotheses.
+$\square$
+
+The whole-edge requirement concerns every identification used to form
+$Y$. A task-local square on $C_{e,a_i}\subsetneq U_e$ leaves the links at
+$U_e\setminus C_{e,a_i}$ unconstrained. Flatness and orbit coverage control
+state identifications, but do not supply legality or response comparisons
+at those links. Gluing on a smaller transport-saturated carrier is a
+separate restricted assertion.
+

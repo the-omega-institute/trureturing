@@ -1,0 +1,21 @@
+**Mathematical citation 7.2 (primary literature).** The invoked mature
+comparison uses exactly the bounded continuous coordinate-clipped test
+$F(Y)-y_0y_1$ and the common scalar marginal of all four coordinates.
+Thus [CW]'s bounded right-continuous supermodular order is sufficient;
+no unbounded-test extension or literature equality characterization is
+used. The Bernstein facts in [BSCA] use a finite polynomial on a closed
+rectangle, an affine map to the unit cube, nonnegative basis functions
+and their partition of unity; they explain the supplied rational
+certificate, not an experimental sign check. [LV, Theorems 1.2–1.4]
+requires finite first moments, satisfied by PAIR's bounded vector
+projections. Its barycentric couplings are background for the supplied
+PAIR20 criterion; no successor is identified with its conditional mean
+in this proof. These are literature-attested tools, not new general
+theorems.
+
+| Citation | Primary mathematical source |
+| --- | --- |
+| [CW] | Côté and Wang, *On convex order and supermodular order without finite mean*, arXiv:2502.17803v3, Definition 3(iii) and Proposition 6. |
+| [BSCA] | Ben Sassi, Sankaranarayanan, Chen and Ábrahám, *Linear Relaxations of Polynomial Positivity for Polynomial Lyapunov Function Synthesis*, arXiv:1407.2952v2, §3.1, (3.7) and Lemma 3.2. |
+| [LV] | Leskelä and Vihola, *Conditional convex orders and measurable martingale couplings*, arXiv:1404.0999v3, Theorems 1.2–1.4; background for the supplied PAIR20 criterion. |
+

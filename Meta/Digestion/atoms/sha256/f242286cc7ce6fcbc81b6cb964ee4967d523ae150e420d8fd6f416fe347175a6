@@ -1,0 +1,20 @@
+**Definition 5.3 (The exact active value).** Put
+
+$$
+\begin{gathered}
+D_0=315892776,\qquad
+a_0=160604935+902133r,\\
+b_0=7806374+1984210r,\qquad
+c_0=-32258964-89972r,\\
+C_N=\frac1{D_0}\begin{pmatrix}a_0&b_0\\b_0&c_0\end{pmatrix},\\
+p_N(z)=\det(zI_2-C_N)
+=z^2-\frac{a_0+c_0}{D_0}z
++\frac{a_0c_0-b_0^2}{D_0^2},\\
+\theta=\frac{a_0+c_0+
+\sqrt{(a_0-c_0)^2+4b_0^2}}{2D_0}.
+\end{gathered}
+\tag{5.6}
+$$
+
+The radical is the nonnegative real square root.
+

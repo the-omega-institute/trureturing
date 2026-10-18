@@ -1,0 +1,47 @@
+**Theorem 9.1 (Full Kraus decomposition and fixed decoder).** Every response $\mathsf S(q_a,q_b,q_o;v_a,v_b)$ of Proposition 3.1, including the pair-specific responses (4.4) and scalar responses of N1–N3, has at most $25$ Kraus branches, each individual Kraus operator having rank at most two. It has a complete-instrument factorization through one transmitted qubit and one flag of at most $25$ values, with a decoder independent of source labels, outcomes and parameters.
+
+Proof. Use the fixed orthonormal coefficient eigenvectors
+
+$$
+\xi_{a,\epsilon}=(e_0-i\epsilon e_4)/\sqrt2,\qquad
+\xi_{b,\epsilon}=(e_1-i\epsilon e_3)/\sqrt2,\qquad \xi_o=e_2.
+$$
+
+For $A=\operatorname{diag}(d_j)+v_aX_a+v_bX_b$ their eigenvalues are $q_a+\epsilon v_a$, $q_b+\epsilon v_b$, $q_o$. In (4.4) these are $q_a(z)+\epsilon rh_a(z)$, $q_b(z)+\epsilon rh_b(z)$ and $s$. For the five eigenpairs $(\lambda_\ell,\xi_\ell)$, numbered $\ell=1,\ldots,5$, put
+
+$$
+K_\ell=\sqrt{\lambda_\ell}\operatorname{diag}(\xi_\ell).
+$$
+
+Add the twenty operators
+
+$$
+K_{jk}=\sqrt{(1-d_k)/4}\,E_{jk},\qquad j\ne k.
+$$
+
+The first five branch maps have entrywise coefficient matrix $\sum_\ell\lambda_\ell\xi_\ell\xi_\ell^\dagger=A$, so their sum is $A\circ Y$. The other twenty maps sum to $\frac14\sum_{j\ne k}(1-d_k)Y_{kk}E_{jj}$. Together these give exactly (3.1). Further,
+
+$$
+\sum_{\ell=1}^{5}K_\ell^\dagger K_\ell=\operatorname{diag}(d_j),\qquad
+\sum_{j\ne k}K_{jk}^\dagger K_{jk}=\operatorname{diag}(1-d_j).
+\tag{9.1}
+$$
+
+Their sum is $I_5$. Each pair-supported diagonal operator has rank at most two, the singleton diagonal operator has rank at most one, and each transition has rank at most one. Zero eigenvalues give zero branches. This bounds each operator's matrix rank; it does not say that the channel's Kraus rank is two. The isometry $\psi\mapsto\sum_\ell K_\ell\psi\otimes|\ell\rangle$, where the index now ranges over all branches, supplies an environment of dimension at most $25$.
+
+Give all $25$ branch labels a fixed ordering. For every label choose once and for all an isometry $V_\ell:\mathbb C^2\to\mathbb C^5$ whose range contains the range of its Kraus matrix. For an $a$ or $b$ diagonal branch use the appropriate original coordinate pair. For a singleton or a transition branch with range in $\mathbb C e_j$, complete $e_j$ with any fixed different original coordinate. These choices depend only on the branch label, not on $q_a,q_b,q_o,v_a,v_b,z,X$. Define
+
+$$
+B_\ell=V_\ell^\dagger K_\ell.
+$$
+
+Because the range of $K_\ell$ is contained in that of $V_\ell$, $V_\ell B_\ell=K_\ell$ and $B_\ell^\dagger B_\ell=K_\ell^\dagger K_\ell$. Thus $\sum_\ell B_\ell^\dagger B_\ell=I_5$. The sender applies the complete instrument with branch output $B_\ell YB_\ell^\dagger$, transmits that two-dimensional quantum output and the flag $\ell$, and retains every branch. The receiver's branch decoder is $Z\mapsto V_\ell ZV_\ell^\dagger$, CPTP on every qubit input. On an arbitrary operator $Z$ on the entire qubit/flag algebra the common decoder is
+
+$$
+\mathcal D(Z)=\sum_\ell V_\ell
+ (I_2\otimes\langle\ell|)Z(I_2\otimes|\ell\rangle)V_\ell^\dagger.
+\tag{9.2}
+$$
+
+This is CP and TP, since $V_\ell^\dagger V_\ell=I_2$ and the flag projectors sum to the identity. Its composite with the sender instrument is $\sum_\ell K_\ell YK_\ell^\dagger=\mathsf S(q_a,q_b,q_o;v_a,v_b)(Y)$ on the entire input algebra. Off-diagonal flag inputs are lawfully dephased by (9.2); the decoder is not defined only on classical promises. If the flag is encoded in five classical bits, define any fixed CPTP output on each of the seven unused binary words; this extends the decoder to the full $32$-valued carrier. Identity with arbitrary untouched references follows from equality of the linear channels. QED.
+

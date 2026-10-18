@@ -1,0 +1,24 @@
+**Theorem 32.3 (existence and truncation of the original heat finite part).** The subtracted integrand in (32.8) is $O_d(t^{-1/2})$ as $t\downarrow0$, the original tail $W_{1,d}(o)$ is finite, and
+
+$$
+\mathfrak m_d=\lim_{\delta\downarrow0}
+\left[\int_\delta^\infty K_d(t;o,o)dt
+ -\frac{2d_0^{\rm h}}5\delta^{-5/2}
+ -\frac{2d_1^{\rm h}}3\delta^{-3/2}
+ -2d_2^{\rm h}\delta^{-1/2}\right].
+\tag{32.9}
+$$
+
+Replacing $\infty$ by $R\ge1$ in the bracket has total error at most $C_d(\sqrt\delta+R^{-1/2})$ from $\mathfrak m_d$, for sufficiently small $\delta>0$.
+
+Proof. Choose a fixed safe radius $\ell>0$ as in Lemma 24.3. At microscopic time one use its strip $(-\ell/s,\ell/s)$, held fixed during parameter differentiation. At the source diagonal the reflection $\sigma(r,y,z,w)=(-r,y,-z,w)$ conjugates the parameter $\theta$ to $-\theta$. Its odd scalar coefficients vanish. The sixth finite derivative in (24.8) bounds Taylor's remainder through degree five by $Cs^6$. The deleted-path bounds J (31.6), and their degree-$j$ versions, restore the original faces and the full canonical coefficients with polynomial times $e^{-c\ell^2/s^2}$ errors. Hence the exact raw scaling (32.4) gives
+
+$$
+j_0s^7K_d(s^2;o,o)
+ =\mathsf q_0(1;0,0)+s^2\mathsf q_2(1;0,0)
+                       +s^4\mathsf q_4(1;0,0)+O_d(s^6).
+\tag{32.10}
+$$
+
+Divide by $j_0s^7$ and put $t=s^2$. This proves the asserted integrable remainder. Independently, L Lemma 41.2 bounds $K_d(t;o,o)$ by $C_dt^{-3/2}$ for $t\ge1$, proving tail convergence. Integrating the three explicit powers over $(\delta,1)$ proves (32.9), including the constants at the upper endpoint. Integrating $Ct^{-1/2}$ over $(0,\delta)$ and $Ct^{-3/2}$ over $(R,\infty)$ gives the error bound. The original faces need not be symmetric: reflection was used only on the estimating strip. $\square$
+

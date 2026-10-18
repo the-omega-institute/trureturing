@@ -1,0 +1,40 @@
+## 409. The exact algebraic compensation
+
+Put s=v+a, d=v-a and W=sqrt((v^2-1)*(a^2-1)). Temporarily vary the
+opposite axial cosh b while keeping r,v,a fixed. The quotient
+
+    J/L=[(r+1)*(b+1)-d^2]/[s^2-(r-1)*(b-1)]
+
+strictly increases on 1<=b<=the given value. Its denominator is
+positive throughout, and its derivative numerator is
+
+    (r+1)*s^2+2*(r^2-1)-(r-1)*d^2
+      =2*(v^2+a^2)+4*r*v*a+2*(r^2-1)>0.
+
+This comparison does not require J to remain positive at b=1;
+it is only a rational algebraic comparison with positive L. Since
+the given b>1,
+
+    t^2 > [(r-1)/(r+1)]*[2*(r+1)-d^2]/s^2.         (409.1)
+
+The right side of (409.1) is permitted to be negative. Using
+
+    K^2=(v^2+a^2-2+2*W)/s^2,
+
+direct expansion gives
+
+    2*lambda^2
+      +[(r-1)/(r+1)]*[2*(r+1)-d^2]/s^2-1
+      =2*[(r-1)^2-s^2+2*(r-1)*W]/[(r+1)*s^2].    (409.2)
+
+The numerator on the right is strictly positive. By symmetry suppose
+v>=a. Then r-1>=v+1 and W>=a^2-1. Therefore
+
+    (r-1)^2-s^2+2*(r-1)*W
+      >=(v+1)^2-(v+a)^2+2*(v+1)*(a^2-1)
+      =(a-1)*(2*v*a+a+1)>0.                        (409.3)
+
+Equations (409.1)-(409.3) prove (408.2), including v=a and the boundary
+r=max(v,a)+2. No numerical approximation or monotonicity of an angle
+in an unrelated coordinate enters this argument.
+

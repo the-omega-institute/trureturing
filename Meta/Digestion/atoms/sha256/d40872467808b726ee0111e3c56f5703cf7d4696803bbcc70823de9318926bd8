@@ -1,0 +1,26 @@
+**Definition 3.1 (midpoints and original zero level).** Set
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\quad
+C=\frac{11758471}{22781250},\quad \rho_p=\frac{1116529}{22781250},
+\quad \rho_\beta=\frac{239}{6750}.
+\tag{3.1}
+$$
+
+The original zero face consists of compatible pairs with
+
+$$
+\mathcal J=\max_{s\in\{p,\beta\}}
+\left\{\sup_{k:\mu(k)>0}\int\operatorname{TV}(D,P_{s,r_k})\,d\nu_s(D)
+-\rho_s\right\}=0.
+\tag{3.2}
+$$
+
+Every supported target, the complete configuration law and the order of
+TV and averaging are retained. [PAIR, (11.29)--(11.30)] supplies both
+full boxes and $\int Q(E_p)\,d\nu_p=C$ at zero level. Indeed the two
+endpoint losses have sum at least $2\rho_s$ and each is at most
+$\rho_s$; equality in their integrated coordinate triangle inequality
+forces the boxes simultaneously on the countable carrier. Inside the
+boxes the endpoint-positive event identifies the midpoint mean.
+

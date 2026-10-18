@@ -1,0 +1,12 @@
+**定义 235.4（The proper-prefix comparison family）。** For use only
+in the relative cone comparison, define for each $k\ge4$
+
+$$
+d_k=k(k-3)/2,\quad b_k=d_k-k+2,\qquad
+q_k^L=(0,b_k,d_k-1,d_k,\ldots,d_k,0,\ldots,0;(k+1)d_k-1),
+$$
+
+with $d_k$ in positions $4,\ldots,k$. The members at $k=4,5,6$
+are reused members, not additional new constructions. Their
+correspondence is given in 236.4.
+

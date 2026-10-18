@@ -1,0 +1,16 @@
+**Lemma 4.1 (stationary paths and the installed budget).**
+Every terminating run visits each Read state at most once. Every correct
+reader on $\mathcal U_*$ needs at least five Halts. Consequently a correct
+terminating reader within nine installed states has at most four Reads
+and at most four calls on every source, even without a predeclared call
+bound.
+
+Proof. On a fixed stationary source each installed literal has one fixed
+reply, so a repeated Read state repeats its deterministic suffix forever.
+Termination excludes this repetition; this is NBP Proposition 12.5's
+per-source argument. The five distinct attained complete rows in
+Definition 2.3 require five different fixed-output Halts. All other
+installed states still count. Subtraction gives the Read bound, and the
+no-repetition fact gives the call bound. This reasoning does not assert
+that the union of paths on different sources is acyclic. $\square$
+

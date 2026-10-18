@@ -1,0 +1,41 @@
+**命题 83.4（Algebraic witnesses need not be safe at four coordinates）。** Within Definition 83.1 at $(h,m,k,T)=(4,15,16,17)$, there is an injective label-constant four-coordinate code with even full rows, all root and chronological missing-coordinate restrictions, and $c(U)\oplus c(V)$ equal to its omitted vector, whose inverse rejects at the second emitted block. Both successful root children are nonconstant.
+
+证明。 Take distinct component names $A_b,D_b$ for the nonzero bit strings $b$ below, with disjoint component alphabets. For $j\in A$ prescribe $\Gamma(j)=(A_{b(j)},D_{b(j)})$, assign that class code $b(j)$, and assign outside $\widehat C$ code $0000$. The full table is
+
+$$
+\begin{array}{c|rrrrrrrrr}
+j&0&1&2&3&4&5&6&7&8\\\hline
+b(j)&1000&1000&1001&1010&1011&0001&1101&1110&0100
+\end{array}
+\tag{83.23}
+$$
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&9&10&11&12&13&14&15&16\\\hline
+b(j)&0101&0110&0111&0100&0010&0011&1111&0000
+\end{array}
+\tag{83.24}
+$$
+
+There are fourteen positive joined classes. Exactly $1000$ and $0100$ have multiplicity two; all others have multiplicity one. The only omitted vector is $1100=1000\oplus0100$, so the full phase XOR is zero. The root conditions hold at phases $0,1,16$. At the missed phases $e_1=14,e_2=12,e_3=10$, the required coordinates of $0011,0100,0110$ are respectively zero. Thus every prescribed row is an available even full row.
+
+Direct application of the same original inverse (83.19) to its first two rows gives
+
+$$
+B_0=1010110\,1^8,
+\qquad B_1=1^8\,0101010.
+\tag{83.25}
+$$
+
+Both words have fifteen bits. The root begins $10$, succeeds on every low source and has terminal tail eight. Its two successful difference children have respectively eight and seven distinct low joined labels; in this construction each component also separates those labels. Neither child can stop correctly at the root. The next word has leading run eight, so every continuing low source reaches
+
+$$
+8+8=16=k
+\tag{83.26}
+$$
+
+and is absorbed during $B_1$. Subsequent endpoints cannot recover the lost labels. Both full words are paid, including the unobserved absorbed part of $B_1$. The common charged phases of the first two arithmetic rows are exactly $\{6,7,15\}$, consistent with the sharp three-phase bound of Lemma 82.2. These are arithmetic design rows; the rejecting block produces bottom, not its putative scalar difference.
+
+This disproves all-witness safety in the unsaturated class. It does not contradict Theorem 83.3, whose selected witness omits a unit vector and therefore retains the fourth common charged class at this boundary. ∎
+

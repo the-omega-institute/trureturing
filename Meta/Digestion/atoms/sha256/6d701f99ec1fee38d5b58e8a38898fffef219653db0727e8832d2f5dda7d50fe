@@ -1,0 +1,79 @@
+**Theorem 6.5 (terminating cell feasibility and actual filler extraction).**
+Nonemptiness of every domain (NRF.22) is decidable by a finite
+construction. A positive decision gives enough distinct actual finite
+trees to fill its free blocks. A negative decision terminates as well.
+The decision does not enumerate all original sources.
+
+Proof. The case $k=0$ has the unique empty residual tuple; the forced
+original term is fully determined. Suppose $k>0$, put $g=|G_S|$,
+and use cap $L=k+g$. For each state $s$ of $M$ write
+$\ell_s=\mathbf1_{q_M(\alpha)=s}+\mathbf1_{q_M(\beta)=s}$ and
+iterate synchronously from $c_0(s)=0$:
+
+$$
+c_{t+1}(s)=\min\left(L,\ \ell_s+
+ \sum_{\delta_M(a,b)=s}c_t(a)c_t(b)\right).
+\tag{NRF.26}
+$$
+
+The two leaf symbols are counted separately even if their states
+coincide. By induction on $t$, $c_t(s)$ is the number, capped at
+$L$, of distinct finite trees of height less than $t$ with state $s$.
+A tree is either one of the two leaves or an ordered pair with unique
+children. Determinism gives a unique child-state pair; the summands
+therefore count disjoint sets of trees, not accepting runs. Capping
+before multiplication and addition commutes with the final cap on
+nonnegative counts. These facts prove the induction.
+
+The count vector is monotone. It has at most $L|\operatorname{States}(M)|$
+strict increases before reaching a fixed point, and one additional
+application detects stability. The height interpretation implies
+
+$$
+c_*(s)=\min(L,|L_s|).
+\tag{NRF.27}
+$$
+
+Indeed a fixed vector cannot increase at a later height, and every
+finite tree has finite height. This includes infinite languages:
+any $L$ distinct members occur below some finite common height.
+
+Compute the exact number $g_s$ of elements of $G_S$ with state $s$.
+Then
+
+$$
+d_s=\min(k,c_*(s)-g_s)=\min(k,|L_s\setminus G_S|).
+\tag{NRF.28}
+$$
+
+If $c_*(s)<L$, the language was counted exactly. If $c_*(s)=L$,
+at most $g$ exclusions leave at least $k$ members. Subtraction is
+nonnegative since all $g_s$ excluded trees are counted. Let
+$m_s=|\{i:\sigma_i=s\}|$. The exact feasibility condition is
+
+$$
+\forall s,\qquad d_s\ge m_s.
+\tag{NRF.29}
+$$
+
+Necessity follows from distinctness within each state. For sufficiency,
+choose $m_s$ distinct values of that state outside $G_S$; different
+states have disjoint languages and hence cannot collide. This is the
+disjoint-domain specialization of the distinct-representative method
+in [SLH, Theorem 61.1][SLH], not a new general matching theorem.
+
+Actual trees can be extracted during the same finite height iteration.
+At each state retain up to $L$ distinct terms from the leaves and
+ordered pairs of previously retained child terms. If a nonempty
+product has fewer than $L$ terms, each nonempty factor has fewer than
+$L$ and its entire relevant finite set was retained. If it has at
+least $L$, the product of the two capped lists still has at least
+$L$. Different child-state pairs produce disjoint terms. Thus the
+retained list size follows (NRF.26). On count stabilization stop;
+there is no need to wait for the identities of capped representatives
+to stabilize. Lists of size below $L$ then contain their entire state
+languages; a full list contains $L$ actual distinct terms. Remove
+$G_S$ and select the required $m_s$ values. Their finite constructor
+derivations establish actual membership. These lists certify capacities
+only; all of (NRF.22) remains the denotation. $\square$
+

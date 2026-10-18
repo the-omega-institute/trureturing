@@ -1,0 +1,36 @@
+**Corollary 7.1 (sharp all-prefix ramp threshold).** Fix $L>0$ and
+$0<d<c-x_2$. For $a(t)=dt/L$, $b(t)=0$, put
+$q_j(u)=(x_j+u)(c-x_j-u)$. Then the greatest feasible programme overlap for
+one causal realization exposing every live cut is
+
+$$
+\mu_{\rm causal}=\min\left\{
+\frac{2\sqrt{x_1x_2}}{x_1+x_2},\
+\frac{2\sqrt{q_1(0)q_2(0)}}{q_1(0)+q_2(0)},\
+\frac{2\sqrt{q_1(d)q_2(d)}}{q_1(d)+q_2(d)}\right\}.
+\tag{CP.24}
+$$
+
+This is an attained threshold for the complete exact-time/five-mode instrument,
+not merely a necessary bound on its survival.
+
+Proof. Since $v=d/L>0$, the middle inequality in (CP.10) is
+$\mu\le2\sqrt{k_1k_2}/(k_1+k_2)$. Its square is
+$1-(x_2-x_1)^2/(k_1+k_2)^2$, increasing with $u=a(t)$, so its minimum is
+at $u=0$. The minus inequality is
+$\mu\le2\sqrt{q_1q_2}/(q_1+q_2)$. Let
+$m=(k_1+k_2)/2$, $h=(x_2-x_1)/2$ and $D=m(c-m)-h^2>0$. Then
+
+$$
+\frac{q_2-q_1}{q_1+q_2}=\frac{h(c-2m)}D,\qquad
+\frac{d}{dm}\frac{h(c-2m)}D
+ =\frac{h[-2D-(c-2m)^2]}{D^2}<0.
+\tag{CP.25}
+$$
+
+Its absolute value has its largest value at an endpoint. The squared minus
+threshold is one minus that squared ratio, so its minimum is at $0$ or $d$.
+The functions are continuous; failure of an endpoint bound gives failure on a
+positive-length adjacent interval, so an almost-everywhere criterion gives
+exactly (CP.24). Theorem 4.1 supplies attainment at equality. $\square$
+

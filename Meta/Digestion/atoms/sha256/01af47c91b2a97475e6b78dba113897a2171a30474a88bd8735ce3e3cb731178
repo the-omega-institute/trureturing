@@ -1,0 +1,26 @@
+**定理 118.2（FIB共同前缀的记录区分不随深度增加）。** 对第116章的两词，
+
+$$
+\langle E(v_n)|E(u_n)\rangle=|\kappa|^2\qquad(n\ge0).
+$$
+
+若两系统过程按第117章的 Pauli 合同已供应相对负号，并使用本定义的记录等距，则任意目标密度输入的约化控制态为
+
+$$
+\varrho_C^{(n)}=\frac12
+\begin{pmatrix}1&-|\kappa|^2\\-|\kappa|^2&1\end{pmatrix}.
+$$
+
+在允许控制相位扫描的读出中，可见度及控制 von Neumann 熵分别为
+
+$$
+\mathcal V_n=|\kappa|^2,\qquad
+S(\varrho_C^{(n)})=h\!\left(\frac{1+|\kappa|^2}{2}\right),
+$$
+
+其中 $h(p)=-p\log p-(1-p)\log(1-p)$，端点以 $0\log0=0$ 延拓。两记录态的迹距离为 $\sqrt{1-|\kappa|^4}$；以上各量均与 $n$ 无关。
+
+证明（118.2）。张量内积是逐位置内积的乘积。共同前缀各位置给单位范数平方一；尾部两位置贡献 $\langle e_\alpha|e_\beta\rangle\langle e_\beta|e_\alpha\rangle=\overline\kappa\kappa$，奇数阶交换次序不改变积。
+
+在前卷定义108.1的同一等距中代入 $U=U_{t_n^+},V=-U$，第108.2条给控制非对角元 $\langle E(v_n)|E(u_n)\rangle\operatorname{tr}(U\varrho(-U)^\dagger)/2=-|\kappa|^2/2$。所列二阶矩阵的本征值为 $(1\pm|\kappa|^2)/2$，故熵为二元熵。控制相位的极值概率为 $(1\pm|\kappa|^2)/2$，得可见度；同一条纯记录迹距离公式以重叠 $|\kappa|^2$ 给最后结论。$\square$
+

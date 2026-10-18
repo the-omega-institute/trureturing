@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-native-product-pressure-completeness"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

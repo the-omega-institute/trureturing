@@ -1,0 +1,31 @@
+**Theorem 5.2 (comparison with both credited envelopes).** For every
+$d\ge1$ and every nonnegative $w$,
+
+$$
+\beta_d(w)\le\Omega_d(w)\le\min\{\mathcal U_d(w),J_d(w)\}.
+\tag{COK.30}
+$$
+
+Proof of the owner comparison. Fix a nonempty local type and define
+$M(a)=\max_{b:(a,b)\in R_\eta}\Phi_\eta(a,b)$, taking zero for
+an empty fiber. Then
+
+$$
+F_\eta(p)\le H_p(O)+\mathbb E_p\log_2M(O)
+             \le\log_2\sum_aM(a).
+\tag{COK.31}
+$$
+
+The first inequality uses conditioning and the pointwise maximum;
+the second is finite Gibbs domination. For each $a$ with $M(a)>0$
+select one maximizing assignment and its actual $x_a$. The owner
+identity makes $a$ a function of $x_a$, so these blocks are distinct.
+Their set has range at most four at every target, by its one-seed
+table. Every actual owned port is in $E(P)$, since its full factor
+is its table of that same own reply. Those replies distinguish all
+the selected $x_a$. Their mass is therefore at most
+$\mathcal U_d(w)$. This works also with no owned seeds: there is at
+most one selected state. Taking maxima proves the owner comparison.
+The comparison with $J$ follows from the exact identity below;
+(COK.16) supplies the first inequality. $\square$
+

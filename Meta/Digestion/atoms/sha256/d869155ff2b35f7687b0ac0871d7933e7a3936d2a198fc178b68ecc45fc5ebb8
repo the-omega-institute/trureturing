@@ -1,0 +1,13 @@
+**定义 6.1（相对于截面的响应分量）。** 在规范截面 $L$ 下，记 $a=v_{13}$，定义
+
+$$
+\begin{aligned}
+r_{K,\mathrm{hor}}&=\langle K,L(DP(v))\rangle,&
+r_{K,\mathrm{hid}}&=a\Delta_{13}K,\\
+r_{\mathsf H,\mathrm{hor}}&=\langle\mathsf H,L(DP(v))\rangle,&
+r_{\mathsf H,\mathrm{hid}}&=a\Delta_{13}\mathsf H.
+\end{aligned}
+$$
+
+对固定读出，总响应为两个分量之和。对移动读出，还须加入定理 5.2 的移动项。改用 $L'=L+d\ell_0$ 后，水平响应增加 $\ell_0(DP(v))\Delta_{13}K$，隐藏响应减少同一量；向量公式相同，总响应不变。
+

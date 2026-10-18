@@ -1,0 +1,30 @@
+**Lemma 20.1 (ordered reconstruction and a particular response tail).** For a specified $z\in L^2$, the actual heat reconstruction satisfies
+
+$$
+\gamma\mathsf R_V(M_Vz)=\gamma(Vz)*\mathcal G,\qquad
+\|\mathbf1_{\mathfrak d>R}\gamma(Vz)*\mathcal G\|_2
+ \le\gamma H_R\|z\|_2.
+\tag{20.1}
+$$
+
+Consequently $\|\mathbf1_{\mathfrak d>R}v\|_2\le T_R^v=O(R^{-1/2})$ and $H_R=O(R^{-3/2})+O(R^{-3})$.
+
+Proof. Put $f=Vz\in L^1\cap L^2$. The metric triangle inequality gives the exact ordered split
+
+$$
+\mathbf1_{\mathfrak d>R}(f*\mathcal G)=\mathbf1_{\mathfrak d>R}
+ \left[f*(\mathcal G\mathbf1_{\mathfrak d>R/2})
+ +(f\mathbf1_{\mathfrak d>R/2})*(\mathcal G\mathbf1_{\mathfrak d\le R/2})\right].
+\tag{20.2}
+$$
+
+A near relative kernel and an output outside $\mathbb B_R$ force the input outside $\mathbb B_{R/2}$. Young's inequality with the factor order shown proves the norm bound. To identify the actual heat integral, split $\mathcal G$ at radius one into an $L^1$ near kernel and an $L^2$ far kernel. Young's inequality gives $(V|z|)*\mathcal G\in L^2$. This positive function dominates the finite heat integrals; Tonelli and $L^2$ dominated convergence identify their limit with the convolution and with the specified $\mathsf R_V(M_Vz)$.
+
+Homogeneity in dimension seven gives $\|\mathcal G\mathbf1_{\mathfrak d>R/2}\|_2=O(R^{-3/2})$ and $\|\mathcal G\mathbf1_{\mathfrak d\le R/2}\|_1=O(R^2)$. The second term in $H_R$ is therefore $O(R^{-3})$. Apply (20.1) to the same equation
+
+$$
+v=(w_{\rm f}-U_h)+\mathsf K\Psi,\qquad \Psi=U_h+v,
+$$
+
+using (17.4). This gives the stated $T_R^v$ bound, without an unknown response norm on its right. Both $w_{\rm f}$ and $U_h$ are $O((1+\mathfrak d)^{-4})$, so their exterior $L^2$ norms are $O(R^{-1/2})$. $\square$
+

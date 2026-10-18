@@ -1,0 +1,109 @@
+**定理 47.2（隐藏增益的全因果精确Read阻塞）。** 对每个
+$0<\eta\le1/25$ 和每个 $\pi\in\mathcal P_\infty^{\rm cmd}$，即使所有Read精确，仍有
+
+$$
+\mathcal E_\pi(0,\eta)\ge25\sqrt{\eta/2}.
+\tag{47.4}
+$$
+
+阻塞适用于完整可数实际记录；有界Read误差合同也包含这些零误差历史。
+
+证明。固定控制器，取共同 $a=0$，在首锚之前每次实际Read报告零。无论合法增益
+怎样选择，（47.2）都使真实可见值保持零，因此这个前缀合法，全部命令、操作种类、
+区间证书、Read选择和停止逐事件共同确定。若没有首锚，或在首锚前已命令 $c=0$，
+取 $b_\pm=20\pm15i$。两点都在半径25的来源帽中，隐藏区别不可见或已被零操作
+消去；选择相同后续增益便使完整记录相同。INITIAL半距15大于
+$25\sqrt{\eta/2}$。无限内部前缀而无锚也在此分支，没有其后的锚事件。
+
+其余情形首次锚发生在有限事件处。把首锚前的非零命令依次记为
+$c_1,\ldots,c_k$，先考虑各增益都为1的合法执行。沿用§40的有序积，写
+
+$$
+p=c_1\cdots c_k=\sigma\lambda q,\quad 0<\lambda\le1,\quad
+\sigma\in\{1,-1\},\quad
+q=\alpha+\nu u,\quad \alpha\ge0,\quad
+\nu=\sqrt{1-\alpha^2},\quad |u|=1,\ u\in E.
+\tag{47.5}
+$$
+
+符号选择使 $q$ 的实部非负，$\nu=0$ 时任取 $u$。空积的方向为 $q=1$。
+仍取 $\tau=4/5$、$\kappa=3/5$。
+
+若 $\alpha\ge\kappa$，引理45.2(ii)及（46.6）给两个合法层来源：
+$\kappa\le\alpha<\tau$ 时投影相同且初态距离至少18；
+$\alpha\ge\tau$ 时可取 $b_R=Rq^{-1}$、$R=7,25$，其投影同为零且距离18。
+所有增益取1，首锚后两状态相同，完整记录相同，半距至少9。
+$\eta\le1/25$ 保证 $9>25\sqrt{\eta/2}$。
+
+若 $0\le\alpha<\kappa$，置
+
+$$
+\rho=\kappa\nu-\tau\alpha>0,\qquad
+K=\kappa\alpha+\tau\nu=\sqrt{1-\rho^2}.
+\tag{47.6}
+$$
+
+$\rho\ge\sqrt{\eta/2}$ 时，引理45.2(i)的半径25同投影对给INITIAL半距
+$25\rho\ge25\sqrt{\eta/2}$。全部增益取1，首锚后同状态即保留完整共同记录。
+
+余下 $0<\rho<\sqrt{\eta/2}<1/5$。由
+$\alpha=\kappa K-\tau\rho$、$K\ge1-\rho^2>24/25$，得到
+
+$$
+\alpha>\frac{52}{125}>\frac25,
+\qquad \nu>\frac45.
+\tag{47.7}
+$$
+
+在运行前固定下面两个半径25来源，二者均配 $a=0$：
+
+$$
+\begin{aligned}
+t&=25\sqrt{2\eta-\eta^2},\\
+b_0&=(25u)q^{-1},\\
+b_1&=(t+25(1-\eta)u)q^{-1}.
+\end{aligned}
+\tag{47.8}
+$$
+
+范数等于25，因为 $t^2+25^2(1-\eta)^2=25^2$。两点的来源合法性为
+
+$$
+\operatorname{Re}b_0=25\nu\ge20,
+\qquad
+\operatorname{Re}b_1=\alpha t+25\nu(1-\eta)\ge25\nu\ge20.
+\tag{47.9}
+$$
+
+这里 $2\eta-\eta^2\ge\eta$、$\sqrt\eta\le1/5$ 给
+$\alpha t\ge10\sqrt\eta\ge25\eta\ge25\nu\eta$。
+因此没有把来源增厚或改变帽边界。
+
+$\alpha<\kappa$ 排除了空内部积，故 $k\ge1$。对 $b_0$ 的运行只把首个内部
+增益选为 $1-\eta$，其余首锚前增益为1；对 $b_1$ 的运行全部增益为1。
+这些数值都在相同证书 $I_\eta$ 中。实标量与四元数乘法交换，因此两条潜在
+内部积分别为 $(1-\eta)p$ 和 $p$。首锚前仍是共同零读前缀，命令没有因这次
+隐藏衰减而改变；首锚后两真实当前状态恰为
+
+$$
+\bigl(\sigma\lambda25(1-\eta)u,0\bigr).
+\tag{47.10}
+$$
+
+$t$ 是实部，被同一个精确锚消去。此后选择相同增益、零Read误差；共同可访问
+前缀强制同一下一事件，同状态给同一真实Read。有限停止、重复Read及每个可数
+有限前缀都保持相同；Stop信息也相同。因此整个可访问记录相同，尽管两条潜在
+执行迹在首个非零内部调用的数值参数上不同。两点的INITIAL距离为
+
+$$
+|b_1-b_0|^2=t^2+(25\eta)^2=1250\eta.
+\tag{47.11}
+$$
+
+对这个共同完整记录，直接复用
+[Recovery Geometry §3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)
+的两候选半距原则，共同 $W$ 值输出至少对其中一个INITIAL有
+$25\sqrt{\eta/2}$ 误差。其余分支已有不小的半距，证明全控制器结论。
+所有两点都是事先固定的合法来源；没有根据后续Read替换来源、执行未调用操作或
+在无限前缀后补事件。证毕。
+

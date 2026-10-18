@@ -1,0 +1,28 @@
+**Lemma 2.4 (actual incidence and fixed successors).** For every $p=(h,z)\in V$,
+$F_p$ and $\mathcal S_p$ are nonempty; their supports have size $h+z$
+and their histories have exactly $h+z$ queries. At fixed $(p,q)$ there is
+at most one support, so $b_p\ge a_p\ge1$. If $(p,S,q)\in\mathcal R$,
+then $i(q)\notin S$, and whenever
+$p_\varepsilon=(h+\varepsilon,z+1-\varepsilon)\in V$,
+
+$$
+(p_\varepsilon,S\cup\{i(q)\},\delta(q,\varepsilon))\in\mathcal R.
+\tag{2.7}
+$$
+
+Every positive-depth live occurrence has an actual live predecessor.
+Axis cells have one support and host: $a_{0,z}=b_{0,z}=a_{h,0}=b_{h,0}=1$.
+
+Proof. Give $h$ successive fresh ones and $z$ fresh zeros. All prefixes
+stay live, cannot halt and query fresh coordinates by Lemma 2.2, so they
+are realized by consistent completions. Freshness gives sizes and exact
+charges. Two different supports at fixed $p,q$ have equal hits, excluded
+by the different-support/equal-hit part of Lemma 2.3. Each host therefore
+determines one support at that cell, and every support has a host, giving
+the surjection and $b_p\ge a_p$. Either reply at an unread coordinate
+has completions following the old history; when its child counts are live,
+its fixed successor must be running and witnesses (2.7). Earlier prefixes
+are live, giving predecessors. The all-zero and all-one deterministic
+reply spines give the axis claim. This is [SI, Theorem 2.2][SI], without
+a unique-host premise. $\square$
+

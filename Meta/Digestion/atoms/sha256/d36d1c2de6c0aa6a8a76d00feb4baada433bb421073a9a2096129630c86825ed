@@ -1,0 +1,16 @@
+### 104.5. Original-coordinate normalization and a two-sided ratio window
+
+The following operations act on all eight coordinates. Changing the sign of the second record-space basis vector and reciprocally rephasing coordinate 2 sends \((u,m)\) to \((-u,-m)\). Swapping the two coordinates of the whole fibre, swapping the record basis and reciprocally rephasing the singleton records by \(\overline u,u\), followed by rescaling the kernel by \(1/m\), sends
+\[
+(A,u,m,z,\alpha)\longmapsto
+(B,\overline u,1/m,\overline uz/m,\alpha m^2).
+\tag{104.34}
+\]
+The reciprocal phases preserve product coefficients, and the whole-fibre swap simultaneously reindexes the product and target matrices. Thus the full norm, ranks, fibre identities and full-domain local-minimum property are preserved. These operations normalize
+\[
+\tfrac12<A<\tfrac34,\quad B=1-A,\quad0<d<\tfrac12,
+\quad0<p<1,\quad q\ne0.
+\tag{104.35}
+\]
+Both signs of \(q\) are retained.
+

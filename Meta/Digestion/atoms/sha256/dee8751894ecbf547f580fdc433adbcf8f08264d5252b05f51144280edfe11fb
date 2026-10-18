@@ -1,0 +1,28 @@
+**Theorem 8.1 ($J=1$ and all grid boundaries).** Theorem 4.1 includes
+$J=1$, $L=2$, $\delta=2^{-r}$ and exact count $M_1=4H+1$. Its
+sufficient precisions are (5.1) with these values, in particular
+
+$$
+B_0(s,1)=\max\left\{1,
+ \left\lceil\log_2\frac{8\mathrm e}{D_0s^{2r}2^r}\right\rceil\right\}.
+\tag{8.1}
+$$
+
+This cap has no growing logarithmic gain. Grid equalities,
+$\widehat p_z=0$, changed integer floors, the dead phase and merged
+successors require no exclusion from the theorem.
+
+Proof. Substitute $J=1$ in (2.2), (3.5) and (5.1). The paid upper
+is $C_{\rm fp}s^{-(2r+1)}$, without a growing $J$ denominator.
+At an exact grid point the ideal adjacent-grid law puts probability
+zero on its upper endpoint. Formula (5.2) keeps this zero; the more
+general perturbation theorem permits any admissible error there.
+The interpolants (4.5) agree at each grid point and their global
+Lipschitz bounds cross any number of changed floors. They include
+$v_\dagger=0$. Merging two successors only adds their probabilities
+and does not change the law of the emitted label or retained successor.
+The potential unabsorbed increments remain valid proof variables even
+when their exits merge at the same label. All zero and one rows are
+specified, including unreachable input edges; none is deleted from the
+count. These observations verify every listed boundary case. $\square$
+

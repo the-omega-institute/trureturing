@@ -1,0 +1,14 @@
+## 463. 超丰数整除条件对变化秩 FIB 候选的必要过滤
+
+§462 只使用 $F_r$ 的缺失 Euler 因子。这里接入一个不同的、只针对最小
+反例的外部结构输入：[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)
+Lemma 8 声称：对每个固定 $0<c<1$，存在 $N_0(c)$，使得每个大于该阈值的
+超丰数 $N$ 都被
+
+$$
+L_c(N):=\operatorname{lcm}\bigl(1,\ldots,\lfloor c\log N\rfloor\bigr)
+$$
+
+整除。这里使用的是该来源的陈述；本项目没有独立审计其完整证明，也没有把
+它当作无条件的 Robin 定理。
+

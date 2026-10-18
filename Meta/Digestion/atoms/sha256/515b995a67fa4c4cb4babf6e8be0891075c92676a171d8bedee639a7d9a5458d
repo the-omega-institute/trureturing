@@ -1,0 +1,13 @@
+**Corollary 5.4 (no capacity-only or completed-order repair).** For the
+task of Definition 2.6 there is no sufficient supplement with an alphabet
+bounded only by $H$, even when the entire current labelled source, acquired
+seed, actual clock, completed command word and its rank, and $P$ are given
+as side data.
+
+Proof. Keep $H=2$ and AIF.7 fixed. Choose any $r$ and $d\ge\max(2,r)$.
+Those side data are constant on its $2^r$ fiber, while Theorem 5.2 requires
+$2^r$ supplement values. Letting $r$ grow contradicts every fixed bound.
+In this witness there is one unfinished command and zero newly completed
+source events. Its ambiguity is input *value* information before
+commitment, not a permutation of a completed multiset. ∎
+

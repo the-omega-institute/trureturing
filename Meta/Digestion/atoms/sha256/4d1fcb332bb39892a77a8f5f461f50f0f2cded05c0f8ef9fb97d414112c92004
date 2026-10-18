@@ -1,0 +1,46 @@
+**定义 1.3（JMJ 的整个承诺类与响应映射）。** 固定
+
+$$
+\begin{gathered}
+H_2=(0,J,24,M,48),\\
+H_3(c)=(H_2,J,c),\qquad \mathcal F_3(c)=\mathcal F(H_3(c)),\quad c\in\mathbb R,\\
+\mathcal C_2=\mathcal F(H_2)\cap\{\delta=0,g(7)=0\},\qquad
+\mathcal C_3(c)=\mathcal F_3(c)\cap\{\delta=0,g(7)=0\},\\
+\mathcal E(K)=K\setminus\mathcal C_3(c)\quad(K\subseteq\mathcal F_3(c)).
+\end{gathered}
+\tag{1.4}
+$$
+
+$\mathcal C_3(c)$ 是整个可变增益射线的承诺类。令 $\Psi_c(W)=(x,y,z)$ 为同一个不变目标在 $H_3(c)$ 后实际执行第四 $M$、第五 $J$、第六 $J$ 的三个响应。其源、整个增益和漂移在三个响应之间不变。
+
+直接矩阵乘法给出
+
+$$
+\begin{aligned}
+L=MJ&=\begin{pmatrix}1&0\\1&1\end{pmatrix},&
+N=JL&=\begin{pmatrix}1&1\\1&0\end{pmatrix},\\
+U=MN&=\begin{pmatrix}1&0\\2&1\end{pmatrix}=2L-I,&
+V=JU&=\begin{pmatrix}2&1\\1&0\end{pmatrix},\qquad JV=U.
+\end{aligned}
+\tag{1.5}
+$$
+
+因此原时钟 $0,\ldots,6$ 的累积矩阵是 $I,J,L,N,U,V,U$。第四 $J$ 的矩阵为 $JN=L$。重复 $U$ 不合并原时钟四与六。若
+
+$$
+R=\begin{pmatrix}A&B\\C&F\end{pmatrix},\quad
+s=A+F,\quad j=B+C,\quad\ell=s+B,
+$$
+
+则
+
+$$
+\begin{array}{c|ccccc}
+Q&J&L&N&U&V\\\hline
+\operatorname{tr}(QR)&j&\ell&A+j&2\ell-s&2A+j.
+\end{array}
+\tag{1.6}
+$$
+
+对 $P=\left(\begin{smallmatrix}a&b\\e&1-a\end{smallmatrix}\right)$，相应 $J,L,N$ 迹为 $b+e,1+b,a+b+e$，三者连同迹一条件确定整个源。比较未选择动作的预测只用于定义策略或证明；它不是协议取得的额外读数。
+

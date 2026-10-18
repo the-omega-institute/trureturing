@@ -1,0 +1,37 @@
+**Definition 301.4 (The second finite comparison basis).**
+Use the same twelve hull inequalities, $R\ge0$, all ten ratio
+generators and all 31 weighted subset inequalities. For every nonempty
+$I\subset J$ of size $k$, include the embedded 113 inequality
+
+$$
+b_1+\sum_Ib_j\le1+(k+3)e,
+$$
+
+and for every $2\le k\le5$ include the embedded 117 inequality
+
+$$
+(k-1)b_2+k\sum_Ib_j\le k-1+k(k+3)e.
+$$
+
+Include also the old one-pivot and protected-stock consequences
+
+$$
+\sum_Ib_j\le c_ke,\qquad
+(k,c_k)=(1,4),(3,7),(4,8),(5,28/3),
+\tag{301.3}
+$$
+
+for every subset of the indicated size. Their suppliers are
+[198.7](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VI.md)
+and [207.12–207.13](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+For the latter, $k=h+1$ protected labels use stock
+$4-2/\lceil(h+1)/2\rceil$, terminal weight one and correct total $k$,
+giving $c_k=k+5-2/\lceil k/2\rceil$ at $k=3,4,5$.
+
+Finally take the four comparison inequalities $F_1\le0,F_2\le0,
+F_C\le0,D\le72R$, and omit one of them. The resulting system has
+$12+1+10+31+31+26+21+3=135$ inequalities. It expressly omits the
+consumed prior consequence $v_5\le33R$. Its inclusion of $D\le72R$
+serves only to specify this bounded comparison, not to retain a separate
+necessary theorem.
+

@@ -1,0 +1,15 @@
+**Definition 72.1 (Two address charges).** Let $c:\mathbb N_0\to[0,\infty)$
+have finite values, be nondecreasing and unbounded, and satisfy $c(0)=0$.
+Write $\Delta c(i)=c(i)-c(i-1)$ and $c(\infty)=\infty$. On finite handoff
+define the maximum charge and cumulative charge respectively by
+
+$$
+Z_{c,A,x}=c(M_{A,x}),\qquad
+S_{c,A,x}=\sum_{j=1}^{K_{A,x}}c(I_{A,x,j}).
+\tag{72.1}
+$$
+
+Set both charges to $\infty$ on every nonhandoff branch. Repetitions each
+contribute a term to $S_c$. The function $c$ is a prescribed numerical charge
+on prime indices; it is not a duration assigned to execution transitions.
+

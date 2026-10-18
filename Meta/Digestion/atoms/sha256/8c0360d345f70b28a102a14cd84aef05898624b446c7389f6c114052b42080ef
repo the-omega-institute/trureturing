@@ -1,0 +1,27 @@
+**Proposition 13.3 (functional correspondence, without a free route).**
+The phase response (RA.16) is the restriction of the original constant-height
+phase-leg unitary to $\operatorname{span}\{e_2,U_-\}$. Specifically, an
+original phase increment $a$ at fixed height $k$ has $k'=0$, so its
+canonical survival charge and all failure densities vanish. Its live map is
+
+$$
+U_k(a)=\operatorname{diag}_{(U_+,U_-,e_2)}
+ \bigl(e^{-ia/2+ika/r},e^{ika/r},1\bigr).
+\tag{RA.17}
+$$
+
+For the fixed isometry $J|0\rangle=e_2$, $J|1\rangle=U_-$ one has
+$U_k(a)J=JR_k(a)$.
+
+Proof. Insert the signed weights (1.2) into the actual negative state-phase
+convention. At fixed height their integrals are $a w_i(k)$; the canonical
+no-failure attenuation is one. Equal paired weights preserve $U_+,U_-$,
+giving (RA.17) and the isometry identity. $\square$
+
+This identity verifies the response function only. Executing the original
+phase leg on the specimen would change its phase. Definition 13.2 instead
+asks for a separate blank-probe route while the native phase is held fixed.
+That route, its actual source binding and its identity action on the old
+joint state are extra premises. Probe action $a$ is not an unrecorded
+increment of the original relation phase $\chi$.
+

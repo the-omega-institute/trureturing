@@ -1,0 +1,35 @@
+**Theorem 7.2 (all-literal certification lower bound).** Any deterministic
+source-blind program correct for acquiring $m(u)$ on all finite
+quiescent sources must, on $B_d^\beta$, query every one of its
+$2^d$ exact leaf literals. The same conclusion holds if its output
+is a certified minimizing anchor. Thus, already on a legal
+zero-update subcase of the concurrent task,
+
+$$
+T\ge2^d,\qquad A\ge d2^d,\qquad Q\ge d.
+\tag{AAR.25}
+$$
+
+No restriction to level scans, ray-only queries or short operands
+is imposed on competitors.
+
+Proof. If exact leaf $q$ is unqueried, flip it to obtain $V_{d,q}$.
+The supplied off-flipped-leaf identity says every submitted native
+reply is unchanged. Proper ancestors are branch in both trees;
+strict descendants of the flipped leaf are absent in both; every
+other address is unchanged. By induction the entire deterministic
+execution, including query selection, control, allocation and
+Return, is identical, whereas (AAR.24) changes the required scalar.
+A correct anchor determines that scalar by $2|a|+e$, so it cannot
+evade the contradiction. Each exact leaf is mandatory, proving
+all three bounds. $\square$
+
+The $2^d$ beta leaf replies also form a sufficient stationary
+information certificate: they force the literal tree to equal
+$B_d^\beta$ by [READ]'s leaf-determination conjunct. Its certificate
+coordinates are exactly $(2^d,d2^d,d)$. This does not give an unknown
+observer the depth or certificate for free. Construction 4.1 is
+uniform and on this source uses $T=2^{d+1}$ and
+$A=(d-1)2^{d+1}+2+d$, with $Q=d$. It pays for discovering and
+certifying the level; the extra last Read is its beta validation.
+

@@ -1,0 +1,175 @@
+**Theorem 8.1 (strict separation from the zero positive residual).**
+Retain the same root, all its source-enclosure and supplier premises in
+Assumption 1.1, and the finite globally entire-cylinder feasible dual
+and the same finite jointly attaining law in Assumption 1.4. If
+
+$$
+t\ge\max\{t_0,10000\},\qquad 0<\lambda<\infty,
+$$
+
+then, in exactly the normalization (IC.8),
+
+$$
+\|R_+\|_{\rm op}>\frac{t}{500}.
+\tag{IC.34}
+$$
+
+This is the real Euclidean operator norm of the symmetric dual
+coefficient matrix $Q-t\mathsf F$. It is neither a quantum trace or
+diamond distance nor a physical resource or actual-label count. No
+inertia premise on $R_-$ is needed. The domain here is FC Assumption
+17.1 with its own additional cutoff $10000$; it does not extend the
+$30000$ premise of
+[RB Assumption 1.3](https://github.com/the-omega-institute/trureturing/blob/36adbdd8df3bc6615cae0f0f5fd1207239025477/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_RANK_ONE_BUDGET_EXCLUSION.md).
+Here and below RB denotes that fixed source.
+
+Proof. Use the static source expressions of (IC.1)–(IC.4), with
+$A_\ell=E_{\ell,11}$, $B_\ell=E_{\ell,22}$ and
+$a_\ell=-E_{\ell,12}$. FC Propositions 18.1 and 24.1 and the
+positive-denominator estimates in FC Proposition 34.2 give
+
+$$
+\begin{gathered}
+\alpha>0.876,\quad\beta>0.121,\quad\mu<12,\quad
+\mathfrak c(x)>1/25,\\
+0<A_\ell<B_\ell<0.02,\quad 0<a_\ell<0.00032,\quad
+0<l_u<0.0052,\quad0<l_v<0.013,\\
+0.0075<e<0.008,\qquad 0<d_*<0.022.
+\end{gathered}
+\tag{IC.35}
+$$
+
+Every decimal in this argument is an exact terminating rational.
+These are static enclosures, with no small-saturated-mass or
+large-budget inertia premise. In particular the coarse rectangle of
+FC18, and also its FC24 widening to $m_1<0.51$, suffice for these
+short bounds. Source membership in the nine GC6.1 dyadic rows supplies
+the same root throughout. Evaluating source expressions on a rectangle
+does not assume TP at any of its off-root points.
+
+The circle identity and $2|uv|\le1$ give
+
+$$
+\begin{aligned}
+|\ell|&\le B_\ell+a_\ell+l_u+l_v
+ <0.03852<1/20,\\
+|f|&\le e+d_*<3/100.
+\end{aligned}
+\tag{IC.36}
+$$
+
+These are the same uniform-height mechanisms used in RB.22–RB.23;
+only static inputs are being reused, not RB's rank-one hypotheses.
+Put $a_*=\sqrt\alpha$, $b_*=\sqrt\beta$ and
+$x_*=(a_*,-b_*)$. This notation is local to this proof. It does not
+refer to a negative-pure kernel contact. The point is unit and
+
+$$
+\begin{gathered}
+\alpha\beta-(8/25)^2>
+0.876\cdot0.121-(8/25)^2=899/250000>0,\\
+f(x_*)=-2ea_*b_*-d_*\beta<-3/625.
+\end{gathered}
+\tag{IC.37}
+$$
+
+For this same law, the last three moments give
+
+$$
+\Lambda:=\int b_xxx^T\,d\pi
+=\begin{pmatrix}U&0\\0&V_2\end{pmatrix}\succ0,
+\qquad\operatorname{tr}\Lambda=\mu.
+\tag{IC.38}
+$$
+
+This is FC Proposition 17.3, including its zero mixed entry, not a new
+choice of failure marginal. Cauchy–Schwarz for coefficient mass one
+gives $K\le\sqrt{\int u^2\,d\pi}=a_*$. Also
+
+$$
+J_t\le\int|\ell|\,d\pi+\int b_x|f|\,d\pi
+<\frac1{20}+\frac3{100}\mu<\frac{41}{100}.
+\tag{IC.39}
+$$
+
+Let $S_+=R_+$ and suppose, for contradiction,
+$\|S_+\|_{\rm op}\le t/500$. Then $Q=t\mathsf F+S_+$.
+Write $\mathcal L_\alpha(P_y)=y_0+\alpha y_3$. The target pairing
+already underlying (IC.15) and RB.31 is now
+
+$$
+\begin{aligned}
+y\cdot B
+&=\mathcal L_\alpha(P_y)+\frac1t\operatorname{tr}(Q\Lambda)\\
+&=\mathcal L_\alpha(P_y)-d_*V_2
+                         +\frac1t\operatorname{tr}(S_+\Lambda),\\
+\mathcal L_\alpha(P_y)-\lambda a_*
+&=J_t+\lambda(K-a_*)+d_*V_2
+                         -\frac1t\operatorname{tr}(S_+\Lambda).
+\end{aligned}
+\tag{IC.40}
+$$
+
+The sign is fixed by $\operatorname{tr}(\mathsf F\Lambda)=-d_*V_2$;
+RB's substitution $Q=-t\mathsf F-\rho ww^T$ has a different sign.
+The standard PSD trace inequality gives
+$|\operatorname{tr}(S_+\Lambda)|\le\mu\|S_+\|_{\rm op}$.
+For example it follows by summing the Rayleigh bounds against the
+nonnegative eigenvalues of $\Lambda$. Since $\lambda(K-a_*)\le0$
+and $V_2\le\mu<12$, (IC.40) implies
+
+$$
+\mathcal L_\alpha(P_y)-\lambda a_*
+<\frac{41}{100}+\frac{11}{500}\,12+\frac{12}{500}
+=\frac{349}{500}.
+\tag{IC.41}
+$$
+
+Evaluate $P_y$ at the four points $(\epsilon a_*,\tau b_*)$,
+$\epsilon,\tau\in\{\pm1\}$. Their equal average is
+$\mathcal L_\alpha(P_y)$: the $u,v,uv$ terms cancel and
+$u^2=\alpha$. At each point pure feasibility gives
+$P_y-\lambda a_*\ge|\ell|\ge0$. Consequently at the particular
+point $x_*$,
+
+$$
+B_*:=P_y(x_*)-\lambda a_*<\frac{349}{125},\qquad
+B_*+\ell(x_*)<\frac{1421}{500}.
+\tag{IC.42}
+$$
+
+This is sign averaging of polynomial evaluations. The pure four-corner
+law has zero failure moments, whereas $B_5(t)=\mu/t>0$, so it is
+not being substituted for the original feasible law.
+
+Use global saturated feasibility at $x_*$ with report sign $+$ and
+height sign $-$, whether or not this point is occupied or this sign
+maximizes its saturated height. By (IC.8), after division by $D_c$,
+
+$$
+\begin{aligned}
+0&\le B_*+\ell(x_*)+
+\mathfrak c(x_*)x_*^T(2t\mathsf F+S_+)x_*,\\
+B_*+\ell(x_*)&\ge\mathfrak c(x_*)
+               [2t|f(x_*)|-x_*^TS_+x_*]\\
+&>\mathfrak c(x_*)\left(\frac6{625}-\frac1{500}\right)t
+>\frac{19}{62500}t\ge\frac{76}{25}.
+\end{aligned}
+\tag{IC.43}
+$$
+
+Here $x_*^TS_+x_*\le\|S_+\|_{\rm op}\le t/500$.
+The bracket is strictly greater than $(19/2500)t>0$ before
+multiplication by the lower capacity bound. The lower bound at
+$10000$ exceeds the upper bound (IC.42) by
+
+$$
+\frac{76}{25}-\frac{1421}{500}=\frac{99}{500}>0.
+\tag{IC.44}
+$$
+
+This contradiction proves the strict inequality, including at the
+endpoint $t=10000$ whenever the supplied premises hold. The equality
+threshold of these particular coarse upper and lower expressions is
+$177625/19<10000$; no sharp cutoff is asserted. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "fib-native-exact-critical-energy-response-and-scale-alternatives"
+path = "docs/develop/theory/FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

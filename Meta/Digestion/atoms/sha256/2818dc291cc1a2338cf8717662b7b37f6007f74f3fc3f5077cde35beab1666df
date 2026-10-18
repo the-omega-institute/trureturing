@@ -1,0 +1,28 @@
+## 151. Excluding special return axes: assumptions
+
+This exclusion uses Sections 137--145 and the response convexity already
+proved in Section 95. It does not require the single-block refinement.
+
+Retain the actual finite ideal face pairing, complete circular edge links,
+minimum degree six, fixed paired frames, and common positive generalized
+length field with every original edge-angle sum 2*pi from the source.
+There are exactly four reservoir labels H={M,C,D,Z}. A nonempty flat set
+has produced the source's genuine escape and unique short return. Write
+m,c,d,z for their cosh lengths. In particular:
+
+    m>1+c+d>3,       z>1+m+c>5.
+
+All occurrences of Z are genuine. M has exactly one flat occurrence and
+its total genuine angle is pi. Every H value is at most z. The return rho
+has one of the frames
+
+    (C,Z,M,Q,Z,M),       (M,Z,C,Q,Z,C).
+
+Its two transverse Z angles exceed pi/2. If a is its companion reservoir
+value and b its shared axis value, genuineness yields
+
+    q=x_Q > (z-a)^2/(b+1)-1 > b.
+
+We prove Q cannot belong to S. No claim excluding the remaining H-axis
+returns is made.
+

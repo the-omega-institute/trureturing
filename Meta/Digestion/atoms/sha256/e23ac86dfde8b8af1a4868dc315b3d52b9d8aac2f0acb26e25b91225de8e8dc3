@@ -1,0 +1,14 @@
+**引理 2.2（最大剥离排除闭面上的等价对）。** 选取实现 $c(r,v)$ 的对 $u,z$，置 $R=r-u$、$S'=v-z$。则 $c(R,S')=0$。若 $|R|,|S'|>0$，则 $(\operatorname{supp}R,\operatorname{supp}S')$ 不相容，包括闭面的所有边界概率行。
+
+证明。若剩余行中还有正质量等价对，便可把它加到 $u,z$，与最大性矛盾。若上述闭面相容，取其中等价概率行 $\alpha,\beta$。每个 $\alpha_j>0$ 的坐标都满足 $R_j>0$，每个 $\beta_j>0$ 的坐标都满足 $S'_j>0$。因此可取
+
+$$
+0<\eta\leq
+\min\left(
+\min_{\alpha_j>0}\frac{R_j}{\alpha_j},
+\min_{\beta_j>0}\frac{S'_j}{\beta_j}
+\right).
+$$
+
+此时 $\eta\alpha\leq R$、$\eta\beta\leq S'$，且二者等价、质量均为 $\eta$，再次矛盾。边界概率行的零坐标不需除法；这正是闭面而非仅相对内部也被排除的原因。
+

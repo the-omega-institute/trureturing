@@ -1,0 +1,13 @@
+**Proposition 302.2 (A scalar-and-ratio comparison point).**
+At $b=(13,13,13,10,9,8,6)/23$, $e=5/23$, one has $E=6/23$,
+$b_1+E=19/23$, $R=0$ and $b_J=r^\star e$. Thus the old scalar and
+ten ratio relations, and their stated nonuniform-cone consequences,
+hold, whereas $F_2=1/23$ and $F_C=4/23$. This is only a comparison
+with those relations.
+
+**Proof.** Substitute $\tau=1/23$ into the displayed expressions.
+The profile is in $H_7$, but Theorem 299.1 excludes any full feasible
+$N$ allocation. Hence it is neither an attainer nor an $N/O$ separator.
+The additional ceiling is already part of Theorem 300.1 and is not a
+second scale result. $\square$
+

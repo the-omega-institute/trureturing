@@ -1,0 +1,27 @@
+**Proposition 9.2 (local finite boundary checks for this specification).**
+The following exact calculations check the named finite interfaces; they
+do not execute the entire expanded program.
+
+| Finite family | Calculation and limit |
+| --- | --- |
+| Call $p=0$ and Convert $r=0$ | Old payload is 0; new payloads are 010000, 010001, 010010, 010011, 011000, 011001, 011010, 011011, all length 6; none equals a unary payload |
+| One pending variable bit | Before IN the optional bit is empty; after IN and after its intervening EX it is the one bit; at and after matching WR it is empty and that bit is in the retained written prefix |
+| One optional control socket | Absence has support $\{\epsilon\}$; zero has $\{\epsilon,0,1,00,01\}$ and boundary $\{00,01,1\}$; one has $\{\epsilon,0,1,10,11\}$ and boundary $\{0,10,11\}$ |
+| Two manifest entrance moves | Home ends at L; first MR reaches the initial F; second MR reaches field zero or its delimiter. Empty subsequent fields emit one empty item each |
+| Zero-length channel body | Each tested copy contributes 3 rows and print 1, giving 7; allocation/descriptors/seals/return outside those bodies remain charged |
+| Sender descriptor after ACK | Sender/mailbox/receiver remain the latest three stages; third-last is sender, since completion records extend 39, not stage stream 37 |
+| Post-ACK registry cut | Before its completed bank descriptor/parity change the previous registry remains active; afterwards the new record is active, but the service token is still unavailable until common return |
+
+Proof. Read the fixed words in PVC.7 at $r=0$ to obtain its eight
+source/destination alternatives. The pending-bit calculation is precisely
+the IN-only latch effect and matching-WR retention effect with distinct
+test latch. The three socket sets follow directly from PVC.3. The two
+manifest moves traverse its two existing edges and perform no test or
+assignment; an F delimiter is emitted by FinishField, not skipped.
+The channel calculation substitutes $L=0$ into its tested loops. The
+staging and registry statements follow the explicit absence of staging
+inside the channel and RCA's sealed-bank parity rule. They check the
+specified local cases, including empty fields and no premature availability;
+they give no finite-enumeration proof of whole-run progress, authority or
+all capacities. Those depend on the preceding induction and hypotheses. ∎
+

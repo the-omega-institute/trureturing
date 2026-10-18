@@ -1,0 +1,5 @@
+**Openproblem 10.1 (Complementary guarded attainment).** Decide whether
+every $0<\tau<1-\varepsilon_0$ has at least one good global minimizer. A
+nonattainment proof must exclude every good global minimizer, not merely
+exhibit a bad one.
+

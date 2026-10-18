@@ -1,0 +1,65 @@
+### 52.2 Propagation and the field use the same seams
+
+For the common graph define
+
+$$
+(L_\infty f)(x)=\sum_{y\sim x}(f(x)-f(y)),\qquad
+Q_\infty(f)=\sum_{\{x,y\}\in E_\infty}|f(x)-f(y)|^2
+=\langle f,L_\infty f\rangle.
+\tag{52.3}
+$$
+
+The sum is over each unoriented seam once, equivalently one half of the ordered sum. The degree bound gives $0\le L_\infty\le6I$ on $\ell^2(V_\infty)$. Thus it is a bounded self-adjoint nonnegative operator on that entire Hilbert space. The same formula defines a bounded operator on $\ell^\infty$ and $\ell^1$.
+
+Classical bounded-rate diffusion is directly instantiated here by $P=I-L_\infty/3$. Its entries are nonnegative and its row sums are one. Consequently the declared heat law is
+
+$$
+K_s=e^{-sL_\infty}
+=e^{-3s}\sum_{m\ge0}\frac{(3s)^m}{m!}P^m,
+\qquad s\ge0.
+\tag{52.4}
+$$
+
+If $x,y$ are connected by an actual seam path of length $r$, its contribution to $P^r$ is at least $3^{-r}$. For every $s>0$,
+
+$$
+K_s(x,y)\ge e^{-3s}\frac{s^r}{r!}>0.
+\tag{52.5}
+$$
+
+The series and positivity allow summation by Tonelli. Every row of every $P^m$ sums to one, and symmetry gives the column statement, so $K_s$ preserves the total mass of any nonnegative $\ell^1$ field. This is outward propagation through any finite number of actual seams with no explosion in the supplied bounded-rate law. It supplies neither finite signal velocity nor physical time or an original numerical sensor.
+
+To specify one fixed attractive field on the *same* graph, supply the homogeneous source density $b(x)=1$ and the screened field law
+
+$$
+(I+L_\infty)\phi=b\quad\text{in }\ell^\infty(V_\infty),
+\qquad V(x)=\phi(x).
+\tag{52.6}
+$$
+
+There is exactly one bounded solution, $\phi=1$. In fact
+
+$$
+(I+L_\infty)^{-1}
+=\frac14\sum_{m\ge0}(3P/4)^m
+=\int_0^\infty e^{-s}K_s\,ds
+\tag{52.7}
+$$
+
+converges in operator norm on $\ell^\infty$, and sends $1$ to $1$. It also gives a positive screened response to each single-occurrence source. The uniform density, screening coefficient, conductances and attraction coupling are supplied together; none is provided by the bare Fibonacci substitution. This is a distributed screened field, not the unscreened Euclidean point-source potential $r^{2-d}$. Its gradient energy is zero while its density has infinite total mass; no isolated-source self-energy statement is being made.
+
+For $V_j$ there are two distinct wavefunction boundary conventions:
+
+$$
+\begin{aligned}
+Q_j^{\mathrm N}(f)&=\sum_{\{x,y\}\subset V_j}|f(x)-f(y)|^2,\\
+Q_j^{\mathrm D}(f)&=Q_j^{\mathrm N}(f)+|f(r_j)|^2,\\
+L_j^{\mathrm D}&=L_j^{\mathrm N}+|r_j\rangle\langle r_j|.
+\end{aligned}
+\tag{52.8}
+$$
+
+The closed convention N deletes the unique outgoing seam. Convention D is the compression of $L_\infty$ to amplitudes extended by zero outside $V_j$, so its outgoing killing is counted once. Both conventions use the restriction of the same potential $V=1$. They do not recompute a different potential at each layer.
+
+Field and wavefunction boundary data must not be conflated. Restricting the field $\phi=1$ keeps its exterior value one. In D notation it satisfies $(I+L_j^{\mathrm D})\phi=1+\mathbf1_{r_j}$, the extra term being the exterior field input through the outgoing seam. In N notation it satisfies $(I+L_j^{\mathrm N})\phi=1$. Solving a zero-exterior *field* equation with right side $1$ instead would give another finite potential. That alternative is not (52.6) and cannot be silently used in its energy comparison. Heat mass is conserved for N; it can be killed at $r_j$ for D.
+

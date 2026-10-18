@@ -1,0 +1,5 @@
+source_id = "fib-jmj-three-world-bound-and-drift-localization"
+path = "docs/develop/theory/FIB_JMJ_THREE_WORLD_BOUND_AND_DRIFT_LOCALIZATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

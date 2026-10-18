@@ -1,0 +1,24 @@
+**定义 137.1（原树、组成与另声明的交换）。** 原生来源是以 $\alpha,\beta$ 为叶的自由有序二叉树，节点 $\langle s,t\rangle$ 保留左右次序和括号。替换 $\rho$ 满足
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+组成读出另定义为 $c(\alpha)=e_1,c(\beta)=e_2$ 及 $c(\langle s,t\rangle)=c(s)+c(t)$。由结构归纳，$c(\rho t)=Mc(t)$，其中
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+归纳的叶步分别为 $e_1\mapsto e_2$ 和 $e_2\mapsto e_1+e_2$；节点步使用 $M$ 的线性性。这只证明所定义的组成读出相容，不证明组成能恢复原树。
+
+标签交换或线性坐标交换 $J$ 是另声明的动作，其局部矩阵为
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+原树标签交换若实际取得，可定义为同时交换所有叶标签而保留括号；局部组成上对应 $J$。仅由 $\beta=\rho\alpha$ 不能取得这个逆向交换，更不能取得交换门的物理执行权。
+

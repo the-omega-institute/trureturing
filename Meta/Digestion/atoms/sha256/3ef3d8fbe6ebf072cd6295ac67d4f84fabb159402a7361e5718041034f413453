@@ -1,0 +1,29 @@
+**Lemma 2.3 (what feasibility does and does not say).** The branch list
+is effective and finite. Its feasibility is decidable by NSF Theorem 4.3.
+Every original solution chooses at least one feasible branch, factors
+through its shape unifier, and satisfies its scalar equations at all
+explicit leaves. Conversely NSF's marker construction for any feasible
+branch gives an original solution, including values of every input
+variable and the named outputs.
+
+These conclusions do not say that every original solution is a marker
+solution or that the branch has finitely many original solutions.
+
+Proof. Adding a subexpression name with its defining equality is an
+existential definitional extension: evaluation extends every original
+assignment, and the definitions uniquely recover that evaluation.
+NSF Lemma 2.3 proves the native-to-normal branch correspondence;
+NSF Definition 3.1 supplies factorization of every actual shape assignment.
+NSF Lemma 3.2 retains exactly the positive equations after decoration.
+Every identical-shape code disequality has a scalar or block mismatch
+in an actual solution, so a negative disjunct can be chosen. A
+syntactically different-shape disequality stays satisfied by that actual
+solution whether or not its ground shapes coincide.
+
+NSF Theorem 4.3 decides the resulting arithmetic witness conditions.
+Its completeness keeps the actual explicit scalar ranks while replacing
+residual blocks; its soundness checks all normality boundaries and
+reassembles every defining equation and disequality. These are the
+stated directions. The replacement step is existential, which is why
+neither of the stronger assertions follows. $\square$
+

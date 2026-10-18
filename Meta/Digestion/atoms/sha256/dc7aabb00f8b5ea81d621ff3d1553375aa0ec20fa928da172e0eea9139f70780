@@ -1,0 +1,41 @@
+**Definition 60.7 (finite descriptions, exact logical prices and simultaneous storage).** The following prices belong to this ideal apparatus. They do not replace the original charges or claim physical optimality. All added classical routines use PR57's opcodes, complete tape encodings, actual allocator recipes, one-cell receipt rule and fee two per core occurrence, routed to the actuator's own chain. Source cursors borrowed under the producer lock are restored by paid Home/Seek routines. Original service retains its original meter and charges; no source-service event is omitted or assigned to both chains. Add `QNew`, one enabled/disabled elementary catalog rotation and a fixed terminal measurement as finite-local quantum core occurrences, each with one new meter receipt and fee two. An elementary rotation changes only its named one or two qubits; its enable is a finite private latch, and its public catalog index is already installed finite control. Digit/enable loading and all catalog/description work are separate classical occurrences. `QNew` creates one qubit in the stated state; it never resets an already constructed qubit. An ideal hold has identity action; retention costs one quantum-mode unit per bank mode per logical tick, including compilation and original service. One quantum mode and eight classical bits are separate storage coordinates.
+
+A public bank description lists every address, wire and three-colour edge, plus the reference, and is installed bit by bit. The address of each qubit is its bank-list ordinal in unary, with its actual connection specified by the public list. No private integer chooses a qubit. Each angle block has a literal record consisting of its opcode, unary endpoint ordinal(s), unary enable-workspace offset, sign, unary scale $U(b)$ and length-framed fixed-width angle magnitude; a terminal marker ends the list. A fixed interpreter scans/copies these fields using PR57's complete routines, then loops over the stored finite magnitude length. Each iteration reads the next digit, reads the fixed enable, computes their AND with `BF`, executes the installed catalog rotation for that public digit position/sign, advances the digit cursor and paid unary position counter, and tests its stored bound. Its only new quantum transition is the declared fixed-angle local rotation; no primitive reads an unbounded angle word. Catalog selection depends on public position, never the private enable. All these finite control, scan and counter occurrences are counted. In particular fixed wiring is supplied material, not a qRAM lookup. Parameter length, synthesis and routing costs are retained, even for disabled gates.
+
+For positive intervals put
+
+$$
+G_{\rm block}=F\sum_{\ell=1}^L m_\ell,\qquad
+G_Q=F\sum_{\ell=1}^L m_\ell J_\ell,
+\quad J_\ell=b_\ell+k_\ell,
+\quad k_\ell=\left\lceil\log_2(2+(3\bar a+\bar g)\theta_\ell+\bar a\theta_\ell)\right\rceil+2.
+\tag{60.14}
+$$
+
+These are respectively the exact interaction angle-block count and elementary quantum rotation count when all magnitudes use that declared fixed width. The integer margin covers sign/magnitude rounding. Zero enable/digit slots are included. Preparation and terminal measurement add their own actual elementary gate counts. Write every repeated slot in full, or retain a finite literal body with a paid unary loop counter; either representation is charged by its actual routine. One elementary finite description bound is obtained by writing the complete list. If $R_c$ is the largest allocated enable-workspace offset and $B_\ell$ bounds a signed fixed-point angle string, the length of its interaction part is at most
+
+$$
+1+\sum_{\ell=1}^L Fm_\ell(40+4K+R_c+2B_\ell),
+\quad
+B_\ell=4(b_\ell+k_\ell)+20.
+\tag{60.15}
+$$
+
+The $2B_\ell$ allowance covers sign, unary scale, unary length framing and all $J_\ell$ magnitude digits; the constant covers opcodes, separators and field terminators. The enable offset is stored in unary, and the two endpoint ordinals are at most $K$. A publicly supplied rational upper bound can replace the expression inside the logarithm; its width is found by the paid integer-doubling routine. This is a finite encoding bound, not an automatically installed program.
+
+For a finite joint run let $E_C$ be its actual classical core count, obtained by expanding all PR57 service and generator recipes, including source supply, compilation, parameter arithmetic, instruction construction/fetch, original policy, all original rows/copies and any record-only verification/output actually commissioned. Let $Q_N=K+1$ count qubit construction, and let $G_P,G_R$ count actual preparation and readout quantum slots. Then the declared exact price coordinates include
+
+$$
+\begin{aligned}
+E&=E_C+Q_N+G_Q+G_P+G_R,\qquad \mathrm{Fee}=2E,\\
+\mathrm{Storage}(c)&=
+\bigl(S_0+b_{\rm ctl}(c)+8A(c)+8E(c),\ Q(c)\bigr),\\
+\mathrm{Retention}(r)&=\sum_{c\text{ a logical tick of }r}Q(c).
+\end{aligned}
+\tag{60.16}
+$$
+
+$A(c)$ counts all constructed ordinary cells, including erased compiler versions, the authentic current packet, complete refused-candidate scratch, all instructions/angles, private flags, original archives, mailboxes and verifier/consumer copies simultaneously. Here $Q(c)$ is the number of qubits already constructed at that same cut, at most $K+1$; after bank construction it is $K+1$, and this is its peak. The second storage coordinate is qubits. Classical peak is the maximum of the displayed first coordinate over the same cuts, not a sum of separate phase maxima. Retained but erased cells are still counted. Every original or added core event constructs one receipt in its own chain, so their total cumulative meter term is $8E(c)$, including quantum events; the two chains' boundary/control foundations are counted in $S_0$. Original fee $2E_{\rm original}$ and added fee $2E_{\rm actuator}$ are separate coordinates whose sum is $2E$. Any separately supplied hardware/control/reference description outside the fixed primitive basis is installed and counted in $b_{\rm ctl}$ or $A$.
+
+These expressions are effective finite evaluations of displayed recipes. For each compiler Boolean gate, its literal code length and interpreter cost are PR57.05–PR57.06 with the actual constructed operand addresses; thus (60.6) does not silently price one Boolean operation as one tape tick. Initial supply has exactly the original $2N$ private ingress bits and their paid writes. Each subsequent compilation reads the very same committed source block, generates all flags and retains their version binding. Finite $H$, finite effective public parameter supply, finite original local computations and a finite commissioned checkpoint list give finite description, $E$, simultaneous storage and retention. There is no uniform bound over arbitrary finite histories, an optimality claim, a physical energy price or a source-copy credit.
+

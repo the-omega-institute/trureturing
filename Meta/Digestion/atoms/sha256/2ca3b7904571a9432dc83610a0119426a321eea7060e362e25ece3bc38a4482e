@@ -1,0 +1,17 @@
+**Definition 5.1 (the priced coordinate problem).** A coordinate
+classification tree receives an unknown $b\in\{0,1\}^m$ and may
+ask for a coordinate $b_i$, adaptively, until it outputs $f(b)$.
+Charge one invocation and $d_i$ letters for that query, with run cost
+
+$$
+c_T(b)=\left(C_T(b),\ \sum_{\text{queries }i}d_i,
+\ \max(\{0\}\cup\{d_i:i\text{ queried}\})\right).
+\tag{NTL.17}
+$$
+
+Repeated queries, if present, are counted. Correctness and finite
+termination are required on all $2^m$ inputs. A native comparator
+for $E_*$ satisfies the same conditions on precisely (NTL.11).
+Neither model restricts local computation or counts installed states
+in this query-cost contract.
+

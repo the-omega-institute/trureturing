@@ -1,0 +1,84 @@
+**Theorem 103.1 (bounded $r_s$ excludes the unit critical orbit).**
+Fix $K$ as in Definition 102.1 and set
+
+$$
+\gamma_K=C_0\phi(k_0)^2J_K^2>0.
+\tag{103.1}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ on the exact path
+$g_n=\chi_cs_n^3$, every $B\in(0,\infty)$ for which $r_{s_n}\le B$
+eventually, and every choice of actual normalized complex ground
+states, every weak global $L^2(d\xi)$ limit of $F_{s_n}$ is
+$c\Phi_c$ and satisfies
+
+$$
+|c|^2\le\frac{1}{1+\gamma_K/\sqrt B}<1,\qquad
+1-|c|^2\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.2}
+$$
+
+Every subsequence has a weakly convergent further subsequence.
+Writing $\mathcal O_c=\{e^{i\theta}\Phi_c:\theta\in\mathbb R\}$,
+the whole sequence consequently obeys
+
+$$
+\liminf_n\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)
+\ge\left(2-2(1+\gamma_K/\sqrt B)^{-1/2}\right)^{1/2}>0.
+\tag{103.3}
+$$
+
+Proof. Actual ground states have zero excess in (85.5), so Theorem
+90.1 supplies weak subsequential compactness, the limit $c\Phi_c$,
+and strong local $L^2$ convergence along every weakly convergent
+subsequence. On such a subsequence Theorem 82.3, the continuity of
+$\phi$ at $k_0$ and compactness of $K$ give
+
+$$
+\mathfrak A_{s_n}(K)\longrightarrow\phi(k_0)cJ_K.
+\tag{103.4}
+$$
+
+For detail, the multipliers
+$\phi(k_0+\varepsilon s_nr)U_{s_n}$ converge uniformly on $K$ to
+$\phi(k_0)V$, and are uniformly bounded. Their product with the
+local $L^2$ difference has integral tending to zero by
+Cauchy--Schwarz and $|K|<\infty$. Their difference paired with
+$c\Phi_c$ is controlled in the same way. No boundary regularity of
+$K$ or global $L^1$ bound on $VF_{s_n}$ is required.
+
+Here $m_{s_n}=r_{s_n}s_n^6/a\le Bs_n^6/a\to0$, so Theorem 102.2
+applies eventually. Since
+$s_n^4/\sqrt{-\epsilon_c(s_n)}=r_{s_n}^{-1/2}\ge B^{-1/2}$,
+it gives
+
+$$
+\liminf_n\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.5}
+$$
+
+These shell masses are disjoint from every fixed microscopic
+compact set for all large $n$. Indeed for a fixed compact
+$D\subset\mathbb R^4$, (78.1) gives
+$\sup_{\xi\in D}d(q'_{s_n}(\xi))=O_D(s_n)$, whereas on the
+shell $d(q)\ge m_{s_n}^{-1/2}\to\infty$. Unitarity therefore yields
+
+$$
+1\ge\int_D|F_{s_n}|^2d\xi
+       +\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\tag{103.6}
+$$
+
+for each fixed compact $D$ and all sufficiently large $n$.
+Pass to the limit using local strong convergence and (103.5),
+then exhaust $\mathbb R^4$ by compact boxes. Since $\|\Phi_c\|_2=1$,
+this gives $1\ge |c|^2+\gamma_KB^{-1/2}|c|^2$, proving (103.2).
+
+Finally, for unit vectors $F$,
+$\operatorname{dist}(F,\mathcal O_c)^2=2-2|\langle F,\Phi_c\rangle|$.
+If the limsup of the absolute overlap exceeded
+$(1+\gamma_K/\sqrt B)^{-1/2}$, weak subsequential compactness would
+give a further subsequence with limit $c\Phi_c$ violating (103.2).
+This proves (103.3) for the full sequence. $\square$
+

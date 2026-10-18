@@ -1,0 +1,24 @@
+**Proposition 6.2 (symbolic binary-width bounds).** For every $D\ge1$,
+
+$$
+3^{\,2^{D-1}}\le C_D,\qquad
+C_D+1\le4^{\,2^{D-1}},
+\tag{FM.25}
+$$
+
+and hence
+
+$$
+\left\lceil2^{D-1}\log_2 3\right\rceil
+\le\left\lceil\log_2 C_D\right\rceil\le2^D.
+\tag{FM.26}
+$$
+
+Proof, as in [PRIOR, Proposition 8.2]. The lower inequality follows
+by induction from $C_1=3$ and $C_d\ge C_{d-1}^2$. For $x\ge1$,
+$x^2+3\le(x+1)^2$, so (FM.24) implies
+$C_d+1\le(C_{d-1}+1)^2$. Induction from $C_1+1=4$ gives the upper
+inequality. Taking logarithms gives the lower width bound. The upper
+inequality gives $\log_2 C_D<2^D$, whose ceiling is at most the integer
+$2^D$. $\square$
+

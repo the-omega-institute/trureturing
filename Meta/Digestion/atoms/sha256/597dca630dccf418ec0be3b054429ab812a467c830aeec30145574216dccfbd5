@@ -1,0 +1,19 @@
+**Verification scope 10.4 (bounded checks).** The following in-memory checks
+passed with exit code zero. Public fixed-token parsing and locating were compared
+to a separate recursively generated tree domain and recursive readout; the
+gate check executed each emitted Boolean gate, rather than replacing the
+conjunction/OR construction by a direct lookup.
+
+| Check | Exact finite domain and result |
+| --- | --- |
+| Public parser and locator | $H=4,N=7$: all 16,384 token packets, exactly 102 valid trees, and all 63 addresses of lengths zero through five; all 6,426 literal comparisons agreed. PAD-before-closure cases were included. |
+| Whole-candidate boundaries | The same 102 sources, rho and both graft directions with every context of at most three leaves: 219 accepted and 4,371 rejected candidates; accepted codes decoded to the actual whole candidate. |
+| Full Boolean tape evaluation | $H=3,N=5$: all 1,024 enumerated rows, 22 valid installed sources and 15 addresses of lengths zero through three, giving 330 complete circuit evaluations. Every tag agreed and every tape had exactly 13,315 gate records. |
+| Journal phase model and source replay | All 7,546 length-three command words on 22 sources, over root/L/R TagRead, rho, left-alpha graft, right-beta graft and local marker: 249,018 phase cuts satisfied the pending/seal/copy-prefix equations; the actual initial source survived each complete recorded-response replay. This checks the declared phase equations, not literal tape code. |
+| Complete producer fibers | All 102 trees at $H=4$: truthful root-relative preorder responses had singleton source fibers and exactly $2m-1$ calls. The $H=1$ accept/reject and 23-gate boundaries were also checked. |
+
+These checks cover precisely those finite cases. The universal claims are the
+ordinary proofs above; enumeration does not prove unbounded actual-source
+realization, exercise the paid tape interpreter, or establish Lean certification.
+No experimental program or data is retained in this theory source.
+

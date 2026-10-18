@@ -1,0 +1,24 @@
+**Lemma 20.2 (forest information inequality, including support zeros).**
+For any finite joint law on tuples $(Y_U)_{U\in\mathscr U}$ and
+any undirected forest $F$ on these units,
+
+$$
+\sum_{\{U,V\}\in F}I(Y_U;Y_V)
+ \le\sum_UH(Y_U)-H((Y_U)_U).
+\tag{COK.98}
+$$
+
+Proof. Root each forest component and order units with parents
+before children. The chain rule, followed by discarding all
+conditioning except the parent, gives
+
+$$
+H((Y_U)_U)
+ \le\sum_{U\text{ root}}H(Y_U)
+       +\sum_{U\text{ nonroot}}H(Y_U\mid Y_{\operatorname{parent}(U)}).
+$$
+
+Subtract from $\sum_UH(Y_U)$. Every nonroot term contributes
+one edge mutual information, proving (COK.98). There is no
+Markov factorization or positivity premise. $\square$
+

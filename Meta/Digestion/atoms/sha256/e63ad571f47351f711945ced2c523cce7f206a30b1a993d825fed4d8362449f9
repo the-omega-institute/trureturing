@@ -1,0 +1,63 @@
+**Open problem 14.4 (unchanged effective all-size bridge).** For
+fixed $d$, let $S_d$, complete native donor templates $\Theta$,
+their solution sets $C_\Theta\subseteq S_d^N$, joint cover counts
+$K_d(N)$ and pressure rate $\sigma_d$ be exactly those of
+[NPC, §§1–8][CombNPC] and FMR. Construct a total computable
+verifier $V(d,\mu,C,\pi)$ on rational probability laws $\mu$ on
+the full $S_d$, rational $C>0$ and finite certificates $\pi$,
+whose acceptance implies
+
+$$
+\forall N\ge1\ \forall\Theta,\qquad
+\sum_{x\in C_\Theta}\prod_{i=1}^N\mu(x_i)\le C^N,
+\tag{LTR.42}
+$$
+
+and prove optimizer-cofinality: for every $d$ and rational
+$\epsilon>0$, some accepted rational label has
+$-\log_2C>\sigma_d-\epsilon$. Equivalently useful here would
+be a proved uniform effective length error
+$\eta_d(N)\to0$, with computable evaluation and a computable
+convergence modulus in $d$ and the requested accuracy, satisfying
+
+$$
+\sigma_d\ge\frac{\log_2K_d(N)}N-\eta_d(N).
+\tag{LTR.43}
+$$
+
+Together with the credited depth-tail bound either route would give
+the required terminating two-sided approximation of the same original
+$\lambda$. Neither route is established here. In particular the
+general equality between the optimized conditional-owner envelope
+$a_d$ and $b_d=\min_\mu\beta_d(\mu)=2^{-\sigma_d}$, or a different
+sound cofinal mechanism, remains unproved; rationalization alone
+is already supplied by [NWO][CombNWO]. Shared-realization completion
+and positive global-defect control near arbitrary correlated native
+extremizers remain obligations. The exact obstruction above changes
+one operational prerequisite for a controller/extension transfer:
+it must preserve a common all-count witness, not only its separate
+count-specific answers. It excludes neither lawful global recoloring
+nor a different all-size certificate method. General exact $M_1(D)$,
+sharp $\lambda$, effective all-size certification and the full
+minimal-relations/internal-observer/mutual-recovery programme remain
+unresolved.
+
+[CombAAR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
+[CombFMR]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[CombRRN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[CombCOK]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[CombRCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[CombFT]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Observer/Separation/FixedTreeCommonExtension.lean
+[CombFTB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Observer/Separation/FixedTreeCommonExtension.scribe.cs
+[CombMoore]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[CombMooreB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.scribe.cs
+[CombKK]: https://arxiv.org/html/1105.0240v2
+[CombQWS]: https://arxiv.org/html/2609.18024v1
+[CombNCE]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[CombD3]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[CombOCC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_COMPONENT_COMPLETION.md
+[CombGDB]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[CombNPC]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CombCBN]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[CombNWO]: https://github.com/the-omega-institute/trureturing/blob/17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+

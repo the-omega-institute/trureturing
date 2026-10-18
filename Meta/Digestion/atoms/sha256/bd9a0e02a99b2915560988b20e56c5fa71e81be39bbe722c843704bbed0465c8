@@ -1,0 +1,11 @@
+## 十、Robin 比较的有限合同：嵌套对数与向外有理夹逼
+
+经典 Robin 判据是
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+Z(n)<e^\gamma\log\log n\quad\text{对所有整数 }n>5040.
+$$
+
+此处 $\gamma$ 是 Euler–Mascheroni 常数。判据作为已知前置消费，出处及严格阈值见 [Choie 等人的文献注](../../../Library/ArithSums/choie2006robincriterion.md)，其 [arXiv v2](https://arxiv.org/abs/math/0604314v2) 引言把该等价归于 Robin；本卷不证明这个判据本身。
+

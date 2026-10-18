@@ -1,0 +1,26 @@
+**定义 1.1（完整采集域）。** 令
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+完整目标为 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+源逐项正、秩一、迹一，不要求对称，非对角元不设上界。每个世界只有一个整个增益多项式。带符号增益、降低次数、采样零、重根及所有合法退化均保留。按时间执行动作 $E_1,\ldots,E_i$，
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1},\qquad
+z_i(W)=d+g(i)\operatorname{tr}(A_iP).
+\tag{1.2}
+$$
+
+初读计数，每个单独动作后立即读取，八次总读使用原时钟 $0,\ldots,7$。只有一条不可重置、不可复制的轨迹；不跳读、不加空动作、不重编号、不增加端口。未选动作的响应函数只比较已经固定的世界，不是额外观察。确定性策略可依赖整个实际历史选择动作、停止并返回完整 $(P,g,d)$，不另加连续、可测或可计算性条件。
+

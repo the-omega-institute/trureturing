@@ -1,0 +1,2 @@
+**数学引文 1.1（来源与证明范围）。** 本卷以共同科学快照 [`f833660337ac6264fc6f742d4b2114f25b4df6c8`](https://github.com/the-omega-institute/trureturing/tree/f833660337ac6264fc6f742d4b2114f25b4df6c8) 中的 [Correlated Word Recovery][Recovery] 定义 1.2–1.4 和 [Legal Edge Minimax][Minimax] 定义 1.2–1.6 为固定合同。前者供应均匀 Bayes 最优错误首项、平方根测量构造及完整服务对应；后者供应 minimax 首项及其与 Bayes 首项的目标不相容性。本卷在同一完整来源上给出全准备类的 Bayes 四阶优化、乘积准备类在任意联合解码之后的四阶损失及相应整数调用展开。以下是普通数学定理与证明，作为理论参考输入，未经 Lean kernel 验证；理想源、公开校准、准备和任意末端测量均是明确假设。
+

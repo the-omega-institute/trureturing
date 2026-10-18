@@ -1,0 +1,36 @@
+**Lemma 2.4 (Density from one coherent law).** Define the local function
+
+$$
+\ell_P(x)=(x_0-p_P(x))^2,\qquad
+D_P=\mathbb E_P\ell_P=\mathbb E_P[p_P(1-p_P)].
+\tag{2.6}
+$$
+
+For $n\ge2k+1$,
+
+$$
+\Phi_n(P_n)=(n-2k)D_P+E_n,\qquad 0\le E_n\le k/2,
+\tag{2.7}
+$$
+
+where $E_n$ is exactly the sum of the original coordinate contributions at $1,\ldots,k,n-k+1,\ldots,n$. For every $n\ge1$,
+
+$$
+\left|\Phi_n(P_n)-nD_P\right|\le k/2.
+\tag{2.8}
+$$
+
+Thus $d(P)=D_P$ exists, $0\le d(P)\le1/4$, and $d(P)\le c_\star$.
+
+**Proof.** Conditional expectation using Proposition 2.2 gives (2.6). At an interior coordinate, the actual finite-word posterior is $p_P$ on its local exterior. Lemma 2.1 and stationarity therefore give $\Phi_{n,i}(P_n)=D_P$. In terms of paired outside completions, their masses $(s_\omega,t_\omega)$ obey $t_\omega=R s_\omega$ with the same positive $R$ for each fixed interior context. Hence the grouping used here is the exact joint identity
+
+$$
+\sum_\omega h(s_\omega,t_\omega)
+=h\left(\sum_\omega s_\omega,\sum_\omega t_\omega\right).
+\tag{2.9}
+$$
+
+Both sums are cylinders of that same law. This is the extension of the full-word grouping in [TwoStep], Proposition 2.4 and Theorem 3.1, to an arbitrary finite visible order.
+
+Lemma 2.1 bounds each of the retained $2k$ boundary contributions by $1/4$, proving (2.7). Taking an interior coordinate at length $2k+1$ also bounds $D_P$ by $1/4$. For $n\ge2k+1$, both $E_n$ and $2kD_P$ lie in $[0,k/2]$, giving (2.8). For $n\le2k$, both $\Phi_n(P_n)$ and $nD_P$ lie in $[0,n/4]$, giving the same bound. Divide by $n$ and use (1.2) with $\Phi_n(P_n)\le\kappa_n$. $\square$
+

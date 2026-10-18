@@ -1,0 +1,41 @@
+**Definition 6.1 (distinct resource questions).** The resource minimized in
+Theorem 4.2 is $\max_\alpha d_\alpha$ for one exact live coding cut. Its
+finite four-state certificate establishes the minimum for the entire
+continuous family (QC.19). It is different from all of the following:
+
+* The Hilbert dimension of a single register embedding live and stopped
+  sectors, which is four in (QC.5).
+* The total retained classical–quantum state, including archive, references,
+  controller, clock, source identity, permissions and all event payloads.
+* The number of bits in a finite-precision archive, or the cardinality of an
+  exact time or waveform register. An exact real failure time is not a finite
+  classical alphabet.
+* Acquisition cost, preparation and calibration cost, coherent gate accuracy,
+  waveform description, physical hardware or elapsed laboratory time.
+* Coding through an arbitrary infinite classical algebra, a nonnormal
+  classical interface, pre-supplied correlated assistance, or an uncounted
+  entangled receiver resource. The finite-$n$ lower bound makes no claim
+  that any of these alternatives succeeds or fails.
+* An ensemble's asymptotic iid compression rate with an allowed vanishing
+  error, or an approximate finite-horizon implementation. KI §VIII.E
+  (PDF p. 22) concerns independent ensemble signals and asymptotically
+  negligible error; it is not the exact one-specimen task (QC.21).
+
+The integer $n$ in (QC.20) can be as large as desired while finite. It is
+not assumed independent of an encoder outcome: the label may acquire
+input-dependent information. The no-imprinting argument constrains what it
+can acquire while permitting the exact common recovery, and the rank
+argument still counts its quantum block correctly. A correct parity bit
+supplied before encoding is a different input: conditional on parity, the
+fixed-height family lies in the two-dimensional span of $e_2$ and $v_+$ or
+$v_-$. The supplier's fixed-parity operations already exploit such a promise.
+Thus the unassisted hypothesis cannot be silently dropped.
+
+The upper correspondence in Theorem 3.1 allows an actual correlated archive
+and keeps it unchanged; the lower bound in Theorem 4.2 denies the code
+access to such assistance. These are explicitly different contracts. Three
+live quantum dimensions do not imply that the entire actual observer is
+three-dimensional, nor that its classical archive is bounded. A finite
+quantum dimension supports a continuum of exact states without identifying
+those states from one specimen.
+

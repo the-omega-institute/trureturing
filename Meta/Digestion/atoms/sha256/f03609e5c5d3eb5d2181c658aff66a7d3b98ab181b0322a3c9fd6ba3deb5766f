@@ -1,0 +1,44 @@
+### Lemma 3.3 (the interval $(2,7)$ has deficit at most two)
+
+For a consecutive gap $B=(2,7)$,
+
+$$
+D_B-E_B\le2. 
+$$
+
+**Proof.** The internal depths are $3,4,5,6$, so $E_B\ge4$. The only axis cells in this pool are $(0,3),(0,4),(3,0)$, each with one host. Hence at most three shared states have an axis endpoint.
+
+For a shared pair with neither endpoint on an axis, (5) forces hit counts $1$ and $3$. The possible lower cells are $(1,2),(1,3),(1,4)$ and the possible higher cells are $(3,1),(3,2),(3,3)$. Requiring a zero decrease at least two leaves, among pairs with neither endpoint on an axis,
+
+$$
+((1,3),(3,1)),\quad ((1,4),(3,1)),\quad ((1,4),(3,2)). \tag{9}
+$$
+
+Let
+
+$$
+\ell=e_{(1,3)}+e_{(1,4)},\qquad
+r=e_{(3,1)}+e_{(3,2)}.
+$$
+
+A shared state without an axis endpoint is counted at a lower endpoint in (9), so the number of such states is at most
+$ b_{(1,3)}+b_{(1,4)}=2+\ell$ and at most $b_{(3,1)}+b_{(3,2)}=2+r$. Therefore
+
+$$
+D_B\le3+\min(2+\ell,2+r)=5+\min(\ell,r). \tag{10}
+$$
+
+The depths $3$ and $6$ are internal noncommon depths, while all other excesses are nonnegative. Hence
+
+$$
+E_B\ge \ell+r+e_3+e_6\ge \ell+r+2. \tag{11}
+$$
+
+If $\ell+r>0$, then $\max(\ell,r)\ge1$, and (10)–(11) give
+
+$$
+D_B-E_B\le3-\max(\ell,r)\le2.
+$$
+
+If $\ell=r=0$, then $D_B\le5$ and $E_B\ge4$, giving $D_B-E_B\le1$. \(\square\)
+

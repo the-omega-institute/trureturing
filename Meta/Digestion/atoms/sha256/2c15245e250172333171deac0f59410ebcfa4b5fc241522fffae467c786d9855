@@ -1,0 +1,22 @@
+**Theorem 63.1 (repo-derived local noncanonical graph).**
+There are six disjoint ray neighborhoods \(\mathcal U_0,\ldots,
+\mathcal U_5\) and \(\varepsilon>0\) such that for each
+\(|b|<\varepsilon\) the common-flat ray locus in their union consists
+of exactly six rays \(v_j(b)\), depending analytically on \(b\), with
+\(v_j(0)=[(V_{\rm nc})_{:j}/\sqrt6]\).
+At \(b=0\) their orthogonality graph is \(K_6\). For every
+\(0<|b|<\varepsilon\), it is exactly
+
+\[
+ K_2\text{ on }\{0,3\}\quad\sqcup\quad
+ K_{2,2}\text{ between }\{1,2\}\text{ and }\{4,5\}.
+\tag{63.1}
+\]
+
+In particular no common-flat orthogonal triple at such a nonzero
+parameter has all three rays in this union. Every three-column subset
+of the displayed central basis is locally isolated in joint
+parameter-and-triple space, modulo its column phases and ordering.
+Nearby candidates are arbitrary; no cyclic or reflection covariance
+is assumed.
+

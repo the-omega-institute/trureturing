@@ -1,0 +1,39 @@
+## 467. A source-specific maximum bound with repeated axes
+
+Use a finite actual ideal face-pairing quotient. Every original tetrahedron
+has one fixed vertex-induced frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), with distinct actual transverse labels A,B. Axes
+may repeat each other or transverse labels. The original face pairing
+is a fixed-point-free involution on original face occurrences. Retain
+its vertex maps and every original normal interval.
+A common positive generalized length field supplies the usual paired
+responses. Let M,Z,C,D be four distinct actual labels with
+
+    c,d>1, m>=1+c+d, z>=1+m+c,
+    tau=(Z,M,C,D,M,C) genuine.
+
+Every owner containing Z is genuine. Its complete original Z-angle sum
+is 2*pi and its normal link is one connected circle of original degree
+at least six. The total genuine M-angle expense is at most pi. Thus
+actual genuine M/Z expense is at most 3*pi. Define
+
+    w=max{x_e : e is an actual label different from Z}.
+
+This maximum exists because the actual edge set is finite and contains
+M,C,D. In particular w>=m>3. No label-count, unique-flat, special-edge
+barrier, four-distinct-frame or degree condition for M is imposed.
+
+**Theorem 467.1.** Under these hypotheses,
+
+    z<1+2*w.                                           (467.1)
+
+This is a source-specific bound. It is not the four-distinct gap
+z<u+m+1, and does not identify w with a prescribed label U.
+It does not resolve the source-axis C/D cases or exclude a second flat.
+
+The proof uses the paired cosine and genuine-factor formulas of
+Sections 95 and 130 of the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md),
+and the source charge from Section 461. All interval counts below
+are original multiplicities, even when two slots have the same label.
+

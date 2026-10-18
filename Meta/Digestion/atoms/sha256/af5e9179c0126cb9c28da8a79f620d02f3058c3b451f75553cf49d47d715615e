@@ -1,0 +1,29 @@
+**Definition 15.1 (a compatible uniformly described code family).**
+Use exactly the full repeated-partner fiber $\mathcal U_*$ of Definition
+4.1 and the same fixed eight-state reader, two recoverable complete
+entries $e_0,e_1$, and whole-row outputs of Supplier application 4.3.
+A finite deterministic machine description $e$ has a prescribed initial
+configuration; let $\tau_e\ge1$ be its first halting stage if it halts.
+Stage one includes the check for an already halting initial configuration.
+Let $h(B)$ be the maximum leaf depth of an acquired finite tree $B$.
+For an acquired branch image define the total finite computation
+
+$$
+f_e(B)=
+\begin{cases}
+\mathbf1_{\{r_B(L^{\tau+1})=\mathsf{branch}\}},
+ &\text{if the description halts first at stage }\tau\le h(B),\\
+0,&\text{if it has not halted by stage }h(B).
+\end{cases}
+\qquad \sigma_e=\sigma_{f_e}\text{ of (PCA.12).}
+\tag{PCA.37}
+$$
+
+The bounded simulation in this definition is a computation on the
+already acquired finite term. It always ends; it requires no decision
+of eventual halting. Heights, simulations and variable-length traversal
+of an acquired term belong only to this code-specification computation,
+with its supplied acquisition and separate costs. They are not operations
+or uncounted workspace supplied to the paid stationary preparer or reader.
+The complete paid-reader entry is always exactly $e_{\sigma_e(u)}$.
+

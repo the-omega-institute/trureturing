@@ -1,0 +1,4 @@
+## §1. 三角保持映射与拉回
+
+称单射 \(f:F\to V(N,K)\) 为**三角保持映射**，若每个 \(A\cap B\cap C=\varnothing\) 的源三角都满足 \(f(A)\cap f(B)\cap f(C)=\varnothing\)。
+

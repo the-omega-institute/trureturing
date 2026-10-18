@@ -1,0 +1,41 @@
+**Theorem 9.2 (continuous strict transition and attained chord).**
+On $[C_{\rm end},C_{\rm sat}]$ the function $\Phi$ is continuous,
+concave and strictly increasing, with endpoint values $0,\gamma_f$.
+For every $\lambda$ in this interval,
+
+$$
+\Phi(\lambda)\ge
+\gamma_f\frac{\lambda-C_{\rm end}}{C_{\rm sat}-C_{\rm end}}.
+\tag{JS.45}
+$$
+
+Thus for $C_{\rm end}<\lambda<C_{\rm sat}$ the original joint limit
+is strictly between $B_0$ and $T_0$. Its interior scalar value is not
+evaluated by (JS.20) or (JS.45).
+
+Proof. Budget inclusion makes $\Phi$ nondecreasing. Mixing two
+covariance-admissible failure measures preserves covariance and mixes
+both cost and objective, proving concavity. The mixture of $\nu_0$
+and the spectral measure, with spectral weight
+$(\lambda-C_{\rm end})/(C_{\rm sat}-C_{\rm end})$, proves (JS.45).
+For every interior product this mixture has a common original recovery
+by Theorem 7.1, including strict-cost perturbations when necessary.
+It is an attainable limiting lower bound, not a combination of
+incompatible records.
+
+Compactness proves right continuity at $C_{\rm end}$: any optimizing
+sequence with costs decreasing to it has subsequential limits on
+$z^2=r$, where $k_+=0$. Concavity of the finite function gives
+continuity at every larger interior budget. At $C_{\rm sat}$ the
+chord tends to $\gamma_f$ and (JS.40) bounds it above, also proving
+continuity there. The chord is positive above $C_{\rm end}$ and
+Theorem 8.2 gives a strict gap below $\gamma_f$ until $C_{\rm sat}$.
+If two distinct budgets below $C_{\rm sat}$ had equal values,
+concavity would force all later secant slopes to be nonpositive;
+monotonicity would force them to be zero. This contradicts the larger
+value at $C_{\rm sat}$. The same endpoint inequalities handle a pair
+containing either endpoint. Therefore increase is strict throughout
+the stated interval, and $\Phi=\gamma_f$ thereafter. No chord
+equality, strict concavity, differentiability, interior contact pattern
+or optimizer count follows. $\square$
+

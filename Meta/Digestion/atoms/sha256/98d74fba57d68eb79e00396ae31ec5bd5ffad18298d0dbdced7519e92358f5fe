@@ -1,0 +1,34 @@
+**Boundary 7.3 (exact versus approximate and finite versus unbounded).**
+The obstruction and endpoint optima are exact. They do not establish an
+approximate reanchoring lower bound. In fact, if $l=a$, the identity
+channel on the specimen has the explicitly source-dependent trace-distance
+error
+
+$$
+\frac12\left\|
+|\psi(x,z,m)\rangle\langle\psi(x,z,m)|-
+|\psi(a,z,m)\rangle\langle\psi(a,z,m)|\right\|_1
+=\sqrt{1-(Z+r g(x,a))^2},
+\quad
+g(x,a)=\frac{\sqrt{xa}+\sqrt{(c-x)(c-a)}}c.
+\tag{RB.28}
+$$
+
+The equality is the pure-state trace-distance formula and the direct inner
+product from (RB.3). The error tends to zero as $x\to a$, uniformly in
+$z,m$. The nine-history construction can use any sufficiently small
+positive $\varepsilon$ in place of $1/64$, still with three distinct
+heights and zero exact reanchoring probability. Thus zero exact success
+does not imply a nonzero uniform approximate error floor. Identity's small
+endpoint error neither returns the actual height exactly nor reproduces
+the canonical tail's complete time/mode instrument.
+
+No error in (RB.28) is substituted for Instrument Stability's complete
+operational metric or Sampled Instrument Certificates' acquired strong
+derivative and terminal-character data. No approximate full instrument,
+finite-noise certificate, summable accumulation guarantee or unbounded
+execution is constructed here. Countability in Corollary 5.3 is an exact
+support argument, not a forever finite-state predictor theorem. The original
+arbitrary finite-duration class and every signed winding remain intact;
+the finite witness and conditional endpoint service are restricted consumers.
+

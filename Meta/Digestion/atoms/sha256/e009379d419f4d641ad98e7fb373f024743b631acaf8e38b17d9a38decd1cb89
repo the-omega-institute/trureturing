@@ -1,0 +1,36 @@
+**Definition 1.1 (positions, costs and Boolean tables).** Fix integers
+$n\ge6$ and $3\le k\le n-2$, and positive integer positions
+$A=\{s_1<\cdots<s_n\}$. Write
+
+$$
+c_i=s_i+4,\qquad W=\sum_{i=1}^n c_i,\qquad
+C_R=\sum_{i\in R}c_i,\qquad G=k(n-k+1).
+$$
+
+A table $P$ consists of a finite installed set $Q$ of running states,
+two distinct terminals $\mathsf0,\mathsf1$, one running start, a fixed
+label $i(q)\in[n]$ at each $q\in Q$, and fixed successors
+$\delta(q,0),\delta(q,1)\in Q\sqcup\{\mathsf0,\mathsf1\}$.
+The entire mutable configuration is the current state. Every visit to
+label $i$ costs one query and $c_i$, including every repeated visit and
+every visit after the output has become logically determined. Put
+$m=|Q|$, counting unreachable installed states and excluding the two
+terminals. Let $m_i$ count installed states labelled $i$ and
+$m(R)=\sum_{i\in R}m_i$.
+
+Let $\mathcal T_{n,k}$ be the class of these tables whose actual run on
+every $x\in\{0,1\}^n$ terminates with
+$\mathbf1_{\{|x|\ge k\}}$ after at most $n$ queries. Let
+$\mathcal F_{c,k}\subseteq\mathcal T_{n,k}$ impose, in addition,
+weighted cost at most $W$ on every actual input. Define
+
+$$
+m_{\mathrm{exec}}(c,k)=\min_{P\in\mathcal F_{c,k}}|Q|.
+$$
+
+The supplied grid makes this minimum nonempty [PCA, Theorem 26.1][PCA];
+see also [CP, Corollary 4.2][CP]. Neither class imposes an order, syntactic
+read-once condition, leveling, acyclicity of the union graph, immediate
+stopping at a certificate, or realizability of every syntactic path.
+An inconsistent syntactic path need not be an actual input run.
+

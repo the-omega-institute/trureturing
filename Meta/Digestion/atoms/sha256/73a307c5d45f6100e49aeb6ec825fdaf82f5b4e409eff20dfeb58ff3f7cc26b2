@@ -1,0 +1,158 @@
+**定义 4.1（宏树、向量与硬集）。** 本族的宏树按下表编号；每个向量的坐标依该顺序排列。
+
+| 索引 | 宏树 |
+| --- | --- |
+| 0 | `(1,(1,(1,0)))` |
+| 1 | `(1,(1,(0,1)))` |
+| 2 | `(1,((1,1),0))` |
+| 3 | `(1,(0,(1,1)))` |
+| 4 | `(1,((1,0),1))` |
+| 5 | `(1,((0,1),1))` |
+| 6 | `((1,1),(1,0))` |
+| 7 | `((1,1),(0,1))` |
+| 8 | `((1,(1,1)),0)` |
+| 9 | `(((1,1),1),0)` |
+| A | `(0,(1,(1,1)))` |
+| B | `(0,((1,1),1))` |
+| C | `((1,0),(1,1))` |
+| D | `((0,1),(1,1))` |
+| E | `((1,(1,0)),1)` |
+| F | `((1,(0,1)),1)` |
+| G | `(((1,1),0),1)` |
+| H | `((0,(1,1)),1)` |
+| I | `(((1,0),1),1)` |
+| J | `(((0,1),1),1)` |
+
+| 向量号 | 四值坐标 | 首阶段 | 全部符号见证 $P:q:e$ |
+| --- | --- | --- | --- |
+| 0 | `aaaaaabbbrxxbabbrarb` | `b1` | 0:2:1 |
+| 1 | `aaaaaabbbrxxbabbrarr` | `b1` | 1:2:1 |
+| 2 | `aaaaaarrrrxxbrrrbrrr` | `r2` | 2:2:1；3:2:1 |
+| 3 | `aabxbaaxxxabaaxxxxxx` | `x3` | 4:4:1 |
+| 4 | `aarxbraxxxaraaxxxxxx` | `x3` | 5:4:1 |
+| 5 | `abxbxxxxxxbxxxxxxxxx` | `x3` | 7:6:1 |
+| 6 | `axxaxxxxxxaxxxxxxxxx` | `x3` | 6:6:1 |
+| 7 | `baxbaaxaxxbaaaxxxxxx` | `x3` | 6:5:1 |
+| 8 | `bbbbbbrrrraarbrrrbrr` | `b4` | 0:1:1；1:1:1 |
+| 9 | `bbbbbbrrrraarrrrrrrr` | `b5` | 2:1:1；3:1:1 |
+| 10 | `bbbbbbrrrrxxrbrrrbrr` | `b4` | 0:1:0；1:1:0 |
+| 11 | `bbbbbbrrrrxxrrrrrrrr` | `b5` | 2:1:0；3:1:0 |
+| 12 | `bbrarbbaxxbrbbaaaaaa` | `b6` | 4:3:1 |
+| 13 | `bbrarrbaxxbrbbaaaaaa` | `b6` | 5:3:1 |
+| 14 | `bbrxrbbxxxbrbbxxxxxx` | `b6` | 4:3:0 |
+| 15 | `bbrxrrbxxxbrbbxxxxxx` | `b6` | 5:3:0 |
+| 16 | `brxraaxaxxraaaxxxxxx` | `x3` | 7:5:1 |
+| 17 | `brxrxxxxxxrxxxxxxxxx` | `x3` | 7:5:0 |
+| 18 | `bxxbxxxxxxbxxxxxxxxx` | `x3` | 6:5:0 |
+| 19 | `rbarbbabxxrbbbxxxxxx` | `b7` | 6:4:1 |
+| 20 | `rbxrbbxbxxrbbbxxxxxx` | `b7` | 6:4:0 |
+| 21 | `rrarbbabxxrbbbxxxxxx` | `b7` | 7:4:1 |
+| 22 | `rrbrrrbrxxrrrraaaaaa` | `r7` | 6:3:1；7:3:1 |
+| 23 | `rrbrrrbrxxrrrrxxxxxx` | `r7` | 6:3:0；7:3:0 |
+| 24 | `rrrbrrrbaarrrrbbbbbb` | `b3` | 4:2:1；5:2:1 |
+| 25 | `rrrbrrrbxxrrrrbbbbbb` | `b3` | 4:2:0；5:2:0 |
+| 26 | `rrrrrrrraarrrrbbbbbb` | `b3` | 6:2:1；7:2:1 |
+| 27 | `rrrrrrrrbbrrrrrrrrrr` | `r3` | 4:1:0；4:1:1；5:1:0；5:1:1；6:1:0；6:1:1；7:1:0；7:1:1 |
+| 28 | `rrrrrrrrrrbbrrrrrrrr` | `r3` | 0:0:0；0:0:1；1:0:0；1:0:1；2:0:0；2:0:1；3:0:0；3:0:1 |
+| 29 | `rrrrrrrrrrrrrrrrrrrr` | `r3` | 0:-1:0；0:-1:1；1:-1:0；1:-1:1；2:-1:0；2:-1:1；3:-1:0；3:-1:1；4:-1:0；4:-1:1；4:0:0；4:0:1；5:-1:0；5:-1:1；5:0:0；5:0:1；6:-1:0；6:-1:1；6:0:0；6:0:1；7:-1:0；7:-1:1；7:0:0；7:0:1 |
+| 30 | `rrrrrrrrxxrrrrbbbbbb` | `b3` | 6:2:0；7:2:0 |
+| 31 | `rrxrbbxbxxrbbbxxxxxx` | `b7` | 7:4:0 |
+| 32 | `xaxaxxxxxxaxxxxxxxxx` | `x3` | 7:7:1 |
+| 33 | `xbxbxxxxxxbxxxxxxxxx` | `x3` | 7:6:0 |
+| 34 | `xxaxaxxxxxxaxxxxxxxx` | `x3` | 4:5:1 |
+| 35 | `xxaxxaxxxxxaxxxxxxxx` | `x3` | 5:6:1 |
+| 36 | `xxbxabxxxxxbxxxxxxxx` | `x3` | 5:5:1 |
+| 37 | `xxbxbxxxxxxbxxxxxxxx` | `x3` | 4:4:0 |
+| 38 | `xxbxxbxxxxxbxxxxxxxx` | `x3` | 5:5:0 |
+| 39 | `xxrxbrxxxxxrxxxxxxxx` | `x3` | 5:4:0 |
+| 40 | `xxxxxxaaabxxaxaabxba` | `x8` | 0:3:1 |
+| 41 | `xxxxxxaaarxxaxaarxbr` | `x8` | 1:3:1 |
+| 42 | `xxxxxxaabaxxxabaxbaa` | `x9` | 2:4:1 |
+| 43 | `xxxxxxaaraxxxabrxraa` | `x9` | 3:4:1 |
+| 44 | `xxxxxxbbbrxxbxbbrxrb` | `b1` | 0:2:0 |
+| 45 | `xxxxxxbbbrxxbxbbrxrr` | `b1` | 1:2:0 |
+| 46 | `xxxxxxbbrbxxabrbarbb` | `bA` | 2:3:1 |
+| 47 | `xxxxxxbbrbxxabrrarbb` | `bA` | 3:3:1 |
+| 48 | `xxxxxxbbrbxxxbrbxrbb` | `bA` | 2:3:0 |
+| 49 | `xxxxxxbbrbxxxbrrxrbb` | `bA` | 3:3:0 |
+| 50 | `xxxxxxrrrrxxbrrrbrrr` | `r2` | 2:2:0；3:2:0 |
+| 51 | `xxxxxxxxaxxxxxaxxaxx` | `xB` | 2:5:1 |
+| 52 | `xxxxxxxxaxxxxxxaxaxx` | `xB` | 3:6:1 |
+| 53 | `xxxxxxxxbxxxxxabxbxx` | `xB` | 3:5:1 |
+| 54 | `xxxxxxxxbxxxxxbxxbxx` | `xB` | 2:4:0 |
+| 55 | `xxxxxxxxbxxxxxxbxbxx` | `xB` | 3:5:0 |
+| 56 | `xxxxxxxxrxxxxxbrxrxx` | `xB` | 3:4:0 |
+| 57 | `xxxxxxxxxaxxxxxxaxax` | `xC` | 0:4:1 |
+| 58 | `xxxxxxxxxaxxxxxxaxxa` | `xC` | 1:5:1 |
+| 59 | `xxxxxxxxxbxxxxxxbxab` | `xC` | 1:4:1 |
+| 60 | `xxxxxxxxxbxxxxxxbxbx` | `xC` | 0:3:0 |
+| 61 | `xxxxxxxxxbxxxxxxbxxb` | `xC` | 1:4:0 |
+| 62 | `xxxxxxxxxrxxxxxxrxbr` | `xC` | 1:3:0 |
+| 63 | `xxxxxxxxxxxxxxxxxxxx` | `x3` | 0:4:0；0:5:0；0:5:1；0:6:0；0:6:1；0:7:0；0:7:1；0:8:0；0:8:1；1:5:0；1:6:0；1:6:1；1:7:0；1:7:1；1:8:0；1:8:1；2:5:0；2:6:0；2:6:1；2:7:0；2:7:1；2:8:0；2:8:1；3:6:0；3:7:0；3:7:1；3:8:0；3:8:1；4:5:0；4:6:0；4:6:1；4:7:0；4:7:1；4:8:0；4:8:1；5:6:0；5:7:0；5:7:1；5:8:0；5:8:1；6:6:0；6:7:0；6:7:1；6:8:0；6:8:1；7:7:0；7:8:0；7:8:1 |
+
+| 硬集号 | 宏树索引集 |
+| --- | --- |
+| 1 | 6,7,8,C,E,F |
+| 2 | 8,9,H,I,J |
+| 3 | E,F,G,H,I,J |
+| 4 | 2,4,5,D,H |
+| 5 | 0,1,2,3,4,5 |
+| 6 | 0,1,6,A,C,D |
+| 7 | 4,5,7,B,C,D |
+| 8 | 3,A,B,D,H |
+| 9 | 3,A,B,C,G |
+| A | 6,7,9,D,I,J |
+| B | C,D,G,I,J |
+| C | C,D,E,F,H |
+
+| 硬集号 | 起始向量号 | 依序十六个第二阶段项 |
+| --- | --- | --- |
+| 1 | 0 | `b67 b67 r67 x78 x78 x67 x67 x68 r67 r67 r67 r67 b6C b6C b6C b6C` |
+| 1 | 16 | `x68 x67 x67 b7C b7C b7C r7C r7C b7E b7E bEF r67 r67 r67 bEF b7C` |
+| 1 | 32 | `x67 x67 x67 x67 x67 x67 x67 x67 a-- a-- b8E r8F b67 b67 b67 b67` |
+| 1 | 48 | `b67 b67 r67 x67 x67 b8F b8E b8F r8F x67 x67 x67 x67 x67 x67 x67` |
+| 2 | 0 | `b8J r9I r89 x89 x89 x89 x89 x89 r89 r89 r89 r89 x89 x89 x89 x89` |
+| 2 | 16 | `x89 x89 x89 x89 x89 x89 x89 x89 bHI bHI bHI b89 r89 r89 bHI x89` |
+| 2 | 32 | `x89 x89 x89 x89 x89 x89 x89 x89 b9I r9J b8H r8H b8J r9I b9I b9I` |
+| 2 | 48 | `b9I b9I r89 x9I x9I b8H b8H b8H r8H x8H x8H b9J b9I b9J r9J x89` |
+| 3 | 0 | `bEF bEF rEF xEF xEF xEF xEF xEF rEF rEF rEF rEF a-- a-- xEF xEF` |
+| 3 | 16 | `xEF xEF xEF xEF xEF xEF a-- xEF bEF bEF bEF rEF rEF rEF bEF xEF` |
+| 3 | 32 | `xEF xEF xEF xEF xEF xEF xEF xEF bGI rGJ bEH rFH bEF bEF bFI bIJ` |
+| 3 | 48 | `bFI bIJ rEF xFG xEG bFH bEH bFH rFH xEF xEF bGJ bGI bGJ rGJ xEF` |
+| 4 | 0 | `a-- a-- rDH b24 r25 x24 x24 x2H b24 b24 b24 b24 b5D r24 b5D r24` |
+| 4 | 16 | `x2H x24 x24 b45 b45 b45 r45 r45 r24 r24 r24 r24 r24 r24 r24 b45` |
+| 4 | 32 | `x24 x24 x5D x4D b25 b24 b25 r25 x24 x24 x24 x24 x24 x24 x24 x24` |
+| 4 | 48 | `x24 x24 rDH x24 x24 x24 x24 x24 x24 x24 x24 x24 x24 x24 x24 x24` |
+| 5 | 0 | `a-- a-- a-- b24 r25 b13 x12 b03 b01 b01 b01 b01 b01 b01 b01 b01` |
+| 5 | 16 | `r13 r13 b03 b14 b14 b45 r01 r01 r01 r01 r01 r01 r01 r01 r01 b45` |
+| 5 | 32 | `x02 b13 x01 x01 b25 b24 b25 r25 x01 x01 x01 x01 x01 x01 x01 x01` |
+| 5 | 48 | `x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01` |
+| 6 | 0 | `b6C b6C r6D a-- a-- b1A x16 b0A b01 b01 b01 b01 b01 b01 b01 b01` |
+| 6 | 16 | `r1A r1A b0A b1C b1C bCD r01 r01 r01 r01 r01 r01 r01 r01 r01 bCD` |
+| 6 | 32 | `x06 b1A x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 b6C b6C b6D b6D` |
+| 6 | 48 | `b6D b6D r6D x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01 x01` |
+| 7 | 0 | `b7C b7C r7D b4B r5B x45 x45 a-- b45 b45 b45 b45 b5C bCD b5C bCD` |
+| 7 | 16 | `a-- x45 x45 b45 b45 b45 r45 r45 r45 r45 r45 r45 r45 r45 r45 b45` |
+| 7 | 32 | `x45 x45 x57 x47 b5B b4B b5B r5B x45 x45 x45 x45 b7C b7C b7D b7D` |
+| 7 | 48 | `b7D b7D r7D x45 x45 x45 x45 x45 x45 x45 x45 x45 x45 x45 x45 x45` |
+| 8 | 0 | `xAB xAB rDH x3H x3H b3A xBD b3A b3D rDH b3D rDH bAD bAD bAD bAD` |
+| 8 | 16 | `r3A r3A b3A bBD bBD bBD r3A r3A b3H b3H r3A r3A bAB r3A r3A bBD` |
+| 8 | 32 | `xBD b3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A` |
+| 8 | 48 | `x3A x3A rDH x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A` |
+| 9 | 0 | `xAB xAB bCG x3G x3G b3A xBC b3A rCG rCG rCG rCG bAC bAC bAC bAC` |
+| 9 | 16 | `r3A r3A b3A bBC bBC bBC r3A r3A b3G b3G r3A r3A bAB r3A r3A bBC` |
+| 9 | 32 | `xBC b3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A` |
+| 9 | 48 | `x3A x3A bCG x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A x3A` |
+| A | 0 | `b67 b67 r67 x79 x79 x67 x67 x69 r67 r67 r67 r67 b6D b6D b6D b6D` |
+| A | 16 | `x69 x67 x67 b7D b7D b7D r7D r7D b7I b7I bIJ r67 r67 r67 bIJ b7D` |
+| A | 32 | `x67 x67 x67 x67 x67 x67 x67 x67 b9I r9J a-- a-- b67 b67 b67 b67` |
+| A | 48 | `b67 b67 r67 x67 x67 x67 x67 x67 x67 x67 x67 b9J b9I b9J r9J x67` |
+| B | 0 | `bCJ rGI bCG xGI xGI xCD xCD xGI rCG rCD rCG rCD bCD bCD bCD bCD` |
+| B | 16 | `xGI xCD xCD bCD bCD bCD rCD rCD bGI bGI bGI rCD rCD rCD bGI bCD` |
+| B | 32 | `xCD xCD xCD xCD xCD xCD xCD xCD bGI rGJ xCG xCG bCJ rGI bDI bDI` |
+| B | 48 | `bDI bDI bCG xCD xCD xCD xCD xCD xCD xCD xCD bGJ bGI bGJ rGJ xCD` |
+| C | 0 | `bCE bCE rDE xEF xEF xCD xCD xEF bDH rCD bDH rCD bCD bCD bCD bCD` |
+| C | 16 | `xEF xCD xCD bCD bCD bCD rCD rCD bEF bEF bEF rCD rCD rCD bEF bCD` |
+| C | 32 | `xCD xCD xCD xCD xCD xCD xCD xCD xDH xDH bEH rFH bCE bCE bDF rEF` |
+| C | 48 | `bDF rEF rDE xCD xCD bFH bEH bFH rFH xCD xCD xCD xCD xCD xCD xCD` |
+

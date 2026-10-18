@@ -1,0 +1,121 @@
+**Theorem 212.10 (Complete graph embedding and attained fiber minimum).**
+For the actual assembled score (212.39), every stopped schedule has
+support $B$. Every full schedule also has support $B$ except possibly
+graph-edge pairs, on which
+
+$$
+B_N^{ij}(Y(\mu))=B+\max_{n\in I_c}\mu_n\{Z:i,j\in Z\}
+                           \quad(\{i,j\}\in E_G).
+\tag{212.42}
+$$
+
+In particular $\Delta_O(Y(\mu))=0$ and
+$\Delta_N(Y(\mu))=\max_{n,e}\mu_n\{e\subseteq Z\}$.
+Over the larger full-score fiber (212.41), one score attains
+
+$$
+\min_{V\in\mathcal F_G(c)}\Delta_N(V)
+       =\max_{n\in I_c}\kappa_G(\gamma_n,c_n),
+\qquad \Delta_O(V)=0
+\quad\text{for that same attainer}.
+\tag{212.43}
+$$
+
+A zero-cost score in the fiber exists exactly when
+
+$$
+c_n/\gamma_n\in\operatorname{STAB}(G)
+   :=\operatorname{conv}\{\mathbf1_Z:Z\subseteq J
+                                  \text{ is independent in }G\}
+\quad\text{for every }\gamma_n>0;
+\tag{212.44}
+$$
+
+zero classes require $c_n=0$. A certificate of the form $(V,0)$ with
+$V$ in this fiber exists exactly when the maximum in (212.43) is at
+most one. The same criterion holds if any $\theta$ in (212.5) is
+allowed while retaining $Q(V)=q$.
+
+**Proof.** For every late pair $i<j$ the stock has
+$\nu_{01},\nu_{10},\nu_{11}\ge2g$.
+Its $00$ mass is zero on a graph edge and exactly $g$ on a nonedge.
+Each individual correct label contributes at most $\gamma_n\le g$
+to any cell; early label rewards are subsets of the zero-label pair
+reward. On a nonedge zero therefore dominates all four cells.
+On an edge, whose endpoints are both after every $n\in I_c$, the
+full maxima are precisely
+
+$$
+\left(\max_n\mu_n\{i,j\in Z\},\ \nu_{01},\ \nu_{10},\ \nu_{11}+t\right).
+\tag{212.45}
+$$
+
+The earlier unqueried correct labels are retained in its first maximum.
+For a stopped late pair, the merged first-zero stock
+$\nu_{00}+\nu_{01}\ge2g$ dominates every correct unary reward;
+the other two cells are also dominated by zero. Its support is $B$.
+
+At the head pair, the full maxima are $(0,S/2,S/2,t)$ and the
+stopped maxima $(S/2,S/2,t)$, using $t\ge g$.
+At an early/late pair $(a,j)$ the early-zero pieces sum to $S/2$.
+In $10$ the pair baseline is $\nu\{x_j=0\}/2\ge g$;
+in $11$ it is $(S-\nu\{x_j=0\})/2+t\ge g$.
+They dominate every correct label, so both supports are $B$.
+Every singleton has a full refinement at an early-containing pair
+of support $B$; the empty function refines into the head pair.
+Constant zero already earns $B$. Consequently all short supports
+are exactly $B$, also in $O$. This proves the complete identity,
+including pairs inside $I_c$ and pairs between $I_c,J$.
+
+For any full score, direct summation gives
+
+$$
+K-\sum_j\beta_j=2\sum_wA_w+\sum_wP_w+T.
+\tag{212.46}
+$$
+
+Inside (212.41), its left side is $B$ and its last two terms total
+$B$. Nonnegativity forces $A=0$. Thus the correct masses are precisely
+$\gamma_n$ in $I_c$, zero in all other classes, and $W_V=B$.
+Project the actual class-$n$ correct measure to $J$, obtaining
+$\sigma_n$ with the prescribed mass and all prescribed unaries.
+
+For $n\in I_c$ and an edge $e=\{i,j\}$, $i<j$, use the legal
+full table
+
+$$
+D_{n,e}=(i,j;n,0,0,0).
+\tag{212.47}
+$$
+
+Constant zero earns $B$. Changing its $00$ output to $n$ loses
+no pair mass by (212.41) and gains exactly $\sigma_n\{e\subseteq Z\}$.
+Thus every member of the full fiber has
+$\Delta_N(V)\ge\max_{n,e}\sigma_n\{e\subseteq Z\}
+\ge\max_n\kappa_G(\gamma_n,c_n)$.
+Compactness of each marginal polytope and continuity of its finite
+maximum supply minimizing measures $\mu_n$. Assemble all these
+minimizers with the same stock (212.38). The complete support identity
+proves equality in (212.43) and stopped cost zero for that very score.
+The cost is a maximum across classes, not their sum; there is no
+separate replenishment of the stock for different pairs or classes.
+
+A nonnegative measure has zero intersection on every graph edge
+exactly when all of its positive atoms are independent sets. Dividing
+by its positive mass gives exactly the convex combinations in
+(212.44), and every such combination gives an actual measure.
+This uses the classical stable-set polytope, as defined in
+Pulleyblank and Shepherd, [*Formulations for the Stable Set Polytope*,
+author-hosted manuscript, §1](https://bshepherd.ca/img/papers/wpclaw.pdf),
+with manuscript SHA-256
+`08515245032617db6c0627463db32cb5b6db035f8ce032cf8c620948f3b46a52`.
+Their incidence vector is $\mathbf1_Z$ here, and its convex coefficients
+are $\mu(Z)/\gamma$. The graph may be arbitrary; no graph-class
+algorithm or complexity bound from that paper is assumed.
+The score embedding and the full-fiber lower bound are (212.45)–(212.47).
+The zero-class and edgeless cases follow directly from the definitions.
+Finally exact quotient equality makes the residual zero, so allowing
+$\theta>0$ cannot improve the available score budget; $\theta=0$
+is sufficient whenever the displayed minimum is at most one.
+$\square$
+

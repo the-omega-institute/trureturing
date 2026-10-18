@@ -1,0 +1,62 @@
+**Definition 1.3 (source dictionary).** Set
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=ae_0e_1^T+be_1e_0^T,\quad S=ce_0e_2^T+de_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\quad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad\kappa=h_0a+h_1b,\\
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad U=1/\alpha,\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad
+\mu=\alpha V+\beta W,\quad r=V/\mu.
+\end{gathered}
+\tag{JS.6}
+$$
+
+The seven amplitudes and $m_1,m_2$ are positive, $0<\delta<1$ and
+$\alpha+\beta=1$. FA71/74 supplies $V/W\in(1/5,3/10)$, so
+$0<r<1<U$. For $0\le x\le U$ define
+
+$$
+\begin{aligned}
+Y(x)&=(1-\alpha x)/\beta,\qquad H(x)=(\sqrt x-1)^2/2,\\
+D_c(x)&=\delta h_0^2+b^2x+d^2Y(x),\\
+N_c(x)&=\delta h_1^2h_2^2+a^2h_2^2x+c^2h_1^2Y(x),\\
+c_*(x)&=N_c(x)/D_c(x),\qquad F_c(x)=H(x)/c_*(x),\\
+C_{\rm end}&=\mu F_c(r)=\frac{(\sqrt\mu-\sqrt V)^2}{2c_*(r)}.
+\end{aligned}
+\tag{JS.7}
+$$
+
+Both affine denominators are strictly positive on the entire closed
+interval. The variable $x$ here is not a history height. On the compact
+ellipse define
+
+$$
+\begin{gathered}
+\mathcal E=\{(z,w):\alpha z^2+\beta w^2=1\},\quad
+h(z,w)=(1,z,w)^T,\quad K(z,w)=s_0D+zT+wS,\\
+n(z,w)=(0,dw/h_2,-bz/h_1)^T,\quad
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\\
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad L=\operatorname{diag}(s_0,1,1),\\
+G=LNL,\quad f(z,w)=h(z,w)^TGh(z,w),\quad
+k(z,w)=n(z,w)^T\Delta n(z,w),\\
+H_{\rm live}=(1-\delta)\Delta A,\quad
+A_y=\sum_i h_i^2p_{yi},\quad \Delta A=A_{27}-A_5>0,\\
+d_f=11m_1/64,\quad
+z_f=\sqrt{m_1m_2}(\sqrt{37}-\sqrt{59})/16<0,\\
+\Xi=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\quad
+L_f=\sqrt{d_f^2+4z_f^2},\quad\gamma_f=(L_f-d_f)/2>0,\\
+S_{\rm corner}=\frac14\sum_{\sigma,\eta=\pm1}|f(\sigma,\eta)|,\quad
+T_0=\mathcal T(s_0)=\frac{H_{\rm live}+S_{\rm corner}+L_f}{2},\quad
+B_0=T_0-\gamma_f.
+\end{gathered}
+\tag{JS.8}
+$$
+
+The expression for $T_0$ is the credited static endpoint. These are
+unnormalized height differences, not conditional-on-failure distances.
+

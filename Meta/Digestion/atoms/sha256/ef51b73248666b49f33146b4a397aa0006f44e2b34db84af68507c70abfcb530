@@ -1,0 +1,13 @@
+#### 12.4　渐近干预响应在两模型中相反
+
+对恒定位命令 $a$，记
+
+$$
+\mu_{\theta,a}(t)
+=
+\mathbb E_{M_\theta^L}\left[Y_t\mid
+\operatorname{do}(A_s=a\ \text{for all }s\ge0)\right].
+$$
+
+<a id="claim-12-4-1"></a>
+

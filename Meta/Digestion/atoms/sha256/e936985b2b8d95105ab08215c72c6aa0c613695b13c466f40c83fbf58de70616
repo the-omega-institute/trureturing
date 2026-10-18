@@ -1,0 +1,42 @@
+**Definition 228.1 (Actual sources and two distinct target families).** The
+countable labeled source, with $p_i$ the $i$th prime, is
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N_x=1+F_rg,\quad q_i(x)=\mathbf1_{p_i\mid N_x},\quad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{gathered}
+$$
+
+Replies are static; each actual integer has finitely many prime divisors,
+so $n(x)$ is finite. There is no source prior or infinite positive source.
+The full Borel carrier is
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each block
+a copy of $(0,1)$. The unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$. Its original nonatomic target remains
+
+$$
+\begin{gathered}
+t(x)=\sum_{i\ge1}3^{-i}q_i(x),\quad Z_t=\int_0^1e^{tu}\,du,\quad
+\nu_x(du)=Z_{t(x)}^{-1}e^{t(x)u}\,du\text{ on }B_{n(x)},\\
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+\end{gathered}
+$$
+
+where $\omega$ counts distinct prime divisors and $\pi_j$ is uniform on
+$P_j$. On distinct original marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+the separately selected targets, for every positive vanishing sequence, are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+ +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+$$
+
+These laws do not replace $\mu_x$. Every finitely marked law has TV
+distance one from $\mu_x$, since its finite support is a Borel null set
+for the nonatomic target. Finite labels in 222–227 mean these actual marks.
+

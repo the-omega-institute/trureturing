@@ -1,0 +1,21 @@
+**数据 7.3（Unrestricted versus conditioned adaptive feasibility）。** The finite feasibility check represents a candidate by its current original-reader record together with its immutable INITIAL label. Each literal action is evaluated by (1.2), its resulting candidates are grouped only by the endpoint reading, and monochromatic groups stop. If two different labels have become the same current record, that candidate action is rejected as irreversibly losing the target. Every $m$-bit action is considered at each remaining nonconstant node. Memoization only identifies identical labelled current-record sets and remaining horizons; it does not merge different observation branches or use a hidden source clock.
+
+The following eight target rows were tested at the claimed fee and one block below it, separately on both free values. Their searches impose no root-action constraint. A row lists $\lambda(1),\ldots,\lambda(m-1)$; the endpoint refinement has additional independent $D,E$.
+
+| $(Q,m)$ | Band layout | Outside label | Endpoint refinement | Exact checked fee |
+| --- | --- | --- | --- | --- |
+| $(2,3)$ | $(0,1)$ | fresh $2$ | no | $4$ |
+| $(2,3)$ | $(0,1)$ | $0$ | no | $3$ |
+| $(2,4)$ | $(0,1,2)$ | fresh $3$ | no | $4$ |
+| $(2,4)$ | $(0,1,2)$ | $0$ | no | $4$ |
+| $(2,4)$ | $(0,1,0)$ | fresh $2$ | no | $3$ |
+| $(3,3)$ | $(0,1)$ | fresh $2$ | no | $4$ |
+| $(2,3)$ | $(0,1)$ | fresh $2$ | yes | $4$ |
+| $(2,4)$ | $(0,1,0)$ | fresh $2$ | yes | $3$ |
+
+All 16 target/budget tests return infeasible below the fee and feasible at it on both free values. They evaluate 1,847 distinct labelled-belief/horizon states and 2,841 candidate actions in total. Rejection is an independent absorbing reading, including in these unrestricted root searches.
+
+Three additional targets were searched conditioned on the proved root $1^m$: $(Q,m)=(2,5)$ with injective band $(0,1,2,3)$ and fresh outside $4$, at budgets four and five; $(2,6)$ with band $(0,1,2,0,3)$ and fresh outside $4$, at budgets four and five; and $(2,7)$ with injective band $(1,2,3,4,5,6)$ and fresh outside zero, at budgets five and six. Both values give infeasible then feasible, with 227,360 states and 12,117,779 candidate actions in total. These searches retain all literal continuation actions and actual tail updates; only the root is supplied by the theorem. A further conditioned check at $(2,5)$, band $(0,1,2,0)$ and fresh outside $3$, finds budget four infeasible on both values, evaluating 2,649 states and 16,561 candidate actions. It is a falsifier for extending the three-label frontier law to three labels already present inside $J$; no exact later fee is inferred.
+
+All four finite batches—preset/original-history checks, screening, adaptive feasibility, and the interior obstruction—completed with exit code zero and no failed assertion. The sharp $(2,3)$ fresh-$A$ case explicitly rejects the incorrect fee three. These finite ranges do not cover every $Q,m$, every later horizon, arbitrary mixed-tail targets, or every multilabel layout. The ordinary proofs above carry the universal claims. No Lean compilation, ingestion, or formalization state is asserted.
+

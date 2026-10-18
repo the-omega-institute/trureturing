@@ -1,0 +1,84 @@
+**Theorem 254.1 (Biased suffix inequality).** For the same $p,\pi$
+and $S,\delta,\mu$ as in Definition 251.3, every real $t\in(0,1)$
+satisfies
+
+$$
+t(1-t)\mu\le S+(3t-2t^2)\delta.
+\tag{254.1}
+$$
+
+**Proof.** In each first-zero class $i$, average over all suffixes
+with independent zero weight $t$ and one weight $1-t$.
+This is a finite convex combination of existing correct rows, used
+only in a proof; it is neither a source prior nor operational randomness.
+For a deterministic table put
+
+$$
+L_D(t)=\sum_i\left([D(v^i)=i]
+                  -\mathbb E_{t,\Omega_i}[D(w)=i]\right),
+\quad u=t(1-t),\quad C_t=3t-2t^2=t+2u.
+\tag{254.2}
+$$
+
+For a pair $a<b$, the summed average-correct contribution of a
+cell emitting $r$ is
+
+$$
+\begin{split}
+\phi_{00}(r)&=t[r=a]+t^2[1\le r<a],\\
+\phi_{01}(r)&=(1-t)[r=a]+u[1\le r<a],\\
+\phi_{10}(r)&=[r=b]+t[a<r<b]+u[1\le r<a],\\
+\phi_{11}(r)&=[r>b]+(1-t)[a<r<b]+(1-t)^2[1\le r<a].
+\end{split}
+\tag{254.3}
+$$
+
+All four functions vanish at $r=0$. To derive the formulas, fix
+the first zero to $r$. A query before $r$ is one, a query at $r$
+is zero, and a query after $r$ has zero weight $t$.
+This covers every relative position of every output label.
+
+Write $A=[\ell_{01}=a]$, $B'=[\ell_{10}=b]$,
+$Z=[\ell_{11}=0\text{ or unqueried}]$,
+$d_D=3-A-B'-Z$, and $c=[\ell_{00}\ne\ell_{01}]$.
+The first two cells satisfy
+
+$$
+A-\phi_{00}(\ell_{00})-\phi_{01}(\ell_{01})
+\ge uc-C_t(1-A).
+\tag{254.4}
+$$
+
+Here is the full case check. If $A=1,c=0$, the left side is zero.
+If $A=1,c=1$, $\phi_{00}(\ell_{00})\le t^2$ and the
+left side is at least $t-t^2=u$. If $A=0,c=0$, the two
+contributions sum to at most $t$, so the left side is at least
+$-t\ge-C_t$. If $A=0,c=1$, they sum to at most $t+u$,
+giving $-(t+u)=u-C_t$.
+Also
+
+$$
+B'-\phi_{10}(\ell_{10})\ge-t(1-B'),\qquad
+[\ell_{11}\text{ numerical unqueried}]-\phi_{11}(\ell_{11})\ge0.
+$$
+
+The sole-zero contribution of cell $11$ is the bracket in this
+last expression. Since $C_t\ge t$ and
+$d_D\ge(1-A)+(1-B')$, summing yields
+$L_D(t)\ge uc-C_td_D$.
+
+A singleton at $a$ can gain, relative to its sole-zero indicators,
+only by emitting an earlier first-zero label in its zero cell.
+There is at most one such label and its gain is at most $t$.
+Its positive cell cannot gain. Its counting defect is at least one,
+so $L_D(t)\ge-t\ge-C_td_D$. A constant has $L_D(t)=0$.
+Thus the inequality holds on the entire catalog, with $c=0$ on
+nonpairs. For example $N(2,4;2,1,4,0)$ has $L_D(1/2)=-3/4$,
+$d_D=c=1$, attaining equality. Earlier unqueried labels are
+essential to this case, and remain legal.
+
+Each averaged correct probability is at least $a_i-e$ by (251.1).
+Therefore $\mathbb E_\pi L_D(t)\le\sum_i s_i=S$.
+Integrating the preceding pointwise inequality under the same
+$\pi$ gives $u\mu-C_t\delta\le S$, proving (254.1). $\square$
+

@@ -1,0 +1,34 @@
+### 86.7. Comparing an arbitrary rank-raising channel to M
+
+For a nearby full B isometry write V_B=W direct-sum R, D=R^*R, epsilon=||R||_F^2. Since the old sector W is square and near a unitary, its polar factor
+
+    U=W(I-D)^(-1/2)
+
+is unitary. Thus V_B=U sqrt(I-D) direct-sum R. Let B_U denote its rank-two old comparison channel, and x=(V_A,U) in X. The square-root expansion gives, uniformly for small epsilon,
+
+    B-B_U=Psi_(U,R)+O(epsilon^2),
+    Psi_(U,R)(Y)=Tr_new(R Y R^*)
+                    -(1/2)B_U(DY+YD),
+    ||Psi_(U,R)||<=C_1 epsilon.                           (24)
+
+These channel-norm estimates depend on the fixed input/output dimensions, not on the dimension of the new environment. For example ||D||op<=epsilon and the new CP map has norm bounded by a fixed constant times epsilon; the old square-root remainder is O(||D||op^2).
+
+Let m=(V_(A_m),U_m) be a nearby closest point of M. At m the physical one-sided path
+
+    U_m sqrt(I-sD) direct-sum sqrt(s)R,   s>=0,
+
+is an isometry for sufficiently small s. Its channel derivative is Psi_(U_m,R). The fixed-A_m global minimum (12) and differentiability of F imply
+
+    d_B F(A_m,B_(U_m))[Psi_(U_m,R)]>=0.                    (25)
+
+Smoothness and (24) imply a uniform Lipschitz comparison
+
+    d_B F(A,B_U)[Psi_(U,R)]>=-C_2 rho(x) epsilon.           (26)
+
+Indeed the derivative of F varies by O(rho), while Psi varies with U by O(||U-U_m|| epsilon); both changes are bounded using (24). Taylor expansion in the physical channel difference in (24), followed by (23), gives
+
+    F(A,B)>=1/4+c rho^2-C_2 rho epsilon-C_3 epsilon^2
+           >=1/4-C_4 epsilon^2.                          (27)
+
+The final inequality completes the square. Combining (5) and (27) proves (3). No error monotonicity under polar replacement is used. The argument keeps all original output coherences; pinching is used only for the valid lower bound (5).
+

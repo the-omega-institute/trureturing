@@ -1,0 +1,19 @@
+**Proposition 7.3 (the uncovered-ray restriction is substantive).**
+For $P=\{L,R\}$, if pre-first-Read updates are forbidden, a read-only
+procedure recovers the invocation row on every finite source under
+finite total interference and observer progress. Theorem 7.2 thus cannot
+be extended to every nonroot cut.
+
+**Proof.** First Read the root, which is the invocation constructor.
+If it is a leaf, the entire invocation tree and row are known; return
+that saved row regardless of later updates.
+If it is branch, both cut addresses were reached at invocation.
+Their exterior is the fixed two-hole pair, and their equality bit is
+preserved in both directions by every update, using injectivity and
+homomorphism of $\rho$.
+Acquire a later validated row with either whole-tree procedure.
+Finite interference gives termination; the acquired partition equals
+the invocation partition, including disequality. This gives the
+invocation row in every case. It supplies no all-fair-history
+termination under infinite interference. $\square$
+

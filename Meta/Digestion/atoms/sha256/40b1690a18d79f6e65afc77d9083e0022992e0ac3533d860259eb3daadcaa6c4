@@ -1,0 +1,200 @@
+**Theorem 6.1 (complete configuration-law stability).** Let
+$(\Gamma_B,\Gamma_A)$ be any boxed compatible pair of Definitions
+1.2--1.3, with its original common unweighted marginals and both full
+residual equations. Retain Assumption 1.1. For every integer $n\ge4$ put
+
+$$
+\begin{aligned}
+d_n&=\int Q(w_{n,1})\,d\nu_p(Q),\\
+e_{a,n}&=d_n-c_az_a^n,& e_{b,n}&=c_bz_b^n-d_n,\\
+\kappa&=\frac15,&
+M_r&=1+z_r+z_r^2+(1+z_r)\lambda+\lambda^2,\\
+C_{r,n}&=M_r\kappa^{-n}
+             \sum_{j=1}^{n-1}\left(\frac\lambda{z_r}\right)^j,
+&M_a&=\frac{3379}{2025},\qquad M_b=\frac{9559}{5625}.
+\end{aligned}
+\tag{6.1}
+$$
+
+Then $e_{r,n}\ge0$ and, for both $r\in\{a,b\}$,
+
+$$
+\max_{s\in\{p,\beta\}}
+  \int\operatorname{TV}(D,P_{s,r})\,d\nu_s(D)
+\le C_{r,n}e_{r,n}.
+\tag{6.2}
+$$
+
+Here $\operatorname{TV}(D,P)=\frac12\sum_{e\in\Omega_s}|D(e)-P(e)|$
+is evaluated on each normalized complete configuration law before
+integration, including the noncompletion coordinate. The marginal
+supports may be arbitrary Borel sets. There is no finite-support,
+recurrence, reversibility, deterministic-successor, irreducibility or
+ergodicity assumption. The index $n$ in (6.1) is the word-return index;
+the original source parameter $n=4$ in Assumption 1.1 is unchanged.
+
+**Proof.** Work throughout with the original disintegrations $B,A$.
+For bounded Borel functions on the respective phase spaces, marginal
+transport gives
+
+$$
+\int B|f|\,d\nu_p=\int|f|\,d\nu_\beta,\qquad
+\int A|h|\,d\nu_\beta=\int|h|\,d\nu_p.
+\tag{6.3}
+$$
+
+Thus a marginal-null exceptional set is assigned zero conditional mass
+at almost every input of the opposite phase. Both kernels act on the
+almost-sure quotients, and their positive weighted compositions do too.
+The countable complete carriers allow one null set per phase for all
+coordinate residual equations and boxes. Iterated identities below
+hold in these quotients; a countable union also makes all indices
+simultaneous. No conditional version at a null input is used. The
+tail bounds of (1.3) imply zero mass at both infinite outcomes by
+continuity from above, while retaining those outcomes in the laws.
+
+Reuse (2.2)--(2.4), writing $w=L\mathbf1$ and $q_j(Q)=Q(w_{j,1})$:
+
+$$
+\begin{gathered}
+P=BA,\qquad Lf=(1-u)B(vAf),\qquad g=(1-u)B(1-v),\\
+\nu_pP=\nu_p,\qquad q_j=L^jg,\qquad
+c_b\le g\le c_a,\qquad w=1-u-g,\\
+\kappa Pf\le Lf\le\lambda Pf\quad(f\ge0).
+\end{gathered}
+\tag{6.4}
+$$
+
+Positivity gives, for every nonnegative bounded $f$ and integer $m\ge0$,
+
+$$
+\kappa^mP^mf\le L^mf\le\lambda^mP^mf,
+\qquad
+\kappa^m\int f\,d\nu_p
+\le\int L^mf\,d\nu_p
+\le\lambda^m\int f\,d\nu_p.
+\tag{6.5}
+$$
+
+For the induction, apply $L$ to the preceding inequalities and then
+apply its one-step comparison to $P^mf$. Integration uses the original
+stationarity $\nu_pP=\nu_p$. No commutation of $L,P$, invariant law for
+$L$, or weighting of either marginal is asserted.
+
+Fix $r$, abbreviate $c=c_r,z=z_r,e=e_{r,n}$, and set $\sigma=1$ at
+$r=a$ and $\sigma=-1$ at $r=b$. Define
+
+$$
+F=\sigma(c-g),\qquad \Phi=\int F\,d\nu_p,\qquad
+h=\sigma(q_n-cz^n),\qquad V=\sigma(w-z).
+\tag{6.6}
+$$
+
+The ratio (2.5) is less than one for $j=0,1,2$ and greater than one
+for every $j\ge3$. Hence $F,h\ge0$ and $\int h\,d\nu_p=e$.
+Since $n-1\ge3$, the predecessor box and $q_n=Lq_{n-1}$ imply
+
+$$
+0\le\sigma(q_n-cz^{n-1}w)=h-cz^{n-1}V,
+\qquad V\le\frac{h}{cz^{n-1}}.
+\tag{6.7}
+$$
+
+Finite telescoping of $L^n\mathbf1-z^n\mathbf1$, followed by (6.7),
+now gives
+
+$$
+\begin{aligned}
+L^nF
+ &=c\sum_{j=0}^{n-1}z^{n-1-j}L^jV-h\\
+ &\le\sum_{j=1}^{n-1}z^{-j}L^jh.
+\end{aligned}
+\tag{6.8}
+$$
+
+Indeed the $j=0$ term minus $h$ is nonpositive, and positivity of
+$L^j$ applies (6.7) to each remaining term. The signed function $V$
+is used only in this order comparison. Apply (6.5) to the nonnegative
+functions $F,h$, obtaining the source-specific defect estimate
+
+$$
+\kappa^n\Phi\le\int L^nF\,d\nu_p
+\le\sum_{j=1}^{n-1}\left(\frac\lambda z\right)^j e.
+\tag{6.9}
+$$
+
+It remains to control TV on every complete coordinate. The endpoint
+b-to-a ratios at phase p are $(6/5)(27/25)^j$ on marker zero and
+$(81/100)(27/25)^j$ on marker one. At suspension they are $9/10$ on
+standalone beta, $(36/25)(27/25)^j$ on prefixed marker zero, and
+$(243/250)(27/25)^j$ on prefixed marker one. Thus the complete events
+where endpoint a exceeds endpoint b are exactly
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+\tag{6.10}
+$$
+
+Every other finite coordinate has the reverse sign, and both infinite
+coordinates have difference zero. Inside the boxes these signs also
+fix the signs of the difference from either endpoint. Normalization
+then identifies the half-$\ell^1$ distance with the signed event
+difference. This uses the whole carrier, not a finite truncation.
+
+Put $x=|u-r|=\sigma(u-r)$ and $y=|v-r|=\sigma(v-r)$. Directly from
+the endpoint product in (6.4), both decompositions hold:
+
+$$
+F=(1-r)x+(1-u)By
+  =(1-r)By+B(1-v)x.
+\tag{6.11}
+$$
+
+Consequently $F\ge(1-r)x$ and $F\ge(1-r)By$.
+For $j=0,1,2$ let $f_j=\sigma(cz^j-q_j)\ge0$, so $f_0=F$.
+The p sign computation and (6.4) give
+
+$$
+\operatorname{TV}(Q,P_{p,r})=f_0+f_1+f_2,\qquad
+f_{j+1}=Lf_j+cz^j(x-F)\quad(j=0,1).
+\tag{6.12}
+$$
+
+Since $c(x-F)\le zF$ by $F\ge(1-r)x$, it follows that
+$f_1\le LF+zF$ and
+$f_2\le L^2F+zLF+z^2F$. Integration using (6.5) yields
+
+$$
+\int\operatorname{TV}(Q,P_{p,r})\,d\nu_p
+\le[1+z+z^2+(1+z)\lambda+\lambda^2]\Phi=M_r\Phi.
+\tag{6.13}
+$$
+
+At suspension the complete residual equation gives
+$W(E_\beta)=1-v+vAg$. By (6.10), its signed difference from
+$1-r+rc$ is precisely TV. Therefore
+
+$$
+\operatorname{TV}(W,P_{\beta,r})=(1-c)y+vAF.
+\tag{6.14}
+$$
+
+Transport (6.11) with the same B marginal to get
+$\Phi\ge(1-r)\int y\,d\nu_\beta$. The A marginal and $v\le b$ give
+
+$$
+\int\operatorname{TV}(W,P_{\beta,r})\,d\nu_\beta
+\le\left(\frac{1-c}{1-r}+b\right)\Phi\le M_r\Phi.
+\tag{6.15}
+$$
+
+The middle coefficient is $37/30$ for a and $22/15$ for b;
+$M_r$ minus that coefficient is respectively $1763/4050$ and
+$1309/5625$. Equations (6.9), (6.13) and (6.15) prove (6.2).
+All nonlinear TV expressions were reduced by their actual coordinate
+signs before any integration. In particular no sampled successor was
+replaced by a conditional barycentre inside TV, and neither
+$\operatorname{TV}(\nu_s,\delta_{P_{s,r}})$ nor TV of an averaged
+configuration law appears. $\square$
+

@@ -1,0 +1,121 @@
+**Theorem 67.5 (Attained nonatomic truthful row with no totally bounded sharp-cap prepared range).** For every $h\in(0,1)$ and every allowed profile $b$, there is one fixed full-original-source problem with all target probabilities nonatomic and row
+
+$$
+(h_y,e_y,d_y,z_y)=(h,0,0,1-h)\qquad(y\in X),
+\tag{67.14}
+$$
+
+with a positive-mass nonatomic likelihood part, $\kappa=1-h$, and original $R_\mu=h$ attained. Nevertheless every lawful family $(\lambda_y)$ satisfying $\sup_y\operatorname{TV}(\lambda_y,\mu_y)\le h$ has a range that is not TV totally bounded. No such family is contained in any fixed finite-dimensional real space of finite signed measures, in particular no density space $E$ of Section 64.
+
+**Proof.** This is an explicitly specified input subclass, on every actual source, not a restriction on the prepared laws. Write $q_i(y)=\mathbf1_{p_i\mid N(y)}$ and define from the original target specification
+
+$$
+n(y)=\min\{i:q_i(y)=0\},\qquad
+t(y)=\sum_{i\ge1}3^{-i}q_i(y)\in[0,1/2].
+\tag{67.15}
+$$
+
+Every actual integer $N(y)$ has finite prime support, so $n(y)$ is finite. Use the disjoint-union standard Borel carrier of copies of $I=(0,1)$,
+
+$$
+\Theta=\bigsqcup_{n\ge1}B_n\ \sqcup\ \bigsqcup_{j\ge1}P_j,
+\tag{67.16}
+$$
+
+with its disjoint-union Borel sigma algebra. Component labels are part of a declared tape, not source observations. Let $\pi_j$ be Lebesgue probability on $P_j$. For $t\in[0,1/2]$ put
+
+$$
+Z_t=\int_0^1e^{tu}\,du,\qquad
+k_t(s)=\frac{e^{ts}}{Z_t}\quad(s\in I).
+\tag{67.17}
+$$
+
+Let $\nu_y$ be the probability supported on $B_{n(y)}$ with density $k_{t(y)}$ there, and prescribe the entire family
+
+$$
+\mu_y=(1-h)\nu_y+h\pi_{\Omega(y)}.
+\tag{67.18}
+$$
+
+Fix the common consumer to return unknown immediately on $B_n$ and to propose the finite integer $j$ immediately on $P_j$. It uses no prime queries. Every record and every Borel restriction on the output is measurable: its actions depend only on the countable measurable component partition. Every tape terminates, so $d_y=0$. Under (67.18) proposal probability is $h$, every proposal is the correct $\Omega(y)$, and unknown probability is $1-h$. Thus (67.14) satisfies every specified allowed $b$, including $b\equiv0$. Both target components have densities on diffuse interval measures, so every target probability is nonatomic. Equal complete signatures have equal $n,t,\Omega$ in this particular input, but all original labels are still assigned their displayed laws. The quantities $n(y)$ and $t(y)$ are part of the fixed target-law specification; the preparation receives neither them, $\Omega(y)$ nor any source label, and uses only finite observed prime answers.
+
+For each $n$, the set $D_n=\{y:n(y)=n\}$ is the occupied prefix cylinder with its first $n-1$ answers positive and its $n$th answer negative. Theorem 35.2 proves its occupation and unbounded $\Omega$ in it and in every occupied further cylinder. Fix $x$ and $m\ge n(x)$. On $C_m(x)$ the component $B_{n(x)}$ is fixed, and
+
+$$
+|t(y)-t(x)|\le\sum_{i>m}3^{-i}
+=\tfrac12\,3^{-m}=:\delta_m
+\qquad(y\in C_m(x)).
+\tag{67.19}
+$$
+
+For any $t,t'$ with $|t-t'|\le\delta$, their exponentials and their integrals satisfy $e^{-\delta}\le e^{t's}/e^{ts}\le e^\delta$ and $e^{-\delta}\le Z_{t'}/Z_t\le e^\delta$. Hence
+
+$$
+k_{t'}(s)\ge e^{-2\delta}k_t(s)\qquad(s\in I).
+\tag{67.20}
+$$
+
+In any occupied cylinder, a source with $\Omega>j$ makes its target mass on $P_j$ zero. Every common submeasure therefore gives each $P_j$ zero mass and gives their countable union zero mass. At the fixed $x,m$, all targets are supported on $B_{n(x)}$ and their proposal component, so greatestness and (67.20) give
+
+$$
+(1-h)e^{-2\delta_m}\nu_x
+\le\ell_{C_m(x)}
+\le(1-h)\nu_x.
+\tag{67.21}
+$$
+
+Every cylinder common mass is at most $1-h$, and (67.21) shows that along each actual branch it tends to $1-h$. Thus $\kappa=1-h$. Theorem 67.2 at $c=1-h$ supplies a lawful family within cap $h$. More specifically, all branch masses satisfy $a_C\le c$, so the positive clipping coefficients of (67.6) equal one. Equation (67.21) makes the limiting output law in (67.7) exactly $\nu_x$. Its error is $h$, because the signed difference $\nu_x-\mu_x=h(\nu_x-\pi_{\Omega(x)})$ has disjoint positive and negative components. This invokes the already verified common-seed realization; preparation does not read or compute the infinite parameter $t(x)$ as an extra input.
+
+The original sharp expression can also be checked directly. In any occupied cylinder choose actual sources with distinct $\Omega$ tending to infinity. For any probability center $v$ on the original tapes, disjointness gives $v(P_{\Omega(y)})\to0$ along these sources. The target mass on that event is $h$, so the cylinder radius is at least $h$. At each $x$, the center $\nu_x$ and (67.19)--(67.20) give
+
+$$
+\sup_{y\in C_m(x)}\operatorname{TV}(\nu_x,\mu_y)
+\le h+(1-h)\sup_{y\in C_m(x)}
+                     \operatorname{TV}(\nu_x,\nu_y)\longrightarrow h.
+\tag{67.22}
+$$
+
+For example the density ratio bounds imply the supremal density $L^1$ difference is at most $e^{2\delta_m}-1$. Taking the unchanged $\inf_m$ at each actual $x$ and then $\sup_x$ proves $R_\mu=h$. This agrees with, and reuses, the all-source truthful-row lower bound of Theorem 61.3.
+
+To check likelihood information, form the positive original-target mixture $\sigma$ and its generated likelihood sigma algebra $\mathcal G$ of Section 59. For each $n$, select actual $y,z\in D_n$ with $\Omega(y)\ne\Omega(z)$, using unboundedness in that occupied cylinder. Their complete signatures are different. If the first differing bit is $i$, its contribution $3^{-i}$ exceeds the tail sum $\frac12\,3^{-i}$, so $t(y)\ne t(z)$. Each target has strictly positive density on its one $B_n$ piece and its one $P_{\Omega}$ piece. Modulo $\sigma$-null sets,
+
+$$
+\{f_y>0\}\cap\{f_z>0\}=B_n.
+\tag{67.23}
+$$
+
+Thus $B_n$ is likelihood measurable modulo null sets. On it, the two likelihood densities have ratio
+
+$$
+\frac{f_y(s)}{f_z(s)}
+=\frac{Z_{t(z)}}{Z_{t(y)}}e^{(t(y)-t(z))s}.
+\tag{67.24}
+$$
+
+This is an injective continuous function with a measurable inverse, and recovers $s$ from likelihood data. Every Borel subset of $B_n$ is consequently in $\mathcal G$ modulo null sets. The restriction of $\sigma$ to this component has a finite strictly positive Lebesgue density: the bounds on $k_t$ are uniform for $0\le t\le1/2$, and every occupied component has positive mixture weight. It is nonatomic. If $B_n$ is represented by the likelihood-measurable set in (67.23), restriction differs only on a null set, so the same atomlessness conclusion holds for that representative. The union of these components has mixture mass $1-h>0$. Hence $\sigma|_{\mathcal G}$ has a nonatomic part of positive mass and cannot satisfy the purely atomic hypothesis (60.1). Diffuseness of the original targets alone would not have proved this.
+
+Finally consider any lawful family $(\lambda_y)$ within cap $h$, imposing no target row, component support, absolute continuity or density-range condition on it. Fix any actual $x\in D_n$. For every integer $\ell\ge n$, Theorem 35.2 supplies an actual $y_\ell\in C_\ell(x)$ with $j_\ell=\Omega(y_\ell)>\ell$. Lemma 45.3 gives $\lambda_{y_\ell}\to\lambda_x$ in TV. The event $B_n\sqcup P_{j_\ell}$ has original target mass one, so the cap forces
+
+$$
+\lambda_{y_\ell}(B_n)+\lambda_{y_\ell}(P_{j_\ell})\ge1-h.
+\tag{67.25}
+$$
+
+For the one fixed measure $\lambda_x$, disjointness of all $P_j$ gives $\lambda_x(P_{j_\ell})\to0$. TV convergence bounds $\lambda_{y_\ell}(P_{j_\ell})$ by that quantity plus $\operatorname{TV}(\lambda_{y_\ell},\lambda_x)$, also tending to zero. Passing to the limit proves
+
+$$
+\lambda_x(B_n)\ge1-h\qquad(x\in D_n).
+\tag{67.26}
+$$
+
+This holds for every occupied $n$ and for every lawful cap-$h$ family, not only for the constructed attainer.
+
+Put $d=1-h>0$. If this family's range were totally bounded, finitely many probability centers would cover it by TV balls of radius $d/4$. For each of these centers $v$, the disjoint events $B_n$ have $v(B_n)\to0$. Choose $n$ so large that every center has $v(B_n)<d/4$, and choose an actual $x\in D_n$. Equation (67.26) gives
+
+$$
+\operatorname{TV}(\lambda_x,v)
+\ge\lambda_x(B_n)-v(B_n)>3d/4
+$$
+
+for every center, contradicting the cover. Thus the range is not totally bounded. Probabilities all have variation norm one. A probability range contained in a finite-dimensional real signed-measure space is therefore bounded there and totally bounded by equivalence of finite-dimensional norms; on differences of probabilities event-TV is half the variation norm. This contradicts the proved obstruction and excludes every such finite-dimensional range, including all fixed $E$-density ranges of Section 64. $\square$
+

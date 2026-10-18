@@ -1,0 +1,26 @@
+**Proposition 5.7 (credited strict enlargement by span four).** If
+$\min(K,L)\ge4$, a complete original graph at both caps can have
+consecutive cuts $1,5$.
+
+Proof. This is [SI, Proposition 10.7][SI]. Use a fully unfolded finite
+tree with distinct internal vertices. Query coordinate $1$ first, then
+$2,3,4,5$ in its zero subtree and $3,4,5,2$ in its one subtree.
+Finish all other coordinates in one fixed order and attach the threshold
+output at depth $n$. Each node has its fixed label and successors;
+every node is counted. Every input pays exactly $n,W$, including any
+certified suffix. At depths two, three and four, the two first-reply
+branches respectively have supports
+$\{1,2\},\{1,3\}$;
+$\{1,2,3\},\{1,3,4\}$; and
+$\{1,2,3,4\},\{1,3,4,5\}$.
+In either branch choose total counts $(1,1)$, $(2,1)$ and $(2,2)$
+at these respective depths. Such replies exist with either fixed first
+reply, remain live since $K,L\ge4$, and give the same cell with
+different supports. These depths are ambiguous. All depth-one supports
+are $\{1\}$, and all depth-five supports are $\{1,2,3,4,5\}$;
+a live depth-five history with two ones and three zeros exists.
+Thus $1,5$ are consecutive cuts. Every later depth also has one support,
+so all gaps have span at most four. This witnesses strict enlargement of
+the span-at-most-three class, without asserting a saving, a minimum in
+the terminal-gap subclass, or a new result of this volume. $\square$
+

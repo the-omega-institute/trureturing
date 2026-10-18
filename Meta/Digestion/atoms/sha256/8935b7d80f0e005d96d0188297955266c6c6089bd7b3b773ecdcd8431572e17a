@@ -1,0 +1,15 @@
+**Assumption 1.3 (paid producer and authentic continuation).** The producer
+has the source-total paid interface of [ARH, Assumption 1.3 and Proposition
+2.1][ARH]. It acquires $R$ and every listed whole endpoint at its actual epoch,
+retains all guards and signs, advances one original-root register to an
+authentic $N$ at least every recorded epoch, and exposes the complete
+accessible-state cut. Its successful retained state has exactly the fiber
+$D$. Subsequent actual actions are paid four-valued original-root reads and
+serial forward applications of $\rho$ on that same register.
+
+This is a premise about the producer and accessible-state factoring. A
+mathematical source chart, rank, equality test, selected-source witness,
+reset, reroot, clone, clock, original-version read or inverse is not an
+additional observer port. Acquisition, actual reads, updates, words,
+computation, installation, retention and output remain separate resources.
+

@@ -1,0 +1,49 @@
+### 定理 20.6（Dirichlet 能量的粗粒化收缩）
+
+若 \((R_j,S_j)\) Dirichlet 相容，则对所有 \(f\in\mathcal H_{j+1}\)，
+
+\[
+\boxed{
+\mathcal Q_j(R_jf)
+\le
+\mathcal Q_{j+1}(f).
+}
+\]
+
+#### 证明
+
+由梯度交换条件，
+
+\[
+\mathcal Q_j(R_jf)
+=
+\|G_jR_jf\|_{\nu_j}^{\,2}
+=
+\|S_jG_{j+1}f\|_{\nu_j}^{\,2}.
+\]
+
+由于 \(\|S_j\|\le1\)，
+
+\[
+\|S_jG_{j+1}f\|_{\nu_j}^{\,2}
+\le
+\|G_{j+1}f\|_{\nu_{j+1}}^{\,2}
+=
+\mathcal Q_{j+1}(f).
+\]
+
+证毕。
+
+因此，对任意相容场族 \(f_j=R_jf_{j+1}\)，有
+
+\[
+\mathcal Q_0(f_0)
+\le
+\mathcal Q_1(f_1)
+\le
+\mathcal Q_2(f_2)
+\le\cdots.
+\]
+
+这是一个纯图论和 Hilbert 空间结论。它说明图层越细，能够承载的 Dirichlet 能量不减。它没有指定能量的物理单位。
+

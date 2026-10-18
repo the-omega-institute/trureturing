@@ -1,0 +1,27 @@
+**定理 4.3（全树尾的实际标架与递推）。** 设 $\Delta>0$，置 $r=\sqrt B,s=\sqrt\Delta$ 以及
+
+$$
+g_1=b/r,\qquad g_2=K/s,\qquad g_3=N/(rs).
+$$
+
+它们是 $U_p$ 中的左手正交单位标架。令 $R$ 循环 $g_i$，则 $R$ 保持切面内叉积。若 $\nu(t)=(m,n)$、$\chi(t)=\sigma f_i\ne0$，则
+
+$$
+\begin{aligned}
+x_1&=\sigma r^m s^n g_i,\\
+x_2&=\sigma s^m(rs)^n g_{i+1},\\
+q_{j+2}&=q_jq_{j+1},\qquad q_j=|x_j|\quad(j\ge1),\\
+x_{j+2}&=\sigma(x_{j+1}\times x_j)=|x_j|R x_{j+1}\quad(j\ge1).
+\end{aligned}
+$$
+
+若 $\chi(t)=0$，全部 $x_j,j\ge1$ 为零。若 $\Delta=0$，全部 $x_j,j\ge2$ 为零。
+
+证明。$K\perp b,N=K\times b$ 且 $|N|^2=B\Delta$ 给正交单位性。叉积表为 $g_{i+1}\times g_i=g_{i+2}$，所以循环保持乘法。按叶数的结构归纳给齐次性
+
+$$
+E_{(r g_1,s g_2)}(t)=r^m s^n\chi_g(t),
+$$
+
+其中 $\chi_g$ 将 $f_i$ 换成 $g_i$，并保持零及符号。定理3.1把 $x_1$ 写为此式，$x_2$ 则使用叶对 $(s g_2,rs g_3)$。此后每次标签循环，组成按 $M$ 更新。由 $M^2=M+I$，相隔两步的每个指数是前两步指数之和，故正幅度满足乘法递推；标架表和 $\sigma^2=1$ 给带符号叉积式。零标签在正交的 $F(p)$ 处齐次求值为零，之后仍零。依赖分支的 $F^2(p)=0$ 给第二项后的全零结论。
+

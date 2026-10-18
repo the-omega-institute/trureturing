@@ -1,0 +1,50 @@
+**Theorem 79.2 (the two necessary inequalities have no overlap).** The strict system (S.158) is impossible for every parameter and center in Theorem 76.2.
+
+Proof. Reuse (S.91) directly for the relaxed capped fidelities. For completeness, the two basis tests and (S.161), with $A_\omega=\omega X^{-1}$, give
+
+$$
+\begin{aligned}
+\operatorname{Tr}[A_\omega(E_{00}+E_{11})]
+&<2(m_X+\operatorname{Tr}A_\omega-2v),\\
+2\operatorname{Tr}A_\omega+c-S_5(K_c)
+&\leq\operatorname{Tr}(K_cE)\\
+&<2(m_X+\operatorname{Tr}A_\omega-2v)+cd,\\
+J_c(X):=S_5(K_c)+2m_X-cT&>4v.
+\end{aligned}
+\tag{S.182}
+$$
+
+The lower bound is the exact rank-five allocation to this same $\widehat P=I-E$; the upper bound uses the same $q_2<d$. All these inequalities hold for one center and one conjugated defect. No separately attainable directionwise marginal is inserted into an actual implementation.
+
+At the positive weights of (S.176), the ordered list (S.177) gives $m_X=ax_{\rm w}+\beta y_{\rm w}$ and
+
+$$
+\begin{aligned}
+J_c(X)
+&=\frac{2s}{x_{\rm w}}+2ax_{\rm w}
++\frac{D_s}{y_{\rm w}}+2\beta y_{\rm w}\\
+&=4\sqrt{as}+2\sqrt{2\beta D_s}>4\sqrt T,\\
+t&>g_\beta(s):=\frac{T-s}{2}
++\frac{(\sqrt T-\sqrt{as})^2}{\beta}.
+\end{aligned}
+\tag{S.183}
+$$
+
+To obtain the last inequality, $s<T$ and $a\leq1$ give $as<T$. Thus the preceding strict comparison is $\sqrt{2\beta D_s}>2(\sqrt T-\sqrt{as})$, with both sides positive. Squaring and using $D_s=2t-\varepsilon$ proves exactly the stated bound; the reverse manipulations are valid as well.
+
+For the opposite comparison put $z=\sqrt{s/T}\in(0,1)$. Since $\varepsilon=T(1-z^2)>0$ and $d/T=(1-u)^2/\beta$, exact subtraction and cancellation of the positive $1-z$ give
+
+$$
+\begin{aligned}
+\frac{g_\beta(s)-d}{T-s}
+&=\frac12+\frac{(1-uz)^2-(1-u)^2}{\beta(1-z^2)}\\
+&=\frac12+\frac{u[2-u(1+z)]}{\beta(1+z)}\\
+&=A_u+\frac{u(1-z)}{\beta(1+z)}>A_u.
+\end{aligned}
+\tag{S.184}
+$$
+
+But (S.175) requires $t<d+A_u(T-s)$, whereas (S.183)–(S.184) require $t>g_\beta(s)>d+A_u(T-s)$. This contradiction proves Theorem 76.2.
+
+Every inversion was of an explicitly positive weight or the positive matrix $\mathcal D$; no inverse of $L$, a leading block or a marginal was used. All squarings compared positive sides, and all denominator clearings used the positive factors displayed above. The proof includes $\beta=1/2$ and applies separately to every arbitrarily small positive $\beta$, with no positive lower cutoff and no claimed uniform positive margin as $\beta\downarrow0$. The endpoint $u=1$ belongs to the polynomial lemma alone. The support dimension can be any fixed finite $k\geq2$; no limiting-rank argument is needed. $\square$
+

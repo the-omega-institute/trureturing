@@ -1,0 +1,13 @@
+**Remark 12.4 (acquisition and payment still required).** The computation
+above reuses the CAP/AIF/RCA mathematical reconstruction interfaces. It
+does not add a callable decoder to CAP. $D_i$ gives neither an actor
+token for the producer meter nor permission to invoke RCA on CAP's
+occupied verifier lanes. Even if a future paid decoder enumerates every
+eligible older ordinal, the intended one must be lawfully bound or
+acquired; a later archive cannot supply an uncommunicated intention.
+Section 13 gives a concrete growing selection requirement. A terminal
+verification/proposal route is not the nonterminal tail used above: any
+independent terminal proposal or prior input must also be acquired, and
+the terminal stopping/callability conditions proved for that route. Those
+obligations are left open. Existing terminal consumer work is preserved.
+

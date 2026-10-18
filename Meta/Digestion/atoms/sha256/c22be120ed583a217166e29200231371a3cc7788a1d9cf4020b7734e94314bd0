@@ -1,0 +1,34 @@
+**Definition 82.2 (three-label constants).** Set
+
+$$
+\begin{gathered}
+d_3=1+\alpha,\quad e_3=1+\beta,\quad D_f=W_f-V_f>0,\quad
+T_f=e_3W_f-\beta V_f,\\
+R_0=\frac{\beta(\alpha W_f-d_3V_f)}
+          {\alpha(e_3W_f-\beta V_f)}>0,\qquad
+\widehat\tau_3=\frac{2\sqrt{\alpha+\beta R_0}}{d_3+e_3R_0},\\
+\mathscr B_0=\begin{pmatrix}
+\mu_f&-V_f/\sqrt{\alpha+\beta R_0}&-W_f\sqrt{R_0}/\sqrt{\alpha+\beta R_0}\\
+-V_f/\sqrt{\alpha+\beta R_0}&V_f&0\\
+-W_f\sqrt{R_0}/\sqrt{\alpha+\beta R_0}&0&W_f
+\end{pmatrix},\\
+\mathscr R(\lambda)=
+ \frac{\beta(\alpha W_f-d_3V_f+\lambda)}{\alpha(T_f-\lambda)},
+\quad c_R(R)=\mathfrak c(\sqrt{\theta+\omega R},1,\sqrt R).
+\tag{FA.62}
+\end{gathered}
+$$
+
+The matrix $\mathscr B_0$ is PSD of rank two. Let
+$S_1=\operatorname{tr}\mathscr B_0$,
+$S_2=((\operatorname{tr}\mathscr B_0)^2-
+\operatorname{tr}(\mathscr B_0^2))/2$ and
+$\lambda_+=(S_1+\sqrt{S_1^2-4S_2})/2$ in this paragraph only.
+This is its larger nonzero eigenvalue, not the failure spectral eigenvalue
+of FA.36. Define the explicit activity
+
+$$
+A_3=\log\left(1+\frac{\lambda_+}{c_R(\mathscr R(\lambda_+))}\right).
+\tag{FA.63}
+$$
+

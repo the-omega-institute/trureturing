@@ -1,0 +1,42 @@
+**Theorem 5.1 (exact signed epoch support, existence and extraction).**
+For every input of Definition 1.2 there is a terminating construction
+of a finite affine formula $F_I(\mathbf n)$ with
+
+$$
+F_I(\mathbf n)\quad\Longleftrightarrow\quad\mathbf n\in E_I.
+\tag{NCE.13}
+$$
+
+For valid input its form is
+
+$$
+F_I(\mathbf n)=\operatorname{Chron}(\mathbf n)
+                   \land\bigvee_{b\in\mathcal A_I}Q_b(\mathbf n).
+\tag{NCE.14}
+$$
+
+The construction decides $E_I=\varnothing$ with terminating YES and
+NO outcomes, without an inhabitation premise. For every tuple accepted
+by $F_I$, it constructs one finite $t$ realizing every complete row
+and every signed link at those exact epochs. It also constructs a
+feasible tuple and such a source whenever $E_I\ne\varnothing$.
+
+Proof. Validate the finite input. On valid input apply Theorem 4.2 to
+(NCE.4), with parameters $\mathbf n$, tree variables consisting of
+the single $t$ and all the $x_{i,b}$, and guard
+$\operatorname{Chron}(\mathbf n)$. All exponents are coordinates
+$n_i\ge0$. Proposition 2.2 supplies both native correspondences.
+The source witness is the expansion of that one named source template;
+the hole values returned in the same valuation satisfy its row
+equations. No source is chosen separately for an individual row or
+link. Completeness in Theorem 4.2 keeps the original epoch tuple,
+even when it replaces the original source.
+
+Decide the Presburger sentence $\exists\mathbf n\ F_I(\mathbf n)$.
+This terminates in the empty case as well as the nonempty case. On
+a supplied accepted tuple, evaluate the finite branches, choose a
+true one, compute its rank potentials and bases, and expand its
+source. On global nonemptiness first extract an arithmetic epoch
+tuple as in Corollary 4.3, then use the same construction. There is
+no finite epoch cutoff and no unbounded negative search. $\square$
+

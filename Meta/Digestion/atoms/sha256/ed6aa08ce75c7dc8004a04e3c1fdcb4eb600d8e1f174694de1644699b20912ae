@@ -1,0 +1,40 @@
+**Proposition 280.1 (Entry ranks and actual finite words).**
+For every finite collection of distinct primes and every prescribed Boolean
+answer at each of them, there is an actual source (273.7) with precisely
+those answers. The first absent prime of every actual source is finite.
+
+**Proof.** Put $Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$.
+Modulo any prime $p$, $Q$ is invertible and, for $n\ge1$,
+
+$$
+Q^n=\begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}.
+$$
+Thus $Q^n$ is scalar exactly when $p\mid F_n$: the off-diagonal
+entries vanish, and $F_{n+1}-F_{n-1}=F_n$. The inverse image of the
+scalar subgroup under $n\mapsto Q^n$, $n\in\mathbb Z$, is a subgroup
+$z(p)\mathbb Z$. Finiteness of $\operatorname{PGL}_2(\mathbb F_p)$
+makes $z(p)>0$, and $F_1=F_2=1$ makes $z(p)\ge3$. Consequently
+
+$$
+p\mid F_n\quad\Longleftrightarrow\quad z(p)\mid n\qquad(n\ge1).
+\tag{280.1}
+$$
+This is the entry-rank criterion also stated in
+[Fibonacci Atomic Relation Generation, (363.13)](FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+The matrix argument supplies its needed prime-modulus case directly.
+
+Let $M$ be the product of the finitely many queried primes. Choose a prime
+$r>\max_p z(p)$, as large as necessary. Then no $z(p)$ divides $r$,
+so $F_r$ is invertible modulo $M$. For each prescribed one require
+$g\equiv-F_r^{-1}\pmod p$; for each prescribed zero require
+$g\equiv0\pmod p$. The Chinese remainder theorem gives one residue
+class modulo $M$. The interval
+$[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]$ contains at least $M$
+consecutive integers for all sufficiently large such $r$, since $F_r$
+grows without bound. It therefore contains a representative of this
+residue class. For this actual $(r,g)$, $1+F_rg$ is divisible by each
+prescribed positive prime and congruent to one at each prescribed
+negative prime. Both repeated and unqueried addresses have their actual
+static answers. Finally $N(r,g)$ is a positive integer, hence has only
+finitely many prime divisors. This proves finite first absence. $\square$
+

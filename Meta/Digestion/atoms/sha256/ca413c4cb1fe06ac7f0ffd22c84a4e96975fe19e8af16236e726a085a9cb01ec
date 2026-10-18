@@ -1,0 +1,91 @@
+**Theorem 92.2 (all-start killed transport and the correct Green marginal).**
+Let $\bar p_t$ be the killed heat kernel of $\bar B$ in raw measure.
+For every $t\ge0$, every bounded Borel $h$ and every original start $Y$,
+
+$$
+(e^{-tB}\pi^*h)(Y)=(e^{-t\bar B}h)(\pi Y).
+\tag{92.4}
+$$
+
+Both semigroups in this equation have their killed Markov extensions.
+For every finite signed or complex measure $\mu$,
+
+$$
+\pi_\#(\mu e^{-tB})=(\pi_\#\mu)e^{-t\bar B}.
+\tag{92.5}
+$$
+
+In particular, for every start $Y$ and $t>0$,
+
+$$
+\int_{\mathbb R}p_t(Y;(k,u,x))dx
+       =\bar p_t(\pi Y;(k,u))
+\tag{92.6}
+$$
+
+as densities. For every $\tau\ge0$ the unshifted killed fields satisfy
+
+$$
+G_\tau(Y)=\int_\tau^\infty p_t(o,Y)dt,\qquad
+\mathsf M G_\tau=\bar G_\tau
+ :=\int_\tau^\infty\bar p_t(\pi o,\cdot)dt,
+\qquad \bar B\bar G_\tau=\bar p_\tau(\pi o,\cdot).
+\tag{92.7}
+$$
+
+At $\tau=0$ the last right side is the raw unit point source
+$\delta_{\pi o}$; the field identities are nonnegative extended-integral
+identities and the source equation is distributional. At $\tau>0$ the
+source has charge $\mathbb P_{k_0}(\zeta>\tau)$, without division by that
+charge. The total mass of either field in (92.7) is
+$\int_\tau^\infty\mathbb P_{k_0}(\zeta>t)dt<\infty$.
+
+Proof. Project the actual SDE (35.2) of L, obtaining
+
+$$
+dK_t=\sqrt2\varepsilon dW_t^1,\qquad
+ du_t=\sqrt2d(K_t)dW_t^2,\qquad t<\zeta.
+\tag{92.8}
+$$
+
+Its coefficients are smooth and bounded on a larger height interval.
+Pathwise uniqueness until height exit holds, and the exit time is exactly
+the original one, independently of $x$. The projected solution from $Y$
+is therefore the solution from $\pi Y$ driven by the same two Brownian
+motions. Taking killed expectations proves (92.4) for every bounded
+Borel test, including $t=0$. Its symmetric core generator and form are
+(92.2), so this is the specified Friedrichs realization, rather than
+another boundary extension. Integrating the all-start equality proves
+(92.5), first for positive and then for signed and complex measures.
+Taking $\mu=\delta_Y$ gives (92.6). These arguments give equality of
+transition measures at every start, not only a stationary starting law.
+
+The retained system has a smooth heat density: putting
+$s_\kappa=H+\kappa$ and $\alpha_\kappa=\kappa+\kappa^2/H$, direct
+calculation from G (25.4) gives
+
+$$
+\det(d(k),d'(k))
+ =-s_\kappa\left(\frac{k-2\kappa}
+                         {2H(k-\alpha_\kappa)}\right)^2\ne0.
+\tag{92.9}
+$$
+
+Indeed $d=f(k)(s_\kappa-k,-k)$ and the determinant is $-s_\kappa f^2$.
+The allowed fixed parameter interval has $s_\kappa>0$, positive
+probabilities and no denominator zero. Thus $\partial_k,R,[\partial_k,R]$
+span the retained tangent space. This verifies the local smoothing
+hypothesis for this quotient. Density equality (92.6) is sufficient
+almost everywhere in the target; all-start factorization itself is the
+stronger measure statement (92.4).
+
+Tonelli now proves (92.7)'s field equality. Testing the retained heat
+equation against $\varphi\in C_c^\infty(\mathcal B)$ and integrating in
+time gives its source equation. The term at infinity vanishes: the
+absolute expectation of a bounded test is at most its supremum times
+the killed height survival probability, which decays exponentially by
+the interval Dirichlet expansion. That expansion also proves the finite
+mass assertion and the stated source charge. The limit at time zero is
+the point evaluation at $\pi o$. There is no threshold factor in (92.7).
+$\square$
+

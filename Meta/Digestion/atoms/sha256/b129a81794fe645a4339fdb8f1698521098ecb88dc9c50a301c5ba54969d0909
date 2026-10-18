@@ -1,0 +1,37 @@
+**Theorem 62.7 (a derived density phase with three retained auxiliaries).** Let $p\ne q$ be two public address wires, and put
+
+$$
+F_{ab}=P_a(1,\pi/2)P_b(1,\pi/2)B_{ab}(1,\pi/2).
+\tag{62.15}
+$$
+
+Products act rightmost first. This is the full matrix which swaps $01,10$, fixes $00$, and negates $11$. Let $C_{cp}$ be the chronological word
+
+$$
+F_{cu},\ F_{cp},\ F_{cv},\ F_{cu},\ F_{cp},\ F_{cv},\ F_{cp}.
+\tag{62.16}
+$$
+
+On $u=v=0$, it returns both auxiliary bits to zero and acts as $(-1)^{n_cn_p}$ on $c,p$. Define
+
+$$
+U_{pq}=B_{qc}(1,\pi/4)\,C_{cp}\,B_{qc}(1,-\pi/4)\,C_{cp}.
+\tag{62.17}
+$$
+
+On the clean input $c=u=v=0$,
+
+$$
+U_{pq}^*P_c(1,\xi)U_{pq}
+=e^{-i\xi n_pn_q},
+\tag{62.18}
+$$
+
+with all three auxiliaries returned to zero and every original state phase preserved. Its expanded chronological word has exactly 89 $P/B$ angle blocks. The reference wire is untouched. The signs and angles in (62.15)–(62.18) describe a real-angle reference, not an exact signed-dyadic catalog or a free inverse.
+
+Proof. A hop of angle $\pi/2$ multiplies each single-occupation swap by $i$. The two phases multiply that swapped excitation by $-i$ and multiply $11$ by $(-i)^2=-1$, proving (62.15) on all four inputs. This is precisely the mature fermionic-swap matrix of Brod–Childs equation(4), consumed from [the matchgate note](../../../Library/QuantumStates/brodchilds2014matchgates.md); it does not change the statistics of the old literal hopping generator.
+
+Track (62.16) on its four clean inputs. With zero or one excitation every swap has sign one and returns the input bits. With $c=p=1$, the occupied pairs are successively $\{u,p\},\{u,c\},\{u,v\},\{c,v\},\{p,v\},\{p,c\},\{p,c\}$. Only the final swap has both endpoints occupied, so it contributes exactly minus one. This proves the clean controlled sign by linearity, including entanglement with every untouched wire.
+
+If $p=0$, the two $C$ factors in (62.17) act as identity and the two $B$ factors cancel. If $p=1$, they act as $Z_c$, and $Z_cB_{qc}(-\pi/4)Z_c=B_{qc}(\pi/4)$ on the single-occupation space. Thus $U$ moves $q=1,c=0$ to $q=0,c=1$ with phase $i$, while fixing the joint vacuum. At this cut $n_c=n_pn_q$ on all four clean input columns. Applying $P_c(\xi)$ and then the explicitly reversed, negated 44-block word returns the complete input with precisely the phase in (62.18). Each $C$ uses $7\cdot3=21$ blocks, so $U$ uses 44 and (62.18) uses $44+1+44=89$. The auxiliaries are shared sequentially between pair words, never measured, projected or reset. $\square$
+

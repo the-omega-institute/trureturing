@@ -1,0 +1,36 @@
+### 57.4 Complete complement trees
+
+Use the finite recursive grammar
+\[
+\mathscr T ::= a\mathscr T\mathscr T
+\ \mid\ I\mid H\mid G\mid L\mid i\mid h\mid g\mid l\mid E,
+\qquad a\in\{0,1,2,3\}.                                  \tag{57.30}
+\]
+Digits specify midpoint bisection in the coordinate order
+\((e,s,t,v)\), followed by the left and right child. Uppercase
+\(R\in\{I,H,G,L\}\) means \(\min_\nu\ell_\nu>0\) for that row;
+lowercase means \(-\max_\nu q_\nu>0\) for the corresponding row.
+The distinct terminal \(E\) means that the entire leaf lies in
+\[
+0\le e\le1/16,\qquad
+-21/80\le s\le-11/80,\qquad
+-37/80\le t\le-27/80,                                    \tag{57.31}
+\]
+where Lemma 57.2 excludes all zeros except the transverse origin.
+The \(v\) interval is unrestricted within the root interval.
+
+Whitespace in each following tree is ignored, and parsing must consume
+its complete word. Thus each tree covers the entire root cube,
+including all boundaries and overlaps. Together with (56.4),
+(57.23), and the rational rules (57.20), (57.26)–(57.30), the words
+specify every leaf and every sign comparison without additional data.
+The exact counts and bounds are:
+
+| Chart | Nodes | Leaves | Endpoint leaves \(E\) | Maximum depth | Positive sign gaps |
+| --- | ---: | ---: | ---: | ---: | --- |
+| F | 31697 | 15849 | 115 | 42 | \(>2^{-7}\) |
+| Q | 84153 | 42077 | 143 | 43 | \(>2^{-13}\) |
+
+Each non-\(E\) comparison is strictly positive. Each \(E\) leaf
+satisfies all three closed rational interval inclusions (57.31).
+

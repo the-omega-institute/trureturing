@@ -1,0 +1,33 @@
+**Proposition 11.2 (conditions for importing the original handoff).**
+After a routing extension of RA, Proposition 6.1's row-only interface
+is available if the original §4 cleanup is completed and either of the
+following additional conditions is satisfied: all remaining accessible
+routing fields are canonically reset to functions of $P,R$ by paid
+finite cleanup; or every residual field not so determined is excluded
+from later access. This includes ready-bank direction and phase even
+when both banks' unused parts and all flags are already zero.
+Any routing during cleanup must itself satisfy Assumption 8.2 and
+must not reopen access to cleared data.
+
+Proof. Original cleanup leaves only the declared row, public cut and
+source-independent control. The extra condition makes every additional
+accessible field a function of those same data, or removes it from
+the accessible interface. Taking their product gives (CWS.17).
+Finite cleanup under observer progress completes without changing
+the accepted bytes; writer updates during it remain genuine updates
+after validation. Thus the validation endpoints and the row-value
+inputs required in Proposition 6.1 retain their meanings.
+
+For finitely many chronological calls, the overlap implications of
+[CNA, Theorem 8.3][CNA] apply to these authentic row values. Its
+attainability argument is also retained: pause the writer during each
+call and its finite routing/cleanup, and insert the prescribed finite
+update bursts between calls. No row-only collision family is lost.
+The source itself, source-port internals and writer workspace remain
+separate charged components and are not secretly handed over.
+
+If reset is required, existence and cost of the reset operations are
+an additional interface obligation. The two-bank table at a halt does
+not automatically execute them. Merely projecting away a field in a
+proof leaves any accessible physical value present. $\square$
+

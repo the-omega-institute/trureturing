@@ -1,0 +1,10 @@
+**Corollary 5.5 (finite-cap structural price).** For every $H\ge3$, choosing
+$m=\lfloor H/3\rfloor$ gives $b+q\ge\lfloor H/3\rfloor$ for exact
+structural recovery in the augmented label/literal contract, despite arbitrary
+authentic numerical archive work. The unchanged numerical-only observer fails
+already at $H=3$.
+
+Proof. Use the actual family (DAF.2) with $3m\le H$ and Theorem 5.1. With
+$b=q=0$ its two $m=1$ members have equal complete numerical observations and
+different literal responses at $L$.
+

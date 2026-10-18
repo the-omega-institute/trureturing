@@ -1,0 +1,4 @@
+**引理 41.4（一次实际更新的叶语法）。** 对任意 $z\in\mathcal T$，$\rho z$ 的每个 $\alpha$ 叶都位于一个以 $R$ 结尾的非空地址。因此任意实际 $N\ge1$ 的 $\rho^N u$ 都没有根 $\alpha$ 或左孩子 $\alpha$。
+
+证明。原 $\alpha$ 变成 $\beta$，原 $\beta$ 变成 $\langle\beta,\alpha\rangle$，新 $\alpha$ 恰在该对的右孩子；配对只在子地址前加前缀。对原树作结构归纳即得一次更新的结论，取 $z=\rho^{N-1}u$ 得后句。这与 `ActualTreeReadoutAcquisition.source_foundation` 中一次替换满足 `alphaValid` 的分句一致；`ActualImageAddressCertificate.no_left_alpha` 本身使用第三像 `Positive`，不把那个更强假设冒充 $N=1$ 的供应。$\square$
+

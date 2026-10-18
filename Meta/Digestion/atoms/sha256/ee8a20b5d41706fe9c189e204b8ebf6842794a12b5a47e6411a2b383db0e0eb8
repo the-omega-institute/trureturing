@@ -1,0 +1,30 @@
+**Proposition 10.2 (A full-support rank-five state with rational energy).**
+For the six-site example of Proposition 9.4, set every
+activity to one, every weight to $1/6$, and both phases
+to $-1$. There are 21 legal words, and
+
+$$
+\mu_{1,6}=\frac17,\qquad \mu_{2,5}=\frac1{21},\qquad
+\langle\psi_\chi,H\psi_\chi\rangle=\frac8{63}.
+\tag{10.2}
+$$
+
+All 21 original probabilities are unchanged and nonzero.
+Its cut rank is five. The two joint occupation events
+are mutually exclusive, so on this carrier
+
+$$
+\chi(S)=1-2s_1s_6-2s_2s_5.
+\tag{10.3}
+$$
+
+Proof. The independent-set count is $F_8=21$. Occupying
+both endpoints $1,6$ leaves the legal two-site interval
+$3,4$, which has three configurations. Occupying $2,5$
+forces all their neighbors empty and leaves only one
+configuration. Each deletion rate is $1/12$, so (10.1)
+gives $4(1/7+1/21)/6=8/63$. The joint events cannot
+coexist, because that would occupy both $1,2$ and both
+$5,6$. Expanding their two sign factors yields (10.3).
+Proposition 9.4 gives the rank. $\square$
+

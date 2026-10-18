@@ -1,0 +1,20 @@
+### 命题 29.5（经典随机读出的 Fisher 收缩可由 CPTP 读出实现）
+
+令 \(p_\theta\) 是 FIB 概率族，令 \(W\) 为随机核。对角提升满足
+
+\[
+\mathcal E_W(\iota_\Sigma(p_\theta))
+=
+\iota_A(Wp_\theta).
+\]
+
+因此输出 Fisher 信息正是前文定理 5.2 的 \(\mathcal I_{\mathrm{out}}\)，并满足
+
+\[
+\mathcal I_{\mathrm{out}}\le\mathcal I_{\mathrm{in}}.
+\]
+
+证明只使用定理 29.3 和定理 5.2。这里的结论是测量后经典 Fisher 信息的收缩，不等同于尚未定义的量子 Fisher 信息。
+
+---
+

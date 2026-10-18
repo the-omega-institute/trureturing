@@ -1,0 +1,4 @@
+**Proposition 20.2 (a concrete singleton family).** For every $m\ge0$ the positive history $X^m s_1c_1c_0c_0$ lies in the $100$ slice with $(A,B)=(2m+3,3)$ and $F(A,B)=1$. Its exact acquired rank is zero at every prefix, and the added count-only acquisition workspace is $O(\log(m+2))$ bits. Retaining its literal rejection word instead uses $m$ data bits before metadata and output.
+
+Proof. In (SC.8), $B-3=0$ forces $j=0,q=0,p=m$, giving the sole summand one. Theorem 19.3 bounds every earlier dictionary by one, so every rank and every queried nonzero block count is at most one. In Theorem 20.1 only the count/index widths then grow. This is a source-realized representation saving on a specific family; it does not improve the unrestricted linear worst-case order or price original source storage and chronological output. $\square$
+

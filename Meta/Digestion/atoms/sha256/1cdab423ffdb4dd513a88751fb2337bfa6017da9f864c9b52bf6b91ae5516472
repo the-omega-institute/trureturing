@@ -1,0 +1,8 @@
+## 4. The entire two-body marginal fiber
+
+Define
+
+$$R=\begin{pmatrix}1/6&0&0&0\\0&1/3&-1/6&0\\0&-1/6&1/3&0\\0&0&0&1/6\end{pmatrix}=\frac16I_4+\frac13|\psi_-\rangle\langle\psi_-|.$$
+
+Every one of the six two-qubit marginals of H_+ and H_- equals this same real matrix. Also <H_+|H_->=0.
+

@@ -1,0 +1,21 @@
+### 18.1 GraphToDirichletLimit
+
+输入：
+\[
+(V_j,E_j,\mu_j,B_j,Q_j)_{j\ge0}.
+\]
+必需假设：
+
+1. 每个 \(Q_j\) 是有限图上的非负二次型，并满足 Markov 收缩性质；
+2. 存在共同 Hilbert 宿主空间 \(\mathcal H=L^2(X,\mu)\) 及明确的比较映射；有限维像外可将能量延拓为 \(+\infty\)；
+3. 对候选极限 \(\mathcal Q\) 证明 Mosco liminf；
+4. 对每个 \(u\in D(\mathcal Q)\) 给出强恢复序列；
+5. 证明 \(\mathcal Q\) 闭、定义域稠密，并证明比较映射允许将 Markov 收缩性质传递到极限；
+6. 若需从给定能量序列抽取收敛子列，另给相应的紧性条件；若声称离散特征值收敛，另给统一紧嵌入或 compact spectral convergence 条件。单个极限算子具有 compact resolvent 不能代替整列的紧性证明。
+
+输出：
+\[
+\mathrm{DirichletFormLimit}(\mathcal Q,\mathcal H),
+\]
+并可进一步输出热半群或 resolvent 收敛。连续坐标、黎曼流形、物理时间和量子 Hamiltonian 均不包含在此输出中。
+

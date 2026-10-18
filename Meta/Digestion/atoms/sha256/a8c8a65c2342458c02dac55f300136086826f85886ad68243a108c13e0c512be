@@ -1,0 +1,58 @@
+**Proposition 7.1 (credited initial branch and identified contact).** Let
+$t_\dagger$ be the least active discriminant zero of JR.142–143, and
+$\tau_\dagger=h(t_\dagger)$ in JR.141. JR54 and RC63 give
+
+$$
+\bar\tau<\tau_\dagger<\tau_3,
+\qquad J(\tau)=\operatorname{tr}G-2\phi(\tau),\qquad
+\mathcal T(s_0\tau)=T_{\rm flat}-\phi(\tau),
+\quad \bar\tau\leq\tau\leq\tau_\dagger,
+\tag{RH.54}
+$$
+
+where $\phi(\tau)=F(\tau)^TGF(\tau)$ for Theorem 6.1's frame.
+Throughout this closed interval the optimal grouped tuple is uniquely
+
+$$
+X_{-,-}=FF^T,\qquad X_{+,+}=UU^T,\qquad
+X_{-,+}=WW^T,\qquad X_{+,-}=0.
+\tag{RH.55}
+$$
+
+JR54 supplies uniqueness before the contact; RC62–63 supplies it also
+at the contact. RC's complete-source comparisons identify the first
+factor and give
+
+$$
+\begin{gathered}
+1.04175447537<t_\dagger<1.04175447539,\qquad
+.9962433511188<\tau_\dagger<.9962433511192,\\
+d_+(t_\dagger)=0,\quad d_+'(t_\dagger)<0,\quad
+ d_-(t_\dagger)>0,\quad d_N(t_\dagger)>0,\\
+.0460291518<\lambda_\dagger<.0460291520,\qquad
+.0081796784563<J(\tau_\dagger)<.0081796784566.
+\end{gathered}
+\tag{RH.54a}
+$$
+
+These are named conditional RC comparisons, not newly executed
+arithmetic. The zero is a genuine support transition, as specified in
+Proposition 7.5. Definition 5.1 gives a matching eleven-label instrument
+with exactly three actual low live-bearing labels on the whole closed
+initial branch.
+
+Proof of correspondence. JR54's positive-positive-negative vector has
+unit norm, is $Q$-null and has $01$ product $\tau/2$. Its squared
+coordinates therefore solve the two linear relations and positive
+quadratic root in RH.46–48. Hence its projector is $UU^T$. The
+compression of $Q$ to $U^\perp$ is nonzero traceless, with exactly two
+real null lines. Both parameterizations continue the same initial
+negative line $v$; continuity selects $FF^T$ and the remaining line
+$WW^T$. The strictly increasing JR parameter $h(t)$ maps its certified
+interval to the stated one. JR.144–152 supplies the initial value and
+interior uniqueness. RC.37–46 identifies its endpoint and proves the
+unique aggregate there and the gluing to the next branch. Theorem 5.2
+supplies the actual common realization. None of these reused branch,
+discriminant or gluing results is a new claim of this companion.
+$\square$
+

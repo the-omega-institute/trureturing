@@ -1,0 +1,31 @@
+### 86.6. Original output leakage and normal quadratic growth
+
+The previous computation extends to the full comparison space X; it does not assume perturbations remain calibrated. At a calibrated base isometry the correct-output part of any tangent satisfies the individual Stiefel tangent equations. Choose a calibrated curve with these same correct-output first derivatives. For the B side choose the corresponding block-diagonal unitary curve. Such a choice is possible because the first derivative of each correct block is tangent to its local frame manifold. The original full tangent may also have wrong-output blocks.
+
+The first derivative of F with respect to arbitrary variations of the correct records at the base is
+
+    dF=-(1/4)sum_(f,i) Re[<a_fi^0,da_fi>
+                                +<b_fi^0,db_fi>].          (20)
+
+To check this, dF=-(1/4)Tr(P_0 dK), and in either fixed-bit sector the other party's tight Gram sends the base record-column matrix to twice itself. Differentiating the Gram gives Tr(P_0 dK)=sum Re of the displayed record inner products. Wrong-output records do not enter K and have zero direct first derivative.
+
+Write a curve as V_0+tV_1+t^2 V_2+o(t^2), without a factorial in V_2. Comparing its isometry normalization with that of the calibrated curve having the same correct V_1 gives, fibrewise,
+
+    A_f^0{}^* Delta A_(2),f+Delta A_(2),f^* A_f^0
+       =-sum_(g!=f) L_(g f)^* L_(g f),
+
+where L_(g f) are the first-order wrong-output blocks; the same identity holds for B. All mixed second-derivative terms of F agree between the two curves because their correct first derivatives agree. Equation (20) therefore gives for the t^2 coefficients
+
+    q_full=q_calibrated
+              +(||L_A||_F^2+||L_B||_F^2)/8.              (21)
+
+This includes arbitrary environment components of the A tangent; those inside the correct output blocks were already included in the d-dimensional calibrated calculation. The full comparison Hessian is positive semidefinite by (6). Equation (21) shows that its kernel forces both wrong-output tangents to vanish and then is exactly the calibrated kernel T M. Hence
+
+    ker Hess_X F at the base = T M.                       (22)
+
+This proves the needed local quadratic growth by an elementary normal-coordinate argument. The Hessian is positive definite on the normal space to M at the base. The same lower bound, with a possibly smaller positive constant, holds on normal spaces at nearby points of M by continuity. Both F=1/4 and dF=0 on M. Taylor expansion in tubular normal coordinates, uniformly on a small neighborhood, consequently gives
+
+    F(x)>=1/4+c rho(x)^2,   c>0,                          (23)
+
+where rho(x) is the distance to M in any fixed smooth local metric on X. Equivalently this is a local Morse--Bott minimum. No general Morse--Bott theorem is required beyond the stated normal-coordinate Taylor argument.
+

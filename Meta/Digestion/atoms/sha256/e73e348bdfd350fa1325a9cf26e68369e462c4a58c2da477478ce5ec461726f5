@@ -1,0 +1,11 @@
+**定义 185.1（有序词对递推）。** 在同一正词域取
+
+$$
+h_0=ab,\quad g_0=ba,\qquad
+h_{r+1}=h_rg_r,\quad g_{r+1}=g_rh_r,\qquad r\ge0.
+$$
+
+这里递推的是有序词对，不是 $\rho$ 替换。每一步连接两个已经定义的词，不调用未知实际输入的交换动作。后面把这对词再同步施加 $\rho^n$。
+
+二进有限差分及 Prouhet–Thue–Morse 乘积是经典中间机制，采用 Hieu D. Nguyen，[*A New Proof of the Prouhet-Tarry-Escott Problem*，arXiv:1411.6168v1，§1式(6)、§2定理2式(10)、定理3，pp.2–6](https://arxiv.org/abs/1411.6168v1)。其 $p=2,A=(1,-1),N=r$ 给所用乘积；定理2要求 $r\ge1$，定理3取 $N=M+1,M\ge1$。这里 $r=0$ 的空乘积及 $r=1$ 的零阶消去分别直接处理。Richomme v1，§6.2，p.30 也使用经典 Thue–Morse 块；本章的结论是这些正叶词的完整方格差异及它在 FIB 地址运输下的保持。
+

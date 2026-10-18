@@ -1,0 +1,135 @@
+## 117. 原占位基中的固定对角实投影
+
+**定义 C-117.1（两个底面读数）。** 在五模式上定义自伴算子
+
+$$
+\begin{aligned}
+K_1&=|0\rangle\langle1|+|1\rangle\langle0|
+-|3\rangle\langle13|-|13\rangle\langle3|
+=\iota(X_A\otimes Z_B)\iota^\dagger,\\
+K_2&=|0\rangle\langle3|+|3\rangle\langle0|
+-|1\rangle\langle13|-|13\rangle\langle1|
+=\iota(Z_A\otimes X_B)\iota^\dagger.
+\end{aligned}
+\tag{C117.1}
+$$
+
+两者在 $|2\rangle$ 上为零。这里 $X,Y,Z$ 为 Pauli 算子，
+区别于 C-94 的占位均值 $X,Y,Z$ 时加下标标明因子。
+设 $C_{ij}=\langle j|\rho|i\rangle$，对 $r>0$ 定义
+
+$$
+\begin{aligned}
+u&=\operatorname{Tr}(\sigma X_A\otimes Z_B)
+=\frac2r\operatorname{Re}(C_{01}-C_{3,13}),\\
+v&=\operatorname{Tr}(\sigma Z_A\otimes X_B)
+=\frac2r\operatorname{Re}(C_{03}-C_{1,13}).
+\end{aligned}
+\tag{C117.2}
+$$
+
+**定理 C-117.2（同一完整对角上的正方形与菱形）。**
+任意底面态在 $(u,v)$ 平面的像恰为 $[-1,1]^2$；
+底面可分离态的像恰为 $|u|+|v|\le1$。
+对于每个固定 $0<r<1$，这两个完整投影区域仍能分别在同一五模式对角
+
+$$
+p^{(r)}=(r/4,r/4,1-r,r/4,r/4)
+\tag{C117.3}
+$$
+
+上达到。它们是读数映射的像，不是全部密度态空间或可分离态空间的识别。
+
+证明。由 Pauli 反对易关系
+$XZ=-iY$、$ZX=iY$，两个局部负号抵消，故
+
+$$
+K_1^2=K_2^2=P_{\mathrm b},\qquad
+K_1K_2=K_2K_1=\iota(Y_A\otimes Y_B)\iota^\dagger.
+\tag{C117.4}
+$$
+
+因此每个条件期望均在 $[-1,1]$。
+为在原占位基中给出全部达到态，取 $s,t\in\{-1,1\}$，置
+
+$$
+\begin{aligned}
+|G_{st}\rangle&=(|0\rangle+s|1\rangle+t|3\rangle-st|13\rangle)/2,\\
+\Pi_{st}&=\tfrac14(P_{\mathrm b}+sK_1)(P_{\mathrm b}+tK_2)
+=|G_{st}\rangle\langle G_{st}|.
+\end{aligned}
+\tag{C117.5}
+$$
+
+直接逐项作用得 $K_1G_{st}=sG_{st}$、$K_2G_{st}=tG_{st}$。
+四个向量归一且互相正交，故右侧确为四个秩一联合谱投影；
+每个在原底角 $0,1,3,13$ 上的对角均为 $1/4$。
+给定任意 $(u,v)\in[-1,1]^2$，令
+
+$$
+q_{st}=\frac{(1+su)(1+tv)}4,\qquad
+\sigma(u,v)=\sum_{s,t}q_{st}|G_{st}\rangle\langle G_{st}|.
+\tag{C117.6}
+$$
+
+权重非负、和一，并有 $\sum s q_{st}=u$、$\sum t q_{st}=v$。
+因此该态达到读数且原占位对角均匀。
+
+对一个乘积底面态，设两侧 Bloch 向量为
+$(x_A,y_A,z_A)$、$(x_B,y_B,z_B)$，各自 Euclidean 范数不超过一。
+于是 $u=x_Az_B$、$v=z_Ax_B$，Cauchy–Schwarz 给
+
+$$
+|u|+|v|\le
+\sqrt{x_A^2+z_A^2}\sqrt{z_B^2+x_B^2}\le1.
+\tag{C117.7}
+$$
+
+凸混合及三角不等式将此界推广到所有可分离态。
+反向令 $\sigma_{j,\varepsilon}=(I_{\mathrm b}+\varepsilon K_j)/4$
+（此处 $K_j$ 限于底面），$\varepsilon=\pm1$。
+例如以 $P_L^\pm=(I\pm L)/2$ 记局部谱投影，有
+
+$$
+\begin{aligned}
+\sigma_{1,\varepsilon}
+&=\tfrac12(P_X^\varepsilon\otimes P_Z^+
++P_X^{-\varepsilon}\otimes P_Z^-),\\
+\sigma_{2,\varepsilon}
+&=\tfrac12(P_Z^+\otimes P_X^\varepsilon
++P_Z^-\otimes P_X^{-\varepsilon}).
+\end{aligned}
+\tag{C117.8}
+$$
+
+它们分别达到 $(\varepsilon,0)$ 与 $(0,\varepsilon)$，可分离且原占位对角均匀。
+任意菱形点可取这些顶点和 $I_{\mathrm b}/4$ 的凸组合，
+例如权重 $|u|,|v|,1-|u|-|v|$，符号按非零读数选择。
+最后将每个构造嵌入
+$\rho=(1-r)|2\rangle\langle2|+r\sigma$，便给 (C117.3)。证毕。
+
+两生成元线性见证 $I-X_AZ_B-Z_AX_B$ 消费 Tóth–Gühne，
+*Entanglement Detection in the Stabilizer Formalism*，
+[quant-ph/0501020v2](https://arxiv.org/abs/quant-ph/0501020v2)，式 (35)–(36)
+的 $N=2$ 情形。相关几何的成熟前置亦见 Horodecki–Horodecki，
+*Information-theoretic aspects of quantum inseparability of mixed states*，
+[quant-ph/9607007v1](https://arxiv.org/abs/quant-ph/9607007v1)，Propositions 3–4
+的 Bell 对角四面体和可分离八面体。这里的固定对角达到性由 (C117.5)–(C117.8)
+在原占位基中证明，不以局部 Clifford 换基后的对角性质代替。
+
+**推论 C-117.3（固定概率圆与非平凡相干读数并存）。**
+对 (C117.3) 的全部达到态，C-94 的均值及隐藏概率都是
+
+$$
+X=Y=r/2,\qquad Z=1-r,\qquad\kappa=r/4,\qquad
+r\kappa-XY=0,\qquad
+\eta=\frac18\log\frac{p_0p_{13}}{p_1p_3}=0.
+\tag{C117.9}
+$$
+
+因此原概率关联椭圆始终满足其圆条件，而相干实读数仍可遍历整个正方形。
+
+证明。将 (C117.3) 代入 C-94.1 和 C-84.7 即得。
+$\eta$ 只依赖对角，不能区别定理 C-117.2 的不同非对角达到态；
+概率圆条件没有将混态集合或它的读数像变成一个圆。证毕。
+

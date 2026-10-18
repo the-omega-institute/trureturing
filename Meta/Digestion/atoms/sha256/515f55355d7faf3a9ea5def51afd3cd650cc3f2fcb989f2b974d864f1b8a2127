@@ -1,0 +1,22 @@
+**定义 A-16.4（终端三胞胎消费者）。** 对定义 A-15.1 的偏移和同一模数，令
+
+
+```math
+\Phi_{\mathcal{\text{ℋ}},\mathfrak{\text{𝔪}}}(r_0)=\prod_{p\mid\mathfrak{\text{𝔪}}}\mathbf{\text{𝟏}}_{r_0+h\not\equiv0\ (p)\ \forall h\in\mathcal{\text{ℋ}}}.
+```
+
+
+所需来源候选数为
+
+
+<table><tbody><tr><td>
+
+```math
+\sum_{s,c}D_L(s,c)\sum_{e\in\{0,1\}:\ se=0}\Phi_{\mathcal{\text{ℋ}},\mathfrak{\text{𝔪}}}(qc+e).
+```
+
+</td></tr></tbody></table>
+
+
+此消费者保留同一历史的 $`s`$、两组成余数及单位闭合，不以分别可达的局部余数虚构整数源。
+

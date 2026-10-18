@@ -1,0 +1,29 @@
+**Lemma 4.1 (complete singular locus and conventions).** In coefficient
+order $(D,T,S)$ set
+
+$$
+\begin{gathered}
+K(z)=uD+vT+wS=\begin{pmatrix}
+h_0u&av&cw\cr bv&h_1u&0\cr d_{\rm src}w&0&h_2u
+\end{pmatrix},\quad
+B_0=\operatorname{diag}(1,-\alpha,-\beta),\quad
+X_c=|D\rangle\langle T|+|T\rangle\langle D|,\\
+\Theta(Z)=\sum_{i,j}Z_{ij}K_j^\dagger K_i,\qquad
+\mathcal Z=\{u=0\}\cup\{u^2-\alpha v^2-\beta w^2=0\},\\
+\mathcal C_2=\left\{\sum_{a=1}^N z_az_a^\dagger:z_a\in\mathcal Z,
+\ N<\infty\right\}.
+\end{gathered}
+\tag{AS.22}
+$$
+
+Then $\det K=h_0h_1h_2u(u^2-\alpha v^2-\beta w^2)$.
+Every nonzero singular product has rank exactly two: for $u\ne0$
+the $1,2$ minor is $h_1h_2u^2\ne0$; for $u=0$, column zero in
+rows one/two and a nonzero row-zero column are independent. Thus the
+entire complex plane and quadratic component are included. Also
+$\operatorname{tr}(CZ)=\operatorname{tr}(\Theta(Z)\rho)$.
+For output-input Choi columns $\mathcal V=(|K_i\rangle\!\rangle)_i$,
+the coefficient Choi is $\mathcal VZ\mathcal V^\dagger$ with output
+partial trace $\Theta(Z)^T$. These index and transpose conventions
+follow by expanding each matrix unit. $\square$
+

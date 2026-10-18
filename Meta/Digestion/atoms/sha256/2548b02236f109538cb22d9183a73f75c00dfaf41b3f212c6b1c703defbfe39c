@@ -1,0 +1,12 @@
+## 461. 变化秩问题的既有固定参数输入
+
+固定禁素集的限制最大阶直接由 Tóth–Wirsing (2003), Corollary 2 给出。
+[增长模数文献笔记的固定参数应用](../../../Library/ArithSums/fibaffine2026growingmoduli.md)
+记录原文、$f(n)=\sigma(n)/n$、$S=\{p:p\mid m\}$ 的参数对应，及其
+对 $1+F_rg$ 的固定秩消费者。该已发表输入同时给出固定 $m$ 的严格
+尾部和因子 $c_m=\prod_{p\mid m}(1-p^{-1})$；本卷不重证它。
+
+下面 §462 需要研究的是这个固定参数因子在 $m=F_r$ 变化时的退化，
+以及同一变化秩候选的完整 Robin 预算。固定秩的
+$\forall r\,\exists G_r\,\forall g\ge G_r$ 不能交换成共同阈值。
+

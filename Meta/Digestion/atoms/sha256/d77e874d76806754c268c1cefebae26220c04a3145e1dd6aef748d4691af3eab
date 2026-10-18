@@ -1,0 +1,50 @@
+**Proposition 6.5 (No uniform identifiable neighborhood).**
+For any positive law on $B_n$, the fixed menu of Definition
+5.1 gives the same recorded distribution on all rays
+
+$$
+\psi^\sigma=\sum_{s\in B_n}\sigma_s\sqrt{p_s}\,e_s,
+\qquad \sigma_s\in\{-1,1\}.
+\tag{6.18}
+$$
+
+There are $2^{|B_n|-1}$ distinct rays in this displayed
+family. For the law (6.1), flipping only the vacuum sign
+gives a distinct ray with the same distribution, represented
+at distance $2\sqrt{\epsilon/(M+\epsilon)}$ from the positive
+reference. Thus no fixed positive-radius neighborhood of
+these references is identifiable uniformly as
+$\epsilon\downarrow0$, despite the positive limiting local
+information ratio of Theorem 6.2.
+
+Proof. On a pair the two quadrature probabilities at
+(6.18) are
+
+$$
+\frac12\left|\sigma_s\sqrt{p_s}
+\mathbin{\pm} i\sigma_t\sqrt{p_t}\right|^2
+=\frac{p_s+p_t}{2}.
+\tag{6.19}
+$$
+
+Mode-basis and blocked-word probabilities remain $p_s$.
+Recorded setting probabilities are state-independent,
+so the entire distribution is unchanged for every $r$
+and $\omega$. Full support makes two sign vectors define
+the same ray exactly when they differ by an overall sign,
+giving the count. A vacuum-only flip changes precisely
+one coordinate by $2\sqrt{p_\epsilon(0)}$; both normalized
+states remain in the legal carrier. For any fixed radius
+this distance is smaller than that radius at sufficiently
+small positive $\epsilon$, while the two rays remain
+distinct. This proves the nonuniform-neighborhood claim.
+$\square$
+
+This boundary concerns the fixed single-quadrature menu.
+Parent/Readout Theorem 8.6 uses both real and imaginary
+edge observations, which supply the missing sign-sensitive
+data on connected support. Its pure-state propagation
+result is not contradicted by (6.19). A local Fisher lower
+bound at the calibrated reference does not itself supply
+those additional observations.
+

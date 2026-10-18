@@ -1,0 +1,38 @@
+**Definition 19.1 (compact response spaces and explicit error data).** Take a fixed smooth real $\sigma$-even $0\le\zeta\le1$, equal to one on $\overline{\mathbb B_2}$ and supported compactly in $\mathbb B_3$. Put $\zeta_R=\zeta\circ\delta_{1/R}$ and $c_\zeta=\|\nabla_H\zeta\|_\infty$, so $\|\nabla_H\zeta_R\|_\infty=c_\zeta/R$. Let
+
+$$
+\mathcal H_R^c=\overline{C_{c,-}^\infty(\mathbb B_{3R};\mathbb R)}^{\sqrt b},\qquad
+h_0(v_R,u)=e(u)\ (u\in\mathcal H_R^c),\qquad \delta_R=h_0[v_R],
+\tag{19.1}
+$$
+
+where $e(u)=\mathcal L(u)-h_0(U_h,u)=h_0(v,u)$. Coercivity (16.1) gives the unique $v_R$. All fields, the mode and the height projection remain the full-space ones; none is regenerated or normalized on the ball.
+
+The complete forcing, obtained by the product rule in $U_h=pF_*$, is
+
+$$
+\mathbf g=(-F_*Xp-pq_*,\ (2r-F_*)Yp),\qquad
+k=\gamma(V_1+VF_*)p,\qquad
+e(u)=\int\mathbf g\cdot\nabla_Hu+\int ku.
+\tag{19.2}
+$$
+
+Fix a valid Engel Sobolev constant $S_H$ such that $\|u\|_{14/5}\le S_H\sqrt{b[u]}$. Bahouri–Barilari–Gallagher–Léautaud, Theorem 5.1, p.29 of the cited version, gives precisely this case $s=1,Q=7$; its norm (4.25), p.21, equals $\|\mathcal E^{1/2}u\|_2$. For $R\ge1$ with $\omega_R<1$, define
+
+$$
+\begin{aligned}
+\omega_R&=\gamma S_H^2\|V\mathbf1_{\mathfrak d>R}\|_{7/2},\\
+a_R&=\frac{(\|\mathbf g\mathbf1_{\mathfrak d>R}\|_2+
+ S_H\|k\mathbf1_{\mathfrak d>R}\|_{14/9})^2}{1-\omega_R},\\
+H_R&=\|\mathcal G\mathbf1_{\mathfrak d>R/2}\|_2\|V\|_2
+ +\|\mathcal G\mathbf1_{\mathfrak d\le R/2}\|_1
+       \|V\mathbf1_{\mathfrak d>R/2}\|_\infty,\\
+T_R^v&=\|\mathbf1_{\mathfrak d>R}(w_{\rm f}-U_h)\|_2
+ +\gamma H_R(M_v+\|U_h\|_2),\\
+\operatorname{Err}_R&=\left(\sqrt{a_R}+\frac{c_\zeta}{R}T_R^v\right)^2.
+\end{aligned}
+\tag{19.3}
+$$
+
+These expressions involve only the specified fields, $w_{\rm f},U_h,d_*$ and bounds for their known norms and constants. They contain neither the unknown full $v$ nor $\delta_h$ on the right. Numerical use requires valid enclosures of these inputs; no numerical values for $S_H,\theta,C_{\rm rec}$ or a sufficient cutoff radius are supplied here.
+

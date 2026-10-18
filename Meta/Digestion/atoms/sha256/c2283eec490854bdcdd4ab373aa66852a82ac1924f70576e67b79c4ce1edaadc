@@ -1,0 +1,40 @@
+## 1. Scope, status and the actual continuation consumer
+
+This is a theory exposition with ordinary proofs, not a Lean certificate,
+physical implementation or construction of an original-source sensor. Repository
+suppliers are taken at the immutable public snapshot
+`11e2a65d554143d0e3f38b37f1b686453451e3c4`. The formal source and composition
+declarations, and the existing canonical stopped instrument, remain credited
+inputs. This theory is reference input; Lean declarations and their checked
+proofs carry the repository's formal mathematical truth. The two writing
+conventions are `formal-thinking-and-answer` and
+`theory-volume-template`, restricted here to theory authorship. No independent
+model diversity or independent-priors assertion accompanies this exposition.
+
+The result concerns one public relative control at two possible current heights.
+The height coordinate is nondecreasing; the relative phase is unrestricted
+within the original regularity class. All unknown initial phases and signed
+prior winding sectors are tested. The initial accessible source-bearing
+assistance is a calibrated pure programme pair, jointly independent of those
+nuisances. The process must expose the correct live specimen at every cut and
+retain the canonical exact first-failure time, original mode and absorbing
+successor. A sharp local criterion determines when this is possible.
+
+Its operational consumer is a still-live observer that interrupts a permitted
+request, retains its source-bound programme, updates its public catalogue of
+possible heights and continues the same original specimen. A terminal
+programmable instrument alone does not supply that consumer: Section 8 gives a
+finite, positive-margin separation. Sections 9–10 acquire a sufficient coherent
+programme through exactly the additional producer phase port already declared
+in [Record Acquisition][RA], Definition 13.2. That port, its source binding,
+permissions and joint preservation are supplied premises, not constructed here.
+The sharp action claim restricts acquisition to protocols for which the old
+specimen and archives are spectators and all new source dependence enters
+through that port.
+
+An arbitrary nonmonotone control, a readable archive correlated with the unknown
+phase or winding, a total guard for requests legal at only one possible height,
+and acquisition using the old specimen are outside these theorems. These
+restrictions do not replace the full original task. In particular the acquired
+joint observer and four-view mutual-recovery programme remain open.
+

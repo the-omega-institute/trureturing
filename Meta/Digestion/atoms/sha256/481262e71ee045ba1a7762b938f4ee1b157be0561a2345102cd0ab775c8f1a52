@@ -1,0 +1,48 @@
+### 定义 1.1（五态空间）
+
+令
+
+\[
+\Sigma=\{0,2,3,5,25\}.
+\]
+
+状态函数 \(x,y,z:\Sigma\to\{0,1\}\) 由表确定：
+
+\[
+\begin{array}{c|ccccc}
+s&0&2&3&5&25\\ \hline
+x(s)&0&1&0&0&1\\
+y(s)&0&0&0&1&1\\
+z(s)&0&0&1&0&0
+\end{array}
+\]
+
+于是
+
+\[
+x^2=x,\quad y^2=y,\quad z^2=z,\quad xz=yz=0,\quad xy=\mathbf 1_{\{25\}}.
+\]
+
+这里 \(25\) 是联合状态 \([2,5]\)，其原生加性数量为 \(2+5=7\)。
+
+令
+
+\[
+\Delta(\Sigma)=
+\left\{
+p\in\mathbb R^\Sigma:
+p_s\ge0,\ \sum_s p_s=1
+\right\}.
+\]
+
+定义
+
+\[
+X=\mathbb E_p[x],\qquad
+Y=\mathbb E_p[y],\qquad
+Z=\mathbb E_p[z],\qquad
+\kappa=\mathbb E_p[xy]=p_{25},
+\]
+
+并令 \(r=1-Z\)。
+

@@ -1,0 +1,52 @@
+**Theorem 9.1 (strictness beyond every matrix-span test).** For every $d\ge1$, let $B=d+1$. Take $B$ initial reads at $I$ followed by $U,T_0,T_1,T_2$. This $d+5$-read history passes every noninitial one-erasure matrix-span test but has a common-slope positive-source collision. The same construction works for any $B\ge1$ when affine drift is allowed.
+
+Proof. After the empty-word initial repeats, execute $M,J$ to reach $U$ and read at $B$; execute $M$ to reach $T_0$ and read at $B+1$; execute $M,J$ to reach $T_1$ and read at $B+2$; execute $M,M,J,M,J$ to reach $T_2$ and read at $B+3$. The final block has left multiplier $U^2M$, giving $U^2MT_1=U^2MUMU$. These blocks have lengths $2,1,2,5$, hence ten atomic operations and $B+4$ actual reads. The unread intermediate states do not advance the reading clock.
+
+The four matrices $I,U,T_0,T_1$ are independent. To verify this using the nondegenerate trace pairing, let $\Delta=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$ annihilate them. Successively their equations give
+
+$$
+a+e=0,\quad a+c+e=0,\quad b+c+2e=0,\quad a+b+3c+2e=0.
+$$
+
+Thus $c=0$, subtracting the third equation from the fourth gives $a=0$, and then $e=b=0$. A matrix annihilating all four is zero, so their four trace functionals, and hence the four matrices, are independent. Entrywise the five matrices satisfy
+
+$$
+I-2U+2T_0-4T_1+T_2=0.
+$$
+
+Rank four makes this the unique dependence up to scale. Every coefficient is nonzero, so any four of the five are independent. Deleting a tail read therefore leaves rank four, as does deleting a noninitial initial repeat when such a repeat exists. All inherited erasure-span tests pass.
+
+Now take
+
+$$
+S_0=\begin{pmatrix}6&9\\1&3/2\end{pmatrix}
+=\begin{pmatrix}6\\1\end{pmatrix}(1,3/2),\qquad
+S_1=\begin{pmatrix}4&5\\2&5/2\end{pmatrix}
+=\begin{pmatrix}4\\2\end{pmatrix}(1,5/4).
+$$
+
+They are positive rank one and distinct. Their difference is
+
+$$
+\Delta=S_1-S_0=\begin{pmatrix}-2&-4\\1&1\end{pmatrix},
+$$
+
+outside both cones. Its traces at $I,T_0,T_1,T_2$ are respectively
+
+$$
+-2+1=-1,\quad -4+1+2=-1,\quad
+-2-4+3+2=-1,\quad -10-8+12+5=-1.
+$$
+
+At $U$ its trace is $-2+1+1=0$. Thus $\Delta\in\mathcal E_B$ with the constant surviving polynomial $Q=-1$, despite the full surviving span.
+
+Use $\alpha_0=\alpha_1=1$, the common slope $\kappa=-1/B$, and
+
+$$
+g(t)=1-t/B,\qquad D_0(t)=0,\qquad D_1(t)=g(t).
+$$
+
+These drifts have degree at most $d$ when $d\ge1$. At every index except $B$ the unweighted signal difference is $-1$, giving observation difference $-g(i)+g(i)=0$. At $B$ the gain is zero and $D_1(B)=0$, so that observation also agrees. This accounts for every initial repeat, the erased read, and the later negative gains. The displayed positive factorizations use one fixed row in each run for the entire legal history. The effective sources and drifts differ, so the collision is not a representation rescaling. ∎
+
+This tail differs from $U,F,G,H$ and does not have a recorded $I$-block,$U,U^2$ prefix. It proves that the drift-compensated condition is strictly stronger than the inherited matrix-span exclusion for $d\ge1$. Its gain samples include a zero and later negative values; the separate collisions of §§7–8 have strictly positive gains. The drift difference here is affine, so this family is not a constant-drift collision.
+

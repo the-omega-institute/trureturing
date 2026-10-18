@@ -1,0 +1,18 @@
+**Proposition 7.5 (meaning of the exact prices).** Theorem 7.2's call
+and peak minima concern hidden native queries on a fixed-age test
+family, and its alphabet result permits unbounded unknown common age.
+Neither minimizes the entire call's work or complete row storage.
+For fixed $q\ge2$ and $a+d\to\infty$, hidden traffic is
+$\Theta((a+d)h_q)$; the lower and upper bounds remain within a
+constant factor if $q=O(a+d)$. In all cases the first row literally
+contains $T_a$ and the later row literally contains $T_{a+d+r+n}$.
+
+Proof. The two length factors are
+$1+\lfloor M/2\rfloor$ and $1+\lfloor(M+q-2)/2\rfloor$.
+Their comparison gives the traffic assertions. The row descriptions
+follow from the actual cuts. Their literal sizes can be exponential
+even when the retained supplementary alphabet has only $q$ values.
+The hidden-query theorem cannot identify a small scalar-control width
+with small total writable work, candidate storage or operand storage.
+$\square$
+

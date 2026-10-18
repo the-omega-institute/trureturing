@@ -1,0 +1,32 @@
+**Theorem 11.9 (overloaded-state and one-way cross-count obstruction).**
+Any complete correct strict-subgrid graph at both original caps must
+have a gap $B\in\mathcal L_*$ with $D_B>E_B$, a state $q\in Q_B$
+with $\lambda(q)>1$, and two distinct actual live prefixes at that
+same $q$, in different count cells, for which exactly one of
+
+$$
+A_H\cap B_{H'},\qquad A_{H'}\cap B_H
+\tag{SI.81}
+$$
+
+is empty. Their distinct supports are incomparable; their count cells
+obey (SI.7) and the stronger right-cut separation (SI.41). The gap
+has span at least five, ends after $e_*$ and contains at least four
+consecutive noncommon-support depths. The same necessity holds for
+the supplied projection of an original native preparer with
+$H_P<G+4+r$ at both native caps.
+
+Proof. Proposition 10.9 gives the positive-deficit late gap and all
+its stated span and cut properties. Equation (SI.66) then gives
+$\sum_{q\in Q_B}\lambda(q)=|V_B|>|Q_B|$, forcing a mass
+strictly larger than one at some installed state. By Theorem 11.4,
+that state's all-history family fails (SI.63). For a witnessing pair,
+Lemma 11.3 excludes compatible assignments, so the other directed
+intersection is nonempty. The same lemma proves both intersections
+nonempty for distinct histories at fixed $p,q$, so this pair must
+come from different cells. Section 2's supplied exclusions forbid
+nested supports and equal supports with unequal hits; they also give
+(SI.7). Lemma 10.2 supplies (SI.41) within this same pool. The native
+projection has $m\le H_P-4-r<G$, and the whole argument applies
+to it without changing its installed vector. $\square$
+

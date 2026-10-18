@@ -1,0 +1,11 @@
+### 定义 14.5（五态事件推前关系）
+
+对任意上述 $T$ 和任意 $q\in\mathcal L$，称 $q$ 是 $T$ 的五态事件推前，当且仅当
+
+$$
+\exists f:\mathbb B^3\to\Sigma,\quad
+\forall s\in\Sigma,\qquad q_s=\sum_{(a,b,c)\in\mathbb B^3:\ f(a,b,c)=s}P_T(a,b,c).
+$$
+
+这里 $f$ 是整个输出三元组上的任意函数，未要求满射，也未加局部依赖限制；局部邻接条件仅施于 $A,B,C$。这是一条关于给定 $T,q$ 的存在条件，不断言任意合法 $q$ 都有这样的表示。
+

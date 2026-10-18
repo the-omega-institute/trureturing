@@ -1,0 +1,23 @@
+**Corollary 27.3 (the precise general-threshold conclusions used by
+the endpoint cases).** For every $1\le k\le n$, the independent
+minimum uniform call budget is $n+1$ and the independent minimum
+absolute-literal budget is $3+W_A$. One table attains both at
+$H=k(n-k+1)+4+r$. For every $2\le k\le n-1$, if $H_{\min}(A,k;r)$
+denotes the minimum installed cardinality with no execution-budget
+restriction, then
+
+$$
+2n+2+r\ \le\ H_{\min}(A,k;r)\ \le\ k(n-k+1)+4+r.
+\tag{PCA.65}
+$$
+
+Proof. Theorem 25.2 and Theorem 26.1 give the two independent
+execution minima. Theorem 25.1 and the same construction give
+(PCA.65). These are the common bounds whose coincident endpoints
+are consumed in Theorem 27.1. No equality for other interior $k$,
+ordered-optimum transfer, or entire three-budget characterization
+for those other thresholds follows from these bounds. In particular
+the construction attaining both execution minima has not been
+proved to have minimum installed cardinality for general $k$.
+$\square$
+

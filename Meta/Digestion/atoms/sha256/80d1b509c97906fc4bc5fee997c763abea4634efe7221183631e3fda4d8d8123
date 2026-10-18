@@ -1,0 +1,31 @@
+**命题 156.2（替换下降到实际求值像的条件与反例）。** 存在映射 $\bar\rho:E(W)\to E(W)$ 使
+
+$$
+\bar\rho(E(w))=E(\rho_{\rm op}(w))
+$$
+
+当且仅当求值纤维满足
+
+$$
+E(u)=E(v)\ \Longrightarrow\
+E(\rho_{\rm op}(u))=E(\rho_{\rm op}(v))
+\qquad(u,v\in W).
+$$
+
+满足时 $\bar\rho$ 唯一且保持该像中的复合及恒等；未满足时，词替换仍良定义，却不能成为实际自映射集合上的这个更新。
+
+证明（156.2）。这里将钉版基础卷定义3.2的稳定纤维检验用于词求值及指定替换。若已有 $\bar\rho$，相同求值经同一个 $\bar\rho$ 必相同，故检验必要。反向，以任一代表 $w$ 定义 $\bar\rho(E(w))$；检验恰保证换代表不改变值，且所得值仍在 $E(W)$。每个像元素都有代表，所以这也给唯一性。对代表 $u,v$，
+
+$$
+\begin{aligned}
+\bar\rho(E(u)\circ E(v))
+&=\bar\rho(E(uv))
+=E(\rho_{\rm op}(uv))\\
+&=E(\rho_{\rm op}(u))\circ E(\rho_{\rm op}(v)),
+\end{aligned}
+$$
+
+而空词给 $\bar\rho(\operatorname{id}_O)=\operatorname{id}_O$。这些等式只定义像上的数学更新，不供应实施替换的物理门。
+
+条件并不由“都是 $O\to O$”自动给出。取 $O=\{0,1\}$、$A_\alpha=\operatorname{id}_O$、$A_\beta$ 为交换零与一的自映射。词 $u=\alpha$ 和 $v=\epsilon$ 求值相同；替换后却分别求值为 $A_\beta$ 和 $\operatorname{id}_O$，不同。因此一般自作用关系可能不保替换，不能直接把语法规则施加到任意实际操作等价类。这里的 $E(u)=E(v)$ 比较在整个声明承载域上的映射，不是只比较一个当前输入的返回。若还商去控制或来源，须对这个更粗求值的纤维及全部所需后续任务再验条件。$\square$
+

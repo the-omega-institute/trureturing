@@ -1,0 +1,21 @@
+### 83.2. Four-fibre exclusion criterion and robust frame excess
+
+At k=4, the bound in section 83.1 yields
+
+    delta >= max{0, 5/4-L_*/2}.                     (7)
+
+In particular, any one party and any one transversal with Gram operator norm at most two certify delta>=1/4, irrespective of the other party's dimension, Kraus rank, phases, or output leakage.
+
+A product with delta<=1/4-eta, eta>0, must satisfy
+
+    L_A,sigma >=2+2eta,
+    L_B,sigma >=2+2eta                               (8)
+
+for every one of the 16 transversals. Thus all 32 party/transversal frame norms must exceed two for a strict improvement. This is a necessary condition only.
+
+For a chosen party and transversal, write e=(L_party,sigma-2)_+. A weaker but convenient nonnegative-excess form of (7) is
+
+    delta >= max{0, 1/4-e/2}.                       (9)
+
+When L_party,sigma<2, the raw bound (7) is stronger than (9) and exceeds 1/4. No near-equality assumption is needed for either estimate.
+

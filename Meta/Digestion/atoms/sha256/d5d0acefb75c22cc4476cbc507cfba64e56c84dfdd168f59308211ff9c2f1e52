@@ -1,0 +1,30 @@
+**Definition 12.2 (a finite spatial statistic).** For a finite tree $u$
+and an address $q$, define two integers $b_q(u),c_q(u)$ by inspecting
+only the initial path toward $q$:
+
+$$
+ (b_q,c_q)(u)=
+ \begin{cases}
+ (0,0),&q\text{ is a branch of }u,\\
+ (2,1),&q\text{ is an alpha leaf of }u,\\
+ (1,0),&q\text{ is a beta leaf of }u,\\
+ (s(r)+2-e(u|_a),\ \mathbf1_{r\text{ ends with }R}),
+   &q=ar\text{ is absent, }a\text{ its blocking leaf},\ r\ne\varepsilon.
+ \end{cases}
+\tag{AAR.57}
+$$
+
+The root is always present, so the last case never applies to the empty
+address. Set
+
+$$
+ \Sigma_P(t)=\bigl((b_p(t),c_p(t))\bigr)_{p\in P}.
+\tag{AAR.58}
+$$
+
+The statistic records neither the identity of a blocking leaf nor its
+whole subtree. It retains its weighted distance only to the extent
+needed by the selected address, together with the alpha-stage flag.
+Its coordinates share one actual initial tree; their possible values
+are not postulated to be independently attainable.
+

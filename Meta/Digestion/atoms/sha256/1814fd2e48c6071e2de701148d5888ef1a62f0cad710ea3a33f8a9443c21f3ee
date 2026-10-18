@@ -1,0 +1,38 @@
+### 97.1. Original domain and the principal-kernel question
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four two-coordinate fibres, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain, write
+
+\[
+ \begin{aligned}
+ \mathcal E&=\{G=G^*\ge0:G_{ff}=I_2\},\\
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}[(T-G\odot H)W],\\
+ \mathcal C&=\{\rho=\bigoplus_f\rho_f\ge0:
+                 \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g).
+ \end{aligned}                                                     \tag{1}
+\]
+
+Suppose (G,H) is a local minimum on the full domain 𝓔×𝓔, rank G=7, and 0<t=F(G,H)<1/2. Fix a spanning vector a of ker G, put S=supp(a), O=Sᶜ, n=|S|, P=G_S and K=H_S. Let 𝒜₀ be the complete set of norming pairs satisfying b(W;G′,H′)≥0 for every feasible G′,H′, where b is the joint first-order expression (14) below. Sections 92 and 95 show that this common-witness subset is nonempty, compact and convex. For every member, the first stress is α_W aa*, α_W>0, and
+
+\[
+ W_{ij}=-\frac{\alpha_W a_i\overline{a_j}}
+                       {2\overline{H_{ij}}}
+       \quad(i,j\text{ in different original fibres}).             \tag{2}
+\]
+
+All cross-fibre entries of G,H are nonzero by |1/2−G_ijH_ij|≤t<1/2. Choose one common witness to define the supported PSD unit-diagonal quotient R of Lemma 95.2. Then
+
+\[
+ \begin{aligned}
+ P&=K\odot\overline R,\qquad \operatorname{rank}P=n-1,\\
+ (P_B)_S&=\alpha\operatorname{diag}(a_S)R
+                           \operatorname{diag}(\overline{a_S}),\\
+ P_BH&=0,\qquad P_B=0\text{ outside }S\times S,\\
+ h+r&\le n,\qquad n-1\le hr,\qquad
+ r\le8-\operatorname{rank}H,
+ \quad h=\operatorname{rank}K,\quad r=\operatorname{rank}R.
+ \end{aligned}                                                     \tag{3}
+\]
+
+The full opposite kernel may contain vectors with nonzero coordinates outside S. A direction annihilating only ker K need not give an affine feasible path for H. The next construction addresses that distinction by changing the outside cross blocks reciprocally. It makes no claim that a principal pair is itself a joint local minimum.
+

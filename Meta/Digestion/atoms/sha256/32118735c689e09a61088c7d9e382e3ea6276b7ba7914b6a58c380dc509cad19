@@ -1,0 +1,61 @@
+**Definition 11.2 (one complete table with a retained separator).**
+Start with a complete binary query tree of depth $n$, with different
+running vertices at all internal positions, and terminal $0$ or $1$
+at depth $n$ according to the full threshold. Every path queries every
+coordinate exactly once, including after a certificate. First query
+$r_1,\ldots,r_M$ in that order. The notation $e_j$ in a routing vector
+means the $j$th unit vector, distinct from the reader entries $e_0,e_1$.
+
+In the cylinder $R=e_j$, query $t$ next, then all of
+$I_j\setminus(R\cup\{t\})$ in increasing coordinate-index order.
+If $t=0$, query $x,x'$ next; if $t=1$, query $y,y'$ next.
+Finish by increasing index among the remaining coordinates.
+In $R=0^M$, use increasing index among the remaining coordinates
+except that $t$ is last. In every other routing cylinder use increasing
+index among all remaining coordinates. These rules assign a fixed
+coordinate to each distinct tree vertex.
+
+Select the following two prefixes in $R=e_j$. On the low prefix put
+$t=0$, all old $u_i$ equal to zero, $v_1,\ldots,v_{M-j}$ equal to
+one and the remaining $v_i$ equal to zero, then $(x,x')=(1,0)$.
+On the high prefix put $t=1$, all old $u_i$ equal to zero, all
+$v_i$ equal to one, then $(y,y')=(0,1)$. Empty displayed lists impose
+no conditions. Their supports are respectively $I_j\cup X$ and
+$I_j\cup Y$, and both have length $n-j-2$.
+
+In the untouched cylinder $R=0^M$, retain the final $t$-vertex after
+all $v_i$ and $x,x',y$ have answered one, and all $u_i$ and $y'$
+have answered zero. Call this existing vertex $J$. Its prefix has
+$M+3=k-1$ ones, so its zero and one successors are $0,1$.
+
+Delete the complete remaining subtree at each of the selected low and
+high prefixes, including its root. Each has $j+2$ query levels.
+Redirect both incoming edges at scale $j$ to a new vertex $V_j$.
+Install the following distinct new scan states; the state $J$ in their
+successors is the existing vertex just retained.
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $V_1$ | $u_M$ | $B_X$ | $B_Y$ |
+| $V_j$, $2\le j\le M$ | $u_{M-j+1}$ | $Z_{M-j+2}$ | $O_{M-j+2}$ |
+| $Z_i$, $2\le i<M$ | $u_i$ | $Z_{i+1}$ | $J$ |
+| $O_i$, $2\le i<M$ | $u_i$ | $J$ | $O_{i+1}$ |
+| $Z_M$ | $u_M$ | $B_X$ | $J$ |
+| $O_M$ | $u_M$ | $J$ | $B_Y$ |
+
+Install four further distinct private states, disjoint from the tree
+and all scan states:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $B_X$ | $x$ | $B_{x'}$ | $J$ |
+| $B_{x'}$ | $x'$ | $0$ | $1$ |
+| $B_Y$ | $y$ | $J$ | $B_{y'}$ |
+| $B_{y'}$ | $y'$ | $0$ | $1$ |
+
+All other retained tree transitions remain unchanged. The two original
+Boolean terminals are the only terminals. Denote this installed table
+by $B_M$. The shared scan and private transitions reuse the motif of
+PE Theorem 5.1, but all scales here share their scan tails and the
+single retained $J$.
+

@@ -1,0 +1,53 @@
+**Theorem 9.4 (Finite-precision triplet selection).** Suppose the source
+coefficient $v$ is centered and whitened, namely
+$$
+\mathbb E[v]=0,
+\qquad
+\mathbb E[vv^{\mathsf T}]=I_{3m},
+$$
+and restrict compression to the equivariant orthogonal projections
+
+$$
+P=P_m\otimes I_3,
+\qquad
+P_m=P_m^{\mathsf T}=P_m^2,
+\qquad
+0\le r:=\operatorname{rank}P_m\le m.
+$$
+
+Write the complete spectrum of $A$ as
+$$
+\lambda_1\ge\cdots\ge\lambda_m\ge0.
+$$
+
+The minimum squared response error is
+
+$$
+\boxed{
+\min_P\mathbb E\|\mathscr R(v-Pv)\|^2
+ =3\sum_{i=r+1}^{m}\lambda_i.
+}
+\tag{9.4}
+$$
+
+The optimal $P_m$ retains eigenvectors for the $r$ largest eigenvalues.
+If $r<m$, adding the next complete three-component response lowers the error
+by $3\lambda_{r+1}$; if $r=m$, there is no next response group and the gain
+is zero.
+
+**Proof.** The error is
+
+$$
+\operatorname{tr}\bigl(G(I-P)\bigr)
+ =3\operatorname{tr}\bigl(A(I-P_m)\bigr).
+$$
+
+The spectral theorem and the finite-dimensional Ky Fan variational principle
+select the $r$ largest eigenvalues of $A$, giving (9.4). $\square$
+
+For example, if $A=\operatorname{diag}(9,4)$, the response spectrum is
+$9,9,9,4,4,4$ when the multiplicity spaces are written explicitly, and
+keeping only the first triplet leaves squared error $12$ under the stated
+identity-covariance convention. The example is a response-capacity
+calculation, not a claim about the present FIB source.
+

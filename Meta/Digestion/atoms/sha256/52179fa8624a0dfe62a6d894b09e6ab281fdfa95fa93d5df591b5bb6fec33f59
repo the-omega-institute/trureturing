@@ -1,0 +1,27 @@
+**Theorem 63.9 (complete finite spectral windows on actual recursive domains).** Fix a compact window $W=[\alpha,\beta]$ with $\beta<B_N$ and $\alpha,\beta\notin\sigma(H_N)$. Let $D_n=D_{j_n}(t_n)$ with arbitrary original finite $t_n$ and $j_n\to\infty$. For both common and killed prescriptions, the ordered eigenvalues in $W$ converge to the common eigenvalues, repeated by multiplicity; eventually the total rank in $W$ equals the common rank. More precisely, for every common variational eigenvalue $\lambda_\ell<B_N$, ordered from the bottom and repeated by multiplicity,
+
+$$
+\lambda_\ell(H^\diamond_{D_n,N})\longrightarrow\lambda_\ell(H_N),
+\qquad
+\left\|I_{D_n,N}\mathbf1_W(H^\diamond_{D_n,N})I_{D_n,N}^*
+-\mathbf1_W(H_N)\right\|\longrightarrow0.
+\tag{63.26}
+$$
+
+The projection statement includes every hidden occupation mode and exceptional or degenerate eigenspace. In particular, for an isolated common eigenvalue $z<B_N$, choose gap endpoints enclosing $z$ and no other common eigenvalue. The finite eigenvalues in that interval may split; their total multiplicity eventually equals $\dim\ker(H_N-zI)$, and the projection onto their entire cluster converges to the full common eigenspace projection. An individual split finite eigenspace is not identified with the whole limiting degenerate space. An empty common window is eventually empty in both finite prescriptions.
+
+Proof. The common spectrum below every $c<B_N$ has finite total multiplicity by Theorem63.4. The min-max principle in §55.8 and finite killed/common ordering give the lower inequalities for every finite variational level. For the reverse inequality, choose the finite span of the first $\ell$ common eigenvectors. Truncate it to configurations in $B_r$, with $r\to\infty$. Boundedness of $H_N$ gives uniform norm and form convergence on its finite-dimensional unit sphere; its dimension is eventually preserved. Place this one truncated span in $D_n$. Its common form is unchanged. For fixed $r$, (63.20), with $b=\lfloor j_n/2\rfloor-r$, makes the killed correction tend uniformly to zero on that span. Min-max gives the required limiting upper inequalities, first taking $n\to\infty$ and then $r\to\infty$. This argument neither assumes bound states in all smaller particle sectors nor changes the source realization.
+
+If $c<B_N$ is in a common gap and $r_c$ common eigenvalues lie below it, their convergence supplies at least $r_c$ finite eigenvalues below $c$. There cannot be $r_c+1$: their finite spectral span would, after zero extension, have common Rayleigh values below $c$, contradicting common min-max. Thus the count is eventually exactly $r_c$. Apply this at both window endpoints to get complete rank and exclude spectral pollution or excess multiplicities. All variational levels below $\beta$ have already been controlled, so isolated common gaps inside the window contain no extra finite eigenvalues.
+
+To prove preservation of the spaces, not just their eigenvalues, take any sequence of finite unit eigenvectors with energies in $W$. Theorem63.8 gives a strongly convergent subsequence with unit limit $f$, and the energies have a convergent subsequence, say $z_n\to z$. For any finite-support configuration test $v$, its occupied addresses and every address reached by one hop are eventually in $D_n$. Thus the common compressed test operator is exactly the common operator there. For the killed alternative its difference on this fixed test support tends to zero by (63.20). In the finite eigen-equation, passage to the limit gives
+
+$$
+\langle H_Nv,f\rangle=z\langle v,f\rangle.
+\tag{63.27}
+$$
+
+Density and boundedness yield $H_Nf=zf$. The gap endpoints ensure $z\in W$.
+
+Choose complete finite orthonormal eigenbases in $W$. Their eventually fixed finite size, tightness and subsequence extraction give orthonormal common limits. The rank equality makes those limits a complete basis of the common window space. Strong convergence of these finitely many basis vectors implies operator-norm convergence of their rank-one projection sums. Any subsequence has a further subsequence with this same limiting projection, proving the full projection limit (63.26). Degenerate vectors may rotate within their space; the space itself is preserved. No root resolvent cancellation or radial reduction enters this proof. $\square$
+

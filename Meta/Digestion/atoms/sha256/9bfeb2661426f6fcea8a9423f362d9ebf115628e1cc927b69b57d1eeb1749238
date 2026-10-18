@@ -1,0 +1,46 @@
+**Theorem 4.2 (terminating exact support construction).** From every
+recognized finite input one can compute Presburger formulas for all three
+supports in (CRE.18), decide designated-row attainment and unboundedness,
+extract arbitrarily large feasible ranks when unbounded, and extract a
+finite upper bound when bounded. No rank truncation is an input hypothesis.
+
+**Proof.** Put $n=j-2\in\mathbb N$. Every atomic occurrence is
+$T_{n+c}$ with $c\ge2$; further fixed transforms only increase $c$.
+For finite $m$, the rank condition is $n\le m-2$; otherwise it is true.
+The substitution defining $\Delta_i$ distributes fixed powers through
+pairs and finite grounds. Each $C_i$ is therefore a finite conjunction of
+whole native negatives in URR Definition 1.2's grammar, with one shared
+natural coordinate and one shared residual. The predicate for $S_D$ has
+the same grammar with three residual names. Theorems 3.1 and 3.3 prove
+their full Cartesian domains before negatives. There are no remaining
+positive residual equations or hidden image, shape or reach restrictions.
+
+Apply [URR, Theorem 3.1 and Corollary 3.2][URR] to each entire list.
+Their simultaneous separator and atomic equality analysis produce exact
+Presburger support, conjoined with the displayed rank condition. In
+particular all additional negatives are included, even if they make a
+support empty or bounded. The admitted support is not guessed from the
+base example. Presburger decision tests emptiness and
+$\forall b\ \exists j\ (j>b\land j\in S_i)$.
+For an unbounded support, the query $j\in S_i\land j\ge b$ returns a
+rank for every supplied $b$. For a bounded support, the true existential
+formula $\exists M\ \forall j\in S_i\ (j\le M)$ returns a bound.
+Under the attained-row premise both supports are nonempty, so a bound
+can be taken at least two. Empty support instead detects a failed
+designated-row attainment premise.
+
+This use of NIC's normalization has its actual scope. [NIC, Theorems
+3.2–3.3 and Proposition 3.5][NIC] prove that their own produced positive
+pieces have full Cartesian residuals, reconstruct the same entire
+declared tuple, and retain negatives after native expansion. Their
+minimum-potential residual-block reconstruction and omission of ambient
+normality restrictions supply that product in both directions; ambient
+code inequality is not a native sign. The explicit correspondence here
+is a direct such mixed description. SLP's restriction on arbitrary
+secondary representations does not remove NIC's producer guarantee.
+
+URR's separator is a section of the entire rank projection, not equality
+of that section with the whole source image. We use it here only to
+compute (CRE.18) and establish finite feasibility at fixed ranks. The
+full source and stratum domains remain (CRE.12) and (CRE.17). $\square$
+

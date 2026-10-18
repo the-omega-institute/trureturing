@@ -1,0 +1,66 @@
+**Theorem 5.1 (Exact all-input, all-history error of the finite port).**
+The port (3.3) satisfies
+
+$$
+e(T_\xi)=\xi=0.52871214445486778799\ldots .
+\tag{5.1}
+$$
+
+Its error is attained by one algebraic pure input, wait zero, one complete
+five-outcome rank-one mode read, and Stop.
+
+Proof. QMB Theorem 2.1 gives the exact first-read identity
+
+$$
+e(T_\xi)=\sup_{t\ge0}\max_{J\subseteq\mathsf S}
+\|Q_J(t)-S^\dagger(Q_J(t))\|_{\rm op}.
+\tag{5.2}
+$$
+
+The reset in this identity is decisive: after first outcome $s$, both
+conditional states equal $\Pi_s$, so the common suffix of every finite
+adaptive policy is a probability kernel. Retaining the first outcome
+preserves its TV; further common processing cannot enlarge it.
+Source-independent random controls are mixtures of these comparisons.
+Conversely wait $t$, a complete read, and Stop realize each first-read
+comparison. Maximizing a Hermitian event expectation over every complex
+density input gives its operator norm. Thus (5.2) retains the full input
+and history quantifiers of Definition 1.2.
+
+By Theorem 3.2, self-adjointness and stationarity yield
+
+$$
+Q_J(t)-S^\dagger(Q_J(t))=O(t)^TH_JO(t).
+\tag{5.3}
+$$
+
+Its norm is independent of actual nonnegative waiting time.
+Since $S(I)=I$, complementary residuals are negatives; empty and full
+events vanish. The fifteen singleton/pair representatives cover every
+event. Theorem 4.4 now proves (5.1), with the decimal only illustrating
+the exact root (4.3)–(4.4).
+
+For an explicit attaining state, write
+$C_2=\left(\begin{smallmatrix}a&b&c\\b&d&e\\c&e&f\end{smallmatrix}\right)$
+in the ordered $V$ basis and set
+
+$$
+B_2=\begin{pmatrix}d&e\\e&f\end{pmatrix},\quad
+h=\begin{pmatrix}b\\c\end{pmatrix},\quad
+v=\frac{(1,\ ((\xi I_2-B_2)^{-1}h)^T)^T}
+{\|(1,\ ((\xi I_2-B_2)^{-1}h)^T)^T\|}.
+\tag{5.4}
+$$
+
+The matrix $B_2$ is a compression of $-S(\Pi_2)$, hence is nonpositive.
+Since $\xi>0$, the inverse in (5.4) exists.
+The Schur complement of $\xi I_2-B_2$ in $\xi I_3-C_2$, together
+with $p(\xi)=0$, proves $C_2v=\xi v$.
+Embed $v$ with zero $L$ coordinates and prepare
+$\rho_\xi=Dvv^\dagger D^\dagger$. Its mode-$2$ probability difference
+at actual wait zero is $v^\dagger H_{\{2\}}v=\xi$.
+The full read's TV is at least that difference and at most the proved
+upper $\xi$, so equality holds. All coefficients of this input are
+algebraic. No limiting torus point, inaccessible event instrument or
+negative physical wait is involved. $\square$
+

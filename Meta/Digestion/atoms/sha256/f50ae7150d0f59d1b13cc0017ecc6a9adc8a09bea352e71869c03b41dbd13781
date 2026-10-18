@@ -1,0 +1,135 @@
+**Proposition 7.5 (RC's complete post-contact value and contact data).**
+Use the same $Q,C,G,L$ as in RH.8. To state the supplied algebraic
+continuation without confusing its scalar coordinates with source Kraus
+matrices, for $0\leq a\leq37/125$ and $7/20\leq k\leq2/5$ put
+
+$$
+\begin{aligned}
+D_a&=\alpha(1-2a)+a^2,&U_a&=-\alpha+2a-a^2,&V_a&=\alpha-a^2,\\
+n_a&=(D_a,U_a,V_a)^T,&\sigma_a&=D_aU_a,\\
+W_a&=D_a Cn_a-2\beta akQn_a,&H_a&=-n_a^TQW_a,&R_a&=W_a^TQW_a,\\
+Z_a&=2H_aW_a+R_an_a,&
+\mathcal E_a&=2H_aW_a^TW_a+D_aR_a\sigma_a,\\
+g_a&=Z_a^TGZ_a,&
+\ell_a&=D_a^2\sigma_a Z_a^TCZ_a-\mathcal E_a^2,\\
+\mathcal P(a,k)&=a^{-1}\det[D_a^2\sigma_a CZ_a-\mathcal E_aW_a,\ QZ_a,\ GZ_a].
+\end{aligned}
+\tag{RH.67a}
+$$
+
+The divisions defining $\ell_a/a$ and $\mathcal P$ are exact polynomial
+divisions before evaluation, including at $a=0$. RC59–60 supplies a
+unique analytic selected root $k(a)\in(7/20,2/5)$ of $\mathcal P=0$.
+All subsequent expressions in this proposition use that root. Its
+full-rectangle comparisons give $D_a,H_a,R_a,\mathcal E_a>0$,
+$\sigma_a<0$, $g_a<0$, $\ell_a/a<0$. Define
+
+$$
+\begin{aligned}
+B_a&=-\frac{R_a}{2D_a\sigma_a H_a}n_an_a^T,&
+C_a&=\frac{Z_aZ_a^T}{2H_a\mathcal E_a},&A_a&=I-B_a-C_a,\\
+\omega_a&=\operatorname{tr}A_a-1,&\tau(a)&=2(A_a)_{01}.
+\end{aligned}
+\tag{RH.67b}
+$$
+
+RC60 supplies the unique simple zero $a_\dagger$ of $\omega_a$ with
+$.2951251<a_\dagger<.2951252$. RC61–63 supplies the following whole
+conditional conclusion, including original all-four-PSD necessity:
+
+$$
+\begin{gathered}
+\tau:[0,a_\dagger]\longrightarrow[\tau_\dagger,1]
+\text{ is a continuous strictly decreasing bijection},\\
+J(\tau(a))=\operatorname{tr}G-\frac{g_a}{H_a\mathcal E_a},\qquad
+\mathcal T(s_0\tau(a))=T_{\rm flat}-\frac{g_a}{2H_a\mathcal E_a},\\
+(X_{+,+},X_{+,-},X_{-,+},X_{-,-})=(A_a,0,B_a,C_a),\\
+\operatorname{rank}(A_a,B_a,C_a)=
+\begin{cases}(2,1,1),&0\leq a<a_\dagger,\\(1,1,1),&a=a_\dagger.
+\end{cases}
+\end{gathered}
+\tag{RH.67c}
+$$
+
+For $0<a\leq a_\dagger$ the aggregate tuple is unique. At $a=0$ it
+is the unique endpoint aggregate of Proposition 10.1. The two null
+lines in $W_a^\perp$ and their exact weights are
+
+$$
+\begin{aligned}
+N_{Q,a}&=\beta(W_a)_1^2+\alpha(W_a)_2^2-\alpha\beta(W_a)_0^2>0,\\
+v_\pm(a)&=\frac{-\alpha(W_a)_0(W_a)_2
+ \pm(W_a)_1\sqrt{N_{Q,a}}}
+ {\alpha(W_a)_2^2+\beta(W_a)_1^2},\\
+u_\pm(a)&=-\frac{(W_a)_0+(W_a)_2v_\pm(a)}{(W_a)_1},\qquad
+q_\pm(a)=(1,u_\pm(a),v_\pm(a))^T,\\
+w_+(a)&=\frac{(A_a)_{02}-v_-(a)(A_a)_{00}}{v_+(a)-v_-(a)},\qquad
+w_-(a)=\frac{v_+(a)(A_a)_{00}-(A_a)_{02}}{v_+(a)-v_-(a)},\\
+A_a&=w_+(a)q_+(a)q_+(a)^T+w_-(a)q_-(a)q_-(a)^T.
+\end{aligned}
+\tag{RH.67d}
+$$
+
+Every denominator displayed here is nonzero by RC60's comparisons.
+The lines $q_+,q_-,n_a,Z_a$ are distinct. Both $w_\pm$ are positive
+for $0\leq a<a_\dagger$; at contact $w_+=0<w_-$. The $A_a$ rays
+have positive $01$ product and positive height difference; $n_a$ has
+negative $01$ product and positive height difference; $Z_a$ has
+negative $01$ product and negative height difference.
+
+At $a=a_\dagger$ the surviving three weighted vectors are exactly the
+orthonormal frame in RH.55 and $Z_2/Z_1=t_\dagger$. RC63 matches both
+values and normalized multipliers there, giving $C^1$ gluing. It also
+supplies the positive linear onset
+
+$$
+\lim_{a\uparrow a_\dagger}\frac{w_+(a)}{a_\dagger-a}
+=\frac{-\omega'(a_\dagger)}{w_-(a_\dagger)K_A(a_\dagger)}>0,
+\quad K_A=\|q_+\|^2\|q_-\|^2-(q_+^Tq_-)^2>0,
+\tag{RH.67e}
+$$
+
+and $w_+(a)>9(a_\dagger-a)/1000$ on $7/25\leq a<a_\dagger$.
+There is no later interior contact or aggregate-rank transition.
+At $a=0$ the four coordinate-$0$-one rays are $(1,\pm1,\pm1)$,
+each with coefficient weight $1/4$. RC64 identifies the same inherited
+endpoint square-root constant and multiplier law of Section 10.
+
+Proof of use and actual correspondence. This proposition invokes
+RC.8–46's selected root, interval/Bernstein comparisons, matching four
+dual blocks, uniqueness, coverage and gluing as named conditional
+suppliers; it does not repeat or numerically reauthenticate them. The
+coefficient dictionary RC.2–3 is exactly RH.7–8, so its $j$ is this
+$J$, its $C_0$ is $C_a$, and its $T_{\rm flat}$ is RH.9's constant
+by RH.10. Thus its original contrast inequality, not a prescribed
+effect, is the same optimization RH.11.
+
+For the actual converse take the nonzero members of
+
+$$
+\sqrt{w_+}\,q_+,\quad\sqrt{w_-}\,q_-,\quad
+\sqrt{-R_a/(2D_a\sigma_a H_a)}\,n_a,\quad
+Z_a/\sqrt{2H_a\mathcal E_a},
+\tag{RH.67f}
+$$
+
+reporting $(+,+,-,-)$. Their real null projectors sum to $I$ by
+RH.67b,d. Their signed $01$ sum is
+$\operatorname{tr}(CA_a)-\operatorname{tr}(CB_a)-\operatorname{tr}(CC_a)
+=2(A_a)_{01}=\tau(a)$, since $\operatorname{tr}C=0$.
+Their absolute $G$ sum is
+$\operatorname{tr}G-2\operatorname{tr}(GC_a)
+=\operatorname{tr}G-g_a/(H_a\mathcal E_a)$ by the stated signs.
+Definition 5.1 therefore supplies one normalized finite instrument
+with the full complex/reference/five-labelled-Borel output RH.36–39,
+all twelve inherited errors, sharp high acquired cost and exactly the
+value RH.67c. All its decoders are TP on their entire declared fibres.
+It has four actual low live-bearing labels above contact and three
+at contact, and twelve or eleven total labels in this construction.
+The upper bound applies to every original optimizer by RC's original
+four-block certificate and Theorem 2.2. The algebraic coefficients are
+not Born probabilities or a source prior. This is a reuse of RC's
+actual realization, not a new residual-curve discovery. The universal
+actual-label lower bound is proved separately in Theorem 9.5.
+$\square$
+

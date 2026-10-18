@@ -1,0 +1,48 @@
+**Definition 3.1 (coefficient fields).** For the bridge $H_v$ of height Brownian motion with generator $\partial_r^2$, from zero to $r$ in time $t$, put
+
+$$
+\begin{aligned}
+u(h)&=(1,h,h^2/2),& S_t&=\sup_{0\le v\le t}|H_v|,\\
+M_j&=\int_0^tH_v^j u(H_v)u(H_v)^{\mathsf T}dv\quad(j=0,1,2),\\
+\gamma_M(z)&=(4\pi)^{-3/2}(\det M)^{-1/2}e^{-z^{\mathsf T}M^{-1}z/4},&
+h_t(r)&=(4\pi t)^{-1/2}e^{-r^2/(4t)}.
+\end{aligned}
+\tag{3.1}
+$$
+
+In the first line $u(h)$ denotes the displayed vector. All three matrices belong to this single bridge. The coefficient kernels and fields are exactly
+
+$$
+\begin{aligned}
+p_0(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[\gamma_{M_0}(z)]=p_E(t;0,(r,z)),\\
+p_1(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[-2D\gamma_{M_0}(z)[M_1]],\\
+p_2(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[3D\gamma_{M_0}(z)[M_2]
+                     +2D^2\gamma_{M_0}(z)[M_1,M_1]],\\
+V_j&=j_0^{-1}\int_1^\infty p_j(t;\cdot)dt\quad(j=1,2),&
+V_{\rm t}&=j_0^{-1}\int_1^\infty t p_0(t;\cdot)dt>0.
+\end{aligned}
+\tag{3.2}
+$$
+
+The full-space antecedent from §107, with the original zero extension of $\widetilde U_s$, is
+
+$$
+\widetilde U_s=V+\beta_sV_1+\beta_s^2V_2+\lambda s^2V_{\rm t}+\mathcal R_s,
+\qquad \|\mathcal R_s\|_\infty\le Cs^{5/2}.
+\tag{3.3}
+$$
+
+It includes every real phase, the entire expanding native domain and its complement, the original infinite-time tail and both faces. Its additional hypotheses and estimates are absolute convergence in (3.2),
+
+$$
+\begin{gathered}
+|V_1|\le C(1+|r|)^{-4},\qquad |V_2|+V_{\rm t}\le C(1+|r|)^{-3},\\
+V_j\circ\sigma=(-1)^jV_j,\qquad V_{\rm t}\circ\sigma=V_{\rm t},\\
+h_t(r)\mathbb E_{0,r}^t[(\det M_0)^{-1/2}S_t^m\mathbf1_{S_t>L}]
+ \le C_m t^{(m-7)/2}e^{-c_mL^2/t}\quad(m\in\mathbb N_0).
+\end{gathered}
+\tag{3.4}
+$$
+
+The corresponding full moment estimate at $L=0$ is understood without the indicator. These are source-weighted and full-space hypotheses, rather than a newly certified extension of a local heat expansion. They use $B$, not $aB$.
+

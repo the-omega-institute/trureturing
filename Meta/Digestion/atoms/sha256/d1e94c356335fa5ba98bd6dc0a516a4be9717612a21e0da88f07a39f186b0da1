@@ -1,0 +1,12 @@
+## 1. Scope and source interfaces
+
+This is a result-specific continuation of [FIB legal gates and Shor readout](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md), Sections 11-15. It keeps that source unchanged and remains independent of HS4 and its many-body model.
+
+The [four-corner coherence and single-copy certification volume](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md), C-117 and C-121, supplies the precise witness and conditional source assumptions consumed below. C-121.1 explicitly assumes an actual three-outcome PVM. Section 4 supplies its effects from the native gates; it does not change the original conditional separability or setting-independence assumptions.
+
+The native generator is the existing ideal open-path operator H_i(beta)=P_(i-1)(cos(beta) X_i+sin(beta) Y_i)P_(i+1), with missing endpoint projectors equal to I, and R_i(beta,t)=exp(-it H_i(beta)). Let J_m embed m ordinary qubits into 2m-1 sites by inserting a zero between consecutive data bits. Site numbers are one-based in the formulas.
+
+The retained control contract is independently addressed phase-zero pulses at every site, real pulse angles, and a second quadrature at exactly one chosen data site 2q_*-1. Other data and separator sites have no second quadrature. Pulse angles, ordering, computational-word initialization, and final complete-word measurement are supplied. This is not global-only control, a finite-blockade approximation, or a noise-calibration claim.
+
+Reduced-address quantum control is established research. Cesa-Pichler [CP23] construct universal Rydberg computation with species-selective global drives in a different dual-species geometry. Their result is stronger concerning removal of local addressing but has different space and architecture costs. Here we retain local X addressing and solve the explicit compilation problem left between the preceding one-reference controllability theorem and its all-sites-phase compiler. Controlled-Pauli identities and circuit routing are established algebraic tools; the new integration is their native pulse realization and quantitative connection to the current AURIC measurement contract.
+

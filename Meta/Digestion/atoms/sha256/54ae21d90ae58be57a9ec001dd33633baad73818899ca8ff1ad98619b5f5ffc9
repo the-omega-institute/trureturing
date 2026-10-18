@@ -1,0 +1,33 @@
+**Lemma 9.1 (covariance from the actual sign catalogue).** In the reduced
+class it suffices, for minimizing error or testing equality at a universal
+lower bound, to consider channels covariant under
+
+$$
+G=\{U_{a,b}=\operatorname{diag}((-1)^a,(-1)^b,1):a,b\in\{0,1\}\}.
+\tag{CG.59}
+$$
+
+The action conjugates the live output and fixes every scalar record.
+
+Proof. Put $j=\beta/\pi$. The actual vector (CG.7) has signs
+$((-1)^j,(-1)^{j+m},1)$. The unitary $U_{a,b}$ sends its bits to
+$(j+a,m+a+b)$ modulo two. This permutes the four actual histories at
+each height, and permutes their live targets in precisely the same way.
+The stopped targets depend only on height and remain fixed. With
+$\mathcal U_g$ denoting the indicated output action, define
+
+$$
+\overline\Phi(\rho)=\frac14\sum_{g\in G}
+           \mathcal U_g\bigl(\Phi(U_g^\dagger\rho U_g)\bigr).
+\tag{CG.60}
+$$
+
+This is one CPTP map and is covariant by reindexing the group sum.
+For each history, unitary invariance and convexity bound its error by
+the average of the four permuted errors of $\Phi$ at that height.
+Thus $E(\overline\Phi)\leq E(\Phi)$. The reduction of Proposition 8.2
+commutes with this action. If $E(\Phi)=L_{\rm full}$, (CG.37) forces
+both reductions to retain equality. These operations are in the enlarged
+comparison class and confer no newly acquired original source operation.
+$\square$
+

@@ -1,0 +1,38 @@
+**Proposition 51.3 (the residual chord and strict decrease).** Let
+$b(1)$ be the inherited endpoint residual in JR.50 and put
+
+$$
+a_s={s_0-s\over s_0-\bar s},\qquad \bar s\le s\le s_0.
+$$
+
+**Proof.** Mix the instrument of Proposition 51.2 at $\bar s$ with the inherited
+finite $s_0$ instrument, using an input-independent retained choice
+with weights $a_s$ and $1-a_s$. Both choices have the same complete
+channel and the same sharp cost. The resulting common instrument has
+
+$$
+\boxed{\mathcal T(s)\geq
+T_{\rm flat}-a_s\mu_*-(1-a_s)b(1).}
+\tag{JR.124}
+$$
+
+The inequality is a feasible retained-choice lower bound. It is not an
+evaluation of the residual optimum. Its interior branch count is 23
+(11 plus 12); the endpoint counts are 11 at $\bar s$ and 12 at $s_0$.
+
+The compact feasible sets make $J_s$ concave by retained input-independent
+choice and nonincreasing by constraint inclusion. Together with (JR.114),
+concavity forces strict decrease on $(\bar s,s_0]$: if two points in
+that interval had equal values, the slope from the preceding point
+$\bar s$, where the value is larger, would violate the monotonicity of
+secant slopes for a concave function. Hence
+
+$$
+\mathcal T(s)<T_{\rm flat}-\mu_*\quad(\bar s<s\le s_0),
+\tag{JR.125}
+$$
+
+while the exact endpoint is attained by the inherited finite instrument,
+$\mathcal T(s_0)=T_{\rm flat}-b(1)$. The residual curve, contact rays and
+branch transitions remain unevaluated.
+

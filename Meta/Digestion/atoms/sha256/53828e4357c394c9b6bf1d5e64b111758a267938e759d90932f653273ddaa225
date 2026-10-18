@@ -1,0 +1,13 @@
+**Lemma 7.1.** For a legal source in the chart
+
+$$
+\frac13<x<\frac12,\quad \rho>0,\quad
+t=\frac{3x-1}{1-2x}>0,\qquad
+P=\frac1{1+\rho t}\begin{pmatrix}1&\rho\\t&\rho t\end{pmatrix},
+\tag{7.1}
+$$
+
+suppose $x+1/3<\rho<3/2$. Let $Z_P(D)$ be the sixth value of
+the first-four-reading interpolant at drift $D$. Then
+$Z_P(D)<0$ for every $D\in[24,48]$.
+

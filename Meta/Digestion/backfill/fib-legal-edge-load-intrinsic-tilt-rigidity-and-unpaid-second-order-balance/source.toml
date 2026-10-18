@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-intrinsic-tilt-rigidity-and-unpaid-second-order-balance"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_INTRINSIC_TILT_RIGIDITY_AND_UNPAID_SECOND_ORDER_BALANCE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,35 @@
+**命题 C-91.3（相同概率和商点不能替代实际同态）。** 令
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，在既定底面张量识别中取
+
+$$
+|\phi_+\rangle=|+\rangle\otimes|+\rangle,\qquad
+|\phi_-\rangle=|-\rangle\otimes|-\rangle,
+$$
+
+$$
+|\psi_\pm\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi_\pm\rangle.
+\tag{C91.6}
+$$
+
+两者五概率相同，均有 $X=Y=r/2$、$\kappa=r/4$、$\chi=0\bmod2\pi$、
+$\mathcal C=0$，但
+
+$$
+|\langle\Omega|\psi_+\otimes\psi_-\rangle|^2=\frac{r^2}4>0.
+\tag{C91.7}
+$$
+
+证明。按 $(0,1,3,13)$ 顺序，两底面系数分别为
+$(1,1,1,1)/2$、$(1,-1,-1,1)/2$。
+各模平方为 $1/4$，后一组相位可取 $(0,\pi,\pi,0)$，交替和为 $-2\pi$。
+每组均为乘积态，故行列式为零。
+混合输入的四项内积却为
+
+$$
+\frac12\left(\frac r4+\frac r4-\left(-\frac r4\right)-\left(-\frac r4\right)\right)
+=\frac r2,
+$$
+
+平方得到所列值。这个输入既没有共同条件态 $\phi\otimes\phi$，
+也不满足式 (C91.1)；不存在与定理 C-91.2 的矛盾。证毕。
+

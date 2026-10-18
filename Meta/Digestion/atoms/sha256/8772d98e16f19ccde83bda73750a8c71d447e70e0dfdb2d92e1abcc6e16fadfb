@@ -1,0 +1,59 @@
+**Proposition 65.5 (the authentic class obstruction with sourcewise refitting).**
+For each separate prescription $\diamond\in\{\mathrm c,\mathrm k\}$, the
+INITIAL $T_3$ of (65.3) has no exact realization (65.5) of all its actual pairs,
+for every $\kappa>0$ and $\ell>0$. Hence both assertions
+
+$$
+\begin{aligned}
+&\exists\kappa,\ell>0\quad
+\forall\text{ authentic }D\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q),\\
+&\forall\text{ authentic }D\quad
+\exists\kappa_D,\ell_D>0\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q)
+\end{aligned}
+\tag{65.14}
+$$
+
+are false. The admissible $D$ in these quantifiers are actual installed domains
+or separately commissioned original finite sources and legal finite versions,
+with the full source/history contract of Definition65.1. Even a fresh whole-table
+fit for every such source does not remove the obstruction. More generally,
+under the same radial transformation (65.6), no fixed finite hyperbolic dimension
+realizes this all-beta source class at every depth.
+
+Proof. Every full-domain representation restricts to its eight depth-three
+terminals. Theorem65.4 gives seven negative eigenvalues there, whereas a Gram
+matrix of $\mathbb H^3$ has at most three. Already the five actual terminals
+
+$$
+\mathcal S_5=\{LLL,LLR,LRL,RLL,RRL\}\subset B_3
+\tag{65.15}
+$$
+
+give inertia $(1,4,0)$. Their ten pairs are a principal restriction of the
+original 105-pair target. This contradiction holds for every positive calibration,
+and normalized distances make the radius irrelevant to it. Definition65.1
+provides this actual source and legal record, so it refutes each universal
+assertion in (65.14). For any fixed $d<\infty$, choose a separately commissioned
+$T_h$ with $2^h-1>d$ and apply the same negative-index argument. $\square$
+
+The terminal table does have an exact distance realization in
+$\mathbb H^{2^h-1}$, by Theorem65.4. This is only a statement about those
+terminal distances under (65.6). No full-$B_h$ distance realization in that
+dimension is established, and (65.5) is the dimension-three Laplace Green law:
+its use as a response-to-distance transform does not make it a Laplace Green
+field in dimension $2^h-1$. Edge completion cannot evade (65.14), because all
+pairs are already prescribed. In Putinar–Vishwakarma,
+[arXiv:2609.10403v1, TheoremsA, B and D, Proposition2.7 and §7.1](https://arxiv.org/pdf/2609.10403v1),
+anchored positive-semidefinite rank recognition controls dimension, chordal
+completion requires compatible specified clique data, and tree product completion
+chooses unspecified pairs while preserving supplied edges. None authorizes
+changing this complete table or dropping its fixed dimension requirement.
+Likewise the opposite-sign characterization in Tabaghi–Dokmanić,
+[arXiv:2005.08672v2, Propositions1–2, §3.1 and AppendixA](https://arxiv.org/pdf/2005.08672v2),
+retains both rank constraints: the positive and negative semidefinite parts have
+ranks at most $d$ and one, with diagonal $-1$ and entries at most $-1$.
+Relaxing rank or projecting a matrix can change prescribed distances and is not
+an exact fit of (65.4).
+

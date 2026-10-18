@@ -1,0 +1,40 @@
+**Theorem 2.3 (Necessary error for every original complex scalar port).**
+For every $T\in\mathfrak C_1$,
+
+$$
+e(T)\ge\frac{129931}{250000}=0.519724.
+\tag{2.6}
+$$
+
+Proof. The scalar-port Choi correspondence in QWS equation (2.15)
+gives $\chi_T\succeq0$, $\chi_T^\Gamma\succeq0$ and
+$\operatorname{Tr}_{\rm out}\chi_T=I_5/5$. It applies to arbitrary
+complex POVM effects and arbitrary complex preparation states; no
+stationary or real replacement is needed for this direction.
+Pair (2.1) separately with $\chi_T$ and $\chi_T^\Gamma$. The
+trace self-adjointness of partial transpose and Lemma 2.2 give
+
+$$
+\begin{aligned}
+\operatorname{tr}\bigl(\chi_T[I\otimes Y-\mathcal W]\bigr)
+&\ge\gamma\left(1-\frac12\operatorname{tr}(\chi_T Q)\right)\\
+&\ge\frac{3\gamma}{5}=\frac3{125000}.
+\end{aligned}
+\tag{2.7}
+$$
+
+This uses PSD pairing with $\chi_T^\Gamma$, not positivity of
+$K_{\rm ker}^\Gamma$. The same TP marginal now yields
+
+$$
+\mathscr S(T)\le\frac{4803}{10000}-\frac3{125000},\qquad
+e(T)\ge1-\frac{4803}{10000}+\frac3{125000}
+=\frac{129931}{250000}.
+\tag{2.8}
+$$
+
+This is $1/250000$ above the QWS lower bound $12993/25000$.
+The proof actually bounds the entire complex PPT TP Choi slice. It
+does not identify PPT with separability or construct a port from a
+relaxed feasible matrix. $\square$
+

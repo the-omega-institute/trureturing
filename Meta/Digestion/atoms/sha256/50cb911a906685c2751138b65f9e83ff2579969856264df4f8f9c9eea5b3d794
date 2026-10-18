@@ -1,0 +1,48 @@
+### 95.2. The complete source and full radial algebra
+
+Use the primitive source \(h_0,h_1,h_2\), degree-19 monomial order,
+30 basis monomials, and fixed 180-row border minor of §88.2.
+The source minor and vertical minor have residues 80 and 64. The border
+matrices therefore specialize without losing a source point; the vertical
+minor excludes \(x=0\) for the physical scaled mean \(G=x+iy\).
+As in §93, the characteristic-zero rational commutation, source-identity,
+and cyclic-vector identities specialize before any lift denominator is
+inverted. Together with the border upper bound they give the full
+30-dimensional source quotient over \(K\).
+
+Project onto the decic component using the five complementary factors
+of §88. The projector resultant is 13. Its first ten columns restricted
+to its first ten rows have determinant 13. This gives the complete
+ten-dimensional generic source summand. The other five components have
+no real projective points on the puncture by the positivity
+argument. No F8 hypothesis is used in this source coverage.
+
+The element \(w=k+t\) is primitive in this summand: the ten power columns
+on the constant vector have determinant 6. Let \(f_W\) be its monic
+characteristic polynomial and obtain \(k=k(w),t=t(w)\) by the same power
+basis. This defines them over \(K\), not merely modulo 137. Set
+\[
+\mathcal A_{20}=K[w,X]/\bigl(f_W(w),
+ (1+k(w)^2)X^2-t(w)X-R\bigr),\qquad R=3-b^2.
+\tag{95.1}
+\]
+The following are multiplication norms in (95.1), except the basis minor:
+
+~~~text
+1+k^2:101; f_W':50; t^2+4R(1+k^2):25;
+y=kX:125; G=X+iy:79; barG=X-iy:91;
+(1,y,...,y^19) basis determinant:27; disc(f_Y):75.
+~~~
+
+Thus (95.1) is a reduced algebra of dimension twenty, and \(y\) is primitive.
+Let \(f_Y\) be its monic characteristic polynomial. Its good reduction is
+
+~~~text
+Y^20+61Y^19-48Y^18+42Y^17+12Y^16-44Y^15-28Y^14-21Y^13
+-38Y^12-50Y^11+2Y^10+51Y^9+55Y^8-16Y^7-47Y^6-23Y^5
++66Y^4+38Y^3+42Y^2-3Y-12.
+~~~
+
+All field-valued original generic source points lie in (95.1), including
+points where F8 or both linear lift pivots vanish.
+

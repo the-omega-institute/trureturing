@@ -1,0 +1,187 @@
+## 117. Common populations and a strict calibration-placement gap
+
+**Theorem C-117.1 (Source-specific compact-set reduction at zero noise).**
+For every nonempty compact $U\subseteq\mathcal K$ and $0\le t\le1$, retain the
+closed simplex $\Delta_5=\{p_j\ge0:\sum_jp_j=1\}$ and C-115.2's function
+
+$$
+F_{t,X}(p)=H_2(p)-S_2\bigl(\sqrt{D_p}(I_5+tX)\sqrt{D_p}\bigr).
+$$
+
+Then
+
+$$
+\begin{aligned}
+Q_{\rm com}(t,0;U)=Q_{\rm rec}(t,0;U)
+ &=\max_{p\in\Delta_5}\min_{X\in U}F_{t,X}(p),\\
+Q_{\rm send}(t,0;U)
+ &=\min_{X\in U}\max_{p\in\Delta_5}F_{t,X}(p).
+\end{aligned}
+\tag{C117.1}
+$$
+
+In particular the first line requires one common population vector before the
+unknown label is selected. No interchange of max and min is asserted.
+All extrema exist. Zero populations, $t=0,1$, singular $I_5+tX$, and arbitrary
+complex correlations across all channel uses are included.
+
+Proof. Consume C-115.2, including its actual Stinespring extension
+$U_Xe_j=e_j\otimes\sqrt{\overline{I_5+tX}}e_j$ and its CPTP degrading map
+$\mathcal L_X(Z)=\sum_j Z_{jj}|v_{X,j}\rangle\langle v_{X,j}|$.
+For any block density matrix $\sigma$, let $p^{(r)}$ be its $r$th marginal
+population and $\bar p=n^{-1}\sum_rp^{(r)}$. The total-correlation data-processing
+step in (C115.7), followed by concavity of $F_{t,X}$, gives for every same $X$
+
+$$
+I_c(\sigma,\Phi_{t,0,X}^{\otimes n})
+ \le\sum_{r=1}^nF_{t,X}(p^{(r)})
+ \le nF_{t,X}(\bar p).
+\tag{C117.2}
+$$
+
+The vector $\bar p$ depends only on $\sigma$, not on $X$. Hence taking the
+infimum in this inequality gives an upper bound by
+$n\max_p\min_XF_{t,X}(p)$. Conversely, a product of the same diagonal input
+$D_p$ has coherent information exactly $nF_{t,X}(p)$ simultaneously for all $X$.
+Maximizing the common $p$ proves equality of the regularized common expression
+in (C116.5) with the first line of (C117.1), for every block length already.
+For the sender-informed expression, C-115.2 gives
+$\max_\sigma I_c(\sigma,\Phi_{t,0,X}^{\otimes n})=n\max_pF_{t,X}(p)$
+for each $X$ before taking the infimum. This gives the second line.
+The operational conclusions now follow from the corrected supplier, not from
+an entropy definition or a numerical optimizer.
+
+C-115.2 gives joint continuity on the compact domain and concavity in $p$.
+Uniform continuity implies continuity of $p\mapsto\min_XF_{t,X}(p)$ and
+$X\mapsto\max_pF_{t,X}(p)$, which proves attainment. No division by a population
+or inverse of a Gram matrix occurs, so the same argument includes the boundary.
+The extensions and data processing act on whole complex matrix algebras; no
+restriction to diagonal block inputs was made in the upper bound. QED.
+
+**Definition C-117.2 (The same four actual sources).**
+Take the following particular subset, without changing $B,f,J$ or the cut:
+
+$$
+\begin{aligned}
+X_{a,+}&=i(E_{04}-E_{40}),&X_{a,-}&=-X_{a,+},\\
+X_{b,+}&=i(E_{13}-E_{31}),&X_{b,-}&=-X_{b,+},\\
+U_4&=\{X_{a,+},X_{a,-},X_{b,+},X_{b,-}\}\subset\mathcal K.
+\end{aligned}
+\tag{C117.3}
+$$
+
+They have operator norm one, spectrum $\{1,0,0,0,-1\}$ and coefficient
+populations $1/5$. The pairs are positions $(0,4)$ and $(1,3)$, namely original
+labels $(0,13)$ and $(1,3)$. Signs change the imaginary coherence on the actual
+pair. Each source belongs to C-108.3's same complete native-history fiber.
+For any fixed $t,\eta$, all four source/Choi spectra, with multiplicities, are
+
+$$
+\left\{a+b,\ a-b,\ a^{[3]},\ c^{[20]}\right\},\qquad
+ a=(1-\eta)/5+\eta/25,\quad b=(1-\eta)t/5,\quad c=\eta/25.
+\tag{C117.4}
+$$
+
+Coincident eigenvalues and zeros are counted with their stated multiplicities.
+Native-history equality follows from the inherited observation theorem and
+linearity under the same white-noise mixing, not from isospectrality alone.
+
+**Theorem C-117.3 (Placement, rather than individual capacity or spectrum).**
+Put $g(t)=1-h_2((1+t)/2)$, with base-two binary entropy and $0\log_20=0$.
+For all $0\le t\le1$,
+
+$$
+\begin{aligned}
+Q(t,0;X)&=g(t) &&(X\in U_4),\\
+Q_{\rm com}(t,0;U_4)=Q_{\rm rec}(t,0;U_4)&=g(t)/2,\\
+Q_{\rm send}(t,0;U_4)&=g(t).
+\end{aligned}
+\tag{C117.5}
+$$
+
+Moreover the individual exact whole-input one-use port dimension in C-114.1's
+finite-flag CPTP contract is
+
+$$
+q_{\rm exact}(\Phi_{t,0,X})=
+\begin{cases}1,&t=0,\\2,&0<t\le1,\end{cases}\qquad X\in U_4.
+\tag{C117.6}
+$$
+
+Thus the positive placement gap is compatible with equal individual capacities,
+equal native histories, equal source spectra and equal individual exact ports.
+Equation (C117.6) asserts no common unknown-source simulator.
+
+Proof. If the active pair is $(j,k)$, put $s=p_j+p_k$. At $s>0$ put $r=p_j/s$.
+The only nondiagonal block of the Gram state in $F$ has eigenvalues
+
+$$
+\frac{s}{2}(1\pm d),\qquad
+ d=\sqrt{(2r-1)^2+4t^2r(1-r)}.
+$$
+
+The three other eigenvalues are the other populations, including their zeros.
+Splitting the entropy by the pair and its complement cancels every other
+population and the pair mass term, leaving
+
+$$
+F_{t,X}(p)=s\left[h_2(r)-h_2((1+d)/2)\right].
+\tag{C117.7}
+$$
+
+At $s=0$ the value is zero, its continuous limit. Sign does not affect this
+spectrum. For fixed $s$, the expression is concave in $r$ by C-115.2 and invariant
+under $r\mapsto1-r$ (exchange the two populations). Averaging these two points
+bounds it by its value at $r=1/2$, namely $s g(t)$, with equality at balance.
+Therefore the individual maximum is $g(t)$, obtained by putting mass $1/2$ on
+each endpoint of the active pair. This consumes C-115.2's calibrated capacity
+result; it does not reprove its coding theorem.
+
+For a single common vector write $s_a=p_0+p_4$, $s_b=p_1+p_3$.
+Their sum is $1-p_2\le1$. Consequently
+
+$$
+\min_{X\in U_4}F_{t,X}(p)
+ \le g(t)\min(s_a,s_b)\le g(t)/2.
+$$
+
+The actual vector $p_*=(1/4,1/4,0,1/4,1/4)$ attains $g(t)/2$ for all four
+labels at once, including $t=0,1$. The first line of (C117.1) yields the two
+uninformed-encoder capacities. The second line yields $g(t)$ for the
+sender-informed task, since each individual maximum is $g(t)$.
+At $t=0$ all channels are the original-basis complete dephasing map and all
+rates vanish. At $t=1$ the individual and common values are respectively one
+and one half. No strict-positivity assumption was used.
+
+For ports, the normalized Choi state at zero noise is maximally correlated.
+Its active $2\times2$ block has eigenvectors supported on only $|j,j\rangle$ and
+$|k,k\rangle$; the other three contributions are product projectors. Its spectral
+decomposition therefore has Schmidt ranks at most two, including a vanished
+active eigenvalue at $t=1$. When $t>0$, partial transpose has on
+$\operatorname{span}\{|j,k\rangle,|k,j\rangle\}$ the eigenvalues $\pm t/5$.
+It is entangled, so Schmidt number is at least two. C-113.3/C-114.1's exact
+whole-algebra finite-flag Choi/Schmidt-number equivalence gives (C117.6).
+At $t=0$ the Choi state is the sum of five product projectors, giving one.
+This port argument uses the source itself, independently of coding capacity. QED.
+
+**Remark C-117.4 (Information is supplied, and any header is paid for).**
+The sender-informed encoder may choose a different population for each active
+pair because its label is supplied before encoding. Receiver information cannot
+change the common encoder population. That is the operational distinction in
+(C117.5); a native history does not perform this calibration.
+For the finite set there is also an explicit way to make a single receiver
+implementation from four individually calibrated codes. For $\eta<1$, encode
+each of the two label bits by $m$ repetitions of $E_{00}$ or $E_{11}$ on the same
+channel. The probability of the measured output label zero is respectively
+$1-\eta+\eta/5$ or $\eta/5$, independent of $t$ and $X$.
+A midpoint threshold on that empirical frequency has bit error at most
+$\exp[-m(1-\eta)^2/2]$ by the Bernoulli Hoeffding bound.
+Take $m\to\infty$ with $m/n\to0$, then apply the label-selected data decoder.
+The header costs $2m$ actual uses and carries no message/reference correlation.
+Its measurement and controlled decoding form one common CPTP decoder; the
+extra trace error is at most twice the header failure probability. Conditional
+independence of fresh environments permits the header and data errors to be
+combined. At $\eta=0$ the two bits can instead be sent exactly in two uses.
+This description illustrates the resource accounting in the supplier; no free
+sender-to-receiver communication is being introduced.
+

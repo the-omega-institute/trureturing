@@ -1,0 +1,14 @@
+**Proposition 188.1.** If the opposite axis of M in sigma is U, then
+
+ u<1+c+d<m<3+c+d,
+ T(m,z)<u<1+c+d.
+
+More generally, whatever the source's opposite axis is, its value is
+strictly below 1+c+d. Consequently the maximal-selected source and its
+chosen escape satisfy the strict inequalities
+
+ m>1+c+d, z>1+m+c.
+
+This supplies necessary inequalities; it does not exclude every possible
+five-reservoir source or prove five-reservoir realization.
+

@@ -1,0 +1,25 @@
+**Definition 6.4 (native consumer specification).** A
+complete realization must supply one fixed finite PR57 graph
+$G$ for boundary-stopped replay, prefix selection, framing, publication,
+Call and return, together with the following commuting relation:
+
+$$
+\operatorname{decode}(\operatorname{Run}_G(B_s,U(k)))
+       =(s[0:k],X(s[0:k]))
+\quad(a\le k\le b).
+\tag{RCA.7}
+$$
+
+The graph must read only actual acquired material at admitted owner-local
+entry states. Its realized virtual state must include the full original
+cell/receipt/code/permission carrier. Every simulated primitive requires
+a finite paid representation update, and output requires actual allocated
+backing. A mathematical state-transition function, a Partrec code-existence
+theorem or an abstract Native localStep is not this graph.
+
+The finite-string computation of Theorem 4.4 and the native enumerator of
+Theorem 5.7 alone do not supply $G$. Sections 11–16 specify its finite
+compilation, actual row simulator, admission and return, and paid late
+installation. Propositions 6.2 and 6.3 are reused after materialization;
+they are not substitutes for that construction.
+

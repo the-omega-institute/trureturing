@@ -1,0 +1,47 @@
+**Proposition 12.1 (a separate exactly-one-update variation).**
+Consider a variation in which every observer must reach a first Read
+after finite source-free work before it may Return. Require termination
+under observer progress when exactly one writer update occurs after that
+Read while the call is pending and the writer then halts. Require invocation
+correctness on histories with exactly one such update before the separate
+Return. Under this variation the classification (CNA.18), and the forced
+root first for its nonconstant positive case, still hold.
+
+**Proof.** Take the fixed first literal $a$ and a separating $u$ from
+Theorem 10.3. Run the call from $u$, perform its first Read, immediately
+apply one update, and halt the writer. By the stated termination premise
+it has a finite observer continuation and Return. Starting instead from
+$\rho u$, perform the same first Read and the same continuation with no
+updates up through its last Read and all required output preparation.
+The two observer records agree at each step: the first replies agree,
+and the source used by every subsequent Read is $\rho u$.
+
+Immediately before the second call's separate Return, apply its sole
+update. This takes its register to $\rho^2u$ but supplies no observer
+input. Return still has the same prepared output. Both complete histories
+now have exactly one update after their first Read and before Return,
+while their invocation rows differ. This excludes every negative case
+and every nonroot first literal for $\{L,R\}$.
+
+Definition 11.1 already works with finite interference. The root shortcut
+can perform one root Read before returning its constant row to satisfy
+the additional first-Read requirement. These give sufficiency. $\square$
+
+This variation specifies finite first-Read progress expressly: restricting
+correctness only to completed exactly-one histories must not give a
+zero-Read program an empty correctness domain when pre-first updates
+are forbidden. The main Assumption 10.1 has no such vacuity because
+zero-update histories are included. The comparison in Lemma 10.2 uses
+one versus zero updates; Proposition 12.1 instead needs the last-Read to
+Return position to put one update in each history. A fused Read/Return
+port removes that position and is outside Proposition 12.1.
+
+A known zero-update budget is another model: stationary full traversal
+recovers every $R_P(u)$, including the empty cut, by the suppliers of §2.
+A positive upper bound is not an assertion that an update occurred.
+Nor does the assertion that exactly one update will occur before Return
+tell the observer when it has been spent. An authentic already-spent count
+and a later acquired whole tree would supply different data; inverse
+transport on its actual image is the [STC] supplier, not a free entry
+snapshot. No such input is used in Theorem 10.4.
+

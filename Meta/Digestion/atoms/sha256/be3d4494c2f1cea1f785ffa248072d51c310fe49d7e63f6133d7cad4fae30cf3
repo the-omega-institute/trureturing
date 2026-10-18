@@ -1,0 +1,19 @@
+**命题 15.12（原生开放位词的求和—最大值误差）。**
+
+
+令 L≥0 为位点个数（若按窗口计 m，则 L=3m），Ω_L 为开放合法位词，|Ω_L|=F_{L+2}。对固定有限实值 score f:Ω_L→ℝ、β>0，设 M=max_Ω f，把 e^{βM} 从和中提出即得
+
+$$
+M\le\beta^{-1}\log\sum_{w\in\Omega_L}e^{\beta f(w)}
+\le M+\frac{\log F_{L+2}}\beta.
+$$
+
+固定 L 时 β→∞ 给最大值；固定有限 β 而 L→∞，未按 L 归一化的上界误差约 L logφ/β，不趋零，每位上界误差趋 logφ/β。原生 $K$ 在这些合法位词上求和。另一份算术最大值接口见 [RoughPrimeSuffixBellman](../../../Blueprint/D5/S3/Arith/ExponentExchange/RoughPrimeSuffixBellman.md)：其 $\operatorname{Feasible}(y,i,b,h)$ 保留截点后的连续素数、整数预算和指数上限，$V$ 取同一可行指数列表的最大值。这里的 $L,\beta$ 及位词没有给出到该整数域的映射。
+
+Robin 所需逐点目标是对每个整数 n>5040 证明 σ(n)/n<e^γ log log n。[FewDistinctPrimes](../../../Blueprint/D5/S3/Arith/Robin/FewDistinctPrimes.md) 的范围为不同素因子数至多八及 $5040<n<223092870$，保留原假设，此范围不含全部正整数。本章 TV 界只控制上述共同法则下的有界平均，不能推出逐 n 正间隙或算术最坏尾界。若要迁移，须供应同一真实逐点来源及转移、覆盖所有可行路径的上界、正的统一裕量，以及与该任务量纲及归一化相容的显式误差桥；这些额外桥梁不由本章假设推出。小平均差允许某个稀有路径有大误差。
+
+
+证明。有限 log-sum-exp 是本原生应用中的经典中间步骤：最大项给下界，全部 $F_{L+2}$ 项各不超过最大项给上界；$L=0$ 时只有空词，误差零。Binet 式给 $L^{-1}\log F_{L+2}\to\log\phi$，得到所列每位误差界。这没有给逐整数 Robin 目标的比较桥。
+
+数学引文。Garrett Birkhoff，*Extensions of Jentzsch’s theorem*，Transactions AMS 85，219–227，DOI [10.1090/S0002-9947-1957-0087058-6](https://doi.org/10.1090/S0002-9947-1957-0087058-6)，承担 Hilbert 正锥收缩先例；二阶精确系数已在定理 15.4 内推导。William Parry，*Intrinsic Markov chains*，Transactions AMS 112，DOI [10.1090/S0002-9947-1964-0161372-1](https://doi.org/10.1090/S0002-9947-1964-0161372-1)，承担 Perron–Markov 构造先例。Ole J. Heilmann、Elliott H. Lieb，*Theory of monomer-dimer systems*，Communications in Mathematical Physics 25，190–232，DOI [10.1007/BF01877590](https://doi.org/10.1007/BF01877590)：第 $i$ 个占位对应扩展路径的边 $(i,i+1)$ 上权 $\lambda$ 的 dimer，monomer 权一，才给本章 $\lambda^{\#ones}$ 的来源；协方差、开放压力由命题 15.8、定理 15.9 的计算承担。R. A. Fisher，*On the mathematical foundations of theoretical statistics*，Philosophical Transactions A 222，309–368，DOI [10.1098/rsta.1922.0009](https://doi.org/10.1098/rsta.1922.0009)，只作 score 方差信息的命名先例，不替代开放 partition 的求导证明。
+

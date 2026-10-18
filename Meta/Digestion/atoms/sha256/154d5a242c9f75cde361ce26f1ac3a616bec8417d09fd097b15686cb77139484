@@ -1,0 +1,4 @@
+## 83. Two even joined classes: safe unsaturated whole-target attainment
+
+The full low cycle in this chapter has $2^h-1$ joined labels, one fewer than the saturated cycle of Chapter 82. Its two positive even classes permit a code with exactly one omitted vector. Root constraints, chronological missing coordinates and even full rows alone do not make every such code physically safe at $h=4$. The selection below omits a unit vector instead. This preserves at least four actual common charged phases at every consecutive boundary, while meeting all accumulated label restrictions. It gives an exact whole-target GLOBAL fee for arbitrary different component tables in the stated two-even class.
+

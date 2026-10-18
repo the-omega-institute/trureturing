@@ -1,0 +1,17 @@
+## 完整供文
+
+这一次真正需要推进的，不再是重复计算 $\kappa$，而是把它提升为一个更结构化的对象：
+
+> **$\kappa$ 是三均值线性观察层 $\mathcal B$ 内部乘法不闭合所产生的唯一隐藏曲率；它是否进入未来，不由平均转移决定，而由输出分支上的递归拉回决定。**
+
+截至本轮可以核对到的 `dev` 快照，远端 HEAD 是 [`ae4f135`](https://github.com/the-omega-institute/trureturing/commit/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb)，时间为 2026-10-10 15:37:42（新加坡时间）。今天与 Auric FIB ATOM 直接相关的理论线仍然是：
+
+- [Relational Quotients and Physical Candidates](https://github.com/the-omega-institute/trureturing/blob/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb/docs/develop/theory/AURIC_FIB_ATOM_RELATIONAL_QUOTIENTS_AND_PHYSICAL_CANDIDATES.md)
+- [Dynamic Future Quotient and Future-Closed Memory](https://github.com/the-omega-institute/trureturing/blob/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb/docs/develop/theory/AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)
+- [Paired Calibration Observability](https://github.com/the-omega-institute/trureturing/blob/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)
+- [Acquired Return $p$-Emission Variation](https://github.com/the-omega-institute/trureturing/blob/ae4f135cebf29ea39c8253bf1c21016cf7cb7cfb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)
+
+仓库当前仍然把 Lean 形式化、理论文档和实验观察区分开来；理论 prose 中的命题不能自动当作 Lean 已验证定理。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com) 当前 PR 队列仍在持续推进预测纤维、未来律和 FIB escape dynamics 相关方向。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+---
+

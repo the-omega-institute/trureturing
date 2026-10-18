@@ -1,0 +1,13 @@
+**定义 8.1（既有四元数来源求值的约定）。** 使用[《二阶关系完成》第101–103节](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)和[《稳定关系边界》第6–8节](AURIC_FIB_STABLE_RELATION_BOUNDARY_THREE_DIMENSIONAL_CLOSURE.md)的结合表示，记
+
+$$
+A=-i\sigma_x,\qquad B=-i\sigma_y,\qquad C=BA=i\sigma_z,
+$$
+
+$$
+Q(\alpha)=A,\quad Q(\beta)=B,\quad
+Q(\langle s,t\rangle)=Q(s)Q(t).
+$$
+
+这一表示保留有向乘法，矩阵结合律仍会忘记原树括号。
+

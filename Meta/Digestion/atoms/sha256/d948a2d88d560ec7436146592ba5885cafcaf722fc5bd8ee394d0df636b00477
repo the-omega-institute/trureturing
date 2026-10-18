@@ -1,0 +1,28 @@
+**Definition 2.1 (shared class variables).** Write $R_i=(C_i,\pi_i)$,
+let $H_i$ be its addressed holes, and let $\mathcal B_i=H_i/\pi_i$.
+Introduce a native variable $x_{i,b}$ for each $b\in\mathcal B_i$,
+reusing it at every occurrence of that class. Variables in different
+rows remain distinct names until constrained. Set
+
+$$
+\begin{aligned}
+W_i(\mathbf x)&=C_i[(x_{i,[p]})_{p\in H_i}],\\
+\Delta_i(\mathbf x)&=\bigwedge_{b\ne c\in\mathcal B_i}
+                    x_{i,b}\ne x_{i,c},\\
+L_I(\mathbf x)&=\bigwedge_{((i,p),(j,q),\epsilon)\in\Lambda}
+                    x_{i,[p]}\ \epsilon\ x_{j,[q]}.
+\end{aligned}
+\tag{NCE.3}
+$$
+
+Empty products have their unique empty valuation and empty conjunctions
+mean true. With one further variable $t$, define
+
+$$
+\Psi_I(\mathbf n,t,\mathbf x)=
+ \bigwedge_{i<m}\bigl(\rho^{n_i}t=W_i(\mathbf x)
+                         \ \land\ \Delta_i(\mathbf x)\bigr)
+ \ \land\ L_I(\mathbf x).
+\tag{NCE.4}
+$$
+

@@ -1,0 +1,20 @@
+**Proposition 72.11 (finite thickness does not give an exact operator
+intertwiner).** The map $J_\varepsilon$ in72.10 is not an exact
+finite-thickness operator intertwiner between $L$ and $H_\varepsilon$.
+
+**Proof.** On graph form inputs, its piecewise constant chamber values
+and its cylinder functions match across the plates. But for a graph
+operator input with a nonzero endpoint cable derivative, its cylinder
+normal derivative at that plate is nonzero while its chamber derivative
+is zero. The weak physical Laplacian then has an interface distribution
+and is not represented by an $L^2$ function. Such inputs belong to
+(72.3): for example give one cable a smooth endpoint-zero function with
+nonzero derivative at a source end, set all other cables and all atomic
+values to zero, and use(72.3) for its nonzero atomic output. This input
+has the required zero grounded trace as well. Thus its $J_\varepsilon$
+image fails the physical operator-domain transmission condition.
+It follows that an identity $H_\varepsilon J_\varepsilon
+=J_\varepsilon L$ on all of $\operatorname{Dom}L$ is false.
+The resolvent estimate(72.26) asserts convergence and is compatible
+with this domain failure. $\square$
+

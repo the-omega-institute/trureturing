@@ -1,0 +1,35 @@
+**Definition 2.1 (the finite successor features).** Define
+
+$$
+f(Q)=\bigl(Q(w_{0,1}),Q(w_{1,1}),Q(w_{2,1})\bigr),
+\qquad
+g(W)=\bigl(W(\beta),W(\alpha w_{0,1}),
+ W(\alpha w_{1,1}),W(\alpha w_{2,1})\bigr).
+\tag{2.1}
+$$
+
+The same expressions evaluate $f,g$ on arbitrary probability laws on their
+respective carriers. For the original flows set
+
+$$
+\begin{aligned}
+V_A&=\int\|f(Q)-f(\mathcal R_A(W))\|_2^2\,d\Gamma_A(W,Q),\\
+V_B&=\int\|g(W)-g(\mathcal R_B(Q))\|_2^2\,d\Gamma_B(Q,W),\\
+V&=V_A+V_B,\qquad \mathfrak C_7=\{\Gamma\in\mathfrak C:V=0\}.
+\end{aligned}
+\tag{2.2}
+$$
+
+Compatibility makes these sums of conditional variances. They measure
+random variation among individual successor forecasts around their input's
+full residual. They are not variances of the residual across inputs, of
+synthetic return weights, or of actual source letters. They are not extra
+data supplied to an observer. Zero $V$ means that these seven scalar
+equalities hold on the two edges; it does not require equality of entire
+successor laws.
+
+The complete-successor graph class of [REV, (16.5)] satisfies $V=0$.
+Proposition 4.1 below proves strict inclusion even among rational represented
+observers with both full boxes. There is no finite-support restriction in
+$\mathfrak C_7$.
+

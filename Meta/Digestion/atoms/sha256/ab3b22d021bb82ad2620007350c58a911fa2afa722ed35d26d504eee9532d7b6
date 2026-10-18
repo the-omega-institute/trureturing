@@ -1,0 +1,18 @@
+**复用 64.3（实际核与来源约束）。** 本卷定理3.1、4.3、5.1、推论16.3及引理26.1／第50节给出运输、全树符号、实际计数和准确核，直接用于下文。其成立对象是实际树历史。令 $F_0=0,F_1=1$，$a_j=F_{j-2},b_j=F_{j-1}$；$j\ge3$ 时
+
+$$
+x_j=\begin{cases}
+q_1^{a_j-1}q_2^{b_j}x_1,&j\equiv1\pmod3,\\
+q_1^{a_j}q_2^{b_j-1}x_2,&j\equiv2\pmod3,\\
+q_1^{a_j-1}q_2^{b_j-1}x_3,&j\equiv0\pmod3,
+\end{cases}\qquad
+x_3=\operatorname{sgn}\bigl(x_0\cdot(x_2\times x_1)\bigr)(x_2\times x_1).
+$$
+
+取 $0^0=1$、$\operatorname{sgn}(0)=0$，零标签和依赖制备均在其适用范围内。实际约束为
+
+$$|x_0\cdot(x_2\times x_1)|\ge q_2^2,\quad q_2\le q_0q_1,\quad
+|x_0\cdot(x_2\times x_1)|\ge c q_0|x_2\times x_1|,\quad c=\sqrt{d_0}/L^2.$$
+
+第三式使用原叶／行列式域；前两式对任意实际制备成立。有限报告可以不正交、不在实际像中，不能要求它们满足这些真来源约束。第68节只在误差证明中对真值使用约束。
+

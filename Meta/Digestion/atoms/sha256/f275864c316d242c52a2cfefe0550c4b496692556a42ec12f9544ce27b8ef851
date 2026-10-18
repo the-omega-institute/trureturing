@@ -1,0 +1,35 @@
+**Theorem 4.1 (exact finite image or effective infinite image).** Given
+$\Phi$ and $\mathbf t$ of Definition 1.1, a terminating algorithm returns
+exactly one of the following:
+
+- FINITE: the complete finite set $\operatorname{Im}_{\Phi}(\mathbf t)$,
+  with an original assignment $\mathbf x$ satisfying $\Phi$ for every
+  listed output and evaluating to that output;
+- INFINITE: an effective map $k\mapsto\mathbf x_k$, $k\in\mathbb N$,
+  with $\Phi(\mathbf x_k)$ and pairwise distinct $\mathbf t(\mathbf x_k)$.
+
+In the finite case the list is empty exactly when $\Phi$ is unsatisfiable.
+The original variable domain remains all finite native trees.
+
+Proof. Compute the finite branch list and decide feasibility of each by
+Lemma 2.3. Discard only infeasible branches. If any remaining branch is
+not output-rigid, Theorem 3.5 supplies the INFINITE answer within original
+solutions, so it is sound for their union.
+
+Otherwise every feasible branch has its single fixed output. Obtain a
+witness from each and evaluate its output tuple. Remove duplicate tuples
+by finite native syntactic equality, retaining a realizing assignment
+for each. Every listed tuple is realized. Every original satisfying
+assignment chooses a feasible branch and has that branch's rigid tuple;
+hence no output is omitted. If there are no feasible branches, the
+solution set and image are empty.
+
+There are finitely many Boolean choices, pairing-collapse choices,
+finite unification steps and negative-witness choices. Feasibility has
+a terminating NO decision; rigidity is a finite graph and syntax test.
+Witness extraction and comparison of finite native trees terminate.
+An infinite answer returns a finite description of the generator proved
+in Theorem 3.5, not an attempted enumeration to establish infinitude.
+Thus both answers terminate without testing successive source-size or
+prefix bounds. $\square$
+

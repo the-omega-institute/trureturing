@@ -1,0 +1,18 @@
+**Proposition 7.5 (existing positive acquisition upper supplier).** If the
+post-update register $U=\rho t$ is held unchanged during acquisition, the existing
+native full-source stack producer acquires and outputs $U$. It uses exactly
+$12s-1=3n-1$ literal calls and $12s-2=3n-2$ native local steps. Its acquired
+output also determines the unique initial $t$ on this actual substitution image.
+
+Proof. `NativeFullSourceProducer.native_source_producer` returns every finite
+source with one Read per actual node and no source changes. Here $U$ has $6s$
+leaves, hence $6s-1$ branches and $12s-1$ nodes. Its `productionTrace` has two
+local steps per branch, giving $12s-2$. The statement is published at epoch
+zero; ordinary induction on its no-update Run rules replaces every Read tag by
+the starting epoch one without altering register, control, addresses or replies.
+This is an epoch-tag adaptation, not a reset. Lemma 7.1 decodes the acquired
+$U$ to its unique preimage. All stack, code, output, literal-address, archive
+recording/access and runtime costs are additional. An abstract native producer
+does not itself establish the paid same-installed-source hybrid or its new row
+schema. No new compilation or source-producer novelty is claimed.
+

@@ -1,0 +1,21 @@
+**Lemma 9.2 (Equivariant Gram form).** Under (9.1), there is a positive
+semidefinite $m\times m$ matrix $A$ such that
+
+$$
+\boxed{G=A\otimes I_3.}
+\tag{9.2}
+$$
+
+**Proof.** Since $W_Q$ is orthogonal, (9.1) gives
+
+$$
+(I_m\otimes Q)^{\mathsf T}G(I_m\otimes Q)=G.
+$$
+
+Write $G$ as an $m\times m$ block matrix with $3\times3$ blocks. Every
+block commutes with every $Q\in SO(3)$. Commutation with half-turns about
+the coordinate axes first removes all off-diagonal entries. Commutation with
+a quarter-turn taking one coordinate axis to another then makes the three
+diagonal entries equal. Hence each block is a scalar multiple of $I_3$;
+symmetry and positivity give (9.2). $\square$
+

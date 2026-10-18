@@ -1,0 +1,24 @@
+**Proposition 5.1 (root, empty cuts and degenerate cells).** The theorem keeps
+all boundary cases.
+
+- If $Q=\{\varepsilon\}$, the target is one reached root hole and $H=0$; no
+  target-pair query is needed.
+- If $Q=\varnothing$, the target is the complete original source. The finite
+  mask branch uses the full exterior condition; the infinite-mask branch
+  supplies pairs of finite sources agreeing to every requested depth and with
+  different complete sources.
+- If $P=\varnothing$, the fixed complete old row contains the entire
+  original tree as its concrete exterior. The remaining records either reject
+  that tree or retain it: the fiber is empty or that fixed singleton.
+  No old hole is assumed.
+- A ground cell has no frontier variables and is checked directly. An empty
+  or unreachable cell contributes no service branch. A nonempty input always
+  retains at least one feasible cell.
+- Repeated old classes, repeated negative records and off-task inequalities
+  remain shared conjunctions. A missing original cut address contributes no
+  hole and remains part of the concrete exterior when required.
+
+Proof. These are direct specializations of (RNL.8)–(RNL.9), the endpoint
+guards in (RNL.2), the joint NSF query and the NPL whole-row image. No case
+introduces a representative source or a finite source-size bound. $\square$
+

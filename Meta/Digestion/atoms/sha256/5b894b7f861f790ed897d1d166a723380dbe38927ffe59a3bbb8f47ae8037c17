@@ -1,0 +1,27 @@
+### 64.2. A retained-coherence constraint for every physical competitor
+
+For an arbitrary Φ define the retained coefficients
+
+    λ_i=<00|Φ(|ii><hh|)|11>,    1≤i≤m.
+
+Then, without assuming anything about Φ's basis outputs or leakage,
+
+    ||λ||₁≤1.                                             (3)
+
+Proof. In one product branch A⊗B choose Stinespring isometries and write
+
+    U_A|i>=|0>a_(0,i)+|1>a_(1,i),
+    U_B|i>=|0>b_(0,i)+|1>b_(1,i),
+
+for every leaf and hub label. Define C_A:C^m→H_EA by C_A e_i=a_(0,i). It is a contraction: it is the composition of the isometric inclusion of the leaf subspace, U_A, and the output-0 coordinate projection. Thus ||C_A||≤1. Also ||a_(1,h)||≤1. For
+
+    α_i=<a_(1,h),a_(0,i)>,
+
+the vector α is the coordinatewise conjugate of C_A* a_(1,h), with the inner product conjugate-linear in its first variable. Hence Σ_i|α_i|²≤1. The same construction gives β_i=<b_(1,h),b_(0,i)> with Σ_i|β_i|²≤1.
+
+The actual channel formula gives λ_i^(b)=α_iβ_i. Consequently
+
+    Σ_i|λ_i^(b)|≤sqrt(Σ_i|α_i|²)sqrt(Σ_i|β_i|²)≤1.
+
+A finite LOSR mixture has λ_i=Σ_b w_b λ_i^(b). The triangle inequality proves (3). In particular the environment vectors a_(0,i) have not been assumed orthogonal or normalized; contraction of their column map replaces the calibrated orthonormal-record premise. Arbitrary product ancillas and larger local environments are absorbed into the Stinespring representations. No code projection, postselection, or physical retraction is used.
+

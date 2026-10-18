@@ -1,0 +1,34 @@
+**Proposition 2.1 (Complete commuting laws and original trace distance).** Define the five matching vectors
+
+$$
+|a_\epsilon\rangle=J(e_0-i\epsilon e_4)/\sqrt2,\qquad
+|b_\epsilon\rangle=J(e_1-i\epsilon e_3)/\sqrt2,\qquad
+|o\rangle=Je_2,\qquad \epsilon\in\{1,-1\},
+$$
+
+and the rank-$20$ projection $\Pi_*=I_{25}-JJ^\dagger$. The projections onto these five vectors and $\Pi_*$ form one fixed six-outcome PVM, with outcomes $a_+,a_-,b_+,b_-,o,*$. Under $X=\sigma X_a$ its law is
+
+$$
+p_{a,\sigma}=(w+\sigma u,w-\sigma u,w,w,w,20\eta/25).
+\tag{2.1}
+$$
+
+The law $p_{b,\sigma}$ interchanges the two $a$ entries with the two $b$ entries. Product-copy outcomes have the product law $p_X^{\otimes m}$. The four states commute, and the opposite-source half trace distance is exactly
+
+$$
+\begin{aligned}
+D_m(t,\eta)
+&=\frac12\|\rho_{t,\eta}(X_a)^{\otimes m}
+             -\rho_{t,\eta}(-X_a)^{\otimes m}\|_1\\
+&=\frac12\sum_{r+q+k=m}\frac{m!}{r!q!k!}(1-2w)^k
+ \left|(w+u)^r(w-u)^q-(w-u)^r(w+u)^q\right|.
+\end{aligned}
+\tag{2.2}
+$$
+
+The sum is over nonnegative integers. The opposite-$b$ value is identical. In particular $D_0=0$, $D_1=2c/5$, and for $m\ge1$, $1\ge D_m\ge D_1$.
+
+Proof. The coefficient vectors $(e_0-i\epsilon e_4)/\sqrt2$ are eigenvectors of $X_a$ with eigenvalue $\epsilon$; the corresponding $b$ vectors diagonalize $X_b$. The matrices act on disjoint pairs. On the matching subspace the five eigenvalues of the source are the five matching entries in (2.1). On the orthogonal complement every eigenvalue is $\eta/25$, with multiplicity twenty. This proves the laws and a common complete eigenbasis. On tensor powers the trace norm of the difference is the sum of absolute eigenvalue differences. Inside $*$ all twenty probabilities are identical for every label; summing them retains the trace norm, including for product strings.
+
+For opposite $a$ labels, every nondistinguished outcome has the same probability under both laws, with total mass $1-2w$. Group those outcomes and let $r,q$ count $a_+,a_-$. The multinomial expansion gives (2.2). It includes zero probabilities and the empty string, for which the two products are equal. At one copy only the two distinguished probabilities differ, by $2u,-2u$, giving $D_1=2u$. Summing probabilities after discarding copies cannot increase their total variation: this follows by the triangle inequality inside each marginal sum. Therefore $D_m\ge D_1$ for $m\ge1$; total variation is at most one. The grouping is a probability sum, not rejection of the rank-$20$ outcome. QED.
+

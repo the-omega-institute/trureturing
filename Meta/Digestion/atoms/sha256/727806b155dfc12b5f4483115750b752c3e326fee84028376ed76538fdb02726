@@ -1,0 +1,66 @@
+**Lemma 4.2 (Uniform harmonic information and bounded logs).** There are positive source-only constants $h_-,h_+$ such that every permitted pair satisfies
+
+$$
+h_-s^{2r}H_L\le u(s,L)\le h_+s^{2r}H_L,\qquad
+0<A<1,\quad 0<u<1,\qquad |\ell_z|\le C_0:=\log(1+c).
+\tag{4.3}
+$$
+
+Proof. For $k\le L$ put $v_k=f_1(k)/f_0(k)-1$. The exact normalization gives
+
+$$
+v_k=\frac{c(k^{-r}-g(s))}{1+cg(s)}.
+\tag{4.4}
+$$
+
+Since $sk\le\eta$, (3.1) and (3.7) imply $g(s)\le G\eta^r k^{-r}\le k^{-r}/2$. Also $g(s)\le1$. Consequently
+
+$$
+\frac{c}{2(1+c)}k^{-r}\le v_k\le ck^{-r},\qquad
+\frac{e^{-\eta}}{z_+}s^a k^{a-1}\le f_0(k)\le\frac1{z_-}s^a k^{a-1}.
+\tag{4.5}
+$$
+
+The exact squared-root distance identity is
+
+$$
+2u=\sum_{z\in\mathcal Z_L}(\sqrt{a_1(z)}-\sqrt{a_0(z)})^2.
+\tag{4.6}
+$$
+
+At a short category $k$ its summand is $f_0(k)v_k^2/(\sqrt{1+v_k}+1)^2$. The denominator is at most $(\sqrt{1+c}+1)^2$. Substituting (4.5), with $a=2r$, makes that summand at least
+
+$$
+\frac{c^2e^{-\eta}}{4z_+(1+c)^2(\sqrt{1+c}+1)^2}\frac{s^a}{k}.
+\tag{4.7}
+$$
+
+Sum the short terms and divide by two. This proves the lower bound with $h_-=c^2e^{-\eta}/[8z_+(1+c)^2(\sqrt{1+c}+1)^2]$. In particular the category laws differ even for $L=1$. Positive masses give $A>0$; Cauchy–Schwarz gives $A\le1$, with equality only for equal normalized laws. Thus $0<A<1$ and $0<u<1$.
+
+For the upper bound retain the full collapsed tail. Put
+
+$$
+\pi_0=\sum_{k\le L}f_0(k),\qquad Q=\sum_{k\le L}f_0(k)v_k^2,\qquad
+m=\sum_{k\le L}f_0(k)v_k=\sum_{k\le L}(f_1(k)-f_0(k)).
+\tag{4.8}
+$$
+
+Since $\sum_{k\le L}k^{a-1}\le L^a$, (3.7) gives $\pi_0\le s^aL^a/z_-\le1/2$. Normalization says that the tail mass changes by exactly $-m$. Its chi-square contribution against $a_0$ is $m^2/(1-\pi_0)$, and weighted Cauchy–Schwarz gives $m^2\le\pi_0Q$. Hence
+
+$$
+\chi^2(a_1\|a_0):=\sum_z\frac{(a_1(z)-a_0(z))^2}{a_0(z)}
+=Q+\frac{m^2}{1-\pi_0}\le\frac{Q}{1-\pi_0}\le2Q.
+\tag{4.9}
+$$
+
+For positive $p,q$, $(\sqrt p-\sqrt q)^2\le(p-q)^2/q$. Equations (4.6) and (4.9) yield $u\le Q$. Finally (4.5) gives
+
+$$
+Q\le\frac{c^2}{z_-}s^a\sum_{k=1}^L k^{a-1-2r}=\frac{c^2}{z_-}s^aH_L.
+\tag{4.10}
+$$
+
+Thus $h_+=c^2/z_-$ is valid. The symmetric affinity has been bounded with the entire normalized tail present; no tail suffix or likelihood observation was supplied for free.
+
+At every $k\ge1$, (3.2) and $k^{-r},g(s)\in[0,1]$ put the full ratio in $[1/(1+c),1+c]$. The ratio $a_1(\star)/a_0(\star)$ is its conditional $f_0$-average over $k>L$, so it lies in the same interval. Taking logarithms proves the uniform bound for every short and tail category. $\square$
+

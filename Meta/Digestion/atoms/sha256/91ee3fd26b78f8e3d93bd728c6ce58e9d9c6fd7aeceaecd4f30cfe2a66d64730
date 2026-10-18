@@ -1,0 +1,27 @@
+**Lemma 93.1 (uniform endpoint perturbation).** Let $\widehat U=1-a_1\eta\sigma$, $\widehat V=1-a_2\eta\sigma$ and let $\widehat A_r$ be the represented anchors from either endpoint mode. For every $j\geq3$, put
+
+$$
+r=3+(j\bmod3),\quad
+R=\frac{F_{j-2}-F_{r-2}}2,\quad
+S=\frac{F_{j-1}-F_{r-1}}2.
+$$
+
+Then $x_j=A_rU^RV^S$. The exponents are nonnegative integers, vanish at $j=3,4,5$, and thereafter satisfy $1\leq R\leq S\leq2R$. Under the semantic field contract, $\|\widehat A_r\widehat U^R\widehat V^S-x_j\|<14\eta$ for every $j$, including zero or unit bases.
+
+**Proof.** This is the phase identity of [supplier §78](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md), with endpoint constants. Fibonacci parity has period three. At $j=r+3t$, $t\geq1$, the pairs $(S-R,2R-S)$ for $r=3,4,5$ are, respectively,
+
+$$
+\left(\frac{F_{3t}}2,\frac{F_{3t-1}-1}2\right),\quad
+\left(\frac{F_{3t+1}-1}2,\frac{F_{3t}}2\right),\quad
+\left(\frac{F_{3t+2}-1}2,\frac{F_{3t+1}-1}2\right).
+$$
+
+Their nonnegativity and the first later values $(R,S)=(1,2),(2,3),(3,5)$ prove the cone on all phases. Along the line segment between the true and represented bases the loss sum satisfies $D_t\geq D-2\eta\sigma\geq D/2$. For $f(u,v)=u^Rv^S$, polynomial derivatives on $[0,1]^2$ give
+
+$$
+|\partial_uf|+|\partial_vf|\leq3R(uv)^{R-1}
+\leq\frac6{D_t}\leq\frac{12}D.
+$$
+
+Indeed $uv\leq1-D_t/2$, and $Rz^{R-1}\leq\sum_{l=0}^{R-1}z^l\leq(1-z)^{-1}$ for $0\leq z<1$. Integrating the derivative bound over base changes of at most $\eta\sigma$ gives scalar error at most $12\eta$. At the three initial anchors it is zero. True anchor norm is at most one, represented coefficient at most one, and anchor error less than $2\eta$, proving the claimed vector bound. Polynomial continuity covers $u=0,1$ or $v=0,1$ without division by a norm or normalization of noisy directions. $\square$
+

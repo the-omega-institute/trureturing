@@ -1,0 +1,37 @@
+**Status 9.4 (ordinary results and outstanding scope).** The
+finite-marker conversion, shared physical-word construction,
+their exact constructor-family paid applications, and the
+single-source six-hole lower bound are `repo-derived` ordinary
+results proved in this volume. The inherited recovery decision,
+operational normalization and finite optimization schemes are
+explicitly reused. No literature-wide novelty or priority claim
+is made.
+
+The exposition uses the repository formal-thinking and
+theory-volume-template conventions within ordinary-theory
+authorization. These proofs have one scientific author; this
+text asserts neither independent approval nor a Lean build.
+No finite experiment, implemented solver, practical complexity
+bound or physical realization is offered as evidence for its
+universal claims. The exact paid access contract remains
+conditional on actual acquisition and the stipulated complete
+accessible state. The unrestricted obligation in Open problem
+9.1 and the broader continuing relation/recovery programme are
+not completed by this increment.
+
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[SRF]: RECURSIVE_RELATIONAL_OBSERVATION_SYNCHRONOUS_RESOURCE_FRONTIER.md
+[JRF]: RECURSIVE_RELATIONAL_OBSERVATION_SERIAL_JOINT_RESOURCE_FRONTIER.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[CAR]: RECURSIVE_RELATIONAL_OBSERVATION_CYCLIC_ATOMIC_RECOVERY.md
+[TPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_TERM_POWER_OBSTRUCTION.md
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+[MONA]: https://www.brics.dk/mona/mona14.pdf
+[BASE]: https://github.com/the-omega-institute/trureturing/tree/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f
+[D5-CENTRAL]: https://github.com/the-omega-institute/trureturing/blob/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean
+[D5-READ]: https://github.com/the-omega-institute/trureturing/blob/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f/D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean
+[D5-TRACE]: https://github.com/the-omega-institute/trureturing/blob/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f/D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean
+[D5-WINDOW]: https://github.com/the-omega-institute/trureturing/blob/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f/D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/FirstWindowBoundaryAdaptive.lean
+[D5-MARGINAL]: https://github.com/the-omega-institute/trureturing/blob/8e1082af82ef26d8d8e9fe85fe3738908f2f5a1f/D5/S3/Combinatorics/Probability/FiniteCommonMarginalSupermodular.lean
+[MATHLIB-DFA]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/DFA.lean
+

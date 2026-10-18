@@ -1,0 +1,86 @@
+**Lemma 82.1 (canonical geometry and free heat).** The multiplication
+
+$$
+(r,y,z,w)(r',y',z',w')=
+(r+r',y+y',z+z'+ry',w+w'+rz'+\tfrac12r^2y')
+\tag{82.1}
+$$
+
+makes $\mathbb R^4$ the step-three Engel group with Haar measure
+$d\xi$. Its left invariant fields $X,Y,[X,Y],[X,[X,Y]]$ have determinant
+one. The automorphic dilations and homogeneous dimension are
+
+$$
+\delta_R(r,y,z,w)=(Rr,Ry,R^2z,R^3w),\qquad Q=7.
+\tag{82.2}
+$$
+
+Let $d_E$ be its control distance for $X,Y$, with squared control
+cost $u^2+v^2$, and put
+$N(\xi)=\max(|r|,|y|,|z|^{1/2},|w|^{1/3})$. Then $d_E$ is proper,
+$d_E(0,\xi)\ge cN(\xi)$, and
+
+$$
+0<p_E(t;\eta,\xi)\le
+ C t^{-7/2}\exp[-c d_E(\eta,\xi)^2/t],\qquad t>0.
+\tag{82.3}
+$$
+
+In particular $V$ is bounded, smooth, strictly positive, and
+
+$$
+0<V(\xi)\le C(1+N(\xi))^{-5},\qquad
+\sup_\xi p_E(t;0,\xi)\le c_Et^{-7/2},\quad c_E=p_E(1;0,0).
+\tag{82.4}
+$$
+
+Proof. The semidirect action on $(y,z,w)$ in (82.1) has determinant
+one and satisfies $T_rT_{r'}=T_{r+r'}$. This verifies associativity,
+Haar measure and the displayed fields. Their two nonzero successive
+brackets are $\partial_z+r\partial_w$ and $\partial_w$.
+This also checks (82.2) and the identification with G (31.2).
+Along a control path of length $L$ from zero, successive integration
+gives $|r|,|y|\le L$, $|z|\le L^2$ and $|w|\le L^3/2$.
+Thus $N\le CL$. Finite control balls have bounded coordinates;
+unit-speed paths in such a ball have uniformly bounded velocities,
+and subsequential limits of their bounded controls and paths remain
+admissible. Closed control balls are compact. Bracket generation
+gives finite distances and the ordinary manifold topology.
+
+Left invariance and dilation covariance give
+$p_E(t;\eta,\eta)=c_Et^{-7/2}$, with the exact clock of G (31.2).
+The heat is smooth and positive by the same bracket-generating
+canonical heat supplier used in (78.7). For the off-diagonal bound
+we use Coulhon--Sikora,
+*Gaussian heat kernel upper bounds via Phragmén--Lindelöf theorem*,
+[arXiv:math/0609429](https://arxiv.org/abs/math/0609429), Theorem 4.1.
+Its hypotheses here are nonnegative selfadjoint $\mathcal E$, a
+continuous heat kernel, the preceding all-time diagonal estimate
+with $D=7$, and the Davies--Gaffney estimate in $d_E$.
+To check the last hypothesis, if $h$ is a bounded real horizontal
+Lipschitz function with $|Xh|^2+|Yh|^2\le1$, completing the square
+in the form gives
+
+$$
+\|e^{\alpha h}e^{-t\mathcal E}e^{-\alpha h}\|_{2\to2}
+ \le e^{\alpha^2t}.
+\tag{82.5}
+$$
+
+Take $h$ to be distance from one support, truncated at the distance
+between the two supports, and optimize $\alpha$ to obtain
+$e^{-d^2/(4t)}$ in the $L^2$ off-diagonal estimate. Bounded horizontal
+Lipschitz multipliers and this calculation follow by form closure
+from smooth local approximations. Theorem 4.1 gives a polynomial
+factor $(1+d^2/(4t))^{7/2}$ times the Gaussian; absorbing it into a
+Gaussian with a smaller exponent proves (82.3). No volume-doubling
+or Euclidean ellipticity premise is needed.
+
+Semigroup Cauchy--Schwarz gives the second bound in (82.4) with its
+stated diagonal constant. Integrating (82.3) over $t\ge1$ gives
+$C(1+d_E(0,\xi))^{-5}$, hence the first bound in (82.4).
+The weak heat-equation calculation of (81.6) is now justified by
+$t^{-7/2}$ at infinity. Hypoellipticity applied to that equation,
+whose right side is smooth, proves smoothness of $V$; heat positivity
+proves its strict positivity. $\square$
+

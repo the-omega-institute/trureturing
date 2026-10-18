@@ -1,0 +1,57 @@
+**Theorem 7.1 (effective weighted minimization and an actual minimizer).** For every rational $\lambda\ge0$, (JRF.1.4) has an effectively computable value in $\mathbb Q_{\ge0}\cup\{\infty\}$ and a correct actual service attaining it.
+
+1. If $\lambda_q=\lambda_\ell=0$, then $W_\lambda^*=0$, whether or not GB holds.
+2. If $\lambda_q+\lambda_\ell>0$ and GB fails, then $W_\lambda^*=\infty$; each individual source still admits finite termination, and a static whole-source recovery service attains this infinite supremum.
+3. If GB holds, a finite actual reply tree attaining $W_\lambda^*$ can be effectively constructed. Its criterion is the same-source sum in (JRF.1.4), not a weighted sum of separate worst coordinates. This remains true when one or two weights vanish.
+
+Proof. First supply a pointwise total static service for every input, regardless of GB. At epoch $N$, use SLH Theorem 2.2's finite historical literal decoder to traverse the original tree: decode the original root, recurse on the children only after an original branch is confirmed, and terminate each original leaf. Each decode needs at most two current reads. Every actual original tree is finite, so the traversal terminates and recovers a finite exact description. Compute its full $Q$ row and halt. No actual update occurs and no original raw receipt is fabricated. Thus when only updates have positive weight the value is zero. This also covers the all-zero weight vector. When GB holds, the finite static supplier of Definition 5.1 attains the same zero value, so a finite reply tree is available in this case as well.
+
+If GB fails and $\lambda_q>0$, every service has unbounded raw cost by SLH Theorem 74.4, so every weighted supremum is infinite. If instead $\lambda_\ell>0$, Corollary 3.3 gives the same conclusion from unbounded length. The static service just constructed attains the infinite supremum. This does not claim an infinite run on a finite source.
+
+Now suppose GB holds and $\lambda_q+\lambda_\ell>0$. The supplier (JRF.5.1) gives the finite rational upper bound
+
+$$
+ B_0=\lambda_qK_0+\lambda_\ell L_0.
+\tag{JRF.7.1}
+$$
+
+The transformations of Theorem 3.1 and Lemma 3.2 dominate costs on each same source; consequently they do not increase $W_\lambda$. It suffices to compare services with actual updates at most $U$. A comparator with weighted cost at most $B_0$ can also be given a finite raw-depth bound. If $\lambda_q>0$, take
+
+$$
+ k_\lambda=\left\lfloor B_0/\lambda_q\right\rfloor.
+\tag{JRF.7.2}
+$$
+
+Every individual raw count is bounded by this integer. If $\lambda_q=0$ and $\lambda_\ell>0$, first clean by Lemma 3.2 and take
+
+$$
+ L_\lambda=\left\lfloor B_0/\lambda_\ell\right\rfloor,
+ \qquad k_\lambda=L_\lambda+s_N.
+\tag{JRF.7.3}
+$$
+
+When both weights are positive, (JRF.7.2) suffices for depth and $L_\lambda$ as defined in (JRF.7.3) also bounds length. Applying Lemma 3.4 if needed only decreases the same-source sum.
+
+For a rational threshold $z\in[0,B_0]$, decide whether a skeleton of depth at most $k_\lambda$ has correctness (JRF.4.2) and, on every reachable leaf,
+
+$$
+ \lambda_q k_t+\lambda_d d_t+\lambda_\ell L_t\le z.
+\tag{JRF.7.4}
+$$
+
+If $\lambda_\ell>0$, enumerate the finite physical addresses with length at most $L_\lambda$ and test (JRF.7.4) with exact leaf reachability, as in Theorem 4.3. If $\lambda_\ell=0$, then $\lambda_q>0$. For every fixed skeleton shape and epoch/class labeling, the left side of (JRF.7.4) is independent of the suffix variables. For each leaf violating that numerical inequality, add
+
+$$
+ \neg\exists X\,(\operatorname{Adm}(X)\land
+                        \operatorname{Path}_t(X;\mathbf s))
+\tag{JRF.7.5}
+$$
+
+to the WS2S formula. Existentially quantify the arbitrary suffixes. There are finitely many skeleton choices; thus this is a decidable unbounded-address test. A true formula has an effectively extractable witness and actual terminal outputs exactly as in Theorem 4.3. Neither case penalizes an unreachable leaf.
+
+These tests have both operational directions. Any comparator satisfying the threshold can be normalized and unrolled within the displayed bounds, with no increase of its same-source costs, and therefore passes a test. Conversely a passing skeleton is executed by the actual service of §4; each source follows a reachable leaf, where its real sum satisfies (JRF.7.4). This proves threshold equivalence against all allowed comparators.
+
+Take a positive common denominator $a$ for the three weights. Each finite run's weighted sum belongs to $a^{-1}\mathbb N$. A bounded nonempty subset of this lattice has a maximum in the same lattice. Therefore every finite $W_\lambda(A)\le B_0$ lies on that lattice. Decide the finitely many thresholds $0,1/a,\ldots,B_0$ in order; $aB_0$ is an integer and the supplier guarantees a true test by the last value. Extract a service at the first true threshold. A smaller weighted value would be a smaller lattice threshold with a true test, a contradiction. This proves exact minimization and attainment. Corollary 4.4 gives an actual source attaining the finite weighted maximum. $\square$
+
+The finite family in §5 is not used to minimize (JRF.1.4): a service with a worse vector of separate maxima can have a better same-source weighted sum. The weighted construction preserves joint path costs throughout. Finite logical effectiveness gives no claim of a practical optimizer or a bound on installation, working memory, or physical running time.
+

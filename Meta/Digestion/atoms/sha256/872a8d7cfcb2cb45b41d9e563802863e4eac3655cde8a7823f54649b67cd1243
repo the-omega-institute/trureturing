@@ -1,0 +1,42 @@
+**Definition 14.2 (limits of the decisions and of realization).**
+Theorem 12.1 fixes finite read and update bounds; Corollary 12.2 can
+derive one from the other for a fixed state budget. Theorem 12.4 instead
+fixes a complete finite literal installation bound and therefore can
+leave both execution bounds unspecified. A per-table bound such as
+(CAR.46) depends on the installed words. It is not a bound in $K$
+alone over unbounded installations.
+
+The prescribed-$K$ question with no read bound, no update bound, no
+length bound and no installation bound remains open here. A phase or
+cycle summary would need an exact correspondence for every actual
+execution, including zero-update loops, shared instructions and shared
+complete outputs. Moreover, the product of an unbounded visit count
+and an unbounded symbolic word length is not covered by the linear
+argument (CAR.50). No unrestricted phase-synthesis theorem, least-$K$
+procedure in that regime, or undecidability conclusion follows from
+the finite decisions above. The exact static state minimum for
+$\mathcal D_m$ is likewise not asserted: the proved bounds are
+(CAR.66) and $m+2$.
+
+Outside cycle coverage, Theorem 11.2 still bounds each installed native
+table, but Lemma 4.1 and Theorem 6.2 have not supplied the general
+signed-fiber predicates and global address interface. The non-atomic
+obligations of Definition 10.2 remain, beyond the separately covered
+SRF and ARH graph families. The proofs here do not import an ambient
+normal-domain or canonicalization solver.
+
+All full-row, joint-source and endpoint-guard statements concern the
+original mathematical finite-tree model. Paid acquisition and a
+complete authenticated access cut are hypotheses, not consequences of
+five online states. Literal installation, atomic read/output semantics,
+serial physical actions and complete future-law recovery are different
+contracts. No physical implementation, asymptotic complexity bound,
+kernel verification or broader full-law attainment is claimed.
+
+[MEM-CII]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+[MEM-ERC]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION_CONTINUATION.md
+[MEM-SRF]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SYNCHRONOUS_RESOURCE_FRONTIER.md
+[MEM-ARH]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[MEM-RWR]: https://arxiv.org/html/1503.03715v3
+[MEM-CELL]: https://github.com/the-omega-institute/trureturing/blob/230f7df3faef1932c21cac2f5dad58f5d9eb9e2a/Blueprint/D5/S3/Geometry/FiniteSimplicialCellInduction.md
+

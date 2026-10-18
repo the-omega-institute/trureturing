@@ -1,0 +1,17 @@
+### 70.1 Unrestricted physical statement
+
+Let F=F_(4,2) be the uniform four-fibre channel of §66. The logical input has labels |f,i>, 1≤f≤4, i∈{0,1}, and the logical output has labels |f>. Its matrix units satisfy
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g| for f≠g.
+
+Fix MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. For arbitrary local CPTP maps A,B:C^8→C^4, define the unhalved diamond error
+
+    δ(A,B)=||(A⊗B)∘J_in−J_out∘F||diamond.
+
+Then
+
+    1/40000 ≤ inf_(A,B) δ(A,B) ≤ 1/2.                    (1)
+
+The lower bound allows arbitrary local ancillas, output populations, extra coherences, and leakage outside the output MC code. It imposes no exact basis-output calibration. The upper bound is attained by an explicit single product channel with error exactly1/2. Two product branches implement the target with zero error by §68's k=4 construction. Formula (1) is a certified interval, not an assertion of the exact one-product optimum.
+

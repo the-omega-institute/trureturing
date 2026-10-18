@@ -1,0 +1,60 @@
+**Lemma 5.1 (finite native observation compilation).** Given finitely
+many native expressions in finitely many source variables, supplied
+epochs, supplied physical addresses, finite cuts and fixed concrete
+row values, one can decide an existential Boolean combination of:
+
+1. native expression equalities;
+2. fixed-coordinate literal replies or reached tests;
+3. guarded whole-subtree equalities and disequalities;
+4. equality of a complete row to a fixed row, or equality of two
+   complete rows at a fixed cut.
+
+Negations are allowed. A positive existential answer gives values of
+all original source variables. No physical word or epoch is quantified.
+
+Proof. First distribute fixed iterates through the finitely many
+explicit native constructors and evaluate their effects on constants.
+Choose an original prefix depth strictly greater than every address
+length used in navigation or a cut. Decompose each source variable
+into all its finitely many original prefix patterns at that depth.
+Each pattern has concrete early leaves and independent native
+variables at its reached frontier. Repeated occurrences of the same
+source variable use the same pattern and the same frontier variables.
+These pattern/valuation pairs cover all finite source tuples exactly;
+the inverse takes their actual original subtrees. This is the
+decomposition used by [ARH, Proposition 3.2][ARH] and
+[NativeDepthPatterns, depthEquiv][D5-DEPTH].
+
+Along a fixed request no frontier variable is entered. Navigation
+either stops in a known constructor term, yielding its entire remaining
+native expression, or enters the explicitly computable finite iterate
+of a known early leaf. In the latter case both reachability and the
+whole reached tree are computed exactly. An absent path stays absent.
+Literal labels are similarly determined. Thus a guarded comparison is
+either false because a guard fails, or precisely the indicated native
+expression comparison. Its Boolean complement is computed *after*
+this guard handling. It is not obtained by flipping its sign.
+
+For a cut $A$, keep its finite reached set and replace each reached
+subtree by $\alpha$, obtaining a native mask expression $M_A$.
+Keep every uncut residual subtree in this expression. With the
+reached set fixed, this mask determines the entire hole context:
+replace the subtrees at those known positions by numbered holes.
+This is [ABC, Theorem 4.2][ABC], equally valid in native syntax.
+Two rows are equal precisely when their reached sets agree, their
+mask trees agree and every pair of reached holes has the same
+whole-subtree equality bit. A fixed concrete row uses its filled mask
+and its full stated partition. Therefore all row tests and their
+complements become finite Boolean combinations of native equalities.
+This retains an arbitrarily large concrete exterior as a term, rather
+than reducing the target to its partition.
+
+Apply Theorem 4.3 on each resulting pattern case. Fill its witness
+frontiers to recover the original variable tuple. Conversely every
+original tuple has its exact pattern case, with the identical
+navigation, guards, masks and whole-subtree tests. These are both
+domain directions. In particular no negated existential auxiliary
+graph has been incorrectly pulled through a quantifier: Boolean
+negation is performed only after deterministic case evaluation.
+$\square$
+

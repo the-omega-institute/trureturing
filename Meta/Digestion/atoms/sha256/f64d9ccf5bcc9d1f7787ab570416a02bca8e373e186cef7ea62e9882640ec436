@@ -1,0 +1,24 @@
+**Definition 71.1 (complete stopped-channel distance).** For lawful TP
+channels $\Phi,\Psi$ on the full five-mode complex input, with common
+actual output types and time coordinates, define
+
+$$
+d_{\rm ref}(\Phi,\Psi)=\frac12
+ \sup_{\substack{R\text{ finite}\\X\in\mathsf D(\mathbb C^5\otimes R)}}
+ \|[(\Phi-\Psi)\otimes\operatorname{id}_R](X)\|_{1,\rm stopped\text{-}cq}.
+\tag{JRH.74}
+$$
+
+The norm includes the complete live block and the variation norm of
+each matrix-valued Borel failure measure, together with all declared
+singular, abort, wrong-support and zero-target sectors. Conditional
+reference operators, not just reference marginals, are retained.
+Analogous distances are used between intermediate finite cq algebras
+in an adaptive construction. Any record comparison first specifies
+common classical coordinates. If the original objective forgets an
+extra retained record, that forgetting is one fixed TP map.
+
+This is only a SUFFICIENT error estimate for the original twelve-input
+objective. It does not replace that objective by complete-channel
+minimization, alter its competitor class or grant access to a reference.
+

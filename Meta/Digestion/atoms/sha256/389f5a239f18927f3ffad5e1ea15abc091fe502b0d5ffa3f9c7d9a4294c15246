@@ -1,0 +1,80 @@
+**Theorem 8.2 (sharp final saturation boundary).** One has
+
+$$
+C_{\rm sat}>C_{\rm end},\qquad
+\Phi(\lambda)=\gamma_f\quad\Longleftrightarrow\quad
+\lambda\ge C_{\rm sat}.
+\tag{JS.39}
+$$
+
+Every covariance-admissible failure measure with objective $\gamma_f$
+has exactly cost $C_{\rm sat}$. Its whitened effects are the two
+spectral projections of $\Xi$, up to proportional splitting and
+simultaneous reversal of the ellipse coordinates.
+
+Proof. On coordinates $1,2$ put $M_2=\operatorname{diag}(m_1,m_2)$
+and whiten each rank-one failure effect as
+$E(z,w)=M_2^{-1/2}nn^TM_2^{-1/2}$. The covariance constraint is
+$\int E d\nu=I_2$, and $k=\operatorname{tr}(E\Xi)$.
+The eigenvalues of $\Xi$ are $\gamma_f>0$ and
+$-b_f=-(L_f+d_f)/2<0$, both simple. Thus
+
+$$
+k_+\le\operatorname{tr}(E\Xi_+),\qquad
+\int k_+d\nu\le\operatorname{tr}\Xi_+=\gamma_f.
+\tag{JS.40}
+$$
+
+In the spectral basis write the two nonnegative overlaps of a nonzero
+rank-one $E$ as $a,b$. The pointwise inequality is
+$\max(\gamma_f a-b_fb,0)\le\gamma_f a$.
+It is an equality exactly when $a=0$ or $b=0$. A nonzero direction
+with both overlaps positive gives strict inequality, including a
+zero-$k$ direction. Equality of the integral forces equality almost
+everywhere, since the gap is nonnegative. Therefore every nonzero
+failure outcome lies on one of the two spectral lines, and their
+integrated whitened effects are exactly the two projections.
+
+Choose real unit eigenvectors
+
+$$
+e_+=(u_f,-1)^T/\sqrt{1+u_f^2},\qquad
+e_-=(1,u_f)^T/\sqrt{1+u_f^2}.
+\tag{JS.41}
+$$
+
+They have the stated signs since $z_f<0$; $0<u_f<1$ follows from
+$L_f>2|z_f|$ and $d_f>0$. For either spectral vector $e=(e_1,e_2)$
+define
+
+$$
+a_e=\alpha Ve_2^2+\beta We_1^2,\qquad
+z_e=-\sqrt V e_2/\sqrt{a_e},\qquad
+w_e=\sqrt W e_1/\sqrt{a_e}.
+\tag{JS.42}
+$$
+
+These points are on the ellipse and satisfy
+$n(z_e,w_e)=M_2^{1/2}e/\sqrt{a_e}$.
+The two-atom measure of masses $a_{e_+}=a_+$ and $a_{e_-}=a_-$
+therefore has covariance $M$, objective $\gamma_f$, squared $z$
+coordinates $x_+,x_-$, and exactly cost (JS.38).
+
+Conversely a whitened spectral line fixes the ratio $z:w$.
+Ellipse normalization fixes its two possible points, differing only
+by simultaneous reversal, and fixes $z^2=x_+$ or $x_-$.
+The integrated whitened projection has coefficient one, which forces
+total mass $a_+$ or $a_-$ on that line. Splitting or simultaneous
+reversal cannot change its cost. Thus every failure-optimal measure
+has cost precisely $C_{\rm sat}$. Compact attainment in Lemma 4.2
+makes $\Phi(\lambda)<\gamma_f$ for every smaller admissible budget,
+not merely nonattainment by a selected family.
+
+Finally $a_++a_-=\mu$ and $a_+x_++a_-x_-=V$.
+The strict inequalities $x_-<r<x_+$ follow directly from $0<u_f<1$
+and $\beta W>0$; both coordinates are strictly below $U$.
+Integrating Lemma 3.1's strictly supporting tangent over these two
+positive masses yields $C_{\rm sat}>\mu F_c(r)=C_{\rm end}$.
+The spectral measure gives the remaining implication in (JS.39).
+$\square$
+

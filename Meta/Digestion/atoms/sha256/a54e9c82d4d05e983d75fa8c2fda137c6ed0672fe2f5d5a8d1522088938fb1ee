@@ -1,0 +1,44 @@
+**Definition 1.3 (source dictionary).** With the source amplitudes of
+JR.2, write
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a e_0e_1^T+b e_1e_0^T,\quad S=c e_0e_2^T+d e_2e_0^T,\\
+M=\operatorname{diag}(0,m_1,m_2),\quad
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+\theta=\frac{ab}{h_0h_1},\quad \omega=\frac{cd}{h_0h_2},\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad
+\kappa=h_0a+h_1b,\\
+\alpha=\theta/\delta,\quad\beta=\omega/\delta,\quad U=1/\alpha,\\
+V=\frac{m_2h_1^2}{b^2},\quad W=\frac{m_1h_2^2}{d^2},\quad
+\mu=\alpha V+\beta W,\quad r=V/\mu,\quad k=\sqrt r.
+\end{gathered}
+\tag{WE.7}
+$$
+
+All displayed amplitudes and $m_i$ are positive; $0<\delta<1$ and
+$\alpha+\beta=1$. The supplied FA.74 comparison $V/W=v^\dagger<1$
+gives $0<V<\mu$, hence $0<r<1<U$. The symbols $a,b,c,d$ denote source
+amplitudes, and $W$ in (WE.7) is a failure moment, distinct from
+$\mathsf W$.
+
+For the radial variable $x\in[0,U]$, unrelated to original height, put
+
+$$
+\begin{aligned}
+w_2(x)&=(1-\alpha x)/\beta,\\
+D_c(x)&=h_0^2\delta+b^2x+d^2w_2(x),\\
+N_c(x)&=h_1^2h_2^2\delta+a^2h_2^2x+c^2h_1^2w_2(x),\\
+c_*(x)&=N_c(x)/D_c(x),\qquad H(x)=(\sqrt x-1)^2/2,\\
+\mathcal F(x)&=H(x)/c_*(x),\qquad
+B_* =\mu/c_*(r),\qquad C_{\rm end}=B_*(1-k)^2/2.
+\end{aligned}
+\tag{WE.8}
+$$
+
+Both affine expressions $D_c,N_c$ are strictly positive on this entire
+closed interval, including its axes. The capacity $c_*$ is precisely
+FA.6 for the normalized real null vector $(s_0,z,w)$ with $z^2=x$,
+$w^2=w_2(x)$.
+

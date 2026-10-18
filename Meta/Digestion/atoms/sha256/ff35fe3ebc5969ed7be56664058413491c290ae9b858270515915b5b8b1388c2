@@ -1,0 +1,37 @@
+**Definition 2.2 (all joint competitors and complete templates).** Fix
+$d\ge1$ and put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{NPC.6}
+$$
+
+Write $S=S_d$, $s=|S|$, $Q=W_d$, $g_q(x)=\Gamma_q(x)$ and
+$r_a(x)=r_x(a)$ for $a,q\in W_d$. Let $\mathcal B_n$ contain every
+nonempty $B\subseteq S^n$ such that, for every $(i,q)$, either
+$g_q(x_i)$ is constant on $B$, or there are $j,a$ and a reply decoder
+$\delta$ with
+
+$$
+g_q(x_i)=\delta(r_a(x_j))\qquad(x\in B).
+\tag{NPC.7}
+$$
+
+The choices depend on $B,i,q$; self donors, off-target queries,
+arbitrary correlations and all cycles are allowed. Set
+$\mathcal B_0=\{\{()\}\}$.
+
+A complete template $\Theta$ chooses for each $(i,q)$ a constant
+equation $g_q(x_i)=z$, or an equation (NPC.7), with any donor $j$,
+any $a\in W_d$, and any total decoder from the four replies to
+$g_q(S)$. Let $C_\Theta$ be its simultaneous solution set. There are
+finitely many such templates at each $n$, with no bound on $n$ or on
+donor topology. [NDR, Theorem 2.2][NDR] identifies the maximum of every
+nonnegative mass over $\mathcal B_n$ with its maximum over nonempty
+$C_\Theta$; every $B\in\mathcal B_n$ is contained in such a solution
+set on the same coordinates. No projection or independent encoding
+is part of this saturation.
+

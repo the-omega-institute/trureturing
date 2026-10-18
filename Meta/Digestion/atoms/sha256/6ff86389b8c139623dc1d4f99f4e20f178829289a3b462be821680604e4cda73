@@ -1,0 +1,23 @@
+**Definition 2.2 (eleven realized local trees).** Put
+
+$$
+C=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C\},\qquad
+U=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_1\}.
+\tag{NPH.6}
+$$
+
+These are eleven actual trees of height at most two, namely the
+credited canonical $S_2$ of [CBN, Definition 1.4][CBN]. A nonempty
+$B\subseteq U$ is *locally admissible* if, for each
+$q\in\{\varepsilon,L,R\}$, $\Gamma_q$ on $B$ is constant or is a
+function of one literal reply $r_u(w)$ on $B$, for some finite word
+$w$ chosen before the reply and every $k$. The witness may depend on
+$B,q$, and may be off-target.
+
+Let $c(B)$ be the minimum number of nonempty terminal leaves of a
+finite local Read decision tree whose terminal cells are locally
+admissible. The tree uses only truthful literal tests on $u\in B$.
+It is a proof quantity, not an installed optimal-strategy oracle.
+

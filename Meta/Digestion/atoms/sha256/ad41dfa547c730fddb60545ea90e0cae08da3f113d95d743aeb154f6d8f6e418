@@ -1,0 +1,23 @@
+**Definition 1.1 (Original objective and producer domain).** Retain the complete open-path words and all legal Hamming-one edges:
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},\qquad
+h(s,t)=\begin{cases}st/(s+t)&s+t>0,\\0&s=t=0,\end{cases}
+$$
+
+$$
+\Phi_n(\mu)=\sum_{\{w,v\}\in E(\Gamma_n)}h(\mu_w,\mu_v),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_n\kappa_n/n.
+$$
+
+Endpoint insertion uses $w_0=w_{n+1}=0$, without a first-to-last constraint. Zero masses do not delete words or edges. All-zero words, endpoint ones and every legal seam remain. For every finite $N\ge1$, the entire exact-real producer domain of [Universal, Definition 4.1][U] is
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,\ M_0,M_1\ge0,
+A=M_0+M_1,\ A\mathbf1=\mathbf1,\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.1}
+$$
+
+Here $\lambda$ is a row and $M_x$ are $N\times N$. Write $M_w=M_{w_1}\cdots M_{w_n}$ and $M_\epsilon=I$. Structural zeros, zero stationary masses, reducible, periodic and noncontractive cases are included. Row unifilarity is an additional hypothesis only in §3.
+

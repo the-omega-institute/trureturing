@@ -1,0 +1,17 @@
+**定义 2.2（完整双状态关系）。** 给定截止 $d$ 和窗口 $0\le t<d$，选择右前沿系数 $e\in\{0,1\}$，后态为 $\rho'=1-e$。关系 $M_t^{(d)}(\rho,\rho')$ 由以下全部条件定义。
+
+若 $|\Gamma_t|\ge2$，没有后态。若 $n_t>0$，写 $\Gamma_t=\{L\}$：$\rho=1$ 时必须 $e\equiv n_t\pmod2$，$\rho=0$ 时两个 $e$ 均可；另当 $e=1$ 且 $\lambda(b)\ne L$ 时要求 $t+2\le d$。
+
+若 $n_t=0$，$e=0$ 总允许。$e=1,\rho=0$ 总允许，因为可用已不存在的左前沿作奇偶供体，正差孩子仅含 $b$。$e=1,\rho=1$ 要求 $R_t^{\circ}\ne\varnothing$；若又有 $\lambda(b)\ne A$，要求 $t+2\le d$。根的 $\rho=0$ 不可到达，不作为额外根动作。
+
+终向量为
+
+$$
+H_d(\rho)=
+\left[\forall j>dm,\ \lambda(j)=A\right]
+\land\left[\rho=0\ \lor\ \lambda(dm)=A\right].
+\tag{2.2}
+$$
+
+$d=0$ 时，从 $\rho_0=1$ 检验此向量，即检验全表常值。$M_t^{(d)}$ 是行列由 $0,1$ 索引的二乘二布尔矩阵，路径乘积使用布尔或与布尔且。
+

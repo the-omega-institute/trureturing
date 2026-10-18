@@ -1,0 +1,60 @@
+**Theorem 9.4 (sharp deterministic order with explicit regimes).** With
+the fixed class (SC.25), for every $N$ satisfying (SC.27) and
+$0\leq\delta\leq\delta_0$, there are positive constants depending only
+on $T,L,W,a,\eta$ such that
+
+$$
+C_-\left(\frac1{N+1}+\sqrt\delta\right)
+\leq R_N(\delta)\leq
+C_+\left(\frac1{N+1}+\sqrt\delta\right).
+\tag{SC.31}
+$$
+
+One may take
+
+$$
+\begin{aligned}
+C_-&=\frac12\min\left\{\frac{WT}{16a},
+                         \frac{\sqrt{WT}}{8\sqrt2 a}\right\},\\
+C_1&=\frac{WT}{2\eta}+\frac{(LT+1)WT}{4\eta^2},\qquad
+C_2=\frac2\eta+\frac{LT+1}{\eta^2},\qquad
+C_+=6C_1+3C_2.
+\end{aligned}
+\tag{SC.32}
+$$
+
+Constants are explicit sufficient ones, not claimed minimax optimal.
+
+Proof. For $\delta=0$ take $n=N+1$ cells; otherwise take
+$n=\min(N+1,\lfloor\delta^{-1/2}\rfloor)$. Since $\delta\leq1/4$,
+$n\geq1$, $n-1\leq N$, $n\delta\leq\sqrt\delta$ and
+$1/n\leq2((N+1)^{-1}+\sqrt\delta)$. Use $n-1$ equally spaced
+interior queries, exact endpoints and the known zero phase. Clip the
+height values and output their polygon's canonical instrument. This is an
+allowed complete-instrument prediction even if its polygon is outside
+the original $L,W$ promise class. Set $\tau=d_x=V=0$ in Theorem 7.1.
+Then $P=0$,
+
+$$
+E=WT/(2n)+2n\delta,\qquad
+\Delta\leq WT/(4n)+\delta,\qquad
+M\leq LT+2\sqrt\delta\leq LT+1.
+$$
+
+Consequently $B\leq C_1/n+C_2n\delta$, using $\delta\leq n\delta$.
+Theorem 7.1 gives
+$R_N(\delta)\leq3B\leq C_+((N+1)^{-1}+\sqrt\delta)$.
+For the lower combine (SC.28) and (SC.30): the maximum of their two
+right sides is at least half their sum after taking the smaller
+coefficient. At $\delta=0$ only (SC.28) is needed. This proves (SC.31).
+$\square$
+
+The credited Record Acquisition lower bounds target area-derived coherence
+responses under different regularity promises. The present witnesses have
+identically zero phase, area, winding and normalized terminal-state change;
+their target distinction is the canonical complete failure instrument.
+The added BV-velocity promise yields the sample/noise tradeoff rather than
+the supplier's fixed-variation floor. All witnesses lie in one fixed
+positive original source. No action/law/resource correspondence to the
+stationary $\alpha/\beta$ or fixed-Hamiltonian minimax model is inferred.
+

@@ -1,0 +1,49 @@
+**Lemma 38.2 (all-weight comparison and profile timing).** Every actual cube
+run, for every θ ∈ {0,1}⁵, has an invocation outside ⋃ᵢ Eᵢ and hence has a
+call of length at least three. Under (PCA.93), a live prefix extends to actual
+weight-two and weight-three cube runs whose selected portions contain exactly
+five distinct selected invocations and exactly one nonselected invocation,
+namely RLR, before the fifth selected invocation. In particular the first
+selected coordinate is common to all cube runs.
+
+**Proof.** Let uθ be the actual origin supplied by Lemma 24.1. If |θ| ≤ 2,
+keep xₐ = Bθ and replace x_c by beta and x_b₃ by alpha. The six class values
+remain distinct, NBP Proposition 9.3 supplies an actual Π₃ origin, and every
+selected address in every Eᵢ has the same reply as on uθ. The prescribed
+entries differ. If |θ| ≥ 3, keep all selected replies and replace the beta at
+b₃ by a fresh branch image, chosen distinct from the finitely many values in
+this comparison. NBP Proposition 9.3 supplies an actual zero-profile origin
+in Z₍*₎, again with the same selected replies and the opposite prescribed
+entry. Thus a correct path on uθ must visit a word outside all Eᵢ; the address
+classification (PCA.55) gives length at least three. This argument is for
+every cube weight, not only the two boundary weights.
+
+Starting at any live prefix, answer fresh selected coordinates by ones until
+two ones have been exposed for the negative completion, and by zeros until
+two zeros have been exposed for the positive completion; thereafter answer
+fresh coordinates with the opposite value. The two response rules are actual
+cube completions by Lemma 24.1 and preserve (PCA.94) until all five
+coordinates have been exposed. A latch before that point would give one
+entry to both required values. A first repeated running state would repeat a
+stationary deterministic loop on an actual completion, contradicting
+sourcewise termination. Hence each completion reads all five selected
+coordinates once. Theorem 34.3 excludes a second nonselected invocation on
+these live continuations. The all-weight comparison supplies one additional
+paid invocation, so the call cap forces exactly five selected invocations and
+one nonselected invocation on each saturated completion; the literal cap
+forces selected charge W_A and nonselected length three.
+
+It remains to locate that nonselected invocation. If it were postponed until
+after all five selected roots, the selected prefix would already cost five
+calls and W_A letters, leaving at most one call and three letters. Keep the
+same selected replies and choose the three actual comparison origins used in
+(PCA.85): a zero-profile origin with x_c = beta, a Π₃ origin differing at
+b₃, and a Π₄ origin differing at b₄. A word shorter than three is common to
+all three. A length-three word in the b₃ cone separates only the Π₃ origin,
+and one in the b₄ cone separates only Π₄; every other available word is
+common on this comparison. No single final invocation can therefore produce
+the three required entries. The unique nonselected invocation must precede
+the fifth selected query, and its cube reply is beta. The first selected word
+is consequently fixed after the common start, possibly after this one common
+profile call. ∎
+

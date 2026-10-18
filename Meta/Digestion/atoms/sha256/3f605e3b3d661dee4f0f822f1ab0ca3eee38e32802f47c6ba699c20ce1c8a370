@@ -1,0 +1,75 @@
+**Lemma 298.4 (Exact complete supports).**
+For the preceding three scores,
+
+$$
+\begin{array}{c|c|r|r}
+Y&\beta&K_Y&W_Y=B_N(Y)=B_O(Y)\\\hline
+Y_1&(1,0,2,2,2,2,2)&17&7\\
+Y_2&(0,1,4,5,5,5,4)&40&17\\
+Y_C&(0,4,18,20,21,21,18)&171&73
+\end{array}
+\tag{298.1}
+$$
+
+**Proof.** Summing the correct weights in each first-zero class gives
+$\beta$; summing all weights gives $K_Y$. For $Y_1$, the $P$ total is
+$4$, the early $C$ total is $1$, and $T=2$, giving anchor $7$.
+For $Y_2$ these totals are $12,1,4$, giving $17$; for $Y_C$ they are
+$52,4,17$, giving $73$.
+
+Here is an exact finite support certificate. For each pair $i<j$ and
+cell $uv$, form, for every label $\ell=0,\ldots,7$,
+
+$$
+g^Y_{ij,uv}(\ell)=\sum_{w:(w_i,w_j)=(u,v)}g_Y(w,\ell),\qquad
+m^Y_{ij,uv}=\max_{0\le\ell\le7}g^Y_{ij,uv}(\ell).
+\tag{298.2}
+$$
+
+The four entries in each table cell below are in order $00,01,10,11$.
+The first column of vectors is for $3Y_1$; the others are unscaled.
+These are additions and maxima of the fully specified integer rewards,
+including every label, rather than maxima over selected terminal outputs.
+
+| Pair | $m^{3Y_1}$ | $m^{Y_2}$ | $m^{Y_C}$ |
+| --- | --- | --- | --- |
+| $1,2$ | $(1,6,8,6)$ | $(1,5,6,5)$ | $(4,20,28,21)$ |
+| $1,3$ | $(4,3,6,8)$ | $(3,3,5,6)$ | $(14,10,21,28)$ |
+| $1,4$ | $(3,4,6,8)$ | $(3,3,5,6)$ | $(13,11,21,28)$ |
+| $1,5$ | $(3,4,6,8)$ | $(4,2,5,6)$ | $(17,7,21,28)$ |
+| $1,6$ | $(3,4,6,8)$ | $(5,1,5,6)$ | $(21,3,21,28)$ |
+| $1,7$ | $(7,0,8,6)$ | $(6,0,6,4)$ | $(20,4,22,23)$ |
+| $2,3$ | $(6,2,6,7)$ | $(3,3,5,6)$ | $(14,14,21,24)$ |
+| $2,4$ | $(6,2,6,7)$ | $(3,3,5,6)$ | $(13,15,21,24)$ |
+| $2,5$ | $(6,2,6,7)$ | $(4,2,5,6)$ | $(17,11,21,24)$ |
+| $2,6$ | $(6,2,6,7)$ | $(5,1,5,6)$ | $(21,7,21,24)$ |
+| $2,7$ | $(8,0,6,6)$ | $(6,0,6,4)$ | $(22,10,20,21)$ |
+| $3,4$ | $(6,3,6,6)$ | $(3,4,5,5)$ | $(13,18,21,21)$ |
+| $3,5$ | $(6,3,6,6)$ | $(4,3,5,5)$ | $(17,14,21,21)$ |
+| $3,6$ | $(6,3,6,6)$ | $(5,2,5,5)$ | $(21,10,21,21)$ |
+| $3,7$ | $(9,0,6,6)$ | $(7,1,5,4)$ | $(28,3,18,24)$ |
+| $4,5$ | $(6,3,6,6)$ | $(4,3,5,5)$ | $(17,13,21,22)$ |
+| $4,6$ | $(6,3,6,6)$ | $(5,2,5,5)$ | $(21,9,21,22)$ |
+| $4,7$ | $(9,0,6,6)$ | $(7,0,5,4)$ | $(21,9,21,18)$ |
+| $5,6$ | $(6,3,6,6)$ | $(5,3,5,4)$ | $(21,13,21,18)$ |
+| $5,7$ | $(9,0,6,6)$ | $(8,0,5,4)$ | $(26,10,18,19)$ |
+| $6,7$ | $(9,0,6,6)$ | $(9,0,4,4)$ | $(28,10,18,17)$ |
+
+For example, in the $00$ cell of pair $(1,2)$ all scored words have
+first zero 1. For $Y_2$ only the unit $P$ row at 0011000 contributes,
+giving reward one to labels 0 and 1; for $Y_C$ its weight is four.
+The other entries use exactly the same rule (298.2), with correct rewards
+only at the actual first-zero label and union rewards at both that label
+and zero. Every vector sums to at most $21,17,73$, respectively.
+An unrestricted $N$ table chooses one label independently in each cell,
+so the sum of those four maxima bounds its complete score.
+
+Empty or singleton information coarsens any distinct-pair partition;
+repetition gives a singleton partition, and reversal permutes cells.
+For nonnegative reward vectors, the maximum of their sum is at most the
+sum of their maxima. This proves the same upper bounds for all those
+tables. The stopped partition merges $00,01$ before choosing its first
+output, so has at most the same bound. The anchor $R$ belongs to both
+catalogs and attains $W_Y$, proving equality throughout (298.1).
+No claim that zero maximizes every individual cell is needed. $\square$
+

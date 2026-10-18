@@ -1,0 +1,55 @@
+**Definition 70.1 (full-input and legal-history infima).** Let
+$\mathfrak h=(D_0,\ldots,D_n)$ be an authentic finite accepted Left/Right graft
+prefix of Definition68.1. It has one immutable INITIAL and one fixed cap $H$;
+all complete supplied contexts, whole candidates and original guards are
+retained. Original Reads and refusals may intervene, with their actual responses
+and acquired records, but are not counted in $n$. There is no accepted whole-rho
+step in this prefix and no service after original Stop.
+
+Let $Y_{\mathfrak h,n}$, $\boldsymbol q_{\mathfrak h,n}$, $V_j$, $B_{j,n}$ and
+$\mathcal R_j$ be exactly (68.2)–(68.5). In particular the recurrence is (68.2),
+with each actual old/new branch diagonal and every historical cross form. Its
+full domain, supplied by Theorem68.3, is
+
+$$
+\mathscr E_{\mathfrak h,n}
+=\mathcal E_{D_n}\oplus\bigoplus_{j<n}
+ (\mathcal E_{D_j}\cap Q_jX_j).
+\tag{70.1}
+$$
+
+This direct-sum notation factors the same $\mathcal F_H\otimes\mathcal A$
+only once. For $y=(b,z_{n-1},\ldots,z_0)$ in this domain define the actual
+nonnegative branch field contribution
+
+$$
+\mathfrak F_{\mathfrak h,n}[y]
+=\mathfrak f_{D_n}[b]+\sum_{j<n}\mathfrak f_{D_j}[z_j].
+\tag{70.2}
+$$
+
+Each summand uses its branch's actual $h_{D_j}$ on the one bank; this notation
+does not identify old and new field matrices.
+
+At fixed $a,g,\Omega,\delta,\diamond$ and nonzero $\mathcal A$, set
+
+$$
+\begin{aligned}
+e_{\mathfrak h}^{\diamond}(n,\delta)
+ &=\inf\{\boldsymbol q_{\mathfrak h,n}[y]:
+          y\in\mathscr E_{\mathfrak h,n},\ \|y\|=1\},\\
+e^{\diamond}(n,\delta)
+ &=\inf_{\mathfrak h\in\mathscr H_n}
+           e_{\mathfrak h}^{\diamond}(n,\delta),\\
+M(n,\delta)&=\min\{n\delta^2,\sqrt{n\delta}\}.
+\end{aligned}
+\tag{70.3}
+$$
+
+Here $\mathscr H_n$ ranges over actual length-$n$ prefixes at arbitrary finite
+caps, each cap fixed within its own run, with arbitrary authentic INITIAL and
+complete legal contexts. These are infima over mathematical form inputs,
+separately from the choice of legal history. They are not infima over natively
+preparable or reachable states. The notation suppresses the fixed commissioned
+parameters; common and killed infima are separate quantities.
+

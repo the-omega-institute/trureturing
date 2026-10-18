@@ -1,0 +1,22 @@
+**Convention 1.3 (exact native notation).** In
+[GenealogicalFiberTransport][D5G], `Source` is `FreeMagma Bool`, with
+true for $\alpha$ and false for $\beta$, and `substitution` is $\rho$.
+In [ActualTreeReadoutAcquisition][D5A], `Address` is `List Bool`, false
+means $L$, true means $R$, and `Reply` and `readout` are the four-valued
+maps of Definition 1.1. In [ActualLeafHistoryRigidity][D5L],
+`subtree a u = some t` means that $a$ is an actually present original
+occurrence with subtree $t$. In [NativeDepthPatterns][D5N],
+`original_present_transport` has precisely that presence premise and
+concludes
+
+$$
+(\rho^ku)|_a=\rho^kt\qquad(k\ge0).
+\tag{NPC.3}
+$$
+
+Its `original_prefix_locality` assumes equality of all original replies
+through the length of the requested word and gives equality of that
+word's replies at every count. Its `depthEquiv` ranges over a dependent
+sum of an actual pattern and its reached frontier, rather than a freely
+supplied shape tag or a subtree input.
+

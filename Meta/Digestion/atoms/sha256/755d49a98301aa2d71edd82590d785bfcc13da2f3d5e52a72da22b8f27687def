@@ -1,0 +1,59 @@
+**Definition 4.2 (public parameters and admission).** Choose
+$\tau_0,\tau_1,\tau_2>0$ with sum one. Put
+
+$$
+A=\sum_i h_i^2\tau_i,\qquad
+B_T=b^2\tau_0+a^2\tau_1,\qquad C_S=d^2\tau_0+c^2\tau_2.
+\tag{NP.26}
+$$
+
+All three are positive. For $0<\xi<1$ define
+
+$$
+\begin{aligned}
+c_\xi&=\frac{1-\xi^2}{1+\xi^2},&
+\sigma_\xi&=\frac{2\xi}{1+\xi^2},&
+\delta_\xi&=1-\alpha-\beta c_\xi,\\
+R_\xi&=\sqrt{\delta_\xi^2+\beta^2\sigma_\xi^2},&
+p&=(R_\xi+\delta_\xi)/2,&
+q&=(R_\xi-\delta_\xi)/(2\alpha),\\
+r_0&=\frac{\beta\sigma_\xi}{2\sqrt\alpha},&
+k_\xi&=(1-\alpha)c_\xi-\beta,\\
+\lambda&=\frac{Ap-B_Tq}{c_\xi(p+\alpha q)},&
+\gamma&=\lambda\sqrt\alpha\,\sigma_\xi+
+ (B_T+\lambda\alpha c_\xi)\sqrt{q/p}.
+\end{aligned}
+\tag{NP.27}
+$$
+
+Admission means exactly
+
+$$
+p+q<1,\qquad k_\xi>0,\qquad Ap>B_Tq,\qquad
+\gamma<\chi\sqrt{\tau_0\tau_1}.
+\tag{NP.28}
+$$
+
+There is no optimization or numerical search hidden in this definition.
+For admitted parameters the selected physical supported state and Gram are
+
+$$
+\rho=\begin{pmatrix}
+\tau_0&i\gamma/\chi&0\\-i\gamma/\chi&\tau_1&0\\0&0&\tau_2
+\end{pmatrix},\qquad
+C=C(\rho)=\begin{pmatrix}A&i\gamma&0\\-i\gamma&B_T&0\\0&0&C_S\end{pmatrix}.
+\tag{NP.29}
+$$
+
+Write
+
+$$
+t=p+q,\quad s_* =\sqrt{1-p-q},\quad
+h=(\sqrt p,i\sqrt q,0)^T,\quad H_*=hh^\dagger,\quad
+F=\lambda k_\xi.
+\tag{NP.30}
+$$
+
+The vector $h$ in (NP.30) is a coefficient vector, distinct from the
+three source coefficients $h_i$.
+

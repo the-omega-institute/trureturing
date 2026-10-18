@@ -1,0 +1,25 @@
+**Convention 8.4 (resource and recovery boundary).** The constructions
+replace preparation and do not preserve an arbitrary competitor's cost.
+Public table generation and membership computation are finite, with no
+useful uniform work bound asserted. A predictor factor has $b\le2D$
+and $c\in\{0,1\}$ and separately fits in
+$\lceil\log_2(2D+1)\rceil+1$ bits. No acquired seed vector or
+source-dependent cut is free: if retained, it would enlarge the complete
+attained alphabet. Installed storage, temporary control, post-request
+workspace, addresses, authentic-count representation and all access
+services remain separate resources. The recovery is exactly
+
+$$
+(E(t),D,p,\text{at most one actual reply})\longrightarrow\Gamma_p(t)
+\longleftrightarrow\bigl(r_{\rho^kt}(p)\bigr)_{k\ge0}.
+\tag{OOA.37}
+$$
+
+It does not recover general source identity, unknown age, hidden
+history, physical space-time or authentication. For the exact optimum,
+RRN Theorem 7.1 already supplies the scan bounds (OOA.36) without
+enlarging the optimal alphabet. Its separate Corollary 7.2 uses the
+fuller scan $2^{D+1}-1$ Reads, maximum length $D+1$ and
+$D2^{D+1}+1$ letters when preserving exactly an arbitrary nonminimal
+competitor's cardinality; neither assertion preserves preparation cost.
+

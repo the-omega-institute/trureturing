@@ -1,0 +1,9 @@
+### 70.6 Complete rational certificate
+
+In the following display every listed integer is divided by \(10^{15}\).
+For each five-dimensional box the coordinate order is \((T,G,S,c,h)\); the
+joint box adds \(b\) last. Each matrix is the preconditioner \(Y\), with rows in coordinate order
+and columns in the equation order (70.6), followed by (70.8) for the joint system. The uniform
+radii are \((1/1000,1/500,1/1000,1/10000,3/10000)\); all other radii are
+\(10^{-10}\). The endpoint parameters are exactly 0.105 and 0.106.
+

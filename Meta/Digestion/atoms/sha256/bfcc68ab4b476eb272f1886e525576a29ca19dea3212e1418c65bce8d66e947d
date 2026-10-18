@@ -1,0 +1,56 @@
+**例 7.2（$\eta=5/8$ 的精确尖锐见证）。** 令
+
+$$
+a_\pm=\frac{1\pm\sqrt{131/250}}2,\quad
+P_\pm=\begin{pmatrix}a_\pm&1/10\\119/100&1-a_\pm\end{pmatrix},\quad
+g(T)=\frac58(T-3)(T-5)(T-6),\quad \delta=\frac{225}{4}.
+\tag{7.5}
+$$
+
+$0<131/250<1$，所以 $0<a_\pm<1$，且
+
+$$
+a_\pm(1-a_\pm)=\frac{1-131/250}{4}=\frac{119}{1000}
+=\frac1{10}\frac{119}{100}.
+$$
+
+两源严格正、秩一、迹一且不同。下左元大于一并不违反源合法性。它们的全部增益采样为
+
+$$
+\left(-\frac{225}{4},-25,-\frac{15}{2},0,\frac54,0,0,5\right),
+\tag{7.6}
+$$
+
+$J,L$ 迹是 $129/100,11/10$。因此四个已取得读数逐项是
+
+$$
+-225/4+225/4=0,\quad
+-25(129/100)+225/4=24,\quad
+-(15/2)(11/10)+225/4=48,\quad 225/4.
+$$
+
+这是同一个字面 $H_3(225/4)$。第四 $M$ 的迹为 $6/5$、读数为 $231/4$；第四 $J$ 的迹为 $11/10$、读数为 $461/8$。所有第五、第六动作均读 $225/4$，这已覆盖所有三读续行及停止。
+
+为同时列清任意第七动作，记 $j=129/100$、$\ell=11/10$。表中的词是按时间排列的第四至第七动作，第二列是其时钟七累积矩阵，第三列是对 $P_\pm$ 的迹；每条轨迹的第七读均为 $225/4+5$ 倍该迹。
+
+| 四动作词 | $A_7$ | $\operatorname{tr}(A_7P_\pm)$ |
+| --- | --- | --- |
+| $MMMM$ | $\left(\begin{smallmatrix}5&2\\8&3\end{smallmatrix}\right)$ | $2a_\pm+309/50$ |
+| $MMMJ$ | $\left(\begin{smallmatrix}5&2\\3&1\end{smallmatrix}\right)$ | $4a_\pm+92/25$ |
+| $MMJM$ | $\left(\begin{smallmatrix}2&1\\5&2\end{smallmatrix}\right)$ | $369/100$ |
+| $MMJJ$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $a_\pm+249/100$ |
+| $MJMM$ | $\left(\begin{smallmatrix}3&1\\4&1\end{smallmatrix}\right)$ | $2a_\pm+259/100$ |
+| $MJMJ$ | $\left(\begin{smallmatrix}3&1\\1&0\end{smallmatrix}\right)$ | $3a_\pm+129/100$ |
+| $MJJM$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $a_\pm+249/100$ |
+| $MJJJ$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $2a_\pm+129/100$ |
+| $JMMM$ | $\left(\begin{smallmatrix}3&2\\5&3\end{smallmatrix}\right)$ | $147/25$ |
+| $JMMJ$ | $\left(\begin{smallmatrix}3&2\\2&1\end{smallmatrix}\right)$ | $2a_\pm+179/50$ |
+| $JMJM$ | $\left(\begin{smallmatrix}1&1\\3&2\end{smallmatrix}\right)$ | $-a_\pm+349/100$ |
+| $JMJJ$ | $\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ | $239/100$ |
+| $JJMM$ | $\left(\begin{smallmatrix}2&1\\3&1\end{smallmatrix}\right)$ | $a_\pm+249/100$ |
+| $JJMJ$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $2a_\pm+129/100$ |
+| $JJJM$ | $\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ | $239/100$ |
+| $JJJJ$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $a_\pm+129/100$ |
+
+每个矩阵由 $A_3=N$ 连续左乘该词得到，迹使用 $\operatorname{tr}(\left(\begin{smallmatrix}p&q\\r&s\end{smallmatrix}\right)P)=s+(p-s)a+rb+qe$。表中即使某个末端动作不分开该对，也不影响 $JJJJ$ 的分离：它的两读之差是 $5\sqrt{131/250}\ne0$。此见证只有 $L_3$，不能计为 $L_4$ 见证。
+

@@ -1,0 +1,53 @@
+**Theorem 2.2 (evaluated equality-incidence bound).** For data remaining
+after Definition 2.1, put $k_f=|I_f|\ge1$ and
+$r_c=|\{f:c\in I_f\}|\ge1$. Choose strictly positive port functions
+$h_{fc}:T_c\to(0,\infty)$ and seed functions $g_c:T_c\to(0,\infty)$.
+Require
+
+$$
+\prod_c g_c(s_c)\prod_f\prod_{c\in I_f}h_{fc}(s_c)=1
+\quad\text{whenever }\prod_f\Phi_f(s_{I_f})>0.
+\tag{INB.7}
+$$
+
+Set
+
+$$
+\nu_f(z)=\Phi_f(z)\prod_{c\in I_f}h_{fc}(z_c),\qquad
+m_{fc}(a)=\sum_{z:z_c=a}\nu_f(z).
+$$
+
+Then the exact incidence lift and its SSSZ upper are
+
+$$
+Z(\Phi)\le U(h,g):=
+\prod_f\prod_{c\in I_f}
+\left[\sum_{a\in T_c}m_{fc}(a)^{r_c}g_c(a)^{k_f}
+\right]^{1/(k_fr_c)}.
+\tag{INB.8}
+$$
+
+Proof. Make one factor vertex with state $z\in T_{I_f}$ and atomic
+measure $\nu_f(z)$, and one variable vertex with state $a\in T_c$ and
+atomic measure $g_c(a)$. Join $f$ to $c\in I_f$ by the binary equality
+function $\mathbf1_{z_c=a}$. Every common assignment $s$ has exactly
+one equality-consistent lift, namely $z_f=s_{I_f}$ at every factor.
+Conversely every consistent lift descends to that same $s$. Its weight
+is the original weight times (INB.7), hence is the original weight;
+at an original zero it is still zero because the gauges are positive.
+The lifted partition sum is therefore exactly $Z(\Phi)$, not just an
+upper or a projection. No original weight is attached to additional copies.
+
+The graph is finite, simple and bipartite, hence triangle-free, with no
+isolated vertices. Apply Sah–Sawhney–Stoner–Zhao [SSSZ, Theorem 1.12][SSSZ]
+to these nonnegative binary functions and finite vertex measures. The
+theorem allows measures without normalization. At edge $(f,c)$ its
+swapped-degree norm is $K_{r_c,k_f}$: it uses $r_c$ factor-state copies
+and $k_f$ variable-state copies. The complete bipartite equality tests
+force their $c$-coordinates to one value $a$. Summing the factor copies
+gives $m_{fc}(a)^{r_c}$ and the variable copies give $g_c(a)^{k_f}$.
+The $1/(k_fr_c)$ root is exactly the factor in (INB.8). Multiplying
+these edge norms proves the inequality. Zero marginal sums cause no
+difficulty. The separate constant and isolated-variable multipliers in
+Definition 2.1 apply on both sides. $\square$
+

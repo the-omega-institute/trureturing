@@ -1,0 +1,45 @@
+**Proposition 3.1 (Attainment for every $n\ge6$).** For every $0<\rho\le1/8$ and $n\ge6$, use the single homogeneous law
+
+$$
+\mu_i=\operatorname{extremal}(\rho)
+=\left(\frac{1-3\rho}{2},\rho,\frac{1-3\rho}{2},\rho,\rho\right)
+\quad(i\in I)
+$$
+
+in the alphabet order of Definition 1.1. There is a nonzero native coefficient vector $a$ for which both inequalities in (3) are equalities. In particular $\beta(\rho)$ is the largest constant valid uniformly over all admissible laws and all coefficient vectors for each fixed $n\ge6$.
+
+Proof. The displayed masses sum to one, and $(1-3\rho)/2\ge\rho$ because $\rho\le1/8<1/5$. Thus this is admissible, with $H_i=L_i=2\rho$ and $T_i=\rho$ at every position, so every $d_{pqr}=\beta(\rho)$.
+
+Take $A=\{0,1\}$, $B=\{2,3\}$, $D=\{4,5\}$, and signs
+$s_0=s_2=s_4=1$, $s_1=s_3=s_5=-1$. Define
+
+$$
+a_{pqr}=\begin{cases}
+s_ps_qs_r,&p\in A,\ q\in B,\ r\in D,\\
+0,&\text{otherwise}.
+\end{cases}                                                     \tag{7}
+$$
+
+All eight supported triples satisfy $p<q<r$ and are distinct original roles; $\sum_\tau a_\tau^2=8$. In the signed sum of (1), the first term vanishes after summing over $r$, and the second after summing over $p$. The third factors, giving the pointwise identity
+
+$$
+F_a=-2(h_0-h_1)(t_2-t_3)(\ell_4-\ell_5).                       \tag{8}
+$$
+
+The common means imply $h_0-h_1=\widehat h_0-\widehat h_1$, and likewise for the $t$ and $\ell$ differences. Expanding their product shows $F_a=-2\sum_\tau a_\tau Z_\tau$, so $R_a=0$ pointwise. This proves equality in the weighted identity and floor.
+
+For completeness, the three differences in (8) depend on disjoint position pairs. Their squared means are respectively $4\rho(1-2\rho)$, $2\rho(1-\rho)$, and $4\rho(1-2\rho)$. This follows by expanding $(X-Y)^2$ for independent identically distributed binary variables of mean $m$, whose squared difference mean is $2m(1-m)$. Thus
+
+$$
+\mathbb E_\mu F_a^2
+=4\,[4\rho(1-2\rho)]\,[2\rho(1-\rho)]\,[4\rho(1-2\rho)]
+=8\beta(\rho)=\beta(\rho)\sum_\tau a_\tau^2.
+$$
+
+Positions beyond 5 integrate to one in the same homogeneous law. Dividing (7) by $\sqrt8$ gives a unit coefficient vector attaining $\beta(\rho)$ for every $n\ge6$. Any larger uniform constant would fail on this vector, while Theorem 2.1 supplies the stated constant. $\square$
+
+[HTS]: https://github.com/the-omega-institute/trureturing/blob/1c1f224301df9fb13b8547f96cd2318edb8aaade/D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation.lean
+[LPT]: https://github.com/the-omega-institute/trureturing/blob/1c1f224301df9fb13b8547f96cd2318edb8aaade/D5/S3/Arith/FibonacciAtomic/LegalPriorityTeacher.lean
+[WB]: https://github.com/the-omega-institute/trureturing/blob/1c1f224301df9fb13b8547f96cd2318edb8aaade/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[CG]: https://github.com/the-omega-institute/trureturing/blob/1c1f224301df9fb13b8547f96cd2318edb8aaade/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md
+

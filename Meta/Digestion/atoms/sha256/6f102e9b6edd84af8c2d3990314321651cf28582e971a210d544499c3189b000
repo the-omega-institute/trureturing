@@ -1,0 +1,43 @@
+**Definition 8.3 (complete pinned and unpinned prescriptions).** For an
+index and $N\ge1$ use the $2N$ ordered original blocks
+$T_1,Y_1,\ldots,T_N,Y_N$. Seed $c_i$ is owned at the actual root
+of $T_i$, with domain $\{\alpha,\beta,\mathsf{branch}\}$. Seed $s_i$
+is owned at the actual root of $Y_i$, with domain $\{\alpha,\beta\}$.
+Identify a leaf-valued $s_i$ with that actual leaf only in the formulas
+below. Prescribe all three factors at $T_i$ by
+
+$$
+z_{T_i,q}=\Gamma_q(\iota(c_i))\qquad(q\in W_2).
+\tag{SCP.28}
+$$
+
+The pinned network $\mathcal N_N$ prescribes at $Y_i$
+
+$$
+\begin{aligned}
+z_{Y_i,\varnothing}&=\Gamma_{\varnothing}(s_i),&
+z_{Y_i,L}&=\Gamma_L(g(c_i)),\\
+z_{Y_i,R}&=\Gamma_R(s_{i+1})&& (i<N),\\
+z_{Y_N,R}&=\Gamma_R(h).&&
+\end{aligned}
+\tag{SCP.29}
+$$
+
+The unpinned network $\mathcal N_N^0$ changes only the last
+prescription, to $z_{Y_N,R}=\Gamma_R(s_N)$. The seeds, owners,
+domains and incidence graph stay the same.
+
+Here are explicit total native decoders for these networks. Every
+occurrence of $c_i$ queries the actual root of $T_i$; every occurrence
+of $s_i$ queries the actual root of $Y_i$. At each $T_i$ table send
+the unused absent input to $\Gamma_q(A)$. At a $Y_i$ root table send
+both unused branch and absent inputs to $\Gamma_{\varnothing}(A)$.
+At every other table extend unused inputs by $\Gamma_q(A)$ for its
+target $q$. Constants require zero Reads. On the declared domains,
+the owner root factors have precisely their input replies. Off the
+binary $Y_i$ domain the root equation has no fixed reply: branch
+cannot equal the alpha reply of its prescribed factor, and absent
+cannot be a root reply of any actual tree. Thus these are the total
+guarded decoders of complete original native templates, denoted
+$\Theta_N$ and $\Theta_N^0$, with no extra domain oracle.
+

@@ -1,0 +1,73 @@
+**定理 8.2（完整 H* 纤维中每条增益射线至多一个目标）。** If
+$W_1,W_2\in\mathcal F_*$ and their nonzero gains are proportional over
+$\mathbb R$, then $W_1=W_2$. There is no restriction on their drifts.
+
+Proof. Let $d_i$ be the drift of $W_i$. Write $g_i=c_i h$, with
+$c_i\ne0$, $h\ne0$, $\deg h\le3$, and $R_i=c_iP_i$. Let
+
+$$
+(y_0,\ldots,y_5)=(0,24,48,312/5,48/5,-532/5).
+\tag{8.7}
+$$
+
+These six readings are distinct. A sampled zero $h(k)=0$ forces
+$d_1=d_2=y_k$. If the drifts agree, there is at most one such sampled
+zero. At the other at least five clocks, the common readings give
+$\operatorname{tr}(A_k(R_1-R_2))=0$. Every five of the matrices in
+(1.5) span $\operatorname{Mat}_2(\mathbb R)$, as established in
+Lemma 2.1. Nondegeneracy of the trace pairing gives $R_1=R_2$.
+Their traces are $c_1,c_2$, so trace normalization then gives
+$c_1=c_2$, $P_1=P_2$, and the same entire gain and drift. This also
+handles all sampled-zero cases.
+
+Suppose instead $d_1\ne d_2$. All six $h(k)$ are now nonzero. Set
+
+$$
+S=\frac{R_1-R_2}{d_1-d_2},\qquad V=R_1-d_1S.
+\tag{8.8}
+$$
+
+The common readings imply
+
+$$
+\operatorname{tr}(A_kS)=-\frac1{h(k)},\qquad
+\operatorname{tr}(A_kV)=\frac{y_k}{h(k)}.                    \tag{8.9}
+$$
+
+These are auxiliary real matrices, with no asserted source legality.
+Rescale the representation $c_i h$ so that $h(1)=1$. The identity
+$A_3=J+L$ applied to both matrices gives
+
+$$
+\frac1{h(3)}=1+\frac1{h(2)},\qquad
+\frac{312/5}{h(3)}=24+\frac{48}{h(2)}.
+\tag{8.10}
+$$
+
+Solving yields $h(2)=-3/8$ and $h(3)=-3/5$. Cubic interpolation,
+including lower degrees, now gives
+
+$$
+B:=h(4)=\frac{77}{20}-h(0),\qquad
+h(5)=\frac{33}{2}-4h(0)=4B+\frac{11}{10}.                    \tag{8.11}
+$$
+
+Both quantities are nonzero. Applying $Q=I+2J+2L-C$ to $V$ gives
+
+$$
+\frac{-532/5}{4B+11/10}=-208-\frac{48/5}{B}.
+\tag{8.12}
+$$
+
+Clearing these already nonzero denominators requires
+$5200B^2+1005B+66=0$. The exact everywhere-positive certificate is
+
+$$
+20800(5200B^2+1005B+66)
+=(10400B+1005)^2+362775>0.                                  \tag{8.13}
+$$
+
+This contradiction excludes unequal drifts. No sign of $c_i$, rank
+condition on an auxiliary matrix, or nonzero-gain-sample promise was
+used to infer existence of a physical world. ∎
+

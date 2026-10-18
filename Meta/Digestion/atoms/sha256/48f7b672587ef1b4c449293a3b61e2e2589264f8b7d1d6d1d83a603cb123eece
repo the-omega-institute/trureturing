@@ -1,0 +1,31 @@
+**Theorem 2.3 (a concrete collision on a fixed-minimum source fiber).**
+For $D=H=1$, $G=\{(0,1)\}$, take
+
+$$
+a=(0,0),\qquad b=(0,1),\qquad
+X_a=\langle T_0,T_2\rangle,\qquad
+X_b=\langle T_0,T_3\rangle.
+\tag{SCC.11}
+$$
+
+Both sources have the same phase-sensitive minimum $z=2$. If their
+retained codes agree, no service in Definition 1.2, even with that $z$
+retained, can recover every lag.
+
+Proof. The two actual capture pairs are
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{source}&(s,t)&K_0(s)&K_1(t)&t-s\\\hline
+X_a&(1,2)&1&4&1\\
+X_b&(1,1)&1&4&0.
+\end{array}
+$$
+
+Here $T_2=\langle\beta,\alpha\rangle$ and
+$T_3=\langle T_2,\beta\rangle$. Thus the old slot in both histories
+is $T_1$, and the later slot in both is $T_4$. Their queried right
+spines and clock values are genuine. The minimum recurrence in
+Definition 4.1 gives $m(X_a)=m(X_b)=2$; their required lags still differ.
+$\square$
+

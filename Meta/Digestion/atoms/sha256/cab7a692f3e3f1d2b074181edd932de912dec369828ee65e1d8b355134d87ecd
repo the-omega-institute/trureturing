@@ -1,0 +1,21 @@
+### 52.1 定义与结论
+
+沿用前卷第 46、51 节的实参数支。令 `-1<a<1`，取
+
+```math
+p=\frac{a-1+i(h+a/h)}2,\qquad
+q=\frac{-a-1+i(h-a/h)}2,
+\qquad h>1,\qquad s=h^2,\qquad
+a^2=\frac{s(3-s)}{1+s}.
+```
+
+这里 `p,q` 是前卷所选的上半平面单位相位，`p+q=-1+ih`。记 `P=p-1,Q=q-1`、`A=J+PI,B=J+QI`，并固定
+
+```math
+H_0=\frac1{\sqrt6}
+\begin{pmatrix}A&B\\\overline B&-\overline A\end{pmatrix},
+\qquad Sx=(x_1,x_2,x_0).
+```
+
+`A,B` 对称，故此处的共轭也等于 adjoint。这个 paired-circulant 种子来自 Szöllősi 的已知构造，见 [arXiv:0811.3930，§2](https://arxiv.org/abs/0811.3930)，DOI `10.1090/S0002-9939-09-10102-8`；以下结论是对其实际循环三元组的额外限制。
+

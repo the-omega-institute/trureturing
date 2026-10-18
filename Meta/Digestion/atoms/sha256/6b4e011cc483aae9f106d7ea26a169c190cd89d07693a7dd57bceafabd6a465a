@@ -1,0 +1,12 @@
+**Lemma 4.1 (A shared root and shared query are impossible).** A deadline-four controller with four word rows cannot share both its root and its first query.
+
+Proof. Name these rows $a_0,b$ and the two spares $x_0,x_1$. Each raw child of $b$ contains $C$ from an original phase-$m$ source, and one lower source at every $j\in J$. Both edges emit. A self-edge of $b$ repeats at the actual phase $a$, where $q_2^B(a)=0$, and leaves a last $b$ with no scalar Halt.
+
+An edge back to the shared root is impossible as well. If its $L$ rejects the phase-$m$ $C$ source, the output is $R$. If safe, $\tau(B)<h$, and that source's arrival at the root has translated INITIAL phase $-m\in J$. The same value, phase and tail are an actual original lower source at that shared root. The immutable labels conflict.
+
+Both children therefore use the spares. If they merge into one spare, after its safe word each raw child still has $C$ and lower sources: the two initial values occur at every relevant phase. Both edges emit, leaving only the other spare as a final decoder for at least three labels. On the common tail it offers at most two successful responses, or one uniform rejecting response.
+
+If the children use distinct spares, both install the same $D$. For $D=L$, each spare's first scalar branch has one fixed eventual output, including any late repeated-$L$ rejection. Its first support consequently has at most two labels. Since it includes $C$, its lower part must be homogeneous. Two such lower parts make the join have at most two classes.
+
+For zero-containing $D$, repetition is safe. Non-$R$ labels can only be scalar Halts of the spares. At least three such labels require a spare with two distinct scalar Halts; a final spare with two identical labels is removable by the homogeneous-union observation. Say $x_i$ has outputs $\{C,A\}$. Its first support has a lower $A$ source at every actual $j$, so $D$'s charge is constant on all $J$. All lower sources at the other spare therefore have the same first scalar response. They either return its sole additional lower label, or continue and can return only $A$ among the final spare's labels. A self-continuation can only return its own sole Halt. Thus that lower part is homogeneous too. Again there are at most two joined classes. ∎
+

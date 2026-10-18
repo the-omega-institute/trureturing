@@ -1,0 +1,48 @@
+### 104.12. Exact grid-interval algebra
+
+Fix the integer $s=2^{112}$. A grid interval is a pair of integers $[a,b]_s$ with $a\le b$, denoting the real closed interval $[a/s,b/s]$. For rational $x\le y$, put
+\[
+ \langle x,y\rangle_s=[\lfloor sx\rfloor,\lceil sy\rceil]_s,
+ \qquad \langle x\rangle_s=\langle x,x\rangle_s.
+\]
+All integers and rational constants in interval expressions are lifted this way. Rational expressions specifying endpoints in this definition are evaluated in $\mathbb Q$ before lifting.
+
+For $X=[a,b]_s$ and $Y=[c,d]_s$, define
+\[
+\begin{aligned}
+ X+Y&=[a+c,b+d]_s,&-X&=[-b,-a]_s,\\
+ X-Y&=X+(-Y),\\
+ XY&=\left[\left\lfloor\frac{\min(ac,ad,bc,bd)}s\right\rfloor,
+            \left\lceil\frac{\max(ac,ad,bc,bd)}s\right\rceil\right]_s.
+\end{aligned}                                                    \tag{104.72}
+\]
+The square $X^{[2]}$ is
+\[
+ X^{[2]}=\begin{cases}
+ [0,\lceil\max(a^2,b^2)/s\rceil]_s,&a\le0\le b,\\
+ [\lfloor\min(a^2,b^2)/s\rfloor,
+                \lceil\max(a^2,b^2)/s\rceil]_s,&\text{otherwise}.
+ \end{cases}                                                     \tag{104.73}
+\]
+If $0\notin Y$, define
+\[
+ Y^{-1}=[\lfloor s^2/d\rfloor,\lceil s^2/c\rceil]_s,
+ \qquad X/Y=X(Y^{-1}).                                            \tag{104.74}
+\]
+Thus division means the outward reciprocal followed by the outward product, not a single rounding of four quotients. If $0\in Y$, this operation is undefined.
+
+For $b\ge0$, the nonnegative square-root interval is
+\[
+ \sqrt{X}=
+ [\lfloor\sqrt{s\max(0,a)}\rfloor,\lceil\sqrt{sb}\rceil]_s.        \tag{104.75}
+\]
+Both endpoint integers are uniquely specified by the adjacent integer-square inequalities; no approximate square root is part of the definition. A required square root with $b<0$ is impossible.
+
+Intersection is $[\max(a,c),\min(b,d)]_s$, declared empty when its lower integer exceeds its upper integer. For rational $l\le u$, let
+\[
+ \operatorname{cut}_{l,u}(X)=X\cap\langle l,u\rangle_s.
+\]
+The operation $\operatorname{pos}(X)$ declares a contradiction if the upper endpoint of $X$ is nonpositive; otherwise it returns $X$ unchanged. It does not clip a negative lower endpoint. Write $\operatorname{zero}(X)$ for $0\in X$.
+
+Every square in §§104.13–104.16 means the interval square (104.73). Products of three or more factors are evaluated left to right, as are sums and differences. Multiplication and division have precedence over addition and subtraction. Parentheses override these rules; each named intermediate is evaluated once and used as the resulting interval. Exponents four mean an iterated square when explicitly written $(X^{[2]})^{[2]}$. No algebraically equivalent reassociation is implicit in these interval expressions.
+

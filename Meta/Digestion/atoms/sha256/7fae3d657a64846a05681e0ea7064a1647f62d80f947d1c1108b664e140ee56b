@@ -1,0 +1,24 @@
+**Definition 8.5 (operational supplier limits and remaining problem).**
+[NativeActiveParityExecution][ACTIVE],
+`native_active_parity_execution`, uses a supplied full source skeleton,
+independent leaf labels, a bound $t\le2K$, and the condition that
+the number of leaves is even or $t=0$; [its Scribe][ACTIVE-S] states
+the corresponding active parity execution. These are not hypotheses
+of the present arbitrary unknown-epoch input.
+[NativeClassRootSimulation][ROOT], `truthful_joint_root_simulation`,
+fixes a stationary one-step image/origin setting, a supplied finite
+supplement map on complete valuations, and finite dialogues assumed
+correct on those origins; [its Scribe][ROOT-S] preserves that scope.
+Neither result supplies a general concurrent producer of the present
+multiple-capture signed input merely because it uses native reads.
+
+The exact mathematical support, negative decision and finite witness
+construction have the proofs above. A complete paid producer for
+arbitrary retained cross-epoch links under an independently advancing
+writer, optimal acquisition/workspace/retention tradeoffs, unrestricted
+variable-address or all-depth recovery, and source-preserving finite
+parametrizations of all signed fibers are separate unresolved tasks.
+The broader recursive mutual recovery of space, time, boundary and
+memory is not completed by this finite existential result. No physical
+spacetime unity or worldwide originality claim follows.
+

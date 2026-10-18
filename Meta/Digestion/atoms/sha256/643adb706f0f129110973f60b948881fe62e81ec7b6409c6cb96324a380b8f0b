@@ -1,0 +1,43 @@
+**Definition 3.2 (polynomial equations with positive denominators).** For an individual contact chart write $r=1+x^2$. For bases $0,\pi,3\pi/2$ use respectively
+
+$$
+(U,V_v)=(1-x^2,2x),\quad(-1+x^2,-2x),\quad(2x,-1+x^2).
+$$
+
+Thus $(u,v)=(U/r,V_v/r)$. Put $Z=U/\sqrt\alpha$, $W_n=V_v/\sqrt\beta$, and
+
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r^2+b^2Z^2+d^2W_n^2,\\
+N_c&=h_1^2h_2^2\delta r^2+a^2h_2^2Z^2+c^2h_1^2W_n^2,\\
+L_c&=g_0r^2+g_1Z^2+g_2W_n^2+2x_GrZ+2y_GrW_n+2z_GZW_n,\\
+F_c&=-\frac{11}{64}(d/h_2)^2W_n^2-2\Delta_{12}\frac{db}{h_1h_2}ZW_n.
+\end{aligned}
+$$
+
+For the pure sheet the moment numerator, denominator, height numerator and report numerator are
+
+$$
+\Gamma^{\rm num}_0=(r^2,rU,rV_v,U^2,UV_v,0,0,0),\quad
+\operatorname{den}_0=r^2,\quad H^{\rm num}_0=L_c,\quad W^{\rm num}_0=rU.
+$$
+
+For the saturated sheet they are
+
+$$
+\begin{gathered}
+\Gamma^{\rm num}_1=(D_cr^2,D_crU,D_crV_v,D_cU^2,D_cUV_v,N_cr^2,N_cU^2,N_cUV_v),\\
+\operatorname{den}_1=D_cr^2,\quad H^{\rm num}_1=D_cL_c+1000N_cF_c,\quad W^{\rm num}_1=D_crU.
+\end{gathered}
+$$
+
+All cleared denominators are strictly positive. Define the contact gap polynomial
+
+$$
+P_i(x)=Y\cdot\Gamma^{\rm num}_{\eta_i}(x)-\epsilon_iH^{\rm num}_{\eta_i}(x)-\lambda\sigma_iW^{\rm num}_{\eta_i}(x).
+$$
+
+The physical $n$-contact system has eight rational moment equations $\sum p_i\Gamma_i-B=0$, in the displayed moment order, followed by interleaved rows $P_0,P_0',P_1,P_1',\ldots,P_{n-1},P_{n-1}'$, each evaluated at its own $x_i$. Unknown order is $(x_0,\ldots,x_{n-1},p_0,\ldots,p_{n-1},Y_0,\ldots,Y_7)$; dimensions are $20$ and $22$ for $n=6,7$.
+
+For the six-contact continuation append $x_6$ and $P_6'(x_6)=0$, without imposing $P_6(x_6)=0$. This is a $21$-variable system. The event system appends $\lambda$ and $P_6(x_6)=0$, with unknown order $(x_0,\ldots,x_5,p_0,\ldots,p_5,Y_0,\ldots,Y_7,x_6,\lambda)$. It is square of dimension $22$. For seven contacts the analytic extension may use signed $p_6$ below the event solely to identify analytic joins and the crossing. A negative mass is never a physical law or optimal instrument.
+

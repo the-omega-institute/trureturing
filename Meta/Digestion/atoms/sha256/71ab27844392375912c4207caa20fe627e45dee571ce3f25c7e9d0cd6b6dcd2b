@@ -1,0 +1,28 @@
+**Proposition 8.1 (exact structural storage).** At any represented cut let
+$c$ count actually constructed finite locations in $C$, and let $K$ count
+all constructed native tape cells, including the meter. Then
+
+$$
+\begin{aligned}
+V&=127+2q+4c+48K,\\
+L&=64+q+2c+24K,\\
+E_{\rm tree}&=V-1,\qquad
+E_{\rm access}=\ell_{\rm head}.
+\end{aligned}
+\tag{CSA.10}
+$$
+
+Here $\ell_{\rm head}=65$ after acquisition and is the actual constructed
+link count before it. Occupied slots number $2(V-1+\ell_{\rm head})$,
+and slot capacity is $7V$. A fresh finite bit adds four vertices and two
+terminals; a native cell append adds 48 vertices and 24 terminals.
+
+Proof. Reuse SSA Proposition 4.5's 47-vertex/24-leaf cell and tape counts.
+An empty finite socket is one vertex/leaf; replacing it by a five-vertex,
+three-leaf switch adds four/two. Hence $R(z)$ has $2q-1+4c$ vertices
+and $q+2c$ leaves. Add the outer scaffold and 64 tape components to obtain
+CSA.10. Each edge occupies its two endpoint slots. After acquisition the
+occupied count is $2V+128$. No cell is subtracted on erasure, retirement,
+copy completion or code-version deactivation. Apparatus $\Pi$ is additional
+to these carrier counts. ∎
+

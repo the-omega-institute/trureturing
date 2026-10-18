@@ -1,0 +1,25 @@
+**Definition 2.3 (structural negative recognition).** An additional negative
+list $\mathcal H$ is recognized as follows. For an endpoint $(e,p)$,
+distribute its supplied finite power $\rho^e$ through
+$U(T_j,x,v,y)$. Evaluate powers of finite grounds; replace atomic occurrences
+by $T_{j+c}$ and residual occurrences by $\rho^c x,\rho^c v,\rho^c y$,
+with fixed nonnegative $c$. Navigate $p$ through explicit pairs and evaluated
+finite grounds only. An endpoint may stop at any node or token. It may not
+descend into an unspecified atomic or residual token. A descent meeting a
+ground leaf before its endpoint fails recognition.
+
+Successful navigation produces an entire reached endpoint expression
+$E_{e,p}(j,x,v,y)$, in the mixed native grammar of NIC. For each supplied
+record $(e,p,f,q,\ne)$ retain its actual whole comparison
+$E_{e,p}\ne E_{f,q}$, with repeated occurrences unchanged. Their entire
+conjunction is $\Delta(j,x,v,y)$; an empty list gives true.
+
+Recognition is a finite syntactic algorithm on the supplied acquired input:
+check the stated $P,R,Q$, the common integer $N$ against every record epoch,
+all specified base literals and records, the permitted optional literal,
+and every additional endpoint by the above navigation. It needs no productive description,
+completion point or unknown source coordinate. It recognizes this presented
+family, not all equivalent acquired presentations. An extra positive record,
+extra unallowed literal or failed structural navigation is outside the class,
+not a NO answer to (CRE.5).
+

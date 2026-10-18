@@ -1,0 +1,27 @@
+**Theorem 7.2 (relative-prior consumer stability, including countable support).** Fix one source-independent observer and two finite/countable PH priors $\mu,\widetilde\mu$. Suppose, for every depth,
+
+$$
+(1-\zeta)\mu(k)\le\widetilde\mu(k)\le(1+\zeta)\mu(k),
+\qquad 0\le\zeta<1.
+\tag{7.3}
+$$
+
+Let $\kappa=\zeta/(1-\zeta)$. At every actual finite history, the full true laws differ by at most $\kappa$ in TV. Both error orders, each capped and uncapped phase risk, and each capped and uncapped $\Phi$ differ by at most $\kappa$. A witness transfers on the identical actual word with score allowance $\kappa$. A bound $\Phi_\infty^\mu-\Phi_H^\mu\le\epsilon$ transfers as
+
+$$
+\Phi_\infty^{\widetilde\mu}-\Phi_H^{\widetilde\mu}\le\epsilon+2\kappa.
+\tag{7.4}
+$$
+
+**Proof.** The supports coincide, including common zero masses. On support write $a(k)=\widetilde\mu(k)/\mu(k)\in[1-\zeta,1+\zeta]$. Multiply the same actual likelihoods, then normalize (2.2), to obtain $\widetilde\nu_h(k)=\nu_h(k)a(k)/\bar a_h$, where $\bar a_h=\sum_k\nu_h(k)a(k)\ge1-\zeta$. Hence
+
+$$
+\operatorname{TV}(\nu_h,\widetilde\nu_h)
+=\frac{\sum_k\nu_h(k)|a(k)-\bar a_h|}{2\bar a_h}
+\le\frac{\zeta}{1-\zeta}.
+$$
+
+All countable sums are absolutely convergent: the integrands are bounded and $\nu_h$ is a probability. Mixing the same complete depth laws and pushing through the same $I_c$ contracts TV. The source-independent initialization and actual update matrices make $\rho_h$ identical for the two priors on the same actual word. Thus the triangle inequality bounds the change of law error by the true-law TV; for conf apply it per decoder and average with the same $\rho_h$. Supremum and the maximum in (2.3) preserve the bound. All finite legal words are positive under both priors, so the actual domains coincide. Applying the bound at both $\infty$ and $H$ yields (7.4). Exact compatibility, when required, remains the same because reports, rows, legal histories and predicted prefixes are unchanged. $\square$
+
+This relative certificate is stronger than small additive prior TV. The family $\mu_\delta\to\mu_0$ in prior TV but admits no such certificate at the atom whose mass disappears. PH47.3 supplies the corresponding acquisition boundary: finite original Reads cannot zero-error certify an unknown prior mass floor. A certified installation description may supply a floor through separately charged computation. Neither this certificate nor a proof posterior is an observer input or a free runtime oracle.
+

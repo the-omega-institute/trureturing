@@ -1,0 +1,52 @@
+### 87.5. Homogeneous mean equations and complete regular lifts
+
+For \(P=F_{16},C_Y,C_D\), put respectively \(n=8,10,10\), and write
+\(P(x,kx)=\sum_{j=0}^{2n}h_j(b,k)x^j\). Exact coefficient division
+of the polynomials defined in (87.13) gives
+\[
+ h_{n+j}=(1+k^2)^jH_j,\qquad h_{n-j}=(-R)^jH_j
+       \quad(1\le j\le n).                          \tag{87.23}
+\]
+Define \(p_0=2,p_1=t\), \(p_j=tp_{j-1}+R(1+k^2)p_{j-2}\), and
+\[
+ h_P(b,k,t)=h_n+\sum_{j=1}^nH_jp_j(t),\qquad
+ \mathcal H_P(b;X,Y,Z)=X^nh_P(b,Y/X,Z/X).             \tag{87.24}
+\]
+The total \((k,t)\)-degree is \(n\), so the homogenization is a
+polynomial. The three \(h_P\) have 471,906,959 terms, with respective
+positive integer contents
+\[
+ 32614907904,\qquad6262062317568,\qquad2717908992.     \tag{87.25}
+\]
+All 28 reciprocity identities in (87.23), and these coefficient counts
+and contents, are directly checkable from the finite construction
+(87.5),(87.12)–(87.14). There is no coefficient interpolation premise.
+The polynomial identity
+\[
+ P(x,y)=\mathcal H_P(b;x,y,x^2+y^2-R)                 \tag{87.26}
+\]
+holds also at \(x=0\). Theorem 87.2 therefore assigns every generic ray
+to a real projective common zero
+\[
+ \mathcal H_{F_{16}}=\mathcal H_{C_Y}=\mathcal H_{C_D}=0,
+ \qquad[X:Y:Z]=[x:y:x^2+y^2-R],\quad(X,Y)\ne(0,0).    \tag{87.27}
+\]
+The punctured zero-channel-mean result in §75 excludes the omitted
+projective point. Vertical slopes are included in (87.27).
+
+For use in the converse direction, on \(F_8\ne0\) equations (87.15)
+show that the original equations on the global line are equivalent to
+\(Q_g=L_{gY}=L_{gD}=0\). The projective equations and the following
+rules retain every affine-pivot case. If \(a_Y^2+a_D^2>0\), the unique
+lift is
+\[
+ \tau=-\frac{a_Y\mu_Y+a_D\mu_D}{a_Y^2+a_D^2}.          \tag{87.28}
+\]
+The cross identity gives consistency, and either nonzero coefficient's
+quadratic compatibility gives \(Q_g(\tau)=0\). If \(a_Y=a_D=0\),
+the two compatibility identities force \(\mu_Y=\mu_D=0\); retain
+every real root of the genuine quadratic \(Q_g\), including a double
+root once. Apply the original strict tests (87.3) and all six orders
+(87.4) in both cases. These are necessary and sufficient on
+\(F_8\ne0\); no converse at \(F_8=0\) is asserted or needed below.
+

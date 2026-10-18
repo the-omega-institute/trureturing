@@ -1,0 +1,5 @@
+source_id = "fib-bounded-native-preparer-synthesis"
+path = "docs/develop/theory/FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

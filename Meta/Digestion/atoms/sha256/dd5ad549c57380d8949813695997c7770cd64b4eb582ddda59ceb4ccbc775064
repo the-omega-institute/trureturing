@@ -1,0 +1,204 @@
+**Proposition 16.1 (supplied overloaded graphs in $\mathfrak I$).**
+For every $M\ge3$ and every original increasing position set $A$,
+the entire graph supplied by [PE, Theorem 8.1][PE], with
+$n=2M+2$, $k=M+1$ and $G=(M+1)(M+2)$, belongs to
+$\mathfrak I$. It has $G+M+2$ running states, attains both
+$n,W$ together, and has a state of mass $1+1/(M+1)>1$ in
+its terminal common-support gap $(M,n)$ of span $M+2$.
+It is outside Definition 11.6 and outside every representation in
+Definitions 12.1, 13.1, 14.1 and [IC, Definition 3.1][IC15].
+For $M\ge4$ it is also outside both terminal-exception classes
+$\mathfrak A_5,\mathfrak C_5$ of [TS, Definition 6.3][TS15].
+
+Proof. We use PE8's complete table, correctness, budgets and counts
+as supplied mathematics; their role here is applicability to (SI.134)
+and separation from the stated sufficient classes. For an explicit
+identification of the whole consumer, put
+
+$$
+I=(1,\ldots,M),\quad x=M+1,\quad y=M+2,
+\quad u_j=M+2+j,\quad U=(u_1,\ldots,u_M).
+\tag{SI.139}
+$$
+
+Install every $R_{h,z}$ with $0\le h\le M$, $0\le z\le M+1$
+except $R_{0,M+1}$, and distinct terminals $\mathsf0,\mathsf1$.
+The sole start is $R_{0,0}$. A generic retained row queries $h+z+1$;
+its zero successor is $R_{h,z+1}$ unless $z=M+1$, when it is
+$\mathsf0$, and its one successor is $R_{h+1,z}$ unless $h=M$,
+when it is $\mathsf1$. Override the two indicated rows and install
+all these new distinct running rows:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R_{0,M}$ | $x$ | $V$ | $R_{1,M}$ |
+| $R_{M,0}$ | $y$ | $V$ | $\mathsf1$ |
+| $V$ | $u_1$ | $Z_2$ | $B_Y$ |
+| $Z_j$, $2\le j<M$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_M$ | $u_M$ | $B_X$ | $J$ |
+| $B_X$ | $x$ | $\mathsf0$ | $\mathsf1$ |
+| $B_Y$ | $y$ | $J$ | $R_{2,M+1}$ |
+| $J$ | $1$ | $\mathsf0$ | $\mathsf1$ |
+
+The omitted row has no remaining predecessor. Every other retained
+row, including any unused row and the entire fallback AND tail, is
+still installed. This is exactly PE8 with its parameter renamed $M$.
+
+Before diversion a grid history exposes its ordinary initial segment.
+The only arrivals at $V$ are the two actual contexts
+
+$$
+\mathcal A:\ I=0^M,\ x=0,
+\qquad \mathcal B:\ I=1^M,\ y=0.
+\tag{SI.140}
+$$
+
+Their residuals are AND on $\{y\}\cup U$ and OR on $\{x\}\cup U$.
+If $u_1=0$, $\mathcal A$ is already certified negative. The
+$Z$ scan either finds its first one and enters $J$, or reaches
+$B_X$ after all $U$ are zero. On $\mathcal B$ a first $U$
+one certifies positive; $J$ reads the old bit $1$, zero on
+$\mathcal A$ and one on $\mathcal B$, and returns the correct
+output in both contexts. With all $U$ zero, $B_X$ reads old zero
+on $\mathcal A$ and the last pivotal OR bit on $\mathcal B$.
+
+If $u_1=1$, $\mathcal B$ is certified positive, while
+$\mathcal A$ remains live at $B_Y$. A zero there certifies
+$\mathcal A$ negative and enters $J$. A one is impossible on
+$\mathcal B$, whose old $y$ is zero. On $\mathcal A$ it enters
+$R_{2,M+1}$ with ordinary support $\{1,\ldots,M+3\}$,
+two ones and $M+1$ zeros. Its retained tail reads
+$u_2,\ldots,u_M$ until the AND task is resolved. Ordinary grid
+routes avoiding $V$ have their original meaning, including the
+direct positive exit from $R_{M,0}$. This exhausts all actual
+arrivals. All routes terminate through finite grid, scan or tail chains.
+
+Every live continuation of $\mathcal A$ after $V$ has $z=M+1$;
+every live continuation of $\mathcal B$ has $h=M$. In particular
+$Z_j,B_X$ can be live only on $\mathcal B$, $B_Y$ only on
+$\mathcal A$, and $J$ is never live. Certification cannot reverse.
+The only new grid return and its entire tail also have $z=M+1$.
+Thus no deviation supplies a nonordinary support at an interior
+cell $h\le M-1,z\le M$. Every actual live history at each such
+cell has support $\{1,\ldots,h+z\}$, proving (SI.134).
+
+For completeness the supplied PE8 bills on each of these same
+inputs are the following. They include every old-coordinate reread.
+Prefixes to $V$ cost $M+1$ queries and $C_I+c_x$ or $C_I+c_y$.
+With all $U$ zero, the complete bills are
+
+$$
+(t,J)_{\mathcal A}=(n,W+c_x-c_y),\qquad
+(t,J)_{\mathcal B}=(n,W).
+\tag{SI.141}
+$$
+
+With $u_1=0$ and first later one $u_j$, $2\le j\le M$, both
+query counts are $M+j+2\le n$ and the respective letter bills are
+
+$$
+C_I+c_x+C_{U_{\le j}}+c_1\le W,\qquad
+C_I+c_y+C_{U_{\le j}}+c_1\le W.
+\tag{SI.142}
+$$
+
+Here $U_{\le j}=\{u_1,\ldots,u_j\}$; the omitted $y$ or $x$
+pays for $c_1$, since $c_1<c_x<c_y$. With $u_1=1$ and
+$B_Y$ returning zero, both query counts are $M+4\le n$ and
+the respective bills are
+
+$$
+C_I+c_x+c_{u_1}+c_y+c_1\le W,\qquad
+C_I+2c_y+c_{u_1}+c_1\le W.
+\tag{SI.143}
+$$
+
+For the first inequality $c_{u_2}>c_1$ suffices. For the second,
+$c_1<c_x$ and $c_y<c_{u_2}$ give
+$c_y+c_1<c_x+C_{U\setminus\{u_1\}}$. If $B_Y$ returns
+one, only $\mathcal A$ occurs and its full tail reads distinct
+coordinates. Routes avoiding $V$ also read distinct coordinates.
+Hence every case satisfies both original caps. The actual input
+
+$$
+A^*:\ I=0^M,\ x=0,\ y=1,\ U=1^M
+\tag{SI.144}
+$$
+
+has order $I,x,u_1,y,u_2,\ldots,u_M$, reads all coordinates once,
+and attains $n,W$ together. The count is the supplied
+$(G-1)+(M+3)=G+M+2$ running states and two terminals.
+
+There are precisely two live prefixes at $V$, of counts
+$(0,M+1)$ and $(M,1)$. Definition 11.2 therefore gives
+
+$$
+\lambda(V)=\binom{M+1}{0}^{-1}+\binom{M+1}{M}^{-1}
+           =1+\frac1{M+1}>1.
+\tag{SI.145}
+$$
+
+Besides $A^*$ use the actual input
+$B^*:I=1^M,x=0,y=0,U=0^M$. Its order is
+$I,y,u_1,\ldots,u_M,x$. Both runs are live before every one
+of their $n$ queries. At every $M<d<n$, the support of $A^*$
+contains $x$ and that of $B^*$ does not. All live histories
+through depth $M$ have ordinary initial-segment support. Hence the
+common depths are exactly $0,1,\ldots,M$ and formal $n$. The
+only nonempty gap interior is $(M,n)$, of span $M+2$, ending
+after $e_*=M+2$. The state $V$ lies in this remaining late-long
+pool. Its two histories fail one directed conflict directly: the
+one set of $\mathcal A$ is empty, while the one set of
+$\mathcal B$ meets the zero set of $\mathcal A$ in $I$.
+Thus Definition 11.6's both-conflict premise fails, consistently
+with (SI.145). All SI11 counting, mass identities and collective
+accounting still apply to this graph.
+
+To exclude every stated order-class reblocking, use also
+$C^*:I=0^M,x=1,y=0,U=1^M$. This run is entirely live until
+its final query and has ordinary order $I,x,y,u_1,\ldots,u_M$.
+Each of Definitions 12.1, 13.1, 14.1 and IC Definition 3.1
+has two relevant properties: its completed fixed common-prefix
+assignment selects one entire permutation for all live queries;
+different modes have different first postprefix coordinates, since
+their nonempty early blocks are disjoint. These properties hold
+before any cost, transversal or attainable-weight condition is used.
+
+Consider any proposed representation, with prefix length $p$ and
+any choice of lists, block lengths, orders, mode names or selector.
+If $p<M$, the three full-live runs have the same first postprefix
+coordinate, so must select the same mode. That would prescribe
+the same complete order, contrary to their displayed orders. If
+$p>M$, their common prefix would include query $M+1$, but
+$A^*$ queries $x$ there and $B^*$ queries $y$. If $p=M$,
+the common prefix is necessarily $I$ in its displayed order.
+$A^*$ and $C^*$ have the identical assignment $I=0^M$, so
+select the same mode. Yet after their next query $x$, while both
+remain live, their next coordinates are $u_1$ and $y$ respectively.
+Again one selected permutation cannot describe both. This exhausts
+all prefix lengths and is unaffected by additional unused modes.
+
+For $M\ge4$, the remaining late pool has span $M+2\ge6$,
+so it is not the exceptional terminal span-five pool $I_5$ of
+TS Definition 6.3. It violates both that definition's
+$\mathcal L_*\subseteq\{I_5\}$ condition and the required
+both-conflict condition outside $I_5$. Thus it is outside both
+$\mathfrak A_5$ and $\mathfrak C_5$. The $M=3$ member has
+span five and supplies no such separation. $\square$
+
+The same graph has multiple support-ambiguous boundary cells.
+For example $(M,1)$ has both ordinary support
+$I\cup\{x\}$ and the $\mathcal B$ support $I\cup\{y\}$;
+$(M,2)$ has ordinary support $I\cup\{x,y\}$ and the
+$\mathcal B$ support $I\cup\{y,u_1\}$. Ordinary witnesses
+can take one zero and $M-1$ ones on $I$ to avoid both diversions.
+Thus neither the all-cell singleton premise of Theorem 4.1 nor
+the at-most-one-exception premise of Theorem 4.2 covers this consumer.
+At $V$, the hit difference and zero decrease in [CL, (CL.15)][CL15] are
+both $M$, whereas its two allowed margins are $K-M=L-(M+1)=1$.
+This overloaded pair is therefore outside that sufficient eligibility
+condition as well; its incidence still belongs to the collective target.
+Its supplied count is above grid by $M+2$ running states. It is
+an application of the weaker support theorem, not a new construction,
+an unrestricted optimum, or a strict-subgrid witness.
+

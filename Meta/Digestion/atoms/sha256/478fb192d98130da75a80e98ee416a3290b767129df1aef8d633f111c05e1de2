@@ -1,0 +1,96 @@
+**Proposition 3.1 (The exact channel moment and stationarity).** For a
+real symmetric matrix $E$, write $t_j=\operatorname{tr}(R_jE)$,
+$j\in\{0,+,-\}$. The channel in (2.4) obeys
+
+$$
+\begin{aligned}
+S(E)={}&\frac{3t_0+t_+}{5}R_0
++\frac{2t_0+t_++2t_-}{10}R_+
++\frac{4t_++3t_-}{20}R_-\\
+&+\frac15R_+ER_++\frac3{10}R_-ER_-\\
+&+\frac25(R_0ER_++R_+ER_0+R_+ER_-+R_-ER_+).
+\end{aligned}
+\tag{3.1}
+$$
+
+It is Hilbert–Schmidt self-adjoint and commutes with
+$X\mapsto G(\theta,\phi)XG(\theta,\phi)^T$ on all complex matrices,
+hence with every actual wait.
+
+Proof. Regard (2.6) as $S(X)=5\mathbb E[PXP]$, where the two orbit types
+have probabilities $2/3,1/3$. Their squared populations in the ordered
+subspaces $(0,+,-)$ are
+
+$$
+p_{\mathrm A}=(0,2/5,3/5),\qquad
+p_{\mathrm B}=(3/5,2/5,0).
+$$
+
+Their first and second population moments are therefore
+
+$$
+\mathbb E p=(1,2,2)/5,\qquad
+M:=\mathbb E[pp^T]
+=\frac1{25}\begin{pmatrix}3&2&0\\2&4&4\\0&4&6\end{pmatrix}.
+\tag{3.2}
+$$
+
+For a uniform unit vector $n$ in a real two-plane, the coordinate
+moments used here are
+
+$$
+\mathbb E[n_an_b]=\delta_{ab}/2,\qquad
+\mathbb E[n_an_bn_cn_d]
+=(\delta_{ab}\delta_{cd}+\delta_{ac}\delta_{bd}
++\delta_{ad}\delta_{bc})/8.
+\tag{3.3}
+$$
+
+Indeed the nonzero fourth moments of sine and cosine are $3/8,3/8,1/8$,
+and all monomials with an odd exponent have zero integral.
+These fourth-moment methods are also used for accessible fidelity in
+[Fuchs–Sasaki, §§4.2–4.3](https://arxiv.org/html/quant-ph/0302092v3);
+their ensemble-average fidelity is a different objective from (1.3),
+and their irreducible group argument does not apply directly to this
+$1+2+2$ representation.
+
+For completeness, contraction of $5\mathbb E[P\,\operatorname{tr}(PE)]$
+gives a formula before inserting (3.2). On the dark line the scalar
+coefficient is
+$5M_{00}t_0+(5/2)M_{0+}t_++(5/2)M_{0-}t_-$.
+For $j\in\{+,-\}$ and the other plane $k$, its diagonal plane block is
+
+$$
+\frac{5M_{jj}}8(t_jR_j+2R_jER_j)
++\frac{5M_{0j}}2t_0R_j+\frac{5M_{jk}}4t_kR_j.
+\tag{3.4}
+$$
+
+The dark/plane off-diagonal blocks are
+$5M_{0j}(R_0ER_j+R_jER_0)$; the two-plane off-diagonal blocks are
+$(5/2)M_{+-}(R_+ER_-+R_-ER_+)$.
+Every other term has a zero odd circle moment.
+Substitution yields (3.1). The missing dark/minus interaction is exactly
+$M_{0-}=0$.
+
+Every sandwich $P_fXP_f$ is Hilbert–Schmidt self-adjoint, hence so is
+$S$. The continuous orbit expression (2.6) is invariant under shifting
+either angle, proving the asserted commutation on all complex matrices.
+Alternatively $P_fXP_f=P_f\operatorname{tr}(P_fX)$ annihilates the
+transpose-antisymmetric part of $X$, and the complex-linear extension
+of (3.1) to $(X+X^T)/2$ is manifestly equivariant.
+This is a property of the displayed channel, with its finite realization
+already proved. It imposes no covariance or real-Kraus restriction on
+competitors.
+Haar covariance constructions in
+[Werner, §4, equation (4.2)](https://arxiv.org/html/quant-ph/9804001)
+and [Nechita–Park, §2.1](https://arxiv.org/html/2403.03667v2)
+provide the relevant averaging framework. Their cloning fidelity and
+random-channel orthogonal covariance classes respectively have different
+objectives or symmetry hypotheses; neither evaluates (1.3).
+In particular no rank-preserving character decomposition is used:
+[unitary_kraus_mixing_invariance](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/D5/S3/QuantumChannels/UnitaryKrausMixingInvariance.lean)
+preserves channel sums but does not assert rank preservation.
+The construction is compatible with all three counterexamples in
+QPC Propositions 9.1–9.3. $\square$
+

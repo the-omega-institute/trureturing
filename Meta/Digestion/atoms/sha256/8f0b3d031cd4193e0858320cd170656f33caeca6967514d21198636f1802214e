@@ -1,0 +1,76 @@
+**Definition 1.4 (The supplied complete coefficient space).** Put
+$H_i=R_i/\sqrt{n_i}$ and $\tau=(1,\sqrt2,\sqrt2)^T$.
+For orthogonal unit vectors set
+$F(a,b)=(ab^T+ba^T)/\sqrt2$. Use the six orthonormal pairs of QRC
+Definition 4.1, in the order $\mathcal N=\{+,-,2+,2-,\Delta,\Sigma\}$:
+
+$$
+\begin{aligned}
++ &: F(d,u_+),\ F(d,v_+),\\
+- &: F(d,u_-),\ F(d,v_-),\\
+2+ &: (u_+u_+^T-v_+v_+^T)/\sqrt2,\ F(u_+,v_+),\\
+2- &: (u_-u_-^T-v_-v_-^T)/\sqrt2,\ F(u_-,v_-),\\
+\Delta &: [F(u_+,u_-)+F(v_+,v_-)]/\sqrt2,\quad
+          [F(v_+,u_-)-F(u_+,v_-)]/\sqrt2,\\
+\Sigma &: [F(u_+,u_-)-F(v_+,v_-)]/\sqrt2,\quad
+          [F(v_+,u_-)+F(u_+,v_-)]/\sqrt2.
+\end{aligned}
+\tag{1.5}
+$$
+
+Call these $F_{\nu1},F_{\nu2}$ and let
+$P_\nu(E)=\sum_{a=1}^2\operatorname{tr}(F_{\nu a}E)F_{\nu a}$.
+For $x=(M,\eta)\in M_3(\mathbb R)\times\mathbb R^6$, define
+
+$$
+\begin{aligned}
+S_x(E)&=\sum_{i,j}M_{ij}\operatorname{tr}(H_jE)H_i
+                       +\sum_\nu\eta_\nu P_\nu(E),\\
+Z(x)&=\sum_{i,j}M_{ij}H_i\otimes H_j
+       +\sum_\nu\eta_\nu\sum_{a=1}^2F_{\nu a}\otimes F_{\nu a},
+\qquad \chi(x)=Z(x)/5.
+\end{aligned}
+\tag{1.6}
+$$
+
+Extend the map complex linearly after replacing a matrix $X$ by
+$(X+X^T)/2$. Choi order is output first, input second, so
+$S_x(X)=\operatorname{Tr}_{\rm in}[(I\otimes X^T)Z(x)]$.
+Each $Z(x)$ is invariant under transposition of either factor.
+QRC's commutant calculation makes $S_x$ stationary and reflected.
+The full TP equation is
+
+$$
+\operatorname{Tr}_{\rm out}Z(x)=\sum_j(M^T\tau)_jH_j=I_5,
+\qquad M^T\tau=\tau.
+\tag{1.7}
+$$
+
+In particular $Z(x)\succeq0$ and (1.7) define a complex CPTP map;
+they do not assert a scalar-port realization. Write
+$\Lambda_{ij}=\sqrt{n_in_j}M_{ij}$. Then (1.7) is exactly
+$\sum_i\Lambda_{ij}=n_j$ for each column, with no omitted
+marginal component. No unitality or symmetry of $M$ is imposed.
+
+For independent real vectors, set
+
+$$
+\begin{gathered}
+h_i(a)=a^TH_ia,\quad
+z_\nu(a)=(a^TF_{\nu1}a,a^TF_{\nu2}a)^T,\\
+k(a,b)=\left(h(a)h(b)^T,
+                (z_\nu(a)^Tz_\nu(b)/2)_{\nu\in\mathcal N}\right),\\
+\mathcal K=\operatorname{cone}\{k(a,b):a,b\in\mathbb R^5,
+                                         \ \|a\|=\|b\|=1\}.
+\end{gathered}
+\tag{1.8}
+$$
+
+Cone means finite nonnegative sums; the formula also defines the
+homogeneous extension to unnormalized vectors. QRC Theorem 5.2
+identifies $\mathcal K$ with the independent real-product Choi cone
+in (1.6). Its TP slice is the selected scalar-port class. QRC
+Theorems 2.2 and 3.2 give every original complex scalar port a
+possibly different no-worse representative in this class. These
+supplier reductions do not place an optimizer on any face below.
+

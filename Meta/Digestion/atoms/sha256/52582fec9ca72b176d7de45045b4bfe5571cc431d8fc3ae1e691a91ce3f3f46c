@@ -1,0 +1,64 @@
+**Theorem 31.3 (The exact action behind the odd-cycle layer count).**
+For the common-copy algebra (31.1), the following coordinates are
+mutually inverse additive descriptions:
+
+$$
+(m,c)\longleftrightarrow(a,\delta),\qquad
+m=|a|-2\delta,\qquad c_i=B_i(a)-\delta,
+\tag{31.4}
+$$
+
+with feasible domain precisely
+
+$$
+a\in\mathbb Z_{\ge0}^n,\qquad \delta\in\mathbb Z,\qquad
+0\le\delta\le\min_i B_i(a).
+\tag{31.5}
+$$
+
+The ring $R_k$ is a normal standard graded Cohen–Macaulay domain of
+dimension $n+1$. Its canonical ideal has exactly the minimal monomial
+generators $X^{\nu_1},\ldots,X^{\nu_{k-1}}$. Its quotient in (31.2)
+has an exact sequence and an $A_k$-module decomposition
+
+$$
+0\longrightarrow R_k(-\nu_1)
+\xrightarrow{\ 1\mapsto X^{\nu_1}\ }\omega_{R_k}
+\longrightarrow\mathcal C_k\longrightarrow0,
+\qquad
+\mathcal C_k=\bigoplus_{j=2}^{k-1}A_ke_j,
+\tag{31.6}
+$$
+
+where $A_k=\mathbb C[y_0,\ldots,y_{n-1}]$ is polynomial and
+$R_k/J_k\simeq A_k$. The complete multiplication on this free
+$A_k$-module is
+
+$$
+\rho(X^s)=y^{a(s)}N^{\delta(s)},\qquad
+Ne_2=0,\quad Ne_j=e_{j-1}\ (j\ge3),
+\quad N^{k-2}=0.
+\tag{31.7}
+$$
+
+Here $N$ is $A_k$-linear of ordinary degree $-2$, $N^0$ is the
+identity, and $y^a=\prod_i y_i^{a_i}$. Thus $X^se_j$ is nonzero
+exactly when $\delta(s)\le j-2$, and then it equals
+$y^{a(s)}e_{j-\delta(s)}$. In particular the free layers in (31.6)
+are not a direct sum of $R_k$-submodules when $k\ge4$.
+
+Proof and attribution of the intermediate classification.
+The canonical classification and the free face layers are the general
+odd-cycle results of Miyazaki, *Non-Gorenstein locus and almost
+Gorenstein property of the Ehrhart ring of the stable set polytope of
+a cycle graph*, [§4, Lemmas 4.1–4.4 and the argument before
+Theorem 4.5][MI31]. The correspondence is his $\ell=k$, his vertex
+function $\eta(v_i)=c_i$, his $\eta(-\infty)=m$, his $\eta_j=\nu_j$,
+and his $R^{(0)}=A_k$. His $C_j$ is the layer $A_ke_j$ before
+passing to the quotient, and his $\operatorname{Cok}\varphi$ is
+$\mathcal C_k(3)$, because his injection is into $\omega_{R_k}(3)$.
+These supplied classification statements are intermediate inputs to
+the action (31.7) and its comparison to the trace and index below.
+The following proof gives all general-$k$ details needed for that
+application in the coordinates of (31.1).
+

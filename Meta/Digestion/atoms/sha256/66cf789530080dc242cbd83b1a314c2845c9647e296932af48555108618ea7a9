@@ -1,0 +1,16 @@
+**Corollary 15.3 (actual affine sections, not independent boundaries).**
+Fix a feasible syndrome $y$ and feasible pinned values $s_P=b$.
+At every nonexceptional $v$, under the uniform law on
+$\{s:Hs=y,\ s_P=b\}$ the star is uniform on its affine parity
+class. Under any mixture over those feasible syndromes it has
+uniform proper-subset marginals.
+
+Proof. The conditioned set is a nonempty affine translate of $Z_P$.
+Projection is uniform on its image, with equal fiber cardinalities.
+Equation (GDB.68) identifies that image with the full affine
+parity class. Proper-subset projections of either parity class
+are uniform, independently of the syndrome. $\square$
+
+The pins and the syndrome refer to the same edge assignment. No
+separately realizable boundary law or unproved completion is used.
+

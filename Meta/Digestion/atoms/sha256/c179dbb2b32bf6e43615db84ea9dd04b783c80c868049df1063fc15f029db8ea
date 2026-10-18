@@ -1,0 +1,60 @@
+**Theorem 188.1 (One error allowance for both acquisition energies).**
+Fix one allocation as in Definition 183.1, one first-zero class
+and, optionally, one conditioned assignment. Let $E_B,E_P$ be
+its base and pair energies, with the same nonnegative remaining
+$Q$ and their own $K,c,d$. Choose any two-coloring of the remaining
+vertices, without assuming its graph is bipartite, and put
+
+$$
+\Delta=\frac12
+  \sum_{\substack{i<j\\\chi(i)=\chi(j)}}Q_{ij}.
+\tag{188.1}
+$$
+
+For each of these two energies let $m_B$ be its Boolean minimum
+and $m_{\rm rel}$ the relaxation (183.9). Then the same $\Delta$
+satisfies
+
+$$
+0\le m_B-m_{\rm rel}\le\Delta.
+\tag{188.2}
+$$
+
+Thus a true margin $m_B-d\ge\Delta$ guarantees its compensation
+certificate. Actual Boolean feasibility only implies
+$m_{\rm rel}\ge d-\Delta$, which is a necessary test and not a
+sufficient one. The sufficient relaxed test is $m_{\rm rel}\ge d$.
+These supplier applications test the two rows of the fixed common
+allocation; they do not construct a missing allocation or separate
+the full stopped class.
+
+**Proof.** Use the relaxation and opposite-threshold calculation
+inside Theorem 183.2, with the classical relaxation context in
+Definition 182.2. Boolean points show $m_{\rm rel}\le m_B$.
+At a relaxed minimizer, use one auxiliary threshold as before.
+Cross-color products have expectation $\max(0,x_i+x_j-1)$.
+Same-color products have expectation $\min(x_i,x_j)$.
+Their excess over the relaxed product lies in $[0,1/2]$: when
+$x_i+x_j\le1$, it is at most $(x_i+x_j)/2$; when the sum is at
+least one, it is $1-\max(x_i,x_j)\le1/2$.
+Linear expectations are exact, for arbitrary signs of $c$.
+Consequently
+
+$$
+m_B\le\mathbb E[E(V)]\le m_{\rm rel}+\Delta.
+$$
+
+The allowance depends only on $Q$ and the coloring, so it applies
+to both row energies simultaneously even though their minima and
+their dual witnesses differ. Zero edges contribute nothing; empty
+suffixes have $\Delta=0$. The threshold is a proof device, not
+an additional acquisition randomization. LP strong duality supplies
+the compensation certificate exactly when its relaxed minimum is
+at least its demand, on any graph. From (188.2),
+$m_B\ge d+\Delta$ implies $m_{\rm rel}\ge d$, whereas
+$m_B\ge d$ gives only $m_{\rm rel}\ge d-\Delta$.
+Also $m_{\rm rel}+\Delta<d$ excludes that fixed allocation;
+$m_{\rm rel}<d$ alone does not. This is an explicitly attributed
+use of relaxation and rounding within the new acquisition criterion,
+not a standalone originality claim for those tools. $\square$
+

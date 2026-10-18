@@ -1,0 +1,62 @@
+**Definition 3.1 (attainable-weight interval-cover class).** Retain
+all of Definitions 1.2 and 2.1. Partition $[n]$ into fixed disjoint
+ordered lists $\mathsf I,\mathsf X,\mathsf Y,\mathsf U,\mathsf V$,
+where
+
+$$
+|\mathsf I|=p\ge1,\qquad
+\mathsf X=(x_1,\ldots,x_b),\quad
+\mathsf Y=(y_1,\ldots,y_b),\quad b\ge1,
+\qquad |\mathsf U|\ge1,\qquad C_{\mathsf Y}<C_{\mathsf X}.
+\tag{IC.13}
+$$
+
+The tail $\mathsf V$ may be empty. Lists in set expressions mean their
+underlying sets; the tail is distinct from $V_{\rm count}$. For an
+ordered list $\mathsf Z$, write $\mathsf Z^{\le t}$ for its first
+$t$ coordinates and $\mathsf Z^{<\ell}$ for its first $\ell-1$
+coordinates. Define
+
+$$
+\pi_X=(\mathsf I,\mathsf X,\mathsf U,\mathsf Y,\mathsf V),
+\qquad
+\pi_Y=(\mathsf I,\mathsf Y,\mathsf U,\mathsf X,\mathsf V).
+\tag{IC.14}
+$$
+
+There is a fixed descriptive function
+$f:\{0,1\}^{\mathsf I}\to\{X,Y\}$ with this property on every
+actual live history. Before depth $p$, the next coordinate is the next
+member of $\mathsf I$. At depth $d\ge p$, with completed exposed
+$\mathsf I$ assignment $\eta$, the next coordinate is
+$\pi_{f(\eta)}(d+1)$. No order condition is imposed after the
+history becomes certified.
+
+Let the attainable cheap weights be
+
+$$
+\mathcal A=\{a\in\{0,\ldots,p\}:
+  \text{some }\eta\text{ has }\operatorname{wt}(\eta)=a
+                              \text{ and }f(\eta)=Y\}.
+\tag{IC.15}
+$$
+
+Require $\mathcal A\ne\varnothing$, and for consecutive elements in
+its increasing order require
+
+$$
+a<a'\text{ consecutive in }\mathcal A
+\quad\Longrightarrow\quad a'-a\le b+1.
+\tag{IC.16}
+$$
+
+The condition is vacuous for a singleton. No monotonicity of $f$, no
+dependence only on weight, and no nondecreasing weight transversal of
+the two modes is required. The cost comparison concerns whole blocks,
+not their individual positions. List lengths and common-support gap
+spans have no uniform bound. All postcertificate freedom of the original
+model, including paid repeats, mixed certified/live receivers and
+syntactic cycles, is retained subject to (IC.7) and actual termination.
+The lists, $f$ and $\mathcal A$ describe the given graph; none is an
+accessible selector, history, counter or phase coordinate.
+

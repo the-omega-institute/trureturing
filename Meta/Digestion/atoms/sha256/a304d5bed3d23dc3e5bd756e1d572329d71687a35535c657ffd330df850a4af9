@@ -1,0 +1,25 @@
+**Definition 101.1 (dependence and scope).** Sections 93--100 are a
+`repo-derived` source-specific synthesis of the original capacity/rigidity,
+full-output construction and sharp-cost results in FA68--70, FA72, FA77--79,
+FA87 and JR42--44, with the original source in RC58 and CG13--17. The
+finite submaximal-height, roof and compression results of §§88--90 retain
+their own scopes. The common-dual, finite-contact, orientation, two-line
+exclusion and sufficient-continuation results are used at their stated
+conditional scopes; the selected five-contact root and its matching whole
+circle inequalities are the additional specialization here. No priority
+claim is attached to this synthesis.
+
+The contraction proof uses the geometric-series fixed-point argument and
+the polynomial sign proof uses the elementary Bernstein convex-hull identity,
+both explicitly given above. Dritschel--Rovnyak, *The Operator Fejér--Riesz
+Theorem*, arXiv:0903.3639v1, §2 Theorem 2.1, factors a Laurent polynomial
+already nonnegative everywhere on the circle, including zeros, into a
+same-degree analytic factor. It neither chooses the present unknown dual
+multipliers nor proves the present inequalities before their signs are
+known. The source-specific quotient bounds in §97 supply those signs directly.
+The relative-interior and information-matrix hypotheses discussed in §91
+are unchanged; no general support bound is transferred into this local
+actual-alphabet theorem. The ordinary real analytic implicit-function theorem
+is applied only after §96's nonsingular independent Jacobian and §99's
+positive analytic domains have been established.
+

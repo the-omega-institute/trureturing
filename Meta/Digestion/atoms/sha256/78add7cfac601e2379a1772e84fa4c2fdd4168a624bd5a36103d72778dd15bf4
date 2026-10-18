@@ -1,0 +1,10 @@
+### 107.3. Exact depth and the primes over 3
+
+From B_3=19 and
+
+ G(B)-1=(B-1)((B-1)^2-3)
+
+one obtains v_3(B_N-1)=j+1 by induction. Indeed the initial valuation is 2, and whenever v_3(B-1)>=2, the second factor has valuation exactly 1. Also B and B' are 1 modulo 3. Hence r^2=BB'=1 modulo 3, and the two Q_3 embeddings give r=+1 and r=-1 modulo 3. Since q=B(2B-3)=-1 modulo 3, the embedding with r=-1 has r+q nonzero modulo 3. The denominator B^2 is a unit and the leading factor 3 has valuation 1, proving v_(p_3)(beta)=1.
+
+The valuation of the rational norm is 3(1+v_3(B-1))=3j+6. Since 3 splits with residue degree 1 at both primes, this is the sum of their two valuations. The conjugate prime therefore has valuation 3j+5. This proves (c), and immediately proves beta is not a cube in K. Its nontrivial class in the exponent-three group K*/K*3 has order 3. The descent-kernel theorem gives the first conclusion of (a); the identity [3]=phihat composed with phi gives the second. No claim of primitivity with respect to integers prime to 3 is made.
+

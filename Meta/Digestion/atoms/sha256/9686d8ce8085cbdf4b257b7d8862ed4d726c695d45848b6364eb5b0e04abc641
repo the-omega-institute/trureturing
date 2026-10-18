@@ -1,0 +1,25 @@
+## Theorem 13. Integral equivariant nonsplitting
+
+For positive odd \(q\), there is no integer-linear section
+\(s:\mathbb Z\to G_q\) satisfying
+\[
+ \Lambda_qs=\mathrm{id}_{\mathbb Z},\qquad
+ \Theta_qs(n)=s(-n)\quad(n\in\mathbb Z).
+\]
+Here the action on \(\mathbb Z\) is negation and the action on \(G_q\)
+is the original genuine time action.
+
+Proof. Equivariance and additivity imply
+\(D_qs(1)=s(1)+s(-1)=0\). The full kernel classification gives
+\(s(1)=kc_q\). Applying the section equation and the pairing yields
+\(1=k(q+1)\), impossible for \(q>0\).
+
+The underlying integer-linear surjection does split after forgetting time:
+choose \(e\in G_q\) with \(\Lambda_q(e)=1\) and send \(n\) to
+\(ne\). The assertion also requires additivity. At \(q=1\), the
+nonadditive set map
+\(n\mapsto(\max(n,0),\max(-n,0))\) is a section of \(a-b\) and
+intertwines negation with coordinate swap. The arithmetic index therefore
+obstructs a linear dynamic splitting, without forbidding equivariant set
+sections or a nonequivariant linear section.
+

@@ -1,0 +1,123 @@
+### 60.7 Exact determinant-norm factors and their real domain
+
+Let \(K(x)=4x^2-3x+9\). The rational function in (60.9) is
+
+\[
+ \mathcal R(x)=
+ \frac{2^{1988}3^{660}x^{80}(1-x)^{16}(3-x)^{40}(3-2x)^{32}
+       (x+3)^{88}\prod_{j=1}^{11}P_j(x)^{e_j}}
+      {(x+1)^{270}K(x)^{62}},
+\tag{60.14}
+\]
+
+where
+
+\[
+ (e_1,\ldots,e_{11})=(16,4,16,4,4,4,4,2,2,2,2).
+\]
+
+The following tuples list every coefficient of \(P_j\) in ascending
+powers of \(x\); that is, \(P_j(x)=\sum_r(p_j)_r x^r\).
+
+\[
+ \begin{aligned}
+ p_{1}=(&-9,-24,5).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{2}=(&-9,-30,7).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{3}=(&-9,-33,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{4}=(&-9,21,-19,3).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{5}=(&-324,-351,270,-75,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{6}=(&-81,-189,-216,-12,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{7}=(&-81,378,-405,-192,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{8}=(&81,-189,99,129,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{9}=(&2916,11664,20169,5643,-4185,\\
+ &585,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{10}=(&-4100625,47949975,-210851586,212963742,-40916421,\\
+ &-73185093,43808328,-10234752,991232).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{11}=(&1282705047207776784384,17215318528057824712704,117232526299052210372352,\\
+ &505282761775449928525824,1409704380811059458455152,2335901061655227495757752,\\
+ &1474962677995745920220001,-1909801390330985930605773,-3511486262570731457658129,\\
+ &1661019846163040543381397,7657048978562045876624982,3359618446652249049989226,\\
+ &-6226967472725127178769526,-4670182461179383581430458,4999955256271492464436875,\\
+ &4307642585746602561959265,-3242410090449421741867395,-1772334863614797885415233,\\
+ &2649027185702825742609660,-539028424008867911993172,-1505112163740993757788180,\\
+ &904965947457086549690748,496032837243307130120103,-739936700875474171595451,\\
+ &322173056215180488319353,-26849528299681425805437,-38267528432505658185546,\\
+ &22066478208799721613306,-6399100142306834162886,1141753511451204587430,\\
+ &-119446066296363146931,3523669184413730247,1014933738876390331,\\
+ &-186302374215273975,16125516781605400,-772113170228400,\\
+ &16726464040000).
+ \end{aligned}
+\]
+
+For each listed polynomial use the Sturm chain starting with
+\(P_j,P_j'\) and repeatedly taking minus the polynomial remainder.
+Omit zero entries when counting endpoint sign variations. The exact
+variation pairs are
+
+\[
+ \begin{array}{c|rrrrrrrrrrr}
+ j&1&2&3&4&5&6&7&8&9&10&11\\\hline
+ V_j(0)&1&1&1&2&2&2&2&1&2&4&16\\
+ V_j(1)&1&1&1&2&2&2&2&1&2&4&16
+ \end{array}
+\tag{60.15}
+\]
+
+None of these polynomials vanishes at either endpoint. Sturm's theorem
+therefore gives no root of any \(P_j\) in \((0,1)\).
+The other factors in (60.14) are nonzero on \(0<x<1\), and
+\(K(x)=4(x-3/8)^2+135/16>0\). Thus \(\mathcal R(x)\ne0\)
+on \((0,1)\). Its only relevant excluded parameter values are the
+central seed \(b=0\) and the endpoints \(b=\pm1\); in particular
+\(b=\pm\sqrt3/2\) require no extra chart for this minor.
+

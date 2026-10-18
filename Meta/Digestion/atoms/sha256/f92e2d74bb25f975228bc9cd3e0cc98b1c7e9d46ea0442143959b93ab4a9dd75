@@ -1,0 +1,31 @@
+**Proposition 74.4 (fixed-input exact SDP and sufficient uniform obligations).** For every actual $N$ and every complex density $\rho$, including singular inputs, Theorem 7.1 transports to
+
+$$
+\max_{R\ {\rm CPTP}}F_e(\rho,RN)
+=\max_{J\succeq0,\ \operatorname{Tr}_3J=I_5}\operatorname{Tr}(C_{\rho,N}J)
+=\min_{Y=Y^\dagger,\ I_3\otimes Y\succeq C_{\rho,N}}\operatorname{Tr}Y.
+\tag{S.153}
+$$
+
+Both optima are attained. Indeed $J_0=I_3\otimes I_5/3$ is strictly primal feasible, and $Y=cI_5$, $c>\|C_{\rho,N}\|_\infty$, is strictly dual feasible. The primal is compact with trace five. Dual feasible $Y$ is PSD, so its bounded-trace sublevels are compact too. Finite-dimensional Slater duality gives the claimed equality and attainment, independent of singularity of $\rho$. Singular dual optima are permitted by the full inequality.
+
+For the arbitrary-third-column $\lambda=1$ branch, a sufficient fixed-$\rho_\star$ programme would construct, for each actual $N$, one real $Y_N\succ0$ satisfying (S.152) and
+
+$$
+\operatorname{Tr}Y_N\leq\frac{1+\sqrt a}{2}.
+\tag{S.154}
+$$
+
+The more general sufficient programme, allowing an actual density to depend on that encoder, is
+
+$$
+\forall N\ \exists\rho_N\in\mathsf D(\mathbb C^3)\ \exists Y_N=Y_N^\dagger:
+\quad C_{\rho_N,N}\preceq I_3\otimes Y_N,\qquad
+\operatorname{Tr}Y_N\leq\frac{1+\sqrt a}{2}.
+\tag{S.155}
+$$
+
+For each successful certificate, $\rho_N,Y_N$ precede every recovery of that same encoder, and (S.121) gives $\delta_N\geq1-\sqrt a$. One $Y_N$ must constrain the complete Kraus list; different matrices for separate columns or input branches do not supply it. The matrix may depend on $N$; no common matrix across different encoders is required.
+
+Uniform feasibility of (S.152)–(S.154) for arbitrary admissible third columns is not proved here. Neither is feasibility of (S.155) for that entire branch or the original all-beta class. These are sufficient witness routes, not asserted necessary conditions for the original diamond target: failure of such a route does not exhibit a full-reference recovery below the target. The exact fixed-input equality (S.153) is reused SDP theory; it does not establish the missing all-channel existence statement.
+

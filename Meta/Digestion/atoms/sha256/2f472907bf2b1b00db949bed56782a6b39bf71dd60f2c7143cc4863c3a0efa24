@@ -1,0 +1,19 @@
+## 6. Boundary of the negative result
+
+The cycle calculations reject the two stated comparison mechanisms on actual
+native instances while preserving equality, correlations, cycles and whole
+block weights. They do not establish a universal obstruction to finer cuts,
+global recolouring, effective approximation, computability, or a different
+finite proof language. They also do not change the credited interval
+$\log_2(33/13)/8\le\lambda<3/16$.
+
+A successful original solution still needs a sound cap for every complete
+native template and accepted endpoints cofinal in the same unrestricted
+$\sigma_d$, or a uniform effective finite-length error. The exact general
+$M_1(D)$ and the broader space-time mutual-recovery programme remain open.
+
+[CBN]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[JTC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_TARGET_CERTIFICATES.md
+[FMR]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NCE]: https://github.com/the-omega-institute/trureturing/blob/54970a4baa12394e603ff4fc76987d86e1879264/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+

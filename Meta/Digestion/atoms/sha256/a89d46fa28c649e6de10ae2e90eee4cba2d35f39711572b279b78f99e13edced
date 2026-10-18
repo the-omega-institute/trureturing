@@ -1,0 +1,40 @@
+### 推论 53.4（可逆 CPTP seam 上的 Fisher 等式）
+
+若存在 CPTP 恢复映射
+
+\[
+\mathcal R:\mathsf L(K)\to\mathsf L(H)
+\]
+
+满足
+
+\[
+\mathcal R(\Phi(\rho))=\rho,
+\qquad
+\mathcal R(\Phi(X))=X,
+\]
+
+则
+
+\[
+F_{\Phi(\rho)}(\Phi(X))=F_\rho(X).
+\]
+
+#### 证明
+
+定理 53.3 分别应用于 \(\Phi\) 和 \(\mathcal R\)，得到
+
+\[
+F_\rho(X)
+\ge
+F_{\Phi(\rho)}(\Phi(X))
+\ge
+F_{\mathcal R\Phi(\rho)}(\mathcal R\Phi(X))
+=
+F_\rho(X).
+\]
+
+两端相等，所以中间等式成立。证毕。
+
+该推论提供了一个可形式化的“无信息逃逸”判据。若存在同一 CPTP 恢复映射同时恢复参考态和 seam 切向量，则 Fisher 几何在该 seam 上精确保持。若只有 Fisher 数值近似保持，不能直接声称存在恢复映射。量子 Fisher 度量的近似可恢复性依赖所选单调度量，SLD Fisher 本身不是一般恢复等价的充分统计判据。这个边界与 Gao、Li、Marvian、Rouzé 对量子 Fisher 度量和可恢复性的分析一致，见 [arXiv:2302.02341](https://arxiv.org/abs/2302.02341)。
+

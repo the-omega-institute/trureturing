@@ -1,0 +1,7 @@
+## 5. Opposite signed-loss controls for every fixed time partition
+
+The triangular signed-loss construction in Instrument Stability §3.2 and
+the Jordan range theorem in Instrument Boundaries §10 are suppliers.
+Here the triangle is reflected, fitted to an arbitrary fixed finite
+partition, and compared at the level of every time-binned CP operation.
+

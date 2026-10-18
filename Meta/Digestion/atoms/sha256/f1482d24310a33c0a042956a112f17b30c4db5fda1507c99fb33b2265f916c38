@@ -1,0 +1,10 @@
+**Definition 7.1 (four presentations in this contract).** The interface
+presentation is the known cut, remaining credit and the strict tree of all
+legal future action words with their labels and root readouts. The process
+presentation is one realized ordered word and its evolving typed states.
+The boundary presentation is $(k,d,s,t)$ in the actual images $Q_{k,d}$.
+The finite memory presentation is a forward syndrome together with a
+supplemental label sufficient for that boundary. These terms refer to the
+relation and operations of Definitions 1.1–1.3, not to physical space,
+physical time or an undeclared native source.
+

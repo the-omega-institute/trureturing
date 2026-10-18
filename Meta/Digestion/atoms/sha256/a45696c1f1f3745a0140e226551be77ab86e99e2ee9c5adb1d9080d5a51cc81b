@@ -1,0 +1,61 @@
+### 31.5. 常数支的整个无限可能纤维与实际末 M 逆
+
+若 $A=0$，先要求 $L\ne0,D=0$，并置
+
+$$
+U=2B=\lambda r,\qquad V=2L=\lambda b\ne0,\qquad
+W=C+U/2=\lambda(j-1).
+\tag{31.17}
+$$
+
+候选参数 $\lambda\ne0$ 定义唯一缩放源
+
+$$
+R(\lambda)=\begin{pmatrix}U&V\\\lambda+W-V&\lambda-U\end{pmatrix},\qquad
+P=R(\lambda)/\lambda,\quad g(t)=\lambda,\quad d=a_0-\lambda.
+\tag{31.18}
+$$
+
+完整来源过滤为
+
+$$
+0<\frac U\lambda<1,\qquad\frac V\lambda>0,\qquad
+\frac{\lambda+W-V}{\lambda}>0,\qquad
+(U-V)\lambda-U^2-VW+V^2=0.
+\tag{31.19}
+$$
+
+末式正是 $\det R=U(\lambda-U)-V(\lambda+W-V)=0$。$R$ 的迹为 $\lambda$，过滤后的 $P$ 四元严格正、迹一、行列式零，因而秩恰一。这里允许负 $\lambda$ 和负的辅助 $R$，正性只施加给归一化 $P$。由式 (31.18) 有 $r=U/\lambda,b=V/\lambda,c=(\lambda+W-V)/\lambda,j=1+W/\lambda$，因此整个插值式恰为
+
+$$
+E(t)=\frac V2t,\qquad O(t)=W-U/2+\frac U2t.
+\tag{31.20}
+$$
+
+连同全部实际零至五方程的检查，式 (31.18)–(31.19) 给常数前缀纤维的必要且充分描述。其全部退化支如下：
+
+| 观察关系 | 行列式方程与整个合法参数集 |
+| --- | --- |
+| $U\ne V$ | 唯一可能 $\lambda=(U^2+VW-V^2)/(U-V)$；先拒绝零，再保留通过式 (31.19) 及全部前缀方程者 |
+| $U=V\ne0,W\ne0$ | 方程化为 $-VW=0$，不成立，纤维为空 |
+| $U=V\ne0,W=0$ | 方程恒等成立，全部合法参数恰为 $0<U/\lambda<1$；若 $U>0$ 则 $\lambda>U$，若 $U<0$ 则 $\lambda<U$，是无限连续族 |
+
+在最后一支，$p=U/\lambda$ 给 $P=\left(\begin{smallmatrix}p&p\\1-p&1-p\end{smallmatrix}\right)$。$U=0$ 或 $B=0$ 不符合非零常数和严格 $r>0$，由过滤拒绝；没有除 $U,W$。$A=0,L=0$ 会迫使 $\mu=\lambda=0$，不合法；$D\ne0$ 也不兼容常数支。于是没有把奇异支裁成有限候选的缺漏。
+
+实际第六 $J$ 在常数支只给
+
+$$
+x_6=-\lambda+\lambda(1+2b)=2V=4L,
+\tag{31.21}
+$$
+
+是完整一致性检查，不能分开上述无限族。实际第七动作 $M$ 的矩阵和迹则给
+
+$$
+x_7=-\lambda+\lambda(1+r+3b+c)=U+2V+\lambda+W,
+\qquad\lambda=x_7-U-2V-W.
+\tag{31.22}
+$$
+
+剩余自由参数的系数恰一。先拒绝恢复的 $\lambda=0$，再用式 (31.18) 恢复整个源、增益和漂移，并检查式 (31.19)、两个整个插值恒等式、式 (31.21) 及全部八个实际方程。兼容的真实常数世界必通过；恢复的 $\lambda$ 唯一，随后整个世界唯一，故实际第八读也分开无限纤维。
+

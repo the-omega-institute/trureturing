@@ -1,0 +1,88 @@
+**Theorem 6.1 (strict nonaffinity).** Under Definitions 1.1–3.2, for every $t\in\mathbb R$,
+
+$$
+\Psi\ne t\,rp\quad\text{in }\dot{\mathcal H}_-.
+\tag{6.1}
+$$
+
+In particular $\ell\ne0$ and $D_{\rm resp}>0$.
+
+Proof. Suppose equality holds for some fixed real $t$. Testing its Riesz equation on any real odd $u\in C_c^\infty$ gives
+
+$$
+t\,h(rp,u)=\ell(u).
+\tag{6.2}
+$$
+
+All pairings are legitimate in the completion because $rp\in\mathcal Q_E$ and has odd core approximation. The weak critical equation can be tested with $ru$. Since $Xr=1$ and $Yr=0$, subtraction gives
+
+$$
+\begin{aligned}
+h(p,ru)&=a\int (Xp)(u+rXu)+a\int (Yp)rYu-\chi\int Vpru=0,\\
+h(rp,u)&=a\int pXu-a\int(Xp)u=-2a\int(Xp)u.
+\end{aligned}
+\tag{6.3}
+$$
+
+The last integration by parts uses the compact support of $u$ and the weak derivative $Xp\in L^2$. It requires no operator-domain assertion for $rp$. The field $Y$ has zero divergence and $Yr=0$, so its response pairing is, distributionally,
+
+$$
+\ell(u)=-2a\langle rY^2p,u\rangle+\chi\int V_1pu.
+\tag{6.4}
+$$
+
+Equations (6.2)–(6.4) imply
+
+$$
+2a(rY^2p-tXp)=\chi V_1p.
+\tag{6.5}
+$$
+
+Initially this equality holds on odd compact tests. Each distribution in its residual is odd under $\sigma$: $X$ changes parity, $Y$ preserves parity, $r$ and $V_1$ are odd, and $p$ is even. An odd distribution vanishes on every even test. Splitting any compact test into its even and odd parts therefore extends (6.5) to all tests. No representative of a general abstract $\Psi$ has been assigned; only the proposed concrete equality was used.
+
+The degree-one scaling of $X,Y$ and (5.3) turn (6.5) into
+
+$$
+2a(rY^2p_R-tXp_R)=\chi R(V_1\circ\delta_R)p_R.
+\tag{6.6}
+$$
+
+For example $(Y^2p)(\delta_R\xi)=R^{-7}Y^2p_R(\xi)$ and the height at $\delta_R\xi$ is $Rr$, which gives exactly the factor $R$ on the right. These identities hold distributionally by change of variables.
+
+On any compact $K\subset\{r>0\}$, write $r\ge c_K>0$. The full-space height bound (3.2) gives
+
+$$
+\sup_K R|V_1(\delta_R\xi)|\le CR(1+Rc_K)^{-4}=O_K(R^{-3}).
+\tag{6.7}
+$$
+
+Lemma 5.2 bounds the local $L^1$ mass of the nonnegative $p_R$. Thus the right side of (6.6) tends to zero in $L^1(K)$. Differential operators with smooth coefficients act continuously on distributions. Passing to the limit (5.4), then canceling $\gamma m>0$, proves
+
+$$
+rY^2\mathcal G-tX\mathcal G=0\quad\text{on }\{r>0\}.
+\tag{6.8}
+$$
+
+The fundamental solution is harmonic on that open set. Hence $Y^2\mathcal G=-X^2\mathcal G$, and (6.8) becomes
+
+$$
+r\partial_r^2\mathcal G+t\partial_r\mathcal G=0
+\quad\text{on }\{r>0\}.
+\tag{6.9}
+$$
+
+Only distributional convergence was used to reach this equation. Lemma 4.1 makes $\mathcal G$ smooth away from zero, so it is now an ordinary equation there.
+
+Fix any nonzero phase triple $\mathbf z$. The function $g(r)=\mathcal G(r,\mathbf z)$ for $r>0$ is smooth, strictly positive and tends to zero at infinity by the height bound in Lemma 4.1. It is bounded as $r\downarrow0$, since $(0,\mathbf z)$ is away from the source and $\mathcal G$ is smooth there. Equation (6.9) says $(r^tg')'=0$. Its complete solutions are
+
+$$
+g(r)=
+\begin{cases}
+A_{\mathbf z}+B_{\mathbf z}r^{1-t},&t\ne1,\\
+A_{\mathbf z}+B_{\mathbf z}\log r,&t=1.
+\end{cases}
+\tag{6.10}
+$$
+
+When $t<1$, decay at infinity forces $B_{\mathbf z}=0$ and then $A_{\mathbf z}=0$. For the exceptional integration case $t=1$, the logarithmic growth gives the same conclusion. When $t>1$, decay forces $A_{\mathbf z}=0$, while boundedness at zero forces $B_{\mathbf z}=0$. Every real case contradicts strict positivity. This proves (6.1), including $t=0$. If $\ell=0$, uniqueness of its Riesz representative would give $\Psi=0$, the excluded case $t=0$. The Hilbert norm then gives $D_{\rm resp}>0$. $\square$
+

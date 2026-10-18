@@ -1,0 +1,31 @@
+**Theorem 3.2 (counted high-incidence elimination).** For every
+$d,n,L\ge1$ and every network $\mathcal N$, put
+
+$$
+H_L=\{c:\nu_{\mathcal N}(c)>L\},\qquad
+q_{\mathcal N,L}=\prod_{c\in H_L}|T_c|,\qquad
+Q_{d,L,n}=4^{\lfloor nm_d/(L+1)\rfloor}.
+\tag{SIR.17}
+$$
+
+Theorem 3.1 partitions its full actual solution set into at most
+$q_{\mathcal N,L}\le Q_{d,L,n}$ nonempty full solution sets from
+$\mathfrak N_{d,L}(n)$ on the same $n$ original blocks.
+
+Proof. Each block has $m_d$ ports, each assigned to at most one seed.
+Counting distinct block-seed incidences gives
+
+$$
+\sum_c\nu_{\mathcal N}(c)
+ =\sum_i|\{c:\text{a port in block }i\text{ is assigned to }c\}|
+ \le nm_d.
+\tag{SIR.18}
+$$
+
+Every member of $H_L$ contributes at least $L+1$, so
+$|H_L|\le\lfloor nm_d/(L+1)\rfloor$. Each domain has at most
+four members. Apply Theorem 3.1 to $H_L$. Every remaining seed
+already had incidence at most $L$, and conditioning adds no
+occurrence. Discard empty sections. If any domain was empty,
+the conclusion is the empty partition of the empty set. $\square$
+

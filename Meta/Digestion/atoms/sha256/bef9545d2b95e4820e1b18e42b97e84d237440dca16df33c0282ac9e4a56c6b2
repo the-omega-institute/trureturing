@@ -1,0 +1,43 @@
+**Definition 251.3 (Counting deficit and the fixed endpoint repair).**
+For a normalized feasible $N$ kernel with a fixed decomposition $\pi$,
+put
+
+$$
+\begin{gathered}
+\delta=3-p_{w^+}(0)-\sum_i p_{v^i}(i),\qquad
+s_0=p_{w^+}(0)-(1-e),\quad s_i=p_{v^i}(i)-(a_i-e),\\
+S=\sum_i s_i,\quad D=2-\sum_i a_i+(L+1)e=\delta+s_0+S,\\
+B=\sum_i(L-i)s_i+3\delta,\qquad c_L=\max\{3,L-1\}.
+\end{gathered}
+\tag{251.6}
+$$
+
+Replace each $N(i,j;u,v,s,t)$ by $\bar D=O(i,j;v,s,t)$,
+keeping constant and singleton tables. Let $\bar p$ be this one
+repaired mixture and $\mu=\pi\{\text{pair tables}:u\ne v\}$.
+The normalized counting estimate of
+[Section 248](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XIV.md#248-quantitative-stopped-repair-of-every-full-normalized-n-law)
+gives
+
+$$
+\delta,s_0,s_i\ge0,\qquad
+\sup_w\operatorname{TV}(p_w,\bar p_w)\le\mu
+\le\min\{1,B\}\le\min\{1,c_LD\}.
+\tag{251.7}
+$$
+
+For clarity, its counting defect on a pair is
+$d_D=3-[v=i]-[s=j]-[t=0\text{ or }t\notin\{i,j\}]$.
+The last bracket counts positive base or one correct unqueried
+sole-zero label, so $d_D\ge0$ and $\mathbb E_\pi d_D=\delta$.
+The cap rows give the nonnegative slacks and their displayed sum.
+The entire vectors at $w^+$ and every $v^i$ are preserved, since
+these words never visit pair cell $00$. On every word, the same-seed
+outputs can differ only in the one event of mass $\mu$.
+Consequently each independent event row holds at $e+\mu$.
+The counting and gain proof uses only the cap rows (251.1), not
+$a_L\ge e$, so this finite formulation also covers inactive and
+zero-cap auxiliary coordinates. The weighted bound in (251.7),
+its $D=0$ endpoint and the balanced
+full $N/O$ plateau face of Section 249 are used as existing results.
+

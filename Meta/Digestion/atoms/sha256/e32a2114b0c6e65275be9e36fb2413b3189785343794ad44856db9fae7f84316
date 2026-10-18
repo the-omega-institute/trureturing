@@ -1,0 +1,10 @@
+**定义 117.1（固定原子的有序求值）。** 沿用前卷定义101.1及106.1，在 $\mathbb C^2$ 上取
+
+$$
+a=-iX,\qquad b=-iY,\qquad
+U_\alpha=a,\quad U_\beta=b,\quad
+U_{\langle s,t\rangle}=U_sU_t.
+$$
+
+对词 $w=w_1\cdots w_L$ 令 $U_w=U_{w_1}\cdots U_{w_L}$，$U_\epsilon=I$；矩阵结合性给 $U_t=U_{\operatorname{wd}(t)}$。右因子先作用，故书写在词尾的原子在此求值中先执行。
+

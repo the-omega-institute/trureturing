@@ -1,0 +1,10 @@
+### Theorem 4.1. Exact five-state measurement effects with one phase address
+
+This native experiment implements the three effects in (4.1) on every five-state density matrix, including bottom-apex coherences. Setting 1 uses seven pulses; setting 2 uses twenty-eight. Each uses exactly one second-quadrature pulse at site one. Uniform random settings cost 35/2 pulses per round on average, excluding preparation and final readout.
+
+Proof. On the bottom, the diagonal output observable is Z tensor I. Pulling it back by V_1 gives CZ (X tensor I) CZ=X tensor Z. S conjugates this operator to Z tensor X, proving setting 2. Every constituent preserves bottom and apex at its boundary. Native CZ and S act by -1 on the apex, while h_1 fixes it, so V_1 and V_2 act there by -1 and +1. Therefore both preserve the apex projector exactly and have no bottom-apex blocks. Pulling back the bottom outcome projectors gives (4.1) as full five-by-five identities. The pulse counts are 5+2 and 21+5+2. QED.
+
+Only the effects and their outcome probabilities have been equated. The implemented complete-word measurement refines the degenerate +/- eigenspaces. Its postmeasurement channel is not asserted to equal a minimally disturbing Lueder instrument for the coarse PVM. For sequential sources, the conditional-null assumptions must refer to the history actually retained by the experiment, including any retained refined outcomes. No future source independence is inferred from these effect identities.
+
+This closes the ideal native-realization premise singled out in C-121.1. Trusted apparatus calibration, source assumptions, sample complexity and physical leakage are separate. The witness remains incomplete: failure to violate its separable bound does not prove that the state is separable.
+

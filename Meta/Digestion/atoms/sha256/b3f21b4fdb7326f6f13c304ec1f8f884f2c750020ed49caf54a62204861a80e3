@@ -1,0 +1,91 @@
+**Proposition 6.4 (the universal operational suppliers restrict to the full
+signed fiber).** The following parts of JRF retain their conclusions on
+$D$ and on its opaque presentation: Lemma 2.2's all-source nonexpansive
+late probes; Theorem 3.1's cap of actual epochs at $M=\max(N,5)$;
+Lemma 3.2's removal of repeated or constant-root reads; and Lemma 3.4's
+use of shortest physical occurrences of old classes. In particular every
+permitted $A$ has an effective capped service satisfying, on each same
+$u\in D$,
+
+$$
+q_{A^c}(u)=q_A(u),\quad
+a_{A^c}(u)=\min(a_A(u),M-N),\quad
+\ell_{A^c}(u)\le\ell_A(u).
+\tag{ABC.6.3}
+$$
+
+The separate cleanup has $q\le\ell+\max(0,2-N)$ and does not increase
+any coordinate. Neither transformation asserts equality of the old and
+new actual receipts.
+
+A different supplier, [SCR, Theorems 9.2 and 10.1][SCR], gives raw-count
+normalization at $M_4=\max(N,4)$. For $N\ge1$, it first performs
+$M_4-N$ actual updates and then reads only at $M_4$. For $N=0$, it keeps
+all actual epoch-zero actions until the simulated controller first asks
+for an update, then performs four actual updates and reads only at four.
+A run halting before that request stays at zero. For each $u\in D$, let
+$q_A^+(u)$ count the original reads after that request when $N=0$, and
+all original reads when $N\ge1$. The resulting service satisfies
+
+$$
+q_{A^{\flat_4}}(u)=q_A(u),\qquad
+\ell_{A^{\flat_4}}(u)
+ \le\ell_A(u)+(M_4-1)q_A^+(u),
+\tag{ABC.6.4}
+$$
+
+with the same full-row output and sourcewise termination. Its actual
+update count is $M_4-N$ for positive entry, and either zero or four at
+zero entry, according to the stated reply-dependent switch. This
+raw-count statement does not replace the joint dominance in (ABC.6.3).
+
+Proof. JRF Lemma 2.2 is quantified over every $u\in\mathcal T$, so its
+same-source reply and literal-length inequalities restrict to $D$.
+The proof of JRF Theorem 3.1 needs those identities, common complete
+control and pointwise termination, all present in Assumption 1.2. It
+keeps early actions, including epochs zero through four, unchanged; after
+the cap it executes the stipulated shorter actual reads. Simulated late
+updates remain local computations, not actual receipts. This is exactly
+the proof of (ABC.6.3), independent of how $D$ is described.
+
+The cleanup uses equality of repeated replies at an unchanged actual
+epoch and the all-source constant-root fact after epoch two. Additional
+signed predicates do not alter either identity. The shortest-occurrence
+step uses only equality of all occurrences of a retained old class and
+the known old context; both remain true on $D$. All constraints are kept
+in the domain while those pointwise identities are applied. Theorem 6.2
+transfers these actual conclusions to the opaque presentation. These
+supplier applications prove sourcewise dominance; JRF's literal-only
+feasibility or stopping algorithms have not been invoked.
+
+For the separate raw normalization, SCR Theorem 9.2 supplies, for every
+$n\ge1$, $M_4\ge4$ and finite $p$, a common effective physical address
+$\widehat T(n,M_4,p)$ with
+
+$$
+r_{\rho^n u}(p)=r_{\rho^{M_4}u}(\widehat T(n,M_4,p)),\qquad
+|\widehat T(n,M_4,p)|\le |p|+M_4-1
+\quad(u\in\mathcal T).
+\tag{ABC.6.5}
+$$
+
+This identity restricts to every same $u\in D$, regardless of its
+retained signed relations. SCR Theorem 10.1's controller simulation uses
+only that identity and the complete common state, so the source/action
+hypotheses are exactly Assumption 1.2. Each simulated read causes one
+actual read, including repeated or constant requests. Summing its length
+bound only over positive-mode requests proves (ABC.6.4); zero-mode
+addresses are unchanged. Simulated updates never become actual updates
+or receipts. Every normalized controller is itself a permitted serial
+controller on $D$, giving the reverse service inclusion for this
+raw-count comparison. Theorem 6.2 supplies its opaque counterpart too.
+
+SCR Theorem 9.3 makes four the sharp threshold for its universal
+positive-epoch at-most-one-read property without extra source evidence,
+even allowing arbitrary reply decoding. It does not impose that lower
+bound on a particular acquired fiber. Its length estimate (ABC.6.5)
+is additive, and the initial advancement can exceed the updates of a
+comparator that halts early. Thus neither $\ell_{A^{\flat_4}}\le\ell_A$
+nor joint sourcewise dominance is inferred. The nonexpansive supplier
+used in (ABC.6.3) remains JRF's $n\ge m\ge5$ theorem. $\square$
+

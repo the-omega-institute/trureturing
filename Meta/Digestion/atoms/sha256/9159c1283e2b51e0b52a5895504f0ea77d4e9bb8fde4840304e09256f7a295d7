@@ -1,0 +1,16 @@
+**Theorem 13.2 (frame covariance and unused environment directions).** The certificates (R.41)–(R.49) are independent of the chosen Gram factor of the same $J$. Under a real orthogonal environment coordinate change $O$, their data transform by
+
+$$
+W\mapsto OW,\quad T\mapsto TO^T,\quad V_S\mapsto OV_S,
+\qquad D_j\mapsto OD_jO^T,\quad H\mapsto OHO^T.
+\tag{R.54}
+$$
+
+Under a general complex environment unitary $U$, every actual environment matrix, kernel effect and certificate must instead be transported by the corresponding unitary conjugation. The underlying real antiunitary becomes $\mathfrak k'=U\mathfrak kU^\dagger$, where $\mathfrak kx=\bar x$.
+
+**Proof.** The first assertion follows because $A_q$ and its kernel effect in (R.41) use $J$, not a factorization. Direct substitution proves (R.54). For a complex change use $J'=(I_3\otimes U)J(I_3\otimes U^\dagger)$ and $Z_q'=(I_3\otimes U)Z_q(I_3\otimes U^\dagger)$. Then $H'=UHU^\dagger$, $D_j'=UD_jU^\dagger$, and the support conditions, eigenvalue bounds, inverse traces and matrix order are invariant. The second phase block is $U\bar\tau U^\dagger=\mathfrak k'(U\tau U^\dagger)\mathfrak k'^{-1}$, generally different from $\overline{U\tau U^\dagger}$. The same transport is required for the barred $C$ relation. A complex gauge cannot silently make the original real structure into entrywise conjugation.
+
+With $\Lambda$ fixed diagonal, an internal eigenframe change $W\mapsto WV$ preserves (R.50) when $V$ is unitary and commutes with $\Lambda$, with $T\mapsto V^\dagger T$. At half weight every $V\in U(2)$ is allowed, exactly as in (R.24). In particular using Takagi coordinates at that endpoint requires cotransforming $T$; their two angles alone do not determine (R.52).
+
+If zero Kraus matrices are added, embed the used environment $E$ into $E\oplus E_0$. The actual $A_q$ vanishes on $\mathbb C^3\otimes E_0$. For the full kernel projection its contribution in (R.41) is $I_{E_0}$, so $H_{q,\mathrm{full}}'=H_{q,\mathrm{full}}\oplus I_{E_0}$. Finite full-kernel aggregates have the same direct sum. Thus their minimum eigenvalue and inverse traces against $D_j\oplus0$ are unchanged. A selected partial-kernel effect need not acquire that identity block automatically; it can be extended by this full unused block if desired. This distinction preserves validity for nonminimal environments without attributing extra charge to an unselected effect. $\square$
+

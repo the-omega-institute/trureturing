@@ -1,0 +1,20 @@
+**Definition 11.1 (menus at an attained name).** Fix $s\in\{2,3\}$ and
+an original correct preparation and reader. On the slice put
+
+$$
+B_e=\{x\in Q_s^N:E(t_x)=e\},\qquad
+I_s=\{e:B_e\ne\varnothing\},\qquad m=|E[\mathcal F_D]|.
+\tag{RRN.40}
+$$
+
+For each $e\in I_s$, the reader's choice at any $p\in\mathcal P_D$
+is zero Reads or one literal fixed by $e,D,p$ before the reply and
+before any authentic count. Let $J_e$ be the set of distinct selected
+words, over all these requests, whose reply is nonconstant on the
+entire $s$-ary slice, and put $b_e=|J_e|$. A selected word constant
+only on $B_e$ is still counted if it varies on the whole slice.
+Zero-Read branches contribute no word. This finite menu counts
+alternative addresses across requests, not simultaneous observations
+or acquired memory. Write $T(x)$ and $A(x)$ for the actual preparation
+Read count and submitted-letter sum on $t_x$, with repetitions charged.
+

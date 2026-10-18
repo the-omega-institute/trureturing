@@ -1,0 +1,30 @@
+**Definition 13.1 (Partition weights and finite law region).** For the
+family in Theorem 12.2 put
+
+$$
+\begin{aligned}
+W_m(\nu)&=\{(\nu(B_1),\ldots,\nu(B_m)):\\
+&\qquad B_1,\ldots,B_m\in\mathcal U\text{ form a measurable partition of }
+\mathsf U\},\\
+\mathcal V_{k,j,p,\nu}
+&=\left\{\sum_{i=1}^m w_i v_i:w\in W_m(\nu)\right\}.
+\end{aligned}
+\tag{13.1}
+$$
+
+Empty cells are permitted, and completed measurable partitions may be
+replaced by versions without changing their measures. The region
+$\mathcal V_{k,j,p,\nu}$ records the law of $Z$ after forgetting the
+seed coordinate. Its full seed-dependent counterpart is precisely the
+set of measures specified on rectangles by
+
+$$
+\mu(B\times\{z\})
+=\sum_{i=1}^m\nu(B\cap B_i)v_i(z),
+\qquad B\in\mathcal U,\quad z\in\mathcal Z_k,
+\tag{13.2}
+$$
+
+as the same measurable partitions vary. Formula (13.2), rather than
+just the weights in (13.1), retains the seed dependence.
+

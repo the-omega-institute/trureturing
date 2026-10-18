@@ -1,0 +1,16 @@
+**Proposition 295.2 (The attained extension and its boundary).**
+Relative to the attained family of 282.2 and its constant-zero
+thinnings on this ratio ray, the additional attained interval supplied
+by 295.1 is $1/29<\tau\le1/24$. The coefficient lower bound $46/5$,
+the old uniform core and the closed-cap source transport are reused.
+No maximality of $1/24$, complete primal equality-face classification,
+or original $N/O$ separator follows.
+
+**Proof.** The old family is stated for $\tau_0\le1/29$; mixing its
+whole law with constant zero multiplies the late ratios by a scalar
+in $[0,1]$, so cannot produce a larger $\tau$ on this ray. Theorem
+295.1 covers the displayed larger interval with one different law.
+Its proof gives no exclusion of any other law for $\tau>1/24$.
+In its own range it attains both optima equally, hence supplies no
+separator. $\square$
+

@@ -1,0 +1,51 @@
+**Definition 77.2 (actual labels and moment coordinates).** Let
+$n_{\rm feas}(s,A)$ be the minimum number of actual low live-bearing
+labels in $\mathfrak F_{s,A}$, and $n_{\rm opt}(s,A)$ the minimum among
+its height maximizers. They are undefined for the empty class.
+A supported-nonzero low label has an entire two-dimensional joint
+fibre and one effective supported live product by Theorem 69.1.
+At finite activity no supported-nonzero label is failure-only. Normalize
+its data as
+
+$$
+K_j=\sqrt{p_j}K(s_0,z_j,w_j),\qquad
+N_j=p_jb_j n_jn_j^T,\qquad
+\alpha z_j^2+\beta w_j^2=1,\quad p_j>0.
+$$
+
+The following is the coordinate form of FA.8 and FA.20, used throughout:
+
+$$
+\begin{gathered}
+\sum_jp_jh_jh_j^T=I_3,\qquad
+0\le b_j\le t\mathfrak c(\mathbf c_j),\qquad t=e^A-1,\\
+\sum_jp_jb_jz_j^2=V_f,\quad
+\sum_jp_jb_jw_j^2=W_f,\quad
+\sum_jp_jb_jz_jw_j=0,\\
+V_f=\frac{m_2h_1^2}{b^2},\quad W_f=\frac{m_1h_2^2}{d^2},\quad
+\mu_f=\alpha V_f+\beta W_f=\sum_jp_jb_j,\\
+\tau=s/s_0\le\sum_jp_j|z_j|,\qquad
+T_{\rm actual}=\frac{H_0+\sum_jp_j|\ell(\mathbf c_j)+b_jf(\mathbf c_j)|}{2}.
+\tag{FA.37}
+\end{gathered}
+$$
+
+The last equality uses the fixed positive weak high contribution. For
+necessity, the available contrast bounds the requested one; for
+sufficiency choose the actual report $\operatorname{sgn}z_j$, either
+sign at zero. No extra acquired label is needed for that report.
+Every finite family satisfying these moments has the common realization
+specified in §86. Arbitrary competing time laws have not been fixed to
+$g(t)$ in deriving them. Integrals replace sums only in the stipulated
+extensions of Convention 67.1.
+
+The $p_j$ are coefficient weights, not source priors or acquisition
+probabilities. The latter are
+$\operatorname{tr}(E(K_j^\dagger K_j+N_j)E^\dagger\rho)$.
+These low-label counts differ from hidden Kraus multiplicity, static
+support/rank, total actual alphabet, five terminal failure labels and
+joint quantum dimension. A supported-zero complementary qubit does not
+enter these counts; its entire fibre still obeys the activity bound.
+A positive nonatomic live-bearing record has infinitely many actual
+labels; an unacquired integration variable cannot control a decoder.
+

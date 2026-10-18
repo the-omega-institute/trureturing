@@ -1,0 +1,48 @@
+**Theorem 5.3 (exact high mass and strict all-$s$ improvement).** The only
+high branches of Definition 5.1 are $(r,H)$. Its acquired and supported
+live high effects agree and equal, on $V$,
+
+$$
+G_s=\left(1-\frac1{R_s}\right)
+(D^\dagger D+s^2T^\dagger T).
+\tag{RE.32}
+$$
+
+On five modes the effect is $EG_sE^\dagger$, and
+$p_H^{\rm acq}(\sigma)=\operatorname{tr}(G_sE^\dagger\sigma E)$.
+For every $s\in[0,1]$ it is strictly smaller than JR's acquired high
+mass on every positive input with nonzero supported compression.
+
+Proof. Lemma 4.2 and $R_s>1$ make each $H$ encoder invertible into
+its three-dimensional fibre. Every nonzero mixed branch has rank two
+and uses precisely its two-dimensional range; the residual $T$ branch
+has rank two when present. Failure and complement fibres are scalar.
+Per $r$ the joint dimensions are therefore $3,2,2,2,1,1,1$ in the
+five-mode construction, with the residual $T$ omitted at $s=1$.
+There is no additional retained specimen or controller share.
+All high decoders output their entire input live, so acquisition and
+supported live mass agree on those branches. Summing the first line of
+(RE.31) over $r$ gives (RE.32).
+
+JR's effect is $G_s^{\rm JR}=D^\dagger D+s^2T^\dagger T$.
+The difference $G_s^{\rm JR}-G_s=G_s^{\rm JR}/R_s$ is positive
+definite on $V$, since $D$ is invertible. Its trace against any nonzero
+positive supported compression is strictly positive. On an original
+history the new value is exactly
+
+$$
+\left(1-\frac1{R_s}\right)
+\left[\sum_iH_{ii}p_{yi}
++s^2\left(b^2\frac y{128}+a^2\frac{64-y}{128}\right)\right].
+\tag{RE.33}
+$$
+
+It is independent of both signs, and the difference from JR's value
+is the bracket divided by $R_s$. On $V^\perp$ both high effects
+vanish. For arbitrary positive five-mode inputs the compression is used
+without normalizing its trace. The same scalar probabilities for a
+joint input use its reduced specimen density, while Theorem 5.2 retains
+the full conditional reference states. Relabeling $r$ proves the same
+statement for all $\gamma\in[-\kappa,0]$ as for
+$\gamma\in[0,\kappa]$. $\square$
+

@@ -1,0 +1,43 @@
+**定理 4.2.1（自反、传递与风险单调性）。** 有：
+
+1. $E\succeq_B E$；
+2. $E\succeq_B F$ 且 $F\succeq_B H$ 蕴含 $E\succeq_B H$；
+3. 若 $E\succeq_B F$，则对任意有限决策问题，
+   $$
+   \inf_\delta\max_{\theta}R_E(\delta,\theta)
+   \le
+   \inf_\gamma\max_{\theta}R_F(\gamma,\theta).
+   $$
+   对任意先验 $\pi$，对应的 Bayes 风险也满足同样不等式。
+
+**证明。**
+
+第一项取恒等通道。第二项若 $K_F=K_EG$ 且 $K_H=K_FH'$，则
+
+$$
+K_H=K_E(GH'),
+$$
+
+故复合后处理给出传递性。
+
+对第三项，给定 $F$ 上任意规则 $\gamma(a\mid\xi)$，在 $E$ 上使用
+
+$$
+\delta(a\mid\omega)
+=
+\sum_\xi G(\xi\mid\omega)\gamma(a\mid\xi).
+$$
+
+代入风险并交换有限求和，得到
+
+$$
+R_E(\delta,\theta)=R_F(\gamma,\theta)
+\qquad\forall\theta.
+$$
+
+因此 $E$ 能实现 $F$ 的每个决策规则，分别取极小值后得到 minimax 与 Bayes 风险不增。证毕。
+
+这一定理的方向很具体：完整记录较丰富时，可以主动丢弃部分记录来模拟较粗接口；反方向需要一个不依赖隐藏状态的随机解码器，不能由“两个接口都包含同一个事件”推出。
+
+<a id="section-4-3"></a>
+

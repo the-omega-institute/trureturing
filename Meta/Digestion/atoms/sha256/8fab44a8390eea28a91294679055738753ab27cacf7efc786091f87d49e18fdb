@@ -1,0 +1,10 @@
+**Source correspondence 7.3 (a retained predictive collision).** AAR
+Proposition 13.3 supplies another necessary distinction: at $p=RLL$,
+$\langle\alpha,\beta\rangle$ and
+$\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ have different
+blocking positions but the same factor $(3,0)$. All definitions here
+use equality of $\Gamma$, rather than identifying it with the first
+leaf descriptor. The canonical normalization preserves the boundary
+needed to simulate experiments; it need not be the minimal passive
+predictive quotient.
+

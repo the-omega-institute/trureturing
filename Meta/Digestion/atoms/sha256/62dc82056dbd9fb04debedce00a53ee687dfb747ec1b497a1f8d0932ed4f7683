@@ -1,0 +1,34 @@
+**命题 8.2（已有混合响应接到有限矩形任务）。** 对不同素数 $p,q$，令 $x=\log n>1$、$a=\log p>0$、$b=\log q>0$，并定义
+
+$$
+f(x)=\log\log x,\qquad
+h(x)=-f''(x)=\frac{\log x+1}{x^2(\log x)^2}>0.
+$$
+
+则完整四角缺口为
+
+$$
+\boxed{
+G(npq)+G(n)-G(np)-G(nq)
+=\int_0^a\int_0^b h(x+s+t)\,dt\,ds>0.
+}
+$$
+
+这把约数格上的联合操作接到普通矩形上的正函数积分；它不是非交换操作或新增物理相互作用。
+
+**证明。** 使用实际整数的素数分解，
+
+$$
+\log Z(n)=\sum_\ell\log\left(\sum_{j=0}^{v_\ell(n)}\ell^{-j}\right).
+$$
+
+增加 $p$ 的指数仅改变第 $p$ 项，不改变第 $q$ 项，故 $D_pD_q\log Z(n)=0$，即使 $p,q$ 已经整除 $n$ 也成立。$\gamma$ 从四角差分消去，留下
+
+$$
+f(x+a)+f(x+b)-f(x)-f(x+a+b).
+$$
+
+这正是 [ZECKENDORF_EULER_5040，§7.2 式 (22)](https://github.com/the-omega-institute/trureturing/blob/78d2f7c423b15d01062f3ffacf4f75b8cee44f30/docs/develop/theory/ZECKENDORF_EULER_5040.md) 已有响应的相反数：供应记号 $\Delta=\gamma+\log\log\log n-\log Z(n)$，此处 $G=-\Delta$；供应的尺度函数对应当前 $f$，本篇的 $h$ 对应其负二阶导数，不能同名混用。
+
+对两个增量各应用一次微积分基本定理，混合差分 $D_aD_bf(x)$ 等于 $\int_0^a\int_0^b f''(x+s+t)dt\,ds$。负号给所列矩形，核连续且严格正、两边长度严格正，积分严格正。因此它消费既有四角公式而把接缝共享原则转成联合尺度预算：单轴约数收益可相加，但相同基点尺度不能当作各轴独立消耗的预算。证毕。
+

@@ -1,0 +1,4 @@
+### 78.4. Attribution and scope
+
+Singular value decomposition, the operator/nuclear norm triangle inequalities, and the variational characterization of the sum of the two largest singular values are standard matrix-analysis ingredients; see [Watrous, The Theory of Quantum Information, Chapter 1](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf) for singular values, Schatten norms, and their variational formulations. No priority claim is made for these ingredients. The original-channel calibration and trace-norm tests are the results of sections 72 and 77. The centroid lemma proves the particular sharp high-purity tradeoff (1), and (5) transports its constructed anchor to all original Schmidt sign-pairs simultaneously. This is a paper theorem concerning the fixed uniform fibre family. The channel lower bound is not an exact optimum, does not restrict the environment dimension, and does not apply to arbitrary finite LOSR mixtures, which can realize the target exactly.
+

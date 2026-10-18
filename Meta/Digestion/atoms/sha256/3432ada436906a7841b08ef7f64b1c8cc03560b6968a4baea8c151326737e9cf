@@ -1,0 +1,32 @@
+**Proposition 288.1 (Five-address and ordered-block comparisons).**
+The three scores of 281.1 yield the same five-address unit-weight
+inequality with stock $21/5$ and total $46/5$. Relative to the
+five-address stocks $17/4$ and $13/3$ in Sections 202 and 205, the
+stock differences are respectively $1/20$ and $2/15$.
+For the signed pattern (283.1), the $37/4$ payer already covers
+$h\le63s/17$. The larger range in 283.1 extends that condition only by
+
+$$
+63s/17<h\le79s/21.
+\tag{288.1}
+$$
+At $m=6k-1$, the stock in 284.1 is smaller by $1/(3k)$ than both
+the balanced stock $c_m$ and the terminal-protected stock $c_{m-1}$
+of Theorem 207.13.
+
+**Proof.** The first assertions follow from (281.1) and subtraction.
+Use the existing $37/4$ score at the same five addresses, scaled by
+$t=(s+h)/5$. The residual has exactly the partial sums in 283.1,
+and its cap coefficient is at least
+
+$$
+5s+h-(37/4)t=(63s-17h)/20.
+$$
+The same Abel estimate therefore already proves the smaller signed
+range. For $m=6k-1$, both $\lceil(m+1)/2\rceil$ and
+$\lceil m/2\rceil$ equal $3k$. Hence
+$c_m=c_{m-1}=4-2/(3k)$, whose difference from $4-1/k$ is
+$1/(3k)$. The protected comparison is within the stated protected
+class of 207.13; it gives no optimality statement for the asymmetric
+law in the unrestricted catalog. $\square$
+

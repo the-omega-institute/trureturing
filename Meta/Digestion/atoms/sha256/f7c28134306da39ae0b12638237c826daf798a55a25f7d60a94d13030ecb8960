@@ -1,0 +1,100 @@
+**Definition 76.5 (the unchanged historical witness and complete target).**
+The separate cap-eight witness does not alter55.6/64.1. Their immutable
+INITIAL is $T_2=\langle\beta,\alpha\rangle$, their original cap is
+$H=3$, and their complete history remains
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{76.10}
+$$
+
+The initial, accepted and refused-candidate leaf counts are $2,3,5$.
+Only $T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$ is installed
+after acceptance; $T_4$ is refused without a candidate Read. INITIAL and
+the original tag-one target $(1,(1,1),BA,A+B)$ remain unchanged. The
+accepted five-port domain has ordered basis $(o,L,R,LL,LR)$. Both complete
+ten-pair tables on precisely that source version remain
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&L\,R&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G_D^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}.
+\tag{76.11}
+$$
+
+These tables belong to that stopped cap-three history. They are not pair
+tables for $T_5$, whose separate admissibility neither raises that history's
+cap nor continues it after Stop. The complete prescriptions for arbitrary
+authentic $D$ are still
+
+$$
+\begin{aligned}
+G_D^{\rm c}(p,q)&=\langle e_p,L^{-1}e_q\rangle
+ =\frac23\,2^{-d(p,q)}+\frac13\,2^{-(|p|+|q|)},\\
+G_D^{\rm k}(p,q)&=\langle e_p,L_D^{-1}e_q\rangle,\qquad
+\phi(p)=2^{-|p|},\\
+d(p,q)&=|p|+|q|-2|p\wedge q|.
+\end{aligned}
+\tag{76.12}
+$$
+
+Here $L$ is55.2's infinite unit-conductance occurrence Laplacian, and
+$L_D=I_D^*LI_D$ has diagonal two at the root, three elsewhere and
+off-diagonal $-1$ on each inherited seam. Both entire kernels, including
+their diagonals, retain their own boundary law. The common one-body field
+is the same for both; killing the pair prescription does not replace it
+by the newly solved killed one-body field. The two unequal prescriptions
+remain separately commissioned operators, with no free physical switch
+or single generator equal to both.
+
+Definition64.5 remains literal. $X_D$ has every intrinsic unit seam and
+both unit grounded stubs at every current leaf, with mass-one source
+atoms, no ground atoms and fixed cable density $0<\delta\le1$:
+
+$$
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_e dx_e,\qquad
+\mathcal K_{D,1}=L^2(X_D,\mu_\delta),\qquad
+\mathcal K_{D,2}^{\rm hc}
+ =\left[L^2((X_D^2)\setminus\Delta,
+                    \mu_\delta\otimes\mu_\delta)\right]_{\rm sym}.
+\tag{76.13}
+$$
+
+Here $\delta_p$ is a Dirac mass and $\Delta=\{(x,x):x\in X_D\}$ is the
+actual same-position set.
+
+All distinct atomic pairs, both orders of atom/cable slices, every
+different-cable rectangle and both same-cable triangles remain, with
+norm weights $1,\delta,\delta^2$. The form domains retain cable and
+slice $H^1$, piecewise cell $H^1$, exchange symmetry, endpoint-to-atom
+and cell-boundary-to-slice matching, zero ground traces in either
+coordinate and both zero same-cable diagonal traces. Missing atomic
+collision values are zero in slice endpoint conditions, including
+shared-port collisions approached on different cables. No arbitrary
+$H^1$ rectangle-corner value is introduced. The kinetic forms are
+exactly64.7: each one-particle cable derivative and each two-particle
+slice derivative has coefficient one; each cell's sum of the two
+derivative energies has coefficient $\delta$, including both
+same-cable triangles. Their operators carry the same commissioned
+factor $a>0$.
+
+With commissioned $a,g>0$ and $\nu\ge0$, the unchanged potentials are
+$U_{D,1}=-g\phi_A$ and
+
+$$
+U_{D,2}^{\diamond}(x,y)
+ =-g(\phi_A(x)+\phi_A(y))
+  -\nu\mathbf1_{\{x=p,y=q\in D,\ p\ne q\}}G_D^\diamond(p,q),
+\qquad \diamond\in\{\mathrm c,\mathrm k\},
+\tag{76.14}
+$$
+
+where $\phi_A$ is $\phi$ on atoms and zero on open cables. The pair
+term is exchange invariant and zero on every other stratum. Geometry
+here changes none of these spaces, measures, forms, coefficients,
+domains or traces, and supplies no new operator correspondence.
+

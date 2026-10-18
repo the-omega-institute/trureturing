@@ -1,0 +1,15 @@
+**Theorem 91.1.** For every \(0<|b|<1\) outside \(\mathcal E\):
+
+1. There are no three mutually orthogonal noncanonical common-flat rays.
+2. Every complete common-flat input basis is \(C(b)/\sqrt6\), up to
+   column phases and permutation.
+3. The fixed pair \((I_6,H_0(b))\) has exactly one common-unbiased basis
+   up to column phases and permutation, namely
+   \(H_0(b)C(b)/\sqrt6\), and cannot belong to a quartet of mutually
+   unbiased bases.
+
+This covers the actual punctured parameter branch outside a finite,
+explicitly specified exceptional set. It is not a theorem at all of its
+exceptional fibres, the center or the endpoints, nor a classification of
+all six-dimensional Hadamard pairs.
+

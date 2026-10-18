@@ -1,0 +1,42 @@
+### 82.4 同一个有限原子族的上构造
+
+证明上界。按 (RC.137) 选择 $o_\epsilon$，加入两个实际饱和标签
+
+$$
+K_\epsilon^{\rm sat}
+=\sqrt{\eta_A\nu_\epsilon}\,K_{h_{\epsilon,o_\epsilon}},
+\qquad
+N_\epsilon^{\rm sat}=B_\epsilon^{\rm sp}.
+\tag{RC.142}
+$$
+
+用引理 81.1，将同一个静态三射线族的六个参数改变 $O(\eta_A)$，精确满足剩余 Gram
+
+$$
+I-\eta_A\sum_\epsilon
+\nu_\epsilon h_{\epsilon,o_\epsilon}h_{\epsilon,o_\epsilon}^T
+$$
+
+和剩余对比度
+
+$$
+\tau_{\rm target}-\eta_A\sum_\epsilon\nu_\epsilon|z_\epsilon|,\qquad
+\tau_{\rm target}=\max(\tau,\tau_{\rm p}).
+$$
+
+平台上将总对比度保持在 $\tau_{\rm p}$ ；活跃区间将其保持在请求的 $\tau$。剩余 Gram 的 $Q$ 迹仍为零，故它和剩余 contrast 确实属于 $\mathscr M$ 的值域空间。以 (RC.116) 中三个主权重和三个主角度为变量，对同一原子族应用局部逆映射，得到精确等式而非一阶残差。扰动范数至多为源决定常数乘 $\eta_A$，三个主要权重仍严格正。静态 slack $D_r-|\ell|$ 在原接触点取零且角向一阶导数为零；主射线高度符号不变，故二阶 Taylor 界给出三个 pure-live 标签总 slack 为 $O(\eta_A^2)$。饱和标签的实际高度差为
+
+$$
+\lambda_\epsilon+
+\eta_A\nu_\epsilon\ell(h_{\epsilon,o_\epsilon}),
+$$
+
+其符号对充分大预算固定为 $\epsilon$。于是该同一族的缺额为
+
+$$
+\frac{\eta_A}{2}(\kappa_++\kappa_-)+O(\eta_A^2).
+\tag{RC.143}
+$$
+
+§86 给出这族原子的完整 CP、参考、五 Borel 与 FIRST 实现。由于 $r\in[r_\star,r_{\rm c}]$  紧，三个主要权重有正下界，联合矩导数的逆一致有界，且只有有限个取向选择，上下界中的二阶常数可一致选取。这证明 (RC.135)–(RC.136)。 $\square$
+

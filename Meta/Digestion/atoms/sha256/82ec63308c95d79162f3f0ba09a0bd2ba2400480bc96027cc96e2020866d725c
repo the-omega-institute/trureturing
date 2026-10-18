@@ -1,0 +1,45 @@
+**Definition 9.4 (unresolved full common-instance problem).** Let $Q$ be
+the original continuation/audit task with original terminal type/output
+and admitted experiments, and $Q_{G_{\rm sel}}$ the task additionally
+exposing the new history operations. Neither is raw-state equality,
+history equality or actual current access. A claimed four-expression
+solution on this same growing carrier must still define independently
+natural spatial, temporal, boundary and retained/callable-memory views
+$V_i$, and prove, for each separately on its stated common domain,
+
+$$
+V_i(x)=V_i(y)\Longrightarrow Q(x)=Q(y),\qquad
+Q(x)=Q(y)\Longrightarrow V_i(x)=V_i(y).
+$$
+
+It must also prove simultaneous legality, label and successor transport,
+and original terminal readouts, on all original and added raw/partial
+phases, including mode acquisition, parser, bank, descriptor, code,
+loan, copy and return cuts. Four copies of manifest/$I_k$/$k$ or an
+intersection of kernels are not independent natural definitions. PVC's
+serializers and paid cycle still need an actually initialized nonconflicting
+ARC74 placement/owner/input/service/return bridge. Its unused verifier
+and fixed-$H$ continuing comparison task do not transfer to this occupied
+verifier and original terminal task. A serialized geometry is not a
+physically materialized old graph, and a printed old token is not a live
+old handle.
+
+The recovery result covers exactly acquisition-or-later cuts in an actual
+completed predecessor admitted at Ready. Its current uncompleted flight
+becomes eligible only if it later returns. The original gate00 suffix has
+no new history entry or later Ready; CAP Theorem 17.3/ARC Proposition 11.2
+therefore retains its last-Ready horizon. CAP Proposition 17.4 excludes
+the final cut for any completed strict-past service, without excluding
+every proper preterminal cut. No posthalt operation is added. Any further
+prehalt service must supply its own initialized entry, retained input,
+authority, original-task correspondence and paid return. CAP Corollary
+16.7's same-output/no-posthalt-audit terminal fibres also retain their
+scoped force: full history cannot simply replace the original terminal
+response. These supplied boundaries are not new impossibility results.
+
+Generic-source progress and original-task acceptance retain Assumption
+1.3 and ARC Definition 9.4. Theorem 7.2's one-source unbounded finite
+growth and the general acquired-cut interface do not settle these
+remaining four-view, converter, task-kernel, final-suffix or infinite-
+continuation obligations.
+

@@ -1,0 +1,61 @@
+**Proposition 8.1 (Height and zero readout).** If $Z\ge4H$, the model
+
+$$
+E_0(k,\alpha,\beta)=k\in\mathbb R,\qquad
+\mathcal U_s(K)=K+s,\qquad
+\mathcal V_t(K)=K,\qquad L_0(K)=0\in\mathbb R^{10}
+\tag{8.1}
+$$
+
+has error supremum exactly $e_0$. Every individual lawful state has
+strictly smaller error. The assertion includes $Z=4H$, equivalently
+$Z=2/3$.
+
+**Proof.** The image is precisely $(0,H)$. The probability guard is
+$0<K+s<H$ and the phase guard is the entire image. These are saturated
+on the encoder fibers, which here contain both phase circles at each
+height. The formulas intertwine the native commands exactly and
+preserve the image whenever lawful. The finite-prefix and intermediate-leg
+induction of Proposition 7.3 applies directly to the height coordinate.
+
+The squared error of the zero decoder, in the original metric, is
+
+$$
+\begin{aligned}
+\|y(k,\alpha,\beta)\|_2^2
+&=16k(H-k)+4Zk\\
+&=4ZH+4(H-k)(4k-Z).
+\end{aligned}
+\tag{8.2}
+$$
+
+If $Z\ge4H$, then $4k-Z<0$ at every interior height, while $H-k>0$.
+Thus (8.2) is strictly smaller than $4ZH$ at each such state. Its
+supremum is nevertheless $4ZH$, since its scalar polynomial value
+tends to $4ZH$ as interior $k$ approaches $H$. At the transition
+$Z=4H$, the difference from $4ZH$ is exactly
+
+$$
+-16(H-k)^2,
+$$
+
+so the same strict pointwise inequality and the same supremum apply.
+No encoder value at the missing endpoint has been used. Attainment
+means that this one finite model has error supremum $e_0$, not that a
+lawful state must realize its supremum. $\square$
+
+When $Z<4H$, interior heights with $k>Z/4$ make the last term of
+(8.2) positive, so this particular zero decoder exceeds the floor.
+Theorem 6.1 supplies the stronger conclusion that every finite candidate
+fails to attain it. When $Z\ge4H$, (8.1) is a sufficient
+one-coordinate witness, not a minimality result. Noninjectivity and
+nonphysical decoded vectors are used openly as permissions of the
+contract.
+
+Combining Proposition 4.1, Theorem 6.1, Proposition 7.2 and Proposition
+8.1 proves the achievable-tolerance assertion of Theorem 2.2. The
+set is upward closed because a model of error at most $\epsilon$
+also satisfies any larger tolerance. The existence of a model for
+every $\epsilon>e_0$, together with the universal lower bound, proves
+the stated infimum in both regimes.
+

@@ -1,0 +1,5 @@
+source_id = "cycle-anderson-persistent-nodal-branches"
+path = "docs/develop/theory/CYCLE_ANDERSON_PERSISTENT_NODAL_BRANCHES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

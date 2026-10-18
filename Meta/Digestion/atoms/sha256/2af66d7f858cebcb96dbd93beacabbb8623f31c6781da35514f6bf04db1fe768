@@ -1,0 +1,27 @@
+**Definition 6.1 (actual twisted ternary cycles).** Work at $d=2$.
+Let $T=\{\alpha,\beta,\mathsf{branch}\}$ and define
+$u(\alpha)=\alpha,u(\beta)=\beta,u(\mathsf{branch})=C_0$.
+On a cycle of $n\ge2$ seeds, owned at their respective block roots,
+let $\theta_i$ be the identity except at one edge, where it exchanges
+alpha and beta and fixes branch. Prescribe
+
+$$
+z_{i,\varepsilon}=\Gamma_\varepsilon(u(s_i)),\quad
+z_{i,L}=\Gamma_L(u(\theta_i(s_{i+1}))),\quad
+z_{i,R}=\Gamma_R(u(s_i)).
+\tag{GDB.24}
+$$
+
+Use the fixed full-support probability on the entire eleven-state $S_2$
+
+$$
+\mu(\alpha)=\mu(\beta)=a=\frac2{13},\qquad
+\mu(g)=b=\frac1{13}\quad(g\text{ any of the nine pair states}).
+\tag{GDB.25}
+$$
+
+Every seed has prescribed block incidence two. The owner table has the
+required three fixed replies; map its unused absent input to $(2,1)$.
+All nonowner unused entries are completed by attained factors. These
+are total complete native tables, not arbitrary graph constraints.
+

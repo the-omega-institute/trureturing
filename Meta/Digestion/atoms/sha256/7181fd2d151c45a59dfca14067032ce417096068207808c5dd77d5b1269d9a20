@@ -1,0 +1,55 @@
+**theorem 10.1 (All positive integer installed budgets).** Under
+Definitions 1.1–2.3, for each fixed allowed $p,j,\nu$, all extrema
+are attained and
+
+| Installed budget | $C_m$ | $R_m$ | $R_m-R_6$ |
+| --- | --- | --- | --- |
+| $m=1,2$ | $a/2$ | $1-a/2$ | $a\eta(1+a)$ |
+| $m=3$ | $S_1=a/2+a\eta$ | $1-a/2-a\eta$ | $a^2\eta$ |
+| $m=4,5$ | $T=a/2+a\eta(1+c)$ | $1-a/2-a\eta(1+c)$ | $\eta^2(a-b)$ |
+| $m\ge6$ | $S_2=a/2+a\eta+a^2\eta$ | $1-a/2-a\eta-a^2\eta$ | $0$ |
+
+Proof. With at most two installed rows, a table containing a read
+has at most one halt row, hence one fixed returned label and correct
+mass at most $a/2$. If it has no reads, every initialized row halts
+with a fixed label of prior at most $a/2$; Lemma 3.2 gives the same
+bound. The one-row construction in Proposition 9.1 attains it.
+
+With at most three rows, two or more read rows leave at most one
+halt label, again bounding correctness by $a/2$. With at most one
+read row, a deterministic reading start cannot return to that row
+on either positive first-reply section, by Lemma 3.3. Both successors
+therefore halt, and the one-read bound gives at most $S_1$.
+Initial halts and their finite initialization averages also obey
+this bound. Proposition 9.1 attains $S_1$ with three rows.
+
+For four or five rows, Theorem 8.1 gives the bound $T$ for every
+installed table, and Proposition 9.2 attains it with four rows.
+For all $m\ge6$, Proposition 5.3 bounds every table by $S_2$
+even in the larger unrestricted protocol class, while
+Proposition 9.3 attains it with six rows. Thus all suprema are
+maxima and, because $q_2=1$, the risk infima are the complementary
+attained minima.
+
+Subtracting the correct masses from $S_2$ gives the last column.
+In particular
+
+$$
+\begin{aligned}
+S_1-a/2&=a\eta>0,\\
+T-S_1&=ac\eta>0,\\
+C_5-C_4&=0,\\
+S_2-T&=a\eta(a-c)
+=a\eta b(a-b)=\eta^2(a-b)>0.
+\end{aligned}
+\tag{10.1}
+$$
+
+Also $S_2-S_1=a^2\eta$ and $S_2-a/2=a\eta(1+a)$.
+All factors giving the strict signs are positive throughout the
+specified biased interior range. There is no interior threshold
+or omitted equality case. The positive penalty comes from a
+universal quantitative bound matched by a complete attainer;
+nonattainment at five rows alone would not have proved it.
+$\square$
+

@@ -1,0 +1,28 @@
+**命题 C-70.4（同一椭圆不能独立预测串联）。** 取
+
+$$
+H=\begin{pmatrix}3&1\\1&3\end{pmatrix},\qquad
+D=\begin{pmatrix}3&0\\0&1\end{pmatrix},\qquad
+\widetilde H=HD=\begin{pmatrix}9&1\\3&3\end{pmatrix}.
+$$
+
+$H$ 与 $\widetilde H$ 具有同一个带标记规范椭圆，但 $H^2$ 与 $\widetilde HH$ 的规范椭圆不同。
+
+证明。正列重加权保持四角比，两表均为 $\Omega=9$、$\rho_*=1/2$。实际乘法却给
+
+$$
+H^2=\begin{pmatrix}10&6\\6&10\end{pmatrix},\qquad
+\widetilde HH=\begin{pmatrix}28&12\\12&12\end{pmatrix}.
+$$
+
+前者 $\Omega=25/9$、$\rho_*=(10-6)/(10+6)=1/4$；后者 $\Omega=7/3$，所以
+
+$$
+\rho_*(\widetilde HH)
+=\frac{\sqrt{21}-3}{\sqrt{21}+3}
+\approx0.208712153\ne\frac14.
+\tag{C70.13}
+$$
+
+若等于 $1/4$，交叉相乘会给 $3\sqrt{21}=15$，平方后 $21=25$，矛盾，故差别是精确的。$H$ 的左右偏置为零；$\widetilde H$ 的 $h_L=0$、$h_R=(\log3)/2$，两者 $j$ 相同。于是第二个乘积恰把原来可从单块等价类中消去的右权重 $D$ 放到了实际接缝，$\beta=(\log3)/2\ne0$。这也从式 (C70.9) 解释了严格缩小。正行列等价只回答孤立块的比较问题，没有允许在拼接后删除实际接缝活动。证毕。
+

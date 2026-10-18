@@ -1,0 +1,5 @@
+source_id = "fib-noisy-source-programming-minimax"
+path = "docs/develop/theory/FIB_NOISY_SOURCE_PROGRAMMING_MINIMAX.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

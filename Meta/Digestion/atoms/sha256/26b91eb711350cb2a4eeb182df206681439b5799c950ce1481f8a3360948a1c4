@@ -1,0 +1,23 @@
+**Definition 1.2 (Actual half-lines and erased-center defects).** All radii $r,R$ are nonnegative integers. Under this single $P$, define
+
+$$
+\begin{aligned}
+\mathcal P&=\sigma(X_j:j\le-1),&\quad \mathcal F&=\sigma(X_j:j\ge1),\\
+W_L(r)&=\sigma(X_{-r},\ldots,X_{-1}),&W_R(r)&=\sigma(X_1,\ldots,X_r),\\
+\mathcal E&=\mathcal P\vee\mathcal F,&G_L(r)&=W_L(r)\vee\mathcal F,\qquad G_R(r)=\mathcal P\vee W_R(r),\\
+q&=\mathbb E_P[X_0\mid\mathcal E],&p_L(r)&=\mathbb E_P[X_0\mid G_L(r)],\qquad p_R(r)=\mathbb E_P[X_0\mid G_R(r)].
+\end{aligned}
+\tag{1.4}
+$$
+
+The finite fields at $r=0$ are trivial. All conditional expectations are actual $[0,1]$ versions under $P$. Set
+
+$$
+e_L(r)=\mathbb E_P(q-p_L(r))^2,\qquad
+e_R(r)=\mathbb E_P(q-p_R(r))^2,\qquad
+\tau_P(R)=\sum_{r\ge R}(e_L(r)+e_R(r)).
+\tag{1.5}
+$$
+
+Both forcing neighbors are retained when $r\ge1$. For these radii, on either neighbor-one event, $X_0=q=p_L(r)=p_R(r)=0$ almost surely, and both defects vanish there. At $r=0$ a missing forcing neighbor can contribute a defect and is retained in (1.5). Null fibers require no division and do not affect expectations.
+

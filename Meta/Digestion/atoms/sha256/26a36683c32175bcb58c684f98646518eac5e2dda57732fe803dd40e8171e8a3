@@ -1,0 +1,102 @@
+**Theorem 4.1 (uniform paid-history certificate).** Fix a certificate (3.1) and a positive integer $D_0$ bounding the table period. Let $a$ be a common positive denominator of all $t\in T$, and define by rational and integer comparisons
+
+$$
+C_{D_0}=(27/25)^{D_0+2}(10/9),\qquad
+q=\min\{z\in\mathbb N:2^z\ge C_{D_0}/(b\eta)\},
+$$
+
+$$
+n=a\left\lceil\frac{q}{2a\delta^2}\right\rceil,\qquad
+H=2n+2D_0+5.
+\tag{4.1}
+$$
+
+For $t\in T$, $0\le i<D_0$ and $e\in\{0,1\}$, use the original acquired words
+
+$$
+h_{t,i,e}=(\alpha\alpha)^{nt}(\beta\beta)^{n(1-t)}
+\beta\alpha\mid\beta\beta\alpha\alpha\,(\beta\alpha)^i\beta^e.
+\tag{4.2}
+$$
+
+The bar marks a boundary and is not a source symbol. $e=0$ is a p query and $e=1$ a suspended query. Denote the finite respective sets by $\mathcal W_p,\mathcal W_\beta$. They depend on the certificate and period bound, not on the number of labels, entries, mixing rate or emissions of a table.
+
+For **every** regular periodic table of period $d\le D_0$, all its arbitrary finite kernels, both risk orders and the same installed prior satisfy
+
+$$
+0\le R_{j,s}-\max_{h\in\mathcal W_s}e_j(h)
+\le E_s:=L_s(2\delta+w\eta),
+\tag{4.3}
+$$
+
+and hence
+
+$$
+0\le R_{j,s}-R_{j,s,H}\le E_s.
+\tag{4.4}
+$$
+
+Every displayed word is positive and legal, has at most $H$ paid Reads, and has source probability at least $3^{-H}$. The bounds concern complete unbounded futures. They assert possible witnesses, not the ability to force a source word, restart a run or encounter a specified witness with certainty.
+
+**Proof.** Each initial equal pair is an original paid seed rejection. The suffix $\beta\alpha$ accepts seed 1; $\beta\beta,\alpha,\alpha$ completes the first three markers as 100, with the original third write and then latch. Each following $\beta\alpha$ is one legal fourth-segment return. The final $\beta$ suspends when $e=1$. Thus (4.2) is an original positive history with the same actual record, independently of $t,n,i$. Its paid length is $2n+6+2i+e\le H$. Each actual letter has probability at least $1/3$ at every supported depth; mixing the positive likelihoods gives the stated occurrence bound. No rejected or accepted operation is added or removed.
+
+The acquired counts are
+
+$$
+A=2nt+3+i,\qquad B=2n(1-t)+3+i+e.
+\tag{4.5}
+$$
+
+For parameter $r$, its likelihood is
+
+$$
+\exp\{2n[t\log t+(1-t)\log(1-t)]-2nD(t\Vert r)\}
+\,a_r^{3+i}(1-r)^e.
+\tag{4.6}
+$$
+
+For $r\in I$ outside the $\delta$-neighborhood and $v\in I$ in the $\delta/4$-neighborhood, Lemma 3.3 bounds the rejection-block likelihood ratio by $e^{-2n\delta^2}$. Moreover $a_r\in[2/9,6/25]$ and $1-r\in[3/5,2/3]$. The suffix ratio is at most
+
+$$
+(27/25)^{3+i}(10/9)^e\le C_{D_0}.
+$$
+
+For each outside parameter this comparison holds against every inside parameter. Integrate the denominator over the inside prior mass, at least $b$, and the numerator over the outside mass, at most one. The same acquired posterior therefore obeys
+
+$$
+\nu_{h_{t,i,e}}\{|r_K-t|>\delta\}
+\le(C_{D_0}/b)e^{-2n\delta^2}
+\le(C_{D_0}/b)2^{-q}\le\eta.
+\tag{4.7}
+$$
+
+The summation is valid for countably many depths; no atom separation, smallest positive mass or tail oracle is used. Since every parameter lies in $I$, (4.7) gives
+
+$$
+\sum_k\nu_{h_{t,i,e}}(k)|r_k-t|\le\delta+w\eta.
+$$
+
+Using the full-law bound underlying (2.4), convexity and the same current $I_c$,
+
+$$
+\operatorname{TV}(T_{h_{t,i,e}}^\mu,(I_c)_*P_{s,t})
+\le L_s(\delta+w\eta).
+\tag{4.8}
+$$
+
+At this actual history the table row is exactly $\pi_{i\bmod d}$ or $\tau_{i\bmod d}$. There is no limit of observer kernels to estimate. Triangle inequalities before configuration averaging, or after forecast marginalization, yield
+
+$$
+|e_j(h_{t,i,e})-F_{j,s,i\bmod d}(t)|
+\le L_s(\delta+w\eta).
+\tag{4.9}
+$$
+
+For every supported parameter $r$, the cover supplies $t$ within $\delta$. Thus (2.4) and (4.9) imply
+
+$$
+F_{j,s,i}(r)\le e_j(h_{t,i,e})+L_s(2\delta+w\eta),
+$$
+
+choosing $0\le i<d\le D_0$ in (4.2). Take the supremum using (2.3). The reverse inequality holds because every witness is an actual history in the original domain. This proves (4.3), and inclusion in the acquired cap proves (4.4). Both orders use the same row and actual posterior throughout. ∎
+

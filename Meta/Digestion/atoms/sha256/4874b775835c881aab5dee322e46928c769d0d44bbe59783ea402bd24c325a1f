@@ -1,0 +1,8 @@
+#### 472.3 来源成熟度与结论范围
+
+定理 472.1 是复用 RLB.7 与 HG.2 的来源运输推导；推论 472.2 是既有命题 466.2 的应用。上游正的 $C_{\rm harmonic}$ 与存在见证 $h_0$ 按 OH.1 原样承重；衰减供应、有限身份与此处普通证明的成熟度不混作本库新的形式化验收。RiemannGaussian 来源使用 Apache-2.0；这里不复制或重证其调和消去证明。$|\mu|\le1$ 复用钉版 Mathlib 的 [`ArithmeticFunction.abs_moebius_le_one`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/ArithmeticFunction/Moebius.lean)。实际未加权有限配对的仓内来源为 `D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.lean`，它的完整 dyadic 与 clipped 身份不是奇调和衰减定理。
+
+定理 472.1 明确给出命题 466.2 所需的 HG.7 算术输入。§§468–469 的有限逆、加权 floor 与幂次类运输不承担 OH.1；`WeightedInghamRate` 的对象是 Fibonacci 商的余数和，而不是实际 $\mu(n)/n$。本节的常数只用于支付完整运输，不主张最优常数、加强率、成本改进或文献优先权。
+
+固定 $x$ 时 $V_x$ 等原核常数允许依赖 $x$；OH.11 没有给出 $x,D$ 联合增长时的 $\sqrt{x}\log x$ 临界共同精度，也没有支付整个有限头部的实际符号。原 signed Robin 完整目标与 RH、native observer 对应，以及物理熵或控制成本的桥仍未由本节建立。Abel 变差级数的绝对收敛与实际原子尾的自然截止存在也不等于原子级数绝对收敛。
+

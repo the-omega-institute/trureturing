@@ -1,0 +1,35 @@
+**Theorem 6.3 (fixed-parameter rates and failure of a uniform online bound).** Fix an unequal allowed parameter triple. As $\epsilon\downarrow0$, the static initialized count, common-decoder autonomous minimum and self-generated-law minimum all satisfy
+
+$$
+N(\epsilon)=\frac{\log(1/\epsilon)}{|\log\theta|}+O_{p,q,r}(1).
+$$
+
+Nevertheless, for fixed sufficiently small positive $\epsilon$, the common-decoder autonomous minimum diverges as $r\to s$ through unequal allowed values with $p,q$ fixed and $s<1/2$. Its asymptotic there is
+
+$$
+6+N_2\ \sim\
+\frac{1-s}{|r-s|}\log\frac{1-2\epsilon}{2\epsilon}.
+$$
+
+The static initialized count remains bounded by Theorem 6.2, while at equality an exact initialized observer has only seven configurations.
+
+**Proof (6.3).** The cutoff formulas immediately give $N_1,N_2=\log(1/\epsilon)/\lambda+O_\theta(1)$. Theorem 5.1 transfers this to the stronger minimum. A static upper bound uses separate intervals for $\delta_0,\ldots,\delta_{N_2-1}$ and one tail interval $[0,\delta_{N_2}]$; thus $C(T_\theta,2\epsilon)\le N_2+1$.
+
+For the lower bound,
+
+$$
+\delta_k-\delta_{k+1}
+=\frac{(1-\theta)\theta^k}{(1+\theta^k)(1+\theta^{k+1})}
+\ge\frac{(1-\theta)\theta^k}{4}.
+$$
+
+The number of initial consecutive gaps guaranteed to exceed $2\epsilon$ is $\log(1/\epsilon)/\lambda+O_\theta(1)$. Their ordered endpoints require separate intervals. This proves the matching static rate; all constants are fixed-parameter constants.
+
+For the second claim, $a=1-s$ stays fixed and $b=1-r\to a$. The function $\kappa(p,q,r)$ is continuous and positive at $r=s$ when $s<1/2$. Choose a neighborhood and an $\epsilon$ with a strict $2\epsilon<\kappa$ margin throughout it. On either side,
+
+$$
+|\log\theta|\sim\frac{|r-s|}{1-s}.
+$$
+
+The exact cutoff expression gives the divergence and the displayed equivalent. For instance $p=q=1/8$, $r\to1/4$ satisfies these assumptions; at equality $\kappa=1/25$, so every fixed $0<\epsilon<1/50$ has such a neighborhood. The static cover bound contains no $\theta$. The equality machine is separately supplied by Theorem 4.3. The discontinuity concerns uniform treatment of arbitrarily long finite startup records, not a singularity of a physical clock or source dynamics. $\square$
+

@@ -1,0 +1,129 @@
+**Lemma 5.1 (inherited first harmonic with the original normalization).**
+Define the unnormalized phase moment
+
+$$
+C_1(k)=\int_{\mathbb T^2}\Gamma_o(k,\alpha,\beta)
+                      \cos(\beta-\beta_o)d\alpha d\beta.
+\tag{5.1}
+$$
+
+This is an absolutely convergent integral at every $k\in I$. It equals
+the Dirichlet Green kernel $R_1(k_o,k)$, relative to $dk$, for
+
+$$
+A_1=-\varepsilon^2\frac{d^2}{dk^2}+c(k)^2,
+\qquad D(A_1)=H^2(I)\cap H^1_0(I).
+\tag{5.2}
+$$
+
+For $a>0$ set
+
+$$
+R^{(a)}(k_o,k)=
+\frac{
+ \sinh\bigl(a(\min(k_o,k)-l)/\varepsilon\bigr)
+ \sinh\bigl(a(u-\max(k_o,k))/\varepsilon\bigr)}
+ {\varepsilon a\sinh(ad/\varepsilon)}.
+\tag{5.3}
+$$
+
+Writing
+
+$$
+c_-=\tfrac12-u/r>0,\qquad c_+=\tfrac12-l/r>0,
+\qquad R_+(k)=R^{(c_+)}(k_o,k),
+\tag{5.4}
+$$
+
+the comparison is
+
+$$
+0<R_+(k)\le C_1(k)
+ \le R^{(c_-)}(k_o,k)\le\varepsilon^{-2}G_I(k_o,k)
+\qquad(k\in I).
+\tag{5.5}
+$$
+
+Proof. This is [Q, Theorem 4.1]. Its correspondence and comparison are
+included here because the mixed form below needs their exact factors.
+Absolute convergence of (5.1) follows from (1.11) and $|\cos|\le1$.
+The normalized angular character map
+
+$$
+\varphi(k)\longmapsto\frac{\varphi(k)}{2\pi}
+ e^{i[m(\alpha-\alpha_o)+n(\beta-\beta_o)]}
+\tag{5.6}
+$$
+
+is an isometry from $L^2(I)$ onto its angular sector. Directly on
+smooth core functions it transforms the full free form into
+
+$$
+\int_I\left(\varepsilon^2|\varphi'|^2
+                 +(m/2+nc(k))^2|\varphi|^2\right)dk.
+\tag{5.7}
+$$
+
+The Fourier projection onto this sector is an average of phase
+translations against a character. It preserves the smooth core and is
+bounded in the free form norm, since these translations preserve $P,Q$
+and $\mu$. Distinct sectors are form orthogonal. Closure therefore
+makes (5.7) a reducing closed-form correspondence with height domain
+$H^1_0(I)$. Its potential is smooth and bounded on the closed interval.
+The one-dimensional weak equation then gives the operator domain
+$H^2(I)\cap H^1_0(I)$, with the reverse inclusion by integration by
+parts. For $m=0,n=\pm1$ the operator is (5.2).
+
+In particular, for a compact smooth height test $a(k)$, evaluating the
+free semigroup at the original point $o$ gives
+
+$$
+\left(e^{-tL}\bigl[a(k)\cos(\beta-\beta_o)\bigr]\right)(o)
+       =(e^{-tA_1}a)(k_o).
+\tag{5.8}
+$$
+
+The cosine has value one at the pole. Thus the phase integral of
+$p_t^\Omega(o,(k,\alpha,\beta))\cos(\beta-\beta_o)$ equals the
+one-dimensional heat kernel of $A_1$, first against height tests and
+then pointwise by smoothness. There is no angular average in (5.8).
+At each height the absolute integral of the full heat integrand over
+time and phases is bounded by (1.11). Signed integration in time is
+therefore legitimate and gives $C_1(k)=R_1(k_o,k)$, with no factor
+$2\pi$ or $1/2$.
+
+The positivity and comparison can also be seen directly at the resolvent
+level. For any continuous $V\ge0$ on $[l,u]$, let $y$ solve
+$-\varepsilon^2y''+Vy=0$ with $y(l)=0,y'(l)=1$, and let $z$ solve
+the same equation with $z(u)=0,z'(u)=-1$. The equation
+$y''=Vy/\varepsilon^2$ prevents a first positive-interval zero of $y$:
+while $y>0$ its derivative cannot decrease below its initial positive
+value. Reversing height gives the analogous assertion for $z$.
+Consequently both are positive in the interior, and
+$\mathcal W=y'z-yz'$ is a positive constant, equal to $z(l)>0$.
+The Dirichlet Green kernel is
+
+$$
+R_V(a,k)=\frac{y(\min(a,k))z(\max(a,k))}
+                     {\varepsilon^2\mathcal W}>0.
+\tag{5.9}
+$$
+
+Its height derivative jump is $-1/\varepsilon^2$, so its source is a
+unit delta relative to $dk$. If $0\le V_1\le V_2$, subtracting the
+two inverse equations gives the resolvent identity
+
+$$
+R_{V_1}(a,k)-R_{V_2}(a,k)
+ =\int_I R_{V_1}(a,s)(V_2(s)-V_1(s))R_{V_2}(s,k)ds\ge0.
+\tag{5.10}
+$$
+
+All these regular one-dimensional kernels are continuous and bounded
+on the closed interval. For $V=a^2>0$, formula (5.9) is precisely
+(5.3); for $V=0$ it is $\varepsilon^{-2}G_I$.
+Since $0<c_-\le c(k)\le c_+$ on $I$, apply (5.10) to
+$0,c_-^2,c(k)^2,c_+^2$ in their indicated order. This proves (5.5).
+In (5.3) both numerator factors and the denominator are strictly
+positive for interior heights. $\square$
+

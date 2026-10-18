@@ -1,0 +1,77 @@
+**Definition 1.4 (canonical actual blocks and joint covers).** Following
+[FMR, Definitions 2.1 and 6.1][FMR], put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\qquad
+S_1=\{\alpha,\beta,C_0\},\qquad
+S_{d+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{NCE.8}
+$$
+
+These are actual trees of height at most $d$, not additional source ports.
+A nonempty $B\subseteq S_d^n$ is jointly admissible if, for every
+coordinate $i$ and target $q\in W_d$, the function $\Gamma_q(x_i)$
+on this same $B$ is constant, or is determined by one function
+$r_{x_j}(a)$, with $1\le j\le n$ and $a\in W_d$. Equivalently,
+
+$$
+r_{x_j}(a)=r_{y_j}(a)
+\ \Longrightarrow\ \Gamma_q(x_i)=\Gamma_q(y_i)
+\quad(x,y\in B).
+\tag{NCE.9}
+$$
+
+The chosen $j,a$ may depend on $B,i,q$ and need not lie in the target
+coordinate or on its path. No product structure is imposed on $B$.
+Let $K_d(n)$ be the least number of jointly admissible sets covering
+$S_d^n$. Let $Z_d(n)$ be the fractional cover optimum over that entire
+family: coefficients $c_B\ge0$ satisfy
+$\sum_{B\ni x}c_B\ge1$ for every $x$, and the objective is
+$\sum_Bc_B$. A set $P\subseteq S_d$ is locally admissible when
+it satisfies joint admissibility with $n=1$, and locally insufficient
+otherwise. For $n=1$ these are the local cover optima.
+
+The following precise supplier facts will be used. FMR Lemma 2.2 shows
+that on $S_d$ a length-$d$ word returns alpha exactly when its
+length-$(d-1)$ parent is branch, and absent otherwise; every longer
+word is absent. Hence arbitrary finite block experiments reduce to
+boundary experiments or constants in their original queried block.
+FMR Theorem 2.5 and Lemma 6.2 implement covers by paid preparation,
+with a first-containing-member code and actual literal witnesses.
+The full boundary scan has the sufficient bounds
+
+$$
+T_D\le2^D-1,\qquad Q_D\le D,\qquad
+A_D\le(D-1)2^D+1,
+\tag{NCE.10}
+$$
+
+for preparation Reads, maximum submitted length and submitted letters.
+It submits every $Rq$, $q\in W_D$, and isolates the acquired table
+after computing the complete code. These are credited sufficient
+construction bounds, not optimal costs or resources granted to a
+lower-bound competitor.
+
+FMR Theorems 3.3, 6.3 and 6.4 supply
+
+$$
+\begin{aligned}
+\sigma_d&=\lim_{n\to\infty}\frac{\log_2K_d(n)}n
+          =\inf_{n\ge1}\frac{\log_2K_d(n)}n,\\
+\lambda&=\lim_{D\to\infty}2^{-D}\log_2M_1(D),\qquad
+K_d(2^h)\le M_1(d+h),\qquad
+2^{-d}\sigma_d\le\lambda.
+\end{aligned}
+\tag{NCE.11}
+$$
+
+The full-family rate exists because the paid native gluing obeys
+$M_1(D+1)\le M_1(D)^2+1$: a leaf marker or a pair of acquired child
+codes serves every variable shape, with constituent Reads translated
+to original-root literals. Thus $2^{-D}\log_2(M_1(D)+1)$ decreases
+to the same limit. Joint concatenation gives subadditivity for
+$\log_2K_d(n)$. The restriction in (NCE.11) uses actual perfect
+scaffolds, not independently optimized child projections. Section 6
+below spells out that restriction for the new certificate.
+

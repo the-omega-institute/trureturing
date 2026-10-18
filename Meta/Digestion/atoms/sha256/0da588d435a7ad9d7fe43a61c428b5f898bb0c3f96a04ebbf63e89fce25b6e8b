@@ -1,0 +1,48 @@
+**Definition 2.1 (standing conditional antecedents).** The Engel product, dilation and Haar measure are
+
+$$
+\begin{aligned}
+(r,y,z,w)(r',y',z',w')
+ &=(r+r',y+y',z+z'+ry',w+w'+rz'+r^2y'/2),\\
+\delta_R(r,y,z,w)&=(Rr,Ry,R^2z,R^3w),\qquad d\xi=dr\,dy\,dz\,dw,
+\qquad Q=7.
+\end{aligned}
+\tag{2.1}
+$$
+
+Let $b[f]=\|Xf\|_2^2+\|Yf\|_2^2$, let $\mathcal Q_E$ be the complex compact smooth core closure in $\|f\|_2^2+b[f]$, and let $\mathcal E=-X^2-Y^2$ be its Friedrichs operator. Write $P_t=e^{-t\mathcal E}$ and $k_t(\xi)=p_E(t;0,\xi)$. The canonical heat supplied in P is conservative, symmetric, strictly positive and continuous. Its proper control distance $d_E$ is homogeneous and
+
+$$
+p_E(t;\eta,\xi)\le Ct^{-7/2}e^{-c d_E(\eta,\xi)^2/t},\qquad
+V=j_0^{-1}\int_1^\infty k_tdt>0,\qquad
+\mathcal EV=j_0^{-1}k_1,\qquad V\le C(1+N)^{-5},
+\tag{2.2}
+$$
+
+where $N=\max(|r|,|y|,|z|^{1/2},|w|^{1/3})$. In particular $V$ is bounded, smooth and has a positive minimum on every compact set. The source $j_0^{-1}k_1$ has Lebesgue mass $1/j_0$, corresponding to unit native raw-source mass. P also supplies $j_0s^7\rho_{s^2}\circ\Xi_s\to k_1$ in $L^1$ and locally uniformly, local form compactness, complete integrated-field convergence $\|U_s-V\|_\infty\to0$, the supported-strip core approximation, and the both-face native tail estimates.
+
+Retain P's compact zero-energy reconstruction on its specified multiplier right sides, its simple attained threshold mode, and R's compact horizontal-energy gap:
+
+$$
+\begin{aligned}
+C_*&=\sup_{0\ne f\in\mathcal Q_E}\frac{\int V|f|^2}{b[f]}\in(0,\infty),&
+\chi&=\chi_c=a/C_*,&\gamma&=\chi/a,\\
+h[f]&=a b[f]-\chi\int V|f|^2\ge0,&H_c&=a\mathcal E-\chi V,\\
+p&=\Phi_c>0,&\|p\|_2&=1,&p&\in D(\mathcal E),&\ker H_c&=\mathbb Cp,\\
+\mathcal Ep&=\gamma Vp,&\mu&=\int Vp^2>0,&b[p]&=\gamma\mu,\\
+h[v]&\ge a\theta b[v]\quad\text{if }b(p,v)=0,&\theta&>0.
+\end{aligned}
+\tag{2.3}
+$$
+
+The gap is in horizontal energy. It is not a positive $L^2$ gap or an all-$L^2$ inverse. The weighted and parity antecedents from P §106 are
+
+$$
+rp\in\mathcal Q_E,\quad h[rp]=a,\quad
+\int r^2(p^2+|Xp|^2+|Yp|^2)d\xi<\infty,\qquad
+\sigma(r,y,z,w)=(-r,y,-z,w),\quad p\circ\sigma=p,\quad V\circ\sigma=V.
+\tag{2.4}
+$$
+
+Here $X$ reverses parity and $Y$ preserves it. All these heat, localization, hypoellipticity, reconstruction, compactness and mode assertions remain conditional at their supplied scopes. No linked external supplier is reauthenticated in this volume.
+

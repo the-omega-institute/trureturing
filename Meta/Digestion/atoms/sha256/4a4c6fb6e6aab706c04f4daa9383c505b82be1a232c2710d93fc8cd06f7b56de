@@ -1,0 +1,98 @@
+**Definition 209.16 (Suppliers, overlap and the original unresolved comparison).**
+The threshold words in 209.2 and 209.5 belong to 203.2; the actual
+subset carrier in 209.6 belongs to 201.2 and 207.4.
+The $E=0$ equal-cell minimum is included once in 209.3, with 207.17
+as its bounded-profile subcase. Formula (209.14) supplies the catalog
+identity used by 209.10; that theorem's additional statement is the
+comparison to the actual original input with retained early slack.
+The finite support-box argument in 209.13 is classical convex analysis;
+the additional relation is the simultaneous same-schedule decrease
+under exact carrier and unary matching. These are derivations for the
+specified score classes, without a claim of literary priority or
+exhaustive exclusion of older consequences.
+
+Existing signed and convex certificates still apply to the overlapping
+families. For the mixed-product strip
+$0<d\le1$, $t\ge d$, $d\le z\le\sqrt{td}$,
+$E=t-z$, $S=t+2z+d$, $T=t$, $0\le\gamma_j\le t+d$,
+the fair endpoint of 206.15 at scale $d$ and the product endpoint
+207.5 with $s=t$, $c=t-\sqrt{td}$ interpolate at
+$\lambda=(z-d)/(\sqrt{td}-d)$ when $t>d$; at $t=d$ the fair
+endpoint suffices. More explicitly, write $\gamma_a=\alpha_a(t-z)$
+with $\alpha_1+\alpha_2=1$; at $t=z$ choose any such split.
+The product endpoint uses $c_a=\alpha_a(t-\sqrt{td})$ and the
+fair endpoint has zero early totals. The input quotient is affine
+in $z$, and the fair-endpoint residual is nonpositive by (207.8).
+This is reuse of convex support and the signed hull.
+For the three-leading-class family
+$\gamma_3=\gamma_4=\gamma_5=\mu\ge1$,
+$0\le\gamma_j\le1$ thereafter and $W\ge4\mu-1$, the old
+three-class shared-terminal block of 201.2–201.3 at $s=\mu-1$
+has zero cost, and (207.8) gives the residual allowance
+$((L-2)/(L-1))(1-E)_+$. The block is zero when $\mu=1$.
+
+For the terminal box $L\ge8$, $E=8$, $S=50$, $T=20$,
+$\gamma_L=21$ and $0\le\gamma_j\le19$ before $L$, use 207.5
+at $d=0,s=19,c_a=\gamma_a$, retaining late totals except
+$\eta_L=19$. Its product measure has mass $900/19$, zero probability
+$19/30$ and pair cells $(19,11,11,121/19)$.
+The early pair coefficients are $(19-\gamma_a)/30$, not a forced
+equal split; they apply to every $\gamma_1+\gamma_2=8$.
+Its anchor is $1413/19$, cost zero, and (207.8) gives residual
+$2b_L-(107/19)e$ with exact charge $2/(L-1)$.
+These are parameter applications of existing suppliers, not separate
+new theorems or evidence of a new quotient region. The old support
+and minimum statements for those families remain valid.
+
+The original countable prime source, static replies, unchanged consumer
+and original nonatomic targets remain exactly 207.1. The marked laws
+(207.2) are separately selected on the full measurable tape carrier.
+Their amplitudes are arbitrary positive monotone sequences tending
+to zero. All Boolean words, multiple-zero words, output labels, negative
+singleton demands, and the independent pair-event row (207.3) remain.
+An auxiliary zero score or an $e=0$ hull vertex does not replace the
+actual positive tails.
+
+Only an actual normalized finite probability-vector configuration
+satisfying every event row may be supplied to
+[109.1 and 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md).
+The former uses the degree-at-most-two probability-vector domain and
+$c\ge H$; the scalar bound $\beta\le1$ in its displayed form is
+redundant under that normalization, as in 108.4. Neither criterion
+applies to unnormalized score weights.
+The latter's necessary direction retains arbitrary-address,
+full-carrier competitors through the countable common seed event,
+finite source witnesses and compact finite-catalog limit. Its sufficient
+direction selects the entire schedule and table before replies by a
+fixed partition of one source-independent uniform seed. Two class
+configurations may use different partitions of that same seed and a
+common refinement, without identical seedwise outputs.
+Advice remains zero, handoff actually finite, and the hard bound counts
+at most two actual requests, including ignored and repeated requests.
+$N$ obtains its preselected replies; $O$ preselects an increasing
+schedule and stops at its first queried zero or exhaustion.
+No address, depth, runtime, expected-count or source-law proxy is used.
+
+At the actual active length $L_a$ of 207.1, every actual $n>L_a$
+still has the exact TV error
+$\max\{1-p_{1^{L_a}}(0),a_n\}$ in (207.51).
+The all-source bound therefore retains equality at the closed cap,
+all vanishing tails and the existing small-active-length cases.
+This transport is a supplier for feasible probability configurations;
+none of the support-maximizing tables or auxiliary carrier measures
+above is thereby a feasible acquisition.
+
+The universal implication (207.52) remains unresolved. The fixed-data
+minima do not force a general input to have equal pair marginals;
+(209.12) and (209.17) do not supply a universally affordable selection;
+(209.20) still requires full mass below actual marginal stock;
+and (209.26), (209.31) can fail even inside the feasible region.
+No theorem here places every arbitrary-credit, nonconstant-capacity,
+over-stock input inside the union of these constructions with one
+budget. Strict support relocation alone gives neither new quotient
+coverage nor exclusion from the full old convex, signed and nonzero
+zero-cost closure. The alternative original common-seed $N_2$
+attainer with a uniform lower certificate against every original
+$O_2$ competitor is also absent. The exact-law obstruction of 112.2
+continues to allow a different stopped law at the same cap.
+

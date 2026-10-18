@@ -1,0 +1,19 @@
+**Convention 3.3 (physical whitening).** For the lower two supported
+coordinates let $M_2=\operatorname{diag}(m_1,m_2)$. A physical failure
+effect $B_f$ is whitened by $M_2^{-1/2}B_fM_2^{-1/2}$. The height
+pairing in this normalization is
+$$
+\begin{gathered}
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\\
+d_f=11m_1/64,\qquad
+z_f=\sqrt{m_1m_2}\,(\sqrt{37}-\sqrt{59})/16<0,\qquad
+L_f=\sqrt{d_f^2+4z_f^2}.
+\end{gathered}
+\tag{GC.11}
+$$
+A unit spectral vector $e$ of $\Xi$ represents the physical effect
+$M_2^{1/2}ee^TM_2^{1/2}$, not the bare projector $ee^T$.
+No two-spectral-line allocation is imposed. The scalar $\nu$ below
+has no relation to an auxiliary fixed-strength spectral allocation.
+

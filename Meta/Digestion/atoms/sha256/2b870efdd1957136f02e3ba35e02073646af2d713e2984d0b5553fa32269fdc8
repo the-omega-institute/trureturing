@@ -1,0 +1,18 @@
+## 7. Connection to the credited critical-point and quadratic tests
+
+The mathematical supplier for this section is Sections 6–10 of *Affine slope transfer and sign-change obstructions at the minimum read count*. Its results are ordinary source-level theorems, without an assertion here of independent review or Lean verification. The following labels identify credited tests, not new versions of them.
+
+Put
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y,
+\qquad E(x,y)=\begin{pmatrix}x&xy\\1&y\end{pmatrix},
+$$
+
+$$
+E_x=\begin{pmatrix}1&y\\0&0\end{pmatrix},\qquad
+E_y=\begin{pmatrix}0&x\\0&1\end{pmatrix}.
+$$
+
+Every positive source is $rE(x,y)$ with $r,x,y>0$; its tangent space is $\{V:\mathfrak b(S,V)=0\}$.
+

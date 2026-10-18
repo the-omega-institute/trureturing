@@ -1,0 +1,46 @@
+**Lemma 1.3 (finite histories from an entire acquired row).** For an
+attained entry, parse each displayed literal subtree and put
+$z_i=c(V|_{w_i})-iq$ for $i\in S$. Then
+
+$$
+\mathscr H_\eta=
+\{(a,\ell):e(a)=c,\ \ell\ge\lambda_0,
+\ a\in\{0,\ldots,H\}^I,
+\ a_i+\ell=z_i\ (i\in S)\}.
+\tag{LQF.3}
+$$
+
+This is equality of actual complete-row fibers. In particular, for any
+fixed $i_*\in S$,
+
+$$
+\max(\lambda_0,z_{i_*}-H)\le\ell\le z_{i_*},\qquad
+1\le|\mathscr H_\eta|\le q^r.
+\tag{LQF.4}
+$$
+
+The cube and installed encoder determine a finite enumeration of the
+whole joint set, without being told the actual lag.
+
+Proof. For an actual history the displayed subtree is
+$T_{iq+a_i+\ell}$, so its clock gives the stated equations. Conversely,
+compare any candidate satisfying those equations with one history
+attaining $\eta$. The displayed literal subtrees agree, because equal
+exponents give equal $T_n$. Every depth-$D$ cut position is reached,
+even when its filling is a leaf. At different slots the exponent bands
+$[jq+\ell,jq+H+\ell]$ are disjoint, since $q=H+1$. The hidden
+partition is therefore discrete in both histories. The skeleton, hole
+addresses, all remaining labels and brackets, and all guards agree.
+This is precisely the complete-row equality supplied by NAR (16.6),
+not an inference from scalar equality for arbitrary rows. It proves
+the reverse inclusion in (LQF.3).
+
+For each cube point $a$, the one equation at $i_*$ forces
+$\ell=z_{i_*}-a_{i_*}$; test its legality, code and all remaining
+equations. This enumerates at most $q^r$ histories and proves (LQF.4).
+For an arbitrary proposed row, first check its full skeleton, displayed
+literals and hidden partition, or compare each constructed candidate's
+entire row directly with $V$. If no candidate passes, report
+inconsistency. Scalar checks alone do not certify such an input.
+$\square$
+

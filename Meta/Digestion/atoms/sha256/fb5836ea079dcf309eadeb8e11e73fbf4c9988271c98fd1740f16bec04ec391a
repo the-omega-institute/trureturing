@@ -1,0 +1,19 @@
+**Proposition 92.3 (the infinite-fibre qualification).** On the real cover,
+a measurable function constant on almost every entire $x$ fibre is in
+$L^2(dY)$ only if it vanishes. The map $\mathsf M$ is a contraction
+$L^1(dY)\to L^1(d\bar Y)$, but is unbounded as a proposed map
+$L^2(dY)\to L^2(d\bar Y)$, even on compact smooth vectors.
+Consequently (92.4)--(92.7) do not assert a nonzero fibre-constant
+reducing Hilbert subspace or an autonomous quantum subsystem.
+
+Proof. Fubini gives an infinite fibre norm for any nonzero constant.
+The $L^1$ statement is the integral triangle inequality. For normalized
+$h\in C_c^\infty(\mathbb R)$ with $\int h\ne0$, put
+$h_R(x)=R^{-1/2}h(x/R)$ and take a fixed nonzero compact smooth retained
+factor $u$. The norm of $u h_R$ is constant, whereas
+$\mathsf M(u h_R)=R^{1/2}(\int h)u$. This proves unboundedness. A
+normalized uniform measure on the hidden real line does not exist.
+The circle isometries in Q §§2--3 and §§10--12, where Q denotes
+[Native observation quotient and Green escape](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md),
+therefore cannot be transferred to (92.1). $\square$
+

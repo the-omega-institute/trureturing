@@ -1,0 +1,87 @@
+**Theorem 65.8 (necessary consequence for the same full one/two-occupation law).**
+Fix the actual INITIAL $D=B_3$ of Definition65.1 and one prescription.
+Retain the full source-qualified Hilbert spaces $\mathscr H_{D,1}$ and
+$\mathscr H_{D,2}$ of (62.1), with their counting-measure norms and literal
+hard-core symmetric statistics. Let
+
+$$
+\begin{aligned}
+h_D&=aL_D-gM_{\phi|D},\\
+H_{D,1}^\diamond&=h_D,\\
+H_{D,2}^\diamond&=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}G_D^\diamond(p,q)n_pn_q.
+\end{aligned}
+\tag{65.30}
+$$
+
+The two-occupation space has dimension 105. The compression retains the
+diagonal $d_p+d_q$, including inherited exterior and blocked-collision killing;
+it is not a Laplacian of only allowed moves or a fermionic exterior power.
+Here $a,g>0$ and $\nu\ge0$ are the commissioned parameters of §62,
+independent of the original $\mathcal D_2$ actor variable.
+
+For any one Hermitian one-body law $B_D$ used consistently in both sectors,
+and any whole-table point law (65.5) with finite distinct points, define
+
+$$
+\begin{aligned}
+\widehat H_{D,1}&=B_D,\\
+\widehat H_{D,2}&=P_{D,2}\,d\Gamma(B_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}\widehat G_D(p,q)n_pn_q,\\
+E_1&=\|B_D-h_D\|_{\rm op},\qquad
+E_2^\diamond=\|\widehat H_{D,2}-H_{D,2}^\diamond\|_{\rm op}.
+\end{aligned}
+\tag{65.31}
+$$
+
+Put
+
+$$
+\delta_{{\rm c},65}=\frac{\varepsilon_{{\rm c},5}}{64},\qquad
+\delta_{{\rm k},65}=\frac{\varepsilon_{{\rm k},5}}{240}.
+$$
+
+Then the necessary joint bound is
+
+$$
+E_2^\diamond+2E_1
+\ge\nu\max_{\{p,q\}\subset D}
+|\widehat G_D(p,q)-G_D^\diamond(p,q)|
+\ge\nu\delta_{\diamond,65}.
+\tag{65.32}
+$$
+
+In particular, preserving the original one-body and kinetic terms gives $E_1=0$
+and, for $\nu>0$, a strictly positive full two-occupation generator-norm floor
+$E_2^\diamond\ge\nu\delta_{\diamond,65}$. At $N=1$ the pair multiplier
+vanishes for both prescriptions, and at $\nu=0$ this obstruction yields no
+positive joint generator floor.
+
+Proof. On $\mathscr H_{D,2}$ the pair difference is diagonal. Its entry at the
+actual occupation $\{p,q\}$ is
+$-\nu(\widehat G_D(p,q)-G_D^\diamond(p,q))$, so its operator norm is
+$\nu$ times the maximum absolute coefficient error on all 105 pairs. The
+hard-core compression of $d\Gamma(B_D-h_D)$ has norm at most $2E_1$.
+The triangle inequality proves the first inequality in (65.32), precisely as
+the same-sector argument in Theorem64.4. This consumes that operator principle;
+the new bound is supplied by the distinct hyperbolic class obstruction.
+
+The five-terminal restriction has maximum relative error at least
+$\varepsilon_{\diamond,5}$. On that restriction its smallest common coefficient
+is $1/64$ and its smallest killed coefficient is $1/240$. Consequently the
+maximum absolute error there is at least $\delta_{\diamond,65}$, and the
+maximum on the full domain is no smaller. An actual pair attaining that finite
+maximum gives the diagonal occupation witness. No alternative one-body fit
+can cancel it in the two-occupation sector without entering the same $E_1$
+budget. $\square$
+
+This is a necessary condition on a law that transports the same complete
+$N=1$ and $N=2$ generators, with the supplied source, reference and clock.
+It does not replace that task by a static configuration or one-body task.
+No finite-time propagator, state, acquired probability, measurement or clock
+error lower bound follows merely from (65.32). Such a bound needs its own
+common input, time, reference, observation and spectral argument; Duhamel's
+usual generator-norm upper estimate cannot be reversed for this purpose.
+Neither independent sector fits nor a quotient by global phase is part of
+the unchanged full joint target.
+

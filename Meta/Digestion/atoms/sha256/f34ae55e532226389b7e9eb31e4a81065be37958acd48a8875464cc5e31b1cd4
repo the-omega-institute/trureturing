@@ -1,0 +1,52 @@
+**Proposition 8.3 (A unique full-sector contact need not allow TP).**
+There is a globally positive form in the actual QAP family with
+exactly one zero preparation population, a radial kernel line with
+all measurement populations positive, and no TP point on its zero
+face. Take
+
+$$
+\begin{gathered}
+(A_0,A_+,A_-)=(s,s+p_+,s),\qquad
+(u,v,w,t)=(2,1,2,0),\qquad
+\mathcal T(p)=\operatorname{diag}(s+p_+,s),\\
+y=0,\qquad
+C=\begin{pmatrix}
+-1&-\sqrt2&-\sqrt2\\
+-\sqrt2&-4&-2\\
+-\sqrt2&-2&-2
+\end{pmatrix},\qquad
+(\delta_+,\delta_-,\delta_{2+},\delta_{2-},
+\delta_\Delta,\delta_\Sigma)=(4,2,0,0,4,4).
+\end{gathered}
+\tag{8.5}
+$$
+
+Proof. With $a_i=\sqrt{p_i}$ the radial form is
+
+$$
+\sum_{i<j}(a_ib_j-a_jb_i)^2
++(a_0b_0-a_+b_+)^2+(a_+b_+-a_-b_-)^2.
+\tag{8.6}
+$$
+
+Its expansion agrees with (8.5), proving PSD for every population,
+including the boundary. The tangent block is positive definite on
+the simplex. Zero in (8.6) forces $b$ proportional to the nonzero
+vector $a$. The last two squares then force
+$p_0=p_+=p_-=1/3$. At this population,
+
+$$
+\mathcal R(p_*)=\frac13
+\begin{pmatrix}3&-2&-1\\-2&4&-2\\-1&-2&3\end{pmatrix},
+\qquad \ker\mathcal R(p_*)=\mathbb R(1,1,1).
+\tag{8.7}
+$$
+
+Its first $2\times2$ principal minor is $8/9>0$, so its rank
+is two. There are no other zero seeds, even on the boundary.
+Consequently $\mathcal Q_{\mathfrak d}=\{(1,1,1)/3\}$, whose
+convex hull excludes $q_{\rm TP}$. Theorem 8.2 proves the failure
+of TP feasibility. As in Proposition 7.4, this is an atom-form
+example, with no assertion that its coefficients are those of a
+normalized event tuple. $\square$
+

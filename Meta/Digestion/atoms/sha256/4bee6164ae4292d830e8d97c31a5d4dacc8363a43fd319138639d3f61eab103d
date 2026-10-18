@@ -1,0 +1,19 @@
+### 66.5 Finite implementations and sharp qubit constructions
+
+Finite existence for arbitrary k,d needs no assumption about complete MUB sets. Take one fixed standard basis in C^d and assign each fibre f a cyclic shift s_f∈Z/d of that basis, with s_1=0. Average uniformly over the d^(k−1) choices of the remaining shifts. For distinct fibres the difference s_f−s_g is uniform, so every squared overlap averages to 1/d. The converse above produces an exact finite physical channel.
+
+For the sharp qubit family let H be an r×r real Hadamard matrix, H*H=rI, with entries ±1. Label the k=3r fibres by (a,c), where a∈{X,Y,Z} is a Pauli axis and 1≤c≤r a column of H. At branch t, weight 1/r, let the two basis projectors in fibre (a,c) be
+
+    P_(t,(a,c),i)=[I+(-1)^i H_(t,c) σ_a]/2,  i∈{0,1}.
+
+Choose arbitrary normalized representatives e for these rank-one projectors, and use their coordinatewise conjugates on the other party. For a≠b, the squared overlap of any representatives is Tr(P_a P_b)=1/2. For a=b and c≠c',
+
+    Tr(P_(t,(a,c),i)P_(t,(a,c'),j))
+       =[1+(-1)^(i+j)H_(t,c)H_(t,c')]/2.
+
+Hadamard column orthogonality makes its branch average 1/2. Thus all distinct fibres satisfy (3), simultaneously, and this one r-branch channel implements all coherent matrix units. The lower bound k≤3r' for any implementation with r' branches forces r'≥r. The weight bound is w_t≤1/r for any implementation; its entropy is at least log₂r, attained by the uniform construction.
+
+Restricting to any k fibres with 3(r−1)<k≤3r preserves this r-branch construction and yields ceil(k/3)=r as lower bound. For d=2, independently, any specified subset of at most three fibres admits one product realization by assigning those fibres distinct Pauli eigenbases. Such independently feasible restrictions need not share a single product realization for the full channel when k>3.
+
+Real Hadamard matrices are not asserted to exist at every order. Orders r=2^s are available by the classical recursion H_1=[1], H_(2r)=[[H_r,H_r],[H_r,−H_r]], whose product with its transpose is 2r I. Therefore the exact resource families include k=3·2^s for every s≥0, as well as any other given Hadamard order. For r=1 the construction is the usual three Pauli bases. The cases k=1 or d=1, outside the main assumptions, admit a single product channel and require no packing argument.
+

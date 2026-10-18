@@ -1,0 +1,43 @@
+### 2.10 The actual phase quotient and its metric
+
+**Mathematical application 2.11 (Horizontal coefficients of a quotient).**
+Fix the means and quotient pure rays by the three occupation phase actions
+$\theta_s\mapsto\theta_s+t_Xx_s+t_Yy_s+t_Zz_s$. SP §§35.4–35.7 supply the
+positive quotient cylinder with primitive $2\pi$-periodic coordinate $\chi$
+and
+
+$$
+\omega_{\rm red}=d\chi\wedge d\kappa,\qquad
+ g_{\rm red}=\frac I2d\kappa^2+\frac2I d\chi^2.
+$$
+
+For the explicit correspondence, the integer inverse formulas are
+
+$$
+\theta_1=\theta_0+\vartheta_X,\quad
+\theta_3=\theta_0+\vartheta_Y,\quad
+\theta_2=\theta_0+\vartheta_Z,\quad
+\theta_{13}=\theta_0+\vartheta_X+\vartheta_Y+\chi.
+$$
+
+They show that no extra finite quotient changes the period of $\chi$ in the
+positive cylinder. The annihilator of $d$ is spanned by
+$\mathbf1,x,y,z$, which are independent on the five modes. Thus minimizing
+phase variance at fixed $d\chi$ is exactly minimizing over the removed phase
+orbit, and Proposition 2.4 gives its coefficient $2/I$. The probability
+coefficient is $\tfrac12\sum d_s^2/p_s=I/2$; the full metric has no mixed
+probability-phase term. These are quotient metric coefficients, not a
+pullback along an integrable section with differential $d\theta=w\,d\chi$.
+Theorem 2.5 rules out that proposed section.
+
+Put $b(\kappa)=2/I(\kappa)$. Then
+
+$$
+g_{\rm red}=b^{-1}d\kappa^2+b\,d\chi^2,\qquad
+\det g_{\rm red}=1,\qquad d\mathrm{Area}=d\kappa\,d\chi.
+$$
+
+Here the area is the positive density; the ordered two-form above fixes the
+symplectic orientation. Endpoints are treated by metric completion and the
+actual orbit strata, not by assuming every closed level is a smooth reduction.
+

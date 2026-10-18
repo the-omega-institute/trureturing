@@ -1,0 +1,52 @@
+### 定理 21.4（Fibonacci 删除投影的 Fisher 数据处理）
+
+对任意
+
+\[
+p\in\Delta(\Sigma_{n+1})^\circ,
+\qquad
+u\in T_p\Delta(\Sigma_{n+1}),
+\]
+
+有
+
+\[
+\boxed{
+\mathcal I_n(D_np;D_nu)
+\le
+\mathcal I_{n+1}(p;u).
+}
+\]
+
+等号当且仅当对每个 \(J\in\Sigma_n\)，以及所有满足 \(\delta_n(I)=J\) 且 \(p_I>0\) 的 \(I\)，比值
+
+\[
+\frac{u_I}{p_I}
+\]
+
+相同。
+
+#### 证明
+
+对每个 \(J\in\Sigma_n\)，记
+
+\[
+P_J=(D_np)(J)
+=
+\sum_{\delta_n(I)=J}p_I,
+\qquad
+U_J=(D_nu)(J)
+=
+\sum_{\delta_n(I)=J}u_I.
+\]
+
+由加权 Cauchy–Schwarz，
+
+\[
+\frac{U_J^2}{P_J}
+\le
+\sum_{\delta_n(I)=J}\frac{u_I^2}{p_I}.
+\]
+
+对 \(J\) 求和得到不等式。Cauchy–Schwarz 的等号条件正是 \(u_I/p_I\) 在每个纤维上为常数。证毕。
+

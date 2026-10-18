@@ -1,0 +1,35 @@
+**Definition 3.3 (the CAP descriptor parser).** Decode symbol triples by
+successive three-bit Takes and the finite inverse table. A trailing partial
+triple is ParseFault. Parse 29's copied word from its beginning, repeating
+the following finite operation until its exact end:
+read literal 0,0,sep; read ten sep-terminated bit fields, including empty
+fields; require the following seal symbol. Each field is accumulated with
+bit tests, cons and Reverse. Any other symbol or missing separator/seal
+is DescriptorFault. Count records by consing one unary mark per completed
+record. Require each numeric field to be one complete $U(n)$; owner,
+port, flags and kind must be in their finite ranges, and creation ordinal
+must equal that record's one-based count.
+
+To resolve an acquired remote reference, ReadFrame its fixed-arity tuple;
+scan this copied list for an equal complete origin field. Use the first
+matching available local record. For a delivered row/dependency require
+local owner $A$, designated archive port 28, initialized=1 and mutable=0.
+For the initial acquired seed/boot material permit its actual designated
+26 or 28 delivery interval and kind, using the corresponding initial
+copied symbol word; these are two fixed cases, not a variable native
+read port. Cancel a copied unary base against that designated symbol list;
+Take its copied length in symbol units; require binary payload symbols,
+following sep, and symbol 1 at the actual status address $b+\ell+1$.
+Compare that address with its descriptor's field. Require its actual CAP
+kind and complete origin/reference equality. A missing, unavailable or
+wrong-kind record has distinct finite rejection. Local-origin-free initial
+blocks are selected by their actual local reference and the same checks,
+not by searching for a remote empty origin shared by many records.
+
+The tests on copied status symbols are finite word tests. Current live read
+permission and authentic sealing come separately from the reached CAP
+acknowledged-return invariant. No copied flag issues TOK. A copied
+immutable flag describes the completed block, not arbitrary bytes with
+forged provenance. More than one actual copy is harmless: CAP Theorem 6.4
+gives equal payloads for the equal complete origin.
+

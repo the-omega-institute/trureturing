@@ -1,0 +1,81 @@
+**Theorem 50.4 (global spectral optimum and its four slacks).** Define
+
+$$
+\mu_*=\psi(t_*),\qquad v_*=v(t_*),\qquad P_*=v_*v_*^T,
+$$
+
+and distinguish the spectral multiplier from the contrast multiplier by
+
+$$
+\lambda_{\rm sp}=\mu_*-g_0+\frac{x+yt_*}{q(t_*)},\qquad
+H_*=G+\lambda_{\rm sp}Q.
+\tag{JR.100}
+$$
+
+**Proof.** The stationarity equation is $`H_*v_*=\mu_*v_*`$. Directed bounds on the
+full box $\mathcal B_{\rm CG}$ and the bracket (JR.99) give
+
+$$
+-\frac{129}{10^5}<\mu_*<-\frac{107}{10^5},\qquad
+\frac{17}{10^4}<\lambda_{\rm sp}<\frac{22}{10^4},
+\tag{JR.101}
+$$
+
+and
+
+$$
+(H_*)_{11}>\frac9{10^4},\qquad (H_*)_{22}>\frac{14}{10^4},\qquad
+|(H_*)_{12}|<\frac{102}{10^6},\qquad
+\det(H_*[1,2])>0.
+\tag{JR.102}
+$$
+
+Thus the $1,2$ principal block is positive definite. Interlacing and
+$`H_*v_*=\mu_*v_*`$ show that $`H_*`$ has exactly one negative eigenvalue,
+namely $`\mu_*`$, and two strictly positive eigenvalues.
+
+Set
+
+$$
+Y_*=H_*-2\mu_*P_*=|H_*|.
+\tag{JR.103}
+$$
+
+The four PSD slacks of the real SDP dual are
+
+$$
+\begin{aligned}
+Y_*-G-\lambda_{\rm sp}Q&=-2\mu_*P_*\succeq0,\\
+Y_*+G+\lambda_{\rm sp}Q&=2(H_*-\mu_*P_*)\succeq0.
+\end{aligned}
+\tag{JR.104}
+$$
+
+The first line is the positive-report ($\epsilon=+1$) slack and the
+second is the negative-report ($\epsilon=-1$) slack. Explicitly, for each
+$r=\pm1$, $`S_{r,+}:=Y_*-G-\lambda_{\rm sp}Q\succeq0`$ and
+$`S_{r,-}:=Y_*+G+\lambda_{\rm sp}Q\succeq0`$. These are the four slacks of
+(JR.126) with $\lambda=0$ and $\nu_{r,\epsilon}=-\epsilon\lambda_{\rm sp}$;
+they satisfy $`S_{r,+}(I-P_*)=0`$ and $`S_{r,-}P_*=0`$.
+For any feasible tuple put $X_-:=X_{+,-}+X_{-,-}$. Then
+$0\preceq X_-\preceq I$, $\operatorname{tr}(QX_-)=0$, and
+$`\operatorname{tr}(GX_-)=\operatorname{tr}(H_*X_-)`$, because
+$\operatorname{tr}(QX_-)=0$. In an eigenbasis of $`H_*`$, the unique
+negative coordinate of $X_-$ is at most one and all positive
+coordinates contribute nonnegatively. Consequently
+
+$$
+\operatorname{tr}(GX_-)=\operatorname{tr}(H_*X_-)\geq\mu_*.
+\tag{JR.105}
+$$
+
+It follows that
+
+$$
+J_s\leq\operatorname{tr}G-2\mu_*\qquad(0\leq s\leq s_0).
+\tag{JR.106}
+$$
+
+Equality in (JR.105) holds exactly when $`X_-=P_*`$. This is the global
+upper bound, and it uses no fixed complete binary effect.
+

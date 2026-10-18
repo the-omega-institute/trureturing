@@ -1,0 +1,57 @@
+**Proposition 7.2 (credited endpoint attainment and nonattainment facts).**
+At $\tau=1$ the primal is finitely attained, its value is
+$j(1)=\operatorname{tr}G-B/2$, and the original value is $T_0$.
+The endpoint dual infimum equals $j(1)$ but has no finite minimizer.
+These JR51 endpoint facts coexist with the open-branch finite
+certificates and divergent normalized multiplier.
+
+Proof. Null-decompose an endpoint tuple. The signed coordinate obeys
+
+$$
+\sum r f_0f_1\leq\frac12\sum(f_0^2+f_1^2)=1.
+\tag{EP.47}
+$$
+
+Equality forces $f_1=rf_0$ for each nonzero atom, and nullity gives
+$f_2^2=f_0^2$. The four corner rays are therefore exhaustive. Their
+Gram normalization forces mass $1/4$ on each unscaled
+$(1,\sigma,\eta)$ ray, from the total mass and three zero mixed
+moments. The three positive and one negative corner heights in EP.18
+give the stated value. Section 8 at the four corners provides a finite
+actual common instrument, rather than only a PSD witness.
+
+For $\tau<1$, mix an endpoint feasible tuple with $I/4$ in all four
+slots, using endpoint weight $a\in(\tau,1)$. Every slot is PD, every
+null trace is zero and contrast is $a>\tau$. Finite-dimensional Slater
+duality gives finite dual attainment. Compactness and nested feasible
+sets give $j(\tau)\to j(1)$ as $\tau\uparrow1$: every subsequential
+limit of optimizers is endpoint feasible. An interior dual optimum
+remains endpoint-dual feasible with objective
+$j(\tau)-\lambda(1-\tau)\leq j(\tau)$. Endpoint weak duality
+sandwiches its dual infimum between $j(1)$ and these converging upper
+values, proving equality.
+
+For an independent algebraic check of no finite minimum, suppose such
+a minimum existed. Complementarity with the two positive corners having
+$r=+$ forces $S_{+,+}=a kk^T$, $k=(1,-1,0)^T$, $a\geq0$.
+Writing $\nu_0=\nu_{+,+}$ gives
+$Y=G+\lambda C-\nu_0Q+a kk^T$. The positive corner $(1,-1,1)$ in
+the other positive-height block gives
+
+$$
+(\nu_{-,+}-\nu_0)Q(1,-1,1)^T+(2a-\lambda)k=0.
+\tag{EP.48}
+$$
+
+Its third coordinate forces $\nu_{-,+}=\nu_0$, hence $2a=\lambda$.
+The negative corner $(1,-1,-1)$ then gives
+$\nu_{-,-}-\nu_0=2(x+y-g_0)$ and requires $R_1=R_2=0$.
+EP.18 already makes both strictly positive. For example its weaker
+rational consequences imply
+$R_1>.00237-.00293+.00010+.87(.00330)>0$ and
+$R_2>.00220+.00010-.00168+.12(.00330)>0$.
+This contradiction does not extrapolate interior Slater attainment.
+Alternatively EP.9's positive square-root gain rules out a finite
+endpoint supporting slope. No native impossibility or failure of finite
+primal attainment follows. $\square$
+

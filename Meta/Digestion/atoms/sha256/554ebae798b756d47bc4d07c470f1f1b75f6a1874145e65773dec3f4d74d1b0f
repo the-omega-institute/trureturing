@@ -1,0 +1,14 @@
+**Definition 52.1 (actual class, constants and transported reality).** Retain Definition 1.1 and the fixed-input optimum $p_N(\rho)=p(\rho)$ of (R.31). In Sections 52–53, $N:M_3\to M_5$ is any actual original-real-Kraus CPTP encoder of actual Kraus rank exactly two and original phase-difference spectrum $(a,\beta,0,-\beta,-a)$, where
+
+$$
+0<\beta\leq\tfrac12,\qquad a=1-\beta,\qquad
+\gamma=\sqrt a,\qquad T=T_\beta=\frac{1+\gamma}{2},\qquad
+d=1-T=\frac{1-\gamma}{2},\qquad v=\sqrt T,\qquad
+\mathcal C=\operatorname{span}\{|0\rangle,|1\rangle\}.
+\tag{R.269}
+$$
+
+Every admissible third column in (R.9), equivalently the complete joint domain in Sections 31–32, remains allowed. No restriction on the original joint Gram data is imposed. Recoveries range over all complex CPTP maps $M_5\to M_3$ on the entire output; channel fidelities include input purifications, and $\delta_N$ uses the unhalved diamond norm with every finite complex reference permitted. The constants obey $\beta=4dT$, $0<d<\beta$, $\gamma\geq1/\sqrt2$, and $\gamma<v<1$.
+
+Choose a minimal real Kraus list and its actual $V:\mathbb C^3\to\mathbb C^5_B\otimes\mathbb C^2_E$. Original environment conjugation is the antiunitary $J_E$. If coordinates are changed by a unitary $W$, replace $V$ by $(I_B\otimes W^\dagger)V$ and transport $J_E$ to $W^\dagger J_EW$, along with every complementary block. In particular $\tau_- =J_E\tau_+J_E^{-1}$, where $\tau_\pm=\Gamma(\chi_\pm)$; this need not mean entrywise conjugation in the new coordinates. The original input frame is kept fixed.
+

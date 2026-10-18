@@ -1,0 +1,108 @@
+**Proposition 10.2 (Native source and finite reachability bridge).**
+Definition 10.1 has exactly the native probability, phase and ray
+interpretation of §§1 and 7, for arbitrary preparation. In particular
+every stated source point is exactly finitely reachable, including both
+band endpoints.
+
+**Proof.** In mode order $(0,1,2,3,13)$, the double-wall constraints
+are $p_2=Z$, $p_1+p_{13}=p_3+p_{13}=H$ and total mass one.
+Putting $p_{13}=k$ gives
+
+$$
+p(k)=(k,H-k,Z,H-k,k),\qquad
+d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+The sum is $2H+Z=1$, and positivity is precisely $0<k<H$.
+The declared native denominator and weights are
+
+$$
+I(k)=\frac2k+\frac2{H-k}=\frac r{k(H-k)},\qquad
+w(k)=\left(\frac12-\frac kr,-\frac kr,0,
+                  -\frac kr,\frac12-\frac kr\right).
+$$
+
+Thus $d^{\mathsf T}w=1$ and $p^{\mathsf T}w=0$ by direct
+substitution. Integrating $d\theta=w(k)\,d\chi$, starting with
+zero increments, gives $h=(u,v,0,v,u)$ and
+
+$$
+du=\left(\frac12-\frac kr\right)d\chi,\qquad
+dv=-\frac kr\,d\chi,\qquad d(u-v)=\frac12\,d\chi.
+$$
+
+These are equalities of increments, not equalities of the preparation
+phases. Set $\eta_j=\theta_j^{\rm in}-\theta_2^{\rm in}$.
+With the native negative-phase convention, a representative is
+
+$$
+\psi(k,u,v)=\left(
+ \sqrt{k}e^{-i(\eta_0+u)},
+ \sqrt{H-k}e^{-i(\eta_1+v)},
+ \sqrt Z,
+ \sqrt{H-k}e^{-i(\eta_3+v)},
+ \sqrt{k}e^{-i(\eta_{13}+u)}
+ \right).
+$$
+
+Equality of two such rays forces their scalar phase to be one because
+the middle entry is the same positive $\sqrt Z$. Moduli then force the
+same $k$, and positive group amplitudes force equality of $u$ and $v$
+independently modulo $2\pi$. These conditions also suffice. Ratios to
+the middle entry, followed by normalization and removal of the fixed
+$\eta_j$, recover the two unit phase pairs continuously and smoothly.
+The source therefore has exactly the band-times-two-circle topology,
+without a further finite quotient.
+
+A straight probability segment changes only $k$. Convexity of $I$
+makes its whole segment lawful exactly when its two endpoints belong
+to $I$. A phase leg of any finite real increment $t$ stays at its
+height and integrates to $Q_t$. In particular the command parameter
+$t$ is real; it is not itself reduced modulo a phase period.
+
+For $k,k+s\in I$, execute the four legs in chronological order
+$P_s,Q_t,P_{-s},Q_{-t}$. The two phase contributions give
+
+$$
+t\left[\left(\frac12-\frac{k+s}{r}\right)
+          -\left(\frac12-\frac kr\right)\right]
+ =-\frac{st}{r},\qquad
+t\left[-\frac{k+s}{r}+\frac kr\right]=-\frac{st}{r}.
+$$
+
+The resulting map is exactly $C_{-st/r}$, with height and total
+real relation increment unchanged. This is a finite rectangle identity,
+not an infinitesimal or limiting commutator formula.
+
+For reachability, take an entry height $h\in I$, equal to $k_0$ if
+$k_0\in I$. Otherwise first use a phase-free probability leg in
+$(0,H)$ from $k_0$ to $h$. Choose $h_1\in I$ different from $h$.
+For target representatives $U,V\in\mathbb R$ and target $k\in I$,
+put
+
+$$
+L=2(U-V),\quad
+U_0=\left(\frac12-\frac hr\right)L,\quad
+V_0=-\frac hr L,\quad
+c=U-U_0=V-V_0.
+$$
+
+First use the rectangle with $s=h_1-h$ and $t=-rc/s$ to add
+$(c,c)$ at $h$. Then execute $Q_L$ at $h$, and finally a
+probability leg from $h$ to $k$. The resulting increments are
+$(U,V)$. All legs are finite, every band probability segment joins
+two band points, and all phase variations are finite. Conversely the
+native equations preserve the increment groups already displayed.
+This proves exact reachability rather than density. If the entire
+producing history is required to stay in the band, the preparation
+must itself lie there.
+
+The coordinates $\alpha=u-v$ and $\beta=u$ used earlier are
+well-defined circle coordinates, with inverse $u=\beta$,
+$v=\beta-\alpha$. The real relation increment along a history is
+$2(u_{\rm lift}-v_{\rm lift})$; its current circle value is
+$2(u-v)$, up to the fixed preparation. It does not retain the
+history's real lift. A common turn fixes this difference but changes
+the bottom amplitudes relative to the positive middle amplitude.
+It is consequently not a global ray gauge. $\square$
+

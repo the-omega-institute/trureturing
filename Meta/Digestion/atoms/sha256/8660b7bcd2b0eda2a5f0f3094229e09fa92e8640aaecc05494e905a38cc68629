@@ -1,0 +1,37 @@
+**Lemma 256.2 (Full-label support certificate).**
+$B_N(y_*)=B_O(y_*)=135$, so $\Delta_N(y_*)=\Delta_O(y_*)=0$.
+
+**Proof.** For each queried pair $i<j$, compute
+
+$$
+g_{ij}^{uv}(r)=\sum_{(w,E,k):\,(w_i,w_j)=(u,v)}k[r\in E]
+\qquad(r\in J_L).
+\tag{256.2}
+$$
+
+The four maxima, in $00,01,10,11$ order, are as follows.
+Every $i<j\le6$ gives $(18,27,45,45)$; every $i<7=j$
+gives $(27,18,45,45)$; for $j=8$ the complete list is
+
+| $i$ | $00$ | $01$ | $10$ | $11$ |
+|---:|---:|---:|---:|---:|
+| 1 | 24 | 21 | 45 | 27 |
+| 2 | 42 | 3 | 45 | 45 |
+| 3 | 32 | 23 | 45 | 35 |
+| 4 | 34 | 12 | 45 | 37 |
+| 5 | 33 | 12 | 45 | 36 |
+| 6 | 42 | 3 | 45 | 45 |
+| 7 | 42 | 12 | 45 | 36 |
+
+Each entry is the maximum of the nine explicit finite sums
+(256.2); labels above eight have zero reward. This supplies a
+finite arithmetic certificate for all 28 pairs and all their labels.
+Each row sum is at most 135. Empty, singleton and repeated schedules
+coarsen a distinct-pair partition and cannot increase its maximal
+score; reversal merely permutes its cells. At larger $L$, every
+scored high bit is fixed to one, so querying it adds no partition
+information and is covered by the same coarsening argument.
+The stopped anchor attains 135. Since $O\subseteq N$, both support
+values equal this number. Directly summing the score at the anchor
+gives $W=135$, completing the certificate. $\square$
+

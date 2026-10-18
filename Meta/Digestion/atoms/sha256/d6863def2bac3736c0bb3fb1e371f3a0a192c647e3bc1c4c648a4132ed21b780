@@ -1,0 +1,32 @@
+**Corollary 13.3 (exact ranks at the isolated point).** At $u_*$,
+
+$$
+\begin{gathered}
+S_0\succeq0,\quad\operatorname{rank}S_0=2,\qquad
+S_{01},S_{02}\succeq0,\quad
+\operatorname{rank}S_{01}=\operatorname{rank}S_{02}=1,\qquad
+S_{12}\succ0,\\
+Z_d\succeq\lambda\operatorname{diag}(p_5)\succeq0,
+\end{gathered}
+\tag{CG.123}
+$$
+
+and the $H,Q^{01},Q^{02}$ of (CG.116) are nonzero positive semidefinite
+rank-one matrices.
+
+Proof. The last three components of $\Psi=0$ give precisely
+$\det S_0=\det S_{01}=\det S_{02}=0$. The leading two-dimensional
+block of $S_0$ is positive definite by (CG.115). Its Schur complement is
+zero because its determinant is zero and that leading block is
+invertible. Thus $S_0$ is positive semidefinite of rank two.
+Each active two-dimensional block has positive first pivot and zero
+determinant, giving positive semidefiniteness and rank one by the same
+Schur-complement argument. The two strict leading minors of $S_{12}$
+give positive definiteness. This does not use the false general
+criterion that nonnegative leading minors alone imply semidefiniteness.
+The last matrix inequality follows from
+$\zeta_1=\lambda p_{51}$, $\zeta_2=\lambda p_{52}$ and the strict
+coordinate-zero slack in (CG.115). Positive multipliers and the spectral
+formula for an adjugate of a positive matrix of corank one give the
+stated ranks and positivity of $H,Q^{01},Q^{02}$. $\square$
+

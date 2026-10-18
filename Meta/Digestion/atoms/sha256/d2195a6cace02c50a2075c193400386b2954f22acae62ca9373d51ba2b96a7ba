@@ -1,0 +1,9 @@
+**定理 127.2（局部像中的三循环排除平坦）。** 假设 $\mathcal A\ne\varnothing$。对 $\sigma\in T$，令
+
+$$\Gamma_\sigma=\{g:g\sigma=\sigma\},\qquad
+K_\sigma=\{p_{g,\sigma}:g\in\Gamma_\sigma\}\le S_4.$$
+
+如果 $3\mid|K_\sigma|$，则 $\alpha^*$ 在 $\sigma$ 上真正非退化。
+
+**证明。** 最大点由一个共同正全局广义长度实现，故其局部角型真正或为恰一组对边承担 $\pi$ 的平坦态。由引理 127.1，局部角向量在 $K_\sigma$ 下不变。若平坦，其唯一 $\pi$ 对必须被 $K_\sigma$ 的全部元素固定；这与引理 126.1 矛盾。
+

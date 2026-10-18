@@ -1,0 +1,18 @@
+**定义 20.2.1（潜变量模型）。** 取有限集 $\mathcal U$、输入集 $\mathcal X$、输出集 $\mathcal Y$，以及满支撑先验 $\pi\in\Delta(\mathcal U)$。对每个 $x\in\mathcal X$ 与 $u\in\mathcal U$，给定输出核
+
+$$
+K_x(y\mid u),
+\qquad
+\sum_{y\in\mathcal Y}K_x(y\mid u)=1.
+$$
+
+潜变量先按 $\pi$ 生成，外部输入 $X$ 由实验者选择，输出 $Y$ 按 $K_X(\cdot\mid U)$ 生成。选择标签 $Z$ 只保留一个固定值 $z$ 供条件化；记
+
+$$
+s_x(u)=\Pr(Z=z\mid\operatorname{do}(X=x),U=u).
+$$
+
+本章先假定 $s_x(u)>0$ 对所有 $x,u$ 成立，因此所有条件分母都正。允许零值时，只需把陈述限制到相关正支撑并逐项检查条件事件是否可达。
+
+<a id="claim-20-2-2"></a>
+

@@ -1,0 +1,80 @@
+### 89.3. All-order overlaps, exact rank and the complete guard
+
+Use the integer 508-term polynomial \(\mathcal N\) reconstructed by
+(79.8)–(79.9). Those equations specify it as the product of all six relative
+ordinary overlaps, with a finite orbit-sum recurrence and no root choices.
+Evaluate it in \(\mathcal A\otimes_K\mathcal A\), using exactly the
+nine arguments in (79.8), with primed quantities in the second factor
+and the current symbolic \(R=3-b^2\). Call the element \(N\).
+For any physical pair, it is the product of its six relative overlaps,
+divided by \((3\sqrt{qq'})^6\). Thus every arbitrary orthogonal generic
+pair annihilates \(N\), irrespective of relative permutation.
+
+Define the surjective algebra map
+\[
+ \rho:\mathcal A\otimes_K\mathcal A\longrightarrow\mathcal A,
+ \qquad \rho(a\otimes c)=a\iota(c),\qquad \dim\ker\rho=380.
+                                                               \tag{89.7}
+\]
+Along the actual branch above, the second point is \(\Theta w\).
+The original identity \(w\perp\Theta w\) makes one overlap factor
+zero. The field identity principle yields \(\rho(N)=0\) in
+characteristic zero. Therefore multiplication by \(N\) has image inside
+\(\ker\rho\) and rank at most 380. This uses an open actual solution
+branch and fieldness, rather than inferring an identity from one parameter.
+
+For the matching lower bound, form the \(400\times400\) multiplication
+matrix in basis \(Y^r\otimes Y^s\), indexed by \(20r+s\), and let
+\(h(b)\) be its leading \(380\times380\) principal minor. The exact
+half bridge identifies its specialization with (79.10), so
+\[
+ h(1/2)=2\pmod{97}.                                  \tag{89.8}
+\]
+Equivalently, exchanging row pairs \((38,39),(167,168),(257,258)\)
+gives the residue 95. This is only a fixed overall sign. The principal
+minor convention in (89.8) is used here. In either convention \(h\)
+is a nonzero rational function, regular and nonzero at the half parameter.
+
+Here is the complete finite safe-specialization guard. It is useful to
+state the construction rather than an impractically expanded polynomial.
+All operations are in rational functions of \(b\), with coefficients
+in \(\mathbb Q(i)\).
+
+1. Include \(E_*(b)\), \(b,R,1+b^2\), and the leading coefficient of
+   \(F\) as required nonzero scalars.
+2. Construct (89.1) in \(\mathcal B_{20}\) by companion reduction in
+   \(k\) and the monic radial quadratic. Compute every inverse by the
+   adjugate and determinant of its multiplication matrix. Construct
+   (89.4)–(89.5), the involution, and the basis-change matrix with columns
+   \(Y^j\). Mark the norms of every inverted element as required
+   nonzero scalars. Also mark every norm listed in §89.2, their needed
+   conjugates, and the basis-change determinant.
+3. Construct the nine overlap arguments, \(N\), its multiplication
+   matrix in the \(Y\)-power basis, and the fixed principal minor
+   \(h(b)\). Mark \(h\) as a required nonzero scalar.
+4. Reduce every scalar rational-function entry in these finite arrays
+   to coprime numerator and denominator over \(\mathbb Q(i)[b]\).
+   Include every nonconstant denominator and its coefficient-conjugate.
+   For each required nonzero scalar include also its numerator and its
+   coefficient-conjugate. Multiply all factors, discard nonzero constants,
+   and clear the final rational constant denominator. Taking the primitive
+   integer part with positive leading coefficient fixes a normalization.
+
+Call this polynomial \(G_*(b)\). Every factor is nonzero, regular and
+nonzero at \(b=1/2\), by the exact half bridge and the printed witnesses.
+In particular a reduced denominator cannot vanish at that regular point.
+Hence \(G_*\in\mathbb Q[b]\) is nonzero and \(G_*(1/2)\ne0\), and
+its real zero set is finite. This includes every chosen pivot, degree,
+unit, basis-change and matrix-denominator failure. No root of the guard
+is declared harmless without proof.
+
+At any real parameter with \(G_*\ne0\), the specialized algebra has
+dimension twenty, \(\rho\) remains onto, \(\rho(N)=0\) specializes
+exactly, and the selected lower minor stays nonzero. Thus
+\[
+ N(\mathcal A_b\otimes\mathcal A_b)=\ker\rho_b.        \tag{89.9}
+\]
+The ideal conclusion is obtained anew after specialization from the two
+rank bounds. It does not silently specialize an unrecorded generic ideal
+multiplier with a possibly vanishing denominator.
+

@@ -1,0 +1,42 @@
+## 10. Suppliers, primary literature and mathematical boundaries
+
+**Source map 10.1.** The following references specify the reused source,
+operation and joint-interface premises. The source links select the immutable
+base used throughout this volume.
+
+| Supplier | Exact contribution and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible` and `finite_rectangles_realize`; the Scribe's real all-sector application supplies (PR.6). The rectangle Lean declaration alone is not attributed the whole ordinary all-sector classification. No helper, source sensor or joint quantum actuator follows. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and [owning Scribe](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Both original regularity alternatives, finite/zero durations, matching endpoints, literal unchanged prefixes, shifted real tails and additive continuous weighted integrals. These identify the actual continuation; they do not acquire unknown past parameters. |
+| [Instrument Boundaries](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–6 and 9–15 | Full original endpoint family, unassisted Kraus rigidity and blind success records, fixed-parity rotations, unassisted checkpoint products, canonical stopped instrument, pair threshold, terminal classification and law-level recovery are credited. The assisted joint input and output here are different contracts. |
+| [Instrument Stability](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md), §§2–5 | Survival-floor inverse bounds, bounded-speed forward discontinuity, low-survival inverse nonuniformity and sufficient complete-output error data are retained. Exact assisted state recovery supplies none of those acquisition certificates. |
+| [Quantum Carrier Minimum](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§2–6 | Exact complete five-labelled $M_3$ correspondence retains supplied correlated archives. Its sharp live block lower bound denies accessible pre-supplied assistance; our helper is excluded by that lower-bound contract. No assisted live-dimension minimum is claimed. |
+| [Record Acquisition](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2–9 and 11 | Point-query obstructions, matched bounded-speed order, conditional calibrated area/winding certificate, timing/arithmetic costs and later-loop errors. A correctly acquired winding/parity record could feed controlled action only with that certificate's actual sensor, calibration and joint-source promises. No such record is constructed here. |
+| [Transport–Memory Completion](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12 and 2.18 | Same coherent source, actual common port, aligned times/records, known nonzero amplitudes and record overlap, and actually acquired readings. The helper overlap here is a new calibrated premise, not an unknown interference factor divided out. Orthogonal parity control and nonzero-overlap interference are distinct consumers. |
+| [Process Geometry](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core](https://github.com/the-omega-institute/trureturing/blob/5094da88f161741b61de3b6b16dbc3a115a83d63/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), §§1–3 | One actual joint image, actual domains/routes, distinct rejection and executed failure, archives, reference, permission and complete selection/update fields. A conditional token recurrence does not instantiate the full observer boundary. |
+
+**Literature statement 10.2.** The following accessible primary texts support
+the mature mechanisms or delimit a tempting transfer. The exact source
+formulas, return constraint and excursion deductions are `repo-derived`
+ordinary consequences proved here. No worldwide priority is asserted.
+
+| Primary source | Precise statement and use |
+| --- | --- |
+| Chefles, Jozsa and Winter, [On the existence of physical transformations between sets of quantum states, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: pure-family transformations have positive environment Gram factors; probabilistic outcomes have positive Gram contributions, with a positive remainder for omitted failure. This is the mature mechanism in Theorem 4.2. Our actual continuous-phase reduction, two blocks and sharp scalar optimization are proved explicitly rather than attributed to a generic finite-family theorem. |
+| Nielsen and Chuang, [Programmable quantum gate arrays, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | `literature-attested`: distinct exact deterministic unitary programmes on arbitrary data require orthogonal programme states. Our correlated phase/parity subfamilies are not arbitrary data for two unitary programmes. Theorem 6.1 supplies four actual source inputs and does not import that missing premise. |
+| Chefles and Barnett, [Quantum State Separation, Unambiguous Discrimination and Exact Cloning, quant-ph/9808018v1](https://arxiv.org/html/quant-ph/9808018v1), separation bound and Eq. (18) | `literature-attested`: optimal unambiguous discrimination of a known equiprobable pure pair has conclusive probability $1-|\langle\eta_+,\eta_-\rangle|$. This credits the familiar distinguishability interpretation of $1-\mu$. It does not create the source-owned helper or prove our repeated original-control upper bound. |
+
+Stinespring dilation, positivity of Gram matrices, two-by-two matrix
+positivity, interval intersection, spectral decomposition and controlled
+unitaries are mature mathematics. They are not claimed as new principles.
+The source-specific delta is (PR.10)–(PR.14), the actual full-phase/pair
+distinction, the complete finite memory criterion (PR.25), and the sharp
+realized excursion frontier (PR.27), with their stated assistance contracts.
+Bounded searches of the immutable original-control and fiber suppliers do
+not establish an exhaustive absence or a worldwide novelty claim.
+
+The bibliographic leads DOI `10.1063/1.4961516`,
+`10.1090/S0025-5718-01-01307-2` and `10.5402/2011/164564` have no verified
+primary text in this source's evidence boundary. No theorem premise is
+imported from them. The proofs above do not depend on those leads.
+

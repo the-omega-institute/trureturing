@@ -1,0 +1,51 @@
+**Proposition 9.5 (Flow form of the phase-target coefficient).** Orient
+each positive edge $e=(u,v)$ arbitrarily, with incidence column
+$b_e=e_u-e_v$, so a positive flow has divergence $+j_e$ at its tail
+and $-j_e$ at its head. Let $B$ collect these columns and
+$G=\operatorname{diag}(g_e)$. For component-balanced $\ell$,
+
+$$
+L_\eta=BGB^{\mathsf T},\qquad
+R_\eta(\ell)
+=\min_{Bj=\ell}\sum_{e\in E_\eta}\frac{j_e^2}{g_e}.
+\tag{9.15}
+$$
+
+An optimizer is
+
+$$
+x=L_\eta^+\ell,\qquad j^*=GB^{\mathsf T}x.
+\tag{9.16}
+$$
+
+Proof. The incidence product is (9.6), and
+$Bj^*=L_\eta L_\eta^+\ell=\ell$. Its energy is
+
+$$
+(j^*)^{\mathsf T}G^{-1}j^*
+=x^{\mathsf T}L_\eta x
+=x^{\mathsf T}\ell
+=\ell^{\mathsf T}L_\eta^+\ell.
+$$
+
+Every other feasible flow is $j^*+z$ with $Bz=0$. The cross term is
+
+$$
+(j^*)^{\mathsf T}G^{-1}z=x^{\mathsf T}Bz=0,
+$$
+
+so its energy is that of $j^*$ plus
+$z^{\mathsf T}G^{-1}z\ge0$. This proves the minimum and its unique
+flow, including disconnected graphs when the sources are balanced
+component by component. If a component is unbalanced, summing $Bj$
+over that component always gives zero, so no flow is feasible and
+the empty infimum is $+\infty$, in accord with (9.9). $\square$
+
+For $\ell=e_u-e_v$ with $u\ne v$ in the same component, (9.15) is
+the ordinary effective resistance between those vertices. Different
+components give infinite resistance, while $u=v$ gives zero.
+This is the classical electrical flow principle applied to the
+statistical conductances (9.6). The flows and potentials are
+mathematical variables; they do not certify physical currents or
+a circuit implementation of the coherent experiment.
+

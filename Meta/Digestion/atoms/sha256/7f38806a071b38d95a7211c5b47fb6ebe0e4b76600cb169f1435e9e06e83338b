@@ -1,0 +1,26 @@
+### 97.5. Ramified primes dividing d
+
+Fix p|d. The certificate equation and primitiveness imply p does not divide c. Indeed, if p|c, reduction first forces p|a; since l has valuation one, comparison modulo p^2 then forces p|b, contradicting the common gcd. Therefore comparing the opposite-parity valuations of a^2 and l b^2 gives v_p(b)=0 and v_p(a)>=1. In particular
+
+ beta^2=-eta e modulo p, where beta=b/c.
+
+The local point t=1,z1=-beta,z2=alpha extends by Hensel to z3=-2beta modulo p, satisfying z3^2=beta^2-h. At that point
+
+ L3=2l b^2/c,
+ L2=beta(3beta+1)^2/2 modulo p.
+
+If 3beta+1 vanishes, use the other Hensel root z3=2beta modulo p; then
+
+ L2=-3beta(beta-1)^2/2 modulo p.
+
+This is a unit in the exceptional case, since p>3. Thus a choice always makes L2 a unit. The actual prime p is1mod12, so (-1/p)=(-3/p)=1, and (5/p)=1. The character of2 can be either sign. Writing l=p l', the odd-prime Hilbert formula gives
+
+ (L3,d)_p=(2/p)(c/p),
+ (L2,d)_p=(beta/p)(2/p)=(b/p)(c/p)(2/p).
+
+For the first equality, the possibly nonsquare unit d/p appears twice and cancels, while l'/ (d/p)=5^epsilon has positive character. Thus the product is (b/p), with both the2-character and the c-character from these two displayed factors cancelling. Since b^2=-eta e c^2 modulo p,
+
+ (b/p)=(-eta e/p)_4 (c/p).
+
+This proves the contribution claimed in Gamma. It also shows explicitly why pairs of primes13mod24 may be included: their individual2-characters need not be positive.
+

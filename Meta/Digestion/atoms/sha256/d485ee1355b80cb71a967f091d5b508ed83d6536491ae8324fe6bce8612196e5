@@ -1,0 +1,56 @@
+**Corollary 206.11 (Signed completion and the exact family optimum).**
+For any input (206.7) and any score from 206.10, compute all four
+columns of (206.10), and let $\theta=\max(0,\sigma_H(Q(y)-Q(V)))$.
+The single inequality $D+\theta\le1$ certifies $Q(y)\in E_N$.
+The differences $a,b,R_k,W'-W$ may have either sign.
+
+If $\eta=\gamma$ and $W'=W\ge2\mu$, zero residual budget is
+possible exactly when
+
+$$
+c_1+c_2\le E,\qquad c_2\le\gamma_2.
+\tag{206.30}
+$$
+
+The largest feasible $\min(c_1,c_2)$ is
+
+$$
+r_* =\min\{\mu,E/2,\gamma_2\},
+\qquad c_1=c_2=r_*,
+\tag{206.31}
+$$
+
+and the minimum cost within this fair family under zero residual
+budget is $\max\{0,3\mu-W,(\mu-r_*)/2\}$.
+For $\mu>2$, a data-only sufficient region is
+
+$$
+W\ge3\mu-1,\qquad E\ge2(\mu-2),\qquad\gamma_2\ge\mu-2.
+\tag{206.32}
+$$
+
+If a unit-$O$ input has three distinct late classes of total $\mu$,
+the first inequality in (206.32) is automatic.
+
+**Proof.** The signed certificate is (206.11)–(206.12).
+With the retained late profile and anchor, the $o,p$ residual readings
+force (206.30). Conversely its value at any point of $H_L$ is
+
+$$
+-(E-c_1-c_2)(1-b_1)-(\gamma_2-c_2)(b_1-b_2)\le0,
+$$
+
+so those two conditions suffice. If $r=\min(c_1,c_2)$, they imply
+$r\le\mu$, $2r\le E$ and $r\le\gamma_2$; (206.31) attains all
+of them. Substitution in (206.29) proves the family minimum.
+No condition $c_1\le\gamma_1$ is needed: signed domination is not
+rowwise subtraction. The second early coordinate is essential;
+swapping early labels would change the $p$ reading.
+Under (206.32), $r_*\ge\mu-2$ and $D\le1$.
+For three maximum late labels, query the earliest two and guess the
+third on exhaustion. Every word in those classes is collected
+regardless of its later zeros, so $W+\delta\ge3\mu$.
+This proves the final assertion. The exact formulas continue to apply
+for $\mu\le2$ whenever their displayed hypotheses hold; the optimum
+is only within the specified family, not over all scores. $\square$
+

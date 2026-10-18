@@ -1,0 +1,72 @@
+**Corollary 14.4 (one original primitive separates every off-counterpart
+pair).** For $h,k\in\Gamma$ with $k\notin\{h,\tau h\}$, there is one
+original primitive experiment $a$, lawful and executed at $h$, for which
+the partial original responses at $h,k$ differ. If it executes lawfully
+at both, the difference is already witnessed by their successor
+original13/latch5/absolute-receipt selections. Consequently
+
+$$
+\begin{aligned}
+h\sim_Q k&\quad\Longrightarrow\quad\nu(h)=\nu(k),\\
+\nu(h)=\nu(k)&\quad\Longleftrightarrow\quad k\in\{h,\tau h\},
+\qquad h,k\in\Gamma.
+\end{aligned}
+$$
+
+Proof. At a prescribed non-IN row of $h$, take Advance. At an IN row,
+choose one constant bit $b$ with $p(h)b\in\mathsf P_7$ and take
+Supply$(b)$. Such a bit exists: an extendible proper frame prefix has
+an extension, while a completed frame is not followed by another
+source IN within this call. Corollary 11.6 supplies a successful
+original primitive at every stated cut. This is one constant one-node
+test for the comparison, not a branch that inspects hidden state or a
+claim of one globally fixed test for all cuts.
+
+If at $k$ that Supply is physically enabled but outside the canonical
+task domain, its partial response is undefined there. This differs
+from the defined response at $h$; it is not a returned value or a
+refusal. A disabled or unauthorized attempt instead has the defined,
+unexecuted `none` response and no receipt. If the action executes on a
+refusal path, its actual label/output and complete changed successor
+remain an executed response. These cases are not identified.
+
+It remains to consider execution of the same lawful primitive at both
+cuts. Both successors lie in the decoding intervals just proved. If
+their selected triples were equal, Theorem 14.3 would recover the same
+actual reference-entry predecessor from each response. Thus
+$\nu(h)=\nu(k)$. The involution and disjoint entry trees then give
+$k=h$ on the same sheet and $k=\tau h$ on the other, a contradiction.
+So the triples, and therefore the complete original responses, differ.
+Equality of all original partial response maps implies equality for
+this one test, proving the implication.
+
+The quantifier does not require simultaneous lawful execution when
+there is a task-domain distinction. When both executions occur, each
+adds one actual receipt, one tick and two native fee units. Their
+absolute successor counts are $n(h)+1,n(k)+1$; no order between counts
+on different branches has been assumed. All gate/setup, retention,
+source work, copies, checks, ACKs and returns keep their actual costs.
+Definition 8.5 and Proposition 13.6 retain each history's own full
+native and structural entrance bills. The mathematical recovery has
+no asserted native execution cost and inserts no driver row.
+
+Theorem 11.4 already gives the separate history inverse of each
+$S,B,T,M_{\rm ret}$ on this domain. The corollary localizes any remaining
+failure of original-$Q$ recovery of those independent views to the
+actual synchronized mates. It proves neither equality nor separation
+of their complete $Q$ responses, and decides neither inclusion nor
+exclusion of retained inactive $C_L$ in those responses. The substantive
+conclusion is which actual cross-entry histories can remain ambiguous,
+with the response-to-counterpart inverse; a bound on fibre cardinality
+alone would not determine that correspondence.
+
+This remains a first-call result with the two fixed actual parameters.
+Obligations 10.2–10.3 remain for alternative bootstrap task admission,
+other raw inputs, added stages, rolling entries, changed return,
+unfinished history flights, final00 without later Ready and terminal
+comparisons, and for genuine acquired material and its authorized paid
+use. The unchanged original task, parked client, occupied verifier and
+INITIAL consumer, absorbing halt, and alpha/beta ordered nonassociative
+source are retained. No faithful paid $\mathcal D_1$ cycle or extension
+of the four-view theorem to those remaining domains is implied. ∎
+

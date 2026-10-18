@@ -1,0 +1,55 @@
+**Theorem 10.9 (Full-gradient local joint error).** Suppose a regular
+measurement as in Theorem 10.8 admits finite-covariance estimators
+$\widehat\xi,\widehat\Phi$ with reference means zero and full local
+expectation Jacobian $I_{2r}$ in the family (10.21). In particular, each
+estimate has zero expectation derivative in the other parameter block.
+Let their reference marginal covariance blocks be $\Sigma_\xi$ and
+$\Sigma_\Phi$. Then
+
+$$
+\operatorname{Tr}(G\Sigma_\xi)
++4\operatorname{Tr}(G^{-1}\Sigma_\Phi)\ge\frac{4r}{N}.
+\tag{10.31}
+$$
+
+Proof. Use positive symmetric square roots of $G$ and standardize by
+
+$$
+u=G^{1/2}\xi,\qquad v=2G^{-1/2}\Phi.
+\tag{10.32}
+$$
+
+The corresponding estimates retain the full identity Jacobian.
+The transformed Fisher blocks are
+$F_{uu}=G^{-1/2}F_{\xi\xi}G^{-1/2}$ and
+$F_{vv}=\tfrac14G^{1/2}F_{\Phi\Phi}G^{1/2}$.
+Thus (10.25) becomes $F_{uu}+F_{vv}\preceq NI_r$.
+For each coordinate $j$, the scalar score identity and Cauchy–Schwarz
+give
+
+$$
+1=\mathbb E_0[\widehat u_j S_{u_j}],\qquad
+\operatorname{Var}_0\widehat u_j\ge\frac1{(F_{uu})_{jj}},
+\qquad
+\operatorname{Var}_0\widehat v_j\ge\frac1{(F_{vv})_{jj}}.
+\tag{10.33}
+$$
+
+Here the scores are those of the whole $N$-copy outcome law, so its
+$F$ already includes the sample count. A zero denominator makes
+the score zero almost surely and contradicts the identity with one;
+then joint local estimability with finite covariance is impossible.
+When both are positive, writing $a=(F_{uu})_{jj}$,
+$b=(F_{vv})_{jj}$ gives
+$a+b\le N$ and $1/a+1/b\ge4/(a+b)\ge4/N$.
+Sum over $j$ and use
+$\operatorname{Cov}\widehat u=G^{1/2}\Sigma_\xi G^{1/2}$,
+$\operatorname{Cov}\widehat v=4G^{-1/2}\Sigma_\Phi G^{-1/2}$
+to obtain (10.31). $\square$
+
+Only marginal variances enter this trace, but neither classical
+cross Fisher blocks nor cross covariance blocks have been assumed zero
+in the proof. The weights specify a dimensionless total error in these
+coordinates; they do not assert a universal physical uncertainty
+normalization for arbitrary choices of relation units.
+

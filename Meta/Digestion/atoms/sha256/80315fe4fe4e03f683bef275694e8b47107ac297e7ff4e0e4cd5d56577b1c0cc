@@ -1,0 +1,15 @@
+**Definition 252.1 (Fair score and canonical tables).** Set
+$A_w=P_w=0$, $C_w=2^{-(L-n)}$ for $w\in\Omega_n$, and $T=1$.
+Call this full score $\zeta$. For a law $p$ let
+
+$$
+\Phi(p)=\zeta\cdot z_p=p_{w^+}(0)
+ +\sum_n\frac1{2^{L-n}}\sum_{w\in\Omega_n}p_w(n),
+\qquad\kappa=3-\Phi(p).
+\tag{252.1}
+$$
+
+A canonical pair is $N(i,j;i,i,j,r)$ with $r=0$ or $r>j$.
+It is already stopped. Let $\nu$ be the mass of every noncanonical
+table, including constants and singletons, in the same decomposition.
+

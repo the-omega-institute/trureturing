@@ -1,0 +1,19 @@
+**Definition 7.1 (finite serial skeleton).** A skeleton is a finite
+four-reply tree with read vertices and absorbing halt leaves. Each read
+vertex carries one fixed physical word $p_v$ and one fixed epoch $n_v$.
+Epochs are at least $N$ and nondecreasing along each root-to-leaf path.
+Before a read execute exactly the difference from the preceding actual
+epoch by forward updates. Halts add no updates. For a leaf $t$ define
+
+$$
+\begin{aligned}
+D_t&=\{u\in D:
+ r_{\rho^{n_v}u}(p_v)=c(v,t)\text{ at every read ancestor }v\},\\
+c_t&=(k_t,n_t-N,\sum_{v\prec t}|p_v|),
+\end{aligned}
+\tag{NSF.13}
+$$
+
+where $k_t$ counts read ancestors, $n_t$ is the last read epoch, and a
+root halt has $n_t=N$. These are entire jointly constrained path fibers.
+

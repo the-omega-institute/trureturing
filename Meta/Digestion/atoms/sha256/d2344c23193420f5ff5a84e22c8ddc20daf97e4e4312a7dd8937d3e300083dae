@@ -1,0 +1,55 @@
+**Definition 69.1 (Uniform order-calibration modulus).** Let $Q$ be a nonempty
+countable subset of $\{0,1\}^{\mathbb N_{>0}}$, with occupied prefix neighborhoods
+
+$$
+U_m(q)=\{q'\in Q:q'_i=q_i\ (1\le i\le m)\},
+\qquad m\in\mathbb N_0,
+\qquad U_0(q)=Q.
+$$
+
+At each fixed depth these sets form a clopen partition of $Q$, and
+$U_{m+1}(q)\subseteq U_m(q)$. Let $(\Theta,\mathcal F,\sigma)$ be a nonempty
+probability carrier, let $\mathcal G\subseteq\mathcal F$ be a sigma algebra, and
+choose finite nonnegative $\mathcal G$-measurable representatives of density
+classes satisfying
+
+$$
+g_q\ge0,
+\qquad
+\int g_q\,d\sigma=1
+\qquad(q\in Q).
+\tag{69.1}
+$$
+
+The law $g_q\sigma$ is on the entire $\mathcal F$. For each $q$ and $m$ put
+
+$$
+\underline g_m(q)(\theta)=\inf_{q'\in U_m(q)}g_{q'}(\theta),
+\qquad
+a_m(q)=\int\underline g_m(q)\,d\sigma,
+\tag{69.2}
+$$
+
+and define the uniform calibration modulus
+
+$$
+\boxed{
+\Omega_g(m)=\sup_{q\in Q}\bigl(1-a_m(q)\bigr).
+}
+\tag{69.3}
+$$
+
+The infimum is measurable because $Q$ is countable. It lies between zero and
+$g_q$, so $0\le a_m(q)\le1$. The measure $\underline g_m(q)\sigma$ is the
+greatest common submeasure of the selected laws
+$\{g_{q'}\sigma:q'\in U_m(q)\}$. Indeed any common submeasure is absolutely
+continuous with respect to $\sigma$, and its Radon--Nikodym density is at most
+each of the countably many $g_{q'}$ off a single null set, hence at most their
+infimum. We call $g$ uniformly order-calibrated when $\Omega_g(m)\to0$.
+
+Changing representatives for the countable family changes them only on a
+countable union of measurable $\sigma$-null sets. Off that one set every
+infimum in (69.2) is unchanged, simultaneously for all $q,m$. Thus (69.2)--(69.3)
+are representative independent. The same convention applies to countably many
+families and their limits below.
+

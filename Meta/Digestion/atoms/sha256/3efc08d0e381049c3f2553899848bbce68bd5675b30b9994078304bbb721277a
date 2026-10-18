@@ -1,0 +1,4 @@
+**Proposition 3.4 (Empty and singleton reset cases).** For $n<5$ there is no reset index. At $n=5$ and $n=6$, the full-complement space on each reset event is a singleton, and $V_2(n)=0$.
+
+Proof. At $n=5$ the anchors at $1,5$ force bits $2,4$ to zero, specifying every bit except the center. At $n=6$, the reset at $i=3$ has anchors at $1,5$, which also force bit $6$ to zero; the reset at $i=4$ is the reflected case. Thus the full-complement posterior is constant on each such event. A variance on a singleton is zero. $\square$
+

@@ -1,0 +1,25 @@
+**Corollary 7.4 (Activity-law transfer and the remaining quantifiers).**
+At $2\le n\le6$, the joint optimum in Definition 5.1
+equals $\max_\omega\gamma(\omega)$, and every
+overall optimum has $r=1$ and a phase-optimal site
+distribution. At every $n\ge2$, $r=1$ is optimal
+for the fixed uniform site distribution. At $n\ge7$,
+the inequality for arbitrary positive nonuniform
+weights not covered by Theorem 7.3 remains an open
+question here.
+
+Proof. The finite connected legal graph and uniform
+positive weights give a positive phase gap, while
+continuity on the compact weight simplex gives a
+phase maximizer. Apply (7.4), or Theorem 7.3 with
+(5.8), respectively. The compression argument
+does not automatically extend: at $n=7$ a $3+4$
+split has ambient dimension 40 and legal dimension
+34, so (7.8) requires eight low-band vectors.
+The length-three block supplies two; the
+length-four $2+2$ compression guarantees three,
+so this count supplies only six. Neither this
+failed count nor the sufficient certificate proves
+or refutes the remaining universal inequality.
+$\square$
+

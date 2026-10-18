@@ -1,0 +1,44 @@
+**定义 1.1（逐原子采集与实际纤维）。** Let $\mathcal W_3$ consist of
+the triples $W=(P,g,\delta)$ with $P$ a strictly entrywise positive real
+$2\times2$ matrix of rank one and trace one, $0\ne g\in\mathbb R[T]$ of
+degree at most three, and $\delta\in\mathbb R$. Put
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{M,J\}.
+$$
+
+The original-clock reading is
+
+$$
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta.                 \tag{1.1}
+$$
+
+The initial reading counts. Each atom is immediately read on the single
+unresettable, uncopyable trajectory. Eight total readings use precisely
+clocks $0,\ldots,7$. There are no skipped readings, unread compound
+actions, empty-action readings, clock renumberings or additional ports.
+Actions, stops and complete-target answers may be arbitrary deterministic
+functions of the entire actual history, without regularity assumptions.
+All gain signs, lower degrees, sampled roots and repeated roots remain
+legal. These are the conventions of [II, Definition 51.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md).
+
+Let $\mathcal F(H)$ retain every action and reading of a literal history.
+For a known set $K\subseteq\mathcal F(H)$, use II, Definition 56.1:
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_{r+1}(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_r(K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}                                                   \tag{1.2}
+$$
+
+The horizon is bounded by the remaining original clocks. Every child
+uses the same fixed worlds and their shared ancestors. Responses to
+unchosen actions are mathematical functions of those worlds; they are
+not additional acquisitions. The negation of $L_r$ means recovery of
+the whole known set within $r$ further readings, including early stops.
+

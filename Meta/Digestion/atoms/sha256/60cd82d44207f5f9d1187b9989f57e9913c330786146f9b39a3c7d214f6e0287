@@ -1,0 +1,46 @@
+**Proposition 271.3 (A sharp additional measured spill in the old support).**
+Let $Y$ be the capacity score of
+[Section 204.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md):
+$C_{v^j}=1$ for $j\in J$,
+$P_{01z}=P_{10z}=\nu(z)/2$, and $T=1$.
+Its inherited values are
+$W_Y=B_N(Y)=B_O(Y)=c_m+1$,
+$K_Y=m+c_m+1$, $\beta_j=1$ on $J$ and zero otherwise.
+For every arbitrary allocation $\lambda\ge0$, even without cap
+feasibility,
+
+$$
+Y\cdot z(\lambda)+\eta+X_{\rm cross}+G_{\rm seed}
+=(c_m+1)M.
+\tag{271.5}
+$$
+
+Consequently $Y\cdot z(\lambda)+\eta\le(c_m+1)M$.
+The coefficient one of $\eta$ is sharp with these other rewards.
+
+**Proof.**
+Using equal mass only, the early pair contribution of $Y$ is
+$c_mM-\frac12\int(\mu_{01z}(J)+\mu_{10z}(J))\,d\nu
+-X_{\rm cross}$.
+Its late-correct contribution is
+$\mathcal T+\sum_{j\in J}\mu_+(j)$, and its positive
+contribution is $\mu_+(0)$.
+The sum of the latter two non-trace terms is $M-\eta$.
+Substitute $\frac12\int(\cdots)=\mathcal T+G_{\rm seed}$;
+the trace cancels and (271.5) follows.
+For the legal table $O(1,2;1,2,1)$ the old $Y$ reward is $c_m$,
+$\eta=1$, and $X_{\rm cross}=G_{\rm seed}=0$.
+The anchor $R$ has reward $c_m+1$ and $\eta=0$.
+A larger coefficient of $\eta$ would fail at the former table.
+
+Dropping charges in (271.3) recovers the inherited scalar bound
+$E_b\le(c_m-2)e$, equivalently
+$\sum_{j\in J}(b_j-e)\le(c_m+1)e$; neither that scalar cut
+nor the old zero-cost $Y$ ray is a new assertion here.
+The additional information is the exact joint charge at the same
+law and the sharp measured spill in (271.5).
+The positive event $\{0,1,2\}$ is not substituted for the original
+positive row $\{0\}$ and is not added to the allowed score cone.
+The identity supplies a necessary relation, without an unrestricted
+payer for a general input score. $\square$
+

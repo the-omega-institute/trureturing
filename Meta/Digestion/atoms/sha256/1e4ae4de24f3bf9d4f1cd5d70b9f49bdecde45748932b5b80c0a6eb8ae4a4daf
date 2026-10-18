@@ -1,0 +1,20 @@
+**Convention 7.2 (remaining mathematical and operational boundaries).**
+The existence question for this code on this full fiber, and its first
+possible two-call state budget, are settled by Theorems 4.1--6.1.
+There is no classification here of all nine-state-compatible codes,
+the general prescribed-code frontier, or an effective decision test
+for an arbitrary supplied computable code. Other call budgets are not
+classified; in particular no root-only impossibility for larger call
+budgets follows from the two-call argument.
+
+The conclusions require every service and access condition in Assumption
+3.1 and the exact finite state-only restriction in Definition 3.2.
+They construct no physical acquisition, export, isolation or entry
+mechanism. An image inverse constructing a finite witness is not a
+physical inverse operation on the register. No equivalence with physical
+storage, time, energy, address cost or total work is asserted. A program
+with a computed address, extra workspace or another source port requires
+a separate correspondence before these state bounds apply. Nothing here
+asserts an empirical machine-learning conclusion, external mathematical
+priority, or a Lean/kernel-verification consequence.
+

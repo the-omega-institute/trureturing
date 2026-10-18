@@ -1,0 +1,53 @@
+**Definition 2.2 (The stationary consecutive-read law).** For $i\in\{0,1\}$ and $0<q<1$, put
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,
+& f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),
+& f_{i,q}(0)&=0,\\
+S_{i,q}(b)&=\sum_{k\ge b}f_{i,q}(k)\quad(b\ge0),
+&\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{2.4}
+$$
+
+The law $\mathsf P_{i,q}$ on $X_0,X_1,\ldots$ is specified as follows. Draw the first tick time $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=\frac{S_{i,q}(b)}{\mu_i(q)}\quad(b\ge0).
+\tag{2.5}
+$$
+
+Place zeros before $\tau$ and a one at $\tau$. Independently draw iid zero counts $K_1,K_2,\ldots$ with law $f_{i,q}$, and put further ones at
+
+$$
+\tau_0=\tau,
+\qquad \tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1).
+\tag{2.6}
+$$
+
+All remaining bits are zero. This is exactly the continuation's stationary forward-wait convention (23.4)–(23.6). In particular $S_{i,q}(0)=S_{i,q}(1)=1$. The first wait has the survival-normalized law (2.5), rather than the complete-gap law $f_{i,q}$.
+
+The normalization and mean follow from nonnegative summation:
+
+$$
+\sum_{b\ge0}S_{i,q}(b)=\sum_{k\ge1}(k+1)f_{i,q}(k)=\mu_i(q),
+\qquad
+\mathbb E_{i,q}\tau
+=\frac1{\mu_i(q)}\sum_{k\ge1}\frac{k(k+1)}2f_{i,q}(k)
+=\beta_i(q).
+\tag{2.7}
+$$
+
+Each moment is finite at every interior $q$. We use the source's polynomial-geometric moment estimates (23.7), attributed there to equations (18.13) and (20.29): with $s=-\log q$,
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),
+\qquad \mu_i(e^{-s})=\frac{10}{s}+O_H(1),
+\qquad \beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+\tag{2.8}
+$$
+
+For parameter correspondence, if $R_j(q)=\sum_{k\ge1}k^jq^k$, the ordinary power-sum identity is $R_j(e^{-s})=(-d/ds)^j(1/(e^s-1))$. Its leading term is $j!s^{-j-1}$. The monic degree-nine terms therefore yield the three leading orders in (2.8); the lower-degree coefficients contribute lower orders. No numerical evaluation or finite sampling supplies an all-integer premise here.
+

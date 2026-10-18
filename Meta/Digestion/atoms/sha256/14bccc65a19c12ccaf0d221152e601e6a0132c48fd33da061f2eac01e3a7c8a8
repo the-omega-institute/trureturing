@@ -1,0 +1,48 @@
+**Corollary 54.1 (each rank-at-most-two center is insufficient for a fidelity-threshold violation).** Let $N:M_3\to M_5$ be any actual original-real-Kraus CPTP encoder of the original phase-difference spectrum $(a,\beta,0,-\beta,-a)$, $0<\beta\leq1/2$, now with arbitrary actual encoder Kraus rank $r\leq9$. Retain its actual $V:\mathbb C^3\to\mathbb C^5_B\otimes E$ and complement $\Gamma$. For each individual environment density $\omega$ of rank at most two,
+
+$$
+\min_{\rho\in\mathcal S}F_\rho(\Gamma,\mathcal C_\omega)\leq\sqrt{T_\beta},
+\qquad
+F(\Gamma,\mathcal C_\omega)\leq\sqrt{T_\beta}.
+\tag{R.294}
+$$
+
+These are root channel fidelities on complex input purifications, with all finite complex references permitted. Under the unrestricted recovery/complement interface, a violation $g_N^2>T_\beta$ could therefore only be witnessed by a center of rank at least three. This statement imposes no rank restriction on the actual encoder or on its allowed complex whole-output CPTP recoveries.
+
+**Proof.** In the actual environment of dimension $r$, (R.3) still gives the convex-combination formula in (R.271), now with $0\preceq\tau_\psi\preceq aI_E$ and trace one. The phase marginals have eigenvalues $a,\beta$ on their supports and zero elsewhere. Coordinate changes retain the original transported antiunitary as in Definition 52.1.
+
+For a rank-two $\omega$, put $P=\operatorname{supp}\omega$ and purify it using $F=\mathbb C^2$, with $P$ coordinates diagonalizing the center as $\operatorname{diag}(s,t)$. Keep the actual $V$ into $B\otimes E$, rather than replacing it by a two-dimensional-environment encoder. The Uhlmann contraction is still $U:\mathbb C^5\to\mathbb C^3\otimes F$; thus one common $\eta\in\ker U^\dagger$ gives exactly (R.272). The projected target marginal $M_\psi$ is supported on $P$, with the same two-by-two expression (R.273). For the actual contracted marginal the argument there still gives
+
+$$
+|\langle\psi|A_{\omega,U}|\psi\rangle|
+\leq f(\tau_\psi,M_\psi)
+=f(Q_\psi,M_\psi),\qquad
+Q_\psi=P\tau_\psi P\big|_P,\quad
+0\preceq Q_\psi\preceq aI_2,\quad \operatorname{Tr}Q_\psi\leq1.
+\tag{R.295}
+$$
+
+The fidelity equality follows from $\sqrt{M_\psi}\tau_\psi\sqrt{M_\psi}=\sqrt{M_\psi}Q_\psi\sqrt{M_\psi}$ on $P$; no commutation of $P$ with $\tau_\psi$ is assumed. Its trace may be strictly below one, so normalization must not be silently imposed.
+
+For $0<t\leq\beta$ the $X$ in (R.276) still satisfies $X_{11}\geq X_{22}>0$, and
+
+$$
+\operatorname{Tr}(Q_\psi X)
+=X_{22}\operatorname{Tr}Q_\psi+(X_{11}-X_{22})(Q_\psi)_{11}
+\leq X_{22}+a(X_{11}-X_{22})
+=aX_{11}+\beta X_{22}=f_t.
+\tag{R.296}
+$$
+
+Thus (R.277)–(R.284) apply unchanged to the compressed marginal. For $t\geq\beta$, $X=I_2$ uses $\operatorname{Tr}Q_\psi\leq1$ and yields the same bound $1-z^\dagger\omega z/2$ as (R.285). The third-input norm bound and the normalization $\operatorname{Tr}G+\|b\|^2=1$ are unchanged. Consequently the identical scalar comparisons and contradiction (R.287) establish (R.270) at this fixed center and every contraction, without imposing encoder rank two.
+
+For a rank-one center $\omega=|e\rangle\langle e|$, any pure $\psi\in\mathcal C$ already has
+
+$$
+F_\psi(\Gamma,\mathcal C_\omega)^2
+=\langle e|\tau_\psi|e\rangle\leq a<T.
+\tag{R.297}
+$$
+
+This is also the $t=0$ case if $F$ is padded to dimension two. At each fixed rank-two center, the compact bilinear minimax exchange between $\mathcal S$ and the contraction ball, as justified in (R.291), gives $\min_{\rho\in\mathcal S}h(\rho,\omega)\leq v$. Rank one satisfies that conclusion directly by (R.297). Minimizing over all input densities can only decrease it, proving (R.294). Unrestricted duality $g_N=\max_\omega F(\Gamma,\mathcal C_\omega)$ then proves the stated necessary rank condition for a fidelity-threshold violation. $\square$
+

@@ -1,0 +1,173 @@
+**Definition 273.2 (One full conic allocation and its scores).**
+Let $R=O(1,2;1,2,0)$, $\alpha=(1,1,0,\ldots,0)$,
+$\mathbf r=z_R=d(\alpha,0)$, and set
+
+$$
+G_C=(z_D-\mathbf r)_{D\in\mathcal D_C},\qquad
+h(b,e)=d(b,e)-\mathbf r.
+\tag{273.2}
+$$
+
+One full allocation $\lambda_D\ge0$ has finite mass
+$M=\sum_D\lambda_D$ and equal-mass word measures
+$\mu_w=\sum_D\lambda_D e_{D(w)}$.
+Full conic feasibility means $G_C\lambda\ge h(b,e)$ on all rows,
+or, with $\eta_n=[n\le2]$,
+
+$$
+\begin{aligned}
+\mu_w(0)&\ge1-b_n-e+(M-1)(1-\eta_n),\\
+\mu_w(n)&\ge b_n-e+(M-1)\eta_n,\\
+\mu_w(\{0,n\})&\ge M-e\quad(w\in\Omega_n),\\
+\mu_+(0)&\ge M-e.
+\end{aligned}
+\tag{273.3}
+$$
+
+The same allocation supplies every word measure; its cell vectors
+have equal mass and are not independently funded laws.
+At $M=1$ these are probability kernels.
+
+A full score $y=(A_w,C_w,P_w;T)\ge0$ has reward
+
+$$
+g_y(w,r)=A_w[r=0]+C_w[r=n]+P_w[r\in\{0,n\}]
+\quad(w\in\Omega_n),\qquad g_y(+,r)=T[r=0].
+\tag{273.4}
+$$
+
+Brackets denote indicators. Define
+
+$$
+\begin{gathered}
+W_y=y\cdot\mathbf r,\quad B_C(y)=\max_D y\cdot z_D,
+\quad\Delta_C(y)=B_C(y)-W_y\ge0,\\
+\beta_n=\sum_{w\in\Omega_n}(C_w-A_w),\qquad
+K=\sum_{w\ne+}(A_w+C_w+P_w)+T,\quad Qy=(\beta;K),\\
+F_q(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke,
+\qquad F_y=F_{Qy}=y\cdot h(b,e).
+\end{gathered}
+\tag{273.5}
+$$
+
+For a fixed feasible allocation its actual score slack is
+$S_y=y\cdot(G_C\lambda-h)\ge0$.
+The auxiliary closed hull and its feasible-cone part are
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\ &1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\quad b_2=b_3,\\
+&0\le E_b:=\sum_{n=3}^Lb_n-(L+1)e\le1-b_1\},\\
+H_N&=\{(b,e)\in H_L:\exists\lambda\ge0,\ G_N\lambda\ge h(b,e)\},
+\qquad\sigma_H(q)=\max_{H_L}F_q.
+\end{aligned}
+\tag{273.6}
+$$
+
+These are the complete-score coordinates of Sections 198–199 and
+[Definitions 251.1–251.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XV.md#251-complete-kernels-event-scores-and-original-source-applicability).
+No sign restriction is placed on a quotient difference.
+
+**Mathematical scope 273.3 (Actual source, carrier and resources).**
+The source and replies throughout are the original objects
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)=1+F_rg,\quad q_i(x)=[p_i\mid N(x)],
+\quad n(x)=\min\{i:q_i(x)=0\}.
+\end{gathered}
+\tag{273.7}
+$$
+
+The primes $p_i$ increase. Replies are static and the first absence
+is finite. Boundaries, Theorem 35.2, with its entry-rank supplier,
+realizes every finite Boolean pattern, including every multiple-zero
+word used here. Its CRT and growing-window argument is the arithmetic
+supplier; no distribution on sources is introduced.
+
+The full carrier is the Borel disjoint union
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$ of copies
+of $(0,1)$. The unchanged consumer returns unknown on $B_j$ and
+proposes $j$ on $P_j$, without prime requests. Its original nonatomic
+targets remain those of Source-Correlated Laws, Theorem 67.5,
+and Acquisition Resources, Definitions 71.1 and 73.1: for fixed
+$h_0\in(0,1)$, put $t_x=\sum_i3^{-i}q_i(x)$,
+$Z_t=\int_0^1\exp(tu)\,du$, let $\nu_x$ have density
+$\exp(t_xu)/Z_{t_x}$ on $B_{n(x)}$, and let $\pi_j$ be uniform
+on $P_j$. The target is
+$\mu_x^{\rm orig}=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, where
+$\Omega(x)$ counts distinct prime divisors of $N(x)$.
+
+The comparison targets here are separately selected marked laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                  +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\quad j\ge0,
+\quad 1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+\tag{273.8}
+$$
+
+A finite marked law has TV distance one from each unchanged
+nonatomic target, by its finite support. Marked-law estimates give
+no accuracy assertion against those targets.
+
+A probability allocation is executed with one source-independent
+$U\sim\operatorname{Unif}[0,1)$ selecting the entire schedule and
+all counterfactual terminal outputs before replies. There is zero
+advice and sourcewise almost-sure finite handoff. Every actual
+request, repeated or ignored, counts toward two. No address,
+runtime, depth or mean-request bound replaces this count.
+Original competitors may use arbitrary addresses and output anywhere
+on $\Theta$.
+
+The normalized stopped criterion of Theorem 109.1 uses $c\ge H$;
+its scalar budget is redundant after normalization. Theorem 110.2
+supplies exact closed-cap class feasibility for arbitrary original
+addresses and full-carrier outputs. Its necessity uses the countable
+source's common probability-one termination event, control of the
+whole preselected schedule, actual finite-pattern witnesses and
+compactness of a finite catalog simplex. It supplies some complete
+finite representative. It need not preserve a starting law, seed
+coupling, curvature or table decomposition. Conversely a finite
+probability allocation emits the actual original marks; the same-seed
+counted completion is the supplier of Proposition 90.2.
+
+For an entire sequence (273.8) and a positive closed cap $e$, the
+actual active length is
+$L_a=\max(\{i:a_i>e\}\cup\{0\})$. Apply a finite theorem only
+in its stated length range. Every actual $n>L_a$ retains its positive
+amplitude, including $a_n=e$. A finite marked kernel has exact tail
+error
+
+$$
+\operatorname{TV}\left(\sum_{r=0}^Lp_+(r)\delta_{\theta_r},
+           (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p_+(0),a_n\}\quad(n>L).
+\tag{273.9}
+$$
+
+This follows from overlap mass $\min\{p_+(0),1-a_n\}$.
+The finite positive word records actual later-zero sources; it is
+not an infinite all-positive source. Proof averages below add no
+operational seed, observation or prior on sources.
+
+For conic mass $M\ge1$, division changes the auxiliary profile:
+
+$$
+x=(1-1/M)\alpha+b/M,\qquad e_x=e/M,
+\qquad Z_N(\lambda/M)\ge d(x,e_x).
+\tag{273.10}
+$$
+
+Indeed $Z_N\lambda=M\mathbf r+G_N\lambda$ and $d$ is affine.
+This is not cap feasibility at unchanged $(b,e)$; $x$ need not
+satisfy $x_2=x_3$ or belong to $H_L$. Same-point conic pairings
+below do not use this division. If $M<1$, padding at the zero
+$G_R$ column to mass one is permitted, without claiming law
+preservation.
+

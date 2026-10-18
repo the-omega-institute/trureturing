@@ -1,0 +1,34 @@
+**推论 11.1（任意基线及两种非零尺度符号）。** Fix
+$D_0\in\mathbb R$, $\lambda\in\mathbb R\setminus\{0\}$ and set
+
+$$
+H_*^{D_0,\lambda}=
+(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5,
+ J,D_0+48\lambda/5,M,D_0-532\lambda/5).                      \tag{11.1}
+$$
+
+Theorems 8.2, 9.1 and 10.2 transport to this entire literal history
+under
+
+$$
+(P,g,d)\longmapsto(P,\lambda g,D_0+\lambda d).
+\tag{11.2}
+$$
+
+In particular the same source radius $\varepsilon$ gives a
+seven-total-reading decoder on the entire corresponding known band.
+
+Proof. This is the bijective normalization (1.4). For every original
+clock and every action word, its readings satisfy
+$z_i^{\rm aff}=D_0+\lambda z_i$. Sources, strict positivity, rank,
+degrees, roots, target distinction and source-band membership are
+preserved. For either sign of $\lambda$, normalize the actual sixth
+read as $s=(z_6^{\rm aff}-D_0)/\lambda$, apply the inverse above,
+and return (11.2). In particular its branch test is $s<-800$;
+using the unnormalized inequality without reversing it when
+$\lambda<0$ would not be this policy. The normalization is algebra
+on acquired readings, not another sensor or acquisition. The history
+already contains six immediate readings and only one $J$ and read
+are added at clock six. The extension (8.14) likewise transports
+with $Y,z$ interpreted as normalized readings. ∎
+

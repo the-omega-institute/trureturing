@@ -1,0 +1,44 @@
+### 2.1. The fixed law and grouped site operators
+
+Use the uniform law on the five legal words
+$(000,100,010,001,101)$, in that order, and the calibrated reference
+experiment of Parent/Readout §8. All three activities in §1 are one. Write
+$e_0,e_1,e_2,e_3,e_{13}$ for the corresponding orthonormal vectors and
+$\psi=\mathbf1/\sqrt5$. The normalized site operators are
+
+$$
+\begin{aligned}
+K_1&=\tfrac12\bigl[
+(e_0-e_1)(e_0-e_1)^{\mathsf T}
++(e_3-e_{13})(e_3-e_{13})^{\mathsf T}\bigr],\\
+K_2&=\tfrac12(e_0-e_2)(e_0-e_2)^{\mathsf T},\\
+K_3&=\tfrac12\bigl[
+(e_0-e_3)(e_0-e_3)^{\mathsf T}
++(e_1-e_{13})(e_1-e_{13})^{\mathsf T}\bigr].
+\end{aligned}
+\tag{2.1}
+$$
+
+Each $K_i$ is an orthogonal projection and annihilates $\psi$.
+For a recorded site distribution
+$\omega\in\Delta_3=\{\omega_i\ge0:\sum_i\omega_i=1\}$, define
+
+$$
+H_\omega=\sum_i\omega_iK_i,\qquad
+\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp}).
+\tag{2.2}
+$$
+
+The experiment's exact Fisher/QFI identity gives
+
+$$
+\gamma(\omega)=
+\inf_{f:\mathcal Q_p[f]>0}
+\frac{\mathcal J_\omega[f]}{\mathcal Q_p[f]}.
+\tag{2.3}
+$$
+
+The budget is one sampled site per trial, and the site label is retained.
+The two edges attached to each endpoint site share its single weight;
+they cannot be assigned independent edge budgets.
+

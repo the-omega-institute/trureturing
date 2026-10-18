@@ -1,0 +1,32 @@
+**Theorem 2.3 (exact weighted carrier in both native directions).**
+Let $\mathcal E$ be the equalities (OCB.13). Define a total public
+reconstruction $\bar x_i(s)$ from the prescribed reply array: use its
+CBN inverse when legal and use $\alpha$ otherwise. Then
+
+$$
+\Omega_{\boldsymbol w}(C_\Theta)
+=\sum_{s\in\prod_cT_c}
+       \left(\prod_{a\in\mathcal E}\mathbf1_a(s)\right)
+       \prod_iw_i(\bar x_i(s)).
+\tag{OCB.15}
+$$
+
+Every complete native template has this representation, and every such
+representation carrying the actual owner ports, ranges, domains and
+prescription tables of RRN gives a complete original template with this
+same identity. The number $n$ of original potential owners is unchanged.
+For an arbitrary correlated nonnegative $W$, replace the last product
+by $W(\bar x_1(s),\ldots,\bar x_n(s))$.
+
+Proof. Theorem 2.2 makes the indicator product exactly the original
+realizability indicator. On it the actual reconstruction is unique.
+The owner identity (OCB.8) recovers each seed as its actual owner reply,
+so each original solution has exactly one lift. Off it the assigned
+value of $\bar x_i$ is immaterial. Apply both directions of RRN
+Theorem 5.2 to obtain (OCB.15), including zero weights and empty
+solution sets. The same bijection proves the assertion for $W$.
+Thus both pressure inequalities are identities for each finite network,
+not comparisons only at a selected optimizer. Arbitrary rectangular
+constraint systems lacking this native provenance are not substituted
+for the quantified class. $\square$
+

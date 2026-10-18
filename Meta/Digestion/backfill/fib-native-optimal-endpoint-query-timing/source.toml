@@ -1,0 +1,5 @@
+source_id = "fib-native-optimal-endpoint-query-timing"
+path = "docs/develop/theory/FIB_NATIVE_OPTIMAL_ENDPOINT_QUERY_TIMING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

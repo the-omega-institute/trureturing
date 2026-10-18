@@ -1,0 +1,62 @@
+**Theorem 3.4 (one physical-word relation across all charts).** Fix any
+finite list of read indices $v$ with epoch numerals $n_v$. Fix a
+finite reply path on some of these indices and, if desired, a
+whole-row label $r$. The following predicates in the physical word
+tuple $\mathbf p=(p_v)_v$ are effectively word-regular:
+
+1. Some $u\in D$ gives the specified replies.
+2. Some such $u$ has whole row different from $r$, on a positive
+   recovery instance.
+3. No such $u$ exists, or no such wrong-row source exists.
+
+The quantifiers concern complete sources satisfying all constraints.
+Word witnesses are common original-root actions, not chartwise
+chosen replacements.
+
+Proof. For each chart and each of the finitely many choices of routing
+kind at every used index, introduce a suffix word $z_{\eta v}$ only
+at port indices. Form in aligned WS2S
+
+$$
+\begin{aligned}
+E_{\eta,t}(\mathbf z)&=
+ \exists X\,[D_\eta(X)\land
+                  \mathsf{Path}_{\eta,t}(X;\mathbf z)],\\
+B_{\eta,t,r}(\mathbf z)&=
+ \exists X\,[D_\eta(X)\land
+                  \mathsf{Path}_{\eta,t}(X;\mathbf z)
+                  \land\neg\mathsf{Row}_{\eta,r}(X)].
+\end{aligned}
+\tag{CRF.9}
+$$
+
+The path is the conjunction of the prescribed reply formulas;
+a wrong known ground reply makes it false. Lemma 3.1 and
+Proposition 3.2 justify every component. All coordinate and run
+sets are quantified here. The only free variables left are the
+finitely many suffix positions.
+
+Apply Lemma 2.2, then impose $p_v=h_{\eta v}z_{\eta v}$ and the
+fixed/cone routing conditions by Lemma 2.3. Project away the suffix
+tracks. Union over the finite routing choices and charts to obtain
+$E_t(\mathbf p)$ and $B_{t,r}(\mathbf p)$. Complement relative to
+valid physical-word tuples for item 3. Unused read indices are
+unconstrained tracks.
+
+For exactness, every source has its unique chart assignment from
+(CRF.5) and every one of its physical words has its unique routing
+kind. Its literal replies therefore give the corresponding witness
+in (CRF.9). Conversely every witness of (CRF.9), with matching
+physical words, fills a complete source in $D$, and (CRF.7) and
+the routing identity give precisely its actual replies at those
+words and epochs. The wrong-row predicate uses the complete row
+classification, so that direction too is exact.
+
+In particular, intersecting several complements $\neg B_{t,r_t}$
+over one physical tuple $\mathbf p$ enforces correctness for
+every chart on the same installed words. The suffix in each
+chart is forced by that word and its selected literal header.
+There is no change from
+$\exists\mathbf p\ \forall u\in D$
+to a chartwise or sourcewise choice of actions. $\square$
+

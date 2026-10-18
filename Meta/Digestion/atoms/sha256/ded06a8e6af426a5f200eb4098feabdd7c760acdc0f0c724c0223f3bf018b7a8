@@ -1,0 +1,26 @@
+**Proposition 7.2 (lawful sweep transitions and joint closure).** At a
+state represented by $(\theta,\tau)$, selecting
+$u\in\operatorname{Perm}_\Sigma(\tau)$ performs exactly one actual
+original-root Read. Its full output is
+$(\mathsf{Read},u,\mathsf{ok},\theta(u))$; its successor is the joint
+state represented by $(\theta,\tau u)$, with the new map entry,
+appended archive and recomputed permission in (CCF.23). Every such
+successor lies in the same joint image. An invalid selector has no
+executed successor or record. At $j=r$ the sweep terminates. Each
+terminal $(\theta,\sigma)$ pays exactly $r$ Reads and $(D+1)r$
+letters, with peak $D+1$ if $r>0$ and zero otherwise.
+
+Proof. Prefix legality in (CCF.22) is exactly the permission rule. All
+$u\in U_c$ are actual leaves of $t_\theta$, so their paid replies are
+the labels specified in Theorem 6.2. Appending the event yields precisely
+(CCF.23) for the same $\theta$ and the extended prefix. That prefix is
+again in (CCF.22), which proves joint successor closure including its
+archive and permission fields. Each permutation contains every address
+once, so its length and charges have the stated values. $\square$
+
+This explicit closure concerns only the specified successful sweep
+image. Preparation of $c$, local computation, repeated diagnostic Reads,
+executed failures and other update menus are not extra histories silently
+covered by it. All acquisition of $c$ and the binding/archive services
+remain paid premises. No physical durations are recorded.
+

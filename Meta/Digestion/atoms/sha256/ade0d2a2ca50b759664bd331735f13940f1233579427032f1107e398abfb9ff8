@@ -1,0 +1,22 @@
+**例 14.6（A full equal-label target requiring six word rows）。** Set $m=6,k=10$, with distinct literal lower labels $A,B$, fresh $R,C$ and arbitrary bottom. On the full target (3.2) take $\lambda_0=B$ only at phase $9$, and $\lambda_1=B$ only at phases $9,10$; all other $J$ entries are $A$. The joined pairs on $O=\{8,9,10\}$ are $(A,A),(B,B),(A,B)$, and $H=\{2,3,4,5\}$ has pair $(A,A)$. Then $K_{\min}^{\rm GLOBAL}(4;f)=N+6$.
+
+Proof of the physical failures. In $\mathsf R$, decoding component zero first leaves the other component nonconstant outside its charge-one singleton $9$. Decoding component one first forces charge one at $9,10$, but the required translation $9-2m=8$ has label $A$ instead of the late component's label $B$. Thus R fails. In P, the homogeneous $H$ fixes the first charge orientation. For $i=0$ it is one only at $9$ on $J$; (13.3) fails at $j=8$. For $i=1$ it is one at $9,10$; (13.3) fails at $j=9$. These failures are on $O$, where no middle word can change the charge.
+
+For Q, the early final entry on $O$ must be homogeneous, while the late entry must contain both labels. The actual translation $q_3^B(j)=q_1(j-2m)$ forces $e=0$ and just the following four possible first-charge triples, ordered at phases $8,9,10$. All other triples already fail one of those two requirements.
+
+| Early component $i$ | First-charge triple | Remaining conflict |
+| --- | --- | --- |
+| $0$ | $110$ | Its early final entry at actual phase $3$ returns $B$ instead of $A$, since $q_2^B(3)=q_1(8)=1$. |
+| $0$ | $101$ | Its early final entry at actual phase $4$ returns $B$ instead of $A$, since $q_2^B(4)=q_1(9)=0$. |
+| $1$ | $100$ | Its complementary marker cannot Stop on the two actual labels; Final fails at phase $4$, and Cross is undefined at phase $3$. |
+| $1$ | $001$ | Stop and Final fail on phases $8,9$; Cross with an opposite Stop cannot return their two labels, and Cross with an opposite Final fails at phase $8$, where $q_3^B(8)=q_1(7)=1$ is forced. |
+
+This is a literal phase contradiction for all physical first supports and all eight complementary-exit patterns, not a numerical controller non-hit. Theorem 14.5 gives the six-row lower bound. The matching six-row complete certificate is (10.4) with isolated leaf $(B,B)$, $i=0,w=1$, remaining classes $(A,A),(A,B)$, and stream
+
+$$
+111111\mid000110\mid000000\mid000100.
+\tag{14.7}
+$$
+
+Its full supports, raw updates and ranks are those of Theorem 6.1. All $221$ original INITIAL records, including bottom, are retained. Thus the complete count is ten when bottom uses an existing output and eleven when its label is fresh. ∎
+

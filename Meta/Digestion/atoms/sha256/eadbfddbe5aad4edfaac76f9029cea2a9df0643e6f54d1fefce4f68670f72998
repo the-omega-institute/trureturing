@@ -1,0 +1,17 @@
+**Definition 12.1 (The distinct sparse pair).** Fix $d\ge1$ and $c>0$, put $a=d+1$ and $B=1+c$, and define
+
+$$
+F_0(k)=k^d,\qquad F_1^{\rm sp}(k)=k^d+c\mathbf1_{\{k=1\}}.
+\tag{12.1}
+$$
+
+Use exactly Definition 2.1's stationary law, Definition 3.1's observer contract and its paid prefix convention with these shapes. For every integer $1\le r\le d$ this pair obeys
+
+$$
+k^d\le F_i(k)\le Bk^d,\qquad
+0\le F_1^{\rm sp}(k)/F_0(k)-1\le c k^{-r}.
+\tag{12.2}
+$$
+
+Its tail is zero after $k=1$, so it does not satisfy the persistent equality in (2.1).
+

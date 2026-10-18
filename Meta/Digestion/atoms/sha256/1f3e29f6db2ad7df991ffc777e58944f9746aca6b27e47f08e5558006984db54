@@ -1,0 +1,19 @@
+**Lemma 4.1 (word closure).** The leaf-word map obeys
+
+$$
+w(\rho t)=\sigma(w(t)),\quad
+\sigma(\alpha)=\beta,\quad\sigma(\beta)=\beta\alpha,
+\qquad
+w(\langle t,u\rangle)=w(t)w(u).
+\tag{DAF.5}
+$$
+
+Equal words therefore give equal $E$, leaf counts, complete candidate guard
+results, and words after each common accepted action of Definition 2.2.
+
+Proof. Structural induction gives the two identities. The Clifford leaf product
+is associative, so $E$ is a function of the ordered word. Leaf count is word
+length. Apply the identities to the entire same named candidate; acceptance
+installs those equally worded candidates and rejection preserves the equally
+worded old trees. No rejected candidate response is introduced.
+

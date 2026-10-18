@@ -1,0 +1,33 @@
+**定义 12.1（没有深度上限的 $k$ 次策略地址）。** 对每个整数 $k\ge0$，给每个回复前缀 $s\in\mathcal A^{<k}$ 一个一阶地址变量 $q_s$。变量总数为 $(4^k-1)/3$；$k=0$ 时没有地址变量。对 $h=(h_1,\ldots,h_k)\in\mathcal A^k$，定义
+
+$$
+\operatorname{Path}_h(X_M;\mathbf q)
+=\bigwedge_{j=0}^{k-1}
+\operatorname{Reply}_{h_{j+1}}(X_M,q_{h_1\cdots h_j}).
+\tag{SLH.12.1}
+$$
+
+空路径谓词为真。对两条链 $X,Y$，定义 $\operatorname{SameTarget}_F(X,Y)$ 为所有 $i$ 上两个历史回复相同，即对每个 $i$ 合取
+
+$$
+\bigvee_{c\in\mathcal A}
+\bigl(\operatorname{Reply}_c(X_{n_i},p_i)
+\land\operatorname{Reply}_c(Y_{n_i},p_i)\bigr).
+$$
+
+以下公式的唯一自由变量是 $\mathbf q$；$X,Y$ 的全部 $6(M+1)$ 个集合变量均为弱二阶全称量词：
+
+$$
+\begin{aligned}
+G_k(\mathbf q):=\forall X_0,\ldots,X_M,Y_0,\ldots,Y_M\quad
+\bigwedge_{h\in\mathcal A^k}\Bigl[
+&\operatorname{Chain}_M(X)\land\operatorname{Chain}_M(Y)\\
+&\land\operatorname{Path}_h(X_M;\mathbf q)
+\land\operatorname{Path}_h(Y_M;\mathbf q)\\
+&\Longrightarrow\operatorname{SameTarget}_F(X,Y)\Bigr].
+\end{aligned}
+\tag{SLH.12.2}
+$$
+
+所有 $q_s$ 在来源量词外选择；$\exists\mathbf q\,G_k$ 不得换成按来源选择地址。$G_k$ 没有查询地址长、原树大小或原树深度的限制。它只断言同一实际路径的来源纤维上答案恒定，没有供应任何未知答案。
+

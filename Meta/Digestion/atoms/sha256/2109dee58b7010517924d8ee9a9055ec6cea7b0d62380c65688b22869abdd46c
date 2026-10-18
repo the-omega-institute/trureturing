@@ -1,0 +1,27 @@
+**Lemma 5.4 (two actual zero companions).**
+Each of the following conditions gives, for every actual source in
+$\Pi_j$, an actual zero-target source with the identical installed
+reply vector.
+
+1. No Read queries class $b_j$.
+2. No Read queries its partner $g(j)$, and every Read querying $b_j$
+   has nonempty suffix.
+
+In either case both entries on every $\Pi_j$ vector have output pair
+$\{R_0,R_j\}$, within two calls when the original correctness bound is
+two calls.
+
+Proof. For item 1 replace $x_{b_j}=\alpha$ by a fresh branch image,
+leaving its beta partner and all other values fixed. This is an actual
+$Z_{g(j)}$ filling and changes no queried value. For item 2 replace
+$x_{b_j}=\alpha$ by beta and replace its beta partner by a fresh branch
+image. This is an actual $Z_{b_j}$ filling. All queried continuations
+at either alpha or beta are absent, and the changed partner is unqueried.
+Choose the new branch value outside the finite list of other values.
+Every tuple stays injective, every repeated partner occurrence receives
+its class's value, and the inverse of Supplier 2.4 supplies the actual
+finite origin with its complete zero row. Definition 5.1 gives the
+two-entry conclusion. No preservation of $\sigma$ under replacement is
+assumed: correctness forces the companions to carry opposite bits.
+$\square$
+

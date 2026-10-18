@@ -1,0 +1,21 @@
+**定义 4.3.1（行距离与缺失度）。** 对有限分布令
+
+$$
+\operatorname{TV}(p,q)=\frac12\sum_z|p(z)-q(z)|.
+$$
+
+定义实验 $E$ 模拟 $F$ 的缺失度为
+
+$$
+\delta(E,F)
+=
+\min_{G:\Omega\to\Xi}
+\max_{\theta\in\Theta}
+\operatorname{TV}
+\bigl(K_EG(\cdot\mid\theta),K_F(\cdot\mid\theta)\bigr).
+$$
+
+它的方向与 Blackwell 序一致：$E\succeq_B F$ 正好对应零缺失度。
+
+<a id="claim-4-3-2"></a>
+

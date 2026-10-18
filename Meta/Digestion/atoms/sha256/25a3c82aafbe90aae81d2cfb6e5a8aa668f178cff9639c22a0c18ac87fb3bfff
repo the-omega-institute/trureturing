@@ -1,0 +1,137 @@
+**Proposition 219.16 (Whole-table execution and the independent TV rows).**
+For a normalized finite distribution on legal tables, partition one
+source-independent $U\sim\mathrm{Unif}[0,1)$ into the table masses.
+The selected interval fixes the entire schedule and all its outputs
+before any reply. N obtains its full preselected schedule. O uses an
+increasing preselected schedule and stops at its first queried zero
+or exhaustion. The N completion of an O pair
+$(i,j;o_0,o_{10},o_{11})$ has outputs
+$(o_0,o_0,o_{10},o_{11})$ on $00,01,10,11$, using the same $U$
+and actual schedule. It acquires the second reply even when ignored.
+
+This gives zero advice, at most two actual requests and finite handoff
+on every source and seed. Repetitions and ignored requests count.
+There is no adaptive replacement of the second address, free probe,
+restart, seed conditioning, expected-count relaxation, source prior,
+address-cost substitution or finite-address restriction on competitors.
+Two different finite laws can use partitions of the same uniform seed
+or their common finite refinement, without claiming identical outputs.
+Score coefficients and conic detector weights are not executed as
+probability laws before normalization.
+
+For one probability vector $p_w$ and a first-zero word of class $n$,
+TV distance at most $\varepsilon$ from the selected target requires
+and is equivalent to the three independent rows
+
+$$
+p_w(0)\ge1-a_n-\varepsilon,\qquad
+p_w(n)\ge a_n-\varepsilon,\qquad
+p_w(0)+p_w(n)\ge1-\varepsilon.
+\tag{219.49}
+$$
+
+At the finite positive word the base row is $p_+(0)\ge1-\varepsilon$.
+These rows hold on all words, even those of zero score weight.
+Negative singleton demands stay unchanged.
+
+**Proof.** Execution follows the selected whole table, so no extra
+randomness or observations enter. For the TV assertion write the
+target masses as $1-a_n,a_n$ on its two marks. The total common mass
+of target and output is
+$\min(p_w(0),1-a_n)+\min(p_w(n),a_n)$.
+Its complement is the maximum of
+$1-a_n-p_w(0)$, $a_n-p_w(n)$ and $1-p_w(0)-p_w(n)$,
+which proves (219.49). The pair row cannot be omitted: with
+$a_n=1/2$, $\varepsilon=1/4$, masses $p(0)=p(n)=1/4$
+pass both singleton bounds while TV is $1/2$.
+The remaining mass can lie at a different legal mark.
+Thus singleton checks alone do not establish the desired event law. ∎
+
+For any finite marked law with labels through $H$ and any actual
+first zero $n>H$, its exact error is
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^Hp_+(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\max\{1-p_+(0),a_n\}.
+\tag{219.50}
+$$
+
+Half the sum of absolute discrepancies is
+$\tfrac12(|a_n-(1-p_+(0))|+(1-p_+(0))+a_n)$,
+giving the formula. It treats all Borel events and retains equality
+$a_n=\varepsilon$. The strict active horizon is
+$L_a=\max(\{n:a_n>\varepsilon\}\cup\{0\})$.
+For $\varepsilon\ge1$, immediate base output suffices; the empty
+active horizon and equality tails are not removed.
+
+The original arbitrary-address/full-carrier necessity is supplied by
+110.2, rather than by a finite score. Its projection fixes the low marks
+and sends other tapes to zero. Countability supplies a common conull
+seed event for actual sourcewise finite handoff and hard count.
+The maximum address of the entire preselected schedule has vanishing
+probability tail. Actual finite-pattern witnesses precede seed choices;
+for each finite family, finite handoff supplies the required execution
+transition cutoffs. Same-class finite simulations and compactness of
+one finite catalog simplex produce one full configuration at the exact
+closed cap. No uniform address or runtime bound is asserted.
+Conversely the finite whole-table law is executed literally and
+(219.50) supplies every actual tail. This is reuse of the class-preserving
+bridge, not a new transport assertion or preservation of an arbitrary
+competitor's entire law.
+
+For a score horizon $H\ne L_a$, both cases of 207.20 are retained.
+If $H<L_a$, fix the later replies to zero and project later labels to
+zero in the finite representation. This gives the low-word rows for
+comparison, rather than a cap attainer on omitted active tails.
+If $H>L_a$, extend the active kernel by ignoring new coordinates.
+Old rows remain unchanged on every new suffix; a new first zero has
+$a_n\le\varepsilon$ and the old positive-word law, so (219.50)
+gives the exact closed bound. This includes $L_a=0$.
+Neither finite algebraic operation is an uncounted observation.
+Auxiliary hull points with $e=0$ and radial parameter zero do not
+assert attainment for an original positive vanishing tail.
+
+The normalized probability-vector criterion 109.1 retains its own
+hypotheses, in particular the common schedule-mass normalization and
+the inequality $c\ge H$ for stopped kernels.
+Neither $Q(V)$ nor a signed affine vector is automatically such a kernel.
+For a full conic configuration of mass $M$, the reused radial filling
+executes masses $\tau\lambda_D$ and anchor mass $1-\tau M$ only when
+$0\le\tau\le1/\max(1,M)$. Its event vector is
+$r+\tau G_N\lambda$. This pays one total mass and scales the entire
+actual amplitude sequence and cap; a positive-tail conclusion requires
+the owning positive-parameter hypotheses. No signed vector is sampled.
+
+A concrete reused normalized configuration gives a common-realization
+check. At any horizon $H\ge3$, choose each of
+
+$$
+(1,2;1,2,0),\quad(1,2;1,2,3),\quad
+(1,3;1,3,0),\quad(2,3;2,3,0)
+\tag{219.51}
+$$
+
+with probability $1/4$ on that same uniform seed.
+Its N completions have the same output law on every word.
+It is feasible at
+$b^\star=(1,1,1,1/4,\ldots,1/4;e=1/4)$:
+the two hull equalities are
+$\sum_{j\ge3}b^\star_j=(H+1)/4$ and
+$b^\star_1+\sum_{j\ge3}b^\star_j-(H+1)e=1$.
+On first-zero classes 1 and 2 the correct reading is $3/4$, base
+is zero or $1/4$, pair is $3/4$ or one; base demand $-1/4$ remains.
+Class 3 has readings $(1/4,3/4,1)$, later classes $(3/4,0,3/4)$,
+and the positive base is $3/4$. These are every independent row,
+on every suffix. Thus the same full mass-one $\lambda$ witnesses
+$b^\star\in H_N$.
+
+Take $a_1=a_2=a_3=1$, $a_4=\cdots=a_H=1/4$ and
+$a_{H+k}=2^{1-k}/4$ for $k\ge1$.
+The actual cap $1/4$ is attained by (219.51); its first new tail
+amplitude equals the cap and (219.50) gives tail error exactly $1/4$.
+This is a reused interface example, not an additional amplitude family.
+At this same point and same mass-one configuration, the quotients in
+(219.34) and (219.37) read $-13/6$ and $-43/16$, respectively.
+They are not strict separation readings.
+

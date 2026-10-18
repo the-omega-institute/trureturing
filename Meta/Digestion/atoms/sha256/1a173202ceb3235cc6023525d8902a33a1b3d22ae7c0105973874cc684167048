@@ -1,0 +1,77 @@
+**Proposition 16.3 (finite terminal partition with a duration charge).**
+On the event of continuous enhanced target paths, the mesh has only
+finitely many points in every bounded time interval. Let
+
+$$
+N=\#\{i\ge0:t_i<S\},\qquad t_{N-1}<S\le t_N.
+\tag{16.6}
+$$
+
+There is the following measurable partition $\mathcal P_\rho$ of
+$[0,S]$. If $S=t_N$, use all $N$ elementary intervals ending at $S$.
+If $S<t_N$, use the elementary intervals with indices
+$0,\ldots,N-3$ and the single final interval $[t_{N-2},S]$.
+In the latter case $N\ge2$, and an empty list of earlier intervals is
+allowed. Write $M$ for the number of intervals in this partition.
+Then $M\le N$. Every partition interval $[s,t]$ satisfies
+
+$$
+\begin{aligned}
+\sup_{s\le v\le t}|W^j_v-W^j_s|&\le2\rho\quad(j=1,2),\\
+\sup_{s\le v\le t}|C_{s,v}|&\le3\rho^2.
+\end{aligned}
+\tag{16.7}
+$$
+
+Moreover its duration $D=t-s$ can be charged to a distinct elementary
+index $i$ with $t_i<S$, so that
+
+$$
+s=t_i,\qquad D\ge\Delta_i.
+\tag{16.8}
+$$
+
+All partition starts are strictly before $S$ and hence have target
+height in $I$.
+
+Proof. On $[0,L+\rho^2]$, continuity of $W^1,W^2,J^\lambda$
+and boundedness of $W^1$ imply uniformly for $s\le L$ that all three
+quantities in (16.4) remain below their thresholds when $t-s$ is
+sufficiently small. Thus, for fixed $\rho>0$, there is a positive
+lower bound on the mesh durations whose starting times lie in $[0,L]$,
+after also taking the minimum with $\rho^2$.
+This proves nonaccumulation. It proves it simultaneously for every
+positive $\rho$ on the same event of continuous target paths.
+
+The first mesh endpoint satisfies $t_1\le\rho^2\le T$.
+Before and at $t_1$, $|W^1|\le\rho<d_*$, so the height cannot have
+exited $I$ there. Consequently $S\ge t_1$. In particular the case
+$S<t_N$ cannot have $N=1$. The stated partition therefore always
+exists, without a separate short initial or terminal interval.
+
+For a merged interval let $v$ lie after its middle mesh point $m$.
+The same target satisfies the exact chronological identity
+
+$$
+C_{s,v}=C_{s,m}+C_{m,v}
+              +(W^1_m-W^1_s)(W^2_v-W^2_m).
+\tag{16.9}
+$$
+
+Equation (16.5) bounds the first two terms by $\rho^2$ and the product
+by $\rho^2$. Adding the two first-level increments gives (16.7).
+Before $m$ the stronger bounds (16.5) apply. The ordinary intervals
+also satisfy (16.7). Charge an ordinary interval to itself and the
+merged final interval to its first, complete elementary interval.
+These indices are distinct and prove (16.8). In particular the
+possibly arbitrarily short remainder $S-t_{N-1}$ is never used
+alone as an energy denominator.
+
+Hitting times of the closed threshold sets in (16.4), evaluations of
+continuous paths at these times, and the finite comparisons defining
+the partition are measurable. The choice can be determined from the
+stopped enhanced path and its death mark: no value after $S$ is
+needed to tell whether a threshold was reached before or at $S$.
+The full endpoint $t_N$ when it exceeds $S$ is needed only for an
+integrable dominating quantity in Section 18. $\square$
+

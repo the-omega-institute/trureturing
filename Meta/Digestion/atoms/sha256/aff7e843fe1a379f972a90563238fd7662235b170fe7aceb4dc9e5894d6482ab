@@ -1,0 +1,101 @@
+### 定义 1：整数编码纤维
+
+固定
+
+$$
+(u,v,w),
+$$
+
+定义
+
+$$
+\kappa=a_7.
+$$
+
+则
+
+$$
+a_2=u-\kappa,
+$$
+
+$$
+a_3=v,
+$$
+
+$$
+a_5=w-\kappa,
+$$
+
+$$
+a_7=\kappa.
+$$
+
+若指数上界为
+
+$$
+0\le a_2\le A_2,\quad
+0\le a_3\le A_3,\quad
+0\le a_5\le A_5,\quad
+0\le a_7\le A_7,
+$$
+
+则 $\kappa$ 必须满足
+
+$$
+\kappa\ge0,
+$$
+
+$$
+\kappa\ge u-A_2,
+$$
+
+$$
+\kappa\ge w-A_5,
+$$
+
+以及
+
+$$
+\kappa\le A_7,
+$$
+
+$$
+\kappa\le u,
+$$
+
+$$
+\kappa\le w.
+$$
+
+因此
+
+$$
+\boxed{
+\kappa_-^{\mathrm{int}}=
+\max(0,u-A_2,w-A_5)
+}
+$$
+
+和
+
+$$
+\boxed{
+\kappa_+^{\mathrm{int}}=
+\min(A_7,u,w).
+}
+$$
+
+允许的整数隐藏纤维为
+
+$$
+\mathcal F_{\mathrm{int}}(u,v,w)=
+\left\{
+\kappa\in\mathbb Z:
+\kappa_-^{\mathrm{int}}
+\le\kappa\le
+\kappa_+^{\mathrm{int}}
+\right\}.
+$$
+
+---
+

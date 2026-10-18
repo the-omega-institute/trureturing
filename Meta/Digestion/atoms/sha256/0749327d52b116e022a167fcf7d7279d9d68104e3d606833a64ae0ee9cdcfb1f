@@ -1,0 +1,8 @@
+**Corollary 256.4 (An exactly paid zero-cost ray).**
+Every input $s y_*$, $s\ge0$, has the full certificate
+$V=s y_*,\theta=0$. It supplies the half-space (256.4) on $H_N$.
+
+**Proof.** Both costs vanish by Lemma 256.2 and the residual is zero.
+The statement covers this entire mixed-row ray, and makes no
+assertion about all other unit-$O$ inputs. $\square$
+

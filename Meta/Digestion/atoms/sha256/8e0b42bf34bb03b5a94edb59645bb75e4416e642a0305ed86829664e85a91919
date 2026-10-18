@@ -1,0 +1,12 @@
+**Remark 9.2 (the extra information is joint, not an independent noise).**
+Once a Wiener law and its canonical stochastic integral prescription are
+specified, $J^0$ can be constructed as a measurable probability limit
+of the left sums in (6.4). It is not an independent third source of
+randomness. But that prescription is additional to uniform first-level
+convergence: the actual rectangles prove that the limiting chronological
+coordinate can instead be $J^0+\lambda t$ on the very same Brownian
+realization. For this native equation no further iterated levels are
+needed. The law up to death and the lifetime suffice; imposing a unique
+post-death extension is unnecessary. These are sufficient data and an
+explicit separating obstruction, not a globally minimal sampler theorem.
+

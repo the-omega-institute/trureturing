@@ -1,0 +1,74 @@
+**Lemma 2.2 (native coverage and the leafless period).** For admissible
+$C,D$ and $a\ge0$,
+
+$$
+E(F(C,D))=\langle E(C),E(D)\rangle,
+\qquad E(\sigma^aC)=\rho^a E(C).
+\tag{NAC.5}
+$$
+
+A code is finite if and only if its expansion is finite. Every native
+completion $u$ has an admissible code $B(u)$ satisfying
+
+$$
+E(B(u))=u,\qquad B(\rho^a u)=\sigma^a B(u).
+\tag{NAC.6}
+$$
+
+For a native pair, either
+
+$$
+\begin{aligned}
+B(\langle u,v\rangle)&=F(B(u),B(v)),\quad\text{or}\\
+B(u)&=[q+1],\quad B(v)=[q],\quad
+B(\langle u,v\rangle)=[q+2]\quad(q\in\mathbb N).
+\end{aligned}
+\tag{NAC.7}
+$$
+
+Finally, for every code $C\in\mathscr C_{\mathbb Z}$ and $d\ne0$,
+
+$$
+C=\sigma^dC\quad\Longleftrightarrow\quad C=O.
+\tag{NAC.8}
+$$
+
+**Proof.** The expansion identities follow at each finite prefix from the
+native recurrence $T_{j+2}=\langle T_{j+1},T_j\rangle$, distribution, and
+$T_{j+a}=\rho^aT_j$. A finite code expands to a finite tree. An infinite
+finitely branching code has an infinite branch, whose raw pair nodes remain
+native pair nodes after expansion, so its expansion is infinite.
+
+The coding in (NAC.6) is the semantic coding of [NIS, Theorem 9.2][NIS]
+and [ABC, Theorems 2.2--2.3][ABC]. Its precise construction is useful here.
+Replace every maximal finite atomic subtree $T_j$ by $[j]$ and retain all
+other pair nodes. These maximal subtrees are disjoint. Every finite native
+leaf lies in one, since it is itself $T_0$ or $T_1$, and its finite list of
+ancestors contains a highest atomic subtree. A subtree with no finite leaf
+is the unique leafless full tree. Therefore the construction defines one
+admissible code on all finite addresses, and expansion recovers $u$.
+
+For clarity about the shift identity, $\rho$ preserves infinite branches
+and is injective on completions. Its possible root images are disjoint:
+a preimage $\alpha$ gives $\beta$, a preimage $\beta$ gives
+$\langle\beta,\alpha\rangle$, and a pair preimage gives a pair both of
+whose children are $\rho$ images and hence have root different from
+$\alpha$. Prefix induction in the last case proves injectivity. It follows
+that $\rho u$ is atomic precisely when $u$ is atomic; the atomic rank then
+increases by one. In the reverse direction rank zero is not a $\rho$ image,
+and $T_j=\rho T_{j-1}$ for $j\ge1$. Thus maximal atomic subtrees are
+translated without changing the retained pair structure. This proves the
+shift identity, first for one step and then for $a$ steps.
+
+If the whole native pair is atomic, its rank is at least two and the
+recurrence and pair injectivity force exactly the second case of (NAC.7).
+Otherwise its root pair is retained. When both children are leafless the
+first case holds as $F(O,O)=O$; no separate leafless branch is needed.
+No effective recovery of $B(u)$ from an arbitrary infinite input is asserted.
+It is used to cover solutions, not to compute them.
+
+If $C$ has a finite leaf at address $p$ with label $j$, equality to
+$\sigma^dC$ would give $j=j+d$ at that same address. This is impossible
+for $d\ne0$. A full tree without leaves is $O$, which every shift fixes.
+This proves (NAC.8). $\square$
+

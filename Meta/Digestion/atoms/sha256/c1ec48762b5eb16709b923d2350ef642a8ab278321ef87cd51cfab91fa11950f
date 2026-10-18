@@ -1,0 +1,14 @@
+## 392. Four P slots: both axes low
+
+If the axes r,o are both low and the pair p,q is high, then
+
+    L>=4*m^2-(m-3)^2=3*(m+3)*(m-1),
+    J<=(m-1)^2.
+
+Thus, using J>0 and (391.2),
+
+    K^2*L/J >= 3*(m+1)*(m+3)/m^2 > 3.
+
+It follows that S>2*atan(sqrt(3))=2*pi/3. The four original
+P slots have expense 2*S>4*pi/3. No gap is used here.
+

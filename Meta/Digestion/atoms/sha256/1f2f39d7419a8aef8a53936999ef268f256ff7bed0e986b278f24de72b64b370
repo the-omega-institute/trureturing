@@ -1,0 +1,10 @@
+**定理 30.1（恰四世界原根七层失败必有四个不同源）。** 对每个 $a_0\in\mathbb R$ 及每个恰含四个不同完整世界的 $K\subseteq\mathcal F(a_0)$，
+
+$$
+L_7(K,(a_0))\quad\Longrightarrow\quad
+\forall W,Z\in K,\quad W\ne Z\ \Longrightarrow\ P_W\ne P_Z.
+\tag{30.2}
+$$
+
+因此所有重复源的恰四世界原根 $L_7$ 支持均被排除。这里不排除四源各异类，不把必要支持下界提高到五，也不从更大或无限失败族抽取恰四失败子族。
+

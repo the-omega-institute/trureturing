@@ -1,0 +1,14 @@
+**Corollary 98.3.** Every Hermitian \(D\) with \(D_{ff}=0\) and \(N_HDN_H=0\) supplies an admissible pair by
+\[
+D_B=D,\qquad
+\mathcal R(D)_{ij}:=(D_A)_{ij}=-\frac{G_{ij}}{H_{ij}}D_{ij}
+\quad(f(i)\ne f(j)),\qquad (D_A)_{ff}=0. \tag{19}
+\]
+The real direction space has dimension exactly \(48-k^2\), where \(k=\dim\ker H\), and hence dimension \(44\) when \(\operatorname{rank}H=6\).
+
+**Proof.** Hermiticity, fibre zeros and full product cancellation are immediate. Equation (17), with reversed trace indices, gives
+\[
+a^*\mathcal R(D)a=-\operatorname{Tr}(B_0D)=0, \tag{20}
+\]
+because \(B_0=N_HB_0N_H\). This is exactly the rank-seven kernel-kernel tangent condition. The zero-fibre Hermitian space has dimension \(64-4\cdot4=48\). Its compression to \(\operatorname{Herm}(\ker H)\) is onto: an adjoint obstruction would be a Hermitian \(Z\) supported on \(\ker H\) and fibre-block diagonal. Then \(ZH=0\) and \(H_{ff}=I_2\) force each \(Z_{ff}=0\). Thus no nonzero obstruction exists, and the \(k^2\) real compression equations are independent. \(\square\)
+

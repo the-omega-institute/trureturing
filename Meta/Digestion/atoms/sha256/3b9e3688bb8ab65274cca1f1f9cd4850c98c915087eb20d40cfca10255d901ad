@@ -1,0 +1,51 @@
+**Definition 13.1 (source and public binary promise).** Retain Definition
+1.1's positive source, common preparation, real lifts and both original
+regularity alternatives. Restrict to its calibrated double wall
+$0<Z<1$, $r=1-Z$, $c=r/2$ and $0<k<c$. Fix public exact numbers
+$0<x<y<c$. At an actual live cut of one unknown original past the current
+height $K$ belongs to $\{x,y\}$. Its real phase, signed winding, waveform
+and retained correlations are not observer inputs. The public catalogue
+and calibrated preparation reference are extra supplied information.
+
+Use the orthonormal preparation directions
+
+$$
+U_+=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2,\qquad
+U_-=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2,\qquad
+V=\operatorname{span}\{U_+,U_-,e_2\}.
+\tag{RA.13}
+$$
+
+Here index $4$ denotes original mode $13$, and $\theta_2=0$.
+The actual family used for the lower bound is
+
+$$
+\psi_{k,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \bigl(\sqrt{2k}U_++(-1)^m\sqrt{2(c-k)}U_-\bigr),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{RA.14}
+$$
+
+Its real residual is $(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$.
+Quantum Carrier Minimum Proposition 7.2 supplies these endpoints from one
+common positive preparation: fix $a_0,q\in(0,c)$, $q\ne a_0$; use a
+unit phase leg $2\pi m$ at $a_0$, a four-unit rectangle at $q$ of height
+
+$$
+B_{\beta,m}=\frac{r(\pi m-\beta)-2\pi m a_0}{q-a_0},
+\tag{RA.15}
+$$
+
+then a unit zero-phase arrival at $k$. Indeed
+$w(q)-w(a_0)=-(q-a_0)(1,1,0,1,1)/r$, so the two phase contributions
+give exactly the displayed residual. The rectangle's real phase increment
+is zero and the arrival transports no phase. All six legs are continuous
+affine original controls in both regularity classes. For the two endpoint
+heights their probability margin is at least
+$\min\{a_0,q,x,c-a_0,c-q,c-y,Z\}>0$.
+Their phase variation $2\pi|m|+2|B_{\beta,m}|$ is finite separately for
+each history, with no common bound over all signed $m$ or real $\beta$.
+Canonical survival is positive because the compact height bands make the
+finite horizontal charges finite. These are actual live-branch witnesses;
+no unsuccessful preparation is retried or erased.
+

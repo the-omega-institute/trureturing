@@ -1,0 +1,35 @@
+### 80.7. A fixed-dimensional calibrated environment resource law
+
+Let the qubit-fibre target T have diagonal blocks I_2 and off-diagonal blocks J_2/2. Let a_f0,a_f1 be orthonormal pairs in an arbitrary A environment, and let b_f0,b_f1 be orthonormal pairs in one common B environment of dimension d>=2. The local B channel is exactly fibre-calibrated; the A channel can initially have arbitrary output leakage, since the one-sided comparison in section 80.5 calibrates A without modifying B.
+
+With A_f and B_f the matrices of these frames, B_f is now d-by-2 and B_f^*B_f=I_2. Define
+
+    C_f=A_f B_f^T/sqrt(2),
+    D_f=A_f Z B_f^T/sqrt(2),
+    N_f=conjugate(B_f) Z B_f^T,   Z=diag(1,-1).
+
+Then D_f=C_fN_f because B_f^T conjugate(B_f)=I_2. Every N_f is a d-by-d traceless Hermitian matrix, with eigenvalues 1,-1 and d-2 zeros; in particular ||N_f||op=1. Put
+
+    m=dim_R span{N_1,...,N_k} <= d^2-1,
+    r=k-m.
+
+Choose a real k-by-r isometry V spanning the kernel of v -> sum_f v_fN_f and set Pi=VV^T. Let S=k^(-1)sum_f C_f, E_f=C_f-S, and a=sum_f||E_f||_F^2=k-k||S||_F^2. Let D have columns Mat^(-1)(D_f), and let Zeta have columns Mat^(-1)(E_fN_f). The kernel identity gives DV=Zeta V, while the contraction property gives
+
+    ||Zeta||_F^2=sum_f||E_fN_f||_F^2
+               <=sum_f||E_f||_F^2=a.
+
+Therefore Tr(Pi D^*D)=||DV||_F^2<=a. In the complete plus/minus representation Khat=[[C,X],[X^*,M]], with C and M the original plus/minus Grams and X their original cross block, choose the projection Phat=diag(ss^*,Pi), s=ones/sqrt(k). Its plus expectation is -a for Khat-That and its minus trace is at most a-r. Thus Tr Phat(Khat-That)<=-r. Since Tr(K-T)=0,
+
+    ||K-T||_1 >=2r,
+    delta >= ||K-T||_1/(2k) >=r/k
+          >=max{0, (k-d^2+1)/k}.                       (10)
+
+The diamond inequality uses the normalized maximally entangled logical/reference input. Its physical error is represented by (K-T)^T/(2k) on the orthonormal support {|f,i>_reference tensor |ff>_output}, and transposition preserves trace norm.
+
+Consequently a necessary local environment resource condition is
+
+    d^2 >= k(1-delta)+1.                               (11)
+
+This is a necessary condition, not a sufficiency or minimal-environment theorem. It applies when the dimension-d party is exactly fibre-calibrated, with arbitrary original leakage permitted only on the other party by the one-sided repair. An arbitrary uncalibrated dimension-d party is not covered. At d=2 the result specializes to section 80's qubit theorem and its exact four-fibre value 1/4. The unrestricted four-fibre optimum with both local environments arbitrary remains open.
+
+

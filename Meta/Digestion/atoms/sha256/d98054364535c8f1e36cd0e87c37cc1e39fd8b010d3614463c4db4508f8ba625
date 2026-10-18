@@ -1,0 +1,30 @@
+#### 定义 4：投影可闭合性
+
+称因果边上的输运 $U$ 对投影 $P$ 是可闭合的，如果存在某个可见输运：
+
+$$
+\overline U:P(\mathcal F_e)\to P(\mathcal F_{e'})
+$$
+
+使得：
+
+$$
+P\circ U
+=
+\overline U\circ P.
+$$
+
+图示为：
+
+$$
+\begin{CD}
+\mathcal F_e @>U>> \mathcal F_{e'}\\
+@V P VV @VV P V\\
+P(\mathcal F_e) @>>\overline U> P(\mathcal F_{e'})
+\end{CD}
+$$
+
+如果这个图交换，那么观察者只需要知道 $P(p)$，就可以预测下一个可见状态。
+
+---
+

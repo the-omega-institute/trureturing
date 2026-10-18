@@ -1,0 +1,36 @@
+**Definition 5.1 (positive parity sector).** Fix $d\ge2$,
+$k=2^{d-1}$, and a connected simple $k$-regular graph $G$ on $n$
+vertices. Every edge $e$ carries one shared binary variable $s_e$;
+the factor at vertex $i$ has its full $k$-edge star as scope. Fix
+rational $0<a<1$ and $0<\epsilon<1$. At the $2^k$ actual perfect
+height-$(d-1)$ trees $u_b$, in the declared local leaf order, set
+
+$$
+\mu(u_b)=a2^{-k}\bigl(1+\epsilon(-1)^{\sum_jb_j}\bigr),
+\qquad
+\mu(x)=\frac{1-a}{|S_d|-2^k}\quad(x\notin\{u_b\}).
+\tag{INB.16}
+$$
+
+There are states outside this perfect set, including the two root
+leaves. Both parity classes contain $2^{k-1}$ strings, so their
+total mass is $a$, and (INB.16) is a strictly positive probability
+on the entire $S_d$. The credited perfect-leaf construction
+[GCB, Theorem 1.2][GCB] gives a complete native template whose
+solutions are precisely the edge-bit assignments, with local factor
+
+$$
+\Phi_i(s_{\operatorname{st}(i)})
+=a2^{-k}(1+\epsilon\chi_i(s)),\qquad
+\chi_i(s)=(-1)^{\sum_{e\ni i}s_e}.
+\tag{INB.17}
+$$
+
+Explicitly all strict internal targets are branch constants. For each
+edge choose one actual terminal occurrence as its owner; both endpoint
+terminal targets query that owner leaf with the total decoder of
+Definition 4.1. The owner's self-equation excludes branch and absent;
+all internal targets force the perfect shape. Every bit assignment
+then has exactly one actual lift, with every $\mu(x_i)$ once. This
+is a specialization of the credited embedding, not a free seed port.
+

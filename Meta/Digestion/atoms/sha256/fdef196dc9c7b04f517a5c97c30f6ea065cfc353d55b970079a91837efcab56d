@@ -1,0 +1,37 @@
+**Difference certificates.** Put $w=\Delta a+\Delta e=\Delta(A-d)$
+and $\epsilon=\Delta e$. In a distinct $BC$ or $BD$ collision,
+$w=0$ would add $A$ and contradict $AB$ injection.
+In a distinct $CD$ collision it would contradict $AD$ injection.
+Hence $w\ne0$ before introducing $\theta=\epsilon/w$.
+
+Solving the terminal equalities gives the following full matrices
+and all six trace differences:
+
+$$
+\begin{array}{c|c|l}
+&\Delta X&(\Delta\sigma_0,\ldots,\Delta\sigma_5)\\ \hline
+BC&\begin{pmatrix}w-\epsilon&-w\\-w&\epsilon\end{pmatrix}
+ &(-6w+\epsilon,6w-2\epsilon,-4w+2\epsilon,2w,-3w+\epsilon,w)\\
+BD&\begin{pmatrix}w-\epsilon&-w\\-\epsilon&\epsilon\end{pmatrix}
+ &(-5w,5w-\epsilon,-3w+\epsilon,2w,-2w,w)\\
+CD&\begin{pmatrix}w-\epsilon&-\epsilon\\-w&\epsilon\end{pmatrix}
+ &(-3w-2\epsilon,4w,-3w+\epsilon,w+\epsilon,-2w,w).
+\end{array}
+\tag{9.1}
+$$
+
+Indeed $\Delta a=w-\epsilon$. The $BC$ equalities give
+$\Delta b=\Delta c=-w$; $BD$ gives $\Delta b=-w$,
+$\Delta c=-\epsilon$; $CD$ gives $\Delta c=-w$,
+$\Delta b=-\epsilon$. Substitution into each of the six rows of
+(5.4) proves all entries of (9.1). In units of $w$ the rows are
+
+$$
+\begin{aligned}
+F^{BC}&=(\theta-6,6-2\theta,2\theta-4,2,\theta-3,1),\\
+F^{BD}&=(-5,5-\theta,\theta-3,2,-2,1),\\
+F^{CD}&=(-3-2\theta,4,\theta-3,1+\theta,-2,1).
+\end{aligned}
+\tag{9.2}
+$$
+

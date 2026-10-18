@@ -1,0 +1,120 @@
+**Theorem 4.2 (uniform upper limit with the actual wrapped record).**
+The policies and estimators in Definition 4.1 satisfy
+
+$$
+\sup_{\kappa\in\mathcal K}
+\left|n\mathbf E(\widehat K_{n,\kappa}-K_\tau)^2-C_\kappa\right|
+\longrightarrow0.
+\tag{4.3}
+$$
+
+Proof. Temporarily use real short increments as analysis variables.
+Conditional on the entire height path, their variances are
+$\delta_n A_j$, where, reindexing the $m$ short intervals,
+
+$$
+A_j=\delta_n^{-1}\int_{T_j}^{T_{j+1}}a_\kappa(K_s)ds,
+\qquad j=1,\ldots,m.
+\tag{4.4}
+$$
+
+The exact joint law with height can be represented using independent
+standard normals $Z_1,\ldots,Z_m$ independent of height. Define
+
+$$
+S_{\rm real}=\frac1m\sum_{j=1}^m A_jZ_j^2,\qquad
+S_{\rm fr}=a_\kappa(K_\tau)\frac1m\sum_{j=1}^m Z_j^2.
+\tag{4.5}
+$$
+
+These are comparison variables, not additional estimator inputs.
+By (1.6) and the uniform Lipschitz bound for $a$,
+$\mathbf E|A_j-a(K_\tau)|^2\le C_\tau h_n$. Jensen's inequality
+and $\mathbf EZ_j^4=3$ imply
+
+$$
+\mathbf E|S_{\rm real}-S_{\rm fr}|^2
+\le\frac3m\sum_{j=1}^m\mathbf E|A_j-a(K_\tau)|^2
+\le C_\tau h_n.
+\tag{4.6}
+$$
+
+The maps $F_\kappa$ are uniformly Lipschitz, so the same bound holds
+for their outputs.
+
+Let $D_m=m^{-1}\sum_{j=1}^m(Z_j^2-1)$. Independence and the Gaussian
+moments give
+
+$$
+\mathbf ED_m^2=\frac2m,\qquad
+\mathbf ED_m^4=\frac{12}{m^2}+\frac{48}{m^3},\qquad
+\mathbf E|D_m|^3\le C m^{-3/2}.
+\tag{4.7}
+$$
+
+For example, a centered $Z^2-1$ has second moment $2$ and fourth
+moment $60$; expanding the fourth power of its sum gives (4.7).
+Fix an interior compact height interval $J\Subset I$. Uniformly for
+$k\in J$ and $\kappa\in\mathcal K$, the distance of $a_\kappa(k)$
+from both clipping thresholds is bounded below. Taylor's formula for
+the inverse, whose second derivative is uniformly bounded there, gives
+for some fixed $c_J>0$
+
+$$
+F_\kappa(a_\kappa(k)(1+D_m))-k
+=\frac{a_\kappa(k)}{a_\kappa'(k)}D_m+O_J(D_m^2)
+\quad\text{on }|D_m|\le c_J.
+\tag{4.8}
+$$
+
+Globally the absolute value on the left is at most $C|D_m|$,
+including the clipping region. On $|D_m|>c_J$,
+$m\mathbf E[D_m^2\mathbf1_{\{|D_m|>c_J\}}]
+\le m\mathbf ED_m^4/c_J^2\to0$.
+The cubic cross term in the squared Taylor formula, multiplied by
+$m$, is $O_J(m^{-1/2})$, and its fourth-order term is $O_J(m^{-1})$.
+Consequently
+
+$$
+m\mathbf E\left(F_\kappa(a_\kappa(k)(1+D_m))-k\right)^2
+\longrightarrow2\left(\frac{a_\kappa(k)}{a_\kappa'(k)}\right)^2
+=w_\kappa(k)
+\tag{4.9}
+$$
+
+uniformly on $\mathcal K\times J$. For every $k\in[l,u]$ the same
+left side is bounded by a common constant, using the global Lipschitz
+bound and (4.7). The two boundary layers have $\pi$ mass tending to
+zero as $J$ increases to $I$, independently of $\kappa$. Integrating
+(4.9) over $K_\tau\sim\pi$, first on $J$ and then removing both
+layers, proves
+
+$$
+\sup_\kappa\left|m\mathbf E(F_\kappa(S_{\rm fr})-K_\tau)^2
+-C_\kappa\right|\longrightarrow0.
+\tag{4.10}
+$$
+
+In particular this frozen risk is $O(m^{-1})$. By (4.6) and
+Cauchy--Schwarz, the absolute difference between the real-increment
+risk and the frozen risk is bounded by
+$C_\tau(\sqrt{h_n/m}+h_n)$. Multiplication by $n$ sends that
+difference to zero, since $nh_n\to0$ and $n/m\to1$.
+
+For the actual estimator, the exact conditional normal law bounds
+the chance that any short real increment has absolute value at least
+$\pi$ by
+
+$$
+2m\exp\left(-\frac{\pi^2}{2a_+\delta_n}\right).
+\tag{4.11}
+$$
+
+Outside this event (4.2) equals the real-increment estimator. Both
+estimates and the target lie in $[l,u]$, so their expected squared-loss
+difference is at most $d^2$ times (4.11). Its product with $n$ also
+tends to zero, uniformly in $\kappa$. Combining this with (4.10)
+proves (4.3). Every experiment used in (4.1)--(4.2) has strictly
+positive spacings; the order $n^{-4}$ of the short spacing is not
+replaced by zero at any finite budget. $\square$
+

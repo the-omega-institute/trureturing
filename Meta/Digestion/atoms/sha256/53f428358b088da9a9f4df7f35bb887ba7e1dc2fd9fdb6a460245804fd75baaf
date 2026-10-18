@@ -1,0 +1,20 @@
+**Attribution 7.1 (Existing results and classical tools).**
+
+| Supplier or framework | Exact use and boundary |
+| --- | --- |
+| [Stationary][S], §2; [Universal][U], §§2–6 | Actual harmonic/Brier risk, original producer joint law, all zero fibers, necessary attainer support and posterior band, component reduction and compact fixed-$N$ separation. These retain their source ownership. |
+| [Conditional Response][R], Theorem 3.1 and §4 | Actual conditional-null zero response and attained-law projection budget. Theorem 2.2 supplies its semantic hypothesis; its response theorem is reused. |
+| [Multiword][M], Lemma 2.1, Theorem 3.1 and §§6–7 | Exterior projection, finite certificate and detectability, and the covered reference law/posterior/sign. Their tail and sign hypotheses remain separate. |
+| [Predictive Quotient][QT], Theorem 2.3, Proposition 3.2 and Theorem 3.3 | Fixed-law row-unifilar actual one-sided tail allowance; no uniform rate or productive sign. No general nonunifilar summability is imported. |
+| [Nonattainment][N], Theorem 1.5; [Completeness][C], Theorem 1.4; [Renewal][P7], §§4–9 | Existing visible-memory, renewal/reset and effective-three-state results remain distinct from arbitrary finite hidden-state coverage. |
+| [Balle, Panangaden and Precup, *A Canonical Form for Weighted Automata and Applications to Approximate Minimization*][BPP], arXiv:1501.06841v3, §§2.2, 3.1 | `literature-attested`: classical finite weighted realization and reachable/observable factorization. Its summable-series SVD, approximation and minimality results are not used: stationary cylinder masses total one at each length. |
+| [Boyd and Vandenberghe, *Convex Optimization*][BV], Appendix A.1.6 | `literature-attested`: finite dual norms and infinity/one duality. Hahn–Banach extension and the annihilator identity are classical; no optimization or statistical benefit is asserted. |
+| [Dawid, Lauritzen and Parry, *Proper Local Scoring Rules on Discrete Sample Spaces*][DLP], arXiv:1104.2224v2, §§4.2.1–4.2.2, Example 4.4, equation (14) | `literature-attested`: conditional Brier scoring. The everywhere-positive full-product argument is not transferred to hard no11; actual legal-fiber projection identities are reused. |
+| [Travers and Crutchfield, *Asymptotic Synchronization for Finite-State Sources*][TC], arXiv:1011.1581v2, Theorem 1 and Proposition 3 | `literature-attested`: strongly connected unifilar, probabilistically distinct synchronization background. [Predictive Quotient, Theorem 3.3][QT] owns the broader reducible/periodic allowance; synchronization gives no productive response. |
+| This source, Theorems 2.2, 3.2, Corollaries 2.3, 3.4, Proposition 4.1 and Theorem 5.1 | `repo-derived`: the exact same-law direction/certificate interface and its bounded presentation obstruction. The classical tools and covered reference sign are not separate new discoveries. |
+
+The mathematical contribution is this interface relative to the supplied
+results. No worldwide priority or exhaustive absence claim is
+made. There are no mathematical programs, experiments, Lean checks or
+empirical machine-learning claims supporting these ordinary proofs.
+

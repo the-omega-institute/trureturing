@@ -1,0 +1,53 @@
+## 354. Original-corner transport and actual-circle closure
+
+In the fixed edge order (12,13,14,34,24,23), the original faces
+of any paired frame (R,A,B,O,A,B) are
+
+    F4=(123): {R,A,B}, F3=(124): {R,A,B},
+    F2=(134): {O,A,B}, F1=(234): {O,A,B}.          (354.1)
+
+All three face labels are distinct. A face with label set {X,C,D},
+where X is M or V, can therefore have only the fixed transverse
+pair {C,D}, {X,C}, or {X,D}. The complete receiving possibilities
+are as follows:
+
+    Face MCD: CD -> sigma;
+              MC -> an axial D interval with pair MC;
+              MD -> an opposite-M owner, excluded in Section 352.
+    Face VCD: CD -> sigma;
+              VC -> an axial D interval with pair VC;
+              VD -> an opposite-V owner, excluded in Section 353.
+
+The first alternatives are the actual single owner sigma, by
+Section 349; duplicate owners with the same CD-pair role are not
+allowed. There is one D corner on each such face. Every
+label-preserving original face map must send it to the receiving
+D corner just classified, even when different labels have equal
+numerical coshes. No paired-frame change is used.
+
+Build the actual D normal link from one closed interval per original
+local D edge occurrence, pairing its endpoints by the original face
+maps. Select the set S of original intervals consisting of
+
+1. both transverse D intervals of sigma, its edges 14 and 23;
+2. every axial D interval of every owner with fixed pair MC or VC.
+
+Each sigma interval has one endpoint on an MCD face and the other
+on a VCD face: edge 14 lies on F3,F2, and edge 23 on F4,F1.
+Each selected MC-pair axial interval has both endpoints on MCD
+faces, and each selected VC-pair axial interval has both on VCD
+faces. The complete face classification proves that every endpoint
+of S is paired to an endpoint of S, possibly on the same interval.
+
+Therefore S is a nonempty union of entire connected components of
+the actual D normal-link graph. More explicitly, the original face
+pairing gives two half-edges at each glued endpoint; endpoint closure
+leaves no half-edge exiting S, so every finite edge path from S
+stays in S. Connectedness of the actual D circle forces all of its
+original intervals to belong to S.
+
+But eta has two original transverse D intervals, with companion V
+and axes M,Z. It is not sigma; neither interval is axial D. Both
+are outside S, a contradiction. This proves that (349.1) is impossible
+and completes the proof of Theorem 348.2.
+

@@ -1,0 +1,68 @@
+**定理 462.3（原 A 的严格正储备）。** 原完整两段常数有精确更强的下界
+
+$$
+\boxed{\quad
+A>\frac\gamma2+
+ \left(k-\frac12\right)\log(2k-1).
+\quad}
+\tag{EFA.10}
+$$
+
+进而
+
+$$
+\boxed{\qquad \frac1{16}<A<\frac12.\qquad}
+\tag{EFA.11}
+$$
+
+
+**证明：完整严格 Jensen。** 对 m=1/(2r)>0 和每个 v>0，实对数切线给
+
+$$
+\log v\le\log m+\frac{v-m}{m},
+$$
+
+等号仅在 v=m。线性项和对数项对 R(v)dv 全部绝对可积。
+切线差非负，并在例如 [m+1,m+2] 上严格正，R 在该紧区间严格正；
+连续非负函数的该段积分严格正。因而
+
+$$
+\int_0^\infty\log v\,R(v)\,dv
+<r\log m+\frac1m\left(\tfrac12-mr\right)
+=r\log m.
+$$
+
+代入 EFA.9，并用 $-\log m=\log(2r)$，得 EFA.10。
+
+**证明：统一严格数值储备。** 对任意 x>0，
+
+$$
+x\log x\ge-\frac1e.
+\tag{EFA.12}
+$$
+
+例如把 $\log y\ge1-1/y$ 用于 y=ex，减去 1 后乘以 x，直接得此界；没有需要估计的局部最小值。
+置 x=2r，EFA.10 给
+
+$$
+A>\frac\gamma2+r\log(2r)
+\ge\frac\gamma2-\frac1{2e}.
+$$
+
+经典 $\gamma>1/2$ 已被原供应复用；
+指数正项级数在 x=1 给
+
+$$
+e>1+1+\frac12+\frac16=\frac83.
+$$
+
+因此
+
+$$
+\frac\gamma2-\frac1{2e}>
+\frac14-\frac3{16}=\frac1{16}.
+$$
+
+最后的上界 A<1/2 直接复用原 PrimePrefixOriginalA。
+这整条链不使用待证的 A 正性或任何数值拟合。证毕。
+

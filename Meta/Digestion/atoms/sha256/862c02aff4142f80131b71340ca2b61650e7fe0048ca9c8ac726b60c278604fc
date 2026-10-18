@@ -1,0 +1,33 @@
+**Theorem 2.2 (selected filling equivalence).** For every
+selection-valid $b$ and every $v\in\mathcal T$,
+
+$$
+\mathcal O_A(v)=b
+\quad\Longleftrightarrow\quad
+\exists(z_c)_{c\in B}\in\mathcal T^B:\quad
+v=C[\mathbf z],\quad
+\bigwedge_{c\ne d}z_c\ne z_d,\quad
+\chi_A\bigl(C,(q_A(z_c))_{c\in B}\bigr).
+\tag{NRF.7}
+$$
+
+The valuation, when it exists, is unique for fixed $v$.
+
+Proof. The complete-row supplier in Definition 1.2 gives the source
+reconstruction, sharing, distinctness and inverse valuation. If the
+selector returns $P$, every hole accepts. Every exterior node rejects:
+an accepting exterior node with no accepting strict ancestor would
+itself have been selected, while an accepting strict ancestor would
+already have stopped the traversal. Bottom-up evaluation on $C$ with
+the actual hole states is exactly the state evaluation on $v$ at those
+nodes. This proves necessity.
+
+Conversely, traverse $C$ from the root. At each exterior pair the guard
+rejects and permits descent to both children. At each concrete leaf it
+rejects without producing a hole. At a hole it accepts and stops.
+Therefore precisely the addressed holes $P$ are selected, independently
+of accepting descendants inside their fillers. The supplied filling
+correspondence gives every equality and every disequality of $\pi$.
+The empty valuation and the single root hole obey the same argument.
+$\square$
+

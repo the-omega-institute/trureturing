@@ -1,0 +1,81 @@
+**Application 26.8 (Theorem 6.1 and (ARH.2.3): complete-row consumers).**
+For the nonempty retained input (CS.26.1), arbitrary finite $H_0$, and
+arbitrary finite prefix-free original $Q$, the following are equivalent:
+
+1. A finite original prefix determines the entire $R_Q$ on the exact
+   retained finite-source fiber.
+2. At every permitted certified $r$, a deterministic source-total static
+   consumer has a uniform finite new-read bound for that entire row.
+3. Such a consumer exists at a permitted epoch with real paid serial
+   updates allowed.
+4. $S(H_0)$ is finite, or $Q$ covers every infinite binary branch.
+
+All parts of this restricted decision are effective. The positive
+consumers return the concrete exterior, reached original holes, and the
+complete partition; the negative answer supplies (CS.26.19).
+
+Proof. The history intersection and completeness test are finite integer
+and trie calculations. To separate known candidate indices, for $t\ge0$
+make one literal read at the physical address $L^{r+t+1}$. On every
+source $u_k$ in the entire family its exact reply is
+
+$$
+r_{\rho^r u_k}(L^{r+t+1})=
+\begin{cases}
+\mathsf{absent},&k<t,\\
+\beta,&k=t,\\
+\mathsf{Pair},&k>t.
+\end{cases}
+\tag{CS.26.23}
+$$
+
+To verify this, use (CS.26.21) on the original address $L^{t+1}$.
+For $t>0$ its guard is $k\ge t$ and its reached subtree is
+$T_{k+1-t}$. For $t=0$ its subtree is always $T_{k+1}$, and the same
+reply table holds. Thus $\beta$ tests exactly $k=t$ on this whole fiber.
+
+If $S$ is finite, generate every finite $u_j$ for $j\in S$ and compute
+its entire row by Application 26.4. Testing all but the last index in a
+fixed order, accepting exactly a $\beta$ reply, either identifies a
+matching candidate or leaves only the last. This gives exhaustive
+separation of the finite sources and returns their exact rows. A
+sufficient raw bound is $|S|-1$, zero for a singleton. Finiteness imposes
+no arbitrary cutoff: the finite set is exactly the history intersection.
+It also gives a finite original-prefix bound directly. For each pair of
+distinct finite candidates compute a differing original address and take
+the maximum of their finitely many lengths (zero for a singleton).
+Agreement at that depth identifies the candidate. Equivalently the
+original tests $L^{t+1}$ in (CS.26.23) give such a finite bound.
+
+If $S=[A,\infty)\cap\mathbb N$ and $Q$ is complete, compute $B_Q$ and
+the actual fixed tuple (CS.26.16), including its root-cut convention.
+The exceptional set
+
+$$
+E=S\cap\{0,\ldots,B_Q-1\}
+\tag{CS.26.24}
+$$
+
+is finite. Compute its individual whole rows by Application 26.4 and test
+each $t\in E$ by (CS.26.23). A match selects that candidate's row. If
+all tests reject, the exact interval description implies the actual
+index is at least $B_Q$, so return the fixed tuple (CS.26.16).
+This service is total with at most $|E|$ new reads; if $E$ is empty it
+uses none. Original addresses $L^{t+1}$ for $t\in E$ also show directly
+that one finite original prefix selects a row: equality of those
+replies either selects the same exceptional source or puts both sources
+in the constant-row tail. The root cut always needs zero reads.
+
+These constructions prove 4 implies 1 and 2. Statement 2 implies 3 by
+inclusion of service classes, and 3 implies 1 by (ARH.2.3), with exactly
+the complete-state and source-totality hypotheses of Assumption 1.3.
+If 4 fails, Application 26.6 refutes 1 at every requested depth.
+This proves the equivalence. $\square$
+
+For any nonempty $S$ and any $Q$, even in the negative boundedness case,
+one may test $t=0,1,2,\ldots$ in (CS.26.23) until $\beta$ occurs. On
+$u_k$ this takes exactly $k+1$ reads, terminates, and identifies the
+original finite tree; Application 26.4 then computes its row. Thus the
+negative conclusion is a failure of a *uniform* finite budget and a
+uniform finite prefix, not a universal nontermination theorem.
+

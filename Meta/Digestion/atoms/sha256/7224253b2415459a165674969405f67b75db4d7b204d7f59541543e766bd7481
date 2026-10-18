@@ -1,0 +1,73 @@
+**Theorem 94.2 (finite tangent marginal and noncommuting limits).** Put
+
+$$
+\bar V(b)=\int_{\mathbb R}V(i_0(b,w))dw.
+\tag{94.3}
+$$
+
+It is finite and positive at every $b\in\mathbb R^3$, and
+
+$$
+\bar V(b)=\frac1{j_0}\int_1^\infty\bar p_H(t;0,b)dt,
+\qquad \bar{\mathcal E}\bar V=\frac1{j_0}\bar p_H(1;0,\cdot)
+\tag{94.4}
+$$
+
+in distributions. The right side has Lebesgue mass $1/j_0$.
+For every fixed $b$ and every sufficiently small $s>0$,
+
+$$
+\int_{\mathbb R}U_s(i_s(b,w))dw
+  =\frac{J_s}{j_0s^2}\int_{\mathbb R}
+                  W_{s^2}(\Lambda_s b,x)dx=+\infty.
+\tag{94.5}
+$$
+
+Nevertheless, for every $L<\infty$,
+
+$$
+\lim_{s\downarrow0}\int_{-L}^L U_s(i_s(b,w))dw
+       =\int_{-L}^L V(i_0(b,w))dw.
+\tag{94.6}
+$$
+
+Convergence is uniform for $b$ in any fixed compact set. Hence the
+iterated limit with $s\downarrow0$ first and then $L\to\infty$ is
+$\bar V(b)<\infty$, whereas the opposite order is $+\infty$.
+There is no integrable majorant along these full finite-scale fibres
+uniformly for small $s$. For each fixed $1<T<\infty$, however, the
+fibre marginal of the field restricted to rescaled times $[1,T]$
+converges in $L^1(db)$ to
+$j_0^{-1}\int_1^T\bar p_H(t;0,b)dt$.
+
+Proof. From (82.4),
+$V(r,Y,Z,w)\le C(1+|w|^{1/3})^{-5}$, an integrable function of $w$.
+This proves finiteness in (94.3), uniformly in $b$; positivity is strict.
+Tonelli and the complete Engel projection in Theorem 93.3 give the
+first identity in (94.4). One can check its time tail directly: integrate
+(82.3), using $d_E\ge cN$, to obtain
+
+$$
+\sup_b\bar p_H(t;0,b)
+ \le Ct^{-7/2}\int_{\mathbb R}
+          e^{-c|w|^{2/3}/t}dw\le Ct^{-2}.
+\tag{94.7}
+$$
+
+This is integrable on $[1,\infty)$. Integrating the retained heat
+equation against a compact smooth test therefore proves the source
+equation in (94.4), with no term at infinity. Its charge uses the
+conservative projected heat, already established by its complete SDE.
+
+Change variables along the exact fibre in (93.3). Since
+$s^5/|\ell_s|=J_s/(j_0s^2)$, this proves (94.5), whose divergence is
+Theorem 94.1 at the actual finite cutoff $s^2$. On a bounded $w$ interval
+and a compact set of $b$, the points $i_s(b,w)$ stay in one compact set,
+inside both moving faces eventually. Uniform convergence (82.10) and
+continuity of $V$ then prove (94.6). Monotone convergence in $L$ gives
+the two different iterated limits. An integrable uniform majorant would
+make (94.5) finite and is therefore impossible. Finally (81.5), Tonelli
+and (93.9) on $[1,T]$ prove the asserted finite-time $L^1$ convergence.
+No exchange of infinite time and infinite fibre has entered that claim.
+$\square$
+

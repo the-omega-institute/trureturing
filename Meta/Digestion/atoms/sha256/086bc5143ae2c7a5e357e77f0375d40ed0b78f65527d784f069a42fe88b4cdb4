@@ -1,0 +1,72 @@
+**Theorem 48.3 (strict local nonoptimality of the specified symmetric
+point).** Let $\mathfrak I_{\rm sym}$ be the three-low-branch instrument
+of Proposition 46.1, retaining every low, fair high, spectral failure
+and complement label. Its two residual null atoms may be chosen by any
+decomposition (JR.60) of $Z_{\rm rem}$. Its actual height-record TV is
+exactly $T_{\rm flat}-\phi(\tau_0)$. There is a common finite
+instrument $\mathfrak I_1$ with three low live branches and
+
+$$
+\begin{gathered}
+\operatorname{TV}_{\mathfrak I_1}
+ -\operatorname{TV}_{\mathfrak I_{\rm sym}}
+ \geq\phi(\tau_0)-\phi(\tau_1)
+ >\frac1{1000000},\\
+E(\mathfrak I_1)=E_*,\qquad
+\mathsf W(\mathfrak I_1)=\mathsf C(s_{\rm int}),\qquad
+\mathsf V(F_1)=2s_0\sqrt{\tau_1Y_{\tau_1}}>s_{\rm int}.
+\end{gathered}
+\tag{JR.73}
+$$
+
+Both instruments have the same entire forgotten channel (JR.56), all
+original failure labels and exact-time measures, the same acquisition
+cut, and $s_{\rm int}=2s_0/3$. Optional classical attenuation retaining
+all labels makes the new contrast exactly $s_{\rm int}$ with the same
+TV, cost and complete channel. This refutes optimality of this
+specified symmetric point for the original inequality constraint.
+The improving witness itself still has three low branches; no
+nonoptimality of every three-low-branch construction is implied.
+
+Proof of the strict TV comparison. At $\tau_0$ the residual coefficient
+support consists of vectors $L_0^{1/2}(u+v,u,v)^T$. The restriction
+of its $N$ quadratic form is
+
+$$
+\begin{aligned}
+A_{\rm res}u^2+2C_{\rm res}uv+B_{\rm res}v^2,\qquad
+A_{\rm res}&=\delta\Delta A+\Delta B+2s_0\xi>\frac8{1000},\\
+B_{\rm res}&=\delta\Delta A+\Delta C+2s_0\eta>\frac7{1000},\\
+0<C_{\rm res}&=\delta\Delta A+s_0(\xi+\eta)+\zeta
+ <\frac6{1000}.
+\end{aligned}
+\tag{JR.74}
+$$
+
+The rational box gives these strict comparisons by the same directed
+operations as above. Hence
+$A_{\rm res}B_{\rm res}-C_{\rm res}^2>20/10^6$.
+Every nonzero residual atom therefore has positive height difference,
+independently of its chosen null decomposition. The distinguished
+atom has
+
+$$
+-\frac{12}{10000}<\phi(\tau_0)=\frac43\mathsf b(1)
+ <-\frac{32}{30000}<0.
+\tag{JR.75}
+$$
+
+The high differences are positive, the total live signed difference
+is $d_f$, and the retained spectral failure labels contribute absolute
+sum $L_f$. Thus the symmetric actual TV, with no label discarded,
+is $\tfrac12[d_f-2\phi(\tau_0)+L_f]$.
+For the new instrument the distinguished low difference is
+$\phi(\tau_1)<\phi(\tau_0)<0$. Whatever the signs of its two
+residual differences, their absolute sum is at least their signed sum.
+Its high contribution is unchanged and its total live signed difference
+is still $d_f$. Its actual TV is consequently at least
+$T_{\rm flat}-\phi(\tau_1)$. Equation (JR.68) proves (JR.73).
+This compares an established old actual value with a new lower bound,
+not two unrelated lower bounds. The common realization and original
+contrast/cost claims are proved next. $\square$
+

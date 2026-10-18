@@ -1,0 +1,43 @@
+**Definition 1.3 (the original complete targets and error).** Define
+
+$$
+\begin{aligned}
+\varsigma_y&=\frac y{y+6},& f_y(t)&=\frac{6y}{(y+6t)^2},\\
+(B_y)_{ij}&=\sqrt{d_{yi}d_{yj}},&
+d_y&=\left(\frac y{128},
+\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),\\
+w&=(0,1/4,1/2,1/4,0),&P_f&=|f\rangle\langle f|.
+\end{aligned}
+\tag{RE.5}
+$$
+
+The target for $(y,e,n)$ has live block
+$EU_{e,n}B_yU_{e,n}^\dagger E^\dagger$ and, separately at each
+original label $\ell=0,1,2,3,4$, measure
+$w_\ell f_y(t)dt\,P_f$. Time is exact $t\in[0,1]$, equivalently
+absolute time $6+t$. Labels $1,3$ remain separate even though their
+densities agree; labels $0,13$ remain named with zero density.
+The target is normalized since $\operatorname{tr}B_y=\varsigma_y$ and
+$\int_0^1f_y=1-\varsigma_y$.
+
+A common CPTP processor has only the specimen and fixed common metadata,
+blanks and independent ancillas. No history index, source callback,
+helper specimen, returned uncounted environment or source-dependent
+installed programme is available. All outcomes, including acquisition
+abort, unexecuted rejection, wrong support and other zero-target sectors,
+enter the norm. If $\Omega_h$ denotes the entire target, the original
+quantity is
+
+$$
+\mathcal E(\Phi)=\max_{h=(y,e,n)}
+\frac12\|\Phi(E\rho_hE^\dagger)-\Omega_h\|_{1,\mathrm{cq}},
+\qquad \mathcal E_* =\inf_{\Phi\ \mathrm{common\ CPTP}}\mathcal E(\Phi).
+\tag{RE.6}
+$$
+
+The cq norm is the live trace norm plus the sum of the variation trace
+norms of all separately labelled output measures. A common dominating
+scalar measure handles atoms and singular continuous parts. It is not
+merely the distance between survival probabilities. No new acquisition
+outcome is conditioned upon or divided by its probability.
+

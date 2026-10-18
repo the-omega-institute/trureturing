@@ -1,0 +1,17 @@
+**Proposition 6.1 (exact joint tables for a supplied finite menu).** Suppose GB holds and $\mathcal M$ is any finite menu of actual epoch/address pairs in $[N,M]$. One can effectively construct exactly
+
+$$
+ \mathcal J(\mathcal M)=
+ \left\{\left(R_Q(u),
+       (r_{\rho^m u}(p))_{(m,p)\in\mathcal M}\right):u\in D\right\},
+\tag{JRF.6.1}
+$$
+
+and give a common original-source witness for each of its rows. The table can be used as a finite source quotient for services restricted to $\mathcal M$, with the actual epoch retained as part of the game state. Its terminal condition is constancy of the full original row.
+
+Proof. For each of the finitely many candidate reply vectors and each $r\in\mathscr R$, test their conjunction with $\operatorname{Adm}(X)$ and $\operatorname{Row}_r(X)$. Fixed physical requests are expressed using their unique old-hole prefix and fixed suffix, or $\chi_C$ outside holes. This is a WS2S formula. Its nonemptiness has exactly the joint-source meaning in (JRF.6.1), not separate marginal feasibility. A witness assignment fills $C$ with class trees and yields the actual source. Equivalently, use SCR's finite original-prefix partition and SLH Theorem 61.1, imposing the whole vector at once.
+
+Each actual source produces one table row. If a program makes a legal monotone sequence of menu requests, induction on the acquired replies shows that its surviving table rows are exactly the images of compatible sources in $D$. The actual epoch forbids moving backward even when an earlier-epoch column remains in the table. Read action $(m,p)$ after epoch $j\le m$ costs $(1,m-j,|p|)$; its update part is physically performed before that read. A halt costs zero further actions and is allowed for a constant target value. Thus a finite legal strategy tree translates both ways with exactly the same costs on the corresponding sources. $\square$
+
+The finite rows in (JRF.6.1) are observations of the whole fiber, not a supplied finite prototype promise. A row's source witness is a mathematical realization of a joint profile and is never substituted for the unknown actual source. Refining this table to identify its individual rows is not required when several rows have the same original $Q$ row.
+

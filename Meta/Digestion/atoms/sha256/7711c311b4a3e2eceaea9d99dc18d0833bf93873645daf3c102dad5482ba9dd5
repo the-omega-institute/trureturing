@@ -1,0 +1,86 @@
+**Theorem 19.2 (Unbounded positive coherent rank with fixed classical producer).**
+The law P has full support on every finite legal word,
+and has one classical edge-emission representation with four
+hidden states. For every integer $d\ge1$, the positive
+coherent state $\Psi_{4d+2}$ has Schmidt rank at least
+$d+1$ across the cut after site $2d+1$. Consequently no
+fixed exact matrix-product bond dimension represents all
+these prescribed positive coherent states.
+
+Proof. The finite stationary word probability is
+$\pi_r(w_1)\prod_{j=1}^{n-1}T_r(w_j,w_{j+1})$.
+Every legal word has positive weight, so every $P_n$ has
+full legal support. The matrices in (19.3) give the claimed
+fixed classical representation. At any cut its classical
+probability matrix factors as
+
+$$
+P_n(\ell,r)=\sum_{h=1}^4
+(\lambda M_\ell)_h(M_r\mathbf1)_h,
+\tag{19.4}
+$$
+
+so its nonnegative rank is at most four. Here $\lambda$
+is the stationary row of Definition 19.1, not a Gibbs
+activity.
+
+Set $L=2d+1$ and choose complete half-window words
+
+$$
+u_i=0(10)^i0^{2(d-i)},\qquad 0\le i\le d.
+\tag{19.5}
+$$
+
+Every $u_i$ has length L, starts and ends in zero, and
+has exactly i ones. Each concatenation $u_iu_j$ is legal
+in the original carrier, with $i+j$ transitions $0\to1$,
+$i+j$ transitions $1\to0$ and $4d+1-2(i+j)$
+transitions $0\to0$. Therefore, writing $n=4d+2$,
+
+$$
+P_r(u_iu_j)=A_r(n)b_r^{i+j},\qquad
+A_r(n)=\frac{(1-r)^{n-1}}{1+r},\qquad
+b_r=\frac{r}{(1-r)^2}.
+\tag{19.6}
+$$
+
+The function $b_r$ is strictly increasing on $(0,1)$.
+Thus $t=b_q/b_p>1$. Put
+$c_n=(1-a)A_q(n)/(aA_p(n))>0$.
+The corresponding full coefficient submatrix of (19.2) is
+
+$$
+\sqrt{P_n(u_iu_j)}=
+\sqrt{aA_p(n)}\,b_p^{i/2}b_p^{j/2}
+\sqrt{1+c_nt^{i+j}}.
+\tag{19.7}
+$$
+
+All row and column factors are nonzero. Invoke the existing
+matrix theorem of Jain,
+[*Hadamard powers of rank two, doubly nonnegative matrices*,
+arXiv:2004.03909v1, Corollary 5, p. 8](https://arxiv.org/abs/2004.03909v1).
+It states that $[(1+y_ix_j)^s]$ is nonsingular for distinct
+real $x_j,y_i$ with all $1+y_ix_j>0$, when
+$s\notin\{0,1,\ldots,N-2\}$. Here choose
+$N=d+1$, $x_i=y_i=\sqrt{c_n}t^i$ and $s=1/2$.
+These are distinct positive coordinates and satisfy all
+hypotheses. The square-root kernel in (19.7) is therefore
+nonsingular, so this actual $(d+1)$-dimensional minor has
+rank $d+1$. The reduced density matrix is $AA^*$ and is
+positive semidefinite regardless of the coefficient matrix's
+eigenvalue signs. The full coefficient matrix, on every legal
+word and with zero entries on forbidden pairs, has at least
+that rank. Pure-state Schmidt rank equals coefficient-matrix
+rank, proving the theorem. $\square$
+
+The scalar $c_n$ depends on window length; the law's
+parameters $a,p,q$ remain fixed. The cited nonsingularity
+holds for every positive $c_n$, so no length-dependent
+choice of law, limiting genericity argument or unproved
+avoidance of determinant zeros is used. The matrix theorem
+and the distinction between ordinary and entrywise-power
+ranks are existing results. The displayed stationary no11
+construction identifies their exact interface to the
+finite-hidden domains; it makes no literature-priority claim.
+

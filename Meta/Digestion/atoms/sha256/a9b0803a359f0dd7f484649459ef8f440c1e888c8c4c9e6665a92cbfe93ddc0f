@@ -1,0 +1,70 @@
+**Definition 3.2 (actual path and response notation).** On exactly the path
+
+$$
+\tau=s^2,\quad g_s=\chi s^3,\quad E_s=E_{s^2}(\chi s^3),\quad
+\epsilon_c(s)=s^2E_s,\quad r_s=-\epsilon_c(s)/s^8=-E_s/s^6>0,
+\tag{3.5}
+$$
+
+the full rescaled form and infimum are
+
+$$
+q_s^c[F]=a b_s[F]-\chi\int U_s|F|^2-a\lambda s^2\|F\|_2^2,
+\qquad \inf_{\|F\|_2=1}q_s^c[F]=\epsilon_c(s).
+\tag{3.6}
+$$
+
+For arbitrary norms, (3.6) is exactly $s^2\mathfrak e_{g_s,s^2}[\mathcal U_s^{-1}F]$. In particular $E_s$ is unscaled and $\epsilon_c(s)$ is rescaled. Write
+
+$$
+\begin{aligned}
+A&=\int r^2|Yp|^2,& B_1&=\int rV_1p^2,& C_2&=\int V_2p^2,\\
+T&=\int V_{\rm t}p^2>0,& J_2&=C_2+2B_1,\\
+D_{\rm clock}&=a+\chi T,& K_{\rm base}&=3aA-\chi C_2.
+\end{aligned}
+\tag{3.7}
+$$
+
+All integrals use full unit Lebesgue measure. The quantities are finite by (2.10), (3.4) and Cauchy–Schwarz. They are jointly realized by the fixed source and mode.
+
+Two actual-state antecedents will be used with their original hypotheses. The macroscopic one-sided estimate of Proposition 100.1 supplies a fixed $c>0$ with
+
+$$
+E_s\le-cs^6,\qquad r_s\ge c
+\tag{3.8}
+$$
+
+for small $s$; fixed $\chi$ factors are absorbed in $c$. It does not identify a minimizing branch or a matching coefficient. For every prescribed sequence $s_n\downarrow0$ and every choice of actual normalized complex ground states $\psi_{s_n}\in D(S)$, Theorem 105.1 gives
+
+$$
+r_{s_n}\to\infty
+\quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)\to0,
+\qquad \mathcal O_c=\{e^{i\theta}p:\theta\in\mathbb R\}.
+\tag{3.9}
+$$
+
+The bounded-$r$ defect of Theorem 103.1 says that for every positive-measure compact $K$, with its original constant $\gamma_K>0$, an eventual bound $r_{s_n}\le B<\infty$ forces every weak limit $cp$ to satisfy
+
+$$
+|c|^2\le(1+\gamma_K/\sqrt B)^{-1},\qquad
+\liminf_n\operatorname{dist}(\mathcal U_{s_n}\psi_{s_n},\mathcal O_c)
+ \ge\left(2-2(1+\gamma_K/\sqrt B)^{-1/2}\right)^{1/2}.
+\tag{3.10}
+$$
+
+Concretely, these source constants can be taken as
+
+$$
+\begin{aligned}
+J_K&=\int_K Vp>0,&
+b_0&=\frac{e^{-3}}{24\pi\sqrt{\det M}},&
+v_M&=\frac{28\pi}{3}\sqrt{\det M},\\
+C_0&=\frac{\chi^2j_0}{a^{3/2}}b_0^2v_M,&
+\gamma_K&=C_0\phi(k_0)^2J_K^2.
+\end{aligned}
+\tag{3.11}
+$$
+
+These are actual eigenstate results, depending on negative attainment, the original two-face resolvent and its compact-charge shell estimate. They are not assumptions about trial states. The native weak-profile disk in Theorem 90.1 allows $|c|\le1$ and lost mass; it supplies no global unit norm by itself.
+

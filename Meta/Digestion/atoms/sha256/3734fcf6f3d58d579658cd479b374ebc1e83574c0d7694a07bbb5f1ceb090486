@@ -1,0 +1,20 @@
+**Corollary 11.3 (endpoint tent and mean rounding error).** Under the same table's two endpoint configuration-risk bounds in (2.4),
+
+$$
+J\le520\epsilon+810V_\pi,\qquad
+M:=\pi\operatorname{dist}(u,\{a,b\})
+\le15600\epsilon+24300V_\pi.
+\tag{11.12}
+$$
+
+Proof. The endpoint calibration (2.5) and $C_p-\chi C_\beta-\zeta_0=0$ imply
+$\pi f-\chi\tau h-\zeta_0\ge-\epsilon_p-\chi\epsilon_\beta$. The complete coordinate triangle identity (2.6) bounds the sum of the two positive upper-coordinate violations for $w_{2,1},w_{3,1}$ by $2\epsilon_p$. Their nonnegative weights in (11.2) are at most $365/15=73/3$. It follows that
+
+$$
+\frac{J}{10}\le\frac{149}{3}\epsilon_p+\chi\epsilon_\beta+81V_\pi
+\le52\epsilon+81V_\pi.
+\tag{11.13}
+$$
+
+Indeed $149/3+\chi<52$. For $d=\operatorname{dist}(c,\{a,b\})$, one has $0\le d\le1/30$ and $(c-a)(b-c)=d(1/15-d)\ge d/30$. Averaging gives $M\le30J$ and hence (11.12). Both calculations use TV before averaging configurations. $\square$
+

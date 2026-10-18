@@ -1,0 +1,57 @@
+**Proposition 8.2 (attainment and the actual joint label).** With fixed
+remaining metadata and no extra independently variable accessible payload,
+the exact live state-and-domain component generated in Definition 8.1 has
+algebra
+
+$$
+\mathcal B_{\rm live}=\bigoplus_{j=1}^M M_3,
+\qquad D_{\rm live}=3M.
+\tag{QC.46}
+$$
+
+The fixed calibrated isometry from §2 encodes the specimen in its
+$j$-block. The total guard compares $j+s$ with $1,M$. An illegal request
+is rejected without execution. On a legal request the handler applies the
+complete canonical instrument along $k(t)=(j+st)h$ and zero relative
+phase. On survival it updates the working label to $j+s$. Thus (QC.42)
+is attained for this live component.
+
+Proof. Retaining the chosen classical label and the active qutrit gives
+(QC.46), exact identity-cut recovery, and the integer legality test.
+For the source-family inputs, integration of (QC.7) gives the legal ramp's
+survival probability
+
+$$
+p_{j,s}=\begin{cases}
+k_j/k_{j+s},&s>0,\\
+1,&s=0,\\
+(c-k_j)/(c-k_{j+s}),&s<0.
+\end{cases}
+\tag{QC.47}
+$$
+
+Its actual surviving state is $\psi_{k_{j+s},\beta,m}$. Every failure
+operation is separately the time/mode CP measure (QC.10)–(QC.11), with
+absorbing $f$. The working-height label is meaningful only on a live
+branch; a failed branch retains its old request context and stopped status.
+
+To verify the joint generation claim, write the actually chosen classical
+label and all actual quantum inputs as a positive state-valued family
+$\rho_j^{LR}$, including its true correlations with a reference or archive.
+The generating instrument has unnormalized branch output
+
+$$
+|j\rangle\langle j|\otimes
+ (\mathcal I_{a_0\to k_j}(do)\otimes\operatorname{id}_R)
+ (\rho_j^{LR}).
+\tag{QC.48}
+$$
+
+No distribution of $j$ or conditional reference state is replaced.
+The label is latched before execution, so conditioning on actual survival
+retains its correctly biased joint distribution. Equations (QC.13) and
+(QC.17) intertwine each of these CP branches with the reduced carrier.
+They also intertwine every legal ramp after the exact integer guard.
+This proves joint correspondence, not merely matching label and specimen
+marginals. $\square$
+

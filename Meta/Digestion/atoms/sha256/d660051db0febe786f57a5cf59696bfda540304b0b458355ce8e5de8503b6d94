@@ -1,0 +1,14 @@
+**Definition 4.1 (the analytical depth-three weights).** The sets $S_2$
+and $S_3$ have respectively $11$ and $123$ states. On $S_3$ put
+
+$$
+w(A)=88,\qquad w(B)=52,\qquad
+w(\langle x,y\rangle)=v(x)v(y),\qquad C=169.
+\tag{NCE.31}
+$$
+
+Here $v$ is (NCE.28), so
+$v(S_2)=17$ and $w(S_3)=88+52+17^2=429$.
+These weights are dual-certificate data. They are neither a source
+prior nor retained advice supplied to the native reader.
+

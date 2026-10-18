@@ -1,0 +1,27 @@
+**Convention 1.1 (ordinary mathematical scope).** The carrier considered here
+is the double-wall specialization of the original positive five-mode source.
+The conclusions are ordinary mathematical deductions about an explicitly
+specified quantum instrument and an exact coding task. They assert neither
+Lean verification nor physical realization. The geometric source, its
+all-sector reachability and its chronological composition are credited inputs.
+The three-dimensional active span, the optimal survival law and the original
+six-dimensional stopped instrument are also credited inputs; they are not new
+claims of this volume. The additional content is their complete labelled
+operation correspondence and the exact coding lower bound with actual
+original-control witnesses.
+
+All repository inputs in this volume refer to the immutable snapshot
+`17ef08588473220560adc4a7fb0775a5f7f238a1`.
+The source declarations are
+[FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean),
+especially `ValidBase`, `probability`, `phaseWeight`, `weight_compatible` and
+`finite_rectangles_realize`, together with its
+[owning Blueprint](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs)
+and
+[OriginalControlComposition](https://github.com/the-omega-institute/trureturing/blob/17ef08588473220560adc4a7fb0775a5f7f238a1/D5/S3/Quantum/Fibers/OriginalControlComposition.lean),
+`OriginalControl`, `FiniteC1Control` and `concatenate_original`.
+The additional instrument is the one in
+[Original-Control Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md),
+§§4–5, equations (OC.10), (OC.14)–(OC.19b). Its quantum operations do not
+follow as physical services merely from the differential transport law.
+

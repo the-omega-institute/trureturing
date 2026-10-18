@@ -1,0 +1,24 @@
+**Definition 2.4 (actual legal requests and stopped successors).** The
+original relative-command convention is [Probability/Phase Transport][PP]
+§9.1. A public pair of relative increments $(a(t),b(t))$, starting at zero,
+means $k(t)=x+a(t)$ and $\chi(t)=\chi_*+b(t)$. Its mathematical domain is
+$(\ell_b-\min a,u_b-\max a)$, where $J_b=(\ell_b,u_b)$.
+This partial operation is not a detector of unknown-domain violations.
+
+Here the positive ramp of displacement $d>0$ and duration $L>0$ has domain
+$(0,c-d)$. A positive return excursion of amplitude $d$ has the same
+domain; its negative mirror has domain $(d,c)$. Each request below is
+promised legal on its stated source catalogue, with common permissions.
+Known permission denial or known mismatch has only its declared visible
+unexecuted rejection and controller update. No executed successor is claimed
+for a mathematically undefined request. A total unknown-height guard is an
+additional target, used only as the decision consumer of §9.
+
+For a separately supplied legal matching continuation, literal composition
+uses $\chi(T+u)=\chi(T)+\chi_{\rm tail}(u)-\chi_{\rm tail}(0)$.
+It neither reads nor resets the old lift. Zero duration permits the matching
+zero-displacement identity; it permits no instantaneous nonzero leg.
+First executed failure keeps its exact time, original mode and absorbing
+$f$, with all old archives and updates. No later positive-carrier operation,
+retry, reset, reversal or replacement specimen follows it.
+

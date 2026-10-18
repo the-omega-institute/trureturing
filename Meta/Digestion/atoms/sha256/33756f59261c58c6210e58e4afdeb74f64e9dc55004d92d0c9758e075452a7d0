@@ -1,0 +1,10 @@
+**Theorem 40.2 (Sharp zero-branch Kraus rank for the actual law).** In the same arbitrary mixed, finite homogeneous competitor class, the minimum zero Kraus rank is one for even $n$ and two for odd $n$, attained simultaneously with $D_n$ in Chapter 37. This parity bound does not require Theorem 31.2.
+
+Proof. A zero branch of rank zero gives $\gamma_1=0$, contrary to (35.1), so every competitor has rank at least one. Suppose the zero branch has rank one, $\widehat\Phi(X)=AXA^*$. With the actual $\widehat\tau$ extracted in (40.1), let $F_1=\widehat\Psi^*(I)\ge0$. Then
+
+$$
+\gamma_k=\operatorname{Tr}[F_1A^k\widehat\tau(A^*)^k]=\|F_1^{1/2}A^k\widehat\tau^{1/2}\|_{\rm HS}^2=C_n(q)k^nq^k. \tag{40.4}
+$$
+
+Cayley–Hamilton makes the matrix-valued sequence inside the norm a finite constant-coefficient vector recurrence. The general recurrence argument (29.3)–(29.6) says that an eventual squared norm $p(k)q^k$, with $q>0$ and a nonzero polynomial of positive leading coefficient, has even polynomial degree. To specify its applicability, write the nonzero recurrence terms as $\sum_jP_j(k)\lambda_j^k$, take the largest occurring modulus $R$ and maximal degree $e$ there, and divide by $R^kk^e$. The remaining leading unit-phase sum has positive Cesàro squared norm $\sum_j\|a_j\|^2$; distinct phases have vanishing cross-term means. Boundedness and that positive mean force first $q=R^2$, then $\deg p=2e$. Here $p(k)=C_n(q)k^n$, so every odd $n$ contradicts rank one. This applies the general mechanism of Chapter 29 to the present actual mixed state and positive effect; Theorem 29.1's SNS statement by itself does not quantify over this whole family. Even $n$ has the nonzero single-zero-Kraus upper from Theorem 37.1, and odd $n$ has its linearly independent two-Kraus upper. Neither lower argument supposes a reset, a pure trajectory, nor a single tick Kraus in the competitor. $\square$
+

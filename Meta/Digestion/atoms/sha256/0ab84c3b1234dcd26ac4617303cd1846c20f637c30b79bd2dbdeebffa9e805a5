@@ -1,0 +1,59 @@
+**Theorem 34.3 (indefinite or rank-one negative semidefinite remainder).**
+Assume the supplied complete jointly attained finite $\lambda>0$
+face of Assumption 28.1 and the range of Proposition 34.2. Then
+
+$$
+\lambda_{\min}(R_-)<0\le\lambda_{\max}(R_-),\qquad
+\det R_-\le0.
+\tag{FC.148}
+$$
+
+Thus $R_-$ is either indefinite or nonzero rank-one negative
+semidefinite. If singular, there is a unique directed negative-height
+pure contact $x_*$, on $\ker R_-$. Its saturated endpoint is also a
+contact with $\eta_1(x_*)\le0$, including zero. Their compatible group
+$G_*$ is mandatory, and after merging its mass $p$ and fraction $\xi$
+satisfy
+
+$$
+p(1-\xi)\ell_-(x_*)>1/30000.
+\tag{FC.149}
+$$
+
+If $R_-$ is indefinite, no compatible paired group contains a
+negative-height pure endpoint.
+
+Proof. Theorem 34.1 forces an occupied negative pure coordinate. At
+its contact $x$, choose $\epsilon=\operatorname{sgn}u$; then
+$F_{0,\epsilon,-}(x)=0$. Entire-circle feasibility gives
+
+$$
+0\le F_{1,\epsilon,-}(x)=N_c(x)x^TR_-x.
+\tag{FC.150}
+$$
+
+So there is a nonnegative quadratic direction. Proposition 28.4
+supplies an occupied reverse saturated contact with strictly negative
+quadratic value. These two directions prove (FC.148).
+
+In the singular case $R_-$ is nonzero rank-one negative semidefinite.
+Every negative pure contact must lie in its kernel by (FC.150).
+Theorem 11.1 puts negative pure heights in $u<0$, so at most one
+of the two directed points of this kernel line can qualify. The forced
+mass proves existence. At this point (FC.150) vanishes, hence the
+saturated negative signed test also vanishes. The opposite height test
+is nonnegative, and its difference is $-2D_c\eta_1$ there, so
+$\eta_1\le0$. The endpoints are compatible even at $\eta_1=0$.
+All negative pure-coordinate mass lies in this one group; (FC.144)
+gives (FC.149).
+
+For indefinite $R_-$, suppose a negative pure endpoint and its
+saturated endpoint formed a compatible group. Their maximizing
+negative signed tests vanish together; both angular derivatives vanish
+because both full-circle tests are smooth and nonnegative. The identity
+$F_1=D_cF_0+N_c x^TR_-x$ implies $x^TR_-x=0$ and its angular
+derivative is zero. The radial and tangent vectors span $\mathbb R^2$,
+so $R_-x=0$, contradicting invertibility. This excludes that paired
+fractional possibility, without excluding negative pure singletons or
+other compatible groups. No claim supplies a finite dual. $\square$
+

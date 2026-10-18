@@ -1,0 +1,69 @@
+**定理 23.6（四角量子核对既有格点数的实现）。** 对每个整数 $m\ge0$，
+
+$$
+\begin{aligned}
+\dim\ker\widehat H_m
+&=\sum_{W=0}^m(m-W+1)^2\\
+&=\frac{(m+1)(m+2)(2m+3)}6\\
+&=\binom{m+4}{4}-\binom{m+2}{4}
+=|mP\cap\mathbb Z^3|.
+\end{aligned}
+$$
+
+二项式在上指标小于四时为零。这里的数列与恒等式由《基础公式与关系》§12.1–§12.4 所有，本定理增加的是它们与 $\widehat A^\dagger\widehat A$ 零空间的对应。
+
+第一种证明：扇区基态计数。$\mathcal H_m$ 按 $(U,V,W)$ 正交分解。固定 $W$，所有 $0\le U,V\le R=m-W$ 都有 §23.5 的非空占位提升，定理 23.5 在每个扇区给恰一条零能射线。故零空间维数是 $\sum_W(R+1)^2$。同一整数位置 $(U,V,W)$ 正是 $mP$ 的格点，已有计数结果给所列多项式和二项式差，不重新建立一般 Ehrhart 定理。
+
+第二种证明：有限阶乘内积。令 $\mathcal P_m$ 是五变量的次数 $m$ 齐次复多项式空间，$\mathcal P_q=0$ 对 $q<0$。在所有有限多项式上定义
+
+$$
+\langle z^n,z^{n'}\rangle=\delta_{n,n'}\,n!,
+\qquad n!=\prod_s n_s!.
+$$
+
+映射 $|n\rangle\mapsto z^n/\sqrt{n!}$ 是各次数空间间的等距映射。对单项式，$\partial_s z^n=n_s z^{n-e_s}$，而
+
+$$
+n_s(n-e_s)!=n!,
+$$
+
+所以乘 $z_s$ 与 $\partial_s$ 互为伴随；不同次数正交。这给完全有限的多项式表示
+
+$$
+\widehat A=\partial_1\partial_3-\partial_0\partial_{13},\qquad
+\widehat A^\dagger=M_f,\quad f=z_1z_3-z_0z_{13}.
+$$
+
+对 $m\ge2$，$M_f:\mathcal P_{m-2}\to\mathcal P_m$ 是单射，因为复多项式环无零因子且 $f\ne0$。有限维伴随关系于是给 $\widehat A:\mathcal P_m\to\mathcal P_{m-2}$ 满射：若一个目标向量正交于其像，便被 $\widehat A^\dagger=M_f$ 送到零，单射迫使该向量为零。由 $\ker(\widehat A^\dagger\widehat A)=\ker\widehat A$ 和 rank–nullity，
+
+$$
+\dim\ker\widehat H_m=\dim\mathcal P_m-\dim\mathcal P_{m-2}
+=\binom{m+4}{4}-\binom{m+2}{4}.
+$$
+
+$m=0,1$ 时目标空间为零，$\widehat H_m=0$，维数分别为一、五，与第一种证明及已有计数一致。证毕。
+
+同一伴随关系还解释齐次坐标环的应用。基础卷命题 12.4 的变量按 §23.1 改名、系数扩为复数后，$Q$ 的齐次理想为 $(f)$，符号相反不改变主理想。次数 $m$ 的商空间是
+
+$$
+(\mathbb C[z]/(f))_m=\mathcal P_m/(f\mathcal P_{m-2}),
+\qquad
+\ker\widehat A=(f\mathcal P_{m-2})^\perp.
+$$
+
+由阶乘内积，每个商类有唯一正交代表，故这两个空间等维且有此有限线性识别。零能向量是多项式空间中的向量，$Q$ 的点是复五振幅的射线；这里没有把所有零能向量逐点识别为 $Q$ 的点。Bargmann 的 *On a Hilbert space of analytic functions and an associated integral transform, Part I*（DOI [10.1002/cpa.3160140303](https://doi.org/10.1002/cpa.3160140303)）只归属解析 Fock 表示背景；此应用的伴随与满射由上述有限阶乘论证承担，不引用未经给出的原文定理编号。
+
+全空间的谱隙也可从同一个扇区模型得到，而不把某个 $R$ 的谱隙移用成全空间谱隙。对 $R=0,\ldots,m$、$j=0,\ldots,\lfloor R/2\rfloor$，标记对 $(R,j)$ 的特征值是 $j(R-j+1)$，贡献的重数为
+
+$$
+(R-2j+1)^2.
+$$
+
+理由是该 $j$ 出现在扇区内当且仅当 $w\ge j$，等价于 $j\le U,V\le R-j$；固定 $R$ 已固定 $W=m-R$，故正好有该平方数个扇区，每个贡献一维。不同 $(R,j)$ 若数值相同，重数相加。$j=0$ 的重数总和恢复本节量子核计数。任意正特征值满足 $R\ge2j,j\ge1$，从而
+
+$$
+j(R-j+1)\ge j(j+1)\ge2.
+$$
+
+$m\ge2$ 时 $R=2,U=V=1,W=m-2,j=1$ 实现特征值二，故整个 $\widehat H_m$ 的正谱隙是二，$\widehat H_m/m$ 的正谱隙是 $2/m$。$m=0,1$ 没有正谱隙。
+

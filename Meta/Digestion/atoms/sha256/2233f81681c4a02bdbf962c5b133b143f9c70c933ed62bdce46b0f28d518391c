@@ -1,0 +1,34 @@
+**Definition 8.1 (admissible snapshots and replay language).** Install mode
+$V^+$ for a frozen, completely copied producer prefix of Definition 5.1. Its
+domain consists of snapshots delivered through the actual ownership transitions,
+with complete public initialization, declared prior $D\subseteq\mathcal T_H$
+and required context/control/output material. It has no live source port and
+no arbitrary-string authenticity oracle. Missing material, wrong port/payload
+types, inconsistent identities, ordinals, generation transitions or sealed
+predecessor/copy references produce a refusal.
+
+For each of the $4^N$ public packets, parse completely, retain valid candidates
+in $D$, and replay the source rows from that candidate initial tree. A TagRead
+row uses Definition 2.2 at the actual recorded $p$ and compares the exact tag.
+A ReadE row computes the exact Clifford response. Rho and graft rows compute
+the entire candidate and whole-capacity guard, compare accept/reject, and advance
+the current replay tree only on acceptance. Reject has no candidate-value field.
+The recorded requests are the actual inputs to this replay, not freshly chosen
+requests that agree on a marginal invariant.
+
+NativeLocal/Halt rows have their own grammar and do not change the replay tree.
+For a controller-generated prefix, $V^+$ additionally runs the copied installed
+controller on public inputs and the acquired reply sequence, checks its submitted
+requests and local markers, and compares the complete terminal output if present.
+For the producer of Corollary 7.3 this is the explicit finite stack computation.
+An arbitrary controller is accepted in this mode only with an effective
+interpreter and pointwise termination of these finite-prefix replay segments.
+A source-call-only snapshot need not claim controller correctness.
+
+All enumerations, arithmetic, parsing, comparisons, replay work and refusal
+outputs are executed and paid. Opaque occurrence references are checked against
+the actually owned copied blocks and their chains; row strings alone do not
+prove the ideal ownership premises. Optional validation of micro-fence schedules
+can use the causal simulator on the same acquired prefix; it adds work and does
+not inspect private source scratch.
+

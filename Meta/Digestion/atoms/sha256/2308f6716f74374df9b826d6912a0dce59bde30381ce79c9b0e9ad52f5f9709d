@@ -1,0 +1,22 @@
+**Theorem 2.5 (finite initialized instance).** Under Assumption 1.3's
+canonical supply and original entrance premises, Definition 2.3 reaches
+its first $R_r$ by finite paid work. It installs one finite $G_{\rm sel}$
+and initializes every register in $\mathcal R_{\rm sel}$ on the actual
+ARC74 annex, independently of every future capacity and selector length.
+
+Proof. Each added routine in §§3–6 has finitely many static word operations
+and call sites. Their macros are the supplied acyclic ones; their loops
+join fixed labels. Thus expansion and first-occurrence numbering produce
+a finite graph and determinate finite $r_{\rm sel}$. ARC's bank entry
+theorem applies with that syntactic count, not its earlier value. Its
+native capture requires no word assignment before this initialized bank.
+The two bootstrap NEXT/INPUT/WRITE/ADVANCE/DONE graphs install the actual
+canonical serializations in finite time. Field-zero validation and the
+manifest importer therefore acquire the same installed description.
+ARC Propositions 3.2, 3.5 and 4.4 supply the closed imports, their exact
+grammars and head restoration for these same roles. The subsequent finite
+initializations and token/Ready rows establish the entry. All code sizes
+and owner slots are constants of this fixed apparatus; no bound on later
+$J,m,t$ or the number of cycles occurs in its initialization. Raw partial
+states have Definition 2.4's actual transitions throughout. ∎
+

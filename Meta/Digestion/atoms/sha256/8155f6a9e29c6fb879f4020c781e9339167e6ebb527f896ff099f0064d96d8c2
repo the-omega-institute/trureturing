@@ -1,0 +1,18 @@
+## 8. Independence from complete-return motion and consequences
+
+The two necessary update statistics are not equivalent. A persistent single label with p emission $1/3$ and suspended emission $2/5$, and identity private updates, has $\mathcal A=1/15$ but zero p-to-p semantic return motion. Conversely take two labels, fair row, $A=I$, $B$ the label swap, and $u=v=(1/3,2/5)$. It has $\mathcal A=0$ and positive complete p-law return motion: the immediate-alpha coordinates of its two generated p laws differ by $1/15$. Both are lawful rational product observers on the original full domain; neither is offered as a common optimizer. The second example is a genuinely changing same-update generator covered by the new obstruction, without a native-mixture assumption.
+
+At exact endpoint calibration, (1.4) with $J=0$ forces the acquired return to preserve emission values and the generated laws to become pure endpoint tags. The supported interior complete word then defeats their common configuration benchmark. Thus positive full-law motion cannot be reconciled with the two calibration boxes by simply conserving the suspended-to-p emission value on every acquired alpha edge.
+
+For task-relative whitebox quality $W_s=1-R_{\mathrm{conf},s}$, simultaneous $W_s\ge1-\rho_s-e$ requires
+
+$$
+\mathcal A(M)\ge\frac{(\kappa-240e)_+}{30}.
+$$
+
+The bound is strict when $\kappa-240e>0$. This concerns a semantic emission and actual update together; it does not identify internal implementations or classify arbitrary trained networks by FIB's five windows.
+
+The original law/law and law/conf attainments remain supplied by [FOUR], and conf/law by [SWITCH], on their unchanged full original history domains. Event calibration in §3 works with either order, but §6 consumes p configuration risk and the arbitrary-emission clipping in §7 consumes both configuration risks. No new attainment for any of the four combinations is asserted. The paired comparison does not dominate the original suspended configuration risk. The source, prior and actual histories are common throughout; separately attainable coordinates are never identified as a jointly attained vector.
+
+A concrete next path for the GoalArtifact's common conf/conf consumer is to combine nonzero alpha-edge emission change, the positive complete-return motion of [MOTION], the complete endpoint word boxes and supported interior configuration losses on one actual $B,A$ circulation. A candidate with $J=0$ is now excluded across all finite shapes. A candidate with $J>0$ must still satisfy every original box and risk obligation; this theorem supplies no such table. Establishing that every lawful candidate also has too little $J$, or constructing a compatible table with both necessary changes, remains open.
+

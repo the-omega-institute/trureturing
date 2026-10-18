@@ -1,0 +1,45 @@
+**Proposition 2.3 (reused exact weak correspondence).** For
+$0\le s<s_0$, put $\tau=s/s_0$. Every original competitor gives
+on $\mathcal J_+$ the full moments
+
+$$
+\begin{gathered}
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jp_jb_j\widehat n_j\widehat n_j^T=M_2,\\
+k:=\sum_jp_j|z_j|\ge\tau,\qquad
+v:=\sum_jp_j|\ell(h_j)+b_jf(h_j)|,
+\qquad 2T_{\rm actual}=H_0+v.
+\end{gathered}
+\tag{AC.11}
+$$
+
+Its actual requested contrast obeys
+$s\le\mathsf V(F)\le s_0k$. Conversely every finite family
+satisfying AC.9–.11 has one simultaneous original realization with
+report signs $\operatorname{sgn}z_j$ and contrast $s_0k$.
+The maximum is attained. These are FA69–72 and FA77's correspondence;
+§13 displays the common realization, including the complement.
+The $p_j$ are coefficient masses, not source priors or acquisition
+probabilities. The acquisition mass on a supported input $\rho$ is
+$\operatorname{tr}((K_j^\dagger K_j+N_j)\rho)$.
+
+Put
+
+$$
+V=\frac{m_2h_1^2}{b_{\rm src}^2},\quad
+W=\frac{m_1h_2^2}{d_{\rm src}^2},\quad
+\mu=\alpha V+\beta W,\quad d\sigma=b\,dp.
+\tag{AC.12}
+$$
+
+The physical failure equation is equivalent to
+
+$$
+\int z^2d\sigma=V,\quad \int w^2d\sigma=W,\quad
+\int zw\,d\sigma=0,\quad \sigma(\mathscr C)=\mu.
+\tag{AC.13}
+$$
+
+This auxiliary measure expresses necessary moments. It does not
+replace the original objective's absolute value on each actual label.
+

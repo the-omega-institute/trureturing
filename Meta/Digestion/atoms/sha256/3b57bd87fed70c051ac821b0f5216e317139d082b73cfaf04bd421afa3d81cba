@@ -1,0 +1,24 @@
+**Definition 1.2 (a chart-independent routing tree).** Let $a_i$ be every
+reached old-hole occurrence in the known outside context $C$, and $b(i)$
+its old class. Construct a finite full binary routing tree $K$ by replacing
+each hole of $C$ by the complete binary skeleton of depth $h_0$. Its leaf
+addresses form $B$: the concrete outside-leaf addresses of $C$, together
+with all $a_i s$ for $|s|=h_0$. Its internal addresses form $I$. The tree
+$K$ is a finite syntactic routing device, not an observation of the source.
+
+Every finite physical word has exactly one of the forms
+
+$$
+ p\in I,\qquad\text{or}\qquad p=c z\quad(c\in B),
+ \qquad |p|=|c|+|z|.
+\tag{SRF.2}
+$$
+
+Indeed follow its letters in the finite full tree until the word ends at
+an internal node or first meets a leaf. Fullness and prefix-freeness of
+$B$ give existence and uniqueness. If $C$ is a root hole, $B$ is level
+$h_0$; if there are no old holes, $K=C$ with its concrete leaves treated
+as routing leaves. A one-leaf $C$ gives $B=\{\varepsilon\}$ and $I=\varnothing$.
+All physical prefixes are retained, including longer occurrences of a
+repeated old class; no shortest-occurrence normalization is used here.
+

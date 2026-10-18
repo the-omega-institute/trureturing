@@ -1,0 +1,20 @@
+**定理 5.1（初始三读的全称恢复式）。** 规定 $\operatorname{sgn}(0)=0$。对每个实际 $t,p$ 都有
+
+$$
+x_3=\operatorname{sgn}\bigl(x_0\cdot(x_2\times x_1)\bigr)(x_2\times x_1).
+$$
+
+在三维中符号也可写为 $-\operatorname{sgn}\det(x_0,x_1,x_2)$。令 $W_3(t,p)=(x_0,x_1,x_2)$、$\mathcal B_3=W_3(\mathcal J)$，则其实际像上的后继为
+
+$$
+G(x,y,z)=\bigl(y,z,\operatorname{sgn}(x\cdot(z\times y))(z\times y)\bigr).
+$$
+
+任意两个实际来源，即使树和制备都未知，$W_3$ 相同当且仅当包含时刻零的完整向量 $\rho$ 未来相同。任意长度至少三的连续初始记录也决定完整未来。
+
+证明。先取 $\Delta>0$、非零标签 $\sigma f_i$。令 $w=x_2\times x_1$；定理4.3给 $w$ 是 $g_{i+2}$ 的严格正倍数，$x_3=\sigma w$。须由初值确定 $\sigma$。若 $i=1$，$w$ 是 $N$ 的正倍数，而引理4.2的两种初值方向满足 $a\cdot N=\Delta>0,N\cdot N=B\Delta>0$。若 $i=2$，$w$ 是 $b$ 的正倍数，$b\cdot b=B>0,(-L)\cdot b=\Delta>0$。若 $i=3$，两者所用方向为 $K$，$|K|^2=\Delta>0$。每种情况都给 $\operatorname{sgn}(x_0\cdot w)=\sigma$。
+
+零标签时 $x_1=x_2=x_3=0$，尽管 $x_0$ 可能非零；依赖制备时 $x_2=x_3=0$。这两分支的 $w$ 均为零，所以公式仍成立。在三维 $x_0\cdot(x_2\times x_1)=-\det(x_0,x_1,x_2)$，给等价符号。
+
+将同一全称公式依次应用于实际树 $\rho t,\rho^2t,\ldots$，得 $G(W_3(t,p))=W_3(\rho t,p)$，后继仍实际可达。归纳恢复所有后项；反向完整未来相同包含前三项。较长记录的末三项恢复继续的后项，而原有前缀保留时刻零。此证明只断言 $\mathcal B_3$ 的闭合，没有断言任意环境三元组可达。
+

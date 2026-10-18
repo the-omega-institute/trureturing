@@ -1,0 +1,29 @@
+**引理 11.1（既有输运的完整应用）。** 对任意 $D\in\mathbb R,\lambda\ne0$，
+
+$$
+\Phi_{D,\lambda}(P,g,d)=(P,\lambda g,D+\lambda d),\qquad
+\Phi_{D,\lambda}^{-1}(P,G,\delta)=(P,G/\lambda,(\delta-D)/\lambda)
+\tag{11.4}
+$$
+
+是完整域双射，并在所有已取得、未来原时钟及停止处保持实际子集、完整返回及失败深度，两种 $\lambda$ 符号均成立。
+
+证明。对每个动作词与每个原时钟，
+
+$$
+(\lambda g(i))\operatorname{tr}(A_iP)+D+\lambda d
+=D+\lambda z_i(W).
+$$
+
+非零仿射响应映射是双射，因此
+
+$$
+\Phi(K\cap\mathcal F(H,E,z))
+=\Phi(K)\cap\mathcal F(\Phi H,E,D+\lambda z).
+\tag{11.5}
+$$
+
+基数保持及式 (1.4) 的归纳保持每个失败和停止分句。策略对每个实际读数作 $(z_{\rm phys}-D)/\lambda$，让原策略选择同一个动作或停止，最后返回 $\Phi$ 作用后的整个目标；逆向同理。不比较响应大小，不改变任何时钟。∎
+
+特别 $H_4(C,X)$ 变成 $(D,J,D+24\lambda,M,D+48\lambda,J,D+\lambda C,M,D+\lambda X)$，实际第五、第六读也逐项作同一仿射变换。全域定理在规范早读坐标适用；一般早读的 $B>0$ 与比值条件也在所用坐标检查，负 $\lambda$ 时不可直接照搬物理不等号。根承诺保持，漂移随完整目标变换；输运不提供承诺识别传感器，也没有补出缺失支臂。
+

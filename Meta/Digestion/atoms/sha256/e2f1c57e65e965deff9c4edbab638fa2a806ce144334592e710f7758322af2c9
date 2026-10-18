@@ -1,0 +1,25 @@
+**Corollary 5.4 (precise local saturation conditions).** For
+nonzero $w$ and a law $p$ as above,
+$F_\eta(p)=\log_2J_d(w)$ if and only if all the following hold:
+
+1. $\kappa_w(P)=J_d(w)$.
+2. On $P$,
+   $p_X(x)=w(x)b_{Y_P(x)}(P)/J_d(w)^2$.
+3. $X$ is a function of the owned tuple $O$ on the positive law.
+4. For every $A\subseteq[k]$, $O$ and $B_A$ are conditionally
+   independent given $Y_A$.
+5. The group vectors $Y_1,\ldots,Y_k$ are mutually independent.
+
+Proof. All terms in (COK.33) must vanish. The two Gibbs terms vanish
+exactly at the law in item 2. All coefficients $\gamma_k(A)$ are
+positive. The $A=\varnothing$ term of (COK.32) forces
+$H(X\mid O)=0$, and this also kills every $H(X\mid O,Y_A)$.
+The remaining first-row terms are exactly item 4. The second row
+vanishes if and only if every complementary split of the group
+vectors is independent. This is equivalent to mutual independence:
+split off the first group, then apply the other split equalities
+to the remaining marginal, and induct. The reverse direction
+follows from mutual independence of all groups. For $k=0$ or $1$
+the split terms and independence requirements have their usual
+vacuous meanings. These observations prove both directions. $\square$
+

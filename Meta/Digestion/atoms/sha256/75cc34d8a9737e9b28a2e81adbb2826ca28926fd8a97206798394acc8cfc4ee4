@@ -1,0 +1,15 @@
+给定零和源 \(b\in\mathbf1^\perp\)，定义静态势
+\[
+\phi=L_c^+b,
+\]
+其中 \(L_c^+\) 是 Moore--Penrose 伪逆。边流和 Dirichlet 能量分别为
+\[
+I_e=c_e q_e^{\mathsf T}\phi,
+\qquad
+\mathcal E_c(b)
+=
+\frac12\sum_{e\in E}c_e(q_e^{\mathsf T}\phi)^2
+=
+\frac12 b^{\mathsf T}L_c^+b.
+\]
+

@@ -1,0 +1,45 @@
+**Theorem 4.2 (common exclusive-entry positive fiber).** Under
+Definitions 2.1–3.2 and the promise $\mathcal C(T)\ne\varnothing$,
+there exist $j\in J$ and $z\in\{0,1\}$ such that
+
+$$
+\forall u\in\Pi_j,\quad G_T(u)=\{z\}.
+\tag{TCR.12}
+$$
+
+Consequently this same pair satisfies
+
+$$
+\forall\sigma\in\mathcal C(T)\ \forall u\in\Pi_j,
+\quad\sigma(u)=z.
+\tag{TCR.13}
+$$
+
+Proof. Choose one $\sigma_0\in\mathcal C(T)$ for existence reasoning.
+Every actual $G_T(u)$ is nonempty. Suppose that no pair satisfies
+(TCR.12). For each fixed $j$, some point of $\Pi_j$ allows 0 and
+some point allows 1. Indeed, if 0 were allowed nowhere, every
+nonempty set there would be $\{1\}$, giving the forbidden pair
+$(j,1)$; the argument excluding absence of 1 is identical.
+
+Choose points allowing the respective bits. They can be chosen
+distinct. If the initial two choices coincide, that point allows both
+bits. Take any different point of the infinite $\Pi_j$ and choose
+one of its allowed bits. Use that bit at the new point and the
+opposite bit at the original point. This gives distinct actual
+$v_{j,0},v_{j,1}\in\Pi_j$ with $b\in G_T(v_{j,b})$ for
+$b=0,1$. The four positive fibers are disjoint, so all eight points
+are different across the four fibers as well.
+
+Apply Lemma 4.1 to these eight points, assigning bit $b$ at
+$v_{j,b}$. The resulting lawful code is still served by the same
+fixed $T,e_0,e_1$ on the whole domain, and attains both bits on
+every entire positive fiber. This contradicts the inherited per-code
+obstruction (TCR.11). Thus (TCR.12) holds. Every compatible code
+selects an element of $G_T(u)$, proving (TCR.13).
+
+Only finitely many ground comparisons were added to an existing
+lawful computation. No arbitrary extensional coloring was declared
+lawful, and no value of that chosen computation is needed as input
+to the table-only construction below. $\square$
+

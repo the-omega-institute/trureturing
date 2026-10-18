@@ -1,0 +1,16 @@
+**Corollary 4.2 (Additional finite weighted-moment hypothesis).** If $T_P<\infty$, then
+
+$$
+\tau_P(0)\le T_P,\qquad
+\tau_P(R)\le\eta_{H,P}(R)\longrightarrow0.
+\tag{4.3}
+$$
+
+Proof. Theorem 4.1 applies, and
+
+$$
+0\le\eta_{H,P}(R)\le\sum_{k\ge R}(k+1)a_k\longrightarrow0.
+$$
+
+This is a deterministic bound on expected squared influence. It needs no random prefactor or expectation-integrability deduction from an almost-sure rate. The hypothesis is a weighted entropy moment; it is not inferred from finite hiddenness. $\square$
+

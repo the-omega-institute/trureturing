@@ -1,0 +1,34 @@
+**Theorem 6.2 (an index map cannot supply omitted old values).** Retaining
+an index map together with $(s,t)$ is insufficient for arbitrary
+old-coordinate actions whose guard tests the value at the requested index.
+The obstruction persists for unguarded deletion when the new syndrome or
+the removed value is a response.
+
+Proof. Over $\mathbb F_2$ take
+
+$$
+H=[1\ 1\ 0\ 0],\qquad k=3,\quad d=1,\qquad
+u=000,\quad u'=110.
+\tag{6.1}
+$$
+
+Both prefixes have completion zero, syndrome zero and current tail zero.
+Their retained index map is the same ordered set $I=(1,2,3)$. Extend the
+operation language to $\operatorname{erase}_{i,a}$, which deletes the
+assigned coordinate $i$ only when $i\in I$, credit remains and its CURRENT
+value is $a$. All surviving coordinate labels are preserved, and
+admissibility means extendability of the surviving assignment in the same
+relation $C$. Removing an assignment always leaves an extendable
+assignment. For $i=1,a=0$, the guard holds at $u$ and fails at $u'$, despite
+equal $(I,d,s,t)$.
+
+For unguarded erasure of index 1, both states have the same survivor index
+set $(2,3)$, but the survivor values are respectively $(0,0)$ and $(1,0)$.
+Their syndrome, formed using the original labeled columns $h_2,h_3$, is
+respectively zero and one; their removed values also differ. Thus an index
+map specifies WHICH coordinates survive and cannot restore WHAT values
+were omitted. Suffix descent used the stored current-last value and
+(2.5); neither supplies the old value at index 1. This countermodel does
+not assert that arbitrary erasure must retain every prefix coordinate in
+every relation; it disproves sufficiency of the stated summary. $\square$
+

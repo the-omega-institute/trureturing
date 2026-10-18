@@ -1,0 +1,69 @@
+## 348. Common objects, rows and the scope of the tests
+
+The source, carrier and consumer are those of [315.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md#315-original-objects-and-the-complete-affine-feasibility-problem). Thus
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,
+\end{aligned}
+$$
+
+where $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$, and the reply to the $i$th prime is
+$q_i=[p_i\mid N(r,g)]$. The first zero is $n=\min\{i:q_i=0\}$. The CRT and Fibonacci-window argument in Boundaries 35.2, reused in XVIII 315.3, realizes every finite word, including words with several zeros. It does not introduce a source prior, a source label or an additional observation.
+
+The full Borel carrier is the disjoint union of interval copies $B_j$ and $P_j$. The unchanged consumer returns unknown on $B_j$ and proposes $j$ on $P_j$, and the marked output is $\theta_j=(B_1,1/(j+2))$. The original nonatomic target
+$(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$ remains the target of the original problem. The finite marked targets considered here are the separate laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad 1\ge a_1\ge a_2\ge\cdots>0,\qquad a_n\longrightarrow0.
+\tag{348.1}
+$$
+
+A finite marked law has total variation one from the unchanged nonatomic target; every accuracy assertion below concerns (348.1) only.
+
+A complete table is selected by one source-independent uniform seed before any reply. Class $N$ preselects its whole schedule and acquires every selected address. Class $O$ preselects an increasing schedule and stops at the first queried zero or exhaustion. Repeated or ignored requests count as actual requests. No second address is selected from a reply, and the hard bound is two actual requests. A proof map used below is a map of Boolean words in a coefficient calculation; it is never an extra observation, reset or copy operation.
+
+For a finite horizon $L$, put $J=\{0,\ldots,L\}$ and write $e_j$ for the label basis vectors. Every complete law is a vector kernel
+
+$$
+ p(w)=c+\sum_{i=1}^L\ell_iw_i+\sum_{1\le i<j\le L}Q_{ij}w_iw_j,
+ \qquad w\in\{0,1\}^L,
+\tag{348.2}
+$$
+
+with nonnegative values and constant mass $M$. Thus $m(c)=M$ and
+$m(\ell_i)=m(Q_{ij})=0$, where $m(v)=\sum_{r\in J}v(r)$. All labels, all multiple-zero words and the positive word $1^L$ are retained.
+
+For a first-zero word $n$ the three independent rows are
+
+$$
+ p_w(0)\ge1-a_n-e,\qquad p_w(n)\ge a_n-e,\qquad p_w(0)+p_w(n)\ge1-e,
+\tag{348.3}
+$$
+
+and at $1^L$ the positive row is $p_{1^L}(0)\ge1-e$. Negative right-hand sides remain literal. For the affine comparison used by the score consumer, let
+$R=O(1,2;1,2,0)$, $\alpha=(1,1,0,\ldots)$, $r=z_R=d(\alpha,0)$, and
+$h(b,e)=d(b,e)-r$. A mass-$M$ allocation is required to satisfy
+
+$$
+ z\lambda\ \ge\ d(b,e)+(M-1)r,
+\tag{348.4}
+$$
+
+row by row. Dividing by $M$ changes the profile to
+$b'=\alpha+(b-\alpha)/M$ and $e'=e/M$; it is not a normalization at the original $(b,e)$.
+
+For $L\ge3$, the canonical full score $Y=(A_w,C_w,P_w;T)$ has
+$QY=(\beta,K)$ with
+$\beta_n=\sum_{w:n(w)=n}(C_w-A_w)$ and
+$K=\sum_w(A_w+C_w+P_w)+T$. Consequently
+
+$$
+F_{QY}(b,e)=\sum_n\beta_n(b_n-\alpha_n)-Ke=Yh(b,e).
+\tag{348.5}
+$$
+
+The lower-horizon polynomial statements are separate finite lemmas. The score consumer is used only at $L\ge3$, with the same full allocation in every row.
+

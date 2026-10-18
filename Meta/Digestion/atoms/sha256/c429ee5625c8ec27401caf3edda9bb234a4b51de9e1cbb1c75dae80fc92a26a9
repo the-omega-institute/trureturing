@@ -1,0 +1,17 @@
+**Definition 41.1 (the actual family and its domain).** In the fixed original real output basis $e_0,\ldots,e_4$, let
+
+$$
+ 0<\beta\leq\tfrac12,\qquad a=1-\beta,\qquad 0<u\leq a,
+$$
+
+$$
+ K_0=\begin{bmatrix}\sqrt a\,e_0&\sqrt a\,e_1&\sqrt{1-u}\,e_4\end{bmatrix},
+ \qquad
+ K_1=\begin{bmatrix}\sqrt\beta\,e_2&\sqrt\beta\,e_3&\sqrt u\,e_0\end{bmatrix},
+ \qquad
+ N_{\beta,u}(X)=K_0XK_0^T+K_1XK_1^T.
+\tag{R.195}
+$$
+
+Its environment basis is $|0\rangle_E,|1\rangle_E$. All subsequent complements, kernels, centers and recovery certificates for this family use this same actual Kraus list. The parameter $u$ in (R.195) is a squared third-column weight, independent of the coordinate names in earlier sections.
+

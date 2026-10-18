@@ -1,0 +1,36 @@
+**Definition 1.3 (configuration losses and the full zero face).** Retain
+
+$$
+\rho_p=\frac{1116529}{22781250},\quad
+\rho_\beta=\frac{239}{6750},\quad
+\mathcal J=\max_{s\in\{p,\beta\},\ k\in\{1,2,3\}}
+ \left\{\int\operatorname{TV}(D_s,P_{s,r_k})\,d\nu_s-\rho_s\right\},
+\tag{1.6}
+$$
+
+where $D_p=Q,D_\beta=W$. TV is taken before configuration averaging.
+Put $E_p=\{w_{0,1},w_{1,1},w_{2,1}\}$ and
+$E_\beta=\{\beta,\alpha w_{0,1}\}$. The supplied endpoint triangle
+identity [PAIR, Section 11.8] says that $\mathcal J=0$ requires both complete
+coordinate boxes
+
+$$
+P_{s,a}(e)\wedge P_{s,b}(e)\le D_s(e)
+ \le P_{s,a}(e)\vee P_{s,b}(e)
+\quad\text{for every complete atom }e,\quad\nu_s\text{-a.s.},
+\tag{1.7}
+$$
+
+and both means
+
+$$
+\int Q(E_p)d\nu_p=M_p=\frac{11758471}{22781250},\qquad
+\int W(E_\beta)d\nu_\beta=M_\beta=\frac{5261}{6750}.
+\tag{1.8}
+$$
+
+Conversely, (1.7)--(1.8) give the four endpoint losses. The two additional
+depth-3 losses in (1.6) remain necessary. The original value is
+$j_c=\min_{\mathfrak C}\mathcal J$ [PAIR, Theorem 11.5]. No additional
+condition introduced below is a premise of this unrestricted value.
+

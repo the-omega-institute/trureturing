@@ -1,0 +1,33 @@
+**Definition 1.1 (indexed translation and the inherited native contract).**
+Keep NARC Assumption 9.1 with public integers $q\ge1$ and $k\ge0$.
+The actual originals are $X_{a,b}=\langle T_a,T_{q+b}\rangle$,
+$0\le a,b<q$, with their unchanged offsets $0,q$. The encoder
+exports exactly $q$ attained labels from the genuinely acquired original
+row before the future cut and lag, and discards every other
+source-bearing field. Reuse the entire acquired rows, complete fibers,
+targets and same-original histories of NARC Theorem 5.2, and the full
+reference states at $Z=q+1$ in (NARC.10.3). The finite certificate
+predicate is exactly $D_k$ of NARC Definition 10.1, with menu
+$\mathcal M_q=\{E,P_2,\ldots,P_{3q+1}\}$.
+
+For the translation below, a reference state is a finite indexed family
+$((N_i,v_i))_{i\in I}$ with $N_i\ge2$. A native target tree is a
+finite tree whose requests have the actual $E/P/S$ response functions
+of NARC Definition 5.3 and whose nonempty leaves have a constant target.
+Its depth counts paid requests. Choose any public subset $J\subseteq I$
+and any integer $\Delta$ with $n_i=N_i+\Delta\ge0$ for every
+$i\in J$. Translation keeps the indices and their targets $v_i$.
+Repeated ages and repeated targets are not replaced by representative
+indices. An empty support requires no output on a promised source and
+is vacuously target-constant, as in NARC Definition 10.1.
+
+The notation $\widehat P_s$ means only the algebraic partition
+(NARC.10.5), for an arbitrary integer $s$. It is not a new request.
+Actual requests below use only $E$ and $P_t$ with $t\ge2$; there is
+no native $P_1$. Their literal suffixes are the supplied
+$w_0=\varepsilon$, $w_{2m}=R^m$ and $w_{2m+1}=LR^m$ for $m\ge1$.
+At a right-visible entry the whole original-root request is $Lw_t$;
+at a left-visible entry it is $Rw_t$. Every letter is materialized,
+and $E$ therefore submits the paid word $L$ or $R$, not the
+uninformative original-root empty word.
+

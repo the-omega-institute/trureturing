@@ -1,0 +1,23 @@
+**Definition 1.4 (pooled completion and task equivalence).** A completion
+protocol starts with a genuinely acquired boundary $e$ or $c$ specified
+below and a further complete refinement $C(t)$, also obtained by paid
+preparation before any later target or count. It receives no selected
+target, makes at most $q$ fresh adaptive Reads at arbitrary finite words,
+and exports a finite passive answer state. Its two possible tasks are:
+
+1. Prediction completion: answer every $p\in\mathcal P_D$ at every
+   subsequently supplied authentic $k\ge0$ without further Reads.
+2. Literal completion: answer $r_t(w)$ for every finite stationary
+   original-root word $w$ without further Reads.
+
+Sources are equivalent for each task when all its required answers agree.
+A finite tree or canonical boundary plus a public recursive evaluator is
+a finite passive implementation; an infinite response table need not be
+stored literally. These completion tasks neither reconstruct past events
+nor change the original one-selected-target service. A lower bound for
+completion is not a lower bound for its original $M_1(D)$ objective.
+
+No product condition is imposed on $C$: it may correlate all source
+coordinates. Query selection may use the entire complete name and every
+fresh reply, including variable stopping. All lower bounds allow this.
+

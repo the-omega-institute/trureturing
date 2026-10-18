@@ -1,0 +1,45 @@
+**Proposition 5.2 (a scalable infinite subfamily).** For arbitrary integers
+$k,r\ge1$, take $m=r$ and payload roles $V_{j,i}$ for every
+$1\le j\le k$, $1\le i\le r$, with
+
+$$
+E_{j,i}=\langle T_{n_j},z_i\rangle.
+\tag{URR.24}
+$$
+
+Choose any context containing two copies of every role and any additional
+fixed finite ground exterior. Give precisely the role partition, and
+install all the feedback cells and payload links of §4. Take no rank
+refinements or extra negatives. The full set of old inequalities still
+compares every pair of different atomic, residual and payload classes.
+
+Its feasible-rank support is exactly
+
+$$
+\{\mathbf n\in\mathbb N^k:n_j\ne n_h\text{ whenever }j\ne h\}.
+\tag{URR.25}
+$$
+
+At each feasible rank the residual and source sizes are unbounded within
+this same fiber, with each residual shared by all its $k$ payloads and
+every role repeated in the old row.
+
+Proof. Necessity follows from the distinct atomic-role classes and
+injectivity of $T_n$. For sufficiency choose any $H\ge1$ and set
+$z_i=\rho^{i-1}C_H$. These residuals have mass $H$ and are pairwise
+distinct by the clock. The atomic roles have mass zero and the payloads
+have mass $H+1$. Thus no equality crosses these three groups. Two payloads
+are equal exactly when their left atomic children and right residual
+children are respectively equal; the distinct ranks and distinct
+residuals force the same indices $(j,i)$. Every old inequality therefore
+holds. Theorem 4.6 gives an actual original source in the full fiber.
+
+The indices in (URR.25) are unbounded; for $k=1$ every natural rank is
+allowed. At each feasible rank, $H$ can increase without bound, producing
+unbounded residual and source sizes inside this very same fiber. Each
+$z_i$ is shared by all $k$ payloads involving it, and every role is
+repeated in the old row. The numbers of generators, payloads, old classes
+and links are arbitrary finite input data. Thus these are an infinite
+family of finite descriptions. Section 4 also permits arbitrary mixed decorations, ground payloads and additional
+whole-template negatives beyond (URR.24). $\square$
+

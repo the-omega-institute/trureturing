@@ -1,0 +1,14 @@
+### 76.1 Uniform qubit fibres and the quantitative conclusion
+
+For the uniform collapsed-fibre channel F_(k,2), let k≥4. The fixed MC input encoding sends |f,i> to |f,i>_A|f,i>_B, and the output encoding sends |f> to |ff>. Local physical channels have full input dimension 2k and output dimension k. For every single product of CPTP maps A⊗B, define the unhalved error
+
+    δ=||(A⊗B)J_in−J_out F_(k,2)||diamond.
+
+No environment bound, covariance, calibrated outputs or leakage restriction is imposed. Then
+
+    δ≥max{(sqrt(16k−39)−3)/(4k), 2(k−3)/(5k)}.           (1)
+
+In particular, the unrestricted one-product optimum for the four-fibre target is at least 1/8. Together with §73's explicit product, it lies in [1/8,1/3). This does not identify that optimum. The general lower bound has limit at least 2/5 as k grows.
+
+The mechanism is nonlinear: two coherent test inputs force incompatible properties of one common family of environment records. A single linear functional cannot strictly separate this target from every product channel, because §66 supplies an exact finite LOSR realization.
+

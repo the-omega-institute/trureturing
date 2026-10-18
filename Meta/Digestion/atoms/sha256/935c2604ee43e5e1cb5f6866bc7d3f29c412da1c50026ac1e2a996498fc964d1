@@ -1,0 +1,73 @@
+**Theorem 9.1 (O3: decreasing curvature need not orient zeros).** Keep the actual $d_0,\zeta,g,p_a,p_b$ but replace the cost by the explicit $\widehat J$ below. It is analytic and nonnegative on $[0,1]$, has its unique zero at the prescribed actual $p_1=W/(V+W)$, and satisfies $\widehat J''>0$, $\widehat J'''<0$ throughout. Its projective test has a simple upward zero and at least three distinct zeros, all in $(p_a,p_b)$. This cost differs from the actual rational/radical capacity cost; no actual-source, physical-capacity or original-recovery conclusion is transferred to it.
+
+Proof. Set
+
+$$
+\begin{gathered}
+p_*=(p_a+p_b)/2,\quad q_*=1-p_*,\quad d=p_*-q_*,\quad R=g(p_*)/g'(p_*),\\
+h_{\min}=R-d/2,\quad h_{\max}=\frac{2d h_{\min}}{d-R},\quad D_{\max}=d+h_{\max},\quad G_*=-g''(p_*),\\
+M_{\rm aux}=\frac{G_*}{g(p_*)}R^2D_{\max}^2+RD_{\max}(1+h_{\max}/d),\\
+K_{\exp}=1+\frac2{d-R}+\frac{M_{\rm aux}}{(d-R)d h_{\min}}.
+\end{gathered}
+\tag{TB.23}
+$$
+
+Equation (TB.13) and $p_a<p_*<p_b$ give $g,g'>0$ and $d/2<R<d$. All displayed constants are finite positive scalars. Define
+
+$$
+I=1-e^{-K_{\exp}d},\quad L_{\exp}=d-I/K_{\exp},\quad
+h_K=\frac{d(R-d/2)}{L_{\exp}-RI}.
+$$
+
+The denominator satisfies
+
+$$
+L_{\exp}-RI=(d-R)+Re^{-K_{\exp}d}-I/K_{\exp}
+>d-R-1/K_{\exp}>(d-R)/2,
+$$
+
+and is less than $d$. Hence $h_{\min}<h_K<h_{\max}$. Put
+
+$$
+J_{\rm base}(t)=t^2/2+(h_K/K_{\exp})e^{-K_{\exp}(t-q_*)},\qquad
+\widehat J(t)=J_{\rm base}(t)-J_{\rm base}(p_1)-J_{\rm base}'(p_1)(t-p_1).
+\tag{TB.24}
+$$
+
+Then
+
+$$
+\widehat J''(t)=1+h_KK_{\exp}e^{-K_{\exp}(t-q_*)}>0,\qquad
+\widehat J'''(t)=-h_KK_{\exp}^2e^{-K_{\exp}(t-q_*)}<0.
+$$
+
+Strict convexity proves nonnegativity and the unique zero at $p_1$. Affine subtraction preserves $B,\Delta_J,c$ and curvature. Exact integration on $[q_*,p_*]$ gives
+
+$$
+\widehat\Delta=d+h_KI,\quad\widehat B=d^2/2+h_K(d-I/K_{\exp})=R\widehat\Delta.
+$$
+
+The equality is precisely the defining equation for $h_K$, so $p_*$ is a zero of the projective test $\widehat c$.
+
+Furthermore
+
+$$
+\begin{gathered}
+\widehat\Delta\le D_{\max},\quad\widehat B\le RD_{\max},\quad
+\widehat B_{\rm rev}=(d-R)\widehat\Delta\ge(d-R)d,\\
+\widehat J''(q_*)>h_{\min}K_{\exp},\qquad\widehat J''(p_*)\le1+h_{\max}/d.
+\end{gathered}
+$$
+
+The last inequality uses $K_{\exp}e^{-K_{\exp}d}\le1/d$, following from $xe^{-x}\le1$ for $x\ge0$. Therefore
+
+$$
+\frac{\widehat W_{\rm cross}}{g(p_*)}
+=\frac{G_*}{g(p_*)}\widehat B^2+\widehat B\widehat J''(p_*)-\widehat B_{\rm rev}\widehat J''(q_*)
+<M_{\rm aux}-(d-R)d h_{\min}K_{\exp}<0.
+$$
+
+Equation (TB.17), valid for any such strictly convex cost, gives $\widehat c'(p_*)>0$: a simple upward zero. The proof of Theorem 4.1's sign bands uses only strict convexity, decreasing curvature on the relevant interval and the same $g$. It applies to $\widehat J$, giving $\widehat c(p_a)>0$ and $\widehat c(p_b)<0$. The upward zero makes the test negative just to its left and positive just to its right; the intermediate value theorem supplies one additional zero on each side inside $(p_a,p_b)$. Analyticity and the nonzero bands give finiteness and confinement of all zeros on $[p_z,p_s]$.
+
+This refutes the general inference from decreasing $J''$ to positive $W_{\rm cross}$ at every zero or to a unique transition. It neither refutes nor settles that assertion for the actual $J=A F_c(x)$. $\square$
+

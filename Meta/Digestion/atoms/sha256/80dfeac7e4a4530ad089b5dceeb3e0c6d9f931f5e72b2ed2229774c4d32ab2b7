@@ -1,0 +1,21 @@
+**Definition 5.1 (raw spatial encode/decode).** For a raw finite record $Y$,
+construct a word-list work tree using the explicit $F_{65}$, $F_{q_2}$,
+tape right spines, $F_8$ and switches. Stack entries are a finite component
+kind, a word cursor/constructed unary index and its current path. Popping
+an internal component pushes right then left. Popping a terminal emits
+its path. Emitting every popped node instead emits support. Bit shapes
+use finite tests; a tape cursor consumes its actual cell list, and an
+optional location uses its absent/0/1 value. OrderedInsert gives the
+declared canonical order. All work nodes/paths are paid word-register
+material; they are not actual newly wired historical geometry.
+
+Conversely, from an S-body use Find for each prescribed component path.
+Read the fixed outer scaffold, optional sockets and tape spines until
+their actual terminal. Each $F_8$ socket has exactly one fork side, which
+decodes its track bit. Reconstruct finite cell/bit lists by AppendItem.
+Reject a missing scaffold branch, extra component node, wrong switch
+shape or inconsistent head/constructed-boundary pattern. Compare the
+complete support re-encoding to the input, so no unmatched node remains.
+Raw symbols are decoded as eight tracks even when they do not form a
+valid current tree, bank field, descriptor or active control table.
+

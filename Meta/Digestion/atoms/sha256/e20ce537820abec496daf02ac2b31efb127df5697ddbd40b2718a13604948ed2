@@ -1,0 +1,119 @@
+**Mathematical citation 8.1a (the supplied quantitative four-moment obstruction).** On precisely the compatible Borel pair of Definition 2.2, retain the following [PAIR, Standing assumptions 12.1 and 14.1] diagnostics:
+
+$$
+\begin{aligned}
+m_p&=\int u\,d\nu_p,&m_\beta&=\int v\,d\nu_\beta,\\
+q_{\rm PAIR}&=\int Q(\beta\beta)\,d\nu_p,&
+z_{\rm PAIR}&=\int W(\alpha\alpha)\,d\nu_\beta,\\
+J_p^{\rm PAIR}&=\int(u-a)(b-u)\,d\nu_p,&
+J_\beta^{\rm PAIR}&=\int(v-a)(b-v)\,d\nu_\beta,\\
+M_B&=\int(u(Q)-v(W))^2\,d\Gamma_B,&
+M_A&=\int(v(W)-u(Q))^2\,d\Gamma_A.
+\end{aligned}
+$$
+
+In particular $q_{\rm PAIR}$ is the mean probability of $w_{0,1}=\beta\beta$; it is not this volume's $q$, the mean probability of $w_{3,1}$. The source's two directional affine defects and their sum are
+
+$$
+\begin{aligned}
+D_B^{\rm PAIR}
+ &=\frac{26}{15}-\frac{19}{15}(m_p+m_\beta)-2q_{\rm PAIR}
+   =J_p^{\rm PAIR}+J_\beta^{\rm PAIR}+M_B,\\
+D_A^{\rm PAIR}
+ &=\frac{11}{15}(m_p+m_\beta)-\frac4{15}-2z_{\rm PAIR}
+   =J_p^{\rm PAIR}+J_\beta^{\rm PAIR}+M_A,\\
+S_{\rm PAIR}
+ &=D_B^{\rm PAIR}+D_A^{\rm PAIR}
+   =2J_p^{\rm PAIR}+2J_\beta^{\rm PAIR}+M_B+M_A\\
+ &=\frac{22}{15}-\frac8{15}(m_p+m_\beta)-2q_{\rm PAIR}-2z_{\rm PAIR}\ge0.
+\end{aligned}
+$$
+
+These exact identities are [PAIR, equations (12.6)–(12.7) and (14.1)]. They use both unweighted phase marginals and the respective descriptor-conditioned residual equations. The symbol $D$ in (2.7) remains the mean absolute deviation of $(1-u)v$ on $\Gamma_B$; neither directional defect nor $S_{\rm PAIR}$ is substituted for it.
+
+[PAIR, Theorem 14.2] states that one weight
+
+$$
+\theta=\nu_p\{Q:u(Q)>(a+b)/2\}
+$$
+
+works for both phases and every normalized complete target. With
+
+$$
+H_{s,\theta}(T)
+ =(1-\theta)\operatorname{TV}(P_{s,a},T)
+   +\theta\operatorname{TV}(P_{s,b},T),
+$$
+
+its all-target bounds are
+
+$$
+|\mathcal L_p(T)-H_{p,\theta}(T)|\le\frac{540}{11}S_{\rm PAIR},
+\qquad
+|\mathcal L_\beta(T)-H_{\beta,\theta}(T)|\le\frac{1395}{22}S_{\rm PAIR}.
+$$
+
+Targets may put positive mass on infinite noncompletion. The descriptors remain the original normalized complete laws with their supplied tail control. No finite law marginal is assumed. The common weight is independent of the target; the comparison keeps TV inside each descriptor integral. At $S_{\rm PAIR}=0$, both flows and both marginals are exactly the synchronized native endpoint pair of [PAIR, Theorem 12.2], with common endpoint weight $\theta$, including $0$ and $1$.
+
+[PAIR, Corollary 14.3] transports this comparison through the same original full-record renderer to every posterior target from a positive paid history under the once-sampled $K$. For an original stationary product the comparison integral is its original history configuration loss. For a general Borel pair it remains a mathematical integral, without asserting an installed observer. This stationary-product interpretation does not replace Theorem 6.2's initialized extraction, support closure, clipping and reachable-edge argument for an arbitrary original finite observer. Neither the common comparison weight nor the two law flows identifies the hidden three-stage return measure $\Xi$ or its variation. No posterior, clock, endpoint tag or continuous descriptor is added to the runtime interface.
+
+For positive endpoint masses and any supported $k\ge3$, [PAIR, Corollary 14.4] gives
+
+$$
+\mathcal J+\frac{540}{11}S_{\rm PAIR}\ge\frac\eta4,
+\qquad
+\eta=\frac{14219478376}{318644812890625}.
+$$
+
+The present fixed positive support $\{1,2,3\}$ meets these hypotheses. In particular the simultaneous inequalities
+
+$$
+\mathcal J<\frac{1777434797}{318644812890625},
+\qquad
+S_{\rm PAIR}<\frac{19551782767}{172068198960937500}
+$$
+
+are excluded. The same corollary also excludes the same risk threshold together with
+
+$$
+\|\mathbf c_{\rm PAIR}-\mathbf c_{\rm PAIR}(\theta_0)\|_\infty
+ <\frac{19551782767}{871812208068750000}
+\quad\text{for some }\theta_0\in[0,1]
+$$
+
+is excluded, where
+
+$$
+\begin{aligned}
+\mathbf c_{\rm PAIR}&=(m_p,m_\beta,q_{\rm PAIR},z_{\rm PAIR}),\\
+\mathbf c_{\rm PAIR}(\theta_0)
+ &=\bigl(a+(b-a)\theta_0,\ a+(b-a)\theta_0,\\
+ &\hspace{1.2cm}(1-\theta_0)(1-a)^2+\theta_0(1-b)^2,
+                 (1-\theta_0)a^2+\theta_0b^2\bigr).
+\end{aligned}
+$$
+
+The coordinate exclusion consumes the displayed affine formula for $S_{\rm PAIR}$, whose coefficient absolute sum is $76/15$. These are the supplied evaluated chord-neighborhood thresholds, not an evaluated optimizer or an unrestricted positive risk-only gap. Away from this neighborhood $S_{\rm PAIR}$ is free. With only depths 1 and 2 supported, the fair native endpoint pair instead has $\mathcal J=S_{\rm PAIR}=0$; this does not meet the present three-depth hypotheses.
+
+The zero predicates of the two diagnostics can be separated by the existing supplied examples, without selecting a different coupling. For the actual two positive $B$ edges of Proposition 7.1, $D=0$, while direct substitution in the definitions above gives
+
+$$
+J_p^{\rm PAIR}=0,\quad
+J_\beta^{\rm PAIR}=\frac{47}{64800},\quad
+M_B=\frac{13}{64800},\quad
+M_A=\frac{181}{64800},\quad
+S_{\rm PAIR}=\frac1{225}>0.
+$$
+
+Conversely, the fair native endpoint pair has $S_{\rm PAIR}=0$. Its two $B$-edge weights are $2/9$ and $6/25$, each of mass $1/2$, so
+
+$$
+c=\frac{52}{225},\qquad D=\frac2{225}>0.
+$$
+
+The latter pair is compatible on the same complete carriers, but is not a zero-level witness for the three-depth objective. These calculations distinguish the diagnostic zero sets; they assert no general quantitative dominance relation or feasibility criterion. The supplied PAIR theorem already establishes a necessary risk-defect relation and uniform complete-loss comparison. This volume's particular increment is the joint $F(c,P),G(c,P)$ response, signed same-path balances and clipped first-half-edge span consumer, rather than the general theme of a quantitative compatibility obstruction.
+
+[REV, Chapter 14, Theorem 14.1] gives an exact all-word endpoint-box criterion for a three-label periodic reversible table with $A=I$ and $B$ a swap plus a fixed point. Its rational table satisfies the complete boxes, suspended midpoint, both interior costs and the retained decline and squared-return necessities, yet misses the p midpoint and fails the p-a risk bound. Its fixed-N companion inequality is conditional on a positive complementary p defect; the displayed table has the opposite sign. This does not supply a zero pair or an unrestricted separating certificate. Its linear chord defect, energy and decline functionals are different from the mean absolute deviation $D$ in (2.7). The periodic criterion and the failed sufficiency bridge are suppliers under their own hypotheses, rather than instances or replacements of (3.3)–(3.11).
+
+[AURIC, Section 15] supplies future-response criteria for one specified finite output-resolved instrument. It does not recover an unknown instrument from these two means, provide an emission port or settle this common-flow feasibility problem. [SPARSE, Sections 10–15] supplies exact deterministic unit-call minimax for static finite ordered-tree history tasks, with its joint original-tree image and arbitrary-depth query coverage. Sections 20–24 additionally treat complete finite nominal installations, exact first-occurrence caches, vector-valued historical targets, unbounded literal addresses and a WS2S capacity criterion. They distinguish exact representation of a given installation from existence of a bounded-address replacement; the latter need not preserve that installation's sourcewise traces or costs. Proposition 23.3's reached-row replay requires the same deterministic installed table, static tree service and never-forgetting raw cache. The binary stopped source here has stochastic paid Reads under one sampled $K$, not that service. No bridge transports their capacity criterion, address bound, replay or unit-call optimum into this common-flow problem or its COMPLETE account.
+

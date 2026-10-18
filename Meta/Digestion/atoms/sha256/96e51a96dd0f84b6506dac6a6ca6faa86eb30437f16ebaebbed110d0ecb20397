@@ -1,0 +1,72 @@
+**theorem 6.4 (Explicit all-complex-competitor lower bound for port one).**
+Under Assumption 1.1 and Definitions 1.2–1.3,
+
+$$
+\boxed{
+\varepsilon_1\ge L:=
+1-\frac12\left(\frac{5556+423\sqrt{17}}{13414}+\frac{63}{125}\right)
+>\frac7{17}.}
+\tag{6.15}
+$$
+
+Equivalently $L=1-(m+63/125)/2$. Illustratively,
+$L=0.47589348145086214355\ldots$, while the credited sufficient port still
+has error $4/7$. No new sufficient channel or exact $\varepsilon_1$ is
+claimed.
+
+Proof. Every legal port-one channel has a finite rank-one Kraus family.
+Omit zero terms and write
+$C_i=s_i|a_i\rangle\langle b_i|$ with $s_i>0$ and complex unit vectors
+$a_i,b_i$. TP gives the joint input-direction constraint
+
+$$
+\sum_i s_i^2|b_i\rangle\langle b_i|=I_5,\qquad
+\sum_i s_i^2=5.
+\tag{6.16}
+$$
+
+For unit $a,b$, define the unnormalized mixed moment
+
+$$
+H(a,b)=\lim_{W\to\infty}\frac1W\int_0^W
+\sum_sa_s|v_s(t)^Ta|^2|v_s(t)^Tb|^2\,dt.
+\tag{6.17}
+$$
+
+The pointwise inequality $2AB\le A^2+B^2$ for nonnegative $A,B$ gives
+$H(a,b)\le(F(a)+F(b))/2$. For every actual finite $t$ and mode $s$,
+input $E_s(t)$ followed by wait $t$, a full read and Stop originally yields
+$s$ with probability one. After the replacement its survival probability is
+
+$$
+f_s(t)=\operatorname{tr}(Q_s(t)\widehat T(Q_s(t)))
+=\sum_i|\operatorname{tr}(Q_s(t)C_i)|^2
+=\sum_i s_i^2|v_s(t)^Ta_i|^2|v_s(t)^Tb_i|^2.
+\tag{6.18}
+$$
+
+Its actual full-history TV is exactly $1-f_s(t)$. Consequently
+$e(T)\ge1-S(T)$, where
+
+$$
+\begin{aligned}
+S(T)&=\lim_{W\to\infty}\frac1W\int_0^W\sum_sw_sf_s(t)\,dt\\
+&=\frac15\sum_i s_i^2H(a_i,b_i)\\
+&\le\frac1{10}\sum_i s_i^2\bigl(m+b_i^\dagger\Lambda b_i\bigr)\\
+&=\frac1{10}\bigl(5m+\operatorname{tr}\Lambda\bigr)
+=\frac12\left(m+\frac{63}{125}\right).
+\end{aligned}
+\tag{6.19}
+$$
+
+The trace is $\operatorname{tr}\Lambda=3/5+2(23/50)+2(1/2)=63/25$;
+the last equality uses the full TP marginal (6.16). This controls arbitrary
+complex input and output directions of every rank-one Kraus term together.
+It applies to every legal finite flag set, without stationarity, unitality,
+real Kraus operators, or a projection ansatz. Taking the infimum gives the
+first inequality in (6.15).
+
+For strict improvement, $\sqrt{17}<5$ gives $m<3/5$, whence
+$L>56/125>7/17$. The displayed decimal is an evaluation of the exact
+expression, not a numerical premise. $\square$
+

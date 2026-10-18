@@ -1,0 +1,49 @@
+**Corollary 62.2 (compact-parameter canonical-basis separation).**
+For every compact \(K\subset(-1,1)\), there exists \(\eta_K>0\) such
+that every noncanonical actual common-flat orthonormal input basis
+\(B\) at a parameter \(b\in K\) satisfies
+
+\[
+ \inf_{D,\Pi}\left\|B-\frac{C(b)D\Pi}{\sqrt6}\right\|_F
+ \ge\eta_K,
+\tag{62.15}
+\]
+
+where \(D\) ranges over diagonal unitary matrices and \(\Pi\) over
+column permutation matrices. No explicit value of \(\eta_K\) is claimed.
+The set \(K\) may contain zero.
+
+**Proof.** Fix the first entry of each unnormalized input column to one.
+The resulting 30-phase torus is compact. The common-flat orthonormal
+basis equations define a closed subset of its product with \(K\), and
+quotienting by the finite column-permutation action preserves compactness.
+The moving canonical graph is compact, hence closed in this solution space.
+
+It is also relatively open. At zero this follows from Theorem 62.1.
+At each nonzero parameter, the canonical-ray separation of
+[§49](MUB_SIX_FOURTH_BASIS_THEORY.md#49-实参数支上-canonical-射线的显式隔离半径)
+gives the lower bound \(|a(b)|/80\) for a distinct ray, with
+\(a(b)=b\sqrt{(3-b^2)/(1+b^2)}\). On a sufficiently small interval
+around a fixed nonzero parameter this bound stays positive. Together with
+continuity of \(C(b)\), it makes the canonical basis graph relatively
+open there as well.
+
+Its complement in the compact solution space is consequently compact.
+The distance in (62.15), minimized over the compact phase and permutation
+group, is continuous and has no zero on this complement. Its minimum is
+strictly positive whenever the complement is nonempty. If it is empty,
+any positive constant satisfies the assertion. This proves the corollary.
+
+The convention in (62.15) is the input-basis convention of (62.1).
+For ordinary common-unbiased column completions, multiplication of both
+terms by \(H_0(b)\) leaves the Frobenius distance unchanged, so the same
+bound holds with \(B\) and \(C(b)/\sqrt6\) replaced by
+\(H_0(b)B\) and \(H_0(b)C(b)/\sqrt6\).
+
+Unlike the punctured single-ray bound, this compactness consequence stays
+positive across the center; it applies to complete bases, not to
+individual rays. Neither the proof nor the corollary uses a finite census
+of central rays or completions. The noncanonical orthogonal-triple problem
+outside this canonical neighborhood, and a general fourth-basis
+exclusion for the paired-circulant family, remain open.
+

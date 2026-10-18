@@ -1,0 +1,27 @@
+**Proposition 2.3 (one shared TP budget).** For the finite necessary test,
+the exact joint feasible set is (JG.10) together with
+
+$$
+G_f,G_o\succeq0,\qquad \operatorname{diag}(d)+G_f+G_o=I_3.
+\tag{JG.15}
+$$
+
+The effects can be complex and need not separately be diagonal. They
+must belong to the SAME channel as $C$.
+
+Proof. A channel with output
+$(C\odot A,\operatorname{tr}(G_fA),\operatorname{tr}(G_oA))$ is CP
+by its Kraus and positive-effect representations and is TP exactly
+when (JG.15) holds. Conversely its effects must sum to identity.
+In the output-input convention the identical condition is
+
+$$
+\operatorname{Tr}_{\rm out}(SCS^\dagger)+G_f^T+G_o^T=I_3,
+\qquad\operatorname{Tr}_{\rm out}J_\Lambda=\Lambda^\dagger(I)^T.
+\tag{JG.16}
+$$
+
+Only the live effect is diagonal. Its diagonality does not remove the
+transposes on general $G_f,G_o$. Independently selected effects or
+optimizers do not establish this joint identity. $\square$
+

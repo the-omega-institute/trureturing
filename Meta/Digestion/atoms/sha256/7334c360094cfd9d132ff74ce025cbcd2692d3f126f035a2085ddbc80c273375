@@ -1,0 +1,75 @@
+**Proposition 8.2 (Parameter limits and fixed-$Z$ scope of the margin).**
+With $T=T_\tau$, $\lambda=\lambda_{T_\tau}$ and $x_*=x_\tau$,
+
+$$
+\begin{array}{c|cccc}
+&T&\lambda&x_*&4H\sqrt T\\\hline
+\tau\downarrow0&1/16&0&1/2&1/2\\
+\tau\uparrow1&1&-\infty&1&2/3
+\end{array}
+$$
+
+The certified $\mu$ tends to zero as $\tau\uparrow1$. Neither the
+certified margin nor the best capacity improvement admits a common
+strictly positive additive lower bound for all $0<Z<2/3$.
+
+Proof. These comparator limits are those of [M, Proposition 10.4].
+Their needed scalar argument is as follows. Solving the relation
+between the parameters gives
+
+$$
+Z=\frac{2\tau}{1+2\tau},\qquad
+H=\frac1{2(1+2\tau)}.
+$$
+
+As $\tau\uparrow1$, the inequalities
+
+$$
+\tau<T<\frac{(1+\tau)^2}{4},\qquad
+0<T-\tau<\frac{(1-\tau)^2}{4}
+$$
+
+give $T\to1$, $T-\tau\to0$ and $\lambda\to-\infty$.
+The bound $(1+\tau)/2<x_*<1$ gives $x_*\to1$.
+The formula for $H$ then gives $4H\sqrt T\to2/3$.
+
+For $\tau\downarrow0$, fix a trial level $t>0$. For sufficiently
+small $\tau$, $t>\tau$ and $v_t,f_t$ converge uniformly on
+$[0,1]$ to $\sqrt t$. For $v_t$, rationalizing its difference from
+$\sqrt t$ gives a uniform bound tending to zero. For $f_t$, use
+$\lambda_t\to0$ and $0\le x\le1$. Therefore
+
+$$
+\Phi_\tau(t)\longrightarrow\frac12-2\sqrt t.
+$$
+
+For any fixed $0<t_-<1/16<t_+$, the limiting signs at $t_-,t_+$
+are respectively positive and negative. The unique decreasing-root
+criterion puts $t_-<T<t_+$ for all sufficiently small $\tau$.
+Letting these brackets approach $1/16$ proves $T\to1/16$.
+It follows that $\lambda\to0$ and $4H\sqrt T\to1/2$.
+At these varying roots, $g_T$ converges uniformly to $s-1/2$.
+Outside any neighborhood of $1/2$, that limit has a strictly
+negative compact maximum. Since $g_T(x_*)=0$, uniform convergence
+forces $x_*\to1/2$.
+
+Finally, Theorem 4.6 gives
+$0<\mu<(T-\tau)/8$, so $\mu\to0$ as $\tau\uparrow1$.
+More generally, the literal floor of Theorem 2.3 remains valid on
+every subclass, while Theorem 7.2 and Proposition 7.1 give
+
+$$
+0<e_{2,\mathsf C}^{\rm aff}-e_{4,\mathsf C}^{\rm aff}
+\le 4H\bigl(\sqrt T-\sqrt\tau\bigr)\longrightarrow0.
+$$
+
+Thus even the actual capacity difference cannot have a positive
+lower bound common to the entire open $Z$ range. This does not
+determine the optimal margin at any fixed $Z$. The exponents
+$\nu_1,\nu_2$ also tend to $-\infty$ at the transition, because
+their differences from $\lambda$ are bounded. These are parameter
+limits, not finite exponential parameters defining a transition
+model. At $Z=0$ the positive middle amplitude is absent and the
+ray identification changes; no theorem at that parameter is
+obtained by this limit. $\square$
+

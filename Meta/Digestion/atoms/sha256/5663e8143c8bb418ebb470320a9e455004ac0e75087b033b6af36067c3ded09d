@@ -1,0 +1,33 @@
+### 95.5. Ordinary overlap: rank 343 with an 18-dimensional zero graph
+
+Let \(\mathcal N\) be the universal 508-term polynomial defined by the
+exact orbit-sum construction in §79.3. Evaluate the ordinary arguments
+of (79.8) in \(\mathcal A_{19}\otimes\mathcal A_{19}\), obtaining \(N_O\).
+Its factors are all six relative ordinary overlaps, up to a nonzero
+normalizing factor. Let \(\pi:\mathcal A_{19}\to\mathcal A_{18}\).
+The map
+\[
+ \rho:\mathcal A_{19}\otimes\mathcal A_{19}\to\mathcal A_{18},\qquad
+ \rho(a\otimes c)=\pi(a)\iota(\pi(c))
+\tag{95.7}
+\]
+is onto. The full normalized Theta identity on (95.6) gives \(\rho(N_O)=0\)
+in characteristic zero, by the same faithful cubic-splitting argument as
+§79. Its kernel has dimension \(19^2-18=343\).
+
+In the ordered power tensor basis \(Y^r\otimes Y^s\), index \(19r+s\),
+the leading principal 343-by-343 minor has determinant 9 modulo 137. Hence multiplication by \(N_O\)
+has rank exactly 343 in characteristic zero, and
+\[
+ N_O(\mathcal A_{19}\otimes\mathcal A_{19})=\ker\rho.
+\tag{95.8}
+\]
+The polynomial \(1+\bar GG'/R\) lies in this kernel. An original
+orthogonal ordinary pair evaluates \(N_O\) to zero, hence every element
+of (95.8) to zero. Its means are radial partners. More precisely, since the
+ideal in (95.8) is the kernel of the surjection (95.7), that pair factors
+through the graph (95.7); both points belong to (95.6). Unique original
+reconstruction and all six root orders put the second ray in
+\(S_3\Theta\) of the first. In particular C cannot acquire an ordinary
+partner by using the excluded B point.
+

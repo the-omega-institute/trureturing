@@ -1,0 +1,27 @@
+**Theorem 7.2 (uniform finite future growth).** Under Assumption 1.3, the
+one beta apparatus of Theorem 7.1 permits every finite strictly increasing
+list $1<J_1<\cdots<J_s$, with genuine auxiliary Reserve$(J_i)$ calls,
+any finite interleaving of accepted or complete rejected new/legacy history
+requests at reached Readies, and optional original source/Raise calls
+that satisfy CAP's actual return premises. Every history request with an
+authentic accepted name has Theorem 6.4's full return; eventual gate00
+has the original beta INITIAL output and halt. No $J_i$ or list maximum
+appears in initial code/data. For a general original source/client, this
+construction preserves only ARC Definition 9.4's conditional original
+proposal/prior/fibre/local-completion guarantee.
+
+Proof. Induct on the finite actual cycle list. CAP's Reserve theorem
+extends the same $\phi_K$ while preserving the original acquired source,
+and its Raise theorem retains each historical guard meaning. Theorem 6.4
+handles the history cycles, including when a later cover includes earlier
+history execution. Source and history types do not change each other's
+counter conventions or input sites. The parked client and occupied verifier
+survive each annex flight; therefore Theorem 7.1's original stopping
+argument applies after any such finite list. For a general controller,
+truth of its actual proposal, its compatible initial-source fibre, prior
+computation and intended stop are the original CAP verifier premises.
+No beta-specific constant proposal proves them universally. Infinite
+continuation additionally requires infinitely continuing actual finite
+supplies and pointwise completion; finite-prefix uniformity gives no
+deadline or bounded-resource infinite run. ∎
+

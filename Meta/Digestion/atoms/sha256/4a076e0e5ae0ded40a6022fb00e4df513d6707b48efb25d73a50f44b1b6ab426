@@ -1,0 +1,45 @@
+**Theorem 6.1 (exact extension condition).** Fix the installed encoder
+and the entire NAR source, menu and lag domain of Assumption 1.1. Let
+$\mathcal F^{\mathrm{global}}_\eta$ mean upper budgets measured only
+on $\mathscr H_\eta$, but of controllers correct on every promised
+NAR input for that encoder. Then
+
+$$
+\mathcal F^{\mathrm{global}}_\eta=\mathcal F_\eta
+\quad\text{if}\quad
+e(a)=e(b),\ a-b=d\mathbf1\ \Longrightarrow\ d=0.
+\tag{LQF.15}
+$$
+
+If this encoder condition fails, there is no globally correct service
+and $\mathcal F^{\mathrm{global}}_\eta=\varnothing$, even at entries
+where $\mathcal F_\eta$ contains zero. Under the condition, every
+locally correct controller at a fixed attained entry, not only its
+optimal replacements, has a globally correct extension with identical
+runs on that entry.
+
+Proof. NAR Theorem 16.5 supplies precisely the equivalence between the
+displayed encoder condition and existence of a globally correct finite
+current service. Its fallback reads hidden clock intervals with the
+finite uniform call bound
+$(r-|S|)\lfloor\log_2(2H+1)\rfloor$. This is a reused feasible
+service, not a new optimality claim.
+
+Fix any locally correct $A$ at $\eta_*$. Install one common controller
+which compares its complete received $(S,c,V)$ to this fixed finite
+entry. On equality run $A$; otherwise run the NAR fallback. The
+comparison includes actual complete-row equality, not only selected
+clock summaries. The equality branch has exactly the histories on
+which $A$ is correct and preserves their queries, replies and costs.
+Every other promised input is handled correctly by the fallback.
+The fixed entry in the installation is a common constant, not an
+additional chosen-source handle. Comparing or parsing an already
+acquired entry adds no fresh Read under this contract. Restricting any
+global service to the entry proves the reverse inclusion in (LQF.15).
+
+If the condition fails, NAR Theorem 16.3 supplies a same-code,
+different-lag pair with the identical whole current tree and hence the
+identical complete row at any selected $S$. No global controller can
+separate it. This leaves the local question at other entries untouched.
+$\square$
+

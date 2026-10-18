@@ -1,0 +1,106 @@
+**Theorem 219.9 (Exact complete support of the joint reserve constructor).**
+Let $I,J\subseteq\{1,\ldots,L\}$ be disjoint,
+$1,2\in I$, $|I|,|J|\ge3$ and $\max I<\min J$.
+Choose $\gamma_j>0$ and write
+$G=\sum_J\gamma_j$, $\mu=\max_J\gamma_j$,
+$\mu_{-j}=\max_{h\in J\setminus\{j\}}\gamma_h$.
+Let $c\ge0$, $S=G+c$, and choose one nonnegative matrix $x_{ij}$
+and one nonnegative vector $t_i$ with
+
+$$
+\sum_i x_{ij}=\gamma_j,\quad \sum_i t_i=c,\quad
+s_i=\sum_jx_{ij}+t_i,
+\qquad 0\le\xi_i\le s_i,
+\qquad E=\xi_1+\xi_2.
+\tag{219.21}
+$$
+
+Initially put $P=x_{ij}$ at $w(\{i,j\})$, $P=t_i$ at
+$w(\{i\}\cup J)$ and $C=\gamma_j$ at $w(\{j\})$.
+Convert fraction $\xi_i/s_i$ of every $P$ atom in guard class $i$
+to $A$ at the same word. For $s_i=0$, $\xi_i=0$ and no division
+is made. All other coefficients, including $T$, vanish.
+Set
+
+$$
+v_{ij}=x_{ij}+t_i,\qquad a_{ij}=s_i-G+\gamma_j+\mu_{-j},
+\qquad
+\delta(x,t)=\max\left\{0,
+ \max_{i<h}(s_i+s_h+\mu-S),
+ \max_{i,j}\bigl[(v_{ij}-c)_++(a_{ij}-v_{ij})_+\bigr]\right\}.
+\tag{219.22}
+$$
+
+The constructed score satisfies
+
+$$
+\begin{gathered}
+\beta_i=-\xi_i\ (i\in I),\quad \beta_j=\gamma_j\ (j\in J),
+\quad \beta=0\text{ elsewhere},\quad K=G+S,\quad W=S-E,\\
+B_N=B_O=S+\delta(x,t),\qquad
+\Delta_N=\Delta_O=E+\delta(x,t).
+\end{gathered}
+\tag{219.23}
+$$
+
+In particular $\delta=0$ exactly when the same allocation obeys
+
+$$
+s_i+s_h\le S-\mu,\qquad
+x_{ij}+t_i\le c,\qquad
+s_i-t_i-x_{ij}\le G-\gamma_j-\mu_{-j}
+\tag{219.24}
+$$
+
+for all distinct guards and all guard-column pairs.
+At $\delta=0$ both unrestricted exact-$Q$ minima equal $E$.
+At positive $\delta$, (219.23) is an exact constructor cost;
+unrestricted optimality requires a separate matching lower bound.
+
+**Proof.** Each donor atom has first zero its guard because every
+guard precedes every positive address. Conversion leaves the
+zero-reward measure $U=A+P$ pointwise fixed and decreases only that
+guard's numerical reward. Every guard reward is a pointwise subset of
+$U$. Positive numerical labels receive only their correct atoms.
+Inactive labels earn zero. This accounts for all labels by a
+constructor-specific dominance statement.
+
+The zero masses for the three active pair types are as follows.
+For a mixed pair the order is guard first, positive second.
+
+| Pair type | Zero masses in $00,01,10,11$ | Competing positive correct rewards |
+| --- | --- | --- |
+| Guards $i,h$ | $(0,s_i,s_h,S-s_i-s_h)$ | largest reward $\mu$ in 11 |
+| Guard $i$, positive $j$ | $(v_{ij},s_i-v_{ij},c+\gamma_j-v_{ij},G-s_i-\gamma_j+v_{ij})$ | $\gamma_j$ in 10; $\mu_{-j}$ in 11 |
+| Positives $j,h$ | $(c,\gamma_j,\gamma_h,G-\gamma_j-\gamma_h)$ | $\gamma_j$ in 01; $\gamma_h$ in 10; each other $\gamma_k$ in 11 |
+
+For guard pairs the total surplus is
+$(s_i+s_h+\mu-S)_+$.
+For a mixed pair it is
+$(v_{ij}-c)_++(a_{ij}-v_{ij})_+$.
+For a positive pair there is no surplus: every other $\gamma_k$
+is bounded by the sum in 11. This includes earlier unqueried labels.
+For guard and mixed pairs, the two cells merged by O are already
+zero-maximizing. For positive pairs, merging 00 and 01 still gives
+their sum of zero rewards. Thus each active pair has identical N and
+O support, even if its surplus is positive.
+
+Every inactive bit is one on the support. A schedule containing it
+reduces to a singleton or an empty partition. An N singleton is refined
+by some distinct active pair, as is the empty schedule; hence its
+support is bounded by the displayed N maximum. Each maximizing active
+pair has the same O value, so O attains that maximum too.
+This avoids requiring that every O singleton itself have a stopped
+pair refinement. Constant zero supplies $S$ in both catalogs.
+The table proves the support formula.
+
+The single score has $A=\sum_i\xi_i$, $P=S-\sum_i\xi_i$, $C=G$,
+$T=0$, giving its quotient and $W=S-E$.
+Every full competitor at the same quotient, regardless of cancellations,
+suffixes, terminal or support, satisfies $W=Z-E$ and
+$B_O\ge Z$ by constant zero. Its cost is at least $E$.
+Matching this bound at $\delta=0$ proves the unrestricted minima.
+Within this constructor every cell gain over zero is nonnegative,
+so zero total gain forces exactly (219.24).
+This converse makes no assertion about other representatives. ∎
+

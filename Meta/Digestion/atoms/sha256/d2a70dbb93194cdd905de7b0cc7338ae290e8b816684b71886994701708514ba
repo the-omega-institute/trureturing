@@ -1,0 +1,31 @@
+**Proposition 253.3 (An explicit score and its unpaid residual).**
+For every full $y\ge0$, the full nonnegative score
+$V_y=y+4\omega_y\zeta$ satisfies
+
+$$
+\Delta_N(V_y)\le\Delta_O(y),\qquad
+F_{Q(y)-Q(V_y)}=4\omega_yD_b,\qquad
+\sigma_H(Q(y)-Q(V_y))=8\omega_y.
+\tag{253.5}
+$$
+
+**Proof.** Columnwise,
+$y\cdot(z_D-\mathbf r)\le\Delta_O(y)+\omega_y I_D$,
+where $I_D=[u\ne v]$ on pairs and zero otherwise. Adding
+$4\omega_y\zeta\cdot(z_D-\mathbf r)$ cancels its excess
+because $I_D\le4(3-\zeta\cdot z_D)$.
+Taking the maximum over the full $N$ catalog proves the budget
+bound. The quotient difference is $-4\omega_yQ(\zeta)$ and
+$F_\zeta=-D_b$, giving the exact residual. On $H_L$,
+$D_b=2-b_1-b_2-E\le2$; it attains two at the auxiliary origin.
+This proves the exact supremum.
+
+The sufficient payment condition for this particular choice is
+$\Delta_O(y)+8\omega_y\le1$, with $\theta=8\omega_y$.
+It is not automatic for a unit-$O$ input. At $y=\zeta$,
+$\omega_y=1/2$ and this construction gives $V_y=3\zeta$
+with residual supremum four. Yet $V=\zeta$, $\theta=0$ is a
+valid certificate because $\Delta_N(\zeta)=0$.
+Thus failure of this score construction is not nonmembership in
+the unrestricted certificate set. $\square$
+

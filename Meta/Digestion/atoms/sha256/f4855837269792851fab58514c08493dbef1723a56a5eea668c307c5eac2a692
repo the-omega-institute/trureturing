@@ -1,0 +1,92 @@
+**Proposition 44.2 (joint attainment and the full-output identity).**
+Definition 44.1 has full TP decoders, total encoder effect $I_5$ and
+$\mathsf V(F)=s$, $\mathsf W=P_{27}(s)$. On each normalized original
+input its acquired law is
+
+$$
+\begin{aligned}
+p(H,\sigma\mid y,e,n)&=P_y(s)/2+
+ \sigma\sqrt{(1-u)(1-v)}\,\kappa enq_y,\\
+p(L,\sigma,\tau\mid y,e,n)&=\frac14\left[
+ uA_y+vB_y+C_y+2\sigma\sqrt{uv}\,\kappa enq_y
+ +2\tau\sqrt u\,\kappa_{02}e q_{02,y}
+ +2\sigma\tau\sqrt v\,acn q_{12,y}\right],\\
+p(f,\epsilon,r\mid y,e,n)&=\frac12\left|
+ \left\langle v_\epsilon,
+ (\sqrt{m_1}n\sqrt{p_{y1}},\sqrt{m_2}\sqrt{p_{y2}})^T
+ \right\rangle\right|^2,\\
+p(\perp,r\mid y,e,n)&=0,\qquad
+p(F=r\mid y,e,n)=1/2+r\kappa s\,enq_y.
+\end{aligned}
+\tag{JR.55}
+$$
+
+For every complex five-mode input $A$, forgetting all acquisition labels
+gives the complete channel
+
+$$
+\begin{aligned}
+\Phi^L(A)&=E\Lambda_*(E^\dagger AE)E^\dagger,\\
+\Phi_j^f(A)(B)&=\left(\int_Bg(t)dt\right)
+ \left[w_j\operatorname{tr}(EME^\dagger A)
+  +\mathbf1_{j=2}\operatorname{tr}((I_5-P)A)\right]P_f,
+ \quad j=0,\ldots,4,
+\end{aligned}
+\tag{JR.56}
+$$
+
+for every labelled Borel time set $B\subseteq[0,1]$. All cross-support
+operators and extra-sector outputs vanish. The same identity holds
+at every passive-reference amplification, with the exact conditional
+reference operators. Hence all twelve original full-cq errors are those
+of $\widehat\Phi_*$, and $E(\Phi)=E_*$. This common instrument attains
+(JR.51), including at its endpoints.
+
+Proof. The live laws and ranks reuse (JR.37), (JR.38) and (JR.40).
+The spectral rows have total effect $M$, and each binary value receives
+$M/2$. The live coefficient Gram sums to $I_3$, so the live encoder effect
+is $D^\dagger D+T^\dagger T+S^\dagger S=I_3-M$. Adding the
+spectral rows gives supported encoder effect $I_3$; the complement
+gives $I_5-P$.
+All individual positive effects are bounded by this sum and are TNI.
+The live decoders are isometries on their entire fibres. The scalar
+decoders are TP because $\sum_jw_j=1$ and $\int_0^1g(t)dt=1$.
+Thus no live-only normalization is used. The binary effect is (JR.41)
+on the supported algebra, and is
+$(I_5+r\kappa sEX_{01}E^\dagger)/2$ on five modes.
+This particular attainer satisfies (CA.11); that is a consequence of
+the construction, not an assumption about every optimizer.
+
+The spectral row effects sum to $M$, so their decoded maps sum to
+$w_jg(t)dt\,\operatorname{tr}(MA_V)P_f$, with
+$A_V=E^\dagger AE$. The complement supplies the second term of
+(JR.56), exactly as in (JR.39). These are equalities of Kraus
+conjugations and trace functionals on all complex matrix units.
+For a joint operator $X$ with passive reference $\mathcal H_R$, the
+live term is obtained by $(EK E^\dagger\otimes I_R)X
+(EK^\dagger E^\dagger\otimes I_R)$, summed over $K=D,T,S$.
+The two failure reference factors are, respectively,
+
+$$
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X],\qquad
+\operatorname{Tr}_5[((I_5-P)\otimes I_R)X].
+$$
+
+They multiply $P_f$, the original weights and $\int_Bg(t)dt$ as
+in (JR.56); they are not replaced by an unconditional reference state.
+This proves the entire complex/reference/labelled-Borel-time identity.
+The two zero-weight original labels stay zero, the others stay separate,
+no singular part is added and common fixed metadata are preserved.
+The actual density $g$ is not asserted to equal an ideal $f_y$.
+Equality to the same complete approximate channel is precisely what
+allows reuse of the original HALF full-cq error certificate.
+
+Only the high H fibres have dimension at least three, so their effect
+and each history's cost are (JR.36). The row law in (JR.55) is its
+ordinary Born probability on a normalized input; it has no division by
+failure mass. Its two spectral outcomes give absolute height-difference
+sum $L_f$. The live differences give $h,\ell$, so all terms of the
+upper bound in Theorem 43.2 are attained by this one instrument.
+A dilation must discard every other system permanently before the cut;
+retaining a correlated share changes the stated cost. $\square$
+

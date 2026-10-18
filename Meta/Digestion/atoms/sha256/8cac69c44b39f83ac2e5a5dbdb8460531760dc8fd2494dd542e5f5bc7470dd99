@@ -1,0 +1,13 @@
+**Mathematical citation 84.4 (TV and convex ingredients).** The finite
+partition and overlap identity in (84.2) uses the TV ingredients credited
+in (77.7): Levin and Peres, with Wilmer, [*Markov Chains and Mixing Times*,
+second edition, Chapter 4, Proposition 4.2, Remark 4.3 and equation
+(4.13)](https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf).
+Finite convex hulls and separating hyperplanes are mature ingredients;
+see Boyd and Vandenberghe, [*Convex Optimization*, Section
+2.5.1](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The nearest-point argument above proves the needed separation directly.
+The rows, tree recurrence and their exact applicability to the original
+marked-source hard-count problem form a `repo-derived` composition;
+these citations carry no literature-priority claim for that composition.
+

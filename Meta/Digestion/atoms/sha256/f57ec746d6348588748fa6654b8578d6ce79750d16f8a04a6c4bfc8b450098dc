@@ -1,0 +1,160 @@
+### 217.4 C — attained signed face with terminal and suffix extension
+
+Fix $L\ge6$, $a\ge b$, $a,b,c,\delta,t\ge0$, $\mu=\max(a,b,c)$, with
+
+$$
+\begin{gathered}
+a\ge3\delta,\quad 0\le t\le\min(a,b,c-\delta),\\
+3\max(b,c)\le2(b+c-\delta)+t,\quad
+3\max(a,c)\le2(a+c-\delta)+t,\\
+6\mu\le3a+2b+2c+\delta+4t,\quad
+3\mu+2t\le3a+2b+2c-2\delta.
+\end{gathered}
+\tag{217.7}
+$$
+
+Set
+$x=(a-3\delta)/6$, $y=a/3$, $z=b/3$, $v=(c-\delta-t)/3$,
+$s=x+y+z+v$, $B_{lit}=3s+t=(3a+2b+2c-5\delta)/2$.
+For $\xi_j\ge0$ outside $\{4,5,6\}$ require
+$\xi_i\le s$ for $i=1,2,3$ and $\sum_{j>6}\xi_j\le t$. Put
+$E=\xi_1+\xi_2$, $D=\sum\xi_j$,
+$\beta=(-\xi_1,-\xi_2,-\xi_3,a,b,c,-\xi_7,\ldots,-\xi_L)$ and
+$K=a+b+c+B_{lit}$. Its absolute stock is $B_{abs}=B_{lit}-D$;
+the donor and suffix capacities ensure $D\le B_{lit}$. Then
+
+$$
+\min_{Q(V)=(\beta,K)}\Delta_N(V)=\min_{Q(V)=(\beta,K)}\Delta_O(V)=E+\delta.
+\tag{217.8}
+$$
+
+On six core coordinates, let $w_i(v)$ have sole guard zero i and pivot
+bits v, and let $w_0(v)$ have all guards one. The initial measures are
+
+| Core word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $x$ | $0$ |
+| $w_i(010)$ | $y$ | $0$ |
+| $w_i(100)$ | $z$ | $0$ |
+| $w_i(110)$ | $v$ | $0$ |
+| $w_0(010)$ | $0$ | $a$ |
+| $w_0(100)$ | $0$ | $b$ |
+| $w_0(110)$ | $0$ | $c$ |
+
+The guard rows occur for each $i=1,2,3$, and unlisted A, C and P
+coefficients initially vanish. All three guard bits are one at the C atoms:
+$C_{111010}=a$, $C_{111100}=b$, $C_{111110}=c$. Their core zero sets
+are $\{4,6\}$, $\{5,6\}$, $\{6\}$ respectively. The core terminal
+mass is $t$. Convert fraction $\xi_i/s$ of every P row in guard class i
+to A at the same word. If $s=0$, its capacities force all three
+$\xi_i=0$ and no division or conversion is used.
+For $j>6$, use one common suffix law of masses $\xi_j/t$ on its sole-zero
+word and remaining mass on the all-one suffix; tensor every core measure with
+this same law, put A mass $\xi_j$ on the corresponding extended sole-zero
+word, and retain terminal mass $t-\sum_{j>6}\xi_j$. If $t=0$, all suffix
+negative masses vanish and only ones are appended. This common tensor is a
+single stock, not a second acquisition law. More explicitly, each
+nonterminal core atom at u with mass r becomes atoms $(u,v)$ of masses
+$r\nu(v)$. The old terminal zero reward $t\nu$ becomes A at core
+$1^6$ and each nonpositive suffix, with terminal coefficient
+$t\nu(1^{L-6})$. Thus every old numerical-label reward measure, including
+label zero, is tensored with the same $\nu$, and every new numerical-label
+reward is zero. K remains $a+b+c+B_{lit}$, W becomes $B_{lit}-E$, and
+the actual terminal coefficient is $t-\sum_{j>6}\xi_j$, possibly zero.
+
+For the unrestricted lower cut, $Z=\sum A+\sum P+T$ gives $W=Z-E$, hence
+$\Delta_O\ge E$. A single stopped mixture of $(1,4;0,4,0)$,
+$(2,4;0,4,0)$, $(3,4;0,4,0)$ (weight $1/5$ each) and $(4,5;0,5,6)$
+(weight $2/5$) has total weight one. Its class counts are at least
+$(3,0,3)$ on guard classes, $(2,3,5)$ on class 4, $(3,2,5)$ on classes 5,6,
+$(3,0,3)$ after 6 and $(3,0,3)$ on the positive word. Weighted accounting
+using $B_{lit}=2A_{tot}-D+P_{tot}+T$ gives
+$5(\Delta_O-E)\ge3a+2b+2c-2B_{lit}=5\delta$.
+For clarity the counts are for the unnormalized five copies of the mixture:
+the positive word needs only its zero count three. Writing I for pivot
+classes 4,5,6, the reward minus $5Z$ is at least
+$3a+2b+2c-2(A_{out}+P_{out}+T)$, and
+
+$$
+B_{lit}-(A_{out}+P_{out}+T)
+ =2A_I+(A_{out}-D)+P_I\ge0.
+$$
+
+This allows arbitrary cancellations and independent P atoms in competitors.
+The single stopped table $(4,5;4,5,6)$ also yields
+$\Delta_O\ge E+a+b+c-B_{lit}$, with nonnegative cancellation slack
+$(A_{tot}-D)+A_I$. Both cuts apply without a constructor support assumption.
+
+For the upper bound, before conversion the exact excesses for complete pair
+types are
+$\left(\mu-s-t\right)_+$ (two guards),
+$(a-2(x+y))_++(\max(b,c)-2(z+v)-t)_+$ (guard/4),
+$(b-2(x+z))_++(\max(a,c)-2(y+v)-t)_+$ (guard/5),
+$(\mu-2s)_+$ (guard/6),
+$(a-3y)_++(b-3z)_++(c-3v-t)_+$ (45),
+$(a-3(x+y))_++(\max(b,c)-3(z+v))_+$ (46), and
+$(b-3(x+z))_++(\max(a,c)-3(y+v))_+$ (56). The inequalities (217.7)
+make each at most $\delta$; all labels, including earlier label 4 in pair 56,
+are included. The first summands in guard/4 and guard/5 are respectively
+$\delta$ and $(\delta+(b-a)/3)_+\le\delta$; the reservoir inequalities
+cover their second summands. The last two inequalities bound two-guard and
+guard/6 excesses. Pair45 has excess exactly $\delta$. In pairs46 and56
+the first summands vanish, and the second summands are
+$(\delta+t-\min(b,c))_+$ and $(\delta+t-\min(a,c))_+$, at most $\delta$.
+Conversion leaves zero reward fixed and lowers donor labels. Tensoring with
+the common suffix law preserves every old/old support. An N old/new pair
+has exactly the old singleton support, and an N new/new pair exactly the
+old empty support, because the same nonnegative factor multiplies each
+label's reward in each suffix cell. No mixed schedule exceeds the old
+support. O is bounded by N, while the old stopped guard/4
+table attains $B_{lit}+\delta$, proving (217.8), including all equality cases.
+
+For the relocation family, move $0\le u\le\min(a,b)$ of C mass from
+the core word $111010$ to $111000$, retaining the same suffix law on
+every moved fiber. Thus core zero set $\{4,6\}$ becomes $\{4,5,6\}$;
+at suffix zero set Z the actual move is
+$w(\{4,6\}\cup Z)\longmapsto w(\{4,5,6\}\cup Z)$.
+Then $Q,W$ and $\Delta_O=E+\delta$ remain fixed,
+while
+$\Delta_N=E+\delta+(u-(a-3\delta)/2)_+$. At $L=7$ with
+$(a,b,c,\delta,t)=(3,5/2,3,1/2,1/2)$,
+$(\xi_1,\xi_2,\xi_3,\xi_7)=(1/4,1/4,1,1/2)$ and $u=1$, one has
+$\beta=(-1/4,-1/4,-1,3,5/2,3,-1/2)$, $K=69/4$, $B_{lit}=35/4$,
+$W=33/4$, and the moved score has $(\Delta_N,\Delta_O)=(5/4,1)$;
+moving it back gives the common minimum one. Here $D=2$,
+$B_{abs}=27/4$ and the actual terminal coefficient is zero: the common
+suffix law is concentrated on its sole zero at 7. The actual relocation is
+therefore $w(\{4,6,7\})\longmapsto w(\{4,5,6,7\})$ with mass one.
+The repaired supports are $37/4$ each; the moved supports are
+$(19/2,37/4)$.
+
+To verify the relocation formula on the whole closed domain, only pairs
+querying 5 change. At a guard/5 pair the inserted label-4 mass in the
+late-zero cell is at most b, already present as label 5; its other cell
+loses label-4 mass. Pair56 moves it into a cell already containing b, so
+that maximum does not rise. O pair45 merges the affected cells and is
+unchanged. N pair45 alone gains $(u-3x)_+$ in 00; its 01 reward stays
+under $3y=a$ and its existing 11 excess is $\delta$. The attaining stopped
+tables persist, proving both exact costs. The same suffix tensor proves the
+statement for every actual moved fiber, including $u=0$ and donor exhaustion.
+
+For the unsigned equal profile, every $L\ge6$ and $g,B\ge0$ gives
+
+$$
+\min\Delta_N=\min\Delta_O
+ =\max\{0,3g-B,(7g-2B)/5\},\qquad K=3g+B.
+$$
+
+This is the $k=3$ case of (217.14), counted once. Its lower cuts are the
+two just proved and the anchor. In the middle interval
+$8g/3\le B\le7g/2$, take $a=b=c=g$,
+$\delta=(7g-2B)/5$ and any $0\le t\le g-\delta$. They satisfy (217.7).
+For $0\le B\le8g/3$, convexly mix the entire $B=8g/3$ score with the
+C-only score on core patterns 010,100,110, keeping each C total g.
+The mixture coefficient is $3B/(8g)$ when $g>0$, and the resulting
+upper bound $3g-B$ matches the single-table lower cut. For $B\ge7g/2$,
+add terminal mass $B-7g/2$ to the zero-cost endpoint: each support rises
+by at most that mass and W by exactly it. At $g=0$ use $T=B$.
+This accounts for every branch, all closed endpoints and the freely allocated
+middle reservoir; it is not a second equal-profile classification.
+

@@ -1,0 +1,50 @@
+**Example 219.14 (Relocation and a strict unit-input repair).**
+In Theorem 219.13 move the entire correct mass $g$ at $w(\{j_1\})$
+to $w(\{j_1,j_2\})$, keeping all other coefficients, and call it $Y$.
+Then
+
+$$
+Q(Y)=Q(V),\quad W_Y=W_V,\qquad
+(\Delta_N(Y),\Delta_O(Y))
+ =\bigl(2g+(g/2-2d)_+,\ 2g\bigr).
+\tag{219.44}
+$$
+
+For pair $(j_1,j_2)$ the N support becomes $S+g/2$:
+the new 00 cell earns $g$ against baseline $c=g/2$.
+The O merged baseline $c+g$ still covers $g$.
+For guard/$j_2$ pairs the moved label $j_1$ competes with the existing
+label $j_2$ of equal mass $g$, so no maximum rises.
+For another positive pair involving $j_2$, the receiving cell already
+has zero reward $g$. All other cells are unchanged or lose a competitor.
+The lower detector (219.42) still collects $s_3+2g$.
+Consequently $B_O=S+2d$ and $B_N=S+\max(2d,g/2)$, proving the formula.
+It is a strict input gap for $0\le d<g/4$, with the explicit same-$Q$
+repair supplied by the theorem.
+
+For a literal rational instance, take $L=7$, $J=\{4,5,6,7\}$,
+$g=1/2$, $d=1/16$, $(h_6,h_7)=(3/8,1/4)$,
+$(z_6,z_7)=(1/4,0)$. The complete nonzero coefficient list is
+
+$$
+\begin{aligned}
+A_{w(\{i,4\})}=A_{w(\{i,5\})}&=3/32,&
+A_{w(\{i,6\})}&=1/8,&
+A_{w(\{i,4,5,6,7\})}&=1/8&& (i=1,2),\\
+A_{w(\{3,4\})}=A_{w(\{3,5\})}&=5/16,&
+A_{w(\{3,6\})}&=1/8,&
+A_{w(\{3,7\})}&=1/4,\\
+C_{w(\{4\})}=C_{w(\{5\})}&=1/2,&
+C_{w(\{6\})}&=3/8,&C_{w(\{7\})}&=1/4.
+\end{aligned}
+\tag{219.45}
+$$
+
+All other coefficients, $P$ and $T$ vanish. This gives
+$Q=((-7/16,-7/16,-1,1/2,1/2,3/8,1/4),7/2)$,
+$W=1$, $B_N=B_O=2$.
+Moving $C_4$ to $w(\{4,5\})$ gives $B_O(Y)=2$, $B_N(Y)=17/8$;
+pair $(4,5)$ has N cell maxima $(1/2,1/2,1/2,5/8)$.
+Thus costs $(9/8,1)$ are repaired to $(1,1)$.
+These input gaps are not original-model separators.
+

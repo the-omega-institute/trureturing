@@ -1,0 +1,36 @@
+**命题 C-82.3（球面坐标中的 concurrence 与唯一内部乘积点）。** 对称纤维上
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac{(2\kappa-L)^2
++4\kappa(L-\kappa)\sin^2(\chi/2)}{L^2}\\
+&=1-\sin^2\vartheta\cos^2(\chi/2).
+\end{aligned}
+\tag{C82.6}
+$$
+
+在全正内部，唯一 $\mathcal C=0$ 的商状态为
+$(\vartheta,\chi)=(\pi/2,0\bmod2\pi)$；
+全部 $\mathcal C=1$ 的内部状态恰为 $\chi=\pi\bmod2\pi$。
+
+证明。在式 (C77.1) 的乘积差展开中代入
+$a=\kappa$、$b=L-\kappa$、$r=2L$，给第一行。
+由
+$2\kappa-L=-L\cos\vartheta$、
+$4\kappa(L-\kappa)=L^2\sin^2\vartheta$，
+第一行变为
+$\cos^2\vartheta+\sin^2\vartheta\sin^2(\chi/2)$，即第二行。
+要 $\mathcal C=0$，两个不超过一的非负因子
+$\sin^2\vartheta$、$\cos^2(\chi/2)$ 的乘积必须为一，
+故各自均为一，给唯一内部点。
+要 $\mathcal C=1$，两因子乘积为零；内部 $\sin\vartheta>0$，
+所以只能 $\cos(\chi/2)=0$，即所述整条经线。
+
+特别地，赤道上 $\chi=0$ 与 $\chi=\pi$ 同有 $\mathcal K=2/r$，
+而 concurrence 分别为零和一。这是“曲率在该点取等当且仅当该点最大纠缠”的反例；
+正确等价是定理 C-82.2 的纤维对称性与最大纠缠的存在性。
+沿 $\chi=\pi$ 改变内部 $\kappa$ 可以改变概率椭圆但保持最大 concurrence；
+沿赤道改变 $\chi$ 可以保持概率圆但改变 concurrence。
+这两个函数可以同在一个参数面上，却不能彼此替代。证毕。
+

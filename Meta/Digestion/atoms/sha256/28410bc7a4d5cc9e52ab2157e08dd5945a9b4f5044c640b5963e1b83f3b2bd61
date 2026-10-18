@@ -1,0 +1,89 @@
+**Theorem 6.3 (native joint gluing, restriction and full-family cutting).**
+For all positive $d,n,m$ and all $h\ge0$,
+
+$$
+K_d(n+m)\le K_d(n)K_d(m),
+\qquad K_d(2n)\le K_{d+1}(n).
+\tag{FMR.38}
+$$
+
+Let $U_0=1$ and $U_{h+1}=1+U_h^2$. Then
+
+$$
+\boxed{\quad
+K_d(2^h)\le m_{d+h}\le U_hK_d(2^h).
+\quad}
+\tag{FMR.39}
+$$
+
+Every upper in these statements has a paid common-start actual
+preparation and a common all-target, all-count reader.
+
+Proof of concatenation. Export the ordered pair of attaining complete
+codes for the two coordinate groups. A request belongs to one group,
+and invokes only that group's one-Read reader. Its query may be
+off-target within that group. Products of its admissible cover
+members are therefore admissible for the joint task. Actual
+preparation Reads at the given occurrences acquire both codes;
+there is no assumption that competing codes factor.
+
+Proof of restriction. In every depth-$(d+1)$ coordinate restrict
+the actual tree to $\langle x_{2i-1},x_{2i}\rangle$ with
+$x_j\in S_d$ independently and simultaneously. Restrict the
+original complete code to this actual slice, without changing any
+fiber. Its root queries are constant branch; any nonempty boundary
+query enters exactly one child, and becomes that child's literal.
+A child target $q\in W_d$ is the parent target $Lq$ or $Rq$ in
+$W_{d+1}$. Thus every restricted joint fiber satisfies (FMR.36)
+on all $2n$ children. No projection of a fiber onto one child
+is asserted. This proves the second inequality in (FMR.38).
+
+Proof of the full-family lower. In the actual $v$ fix a perfect
+binary scaffold of height $h$, and fill its $2^h$ frontier positions
+with all tuples from $S_d^{2^h}$. These simultaneous trees have
+height at most $d+h$, hence belong to the original family after
+the outer pairing. A normalized full-family query either ends
+strictly above the frontier and has constant branch reply, or
+enters one block with a suffix in $W_d$. Arbitrary longer words
+are already covered by Theorem 2.3 and Lemma 2.2. Every block
+target becomes a permitted original target $Raq$. Restricting
+the same complete code and reader therefore gives a joint-block
+competitor on this one actual slice. Its alphabet is at least
+$K_d(2^h)$.
+
+Proof of the full-family upper. For arbitrary variable-shaped $v$,
+retain its unlabelled top shape through the first $h$ levels. A
+leaf encountered before depth $h$ contributes one shape, regardless
+of its label; a branch contributes an ordered pair of shallower
+shapes. The shape count is exactly $U_h$. This information locates
+all shallow leaves and all actual slots at depth $h$, but retains
+no shallow leaf labels. Order all $2^h$ potential depth-$h$ slots.
+At an actual slot insert the canonical $S_d$ representative of
+its subtree; at a slot blocked by an earlier leaf insert the
+public dummy tree alpha. Retain the unlabelled shape and one
+attaining joint $K_d(2^h)$ code for this entire tuple.
+
+After a target is supplied, there are three cases. If it ends
+at a branch strictly above the cut, its trajectory is constantly
+branch. If it meets a shallow leaf, the retained shape locates
+that leaf; one actual Read at its original-root address gives
+the label, and (FMR.4) gives the target factor even if the target
+was initially absent. Otherwise it enters an actual depth-$h$
+slot, and the reader invokes the joint-block rule for that slot
+and residual target. That rule may query a different slot. If
+the queried slot is actual, translate its boundary probe to its
+full original-root literal. If it is dummy, compute alpha at
+its root and absent at every nonempty word, using no actual Read.
+The retained top shape determines which case applies. A dummy
+does not supply a source-bearing reply or a second experiment.
+The total is still at most one actual Read.
+
+All branches use only the complete exported pair, public data and
+the late target. Acquire the full depth-$(d+h)$ canonical boundary
+once and compute this pair from its actual replies. This obeys
+(FMR.11); actual slots and shallow leaves are not inferred from
+an inaccessible transcript after handoff. Equations (FMR.4)–(FMR.6)
+prove correctness for every subsequent $k$. This covers all leaf
+roots, branch roots and degenerate cut shapes, and proves (FMR.39).
+$\square$
+

@@ -1,0 +1,75 @@
+**Theorem 7.1 (an acquired atomic tail has no finite rank-free cover).**
+The actual acquired fiber in [ARH, Proposition 7.1][ARH], namely
+
+$$
+\begin{gathered}
+P=\{L,R\},\quad
+R=(\langle\square_1,\square_2\rangle,\{\{1\},\{2\}\}),\quad
+H_0=\varnothing,\\
+H_{\rm rel}=\{(0,\varepsilon,1,L,=)\},\quad N\ge1,\qquad
+D_\star=\{T_j:j\ge2\},
+\end{gathered}
+\tag{FJC.26}
+$$
+
+has no representation as a finite union of rank-free negative-only
+chart images (FJC.7). Even its infinite stratum at
+$Q=\{LL,LR,RL,RR\}$ with reached four-hole exterior and partition
+$\{\{1\},\{2,3\},\{4\}\}$, consisting of $j\ge4$, has no such
+finite cover.
+
+**Proof.** ARH Proposition 7.1 proves exactly the whole source fiber
+and actual acquisition: the root-to-descendant positive forces an
+atomic iterate, and the old reached two-hole row retains its distinct
+children, excluding the smaller indices. Its entire four-hole rows are
+$\langle\beta,\alpha\rangle$ with no reached cut for $j=2$;
+$\langle\langle\square_1,\square_2\rangle,\beta\rangle$ with two
+singleton classes for $j=3$; and
+$\langle\langle\square_1,\square_2\rangle,
+\langle\square_3,\square_4\rangle\rangle$ with the partition in the
+statement for $j\ge4$. These suppliers retain all old guards and
+inequalities and the same paid complete-state premise.
+
+Every atomic $T_j$ has mass $\gamma(T_j)=0$ by ABC. Consider an
+inhabited rank-free chart with output $\Theta$ and feasible whole
+negative conjunction $\Delta$. If its output contains a residual
+variable, the URR separation construction used in Theorem 4.2 can choose
+its common residual mass $G$ arbitrarily large, subject to $G>M$.
+All its equality-reflection arguments still hold: ground masses stay
+below $G$, residual pair masses exceed $G$, and separated clock
+intervals distinguish the decorations. Consequently this finite tuple
+still satisfies every feasible negative. Every residual appearing in
+the output has positive mass $G$, and fixed powers and pairing never
+decrease that mass. The output therefore has positive mass, contrary
+to containment in the atomic tail.
+
+An inhabited chart whose output contains no residual variable produces
+one fixed finite source, even if its unused coordinates occur in
+$\Delta$. An empty chart produces none. Hence finitely many charts
+contained in the tail produce only finitely many sources, while the
+indices $j\ge2$ and $j\ge4$ each give infinitely many distinct $T_j$.
+The contradiction proves both claims. Variable atomic ranks are a real
+boundary of this input class. It does not prove undecidability or rule
+out another representation. $\square$
+
+**Open problem 7.2 (unrestricted stopping).** For arbitrary complete
+acquired native $I$ and arbitrary finite distinct attained full rows
+$B$, decide $\forall h\ J_B(h)$ with actual finite-source synthesis
+or a finite exclusion depth. General mixed covers can require
+unbounded atomic-rank coordinates, whose joint cofinal finite support
+must be preserved, and common-output equations can have multiple
+nonfunctional constraints or image/inverse restrictions. No complete
+effective reduction of those cases to (FJC.10) is proved here. A failed
+reduction has no NO meaning for such an input. Fixed-depth feasibility,
+finite images and equality of supplied recursive descriptions do not
+supply that missing reduction or an outer stopping rule.
+
+The functional decision asserts existence of one synthesized contact
+certificate for each positive instance in its stated class. It does
+not represent every semantic common completion point. A completion
+point outside a chosen description language does not refute an
+existential certificate basis when the same instance has another
+representable contact. No claim of all-input synthesis, physical
+spacetime recovery, undecidability, global research completion or
+resource optimality follows.
+

@@ -1,0 +1,59 @@
+**Proposition 266.3 (Exact first-zero-invariant subclass).**
+Suppose a normalized finite kernel has one probability vector $m_n$
+on each full first-zero fibre $\Omega_n$, and vector $m_+$ at
+the positive word. For $L\ge3$ it belongs to the complete $N_L$
+class exactly when
+
+$$
+m_3=\cdots=m_L=m_+.
+\tag{266.6}
+$$
+
+Every such kernel is already in $O_L$ with schedule $(1,2)$.
+For an original active horizon $L\ge3$, cap feasibility within
+this invariant subclass is equivalent to
+
+$$
+\sum_{n\ge3}(a_n-e)_+\le e.
+\tag{266.7}
+$$
+
+This subclass is empty at positive-cap points of $H_L$.
+
+**Proof.** The unique multilinear polynomial of the invariant
+vector-valued function is
+
+$$
+m_1+\sum_{k=1}^{L-1}(m_{k+1}-m_k)\prod_{i=1}^kw_i
+       +(m_+-m_L)\prod_{i=1}^Lw_i.
+\tag{266.8}
+$$
+
+On a word of first zero $n$, the sum telescopes through $k=n-1$;
+on the positive word it telescopes to $m_+$. This proves the
+formula, and uniqueness follows by successive Boolean differences.
+The degree-two constraint of every complete $N$ law forces every
+coefficient of degree at least three to vanish. These coefficients
+are exactly (266.6). Conversely, a stopped $(1,2)$ table can have
+marginal laws $m_1,m_2,m_+$ on cells $0,10,11$.
+Couple these finite marginals before replies, for example by their
+product distribution on whole tables. This realizes the specified
+kernel with one seed and proves both directions.
+
+For cap feasibility the common late/positive vector $v$ must have
+$v_0\ge1-e$ and $v_n\ge(a_n-e)_+$ for $n\ge3$.
+Summing proves necessity of (266.7).
+For sufficiency take the exact target vectors on the first two
+fibres. For the common vector set
+$v_n=(a_n-e)_+$, $n\ge3$, $v_1=v_2=0$, and
+$v_0=1-\sum_{n\ge3}(a_n-e)_+$.
+Every correct row holds; base and pair probabilities are at least
+$1-e$, so their respective demands hold independently. The positive
+row and actual tails hold by (251.9). This proves the original
+restricted characterization. On $H_L$, $b_n\ge e$ and
+$\sum_{n\ge3}(b_n-e)=E_b+3e\ge3e>e$ when $e>0$,
+so this restricted class is empty. This does not exclude general
+stopped kernels with necessary fibre variation. The amplitudes
+in (266.7) are already contained in the Section 113 supplier.
+$\square$
+

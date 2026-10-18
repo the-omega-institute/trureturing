@@ -1,0 +1,24 @@
+**Definition 55.1 (original source, event version and the added realization).** Let $t$ be any original nonempty finite ordered $\alpha/\beta$ tree of [Continuation Definition1.1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md). Labels, brackets, left/right order and distinct equal-valued occurrences remain part of $t$. Use the original whole substitution
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle s,u\rangle=\langle\rho s,\rho u\rangle.
+\tag{55.1}
+$$
+
+An actual whole-rho history retains its original initialization, all commands, actual acceptances or refusals, every numerical Read and Stop, and any already acquired records. At an event $e$, let $j(e)$ count accepted substitutions, not attempted commands or Reads. Its actual current source is $t_{j(e)}=\rho^{j(e)}t$, and INITIAL is always $t$. This chapter introduces no other executed source action. Under the fixed-$H$ TM30/57 interface, INITIAL belongs to its original prior $\mathcal T_H$ and the whole candidate must pass its original leaf-count guard; refusal leaves both the current tree and $j(e)$ unchanged, appends the original refusal, and returns no candidate Read. Reads preserve the current tree and retain their original functions. [Process44](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)'s uncapped menu instead permits each finite whole-rho prefix. Statements quantified over all $j$ mean this uncapped mathematical family or separately legal finite prefixes, never a cap increase in one fixed-$H$ execution. A stopped history has no subsequent events; a natural-number-indexed history has no event after an infinite prefix. Only versions actually reached by a chosen history are asserted as its event domains. The other $D_j(t)$ belong to the source-indexed mathematical family of separately legal finite prefixes; they are not an execution continuation of that stopped or capped history. The common realization is attached to the same immutable source and root, not acquired by a post-prefix event.
+
+Write $D_j(t)=\operatorname{Pos}(\rho^jt)$, with root $o=\varepsilon$. Consume [Transport Memory TM22.2 and TM23.2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), rather than reproving their persistence and exhaustion: the inclusion $D_j\subset D_{j+1}$ is the same-address map, every old parent–child seam and its order persists, every finite address eventually occurs, and the birth bound is $b_t(p)\le2|p|$. In particular
+
+$$
+B_{\lfloor j/2\rfloor}:=\{p:|p|\le\lfloor j/2\rfloor\}\subset D_j(t),
+\qquad \bigcup_jD_j(t)=\mathcal P:=\{L,R\}^{*}.
+\tag{55.2}
+$$
+
+The actual domains are the irregular trees $D_j(t)$, not replacement balls. A ball in (55.2) is only a comparison subset inside each actual domain. TM23's birth field and versioned tags still determine the ordered source and its semantic whole-rho versions in their stated scope; they do not authenticate which actual actions occurred. A persistent address can change from $\alpha$ to $\beta$ to a branch. Persistence of a geometric site therefore does not mean persistence of its label or of its complete subtree.
+
+Supply the following additional joint mathematical contract. The graph on $\mathcal P$ has exactly the parent–child seams $\{p,pL\},\{p,pR\}$; each seam has length and symmetric conductance one, each site has counting measure one, and the same root $o$ is fixed throughout. Root degree is two, all other degrees are three. The source of the scalar field is one unit at this root, with no homogeneous background, screening term, moving anchor or added parent seam at the root. Its exterior condition is decay at infinity, and the field is taken in $\ell^2(\mathcal P)$. Complex amplitudes have the counting-measure norm. Public constants $a,g>0$ specify the common kinetic and attractive energy units. The clock $\tau$ for the supplied heat law is distinct from source-event order; the supplied amplitude law is $i\partial_\tau f=\mathsf Hf$ with unit action scale. Its solution is $e^{-i\tau\mathsf H}f(0)$, which preserves the full counting-measure norm because $\mathsf H$ is bounded self-adjoint. No relation between an accepted substitution and elapsed $\tau$ is inferred. Unit weights, symmetry, field access, amplitude preparation, this clock and these laws are added contracts, not native operations, prices or physical facts.
+
+The faithful joint object retains $(t,\mathsf h,e,j(e),D_j(t),\operatorname{tag}_{t_j},b_t)$ together with the restrictions of the following field and operators. Forgetting its added coordinates returns exactly the original source/history, actions, every Read/refusal/Stop and immutable INITIAL. This is a mathematical association on the same actual realization, not an extra observer record, a source-specific controller initialization or an acquired certificate. Geometry alone is a strictly smaller projection of this object.
+

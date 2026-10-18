@@ -1,0 +1,109 @@
+**Definition 2.1 (One normalized allocation and all rows).**
+For an integer horizon $L\ge0$, let $\mathcal W_L=\{0,1\}^L$,
+$+=1^L$, and $\Omega_n=\{w:\min\{i:w_i=0\}=n\}$.
+The complete $N$ catalog contains constants, singletons and every
+four-cell table $N(i,j;u_{00},u_{01},u_{10},u_{11})$, $1\le i<j\le L$,
+with each output independently allowed in $\{0,\ldots,L\}$.
+Every earlier or unqueried label remains legal. Reversal permutes
+cells; repetition supplies singleton information without refunding an
+actual request. At horizon zero there is only the empty input and
+label zero.
+
+One normalized allocation is one vector $\lambda_D\ge0$ with
+$\sum_D\lambda_D=1$. It determines
+
+$$
+p_w(\ell)=\sum_D\lambda_D[D(w)=\ell].
+\tag{2.1}
+$$
+
+Each complete table has its same mass in every counterfactual cell;
+this same $\lambda$ supplies every word. There is no separate
+wordwise or cellwise choice of law. At profile $(b_1,\ldots,b_L;e)$,
+retain separately every row
+
+$$
+\begin{aligned}
+p_w(0)&\ge1-b_n-e &&(A_w),\\
+p_w(n)&\ge b_n-e &&(C_w),\\
+p_w(0)+p_w(n)&\ge1-e &&(P_w),\qquad w\in\Omega_n,\\
+p_+(0)&\ge1-e &&(\text{positive row}).
+\end{aligned}
+\tag{2.2}
+$$
+
+The three zero-word events are $\{0\},\{n\},\{0,n\}$.
+Every unscored constraint and every negative singleton demand is
+retained literally. For $0\le b_n\le1$ their deficits satisfy
+
+$$
+\operatorname{TV}(p_w,(1-b_n)e_0+b_ne_n)
+ =\max\{1-b_n-p_w(0),\ b_n-p_w(n),\ 1-p_w(0)-p_w(n)\}.
+\tag{2.3}
+$$
+
+For general real profiles the rows instead define affine feasibility,
+without asserting a probability target outside that interval.
+The full-row conventions are
+[XVII297.4–297.5 and 309.1–309.2](https://github.com/the-omega-institute/trureturing/blob/07dfbdacb577f1cb1ebd6b6048ee3efa4c75285d/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVII.md)
+and
+[XVIII315.2](https://github.com/the-omega-institute/trureturing/blob/24e09b5c/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md).
+
+**Reused theorem 2.2 ($Y_{128}$ at its full affine scope).**
+The score, complete support certificate and theorem belong to
+[XVIII318.1–318.2, revision `24e09b5c`](https://github.com/the-omega-institute/trureturing/blob/24e09b5c/docs/develop/theory/KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XVIII.md#318-a-seven-late-lower-certificate-for-an-attained-family).
+Its invariants on nine coordinates are
+
+$$
+\begin{gathered}
+\beta=(0,16,88,104,104,96,88,88,88),\qquad K=1024,\\
+W=B_N=B_O=368,\qquad \Delta_N=\Delta_O=0.
+\end{gathered}
+\tag{2.4}
+$$
+
+To specify its broad domain, let $d(b,e)$ be the full demand vector
+in (2.2), $z_D$ the full event-incidence vector of a deterministic
+table, $R=O(1,2;1,2,0)$, $\alpha=(1,1,0,\ldots,0)$,
+$r=z_R=d(\alpha,0)$ and $G_N=(z_D-r)_D$.
+Here $O(i,j;u,s,t)$ gives the outputs on stopped cells $0,10,11$,
+so $R$ emits 1 when its first reply is zero, 2 after $10$, and 0
+after $11$.
+For every $L\ge9$, every ordered
+$3\le j_1<\cdots<j_7\le L$, every real $(b,e)$ and one
+complete feasible allocation
+
+$$
+\lambda\ge0,\qquad G_N\lambda\ge d(b,e)-r,\qquad
+M=\sum_D\lambda_D<\infty,
+$$
+
+the theorem gives
+
+$$
+2b_2+11b_{j_1}+13b_{j_2}+13b_{j_3}+12b_{j_4}
+ +11b_{j_5}+11b_{j_6}+11b_{j_7}\le2+128e.
+\tag{2.5}
+$$
+
+The same is true in the complete $O$ catalog. This finite affine
+theorem requires neither normalization, order, $b_i\ge e$, an
+auxiliary hull, nor the attained-family hypotheses of XVIII321.1.
+At mass one its allocation condition is exactly (2.2).
+
+The owning theorem's 46-row score and complete support proof cover
+all ten labels in every pair cell, constants, singletons, repeated
+and reversed schedules, and every ordered embedding. On the embedded
+scored support, outside queries are constant and outside labels earn
+zero. All unscored constraints remain. Its nonnegative score pairing
+with the same complete allocation gives
+
+$$
+Y_{128}(d(b,e)-r)\le M\Delta_N=0;
+$$
+
+the left side is eight times the left-minus-right expression in
+(2.5). No division by $M$ is made. This is the credited supporting
+result used below, with its support certificate retained at its owning
+source.
+

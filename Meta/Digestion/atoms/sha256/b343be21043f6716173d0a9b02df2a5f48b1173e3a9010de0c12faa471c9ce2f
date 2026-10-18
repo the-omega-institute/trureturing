@@ -1,0 +1,34 @@
+**Corollary 8.2 (the exact pointwise infimum and its quantifiers).** Let
+$\mathcal F_{\rm ceil}$ denote all designs of Definition 3.1 with
+(RE.15) at $s=1$. For every positive five-mode test input $\tau$,
+
+$$
+\min_{\mathfrak F\in\mathcal F_{\rm ceil}}
+ p_H^{\rm acq}(\tau;\mathfrak F)
+=B(E^\dagger\tau E).
+\tag{RE.58}
+$$
+
+The minimum is attained separately for every test input. The same
+statement holds with supported live high mass as objective. At the
+negative ceiling exchange the binary labels.
+
+Proof. Theorem 7.2 gives the lower bound for every allowed factorization.
+Choose the fixed constants in Theorem 8.1 to be
+$x_r=x_r^*(E^\dagger\tau E)$ from (RE.48), using zero when the
+compression vanishes. Equation (RE.54) then has trace (RE.49) against
+that compression. This is a single common instrument, valid on every
+unknown input, with its constants chosen once from the public test
+input for this mathematical optimization. It never consults the actual
+input during execution. At zero compression its high probability is
+zero. The input may be singular or subnormalized; homogeneity preserves
+the equality. For a normalized complement input the scalar complement
+branches carry its entire probability. Every original test input is
+included without modification.
+
+The quantifier is
+$\forall\tau\succeq0\ \exists\mathfrak F_\tau\in\mathcal F_{\rm ceil}$
+attaining the bound at $\tau$. It is not
+$\exists\mathfrak F\ \forall\tau$ attaining it. The opposite assertion
+will fail even on two original histories. $\square$
+

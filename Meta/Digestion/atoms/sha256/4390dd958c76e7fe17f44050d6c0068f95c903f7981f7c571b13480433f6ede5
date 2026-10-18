@@ -1,0 +1,21 @@
+## 198. A lower cost for every axial residual slot
+
+Assume u<=m and consider any genuine axial Z slot with pair {M,U}.
+Let its angle be theta and its owner's transverse M angle be beta.
+The exact paired response is
+
+ beta=atan(A*cot(theta/2))+atan(B*cot(theta/2)),
+ A=[sqrt(m^2-1)+sqrt(u^2-1)]/(m+u)*s,
+ B=[sqrt(m^2-1)-sqrt(u^2-1)]/(m+u)*s>=0.
+
+Write alpha=sqrt((m-1)/(m+1)). Since u>1,
+ sqrt(u^2-1)>alpha*(u-1),
+while sqrt(m^2-1)=alpha*(m+1). Thus A>alpha*s>1/2,
+because m,z>3 imply alpha,s>1/sqrt(2).
+
+It follows that theta+beta>pi/2. For theta>=pi/2 this follows from
+beta>0. For 0<theta<pi/2, put t=cot(theta/2)>1. Then
+ tan(pi/2-theta)=cot(theta)=(t-1/t)/2<t/2<A*t,
+so atan(A*t)>pi/2-theta and beta is at least that arctangent.
+This includes u=m, when B=0.
+

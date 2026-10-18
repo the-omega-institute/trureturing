@@ -1,0 +1,42 @@
+**定理 4.1。** 对上述任一不同碰撞对，存在次数至多一的 $L$，使
+
+$$
+\begin{gathered}
+h_2-h_1=R_2L,\qquad R_2=(T-6)(T-7)=T^2-13T+42,\\
+[R_2]=(42,-13,1),\qquad
+(R_2(0),\ldots,R_2(7))=(42,30,20,12,6,2,0,0).
+\end{gathered}
+\tag{4.1}
+$$
+
+若 $L=\alpha T+\beta$，则
+
+$$
+[R_2L]=(42\beta,42\alpha-13\beta,\beta-13\alpha,\alpha).
+\tag{4.2}
+$$
+
+对 $Q_j=c_j-d$，有带符号精确恒等式
+
+$$
+R_2(j)L(j)=-\frac{Q_jwF_j}{\sigma_{1,j}\sigma_{2,j}},\quad
+L(j)=0\Longleftrightarrow Q_jF_j=0\quad(0\le j\le5),
+\tag{4.3}
+$$
+
+非零时 $\operatorname{sgn}L(j)=-\operatorname{sgn}(w)\operatorname{sgn}(Q_jF_j)$。
+
+**证明。** $h_2-h_1$ 在六、七消失，因式定理给 (4.1)，含零多项式 $L=0$；展开给 (4.2) 与样本行。由 (3.2)，
+
+$$
+h_2(j)-h_1(j)=Q_j\left(\frac1{\sigma_{2,j}}-\frac1{\sigma_{1,j}}\right)
+=-\frac{Q_j\Delta\sigma_j}{\sigma_{1,j}\sigma_{2,j}}.
+\tag{4.4}
+$$
+
+代入 (3.9)，再使用 (3.5)、$w\ne0$、六个正的 $R_2(j)$，即得所有结论。未消去任何祖先增益、残差、首项系数或根差。∎
+
+非零常数没有根和符号改变；非常数仿射函数是非零常数乘 $T-\rho$，只有一个根。故有序非零样本至多改变一次符号。若某节点是根，则同侧所有样本非零且同号，异侧的符号相反；两个不同采样根强制 $L=0$。只删除零后数改变次数不是完整的仿射根判据。
+
+在 $H_*$，若 $d\ne\zeta$，则 $Q_5F_5=\zeta-d\ne0$，排除 $L=0$。若 $d=\zeta$，$BC$ 的 $Q_3F_3$、$BD$ 的 $Q_0F_0$、$CD$ 的 $Q_1F_1$ 分别非零，同样排除 $L=0$。所以零多项式分支由恒等式排除，而非预先删去。所有降次、零斜率及重六次根仍已包括在因式分解中。
+

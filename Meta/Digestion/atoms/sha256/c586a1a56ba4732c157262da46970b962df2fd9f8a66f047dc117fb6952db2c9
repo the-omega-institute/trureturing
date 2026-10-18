@@ -1,0 +1,45 @@
+### 109.2. Two original coherent inputs
+
+Let $R_s|x\rangle=|xs\rangle$ and $P_\pm=(I\pm R_s)/2$. The original target is $T=(J_{\rm all}+I-R_s)/2$; in the character order $(++),(-+),(+-),(--)$ its coefficients are $(1/2,0,1/8,1/8)$ and its two-dimensional coefficient is $\operatorname{diag}(0,1/4)$. For $L=T-G\odot H$, the original block-diagonal densities $\rho_\pm=P_\pm/4$ have trace one. RT III §91 gives
+
+$$
+F(G,H)\geq E_\pm:=\frac14\|P_\pm L P_\pm\|_1.
+\tag{109.8}
+$$
+
+No commutation of $L$ with $R_s$ is required. In the regular decomposition, $R_s$ acts by the character signs $\eta$ and the two copies of $U(s)^{\mathsf T}$. The compressions remove the off-diagonal entries of the two-dimensional coefficient. The scalar eigenvalues have multiplicity one and factor eight; the two two-dimensional copies have factor four. Hence
+
+$$
+\begin{aligned}
+E_+&=2\bigl(|1/2-c_0|+c_{-,+}+S_{11}\bigr),\\
+E_-&=2\bigl(|1/8-c_{+,-}|+|1/8-c_{-,-}|+|1/4-S_{22}|\bigr).
+\end{aligned}\tag{109.9}
+$$
+
+The product calibration gives $c_0+c_{-,+}+S_{11}=1/2$ and $c_-+S_{22}=1/2$. Thus $c_0\leq1/2$, and (109.7) yields
+
+$$
+E_+=2-4c_0\geq1-\frac{PP'+QQ'}2,\qquad
+E_-\geq4|c_--1/4|=\frac{|PQ'+QP'|}{2}.
+\tag{109.10}
+$$
+
+Put $e=|PQ'+QP'|/2\in[0,1]$. The exact identity
+
+$$
+\begin{split}
+(PQ'+QP')^2+4(1-PP'-QQ')
+&=(PQ'-QP')^2+4(1-PP')(1-QQ')\\
+&\geq0
+\end{split}\tag{109.11}
+$$
+
+implies $PP'+QQ'\leq1+e^2$. Therefore
+
+$$
+F(G,H)\geq\max\left\{e,\frac{1-e^2}{2}\right\}\geq\sqrt2-1.
+\tag{109.12}
+$$
+
+Indeed $d=\sqrt2-1$ satisfies $(1-d^2)/2=d$; use the first term when $e\geq d$ and the second otherwise. This proof includes all endpoints and singular coefficient matrices without division.
+

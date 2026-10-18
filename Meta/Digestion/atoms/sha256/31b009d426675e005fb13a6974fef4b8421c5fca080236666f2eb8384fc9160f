@@ -1,0 +1,62 @@
+**Lemma 11.1 (zero drift and late-zero strata).** The class
+$\mathcal Z_6(0)$ has at most one member. At every arbitrary real
+$d$, if $y_4=d$ or $\zeta=d$, then $|\mathcal Z_6(d)|\le2$.
+There is no legal world on $H$ with roots four, five and six.
+
+Proof. At $d=0$, (10.4) becomes $45k^2+k-18=0$. This quadratic
+is strictly increasing for $k>0$, is negative at $3/5$ and positive
+at $2/3$ (the values are $-6/5,8/3$), so has a unique positive
+root $\kappa\in(3/5,2/3)$. Reduction modulo this quadratic gives
+
+$$
+p_4(\kappa,0)=64\kappa-96/5>0,\qquad
+p_5(\kappa,0)=(136/3)\kappa-24>0.
+\tag{11.1}
+$$
+
+Put $c_i=p_i(\kappa,0)/(\kappa(\kappa+1))>0$ for $i=4,5$,
+and $w_*=r/\ell$. Both actual late equations become
+
+$$
+\zeta/c_5=\kappa+2-w_*,\qquad
+y_4/c_4=\kappa+w_*+1/\ell.
+\tag{11.2}
+$$
+
+They fix $w_*$ and then $1/\ell=y_4/c_4-\kappa-w_*$,
+which is positive on every legal candidate. Thus they fix
+$\ell,r,u,v$, and the first four samples fix the entire gain.
+This proves uniqueness without a terminal reading, and also shows
+that neither late reading can equal zero on this stratum.
+
+If four, five and six were roots, degree at most three and a nonzero
+gain would force $f(T)=a(T-4)(T-5)(T-6)$, $a=d/120\ne0$.
+Clocks one, two and three then give
+
+$$
+j=\frac{2(d-24)}d,\qquad
+\ell=\frac{5(d-48)}d,\qquad
+j+\ell=\frac{20(d-312/5)}d.
+\tag{11.3}
+$$
+
+Consequently $d=960/13$, $j=27/20$, $\ell=7/4$, and
+$uv=(\ell-1)(j-\ell+1)=9/20>1/4$, contradicting
+$uv=r(1-r)\le1/4$. Lower degrees cannot have those three roots.
+
+Now take $d\ne0$. If $\zeta=d$, positivity of the fifth trace
+gives $f(5)=0$, hence $p_5(k,d)=0$. This is a nonzero polynomial
+of degree at most two: its quadratic coefficient vanishes only
+at $d=48$, where $p_5=(72/5)(k-1)$ remains nonzero.
+There are at most two positive roots, counted without multiplicity.
+Each fixes $\ell$ by (10.4); the exclusion just proved gives
+$f(4)\ne0$, so the actual fourth equation fixes
+$r=(y_4-d)/f(4)-1-k\ell$. Thus each root supplies at most one
+world. If $y_4=d$, use instead $p_4(k,d)=0$ and the nonzero
+fifth sample to fix $r=(k+2)\ell-(\zeta-d)/f(5)$.
+The polynomial $p_4$ also has degree at most two and is nonzero
+for all $d$: at its only quadratic degree drop $d=48$ it is
+$(48/5)(2k-1)$. The simultaneous late-zero case is empty by
+(11.3). Repeated polynomial roots reduce these cardinalities.
+Together with the already settled $d=0$ case this proves the lemma. ∎
+

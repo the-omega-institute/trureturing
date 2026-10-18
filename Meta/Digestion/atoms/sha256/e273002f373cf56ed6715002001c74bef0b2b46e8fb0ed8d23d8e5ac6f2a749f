@@ -1,0 +1,98 @@
+**命题 466.2（实际奇来源的条件尾合同）。** 固定 x≥e。
+令整数 D>x，另行支付实际奇调和前缀的准确全后继合同
+
+$$
+|H_{\mathrm o}(n)|\le C_{\mathrm o}
+ e^{-c_{\mathrm o}(\log n)^{1/3}}\quad(n\ge D),
+\qquad C_{\mathrm o}\ge0,\ c_{\mathrm o}>0.
+\tag{HG.7}
+$$
+
+则同一原奇来源的自然截止尾存在。
+写 c=c_o，z₀=(log(D+1))^(1/3)，并定义完整积分
+
+$$
+J_j(c,z_0)=\int_{z_0}^\infty z^j e^{-cz}dz
+=e^{-cz_0}\sum_{k=0}^j\frac{j!}{k!c^{j-k+1}}z_0^k,
+\qquad j\in\mathbb N.
+\tag{HG.8}
+$$
+
+其准确锚与完整预算为
+
+$$
+\begin{aligned}
+\mathscr T_{D,\infty}(x)
+&=-b_x(D+1)H_{\mathrm o}(D)
+-\sum_{n=D+1}^\infty[b_x(n+1)-b_x(n)]H_{\mathrm o}(n),\\
+|\mathscr T_{D,\infty}(x)|
+&\le |b_x(D+1)|\,|H_{\mathrm o}(D)|\\
+&\quad+3C_{\mathrm o}V_xe^c
+ [J_2(c,z_0)+2J_5(c,z_0)+J_8(c,z_0)].
+\end{aligned}
+\tag{HG.9}
+$$
+
+**证明。** 对 M>D，有限 Abel 恒等式给同一奇来源尾
+
+$$
+\begin{aligned}
+\mathscr T_{D,M}(x)
+&:=\sum_{\substack{D<n\le M\\n\text{ 奇}}}\mu(n)\mathscr D_x(n)\\
+&=b_x(M)H_{\mathrm o}(M)-b_x(D+1)H_{\mathrm o}(D)\\
+&\quad-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]H_{\mathrm o}(n).
+\end{aligned}
+\tag{HG.10}
+$$
+
+终端与锚均保留。HG.6–HG.7 给 b_x(M)H_o(M)→0，
+因为置 z=(log M)^(1/3) 后只是多项式乘 e^(−cz)。
+每个整数单元上，将 b_x 与连续主导函数
+V_x(1+log t)²/t 的原函数作导数比较，得到增量的积分界。
+对 n≤t≤n+1、n≥1，非负立方根的次可加性给
+(log t)^(1/3)−(log n)^(1/3)≤[log(t/n)]^(1/3)<1。
+于是整个变差和满足
+
+$$
+\begin{aligned}
+&\sum_{n=D+1}^\infty
+ |b_x(n+1)-b_x(n)|\,|H_{\mathrm o}(n)|\\
+&\quad\le C_{\mathrm o}V_xe^c\int_{D+1}^\infty
+ e^{-c(\log t)^{1/3}}\frac{(1+\log t)^2}{t}dt\\
+&\quad=3C_{\mathrm o}V_xe^c\int_{z_0}^\infty
+ e^{-cz}(z^2+2z^5+z^8)dz<\infty.
+\end{aligned}
+\tag{HG.11}
+$$
+
+最后一个等号先用 u=log t，再用 z=u^(1/3)。
+完整积分 HG.8 由 J₀=e^(−cz₀)/c 以及保留无穷端点的递推
+J_j=z₀^j e^(−cz₀)/c+(j/c)J_(j−1) 得到；
+端点 z^j e^(−cz)→0，归纳给其准确有限多项式。
+因此 HG.10 中变差级数绝对收敛，终端趋零，
+取自然截止极限并用三角不等式就是 HG.9。证毕。
+
+HG.11 只证明 Abel 变差项的绝对可和与原子尾的自然截止存在；
+不声称原子和本身绝对收敛。连接 §453 的累计 Mertens 配对时，
+仍须支付其准确 clipped 端点，不能借此许可独立的无限素数—合数分拆。
+
+§464 的 Gaussian 供应 RLB.7 给实际完整 H 的立方对数衰减。
+HG.2 给从完整 H 到实际 H_o 的准确有限运输，
+但其中的小指标末项必须另行估计。
+命题 466.2 的结论依赖 HG.7 对实际奇调和前缀的全部后继界；
+有限身份本身不提供这个衰减假设。
+
+即使支付了 HG.7，固定 x 的 HG.9 也不自动支付原
+√x log x 临界共同精度。对固定 q>1 的整数截止 D=⌈x^q⌉，
+即便 C_o 和 K_x 只造成对数因素，
+√x 仍压过 exp[−c_o(q log x)^(1/3)]；这个上界本身
+无法给出所需共同临界预算。增长更快的来源截止仍留下整个有限头部的
+真实符号或消去任务。原 Robin 完整符号和 RH 保持开放。
+
+实际 μ 与有限重索引复用 Mathlib 及 §453 的
+ActualOddMobiusFinitePairing；Abel 代数保持 Mathlib 的来源。
+Gaussian 的不可变修订 24444671cee3bf643ff1307909b961a329372a9e
+及完整 Apache-2.0 归属见
+[原调和 Abel 来源记录](../../../Library/Analytic/sanftenberg2026harmonicabel.md)。
+本节有限收缩和固定尺度变差推导不提出文献优先权主张。
+

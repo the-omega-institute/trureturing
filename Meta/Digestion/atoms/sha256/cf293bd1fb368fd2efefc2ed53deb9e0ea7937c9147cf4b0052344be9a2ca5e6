@@ -1,0 +1,73 @@
+**Proposition 23.2 (credited paid realization of the reciprocal-cover
+fibers).** Fix public $d\ge2,m\ge1,h$, let $N=2m$,
+$H=\lceil\log_2N\rceil$, $K=2^H$ and $D=d+H$. Put the
+$N$ actual ordered blocks (COK.105) in a public perfect
+height-$H$ scaffold in the right subtree, padding the other
+$K-N$ slots by alpha. On the entire original variable-shape
+$\mathcal F_D$ there is a correct deterministic effective
+preparation and reader with exactly
+
+$$
+|S_D|-2^{2m}+1
+\tag{COK.116}
+$$
+
+complete attained names. On every source it uses exactly
+
+$$
+2^D-1\text{ preparation Reads},\qquad
+Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1\text{ submitted letters}.
+\tag{COK.117}
+$$
+
+Every permitted late request uses zero Reads or one actual
+original-root Read of length at most $H+2\le D$, chosen
+before its reply and every authentic count. This is an explicit
+nonoptimal full-family witness using Theorem 16.1's paid scan,
+not a new scan theorem or acquisition optimum.
+
+Proof of the instantiated correspondence. The ordered scaffold
+embeds the $2^{2m}$ rows injectively in $S_D$. Merge exactly
+these states into one name and give each other canonical state
+its own name. Before any request, the source-blind preparer
+actually reads every literal $Rq$, $q\in W_D$, in a fixed
+public order on the one stationary $t=\langle\alpha,v\rangle$,
+including absent replies. The acquired array computes
+$\pi_D(v)$, and a finite installed table selects its fixed-width
+complete name. Every canonical state is an actual possible
+right subtree and is fixed by $\pi_D$, so all these names are
+attained and (COK.116) counts them exactly. Counting those scan
+words and their lengths gives (COK.117).
+
+At a singleton name the requested full factor is installed, so
+no Read is needed. At the merged name, targets strictly above
+the frontier are constant branch and padding targets have
+their fixed alpha factors for every remaining suffix. A target
+inside a true block has form $Ra_iq$, $q\in W_d$. For the
+block root use branch. For $q=Lr$ or $Rr$, (COK.104) selects
+the actual owner of the indicated leaf. Its only Read is
+
+$$
+Ra_jL,\qquad |Ra_jL|=H+2\le D.
+\tag{COK.118}
+$$
+
+From its reply and the fixed suffix $r$, the installed table
+gives $\Gamma_r$ of that leaf. Thus it gives the requested
+full factor, including factors at initially absent suffixes.
+These cases exhaust every original request, since its length
+is at most $D$.
+
+Canonicalization preserves this queried reply and the requested
+factor on the full inverse-image fiber, including all original
+variable shapes. Each queried owner occurrence is actually
+present. Homomorphic transport (COK.82), with exactly the
+presence premise of `original_present_transport`, therefore
+applies; subtree notation supplies no access port. After this
+single query, (COK.5) answers every subsequently supplied
+authentic $k\ge0$ without another Read. The query is selected
+from the complete name, $D,p$ and public tables before its
+reply and every count. The matching $h$ and scaffold are
+fixed public installation, never acquired advice. $\square$
+

@@ -1,0 +1,17 @@
+**定义 6.2（奇偶树和有序刻画路径的比较合同）。** 在固定布尔输入上的奇偶决策树，每个查询可选任意坐标子集的奇偶，以最坏树深计费，见 Chistopolskaya–Podolskii，[Parity Decision Tree Complexity is Greater Than Granularity, arXiv:1810.08668v1](https://arxiv.org/html/1810.08668v1)，第1节、第2.2节。把本卷的相位写成 one-hot 输入，只对应于 (1.3) 的特定移动窗口查询；任意子集查询权限、首位安全限制与字面接缝不能由该表示获得。
+
+Türker–Hierons–Mousavi–El-Fakih，[Efficient State Identification for Finite State Machine-Based Testing](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf)，[DOI 10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，定义11–15、18，取有序刻画路径的合同：定义11在指定状态上执行刻画词；定义12覆盖每个状态／刻画词对且允许额外转移串；定义13去掉这些额外转移串；定义14要求逐对最短区分前缀；定义15合并后两项；定义18约束额外转移串长度的总和。因此存在 transfer-free 的有序刻画路径，其定义不以复位为必要前提。此覆盖合同与一个未知 INITIAL 来源上的标签识别合同具有不同的量词及终端义务；本卷没有建立两者之间保持最坏费用的对应。
+
+[S1]: https://raw.githubusercontent.com/the-omega-institute/trureturing/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md
+[S2]: https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md
+[S3]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md
+[S4]: https://raw.githubusercontent.com/the-omega-institute/trureturing/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md
+[S6]: https://raw.githubusercontent.com/the-omega-institute/trureturing/7d65d83f72d972406830eaf4b51d7aad0c520efb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md
+[S7]: https://raw.githubusercontent.com/the-omega-institute/trureturing/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md
+[S9]: https://raw.githubusercontent.com/the-omega-institute/trureturing/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md
+[S10]: https://raw.githubusercontent.com/the-omega-institute/trureturing/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md
+[S11]: https://raw.githubusercontent.com/the-omega-institute/trureturing/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md
+[S12]: https://raw.githubusercontent.com/the-omega-institute/trureturing/6fc2bde244ddcb01a0ac285461dee12494dde19c/docs/develop/theory/KBONACCI_PREFIX_DEADLINE_AND_WRAP_COST.md
+[S13]: https://raw.githubusercontent.com/the-omega-institute/trureturing/6850a89acdb12d4f17af57dacee2d67e0b514be4/docs/develop/theory/KBONACCI_MULTILABEL_PREFIX_AND_TERMINAL_COST.md
+[E]: https://github.com/the-omega-institute/trureturing/blob/360ccde2641d4324e4cd0b2be575ce6b8333acc7/D5/S1/Words/AdmissibleWords/KBonacciActualEndpointOperators.lean
+

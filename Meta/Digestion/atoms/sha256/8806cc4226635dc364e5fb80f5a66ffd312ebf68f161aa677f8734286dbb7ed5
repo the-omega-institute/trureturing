@@ -1,0 +1,17 @@
+**例 10.3（A full disjoint-label consumer at every scale）。** For $q\ge1$, use $m=6q$, $k=11q-1$, $g=q$, and
+
+$$
+\lambda_0(j)=\mathbf1_{\{9q\}}(j),\qquad
+\lambda_1(j)=2+\mathbf1_{\{10q\}}(j)\quad(j\in J).
+\tag{10.5}
+$$
+
+The label sets are $\{0,1\}$ and $\{2,3\}$. Here $H=\{2q,3q,4q,5q\}$ is homogeneous and $O=\{8q,9q,10q\}$ has all three pairs. Fresh $R,C$ and arbitrary bottom complete the full target. The unchanged certificate (10.4), with isolated leaf $(1,2)$ and $w=1$, uses
+
+$$
+1^{6q}\ \mid\ 0^{3q}1^{2q}0^q\ \mid\ 0^{6q}\ \mid\ 0^{3q}1^q0^{2q}.
+\tag{10.6}
+$$
+
+Its actual supports, ranks and raw decoder are those just specified; no source is omitted. Theorem 10.2 gives twelve complete states when bottom uses an existing output and thirteen when it is fresh. The universal branch proof supplies this minimum; the family illustrates its consumption.
+

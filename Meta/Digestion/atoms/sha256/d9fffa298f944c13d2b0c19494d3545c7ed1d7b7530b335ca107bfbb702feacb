@@ -1,0 +1,17 @@
+## 6. 原题剩余义务与来源
+
+尚缺对每个 $n$ 的显式选择 $\varepsilon_n$ 或等价递归，并证明其端口运输相容且全部 $J_E$ 边恰形成一个回路。一个可验的统一规则必须消费第 4 节的完整项链与方向信息；只给末标签、连通性、有限成功表或形式上的群生成证明均不能完成该义务。若保留全部 $a$ 的路线失败，仍须继续原始三反转目标。
+
+这里也不能把“两步前进”的置换误当成一个轨道。设 $\alpha(g)=ga$，$\mu_\varepsilon(g)=gb$ 或 $gc$；两者都是无固定点对合。每条长度 $2q$ 的原始交替圈在 $\alpha\circ\mu_\varepsilon$ 下分为两个长度 $q$ 的轨道。因而完整 Hamilton 圈要求恰有两个长度 $n!/2$ 的轨道，而非一个 $n!$ 长轨道。
+
+文献范围：
+
+| 来源 | 精确支持与边界 |
+| --- | --- |
+| Sawada–Williams, [Successor rules for flipping pancakes and burnt pancakes](https://www.socs.uoguelph.ca/~sawada/papers/pancake_successor.pdf), §2.3、§3.2、§3.3 | `literature-attested`：bracelet 类、Big-3 原猜想以及与前缀旋转项链构造的类比；不提供本卷所缺的统一接线。 |
+| Blanco 等, [Generating the symmetric group by three prefix reversals](https://arxiv.org/html/2511.16959v3), §4.2 | `literature-attested`：该版本仍陈述 Big-3 猜想及小阶计算；不能据此宣告全球尚无解或本研究独有。 |
+| Konstantinova–Son, [The girths of the cubic Pancake graphs](https://arxiv.org/abs/2201.05733), §2 | `literature-attested`：原始前缀反转的圈字表示和短圈研究；不证明任意阶的本端口单回路。 |
+| 本卷第 3–5 节 | `repo-derived`：具体状态空间、项链接线和运输公式、一般连通性反例及有限非树对照；经典图论机制继续归属于其既有来源。 |
+
+已查仓库相关 Library 与 PrefixReversalTriple 源、以上三份原文及一次 arXiv pancake/Hamiltonian 检索；未识别出可直接复用的完整统一接线证明。这只是已查范围结论。其他网页检索遇到限流或验证页，覆盖不完整，不能报告 exhaustive novelty 或 search-complete。技术缺口不改变原题的数学状态。
+

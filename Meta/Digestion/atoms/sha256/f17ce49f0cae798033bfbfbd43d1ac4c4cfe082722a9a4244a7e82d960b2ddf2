@@ -1,0 +1,79 @@
+**Theorem 3.1 (coherence-preserving residual bound).** For $0<\beta\leq1/2$ and every actual encoder in Definition 1.1, put
+
+$$
+e_\beta(w)=\frac{\beta(1-w)}{\beta+2+\sqrt{8\beta w}}.
+$$
+
+For every single complex CPTP recovery $R$,
+
+$$
+\|RN-\mathrm{id}_3\|_\diamond\geq2e_\beta(w),\qquad
+F(RN,\mathrm{id}_3)^2\leq1-e_\beta(w).
+\tag{R.11}
+$$
+
+Hence $\delta_N\geq2e_\beta(w)$ and $g_N^2\leq1-e_\beta(w)$ on the full input/reference domain.
+
+**Proof.** For the orthonormal inputs $\eta_j=\chi_+,\chi_-,|2\rangle$, let $P_j=|\eta_j\rangle\langle\eta_j|$ and $E_j=R^\dagger(P_j)$. These are one POVM: $E_j\succeq0$, $\sum_jE_j=I_5$, even when $R$ is complex. Set $p_j=\operatorname{Tr}[E_jN(\eta_j)]$ and $\varepsilon=\max_j(1-p_j)$. Measuring the pure ideal target gives
+
+$$
+\|RN-\mathrm{id}\|_\diamond\geq2\varepsilon,
+\qquad F(RN,\mathrm{id})^2\leq\min_jp_j=1-\varepsilon.
+\tag{R.12}
+$$
+
+The actual $D_\sigma=\sigma_++\sigma_-$ obeys $D_\sigma\succeq\beta\Pi$. Since $E_2\preceq I-E_+$ and $E_2\preceq I-E_-$,
+
+$$
+\beta\operatorname{Tr}(\Pi E_2)\leq\operatorname{Tr}(D_\sigma E_2)
+\leq(1-p_+)+(1-p_-)\leq2\varepsilon,
+\quad \Pi E_2\Pi\preceq d\Pi,\quad d=2\varepsilon/\beta.
+\tag{R.13}
+$$
+
+The last inequality uses that a PSD operator's largest eigenvalue is at most its trace. It does not diagonalize $E_2$ or the third output.
+
+Set $E_0=\beta/(\beta+2)$. Since $0\leq e_\beta(w)\leq E_0$, the branch $\varepsilon\geq E_0$ is done. On the other branch $d<1-\varepsilon\leq p_2$ and $d<1$. If $w=1$ the bound is zero and needs no normalization. Otherwise take the normalized mathematical vectors
+
+$$
+\Psi=V|2\rangle,\qquad
+\phi=((\Pi\otimes I)\Psi)/\sqrt{1-w},\qquad
+|\langle\phi,\Psi\rangle|=\sqrt{1-w}.
+$$
+
+For $E=E_2\otimes I$, put $r=\langle\phi|E|\phi\rangle\leq d$ and $p=\langle\Psi|E|\Psi\rangle=p_2\geq1-\varepsilon$. Splitting the overlap into its $E$ and $I-E$ parts and using Cauchy–Schwarz gives
+
+$$
+\sqrt{1-w}\leq\sqrt{pr}+\sqrt{(1-p)(1-r)}.
+\tag{R.14}
+$$
+
+Equivalently this is Watrous root-fidelity monotonicity under the binary CPTP measurement. The vector $\phi$ is an auxiliary proof vector, not an encoded input or a physical postselection instruction. Both terms in (R.14) retain the entire third-state coherence.
+
+On the exact rectangle $0\leq r\leq d<1-\varepsilon\leq p\leq1$, the function $B(p,r)=\sqrt{pr}+\sqrt{(1-p)(1-r)}$ increases in $r$ and decreases in $p$. In the interior this follows from
+
+$$
+\partial_pB=\tfrac12(\sqrt{r/p}-\sqrt{(1-r)/(1-p)})<0,\quad
+\partial_rB=\tfrac12(\sqrt{p/r}-\sqrt{(1-p)/(1-r)})>0;
+$$
+
+continuity includes the zero and unit endpoints. Thus its exact rectangle maximum is $B(1-\varepsilon,d)$, giving
+
+$$
+\sqrt{1-w}\leq H_\beta(\varepsilon)
+:=\sqrt{2\varepsilon(1-\varepsilon)/\beta}
++\sqrt{\varepsilon(1-2\varepsilon/\beta)}.
+\tag{R.15}
+$$
+
+This envelope bounds the two numbers from the same fixed recovery, not numbers attained at different recoveries.
+
+For $0\leq x\leq E_0$, put $\alpha(x)=\arcsin\sqrt{1-x}$ and $\gamma(x)=\arcsin\sqrt{2x/\beta}$. Then $\alpha\geq\gamma$ and $H_\beta(x)=\cos(\alpha-\gamma)$ strictly increases from zero to one. Indeed $\alpha-\gamma$ strictly decreases from $\pi/2$ to zero. Let $M=\beta+2+\sqrt{8\beta w}$ and $e=\beta(1-w)/M$. The exact nonnegative-root identities
+
+$$
+1-e=\frac{(\sqrt2+\sqrt{\beta w})^2}{M},\qquad
+1-2e/\beta=\frac{(\sqrt\beta+\sqrt{2w})^2}{M}
+$$
+
+give $H_\beta(e)=\sqrt{1-w}$. Hence (R.15) forces $\varepsilon\geq e$. At $w=0$ this says $e=E_0$ and the small-$\varepsilon$ branch would be impossible; at $w=1$ no $\phi$ was formed; at $\varepsilon=E_0$ the large branch applies. Combining with (R.12) proves (R.11), including every complex recovery before optimization. Product witnesses already belong to the larger full-reference test domain. $\square$
+

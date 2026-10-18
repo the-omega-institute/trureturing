@@ -1,0 +1,68 @@
+**定理 24.12（FIB 支撑上的锐最小交换体积）。** 在定义 24.11 的整数合同中，若 $c\ne0$ 保持直到 $r$ 阶，则
+
+$$
+\|c\|_1\ge2^{r+1},\qquad m(c)\ge2^r.
+$$
+
+存在这样的非零 $c$ 当且仅当 $r<\lceil n/2\rceil$；在此范围内下界可达到。若 $r\ge\lceil n/2\rceil$，不存在非零合法直方图交换。
+
+证明。先在任意有限坐标集 $E$ 的整个 Boolean 立方体上证明整数界：设 $c:2^E\to\mathbb Z$ 非零，且对所有 $|S|\le r$ 有 $\sum_{I\supseteq S}c_I=0$。对 $r$ 归纳，命题同时量化所有有限 $E$。
+
+当 $r=0$，总和为零且 $c$ 非零，必有一个正整数系数和一个负整数系数。因此正质量、负质量各至少一，$\|c\|_1\ge2$。若 $E$ 为空，此前提本就不可能成立，不需添一个例外解。
+
+现设 $r\ge1$，并已知所有坐标集上的 $r-1$ 阶结论。质量零保证支撑至少含两个不同集合 $I_0,I_1$，选一个区分它们的坐标 $j\in I_0\mathbin\triangle I_1$。在 $E'=E\setminus\{j\}$ 上定义两片
+
+$$
+c^{(0)}_B=c_B,\qquad c^{(1)}_B=c_{B\cup\{j\}},\qquad B\subseteq E'.
+$$
+
+所选两个非零支撑分处两片，所以每片都是非零整数函数。对任何 $S\subseteq E'$、$|S|\le r-1$，有
+
+$$
+\sum_{B\supseteq S}c^{(1)}_B
+=\sum_{I\supseteq S\cup\{j\}}c_I=0,
+$$
+
+$$
+\sum_{B\supseteq S}c^{(0)}_B
+=\sum_{I\supseteq S}c_I-
+\sum_{I\supseteq S\cup\{j\}}c_I=0.
+$$
+
+第一式使用 $|S\cup\{j\}|\le r$，第二式再使用原来的 $S$ 矩。故两片各满足归纳前提，各自 $\ell^1$ 范数至少 $2^r$。两片分割全部系数，得到
+
+$$
+\|c\|_1=\|c^{(0)}\|_1+\|c^{(1)}\|_1\ge2^{r+1}.
+$$
+
+这个证明不假定切片仍是某个路径的独立集族。回到 FIB 情形，将每个非法字 $I\notin\Gamma_n$ 的系数明确延拓为零。合法 $S$ 的矩条件就是原条件；非法 $S$ 不可能包含于任何合法 $I$，所以其矩也是零。于是整个 Boolean 立方体满足刚证明的假设，范数不变，整数界随即成立。整数性不能删掉：实数倍缩小一个非零方向会任意缩小范数。
+
+为证明达到，令 $r<\lceil n/2\rceil$，取合法集合
+
+$$
+T=\{1,3,\ldots,2r+1\},\qquad |T|=r+1.
+$$
+
+这个范围保证 $2r+1\le n$；其所有子集均合法。使用已有 Möbius 反演列 $D_T$，对任意 $S\subseteq[n]$，若 $S\not\subseteq T$ 则其 $S$ 矩为零；若 $S\subseteq T$，则
+
+$$
+\begin{aligned}
+\sum_{I\supseteq S}D_T(I)
+&=\sum_{S\subseteq I\subseteq T}(-1)^{|T|-|I|}\\
+&=(-1)^{|T|-|S|}\sum_{J\subseteq T\setminus S}(-1)^{|J|}
+=\begin{cases}1,&S=T,\\0,&S\ne T.\end{cases}
+\end{aligned}
+$$
+
+末式在 $S\ne T$ 时由任取 $j\in T\setminus S$、配对 $J$ 与 $J\mathbin\triangle\{j\}$ 消去得到。因此全部 $|S|\le r$ 的矩为零。任取 $j\in T$，在 $T$ 的子集中切换 $j$ 会翻转 $D_T$ 的符号，故正负各有 $2^r$ 个系数，每个绝对值一，得到 $m(D_T)=2^r$。
+
+最后，合法集合最大阶数为 $\alpha=\lceil n/2\rceil$：把路径按相邻两点分组，每组至多选一点，奇数长度再容许末点，给上界；奇数位置集合达到该界。若 $r\ge\alpha$，则所有合法矩，包括质量，全都固定。将原反演应用于有符号数组，写 $m_S(c)=\sum_{I\supseteq S}c_I$，便有
+
+$$
+c_I=\sum_{T\supseteq I}(-1)^{|T|-|I|}m_T(c)=0.
+$$
+
+所以非零 $c$ 不存在，完成充要条件。证毕。
+
+本定理中使用的整个 Boolean 立方体整数下界是既有 $[t]$-trade 结果。[Ghorbani–Kamali–Khosrovshahi–Krotov，On the volumes and affine types of trades，arXiv:1810.02296v2](https://arxiv.org/abs/1810.02296v2) 的 §2.1 将 trade 写成整数函数 $\sum_X\tau_XX$，正负系数分别为两侧块的重数，并要求式 (2) 的 $\sum_{X\supseteq S}\tau_X=0$。精确对应为 $E=V_{\rm lit}$、$c_I=\tau_I$、$r=t$、$m(c)=\operatorname{vol}(T_{\rm lit})$。原文 §3 的 Lemma 3 陈述 unitrade 的界并紧接说明 trade 同界；Lemma 4 明述非空 $[t]$-trade 的最小体积 $2^t$ 及极小结构。整数权重、重复块和一般体积界均不是这里新增的扩展。上述归纳作为当前守恒成本推导中的完整中间证明，另将非法字零延拓、合法 $T$ 的达到构造和路径最大阶数接到本章的算子合同。
+

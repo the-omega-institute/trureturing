@@ -1,0 +1,22 @@
+**Theorem 21.2 (sharp promised data alphabet, original continuation outside it).** For a publicly declared integer $L\ge5$, let
+
+$$
+D_L=\max\{G_{L_{\rho,v}}(A,B):\rho\in\{0,1\},\ |v|=3,\ A+B\le L\}.
+\tag{SC.52}
+$$
+
+Zero-size cells may be included. There is a finite supplementary monitor with $D_L$ rank-label values, separately charged bounded count/metadata storage and a validity flag, that recovers exactly every positive third-latch history of length at most $L$, for both seeds and every marker triple. Relative to its declared terminal boundary, $D_L$ is the least single supplementary data alphabet for that promise. On the restricted $R=1,v=100$ promise with $L\ge6$, replace it by the sharp
+
+$$
+D_L^{100}=\max_{A+B\le L}F(A,B).
+\tag{SC.53}
+$$
+
+The source's behavior outside either promise is unchanged. This is neither a uniformly finite exact all-history device nor a bound on the fourth segment or the entire original machine.
+
+Proof. Install (SC.51) with the appropriate maximum as $D$. Keep exact selected counts while their sum is at most $L$. Before any next count write would exceed $L$, set an absorbing overflow/invalid flag and hold the monitor's counts/label instead of claiming an exact out-of-range count. The original control, finite record writers, latch, fourth segment and Stop continue normally on every path, including infinite noncompletion paths. At its actual latch the same monitor bank is held. No promised completion enters overflow; its terminal full rank is less than its dictionary size, which is at most $D$, so its clipped rank equals its exact rank. In fact its earlier prefix dictionaries inject into that same terminal dictionary by (SC.48); no early saturation can lose a promised past. This also holds on the restricted $100$ promise without providing future seed or marker eligibility before acquired. Histories outside that restricted domain make no promised recovery claim.
+
+A maximizing nonempty terminal cell forces at least $D$ labels by Theorem 19.2's exact-recovery lower bound, even with original future side information. Thus the maximum is necessary and attained as a data alphabet. A shared separately supplied validity flag is not a free extra label: it and its storage are charged; folding invalidity into the data alphabet instead may reserve an additional value. Counters/width metadata cost $O(\log(L+2))$ monitor bits, while the installed $L,D$ descriptions and $\lceil\log_2D\rceil$ label storage have their own cost. On the bounded counting portion, Theorem 21.1 gives $O(\log(D+1)+\log(L+2))$ arithmetic workspace and $O((L+1)^3[1+\log(D+1)+\log(L+2)]^2)$ acquisition bit work. Since $D\le2^L$, this is at most $O((L+1)^5)$.
+
+The maxima can be sized by scanning the $O((L+1)^2)$ count cells for the fixed sixteen terminal tags and computing (SC.43). This charges $O(L+1)$ temporary bits and a conservative $O((L+1)^6)$ initialization bit-work bound, as well as the stored maximum. A public length promise is an analysis/observer-allocation condition and supplies no early Stop or source cutoff. A variable-width exact observer of §§19–20 instead continues growing on every finite prefix; Theorem 10.1 still rules out uniformly finite unrestricted exact chronology retention. $\square$
+

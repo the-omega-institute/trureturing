@@ -1,0 +1,40 @@
+**Definition 11.1 (joint certificate data).** Retain the actual original-real class, coordinates, metrics and complementary blocks of Definition 1.1 and (R.2)–(R.4). Write
+
+$$
+s=\sqrt a,\qquad t_\beta=(1+s)/2,\qquad U(\beta)=1-s,
+\qquad J=J_\Gamma=BB^\dagger.
+$$
+
+Here $J$ is the input-first Choi matrix of one actual complement in the displayed input frame. For every complex reference density $q\in\mathsf D(\mathbb C^3)$, including singular $q$, set
+
+$$
+A_q=(\sqrt q\otimes I_r)J(\sqrt q\otimes I_r),\qquad
+P_q=\operatorname{supp}A_q,
+$$
+
+$$
+0\preceq Z_q\preceq I-P_q,\qquad
+H_{q,Z_q}=\operatorname{Tr}_{\mathbb C^3}
+\bigl[(\sqrt q\otimes I_r)Z_q(\sqrt q\otimes I_r)\bigr].
+\tag{R.41}
+$$
+
+The letter $Z_q$ denotes a kernel effect, distinct from the comparison state $Q_q$ in Theorem 6.1. It may be the full kernel projection or the projection onto any specified orthonormal subset of the kernel. Let $\mathscr H(J)$ consist of all finite convex aggregates
+
+$$
+H=\sum_{\ell=1}^m p_\ell H_{q_\ell,Z_{q_\ell}},
+\qquad p_\ell\geq0,\qquad \sum_{\ell=1}^m p_\ell=1.
+\tag{R.42}
+$$
+
+Every summand is constructed from this same $J$. Such aggregation varies witness inputs, not the encoder, dilation or environment center. By (R.27), the corresponding physical input in these coordinates is $q^T$, rather than $q$. In particular
+
+$$
+|\psi_q\rangle=\sum_{ij}(\sqrt q)_{ij}|i\rangle_R|j\rangle_A,
+\quad \operatorname{Tr}_A P_{\psi_q}=q,
+\quad \operatorname{Tr}_R P_{\psi_q}=q^T,
+\quad \operatorname{Tr}A_q=1.
+$$
+
+These identities impose no reality or invertibility assumption on $q$. Under the original-to-phase change (R.2), the reference density transforms as $q_p=H^Tq_0\bar H$; the actual density transforms as $\rho_p=H^\dagger\rho_0H$, with $\rho_0=q_0^T$ and $\rho_p=q_p^T$. The $H$ in this coordinate formula is the fixed basis matrix of (R.2), not the certificate in (R.42).
+

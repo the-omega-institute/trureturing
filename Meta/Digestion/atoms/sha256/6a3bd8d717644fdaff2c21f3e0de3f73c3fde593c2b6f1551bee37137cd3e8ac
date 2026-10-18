@@ -1,0 +1,53 @@
+**Convention 14.1 (the inherited depth-two data).** Write
+$Q_1=S_1=\{\alpha,\beta,C_0\}$ and
+
+$$
+\mathcal G=\{g_{xy}=\langle x,y\rangle:x,y\in Q_1\},
+\qquad S_2=\{\alpha,\beta\}\sqcup\mathcal G.
+\tag{RCE.45}
+$$
+
+Use precisely the table and maximal local sets of
+[NCM, Convention 3.1, (NCM.14)–(NCM.15)][NCM]. In the notation
+here, put $f(\alpha)=(2,1)$, $f(\beta)=(1,0)$,
+$f(C_0)=(0,0)$. The root target is determined by the root reply;
+the side factors at a branch are
+$\Gamma_L(g_{xy})=f(x)$ and $\Gamma_R(g_{xy})=f(y)$.
+At the root leaves the two side-factor rows are
+
+$$
+\begin{array}{c|cc}
+ &\Gamma_L&\Gamma_R\\\hline
+\alpha&(3,0)&(4,1)\\
+\beta &(2,0)&(3,1)
+\end{array}
+\tag{RCE.46}
+$$
+
+For each side its two root-leaf values are distinct from each other
+and from the three $f$ values. Both root leaves give absent on
+either side experiment, while a branch gives the root reply of its
+selected child. These are inherited table entries, not a new native
+interface. The inherited maximal local sets are
+
+$$
+H_\alpha=\{\alpha\}\cup\mathcal G,\qquad
+H_\beta=\{\beta\}\cup\mathcal G,\qquad
+T_{xy}=\{\alpha,\beta,g_{xy}\}.
+\tag{RCE.47}
+$$
+
+For arbitrary $w:S_2\to[0,\infty)$ set
+
+$$
+W=\sum_{x\in S_2}w(x),\quad a=w(\alpha),\quad b=w(\beta),
+\quad t=\max_{g\in\mathcal G}w(g),\quad
+M(w)=\max\{W-a,W-b,a+b+t\}.
+\tag{RCE.48}
+$$
+
+Thus $M(w)$ is exactly the largest local mass, by (RCE.47).
+Every set of at most three states is local: it either omits a root
+leaf or contains both and at most one branch. Each $w$ remains one
+whole-block weight, with arbitrary dependence between its two children.
+

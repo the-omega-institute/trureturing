@@ -1,0 +1,28 @@
+**引理 8.2.1（每个单步可见律相同）。** 对任意 $\lambda\in[0,1]$、任意可见准备 $\nu$、任意单动作 $c\in\{a,b\}$ 以及 $x,y\in\{0,1\}$，在两个模型中都有
+
+$$
+\Pr(X_0=x,X_1=y\mid \operatorname{do}(A_0=c))
+=\frac{\nu(x)}2.
+$$
+
+特别地，给定 $X_0=x$ 后，$X_1$ 是均匀位，与模型编号和动作标签都无关。
+
+**证明。** 对动作 $a$，确定性分支的下一可见位是 $H_0$；对动作 $b$，确定性分支的下一可见位是 $H_0$ 或 $1-H_0$。由于 $H_0$ 均匀，这两种分支的可见位都均匀。重置分支也产生均匀的第一坐标。乘上 $\Pr(X_0=x)=\nu(x)$ 即得。证毕。
+
+定义单动作同质记录族
+
+$$
+\mathcal R_{\mathrm{mono}}(M)
+=
+\left\{
+\operatorname{Law}_M(X_0,\ldots,X_n)
+\;\middle|
+\begin{array}{l}
+\nu\text{ 任意},\ c\in\{a,b\},\ n\in\mathbb N_0,\\
+\text{整段运行的每一步都执行同一个 }c
+\end{array}
+\right\}.
+$$
+
+<a id="claim-8-2-2"></a>
+

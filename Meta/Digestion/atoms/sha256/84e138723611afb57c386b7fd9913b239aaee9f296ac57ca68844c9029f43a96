@@ -1,0 +1,13 @@
+**Corollary 27.1 (Attained fixed-machine order and the growing-counter comparison).** For the exact sources and any fixed $0<\alpha<1/2$, every observer in Definition 23.3 satisfying (23.8) pays $\Omega_{\mathcal A,H,\alpha}(s^{-11})$ in each family, and one fixed deterministic observer pays $\Theta_{H,\alpha_0}(s^{-11})$ in each. In particular no one fixed finite-state stochastic observer in this experiment can have an $O(s^{-3})$ paid mean near one, even under just one of the two families while retaining the full contract.
+
+Theorem 22.3 of the owning source supplies a deterministic parameter-free observer on the same stationary families with the same consecutive paid-read actions, separate uniform family errors and pointwise finite means, whose achieved mean is $\Theta_{H,\alpha}(s^{-3})$ under both families. Its unbounded gap and pair counters and its growing dyadic precision, described in Proposition 22.6 there, place it outside Definition 23.3. Hence these two achieved orders give a separation between one fixed finite controller and that growing-memory procedure for this exact testing experiment.
+
+Proof. The lower assertion is Theorem 25.4 and the matching finite-state upper assertion is Theorem 26.4. If such a fixed finite controller had $\mathbb E_{i,e^{-s}}T\le Cs^{-3}$ for either fixed $i$ throughout a sufficiently small neighborhood, (25.12) would force $c_{\mathcal A}\le Cs^8$ there, a contradiction as $s\downarrow0$. The cited source theorem provides the other procedure and its actual-read order. Proposition 22.6 specifies persistent control of $O(D_L)$ bits and temporary exact-arithmetic workspace of $O(D_L^2)$ bits after $L$ reads, where, for fixed model and risk descriptions,
+
+$$
+D_L=O_{H,\alpha}(1+\log(L+2)).
+\tag{27.1}
+$$
+
+These are growing bounds over possible histories, not a fixed finite set of configurations. Its arbitrary possible gap lengths and counters cannot be treated as finitely many states merely because there are finitely many named integer registers. $\square$
+

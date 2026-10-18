@@ -1,0 +1,18 @@
+**Theorem 3.2 (exact identity on one graph).** For every qualifying graph,
+
+$$
+m-G=E-D+\nu.
+\tag{3.1}
+$$
+
+Proof. The finite incidence relation gives
+
+$$
+G+E=\sum_{p\in V}b_p
+=\sum_{q\in Q_{\rm live}}d(q)=|Q_{\rm live}|+D.
+$$
+
+Subtract using $m=|Q_{\rm live}|+\nu$. This is precisely the identity
+of [SI, Theorem 5.2, (SI.19)][SI], with a single symbol $\nu$ for the
+never-live count. Terminals are outside $m$. $\square$
+

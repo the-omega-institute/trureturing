@@ -1,0 +1,39 @@
+**Proposition 9.1 (physical capacity and whole qubit).** For any occupied atom let $L=L_h$, $K=\sqrt p L$ and $N=p b_{\rm label}n_hn_h^T$. The matrix $L$ has rank two, $N$ is supported on its row space and
+
+$$
+n_h^T(L^*L)^+n_h=1/c_h.
+$$
+
+If $J:\mathbb C^2\to\operatorname{ran}L^*$ is an isometry, define
+
+$$
+Q=J^*(K^*K+N)J,\quad
+C=Q^{1/2}J^*E^*,\quad
+B=KJQ^{-1/2},\quad
+F=Q^{-1/2}J^*NJQ^{-1/2}.
+$$
+
+Then $Q\succ0$, $BC=KE^*$, $C^*FC=ENE^*$ and
+
+$$
+B^*B+F=I_2,\quad I_2-F\succ0,\qquad
+\frac{f_{\max}}{1-f_{\max}}=\frac{b_{\rm label}}{c_h},
+$$
+
+where $f_{\max}$ is the only possible nonzero eigenvalue of $F$. Thus the actual capacity is $b_{\rm label}\le1000c_h$, with equality at each saturated contact. At a pure contact $F=0$. All zero weights, in particular $p_4=0$ at the event, are omitted before inverses.
+
+Proof. The ellipse makes $\det L=0$, whereas its lower diagonal $2\times2$ minor is $\delta h_1h_2>0$. Its kernel is spanned by $(s_0,-bz/h_1,-dw/h_2)^T$, orthogonal to $n_h$. Solve $L^*x=n_h$ as
+
+$$
+x=(x_0,A_1-B_1x_0,C_1-D_1x_0)^T,
+$$
+
+where $A_1=dw/(s_0h_1h_2)$, $C_1=-bz/(s_0h_1h_2)$, $B_1=az/(s_0h_1)$ and $D_1=cw/(s_0h_2)$. The ellipse gives $A_1D_1-B_1C_1=h_0/(h_1h_2)$. Minimizing the squared norm in $x_0$ gives
+
+$$
+\min\|x\|^2=
+\frac{A_1^2+C_1^2+(A_1D_1-B_1C_1)^2}{1+B_1^2+D_1^2}=1/c_h.
+$$
+
+This uses the actual live effect, not a bare projector after whitening. On its row space $K^*K$ is strictly positive, giving $Q\succ0$. The stated identities follow by multiplication, since $JJ^*$ fixes both $K^*$ and $N$. The rank-one generalized Rayleigh quotient for $N$ relative to $K^*K$ is $b_{\rm label}/c_h$. Congruence by $Q^{-1/2}$ then gives $f_{\max}/(1-f_{\max})$ as displayed. This includes the pure and axis cases without singular inverses. $\square$
+

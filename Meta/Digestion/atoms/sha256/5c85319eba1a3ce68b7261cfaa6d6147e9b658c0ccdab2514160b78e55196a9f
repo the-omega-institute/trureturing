@@ -1,0 +1,18 @@
+## 4. The entire fixed-polynomial-shape class
+
+Fix a known $h\in\mathbb R[T]\setminus\{0\}$ of degree at most three.
+Define
+
+$$
+K_h=\{W\in\mathcal F(H):f=a h
+                         \text{ for some }a\in\mathbb R\setminus\{0\}\}.
+                                                                    \tag{4.1}
+$$
+
+The gain constraint specifies a fixed one-dimensional polynomial
+subspace with its zero element removed; both amplitude signs are
+included. The shape promise
+is information about known candidates, not information inferred from
+the observed ancestor. No drift or source is fixed, and the class
+has no cardinality bound.
+

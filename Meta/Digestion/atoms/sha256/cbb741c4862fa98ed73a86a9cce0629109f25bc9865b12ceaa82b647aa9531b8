@@ -1,0 +1,4 @@
+**引理 3.2（匹配 WR）。** 在 $\mathcal I_P$，每次源 IN 前的绝对原生 ordinal 为 $j$ 时，其匹配线位的 WR 后 ordinal 为：header/length 的 $j+3$，payload 的 $j+2$。WR 地址在 IN 前已由当时实际状态确定；从 IN 到该 WR 没有另一次 IN 或 latch 5 覆写。匹配 WR 执行后，该线位在本次区间内不再改写。
+
+证明。CAP 定义 4.6 的 header 是 `IN; EX; WR; MR`，length 是 `IN; EX; WR; RD(test); MR`。两者在 IN 前已位于当前 append R；EX 不因输入值分支，WR 把 latch 5 写入该旧 R 所成的线位。payload 已按实际完成长度 Zero 预分配，并已 At 到其当前线位；正迭代是 `RD(length); IN; WR; MR(payload); MR(length)`。故以 IN 前为 $j$ 时恰有上述偏移。length 的测试用不同 latch；两种图均没有中间输入或先覆写 latch 5。后来 WR(status,1) 只写各块的独立 status，不写线位。三个 wire 块按原始保留规则不再修改。尚未被 payload WR 写入的预留零不因此成为已消费输入。$\square$
+

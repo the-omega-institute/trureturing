@@ -1,0 +1,13 @@
+**Convention 6.6 (parameter boundaries).** The proofs apply at every
+$m,d\ge2$, including the smallest gadget and canonical depth. Although
+$m,d$ determine the native tuples, conditional nuisance and source
+costs, their common conditional law removes them from the risk formula.
+If $\ell=1$ is admitted, $P=Q$ and the risk is always $1/2$.
+At the excluded endpoint $\epsilon=1$ the laws also coincide. At
+the excluded endpoint $\epsilon=0$, for $t\ge1$ the one-source
+risk is $2^{-t}$: under $P$, all phases can still agree. At $t=0$
+it remains $1/2$. Endpoint statements follow directly from the phase
+laws and the same pointwise Bayes argument; strict positivity and the
+positive-event reverse kernels above were asserted only in the stated
+open $\epsilon$ range.
+

@@ -1,0 +1,26 @@
+**Proposition 7.1 (one representative per row changes the price).** Fix
+one $w_0\in\Sigma^m$ and replace the source domain of the consumer by
+the two-source set $\{u_g,u_{g^{(w_0)}}\}$, while retaining the same
+entry epoch, action interface and full-row outputs. This is one
+representative for each actual row. Its Pareto basis is
+$\{(1,0,D)\}$, and its same-run price is
+$\lambda_q+D\lambda_\ell$. For $m\ge1$ it therefore fails to preserve
+the whole-fiber resource problem, whose two positive coordinates are
+larger by the factor $2^m$.
+
+Proof. The one word $RLw_0R^{\lfloor N/2\rfloor}$ distinguishes the
+two leaf images and hence the two whole rows. It has length $D$ and
+needs no update. Zero reads cannot select their different rows. The
+first differing read of any correct adaptive comparator must have
+length at least $D$ by the same two-copy, all-epoch calculation
+(GRS.28)–(GRS.29). Both runs reach that read, giving the simultaneous
+lower bound and the weighted statement. The full-fiber values are
+Theorem 6.3. $\square$
+
+This comparison preserves the set of row VALUES but discards sources
+inside a row fiber. It is an invalid experimental shortcut for the
+original task, not a competing acquisition theorem on $U_m$. The
+prefix-cell witnesses in Proposition 3.2 are different: they merely
+compute labels, while every formula (GRS.15) still quantifies every
+admitted source, not those witnesses alone.
+

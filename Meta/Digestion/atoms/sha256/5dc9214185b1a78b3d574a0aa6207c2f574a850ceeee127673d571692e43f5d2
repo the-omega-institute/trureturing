@@ -1,0 +1,21 @@
+**Corollary 6.7 (effective decisions and what a witness means).**
+Emptiness of $\mathscr R_b$, exact support of validation epochs,
+membership of a supplied finite candidate $(u,n,j)$, and extraction
+of an actual source and producing schedule at any feasible supplied
+$n$ are decidable. The epoch support is the effective finite union
+$\bigcup_{c\in\mathcal C}I^E_c$.
+
+Proof. Each cell in the list is nonempty by Theorem 6.5, so its guard
+is precisely its supported epochs. To obtain a witness at a feasible
+$n$, choose a cell whose guard contains it and extract sufficient
+fillers as above; Theorem 3.2 supplies the schedule for any supplied
+$j$. For a supplied original source, prune it, compare its actual
+residual values with the finite constants and each other, compute
+the finite product states, and test its guard at $n$. Equivalently,
+evaluate the bounded representative $\rho^{\kappa(n)}u$.
+All are finite computations on supplied finite data. A witness
+proves existence and is not thereby the unknown actual original.
+Decoding with actual residuals recovers that candidate, whereas
+recovering an unknown source from $b$ alone requires fiber constancy.
+$\square$
+

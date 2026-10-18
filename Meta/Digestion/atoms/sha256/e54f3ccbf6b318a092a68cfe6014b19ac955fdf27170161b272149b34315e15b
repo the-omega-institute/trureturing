@@ -1,0 +1,13 @@
+**Boundary 10.3 (Resources and parameters).** The statements fix
+$0<p<1$, $p\ne1/2$, and either original $j=0$ or $j=1$.
+They do not extend to the fair or endpoint parameters, to budgets
+$k>2$, to minimum expected paid cost, or to optimal stopping for
+another resource. The paid representatives may replace exterior
+behavior with internal nonreturn, so they do not optimize total
+finite-return probability or preserve the distribution of all
+costs. Every actual call of each constructed policy is nevertheless
+charged. Internal computation, finite waiting, address size, program
+length, counters, persistent state and physical storage receive no
+complexity or bounded-memory conclusion. The measurable protocol
+contract does not silently acquire an effectiveness restriction.
+

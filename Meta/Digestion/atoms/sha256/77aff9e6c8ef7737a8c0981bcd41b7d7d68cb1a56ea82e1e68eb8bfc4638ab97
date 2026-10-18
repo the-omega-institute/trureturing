@@ -1,0 +1,35 @@
+**Convention 1.1 (fixed source and supplier versions).** All repository
+suppliers in this volume are read at
+`a683624403f0c22bc441dc3171f5e181bfd709f6`. Abbreviate the following
+volumes by SSA, RCA, AIF, LJA, PR57 and NCR, respectively:
+
+- [Native Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md).
+- [Native Retrospective Cut Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md).
+- [Native Acquired Input Frontier and Replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md).
+- [Native Literal Journal Adapter](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md).
+- [Transport Memory Completion, §57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#57-a-complete-paid-ideal-realization-of-the-original-ordered-tree-interface).
+- [Native Clocked Recovery and Order](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md).
+
+Fix $H\ge1$, $N=2H-1$, preparation occurrence $\xi$, the original
+canonical controller $D_0$, and RCA's precise textual expansions $L,D_1$.
+Fix their literal row/effect order, codecs $E,\Delta$, original origin and
+descriptor conventions, and one owner assignment satisfying RCA
+Definitions 14.1–14.2. These parameters are fixed independently of the source.
+All statements apply to each actual $u\in\mathcal T_H$, with the same
+construction for all such $u$; a recovery never chooses another source.
+Here
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\tag{CSA.1}
+$$
+
+Pairing is ordered and $\mathcal T_H$ has between one and $H$ leaves.
+The source is PR57's actual paid padded $N$-token packet, with
+PAD $00$, alpha $01$, beta $10$, PAIR $11$. Its original no-update
+acquisition and seed delivery end at $a(u)$. Subsequent modifications
+operate on that same private interval and preparation occurrence.
+

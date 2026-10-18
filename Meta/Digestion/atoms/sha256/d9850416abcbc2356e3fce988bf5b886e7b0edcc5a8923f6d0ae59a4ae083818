@@ -1,0 +1,40 @@
+**Lemma 42.1 (Gaussian tests inside a blind interval).**
+Let a covariance-$2$ Brownian motion be compared on $[0,t_0]$ with a
+continuous numerical path whose next observation time is fixed from the
+previous records. Allow arbitrary additional past information at those
+observation times, provided fresh Brownian increments retain their usual
+law in the enlarged filtration. If there are at most $n$ observations,
+then for every $\epsilon>0$ the probability of the complete scalar tube
+of radius $\epsilon$ is at most
+
+$$
+\left[\mathbb P\left\{|G|\le
+              \epsilon\sqrt{(n+1)/t_0}\right\}\right]^{n+1},
+\qquad G\sim N(0,1).
+\tag{42.1}
+$$
+
+Proof. Set $v=t_0/[2(n+1)]$ and
+$g=\mathbb P(|N(0,2v)|\le\epsilon)$. Conditional on all past
+information at the beginning of an observation-free interval of known
+length $h$, the numerical comparison path throughout it is fixed.
+Test only at its internal times $v,2v,\ldots,\lfloor h/v\rfloor v$.
+At each such time the required endpoint belongs to an interval of length
+$2\epsilon$. A centered normal density assigns the largest probability
+to an interval of that length when the interval is centered at zero;
+this follows by differentiating its integral with respect to the center.
+Independent increments and successive conditioning therefore bound the
+conditional tube probability on this gap by
+$g^{\lfloor h/v\rfloor}\le g^{h/v-1}$.
+
+For completeness, let $A_i$ be survival of the scalar tube through the
+first $i$ blind gaps, and $s_i$ their elapsed total time. The preceding
+inequality makes
+$\mathbf1_{A_i}g^{-s_i/v+i}$ a nonnegative supermartingale at the gap
+ends. Pad a policy with fewer than $n+1$ gaps by zero-length gaps at
+$t_0$; the same inequality holds for those gaps. Thus
+$\mathbb P(A_{n+1})\le g^{t_0/v-(n+1)}=g^{n+1}$.
+Since $\sqrt{2v}=\sqrt{t_0/(n+1)}$, this is (42.1).
+The internal tests are solely a converse device. They are not sensor
+calls, acquired bridges or permitted controller actions. $\square$
+

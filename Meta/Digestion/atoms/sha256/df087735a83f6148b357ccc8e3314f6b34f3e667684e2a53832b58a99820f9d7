@@ -1,0 +1,74 @@
+**Definition 4.6 (simultaneous installation and width parameters).**
+Let $I_0$ be the fixed bit length of the chosen PH sequential interpreter,
+loader and the nonrecursive routines just specified, and let $I_c$ be
+the fixed bit length of the block-graph writer below. These are fixed
+program descriptions independent of $h,T$; their instructions are the
+local bit/move/control operations of Definition 4.3. They are charged
+constants, not a provider returning an online table. Put
+
+$$
+\begin{aligned}
+Z&=T_G+I_0+I_c+N+W_*+P+\ell+16,\\
+r&=\left\lceil\log_2\bigl(256(Z+1)^2+1\bigr)\right\rceil,\\
+b_{\rm mut}&=3P+32r+64,\qquad L=2b_{\rm mut}-1,\\
+S_{\rm inst}&=2^{b_{\rm mut}}.
+\end{aligned}
+\tag{4.5}
+$$
+
+The installed set is exactly the zero-interleaving image of all
+$b_{\rm mut}$-bit words. This counts all malformed and unused valuations
+of Proposition 4.5; no reachable-state quotient is used. Its transition
+rows are specified by the finite interpreter and routines, not stored
+as $2^{b_{\rm mut}}$ separate records. If a convention additionally
+requires such an expanded composite table, its full storage must be
+added; (4.3) is not its size. With the four distinguished PC values of
+Proposition 4.5, the complete row counts are
+
+$$
+n_R^{\rm comp}=n_U^{\rm comp}=2^{b_{\rm mut}-r-5},\qquad
+n_H^{\rm comp}=2^{b_{\rm mut}-r+1},\qquad
+n_{\rm typed}^{\rm comp}=5\cdot2^{b_{\rm mut}-r-5}.
+\tag{4.5a}
+$$
+
+The remaining rows are local. All five flags must be zero at an issue
+PC, which explains the exponent. Each Halt PC fixes one output bit.
+Even if no valid macro run ever updates, the unreachable Update-PC
+rows remain installed and counted. The composite installed Read menu
+contains every word of length at most $P$, because malformed arm
+configurations allow arbitrary receiver cells and any valid occupied
+length. Its size is $2^{P+1}-1$, despite the much smaller set reached
+on actual runs. These extra rows do not alter the simulation assertion,
+which begins at the single common lawful initialization.
+
+Use PH8.1's allocation header $J_r$, with one width declaration for
+each of the thirty-two slots, the sixty-four-Boolean allocation,
+and the three array lengths. Gamma codes of $P+1$ handle empty arrays.
+The explicit generous bound
+
+$$
+|J_r|\le 128r+128
+\tag{4.6}
+$$
+
+covers these declarations and their fixed register identities. Resident
+immutable storage is $T_G+I_0+|J_r|$. A sufficient simultaneous
+installation peak, including a duplicate input image, the source table,
+the graph writer, its two native-word scratch arrays and online RAM, is
+
+$$
+B_{\rm install}\le
+4(Z+|J_r|)+L.
+\tag{4.7}
+$$
+
+All headers, code and initialization bits are source-independent.
+Initialization scans the headers, sets slot 1 to the installed initial
+block, installs $P,N,w_G$ and the image end in their named slots,
+zeros all payloads and response flags, homes the heads, and enters
+the row-fetch PC. Other scratch/return slots begin at zero. The loader
+makes no source call and cannot enter either Halt PC. Its finite work
+is charged, and its temporary input image is included in (4.7).
+These are sufficient allocations, not sharp minima.
+

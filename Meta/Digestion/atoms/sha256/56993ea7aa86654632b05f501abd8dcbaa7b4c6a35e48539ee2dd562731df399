@@ -1,0 +1,26 @@
+**定义 221.18（原始来源、载体与分别声明的标记目标）。** 保持原始可数带标签来源
+
+$$
+X=\{(r,g):r\text{ 是素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},
+\quad N_x=1+F_rg,
+\quad q_i(x)=[p_i\mid N_x],
+$$
+
+其中 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，$p_i$ 为第 $i$ 个素数。回答静态；每个实际整数素因子有限，故 $n(x)=\min\{i:q_i(x)=0\}$ 有限。没有给 $X$ 分布，也没有引入无限全正来源。
+
+原始带空间仍为 $B_j,P_j$ 各个 $(0,1)$ 副本的 Borel 不交并；消费者在 $B_j$ 输出 unknown，在 $P_j$ 提议 $j$。原始非原子族仍为
+
+$$
+\mu_x=(1-h_0)\nu_x+h_0\pi_{\omega(N_x)},\qquad0<h_0<1,
+$$
+
+其中 $\nu_x$ 在 $B_{n(x)}$ 上有归一化密度正比于 $\exp(t(x)u)$，$t(x)=\sum_i3^{-i}q_i(x)$，$\pi_j$ 在 $P_j$ 上均匀，$\omega(N_x)$ 为原始素因子计数参数。取原带上的不同点 $\theta_j=(B_1,1/(j+2))$，另行声明标记目标
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+$$
+
+有限标记律与每个原始非原子 $\mu_x$ 的 TV 为一：取其有限支持集，标记律质量一而非原子律质量零。因此上述具体标记帽见证不是原始非原子族的替换或其帽见证。完整竞争者仍可输出任意原始带。
+

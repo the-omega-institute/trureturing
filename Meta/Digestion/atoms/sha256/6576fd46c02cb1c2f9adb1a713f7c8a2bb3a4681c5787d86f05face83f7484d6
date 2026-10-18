@@ -1,0 +1,32 @@
+**Definition 29.1 (Cyclic degree, interior module and facet deficit).**
+Specialize (28.14) to seven positions and write
+
+$$
+\begin{aligned}
+\mathcal S&=\{(m,c)\in\mathbb Z_{\ge0}^{8}:
+ c_i+c_{i+1}\le m,\ \sum_i c_i\le3m\},\\
+R&=R_7^{\mathrm{cyc}}=\mathbb C[\mathcal S],\qquad
+S=\mathbb C[z_I:I\in B_7^{\mathrm{cyc}}],\qquad I=\ker(S\to R),\\
+\delta(m,c)&=3m-\sum_i c_i,\\
+\Omega&=\operatorname{span}_{\mathbb C}
+ \{X^{(m,c)}:c_i\ge1,\ c_i+c_{i+1}\le m-1,
+                    \ \sum_i c_i\le3m-1\}.
+\end{aligned}
+\tag{29.1}
+$$
+
+Here $\Omega$ is an $R$-submodule of $R$, since addition of a semigroup
+point preserves the strict cone inequalities. Put
+
+$$
+\nu_3=(3;\mathbf1),\qquad \nu_5=(5;2\mathbf1),\qquad
+J=\operatorname{span}_{\mathbb C}\{X^s:s\in\mathcal S,\ \delta(s)\ge1\}.
+\tag{29.2}
+$$
+
+The nonnegative additive function $\delta$ makes $J$ an ideal.
+Use $S(-a)_d=S_{d-a}$ for ordinary shifts, and the corresponding
+convention for vectors of degrees. Let $L(m)=L_7^{\mathrm{cyc}}(m)$
+for $m\ge0$, and let $L^\circ(m)$ count the interior lattice points of
+$mQ_7$ for $m>0$.
+

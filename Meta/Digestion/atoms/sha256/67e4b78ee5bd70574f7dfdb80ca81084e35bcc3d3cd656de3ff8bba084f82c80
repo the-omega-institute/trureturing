@@ -1,0 +1,25 @@
+**Shape boundary at fixed invariant.** For $0<\epsilon<1/4$ and $j=1,2$, set
+
+$$
+p_j=\epsilon,\quad q_j=2-(1+j/3)\epsilon,\quad
+r_j=j\epsilon,\quad s_j=jq_j,\quad k_j=0,
+\qquad D_j(\tau)=-(p_j+s_j).
+$$
+
+Every entry is positive, $p_js_j=q_jr_j$, and $u_j=3p_j+3q_j+r_j=6$. Use $c_j=(\epsilon,j\epsilon)^{\mathsf T}$ and $\ell_j=(1,q_j/\epsilon)$. Their product is $S_j$. The one constant polynomial $D_j$ is used at every index. Direct trace substitution gives the entire data vector
+
+$$
+z^{(j)}=\bigl(0,\ 2-(1+j/3)\epsilon,\ 6,\ 6,
+8+(6+5j/3)\epsilon,\ 8+(10+8j/3)\epsilon\bigr).
+$$
+
+Thus
+
+$$
+\|z^{(2)}-z^{(1)}\|_\infty=8\epsilon/3\longrightarrow0,
+\qquad s_2-s_1=2-2\epsilon,
+\qquad \|D_2-D_1\|_{\mathrm{coef}}=2-2\epsilon.
+$$
+
+The matrices and drift coefficients stay bounded. Hence even at fixed $u=6$, bounded sources and drifts, and zero slope, the unrestricted full $S,D$ inverse is not uniformly continuous. The reduced estimate of Section 12 still holds; reconstruction of $s=qr/p$ fails uniformly near this shape boundary.
+

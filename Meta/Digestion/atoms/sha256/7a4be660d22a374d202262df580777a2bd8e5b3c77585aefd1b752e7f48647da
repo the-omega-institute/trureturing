@@ -1,0 +1,6 @@
+### 定理 58.3（rank instantiation 与统一有限分离）
+
+对 RankedExpr(k,m)，instantiation 保持 native evaluation。对任意有限 pair-list \(L\)，同一个 uniformSeparator(L) 对所有无界 rank vectors \(n\) 同时满足：每个 pair 在 separator 下相等，当且仅当该 pair 在全部 residual valuations \(z\) 下相等。若列表中每个 pair 各自存在 residual valuation 使其不等，则同一个 separator 同时使所有 pair 不等。
+
+对应来源条目为 instantiate_eval、uniform_residual_reflection、simultaneous_completion。上述陈述限于所指定的有界语法类；其中对无界 rank vectors 的量化不等于覆盖所有 source 或无限 rank 表达式，也不涉及物理读权限、资源最优性或 RH。来源：[Native Uniform Residual Realization](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization.md)，dev commit cdb23e4374。
+

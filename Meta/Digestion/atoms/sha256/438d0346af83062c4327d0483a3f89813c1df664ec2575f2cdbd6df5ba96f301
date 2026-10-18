@@ -1,0 +1,30 @@
+### 定理 4.4（Fisher 线元）
+
+沿 \(\kappa\) 方向，
+
+\[
+ds_F^2
+=
+\sum_s\frac{dp_s^2}{p_s}
+=
+\mathcal I(\kappa)d\kappa^2.
+\]
+
+平方根坐标
+
+\[
+a_s=2\sqrt{p_s}
+\]
+
+把概率单纯形嵌入半径二的球面，因为
+
+\[
+\sum_sa_s^2=4,
+\qquad
+\sum_sda_s^2=\sum_s\frac{dp_s^2}{p_s}.
+\]
+
+证明：直接微分 \(a_s=2\sqrt{p_s}\) 即得。证毕。
+
+---
+

@@ -1,0 +1,12 @@
+在 \(\mathbf1^\perp\) 上 \(L_s\) 可逆。对恒等式
+\[
+L_sL_s^+=I_{\mathbf1^\perp}
+\]
+求导得
+\[
+L_s'L_s^++L_s\frac{d}{ds}L_s^+=0.
+\]
+左乘 \(L_s^+\) 即得
+\[
+\frac{d}{ds}L_s^+
+=

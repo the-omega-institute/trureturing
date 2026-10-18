@@ -1,0 +1,36 @@
+## 12. Scope of the mathematical conclusion
+
+Theorem 10.1 evaluates all positive integer installed budgets only
+for the fixed original biased interior parameter, the actual fixed
+$H_j$, the literal interface in Definition 2.2, and $q_2=1$.
+Its lower bounds include almost-sure stopping with exceptional
+null paths; its attainers additionally halt on every binary input.
+The distinction is preserved throughout the proof. Source-null
+records have zero contribution, not an extra source observation
+or an uncharged instruction.
+
+The exact frontier at $q_2<1$ is not determined here. Seed-event
+availability and selective returns can matter there. Quantitative
+frontiers for larger read budgets, joint expected-read constraints,
+and other runtime memory ports also remain outside this result.
+In particular the proof does not transfer to an interface with
+an external program counter, saved reply, output latch, clock,
+computed addresses or later seed access. The fair parameter
+$p=1/2$ and endpoints $p=0,1$ are excluded; strictness is asserted
+only for each fixed parameter in the stated range, without a
+uniform positive gap at its degenerate limits.
+
+Installed rows are an abstract resource defined by the complete
+instruction convention. Their number supplies no physical-bit,
+write, energy, code-size, timing or learning guarantee. Every
+actual call remains charged even if it is repeated or returns a
+separator zero. Hidden-state classification here supplies no
+visible-bit Brier theorem. Original, Open Problem 6.4, concerning
+arbitrary-finite attainment/separation for the whole harmonic/Brier
+domain, remains unresolved by this volume. No completion of that
+problem or any research-wide goal follows.
+
+The evidence is the ordinary proofs in this source. No mathematical
+execution, numerical enumeration, experiment, new test, Lean
+compilation or kernel certification is asserted.
+

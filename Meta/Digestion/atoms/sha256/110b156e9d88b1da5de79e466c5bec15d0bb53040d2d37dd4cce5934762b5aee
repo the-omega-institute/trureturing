@@ -1,0 +1,72 @@
+**Theorem 3.4 (paid full-family realization of the displayed fibers).**
+Let $B\subseteq S_d^N$ be any nonempty finite admissible relation,
+with $N\ge1$, including Theorems 2.4, 3.2 and 3.3's nonempty
+solution sets. Put $H=\lceil\log_2N\rceil$, $k=2^H$, pad the tuple
+by $k-N$ fixed $\alpha$ blocks, and put $D=d+H$. There is a correct
+full-family preparation and reader satisfying Assumption 1.2, with
+complete attained alphabet exactly
+
+$$
+|S_D|-|B|+1.
+\tag{OCB.22}
+$$
+
+It merges exactly the padded perfect-scaffold image of $B$ among the
+canonical states and gives each other canonical state its own name.
+On every original source it uses
+
+$$
+T_{\rm prep}=2^D-1,\qquad Q_{\rm prep}\le D,\qquad
+A_{\rm prep}=(D-1)2^D+1.
+\tag{OCB.23}
+$$
+
+If $B$ is empty, use $|S_D|$ singleton canonical names instead.
+
+Proof. Let $T_H$ be the fixed ordered perfect scaffold with these $k$
+actual frontier blocks. It is injective on their tuples and lies in
+$S_D$. Before any request, actually Read every $Rq$, $q\in W_D$,
+including absent replies, on the same stationary source. These charged
+replies determine $\pi_D(v)$ by FMR. Its public finite membership table
+selects the stated name. Exactly $|B|$ canonical states share the merged
+name, proving (OCB.22); every name is attained by a canonical source.
+Public scan order, fixed-width naming, public allocation and padded
+finite table computation, followed by the paid isolation of Assumption
+1.2, leave only that complete name accessible. The counts are
+$\sum_{l<D}2^l=2^D-1$ and
+$\sum_{l<D}(l+1)2^l=(D-1)2^D+1$.
+
+A singleton canonical name fixes every factor and needs zero Reads.
+At the merged name, targets above the cut have constant branch factor;
+padding-block targets have their public fixed factors. Every other
+target is $Ra_iq$, $q\in W_d$, at an actual frontier occurrence.
+Its admissibility witness queries at most one original-root literal
+$Ra_ja$, $a\in W_d$, of length at most $1+H+d-1=D$.
+For the selector constructions the donor may simply be the specified
+owner-root word $Ra_j$, of length $H+1$. No subtree is passed to the
+reader. Pairing homomorphism at these actually present occurrences gives
+
+$$
+r_{\rho^kt}(Ra_iq)=r_{\rho^k(t|_{Ra_i})}(q).
+\tag{OCB.24}
+$$
+
+This is exactly `original_present_transport`'s presence premise in
+[NativeDepthPatterns][D5N]. On every variable-shaped source with the
+same canonical name, $\pi_D$ preserves both the selected boundary reply
+and the target factor. Thus the installed factor table and (OCB.5)
+answer every subsequent authentic count, with the literal chosen before
+that count. All permitted targets, including absent ones, are covered.
+
+The acquired boundary, membership workspace and preparation transcript
+are isolated, rather than exported as seeds, source identity or a cut
+descriptor. Table generation/installation, work/control, temporary
+buffers, post-request workspace, address construction, authentic count,
+predictor size, entry, authentication and physical time remain separate
+resources. The predictor $(b,c)$ needs at most
+$\lceil\log_2(2D+1)\rceil+1$ bits separately. These deliberately
+nonoptimal codes do not determine $M_1(D)$ and do not preserve an old
+preparation cost. The scan bounds are the credited FMR bounds; the
+fiber sets and their exact counted use here are the stated native
+constructions. $\square$
+

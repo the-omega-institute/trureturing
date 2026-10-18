@@ -1,0 +1,54 @@
+### 100.4. Explicit coefficients and the earlier denominator
+
+**Proposition 100.2.** The residuals have the scalar formulas
+\[
+\gamma_\pm=\frac12\left[
+\widetilde r^*(K\pm D)\widetilde r
+-\left|e^*(K\pm D)\widetilde r\right|^2\right]. \tag{14}
+\]
+Their sum is §99's strictly positive denominator, and the bound (13) is at least the bound in §99, with the equality and endpoint cases below.
+
+**Proof.** Expanding (9) gives (14); nonnegativity follows from its projection expression before taking scalar square roots. In particular,
+\[
+\gamma_++\gamma_-=
+\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{15}
+\]
+This sum equals §99's \(\gamma\). To verify the identification, put
+\(I=S\setminus\{j\}\), \(P=K_{II}-K_{Ij}K_{jI}\succ0\), and \(v=(Je)_I\).
+The same common cross formula gives
+\[
+q_i=\frac{a_i}{\overline{H_{ij}}}
+=-\frac{p_j}{\alpha\overline{a_j}}(Je)_i\quad(i\ne j). \tag{16}
+\]
+Thus \(q\) is a nonzero scalar multiple of \(v\). Moreover
+\[
+v^*Pv=1,\qquad r^*Pv=\widetilde r^*De. \tag{17}
+\]
+For the first identity, use \(e^*KJe=e^*De=0\) to eliminate the \(j\)-coordinate
+and then \((Je)^*K(Je)=e^*DK^{-1}De=K_{jj}=1\).
+For the second, its \(I\)-coordinates read
+\(Pv=(KJe)_I=D_{Ij}\). Therefore
+\[
+r^*Pr-\frac{|r^*Pq|^2}{q^*Pq}
+=\widetilde r^*K\widetilde r-|e^*K\widetilde r|^2-|e^*D\widetilde r|^2. \tag{18}
+\]
+The physical independence of \(r,q\), proved in §99, makes the sum strictly
+positive. This justifies the denominator of (13) in the original problem.
+
+Finally,
+\[
+(\sqrt{\gamma_+}+\sqrt{\gamma_-})^2\le2(\gamma_++\gamma_-), \tag{19}
+\]
+so (13) is never smaller than §99's \(|b|^2/\gamma\).
+For \(b\ne0\), equality holds exactly when \(\gamma_+=\gamma_-\); if \(b=0\),
+both values vanish. The strengthening factor is between one and two, attaining
+two when exactly one residual vanishes. \(\square\)
+
+No universal comparison with \(1/16\), exclusion of any support or rank class,
+or global quarter bound is asserted. This result uses the two full dual faces
+and the same original partner constraints. It makes no rank-preservation,
+real-gauge, independent physical-completion or second-derivative assumption.
+
+
+The unrestricted global interval remains \([\sqrt3-\tfrac32,\tfrac14]\). These are full-calibrated-domain local-minimum constraints; global calibration may enlarge ranks and does not transfer local minimality from leaking channels.
+

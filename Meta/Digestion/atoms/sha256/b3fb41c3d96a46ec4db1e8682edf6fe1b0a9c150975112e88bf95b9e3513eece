@@ -1,0 +1,14 @@
+**Definition 3.2 (two success contracts).** One common trace-nonincreasing
+CP success map, independent of $\beta,m$, must have exact specimen marginal
+$p_\epsilon|\psi_{l,\beta,m}\rangle\langle\psi_{l,\beta,m}|$ on every
+promised input. The probability may initially depend on history; rigidity
+below forces independence of $\beta$ within each parity. Retain all success
+auxiliaries, including their dilation residue, as the updated quantum record.
+
+In contract **C**, the helper may change and its complete success residue
+is retained. In contract **R**, the original helper must additionally be
+returned in the pure state $\eta_\epsilon$ on success; every extra residue
+is also retained. This is return **on success only**. Neither contract
+requires the original helper unchanged on failure. Requiring unchanged
+return on every branch is a different problem, not solved by the R optimum.
+

@@ -1,0 +1,43 @@
+## 345. Exact original-face transitions
+
+Retain the hypotheses of Section 341 and the supposition (343.1).
+In a fixed paired frame (R,A,B,O,A,B), the four original faces are
+
+    F4=(123): {R,A,B},  F3=(124): {R,A,B},
+    F2=(134): {O,A,B},  F1=(234): {O,A,B}.        (345.1)
+
+Every face therefore contains both transverse labels and one axis.
+All three labels on each face are distinct. If a face has label set
+{X,C,D}, its owner's transverse pair is exactly one of
+
+    {C,D}, {X,C}, {X,D}.                         (345.2)
+
+There is no further possibility: the fixed transverse pair occurs in
+every face and must consist of two members of that three-label set.
+Because the four frame labels are distinct, the remaining face label
+is an axis, not a third repeated transverse label.
+
+For X=M, the three possibilities in (345.2) are respectively:
+
+    sigma;
+    a D-axis owner with transverse pair {M,C};
+    an owner (W,M,D,C,M,D), excluded in Section 343.
+
+For X=V, they are respectively:
+
+    sigma;
+    a D-axis owner with transverse pair {V,C};
+    an owner (W,V,D,C,V,D), excluded in Section 344.
+
+The first possibility is sigma itself, not a new owner with the same
+role vector, by Section 342. These classifications use the fixed chosen
+frame of each receiving owner. No change of frame, metric equality or
+identification of distinct labels is performed.
+
+Every original D corner of a face {M,C,D} consequently pairs to a D
+corner in sigma or to the unique axial D interval of an owner with
+pair {M,C}. The analogous statement for a {V,C,D} face uses pair {V,C}.
+The D corner is unique in either face, so label-preserving face gluing
+sends it to the original D corner just classified, even if some coshes
+happen to be equal.
+

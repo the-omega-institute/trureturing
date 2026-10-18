@@ -1,0 +1,35 @@
+## 265. The actual M circle has exactly six original slots
+
+The three original M intervals of tau (two transverse) and rho (one
+axial) form a path with its two ends on tau's unused {M,C,D} faces.
+The M edge on each paired {M,Z,C} face is unambiguous, since those
+three labels are distinct.
+
+Every other M owner is outside K by the assumed absence of M from
+eta,xi. The complete single-high-M classification (Sections 205–221)
+leaves the unique flat, at most two genuine axial-M/{C,D} owners, and
+at most one transverse-M exception (B,M,B,B,M,B), B=C or D. The
+exception has only face multisets {M,B,B} and cannot receive {M,C,D}.
+
+Every axial-M/{C,D} owner has exactly one M slot. If both axes were M,
+then (m-1)^2>(c+d)^2 would make it axial-flat with two M pi slots,
+contrary to p_M=1. Its one M interval has both ends on {M,C,D} faces.
+Following the actual circle from a free tau endpoint therefore remains
+within the axial-M/{C,D} class until it returns to the tau/rho path.
+Connectedness leaves no additional disjoint M interval or transverse-M
+exception. There are at most
+ 2+1+1+2=6
+original slots: tau's two, rho's one, the flat's one and at most two
+genuine axial-M slots. Minimum degree six forces equality.
+
+Consequently there are exactly two distinct genuine owners
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+and the exact original M equation is
+ S+theta_M(A_1)+theta_M(A_2)=pi,
+ S=2*beta_M(tau)+theta_M(rho).                    (265.1)
+An opposite R_i cannot be M by the preceding argument, or Z/U, because
+m>1+c+d and z,u>m would make that axial pair flat, contradicting the
+absence of Z/U from all flat owners. Therefore R_i is C,D or special.
+For a special R_i its fixed pair is {C,D}, so Theorem112.1 gives
+1<r_i<1+c+d. The same upper bound holds for the low alternatives.
+

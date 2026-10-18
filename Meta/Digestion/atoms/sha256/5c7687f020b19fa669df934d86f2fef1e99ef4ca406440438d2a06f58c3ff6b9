@@ -1,0 +1,56 @@
+**Definition 5.1 (complete maintenance graphs).** At entry the command $U(J)$
+is retained, the source token is held busy, ReadState has materialized
+$h,K,r,p,v$, and $q,g,e,j,m$ are accessible through their complete
+counter descriptors. Counter lookup is an origin/ordinal scan of their
+immutable versions followed by the supplied complete unary copy; it never
+treats an ordinal as a primitive address. The suspended actor continuation
+and old archive permissions are untouched. Run CloseFence(`maintenance-start`)
+once here, before the branch tests. Retain its complete staged reference and
+its constructed fence-count component $U(f_s)$ for either maintenance kind.
+
+For Reserve, Compare($J,K$) selects greater/equal/less. In the greater branch:
+Sub and two doublings construct $d=4(J-K)$; increment $r$ and $v$ into prepared
+new words; reload the already acquired $U(f_s)$; Base(16) constructs $b$; Zero(16;$d$) creates the interval
+and its delimiter. Copy all seven reservation fields into work words, one at
+a time as needed; construct the response fields `reserve-ok`, old $K$, $J$,
+and new layout ordinal. The fields containing $m$ refer to the completed
+pre-operation all-event count. WriteRecord(`01`) appends the complete entry
+and publishes it at its seal WR. After its final MR execute
+CloseFence(`post-directory-publication`) bound to the new count $v+1$ and
+retain its complete reference $f_d$. Its source-service token remains busy.
+Construct/seal the finite response block, release its response token by CTL,
+and run CloseFence(`response-commit`), retaining its complete reference. The prepared $m+1$ version
+is now selected by paid copying/descriptor work. Go to the §6 maintenance
+row routine. In the equal and less branches allocate no source segment and
+append no directory record: prepare the typed `unchanged` or
+`maintenance-refusal` response with the old/current values, commit it, advance
+only $m$, and use the identical row/delivery/return route.
+
+For Raise, Compare($J,h$), then Compare($J,K$), selects exactly $h<J\le K$.
+In that branch increment $p,v$, reload the acquired $U(f_s)$, construct the
+five raise fields and response `raise-ok`, old $h$, $J$, new policy ordinal,
+then WriteRecord(`10`), its final MR and
+CloseFence(`post-directory-publication`) with the new count. No source cell
+is a WR destination. Commit response, run CloseFence(`response-commit`), select $m+1$, and go to the same row route. Equality with $h$
+returns `unchanged`; $J<h$ or $J>K$ returns `maintenance-refusal`, with no
+directory record. Failure/equality branches use that same entry start reference and run
+CloseFence after their own response release, retaining both actual references;
+they write
+`no-publication` and never borrow either reference as a publication fence. Every invocation prepares both old and required incremented
+counter versions before selecting them, as in LJA4.2. Directory count and
+$r,p$ at an activated but not-yet-row-sealed cut are determined by the actual
+directory prefix and phase; their later wire copies are not atomic counters.
+
+Directory publication and response commitment are different boundaries.
+After the seal WR the new binding/guard is authoritative, but a new source
+call is still unavailable. The following MR, response sealing/release, closed
+fence scans, row writing, channel phases and acknowledgement are all real
+states. Before publication, staged allocation/metadata has no current-source
+authority. Only after acknowledgement does the dispatcher restore source
+admission. A row's manifest payload and complete publication-fence reference are
+serialized only after their construction. The latter names its actual
+post-publication CTL-fence, not the directory seal WR. All three closed
+fence readouts and their staging/descriptor work precede row serialization.
+The no-change/refusal branches retain their unchanged complete manifest.
+No field predicts its own future completion ordinal.
+

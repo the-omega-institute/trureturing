@@ -1,0 +1,81 @@
+**Proposition 8.6 (Endpoint neighborhood and short-length obstruction).**
+Fix $n\ge4$, $\tau=1/2$, $0<r<1$ and positive
+$\omega,\eta$. The completed menu extends regularly
+to the normalized real state
+$\psi_*=(0,\mathbf1/\sqrt M)$ at $\epsilon=0$.
+With $h=\mathbf1/\sqrt M$ on the nonvacuum words,
+put
+
+$$
+C_\omega=\frac12\sum_{\{s,t\}\in E(G_n^\circ)}
+\omega_{i(s,t)}(e_s-e_t)(e_s-e_t)^{\mathsf T},
+\qquad g_\omega=\lambda_{\min}(C_\omega|_{h^\perp})>0.
+\tag{8.16}
+$$
+
+The endpoint worst information ratio on the full
+horizontal tangent is
+
+$$
+\Gamma_* =\min\{1-r,rg_\omega\}>0.
+\tag{8.17}
+$$
+
+There is a fixed projective neighborhood of $\psi_*$
+on which the probability-law map is injective with
+a Lipschitz inverse on its image. It contains all
+sufficiently small positive-$\epsilon$ references,
+with one inverse constant independent of $\epsilon$.
+At $n=2,3$ independent phases of the nonvacuum
+connected components prevent this endpoint conclusion.
+
+Proof. The probabilities (8.15) have strictly positive
+limits at $\epsilon=0$, as do all active quadrature
+and blocked probabilities. The vacuum is never a
+blocked word. Therefore ordinary score Fisher
+division remains valid at this endpoint. The limiting
+parent and real horizontal space are
+
+$$
+H_*=1\oplus C_\omega,\qquad
+V_* =\mathbb R e_0\oplus h^\perp.
+\tag{8.18}
+$$
+
+The nonvacuum graph is connected by Theorem 6.2,
+and all its edge weights are positive, so
+$g_\omega>0$. Also $0\preceq C_\omega\preceq I$.
+The local calculation of Theorem 8.2 still applies
+because every measurement overlap is nonzero, even
+though the vacuum coordinate itself is zero.
+On $V_*$ the largest parent eigenvalue is 1 and the
+smallest is $g_\omega\le1$, proving (8.17).
+In particular, the real vacuum direction has ratio
+$1-r$ and its imaginary counterpart has ratio $r$;
+both directions remain in the tested space.
+
+For the inverse neighborhood use the projective
+chart with the singleton-$1$ coordinate positive.
+Every nonvacuum coordinate at $\psi_*$ has magnitude
+$1/\sqrt M$. A sufficiently small fixed neighborhood
+has every such magnitude at least
+$\delta=1/(2\sqrt M)$. It is contained in
+$\mathcal U_\delta$ of Theorem 8.3. That theorem's
+explicit bound proves injection and Lipschitz
+stability of the normalized root-gauged vectors,
+without division by a vacuum amplitude. The same
+neighborhood contains the rare-vacuum references
+for all sufficiently small $\epsilon>0$, so its
+inverse constant is independent of $\epsilon$.
+
+For $n=2,3$, deleting the vacuum leaves the components
+of Proposition 6.3. At $\epsilon=0$ all vacuum edge
+coherences vanish. Independently changing component
+phases therefore leaves every diagonal and legal
+edge coherence unchanged, hence every outcome law
+unchanged. The phases can change by arbitrarily
+small amounts while giving distinct rays. Thus no
+injective projective neighborhood exists there.
+This does not contradict full-support injection
+for each positive $\epsilon$. $\square$
+

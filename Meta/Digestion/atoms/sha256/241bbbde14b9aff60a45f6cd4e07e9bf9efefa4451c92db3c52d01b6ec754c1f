@@ -1,0 +1,29 @@
+**Definition 96.1 (Four coordinates and two analytic error values).** Retain
+Definitions 71.1, 73.1, 77.1 and 90.1. Thus the entire countable labeled
+$X$, static prime replies, zero advice, one common source-independent seed,
+original tape carrier and unchanged consumer remain fixed. The selected
+laws are $\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
++a_{n(x)}\delta_{\theta_{n(x)}}$, where $n(x)$ is the first absent prime
+index and the full sequence satisfies (73.3). Put
+
+$$
+\begin{aligned}
+u&=a_1,\quad v=a_2,\quad w=a_3,\quad z=a_4,
+&1&\ge u\ge v\ge w\ge z>0,\\
+F_A&=\max\left\{\frac w4,\frac{w+z}{6},
+                       \frac{u+v+w+z-2}{5}\right\},\\
+F_R&=\max\left\{\frac w4,\frac{w+z}{6},
+                  \frac{u+w+z-1}{5},
+                  \frac{v+2w+2z-1}{10}\right\}.
+\end{aligned}
+\tag{96.1}
+$$
+
+The subscript $R$ denotes the common restricted feasibility value; it is
+not an address resource. Both values are positive, and $F_A\le F_R$:
+the restricted five-event term dominates the adaptive last term since
+$v\le1$. The four-coordinate active regime is precisely
+$a_5\le\varepsilon<z$, with $\varepsilon>0$. No tail is discarded or
+replaced by zero. Sections 97--99 give the score bounds, lawful kernels
+and continuous-parameter coverage needed for the following theorem.
+

@@ -1,0 +1,136 @@
+**Theorem 74.1 (Marked-family resource identities against all adaptive rules).**
+For every sequence (73.3), all infima below range over the full class
+$\mathcal A(\lambda^a)$ of arbitrary adaptive exact acquisitions on all
+actual sources. One acquisition $A^a$ attains all three identities:
+
+$$
+\begin{aligned}
+\min_{A\in\mathcal A(\lambda^a)}\sup_x\mathsf E_A K_{A,x}
+ &=\sum_{i\ge1}a_i,\\
+\min_{A\in\mathcal A(\lambda^a)}\sup_x\mathsf E_A S_{c,A,x}
+ &=\sum_{i\ge1}c(i)a_i,\\
+\min_{A\in\mathcal A(\lambda^a)}\sup_x\mathsf E_A Z_{c,A,x}
+ &=\sum_{i\ge1}\Delta c(i)a_i.
+\end{aligned}
+\tag{74.1}
+$$
+
+For the charged identities assume Definition 72.1 and $c(1)>0$.
+Values of $\infty$ are allowed, and attainment at $\infty$ means that every
+competitor has infinite supremal mean for that resource. These are uniform
+minimax identities; no sourcewise minimum-count or minimum-cumulative-charge
+claim is made by (74.1).
+
+**Proof.** The sourcewise formulas (73.6), together with occupation of every
+$D_n$, show that $A^a$ has uniform means equal to the three series: each
+supremum is the increasing limit of its nonnegative finite partial sums.
+These give the upper bounds, including extended-real values. The third
+identity also follows directly from (72.2) and (73.5), since
+
+$$
+\sup_{x\in X}\sum_{i\ge1}\Delta c(i)r_x(i-1)
+=\sup_{n\ge1}\sum_{i=1}^n\Delta c(i)a_i
+=\sum_{i\ge1}\Delta c(i)a_i.
+\tag{74.2}
+$$
+
+It remains to establish the universal lower bounds for count and cumulative
+charge. We prove them together. Let either $b_i=1$ for every $i$, or
+$b_i=c(i)$. On finite handoff write
+$W_{A,x}=\sum_{j=1}^{K_{A,x}}b_{I_{A,x,j}}$, and put $W_{A,x}=\infty$ on
+nonhandoff. In either case $b_i\ge b_1>0$ and $W_{A,x}\ge b_1K_{A,x}$.
+Fix any $A\in\mathcal A(\lambda^a)$ and set
+$B_A=\sup_x\mathsf E_A W_{A,x}$. If $B_A=\infty$, the desired lower bound
+$B_A\ge\sum_i b_i a_i$ is immediate in the extended order. Suppose instead
+that $B_A<\infty$.
+
+Fix a finite $r\ge1$ and $\varepsilon>0$. Choose a finite $k$ such that
+
+$$
+\sup_x\mathsf P_A\{K_{A,x}>k\}
+\le\frac{B_A}{b_1(k+1)}<\varepsilon.
+\tag{74.3}
+$$
+
+Use the common finite-query-forest event of (70.3)--(70.4). Explicitly, let
+$I_{A,x,j}=0$ when the $j$th request is never made, and put
+
+$$
+J_{A,k,m}=\bigcup_{x\in X}\ \bigcup_{1\le j\le k}
+                    \{s:I_{A,x,j}(s)>m\}.
+\tag{74.4}
+$$
+
+For completeness, its applicable finite-forest property is as follows. Each
+request index is measurable by a countable union over finite transition
+times and finite request/answer words; countability of $X$ makes $J$ measurable.
+At a fixed seed the common rule has at most two answer continuations at each
+request. Its first $k$ requests across all actual sources therefore occupy
+at most $2^k-1$ nodes, with a finite largest requested index. A terminated
+branch, or one with infinite processing before another request, adds no
+node. Consequently $J_{A,k,m}\downarrow\varnothing$ as $m\to\infty$, and
+continuity from above gives $\mathsf P_A(J_{A,k,m})\to0$.
+This is precisely the finite-branching supplier in Section 70, with the
+decision-tree background of Buhrman and de Wolf,
+[*Complexity Measures and Decision Tree Complexity: A Survey*, Sections
+3.1--3.2](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf).
+No finite Boolean input-size bound is being transferred to $X$.
+
+Choose $m\ge r$ with $\mathsf P_A(J_{A,k,m})<\varepsilon$. Theorem 35.2
+supplies one actual $z$ whose first $m$ answers are all positive, and, for
+each $1\le i\le r$, an actual $y_i$ whose first $m$ answers are all positive
+except at $i$. In particular $n(y_i)=i$. These finitely many comparison
+sources are fixed for this $r,\varepsilon,k,m$.
+
+At $y_i$ the finite output event $\{\phi_{y_i}=\theta_i\}$ has probability
+$a_i$. Intersect it with $\{K_{A,y_i}\le k\}\setminus J_{A,k,m}$, and remove
+the null subset on which the certificate of Theorem 73.3 fails. Denote the
+result by $E_i$. All these are events in the same seed probability space,
+and the two probability losses and the null removal give
+
+$$
+\mathsf P_A(E_i)\ge a_i-2\varepsilon.
+\tag{74.5}
+$$
+
+For every seed in $E_i$, execution at $y_i$ requests $p_i$ at least once.
+All its requests lie within indices $1,\ldots,m$, because it uses at most
+$k$ requests and the seed is outside $J_{A,k,m}$. Before its first request
+to $p_i$, each requested answer agrees with that at $z$: the first $m$
+answer words of $y_i,z$ differ only at $i$. Induction over this finite
+execution prefix therefore makes $z$ issue the same first request to $p_i$
+on the entire event $E_i$. It does not matter how the two executions differ
+after that request.
+
+Let $Q_i(z)$ be the measurable event that $z$ requests $p_i$ at least once.
+We have $E_i\subseteq Q_i(z)$. Counting a charge once for each distinct
+index among $1,\ldots,r$ gives, pointwise, including nonhandoff,
+
+$$
+W_{A,z}\ge\sum_{i=1}^r b_i\mathbf1_{Q_i(z)}.
+$$
+
+The events $E_i$ need not be disjoint; no disjointness is used in the
+following finite linearity of expectation:
+
+$$
+B_A\ge\mathsf E_A W_{A,z}
+\ge\sum_{i=1}^r b_i\mathsf P_A(Q_i(z))
+\ge\sum_{i=1}^r b_i(a_i-2\varepsilon).
+\tag{74.6}
+$$
+
+For fixed $r$ this inequality holds for every $\varepsilon>0$, although the
+chosen actual source $z$ may change with $\varepsilon$. The left side is the
+same source supremum. Letting $\varepsilon\downarrow0$ gives
+$B_A\ge\sum_{i=1}^r b_i a_i$, and then taking $r\to\infty$ gives
+$B_A\ge\sum_{i\ge1}b_i a_i$. If that series diverges, this contradicts the
+assumed $B_A<\infty$ and proves that no competitor has a finite uniform
+mean. Otherwise it is the required finite lower bound. The choices $b_i=1$
+and $b_i=c(i)$ establish the first two lines of (74.1).
+
+At each finite stage $z$ has only a prescribed finite all-positive prefix;
+it remains an actual source with finite prime support. No all-positive
+infinite word is introduced as a source, and no individual-seed choice of a
+comparison source enters the proof. $\square$
+

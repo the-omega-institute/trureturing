@@ -1,0 +1,5 @@
+source_id = "fib-atom-whitebox-acquisition-risk"
+path = "docs/develop/theory/FIB_ATOM_WHITEBOX_ACQUISITION_RISK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

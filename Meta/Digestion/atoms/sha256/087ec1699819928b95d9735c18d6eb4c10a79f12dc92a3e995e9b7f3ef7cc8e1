@@ -1,0 +1,21 @@
+### 72.6 A quantitative four-fibre consequence
+
+For the uniform four-fibre qubit target of §70, reduction (2) allows restriction to calibrated products with arbitrary environments. Let δ be the error of such a product and let R_fg,T_fg be its two 2×2 cross-Gram contractions. Actual matrix-unit coefficients give |R_fg[i,j]T_fg[i,j]−1/2|≤δ. For each row, expansion and Cauchy–Schwarz as in §71 give
+
+    Σ_j|R_fg[i,j]−conj(T_fg[i,j])|²≤4δ,
+    ||R_fg[i,:]||₂²≥1−4δ,
+    ||R_fg[i,j]|²−1/2|≤δ+2√δ.                            (9)
+
+Anchor the first party's orthonormal frames at the first fibre. Summing the middle estimate in (9) over two rows bounds each other frame's squared residual outside the anchor plane by 8δ. A unitary polar extension on that plane therefore gives a common-plane orthonormal frame at Frobenius distance at most 4√δ, including singular overlap cases. Changing two frames changes each squared cross overlap by at most 16√δ. Thus the four corresponding unit Bloch vectors obey
+
+    |n_f·n_g|≤2δ+36√δ  (f≠g).
+
+Their 4×4 Gram matrix has rank at most three and trace four, so Tr G²≥16/3. Its four diagonal squares sum to four, forcing some off-diagonal modulus to be at least 1/3. Therefore
+
+    δ+18√δ≥1/6,
+    δ≥[1/(3(18+√(324+2/3)))]².                          (10)
+
+The same bound holds for every original unrestricted product by (2). Together with §70's explicit tetrahedral product, the one-product optimum lies between the number in (10), approximately 8.56×10^(-5), and 1/2. The lower value improves §70's 1/40000 but is not claimed optimal; the principal conclusion is the exact resource-preserving reduction for the entire collapsed-fibre channel class.
+
+The Choi, Schur-product and Hermiticity-preserving diamond facts used here are standard; see [Watrous, The Theory of Quantum Information, §§2.2,3.3,4.1.3](https://cs.uwaterloo.ca/~watrous/TQI/) and [Watrous, Simpler semidefinite programs for completely bounded norms](https://arxiv.org/abs/1207.5726). Sections 54 and 63–65 describe exact-support Gram constructions; §§70–71 retain unrestricted physical leakage in quantitative obstructions. The reduction above compares unrestricted approximation with calibrated implementations at the same shared resource by a reference-tagged trace-compensation argument. It asserts no general diagonal-repair contraction, no four-fibre exact optimum and no arbitrary-channel or full-RT theorem.
+

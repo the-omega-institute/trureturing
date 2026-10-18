@@ -1,0 +1,132 @@
+**Theorem 365.2 (No canonical-event dominator at the optimal $H_7$ profile).** For the family of Theorem 364.2 and
+
+$$
+\frac3{40}<t\le\frac5{64},\qquad
+\delta_t=\frac{5t-3/8}{37}>0,
+\tag{365.5}
+$$
+
+there is no $q\in\mathscr O_7$ with $z(q)\ge z(p_t)$ on all $382$ canonical event rows. More precisely, every $q\in\mathscr O_7$ loses at least $\delta_t$ on some row scored below. At $t=5/64$ this loss is at least $1/2368$.
+
+The profile lies in $H_7$, has active length seven and has the same-cap stopped survivor $p_*$ of Theorem 364.2. Thus this is an obstruction to monotonically improving the canonical events of the supplied law; it does not exclude stopped feasibility at that profile.
+
+*Proof.* Its hull coordinates satisfy
+
+$$
+b_2=b_3,\qquad
+\sum_{j=3}^7b_j-8e_*=\frac{17}{64}\ge0,\qquad
+b_1+\sum_{j=3}^7b_j-8e_*=\frac{60}{64}\le1,
+\qquad b_7>e_*.
+\tag{365.6}
+$$
+
+Take the following full nonnegative score $Y$. Every unlisted row, including the positive row, has weight zero; it remains part of (363.6).
+
+| Type | Word | Weight |
+| --- | --- | ---: |
+| $P$ | 0110101 | 2 |
+| $P$ | 0111110 | 3 |
+| $C$ | 1000100 | 5 |
+| $A$ | 1010010 | 1 |
+| $A$ | 1010111 | 1 |
+| $A$ | 1011001 | 2 |
+| $A$ | 1011100 | 1 |
+| $P$ | 1100000 | 2 |
+| $P$ | 1101011 | 1 |
+| $P$ | 1101101 | 2 |
+| $C$ | 1110101 | 4 |
+| $P$ | 1110110 | 1 |
+| $C$ | 1111010 | 3 |
+| $C$ | 1111101 | 5 |
+| $C$ | 1111110 | 4 |
+
+The weights sum to $37$. Here is a full all-label support calculation. For each schedule $S$ and cell $c$ set
+
+$$
+H_{S,c}=\max_{z\in J_7}\sum_{w:\operatorname{cell}_S(w)=c}f_w(z).
+\tag{365.7}
+$$
+
+For an $O$ pair the cells are $w_i=0$, $w_i=1,w_j=0$, $w_i=w_j=1$; for an $N$ pair they are $00,01,10,11$. The empty and singleton cells are the same in both catalogs. Every maximum ranges over all eight labels, including earlier and unqueried labels.
+
+| Schedule | $O$ cell maxima | $N$ cell maxima |
+| --- | --- | --- |
+| empty | $(16)$ | $(16)$ |
+| 1 | $(5,11)$ | $(5,11)$ |
+| 2 | $(5,11)$ | $(5,11)$ |
+| 3 | $(5,11)$ | $(5,11)$ |
+| 4 | $(7,9)$ | $(7,9)$ |
+| 5 | $(6,10)$ | $(6,10)$ |
+| 6 | $(9,7)$ | $(9,7)$ |
+| 7 | $(8,8)$ | $(8,8)$ |
+| 12 | $(5,5,6)$ | $(0,5,5,6)$ |
+| 13 | $(5,5,6)$ | $(0,5,5,6)$ |
+| 14 | $(5,5,6)$ | $(2,3,5,6)$ |
+| 15 | $(5,6,5)$ | $(0,5,6,5)$ |
+| 16 | $(5,7,4)$ | $(2,3,7,4)$ |
+| 17 | $(5,5,6)$ | $(3,2,5,6)$ |
+| 23 | $(5,5,6)$ | $(5,5,5,6)$ |
+| 24 | $(5,5,6)$ | $(5,3,5,6)$ |
+| 25 | $(5,3,8)$ | $(3,5,3,8)$ |
+| 26 | $(5,6,5)$ | $(5,2,6,5)$ |
+| 27 | $(5,6,5)$ | $(5,3,6,5)$ |
+| 34 | $(5,5,6)$ | $(5,3,5,6)$ |
+| 35 | $(5,3,8)$ | $(3,5,3,8)$ |
+| 36 | $(5,5,6)$ | $(5,1,5,6)$ |
+| 37 | $(5,6,5)$ | $(5,3,6,5)$ |
+| 45 | $(7,3,6)$ | $(3,5,3,6)$ |
+| 46 | $(7,5,4)$ | $(5,3,5,4)$ |
+| 47 | $(7,4,5)$ | $(5,4,4,5)$ |
+| 56 | $(6,5,5)$ | $(4,3,5,5)$ |
+| 57 | $(6,5,5)$ | $(3,3,5,5)$ |
+| 67 | $(9,5,2)$ | $(5,6,5,2)$ |
+
+The entries are finite sums specified by the fifteen rows and (365.1): at zero sum the relevant $A,P,T$ weights; at label $z>0$ sum the $C,P$ weights with first zero $z$; then maximize these eight numbers within the indicated word cell. For example, in the $00$ cell of $N$ pair $23$ the row $C:1000100:5$ gives maximum $5$ at label $2$, whereas its $01$ cell has maximum $5$ at label $0$ from the four $A$ rows. Merging them into one stopped cell gives maximum $5$, rather than $10$.
+
+For any complete allocation, a cell with owning schedule mass $m_S$ contributes at most $m_SH_{S,c}$. Therefore
+
+$$
+Y\cdot z(q)\le\sum_Sm_S\sum_cH_{S,c}
+                 \le\max_S\sum_cH_{S,c},\qquad \sum_Sm_S=1.
+\tag{365.8}
+$$
+
+There is one schedule budget, not a new budget per cell. Every stopped sum is $16$, and the maximal complete $N$ sum is $21$, attained at pair $23$. Choosing a maximizing label independently for each cell defines a single deterministic complete table, so the supports are exactly
+
+$$
+B_O(Y)=16,\qquad B_N(Y)=21.
+\tag{365.9}
+$$
+
+Reversed or repeated finite preselected requests give no additional information beyond the pair or singleton tables already included.
+
+Substitution of the entire law in Theorem 364.2 gives
+
+$$
+Y\cdot z(p_*)=\frac{125}{8},\qquad
+Y\cdot z(p_t)=\frac{125}{8}+5t.
+\tag{365.10}
+$$
+
+Only the correct row at $1000100$, of weight $5$, changes in this score. Thus for every $q\in\mathscr O_7$,
+
+$$
+Y\cdot(z(p_t)-z(q))\ge5t-\frac38.
+\tag{365.11}
+$$
+
+A nonnegative weighted average with total weight $37$ forces some scored row loss at least $\delta_t$. The strict range in (365.5) and its endpoint value follow exactly. At $t=3/40$ the displayed gap is zero, so this proof makes no strict assertion there.
+
+For comparison with the unit-score question, the same explicit arithmetic gives
+
+$$
+\begin{gathered}
+W_Y=16,\quad\Delta_O(Y)=0,\quad\Delta_N(Y)=5,\\
+Q(Y)=((0,0,0,4,3,5,4),37),\qquad
+Y\cdot d(b,e_*)=\frac{879}{64}<16.
+\end{gathered}
+\tag{365.12}
+$$
+
+This is a zero-cost stopped score. No positive scaling makes it unit-$O$, and it violates no target-demand inequality at this profile. The survivor $p_*$ meets that same profile and cap. $\square$
+

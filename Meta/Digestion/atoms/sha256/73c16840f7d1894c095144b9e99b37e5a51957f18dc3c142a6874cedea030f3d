@@ -1,0 +1,62 @@
+### 命题 458.1（自匹配点的三项精确账本）
+
+在严格自匹配根 $t$ 上，记 $\varepsilon_*=(t\log t)^{-1}$，并令 $P$
+为 $N^-(t)$ 的最大支撑素数；由严格库存的支撑截止，其支撑正好是
+所有 $p\le P$ 的素数。则
+
+$$
+\boxed{
+\log\frac{e^\gamma\log\log N^-(t)}
+{\sigma(N^-(t))/N^-(t)}
+=
+\log\frac{\log t}{\log P}
+-\mathfrak m(P)
++\mathcal A_P(\varepsilon_*)
++\mathcal L_P(\varepsilon_*).
+}
+\tag{458.2}
+$$
+
+**证明。** 由（457.3），连续包络部分为
+
+$$
+\gamma+\log(\log t)-\log\mathcal C_P(\varepsilon_*).
+$$
+
+又
+
+$$
+\log\mathcal C_P(\varepsilon_*)
+=\log\mathcal M(P)-\mathcal A_P(\varepsilon_*)
+=\gamma+\log(\log P)+\mathfrak m(P)
+-\mathcal A_P(\varepsilon_*).
+$$
+
+代入并保留（457.3）的 $\mathcal L_P$ 即得（458.2）。同一恒等式还给出
+
+$$
+\mathcal A_P(\varepsilon)+\mathcal L_P(\varepsilon)
+=\log\frac{\mathcal M(P)}{Z(N)}
+=-\sum_{p\le P}\log(1-p^{-a_p-1}).
+\tag{458.5}
+$$
+
+因此，在指数向量固定的同一个稳定胞腔内，完整补偿不随价格变化；价格只改变
+两部分之间的分配。右端是既有有限指数 Euler 修正，见
+[Polak 的完整支撑恒等式](../../../Library/Analytic/polak2026finiterobinca.md#directly-reusable-effective-core)。$\square$
+
+因此，自匹配根上的 Robin 不等式等价于同一个实际支撑上的严格条件
+
+$$
+\boxed{
+\mathfrak m(P)
+<
+\log\frac{\log t}{\log P}\,+\mathcal A_P(\varepsilon_*)\,+\mathcal L_P(\varepsilon_*).
+}
+\tag{458.3}
+$$
+
+左侧是有限 Mertens 乘积相对于 $e^\gamma\log P$ 的实际偏差；右侧的三项
+分别来自支撑截断、连续价格衰减和整数取整。这个条件没有把 Mertens 误差
+替换成平均估计，也没有把取整损失隐藏进定义。
+

@@ -1,0 +1,14 @@
+**定义 3.3（完整行为和残余）。** $\beta_i(s)$ 记录从 $s$ 出发的全部有限合法操作词、响应与终点读出，包括空词的当前读出。令
+
+$$
+s\equiv_i t\iff\beta_i(s)=\beta_i(t).
+$$
+
+沿共同合法词 $u$ 取残余 $\operatorname{res}_u$，满足
+
+$$
+\beta(F_us)=\operatorname{res}_u\beta(s).
+$$
+
+该行为对象不宣称所有备选实验可共同执行。
+

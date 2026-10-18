@@ -1,0 +1,79 @@
+**Definition 4.1 (Independent factors and common weights).** Use the following
+exact parameters, independently of the lower tuple:
+
+$$
+s=\frac{8104433}{20000000},\quad
+r_A=\frac{101784321}{10^8},\quad
+r_B=\frac{37819381}{50000000},
+$$
+
+$$
+W_A=\frac2{1-s}=\frac{40000000}{11895567},\quad
+W_B=5-W_A=\frac{19477835}{11895567},\quad
+t=\frac1{W_B}=\frac{11895567}{19477835},
+\tag{4.1}
+$$
+
+$$
+d_A=r_A^2s+1-s,\quad d_B=r_B^2t+1-t,\quad
+\alpha=\frac{r_A^2s}{d_A}
+=\frac{27987438301460591968251}{67639328301460591968251},
+$$
+
+$$
+\beta_U=\frac{r_B^2t}{d_B}
+=\frac{17014295848122919627287}{35969965848122919627287},
+$$
+
+$$
+g=\frac{W_Br_Bt(1-t)}{d_B}
+=\frac{14337834116805400000000}{35969965848122919627287},
+\quad
+h_U=\frac{W_Ar_As(1-s)}{d_A}
+=\frac{54993613999666200000000}{67639328301460591968251}.
+\tag{4.2}
+$$
+
+Let $F$ be the disjoint union of nine flags $(A,k,l)$,
+$0\leq k,l<3$, and five flags $(B,k)$, $0\leq k<5$. With
+$\theta_k=2\pi k/3$ and $\phi_k=2\pi k/5$, set
+
+$$
+b_{Akl}=\sqrt{s}\,w_+(\theta_k)+\sqrt{1-s}\,w_-(\theta_l),
+$$
+
+$$
+a_{Akl}=
+\frac{r_A\sqrt{s}\,w_+(\theta_k)+\sqrt{1-s}\,w_-(\theta_l)}
+{\sqrt{d_A}},\qquad c_{Akl}=W_A/9,
+\tag{4.3}
+$$
+
+$$
+b_{Bk}=\sqrt{t}\,d+\sqrt{1-t}\,w_+(\phi_k),
+$$
+
+$$
+a_{Bk}=
+\frac{r_B\sqrt{t}\,d+\sqrt{1-t}\,w_+(\phi_k)}
+{\sqrt{d_B}},\qquad c_{Bk}=W_B/5.
+\tag{4.4}
+$$
+
+Define the encoder rows, whole-block decoders and composite by
+
+$$
+B_f=\sqrt{c_f}\,b_f^TD^\dagger,\quad
+\operatorname{Enc}(X)=(B_fXB_f^\dagger)_f,\quad
+\operatorname{Dec}_f(z)=z\,Da_fa_f^TD^\dagger,
+$$
+
+$$
+C_f=\sqrt{c_f}\,Da_fb_f^TD^\dagger,\qquad
+T_{\rm J}(X)=\sum_f C_fXC_f^\dagger.
+\tag{4.5}
+$$
+
+The constants in this definition specify one common channel for all
+events and every input; they are not eventwise choices.
+

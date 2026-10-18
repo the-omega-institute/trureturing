@@ -1,0 +1,43 @@
+**Theorem 8.3 (there are finitely many, and at least one, exceptional
+strengths).** The exceptional set in $(\sqrt\ell,1)$ is nonempty and
+has at most three members. Neither endpoint is exceptional in the
+strong-regime parametrization.
+
+Proof. Regard $q$ as the parameter on $[0,q_{\max}]$, put
+$p=k+\alpha q$ and $\omega=ph_0^2+qb^2$, and consider the polynomial
+
+$$
+R(q)=\omega^2(1-p-q)+(2\omega-1)pq
+     =\omega^2v^2-(1-\omega)^2t^2.
+\tag{CA.57}
+$$
+
+It has degree at most three, since $p$ and $\omega$ are affine in $q$.
+On the open interval both factors being compared are positive. Factoring
+the difference of their squares shows $R(q)=0$ if and only if $D_*=0$;
+there is no extraneous root from squaring. At zero,
+
+$$
+D_*(0)=kh_0^2\sqrt\ell>0,\qquad
+R(0)=(kh_0^2)^2\ell>0.
+\tag{CA.58}
+$$
+
+At $q=q_{\max}$ one has $p=q=q_{\max}$, hence $t=q_{\max}$,
+$v=1-q_{\max}$ and
+
+$$
+D_*(q_{\max})=\omega-q_{\max}
+ =-q_{\max}d^2<0,
+\tag{CA.59}
+$$
+
+using $h_0^2+b^2+d^2=1$. The continuous function $D_*$ has a zero in
+the open interval. Since $R(0)>0$, $R$ is a nonzero polynomial and has
+at most three distinct real roots. The strictly increasing strength
+parameter in Lemma 7.2 sends these interior roots to between one and
+three distinct strengths strictly between $\sqrt\ell$ and $1$.
+At $s=1$ (CA.59) is nonzero, so its equality vector is the singleton.
+This proof neither counts roots by enumeration nor asserts uniqueness
+of the exceptional strength. $\square$
+

@@ -1,0 +1,98 @@
+**Theorem 5.3 (identical local laws and bounded-owner full conditionals).**
+Fix $m\ge2,d\ge2$, an integer $\ell\ge1$, an update budget
+$1\le r<4m$, and a rational $0<\epsilon<1$. Take $\ell$ disjoint
+copies of $\mathcal T_{m,d}$, retaining their $n=11m\ell$ original
+blocks and their entire once-owned product weight $W$. Let $P=W/Z$
+be its actual Gibbs law. Its phase vector $F\in\{0,1\}^\ell$ is
+uniform. Define the positive rational phase law
+
+$$
+q=(1-\epsilon)\frac{\delta_{0^\ell}+\delta_{1^\ell}}2
+    +\epsilon\operatorname{Unif}(\{0,1\}^\ell),
+\qquad Q(\,\cdot\mid F)=P(\,\cdot\mid F),\quad Q_F=q.
+\tag{OCC.20}
+$$
+
+Then $Q$ is positive on exactly the same complete actual solution set
+as $P$. It has the same full conditional law as $P$ for every update
+of at most $r$ actual owner tuples. It also has the same marginal on
+each entire gadget. Consequently every local joint law used by COK,
+including its actual owned tuple and every incoming actual-owner group,
+is identical under $P$ and $Q$. Nevertheless, with
+$\delta_\ell=\ell-H(q)$,
+
+$$
+\begin{aligned}
+H(P)-H(Q)&=\delta_\ell,\\
+\log_2Z-\bigl(H(Q)+\mathbb E_Q\log_2W\bigr)&=\delta_\ell,\\
+\Delta(Q)-\Delta(P)&=\delta_\ell,\\
+\delta_\ell&\ge(1-\epsilon)(\ell-1)-h_2(\epsilon).
+\end{aligned}
+\tag{OCC.21}
+$$
+
+For $\epsilon=1/4$ this is at least $3\ell/4-7/4$ on
+$11m\ell$ original blocks. For $\ell\ge2$ the gap is strictly
+positive; $\ell=1$ gives $Q=P$ and zero gap.
+
+Proof. The copies' actual relation and once-owned weight product factor
+across copies, so their Gibbs laws factor. By Theorem 5.2 each phase
+has mass $1/2$ and the phase vector is uniform. Every $q(f)>0$,
+so $Q$ has the identical positive support and
+
+$$
+\frac{Q(s)}{P(s)}=2^\ell q(F(s)).
+\tag{OCC.22}
+$$
+
+No move of fewer than $4m$ owners changes any gadget phase, by
+Theorem 4.3. Thus (OCC.22) is constant on each $G_r$ component.
+Lemma 3.2 proves equality of every stated full conditional, including
+updates spread over several copies. This argument also covers $r<4$,
+when every point is isolated. For $4\le r<4m$, the exact components
+are indexed by their phase vectors, since phase-zero choices in each
+copy are connected by four-owner moves.
+
+Every one-coordinate phase marginal of $q$ is fair. Given a phase
+vector, each gadget has its original Gibbs conditional law, depending
+only on its own phase. Averaging therefore gives precisely its full
+$P$ marginal. In particular its local block, owned tuple, incoming
+groups and full actual outside owners have the same joint distribution
+under both laws: all belong to that same gadget. This is simultaneous
+compatibility of all the COK laws, not separate abstract local choices.
+
+Conditional entropies of the complete solutions given the phase vector
+add across gadgets under both laws. Their expectations agree because
+the individual phases have the same marginals. The phase entropy under
+$P$ is $\ell$ and under $Q$ is $H(q)$, proving the first equality
+of (OCC.21). The same entire-gadget marginals give
+$\mathbb E_Q\log_2W=\mathbb E_P\log_2W$, proving the second
+equality from the Gibbs identity. Equivalently Lemma 3.2 gives
+$D_2(q\Vert\operatorname{Unif})=\ell-H(q)$. The terms in
+$\mathcal L$ are the same local entropies under the two laws, so
+(OCC.10) gives the third equality.
+
+Introduce the mixture marker for (OCC.20), of entropy $h_2(\epsilon)$.
+Its conditional phase entropy is one on the two-point part and $\ell$
+on the uniform part. Dropping its nonnegative conditional entropy given
+$F$ gives
+
+$$
+H(q)\le h_2(\epsilon)+(1-\epsilon)+\epsilon\ell.
+$$
+
+This proves the last inequality. Since $h_2(1/4)\le1$, the displayed
+coarser rational lower bound follows. For $\ell\ge2$, $q$ is not
+uniform when $\epsilon<1$, so strict entropy maximization by the
+uniform law gives $\delta_\ell>0$. $\square$
+
+This theorem does not make $Q$ the Gibbs law of the original weights.
+It constructs globally realizable positive laws with exactly the stated
+identical conditional and local data. The missing global datum is the
+original weighted component law, not feasibility of a joint completion.
+For the actual $W$, Gibbs variational duality gives
+$H(Q)+\mathbb E_Q\log_2W\le\log_2Z$. Substituting this value
+as an equality or an upper bound reverses the available implication.
+The full network and weights still determine $P$ by definition; summing
+their component normalizers recovers it exactly on this family.
+

@@ -1,0 +1,34 @@
+**Theorem 2.3 (uniform forward translation and its exact image).** For
+$m\in\mathbb N$, let $\tau_m$ add $m$ to every primitive rank of a code
+and preserve $F$. Then $\tau_m$ maps $\mathcal N$ into $\mathcal N$,
+$\tau_0$ is the identity, $\tau_{m+n}=\tau_m\tau_n$, and
+
+$$
+\begin{aligned}
+\tau_m J(X,Y)&=J(\tau_m X,\tau_m Y),\\
+E(\tau_m X)&=\rho^m E(X),\\
+B(\rho^m u)&=\tau_m B(u).
+\end{aligned}
+\tag{ABC.2.5}
+$$
+
+The image $\tau_m[\mathcal N]$ consists exactly of normal codes all of
+whose primitive ranks are at least $m$. Subtracting $m$ from those ranks
+is its unique inverse on that image. If $m>0$, $\tau_m$ is not surjective
+on $\mathcal N$.
+
+Proof. Translation preserves which terms are primitive and preserves
+both truth and falsity of the exceptional relation $i=j+1$ between two
+primitive siblings. It therefore preserves (ABC.2.1), and direct use of
+the two cases of $J$ proves the first identity. The monoid laws follow
+from addition at each leaf. Structural induction on $X$, using
+$\rho^mT_j=T_{j+m}$ and preservation of native pairing, proves the second
+identity. Theorem 2.2 then proves the third.
+
+Every translated rank is at least $m$. Conversely, if all ranks of a
+normal code are at least $m$, subtracting $m$ preserves the exceptional
+sibling relation in both directions, so produces a normal code. This is
+a two-sided inverse on the specified image. The primitive code $[0]$
+is outside that image when $m>0$. Thus the conjugacy is for the forward
+$\mathbb N$-monoid action, not a group action or a source reset. $\square$
+

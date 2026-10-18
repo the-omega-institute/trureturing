@@ -1,0 +1,6 @@
+**A3 whole odd completion.**
+
+**proof.**
+
+Write g=a2\*t^2+a1\*t+a0g. The even identity gives e3=b\*a2/2. The whole polynomial O=d+o\*g has cubic coefficient r\*a2/2=q\*e3 and agrees with R at 1,3,5. Their difference has those three distinct roots. The product (t-1)(t-3)=t^2-4t+3, multiplied by t-5, gives S=t^3-9t^2+23t-15. Comparing the cubic coefficient forces O-R=q\*e3\*S; a residual polynomial of degree at most two with those three roots is zero. Thus O=R+q\*e3\*S is a necessary whole identity determined from acquired data and a candidate q. It is not a separately measured odd response.
+

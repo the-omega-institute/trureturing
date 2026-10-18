@@ -1,0 +1,43 @@
+**定义 1.1（完整目标与原时钟）。** 置
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+一个合法完整世界是 $W=(P,g,d)$，其中
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{1.1}
+$$
+
+因此源逐项严格正、秩恰为一、迹为一，可以不对称；非对角元无上界。令 $A_0=I$、$A_i=E_iA_{i-1}$，原时钟 $i$ 的响应是
+
+$$
+z_i(W)=d+g(i)\operatorname{tr}(A_iP).
+\tag{1.2}
+$$
+
+初读计数，每个单独动作后立即读取。全过程固定同一个源、整个增益和漂移，不重置、不复制轨迹、不跳读、不补空动作、不重编号时钟，也不增加观测端口。目标是整个三元组，不是其某个因子或类别。
+
+本卷固定
+
+$$
+H_4=(0,J,24,M,48,J,z,M,Y),\qquad
+36<z<\frac{361}{10},\quad33<Y<34,
+\tag{1.3}
+$$
+
+并固定任意实数 $p,v,a$。所研究的是实际第五个 $M$、第六个 $M$、最终 $J$ 的纤维，其字面七动作词与八个响应为
+
+$$
+(E_1,\ldots,E_7)=(J,M,J,M,M,M,J),\qquad
+(z_0,\ldots,z_7)=(0,24,48,z,Y,p,v,a).
+\tag{1.4}
+$$
+
+记实现式 (1.4) 的全部合法世界为 $\mathcal F_{MMJ}(z,Y,p,v,a)$。各个候选世界都可有不同的 $b,d,g$；不假定两个可能端点共享任何隐藏参数。
+

@@ -1,0 +1,15 @@
+### 93.5. Generic pair rigidity and mixed exclusion
+
+The radial involution fixes \(z,k,t\) and sends
+\[
+ X\longmapsto t/(1+k^2)-X,\qquad G\longmapsto-R/\bar G.
+\]
+The full normalized \(\Theta\) identities of §89 hold generically and
+specialize through the new source construction. They require no unit
+assumption on the old derivative \(F_k\).
+
+Use the complete all-six-order overlap norm \(N\) from §§79,89. For
+\(\rho(a\otimes c)=a\iota(c)\), the transported identity \(\rho(N)=0\)
+bounds multiplication rank by 380. The map is onto a twenty-dimensional
+algebra, so its kernel has dimension 380. In basis \(y^r\otimes y^s\),
+indexed by \(20r+s\), the leading 380-by-380 principal minor is

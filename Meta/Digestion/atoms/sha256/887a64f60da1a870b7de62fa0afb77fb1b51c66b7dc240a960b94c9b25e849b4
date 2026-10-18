@@ -1,0 +1,34 @@
+**Theorem 5.2 (mixed-kernel criterion).** Let
+$R=\ker(K_{\rm mix})$ on the actual image, with the selector and
+namespace maps included in the trace or assumed to factor through it.  Then
+$R$ is a typed right congruence closed under
+every finite action order from $\mathcal M$, including resource and
+failure responses.  More generally, for an arbitrary relation $R$, the
+premise
+
+$$
+xRy\Longrightarrow K_{\rm mix}(x)=K_{\rm mix}(y)
+\tag{5.3}
+$$
+
+only gives observational soundness, namely $R\subseteq\ker(K_{\rm mix})$.
+An autonomous quotient also requires $R$ to be an equivalence and its
+successor, legality, selector and namespace maps to be well defined; this
+forward-closure condition must be imposed separately unless $R=\ker(K_{\rm
+mix})$.  If (5.3) fails for a pair that a proposed boundary merges, some
+fixed-menu word distinguishes the pair and the boundary is not sufficient for
+the corresponding continuation task.
+
+**Proof sketch.** For $R=\ker(K_{\rm mix})$, take a word $av$.  Equality
+of its complete trace and of the common first response leaves equal mixed
+profiles for the successors after $a$, so the kernel is forward closed.
+For the converse, choose a distinguishing word $u$; its response is a
+permitted observation, so a boundary merging the pair is unsound.  The finite
+countermodel in §4.3 shows why a weaker aggregate kernel does not supply this
+closure; the one-state table in §4.2 only illustrates order loss inside a
+single history. $\square$
+
+Thus an action-order proof must close under $K_{\rm mix}$, not merely under
+the coordinatewise future table.  A result proved for a fixed $\mathcal M$
+does not silently quantify over fresh action names.
+

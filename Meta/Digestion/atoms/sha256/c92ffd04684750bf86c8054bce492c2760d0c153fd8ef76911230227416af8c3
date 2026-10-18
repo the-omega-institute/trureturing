@@ -1,0 +1,46 @@
+**定理 24.3（最小非平凡直方图交换的有序实现）。** 定义
+
+$$
+A=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad V=A+A^\dagger,
+$$
+
+$$
+Q_a=N_a\otimes I+I\otimes N_a\quad(a=x,y,z),\qquad
+\mathsf S|s,t\rangle=|t,s\rangle.
+$$
+
+则 $[Q_a,A]=[Q_a,V]=0$，且 $\mathsf S A\mathsf S=A$、$[\mathsf S,V]=0$。在质量与三占位加和均严格保持的同标签交换中，消去两侧相同副本后，非零直方图变化的每侧最小副本数为二，唯一无序二对二碰撞是
+
+$$
+\{0,13\}\longleftrightarrow\{1,3\}.
+$$
+
+证明。对任意有序基矩阵单位，
+
+$$
+[Q_a,|s,t\rangle\langle u,v|]
+=(a_s+a_t-a_u-a_v)|s,t\rangle\langle u,v|.
+$$
+
+$A$ 的两项均用同一列关系 $v_0+v_{13}=v_1+v_3$，故交换子为零；取伴随给 $V$ 的结论。交换两个系统将 $A$ 的第一项变成第二项，反之亦然，故得交换对称性。
+
+更一般地，设两个等长有序标签列表的直方图分别为 $h^+,h^-\in\mathbb N_0^5$，总质量及总占位相等。其差 $c=h^+-h^-$ 属于 $\ker_{\mathbb Z}W$，即 $c=kd$。逐标签取消共同副本后，剩余每侧体积为
+
+$$
+m(c)=\sum_s\max(c_s,0)
+=\sum_s\max(-c_s,0)=\frac12\sum_s|c_s|=2|k|.
+$$
+
+非零变化要求 $k\ne0$，所以 $m(c)\ge2$；等号时 $k=\pm1$，恰为所列四角碰撞。若只是排列同一直方图，$c=0$，即使有序态互异也不算非零交换体积。共同旁观副本同样不计入 $m(c)$。
+
+这个整数判据直接连接严格的算子守恒。对 $m$ 系统的总荷 $Q_a^{(m)}=\sum_jN_a^{(j)}$，任意算子 $K$ 满足
+
+$$
+\langle\mathbf s|[Q_a^{(m)},K]|\mathbf t\rangle
+=(q_a(\mathbf s)-q_a(\mathbf t))K_{\mathbf s\mathbf t},
+\qquad q_a(\mathbf s)=\sum_ja_{s_j}.
+$$
+
+因此 $[K,Q_a^{(m)}]=0$ 强制每个非零跃迁矩阵元两端的总荷相等。反向，一对总荷相等的列表所给的矩阵单位及其伴随都与荷交换。没有借用外部储库抵偿，也没有把“某个输入的期望相等”提升为这个全算子结论。$A$ 给出了达到二的具体实现。证毕。
+

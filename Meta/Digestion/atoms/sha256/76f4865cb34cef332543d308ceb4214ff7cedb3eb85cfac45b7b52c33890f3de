@@ -1,0 +1,29 @@
+**Convention 9.4 (credited endpoints and the broader programme).**
+The established original endpoints, credited to [NCE, Sections 13–19][NCE]
+and [D3][D3], remain
+
+$$
+\frac18\log_2\frac{7792603}{3038031}\le\lambda<\frac3{16},
+\qquad M_1(3)=4,\qquad M_1(6)\ge1874.
+\tag{WBF.40}
+$$
+
+No new memory or rate endpoint follows from the norm obstruction.
+General exact $M_1(D)$, sharp $\lambda$, effective all-correlated
+convergence and the minimal-relations/internal-observer programme
+for space, time, boundary and memory remain unresolved. The concrete
+consumer here is the lawful requested-factor recovery of Section 8
+and the exclusion of one mandatory per-fiber certificate mechanism,
+with all full-source resources and shared references preserved.
+
+[FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[NPC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[CBN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONSTRUCTOR_BOUNDARY_NETWORKS.md
+[RRN]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[RCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURSIVE_CERTIFICATE_ESCAPE.md
+[JPL]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_JOINT_POTENTIAL_LIMITS.md
+[GDB]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[NCE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[D3]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[LZ]: https://arxiv.org/html/1210.7013v2
+

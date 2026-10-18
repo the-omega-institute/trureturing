@@ -1,0 +1,99 @@
+**Theorem 34.4 (Equality of all layer indices does not recover
+the cyclic multiplication).**
+The two modules $\mathcal C_k$ and $\mathcal C_k^{\mathrm{split}}$
+have identical restrictions to $A_k$, identical graded dimensions
+in every degree, and the identical bundle (34.1). For identical
+metrics they therefore have the same operators (34.2) and all the
+same indices (34.4). Nevertheless for every $k\ge4$ they are not
+isomorphic as $R_k$-modules, even without a grading condition.
+For $k=3$ their actions agree.
+
+Under the mode presentation $S_n\to R_k$, the reduced face is the
+linear subspace $\iota:\mathbb P^{2k}\hookrightarrow\mathbb P^{D_n-1}$
+given by keeping the maximum-mode coordinates $z_{M_i}=y_i$ and
+setting all smaller-mode coordinates to zero. The split module
+has sheaf
+
+$$
+\widetilde{\mathcal C_k^{\mathrm{split}}}(m)
+=\iota_*\mathcal E_{k,m}.
+\tag{34.10}
+$$
+
+For $k\ge4$, the full $R_k$-module $\mathcal C_k$ does not have
+that reduced-face pushforward sheaf. Its annihilator has radical
+$J_k$, but its positive-deficit action remains nonzero after
+localizing on a maximum-mode chart.
+
+Proof. Both restrictions are literally
+$\bigoplus_{j=2}^{k-1}A_k(-(2j+1))$, so their degree-$m$ dimensions
+are both the sum in (32.2). Sheafification of these restricted
+modules gives the same bundle, with the same holomorphic structure.
+Choosing the same metrics gives the same Dolbeault differential,
+formal adjoint, symbol, Sobolev realization and harmonic spaces.
+Consequently (34.3)–(34.4) give the same index for every $m\ge0$;
+the equality is not merely an agreement in one selected degree.
+
+On the split module $J_k$ acts by zero. For $k\ge4$, $e_3$ is
+present and the size-$(k-1)$ mode $s_I$ of (31.19) satisfies
+$X^{s_I}e_3=y^{a(s_I)}e_2\ne0$ in the actual module.
+If an $R_k$-linear isomorphism to the split module existed, it
+would send this nonzero vector to
+$X^{s_I}\phi(e_3)=0$, contradicting injectivity.
+This proves the claimed nonisomorphism without any requirement
+that the isomorphism preserve layer labels or degrees. For $k=3$
+there is only $e_2$ and every positive deficit kills it by (31.7),
+so (34.9) is its actual action.
+
+More precisely, the successive layer filtration itself is
+nonsplit above its first layer when $k\ge4$. For $3\le j\le k-1$,
+a lift of the generator of the quotient
+$A_ke_j$ in $\bigoplus_{r=2}^jA_ke_r$ has the form
+$e_j+\sum_{r<j}f_re_r$. Multiplication by the deficit-one mode
+$X^{s_I}$ has nonzero $e_{j-1}$ coefficient $y^{a(s_I)}$;
+the lower terms land in layers at most $j-2$ and cannot cancel it.
+The quotient generator is killed by $J_k$, so it admits no
+$R_k$-linear section. Separately, the canonical exact sequence
+(31.6) is nonsplit for every $k\ge3$: the nonzero empty mode
+$X^{(1,0)}$ annihilates $\mathcal C_k$ by (31.18) but is a
+nonzerodivisor on $\omega_{R_k}\subset R_k$. Hence every
+$R_k$-linear map $\mathcal C_k\to\omega_{R_k}$ is zero,
+whereas a section would be nonzero.
+
+For the geometric assertion, $S_n\to R_k\to A_k$ kills exactly
+the variables for independent sets of size less than $k$.
+Every size-$k$ independent set is some $M_i$: such a set leaves
+$k+1$ unoccupied vertices distributed among $k$ nonempty gaps,
+so exactly one gap has length two and all others have length one.
+Its unique edge with both endpoints unoccupied is $i,i+1$,
+which determines $M_i$. The polynomial independence in (31.13)
+therefore implies that the composite map's kernel consists exactly
+of the smaller-mode variables. This proves the stated linear
+closed immersion and, by localization on its standard charts,
+the reduced-face sheaf identity (34.10), with the same ordinary
+degree twists. It is the general version of the coordinate
+identification (30.7)–(30.8) for a module whose action factors
+through the face quotient.
+
+The actual module has a different local action when $k\ge4$.
+On any maximum-mode chart $y_r\ne0$, its localized degree-zero
+module contains $e_3/y_r^7$, and
+
+$$
+\frac{X^{s_I}}{y_r}\,\frac{e_3}{y_r^7}
+=\frac{y^{a(s_I)}e_2}{y_r^8}\ne0.
+\tag{34.11}
+$$
+
+The degrees match since $|a(s_I)|=3$. Nonvanishing follows from
+freeness over $A_k$ and the fact that its nonzero monomial
+$y^{a(s_I)}$ remains nonzero after inverting $y_r$.
+But $X^{s_I}/y_r$ belongs to the ideal of the reduced face, which
+annihilates every sheaf pushed forward from that face. Thus the
+actual sheaf cannot be (34.10). The radical support statement
+is Proposition 31.4; the nonzero nilpotent action is information
+additional to that reduced support. The bundle carrier in
+Definition 34.1 is obtained by forgetting to $A_k$, not by
+asserting that the full $R_k$-module already factors through the
+reduced face. $\square$
+

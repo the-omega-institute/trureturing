@@ -1,0 +1,32 @@
+**Definition 3.1 (The transport history model).** Use the full-support fiber,
+$d$, $I$, $w$ and negative phase convention of §2, with fixed means. An
+admissible control on a compact time interval is a piecewise $C^1$ path
+$(\kappa(t),\chi(t))$ in the open fiber times $\mathbb R$, or an absolutely
+continuous such path, with finite phase variation. Its state lift satisfies
+
+$$
+\dot p=d\dot\kappa,\qquad
+\dot\theta=w(\kappa)\dot\chi.
+$$
+
+A base/phase loop has $\kappa(T)=\kappa(0)=\kappa_0$ and
+$\chi(T)-\chi(0)=2\pi m$ for some $m\in\mathbb Z$. This definition closes the
+periodic control base; it does not presume full state or ray return. The
+continuous lift $\chi$ keeps its actual integer winding. With the initial
+middle phase chosen to be zero, $w_2=0$ keeps $\theta_2=0$.
+
+The real residual and its relation charge are
+
+$$
+h=\int_0^T w(\kappa(t))\dot\chi(t)\,dt,
+\qquad h_2=0,\qquad d^{\mathsf T}h=2\pi m.
+$$
+
+The last identity follows directly from $d^{\mathsf T}w=1$. Continuity on a
+compact interval keeps any such positive path in a compact subinterval of the
+fiber; thus $w$ is bounded and these integrals exist. Zero winding means
+$m=0$, not merely that the physical phase circle is closed. This control law
+moves vertically in IE's probability projection and is different from the
+Fisher-horizontal motion of §2.2. It is also a restriction of the arbitrary
+phase paths used for the variational comparison of §2.8.
+

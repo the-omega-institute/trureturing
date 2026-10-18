@@ -1,0 +1,30 @@
+**Lemma 4.1 (exact special law).** At $h_n$ the raw report $Q$ has
+
+$$
+\begin{aligned}
+Q(u_{0,0})&=5/8,&Q(u_{0,1})&=1/4,\\
+Q(u_{j+1,0})&=(1/24)(2/9)^j,&Q(u_{j+1,1})&=(1/18)(2/9)^j\quad(j\ge0).
+\end{aligned}
+\tag{4.1}
+$$
+
+For every finite/countable posterior on PH parameters, writing $m=\sum_k\nu(k)r_k$,
+
+$$
+\operatorname{TV}\!\left(Q,\sum_k\nu(k)P_{p,r_k}\right)=5/8-m.
+\tag{4.2}
+$$
+
+**Proof.** The exceptional first $\alpha$ completes immediately. After first $\beta$ (probability $3/8$), synthesis uses iid $r_1$: the immediate second $\beta$ gives $(3/8)(2/3)=1/4$; first $\alpha$ returns to ordinary p with factor $(3/8)(1/3)=1/8$, giving the two later families in (4.1). Their geometric sum plus the two immediate terms is one.
+
+For $r\in[1/3,2/5]$, $a_r\ge2/9$. The true immediate $\beta\beta$ mass is at least $9/25>1/4$. For every $j\ge0$,
+
+$$
+r a_r^{j+1}\ge(2/27)(2/9)^j>(1/24)(2/9)^j,
+$$
+$$
+(1-r)^2a_r^{j+1}\ge(2/25)(2/9)^j>(1/18)(2/9)^j.
+$$
+
+Conversely $Q(\alpha)=5/8>r$. Thus the only positive coordinate of $Q-P_{p,r}$ is $\alpha$, for every $j$, not merely a finite set of words. These signs survive any actual posterior mixture. Both laws give zero to noncompletion. For normalized laws, the sum of the positive coordinate differences is TV, proving (4.2). The same $I_c$ preserves this equality on the complete record/control/Stop transcript. It is a full-tail TV formula whose maximizing event happens to be one letter, not a substitution of a one-step loss for the original consumer. $\square$
+

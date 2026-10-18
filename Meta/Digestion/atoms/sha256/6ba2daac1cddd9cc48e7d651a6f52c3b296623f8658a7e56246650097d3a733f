@@ -1,0 +1,20 @@
+**Assumption 1.3 (paid producer and authentic continuation).** Impose exactly
+[ARH, Assumption 1.3 and Proposition 2.1][ARH]. A public source-total paid
+producer acquires the old row and the finite whole-subtree endpoint descriptions
+at their actual epochs, computes signs from those descriptions, advances the
+same register and original root to certified $N$, and makes the stipulated
+complete access cut. Its entire accessible state is a common recoverable
+encoding of $I$ and common parameters, with original-source fiber exactly $D$.
+Every source in $D$ gives that state, and every source giving it lies in $D$.
+
+Every accessible source-dependent cache, count, length, address, control
+position, timing field, permission, archive and handle is included in this
+premise. It is an access assumption, not a physical-erasure conclusion.
+Subsequent actions are paid four-valued $\mathsf{Read}(p)$ and real serial
+forward $\mathsf{ApplyRho}$ on that same register. A correct service is
+deterministic, effective and terminating on every source in $D$. There is no
+mathematical chart, rank, equality, selected-source, reset, reroot, clone,
+old-version or clock port. Acquisition, new reads, literal words, updates,
+local computation, preparation, installation, memory, retention and entry
+remain separate charges.
+

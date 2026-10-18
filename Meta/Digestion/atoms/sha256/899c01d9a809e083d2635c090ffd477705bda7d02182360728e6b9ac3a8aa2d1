@@ -1,0 +1,174 @@
+**Theorem 34.1 (whole-source and whole-row interpretation).** On a covered
+input one can construct Presburger predicates $\mathsf{Adm}(k)$ and
+$\mathsf{Same}_Q(k,l)$, for $k,l\in\mathbb N^{\mathcal B}$, such that
+
+$$
+\begin{gathered}
+U_k=C[(T_{k_{[i]}})_i],\qquad
+S=\{k\in\mathbb N^{\mathcal B}:\mathsf{Adm}(k)\},\\
+k\longmapsto U_k\text{ is a bijection }S\longrightarrow U,\\
+\mathsf{Same}_Q(k,l)\quad\Longleftrightarrow\quad
+R_Q(U_k)=R_Q(U_l).
+\tag{LAC.34.1}
+\end{gathered}
+$$
+
+The last equivalence holds for all nonnegative tuples, hence in particular
+for all admitted tuples. The target equality compares the entire concrete
+exterior, the reached original addresses and every whole-subtree equality
+in their partition. The construction does not require a bound on ranks,
+expanded source size or concrete target exterior. It imposes all retained
+constraints on one tuple; it makes no replacement by independent margins.
+
+Proof. Use the native normal codes, join $J$, translation $\tau_n$,
+guarded navigation $\nu_p$ and literal map $\lambda$ of
+[ABC, Definitions 2.1 and 3.1, Theorems 2.2–3.2][LAC-ABC]. The following
+finite symbolic construction checks their precise arithmetic interface
+for the fixed acquired context.
+
+A guarded symbolic code is a finite ordered $F$-shape with primitives
+$[f(k)]$, where $f$ is an integer-affine expression and its Presburger
+guard entails $f(k)\ge0$ and native normality of the code. Integer-affine
+notation is only shorthand for arithmetic over $\mathbb N$: move negative
+coefficients and constants across each equality or inequality. A family
+of such guarded codes has finitely many branches. Its branches are
+mathematical cases in a formula, not accessible chart labels.
+
+Start with $[k_b]$ at each hole of class $b$, $[0]$ at each concrete
+$\alpha$ and $[1]$ at each concrete $\beta$. Recursively combine the two
+already normal child families at every pairing node of $C$. On a branch
+where both children are primitive, $[f]$ and $[g]$, split on $f=g+1$:
+the true branch returns $[g+2]$ and the false branch returns
+$F([f],[g])$. If either child has an $F$ head, retain their $F$ pair.
+These are precisely the cases of native $J$. The two guards partition
+the existing branch; false guards may be kept or discarded. Structural
+induction on the finite $C$ proves that the resulting guarded family
+$X(k)$ evaluates to the canonical code $B(U_k)$ for every tuple.
+
+Every internal join is processed after its children, so a collapse can
+propagate through arbitrarily many levels of this fixed context.
+It may join blocks from distinct old classes. Such a join does not erase
+the physical old occurrence: expansion still has the same native pair
+and the same reached original address. In particular the pair expression
+$F([1],[0])$ must normalize to $[2]$ before native equality is tested;
+their expansions are the same $T_2$.
+
+For a fixed epoch $n$, translation replaces each $[f]$ by $[f+n]$ and
+preserves $F$, by ABC Theorem 2.3. For one child step, an $F$ node returns
+the designated child; at $[f]$ split into $f=0$, $f=1$ and $f\ge2$.
+The first two cases return absence, while the third returns $[f-1]$ for
+$L$ or $[f-2]$ for $R$. Absence is absorbing. Iterate for the finitely
+many letters of the specified word. At the resulting code the literal
+cases are $[0]$, $[1]$, a primitive of rank at least two, an $F$ head,
+or absence. These cases give respectively $\alpha$, $\beta$,
+$\mathsf{branch}$, $\mathsf{branch}$ and $\mathsf{absent}$.
+
+Thus, for every fixed endpoint $(n,p)$, both its existence and its exact
+whole-subtree normal code have finite guarded arithmetic descriptions.
+The construction checks every intermediate child, not merely the final
+rank's nonnegativity. For example, $T_2|_{LL}$ is absent although
+$2-w(LL)=0$. A known original exterior leaf may expand before an endpoint
+is requested; translation and these same native child rules include its
+born addresses without interpreting them as original ones.
+
+To compare two present endpoint codes, refine their finite branch families
+together. On each pair of branches, different normal $F$/primitive shapes
+give false; equal shapes give the conjunction of the corresponding
+primitive-rank equalities. Theorem 2.2 of ABC makes this exactly whole
+native-tree equality. Write $G_{n,p}(k)$ for endpoint existence,
+$E_{n,p;m,q}(k)$ for this guarded equality test, and
+$L_{n,p,c}(k)$ for the exact literal predicate. A signed record contributes
+
+$$
+G_{n,p}(k)\land G_{m,q}(k)\land
+\begin{cases}
+E_{n,p;m,q}(k),&\bowtie\text{ is }=,\\
+\neg E_{n,p;m,q}(k),&\bowtie\text{ is }\ne.
+\end{cases}
+\tag{LAC.34.2}
+$$
+
+The guards stay outside the negation. In particular neither missing
+endpoint can make a disequality true. Equality of a paired expression
+is conjunction of its child equalities; its disequality negates the
+whole conjunction, rather than demanding both child disequalities.
+
+Define $\mathsf{Adm}$ as the conjunction of every $k_b\ne k_c$ for
+different old classes, every literal predicate $L_{n,p,c}$ in the retained
+list, and (LAC.34.2) for every retained signed record. One may also conjoin
+the designated compatibility equations and lower bounds (LAC.33.2):
+Proposition 33.2 proves them consequences of the predicates already
+included. An incompatible designated equation gives the constant false
+predicate. Repeated literals and records remain conjuncts.
+
+The complete old row is enforced by the construction of $U_k$, not by
+forgetting it. The concrete context $C$ and its reached-hole list are
+unchanged, and every repeated class uses the same rank variable. Because
+$P$ is prefix-free, an old absent cut cannot lie below a reached old hole.
+It is blocked by a concrete strict-prefix leaf in $C$, which filling does
+not alter. Thus every filling has exactly the old reached set and exterior.
+Index injectivity makes all the stated $k_b\ne k_c$ exactly the remaining
+requirements for its complete old partition.
+
+Now take $u\in U$. Proposition 33.2 supplies its unique atomic old-class
+values. The original old-row reconstruction (ARH.1.2) gives $u=U_k$.
+Its old inequalities and every actual guarded record give
+$\mathsf{Adm}(k)$ by the exact endpoint and literal computations.
+Conversely take any $k$ satisfying $\mathsf{Adm}$. Its filling is a
+nonempty finite native tree, has the complete old row just proved, and
+satisfies every literal and both guarded endpoints and sign of every
+relation. It therefore lies in the original $U$. Finally, equality
+$U_k=U_l$ recovers $T_{k_b}=T_{l_b}$ at $a_b$ for every class and hence
+$k=l$. This proves both source inclusions and injectivity without assuming
+that old holes are maximal atomic blocks.
+
+For the target, construct the symbolic reached set
+$I_Q(k)=\{q\in Q:\nu_q(X(k))\ne\bot\}$. All of its finitely many membership
+predicates are already available. Use the native mask of
+[ABC, Definition 4.1 and Theorem 4.2][LAC-ABC]: $M_Q(X)$ is the code of
+the tree obtained by filling each reached original $Q$ hole with $\alpha$.
+For an empty cut trie retain the whole current code. For a root cut
+return $[0]$. With only proper cuts, a native leaf remains that leaf;
+at a native branch recurse down the two appropriate subtries and rejoin
+with $J$. This is a finite recursion on the fixed cut trie. Each child
+step uses the guarded rules above and each rejoin the same finite
+normalization. Hence $M_Q(X(k))$ also has a finite guarded code family,
+even when an uncut part of its expansion has unbounded size.
+
+Use a second tuple $l$ and define
+
+$$
+\begin{aligned}
+\mathsf{Same}_Q(k,l)\ \Longleftrightarrow\quad& I_Q(k)=I_Q(l),\\
+&M_Q(X(k))=M_Q(X(l)),\\
+&\bigwedge_{q,r\in I_Q(k)}
+ \left(\nu_q(X(k))=\nu_r(X(k))\ \Longleftrightarrow\
+       \nu_q(X(l))=\nu_r(X(l))\right).
+\end{aligned}
+\tag{LAC.34.3}
+$$
+
+Every displayed code equality is implemented by the finite normal-shape
+comparison, not ambient equality of unnormalized terms. The last line
+is a finite conjunction over $Q\times Q$ guarded by membership of both
+addresses; the first line then supplies the same guards on the other
+tuple. Consequently (LAC.34.3) is a Presburger formula.
+
+For a fixed reached set $I$, filling all numbered holes with $\alpha$
+is injective on contexts with holes at precisely $I$: replace the
+subtrees at $I$ by their numbered holes to invert it. Prefix-freeness
+ensures this replacement cannot conceal another cut. Therefore equal
+native masks and equal reached sets mean equal complete concrete
+exteriors, even when normalization of a mask collapsed a surrounding
+atomic block. The last line compares every pair of whole removed
+subtrees, so it is exactly equality of the complete partitions,
+including repeated target holes. This is precisely ABC's whole-row
+correspondence and proves (LAC.34.1).
+
+All recursions have finite inputs: the known $C$, the finitely many
+specified words and epochs, the $Q$ trie, and finite products of their
+branch families. Their tests are affine arithmetic and Boolean operations.
+No step unfolds an unbounded unknown $T_k$ or enumerates unknown shapes.
+No general formula for normality on arbitrary ambient shapes is assumed.
+$\square$
+

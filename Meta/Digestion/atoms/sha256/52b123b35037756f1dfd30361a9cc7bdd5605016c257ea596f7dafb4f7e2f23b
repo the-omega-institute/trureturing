@@ -1,0 +1,85 @@
+**Proposition 8.3 (every actual history, exact contrast, TV and sharp cost).**
+The selected endpoint instrument attains EP.26 in the unchanged original
+problem, with exact contrast $s_0\tau(p)$ and the sharp worst-history
+ACQUIRED cost.
+
+Proof. For EVERY $y\in\{5,16,27\}$ and BOTH $e,n=\pm1$, the complete
+actual law is
+
+$$
+\begin{aligned}
+p(j\mid y,e,n)={}&x_j^2A_y+z_j^2B_y+w_j^2C_y
+ +2x_jz_j\kappa enq_y\\
+ &+2x_jw_j\kappa_{02}e\frac{\sqrt y}{16}
+ +2z_jw_ja_Kc_Kn\frac{\sqrt{64-y}}{16},\\
+p(H,r\mid y,e,n)&=(1-\delta)A_y/2,\\
+p(f,\epsilon_f,r\mid y,e,n)&=\frac12\left|
+ \left\langle v^{\rm fail}_{\epsilon_f},
+  (\sqrt{m_1}n\sqrt{p_{y1}},\sqrt{m_2}\sqrt{p_{y2}})^T
+ \right\rangle\right|^2,\\
+p(\perp,r\mid y,e,n)&=0.
+\end{aligned}
+\tag{EP.56}
+$$
+
+The first expression is $\|K_jU_{e,n}a_y\|^2$, expanded with the
+cross effects $\kappa X_{01}$, $\kappa_{02}X_{02}$ and
+$a_Kc_KX_{12}$. These are nonnegative norm squares; EP.52 makes the
+complete law sum to one. Coefficient masses $\pi_j$ are not the acquired
+probabilities in EP.56 and are not priors on histories.
+
+High and scalar reports are fair. The supported binary effect and its
+whole five-mode completion are
+
+$$
+F=\frac12I_3+\frac12\sum_jr_jK_j^\dagger K_j,\qquad
+F_5=EFE^\dagger+(I_5-P_V)/2.
+\tag{EP.57}
+$$
+
+Their $01$ coordinate gives
+$\mathsf V(F)=s_0\sum_j\sigma_j\pi_ju_j=s_0\tau(p)$, since
+$\sigma_ju_j=1+d_j$. No other coordinate is prescribed. In particular,
+the argument uses the original contrast inequality and derives exact
+contrast for this attainer.
+
+The only high fibres are the two high branches. Their shared total
+acquired effect on five modes is
+
+$$
+Q_H=(1-\delta)ED^\dagger DE^\dagger.
+\tag{EP.58}
+$$
+
+Its probability is $(1-\delta)A_y$ on each original history, independent
+of both signs; its maximum is $(1-\delta)A_{27}=\mathsf C(s)$.
+This is an acquired worst-history statement, not a sign mean or a
+live-conditioned probability. On a general normalized complex five-mode
+input $\sigma$ it is $(1-\delta)\operatorname{tr}(ED^\dagger DE^\dagger\sigma)$.
+
+Retain every actually generated label as $R$. Its four low differences
+are $\pi_j f_j(d_j)$, its positive high differences sum to
+$(1-\delta)\Delta A$, and its spectral failure absolute differences
+sum to $L_f$. Hence
+
+$$
+\operatorname{TV}(P^R_{5,+,+},P^R_{27,+,+})
+=\frac{(1-\delta)\Delta A+L_f+\sum_j\pi_j|f_j(d_j)|}{2}
+=T_{\rm flat}+K(p).
+\tag{EP.59}
+$$
+
+The same actual instrument attains value, contrast, cost and all output
+identities. Exact contrast needs no attenuation labels here. This is a
+newly generated acquisition of the four distinct low labels, rather than
+a retrospective read of analytically split Kraus rows.
+
+A mathematical dilation can use
+$\sum_{a,k}|a\rangle_C\otimes C_{ak}|\psi\rangle\otimes|a,k\rangle_Z$;
+EP.52 makes it an isometry. Permanently discarding $Z$ before the cut
+dephases the actual label and leaves exactly its declared whole fibre.
+No other correlated specimen, controller, memory, environment or
+entanglement share remains accessible. Keeping any such share changes
+the counted acquisition. This describes supplied mathematical operations,
+not a native permission to enact the dilation. $\square$
+

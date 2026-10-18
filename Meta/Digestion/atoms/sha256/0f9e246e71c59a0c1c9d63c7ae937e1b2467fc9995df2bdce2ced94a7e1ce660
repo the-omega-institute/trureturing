@@ -1,0 +1,26 @@
+**Definition 3.2 (literal sole storage).** Reuse SSA Definitions 3.2 and
+4.1–4.2's $F_m$, five-occurrence switches $g_0,g_1$, eight-track cell
+$G(c)$, right-spine tape $\mathcal L(w)$ and origin/head links. Replace
+only the fixed fully occupied finite-register component by
+
+$$
+R(z)=F_q[a(z_1),\ldots,a(z_q)],\qquad
+a(\bot)=\bullet,\quad a(0)=g_0,\quad a(1)=g_1,
+\tag{CSA.2}
+$$
+
+where $z_i=\bot$ means that actual finite location has not been constructed.
+Substitute the 64 tape components and $R(z)$ into the outer $F_{65}$.
+Call the resulting full ordered tree $U_+(Y)$ and add exactly SSA's
+marked-head links to obtain $\Gamma_+(Y)$. The tape-origin links are
+absent before the corresponding heads exist and number 65 after acquisition.
+There is no descriptor-to-block shortcut.
+
+The structural machine stores these incidences. $Y$ is the comparison
+record, not a byte payload maintained beside them. $F_q$ is charged empty
+capacity where a bit is absent; it contains no future code value. All
+64 tape words are literal, including raw invalid packets and unfinished
+copies. Old control versions, banks and dead material remain in place.
+Each component has the authority of its actual field. The trusted core's
+bounded internal probes grant no owner an all-owner traversal capability.
+

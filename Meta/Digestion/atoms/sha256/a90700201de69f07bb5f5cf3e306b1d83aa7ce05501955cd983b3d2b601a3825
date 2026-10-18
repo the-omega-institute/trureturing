@@ -1,0 +1,45 @@
+### 91.1. Original channels, forward Grams, and the adaptive theorem
+
+The logical input has orthonormal basis |f,i〉, 1≤f≤4 and i∈{0,1}. The target channel ℱ:C⁸→C⁴ is
+
+\[
+ \mathcal F(|f,i\rangle\langle f,j|)=\delta_{ij}|f\rangle\langle f|,
+ \qquad
+ \mathcal F(|f,i\rangle\langle g,j|)=\tfrac12|f\rangle\langle g|
+ \quad(f\ne g).
+                                                               \tag{1}
+\]
+
+Keep the fixed correlated encodings V_in|f,i〉=|f,i〉⊗|f,i〉 and V_out|f〉=|f〉⊗|f〉, with encoding channels J_in and J_out. For arbitrary original CPTP maps A,B:C⁸→C⁴, put
+
+\[
+ \delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                    -J_{\rm out}\circ\mathcal F\|_\diamond.
+                                                               \tag{2}
+\]
+
+The norm is unhalved and permits arbitrary reference systems and arbitrary operator inputs in its definition. No Kraus-rank bound or output-support restriction is imposed unless stated.
+
+Choose Stinespring isometries V_A,V_B and define their correct-output records
+
+\[
+ a_{fi}=(\langle f|\otimes I)V_A|f,i\rangle,
+ \qquad b_{fi}=(\langle f|\otimes I)V_B|f,i\rangle.
+                                                               \tag{3}
+\]
+
+Let G,H be their forward Grams, with inner products conjugate-linear in the first argument, and put K=G⊙H. Let T have diagonal blocks I₂ and off-diagonal blocks J₂/2, and set L=T−K. The original encoded product uses the transpose of this forward Gram.
+
+Define the compact set of fibre-block densities and the adaptive value
+
+\[
+ \begin{split}
+ \mathcal D&=\{\rho=\bigoplus_{f=1}^4\rho_f:
+                \rho_f\ge0,\ \sum_f\operatorname{Tr}\rho_f=1\},\\
+ \mathcal B(L)&=\max_{\rho\in\mathcal D}
+              2\operatorname{Tr}(\sqrt\rho L\sqrt\rho)_+.
+ \end{split}                                             \tag{4}
+\]
+
+Here X₊ denotes the positive part of a Hermitian matrix X.
+

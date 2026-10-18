@@ -1,0 +1,50 @@
+**Lemma 10.2 (explicit Grams and saturated branch).** Set
+$\kappa_{02}=h_0c+h_2d$,
+$A_y=\sum_i h_i^2p_{yi}$,
+$B_y^{\rm res}=b^2p_{y0}+a^2p_{y1}$,
+$C_y^{\rm res}=d^2p_{y0}+c^2p_{y2}$ and
+$q_y=\sqrt{y(64-y)}/128$. Then
+
+$$
+C^{(y)}=
+\begin{pmatrix}
+A_y&\kappa q_y&\kappa_{02}\sqrt y/16\\
+\kappa q_y&B_y^{\rm res}&ac\sqrt{64-y}/16\\
+\kappa_{02}\sqrt y/16&ac\sqrt{64-y}/16&C_y^{\rm res}
+\end{pmatrix},\qquad
+C(\rho_{y,e,n})=C_gC^{(y)}C_g,\quad C_g=\operatorname{diag}(1,en,e).
+\tag{PG.54}
+$$
+
+All twelve have $b_0<k$ in Convention 6.3, so their inherited spectral constants have $\mu_y>0$.
+
+Proof. The entries are (PG.19). Also
+$U_{e,n}DU_{e,n}=D$,
+$U_{e,n}TU_{e,n}=enT$ and
+$U_{e,n}SU_{e,n}=eS$, giving the congruence and preserving $B$.
+
+For saturation, $\alpha<.03$, $B_y^{\rm res}<.036$ and
+$|C_{TS}|=ac\sqrt{64-y}/16\le ac/2<.009$.
+From (PG.51)–(PG.53), $a/b>3/8$, $b>2/15$, while $h_0>19/20,h_1>7/10$. Thus
+
+$$
+\kappa=b(h_0a/b+h_1)>
+\frac2{15}\left(\frac{19}{20}\frac38+\frac7{10}\right)
+=\frac{169}{1200}>\frac7{50}.
+\tag{PG.55}
+$$
+
+Suppose $b_0\ge k$ for one original signed Gram. For its unit positive-$D$ kernel $v_0$,
+$(1+\alpha)v_T^2+(1+\beta)v_S^2\le\ell<1/36$,
+so $|v_T|,|v_S|<1/6$, $v_D>5/6$. Positivity of $C-\lambda_0B$ gives $\lambda_0\le A_y<1$. The $T$ row of its kernel equation would yield
+
+$$
+|C_{DT}|v_D
+ \le(C_{TT}+\alpha\lambda_0)|v_T|+|C_{TS}||v_S|
+ <\frac{.036+.03+.009}{6}=\frac1{80}.
+$$
+
+But $y(64-y)=295,768,999$, all greater than $17^2$, so (PG.55) instead gives
+$|C_{DT}|v_D>(7/50)(17/128)(5/6)=119/7680>1/80$.
+This contradiction proves the strict saturated branch, excluding the transition for these twelve. This is the inherited RG argument. $\square$
+

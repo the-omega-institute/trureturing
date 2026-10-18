@@ -1,0 +1,68 @@
+**Definition 1.2 (the arithmetic interface being reused).** Use the finite
+chart family and bijection of [CAR, Theorem 3.2][CAR]:
+
+$$
+\coprod_{\eta\in\mathcal A}
+ \{\mathbf n\in\mathbb N^{d_\eta}:
+                  \operatorname{Adm}_\eta(\mathbf n)\}
+ \xrightarrow[\text{bijection}]{\ \Theta\ }D,
+\qquad
+(\eta,\mathbf n)\longmapsto\Theta_\eta(\mathbf n).
+\tag{NPS.2}
+$$
+
+Here $\mathbb N$ includes zero; $d_\eta=0$ is permitted. The predicates
+$\operatorname{Adm}_\eta$ and
+$\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)$ are those of
+[CAR, Lemma 4.1][CAR]. The latter means precisely
+
+$$
+R_Q(\Theta_\eta(\mathbf n))
+ =R_Q(\Theta_\theta(\mathbf m)).
+\tag{NPS.3}
+$$
+
+Both predicates are effective first-order Presburger formulas. Admission
+retains the entire acquired input, including both endpoint guards of
+every signed record. The chart inverse is effective on a supplied
+concrete source; no chart selector or source tuple is thereby installed
+as an observation.
+
+Use the physical descriptors of [CAR, Definition 6.1 and Theorem 6.2][CAR].
+For the common finite skeleton depth $H$, their types are the finitely
+many literal words of length at most $H$, and the finitely many choices
+$(z,b)$ with $|z|=H$ and $b\in\{L,R\}$. A descriptor of the latter
+type has unbounded natural parameters $(t,l)$ satisfying
+
+$$
+l\ge1,\qquad
+l-1\le t-\omega(b)\le2(l-1),
+\qquad \omega(L)=1,\quad\omega(R)=2.
+\tag{NPS.4}
+$$
+
+This notation denotes ordinary integer inequalities, equivalently
+addition inequalities over naturals. A long descriptor describes a word
+$zs$ with suffix length $l$, suffix weight $t$ and last letter $b$.
+Write $\operatorname{Valid}(\delta)$ for its supplied validity formula;
+a short literal descriptor is automatically valid. Every finite word
+has a descriptor, and every valid descriptor has an effectively
+constructible single literal realization $p(\delta)$. For the four-reply
+alphabet $\mathcal C=\{\mathsf{absent},\alpha,\beta,\mathsf{branch}\}$,
+the supplied predicates satisfy
+
+$$
+\operatorname{Reply}_{\eta,c}(\mathbf n,j,\delta)
+\quad\Longleftrightarrow\quad
+r_{\rho^j\Theta_\eta(\mathbf n)}(p)=c
+\quad\text{for every realization }p\text{ of }\delta.
+\tag{NPS.5}
+$$
+
+This equivalence holds on every admitted chart tuple, at every natural
+epoch, with the **same physical word** on the whole chart union. It
+includes actual absence and the endpoint condition for a suffix ending
+in $L$. Its formulas are Presburger jointly in source coordinates,
+epoch and descriptor parameters. These are supplied interfaces; their
+chart, normalization and word-realization proofs remain in CAR.
+

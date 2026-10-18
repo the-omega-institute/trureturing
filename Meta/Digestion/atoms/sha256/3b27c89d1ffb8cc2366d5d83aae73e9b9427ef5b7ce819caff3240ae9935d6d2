@@ -1,0 +1,32 @@
+**Definition 4.1 (the final weighted constructor graph).** In a saturated
+unmarked component choose one of its leaf or pair descriptors if present.
+The clashes exclude having both. A leaf descriptor $t$ gives
+
+$$
+V_v=[\ell_v(p,q)],\qquad \ell_v=a_t-\delta_t.
+\tag{NAC.14}
+$$
+
+A pair descriptor $p_0=F(l,r)$ gives
+
+$$
+V_v=F(\sigma^{w_L}V_{v(l)},\sigma^{w_R}V_{v(r)}),
+\qquad w_L=\delta_l-\delta_{p_0},\quad
+w_R=\delta_r-\delta_{p_0}.
+\tag{NAC.15}
+$$
+
+These are directed edges with fixed integer weights. Marked components
+are assigned $O$. A component with no descriptor is free and is also
+assigned $O$ for the selected solution. A pair component remains a pair
+equation, including when it belongs to a constructor cycle. In particular,
+a terminal-free recursive component is not removed from the graph merely
+because it has no displayed leaf.
+
+Unfold (NAC.15) down finite words, adding weights, and use (NAC.14) when
+a terminal is reached. Free and marked states unfold as $O$. Every edge
+out of a pair consumes one address letter; hence this defines one code
+$V_v^*$ for each state. It may have infinitely many differently labelled
+leaves. It is a finite weighted representation, not a claim that the expanded
+native tree has finitely many distinct subtrees.
+

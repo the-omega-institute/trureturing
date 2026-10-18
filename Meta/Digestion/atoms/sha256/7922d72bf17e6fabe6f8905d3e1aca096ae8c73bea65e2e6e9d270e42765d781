@@ -1,0 +1,43 @@
+**Theorem 13.5 (the complete SAME six-law fiber).** Keep exactly the two joint flows (11.34) and the individual complete laws (11.29)–(11.31). Thus $\Sigma=\{7/20,23/60\}$, $(u_0,u_1,u_2)=(1/3,11/30,2/5)$, and the notation $m=11/30,q=19/30,t_\sigma=q\sigma$ is that of Definition 11.7; this local scalar $m$ does not change the source parameter $m=2$. Every abstract realizable triple with these flows, allowing arbitrary finite COMPLETE refinements, has exactly the form
+
+$$
+\Xi=\frac16\sum_{\sigma,i,k}T^\sigma_{ik}
+             \delta_{(Q_{\sigma,i},W_\sigma,Q_{\sigma,k})},
+\tag{13.12}
+$$
+
+where the full block parameterization is
+
+$$
+T^\sigma_{i,\cdot}=(s_i^\sigma,1-2s_i^\sigma,s_i^\sigma),\qquad
+0\le s_i^\sigma\le\tfrac12,\qquad
+\sum_{i=0}^2s_i^\sigma=1.
+\tag{13.13}
+$$
+
+Every real choice in (13.13) has the abstract original initialized realization of Theorem 13.4. Rational choices have represented exact realizations under Proposition 12.6's fresh private fair-bit convention.
+
+**Proof.** Propositions 11.8–11.9 already establish the normalized full masses, including zero infinite coordinates, their membership in the required descriptor spaces and the two compatible whole flows. Their distinctness is also exact: alpha distinguishes the three $i$ values, $Q_{\sigma,i}(\beta\beta)=(1-u_i)(1-\sigma)$ distinguishes equal $i$ in different blocks, and $W_\sigma(\beta)=1-\sigma$ distinguishes the two suspended atoms. Thus the p atom masses are $1/6$ and the suspended atom masses are $1/2$, without an unaccounted collision.
+
+Use the SAME residual identities (11.36). The affine full-law relation (11.30) also gives $Q_{\sigma,1}=G_\sigma$ because $u_1=m$. Hence
+
+$$
+\mathcal R_B(Q_{\sigma,i})=W_\sigma,\qquad
+\mathcal R_A(W_\sigma)=G_\sigma=Q_{\sigma,1}
+                         =\tfrac13\sum_kQ_{\sigma,k}.
+\tag{13.14}
+$$
+
+These equalities include every completed word and infinity, and verify (13.4) for these exact flows. Nonnegativity and the exact first-two and last-two marginals exclude all cross-block triple mass. Writing the remaining mass as $T^\sigma_{ik}/6$ forces every row and column of each $T^\sigma$ to sum to one.
+
+For an incoming $i$, the full-law condition (13.7) is $\sum_kT^\sigma_{ik}Q_{\sigma,k}=G_\sigma$. Testing alpha makes it necessary that
+
+$$
+\sum_kT^\sigma_{ik}u_k=m.
+\tag{13.15}
+$$
+
+Conversely, the row sum and the full affine formula $Q_{\sigma,k}=u_k\delta_\alpha+(1-u_k)\beta W_\sigma$ turn (13.15) into the whole mixture $m\delta_\alpha+q\beta W_\sigma=G_\sigma$. This proves every full-law coordinate, including infinity. The reduction to this emission equation is justified by the fixed full-law affine relation, not by emissions alone for general descriptors.
+
+Since $u_k=m+(k-1)/30$, (13.15) is exactly $T^\sigma_{i0}=T^\sigma_{i2}$. Nonnegative row sums give the row form and bounds in (13.13). Column 0 forces $\sum_i s_i^\sigma=1$; this gives column 2 equal to one and column 1 equal to $3-2=1$. These conditions are therefore necessary and sufficient, including boundary rows with zeros. Theorem 13.4 applies to every such tensor. Its supplied realization has p labels $(\sigma,i)$, suspended labels retaining the same incoming $(\sigma,i)$, uniform six-label phase rows, $B=I$ and block alpha-update $A=T^\sigma$. This is a sufficient realization of every triple, while necessity allowed arbitrary refinements and nonstationary original history rows; it imposes no identity-update or reversibility requirement on those other realizations. $\square$
+

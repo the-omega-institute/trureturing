@@ -1,0 +1,41 @@
+**Lemma 11.2 (Existence, monotonicity, and limit).** For every fixed
+$N\ge1$, the minimum in (11.10) exists, the sequence $d_{N,m}$ is
+nondecreasing, and
+$$
+\lim_{m\to\infty}d_{N,m}=1.
+\tag{11.11}
+$$
+
+**Proof.** The zero vector belongs to $\mathcal R_{N,m}$ and has
+$J_m(0)=1$. The set
+$$
+K_m=\{u\in\mathcal R_{N,m}:J_m(u)\le1\}
+$$
+is nonempty and closed, and $J_m(u)\le1$ implies
+$0\le u_j\le2\sqrt j$ for every coordinate. Thus $K_m$ is compact and
+$J_m$ attains a minimum on it. Outside $K_m$ the objective is larger than
+one, so this is also the global minimum on $\mathcal R_{N,m}$ and
+$0\le d_{N,m}\le1$; the endpoint value $d_{N,m}=1$ is included.
+
+Truncating a feasible vector for $m+1$ to its first $2m+1$ coordinates
+takes the upper-left principal submatrix of $H_{m+1}$ and cannot increase
+the maximum in $J_m$. Applying this to a minimizer proves
+$d_{N,m}\le d_{N,m+1}$.
+
+Let $D=\lim_m d_{N,m}\le1$. If $D<1$, choose $D<\sigma<1$. A minimizer
+$u^{(m)}$ then obeys, on every defined coordinate,
+$$
+(1-\sigma)\sqrt j\le u_j^{(m)}
+ \le(1+\sigma)\sqrt j.
+\tag{11.12}
+$$
+A scalar diagonal subsequence gives an infinite sequence $u_j$ with the
+same bounds. Any finite submatrix of $(u_{p+q+1})$ is, for sufficiently
+large $m$, a submatrix of $H_m(u^{(m)})$; its $(N+1)$-minors therefore
+vanish in the limit. Lemma 5.1 applied to $u_{j+1}$ makes this sequence
+bounded, contradicting the positive lower bound in (11.12). Hence
+$D=1$. The finite prefixes are a relaxation only: no individual feasible
+finite prefix is asserted to extend to a native model or even to an infinite
+finite-rank realization. The infinite finite-rank sequence used in the
+contradiction is obtained by diagonal compactness. $\square$
+

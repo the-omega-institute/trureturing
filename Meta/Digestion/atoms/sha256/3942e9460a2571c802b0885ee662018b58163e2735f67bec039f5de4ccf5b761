@@ -1,0 +1,103 @@
+**Theorem 152.1 (General rational strict-cap separator normal form).** Fix
+$L\ge1$. If $\Pi_{N,L}\not\subseteq\Pi_{O,L}$, there exist a rational
+profile satisfying (150.3), a rational complete $N$ allocation, a nonzero
+$y\in\mathbb Z_{\ge0}^{m_L}$ and a rational $\gamma>0$ such that the
+allocation satisfies every closed-cap row at $e$, (151.1) holds, and for
+every extension by a positive nonincreasing vanishing actual tail with
+$a_{L+1}\le e$, there is an original one-common-seed $N_2$ witness at cap
+$e$, while every original full-carrier arbitrary-address $O_2$ competitor
+has error strictly greater than $e+\gamma$. In particular,
+
+$$
+\exists N\in\mathcal N_2:\ e_a(N)\le e,
+\qquad
+\forall O\in\mathcal O_2:\ e_a(O)>e+\gamma,
+\qquad
+\inf_{O\in\mathcal O_2}e_a(O)\ge e+\gamma.
+\tag{152.1}
+$$
+
+All classes are exactly Definition 90.1's original hard-two classes.
+The premise is failed parameter containment, not a discovered counterexample.
+
+**Proof.** Propositions 150.1--150.3 give a strict rational full $N$ lift;
+Propositions 151.1--151.2 give its integer separator. Put
+
+$$
+W=\sum_{j=0}^{m_L-1}y_j>0,\qquad
+\gamma=\min\left\{\frac{\Delta}{2W},\frac{a_L-e}{2},\frac{1-e}{2}\right\},
+\qquad s=e+\gamma.
+\tag{152.2}
+$$
+
+Every entry is rational and positive, so $0<e<s<a_L$ and $s<1$.
+All rows change at the larger cap by the same amount:
+$d_j(a,s)=d_j(a,e)-\gamma$. Hence
+
+$$
+y\cdot d(a,s)-B_{O,L}(y)=\Delta-W\gamma\ge\Delta/2>0.
+\tag{152.3}
+$$
+
+No complete stopped allocation meets the larger closed cap $s$.
+The head and both active lengths remain $L$; no active-set boundary was
+crossed in obtaining the margin.
+
+Keep this head and choose any entire tail as in the statement. One explicit
+wholly rational sequence is
+
+$$
+a_{L+j}=\frac e{j+1}\qquad(j\ge1).
+\tag{152.4}
+$$
+
+Every other permitted positive monotone vanishing tail, rational or
+irrational and including $a_{L+1}=e$, works with exactly the same head,
+allocation, seed rule and $\gamma$. Together with (150.3) it is (140.2),
+and at both caps $e,s$ its actual active length is exactly $L$.
+
+Use (140.7) to obtain rational masses $q_{S,f}$ over entire schedule/table
+pairs. A common denominator gives one finite categorical partition of
+$U\in[0,1)$ into half-open intervals selecting $S,f$ before any replies.
+This is one source-independent common seed for every actual $x$.
+It adds no advice, source law, source label observation or independent
+per-source terminal randomization. Query precisely the selected original
+prime addresses in $S$ and hand off the original tape $\theta_{f(c)}$.
+The rule has zero advice, at most two actual requests and finite measurable
+handoff for every actual source and seed. Actual source and static answers
+are exactly (140.1), and their pattern witnesses remain supplied by 35.2.
+
+If $n(x)\le L$, all its low words, including all multiple-zero suffixes,
+satisfy the complete finite rows at cap $e$. If $n(x)>L$, its low word is
+$1^L$ and no mark beyond $L$ is emitted. The exact identity (110.9) gives
+
+$$
+\operatorname{TV}(p_{1^L},\lambda_x^a)
+ =\max\{1-p_{1^L}(0),a_{n(x)}\}\le e.
+\tag{152.5}
+$$
+
+The infinite positive tail is not truncated. The all-positive finite row
+provides the base deficit, and every tail amplitude is at most $e$.
+This constructs the original $N$ attainer relative to its selected laws.
+
+Now suppose any original $O_2$ competitor, with arbitrary addresses and
+arbitrary original tapes, had uniform error at most $s$.
+The necessary $O$ direction of the already proved exact closed-cap
+Theorem 110.2 would give a finite stopped cap-feasible allocation at $s$;
+Theorem 109.1 identifies its stopped region with $\mathscr C_L$.
+Its original repetitions where allowed, common seed and sourcewise
+almost-sure finite handoff are handled by that supplier, not weakened
+here to a low-address or finite-support class. Formula (152.3) excludes
+every such allocation, a contradiction. Thus each original competitor
+has error $>s$ and their infimum is $\ge s$. An infimum might be approached,
+so no strict infimum inequality is inferred from the strict inequalities
+for individual competitors.
+
+The original consumer and its nonatomic $\mu_x$ remain fixed. The
+constructed finite set of $B_1$ marks restricts only our $N$ witness;
+its error against each $\mu_x$ is one and the consumer is unknown there,
+as in 82.1. All cap and lower-bound conclusions concern the separately
+selected $\lambda_x^a$. This completes the conditional original-source
+normal form. $\square$
+

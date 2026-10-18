@@ -1,0 +1,23 @@
+**Boundary 4.2 (Public bias and the optional almost-sure total cap).** The
+relabeling of a fixed supplied tree is independent of $p$. If a rule uses
+$p$ as fixed public data, Theorem 4.1 applies to its tree separately at
+each fixed $p$; it does not assert that the tree selection is independent
+of $p$ or impose a joint measurability requirement in $p$.
+
+The same construction also gives an optional variant for an input with
+$\mathbb P_p(N\le k)=1$ at a specified allowed $p$. Indeed normalization
+changes its $Z$ only on $\{N>k\}$, a product-null event. The normalized
+tree map is measurable, its compression is formally capped, and product
+integration in (4.7) preserves the original joint law. This is an
+almost-sure input hypothesis and an everywhere-capped output, rather
+than a claim that those requirements coincide for individual rules.
+
+A budget only on returns cannot replace either total-cap hypothesis.
+For example, a rule can make exactly $k+1$ repeated actual reads and
+then continue internally forever. It has no returning path, so satisfies
+any bound restricted to returns, but its $N=k+1$ law cannot be preserved
+by a total-cap-$k$ representative. More generally, the truncation used in
+[Original, Theorem 14.1][Original] preserves its stated budgeted-return projection;
+it need not preserve an unrestricted rule's whole law or its costs above
+$k$. No such stronger conclusion is used in Theorem 4.1.
+

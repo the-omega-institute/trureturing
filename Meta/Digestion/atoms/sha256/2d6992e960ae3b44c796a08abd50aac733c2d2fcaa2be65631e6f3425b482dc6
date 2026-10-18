@@ -1,0 +1,32 @@
+**Definition 52.1 (the original-real class and the full-reference objective).** Let $N:M_3\to M_5$ be an actual original-real CPTP encoder of [Definition 1.1 and Theorems 1.2–1.3 of the first volume](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md#1-the-complete-actual-real-frame-domain). Its Kraus matrices are real in the fixed original input and output bases, its actual phase-difference spectrum is $(a,\beta,0,-\beta,-a)$, and
+
+$$
+0<\beta\leq\frac12,\qquad a=1-\beta,\qquad
+\chi_\pm=\frac{|0\rangle\pm i|1\rangle}{\sqrt2},\qquad
+\mathcal C=\operatorname{span}\{|0\rangle,|1\rangle\}.
+\tag{S.1}
+$$
+
+Choose a real Kraus compression of actual rank $r\leq9$ as in Theorem 1.3, and fix its Stinespring isometry and complement
+
+$$
+V:\mathbb C^3\longrightarrow\mathbb C^5_B\otimes E,
+\qquad E=\mathbb C^r,\qquad
+\Gamma(X)=\operatorname{Tr}_B(VXV^\dagger).
+\tag{S.2}
+$$
+
+All admissible third columns remain in this class; no component in the active output space is removed. For positive semidefinite, possibly subnormalized operators write $f(Q,M)=\|\sqrt Q\sqrt M\|_1$. For an actual input density $\rho$ and any of its purifications, let $F_\rho(\Lambda_1,\Lambda_2)$ be root fidelity of the purified channel outputs. Put
+
+$$
+\begin{aligned}
+F(\Lambda_1,\Lambda_2)&=\min_{\rho\in\mathsf D(\mathbb C^3)}F_\rho(\Lambda_1,\Lambda_2),\\
+g_N&=\max_{R:M_5\to M_3\ {\rm CPTP}}F(RN,\mathrm{id}_3),\\
+\delta_N&=\inf_{R:M_5\to M_3\ {\rm CPTP}}\|RN-\mathrm{id}_3\|_\diamond,\\
+T&=\frac{1+\sqrt a}{2},\qquad v=\sqrt T,\qquad d=1-T.
+\end{aligned}
+\tag{S.3}
+$$
+
+Recoveries are all complex CPTP maps on the whole five-dimensional output. The diamond norm is unhalved and allows every finite complex reference. Dimension at most three suffices for an input-purification witness below; it does not narrow that supremum.
+

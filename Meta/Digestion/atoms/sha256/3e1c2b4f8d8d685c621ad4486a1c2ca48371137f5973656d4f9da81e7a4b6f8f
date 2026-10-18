@@ -1,0 +1,55 @@
+## 7. Whole-class information, unions and comparison with VII
+
+The gain-shape result uses one affine line containing the entire
+lifted legal class. Joint separation of the six coordinates then
+provides one scalar injective on that whole line. This rules out
+different collision pairs on different arms inside that class, even
+when the pairs have no common endpoint. The fixed-source result
+instead uses one parameter $d$ and two terminal slopes which cannot
+both vanish. Neither proof imposes a finite-cardinality restriction.
+
+Both are conditional statements about known candidates. The observed
+history does not identify a shape $h$ or a source $P_*$, and neither
+theorem supplies such information. A union of different shape classes
+can have different containing affine lines; a scalar injective on
+each of several classes need not be injective on their union.
+Different fixed-source classes may require different responses and
+may collide with each other. No theorem here gives one scalar or one
+policy on the unrestricted union by taking these conditional inverses
+separately.
+
+VII, Theorem 4.1 states that every distinct pair on this exact entire
+$JMMJM$ fiber has $\neg L_2$. Its Section 4 proof includes the
+rank-one terminal calculation, a separate double-future-root argument
+and the rational Bernstein certificate of its Section 3. The
+coefficient-array identities are not independently certified here.
+None of that pair-exclusion theorem, its large coefficient arrays or
+the unseen II–VI bridges is a premise of Theorems 3.1, 4.1 or 5.1
+above. The small matrix identities, factorization, interpolation and
+all separation arguments needed for these three theorems are
+displayed here.
+
+Even granting VII's pair exclusion, its logical scope is a pair,
+not an arbitrary family or an unrestricted triple. For two worlds,
+$L_2$ requires agreement on both sixth responses and all four
+terminal responses. On a larger set, the collision pairs retained
+after different actions or responses can differ. Excluding each
+fixed pair does not establish (6.3) for the whole larger set.
+The additional affine structure above is what supplies (6.3) for
+the promised classes.
+
+The histories appearing in the supplied VII source have distinct
+roles:
+
+| Literal history | Scope retained |
+| --- | --- |
+| $JMMJM$, with (1.1) and all six readings | Theorems 3.1–5.1 here; the pair exclusion stated in VII, Theorem 4.1 |
+| $JMMJ$ and its earlier $JMM$ history with the readings in (1.1) | VII's small-child consumers retain their cardinality promises on each actual $J$, then $M$, child |
+| $MMJM$, namely $(0,M,1,M,23/7,J,331/35,M,Y)$ | VII's separate common-prediction, common-$b,d_6$ whole-class application retains its own promises and zero-stratum restrictions |
+| $MJMMJ$ | The distinct pair-exclusion history attributed by VII to VI; it is not (1.1) |
+
+No local decoder or obstruction is transferred between these ancestors.
+In particular the $MMJM$ common-prediction constants are not extra
+observations on the present trajectory, and its response chart is
+not the $Q$ chart of this $JMMJM$ child.
+

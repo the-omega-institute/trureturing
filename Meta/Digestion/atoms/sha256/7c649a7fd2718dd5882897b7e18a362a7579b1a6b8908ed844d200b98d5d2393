@@ -1,0 +1,54 @@
+**命题 23.10（最小扇区的两种时间律及未来分离）。** 取 $m=2,U=V=1,W=0$，基按
+
+$$
+|L\rangle=|0,1,0,1,0\rangle,\qquad
+|R\rangle=|1,0,0,0,1\rangle
+$$
+
+排列。它们分别有 $k=0,1$。于是
+
+$$
+\widehat H=\begin{pmatrix}1&-1\\-1&1\end{pmatrix},\qquad
+L=-\widehat H,\qquad \operatorname{spec}\widehat H=\{0,2\},
+\qquad \pi=(1/2,1/2).
+$$
+
+由 $|L\rangle$ 出发的酉状态及 $R$ 的概率为
+
+$$
+e^{-it\widehat H}|L\rangle
+=e^{-it}(\cos t\,|L\rangle+i\sin t\,|R\rangle),
+\qquad P_R^{\rm quantum}(t)=\sin^2t.
+$$
+
+同一初始确定占位的连续时间链则给
+
+$$
+P_R^{\rm Markov}(t)=\frac{1-e^{-2t}}2\qquad(t\ge0).
+$$
+
+另取
+
+$$
+|\Psi_\pm\rangle=\frac{|L\rangle\pm i|R\rangle}{\sqrt2}.
+$$
+
+两态所有五个平均占位相同，$\mathbb E n_{13}=1/2$，但在上述同一酉演化下
+
+$$
+\left.\frac d{dt}\langle n_{13}\rangle_{\Psi_\pm(t)}\right|_{t=0}=\pm1.
+$$
+
+证明。两点率为 $\beta_0=\delta_1=1$，代入扇区矩阵得显示式；对称和反对称向量给特征值零、二。写 $\widehat H=I-\sigma_x$ 得酉式。概率方程 $\dot P_R=1-2P_R,P_R(0)=0$ 给链的指数式。
+
+两个 $\Psi_\pm$ 在占位基的对角概率都为 $(1/2,1/2)$，故每个对角占位读数都相同，五均值为 $(1/2,1/2,0,1/2,1/2)$。而
+
+$$
+n_{13}=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+ i[\widehat H,n_{13}]=\begin{pmatrix}0&-i\\i&0\end{pmatrix}=\sigma_y.
+$$
+
+$\Psi_\pm$ 是 $\sigma_y$ 的正、负本征态，Heisenberg 导数即为 $\pm1$。更具体地，未来概率是 $(1\pm\sin2t)/2$，所以在一般的同一个未来时刻也可分离。证毕。
+
+这是在明确给定相干态、酉演化和占位观测的有限模型里，当前完整平均占位不足以决定未来读数的成对例子。它不自动供应原有概率读者、原生位词守卫或比较装置的实现。量子振荡和经典衰减虽有同谱源，时间律已经在最小扇区上不同。
+

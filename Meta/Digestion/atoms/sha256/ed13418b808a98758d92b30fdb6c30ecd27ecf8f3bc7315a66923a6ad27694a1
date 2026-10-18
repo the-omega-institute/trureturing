@@ -1,0 +1,26 @@
+**Convention 10.1 (Inherited values and literal table notation).**
+The existing [Installed Three, Sections 4–10][I3] owns
+
+$$
+\begin{gathered}
+F=\frac a2+a\eta(1+c+c^2),\qquad
+V=\frac a2+a\eta(3/2+a^2),\\
+W=Z+a\eta=S_3-d\eta^2,\qquad
+X_\star=S_3-\frac{ad\eta c}{2}.
+\end{gathered}
+\tag{10.1}
+$$
+
+The following four controllers and masses are inherited actual
+lower realizations. They are included to identify exactly the lower
+sides retained with the new upper bound. None is asserted to attain
+$S_3-\rho$. Each displayed table is a separate installation.
+Write $L(k)=\operatorname{Read}(2(j+k))$ for a fixed integer
+literal chosen using public $j$, and use fixed Halt rows
+$Z_H=\operatorname{Halt}(h_1(\sigma))$,
+$P=\operatorname{Halt}(h_0(\sigma))$ and, when listed,
+$Q=\operatorname{Halt}(h_0(1-\sigma))$.
+There is no runtime address arithmetic. A dash denotes no update
+at a Halt. Initialize constantly at the first row, on the given
+unchanged seed space; each instruction can take duration one.
+

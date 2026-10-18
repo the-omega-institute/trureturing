@@ -1,0 +1,38 @@
+**Lemma 2.1 (Source sections and paid padding).** Fix a seed value
+$u$. A consistent finite acquired record has source section exactly
+
+$$
+C(r)=\{X_{t_i}=x_i:1\le i\le n\}.
+\tag{2.1}
+$$
+
+An inconsistent record has empty section. On a terminal section its
+output is fixed. For the purpose of $(q,L)$, a fixed-seed protocol
+that starts with a read can be represented by a depth-two binary tree
+with a first address $t$, second addresses $t_0,t_1$, and an
+accept/reject decision and an output at each leaf. This representation
+preserves its return and error masses before optimizing outputs.
+
+Proof. At a fixed seed and prefix, every next event and finite delay
+is determined. A requested address and its reply intersect the old
+section with $\{X_t=x\}$. A finite return imposes no extra source
+condition; internal divergence is the same behavior on the entire
+prefix section. Induction proves (2.1), including adaptive choices.
+Contradictory repeated replies give an empty cylinder.
+
+If after a second call the next event is a third read or internal
+nonreturn, reject that branch for this calculation. A later return
+after a third read is outside $E_2$. If a one-read branch returns,
+make an actual paid repeat of that address, ignore its necessarily
+repeated reply, and then return the same state. The branch still
+returns within two calls with exactly the same source and error
+masses. A short rejected branch can likewise be padded by a paid
+repeat and internal nonreturn. This yields the asserted tree.
+
+Before any read, internal nonreturn gives $(q,L)=(0,0)$. A zero-read
+return gives $q=1$ and correct mass at most $a/2$. These cases will
+receive explicit representatives in Theorem 4.3. All later behavior
+discarded from the calculation remains allowed in the original
+competitor class. The section argument is the interface of Original,
+Theorems 9.2–10.1, here proved directly. $\square$
+

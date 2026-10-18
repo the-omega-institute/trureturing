@@ -1,0 +1,13 @@
+**Corollary 3.6 (placement of continuing authority).** For the protocols
+above, rechecking the original admission predicate is not in general
+a continuing permission. A sufficient local dispatch order is: first
+interpret retained core phase; at Halt take no step; at Busy execute
+only the admitted row's next authorized stage; only at Ready consult
+current original code and current admission guards.
+
+Proof. In Busy this order does not depend on the predicates made false
+in Theorem 3.3 and Propositions 3.4–3.5. Induction on a fixed finite
+stage list therefore removes those three causes of self-lock. It does
+not establish the list's data/head/constructor guards or install that
+dispatch order; those are separate hypotheses in §5. ∎
+

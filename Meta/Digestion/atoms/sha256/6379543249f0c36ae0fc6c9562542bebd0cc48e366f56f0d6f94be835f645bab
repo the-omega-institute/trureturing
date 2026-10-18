@@ -1,0 +1,172 @@
+**Theorem 211.12 (Two full-row tradeoffs and one sharp maximum).**
+For every balanced $Z$ and every $U_3,U_4$ as above, define
+$\delta_j=\Delta_N(Z+U_j)$. Then both
+
+$$
+\delta_3+\delta_4\ge\frac12,\qquad
+3\delta_3+\delta_4\ge1.
+\tag{211.35}
+$$
+
+The common sharp conclusion is
+
+$$
+\inf_{Z,U_3,U_4}\max(\delta_3,\delta_4)=\frac14,
+\tag{211.36}
+$$
+
+and it is attained for every $L\ge4$.
+For every positive linear exact selector, (211.35) holds with
+$\delta_j=\Delta_N(\mathcal S(q_j))$, and the infimum of this
+maximum over selectors is the same attained $1/4$.
+Every positive affine exact selector on the whole cone has zero offset
+and is included.
+
+**Proof.** For a complete table $D$ put
+$a_D(V)=V\cdot(z_D-r)$. Consider two lists of four legal $N$ tables:
+
+$$
+\begin{array}{c|c|c}
+ &\mathcal W&\mathcal F\\\hline
+1&(1,3;1,0,3,0)&(1,2;1,1,2,3)\\
+2&(2,3;2,0,3,0)&(1,3;1,1,3,0)\\
+3&(1,2;1,1,2,4)&(2,3;2,0,3,0)\\
+4&(3,4;0,0,4,0)&(3,4;0,0,4,0).
+\end{array}
+\tag{211.37}
+$$
+
+Define $J_{\mathcal W}=\sum_{D\in\mathcal W}a_D$ and
+$J_{\mathcal F}=\sum_{D\in\mathcal F}a_D$ as linear functionals
+on the full score space. Lower bounds for their coefficients on every
+independent row are
+
+| First zero or row | $J_{\mathcal W}$ coefficients $(A,C,P)$ | $J_{\mathcal F}$ coefficients $(A,C,P)$ |
+| --- | --- | --- |
+| $1$ | $(1,-3,-1)$ | $(1,-2,-1)$ |
+| $2$ | $(1,-3,-1)$ | $(1,-3,-1)$ |
+| $3$ | $(-3,2,-1)$ | $(-3,3,0)$ |
+| $4$ | $(-2,2,0)$ | $(-2,1,-1)$ |
+| $n\ge5$ | $(-1,0,-1)$ | $(-1,0,-1)$ |
+| positive $T$ | $-1$ | $-1$ |
+
+To verify this all-word table, if $N_0,N_n$ count the four outputs
+equal to zero and to the actual first zero, respectively, the three
+coefficients are
+$N_0-4\mathbf1_{n\ge3}$,
+$N_n-4\mathbf1_{n\le2}$, and $N_0+N_n-4$.
+For $\mathcal W$ on either early class, at least one table is correct,
+at least one outputs zero, and at most one outputs outside $\{0,n\}$.
+Indeed the head table is correct; if bit 3 is zero the last table is
+zero, whereas if bit 3 is one both early/3 tables are zero.
+For $\mathcal F$ on class 1, its first two tables are correct;
+if the third is wrong then bit 3 is zero and the fourth is zero,
+while if the fourth is wrong then bit 3 is one and the third is zero.
+On class 2 the outputs are $(2,3,2,0)$ when bit 3 is zero;
+when it is one they are $(2,0,0,4)$ or $(2,0,0,0)$.
+These facts prove the early bounds including every multiple-zero prefix.
+
+For class 3 the outputs are $(3,3,4,0)$ for $\mathcal W$ and
+$(3,3,3,0)$ for $\mathcal F$. For class 4 they are
+$(0,0,4,4)$ and $(3,0,0,4)$ respectively.
+For later classes and the positive word they are $(0,0,4,0)$ and
+$(3,0,0,0)$ respectively. This verifies every remaining coefficient;
+bits beyond four are unrestricted, not deleted.
+In each list, the $A$ lower coefficient plus the $C$ lower coefficient
+is at least $-2$ in every class, and every $P,T$ coefficient is at
+least $-1$. If $t_n$ is the common aggregate $A,C$ mass of balanced
+$Z$ in class $n$, integration gives
+
+$$
+J_{\mathcal W}(Z)\ge-2\sum_nt_n-\sum_wP_w-T=-K_Z=-3,\qquad
+J_{\mathcal F}(Z)\ge-3.
+\tag{211.38}
+$$
+
+This uses classwise equality of totals; it never pairs individual $A$
+and $C$ atoms or restricts their supports.
+
+The first two $\mathcal W$ tables collect every unit of $U_3$;
+the last two collect every unit of $U_4$. Their correct anchors are
+zero. Hence
+
+$$
+2\delta_3+2\delta_4\ge4+J_{\mathcal W}(Z)\ge1.
+$$
+
+The first three $\mathcal F$ tables collect all of $U_3$ and the
+last collects all of $U_4$, giving
+$3\delta_3+\delta_4\ge4+J_{\mathcal F}(Z)\ge1$.
+Both are comparisons of whole tables integrated against the same stock.
+They prove (211.35), and either implies the maximum is at least $1/4$.
+
+For simultaneous sharpness, put pair mass $3/8$ at each
+$w(\{a,3\}),w(\{a,4\}),w(\{a,3,4\})$, $a=1,2$, and
+$T=3/4$, obtaining balanced $Z$ of mass three. Choose $U_3$ as
+unit correct mass at $w(\{3,4\})$ and $U_4$ at $w(\{4\})$.
+All later bits are one. Zero collects the whole stock in every
+schedule, so its total baseline is three. Early labels collect only
+subsets of this pair stock; the only possible excess is the unit
+correct reward in its own cell. For the six pairs on coordinates
+$1,2,3,4$, the zero-label stock in that target cell is
+
+$$
+\begin{array}{c|rrrrrr}
+ &12&13&14&23&24&34\\\hline
+U_3&3/4&3/4&3/4&3/4&3/4&3/4\\
+U_4&3/4&9/8&3/4&9/8&3/4&3/4.
+\end{array}
+\tag{211.39}
+$$
+
+These entries follow by counting the six specified pair atoms and
+adding $T$ only in the positive cell. Thus every such support is at
+most $3+(1-3/4)=13/4$. A schedule involving a later constant-one
+coordinate reduces to a singleton or empty observation; its target
+cell contains a refined cell listed above and cannot have smaller
+baseline. This also controls all short $N$ functions and hence all
+short $O$ functions. The stopped head table $(1,2;1,2,j)$ attains
+$13/4$ for the respective $j$. Consequently both complete costs of
+each sharp score are $1/4$, proving attained (211.36) and simultaneous
+equality in both tradeoffs.
+
+It remains to connect arbitrary selectors to these full scores.
+For every nonnegative score the exact identity
+
+$$
+K-\sum_j\beta_j=2\sum_wA_w+\sum_wP_w+T
+\tag{211.40}
+$$
+
+holds. Let $s_0=(0,\ldots,0;1)$ and $c_j^0=(e_j,1)$ be the
+stock and correct generators of $\mathcal Q_L^+$.
+For any selector, $U_j=\mathcal S(c_j^0)$ has $K=\sum\beta=1$;
+(211.40) forces $A=P=T=0$ and then forces pure correct mass one
+on class $j$. Set $Z_1=\mathcal S(s_0)$.
+It has classwise balanced $A,C$ and $K_{Z_1}=1$.
+The stock in (211.35) is exactly $Z=3Z_1$, and
+
+$$
+\mathcal S(q_j)=U_j+3Z_1=U_j+Z.
+\tag{211.41}
+$$
+
+This factor three is essential: a mass-one stock bound must be
+multiplied by three before applying the unit correct rays of mass four.
+Linearity now proves both selector tradeoffs.
+Conversely take the sharp $Z,U_3,U_4$ above, choose any pure unit
+correct $U_j$ on every other class, and define
+
+$$
+\mathcal S(\gamma,K)=\sum_j\gamma_jU_j
+                     +\frac{K-\sum_j\gamma_j}{3}\,Z.
+\tag{211.42}
+$$
+
+It is positive and exact on the whole cone, so it attains the same
+sharp maximum. Finally an affine selector's offset is its value at
+zero. That score is nonnegative and has $K=0$, which forces all its
+coordinates zero. Its linear part is therefore the entire selector.
+This argument uses the closed whole cone, including its origin.
+$\square$
+

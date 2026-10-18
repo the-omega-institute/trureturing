@@ -1,0 +1,78 @@
+**Theorem 64.7 (homogeneous full retained-state finite-horizon correspondence).**
+For every authentic finite installed $D$, both prescriptions, $N=1,2$, and every
+$f\in\mathscr H_{D,N}$, define
+\[
+\begin{aligned}
+C_N&=6aN+M_N,\qquad s_N=1-(1+\beta_N^2)^{-1/2},\\
+r_N&=18a\delta\mathbf1_{N=2}+2C_Ns_N+\beta_N(C_N+M_N).
+\end{aligned}
+\]
+For every declared $T<\infty$ and every $|\tau|\le T$,
+\[
+\left\|e^{-i\tau\mathcal T^\diamond_{\delta,D,N}}W_Nf
+-W_Ne^{-i\tau H^\diamond_{D,N}}f\right\|
+\le |\tau|r_N\|f\|\le Tr_N\|f\| .                    \tag{64.12}
+\]
+This norm includes every atomic, mixed and continuum component and every phase.
+An initial admissible component $z\in\mathcal Q_{D,N}$ with $\|z\|\le\eta$ adds
+at most $\eta$, without any orthogonality assumption or reset. For fixed
+$a,g,\nu,T$ the bound tends to zero with $\delta$, uniformly over all finite
+installed $D$ and both fixed populations. It is not uniform over unbounded
+population or unbounded horizon. Decreasing $\delta$ changes storage mass at
+fixed unit seam lengths; no mesh, thermodynamic or physical-mass limit is supplied.
+
+Proof. Write $V_N=H^\diamond_{D,N}-aK_{D,N}$. The multiplier in (64.8) satisfies
+$U J_N=J_NV_N$, $\|U\|,\|V_N\|\le M_N$, and
+$\|H^\diamond_{D,N}\|\le C_N$. Set $Q_N=E_N-J_N$ and
+$D_N=a(B_N-K_{D,N})$. The exact operator identity of Theorem64.6 gives
+\[
+\mathcal T W_N-W_NH
+=J_N[H,S_N]+J_ND_NS_N+UQ_NS_N-Q_NS_NH .
+\]
+Since $\|S_N\|\le1$, $\|S_N-I\|\le s_N$ and
+$\|D_N\|\le18a\delta\mathbf1_{N=2}$, its norm is at most $r_N$.
+For the entire finite target space $W_Nf\in\operatorname{Dom}(\mathcal T)$, so
+integrating the exact derivative of
+$e^{-i(\tau-s)\mathcal T}W_Ne^{-isH}f$ is justified. Unitarity gives (64.12),
+including its factor $\|f\|$. An initial $z$ contributes exactly its preserved
+norm bound. The constants use only total incidence at most three and the common
+Green bound, not the number or shape of sites. $\square$
+
+There is one density choice for the whole joint approximation, without a
+sector-specific fit. For $0<\delta\le1$, $\beta_N\le16\sqrt\delta$ and
+$s_N\le\beta_N^2/2\le128\delta$. Put
+\[
+M=2g+\nu/\lambda,\qquad C=12a+M,\qquad
+R=18a+256C+16(C+M).
+\]
+Then $r_N\le R\sqrt\delta$ for both $N=1,2$ and both pair prescriptions,
+on every authentic finite $D$. For a declared $T>0$ and absolute unit-input
+tolerance $\varepsilon>0$, any single
+$0<\delta\le\min\{1,(\varepsilon/(TR))^2\}$ gives error at most
+$\varepsilon\|f\|$ throughout the horizon. At $T=0$ every declared density
+works. This is a common mathematical storage/preparation choice, not a native
+density control or a finite-price preparation procedure.
+
+For a singleton $D=\{o\}$ both grounded stubs remain and $B_1=[2]$.
+The target $\mathscr H_{D,2}$ is the zero space, so $E_2,W_2$ are its unique zero
+maps and (64.12) holds for its zero input. The full two-position cable space still
+exists and all its modes are retained; an auxiliary initial state there is covered
+by its $\eta$ budget. No unit two-port preparation is commissioned when $|D|<2$.
+This treats the degenerate finite domain without excluding that source. Zero
+$\nu$, zero comparison time, identical-domain alpha-to-beta versions and every
+finite source boundary are included. The strictly positive commissioned $a$ is
+independent of the original actor's arbitrary unbounded parameter, including zero.
+
+A supplied zero-generator reference branch may be adjoined by direct sum, using
+$0\oplus\mathcal T$, $0\oplus H$ and $I\oplus W_N$; tensoring supplied retained
+registers with identity gives the same bound. This keeps relative reference phase
+and the same comparison clock, with no phase quotient. Unknown joint reference
+preparation remains a separate permission. The joint object retains all original
+classical records. Unused address-bank modes and the $c,u,v$ and supplied clock/
+reference registers remain explicit full auxiliary factors with their stipulated
+identity holds; (64.12) also holds for target inputs entangled with those factors.
+The active target is transported through $W_N$, without preparing a second copy.
+Their construction,
+preparation, storage, hold and any error budgets are additional resources; (64.12)
+does not supply them or replace §62's actual digital circuit by a cable device.
+

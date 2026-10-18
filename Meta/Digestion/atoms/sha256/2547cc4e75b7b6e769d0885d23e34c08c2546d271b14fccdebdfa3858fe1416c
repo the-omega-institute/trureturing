@@ -1,0 +1,17 @@
+**Proposition 2.2 (the opposite Supply also excludes silent draining).**
+At $x_1$ of Proposition 2.1, interpreting Busy as its original
+predecessor neither transports the original Supply menu directly nor
+repairs that menu by silently completing the outstanding row.
+
+Proof. The original predecessor permits both Supply values. Busy
+permits no second input. Its actual internal continuation is not
+original Advance either: Advance is disabled at the prescribed IN.
+Now test original Supply$(1)$. Its demanded complete successor has
+latch 5 equal to 1 and $n+1$ original receipts. Completing Busy instead
+finishes the already accepted IN(0), giving latch 5 equal to 0 and
+$n+1$ receipts. Every later completed original row has at least
+$n+2$ receipts, so cannot yield that demanded complete successor.
+Receiving 1 at a later IN would have another site occurrence. Erasing
+the accepted 0 or overwriting it with a second input also violates
+the required input correspondence. ∎
+

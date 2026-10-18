@@ -1,0 +1,76 @@
+**Proposition 8.14 (Pure quantum information and the gap ratio).** For
+$|\psi_t\rangle=\sum_u\sqrt{p_u}e^{-itf_u}|u\rangle$, the quantum Fisher
+information of the scalar parameter $t$ is
+
+$$
+\mathcal Q_p[f]=4\operatorname{Var}_p(f),\qquad
+J_p[f]\le\mathcal Q_p[f].
+\tag{8.26}
+$$
+
+If $S$ is connected and $|S|\ge2$, define the resampling spectral gap by
+
+$$
+\gamma(p)=\inf_{\operatorname{Var}_p(f)>0}
+\frac{\mathcal E_p(f,f)}{\operatorname{Var}_p(f)}.
+$$
+
+Then $\gamma(p)>0$ and the exact weakest-direction comparison is
+
+$$
+\inf_{\mathcal Q_p[f]>0}\frac{J_p[f]}{\mathcal Q_p[f]}
+=\frac{\gamma(p)}n.
+\tag{8.27}
+$$
+
+Proof. The pure-state derivative formula supplied by [Paris, §4.1,
+equations (26)–(27)][Paris8] is
+
+$$
+\mathcal Q_p[f]
+=4\bigl(\langle\dot\psi_t|\dot\psi_t\rangle
+-|\langle\psi_t|\dot\psi_t\rangle|^2\bigr).
+\tag{8.28}
+$$
+
+Here the supplier's scalar parameter is $t$ and its selfadjoint generator
+is $F=\sum_uf_u\Pi_u$, with $|\psi_t\rangle=e^{-itF}|\psi_0\rangle$.
+Directly, $|\dot\psi_t\rangle=-iF|\psi_t\rangle$,
+$\langle\dot\psi_t|\dot\psi_t\rangle=\sum_up_uf_u^2$ and
+$\langle\psi_t|\dot\psi_t\rangle=-i\sum_up_uf_u$. Substitution proves
+$\mathcal Q_p[f]=4\operatorname{Var}_p(f)$ and fixes the normalization.
+If an SLD is used, the pure-state relation is
+$L_t=2\dot\rho_t=2(|\dot\psi_t\rangle\langle\psi_t|
++|\psi_t\rangle\langle\dot\psi_t|)$; indeed differentiation of
+$\rho_t^2=\rho_t$ verifies the defining SLD equation. No expanded SLD
+with a missing factor is used.
+
+For each $i$, the law of total variance gives
+$\mathbb E_p\operatorname{Var}(f\mid\mathcal F_i)
+\le\operatorname{Var}_p(f)$. Sum these $n$ inequalities and apply
+(8.25) to get $J_p[f]\le4\operatorname{Var}_p(f)$. The ratio in (8.27)
+is therefore exactly $\mathcal E_p(f,f)/(n\operatorname{Var}_p(f))$.
+To see positivity, subtract the mean and minimize on the set
+$\sum_up_uf_u=0$, $\sum_up_uf_u^2=1$. It is a nonempty compact sphere
+in a finite-dimensional space when $|S|\ge2$. A zero minimum would,
+by (8.25) and connectedness, be a constant function; its mean-zero and
+unit-variance requirements exclude this. The positive minimum is
+$\gamma(p)$. $\square$
+
+A singleton support has $\mathscr L_p=0$, $J_p=0$ and $\mathcal Q_p=0$
+for every $f$. There is no direction with positive variance, so the
+gap ratio (8.27) is undefined, rather than a quotient $0/0$. For a
+support with at least two components, a function taking different
+constants on them has positive variance and zero energy. The global
+variational gap is then zero; gaps within individual components answer
+separate restricted questions.
+
+The resampling chain, diagonal phase evolution and resolved measurement
+are three distinct processes sharing the quadratic form (8.25). The
+chain has one unit refresh rate per site, whereas the experiment chooses
+one site per preparation. This accounts for the factor $1/n$. Neither
+(8.24) nor its gap is a Schmidt kernel, a predictive-memory identity or
+a physical dissipative realization. The conditional laws, variances
+and coherent amplitudes all come from the same finite $p$; separately
+optimized laws cannot be substituted into different sides of (8.27).
+

@@ -1,0 +1,39 @@
+**Definition 3.1 (simultaneous timed values).** For $T>0$, let $n\geq1$,
+$h=T/n$ and $t_j=jh$. An added acquisition service supplies ordered actual
+times and numerical readings with one simultaneous certificate:
+
+$$
+\begin{gathered}
+0=s_0<\cdots<s_n=T,\qquad |s_j-t_j|\leq\tau,\\
+|y_j^{\rm raw}-k(s_j)|\leq d_k,\qquad
+|x_j^{\rm raw}-\xi(s_j)|\leq d_x.
+\end{gathered}
+\tag{SC.8}
+$$
+
+All values refer to the same source/epoch, preparation, programme and clock.
+Height and unwrapped relative-phase readings in each row are simultaneous.
+The phase anchor is the actual initial event, not a guessed past lift.
+Sensor error includes gain, bias, drift and quantization. A statistical
+certificate must specify one joint event; separate marginal coverage
+probabilities do not imply (SC.8) simultaneously. Asynchronous readings
+need an additional phase modulus or a proved simultaneous-error contract:
+total phase variation alone does not control a compressed intervening pulse.
+
+Clip heights to $[\eta,c-\eta]$ and set $y_0=y_n=a$, keeping raw fields.
+Let $x_j=x_j^{\rm raw}-x_0^{\rm raw}$. Form the affine interpolants
+$\widetilde k,\widetilde\xi$ through $(t_j,y_j)$ and $(t_j,x_j)$.
+Their initial relative phase is zero and their height returns exactly to $a$.
+The actual surrogate phase is $\chi(0)+\widetilde\xi$; its execution would
+require its own relative-command actuator, without learning $\chi(0)$.
+Both interpolated coordinates have finite-piecewise-$C^1$ regularity and
+finite variation. Their transported lift is the original integral lift.
+When both coordinates change on a cell this lift need not be affine; no
+claim of an affine chart for the full lifted state is needed.
+
+The surrogate is an actual mathematical original control. It need not obey
+the true source's speed or BV-velocity bounds. Those bounds are used to
+certify its error, not silently imposed on interpolated noise. Its finite
+description is not permission to execute it in place of the requested
+programme and is not a reconstruction of the unknown quantum input.
+

@@ -1,0 +1,8 @@
+## 456. Every oriented original normal circle
+
+A state T:a>b/Ff is an ordered local edge with exiting face Ff. Cross Ff by
+its specified face map, carry a and b in their order, and exit by the other
+face containing the image edge. The following lists close exactly, including
+the ordered endpoints. Each underlying original local edge occurs once in
+its displayed cycle.
+

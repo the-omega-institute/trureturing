@@ -1,0 +1,18 @@
+**Definition 9.1 (Sources of the statements and methods).** The
+finite-precision/calibration bridge of Theorem 4.1, its sufficient
+installation bounds, the fixed-cap input-accuracy bound and the
+construction-specific failures are repository-derived ordinary
+deductions. No worldwide priority assertion accompanies this
+composition. The source correspondence is as follows.
+
+| Source | Exact use and boundary |
+| --- | --- |
+| [C], Definitions 1.1–1.3, 3.1 and 5.1; Theorems 3.2, 4.1 and 5.1 | Identical positive pair, known common $q$, stationary first wait, exact terminal phase law, normalized signal and moments, threshold and complete configurations. The source-specific estimates are inherited premises; the changed-law absorption, risks and paid means are proved here for the calibrated dyadic rows. |
+| [C], Definition 2.2, Theorems 6.1 and 7.1, Corollary 7.2 | Existing unrestricted complete-budget lower/upper and eventual-growth criterion. The converse retains its credit to the renewal state/read source, Theorem 11.2 and Open problem 11.3. Section 7 transfers these results with precision provision and adds no universal lower. |
+| [C], Definition 1.1 and Definition 9.1, correspondence to critical multiscale renewal attainment, Theorems 9.1–9.2 | Logarithmic paid attainment already has a prior multiscale construction. Neither that attainment nor the stronger counted all-budget frontier of [C] is a new conclusion of this volume. |
+| Philippe Flajolet, *Approximate Counting: A Detailed Analysis*, BIT 25, 113–134, Section 1, as cited in [C, Definition 3.1 and Definition 9.1] | The classical base-two Morris phase increments $j$ with probability $2^{-j}$. Its approximate-count analysis alone supplies neither the source-normalized contrast nor the dyadic-calibration theorem. |
+| Lu Xia, Martijn Anthonissen, Michiel Hochstenbach and Barry Koren, *Improved stochastic rounding*, arXiv:2006.00489v1, Section 3, as cited in [C, Theorem 4.1 and Definition 9.1] | Classical distance-proportional adjacent-grid rounding gives the ideal form. Finite-probability rounding here may be biased; its quantitative error is explicitly controlled rather than identified with ideal unbiasedness. |
+| Marco Zamparo, *Renewal model for dependent binary sequences*, arXiv:2108.11293v2, Theorem 2.1, as cited in [C, Definition 1.2 and Definition 9.1] | The equilibrium first-interval correspondence uses $K+1$ and $\tau+1$. It provides no free gap port, hidden countdown or configuration bound. |
+| Steven R. Howard, Aaditya Ramdas, Jon McAuliffe and Jasjeet Sekhon, *Exponential line-crossing inequalities*, arXiv:1808.03204v5, Section 2.3, Lemma 1, as cited in [C, Theorem 5.1 and Definition 9.1] | The classical exponential-supermartingale method is used with the actual gap/coin conditional law. The finite-drift and bounded-limit proof is included in Theorem 4.1. It supplies no free observation or state count. |
+| Finite generating-function differentiation and predictable stopped summation | The matrix Neumann series in Theorem 6.1 and the nonnegative predictable sum (4.16) are standard methods used inside the new deductions. They do not assume duration/increment independence or assert offline complexity. |
+

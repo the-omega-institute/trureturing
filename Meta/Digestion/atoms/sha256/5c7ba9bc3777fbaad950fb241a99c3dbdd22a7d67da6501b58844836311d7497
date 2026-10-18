@@ -1,0 +1,33 @@
+##### 定义 2.5.1： 固定动力学下的区域不变性
+
+设：
+
+$$
+H=H^\dagger,
+\qquad
+U_t=e^{-itH/\hbar},
+\qquad \hbar>0.
+$$
+
+取区域投影 $P=P_R$，记：
+
+$$
+Q_R=I-P.
+$$
+
+称 $R$ 对该动力学**普适不变**，若对每个满足：
+
+$$
+\rho=P\rho P
+$$
+
+的初态，以及全部 $t\in\mathbb R$，都有：
+
+$$
+U_t\rho U_t^\dagger
+=
+P\,U_t\rho U_t^\dagger P.
+$$
+
+<a id="claim-2-5-2"></a>
+

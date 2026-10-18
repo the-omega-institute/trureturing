@@ -1,0 +1,17 @@
+## 205. Hypotheses and existing consequences
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths and original 2*pi
+edge equations. There are exactly five reservoirs and a nonempty flat set.
+Choose a maximal pi-selected reservoir M, its source sigma with pair {C,D},
+and its escape tau=(Z,M,C,D,M,C). Write H={M,C,D,Z,U} and cosh values
+m,c,d,z,u. Use the already established consequences
+
+ m>1+c+d, c,d<m-2, z>m, u>m, p_M=1.
+
+All five reservoirs are genuinely witnessed, every flat selects its two
+axes, and neither Z nor U has any flat occurrence. The latter statement
+for Z is the five-witness result; for U it is the small-fifth exclusion.
+For every special edge with fixed reservoir pair {A,B}, its value obeys
+s<1+a+b. These statements hold for actual labels and slots.
+

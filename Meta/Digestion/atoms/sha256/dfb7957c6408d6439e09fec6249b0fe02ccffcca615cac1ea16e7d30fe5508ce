@@ -1,0 +1,17 @@
+**Corollary 18.3 (obstruction for exactly that closure).** Every common
+CPTP implementation built from Definition 18.2, with all outcomes
+included in the original comparison, satisfies (CG.167).
+
+Proof. A live Kraus operator $\sum_jP_j\otimes B_{a,j}$ leaves each
+specimen subspace $|j\rangle\otimes R$ invariant. Record-local operations
+have the same property, and products of such operators retain it.
+Thus an input $|j\rangle\langle j|\otimes\tau_R$ has live specimen
+support only on $|j\rangle$ along every surviving branch. Sums,
+independent mixtures and tracing out the record preserve this support.
+An absorbing branch contributes no later live mass. Hence the resulting
+live map has $T_{ij}=0$ for $i\ne j$, and Theorem 18.1 applies.
+The same conclusion holds for any explicitly defined limit of these
+live maps in Choi norm, because those zero diagonal entries form a closed
+set. No continuous control limit is presumed available by this statement.
+$\square$
+

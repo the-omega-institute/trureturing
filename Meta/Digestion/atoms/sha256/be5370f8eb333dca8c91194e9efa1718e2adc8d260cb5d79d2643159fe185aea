@@ -1,0 +1,4 @@
+## 58. Native whole-rho renewal: source labels, retained spectral state and finite-clock fidelity
+
+This chapter consumes the same original source and the full interaction realization of §55. It addresses a joint question left by a static spectral description: what changes when an actually accepted native substitution creates new occurrences, what information determines that change, and when can the resulting finite amplitude trajectory preserve a common full spectral state? The positive result is uniform over the original finite sources and their actual irregular domains, on a supplied finite clock. The source/action and amplitude contracts remain distinct.
+

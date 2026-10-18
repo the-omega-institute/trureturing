@@ -1,0 +1,24 @@
+**Lemma 5.1 (Adjacent zeros followed by one).** Suppose two distinct
+adjacent active edges have label zero. On a third active one edge the
+maximal full-law state mass is at most $a^3\eta$ for every target
+position.
+
+Proof. The zero triple is constant with weights $a^3,b^3$ and
+total $t\le a^2$. A repeated third edge cannot reply one. A
+third edge disjoint from the triple gives maxima
+
+$$
+a^3\eta,\quad t\eta/2,\quad at\eta
+\tag{5.1}
+$$
+
+for target in the triple, in the one pair, or outside both. The
+second is at most $a^3\eta$ because $t\le a^2$ and
+$a\ge1/2$; the third is at most $a^3\eta$ because $t\le a^2$.
+An extension gives four-spin weights $a^3b,ab^3$, whose sum is
+$c\eta$. For an internal target, including the new vertex, its
+maximum is $a^2\eta/2$; for an exterior target it is
+$ac\eta/2\le a^2\eta/2$. These are at most $a^3\eta$.
+A single line edge has no remaining incidence with that triple.
+A separator cannot produce the required one. $\square$
+

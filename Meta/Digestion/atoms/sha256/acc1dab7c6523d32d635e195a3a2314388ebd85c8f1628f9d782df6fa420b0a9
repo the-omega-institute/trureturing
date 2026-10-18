@@ -1,0 +1,49 @@
+**References 9.1 (primary results used for comparison).** The
+arithmetic regions here are constructed explicitly in (NUE.12);
+their native correspondence is proved before they are classified
+arithmetically. The following established results delimit related
+formulations. None is invoked with an enlarged language or changed
+quantifier order.
+
+| Primary source | Exact correspondence and limitation |
+| --- | --- |
+| Ginsburg and Spanier, *Semigroups, Presburger Formulas, and Languages*, Pacific Journal of Mathematics 16(2), 285--296, Theorems 1.2--1.3, [publisher text][GS] | `literature-attested`: Presburger sentence decidability and effective equivalence with semilinear subsets of natural integer lattices. Equation (NUE.12) already gives the constants and generators directly; this result does not prove native row stabilization or remove native variables. |
+| Marshall, Meadows and Narendran, *On Unification Modulo One-Sided Distributivity: Algorithms, Variants and Asymmetry*, arXiv:1503.06687v2, Sections 4--5, Theorems 4.4 and 5.8, [primary text][MMN] | `literature-attested`: unification for the stated typed single-homomorphism theory, with a subterm-collapse-free cycle argument. The native constant laws are extra: $\rho(x)=\langle x,\alpha\rangle$ has the finite solution $x=\beta$. Thus a raw free-theory occurs rejection cannot be transferred to this interpreted operation. |
+| Cerna, *Schematic Unification*, arXiv:2306.09152v7, Definitions 2--6 and the stated infinity-stability condition, [primary text][CERNA] | `literature-attested`: iterated indexed-variable substitution schemas and a sound terminating algorithm for uniform schematic problems, with completeness under infinity-stability. Its question asks whether every schematic instance is unifiable. Here finitely many unknown epochs and one finite ground original are existentially shared; no quantifier-preserving reduction is inferred. |
+| Durand, *Decidability of the HD0L ultimate periodicity problem*, arXiv:1111.3268v3, Section 1.1 and Theorem 1, [primary text][DURAND] | `literature-attested`: ultimate periodicity of the specified morphic-word system with given alphabets, morphisms and seed word. Native trees can be serialized faithfully in prefix notation using a pair symbol $p$, with $a\mapsto b$, $b\mapsto pba$, $p\mapsto p$. This intertwines the operations, but the seed here is unknown and multiple existential epochs share it; word-limit periodicity does not supply the required finite-tree joint decision. |
+| Atserias and Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Sections 3--4, Theorems 3--4, [primary text][AK] | `literature-attested`: local-to-global consistency for $K$-relations over acyclic attribute hypergraphs, with marginal-consistency hypotheses. Nonempty pairwise native-history intersections are weaker than those hypotheses. A tree-shaped address space or a connected clock graph does not establish the required relation-schema acyclicity. Proposition 5.1 gives the direct native obstruction. |
+
+The native deductions in Sections 2--7 are `repo-derived`. The
+normal coordinates, fixed-epoch decision, finite-tree methods,
+Presburger/semilinear vocabulary and local-to-global distinction
+are reused mathematical ingredients. No worldwide priority,
+general undecidability, implemented-solver, or low-cost observation
+claim is attached to their application here.
+
+[NAR]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md
+[NARC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[NSF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md
+[ABC]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BLOCK_CONJUGACY.md
+[ARH]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md
+[NIC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_COVER_AND_PREFIX_COST.md
+[NIS]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMAGE_SATURATION.md
+[BOUNDARY]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md
+[CNA]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md
+[CUT]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean
+[ROW]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.lean
+[DEPTH]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean
+[HISTORY]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.lean
+[BACK]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.lean
+[INTR]: ../../../D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.lean
+[CUT-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.scribe.cs
+[ROW-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionDecoder.scribe.cs
+[DEPTH-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.scribe.cs
+[HISTORY-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeHistoryCells.scribe.cs
+[BACK-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativePredecessorRowRecovery.scribe.cs
+[INTR-S]: ../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.scribe.cs
+[GS]: https://msp.org/pjm/1966/16-2/pjm-v16-n2-p09-s.pdf
+[MMN]: https://arxiv.org/html/1503.06687v2
+[CERNA]: https://arxiv.org/html/2306.09152v7
+[DURAND]: https://arxiv.org/html/1111.3268v3
+[AK]: https://arxiv.org/html/2009.09488v1
+

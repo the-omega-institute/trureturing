@@ -1,0 +1,88 @@
+**Proposition 251.4 (Original source and the scope of finite repairs).**
+All subsequent finite acquisitions apply to the separately selected
+marked laws of [Definition 110.1 and Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source).
+Explicitly retain
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+X=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)=1+F_rg,\quad q_i(x)=[p_i\mid N(x)],\quad
+n(x)=\min\{i:q_i(x)=0\},\\
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                   +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\longrightarrow0.
+\end{gathered}
+\tag{251.8}
+$$
+
+Here $p_i$ are the increasing primes. The countable source has
+static answers and finite first absence. Every finite pattern has
+an actual source witness by
+[Boundaries, Theorem 35.2](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md#35-exact-finite-divisibility-fibres-in-canonical-fibonacci-windows),
+under its stated entry-rank supplier. Its CRT construction chooses
+a prime index for which $F_r$ is invertible modulo the finitely
+prescribed primes, then selects the required residue class for $g$
+in the growing Fibonacci window. This is the named arithmetic
+premise, not a new claim eliminating that supplier.
+
+The full Borel carrier is
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$, with each
+block a copy of $(0,1)$ and $\theta_j=(B_1,1/(j+2))$.
+The consumer, unknown on $B_j$ and with proposal $j$ on $P_j$,
+and its original nonatomic targets remain those of
+[Acquisition Resources, Definitions 71.1 and 73.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#73-monotone-marked-first-absence-laws-and-their-finite-certificates).
+In particular, with its fixed $h_0\in(0,1)$,
+$s(x)=\sum_i3^{-i}q_i(x)$ and $\Omega(x)$ the number of
+distinct prime divisors of $N(x)$, those targets are
+$\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, where $\nu_x$ has
+density $\exp(s(x)u)/\int_0^1\exp(s(x)v)\,dv$ on $B_{n(x)}$
+and $\pi_j$ is uniform on $P_j$. They are distinct from (251.8).
+
+Every displayed finite mixture is realized by a single
+source-independent $U\sim\operatorname{Unif}[0,1)$ partitioned
+into whole-table intervals before replies. An outer mixture, a choice
+of midpoint daughter, or a refinement of terminal marginals is made
+within that same seed. It does not supply another observation or seed.
+Execution queries actual prime addresses, has zero advice, hands off
+an original mark finitely for every source and seed, and makes at most
+two actual requests. Its $N$ completion obtains the whole schedule
+on the same $U$ and counts any ignored reply.
+
+**Proof.** The finite table construction of Sections 109–110 fixes
+the schedule and every counterfactual terminal output from $U$.
+For a cell-marginal description, refine a schedule interval by the
+finitely many marginal cutpoints; this gives a common whole-table
+law without assuming independence among cells. The necessary
+direction of Theorem 110.2 permits original competitors with arbitrary
+addresses, arbitrary full-carrier outputs, repetitions and sourcewise
+almost-sure finite handoff. Countability supplies one common conull
+seed event; the maximum preselected address is finite almost surely.
+Actual finite-pattern witnesses are fixed before seeds. Whole-schedule
+address tails and finite-family execution cutoffs give approximate
+finite catalog laws, and compactness gives the exact closed-cap law.
+This transports feasibility and need not preserve an initially supplied
+competitor's law or seed coupling. A same-seed repair begins with the
+selected finite representative.
+
+At an actual first absence $n>L$, any displayed finite law emits no
+label $n$ and has the exact full-Borel error
+
+$$
+\operatorname{TV}\left(\sum_{r=0}^Lp_{w^+}(r)\delta_{\theta_r},
+             (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p_{w^+}(0),a_n\}.
+\tag{251.9}
+$$
+
+Thus repairs preserving the positive law retain every original tail
+cap, including ties $a_{L+1}=e$. An increased head cap does not require
+discarding the original tail. The finite all-positive word records
+these actual tails; it is not an infinite all-positive source.
+All statements use uniform all-source TV over all Borel events,
+without a source prior, address bound, running-time bound, mean request
+budget or access to $N(x)$ or $n(x)$. A finite marked law has TV one
+from each unchanged nonatomic $\mu_x$, by its finite support. No
+approximation to those targets is asserted. $\square$
+

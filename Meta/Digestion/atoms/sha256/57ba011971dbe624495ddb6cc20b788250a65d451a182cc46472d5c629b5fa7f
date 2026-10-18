@@ -1,0 +1,51 @@
+**定理 41.2（仿射来源的精确无噪取得阈值）。** 在定义 41.1 的精确
+Read 合同下，要求恢复同一初态 $x$（因而恢复其全部原 $\Gamma_d$ 有限词响应）。
+最小最坏更新数为
+
+$$
+N_{\rm exact}(n,\rho)=
+\begin{cases}
+1,&r\ne0,\\
+2,&r=0,
+\end{cases}
+\tag{41.4}
+$$
+
+并且零次更新在所有 $n,\rho$ 下都不能保证取得。这里的 $\rho$ 不改变阈值。
+
+证明。若先用内部控制得到 $p\ne0$ 再读锚，初读给出 $a$，锚后读数除以已知的 $|p|$ 给出
+$w=\operatorname{Im}(b\widehat p)$。若 $\alpha_p\ne0$，由 (41.3) 唯一解出
+
+$$
+ s=\frac{\rho-\langle w,\beta_p\rangle}{\alpha_p},
+ \qquad b=(s+w)\widehat p^{-1}.
+\tag{41.5}
+$$
+
+所以 $x$ 已由同一实际历史恢复，后续响应只是已知状态的确定函数。直接执行
+$A_d$ 时 $\widehat p=1$，$\alpha_p=r$，故 $r\ne0$ 时一步足够。
+
+若 $r=0$，则 $|v|=1$。取一个单位内部控制 $c=v$（或 $-v$，按符号选取），
+再执行 $A_d$；此时 $\operatorname{Re}(nv)=\operatorname{Re}(v^2)=-1$，
+故两步足够。更一般地，两个单位纯虚控制总可把增益做到一：写
+$n=\cos\theta+u\sin\theta$，其中 $u$ 为单位虚四元数（$v=0$ 时任取），
+取单位 $w\perp u$，置 $t=w\times u$，则 $t$ 为单位且 $w\times t=-u$。
+置 $c_1=w$、$c_2=-\cos\theta\,w+\sin\theta\,t$，则
+$c_1c_2=\bar n$。这给出后文 $N\ge3$ 的稳定构造。
+
+反之，零次或只执行内部控制时全部读出只依赖 $a$，而 (41.1) 中的 $b$ 是三维
+无界仿射平面。若一次更新为内部控制，仍没有隐藏读；若一次更新为锚，
+$p=1$。当 $r=0$ 时，对任意 $w$ 和任意实数 $s$，$(s+w)$ 都满足
+$\langle s+w,n\rangle=\langle w,v\rangle$，所以改变 $s$ 得到同一锚读数的
+不同来源。故零次失败，纯虚法向的一次更新也失败。
+
+更一般地，固定首次锚前的 $p$。若 $\alpha_p=0$，则
+$b_t=b+t\widehat p^{-1}$ 仍在 (41.1) 中且
+$\operatorname{Im}(b_t\widehat p)=\operatorname{Im}(b\widehat p)$；令 $a_k$ 为
+内部前缀后的可见分量，则首次锚后 $A_d(a_k,b_tp)=A_d(a_k,bp)$，
+后续同一记录的动作不能再分开它们。若
+$\alpha_p\ne0$，(41.5) 已给唯一性。对最多两次更新，首次锚前至多有一个内部
+控制；任意单位纯虚 $c$ 满足
+$|\operatorname{Re}(nc)|=|\langle v,c\rangle|\le|v|$，所以 $r=0$ 时两步构造
+达到且一的增益并且一步不可能。证毕。
+

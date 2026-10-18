@@ -1,0 +1,22 @@
+# Recursive relational observation: joint marginal and an attaining scalar port
+
+For the original five-mode quantum preparation, fixed scalar port and
+actual finite-history criterion, this volume proves
+
+$$
+\boxed{\frac{129931}{250000}\le\varepsilon_1\le\lambda},\qquad
+\frac{52417656}{10^8}<\lambda<\frac{52417658}{10^8}.
+\tag{0.1}
+$$
+
+The necessary bound covers every legal complex competitor. The sufficient
+bound is the exact error of one explicit fourteen-flag port and is attained
+at wait zero. Both endpoints strictly improve the QWS interval. They do
+not match, and the original optimum remains open.
+
+This volume is reference mathematics: ordinary proofs and finite exact
+arithmetic, without new Lean kernel evidence or a physical realization
+claim. Its content is append-only; corrections and extensions belong
+after the final append anchor. Definitions and proofs below distinguish
+the new two-sided improvement from the credited supplier results.
+

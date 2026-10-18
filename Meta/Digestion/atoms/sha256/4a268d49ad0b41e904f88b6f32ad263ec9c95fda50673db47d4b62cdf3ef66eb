@@ -1,0 +1,22 @@
+**Convention 2.2 (specific supplied premises).** CG §§13–17, §22 and
+JR §29 supply the rank-one factorizations
+$H^{\rm src}=hh^T$, $Q^{01}=(a,b)^T(a,b)$,
+$Q^{02}=(c,d)^T(c,d)$, and
+
+$$
+\begin{gathered}
+h_0,h_1,h_2,a,b,c>0,\quad d\ne0,\quad m_1,m_2,\eta_2>0,\quad
+0<\kappa<1/4,\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\\
+h_0h_1>695/1000,\quad h_0h_2>796/1000,\quad
+\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}<36/1000,\\
+\lambda<49/100,\quad \alpha_1>0,\quad \alpha_2>1,\quad
+2/5<\beta_1<1/2,\quad 0<\beta_2<5/6.
+\end{gathered}
+\tag{IR.9}
+$$
+
+These are exact identities and strict conditional inequalities, not
+numerical tolerances established here. In particular the total effect
+in (IR.9) is exactly $I_3$.
+

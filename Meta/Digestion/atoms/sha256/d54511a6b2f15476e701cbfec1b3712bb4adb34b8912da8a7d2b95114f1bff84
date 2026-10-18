@@ -1,0 +1,18 @@
+**命题 39.3（A finite common-stream penalty across free values）。** At $k=2$, $m=5$, $T=3$, $g=1$, take distinct scalar labels $A,B$. Independently of INITIAL tail, give the ordered pair $\Gamma$ at $j=0,1,2$ respectively
+
+$$
+(A,A),\quad(A,B),\quad(B,A).
+\tag{39.7}
+$$
+
+Then $C_{\rm ad}(f)=1$ and $C_{\rm pre}(f)=2$ under both alphabets. One common preset stream is
+
+$$
+01000\mid00010.
+\tag{39.8}
+$$
+
+Proof. Each scalar-value fibre has two phase cells of sizes two and one, so the credited adaptive wide law has no odd/odd exception and gives one paid block. Explicitly, on initial value zero use $00010$, whose first-index mask is $\{0,1\}$; on initial value one use $00100$, whose mask is $\{0,2\}$. These are the respective $A$ cells. Both words start zero and have a single one, so they clear every INITIAL tail and are legal. Both fibres are nonconstant, giving the one-block lower bound.
+
+The joined target has three distinct labels, so at least two binary successful endpoints are required on the full tail-zero subprior. In (39.8) the first mask is $\{1,2\}$; at offset $5\equiv2\pmod3$ the second mask is $\{0,2\}$. Their columns are $01,10,11$ at $j=0,1,2$, have XOR zero and distinguish all three pairs. The words start zero and have only isolated ones, so every original INITIAL tail succeeds and all seams are legal. Decode the pair and return its free-value component. This attains fee two and includes every zero in the displayed blocks. ∎
+

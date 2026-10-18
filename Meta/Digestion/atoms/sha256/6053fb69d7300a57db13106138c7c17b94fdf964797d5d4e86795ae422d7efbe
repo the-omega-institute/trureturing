@@ -1,0 +1,63 @@
+**Calculation 12.2 (native coefficients and prefix charge).** Put
+$s_\kappa=H+\kappa$ and $\alpha_\kappa=\kappa s_\kappa/H$. Directly
+reducing the original information sum in (12.3) gives
+
+$$
+\begin{aligned}
+\mathcal I_\kappa(k)
+ &=\frac{2H(k-\alpha_\kappa)}{k(k-2\kappa)(s_\kappa-k)},\\
+A_\kappa(k):=w_{13}(k)
+ &=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},\\
+B_\kappa(k):=w_1(k)=w_3(k)
+ &=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},\\
+C_\kappa(k):=w_0(k)-w_{13}(k)
+ &=\kappa g_\kappa(k),\qquad
+ g_\kappa(k)=\frac{s_\kappa-k}{H(k-\alpha_\kappa)}.
+\end{aligned}
+\tag{12.7}
+$$
+
+These functions extend smoothly to $\kappa=0$ on a neighbourhood of
+$[l,u]$. In particular
+
+$$
+A_0(k)=\frac{H-k}{2H},\qquad B_0(k)=-\frac{k}{2H},\qquad
+ g_0(k)=\frac1k-\frac1H.
+\tag{12.8}
+$$
+
+For every sufficiently small $\kappa$ of either sign, $g_\kappa>0$ and
+
+$$
+g_\kappa'(k)=\frac{\alpha_\kappa-s_\kappa}
+ {H(k-\alpha_\kappa)^2}<0,\qquad
+M_\kappa:=\sup_{k\in I}g_\kappa(k)
+ =g_\kappa(l)=\frac{s_\kappa-l}{H(l-\alpha_\kappa)},\qquad
+M_0=\frac{H-l}{Hl}.
+\tag{12.9}
+$$
+
+The endpoint value at $l$ specifies a supremum; the height $l$ itself is
+not a legal control height. All these suprema are uniformly bounded for
+small $|\kappa|$ because the guard stays strictly inside the probability
+fiber.
+
+The source identity $d^{\mathsf T}w=1$ reads
+$C_\kappa+2A_\kappa-2B_\kappa=1$. Since all increments start at zero,
+every lawful prefix satisfies the real identity
+
+$$
+b(t)=\delta(t)+2h_{13}(t)-2v(t).
+\tag{12.10}
+$$
+
+Consequently (12.5) forces
+$b(T)=\chi+2\pi j+4\pi(m-n)$ and $[b(T)]=[\chi]$.
+These are closed-visible prefixes of [N, Definition 8.1], not base/phase
+loops with $[b(T)]=0$. Adding that loop condition would make this class
+empty. The pointwise reciprocal identity underlying [N, Theorem 3.11],
+$w_0-w_{13}=(X+Y-r)/(\mathcal I p_0p_{13})$, holds on these prefixes
+without any closing condition; (12.7) is its exact specialization with
+$X+Y-r=2\kappa$. Thus using it here does not import an unmet loop
+hypothesis.
+

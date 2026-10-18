@@ -1,0 +1,24 @@
+**Corollary 5.2 (native installed-label inequalities).** For one native
+preparer satisfying (CP.6), and every actual live cube prefix with
+the parameters of (CP.23), if $N\ge6$ and $3\le q\le N-2$, then
+
+$$
+M(R)\ge F(N,q).
+\tag{CP.26}
+$$
+
+In particular $M(R)\ge3(N-2)$ at either residual boundary threshold.
+All these inequalities concern the same installed native vector
+$(M_i)$, including unused selected states.
+
+Proof. Project this preparer onto the actual cube by the projection
+in WTF Theorem 4.1. It retains at most $M_i$ states of label $i$,
+suppresses cube-constant chains without unfolding, and preserves the
+selected-state subsequence of every actual cube run. Its simultaneous
+caps are $n,W$. An actual live native prefix gives the corresponding
+Boolean prefix with the same $S,h$. If it ends before a live $RLR$
+call, following that fixed cube call first does not change $S,h$.
+Apply Theorem 5.1 to the projected multiplicities and use
+$m(R)\le M(R)$. The profile call is suppressed only in this proof
+projection; it remains paid on each original native run. $\square$
+

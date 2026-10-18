@@ -1,0 +1,33 @@
+**Theorem 7.2 (finite capacity-safe Native realization).** Every finite
+capacity-safe Native run of such an installed controller has a finite paid
+adapter execution with the same literal replies, accepted updates, complete
+Native trace and whole output. At each corresponding completed cut
+
+$$
+t_{\rm current}=\rho^e u,
+$$
+
+and the acquired journal has the actual binding of §5. Every primitive
+microcut of the realization remains in the full history of §6.
+
+**Proof.** At valid boot the relation holds with $e=0$. For a Native local
+instruction, execute its actual finite public computation on acquired control
+and commit its one local marker, with no source change. For a Native Read,
+Theorem 3.3 produces exactly `readout p` on the related register; its acquired
+reply selects the same encoded continuation. Both cases preserve epoch and
+the source equation. For ApplyRho, capacity safety makes the whole guard
+accept. PR57.T2 installs exactly $\rho$ of that register and advances $e$, so
+the equation becomes $\rho(\rho^e u)=\rho^{e+1}u$. The journal retains its actual
+old-epoch update label. For Stop, write/seal the complete encoded output and
+commit Halt, then finish its record and delivery. Halt adds no Native event.
+Induction on the finite Native `Run` concatenates the finite fragments of
+Theorem 4.5. Their trace projections are the stated Native constructors, so
+all locals, repeats, epochs and replies are preserved. Theorem 5.3 supplies
+authentic recording, and Theorem 6.3 retains every intervening cut. $\square$
+
+The abstract trace projection is not identity of Native instructions with
+PR57 gate/evaluator microsteps. On this subinterface $g=e$; outside it an
+accepted graft changes the source while leaving $e$ unchanged, so the displayed
+Native source equation is not claimed there. A rejected rho cannot be labelled
+as an unconditional Native update.
+

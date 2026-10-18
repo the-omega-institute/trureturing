@@ -1,0 +1,77 @@
+**Theorem 26.4 (Exact actual mean, finite termination and positive leading constants).** The deterministic observer of Definition 26.1 terminates almost surely and has finite mean paid cost at every $q\in(0,1)$ in either family. Its exact mean is
+
+$$
+\mathbb E_{i,q}T
+=1+\beta_i(q)
++\frac{2M\mu_i(q)Z_i(q)A_i^{\rm sh}(q)}{C_iq^4}.
+\tag{26.12}
+$$
+
+It satisfies all of (23.8), with the state bound (26.4), and for both $i=0,1$,
+
+$$
+\mathbb E_{i,e^{-s}}T\sim\kappa_i s^{-11},
+\qquad
+\kappa_i=\frac{20M\,9!\,A_i^{\rm sh}(1)}{C_i}>0.
+\tag{26.13}
+$$
+
+Here $A_0^{\rm sh}(1)=20196$, while $A_1^{\rm sh}(1)=H(1)+H(2)+H(3)$ is the exact positive rational value specified by (23.1). Thus (26.13) gives an explicit positive leading constant for each family.
+
+Proof. At a fixed $i,q$, both retention and retained-pair acceptance have positive probabilities. Consequently every finite number of retained categories and accepted pairs is acquired almost surely. More quantitatively, let $J_M^*$ be the number of retained pairs through the $M$th acceptance. The independent acceptance indicators give
+
+$$
+\mathbb E_{i,q}J_M^*=\frac{M}{\zeta_i(q)}<\infty.
+\tag{26.14}
+$$
+
+This follows by summing the means $1/\zeta_i(q)$ of the $M$ successive geometric waiting counts for accepted pairs. Let $G_M$ be the number of raw post-first-tick gaps actually read through termination. In terms of the blocks of (26.9),
+
+$$
+G_M=\sum_{r=1}^{2J_M^*}W_r.
+\tag{26.15}
+$$
+
+The integer $J_M^*$ is determined by the retained categories alone. Their independence from the whole sequence of waiting counts in Lemma 26.3 and Tonelli yield
+
+$$
+\mathbb E_{i,q}G_M
+=\frac{2M}{\rho_i(q)\zeta_i(q)}
+=\frac{2MZ_i(q)A_i^{\rm sh}(q)}{C_iq^4}<\infty.
+\tag{26.16}
+$$
+
+Every one of these raw gaps is actually completed. On each path the paid cost is therefore exactly
+
+$$
+T=1+\tau+\sum_{n=1}^{G_M}(K_n+1).
+\tag{26.17}
+$$
+
+This includes all rejected short pairs, all intervening long gaps, the initial stationary zeros and their first tick, and the final closing tick. For each $n\ge1$, the event $\{G_M\ge n\}$ is determined by the preceding raw gaps: it says that the observer has not yet completed its $M$th acceptance. It is independent of the next iid gap $K_n$. Thus
+
+$$
+\begin{aligned}
+\mathbb E_{i,q}\sum_{n=1}^{G_M}(K_n+1)
+&=\sum_{n\ge1}\mathbb E_{i,q}
+       [(K_n+1)\mathbf1_{\{G_M\ge n\}}]\\
+&=\mu_i(q)\sum_{n\ge1}\mathsf P_{i,q}(G_M\ge n)
+=\mu_i(q)\mathbb E_{i,q}G_M.
+\end{aligned}
+\tag{26.18}
+$$
+
+No independence between a gap's length and the acceptance decision made after that gap is asserted. Predictable inclusion, rather than such an independence claim, is the reason for (26.18).
+
+The initial wait is almost surely finite and has mean $\beta_i(q)$. Equations (26.16)–(26.18) prove (26.12), its finiteness, and almost-sure actual termination. Correctness is (26.8), and the fixed deterministic finite realization is Lemma 26.2.
+
+Finally $A_i^{\rm sh}(e^{-s})\to A_i^{\rm sh}(1)>0$, $e^{-4s}\to1$, and (23.7) applies to the other factors in (26.12). The initial term is $O_H(s^{-1})$, whereas the acquisition term has asymptotic value
+
+$$
+\frac{2M\,(10/s)\,(9!s^{-10})\,A_i^{\rm sh}(1)}{C_i}
+=\kappa_i s^{-11}.
+\tag{26.19}
+$$
+
+All factors in $\kappa_i$ are strictly positive, proving (26.13). $\square$
+

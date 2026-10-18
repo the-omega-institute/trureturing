@@ -1,0 +1,31 @@
+**Definition 7.3 (runtime interval control).** The interval reader does
+not install an age-specific table or store an unbounded table-state
+identifier at unit cost. Compute $h_q$ from the paid public integer
+$q$. Maintain a surviving interval $[l,u]$ and remaining budget $h$,
+initially $[C+d,C+d+q-1]$ and $h_q$. A singleton halts with its age.
+An empty interval or a nonsingleton at budget zero marks INVALID.
+Otherwise set $t=l+(3\cdot2^{h-1}-2)$ and use the actual $P_t$
+query of [AOF, Definition 8.2][AOF], feeding its reply to its absent,
+alpha, beta or branch cell and intersecting with $[l,u]$. Decrease
+$h$ by one after every query.
+
+To enforce the peak bound, put $U_0=C+d+q-1$ and
+$m=\lfloor(U_0-1)/2\rfloor$. Replace a too-long shortest $P_t$
+representative by the bounded-domain query and four-entry reply map
+of [AOF, Theorem 9.1][AOF]. For $U_0\le2$ use the hidden root and its
+finite age table. Otherwise use $R^m$ when replacement is needed.
+On its absent cell the old test is absent; on its leaf cells its
+corresponding ages are $2m,2m+1$; on its branch cell the only reachable
+age up to $U_0$ is $2m+2$. Evaluate the old $P_t$ response at those
+ages by binary arithmetic. Prepend the whole-root base $R$ to every
+submitted word. A response with an empty surviving cell rejects the
+attempt. Reaching adjacent or empty data never creates an unbounded
+search. For $q=1$, no hidden query is needed and the supplementary
+value is zero.
+
+This is a finite arithmetic generator of a depth-$h_q$ tree, not a
+stored $q$-leaf tree. A mapped reply is provisional local data, not an
+actual observation at an unqueried word. Beyond the provisional bound
+$U_0$ the map can be false; the enclosing guard, not that map, supplies
+acceptance authority.
+

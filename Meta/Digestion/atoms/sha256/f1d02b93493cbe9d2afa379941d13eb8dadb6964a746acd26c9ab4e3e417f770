@@ -1,0 +1,53 @@
+**Theorem 42.2 (a continuum above the threshold for every positive beta).** Put
+
+$$
+ s=\sqrt a,\qquad p=T_\beta=\frac{1+s}{2},\qquad
+ t=1-p=\frac{1-s}{2}.
+$$
+
+For every $0<\beta\leq1/2$ and every
+
+$$
+ 0<u<(1-s)^2,
+\tag{R.207}
+$$
+
+the actual family (R.195) satisfies $U_N>p$. In particular such failures exist at arbitrarily small positive $u$ for every positive allowed beta.
+
+**Proof.** Since $s\geq1/\sqrt2$, $1-s<s$, so (R.207) implies $u<a$ and lies within Definition 41.1. For the legitimate diagonal centers $\omega_x=\operatorname{diag}(1-x,x)$, define
+
+$$
+ A(x):=\left(\sqrt{a(1-x)}+\sqrt{\beta x}\right)^2,
+ \qquad
+ \kappa_u(x):=\frac{u+(a-u)x}{(s+\sqrt u)^2}.
+\tag{R.208}
+$$
+
+The two phase fidelities both equal $A(x)$, while (R.199) equals $\kappa_u(x)$. Since $1-t=p$ and $\beta=4pt$, substitution yields
+
+$$
+ A(t)=p,\qquad
+ t-\kappa_u(t)
+ =\frac{s\sqrt u(2t-\sqrt u)}{(s+\sqrt u)^2}>0.
+\tag{R.209}
+$$
+
+Here $2t=1-s>\sqrt u$. Also $\beta=2t(1+s)>t$. The following strictly positive displacement is therefore defined:
+
+$$
+ \epsilon:=\frac12\min\left\{
+ \beta-t,\ \frac{s\sqrt u(2t-\sqrt u)}{a-u}\right\}>0.
+\tag{R.210}
+$$
+
+It obeys $t+\epsilon\leq(t+\beta)/2<\beta$. For $x\in[0,\beta]$, write $x=\sin^2\theta$, $\beta=\sin^2\alpha$, with $0\leq\theta\leq\alpha\leq\pi/4$. Then $A(x)=\cos^2(\alpha-\theta)$ is strictly increasing up to $\beta$. Consequently $A(t+\epsilon)>A(t)=p$. On the other hand, $\kappa_u$ is affine with positive slope $(a-u)/(s+\sqrt u)^2$, and (R.210) increases it by at most half of the positive gap in (R.209). Thus
+
+$$
+ A(t+\epsilon)>p,\qquad
+ \kappa_u(t+\epsilon)<t,\qquad
+ U_N\geq\min\{A(t+\epsilon),1-\kappa_u(t+\epsilon)\}>p.
+\tag{R.211}
+$$
+
+This gives an explicit center for every member of the stated continuum and proves the strict result without requiring the outer optimum in (R.205). $\square$
+

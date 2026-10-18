@@ -1,0 +1,19 @@
+**Theorem 1.5 (Direct conditional bridge, with exact quantifiers).** For every stationary legal law $P$,
+
+$$
+d(P)=c_\star\quad\text{and}\quad A_P<\infty
+\quad\Longrightarrow\quad\mathsf Z_\Delta(P).
+\tag{1.10}
+$$
+
+Consequently, on the entire original finite-hidden domain,
+
+$$
+\forall N\ge1\ \forall\theta\in\Theta_N:\quad
+\bigl[d(P_\theta)=c_\star\ \text{and}\ A_{P_\theta}<\infty\bigr]
+\Longrightarrow\mathsf Z_\Delta(P_\theta).
+\tag{1.11}
+$$
+
+The band used in the proof follows from attainment. The root sum is a separate additional premise; it is not inferred from the band, finite hidden dimension or attainment. Constants may depend on this law and on a fixed block and test. No parameter-uniform rate is asserted. The proof occupies §§3–8; §2 states the reused premises.
+

@@ -1,0 +1,18 @@
+**定义 1.2（Actual root-zero table）。** Fix a remembered free INITIAL value $v$, emit $1^m$, and retain its successful zero-difference archive. With $J=P\setminus\{0,m\}$, the INITIAL candidates and current records are exactly
+
+$$
+(v,-j,s),\quad j\in J,\ 0\le s<h;
+\qquad (v,-j+m,m+s).
+\tag{1.2}
+$$
+
+Require the INITIAL target on these rows to be $\lambda(j)$ independently of $s$. Impose no labels on other root archives. Write $D_{\rm ad}(\lambda)$ for the minimum additional worst emitted-block fee on this archive and $D_{\rm child\text{-}pre}(\lambda)$ for its price with one fixed literal suffix and archive-dependent stopping. The root is already paid and is not included in $D$. Define the two actual missed sets
+
+$$
+H=J\setminus W_1=P\cap\{a+1,\ldots,m-1\},
+\qquad O=J\setminus W_2.
+\tag{1.3}
+$$
+
+The priced class has exactly three labels, $|\lambda[J]|=3$, and $\lambda$ is constant on $H$. Empty-set constancy is allowed. When $H$ is nonempty, denote its label by $L_H$.
+

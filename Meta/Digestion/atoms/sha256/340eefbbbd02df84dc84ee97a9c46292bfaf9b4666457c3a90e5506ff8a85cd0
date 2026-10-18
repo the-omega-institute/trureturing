@@ -1,0 +1,63 @@
+### 定理 1.3（金字塔像与合法纤维）
+
+可见映射
+
+\[
+P(p)=(X,Y,Z)
+\]
+
+的像为
+
+\[
+\mathcal P=
+\{(X,Y,Z):X,Y,Z\ge0,\ X+Z\le1,\ Y+Z\le1\}.
+\]
+
+固定 \((X,Y,Z)\) 后，合法概率律构成闭区间
+
+\[
+\mathcal F_{X,Y,Z}
+=
+\{p_\kappa:\kappa_-\le\kappa\le\kappa_+\},
+\]
+
+其中
+
+\[
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+\]
+
+证明：四个底面质量非负分别给出
+
+\[
+\kappa\ge0,\quad
+\kappa\le X,\quad
+\kappa\le Y,\quad
+\kappa\ge X+Y-r.
+\]
+
+这些条件合并成上述区间。反向地，区间中每个 \(\kappa\) 代入重构式都给出非负、归一化概率律。证毕。
+
+定义
+
+\[
+d=(1,-1,0,-1,1).
+\]
+
+则
+
+\[
+p_\kappa-p_{\kappa'}=(\kappa-\kappa')d,
+\]
+
+且在质量零空间 \(T=\{v:\sum_s v_s=0\}\) 上
+
+\[
+\ker(DP)=\mathbb R d.
+\]
+
+这证明了三维金字塔丢失的概率方向恰为一维。
+
+---
+

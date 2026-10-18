@@ -1,0 +1,26 @@
+### 76.4 Common three-dimensional support forces a spectral deficit
+
+Let Q be the rank-three projection associated with this anchor c_a as in (2). Applying the support inequality to every pair c_f,d_f gives
+
+    Σ_f||(I−Q)d_f||²≤Σ_f(e_f+e_f²)
+      ≤s+min{s²,s}
+      ≤min{kδ+k²δ²,2kδ}.                               (7)
+
+Let B:C^k→H_A⊗H_B have columns d_f, so M=B*B. The positive matrix B*QB has rank at most three. The sum of the k−3 smallest eigenvalues of M is at most
+
+    Tr B*(I−Q)B=Σ_f||(I−Q)d_f||².                      (8)
+
+For example, choose a (k−3)-dimensional subspace of ker(QB) and apply the variational characterization of the sum of the smallest eigenvalues; the trace of B*(I−Q)B on that subspace is bounded by its full trace. This argument neither assumes a common local Schmidt plane for all fibres nor truncates the competitors' environments.
+
+Write the eigenvalues of M increasingly as λ_1,...,λ_k. Since TrM=k, the second trace-zero difference in (4) yields
+
+    δ≥(2/k)Σ_j(1−λ_j)_+
+      ≥(2/k)((k−3)−Σ_(j=1)^(k−3)λ_j).                 (9)
+
+Combining (7)–(9) separately with its two bounds gives
+
+    2kδ²+3δ−2(k−3)/k≥0,
+    5δ≥2(k−3)/k.
+
+The positive root of the quadratic is (sqrt(16k−39)−3)/(4k). This proves (1) for every calibrated product and hence, by the non-increasing replacement, for every original physical product. For k=4 the quadratic becomes 16δ²+6δ−1≥0, whose positive root is exactly 1/8.
+

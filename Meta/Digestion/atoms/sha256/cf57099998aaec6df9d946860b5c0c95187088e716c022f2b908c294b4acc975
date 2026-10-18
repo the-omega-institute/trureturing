@@ -1,0 +1,37 @@
+**Lemma 3.1 (Symbolic five-site insertion comparison).** At every reset index of the same $\pi_n$,
+
+$$
+M_i\le\frac9{49-13c_i}.
+\tag{3.1}
+$$
+
+Proof. Fix the complete exterior $\eta$ of $[i-2,i+2]$. Only exteriors allowing both anchors to equal one can contribute to $E_i$. For each such exterior, the immediately adjacent exterior bits, when present, are zero. Consequently every legal five-site word can be inserted into this fixed exterior. Define the unnormalized masses
+
+$$
+u_\eta=\pi_n(\eta,10001)>0,\qquad
+t_\eta=\pi_n(\eta,10101)>0.
+$$
+
+The notation specifies the exterior and the five middle bits together, hence one complete length-$n$ word. All the following comparisons take place in this same exterior and use (1.2).
+
+First consider the disjoint words $a0x0b$, $a,b,x\in\{0,1\}$. For $x=0$, deleting either or both anchor ones from $10001$ shows that each of the four masses is at least $u_\eta$. For $x=1$, the same deletions from $10101$ give four masses at least $t_\eta$. Their total is at least $4(u_\eta+t_\eta)$.
+
+The two words $0100b$, $b\in\{0,1\}$, have total mass at least $2u_\eta/3$: each precursor $0000b$ has mass at least $u_\eta$, and inserting the second bit is legal and retains at least a third of that mass. Likewise the two words $a0010$ have total mass at least $2u_\eta/3$. Finally $00000$ has mass at least $u_\eta$; successive legal insertions at its second and fourth positions give mass at least $u_\eta/9$ to $01010$.
+
+The four families are disjoint: their second and fourth bits are respectively $00$, $10$, $01$ and $11$. Each is legal with the fixed exterior. Their union need not be given any independent probabilistic structure. Its mass alone proves
+
+$$
+\pi_n(W_{[1,n]\setminus[i-2,i+2]}=\eta)
+\ge4(u_\eta+t_\eta)+\frac{13}{9}u_\eta.
+\tag{3.2}
+$$
+
+Sum (3.2) over exteriors compatible with $E_i$. Their total probability is at most one; the sums of $u_\eta+t_\eta$ and $u_\eta$ are respectively $M_i$ and $M_i(1-c_i)$ by (1.8). Hence
+
+$$
+1\ge4M_i+\frac{13}{9}M_i(1-c_i)
+=\frac{49-13c_i}{9}M_i.
+$$
+
+The denominator is positive on the band, proving (3.1). Incompatible exteriors contribute nothing to $E_i$ and are never divided by. A missing exterior bit at an open endpoint imposes no extra constraint. This is a symbolic disjoint-event comparison, not an evaluation of an optimizer or a substitution of $\pi_5$. $\square$
+

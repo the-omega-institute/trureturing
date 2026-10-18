@@ -1,0 +1,52 @@
+**Definition 75.2 (physical carriers, exact maps and adjoints).** Use $\Omega_\varepsilon=\Omega_\varepsilon^+$ of72.5 and $\mathcal P_\varepsilon=L^2_{\rm sym}(\Omega_\varepsilon^2)$. Its mixed-ground form domain $\mathcal Q_{{\rm mix},\varepsilon}$ is exactly(73.5): symmetric $H^1$ functions with zero trace on both grounded product faces, with no essential condition on the exterior Neumann walls. The free form is
+
+$$
+q_{0,\varepsilon}[u]=\beta\int_{\Omega_\varepsilon^2}
+                 (|\nabla_xu|^2+|\nabla_yu|^2).
+\tag{75.6}
+$$
+
+Denote its operator by $B_\varepsilon$. Write $J=J_{\varepsilon,2}$ for the actual isometry of73.6, not a harmonic calibration. For a source port let $Z_p^\varepsilon$ be its chamber, and for a cable let $Z_e^\varepsilon(x)$ be its cross-section at longitudinal coordinate $x$. Put $c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}$. On the ordered chamber/chamber, chamber/cylinder, cylinder/chamber and cylinder/cylinder products, respectively, $JF$ equals
+
+$$
+c_\varepsilon^2F_{pq},\qquad c_\varepsilon^2F_{pe}(y),\qquad
+c_\varepsilon^2F_{ep}(x),\qquad c_\varepsilon^2F_{ef}(x,y).
+\tag{75.7}
+$$
+
+It is zero if either coordinate lies in a ground half-chamber. The adjoint on all physical Hilbert data is
+
+$$
+(J^*u)_{\alpha\gamma}
+ =b_\alpha b_\gamma\int_{Z_\alpha^\varepsilon\times Z_\gamma^\varepsilon}u,
+\qquad b_p=c_\varepsilon,\quad b_e=c_\varepsilon/\delta.
+\tag{75.8}
+$$
+
+Cable longitudinal variables are not integrated in this formula. The volumes $|Z_p^\varepsilon|=\varepsilon^{s-1}/\delta$ and $|Z_e^\varepsilon(x)|=\varepsilon^{s-1}$ give $J^*J=I$ with precisely the weights in(73.1). Set $L_\varepsilon=JE$, so $L_\varepsilon^*L_\varepsilon=I$ and $L_\varepsilon^*=E^*J^*$. Both $J$ and $L_\varepsilon$ have proper range in the full physical space: nonconstant chamber and transverse modes and ground half-chamber functions remain there.
+
+For a radius $R_\varepsilon>0$ put, exactly as in74.7,
+
+$$
+\begin{aligned}
+G_{\varepsilon,R}&=\{(x,y)\in\Omega_\varepsilon^2:|x-y|>R_\varepsilon\},
+&\mathcal P_{\varepsilon,R}&=L^2_{\rm sym}(G_{\varepsilon,R}),\\
+\iota_\varepsilon&:\mathcal P_{\varepsilon,R}\to\mathcal P_\varepsilon,
+&\iota_\varepsilon u&=\text{zero extension},\\
+\mathcal Q_{\varepsilon,R}^{\rm D}
+ &=\{u\in\mathcal P_{\varepsilon,R}:\iota_\varepsilon u
+                                  \in\mathcal Q_{{\rm mix},\varepsilon}\}.
+\end{aligned}
+\tag{75.9}
+$$
+
+The adjoint $\iota_\varepsilon^*$ is restriction to the allowed set. The zero extensions in this domain are exactly the mixed-ground $H^1$ functions vanishing almost everywhere on $|x-y|\le R_\varepsilon$. Thus this is Dirichlet exclusion across the inner wall in its trace charts, retaining the original exterior and grounded conditions. Chapter74 supplies its closedness and density on the allowed carrier; no global $H^2$ regularity or alternative boundary-core identification is assumed. The allowed target lift and its adjoint are exactly
+
+$$
+T_\varepsilon=\iota_\varepsilon^*L_\varepsilon,\qquad
+T_\varepsilon^*=L_\varepsilon^*\iota_\varepsilon.
+\tag{75.10}
+$$
+
+This lift is a contraction. Its isometry is neither assumed nor needed.
+

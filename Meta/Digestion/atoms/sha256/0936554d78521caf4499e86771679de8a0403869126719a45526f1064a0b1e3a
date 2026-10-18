@@ -1,0 +1,48 @@
+**Assumption 3.1 (original two-phase services).**
+Keep NBP Assumptions 9.2 and 10.6, Definition 15.1, and NRE Assumption 3.1.
+Exactly one authenticated genuine $\rho$ update binds the same actual
+origin $u\in\mathcal U_*$ to the same current register $t_u$. The root,
+cut and version are fixed; there is no reset, rotation, source replacement,
+arbitrary edit or subsequent update. Authentication certifies this binding
+without revealing the origin inside the fiber. The current row is lawfully
+acquired on this stationary version.
+
+Before the access cut, a producer genuinely possesses either the lossless
+finite current tree, or $R_*$ and one acquired finite subtree value for each
+of its six classes, all from that same version. Partition equalities are
+comparisons of these acquired finite terms. Fix one specified lawful finite
+computation on these data, and prescribe its complete exported value
+
+$$
+\sigma:\mathcal U_*\longrightarrow\{0,1\}.
+\tag{NRN.10}
+$$
+
+This code may depend on internal finite structure and may attain only one
+bit. The producer computes and actually exports exactly this code with
+the current row before losing access to the acquired values. The reader
+receives the original pointwise value; no replacement coloring is allowed.
+
+A supplied lawful common entry exposes exactly the prescribed complete
+code and common $P,R_*$ and controls. These inputs are recoverable at entry.
+No other source-dependent identity, predecessor, alpha marker, acquired
+term, trace, cache, old output, archive, pointer, allocation, control field,
+acquisition order or count, length, meter, timing or update packet is
+accessible. Fields determined by the declared payload add no distinction;
+any further accessible source field changes this contract. Inaccessible
+material need not be physically erased.
+
+During reading the same register is stationary, and its only source port
+is the four-reply literal port of Definition 2.1. There is no equality,
+image, provenance, generation, inverse or additional subtree port. Every
+invocation is paid, including repeats, absences, leaf continuations and
+words already used in acquisition. Every actual origin in the full domain
+must terminate with its entire $F(u)$.
+
+Lawful acquisition, acquired-term computation, authentication, version
+binding, installation, actual export, complete isolation, faithful entry
+and authentic continuing native service are separately supplied and priced.
+An absorbing producer stop supplies no resume operation: any reader entry
+after it is a separate supplied invocation. A mathematical representation
+of the code or row constructs none of these services.
+

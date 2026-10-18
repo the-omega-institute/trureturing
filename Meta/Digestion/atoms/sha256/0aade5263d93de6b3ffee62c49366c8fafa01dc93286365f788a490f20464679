@@ -1,0 +1,50 @@
+**命题 5.1（未来样本和每个原子动作）。** 记 $\gamma_i=g(i)$，(4.3)–(4.4) 给
+
+| 分支 | $k$ | $\gamma_6$ | $\gamma_7$ |
+| --- | --- | --- | --- |
+| $t>0,t\ne1$ | $-\alpha+\beta/(t-1)$ | $\alpha+\beta/(t-1)-8\Delta/t$ | $16\alpha/5+\beta/(t-1)-35\Delta/(2t)$ |
+| $t=1,\beta=0$ | 任意 $k$ | $k+2\alpha-8\Delta$ | $k+21\alpha/5-35\Delta/2$ |
+
+五个 $J$ 后 $A_5=J$。剩余全部响应为
+
+| 原时钟、续词 | 累计矩阵 | 迹因子 | 归一化响应 |
+| --- | --- | --- | --- |
+| $6:J$ | $I$ | $1$ | $\gamma_6-k=2\alpha-8\Delta/t$ |
+| $6:M$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ | $(1+b)\gamma_6-k$ |
+| $7:JJ$ | $J$ | $t$ | $t\gamma_7-k$ |
+| $7:JM$ | $M$ | $t+1-a$ | $(t+1-a)\gamma_7-k$ |
+| $7:MJ$ | $JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $t+a$ | $(t+a)\gamma_7-k$ |
+| $7:MM$ | $M^2J=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ | $1+t+b$ | $(1+t+b)\gamma_7-k$ |
+
+这里续词按时间顺序，每个字母后分别立即读数。非单位时，两个将用于秩比较的展开式为
+
+$$
+\begin{aligned}
+z_{6,M}&=(2+b)\alpha-8\frac{1+b}{t}\Delta+\frac b{t-1}\beta,\\
+z_{7,MJ}&=\left[1+\frac{16}{5}(a+t)\right]\alpha
+-\frac{35}{2}\frac{a+t}{t}\Delta+\frac{a+t-1}{t-1}\beta.
+\end{aligned}
+\tag{5.1}
+$$
+
+**证明。** 未来样本由 (4.2) 的 $u(6),v(6),u(7),v(7)$ 代入。分别左乘第六和第七单独动作得到表中全部矩阵。对任意矩阵 $X$，
+
+$$
+\operatorname{tr}(XP)=X_{11}a+X_{12}c+X_{21}b+X_{22}(1-a),
+\tag{5.2}
+$$
+
+代入 $c=t-b$ 就得每个迹因子；再乘对应原时钟增益、减去 $k$。代入非单位未来样本并收集三个历史参数，得到 (5.1)。∎
+
+非单位候选的根六、根七分别恰为
+
+$$
+\begin{aligned}
+\alpha t(t-1)+\beta t-8\Delta(t-1)&=0,\\
+\frac{16}{5}\alpha t(t-1)+\beta t-\frac{35}{2}\Delta(t-1)&=0.
+\end{aligned}
+\tag{5.3}
+$$
+
+乘法只用了已非零的 $t(t-1)$。这些多项式不除以首项或判别式；二次、一次、常数、恒零方程及重复的 $t$ 根都按原式保留，再施加 $t>0,t\ne1$ 和非零增益过滤。单位候选必须用表中关于自由 $k$ 的两个线性根式。更早的根、根的重数及增益符号均由完整系数 (4.11) 保留，不能用仅有的未来根条件替换。
+

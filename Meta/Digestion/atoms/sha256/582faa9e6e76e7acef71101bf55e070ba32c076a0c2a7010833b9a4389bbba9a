@@ -1,0 +1,33 @@
+**Theorem 3.2 (guarded whole-subtree and literal correspondence).** For
+every $u\in\mathcal T$, $n\ge0$ and finite physical word $p$,
+
+$$
+\begin{aligned}
+p\in\operatorname{Pos}(\rho^n u)
+ &\Longleftrightarrow\nu_p(\tau_nB(u))\ne\bot,\\
+B((\rho^n u)|_p)&=\nu_p(\tau_nB(u))\quad\text{when reached},\\
+r_{\rho^n u}(p)&=\lambda(\nu_p(\tau_nB(u))).
+\end{aligned}
+\tag{ABC.3.3}
+$$
+
+Thus a signed record is exactly the following predicate on $X=B(u)$:
+
+$$
+\nu_s(\tau_aX)\ne\bot\ \land\
+\nu_t(\tau_bX)\ne\bot\ \land\
+\nu_s(\tau_aX)\ \bowtie\ \nu_t(\tau_bX).
+\tag{ABC.3.4}
+$$
+
+Proof. At a normal constructor, $E$ is native pairing. At $[j]$, the
+expanded source is a leaf exactly for $j=0,1$, and for $j\ge2$ its
+children are $T_{j-1},T_{j-2}$ by the supplied recurrence. Therefore
+(ABC.3.1) gives exactly the reached native children and their canonical
+codes. Induction on the length of $p$, propagating $\bot$ after the first
+failed edge, proves the first two statements at epoch zero for every
+normal code. Equation (ABC.3.2) gives its literal root reply. Apply these
+facts to $\tau_nB(u)=B(\rho^n u)$ to obtain (ABC.3.3). Under the two guards,
+Theorem 2.2 makes code equality equivalent to whole native subtree
+equality; its negation gives the disequality case. $\square$
+

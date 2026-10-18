@@ -1,0 +1,46 @@
+**theorem 2.1 (Full-class converse and actual simultaneous upper bound).**
+For every known $t,\eta\in[0,1]$, define
+
+$$
+\begin{aligned}
+B_3&=6u(1-2h+2h^2)-4u^3,\\
+F_3&=2u(1+r+r^2),\\
+M_3&=6ur+12u(w^2+n^2)-4u^3,\\
+K_3&=\max\{F_3,M_3\}.
+\end{aligned}
+\tag{2.1}
+$$
+
+Then the original optimization (1.3) satisfies
+
+$$
+\boxed{[c-B_3]_+\ \le\ E_3(t,\eta)\ \le\ [c-K_3]_+.}
+\tag{2.2}
+$$
+
+The lower bound quantifies over every processor in Definition 1.2.
+For each fixed parameter pair, one complete finite-round real LOCC
+processor, selected from two explicit protocols using only $t,\eta$,
+has error exactly the upper endpoint for each of the four labels.
+It is CP/TP on the entire complex joint algebra. The coefficients also
+have the forms
+
+$$
+\begin{aligned}
+B_3&=\frac{c(2550+540\eta+108\eta^2)-100c^3}{3125},\\
+F_3&=\frac{c(2450+660\eta+72\eta^2)}{3125},\\
+M_3&=\frac{c(2550+420\eta+204\eta^2)-100c^3}{3125}.
+\end{aligned}
+\tag{2.3}
+$$
+
+Proof. Section 3 proves the lower bound. Sections 4–7 give the complete
+instruments and a parameter-only selection with the upper error.
+The identities in (2.3) follow by substituting (1.4) into (2.1).
+Section 8 proves the equality regions and the qualified interval width.
+None of these statements asserts either endpoint to be the optimum
+at general positive noise. The two-copy finite certificate is reused
+as an intermediate ingredient; the additional content is its
+three-copy use with the cubic contribution and the actual three-copy
+local protocols. QED.
+

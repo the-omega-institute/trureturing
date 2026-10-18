@@ -1,0 +1,13 @@
+**Definition 5.1 (the phase experiment).** Let $E_s$, $0\le s\le\ell$,
+reveal the phases of $s$ fixed distinct public gadgets in fixed order.
+At $s=0$ its sole outcome is the empty vector under both hypotheses.
+For $s\ge1$ its two laws on $\{0,1\}^s$ are
+
+$$
+p_s=\operatorname{Unif}(\{0,1\}^s),\qquad
+q_s=(1-\epsilon)\frac{\delta_{0^s}+\delta_{1^s}}2+\epsilon p_s.
+$$
+
+These follow by marginalization of the phase laws, without modifying
+any conditional native tuple law.
+

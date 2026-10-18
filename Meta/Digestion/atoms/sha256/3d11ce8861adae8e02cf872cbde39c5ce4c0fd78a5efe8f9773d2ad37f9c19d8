@@ -1,0 +1,21 @@
+**Convention 1.1 (fixed sources).** Repository references mean their bodies at
+`82c9eb9c1462af91333b7038a93488c8b9b8bdc7`. Write RCA, SSA, CSA, CAP, AIF and
+LJA for, respectively,
+
+- [Native Retrospective Cut Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md);
+- [Native Structural Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md);
+- [Native Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md);
+- [Native Capacity Coherence and Growth](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md);
+- [Native Acquired Input Frontier and Replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md);
+- [Native Literal Journal Adapter](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md).
+
+PR57 means §57 of
+[Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md).
+Its finite constructed tapes, local opcodes, meter, source and channel
+conventions are assumptions of the instance, not consequences of a wire
+codec. RCA §§11–16 supply the native word compiler, literal row interpreter,
+capture/bootstrap installation, acquired covers/packages and delivery.
+SSA §§3–7 and CSA §§3–7 supply the structural representation and mathematical
+inverse methods. Their inverses are reused inside the construction below.
+CSA Lemma 7.2 expressly leaves additional view serializers uninstalled.
+

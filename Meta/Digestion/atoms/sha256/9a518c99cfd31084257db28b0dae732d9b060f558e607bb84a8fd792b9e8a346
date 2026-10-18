@@ -1,0 +1,21 @@
+**定义 30.1（边缘档案所观察的来源）。** 取非空有限坐标集 $X_i$，$|X_i|=d_i\ge1$，$i=1,\ldots,n$，$n\ge1$；令 $X=\prod_iX_i$、$D=\prod_id_i$。线性分布载体为 $\mathbb R^X$，概率来源域为
+
+$$
+\Delta(X)=\{p:p(x)\ge0,\ \sum_xp(x)=1\}.
+$$
+
+这里的来源是一个总体概率律 $p$，不是该律的一次样本。$Q_{\le r}$ 将 $p$ 送到全部 $|J|\le r$ 的坐标边缘，$0\le r\le n$，空边缘记录总质量。用均匀乘积参考测度上的有限 ANOVA 张量接口
+
+$$
+\mathbb R^{X_i}=\mathbb R\mathbf1_i\oplus V_i^0,\qquad
+V_i^0=\{f:\sum_{x_i}f(x_i)=0\},
+$$
+
+$$
+\mathbb R^X=\bigoplus_{S\subseteq\{1,\ldots,n\}}V_S,\qquad
+V_S=\bigotimes_{i\in S}V_i^0\otimes
+\bigotimes_{i\notin S}\mathbb R\mathbf1_i.
+$$
+
+$|S|$ 是交互阶，$\dim V_S=\prod_{i\in S}(d_i-1)$。这一分解是已有的 ANOVA 中间工具，参见 Owen, [The ANOVA decomposition，附录 A.1–A.3](https://artowen.su.domains/mc/A-anova.pdf)。参考测度的乘积结构用于分解函数空间，不要求待研究的 $p$ 本身概率独立。
+

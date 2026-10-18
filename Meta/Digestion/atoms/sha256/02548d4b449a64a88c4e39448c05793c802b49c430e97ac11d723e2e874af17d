@@ -1,0 +1,36 @@
+**定理 22.4.1（有界停止的似然比恒等式）。** 假设对所有比较中的路径，$q_t^\beta(z\mid h,u)>0$。固定 $u$，令
+
+$$
+R_t(u)=
+\frac{p_\alpha(Z_{1:t}\mid u)}{p_\beta(Z_{1:t}\mid u)}
+=\prod_{s=1}^t
+\frac{q_s^\alpha(Z_s\mid Z_{1:s-1},u)}
+{q_s^\beta(Z_s\mid Z_{1:s-1},u)}.
+$$
+
+在协议 $\beta$ 的条件概率下，$(R_t(u))_{t=0}^N$ 是非负鞅；对任意 $T\le N$，有
+
+$$
+\mathbb E_\beta[R_T(u)\mid U=u]=1.
+$$
+
+对任意停止事件 $E\in\mathcal F_T$，有
+
+$$
+\boxed{
+\Pr_\alpha(E\mid U=u)
+=\mathbb E_\beta[R_T(u)\mathbf 1_E\mid U=u].
+}
+$$
+
+**证明。** 给定 $\mathcal F_{t-1}$ 和 $U=u$，下一步增量的条件期望为
+
+$$
+\sum_zq_t^\beta(z\mid h,u)
+\frac{q_t^\alpha(z\mid h,u)}{q_t^\beta(z\mid h,u)}=1.
+$$
+
+所以 $R_t$ 是鞅。有限停止时间可以逐项展开，或使用有界可选停止定理，得到期望恒等式。对事件 $E$ 逐条历史展开，$\beta$ 概率乘以 $R_T$ 恰好是 $\alpha$ 概率。证毕。
+
+<a id="claim-22-4-2"></a>
+

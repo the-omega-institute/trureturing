@@ -1,0 +1,49 @@
+**Theorem 10.1 (Exact dimension-zero and dimension-one baselines).**
+For every $0<Z<1$,
+
+$$
+e_0^{\rm aff}(Z)=e_1^{\rm aff}(Z)=R_0.
+$$
+
+The same values hold if all prescribed paths are required. In the
+guard-recoverable class, with or without prescribed paths, the
+dimension-zero class is empty and the dimension-at-most-one capacity
+is $R_0$. Every finite endpoint asserted here is achieved.
+
+**Proof of Theorem 10.1.** Every model of stored dimension at most
+one has useful-readout rank at most one. Proposition 4.2 therefore
+gives the lower bound $R_0$, while the literal zero-dimensional
+model with decoder zero gives the upper bound. In $\mathbb R^0$
+there is a single encoded value and a unique ambient update. Its
+intertwining identities hold for every lawful source command and
+every lawful prescribed path, without a guard-recovery assertion.
+Lemma 4.1 also directly proves optimality over all constant decoder
+offsets.
+
+To disprove guard recovery in dimension zero, choose $k_1<k_2$ in
+$(0,H)$ and set $s=H-(k_1+k_2)/2$. Then
+
+$$
+0<k_1+s=H-(k_2-k_1)/2<H,\qquad
+k_2+s=H+(k_2-k_1)/2>H.
+$$
+
+The two equal encodings would have to give different guard answers.
+Thus this class is empty.
+
+For dimension at most one with guard recovery, use
+
+$$
+E_{\rm h}(k,\alpha,\beta)=K=k,\qquad
+\mathcal U_s(K)=K+s,\qquad
+\mathcal V_t(K)=K,\qquad q(K)=0.
+$$
+
+Its actual image is $(0,H)$ and its straight guard is exactly
+$0<K+s<H$. For the path of Proposition 9.1 its affine update is
+$K\mapsto K+\Delta$, with full guard
+$0<K+\eta(t)<H$ at every time. These formulas give exact endpoint,
+truncation and concatenation identities directly. The zero readout
+has error $R_0$. Subclass inclusion supplies the same lower bound
+for both guarded variants, completing the proof. $\square$
+

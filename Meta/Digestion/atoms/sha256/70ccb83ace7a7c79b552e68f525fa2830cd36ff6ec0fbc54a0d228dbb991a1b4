@@ -1,0 +1,74 @@
+**Definition 1.1 (native data, source and full complex domains).** Fix one original admitted signed $\kappa\ne0$, $H$, $I=(l,u)$, $k_0\in I$, and $a,\varepsilon>0$, retaining every original probability, interval and denominator restriction. Put
+
+$$
+\begin{aligned}
+\alpha_\kappa&=\kappa+\kappa^2/H,&d_0&=k_0-\alpha_\kappa>0,&\nu&=\varepsilon/d_0,\\
+L_I&=u-l,&\lambda&=\varepsilon^2\pi^2/L_I^2,&
+\phi(k)&=(2/L_I)^{1/2}\sin\bigl(\pi(k-l)/L_I\bigr),\\
+c_j&=c_\kappa^{(j)}(k_0)\quad(j=0,1,2),&
+j_0&=\varepsilon^4|\det(c_0,c_1,c_2)|>0.
+\end{aligned}
+\tag{1.1}
+$$
+
+The entire original vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$, including its third component, obeys the exact identity
+
+$$
+\begin{aligned}
+c_\kappa(k_0+h)&=c_0+h c_1+\frac{h^2}{2(1+h/d_0)}c_2,\\
+(A_\kappa(k),B_\kappa(k))
+ &=\frac{k-2\kappa}{2H(k-\alpha_\kappa)}(H+\kappa-k,-k),\\
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ &=-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0.
+\end{aligned}
+\tag{1.2}
+$$
+
+All jets belong to this one original vector; none is freely chosen. The denominator has a positive margin on $\overline I$. On $\mathcal C=I\times\mathbb R^3$, $q=(\theta,v,x)$, use raw measure $dY=dk\,dq$ and
+
+$$
+B=-\varepsilon^2\partial_k^2-(c_\kappa(k)\cdot\partial_q)^2,
+\qquad S=B-\lambda\ge0.
+\tag{1.3}
+$$
+
+Both height endpoints are Dirichlet. With unitary phase Fourier factor $(2\pi)^{-3/2}$ and $B_\eta=-\varepsilon^2\partial_k^2+|\eta\cdot c_\kappa(k)|^2$, the complete complex domains, including underlying $L^2(dY)$ membership, are
+
+$$
+\begin{aligned}
+\mathcal Q
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\!\int_I
+ (\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa|^2|\widehat\psi|^2)dk\,d\eta<\infty\right\},\\
+D(S)=D(B)
+ &=\left\{\psi:\widehat\psi(\cdot,\eta)\in H^2(I)\cap H_0^1(I)\text{ a.e.},\quad
+ \int_{\mathbb R^3}\|B_\eta\widehat\psi(\cdot,\eta)\|_2^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{1.4}
+$$
+
+Thus $\mathcal Q=D(S^{1/2})=D(B^{1/2})$. Every real phase frequency and every complex state in these domains is retained. No ordinary phase $H^1$, reality, parity or height-product restriction is imposed on native competitors.
+
+For the killed heat kernel $p_t^B$ in raw measure and pole $o=(k_0,0)$, retain exactly
+
+$$
+\begin{aligned}
+W_\tau&=\int_\tau^\infty e^{\lambda t}p_t^B(o,\cdot)dt,&
+\rho_\tau&=e^{\lambda\tau}p_\tau^B(o,\cdot),&SW_\tau&=\rho_\tau,\\
+\int\rho_\tau dY&=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),&
+\int\phi(k)\rho_\tau(k,q)dk\,dq&=\phi(k_0),\\
+\mathfrak e_{g,\tau}[\psi]&=a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2dY,&
+E_\tau(g)&=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}\mathfrak e_{g,\tau}[\psi].
+\end{aligned}
+\tag{1.5}
+$$
+
+The raw and $\phi$-weighted charges differ, without survival renormalization. The field clock is $B$, independently of $a$. P Propositions 70.2 and 75.2 supply, separately at each positive $g,\tau$, a bounded multiplier, operator $aS-gW_\tau$ on exactly $D(S)$, and finite negative attained bottom. The exact path is
+
+$$
+\tau=s^2,\qquad g_s=\chi_cs^3,\qquad E_s=E_{s^2}(\chi_cs^3),\qquad
+\epsilon_c(s)=s^2E_s,\qquad r_s=-\epsilon_c(s)/s^8=-E_s/s^6>0.
+\tag{1.6}
+$$
+

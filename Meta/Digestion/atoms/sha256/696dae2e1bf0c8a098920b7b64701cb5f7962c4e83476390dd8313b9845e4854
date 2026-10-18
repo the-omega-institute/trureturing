@@ -1,0 +1,16 @@
+## 493. Face-count obstruction
+
+In a fixed frame (R,A,B,O,A,B), each original face has one axial role and both transverse roles. If a paired-frame owner has at least four H slots, every one of its faces has at least two original H slots:
+
+- if both transverse roles are in H, they already supply two on each face;
+- if exactly one transverse role is in H, reaching four total H slots requires both axes to be in H, so each face again has two;
+- if neither transverse role is in H, there are at most two H slots in the owner, which is outside this case.
+
+This counts slots, including repeated labels. It does not require four distinct actual labels or distinct numerical lengths.
+
+The two original faces through phi's V axis both have actual edge-label multiset {V,C,D}, with exactly one H slot. Such a face cannot pair to a face of any genuine owner with four or five H slots. The only three-H-slot genuine owner tau contains no V label. A zero-H-slot owner also contains no V. The remaining flat sigma contains no V. Therefore the two VCD face occurrences of phi have no target outside those two face occurrences.
+
+The face pairing is a fixed-point-free involution on original face occurrences. It consequently pairs these two distinct faces to each other. Their unique V edge is phi's single original axial V slot on both sides. Thus both endpoints of that one original V normal interval are paired to each other, giving a closed normal-circle component consisting of precisely one original interval.
+
+The actual normal link of V is connected, so this component would be the whole normal circle. Its original degree would be one, contradicting the required degree at least six. This proves the theorem.
+

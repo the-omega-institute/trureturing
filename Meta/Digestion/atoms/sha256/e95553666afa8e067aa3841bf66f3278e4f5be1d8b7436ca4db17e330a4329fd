@@ -1,0 +1,62 @@
+**Theorem 34.1 (tested lower-charge cancellation).** With $E_{i,s}$ and $E_s^{\rm row}$ of (24.24), (24.40),
+
+$$
+s^i\langle p,E_{i,s}\rangle=o_d(s^5),\qquad i=1,2,3,4.
+\tag{34.1}
+$$
+
+Only the already specified $L^2$ norm of $g_4$ is required. Reflection is a property of the fixed canonical charges, not a restriction on any actual state.
+
+Proof. For $i=1,2,3$ put $k_i=5-i$. On the estimating strip apply Taylor's integral formula through degree $k_i-1$ to the return on the inner-height truncation of $g_i$. The next derivative orders are $4,3,2$. For $t<1$ its weighted-input $L^2$ bounds are integrable. For $t\ge1$, (24.34) gives respectively the complete lists
+
+$$
+\begin{array}{c|c|c}
+i&\text{input exponents}&\text{time exponents in }L^\infty\\ \hline
+1&(1,1,7/6,7/5,7/4)&(-3/2,-2,-2,-2,-2)\\
+2&(1,7/6,7/5,7/4)&(-2,-2,-2,-2)\\
+3&(6/5,18/13,18/11)&(-23/12,-73/36,-77/36)
+\end{array}
+\tag{34.2}
+$$
+
+Every long-time exponent is strictly below $-1$. At each fixed positive time, the finite strip derivatives at $\theta=vs$, $0\le v\le1$, converge to the canonical derivatives. To justify this on the noncompact inputs, approximate $g_i$ simultaneously in the finitely many weighted $L^2$ and weighted $L^p$ norms displayed in (34.2). Compact inputs admit dominated differentiation of the common bridge; (24.8) bounds the approximation error independently of $s,L$ at each time and by the stated integrable powers. This proves dominated convergence of the time-integrated Taylor remainder.
+
+The test $w_s=F_sp$ converges to $Vp$ both in $L^1$ and $L^2$: (24.6), Cauchy–Schwarz and bounded multiplication give errors $O(s)$. Pair the short-time output with its $L^2$ test, and the long-time output with its $L^1$ test. The normalized scalar return remainder consequently tends to
+
+$$
+\left\langle Vp,\int_0^\infty\mathsf Q_{k_i}(t)g_i\,dt\right\rangle.
+\tag{34.3}
+$$
+
+The integral in (34.3) is used only in $L^2$ for $0<t<1$ plus $L^\infty$ for $t>1$. The Taylor normalization is exactly $\mathsf Q_{k_i}=\partial_\theta^{k_i}Q_\theta|_0/k_i!$. Thus this step asserts neither a bounded operator derivative nor an additional $L^2$ threshold return.
+
+All restorations are smaller than $s^5$ after the exterior factor $s^i$. Equations (24.29)–(24.33) give $O(s^6)$ for outer native/safe inputs and $O(s^{31/6})$ for outer coefficient inputs, by transposing the complete symmetric endpoint kernel. The inner deleted-path and time-tail bounds (24.35)–(24.36) give $O(s^6)$ for $i=1$, $O(s^7)$ for $i=2$, and at worst $O(s^{41/6})$ for $i=3$ after that factor. These include outputs outside the original interval. They justify the same normalized scalar limit on the actual domain.
+
+Canonical reflection gives $g_i\circ\sigma=(-1)^ig_i$ and $\mathsf Q_j$ parity $(-1)^j$. Since $i+k_i=5$, (34.3) is zero. For the field products retain their exact order (24.26). Add the first omitted coefficient to each field remainder in (24.38). The exceptional $(i,j)=(1,0)$ uses convergence to $V_4$ in $L^\infty$, paired with $G_0g_1\in L^2$ and $p\in L^2$. Every other entry uses convergence to $V_{5-i-j}$ in $L^4$ paired with its stated $L^4$ return. These convergences follow from J Lemma 23.2 and Lemma 32.1: after including degree three the $L^4$ error is $O(s^{13/4})=o(s^3)$, and at degrees two and one the errors are $O(s^3)=o(s^2)$ and $O(s^2)=o(s)$. The degree-four supremum error is $O(s^5(1+|\log s|))=o(s^4)$. Each limiting field scalar has total degree $i+j+(5-i-j)=5$ and is zero by reflection. This proves (34.1) for $i=1,2,3$.
+
+For the last charge, the fourth right side in J (45.2) is even: every constituent has total degree four, and $g_0$ is even. Reflection commutes with its Fredholm operator and preserves $\langle p,g_4\rangle=0$. Normalized uniqueness therefore makes $g_4$ even, without adding a weight.
+
+We need only the following strong derivative on the single fixed input $p$:
+
+$$
+\frac{(L_s-K_{\rm rec})p}{s}
+ \longrightarrow D_1p:=G_0(V_1p)+\mu G_1g_0
+                   \quad\text{in }L^2.
+\tag{34.4}
+$$
+
+Indeed (24.17) splits the left numerator into $H_s((F_s-V)p)$ and $\mu(H_s-G_0)g_0$. The divided field input tends to $V_1p$ in both $L^1$ and $L^2$. For $L^1$ use the degree-one $L^2$ field expansion paired with $p$; for $L^2$ use the supremum expansion. The uniform bound (24.14) controls its moving-input error. On the fixed input $V_1p\in L^1\cap L^2$, finite-time heat convergence and the integrable $t^{-7/4}$ return bound give $H_s(V_1p)\to G_0(V_1p)$ in $L^2$.
+
+For the seed-return derivative, (24.15) is an integrable $L^2$ majorant for the first strip derivative. Weighted compact approximation and fixed-time bridge convergence identify its limit with $G_1g_0$. The original/strip and canonical zero-order time restorations in the proof of Lemma 24.4 are $O(s^{3/2})+O(s^{9/2})=o(s)$. The degree-one coefficient restorations after its exterior factor are also $O(s^{3/2})$ or smaller, from the same column $L^2$ interpolation. Removing them proves $(H_s-G_0)g_0/s\to G_1g_0$ strongly and hence (34.4).
+
+Both terms of $D_1p$ are odd $L^2$ vectors. By adjointness,
+
+$$
+\frac{\langle p,(N_s-N_0)g_4\rangle}{s}
+ =\left\langle\frac{(L_s-K_{\rm rec})p}{s},g_4\right\rangle
+ \longrightarrow\langle D_1p,g_4\rangle=0.
+\tag{34.5}
+$$
+
+Multiplication by $s^4$ proves the remaining assertion. No $G_0g_4$ or height moment of $g_4$ is involved. $\square$
+

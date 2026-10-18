@@ -1,0 +1,91 @@
+**Proposition 5.1 (Projection and full-residual summability).** Assume $\mathsf B(P)$ and $A_P<\infty$. Fix $C=[a,b]$ and any bounded cylinder function $h$, whose finite coordinate support need not lie in $C$. Let
+
+$$
+g=h-\mathbb E_P[h\mid\mathcal H_C],\qquad
+\mathcal F_k=\sigma(X_j:j\le k),\qquad
+f_k=\mathbb E_P[g\mid\mathcal F_k]-\mathbb E_P[g\mid\mathcal F_{k-1}].
+\tag{5.1}
+$$
+
+Then
+
+$$
+g=\sum_{k\ge a}f_k\text{ in }L^2(P),\qquad
+A(g):=\sum_{k\ge a}\|f_k\|_2<\infty.
+\tag{5.2}
+$$
+
+For the original full-posterior residual, set
+
+$$
+c_i(g)=\mathbb E_P[(X_i-q_i)g\mid\mathcal E_i].
+$$
+
+It also satisfies
+
+$$
+W(g):=\sum_{i\in\mathbb Z}\|c_i(g)\|_2<\infty.
+\tag{5.3}
+$$
+
+**Proof.** Let $H=\|h\|_\infty$ and choose a finite interval containing $C$ and every coordinate used by $h$. For $t$ beyond its right end and with $t\ge b+1$, put
+
+$$
+g_t^R=h-\mathbb E_P[h\mid\mathcal V_t^R].
+$$
+
+It is $\mathcal F_t$-measurable. All exterior coordinates used by $h$ are retained in $\mathcal V_t^R$. Thus for each block word $w$, the value of $h$ at that completion is a bounded $\mathcal V_t^R$-measurable function $h_w$, and
+
+$$
+\mathbb E_P[h\mid\mathcal H_C]=\sum_wh_wp_C(w;Y),\qquad
+\mathbb E_P[h\mid\mathcal V_t^R]=\sum_wh_ws_t^R(w).
+$$
+
+Set $h_w=0$ on incompatible retained exteriors. Proposition 4.3 gives
+
+$$
+\|g-g_t^R\|_2\le H\bigl(\mathbb E_P\|p_C-s_t^R\|_1^2\bigr)^{1/2}
+\le H\left(H_L\sum_{i=a}^be_R(t-i)\right)^{1/2}=:b_R(t).
+\tag{5.4}
+$$
+
+For $t$ before the left end of the chosen interval and with $t\le a-1$, the corresponding function
+
+$$
+g_t^L=h-\mathbb E_P[h\mid\mathcal V_t^L]
+$$
+
+is measurable in $\sigma(X_j:j\ge t)$ and satisfies
+
+$$
+\|g-g_t^L\|_2\le H\left(H_L\sum_{i=a}^be_L(i-t)\right)^{1/2}=:b_L(t).
+\tag{5.5}
+$$
+
+These two bounds are summable over their respective distant cuts. Indeed
+$\sqrt{\sum_i u_i}\le\sum_i\sqrt{u_i}$ for nonnegative numbers, and a fixed finite $C$ turns either sum over cuts into at most $L$ shifted subseries of the corresponding root sum in (1.6).
+
+Since $\mathcal F_{a-1}\subseteq\mathcal H_C$ and $\mathbb E_P[g\mid\mathcal H_C]=0$, the initial projection onto $\mathcal F_{a-1}$ is zero. The increasing fields $\mathcal F_k$ generate the full configuration field. Their $L^2$ projections of $g$ therefore converge to $g$: one can first approximate $g$ in $L^2$ by finite-coordinate simple functions, each measurable in some $\mathcal F_k$, and use projection contraction. Telescoping the projections proves the decomposition in (5.2).
+
+For sufficiently large $k$, $g_{k-1}^R$ is $\mathcal F_{k-1}$-measurable. The operator $\Pi_{\mathcal F_k}-\Pi_{\mathcal F_{k-1}}$ is an orthogonal projection, of norm at most one, and annihilates this function. Hence
+
+$$
+\|f_k\|_2\le\|g-g_{k-1}^R\|_2\le b_R(k-1).
+\tag{5.6}
+$$
+
+The omitted initial terms are finite in number, proving $A(g)<\infty$.
+
+For a sufficiently far-right site $i$, $g_{i-1}^R$ is $\mathcal E_i$-measurable. Using the conditional mean-zero residual, conditional contraction and $|X_i-q_i|\le1$ gives
+
+$$
+\begin{aligned}
+\|c_i(g)\|_2
+&=\left\|\mathbb E_P[(X_i-q_i)(g-g_{i-1}^R)\mid\mathcal E_i]\right\|_2\\
+&\le\|g-g_{i-1}^R\|_2\le b_R(i-1).
+\end{aligned}
+\tag{5.7}
+$$
+
+At sufficiently far-left sites, $g_{i+1}^L$ is $\mathcal E_i$-measurable and gives the bound $b_L(i+1)$. Every remaining site costs at most $\|g\|_\infty$, and there are only finitely many. This proves (5.3). The finitely many seam sites have not been assigned zero defects. Neither mixing nor ergodicity enters the argument. $\square$
+

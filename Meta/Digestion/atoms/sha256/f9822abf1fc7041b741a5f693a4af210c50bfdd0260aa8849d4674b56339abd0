@@ -1,0 +1,20 @@
+**Definition 6.1 (common skeleton depth and physical descriptors).**
+For each chart, write its reconstructed source as a fixed finite full
+binary pairing skeleton whose leaves are $T_{n_y+c}$ or $T_c$.
+Ground leaves can always be $T_0,T_1$. This is an expansion template,
+not necessarily the maximal normal skeleton. Let $H$ be the maximum
+leaf-address length over these finitely many skeletons.
+
+A physical descriptor is either a literal word $p$ with $|p|\le H$, or
+
+$$
+(z,t,l,e),\qquad |z|=H,\quad e\in\{L,R\},\quad l\ge1,
+\quad l-1\le t-\omega(e)\le2(l-1),
+\tag{CAR.19}
+$$
+
+where $\omega(L)=1$, $\omega(R)=2$. Its length is $|p|$ in the first
+case and $H+l$ in the second. It represents the words $zs$ where $s$
+has length $l$, weight $t=\#_L(s)+2\#_R(s)$ and last edge $e$.
+There is no upper bound on $l$ or $t$.
+

@@ -1,0 +1,52 @@
+**定理 82.6（Exact adaptive and GLOBAL fees of the five-even family）。** For every integer $d\ge2$, Construction 82.5 gives full original INITIAL and history targets with
+
+$$
+\boxed{
+C_{\rm ad}(f)=C_{\rm ad}(F)=d+1,\qquad
+C_{\rm pre}(f)=C_{\rm pre}(F)=2d.
+}
+\tag{82.34}
+$$
+
+Their exact worst emitted-bit fees are $m(d+1)$ and $2md$, respectively. The GLOBAL attainment is the one actual stream (82.20) with the explicit pair code (82.32), serving both free-value fibres, every original tail and initial bottom as specified in Theorem 82.4.
+
+**证明（adaptive lower bound for all literal words and endpoint stops）。** Fix either free INITIAL value. The low source set has $2^d+1$ different component labels: all $2^d$ row or column labels and fresh $C$. Every one is actual by (82.17). The unequal low/high-tail pair again forces a $10$ root under every correct adaptive controller. After this root, each successful archive has common value and tail. The all-action common-tail binary bound in the proof of Theorem 82.4 therefore allows at most $2^H$ distinct low-label leaves at whole fee $H$. Since $2^d+1>2^d$, every such controller has $H\ge d+1$. The bound covers all waits, repairs, all-one words, attempted rejection and early homogeneous stops. A different root chosen on the other freely read value cannot remove this bound on either fibre.
+
+**证明（a lawful value-adaptive attainment, with every complete word paid）。** Read the free INITIAL value $v$ and issue the same alternating root $P_m=(10)^{(m-1)/2}1$. Initial bottom has already stopped with $L_\bot$. The root rejects exactly the original high band $s=m$, returns $R$ at its paid endpoint and stops; low outside phase $z$ has successful difference zero, returns $C$ at that endpoint and stops. Every other low source reaches the actual positive archive of Definition 73.1, with support $A$, common current scalar, actual tail one and the component table $\lambda_v$. That table has exactly $r=2^d$ labels, allowing all the repetitions in (82.29).
+
+Use the credited selection and attainment of Lemmas 73.3 and 73.5 and Theorem 73.6 on this one actual child. They give an injective $b^{(v)}:\lambda_v[A]\to\mathbb F_2^d$. For suffix coordinate $q=1,\ldots,d$ it obeys the unavailable-coordinate and first-suffix conditions
+
+$$
+b_q^{(v)}(\lambda_v(m+1-2q))=0,
+\qquad b_1^{(v)}(\lambda_v(m))=0,
+\tag{82.35}
+$$
+
+and, in the ordinary list selection, the adjacent conditions
+
+$$
+b_{q-1}^{(v)}(\lambda_v(m+2-2q))
+ b_q^{(v)}(\lambda_v(m+2-2q))=0
+\quad(2\le q\le d).
+\tag{82.36}
+$$
+
+For $d\ge3$ these lists always suffice. At $d=2$, the same lists suffice unless the four specified labels in (73.7) are distinct; in that sole alternative use exactly (73.8). It still obeys (82.35), and its actual suffix has first-suffix leading zero, then terminal run one followed by leading run two at the relaxed seam. That seam has length three, strictly below $k$ since the present $m\ge21$. This is the supplied physical alternative, not an assumed availability of arbitrary binary queries.
+
+To specify the actual suffix words in either selection, on $A$ put $\psi_q^{(v)}(j)=b_q^{(v)}(\lambda_v(j))$, compensate only at the already stopped outside phase, and invert:
+
+$$
+\psi_q^{(v)}(z)=\bigoplus_{j\in A}b_q^{(v)}(\lambda_v(j)),
+\qquad
+S^{(v)}_{q,i}=\bigoplus_{a=0}^i
+                 \psi_q^{(v)}(qm+a\bmod T),
+\quad0\le i<m.
+\tag{82.37}
+$$
+
+The unavailable low coordinate is zero by (82.35) and each full row is even. The inverse is a complete literal word at actual index $q$. The first suffix starts zero, clearing the actual inherited root tail one. In the list case, (82.36) puts a zero among the two bits adjacent to each later suffix boundary; in the four-label alternative the single relaxed seam has the strict run length just stated. All words are internally legal because $m<k$. Thus the whole issued stream on the selected value fibre is $P_m|S_1^{(v)}|\cdots|S_d^{(v)}$, with no wait, repair or cleanup word.
+
+Every root-positive source emits all $d$ suffix words, reads only its own completed scalar endpoints, obtains $b^{(v)}(\lambda_v(j))$ from successive differences and returns its immutable INITIAL component label. The superscript uses the remembered free initial value, not the changing current scalar. Both component policies are permitted adaptive actions; they are not asserted to be one common stream. The high and outside branches have already stopped after one paid block, initial bottom stops freely, and all root-positive records are actual and pay exactly $d+1$ complete blocks. This proves the adaptive upper bound matching the preceding lower bound.
+
+Construction 82.5 satisfies $\mathsf K$ at $h=2d$ by (82.32)–(82.33). Theorem 82.4 supplies the common stream (82.20) at exactly $2d$ blocks; its strict physical seams follow from (82.21)–(82.22), not from composing the two adaptive suffixes. There are $2^{2d}$ actual joined low labels including $\widehat C$, so the same joined all-action capacity bound also directly gives its matching GLOBAL lower bound. The history pullback and complete-block bit conversion are those already proved. This gives (82.34). ∎
+

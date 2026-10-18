@@ -1,0 +1,37 @@
+**Proposition 3.2 (whole-row labels from determining cells).** On a positive
+ARH22.1 recovery decision one can compute the exact finite image
+$\mathscr R=R_Q(D)$ and formulas
+$\mathsf{Row}_{\eta,r}(X)$ for $r\in\mathscr R$, partitioning
+$D_\eta$ by entire original rows. Equal rows in different charts
+receive the same label.
+
+Proof. Use the supplier's original determining prefix, and enlarge
+its bound if necessary to an inclusive depth $H$. Enumerate the
+finitely many reply vectors $\theta$ on $|p|\le H$ and form
+
+$$
+D_\eta(X)\land
+ \bigwedge_{|p|\le H}[r_{F_\eta[X]}(p)=\theta(p)].
+\tag{CRF.8}
+$$
+
+Lemma 3.1 makes every such cell decidable for emptiness in WS2S.
+A nonempty cell supplies a finite complete tuple witness; alternatively,
+after the positive emptiness decision enumerate finite tuples and
+test their concrete predicates until a witness appears. Fill its
+template and compute its complete original $Q$ row.
+
+Both source inclusions in (CRF.5) and the determining-prefix property
+make this row constant on the entire cell, across charts as well
+when the prefix vector agrees. Every source lies in one cell.
+Merge equal finite rows by comparing all concrete exterior symbols,
+reached positions, canonical numbering and all partition classes.
+Disjoin the cells giving each merged row to define
+$\mathsf{Row}_{\eta,r}$. Every label is attained by a cell witness,
+and every actual source has its correct label.
+
+This is the determining-cell argument of SRF Proposition 1.5 with
+the exact suppliers replaced as displayed. Finite image alone is
+not its premise. The chart and prefix are construction indices,
+not observations given to the running service. $\square$
+

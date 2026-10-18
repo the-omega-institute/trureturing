@@ -1,0 +1,37 @@
+**Corollary 3.4 (explicit linear regions).** The representation of
+$E$ in Theorem 3.3 is an effective finite union of linear sets in
+$\mathbb N^m$. More specifically, if $c_i<B$ for all $i$, then
+$L_{\mathbf c}=\{\mathbf c\}$. Otherwise let $k$ be the first
+index with $c_k=B$, and define $v_j\in\{0,1\}^m$ to be one in
+coordinates $j,\ldots,m-1$ and zero before $j$. Then
+
+$$
+L_{\mathbf c}=\mathbf c+
+                  \sum_{j=k}^{m-1}\mathbb N v_j.
+\tag{NUE.12}
+$$
+
+In particular an exact quantifier-free arithmetic description is
+
+$$
+\mathbf n\in\mathcal C_m\quad\land\quad
+\bigvee_{\mathbf c\in K}
+\left(
+ \bigwedge_{c_i<B} n_i=c_i\ \land\
+ \bigwedge_{c_i=B} n_i\ge B
+\right).
+\tag{NUE.13}
+$$
+
+Proof. Monotonicity of $\mathbf c$ makes its entries equal to $B$
+one terminal suffix. Since $B\ge1$ and $c_0=0$, $k\ge1$. For a
+tuple in the cap region put
+$a_k=n_k-B$ and $a_j=n_j-n_{j-1}$ for $j>k$. These are natural,
+and direct substitution gives
+$\mathbf n=\mathbf c+\sum_{j=k}^{m-1}a_jv_j$. Conversely every
+such sum has the required fixed prefix, nondecreasing tail and cap.
+The case with no capped coordinate is immediate. This proves
+semilinearity by an explicit construction; no regularity or
+Presburger hypothesis about native fibers has been assumed.
+$\square$
+

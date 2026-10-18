@@ -1,0 +1,51 @@
+**Proposition 92.5.** There are equal positive principal Grams on one coordinate in each of four fibres, of rank three with a kernel vector nonzero on every coordinate, whose complete restricted diamond error is 21/100. They admit an original physical completion with both local ranks seven, but the completion has full error at least 1/2. The principal example cannot carry a positive common norming stress.
+
+**Proof.** In a real three-dimensional environment choose
+
+\[
+ u_f=\frac{2e_0+\cos(\pi f/2)e_1+\sin(\pi f/2)e_2}{\sqrt5},
+                    \qquad f=0,1,2,3.                       \tag{37}
+\]
+
+Their Gram R is real circulant with first row (1,4/5,3/5,4/5), eigenvalues 16/5,2/5,0,2/5, and kernel spanned by v=(1,−1,1,−1). Set both principal Grams equal to R. The singleton target is (I₄+J₄)/2, so with P=vv*/4,
+
+\[
+ L_S=\frac7{50}(vv^*-I_4)
+       =\frac{14}{25}P-\frac7{50}I_4,\qquad
+ Z=|L_S|=\frac7{50}I_4+\frac7{25}P.                           \tag{38}
+\]
+
+The eigenvalues of L_S are 21/50 and −7/50 with multiplicity three. Exact positive majorant certificates are
+
+\[
+ Z-L_S=\frac7{25}(I_4-P)\ge0,\qquad
+ Z+L_S=\frac{21}{25}P\ge0,\qquad Z_{ff}=\frac{21}{100}.
+                                                                  \tag{39}
+\]
+
+For every feasible singleton density ρ and witness W, ρ is diagonal and Tr(L_Sρ)=0. Therefore
+
+\[
+ \begin{split}
+ 2\operatorname{Tr}(L_SW)
+  &=\operatorname{Tr}(L_SW)
+              -\operatorname{Tr}[L_S(\rho-W)]\\
+  &\le\operatorname{Tr}(ZW)+\operatorname{Tr}[Z(\rho-W)]
+    =\operatorname{Tr}(Z\rho)=\frac{21}{100}.
+ \end{split}                                                   \tag{40}
+\]
+
+Equality holds for ρ=I₄/4 and W=vv*/16. This proves the complete restricted diamond norm, including arbitrary references, rather than only a uniform-input lower bound. The singleton restriction is a scalar Schur map, so (39) is also its usual diamond majorant.
+
+If a positive common norming stress existed, rank three would force it to be αvv* with α>0. Across distinct singleton fibres its equation would require W_fg=−αv_fv_g/(2R_fg). Every R_fg is positive and (L_S)_fg v_fv_g=7/50. Consequently
+
+\[
+ 2\operatorname{Tr}(L_SW)=-\frac{7\alpha}{3}<0,                \tag{41}
+\]
+
+contradicting the positive norming value. Zero stress is impossible too: all cross entries of R are nonzero, so it would force all cross entries of W to vanish. Thus the obstruction concerns every proposed common norming stress, not merely the displayed uniform witness.
+
+For the original-channel completion, use u_f as each first-bit environment record and four distinct orthonormal records e′_f in an orthogonal real four-dimensional space as the second-bit records. Use these same seven-dimensional records for both local channels. Each original fibre pair is orthonormal, so |f,i〉↦|f〉⊗record_(f,i) is a Stinespring isometry on all eight original inputs. After ordering the first-bit coordinates before the second-bit coordinates, both full Grams are R⊕I₄ and have rank seven. Hence both calibrated channels have local Choi rank seven, and the four-singleton restriction above is retained exactly.
+
+However any first-bit coordinate and a second-bit coordinate in a different fibre have product coefficient zero instead of the target 1/2. The original matrix-unit test therefore gives full error at least 1/2. This completion is not an original subquarter competitor and does not have the common active support asserted in Theorem 92.2. The proposition follows.
+

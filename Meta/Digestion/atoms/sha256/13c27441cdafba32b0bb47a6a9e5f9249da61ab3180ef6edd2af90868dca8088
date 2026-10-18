@@ -1,0 +1,46 @@
+## 137. Four-reservoir hypotheses and notation
+
+The following proof uses the paired angle identities of Sections 95--96,
+the special-edge barrier of Section 112, and the maximal-selected escape
+of Sections 130--136. These are statements about the original shared
+length field and actual face-pair quotient.
+
+Use an actual finite ideal tetrahedron face pairing whose complete edge
+links are circles. Count local edge occurrences throughout, including
+repeated labels, distinct-face self-gluings, and repeated appearances of a
+tetrahedron in a normal circle. Every global edge has degree at least six.
+
+Let the actual global edge set be E = H disjoint-union S, with |H|=4. Each
+tetrahedron has a fixed vertex-induced frame, in edge order
+(12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),       A,B in H, A != B.
+
+The axial labels R,O are unrestricted and may repeat each other or a
+reservoir label. All tetrahedra use one common positive global length field,
+with x_e = cosh(ell_e)>1. Every original extended edge-angle sum is 2*pi.
+Assume at least one tetrahedron is flat.
+
+The maximal-selected escape theorem gives all four distinct labels
+
+    H={M,C,D,Z}
+
+and a genuine tetrahedron tau with frame
+
+    (Z,M,C,D,M,C).
+
+Write m,c,d,z for their respective cosh lengths. M is maximal in value
+among H labels with a flat pi occurrence; it has exactly one flat pi
+occurrence. Z has no flat pi occurrence. The escape theorem initially gives
+
+    m >= 1+c+d,          z >= 1+m+c.
+
+The source flat block sigma has axial label M and reservoir pair {C,D}.
+The selected transverse M angle in tau is at most pi/2.
+
+An axial run of Z is a maximal consecutive sequence of occurrences that
+are axial in their fixed frames. Its actual reservoir pair is constant:
+the other two edge slots of each crossed face transport that pair. Call a
+run dominant when its pair {A,B} satisfies z>=1+x_A+x_B. Such a pair cannot
+contain Z. The entire star being axial is treated separately below.
+

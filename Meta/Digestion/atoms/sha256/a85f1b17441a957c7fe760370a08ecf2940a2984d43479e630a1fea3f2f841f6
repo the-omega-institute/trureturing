@@ -1,0 +1,68 @@
+**Proposition 37.2 (scope of the spectral obstruction).**
+Within the original two critical families, bounded attained attractive
+ground energy and concentration of ground probabilities do not suffice
+to preserve the isolated simple low-energy spectrum of the actual native
+three-coordinate leaf. This remains true at the unit ground-coincidence
+parameter. The comparison with the complete sector is a different
+comparison, with the factor $1/(2\pi)$ and the entire spectrum (36.2).
+
+Proof. Theorems 33.1--33.2 supply bounded attained minima and the
+concentrated ground laws; (35.7) and (36.8) supply respectively the
+vanishing full gap and strictly positive comparison gaps. Equation
+(37.1) gives the obstruction even when the ground energy and probability
+match. Fixed-parameter isolation from Corollary 35.3 is consistent with
+this failure of uniform isolation. A constant fixed-index limit is not
+itself an identification of a limiting operator or its spectral type.
+The construction fixes $N$ before taking $\kappa\to0$; the derivative
+norms and supports chosen in (35.4) may depend on $N$. It supplies no
+assertion for a prescribed growing $N(\kappa)$, no spacing rate,
+transverse fluctuation profile, Weyl law or resolvent convergence.
+
+The general methods are classical variational and bounded-perturbation
+methods; the additional native conclusions are (35.2), the complete
+comparison (36.7)--(36.8), and the excited-level separation (37.1).
+The sharp heat, source, field and ground limits are reused from
+§§31--34 and [G, §§23,25--29], rather than rederived. The singular
+point-field strict-ground result in
+[Fixed-pole strict ground-energy gap, Theorem 7.2 and Boundary 8.2](FIB_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md)
+compares two actual minima in its strict stable regime; it is neither an
+excited spectral gap nor a critical-cutoff spectral limit. The restricted
+singular-field limit in
+[Observation quotient, Theorem 11.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+also retains its different field and small-coupling hypotheses.
+Neither replaces the completed attractive forms (35.1).
+
+For the classical semiclassical comparison, B. Simon,
+*Semiclassical Analysis of Low Lying Eigenvalues. I. Non-degenerate
+Minima: Asymptotic Expansions*, Ann. Inst. H. Poincaré A 38 (1983),
+295--308, [§1, hypotheses (A1)--(A4) and Theorem 1.1](https://www.numdam.org/item/AIHPA_1983__38_3_295_0/),
+treats $-\Delta+\Lambda^2h+\Lambda g_1$ with smooth fixed scalar
+potentials, finitely many zeros of $h$, positive definite Hessians there,
+and the stated lower and exterior bounds. Those hypotheses do not
+identify the present full form with that scalar family: here
+$\varepsilon$ stays fixed, only the hidden direction loses kinetic
+control, the raw critical field itself narrows, and the original visible
+cross terms remain. No harmonic-oscillator expansion or sharp gap rate
+is imported from that theorem. The finite-dimensional proof above
+requires only (32.9), the complete-domain lower bound and classical
+min-max, not a new general semiclassical theorem. These native deductions
+are `repo-derived`; the cited classical methods are
+`literature-attested`, without a worldwide novelty assertion.
+
+The source and domain obstructions of Theorem 34.2 persist independently
+of the spectra. The zero-leaf embedding is an embedding of measures,
+whereas $J$ is a raw-measure Hilbert-space isometry for the complete
+sector. Conditional source charge is still different from field mass;
+normalization still changes neither height death nor the original free
+clock. The free quotient criteria in
+[Free diffusion quotient rigidity, Theorem 3.1 and Definition 6.2](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md)
+do not make an attractive fixed-pole multiplier invariant or identify
+different source laws. None of these statements adds a reset, projection
+actuator, independent driver, preparation of ground amplitudes,
+acquisition procedure or mean selector. The native finite-history and
+principal-symbol boundaries in
+[Probability, phase transport and holonomy, Theorems 8.2, 10.3 and 10.5](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)
+remain in force. State dimension is not a conclusion about physical
+spatial axes. All parameters other than $\kappa$ are fixed; no
+$\varepsilon\to0$ limit or other cutoff family is asserted. $\square$
+

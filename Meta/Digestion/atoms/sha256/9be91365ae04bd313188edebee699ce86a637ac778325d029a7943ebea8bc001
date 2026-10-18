@@ -1,0 +1,33 @@
+**Definition 4.1 (adaptive finite skeletons).** For integers $k,b\ge0$,
+a skeleton is a finite rooted four-reply tree of read depth at most
+$k$. Its internal vertices are actual reads; each has one physical
+word $p_v$ and one epoch $n_v\in[N,N+b]$, with epochs nondecreasing
+along each path. Its leaves are absorbing halts with labels in
+$\mathscr R$. A root halt is allowed. At execution, perform exactly
+the real updates needed to reach the next read's installed epoch,
+submit the installed physical word, and follow its actual reply.
+There are no updates after the final read.
+
+For a halt leaf $t$, put
+
+$$
+k_t=\#\{v:v\prec t\},\qquad
+b_t=n_{\rm last}-N\ \text{or }0\text{ at a root halt},\qquad
+L_t(\mathbf p)=\sum_{v\prec t}|p_v|.
+\tag{CRF.10}
+$$
+
+The relation $E_t$ of Theorem 3.4 says exactly that this leaf is
+reachable from some source in the entire $D$. If its installed
+label is $r_t$, correctness is exactly
+
+$$
+\mathsf{Correct}(\mathbf p)=
+       \bigwedge_t\neg B_{t,r_t}(\mathbf p).
+\tag{CRF.11}
+$$
+
+Shapes, epoch assignments and leaf labels have finite ranges for
+fixed $(k,b)$. The words are unbounded. Their lengths in (CRF.10)
+are complete original-root lengths, with no header discarded.
+

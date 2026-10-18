@@ -1,0 +1,65 @@
+**Lemma 3.1 (Same-law five-bit masses).** For every $K\in\mathcal K$ set
+
+$$
+a=1-\rho,\quad \eta=7/13,\quad m=3/7,\quad
+u=(\rho-3/20,3/20),\quad q=\frac{14}{3}u^\mathsf T,\quad C=K_{RR},
+$$
+
+$$
+z=uq=\frac{14}{3}\rho^2-\frac75\rho+\frac{21}{100}.
+\tag{3.1}
+$$
+
+For $x,y\in\{0,1\}$, let $s_{xy}=P_K([x000y])$ and
+$t_{xy}=P_K([x010y])$. These are the two center completions of the same
+radius-two exterior atom. Their exact masses are
+
+| Context $xy$ | $s_{xy}/\eta$ | $t_{xy}/\eta$ |
+| --- | --- | --- |
+| $00$ | $a^3$ | $z$ |
+| $01$ | $a^2\rho$ | $\rho-z$ |
+| $10$ | $a^2\rho$ | $\rho-z$ |
+| $11$ | $a\rho^2$ | $m-2\rho+z$ |
+
+In particular the table is independent of $\tau$, and
+$D_2(P_K)=\sum_{x,y}h(s_{xy},t_{xy})$.
+
+Proof. In the free/tail block order, direct multiplication gives
+
+$$
+M_0^2=f w,\qquad
+f=(a,0,0,q_2,q_3)^\mathsf T,\qquad
+w=(a,u_2,u_3,0,0),\qquad
+\lambda f=\eta,\quad w\mathbf1=1,\quad wM_0=aw.
+$$
+
+Consequently $P_K([0^j])=\eta a^{j-2}$ for $j\ge2$.
+Subtracting the left and right extensions of the actual zero cylinders
+gives $s_{00}=P_K([0^5])$,
+$s_{01}=s_{10}=P_K([0^4])-P_K([0^5])$, and
+$s_{11}=P_K([0^3])-2P_K([0^4])+P_K([0^5])$. This proves the lower column;
+the equalities use stationarity, without any assumption of seam independence.
+
+For the upper column put $\omega=\pi_R/\pi_1=(3/14,3/14)$.
+Detailed balance gives $\omega_jq_j=u_j$, while $C\mathbf1=\mathbf1-q$.
+The same word products give
+
+$$
+\begin{aligned}
+P_K([1])&=\eta m,\\
+P_K([101])&=\eta\omega C\mathbf1=\eta(m-\rho),\\
+P_K([10101])&=\eta\omega C^2\mathbf1
+=\eta\sum_{j\in R}\omega_j(1-q_j)^2
+=\eta(m-2\rho+z).
+\end{aligned}
+$$
+
+The middle equality on the last line uses detailed balance within $R$.
+Legality forces both neighbors of a center $1$ to be zero. Thus
+$t_{11}=P_K([10101])$,
+$t_{01}=t_{10}=P_K([101])-P_K([10101])$, and
+$t_{00}=P_K([1])-2P_K([101])+P_K([10101])$, proving the upper column.
+All entries are actual nonnegative cylinder masses, also at the boundary
+of (2.3). The remaining exterior atoms force the center to zero, so (1.1)
+gives the asserted $D_2$ formula, including zero-total fibers. $\square$
+

@@ -1,0 +1,14 @@
+**Corollary 9.4 (separation of zero and nonnegative sets).** At an admitted datum with $C_{\rm resp}=0$,
+
+$$
+\min_t C_{\rm aff}(t)=\nu^2\Delta_{\rm aff}>0,
+\qquad
+C_{\rm aff}^{\mathbb C}(z_0)=\nu^2\{\Delta_{\rm aff}+a|z_0-t_0|^2\}>0
+\quad(z_0\in\mathbb C\text{ fixed}).
+\tag{9.7}
+$$
+
+More generally $C_{\rm resp}\ge0$ forces $\min_tC_{\rm aff}(t)>0$, hence $C_{108}>0$. Thus neither an affine minimum zero nor $C_{108}=0$ can be a response-zero witness. Conversely, positivity of every affine coefficient does not by itself imply nonnegative response.
+
+Proof. These are direct consequences of the exact positive differences (7.2) and (8.2). They separate sets conditional on occurrence and prove no set nonempty. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "big3-necklace-transition-interface"
+path = "docs/develop/theory/BIG3_NECKLACE_TRANSITION_INTERFACE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

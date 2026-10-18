@@ -1,0 +1,20 @@
+### 推论 55.3（dev 有限素因子盒反例）
+
+在 dev 的有限素因子盒 \(s=(a,b,c,k)\) 上，读出
+\[
+q(s)=(u,v,w)=(a+k,b,c+k)
+\]
+忘掉隐藏坐标 \(k\)。对 dev 的 7-move 生成元，取
+\[
+s=(0,0,C-1,1),\qquad t=(1,0,C,0),
+\]
+则 \(q(s)=q(t)=(1,0,C)\)，但对 \(g=\mathbf 1_{\{(1,0,C+1)\}}\) 有
+\[
+L(g\circ q)(s)=1/5,\qquad L(g\circ q)(t)=0.
+\]
+因此不存在只依赖 \(q\) 的生成元 \(G\) 使 \(L(g\circ q)=G(g)\circ q\) 在整个盒上成立。若 \(\pi(s)\propto1/(2^a3^b5^c7^k)\)，则对 \(f=\mathbf1_{\{q=(1,0,2)\}}\) 的隐藏纤维，二阶缺陷中含严格正项
+\[
+\frac1{425Z}=\frac{21}{34255}>0.
+\]
+这说明三维 \(q\) 的观察路径存在不可消去的 hidden-field memory。来源：[dev DivisorAssociationFiber](https://github.com/the-omega-institute/trureturing/blob/dev/Blueprint/D5/S3/Arith/GoldenResource/DivisorAssociationFiber.md)，commit 41a47f1c3d，merge #15832。
+

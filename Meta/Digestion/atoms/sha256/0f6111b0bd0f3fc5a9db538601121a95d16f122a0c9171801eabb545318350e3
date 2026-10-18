@@ -1,0 +1,15 @@
+**来源边界 10.1。** 下表中的仓内理论使用版本 `531252e1cabf27b1045e16993d12ffae880c1e46`；PCR 的完整文本 SHA256 为 `34965bcd940caa8e5f73cabae09061c8cbb8727661cd69a42ada3fdc08e5e2f0`。源库声明的比较版本为 `cda923132d98ab62379ad5bd2434c747e44c6a74`，只核对其陈述、定义和适用范围，没有当前编译或精确形式实例化的主张。
+
+| 来源与精确编号 | 复用内容与边界 |
+| --- | --- |
+| [PCR](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) 定义 1.1–1.2、定理 3.1、引理 4.2、定理 4.3、5.1 | 原语法、单次制备、运输、五符号表、带符号尾及准确三读；本卷第 2–3 章完整写出所需关系 |
+| PCR 引理 16.2、推论 16.3、第 50–51 节 | 实际投影、幅度限制、三锚和稳健符号界；投影幂包围的新几何由本卷第 4–5 章承担 |
+| PCR 定理 18.2–18.4、命题 19.1、定理 19.2、命题 19.3、第 24–28 节、第 53 节 | 真实组成、完整三线可行性、有限达到的 $`H_*`$、十制度及全未来模量；第 7 章给风险转换 |
+| PCR 第 54–56 节、定理 65.2、结论范围 74.3 | 半锚、两个实际收缩族、正噪声三点纤维、最近真格点单元、有限字与表示边界；本卷缩短共同报告并证明尖锐系数，不导入待定记忆结果 |
+| [《原子关系生成》](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 第 2–3 节 | 自由有序原树、字面规范递推和真实叶数 |
+| [《递归全息边界几何》](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md) 定理 7.2 | 单位轴、七标签和正向三循环；不迁移其其它维数或容量结论 |
+| [《过程几何》](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 定理 44.2 | 非零组成实际见证；嫁接只构造比较源，不供应观察动作 |
+| [《恢复几何》](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) 定理 3.2 | 兼容纤维最小包围半径的视角；其估计器输出域须随任务指定，本卷中心在 $\mathbb R^3$ 中且不必实际可达，不直接迁移受限输出域的常数。该一般视角本身不计新结果，也不提供优化服务 |
+
+源库 `RankOneInfiniteHorizonRisk` 的声明 `rank_one_infinite_horizon_risk` 是标量 $a^n$、$0<a<1$、有限窗口、正有界标量噪声下的全未来风险 $1/2$；其极限次序是相关类比，但方向与原树共同约束不同，本卷不直接实例化它。`FinitePowerExtrapolationRisk` 的 `finite_power_extrapolation_risk` 只处理指定有限视界；`ZeroSumBoxRecovery` 的 `zero_sum_box_recovery_sharp` 使用零和实平面、坐标最大范数以及必须输出合法平面的估计器。它们均不承担本卷的三向量乘积误差球和全未来 Euclidean 尖锐常数。
+

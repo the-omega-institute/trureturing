@@ -1,0 +1,26 @@
+**Proposition 7.2 (finite representation and decision costs at their
+stated interfaces).** A tuple-list encoding of $K$ uses
+$O(|K|m\log(B+1))$ bits for its entries, in addition to the encoding
+of $B$, the input and optional witnesses. The exhaustive construction
+uses the number of fixed-epoch feasibility calls in (NUE.11).
+Membership after construction requires only chronology, capping and
+finite-table membership. For one fixed nonempty input, selecting one
+finite original per accepted region gives an effective bound on the
+sizes of these selected originals, uniform over all its feasible epochs.
+This is not a bound on all compatible originals. No polynomial
+total-time bound or input-independent witness bound is asserted.
+
+Proof. Every coordinate of a representative lies in $0,\ldots,B$.
+The bit count and call count follow from their respective finite
+encodings and Theorem 3.3. A query tuple can be capped by comparison
+with $B$; this computation depends on its integer representation
+length, not on physically executing its count. NSF's calls each
+terminate, but their work and witness sizes are separate from how
+many calls are made. The maximum size of the finitely many returned
+$t_{\mathbf c}$ is the stated bound on selected originals. Root-only
+rows still admit originals of every finite size. Even a compact atomic
+index can require a large literal tree: with $F_0=0,F_1=1$, $T_r$
+has $F_{r+1}$ leaves
+and $2F_{r+1}-1$ nodes. Thus an arithmetic representation is not
+a unit-cost materialized source. $\square$
+

@@ -1,0 +1,31 @@
+**Theorem 13.2 (one oriented hemisphere for every residual contact).**
+In addition to the hypotheses of Theorem 13.1, suppose
+
+$$
+a_o^2+b_o^2>0,\qquad w_o^TR_+w_o\ge0.
+\tag{FC.46}
+$$
+
+Then every nonmerged saturated contact has the same sign of $u$,
+strictly positive height, and $L_o(x)<0$. The conclusion permits
+$w_o^TR_+w_o=0$ and an empty residual set.
+
+Proof. If $\mathcal I_-$ is empty there is nothing to prove.
+Otherwise $a_o+b_oz$ has no zero in this interval. For $b_o=0$
+it is the nonzero constant $a_o$. For $b_o\ne0$, a zero
+$z_0=-a_o/b_o$ inside would imply
+
+$$
+w_o^TR_+w_o=b_o^2r_Q(z_0)<0,
+\tag{FC.47}
+$$
+
+contrary to (FC.46). Continuity on one interval therefore gives a
+fixed strict sign of $a_o+b_oz$. Every residual contact satisfies
+$L_o(x)=u(a_o+b_oz)\le0$ by (FC.43), and neither factor can
+vanish. Hence $L_o(x)<0$ and all such $u$ have the same sign.
+These are directed-circle contacts: no quotient by antipodes has
+been taken. Equality in (FC.46) excludes an interior zero just as
+strict positivity does, because the cone itself is open.
+$\square$
+

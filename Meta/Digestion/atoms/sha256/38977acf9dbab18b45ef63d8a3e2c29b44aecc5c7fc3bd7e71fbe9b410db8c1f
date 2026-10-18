@@ -1,0 +1,28 @@
+**Corollary 5.5 (Exact quantitative five-row penalty).** Relative to
+the inherited unrestricted three-read optimum,
+
+$$
+S_3-C_5=R_5-(1-S_3)=d\eta^2(3-2\eta)>0.
+\tag{5.2}
+$$
+
+Also $C_4-C_3=ac\eta>0$ and $C_5-C_4=ac^2\eta>0$.
+
+Proof. Expand $1+c+c^2=3-6\eta+4\eta^2$. Then
+
+$$
+\begin{aligned}
+S_3-F
+&=3a^2\eta+2\eta^3-a\eta(3-6\eta+4\eta^2)\\
+&=3(2a-1)\eta^2-2(2a-1)\eta^3\\
+&=d\eta^2(3-2\eta).
+\end{aligned}
+\tag{5.3}
+$$
+
+The middle line uses $a^2-a=-\eta$. All factors in (5.2) are
+positive by (1.4). The other differences follow directly from the
+matched values in Theorem 5.4. This is an exact all-table quantitative
+penalty, with one actual attainer, rather than a consequence of
+nonattainment alone. $\square$
+

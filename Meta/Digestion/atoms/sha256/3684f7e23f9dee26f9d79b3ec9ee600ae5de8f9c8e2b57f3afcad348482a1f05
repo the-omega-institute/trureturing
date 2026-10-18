@@ -1,0 +1,65 @@
+**Proposition 4.1 (reused attained common dual).** At
+$t>t_0$ and $\tau<\tau_{\max}(t)$ there exist optimal finite
+$Y\in\operatorname{Sym}_3$, $Z\in\operatorname{Sym}_2$ and
+$\lambda\ge0$ such that, on the entire ellipse,
+
+$$
+\begin{aligned}
+h^TYh&\ge|\ell(h)|+\lambda|z|,\\
+h^TYh+tc(h)\widehat n_h^TZ\widehat n_h
+ &\ge|\ell(h)+tc(h)f(h)|+\lambda|z|,
+\end{aligned}
+\tag{AC.16}
+$$
+
+and the optimal low height is
+$\operatorname{tr}Y+\operatorname{tr}(ZM_2)-\lambda\tau$.
+Every original optimizer satisfies pointwise contact almost everywhere
+and $\lambda(k-\tau)=0$.
+
+This is the continuous common-dual theorem of RC68, with its original
+conditional scope. Its relevant hypothesis is relative interior of
+the full two-sheet moment projection, not just primal feasibility.
+For precision, a uniform angular probability $\rho_\circ$ and a
+balanced four-sign measure $\rho_u$ give the full-support failure
+measure
+
+$$
+\sigma_\varepsilon
+=\mu[(1-\varepsilon)\rho_{u_\varepsilon}
+ +\varepsilon\rho_\circ],\qquad
+u_\varepsilon=\frac{u_f-\varepsilon/(2\alpha)}{1-\varepsilon}.
+\tag{AC.17}
+$$
+
+It preserves AC.13. Its saturated live measure is
+$\sigma_\varepsilon/(tc)$; the residual Gram is positive definite
+for sufficiently small $\varepsilon$, since at zero it equals
+$\operatorname{diag}(1-q,1-qu_f,1-qv_f)$. A small positive angular
+component can also be inserted into a pure completion of this Gram.
+The resulting two full-support sheets retain strict contrast slack,
+because their contrast tends to $\tau_{\max}(t)>\tau$.
+Any supporting functional of their moment projection must have zero
+contrast coefficient and vanish identically on both sheets. The pure
+identity is a multiple of $h^TQh=0$; the remaining failure quadratic
+then vanishes identically, so its physical matrix is zero. After
+quotienting the identity the target is relatively interior.
+Compactness and fixed total live mass make the height boundary closed;
+a separating functional at its optimum therefore has a positive height
+coefficient and can be normalized. Its two sheet inequalities are
+AC.16. This records the actual continuous-cone argument underlying the
+supplier, without assuming a polynomial relaxation selects a contact.
+
+For each competitor's own $b\in[0,tc(h)]$, convex interpolation of
+$|\ell+bf|$ between its two endpoints gives
+
+$$
+h^TYh+b\widehat n_h^TZ\widehat n_h
+ \ge|\ell(h)+bf(h)|+\lambda|z|.
+\tag{AC.18}
+$$
+
+Integration gives the stated upper bound; equality gives the contact
+and complementarity assertions. Supported-zero labels have zero
+supported difference and do not invalidate this bound.
+

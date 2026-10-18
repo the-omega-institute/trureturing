@@ -1,0 +1,8 @@
+**文献背景。** 贝叶斯重复更新、序列似然比、选择偏差与 Hilbert 投影距离都是成熟主题。本章把它们组合成持续潜变量的因果接口预算：单轮秩一条件、对数扩张可加、等接受率二元见证、持续/重生分界和 $\tanh(n\Delta/4)$ 容量。本章不声称这组包装具有文献原创性。
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| Pearl, *Causality*, 2nd ed., UCLA 在线版 <https://bayes.cs.ucla.edu/BOOK-2K/> | 选择与干预的语义边界；不用于本章的多轮容量优先权。 |
+| Cohen and Fausti, *A sharp bound on the total variation distance between probability measures*, <https://arxiv.org/abs/2309.02413> | 投影扩张控制总变差的锐利双曲正切界；本章将其应用于序列选择似然。 |
+| — | 定理 21.3.1、推论 21.3.2、命题 21.4.2 与定理 21.5.1 的有限乘法推导。 |
+

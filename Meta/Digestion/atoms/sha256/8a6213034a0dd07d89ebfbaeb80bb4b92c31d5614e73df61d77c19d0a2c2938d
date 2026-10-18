@@ -1,0 +1,21 @@
+**Corollary 3.4 (Exact existence of the specified strict certificate).**
+With the independent allowance in Convention 3.3, a direction
+$f\in\mathcal K_L(P)$ with $F>0$ satisfying (3.2) exists if and only if
+
+$$
+\operatorname{dist}_1
+\bigl(v_{L,R,r},\operatorname{range}(E_{\theta,L}^{\mathsf T})\bigr)
+>B_{L,R,r}(P).
+\tag{3.3}
+$$
+
+Proof. Normalize any witnessing direction by $F$ and apply (3.1).
+Conversely a maximizing direction for $a>B_{L,R,r}\ge0$ is nonzero;
+normalizing it to infinity norm one gives a strict witness. This is exactly
+the existing certificate's threshold, at the specified $L,R,r$. $\square$
+
+Null coordinates have both zero loss and zero context entries, so they
+create no residual. A nontrivial kernel can still have residual zero.
+Law invariance applies to (3.1) because both $v$ and $K^\perp$ depend on
+the same $P$. No separate posterior table or optimization program is used.
+

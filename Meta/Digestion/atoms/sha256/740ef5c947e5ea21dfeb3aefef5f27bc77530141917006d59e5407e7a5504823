@@ -1,0 +1,78 @@
+**Convention 2.2 (supported equality consequences).** JR42, RH Theorem
+2.2 and the sharp-cost proof give, for every competitor at sharp cost,
+the supported live map $D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$,
+total supported failure effect $M$, and no other supported output mass.
+The supported high acquired effect is
+$(1-u_s)D^\dagger D+(1-v_s)T^\dagger T$. Each high label has no
+supported later failure. These are supported consequences for all
+optimizers; they do not identify whole five-mode channels or individual
+labelled failure-time measures.
+
+On the weak interval every nonzero low encoder/live-decoder product is,
+after removal of a common phase,
+
+$$
+K(c)=c_0D+c_1T+c_2S,\qquad
+c_0^2=\theta c_1^2+\omega c_2^2,\quad c_0\ne0.
+\tag{TA.11}
+$$
+
+Its normalized coefficient vector is $f=L^{-1}c$, with $f^TQf=0$;
+the total normalized low Gram is $I_3$. RH Lemma 8.2 proves one
+real-null ray per actual low live-bearing label, including arbitrary
+inaccessible multiplicity. RH Theorem 9.5 proves the minimum of such
+labels is three through $s_\dagger$, including contact, and four for
+$s_\dagger<s\leq s_0$. This is credited low-label mathematics, not
+the total-alphabet theorem below.
+
+For strong $s>s_0$, JR's equality conditions give four low coefficient
+rays and two high directions,
+
+$$
+\begin{aligned}
+K_{\sigma,\eta}&=
+ (\sqrt{u_s}D+\sigma\sqrt{v_s}T+\eta S)/2,\\
+H_\sigma&=
+ (\sqrt{1-u_s}D+\sigma\sqrt{1-v_s}T)/\sqrt2,
+\qquad\sigma,\eta=\pm1.
+\end{aligned}
+\tag{TA.12}
+$$
+
+All four low ray masses are positive, their rank is two, and both high
+matrices are invertible. The low height differences for $(\sigma,\eta)$
+equal $(+,+),(+,-),(-,+)$ are strictly positive. Only $(-,-)$ can be
+negative or zero. The supported high Gram is
+$\operatorname{diag}(1-u_s,1-v_s,0)$, with zero $DT$ cross moment.
+These are JR's real equality face and strong height result; the actual
+high-label count will require a separate report argument.
+
+For later use set
+
+$$
+\begin{gathered}
+\Xi=M^{1/2}\Delta M^{1/2}\big|_{\{1,2\}}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\quad
+d_f=11m_1/64>0,\quad
+z_f=\frac{\sqrt{m_1m_2}}{16}(\sqrt{37}-\sqrt{59})<0,\\
+L_f=\sqrt{d_f^2+4z_f^2},\qquad T_{\rm flat}=(d_f+L_f)/2.
+\end{gathered}
+\tag{TA.13}
+$$
+
+TP implies $\Delta A+\Delta B+\Delta C=d_f$ and
+$(1-\delta)\Delta A+\operatorname{tr}G=d_f$. JR's exact weak
+reduction is
+
+$$
+\mathcal T(s_0\tau)=\frac{(1-\delta)\Delta A+L_f+J(\tau)}2,
+\tag{TA.14}
+$$
+
+where $J$ maximizes $\sum_{r,\epsilon}\epsilon\operatorname{tr}(GX_{r,\epsilon})$
+over real PSD slots with individual zero $Q$ trace, total $I_3$ and
+$\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}\geq\tau$.
+Analytic separation/refinement upper-bounds an arbitrary actual record's
+TV; a new compatible instrument actually generating the labels attains
+the bound. It does not expose old inaccessible indices.
+

@@ -1,0 +1,53 @@
+**Definition 2.3 (actual raw decoder and finite patch table).** Form the
+following finite enumeration, with no dependence on future capacities.
+Enumerate absent/0/1 patterns of the fixed slot catalog, active version,
+PC/mode/cursor, token/latch patterns, and all raw bit contents of each
+fixed finite native version store. During a bootstrap the active rows
+are its fixed NEXT/INPUT/WRITE/ADVANCE/DONE rows. A wrong supplied bit
+changes its actual raw store, not that active bootstrap. After DONE use
+ARC Definition 6.2's actual decoded row: no unique in-range well-typed
+row means no enabled main row. A unique row uses its actual seven native
+fields and ordered finite local effects, not the canonical $G$ row.
+
+The row/effect interpreter is ARC Definition 6.2's finite grammar. In
+particular a finite effect may preserve, assign a named finite bit from
+a literal/designated latch, change a seal/mark at a named port's current
+or immediately preceding existing marker, select a named stage/version,
+advance its fixed finite cursor, halt, or select an F receipt. Its
+arguments cannot be runtime words, addresses, lists or capacities.
+Out-of-range ports, latches, symbols, Boolean tables, stages or slot
+indices fail the same decoder/guard. An absent required location is not
+read as 0. Native token/boundary/writability and cursor conditions are
+tested as in the actual primitive domain. No new enabling permission
+is supplied by the fact that a rule is in this enumeration.
+
+For each decoded possibility, list its actual bounded cell roles and
+walks in effect order, including every named CTL marker role, every moved-to
+neighbor and the meter append cell. Enumerate their eight-track bytes,
+endpoint aliases and the two raw IN values. The immediately preceding
+marker uses the existing predecessor walk, subject to the same existence
+guard; a control effect does not hide a seek to an encoded numeral.
+Where an effect reads a value already changed by an earlier effect, use
+that intermediate finite value in this same truth-table evaluation.
+The actual native partial effect determines whether there is a successor.
+No canonical-prefix test is imposed on a raw IN patch.
+
+Combine native core, finite effects, successor and receipt on their actual
+physical identities. Preserve written effect order to determine final
+values. Combine duplicate native target positions once; inspect repeated
+roles as often as their ordered stencil specifies. Assign the distinct
+designated existing target bits in first-role/track order, whether or not
+their final values differ. Construct core cells or the fresh finite bit
+before the receipt cell, with fixed template-role order. Update the
+actual affected head links. Unmentioned tracks, latches and locations
+persist.
+
+Order entries by version/finite pattern, decoded row, byte pattern,
+alias partition and input bit; use absent before 0 before 1, ascending
+port/latch order and ARC's symbol order. Flatten original row code,
+tested pattern, guarded walks, label code, assignment lists and template
+incidences using SSA Definition 3.2's unary/list encoding. This defines
+a literal finite table $\Pi_U$ and its finite description length
+$d_U$. Unbounded bank operations and Step74 remain their expanded native
+rows; this table has no Cover, Call, string assignment or replay leaf.
+

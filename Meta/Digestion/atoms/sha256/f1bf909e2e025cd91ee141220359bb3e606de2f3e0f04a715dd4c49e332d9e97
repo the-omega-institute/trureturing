@@ -1,0 +1,47 @@
+**Proposition 6.2 (Strict product slack prevents matching this tuple).**
+The normalized lower tuple of Definition 3.1 has strictly positive
+slack on every nonzero complex product. It has no nonzero real product
+kernel and therefore cannot itself be complementary to positive scalar
+atoms of a legal attaining port at $c$.
+
+**Proof.** For complex nonzero $a,b$, partial transposition gives
+
+$$
+(a\otimes b)^\dagger W(a\otimes b)
+=\frac12\left[
+(a\otimes b)^\dagger P(a\otimes b)
++(a\otimes\overline b)^\dagger P(a\otimes\overline b)\right]>0.
+\tag{6.3}
+$$
+
+Lemma 3.4 proves both strict inequalities; it covers all complex
+factors and every zero-population or interior configuration.
+For real factors (6.3) is the global real-product quadratic form of
+the event/TP tuple. Thus its preparation-dependent matrix is positive
+definite for every nonzero preparation vector, including all radial
+and tangent sectors, without omitting the signed interior cubic.
+A separable TP Choi state is a positive sum of nonzero product states.
+Its pairing with $W$ is strictly positive. Equality in (3.22) for this
+tuple would require that pairing to vanish, which is impossible.
+This is an obstruction to equality for this particular strictly
+positive rounded certificate. It does not exclude boundary or
+nondecomposable certificates that match a legal port. $\square$
+
+**Open problem 6.3 (The same joint obligation).** The original exact
+$\varepsilon_1$ remains open inside (6.1). A matching solution requires
+one normalized set of all signed-event multipliers and all three TP
+multipliers, global product positivity including degenerate and interior
+populations, and one legal positive-weight port on its actual kernel
+face satisfying the same TP and complementary event equations.
+The port in Section 4 is not asserted to lie on the kernel of another
+valid tuple. The lower and upper have not been made complementary.
+
+The upper changes the encoder population and both independent decoder
+ratios together. Its active representatives are the splitting singletons
+$\{2\},\{5\}$, rather than the keep-only active set of the credited QSD
+ports. This is a sufficient design within a known construction family;
+it supplies no no-loss restriction of original competitors or proof of
+an optimizer in that family. Positive boundary atoms, separate TP
+feasibility, pair saturation, cycle compatibility and a feasible PPT
+point do not supply the missing common equality.
+

@@ -1,0 +1,37 @@
+**定义 2.1（同一祖先与原时钟延续）。** 对任意 $Y\in\mathbb R$，令
+
+$$
+\begin{aligned}
+H_p(Y)&=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+ M,D_0+312\lambda/5,J,Y),\\
+y&=(Y-D_0)/\lambda,\\
+H_x&=(H_p(Y),J,D_0+\lambda x),\\
+H_{x,w}&=(H_x,J,D_0+\lambda w),\qquad
+\mathcal U_{x,w}=\mathcal F(H_{x,w}).
+\end{aligned}                                                   \tag{2.1}
+$$
+
+$\mathcal U_{x,w}$ 始终取遍整个 $\mathcal W_3$。令
+
+$$
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+B=J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+C=JB=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix}.                    \tag{2.2}
+$$
+
+有 $ML=B$、$JC=B$。因此 $H_{x,w}$ 的原时钟 $0,\ldots,6$ 的累计矩阵为
+
+$$
+(I,J,L,B,C,B,C),                                             \tag{2.3}
+$$
+
+且它的全部祖先方程恰为
+
+$$
+f(i)\operatorname{tr}(A_iP)+d
+ =(0,24,48,312/5,y,x,w)_i\qquad(0\le i\le6).                 \tag{2.4}
+$$
+
+定义没有附加 $d=0$、$f(6)=0$、$f(7)=0$、共同增益射线、源标签或基数上界。所有其他相容世界均保留。
+

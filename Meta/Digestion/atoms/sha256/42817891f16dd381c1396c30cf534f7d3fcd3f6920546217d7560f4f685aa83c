@@ -1,0 +1,24 @@
+**Literature statement 12.1 (tools and non-transfer).** Channel affinity,
+positive-effect comparison, trace-norm convexity, total variation of a
+unimodal function and best affine approximation of a concave function are
+mature tools. The substantive deductions here are their actual-source
+applications (AC.11), (AC.16), (AC.24), (AC.26) and (AC.31).
+The decision frontier is an explicit mature discrimination application;
+the return curve is a conditional consumer of the credited canonical law.
+These statements are `repo-derived`; no worldwide originality is asserted.
+
+| Primary source and version | Verified scope and use |
+| --- | --- |
+| F. Buscemi, [Comparison of quantum statistical models: equivalent conditions for sufficiency, arXiv:1004.3794v4](https://arxiv.org/html/1004.3794v4), Definitions 15, 19 | `literature-attested`: statistical-morphism m-sufficiency and existence of one CPTP sufficient map have different premises. Our comparison requires the latter physical-map class; a decision comparison alone installs no acquisition channel. |
+| A. Jenčová, [Randomization theorems for quantum channels, arXiv:1404.3900v1](https://arxiv.org/html/1404.3900v1), §3.1, Theorem 2 | `literature-attested`: finite quantum experiments are compared by common CP randomizations and pointwise trace-norm error. This supplies the comparison frame. The exact-time norm and obstruction here are proved directly, without extending a finite-dimensional output theorem by assertion. |
+| E. Bagan, R. Muñoz-Tapia, G. A. Olivares-Rentería and J. A. Bergou, [Optimal discrimination of quantum states with a fixed rate of inconclusive outcomes, arXiv:1206.4145v1](https://arxiv.org/html/1206.4145v1), POVM formulation and Eqs. (1)–(3) | `literature-attested`: a known ensemble, an inconclusive POVM effect and error minimization at prescribed inconclusive rate. Theorem 9.1 proves its particular robust family calculation explicitly; neither that literature nor the attaining POVM promises a preserved original successor. |
+| U. Herzog, [Discrimination of two mixed quantum states with maximum confidence and minimum probability of inconclusive results, arXiv:0812.3174v2](https://arxiv.org/html/0812.3174v2), Eqs. (1)–(9) | `literature-attested`: mixed-state POVM confidence and support/spectral restrictions. Only this mature decision framework is credited; no unknown-source actuator or acquisition mechanism is transferred. |
+| E. Farhi and coauthors, [Quantum state restoration and single-copy tomography, arXiv:0912.3823v2](https://arxiv.org/html/0912.3823v2), Theorems 1–2 | Requires supplied coherent access to the unknown state's exact projector and repeated oracle calls; the tomography construction also uses coherent implementation/uncomputation. Those source-dependent services and restoration attempts are absent from the original absorbing-failure menu. |
+| S. Lahiry, [Classical Sufficiency in Quantum Statistical Experiments, arXiv:2609.29348v1](https://arxiv.org/html/2609.29348v1), §3.4.2 | Recent primary scope comparison: preserving a prescribed classical decision/measurement experiment differs from quantum-channel recovery. It supplies no original-control sensor or live successor map. |
+
+These inspected sources furnish no verified directly sufficient acquired
+observer under this volume's input contract. This bounded comparison is
+neither an exhaustive literature exclusion nor a universal impossibility.
+No conclusion or cost is imported from a model merely sharing dimensions
+or terminology.
+

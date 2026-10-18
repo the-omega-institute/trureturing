@@ -1,0 +1,16 @@
+**约定 9.1（仓内不可变引文）。** 下表使用完整提交定位供应；其普通证明与声明源码各保留原证据性质，引用不是新的 Lean 核验。
+
+| 引文 | 精确供应及本卷使用范围 |
+| --- | --- |
+| [S1：不可逆目标取得](https://github.com/the-omega-institute/trureturing/blob/f64d9e5dc37301e04ffc33332c919dd56a81ed6f/docs/develop/theory/KBONACCI_IRREVERSIBLE_TARGET_ACQUISITION.md) | 第1–2节的原读者、INITIAL 合同与字母表等价；引理4.2–4.3的活全一候选与首零阈值；定理5.2的合并标签判据；例8.5的混合尾边界。 |
+| [S2：最小模值观察器](https://github.com/the-omega-institute/trureturing/blob/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md) | 第13节原阶权重、定理14.1的周期 $T$ 与相邻一系数。自主状态数和未来窗口数不转化为追加块费用。 |
+| [S3：自校准边界](https://github.com/the-omega-institute/trureturing/blob/84aeabc092530002a1a9f17079c15a8c803e38cd/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) | 引理15.1的同词值／相位／尾联合来源和独立可达拒绝。任意大来源长度不提供隐藏时钟。 |
+| [S4：窄查询窗口费用](https://github.com/the-omega-institute/trureturing/blob/84c05a76262b9b8c1a491c02afdee34e60535e9b/docs/develop/theory/KBONACCI_NARROW_QUERY_WINDOW_COST.md) | 第1–3节的实际转移、短路径反演与非恒定相位根首零。$g\ge2$ 同色扫描与其它护栏族不能直接分类本文 $g=1$ 表。 |
+| [S5：临界块宽费用](https://github.com/the-omega-institute/trureturing/blob/0e51d0ec80c86e888fcdde78982665a7c5c17c79/docs/develop/theory/KBONACCI_CRITICAL_WIDTH_TARGET_COST.md) | 定理2.2的同一字面块循环边反演。其 $m=k$ 精确费用没有作为 $m<k$ 最优值使用。 |
+| [S6：目标取得费用](https://github.com/the-omega-institute/trureturing/blob/3fa4d2325f1e8bcf3f4f9813f83fdf4c1156fdd0/docs/develop/theory/KBONACCI_TARGET_ACQUISITION_COST.md) | 定理3.1只在明确宽块查询空间条件下给精确式；本卷不删除该条件。 |
+| [S7：互素相位费用](https://github.com/the-omega-institute/trureturing/blob/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md) | 定理3.1、4.1、5.1、6.1的单位宽、宽二、首窗及单点规律；反例7.1的 $T=5$ 回绕。全部作为先例，不重计为新增。 |
+| [S8：关系观察恢复几何](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) | 定义8.1–8.3、定理8.5、命题8.6的实际来源有限树与硬预算递推；命题8.10说明不能删除付费常值动作。本文不再交付通用 Bellman 结果。 |
+| [S9：关系续接几何](https://github.com/the-omega-institute/trureturing/blob/f6a4a894f2377f2a529748b9729b0637bd0ae006/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | 定义3.2–3.3、4.1的动态充分纤维与行为商作为识别语言。此处不从线性表示维数获得块费。 |
+| [S10：实际取得几何](https://github.com/the-omega-institute/trureturing/blob/dc3fa13ad47f1171fbc8dac1306273339091cd43/docs/develop/theory/KBONACCI_ACTUAL_ACQUISITION_GEOMETRY.md) | 命题4.1、5.3的实际尾像与匹配像，支持既有字面接口；源编码最短词与未知 INITIAL 目标费用不是同一问题。 |
+| [S11：实际饱和声明源码](https://github.com/the-omega-institute/trureturing/blob/7d65d83f72d972406830eaf4b51d7aad0c520efb/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.lean) | 仅定位供应的实际饱和源码；本卷不编译、不调用新形式化，也不据此自报任何定理为 kernel 真值。 |
+

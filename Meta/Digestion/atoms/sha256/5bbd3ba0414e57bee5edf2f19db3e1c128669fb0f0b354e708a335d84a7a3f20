@@ -1,0 +1,87 @@
+**Proposition 9.1 (local discrimination and the missing global charge).**
+Theorems 7.2 and 8.1 leave the original universal grid-optimum problem
+unresolved. More precisely, choose the $G=k(n-k+1)$ actual live
+$(h,z)$ witnesses of Theorem 4.2, let $\mathcal W$ be their image
+in the original selected-state alphabet, put $N=|\mathcal W|$, and
+let $M$ count all installed selected states. A sufficient missing
+whole-table implication is
+
+$$
+M-N\ge G-N,                                         \tag{PE.39}
+$$
+
+or, concretely, a charge assigning at least $G-N$ distinct installed
+selected states outside the entire image $\mathcal W$ to the lost
+witness multiplicities. It must account for both $D=0$ and $D>0$
+collisions. Neither the local discriminator nor the local continuation
+count in Theorem 7.2 supplies this implication.
+
+Proof. The $G$ witnesses exist by Theorem 4.2. A collision loses one
+or more multiplicities when those witnesses are mapped into their
+$N$ distinct selected states. If the stated charge were available,
+(PE.39) would give $M\ge G$. The independently forced two
+nonselected running states, two original entry latches and $r$
+mandated latches in (PE.13) would then give $H\ge G+4+r$.
+The original grid attains that count under the original caps, but
+the required charge is not established here.
+
+Theorem 7.2 distinguishes the paid discriminator from only its two
+incoming state histories. The state may belong to $\mathcal W$ as
+the endpoint of a different live witness, or the same state may serve
+several collisions. Likewise the local $a+b+u+1$ continuation sets
+can overlap one another and $\mathcal W$. They cannot be summed
+as disjoint charges. The $D=0$ balanced-tight case has no interval
+(PE.25) at all, and distinct individual costs exclude it only when a
+private side is a singleton, not for all larger private sets.
+Thus even the existence of a paid common-coordinate reread in every
+$D>0$ pair does not produce a global multiplicity charge.
+
+Theorem 8.1 also rules out closing this gap merely by prohibiting all
+singleton-private sharing, all polarity defects, or every such collision
+at $k=3$. Its complete table obeys the full original contract. However,
+it has $H=(G+4+r)+(m+2)>G+4+r$, so it neither refutes grid
+optimality nor proves its own added states necessary.
+
+An alternative completion would be a faithful whole-table comparison
+or a cardinality-preserving normalization. Such a bridge must preserve
+the entire original domain, all words and legal source paths, the
+literal handoff, sourcewise termination and both paid caps. A unique
+level or semantic residual per installed state is not established.
+Union paths need not be actual paths on one source. Unfolding or
+leveling with additional copies, or imposing increasing order, cannot
+be used as a count-preserving bridge without proof. The restricted
+literature results discussed in Proposition 6.1 therefore do not close
+(PE.39). The general $H_{\mathrm{exec}}(A,k;r)$, unrestricted
+$H_{\min}(A,k;r)$ and the separate full-$N$ unequal-tail target remain
+unresolved. No overall completion follows. $\square$
+
+The extra content is the exact paired-completion interval, the paid
+common-coordinate discriminator after both certificates, the joint
+same-continuation count and letter inequalities, singleton separation,
+and the complete singleton-private family for every original ordered
+cost input. Theorem 3.1 supplies (PE.6), the all-weight nonselected
+charge and the two polarity implications; Lemma 4.1 and Theorem 4.2
+supply the collision exclusions and installed-state witnesses.
+Theorem 5.1 and Proposition 5.2 already establish mixed sharing and
+its compatibility with distinct subset sums for other families. Their
+profile gate and paid old-coordinate recovery are reused; mixed
+sharing in general is not an additional discovery here.
+
+The actual inverse, complete rows, profiles, occurrence identity,
+simultaneous cube, live saturation, interval exclusion, unchanged reader
+and classical threshold grid are used only at the explicitly stated
+supplier scopes in Sections 1–2 and 6. Their nested source bodies are
+not additional premises silently imported here. Threshold certificates,
+deterministic indistinguishability and stationary cycling on a fixed
+source are mature tools. The deductions above are ordinary proofs
+relative to these credited premises, not kernel certificates or claims
+of worldwide originality. No external novelty search is asserted.
+
+All supplied services and separate prices of Assumption 1.4 remain
+required. The results prove no acquisition, authentication, export,
+isolation, initialization, handoff-storage or physical-resource service.
+In particular $H,q_P,\ell_P$ yield no total physical cost conclusion,
+no general neural-network theorem and no empirical machine-learning
+claim. The original optimum and the remaining global charge are not
+replaced by the larger constructed table.
+

@@ -1,0 +1,25 @@
+**Proposition 8.3 (homogeneity and equivalent descriptions).** For every
+positive five-mode $\sigma$ with $E^\dagger\sigma E=t\rho$, $t>0$,
+
+$$
+E_s(\sigma)=tE_s(\rho)\qquad(0\leq s\leq1).
+\tag{AS.59}
+$$
+
+The lower effect inequality (AS.23) multiplies the selected lower
+bound by $t$; the high effects (AS.54) are supported on
+$\operatorname{ran}E$ and give equality. No acceptance division is
+introduced, even with complement or cross-support components.
+If compression is zero, positivity kills the cross block and the
+minimum is zero: factor $(I_3+r sX_c)/2$ into finitely many
+supported high columns, and add the same scalar completions.
+Its high mass on $\sigma$ is zero and nonnegativity is the lower
+bound. This separate argument uses no singular Gram inverse.
+
+Conjugate public states use separately fixed conjugated encoders and
+range maps. The real source and full effects are preserved; no physical
+conjugation of an unknown state is invoked. Negative strength exchanges
+report names. A global coefficient phase does not change a CP branch.
+These are exact equivalences at their stated scope, not uniform
+continuity results at a nonadmitted or singular input. $\square$
+

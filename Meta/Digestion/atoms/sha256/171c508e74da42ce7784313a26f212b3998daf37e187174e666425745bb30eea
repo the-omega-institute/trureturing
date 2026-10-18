@@ -1,0 +1,51 @@
+**Definition 11.1 (finite image profiles and their whole-term negatives).**
+Fix any inclusive relative depth $b\ge0$. For each class $d$, form a
+finite prefix pattern that exposes every node through depth $b$, stops
+at each early leaf, and retains that leaf's entire absent cone. A branch
+at depth $b$ is represented by a live name $z_{d,w}$, where $w$ is its
+relative occurrence address. Its observed reply is branch; its hidden
+value is required to be a branch image. A leaf at depth $b$ is retained
+as that literal leaf. All branch constructors at smaller depth are
+retained. Call the resulting finite free term $T_d$.
+
+Names for different pairs $(d,w)$ are independent. Every occurrence of
+one class in $C_*$ uses exactly the same $T_d$ and exactly the same
+names. There is no requirement that distinct live names have distinct
+values. The required distinctness is the entire conjunction
+
+$$
+\Delta=\bigwedge_{d\ne e} T_d\ne T_e.
+\tag{PCA.25}
+$$
+
+The two sides are whole class terms, including all fixed finite pieces.
+They are not replaced by childwise inequalities. Define a syntactic
+image predicate $J$ on these terms by
+
+$$
+\begin{aligned}
+J(\alpha)&=\mathsf{false},& J(\beta)&=\mathsf{true},&
+J(z_{d,w})&=\mathsf{true},\\
+J(\langle A,B\rangle)&\Longleftrightarrow
+ (A=\beta\text{ literally and }B=\alpha\text{ literally})
+ \ \lor\ (J(A)\land J(B)).
+\end{aligned}
+\tag{PCA.26}
+$$
+
+A live name is a branch, so it is neither of the two literal leaves
+in the first disjunct. Expand fixed grounds in the free ordered
+$\alpha/\beta$ signature. Retain precisely those pattern tuples for
+which
+
+$$
+J(C_*[(T_{[p]})_{p\in H}])\quad\text{and}\quad
+T_d,T_e\text{ have unequal syntax whenever }d\ne e.
+\tag{PCA.27}
+$$
+
+Denote this finite set of retained profiles by $\Omega_b$. These are
+finite syntactic tests on bounded patterns, not tests of an unknown
+acquired-term program. The exterior is kept literally, so all its
+concrete leaves, repeated holes and blocked public cut members remain.
+

@@ -1,0 +1,34 @@
+### 62.2 Complete phase chart and original constraints
+
+Let \(\theta_{rk}\) be 30 independent real variables, with
+\(1\le r\le5\), \(0\le k\le5\), and put
+
+\[
+ \theta_{0k}=0,\qquad Z_{rk}(\theta)=V_{rk}e^{i\theta_{rk}}.
+\]
+
+Restrict all phases to a sufficiently small neighborhood of zero. This is
+a complete local chart after fixing only the six column phases. Define
+\(F(b,\theta)\in\mathbb R^{60}\) in the following zero-based order:
+
+1. For \(j<k\), in lexicographic order, take
+   \(\operatorname{Re}(Z^*Z)_{jk}\), then
+   \(\operatorname{Im}(Z^*Z)_{jk}\). These are rows 0 through 29.
+2. For \(k=0,\ldots,5\), then \(a=0,\ldots,4\), take
+   \(|(M(b)Z)_{ak}|^2-6\). These are rows 30 through 59.
+
+The Gram diagonal and the input moduli are automatic. Since
+\(M(b)^*M(b)=6I_6\), the sixth output equation for each column follows
+from the first five. Thus \(F=0\) is equivalent to all of (62.2).
+Order the variables as
+
+\[
+ z=(\theta_{10},\ldots,\theta_{50},
+ \theta_{11},\ldots,\theta_{51},\ldots,
+ \theta_{15},\ldots,\theta_{55},b)\in\mathbb R^{31}.
+\]
+
+Write \(\mathcal J=DF(0,0)\), and let \(Q_{\mathrm{full}}\) be the
+homogeneous degree-two term of
+\(F(z)=\mathcal Jz+Q_{\mathrm{full}}(z)+O(\|z\|^3)\).
+

@@ -1,0 +1,32 @@
+**Lemma 6.3 (a diagonal dual inequality).** For all nonnegative
+$f_1,\ldots,f_k$ on $P$, with $k=2^h\ge2$,
+
+$$
+\sum_{s=0}^4\prod_{j=1}^k f_j(u_s)
+\le\prod_{j=1}^k R(f_j).
+\tag{JPL.27}
+$$
+
+Proof. First $R(f)\ge\|f\|_2$. To see this, let $m$ be a minimum
+core entry, let $a,b,c$ be the other three core entries, and let $t$
+be the fifth entry. Then $a,b,c\ge m\ge0$ and
+$R(f)=a+b+c+t$, so
+
+$$
+R(f)^2-\|f\|_2^2
+=2(ab+ac+bc)-m^2+2t(a+b+c)\ge0.
+$$
+
+For $k\ge2$, $\|f\|_k\le\|f\|_2$: after scaling the latter to
+one, every entry is at most one and its $k$-th power is at most its
+square. The zero-vector case is immediate.
+
+The finite power-of-two Hölder inequality gives
+$\sum_s\prod_j f_j(u_s)\le\prod_j\|f_j\|_k$.
+Here it follows directly by repeated Cauchy–Schwarz: split the $k$
+factors into equal halves, apply Cauchy–Schwarz to the two half-products,
+and apply the same inequality inductively to their squared factors.
+The base case $k=2$ is Cauchy–Schwarz itself. Thus no asymptotic or
+factorization assumption is involved. Combine the two norm bounds
+with this inequality to obtain (JPL.27). $\square$
+

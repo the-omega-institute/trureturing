@@ -1,0 +1,85 @@
+## 123. The same positive white noise permits exact noisy channels from finite copies
+
+**Theorem C-123.1 (All-parameter bounds and a sufficient exactness budget).**
+For the actual original noisy family, all $m\ge0$ and $t,\eta\in[0,1]$ satisfy
+
+$$
+ [c-D_m(t,\eta)]_+\ \le\ e_m(t,\eta)\ \le\
+ [c-sD_m(t,\eta)]_+\ \le c.
+\tag{C123.1}
+$$
+
+Here $c,s,\gamma$ are exactly (C121.3), and $D_m$ is the finite sum (C121.6).
+At $t=0$ or $\eta=1$, $e_0=e_m=0$ and no program is needed.
+If $c>0$ and the target margin $\gamma=s-c$ is strictly positive, then a finite
+$m$ suffices for exact simultaneous programming of all four target channels.
+One sufficient integer budget is
+
+$$
+ m\ \ge\ \left\lceil\frac{25}{2c^2}
+              \log\frac{2s}{\gamma}\right\rceil.
+\tag{C123.2}
+$$
+
+The logarithm here is natural. A smaller sufficient budget is any integer for
+which (C121.6) gives $D_m\ge c/s$. Neither budget is asserted optimal for
+$\eta>0$. The sole parameter point with $\gamma=0$ is $(t,\eta)=(1,0)$,
+whose finite-copy obstruction is (C122.2).
+
+Proof. Repeat (C122.3) with target distance $2c$, which is still exact by
+(C121.8), and the actual noisy-program distance $2D_m(t,\eta)$. This proves
+the lower bound over all CPTP competitors. C-121.3 gives the upper bound.
+At $c=0$ every target is $T_\eta(0,0)$, directly implementable with $m=0$.
+
+For $c>0$, on one measured copy let $H_a$ be $1$ at $a_+$, $-1$ at $a_-$,
+and $0$ otherwise. Under the two opposite-$a$ laws its means are $2u$ and
+$-2u$. The variables for $m$ copies are independent and lie in $[-1,1]$.
+The bounded-variable estimate used here is the standard Hoeffding bound.
+Its needed form follows directly: for a variable $V\in[-1,1]$, put
+$F(\lambda)=\log\mathbb E e^{\lambda(V-\mathbb EV)}$. Its second derivative
+is the variance under the exponentially tilted law, at most one;
+$F(0)=F'(0)=0$ therefore implies $F(\lambda)\le\lambda^2/2$.
+Independence, the exponential Markov inequality and minimization at
+$\lambda=\alpha$ give the one-sided sample-mean bound
+$\exp(-m\alpha^2/2)$, with a factor two for the two tails.
+Applying it at $\alpha=2u$ gives
+$\Pr_{a,+}(\sum H_a\le0)\le\exp(-2mu^2)$ and the opposite inequality under
+$a,-$ with the same bound. The test given by the sign of the sum, with a fair
+random tie, thus has average error at most $\exp(-2mu^2)$.
+For commuting states the optimal equal-prior binary error is $(1-D_m)/2$,
+as follows directly by assigning each outcome to its larger probability.
+Consequently
+
+$$
+D_m(t,\eta)\ge1-2\exp(-2mc^2/25).
+\tag{C123.3}
+$$
+
+This bound may be negative for small $m$; the exact value remains nonnegative.
+Condition (C123.2) makes its right side at least $c/s=1-\gamma/s$.
+Then $r_m=c/D_m\le s$ in (C121.9), and the average response is precisely the
+target on every input matrix, hence with every complex reference.
+Finally $\gamma=(1-\eta)(1-t)+\eta/5$ is a sum of nonnegative terms; its zero
+set on the specified square is exactly the coherent corner. QED.
+
+**Proposition C-123.2 (Exact channels do not require exact label identification).**
+For $\eta>0$ and $c>0$, all four actual program states are positive definite.
+No finite number of them permits perfect identification of $X$, whereas
+C-123.1 gives exact channel programming with sufficiently many copies.
+At $\eta=0$, $0<t<1$, the same statement holds on their common five-dimensional
+support. In both cases the exact construction uses response channels whose
+allowed coherence magnitude $s$ exceeds the target magnitude $c$.
+
+Proof. In the noisy case the smallest program eigenvalue is at least
+$\eta/25>0$. On the matching support at zero white noise and $t<1$, the
+smallest eigenvalue is $(1-t)/5>0$. Tensor powers have the same common support
+with strictly positive eigenvalues there. An effect with zero probability on
+one such state must vanish on this support, and therefore has zero probability
+on every state in the family. No POVM can give four disjoint perfectly
+identifying outcomes. Nevertheless, (C121.12) has nonzero signed expectations.
+Choosing $r_m=c/D_m$ reproduces the required coefficients exactly, while each
+response remains CP because $r_m\le s$. The individual outcomes need not name
+the true label; they may select more coherent channels than the averaged
+target. This is exact synthesis by averaging actual controls, not postselection
+or finite-copy perfect tomography. QED.
+

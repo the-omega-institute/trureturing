@@ -1,0 +1,28 @@
+**Lemma 5.1 (unsaturated lift and exact norm cap).** Suppose $b_0>k$, let $H^*=tvv^T$ as in (RG.23), and put
+
+$$
+L=I-tvv^T\succ0,\quad G=L^{-1},\quad
+\nu=\sqrt{G_{DD}G_{TT}}+|G_{DT}|,\qquad
+s_{\rm cap}(C)=\min\{1/2,1/\nu\}>0.
+\tag{RG.29}
+$$
+
+For every $0\le s\le s_{\rm cap}(C)$ the matrices
+
+$$
+H_r=H^*/2,\qquad L_r=(L+rsX_c)/2,\qquad N_r=M/2
+\tag{RG.30}
+$$
+
+are real PSD, satisfy $\operatorname{tr}(BL_r)=0$, and obey
+
+$$
+\sum_r(H_r+L_r)=I,\quad N_++N_-=M,\quad
+\Theta(H_r+L_r)+N_r=(I+rs\kappa X_{01})/2.
+\tag{RG.31}
+$$
+
+Proof. Since $t<1$, $L\succ0$. Set $x=L^{-1/2}e_D$, $y=L^{-1/2}e_T$. The congruence of $X_c$ is $xy^T+yx^T$. Its two nonzero eigenvalues are $x^Ty\pm\|x\|\|y\|$: restrict to their two-dimensional span and compute its characteristic polynomial, whose trace is $2x^Ty$ and determinant $(x^Ty)^2-\|x\|^2\|y\|^2$. The two vectors are independent, so the remaining eigenvalue is zero and the norm is precisely $\nu$. Thus $L\pm sX_c\succeq0$ when $s\nu\le1$, also at equality. The number $\nu$ is finite and positive.
+
+Also $\operatorname{tr}(BL)=k-tb_0=0$ and $\operatorname{tr}(BX_c)=0$. This gives the low trace claims. Finally $H_r+L_r=(I+rsX_c)/2$, so (RG.31) follows from $\Theta(I)=I-M$ and $\Theta(X_c)=\kappa X_{01}$. $\square$
+

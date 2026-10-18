@@ -1,0 +1,45 @@
+**Definition 2.2 (positive flattening).** Name every declared input
+variable and every subexpression of $\mathscr E$. Repeated uses of a
+name reuse its value. Expand a fixed ground parameter into its finite
+native syntax. The positive definitions become
+
+$$
+Z=[0],\quad Z=[1],\quad Z=\tau_a X,\quad Z=J(X,Y),
+\tag{NIC.7}
+$$
+
+together with the original positive equalities between names. For each
+$J$ definition choose a collapse case
+
+$$
+X=[r+1],\quad Y=[r],\quad Z=[r+2],\qquad r\in\mathbb N,
+\tag{NIC.8}
+$$
+
+or an ordinary case $Z=F(X,Y)$. At this stage canonical solutions
+require every name normal, including an ordinary case's output.
+
+Erase ranks to a primitive shape $c$ and an ordered binary shape
+constructor $f$. A shift gives equal shapes. A collapse forces the
+three primitive shapes, an ordinary case gives $s_Z=f(s_X,s_Y)$,
+and every other positive equality gives the corresponding shape
+equality. Solve this finite free-shape problem by an idempotent most
+general unifier $\sigma$, with its factorization property on the
+entire declared family of shape names. In particular unconstrained names
+are left independent; they are not identified merely because they do
+not occur in an equation. Failure discards this case only. Write
+$S_Z=\sigma(s_Z)$, retaining all names, including unconstrained names.
+The residual variables occurring in this finite tuple of terms are
+$w_1,\ldots,w_m$.
+
+Finite free-tree unification and its factorization property are used
+exactly as in [NSF, Definition 3.1][NSF]. Its occurs check applies to
+these erased *branch* equations over $c,f$, never directly to an
+interpreted native expression.
+
+Decorate every explicit $c$ occurrence of each $S_Z$ with a natural
+scalar $r_{Z,p}$ and every occurrence of $w_j$ with a block name
+$U_{Z,p}$ of sort $j$. Different positions have different decorations;
+reusing $Z$ reuses its entire decorated term. A block is a rank function
+on the leaves of the nonempty finite shape eventually filling $w_j$.
+

@@ -1,0 +1,4 @@
+### 109.1. The noncentral action and the lower bound
+
+Let $D_8=\langle r,s\mid r^4=s^2=e,\ srs=r^{-1}\rangle$ label the original eight input coordinates, with original fibres $\{x,xs\}=x\langle s\rangle$. These are left cosets, or equivalently orbits of right multiplication by the noncentral reflection $s$. Keep the original local $\mathbb C^8\to\mathbb C^4$ channels, correlated encoding and unhalved arbitrary-reference diamond error $\delta$.
+

@@ -1,0 +1,24 @@
+**Definition 5.1 (complete positive branches).** Under Assumption 2.3
+write
+
+$$
+\begin{gathered}
+P_y=y_0+y_1u+y_2v+y_3u^2+y_4uv,\\
+F_{0,\epsilon,\sigma}=P_y-\epsilon\lambda u-\sigma\ell,
+\qquad \epsilon,\sigma\in\{\pm1\},\\
+N_R=\#\{(u,v)\in S^1:F_{0,+,+}=0\},\qquad
+N_L=\#\{(u,v)\in S^1:F_{0,-,+}=0\}.
+\end{gathered}
+\tag{PC.23}
+$$
+
+These are the original full-circle pure tests (FC.7). They are
+nonnegative, nonzero and of trigonometric degree at most two.
+FC Theorem 12.1 confines their zeros to their strict report
+hemispheres and bounds each inventory by two. FC Proposition 20.1
+excludes zero-height pure contacts, and FC Theorem 11.1 gives
+$\ell>0$ on $u\ge0$. It follows that $N_R+N_L$ counts precisely
+all positive-height pure contacts, including unused contacts; the
+negative-height pure contacts have $u<0$ and belong to
+$F_{0,-,-}$, which has at most two zeros.
+

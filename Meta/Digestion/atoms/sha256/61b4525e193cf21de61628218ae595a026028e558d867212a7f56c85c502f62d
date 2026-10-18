@@ -1,0 +1,12 @@
+**Proposition 3.3 (Fair and endpoint laws).** At $p=1/2$, write $A_i$ for the indicator that site $i$ is active. Then
+
+$$
+q_{P_{1/2}}=p^L_{r,P_{1/2}}=p^R_{r,P_{1/2}}=A_0/2\quad\text{almost surely},
+\qquad e_{L,P_{1/2}}(r)=e_{R,P_{1/2}}(r)=\tau_{P_{1/2}}(R)=0.
+\tag{3.4}
+$$
+
+At $p=0,1$, all these posteriors and defects are zero. Formula (3.2) is restricted to biased interior parameters: substituting $v_m(1/2)=1/4$ into it would give a false fair-law defect.
+
+Proof. At fairness any consecutive $m$-XOR record has two equally likely spin preimages and mass $2^{-m}$. Extending any finite set to a consecutive interval and marginalizing shows the entire $Y$ process is iid fair. Given the phase, $Y_0$ is independent of all other XORs; finite-cylinder independence extends to their generated field. Lemma 2.2 makes phase measurable in each one-sided field even at $r=0$. Thus an active erased center has posterior $1/2$, and a separator has posterior zero, for the full and both one-sided fields. At endpoints the actual visible law is all-zero, so direct conditioning gives zero. $\square$
+

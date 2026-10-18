@@ -1,0 +1,33 @@
+**Proposition 8.5 (A positive real budget outside an attained Fisher optimum).**
+Fix any positive reference law at $n=2$ or $n=3$,
+or an activity-law reference at $2\le n\le6$, and
+let $\gamma^*=\max_\omega\gamma(\omega)>0$. Within
+the regular menus of Definition 8.1 with both families
+and every site receiving positive probability, the
+joint information ratio has supremum $\gamma^*$
+and no maximizer. Every $r<1$ gives a value strictly
+below that supremum. The excluded $r=1$ menu has the
+global sign fiber of Proposition 6.5.
+
+Proof. Equations (8.3), (5.4), Proposition 6.3 and
+the activity-law transfer of Corollary 7.4 give
+$\Gamma=r\gamma(\omega)$. The phase maximum is
+positive by connectedness and uniform positive site
+weights, and is attained on the compact weight simplex.
+If $\omega_i=0$, the nonzero tangent
+$u_s=\psi_s(s_i-\mathbb E_p s_i)$ is killed by all
+remaining site projections, so $\gamma(\omega)=0$.
+Hence every maximizing phase distribution has all
+weights positive. Use such a distribution, positive
+$\eta$, an allowed $\tau$, and let $r\uparrow1$ to
+approach $\gamma^*$. For any $r<1$,
+$r\gamma(\omega)\le r\gamma^*<\gamma^*$, proving
+nonattainment. At $r=1$ the real family is absent and
+Proposition 6.5 applies. $\square$
+
+This is a boundary of the specified global pure-ray
+identification promise. A promised local neighborhood
+can use the original calibrated Fisher optimum; that
+is a different target. No conclusion about original
+finite-producer attainment follows from this menu.
+

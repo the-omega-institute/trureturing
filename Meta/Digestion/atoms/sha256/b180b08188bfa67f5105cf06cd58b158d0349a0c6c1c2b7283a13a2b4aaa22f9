@@ -1,0 +1,45 @@
+**Theorem 6.2 (original risk versus clipped return-weight span).** Every original finite COMPLETE observer on the fixed positive three-depth prior satisfies
+
+$$
+\frac{1159}{11}e(M)+\frac{\mathcal S(M)}2>\kappa_0,
+\qquad
+e(M)=\max_s\{R_{\mathrm{conf},s}(M)-\rho_s\}.
+\tag{6.2}
+$$
+
+Consequently the original class with $\mathcal S(M)=0$ has
+
+$$
+e(M)>\frac{99}{185440000},\qquad
+\inf_Me(M)\ge\frac{99}{185440000}.
+\tag{6.3}
+$$
+
+An exact original common attainer must have $\mathcal S(M)>9/80000$. Every vanishing-excess sequence has $\liminf\mathcal S(M_n)\ge9/80000$.
+
+Proof. Apply the initialized common paid-history extraction [PAID, Lemma 14.1] on that one fibre. It supplies the original acquired kernels and common rows $\pi B=\tau$, $\tau A=\pi$, with both supported pure-target configuration losses no greater than the corresponding original risks. Every positive stationary label and every positive edge from it belongs to Definition 6.1's reachable set. The extraction begins with the original source-independent initialization and paid histories, not a substituted stationary source.
+
+Delete only zero-row labels by the supplied support-closed rule. Clip both emissions, retain these very kernels and rows, and regenerate both complete laws using them. Put $\varepsilon_s=R_{\mathrm{conf},s}(M)-\rho_s\ge0$ and $\widehat\varepsilon_s=\max_{k\in\{1,2,3\}}\widehat{\mathcal L}_s(P_{s,r_k})-\rho_s$, with $\widehat{\mathcal L}_s$ denoting the clipped table's configuration loss and $\widehat e=\max_s\widehat\varepsilon_s$. Explicitly that loss is $\sum_x\pi_x\operatorname{TV}(\widehat Q_x,P_{p,r_k})$ or $\sum_y\tau_y\operatorname{TV}(\widehat W_y,P_{\beta,r_k})$.
+
+The endpoint coordinate identity on the extracted rows gives $\pi|u-\widehat u|\le2\varepsilon_p$ and $\tau|v-\widehat v|\le2\varepsilon_\beta$. The clipping coupling in [CLIP, equations (3.6)–(3.10)] applies directly to this closed stationary support, as also recorded in [HET, Section 2]. The clipped synthetic return kernel is bounded entrywise by $(4/15)BA$ and $\pi BA=\pi$. Thus the average complete-law changes are at most $(30\varepsilon_p+20\varepsilon_\beta)/11$ at p and $(12\varepsilon_p+30\varepsilon_\beta)/11$ at suspension, including any old noncompletion mass. Adding the extracted pure-target risk bounds gives
+
+$$
+\widehat\varepsilon_p\le\frac{41\varepsilon_p+20\varepsilon_\beta}{11},
+\qquad
+\widehat\varepsilon_\beta\le\frac{12\varepsilon_p+41\varepsilon_\beta}{11},
+\quad
+\widehat e\le\frac{61}{11}e(M).
+\tag{6.4}
+$$
+
+This is one regular table with its own same-update laws. Its return weight uses exactly the clipped products in (6.1). If a scalar lies in an interval of width $s$, its mean absolute deviation is at most $s/2$, by the chord bound for distance from its mean. Thus this table has $\widehat D\le\mathcal S(M)/2$. Embed its two acquired flows into $\mathfrak C$ by [PAIR, equation (11.24)] and apply Theorem 4.1:
+
+$$
+\kappa_0<19\widehat e+\widehat D
+\le\frac{1159}{11}e(M)+\frac{\mathcal S(M)}2.
+$$
+
+This proves (6.2); its remaining consequences follow by setting $\mathcal S=0$, setting $e=0$, or taking a lower limit, respectively. ∎
+
+The conclusion concerns the original full-history risks and an explicitly clipped statistic on original reachable edges. It supplies no clipping-preservation theorem for an unmodified constant return product outside the regular interval. It assumes no hard marginalized-defect budget, and the comparison preserves neither a prescribed COMPLETE cap nor a total-resource allocation. Original transient configurations and every positive paid history remain in the original suprema.
+

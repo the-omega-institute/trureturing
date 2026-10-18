@@ -1,0 +1,74 @@
+**Lemma 6.2b (all-finite journal and consumer correspondence).** For every
+finite lawful execution and every inserted finite maintenance word, the
+preceding ordinal relation, both predecessor chains, index lookups and
+complete acquired row payloads agree. Filtering unified events by
+$\epsilon=1$ gives exactly LJA's semantic-event order, including locals,
+rejects and Halt. Its fixed-$H$ operation contract is retained where the
+historical guard is $H$; changes of guard use the explicitly annotated
+extended contract, never a silent fixed-$H$ identification.
+
+The precise field correspondence with LJA5.1 is:
+
+| LJA field or consumer | Relation in this resident instrument |
+| --- | --- |
+| Semantic count/event ordinal | Same semantic count $j$; row $k$ uses the postcommit ordinal $k$, while its unified mate has old ordinal $\sigma(k)$ and before/after $j=(k-1,k)$ |
+| Sealed predecessor and journal lookup | The $k-1$ semantic predecessor maps to the actual reference of $J_{k-1}$; GetSemantic uses index 18. Unified predecessors and index 19 use their own ordinals. Descriptor ordinal $c$ is obtained separately by ReadDescriptor |
+| Original model and $H$ | `SEG-J1` is an explicit new record version; $H$ becomes the row's historical $h$, with $H_0$/prior retained independently. A whole fixed-$H_0$ LJA replay is claimed only when every semantic guard is $H_0$ |
+| Preparation and `INITIAL-SOURCE` | The same actual $\xi$ and original ingress tuple, copied from boot; no second preparation, new source value or readable payload is supplied by its name |
+| Port, request, complete material, response, before/after $q,g,e$ | Equal original data for all seven kinds, including executed rejects and complete local/output material; source-call-only indices are obtained by the separate kind filter |
+| Actual source-block descriptor | The typed layout tuple replaces the contiguous descriptor. Its interpretation is $i\mapsto\phi_K(i)$ for $i<L(h)$, with the actual manifest; old interval handles keep their original meanings |
+| Template, start/response fences, row creation | The actual installed compiled template and new paid cut/descriptor references. Corresponding cut kinds and relative order are retained; numerical addresses, fence ordinals, ticks, fees and creation occurrences are not identified with a hypothetical contiguous execution |
+| Row copy and received reference | Equality of the whole payload and original reference; receiver allocation/owner/base/status are its own. Only its acquired local descriptor permits reading |
+| LJA replay/receipt consumer | The version-aware decoder and joined verifier of Definition 6.5, with the same initial $q_{H_0}$ target, then its actual acquired-binding consumer. An unmodified LJA or PR57 byte parser is not claimed to accept these new versions |
+
+Proof. Induct on completed dispatcher events, simultaneously retaining
+the actual before/after source, counter words, sealed indices and returned
+owner/continuation boundary. At zero both indices are empty and all five
+event counters are zero; boot binding gives the actual initial occurrence.
+At a maintenance event $\epsilon=0$, the completed $m$ advances once,
+$j,q,g,e$ do not advance, index 18 and every $J_k$ remain untouched, and
+one $U_a$ with the prior unified predecessor and none semantic reference
+is sealed/indexed. This includes strict, unchanged and refusal outcomes.
+Its directory/guard effect is precisely Definition 5.1, not an original
+source event. At a source event $\epsilon=1$, Theorem 4.5 supplies its exact
+response and successor; the five original source kinds have precisely
+LJA4.3's $q,g,e$ cases. At NativeLocal or Halt its actually completed
+instruction or complete sealed output commits that marker, preserving
+$q,g,e$ and the source. Each of these seven cases advances $j,m$ once.
+The last complete semantic index therefore names $J_{c_a}$, and the new
+semantic row/index is exactly $J_{c_a+1}$. The last complete unified index
+names $U_{a-1}$, and its new row is exactly $U_a$ with that semantic link.
+Frame inversion and native seal-gated selection, proved in Lemma 6.1b,
+give all payload, counter, predecessor and reference equalities in the
+table. The end count is $c_{a+1}$, proving rank/select and $m-j$ by induction.
+
+For intermediate cuts let $E_s$ be the nonmaintenance filter of committed
+$E^+$, $A_s$ the sealed semantic-row word and $P_s$ its committed unsealed
+suffix. Commitment adds exactly the same one semantic event to $E_s,P_s$
+when $\epsilon=1$, and none on maintenance. Semantic row seal transfers
+that event from $P_s$ to $A_s$; its following index append and unified row
+seal add no event. Thus $E_s=A_s\mathbin{+\!+}P_s$, $|P_s|\le1$, alongside
+the existing $E^+=A^+\mathbin{+\!+}P^+$; the two pending fields need not
+empty at the same cut. Partial index/status/copy words remain unavailable
+and the phase retains the committed/prepared counts. Busy admission prevents
+a second event before both rows, indices, dependencies and final ACK.
+This covers all primitive cuts without asserting equality of in-flight
+archive lengths or incrementing a counter at a later seal.
+
+Index induction visits a fixed finite complete prefix and selects exactly
+its requested label after the seal; payload field induction gives the
+seven-kind and source-only filters. A successful local-origin lookup reads
+the equal acquired payload; absent/unfinished copies fail availability.
+The rank scan is over those same complete rows, so the selected prefix
+includes all preceding maintenance and omits no historical guard. Every
+word, selection, dependency, returned token and head is furnished by the
+listed finite graphs; bounded scans, not an oracle, implement the table.
+At constant historical guard $H_0$ the original row replay therefore has
+the same requests, replies, source successors and initial-target fiber.
+After Raise only the guard-annotated replay has that assertion; the old
+fixed-$H_0$ claim is not made. Changed physical descriptors, schedules and
+references are related by the displayed maps, not by fictitious byte
+equality with an unexecuted legacy run. Definitions 6.3 and 6.5 below
+copy and check these joins before any continuation or target output.
+$\square$
+

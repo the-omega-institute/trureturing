@@ -1,0 +1,10 @@
+**A1 acquired interpolants and degree.**
+
+**construction.**
+
+From the actual seven readings define E of degree at most three at the four even nodes 0,2,4,6, and R of degree at most two at the three odd nodes 1,3,5. Lagrange interpolation uses only distinct fixed node differences. Write E=e0+e1\*t+e2\*t^2+e3\*t^3 and R=o0+o1\*t+o2\*t^2. Set e(t)=1+b\*t/2 and o(t)=j-r/2+r\*t/2 for a compatible world.
+
+**proof.**
+
+The even trace table is precisely e(i). Since deg(g)<=2, d+e\*g has degree at most three and agrees with E at four distinct even clocks. Their difference therefore vanishes identically. Moreover b/2 is nonzero and g is nonzero, so deg(e\*g)=deg(g)+1>=1; adding the constant d cannot remove its leading term. Thus deg(E)=deg(g)+1. In the branch e3!=0 EVERY compatible world in the declared class has a genuinely quadratic gain. Constants would give degree-one E and nonconstant affine gains degree-two E, so neither can be an omitted competitor. For arbitrary incompatible readings the retained list may be empty. No executed interpolation or inference about an unrestricted cubic is used.
+

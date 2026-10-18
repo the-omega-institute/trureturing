@@ -1,0 +1,74 @@
+## 15. The five-mode closed-loop controls preserve the phase orbit
+
+The fixed-preparation transport source
+[AURIC probability, phase transport and holonomy](https://github.com/the-omega-institute/trureturing/blob/146d456b13542a1bd49e9278c162bf2588f183e1/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md),
+Definition 3.1 and §3.8, already supplies the endpoint
+position-locality result. Use its literal tensor order
+low, middle, high, identifying modes $0,1,2,3,13$ with
+$000,100,010,001,101$. Its negative-phase convention and
+closed-loop relation give
+
+$$
+h_0-h_1-h_3+h_{13}=2\pi m,\qquad
+\frac{e^{-ih_0}e^{-ih_{13}}}{e^{-ih_1}e^{-ih_3}}=1.
+\tag{15.1}
+$$
+
+Its endpoint unitary is therefore a restriction of a product
+of three position phase unitaries, up to one common phase.
+The source establishes that it preserves every Schmidt
+spectrum for bipartitions of these positions, comparing
+initial and final states at the same probability vector.
+Intervening probability legs are not asserted to preserve
+that spectrum.
+
+Thus the closed-loop histories belong to the entropy-neutral
+phase orbit of §8 under this tensor identification. For a
+joint occupation phase supported only at $101$, its
+rectangle value is $e^{i\theta}$, so a nontrivial such gate
+is outside this endpoint control class. The phase family
+considered in §§4–14 is a representation of candidate
+states; closed-loop histories alone do not acquire this
+nontrivial rectangle.
+
+Definition 3.1 also permits open phase legs. At fixed
+probability, choose a phase-base increment $-\theta$;
+its lift has residual $h_s=-\theta w_s$, with
+$w_0-w_1-w_3+w_{13}=1$ and $w_2=0$. Under the source's
+negative convention its endpoint multiplier is
+$e^{i\theta w_s}$. Its crossing rectangle is therefore
+$e^{i\theta}$, exactly that of the joint gate. Their
+quotient has trivial crossing rectangle and is a product
+of position-local phases by the algebra of §3.8. Thus the
+declared fixed-probability open phase control acquires the
+same Schmidt spectra as the three-site joint gate, up to
+position-local phases. This applies at the symmetry walls
+as well: it does not require a closed loop that can cancel
+every local residue there. It identifies an admissible
+mathematical control already in the source, while physical
+preparation, implementation and calibrated energy remain
+separate requirements. No corresponding control on the
+full longer-chain mirror family is supplied by this
+five-mode construction.
+
+The same transport source, §4, establishes affine capacity
+6 in generic position for its five-edge ideal coherence
+menu. That number counts three circle characters through
+two real quadratures each. It can coexist with unchanged
+Schmidt spectra because fixed-reference coherence readings
+are not invariant under position-local phases. The source
+also establishes smaller capacities on its symmetry walls
+and an anisotropic realized response Gram; none supplies a
+spatial dimension, a triplet rotation action or longer-chain
+joint phase controls.
+
+For the three-site Gibbs specialization used here,
+$p_{13}/p_0=\lambda_1\lambda_3$ and
+$p_1/p_3=\lambda_1/\lambda_3$. The source walls
+$X+Y=1-Z$ and $X=Y$ become, respectively,
+$\lambda_1\lambda_3=1$ and $\lambda_1=\lambda_3$.
+Consequently the uniform-activity example is on both walls,
+rather than in the generic six-coordinate regime. This is
+a parameter correspondence to the existing source result,
+not a new capacity theorem.
+

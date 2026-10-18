@@ -1,0 +1,21 @@
+### 定义 49.1（Fisher 切空间）
+
+令 \(p\in\Delta^\circ(\Sigma)\) 是五态单纯形内点，定义
+
+\[
+T_p\Delta(\Sigma)=\left\{a\in\mathbb R^\Sigma:\sum_s a_s=0\right\},
+\qquad
+g_p^F(a,b)=\sum_{s\in\Sigma}\frac{a_sb_s}{p_s}.
+\]
+
+对于 \(a\in T_p\Delta(\Sigma)\)，相对熵有局部展开
+
+\[
+D_{\rm KL}(p+\varepsilon a\Vert p)
+=
+\frac{\varepsilon^2}{2}g_p^F(a,a)+O(\varepsilon^3).
+\tag{49.1}
+\]
+
+因此 Fisher 度量是概率场在观察点的二阶信息尺度。它是由概率与归一化产生的几何量，不预设物理单位。
+

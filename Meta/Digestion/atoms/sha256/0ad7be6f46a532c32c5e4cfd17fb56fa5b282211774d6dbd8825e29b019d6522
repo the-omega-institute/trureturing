@@ -1,0 +1,58 @@
+### 455.6. 全实际 \(O\) 的有限来源读数及精确剩余供应
+
+前节的 \(\mathscr C_x\) 是完整补集。若要求一个有限来源读数，须使用实际
+
+\[
+O(n)=\sum_{\substack{m\le n\\m\text{ odd}}}\mu(m),\qquad O(0)=0,
+\quad \mathscr F_x(N)=\sum_{n=1}^NO(n)\mathcal L_x(n),
+\]
+
+并置
+
+\[
+\mathscr C_{x,N}=
+\sum_{\substack{m\le N,\ m\text{ odd}\\m\notin\mathcal P_x}}
+\mu(m)\mathscr D_x(m).
+\]
+
+对同一整数 \(N\ge\lceil8x\rceil\)，有限 Abel 求和与
+\(\mathcal L_x(n)=\mathscr D_x(n)-\mathscr D_x(n+1)\) 给
+
+\[
+\boxed{\mathscr F_x(N)+O(N)\mathscr D_x(N+1)
+=\sum_{\substack{m\le N\\m\text{ odd}}}\mu(m)\mathscr D_x(m)
+=\mathscr C_{x,N}-\mathcal A_x.}
+\tag{CC.28}
+\]
+
+证明只用
+\(O(n)-O(n-1)=\mu(n)\mathbf1_{n\text{ odd}}\)，包括 \(n=1\)，以及全部面板素数已满足 \(p\le N\)。这里校正的是**全实际 \(O(N)\)** 的截止边界；它不是面板的 \(-Q_x^{\mathrm p}\)，因而不能将（CC.19）–（CC.22a）的面板大小直接移植到这个全实际边界。
+
+定义同一自然奇源截止的剩余量
+
+\[
+\mathscr R_x(N)=\mathscr C_x-\mathscr C_{x,N}
+=\lim_{R\to\infty}
+\sum_{\substack{N<m\le R\\m\text{ odd}}}\mu(m)\mathscr D_x(m).
+\tag{CC.29}
+\]
+
+这个固定 \(x,N\) 的极限存在性直接来自 §453（DP.16）；没有推导任何增长 \(x,N\) 的共同临界误差。把（CC.28）补全得到精确完整读数
+
+\[
+\boxed{\mathscr F_x(N)+O(N)\mathscr D_x(N+1)+\mathscr R_x(N)
+=\mathscr C_x-\mathcal A_x=I_\psi(x).}
+\tag{CC.30}
+\]
+
+因此有限来源版本的原目标仍精确要求
+
+\[
+\mathscr C_{x,N}+\mathscr R_x(N)
+\ge\mathcal A_x-\frac B{\sqrt x\log x}
+\tag{CC.31}
+\]
+
+对全部充分大实数 \(x\) 成立，且 \(N=N(x)\) 为所选同一截止。支付（CC.31）需要同源完整剩余 \(\mathscr R_x(N)\) 的联合抵消；固定 \(x\) 的收敛及本稿的有限面板截止律都不提供这一供应。完整观测量（CC.30）保留单位、每份已触发来源的全部纤维、全部剩余来源及精确 \(\mathcal A_x\)。
+
+联合面板估计（CC.17）与全实际来源的有限校正身份（CC.30）作用于不同系数：前者控制面板大小，后者保留实际奇前缀与全部剩余来源。原临界下界仍要求（CC.31）的同源剩余估计。

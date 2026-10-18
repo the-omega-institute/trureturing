@@ -1,0 +1,20 @@
+**Definition 60.1 (The atomic input subclass).** In addition to Definition 59.1, assume that $\sigma|_{\mathcal G}$ is purely atomic in the following explicit sense. There is a nonempty finite or countable index set $J$ and pairwise disjoint $A_j\in\mathcal G$ such that
+
+$$
+\sigma(A_j)>0,\qquad
+\sigma\left(\bigcup_{j\in J}A_j\right)=1,
+\qquad
+\sigma(A_j\cap B)\in\{0,\sigma(A_j)\}\quad(B\in\mathcal G).
+\tag{60.1}
+$$
+
+Define fixed probability components on the original tapes and target vectors on $J$ by
+
+$$
+\kappa_j(A)=\frac{\sigma(A\cap A_j)}{\sigma(A_j)}\quad(A\in\mathcal F),
+\qquad p_y(j)=\mu_y(A_j).
+\tag{60.2}
+$$
+
+The components may be diffuse with respect to $\mathcal F$. Hypothesis (60.1) is a condition on the entire original target family through its likelihood information; it is not a restriction on prepared laws, a finite point-support assumption, or a consequence of countability of $X$.
+

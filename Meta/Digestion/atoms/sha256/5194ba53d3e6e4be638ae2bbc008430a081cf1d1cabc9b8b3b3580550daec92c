@@ -1,0 +1,29 @@
+**Proposition 6.2 (Strict product slack prevents matching this tuple).**
+The normalized lower tuple of Definition 3.1 has strictly positive
+slack on every nonzero complex product. It has no nonzero real product
+kernel and therefore cannot itself be complementary to positive scalar
+atoms of a legal attaining port at $c$.
+
+**Proof.** For complex nonzero $a,b$, partial transposition gives
+
+$$
+(a\otimes b)^\dagger W(a\otimes b)
+=\frac12\left[
+(a\otimes b)^\dagger P(a\otimes b)
++(a\otimes\overline b)^\dagger P(a\otimes\overline b)\right]>0.
+\tag{6.3}
+$$
+
+Lemma 3.4 proves both strict inequalities; it covers all complex
+factors and every zero-population or interior configuration.
+For real factors (6.3) is the global real-product quadratic form of
+the event/TP tuple. Thus its preparation-dependent matrix is positive
+definite for every nonzero preparation vector, including all radial
+and tangent sectors, without omitting the signed interior cubic.
+A separable TP Choi state is a positive sum of nonzero product states.
+Its pairing with $W$ is strictly positive. Equality in (3.22) for this
+tuple would require that pairing to vanish, which is impossible.
+This is an obstruction to equality for this particular strictly
+positive rounded certificate. It does not exclude boundary or
+nondecomposable certificates that match a legal port. $\square$
+

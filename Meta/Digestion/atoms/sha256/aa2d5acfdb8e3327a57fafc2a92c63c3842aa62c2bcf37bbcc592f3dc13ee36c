@@ -1,0 +1,34 @@
+**Proposition 7.1 (Bridge witness and its complete source vector, inherited).** Put
+
+$$
+\psi=1-j,\qquad q=j,\qquad B=2q+\psi=j+1,
+\qquad d=p(1-p),\qquad c=\pi_0^2+\pi_1^2=1-2d.
+\tag{7.1}
+$$
+
+The seed-ignoring rule $V_j$ first reads $j+7$, returning $a_0$ on one; on zero it reads $j+3$, returning $a_0$ on one; on two zeros it reads $j+5$, returning $a_1$ on one and $a_0$ on zero. All waits may be fixed finite waits. It returns on every branch and has total cap three. For both $s\in\{0,1\}$, its complete nonzero source masses are
+
+$$
+\begin{aligned}
+J_p(H_j=b_s,O=a_0,D=1,N=1)&=\frac{\pi_s}{2}\,2d,\\
+J_p(H_j=b_s,O=a_0,D=1,N=2)&=\frac{\pi_s}{2}\,2dc,\\
+J_p(H_j=b_s,O=a_1,D=1,N=3)&=\frac{\pi_s}{2}\,2d^2,\\
+J_p(H_j=b_s,O=a_0,D=1,N=3)&=\frac{\pi_s}{2}\,(c^2-2d^2),\\
+J_p(H_j=a_s,O=a_0,D=1,N=3)&=\frac{\pi_s}{2}.
+\end{aligned}
+\tag{7.2}
+$$
+
+All other tuples have mass zero. Each mass jointly with $u\in G$ is multiplied by $\nu(G)$ for every $G\in\mathcal U$. This is the witness and law of Two-read Proposition 5.1.
+
+Proof. In phase $\psi$, the endpoint is $b_{S_q}$ and the three zero-branch spin edges, in query order, have left endpoints $q+3,q+1,q+2$. The first two edges are disjoint from one another and from $q$. Each pair has XOR-one probability $2d$ and zero probability $c$. The first and second stopping probabilities are therefore $2d$ and $2dc$.
+
+On two zeros both pairs are constant. The bridge XOR is one exactly when their constants differ. Each of the two opposite-constant assignments has product mass $\pi_0^2\pi_1^2=d^2$, giving $2d^2$. The remaining two-zero mass is
+
+$$
+c^2-2d^2=\pi_0^4+\pi_1^4>0.
+\tag{7.3}
+$$
+
+All these events exclude the target spin and hence are independent of it. Their probabilities sum to $2d+2dc+c^2=1$, since $2d+c=1$. In the other phase every queried address is a separator and the rule returns $a_0$ at count three. The phase factors $1/2$ and target factors $\pi_s$ give (7.2), including its zero coordinates. Seed independence gives the rectangle masses. This verifies the supplied law directly. $\square$
+

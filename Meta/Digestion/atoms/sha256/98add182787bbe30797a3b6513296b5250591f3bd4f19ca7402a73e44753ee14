@@ -1,0 +1,27 @@
+## 407. Standalone axial compensation
+
+**Theorem 407.1.** Let r,v,a,b>1, and assume
+
+    r>=max(v,a)+2,
+    L=(v+a)^2-(r-1)*(b-1)>0,
+    J=(r+1)*(b+1)-(v-a)^2>0.
+
+For the genuine paired frame (r,v,a,b,v,a), write theta for the
+axial angle at r and beta_v,beta_a for its transverse angles. If
+
+    0<theta<=pi/3,
+
+then
+
+    3*theta+2*beta_v+2*beta_a>2*pi.                  (407.1)
+
+Without the small-angle hypothesis, one always has
+
+    4*theta+2*beta_v+2*beta_a>2*pi.                  (407.2)
+
+The theorem uses no source-flat product, no source tau, no maximum
+gap, no degree condition, and no normal-circle topology. It counts the
+two original transverse slots of each label. Equal transverse coshes
+are allowed. These are analytic statements about the paired response
+formulas, without a Lean or kernel-verification claim.
+

@@ -1,0 +1,34 @@
+**Theorem 5.2 (exact retained-data refinement).** The operation of
+Definition 5.1 preserves exactly all original histories of $I^+$,
+at their original epoch tuples. On every supplied old shape tuple it
+has effective coordinate maps in both directions between compatible
+old assignments with new mismatch witnesses and refined assignments.
+They preserve every named code, hence every original source and all
+old memory relations.
+
+Proof. Retain the old rank vertices. A new positive is equivalent to
+shape equality together with equality of all corresponding ranks.
+A new negative is equivalent to exactly the structural or selected-leaf
+alternative of Lemma 3.3. Therefore the enlarged graph and forbidden
+list characterize precisely the compatible old rank assignments.
+
+Given compatible old coordinates, first reconstruct their ranks by
+(SFP.11), choose any required new unequal leaves, and take their values
+at the new forest roots as the new bases. These bases satisfy the
+refined arithmetic guard. Conversely, from refined bases reconstruct
+all ranks and read them at the old forest roots; the old guard holds
+because every old constraint was retained. The two operations preserve
+all ranks, with the chosen negative witnesses retained in the
+correspondence. Lemma 3.3 and Corollary 4.2 give the asserted source and
+epoch correspondence. This proof covers accidental equality of supplied
+residual shapes and every resulting merger of components. $\square$
+
+The theorem gives an exact data-preserving update of the represented
+alternatives. Nonemptiness of an arbitrary unspecified shape fiber is
+not decided by trying shapes. For any fixed supplied shape tuple,
+existence of its arithmetic coordinates is decidable by ordinary
+Presburger arithmetic; this includes any finite set of such shapes.
+Global signed-existence and opposite-sign existential queries already
+have the NCE supplier. No new global inclusion, equality or arbitrary
+tree-quantifier decision is inferred from this refinement operation.
+

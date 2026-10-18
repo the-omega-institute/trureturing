@@ -1,0 +1,32 @@
+### 103.2. The same normer and the actual supported symmetry
+
+Let \(\Theta\) conjugate and interchange \(3,4\) while fixing \(1,2\). It fixes \(H_S\) and the target \(T_S\). The fixed-\(H\) principal objective is convex in its other Gram, and \(G_S\) is a global best response. The reflected Gram and its midpoint with \(G_S\) have the same minimum \(t\). Every normer at the midpoint norms both endpoints: its endpoint objective values are at most \(t\) and average to \(t\). Uniqueness of all principal normers at the original coefficient therefore fixes that same norming pair \((\rho,W)\) under \(\Theta\). This argument does not replace the physical Gram by a rank-preserving average.
+
+The original common cross formula is
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},\qquad \alpha>0,
+\tag{3}
+\]
+for supported coordinates in different original fibres. Nonzero supported cross entries are supplied by the subquarter hypotheses. Phase and rescale \(a\) so that
+\[
+a_S=(c,sm,z,\overline z),\qquad m\in\mathbb R\setminus\{0\},\quad z\ne0.
+\tag{4}
+\]
+Indeed the fixed-\(W\) identities first give \(a_4=\overline{a_3}\), and then make \(a_2\) real after \(a_1\) is positive. Rescaling changes \(\alpha\) by a positive factor. Hypothesis (2) is exactly \(m=1\) or \(m=-1\).
+
+Write \(u=p+iq\), with \(p^2+q^2=1\). Real-gauge endpoints are excluded by §101; in particular \(q\ne0\) and \(|p|<1\). If \(c^2=s^2=1/2\), both singleton records are unbiased and §102 excludes the point. Hence below put
+\[
+A=c^2,\quad B=s^2=1-A,\quad d=A-B\ne0,\qquad
+h=H_{34}=A+B\overline u^2\ne0.
+\tag{5}
+\]
+The last inequality follows from \(A\ne B\) and \(|u|=1\).
+
+The actual quotient correlation \(R\) is PSD, has diagonal one and rank two, and satisfies \(G_S=H_S\odot\overline R\) and \(R\operatorname{diag}(\overline a)H_S=0\). Factor \(R\) as the Gram of unit vectors \(v_i\). The weighted kernel relation gives, without inverting \(R\),
+\[
+v_3=\frac{-u v_1+m v_2}{2iq\overline z},\qquad
+v_4=\frac{\overline u v_1-m v_2}{2iqz}.
+\tag{6}
+\]
+Their equal unit norms imply that \(r=R_{12}\) is real, since \(mq\ne0\). Necessarily \(-1\le r\le1\). Formula (6) gives \(R_{14}=\overline{R_{13}}\) and \(R_{24}=\overline{R_{23}}\). Thus the actual \(R,G_S\) and \(L_S=T_S-G_S\odot H_S\) are \(\Theta\)-fixed. No averaged Gram is substituted for them.
+

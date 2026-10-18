@@ -1,0 +1,23 @@
+**Convention 5.1 (Static literals and table notation).** Each displayed
+table is a separate controller, initialized constantly at its first row.
+Every listed row is installed. A dash at a halt means it has no update.
+Instructions may all have duration one. Expressions $2(j+k)$ in an
+instruction mean a single integer literal fixed before runtime. For
+clarity, all offsets used in these tables instantiate as follows:
+
+| Offset $k$ | Integer for $j=0$ | Integer for $j=1$ |
+| --- | --- | --- |
+| $-2$ | $-4$ | $-2$ |
+| $-1$ | $-2$ | $0$ |
+| $0$ | $0$ | $2$ |
+| $1$ | $2$ | $4$ |
+| $2$ | $4$ | $6$ |
+| $3$ | $6$ | $8$ |
+| $4$ | $8$ | $10$ |
+| $6$ | $12$ | $14$ |
+
+There is no runtime address arithmetic. Row names such as $P,Q,Z_H$
+name actual halt rows; their fixed labels are always displayed. A record
+in a mass table is its full sequence of paid replies up to return.
+Source masses are full $J_p$ masses, including the uniform phase.
+

@@ -1,0 +1,52 @@
+**推论 459.3。** 在全部 $0\le\varepsilon\le K_h$ 上，有精确乘法式
+$$
+n_\varepsilon=A_{h,\varepsilon}(K_h-\varepsilon),\qquad
+A_{h,\varepsilon}
+=\frac{32S_h}{r_\varepsilon^3(D_\varepsilon+V)},
+$$
+$$
+\sup_{0\le\varepsilon\le K_h}|A_{h,\varepsilon}-64|
+\longrightarrow0.
+\tag{SNC.16}
+$$
+在 $\varepsilon=K_h$ 时，此式仍给精确零，不作 $0/0$ 比值。
+特别地，精确拟合的最小负质量满足
+$$
+\boxed{\quad n_0/h^2\longrightarrow8c/9.\quad}
+\tag{SNC.17}
+$$
+若 $\varepsilon_h\ge0$ 且 $\varepsilon_h/h^2\to\kappa\in[0,\infty)$，则整个允许误差类的
+最小负质量满足
+$$
+\frac{\inf_{E_h(\sigma)\le\varepsilon_h}N_-(\sigma)}{h^2}
+\longrightarrow\bigl(8c/9-64\kappa\bigr)_+.
+\tag{SNC.18}
+$$
+因此任何误差 $o(h^2)$ 的非负率 signed 候选，都有
+$\liminf N_-(\sigma_h)/h^2\ge8c/9$；这是必要抵消预算，
+其三点常数由（SNC.9）真正达到。
+
+**证明。** 从（SNC.5）有
+$$
+n_\varepsilon
+=\frac{4(D_\varepsilon-V)}{r_\varepsilon^3}
+=\frac{32\Delta_\varepsilon}
+       {r_\varepsilon^3(D_\varepsilon+V)}.
+$$
+代入（SNC.4）给（SNC.16）的精确式。
+同一误差区间内 $S_h\to2c$、$r_\varepsilon\to1$、
+$D_\varepsilon+V\to c$ 一致成立，所以乘子一致趋于 $64$。
+（SNC.2）给（SNC.17）；对（SNC.8）分别在 $\varepsilon_h\le K_h$
+与 $\varepsilon_h>K_h$ 使用正部函数的连续性，得（SNC.18）。证毕。
+
+精确拟合的最优原子还满足
+$$
+t_+\longrightarrow1/3,\qquad
+ht_-\longrightarrow2\log2,\qquad W_0\longrightarrow c/2.
+\tag{SNC.19}
+$$
+事实上 $u=c/2-ch/6+O(h^2)$、$v=c/2-ch/4+O(h^2)$，
+$\Delta=O(h^2)$ 给 $r_0=v/u+O(h^2)=1-h/6+O(h^2)$，
+于是 $-2\log r_0/h\to1/3$，其余由（SNC.5）、（SNC.9）得到。
+最优负谱率随窗口缩小逃到 $1/h$ 尺度，负质量仍为明确的 $h^2$ 量级。
+

@@ -1,0 +1,21 @@
+**Theorem 7.1 (Finite-$q$ converse for either paid mean).** Under the exact source premises of Section 2, for every $M\ge2$, $0<\alpha<1/2$, $q\in(0,1)$, $\mathcal A\in\mathfrak A_M(q,\alpha)$, integer $L\ge1$ and $i\in\{0,1\}$, set $b_\alpha=1-2\alpha$. Then
+
+$$
+b_\alpha\le r_H(q)+\chi_{M,L}
++[\pi_0(q,L)+\pi_1(q,L)]B(1-q)\mathbb E_{i,q}^{\mathcal A}T,
+\tag{7.1}
+$$
+
+and consequently
+
+$$
+\mathbb E_{i,q}^{\mathcal A}T
+\ge\frac{[b_\alpha-r_H(q)-\chi_{M,L}]_+}
+ {B(1-q)[\pi_0(q,L)+\pi_1(q,L)]}.
+\tag{7.2}
+$$
+
+Here $[x]_+=\max(x,0)$, $r_H$ is (5.1), $\pi_i$ is (5.5), and $\chi_{M,L}=(1+\delta/(L+1))^{2\cdot3^M}-1$. The denominator is strictly positive at every interior $q$.
+
+Proof. The two selected risks give $p_0\le\alpha$, $p_1\ge1-\alpha$ and hence $p_1-p_0\ge b_\alpha$. Apply Lemma 6.1 for target $i$ and use (6.2) and Lemma 6.2 to obtain $\mathbb E_iN\le B(1-q)\mathbb E_iT$. This proves (7.1). Positivity of $B$, $1-q$ and both short masses permits division. Nonnegativity of the paid mean gives the positive-part version (7.2). These steps apply for either target to the same actual machine. $\square$
+

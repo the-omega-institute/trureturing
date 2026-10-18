@@ -1,0 +1,14 @@
+**Mathematical citation 7.1 (repository correspondence).** Repository sources
+are taken at revision `96eefd8005c580da62498f9fd559760f0b30b603`; CNA is the
+committed supplier introduced by `49bdebade254ee007be4e4321d8a73731624f685`.
+
+| Supplier | Exact reuse and limitation |
+| --- | --- |
+| [ACPD] `cutExterior`, `actualPartition`, `literalRecord`, `canonicalRow_record_iff`; private `eraseClasses_literal` | Exact exterior/partition information, including false pairs. Does not execute concurrent acquisition. |
+| [NFSP] `sourceControl`, `native_source_producer`; private `traverse`, `production_reads`, `stationary` | Existing stationary full-tree and chronology supplier; its control retains subtrees. RA does not treat it as a workspace-efficient implementation. |
+| [NWRS] `stationary_whole_fiber_service` | Stationary source, old row and consistent-history hypotheses remain required. No concurrent equality port follows. |
+| [NDP] `original_present_transport`; [CNA, §§2–5][CNA] | Persistence, leaf validation, full-tree acquisition and finite-interference method are existing inputs. RA's cut-only candidate and streaming comparison are the different consumer. |
+| [CILB] `successful_run_read_lower_bound`, private `leaf_alternative`, `separating_read` | Existing native parity leaf-perturbation argument. Its target and serial execution differ; Theorem 5.3 supplies the actual complete-row pair and quantifiers. |
+| [SLD, Definitions 1.3 and 8.1, Proposition 8.4][SLD] | Charge control, receivers, heads and physical immutable letters separately. Its bounded literal installation is not advice for an unknown-height RA source. |
+| [CNA, §8][CNA], [NAR, §12][NAR], [DOR] | Exact post-acquisition row-only versus richer-memory boundary, with their authentic-history assumptions. |
+

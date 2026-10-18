@@ -1,0 +1,36 @@
+**Theorem 7.2 (strict strength order using all eight moments).** On both positive-weight physical open sides $dk/d\lambda>0$. The selected strengths join continuously and strictly at the common event.
+
+Proof. Let $z=(p,\phi)$ collect occupied weights and angles and $\mathcal M(z)=\sum p_i\Gamma_i$. At a contact root set
+
+$$
+\mathcal L(z,Y,\lambda)=Y\cdot(\mathcal M(z)-B)-\sum_i p_i(|H_i|+\lambda|u_i|).
+$$
+
+Signs are fixed locally by Proposition 7.1. The contact-system Jacobian is nonsingular by §5, so $M_0=D_z\mathcal M$ has rank eight on the positive sides. For six, its twenty-equation occupied subsystem is nonsingular: the augmented system is block triangular in the final unused $x_4$, with nonzero last diagonal $P_4''(x_4)$. The angular part of $\mathcal L_{zz}$ is $\operatorname{diag}(p_i\gamma_i)$, where $\gamma_i>0$ is normalized angular gap curvature. Its weight and mixed blocks vanish by the contact value and derivative equations. If its quadratic form vanishes on $\ker M_0$, all angle variations vanish because every occupied $p_i>0$. Moment-column independence then forces all weight variations to vanish. Thus the Hessian restricted to $\ker M_0$ is positive definite.
+
+It remains essential to show that contrast has a nonzero tangent preserving all eight moments. Use the three pure columns $0,1,2$ and write $A_i=\sqrt{p_i}(1,u_i,v_i)^T$, $J=\operatorname{diag}(1,-1,-1)$ and $S_{ij}=A_i^TJA_j$. The $S_{ij}$ are nonzero by positive weights and distinct circle points. Let $\Omega$ be skew with
+
+$$
+\Omega_{10}=1/S_{01},\quad \Omega_{20}=-1/S_{02},\quad
+\Omega_{21}=1/S_{12}.
+$$
+
+Set $\dot A=A\Omega$ on these three columns and leave all other columns fixed. Skewness gives $d(AA^T)=0$; the three chosen identities make $d(A_i^TJA_i)=0$ individually. The positive first coordinates therefore give a legitimate tangent in $(p,\phi)$ preserving all first and second pure moments. The last three moments are zero on these pure columns, and every saturated coordinate was left fixed. Hence this tangent preserves the full eight-moment map, not only the contrast-free or even-moment constraints.
+
+Put $a=x_0$ and $\rho_j=(x_0-x_j)/(1+x_0x_j)$, $j=1,2$. Substituting the charts and the signs $(+,-,-)$ into $d\sum p_i|u_i|$ gives
+
+$$
+Dk[\dot z]=\frac{2(1-a^2)}{1+a^2}(\rho_1-\rho_2)
+\left(\rho_1+\rho_2-\frac{2a}{1-a^2}\right)>0.0001701047.
+$$
+
+For example the derivative can be obtained directly from $p_i=A_{0i}^2$ and $p_iu_i=A_{0i}A_{1i}$, so $d(p_i|u_i|)=\sigma_i d(A_{0i}A_{1i})$; expansion with the stated $\Omega$ yields the displayed rational expression. Its denominators exclude zero on the boxes.
+
+Differentiate the contact KKT equations and restrict to $\ker M_0$. If $q_T$ is the restriction of $Dk$ and $H_T$ the restricted Hessian, then $H_Tz'_T=q_T$, so
+
+$$
+k_\lambda=q_T^TH_T^{-1}q_T>0.
+$$
+
+This argument is used only on positive-weight sides; it never divides by the vanishing $p_4$ at the event. Exact event embeddings give continuity there. Strict order on the two adjacent open sides and their shared limit gives strict order across the entire selected physical curve. $\square$
+

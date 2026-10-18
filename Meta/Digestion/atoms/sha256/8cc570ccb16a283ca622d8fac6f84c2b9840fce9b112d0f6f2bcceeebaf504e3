@@ -1,0 +1,60 @@
+**Theorem 6.1 (Exact original error of the independent-decoder port).**
+The fixed port (3.5) has, for all original complex inputs and all actual
+finite adaptive histories,
+
+$$
+e(T_\theta)=\theta
+=0.524272337746606724475420251080046976\ldots .
+\tag{6.1}
+$$
+
+Its error is attained by an explicit algebraic pure input, actual wait
+zero, one complete five-outcome rank-one read, and Stop.
+
+Proof. The channel is stationary on all complex matrices by Lemma 3.3.
+Apply the supplied first-read identity (1.8) and its stationary
+consequence (1.9), always with $S^\dagger=\mathcal A$. TP gives
+$\mathcal A(I)=I$, so complements reduce the full event family to
+the fifteen tests certified in Theorem 5.4. This proves the upper
+bound for the entire history and input suprema in (1.3).
+
+To recall why the first-read identity covers these suprema, before the
+first read there are no source-dependent results. A deterministic policy
+therefore has a common prefix of waits totaling a nonnegative $t$, or
+stops without a read. In the latter case its histories agree. In the
+former case, after first outcome $s$, each compared conditional state
+is $\Pi_s$. The common finite suffix is a probability kernel depending
+on that outcome and the common controls, not on the original input.
+With the first outcome retained, summing the absolute probability
+differences over the suffix gives exactly the first-outcome TV.
+Forgetting records cannot increase it. Source-independent random
+controls mix these inequalities under the same mixing law, even if
+the control record is retained. Conversely one wait, full read and
+Stop realizes each first-read comparison. Finally maximizing a
+Hermitian event expectation over all complex density inputs gives
+its operator norm. This preserves every quantifier of the original
+contract, rather than testing only real states or a bounded depth.
+
+For explicit attainment, define the nonzero real vector
+
+$$
+v_0=b_0e_N+(D_0\theta-a_0)e_{25},\qquad
+v=\frac{v_0}{\sqrt{b_0^2+(D_0\theta-a_0)^2}},\qquad
+\rho_\theta=Dvv^TD^\dagger.
+\tag{6.2}
+$$
+
+The denominator is positive because $b_0>0$. The first row of
+$C_Nv_0=\theta v_0$ holds immediately; the second is the identity
+$(D_0\theta-a_0)(D_0\theta-c_0)=b_0^2$ from $p_N(\theta)=0$.
+Thus $H_Nv=\theta v$. Since $D$ is the identity on $L$, the frame
+identification introduces no phase in this example. For input
+$\rho_\theta$, wait zero and a full mode read, the mode-$N$ probability
+difference is
+$\operatorname{tr}(\Pi_N(\rho_\theta-T_\theta(\rho_\theta)))
+=v^TH_Nv=\theta$.
+The full outcome TV is at least this difference and at most the proved
+upper $\theta$, so equality holds. The singleton event is a grouping
+of the full read, not a new instrument. No closure angle, inaccessible
+wait, hidden record or limiting input is used. $\square$
+

@@ -1,0 +1,29 @@
+**命题 38.4（操作次序的算术障碍）。** 两个指定矩阵的交换子为
+
+$$
+\mathsf K=M\mathsf R-\mathsf RM
+=\begin{pmatrix}2&1\\1&-2\end{pmatrix},
+\qquad
+\mathsf K^2=5I,\qquad \det\mathsf K=-5.
+$$
+
+共同不变直线上的两个操作必交换，所以其存在要求 $p=5$；实际共同直线及充分性由定理 38.3 给出。
+
+证明。分别相乘得
+
+$$
+M\mathsf R=\begin{pmatrix}1&0\\1&-1\end{pmatrix},
+\qquad
+\mathsf RM=\begin{pmatrix}-1&-1\\0&1\end{pmatrix}.
+$$
+
+相减给所列矩阵。它的平方对角元为 $4+1=5$、$1+4=5$，非对角元为 $2-2=0$；行列式为 $2(-2)-1=-5$。若 $v\ne0$ 生成一条共同直线，写 $\mathsf Rv=rv$、$Mv=mv$，则
+
+$$
+\mathsf Kv=M(rv)-\mathsf R(mv)=(rm-mr)v=0.
+$$
+
+因此约化的 $\mathsf K$ 奇异，$-5=0\pmod p$，只能 $p=5$。交换子的奇异性在这里是必要条件；一般两个矩阵的交换子有核，并不单凭此事实就给出共同不变直线。本题的候选、保持性及唯一性仍由定理 38.3 的具体向量计算承担。证毕。
+
+在 $\ell_5$ 上，旋转的标量是二，Fibonacci 递推的标量是三。$\ell_5$ 是 $\mathbb F_5^2$ 的子空间；它不同于商空间 $\mathbb F_5^2/\ell_5$。第 40 章将算出后一个空间上的两个标量都为三，不能把直线作用与商作用混用。
+

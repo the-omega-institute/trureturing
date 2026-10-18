@@ -1,0 +1,33 @@
+**Assumption 1.2 (complete paid preparation and late reading).** One
+deterministic effective procedure starts source-blind from $D$ and common
+installed tables, does not receive the later target, and terminates on
+every $t\in\mathcal F_D$. It acquires source dependence only through charged
+literal Reads. It exports a finite code $E(t)$ whose complete attained
+alphabet includes all accessible surviving source distinctions: selectors,
+control, buffers, operands, lengths, allocation, handles, counters and
+accessible timing distinctions. Every other accessible field after handoff
+is a function of this code and public data. A separately paid service
+isolates transcripts and other preparation material and supplies lawful
+reader entry. Export, isolation, continuity and authentication are declared
+services, not inferred physical operations.
+
+Only after export is a source-independent public $p\in\mathcal P_D$
+supplied. A common deterministic reader uses $E(t),D,p$ and the installed
+tables. It makes zero Reads or one fresh Read of the same stationary source
+at any finite word chosen from those inputs. It produces a final predictor
+$Z$. Every subsequently supplied authentic $k\ge0$ must satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad(t\in\mathcal F_D,\ p\in\mathcal P_D,\ k\ge0),
+\tag{NDR.2}
+$$
+
+without further Reads. No supplied $k$ guides the query. Define $M_1(D)$ as
+the minimum $|E[\mathcal F_D]|$ among these jointly correct procedures.
+Only that complete retained alphabet is optimized. Preparation Reads,
+work, control, installed codebooks, temporary storage, post-request
+workspace, final predictor size, address length, submitted letters, count
+representation, entry, handoff, isolation and physical time are separate
+resources.
+

@@ -1,0 +1,60 @@
+### 29.4 Last syzygies in the given mode grading
+
+There are $29$ degree-one variables in $S$. The independent subsets of
+the seven-ring comprise one empty set, seven singletons, fourteen
+nonadjacent pairs, and seven triples. The pair count is
+$\binom72-7=14$. Each triple has exactly one uncovered edge: its three
+occupied vertices force three distinct unoccupied successors, leaving
+one further unoccupied vertex, so its three gaps have lengths $1,1,2$.
+Conversely each choice of uncovered edge gives exactly the triple
+(28.10). This proves the triple count and identifies these seven modes
+with the $M_j$ of (29.3).
+
+A fixed vertex occurs in eight modes: after selecting it, delete it and
+its two neighbors; the remaining four vertices form a path, with
+$|B_4|=8$ by Definition 25.7. Therefore the sum of all variable
+multidegrees is
+
+$$
+\Sigma=\sum_{I\in B_7^{\mathrm{cyc}}}(1,\mathbf1_I)
+=(29;8\mathbf1),\qquad \omega_S=S(-\Sigma).
+\tag{29.15}
+$$
+
+Since $R$ is Cohen–Macaulay of dimension eight, the
+Auslander–Buchsbaum and canonical-Ext inputs of Theorem 27.2 apply to
+this presentation and give
+
+$$
+\operatorname{pd}_S R=29-8=21,\qquad
+\operatorname{Ext}^{21}_S(R,S(-\Sigma))\simeq\omega_R,
+\tag{29.16}
+$$
+
+with all other Ext groups zero. These are the same classical
+commutative-algebra suppliers [AB27] and [BE77]; the polynomial ring
+and grading have now changed from the path presentation to (28.14).
+Choose a minimal multigraded resolution $F_\bullet$. Such a resolution
+exists by homogeneous generator selection and Hilbert syzygy, as in
+Theorem 27.2. If $S(-\gamma)$ is a summand of $F_{21}$, its dual into
+$S(-\Sigma)$ has generator degree $\Sigma-\gamma$.
+Every differential of a minimal resolution has entries in the
+homogeneous maximal ideal, and dualizing preserves that property.
+Thus the cokernel of the last dual differential has precisely these
+minimal generator degrees; reduction modulo the maximal ideal makes
+the differential zero. By (29.12) those degrees are exactly
+$\nu_3,\nu_5$. Subtraction from (29.15) gives (29.6).
+
+For comparison, the open seven-position path of chapter 27 has
+$34$ mode variables (the Fibonacci number $F_9$), dimension eight,
+projective dimension $26$,
+and one last generator of ordinary degree $34-3=31$.
+Closing the seam removes five degree-one modes, but the surviving
+cyclic relation algebra has two canonical generators and two last
+syzygy summands. The local four-corner identities (28.18) persist while
+the rank-one terminal duality of the path ceases to apply.
+Here $21$ is the length of a minimal free resolution, and (29.6)
+specifies only its final module. No full list of its twenty-one
+matrices, intermediate Betti numbers, or native operations is asserted.
+This completes the proof of Theorem 29.2. $\square$
+

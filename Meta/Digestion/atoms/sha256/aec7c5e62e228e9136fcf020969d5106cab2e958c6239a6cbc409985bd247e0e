@@ -1,0 +1,69 @@
+**Lemma 18.2 (actual successful composition and same-run range).**
+Every prescribed finite continuation exists and reaches
+$r_{\mathbf j}$. Its $i$th history flight accepts
+AcquisitionOffset$(J_i)$ and binds exactly the actual old prefix
+at
+
+$$
+k_i=a+J_i\le b_i.
+$$
+
+It delivers and checks the independent expressions of that prefix
+by the existing received-body cycle, with full current authority and
+return. The old target $k_i$ stays fixed during that flight; $b_i$,
+the later Ready and the final current history are different objects.
+
+Proof. At the first source entry $K=1<J_1$. At every subsequent
+one the preceding successful Reserve set $K=J_{i-1}$, and intervening
+history work has not modified source16 or its directory. CAP
+Definition 5.1 and Theorem 5.2 therefore take the genuine greater
+branch at $J_i>K$. The frame has the actual CAP Definition 4.6
+header, unary length and payload, so its canonical supplies enter
+that branch through $F^A$, not an automatic computed-command entry.
+CAP Lemmas 4.7 and 6.7 supply its entire row/dependency acquisition,
+checks, final row ACK, source-token TOK and idle return. ARC
+Definitions 4.1 and 5.4 and Proposition 5.5 then supply the paid
+normalization, closed CaptureCAP imports with restored archive heads,
+and genuine next Ready. This uses the installed return path, not
+equality of an outer-entry PC with a return marker.
+
+Count just the original input rows of this completed source call
+in this very run. The header consumes 3 bits, the length
+$U(J_i+1)$ consumes $J_i+2$, and the payload $U(J_i)$ consumes
+$J_i+1$. These are $2J_i+6$ actual original IN rows. Its outer01
+adds 2 actual gate IN rows. Since acquisition precedes $P$, all
+these rows are after $a$. Consequently
+
+$$
+b_i-a\ge 2J_i+8>J_i\ge0.
+$$
+
+No time or cost comparison between different runs or different
+targets is involved. The next separately acquired mode is1;
+$0U(J_i)$ has exactly $J_i+2$ bits and exhausts the mode-one
+AcquisitionOffset grammar. GCA Definitions 3.1–3.3 and Theorem 5.6,
+with Lemma 5.3 here, therefore verify every parser and range guard
+and bind $k_i=a+J_i$ in this authentic completed predecessor.
+Theorem 8.2 applies to this actual accepted name, including when its
+old cut lies in an earlier source or conversion fragment.
+
+The full success being reused is §§6–8, not merely GCA's first
+Image delivery. Its eight publications are CoverRef, PackageRef,
+Image, and View0 through View4. Definitions 7.1–7.2 and Lemma 7.3
+retain immutable71 backing, separate initialized72/73 intervals,
+actual68 descriptors and69 placements, both paid copies, seals,
+current read/invocation/availability TOKs and receiver print.
+Each callback positions73 before bank work, clears its candidate,
+imports its actual received tuple and checks the full expected
+binding. The five independent decoders check S, B, M, T, S; each
+next arrow consumes only its received operand. The last S is compared
+with firstS and independently passes the HistoricalImage value
+checker. Only then do the single final ACK, mailbox return,
+completed five-field history item, invocation return and sole Ready
+occur. Past token/owner fields in the represented target supply no
+current permission. These supplied success and return facts give
+the induction boundary for the next Reserve. Finally, the last
+actual Ready enables outer01 and the finite original header prelude;
+its first IN5(0) needs no future completion of that new frame.
+$\square$
+

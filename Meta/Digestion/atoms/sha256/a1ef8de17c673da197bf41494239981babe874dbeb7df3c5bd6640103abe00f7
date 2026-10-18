@@ -1,0 +1,4 @@
+**Lemma 4.2 (exact capped sums and products).** Disjoint union and Cartesian product capacities are obtained by $\oplus$ and $\otimes$. Moreover a cell of capacity at least $j\le6$ has $j$ actual different finite witnesses.
+
+Proof. For a disjoint union with total size below six, each summand has its exact finite size; if total size is at least six, selecting six members across the disjoint summands certifies saturation. For a product, a zero factor makes it empty. If both nonempty factors have finite size below six, ordinary multiplication is exact until it reaches six. If one factor already has six different members, pairing them with one member of the other gives six different ordered pairs. These cases prove the formulas and witness assertion, also for singleton and finite cells. Lemma 1.2 gives the unrestricted capacities. $\square$
+

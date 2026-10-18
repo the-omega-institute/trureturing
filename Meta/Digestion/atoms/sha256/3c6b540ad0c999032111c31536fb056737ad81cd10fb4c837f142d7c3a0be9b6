@@ -1,0 +1,22 @@
+**Definition 4.1 (fixed scaffold lift).** For $h\ge0$ put $k=2^h$. Define
+$T_0(x)=x$ and recursively
+
+$$
+T_{h+1}(x_1,\ldots,x_{2k})
+=\left\langle T_h(x_1,\ldots,x_k),
+T_h(x_{k+1},\ldots,x_{2k})\right\rangle .
+$$
+
+This is one fixed perfect ordered height-$h$ scaffold with the $k$ actual
+$S_d$ blocks at its frontier. For $w:S_d\to[0,\infty)$ define the lifted
+weight on $S_{d+h}$ by
+
+$$
+ w^{\uparrow}(T_h(x_1,\ldots,x_k))=\prod_{j=1}^kw(x_j),
+ \qquad w^{\uparrow}(u)=0\text{ off the image of }T_h.
+\tag{JTC.10}
+$$
+
+Let $A_n^{(d)}(w)$ be the maximum $w$-mass of an admissible subset of
+$S_d^n$, and put $\beta_d(w)=\sup_{n\ge1}A_n^{(d)}(w)^{1/n}$.
+

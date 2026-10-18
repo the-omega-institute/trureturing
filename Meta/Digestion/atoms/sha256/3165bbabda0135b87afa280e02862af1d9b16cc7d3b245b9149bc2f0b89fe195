@@ -1,0 +1,4 @@
+**命题 61.2（可行代表不能成为实际来源）。** 在 $P=\{\varepsilon\}$ 的根孔单类行、$H=\varnothing$ 上，所有 $\mathcal T$ 都属于剩余来源。取 $\alpha$ 作为定理61.1的可行见证，不允许把后来纪元一的根回复宣告为 $\beta$；准确范围为 $\{\beta,\mathsf{branch}\}$。
+
+证明。原来源 $\alpha$ 与 $\beta$ 经生产者取得后给同一个根孔单类行；$\rho\alpha=\beta$，$\rho\beta=\langle\beta,\alpha\rangle$。任意原分支的像仍为分支，穷尽全部来源，给出所列准确范围。见证只证明族非空，不识别当前未知来源。$\square$
+

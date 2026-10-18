@@ -1,0 +1,39 @@
+**Definition 12.1 (the prescribed complete-law triple).** Use the complete countable carriers $\Omega_p,\Omega_\beta$, including their infinite noncompletion outcomes, and the convex compact TV spaces $\mathcal K_p,\mathcal K_\beta$ of [PAIRED, Section 11.1 and Lemma 11.1](RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md). Retain $a=1/3$, $b=2/5$, $\lambda=4/15$, $u(Q)=Q(\alpha)$, $v(W)=1-W(\beta)$ and the normalized residual maps $\mathcal R_B,\mathcal R_A$ in that section. Their domains are these compact spaces; their codomains are the full opposite probability simplices, without an assumption that every residual belongs to the opposite compact space.
+
+An admissible prescribed return measure is a Borel probability $\Xi$ on $\mathcal K_p\times\mathcal K_\beta\times\mathcal K_p$, with coordinates $(Q,W,Q')$, such that
+
+$$
+\Xi_1=\Xi_3=\nu_p,\qquad \Xi_2=\nu_\beta,\qquad
+\mathbb E_\Xi[W\mid Q]=\mathcal R_B(Q),\qquad
+\mathbb E_\Xi[Q'\mid Q,W]=\mathcal R_A(W).
+\tag{12.1}
+$$
+
+Each conditional equality is an equality of complete measures, or equivalently of every coordinate of the countable carrier almost surely. The second equality conditions on the whole incoming pair. All marginals and expectations are unweighted acquired ones. Set
+
+$$
+\mathcal L_p^\Xi(T)=\int\operatorname{TV}(Q,T)\,d\nu_p(Q),\qquad
+\mathcal L_\beta^\Xi(T)=\int\operatorname{TV}(W,T)\,d\nu_\beta(W),\qquad
+V_\Xi=\int|u(Q)-u(Q')|\,d\Xi.
+\tag{12.2}
+$$
+
+Targets are arbitrary normalized complete probability laws at their respective phases and may charge noncompletion. TV is half the $\ell^1$ distance and remains inside the configuration integral. On triples use the cost
+
+$$
+d_\Sigma((Q,W,Q'),(q,w,q'))
+ =\operatorname{TV}(Q,q)+\operatorname{TV}(W,w)
+    +\operatorname{TV}(Q',q').
+\tag{12.3}
+$$
+
+A regular finite table $F$ means Definition 2.2 with its own generated complete laws $Q_x^F,W_y^F$. Its actual triple is
+
+$$
+\Xi_F=\sum_{x,y,k}\pi_xB_{xy}A_{yk}
+       \delta_{(Q_x^F,W_y^F,Q_k^F)}.
+\tag{12.4}
+$$
+
+The claim of approximation below concerns a coupling cost (12.3), not the outer TV distance between probability measures on the descriptor product. The first-two and last-two projections of an admissible $\Xi$ form a compatible pair of PAIRED, Definition 11.2: the first equation in (12.1) supplies its $B$ equation, and conditioning the second equation further on $W$ supplies its $A$ equation. These projections need not determine $\Xi$.
+

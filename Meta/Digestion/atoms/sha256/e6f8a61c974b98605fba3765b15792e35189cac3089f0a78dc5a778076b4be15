@@ -1,0 +1,7 @@
+**Example 10.3 (the necessary pending field).** Cut a TagRead execution just
+after complete response release and before its row's final seal. Then
+$|E|=|A_P|+1$, and the receiver still lacks that row. At seal the lengths become
+equal; during its later copy the destination remains unavailable. Thus an
+invariant $E=A_P$ at all cuts, or equality of all in-flight archive lengths,
+would be false even in this deterministic ideal model.
+

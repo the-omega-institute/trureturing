@@ -1,0 +1,61 @@
+**Lemma 4.2 (forecast increases have a positive signed cost).** For the comparison of Lemma 4.1 and the paired table of (3.7),
+
+$$
+D_0\ge D^*+cJ_-.
+\tag{4.2}
+$$
+
+**Proof.** Work in the split table and write $U=\operatorname{diag}(1-u)$. Let
+
+$$
+F_0=B'\operatorname{diag}(v^0)A',\quad
+F_*=C\operatorname{diag}(u),\quad
+H_0=UF_0,\quad H_*=UF_*,\quad R=H_*-H_0\ge0.
+$$
+
+The inequality is entrywise, since each split alpha edge has $v^0_{yz}\le u_z$. Let $g_0=U\mathbf1-H_0\mathbf1$, $g_*=U\mathbf1-H_*\mathbf1$. These are the immediate marker-1 word probabilities. Then $g_0-g_*=R\mathbf1$. Set $t=J_-$. The total expected difference between successor and suspended emissions in the split table is exactly t; edges with original $v_y>u_z$ were set to equality.
+
+Let $f_n=g_0+H_0g_0+\cdots+H_0^ng_0$ and define $f_n^*$ similarly; put $f_{-1}=f_{-1}^*=0$. These are probabilities of marker 1 completed within n returns, so each lies in [0,1]. Subtracting their recursions gives
+
+$$
+f_n-f_n^*=H_0(f_{n-1}-f_{n-1}^*)+R(\mathbf1-f_{n-1}^*).
+$$
+
+Induction yields $0\le f_2-f_2^*\le\sum_{j=0}^2H_0^jR\mathbf1$. Since $H_0\le\lambda C$, $\pi C=\pi$ and $\pi R\mathbf1\le(2/3)t$,
+
+$$
+0\le a_0-a^*\le\tfrac23(1+\lambda+\lambda^2)t=\tfrac{602}{675}t.
+\tag{4.3}
+$$
+
+For the suspended event define the nonnegative row
+
+$$
+r_z=\sum_y\tau_yA_{yz}(u_z-v^0_{yz}),\qquad \sum_zr_z=t.
+$$
+
+The alpha-weighted successor row is $\pi\operatorname{diag}(u)-r$. Therefore
+
+$$
+b_0-b^*=r(\mathbf1-g_0)+\sum_x\pi_xu_x(g_0-g_*)_x.
+\tag{4.4}
+$$
+
+Every $(g_0)_x\le(2/3)^2=4/9$, so the first term is at least 5t/9. For the second, $u_x(1-u_x)\ge2/9$, and summing its beta-edge flow gives at least 2t/9. Hence
+
+$$
+b_0-b^*\ge7t/9.
+\tag{4.5}
+$$
+
+Equations (4.3)–(4.5), in the **same** table, imply
+
+$$
+D_0-D^*\ge\left(\frac7{9d_\beta}-\frac{602}{675d_p}\right)t
+=\frac{502947375}{266850431}t=ct.
+$$
+
+This sign uses the original two events, their distinct full-tail endpoint distances, and the common actual circulation. It is not a marginal covariance substitution or an arbitrary-task monotonicity claim. ∎
+
+**Proof of Theorem 3.1.** Combine (3.6), Lemmas 4.1–4.2 and the supplied paired inequality (3.7). No individual conditional-law calibration or zero marginalized defect was assumed. ∎
+

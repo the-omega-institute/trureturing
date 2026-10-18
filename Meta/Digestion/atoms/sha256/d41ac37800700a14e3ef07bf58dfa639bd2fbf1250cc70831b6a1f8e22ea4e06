@@ -1,0 +1,18 @@
+**定义 46.2（延迟探针与实际记录）。** 对 $p\in F$ 定义
+
+$$
+a_{p,0}=p,\quad a_{p,1}=pR,\quad
+ a_{p,2m}=pR^m\ (m\ge1),\quad
+ a_{p,2m+1}=pRLR^{m-1}\ (m\ge1).
+\tag{SLH.46.1}
+$$
+
+按固定的 $p_1,\ldots,p_k$ 顺序请求这些地址，并把地址和实际四值回复写入有序 raw 记录
+
+$$
+\operatorname{Rec}_N(u)=\bigl((a_{p_i,N},r_{\rho^Nu}(a_{p_i,N}))\bigr)_{i=1}^k .
+\tag{SLH.46.2}
+$$
+
+记录的值只包含已经发生的请求；它不是一个尚未执行的答案摘要。
+

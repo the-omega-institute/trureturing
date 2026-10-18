@@ -1,0 +1,37 @@
+**Theorem 6.2 (necessity for every original finite implementation).**
+Every design in Definition 2.3 supplies a point of $\mathcal K_s$ with
+
+$$
+G_H^{\rm acq}\succeq G_H^L
+ =E\Theta(H_++H_-)E^\dagger.
+\tag{CA.29}
+$$
+
+There is no restriction on its binary-conditioned live maps beyond
+(CA.27).
+
+Proof. Choose finite Kraus matrices $C_{\xi a}$ of the actual encoders
+and $B_{\xi b}$ of their supported live-decoder compressions. Each product
+$B_{\xi b}C_{\xi a}$ is a rank-one positive Choi summand of the fixed
+live Choi matrix. A positive summand kills the kernel of that matrix:
+its quadratic form there is bounded by zero, so its positive square root
+kills each such vector. Thus every product has input and output support
+in $V$ and, in supported coordinates, is uniquely $K(z)$ for a complex
+coefficient vector $z$. The rank of a product through the entire fibre is
+at most $d_\xi$. Low products therefore have their vectors on exactly the
+singular locus of Lemma 3.1. Summing their projectors at record $r$ gives
+$L_r\in\mathcal C_2$; high products give $H_r\succeq0$.
+
+The sum of physical live Choi matrices is $\mathcal VI\mathcal V^\dagger$.
+A left inverse of $\mathcal V$ makes the coefficient sum exactly $I_3$.
+The difference between the plus record effect and its live effect is its
+whole supported failure effect $N$. All separately labelled time sectors
+are included in that event, so positivity of the two binary failure
+measures gives $0\preceq N\preceq M$. Positive summands in a zero extra
+sector vanish. This reasoning uses no chosen failure-time split. Finally
+full decoder TP and supported-live TNI give (CA.29) for the same actual
+high branches before any input is tested. It remains valid on five-mode
+inputs with complement mass and cross-support coherence. All product
+Kraus refinements here are analytic; they do not pretend that extra
+classical flags were observed in the original design. $\square$
+

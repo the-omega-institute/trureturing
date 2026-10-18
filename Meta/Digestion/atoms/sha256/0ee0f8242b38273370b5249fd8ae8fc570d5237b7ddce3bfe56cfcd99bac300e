@@ -1,0 +1,20 @@
+**推论 235.2（Free additive extension of any existing certificate）。**
+If a full $y\ge0$ has $\Delta_O(y)\le1$ and any unrestricted
+certificate $(V_0,\theta_0)$, then for every one vector $a_m\ge0$,
+
+$$
+y'=y+\sum_{m=4}^La_mY_m^L,\qquad
+V'=V_0+\sum_{m=4}^La_mZ_m^L
+$$
+
+satisfy $\Delta_O(y')\le1$, $\Delta_N(V')\le\Delta_N(V_0)$,
+and $Q(y')-Q(V')=Q(y)-Q(V_0)$. The same $\theta_0$ works,
+including $\theta_0=1$ and nonzero zero-cost $V_0$.
+
+证明。 Apply the exact zero-cost and exact quotient identities of
+234.1 and support subadditivity to these actual combined scores.
+This is the zero-cost addition principle of VI, 199.6 applied to
+the explicit uniform family; it supplies no new generic closure
+principle and imposes no preserved baseline, unary or exact law
+on the original unrestricted problem. $\square$
+

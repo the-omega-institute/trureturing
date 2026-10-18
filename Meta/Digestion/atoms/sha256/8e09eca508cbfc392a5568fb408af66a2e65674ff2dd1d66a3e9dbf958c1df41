@@ -1,0 +1,28 @@
+**实例 80.4（A larger-width repeated-class witness）。** Let $d=3$, $m=11$, $k=12$, $T=13$. Take distinct low labels $D,E_0,\ldots,E_5$ and use the ordered table
+
+$$
+\lambda=(E_0,E_1,D,E_2,D,E_3,D,E_4,D,E_0,E_0,E_5).
+\tag{80.19}
+$$
+
+The even class has four phases, $E_0$ has three, and the other five classes have one each. A code satisfying Lemma 80.2 is
+
+$$
+\begin{array}{c|cccccccc}
+\text{label}&D&C&E_0&E_1&E_2&E_3&E_4&E_5\\
+c(\text{label})&000&010&100&101&110&111&011&001
+\end{array}
+\tag{80.20}
+$$
+
+The first displayed digit is coordinate zero. In (80.4), $\lambda(e_1)=E_0$, $\lambda(e_2)=D$, $\lambda(s_1)=E_5$, and $\lambda(s_2)=E_0$. Thus the positive root condition, an unavailable coordinate and a seam restriction accumulate on $E_0$, all satisfied by its one code. Formula (80.14) gives the literal stream
+
+$$
+10011000010\ \mid\ 01111001100\ \mid\ 00111000011.
+\tag{80.21}
+$$
+
+Its root begins $10$ and ends zero; both following words begin zero. Every low source returns the code in (80.20) from its own three differences. High tail eleven rejects in the first bit and remains absorbed until the paid root endpoint, where it returns $R$; initial bottom stops freely. The whole INITIAL block fee is three and the emitted-bit fee is $33$.
+
+Transposing phases zero and two of (80.19) preserves every class multiplicity but puts $D$ at phase zero. For its entire extension (80.3), Theorem 80.3 gives block fee four and emitted-bit fee $44$, attained by (80.17)–(80.18). This is a falsifiable placement obstruction at a width larger than the minimal dyadic width, with nonsingleton odd and even classes. It illustrates the uniform law rather than furnishing an additional finite-table optimality claim.
+

@@ -1,0 +1,70 @@
+**lemma 8.1 (Equality in the supplied spectral and rank bounds).** Let
+$\mathcal M$ be the QMB weighted observation operator with weights $a_s$.
+On the complex traceless matrix space its largest eigenvalue $33/68$ is
+simple, with eigendirection
+
+$$
+Z=-4R_0+(1-5/\sqrt{17})R_++(1+5/\sqrt{17})R_-.
+\tag{8.1}
+$$
+
+Equality in the QMB inequality
+
+$$
+\langle C,\mathcal M(C)\rangle_{\rm HS}
+\le\frac{33}{68}\|C\|_{\rm HS}^2
++\frac{35}{68}\frac{|\operatorname{tr}C|^2}{5}
+\tag{8.2}
+$$
+
+therefore forces $C\in\operatorname{span}_{\mathbb C}\{I,Z\}$.
+For a nonzero rank-at-most-$q$ complex matrix, equality in
+$|\operatorname{tr}C|^2\le q\|C\|_{\rm HS}^2$ forces
+$C=cP$, where $c\ne0$ and $P$ is a rank-$q$ orthogonal projection.
+
+Proof. The QMB three-dimensional rotation-invariant block has eigenvalues
+$1,33/68,0$. To identify its traceless top vector without a normalization
+ambiguity, a matrix $z_0R_0+z_+R_++z_-R_-$ has output coefficients
+$\sum_jS_{ij}z_j/d_i$, where $(d_0,d_+,d_-)=(1,2,2)$.
+Substitution of $(-4,1-5/\sqrt{17},1+5/\sqrt{17})$ into (6.3) gives
+exactly $33/68$ times that vector, with trace zero.
+
+The other nonzero eigenvalues on the traceless space, each twice, are
+
+$$
+\frac{1+3/\sqrt{17}}4,\quad
+\frac{1-3/\sqrt{17}}4,\quad
+\frac{67}{272}-\frac{3}{16\sqrt{17}},\quad
+\frac{67}{272}+\frac{3}{16\sqrt{17}},\quad
+\frac{13}{34},\quad\frac{13}{34}.
+\tag{8.3}
+$$
+
+All are strictly less than $33/68$. For the first, this is equivalent to
+$51<16\sqrt{17}$, verified by squaring. The larger plane-internal value
+is less than $67/272+3/64<33/68$ because $\sqrt{17}>4$; the last
+comparison is immediate. The remaining complex transpose-antisymmetric
+space has eigenvalue zero. The QMB full spectrum thus proves simplicity on
+the entire complex traceless space, not only on real symmetric matrices.
+Splitting off the scalar identity in (8.2), equality leaves only its top
+traceless eigenspace, proving the first equality characterization.
+
+For the rank claim, take a singular value decomposition
+$C=\sum_{j=1}^r\sigma_ju_jv_j^\dagger$ with $r\le q$ and positive
+singular values. The complete chain is
+
+$$
+|\operatorname{tr}C|
+\le\sum_j\sigma_j|v_j^\dagger u_j|
+\le\sum_j\sigma_j
+\le\sqrt r\left(\sum_j\sigma_j^2\right)^{1/2}
+\le\sqrt q\|C\|_{\rm HS}.
+\tag{8.4}
+$$
+
+Equality at the endpoints forces $r=q$, equal singular values, and
+$u_j=e^{i\theta_j}v_j$. Equality in the triangle inequality forces the
+same phase for all $j$. Hence $C=c\sum_jv_jv_j^\dagger=cP$, with the
+asserted rank. This proves the characterization for arbitrary complex
+matrices. $\square$
+

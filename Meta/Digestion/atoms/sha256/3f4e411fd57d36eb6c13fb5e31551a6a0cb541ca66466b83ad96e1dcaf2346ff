@@ -1,0 +1,16 @@
+**Convention 70.2 (assembling original instruments).** Whenever a finite
+list of live matrices has total coefficient Gram $I_3$ and its attached
+failure effects sum to $M$, encode each low label by FA.11, each high
+matrix $H$ directly into its whole three-dimensional fibre with live
+isometry $E$, and precompose supported encoders by $E^\dagger$.
+For a low label the actual encoder effect is
+$E(K^\dagger K+N)E^\dagger$. Generate and retain its declared
+classical label and binary report; independent report coins may split
+this label without changing its quantum dimension or rate. Add the
+coherent counted dimension-two complement of Theorem 75.1. These
+operations have total encoder effect $I_5$ and are CP/TNI branchwise,
+as proved there. They define a common instrument, not a family indexed
+by the unknown history. Competitors need not use FA.13: it is a chosen
+attainer. The general prescribed-path realization supplies their own
+admitted labelled CP densities whenever those are being retained.
+

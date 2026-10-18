@@ -1,0 +1,44 @@
+**Definition 4.1 (cyclic positive exact-one system).** Fix $m\ge2$ and
+indices modulo $m$. Its $3m$ Boolean variables are $x_i,a_i,b_i$.
+For each $i$ impose the two ordered positive exact-one-in-three clauses
+
+$$
+(x_i,a_i,b_i),\qquad(x_{i+1},a_i,b_i).
+\tag{OCC.14}
+$$
+
+Each clause has three distinct variables, including at $m=2$.
+A Boolean zero is the actual leaf $A$ and a Boolean one is $B$.
+Apply precisely [OCB, Theorem 3.3][OCB]'s unique native lift, with
+selector states $u_0=A,u_1=B,u_2=C_0$ for true positions $0,1,2$.
+
+Explicitly give each Boolean variable its own original owner block,
+all of whose depth-two factors are those of its root leaf seed. Give
+each of the $2m$ clauses a selector-owner block with all factors of
+$u_c$, whose actual root reply is respectively $A,B,\mathsf{branch}$.
+For its position $k$ occupied by Boolean variable $v$, add a connector
+block with factor prescriptions
+
+$$
+z_\varepsilon=\Gamma_\varepsilon(v),\qquad
+z_L=\Gamma_L(B\text{ if }c=k\text{, else }A),\qquad
+z_R=\Gamma_R(v).
+\tag{OCC.15}
+$$
+
+It owns no seed. All occurrences of $v$ query its same actual owner;
+all occurrences of a selector query that selector's same actual owner.
+For $d>2$, retain these three prescriptions and prescribe every
+additional factor from the same actual owner state as its block's root:
+$v$ at a variable owner or connector, and $u_c$ at a selector owner.
+Call this network $\mathcal T_{m,d}$.
+
+Every table has its original attained range. For completeness, a Boolean
+owner's total root decoder maps $A,B$ to their own root factors and
+maps branch and absent to the root factor of $A$; these last replies
+cannot be fixed points. A selector owner's root decoder fixes the
+three stated actual replies and maps absent to the root factor of $A$.
+Nonowner off-domain entries may be completed by any attained factor.
+These guards give a complete original template by RRN's converse;
+no Boolean or selector domain is supplied as an extra source promise.
+

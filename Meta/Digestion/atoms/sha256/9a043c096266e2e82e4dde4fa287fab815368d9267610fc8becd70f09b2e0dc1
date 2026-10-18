@@ -1,0 +1,109 @@
+**Proposition 7.12 (A separate general-fixed-means necessary floor).**
+Fix $0<Z<1$, $r=1-Z$, and $0<X,Y<r$. In the general native
+fixed-mean fiber set
+
+$$
+p(k)=(r-X-Y+k,\ X-k,\ Z,\ Y-k,\ k),\qquad
+J=\bigl(\max\{0,X+Y-r\},\min\{X,Y\}\bigr),
+$$
+
+$$
+d=(1,-1,0,-1,1)^{\mathsf T},\qquad
+I(k)=\frac1{p_0(k)}+\frac1{p_1(k)}
+     +\frac1{p_3(k)}+\frac1k,\qquad
+w_s(k)=\frac{d_s}{p_s(k)I(k)}.
+$$
+
+Use the same native law, arbitrary fixed preparation, original ten
+outputs and their Euclidean norm. On any $[a,b]$ strictly inside
+$J$, an arbitrary finite encoder with fixed affine original-output
+readout and exact state-independent affine phase updates has
+uniform error necessarily
+
+$$
+\epsilon\ge 2\sqrt{Zp_0(b)}
+ =2\sqrt{Z(r-X-Y+b)}.
+$$
+
+The conclusion holds in every wall regime. It asserts neither
+sharpness nor equality attainment away from the double wall.
+
+**Proof.** The interval $J$ is nonempty: if $X+Y\le r$ its lower
+end is zero and its upper end is positive; otherwise
+$X+Y-r<X,Y$ because each mean is less than $r$.
+The displayed probabilities are positive and sum to one on $J$,
+and their derivative is the native tangent $d$.
+The coefficient $w_2=0$ fixes the middle phase; $d^{\mathsf T}w=1$
+and $p^{\mathsf T}w=0$ follow directly from the displayed sums.
+These are the actual native coefficients, with no substituted
+frequency family.
+
+For each $k\in[a,b]$, a phase-free probability prefix from the
+fixed preparation produces a zero-increment ray $x_k$. If needed,
+separate its positive-fiber entry from its band continuation.
+Applying $Q_t$ at that height adds $tw(k)$ to the phases.
+After removing the fixed $02$ preparation rotation, its actual
+response is
+
+$$
+F_t(k)=B_0(k)e^{iw_0(k)t},\qquad
+B_0(k)=2\sqrt{Z(r-X-Y+k)},\qquad
+w_0(k)=\frac1{p_0(k)I(k)}.
+$$
+
+The amplitude is positive and strictly increasing on the band.
+Only this reachable subset is needed; no extra independent phase
+controls or full-torus assertion is required here.
+
+To prove the needed frequency spread on every wall regime, put
+$S=X+Y$. Multiplication of $I$ by
+$p_0(X-k)(Y-k)k$ gives the positive polynomial on $J$
+
+$$
+\begin{aligned}
+\mathcal Q(k)
+ &=(X-k)(Y-k)(r-S+2k)+k(r-S+k)(S-2k)\\
+ &=XY(r-X-Y)+2XYk-rk^2.
+\end{aligned}
+$$
+
+Consequently
+
+$$
+w_0(k)=\frac{k(X-k)(Y-k)}{\mathcal Q(k)}.
+$$
+
+The denominator is nonzero on $J$. If this rational function
+were constant on any nonempty open subinterval, clearing its
+denominator would give a polynomial identity. The numerator has
+cubic coefficient one, whereas the denominator has degree at
+most two, so that identity is impossible. This argument also
+covers $X=Y$, $X+Y=r$, their intersection, and neither wall;
+cancellation of common factors cannot make the displayed
+polynomial identity possible. Thus $w_0$ is continuous and
+nonconstant on every positive-width subinterval. No support
+boundary is approached or executed for this conclusion.
+
+If $\epsilon<B_0(b)$, choose $q\in[a,b)$ with
+$B_0(q)>\epsilon$. The image $w_0([q,b])$ is a closed interval
+$[\omega_-,\omega_+]$ of positive width, by continuity,
+the intermediate value theorem and nonconstancy. Take
+$T=2\pi/(\omega_+-\omega_-)$. For distinct integers $j,l\ge0$,
+the image of $(j-l)Tw_0$ has length at least $2\pi$ and contains
+an odd multiple of $\pi$. At its preimage the true responses
+$F_{jT},F_{lT}$ differ by at least $2B_0(q)$.
+Both affine offsets are again absorbed by
+$\operatorname{span}_{\mathbb C}\{1,E_1(x_k),\ldots,E_n(x_k)\}$.
+Their predicted responses belong to its bounded subspace, have
+supremum norm at most $B_0(b)+\epsilon$, and are separated by
+at least $2(B_0(q)-\epsilon)$. The complete norm argument of
+Theorem 7.4 gives the contradiction.
+
+For one nonzero command $t_0$, choose an integer $M>0$ with
+$M|t_0|(\omega_+-\omega_-)\ge2\pi$ and use its $jM$ repetitions.
+For history encoders use the same canonical probability prefixes.
+These give the same proof without frequency monotonicity or
+encoder regularity. Only a one-pair lower bound has been proved;
+the double-wall upper construction is not transferred to this
+different source. $\square$
+

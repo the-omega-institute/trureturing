@@ -1,0 +1,54 @@
+### 2.2 Flat Fisher probability transport
+
+**Mathematical citation 2.2 (Full use of IE Theorem 14.2).** On the positive
+simplex set
+
+$$
+I(p)=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}},
+\qquad \tau(p)=\log\frac{p_0p_{13}}{p_1p_3},
+\qquad g_F(v,u)=\sum_s\frac{v_su_s}{p_s}.
+$$
+
+Apply IE Definition 14.1 and Theorem 14.2 with the mode and base permutation in
+§1. Its entire positive domain becomes
+
+$$
+\mathcal B=\{(X,Y,Z):0<Z<1,\ 0<X,Y<1-Z\}.
+$$
+
+The supplied derivative and orthogonality identities become
+
+$$
+\partial_\kappa\tau=I>0,\qquad
+ d\tau(v)=g_F(d,v),\qquad
+ v\perp_{g_F}d\ \Longleftrightarrow\ d\tau(v)=0.
+$$
+
+For each $b_{\mathrm{vis}}\in\mathcal B$ and every $\tau_0\in\mathbb R$, there
+is exactly one positive solution $\kappa=K(b_{\mathrm{vis}},\tau_0)$ of
+
+$$
+\frac{\kappa(r-X-Y+\kappa)}{(X-\kappa)(Y-\kappa)}=e^{\tau_0}.
+$$
+
+The endpoint justification is part of that supplier: at the lower endpoint the
+numerator tends to zero and the denominator has a strictly positive limit; at
+the upper endpoint the denominator tends to zero and the numerator has a
+strictly positive limit. Coincident zeros occur only within the numerator at
+the lower end or within the denominator at the upper end. Hence the limits are
+$-\infty$ and $+\infty$, respectively. The positive derivative gives the smooth
+implicit inverse on all of $\mathcal B\times\mathbb R$.
+
+Consequently $(X,Y,Z,\tau)$ are global smooth coordinates on the positive
+simplex. For any absolutely continuous base path on a compact parameter
+interval and any positive initial law over its initial base point, the unique
+Fisher-horizontal lift preserves $\tau$ and is
+$p_{K(b_{\mathrm{vis}}(t),\tau_0)}$. A closed base path returns exactly the
+initial probability law. This is the flat connection supplied by IE, with all
+hypotheses mapped; no additional flatness theorem is asserted here.
+
+Flatness in this statement belongs to the horizontal distribution of the
+probability projection. It is not a claim about the Riemannian curvature of
+$g_F$. Moving $\kappa$ while holding $(X,Y,Z)$ fixed is a vertical motion for
+this projection, not this Fisher-horizontal transport.
+

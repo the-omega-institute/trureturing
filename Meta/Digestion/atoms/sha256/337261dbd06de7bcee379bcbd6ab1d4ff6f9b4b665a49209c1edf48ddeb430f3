@@ -1,0 +1,15 @@
+**文献定理 13.1（复用 Bernays 的不限互素表示计数）。** 设 $f(s,t)=as^2+bst+ct^2$ 为固定本原正定整二元二次型，$\gcd(a,b,c)=1$，判别式 $\Delta=b^2-4ac<0$。令
+
+$$
+B_f(X)=\#\{m\in\mathbb Z:1\le m\le X,\ m=f(s,t)\text{ 对某些 }s,t\in\mathbb Z\}.
+$$
+
+这里不要求 $\gcd(s,t)=1$，也不要求 $m$ 与判别式互素。经典 Bernays 定理给
+
+$$
+B_f(X)\sim c(\Delta)\frac{X}{\sqrt{\ln X}},\qquad c(\Delta)>0,
+\tag{JM.36}
+$$
+
+首项常数仅依赖判别式。本卷复用此解析数论结论，不证明新的 Bernays 定理。其明确供应位置是 Brink–Moree–Osburn，*Principal forms $X^2+nY^2$ representing many integers*，[arXiv:1003.1094v2](https://arxiv.org/abs/1003.1094v2)，§1式(2)及§2 pp.2–4区分完整 $B_f$ 与限制 $B_f'$ 的讨论；Moree–Osburn，*Two-dimensional lattices with few distances*，[arXiv:math/0604163v2](https://arxiv.org/abs/math/0604163v2)，§2 pp.4–6、PDF式(2.3)，对应 [HTML式(6)](https://arxiv.org/html/math/0604163v2)。1912原论文不是本卷独立核查的证明供应；这里的证据是这两篇现代原始文献的明确陈述。
+

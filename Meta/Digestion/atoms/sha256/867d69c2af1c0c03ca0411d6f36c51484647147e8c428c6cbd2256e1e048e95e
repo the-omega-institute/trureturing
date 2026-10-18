@@ -1,0 +1,62 @@
+### 84.4. The product resultant and all possible collision parameters
+
+Put \(\Pi(L,B)=\sum_{n=0}^5\pi_n(B)L^n\), with the following
+coefficients; \(H,E\) will be used in the discriminant. All entries
+are exact integer polynomials.
+
+```text
+pi0 = -36*B^11 - 664*B^10 - 3076*B^9 + 1376*B^8 + 37176*B^7 + 54000*B^6 - 65448*B^5 - 116640*B^4 + 55404*B^3 + 29160*B^2 + 8748*B
+pi1 = -180*B^11 - 2321*B^10 - 8514*B^9 + 4787*B^8 + 166448*B^7 + 409230*B^6 - 664668*B^5 - 2736018*B^4 - 1234764*B^3 - 143613*B^2 + 21870*B - 6561
+pi2 = -360*B^11 - 2644*B^10 - 8192*B^9 + 28460*B^8 - 24048*B^7 + 627032*B^6 + 1908576*B^5 - 5506632*B^4 - 5420520*B^3 - 150660*B^2 + 163296*B - 2916
+pi3 = -360*B^11 - 646*B^10 - 4252*B^9 + 49682*B^8 - 254656*B^7 + 318996*B^6 + 1815480*B^5 - 2230188*B^4 - 3156408*B^3 - 911502*B^2 + 169668*B + 9882
+pi4 = -180*B^11 + 676*B^10 - 2604*B^9 + 26252*B^8 - 104712*B^7 + 58280*B^6 + 341544*B^5 - 398504*B^4 - 35076*B^3 + 71412*B^2 + 40644*B + 2268
+pi5 = -36*B^11 + 335*B^10 - 1106*B^9 + 1619*B^8 - 3376*B^7 + 11086*B^6 - 14716*B^5 - 6994*B^4 + 39556*B^3 - 43549*B^2 + 21150*B - 3969
+H = 4424301*B^15 - 30779595*B^14 + 64332981*B^13 - 11332035*B^12 - 431591567*B^11 + 913951065*B^10 + 1554539977*B^9 - 1999932175*B^8 - 3801379737*B^7 - 1635354945*B^6 - 108073953*B^5 + 84468663*B^4 + 25993467*B^3 + 2177523*B^2 - 120285*B - 32805
+E = 16875*B^16 - 43200*B^15 - 116712*B^14 - 1410592*B^13 + 12465444*B^12 - 32830464*B^11 + 28837832*B^10 + 51887904*B^9 - 125776782*B^8 - 90873792*B^7 + 307606248*B^6 - 223490016*B^5 + 449323524*B^4 - 120092544*B^3 + 14644152*B^2 - 1889568*B + 177147
+```
+
+The following exact resultant identity follows from (84.9)–(84.13):
+\[
+\begin{aligned}
+ \operatorname{Res}_v(F_6,N_8)
+ ={}&-429981696b^8(b^2-3)^6(b^2+1)^6(1+j^2)^{18}j^6\\
+    &\quad\cdot(bj-1)^2(bj+1)^2V_*^2\Pi(j^2,b^2),\\
+ V_*={}&(b^2-5)^2j^4+2[(b^2-1)^2+8]j^2+(b^2+3)^2>0.
+\end{aligned}                                                    \tag{84.14}
+\]
+Here and below a resultant is the determinant of the ordinary Sylvester
+matrix. One finite characteristic-zero verification of (84.14) is to
+substitute \(j=0,1,\ldots,68\) on both sides and compute the
+resultants over \(\mathbb Q[b]\). All 69 identities are exact.
+Both sides have \(j\)-degree at most \(6\cdot6+8\cdot4=68\),
+so those identities determine the full polynomial equality. This is an
+interpolation identity, not an inference from numerical samples.
+
+Suppose \(j\ne0\), \(bj\ne\pm1\), and two distinct original
+aligned inputs have this product. Neither phase is a pole, and (84.11)
+is nonzero. The two \(v\)-values must therefore be distinct common
+roots of \(F_6,N_8\). Evaluation at them gives two independent
+left null vectors of the 14-by-14 Sylvester matrix. Its rank is at most
+12, so every cofactor is zero. Its determinant and its \(j\)-derivative
+both vanish, including at a drop of a leading polynomial coefficient.
+The prefactor in (84.14) is nonzero, hence
+\[
+ \Pi(j^2,b^2)=\Pi_L(j^2,b^2)=0.                          \tag{84.15}
+\]
+This multiplicity argument is essential: the resultant factorization
+alone does not count lifts of the product map.
+
+The leading \(L\) coefficient and discriminant are
+\[
+\begin{aligned}
+ \pi_5(B)&=-(B-1)^6(9B^2+22B+49)(4B^3-23B^2+18B+81),\\
+ \operatorname{Disc}_L\Pi
+ &=2^{56}B^3(B-1)^6(B-3)^3(B+1)(B+3)^8H(B)^2E(B).
+\end{aligned}                                                    \tag{84.16}
+\]
+The leading coefficient is nonzero for \(0<B<1\), since its final
+factor is at least 58. Exact Sturm division for the printed polynomials
+gives zero roots of \(E\), and two simple roots of \(H\), in
+\((0,1)\). Thus (84.15) retains precisely these two possible
+parameter fibers, subject to the special products treated next.
+

@@ -1,0 +1,22 @@
+**Corollary 12.4 (the missing acquisition distinction).** On the actual
+pair in Theorem 12.3, the complete received words and bindings of this
+flight, its released bits, native completion and existing successful
+checks do not determine the actual target bit $c_p$. Consequently they
+cannot by themselves certify recovery of the actual raw target or any
+of its four independent views on both histories. An exact extension on
+this pair must acquire a distinguishing dependency beyond those common
+values before using them as a raw-target certificate.
+
+Proof. All the indicated acquired values and outcomes agree, while
+the required bit is zero on one actual target and one on the other.
+Any function of only those common values and the same fixed public
+parameters has the same value on the pair. A recovered full raw target
+would give its $c_p$ coordinate; any recovered independent view would
+give it by Theorem 11.4. Either contradicts the unequal bits. Repeated
+copying, canonical replay and checks using only those same arguments
+preserve this obstruction. A differing future supplied bit chosen from
+retained external bootstrap knowledge would be additional input; its
+actual acquisition, authority and faithful use would require their own
+proof. The corollary asserts no impossibility for all other installed
+routes and no new permission to read $C_L$. ∎
+

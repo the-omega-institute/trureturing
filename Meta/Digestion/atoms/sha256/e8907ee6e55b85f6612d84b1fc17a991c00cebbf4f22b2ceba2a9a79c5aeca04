@@ -1,0 +1,17 @@
+### 95.1. Original channels, exact objective, and scope
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, the four original two-coordinate fibres, the correlated input encoding |f,i〉↦|f,i〉|f,i〉, the output encoding |f〉↦|ff〉, and the arbitrary-reference unhalved diamond error. On the calibrated domain put
+
+\[
+ \begin{aligned}
+ \mathcal E&=\{G=G^*\ge0:G_{ff}=I_2\text{ for every fibre }f\},\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                    \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g),\\
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W].
+ \end{aligned}                                                     \tag{1}
+\]
+
+Section 91 identifies (1) exactly with that calibrated physical error. Every local minimum below means a local minimum on the full domain 𝓔×𝓔, rather than on a fixed-rank stratum.
+

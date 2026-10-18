@@ -1,0 +1,27 @@
+### 3. 历史计数记忆
+
+未来返回、阶段、深度和资源约束可能还依赖历史计数，例如
+
+$$
+\Sigma_{\mathrm{hist}}=(\mathrm{phase},A,B,\mathrm{boundary}).
+$$
+
+如果 $A,B$ 无界增长，精确 future quotient 可能没有有限状态表示。
+
+因此总体记忆结构应写成
+
+$$
+\boxed{
+\Sigma_{\mathrm{future}}=
+\bigl(
+\Sigma_{\mathrm{sep}},
+\Sigma_{\mathrm{cycle}},
+\Sigma_{\mathrm{hist}}
+\bigr).
+}
+$$
+
+某个实验如果只读一阶占用，可以商掉 $\Sigma_{\mathrm{cycle}}$；如果读二阶联合，则必须保留一部分 $\kappa_q$；如果读完整未来律，还可能需要保留历史计数。
+
+---
+

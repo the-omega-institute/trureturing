@@ -1,0 +1,62 @@
+**Theorem 12.3 (at most three zeros on each complete saturated test).**
+Under Assumption 10.1, every $F_{1,\epsilon,\sigma}$ has at most
+three distinct circle zeros. Hence the complete endpoint inventory
+in (FC.6), before any compatible-group compression, satisfies
+$|Z|\le5+4\cdot3=17$.
+
+Proof. Fix one test. Its even part is homogeneous quartic and its
+odd part is $D_cL_2$, where
+$L_2=(y_1-\sigma l_u-\epsilon\lambda)u+
+(y_2-\sigma l_v)v$. Suppose it has four distinct zeros. By
+Theorem 12.1 it is $(E_2+L_1)^2$, and all zeros lie in
+$\epsilon u>0$. Neither $E_2$ nor $L_1$ can vanish identically:
+otherwise the square is even under $x\mapsto-x$, which forces
+forbidden antipodal zeros. Comparing odd parts on the circle gives
+
+$$
+2E_2L_1=D_cL_2
+\tag{FC.40}
+$$
+
+as a homogeneous cubic identity on $\mathbb R^2$, because a
+homogeneous cubic vanishing on the circle vanishes on every ray.
+The positive definite binary quadratic $D_c$ is irreducible over
+$\mathbb R$: a factorization into real linear factors would give
+a nonzero real zero. The polynomial ring $\mathbb R[u,v]$ is a
+unique factorization domain, so this irreducible is prime. It
+cannot divide the nonzero linear $L_1$; (FC.40) forces
+$E_2=k_cD_c$ for a nonzero real $k_c$. Divide the square root by
+$k_c$ without changing its zeros. Its four zeros are those of
+
+$$
+q_c(u,v)=D_u u^2+D_v v^2+A_su+B_sv.
+\tag{FC.41}
+$$
+
+Reflection in the $v$ axis allows us to put all four in $u>0$;
+$D_u,D_v$ are unchanged. No zero remains on $u\le0$, since an
+additional zero would give more than four zeros of the original
+nonnegative degree-four test. At the two endpoints $u=0$, the
+values are $D_v+B_s$ and $D_v-B_s$. They are nonzero and their
+sum is $2D_v>0$. The connected opposite closed semicircle has no
+zero, so $q_c$ is positive everywhere on it, including both
+endpoints. If $A_s\ge0$, then
+$q_c(u,v)=q_c(-u,v)+2A_su>0$ on $u>0$, a contradiction.
+If $A_s<0$, parameterize that open semicircle by $v\in(-1,1)$:
+
+$$
+q_c(v)=D_u+(D_v-D_u)v^2+A_s\sqrt{1-v^2}+B_sv,\qquad
+q_c''(v)=2(D_v-D_u)-\frac{A_s}{(1-v^2)^{3/2}}>0.
+\tag{FC.42}
+$$
+
+A strictly convex function has at most two distinct zeros: three
+zeros would contradict strict convexity at the middle one relative
+to the first and third. This contradicts four. The endpoint
+argument included the entire opposite arc and its endpoints;
+there is no affine-chart omission. Summing the five pure contacts
+and the four three-point saturated inventories proves $17$,
+with coincident signed descriptions deduplicated as in Definition
+3.1. This bounds candidate sheet contacts for each supplied dual,
+not actual necessary labels. $\square$
+

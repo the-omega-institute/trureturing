@@ -1,0 +1,63 @@
+**定理 25.4（Exact preset unit envelope）。** Put
+
+$$
+\Lambda(j)=(\lambda_0(j),\lambda_1(j)).
+\tag{25.14}
+$$
+
+If both fibres are phase-only, then
+
+$$
+C_{\rm pre}(f)=\phi_k(\Lambda).
+\tag{25.15}
+$$
+
+If either fibre is mixed, first require the top row (25.11) to be constant separately on each value fibre. If this fails, preset fee is infinite. Otherwise a common cutoff $\tau\in\{1,\ldots,k-1\}$ is eligible exactly when (25.8) holds for both values and
+
+$$
+\begin{aligned}
+\ell_v(j)&\ge k-\tau &&(v\in\mathbb F_2,\ 0\le j\le k),\\
+F_v(0,k-2)&=F_v(1,k-2) &&(v\in\mathbb F_2,\ \tau\ge2).
+\end{aligned}
+\tag{25.16}
+$$
+
+In particular, the prefix condition covers phases zero and one and every phase peeled before the cutoff. For $\tau=1$ its cost is
+
+$$
+D(1)=\max\left(
+\begin{cases}1,&\Lambda(0)=\Lambda(1),\\k+1,&\Lambda(0)\ne\Lambda(1),\end{cases}
+\quad
+\begin{cases}1,&\Lambda|_{\{2,\ldots,k\}}\text{ constant},\\2+d(2,\Lambda),&\text{otherwise}.
+\end{cases}
+\right).
+\tag{25.17}
+$$
+
+For $\tau\ge2$ its cost is
+
+$$
+D(\tau)=
+\begin{cases}
+\tau,&\Lambda|_{\{\tau+1,\ldots,k\}}\text{ constant},\\
+\tau+1+d(\tau+1,\Lambda),&\text{otherwise}.
+\end{cases}
+\tag{25.18}
+$$
+
+The exact preset fee is $\min_{\tau\text{ common-eligible}}D(\tau)$, including infinity for an empty eligible set. These are common-stream costs; no maximum of fibre-optimal preset costs is asserted.
+
+**证明。** Under any one literal stream, the two free-value fibres have identical source partitions at each chronological depth: on successful sources their values differ by their initial-value offset, and rejection is common within the same tail/phase subset. Therefore one can test constancy separately on each fibre, equivalently use the ordered pair of INITIAL labels on each common source partition. This correspondence does not permit different actions on the fibres. If both targets are phase-only, the lower bound in [S11, Theorem 3.1] applies to the pair table, and its literal attaining stream works for both values. This proves (25.15).
+
+If a fibre is mixed, the common root must be one. Hence root rejection forces a constant top row on each fibre, including any phase-only fibre accompanying it. Let $\tau$ be the number of leading ones before the stream's first zero. A successful source of fixed phase $j$ after those ones has INITIAL tails $0\le s<k-\tau$, all with identical previous archives on its value fibre. If they stopped earlier, their labels were already constant; otherwise the first zero merges them. Thus the first condition of (25.16) is necessary for every phase, even a phase already identified by its value archive.
+
+For $\tau\ge2$, the second one rejects the phase-zero and phase-one sources at tail $k-2$ in one $\mathcal H$ archive; it also rejects the $\mathcal M$ strip at that tail. This gives the second condition of (25.16) and the $z=1$ case of (25.8). The later unresolved suffix rejections give all other cases of (25.8). For a source that stopped before these bits, these sets remain subsets of its constant stopping archive, so the same necessity holds without executing any continuation on it. If there is no useful first zero, at $k\ge3$ normalize to $\tau=k-1$: all-one successful signatures then identify every phase, and the remaining INITIAL tail is zero. At $k=2$, two consecutive ones reject both members of the unresolved $\mathcal H$ archive, so they could finish only if already constant at depth one, which admits $\tau=1$. A stream whose first zero is later gives no extra feasible case. Every finite preset controller therefore admits a common-eligible normalized cutoff.
+
+At $\tau=1$, all surviving phase prefixes have length $k-1$ and are constant by (25.16). The $\mathcal H$ archive either has one pair label and stops at depth one, or its two phases have different pair labels. In the latter case the next one would merge differently labelled rejected sources; clearing zero is necessary, and no bit before absolute position $k$ can distinguish the two phases. Its exact total depth is $k+1$. The $\mathcal M$ archive either stops at depth one, or requires the paid zero at position one and the exact suffix cost $d(2,\Lambda)$. This proves the lower bound (25.17).
+
+For simultaneous attainment at $\tau=1$, issue the common prefix $10$. If the endpoint pair is unresolved, continue ones at positions $2,\ldots,k$, stopping it at depth $k+1$. Its run has length $k-1$, hence is safe. Every nonconstant $\mathcal M$ suffix obtains the prefix of these same ones required by Lemma 25.2a and stops at depth $2+d(2,\Lambda)\le k+1$. If the endpoint pair is already constant, use only the suffix continuation needed for $\mathcal M$. When both archives are constant, stop all sources after the root one and emit no zero. Thus their worst actual fee is exactly the maximum in (25.17).
+
+For $\tau\ge2$, after $\tau$ ones each successful phase $j\le\tau$ is identified and its surviving prefix has one label by (25.16). Those archives stop by depth $\tau$, including the two endpoint phases. Every earlier rejection was legal by the top-row condition, (25.8), and the endpoint equality. The still-unidentified suffix is constant phase by phase. If its pair labels are all equal, all sources stop by depth $\tau$; otherwise issue one zero at position $\tau$ and then the attained suffix stream of Lemma 25.2a. The all-one prefix and this zero have legal chronological seams, and the later run has length less than $k$. This attains (25.18).
+
+For the matching cutoff lower bound, a nonconstant suffix cannot stop before its first zero; the first zero costs one and Lemma 25.2a forces its stated remaining depth. A constant suffix gives an apparent lower bound $\tau$ unless every source has already stopped at some smaller common depth $d$. In that event the raw all-one archives at depth $d$ are all constant on both fibres. All rejection-strip conditions up to $d$ hold, every phase prefix of length $k-d$ is constant, and the unresolved suffix pair label is constant. Thus $d$ is itself a common-eligible cutoff, with $D(d)=d$ (or $D(1)=1$). Such an unused later cut never lowers the minimum. Minimizing over eligible cuts gives the exact lower bound and attained common stream in every case, including all early-stopped archives. ∎
+

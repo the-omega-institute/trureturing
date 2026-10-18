@@ -1,0 +1,32 @@
+**Assumption 1.1 (the fixed five-mode source).** The source is exactly the additional stochastic model of [Auric, §§122–123, revision ad512afaf86ab2258ef58a78089f247e190866f4](https://github.com/the-omega-institute/trureturing/blob/ad512afaf86ab2258ef58a78089f247e190866f4/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md). Its states are
+
+$$
+s_0=000,\quad s_1=100,\quad s_2=101,\quad
+s_3=001,\quad s_4=010,
+$$
+
+corresponding respectively to $\mathrm{null},[2],[25],[5],[3]$. Write a state by its index. Assume
+
+$$
+p,q,r>0,\qquad p+q+r<1,\qquad
+P=\begin{pmatrix}
+1-p-q-r&p&0&q&r\\
+q&1-p-q&p&0&0\\
+0&q&1-p-q&p&0\\
+p&0&q&1-p-q&0\\
+r&0&0&0&1-r
+\end{pmatrix},\qquad
+\pi=\frac15(1,1,1,1,1).
+$$
+
+Rows are departure states. The chain $(X_t)_{t\ge0}$ starts with $X_0\sim\pi$. The only read is
+
+$$
+\chi(0)=0,\quad\chi(1)=1,\quad\chi(3)=3,\quad
+\chi(2)=\chi(4)=B,\qquad Y_t=\chi(X_t).
+$$
+
+The observation map is $\chi$; $q$ always denotes the scalar transition parameter. Successive symbols are actually acquired in order. The observer has no hidden-state read, discarded-history access, source copy, reset, chosen experiment, additional control or external recording-age input. Its retained word changes using only its previous retained word and the newly acquired symbol. The Markov law is an explicit additional contract, not a consequence of the tree substitution $\rho$ or of the two leaf symbols.
+
+Put $s=p+q$, $a=1-s$, $b=1-r$ and $c=1-s-r$. Thus $0<a,b<1$ and $c>0$. All parameter equalities compatible with the displayed strict inequalities remain in the domain. In particular neither $p\ne q$ nor $r\ne s$ is a standing assumption.
+

@@ -1,0 +1,77 @@
+**Construction 5.1 (Genuine $P^0,P^\star,Q$ and every table weight).**
+Each row below is $O(i,j;f,m,z)$ with mass equal to its count
+divided by $24$. This is precisely the genuine $P^0$.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 2 | 1 | 2 | 0 | 4 |
+| 1 | 2 | 1 | 2 | 3 | 2 |
+| 1 | 2 | 1 | 2 | 4 | 1 |
+| 1 | 2 | 1 | 2 | 5 | 1 |
+| 1 | 3 | 1 | 3 | 0 | 3 |
+| 1 | 4 | 0 | 4 | 0 | 1 |
+| 2 | 3 | 0 | 3 | 0 | 3 |
+| 2 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 0 | 1 |
+| 3 | 4 | 0 | 4 | 5 | 1 |
+| 3 | 5 | 0 | 5 | 0 | 1 |
+| 3 | 6 | 0 | 6 | 0 | 1 |
+| 4 | 5 | 0 | 5 | 0 | 1 |
+| 4 | 6 | 0 | 6 | 0 | 1 |
+| 5 | 6 | 0 | 6 | 0 | 1 |
+| 6 | 7 | 0 | 7 | 0 | 1 |
+
+Its counts sum to $24$. Its $(1,4)$ first output is zero and its
+class-one correct count is eleven; a different head-filled variant
+with count twelve is not substituted. It ignores bits eight and nine.
+
+The following sixteen deterministic rows of $P^\star$ have counts
+divided by $3072$.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 4 | 0 | 4 | 0 | 110 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 5 | 0 | 5 | 0 | 132 |
+| 3 | 6 | 0 | 6 | 0 | 125 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 117 |
+| 4 | 6 | 0 | 6 | 0 | 110 |
+| 5 | 6 | 0 | 6 | 0 | 127 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+| 8 | 9 | 0 | 9 | 0 | 17 |
+
+Its five other schedule rows have these raw terminal vectors, also
+divided by $3072$.
+
+| Schedule | Count $m$ | First vector | Middle vector | Exhaustion vector |
+| --- | ---: | --- | --- | --- |
+| $(1,2)$ | 944 | $944e_1$ | $944e_2$ | $463e_0+220e_3+162e_4+99e_5$ |
+| $(2,3)$ | 391 | $333e_0+58e_2$ | $391e_3$ | $391e_0$ |
+| $(3,4)$ | 236 | $236e_0$ | $236e_4$ | $148e_0+88e_5$ |
+| $(6,7)$ | 74 | $74e_0$ | $74e_7$ | $17e_0+4e_8+53e_9$ |
+| $(6,8)$ | 53 | $53e_0$ | $53e_8$ | $17e_0+36e_9$ |
+
+The deterministic counts total $1374$ and these schedule counts total
+$1698$, with single total $3072$. Every terminal vector has its own
+row count. For raw vectors $f,v,z$, assign complete table
+$O(i,j;r,s,t)$ weight $f(r)v(s)z(t)/(3072m^2)$. It recovers all
+cell marginals with one schedule budget, by 4.2.
+
+Define $Q$ by changing only the $(6,7)$ exhaustion vector to
+$17e_0+57e_8$. This replaces exactly the $53/3072$ mass of
+$O(6,7;0,7,9)$ by $O(6,7;0,7,8)$. On the entire cube,
+
+$$
+Q_w-P^\star_w=\frac{53}{3072}w_6w_7(e_8-e_9).
+$$
+
+These are the credited complete laws; no ninth input is fixed or
+projected in $P^\star$ or $Q$ here.
+

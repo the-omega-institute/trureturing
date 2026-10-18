@@ -1,0 +1,61 @@
+**定理 30.4.1（局部界下的锐利区间）。** 在桥接集合 $B$ 和局部界 $(\ell_z,u_z)_{z\in U}$ 已知时，所有与这些条件相容的目标效应恰好组成区间
+
+$$
+\boxed{
+\left[
+\sum_{z\in B}\mu_t(z)\delta_s(z)
++
+\sum_{z\in U}\mu_t(z)\ell_z,\;
+\sum_{z\in B}\mu_t(z)\delta_s(z)
++
+\sum_{z\in U}\mu_t(z)u_z
+\right].
+}
+$$
+
+**证明。**
+
+对任意相容目标核，逐项有
+
+$$
+\mu_t(z)\ell_z
+\le
+\mu_t(z)\delta_t(z)
+\le
+\mu_t(z)u_z
+\qquad(z\in U),
+$$
+
+因为 $\mu_t(z)\ge0$。在 $B$ 上 $\delta_t=\delta_s$，求和得到区间包含性。
+
+反过来，取任意 $\lambda\in[0,1]$，在每个 $z\in U$ 定义
+
+$$
+\delta_t(z)=
+(1-\lambda)\ell_z+\lambda u_z.
+$$
+
+由于 $\ell_z,u_z\in[-1,1]$，可以构造二元概率核，例如令
+
+$$
+K_t^0(1\mid z)=\frac{1-\delta_t(z)}2,
+\qquad
+K_t^1(1\mid z)=\frac{1+\delta_t(z)}2.
+$$
+
+这给出合法的 Bernoulli 核，并在 $B$ 上使用桥接核。令各 $z$ 的 $\lambda$ 同时从 $0$ 变到 $1$，目标效应连续取得区间两端之间的每个值。故所给区间锐利。证毕。
+
+无局部信息时，结论退化为
+
+$$
+\theta_t\in
+\left[
+\sum_{z\in B}\mu_t(z)\delta_s(z)-\mu_t(U),\;
+\sum_{z\in B}\mu_t(z)\delta_s(z)+\mu_t(U)
+\right].
+$$
+
+于是 $\mu_t(U)$ 是一个精确的未桥接质量预算：它既是未知效应对总体结果的最大幅度，也是区间端点可以达到的实际误差。
+
+<a id="section-30-5"></a>
+

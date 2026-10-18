@@ -1,0 +1,29 @@
+**Theorem 39.1 (One actual stationary law in both constructions).** For the completed quantum construction set $\mathcal E_0=\Phi$, $\mathcal E_1=\Psi$ and
+
+$$
+R_0^{\rm op}=\sum_{a\ge0}\Phi^a(\tau),\qquad \rho_*=\mu^{-1}R_0^{\rm op},\qquad P(w_1\cdots w_N)=\operatorname{Tr}\big[\mathcal E_{w_N}\cdots\mathcal E_{w_1}(\rho_*)\big]. \tag{39.1}
+$$
+
+The superscript distinguishes this operator sum from the scalar $R_0$ in (24.2). Then $\rho_*$ is an invariant density, and for $r\ge1$, $A,B,g_1,\ldots,g_{r-1}\ge0$ one has
+
+$$
+\begin{aligned}
+P(0^A1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^B)&=\nu S_A S_B\prod_{i=1}^{r-1}\gamma_{g_i},\\
+P(0^N)&=\nu\sum_{j\ge N}(j-N+1)\gamma_j=\nu R_N\qquad(N\ge0).
+\end{aligned} \tag{39.2}
+$$
+
+For $r=1$ there are no internal gaps and the product is one. The classical construction with initial row $\pi=\mu^{-1}\sum_{a\ge0}\beta T_0^a$ has exactly these same cylinders, namely $P(w)=\pi T_{w_1}\cdots T_{w_N}\mathbf1$.
+
+Proof. Stability of $\Phi$ and $T_0$ gives norm convergence of both sums. By properness and completeness, $s_a=\operatorname{Tr}\Phi^a(\tau)$ satisfies $s_a-s_{a+1}=\gamma_a$ and $s_a\to0$, so $s_a=S_a$. Nonnegative summation gives $\operatorname{Tr}R_0^{\rm op}=\sum_aS_a=\sum_j(j+1)\gamma_j=\mu$. Actual reset strengthens the scalar gap identity to $\Psi\Phi^a(\tau)=\gamma_a\tau$. Shifting and summing therefore gives
+
+$$
+\Phi(R_0^{\rm op})=R_0^{\rm op}-\tau,\qquad \Psi(R_0^{\rm op})=\tau,\qquad (\Phi+\Psi)(\rho_*)=\rho_*,\qquad \Psi\Phi^A(\rho_*)=\nu S_A\tau. \tag{39.3}
+$$
+
+Apply the last identity at the first one, then the reset identity at each internal gap and the survival identity at the terminal $B$ zeros. This proves the first formula of (39.2). If there is no one, taking $\operatorname{Tr}\Phi^N(\rho_*)=\nu\sum_{a\ge0}S_{N+a}$ and exchanging nonnegative sums proves the second. It includes the empty word, because $R_0=\mu$. Right consistency follows from trace preservation; left consistency follows from invariance of $\rho_*$. These consistent cylinders consequently define a stationary process. Moreover $R_N\to0$, since it is bounded by the tail of the summable sequence $(j+1)\gamma_j$; there is no additional all-zero stationary component.
+
+In the classical construction, $\beta T_0^a\mathbf1=S_a$ and $\beta T_0^aT_1=\gamma_a\beta$. Hence $\pi\mathbf1=1$, $\pi T_0=\pi-\nu\beta$, $\pi T_1=\nu\beta$, and $\pi(T_0+T_1)=\pi$. The identical first-one, internal-gap and final-survival calculation proves all of (39.2). Thus the two models match complete stationary cylinders, not just the gap degree, one-time marginals or a reset-conditioned fragment. The quantum reachable span in Theorem 37.1 is full, so the positive sum $R_0^{\rm op}$ has full support; the invariant density is faithful. It differs from $\tau$: indeed $\operatorname{Tr}\Psi(\tau)=\gamma_0=0$ whereas $\operatorname{Tr}\Psi(\rho_*)=\nu>0$. $\square$
+
+The invariant-state and ordered-cylinder conventions are those of Monras–Beige–Wiesner, [*Hidden Quantum Markov Models and non-adaptive read-out of many-body states*, arXiv:1002.2337v2, §4.3, equations (25)–(27)](https://arxiv.org/abs/1002.2337v2). The same PDF's equations (18)–(20) embed a classical generator into an HQMM of the same dimension. In the row orientation of (38.1), that embedding uses $\sqrt{(T_s)_{ij}}\,|j\rangle\langle i|$; the PDF uses column transitions, so its transition matrices are the transposes. It preserves diagonal-state cylinders on $n+1$ dimensions. That general embedding is a predecessor and convention check, while the smaller matrices of Chapter 37 and the explicit stationary sum above supply this exact dimension comparison.
+

@@ -1,0 +1,14 @@
+**Proposition 5.5 (born holes are not independent root images).**
+Requiring every selected filler to belong to $\rho^r[\mathcal T]$
+is unsound even when the complete captured root has that membership.
+
+Proof. Let the selector accept exactly the two literal leaves and
+reject every pair. Invocation $u=\beta$ and $r=1$ give the capture
+$\langle\beta,\alpha\rangle$, with selected cut $\{L,R\}$ and
+two distinct classes. Its right filler $\alpha$ has no predecessor,
+although the whole capture is $\rho\beta$. The original pruning
+pattern is the single original leaf $\beta$; both holes in
+(NRF.16) are ground born holes. No residual image test is imposed
+on either of them. Theorem 3.2 realizes these same coordinates
+for every independent $j$. $\square$
+

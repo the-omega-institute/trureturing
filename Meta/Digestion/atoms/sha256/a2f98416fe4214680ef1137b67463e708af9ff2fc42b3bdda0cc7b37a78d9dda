@@ -1,0 +1,18 @@
+**Proposition 3.4 (the first order is included).** For $r=1$ the
+parameters are $m=2$, $a=2$, $M=8$, $C=16$, $N=3^{14}$,
+$D=n=3^{14}+1$ and $p=R^n$. One may take
+$F=\mathbb F_3[X]/(X^2+1)$. In particular,
+
+$$
+V(\mu_0)\le\frac{1728}{100},\qquad
+V(\mu_1)\ge\frac{1881}{100}.
+\tag{NCO.27}
+$$
+
+Proof. The polynomial $X^2+1$ has no root in $\mathbb F_3$ and is
+irreducible of degree two. Substitute $a=2$ in (NCO.25).
+The bound uses $h_n\le28$ and is not an exact-value computation.
+The proof for general $r$ uses the same argument with larger fields
+and families; it is not inferred from this first-order case.
+$\square$
+

@@ -1,0 +1,27 @@
+**Lemma 2.4 (global correctness and core costs).** Definition 2.3 is one
+common source-blind encoder correct on every member of $\mathcal F_8$. Its
+cost is at most $9$ on every source. On the correlated representatives its
+costs, in order $j=1,\ldots,8$, are
+
+$$
+(2,3,2,3,2,3,2,3),
+\tag{2.8}
+$$
+
+independently of $e$.
+
+**Proof.** If $RR$ is absent, $R$ is a leaf in a full tree and the second
+Read supplies its actual label. Otherwise $R$ is branch. On a representative
+$s_{j,e}$, (2.3) selects exactly the search tree containing key $j$, and
+the reply at a queried prefix $p_i$ is `branch` for $i<j$, the actual leaf
+label $\lambda_e$ for $i=j$, and `absent` for $i>j$. The key depths in
+(2.5)--(2.7) give (2.8).
+
+For an arbitrary source, a selected tree can only return on actual evidence.
+If it does not, the fallback is the all-source AAR13.4 search, so the same
+program terminates and is correct on the whole family. Each selected tree
+has height at most four; hence the initial `RR`, at most four candidate Reads,
+and at most four fallback Reads give the uniform bound $9$. No source name,
+subtree port, advice, clock or supplied target count is used during
+acquisition. $\square$
+

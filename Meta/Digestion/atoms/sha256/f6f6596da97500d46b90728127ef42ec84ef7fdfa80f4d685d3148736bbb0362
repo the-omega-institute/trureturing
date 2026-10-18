@@ -1,0 +1,201 @@
+## 9. Exact rational feasibility of the remaining simultaneous core
+
+The following equivalence supplies a full simultaneous system; it
+does not assign that system a feasibility verdict.
+
+**Theorem 9.1.** Fix $d,y,\zeta\in\mathbb R$ with
+$d\notin\{0,24,48,312/5,y,\zeta\}$. A triple as in the restricted
+core of Theorem 8.1 exists on these normalized data if and only if,
+after the relabeling in (8.2), the rational system below has a
+solution. All three parameter evaluations use the same $d,y,\zeta$.
+
+Seek pairwise distinct real $k_1,k_2,k_3>0$. Put
+
+$$
+\begin{aligned}
+A&=24-d,&B&=48-d,&C_*&=312/5-d,\\
+N_d(k)&=(4032-84d)k^2+(168+21d)k+70d-1680,\\
+\ell(k)&=\frac{N_d(k)}{20d\,k(k+1)},&j(k)&=k\ell(k),\\
+u(k)&=\ell(k)-1,&v(k)&=(k-1)\ell(k)+1.
+\end{aligned}
+\tag{9.1}
+$$
+
+For each $k=k_h$ require $\ell>1$, $v>0$, and define
+
+$$
+a_1=\frac{A}{k\ell},\qquad
+a_2=\frac{B}{\ell},\qquad
+a_3=\frac{C_*}{(k+1)\ell}.
+\tag{9.2}
+$$
+
+Define $f_k$ by the full increasing-power coefficient vector
+
+$$
+\left(-d,\ \tfrac{11}6d+3a_1-\tfrac32a_2+\tfrac13a_3,
+ -d-\tfrac52a_1+2a_2-\tfrac12a_3,
+ \tfrac16d+\tfrac12a_1-\tfrac12a_2+\tfrac16a_3\right),
+\tag{9.3}
+$$
+
+and put
+
+$$
+h_4=\tfrac12a_1-\tfrac95a_2+\tfrac94a_3,\qquad
+h_5=a_1-\tfrac{16}5a_2+3a_3,\qquad
+h_6=a_1-3a_2+\tfrac52a_3.
+\tag{9.4}
+$$
+
+Require $h_4h_5h_6\ne0$, and set
+
+$$
+\begin{aligned}
+r(k)&=(y-d)/h_4-1-k\ell,\qquad 0<r(k)<1,\\
+(\ell-1)((k-1)\ell+1)&=r(k)(1-r(k)),\\
+\zeta-d&=h_5((k+2)\ell-r(k)),\\
+P_k&=\begin{pmatrix}r(k)&\ell-1\\(k-1)\ell+1&1-r(k)\end{pmatrix}.
+\end{aligned}
+\tag{9.5}
+$$
+
+Finally define
+
+$$
+U(k)=h_6\bigl(2+2r(k)+(2k-1)\ell\bigr),\qquad
+V(k)=h_6\bigl(1+2(k+1)\ell\bigr),
+\tag{9.6}
+$$
+
+and require a common nonzero sign for $h_6(k_1),h_6(k_2),h_6(k_3)$,
+together with
+
+$$
+U(k_1)=U(k_2)\ne U(k_3),\qquad
+V(k_1)=V(k_3)\ne V(k_2).
+\tag{9.7}
+$$
+
+The rank-one equality and fifth-reading equality in (9.5), as well
+as the inequalities and simultaneous constraints, are part of the
+system. None may be replaced by only (9.1).
+
+**Proof, necessity and all coefficients of the elimination.** For
+an actual core world put $k=j/\ell>0$. Its first four equations
+give (9.2). Its seventh root and Lemma 2.1 give (4.5). Multiplying
+by $k(k+1)$ gives
+
+$$
+20d\ell k(k+1)
+   =84B k(k+1)-70A(k+1)-35C_*k=N_d(k).
+\tag{9.8}
+$$
+
+The coefficients on the right are exactly
+
+$$
+\begin{array}{c|c|c}
+\text{power}&\text{unsimplified coefficient}&\text{coefficient}\\ \hline
+2&84B&4032-84d\\
+1&84B-70A-35C_*&168+21d\\
+0&-70A&70d-1680
+\end{array}
+\tag{9.9}
+$$
+
+Since $d\ne0$, (9.8) determines $\ell$ as in (9.1). Interpolation
+gives (9.3) and (9.4). Theorem 8.1 gives the nonzero late and sixth
+samples. The fourth equation, divided only by the proved nonzero
+$h_4$, gives $r$ in (9.5). Source legality supplies all its
+inequalities and rank-one equality. The fifth equation is precisely
+the retained last scalar equality in (9.5). Identities (1.7)–(1.8)
+give (9.6), and Theorem 8.1 gives the sign and collision conditions.
+
+At fixed $d,y,\zeta$, equal $k$ determines equal $\ell,j$, the
+entire polynomial and $r$, hence the same complete world. Therefore
+three distinct core worlds supply three distinct parameters. Every
+denominator used is nonzero by $d\ne0$, $k>0$, $\ell>1$ and
+$h_4\ne0$. The example in Section 7, having $d=0$, is outside this
+chart, rather than an omitted special case of this theorem.
+
+**Proof, sufficiency and every ancestor equation.** Conversely take
+three parameters satisfying all conditions. For each one,
+$\ell>1$, $v>0$ and $0<r<1$ make all four entries of $P_k$
+strictly positive. The retained equality $uv=r(1-r)$ gives
+determinant zero, and trace one gives rank one. The coefficient
+vector (9.3) defines a degree-at-most-three polynomial with
+constant term $-d\ne0$, so the gain is legal and nonzero.
+Expansion of (2.3) shows its four samples are exactly
+$-d,a_1,a_2,a_3$. Equation (9.8), divided only by positive
+$k\ell(k+1)$, is
+
+$$
+20d+70a_1-84a_2+35a_3=0.
+\tag{9.10}
+$$
+
+By (2.4) this is exactly $f_k(7)=0$. Lemma 2.1 gives
+$f_k(4)=h_4$, $f_k(5)=h_5$, $f_k(6)=h_6$. The six actual
+ancestor equations now verify individually as
+
+$$
+\begin{aligned}
+f_k(0)+d&=-d+d=0,\\
+f_k(1)j+d&=\frac{A}{k\ell}(k\ell)+d=24,\\
+f_k(2)\ell+d&=\frac{B}{\ell}\ell+d=48,\\
+f_k(3)(j+\ell)+d
+ &=\frac{C_*}{(k+1)\ell}(k+1)\ell+d=312/5,\\
+f_k(4)(1+r+j)+d&=h_4(1+r+k\ell)+d=y,\\
+f_k(5)(j+2\ell-r)+d&=h_5((k+2)\ell-r)+d=\zeta.
+\end{aligned}
+\tag{9.11}
+$$
+
+Because $d$ differs from all six readings and the traces are positive,
+no ancestor gain sample is zero. Sixth gains are nonzero by (9.4).
+Different $k$ give different complete worlds, since any one source
+itself determines $j/\ell$. Their normalized sixth values are
+$d+U(k)$ and $d+V(k)$, and their terminal values are all $d$.
+
+**Proof, actual losing children and absence of a losing proper
+pair.** Use the one resulting fixed triple $K$. Under first action
+$J$, choose the raw response
+
+$$
+w_J=D_0+\lambda(d+U(k_1)).
+\tag{9.12}
+$$
+
+Its actual child is exactly $\{W_1,W_2\}$ by (9.7). For each last
+action $F\in\{J,M\}$, choose raw response $D_0+\lambda d$;
+its actual terminal child is that same pair and has $L_0$. Thus
+this particular $J$ child has $L_1$. Under first action $M$ choose
+
+$$
+w_M=D_0+\lambda(d+V(k_1)).
+\tag{9.13}
+$$
+
+Its actual child is exactly $\{W_1,W_3\}$, and under each last
+action the response $D_0+\lambda d$ again retains that pair and
+has $L_0$. This proves both existential response clauses required
+for $L_2(K,H)$. The only colliding proper pair under $J$ is
+$\{1,2\}$ and the only one under $M$ is $\{1,3\}$; every proper
+pair consequently fails one first-action clause of $L_2$. Empty
+and singleton proper subsets fail the cardinality clause. Thus the
+triple is inclusion-minimal and has exactly the core properties.
+
+For arbitrary original $D_0$ and either sign of $\lambda\ne0$, set
+
+$$
+g_h=\lambda f_{k_h},\qquad \delta_h=D_0+\lambda d,
+\qquad Y=D_0+\lambda y,\quad z=D_0+\lambda\zeta.
+\tag{9.14}
+$$
+
+The bijection in Section 1 gives precisely the original-world
+correspondence and the same actual-child quantifiers. This proves
+both directions of the equivalence. No feasible parameters or
+impossibility proof for (9.1)–(9.7) are supplied. ∎
+

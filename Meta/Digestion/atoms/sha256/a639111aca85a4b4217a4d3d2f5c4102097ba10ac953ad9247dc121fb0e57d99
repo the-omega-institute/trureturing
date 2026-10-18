@@ -1,0 +1,90 @@
+**Theorem 101.2 (real-kernel exclusion).**
+No such local minimum exists. Reality of \(G\), of the quotient, or of
+any outside records is not required.
+
+**Proof.**
+The zero-coordinate and coincident-record cases already have \(t\ge1/2\).
+Otherwise order the positive angles as in (4).
+The common normer and quotient facts of §§95 and 99 give one and the same
+pair \((\rho,W)\), a scale \(\alpha>0\), and a PSD correlation matrix \(R\) with
+\[
+\begin{aligned}
+W_{ij}&=-\frac{\alpha a_i a_j}{2H_{ij}}
+&&\text{across original fibres on }S,\\
+2(LW)_{ff}&=t\rho_{ff},\qquad
+G_S=H_S\odot\overline R,\qquad
+R\operatorname{diag}(a)H_S=0.
+\end{aligned} \tag{20}
+\]
+The pair is supported on \(S\). In particular, all supported cross entries
+of \(W\) are real. Multiplying \((Ga)_i=0\) by \(\alpha a_i\),
+substituting \(G_{ij}H_{ij}=1/2-L_{ij}\), and using the diagonal entry
+of the same complementary relation in (20), gives
+\[
+\alpha a_i^2
+=\sum_{\substack{j\in S\\j\text{ in another original fibre}}}W_{ij}
+-t\rho_{ii}. \tag{21}
+\]
+The cross-fibre row sum is strictly positive. For \(i\in F\) this is
+\(W_{i3}+W_{i4}>0\); no independently chosen witness is used.
+Also, the matrix-unit bound and \(H_{ij}>0\) give
+\(\operatorname{Re}G_{ij}>0\) and \(\operatorname{Re}R_{ij}>0\)
+on all supported cross-fibre entries. In particular
+\(r=\operatorname{Re}R_{34}\in(0,1]\).
+
+Multiply \(a\) by \(-1\) if needed so that \(a_3=b>0\).
+If \(a_4=d>0\), the full \(F\)-block kernel equations give
+\(a_i=-bG_{i3}-dG_{i4}\).
+Taking real parts gives \(a_1,a_2<0\).
+Theorem 101.1 applies, contradicting \(t<1/4\).
+
+It remains to consider \(a_4=-d<0\), \(d>0\).
+Factoring \(R\) into unit records \(r_i\), the quotient relation in (20)
+gives, by the same singular-safe argument as for (18),
+\[
+a_1r_1=-cb r_3+pd r_4,\qquad
+a_2r_2=-sb r_3+qd r_4. \tag{22}
+\]
+There are four possible sign patterns of the nonzero \(F\) entries.
+
+If \(a_1>0\), \(a_2<0\), take real inner products of the first equation
+with \(r_3\) and of the second with \(r_4\).
+Since \(\operatorname{Re}R_{13},\operatorname{Re}R_{24}>0\), this gives
+\[
+pd r>cb,\qquad qd<sb r.
+\]
+Hence \(d/b>c/(pr)\) and \(d/b<sr/q\), which imply
+\(cq<sp r^2\le sp\), contrary to \(\Delta>0\).
+
+If \(a_1=-A<0\), \(a_2=B>0\), the two positive \(F\)-row sums in (21) give
+\[
+b/c>d/p,\qquad d/q>b/s.
+\]
+Thus \(d/b<p/c\) and \(d/b>q/s\), again contradicting \(cq>sp\).
+
+If \(a_1=-A<0\), \(a_2=-B<0\), the reverse triangle inequalities in (22) give
+\(A\ge cb-pd\), \(B\ge sb-qd\). Therefore
+\[
+\frac A p+\frac B q
+\ge b\left(\frac c p+\frac s q\right)-2d
+>\frac b h-2d,\qquad
+h\left(\frac c p+\frac s q\right)=1+\frac{cs}{pq}>1. \tag{23}
+\]
+But (21) at coordinate 4 is
+\[
+\alpha d^2=\frac{\alpha bd}{2h}
+-\frac{\alpha d}{2}\left(\frac A p+\frac B q\right)-t\rho_{44}, \tag{24}
+\]
+which, because \(t\rho_{44}\ge0\), implies the opposite non-strict inequality.
+
+Finally, if \(a_1=A>0\), \(a_2=B>0\), (22) similarly gives
+\[
+\frac A c+\frac B s
+\ge d\left(\frac p c+\frac q s\right)-2b
+>\frac d h-2b,\qquad
+h\left(\frac p c+\frac q s\right)=1+\frac{pq}{cs}>1. \tag{25}
+\]
+Identity (21) at coordinate 3 reads
+\(\alpha b^2=\alpha bd/(2h)-\alpha b(A/c+B/s)/2-t\rho_{33}\)
+and gives the opposite inequality. All cases are exhausted. \(\square\)
+

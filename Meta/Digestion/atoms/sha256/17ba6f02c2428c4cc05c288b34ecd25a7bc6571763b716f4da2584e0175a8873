@@ -1,0 +1,29 @@
+**Proposition 4.2 (regular infinite witness).** Fix $n=3,c=6,v=3$ and take the final multiplier $W=U^mM$ for any integer $m\ge3$. The endpoints are
+$$
+I,\quad \begin{pmatrix}1&0\\3&1\end{pmatrix},\quad
+\begin{pmatrix}6&1\\5&1\end{pmatrix},\quad
+\begin{pmatrix}17&3\\6&1\end{pmatrix},\quad
+\begin{pmatrix}6+23m&1+4m\\23&4\end{pmatrix}.
+\tag{4.6}
+$$
+Deletion of any endpoint leaves four independent matrices, and $\mathsf B$ is invertible. Nevertheless Theorem 4.1 gives finite collisions.
+
+**Proof.** Multiplication by $M$ first gives $(\begin{smallmatrix}6&1\\23&4\end{smallmatrix})$, then $U^m$ gives (4.6), proving legality. The first four matrices are independent because their three nonconstant trace coefficient rows have determinant $n(v-2)=3$. The unique five-matrix dependence, up to scale, has coefficients
+$$
+(m,\ 9-7m,\ 15m-30,\ 9-9m,\ 3).
+$$
+Its four entry sums are
+$$
+m+(9-7m)+6(15m-30)+17(9-9m)+3(6+23m)=0,
+$$
+$$
+(15m-30)+3(9-9m)+3(1+4m)=0,
+$$
+$$
+3(9-7m)+5(15m-30)+6(9-9m)+69=0,
+$$
+$$
+m+(9-7m)+(15m-30)+(9-9m)+12=0.
+$$
+All five coefficients are nonzero for $m\ge3$. Any dependence among four survivors would extend to one with a zero coefficient, contradicting uniqueness. Finally $\det\mathsf B=(4-1)\det V=9\ne0$. This family therefore passes every deletion-span test of Lemma 2.1. Its upper-right final entry $1+4m$ also shows that its final multiplier is not a lower-shear tail preserving the preceding upper row. The witness establishes coverage beyond those narrower exclusions; the uniform theorem is the substantive assertion. ∎
+

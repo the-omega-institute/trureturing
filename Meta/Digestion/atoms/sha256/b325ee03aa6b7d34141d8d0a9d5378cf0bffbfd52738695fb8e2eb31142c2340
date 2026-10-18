@@ -1,0 +1,50 @@
+**定义 7.1（归一化整纤维及其最后两式）。** In this section
+$Y,z$ denote normalized readings: set $D_0=0$, $\lambda=1$ in
+Definition 1.2 and write
+
+$$
+H(Y,z)=(0,J,24,M,48,M,312/5,J,Y,M,z),\qquad
+\mathcal F_{Y,z}=\mathcal F(H(Y,z)).
+\tag{7.1}
+$$
+
+Thus $Y=y$ and $z=\zeta$ in (1.4). All six equations use the
+same fixed $(P,g,d)$ and the original clocks. No source, gain shape,
+root or drift label is supplied. For $P$ as in (1.5), retain $u,v$
+and the interpolation of Definition 1.4. Put $T_4=1+a+u$,
+$T_5=u+2v-a$ and
+
+$$
+\begin{aligned}
+\gamma_4&=\frac{96}{u}-\frac{288}{v}+\frac{1248/5}{u+v},&
+\kappa_4&=1-\frac4u+\frac6v-\frac4{u+v},\\
+\gamma_5&=\frac{360}{u}-\frac{960}{v}+\frac{624}{u+v},&
+\kappa_5&=4-\frac{15}{u}+\frac{20}{v}-\frac{10}{u+v}.
+\end{aligned}
+\tag{7.2}
+$$
+
+The first four readings determine the interpolant with samples
+
+$$
+(q_0,q_1,q_2,q_3)=
+\left(-d,\frac{24-d}{u},\frac{48-d}{v},
+                         \frac{312/5-d}{u+v}\right).
+\tag{7.3}
+$$
+
+Its last two evaluations are $g(i)=\gamma_i+\kappa_i d$.
+Consequently compatibility is exactly the pair of simultaneous
+remaining equations
+
+$$
+Y=T_4\gamma_4+(1+T_4\kappa_4)d,\qquad
+z=T_5\gamma_5+(1+T_5\kappa_5)d.
+\tag{7.4}
+$$
+
+These are the coordinates of Theorem 3.1, with
+$\alpha_i=1+T_i\kappa_i$. The interpolant is nonzero because
+its readings at zero and one are different. Every division so far
+is by a positive trace or a nonzero interpolation integer.
+

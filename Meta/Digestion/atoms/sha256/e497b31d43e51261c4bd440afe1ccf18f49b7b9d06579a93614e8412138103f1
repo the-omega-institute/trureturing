@@ -1,0 +1,45 @@
+**命题 21.8.3（对称二元族同时饱和）。** 取均匀先验和
+
+$$
+f=(1,\varepsilon),
+\qquad
+g=(\varepsilon,1),
+\qquad 0<\varepsilon\le1.
+$$
+
+重复 $n$ 轮后，
+
+$$
+F=(1,\varepsilon^n),
+\qquad
+G=(\varepsilon^n,1),
+$$
+
+两种协议的接受率相同，且
+
+$$
+A_n=\frac{1+\varepsilon^n}{2},
+\qquad
+\tau_n=\frac{1-\varepsilon^n}{1+\varepsilon^n}.
+$$
+
+因此
+
+$$
+\boxed{
+\tau_n=\tanh\left(\frac{n\Delta}{4}\right),
+\qquad
+A_n=\frac1{1+\tau_n},
+}
+$$
+
+其中 $\Delta=2\log(1/\varepsilon)$ 是单轮投影扩张。它同时饱和投影界和等吞吐界。更强的是，对每个前缀 $k$，两协议的接受概率都相同：
+
+$$
+\Pr(E_k\mid f)=\Pr(E_k\mid g)=\frac{1+\varepsilon^k}{2}.
+$$
+
+所以达到大后验差异并不需要先从协议总接受数中看出差异。
+
+<a id="section-21-9"></a>
+

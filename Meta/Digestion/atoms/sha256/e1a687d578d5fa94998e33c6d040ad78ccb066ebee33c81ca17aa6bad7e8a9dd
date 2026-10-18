@@ -1,0 +1,53 @@
+**Definition 11.2 (Inherited monomial forms at the specified heat-bath rates).**
+For every $I,J\subseteq V$, including illegal sets,
+
+$$
+\begin{aligned}
+V_{IJ}&:=\operatorname{Cov}_p(m_I,m_J)
+=\mu_{I\cup J}-\mu_I\mu_J,\\
+A_{IJ}&:=\mathcal E_G(m_I,m_J)
+=\mu_{I\cup J}
+\sum_{i\in I\cap J}\frac{\omega_i}{1+\lambda_i}.
+\end{aligned}
+\tag{11.4}
+$$
+
+Proof. The product of the two Boolean monomials is $m_{I\cup J}$,
+giving the covariance identity. On an insertion at $i$, the
+increment of $m_I$ is zero unless $i\in I$; in that case it is
+$\mathbf1_{I\setminus\{i\}\subseteq s}$. Both increments are
+one exactly when $i\in I\cap J$ and the occupied endpoint
+$t=s\cup\{i\}$ contains $I\cup J$. Detailed balance gives
+
+$$
+p(t)=\lambda_i p(s),\qquad
+p(s)q_i=\frac{p(t)}{1+\lambda_i}.
+\tag{11.5}
+$$
+
+Insertion and erasure are mutually inverse between these empty
+and occupied endpoints. For fixed $i\in I\cap J$, summing
+$p(t)$ over the occupied endpoints containing $I\cup J$ gives
+$\mu_{I\cup J}$. Multiplication by $\omega_i/(1+\lambda_i)$
+and summation over $i$ prove (11.4). If the union is illegal,
+there are no such endpoints and both descriptions give zero.
+No independence of the occupations under $p$ is assumed. $\square$
+
+The monomial mechanism is established in Miao--Yin [MY26], §3.2,
+equations (13), (21) and (22), for auxiliary unit-deletion dynamics
+on positive downward-closed supports. At retention one, their
+unnormalized energy is $|I\cap J|\mu_{I\cup J}$. Formula (11.4)
+applies that mechanism with the specified occupied-site deletion
+rates $\omega_i/(1+\lambda_i)$. A Metropolis rate would give a
+different coefficient. This calculation is an attributed ingredient
+in the phase-menu and filtering applications, not a new general
+monomial energy principle.
+
+In particular, disjoint monomials have zero bilinear insertion
+energy even when their covariance is nonzero. The two matrices
+encode different relations: $V$ records joint fluctuations,
+whereas $A$ requires a common site whose flip changes both
+monomials. For singleton coordinates (11.4) recovers
+$A_{ij}=0$ for $i\ne j$ and
+$A_{ii}=\omega_i\mu_i/(1+\lambda_i)$.
+

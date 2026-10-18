@@ -1,0 +1,46 @@
+**约定 1.2（所用累计估计）。** 采用上述来源的 `eta_high` 以及 [ActualFactorialCumulativePositivity 的 `result`](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/D5/S3/Arith/Robin/ActualFactorialCumulativePositivity.lean) 给出的同对象估计：
+
+$$
+|\eta(y)|\le1+\log y\quad(y\ge1),
+\tag{1.2}
+$$
+
+$$
+\frac{\log Y}{Y}\le C(Y)
+\le2-\frac{\log Y+2}{Y}<2\quad(Y\ge1),
+\tag{1.3}
+$$
+
+$$
+C(1)=0,\qquad C(2)=\log2-\frac{(\log2)^2}{2}.
+$$
+
+置
+
+$$
+c_{\mathrm{fac}}=\frac{\log2(1-\log2)}2>0.
+$$
+
+当 $Y\ge2$ 时，还有
+
+$$
+C(Y)\ge c_{\mathrm{fac}}+\frac{\log Y}{Y}.
+\tag{1.4}
+$$
+
+同一供应中的积分表示及严格界为
+
+$$
+h(r)=\int_0^\infty C(e^u)
+\left[\frac1{(r+u)^2}+\frac2{(r+u)^3}\right]du,
+\tag{1.5}
+$$
+
+$$
+c_{\mathrm{fac}}\left[\frac1{r+\ell}+\frac1{(r+\ell)^2}\right]
+<h(r)<2\left(\frac1r+\frac1{r^2}\right).
+\tag{1.6}
+$$
+
+这些累计供应作为后续谱表示的前提使用；它们没有要求 $\eta$ 逐点非负。
+

@@ -1,0 +1,25 @@
+**定义 1.1（原生窗口与数量解释）。** 采用 [Fibonacci 原子关系生成理论 §§2–4、57–58](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的原始树、替换与组成观察：
+
+$$
+\begin{gathered}
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+c(\langle s,t\rangle)=c(s)+c(t),\\
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+c(\rho(t))=Mc(t),\qquad M^2=M+I,\qquad
+\ell=(2,3).
+\end{gathered}
+$$
+
+连续三个窗口位置为 $\alpha,\beta,\rho^2\alpha$，数量分别为 $2,3,5$。字串按从高到低的 $(b_5,b_3,b_2)$ 书写，合法性为 $b_5b_3=b_3b_2=0$。引用上述窗口定义，五模式为
+
+$$
+\begin{array}{c|ccccc}
+\text{字串}&000&001&010&100&101\\
+\text{模式}&[null]&[2]&[3]&[5]&[25]\\
+\text{数量}&0&2&3&5&7
+\end{array}
+$$
+
+其中 $[25]=[2+5]$ 是一个窗口中的联合加法块，不能解释成两个乘法块 $[2][5]$。数量商、非相邻条件与乘法规则均为指定的数学输入。
+

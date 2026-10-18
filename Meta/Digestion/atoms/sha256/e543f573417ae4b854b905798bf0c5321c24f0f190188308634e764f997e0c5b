@@ -1,0 +1,98 @@
+**Theorem 34.3 (live-prefix saturation and the unique live profile
+literal).** Every live history of Definition 34.1 extends to each of
+two actual cube runs, one of final weight $k-1$ and one of final
+weight $k$, with the following properties.
+
+1. Every proper prefix before the last distinct selected-coordinate
+   query is live. Each completed run uses exactly $n$ selected
+   invocations, one at each coordinate, and exactly one further
+   invocation. Their total costs are exactly $n+1$ and $3+W_A$.
+2. Every invocation from a live history queries either a previously
+   unexposed coordinate $i$, at exactly $LLLw_i$ or $LRLw_i$,
+   or the literal $RLR$. There is at most one nonselected invocation
+   during the live portion. In particular a selected child, a repeated
+   bit, an unrelated constant or root word, and a second profile
+   invocation are excluded there.
+3. On the two saturated completions in part 1, the unique nonselected
+   invocation is $RLR$ and precedes the $n$th selected invocation.
+
+Proof. Start with the given live history. For a negative completion,
+answer each first exposure of a new coordinate by one until the
+total number of exposed ones is $k-1$, and then by zero.
+For a positive completion, instead answer new coordinates by zero
+until the total number of exposed zeros is $n-k$, and then by one.
+Previously exposed coordinates keep their values. Lemma 24.1 gives
+the actual reply for each such bit, including at selected children;
+every other word receives its fixed cube reply.
+
+For the negative rule every proper exposed prefix has at most $k-1$
+ones and at most $n-k$ zeros; its last fresh answer is the
+$(n-k+1)$st zero. For the positive rule the analogous last answer
+is the $k$th one. Thus both predicates remain possible until the
+$n$th distinct exposure. These rules are consistent with the
+starting history by (PCA.83). Every finite response history has
+actual cube completions.
+
+A latch before all $n$ exposures would give one entry to both
+required bits. Nor can a running state first repeat: all bit values
+used between its two visits have then been fixed, and any actual
+completion would repeat that stationary deterministic loop forever.
+The finite installed state set and sourcewise termination therefore
+force all $n$ distinct exposures. Their resulting vectors have the
+claimed weights, and their remaining paths are actual terminating
+cube runs.
+
+Lemma 34.2 supplies, on each of these very runs, one further
+distinguishing invocation outside the selected supports. The $n$
+distinct selected invocations charge at least $W_A$ letters, and
+that further invocation charges at least three. Both bounds in
+(PCA.82) are consequently equalities. There can be no repeated
+coordinate or second nonselected invocation anywhere on either
+saturated run. Every selected word must have its minimum length
+$s_i+4$, attained in $E_i$ only at its two occurrence roots;
+the unique nonselected word has length exactly three.
+
+Apply these two completions at a live history just before any
+specified next invocation. That invocation's installed word is the
+same in both completions, even if its next bit answer differs.
+If selected, it is fresh and is one of the two shortest roots.
+If nonselected, it is the sole nonselected word on both completed
+runs, and so must distinguish both respective comparisons of
+Lemma 34.2. Their intersection forces that word to be $RLR$.
+A prefix containing two nonselected invocations would itself
+occur in a saturated completion, which has only one. This proves
+parts 1 and 2 without identifying any installed states or
+declaring their union acyclic.
+
+It remains to exclude postponing the profile invocation until after
+all $n$ selected calls on a saturated run. If it were so postponed,
+the prefix through those calls would consist solely of the $n$
+shortest selected roots, with cost $n$ calls and $W_A$ letters.
+Hold their whole value $x_a=B_\theta$ fixed and choose three
+actual origins with $x_c=\beta$, the same branch values at
+$b_1,b_2$, and, respectively,
+
+$$
+(x_{b_3},x_{b_4})=(D_3,D_4),\quad
+(\alpha,D_4),\quad(D_3,\alpha).
+\tag{PCA.85}
+$$
+
+Choose the branch values to avoid $B_\theta$ and one another.
+These are actual $Z_c,\Pi_3,\Pi_4$ origins by NBP Proposition
+9.3. Their required bits are respectively $0,1,1$. They all follow
+that selected-only prefix, since both $a$ occurrences are identical.
+Each has at most one invocation and three letters left. A shorter
+word gives the common exterior branch. A length-three word at
+$a,b_1,b_2$ or either $c$ occurrence is common to all three.
+The $b_3$ root distinguishes only $\Pi_3$, and the $b_4$ root
+only $\Pi_4$. No one allowed invocation can separate $Z_c$ from
+both positive origins. Immediate latching also cannot do so.
+This contradicts whole-domain correctness and (PCA.82).
+
+Thus the sole nonselected invocation precedes the last selected
+one; its starting history is live. Part 2 identifies it as $RLR$.
+This proves part 3. The sources in (PCA.85), like those in Lemma
+34.2, are actual full-fiber comparison origins, not extra runtime
+ports or restrictions on upper inputs. $\square$
+

@@ -1,0 +1,13 @@
+**引理 5.2（所有剩余原子动作的实际矩阵）。** 在 $J^5$ 后，$A_5=J$。下表给出所有剩余读数的迹因子，其中 $P_{\epsilon\nu}$ 表示 (5.2) 的相应来源，$\gamma_i=g(i)$。
+
+| 原时钟与后续时间词 | 累计矩阵 | 迹因子 | 归一化实际读数 |
+| --- | --- | --- | --- |
+| $6:J$ | $I$ | $1$ | $\gamma_6-k$ |
+| $6:M$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b_\nu$ | $(1+b_\nu)\gamma_6-k$ |
+| $7:JJ$ | $J$ | $s$ | $s\gamma_7-k$ |
+| $7:JM$ | $M$ | $s+1-a_\epsilon$ | $(s+1-a_\epsilon)\gamma_7-k$ |
+| $7:MJ$ | $JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $s+a_\epsilon$ | $(s+a_\epsilon)\gamma_7-k$ |
+| $7:MM$ | $M^2J=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ | $1+s+b_\nu$ | $(1+s+b_\nu)\gamma_7-k$ |
+
+**证明。** 第六次左乘 $J$ 或 $M$ 得 $I$ 或 $MJ$；再分别左乘 $J$ 或 $M$ 得表中四个末矩阵。对任意 $X$，$\operatorname{tr}(XP)=X_{11}a+X_{12}c+X_{21}b+X_{22}(1-a)$，代入 $c=s-b$ 就得到每一行。两个字母是分别立即读取的第六、第七动作，不是一个复合动作。∎
+

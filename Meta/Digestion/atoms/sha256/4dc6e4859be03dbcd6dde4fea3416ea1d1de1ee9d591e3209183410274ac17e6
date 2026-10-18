@@ -1,0 +1,52 @@
+**Construction 8.3 (one common decoder at an absorption point).** At
+$s\in\mathcal E_{\rm abs}$ use the preceding construction except
+replace the $q_+$ live label and positive scalar failure label by one
+label. Let $K$ be the actual **weighted** rank-two live matrix
+associated with $\sqrt{w_+}q_+$. Here $w_+>0$ because the selector
+is interior. TA.38 gives $b_+\ker K=0$. Define
+
+$$
+A_K=K^\dagger K+B_+,\quad S_K=(\ker K)^\perp,
+\quad J_K:\mathbb C^2\longrightarrow S_K\text{ isometric}.
+\tag{TA.44}
+$$
+
+Then $A_K$ has rank two and support $S_K$. Let $A_K^{+1/2}$ denote
+its inverse square root on that support, zero on its kernel. Supply
+one encoder and live/failure components of one decoder:
+
+$$
+\begin{aligned}
+C_{\rm abs}&=J_K^\dagger A_K^{1/2}E^\dagger,\\
+R_L&=KA_K^{+1/2}J_K,&R_f&=b_+A_K^{+1/2}J_K.
+\end{aligned}
+\tag{TA.45}
+$$
+
+Its decoder sends $X$ to $ER_LXR_L^\dagger E^\dagger$ in live
+and to $\operatorname{tr}(R_fXR_f^\dagger)w_\ell g(t)dt\,P_f$
+in each original failure label. The kernel condition gives the exact
+identities
+
+$$
+R_LC_{\rm abs}=KE^\dagger,\quad
+R_fC_{\rm abs}=b_+E^\dagger,\quad
+R_L^\dagger R_L+R_f^\dagger R_f=I_2.
+\tag{TA.46}
+$$
+
+Thus this is one common CP, full TP decoder on the whole dimension-two
+fibre. No input-dependent normalization is used. Its encoder effect
+is $E(K^\dagger K+B_+)E^\dagger$. Both its live and its failure
+maps equal the former two maps exactly, on the full complex algebra,
+not just their effects or twelve test-state values. The live and
+failure height differences being merged are both positive, so their
+actual-record absolute difference is preserved. Report plus on this
+label. The added $B_+$ has zero $01$ coordinate and does not change
+contrast. Negative spectral failure remains separate. There are
+$4+1+1=6$ actual outcomes.
+
+This proves the sufficiency direction of the kernel condition in
+Lemma 3.2, for the entire spectral failure mass. The same formulas
+also work with any positive multiple of $B_+$ when required.
+

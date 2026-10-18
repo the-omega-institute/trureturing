@@ -1,0 +1,57 @@
+### 90.3. A completely reconstructible rational quintic lift
+
+The degree-one subresultant of the ordered pair \((\Psi,\Phi)\) is
+\[
+ S_1=6d^2b^4(b^2-3)^2[V(b,d)\theta-U(b,d)].            \tag{90.7}
+\]
+The following determinant definition fixes every sign and coefficient
+without a stored polynomial list. Form the eight coefficient rows
+\[
+ \theta^2\Psi,\ \theta\Psi,\ \Psi,\quad
+ \theta^4\Phi,\ \theta^3\Phi,\ \theta^2\Phi,\ \theta\Phi,\ \Phi
+\]
+in the nine columns \(\theta^8,\theta^7,\ldots,1\). Let \(L\) be
+the determinant using the first eight columns, and \(C\) the determinant
+using the first seven columns and the final constant column. Set
+\[
+ W=6d^2b^4(b^2-3)^2,\qquad V=L/W,\qquad U=-C/W.        \tag{90.8}
+\]
+Both quotients are integer polynomials. They have \(d\)-degrees
+13 and 14, \(b\)-degree 27, and respectively 173 and 186 terms.
+The determinant expansion gives a polynomial combination of \(\Phi\)
+and \(\Psi\), so every common root annihilates (90.7), without assuming
+that the specialized subresultant degrees remain unchanged.
+
+The leading quintic coefficient is
+\[
+ \ell=(9b^8+28b^6-170b^4-612b^2+2025)
+             (2b^{10}+33b^8+90b^6+4b^2-1).             \tag{90.9}
+\]
+Retain \(\ell\) and \(\operatorname{Res}_d(Q_5,V)\) in the guard.
+The latter is nonzero at the half parameter by §90.4. At a physical
+point outside the guard, \(d\ne0\) and (90.7) gives uniquely
+\(\theta=U/V\). The exact characteristic-zero divisions are
+\[
+ Q_5\mid V^4\Phi(b,d,U/V),\qquad
+ Q_5\mid V^6\Psi(b,d,U/V).                            \tag{90.10}
+\]
+The homogeneous expressions have 2717 and 6076 terms. Direct division
+using (90.1),(90.3),(90.8) and the printed quintic gives zero remainders;
+the integer quotient term counts are 2088 and 5112. This reconstructs
+both identities without omitted data.
+
+Conversely every real quintic root passing the retained units and
+\(K_a=d^2+4U/V>0\), with each sign \(s=\pm\sqrt{K_a}\), reconstructs
+an original ray by
+\[
+ u=(s+d)/2,\quad v=(s-d)/2,\quad
+ z=(1+iu)/(1-iu),\quad r=(1+iv)/(1-iv),\quad
+ g=s(A_a+iC_a)/\kappa.                                \tag{90.11}
+\]
+Use all three repeated-pair positions. The two signs form the dephased
+\(\Theta\) pair. Constant-channel subcases such as \(u=0\) or \(v=0\)
+are retained. The complete pole analysis of §75 puts every actual Cayley
+pole on the zero set of the second factor in (90.9), so every such fibre
+is explicitly retained in the guard. No pole is lost by a finite-chart
+division, and the quintic degree alone asserts no physical root count.
+

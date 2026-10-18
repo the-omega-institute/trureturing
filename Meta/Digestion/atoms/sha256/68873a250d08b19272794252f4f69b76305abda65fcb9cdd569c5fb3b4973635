@@ -1,0 +1,31 @@
+**Theorem 15.1 (actual-image completeness and finite-length sufficiency).** For every fixed $\mu$ and all $h,g\in\mathcal H_3(\mu)$, $G_\infty(h)=G_\infty(g)$ if and only if $h=g$. Under Hypothesis 7.1's acquisition and specified delivery, the full readout, raw selected word, held record (SC.3), and parser-labelled precedence/incidence expression of Definition 7.3 determine one another on their actual images. Counts and the fixed-prior continuation law are projections; their reverse chronological recovery fails even after any one fixed $G_k$ and the full original $V$ are added.
+
+For each individual $h$, the cutoff $\min(A(h),B(h))+1$ identifies its word among all compatible actual histories. For every public integer length bound $L\ge5$, one sufficient cutoff for the entire actual domain $N\le L$ is
+
+$$
+q(L)=\min\left\{
+\lfloor L/2\rfloor+1,
+\left\lfloor\frac{16}{7}\sqrt L\right\rfloor+5
+\right\}.
+\tag{SC.34}
+$$
+
+This is a semantic sufficient order, not a sharp threshold or an online resource optimum. The cap $L$ is a recovery promise, not a new stopping rule.
+
+Proof. Reuse the generic finite-word coefficient inverse: degree one gives $N=A+B$, and degree $N$ has the unique nonzero word coefficient $c_h(h)=1$. Thus the whole readout recovers $h$; evaluation of (SC.25) gives the converse. Theorems 6.3, 7.2 and 7.4 supply the actual parser, held-record and relational inverses. Counts and the original control give the future law under the installed prior. Theorem 14.1 supplies actual noninjective fibers for every fixed cutoff, with identical future rows; no semantic law port is needed for this obstruction.
+
+The smaller elementary inverse is the right-bounded-block reconstruction supplier of Fleischmann–Lejeune–Manea–Nowotka–Rigo, [*Reconstructing Words from Right-Bounded-Block Words*, arXiv:2001.11218v2, §3 equation (2), Theorems 19 and 21](https://arxiv.org/pdf/2001.11218v2). To specify its arguments here, choose the minority raw letter $a$, let $b$ be the other letter, and let $p=|h|_a$. Write $h=b^{g_0}a b^{g_1}a\cdots a b^{g_p}$. Its supplied counts satisfy
+
+$$
+t_i:=c_{a^i b}(h)=\sum_{j=i}^{p}\binom ji g_j,
+\qquad
+g_p=t_p,\quad
+g_i=t_i-\sum_{j=i+1}^{p}\binom ji g_j
+\quad(0\le i<p).
+\tag{SC.35}
+$$
+
+Every used pattern has degree at most $p+1$; degree-one counts select $a$ and $p$. This known triangular inverse reconstructs the runs, including $p=0$ and empty runs. The two-sided alternative $c_{a^i b a^{p-i}}=g_i$ uses the same order because it selects all $p$ occurrences of $a$. These are explicit supplier substitutions, not new generic word-reconstruction theorems. Applying the inverse to the actual raw word and then the original parser yields all records without extra source access. It gives the first bound in (SC.34).
+
+For the stronger large-length cutoff, use the Krasikov–Roditty scattered-multiset reconstruction bound $\lfloor16\sqrt n/7\rfloor+5$, as stated in the introduction and §3 of that reconstruction supplier, with original attribution [*On a Reconstruction Problem for Sequences*, JCTA 77, 344–348, doi:10.1006/jcta.1997.2732](https://doi.org/10.1006/jcta.1997.2732). Its convention is multiplicities of scattered subwords at a common known length, not contiguous factors or presence alone. If this bound exceeds $n$, the full degree-$n$ word already suffices. Otherwise ExactDeckCore's `exactKDeck_eq_iff_cutoffMagnus_eq_of_common_length`, with its hypothesis $k\le n$, transports the supplied exact-deck uniqueness to the whole cutoff. Degree one fixes $n$, so the bound at $L$ serves all smaller $n$ as well. Taking the smaller of these two sufficient orders proves (SC.34). The square-root theorem is a literature supplier, not newly proved or Lean-verified content here. $\square$
+

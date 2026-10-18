@@ -1,0 +1,76 @@
+**Theorem 65.3 (rooted coefficients on the authentic complete domains).**
+For terminal addresses $|p|=|q|=h\ge1$, $p\ne q$, put
+$k=|p\wedge q|<h$. The two responses are
+
+$$
+g^{\rm c}_{h,k}=\frac{2\cdot4^k+1}{3\cdot4^h},\qquad
+g^{\rm k}_{h,k}=F_k,
+\tag{65.7}
+$$
+
+where, for the killed domain $B_h$,
+
+$$
+A_d=2^{h-d+1}-1\quad(0\le d\le h),\qquad
+F_k=\frac1{2^{h+1}A_0}
++\sum_{r=1}^k\frac1{A_{r-1}A_r}.
+\tag{65.8}
+$$
+
+More generally, for arbitrary $p,q\in B_h$, including the diagonal, with
+$d=|p|$, $e=|q|$ and $k=|p\wedge q|$,
+
+$$
+G_{B_h}^{\rm k}(p,q)=A_dA_eF_k.
+\tag{65.9}
+$$
+
+Each terminal response in (65.7) is strictly positive and strictly increasing
+with $k$. At depth three the complete twenty-eight-pair terminal restriction is
+
+| Common-prefix depth $k$ | Number of unordered terminal pairs | $g^{\rm c}_{3,k}$ | $g^{\rm k}_{3,k}$ |
+| --- | ---: | ---: | ---: |
+| $0$ | $16$ | $1/64$ | $1/240$ |
+| $1$ | $8$ | $3/64$ | $23/1680$ |
+| $2$ | $4$ | $11/64$ | $103/1680$ |
+
+Proof. The common coefficient is the direct terminal restriction of the already
+supplied exact identity (62.3), retaining both its tree-distance term and its
+rooted image term. For the killed coefficient, expose the rooted triangular
+factorization used in (62.19)–(62.21). Set
+
+$$
+s_0=\frac{2^{h+1}}{A_0},\qquad
+s_d=\frac{A_{d-1}}{A_d}\quad(1\le d\le h).
+$$
+
+For real site coordinates $x$, expansion gives
+
+$$
+x^\mathsf TL_{B_h}x
+=s_0x_o^2+\sum_{v\in B_h\setminus\{o\}}
+s_{|v|}\left(x_v-\frac{x_{v^-}}{s_{|v|}}\right)^2.
+\tag{65.10}
+$$
+
+Every cross term is $-2x_vx_{v^-}$. At an internal nonroot site of depth $d$,
+the diagonal is $s_d+2/s_{d+1}=3$, because
+$A_{d-1}=2A_d+1$ and $A_d=2A_{d+1}+1$. At a leaf it is $s_h=3$.
+At the root it is $s_0+2/s_1=2$. For $h=0$ the empty sum leaves
+$s_0=2$ and $L_{B_0}=[2]$, so the same formula includes the singleton without
+an artificial root edge.
+
+Write $x_v=A_{|v|}w_v$. Equation (65.10) then has root coefficient
+$2^{h+1}A_0$ on $w_o^2$ and coefficient $A_{r-1}A_r$ on each
+$(w_v-w_{v^-})^2$ at depth $r$. The map from $w$ to its root and edge
+differences is triangular and invertible. Its inverse expresses $w_p$ as the
+sum of those differences along the root-to-$p$ path. Inverting the diagonal
+quadratic form therefore gives a matrix entry equal to the sum of reciprocal
+coefficients on the shared path, namely $F_{|p\wedge q|}$.
+Multiplying by $A_dA_e$ proves (65.9). This is finite algebra on the actual
+occurrence operator; no random innovations, resampled source or extra seam
+is supplied by the factorization. Since $A_h=1$, (65.7) follows. Positivity
+and strict increase follow from the positive summands in (65.8). Substituting
+$h=3$ gives the displayed table, and counting the ordered binary clusters gives
+its pair multiplicities. $\square$
+

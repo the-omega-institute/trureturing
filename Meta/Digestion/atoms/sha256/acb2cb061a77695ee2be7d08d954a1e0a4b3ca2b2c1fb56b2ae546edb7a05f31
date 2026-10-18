@@ -1,0 +1,75 @@
+**Theorem 2.2 (exact native criterion for arbitrary early encoders).**
+For every nonempty $A\subseteq\mathcal A$ and every $B,E$ as above,
+uniform recovery from the complete input of Definition 1.4 is possible
+if and only if
+
+$$
+\forall a,b\in A:\quad
+ B(a)=B(b)\ \land\ E(a)=E(b)
+ \ \Longrightarrow\ Q_G(a)=Q_G(b).
+\tag{SCC.7}
+$$
+
+Equivalently, on each joint retained-code fiber, $a_i-b_i$ must be
+constant on every $C\in\mathcal C(G)$. Equivalently, $V_G$ is constant
+there. The criterion includes all arbitrary encoders, not only codes
+that explicitly store addresses or reference differences.
+
+Proof. If (SCC.7) holds, a finite table recovers the common calibration
+of each nonempty joint fiber. On an actual input write $k=K_i^a(s)$
+and $l=K_j^a(t)$. Return
+
+$$
+\mathsf{Dec}(B(a),E(a),i,k,j,l)
+ =l-k-\Delta_{ij}(a)=t-s.
+\tag{SCC.8}
+$$
+
+This reuses the signed calibration mechanism of [AAR, Proposition
+6.3][AAR]. The unknown epochs are not evaluated by the decoder.
+Inputs outside its actual image may be rejected or assigned an
+arbitrary value; no accuracy there is required.
+
+For necessity take $a,b$ in the same joint fiber and an allowed edge
+with $a_j-a_i\ne b_j-b_i$. Put
+
+$$
+\begin{aligned}
+d_i&=b_i-a_i,&d_j&=b_j-a_j,\\
+s&=H+\min(0,d_i),&t&=H+\max(0,d_j),\\
+s'&=s-d_i=H-\max(0,d_i),&
+t'&=t-d_j=H-\min(0,d_j).
+\end{aligned}
+\tag{SCC.9}
+$$
+
+Each $d$ lies in $[-H,H]$. Consequently
+
+$$
+0\le s\le H\le t\le2H,\qquad
+0\le s'\le H\le t'\le2H.
+$$
+
+The two histories are the actual trajectories of $X_a$ at epochs
+$s,t$ and of $X_b$ at epochs $s',t'$. Equation (SCC.2) gives
+
+$$
+K_i^a(s)=K_i^b(s'),\qquad K_j^a(t)=K_j^b(t'),
+\qquad (t'-s')-(t-s)=d_i-d_j\ne0.
+\tag{SCC.10}
+$$
+
+Their entire decoder inputs agree, including the explicitly retained
+old address and clock, but the required outputs differ. Each history
+separately has one genuine native source and correctly ordered
+captures. This does not splice endpoints from different sources into
+one purported history. Extra differences in the producers' discarded
+traces are unavailable precisely by the complete-handoff premise.
+A deterministic decoder cannot serve both histories.
+
+Finally, equality of edge differences propagates along an undirected
+path, reversing signs when an edge is traversed backwards. It is
+therefore equivalent to componentwise constancy of $a-b$. Subtracting
+each component minimum gives equivalence to equality of $V_G$.
+The reverse implications follow by subtraction on each edge. $\square$
+

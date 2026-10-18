@@ -1,0 +1,14 @@
+**Proposition 7.4 (Boolean acquisition retains its original target).** After
+the same truthful acquisition, an optional Boolean consumer decides exactly
+$\operatorname{Positive}(U)\iff\exists T,\rho^3T=U$. This does not relabel the
+tree-output or numeric-output producer as the original Boolean strategy.
+
+**Proof.** Substitution never decreases leaf count. Every actual preimage
+$T$ therefore has at most $m$ leaves. Enumerate those finitely many labelled
+ordered trees, compute their third substitutions as local acquired syntax,
+and compare to the acquired $U$. The exhaustive answer is true exactly when
+one equality holds. This is the finite-decision argument already supplied by
+`acquisition_foundation`; executing the finite enumeration and comparisons
+adds its own paid bill. `Positive` and the Boolean return type remain exactly
+the original ones. $\square$
+

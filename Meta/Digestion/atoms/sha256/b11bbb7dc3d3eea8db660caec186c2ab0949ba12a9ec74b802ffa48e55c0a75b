@@ -1,0 +1,9 @@
+**Theorem 89.2 (sharp critical-radius numerical length).** There are constants $c_-,c_+$ and $N_0$, depending only on the fixed $L,d_0$ and the fixed interpreter/framing convention, such that
+
+$$
+\log_2\log_2N-c_-\leq C_N(1/2)
+\leq\log_2\log_2N+c_+,\qquad N\geq N_0.
+$$
+
+Thus $C_N(1/2)=\log_2\log_2N+O_{L,d_0}(1)$, its ratio to $\log_2\log_2N$ tends to one, and the minimum number of radius-$1/2$ centers is $\Theta_{L,d_0}(\log N)$. The lower permits arbitrary real center trajectories, so it applies in particular to terminating finite-output decoders. The upper uses one fixed finite arithmetic interpreter independent of $N,L,d_0$. An additional prefix-free requirement has the separately paid sufficient representation in Definition 92.2. No optimal additive constant or optimal prefix-free overhead is asserted.
+

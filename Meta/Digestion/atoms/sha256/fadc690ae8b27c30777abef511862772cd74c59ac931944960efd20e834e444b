@@ -1,0 +1,69 @@
+**Proposition 4.2 (The eight-bit cut at every original error).**
+For every entire sequence (1.2) and every original competitor $A$
+in either class,
+
+$$
+2a_2+11a_3+13a_4+13a_5+12a_6+11a_7+11a_8
+ \le2+117e_a(A).
+\tag{4.2}
+$$
+
+**Proof.** First let an original $N$ rule meet $0<E\le1$ and
+take the representative of 4.1. We obtain one complete normalized
+eight-bit representative as follows.
+
+If $H>8$, in each table fix every higher represented reply to zero,
+project each label above eight to zero, and contract the resulting
+constant observations. The same table weights supply the whole
+restricted law, with at most two variable observations. On a low
+first-zero word $n\le8$, projection leaves its target
+$(1-a_n)e_0+a_ne_n$ unchanged, and TV contracts. Thus every
+$A,C,P$ row survives, for every suffix. On the positive eight-prefix
+the fixed higher bits give first zero nine. Its target projects to
+$e_0$, so TV contraction gives $p_+(0)\ge1-E$. This verifies
+the positive row regardless of the size of the actual $a_9$.
+If $H=8$, use the representative itself.
+
+If $H<8$, ignore the added input bits and retain the old outputs.
+All old first-zero rows are unchanged. At each added first zero
+$n>H$ its law is the old positive law $p_+$, supported on labels
+at most $H$. Since its only possible overlap with the target is
+at zero, the exact identity is
+
+$$
+\operatorname{TV}(p_+,(1-a_n)e_0+a_ne_n)
+ =1-\min\{p_+(0),1-a_n\}
+ =\max\{1-p_+(0),a_n\}\le E.
+\tag{4.3}
+$$
+
+Here $a_n\le E$ and $p_+(0)\ge1-E$. In row terms,
+$p_+(0)\ge1-a_n-E$, $p_+(n)=0\ge a_n-E$ and
+$p_+(0)+p_+(n)\ge1-E$. These separately verify the base,
+correct and independent union events. The positive row persists.
+This includes $H=0$, where the old input is empty, as well as
+all ties $a_n=E$, negative singleton demands and every multiple-zero
+suffix.
+
+These operations prove necessity through finite representations.
+They give no free actual observation or law-preserving stopping
+replacement to an original rule. After them, apply Lemma 3.1 with
+artificial ninth amplitude $b'_9=E$ to the eight-bit representative
+at $(a_1,\ldots,a_8;E)$. This auxiliary amplitude is not the actual
+$a_9$: the original sequence and all its targets retain their values.
+In particular the proof constructs no original competitor that ignores
+an actually active ninth coordinate. Theorem 3.2 now gives (4.2)
+with $E$ in place of the error.
+
+For caps $E\ge1$ this necessary inequality is immediate: its left
+side is at most 73, while $2+117E\ge119$. Thus every positive
+met cap is covered. For actual error $r<1$, decrease positive met
+caps to $r$. The inequality is affine in the cap and passes to the
+limit, including hypothetical $r=0$. Horizons and representatives
+may change; no limiting law or coupling is asserted. At $r=1$ the
+same direct bound applies. Finally complete an original $O$ schedule
+as in Definition 1.2. Its identical output law has the same error
+and at most two actual requests, with any ignored second request
+counted. The $N$ result therefore proves (4.2) for $O$ too.
+$\square$
+

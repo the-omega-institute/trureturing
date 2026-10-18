@@ -1,0 +1,25 @@
+**Theorem 3.4 (noninterference until commitment).** Fix equal public boot
+parameters, public acquired history, arena-layout descriptors and next address
+$p$ in two valid executions. Up to literal-response commitment, the extended
+public microtraces agree: instructions, touched addresses, availability, allocation,
+control, ticks and fees agree. At commitment the only new source-dependent public
+value is the complete literal reply. Thereafter public computations are functions
+of acquired responses and public inputs.
+
+**Proof.** The enumeration, parser branches, locator branches, record masks,
+destination allocation and all instruction addresses depend on public $H,p,z$
+and the common layout. Hence the generated code and its construction schedules
+agree. During private execution every loop bound and seek comes from that code.
+Private latches only feed `BF` and private bit writes; they never choose a control
+edge, port, address or stopping test. The response has two fixed positions, and
+the same complete-write/seal/release schedule runs in both executions. Induction
+on primitive occurrences proves the precommit equality. At release Theorem 3.3
+supplies the one newly available literal response; every later test is public.
+$\square$
+
+Public microtrace here has TM57's privacy convention: it reveals a private
+write's opcode and location, not its private bit value or latch contents.
+Full actual histories retain those private values. Theorem 3.4 is not equality
+of those full private histories. Giving a public observer private scratch
+equalities would violate the declared interface.
+

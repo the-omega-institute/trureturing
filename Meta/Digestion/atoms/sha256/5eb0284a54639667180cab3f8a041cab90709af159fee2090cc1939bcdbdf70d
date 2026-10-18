@@ -1,0 +1,11 @@
+**Theorem 2.2 (actual rank-three zero-beta residual).** The endpoint branch of (R.4) is attained by
+
+$$
+K_0=e_0\langle0|+e_1\langle1|,\quad
+K_1=\tfrac13e_2\langle2|,\quad
+K_2=\tfrac23e_3\langle2|,\quad
+K_3=\tfrac23e_4\langle2|.
+$$
+
+**Proof.** The TP sum is $I_3$. The phase support is $\operatorname{span}(e_0,e_1)$, $\tau$ has rank one, $C=0$, and $S=\operatorname{diag}(0,1/9,4/9,4/9)$ in the displayed environment. Thus $w=1$, $\operatorname{rank}S=3$ and $\operatorname{rank}J_p=5$. A rank-one restriction at zero would exclude an actual original-class channel. $\square$
+

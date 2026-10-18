@@ -1,0 +1,32 @@
+**Theorem 4.3 (native heavy targets satisfy the squared-cell bound).**
+For every range-feasible $P\subseteq S_3$ with $w(P)>169$, there
+is a nonempty $q\in W_3$ which no own-coordinate native experiment,
+at any finite word, determines on $P$, and
+
+$$
+\sum_z w(P\cap\Gamma_q^{-1}(z))^2
+\le88^2+116^2=21200<28561=169^2.
+\tag{NCE.38}
+$$
+
+Proof. Lemma 4.2 forces both $A,B$ to belong to $P$. If there
+were at most one branch, its weight would be at most $4\cdot4=16$,
+so $w(P)\le88+52+16=156$. There are therefore two distinct
+branches. Lemma 3.2 supplies a nonempty target $q\in W_3$
+distinguishing them.
+
+The root experiment merges these two branches, so does not
+determine this target. Every nonempty finite word returns absent
+on both $A$ and $B$, whose target factors differ by Lemma 3.2;
+thus no such experiment determines it either. A constant experiment
+also fails. This exhausts every own-coordinate experiment, including
+all off-target and arbitrarily long words.
+
+By Lemma 3.2, $A$ is alone in its target cell: neither $B$ nor
+any branch shares its factor. That cell has weight $88$. All
+remaining cells together have weight at most $52+64=116$, by
+the last row of Lemma 4.2. For nonnegative numbers the sum of
+squares is at most the square of their sum, because all cross
+products are nonnegative. Applying this to those remaining cells
+gives (NCE.38). $\square$
+

@@ -1,0 +1,39 @@
+**Proposition 58.4 (a native source distinction consumed by the next response).** In the uncapped Process44 numerical contract take the two actual INITIAL sources
+
+$$
+u=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+\qquad
+v=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle.
+\tag{58.5}
+$$
+
+Their old seven-site domains and the entire old addressed operator $\mathsf H_D$ coincide. Both have original $\eta=((2,2),0)$, so Process44.7 gives identical histories for every allowed numerical adaptive protocol with common initialization and matched prepared contexts. In particular the actual finite word
+
+$$
+\operatorname{Read}_\eta[((2,2),0)];\quad
+\rho;\quad\operatorname{Read}_\eta[((2,4),0)];\quad
+\operatorname{Stop}
+\tag{58.6}
+$$
+
+is common. Its two installed domains differ, because the beta frontiers are respectively $\{RL,RR\}$ and $\{LR,RR\}$. At the supplied values $a=1,g=16,z=-16$, write
+$G_o(D;z)=\langle e_o,(\mathsf H_D-zI)^{-1}e_o\rangle$. Then
+
+$$
+\begin{aligned}
+G_o(D(u);-16)=G_o(D(v);-16)&=163/296,\\
+G_o(D(\rho u);-16)&=448087/813700,\\
+G_o(D(\rho v);-16)&=41237/74884,\\
+G_o(D(\rho u);-16)-G_o(D(\rho v);-16)&=1/7616638850.
+\end{aligned}
+\tag{58.7}
+$$
+
+Thus the full old operator and its complete spectral catalogue, together with these genuine numerical records, do not determine this next mathematical response. This does not equate the sources in the wider authenticated-address interface or in a different Clifford port.
+
+Proof. The original cross-product leaf evaluation vanishes on both trees: each root multiplies two zero or two equal-axis child values. The actual compositions agree, and $c\rho=Mc$, $q\rho=Rq$ give both replies in (58.6). Process44.7 already owns the adaptive-history statement; no counterfactual execution is inferred from it. The old shape is the same complete two-level tree, so (55.4) gives the identical addressed matrix for every supplied $a,g$.
+
+At $z=-16$ the resolvent matrix diagonal at depths $0,1,2,3$ is respectively $2,11,15,17$. In the old domain each depth-one Schur pivot is $11-2/15=163/15$, giving $G_o=(2-30/163)^{-1}=163/296$. On a beta depth-two leaf actually split by $\rho$, its pivot becomes $15-2/17=253/17$. The depth-one pivots for $\rho u$ are $163/15$ and $2749/253$, while those for $\rho v$ are both $41237/3795$. Taking the root inverse gives precisely (58.7). These are applications of §55.5's existing elimination on the literal renewed trees, not a new Schur theorem. The uniform lower bound $\mathsf H_D\ge(3-2\sqrt2-16)I>-16I$ makes every inverse legitimate. The displayed difference is also obtained by full rational matrix elimination.
+
+If a new scalar port for this response were expressly authorized with jointly adversarial absolute error $\varepsilon_z$, this one response separates the pair exactly when $2\varepsilon_z<1/7616638850$. At equality the two closed report intervals touch. This is only the distinguishability condition for that added port; it supplies neither that port nor its precision, cost or execution. Original $\operatorname{Read}_\eta$ has acquired neither number in (58.7). □
+

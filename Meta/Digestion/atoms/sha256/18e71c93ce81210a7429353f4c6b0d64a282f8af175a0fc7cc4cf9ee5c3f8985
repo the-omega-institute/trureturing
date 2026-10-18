@@ -1,0 +1,20 @@
+**定义 60.3（四十字实际行及全部可见标签）。** 每个响应行先保留请求十二字，再保留以下二十八字：
+
+$$
+\begin{aligned}
+(&\mathrm{event},\mathrm{reason},\mathrm{sid},\mathrm{version},\mathrm{origin},
+\mathrm{loaded\_mode},\mathrm{loaded\_a},\mathrm{loaded\_b},D,B,\\
+&\mathrm{cursor\_before},\mathrm{cursor\_after},\mathrm{sample\_present},\mathrm{sample\_bit},
+\mathrm{load\_ref},\mathrm{stop\_ref},\mathrm{stop\_cursor},\\
+&\mathrm{receipt\_ref},\mathrm{receipt\_kind},\mathrm{receipt\_value},
+\mathrm{load\_attempts},\mathrm{sample\_attempts},\mathrm{stop\_attempts},\\
+&\mathrm{verify\_attempts},\mathrm{use\_attempts},\mathrm{global\_remaining},
+\mathrm{terminal\_tag},\mathrm{schedule\_ref}).
+\end{aligned}
+\tag{60.2}
+$$
+
+档案含每次获准提交，包括全部拒绝；事件号连续。请求中的身份声称与响应中的实际身份分开，错误声称不能改变后者。成功 SAMPLE 的前后游标依次为 $0,\ldots,n-1$ 与 $1,\ldots,n$。完整行在付费提交后一次公开；未用槽全四十字为零。schedule_ref 指向公共字面表，连同上一实际发生及表长确定开始、结束逻辑 tick；逐步 tick 标签本身属于服务迹，不是被省略的元数据。记录已提交后不再改值，后续整档案提交选择对旧槽复制原值。
+
+每个微步的公共标签完整列为：所有者、操作／相位、字面指令地址、具名源／目的单元地址、通道方向、单位 tick、费用增量、忙／空闲令牌，以及刚提交的行或最终任务输出。私有操作数值、算术工作空间和未提交候选响应无读端口。固定扫描及拒绝填充使地址与表长不依这些值；模拟电路活动或功耗不在这个理想字接口中。额度、enabledness、停止、全部行字段及累计费均保留。有效来源直接影响的基础可见量只有真正的门位；后续提案、记录和策略当然可以依已取得位而变。
+

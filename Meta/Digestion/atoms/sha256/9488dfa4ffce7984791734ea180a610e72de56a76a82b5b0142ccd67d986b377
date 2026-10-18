@@ -1,0 +1,25 @@
+**Definition 3.2 (direct gate tape).** Use the already installed source interval
+and allocate all fresh result bits after it in the same producer-owned private
+arena addressable by the existing PR57.D4 gate interpreter. Source cells retain
+their original fixed descriptor and are never gate destinations. All scratch
+descriptors are obtained
+by `Base`/`Allocate`, never by converting a mathematical cursor into a free number.
+Allocate and zero a shared dummy operand cell first. Emit directly, without a
+recursive expression-expansion wrapper, the following finite tape:
+
+1. One constant-zero gate for the shared zero value, and one constant-zero gate
+   for each of the two output accumulators.
+2. For every enumerated packet $z$, emit a fresh constant-one $e_{z,0}$. For each
+   private bit position $i<2N$ emit one gate
+
+$$
+e_{z,i+1}=
+\begin{cases}
+e_{z,i}\land x_i,&z_i=1,\\
+e_{z,i}\land\neg x_i,&z_i=0.
+\end{cases}
+$$
+
+3. Emit two fresh OR-fold outputs. For response coordinate $j$, OR its previous
+   accumulator with $e_{z,2N}$ if the public $b(z,p)_j=1$, and with the shared
+   zero otherwise. Both gates are emitted for every row, including invalid rows.

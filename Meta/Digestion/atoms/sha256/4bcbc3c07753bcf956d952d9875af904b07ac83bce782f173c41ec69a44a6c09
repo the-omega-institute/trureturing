@@ -1,0 +1,92 @@
+**Theorem 87.3 (one common original-class output constructor).** Fix a weak
+request $0\le s<s_0$ and a finite family satisfying (FA.91)--(FA.92) with
+$\sum_jp_j|z_j|\ge\tau:=s/s_0$. Give low label $j$ the deterministic report
+$\operatorname{sgn}(z_j)$, arbitrary at zero, and choose isometries
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$. Put
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,\\
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\qquad
+B_j=K_jJ_jQ_j^{-1/2},\\
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2},
+\end{gathered}
+\tag{FA.94}
+$$
+so that $B_j^\dagger B_j+F_j=I_2$ and
+$L_{\mathrm{dec},j}=B_j^\dagger B_j\succ0$. Use
+
+$$
+G_{\mathrm{time}}(u)=\frac{2u}{1+u},\qquad
+Z_j(u)=\sqrt{I-G_{\mathrm{time}}(u)F_j},\qquad
+R_j(u)=2(1+u)^{-2}F_j[I-G_{\mathrm{time}}(u)F_j]^{-1}.
+\tag{FA.95}
+$$
+
+The current-survivor jump on each of the five labelled Borel components is
+
+$$
+Y\longmapsto w_\ell\,\frac{2}{(1+u)^2}
+\operatorname{tr}\!\left(F_jZ_j(u)^{-1}YZ_j(u)^{-1}\right)P_f,
+\quad w=(0,\tfrac14,\tfrac12,\tfrac14,0),
+\tag{FA.96}
+$$
+and the survivor terminal map uses $EB_j(I-F_j)^{-1/2}$. Its activity is
+
+$$
+\int_0^1\|R_j(u)\|du
+=\log\left(1+\frac{b_j}{\mathfrak c(h_j)}\right)\le A.
+\tag{FA.97}
+$$
+
+Choose isometries $W_\perp:\mathbb C^2\to\operatorname{ran}(I-P)$ and
+$J_0:\mathbb C^2\to\mathbb C^3$, and use one counted high label
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\ W_\perp^\dagger\end{pmatrix}.
+\tag{FA.98}
+$$
+Its rate is zero, its binary report is deterministically $+$, and its two
+terminal Kraus indices are hidden. For every $X\in M_5$ and every passive
+reference, the resulting full output satisfies
+
+$$
+\Phi^L(X)=E\left[\Lambda_*(E^\dagger XE)+
+J_0W_\perp^\dagger XW_\perp J_0^\dagger\right]E^\dagger,
+\tag{FA.99}
+$$
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)
+\operatorname{tr}(EME^\dagger X)P_f,
+\tag{FA.100}
+$$
+with conditional reference operator
+$w_\ell(\int_{\mathcal B}g)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$. The five components include the two
+zero components. The total encoder effect is $I_5$; failures occur first at
+absolute time $6+u$, only survivors receive the terminal map, and no later
+positive-carrier action or forced deadline absorption is introduced. Under the
+inherited source identities, the same instrument preserves
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*,\qquad e,n\in\{\pm1\},
+\tag{FA.101}
+$$
+and its whole dimension-five high fibre (supported dimension three plus
+coherent complementary dimension two) is charged by the dimension-at-least-three
+acquisition event and has the original sharp worst-history joint cost. This
+constructor uses the allowed JR free complement and is distinct
+from the fixed certain-failure CA10 completion.
+
+**Proof.** The identities in (FA.94) are direct matrix multiplication. Since
+$F_j\prec I$, (FA.95) is positive on the whole fibre and integration of the
+rank-one eigenvalue gives (FA.97). Equations (FA.99)--(FA.100) follow by
+summing the live and failure Kraus components; tensoring the same calculation
+with $I_R$ gives the reference identity. The source error and cost identities
+are inherited exactly. The low reports attain
+$\mathsf V=s_0\sum_jp_j|z_j|\ge s$, while the deterministic high report
+contributes no $01$ effect. The moment and capacity identities alone give the
+displayed CP outputs; membership at the requested contrast also uses the
+stated available-contrast hypothesis. $\square$
+

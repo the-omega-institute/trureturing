@@ -1,0 +1,77 @@
+**Application 26.3 (Theorem 5.2: exact literal-history intersection).** For a
+literal record $e=(a,p,c)$ let $I_e$ be the set of indices giving its
+stated reply at its own certified epoch. At $p=\varepsilon$, $I_e$ is
+$\mathbb N$ for $c=\mathsf{Pair}$ and is empty otherwise. At a nonempty
+$p$, put $h=h(p)$ and $g=g(p)$. The exact sets are
+
+$$
+\begin{array}{c|l}
+c&I_{(a,p,c)}\\ \hline
+\mathsf{absent}&\{j\in\mathbb N:j\le g-a-1\}\\
+\alpha&\{h-a-2\}\cap\{j\in\mathbb N:j+a\ge g\}\\
+\beta&\{h-a-1\}\cap\{j\in\mathbb N:j+a\ge g\}\\
+\mathsf{Pair}&\{j\in\mathbb N:j\ge\max(0,h-a)\}.
+\end{array}
+\tag{CS.26.9}
+$$
+
+Define, as an intersection over the retained list with all occurrences,
+
+$$
+S(H_0)=\mathbb N\cap\bigcap_{e\text{ an occurrence in }H_0}I_e.
+\tag{CS.26.10}
+$$
+
+This proves (CS.26.3) exactly, including emptiness. Every $I_e$ is an
+integer interval or empty. Their finite intersection has exactly one of
+the three forms stated above; in particular it has no separated finite
+part preceding a disconnected tail.
+
+Proof. Absence is exactly failure of (CS.26.7). Under that guard the
+subtree index $n=j+a+2-h$ is nonnegative. Its root is $\alpha$ exactly
+when $n=0$, is $\beta$ exactly when $n=1$, and is a pair exactly when
+$n\ge2$. These facts give the two guarded singleton lines. For the last
+line $n\ge2$ is $j+a\ge h$, which implies the guard because $h\ge g$.
+These cases exhaust the replies, including endpoints born after epoch zero.
+
+For computation, start with lower bound zero and upper bound $+\infty$.
+An empty $I_e$ makes the result empty; otherwise intersect its lower and
+upper bounds with the running bounds. A finite singleton supplies both
+bounds. At the end lower bound above upper bound means empty, a finite
+upper bound gives a finite interval $[A,B]\cap\mathbb N$, and infinite
+upper bound gives $[A,\infty)\cap\mathbb N$. Maxima of lower bounds and
+minima of upper bounds prove this exhaustive classification.
+
+Every original source satisfying the retained input first has the form
+$u_j$ by Application 26.1 and then satisfies every set membership in
+(CS.26.10). Conversely a $j$ in that intersection produces a finite $u_j$
+with the complete old row, the guarded acquired equality, and every
+literal at its stated epoch. This proves both full-source inclusions;
+there is no additional promise that the source belongs to the family.
+$\square$
+
+Identical records may have identical effects on the intersection, but
+remain distinct acquired occurrences. Different epochs are never merged.
+For example $(0,LL,\mathsf{absent})$ and $(1,LL,\beta)$ both hold exactly
+at $j=0$; recording both, or repeating either, is legitimate. Treating
+the absent reply as an absence at every epoch would give a false result.
+
+For clarity about signs, the relation convention remains literally
+
+$$
+\operatorname{Rel}_{(a,p,b,q,\bowtie)}(u_j)
+\Longleftrightarrow
+G_{a,p}(j)\land G_{b,q}(j)\land
+\bigl(V_{a,p}(j)\bowtie V_{b,q}(j)\bigr),
+\tag{CS.26.11}
+$$
+
+where $G_{a,\varepsilon}$ is true, $G_{a,p}(j)$ for nonempty $p$ means
+$j+a\ge g(p)$, and $V$ is the entire subtree in (CS.26.7), or $u_{j+a}$
+at the root, defined only under its guard. For a disequality it is the
+last comparison alone that is negated; both guards stay conjoined.
+Here the sole retained relation is (CS.26.1), whose two guards were
+verified above. The old $x\ne z$ compares reached old holes and holds
+by index distinctness. Formula (CS.26.11) fixes the semantic convention;
+this application does not add arbitrary signed records to its input class.
+

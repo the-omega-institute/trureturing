@@ -1,0 +1,36 @@
+**Theorem 3.1 (Vanishing-tail finite certificate).** Let $P$ be an actual stationary legal law with a conditional-null $f_C$. Suppose an actual-law bound $\tau_P(R)\le\eta(R)$ is proved independently of attainment. For integers $R,r\ge0$, define
+
+$$
+U_{R,r}(P,f)=\sum_{i\in I_R}\mathbb E_P[f_C(X_i-q_{r,i}(P))^2],\qquad I_R=[1-R,L+R].
+\tag{3.1}
+$$
+
+Same-law attainment implies
+
+$$
+|U_{R,r}(P,f)|\le F\eta(R)+2(L+2R)F\sqrt{\frac{c_\star}{r+1}}.
+\tag{3.2}
+$$
+
+A verified strict inequality
+
+$$
+|U_{R,r}(P,f)|>F\eta(R)+2(L+2R)F\sqrt{\frac{\bar c}{r+1}}
+\tag{3.3}
+$$
+
+certifies $d(P)<c_\star$. If $S_P(f)\ne0$ and $\eta(R)\to0$, some finite $R,r$ give (3.3), without assuming attainment in this detectability statement.
+
+Proof. Under attainment, (1.3) sets the full response to zero. Lemma 2.1 makes its full-posterior partial sum $V_R$ on $I_R$ satisfy $|V_R|\le F\eta(R)$. For each retained site, projection under the same $P$, stationarity, squared-loss Lipschitz continuity and Cauchy–Schwarz give
+
+$$
+|U_{R,r}-V_R|\le2(L+2R)F\sqrt{D_r(P)-c_\star}
+\le2(L+2R)F\sqrt{c_\star/(r+1)}.
+$$
+
+This proves (3.2); monotonicity in the nonnegative ceiling and (1.1) prove the strict certificate. For arbitrary $P$ with nonzero $S$, choose $R$ so $F\eta(R)<|S|/4$. Then $|V_R|>3|S|/4$. For this fixed $R$, increasing-field $L^2(P)$ projection gives $U_{R,r}\to V_R$. Choose finite $r$ making the approximation error and square-root allowance each smaller than $|S|/4$. The left side then exceeds $|S|/2$ and the threshold is smaller than $|S|/2$. $F=0$ cannot give nonzero $S$. $\square$
+
+For $P_\theta$, (3.1) is determined by its actual finite marginal on $[1-R-r,L+R+r]$. On a positive radius-$r$ exterior atom $u,v$, the posterior is $\lambda M_uM_1M_v\mathbf1/(\lambda M_uAM_v\mathbf1)$; zero denominators have zero contribution, forced atoms have zero numerator, and empty words handle $r=0$. All block/window overlaps are retained.
+
+[Two-word, Theorems 2.1 and 3.1][W] cancel exterior terms exactly for a positive conditional-null pair, and remove the constant allowance from the interior-only $T_{L,r}$. Here nearby exterior sites remain in $U_{R,r}$ and the independently proved tail allowance vanishes. This theorem does not remove the interior-only constant for arbitrary multiword directions, nor supply a universal or efficient radius.
+

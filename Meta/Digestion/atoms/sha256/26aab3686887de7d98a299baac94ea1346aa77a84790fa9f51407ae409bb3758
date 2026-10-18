@@ -1,0 +1,30 @@
+### 3.5 全协议类下界的统一余项
+
+式（1.3）的 minimax 下界已包含所有允许的准备、有限参考和随机化。其量词来自 [Minimax][Minimax] §§3.2–3.3 的同时决策约束：共同混态输入可在有限参考上纯化，POVM 可等距嵌入正交结果空间；对每条合法边，固定源的相对酉给出 $\operatorname{Re}\langle\psi_b,\psi_c\rangle=x$，从而同一决策律满足
+
+$$
+x\le\sqrt{P(c\mid b)}+\sqrt{P(b\mid c)}+\sqrt{\eta_b\eta_c}.
+\tag{3.12}
+$$
+
+源无关随机种子的平均保持此式，因为 $\mathbb E\sqrt P\le\sqrt{\mathbb EP}$，且 $\mathbb E\sqrt{\eta_b\eta_c}\le\sqrt{\mathbb E\eta_b\,\mathbb E\eta_c}$。此后使用最终平均条件概率，不交换种子平均与逐源最大值。若最大错误 $m<x$，则每条边的两向错误振幅之和至少为 $x-m>0$；按这个正和归一得到可行图份额，故 $m\ge\kappa_n(x-m)^2$。零振幅的分子允许为零，没有除以个别份额、准备权重或对偶质量。$m\ge x$ 的情形也满足 $m\ge v_n(x)$。这正是所引全协议下界的适用范围。
+
+只需对这个既有有限表达式作统一估计。令 $v=v_n(x)$。对 $x>0$，其较小根满足
+
+$$
+v=\kappa_n(x-v)^2,\qquad
+0\le v\le\kappa_nx^2.
+$$
+
+因而
+
+$$
+0\le\kappa_nx^2-v
+=2\kappa_nxv-\kappa_nv^2
+\le2\kappa_n^2x^3
+\le\frac18n^2x^3.
+\tag{3.13}
+$$
+
+对所有协议取下确界得式（2.1）的下界。不假定最优准备或最优 POVM 存在或连续，也不要求参考维数有统一上限。
+

@@ -1,0 +1,22 @@
+**Definition 2.2 (The three-read installed frontier).** Let $\tau$ be
+the return time, with $\tau=\infty$ on nonreturn, and let
+$N\in\mathbb N_0\cup\{\infty\}$ count all actual calls. Set
+
+$$
+\begin{gathered}
+E_3=\{\tau<\infty,N\le3\},\qquad
+q_3=(J_p\otimes\nu)(E_3),\\
+L_3=(J_p\otimes\nu)(A\ne H_j,E_3),\\
+C_m=\sup\{q_3-L_3:|K|\le m,\ q_3=1\},\qquad
+R_m=1-C_m,\qquad m\ge1.
+\end{gathered}
+\tag{2.2}
+$$
+
+An immediate halt makes these sets nonempty. The condition $q_3=1$ is
+almost sure, allowing exceptional nonreturn and excess-read paths of
+probability zero. It does not require an all-input cap. On this slice
+$L_3$ is unconditional four-state classification error, up to a null
+extension of $A$. It is distinct from visible-bit Brier loss. The total
+paid cost is $\mathbb E N$, counting all returning and nonreturning paths.
+

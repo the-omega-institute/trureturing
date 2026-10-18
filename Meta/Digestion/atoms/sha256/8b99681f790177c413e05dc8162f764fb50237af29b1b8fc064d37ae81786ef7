@@ -1,0 +1,58 @@
+**Theorem 28.5 (Complete sparse pair density).** Here $a_0=00,a_1=01$ and $b_0=0000,b_1=0010,b_2=0100,b_3=0101$. Put $s=1-p_1=p_2+p_4$. In the support order
+
+$$
+a_0b_0\mid(a_0b_1,a_0b_2,a_1b_0)\mid(a_0b_3,a_1b_1,a_1b_2)\mid a_1b_3,
+$$
+
+the complete noisy blocks are
+
+$$
+sp_4,
+$$
+
+$$
+\begin{pmatrix}
+sp_2&sp_1p_2&\mu D_0\\
+sp_1p_2&p_1s^2&\mu D_0\\
+\overline\mu D_0&\overline\mu D_0&p_1p_4
+\end{pmatrix},
+\tag{28.5}
+$$
+
+$$
+\begin{pmatrix}
+sp_1^2&\mu d\overline e&\mu p_1D_0\\
+\overline\mu\,\overline d e&p_1p_2&p_1^2p_2\\
+\overline\mu p_1D_0&p_1^2p_2&p_1^2s
+\end{pmatrix},
+\tag{28.6}
+$$
+
+and $p_1^3$, respectively. Every unlisted entry is zero. The entry $R_s=\mu D_0$ is the $(a_0b_1,a_1b_0)$ entry of (28.5), while $Z_s=\mu d\overline e$ is the $(a_0b_3,a_1b_1)$ entry of (28.6).
+
+**Proof.** The second-window vectors are $c_4e_4,c_2Sx,c_1S^2x,c_1^2x$. Their untwirled Gram matrix is exactly
+
+$$
+\begin{pmatrix}p_4&d&d&0\\
+\overline d&p_2&p_1p_2&e\\
+\overline d&p_1p_2&p_1s&p_1d\\
+0&\overline e&p_1\overline d&p_1^2\end{pmatrix}.
+$$
+
+The eight joint vectors, with their total counts, are
+
+$$
+\begin{array}{c|c|c}
+00|0000&S^2x\otimes c_4e_4&0\\
+00|0010&S^2x\otimes c_2Sx&1\\
+00|0100&S^2x\otimes c_1S^2x&1\\
+00|0101&S^2x\otimes c_1^2x&2\\
+01|0000&c_1x\otimes c_4e_4&1\\
+01|0010&c_1x\otimes c_2Sx&2\\
+01|0100&c_1x\otimes c_1S^2x&2\\
+01|0101&c_1x\otimes c_1^2x&3.
+\end{array}
+$$
+
+The three count-one diagonals are $sp_2,p_1s^2,p_1p_4$. The first/second pair in the count-one block uses the local entry $p_1p_2$, giving $sp_1p_2$; their cross-window pairs use $d\overline d=D_0$, giving $\mu D_0$. The count-two diagonal entries are $sp_1^2,p_1p_2,p_1^2s$. Its first/second pair is $d\overline e$, its first/third pair is $d(p_1\overline d)=p_1D_0$, and its second/third pair is $p_1(p_1p_2)=p_1^2p_2$. Both the first/second and first/third pairs in this last block have $\Delta m_1=-1$, so these two cross-window entries carry $\mu$, while the second/third pair has $\Delta m_1=0$. The count-zero and count-three norms are $sp_4$ and $p_1^3$. This accounts for every supported vector and proves (28.5)–(28.6). $\square$
+

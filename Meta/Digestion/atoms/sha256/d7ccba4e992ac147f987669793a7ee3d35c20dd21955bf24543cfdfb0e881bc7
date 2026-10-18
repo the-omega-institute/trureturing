@@ -1,0 +1,42 @@
+### 104.1. Original domain and the equal-polar hypothesis
+
+Retain the four original two-coordinate fibres and the calibrated Gram domain
+\[
+\mathcal E=\{G\in\operatorname{Herm}(8):G\succeq0,\ G_{ff}=I_2\}.
+\]
+The local channels have dimensions \(\mathbb C^8\to\mathbb C^4\), the correlated encoding is fixed, and the error has the original unhalved diamond normalization with arbitrary reference. With \(T_{ff}=I_2\) and \(T_{fg}=J_2/2\) for distinct fibres, [RT III §91](ARITHMETIC_HOLOGRAPHIC_RT_III.md) gives the calibrated equality
+\[
+F(G,H)=\max_{\rho,W}2\operatorname{Tr}[(T-G\odot H)W],
+\qquad \rho\succeq0,\quad \rho\text{ fibre-block diagonal},\quad
+\operatorname{Tr}\rho=1,\quad0\preceq W\preceq\rho.
+\tag{104.1}
+\]
+Assume throughout the original-domain parts of this section that \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), that
+\[
+\operatorname{rank}G=7,\qquad \operatorname{rank}H=6,
+\qquad0<t=F(G,H)<\tfrac14,
+\tag{104.2}
+\]
+and that the support \(S\) of the full kernel vector of \(G\) has occupancy \((2,1,1,0)\). Write its whole original fibre as \(F=\{1,2\}\) and its singleton coordinates as \(J=\{3,4\}\). Their actual original partners remain outside \(S\).
+
+The additional equal-polar hypothesis is that reciprocal diagonal phase changes of \(G,H\) and a record-space basis choice put the supported \(H\) records in the form
+\[
+h_1=e_1,\quad h_2=e_2,\quad
+h_3=(c,su),\quad h_4=(c,s\overline u),\qquad
+c,s>0,\quad c^2+s^2=1,\quad |u|=1.
+\tag{104.3}
+\]
+This is a substantive restriction on the two singleton records. It is not a reduction of arbitrary supported Grams by a real gauge. Zero values of either polar coordinate would make an original cross-fibre product entry zero and force the matrix-unit error to be at least \(1/2\); thus the positive convention loses no subquarter endpoint. No symmetry is imposed on outside records.
+
+**Theorem 104.1.** There is no local minimum satisfying (104.2)–(104.3) and the stated support condition.
+
+The proof keeps the same original common normer throughout. RT III §§95–97 supply the supported quotient, the equality of principal and full complete norms, unrestricted principal one-party best responses, and the rank-one-quotient exclusion. In this occupancy their consequences are
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\quad G_S=H_S\odot\overline{\mathsf R},
+\quad \mathsf R\succeq0,\quad \mathsf R_{ii}=1,
+\quad \mathsf R\operatorname{diag}(\overline a)H_S=0.
+\tag{104.4}
+\]
+Here \(a\) spans the full kernel of \(G\). Section 99 supplies uniqueness of all principal normers, including singular competitors, positive definiteness of the common principal density, and invertibility of the coefficient and witness cross blocks. Sections 101–102 exclude the real-gauge and both-unbiased endpoints. These results concern the full calibrated domain; they do not assert joint local minimality on a principal or fixed-rank domain.
+

@@ -1,0 +1,13 @@
+## 8. Safe singular slopes and a transverse sign restriction
+
+Write
+
+$$
+\mathcal C_{\mathrm{safe}}=
+\left\{\begin{pmatrix}A&B_0\\C_0&E_0\end{pmatrix}:
+ A,E_0\ge0,\ B_0,C_0\le0\right\}.
+$$
+
+The positive-secant and prescribed-slope criteria used here are Theorems 2.1 and 3.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md). Their matrix interpolation kernel is exactly $\ker\mathcal T_a$, by Lemma 2.1. A subspace contained in
+$\mathcal C_{\mathrm{safe}}\cup(-\mathcal C_{\mathrm{safe}})$ has dimension at most one. We use those existing results without re-proving them.
+

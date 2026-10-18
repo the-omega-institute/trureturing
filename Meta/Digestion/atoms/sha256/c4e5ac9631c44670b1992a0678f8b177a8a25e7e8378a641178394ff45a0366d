@@ -1,0 +1,45 @@
+**Proposition 58.4 (source-box inclusion and original optimization).**
+The image of $\mathcal B_9$ under (RC.2)–(RC.5) is contained in the
+interior of $\mathcal B_7$. For the conditional source root the original
+problem is
+
+$$
+\begin{aligned}
+j(\tau)=\max\;&\sum_{r,\epsilon=\pm1}\epsilon\operatorname{tr}(GX_{r,\epsilon}),\\
+&X_{r,\epsilon}\succeq0,\quad\operatorname{tr}(QX_{r,\epsilon})=0,
+\quad\sum_{r,\epsilon}X_{r,\epsilon}=I,\quad
+\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}\geq\tau,
+\end{aligned}
+\tag{RC.6}
+$$
+
+and $\mathcal T(s_0\tau)=T_{\rm flat}+(j(\tau)-\operatorname{tr}G)/2$.
+On the residual interval every optimizing tuple has
+$X_{+,-}=0$, saturated contrast, and corresponds to
+
+$$
+A=X_{+,+},\quad B=X_{-,+},\quad C_0=X_{-,-},\qquad
+A+B+C_0=I,\quad \operatorname{tr}(QA)=\operatorname{tr}(QB)
+=\operatorname{tr}(QC_0)=0,
+\tag{RC.7}
+$$
+
+with $2A_{01}=\tau$ and objective
+$\operatorname{tr}G-2\operatorname{tr}(GC_0)$.
+
+Proof. The inclusion is a finite rational/radical comparison: substitute
+all nine intervals in CG.112–.113, take adjugates, the three positive
+pivots in (RC.5), then (RC.2)–(RC.3). Directed arithmetic is specified in
+§60; its integer endpoint comparisons give precisely the strict
+inclusions in the table. In particular no coordinate $\eta_i$ is held
+at its centre. These comparisons also imply the coarse JR.86 box.
+The optimization and its connection with the original experiment are
+JR Theorems 42.1 and 45.1, JR.83–.85 and Lemma 53.2, reused with their
+full all-error-optimizer scope. CA Theorem 5.1's real exposed face is a
+consequence of the complex equality conditions. It is not an assumption
+that the competitors are real processors. Necessity uses analytic
+refinement only as an upper bound on actual-label TV; the converse
+constructs an instrument that actually generates the labels. In
+particular no other binary-effect entry or forgotten complete channel
+is fixed in the lower bound. $\square$
+

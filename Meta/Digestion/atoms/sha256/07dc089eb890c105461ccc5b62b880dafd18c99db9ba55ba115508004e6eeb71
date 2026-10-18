@@ -1,0 +1,42 @@
+## 2. Adjacent low-degree slots obstruct every allowed parameter
+
+Suppose an actual edge e has degree d(e) in {6,7}. Suppose every one of the four adjacent local slots at every occurrence of e has global degree at most9. No bound is imposed on its opposite slots. Then Uemura Condition5.4 fails at e for every allowed C.
+
+Proof. Define one global assignment, simultaneously for all labels, by
+
+    x_f=B_d(f)(C).
+
+This lies in Q_C by Lemma5.2. The target and all its adjacent slots read C. Every opposite value o satisfies 1<o<=C. In the standard order (12,13,14,34,24,23), each target occurrence therefore reads
+
+    (C,C,C,o,C,C).
+
+Direct substitution in the native six-variable cosine formula gives
+
+    phi(C,C,C,o,C,C)
+      = [2C^2-(C-1)o]/[C-1+2C^2]
+      >= phi(C,C,C,C,C,C)=C/(2C-1).
+
+The denominator is positive. The raw value is positive because o<=C, and is strictly less than1 because o>1. Thus clamping causes no ambiguity. Each actual target angle is at most
+
+    beta(C)=arccos(C/(2C-1)).
+
+For d(e)=6, C/(2C-1)>1/2 implies beta(C)<pi/3, so the total is strictly below2pi.
+
+For degree7, beta is increasing in C. At C_max=1+sqrt2, its cosine is
+
+    q=(3+sqrt2)/7.
+
+Put c=cos(2pi/7). We have c>1/2 and
+
+    p(c)=0,  p(x)=8x^3+4x^2-4x-1.
+
+The identity follows from 1+2cos(2pi/7)+2cos(4pi/7)+2cos(6pi/7)=0. On x>=1/2, p'(x)=24x^2+8x-4>0. Also q>1/2 and
+
+    p(q)=(-263+204sqrt2)/343>0,
+
+since 2*204^2=83232>263^2=69169. Hence q>c, so beta(C)<=arccos q<2pi/7. Again the total angle is strictly below2pi. This proves failure of the full quantified static condition, not merely failure of a tabulated lower-angle estimate.
+
+All repeated occurrences read the same global x_f. A high-degree label appearing as an opposite slot at one occurrence cannot create an inconsistency: the hypothesis only forbids that label in an adjacent slot anywhere in this particular target star. The same global assignment handles every occurrence simultaneously.
+
+Consequently, if Condition5.4 holds for some allowed C, every degree6 or degree7 edge must have at least one actual occurrence with an adjacent degree>=10 slot. This is a necessary condition for this specific box criterion, not for geometricity.
+

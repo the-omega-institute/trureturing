@@ -1,0 +1,32 @@
+## 11.8 Scope, source credit, and remaining boundaries
+
+This continuation extends the owning volume *Native FIB on the full open
+domain: affine approximation and finite attainment*. Its §§1--4 supply the
+native current-ray interface, original ten-output metric, bounded
+observable reduction, and scalar residual used above; §§5--9 supply the
+finite-rank growth lemma, polynomial witnesses, exact updates, and
+prescribed-path interface. The new synthesis is the varying-model
+fixed-dimension quantifier, the finite Hankel minima and their limit, and
+the exact implicit positive certificate. The classical ingredients are
+finite-dimensional linear algebra, translation characters, scalar diagonal
+subsequences, closed determinant equations, finite Hankel shift
+realizations, generalized eigenspaces, finite geometric sums and Cesaro
+cancellation, Bernstein moment identities, and finite Cauchy--Schwarz
+estimates. These ingredients are used here only within the unchanged
+native contract.
+
+The statements remain limited to $0<Z<1$ and the open support
+$0<k<H$. No endpoint or support-degenerate limit is included. Encoders are
+functions of current rays, and only bounded affine observables were shown
+to lose $\beta$; unbounded encoder coordinates and arbitrary encoder fibers
+remain unclassified. The exact capacity and its attainment for general
+positive fixed $n$ below $Z=2/3$ remain open. Effective bounds on the least
+certificate index $M$, evaluated finite minima, matching rates, and an
+optimal dimension characterization remain open. The original unrelated
+finite-hidden-$N$ alternative remains unresolved, with no identification
+between its objective or admissible realizations and Definition 2.1. The
+results make no claim about kernel verification, finite precision,
+robustness, physical implementation, efficient algorithms, training,
+machine-learning benefit, or worldwide priority. The guard-recoverable
+zero-dimensional exception is separate as stated in §11.5.
+

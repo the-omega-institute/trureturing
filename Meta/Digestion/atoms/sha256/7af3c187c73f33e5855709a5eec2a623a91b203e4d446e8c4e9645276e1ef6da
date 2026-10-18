@@ -1,0 +1,13 @@
+### 58.1 Model and theorem
+
+Let L=C² be the logical input, and X=Y=C² the two physical local systems. Define V:L->X tensor Y by V|0>=|00>, V|1>=|11>, and J(Z)=VZV*. For t in [0,1], let D_t be the logical amplitude-damping channel with Kraus matrices K_0=|0><0|+sqrt(t)|1><1| and K_1=sqrt(1-t)|0><1|. The target channel is T_t=J composed with D_t, from L to X tensor Y.
+
+Competitors are F=Phi composed with J, where Phi is any finite convex mixture of product qubit CPTP maps A tensor B. Local product ancillas are allowed; communication, postselection, and additional shared entanglement are not. Neither code-support preservation nor exact action on either basis state is imposed. Diamond norm includes arbitrary passive references and is not divided by two.
+
+Then
+
+    inf_Phi ||Phi composed with J - T_t||_diamond
+       = (8/9)(sqrt(t)-t).
+
+The infimum is attained by two product-CPTP branches: with probability a=(2t+sqrt(t))/3 use identity on both physical systems, and with probability 1-a reset both to |0>. The same random choice and same physical channel act on every logical input. At t=0 or t=1, a single branch suffices.
+

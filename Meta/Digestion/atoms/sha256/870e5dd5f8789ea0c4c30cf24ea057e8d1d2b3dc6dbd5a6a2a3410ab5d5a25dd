@@ -1,0 +1,50 @@
+### theorem 8.1: 定理 8：局部不可见不推出迭代不可见
+
+若某个隐藏方向 $h$ 在一步未来读出下满足：
+
+$$
+R_1(h)=0,
+$$
+
+但动态更新算子 $U$ 满足：
+
+$$
+R_1(Uh)\neq0,
+$$
+
+则 $h$ 虽然对一步预测不可见，但对两步预测可见。
+
+#### 证明
+
+一步读出不能区分 $p$ 与 $p+h$。
+
+经过动态更新后，两者差异变为：
+
+$$
+U(p+h)-U(p)=Uh.
+$$
+
+若
+
+$$
+R_1(Uh)\neq0,
+$$
+
+则第二步未来读出可以区分它们。证毕。
+
+因此，动态 future quotient 必须至少检查：
+
+$$
+\kappa
+\longrightarrow
+U\kappa
+\longrightarrow
+U^2\kappa
+\longrightarrow
+\cdots.
+$$
+
+这正是静态 AURIC 纤维与项目中 dynamic future quotient 之间最关键的连接。
+
+---
+

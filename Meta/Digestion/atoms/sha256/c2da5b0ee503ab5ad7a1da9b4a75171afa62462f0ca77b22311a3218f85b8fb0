@@ -1,0 +1,45 @@
+**命题 33.10.2（独立干预记录的亲和度）。** 在定义 33.8.1 的实验中，若 $S=\{j:c_j(u)\ne c_j(v)\}$，则 $B(P,Q)=\prod_{j\in S}(1-\lambda_j+\lambda_j a_p)$。
+
+**证明。** 擦除时两假设都给出同一个 $\bot$，故第 $j$ 行的 Bhattacharyya 亲和度为
+
+$$
+1-\lambda_j+\lambda_j a_p.
+$$
+
+独立分离行相乘，非分离行即使端点在同一行内相关也只贡献因子 $1$。若 $S=\{j:c_j(u)\ne c_j(v)\}$，则
+
+$$
+\boxed{
+B(P,Q)=\prod_{j\in S}\bigl(1-\lambda_j+\lambda_j a_p\bigr).
+}
+$$
+
+乘积律的有限求和逐坐标分解即得所述公式。若 $p$ 与 $\lambda_j=\lambda$ 同质，令 $d=|S|$ 为两端目标编码的 Hamming 距离，便有
+
+$$
+B=b^d,
+\qquad b=1-\lambda+\lambda a_p.
+$$
+
+这里的 $d$ 只控制亲和度，不预先决定精确 Bayes 风险。对任意两个离散记录律，令
+$\operatorname{TV}(P,Q)=\frac12\sum_x|P(x)-Q(x)|$，则等先验最优错误率
+
+$$
+P_e=\frac{1-\operatorname{TV}(P,Q)}2
+$$
+
+满足
+
+$$
+\boxed{
+\frac{1-\sqrt{1-B^2}}2\le P_e\le\frac B2.
+}
+$$
+
+这里使用的 Bayes 风险与亲和度界是二元检验的标准估计：最优规则在每个记录上选质量较大的假设，所以 $P_e=\frac12\sum_x\min(P(x),Q(x))$。上界来自 $\min(P(x),Q(x))\le\sqrt{P(x)Q(x)}$。对下界，令
+$s_x=\sqrt{P(x)}+\sqrt{Q(x)}$、$d_x=\sqrt{P(x)}-\sqrt{Q(x)}$；则
+$\sum s_x^2=2+2B$、$\sum d_x^2=2-2B$，而
+$2\operatorname{TV}=\sum|d_xs_x|\le\sqrt{(2-2B)(2+2B)}=2\sqrt{1-B^2}$，整理即得。证毕。
+
+<a id="section-33-11"></a>
+

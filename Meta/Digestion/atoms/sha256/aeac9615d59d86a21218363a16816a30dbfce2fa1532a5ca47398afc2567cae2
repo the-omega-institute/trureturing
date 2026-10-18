@@ -1,0 +1,19 @@
+**Lemma 45.3 (Finite-record coupling and common submeasures).** Enumerate the primes as $p_1<p_2<\cdots$, write $P_m=\{p_1,\ldots,p_m\}$, and let $C_m(x)$ be the actual sources matching $x$ on $P_m$. Let $E_m(x)$ be the measurable seed event that preparation at $x$ terminates within $m$ transitions and uses only primes in $P_m$. Then $E_m(x)\uparrow T_x$, and, for every $y\in C_m(x)$, the preparation at $y$ has the same record and output as at $x$ on this entire event. In particular,
+
+$$
+\operatorname {TV}(\widehat\mu_x,\widehat\mu_y)
+\le1-\mathsf P(E_m(x)).
+\tag{45.4}
+$$
+
+The finite measure
+
+$$
+\rho_{x,m}(A)=\mathsf P(E_m(x)\cap\phi_x^{-1}(A))\qquad(A\in\mathcal F)
+\tag{45.5}
+$$
+
+is dominated by $\widehat\mu_y$ for every $y\in C_m(x)$. Thus every lawful prepared-law map is TV-continuous in finite prime observations, and two sources with identical complete prime observations have equal prepared laws.
+
+**Proof.** Every finite preparation uses a finite menu, so the stated events exhaust $T_x$. On $E_m(x)$, induction over the actual execution transports each preparation transition to every source matching $P_m$, with the seed fixed. This gives identical records and output tapes, without requiring a measurable diagonal in $\Theta\times\Theta$. For each $A\in\mathcal F$, the two output-event indicators agree on $E_m(x)$, and their expectation difference has absolute value at most $1-\mathsf P(E_m(x))$. Taking the event supremum proves (45.4); restricting to the same event proves (45.5)'s domination. Given $\gamma>0$, choose $m$ with $\mathsf P(E_m(x))>1-\gamma$. The cylinder $C_m(x)$ then gives a TV neighborhood of radius $\gamma$. Identical complete observations permit the same comparison for every $m$, giving equality. All comparisons hold for a whole seed event before any comparison source or individual seed is used. $\square$
+

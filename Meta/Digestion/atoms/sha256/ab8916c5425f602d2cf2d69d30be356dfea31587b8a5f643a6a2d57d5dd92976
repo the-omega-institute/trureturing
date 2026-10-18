@@ -1,0 +1,40 @@
+**Theorem 5.1 (uniqueness of contact masses and grouped matrices).**
+For every sufficiently small positive $p$, the optimal tuple in EP.14
+at $\tau(p)$ is uniquely
+
+$$
+\begin{aligned}
+X_{+,+}&=\pi_{++}h_{++}h_{++}^T+\pi_{+-}h_{+-}h_{+-}^T,\\
+X_{-,+}&=\pi_{-+}h_{-+}h_{-+}^T,\qquad
+X_{-,-}=\pi_{--}h_{--}h_{--}^T,\qquad X_{+,-}=0.
+\end{aligned}
+\tag{EP.30}
+$$
+
+It has the ranks EP.8. The slacks $S_{+,+},S_{-,+},S_{-,-}$ have
+ranks $1,2,2$, respectively, and $S_{+,-}$ can have rank three.
+
+Proof. Equality in EP.29 saturates contrast and all PSD pairings.
+Null-decompose any optimal slots by Proposition 2.2. Every nonzero
+atom must lie on the appropriate null zero ray listed after EP.27.
+The first four moment columns are a perturbation of the invertible
+corner Hadamard matrix, so the four total masses are unique. They are
+precisely $\pi_j(p)$. All are positive; the two positive-$u$ rays are
+independent. This proves both grouped uniqueness and the primal ranks.
+It permits proportional splitting of an atom and makes no claim of
+unique encoder or Kraus representation.
+
+The first PSD slack kills two independent contacts, and is nonzero
+because its null-cone zero set is not the whole ellipse. Its rank is
+one. Each other used slack has exactly one null-cone zero. Near that
+contact its ellipse quadratic form equals $(2/p)(P-H_p)$ and has
+strictly positive second derivative. If its PSD rank were one, its
+form would be a square of a linear form. The affine zero line on
+$h_0=1$ either meets the ellipse transversely, giving a second
+intersection, or is tangent, making the square have zero second
+derivative at the contact. Both contradict the established properties.
+It cannot be zero or PD, so its rank is two. Strict completion gives
+the unused block rank three. The rank statements concern complete
+slack matrices, not only their restrictions to the null cone.
+$\square$
+

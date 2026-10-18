@@ -1,0 +1,44 @@
+**推论 460.2（两种准确的集中预算）。** 若定理 460.1 的候选还满足
+$N_-(\sigma)\le n+\rho$，其中 $\rho\ge0$，则
+$$
+\int y^2(y-r)^2\,d\sigma^+\le M\rho,
+\qquad
+\int(y-r/2)^2\,d\sigma^-\le\frac{M\rho}{\alpha},
+\quad d_{\rm box}\le M\rho.
+\tag{SDD.4}
+$$
+因而对每个 $a>0$ 有
+$$
+\sigma^-\{t:|y(t)-r/2|\ge a\}
+\le\frac{M\rho}{\alpha a^2},
+$$
+$$
+\int_{\{|y-r|\ge a\}}y^2\,d\sigma^+
+\le\frac{M\rho}{a^2}.
+\tag{SDD.5}
+$$
+若正部另有真实支持截止 $t\le T$，则还得到原始正质量控制
+$$
+\sigma^+\{t:|y(t)-r|\ge a\}
+\le\frac{M\rho e^{hT}}{a^2}.
+\tag{SDD.6}
+$$
+没有这一截止时，（SDD.5）只控制所写的加权正质量。
+
+**证明。** （SDD.3）的三个非负项分别不超过 $M\rho$。
+对于 $0\le y\le1$，准确因式分解为
+$$
+M-y^2(y-r)^2
+=(y-r/2)^2\bigl(r^2/2-(y-r/2)^2\bigr).
+\tag{SDD.7}
+$$
+因为 $0<r<1$，有 $|y-r/2|\le1-r/2$，所以括号内至少为
+$r^2/2-(1-r/2)^2=\alpha>0$。积分给（SDD.4）第二项；
+其余项直接来自（SDD.3）。在各自所写集合上用距离平方至少为 $a^2$，
+得到（SDD.5）。若 $t\le T$，则 $y^2=e^{-ht}\ge e^{-hT}$，
+得到（SDD.6）。证毕。
+
+正部不能无条件改成原始质量集中：有限谱率上的平方零点只有 $y=r$，
+但 $q(t)\to0$ 当 $t\to\infty$。接近最优允许正质量逃向无穷谱率；
+负部的最大点缺口则有（SDD.7）的统一正系数。这是两种集中结论的准确差别。
+

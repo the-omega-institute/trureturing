@@ -1,0 +1,26 @@
+**Proposition 12.2 (unnormalized effects and actual laws).** In each saturated attaining instrument the explicit high encoder per report is
+
+$$
+\sqrt{(1+rs\tau)/2}\,K(v)E^\dagger:\mathbb C^5\to\mathbb C^3,
+$$
+
+with decoder $X\mapsto EXE^\dagger$. For every rank-many low factor $z_{rj}$ of $L_r$, its encoder is $U_{rj}^\dagger K(z_{rj})E^\dagger$ into $\mathbb C^2$, with decoder $X\mapsto EU_{rj}XU_{rj}^\dagger E^\dagger$. Supported failure rows and complement trace branches are exactly those in Theorem 3.4, retaining their separate report/eigenpair labels and entire scalar measures. The same construction with high factors $\sqrt{k/2}e_D$ gives the plane instruments.
+
+For a positive five-mode test $\sigma$ with unnormalized compression $\rho$, their raw branch masses are the traces of these encoder outputs; in particular
+
+$$
+\begin{aligned}
+p(r,H)&=\frac{1+rs\tau}{2}\operatorname{tr}(\Theta(P)\rho),\\
+p(r,L,j)&=\operatorname{tr}(K(z_{rj})^\dagger K(z_{rj})\rho),\\
+p(r,f,j)&=\nu_{rj}\langle f_{rj},\rho f_{rj}\rangle,\qquad
+p(r,\perp)=\operatorname{tr}(Q_5\sigma)/2,\\
+p(r)&=\operatorname{tr}\sigma/2+rs\kappa\operatorname{Re}\rho_{01}.
+\end{aligned}
+\tag{PG.65}
+$$
+
+Only on a normalized actual input are these probabilities. On each original history the last line is
+$1/2+rs\kappa en\sqrt{y(64-y)}/128$. A fair report at $s=0$ does not make the finer generated labels input independent.
+
+Proof. These are encoder Born traces. The low reconstruction isometry preserves its trace, and the sum is precisely the effect (PG.10), whose trace gives the last line. No trace is divided by a later-live, failure or acquisition mass. Whole TP decoding, full reference operators, every separate Borel time set, cross-support zeros and extra-sector zeros have already been proved at the map level in Theorem 3.4 and therefore hold for all these specializations. $\square$
+

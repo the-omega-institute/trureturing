@@ -1,0 +1,57 @@
+**Proposition 8.1 (what a retained whitebox summary must preserve).** Fix
+the actual operations and full-row target of Definition 1.3. A summary
+of an acquired input cannot determine its exact feasible budget region
+if it identifies $U_m$ with the representative domain in Proposition
+7.1 while retaining only their identical set of possible rows. Nor can
+it identify the coupled $U_m$ with $U_m^-$ and retain its uniform finite
+recovery answer.
+
+Proof. In the first case the common row set has two elements but the
+two exact budget regions have different minimal vectors, by Theorem
+6.3 and Proposition 7.1. In the second case the finite feasible region
+is nonempty for $U_m$ and empty for $U_m^-$, by Theorems 6.3 and 7.2.
+A function of the same summary has the same value on both inputs and
+cannot equal both different answers. $\square$
+
+For a machine-learning or whitebox interpretation, the precise lesson
+is about what a model is asked to retain and which observations it can
+actually acquire. Knowing the finite list of output classes does not
+specify the cost of certifying an output on all states compatible with
+the actual record. Here that cost grows like the number of independent
+leaf alternatives, although the output remains binary and the hidden
+tree size is unbounded. An acquired cross-version equation can eliminate
+an unbounded comparison obligation without disclosing the unknown tree.
+The equation's acquisition, certification and retention remain paid.
+
+Constructive counterpairs have a concrete diagnostic use: on the
+accepting source they identify a particular unexamined cone in which a
+different admissible source would receive an incorrect row. After
+deleting the graph record, pairs exist beyond every finite original
+prefix. These are exact model-relative failure certificates. They are
+not training data with a claimed distribution, a guarantee about
+generalization, a learned-policy construction, an empirical gain, or a
+claim of reduced physical energy. There is no generic risk-decomposition
+argument substituting for the source/action proofs above.
+
+The graph theorem does not settle exact resource synthesis on the entire
+constructor-elimination family $\mathcal E_{\rm CE}$ of ARH19–25.
+That larger question remains open here. Its parameter occurrences need
+not have the simple two-copy, one-shared-suffix form (GRS.7). A proposed
+extension must establish common physical actions before all sources,
+preserve each entire domain, and provide whole-row terminal formulas
+and an unbounded-address negative stopping argument for its own
+representation. Failure to prove that bridge is not an impossibility
+theorem for $\mathcal E_{\rm CE}$.
+
+There are specific existing warnings against automatic transfer.
+[SRF, Counterexample 1.6][SRF] disproves recognizability of a particular
+direct same-root convolution of a physical word and a shifted residual
+tree; it does not disprove another encoding. [TPO, Definition 1.2 and
+Corollary 4.2][TPO] excludes a uniform native normal-domain definition
+in its named four-sort covariant term-power language with pointwise
+inner formulas and no variable leaf-address selector. It says nothing
+against the full binary-position finite-set interpretation in Lemma
+2.2. Neither obstruction is promoted to general resource-synthesis
+impossibility. The concrete impossibility established here is exactly
+the acquired-relation-deletion theorem on (GRS.30).
+

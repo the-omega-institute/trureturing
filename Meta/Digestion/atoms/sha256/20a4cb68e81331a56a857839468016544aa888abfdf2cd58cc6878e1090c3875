@@ -1,0 +1,59 @@
+**Theorem 4.1 (joint fractional optimum and regularized depth two).**
+For every integer $n\ge1$,
+
+$$
+Z_2(n)=\left(\frac{25}{17}\right)^n,
+\qquad
+\left\lceil\left(\frac{25}{17}\right)^n\right\rceil
+\le K_2(n)
+\le H_{11^n}\left(\frac{25}{17}\right)^n,
+\tag{NCM.19}
+$$
+
+where $H_N=\sum_{j=1}^N1/j$. Consequently
+
+$$
+\sigma_2=\log_2\frac{25}{17}.
+\tag{NCM.20}
+$$
+
+For all $n\ge1$, an explicit uniform finite-block error is
+
+$$
+\eta_2(n)=\frac{\log_2(1+3n)}n\longrightarrow0,
+\qquad
+\sigma_2\ge\frac{\log_2 K_2(n)}n-\eta_2(n).
+\tag{NCM.21}
+$$
+
+Proof. The rational point weights
+$y_n(x)=17^{-n}\prod_i w(x_i)$ have mass at most one on every
+jointly admissible set by Theorem 3.3. Their total on $S_2^n$ is
+$(25/17)^n$. Summing against any fractional cover gives the lower
+bound on $Z_2(n)$, and summing over any integral cover gives the
+ceiling lower bound on $K_2(n)$.
+
+For the opposite fractional inequality, reuse the local coefficients
+in Convention 3.1. Every product of their locally admissible sets is
+jointly admissible: the requested coordinate uses its own local
+experiment. Assign each product the product of those coefficients.
+The total coefficient covering a tuple is the product of its local
+coverages, hence one; total coefficient is $(25/17)^n$. This is an
+explicit primal cover matching the all-competitor dual. The local
+seed is credited to FMR; the feasibility of its dual tensor against
+all additional correlated competitors is Theorem 3.3.
+
+FMR Lemma 4.4's finite harmonic rounding, applied to these $11^n$
+vertices, gives the integral upper in (NCM.19), with paid attainment
+as in FMR Lemma 6.2. Since
+
+$$
+H_{11^n}\le1+\ln(11^n)=1+n\ln11<1+3n,
+$$
+
+the normalized logarithmic upper and lower differ by at most
+$\eta_2(n)$. This tends to zero, proving (NCM.20) and (NCM.21).
+The lower bound applies uniformly to every allowed fiber and reader;
+the upper supplies one valid code. No value of finite $K_2(n)$ alone
+is treated as a lower bound on its limiting rate. $\square$
+

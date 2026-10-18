@@ -1,0 +1,12 @@
+**Corollary 7.2 (effective cost evidence).** A finite represented repair
+may instead supply any rational couplings with certified upper costs
+$M_p,M_\beta$. Every bound remains valid after replacing $m_p,m_\beta$
+by $M_p,M_\beta$.
+
+**Proof.** Equations (3.8)–(3.15) use only the integrated costs of the
+chosen couplings. All coefficients in the subsequent bounds are
+nonnegative, so their certified upper bounds can be substituted. This
+does not change the exact optimal-cost existence assertion in Theorem 3.1.
+If neither complete-law costs nor upper bounds are supplied, finite
+rationality alone supplies no evaluated error budget. $\square$
+

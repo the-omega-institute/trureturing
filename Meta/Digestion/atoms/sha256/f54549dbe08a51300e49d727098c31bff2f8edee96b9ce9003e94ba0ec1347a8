@@ -1,0 +1,18 @@
+**Definition 1.3 (the optimization and the whole-fibre constraint).** Let $F_+$ be the plus effect of an actual binary report processed from the same acquired label. In source notation $\kappa=h_0a+h_1b>0$, define
+
+$$
+\mathsf V(F_+)=\frac{2|\operatorname{Re}(F_+)_{01}|}{\kappa},\qquad
+\mathsf W=\max_{y,e,n}\Pr_{y,e,n}(d_j\ge3).
+$$
+
+The original sharp cost $\mathsf C(s)$ is JR.32. Each decoder has a positive measurable first-event rate $R_j(a)$ of integrable operator norm on its entire joint fibre. Its other survivor controls preserve trace; its terminal processing on survivors is TP. There is no forced terminal absorption, singular first-event measure, or positive-carrier operation after the first failure. Define
+
+$$
+\mathsf A=\sup_j\int_0^1\|R_j(a)\|\,da,
+\qquad
+\mathcal T_A(s)=\sup\left\{\operatorname{TV}(P^j_{5,+,+},P^j_{27,+,+}):
+E(\Phi)=E_*,\ \mathsf V(F_+)\ge s,\ \mathsf W=\mathsf C(s),\ \mathsf A\le A\right\}.
+$$
+
+The supremum over labels becomes the stipulated essential supremum in the integral extension. It is neither expected activity nor the integral of a maximum across labels. Total variation is one half of the absolute signed mass on the actual acquired-label space, with live and eventual failure mass combined inside each label before the absolute value. Every nonzero full encoder counts as an actual label, even if its supported restriction is zero. Low means $d_j\le2$, high means $d_j\ge3$; their label counts are distinct from fibre dimensions and hidden Kraus counts.
+

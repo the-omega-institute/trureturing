@@ -1,0 +1,19 @@
+**Definition 7.1 (Native cuts and controller requirement).** Restrict the source
+menu to TagRead and accepted $\rho$, together with declared NativeLocal and
+Halt markers. Start from the actual boot source $u$, epoch zero and empty
+authenticated journal. A finite Native run is capacity-safe if every current
+tree and every substitution candidate in that run belongs to $\mathcal T_H$.
+The abstract register at a completed semantic cut is the decode of the same
+installed TM block. The abstract control is the fully acquired controller
+workspace, $e$ is its rho epoch, and the Native trace projection maps TagRead
+to `read(e,p,y)`, accepted Rho to `update(e_before)`, NativeLocal to `localStep`,
+and omits Halt while retaining its complete output separately.
+
+For implementation the controller has an actually supplied finite effective
+description over finite encodings, with terminating computation at each reached
+instruction. A general $\delta:C\to\operatorname{Op}(C,O)$ with arbitrary types
+and no effective finite representation is not asserted to have a tape
+implementation. A general selector backend additionally consumes its actual
+code and genuine-state realization equation; the existence of a `Partrec`
+certificate or a classical code choice does not install that description.
+

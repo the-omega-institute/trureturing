@@ -1,0 +1,5 @@
+source_id = "fib-retuned-bounded-memory-uniform-renewal-converse"
+path = "docs/develop/theory/FIB_RETUNED_BOUNDED_MEMORY_UNIFORM_RENEWAL_CONVERSE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

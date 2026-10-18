@@ -1,0 +1,61 @@
+### 62.2. A dimension-independent inequality for actual physical outputs
+
+The following estimate holds in every dimension d≥3, with any three distinct labels renamed 1,2,3. For a physical LOSR channel Φ, let
+
+    p_i = <ii|Φ(J(|i><i|))|ii>,
+    λ_ij = <ii|Φ(J(|i><j|))|jj>,
+    ℓ_i = Tr[(I−P_code) Φ(J(|i><i|))],
+
+where P_code=Σ_k |kk><kk|. Thus ℓ_i is the actual basis-input code leakage. Define the real functional
+
+    W(Φ)=2 Re λ12+2 Re λ23−Re λ13−p_1−2p_2.
+
+Then
+
+    W(Φ) ≤ 3 sqrt(2ℓ_1)+4 sqrt(2ℓ_2)+3 sqrt(2ℓ_3)+2ℓ_1+4ℓ_2.       (1)
+
+In particular, exact code support implies W≤0. This linear three-label constraint strengthens the saturated-path contradiction into a usable stability estimate. Its constants do not depend on d, branch count, or local Stinespring environment dimensions.
+
+Proof. First consider one positive-weight product branch A⊗B. Choose finite Stinespring isometries and expand their images of the input basis as
+
+    U_A|i>=Σ_k |k> a_(k,i),    U_B|i>=Σ_k |k> b_(k,i),
+
+where the a and b are environment vectors. Put a^i_k=||a_(k,i)||² and b^i_k=||b_(k,i)||²; each is a probability distribution. The branch's leakage on input i is
+
+    ℓ_(b,i)=1−Σ_k a^i_k b^i_k.
+
+Choose f_b(i) maximizing a^i_k b^i_k, and write M_(b,i) for that maximum. Cauchy–Schwarz gives Σ_k sqrt(a^i_k b^i_k)≤1, hence
+
+    1−ℓ_(b,i)=Σ_k a^i_k b^i_k ≤ sqrt(M_(b,i)),
+    1−M_(b,i) ≤ 2ℓ_(b,i).
+
+For each i let e_(b,i) be the unit environment vector obtained by normalizing a_(f_b(i),i)⊗b_(f_b(i),i). If this vector is zero, choose any unit vector in the same environment space; in that case M_(b,i)=0 and ℓ_(b,i)=1. Define
+
+    g_(b,i)=a_(i,i)⊗b_(i,i),
+    h_(b,i)=1_(f_b(i)=i) e_(b,i).
+
+If f_b(i)=i, then g_(b,i)=sqrt(M_(b,i)) e_(b,i). Otherwise ||g_(b,i)||²≤1−M_(b,i), since its output probability is disjoint from the maximizing joint output. In both cases,
+
+    ||g_(b,i)−h_(b,i)||²≤2ℓ_(b,i),
+    | ||g_(b,i)||²−||h_(b,i)||² |≤2ℓ_(b,i).                 (2)
+
+The vectors g encode the actual retained matrix-unit coefficients:
+
+    p_i=E_b ||g_(b,i)||²,    λ_ij=E_b <g_(b,j),g_(b,i)>.
+
+Define rounded quantities p̃_i=E_b ||h_(b,i)||² and λ̃_ij=E_b <h_(b,j),h_(b,i)>. All g and h have norm at most one. The triangle inequality followed by Cauchy–Schwarz in the branch probability space yields
+
+    |p_i−p̃_i|≤2ℓ_i,
+    |λ_ij−λ̃_ij|≤sqrt(2ℓ_i)+sqrt(2ℓ_j).                    (3)
+
+No physical implementation of the rounded vectors is asserted or needed. They are auxiliary vectors on a single common branch probability space.
+
+For each branch write E_i=1_(f_b(i)=i), so h_i=E_i e_i. The following pointwise Gram/event inequality holds:
+
+    2 Re<h_2,h_1>+2 Re<h_3,h_2>−Re<h_3,h_1>
+       ≤ ||h_1||²+2||h_2||².                              (4)
+
+To verify it, if all three E_i equal one, subtracting the left side from the right side gives ||e_1−2e_2+e_3||²/2≥0. If E_1=E_2=1,E_3=0, the left side is at most2 while the right side is3. If E_1=E_3=1,E_2=0, the left side is at most1 and the right side is1. If E_2=E_3=1,E_1=0, the left side is at most2 and the right side is2. With at most one event present, the left side vanishes and the right side is nonnegative. These cases exhaust all possibilities.
+
+Averaging (4) gives W̃≤0. Applying (3) to its three coherence coefficients with absolute weights2,2,1, and its population coefficients with weights1,2, proves (1). In particular the square-root coefficients are3,4,3. This proof uses the actual arbitrary local channels, not a code-preserving ansatz or an assumed approximate version of §54.
+

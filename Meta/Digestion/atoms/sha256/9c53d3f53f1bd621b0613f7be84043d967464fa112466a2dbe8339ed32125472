@@ -1,0 +1,50 @@
+**Theorem 8.3 (exact equations, input prices and local subtotals).** For
+every finite completed run prefix of this specified expansion,
+
+$$
+\begin{aligned}
+n&=\sum_{o,p}N_{o,p}(n),&T(n)&=n,&F(n)&=2n,\\
+S(n)&=S_{\rm irr}+b_{\rm ctl}(n)+8A(n)+8n.
+\end{aligned}
+$$
+
+A canonical general payload of $\ell$ bits uses exactly $2\ell+6$ actual
+IN bits including gate1 and HistoryMode. A successful AcquisitionOffset
+flight's designated outer replay loops execute $b+2k$ Step calls; a
+successful SourceOffset flight executes $b+f+2k$. These are represented
+row-call counts, not native-row prices. Its three successful publications
+of lengths $L_C,L_P,L_I$ have only the channel-body/print subtotal
+$\sum_i(17L_i+7)$, and retain at least $3\sum_i L_i$ payload cells.
+The whole flight is this subtotal plus its other actual work in §8.2.
+
+Proof. Induct over the actual native rows using Definition 8.1. Every
+test/body/return and every newly installed or retained bit has an entering
+purpose and the stated increment. This proves all vector coordinates and
+the storage equation. The two actual finite bootstraps contribute
+$4|E(L)|+2$ and $4|E(G_{\rm sel})|+2$ rows, respectively; intervening
+capture, register/manifest initialization and original boot are distinct
+terms, not included in those bit-installation subtotals.
+
+The input count is $1+1+3+(\ell+1)+\ell=2\ell+6$; no later callback is
+an external IN. Acquisition payload length is $t+2$, source payload length
+$m+t+3$. In Theorem 7.1, the Reserve frame uses ten actual source IN bits
+plus its two gate bits; the following general request uses $2m+14$ actual
+IN bits. These values exclude boot and later original/optional inputs,
+all separately counted by their site kinds.
+
+Boundary's designated loop executes $b$ Steps. Acquisition binding uses
+only arithmetic, while successful source location stops exactly at $f$
+after its exit row. Issue and Call each execute exactly $k$ Steps on their
+own copied inputs. Thus the displayed outer-loop counts follow. Each such
+Step has the full later bank/state expansion of §8.2; its runtime is not
+one native row or a free historical execution. Earlier represented services
+likewise retain their literal native computation.
+
+ARC Proposition 10.3/CAP Proposition 18.3 supplies $12L+6$ for the two
+tested copy bodies through the second handoff, and $5L+1$ for print.
+Adding the three actual payloads gives the displayed subtotal. Allocation,
+positioning, staging, descriptors, parsing, selection, both Prefix calls,
+ACK and Ready remain disjoint nonnegative terms. Sender/mailbox/receiver
+payload intervals are distinct and retained, giving the cell lower bound.
+No retirement or erasure subtracts their construction cost. ∎
+

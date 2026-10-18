@@ -1,0 +1,39 @@
+**Definition 7.1 (conditional finite retained controller account).**
+For a finite phase/snapshot alphabet $\Theta$, let $M$ be the least
+power of two at least $|\Theta|$. One possible explicit endowment is
+a new binary root with the original $\Gamma_U(W_0)$ on its left,
+a perfect $F_M$ scaffold on its right, and one terminal marker attached
+at Ready. $W_0$ is exactly UAS 2.4's irreducible foundation: the two
+meter boundary cells/links, the endowed finite primitive bits and
+empty other tapes. The fixed rule/matching mechanism is additional
+apparatus. No source bit, later input or future $J$ is placed in it.
+The old original preparation, all boundaries and both actual
+bootstraps remain subsequent original rows.
+
+This is a finite initial relation and tariff in a declared stronger
+model. A native program constructing that apparatus and performing
+its matching, phase selection and continuing permission is not
+supplied by the endowment. Existence of $\Theta$ or a Cartesian
+product does not install its material or evaluate its cases.
+
+At stable cuts this controller adds $2M+1$ vertices and $M$ child
+terminals. With UAS's original $q,c,C,\ell$,
+
+$$
+\begin{aligned}
+V_\mu&=147+2q+c+24C+2M+1,\\
+L_\mu&=74+q+8C+M,\\
+E_{\rm tree}&=V_\mu-1,\qquad E_{\rm access}=\ell,\\
+\operatorname{occupied}&=2(V_\mu-1+\ell),\qquad
+\operatorname{capacity}=7V_\mu.
+\end{aligned}
+\tag{OR.3}
+$$
+
+At partial cuts use actual births, links and terminal counts, not
+the count for a fictitiously completed cell. Initially
+$V_{\mu,0}=195+2q+c_0+2M+1$. Charging every birth and all seven initial
+slots gives $g_0=1+8V_{\mu,0}$, plus a separate fixed apparatus
+price $\rho_\mu$. This includes empty slots and is not an installation
+program or an estimate of its native installation fee.
+

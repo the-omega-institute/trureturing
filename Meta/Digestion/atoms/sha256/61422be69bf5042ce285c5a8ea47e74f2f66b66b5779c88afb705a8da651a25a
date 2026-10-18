@@ -1,0 +1,83 @@
+**定理 10.1（整个完整目标纤维的六点紧闭包）。** In the ambient
+space (9.1),
+
+$$
+\overline{\mathcal F}^{\,\mathbb R^8}
+=\mathcal F^+
+=\mathcal F\ \sqcup\ \{\text{the six targets of Theorem 9.2}\}.
+\tag{10.1}
+$$
+
+This closure is compact. The positive fiber $\mathcal F$ is
+bounded, relatively open and dense in $\mathcal F^+$, and is
+nonclosed and noncompact in $\mathbb R^8$. Every sequence in
+$\mathcal F$ has a subsequence converging to a member of
+$\mathcal F$ or one of the six added targets. Projection onto
+sources is a homeomorphism from $\mathcal F^+$ to its compact
+compatible source set, with inverse given by (3.2).
+
+The relative boundary of $\mathcal F$ inside $\mathcal F^+$
+is exactly the six added points. This is the source boundary meant
+here. Its ambient topological boundary in $\mathbb R^8$ is instead
+all of $\mathcal F^+$.
+
+All statements hold, with transformed gain and drift, for each
+fixed affine copy $H_*^{D_0,\lambda}$, $D_0\in\mathbb R$,
+$\lambda\ne0$ of either sign. The constants may depend on the
+fixed history and normalization parameters.
+
+**证明。** Theorem 8.1 puts all nonnegative compatible sources
+inside one compact corridor $\mathcal K_{\varepsilon,R}$ of
+(4.2). Theorems 2.1, 3.1 and 4.1 apply on this entire corridor:
+$\Delta>0$, its minimum there is positive, and the unique drift
+and all four coefficients of the gain are bounded and continuous
+functions of the source. Thus $\mathcal F^+$ is bounded in
+$\mathbb R^8$, including every drift and gain coordinate, rather
+than just its source projection.
+
+The source inequalities, determinant and six reading equations
+are closed polynomial conditions in (9.1). The only apparently
+open condition in the definition of $\mathcal F^+$ is $g\ne0$;
+it is redundant, since a zero gain would give the same reading
+$d$ at clocks zero and one, contrary to $0\ne24$. Hence
+$\mathcal F^+$ is closed as well as bounded, and is compact by
+Heine–Borel. Every Euclidean limit of legal worlds retains the
+nonnegative source conditions and all six equations, with nonzero
+gain, so lies in $\mathcal F^+$. This rules out a zero-gain limit
+without an extra gain assumption.
+
+Conversely Theorem 9.2 exhausts $\mathcal F^+\setminus\mathcal F$
+and gives a legal arc approaching each member of that difference.
+Together with $\mathcal F\subset\mathcal F^+$ this proves (10.1).
+Sequential compactness gives the subsequence statement. Theorem 3.1
+gives a bijection under projection, and (3.2) is continuous on the
+entire corridor, proving the homeomorphism, including at every
+added source. It is conditional reconstruction at a supplied source,
+not identification of that source from the history.
+
+Strict positivity makes $\mathcal F$ relatively open in
+$\mathcal F^+$, and (10.1) makes it dense. Each of the six missing
+points is approached by legal worlds, so $\mathcal F$ is not
+closed and cannot be compact in Euclidean space. Its relative
+boundary is consequently $\mathcal F^+\setminus\mathcal F$.
+In the ambient space it has empty interior, since every member
+satisfies the hyperplane equation $k_0+d=0$. Its ambient boundary
+is therefore its whole closure, not just the six added points.
+
+Finally the affine map
+
+$$
+(P,g,d)\longmapsto(P,\lambda g,D_0+\lambda d)
+\tag{10.2}
+$$
+
+is a homeomorphism of the coefficient/source ambient spaces for
+fixed $\lambda\ne0$. At every original clock and actual action
+it changes a reading $v$ to $D_0+\lambda v$. It preserves source
+conditions, nonzero gain, degree and roots, and transports all six
+ancestor equations and each approach arc. Both signs of $\lambda$
+are permitted. The same map also transports Theorem 7.2 to every
+fixed affine normalization of its histories. There is no bound
+uniform over unbounded $Y,z,D_0,\lambda$, nor over an implicit
+function interval as $Y$ varies. ∎
+

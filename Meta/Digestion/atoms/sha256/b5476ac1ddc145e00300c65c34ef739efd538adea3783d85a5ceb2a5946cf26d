@@ -1,0 +1,49 @@
+**Definition 348.1 and hypotheses.**
+
+Consider a finite face-paired tetrahedral quotient with precisely the
+six distinct actual edge labels M,V,C,D,Z,U. Every actual edge has a
+connected circular normal link. Each original tetrahedron owner has
+one fixed vertex-induced paired frame, in local edge order
+(12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B),
+
+where R,A,B,O are four distinct actual labels. Original faces are
+paired by maps preserving actual edge labels. Repeated role vectors,
+distinct-face self-gluings, loops, and repeated visits to an owner in
+a normal circle are allowed. Each original local edge occurrence is
+a separate angle slot and normal-link interval.
+
+There is one shared positive generalized length at each actual edge;
+write its cosh as m,v,c,d,z,u. All original generalized angles are
+nonnegative and sum to 2*pi around each actual edge. There is a unique
+flat owner
+
+    sigma=(M,C,D,V,C,D),
+
+with axial M,V angles pi and transverse C,D angles zero. Every other
+owner is genuine, with all its angles in (0,pi). A genuine owner
+
+    tau=(Z,M,C,D,M,C)
+
+exists. Assume exactly the numerical conditions
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1.                                           (348.1)
+
+The final inequality is an explicit additional upper-gap premise; it
+is not inferred just from connected circles. In the original setting
+where all actual circle degrees are at least six, the published
+complete-star maximum-gap theorem in Sections 318--321 supplies it.
+No degree lower bound is otherwise used here.
+
+For shared coshes r,a,b,o, every genuine paired response obeys
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0.                          (348.2)
+
+Its axial and transverse angles are the published original paired
+angles, not angles of a changed frame.
+

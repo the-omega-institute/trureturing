@@ -1,0 +1,17 @@
+**Proposition 7.1 (finite rational realization and a sufficient description bound).** For each fixed $q\ge3$, the rational signs admit finite exact stochastic service programs with the same state-carrier and table-denominator sizes. One explicit stored-table representation uses $O(N^2(N+\log N))$ bits for update probabilities, in addition to original control, emissions, selectors and sampler workspace. No prescribed total budget or finite worst-case execution time is asserted.
+
+**Proof.** At the rational signs, all $B$ rows have the common denominator $4NM$ and integer numerators
+
+$$
+2M(N\mathbf1_{i=j}+1)\pm z_i b_j.
+\tag{7.1}
+$$
+
+Their numerators are positive and sum to that denominator. The rows of $A$ use denominator $2N$ and numerators $N\mathbf1_{i=j}+1$. The emissions use denominator $100N$ and numerators $34N+5i$. Thus no exact-real constant or noncomputable sampling procedure is needed for the rational pair.
+
+For denominator $D$, take $t=\lceil\log_2D\rceil$ independent fair bits, accepting their integer when below $D$ and otherwise repeating. Each attempt succeeds with probability $D/2^t>1/2$, so the procedure terminates almost surely and generates a uniform integer below $D$. Selecting the assigned interval gives the finite categorical sampler. For each fixed $q$ its partial integer, comparisons, selected outcome, program counter and workspace have a finite carrier. Rejected private bit attempts do not become source Reads. Their fresh bits are independent of $K$. All sampler microstates and persistent randomness must be counted. Internal states carry the conditional continuation of that same finite service program; they are not assigned unrelated decoders. They create no additional source-query cuts or Read permissions. At a returned original operation cut the effective joint synthetic transition is exactly $q_i(o)P_o(i,i')$, using independent fresh emission and update bits. This is the represented-service convention of [PAID, Lemma 2.1.1]. These facts are the represented rational sampling convention already used by [PAIR, Sections 7–8] and [PAID, Lemma 2.1.1].
+
+Because $M\le2^{N-1}$, the denominators in (7.1) require $O(N+\log N)$ bits. One explicit stored-table representation uses $O(N^2(N+\log N))$ bits for its update probabilities, in addition to original control, model selectors, emissions, indices and sampler workspace. This is a sufficient representation, not an optimum. The two signs share the same denominator sizes, state carrier and program; a fixed mode selects their counted matrices.
+
+Unbounded source rejections and returns, and unbounded private rejection-sampler attempts, preclude a finite worst-case total runtime. Program description, current configuration, random bits, arithmetic, output generation, source Reads, physical preparation, retention, energy and runtime remain separate accounts. The delay $N$ is a number of future Reads in this law comparison, not a total acquisition, execution or address cost. $\square$
+

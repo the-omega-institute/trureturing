@@ -1,0 +1,31 @@
+**Theorem 7.1 (N2, regions where N1 attains the unrestricted value).** For every $m\ge0$ and all original parameters, if $R_m\ge1-s$ then
+
+$$
+e_m(t,\eta)=[c-D_m(t,\eta)]_+.
+\tag{7.1}
+$$
+
+The condition $\nu^m\ge1-s$ also certifies attainment by the nine-response N1 processor. At any parameter point, whether or not that condition holds,
+
+$$
+c\le K_mD_m\quad\Longrightarrow\quad e_m(t,\eta)=0.
+\tag{7.2}
+$$
+
+For every $t,\eta\in[0,1]$, the unrestricted one-copy minimax is
+
+$$
+e_1(t,\eta)=\frac35(1-\eta)t.
+\tag{7.3}
+$$
+
+Proof. For $m\ge1$, $R_m\ge1-s$ is equivalent to $s/(1-R_m)\ge1$, hence to $K_m=1$. The upper and lower bounds in (6.1) then agree. At $m=0$, $K_0=1$ by convention and $R_0=1\ge1-s$, so the same conclusion holds. The estimate $R_m\ge\nu^m$ gives the simpler sufficient region. If $R_m=1-s$ and $r=Q=1$, formula (6.2) has $q_C=0$; the response remains CPTP by its Choi eigenvalues. Thus equality on the region boundary is included without a limiting argument.
+
+Whenever $c\le K_mD_m$, the explicit upper bound is zero, which proves (7.2) by nonnegativity. This is a sufficient test for N1. The necessary-and-sufficient unrestricted test is $D_m\ge c$ by Corollary 4.2. If $m=1$, $R_1=\nu=1-4s/5$ and
+
+$$
+R_1-(1-s)=s/5>0,\qquad D_1=2c/5.
+$$
+
+Equation (7.1) gives (7.3), including $c=0$. Every attainment here is simultaneous for all four targets; the converse still ranges over every allowed CPTP processor. QED.
+

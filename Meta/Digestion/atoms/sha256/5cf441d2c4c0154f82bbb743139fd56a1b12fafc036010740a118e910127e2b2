@@ -1,0 +1,61 @@
+**Theorem 206.15 (Clipping with both signed prefix columns).**
+For any input (206.7) and $0\le s\le1$, define
+
+$$
+\eta_j=\min(\gamma_j,2s),\qquad
+R_k=\sum_{j=3}^k(\gamma_j-2s)_+,
+\qquad V_s=\mathcal V((0,0),(2s,2s),\eta,s).
+\tag{206.38}
+$$
+
+It has anchor $5s$ and exact excess
+$\Delta_N(V_s)=\Delta_O(V_s)=\max(0,\max_j\eta_j-s)\le s$.
+If for every $3\le k\le L$,
+
+$$
+\begin{aligned}
+R_k&\le(k-2)E+(k-1)(1-s),\\
+3R_k&\le(k-2)(W-5s)+(k+1)(1-s),
+\end{aligned}
+\tag{206.39}
+$$
+
+then $(V_s,1-s)$ is a complete certificate. In particular
+
+$$
+\mu\ge2,\qquad E\ge\mu-2,\qquad W\ge3\mu-1
+\tag{206.40}
+$$
+
+suffice with $s=1$, with no restriction on the early split or the
+order of the late profile. If $\delta\le1$ and three late classes
+attain $\mu$, the last inequality in (206.40) is automatic.
+
+**Proof.** This score is exactly 203.6's fair supplier with
+$\kappa_f=2s,\tau=s$. Its second-largest late total is at most
+$2s$, so all the hypotheses of that supplier hold. Its formula
+$\max(0,\max\eta-\kappa_f/2,\max\eta-\tau)$ gives the stated
+complete cost. At $s=0$ every coefficient is zero.
+The quotient difference has early coordinates $\gamma_1,\gamma_2$,
+late coordinates $(\gamma_j-2s)_+$, and last coordinate
+$R_L+W-5s$. Formula (206.10) gives readings
+
+$$
+-E,\quad-\gamma_2,\quad
+\frac{R_k-(k-2)E}{k-1},\quad
+\frac{3R_k-(k-2)(W-5s)}{k+1}.
+\tag{206.41}
+$$
+
+The first two are nonpositive; (206.39) bounds both remaining columns
+by $1-s$. Thus (206.11) holds with one shared budget.
+For (206.40), each residual class at $s=1$ is at most $\mu-2$,
+so $R_k\le(k-2)(\mu-2)\le(k-2)E$ and
+$3R_k\le3(k-2)(\mu-2)\le(k-2)(W-5)$.
+The three-label collection proves the automatic $W$ bound.
+All equality cases, including $\mu=2$, $s=0,1$ and $\theta=1$,
+are included. Consequently, for $\mu\ge2$, a nonmember must have
+$E<\mu-2$ or $W<3\mu-1$; with three maximum late classes and
+$\delta\le1$, it must have $E<\mu-2$. These are only necessary
+conditions for failure. $\square$
+

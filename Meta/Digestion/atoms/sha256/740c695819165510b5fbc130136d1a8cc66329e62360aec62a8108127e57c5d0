@@ -1,0 +1,10 @@
+**Proposition 293.3 (Strict refinement of the single scalar relation).**
+For $e>0$, the scalar equality $\sum_Jb_j=(46/5)e$ alone permits the
+flat choice $b_j=(46/25)e$. That choice fails the ratio conclusion of
+293.2.
+
+**Proof.** Its sum is the required scalar value, while $46/25$ differs
+from every one of the five displayed $r^\star_a$. Thus the scalar relation alone is weaker. This comparison
+does not assert that the flat choice meets all other necessary tests
+or possesses a full feasible allocation. $\square$
+

@@ -1,0 +1,36 @@
+### 40.2 Complete eighteen-state phase attainment
+
+Let $K$ contain the eleven running states below and seven states $H_0,\ldots,H_6$. Define $u(H_\theta)=\operatorname{Halt}(\theta)$ and $v(H_\theta,o)=H_\theta$ for every $o$. Initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=H_0$. The table supplies every running instruction and response. Rank is a mathematical function on $K$, zero at every Halt.
+
+| Phase state | Emitted word | Response $0$ | Response $1$ | Response $\bot$ | Rank |
+| --- | --- | --- | --- | --- | --- |
+| $R_0$ | $0101$ | $Z_0$ | $A_0$ | $H_0$ | $3$ |
+| $R_1$ | $0101$ | $A_1$ | $Z_1$ | $H_0$ | $3$ |
+| $A_0$ | $1111$ | $Q_0$ | $P_0$ | $H_0$ | $2$ |
+| $A_1$ | $1111$ | $P_1$ | $Q_1$ | $H_0$ | $2$ |
+| $Z_0$ | $0100$ | $H_0$ | $S$ | $H_0$ | $2$ |
+| $Z_1$ | $0001$ | $H_0$ | $S$ | $H_0$ | $2$ |
+| $P_0$ | $0110$ | $H_5$ | $H_4$ | $H_0$ | $1$ |
+| $P_1$ | $0110$ | $H_4$ | $H_5$ | $H_0$ | $1$ |
+| $Q_0$ | $0110$ | $H_6$ | $H_3$ | $H_0$ | $1$ |
+| $Q_1$ | $0110$ | $H_3$ | $H_6$ | $H_0$ | $1$ |
+| $S$ | $0001$ | $H_2$ | $H_1$ | $H_0$ | $1$ |
+
+Actual live supports follow. Every listed $(x,j)$ includes all six INITIAL old tails. Current phase at depth $d$ is $-j+4d$.
+
+| State | Depth $d$ | INITIAL $x$ | INITIAL $j$ support | Current value | Current tail |
+| --- | --- | --- | --- | --- | --- |
+| $R_x$ | $0$ | $x$ | $0,1,2,3,4,5,6$ | $x$ | $0,1,2,3,4,5$ |
+| $A_x$ | $1$ | $x$ | $1,2,3,4$ | $x\oplus1$ | $1$ |
+| $Z_x$ | $1$ | $x$ | $0,5,6$ | $x$ | $1$ |
+| $P_x$ | $2$ | $x$ | $2,3$ | $x\oplus1$ | $5$ |
+| $Q_x$ | $2$ | $x$ | $1,4$ | $x$ | $5$ |
+| $S$ | $2$ | $0$ | $5,6$ | $1$ | $0$ |
+| $S$ | $2$ | $1$ | $5,6$ | $1$ | $1$ |
+
+The root's first zero safely clears every old tail inside its paid block and ends in tail one. Second word $1111$ safely reaches tail five, and $0110$ then starts zero. Other second words start zero and are safe; final $0001$ is safe from both tails at $S$. No live source rejects.
+
+By (40.9), $0100$ on $Z$ at depth one has increments $(0,1,1)$ at $j=0,5,6$; $0001$ has $(1,0,0)$. Thus $Z_0$ uses $0100$ and $Z_1$ uses $0001$, sending their singletons to $H_0$ and their pairs to $S$ with current value one. The two tails at $S$ differ, but its zero-first word is safe for both. At final depth $0001$ adds one at $j=5$ and zero at $j=6$, giving absolute values zero and one and labels $H_2,H_1$. This merger uses actual correlated supports without identifying their entire device records.
+
+For $0110$, final row (40.12) is $(0,0,1,0,1,0,0)$; the support values give exactly the listed $P/Q$ labels $-j\pmod7$. All running transitions strictly lower rank, including bottom transitions. Rank is determined by the state and supplies no external countdown. Termination takes at most three emissions. Each of the eleven running states and seven persistent Halts is reached by an actual source.
+

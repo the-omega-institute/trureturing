@@ -1,0 +1,44 @@
+**Theorem 299.1 (Three all-length, all-mass necessary relations).**
+For every $L\ge7$, every ordered embedding
+$3\le j_1<j_2<j_3<j_4<j_5\le L$, every real finite profile $(b,e)$,
+and every one complete feasible $N$ allocation of any finite mass,
+
+$$
+\begin{aligned}
+b_1+2\sum_{a=1}^5b_{j_a}&\le1+17e, &&(Y_1)\\
+b_2+4b_{j_1}+5b_{j_2}+5b_{j_3}+5b_{j_4}+4b_{j_5}
+ &\le1+40e, &&(Y_2)\\
+4b_2+18b_{j_1}+20b_{j_2}+21b_{j_3}+21b_{j_4}+18b_{j_5}
+ &\le4+171e. &&(C)
+\end{aligned}
+\tag{299.1}
+$$
+
+The same holds for a complete $O$ allocation. No monotonicity,
+normalization or $H_L$ membership is required. Every original acquisition
+in $\mathcal N_2$ or $\mathcal O_2$ at any positive closed cap $e$
+satisfies these relations with its actual amplitudes $a$ in place of $b$,
+including every ordered gap embedding and inactive chosen address.
+
+**Proof.** Embed the seven score coordinates as
+$(1,2,j_1,\ldots,j_5)$, and put all nonskeleton bits equal to one on
+the scored support. Map numerical labels by the same embedding. A query
+outside the skeleton is constant on that support. Two arbitrary queries
+therefore produce either one of the core pair partitions or a coarsening.
+An outside output label has reward zero; all active label rewards are
+already covered by (298.2). Thus Lemma 298.4 proves zero excess in the
+entire length-$L$ catalogs, including all arbitrary earlier, unqueried
+and outside labels. The embedding changes neither quotient nor anchor.
+Apply (297.5) separately to each score and the same given $\lambda$:
+$F_{QY}\le M\Delta_N(Y)=0$. Expanding the three quotients gives
+(299.1). All three independent event rows remain present throughout;
+no independent marginal allocation is substituted.
+
+For an original rule at $0<e\le1$, use 297.3 with prefix $j_5$ to
+obtain one normalized complete representative satisfying all rows at
+$(a_1,\ldots,a_{j_5};e)$. Apply the just proved embedded relations.
+Counted $O$ completion gives the same conclusion for original $O$.
+For $e\ge1$, the left sides are at most $11,24,102$, and the right
+sides are at least $18,41,175$, so the statements follow directly from
+$0<a_i\le1$. $\square$
+

@@ -1,0 +1,29 @@
+### 104.14. Complete auxiliary interval and root contractions
+
+Initialize the full existential interval independently at every box:
+\[
+ r=\left\langle-\frac{19999999999}{20000000000},
+                  \frac{19999999999}{20000000000}\right\rangle_s.
+                                                                    \tag{104.81}
+\]
+Put $L_1=n_2b_1-b_2n_1$ and $L_0=n_2b_0-b_2n_0$. If $0\notin L_1$, replace $r$ by $r\cap(-L_0/L_1)$. If $0\in L_1$, make no division and reject only if $0\notin L_1r+L_0$.
+
+For a quadratic coefficient triple $(c,b,d)$ and the current $r=[l,u]_s$, set the current exact midpoint interval
+\[
+ m=\left[\left\lfloor\frac{l+u}{2}\right\rfloor,
+          \left\lfloor\frac{l+u}{2}\right\rfloor\right]_s,
+ \quad A=2cr+b.                                                   \tag{104.82}
+\]
+If $0\notin A$, replace $r$ by
+\[
+ r\cap\left(m-\frac{cm^{[2]}+bm+d}{A}\right).                     \tag{104.83}
+\]
+If $0\in A$, retain $r$ unchanged. Perform this operation four times, in exactly the order
+\[
+ (n_2,n_1,n_0),\ (b_2,b_1,b_0),\ (n_2,n_1,n_0),\ (b_2,b_1,b_0).
+                                                                    \tag{104.84}
+\]
+A new midpoint (104.82) is formed from the current interval before every operation, including after any preceding contraction. Empty intersections reject as specified in §104.13.
+
+Next reject if zero is absent from $n_2r^{[2]}+n_1r+n_0$, and then reject if zero is absent from $b_2r^{[2]}+b_1r+b_0$.
+

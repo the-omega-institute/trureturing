@@ -1,0 +1,24 @@
+**Corollary 4.3 (concrete PG34 witnesses).** Define joint compatibility by
+NCR.1–2, correct typed descriptor intervals and predecessor/copy chains,
+row/phase availability, actual token ownership and agreement of all fields
+with their endpoint. Define `NextCompat` by the prescribed opcode's finite
+tape/latch/control rewrite, receipt append, source effect if any, token
+transfer and commitment/seal rules of Theorem 4.2. Then this observer satisfies
+`run-full`, `run-next`, and their all-success restrictions `Full_R` and
+`NextCompat` on its actual history domain.
+
+Proof. For a history $h$, use the references and permissions actually
+constructed in $x_h$. Theorem 4.2 proves that the single tuple consisting of
+its archive, work, references, permissions, $\xi,e$, phase type and last event
+satisfies compatibility. This is the required full witness. At an enabled
+primitive, take the actual extended history and its actual endpoint tuple.
+The transition cases in the same proof establish exactly the indicated
+`NextCompat` equations and preserve compatibility. Hence the successor is in
+the same joint image, including a completed Fetch-rejection successor. On
+illegal-unexecuted input there is no extension. Restricting to all-success
+histories gives the corresponding success-only statements. ∎
+
+This discharges the named obligations for the model in Definition 2.2. It does
+not assert an already compiled PG34 client, validate a submitted external
+transcript, or recover scratch from the semantic archive alone.
+

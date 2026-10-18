@@ -1,0 +1,42 @@
+**Theorem 205.3 (Correct-only support with arbitrary pair rows).** Define
+
+$$
+J_C(V)=\{j\ge3:\sum_{n(w)=j}C_w>0\}.
+$$
+
+Now all $A,P,T$ and early correct rows are unrestricted, including pair
+weight in every omitted late class. If $h\ge1$, $m=L-2\ge3h+2$, put
+
+$$
+D_h=m-2h+1,\qquad c_0=D_h^{-1},\qquad
+ b_i=(h+1)c_0,\quad e=hc_0.
+\tag{205.8}
+$$
+
+Every $V\ge0$ with $|J_C(V)|\le h$ satisfies (205.6) at this $b$.
+Every finite additive certificate of such scores satisfies (205.7),
+and every limit of their quotient sets with additive cost at most $B$
+satisfies $F_q(b)\le B$. The same statement holds at $h=0,m\ge2$.
+
+**Proof.** The two capacity expressions for $H_L$ are
+$(m-3h)c_0\ge0$ and $1$; its order conditions follow from $m\ge3h+2$.
+For $J=J_C(V)$ and $a=|J|\le h$, take the complete stopped mixture
+
+$$
+\Pi_J=c_0R+c_0\sum_{j\in J}\operatorname{Const}_j
+       +[1-(a+1)c_0]\operatorname{Const}_0.
+\tag{205.9}
+$$
+
+All weights are nonnegative and sum to one. On an early-first-zero
+word, the correct and base probabilities are respectively $c_0$ and
+$1-(a+1)c_0$. On a late-first-zero word they are $c_0\mathbf1_{n\in J}$
+and $1-ac_0$. At the positive word the base probability is $1-ac_0$.
+Thus every base row meets $1-(2h+1)c_0$, every independent pair row,
+even in an omitted late class, meets $1-ac_0\ge1-e$, and every retained
+correct row meets $c_0=b_n-e$. Only omitted correct rows lack a guarantee,
+and their $C$ coefficient is zero. Unit-mass weak duality proves the
+claim; addition at one fixed $b$ proves the finite bound. Continuity of
+$F_q(b)$ proves the bounded-cost closure assertion. With $h=0$ the same
+formulas use $J=\varnothing$ and remain valid. $\square$
+

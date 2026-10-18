@@ -1,0 +1,144 @@
+**Definition 4.1 (equivalence and the overlap indicator).** For any
+finite relative menu $S$ and finite trees, put
+
+$$
+u\equiv_S u'
+\quad\Longleftrightarrow\quad
+\forall q\in S\ \forall k\ge0,\quad
+\operatorname{val}(q,\rho^k u)=\operatorname{val}(q,\rho^k u').
+\tag{FM.13}
+$$
+
+For nonempty $S$, set $\eta(S)=0$ if every target is $Lr$ with
+$r\ne\varepsilon$, and set $\eta(S)=1$ otherwise. Thus
+$\eta(S)=1-\delta(S)$ for [DEV, Definition 12.5]'s $\delta$ on
+nonempty menus. The empty case is treated separately.
+
+**Mathematical citation 4.2 (complete constructor classification).**
+The constructor analysis in [DEV, Theorem 12.6] gives the following
+statements simultaneously for every nonempty finite $S$.
+Alpha and beta are inequivalent, and alpha is inequivalent to every
+branch. Beta can agree with a branch only when $\eta(S)=0$; in that
+case, for every $x,y$,
+
+$$
+\beta\equiv_S\langle x,y\rangle
+\quad\Longleftrightarrow\quad x\equiv_{S_L}\alpha
+\quad\Longleftrightarrow\quad x=\alpha.
+\tag{FM.14}
+$$
+
+The right child is unrestricted. This is one joint identification on
+the entire menu, not separately chosen matches at different targets.
+The final equivalence uses the same published analysis: on a nonempty
+menu the alpha class is the singleton alpha. For branches, in every
+case including $\varepsilon\in S$,
+
+$$
+\langle x,y\rangle\equiv_S\langle x',y'\rangle
+\quad\Longleftrightarrow\quad
+x\equiv_{S_L}x'\ \text{and}\ y\equiv_{S_R}y'.
+\tag{FM.15}
+$$
+
+The exclusions are exhaustive: a target $\varepsilon$ distinguishes
+beta from a branch initially; a target $L$ distinguishes absence
+from a present child; a target $Rr$ has beta branch time $s(r)+3$,
+beyond any branch child's bound $s(r)+2$. If none occurs, all targets
+are strictly below $L$ and the joint overlap (FM.14) applies. For
+$S=\varnothing$ all trees are equivalent. In particular $\{L\}$
+does not permit the overlap, whereas $\{LL\}$ does. These are the
+published classification cases, retained as premises without a second
+constructor proof.
+
+**Mathematical citation 4.3 (finite grammar, rank and representatives).**
+Use [DEV, Definition 12.5 and Theorem 12.6]'s branch-first integer
+normal form, with $N(S)=n(S)$:
+
+$$
+N(\varnothing)=1,\qquad
+N(S)=N(S_L)N(S_R)+1+\eta(S)\quad(S\ne\varnothing).
+\tag{FM.16}
+$$
+
+For nonempty $S$ put $J_S=N(S_L)N(S_R)$. Its branch codes are
+$0,\ldots,J_S-1$, alpha has code $J_S$, and beta has the separate
+code $J_S+1$ only when $\eta(S)=1$. Precisely,
+
+$$
+\begin{aligned}
+e_\varnothing(u)&=0,\\
+e_S(\langle x,y\rangle)&=e_{S_L}(x)N(S_R)+e_{S_R}(y),\\
+e_S(\alpha)&=J_S,\\
+e_S(\beta)&=\begin{cases}
+J_S+1,&\eta(S)=1,\\
+e_{S_L}(\alpha)N(S_R)+e_{S_R}(\alpha),&\eta(S)=0.
+\end{cases}
+\end{aligned}
+\tag{FM.17}
+$$
+
+Only the first line applies to the empty menu. In the overlap case
+$S_L$ is nonempty and $S_R$ is empty, so the final line is a well-typed
+branch code, not an extra leaf code. Every nonempty child menu has
+smaller maximum word length. The recursion is finite, terminating and
+prunes unused subtrees by returning zero immediately on an empty menu.
+
+The integer is the rank of its menu-typed form. To unrank $i<J_S$,
+take the quotient and remainder of $i$ by $N(S_R)$ and unrank them
+in the two child menus. The remaining valid integers select their
+leaf tags. Reverse this procedure to construct a representative
+$r_S(i)$, using alpha for the empty code and pairing the two child
+representatives for a branch code. The supplier proves
+
+$$
+\begin{aligned}
+e_S(u)=e_S(u')&\ \Longleftrightarrow\ u\equiv_S u',\\
+e_S(r_S(i))&=i\qquad(0\le i<N(S)),\\
+\operatorname{height}(r_S(i))&\le\max(0,d(S)+1).
+\end{aligned}
+\tag{FM.18}
+$$
+
+Thus (FM.16) counts disjoint actual classes. Each product pair is
+realized by one actual full tree formed from its child representatives;
+nested targets and shared blockers are not assigned independent
+signatures. Every class occurs under every height cap at least
+$\max(0,d(S)+1)$. In particular
+$\langle\alpha,r_S(i)\rangle\in\mathcal F_D$. The leaf-first ranks
+in [PRIOR, §§5–6] name these same classes in a different order;
+no equality of the two numerical encodings is asserted.
+
+**Mathematical citation 4.4 (attained arbitrary-state optimum).**
+[DEV, Theorem 12.6] applies to Definition 2.3 and gives exactly
+
+$$
+\min |m(\mathcal F_D)|=N(S),\qquad
+b(D,P)=\left\lceil\log_2 N(S)\right\rceil.
+\tag{FM.19}
+$$
+
+For any correct deterministic encoding, equality of its complete
+retained states must imply equality of $e_S$ on the right subtrees.
+The published separation lower bound uses no effectiveness assumption
+on that encoding; effectiveness is supplied by the attaining code.
+All $N(S)$ lower-bound representatives are in the exact initial family,
+and a pair of different codes has a common legal separator below $2D$.
+
+For attainment retain $e_S(v)$ for $t=\langle\alpha,v\rangle$ in the
+fixed public width (FM.19). Unrank it, build $r_S(i)$, navigate the
+finite representative to obtain (FM.10), and evaluate (FM.11) at the
+supplied $k$. Relabel the relative outputs by $q\mapsto Rq$.
+This is the supplier's effective representative decoder; it does not
+construct the potentially large current tree. A fixed default on
+invalid codewords makes it total. Empty $S$ uses one state, zero bits
+and the empty output.
+
+The optimum requires the complete-state and cleanup conditions of
+Definition 2.3. Recurrence tables, rank arithmetic, public codebooks,
+representative construction and their work are finite, not free.
+Source-dependent preprocessing, code lengths, pointers or old outputs
+remaining accessible outside the exported state enlarge that state.
+The generic separation principle used by [DEV] is credited background;
+(FM.19) is reuse of its native minimum theorem.
+

@@ -1,0 +1,35 @@
+### 2.5. Every finite-length objective certificate
+
+Fix any $n\ge1$ and $1\le i\le n$. Put
+$\mathcal G_{n,i}=\sigma(X_j:1\le j\le n,\ j\ne i)$ and
+$u_{n,i}=\mathbb E_R[X_i\mid\mathcal G_{n,i}]$. Since
+$\mathcal G_{n,i}\subseteq\mathcal E_i$, the conditional-expectation
+identity gives
+
+$$
+\begin{aligned}
+\mathbb E_R[(X_i-u_{n,i})^2]
+&=\mathbb E_R[(X_i-q_i)^2]
+  +\mathbb E_R[(q_i-u_{n,i})^2]\\
+&\ge d(R)=c_\star.
+\end{aligned}
+\tag{2.15}
+$$
+
+Indeed the cross term has expectation zero by conditioning on
+$\mathcal E_i$, and stationarity with $q_i=q_0\circ T^i$ identifies
+the first term with (2.9).
+
+The supplied coordinate-fiber identity [Stationary, §2][Stationary], also
+stated as [Finite Memory, Lemma 2.1][Finite Memory], identifies the left
+side of (2.15) with the contribution of coordinate $i$ to
+$\Phi_n(R_n)$. Its hypotheses are exactly a probability vector on the
+complete $B_n$. On a two-word fiber of masses $s,t$ the weighted squared
+risk is $h(s,t)$; a forced-zero singleton has risk zero, and a fiber with
+$s=t=0$ has both weighted risk and $h(0,0)$ zero. Thus this identity keeps
+the all-zero word, legal endpoint ones, and all original edges. It
+requires no boundary matching, seam independence or positive-mass
+division. Summing (2.15) over all $n$ coordinates, and applying the
+definition of $\kappa_n$ and the supplied ceiling (1.1), proves (2.4).
+The argument also covers $n=1$ with its trivial conditioning field.
+

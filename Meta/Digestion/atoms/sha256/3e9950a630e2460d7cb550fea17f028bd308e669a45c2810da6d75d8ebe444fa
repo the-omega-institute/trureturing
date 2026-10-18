@@ -1,0 +1,47 @@
+**Theorem 23.4 (exact inverse-damping transport on $\mathcal H_0$).** For $q>0$ and the actual comparison of Theorem 23.3, define the input map, in the original $0,1$ versus $2$ splitting,
+
+$$
+\begin{gathered}
+F=\operatorname{diag}(1,1,-1),\qquad
+\Gamma_r=\frac{1+r}{2}\,\mathrm{id}_3+
+          \frac{1-r}{2}\operatorname{Ad}_F,\\
+\Gamma_r\begin{pmatrix}H&\xi\\\xi^\dagger&d\end{pmatrix}
+=\begin{pmatrix}H&r\xi\\r\xi^\dagger&d\end{pmatrix}.
+\end{gathered}
+\tag{R.110}
+$$
+
+The map is CPTP for $0\leq r\leq1$. On $\mathcal H_0$ exactly, $N(Y)=N^\sharp(\Gamma_r(Y))$. For any nonzero comparison witness in that space, set
+
+$$
+X^\sharp=\begin{pmatrix}H&\xi\\\xi^\dagger&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}H&\xi/r\\\xi^\dagger/r&0\end{pmatrix}.
+\quad
+\begin{gathered}
+N(Y)=N^\sharp(X^\sharp),\qquad
+\|X^\sharp\|_1\leq\|Y\|_1,\\
+m_{\min}(N)\leq m_0(N)\leq m_0(N^\sharp).
+\end{gathered}
+\tag{R.111}
+$$
+
+The inverse construction is a Hermitian test-operator construction, with no assertion of a CP state-preparation map. For a general complex matrix $Y$, the full discrepancy is
+
+$$
+N(Y)-N^\sharp(\Gamma_r(Y))
+=Y_{22}(D-D^\sharp)
+=Y_{22}\,[D_\perp-(1-q)D^\sharp].
+\tag{R.112}
+$$
+
+**Proof.** Both coefficients in (R.110) are nonnegative and sum to one, so this is a convex mixture of two unitary channels. Triangle inequality and unitary invariance give $\|\Gamma_r(Y)\|_1\leq\|Y\|_1$ for every matrix $Y$. Equations (R.103), (R.107) show that damping precisely cancels the factor $1/r$ in every plane–third cross image, including its complex conjugate. The plane block is unchanged. The only remaining difference is the $22$ image, proving (R.112) and the claimed equality when $Y_{22}=0$.
+
+For the specified inverse, $Y\in\mathcal H_0$, $Y\ne0$, and $\Gamma_r(Y)=X^\sharp$. Norm contraction therefore gives the first two identities of (R.111) and
+
+$$
+\frac{\|N(Y)\|_1}{\|Y\|_1}
+\leq\frac{\|N^\sharp(X^\sharp)\|_1}{\|X^\sharp\|_1}.
+$$
+
+Minimize over the comparison witnesses to obtain (R.111). The inverse need not preserve positivity and is not used as a physical preprocessing operation. An unrestricted witness for $m_{\min}(N^\sharp)$ cannot replace $X^\sharp$ here unless it also satisfies $X^\sharp_{22}=0$; (R.112) identifies the missing term. No division by $q$ is used at $q=0$, which was already settled by Theorem 23.2. $\square$
+

@@ -1,0 +1,66 @@
+**Theorem 6.3 (unconditional $1/99$ with actual prehistory priors).**
+Use the same preparation and six-unit histories of Proposition 3.1 for
+the heights in (AC.20). Leave their prefixes unchanged, retain all first
+failures, and apply any common specimen-only procedure only at the reached
+live cut. For at least one of the twelve deterministic histories the full
+prefix-plus-continuation error is at least $1/99$.
+
+Proof. Formula (AC.6) gives the exact live probabilities
+
+$$
+q_-=\frac{32}{177},\qquad q_0=\frac29,\qquad
+q_+=\frac{32}{111}.
+\tag{AC.22}
+$$
+
+Consider two mathematical source experiments, each with the uniform four
+nuisance choices. The first chooses $x_0$ before preparation. The second
+chooses $x_-$ and $x_+$ before preparation with probabilities
+$p_-=59/96$ and $p_+=37/96$. These are priors for the actual same
+preparation, not posterior weights silently substituted for source priors.
+Both are realized within one common generator: an unread fair classical
+selector chooses the middle case or the stated outer prior before the
+six-unit history begins. The two experiments are its conditional laws;
+neither that selector nor its height/nuisance choices assists the processor.
+They satisfy
+
+$$
+p_-q_-=p_+q_+=1/9,\qquad
+p_-q_-+p_+q_+=q_0=2/9.
+\tag{AC.23}
+$$
+
+Thus both experiments reach the cut with live mass $2/9$ and the same
+normalized accessible density. Their earlier stopped archives need not
+coincide. Each archive is exactly retained in its own true/simulated
+comparison and cannot send information to another run's live branch.
+
+For each deterministic history let $E_{x,\beta,m}$ be its unconditional
+error. The unchanged prefixes and absorbing branches give
+$E_{x,\beta,m}=q_x e_{x,\beta,m}$ in the declared reduced output task;
+if further fields are required, the corresponding full error is at least
+this. Multiply (AC.19) by $2/9$ and use (AC.23):
+
+$$
+\tfrac29\bar e_0+
+ p_-q_-\bar e_-+p_+q_+\bar e_+
+\geq\tfrac29D=\frac2{99}.
+\tag{AC.24}
+$$
+
+The left side is the sum of the two source-prior averages of deterministic
+unconditional errors. At least one average is at least $1/99$, hence at
+least one deterministic error is at least $1/99$. Earlier failures were
+neither equated across experiments nor discarded. $\square$
+
+The entire seven-unit rational witness has support at least $5/256$,
+height speed at most $27/256$, phase speed at most $8\pi$ and phase
+variation at most $16\pi$. For a piecewise constant height-velocity
+representative its variation on the open execution interval, with one-sided
+endpoint traces and no exterior extension by zero, is at most $31/64$.
+Indeed its velocities are
+$(0,-16,0,16,0,x\cdot256-32,6)/256$; their jumps total at most
+$(64+27+33)/256=31/64$. The finite witness needs no near-wall limit,
+unbounded winding, arbitrarily rapid oscillation or infinite programme
+description.
+

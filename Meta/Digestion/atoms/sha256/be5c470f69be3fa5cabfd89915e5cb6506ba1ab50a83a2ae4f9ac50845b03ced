@@ -1,0 +1,21 @@
+**Hypothesis 69.2 (original emission and coarse action contract).** Assume
+$\operatorname{Legal}(M,U)$ for every $U\in W_n$; the common initial decoder is empty.
+Assume `historyAction M` factors through $\kappa_{\rm hist}$ on all finite histories,
+including unrealizable replies, arbitrary or repeated address labels, and posthalt
+reports: $\kappa_{\rm hist}h=\kappa_{\rm hist}h'$ implies equal historyAction values.
+Assume that on $T_n$ the actual execution emits exactly the original initial
+query/reply list
+
+$$
+h_n=((q_i,\mathsf{br}))_{i=1}^{j},\qquad j=F(n-2),
+\tag{JM.236}
+$$
+
+in the shortlex order of Definition 68.1, with no earlier halt. Equivalently, it reaches
+an `ActualPrefix` with history $h_n$; the row after query $j$ may halt or continue. The
+emission is exactly [JM66.1, (JM.214)][JM]. The factorization is the native relation
+characterized by
+[ActualObserverPairReach.pairActionInvariant_iff_allHistoryFactorization][Pair]. These
+hypotheses impose no task correctness, finite termination on other sources, or extension
+of legality to a larger `Allowed(N)` domain.
+

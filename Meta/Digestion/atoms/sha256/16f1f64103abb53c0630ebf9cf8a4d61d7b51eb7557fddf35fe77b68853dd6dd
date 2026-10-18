@@ -1,0 +1,38 @@
+**Theorem 28.2 (exact two-Read installed-state minimum).** Over all
+finite word lengths in Assumption 25.1,
+
+$$
+N_{\rm int}(2)=11.
+\tag{NARC.28.2}
+$$
+
+**Proof.** Seven distinct full lag outputs require seven distinct
+halt words. Theorem 27.1 requires three distinct query words $R,A,B$,
+disjoint from them. Fewer than ten installed words are impossible.
+If exactly ten are installed, these exhaust $W$: there are no
+internal rows, additional queries, duplicate halts or unused words.
+The common initial word is consequently $R$. Its forced lower and
+upper transitions are now genuine direct one-bit edges to $A,B$.
+The unique halt $H_{16}$ for output sixteen and the unique halt
+$H_{17}$ for output seventeen are each direct response successors
+of both second queries. Thus $A,B$ have three distinct common
+neighbors $R,H_{16},H_{17}$, forming a $K_{2,3}$ subgraph.
+
+The classical cube obstruction of [Havel--Morávek, Propositions
+1--2 and Example 1][HM-RW-full], pp.340--342, applies to injective
+adjacency-preserving coding. Directly, two distinct binary words
+with a common one-bit neighbor differ in exactly two coordinates.
+Their only common neighbors are the two words obtained by changing
+one or the other differing coordinate. They cannot have three.
+Every $\Gamma_d$ is a cube subgraph, so ten installed words are
+excluded at every finite width. Here the absence of internal words
+is deduced from equality in the state count; internal paths have
+not been contracted to manufacture the three edges.
+
+For the upper bound, Definition 19.1 and Proposition 19.2 already
+supply the complete eleven-word, six-bit, two-Read installation and
+all fifteen actual first halts. Interpret its running rows as query
+rows and take $I=\varnothing$. Its total successors, initial word
+and full halt constants are unchanged. It satisfies Assumption 25.1
+and attains eleven. $\square$
+

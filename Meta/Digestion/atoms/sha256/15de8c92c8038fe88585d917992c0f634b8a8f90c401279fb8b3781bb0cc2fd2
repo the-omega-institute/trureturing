@@ -1,0 +1,8 @@
+**假设 5.1（局部方向接口）。** FIB 关系区块的方向接口为非零有限维实正定内积空间 $V$，二元关系 $B:V\times V\to V$ 双线性、反对称且非零，并满足
+
+$$
+B(Ru,Rv)=RB(u,v)\qquad\text{对每个 }R\in SO(V).
+$$
+
+这里的群是全部 $SO(V)$；原生树的可达值是否覆盖球面、这些旋转是否可执行，是另外的任务与动力学条件。定向三维空间的叉积以 $\langle u\times v,w\rangle=\operatorname{vol}(u,v,w)$ 定义。
+

@@ -1,0 +1,12 @@
+**Definition 6.1 (one actual residual cone).** Fix one actual live prefix,
+its support $S_0$, its particular assignment $\eta_{S_0}$, its endpoint,
+and its $h_0$ exposed ones. Put
+
+$$
+R=[n]\setminus S_0,\qquad N=|R|,\qquad q=k-h_0.
+$$
+
+Every completion in this cone retains this same old assignment and follows
+this same prefix. Different actual prefixes are not identified by this
+notation.
+

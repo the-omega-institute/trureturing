@@ -1,0 +1,57 @@
+**Theorem 256.3 (All-horizon original necessary inequality).**
+For every entire positive monotone vanishing sequence and every
+original $A\in\mathcal N_2$, hence every $A\in\mathcal O_2$,
+
+$$
+43e_a(A)\ge2a_2+4a_3+4a_4+5(a_5+a_6+a_7+a_8)-2.
+\tag{256.3}
+$$
+
+There is no hypothesis on its actual active horizon or tails.
+Moreover, for every $L\ge8$, $(b,e)\in H_L$ and the same arbitrary
+finite full feasible $N$ vector $\lambda$,
+
+$$
+43e\ge2b_2+4b_3+4b_4+5(b_5+b_6+b_7+b_8)-2,
+\tag{256.4}
+$$
+
+independently of its conic mass.
+
+**Proof.** The target score on $B_8$ is
+$117+18a_2+36a_3+36a_4+45\sum_{5}^8a_i$.
+Here the union events contribute 90 and the positive event 27.
+A cap-$e$ normalized law has score at least that quantity minus
+$387e$. Lemma 256.2 bounds it above by 135. Subtracting 135
+and dividing by nine proves (256.3) for finite laws. This argument
+uses the union events themselves, including the late union events,
+without substituting sums of singleton inequalities.
+
+For a conic law, use the same $y_*$ and $\lambda$:
+
+$$
+F_{y_*}(b,e)\le y_*\cdot G_N\lambda
+ =\sum_D\lambda_Dy_*\cdot(z_D-\mathbf r)\le0.
+$$
+
+Expanding its left side gives nine times the right-minus-left
+expression in (256.4). No mass-dependent allowance is needed.
+
+For an original competitor with error $r\in(0,1]$, Theorem 110.2
+supplies a finite feasible representative at its actual horizon.
+If that horizon exceeds eight, fix all higher input bits to zero,
+project labels above eight to zero and delete those fixed high
+observations. Low first-zero targets are fixed by the projection;
+the low all-positive target projects to base. If the horizon is
+below eight, add ignored input coordinates. A new first zero has
+$a_n\le r$, and the old positive row gives
+$\operatorname{TV}=\max\{1-p_{w^+}(0),a_n\}\le r$.
+The all-positive row is also retained. These are the exact
+projection and extension operations proved in
+[Theorem 117.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#117-a-uniform-second-head-necessary-certificate).
+They retain one preselected hard-two mixture. Thus the eight-word
+score proof applies without bounding original addresses or outputs.
+For error zero, apply the positive-cap conclusion for every $r>0$
+and let $r\downarrow0$. Error one is included; larger alleged
+caps need no additional argument. $\square$
+

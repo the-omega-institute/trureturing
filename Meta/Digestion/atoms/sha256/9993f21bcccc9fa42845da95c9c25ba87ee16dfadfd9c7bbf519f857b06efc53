@@ -1,0 +1,51 @@
+**Theorem 92.1.** At every real \(b\) with \(0<|b|<1\) and
+\(L(b)=0\), there is no noncanonical common-flat orthogonal triple.
+Consequently the canonical complete common-flat input basis is unique up
+to phases and permutations, and the fixed pair \((I_6,H_0(b))\) cannot
+belong to a quartet. There are exactly two such parameters, \(b=\pm b_L\),
+where \(559/625<b_L<1789/2000\).
+
+Here is an exact irreducibility certificate. The monic reductions of \(L\)
+have these factorizations:
+
+```text
+mod 5:
+(b+1)(b-1)
+(b^4-2b^2+b+1)(b^4-2b^2-b+1)
+(b^22-2b^18+2b^14+b^12-2b^8-2b^6-2b^4-2b^2-2)
+
+mod 7:
+(b^14+2b^12+3b^10-b^8-b^4-3b^2-3)
+(b^18-b^16-3b^14-b^12-3b^10+2b^8-3b^6-2b^4+3b^2+1)
+```
+
+Each factor passes the exact Rabin criterion: for a degree \(n\) factor
+\(f\) over \(\mathbb F_p\), \(b^{p^n}=b\bmod f\), and
+\(\gcd(f,b^{p^{n/q}}-b)=1\) for every prime divisor \(q\) of \(n\).
+The possible proper factor degrees modulo 5 are
+
+```text
+1,2,4,5,6,8,9,10,22,23,24,26,27,28,30,31,
+```
+
+whereas modulo 7 they are 14 and 18. Their intersection is empty.
+Gauss's lemma therefore proves irreducibility over \(\mathbb Q\).
+The signs \(L(0)=-1594323\), \(L(1)=12779520\) give a real embedding of
+\(\mathbb Q[b]/(L)\). This field cannot contain \(i\); adjoining \(i\)
+has degree two, so \(L\) remains irreducible over \(\mathbb Q(i)\).
+
+Ordinary exact Sturm division gives one root in \((0,1)\), and one in
+\((559/625,1789/2000)\). Evenness gives the stated negative partner.
+All subsequent operations may be performed in the characteristic-zero
+field \(K_L=\mathbb Q(i)[b]/(L)\), without selecting an approximate root.
+
+Two good residue maps used below are
+
+\[
+(p,b,i)=(97,9,22),\qquad (101,13,10).
+\]
+
+They satisfy \(L(b)=0\) and \(i^2=-1\) modulo the indicated prime; neither
+prime divides the leading coefficient 2556. The second map is needed
+only for three component resultants, which have rational coefficients.
+

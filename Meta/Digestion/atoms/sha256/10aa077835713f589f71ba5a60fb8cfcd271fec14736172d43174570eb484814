@@ -1,0 +1,129 @@
+**Proposition 5.2 (an explicit native loss for every fixed bundle width).**
+Use the credited depth-three weights and pressure value from [NCE]
+
+$$
+ v(\alpha)=v(\beta)=4,
+\quad v(x)=1\ (x\in S_2\setminus\{\alpha,\beta\}),
+$$
+
+$$
+ w(\alpha)=88,
+\quad w(\beta)=52,
+\quad w(\langle x,y\rangle)=v(x)v(y),
+$$
+
+whose total is $429$. Put
+
+$$
+P_0=\{\alpha,\beta\}\cup
+\{\langle x,y\rangle:x,y\in\{\alpha,\beta\}\}.
+$$
+
+The six weights on $P_0$ are $88,52,16,16,16,16$, so
+
+$$
+ w(P_0)=204,\qquad
+ \sum_{x\in P_0}w(x)^2=11472.
+\tag{JTC.13}
+$$
+
+The six nonroot targets in $W_3$ are range-feasible and are not own-determined
+on $P_0$; the root target is own-determined and is not needed. The joint map
+of all six nonroot targets is injective on $P_0$.
+
+For an exact check, the target ranges on $P_0$, in the order
+$\varepsilon,L,R,LL,LR,RL,RR$, have sizes $3,4,4,3,3,4,4$. The corresponding
+single-target squared cell sums are
+$14544,12496,12496,15824,15824,12496,12496$; the joint six-target sum is
+$11472$. These integers use the weights in (JTC.13), and the root entry is
+listed only to show why it is excluded from $\operatorname{Bad}(P_0)$.
+
+For $k=2^h\ge4b$, let $P_h=T_h(P_0^k)$ and
+$\mu_h=w^{\uparrow}/429^k$. The credited depth-three pressure is
+$\beta_3(w)=169$, hence Theorem 4.2 gives
+
+$$
+\beta_{h+3}(\mu_h)=B=\left(\frac{169}{429}\right)^k.
+$$
+
+Every cap accepted by $V_b$ at $\mu_h$ satisfies
+
+```math
+ C\ge T_{k,b}:=
+ \frac{204^{k-b}\,11472^{b/2}}{429^k}>B.
+\tag{JTC.14}
+```
+
+**Proof.** A coarse target is constant above the scaffold or depends on one
+frontier module. A bundle of at most $b$ targets touches at most $b$ modules.
+On a touched module its partition is coarser than the injective six-target
+partition, so its squared cell sum is at least $11472$. An untouched module
+contributes $204$ to its cell-mass norm. If $t\le b$ modules are touched,
+the product partition's norm is at least
+$204^{k-t}11472^{t/2}/429^k\ge T_{k,b}$; its squared norm is at least
+$204^{2(k-b)}11472^b/429^{2k}$. Every target of $P_h$ is constant or a
+target of one $P_0$ module, so $P_h$ is range-feasible. If it is light, the cap
+already obeys $C\ge\mu_h(P_h)\ge T_{k,b}$; if it is heavy, the required bundle
+has the same lower bound. Finally
+
+$$
+\sqrt{11472}>107,\qquad
+204^3\cdot107=908394048>815730721=169^4,
+$$
+so $T_{k,b}>B$ whenever $k\ge4b$. $\square$
+
+The normalized loss obeys
+
+$$
+2^{-(h+3)}\log_2(C/B)\ge\frac18\left[
+\log_2\frac{204}{169}-\frac bk\log_2\frac{204}{\sqrt{11472}}\right].
+$$
+
+It stays positive along this specified weight family when $b/k\to0$;
+this is not an assertion about optimization over other weights.
+
+Zeros are not essential. Use the rational lower bound
+$R=204^{k-b}107^b/429^k>B$ and
+$\delta=(R-B)/(4(2+R))$. For the uniform law $u$ on $S_{h+3}$ put
+$\widetilde\mu=(1-\delta)\mu_h+\delta u$ and $\widetilde C=B+2\delta$.
+The continuity estimate supplied in [NPC, Theorem 6.1] gives
+$\beta(\widetilde\mu)\le B+\delta<\widetilde C$, while every bundle cell
+norm on $P_h$ is at least $(1-\delta)R$ and
+
+$$
+(1-\delta)R-\widetilde C=\frac34(R-B)>0.
+$$
+Thus the same bounded-bundle test rejects a strictly positive valid cap.
+Both $\delta$ and $\widetilde C$ are rational, $0<\delta<1$, and
+$\operatorname{TV}(\widetilde\mu,\mu_h)\le\delta$.
+
+At $b=1,h=2,d=5$, the smallest hard single-target squared cell mass on $P_0$ is
+$12496$ (the other two hard targets give $15824$). Direct integer arithmetic
+checks
+
+$$
+12496\cdot204^6=900641637831868416
+>665416609183179841=169^8.
+$$
+
+For the stated rational slack the required comparison is the stronger one
+
+$$
+\begin{aligned}
+10000\cdot12496\cdot204^6&=9006416378318684160000,\\
+10201\cdot169^8&=6787914830277617558041,\\
+10000\cdot12496\cdot204^6-10201\cdot169^8
+&=2218501548041066601959>0.
+\end{aligned}
+$$
+
+Thus $V_1$ rejects the valid cap
+$C=(101/100)(169/429)^4$. The pressure of the lifted weight is already
+attained at length one by the lifted product of the credited $169$-mass set;
+length enumeration cannot repair this failure.
+
+This is a pointwise-completeness obstruction for the specified fixed-width
+bundle language. It does not refute the optimizer-cofinality requested by
+[NPC, Definition 8.1], and it does not exclude unrestricted bundle widths,
+global recoloring, lawful finer cuts, or another sound proof system.
+

@@ -1,0 +1,4 @@
+**Corollary 24.3 (return identification order must grow).** Any cutoff schedule that recovers $\mathbf J$ from $\mathcal B,G_k$ on every length promise $N\le L$ eventually exceeds each fixed $k$. This remains true if total returns and retry multiplicities are also supplied. It does not assert an independently unbounded return threshold when the retry word is fixed or supplied.
+
+Proof. For fixed $k$, Theorem 24.2 gives one finite witness pair with a finite common length. It belongs to every larger length promise, and equality of $G_k$ implies equality at every smaller cutoff. The identical full original future laws cannot remove the collision. The theorem bounds the sufficient total returns but not the witness length, so it provides no new numerical rate in $L$. In particular (SC.36)'s source/generic threshold bounds remain unchanged. $\square$
+

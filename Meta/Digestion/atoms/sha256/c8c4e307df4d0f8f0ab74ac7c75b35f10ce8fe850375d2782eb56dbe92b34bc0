@@ -1,0 +1,97 @@
+## 6. Consuming the supported interior full-tail risk
+
+Energy and endpoint calibration alone do not prove an interior risk obstruction. This section supplies that missing consumption on the same table and prior.
+
+Use the supplied complete-law Lipschitz bound [CLIP, Proposition 5.3]
+
+$$
+\operatorname{TV}(P_{p,u},P_{p,t})\le L_p|u-t|,
+\qquad L_p=125/57.
+$$
+
+Here is the complete-law coupling behind this bound. Couple Bernoulli-$u$ and Bernoulli-$t$ letters until their first discrepancy. Before then the original parsers and event blocks agree. The mismatch probability at each live Read is $|u-t|$. The expected remaining Read count at parameter $u$ solves $N_u=1+(1-u)(1+uN_u)$, hence $N_u=(2-u)/(1-u(1-u))\le125/57$. Summing first-discrepancy hazards gives the displayed bound on the entire stopped word and its $I_c$ rendering. Both generators complete almost surely, with the infinite outcome retained. No finite future horizon is used.
+
+Put $d_x'=\operatorname{TV}(\widetilde Q_x,P_{p,u_x})$. The paired equations and a Bernoulli-emission coupling give
+
+$$
+d_x'\le(1-u_x)\sum_zC_{xz}
+\bigl((1+u_zL_p)|u_z-u_x|+u_zd_z'\bigr).
+$$
+
+After averaging, stationarity and $\lambda=4/15$ yield
+
+$$
+\mathbb E d_x'\le k\sum_{x,z}\pi_xC_{xz}|u_x-u_z|
+\le k\sqrt{2\mathcal E_C},\qquad k=1070/627.
+\tag{6.1}
+$$
+
+All distances here concern the complete laws, including all return words and infinite outcomes.
+
+Round $u_x$ to the nearer endpoint $t_x\in\{1/3,2/5\}$, taking the lower one on a tie. Since $|u_x-t_x|\le(2/15)Z_x(1-Z_x)$, (1.4), (4.1), (6.1) and the Lipschitz bound give
+
+$$
+d_0:=\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,t_x})
+\le\frac{10}{11}J+k\sqrt{2\mathcal E_C}+\frac{800}{171}G.
+\tag{6.2}
+$$
+
+These endpoint laws are comparison laws inside a proof. They are not asserted to be a risk-dominating replacement observer.
+
+Let $w=\pi\{t_x=1/3\}$. The p endpoint event calibration implies
+
+$$
+|w-1/2|\le(\varepsilon_p+d_0)/d_p.
+\tag{6.3}
+$$
+
+For every $r\in I_0$, the supplied interior complete word $w_{3,1}$ has mass above both endpoint masses by at least $\eta$. Its mass is $r^3(1-r)^5$, decreasing on $I_0$, and (1.1) is its value at $5/13$ minus its endpoint-2 value. Endpoint 2 has the larger endpoint mass.
+
+For any normalized countable laws $D,P_1,P_2$, including their infinite outcome, the scalar identity $|d-a|+|d-b|-|a-b|=2\operatorname{dist}(d,[a\wedge b,a\vee b])$ summed over coordinates gives
+
+$$
+\operatorname{TV}(D,P_1)+\operatorname{TV}(D,P_2)-\operatorname{TV}(P_1,P_2)
+=\sum_w\operatorname{dist}(D(w),[P_1(w)\wedge P_2(w),P_1(w)\vee P_2(w)]).
+$$
+
+The single coordinate $w_{3,1}$ is at least $\eta$ outside the endpoint interval. With $D=P_{p,r}$, the identity therefore gives
+
+$$
+\frac{\operatorname{TV}(P_{p,1/3},P_{p,r})+
+\operatorname{TV}(P_{p,2/5},P_{p,r})}{2}
+\ge\rho_p+\eta/2.
+\tag{6.4}
+$$
+
+This is the supplied [NATIVE, §6] full-tail interior excess. Reverse triangle bounds the change from fair weights by $d_p|w-1/2|$. The triangle inequality for each configuration, followed by (6.3), consequently gives
+
+$$
+\sum_x\pi_x\operatorname{TV}(Q_x,P_{p,r})
+\ge\rho_p+\eta/2-\varepsilon_p-2d_0.
+$$
+
+Choose one actually supported nonendpoint. Its original pure-target configuration risk is at most $\rho_p+\varepsilon_p$. Therefore
+
+$$
+\eta/4\le\varepsilon_p+d_0.
+\tag{6.5}
+$$
+
+This step uses configuration-before-TV. It is not supplied by a marginalized risk bound or by separate phase attainment.
+
+From (1.4), $\mathcal E_C\le G/h$, while $\varepsilon_p\le d_pG$ and $J\le G/K$. Substituting (6.2) into (6.5) gives
+
+$$
+\eta/4\le A_0G+B_0\sqrt G,
+$$
+
+$$
+A_0=d_p+800/171+10/(11K)<5,
+\qquad B_0^2=2k^2/h<1.
+\tag{6.6}
+$$
+
+All comparisons are rational: $A_0=1721459302499479/358022162953125$ and $B_0^2=12220682338076/12476288085327$. If $G\le\eta^2/64$, the right side is at most $5\eta^2/64+\eta/8<\eta/4$, since $0<\eta<8/5$. This contradiction proves $G>\kappa$.
+
+Finally $1/d_p+1/d_\beta=6490644750/266850431<25$ and $K<30$. Hence $G\le25\max(\varepsilon_p,\varepsilon_\beta)+30J$, proving (1.7). The constants are conservative; no optimality is claimed.
+

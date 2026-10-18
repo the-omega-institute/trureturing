@@ -1,0 +1,59 @@
+**定义 81.1（同一输入存在问题）。** 固定
+[《AURIC Ω 静态相融纤维理论》定义 68.1、73.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)
+的物理顺序
+$(000,100,010,001,101)$ 和被动实帧
+$D_3=\operatorname{diag}(1,i,i,i,1)$。
+任取这个顺序中的 $z=(z_i)_{i=1}^5$，满足 $z_i\geq0$、$\sum_i z_i=1$；
+令 $\zeta_1\geq\cdots\geq\zeta_5$ 是其降序排列，并置
+
+$$
+P=\zeta_1,\qquad Q=\zeta_1+\zeta_2,\qquad
+V=\zeta_4+\zeta_5,\qquad d=\min\{V,(1-Q)/2\}.
+\tag{XII.1}
+$$
+
+沿用原卷的 $\mathcal E(z)$、$\mathcal S_z$、$H_z(s)$：
+输入为同一个指定实帧中的两个实际 $5\times5$ 半正定迹一矩阵
+$\rho,\sigma$，两者对角均为 $z$，逐项实部相同，且
+
+$$
+\operatorname{spec}(\rho-\sigma)=(a,b,0,-b,-a),\qquad
+a\geq b\geq0,\qquad s=a+b.
+\tag{XII.2}
+$$
+
+共同实部是每对见证的存在变量，不是在不同态对之间预先固定的矩阵。
+$H_z(s)$ 只在实际非空的固定 $s$ 切片上定义。
+原卷的 $a_1,a_2,D$ 在这里分别为 $a,b,s$；
+原卷 (X.3) 的 $U$ 为这里的 $V$。
+下文的 $A=a^2/4$、$B=b^2/4$ 是非负标量，
+不沿用原卷实反对称矩阵 $A$ 的记号。
+$d$ 是人口上限的合并量，不是 Hilbert 空间维数或第二差权重。
+大写 $Z$ 及小写 $\xi$ 是实部谱坐标，不是人口向量 $z$。
+
+原卷定理 76.1 给出的共同四谱接口写为
+
+$$
+\begin{gathered}
+r=(x,y,\xi,w),\quad x\geq y\geq\xi\geq w\geq0,\quad
+x+y+\xi+w=1,\\
+x\geq P,\quad x+y\geq Q,\quad w\leq V,\\
+xy\geq A,\quad xw\geq B,\quad y\xi\geq B,\quad
+xy\xi w\geq AB.
+\end{gathered}
+\tag{XII.3}
+$$
+
+存在这样一个共同 $r$，当且仅当 $(a,b)\in\mathcal S_z$。
+这是包括零人口、相同人口和奇异实部的实际密度接口；
+四个乘积不等式必须由同一个 $r$ 满足。
+其证明使用原卷命题 73.2 的奇异值乘积与第四外幂必要界、
+命题 75.1 的同谱充分性，以及实 Schur–Horn 对角接口。
+这些标准谱工具在原卷相应证明内使用，不作为本续卷新增的独立结论。
+人口排序还给出
+
+$$
+Q\leq2P,\qquad 1-V\leq3P.
+\tag{XII.4}
+$$
+

@@ -1,0 +1,34 @@
+**Definition 8.2 (The three extra endpoint premises).** For a stationary legal law $P$ write $\mathcal E_j=\sigma(X_k:k\ne j)$, $F_j=\{X_{j-1}=X_{j+1}=0\}$ and $(Tx)_j=x_{j+1}$. Choose an exterior Borel version of $q_0^P=\mathbb E_P[X_0\mid\mathcal E_0]$, set $q_j^P=q_0^P\circ T^j$, and put $\ell_j^P=(X_j-q_j^P)^2$. The posterior band is
+
+$$
+\mathsf B(P):\quad q_j^P=0\text{ on }F_j^c,\qquad
+\frac14\le q_j^P\le\frac12\text{ on }F_j,
+\quad P\text{-almost surely for every }j.
+\tag{8.4}
+$$
+
+The one-sided erasure errors and their required sum are
+
+$$
+\begin{aligned}
+p_r^L&=\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,X_2,\ldots],&
+e_L(r)&=\mathbb E_P(q_0^P-p_r^L)^2,\\
+p_r^R&=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_r],&
+e_R(r)&=\mathbb E_P(q_0^P-p_r^R)^2,\\
+A_P&=\sum_{r\ge0}(\sqrt{e_L(r)}+\sqrt{e_R(r)}).&&
+\end{aligned}
+\tag{8.5}
+$$
+
+At $r=0$ each field still contains the entire opposite half-line. Under the band and $A_P<\infty$, [Guarded, Lemma 2.2] supplies a Borel conull set saturated under legal finite modifications on which
+
+$$
+\Delta_P(x,z)=\sum_{j\in\mathbb Z}
+\bigl(\ell_j^P(x)-\ell_j^P(z)\bigr)
+\tag{8.6}
+$$
+
+is absolutely convergent whenever $x,z$ differ at finitely many sites. Every loss remains the fixed original-$P$ function even after a modification. Strong zero, $\mathsf Z_\Delta(P)$, asserts that this sum is zero for every such pair on a saturated conull set. This is a pathwise extra premise, not merely a vanishing expected first variation.
+
+The three premises in the consumer are all of $\mathsf B(P)$, $A_P<\infty$ and $\mathsf Z_\Delta(P)$. They do not redefine $\Theta_N$.
+

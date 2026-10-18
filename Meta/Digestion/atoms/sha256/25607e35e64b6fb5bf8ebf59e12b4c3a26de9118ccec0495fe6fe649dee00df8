@@ -1,0 +1,114 @@
+**Theorem 3.1.** Suppose $P\in\mathcal N_1$, the first four actual
+normalized readings are $(0,24,48,312/5)$, $\deg f\le3$, and $f(6)=0$.
+Then
+
+$$
+0\le d\le24\quad\Longrightarrow\quad f(4)>0.
+\tag{3.1}
+$$
+
+This statement needs no seventh-gain promise. If both late readings
+are present, their actual fourth equation consequently gives $y>d$.
+
+**Proof.** The $f(6)$ evaluation row of (2.4) gives
+
+$$
+0=10d+36q_1-45q_2+20q_3.
+\tag{3.2}
+$$
+
+Substitution into the $f(4)$ evaluation row gives
+
+$$
+f(4)=d+4q_1-6q_2+4q_3=-d-\frac{16}5q_1+3q_2.
+\tag{3.3}
+$$
+
+Indeed $4q_3=-2d-(36/5)q_1+9q_2$. Set $r=u/v>0$.
+Multiplication of (3.2) by $v>0$ gives
+
+$$
+10dv=45(48-d)-\frac{36(24-d)}r
+                         -\frac{20(312/5-d)}{r+1}.
+\tag{3.4}
+$$
+
+Assume $f(4)\le0$. Equation (3.3) then requires
+
+$$
+dv\ge3(48-d)-\frac{16(24-d)}{5r}.
+\tag{3.5}
+$$
+
+Using (3.4), this implies
+
+$$
+0\le\frac32(48-d)-\frac{2(24-d)}{5r}
+                              -\frac{2(312/5-d)}{r+1}.
+\tag{3.6}
+$$
+
+The multiplier $10r(r+1)$ is positive. Thus $P_d(r)\ge0$, where
+
+$$
+\begin{aligned}
+P_d(r)
+ &=15(48-d)r(r+1)-4(24-d)(r+1)-20(312/5-d)r\\
+ &=15(48-d)r^2+(9d-624)r+4(d-24).
+\end{aligned}
+\tag{3.7}
+$$
+
+The full increasing-power coefficient row is
+$(4d-96,9d-624,720-15d)$: the linear coefficient is
+$(720-15d)+(-96+4d)+(-1248+20d)=9d-624$.
+On $0\le d\le24$, write $A_d=15(48-d)>0$. Then
+
+$$
+P_d(0)=4(d-24)\le0,\quad P_d(1)=-2d\le0,\qquad
+P_d(r)=(1-r)P_d(0)+rP_d(1)-A_dr(1-r).
+\tag{3.8}
+$$
+
+The last identity makes $P_d(r)<0$ for $0<r<1$.
+For $d>0$ it is also negative at $r=1$. Therefore the necessary
+$P_d(r)\ge0$ forces $r>1$ if $0<d\le24$, and $r\ge1$ if $d=0$.
+Both drift endpoints, including the vanishing constant coefficient
+at $d=24$, are retained.
+
+First take $d=0$, before dividing by $d$. For $r\ge1$ the right side
+of (3.4) is at least
+
+$$
+45\cdot48-36\cdot24-10(312/5)=2160-864-624=672>0,
+\tag{3.9}
+$$
+
+contrary to its zero left side. Now let $0<d\le24$. Since $r>1$,
+$24-d\ge0$ and $312/5-d>0$, that right side is strictly greater than
+
+$$
+45(48-d)-36(24-d)-10(312/5-d)=672+d.
+\tag{3.10}
+$$
+
+The strictness still holds at $d=24$ through the last term. Hence,
+dividing only by the now positive $10d$,
+
+$$
+v>\frac{672+d}{10d}\ge\frac{29}{10},
+\tag{3.11}
+$$
+
+where the last inequality is $672\ge28d$. But $r>1$ gives
+$u>v$, so $p+q>1+p$ and $q>1$. Also $p=v-1>19/10$.
+Thus $pq>19/10>1/4$, contradicting
+$pq=s(1-s)\le1/4$. This proves (3.1), including all permitted
+nonnegative source entries. Positivity of $t_4$ in the actual
+fourth equation then gives $y>d$. ∎
+
+This rank-one conclusion is stronger than an inequality on arbitrary
+positive trace coordinates. The determinant bound is its final
+essential constraint; no common source sum, gain ratio or leading
+coefficient has been assumed.
+

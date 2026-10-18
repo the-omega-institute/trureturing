@@ -1,0 +1,19 @@
+**反例 6.3（Noncoprime empty-gap witness）。** Set
+
+$$
+m=6,\quad r=g=2,\quad T=8,\quad k=7,\quad P=\{0,2,4,6\},\quad a=0,
+$$
+$$
+\lambda(2)=0,\quad\lambda(4)=1,\quad\lambda(0)=\lambda(6)=0.
+\tag{6.2}
+$$
+
+Here $F=\varnothing$ but the exact adaptive and preset fee is two. A common stream is
+
+$$
+111111\mid000001.
+\tag{6.3}
+$$
+
+Proof. The root rejects all initial tails at least one to $R_1$; the only low tail is zero. Its successful positive archive is $\{0,6\}$, both labelled zero; its zero archive is $\{2,4\}$. The second ordered path is $6,7,0,1,2,3,4$. Word $000001$ has charges one only at $3,4$, so its actual responses are zero at $2$ and one at $4$, and zero at both endpoints. Its first zero safely clears root tail six. Thus every leaf has its correct INITIAL label; nonconstancy on $Z$ excludes fee one. The nonactual vertex three supplies parity, demonstrating why a universal nonempty-$F$ requirement is false. ∎
+

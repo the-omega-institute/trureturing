@@ -1,0 +1,34 @@
+**定理 31.3（Exact simultaneous first-zero parent cube）。** Fix an eligible cut $a=qm+r$. In the parent block at index $q$, prescribe the empty initial run when $r=0$ and otherwise $r$ leading ones:
+
+$$
+B_0=\cdots=B_{r-1}=1,\qquad B_r=0.
+\tag{31.7}
+$$
+
+For each actual local vertex $i\in\{0,g,2g,\ldots,m\}$, put
+
+$$
+A_0=\{0\},\qquad A_m=\{m-1\},\qquad
+A_i=\{i-1,i\}\quad(0<i<m).
+\tag{31.8}
+$$
+
+The possible successful parent-response rows are precisely zero outside $P\cap W_q$ and, at $j=u_q+i$, satisfy
+
+$$
+\xi_i\in
+\begin{cases}
+\left\{\displaystyle\bigoplus_{b\in A_i}B_b\right\},&A_i\subseteq\{0,\ldots,r\},\\
+\mathbb F_2,&A_i\not\subseteq\{0,\ldots,r\}.
+\end{cases}
+\tag{31.9}
+$$
+
+Every combination in this product is realized by one and the same word satisfying (31.7). Its first zero is exactly at $r$; its successful sources are exactly the earlier all-one survivors with $s<k-a$; its final tail is at most $m-r-1\le m-1$. The rejected sources in that block are exactly $S_q(\beta)\times[h_q-r,h_q)$ in each earlier archive. These rejection and response data belong to the same parent word.
+
+Proof. At every successful source, (1.4) gives the response at local vertex $i$ as the XOR of the bits indexed by $A_i$. Actual vertices have spacing $g\ge2$. Consequently the sets (31.8) are pairwise disjoint: consecutive internal pairs are separated or adjacent without sharing a bit, and neither endpoint singleton shares a bit with an internal pair. The two endpoint singletons are also disjoint, since $m\ge3$. If all bits of $A_i$ were prescribed in (31.7), its XOR is fixed. Otherwise choose one unprescribed bit in $A_i$, set the other unprescribed bits there to zero, and set the chosen bit to the desired response XOR the already prescribed bits. Different coordinates use disjoint unprescribed bits, so all choices coexist in one word. Set any other unprescribed bits to zero. This constructs every row in (31.9). Conversely (1.4) forces its fixed coordinates and its zero response outside the window. Ordered paths retain the same conclusion on a wrap; no vertex repeats because $m<T$.
+
+Before $B_r=0$ the total emitted input consists of $a$ ones. Hence an INITIAL tail survives precisely when $s+a<k$. All higher tails still present at depth $q$ reject among the $r$ leading ones, without exposing their intermediate values. Every lower tail reaches the prescribed zero, resets, and completes the block safely: the remaining input has fewer than $m<k$ bits. The final tail is bounded by the length of that suffix. These facts establish the asserted joint threshold, response and tail information. ∎
+
+The cube includes endpoint constraints. For example, when $r=m-1$ the right endpoint response is forced to zero; when $r=0$ the left endpoint response is forced to zero. A free charge assignment on all actual vertices would lose these restrictions and would not describe the INITIAL parent.
+

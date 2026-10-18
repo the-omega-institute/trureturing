@@ -1,0 +1,19 @@
+**Definition 6.1 (an injective geometry target).** For $T\in\mathcal T$, let $w(T)$ be its complete ordered leaf-label word and define the complete inorder ancestor-coordinate list by the existing recursion
+
+$$
+\begin{aligned}
+g(\alpha)&=g(\beta)=(),\\
+g(\langle U,V\rangle)&=g(U)\mathbin{+\!+}[m(U)m(V)]\mathbin{+\!+}g(V),\\
+\tau(T)&=(w(T),g(T)).
+\end{aligned}
+\tag{NDR.11}
+$$
+
+These are `wd` and `AncestorAreaInterval.coordinates`. [NativeAncestorUniqueness](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativeAncestorUniqueness.lean), `native_ancestor_uniqueness`, supplies injectivity of this full pair on all native labelled trees. This is a downstream supplier, not another native uniqueness claim.
+
+The conversion from a recovered tree to $\tau$ is internal finite recursion. Conversely, for a tuple in the actual image, its finite word fixes the number and ordered labels of leaves. Enumerate the finitely many full binary bracketings of that word, compute each coordinate list, and compare with the supplied list. The actual source is among them and the supplier's injectivity makes the match unique. This gives a finite inverse on the actual image, without any additional source requests or any time bound for the computation. An empty word or a tuple with no matching bracketing can be assigned a fixed default tree; this makes the conversion total without changing it on any correct terminal output.
+
+Consequently Theorem 4.1 prices exact acquisition of this target as well: compose a full-tree policy with its forward map for one inequality, and an exact $\tau$ policy with this inverse for the other. Both compositions preserve the actual request histories and both phase costs. Determining evidence for $\tau$ is likewise exactly determining evidence for the tree. No unknown-source coordinate port is supplied by this conversion.
+
+A recovered tree also gives $r_T(q)$ for every later supplied finite address $q$. Retaining an accessible tree description or the lossless `AtomicPrefixParser.code` suffices for these later value requests with zero further source calls. Its exact decoding and injectivity are supplied by [AtomicPrefixParser](../../../D5/S3/Arith/FibonacciAtomic/AtomicPrefixParser.lean), `result`; storage, decoding, computation and output remain charged separately. The determining leaf records of Definition 2.1 are another sufficient retained representation, not a new coordinate-acquisition obligation.
+

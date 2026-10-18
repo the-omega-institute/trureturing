@@ -1,0 +1,25 @@
+**Definition 1.2 (trees and the source).** Use the original free nonempty
+ordered binary trees
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\rho\alpha=\beta,\quad
+\rho\beta=\langle\beta,\alpha\rangle,\quad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+Let $\lambda(t)$ be the number of leaves. For a public $H\ge1$, put
+$N=2H-1$ and $\mathcal T_H=\{t:\lambda(t)\le H\}$. The installed source is
+the adapter's one private $2N$-bit block, with preorder tokens
+`PAD=00`, `alpha=01`, `beta=10`, `PAIR=11`, padded after closure. Its
+immutable preparation identity is $\xi$. Source identity, tree value, and
+current generation are different objects. Addresses are finite words over
+$\{L,R\}$, including the empty root. The literal response is
+$\operatorname{tag}(p,t)\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+
+Ordered pairing, root and child relations, substitution, tapes, finite
+control, input ports, ownership, receipt construction and archive services
+are explicit structures of the model. None is inferred merely from the
+existence of two leaf labels.
+

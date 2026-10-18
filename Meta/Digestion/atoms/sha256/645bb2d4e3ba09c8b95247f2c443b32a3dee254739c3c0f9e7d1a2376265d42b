@@ -1,0 +1,18 @@
+### 461.1 原数据、残余数据和同一个共同小窗口
+
+沿用 §459 的实际值
+$$
+u=cB(h),\quad v=cB(3h/2),\quad z=cB(2h),
+\qquad S=2v+u+z,\quad \Delta=v^2-uz,\quad K_h=\Delta/S.
+$$
+令
+$$
+u_a=u-a,\quad v_a=v-a,\quad z_a=z-a,
+\qquad S_a=S-4a,
+$$
+$$
+\Delta_a=v_a^2-u_a z_a
+ =\Delta+a(u+z-2v),\qquad K_{a,h}=\Delta_a/S_a.
+\tag{MU.1}
+$$
+

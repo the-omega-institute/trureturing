@@ -1,0 +1,18 @@
+**Convention 9.2 (source-verified primary comparisons).** The following
+primary results have their own representation and hypothesis requirements.
+No native equivalence satisfying both mass directions and the original
+operational resource conditions is assumed for any row.
+
+| Primary source | Exact result and boundary |
+| --- | --- |
+| Gogacz–Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, Theorem 1 and Corollary 1, [arXiv:1512.01808v1][GT] | A fixed query schema has an almost-entropic characterization and a submodular outer bound. A native witness gives a functional dependence under one common law, but varying native lengths, maps and owned weights do not become a fixed-schema cofinality theorem. |
+| Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, Theorem 4.1, [arXiv:1202.6035v2][R] | Graph-cover domination assumes a binary log-supermodular factorization. Arbitrary native joint weights have no such premise. The current [GCB][GCB] native graph-cover and Bethe boundaries are separate credited results. |
+| de Boer–Buys–Zuiddam, *The asymptotic spectrum distance, graph limits, and the Shannon capacity*, Theorem 3.7, [arXiv:2404.16763v2][DBZ] | Fraction graphs approached from above converge uniformly over the specified spectrum. No cardinality-preserving native fraction-graph identification or effective approximation in that distance is established here. |
+| Sarantis–Tetali–Zheng, *On Counting Independent Sets in Regular Hypergraphs*, Theorems 1.4–1.5, [arXiv:2609.17468v1][STZ] | The first bound assumes uniform regular hypergraphs with no cross-edges; the second assumes vanishing relative maximum codegree of the twin quotient along growing degree. Arbitrary native donor networks with whole-block weights have neither a proved reduction nor these hypotheses as a general premise. |
+
+These comparisons give no imported effective all-instance cap. The
+proofs above instead use explicit native tables, same-realization
+maps and finite inequalities. The source references distinguish
+verified statements from unproved transfer bridges; inaccessible or
+unmatched literature would not establish originality.
+

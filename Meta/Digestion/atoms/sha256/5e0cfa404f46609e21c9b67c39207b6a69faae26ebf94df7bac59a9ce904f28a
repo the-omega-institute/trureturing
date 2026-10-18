@@ -1,0 +1,27 @@
+**Proposition 7.1 (attaining Read and literal-letter prices).** For
+$k\le1$, an optimal fixed guess uses zero Reads and zero submitted
+letters. For $k\ge2$, a fixed attaining list has $t$ Reads, each
+of length $H+1$, and $t(H+1)$ submitted $L/R$ letters. It can
+stop on its first mismatch, using $r$ Reads and $r(H+1)$ letters
+on that path, $r\le t$, with worst-case $t$.
+
+Proof. Query the $t$ actual $x$ roots of Proposition 4.3 and decode
+alpha as zero and beta as one. Accept $Q$ exactly when all decoded
+phases agree. Branch and absent cannot occur at those endpoints on
+this support; assigning either any fixed fallback decision makes the
+decoding table total. Once a mismatch occurs, completing the fixed list
+cannot restore equality, so early decision $P$ preserves the test.
+Lengths and letter counts follow by adding the initial $R$ and the
+$H$ frontier letters for each submitted word. All-equal paths occur
+under both laws and require the full list, making this a real worst-case
+cost. Corollary 6.4 supplies Read optimality. No optimality claim for
+expected cost or for a separate letter-budget problem is made. $\square$
+
+Submitting a literal word is one charged Read, with its letters also
+counted. Its prefixes are not free navigation operations. All addresses
+and the alpha/beta and equality tables are public source-independent
+data. The deterministic test needs no private randomness. If competitor
+randomness is supplied and paid, Theorem 5.2 and Lemma 6.1 still give
+the same optimum. Auxiliary random draws in its comparison kernel are
+not resources of the implemented test.
+

@@ -1,0 +1,25 @@
+**Theorem 3.3 (existence of the original full-family rate).** The limit
+
+$$
+\lambda=\lim_{D\to\infty}2^{-D}\log_2m_D
+\tag{FMR.15}
+$$
+
+exists. More precisely $2^{-D}\log_2(m_D+1)$ is nonincreasing and
+has the same limit. Fixed-width naming $\lceil\log_2m_D\rceil$
+has the same normalized limit.
+
+Proof. Since $m_D\ge1$, (FMR.14) gives
+
+$$
+m_{D+1}+1\le m_D^2+2\le(m_D+1)^2.
+$$
+
+The shifted normalized logarithms therefore decrease and are bounded
+below by zero. Their difference from the requested sequence is at
+most $2^{-D}$. The fixed-width rounding difference is also at most
+$2^{-D}$. These observations prove all assertions. The composition
+hypothesis is supplied by the actual native construction in Theorem
+3.2, not by an assumed graph product or a reverse product inequality.
+$\square$
+

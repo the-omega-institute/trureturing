@@ -1,0 +1,53 @@
+**Theorem 5.2 (effective complete Pareto basis).** On a nonempty positive
+gate, a terminating algorithm computes a finite nonempty set
+$\mathcal B\subseteq\mathbb N^3$ such that
+
+$$
+\mathcal B=\operatorname{Min}(\mathcal F),\qquad
+\mathcal F=\{b\in\mathbb N^3:\exists v\in\mathcal B\ v\le b\}.
+\tag{GRS.17}
+$$
+
+For each $v$ it constructs a legal service with exact worst vector $v$
+and finite source witnesses for its coordinate maxima. On a nonempty
+negative gate, $\mathcal F$ is empty and every correct service has both
+unbounded worst read count and unbounded worst submitted-length sum.
+
+Proof. This uses the cofinal-grid and Pareto method of [JRF, Lemma 5.2
+and Theorem 5.3][JRF]. Its exact hypotheses here are the whole-domain
+positive/negative gate of Definition 3.1, the static supplier (GRS.11),
+the same-source cap and cleanup in Lemma 5.1, the unbounded-address
+decision of Theorem 4.2, and the triple decision of Corollary 4.3.
+The supplier's literal-only source feasibility routine is not used.
+
+Set $K=\max(K_0,L_0)$. First decide every pair
+$0\le q\le K$, $0\le d\le D_N$ by Theorem 4.2, leaving physical words
+unbounded. For each true pair extract a finite service and its finite
+worst length $L^{\rm wit}_{q,d}$. Only then use Corollary 4.3 to find
+the least feasible $L_{q,d}$ in the finite interval
+$0\le L\le L^{\rm wit}_{q,d}$. Retain the minimal elements among the
+resulting triples. This terminates: there are finitely many pairs,
+false pairs never start an address enumeration, and each true pair
+provides its own finite upper endpoint for length minimization.
+
+For completeness take any finite-budget comparator and normalize it by
+Lemma 5.1. Let $q',L'$ be its worst reads and length, so $q'\le L'$.
+If $q'\le K$, its read/update pair lies in the grid and the least length
+for that pair is at most $L'$. If $q'>K$, then $q'>K_0$ and $L'>L_0$;
+the static supplier is no worse in all three coordinate maxima. The grid
+is therefore cofinal in the entire original comparison class. This step
+compares worst coordinates, not the cost on each same source.
+
+Every retained triple is feasible. Cofinality proves equality of the
+upward closures and hence (GRS.17). At a minimal retained triple the
+actual worst vector of its witness cannot be strictly smaller: it too
+would be feasible, contradicting minimality. Corollary 4.3 provides the
+actual-source maxima. This proves attainment as well as the upper-budget
+description; it does not claim that arbitrary larger exact cost vectors
+can be independently installed.
+
+On a negative gate no uniform finite read service exists, by the gate.
+If some correct service had finite worst length, deleting its constant
+root reads would give a uniform read bound by the proof of (GRS.16), a
+contradiction. This proves both unboundedness statements. $\square$
+

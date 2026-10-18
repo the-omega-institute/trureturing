@@ -1,0 +1,64 @@
+**Theorem 52.3 (joint moving mass and both undamped inputs).** Let $L^0$ denote the undamped late kernel (35.9) at $h=0$, used in its finite quadratic pairing against $x_s\in L^1$. Its kernel is bounded by $Cj_0s^5$ by L Lemma 41.2; no bounded inverse on all of $L^2$ is asserted. Then
+
+$$
+\begin{aligned}
+s^{-8}(\delta_s-\delta_{\chi,s})
+ &\longrightarrow\frac{j_0A_p^2}{C_*^2}I_\chi,\\
+s^{-8}(\langle x_s,L^0x_s\rangle-Q_{\chi,s})
+ &\longrightarrow\frac{2j_0A_p^2}{C_*}I_\chi,\\
+\frac{\ell_s(\delta_s-\delta_{\chi,s})+
+ \langle x_s,L^0x_s\rangle-Q_{\chi,s}}{n_s}
+ &=c_\chi s^8+o_{d,\chi}(s^8),\qquad
+c_\chi=\frac{3j_0A_p^2}{\mu C_*}I_\chi.
+\end{aligned}
+\tag{52.3}
+$$
+
+Proof. Change the complete output variable in the mass scalar. The exact equality is
+
+$$
+s^{-8}(\delta_s-\delta_{\chi,s})
+ =j_0^{-1}\int_{\mathcal C}R_\chi(Y)w_s(Y)^2dY.
+\tag{52.4}
+$$
+
+The global majorant $C|R_\chi|r^{-10}$ is integrable by the proof of Lemma 52.2. Theorem 51.3 and dominated convergence prove the first line of (52.3).
+
+For the late scalar use its exact full-product kernel scaling:
+
+$$
+\langle x_s,L^0x_s\rangle-Q_{\chi,s}
+ =j_0s^5\iint_{\mathcal C^2}\mathcal R_\chi(A,Y)d\nu_s(A)d\nu_s(Y).
+\tag{52.5}
+$$
+
+Fix a small $\epsilon>0$ and split each endpoint into $r<\epsilon$ and $r\ge\epsilon$. The two-outer piece is $O_\epsilon(s^6)$, since the kernel is bounded and each exterior mass is $O_\epsilon(s^3)$. On the $A$-outer, $Y$-inner piece, for each fixed exterior $A$,
+
+$$
+\int_{r(Y)<\epsilon}\mathcal R_\chi(A,Y)d\nu_s(Y)
+ \longrightarrow A_p\mathcal R_\chi(A,o)=A_pR_\chi(A).
+\tag{52.6}
+$$
+
+Continuity at $Y=o$ follows from positive-time heat continuity and the integrable large-time bound of L Lemma 41.2; the compact cutoff adds no difficulty. Concentration gives (52.6) by first restricting to an arbitrarily small ball about $o$; the intervening annulus has $O(s^3)$ mass. The integrand after division by $s^3$ is dominated on the exterior by $Cr(A)^{-10}$, uniformly in its inner integral. Therefore (51.6) and dominated convergence make this piece divided by $s^3$ tend to
+
+$$
+\frac{A_p^2}{C_*}\int_{r(A)\ge\epsilon}R_\chi(A)G(o,A)^2dA.
+\tag{52.7}
+$$
+
+The other single-outer piece gives the identical limit by symmetry. The two-inner piece is bounded, using (52.2), by a constant times $A_s\int_{r<\epsilon}r^4d\nu_s$. Homogeneous ball integration and (51.5) give the quantitative bound
+
+$$
+\begin{aligned}
+\int_{r<\epsilon}r^4d\nu_s
+ &\le Cs^{-7}\int_0^\epsilon r^{10}(1+r/s)^{-10}dr
+ \le Cs^3\epsilon,\\
+ s^{-3}\left|\iint_{r(A),r(Y)<\epsilon}\mathcal R_\chi(A,Y)d\nu_s(A)d\nu_s(Y)\right|
+ &\le C\epsilon.
+\end{aligned}
+\tag{52.8}
+$$
+
+This bound follows also shell by shell and requires no finite fourth absolute moment of $x_s$. The omitted inner portion of the integral in (52.7) is $O(\epsilon)$ by Lemma 52.2. Let $s\downarrow0$ at fixed $\epsilon$ and then $\epsilon\downarrow0$. Equations (52.5)–(52.8) prove the second line of (52.3). Finally $\ell_s\to C_*$ and $n_s\to\mu>0$; the mass contribution supplies one copy and the two moving late endpoints supply two copies of the same finite integral. This proves the factor three. $\square$
+

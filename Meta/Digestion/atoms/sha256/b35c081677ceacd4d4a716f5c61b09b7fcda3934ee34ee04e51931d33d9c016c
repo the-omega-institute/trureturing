@@ -1,0 +1,13 @@
+## 5. Uniform bounds for both first-reply subtrees
+
+Fix an arbitrary depth-three tree of Lemma 2.2. Let $\alpha$ be the
+parity of its first address and $\beta=1-\alpha$. Its active first
+edge in phase $\alpha$ is $e$. The first reply one certifies phase
+$\alpha$. Define the actual sums of maximal terminal state masses
+
+$$
+B_1=\sum_{y,z}m(C_{1yz}),\qquad
+B_0=\sum_{y,z}m(C_{0yz}).
+\tag{5.1}
+$$
+

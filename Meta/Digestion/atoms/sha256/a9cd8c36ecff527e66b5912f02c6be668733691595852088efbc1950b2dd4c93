@@ -1,0 +1,59 @@
+**Theorem 5.4 (credited span-four compensation).** Every consecutive
+span-four interval satisfies
+
+$$
+D_I\le E_I,\qquad |Q_I|\ge |V_I|.
+\tag{5.9}
+$$
+
+Proof. We give the full compensation argument of [SI, Theorem 10.4][SI].
+Let $e_1,e_2,e_3$ be the excess-host sums at its three internal depths.
+Each depth is ambiguous because the cuts are consecutive. Thus
+$e_j\ge1$ and $E_I\ge3$. By Lemma 5.3, if $s$ states are shared,
+then $D_I=s$. View each shared state as an edge between its two cells
+in (5.8), retaining parallel edges for distinct states. At most six cells
+are incident. If their number is $v$, their host counts dominate their
+degrees, so their total excess is at least $2s-v$. The last layer is
+disjoint from these cells and has excess at least one. Hence
+
+$$
+E_I\ge2s-v+1\ge2s-5.
+\tag{5.10}
+$$
+
+If $E_I<s$, integer strictness with $E_I\ge3$ and (5.10) forces
+$s=4,E_I=3,v=6$. Therefore all six cells are distinct and valid,
+each $e_j=1$, every incident host count equals its degree, and every
+other cell on the first two layers has exactly one host. Any boundary
+deletion or coincidence has already made this deficit impossible.
+
+Write $x,y,z_*,u_*,v_*,w_*$ for the multiplicities of
+$CZ,AY,UV',AZ,AV',ZU$. Since $C,Y$ are incident pendant
+vertices, $x,y\ge1$. Their actual successors force $z_*\ge1$,
+without any injectivity assumption. Counting degrees on the two layers
+gives
+
+$$
+\begin{aligned}
+x+y+z_*+u_*+v_*+w_*&=4,\\
+2x+2y+2u_*+v_*+w_*-4&=1,\\
+2z_*+v_*+w_*-2&=1.
+\end{aligned}
+\tag{5.11}
+$$
+
+The last equation forces $z_*=1,v_*+w_*=1$. The middle then
+forces $x=y=1,u_*=0$. If $v_*=1$, only $A$ on the first
+diagonal has multiple hosts. Every cell from $C$ through $Z$ has
+one host, hence one support. Consecutive such cells have equal supports
+by an actual parent fork, as in Theorem 3.3; the parent itself need
+not have a unique support. The live diagonal is an integer interval,
+so $C,Z$ have equal supports. Their shared $CZ$ state contradicts
+equal-support/unequal-hit exclusion. If $w_*=1$, only $Z$ has
+multiple hosts on that diagonal; the same argument from $A$ through
+$Y$ contradicts the shared $AY$ state. These exhaust the possibilities,
+so $E_I\ge s=D_I$. Restricted incidence counting gives
+$|Q_I|=|V_I|+E_I-D_I$, proving the second assertion. All edges
+and successors here are actual incidences of the one original graph;
+certified traffic is still paid and unrestricted. $\square$
+

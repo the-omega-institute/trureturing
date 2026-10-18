@@ -1,0 +1,31 @@
+**Theorem 142.2 (All thirteen unrestricted necessary cuts).** Any complete
+$N$ allocation satisfying the five-bit cap rows satisfies
+
+$$
+\sum_{i=1}^5T_{q,i}a_i-W_q e\le B_q-T_{q,0}
+\quad\text{for every one of the 13 scores }q.
+\tag{142.2}
+$$
+
+This requires neither the residual strip nor $\kappa_3=0$.
+
+**Proof.** For every complete allocation, substituting its law gives
+
+$$
+\begin{aligned}
+S_q(p)&=\sum_{S,c,r}h^{(q)}_{S,c}(r)T_{S,c,r}\\
+ &\le\sum_{S,c}M^{(q)}_{S,c}w_S
+ =\sum_S B^{(q)}_S w_S\le B_q.
+\end{aligned}
+\tag{142.3}
+$$
+
+Equal masses of all cells in each schedule and global normalization
+are used in the last two steps. From the nonnegative weighted cap rows,
+$S_q(p)\ge T_{q,0}+\sum_iT_{q,i}a_i-W_qe$.
+This proves (142.2). The sparse integers in the tables reconstruct all
+3978 full $h$ coefficients, 663 cell maxima, 208 schedule totals and 13
+target polynomials; their displayed maxima are exact integer maxima.
+The argument applies to any complete $N$ witness, hence to every $O$
+witness through completion. $\square$
+

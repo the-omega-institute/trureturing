@@ -1,0 +1,93 @@
+**Theorem 4.1 (source-specific strict separation and retained paired columns).**
+Under Assumptions 1.1 and 1.4, additionally suppose that the symmetric
+matrix $R_-=Q+t\mathsf F$ is indefinite. Use the coefficients of
+Theorem 3.1 and define
+
+$$
+P_-(z)=q_0+(q_1+2te)z+(q_2-td_*)z^2.
+\tag{IC.21}
+$$
+
+For every complete negative-height pure contact $x_n$, and for every
+complete reverse saturated contact $x_r\in T_{\rm rev}$,
+
+$$
+P_-(z_n)>0,\qquad P_-(z_r)<0.
+\tag{IC.22}
+$$
+
+The first assertion is conditional on the presence of the particular
+negative pure contact; indefiniteness alone is not an existence claim.
+The inequalities retain every such pure contact, including both if
+present, and every reverse group, occupied or unused. Every compatible
+paired group has positive pure height and obeys
+
+$$
+R_+x=0,\qquad \eta_0(x)>0,\qquad \eta_1(x)\ge0.
+\tag{IC.23}
+$$
+
+Both endpoint columns and all legal fractions of that group remain
+available. The condition permits a zero saturated height and the
+algebraic case $R_+=0$; neither is asserted to occur on an attained
+face. If $R_+\ne0$ and a paired group exists, its directions lie on
+the kernel line of this singular matrix; this still does not select
+one endpoint coordinate or identify antipodal labels.
+
+Proof. At a negative pure contact, the actual report tag and negative
+height tag give $F_{0,\epsilon,-}=0$. By (IC.8) and global feasibility,
+
+$$
+0\le F_{1,\epsilon,-}(x)=N_c(x)x^TR_-x.
+$$
+
+Suppose $x^TR_-x=0$. Both nonnegative signed tests now vanish, so
+both angular derivatives vanish. Differentiating
+$F_1=D_cF_0+N_c x^TR_-x$ at this point yields
+$(x^TR_-x)'=0$, since $N_c>0$. For a unit tangent $x^\perp$,
+this is $2(x^\perp)^TR_-x=0$. Together with $x^TR_-x=0$,
+it gives $R_-x=0$ because $x,x^\perp$ span the plane.
+An indefinite symmetric $2\times2$ matrix is invertible. This
+contradiction proves $x^TR_-x>0$. In the chart,
+$x^TR_-x=P_-(z)/(1+z^2)$, proving the first strict barrier.
+The standard minimum-derivative argument is being used inside this
+original-source separation proof, not as a separate general theorem.
+
+At a reverse saturated contact, FC Theorem 25.1 gives
+$\ell>0>\eta_1$. The pure actual gap is
+$\mathscr D_0=P_y-\ell-\lambda|u|\ge0$, so
+
+$$
+F_{0,\epsilon,-}=\mathscr D_0+2\ell>0,\qquad
+x^TR_-x=-\frac{D_c(x)}{N_c(x)}F_{0,\epsilon,-}(x)<0.
+\tag{IC.24}
+$$
+
+This identity is FC (FC.119), and applies to every reverse saturated
+contact, not only to the mandatory occupied ones. It proves the second
+barrier with the same reconstructed coefficients, rather than a
+separately chosen negative direction.
+
+For paired groups, reuse the negative-paired exclusion of FC Theorem
+34.3. Its paired-endpoint argument uses only whole-circle feasibility,
+nonzero pure height and invertibility of $R_-$; the small-mass premise
+in that theorem is used to force existence of negative pure coordinates,
+not for that exclusion. FC Theorem 19.1 and Proposition 20.1 exclude
+zero-height pure contacts in the complete inventory: both signed pure
+minima at such a point would force a zero derivative of $\ell$, whereas
+its two source zeros are simple. Thus every paired group left by the
+credited exclusion has positive pure height. Compatibility gives
+$\eta_1\ge0$, including zero, so both endpoints share the maximizing
+height tag $+$.
+
+At their two signed zeros the same identity, now
+$F_{1,\epsilon,+}=D_cF_{0,\epsilon,+}+N_c x^TR_+x$, gives
+$x^TR_+x=0$ and $(x^TR_+x)'=0$. Hence $R_+x=0$ by the
+same radial/tangent decomposition. This proves (IC.23). It is a
+necessary kernel condition; the converse requires both contact equations,
+the height signs and global feasibility. Nothing in it proves the
+existence of a paired group, excludes $R_+=0$, or rules out
+positive-pure/zero-saturated compatibility. Nor does a kernel condition
+replace the two independent masses $(a_0,a_1)$ of Definition 1.5.
+$\square$
+

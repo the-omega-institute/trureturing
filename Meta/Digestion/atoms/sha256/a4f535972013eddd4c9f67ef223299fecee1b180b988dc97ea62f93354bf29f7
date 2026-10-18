@@ -1,0 +1,53 @@
+**Theorem 3.3 (complete live View0 and checked origin).** In any canonical
+actual continuation containing the complete stage interval of Lemma 3.2,
+let $h_k$ be its selected actual target. The concatenation of live OUT bits
+at this interval's stage-0 print site is exactly the existing wire word
+
+$$
+W_0=[0100,\mathrm{serviceBinding},\xi,U(0),b_*,00,v_S(h_k)].
+$$
+
+Here $b_*$ is GENERAL Definition 5.1's complete acquired ten-field target
+binding, with target tally $k$; $v_S(h_k)$ is its canonical independent
+support body. The actual CheckS0 independently imported, decoded,
+re-encoded and checked that same word/body and binding before $E_1$.
+This holds for every canonical alternative starting prefix that actually
+contains the interval, regardless of its earlier Ready history.
+
+Proof. Lemma 3.2 identifies the actual accepted-target route, so GENERAL
+Lemmas 5.3 and 7.3 and Theorem 6.3 identify RenderS's candidate and acquired
+binding. GENERAL Definition 7.1/CYCLE Definition 8.2 serialize exactly the
+seven fields displayed above. ARC Definition 7.1 and CYCLE Definition 8.4
+measure the real sender71 length, initialize distinct mailbox72 and
+receiver73 intervals with F, and stage their three placement records on69.
+Each of the two tested copy loops copies the entire actual payload under
+its current seals/TOKs. Their induction gives bitwise equality of all three
+payloads while their physical intervals and origins remain distinct.
+
+During the protected copy/print segment there is no bank assignment or
+extra69 staging. The actual receiver base and sender payload length are
+reloaded from those same placements. The print loop is literally
+RD(length,5); on 1 RD(73,4), OUT(4), MR(73), MR(length); terminal RD(0)
+exits. It therefore transmits each receiver bit once, in order, and no
+other bit at that print site. Its finite loop is entered before its first
+length test and observed through its terminal zero exit. Hence the complete
+live word is $W_0$, not an arbitrary suffix with a plausible tuple parse.
+There is no external IN in this interval. Intermediate bank work is still
+actual work, but the selected bits are only this site's OUT releases.
+
+Before any callback bank rebuild, CheckS0 uses the still-current placement
+to Seek73 to that same receiver's first bit. Its candidate is cleared;
+its actual RD/cons/MR import ends at the receiver's F and preserves head73
+through compiler assignments. It parses the received wrapper into
+sourceBody, applies $D_S$, exact re-encoding and full binding checks,
+then saves the received S as firstS. Only afterwards does $E_1$ occur.
+These are GENERAL Definition 7.2's supplied checks; no second source or
+unreceived body is an operand.
+
+For a different canonical start, the proof uses the same fixed physical
+call sites, the newly reached actual predecessor, and its current channel
+rights. Lemma 3.2 gives their origin, and GENERAL's target/channel theorems
+apply to that occurrence. Nothing in the proof presupposes a common
+previous Ready, a claimed numeral's honesty or equality of prior covers.
+Thus the assertion is uniform over all such starts. ∎
+

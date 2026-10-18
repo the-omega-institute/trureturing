@@ -1,0 +1,47 @@
+**Convention 21.1 (unchanged source, processor and output).** In §§21–25,
+the experiment remains (CG.20), with the credited value and instrument
+of Theorem 16.1 and the all-optimizer conclusion of Theorem 17.2.
+The fixed isometry $E:\mathbb C^3\to\mathbb C^5$ has columns
+$(|+\rangle,|-\rangle,|2\rangle)$ from (CG.6). In these coordinates,
+the twelve ACTUAL normalized reached-old-live-cut inputs are
+
+$$
+\rho_{y,e,n}=U_{e,n}\rho_yU_{e,n}^\dagger,\qquad
+U_{e,n}=\operatorname{diag}(e,n,1),\qquad y\in\{5,16,27\},
+\tag{CG.179}
+$$
+
+where $\rho_y$ and $B_y$ are exactly (CG.111). The correspondence to
+the original source parameters, rather than a newly prepared ensemble, is
+
+$$
+x=y/256,\qquad e=(-1)^{\beta/\pi},\qquad n=e(-1)^m.
+\tag{CG.180}
+$$
+
+| Original $(\beta,m)$ | $(e,n)$ |
+| --- | --- |
+| $(0,0)$ | $(1,1)$ |
+| $(0,1)$ | $(1,-1)$ |
+| $(\pi,0)$ | $(-1,-1)$ |
+| $(\pi,1)$ | $(-1,1)$ |
+
+The ideal live block is $U_{e,n}B_yU_{e,n}^\dagger$. Each of the five
+failure sectors has the entire measure
+$w_\ell f_y(t)dt\,P_f$, where
+$w=(0,1/4,1/2,1/4,0)$ and $f_y(t)=6y/(y+6t)^2$ on $[0,1]$.
+Its total mass is $6/(y+6)$, complementary to the live mass $y/(y+6)$.
+The objective is the maximum over these twelve histories of HALF the
+complete cq trace norm. All complex live coherences, exact failure
+labels/times, singular measures, aborts, rejections, wrong support and
+additional zero-ideal sectors remain in that norm. No subsequent
+acquisition outcome is conditioned upon. The earlier reach probabilities
+(CG.8) are not source priors.
+
+There is one common CPTP processor on the entire complex input algebra,
+with the original five-mode completion and common metadata of Definition
+3.1. Its coefficients cannot depend on $y,e,n$ or a readable history.
+The compressed live map $\Lambda:M_3\to M_3$ is CP and TNI; it is
+generally not TP. The finite necessary output test $\mathcal C$ of
+Convention 17.1 is used only to obtain lower bounds for this full task.
+

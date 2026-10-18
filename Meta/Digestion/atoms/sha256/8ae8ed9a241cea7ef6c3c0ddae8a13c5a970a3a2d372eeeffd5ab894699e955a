@@ -1,0 +1,36 @@
+**Corollary 7.2 (exact cardinality for an arbitrary competitor).** If
+one also requires exactly $m$ attained names for a given possibly
+nonminimal original competitor, this is achievable with representative
+readers and sufficient preparation bounds
+
+$$
+T_{\rm prep}\le2^{D+1}-1,\qquad
+Q_{\rm prep}\le D+1,\qquad
+A_{\rm prep}\le D\,2^{D+1}+1.
+\tag{RRN.31}
+$$
+
+The assigned fibers may change. Neither (RRN.27) nor (RRN.31)
+asserts preservation of the competitor's preparation cost.
+
+Proof. The finite set $\mathcal F_D$ has at least $m$ sources because
+$m$ is an attained deterministic alphabet size. Start with the
+$m_0\le m$ nonempty full-family fibers from Theorem 7.1. While
+their number is below $m$, at least one contains two sources;
+otherwise their total number would be $|\mathcal F_D|<m$.
+Split off one source as a new name and duplicate the parent name's
+representative template. Iteration gives exactly $m$ nonempty
+fibers, each a subset of a fiber where that template is correct.
+
+All finite sets and this refinement can be generated source-blind.
+The original $m$ can itself be computed by simulating the terminating
+given preparation on every explicit member of $\mathcal F_D$.
+The actual source selects its refined name through a paid scan of
+every $Rq$ with $|q|\le D$. Since $\operatorname{ht}(v)\le D$,
+this complete constructor array determines $v$ itself, and hence its
+public refined table entry. Its scan counts are (RRN.31), using
+(RRN.30) at $D+1$. Export only the refined name and apply the same
+isolation and padding conventions. Duplicating a public reader table
+adds no source-bearing late query and changes no predictor requirement.
+$\square$
+

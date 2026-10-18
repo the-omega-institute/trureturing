@@ -1,0 +1,5 @@
+source_id = "fib-atom-whitebox-sic-time-acquisition"
+path = "docs/develop/theory/FIB_ATOM_WHITEBOX_SIC_TIME_ACQUISITION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,61 @@
+**Proposition 88.1 (Single-zero and all-one tests are insufficient).** Use
+the sequence and cap in (86.8). There is a lawful hard-one-request rule
+whose error is at most $1/5$ at every actual source with low word $01$,
+$10$ or $11$, but whose error is $1/2$ at an actual source with low
+word $00$. Consequently these three pattern classes cannot replace the
+complete cube in Theorems 83.3 and 84.1.
+
+**Proof.** Choose $p_1$ or $p_2$ with equal probabilities under a single
+source-independent seed. A zero answer emits the corresponding mark
+$\theta_i$. A one answer emits the other mark with conditional
+probability $1/10$ and otherwise emits $\theta_0$. These choices can
+be coordinates of one product seed, or four fixed categorical intervals
+of lengths $1/20,9/20,1/20,9/20$ specifying the requested index and the
+positive-answer output. No seed is reset or conditioned away.
+Every branch makes exactly one actual request and hands off an original
+tape, and all its records are measurable finite categorical events.
+
+The complete output table, with the same column order as (86.5), is
+
+$$
+\begin{array}{c|ccc}
+b&p_b(0)&p_b(1)&p_b(2)\\\hline
+00&0&1/2&1/2\\
+01&9/20&11/20&0\\
+10&9/20&0&11/20\\
+11&9/10&1/20&1/20
+\end{array}
+\tag{88.1}
+$$
+
+At $01$ the selected target is
+$(1/4)\delta_{\theta_0}+(3/4)\delta_{\theta_1}$, and the missing
+$1/5$ at the correct mark is added at the base. Thus TV is $1/5$.
+At $10$ the same calculation with $\theta_2$ gives $1/5$.
+At every actual source with word $11$, its first absence is $n>2$;
+(83.9) gives error $\max\{1/10,a_n\}\le1/5$ for the last row.
+The last calculation covers all actual tail targets in that pattern
+class, rather than just the abstract target $\delta_{\theta_0}$.
+At $00$ the target is again $\lambda_1$, while the first row has deficits
+$1/4$ at the base and $1/4$ at $\theta_1$. The sum of these deficits
+is $1/2$, which is its TV error by (84.2).
+
+The missing pattern is actually occupied, with a small explicit label.
+The prime index $r=11$ has $F_{11}=89$ and permitted window
+$9\le g\le17$. For $x=(11,12)$,
+
+$$
+N(x)=1+89\cdot12=1069,
+\qquad 2\nmid1069,\quad3\nmid1069.
+\tag{88.2}
+$$
+
+Hence $q_1=q_2=0$ and $n(x)=1$, proving the claimed actual-source
+failure. The other words are actual too: $(7,2)$ is allowed since
+$F_7=13$ and its window is $\{2\}$, and its value $27$ has word $01$;
+$(11,9)$ has value $802$ and word $10$; $(11,13)$ has value $1158$
+and word $11$. The source labels are fixed, with static prime answers,
+zero advice and the same seed law in all four comparisons. The failure
+therefore comes from omitting a joint answer pattern, not from adding an
+unrealizable source or an observation outside the contract. $\square$
+

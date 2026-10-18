@@ -1,0 +1,47 @@
+**Theorem 1.4 (the complete selected local event).** Under Assumption 1.2, fix
+
+$$
+t=1000,\quad A=\log1001,\quad
+I=[190.449003333,190.449005333].
+$$
+
+There is one event $\lambda_e$ selected by the event box and equations of §4, with
+
+$$
+190.44900433290<\lambda_e<190.44900433292.
+$$
+
+There are two analytic signed contact sections on the entire interval $I$, with the common exact event embeddings specified in §5. The seven-contact section is physical for $\lambda\le\lambda_e$ and has $p_4>0$ for $\lambda<\lambda_e$, $p_4=0$ at the event and $p_4<0$ afterwards. The six-contact section, retaining the unused stationary direction $x_4$, is physical for $\lambda\ge\lambda_e$. Its cleared unused gap is negative before, zero at and positive after the event. Signed negative weights are auxiliary and never physical acquisitions.
+
+Choose the physical section on each side and define
+
+$$
+k(\lambda)=\sum_i p_i|u_i|,\qquad
+s(\lambda)=\frac{s_0}{\sqrt\alpha}k(\lambda),\qquad
+V(\lambda)=\frac{H_{\rm high}+\sum_i p_i|H_{\eta_i}(u_i,v_i)|}{2}.
+$$
+
+These represented strengths are continuous and strictly increasing through the event, analytic on each open side, and lie strictly in the weak feasible interior $0<s(\lambda)<s_{\max}(1000)<s_0$. At every represented strength,
+
+$$
+\mathcal T_{\log1001}(s(\lambda))=V(\lambda)
+=\frac{H_{\rm high}+Y(\lambda)\cdot B(1000)-\lambda k(\lambda)}2.
+$$
+
+The minimum original TOTAL actual alphabet among these optimizers is $7$ supported low plus one high, hence $8$, before the event; it is $6$ supported low plus one high, hence $7$, at and after the event. Three distinct saturated physical failure lines are necessary before, and two after, the event. The event itself has
+
+$$
+\begin{aligned}
+0.12520584446759&<s(\lambda_e)<0.12520584446760,\\
+0.08594665979087&<V(\lambda_e)<0.08594665979089.
+\end{aligned}
+$$
+
+One common original complex CP/TP chronological instrument at each chosen parameter simultaneously attains this value, count, contrast, minimax error, sharp JOINT cost, all five Borel/passive-reference maps and whole-fibre activity. The value as a function of strength is analytic on each side, continuous and $C^1$ through the event, with
+
+$$
+\frac{d\mathcal T_{\log1001}}{ds}=-\frac{\lambda\sqrt\alpha}{2s_0}.
+$$
+
+Proof. Sections 2–10 give the source, finite comparisons, global equality, fractional actual-label necessity and same-instrument construction. The theorem quantifies only the selected local interval and its represented strengths. It asserts no next-event property or connection to earlier multiplier ranges. $\square$
+

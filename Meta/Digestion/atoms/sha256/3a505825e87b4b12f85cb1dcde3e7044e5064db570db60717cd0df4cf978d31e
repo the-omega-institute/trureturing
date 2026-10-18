@@ -1,0 +1,35 @@
+**Lemma 16.2 (one shared threshold controls both costs).** For every regular stationary table, there is a fixed $\theta\in(a,b)$, different from every $u_x$, such that its endpoint tags
+
+$$
+c_\theta(x)=\begin{cases}b,&u_x>\theta,\\a,&u_x<\theta\end{cases}
+$$
+
+satisfy
+
+$$
+\begin{aligned}
+M_\theta&=\sum_x\pi_x|u_x-c_\theta(x)|,\\
+\delta_\theta&=\sum_{x,y,x'}\pi_xB_{xy}A_{yx'}
+                 \mathbf1_{\{c_\theta(x)\ne c_\theta(x')\}},\\
+15M_\theta+6\delta_\theta&\le450J+90V_\pi.
+\end{aligned}
+\tag{16.4}
+$$
+
+Proof. Integrate a threshold uniformly over $(a,b)$ only for this selection argument. For a scalar $u\in[a,b]$, the portions giving tags $b,a$ have lengths $u-a,b-u$, respectively. Hence
+
+$$
+\frac1L\int_a^b|u-c_\theta(u)|\,d\theta
+=\frac{2(u-a)(b-u)}L.
+$$
+
+Two emissions acquire different tags precisely for thresholds between them, up to a set of measure zero. Their mean crossing indicator is $|u-u'|/L$. Integrating the finite sums gives
+
+$$
+\frac1L\int_a^bM_\theta\,d\theta=30J,\qquad
+\frac1L\int_a^b\delta_\theta\,d\theta=15V_\pi.
+\tag{16.5}
+$$
+
+The finite set of emissions partitions $(a,b)$ into nonempty open intervals. Both costs are constant on each such interval. A representative of an interval minimizing $15M_\theta+6\delta_\theta$ has cost no greater than its integral average, proving (16.4). This avoids all ties, including repeated emissions and midpoint emissions. The choice is shared by both phases and all targets. It is not an online classifier or a new randomized operation. If $J=0$, positive-row p emissions are endpoints and $M_\theta=0$. If $V_\pi=0$, every positive actual return joins equal emissions and $\delta_\theta=0$. The selection inequality is non-strict in these cases as well. $\square$
+

@@ -1,0 +1,76 @@
+### 16.1 Compatible full-law pairs
+
+Let $\Omega_p,\Omega_\beta$ be the complete raw carriers, including their infinity cells, and let
+
+$$
+\mathcal K_p=\{Q\in\mathcal P(\Omega_p):a\le Q(\alpha)\le b,\ Q(T_p(j))\le(4/15)^j\ \forall j\ge0\},
+$$
+
+$$
+\mathcal K_\beta=\{W\in\mathcal P(\Omega_\beta):a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b(4/15)^j\ \forall j\ge0\},
+$$
+
+where the tail sets contain all words of return depth at least $j$ and the corresponding infinity cell, for every $j\ge0$.  Write
+
+$$
+u(Q)=Q(\alpha),\quad U(Q)=1-u(Q),\quad v(W)=1-W(\beta),
+$$
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},
+\qquad
+\mathcal R_A(W)(F)=\frac{W(\alpha F)}{v(W)}.
+$$
+
+The denominators obey $U\ge3/5$ and $v\ge1/3$.  A compatible pair is a pair of Borel probability measures
+
+$$
+\Gamma_B\ \,\text{on }\mathcal K_p\times\mathcal K_\beta,
+\qquad
+\Gamma_A\ \,\text{on }\mathcal K_\beta\times\mathcal K_p
+$$
+
+with common unweighted marginals
+
+$$
+(\Gamma_B)_1=(\Gamma_A)_2=\nu_p,
+\qquad
+(\Gamma_B)_2=(\Gamma_A)_1=\nu_\beta,
+\tag{16.1}
+$$
+
+and, for every continuous input test and every complete atom (including infinity),
+
+$$
+\int \phi(Q)\,[\mathcal R_B(Q)(\eta)-W(\eta)]\,d\Gamma_B=0,
+\qquad
+\int \psi(W)\,[\mathcal R_A(W)(\omega)-Q(\omega)]\,d\Gamma_A=0.
+\tag{16.2}
+$$
+
+The continuous-test form extends to bounded Borel input tests by the compact-metric signed-measure argument following Definition 11.2. Atomwise identities also extend to every complete event by countable summation and dominated convergence; bounded tests and normalized residual laws supply domination, including for each tail with its infinite outcome.  Thus (16.2) is a full-descriptor conditional equation, not an equation conditioned only on a residual value.
+
+Define
+
+$$
+\begin{aligned}
+J_p&=\int (u-a)(b-u)\,d\nu_p,\\
+J_\beta&=\int (v-a)(b-v)\,d\nu_\beta,\\
+M_B&=\int (u(Q)-v(W))^2\,d\Gamma_B(Q,W),\\
+M_A&=\int (v(W)-u(Q))^2\,d\Gamma_A(W,Q).
+\end{aligned}
+\tag{16.3}
+$$
+
+For each supported depth $k$, put $r_k=F_{k+1}/F_{k+3}$.  Define
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=\max\left\{
+\sup_{k:\mu(k)>0}\int\operatorname{TV}(Q,P_{p,r_k})\,d\nu_p(Q)-\rho_p,
+\quad
+\sup_{k:\mu(k)>0}\int\operatorname{TV}(W,P_{\beta,r_k})\,d\nu_\beta(W)-\rho_\beta
+\right\}.
+$$
+
+This is the maximum of the two supported-depth suprema; neither supremum is assumed to be attained at a supported depth.  It is the compatible-pair functional of the full original target, with TV inside the configuration integral.
+

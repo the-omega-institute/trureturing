@@ -1,0 +1,16 @@
+**推论 38.2（Complete arbitrary-target wide preset spectrum）。** For every $k\ge2$ and $m\ge2k+1$, every arbitrary immutable INITIAL target under the full joint prior, and either original alphabet,
+
+$$
+C_{\rm pre}(f)=
+\begin{cases}
+0,&\Gamma\text{ constant on successful INITIAL records},\\
++\infty,&\text{no common eligible cut exists},\\
+\max\{1,D_g(\Lambda)\},&\text{otherwise}.
+\end{cases}
+\tag{38.7}
+$$
+
+The finite value is the optimum actual emitted complete-block fee, with one literal attaining stream; it is not an upper bound or a fee for an already acquired phase archive.
+
+Proof. Every eligible $0\le a<k$ satisfies $a+k+2\le(k-1)+k+2=2k+1\le m$. Apply Theorem 38.1. Constant $\Gamma$ admits cut zero, so the zero and infinite cases are disjoint. All sources, their initial tails and their independent bottom remain those of Definition 36.1. ∎
+

@@ -1,0 +1,35 @@
+**Lemma 2.3 (Normalization and stationarity).** All sums in Definition 2.1 are finite.
+Moreover,
+
+$$
+S_i(0)=S_i(1)=1,\qquad
+\sum_{b\ge0}S_i(b)=\mu_i,\qquad
+\mathbb E_i\tau=\beta_i,
+$$
+
+and the bit process is stationary.
+
+**Proof.** Polynomial growth times $e^{-sk}$ is summable. Each $f_i$ is therefore a
+positive probability law on the positive integers. A mass $f_i(k)$ contributes to
+$S_i(b)$ for exactly $b=0,\ldots,k$, so Tonelli's theorem gives
+
+$$
+\sum_{b\ge0}S_i(b)=\sum_{k\ge1}(k+1)f_i(k)=\mu_i,
+\qquad
+\sum_{b\ge0}bS_i(b)=\frac12\sum_{k\ge1}k(k+1)f_i(k).
+$$
+
+This proves normalization and the stated residual-wait mean. For stationarity, use a
+countdown only on the proof probability space: a positive countdown decreases by one,
+and a zero countdown draws a fresh $K$ with law $f_i$. With
+$\pi_i(b)=S_i(b)/\mu_i$, incoming mass at $b$ is
+
+$$
+\pi_i(b+1)+\pi_i(0)f_i(b)
+ =\frac{S_i(b+1)+f_i(b)}{\mu_i}=\pi_i(b).
+$$
+
+At $b=0$ use $f_i(0)=0$ and $S_i(0)=S_i(1)$. Starting the countdown in $\pi_i$ and
+emitting one exactly at countdown zero gives the displayed stationary bit process. The
+countdown and the residual age are not observer state. $\square$
+

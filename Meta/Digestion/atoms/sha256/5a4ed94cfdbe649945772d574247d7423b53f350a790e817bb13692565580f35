@@ -1,0 +1,14 @@
+**Definition 3.1 (simultaneous contact predicate).** For distinct rows
+$r_1,\ldots,r_k\in A$, write
+
+$$
+J_{r_1,\ldots,r_k}(h)
+\;:\Longleftrightarrow\;
+\exists u_i\in D_{r_i}\ (u_1\equiv_h\cdots\equiv_h u_k).
+\tag{SJM.12}
+$$
+
+The all-depth assertion is $\forall h\,J_{r_1,\ldots,r_k}(h)$ with fresh finite
+witnesses allowed at each depth. It does not require an infinite source satisfying
+the signed predicates.
+

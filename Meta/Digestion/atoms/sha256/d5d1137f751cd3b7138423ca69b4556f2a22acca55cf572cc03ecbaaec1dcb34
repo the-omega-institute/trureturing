@@ -1,0 +1,29 @@
+**定义 221.3（完整得分与同实现的条件后果）。** 每个非全正字有独立非负得分 $A_w,C_w,P_w$，全正字有 $T\ge0$，其奖励为
+
+$$
+g_y(w,\ell)=A_w[\ell=0]+C_w[\ell=n(w)]+P_w[\ell\in\{0,n(w)\}],
+\quad g_y(1^L,\ell)=T[\ell=0].
+$$
+
+这里的 $A_w$ 是得分，与候选标签集 $A$ 有别。令
+
+$$
+\begin{aligned}
+W(y)&=\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+B_C(y)&=\max_{D\in\mathcal D_C}\sum_w g_y(w,D(w)),\quad
+\Delta_C(y)=B_C(y)-W(y),\\
+\beta_n&=\sum_{\Omega_n}(C_w-A_w),\quad
+K=\sum_w(A_w+C_w+P_w)+T,\quad Q(y)=(\beta,K),\\
+F_{Q(y)}(b,e)&=\sum_n\beta_n(b_n-\alpha_n)-Ke.
+\end{aligned}
+$$
+
+这些是证明权重，不能当作概率预算。若上述同一候选得到质量恰为 $M$ 的可行完整停止配置 $\mu$，则每个完整 $y\ge0$ 在同一 $(b,e)$ 上满足
+
+$$
+F_{Q(y)}(b,e)=y\cdot h\le y\cdot G_O\mu
+\le M\Delta_O(y).
+$$
+
+因此单位停止得分有 $F_{Q(y)}(b,e)\le M\le\max(1,M)$。该条件结论使用原来那个完整 $\lambda$ 与质量，所有行各用一次；一个非最优的大 $M$ 不证明最优截断预算上的比较。
+

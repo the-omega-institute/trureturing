@@ -1,0 +1,85 @@
+**Theorem 9.1 (simultaneous full-output realization).** Every selected law is realized by seven actual low qubit fibres and one actual high dimension-five fibre, with activity at most $\log(1+t)$, strictly positive survivors, original sharp joint acquired cost and complete original output identities.
+
+Proof. For a general allowed fractional label set $K=\sqrt p\,L_h$, $L_h=s_0D+zT+wS$, and $N=pb_hn_hn_h^T$. At a selected endpoint $b_h=\eta tc(h)$. Expansion gives
+
+$$
+\det L_h=s_0^3h_0h_1h_2(1-\alpha z^2-\beta w^2)=0.
+$$
+
+Its lower rows $(bz,s_0h_1,0)$ and $(dw,0,s_0h_2)$ are independent, so it has rank two. Its kernel is spanned by $(s_0,-bz/h_1,-dw/h_2)^T$, orthogonal to $n_h$, proving $\operatorname{ran}N\subset\operatorname{ran}K^\dagger$.
+
+Here is also the exact capacity algebra. Write $L_h=T_hR_h$, where $R_h$ consists of those lower rows and $T_h$ has rows $(az/(s_0h_1),c_{\rm src}w/(s_0h_2)),(1,0),(0,1)$. Then $n_h=R_h^T(dw,-bz)^T/(s_0h_1h_2)$. The $2\times2$ inverse of $T_h^TT_h$, using $ab h_2z^2+c_{\rm src}d h_1w^2=\delta h_0h_1h_2$, gives
+
+$$
+n_h^T(L_h^\dagger L_h)^+n_h=1/c(h).
+$$
+
+Equivalently, for $G_h=L_h^\dagger L_h$ and its positive $00$ pivot,
+
+$$
+G_h-\frac{G_he_0e_0^TG_h}{(G_h)_{00}}=c(h)n_hn_h^T.
+$$
+
+Indeed $(G_h)_{01}=s_0z(h_0a+h_1b)$, $(G_h)_{02}=s_0w(h_0c_{\rm src}+h_2d)$, $(G_h)_{11}=a^2z^2+\delta h_1^2$, $(G_h)_{22}=c_{\rm src}^2w^2+\delta h_2^2$, $(G_h)_{12}=ac_{\rm src}zw$. Multiplying the residual $11,12,22$ entries by $(G_h)_{00}$ gives the numerator of (2) times $d^2w^2/h_2^2,-bdzw/(h_1h_2),b^2z^2/h_1^2$, respectively. This also proves $N\preceq tK^\dagger K$ iff $b_h\le tc(h)$ by the Schur complement.
+
+Choose a row-space isometry $J:\mathbb C^2\to\operatorname{ran}K^\dagger$ and put
+
+$$
+Q=J^\dagger(K^\dagger K+N)J>0,\quad C=Q^{1/2}J^\dagger E^\dagger,\quad B=KJQ^{-1/2},\quad F=Q^{-1/2}J^\dagger NJQ^{-1/2}.
+$$
+
+Then $BC=KE^\dagger$, $C^\dagger FC=ENE^\dagger$ and $B^\dagger B+F=I_2$. Since $K$ has rank two, $I_2-F\succ0$ on the entire fibre. The rank-one update formula gives the nonzero failure eigenvalue $b_h/[c(h)+b_h]$, zero for a pure label and $t/(1+t)$ for a saturated one.
+
+Use the common witness time law, distinct from the ideal $f_y$,
+
+$$
+g(a)=2/(1+a)^2,\quad G_{\rm time}(a)=2a/(1+a),\quad Z(a)=[I-G_{\rm time}(a)F]^{1/2},\quad R(a)=g(a)F[I-G_{\rm time}(a)F]^{-1}.
+$$
+
+The positive rate acts on the whole fibre; $Z(a)$ is invertible for every cut. The no-jump propagator from $a$ to $b$ is $Z(b)Z(a)^{-1}$. Intervening survivor controls can be identity TP controls. From a current surviving operator $Y$ the CP density to each separately labelled failure component is
+
+$$
+Y\longmapsto w_\ell g(a)\operatorname{tr}\bigl(FZ(a)^{-1}YZ(a)^{-1}\bigr)P_f,
+\qquad\ell\in\{0,1,2,3,13\}.
+\tag{13}
+$$
+
+Pullback through the no-jump path gives $w_\ell g(a)\operatorname{tr}(FY)P_f$ from the initial decoder input. Accumulated jump effect $G_{\rm time}(a)F$ plus survivor effect $I-G_{\rm time}(a)F$ is identity at every cut; the same identity conjugated by $Z(a)^{-1}$ gives TP from any intermediate cut. Thus survivor plus stopped outputs are a chronological TP instrument, although the survivor branch alone decreases trace.
+
+On terminal survivors only, use the isometry $EB(I-F)^{-1/2}$, whose composition with $Z(1)$ gives $EB$. For each eigenvalue $f$ of $F$,
+
+$$
+\int_0^1\frac{g(a)f}{1-G_{\rm time}(a)f}\,da=-\log(1-f).
+$$
+
+Hence $\int\|R(a)\|da=\log(1+b_h/c(h))\le\log(1+t)$, with equality for the three saturated labels and zero on the four pure labels. The terminal survivor effect is at least $(1+t)^{-1}I_2>0$. The failure law has no deadline atom, its FIRST time is **absolute $6+a$**, and no stopped carrier receives terminal or later processing.
+
+For the high outcome choose fixed isometries $W_\perp:\mathbb C^2\to P^\perp$, $J_0:\mathbb C^2\to\mathbb C^3$. Use the single encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\W_\perp^\dagger\end{pmatrix}:\mathbb C^5\to\mathbb C^3\oplus\mathbb C^2.
+$$
+
+Its entire **dimension-five** fibre is counted. Its rate is zero and its report is plus. Two hidden terminal Kraus matrices $E[I_3\ 0]$ and $EJ_0[0\ I_2]$ have effects summing to $I_5$ on this fibre. They do not create another readable outcome or an uncounted complement. This is the allowed JR coherent completion, distinct from a fixed certain-failure complement.
+
+The joint moments give $\sum_iK_i^\dagger K_i=\delta D^\dagger D+T^\dagger T+S^\dagger S$ and $\sum_iN_i=M$. Source-root TP and $W_\perp W_\perp^\dagger=I_5-P$ make all eight encoder effects sum to $I_5$. Moreover cross terms cancel as Kraus maps. For **every complex** $X\in M_5$ the forgotten-label maps are exactly
+
+$$
+\Phi^L(X)=E[\Lambda_*(E^\dagger XE)+J_0W_\perp^\dagger XW_\perp J_0^\dagger]E^\dagger,
+$$
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=w_\ell\left(\int_{\mathcal B}g(a)\,da\right)\operatorname{tr}(EME^\dagger X)P_f.
+\tag{14}
+$$
+
+The same composed Kraus identities tensor with the identity on every passive reference. In particular the conditional failure operator is exactly
+
+$$
+w_\ell\left(\int_{\mathcal B}g(a)\,da\right)P_f\otimes\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+$$
+
+It is not replaced by the unconditioned reference marginal. Equality of CP densities proves equality on every Borel set, and the live Kraus identities preserve all supported off-diagonal coherences. All five failure components, including both zero measures, remain separate.
+
+On all twelve original histories the complement has probability zero. Convention 2.2 therefore transfers exactly the original complete HALF error, with equality at $y=5,27$ and strict inequality at $y=16$. The acquisition effect of low label $i$ is $E(K_i^\dagger K_i+N_i)E^\dagger$, including later-failure mass. Only the one high fibre has dimension at least three. Its history-$y$ acquired mass is $(1-\delta)A_y$, maximized at $27$; Convention 2.3 identifies this with the sharp joint cost. Low reports are $\sigma_i=\operatorname{sign}z_i$. The high supported effect is diagonal, and the plus low effects have $01$ entry $\kappa s_0\sum_{z_i>0}p_iz_i$. Since $\sum p_iz_i=0$, this gives $\mathsf V=s_0\sum p_i|z_i|=s(t,\lambda)$. Every operation is fixed at the chosen parameter before the unknown input arrives. The construction therefore supplies one common simultaneous attainer, with the full resource and output accounting, for each parameter. ∎
+

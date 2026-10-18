@@ -1,0 +1,28 @@
+**Definition 6.1 (A supplied rare-vacuum law).** Fix a finite
+$n\ge4$, let $0$ denote the empty word in $B_n$, and put
+$M=|B_n|-1$. For $\epsilon>0$, define
+
+$$
+p_\epsilon(0)=\frac\epsilon{M+\epsilon},\qquad
+p_\epsilon(s)=\frac1{M+\epsilon}\quad(s\ne0).
+\tag{6.1}
+$$
+
+Use the pure reference $\psi_\epsilon=\sqrt{p_\epsilon}$ and
+the same fixed quadrature settings, blocked-word outcomes,
+recorded labels and preparation budget as Definition 5.1.
+Write $\gamma_\epsilon(\omega)$ and
+$\Gamma_\epsilon(r,\omega)$ for the corresponding ratios.
+Let $G_n^\circ$ be the legal-toggle graph induced by the
+nonempty words, and let $L_n^\circ$ be its unweighted
+combinatorial Laplacian. Define
+
+$$
+g_n=\lambda_2\!\left(\frac1{2n}L_n^\circ\right),
+\tag{6.2}
+$$
+
+with the eigenvalues ordered increasingly, including the
+constant zero mode. The graph and $g_n$ are fixed before
+letting $\epsilon$ tend to zero.
+

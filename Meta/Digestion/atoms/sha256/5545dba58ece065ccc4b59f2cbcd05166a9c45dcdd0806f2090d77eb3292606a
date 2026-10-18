@@ -1,0 +1,72 @@
+**Theorem 11.2 (actual attainment and simultaneous deep live filling).**
+The retained profiles are exactly the profiles of the entire actual
+fiber:
+
+$$
+\Omega_b=\{\eta_b(x):x\in\mathcal X_*\},
+\qquad
+\mathcal X_*\cong\mathcal U
+\text{ as in NBP (NBP.10.3).}
+\tag{PCA.28}
+$$
+
+For every $\eta\in\Omega_b$ and every finite $L\ge0$, there is one
+actual legal valuation $x^{\eta,L}$ with this profile in which all
+live names are simultaneously filled by finite non-atomic image trees
+of minimum leaf depth greater than $L$, while every whole-class
+negative in (PCA.25) holds. Its filled current tree has the actual
+finite inverse
+
+$$
+t^{\eta,L}=C_*[(x^{\eta,L}_{[p]})_{p\in H}]
+          =\rho u^{\eta,L},\qquad u^{\eta,L}=\delta(t^{\eta,L})\in\mathcal U.
+\tag{PCA.29}
+$$
+
+All repeated class occurrences use one value. No source-size or depth
+promise is imposed on $\mathcal U$.
+
+Proof. Reuse the disjoint native image grammar
+$\mathcal I::=\beta\mid E\mid\langle\mathcal I,\mathcal I\rangle$
+and its unique inverse, supplied by NBP Proposition 9.3 and the source
+cited there. Every branch subtree of an image is itself an image; the
+only possible nonimage subtree is the literal alpha. This is the
+subtree fact used in NBP Proposition 10.2.
+
+For any assignment of branch images to the live names, (PCA.26) is
+exact for image membership of a free term. Indeed, its leaf and live
+cases are exact. At a pair, equality with $E$ requires its two children
+to be the literal beta and alpha: a live name or a pair has branch
+root and cannot become either leaf. The other image alternative is
+exactly a pair of images. Induction gives (PCA.26) for the whole term.
+Thus (PCA.27)'s first condition makes every such live filling an image.
+This is an application of the existing image grammar, not a new image
+or disunification supplier.
+
+An actual legal valuation has a unique depth-$b$ decomposition of the
+stated form. Each of its live branch subtrees is an image. Image
+membership gives the first condition in (PCA.27). An identical pair of
+syntactic class terms would evaluate equally under every assignment,
+contrary to its actual class disequality. Hence every actual profile
+is retained.
+
+Conversely, for a retained pattern apply [Retained Literal Root Depth,
+Theorem 2.2][LRD] directly to the finite list (PCA.25), with intrinsic
+rank one for every remaining name and minimum leaf depth greater than
+$L$. All sides are free terms over the common names, with fixed grounds
+literally expanded, and every listed pair has unequal syntax by
+(PCA.27). That theorem supplies one simultaneous finite tuple,
+including all negatives involving closed ground classes. Rank one
+implies membership in $\rho[\mathcal T]$; non-atomicity and the supplied
+deep-leaf property give the required branch images. If there are no
+live names, the empty tuple works: every class is a fixed finite ground
+and the retained negatives are already unequal grounds.
+
+The filling therefore has its exact prescribed branch/leaf/absent
+profile, all different-class disequalities, and an image whole tree.
+NBP's legal-row bijection and unique inverse give (PCA.29), with the
+complete current row exactly $R_*$. This proves both directions of
+(PCA.28) and the simultaneous strengthening. One may make these choices
+for all finitely many retained profiles; no relation between their
+separate actual origins is required. $\square$
+

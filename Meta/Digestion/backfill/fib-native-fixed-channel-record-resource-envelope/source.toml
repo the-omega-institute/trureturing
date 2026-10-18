@@ -1,0 +1,5 @@
+source_id = "fib-native-fixed-channel-record-resource-envelope"
+path = "docs/develop/theory/FIB_NATIVE_FIXED_CHANNEL_RECORD_RESOURCE_ENVELOPE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

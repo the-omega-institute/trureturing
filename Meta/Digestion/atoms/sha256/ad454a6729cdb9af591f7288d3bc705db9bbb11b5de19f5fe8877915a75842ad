@@ -1,0 +1,42 @@
+**Definition 13.5 (local work, material and observation account).**
+Use Assumption 3.1's component prices: each relocation has one commitment,
+three endpoint assignments and zero births. A complete inspection from
+the positioned root probes both child slots at each of five vertices and
+$\mathsf P$ on each of four returns, hence $14$ probes at every phase.
+Reinspect before each relocation. The data subtotal is
+
+$$
+\begin{aligned}
+(\text{commitments},\text{probes},\text{assignments},\text{births})
+  &=(3,42,9,0),\\
+G_{\rm data}&=3(1+14+3)=54.
+\end{aligned}
+\tag{SSA.19}
+$$
+
+All five vertices and their seven-slot capacities remain retained. This
+subtotal excludes reaching the root, target reads/acquisition, material
+table installation, actual phase/latch storage and updates, continuing
+authority, receipts and all other row work. Actual entry/return walks
+add their total lengths. A root or operand held across cuts needs its
+actual access relation, not a free saved pointer. Rereading a separate
+five-vertex operand component once adds another 14 probes and its routing.
+No unbounded driver, equality service, allocator or scheduler is included.
+
+The changed SSA switch has four changed slots; one relocation has three
+and cannot perform that exchange in one occurrence. Bounded patch syntax
+can express SSA.16 on the enlarged tree carrier; the old literal compiler
+does not thereby gain an enabled relocation row. This is a restriction of the
+instantaneous data effect, paid with nine assignments and three commitments.
+It proves neither a weakening of the complete machine basis nor a
+total-cost improvement over SSA's four designated assignments.
+
+Counts are equal in all four cases, but private endpoint choices differ.
+A local count correspondence requires an explicitly declared public
+interface keeping those bounded internal choices and probes private.
+Publishing the first move's source side reveals $x$; equal counts alone
+do not prove noninterference. Three data occurrences are neither one
+original tick nor three constructed original receipts. In an unchanged
+cycle the tree returns to its entrance, so geometry alone retains no
+elapsed chronology.
+

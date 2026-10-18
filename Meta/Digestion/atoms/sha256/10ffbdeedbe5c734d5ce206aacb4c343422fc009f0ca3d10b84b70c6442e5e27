@@ -1,0 +1,18 @@
+**Corollary 4.4 (size of the remaining grid interval).** Put
+$d=\min(k,n-k+1)$ and $e=\max(k,n-k+1)$. The width between the
+lower and upper bounds in (CP.19) is
+
+$$
+k(n-k+1)-F(n,k)=(d-3)(e-2).
+\tag{CP.22}
+$$
+
+The improvement in running states over the supplied $2n-2$ bound is
+$e-2$. For $n=7,k=4$, (CP.19) reads
+$14\le m_{\mathrm{exec}}\le16$ and
+$18+r\le H_{\mathrm{exec}}\le20+r$.
+
+Proof. Since $n=d+e-1$, subtracting $2n+e-4$ from $de$ gives
+$(d-3)(e-2)$. Subtracting $2n-2$ from $F(n,k)$ gives $e-2$.
+The displayed example has $d=e=4$. $\square$
+

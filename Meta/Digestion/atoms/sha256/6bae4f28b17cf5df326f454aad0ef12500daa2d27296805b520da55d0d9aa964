@@ -1,0 +1,37 @@
+**Proposition 39.3 (exact witness on the original real effect space).**
+Let $A_y=\overline P_y$. On the real lower-supported effect space of
+(FC.156), the original test probabilities reconstruct
+
+$$
+\begin{gathered}
+(F_{\rm rev})_{11}=\frac{64}{11}(A_5-A_{27}),\qquad
+(F_{\rm rev})_{22}=2A_5-2q_5(F_{\rm rev})_{11},\\
+(F_{\rm rev})_{12}=
+\frac{P^{\rm rev}_{5,\epsilon,+1}-P^{\rm rev}_{5,\epsilon,-1}}
+     {4\sqrt{q_5/2}},\\
+\frac{(F_{\rm rev})_{11}}{a_f^2}
+-\frac{2(F_{\rm rev})_{22}}{5b_f^2}
++\frac{39(F_{\rm rev})_{12}}{10a_fb_f}
+=\int_{\mathcal R_+}\Psi\,d\sigma\ge S_\Psi.
+\end{gathered}
+\tag{FC.180}
+$$
+
+This exact indefinite witness is a linear combination of probabilities
+on the original test states. It is not informational completeness on
+all complex qutrit operators or a new measurement protocol for the one
+unknown specimen.
+
+Proof. Add and subtract (FC.161), using $q_5-q_{27}=11/64$.
+The first three identities follow. On the lower block, (FC.156) says
+$F_{11}=a_f^2\int v^2d\sigma$, $F_{22}=b_f^2\int u^2d\sigma$
+and $F_{12}=-a_fb_f\int uv d\sigma$, with all integrals restricted
+to $\mathcal R_+$. Substitution gives the last identity and (FC.159)
+gives its inequality. The finite-frame principle is mature; Scott,
+*Tight informationally complete quantum measurements*, [§III (18)–(20)
+and §IV Proposition 10](https://arxiv.org/pdf/quant-ph/0604049), requires
+spanning the actual operator space. The three-dimensional real space
+used here is checked explicitly. No complex qutrit spanning, 2-design,
+extra specimen, tomography or observable-access premise is supplied.
+$\square$
+

@@ -1,0 +1,12 @@
+**假设 160.1（来源、取得与共同几何参照）。** 原生来源仍是钉版基础卷[定义1.1–1.4、2.1–2.4、3.1–3.3、7.1–7.2](https://github.com/the-omega-institute/trureturing/blob/d97800bf7e3690878d6d7c59c8784e719f44a5f7/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)的自由有序树
+
+$$
+T::=\alpha\mid\beta\mid\langle T,T\rangle.
+$$
+
+左右顺序、括号及实际来源不删除。令 $\operatorname{wd}(\alpha)=\alpha$、$\operatorname{wd}(\beta)=\beta$、$\operatorname{wd}(\langle s,t\rangle)=\operatorname{wd}(s)\operatorname{wd}(t)$，叶序从左到右读取。正词域为 $W_+=\{\alpha,\beta\}^*$；其中空词 $\epsilon$ 只扩展零贡献，不是第三种原生叶，非空词才有原树代表。
+
+另给一个定向欧氏平面、共同原点 $O=(0,0)$、正交等长单位向量 $e_\alpha=(1,0)$、$e_\beta=(0,1)$，单位正方形的面积为一。这是新增的几何读出合同，不从原生树的数量解释推出。词的每片叶分别贡献这两个单位步；路径先读左叶再读右叶，不采用矩阵对状态的执行次序。端点记为 $\mathbf q=(u,v)$，而原来的数量记为 $N=2u+3v$，以免把两种读数混为同一个 $q$。
+
+本章的数学映射可以对整个声明来源族定义。若用于实际观察，还须先实际取得所需叶类型和顺序，保存可精确访问的记录，并取得所用后续操作及共同来源、环境和参照的相容接缝。一个树或词在数学域中存在，不意味着已经执行、读取或保存。几何补弦、数学逆路径和连续曲线均不在这条取得合同中免费供应。
+

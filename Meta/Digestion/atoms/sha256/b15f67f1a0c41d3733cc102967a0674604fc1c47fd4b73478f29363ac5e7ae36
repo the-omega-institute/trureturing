@@ -1,0 +1,85 @@
+**Proposition 2.1 (exact calibration).** The $2d+2$ individual actions $M^{2d+2}$, including the initial read, provide $2d+3$ reads. Fixed linear maps of these reads return the full $\beta$ and $\delta$ exactly. Subsequent processing determines $t_P=\operatorname{tr}(MP)$ on every allowed world.
+
+**Proof.** Put
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2}=-\phi^{-1},\qquad
+\Pi_+=\frac{M-\psi I}{\phi-\psi},\qquad
+\Pi_-=\frac{\phi I-M}{\phi-\psi}.
+\tag{2.1}
+$$
+
+The identity $M^2=M+I$ and the two distinct roots $\phi,\psi$ of $x^2-x-1$ give complementary rank-one projectors with
+
+$$
+M^i=\phi^i\Pi_++\psi^i\Pi_-,\qquad
+\alpha=\operatorname{tr}(\Pi_+P),\qquad
+\eta=\operatorname{tr}(\Pi_-P),\qquad \alpha+\eta=1.
+\tag{2.2}
+$$
+
+For completeness, the projector formulas give their sum $I$, their product zero, and $M\Pi_+=\phi\Pi_+$, $M\Pi_-=\psi\Pi_-$. These identities prove the power formula, including $i=0$. Both projectors have trace one and rank one. The entries of $\Pi_+$ are
+
+$$
+\frac1{\phi-\psi}\begin{pmatrix}-\psi&1\\1&1-\psi\end{pmatrix},
+$$
+
+all strictly positive, so $\alpha>0$. Nothing forces $\eta$ to be positive: zero and negative values remain in the domain.
+
+Let $D=x\,d/dx$. For a coefficient polynomial $f(x)=\sum_i c_i x^i$,
+
+$$
+(D^j f)(\lambda)=\sum_i c_i i^j\lambda^i.
+\tag{2.3}
+$$
+
+At either nonzero spectral node, the Euler jets through order $d$ are an invertible triangular transform of the ordinary derivative jets: the leading derivative term of $D^j f$ is $x^j f^{(j)}$, and its lower terms have derivative orders less than $j$. The diagonal entries at $\lambda$ are $1,\lambda,\ldots,\lambda^d$, all nonzero.
+
+Prescribing $m$ Euler jets at each of $\phi,\psi$ and a value at $1$ is consequently a nonsingular square system on polynomials of degree at most $2m$. Indeed, a homogeneous solution has roots of multiplicity at least $m$ at both spectral nodes and a root at the third distinct node $1$. It must vanish, because otherwise its degree would be at least $2m+1$. The domain and condition spaces both have dimension $2m+1$, so injectivity proves existence and uniqueness for arbitrary prescribed conditions.
+
+For each $0\le k\le d$, choose its unique polynomials $f_k^+,f_k^-$ with
+
+$$
+\begin{aligned}
+f_k^+(1)&=0,&(D^j f_k^+)(\phi)&=\delta_{jk},&(D^j f_k^+)(\psi)&=0,\\
+f_k^-(1)&=0,&(D^j f_k^-)(\phi)&=0,&(D^j f_k^-)(\psi)&=\delta_{jk}
+\end{aligned}
+\quad(0\le j\le d),
+\tag{2.4}
+$$
+
+where $\delta_{jk}$ is the Kronecker symbol. Set $T=2m=2d+2$ and write $f_k^\pm(x)=\sum_{i=0}^T c_{ki}^\pm x^i$. The actual prefix observations satisfy
+
+$$
+z_i=\sum_{j=0}^d\beta_j i^j(\alpha\phi^i+\eta\psi^i)+\delta,
+\qquad 0\le i\le T.
+\tag{2.5}
+$$
+
+Substituting (2.5) into the fixed coefficient readouts and using (2.3)--(2.4) gives
+
+$$
+U_k=\sum_{i=0}^T c_{ki}^+z_i=\alpha\beta_k,\qquad
+V_k=\sum_{i=0}^T c_{ki}^-z_i=\eta\beta_k,
+\qquad U+V=\beta.
+\tag{2.6}
+$$
+
+For the drift, put $Q(x)=x^2-x-1$. The polynomial $f_\delta(x)=(-1)^mQ(x)^m$ has degree $2m$, value $1$ at $1$, and zero Euler jets through order $d$ at both spectral nodes. The same substitution gives
+
+$$
+\sum_{i=0}^T [x^i]f_\delta(x)\,z_i=\delta.
+\tag{2.7}
+$$
+
+Finally choose the least $k$ with $\beta_k\ne0$, which exists, and obtain
+
+$$
+\alpha=U_k/\beta_k,\qquad
+\eta=1-\alpha,\qquad t_P=\phi\alpha+\psi\eta.
+\tag{2.8}
+$$
+
+This divides only by a selected nonzero coefficient. There is no division by $\eta$ or any sampled gain. All coefficient polynomials specify weights on the original reads at clocks $0,\ldots,T$; they do not change those clocks. All signs, degree drops, roots, and drifts are included. $\square$
+

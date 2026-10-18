@@ -1,0 +1,59 @@
+**Theorem 161.1 (Entire original six-active closed-cap comparison).** For
+every entire sequence of Definition 154.1 and every positive cap $e$
+with $a_6>e\ge a_7$, under that full original acquisition contract,
+
+$$
+\exists N\in\mathcal N_2:\ e_a(N)\le e
+\quad\Longleftrightarrow\quad
+\exists O\in\mathcal O_2:\ e_a(O)\le e.
+\tag{161.1}
+$$
+
+The new stopped rule and its own counted $N$ completion use the same
+source-independent seed and have identical laws. The replacement need
+not preserve the law or seed coupling of the initially supplied $N$.
+
+**Proof.** Completion, [Proposition 90.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions),
+gives the reverse implication. For the forward direction reuse the
+necessary $N$ direction of [Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+at this exact closed cap. It gives one finite $N$ witness from any
+original arbitrary-address, full-carrier witness, without asserting
+preservation of that competitor's laws.
+
+At active length six, $D_3=\sum_{i\ge3}(a_i-e)_+=S-4e$.
+If $D_3\le3e$, reuse [Theorem 113.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#113-residual-demand-and-a-common-stopped-mixture).
+It supplies a stopped original rule at the same cap, including equality,
+with tail error $\max\{D_3/3,a_{n(\xi)}\}\le e$.
+If $D_3>3e$, then $S>7e$; the necessary bound of Theorem 113.2 gives
+$S-7e\le1-a_1$. Thus the profile lies in $Q_6$.
+The finite witness and Proposition 157.2 put it in $P$, and Theorem
+160.1 supplies a full stopped allocation at the identical cap.
+These two cases exhaust the entire original six-active domain.
+
+Realize the allocation with (160.2) on the actual original primes and
+output the actual original mark $\theta_r$. For $n(\xi)\le6$, the six
+answers form one of all 64 words already included in the cap rows.
+This includes every multiple-zero suffix and every actual later pattern.
+For $n(\xi)>6$ the low word is $1^6$ and the table emits no tail mark.
+The exact tail identity [equation (110.9)](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+gives
+
+$$
+\operatorname{TV}\left(\sum_{r=0}^6p_{1^6}(r)\delta_{\theta_r},
+       (1-a_{n(\xi)})\delta_{\theta_0}+a_{n(\xi)}\delta_{\theta_{n(\xi)}}\right)
+=\max\{1-p_{1^6}(0),a_{n(\xi)}\}=e.
+\tag{161.2}
+$$
+
+Every prescribed actual tail amplitude is at most $e$, including
+$a_7=e$. None is deleted or replaced by a zero tail. Actual tail sources
+exist by the finite-pattern supplier, so the uniform error on this
+polytope branch is exactly $e$. The residual branch has the stated
+supplier's tail formula instead. Both rules hand off after finitely many
+operations for every source and seed, use no advice or unqueried reply,
+and satisfy the hard count. The unchanged consumer acts on the same
+source and handed tape. The construction and its $N$ completion use the
+same $U$ and ignore only counted acquired replies.
+Theorem 109.1 and the sufficient direction of Theorem 110.2 give the
+claimed intersection and original feasibility conclusions. $\square$
+

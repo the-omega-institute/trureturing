@@ -1,0 +1,73 @@
+**Theorem 5.1 (A full-rank family on the original TP slice).** For
+$m=(6,13/2,5)$, use exactly $\chi'_{1/2}$ and $W'_{1/2}$
+from (4.3), and set
+
+$$
+\chi_s=(1-s)\chi'_{1/2}+s\frac{I_{25}}{25},\qquad 0\le s\le1.
+\tag{5.1}
+$$
+
+For $0\le s<15/112$, this is a PPT, full-TP, stationary and
+reflected complex channel Choi state outside the scalar-port cone.
+For $0<s<15/112$ it is positive definite. In particular
+
+$$
+\chi_{1/10}\succeq I_{25}/250,\qquad
+\operatorname{tr}(W'_{1/2}\chi_{1/10})=-19/125.
+\tag{5.2}
+$$
+
+The separation persists in a relative open neighborhood in the
+affine space (1.6) with the full TP marginal. It does not depend
+on maintaining the saturation or rank-one hypotheses of §3.
+
+Proof. Both summands in (5.1) have the full marginal $I_5/5$
+and the same invariances. Positivity gives
+$\chi_s\succeq sI_{25}/25$. The coordinates of its unnormalized
+Choi matrix are explicitly
+
+$$
+M_s=(1-s)M'_{1/2}+s\tau\tau^T/5,\qquad
+\eta_s=(1-s)\eta'_{1/2}.
+\tag{5.3}
+$$
+
+Thus all three marginal equations still hold. For either plane
+the saturation slack is $s n_j^2/5$, which is strictly positive
+for $s>0$. The rank-one/pair-saturated criterion is consequently
+not invoked for these points.
+
+At $\xi=1/2$, (4.5) is $-3/5$. The filtered witness trace is
+
+$$
+\operatorname{tr}W'_{1/2}
+ =\sum_i n_i^2m_i
+  +n_0n_+m_++n_+n_-m_-+n_-n_0m_0
+ =52+45=97.
+\tag{5.4}
+$$
+
+All cross terms are traceless. Hence
+
+$$
+\operatorname{tr}(W'_{1/2}\chi_s)
+ =-\frac35(1-s)+\frac{97}{25}s
+ =\frac{112s-15}{25}.
+\tag{5.5}
+$$
+
+This is negative precisely on the stated interval. Theorem 4.2's
+global complex-product positivity excludes complex separability
+there, and HSR excludes all scalar ports. Substitution gives (5.2).
+
+At an interior value $s>0$, sufficiently small Hermitian
+perturbations in this affine space preserve strict positivity and
+the strictly negative witness pairing, by their strict margins and
+continuity. Separate-transpose invariance then preserves strict PPT
+as well. This proves the relative-neighborhood assertion, in contrast
+to a result confined to an equality face. Also the witness cannot
+be decomposable as $P+Q^{\Gamma_{\rm in}}$ with $P,Q\succeq0$:
+such a form pairs nonnegatively with every PPT state, contradicting
+(5.5). The indecomposable mechanism is the credited Choi mechanism;
+(5.1)–(5.5) give its exact walk-space robustness. $\square$
+

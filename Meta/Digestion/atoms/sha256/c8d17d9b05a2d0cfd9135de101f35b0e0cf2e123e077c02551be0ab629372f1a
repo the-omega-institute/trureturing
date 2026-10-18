@@ -1,0 +1,31 @@
+**Theorem 9.1 (crossblock channel and failure of a fixed-pair shortcut).** For $a=1-\beta$ consider
+
+$$
+K_0=\sqrt a(e_0\langle0|+e_1\langle1|+e_2\langle2|),\qquad
+K_1=\sqrt\beta(e_3\langle0|+e_4\langle1|+e_1\langle2|).
+\tag{R.38}
+$$
+
+This is an actual original-class encoder. At positive beta its complement has Choi eigenvalues $1,a,a,\beta,\beta,0$ and unique normalized kernel vector
+
+$$
+\xi=\sqrt\beta\,|1\rangle|0_E\rangle-\sqrt a\,|2\rangle|1_E\rangle.
+\tag{R.39}
+$$
+
+Thus its only missing Choi direction is entangled. Every recovery has error at least $\beta>1-\sqrt a$, although the fixed pair $(|0\rangle\pm|2\rangle)/\sqrt2$ has output distance two.
+
+**Proof.** The TP products are $aI_3$ and $\beta I_3$. The phase outputs are the orthogonal mixtures in planes $(e_0,e_1)$ and $(e_3,e_4)$, with weights $a,\beta$. In the original real environment,
+
+$$
+\tau=\sigma=\operatorname{diag}(a,\beta),\qquad
+C=i\sqrt{a\beta/2}|0_E\rangle\langle1_E|,\qquad
+S=a|0_E\rangle\langle0_E|.
+$$
+
+For beta zero the same residual is obtained directly with the support inverse. In original input coordinates the only off-diagonal complementary block is $\Gamma(|1\rangle\langle2|)=\sqrt{a\beta}|0_E\rangle\langle1_E|$ and its adjoint. The Choi diagonal is $(a,\beta,a,\beta,a,\beta)$, with a coupled block on $(1,0_E),(2,1_E)$ equal to $(\sqrt a,\sqrt\beta)(\sqrt a,\sqrt\beta)^T$. The other four scalar entries are $a,\beta,\beta,a$. This proves the spectrum and (R.39), with Schmidt rank two for all positive beta, maximally entangled at half weight. At zero the Choi rank is three and the unique-kernel assertion is not made.
+
+For the fixed superposition pair the output difference has disjoint off-diagonal blocks of weights $a,\beta$, so its trace norm is $2a+2\beta=2$. In contrast the outputs on $|1\rangle,|2\rangle$ have diagonal difference with nonzero entries $a-\beta,\beta,-a$, of norm $2a$. The same-recovery contraction argument gives $\delta_N\geq1-a=\beta$. Since $\sqrt a>a$ for positive beta, this strictly exceeds $1-\sqrt a$. The fixed superposition pair's lack of contraction is not a counterexample to existence of some useful input pair or to the sharp class curve.
+
+A full recovery with Kraus matrices $L_0=|0\rangle\langle e_0|+|1\rangle\langle e_1|+|2\rangle\langle e_2|$ and $L_1=|0\rangle\langle e_3|+|1\rangle\langle e_4|$ is TP. On all matrices its composite is $a\,\mathrm{id}+\beta\mathcal D$, where $\mathcal D(X)=P_0XP_0+X_{22}|1\rangle\langle1|$, $P_0=|0\rangle\langle0|+|1\rangle\langle1|$. The Kraus matrices $P_0,|1\rangle\langle2|$ make $\mathcal D$ CPTP. Its diamond distance from identity is two, bounded above as a difference of channels and attained on $|2\rangle$. This recovery's exact error is therefore $2\beta$, with all references included. This last value is not asserted to be the encoder's optimum. $\square$
+

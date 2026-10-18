@@ -1,0 +1,46 @@
+**Theorem 4.6 (the entire acquired fiber).** Form a finite list
+$\mathcal L_C$ consisting of:
+
+1. $F_H\ne F_{H'}$ for every two distinct old roles $H,H'$;
+2. every translated whole negative record of Definition 4.3, retaining
+   repetitions and its actual endpoint coordinates.
+
+Let $D_C$ be their conjunction and define the full original-source fiber
+
+$$
+U=\{u:R_A(u)=R,\ H_0(u),\ H_{\rm rel}(u)\},
+\tag{URR.20}
+$$
+
+where $H_0,H_{\rm rel}$ are exactly all the prescribed records. Then
+$\Theta$ is a bijection
+
+$$
+\{(\mathbf n,\mathbf z):K(\mathbf n)\land
+D_C(\mathbf n,\mathbf z)\}\ \longrightarrow\ U.
+\tag{URR.21}
+$$
+
+Proof. A source in $U$ satisfies the positive conditions of Lemma 4.5,
+so has its unique coordinates with $K$. Its complete old partition says
+that different roles have unequal whole subtrees. These are exactly
+item 1, including all off-task classes. Every additional negative has
+two reached endpoints and the exact mixed values established in
+Definition 4.3, so item 2 holds. This gives one inclusion.
+
+Conversely, a tuple satisfying the left side of (URR.21) constructs a
+source satisfying all positive and literal data by Lemma 4.5. Its old
+cut positions are all reached and its concrete exterior is exactly $C$.
+Occurrences of the same role are equal; item 1 prevents every unwanted
+cross-role equality. Thus its whole old partition is exactly $\pi$.
+Item 2, together with both
+structurally proved endpoint guards, gives each negative signed record.
+Rank-refinement guards were already imposed by $K$. Hence every record
+holds on this single original source and its old row is exactly $R$.
+Uniqueness is the uniqueness in Lemma 4.5. $\square$
+
+The temporary positive set in Lemma 4.5 is only a proof device. Equation
+(URR.21) restores every old inequality and every signed record and is the
+domain used for all subsequent statements. It is not a statement that
+arbitrary positive histories admit such a presentation.
+

@@ -1,0 +1,67 @@
+**Theorem 5.1 (Finite-state hitting comparison).** Under Definition 4.1, for every $x\in\mathcal S$,
+
+$$
+\gamma^{-2n}h_P(x)\le h_Q(x)\le\gamma^{2n}h_P(x),
+\qquad
+|h_Q(x)-h_P(x)|\le\frac{\gamma^n-1}{\gamma^n+1},
+\qquad n\le M-2.
+\tag{5.1}
+$$
+
+No global absorption, irreducibility, aperiodicity, spectral gap or lower bound on positive exits is assumed.
+
+Proof. Each positive forest has exactly $n$ comparable edges, so
+
+$$
+\gamma^{-n}w_P(\phi)\le w_Q(\phi)\le\gamma^n w_P(\phi).
+\tag{5.2}
+$$
+
+Sum term by term over all forests, over forests marked at $x$, or over their complementary subfamily. The same factors compare $\mathcal D$, $\mathcal A(x)$ and $\mathcal C(x)$ respectively. Using (4.5) for $\mathcal A/\mathcal D$ proves the multiplicative assertion on $V$ with exponent $2n$. Boundary values agree and give it there too.
+
+For the additive assertion, if $\mathcal C_P(x)=0$, termwise comparison gives $\mathcal C_Q(x)=0$ and both hitting values equal one. Otherwise both complementary sums and both marked sums are strictly positive. Put
+
+$$
+z=\frac{\mathcal A_P(x)}{\mathcal C_P(x)}>0,
+\qquad
+r=\frac{\mathcal A_Q(x)/\mathcal A_P(x)}
+        {\mathcal C_Q(x)/\mathcal C_P(x)}.
+\tag{5.3}
+$$
+
+Then $\gamma^{-2n}\le r\le\gamma^{2n}$, and
+
+$$
+h_P(x)=\frac z{1+z},\qquad h_Q(x)=\frac{rz}{1+rz}.
+\tag{5.4}
+$$
+
+If $r<1$, interchange $P$ and $Q$; the new ratio is $1/r$ and lies in $[1,\gamma^{2n}]$. It suffices to consider $r\ge1$. The difference is
+
+$$
+h_Q(x)-h_P(x)=\frac{(r-1)z}{(1+z)(1+rz)}.
+\tag{5.5}
+$$
+
+The nonnegative square $(z^{-1/2}-\sqrt r\,z^{1/2})^2$ yields
+
+$$
+\frac{(1+z)(1+rz)}z
+=z^{-1}+rz+1+r
+\ge2\sqrt r+1+r=(1+\sqrt r)^2.
+\tag{5.6}
+$$
+
+Hence the difference is at most
+
+$$
+\frac{r-1}{(1+\sqrt r)^2}
+=\frac{\sqrt r-1}{\sqrt r+1}
+\le\frac{\gamma^n-1}{\gamma^n+1}.
+\tag{5.7}
+$$
+
+The last inequality uses that $(v-1)/(v+1)$ increases for $v\ge1$. The case $r=1$ is included. Boundary states have zero difference, and if $n=0$ every state is boundary. This proves (5.1). $\square$
+
+The proof uses a common positive family for both the marked and complementary sums. Estimating a signed difference of determinants would not give that comparison. Reducible supports and closed non-target classes are included: such classes lie in $\mathcal Z$ even if they were nonabsorbing before the analytical row replacement. Zero edges contribute zero in both kernels. Self-loops remain accounted for in (4.6); a very small positive exit may make forest sums small, but does not change their termwise ratios. Hitting values zero, one and the empty interior $V$ have all been treated explicitly. For $\gamma=1$ the additive bound is zero. The exponent $2n\le2(M-2)$ improves the supplied elimination exponent $2\cdot3^M$; no optimality of either the new exponent or the additive bound within this stochastic class is asserted.
+

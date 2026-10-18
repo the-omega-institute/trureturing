@@ -1,0 +1,62 @@
+**Proposition 20.1 (an exact excursion for each survival likelihood).**
+For every $q\in(0,1]$, define
+
+$$
+b(q)=\frac{ac}{a+q(c-a)},\qquad d(q)=b(q)-a,\qquad
+k_q(t)=
+\begin{cases}
+a+d(q)t,&0\leq t\leq1,\\
+b(q)-d(q)(t-1),&1\leq t\leq2.
+\end{cases}
+\tag{PR.75}
+$$
+
+Keep relative phase constant. This is an actual two-unit original control,
+with both original regularity alternatives, whose canonical live return
+operator is $\sqrt q I_5$. It realizes every entry of (PR.71).
+
+Proof. The denominator in $b(q)$ is positive. Direct subtraction gives
+$a\leq b(q)<c$, with equality $b(q)=a$ exactly at $q=1$.
+Both affine legs and their join remain strictly positive and continuous.
+They are absolutely continuous and finite piecewise $C^1$ with constant
+rates on each closed piece. Their phase variation, new winding and
+transported phase increment are zero. On the upward leg, integration
+of $\lambda=k'/k$ gives survival $a/b$. On the downward leg,
+integration of $\lambda=-k'/(c-k)$ gives survival
+$(c-b)/(c-a)$. Their product is
+
+$$
+\frac ab\,\frac{c-b}{c-a}=q.
+\tag{PR.76}
+$$
+
+Proposition 18.1 gives the full scalar return and complete failure law,
+not just a chosen Bernoulli trial. At $q=1$ both legs are waits, with
+no failure. No nontrivial instantaneous excursion is used. $\square$
+
+For an explicit time/mode law on these affine programmes, write
+$b=b(q)$, $d=b-a$ and $A=a(c-b)/b$. On the two open legs,
+
+$$
+\begin{array}{c|c|c}
+ &S(t)&(f_0,f_1,f_2,f_3,f_4)(t)\\ \hline
+0<t<1&a/k(t)&
+ \dfrac{ad}{k(t)^2}(0,c,Z,c,0)\\[4pt]
+1<t<2&A/(c-k(t))&
+ \dfrac{Ad}{(c-k(t))^2}(c,0,Z,0,c)
+\end{array}
+\qquad f_i=(p_i(a)-S p_i(k))'.
+\tag{PR.77}
+$$
+
+These weights follow by differentiating the actual CP law:
+$f_i=S(\lambda p_i-p_i')$. They are not imported from the particular
+nonlinear uniform-time example in Event Memory and Coarse Aliasing §3.
+For an arbitrary joint input put
+$\rho^R_{ii}=\langle i|\rho_{AR}|i\rangle$; its failure CP density is
+$[f_i(t)/p_i(a)]|f\rangle\langle f|\otimes\rho^R_{ii}$.
+For (PR.61) the actual mode/time probabilities are $f_i(t)\,dt$.
+Their total masses on the two legs are $1-a/b$ and $a/b-q$.
+There are no atoms at the turn or terminal cut. Together with $q\rho_{AR}$
+and the same seed, these formulas specify every successor.
+

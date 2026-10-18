@@ -1,0 +1,33 @@
+**Definition 6.1 (natural ownership of experiments, without independent
+codes).** For fixed $d\ge1$ and $n\ge1$, the joint universe is $S_d^n$.
+Its targets and experiments are
+
+$$
+F_{i,q}(x)=\Gamma_q(x_i),\qquad
+R_{j,w}(x)=r_{x_j}(w),
+\quad i,j\in\{1,\ldots,n\},\quad q,w\in W_d,
+\tag{FMR.35}
+$$
+
+together with a constant experiment $\bot$. A nonempty
+$B\subseteq S_d^n$ is jointly admissible if, for every $(i,q)$,
+some single $(j,w)$ or $\bot$ has
+
+$$
+\forall x,y\in B,\quad
+R_{j,w}(x)=R_{j,w}(y)
+\ \Longrightarrow\ F_{i,q}(x)=F_{i,q}(y).
+\tag{FMR.36}
+$$
+
+The index $j$ need not equal $i$, and the set $B$ need not be a
+product. Let $K_d(n)$ be the minimum number of such sets covering
+$S_d^n$, and set $K_d(0)=1$.
+
+The coordinate notation does not supply several free source ports.
+When actual blocks occur at public prefix-free original addresses
+$Ra_1,\ldots,Ra_n$ of one stationary tree, (FMR.35) is implemented
+by the single original-root literal $Ra_jw$. A virtual artificial
+wrapper is handled by Lemma 3.1. The tuple is a mathematical
+description of jointly realized actual blocks, not a copying action.
+

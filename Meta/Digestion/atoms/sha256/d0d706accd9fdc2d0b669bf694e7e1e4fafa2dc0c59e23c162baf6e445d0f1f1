@@ -1,0 +1,49 @@
+**定理 25.3（Exact adaptive unit envelope）。** If $\ell_v(j)=k$ for every $j$, set $A_v=\phi_k(\lambda_v)$. Otherwise the fibre is mixed. If its top row
+
+$$
+\{F_v(j,k-1):0\le j\le k\}
+\tag{25.11}
+$$
+
+is not constant, set $A_v=+\infty$. In the remaining mixed case set
+
+$$
+A_v=\max\left(H_v,\ \min_{\tau\text{ $v$-eligible}}M_v(\tau)\right).
+\tag{25.12}
+$$
+
+Then, for every arbitrary label set and table,
+
+$$
+C_{\rm ad}(f)=\max(A_0,A_1).
+\tag{25.13}
+$$
+
+**证明。** A phase-only fibre is exactly the domain of [S11, Theorem 3.1], including constants and the $k=2$ exceptions. Its attaining constructions are literal streams, and its lower bounds hold for adaptive trees. The initial free value chooses the fibre, so the two whole-root costs combine by a maximum.
+
+In a mixed fibre, root zero merges all tails at each phase and destroys some required distinction. Thus root one is forced. It rejects the entire top row to one archive, making (25.11) necessary. Its two successful archives are exactly
+
+$$
+\begin{array}{c|c|c|c}
+\text{archive}&\text{INITIAL phases}&\text{INITIAL tails}&\text{current value}\ \hline
+\mathcal H&\{0,1\}&0\le s<k-1&v\oplus1\\
+\mathcal M&\{2,\ldots,k\}&0\le s<k-1&v.
+\end{array}
+$$
+
+Both have current tail $s+1$. The rejection archive returns its common INITIAL label and stops at depth one. The two successful archives are siblings: their total fees must be maximized, never added.
+
+On $\mathcal H$, a constant target stops at depth one, giving the first line of (25.7). If each of its two phase rows has a constant surviving prefix but those labels differ, the second bit cannot be one: it would reject the INITIAL tail $k-2$ from both phases into one archive with different labels. A zero at absolute position one clears safely. At all later positions $2,\ldots,k-1$ both phases have zero coefficient; their cleared tails and values remain common. They cannot separate before the one at position $k$, whose endpoint has total depth $k+1$. The safe word $1\,0^{k-1}1$ attains that depth. This is the second line.
+
+In every other unresolved $\mathcal H$ case, some surviving phase row is tail-dependent, so a second-bit zero is impossible. A second-bit one is possible exactly when $F_v(0,k-2)=F_v(1,k-2)$, since those are the two rejected sources. If equality fails both actions lose a required distinction, proving infinity. If equality holds and $k\ge3$, the successful second endpoint separates phases zero and one: only phase one flips there. Each is then a phase-known archive with INITIAL tail range $0\le s<k-2$.
+
+More generally, on a phase-known archive reached by $j$ successful leading ones, remaining tails satisfy $0\le s<k-j$. Its exact total stopping depth is $\max(j,k-\ell_v(j'))$ for its known phase $j'$. To prove this, if the remaining prefix is constant it stops at depth $j$. Otherwise tails $\ell_v(j')-1$ and $\ell_v(j')$ have different labels, survive indistinguishably before absolute depth $k-\ell_v(j')$, and any earlier zero merges them. Consecutive ones through that depth reject the larger tail and then leave a constant surviving prefix. Each earlier rejection on this phase-known branch identifies exactly one INITIAL tail and returns its own label. No clearing zero is needed. Applying this at depth two to phases zero and one gives the third line of (25.7). At $k=2$ these surviving prefixes are singletons, so the first two lines already cover every finite $\mathcal H$ case. Thus $H_v$ is its exact total-root cost.
+
+On $\mathcal M$, follow the still-unidentified suffix through leading ones. After total depth $z\ge1$, that archive has exactly phases $j\ge z+1$, tails $0\le s<k-z$, and current value $v$. A one at position $z$ rejects INITIAL tail $k-z-1$ from every one of those phases, requiring precisely the constancy in (25.8); its successful flip identifies phase $z+1$, while the other successful archive is the next suffix. All previously peeled phases are separate acquired siblings. At phase $j$'s identifying endpoint of depth $j$, its best total cost is $\max(j,k-\ell_v(j))$ by the phase-known calculation above.
+
+The first zero on the unidentified suffix, if any, occurs after a total of $\tau$ ones, with $1\le\tau\le k-1$ in normalized form. It merges every surviving tail at each of its phases, so (25.9) is necessary. All earlier rejected strips require (25.8). If this suffix stops before its zero, its entire remaining table is constant and the same conditions hold for that stopping depth $\tau$. Continuing all ones to depth $k-1$ leaves only phase $k$ and tail zero, so no later cutoff is needed. Thus every finite controller yields an eligible $\tau$.
+
+At an eligible cutoff, each remaining phase has surviving label $\lambda_v(j)$. A constant suffix stops at depth $\tau$; otherwise the zero at position $\tau$ is paid, and the resulting archive is exactly the cleared suffix of Lemma 25.2a with $a=\tau+1$. Its optimal further cost is $d(\tau+1,\lambda_v)$. This proves $L_v(\tau)$, including its absolute fee origin. Together with the identified-phase siblings it gives the necessary $M_v(\tau)$ lower bound on that choice of cutoff.
+
+Conversely, choose a minimizing eligible cutoff. Issue ones on the unidentified suffix until that depth, retiring each rejected strip to its constant label. Each peeled phase independently follows its optimal phase-known all-one continuation and stops. At the chosen suffix either stop at its constant label, or issue its clearing zero followed by the safe all-one continuation in Lemma 25.2a. These are actual paths on separate acquired archives; all their depths are measured from the one original root. Their maximum is exactly $M_v(\tau)$. Independently run the attained $\mathcal H$ continuation on its sibling. Every emitted bit is charged; no source is copied and no labels are reevaluated after clearing. This attains (25.12) and (25.13), and failure of either archive condition proves unattainability. ∎
+

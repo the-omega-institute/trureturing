@@ -1,0 +1,21 @@
+**Theorem 62.3 (all-source extensive stability in the commissioned sectors).** For every authentic finite $D$, every supported $N$, either pair prescription and every $f\in\mathscr H_{D,N}$,
+
+$$
+\langle f,H^\diamond_{D,N}f\rangle
+\ge \left[a\lambda-g-\frac{\nu}{2\lambda}\right]N\|f\|^2.
+\tag{62.5}
+$$
+
+The same bound holds for the infinite common operator on $\ell^2(\mathcal C_N(\{L,R\}^*))$. The constant is independent of the source, its cap, its irregular boundary and $N$. It is an extensive bound for this hard-core/Green law, not for unrestricted product-state attraction.
+
+Proof. For a realized occupation $S$, put $z_p=\mathbf1_{p\in S}$. On the same $D$ and the same pair kernel,
+
+$$
+\sum_{\{p,q\}\subset S}G^\diamond_D(p,q)
+=\frac12\left[z^*G^\diamond_Dz-\sum_{p\in S}G^\diamond_D(p,p)\right]
+\le\frac{N}{2\lambda}.
+\tag{62.6}
+$$
+
+This uses $\|z\|^2=N$, the positive diagonal and the operator bound (62.4). It does not combine separately attained estimates on different realizations. Also $0<\phi\le1$, so the one-body attraction is bounded by $gN$. Apply the kinetic bound proved inside Theorem62.2. The infinite kinetic operator is bounded and has the same compressed tensor proof; (62.6) applies to each finite occupation. Thus its pair multiplier is bounded for each fixed $N$ and the conclusion extends by density. These estimates prove lower boundedness, not a negative ground state, its attainment or precompactness of near-minimizers. $\square$
+

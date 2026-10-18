@@ -1,0 +1,74 @@
+## 8. Permanent correspondence, strict increase and remaining obligation
+
+The permanent project references used here are
+[IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md),
+[G](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md),
+and [F](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md).
+Their exact roles are as follows.
+
+| Permanent source and location | Established result and correspondence here |
+| --- | --- |
+| IX, Definitions 1.1–1.4; Theorems 2.1 and 3.1 | Complete-world model, full arbitrary ancestor, positive traces, interpolation, $\Delta>0$ throughout the nonnegative domain, and the exact source-conditioned rational graph in Section 2. Conditional gain/drift recovery does not identify the unknown source. |
+| IX, Theorem 4.1; Proposition 4.2 | Bounds require a fixed positive finite trace corridor and bounded readings; arbitrary moving late readings can carry arbitrary drift. Neither result gives compactness of our arbitrary-history slice. |
+| IX, Definitions 5.2–5.3 | Same three fixed legal worlds, actual-response recursion, common-history joint obligation and the retained original-root eight-versus-nine quantifiers. Sections 6–7 here preserve this exact interface. |
+| IX, Theorem 7.2; Theorems 8.1, 9.2 and 10.1; Definitions 11.1–11.2 | Exact history-dependent source-escape locus, and the $H_*$ trace corridor, six boundary targets and compact complete-world closure. Section 2 states their limited comparison; no arbitrary-history compactness or legal-triple conclusion is imported. |
+| G, Theorem 2.1 | Fixed full ancestor and common-drift repeated-sixth singleton, exact cubic/double multiplicity, root/drift ranges and normalized positive sign. Theorem 5.1 uses only these necessary ranges for its second alternative; the full-slice first alternative has its own proof. |
+| G, Section 3; Theorem 4.1; Theorem 6.1 | Signed terminal representation and complete-world reconstruction; whole-class three-coordinate injectivity and the pair-at-most-two bound; baseline incidence count and sign restrictions. Section 6 reuses these at their exact three-world scope. |
+| G, Propositions 5.1–5.2 and 7.1 | TT actual-child equivalence, policy conditional on an injective scalar on the whole known set, and exact joint feasibility. Sections 6–7 retain all real responses and both late equations. |
+| F, Sections 1–2; Lemmas 2.1 and 2.3; Definition 2.2 | Model, legal positive $Q$ chart, chronological terminals and four-terminal complete-world inverse. The signed representation in Section 3 has the same normalization and admits both terminal signs. |
+| F, Theorem 4.1 and Corollary 4.2 | Five strict ratios and the exchanged-source argument require common drift, both common sixth predictions and nonzero sixth gains to obtain a common source sum. Those hypotheses do not hold merely from $f_i(6)=0$. |
+| F, Theorem 6.1; Proposition 7.2; Corollary 7.3 | Diagonal-swap obstruction requires common $q=f(6)/f(7)\ne0$; PP/PT/TP/TT is the exact actual-child table, and all-zero TT versus nonzero varying-ratio PP remains the common-drift alternative. Here $q=0$; there is no cancellation by $q$ and no common-sum inference. |
+| This volume, Theorems 4.1, 5.1 and 6.2 | Source-relative new deductions: whole-class $AB$ and $AD$ injections, strict $AC$ drift/late-reading restrictions and entire-slice root consequences, and the resulting complete TT pattern exclusions. The exact remaining system is preserved rather than declared feasible or impossible. |
+
+G's three-coordinate result permits a distinct pair to share any two
+terminal coordinates; its count permits any one constant column and
+all three partitions of type $(2,2,0)$. Theorem 4.1 here removes
+$AB$ and $AD$ globally on the whole promised class. Consequently
+constant $A,B,D$ and both partitions $AB\mid CD$, $AD\mid BC$
+are excluded as entire simultaneous configurations. The remaining
+constant $C$, partition $AC\mid BD$, and type $(2,1,1)$ with
+repeated $AC$ acquire strict common-drift and actual-late-reading
+constraints, together with simplicity on the entire source slice.
+These are strict additional obstructions relative to the supplied
+baselines, not a reparametrization of their graph or a new label for
+their incidence count.
+
+The mathematical tools inside the new proofs are elementary matrix
+algebra, polynomial factorization and root counting, signs of linear
+factors, and the intermediate value theorem. Lagrange interpolation
+and the positive residual denominator are established interfaces.
+No external-priority or literature-completeness conclusion is made.
+These model-specific symbolic results carry no empirical, general
+neural-network, kernel or Lean verification, stability, efficiency
+or computational-resource claim.
+
+The full common-drift zero-sixth TT feasibility question is unresolved.
+Its surviving patterns are constant $C$ and $AC\mid BD$ under
+(5.1) and the entire-slice restrictions, and type $(2,1,1)$ with
+repeated $AC,BC,BD,CD$ under the respective restrictions above.
+Outside the $AC$ drift range, or with a repeated-sixth member, only
+repeated $BC,BD,CD$ in type $(2,1,1)$ remain. None is asserted
+attainable. There is no exact legal witness and no uniform exclusion
+for the full system (7.1).
+
+The common-drift nonzero-sixth varying-$q$ PP case, variable drifts,
+other terminal-root strata, larger or infinite losing families, their
+full actual fibers, other literal histories, the earlier $JMMJ$
+parent-arm gluing and the separate $MMJM$ and $MJMMJ$ obligations
+remain unresolved here. A larger losing family is not proved to
+contain a losing triple. No acquisition of unchosen terminal
+coordinates is supplied.
+
+The original-root alternative remains a lawful complete-target decoder
+on every legal world with at most eight total readings versus
+$n_{\mathrm{det}}(3,0)\ge9$. It still includes both initial actions,
+every actual history and early stop, arbitrary constant drift, all
+positive nonsymmetric rank-one trace-one sources, and every nonzero
+cubic-or-lower gain with both signs, sampled roots and multiplicities.
+A result on this one ancestor still needs its earlier-history bridge.
+The strongest conclusions here are the two entire-class terminal-pair
+injections and the strict $AC$ and joint-pattern obstructions. The
+remaining obligation is exactly to produce one simultaneous legal
+three-source solution of (7.1), for common $d,y,\zeta$, or to exclude
+all such solutions; neither alternative is settled by these necessary
+restrictions.

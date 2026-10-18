@@ -1,0 +1,10 @@
+**假设 11.1（引用的 Robin 判据）。** 采用 [Choie–Lichiardopol–Moree–Solé，arXiv math/0604314v2，摘要及§1](../../../Library/ArithSums/choie2006robincriterion.md) 所引 Robin 等价判据：
+
+$$
+\mathrm{RH}\iff
+\forall n\in\mathbb N,\quad n>5040\Longrightarrow
+\frac{\sigma(n)}n<e^\gamma\log\log n.
+$$
+
+这里 $\gamma$ 为 Euler–Mascheroni 常数。此等价为文献输入；所用整数的素数支撑有限，但没有统一的支撑数量或指数上界。
+

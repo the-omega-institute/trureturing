@@ -1,0 +1,94 @@
+**Theorem 3.2 (Finite constructive reachability).** Write
+
+$$
+E_-:\ X+Y=r,\qquad E_+:\ X=Y,
+$$
+
+and define the real vector space
+
+$$
+V_b=\{h\in\mathbb R^5:h_2=0,\ d^{\mathsf T}h=0,
+\ E_-\Rightarrow h_0=h_{13},\ E_+\Rightarrow h_1=h_3\}.
+$$
+
+Its dimension is $3-\mathbf1_{E_-}-\mathbf1_{E_+}$. The exact set of
+zero-winding residuals is $V_b$. For every chosen $\kappa_0$, at most three
+rectangles with heights preselected independently of the target realize every
+vector in $V_b$.
+
+Proof. Introduce the four poles
+
+$$
+\lambda_0=X+Y-r,\qquad \lambda_1=X,\qquad
+\lambda_3=Y,\qquad \lambda_{13}=0.
+$$
+
+For bottom modes,
+
+$$
+p_s=d_s(\kappa-\lambda_s),\qquad
+w_s(\kappa)=\frac1{I(\kappa)(\kappa-\lambda_s)}.
+$$
+
+The same-sign poles collide precisely on $E_-$ or $E_+$. An opposite-sign
+collision would require one of $X,Y,r-X,r-Y$ to vanish, excluded by the
+strict mean hypotheses. Let $g=4-\mathbf1_{E_-}-\mathbf1_{E_+}$ be the number
+of distinct pole groups. Components of $w$ are equal within each group. The
+space $U_b$ of vectors with zero middle component and these group equalities
+has dimension $g$. On it, $d^{\mathsf T}$ is a nonzero functional, so
+$V_b=U_b\cap\ker d^{\mathsf T}$ has dimension $g-1$.
+
+Choose any $g$ distinct interior heights, one of them $\kappa_0$. The matrix
+with rows indexed by the distinct poles and columns by these heights,
+
+$$
+M_{aj}=\frac1{\kappa_j-\lambda_a},
+$$
+
+is nonsingular. To prove this directly, suppose a row combination vanishes at
+all $g$ heights. The rational function
+$R(t)=\sum_a c_a/(t-\lambda_a)$ then has $g$ distinct zeros away from the
+poles. Its numerator over $\prod_a(t-\lambda_a)$ has degree at most $g-1$,
+so that numerator is identically zero. Evaluating its residue at each pole
+gives $c_a\prod_{b\ne a}(\lambda_a-\lambda_b)=0$, hence every $c_a=0$.
+
+Scaling each column by the nonzero number $1/I(\kappa_j)$ preserves
+independence. Thus the $g$ vectors $w(\kappa_j)$ are linearly independent in
+$U_b$. All lie in the affine hyperplane $d^{\mathsf T}w=1$, and their
+$g-1$ differences from $w(\kappa_0)$ are a basis of $V_b$: a linear relation
+among these differences would be a linear relation among the $g$ vectors,
+while their number is the dimension of $V_b$.
+
+For an arbitrary zero-winding loop,
+
+$$
+h=\int_0^T\bigl(w(\kappa(t))-w(\kappa_0)\bigr)\dot\chi(t)\,dt.
+$$
+
+Every integrand vector is in $V_b$, proving inclusion. Conversely write an
+arbitrary $h\in V_b$ in the basis just constructed:
+
+$$
+h=\sum_{j=1}^{g-1}a_j\bigl(w(\kappa_j)-w(\kappa_0)\bigr).
+$$
+
+The rectangle of Theorem 2.6 with probability height $\kappa_j$ and real
+phase height $a_j$ realizes the corresponding summand. Concatenate the
+rectangles at $(\kappa_0,0)$. Negative coefficients are permitted by reversing
+the phase leg. This is a finite piecewise linear, hence admissible, path and
+realizes the vector exactly. No approximation by a dense subgroup is used.
+The construction imposes no uniform speed, energy or phase-height bound.
+$\square$
+
+The same argument determines every winding sector, not only zero winding:
+
+$$
+\mathcal R_m=2\pi m\,w(\kappa_0)+V_b,\qquad m\in\mathbb Z.
+$$
+
+Indeed subtraction of $2\pi m w(\kappa_0)$ gives the integral of
+$w-w(\kappa_0)$, hence the inclusion. Conversely first perform $m$ fixed-height
+circles, whose residual is $2\pi m w(\kappa_0)$, then the finite rectangle
+construction for the desired remainder. Both paths have the same initial and
+final periodic base point.
+

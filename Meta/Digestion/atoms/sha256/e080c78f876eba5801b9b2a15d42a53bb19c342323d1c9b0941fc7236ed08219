@@ -1,0 +1,13 @@
+**定理 10.3（四种读法的条件汇合）。** 固定定义1.1的原树规则、定义2.1的规范方向及定义3.1的标记参照，则整树展开、单支系无相邻 $11$ 的有限历史、三步规范五模式守卫和递归区间细分有保持相应接续的映射。对 $0<s<1$，其中从同一 $\beta$ 初始区间的三步末态尺度相容当且仅当 $s=\varphi^{-1}$；追加假设7.1后，这又当且仅当固定分割族的长期地址熵率最大。在假设9.1的全回复纤维内，精确取得并保留完整前沿则由 $\mu_s=1$ 判定。
+
+证明。原树到指定支系的选择由定义1.1给出，支系到有限合法码的双向对应由命题1.3给出；逐窗反转由定理2.2保持原接缝，不能省掉方向标签。原树到区间的完整编码由定理3.2给出；替换和固定非边界读点的支系由定理4.2相容，无限码仍保留命题4.3的边界限制。定理5.2及7.4分别给两个黄金等价条件，定理6.2说明相同端点尺度仍不恢复内部支系地址。定理9.3及9.5给实际取得量到加权误差及完整恢复的桥；它们使用全部保留回复和不受限来源，不从数学分割自动生成实际记录。
+
+这些映射分别保留树括号、类型接续、窗口守卫、区间尺度或取得纤维；只在已证明的对象和条件内组合。单位区间可以作为不动参照，标签和细分持续变化；没有由这里的三步、五模式、黄金数或熵率推出物理空间维数、作用量、能量效率、免费逆操作或免费历史档案。所用成熟语言、Parry 数据、编码恢复、熵恒等式、Kakutani 分割和标量极值均按各供应作为中间结果；本卷的内容是它们在这一明确原树—支系—观察合同中的桥接，文献引用不认证全局新颖性。$\square$
+
+[A]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md
+[B]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[F]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md
+[J]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[K]: ../../../Library/Dynamics/carbone2012dynamical.md
+[G]: ../../../Library/Dynamics/gohlke2023measure.md
+

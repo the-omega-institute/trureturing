@@ -1,0 +1,27 @@
+**Definition 2.1 (Compositions, convolution and conditional information).** Fix an integer $m\ge2$. For an integer $n\ge m$ set
+
+$$
+\Omega_{m,n}=\{(k_1,\ldots,k_m)\in\mathbb N_{\ge1}^m:
+ k_1+\cdots+k_m=n\},\qquad
+C_{i,m}(n)=\sum_{k\in\Omega_{m,n}}\prod_{j=1}^mF_i(k_j).
+$$
+
+Set $C_{i,m}(n)=0$ for $0\le n<m$. At legal totals define
+
+$$
+G_{i,m,n}(k)=\frac{\prod_{j=1}^mF_i(k_j)}{C_{i,m}(n)},\qquad
+w_n(k)=\prod_{j=1}^m r_{k_j},\qquad
+c_n=\frac{C_{1,m}(n)}{C_{0,m}(n)}.
+$$
+
+Write $\mathbb E_{i,n}$ and $\operatorname{Var}_{i,n}$ for expectation and variance under $G_{i,m,n}$, suppressing the fixed $m$. Define
+
+$$
+\begin{aligned}
+d_{0,m}(n)&=D(G_{0,m,n}\Vert G_{1,m,n}),\\
+d_{1,m}(n)&=D(G_{1,m,n}\Vert G_{0,m,n}),\\
+\overline D_{i,m}(q)&=\sum_{n\ge m}
+\frac{C_{i,m}(n)q^n}{Z_i(q)^m}\,d_{i,m}(n).
+\end{aligned}
+$$
+

@@ -1,0 +1,5 @@
+source_id = "consecutive-dependent-triples-conics"
+path = "docs/develop/theory/CONSECUTIVE_DEPENDENT_TRIPLES_CONICS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

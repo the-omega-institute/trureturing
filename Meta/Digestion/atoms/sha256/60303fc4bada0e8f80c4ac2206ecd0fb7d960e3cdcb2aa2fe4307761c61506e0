@@ -1,0 +1,60 @@
+**定理 448.1（同一 Euler 乘积的真实极值实现）。** 存在相互独立的随机
+变量 \(B_r,T_r\)，由全部素数 \(r\) 编号，满足
+
+\[
+\mathbb P(B_r=1)=1/r,\qquad
+\mathbb P(T_r>u)=e^{-u\log r},\qquad X_r=B_rT_r.
+\]
+
+令
+
+\[
+U=\sup_rX_r,\qquad
+M_z=\max\!\left(\max_{r\le z}X_r,T_p\right).
+\]
+
+则 \(0<U<\infty\) 几乎处处，且原两个轮廓精确为
+
+\[
+\boxed{\mathbb P(U\le u)=g(u),\qquad
+\mathbb P(M_z\le u)=g_z(u)\quad(u>0).}
+\tag{PM.2}
+\]
+
+\(U\) 的最大值几乎处处由唯一素数取得。在这个实现中，
+有限实际前缀的下一素数时钟 \(T_p\) 没有 Bernoulli 稀释。
+
+**证明。** 对每个素数，
+\(\mathbb P(X_r\le u)=1-r^{-1-u}\)。有限乘积与递减事件的概率连续性
+给
+
+\[
+\mathbb P(U\le u)=\prod_r(1-r^{-1-u})=\zeta(1+u)^{-1}.
+\]
+
+经典实轴 Euler 乘积在 \(u>0\) 绝对收敛。由 \(g(0+)=0\)、
+\(g(\infty)=1\)，得到 \(0<U<\infty\) 几乎处处。对每个固定有理数
+\(a>0\)，\(\sum_r\mathbb P(X_r>a)=\sum_rr^{-1-a}<\infty\)；
+因此几乎处处只有有限多个 \(X_r>a\)。在全部正有理 \(a\) 上同时取这项
+结论，当 \(U>0\) 时即可从某个有限集合取得最大值。两个不同素数的正值
+连续且独立，故其相等的概率为零；可数对的并集仍为零。有限
+\(r\le z\) 与独立 \(T_p\) 的分布函数乘积给 \(g_z\)。证毕。
+
+进一步，唯一获胜素数的联合密度为
+
+\[
+\mathbb P(U\in du,\ r\text{ 获胜})
+=g(u)\frac{\log r}{r^{1+u}-1}\,du,
+\]
+
+故
+
+\[
+g'(u)=\sum_r g(u)\frac{\log r}{r^{1+u}-1}>0.
+\tag{PM.3}
+\]
+
+局部逐项微分由 \(\sum_{n\ge2}(\log n)n^{-1-a}<\infty\) 支付；
+非负积分交换给全部获胜素数的质量和为一。这种素数标记实现保留全部素数，
+不只保留自身为 Fibonacci 项的素数。
+

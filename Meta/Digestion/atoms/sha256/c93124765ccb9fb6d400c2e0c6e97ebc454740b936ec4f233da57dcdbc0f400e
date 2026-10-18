@@ -1,0 +1,41 @@
+**Definition 1.2 (source, literals and original prediction task).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+&h(\alpha)&=h(\beta)=0,\\
+h(\langle u,v\rangle)&=1+\max\{h(u),h(v)\},
+&\rho(\alpha)&=\beta,\\
+\rho(\beta)&=\langle\beta,\alpha\rangle,
+&\rho(\langle u,v\rangle)&=\langle\rho(u),\rho(v)\rangle.
+\end{aligned}
+\tag{CCF.1}
+$$
+
+Pairing is free and ordered. Every finite word $w$ over $L,R$, including
+the empty word, is a legal original-root Read. Its reply $r_t(w)$ is
+alpha or beta at the corresponding leaf, branch at a pair, and absent
+after the path passes a leaf. The four replies are
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$.
+
+The ordered constructor, substitution rule and literal observation are
+separately stipulated relations. The two leaf symbols alone supply none
+of pairing, observation, execution, reference, permissions or records;
+the latter services and their common realization are declared below.
+
+For public $D\ge1$, fix the full original family and permitted targets
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+W_D=\{a:|a|\le D-1\},\qquad \mathcal P_D=\{Ra:a\in W_D\}.
+\tag{CCF.2}
+$$
+
+The one actual $t\in\mathcal F_D$ stays stationary. The original task
+exports before an arbitrary later $p\in\mathcal P_D$, permits at most
+one fresh Read selected before its reply and every count, and then must
+answer $r_{\rho^k(t)}(p)$ for every later authentic $k\ge0$ with no
+further Read. Here $\rho^k(t)$ is a prediction target. No actual
+substitution, graft, inverse, source copying, reset or physical clock is
+installed by (CCF.1).
+

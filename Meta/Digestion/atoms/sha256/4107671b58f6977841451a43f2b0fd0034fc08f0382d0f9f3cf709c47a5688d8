@@ -1,0 +1,29 @@
+**Definition 9.1 (Zero cylinders).** Keep the positive activity law,
+open path, site weights and operators of Chapter 7. Let $Z_T$ denote
+the activity partition function with the vertices in $T$ deleted,
+so $Z_\varnothing=Z$. For a nonempty set $T\subseteq[n]$, put
+
+$$
+A_T=\{s\in B_n:s_i=0\text{ for every }i\in T\},
+\qquad \alpha_T=p(A_T)=\frac{Z_T}{Z}.
+\tag{9.1}
+$$
+
+Deletion evaluates an event in the original law. It does not replace
+the generator by a chain on a smaller graph, rescale its weights, or
+remove a tangent coordinate. Write $N(i)$ for the actual open-path
+neighbors of $i$. Define
+
+$$
+\kappa_T=
+\frac{Z\displaystyle\sum_{i\in T}\omega_iq_iZ_{T\cup N(i)}}
+{Z_T(Z-Z_T)},
+\qquad
+\kappa_* = \min_{\varnothing\ne T\subseteq[n]}\kappa_T.
+\tag{9.2}
+$$
+
+The vacuum belongs to $A_T$, and a singleton occupation at any site
+in $T$ lies outside it. Positive activities therefore give
+$0<\alpha_T<1$.
+

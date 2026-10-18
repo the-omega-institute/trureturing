@@ -1,0 +1,25 @@
+**Corollary 72.2 (native word errors in those stages).** Let $U,W$ be
+EXACT isometries from the same incoming space into the same outgoing
+space, with $|z|=1$ and $\|W-zU\|_{\rm op}\le\epsilon$. After
+any common TP read/routing/discard operation, the complete HALF stage
+error is at most $\epsilon$, at all passive references. Such estimates
+may be inserted in (JRH.76), provided the common record and full-domain
+TP interfaces remain lawful.
+
+Proof. Tensoring $I_R$ does not change the operator norm. For any
+normalized $X\succeq0$, expand the output difference as
+
+$$
+((W-zU)\otimes I_R)X(W^\dagger\otimes I_R)
+ +(zU\otimes I_R)X((W-zU)^\dagger\otimes I_R).
+\tag{JRH.78}
+$$
+
+The trace norm product inequality and $\|W\|=\|U\|=1$ give
+norm at most $2\epsilon$; a common TP continuation contracts it.
+The HALF convention yields $\epsilon$. This is the standard isometry
+estimate also used in Native (VII.15), here applied to the complete
+record stages. A general approximate matrix need not have norm one
+and cannot be substituted into this bound without its norm factors.
+$\square$
+

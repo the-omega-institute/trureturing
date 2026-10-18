@@ -1,0 +1,10 @@
+**定义 5.1（全四值相容与保留阶段）。** 固定一个四叶族或其固定上下文嵌入族 $\mathcal F$。对实际历史 $\mathcal H$，定义
+
+$$
+\operatorname{Comp}(\mathcal H)
+=\{V\in\mathcal F:\forall (u,y)\text{ 出现在 }\mathcal H, r_V(u)=y\}.
+\tag{5.1}
+$$
+
+重复项依原时间顺序保留。证明中维护非空子集 $S\subseteq\operatorname{Comp}(\mathcal H)$，各步 $S$ 嵌套；不要求它等于整个相容族。阶段数是已经强制得到的、不同核心地址上的非 $\alpha$ 回复数，最高取三。阶段零保留全族；阶段一保留首阶段硬集；阶段二保留第二阶段指定的不同源对；阶段三以后选一个相容源作完整真实运行。
+

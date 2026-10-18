@@ -1,0 +1,42 @@
+**Definition 6.1 (Attribution and the remaining matching problem).**
+The fixed-measurement largest-eigenvalue rule, the $D_4$ configuration,
+finite measure-and-prepare construction and convexity are mature
+ingredients. The standard rank-one-Kraus/measure-and-prepare equivalence
+is [Horodecki–Shor–Ruskai, Theorem 4(A–D)](https://arxiv.org/html/quant-ph/0302031v2),
+whose CPTP version separately requires POVM normalization. Equations
+(2.10) and (3.2)–(3.5) supply that normalization and the complex
+channel identities directly. The real-sphere design statement alone
+would not establish them. The fixed-measurement payoff rule is used
+only inside the actual signed-event descent proof; its ensemble
+fidelity optimum is not a value of (1.3).
+
+The task-specific decoder direction and its certified segment, the
+thirteen-flag event comparison, the necessary splitting-event mass and
+active-set conclusions, and the particular twenty-seven-flag certificate
+are repo-derived consequences relative to the credited suppliers.
+This classification asserts no worldwide novelty or new Lean kernel
+verification. The general slack identity is credited to QJM; its
+evaluation at the comparison point supplies the new event restriction.
+
+The exact $\varepsilon_1$, globally optimal port and matching necessary
+certificate remain unresolved. Such a certificate must couple the same
+all-fifteen-event multipliers and all three TP multipliers with
+$B_y(a)\succeq0$ for every real $a$, complementary signed event
+eigenspaces, and kernels for its positive-weight independent product
+atoms. Conditions (4.8)–(4.9) are necessary, not sufficient. The
+response condition with one simple active signed event does not
+replace the common-multiplier problem when several events are active.
+No two-orbit, fourteen-flag, twenty-seven-flag, projector,
+preparation-equals-measurement, unital or self-adjoint support
+restriction on an unrestricted optimizer has been established.
+
+QRC's no-worse replacement retains independent factors and may change
+the channel. It does not contradict QPC's unchanged-channel real-Kraus
+obstruction. Whole-channel stationarity does not supply a rank-preserving
+definite-character Kraus decomposition; the actual menu is not
+$O(5)$ invariant. Neither PPT feasibility nor an unevaluated extension
+or moment problem is substituted for the exact product cone, and no
+low-dimensional PPT sufficiency is transferred to this $5\times5$
+problem. The original lower and every historical supplier bound retain
+their stated domains.
+

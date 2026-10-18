@@ -1,0 +1,24 @@
+**Definition 1.1 (services, costs and two depths).** Fix the acquired input,
+its entire source fiber $U\ne\varnothing$, and certified entry epoch $N$
+from [ARH, Assumption 1.3][ARH]. A service is deterministic, effective and
+terminates correctly on every $u\in U$. Its source operations are actual
+original-root $\mathsf{Read}(p)$ at arbitrary finite words, forward actual
+$\mathsf{ApplyRho}$, and absorbing $\mathsf{Halt}$. Local work uses the
+common initial state and acquired replies only. No chart, source identity,
+unknown-tree equality, membership, reset, cloning or reroot port is added.
+
+Write
+
+$$
+ c_A(u)=(q_A(u),d_A(u),\ell_A(u)),\qquad
+ \ell_A(u)=\sum_{\text{actual reads }p}|p|.
+\tag{SRF.1}
+$$
+
+Every call, including repetitions and absent replies, is counted. All three
+costs precede any supremum. Installation, address construction, memory,
+local work, acquisition, certification, physical time and energy are
+separate resources. Use $h_0$ for the common original pattern depth called
+$d$ in [ARH, Definitions 3.1 and 10.1][ARH]; use $d$ here for a bound on
+post-entry updates. These two parameters are unrelated.
+

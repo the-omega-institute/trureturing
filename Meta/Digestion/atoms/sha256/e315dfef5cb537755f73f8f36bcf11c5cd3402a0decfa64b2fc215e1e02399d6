@@ -1,0 +1,29 @@
+**Proposition 8.3 (unbounded hidden values with genuine refinement).**
+For $D[t]=\langle\beta,t\rangle$, a selected root row recovers
+$R_{\{R\}}(v)$ as $\langle\beta,\square_R\rangle$ with its
+singleton partition, while not determining $v$. The refinement
+occurs at positive native epochs as well as at invocation. For
+multiple selected holes, complete equalities and disequalities of
+all their right subtrees transfer exactly.
+
+Proof. A three-state automaton suffices: states $b,a,d$, leaf states
+$q_\beta=b,q_\alpha=d$, pair transition equal to $a$ exactly when
+its left state is $b$, and equal to $d$ otherwise; accept $a$.
+Only the literal leaf $\beta$ has state $b$, so this accepts
+exactly (NRF.36). Every $\langle\beta,t\rangle$ selects its
+root, for arbitrary finite $t$, giving the same root row. Theorem
+8.2 recovers its specified finer row. The two distinct captures
+$\langle\beta,\alpha\rangle$ and
+$\langle\beta,\beta\rangle$ already show lack of whole-tree
+uniqueness; both are also possible original sources at epoch zero.
+Moreover $(u,n)=(\beta,1)$ and $(\alpha,2)$ give the first capture.
+
+For example $v=\langle D[x],D[y]\rangle$ rejects at the root
+because its left child is a pair, and selects $L,R$. Its old holes
+are equal if and only if $x=y$. Its refined cut $\{LR,RR\}$ has
+exactly the same bit. Both signs are realized by actual finite
+$x,y$, while their sizes are unrestricted. A bare root row, in
+contrast, also admits $\alpha$ and cannot recover the asserted
+right-hole exterior. The extra information comes from the public
+selector's choice, not from a retained hidden state. $\square$
+

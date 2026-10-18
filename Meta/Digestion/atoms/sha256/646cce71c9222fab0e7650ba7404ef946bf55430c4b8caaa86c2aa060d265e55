@@ -1,0 +1,17 @@
+**推论 93.1（条件系数及继承的一致性）。** 在约定 88.1 的全部系数前提下，$0\le s\le s_{\rm c}$ 时，取 $r=r_\star$ 于 $s\le s_{\rm p}$，其余用 (RC.122) 的同一选定逆式。则
+
+$$
+\boxed{
+K(s)=\frac12\sum_{\epsilon=\pm1}
+\nu_\epsilon[a_\epsilon(r)+2b_\epsilon(r)]
+=\frac12\sum_{\epsilon=\pm1}\nu_\epsilon
+[h_{\epsilon,+}^T(\mathcal Y(r)-\epsilon G)h_{\epsilon,+}
+-\lambda(r)z_\epsilon].
+}
+\tag{RC.191}
+$$
+
+这里 $b_A=e^A-1$，$K(s)=\lim_{A\to\infty}b_A[\mathcal T(s)-\mathcal T_A(s)]$，保持 (RC.105) 的规范。$\mathcal Y,\lambda$ 仍由 (RC.130)–(RC.131) 明确给出，$a_\epsilon,b_\epsilon$ 仍由 (RC.134) 给出，故没有剩余取向优化。
+
+证明。(RC.187) 使 $|b_\epsilon|=-b_\epsilon$，代入 (RC.135) 即得。§82 的同一个三条正主射线矩修复和两个饱和物理谱标签现在统一选 $h_{+,+},h_{-,+}$，无需更换源、失败 effect 或容量。原全类下界与同族上界继续给出 (RC.136) 的一致 $O(b_A^{-2})$ 余项；接触邻域仍按 §84.2 固定第四条射线及其静态权重，只修复原三条正射线，故 (RC.155)–(RC.157) 的连续拼接和联合首阶极限保持其原条件。这里没有重新从符号估计推出那些全类系数桥。$\square$
+

@@ -1,0 +1,25 @@
+**Theorem 2.2 (prescribed non-atomic ranks, deep leaves and all negatives together).** Let $X=\{x_1,\ldots,x_s\}$ be finite. After any chosen variables have been replaced by fixed finite ground trees and those trees have been literally expanded, let $\mathcal L$ be a finite list of syntactically unequal pairs of free $\alpha/\beta$ pair terms over $X$. For arbitrary prescribed $r_i\in\mathbb N_0$ and $L\in\mathbb N_0$, there is one tuple of finite non-atomic trees $z_i$ such that
+
+$$
+\nu(z_i)=r_i,\qquad
+\mu(z_i)>L,\qquad
+A[z]\ne B[z]\quad((A,B)\in\mathcal L),
+\tag{LRD.6}
+$$
+
+where $\mu$ is minimum native leaf depth. The tuple can moreover be chosen pairwise distinct. Repeated names use one value throughout. Pairwise distinctness is a permitted construction, not an extra assumption on distinct names in (LRD.5).
+
+**Proof.** We use the equal-native-leaf-count reflection mechanism of the existing private `compound_mass_ne` and `bounded_eval_injective`, not a new general disunification theorem. The additional choice of their equal-mass representatives is explicit.
+
+For $s=0$, every side is already ground and the empty tuple works. Otherwise let $t$ bound the syntactic leaf counts of all listed sides, with each variable occurrence counted as one leaf. Choose $h_0>L$ with $h_0\ge1$ and $2^{h_0}\ge s$. Let $\ell_i$ be the native leaf count of $T_{r_i}$. Choose a positive common multiple $M$ of all $\ell_i$, sufficiently large that
+
+$$
+M>\max(t,1),\qquad M/\ell_i>2^{h_0}\quad(1\le i\le s).
+$$
+
+Start from a complete height-$h_0$ all-$\alpha$ tree. For the $i$th seed replace its $i$th bottom leaf by an all-$\alpha$ comb with $M/\ell_i-2^{h_0}+1$ leaves. This number is at least two. The resulting $p_i$ has exactly $M/\ell_i$ leaves and no leaf above depth $h_0$. Set $z_i=\rho^{r_i}p_i$.
+
+Every nonempty all-$\alpha$ tree is primitive: every $\rho$ image has a $\beta$ leaf. Thus $\nu(z_i)=r_i$ by primitive-ray uniqueness. No $p_i$ is the one-leaf atomic endpoint $\alpha$, so $z_i$ is non-atomic. Substitution never moves an old leaf upward and therefore $\mu(z_i)\ge h_0>L$. Since $\rho^{r_i}$ replaces each $\alpha$ leaf by $T_{r_i}$, each $z_i$ has exactly $M$ native leaves. Unequal prescribed ranks distinguish values; at equal ranks the seed leaf counts agree, the extended bottom positions distinguish the seeds, and injectivity of $\rho^{r_i}$ distinguishes the values.
+
+For completeness, the reused reflection argument applies simultaneously to this tuple. A term with $a$ variable occurrences and $b$ constant occurrences has evaluated leaf count $Ma+b$. A ground term in the list or one of its subterms has fewer than $M$ leaves. A compound term containing variables has evaluated count greater than $M$: if $a\ge2$ it has at least $2M$, and if $a=1$ its other syntactic leaf contributes $b\ge1$. Hence a variable image of count $M$ cannot equal a constant or a compound side. Distinct variable names have distinct images. A constant cannot equal a pair; two pairs can be equal only if their ordered children are equal. Induction on the two bounded terms consequently makes evaluated equality imply syntactic equality. Every listed negative has unequal syntax and is preserved by this same assignment. This includes repeated occurrences and negatives involving expanded fixed ground pieces. The finite construction is effective, and proves all of (LRD.6) at once. $\square$
+

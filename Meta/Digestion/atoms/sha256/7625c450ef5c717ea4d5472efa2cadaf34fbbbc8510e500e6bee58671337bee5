@@ -1,0 +1,18 @@
+**Definition 2.2 (the source probe).** For an integer $r\ge1$ and $w\in\{0,1\}^r$, supply gate01 and the original TagRead frame
+
+$$
+A_r(w)=010\,U(r+1)\,w0.
+$$
+
+The payload has length $r+1$. Every such binary address is canonical, including addresses whose eventual response is absent. CAP Definition 4.6 preallocates and zeros the payload interval, positions its actual payload and length heads, and then repeats
+
+$$
+\operatorname{RD}(\text{length}),\quad
+\operatorname{IN}(5),\quad
+\operatorname{WR}(13,5),\quad
+\operatorname{MR}(\text{payload}),\quad
+\operatorname{MR}(\text{length}).
+$$
+
+There is no branch on a payload value. The length-test latch differs from input latch5. The cut used below is after $r$ complete iterations and the next RD and IN(0), immediately before its matching WR(13,5). The first $r$ payload cells contain $w$; the pending input bit is the common 0. The current frame is not yet sealed or delivered to $A$.
+

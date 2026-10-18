@@ -1,0 +1,40 @@
+**定义 19.2（Explicit deadline arrays）。** A row $e_t$ prescribes charges on $P\cap W_t$, and is extended by zero on $P\setminus W_t$. Call the array $(e_1,\ldots,e_Q)$ literal-admissible when
+
+$$
+e_1(m)=0,
+\qquad
+\bigoplus_{j\in W_t}e_t(j)=0\quad(1\le t\le Q)\ \text{if }g=1.
+\tag{19.6}
+$$
+
+When $g>1$ there is no parity restriction on the actual vertices. Indeed $tm+1\pmod T$ is a nonactual vertex of each window: assign its charge to compensate the parity of the prescribed actual charges and assign zero to other nonactual vertices. Formula (1.5) then gives a whole literal word realizing each row. For $g=1$ the row already has even full-path parity and (1.5) applies directly. In either case (19.6) makes the first bit of block one zero. This is actual path inversion, not a linear span of unavailable blocks.
+
+For an admissible array define, using only its zero-difference continuation,
+
+$$
+U_1=Z,\qquad A_t=\{j\in U_t:e_t(j)=1\},\qquad
+U_{t+1}=U_t\setminus A_t,
+$$
+$$
+X_t=A_t\setminus\{h_t\}\quad(t<Q),\qquad X_Q=A_Q.
+\tag{19.7}
+$$
+
+Say that the array has the retirement property if
+
+$$
+|\lambda[X_t]|\le1\quad(1\le t\le Q),\qquad
+|\lambda[U_{Q+1}]|\le1.
+\tag{19.8}
+$$
+
+Empty sets satisfy these inequalities. If $t<Q$, $h_t\in A_t$, and $X_t$ is nonempty with its unique label $L_t$, call $t$ a repair obligation exactly when $\lambda(h_t)\ne L_t$. The common-stream condition is
+
+$$
+e_Q(0)=1,
+\qquad e_{t+1}(h_t)=1\quad\text{at every repair obligation }t<Q.
+\tag{19.9}
+$$
+
+Labels may repeat arbitrarily, including at the $h_t$. Neither (19.7) nor (19.8) chooses a baseline in advance or presupposes an actual frozen phase. These conditions are finite mathematical existence tests on the actual charge rows. With a supplied finite table and decidable equality of its labels, the finitely many binary rows can be enumerated and the displayed comparisons performed. Without table access and label-equality access, no effective algorithm on an arbitrary abstract $Y$ is asserted. Such offline enumeration is not an emitted-block fee.
+

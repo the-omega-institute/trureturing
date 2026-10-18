@@ -1,0 +1,65 @@
+**Theorem 67.2 (Maximal lawful proportional containment, including its positive endpoint).** For $0<c\le1$, (67.4) is lawfully feasible if and only if $\kappa\ge c$. The set of feasible coefficients in $[0,1]$ is exactly $[0,\kappa]$, and its largest coefficient is attained. When $\kappa=0$ this last assertion is the vacuous zero contract, not a positive containment or a TV-cap conclusion. The criterion is target-only: its inputs are the original measures, their measurable structure and the occupied actual cylinders.
+
+**Proof.** Necessity uses the whole-event finite-record submeasure of Lemma 45.3. If preparation has laws $\lambda_y$, its measure $\rho_{x,m}$ is dominated by every $\lambda_y$ with $y\in C_m(x)$ and has mass increasing to one. Equation (67.4) therefore gives $c\rho_{x,m}\le\mu_y$ for all those labels simultaneously. Greatestness in (67.2) yields
+
+$$
+c\rho_{x,m}\le\ell_{C_m(x)},\qquad
+c\,\mathsf P(E_m(x))\le a_{C_m(x)}.
+\tag{67.5}
+$$
+
+Taking the increasing limit of masses gives $A(x)\ge c$ at every actual $x$, and hence $\kappa\ge c$.
+
+For sufficiency fix $0<c\le\kappa$. Give the root a fictitious parent with measure and mass zero. For every occupied node $C$, with parent $C^-$, define
+
+$$
+\begin{aligned}
+\Delta_C&=\ell_C-\ell_{C^-},&
+d_C&=a_C-a_{C^-}\ge0,\\
+q_C&=\min(c,a_C)-\min(c,a_{C^-}),&
+t_C&=\begin{cases}q_C/d_C,&d_C>0,\\0,&d_C=0.\end{cases}
+\end{aligned}
+\tag{67.6}
+$$
+
+For the root use $\Delta_X=\ell_X$ and $d_X=a_X$. The map $a\mapsto\min(c,a)$ is increasing and has slope at most one, so $0\le q_C\le d_C$ and $0\le t_C\le1$. A zero-mass positive $\Delta_C$ is the zero measure. Along the finite ancestor chain, including the root, put
+
+$$
+H_C=\frac1c\sum_{D\preceq C}t_D\Delta_D.
+\tag{67.7}
+$$
+
+These are positive finite measures increasing along branches, and telescoping gives
+
+$$
+H_C(\Theta)=\frac{\min(c,a_C)}c,\qquad
+cH_C\le\sum_{D\preceq C}\Delta_D=\ell_C.
+\tag{67.8}
+$$
+
+For an actual signature $q=[x]$, the increasing measures $H_{C_m(x)}$ have masses tending to one, because $a_{C_m(x)}\uparrow A(x)\ge c$. Their limit defines a probability $\lambda_q$ on the entire original carrier. For example its density is the monotone limit of the densities in (67.7), and monotone convergence proves countable additivity and integral one. Every $y$ with this signature lies in every one of these cylinders, so (67.8) gives $c\lambda_q\le\mu_y$. This proves simultaneous domination for every equal-signature label; it requires no assumption that the original targets factor through signatures.
+
+The following common-seed realization identifies this limiting law with actual finite execution. For each of the countably many nodes with $d_C>0$, take an original-tape coordinate $W_C$ of normalized law $\Delta_C/d_C$. At $d_C=0$ take the point-evaluation law at one fixed tape $\theta_0$; measurable singleton sets are unnecessary for this probability measure. Include these coordinates and an independent uniform $U\in(0,1)$ under one product probability law. Let
+
+$$
+B_C=\frac{\min(c,a_C)}c.
+\tag{67.9}
+$$
+
+At a reached node $C$, the common deterministic rule hands over $W_C$ when $U<B_C$; otherwise it queries the next actual prime and follows its answer. Reaching a nonroot node entails $U\ge B_{C^-}$, since the thresholds are increasing along its branch. For $d_C>0$ and any $F\in\mathcal F$, its unconditional output submeasure is
+
+$$
+\mathsf P\{B_{C^-}\le U<B_C,\ W_C\in F\}
+=\frac{q_C}{c}\frac{\Delta_C(F)}{d_C}
+=\frac{t_C\Delta_C(F)}c.
+\tag{67.10}
+$$
+
+The root has lower threshold zero. Zero increments contribute no probability and require no normalization by zero. Summing along the actual branch through depth $m$ gives precisely $H_{C_m(x)}$. At every fixed actual source $B_{C_m(x)}\uparrow1$. Every $U<1$ consequently crosses a threshold at a finite depth, even if $a_{C_m(x)}\uparrow c$ without ever reaching $c$. Thus actual preparation is finite almost surely at every source, and its complete output measure is $\lambda_{[x]}$.
+
+Finite-record events are measurable interval events in $U$, with measurable coordinate events when output is specified. For each original $F$, the handoff preimage is the countable union of the events in (67.10), hence measurable. The probability product has only countably many coordinate probability spaces and uses their product sigma algebra. The rule reads only the acquired prefix; the original consumer receives only the original tape and runs on the same static source. No conditioning, discarded failures, source selection or reset is involved.
+
+There is also an explicit exhaustion correspondence. For $y\in C$, its limiting $\lambda_{[y]}$ includes $H_C$, so $H_C$ is a common submeasure of all these selected laws. Along each actual branch its mass increases to one by (67.8). Their greatest common submeasures therefore exhaust one, exactly the hypothesis of Theorem 46.4. This is an order statement, stronger than metric continuity alone.
+
+For $c=0$, hand $\theta_0$ over in one transition with a unit seed. Then $0\lambda_y=0\le\mu_y$ at every label without positive division. Necessity for positive coefficients and the construction at every $0<c\le\kappa$ prove the asserted interval and its endpoint, including the separate case $\kappa=0$. The specialization $c=1$ is the already published exact-acquisition criterion 46.4, reused rather than a new exactness theorem. $\square$
+

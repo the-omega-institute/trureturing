@@ -1,0 +1,45 @@
+**Proposition 247.1 (An affine bound preserved by residual extension).**
+Write $E(a,c)=D_3(a,c)-3c$. Every feasible core with at most six active
+coordinates satisfies
+
+$$
+E(a,c)\le\tfrac34(1-a_2).
+\tag{247.1}
+$$
+
+The family of §187 has the stronger coefficient $2/3$.
+Any finite sequence of the residual extensions of §173 preserves each
+of these bounds. At a fixed prefix of length $L$, convex mixtures of
+such extended data satisfy
+
+$$
+\sum_{n=3}^L a_n-(L+1)c\le\tfrac34(1-a_2).
+\tag{247.2}
+$$
+
+Proof. If the active length is $k\in\{3,4,5,6\}$, pad inactive finite
+amplitudes to $c$ through coordinate six. The ignored-bit extension
+retains every cap row, and §117.2 at six gives
+$3a_2+4\sum_{n=3}^6a_n-3\le28c$, equivalent to (247.1).
+For length below three, $E\le0$. Section 187.2 gives
+$E=r/10$, $1-a_2=3r/20$, proving its coefficient $2/3$, including
+$r=0$. Section 174.2 multiplies $E$ and $1-a_2$ by the same
+nonnegative core coefficient under each residual extension. This proves
+preservation by finite iteration. For actual prefix amplitudes,
+$\sum_{n=3}^L a_n-(L+1)c\le D_3(a,c)-3c$; inactive entries
+can only decrease the left side. The resulting inequality is affine
+in prefix amplitudes and cap, so convex mixtures preserve it. ∎
+
+The center (246.8), at head $23/25$ and cap $49/100$, has
+$E=2/25$, whereas $3(1-a_2)/4=3/40$. Its excess above (247.2) is
+$1/200$. Thus it is outside this precisely stated residual and convex
+closure, including the entire old five- and six-active families of
+§§148 and 161, and the full fixed-core family of §187.
+For the direct six-to-seven recognition at this center, §174.1 gives
+$g_7=21/100$, $W=14/25$, $E_{\rm ext}=7/20$, $r=11/25$,
+$e_0=7/22$, and inverse core
+$(A_2,A_3,A_4,A_5,A_6)=(17/22,17/22,29/44,6/11,19/44)$.
+Section 117.2 requires core error $197/616>7/22=196/616$.
+This excludes that direct inverse core, without excluding unrestricted
+stopped feasibility, which Theorem 246.2 supplies.
+

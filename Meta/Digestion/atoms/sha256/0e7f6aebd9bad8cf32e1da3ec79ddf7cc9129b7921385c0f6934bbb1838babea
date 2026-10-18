@@ -1,0 +1,65 @@
+**Theorem 5.2 (complete acceptance boundary, with all grouped supports).**
+For finite paired interfaces and arbitrary nonnegative weights,
+
+$$
+\mathcal U_{\prod_{j=1}^m I_j}(\bigotimes_jw_j)
+       =\prod_{j=1}^m\mathcal U_{I_j}(w_j).
+\tag{OCB.36}
+$$
+
+In particular
+
+$$
+\mathcal U_{d+h}(w^\uparrow)=\mathcal U_d(w)^{2^h},\qquad
+|\mathcal U_d(\mu)-\mathcal U_d(\nu)|
+       \le\operatorname{TV}(\mu,\nu).
+\tag{OCB.37}
+$$
+
+For every rational input, finite acceptance by precisely $V_{\rm own}$
+is equivalent to $C\ge\mathcal U_d(\mu)$. The predicate is total
+computable and sound at every length for all complete native templates.
+
+Proof. Take a correlated product test support $P$, and write
+$P_j=\pi_jP$. Self-decodability of a designated pair in constituent
+$j$ is equivalent to its self-decodability on $P_j$. Let
+$v_j(x_j)=(r_q(x_j))_{q\in E(P_j)}$. The tuple of these vectors
+separates $P$. Therefore
+
+$$
+\sum_{x\in P}\prod_jw_j(x_j)
+\le\prod_j\left[
+ \sum_y\max_{u\in P_j:v_j(u)=y}w_j(u)\right].
+\tag{OCB.38}
+$$
+
+Indeed at most one row of $P$ lies over any tuple of $v_j$ cells;
+its weight is at most the product of those cell maxima, and summing
+over all cell tuples proves the inequality. Every $P_j$ is
+range-feasible. The representative selection in Theorem 4.4 turns
+each bracket into the mass of a reply-basis test subset, bounded by
+$\mathcal U_{I_j}(w_j)$. This proves one direction of (OCB.36).
+The product of maximizing constituent test supports is itself a test
+support, with product mass, proving the other direction. This proof
+also covers zero weights; it imposes no product structure on the
+competing $P$.
+
+On an actual scaffold, the paired targets and replies above the cut
+are constants, while those below it are exactly the constituent paired
+ports, in both directions by their fixed public prefixes. Zero-weight
+states can be removed because $\mathscr R$ is hereditary. Thus the
+product identity gives the scaffold equality in (OCB.37). The stability
+bound follows since $\mathcal U$ is a maximum of subset probability
+masses and every such mass changes by at most total variation.
+
+Induct on any finite derivation. Ordinary leaves give $C\ge\mathcal U$.
+By (OCB.36) every grouped leaf gives the same inequality. By the
+scaffold identity and the inductive premise, a scaffold step does too.
+The stability inequality proves it for a stability step. Conversely,
+when $C\ge\mathcal U$, enumerate all finitely many test supports
+and their rational subset masses to obtain an ordinary exhaustive leaf.
+All these checks terminate and have finite rational comparisons.
+Theorem 4.3 and the credited native scaffold and stability facts prove
+all-size soundness. This characterizes exactly the stated rule class,
+not $V_{\rm rec}$ or its range extension. $\square$
+

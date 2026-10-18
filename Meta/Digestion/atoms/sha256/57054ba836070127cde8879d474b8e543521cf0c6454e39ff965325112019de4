@@ -1,0 +1,20 @@
+**Definition 2.4 (Complete configurations and six obligations).** Fix one $0<\alpha<1/2$, independent of $s$. At each selected known common $q$, one observer and one source-independent initialization are used under both possible labels. The complete persistent configuration set includes every initialization and control state, register, phase, retained random consequence, stored seed and both internally emitted decision labels. Fresh independent coins may be marginalized into transition rows. Every retained part of randomness counts.
+
+Immutable source-independent transition probabilities may be arbitrary real functions of known $q,H_c,\alpha$ and the finite budget. Retuning may be discontinuous, and positive entries may be arbitrarily small. Immutable description and its precision are separate resources. There is no hidden mutable clock, read count, program counter, address, archive, seed position or work tape. No extra history, source copy, reset, skipped bit, free gap, hidden age, probability response or label advice is available. The cost tally is not an input.
+
+An active action reads the next actual bit or stops and emits a label $D\in\{0,1\}$. If exactly $X_0,\ldots,X_{T-1}$ are read, their paid count is $T$. Initial stopping costs zero. Every read zero, tick, initial wait and terminal partial interval is charged. The output is the internally emitted label; stopping time is not externally decoded into a label.
+
+Write $\mathfrak A_M(q,\alpha)$ for observers with at most the finite integer $M\ge2$ complete configurations satisfying
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,\qquad
+\mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,\qquad
+\mathbb E_{i,q}T<\infty\quad(i=0,1).
+\end{gathered}
+\tag{2.9}
+$$
+
+These are precisely G, Definition 3.1. A single unchanged parameter-free machine or guarantees over two separately varying nuisance parameters would be different requirements.
+

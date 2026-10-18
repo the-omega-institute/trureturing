@@ -1,0 +1,152 @@
+**Theorem 75.3 (three-distinct selected channel).** For \(|b|<1\), the
+common-flat rays whose upper channel has three distinct entries and
+nonzero mean are exactly the reconstructions (75.16) from the system
+(75.13)–(75.15). Every root order is retained.
+
+**Proof and definition of the system.** Normalize \(X=3t>0\) by the
+unique common phase. Then \(0<t<1\). Put
+\(\xi=x_0x_1x_2\) and \(u=x-t1\). The vectors \(1,u,\bar u\) are
+linearly independent: multiplying their evaluation matrix by the three
+nonzero \(x_j\) reduces its determinant to a nonzero Vandermonde factor.
+Consequently there are unique complex \(g,c,d\) with
+\[
+ y=gt1+cu+d\bar u,\qquad g=Y/X.
+\]
+The elementary symmetric identities of the three unit roots give
+\[
+ u^2=tu+\xi\bar u+2t(t-\xi)1,\qquad
+ |u|^2=(1-t^2)1-t(u+\bar u).                        \tag{75.8}
+\]
+For a channel \(kt1+Cu+D\bar u\), define
+\[
+ \mathcal F(k,C,D)=\bar kC+k\bar D-|C|^2-|D|^2+C\bar D.
+\]
+Its squared-modulus \(u\)-coefficient and constant coefficient are
+\[
+ t\mathcal F(k,C,D)+\bar\xi\bar CD,\qquad
+ |k|^2t^2+(|C|^2+|D|^2)(1-t^2)
+                         +4t\operatorname{Re}[C\bar D(t-\xi)].  \tag{75.9}
+\]
+Independence of \(1,u,\bar u\) makes vanishing of the first expression
+necessary and sufficient for constant moduli.
+
+Set
+\[
+\begin{gathered}
+ U=A+Bg,\qquad V=\bar B-\bar Ag,\\
+ Y_c=\mathcal F(g,c,d),\quad
+ T_c=\mathcal F(U,P+Qc,Qd),\quad
+ L_c=\mathcal F(V,\bar Q-\bar Pc,-\bar Pd),\quad e=\bar\xi/t.
+\end{gathered}
+\]
+The input and two output correlations are
+\[
+\begin{aligned}
+ Y_c+e\bar cd&=0,\\
+ T_c+e(|Q|^2\bar c+Q\bar P)d&=0,\\
+ L_c+e(|P|^2\bar c-Q\bar P)d&=0.                    \tag{75.10}
+\end{aligned}
+\]
+Using \(|P|^2+|Q|^2=6\), their sum-difference has the exact form
+\[
+\begin{gathered}
+ T_c+L_c-6Y_c=-3(\alpha+\beta c+\bar\beta\bar d),\\
+ \alpha=3-ib-h(b+i)\bar g,\qquad
+ \beta=(3+ib)\bar g+h(b-i).                         \tag{75.11}
+\end{gathered}
+\]
+If \(\beta=0\), then \(\alpha=12/(3+ib)\ne0\). Every solution
+therefore has \(\beta\ne0\) and
+\[
+ c=-\alpha/\beta-(\bar\beta/\beta)\bar d.           \tag{75.12}
+\]
+Neither \(c\) nor \(d\) can vanish. Indeed, if \(d=0,c\ne0\), the map
+\(y=(g-c)t+cx\) sends three distinct points of the unit circle to the
+unit circle. Two distinct circles have at most two intersection points,
+so \(g=c\), \(|c|=1\). But the real part of \(\alpha+\beta g\) is six.
+If \(c=0,d\ne0\), apply the same argument to \(\bar x\): it gives
+\(g=d\), \(|d|=1\), whereas
+\(\alpha+\bar\beta\bar g=6-2ib\ne0\).
+If \(c=d=0\), the lower channel is a nonzero constant \(y_0\).
+The output channels are \(Px+(3t+By_0)1\) and
+\(\bar Qx+(3t-\bar Ay_0)1\). Since \(P,Q\ne0\), the same circle
+argument forces both centers to vanish, contrary to
+\((B+\bar A)y_0=(3-ib)y_0\ne0\). Thus all these strata are excluded
+by original flatness, rather than by an additional chart assumption.
+
+The four real unknowns are the real and imaginary parts of \(g,d\),
+with \(c\) given by (75.12). Put
+\[
+ A_c=|c|^2+|d|^2,\quad B_c=|cd|^2,\quad
+ A_t=|P+Qc|^2+|Qd|^2,\quad B_t=(P+Qc)\bar Q\bar d.
+\]
+The system consists of one complex equation and two real equations:
+\[
+\begin{aligned}
+ E&=\bar c(T_c-|Q|^2Y_c)-Q\bar P Y_c=0,\\
+ N_y&=(A_c-1)|Y_c|^2
+       +B_c[|g|^2-A_c+4\operatorname{Re}(c\bar d+Y_c)]=0,\\
+ N_t&=(A_t-6)|Y_c|^2
+       +B_c[|U|^2-A_t+4\operatorname{Re}(B_t+T_c)]=0.          \tag{75.13}
+\end{aligned}
+\]
+Its nonzero-denominator and real inequalities are
+\[
+ \beta cdY_c\ne0,\qquad q=\frac{B_c}{|Y_c|^2},\quad 0<q<1,\qquad
+ e=-\frac{Y_c}{\bar cd},                             \tag{75.14}
+\]
+\[
+ \mathscr D=q^2(3-8\operatorname{Re}e)+6q-1<0.        \tag{75.15}
+\]
+For a fixed parameter these are rational equations and inequalities in
+four real variables. Jointly in \(b,h\), adjoin
+\((1+b^2)h^2=3-b^2\), \(h>0\). Clearing positive squared-modulus
+denominators gives an equivalent real semialgebraic system.
+
+For reconstruction put \(t=\sqrt q>0\), \(\xi=t\bar e\). By definition
+of \(q,e\), \(|\xi|=1\). Choose the three roots, in any order, of
+\[
+ z^3-3tz^2+3t\xi z-\xi=0,\qquad
+ x=(x_0,x_1,x_2),\quad u=x-t1,\quad y=gt1+cu+d\bar u.        \tag{75.16}
+\]
+The discriminant divided by \(\xi^2\) is
+\[
+ 27(3t^4+6t^2-1-8t^3\operatorname{Re}\xi)=27\mathscr D.
+\]
+Its negative sign is exactly the condition that all three roots are
+unit and distinct. To see the equivalence, the cubic is self-inversive,
+so its multiset of roots is invariant under \(z\mapsto1/\bar z\)
+and contains at least one unit root. If the other two are off the circle,
+they are \(re^{i\phi},r^{-1}e^{i\phi}\), \(r>0,r\ne1\); the product
+formula for the discriminant makes its quotient by \(\xi^2\) strictly
+positive. For three distinct unit roots, writing each difference as
+\(2i\) times a sine makes the quotient strictly negative. Discriminant
+zero is precisely the repeated-root boundary.
+
+Definition of \(e\) imposes the first equation of (75.10). Since
+\(c,d\ne0\), the complex equation in (75.13) reconstructs the second;
+(75.11) reconstructs the third. For a channel with zero correlation,
+(75.9) rewrites its constant squared norm as
+\[
+ |C|^2+|D|^2+t^2[|k|^2-|C|^2-|D|^2
+                    +4\operatorname{Re}(C\bar D+\mathcal F(k,C,D))].
+\]
+Thus \(N_y=0\) gives every lower input modulus one, and \(N_t=0\)
+gives every upper output squared modulus six. The lower output moduli
+are constant by their correlation, so original unitarity \(M^*M=6I\)
+forces their common squared modulus to be six. This proves sufficiency.
+Conversely the original equations gave every displayed relation; in
+particular \(Y_c=-e\bar cd\ne0\). Necessity follows as well.
+
+The six root orders are exactly the synchronous \(S_3\) orbit. An
+optional centered coordinate \(Z=\beta c+\alpha/2\), \(A_0=\alpha/2\)
+gives the invertible change
+\[
+ c=\frac{Z-A_0}{\beta},\quad
+ d=-\frac{\bar Z+\bar A_0}{\beta},\quad
+ |c|^2+|d|^2=\frac{2(|Z|^2+|A_0|^2)}{|\beta|^2},\quad
+ c\bar d=\frac{A_0^2-Z^2}{|\beta|^2}.               \tag{75.17}
+\]
+No covariance condition on the candidate ray or restriction on root
+order was used. \(\square\)
+

@@ -1,0 +1,19 @@
+**References 11.2 (formal-source inspection).** The native correspondence
+is $\alpha=\mathtt{FreeMagma.of\ true}$,
+$\beta=\mathtt{FreeMagma.of\ false}$, pairing $\mathtt{FreeMagma.mul}$,
+and $\rho=\mathtt{substitution}$. Public declarations and the relevant
+private/local proofs in the following source families provide existing
+interfaces. Reading them is not a fresh compile of this volume.
+
+| Source family | Exact interface and limit |
+| --- | --- |
+| [SourceTransportCentralizer][D5-CENTRAL] | `source_transport_centralizer`, with its local injectivity, classification and orbit arguments, supplies native injectivity and atomic stability. It states no arbitrary projection-image decision. |
+| [NativeDepthPatterns][D5-DEPTH] | `depthEquiv`, private `fill_decompose`/`decompose_fill`, and `original_prefix_locality` give all-source original prefix decomposition and physical locality. `History` is `List (Nat × Address × Reply)`. |
+| [NativeGroundSeparation][D5-GROUND] | `simultaneous_ground_separation` and private `compound_mass_ne`/`bounded_eval_injective` use equal-mass native markers. Lemma 3.1 uses NSF's one-constant shape variant with arbitrarily growing mass, not an unproved erasure of Boolean marker labels. |
+| [NativeCutFibers][D5-CUT] | `rowFiberEquiv`, private `recover_fill` and `fill_injective` retain the entire old row and all class inequalities. |
+| [NativeHistoryCells][D5-HISTORY] | `cell_feasibility_exact`, `historyCellEquiv` and private `syntax_iff_ground` cover literal histories and all old-class constraints, not arbitrary acquired signed subtree comparisons. |
+| [NativeSymbolicRecutting][D5-RECUT] | `symbolic_recut_exact`, private `termAt_fill` and `exterior_commute` preserve reached order, concrete exterior and full equality partition beyond the supplied original cut depth. |
+| [DelayedOriginalReadout][D5-READ] | `original_decoder_correct`, `original_decoder_service` and private `present_label_decode` identify the actual chronological read list and known-reached decoder. |
+| [DelayedTemplateCertificate][D5-TEMPLATE] | `delayed_template_certificate`, `delayed_template_resources` and `delayed_template_service` give paid equality certificates for a supplied finite template. They do not by themselves classify all sources in an arbitrary signed fiber. |
+| [Pinned mathlib Algebra/Free.lean][FREE] | FreeMagma's free constructors, decidable equality, lift and homomorphism extensionality. Shape unification is used only after native smart-pairing branches have been separated. |
+

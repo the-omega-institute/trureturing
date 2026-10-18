@@ -1,0 +1,10 @@
+**定义 6.1（局部径向展开）。** 给定 $`d\ge1`$、$`\varepsilon\gt0`$，在标准欧氏 $`\mathbb{ℝ}^d`$ 中取点 $`p`$ 和开球 $`U=B_\varepsilon(p)`$。定义
+
+```math
+\widetilde U_p=S^{d-1}\times[0,\varepsilon),\qquad
+S^{d-1}=\{n\in\mathbb{ℝ}^d:\|n\|=1\},\qquad
+\beta(n,R)=p+Rn.
+```
+
+$`R`$ 是欧氏半径，$`n`$ 是单位方向。不作 $`n\sim-n`$ 的对径识别，因此保留的是有向射线。此模型称为实定向吹起，其零半径边界称异常边界或前面；$`\beta`$ 是吹降映射。
+

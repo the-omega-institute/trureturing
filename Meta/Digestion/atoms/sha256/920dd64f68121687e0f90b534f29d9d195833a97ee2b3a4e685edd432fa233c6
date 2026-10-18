@@ -1,0 +1,44 @@
+**Proposition 140.3 (One shared seed realizes the complete models).**
+The models (140.5) describe precisely the whole finite preselected and
+increasing first-zero-stop classes at hard count two.
+
+**Proof.** Static repeated queries in a finite $N$ schedule can be
+replaced by one query and its repeated static reply; a reversed distinct
+pair can be sorted with its table permuted. This represents its law,
+without allowing an uncounted observation in the original execution.
+For a seeded rule integrate each cell's predetermined output indicator
+over the seed event choosing $S$. The resulting $T_{S,c,r}$ have common
+mass $w_S$ in all cells, and the schedule events have total mass one.
+An $O$ rule uses the same output on both patterns in its first-zero cell.
+
+Conversely, for each $w_S>0$ put $\pi_{S,c}(r)=T_{S,c,r}/w_S$.
+For every deterministic table $f:\operatorname{cells}_C(S)\to J_L$ put
+
+$$
+q_{S,f}=w_S\prod_{c\in\operatorname{cells}_C(S)}\pi_{S,c}(f(c)).
+\tag{140.7}
+$$
+
+These nonnegative masses sum over tables to $w_S$ and over schedules to
+one. Their marginal sum over $f(c)=r$ is $T_{S,c,r}$.
+One partition of $U\in[0,1)$ into half-open intervals of masses
+$q_{S,f}$ fixes the schedule and its entire table before replies.
+Zero-mass schedules are omitted. The product is a chosen coupling of
+counterfactual cells, not independent source-dependent random choices.
+This supplies all word-law coordinates from one common seed.
+For rational allocations all $q_{S,f}$ are rational.
+Queries to $S$ and output of its table label are finite and measurable;
+in $O$ execution stops at its first queried zero.
+All allowed terminal labels and schedules remain in the model. $\square$
+
+For real-parameter continuity a different interval realization using
+absolute terminal masses is given in Section 147. The product construction
+is especially useful for the rational normal form.
+The already supplied [Theorem 109.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#109-an-exact-coefficient-criterion-with-one-common-probability-budget)
+identifies $\mathscr O_L=\mathscr C_L\subseteq\mathscr N_L$ by its
+coordinatewise coefficient criterion. The already supplied
+[Theorem 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+transports both full original classes to these finite feasibility slices
+at the exact closed cap, including arbitrary original addresses,
+repetitions and full-carrier outputs. These suppliers are reused.
+

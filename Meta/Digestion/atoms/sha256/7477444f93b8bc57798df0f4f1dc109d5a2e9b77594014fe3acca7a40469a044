@@ -1,0 +1,50 @@
+**Definition 7.1 (the two projections of one chosen cover).** Fix any
+one complete cover $\mathcal C=(C_t)_{t=0}^{18}$ of Definition 1.2
+with $q=19$ and $\lambda\in\{0,1\}$. All projection statistics
+below refer to these same nineteen chosen classes. Set
+
+$$
+\begin{aligned}
+S_t^a&=\{a:\exists b,\ (a,b)\in C_t\},&
+S_t^b&=\{b:\exists a,\ (a,b)\in C_t\},\\
+\gamma_t^a&=\max S_t^a-\min S_t^a-9,&
+\gamma_t^b&=\max S_t^b-\min S_t^b-9,\\
+\Gamma_a&=\sum_{t=0}^{18}\gamma_t^a,&
+\Gamma_b&=\sum_{t=0}^{18}\gamma_t^b,\\
+N_i&=\#\{t:i\in S_t^a\},&
+M_i&=\#\{t:i\in S_t^b\},\\
+\eta_a&=19-N_9,&\eta_b&=19-M_9.
+\end{aligned}
+\tag{NAGC.7.1}
+$$
+
+Here $0\le i\le18$. [NARC, Theorem 13.3][NARC] supplies nine
+strict increases of $a$ and nine strict decreases of $b$, with no
+returns in either coordinate. Thus $|S_t^a|=|S_t^b|=10$;
+$\gamma_t^a,\gamma_t^b$ count the missing integers in their
+respective coordinate spans and are nonnegative. Applying the
+existing path identity (NAGC.4.1) to this same $C_t$ gives
+
+$$
+g_t=\gamma_t^a+\gamma_t^b,\qquad
+G(\mathcal C)=\Gamma_a+\Gamma_b.
+\tag{NAGC.7.2}
+$$
+
+The symbols $N_i,M_i$ are exactly the fixed-first-coordinate and
+fixed-second-coordinate incidence counts in [NARC, Theorem 14.3,
+(NARC.14.3)][NARC]. In particular
+
+$$
+\begin{gathered}
+N_i,M_i\in\{4,7,10,13,16,19\},\qquad
+\sum_{i=0}^{18}N_i=\sum_{i=0}^{18}M_i=190,\\
+\eta_a,\eta_b\in\{0,3,6,9,12,15\}.
+\end{gathered}
+\tag{NAGC.7.3}
+$$
+
+These are inherited projection and incidence facts. The relation
+between their residue imbalance and the coordinate span gaps is
+provided by the following lemma.
+

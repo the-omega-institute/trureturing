@@ -1,0 +1,31 @@
+**Proposition 8.2 (what the joint premise contributes).** Under (SC.23),
+keep the same actual joint distribution of $(\omega,M_0,y)$ and the same
+conditional input/reference states in the true and predicted models.
+Replace only $\mathcal I_\omega$ by the polygon instrument computed from
+$y$. Fix one total measurable predictor: use the stated polygon on reported
+complete tables and a declared normalized default instrument on reported
+incomplete results. The predictor does not inspect a latent good/bad event.
+If $\varepsilon(y)$ bounds (SC.20) on every good pair $(\omega,y)$,
+then the complete joint-output distance is at most
+
+$$
+\int_{\rm good}\varepsilon(y)\,d\Pr(\omega,M_0,y)
+   +\Pr(\mathrm{bad}).
+\tag{SC.24}
+$$
+
+In particular a uniform certificate $\varepsilon$ on a joint event of
+probability at least $1-\alpha$ gives at most $\min(1,\varepsilon+\alpha)$.
+This is unconditional and includes specimen and sensor failure branches.
+
+Proof. Conditional on $(\omega,M_0,y)$, (SC.23) leaves exactly the
+canonical instrument on its actual joint quantum input. Theorem 7.1 applies
+to every such input, including its reference and archives. Integrate the
+trace-norm inequality over the same classical measure on both sides.
+On bad pairs the same record-defined predictor still outputs a normalized
+instrument, so complete-output distance there is at most one. Retain every
+actually reported failure label, but add no label for an unflagged statistical
+error event.
+The triangle inequality gives (SC.24). Discarding a latent analytical label
+is contractive and does not grant its value to the controller. $\square$
+

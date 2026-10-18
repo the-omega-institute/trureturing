@@ -1,0 +1,15 @@
+**Proposition 6.4 (the published endpoint consumer remains valid).** For this same machine, every prior of Theorem 5.1 and every legal PH21/PH39 period choice have
+
+$$
+Q_i=P_{p,r_1},\qquad V_i=P_{\beta,r_1},\qquad
+A_p^{\rm end}=2\rho_p,\qquad A_\beta^{\rm end}=2\rho_\beta,
+\qquad \Psi^{\rm end}(M)=\rho_p.
+\tag{6.4}
+$$
+
+Thus PH45.2 applies with the already certified endpoint floor $a=1/4$, and PH46.1 transfers every certified endpoint margin $g_{\rm end}$ with $t_*+g_{\rm end}\le\rho_p$ to its specified smaller requested margin. Neither that transfer nor PH46.2's budget margin supplies the full numerical approximation of §5 or the larger full-history threshold in (6.1).
+
+**Proof.** The original PH21 training words are $(\alpha\alpha)^m(\beta\beta)^lS_0$, where $S_0=S$ and both exponents tend to infinity in their prescribed residue classes. Once $m\ge4$, the seventh consecutive $\alpha$ sends the matcher to dead; later letters cannot revive it. The original rejected pairs still return to the same seed-parser cut, and $S_0$ produces exactly the same $c_*$. Hence the PH21 row $\Lambda$ is the point mass on $(c_*,\mathrm{dead})$ with its canonical charged idle fields. Every further fourth-segment return $\beta\alpha$ preserves that matcher and original $c_*$; all PH39 rows $\lambda_i$ coincide. Their raw decoders are precisely the ordinary $r_1$ laws, and the suspended row is their deterministic $\beta$ successor. This establishes the first two identities for any legal period choice without replacing the published endpoint domain by arbitrary posterior inputs. Reuse ST2.2/PH2.2's exact endpoint distances to get the last three identities; $\rho_p>\rho_\beta$.
+
+All PH45 hypotheses hold by Lemma 3.3 and the endpoint certificate, so its endpoint-row approximation theorem and PH46's margin consumers apply unchanged. However $\rho_p<t_*+99/500$, while (6.1) has full-history value above $t_*+99/500+1/1000$. The histories carrying that larger gap retain $t_6$ and concentrate the actual posterior on depth 3. The endpoint-training limit has erased $t_6$ instead. Thus this machine specifies which actual full-history stratum is missed by endpoint rows; it is not a counterexample to their scoped transfer. PH48.1 already proves the general direction cannot be reversed; the new point here is the absence of any uniform horizon for the larger consumer even after both endpoint masses are bounded away from zero. $\square$
+

@@ -1,0 +1,42 @@
+**Theorem 70.1 (common-kernel necessity).** At a strict interior point,
+let a globally optimal supported-nonzero actual low label have $p_j>0$ and
+$0<b_j<C(h_j)$. Its two endpoint heights have a common sign
+$\epsilon\in\{\pm1\}$, with zeros allowed. For every optimal common
+certificate,
+
+$$
+(Z-\epsilon\Delta_f)\widehat n_{h_j}=0.
+\tag{RC.72}
+$$
+
+Consequently if both $Z-\Delta_f$ and $Z+\Delta_f$ are invertible,
+every supported-nonzero optimal low label is pure or saturated.
+Supported-zero actual labels have no assigned endpoint or contact.
+
+**Proof.** Endpoint splitting gives
+
+$$
+|\ell+b_jf|\le(1-b_j/C)|\ell|+(b_j/C)|\ell+Cf|.
+\tag{RC.73}
+$$
+
+Strictly opposite endpoint signs would make this strict and yield a
+strictly better instrument with the same moments and contrast by §75.
+Thus there is a common maximizing sign $\epsilon$. Optimality and
+positive endpoint weights imply contact on both sheets, for any optimal
+certificate. Choose a maximizing report sign $r$. The corresponding
+$P^0,P^1$ are nonnegative and zero at $h_j$, so both angular derivatives
+vanish there. Subtracting $\mathcal D P^0$ from $P^1$ and differentiating,
+using $\mathcal N>0$, gives
+
+$$
+\widehat n^TB\widehat n=0,\qquad
+(\widehat n')^TB\widehat n=0,\quad B=Z-\epsilon\Delta_f.
+\tag{RC.74}
+$$
+
+On the parametrization in §68,
+$\det[\widehat n,\widehat n']=bd/(h_1h_2\sqrt{\alpha\beta})\ne0$.
+The two equations therefore imply $B\widehat n=0$. The final assertion
+uses $\widehat n\ne0$. $\square$
+

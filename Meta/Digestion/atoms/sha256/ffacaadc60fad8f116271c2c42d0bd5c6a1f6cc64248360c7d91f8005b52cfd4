@@ -1,0 +1,16 @@
+**Convention 2.1 (native logical and paid suppliers).** The following
+interfaces are reused with their exact premises.
+
+| Supplier | Parameters here and permitted conclusion |
+| --- | --- |
+| [NSF Lemma 5.1 and Theorem 5.2][NSF] | The entire predicate (NFO.2), finitely many fixed epochs and words, and one or two original source variables. They decide joint feasibility, full-row equality or disagreement, with original witnesses. Words are not logical variables in these calls. |
+| [NSF Theorem 7.2][NSF] | A fixed finite physical reply tree. It decides every path fiber and terminal full-row constancy, installs actual row outputs and computes exact sourcewise path costs and their maxima. |
+| [NSF Theorems 7.3 and 8.1][NSF] | A supplied finite $(K,A,L)$ box. They decide it and its same-source weighted thresholds by finite skeleton enumeration. |
+| [JRF Lemma 2.2, Theorem 3.1, Lemma 3.2][JRF]; [NSF Proposition 7.4][NSF] | Sourcewise late-epoch nonexpansive transport, an actual epoch cap and cached/constant-read cleanup on every finite native source. These require no literal-only source-language decision. |
+| [ARH (2.3)][ARH]; [NSF Theorem 6.1][NSF] | Finite serial/static/prefix existence equivalence; effective checking and a paid static consumer for a supplied determining prefix. |
+| [NPL Theorems 5.3, 7.1 and 8.2][NPL] | Entire row-image classification, exact source-fiber finiteness, and complete resources when the entire source domain really is finite. They do not supply a finite representative domain for an infinite fiber. |
+
+JRF's literal-history $\mathsf{GB}$ and its matched WS2S source formulas
+are not used on arbitrary signed histories. Its optimization construction
+will instead receive the native decisions proved below.
+

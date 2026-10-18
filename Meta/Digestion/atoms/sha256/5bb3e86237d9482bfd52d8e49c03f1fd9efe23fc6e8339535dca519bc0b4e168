@@ -1,0 +1,42 @@
+**Definition 1.5 (All events and the normalization convention).** Let
+$\mathcal J_{15}=\{J\subseteq\mathsf S:1\le|J|\le2\}$ and
+$\Pi_J=\sum_{s\in J}\Pi_s$. For $t_J=(\operatorname{tr}(H_i\Pi_J))_i$,
+the same channel's adjoint residual is
+
+$$
+\mathcal H_J(x)=\Pi_J-S_x^\dagger(\Pi_J)
+ =\sum_i[t_J-M^Tt_J]_iH_i
+          +\sum_\nu(1-\eta_\nu)P_\nu(\Pi_J).
+\tag{1.9}
+$$
+
+The adjoint uses $M^T$, even for nonunital, non-self-adjoint maps.
+QMB Theorem 2.1 and QRC Theorem 3.2 give, for any CPTP $S_x$,
+
+$$
+e\bigl(DS_x(D^\dagger\,\cdot\,D)D^\dagger\bigr)
+ =\max_{J\in\mathcal J_{15}}\|\mathcal H_J(x)\|_{\rm op}.
+\tag{1.10}
+$$
+
+This identity applies also to nonseparable CPTP points of (1.6).
+The scalar-port/measure-and-prepare/separable-Choi/rank-one-Kraus
+equivalence is the mature result of
+[Horodecki–Shor–Ruskai, quant-ph/0302031v2, Theorem 4(A–D)](https://arxiv.org/pdf/quant-ph/0302031v2).
+Their CPTP version additionally requires a POVM, equivalently
+$\sum_fC_f^\dagger C_f=I$. In output-first order a scalar-port
+Choi state has the normalization
+$\chi=\frac15\sum_f\sigma_f\otimes E_f^T$ with
+$\sigma_f\succeq0$, $\operatorname{tr}\sigma_f=1$,
+$E_f\succeq0$ and $\sum_fE_f=I$.
+
+These are also the conventions of the repository interfaces
+[QuantumChannel](../../../D5/S3/Quantum/Foundation/FiniteStateChannel.lean),
+[finite_kraus_quantum_channel](../../../D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)
+and [finite_kraus_instrument_born_marginal](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean):
+rectangular encoder rows have domain $\mathbb C^5$ and codomain
+$\mathbb C$, decoder columns have domain $\mathbb C$ and codomain
+$\mathbb C^5$, and decoded branch traces equal their Born weights.
+These interface identifications do not constitute a formalization
+of the statements below.
+

@@ -1,0 +1,4 @@
+## 86. A one-block GLOBAL placement surcharge with unchanged joined multiplicities
+
+Two distinct fixed INITIAL targets can have the same component label counts and the same joined multiplicity multiset, yet have different optimal GLOBAL fees. Here two entries of Construction 84.4 are changed. Every correct root then splits both doubled joined classes between its two successful output archives. Their total label count exceeds the capacity of $2d$ blocks. An actual common stream attains the resulting $2d+1$ bound, including its literal inverses, strict seams and paid stopping rule. The adaptive positive archive is exactly the archive already treated in Chapter 85.
+

@@ -1,0 +1,19 @@
+**定理 37.1（整个第六 J 纤维的结构）。** 每个有限 $\mathcal K_J$ 至多有十个不同完整世界。它无限当且仅当
+
+$$
+\mathcal H=a_0+(0,0,a,a,2a,2a,2a),\qquad a\ne0.
+\tag{37.3}
+$$
+
+在此情形整个纤维恰为
+
+$$
+\left\{\left(
+\begin{pmatrix}b&b\\1-b&1-b\end{pmatrix},\quad
+ g(t)=\frac ab,\quad d=a_0-\frac ab
+\right):0<b<1\right\}.
+\tag{37.4}
+$$
+
+它恰有连续统基数，没有其他无限或可数无穷情形。十是粗上界，不主张达到、尖锐、支持最少或读数最优。以下给必要与充分的整个列表及全部证明。
+

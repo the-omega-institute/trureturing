@@ -1,0 +1,41 @@
+**Definition 26.2 (exact selected systems).** For $n=5,6$ define
+$\mathcal F_n(X;\lambda)$ in the unknown order
+
+$$
+X=(x_0,\ldots,x_{n-1},p_0,\ldots,p_{n-1},d_0,\ldots,d_7)
+\tag{AC.131}
+$$
+
+by eight moment residuals $\sum_{i<n}p_i\Gamma_{\eta_i}(\phi_i)-B$,
+followed by the interleaved pairs $P_i(x_i),P_i'(x_i)$ in increasing
+$i$. Here $\phi_i=b_i^{\rm chart}+2\arctan x_i$, and
+
+$$
+P_i=\boldsymbol d\cdot\Gamma_{\eta_i}^{\rm num}
+       -\epsilon_i H_{\eta_i}^{\rm num}-\lambda\sigma_iW_{\eta_i}.
+\tag{AC.132}
+$$
+
+The denominators are $r^2$ or $D_cr^2$, $r=1+x^2$, all strictly
+positive. The height numerators are $L_c$ and $D_cL_c+1000N_cF_c$;
+the report numerators are $rU$ and $D_crU$. In particular
+$F_c=-(11/64)(d_{\rm src}W_c/h_2)^2
+-2\Delta_{12}d_{\rm src}b_{\rm src}Z_cW_c/(h_1h_2)$, with the
+physical negative cross sign and $\Delta_{12}=(\sqrt{37}-\sqrt{59})/16$.
+A prime in the selected equations is local-$x$ differentiation.
+
+The selected six-contact point $S$ is the zero of
+$\mathcal F_6(X;1/4)$ in the box specified in §27. The selected
+activation $D$ is the zero of the twenty-equation system
+
+$$
+\mathcal F_D(X_5,\lambda,x_5)
+ =\bigl(\mathcal F_5(X_5;\lambda),P_5(x_5),P_5'(x_5)\bigr)=0
+\tag{AC.133}
+$$
+
+in its §27 box. Its order is $(x_0,\ldots,x_4,p_0,\ldots,p_4,
+\boldsymbol d,\lambda,x_5)$ and its sixth weight is exactly zero.
+The unused contact is part of the equations, not an assumed extra
+outcome. Both systems have twenty variables and twenty equations.
+

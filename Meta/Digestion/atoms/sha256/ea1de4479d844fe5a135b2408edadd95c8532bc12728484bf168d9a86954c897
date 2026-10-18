@@ -1,0 +1,26 @@
+## Geometric seed and six-chamber regrouping
+
+By Luo–Yang Proposition 4.1, there exists a unique compact strictly hyperideal tetrahedron T with dihedral angles α=π/4 on its peripheral low triangle and β=2π/9 on its high center star. Indeed, its center angle sum is 3β=2π/3<π, and each peripheral sum is 2α+β=13π/18<π. Uniqueness realizes every permutation of the three peripheral vertices as an isometry. Transpositions are reflections; their mirrors bound six S3 fundamental sectors.
+
+Choose one such sector Q. Label its four original facets A,B,C,D, where A is a piece of the LLL base, B a piece of one LHH side, and C,D symmetry mirrors. Their Coxeter labels are
+m_AB=4, m_BC=9, m_CD=3, m_AC=m_AD=m_BD=2.
+The low angle is unchanged π/4, the high angle is bisected to π/9, and adjacent symmetry planes meet at π/3. Q is a compact doubly truncated Coxeter orthoscheme. It has hyperideal endpoints ABC and BCD, and finite vertices ABD and ACD. The latter are respectively a low-edge midpoint and the base-face center; they are subdivision points only.
+
+Write a,b,c,d for the four facet reflections, U for the ABC truncation face, V for the BCD truncation face, and K=<c,d>≅S3 (order 6). The six chambers kQ tile T by construction. One can also verify the coarsening by stabilizers of the supporting planes
+(or, equivalently, the corresponding complete faces of T), not of the
+individual Q-face polygons:
+- A: Stab_K(A)=K, since a commutes with c,d. Six sectors give one base hexagon
+- B: Stab_K(B)=<d>. The three K-translates of its supporting face each comprise B∪dB, giving three side hexagons
+- U: Stab_K(U)=<c>. Three peripheral truncation triangles each comprise U∪cU
+- V: Stab_K(V)=K. Six pieces give one center truncation triangle
+- C and D are entirely internal interfaces; no pieces remain in the block boundary
+
+For a direct polygon check, A is a quadrilateral (one truncation corner), and
+the six A sectors join collinearly along C,D to one hexagon. B is a pentagon
+(two truncation corners); B and dB join along their D seam to one hexagon.
+U is a triangle with angles (π/4,π/9,π/2); U and cU join along C to a
+triangle with angles (π/4,π/4,2π/9), and K gives three peripheral copies.
+V is a triangle with angles (π/9,π/3,π/2); its six K sectors give one
+equilateral triangle of angle 2π/9. Thus KQ=T has four outer hexagons and
+four truncation triangles.
+

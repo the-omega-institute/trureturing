@@ -1,0 +1,26 @@
+**定义 41.1（新增供应与完整星域）。** 取 $m\ge6,n=m+1$，沿用第 40 节的互异标签 $x,y,t,A$，进一步写成
+
+$$
+A=(\alpha,C,q,r),\qquad |C|=m-5\ge1.
+$$
+
+下层两个供应的邻域之并记为 $\mathcal D_0$。对一个下层完整供应 $e$，记其全部 $D$ 邻居为 $N(e)$。置
+
+$$
+\begin{aligned}
+e&=(q,[y,\alpha,C,x,r]),\\
+D_1&=[y,\alpha,C,q,x,r],\qquad D_2=[y,\alpha,C,x,q,r],\\
+D_*&=[y,\alpha,q,C,x,r],\qquad\mathcal D=\mathcal D_0\cup N(e).
+\end{aligned}
+$$
+
+在 $\mathcal D$ 每个项链上保留新标签 $t$ 的全部 $m$ 个插入间隙及其完整上层 $ab$ 圈，得到顶点域 $V$。从这些原生圈出发，切换除 $(t,D_*)$ 外的全部零层完整供应，并施加两个标准开关
+
+$$
+g=(y,\operatorname{rev}(A),t,x),\qquad
+w=(t,C,x,r,y,\alpha,q),\qquad
+\mathcal T_g,\mathcal T_w.
+$$
+
+所得二因子记为 $\Phi_m$。伴随供应仍为 $X=(x,[t,y,A])$，其 $(cb)^m$ 端点从 $p_0=(t,y,A,x)$ 顺次编号。
+

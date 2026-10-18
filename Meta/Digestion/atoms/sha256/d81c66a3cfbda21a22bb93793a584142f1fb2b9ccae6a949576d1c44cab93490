@@ -1,0 +1,42 @@
+**引理 45.5（伴随的普通内部叶接口）。** 对 $1\le j\le m-4$，分割 $A=L_jR_j$，$|R_j|=j$，$|L_j|=m-2-j$，令
+
+$$
+P_j=[y,L_j,x,R_j],\quad
+\widehat D_j=[t,x,\operatorname{rev}(L_j),y,\operatorname{rev}(R_j)],\quad
+T_j=(s,x,\operatorname{rev}(L_j),y,\operatorname{rev}(R_j),t).
+$$
+
+该影子规范最小：首两项为 $t,x$，而 $x$ 两邻中 $\operatorname{last}(L_j)$ 小于 $\operatorname{first}(R_j)$。它在二核及当前核心外；伴随影子投影到 $\alpha$ 后的间隙，此处 $|L_j|\ge2$，所以不排除它。记完整转换圈为 $C_j$，其 $g,X$ 的唯一旧切口为
+
+$$
+A_{gj}=g_{2m+2j},\ B_{gj}=g_{2m+2j+1},\quad
+A_{Xj}=X_{4m-6-2j},\ B_{Xj}=X_{4m-5-2j}.
+$$
+
+其实际圆周顺序为 $B_{gj},A_{gj},A_{Xj},B_{Xj}$。短接口为
+
+$$
+A_{gj}\to A_{Xj}:\quad
+U_{m-j-1}(cH)^jcU_{m-j-1}cU_j(cH)^{m-j-3}cU_{j+3},
+\qquad 2m^2+2m-3.
+$$
+
+对 $j\ge3$，另一接口为 $B_{gj}\to B_{Xj}$，长 $N-2m^2-2m+1$，两路径穷尽 $C_j$。
+
+证明：用引理 45.3 的完整圆字展开。两切口的确切位置为
+
+| 切口 | $T_j$ 原生偏移 | 展开块 | 块中 $H$ 的零起算指标 | $H$ 起点 | 分裂指标 $d$ |
+| --- | --- | --- | --- | --- | --- |
+| $g$ | $4m-2j-2$ | $Z_{j+1}$ | $m-j-1$ | $(y,\operatorname{rev}R_j,x,\operatorname{rev}L_j,t,s)$ | $j+1$ |
+| $X$ | $4m-2j$ | $Z_j$ | $m-j-3$ | $(\alpha,y,t,\operatorname{rev}R_j,x,\operatorname{rev}(L_j\setminus\alpha),s)$ | $j+3$ |
+
+在第一行 $U_db$ 给 $B_{gj},A_{gj}$，第二行给 $A_{Xj},B_{Xj}$。表由 $ab$ 左旋完整元组、$cH$ 右旋末 $s$ 前缀及 $x$ 的位置 $j+1,j+3$ 直接给出；$m-j-3\ge1$、$j+3\le m-1$，故全部指标在界内。两块相邻且按 $r$ 递减，故圆周顺序及短字如述。所有字都是已证完整原生補弧的实际子弧。$g$ 的当前 $t$ 间隙为 $\{\alpha,y\}$，$X$ 为 $\{r,y\}$，不同；核心及其它接触投影到别的旧星。当前 $w$ 的 $q$ 场只在 $P_1,P_2$ 与此内部族相交，故 $j\ge3$ 无其它切口。删两边的单圈给出完整两路径及所述剩余长度。对 $j=1,2$，短字仍存活，其额外 $q$ 切口在更早的另一 $Z$ 块，不在短弧内。
+
+特别对 $2\le j\le m-5$，用实际伴随边 $A_{Xj}\xrightarrow cB_{X(j+1)}$ 拼短叶 $j$ 与长叶 $j+1$，得
+
+$$
+g_{2m+2j}\to g_{2m+2j+3},\qquad\text{长 }N-1.
+$$
+
+该 $c$ 的奇偏移为 $4m-7-2j$，两域互不相交。
+

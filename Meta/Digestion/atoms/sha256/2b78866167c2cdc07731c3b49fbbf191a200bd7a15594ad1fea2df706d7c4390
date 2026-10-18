@@ -1,0 +1,20 @@
+**Convention 2.3 (the same chronological continuation).** For $k,l\in(0,c)$
+and any finite $L>0$, the horizontal leg is
+$k(s)=k+(l-k)s/L$ with zero relative phase increment. Its absolute lift is
+the actual preceding terminal lift. At a join of duration $T$,
+`concatenate_original` gives
+
+$$
+k(T+s)=k_{\rm tail}(s),\qquad
+\chi(T+s)=\chi(T)+\chi_{\rm tail}(s)-\chi_{\rm tail}(0).
+\tag{PR.7}
+$$
+
+It preserves the old prefix pointwise and adds each continuous weighted
+integral and the real phase increment. The target at the new cut is exactly
+$\psi_{l,\beta,m}$. The controller specifies the same relative command for
+every unknown history; it never receives $\chi(T)$, $\beta$ or $m$.
+Zero duration allows the matching identity $l=k$, not a nontrivial
+instantaneous height leg. All future signed sectors remain in the original
+menu; the theorems select phase-preserving legs as their particular consumer.
+

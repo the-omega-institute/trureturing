@@ -1,0 +1,107 @@
+**Theorem 218.8 (Exact residual and a dimension-preserving budget lift).**
+For every full y and $L\ge m\ge3$,
+
+$$
+\begin{aligned}
+W_z&=W_y,\qquad Q(z)=(\beta_1,\ldots,\beta_m;K_y-C_>),\\
+\Delta_{\mathcal C}(z)&\le\Delta_{\mathcal C}(y),\qquad
+\Delta_{\mathcal C}(\iota_m(V))=\Delta_{\mathcal C}(V)
+ \quad(\mathcal C=N,O),\\
+\Theta_m(y)&:=\sigma_{H_L}(Q(y)-Q(\iota_m(z)))\\
+ &=\max\left\{0,\ \max_{k>m}\frac{S_k}{k-1},\
+ \max_{k>m}\frac{3S_k-(k-2)A_>}{k+1}\right\}.
+\end{aligned}
+\tag{218.28}
+$$
+
+When $m=L$, omit the empty maxima. In particular $\Theta_m(y)=0$
+if and only if every cumulative tail sum $S_k\le0$.
+
+Suppose those cumulative inequalities hold. For any full m-score V,
+any $\theta\ge0$ with
+$\sigma_{H_m}(Q(z)-Q(V))\le\theta$, and the sufficient mass condition
+$K_V\le K_z+A_>$, one has
+
+$$
+\sigma_{H_L}(Q(y)-Q(\iota_m(V)))\le\theta.
+\tag{218.29}
+$$
+
+Thus $\Delta_N(V)+\theta\le1$ gives one original-length certificate
+with the same cost and residual budget. The mass condition restricts this
+lift only, not the unrestricted universal problem.
+Alternatively an exact-Q prefix replacement V has exact extra charge
+$\Theta_m(y)$, so $\Delta_N(V)+\Theta_m(y)\le1$ suffices without
+the cumulative-sign assumption, including the endpoints.
+
+**Proof.** Any complete m-table viewed as an L-table asks the same low
+addresses and emits the same labels through m. Its y reward equals its
+z reward exactly. At a prefix containing a zero this follows by summing
+suffix coefficients. At a positive prefix, output zero earns A+P or T;
+a numerical label through m earns nothing from first-zero classes beyond m.
+This proves the Q,W identities and $B_{\mathcal C}(z)\le B_{\mathcal C}(y)$.
+It uses a subset of the full input catalog for a support lower bound and
+does not prune any input label.
+
+On $\iota_m(V)$, every added bit is one on the score support and added
+labels have zero reward. Every high-address table reduces to a legal low
+empty, singleton or pair table. In O high addresses follow low ones:
+a low zero stops first, and otherwise the constant high continuation folds
+into exhaustion. Conversely every low table embeds.
+Thus both supports and W, and therefore both costs, are preserved exactly.
+
+Use the complete hull supplier 198.5 with vertices
+
+$$
+\begin{aligned}
+o&=(0,\ldots,0;0),\qquad p=(1,0,\ldots,0;0),\\
+u_k&=(1/(k-1),\ldots,1/(k-1),0,\ldots,0;0),\\
+v_k&=(1,\ldots,1,e_k,\ldots,e_k;e_k),\qquad
+e_k=(k-2)/(k+1),\quad3\le k\le L,
+\end{aligned}
+$$
+
+where the first k entries are the displayed repeated value.
+They generate $H_L$; their generation and convex support are reused.
+The erased residual has zero early beta, original tail beta, and
+K-coordinate $C_>$. Its readings at o,p and $u_k$ with $k\le m$
+are zero, at $v_k$ with $k\le m$ are $-e_kA_>$, and at high vertices are
+
+$$
+F_{\rm res}(u_k)=S_k/(k-1),\qquad
+F_{\rm res}(v_k)=\frac{3S_k-(k-2)A_>}{k+1}.
+$$
+
+Here $\sum_{j>m}\beta_j=C_>-A_>$ accounts for the complete actual tail.
+Taking their maximum proves (218.28). If every $S_k\le0$, every reading
+is nonpositive and o attains zero; a positive $S_k$ is detected by its
+own $u_k$. No hull vertex is asserted to be an original positive-tail law.
+
+For the general lift, put $r_i=\beta_i(y)-\beta_i(V)$ for $i\le m$,
+$E=r_1+r_2$, $R_1=\sum_{i\le m}r_i$ and $\kappa=K_z-K_V$.
+At o,p and $u_k$, $k\le m$, the full residual readings equal their
+lower-dimensional readings. In particular $F(o)=-E$, which need not
+vanish. At low $v_k$ the reading is the lower reading minus $e_kA_>$.
+For $k>m$, the u reading is
+
+$$
+\frac{R_1+S_k}{k-1}-E
+ \le\frac{R_1}{k-1}-E
+ =\frac{m-1}{k-1}F_{\rm low}(u_m)
+  +\left(1-\frac{m-1}{k-1}\right)F_{\rm low}(o)\le\theta.
+$$
+
+The high v reading is
+
+$$
+R_1-E+\frac{3S_k-(k-2)(\kappa+A_>)}{k+1}.
+$$
+
+Since $S_k\le0$, $\kappa+A_>\ge0$ and $e_k\ge e_m$, it is at most
+$R_1-E-e_m(\kappa+A_>)\le R_1-E-e_m\kappa=F_{\rm low}(v_m)\le\theta$.
+All vertices are covered. This proves (218.29) using the same V,
+without the false assertion that projection of $H_L$ into its first
+m amplitudes and e lies in $H_m$. Cost preservation supplies the same
+single budget. In the exact-Q case the residual is precisely the erased
+one already computed. $\square$
+

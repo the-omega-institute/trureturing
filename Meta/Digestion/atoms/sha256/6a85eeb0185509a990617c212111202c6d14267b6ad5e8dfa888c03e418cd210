@@ -1,0 +1,111 @@
+**Theorem 219.13 (Three debts, zero absolute stock and exact cost $2g$).**
+Let $g>0$, $0\le d\le g/2$ and
+$J=\{j_1<\cdots<j_m\}\subseteq\{1,\ldots,L\}$ with
+$m\ge4$, $j_1\ge4$. Set $\gamma_{j_1}=\gamma_{j_2}=g$,
+$\gamma_{j_r}=h_r\in(0,g]$ for $r\ge3$, and require
+
+$$
+H=\sum_{r\ge3}h_r>g,\qquad
+\sum_{r\ge3}(h_r-g/2)_+\le g/2.
+\tag{219.38}
+$$
+
+Prescribe debts at $1,2,3$ equal to
+$(g-d,g-d,H+g/2+2d)$, positives $\gamma$ on $J$, zero elsewhere,
+and $K=2H+9g/2$. Then
+
+$$
+\min_{Q(V)=(\beta,K)}\Delta_N(V)
+ =\min_{Q(V)=(\beta,K)}\Delta_O(V)=2g.
+\tag{219.39}
+$$
+
+One explicit attainer has $P=T=0$ and constructor excess $2d$
+above the constant-zero bound $E=2(g-d)$.
+For $d>0$ this is a strictly positive-excess unrestricted minimum.
+
+**Proof.** Choose one vector $z_r$ satisfying
+
+$$
+\max(0,h_r-g/2)\le z_r\le\min(h_r,g/2),\qquad
+\sum_{r\ge3}z_r=g/2.
+\tag{219.40}
+$$
+
+The sum of lower endpoints is at most $g/2$ by (219.38).
+The sum of upper endpoints equals
+$H-\sum(h_r-g/2)_+>g/2$. A finite product of intervals has every
+sum between its endpoint sums, so (219.40) has a simultaneous solution.
+This is one allocation, without separate choices for different cells.
+
+In Theorem 219.9 take $I=\{1,2,3\}$,
+$c=g/2$, $G=2g+H$, $S=H+5g/2$,
+$s_1=s_2=g-d$, $s_3=H+g/2+2d$ and $\xi_i=s_i$.
+Set $t_1=t_2=g/4$, $t_3=0$.
+For each of the two top columns put
+
+$$
+x_{1j}=x_{2j}=g/4-d/2,\qquad x_{3j}=g/2+d;
+\qquad
+x_{1j_r}=x_{2j_r}=z_r/2,\quad x_{3j_r}=h_r-z_r\quad(r\ge3).
+\tag{219.41}
+$$
+
+All entries are nonnegative. The top columns sum to $g$, the tail
+columns to $h_r$, and the row totals including reserves are the stated
+$s_i$. All donor $P$ is converted to $A$.
+
+For guards 1 and 2, $a_{ij}=\gamma_j-H-d<0$ and
+$v_{ij}\le c$, so every mixed excess is zero.
+For guard 3 at a top column, $v=g/2+d$ and $a=g/2+2d$,
+giving excess $d+d=2d$.
+At a tail column, $v=h_r-z_r\le g/2$ and
+$a-v=z_r-g/2+2d\le2d$.
+A guard 3/guard 1 or 2 pair has excess $d$;
+the pair 1/2 has none since $H>g$.
+All positive pairs have support $S$. Thus (219.22) gives
+$\delta=2d$, $W=s_3$, $B_N=B_O=S+2d$ and both costs $2g$.
+This includes $d=0$ and $d=g/2$.
+
+For unrestricted optimality, here $K=\sum|\beta|$.
+Equation (219.3) forces every full exact-$Q$ competitor to have
+$P=T=0$, $A$ only in classes 1,2,3 with totals $s_i$ and $C$ only
+in $J$ with totals $\gamma_j$. Hence every competitor has $W=s_3$.
+The legal stopped table
+
+$$
+(3,j_1;0,j_1,j_2)
+\tag{219.42}
+$$
+
+collects every $A_3$ atom, every $C_{j_1}$ atom and every $C_{j_2}$
+atom, whatever their suffixes. Other rewards are nonnegative.
+Its exhaustion output $j_2$ is legitimately unqueried.
+Therefore $B_O\ge s_3+2g$ and $\Delta_O\ge2g$;
+N contains O. This independent bound matches the construction,
+proving the unrestricted minima. ∎
+
+The theorem permits every finite $m\ge4$ and arbitrary gaps after
+address 3. For instance tails $(3g/4,g/2,\ldots,g/2)$ satisfy
+(219.38) at every such $m$. These parameters do not impose a finite
+address bound on original competitors.
+
+At $d=0$ the proportional-column constructor cannot attain this same
+zero-excess fiber when $H>g$. Its large-row interval would require
+
+$$
+\chi_3\ge\frac{H}{H+g},\qquad
+\chi_3\le\frac{H+g/2}{H+2g},\qquad
+\frac{H}{H+g}-\frac{H+g/2}{H+2g}
+ =\frac{g(H-g)}{2(H+g)(H+2g)}>0.
+\tag{219.43}
+$$
+
+The lower bound follows from its top-column mixed complement
+condition; the upper bound follows from nonnegative $t_3$.
+This excludes that proportional construction, rather than every
+possible predecessor certificate.
+At full conversion Corollary 219.12 with $\mu=g$, $H=v+w>g$,
+$z_3=z_4=g/4$ agrees with this theorem's $d=0$ boundary.
+That common boundary is a single attained region.
+

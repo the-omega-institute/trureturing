@@ -1,0 +1,22 @@
+## 11.2 The finite Hankel relaxation
+
+Fix $N=n+1\ge1$. For an integer $m\ge0$ put $L_m=2m+1$. For
+$u=(u_1,\ldots,u_{L_m})\in\mathbb R^{L_m}$ define
+$$
+H_m(u)=(u_{p+q+1})_{0\le p,q\le m},
+\qquad
+\mathcal R_{N,m}
+ =\{u:\operatorname{rank}H_m(u)\le N\}.
+$$
+When the matrix is too small for an $(N+1)$-minor, the rank restriction is
+vacuous. Otherwise $\mathcal R_{N,m}$ is exactly the common zero set of
+all such minors, hence a closed finite-dimensional determinantal set.
+Define
+$$
+J_m(u)=\max_{1\le j\le L_m}
+ \frac{|u_j-\sqrt j|}{\sqrt j},
+\qquad
+d_{N,m}=\min_{u\in\mathcal R_{N,m}}J_m(u).
+\tag{11.10}
+$$
+

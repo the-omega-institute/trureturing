@@ -1,0 +1,28 @@
+**Lemma 8.1 (The inherited two-read error coefficient, proved from
+the leaf products).** Every original protocol satisfies
+
+$$
+L\ge\frac{b^2}{c}q.
+\tag{8.1}
+$$
+
+The coefficient and its selective equality witness are Original,
+Theorem 10.1 and (10.4), reused in Risk, §2.
+
+Proof. First bound the largest correct proportion of each leaf by
+$a^2/c$. A one-containing leaf certifies one phase. Inspection
+of Lemmas 2.4–2.5 shows its possible maximal proportions are
+$1/2$, $a$, or $a^2/c$. The latter exceeds $a$ because $a>c$.
+A same-parity all-zero leaf has $M=a/2$ and $W\ge1/2$, so its
+proportion is at most $a$. An opposite-parity $00$ leaf has
+$W=c$, $M\le a^2/2$, hence proportion at most $a^2/(2c)$.
+These cases include repetitions and impossible leaves of zero
+mass. A zero-read return has correct proportion at most $a/2$;
+a one-read return may either be padded as in Lemma 2.1 or bounded
+directly by its one/zero branch proportions at most $a$.
+
+Summing $M\le(a^2/c)W$ over accepted sections and integrating
+gives $C\le(a^2/c)q$. Since $a^2+b^2=c$, this is (8.1).
+The argument is recordwise and puts no restriction outside $E_2$.
+$\square$
+

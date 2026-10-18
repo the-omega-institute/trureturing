@@ -1,0 +1,18 @@
+### 6.1 Euclid 外部素数是离散逃逸边
+
+对有限素数支撑 \(S\)，定义
+
+\[
+N(S)=\prod_{p\in S}p+1.
+\]
+
+[PrimeAxisEscape](../../../Blueprint/D5/S3/Axis/PrimeAxisEscape.md) 保证存在素数 \(q\mid N(S)\) 且 \(q\notin S\)。因此可以构造图
+
+\[
+S\longrightarrow S\cup\{q\},
+\qquad
+\text{cost}(S\to S\cup\{q\})=\ln q.
+\]
+
+这是一条严格的离散支撑逃逸边。PrimeCashflow 还提供了 \(\sum_p|u(p)|\ln p\) 型长度/成本。它和 κ 纤维耗散是两种不同的坐标，前者改变算术支撑，后者保持宏观均值而消除隐藏关联。
+

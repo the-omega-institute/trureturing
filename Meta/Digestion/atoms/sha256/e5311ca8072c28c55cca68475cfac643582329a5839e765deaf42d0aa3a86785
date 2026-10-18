@@ -1,0 +1,16 @@
+**定理 21.2（全制备的平方根上界）。** 对所有 $H>0,\varepsilon\ge0$，
+
+$$
+\Omega_H(\varepsilon)\le
+\min\{2H^2,\max(2H\varepsilon,\sqrt6H^2\sqrt\varepsilon)\}.
+$$
+
+证明。推论16.3的 $|x_0\cdot w|\ge q_2^2$ 不需要叶界或非退化下界；定理5.1也覆盖依赖及零标签来源。任一实际对的 $|w-w'|\le2H\varepsilon$。零或同符号分支的目标差至多此量；异号分支满足
+
+$$
+q_2^2+(q'_2)^2\le|x_0\cdot w-x'_0\cdot w'|
+\le H^2\varepsilon+H(2H\varepsilon)=3H^2\varepsilon.
+$$
+
+故目标差至多 $H(q_2+q'_2)\le\sqrt6H^2\sqrt\varepsilon$。最后每目标范数仍至多 $H^2$，给独立幅度截断。每个分支使用的两成员都在同一较宽实际域中。
+

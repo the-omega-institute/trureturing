@@ -1,0 +1,19 @@
+**Proposition 10.2 (no direct identity handoff to predecessor recovery).**
+The stationary family $\mathcal F_D$ is disjoint from the image of
+$\rho$. Consequently the returned predecessor-row reader of [ERC]
+cannot be applied by identifying its substituted source with an
+original source in $\mathcal F_D$.
+
+**Proof.** No substitution image is $\alpha$. A substituted leaf is
+$\beta$ or $\langle\beta,\alpha\rangle$; a substituted pair has
+left child another substitution image, hence never $\alpha$. Thus no
+image is a pair with left child $\alpha$, as every member of
+$\mathcal F_D$ is. The declaration `returned_native_reader` runs on
+$\rho(u)$ and targets the complete predecessor row. Its assumptions
+include a prefix-free cut, a complete row with nonempty `OriginFiber`,
+$r\ge1$ and compatible acquired image values. The finite minimax in
+[FRM] uses the attained three-reply class-root chart. These are valid
+different endpoints and supply no all-length weighted-template cap
+without an operation- and cardinality-preserving reduction. No such
+reduction is used here. $\square$
+

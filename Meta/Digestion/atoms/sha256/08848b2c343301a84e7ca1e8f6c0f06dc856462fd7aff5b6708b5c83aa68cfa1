@@ -1,0 +1,30 @@
+**Definition 4.2 (joint-completion condition).** Let
+
+$$
+q=(\partial_p)_*\mu
+\tag{4.4}
+$$
+
+and let $\nu$ be the conditional joint law of the entire forest $z$ under
+$\mu$ given $\partial_p=B$. Require that, for every leaf descriptor
+$b=(j,e)$, the conditional joint law of the exposed tuple
+
+$$
+(z_2,\ldots,z_j)\mid\partial_p=b
+\tag{4.5}
+$$
+
+equals the corresponding coordinate projection of $\nu$. No independence
+among the coordinates of $\nu$ is required. The sole independence is that
+the one persistent forest $z$ is independent of $b$ in the representation
+
+$$
+\mu=T_*(q\times\nu).
+\tag{4.6}
+$$
+
+Condition (4.5) is equivalent to (4.6) for the realization map above. If
+$\mu$ has full support, $q$ is positive on every descriptor and $\nu$ is
+positive on every legal forest. For a rational finite law, all these masses
+are rational.
+

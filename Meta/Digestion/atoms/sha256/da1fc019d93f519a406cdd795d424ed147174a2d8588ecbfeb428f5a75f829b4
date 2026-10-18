@@ -1,0 +1,77 @@
+**定理 54.4（原完整来源上的有限上界）。** 定义54.3的控制器 $\pi_+$ 在全部原来源及全部合法联合Read误差上满足
+
+$$
+\mathcal E_{\pi_+}(\delta)\le B(\rho_+,\delta).
+\tag{54.15}
+$$
+
+证明。先核对未标记层的实际判别。$0<\rho_+\le\delta/11<1/10$，而
+
+$$
+\begin{aligned}
+g-2\delta&=25h-7-2\delta
+=\frac6{25}\delta^2-7(1-K)\\
+&\ge\left(\frac6{25}-\frac7{121}\right)\delta^2
+=\frac{551}{3025}\delta^2>0.
+\end{aligned}
+\tag{54.16}
+$$
+
+用的只是 $1-K\le\rho^2$ 和 $\rho\le\delta/11$。
+真实 $bq=s+w$、$R_0=|b|$ 仍满足§45的原帽关系
+$s\ge-R_0\rho$、$R_0h\le|w|\le R_0$。
+末读为 $y_3=w+e_3$，因此内层 $r\le7+\delta<T$，外层
+$r\ge25h-\delta>T$；（54.14）逐合法记录判出 $R=R_0$。
+
+径向Read条件给 $d_R^-\le|w|\le d_R^+$，故
+$\ell_R\le|s|\le u_R$。
+若 $\ell_R>R\rho$，负实部分支由 $s\ge-R\rho$ 排除，真实 $s\in[\ell_R,u_R]$。
+函数 $f(x)=\sqrt{R^2-x^2}$ 的负导数模 $x/\sqrt{R^2-x^2}$ 在 $[0,R)$ 递增。
+截断不扩张给 $d_R^+-d_R^-\le2\delta$。因此在 $[0,R]$ 上，该径向区间的 $f$ 值之差至多最右端长度 $2\delta$ 的区间的差：
+
+$$
+u_R-\ell_R\le f(R-2\delta)-f(R)
+=\sqrt{4R\delta-4\delta^2}.
+\tag{54.17}
+$$
+
+此处 $2\delta<R$；端点 $R$ 的等式按连续性取极限。
+又
+
+$$
+t_R^2-(4R\delta-4\delta^2)
+=R\rho^2\left(R-\frac{4\delta}{1+K}\right)\ge0,
+\tag{54.18}
+$$
+
+因此第一输出分支的实部误差至多 $(u_R-\ell_R)/2\le S_R$。
+
+若 $\ell_R\le R\rho$，则 $d_R^+\ge RK$，从截断定义得
+$r+\delta\ge RK$。于是
+
+$$
+r\ge RK-\delta,\qquad d_R^-\ge RK-2\delta>0,
+\qquad u_R\le t_R(\rho,\delta).
+\tag{54.19}
+$$
+
+真实 $s$ 属于 $[-R\rho,u_R]$，其第二输出分支是这个包围区间的中点，故
+$|\widehat s-s|\le(R\rho+u_R)/2\le S_R$。
+这里区间只包围原帽上的实际标量，没有把区间内每一点当作合法来源。
+（54.19）是对容许负分支的同一实际报告施加的条件，不把两种分别可达的径向端点任意拼合。
+
+$t_R^2=R^2\rho^2+4RK\delta-4\delta^2$ 随正 $R$ 递增，因此 $S_7\le S_{25}$。
+球投影不增大到真实 $w$ 的距离，所以 $|\widehat w-w|\le\delta$；初读给
+$|y_0-a|\le\delta$。右乘 $q^{-1}$ 等距，初始可见槽、隐藏实部及隐藏虚部正交，得到
+
+$$
+|\widehat x-(a,b)|^2
+=|y_0-a|^2+|\widehat s-s|^2+|\widehat w-w|^2
+\le2\delta^2+S_{25}(\rho,\delta)^2.
+\tag{54.20}
+$$
+
+无界的 $a$ 在两次内部动作中虽被改变，末锚把它的演化量放入隐藏槽，末读仍恰为 $w+e_3$；INITIAL的 $a$ 由实际初读估计。
+证明只逐项使用各实际误差的范数界，覆盖所有联合、相关、历史依赖误差。
+所有动作和停止预先固定，恰三更新四Read，证明（54.15）。证毕。
+

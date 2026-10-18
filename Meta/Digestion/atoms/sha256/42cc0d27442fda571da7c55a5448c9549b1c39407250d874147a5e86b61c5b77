@@ -1,0 +1,33 @@
+**Definition 2.1 (Fixed stationary row and unchanged constructor).** Fix
+
+$$
+\pi=(7/10,3/20,3/20),\qquad R=\{2,3\}.
+$$
+
+Let $\mathcal K$ contain every entrywise nonnegative stochastic
+$3\times3$ matrix $K$ satisfying
+$\pi_iK_{ij}=\pi_jK_{ji}$ for all $i,j$. No entry is fixed. In particular
+$K_{13}$ is unrestricted. There is no additional positivity, rank,
+positive-semidefiniteness, irreducibility, aperiodicity or mixing condition.
+
+Use the refractory constructor of [Slice, Definition 2.1][Slice]: let $J$
+include coordinates $2,3$, $E=JJ^{\mathsf T}$ and $D=I_3-E$. In state
+order $(1,2,3,2',3')$ put
+
+$$
+M_0(K)=\begin{pmatrix}DK&0_{3\times2}\\J^{\mathsf T}K&0_{2\times2}\end{pmatrix},\qquad
+M_1=\begin{pmatrix}0_{3\times3}&J\\0_{2\times3}&0_{2\times2}\end{pmatrix},
+$$
+
+$$
+b=\pi(R)=3/10,\qquad
+\lambda=\frac{(\pi,\pi J)}{1+b}
+=(7/13,3/26,3/26,3/26,3/26),\qquad
+\theta_K=(\lambda,M_0(K),M_1).
+\tag{2.1}
+$$
+
+Free state $1$ emits zero and advances by $K$. A free state in $R$ emits
+one into its own tail; a tail emits zero and advances by $K$. Time is the
+integer emitted-bit clock, with stationary row $\lambda$.
+

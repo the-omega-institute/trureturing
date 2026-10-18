@@ -1,0 +1,26 @@
+**Proposition 2.3 (historical leaf-cylinder calibration).** Suppose an
+actual Read at $v$ acquires leaf $(a,e)$ and a later actual Read at $w$
+acquires leaf $(b,f)$ with $b=ar$. On any authentic history of
+Definition 1.3,
+
+$$
+k=s(r)+f-e=s(b)-s(a)+f-e.
+\tag{AAR.6}
+$$
+
+This allows any acquired descendant leaf, including a ray different
+from $aR^\infty$. It does not require simultaneous observation of two
+references, a global boundary profile or the future descriptor $b$
+to have been known at $v$.
+
+Proof. Present-subtree transport gives $U_w|_a=T_{k+e}$. Every terminal
+word $r$ of $T_n$ satisfies $s(r)+e(T_n|_r)=n$. This follows directly
+from (AAR.5) applied to a ray through that terminal: at alpha every
+finite reference has coordinate zero, so after $n$ updates it has
+coordinate $n$. Equivalently the two children of an expanded beta
+have equal weighted leaf score. Substitute $n=k+e$. At $v$ every
+finite extension of $a$ had the same absence-safe coordinate $s(a)+e$;
+the old leaf is the actually acquired common calibration for its
+whole cylinder. No value elsewhere in the tree enters the argument.
+$\square$
+

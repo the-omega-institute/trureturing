@@ -1,0 +1,72 @@
+**Theorem 4.1 (weak free-domain bridge and regularity).** Every
+nonnegative normalized minimizer $v$ in Lemma 2.2 satisfies
+
+$$
+Wv\in L^2(D),\qquad v\in D(\overline L),\qquad
+\overline Lv=(E+gW)v\quad\text{in }L^2(D).
+\tag{4.1}
+$$
+
+It has a continuous representative on $[l,u]\times\mathbb T$, equal
+to zero on the two height faces, belongs to $H^2(D)$, and is smooth on
+$D\setminus\{x_o\}$.
+
+Proof. Lemma 3.1 gives $W\in L^4$ and Lemma 3.2 gives $v\in L^4$.
+Hölder therefore yields $\|Wv\|_2\le\|W\|_4\|v\|_4<\infty$.
+The weak equation (2.5) becomes
+
+$$
+\overline T(v,z)=\langle(E+gW)v,z\rangle
+\quad\text{for every }z\in\overline{\mathcal F}.
+\tag{4.2}
+$$
+
+Its right side has an $L^2$ representative. Definition (1.5), not an
+assumed intersection formula for an attractive operator domain, now
+proves (4.1).
+
+By the inherited exact operator-domain description (1.9),
+$\sum\lambda_{jm}^2|v_{jm}|^2<\infty$.
+For these fixed positive parameters and $j\ge1$, $\lambda_{jm}$ is
+bounded above and below by positive multiples of $1+j^2+m^2$.
+The sine/Fourier expansion, or its odd periodic extension in height,
+thus gives all second weak derivatives in $L^2$, proving $H^2$.
+Furthermore
+
+$$
+\sum_{j,m}|v_{jm}|
+ \le\left(\sum_{j,m}\lambda_{jm}^2|v_{jm}|^2\right)^{1/2}
+      \left(\sum_{j,m}\lambda_{jm}^{-2}\right)^{1/2}<\infty.
+\tag{4.3}
+$$
+
+The basis functions $e_{jm}$ are uniformly bounded on the closed
+cylinder. Hence the series converges absolutely and uniformly there.
+Its sum is continuous, represents $v$, and vanishes at both height
+faces, since each sine does.
+
+For local smoothness choose a smooth cutoff $\zeta$ supported in
+$D\setminus\{x_o\}$ and away from the height faces. Here $W$ is
+smooth by Lemma 3.1. In weak derivatives,
+
+$$
+\begin{aligned}
+(\overline L+1)(\zeta v)
+={}&\zeta(E+gW+1)v
+ -2\varepsilon^2\zeta_kv_k-\varepsilon^2\zeta_{kk}v\\
+ &-\tfrac12\zeta_\alpha v_\alpha-\tfrac14\zeta_{\alpha\alpha}v.
+\end{aligned}
+\tag{4.4}
+$$
+
+Extend the compact height support by zero to $\mathbb R\times\mathbb T$.
+The constant-coefficient operator on the left has Fourier symbol
+$1+\varepsilon^2\xi^2+m^2/4$, so its inverse maps $H^s$ to
+$H^{s+2}$. Starting from local $H^2$, the right side of (4.4) lies in
+$H^1$ on compact supports. Thus $\zeta v\in H^3$. Using nested
+cutoffs, local $H^m$ makes the right side $H^{m-1}$ and gives local
+$H^{m+1}$ on a smaller neighborhood. Iteration gives every integer
+Sobolev order; Fourier Cauchy--Schwarz then gives continuous derivatives
+of every prescribed finite order. This proves smoothness away from
+$x_o$. Smoothness at the base pole is not asserted. $\square$
+

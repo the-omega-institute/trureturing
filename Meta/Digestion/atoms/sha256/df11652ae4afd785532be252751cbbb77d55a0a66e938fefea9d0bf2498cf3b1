@@ -1,0 +1,93 @@
+**Proposition 16.3 (A bounded native coefficient has exponential modulus).**
+There are fixed $p_+,p_-\in\mathbb C$, a function
+$c:(0,H)\to\mathbb C$, and a nowhere-zero function
+$f:(0,H)\to\mathbb C$ such that
+
+$$
+z(k,\alpha)=c(k)+p_+f(k)e^{i\alpha}
+                    +p_-\overline{f(k)}e^{-i\alpha}.
+\tag{16.6}
+$$
+
+In a used native-pair case at least one of $p_+,p_-$ is nonzero.
+Normalize $f(H/2)=1$. Then for some finite real $\gamma$,
+
+$$
+f(k+s)=m_sf(k)\quad(k\in I_s),\qquad
+|m_s|=e^{\gamma s}\quad(|s|<H),\qquad
+|f(k)|=e^{\gamma(k-H/2)}.
+\tag{16.7}
+$$
+
+Only the modulus is asserted to be an ordinary exponential.
+
+**Proof of Proposition 16.3.** Choose the native basis vector
+$v_*=u_\xi(H/2)\ne0$ and write $u_\xi(k)=f(k)v_*$. This gives
+the normalization, nonvanishing, and the first identity in (16.7).
+Reality and uniqueness of the primary decomposition imply
+$\overline{\Pi_\xi}=\Pi_{\xi^{-1}}$. Since $F$ is real, its
+conjugate primary component is therefore
+$\overline{f(k)}\,\overline{v_*}$ at phase zero. Apply the fixed
+complex row $\ell=\ell_1+i\ell_2$ to these two components and
+set $p_+=\ell v_*$, $p_-=\ell\overline{v_*}$. The residual
+row $\ell\Pi_{\rm res}$ is phase-invariant by the argument
+after Lemma 15.2. This gives (16.6), with
+$c(k)=\ell\Pi_{\rm res}F(k,0)$. If both fixed coefficients
+vanish, $z$ and both of its real components are phase-independent;
+that is the baseline case of Proposition 14.3, not a used native
+pair.
+
+It remains to justify a bound on $f$, rather than on the hidden
+state. Put $M=\sup_{k,\alpha}|z(k,\alpha)|<\infty$, as supplied
+by finite readout error. Let $\omega=e^{2\pi i/3}$. Evaluating
+(16.6) at the three actual phases $2\pi j/3$ gives the finite
+coefficient identities
+
+$$
+p_+f(k)=\frac13\sum_{j=0}^2
+ z(k,2\pi j/3)\omega^{-j},\qquad
+p_-\overline{f(k)}=\frac13\sum_{j=0}^2
+ z(k,2\pi j/3)\omega^j.
+\tag{16.8}
+$$
+
+They follow from $1+\omega+\omega^2=0$. Both right sides have
+modulus at most $M$. Since at least one fixed coefficient is
+nonzero, there is a finite $K\ge1$ with $|f(k)|\le K$ for all
+interior $k$. No latent norm or hidden residual coordinate has
+been bounded.
+
+For $|s|<H/2$, use (16.4) at the reference height $H/2$ to get
+$|m_s|\le K$. Use $-s$ and (16.5) to get the reciprocal bound.
+Thus
+
+$$
+K^{-1}\le|m_s|\le K\quad(|s|<H/2).
+$$
+
+The function $b(s)=\log|m_s|$ is locally additive on $(-H,H)$
+by (16.5), and $|b(s)|\le\log K$ near zero. This is the
+bounded-additivity mechanism already used in Lemma 5.3. Explicitly,
+for a positive integer $N$ and $|s|<H/(2N)$, all partial sums
+up to $Ns$ remain lawful for the local scalar law, so
+
+$$
+|b(s)|=|b(Ns)|/N\le\log K/N.
+$$
+
+This proves continuity at zero. Local additivity gives continuity
+at every point of $(-H,H)$. With $a_*=H/4$, subdivision, finite
+addition, and sign reversal give
+$b(qa_*)=q b(a_*)$ for every rational $q$ with $|qa_*|<H$.
+Density and continuity then give $b(s)=\gamma s$, where
+$\gamma=b(a_*)/a_*$ is finite. Applying the multiplier identity
+between $H/2$ and $k$ proves the last equality in (16.7).
+$\square$
+
+Neither the complex multiplier nor the unit phase $f/|f|$ has
+been proved continuous. Example 5.4 already supplies bounded
+encoders $e^{\gamma k}U(\alpha+\ell(k))$ with additive,
+possibly discontinuous height twists and exact updates
+$e^{\gamma s}R_{\ell(s)}$, $R_{t/2}$. They remain within the
+contract. The modulus argument does not exclude them.
+

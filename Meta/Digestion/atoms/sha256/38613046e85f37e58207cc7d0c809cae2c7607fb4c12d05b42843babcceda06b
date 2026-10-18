@@ -1,0 +1,90 @@
+## 5. The entire fixed-source class
+
+For a fixed known legal source $P_*$, define
+
+$$
+K_{P_*}=\{W\in\mathcal F(H):P=P_*\}.                              \tag{5.1}
+$$
+
+The source promise is candidate information. It is not inferred from
+the ancestor. Gains may have different shapes, arbitrary drift and all
+legal root patterns; the class has no cardinality bound.
+
+**Theorem 5.1.** One fixed chronological continuation $JJ$ or $JM$
+has an injective clock-seven response on $K_{P_*}$. It recovers the
+complete target with both immediate reads, hence at most eight total
+readings. The same continuation works on any known subset, and
+$\neg L_2(K_{P_*},H)$.
+
+**Proof.** Put $t_i=\operatorname{tr}(A_iP_*)>0$ for $0\le i\le3$.
+Define the interpolation polynomials
+
+$$
+\ell_i(T)=\prod_{\substack{0\le j\le3\\j\ne i}}
+                       \frac{T-j}{i-j},\qquad
+U_*(T)=\sum_{i=0}^3\frac{c_i}{t_i}\ell_i(T),\qquad
+V_*(T)=\sum_{i=0}^3\frac1{t_i}\ell_i(T).
+                                                                    \tag{5.2}
+$$
+
+Every compatible gain satisfies
+
+$$
+f(T)=U_*(T)-dV_*(T).                                             \tag{5.3}
+$$
+
+Indeed (1.3) gives equality at four distinct clocks, and the
+difference is a polynomial of degree at most three, so the root
+bound makes it identically zero. Only strictly positive $t_i$ and
+nonzero integer interpolation denominators have been divided out,
+never a gain sample. The last two ancestor equations, nonzero-gain
+condition and all remaining legality conditions restrict the allowed
+real values of $d$. They are retained, not discarded. Equal $d$
+gives equal $f$ by (5.3), so $d$ parametrizes the legal class
+injectively.
+
+Let
+
+$$
+B=QP_*,\qquad q_0=\operatorname{tr}(QP_*),\qquad
+q_1=\operatorname{tr}(MJQP_*).
+$$
+
+Since $MJ=L$, direct multiplication gives
+
+$$
+\operatorname{tr}(LB)=B_{11}+B_{12}+B_{22},\qquad
+q_1-q_0=B_{12}=(QP_*)_{12}>0.                                   \tag{5.4}
+$$
+
+The clock-seven responses after the words $JJ$ and $JM$ are
+
+$$
+\begin{aligned}
+r_{JJ}&=q_0U_*(7)+(1-q_0V_*(7))d,\\
+r_{JM}&=q_1U_*(7)+(1-q_1V_*(7))d .
+\end{aligned}                                                       \tag{5.5}
+$$
+
+Their slopes $k_0=1-q_0V_*(7)$ and $k_1=1-q_1V_*(7)$ cannot both
+vanish. Otherwise subtraction gives
+$(q_1-q_0)V_*(7)=0$; (5.4) implies $V_*(7)=0$, contradicting $k_0=0$.
+
+Choose $JJ$ when $k_0\ne0$ and $JM$ otherwise. The selected terminal
+response is affine in $d$ with nonzero slope, hence injective on the
+whole legal class. In either case first execute $J$ and read clock
+six, then execute the chosen second atom and read clock seven. If the
+chosen coefficient and trace are $k$ and $q$, the terminal value $r$
+returns
+
+$$
+d=\frac{r-qU_*(7)}{k}.
+$$
+
+Now (5.3) and (1.4), together with the known $P_*$, recover the complete
+original target. Worlds with $f(6)=0$ or $f(7)=0$ remain covered,
+because neither value has been divided out. Lower degrees, cancellations,
+either gain sign and repeated roots remain legal. Restricting the
+same inverse to a known subset preserves injectivity. The claimed
+recursion statement follows from Section 6. ∎
+

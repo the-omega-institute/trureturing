@@ -1,0 +1,48 @@
+**Theorem 4.4 (exact full switching strata).** For
+$\sigma\in\{0,1\}^m$, let $r_\sigma$ have exterior $C$, reached set $Q$
+and the complete partition
+
+$$
+X_i=\begin{cases}Y_i,&\sigma_i=0,\\ Z_i,&\sigma_i=1,\end{cases}
+\qquad\text{all other classes distinct}.
+\tag{FNS.22}
+$$
+
+Let $\Theta_\sigma$ be (FNS.20) after these simultaneous substitutions, and
+let $\Lambda_\sigma$ be every cross-class inequality of this full partition.
+Then both exact descriptions are
+
+$$
+\begin{aligned}
+D_{r_\sigma}
+ &=\{\Theta_\sigma(\mathbf n,\mathbf y):
+       \Gamma_R(\mathbf n,\mathbf x^\sigma(\mathbf n,\mathbf y),\mathbf y)
+       \land\Lambda_\sigma(\mathbf n,\mathbf y)\}\\
+ &=\bigcup_{b\in\mathcal B_{I,r_\sigma}}
+   \{U_{r_\sigma,b}(\mathbf a,\mathbf z):
+       P_{r_\sigma,b}(\mathbf a)\land\Delta_{r_\sigma,b}(\mathbf a,\mathbf z)\}.
+\end{aligned}
+\tag{FNS.23}
+$$
+
+The second line, not the potentially positive first-line predicate, is the
+Cartesian negative chart used by Section 2.
+
+**Proof.** In the first line the substitution makes precisely the target
+within-class equalities literal; $\Lambda_\sigma$ keeps every other target
+comparison. The complete $\Gamma_R$ retains the entire original input,
+including old positives. Thus every image point has both the old row and
+$r_\sigma$. Conversely a source in $D_{r_\sigma}$ is recovered by the raw
+installation map with its actual ranks and $Y$ values; its complete target
+partition forces the substitutions and all $\Lambda_\sigma$ tests. The old
+predicate still holds on that same source. These prove the first equality.
+Lemma 4.2 proves the second equality in both directions.
+
+No old equality is presumed redundant. For example, if $P=Q$ and $R$ fixes
+$X_i=Y_i$, a target row requiring $X_i=Z_i$ and $Y_i\ne Z_i$ has empty
+stratum. More generally when $P=Q$, $D_r=\varnothing$ for every $r\ne R$.
+With $P=\{\varepsilon\}$ the singleton old class places no identification
+on different descendant role slots. These are two different admitted old
+inputs, handled by the same complete correspondence, not interchangeable
+boundaries. Attainment is checked on the full predicates. $\square$
+

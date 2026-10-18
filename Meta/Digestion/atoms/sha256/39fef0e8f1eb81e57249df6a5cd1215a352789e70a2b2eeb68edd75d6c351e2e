@@ -1,0 +1,38 @@
+**定理 60.2（实际原孔的运输和准确后来纤维）。** 对任意 $u=C[(z_{[i]})_i]\in\mathcal U_R$ 及 $n\ge0$，所有原孔址保持存在，并有
+
+$$
+\rho^n u=C^{(n)}[(\rho^n z_{[i]})_i],
+\qquad
+(\rho^n u)|_{p_i}=\rho^n z_{[i]},
+\tag{SLH.60.3}
+$$
+
+$$
+i\sim_\pi j
+\iff (\rho^n u)|_{p_i}=(\rho^n u)|_{p_j}.
+\tag{SLH.60.4}
+$$
+
+令 $\mathcal U_R(H)=\mathcal U_R\cap\mathcal V(H)$。若 $o_C(H)$ 为假，则此族为空；否则有双射
+
+$$
+\left\{(z_b)_{b\in B}:z_b\in L_b(H),\quad
+                       z_b\ne z_{b'}\ (b\ne b')\right\}
+\ \longleftrightarrow\ \mathcal U_R(H),
+\qquad (z_b)_b\longmapsto C[(z_{[i]})_i].
+\tag{SLH.60.5}
+$$
+
+上述原坐标候选族在纪元 $n$ 的像恰是 $\rho^n[\mathcal U_R(H)]$。原族与这个实际替换像互相恢复；像外树不属于逆向定义域。将它称为真实切点的准确来源族，还须通过假设62.1及定理62.2的控制、证据和版本条件。
+
+证明。式 (SLH.60.3) 直接迭代[运输与记忆卷 §22](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)的旧地址及上下文运输 (RA.2205)–(RA.2206)，$\rho^n$ 的单射和实际像逆由 (RA.2207) 供应。这给 (SLH.60.4) 的两个方向；不把不同纪元的两个子树拿来消去同一迭代。
+
+若 $q=p_i s$，原生字面导航和 (SLH.60.3) 给
+
+$$
+r_{\rho^n u}(p_i s)=r_{\rho^n z_{[i]}}(s),
+\tag{SLH.60.6}
+$$
+
+其 $n$ 是整个寄存器的同一个认证纪元，不因孔深增加或减少。若不存在这种孔前缀，则访问路径始终不进入任何未知孔；途中具体叶新长出的节点仍由该叶和 $n$ 完全确定，所以回复为 $\chi_C(n,q)$，包括深缺席情形。故全部原约束逐项等价于 $o_C(H)$ 和各 $z_b\in L_b(H)$；定理59.4再加入完整相异关系，给 (SLH.60.5) 的两个方向及唯一逆。实际像的互逆仍使用原供应的像解析，不把区间外壳或任意形状的当前树当成实际像。$\square$
+

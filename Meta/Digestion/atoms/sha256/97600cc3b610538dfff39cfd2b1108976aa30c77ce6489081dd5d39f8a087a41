@@ -1,0 +1,27 @@
+**命题 41.3（Crossed versus aligned absolute-response consumer）。** Fix $m=5$, $k=8$, $T=9$ and
+
+$$
+H_0=H_1=\{2,3\},\qquad
+\mathcal B_0(H_0)=\mathcal B_0(H_1)=00100.
+\tag{41.22}
+$$
+
+Let $a\ne b$ and choose $y_\bot=a$. The following two targets have the same supports, the same two actual output labels, and the same adaptive and GLOBAL minimum emitted-block fee one, supplied by Theorem 27.2. Their complete-controller minima at fee at most one differ:
+
+| Label assignment | $(A_0,B_0,A_1,B_1,y_\bot)$ | $(L,n,\epsilon)$ | Exact minimum |
+| --- | --- | --- | --- |
+| Crossed | $(a,b,b,a,a)$ | $(2,2,1)$ | $3$ |
+| Aligned | $(a,b,a,b,a)$ | $(2,2,0)$ | $4$ |
+
+Proof. Equation (41.14) gives the displayed literal word. Its only nonzero charges in (41.12) are at $j=2,3$. It starts zero and succeeds on all $2Tk=144$ live INITIAL records, including tail seven, under both original alphabets. With initial bottom the full source has $145$ records. Formula (41.9) gives the two exact counts, and the following tables expose the absolute-response difference without an external saved INITIAL value:
+
+| Target and running state | Emit | Response $0$ | Response $1$ | Response $\bot$ |
+| --- | --- | --- | --- | --- |
+| Crossed $R$ | $00100$ | $h_a$ | $h_b$ | $h_a$ |
+| Aligned $R_0$ | $00100$ | $h_a$ | $h_b$ | $h_a$ |
+| Aligned $R_1$ | $00100$ | $h_b$ | $h_a$ | $h_a$ |
+
+Both controllers also contain precisely $h_a,h_b$, with the literal Halt instructions and all three self-loops of Section 41.3. Crossed initialization is $c(0)=c(1)=R$, $c(\bot)=h_a$. Aligned initialization is $c(0)=R_0$, $c(1)=R_1$, $c(\bot)=h_a$. The tables and initialization give all states, instructions and response rows.
+
+In the crossed target the absolute endpoint already selects its literal output regardless of INITIAL value. In the aligned target, the same absolute endpoint requires opposite labels for the two INITIAL values. For example response zero arises outside $H_0$ at INITIAL value zero, requiring $a$, but inside $H_1$ at INITIAL value one, requiring $b$. These are actual full-source executions. The unique common root word cannot alter this conflict. Two running states retain the required distinction inside $K$. Equal support, fee and output count therefore do not determine complete action-memory compatibility. The lower bound excludes another word, rejection, a running cycle or a hidden free transition as a three-state aligned alternative. $\square$
+

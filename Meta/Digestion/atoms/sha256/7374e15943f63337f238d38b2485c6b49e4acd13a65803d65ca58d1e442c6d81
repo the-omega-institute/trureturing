@@ -1,0 +1,81 @@
+**Theorem 210.2 (A complete four-late support inequality).** For every
+$L\ge6$, every full score $V\ge0$, and $C=N,O$,
+
+$$
+-\beta_1-2\beta_2+2\sum_{j=3}^6\beta_j
+       +\sum_{j=7}^L\beta_j-K\le3\Delta_C(V).
+\tag{210.5}
+$$
+
+In the input family this reads
+$\sum_{j=3}^6\gamma_j\le W+\gamma_1+2\gamma_2+3\Delta_C(V)$.
+
+**Proof.** Set
+$b^\dagger=(3/4,1/2,1/2,1/2,1/2,1/2,1/4,\ldots,1/4;1/4)$.
+Its late sum is $(L+2)/4$; the lower hull inequality has slack $1/4$
+and the upper one is equality. Thus $b^\dagger\in H_L$.
+Give $R$ probability $1/4$ and each of the following stopped tables
+probability $1/8$:
+
+$$
+\begin{gathered}
+(1,3;1,3,0),\quad(1,4;1,4,0),\quad
+(2,3;0,3,0),\quad(2,4;0,4,0),\\
+(3,5;0,5,6),\quad(4,5;0,5,6).
+\end{gathered}
+\tag{210.6}
+$$
+
+For its output probabilities the following bounds hold on every
+word in each first-zero class. The last column is mass outside
+$\{0,n\}$, not a replacement for the independent pair demand.
+
+| First zero | Correct mass | Zero mass | Other mass |
+| --- | --- | --- | --- |
+| $1$ | $1/2$ | at least $1/4$ | at most $1/4$ |
+| $2$ | $1/4$ | $1/2$ | $1/4$ |
+| $3$ | $1/4$ | at least $1/2$ | at most $1/4$ |
+| $4$ | $1/4$ | $5/8$ | $1/8$ |
+| $5,6$ | $1/4$ | $3/4$ | $0$ |
+| $n>6$ | $0$ | $3/4$ | $1/4$ |
+
+At $1^L$ the zero mass is $3/4$. To check the only variable suffix
+cases, at $n=1$ a wrong output from $(2,k;0,k,0)$ requires $w_k=0$,
+whereas a nonzero output from $(k,5;0,5,6)$ requires $w_k=1$,
+for $k=3,4$. Each pair therefore contributes at most one wrong eighth.
+At $n=2$, exactly one table in each pair
+$\{(1,k;1,k,0),(k,5;0,5,6)\}$ is wrong. At $n=3$, $w_4=0$
+gives two wrong eighths and $w_4=1$ gives one. The remaining rows
+follow from the fixed prefix and do not constrain any later bit.
+These readings dominate all three event demands at $b^\dagger$.
+
+Remove the anchor component. The six other tables give a conic
+configuration $\lambda_0$ of mass $3/4$ with
+$G_O\lambda_0\ge h(b^\dagger)$; copying the stopped first cell
+gives the same inequality in $N$. Multiplication by $V$ gives
+
+$$
+F_{Q(V)}(b^\dagger)\le\tfrac34\Delta_C(V).
+\tag{210.7}
+$$
+
+Four times its left side is (210.5). Substituting $K=G+W$ proves
+the input specialization. For any complete certificate it also gives
+$F_q(b^\dagger)\le3\Delta_N(V)/4+\theta\le1$, with arbitrary
+signed residuals and all zero-cost cores included.
+
+The normalized seven-table mixture itself is an actual stopped rule
+for $a_1=3/4$, $a_2=\cdots=a_6=1/2$,
+$a_n=2^{-(n-5)}$ for $n\ge7$, at closed cap $1/4$.
+Partition one uniform seed into the displayed table probabilities
+before replies; execute the selected increasing schedule and return
+its mark. Every execution hands off after at most two actual requests.
+The three-event readings give error $1/4$ at each low first zero.
+For every actual $n>6$ the output is
+$(3/4)\delta_{\theta_0}+(1/4)\delta_{\theta_6}$, whose error is
+$\max(1/4,a_n)=1/4$, including $a_7=1/4$.
+Acquiring the full preselected schedule gives its $N$ realization by
+90.2 on the same seed. Thus this witness is feasible in both classes;
+it is no separator. The constant auxiliary tail of $b^\dagger$ has
+not replaced the actual vanishing tail. $\square$
+

@@ -1,0 +1,31 @@
+**Definition 6.1 (Band, summability and strong zero).** For a stationary legal $P$, let $(Tx)_i=x_{i+1}$. Choose a Borel exterior version of $q_0$ and put $q_i=q_0\circ T^i$, so that
+
+$$
+\mathcal E_i=\sigma(X_j:j\ne i),\qquad
+F_i=\{X_{i-1}=X_{i+1}=0\},\qquad
+q_i=\mathbb E_P[X_i\mid\mathcal E_i],\qquad
+\ell_i=(X_i-q_i)^2.
+$$
+
+The band $\mathsf B(P)$ means $q_i=0$ on $F_i^c$ and $1/4\le q_i\le1/2$ on $F_i$, almost surely. Define
+
+$$
+\begin{aligned}
+p_j^L&=\mathbb E_P[X_0\mid X_{-j},\ldots,X_{-1},X_1,X_2,\ldots],&
+e_L(j)&=\mathbb E_P(q_0-p_j^L)^2,\\
+p_j^R&=\mathbb E_P[X_0\mid\ldots,X_{-2},X_{-1},X_1,\ldots,X_j],&
+e_R(j)&=\mathbb E_P(q_0-p_j^R)^2,\\
+A_P&=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr).
+\end{aligned}
+\tag{6.1}
+$$
+
+At $j=0$ the whole opposite half-line is retained. Under the band and $A_P<\infty$, [Guarded, Lemma 2.2] supplies a saturated conull set where
+
+$$
+\Delta_P(x,z)=\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))
+\tag{6.2}
+$$
+
+is absolutely convergent for every legal finite modification. All losses use the original $P$ predictors. Strong zero, denoted $\mathsf Z_\Delta(P)$, asserts that this cocycle vanishes on every such pair in a saturated conull set. It is an additional pathwise premise.
+

@@ -1,0 +1,65 @@
+**Definition 2.1 (Spectral sectors).** Put
+
+$$
+D=\operatorname{diag}(1,i,i,i,1),\quad
+A=-iD^\dagger KD,\quad O(t)=e^{tA},\quad
+r=\sqrt {17},\quad \mu_\pm=\frac{5\pm r}{2},\quad
+\omega_\pm=\sqrt{\mu_\pm}.
+\tag{2.1}
+$$
+
+Thus $A$ is real skew-symmetric and $D^\dagger U(t)D=O(t)$. Define
+$B=-A^2$ and
+
+$$
+R_\pm=\frac{B(B-\mu_\mp I)}{\mu_\pm(\mu_\pm-\mu_\mp)},\qquad
+R_0=I-R_+-R_-=dd^T,\qquad d=\frac{e_2-e_5}{\sqrt2}.
+\tag{2.2}
+$$
+
+Use sector order $(0,+,-)$ and dimensions $(n_0,n_+,n_-)=(1,2,2)$.
+In block order $L=(N,25)$, $V=(2,3,5)$, all $L/V$ cross entries vanish, and
+
+$$
+R_+|_L=
+\begin{pmatrix}(r+1)/(2r)&2/r\\2/r&(r-1)/(2r)\end{pmatrix},
+\quad
+R_+|_V=
+\begin{pmatrix}
+(r+3)/(4r)&1/r&(r+3)/(4r)\\
+1/r&(r-3)/(2r)&1/r\\
+(r+3)/(4r)&1/r&(r+3)/(4r)
+\end{pmatrix},
+\tag{2.3}
+$$
+
+$$
+R_0|_L=0,\qquad
+R_0|_V=\frac12
+\begin{pmatrix}1&0&-1\\0&0&0\\-1&0&1\end{pmatrix},
+\qquad R_-=I-R_0-R_+.
+\tag{2.4}
+$$
+
+These matrices directly give $R_iR_j=\delta_{ij}R_i$,
+$\operatorname{tr}R_i=n_i$ and $BR_\pm=\mu_\pm R_\pm$.
+For $j=\pm$ put
+
+$$
+W_j=\frac{AR_j}{\omega_j},\quad
+u_\pm=\frac{R_\pm e_N}{\sqrt{(1\pm1/r)/2}},\quad
+w_j(\theta)=\cos\theta\,u_j+\sin\theta\,W_ju_j,
+\tag{2.5}
+$$
+
+and
+
+$$
+G(\alpha,\beta)=R_0+\cos\alpha\,R_++\sin\alpha\,W_+
++\cos\beta\,R_-+\sin\beta\,W_-.
+\tag{2.6}
+$$
+
+These are passive design and integration coordinates, not new allowed
+physical controls. The actual walk is $G(\omega_+t,\omega_-t)$.
+

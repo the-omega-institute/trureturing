@@ -1,0 +1,133 @@
+**Theorem 7.1 (actual common-suffix certificate packing).** Use Convention
+6.1 and Notation 6.2, and suppose $\delta>0$. Define
+
+$$
+\lambda=b+u-q+1,\qquad
+J=\{t\in\mathbb Z:\max(0,v-\xi)\le t\le\min(u,q-\eta-1)\}.
+\tag{WTF.22}
+$$
+
+Then $\lambda,v$ are positive and $J$ is nonempty. For every assignment
+$\omega\in\{0,1\}^U$ of weight $t\in J$, there are two actual cube
+sources completing the respective histories, agreeing outside $I$,
+with original prescribed entries $e_0,e_1$.
+
+Their suffixes from the common state have a first different native
+reply, at one original installed state with fixed word
+$a_*\in E_i$ for some $i\in D_I$. Just before that invocation, the two
+actual histories have already acquired respectively a negative and a
+positive cube-threshold certificate. This invocation is a paid requery
+of a coordinate old on both histories.
+
+Write $X_1=\{i\in X:\eta_S(i)=1\}$ and
+$Y_0=\{i\in Y:\eta_T(i)=0\}$, and let $U_0,U_1$ be the zero and one
+sets of $\omega$. Before that first different reply, the common suffix
+contains shortest-root certificate calls at disjoint sets
+
+$$
+C_-\subseteq Y_0\cup U_0,\quad |C_-|=\lambda,\qquad
+C_+\subseteq X_1\cup U_1,\quad |C_+|=v.
+\tag{WTF.23}
+$$
+
+These calls together with the first differing call occupy
+$\lambda+v+1$ distinct original installed selected states and obey
+
+$$
+\begin{aligned}
+\lambda+v+1&\le u+\min(a,b),\\
+C_{C_-}+C_{C_+}+|a_*|&\le C_U+\min(C_X,C_Y).
+\end{aligned}
+\tag{WTF.24}
+$$
+
+The certificate statement concerns the cube threshold; it need not
+discharge all original-profile obligations or perform the actual entry.
+
+Proof. Liveness gives $q\le b+u$, so $\lambda\ge1$, and $v\ge1$.
+Since $\delta>0$, integrality gives $v-\xi\le q-\eta-1$.
+By (WTF.20) and $\eta\le b$, the right endpoint before clipping is
+nonnegative, and $v-\xi\le u$. Hence clipping both to $[0,u]$
+leaves a nonempty integer interval.
+
+Fix any allowed $\omega$. On both sources put the old $S$ values on
+$X$, the old $T$ values on $Y$, and $\omega$ on $U$. On $I$ keep
+the respective history's own values. The resulting vectors, denoted
+$\theta^-,\theta^+$, each extend their own actual history, differ only
+on $D_I$, and have weights
+
+$$
+|\theta^-|=h+\eta+t\le k-1,\qquad
+|\theta^+|=g+\xi+t\ge k.
+\tag{WTF.25}
+$$
+
+Supplier 2.1 realizes each as a genuine finite original source. Every
+old constant and selected reply in its own incoming history is
+unchanged, so each reaches the same original shared state as stipulated.
+
+From that state, identical actual replies give identical fixed
+successors. If no reply ever differed, termination would give the same
+literal entry on both sources, contradicting (WTF.25). There is a first
+different reply at a common running state. The complete all-address
+classification places its word in $E_i$ for $i\in D_I$: every other
+coordinate and every cube-constant word has the same reply. In
+particular $D_I\ne\varnothing$.
+
+That coordinate was exposed on both histories before the shared state.
+If either history were still live immediately before this requery,
+the live freshness supplier would prohibit that very invocation.
+Both are therefore nonlive. Exposures cannot remove a genuine
+certificate, and their final signs are respectively zero and one.
+Thus the negative source has exposed at least $n-k+1$ zeros and the
+positive source at least $k$ ones before the requery.
+
+Initially the negative history had $|S|-h$ zeros. It needs precisely
+
+$$
+(n-k+1)-(|S|-h)=b+u-q+1=\lambda
+\tag{WTF.26}
+$$
+
+new zeros for its first negative certificate. Take their first
+exposures. They are in $Y_0\cup U_0$, since these are the zeros outside
+$S$ on that source. Each is queried while that source is still live,
+including the exposure completing its certificate, and therefore at
+a shortest occurrence root of length $c_i$. Similarly take the $v$
+first new one exposures completing the positive source's first positive
+certificate. They lie in $X_1\cup U_1$ and are shortest-root calls.
+All occur before the first different reply and so are on one common
+state sequence. A zero and a one outside $I$ cannot have the same
+coordinate, as the sources agree there. This proves (WTF.23).
+Their coordinates are distinct and outside $I$, whereas $a_*$ reads
+$I$, proving the asserted distinct installed-state count. In addition,
+sourcewise termination keeps the requery state distinct from its
+earlier prefix state on each source.
+
+Every prefix leading to an initially live history is itself live.
+Consequently those two incoming prefixes contain respectively $|S|$
+and $|T|$ selected calls with charges exactly $C_S,C_T$.
+Lemma 2.2 applies separately to each completed source even at these
+nonsaturated final weights. Each complete run therefore has at most
+$n$ selected visits and at most $W$ selected letters. The selected
+calls just identified give, separately,
+
+$$
+\begin{array}{ll}
+|S|+\lambda+v+1\le n,&
+C_S+C_{C_-}+C_{C_+}+|a_*|\le W,\\
+|T|+\lambda+v+1\le n,&
+C_T+C_{C_-}+C_{C_+}+|a_*|\le W.
+\end{array}
+\tag{WTF.27}
+$$
+
+Other calls can only consume further budget. Now
+$n-\max(|S|,|T|)=u+\min(a,b)$ and
+$W-\max(C_S,C_T)=C_U+\min(C_X,C_Y)$.
+These are exactly (WTF.24). Taking the tighter of two same-source
+constraints does not add costs of different sources. The compulsory
+nonselected invocation can lie before the common state, inside the
+common suffix, or after its first different reply; no common timing
+assumption was used. $\square$
+

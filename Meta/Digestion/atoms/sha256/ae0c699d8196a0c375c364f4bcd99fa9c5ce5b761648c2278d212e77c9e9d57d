@@ -1,0 +1,89 @@
+### 62.3 Exact rank and the full three-dimensional kernel
+
+Put \(p=(\sqrt3+i)/2\), \(t=-2i/\sqrt3\), and let \(I=I_3\).
+Differentiating the actual radical family (60.1) gives
+
+\[
+ M'(0)=\begin{pmatrix}pI&-pI\\-\bar pI&-\bar pI\end{pmatrix},
+ \qquad
+ M''(0)=\begin{pmatrix}tI&tI\\-tI&tI\end{pmatrix}.
+\tag{62.3}
+\]
+
+Set \(Y=M(0)V\), \(Y'=M'(0)V\). Before taking real and imaginary
+parts, the Gram derivative at the variable \(\theta_{r\ell}\) is
+
+\[
+ i\bar V_{rj}V_{rk}(\delta_{\ell k}-\delta_{\ell j});
+\]
+
+its parameter derivative is zero. For the output row indexed by \((a,k)\),
+
+\[
+ \begin{aligned}
+ \partial_{\theta_{r\ell}}F_{ak}
+   &=2\delta_{\ell k}\operatorname{Re}
+       (i\bar Y_{ak}M(0)_{ar}V_{rk}),\\
+ \partial_bF_{ak}&=2\operatorname{Re}(\bar Y_{ak}Y'_{ak}).
+ \end{aligned}
+\tag{62.4}
+\]
+
+These formulas specify the full real matrix \(\mathcal J\) over
+\(\mathbb Q(\sqrt3)\). Select columns \(0,\ldots,27\) and rows
+
+\[
+ \rho=(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,
+ 22,23,29,30,31,32,35,36,40,50).
+\]
+
+Exact elimination gives
+
+\[
+ \det\mathcal J[\rho,0{:}28]=-153055008\ne0.
+\tag{62.5}
+\]
+
+Here \(0{:}28\) denotes columns zero through 27. To describe the full
+kernel, put \(s=\sqrt3\) and define
+
+\[
+ \begin{aligned}
+ A_+&=(-2+s,-1+s,-1+s,s,-2),\\
+ A_-&=(-1,1+s,-1+s,1,0),\\
+ B_+&=(-1+s,-2+s,-1+s,-2,s),\\
+ B_-&=(1+s,-1,-1+s,0,1).
+ \end{aligned}
+\]
+
+Let \(K_1\) have successive five-phase blocks
+\((A_+,A_-,A_+,A_-,A_+,A_-)\) and final parameter coordinate zero.
+Define \(K_2\) similarly with \(B_+,B_-\). Let \(K_c\) have final
+parameter coordinate one and phase entries
+
+\[
+ (K_c)_{rk}=
+ \begin{cases}-1,&k\ge2\text{ and }r\ge3,\\0,&\text{otherwise}.
+ \end{cases}
+\]
+
+Direct multiplication in (62.4) gives
+\(\mathcal JK_1=\mathcal JK_2=\mathcal JK_c=0\). Their coordinate
+submatrix on indices \((28,29,30)\) is
+
+\[
+ \begin{pmatrix}1&0&-1\\0&1&-1\\0&0&1\end{pmatrix}.
+\]
+
+It has determinant one. Together with (62.5), this proves
+
+\[
+ \operatorname{rank}\mathcal J=28,\qquad
+ \ker\mathcal J=\operatorname{span}_{\mathbb R}\{K_1,K_2,K_c\}.
+\tag{62.6}
+\]
+
+The vector \(K_c\) is the tangent to the actual canonical family.
+The repeated patterns of \(K_1,K_2\) are consequences of the complete
+Jacobian calculation, not assumptions on candidate bases.
+

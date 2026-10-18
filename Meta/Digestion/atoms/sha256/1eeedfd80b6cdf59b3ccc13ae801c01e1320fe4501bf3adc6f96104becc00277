@@ -1,0 +1,59 @@
+**命题 471.2。** 对每个 $r>0$，
+
+$$
+E'(r)=-\int_1^\infty\frac{\eta(y)}{y^2}
+[(r+\log y)^{-2}+2(r+\log y)^{-3}]dy,
+\qquad |E'(r)|\le2(r^{-2}+2r^{-3}).
+\tag{FD.5}
+$$
+
+**证明。** 固定 $r_0>0$，在邻域 $r_0/2<r<3r_0/2$ 上，逐点导数的绝对值不超过
+
+$$
+(4r_0^{-2}+16r_0^{-3})(1+\log y)y^{-2}.
+$$
+
+该函数在完整 $(1,\infty)$ 可积，$\eta$ 可测，基点的原积分可积。参数积分求导定理因此适用；积分导数的上界再由积分为 $2$ 得出。这里 $\eta(y)$ 始终是固定乘子，没有对阶乘、floor 或 FD.4 的误差不等式求导。证毕。
+
+同一实际 dyadic 权满足
+
+$$
+b_x(s)=F_\ell(r)-\tfrac12F_\ell(r+L)+E(r)-\tfrac12E(r+L).
+\tag{FD.6}
+$$
+
+其中 $1/2$ 来自 $sP_x(2s)=Q_x(2s)/2$，不能删去。对 $s>x$ 求导，得到
+
+$$
+sb'_x(s)=S_\ell(r)+E'(r)-\tfrac12E'(r+L),
+$$
+$$
+S_\ell(r)=\tfrac12\log(r/\ell)+\frac1{2\ell}
+-\tfrac12\log(1+L/r)+r^{-2}-\tfrac12(r+L)^{-2}.
+\tag{FD.7}
+$$
+
+这是对实际 $b_x$ 的恒等式。由 FD.5，完整高域导数误差满足
+
+$$
+|sb'_x(s)-S_\ell(r)|\le3r^{-2}+6r^{-3}.
+\tag{FD.8}
+$$
+
+因为 $0<L<1$、$\log(1+L/r)\le L/r$ 和 $r\ge\ell\ge1$，
+
+$$
+0\le\tfrac12\log(r/\ell)+\frac{1-L}{2\ell}
+\le S_\ell(r)\le\tfrac12\log(r/\ell)+\frac1{2\ell}+r^{-2}.
+$$
+
+故得到完整且显式的导数预算
+
+$$
+\boxed{|sb'_x(s)|\le\tfrac12\log(r/\ell)+\frac1{2\ell}+4r^{-2}+6r^{-3}
+\le\tfrac12\log(r/\ell)+\frac{21}{2\ell}.}
+\tag{FD.9}
+$$
+
+固定 $x$ 时，该界为 $|b'_x(s)|=O_x(\log\log s/s)$；固定 $u>1$ 而取 $s=ux$ 时，它为 $O_u(1/(s\log x))$。
+

@@ -1,0 +1,38 @@
+## 62. 三层维数账本与不可约三体算术场
+
+“二生三，三开始有无限可能”的数学解释需要把线性载体、概率流形和可见商分开。对未归一化五态向量空间 \(E=\mathbb R^\Sigma\)，可见投影 \(P:E\to\mathbb R^3\) 满秩，且
+
+\[
+\ker P=\operatorname{span}\{e_0,d\},
+\qquad
+\dim E=2+3=5.
+\tag{62.1}
+\]
+
+这里 \(e_0\) 是离开总质量归一化超平面的方向，\(d\) 才是归一化概率场内部的真实隐藏纤维方向。令
+
+\[
+T_0=\left\{v\in\mathbb R^\Sigma:\sum_sv_s=0\right\}.
+\]
+
+则
+
+\[
+\dim T_0=4,\qquad
+\ker(P|_{T_0})=\mathbb R d,\qquad
+\dim\operatorname{im}(P|_{T_0})=3.
+\tag{62.2}
+\]
+
+同一结构的严格维数账本是
+
+\[
+\underbrace{5}_{\text{未归一化坐标}}
+\longrightarrow
+\underbrace{4}_{\text{概率流形切空间}}
+\longrightarrow
+\underbrace{3}_{\text{可见投影}},
+\]
+
+同时保留一个真实的归一化隐藏方向。因此 \(2+3=5\) 是线性载体的秩零化关系，不是说概率单纯形本身有五个内禀维数。
+

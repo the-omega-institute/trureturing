@@ -1,0 +1,37 @@
+**Corollary 6.3 (monotonicity and eventual stabilization).** Fix gaps
+$g$ and the associated offsets $p_i$. The function
+
+$$
+b\longmapsto m_{\mathrm{exec}}((b+p_i)_{i=1}^n,k),
+\qquad b\in\mathbb Z,\ b\ge5,
+$$
+
+is nonincreasing, and is constant for every $b\ge b_0(g)$.
+Its stable value is
+
+$$
+\min\{|Q_P|:P\in\mathcal T_{n,k},\ B_Pg\le0\}.
+\tag{TC.13}
+$$
+
+For any original $c$, integer $h\ge0$ and positive integer $q$,
+
+$$
+m_{\mathrm{exec}}(c+h\mathbf1,k)
+ \le m_{\mathrm{exec}}(c,k),\qquad
+m_{\mathrm{exec}}(qc,k)=m_{\mathrm{exec}}(c,k).
+$$
+
+Proof. Increasing $b$ by $h$ changes each actual excess by
+$h(t(x)-n)\le0$, so preserves feasibility. Theorem 6.2 makes
+every shorter-run constraint automatic for every table once
+$b\ge b_0(g)$; beyond that bound the feasible set of tables
+is precisely the set in (TC.13). The grid belongs to that set, so
+its installed counts have a minimum. Scaling $c$ by $q>0$
+multiplies every actual excess by $q$, giving exactly the same
+feasible tables. All these cost vectors are admissible original
+position instances, with positions obtained by subtracting four.
+They compare different parameter instances; they do not authorize
+changing the supplied code or addresses within a fixed native task.
+No independence from the gaps is asserted. $\square$
+

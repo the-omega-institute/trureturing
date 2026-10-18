@@ -1,0 +1,27 @@
+**Definition 1.3 (Hard two actual requests and full finite catalogs).**
+An original acquisition has one source-independent seed, zero advice
+and sourcewise almost-sure finite measurable handoff to the unchanged
+consumer. In $\mathcal N_2$ the whole schedule is preselected and all
+its replies are acquired. In $\mathcal O_2$ an increasing schedule is
+preselected and execution stops at its first queried zero or exhaustion.
+The second address cannot depend on a reply. At most two actual
+requests are allowed, including repetitions and ignored replies.
+Competitors retain arbitrary addresses and arbitrary Borel outputs in
+$\Theta$. There is no source distribution, free source label, free
+$r,g,N,n$, free reply prefix, address bound, runtime bound or
+mean-request relaxation. Outputs depend on seed and acquired transcript.
+
+For $K$ finite bits the complete $N$ catalog contains constants,
+singletons and every $N(i,j;r_{00},r_{01},r_{10},r_{11})$ with four
+independent output labels in $\{0,\ldots,K\}$. The complete $O$
+catalog contains constants, singletons and every $O(i,j;f,m,z)$,
+$i<j$, on stopped cells $0,10,11$. Earlier and unqueried output
+labels remain legal. Static reversal permutes cells, and repetition
+gives singleton information. Finite contraction does not refund any
+original actual request.
+
+A stopped table has counted completion $N(i,j;f,f,m,z)$, which
+acquires the ignored second reply after an early zero. This embeds
+stopped laws in $N$ without converting an arbitrary competing $N$
+law into $O$.
+

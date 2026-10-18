@@ -1,0 +1,15 @@
+**Assumption 14.1 (signed pure interface and full support).** In addition
+to Assumption 1.2, assume the signed pure-contact information of the
+connected-interval source, Definition 3.1 and its strict signed geometry:
+there are two circle points with $u<0$ and with respectively
+$\ell>0$ and $\ell<0$. In that contact indexing they are pure
+indices $1$ and $2$, with report sign $-$ and height signs $+$ and
+$-$, respectively. Only these signed points are required here; no
+numeric contact table or enlarged budget interval is required.
+At a strict weak request, use RC §68's jointly feasible two-sheet
+law whose pure component $\mu_0$ has full circle support and whose
+achieved contrast strictly exceeds the request, as described in §7.
+Keep its jointly feasible saturated component $\mu_1$. Full support
+means every nonempty open arc has positive $\mu_0$ mass; it does
+not require a uniform positive density lower bound.
+

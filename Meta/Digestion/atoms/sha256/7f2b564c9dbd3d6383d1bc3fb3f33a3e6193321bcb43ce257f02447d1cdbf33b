@@ -1,0 +1,63 @@
+### 2.1. The measurable decomposition and the exterior component label
+
+The space $X$ is a closed subset of the compact metrizable binary product,
+so it is Polish with its Borel sigma-field standard. The shift $T$ is
+invertible and Borel. Thus [Gray, Theorem 8.5.1][Gray] applies to the
+stationary dynamical system $(X,Q_\star,T)$. In the realization used in
+that theorem's proof, $\Lambda$ is the Borel set of stationary ergodic
+probability measures on $X$ and $R_\lambda=\lambda$. In particular each
+component is a normalized law on the original visible space. The evaluation
+maps $\lambda\mapsto R_\lambda(C)$ are measurable for Borel $C\subseteq X$.
+The theorem gives an invariant measurable $\psi$, and asserts that
+$R_{\psi(x)}(C)$ is a version of $Q_\star(C\mid\psi)$.
+
+The process is two-sided, stationary, and has the finite, hence standard,
+alphabet $\{0,1\}$. [Gray, Lemma 8.6.2][Gray] therefore permits the same
+component map to be chosen measurable with respect to
+$\sigma(X_j:j<0)$. This lemma does not assume finite visible Markov order.
+For every integer $i$, $\psi\circ T^i$ is measurable with respect to
+$\sigma(X_j:j<i)\subseteq\mathcal E_i$. Invariance identifies it with
+$\psi$. It is enough if this identification holds $Q_\star$-almost surely;
+the countably many coordinate identifications can be imposed together.
+Consequently, for every $H$ in the Borel sigma-field $\mathcal L$ of
+$\Lambda$, $\mathbf1_{\{\psi\in H\}}$ has an
+$\mathcal E_i$-measurable version for every $i$.
+
+To make the joint-law claim explicit, define the probability measure
+
+$$
+J=(\psi,\operatorname{id}_X)_*Q_\star
+\quad\text{on }\Lambda\times X.
+$$
+
+The conditional-probability assertion of Theorem 8.5.1 says that, for
+$H\in\mathcal L$ and Borel $C\subseteq X$,
+
+$$
+J(H\times C)=Q_\star(\{\psi\in H\}\cap C)
+=\int_H R_\lambda(C)\,dW(\lambda).
+\tag{2.5}
+$$
+
+Measurability of the probability kernel extends (2.5), first by simple
+functions and then by monotone convergence on the product sigma-field, to
+
+$$
+\int f(\psi(x),x)\,dQ_\star(x)
+=\int_\Lambda\int_X f(\lambda,x)\,dR_\lambda(x)\,dW(\lambda)
+\tag{2.6}
+$$
+
+for every bounded Borel $f$ on $\Lambda\times X$. This is the joint law
+used throughout the proof; its $X$-marginal is $Q_\star$, its
+$\Lambda$-marginal is $W$, and it is concentrated on $\psi(x)=\lambda$.
+The latter graph is Borel because $\Lambda$ is standard Borel. Applying
+(2.6) to its indicator shows that
+
+$$
+\Lambda_0=\{\lambda:R_\lambda(\{x:\psi(x)=\lambda\})=1\}
+$$
+
+is measurable and conull. This also specifies the component fiber under
+each law in the common set constructed below.
+

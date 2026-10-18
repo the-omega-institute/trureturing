@@ -1,0 +1,49 @@
+**Definition 4.3 (switching mass and deficits).** Set $w=\zeta\{r=a\}$ and
+
+$$
+J=\mathbb E_\zeta[\mathbf1_{r=a}\theta_x]
+ =\mathbb E_\zeta[\mathbf1_{r=b}(1-\theta_x)].
+\tag{4.5}
+$$
+
+The equality follows from stationarity of the mark: its next high-mark probability is $\pi\theta=\tau\{v=b\}=1-w$. Hence the low-to-high and high-to-low masses balance.
+
+Put
+
+$$
+L=\mathbb E_\zeta[\mathbf1_{r=a}(G_a-g^*_{a,x})],
+\qquad
+H=\mathbb E_\zeta[\mathbf1_{r=b}(g^*_{b,x}-G_b)]
+$$
+
+and
+
+$$
+k_a=G_a(c_b-c_a)+T_a(b-a)=1664/759375,
+$$
+
+$$
+k_b=G_b(c_b-c_a)+T_b(b-a)=832/421875.
+$$
+
+Subtraction in (4.2) gives
+
+$$
+G_a-g^*_{a,x}=k_a\theta_x/c_x,
+\qquad
+g^*_{b,x}-G_b=k_b(1-\theta_x)/c_x.
+\tag{4.6}
+$$
+
+Thus $L,H\ge0$, and the common switching mass in (4.5) implies
+
+$$
+H\le R L,
+\qquad
+J\le(c_b/k_a)L,
+\qquad
+R=\frac{k_bc_b}{k_ac_a}=\frac{59049}{62500}<\frac{19}{20},
+\qquad c_b/k_a=6561/416<16.
+\tag{4.7}
+$$
+

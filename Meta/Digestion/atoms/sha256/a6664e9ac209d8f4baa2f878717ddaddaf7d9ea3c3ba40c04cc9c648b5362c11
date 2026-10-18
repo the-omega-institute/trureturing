@@ -1,0 +1,38 @@
+**Theorem 23.2 (the complete conditional interaction-width frontier).**
+For the identical acquired entry, target and services of Assumption
+21.1, the frontier of Definition 21.2 is
+
+$$
+\boxed{
+L(k)=\begin{cases}
+\infty,&k=0,1,\\
+6,&k=2,\\
+5,&\text{every finite integer }k\ge3.
+\end{cases}}
+\tag{NARC.23.2}
+$$
+
+In particular, the minimum worst-case chronological Read count at
+five mutable bits is exactly three.
+
+**Proof.** A common initial halt yields only one output. If the initial
+word runs, a budget of one Read requires every actual successor to
+halt immediately. That one fixed literal has only four replies, hence
+at most four different full halt outputs. Neither zero nor one Read
+can supply the seven required integers, at any finite word width.
+
+For $k=2$, Assumption 21.1 is exactly the writable contract of
+Assumption 17.4. Theorem 20.1's lower bound ranges over every finite
+installed-state budget and all literal queries, using the all-address
+and forced-support proof of Theorem 18.1. Proposition 19.2 supplies
+the matching six-bit actual certificate on these same fifteen histories.
+Thus $L(2)=6$. The result is reused with its whole controller family;
+no restriction to a particular two-Read table is introduced.
+
+Theorem 22.2 gives $L(3)\le5$. The same table still first halts within
+three Reads when any larger finite at-most allowance is available,
+so $L(k)\le5$ for every $k\ge3$. Theorem 23.1 excludes all shorter
+widths at each such allowance. This proves equality. The two-Read
+exclusion also proves the lower half of the stated minimum Read count
+at width five, and the new table attains its upper half. $\square$
+

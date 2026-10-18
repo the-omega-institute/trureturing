@@ -1,0 +1,9 @@
+**定义2.8（边缘条件更新缺陷）。** 合法下一操作 $x$ 的预测柱概率 $q_h(x)>0$ 时，条件化并删除原操作块得到 $\operatorname{res}_xQ_h$，置
+
+$$
+\delta(h,x)=\operatorname{TV}(\operatorname{res}_xQ_h,Q_{hx}).
+\tag{2.5}
+$$
+
+$q_h(x)=0$ 时约定缺陷0，不选择虚构条件律，实际后继和风险仍在域内。$\Delta_4$ 对第四段全部正实际历史及合法下一 Read 取上确界；$\Delta_{\rm all}$ 对第一笔 Read 前至 deliveredStop 的原全部正有限历史和合法操作取上确界。pending 的唯一 Stop 后继缺陷0，delivered 空上确界0。
+

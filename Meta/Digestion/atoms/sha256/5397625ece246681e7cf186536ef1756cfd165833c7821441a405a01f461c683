@@ -1,0 +1,33 @@
+**Corollary 20.2 (global original upper bound).** Let $Y,Z_f$ be
+the physical matrices AC.64–.65 evaluated at the selected $d(t,\lambda)$;
+in particular $Z_f$ includes the factor $1/t$. Then
+$dB=\operatorname{tr}Y+\operatorname{tr}(Z_fM_2)$ and every
+admitted original weak competitor obeys
+
+$$
+T_{\rm actual}\le\frac12
+ [H_0+dB-\lambda(\sqrt\alpha/s_0)s].
+\tag{AC.110}
+$$
+
+Proof. Substitution gives
+$d\Gamma_0=h^TYh$ and
+$d\Gamma_1=h^TYh+tc(h)\widehat n_h^TZ_f\widehat n_h$.
+For its **own** $b\in[0,tc(h)]$, the absolute-value convex chord
+therefore gives
+
+$$
+h^TYh+b\widehat n_h^TZ_f\widehat n_h
+\ge|\ell(h)+bf(h)|+\lambda|u|.
+\tag{AC.111}
+$$
+
+Integrate the full live Gram and physical failure covariance. Since
+the actual report satisfies $s\le\mathsf V(F)\le C_s\int|u|dp$,
+AC.110 follows with the original HALF factor. FA69/87 supplies this
+reduction for the full complex/multi-Kraus class, with each competitor's
+admitted time laws. No failure direction, low-sheet support or maximum
+live-height decomposition was imposed on that class. Supported-zero
+full encoders contribute zero supported height and are still admitted.
+$\square$
+

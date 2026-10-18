@@ -1,0 +1,24 @@
+**定理 18.4.2（分支预算的加权上界）。** 有
+
+$$
+\boxed{
+\eta_{\mathrm{KL}}(K_{\mathrm{br}})
+\le
+\sum_{i\in I}\lambda_i\eta_{\mathrm{KL}}(K_i).
+}
+$$
+
+**证明。**
+
+由于不同 $i$ 的输出支持不交，
+
+$$
+D(pK_{\mathrm{br}}\Vert qK_{\mathrm{br}})
+=
+\sum_i\lambda_iD(pK_i\Vert qK_i).
+$$
+
+每一项至多为 $\lambda_i\eta_{\mathrm{KL}}(K_i)D(p\Vert q)$；求和并取上确界即得。证毕。
+
+<a id="claim-18-4-3"></a>
+

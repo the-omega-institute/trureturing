@@ -1,0 +1,17 @@
+**Convention 1.1 (additional operation class).** The assisted service in this
+volume is a common calibrated quantum instrument acting jointly on the live
+specimen and one supplied helper. Its success target is the exact specimen
+state at a declared endpoint or checkpoint. It keeps the full auxiliary
+success output. Its executed failure stops the specimen and retains the
+actual failure residue. This service, its coherent helper access, blank
+ancillas and implementation permission are additional premises. It is not
+the canonical exact-time, five-mode stopped instrument of
+[Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md),
+(OC.19)–(OC.19b). The two services generally have different probabilities
+and different complete failure outputs.
+
+The original scientific consumer is narrow and concrete: implement a common
+phase-preserving height leg on one unknown original specimen, then keep
+usable actual memory for subsequent declared cuts. Neither a numerical
+overlap nor a compact specimen representation is that acquired memory.
+

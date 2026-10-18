@@ -1,0 +1,22 @@
+### 60.4 A positive diagonal target
+
+Let \(X(z)\) be the 30 mixed cubic monomials, omitting the five pure
+cubes, and let \(e\) select the monomial \(z_0z_1z_2\). Put \(x=b^2\) and
+
+\[
+ \begin{aligned}
+ S(x)={}&767x^6-9225x^5+26487x^4-16011x^3
+              +25758x^2+34992x+5832,\\
+ T(x)={}&5408x^{10}-18831x^9-691668x^8+4787046x^7-4239945x^6\\
+       &-13850757x^5-10793574x^4-49618656x^3
+              -57874581x^2-23737698x-3306744,\\
+ D(x)={}&3(x+1)(x+3)^2S(x),\qquad
+ G(x)=D(x)I_{30}-T(x)ee^*.
+ \end{aligned}
+\tag{60.7}
+\]
+
+The coefficient vector of \(X^*G X\) is \(\tau\)-fixed: both its mixed
+cubic diagonal and the selected monomial are invariant under exchanging
+indices 0 and 1. Let \(t\in\mathbb L^{406}\) be its encoding from §60.3.
+

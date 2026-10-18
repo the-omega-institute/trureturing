@@ -1,0 +1,14 @@
+### 107.5. Every other finite place, including denominator and ramified primes
+
+Use normalized prime-ideal valuations v_P(P)=1. For any rational p, the norm valuation is the sum of f(P/p)v_P(beta) over P|p.
+
+First suppose p|M. Then p>5, p is ramified in K, and its unique prime has residue degree 1. The exact cube norm therefore forces its valuation to be a multiple of 3. This includes all possible overlap between D and C or D' and C', and any resulting negative valuation from B^2; no integrality assumption at these primes is used.
+
+Next suppose p is inert in K. Its unique residue degree is 2, so the cube norm gives 2v_P(beta)=0 modulo 3, hence v_P(beta)=0 modulo 3. The case p=2 or 3 cannot occur here because both split.
+
+It remains to treat a split p not dividing 6M. If p|B, then p does not divide D, and v_p(B)=2e with e=v_p(C)>=1. Since B'=3 modulo p, neither B' nor C' is divisible by p. In both embeddings, v_p(r)=e, whereas v_p(q)=2e because 2B-3 is a unit. Hence v_p(r+q)=e. The denominator B^2 has valuation 4e, giving exactly v_P(beta)=-3e at each prime above p.
+
+If p does not divide B, beta is integral in both embeddings. Both valuations cannot be positive: otherwise both r+q and -r+q vanish modulo p, hence r=q=0 there. Since B is a unit, these equations force G(B)=0 and 2B-3=0 modulo p. But G(3/2)=-3/8, which is nonzero for p not dividing 6. This is impossible. Thus at least one valuation is zero, and the cube norm forces the other to be a multiple of 3.
+
+These cases exhaust every finite place. They account, in particular, for primes of even depth, primes in C or C', primes dividing both a kernel and its square multiplier, and every possible denominator. This proves (d)'s valuation assertion without a squarefree-block hypothesis.
+

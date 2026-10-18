@@ -1,0 +1,23 @@
+## 83. 初始平台的明确常数和严格谱取向
+
+令
+
+$$
+\psi_\star=\psi(r_\star)<0,\qquad
+k_\star=k_{r_\star},\qquad d_\star=d_{r_\star}.
+$$
+
+在平台端点， $\lambda=0$。设 $\mu_\star=H_{02}/q_{02}$，则 (RC.131) 可化为
+
+$$
+\mathcal Y_\star
+=G-2\mu_\star Q-2\psi_\star f_0f_0^T.
+$$
+
+所以在 null 椭圆上
+
+$$
+D_\star(h)=\ell(h)-2\psi_\star(f_0^Th)^2.
+\tag{RC.144}
+$$
+

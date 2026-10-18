@@ -1,0 +1,24 @@
+### 101.9. Alternate proof of the product balance by Hilbert reciprocity
+
+**Proof of the product assertion in Theorem 101.1.**
+
+Keep exactly Theorem 101.1's hypotheses and put K0=Q(sqrt(5)), beta=-1-F_N sqrt(5), and gamma=8+3sqrt(5). Consider the quadratic Hilbert symbols (beta,gamma)_v over all places of K0. Their product is 1. We calculate every local contribution.
+
+**Real places.** Both conjugates of gamma are positive. Thus both real Hilbert symbols are 1, regardless of the signs of beta.
+
+**Places above two.** The full-ring computation gives beta in 1+4 O_(K0,v). Its square root defines an unramified quadratic algebra, by the étale polynomial already displayed. Gamma is a unit because its norm is the odd integer 19. Every unit is a norm from an unramified quadratic local extension (and everything is a norm from the split algebra). Hence the local Hilbert symbol is 1.
+
+**The place above five.** Both beta and gamma are units: their norms are -D C^2, coprime to five, and 19. Over a local field of odd residue characteristic, two units have Hilbert symbol 1. Thus this place contributes 1.
+
+**Places above 19.** The prime splits in K0, and the residues of beta at its two primes are 16 and 1. Hensel's lemma makes beta a square in each local field because these are nonzero squares and 19 is odd. Both Hilbert symbols are therefore 1, even at the prime where gamma has positive valuation. No assumption about the primes of C has entered.
+
+**Places above odd rational primes outside 5*19*D.** Gamma is a unit. The trace relation beta+bar(beta)=-2 prevents both conjugates from having positive valuation at a split rational prime. Any nonzero beta valuation is consequently 2v_p(C), which is even. At an inert prime a positive valuation would force both conjugates and their trace to be divisible by that prime, which is impossible. Thus the local Hilbert formula, after removing a square, makes every factor 1. This accounts for every prime occurring only in the square cofactor, with no imposed 19-splitting condition and no bound on its exponent.
+
+**Places above a prime p|D.** Such a prime is greater than five, different from 19, and splits in K0. The two beta valuations are 0 and 1+2v_p(C). Indeed their sum is the valuation of its rational norm and their simultaneous positivity is excluded by the trace. At the unit prime both beta and gamma are units, so the Hilbert factor is 1. At the other prime, gamma is a unit and the odd-local formula is its residue-field quadratic character raised to the odd beta valuation. The residue field is F_p, so the factor is (8+3s/p) for the root s corresponding to that prime. It equals chi(p): the residues at the two roots are nonzero and their product is 19, whose character is +1 by the hypothesis. Thus the root selected by the actual beta valuation makes no difference. The possibility p|C changes only the even part of the valuation.
+
+These are all places. The global product formula therefore gives exactly
+
+1 = product_(p|D) chi(p).
+
+This proof explains directly the distinction between full support and odd-depth support. The general product hypothesis on (19/p) is used to identify the locally selected character with the root-independent character in the statement; it is not silently imposed at even-depth primes. This proves the same product assertion directly by Hilbert reciprocity. ∎
+

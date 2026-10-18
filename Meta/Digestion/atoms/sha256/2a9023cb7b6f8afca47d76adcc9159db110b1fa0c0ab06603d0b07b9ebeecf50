@@ -1,0 +1,33 @@
+### Proposition 3.1 (exact common-model existence test)
+
+For arbitrary proposed real data $z_0,\ldots,z_{B+4}$ on the path of Theorem 2.1, the following finite procedure is necessary and sufficient for membership in the declared common-source model.
+
+1. Interpolate $P$ from $z_0,\ldots,z_{B-1}$ and form $v_0,v_1,\eta,r_*$ as in the proof. Require $r_*>0$ and set $\kappa=\eta/r_*$.
+2. Mark the exact zeros of $1+\kappa i$ among the last three indices and choose an available pair among $X,Y,Z$. Require its inverse to be defined and to produce $p,q,r_*,s>0$ with $ps=qr_*$. For the $X,Z$ pair, require $X>0$ before taking the positive root.
+3. Form $a=p+s$ and $D(t)=P(t)-a(1+\kappa t)$. Require $\deg D\le d$ and require every one of the $B+5$ exact observation equations
+
+$$
+z_i=(1+\kappa i)\operatorname{tr}(A_iS)+D(i)
+$$
+
+on the displayed path, including every zero-gain position.
+
+These conditions are necessary and sufficient.
+
+#### Proof
+
+Necessity is every identity in Theorem 2.1, including positivity, the rank-one equation, the denominator conditions, and the full read check. Conversely, suppose the listed conditions hold. Set $\alpha=1$, $\beta=\kappa$, $R=S$, choose
+
+$$
+c=\begin{pmatrix}p\\r_*\end{pmatrix},\qquad
+\ell=\left(1,\frac q p\right).
+$$
+
+Both vectors are strictly positive and
+
+$$
+c\ell=\begin{pmatrix}p&q\\r_*&r_*q/p\end{pmatrix}=S
+$$
+
+because $ps=qr_*$. Executing the stated forward path with this one fixed instrument and the checked polynomial $D$ gives every proposed equation. This is a genuine common-source realization, not an independent lifted pair. ∎
+

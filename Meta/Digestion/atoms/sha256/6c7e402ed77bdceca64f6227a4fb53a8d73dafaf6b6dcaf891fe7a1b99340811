@@ -1,0 +1,30 @@
+**Theorem 8.1 (concurrent capture supplies an actual row family).**
+Consider finitely many successful calls on one actual register and root,
+with pure $\rho$ as its only source change. Use their validation Reads
+as chronological capture events $v_i$. A root shortcut may instead
+designate any one declared event in its call. Put $t=U_{v_0}$ and
+let $n_i$ count actual updates after $v_0$ and before $v_i$. Then
+
+$$
+0=n_0\le n_1\le\cdots\le n_{m-1},\qquad
+U_{v_i}=\rho^{n_i}t,\qquad
+R_i=R_{P_i}(\rho^{n_i}t).
+\tag{CNA.13}
+$$
+
+These equalities supply the acquired-family premise of [NAR, §12][NAR].
+The counts are semantic witnesses until a decoder recovers them.
+
+**Proof.** Between chosen events the one source undergoes exactly
+the counted number of updates; Reads and local work leave it fixed.
+Induction over these events gives the source equality.
+Each accepted certificate gives the entire tree at its validation,
+hence the complete row there. The constant root-shortcut row is the
+row at any chosen event. Compose these facts on this one actual history.
+
+Each non-shortcut capture has a real stationary guard interval ending
+at validation. A first-leaf traversal may start earlier, but Theorem 3.3
+proves its output equals that stationary version. This supplies the
+truthful row-value premise without retrospectively adding concurrent
+writers to a serial execution theorem. $\square$
+

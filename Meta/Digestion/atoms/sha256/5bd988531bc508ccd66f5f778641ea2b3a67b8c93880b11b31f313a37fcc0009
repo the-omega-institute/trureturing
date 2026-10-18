@@ -1,0 +1,75 @@
+**Theorem 7.1 (positive-gain failure of $I,U,F,G,H$).** For $d=0$ and $B=1$, the path in §6 has distinct effective targets with equal observations and strictly positive gain samples at every recorded index.
+
+Proof. Set $\varepsilon=1/1000$. Let $T$ be the smaller root of
+
+$$
+11\varepsilon T^2+(57\varepsilon-2)T+109\varepsilon+22=0,
+$$
+
+or explicitly
+
+$$
+T=\frac{2-57\varepsilon-\sqrt{4-1196\varepsilon-1547\varepsilon^2}}{22\varepsilon}.
+$$
+
+To check the root and positivity, put
+$f(T)=2T-22-\varepsilon(11T^2+57T+109)$.
+It is a concave quadratic, $f(11)=-2067\varepsilon<0$, and
+$f(13)=4-2709\varepsilon>0$. It tends to $-\infty$ as $T\to\infty$, so it has two distinct real roots, one in $(11,13)$ and the other above $13$. For $0<T\le11$, both terms make $f(T)<0$. The root in $(11,13)$ is the smaller root; in particular the displayed discriminant is strictly positive and this formula selects a positive root with $11<T<13$.
+
+Define
+
+$$
+S_1=\begin{pmatrix}1&T\\1&T\end{pmatrix},\qquad
+Q=\begin{pmatrix}T+15&10T+17\\T+2&-T-5\end{pmatrix},
+\qquad S_0=S_1+\varepsilon Q.
+$$
+
+The first source is positive rank one. The first three entries of $S_0$ are positive. Its bottom-right entry is
+$T-\varepsilon(T+5)>11-18/1000>0$. The mixed determinant coefficient and the determinant of $Q$ are respectively
+
+$$
+2T-22,\qquad -11T^2-57T-109.
+$$
+
+Indeed the first is
+$(-T-5)+T(T+15)-T(T+2)-(10T+17)$, and the second is
+$(T+15)(-T-5)-(10T+17)(T+2)$. Consequently
+
+$$
+\det S_0=\varepsilon\bigl[(2T-22)-\varepsilon(11T^2+57T+109)\bigr]=0.
+$$
+
+This proves strict positivity and rank one for both sources.
+
+To verify every read, use the linear operator
+
+$$
+N\begin{pmatrix}p&q\\r&s\end{pmatrix}
+=\begin{pmatrix}2p+q+13r&-p+5q+18r+5s\\p+s+r&-q-5r\end{pmatrix}.
+$$
+
+Substitution in the four residual formulas gives
+
+$$
+\begin{aligned}
+V_1(N(S))&=p+r+s=\operatorname{tr}(US),\\
+V_2(N(S))&=2p+2q+6r+8s=2\operatorname{tr}(FS),\\
+V_3(N(S))&=3p+3q+12r+9s=3\operatorname{tr}(GS),\\
+V_4(N(S))&=8p+4q+28r+12s=4\operatorname{tr}(HS).
+\end{aligned}
+$$
+
+Here $N(S_1)=Q$ and $\operatorname{tr}Q=10$. Give run $0$ the parameters $\kappa_0=0,D_0=0$, and run $1$ the parameters $\kappa_1=\varepsilon,D_1=10\varepsilon$, with $\alpha=1$ in both. Their initial readings coincide because
+$\operatorname{tr}S_0=\operatorname{tr}S_1+10\varepsilon$.
+At actual tail index $k=1,2,3,4$, subtract this common initial reading. Run $0$ gives $V_k(S_0)$, while run $1$ gives
+
+$$
+V_k(S_1)+\varepsilon k\operatorname{tr}(C_kS_1)
+=V_k(S_1)+\varepsilon V_k(N(S_1))=V_k(S_0).
+$$
+
+Thus all five observations agree. Gains are respectively $1$ and $1+\varepsilon i>0$, and both drifts are constants. Proposition 1.1 realizes each positive source with one fixed positive row. The differing slopes make the effective targets distinct. ∎
+
+This excludes this particular five-read path. It does not prove a six-read lower bound for constant drift or provide a six-read recovering path.
+

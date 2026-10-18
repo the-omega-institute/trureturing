@@ -1,0 +1,7 @@
+**Corollary 135.1 (no two distinct external H axes).** If every block
+satisfies |X_sigma|<=1, then every common positive zero-curvature
+generalized length field under the §130 assumptions is genuine.
+
+Proof. A flat set would give the escape block tau of Theorem 134.1, where
+both D and Z are distinct members of X_tau. QED.
+

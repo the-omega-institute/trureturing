@@ -1,0 +1,71 @@
+### 96.3. A two-fibre unitary best-response fact
+
+We next analyze the four-coordinate occupancy consisting of two whole original fibres. Its principal Grams have the form
+
+\[
+ G_S=\begin{pmatrix}I_2&X\\X^*&I_2\end{pmatrix},\qquad
+ H_S=\begin{pmatrix}I_2&Y\\Y^*&I_2\end{pmatrix},\qquad
+ \|X\|_{\rm op},\|Y\|_{\rm op}\le1.
+                                                                    \tag{12}
+\]
+
+For M=J₂/2−X⊙Y, the exact two-fibre adaptive norm is ∥M∥op. To verify the upper bound, put C=W₁₂, A=W₁₁, B=W₂₂. Positivity of W and ρ−W gives
+
+\[
+ \begin{aligned}
+ \|C\|_1&\le\sqrt{\operatorname{Tr}A\,\operatorname{Tr}B},\\
+ \|C\|_1&\le\sqrt{\operatorname{Tr}(\rho_1-A)
+                           \,\operatorname{Tr}(\rho_2-B)},\\
+ 2\|C\|_1&\le\sqrt{\operatorname{Tr}\rho_1\,
+                          \operatorname{Tr}\rho_2}\le\frac12.
+ \end{aligned}                                                     \tag{13}
+\]
+
+The first inequality follows by factoring a positive block matrix as blocks P*P,P*Q,Q*P,Q*Q and applying the Hilbert–Schmidt product inequality; the second is the same argument for ρ−W. Adding and applying the scalar Cauchy–Schwarz inequality gives the third. Thus the objective 4Re Tr(MC*) is at most ∥M∥op. For unit left and right singular vectors u,v attaining that norm, equality is realized by
+
+\[
+ \rho=\operatorname{diag}(uu^*/2,vv^*/2),\qquad
+ W=\frac14\binom{u}{v}\binom{u}{v}^{*},\qquad
+ \rho-W=\frac14\binom{u}{-v}\binom{u}{-v}^{*}\ge0.               \tag{14}
+\]
+
+**Lemma 96.3.** If Y is a 2×2 unitary with no zero entry, every contraction X minimizing ∥J₂/2−X⊙Y∥op is unitary.
+
+**Proof.** Independent row and column phases on Y, and reciprocal phases on X, preserve the product and contraction conditions. Thus assume
+
+\[
+ Y=\begin{pmatrix}c&s\\s&-c\end{pmatrix},
+ \qquad c,s>0,\qquad c^2+s^2=1.                             \tag{15}
+\]
+
+Indeed three entries can be made positive real, after which orthogonality forces the displayed negative fourth entry. Put
+
+\[
+ P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+ J=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+ \Theta(X)=JXJ.
+                                                                    \tag{16}
+\]
+
+This involution preserves contractions and satisfies Y⊙Θ(X)=P(Y⊙X)P. It preserves the objective because P J₂P=J₂. Complex conjugation also preserves the objective and commutes with Θ. Averaging these four symmetries gives a minimizing contraction
+
+\[
+ X_0=\frac{X+\overline X+\Theta(X)+\Theta(\overline X)}4
+       =\begin{pmatrix}a&b\\b&-a\end{pmatrix},
+       \qquad a,b\in\mathbb R.                              \tag{17}
+\]
+
+Its norm √(a²+b²) must equal one. If it were smaller, compare with the exact-target matrix
+
+\[
+ X_{\rm tar}=
+   \begin{pmatrix}1/(2c)&1/(2s)\\1/(2s)&-1/(2c)\end{pmatrix},
+ \qquad Y\odot X_{\rm tar}=J_2/2,\qquad
+ \|X_{\rm tar}\|_{\rm op}=\frac1{2cs}\ge1.
+                                                                    \tag{18}
+\]
+
+The interior contraction X₀ would have positive error. For sufficiently small ε>0, (1−ε)X₀+εX_tar would remain a contraction while its complete matrix error decreased by the factor 1−ε, contradicting minimality. Thus X₀ is unitary.
+
+A unitary is an extreme point of the operator-norm unit ball. Here is the needed elementary argument. If a unitary Q is an average of contractions A_k, the contractions B_k=Q*A_k average to I. For each unit vector v, Re(v*B_kv)≤1 and their average equals one, so each equals one. Equality in Cauchy–Schwarz gives B_kv=v for every v, hence A_k=Q. Applying this to the four contractions in (17) gives X=X₀, in particular X is unitary. Undoing the reciprocal phases proves the lemma. ∎
+

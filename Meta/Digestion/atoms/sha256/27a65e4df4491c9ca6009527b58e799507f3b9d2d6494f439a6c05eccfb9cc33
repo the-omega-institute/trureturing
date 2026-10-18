@@ -1,0 +1,28 @@
+**Proposition 2.1 (Finite vertex-score equation).** If $p$ is strictly positive on $B_n$, let $a_{p,j}$ denote its full-complement posterior. Extend $\Phi_n$ to positive mass vectors by the same edge sum. Its derivative with respect to a word mass is
+
+$$
+L_p(w):=\frac{\partial\Phi_n}{\partial p_w}
+=\sum_{v:\{w,v\}\in E(\Gamma_n)}\frac{p_v^2}{(p_w+p_v)^2}
+=\sum_{j=1}^n(w_j-a_{p,j}(w_{-j}))^2.
+\tag{2.1}
+$$
+
+For the supplied positive optimizer,
+
+$$
+L_{\pi_n}(w)=\kappa_n\qquad(w\in B_n).
+\tag{2.2}
+$$
+
+Proof. For $s,t>0$, $\partial_s h(s,t)=t^2/(s+t)^2$. At a free coordinate of $w$, if $w_j=0$ the corresponding derivative is the squared posterior; if $w_j=1$ it is the squared complementary posterior. A forced coordinate of a legal word equals zero, its posterior equals zero, and it has no flip edge. This accounts for every term of (2.1), including endpoint terms.
+
+At $\pi_n$, transferring a sufficiently small signed mass from any vertex to any other vertex stays in the positive simplex. The derivative in this direction vanishes at a maximum. Hence all $L_{\pi_n}(w)$ have the same value. Multiplication by $\pi_n(w)$ and summation identifies this value: an edge with masses $s,t$ contributes
+
+$$
+s\frac{t^2}{(s+t)^2}+t\frac{s^2}{(s+t)^2}=h(s,t).
+$$
+
+The common value is $\Phi_n(\pi_n)=\kappa_n$. This is elementary finite-simplex differentiation of the original objective. $\square$
+
+Only positivity, normalization and full-simplex optimality are used for the variation. Nearby varied laws need not satisfy the optimizer's insertion inequalities. Imposing such inequalities on the admissible directions would change the variational problem.
+

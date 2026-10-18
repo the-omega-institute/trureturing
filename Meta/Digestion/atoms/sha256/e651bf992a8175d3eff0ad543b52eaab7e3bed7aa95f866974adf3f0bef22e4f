@@ -1,0 +1,50 @@
+**Theorem 10.4 (strict improvement at each original input and mate reversal).**
+For every $s<1$ and every original individual input, there exists another
+finite common design with the same JR binary-conditioned complete
+channels and strictly smaller acquired high mass at that input than
+$g_y(s)$. Its mass on the original beta-mate is strictly larger than
+$g_y(s)$ for a sufficiently small chosen perturbation.
+
+Proof. Fix a real original $\rho=\rho_{y,e,n}$, and write
+$x_r^0=0$ in the weak regime and
+$x_r^0=r\sqrt{q_s/p_s}$ in the strong regime. Let
+$\theta_0=k/2$ or $p_s/2$, respectively. On the curve of Proposition
+10.3 the derivative of this record's high probability at zero is
+
+$$
+2\theta_0\,\mathcal U_r(\rho),\qquad
+\mathcal U_r(\rho)=
+\operatorname{Re}\operatorname{tr}((D+x_r^0T)^\dagger S\rho)
+=(h_0c+h_2d)\rho_{02}+x_r^0ac\rho_{12}.
+\tag{IR.66}
+$$
+
+The derivatives of $x,\theta$ vanish, leaving precisely the two $S$
+cross terms. The displayed expression follows by multiplying $D^\dagger S$
+and $T^\dagger S=ac|1\rangle\langle2|$.
+On the actual inputs,
+$\rho_{02}=e\sqrt y/16\ne0$ and
+$\rho_{12}=n\sqrt{64-y}/16$. Since $x_-^0=-x_+^0$,
+
+$$
+\mathcal U_+(\rho)+\mathcal U_-(\rho)
+ =2(h_0c+h_2d)\rho_{02}\ne0.
+\tag{IR.67}
+$$
+
+Thus at least one record has nonzero derivative. Perturb only that
+record on its lawful curve, with a sufficiently small $z$ opposite
+the sign of $\mathcal U_r$. The definition of a nonzero derivative
+ensures strict reduction in that input's high probability; the other
+record is unchanged. The null-decomposition encoders in Proposition
+10.2 give an actual complete finite design for every such chosen $z$.
+
+The unitary $W=\operatorname{diag}(-1,-1,1)$ sends this original input
+to its other $\beta_{\rm hist}$ at the same $y,m$. It commutes with
+$D,T$ and anticommutes with $S$. Therefore the derivative in (IR.66)
+reverses sign on $W\rho W^\dagger$, while both base costs are $g_y(s)$.
+For the same sufficiently small signed $z$ the beta-mate's cost strictly
+increases. The constants are chosen using the fixed public test input
+before execution; the resulting instrument is common on every unknown
+input. It neither reads $y,e,n$ nor grants a parity sensor. $\square$
+

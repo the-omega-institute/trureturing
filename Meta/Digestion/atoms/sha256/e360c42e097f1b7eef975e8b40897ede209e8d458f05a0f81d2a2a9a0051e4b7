@@ -1,0 +1,26 @@
+**Lemma 72.2 (the lines are forced).** In every feasible instrument in
+this layer, the supported-nonzero low labels use all four directions
+
+$$
+h_{z,\pm}=(1,\pm\alpha^{-1/2},0),\qquad
+h_{w,\pm}=(1,0,\pm\beta^{-1/2}).
+\tag{RC.79}
+$$
+
+**Proof.** The physical congruence in §68 transforms (RC.66) into
+
+$$
+\sum_jp_jv_jv_j^T=I_2,\qquad
+\sum_jp_jb_jv_jv_j^T=\operatorname{diag}(V,W).
+\tag{RC.80}
+$$
+
+Rank two of the first matrix requires two independent lines. Aggregate
+its weights on unit representatives of the two lines and form the
+square matrix $U$ with these weighted columns. Then $UU^T=I_2$, so
+$U$ is orthogonal. The second equation is a spectral decomposition in
+the same orthogonal basis, with eigenvalues equal to the weighted
+failure ratios on the lines. Since $V<W$, its eigendirections are
+uniquely the coordinate axes. The ellipse fixes their lengths as in
+(RC.79). First moments force both orientations on each axis. $\square$
+

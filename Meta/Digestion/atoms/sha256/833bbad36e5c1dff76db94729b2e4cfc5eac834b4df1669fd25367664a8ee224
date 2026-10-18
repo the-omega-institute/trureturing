@@ -1,0 +1,84 @@
+**Example 227.3 (Reused zero core and the same-point full allocation).**
+The score $V_0=(5/2)U_3+(7/2)U_4$ from the zero-cost generators of
+216.3, with $m=6,r=3$, has exactly these rows:
+
+$$
+\begin{gathered}
+C_{110111}=11,\quad C_{111110}=5,\quad
+P_{010110}=5/2,\quad P_{010111}=17/2,\quad P_{100111}=11,\\
+P_{111010}=P_{111100}=5/2,\qquad T=6.
+\end{gathered}
+$$
+
+The generator theorem applies at these parameters; its two coefficients
+are nonnegative. Directly every one of its 22 full schedule supports
+is 33, its anchor is 33, and
+$Q(V_0)=(0,0,11,0,0,5;49)$. The residual against $Y$ is
+$(5,0,5,1,8,6;43)$ with readings
+
+$$
+(-5,0,0,-2,-4/3,-28/5,-1/4,-9/2,0,-32/7).
+$$
+
+All are nonpositive, so $(V_0/3,0)$ certifies $Y/3$ unrestrictedly.
+Indeed $(tV_0,0)$ certifies $Q(tY)$ for every $t\ge0$.
+This application reuses the zero core and its scaled ray, rather than
+asserting a new zero-stock result.
+
+The same hull barycenter used by the lower functional is
+
+$$
+\bar b=\mu_3v_3+\mu_5v_5+\mu_6v_6
+ =(1,1,1,6097/6336,6097/6336,523/576;3469/6336).
+$$
+
+A complete normalized allocation there is
+$\mu_3P_{3,2}+\mu_5P_{5,2}+\mu_6P_{6,2}$, where $P_{k,2}$ is the
+uniform triple law. To specify all 59 entries without suppressing
+repeated tables, the following lists give every triple and its individual
+mass. Each triple $i<j<r$ means $O(i,j;i,j,r)$, with $r=\infty$
+interpreted as output zero; its full completion is $N(i,j;i,i,j,r)$.
+
+| Component | All triples in that component | Mass of each entry |
+| --- | --- | --- |
+| $k=3$ | $123,12\infty,13\infty,23\infty$ | $239/19008$ |
+| $k=5$ | $123,124,125,12\infty,134,135,13\infty,145,14\infty,15\infty,234,235,23\infty,245,24\infty,25\infty,345,34\infty,35\infty,45\infty$ | $43/7920$ |
+| $k=6$ | $123,124,125,126,12\infty,134,135,136,13\infty,145,146,14\infty,156,15\infty,16\infty,234,235,236,23\infty,245,246,24\infty,256,25\infty,26\infty,345,346,34\infty,356,35\infty,36\infty,456,45\infty,46\infty,56\infty$ | $3997/166320$ |
+
+For each component and every first zero $n\le k$, correct probability
+is $1-e_k$, pair probability is at least $1-e_k$, and base probability
+is at least the literal demand $-e_k$. For $n>k$, base and pair are
+$1-e_k$ and correct is zero, meeting demands $1-2e_k,0,1-e_k$.
+The positive base is $1-e_k$. These statements follow from triple
+inclusion on every word, not just sole-zero words. The affine demand
+vector therefore obeys
+
+$$
+z_{\mu_3P_{3,2}+\mu_5P_{5,2}+\mu_6P_{6,2}}
+ \ge\mu_3d(v_3)+\mu_5d(v_5)+\mu_6d(v_6)=d(\bar b).
+$$
+
+This proves all 190 independent rows for that same $\bar b$, and its
+same-seed full completion gives a complete mass-one $N$ allocation.
+Its positive base is $2867/6336$. In contrast, the two-table lower
+functional emits label one with probability zero at $000000$, below
+the required $2867/6336$. Its mass one does not make it feasible.
+Moreover $F_{Q(Y)}(\bar b)=-283/18$, or $-283/54$ for $Y/3$,
+so the actual feasible point gives no strict separation.
+
+At this same point the sum of least correct deficits for a whole-block
+exhaustion-zero endpoint replacement is
+
+$$
+\sum_{n=1}^6(\bar b_n-\bar e)=2+\bar e=16141/6336>2.
+$$
+
+Every unit-mass queried-endpoint-only rule can supply total correct
+sole-zero degree at most two. The full law just displayed is feasible
+because unqueried numerical exhaustion labels remain legal. This is a
+boundary of that constructor, not a restriction on the original problem.
+For the original companion take $a_n=\bar b_n$ for $n\le6$ and
+$a_{6+j}=\bar e2^{1-j}$ for $j\ge1$. The strict active length is six;
+all amplitudes are positive and nonincreasing with vanishing tail,
+$a_7=\bar e$, and every actual tail error is exactly $\bar e$.
+

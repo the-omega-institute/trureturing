@@ -1,0 +1,71 @@
+### 36.8. 继承的整个仿射并集，包含两种有符号半直线
+
+本节仿射部分直接继承《FIB 仿射增益恢复与早期动作分离》第 31.2—31.5 节，尤其式 (31.5)—(31.13)、(31.17)—(31.20)。该卷的 $E,O$ 在此分别为 $E,R$，系数 $A,L,D,B,C$ 完全相同，物理漂移同为 $a_0-\lambda$。以下给其全部父条件及证明，不把继承仿射数学另计新增结果，也不把该卷固定末动作逆装成整个二次逆。
+
+在 $\nu=0$ 时，两整个式为 $E=-\lambda+eg,R=-\lambda+og$，逐系数要求
+
+$$
+A=\mu/s=b\mu/2,\quad L=\mu+\lambda/s,\quad
+D=qA,\quad B=qL+2\eta A,\quad
+C=(q-1+2\eta/s)\lambda.
+\tag{36.28}
+$$
+
+因 $b>0$，只在仿射部分内 $A\ne0$ 等价于非恒定仿射。此观察不排除同记录中的真正二次竞争者。
+
+非恒定仿射的整个父如下：若 $A\ne0$，强制 $q=D/A$，要求 $q>0$ 及 $B=qL+2\eta A$，保留全部不同实根 $s>2q$ 满足
+
+$$
+(q-1)As^2+(2\eta A-(q-1)L)s+C-2\eta L=0,
+\qquad \mu=As,\quad\lambda=s(L-As),\quad d=a_0-\lambda.
+\tag{36.29}
+$$
+
+来源用式 (36.6)。证明：偶数系数唯一给 $\mu,\lambda$，常数式为 $C=((q-1)s+2\eta)(L-As)$，展开移项正是式 (36.29)。反向这些等式匹配两整个式的全部系数，故在三个偶、三个奇节点复现六个父方程；来源严格，$\mu=As\ne0$。每个世界必对应自己的根，每个接受根充分且唯一。$q\ne1$ 时二次项 $(q-1)A\ne0$；$q=1$ 时 $\eta=-1/2$，方程为 $-As+C+L=0$，非退化一次。所以至多两个完整世界，重根只计一次；$\eta=0$、$\lambda=0$、$L=0$ 或物理采样零均不被约去。
+
+常数仿射支须 $A=0,D=0,L\ne0$，$\mu=0,\lambda\ne0$。定义
+
+$$
+U_c=2B=\lambda r,\qquad V_c=2L=\lambda b\ne0,\qquad
+W_c=C+U_c/2=\lambda(j-1),
+\tag{36.30}
+$$
+
+对候选 $\lambda\ne0$ 置
+
+$$
+R_\lambda=\begin{pmatrix}U_c&V_c\\\lambda+W_c-V_c&\lambda-U_c\end{pmatrix},\qquad
+P=R_\lambda/\lambda,\quad g(t)=\lambda,\quad d=a_0-\lambda.
+\tag{36.31}
+$$
+
+整个来源过滤恰为
+
+$$
+0<\frac{U_c}{\lambda}<1,\qquad \frac{V_c}{\lambda}>0,\qquad
+\frac{\lambda+W_c-V_c}{\lambda}>0,\qquad
+(U_c-V_c)\lambda-U_c^2-V_cW_c+V_c^2=0.
+\tag{36.32}
+$$
+
+证明：缩放源的行列式为 $U_c(\lambda-U_c)-V_c(\lambda+W_c-V_c)$，展开即最后等式；其迹为 $\lambda$。过滤后的 $P$ 迹一、所有元严格正、行列式零，故秩恰一。回代有 $r=U_c/\lambda,b=V_c/\lambda,c=(\lambda+W_c-V_c)/\lambda,j=1+W_c/\lambda$，于是
+
+$$
+E(t)=V_ct/2,\qquad R(t)=W_c-U_c/2+U_ct/2.
+\tag{36.33}
+$$
+
+这与已取得插值恰相同，所以全部父方程成立；任意真实常数世界也必强制这些量，证明双向完整性。正性只要求归一化的 $P$，$\lambda$ 以及辅助 $R_\lambda$ 可以为负。
+
+全部常数奇异和符号情形为
+
+| 条件 | 整个合法参数集 |
+| --- | --- |
+| $U_c\ne V_c$ | 唯一可能 $\lambda=(U_c^2+V_cW_c-V_c^2)/(U_c-V_c)$；拒绝零后，保留且仅保留式 (36.32) 通过者 |
+| $U_c=V_c\ne0,W_c\ne0$ | 行列式为非零 $-V_cW_c$，空集 |
+| $U_c=V_c\ne0,W_c=0$ | 行列式恒零，全部参数为 $0<U_c/\lambda<1$；$U_c>0$ 时 $\lambda>U_c$，$U_c<0$ 时 $\lambda<U_c$ |
+
+末行令 $p=U_c/\lambda$，则 $P=\left(\begin{smallmatrix}p&p\\1-p&1-p\end{smallmatrix}\right)$，所有来源不等式恰化为 $0<p<1$，故确为整个有符号半直线，非有限截取。$U_c=0$ 被严格 $r>0$ 过滤拒绝，不除 $U_c$；$V_c=0$ 与 $L\ne0$ 矛盾，故没有遗漏 $U_c=V_c=0$。$W_c=0,U_c\ne V_c$ 仍在唯一候选支内。$L=0$ 或 $D\ne0$ 使常数部分空。有限常数部分至多一世界。
+
+同一记录的恒定与非恒定仿射由 $A=0$ 和 $A\ne0$ 区分，不能彼此共存；有限仿射部分至多二。所有仿射成员始终与所有合法真正二次分支一同保留，不能先按一个仿射承诺剔除其他次数。
+

@@ -1,0 +1,89 @@
+**定理 C-113.1（惩罚未匹配质量的原切口三阶环境证书）。** 设
+$127/129<t\le1$，定义
+
+$$
+\delta=\frac{129t-127}{15},\quad e=\frac\delta2,\quad
+L=1+\frac{121}{e},\quad
+\mathcal W_t=J(\mathsf W+eI_5)J^\dagger+LQ,\quad
+B_t=L+1-e.
+\tag{C113.1}
+$$
+
+则对每个 Schmidt number 至多三的环境密度态 $\sigma$，
+
+$$
+\operatorname{tr}(\mathcal W_t\sigma)\ge0,\qquad
+\operatorname{tr}(\mathcal W_t\Gamma_t^{\rm F})=-e,\qquad
+\|\sigma-\Gamma_t^{\rm F}\|_1\ge d_{t,0}:=\frac{2e}{B_t}>0.
+\tag{C113.2}
+$$
+
+范数采用完整迹范数，不除以二。因此开球半径 $d_{t,0}$ 内的每个环境密度态，
+包括未匹配质量非零和有匹配／未匹配交叉相干者，其 Schmidt number 均至少四。
+
+证明。对任意环境纯向量，在固定局部标签识别 $V,W$ 中写成
+$\psi=\sum_{j,k}M_{jk}Ve_j\otimes We_k$；$M$ 是任意复矩阵，
+Schmidt 秩等于 $\operatorname{rank}M$，不取实部也不取共轭后的另一切口。
+置 $z_j=M_{jj}$、$R=M-\operatorname{diag}z$、$r=\|R\|_F$。
+于是 $P\psi=Jz$，$\|Q\psi\|^2=r^2$。
+假设 $\operatorname{rank}M\le3$；保留 $|z_j|$ 最大的三个坐标得到 $z_S$，
+置 $h=z-z_S$、$a=\|z_S\|$、$b=\|h\|$。相同模的坐标任意破同值，零坐标也保留。
+有
+
+$$
+b^2\le r^2.
+\tag{C113.3}
+$$
+
+这里可直接核对低秩逼近的通常论证：取 $\ker M$ 内任意二维子空间的正交投影 $\Pi$，
+则 $M\Pi=0$、$0\le\Pi_{jj}\le1$、$\sum_j\Pi_{jj}=2$，且
+$\|\operatorname{diag}(z)\Pi\|_F^2=\sum_j|z_j|^2\Pi_{jj}\ge b^2$。
+最后一个不等式由把总权重二优先分配给最小的两个 $|z_j|^2$ 得到；
+交换较大项上的权重到较小项只使和减小。
+另一方面 $\operatorname{diag}(z)\Pi=-R\Pi$，其 Frobenius 范数至多 $r$。
+这也覆盖秩零、一、二、退化对角与全部同值情形。
+
+C-112.2 给 $z_S^\dagger\mathsf Wz_S\ge0$，
+$\mathsf W\succeq-I_5$，以及 $\|\mathsf W-10I_5\|_{\rm op}=11$。
+由于 $z_S\perp h$，交叉项满足
+$|z_S^\dagger\mathsf Wh|=|z_S^\dagger(\mathsf W-10I_5)h|\le11ab$。
+因此
+
+$$
+\begin{aligned}
+\langle\psi,\mathcal W_t\psi\rangle
+&=z^\dagger(\mathsf W+eI_5)z+Lr^2\\
+&\ge ea^2-22ab+(e-1)b^2+Lr^2\\
+&=e(a-11b/e)^2+eb^2+L(r^2-b^2)\ge0.
+\end{aligned}
+\tag{C113.4}
+$$
+
+所有量均来自同一个 $M$；没有把互不相容的最优值组合。
+密度态 Schmidt number 的定义给有限秩一分解，权重吸入向量后逐项相加，
+得到整个复锥上的非负性。对一般环境态，$P\sigma Q$ 与 $Q\sigma P$ 的配对为零，
+因为 $\mathcal W_t$ 对 $P\oplus Q$ 分块对角；证明没有令这些相干本身为零。
+非匹配对角质量正是 $L\operatorname{tr}(Q\sigma)$，不能漏掉。
+
+目标的负值由 C-112.2 得 $-\delta+e=-e$。
+因 $0<e\le1/15$，$L>21+e$，故 $\mathcal W_t$ 的最小／最大本征值为
+$e-1,L$，谱直径为 $B_t$。置 $c_t=(L+e-1)/2$，有
+$\|\mathcal W_t-c_tI_{25}\|_{\rm op}=B_t/2$。
+同迹 Hermitian 差的迹范数对偶遂给
+$e\le(B_t/2)\|\sigma-\Gamma_t^{\rm F}\|_1$，即 (C113.2)。
+这只是明确的充分常数，不断言最优半径或最优见证。
+
+C-112.6 的真实标量 Fourier 测量制备通道不是反例：
+其 $J^\dagger\widehat\chi J=P_2/5$、$\operatorname{tr}(Q\widehat\chi)=4/5$，所以
+
+$$
+\operatorname{tr}(\mathcal W_t\widehat\chi)
+=\frac{e-1+4L}{5}>0.
+\tag{C113.5}
+$$
+
+通常的 Schmidt-number 锥及其对偶见证用法见 Terhal–Horodecki，
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/html/quant-ph/9911117v4)。
+这里消费 C-112.2 的特定五次根证书，并以 (C113.3)–(C113.4) 给它一个有效环境延拓；
+未以非局部匹配投影保持 Schmidt 秩为前提。证毕。
+

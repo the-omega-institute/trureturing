@@ -1,0 +1,92 @@
+**201.8（原始资源、来源与未决范围）。** 原始可数带标签来源完整地取为
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ 为素数},\ g\in\mathbb Z,
+\ \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=\mathbf1_{p_i\mid N(x)},\qquad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{aligned}
+\tag{201.33}
+$$
+
+其中 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$，$p_i$ 按递增顺序枚举素数。
+静态回答、有限实际首缺以及每个有限 Boolean 字的实际来源见证均按定义 110.1
+复用，包含这里用到的所有多零字。纸带仍是原不交并 Borel 载体
+$\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$，各块为 $(0,1)$ 的副本；
+原可测标记 $\theta_j=(B_1,1/(j+2))$、同一来源上运行的原消费者和非原子目标
+$\mu_x$ 不变。另行选定的标记律仍为
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}+a_{n(x)}\delta_{\theta_{n(x)}},
+\qquad1\ge a_1\ge a_2\ge\cdots>0,\quad a_i\longrightarrow0.
+\tag{201.34}
+$$
+
+两类严格采用获取资源定义 90.1：零建议，每类只有一个与来源无关、对全部来源
+共同使用的种子 $U$，实际逐源几乎处处有限交接，硬上界为两次实际请求。
+重复请求和取得后忽略的请求都计数。$N_2$ 预选完整日程并取得全部回答；$O_2$
+预选严格递增日程，在首次查询零或耗尽时停止。竞争者保留任意地址和原完整载体
+内任意输出，误差是所有实际来源上的 TV 上确界。地址大小、深度、运行时间和
+平均请求数均不替换这一实际计数。
+
+评分 $y,V,W_\gamma$、子集测度 $\nu_J$ 及层权重 $d_\ell$ 是确定的非负对偶量。
+对任意原始达到者，定理 110.2 的必要方向先给一个完整同类概率配置；上述不等式
+作用于该同一个配置的全部行。若使用既有有限概率配置实现规则，则按定理 199.8
+用一个 $U\in[0,1)$ 的固定区间在回答前选择整张表和全部终端标签，只执行所选表，
+交付实际原标记。此为每类自己的共同种子实现；割覆盖没有再添加随机源、建议、
+来源分布或来源观察，也没有把 $V$ 归一成获取规则。
+
+任意原地址及完整纸带竞争者的闭帽必要性、同类有限表的充分性仍全部由
+[定理 110.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION.md#110-exact-closed-cap-transport-on-the-original-countable-source)
+承担。在实际活跃长度 $L=\max(\{i:a_i>e\}\cup\{0\})$，每个实际首缺 $n>L$
+的精确尾误差仍为
+
+$$
+\max\{1-p_{1^L}(0),a_n\},\qquad0<a_n\le e,
+\tag{201.35}
+$$
+
+包括 $a_n=e$。有限正字仅为这些实际尾源记账，不是无限全正源。
+全部原始正、非增、趋零尾部均保留。需要径向解释或闭辅助边界时，只复用
+[定理 165.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#165-a-unique-radial-direction-away-from-the-first-two-prefix)、
+[定理 168.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#168-closed-auxiliary-boundaries-and-the-original-positive-domain)和
+[定理 170.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IV.md#170-every-original-tail-under-the-same-radial-law-identity)
+在原范围内的正规形、正闭帽边界与整个实际序列身份；不由评分补偿推断任意
+$N$ 律到 $O$ 律的转换。定义 199.9 中的停止核条件继续由定理 109.1 与归一恒等式
+(108.4) 给出。
+
+割的分数覆盖是成熟背景，见 Robert Šámal，
+[*Cubical coloring — fractional covering by cuts*, arXiv:0911.2589v1,
+Lemma 2.1、Corollary 2.2](https://arxiv.org/abs/0911.2589v1)。该文对边传递图的
+割覆盖量与最大割密度给出关系，并有
+$x(K_{2n})=x(K_{2n-1})=2-1/n$（$n\ge2$）；这里的 $c_k=2x(K_k)$ 仅用于 $k\ge3$，
+$c_1,c_2$ 是 (201.6) 的特殊值。引理 201.2 给出了所需非负子集公式和矩，
+定理 201.3 则在完整事件评分内逐胞使用这些矩。
+饱和归属定理 198.1，任意正确行加尾的既有迁移归属定理 198.4，带符号支持归属
+定理 198.5，完整证书与零成本吸收归属定理 199.3—199.6，守卫冲突归属定义 200.2
+与定理 200.4—200.5。这里不从一般分数割覆盖或评分重排取得原始获取运输。
+
+本节的阈值是显式代表的充分条件，没有证明其最优性或对任意代表的必要性。
+即使在 (201.4) 内，低总量区域
+
+$$
+B<\Lambda(\gamma)+(\mu-\delta)_+
+\tag{201.36}
+$$
+
+仍未由此构造分类，特别是零预算时的 $B<\Lambda+\mu$。
+未满足充分阈值不等于 $Q(y)\notin E_N$。一般完整评分仍有未决的
+
+$$
+D_O(0)\subseteq D_N(0)+P_H,\qquad D_O(1)\subseteq E_N,
+\qquad\rho_O(b)\le\max\{1,\rho_N(b)\}\quad(b\in H_N).
+\tag{201.37}
+$$
+
+推论 199.4、定义 199.9 和定理 110.2 所界定的原始全称义务依旧是：对每个完整
+正单调趋零序列和每个正闭帽，从 $\mathcal F_N\ne\varnothing$ 得到
+$\mathcal F_N\cap\mathscr C_L\ne\varnothing$，或给出完整原始 $N_2$ 达到者及
+排除所有原始 $O_2$ 竞争者的统一证书。这里的必要幅界、零成本代表和完整评分
+子族包含均不替代该义务，也不提供一般 $O$ 达到者。
+

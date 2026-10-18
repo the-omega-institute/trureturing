@@ -1,0 +1,17 @@
+**Definition 5.1 (mask and exterior output).** For the original source
+$u$ let $I_Q(u)=Q\cap\operatorname{Pos}(u)$ and let $m_Q(u)$ be the
+native tree obtained by replacing the subtree at each $q\in I_Q(u)$
+by $\alpha$. Define
+
+$$
+\operatorname{Ext}_Q(u)=(I_Q(u),C_Q(u)),
+\tag{NPL.10}
+$$
+
+where $C_Q(u)$ is the numbered-hole context before those fillings.
+The partition is deliberately a separate field of the **full** target,
+not discarded from that target. ABC Theorem 4.2 supplies the exact
+bijection between $(I_Q,m_Q)$ and this exterior output on their images:
+replace the subtrees at the known reached positions by numbered holes.
+This holds even when coding the mask collapses an atomic block.
+

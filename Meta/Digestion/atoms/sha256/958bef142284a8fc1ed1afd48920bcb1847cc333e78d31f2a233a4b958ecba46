@@ -1,0 +1,18 @@
+**Definition 1.6 (Scalar parameters).** For the entire source range put
+
+$$
+x=k/H,\qquad \tau=\frac Z{4H}>0,\qquad s(x)=\sqrt{x(1-x)}.
+$$
+
+The inverse correspondence is
+
+$$
+Z=\frac{2\tau}{1+2\tau},\qquad
+H=\frac1{2(1+2\tau)}.
+$$
+
+Thus $0<\tau<1$ is exactly $0<Z<2/3$, and $\tau=1$ is $Z=2/3$.
+The scalar variable $x$ and scalar function $s$ do not rename a control
+input. Closed scalar endpoints in this volume concern limits of
+explicit functions; the source always has $0<x<1$.
+

@@ -1,0 +1,33 @@
+**Theorem 91.2 (same-operator prefix approximation).** For every finite native ordered
+tree $t$, every $h\geq0$ and every $\lambda>0$,
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.6}
+$$
+
+Consequently, if $p_h(t)=p_h(u)$, then
+
+$$
+|G_\lambda(t)-G_\lambda(u)|
+ \leq \lambda^{-1}q_\lambda^{\,2h+3}.
+\tag{91.7}
+$$
+
+There is no factor $2$ in (91.7). At $\lambda=1$, $G_1(t)$ is exactly the
+closed INITIAL response $F_{\mathrm{spec}}(t)$ of §52.21.
+
+**Proof.** By Lemma 91.1, (91.4) is the initial segment of (91.3). Every
+$\mu_n(t)$ is nonnegative and at most one because $P_t$ is stochastic. Therefore
+
+$$
+0\leq G_\lambda(t)-S_h(p_h(t))
+\leq\frac1{3+\lambda}\sum_{n\geq2h+3}q_\lambda^n
+=\lambda^{-1}q_\lambda^{2h+3}.
+$$
+
+If the two tables agree, both responses lie in the same interval
+$[S_h,S_h+\lambda^{-1}q_\lambda^{2h+3}]$, which proves (91.7). The identity at
+$\lambda=1$ is $L_t+I=\mathcal H_t^{(0)}+2I$ by §52.21. $\square$
+

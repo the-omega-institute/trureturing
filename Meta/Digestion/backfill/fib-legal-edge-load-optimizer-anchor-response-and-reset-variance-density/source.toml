@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-optimizer-anchor-response-and-reset-variance-density"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_OPTIMIZER_ANCHOR_RESPONSE_AND_RESET_VARIANCE_DENSITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

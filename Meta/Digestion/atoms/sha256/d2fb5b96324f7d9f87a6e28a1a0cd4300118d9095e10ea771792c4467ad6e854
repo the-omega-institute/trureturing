@@ -1,0 +1,55 @@
+**Definition 20.1 (existing common laws and ownership units).** Fix
+$d,n\ge1$ and an actual owned-seed network. Let $P$ be any
+probability on any nonempty retained relation of actual seed
+solutions. It may have zeros, arbitrary correlations and arbitrary
+nonnegative once-owned block weights underlying its support.
+It is not assumed to arise by extension of local laws.
+
+Assume that every block uses seeds from at most one distinct
+outside owner. When present denote that owner by $j(i)$, and
+write $B_i=\operatorname{pr}_{j(i),i}O_{j(i)}$ for its entire
+locally occurring group. Self references stay inside $O_i$.
+Use the distinct notation
+
+$$
+\iota_i=I_P(O_i;B_i),
+$$
+
+setting $\iota_i=0$ if there is no outside owner. Thus the
+ownership digraph has an edge $j(i)\to i$ and indegree at most
+one; outgoing degree and seed incidence are unrestricted.
+
+A reciprocal pair is $\{i,j\}$ with $j(i)=j$ and $j(j)=i$.
+These pairs are disjoint. Partition the owner blocks into units
+$\mathscr U$ consisting of those pairs and all remaining
+singletons. Write $O_U=(O_i)_{i\in U}$ and define, under the
+same $P$,
+
+$$
+\begin{aligned}
+T(P)&=\sum_{U\in\mathscr U}H_P(O_U)-H_P(s)
+   =D_2\!\left(P\,\middle\|\,\bigotimes_{U\in\mathscr U}P_{O_U}\right),\\
+M_{ij}&=I_P(O_i;O_j),\\
+L(P)&=\sum_{\{i,j\}\text{ reciprocal}}
+           \left[M_{ij}-\frac{\iota_i+\iota_j}{2}\right],\\
+J_{\rm out}(P)&=\sum_{i:\,j(i)\text{ exists and is not reciprocal}}
+                    \iota_i.
+\end{aligned}
+\tag{COK.96}
+$$
+
+The product in $T$ is an analytical product of unit marginals,
+not an asserted law of actual solutions. Empty owned tuples have
+one value and entropy zero. In this class the COK chain defect,
+defined for any such common law, is
+
+$$
+\Delta(P)=\sum_iH_P(O_i)-H_P(s)-\frac12\sum_i\iota_i,
+\tag{COK.97}
+$$
+
+since the two coefficients for one incoming owner are $1/2$,
+whereas a block with none contributes $H_P(O_i)$. For a Gibbs
+law on a retained relation this is exactly (COK.21), and it then
+has the weighted cap consumer (COK.22).
+

@@ -1,0 +1,29 @@
+## 355. Scope of the receiver-free M/Z implication
+
+This argument prescribes no source partner inventory or number of
+receiving owners. A source face can pair to another face of the same
+owner, several faces can meet the same owner, and the actual circle
+can revisit owners. The selection and transport use original edge
+intervals and original face incidences throughout. Both global exit
+exclusions, rather than just absence at the first source face, are
+needed and were proved in Sections 352--353.
+
+The proof retains the actual eta M-axis slot twice in its respective
+valid subset budgets: first with tau to establish (350.2)--(350.4), and
+then with a hypothetically existing kappa to contradict the complete
+M capacity. It does not add those two subset inequalities together
+or double-count eta in one total.
+
+The one-sided upper gap u<z+m+1 is essential to the present stated
+proof: it bounds an opposite-M U axis by 3*m and permits the scalar
+comparison for an opposite-V U axis. It is supplied by the published
+maximum-gap theorem only with that theorem's original hypotheses,
+including the degree assumption; it is not a consequence of
+connectedness in the weaker Section 341 normal form.
+
+Together with Theorem 341.2, this leaves the M/U high-axis
+pattern separate under the same source normal form. No full
+unique-flat exclusion or general six-edge geometric realization
+result is claimed.
+
+Continuation: [six-edge high-axis expenses and the remaining owner count](CFMP_GEOMETRIC_REALIZATION_SIX_EDGE_HIGH_AXES.md).

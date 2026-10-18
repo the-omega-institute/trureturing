@@ -1,0 +1,202 @@
+**Theorem 7.2 (paired completions, joint certificates and paid bounds).**
+In Definition 7.1 let
+
+$$
+J=\bigl[\max(0,V-p),\ \min(u,Q-y-1)\bigr]
+                              \cap\mathbb Z.        \tag{PE.25}
+$$
+
+This interval is nonempty exactly when $D>0$. For every assignment
+$\tau:U\to\{0,1\}$ of weight $z\in J$, there are actual cube
+completions of the two incoming histories which agree on $X,Y,U$,
+differ only on $I$, and require respectively $L_0=\widehat e_0$ and
+$L_1=\widehat e_1$. Starting from the common state, their first
+different native reply is at a word in $E_i$ for some $i\in I$ with
+$s_i\ne t_i$. Both histories are already mathematically certified,
+with their different prescribed bits, strictly before this invocation.
+The discriminator is a paid running state absent from both incoming
+state histories, including their common endpoint.
+
+For each of these paired completions there are sets, taken from that
+same common continuation strictly before its first different reply,
+
+$$
+\begin{gathered}
+A_1\subseteq\{j\in X:s_j=1\},\qquad
+B_0\subseteq\{j\in Y:t_j=0\},\\
+U_0\subseteq\{j\in U:\tau_j=0\},\qquad
+U_1\subseteq\{j\in U:\tau_j=1\},
+\end{gathered}
+$$
+
+such that, for the discriminator coordinate $i$ just specified,
+
+$$
+\begin{aligned}
+|B_0|+|U_0|&\ge b+u-Q+1,\\
+|A_1|+|U_1|&\ge V,\\
+|A_1|+|B_0|+|U_0|+|U_1|+1
+                   &\le\min(a+u,b+u),\\
+C_{A_1}+C_{B_0}+C_{U_0}+C_{U_1}+c_i
+                   &\le\min(C_X+C_U,C_Y+C_U).
+\end{aligned}                                      \tag{PE.26}
+$$
+
+If $D>0$, at least $a+b+u+1$ distinct installed selected states occur
+in the union of continuations, at or after the common state, over all
+completions of either incoming history. This is a local union count.
+
+Proof. The restrictions (PE.24) are consequences of the original
+interval exclusion, rather than extra restrictions on competitors. For
+completeness, its two clipped intervals are
+
+$$
+[\max(0,Q-b),\min(u,Q-1)],\qquad
+[\max(0,V-a),\min(u,V-1)].
+$$
+
+They are nonempty by liveness and $a,b>0$. Since $Q>V$, the second
+upper endpoint is no greater than the first. Their disjointness in
+(PE.5) places the second interval strictly below the first. The first
+lower endpoint must consequently be positive, hence $Q-b$; the
+second upper endpoint must be below $u$, hence $V-1$. Their strict
+separation yields $Q\ge b+1$, $V\le u$ and $\Delta\ge b$,
+as in Theorem 3.1.
+
+Suppose first that $D>0$. All quantities are integers, and
+
+$$
+Q-y-1\ge b-y\ge0,\qquad V-p\le u,\qquad
+(Q-y-1)-(V-p)=D-1\ge0.
+$$
+
+These inequalities prove that the clipped lower endpoint in (PE.25)
+does not exceed its upper endpoint. If $D=0$, nonnegativity of
+$\varepsilon$ and $e$ forces
+
+$$
+\Delta=b,\qquad p=0,\qquad y=b,\qquad Q=V+b.
+$$
+
+Then (PE.25) has lower endpoint $V$ and upper endpoint at most $V-1$,
+so is empty. Since $D\ge0$ always, this proves the asserted exact
+nonemptiness criterion, including the balanced-tight boundary.
+
+Fix $\tau$ of weight $z\in J$. Define two complete Boolean vectors
+by
+
+$$
+\begin{array}{c|cccc}
+ &I&X&Y&U\\ \hline
+\theta^-&s|_I&s|_X&t|_Y&\tau\\
+\theta^+&t|_I&s|_X&t|_Y&\tau.
+\end{array}                                        \tag{PE.27}
+$$
+
+The first extends the $S$ history and the second extends the $T$
+history. Their exposed replies are unchanged, including every
+cube-constant reply, so determinism makes them follow those histories.
+Definition 2.1 supplies simultaneous actual finite origins for both
+vectors, with all original current-row disequalities. Their weights are
+
+$$
+|\theta^-|=h+y+z\le k-1,\qquad
+|\theta^+|=g+p+z\ge k.                             \tag{PE.28}
+$$
+
+Indeed these are exactly the two opposite-output inequalities defining
+(PE.25), together with $0\le z\le u$. Although both cube sources
+have complete target row $R_0$, their prescribed preparation entries
+are the different literal latches $L_0,L_1$.
+
+From the common running state, fixed successors give identical state
+sequences until a first different reply. If there were no such reply,
+sourcewise termination would give the same latch, contradicting
+(PE.28). The all-address classification (PE.2) says that this first
+difference must occur in $E_i$ for a coordinate where the vectors
+differ. By (PE.27), $i\in I$ and $s_i\ne t_i$. In both histories
+this coordinate is old. A live cube history can query only a fresh
+selected coordinate, by the saturation supplier in Definition 2.1.
+Thus neither continued history is live immediately before this
+invocation. As their actual completions are respectively negative and
+positive, they already have at least $n-k+1$ distinct observed zeros
+and $k$ distinct observed ones. This is certification of their
+mathematical threshold residuals; the table receives no free
+certificate bit or silent operation.
+
+If the discriminator state had occurred on either incoming history,
+the corresponding completed actual source would revisit that same
+entire changing configuration. On a fixed source its absolute query
+has the same reply and fixed successor each time. Iterating would
+therefore repeat a deterministic cycle forever, contradicting
+sourcewise termination. The same argument excludes equality with the
+common endpoint. Its actual visit pays one call and its whole word
+length, at least $c_i$. This proves distinctness only from these two
+incoming histories, not from states used by other histories.
+
+Take $A_1,B_0,U_0,U_1$ to be all the indicated coordinates queried in
+the common continuation before that first different reply. They are
+sets of distinct coordinates; repeated visits do not enlarge them and
+remain charged. The negative source has $|S|-h$ old zeros. Its only
+new observed zeros can be in $B_0$ or $U_0$. The positive source has
+$g$ old ones; its only new observed ones can be in $A_1$ or $U_1$.
+Old common coordinates queried earlier in the continuation cannot add
+new exposed coordinates. The two certificates therefore give
+
+$$
+\begin{aligned}
+|S|-h+|B_0|+|U_0|&\ge n-k+1,\\
+g+|A_1|+|U_1|&\ge k.
+\end{aligned}
+$$
+
+Since $n-|S|=b+u$, these are the first two inequalities of (PE.26).
+The sets come from one actual shared continuation, not independently
+chosen certificate optimizers.
+
+Write $K=|A_1|+|B_0|+|U_0|+|U_1|$ and
+$C=C_{A_1}+C_{B_0}+C_{U_0}+C_{U_1}$. Every prefix of a live history
+is live. Consequently the incoming selected contributions are exactly
+$|S|$ calls and $C_S$ letters, or $|T|$ calls and $C_T$ letters:
+they exposed their supports once at shortest occurrence roots. These
+are selected contributions, not assertions that a prefix had no paid
+profile call. Disjoint coordinate classes require at least $K$
+selected continuation invocations, in addition to the discriminator.
+Their letter charge is at least $C+c_i$, even if some are longer
+selected-child words after certification.
+
+The all-weight comparison proved at the beginning of Theorem 3.1
+supplies on each complete cube run at least one nonselected invocation
+of length at least three. It is disjoint from all the selected visits
+just counted. Apply both original caps first to the negative source
+and then to the positive source, without adding the two executions:
+
+$$
+\begin{aligned}
+|S|+K+1+1&\le n+1,& C_S+C+c_i+3&\le W+3,\\
+|T|+K+1+1&\le n+1,& C_T+C+c_i+3&\le W+3.
+\end{aligned}                                      \tag{PE.29}
+$$
+
+Since $n-|T|=a+u$, $W-C_S=C_Y+C_U$ and
+$W-C_T=C_X+C_U$, (PE.29) proves the last two inequalities of
+(PE.26). Other visits, including repeats and profile calls at different
+times on the two sources, can only increase their own execution costs.
+No post-certification freshness or free replay was used.
+
+For the local state count, every unread coordinate of a live threshold
+residual is relevant. If the residual has $d$ unread coordinates and
+needs $v$ hits, $1\le v\le d$, assign $v-1$ hits to its other
+$d-1$ coordinates. Flipping the remaining coordinate changes the
+required latch. Both completions are actual cube sources. A correct
+deterministic continuation must therefore query an address in that
+coordinate's $E_j$, since all other replies agree. Apply this argument
+to all coordinates in $X\cup U$ from the $T$ history and in
+$Y\cup U$ from the $S$ history. Disjointness of the $E_j$ requires
+at least $a+b+u$ selected states among those continuations. The
+already forced discriminator has a coordinate in $I$, outside that
+union, and contributes one further state. Its incoming query state for
+that same old coordinate is different by the termination argument.
+States counted here may serve other collisions or lie in other
+witness images; the count is not globally additive. $\square$
+

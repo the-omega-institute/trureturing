@@ -1,0 +1,17 @@
+**假设 2.2（约数权重与 Robin 供应）。** 使用 [FIB][FIB] §74 的接口
+
+$$
+Z(n)=\sum_{d\mid n}\frac1d=\frac{\sigma(n)}n,\qquad
+\sigma(n)=\sum_{d\mid n}d.
+$$
+
+经典 Robin 等价关系以 [Choie、Lichiardopol、Moree、Solé，v2，摘要及 §1][Choie] 为所用来源，亦见既有 [Library 注释][ChoieNote]：
+
+$$
+\mathrm{RH}\iff
+\forall n\in\mathbb N,\quad n>5040\Longrightarrow
+Z(n)<e^\gamma\log\log n.
+$$
+
+该来源将等价关系归于 G. Robin，*Grandes valeurs de la fonction somme des diviseurs et hypothèse de Riemann*，J. Math. Pures Appl. (9) 63 (1984), 187–213，参考文献 [9]。这里的原始归属通过该 v2 引用。
+

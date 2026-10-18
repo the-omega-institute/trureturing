@@ -1,0 +1,9 @@
+**约定 11.3（外部主源与文献状态）。** 下列成熟方法只承担其明确内容；没有把一个仿真定理的名称当作本装置的权限、初始化或实验桥。
+
+| 主源 | 确切用途与文献状态 |
+| --- | --- |
+| [mathlib `StateTransition.lean`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean)，固定版本的 `Respects`、`tr_reaches₁`、`tr_reaches` | `literature-attested`：匹配关系和非空目标片段是显式前提，原始 `none` 需相应终止条件；不能把 task-undefined raw Supply 塞成 `none`。 |
+| [CompCert v3.16 `common/Smallstep.v`](https://raw.githubusercontent.com/AbsInt/CompCert/v3.16/common/Smallstep.v)，`fsim_properties` | `literature-attested`：初态、终态、相同 trace 的有限片段和良基 stuttering 条件；不推出含实际 meter 的完整后继相等，不授予 actor 访问。 |
+| [Lynch–Vaandrager, *Forward and Backward Simulations*, Part I](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)，§3.2、Lemma 3.8、Theorem 3.10 | `literature-attested`：前向模拟经有限执行片段给 trace inclusion；不是四独立视图、原任务逆或当前 driver 的构造。 |
+| 本卷第 3–4、7–8 节的具体源对应及边界 | `repo-derived`：在上述源文模型中的普通推导。匹配 WR、gate 输入冗余、原始 consumer 的细 cut 计数是具体应用；不作 `suspected-novel` 或全球新颖性声明。 |
+

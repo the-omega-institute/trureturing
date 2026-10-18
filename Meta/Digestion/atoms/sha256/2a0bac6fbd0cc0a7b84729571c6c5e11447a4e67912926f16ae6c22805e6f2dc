@@ -1,0 +1,37 @@
+**Convention 11.1 (source, task and credited interfaces).** Write CAP for
+this volume, SSA for *Native structural storage, support, and the
+terminal-boundary atlas*, AIF for *Native acquired-input frontier and exact
+replay*, RCA for *Native retrospective cut acquisition*, and CSA for
+*Native callable storage atlas*. The following application uses CAP
+Definitions 2.2–2.4, 3.3, 5.1, 6.1–6.5 and Theorems 5.2, 7.2, 7.4;
+SSA Definitions 3.1–6.1 and Theorems 4.4, 6.2; and CSA Definitions
+3.1–4.1 and 8.2, Lemma 3.4 and Proposition 8.1. It does not identify the
+operational domains of those volumes. In particular CSA's installed RCA
+service has a fixed source-capacity parameter; its four-kernel and Call
+theorems are not cross-capacity theorems about CAP.
+
+Fix one actual finite CAP native graph, resident boot, raw or effective
+mode, controller realization where used, allocator convention and supplied
+initial data. Keep its original $H_0$, preparation occurrence $\xi$ and
+actually acquired seed syntax of $u$. At later cuts write $t$ for the
+current source. Reserve changes its backing; genuine Rho or grafting can
+change $t$; Raise changes a later admission guard. None changes the
+meaning of the initial target $q_{H_0}(u)$ or an earlier row's guard. All
+statements below concern this one initialized instrument. Variable
+integers, programs, controller states and saved returns remain its actual
+tape words, rather than values stored in an unbounded finite controller.
+
+The original continuation task is AIF Definition 2.6's partial
+finite-experiment response task instantiated with CAP's installed rows and
+seven-tag canonical source/maintenance language. It retains legal domains,
+labels and complete original successors; hidden successor coordinates are
+mathematical observations, not actor read permissions. Its actual domain
+includes busy parsing, address resolution, source overwrites, maintenance,
+rows, copied descriptors, checks and returns, rather than just idle
+endpoints. At a physically enabled IN both raw bits still execute. A bit
+leaving the canonical-prefix domain has its real latch/control/receipt
+successor and exits that domain. Boot/preparation/acquisition have their
+original entrance restrictions. A global Halt retains its original
+terminal meaning. Call this task $Q_{\rm CAP}$. No assertion below replaces
+it by an everywhere-continuing diagnostic task.
+

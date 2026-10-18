@@ -1,0 +1,38 @@
+**Proposition 3.5 (credited Cartesian negative completion).** For each
+signed piece (NIC.13), [URR, Theorem 3.1 and Corollary 3.2][URR] supplies a
+finite tuple $\mathbf z_b^\star$, independent of $\mathbf n$, and a
+Presburger formula $\Psi_b$ such that
+
+$$
+\begin{aligned}
+\exists\mathbf z\ C_b(\mathbf n,\mathbf z)
+&\Longleftrightarrow C_b(\mathbf n,\mathbf z_b^\star)\\
+&\Longleftrightarrow P_b(\mathbf n)\land\Psi_b(\mathbf n).
+\end{aligned}
+\tag{NIC.15}
+$$
+
+This is a rank-support section, not an image identity after fixing
+$\mathbf z=\mathbf z_b^\star$, and it preserves no arbitrary prescribed
+original prefix of a represented source.
+
+Proof. Substitution of $F_b$ into any original expression gives a mixed
+template: distribute each fixed power through pairs and finite ground
+trees, add it to the offsets in $T_{n_j+c}$, and combine it with a
+residual decoration $\rho^a z_i$. All decorations remain nonnegative.
+Thus the pulled-back list $\Delta(F_b)$ has exactly URR's grammar with
+shared names. By Theorem 3.2 the domain before negatives is the full
+Cartesian product in (NIC.3); there is no hidden positive residual
+restriction to violate URR's hypothesis. URR's equality reflection
+therefore realizes all these negatives jointly at its one finite tuple
+for every feasible rank, and its arithmetic equality analysis gives
+$\Psi_b$. Conjoining the rank-only $P_b$ proves (NIC.15).
+
+For the distinction, take the identity cover of the empty presentation
+in one variable, with $k=0,m=1$ and no negatives. Its source image is
+all of $\mathcal T$. Fixing any one $z^\star$ gives only that single
+source. A different finite source disagrees with it at some finite
+original address. Hence the completion statement cannot also assert
+preservation of every prescribed source prefix or of its entire image.
+The exact signed image remains (NIC.14). $\square$
+

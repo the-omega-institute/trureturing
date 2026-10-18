@@ -1,0 +1,31 @@
+**命题 478.2（有限递归的准确乘法）。** 若 $\omega$ 也是有限支撑有符号离散测度，且 $\nu\star_\times\omega$
+是有限乘法卷积，即将 $\nu\otimes\omega$ 经 $(a,b)\mapsto ab$ 推前，则
+
+$$
+T_\nu T_\omega=T_{\nu\star_\times\omega},\qquad
+\Phi_{\nu\star_\times\omega}(s)=\Phi_\nu(s)\Phi_\omega(s).
+$$
+
+在 $V=\operatorname{span}\{t\log t,t\}$ 上，若
+$\mathcal J(\Phi)=\Phi(1)I+\Phi'(1)J$，则
+
+$$
+\mathcal J(\Phi\Psi)=\mathcal J(\Phi)\mathcal J(\Psi).
+$$
+
+证明。所有积分都是有限和，双重求和与 $(ab)^s=a^sb^s$ 给出前两式。
+后一式由乘积求导法则和 $J^2=0$ 给出。
+
+特别地，实际锚定测度的两次作用在 $V$ 上对应
+
+$$
+(h_NI-\ell_NJ)(h_MI-\ell_MJ)
+=h_Nh_MI-(h_N\ell_M+\ell_Nh_M)J.
+$$
+
+正尺度本身组成群，因为 $R(a)R(b)=R(ab)$ 且 $R(a)$ 可逆。
+有符号平均却可能不可逆；实际极限矩阵 $J$ 就是一个例子。
+有限乘法卷积还会产生 $1/(mn)$ 等新支点，因而 $\nu_N\star_\times\nu_M$
+一般不属于原来单一自然截断的 $\nu_K$ 族。
+递归具有准确的卷积乘法，但不能据此任意替换自然截断、端点或锚。
+

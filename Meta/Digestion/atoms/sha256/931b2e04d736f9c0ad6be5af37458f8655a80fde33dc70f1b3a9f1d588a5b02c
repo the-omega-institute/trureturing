@@ -1,0 +1,95 @@
+**Theorem 108.1 (admissible affine-amplitude trial asymptotic).**
+With $\eta$ as in Theorem 106.1, put
+
+$$
+\nu=\varepsilon/d_0,\quad R_s=s^{-1/2},\quad w_s(r)=1+\beta_sr,
+\quad f_s=\eta_{R_s}w_s\Phi_c,\quad
+Z_s=\mathcal T_s^{-1}f_s/\|f_s\|_2,
+\tag{108.1}
+$$
+
+and define the finite real numbers
+
+$$
+A_2=\int r^2|Y\Phi_c|^2d\xi,\quad
+J_2=\int(V_2+2rV_1)|\Phi_c|^2d\xi,\quad
+J_{\rm t}=\int V_{\rm t}|\Phi_c|^2d\xi>0.
+\tag{108.2}
+$$
+
+For every sufficiently small original real $s>0$, $Z_s$ is a
+normalized admissible real vector in the original complex form
+domain $\mathcal Q_s$, and
+
+$$
+\frac{q_s^c[Z_s]}{s^2}\longrightarrow
+\nu^2\{a(1-A_2)-\chi_cJ_2\}
+ -\lambda\{a+\chi_cJ_{\rm t}\}.
+\tag{108.3}
+$$
+
+This is the Rayleigh asymptotic of the specified trial. No sign of
+the complete coefficient or asymptotic equality for the actual
+infimum is asserted.
+The sign of (108.3) and the actual exact-critical ground-state
+profile decision remain unresolved.
+
+Proof. Theorem 106.1 makes (108.2) finite, using boundedness of
+$V_1,V_2,V_{\rm t}$ and $r\Phi_c\in L^2$.
+The cutoff approximation of (98.6), now multiplied by the smooth
+bounded-on-its-strip function $w_s$, proves admissibility.
+Both original faces lie outside its height support eventually.
+Also $\|f_s\|_2\to1$, by $r\Phi_c\in L^2$ and dominated
+convergence. Parity eliminates every integral with an odd height
+factor times a $\sigma$-even density.
+
+Use the product identity (106.5) with $g=\eta_{R_s}w_s$.
+The linear term in $\beta_s$ vanishes by parity, so
+
+$$
+h_c[f_s]=a\int|\eta_{R_s}'|^2|\Phi_c|^2
+ +a\beta_s^2\int|\eta_{R_s}+r\eta_{R_s}'|^2|\Phi_c|^2
+ =a\beta_s^2+o(s^2).
+\tag{108.4}
+$$
+
+Here (106.2) bounds the first integral; the multiplier in the
+second is uniformly bounded and tends pointwise to one.
+The exact rational cancellation in (97.2) gives
+
+$$
+a\widetilde b_s[f_s]-a b[f_s]
+ =a\int(1-w_s^2)\eta_{R_s}^2|Y\Phi_c|^2
+ =-a\beta_s^2A_2+o(s^2).
+\tag{108.5}
+$$
+
+The linear integral is zero, and (106.1) permits dominated
+convergence in the quadratic integral. No ordinary phase
+$H^1$ assumption has been made.
+
+Finally (107.3) and its parities give
+
+$$
+\int(\widetilde U_s-V)|f_s|^2
+ =\beta_s^2J_2+\lambda s^2J_{\rm t}+o(s^2).
+\tag{108.6}
+$$
+
+To check all weighted terms, the $\beta_sV_1$ term has zero
+pairing with $\eta_{R_s}^2|\Phi_c|^2$, and its next term is
+$2\beta_s^2\int rV_1\eta_{R_s}^2|\Phi_c|^2$.
+Its remaining cubic term is odd and zero. The linear cross
+terms from $V_2,V_{\rm t}$ are also odd; their terms containing
+$\beta_s^2r^2$ cost $O(s^4)$, since $r\Phi_c\in L^2$.
+Dominated convergence handles the displayed integrals, while
+(107.3)'s remainder costs $O(s^{5/2})\|f_s\|_2^2$.
+Combining (108.4)--(108.6) with the original threshold subtraction
+$-a\lambda s^2\|f_s\|_2^2$, and then normalizing, proves (108.3).
+The real vector supplies only an upper bound on the infimum over
+all complex vectors; it has not been identified with an actual
+normalized complex ground state. All three results are ordinary
+source-specific deductions using the existing variational,
+convolution, heat and parity tools, with no claim of kernel
+certification or source-independent novelty. $\square$
+

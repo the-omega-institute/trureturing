@@ -1,0 +1,29 @@
+### 65.4 Exact difference norm and unrestricted lower witness
+
+For any two matrices Z,W, including matrices whose individual channels are not positive, their prescribed linear-map difference satisfies
+
+    ||E_Z−E_W||diamond=||Z−W||op.                         (2)
+
+Let D=Z−W and r=||D||op. For r=0 this is immediate. Otherwise E_(D/r) is CPTP by the Choi criterion above. If O(T)=(T−σ_z T σ_z)/2 is the qubit off-diagonal map, then
+
+    E_Z−E_W=r O∘E_(D/r).
+
+The diamond norm of O is one: the unitary-channel triangle inequality bounds it by one and the state |+><+| attains one. This proves the upper bound r for arbitrary references and arbitrary operator inputs.
+
+There exist normalized vectors |a> in the first fibre and |b> in the second such that
+
+    Σ_ij a_i conj(b_j)D_ij=r,
+
+after adjusting a global phase. Indeed this is the usual singular-vector variational formula for ||D||op with the first vector conjugated; conjugation does not change its unit sphere. The normalized state (|a>+|b>)/sqrt(2) has difference output with off-diagonal entries r/2, so its trace norm is r. This proves (2); isometric output encoding preserves the norm.
+
+For an unrestricted physical Φ let Λ be its retained matrix, D=Z−Λ and r=||D||op. Choose the same maximizing a,b and a two-dimensional passive reference. Put
+
+    |Ψ>=(|0>_R|a>+|1>_R|b>)/sqrt(2),
+    H=|0,00><1,11|+|1,11><0,00|.
+
+The input is normalized and ||H||op=1. For Δ=J_out∘E_Z−Φ∘J_in,
+
+    Tr[H(id_R⊗Δ)(|Ψ><Ψ|)]=r.
+
+Only the two reference-off-diagonal output entries contribute, each r/2; arbitrary populations, extra coherences and leakage cannot alter this expectation. Consequently ||Δ||diamond≥||Z−Λ||op. Since Λ∈S, this proves the lower bound in (1). A minimizer W exists because S is compact. Its finite physical construction and (2) give the matching upper bound, completing the unrestricted result.
+

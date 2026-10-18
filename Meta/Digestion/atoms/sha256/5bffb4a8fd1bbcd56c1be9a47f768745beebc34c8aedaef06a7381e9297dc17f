@@ -1,0 +1,10 @@
+**Corollary 89.3 (integral-point indices at N=81).** Under the hypotheses and notation of Theorem 85.1 with $N=81$, every affine integral point $K\ne\pm R$ with $\delta(K)=(5,D,5D)$ has
+
+$$X(K)=5DB_{81r},$$
+
+where $r\ge11$ is prime.
+
+**Proof.** Theorem 85.1 gives the repeated-kernel equation at an odd relative index $k>1$ coprime to $3$. Theorem 89.2 makes $k$ prime, and Theorem 86.1 excludes $5$ and $7$. ∎
+
+Theorem 89.2 excludes every composite relative index at this exact original block, including arbitrarily large ones. The surviving prime-index case remains open. Neither existence of a repeated kernel nor a universal WSS exclusion follows, and the finite certificate is not extrapolated to other original indices.
+

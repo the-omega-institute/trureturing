@@ -1,0 +1,40 @@
+**Assumption 17.4 (all installed states and immediate writes).**
+Impose the complete Moore discipline of Assumption 4.1 and
+[AOF, Definition 10.1][AOF-RW] on the arbitrary-code entry of
+Assumption 17.1. A table has finite disjoint running and halting
+sets $K=Q\sqcup H$, one common initial state $R$, a fixed fully
+materialized original-root word $\operatorname{addr}(s)$ for each
+$s\in Q$, a total map $\operatorname{next}:Q\times\mathcal A\to K$,
+and one fixed complete natural-number output at each $h\in H$.
+It must first halt correctly after at most two chronological Reads
+on each of the fifteen actual sources. All installed states count,
+including unreachable, redundant and unused states.
+
+After installation the current state is the entire mutable accessible
+configuration. There is no separately accessible input code or row,
+reply latch, program counter, phase, clock, history, mutable selector,
+address register, output accumulator or arithmetic decoder. The
+installed address, transition and complete-output table is immutable,
+with separately supplied reading and output services and separately
+charged storage. There is no free control step between Reads.
+
+For the writable variant additionally impose [FIB, Definition
+45.1][FIB-RW]: one fixed-length binary word without adjacent ones
+is the entire mutable configuration. The current word and the actual
+reply choose that same installed word or one legal bit flip immediately,
+then discard the reply. The next instruction is selected solely by
+the updated word. There is no intermediate write instruction or
+additional write phase. Initialization, immutable-table access,
+Read execution, atomic response writing and complete output are
+conditional services; legal names alone supply none of them physically.
+All configuration needed by a proposed device must satisfy this
+complete-state contract to receive the bounds below.
+
+This combines the arbitrary-code fiber and two-Read budget of
+Assumption 9.1 with an additional finite Moore restriction. It does
+not substitute $e_{16}$ for the fixed reference $e=a_0$ in Theorem
+4.2, or transfer AOF's interval age-identification numerical optima.
+The acquisition and compilation phases have their own memory and
+cost contracts; the writable restriction here concerns recovery
+after complete installation.
+

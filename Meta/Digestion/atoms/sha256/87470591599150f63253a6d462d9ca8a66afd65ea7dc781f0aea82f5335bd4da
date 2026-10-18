@@ -1,0 +1,81 @@
+**Corollary 10.5 (Updated valid middle-budget bounds).** For every
+declared parameter, endpoint and unchanged independent seed,
+
+$$
+\begin{aligned}
+\max(F,V)&\le C_6\le S_3-\rho,\\
+W&\le C_7\le S_3-\rho,\\
+\max(W,X_\star)&\le C_8\le S_3-\rho,
+\qquad C_6\le C_7\le C_8.
+\end{aligned}
+\tag{10.10}
+$$
+
+The inherited exact low values are
+$C_1=C_2=a/2$, $C_3=a/2+a\eta$,
+$C_4=a/2+a\eta(1+c)$ and $C_5=F$; for $m\ge9$ the
+inherited value is $C_m=S_3$. All exact $C_m$ are attained
+and independent of the unchanged seed law by [Installed Three,
+Theorems 10.1–10.2][I3]. That finite-menu theorem preserves
+actual rows and successors and is separate from the proof of
+the explicit upper gap.
+
+Proof. The lower tables are Propositions 10.2–10.4, and every
+smaller table is allowed at larger installed budgets. The upper
+bound is Theorem 3.2. Class inclusion proves monotonicity.
+The assertions of exact inherited values and attainment are the
+stated results of Installed Three; they are not new conclusions
+of the quantitative forcing argument.
+
+For completeness, the full-range comparisons between the lower
+points, with their original ownership, are
+
+$$
+\begin{aligned}
+S_3-F&=d\eta^2(3-2\eta),\\
+V-F&=\frac{a\eta d}{4}(2-3d-d^3),\\
+W-F&=2d\eta^2(1-\eta)>0,\\
+W-V&=ad\eta c/2>0,\\
+X_\star-W&=\frac{ad\eta}{2}(1-2a^2).
+\end{aligned}
+\tag{10.11}
+$$
+
+To verify the first identity expand
+$1+c+c^2=3-6\eta+4\eta^2$ and use $a^2-a=-\eta$.
+For the second, subtract the definitions to get
+$a\eta(1/2+a^2-c-c^2)$; substituting
+$a=(1+d)/2,c=(1+d^2)/2$ makes the bracket
+$d(2-3d-d^3)/4$. The third subtracts $d\eta^2$ from
+the first deficit. The fourth is (10.8), since
+$W=Z+a\eta$ and $V=Z_V+a\eta$. Finally
+$X_\star-W=d\eta(\eta-ac/2)$ and
+$\eta-ac/2=(a/2)(2b-c)=(a/2)(1-2a^2)$.
+These compare actual attainable values and do not optimize the
+unevaluated middle-budget classes. $\square$
+
+**Open Problem 10.6 (The exact original target remains open).**
+Determine the exact attained $C_6,C_7,C_8$ throughout every
+fixed $0<p<1$, $p\ne1/2$, for both actual original $H_0,H_1$,
+the same arbitrary unchanged independent seed law, and exactly
+the complete runtime interface in Definition 2.1 under almost-sure
+$q_3=1$. Completion requires upper bounds for every original
+actual table, matched by complete common-source actual attainers
+for every winning parameter branch. The possible equations
+
+$$
+C_6=\max(F,V),\qquad C_7=W,\qquad
+C_8=\max(W,X_\star)
+\tag{10.12}
+$$
+
+are neither assumed nor proved. The inherited lower points need
+not exhaust the finite menu. No branch of this exact optimization
+task is settled merely by (10.10), and $\rho$ has no asserted
+matching attainer. Every candidate must respect one actual
+installed instruction and both fixed successors at every reaching
+positive section. Equal scalar values do not imply instruction
+identity; equal literals need not be equal rows. Early stops,
+minority and wrong-phase labels, all address geometries, unused
+rows and exceptional null cycles remain in the upper-bound class.
+

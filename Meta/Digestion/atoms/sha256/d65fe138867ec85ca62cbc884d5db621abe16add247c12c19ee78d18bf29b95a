@@ -1,0 +1,39 @@
+**Lemma 25.2 (Decision separation at an unbounded stop).** Assume the termination and finite-mean conditions in (23.8) for the fixed parameter $q$, and let
+
+$$
+p_i(q)=\mathsf P_{i,q}(D=1).
+$$
+
+For each $i\in\{0,1\}$,
+
+$$
+|p_1(q)-p_0(q)|\le r(q)+\varepsilon(q)\mathbb E_{i,q}N.
+\tag{25.3}
+$$
+
+Proof. For $j\in\{0,1\}$ define $h_j(x)$ to be the probability that the chain with kernel $U_j(q)$ started at $x$ eventually reaches $d_1$. This definition makes sense even at a state from which absorption has probability less than one. It gives
+
+$$
+0\le h_j\le1,\qquad U_j(q)h_j=h_j,
+\qquad h_j(d_0)=0,\quad h_j(d_1)=1.
+\tag{25.4}
+$$
+
+Fix $i$ and take $j=1-i$. Conditional expectation of the finitely many stopped increments gives, for every integer $m\ge1$,
+
+$$
+\mathbb E_{i,q}h_j(Y_{N\wedge m})-\nu_i(q)h_j
+=\mathbb E_{i,q}\sum_{n=0}^{(N\wedge m)-1}
+  \bigl[(U_i(q)-U_j(q))h_j\bigr](Y_n).
+\tag{25.5}
+$$
+
+For a function valued in $[0,1]$, the difference between its averages under two probability rows is at most their total variation. Each summand in (25.5) therefore has absolute value at most $\varepsilon(q)$. Lemma 25.1 and the assumed finite mean give $\mathbb E_{i,q}N<\infty$. Bounded convergence on the left and domination by $\varepsilon(q)N$ on the right allow $m\to\infty$. Since $h_j(Y_N)=D$,
+
+$$
+|p_i(q)-\nu_i(q)h_j|\le\varepsilon(q)\mathbb E_{i,q}N.
+\tag{25.6}
+$$
+
+Starting the $j$ chain with its actual initial law gives $p_j(q)=\nu_j(q)h_j$. The initial-row difference is at most $r(q)$, proving (25.3). Interchanging $i$ and $j$ gives the bound with the expectation under the other family. No assumption about termination from every abstract state was required, and no deterministic truncation remains in (25.3). $\square$
+

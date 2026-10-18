@@ -1,0 +1,4 @@
+**Theorem.** No such local minimum exists.
+
+Condition (1) says that both supported singleton records of \(H\) are unbiased to the supported orthonormal pair. It does not require a real gauge. The proof explicitly treats nonreal cycle phases. It does not exclude the entire \((2,1,1,0)\) support, any other listed support pattern, or the full global quarter problem.
+

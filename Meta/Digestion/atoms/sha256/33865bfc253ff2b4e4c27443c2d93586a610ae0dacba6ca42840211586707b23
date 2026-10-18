@@ -1,0 +1,13 @@
+**Definition 1.2 (actual services and sourcewise costs).** Let $\mathcal C(D,N,Q)$ be the common deterministic effective serial programs that correctly output $R_Q(u)$ and terminate on each $u\in D$. Their only new source-dependent input is the reply to an actual $\mathsf{Read}(p)$ on the one current register. Their other source actions are actual $\mathsf{ApplyRho}$ and absorbing $\mathsf{Halt}$. Choices of address, updates, and stopping may depend on acquired replies and the actual accessible control. There is no backward reset, moved root, hidden source oracle, free producer, unrecorded clock, or extra equality port. Local computation and working storage are supplied separately. No uniform running-time bound is assumed. After a genuine halt, continuation requires a separately supplied entry.
+
+For $A\in\mathcal C(D,N,Q)$ and $u\in D$, define
+
+$$
+ c_A(u)=(q_A(u),d_A(u),\ell_A(u))\in\mathbb N^3,
+ \qquad
+ \ell_A(u)=\sum_{\text{actual new reads }p}|p|.
+\tag{JRF.1.2}
+$$
+
+Here $q_A$ counts every actual new raw call, including repetitions; $d_A$ counts actual post-entry $\mathsf{ApplyRho}$ actions. A root read has address length zero but still costs one raw call. Each $|p|$ is the length of the literal physical address submitted on that call, with its original-root prefix included. Address construction, storage, transmission hardware, local computation, installed program, output, retention, authentication, and physical update work have no price assigned by (JRF.1.2). In particular, an action count is not a time or energy measurement.
+

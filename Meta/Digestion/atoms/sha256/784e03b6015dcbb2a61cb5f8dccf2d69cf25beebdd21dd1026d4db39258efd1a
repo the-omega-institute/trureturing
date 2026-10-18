@@ -1,0 +1,18 @@
+**定义 1.2（失败，包括停止）。** $\mathcal F(H)$ 是实现字面历史 $H$ 的全部完整世界。对任意基数的已知 $K\subseteq\mathcal F(H)$，定义
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:\
+L_{s-1}\bigl(K\cap\mathcal F(H,E,z),(H,E,z)\bigr).
+\end{aligned}
+\tag{1.4}
+$$
+
+这是整个已知集合在至多再读 $s$ 次时的失败，预算不超过剩余原时钟。基数分句排除提前停止。非失败时，单元素立即返回；否则按固定次序 $M,J$ 选择所有可达实际子集均非失败的动作，再按实际读数递归，便得到一个覆盖整个已知集合的策略。空子集不可达，可以任意补定义。
+
+同历史的包含关系保持失败：若 $K\subseteq K'$，则 $L_s(K,H)\Rightarrow L_s(K',H)$。证明在 $s=0$ 用基数，归纳步把各动作选出的实际失败子集包含进 $K'$ 的同响应子集，再用归纳假设。较短预算也保持失败。对恰好两个不同目标，任何非单元素子集只能保留同一对，故 $L_s$ 等价于这对在所有长度至多 $s$ 的续行前缀上逐读相等。这不允许从较大失败族抽出同深度失败对。
+
+以上接口复用 [IV，第 1 节](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 和 [V，定义 1.1、引理 9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)。未选动作的响应只是固定世界的数学函数，不是已经取得的额外观测。
+

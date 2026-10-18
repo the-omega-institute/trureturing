@@ -1,0 +1,180 @@
+**theorem 9.1 (Bounded positive-noise joint/spatial separation).**
+Let $e_3^{\rm joint}$ be the common unrestricted or real-joint
+three-copy optimum supplied in C-130.4, with exactly the source,
+target and complex reference convention of Definition 1.1. Then, for
+$c>0$ and $0<\eta\le1/2$,
+
+$$
+E_3-e_3^{\rm joint}\ge
+\frac{12c\eta(15+7\eta)}{3125}>0.
+\tag{9.1}
+$$
+
+The comparison uses the supplied joint value at its visible scope.
+It does not assert that its joint operations are original-cut LOCC.
+
+Proof. The credited C-130.4 value is
+
+$$
+e_3^{\rm joint}=[c-D_3]_+,\qquad
+D_3=\left\|\frac{\rho_+^{\otimes3}-\rho_-^{\otimes3}}2\right\|_1
+    =6u(1-2w+2w^2)-4u^3.
+\tag{9.2}
+$$
+
+We first evaluate its trace quantity without using a nested
+general-copy formula. The two opposite sources commute, with
+distinguished active eigenweights $w\pm u$ and a neutral complement
+of mass $d_0=1-2w$. Decompose the tensor experiment by the number of
+active factors. The one-active blocks have total norm $6ud_0^2$;
+the two-active blocks have total norm $12uwd_0$, since each
+$uw(A\otimes P+P\otimes A)$ has norm $4uw$; and the all-active
+block has norm $12uw^2-4u^3$ by (3.12). These supports are
+orthogonal, so their norms add, giving (9.2). The neutral complement
+includes all unmatched modes and is not dropped.
+
+The following specialization explains the quantitative scope of
+the visibly supplied joint construction at three copies. The common
+spectral outcomes are $a_+,a_-,b_+,b_-,o,\star$: the pair vectors
+are $J(e_j-i\epsilon e_k)/\sqrt2$, the singleton is $Je_2$, and
+$\star$ retains the entire rank-20 unmatched sector. For $X=\sigma X_a$
+their probabilities are
+
+$$
+p_{a,\sigma}=(w+\sigma u,w-\sigma u,w,w,w,20n),
+$$
+
+while $p_{b,\sigma}$ interchanges the two $a$ entries with the two
+$b$ entries. These follow directly from (1.1); grouping the unmatched
+sector loses no trace distance because all its individual probabilities
+are label independent. The resulting commuting words have signed counts
+$h_d(z)=\operatorname{sgn}(n_{d+}-n_{d-})$, with ties zero, and
+presence indicator $H_d(z)$ recording any outcome on pair $d$.
+A present tie is distinct from absence. Put
+
+$$
+Z_0=(1-2w)^3>0,\qquad T_0=1-Z_0.
+$$
+
+Each pair has presence probability $T_0$ under every label. Swapping
+the two active outcomes gives
+$\mathbb E_{\sigma X_d}h_d=\sigma D_3$; swapping the inactive pair
+fixes the source law and gives zero expectation there. The sign of
+the opposite-word probability difference is the sign of the active
+count, including $w=u$ by comparison of its nonzero supports.
+The necessary first-occurrence budget follows directly here:
+
+$$
+D_3-\frac uw T_0=4u(w^2-u^2)\ge0.
+\tag{9.3}
+$$
+
+For $D_3>0$, set
+
+$$
+a_0=\min\{1,c/D_3\},\quad Q_0=\max\{s,a_0\},\quad
+q_0=(s-Q_0T_0)/Z_0,
+\quad
+q_d(z)=\begin{cases}Q_0,&H_d(z)=1,\\q_0,&H_d(z)=0.\end{cases}
+\tag{9.4}
+$$
+
+If $Q_0=s$, its numerator is nonnegative immediately. If $Q_0=a_0>s$,
+(9.3) and $c/s=u/w$ imply $a_0T_0\le s$. Also $Q_0\ge s$
+implies $q_0\le s$. Hence
+$0\le q_0\le s\le Q_0\le1$,
+$a_0|h_d|\le q_d$ and $\mathbb E_Xq_d=s$.
+
+For clarity, this is a specialization of the supplied joint protocol,
+not a spatial upper bound. Its real joint sector instrument extracts
+a qubit from either two-dimensional matching sector, and retains the
+singleton and full unmatched outcomes. On extracted qubits use
+$H=iR_2$, $P_\epsilon=(I+\epsilon H)/2$ and the real gate
+
+$$
+V=(I\otimes A_H)
+  (I\otimes|0\rangle\langle0|+R_2^T\otimes|1\rangle\langle1|),
+\qquad A_H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+It obeys
+$V(H\otimes I)V^T=H\otimes I$ and
+$V(I\otimes H)V^T=H\otimes Z_2$: the first follows from commutation
+with $R_2$, and in the second the controlled gate sends $I\otimes H$
+to $H\otimes X_2$ before $A_HX_2A_H^T=Z_2$.
+Measuring the auxiliary qubit computationally therefore reads only
+relative signs and retains the first sign in one qubit.
+For an orbit $\{z,\bar z\}$ under global conjugation, choose the
+representative whose first extracted sign is positive. The orbit
+record and retained unnormalized qubit are
+
+$$
+\tau_{X,z}=\lambda_X(z)P_++\lambda_X(\bar z)P_-,
+\qquad\lambda_X(z)=p_X^{\otimes3}(z).
+\tag{9.5}
+$$
+
+All-neutral words retain their scalar weight without a qubit. The
+joint sector tests, relative-sign gates and measurements are complete
+on the full complex algebra. They are the visible C-130.1 instrument;
+their use of matching sectors is not a local-test permission in
+Definition 1.2.
+
+On a data pair $d$, the supplied real joint response uses a three-way
+coin of probabilities
+$a_0|h_d|$, $q_d-a_0|h_d|$, $1-q_d$. The first branch couples the
+data to the retained qubit by controlled $R_2$ or $R_2^T$ according
+to the representative sign of $h_d$. Its coherence on an
+unnormalized retained operator $\tau$ is
+$ia_0h_d\operatorname{tr}(H\tau)$. The second branch measures and
+keeps the data coordinate, and the third measures it and prepares
+uniformly one of the other four coordinates. The mean stay weight
+is $s$ and every wrong-coordinate weight is $(1-s)/4=5n$.
+Summing (9.5) over orbits gives active coefficient
+$a_0D_3=\min(c,D_3)$ and zero inactive coefficient. The no-pair
+record uses only the last two branches with probabilities $q_0,1-q_0$;
+present ties use $Q_0$ and also have zero first-branch weight.
+The singleton uses the ordinary target diagonal preparation.
+If $D_3=0$, then $u=c=0$ and the common target is used instead.
+These complete real joint instruments give (9.2)'s upper error by
+the norm identity of Definition 4.3.
+
+Conversely every joint CPTP processor, when appended with any fixed
+reference/data state, contracts the actual opposite-program difference.
+Thus $\|N_+-N_-\|_\diamond\le2D_3$. The opposite targets have
+distance $2c$, so the triangle inequality gives worst error at least
+$[c-D_3]_+$. This verifies the relevant three-copy joint specialization
+from the visible ingredients. The already supplied joint optimum,
+its general-copy theorem and its literature provenance are not claimed
+as new results here.
+
+For the separation itself, $c>0$ and $\eta\le1/2$ imply
+$3/25\le w\le1/5$. As in (7.3),
+
+$$
+\frac{D_3}{c}=\frac65(1-2w+2w^2)-\frac{4c^2}{125}
+                 \le\frac{2958}{3125}<1.
+\tag{9.6}
+$$
+
+Moreover,
+
+$$
+D_3-B_3=12un(1-2w-n)
+        =\frac{12c\eta(15+7\eta)}{3125}\ge0.
+\tag{9.7}
+$$
+
+Therefore both $D_3<c$ and $B_3<c$: the positive parts in the
+two lower errors do not clip. Subtract the supplied joint value
+$c-D_3$ from the spatial lower bound $c-B_3$ to obtain (9.1).
+Strictness uses $c>0$ and $\eta>0$ in exactly the stated range.
+
+At $t=1,\eta=1/2$, (9.2) gives $D_3=2933/6250$ and joint error
+$192/6250$. Consequently (8.6) implies spatial excess at least
+$111/6250$. This is a lower bound on the excess, not its exact value.
+At zero white noise, $D_3=B_3=M_3$, so the spatial equality (8.3)
+has the already supplied joint number. Its additional assertion is
+original-cut real LOCC attainment and a converse for the entire
+original real LOCC class. QED.
+

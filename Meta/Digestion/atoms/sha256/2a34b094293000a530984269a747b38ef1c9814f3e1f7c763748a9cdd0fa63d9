@@ -1,0 +1,24 @@
+**Lemma 7.2 (Normalization and scalar endpoint meaning).** Under
+$c=C/(2H)$ and $\lambda=\gamma H$, the radial squared error of
+Theorem 6.4 equals $16H^2\mathcal J(c,\lambda)$. For $c=0$ it equals
+$16H^2T_0=R_0^2$. For every $c>0$ and finite $\lambda$,
+$\mathcal J(c,\lambda)>\tau$.
+
+**Proof of Lemma 7.2.** Substitute $k=Hx$ and $A(k)=2Hs(x)$.
+The radial amplitude is $2Hce^{\lambda x}$, and the remaining term
+becomes $4ZHx=16H^2\tau x$. The resulting scalar function is
+continuous on $[0,1]$, so its supremum on $(0,1)$ equals its
+closed-interval maximum. This concerns the explicit scalar formula;
+it makes no extension of an arbitrary encoder to endpoint source states.
+
+For $c=0$,
+
+$$
+s(x)^2+\tau x
+=T_0-\left(x-\frac{1+\tau}{2}\right)^2,
+$$
+
+and the vertex is interior. For $c>0$, the scalar endpoint value at
+$x=1$ is $c^2e^{2\lambda}+\tau>\tau$. It is a limit of interior
+errors, hence bounds their supremum below. $\square$
+

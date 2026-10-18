@@ -1,0 +1,10 @@
+**命题 A-17.1（精化与原生转移交换）。** 若 $`\mathfrak{\text{𝔪}}\mid\mathfrak{\text{𝔪}}'`$，保同一接缝、字母、错误类型的约化 $`\pi`$ 满足 $`\pi T_I^{(\mathfrak{\text{𝔪}}')}=T_I^{(\mathfrak{\text{𝔪}})}\pi`$。其计数满足
+
+
+```math
+D_\ell^{(\mathfrak{\text{𝔪}})}(s,c)=\sum_{c'\bmod\mathfrak{\text{𝔪}}'=c}D_\ell^{(\mathfrak{\text{𝔪}}')}(s,c').
+```
+
+
+证明。$`S,d_I`$ 整数系数，模约化与仿射式交换；守卫只取原生真实位，不依赖模数。初值相容，按相同来源的约化纤维求和给第二式，也可按 $`\ell`$ 归纳。单位位和终端目标若由粗模数因子化，同样保响应。证毕。
+

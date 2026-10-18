@@ -1,0 +1,17 @@
+#### 17.1.4 Korevaar–Schoen 能量
+
+Alonso Ruiz 和 Baudoin 的 [Dirichlet forms on metric measure spaces as Mosco limits of Korevaar–Schoen energies](https://arxiv.org/abs/2301.08273) 给出 Korevaar–Schoen 型非局部能量的 Mosco 极限充分条件，并使用 Rellich–Kondrachov 型紧性。该结果适用于 Cheeger spaces，也包括部分 fractal-like metric-measure spaces。
+
+相应的非局部图能量为
+
+\[
+\mathcal Q_{j,\varepsilon}(u)
+=
+\frac{1}{\varepsilon^{m+2}}
+\sum_{v,w}
+\eta\!\left(\frac{d_j(v,w)}{\varepsilon}\right)
+|u_v-u_w|^2\mu_j(v)\mu_j(w),
+\]
+
+其 Mosco 收敛是额外的待证条件；极限不预设为流形。若最终需要黎曼流形，仍要增加一个独立的光滑化或流形识别定理。
+

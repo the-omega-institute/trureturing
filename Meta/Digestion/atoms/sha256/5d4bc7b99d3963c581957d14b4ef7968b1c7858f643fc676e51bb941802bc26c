@@ -1,0 +1,84 @@
+**Proposition 180.2 (Demanded score, attained score and nested masses).**
+For the same kernel,
+
+$$
+\begin{aligned}
+D_3-3\varepsilon&=39/400,\\
+(f_5,f_6,f_7)&=(33/400,37/400,39/400),\\
+(|M_5|,|M_6|,|M_7|)&=(25,55,70).
+\end{aligned}
+\tag{180.7}
+$$
+
+The cap-demanded lower score and the kernel's actual score are
+distinct:
+
+$$
+3+f_5=1233/400,\qquad \Phi(p)=17567/5600.
+\tag{180.8}
+$$
+
+The complete-table refinement (176.4) of this attainer has
+$q_5=q_6=q_7=117/800$. Every finite stopped cap attainer must instead
+obey the necessary lower bounds $q_k\ge f_k$ from (180.7).
+The $q_7$ lower bound does not strengthen the lower bound on its
+25-mode subset $q_5$ to $39/400$.
+
+Every $T_7$ competitor on the same entire original sequence has
+uniform error at least $61/200$. The constructed full $O_2$ rule
+has error $233/800$, so their restricted-method difference is
+$11/800$. These facts assert neither a full $N/O$ support gap nor
+optimality for the full stopped class.
+
+**Proof.** Proposition 174.2 gives the excess $r/10=39/400$.
+Here $B=g_6+g_7=3/200$; (177.7) gives $f_5=33/400$.
+The successive differences are $f_6-f_5=g_6=1/100$ and
+$f_7-f_6=g_7=1/200$. Formula (177.3) gives the three mode counts,
+using its full-prefix branch at seven.
+
+For the actual score, the six selected event probabilities at
+$w_0,\ldots,w_5$ are, using (180.2)--(180.3),
+
+$$
+\frac{303}{400},\quad\frac{567}{800},\quad
+\frac{1431}{4000},\quad\frac{1353}{4000},\quad
+\frac{1041}{4000},\quad\frac{4001}{5600}.
+\tag{180.9}
+$$
+
+Their sum is $17567/5600$. The demanded sum in (177.4) is only
+$3+33/400=1233/400$, establishing the distinction in (180.8).
+
+In the refinement (176.4) of the seven-cell core, the schedules
+$(2,3),(3,4),(4,5)$ each have first-zero-label-zero mass $z=1/20$.
+Their middle labels are respectively $3,4,5$, and all their
+exhaustion labels are zero or a legal later label at most five.
+Every endpoint in these three zero-first portions lies in $M_5$.
+No other core schedule contributes to $M_5$, $M_6$ or $M_7$:
+the schedules starting at one are excluded by $i\ge2$, and
+$(2,4)$ has numerical first label two. The subset endpoints also
+have numerical first labels, so none contributes. Consequently each
+of the three nested masses is $r(3z)=(39/40)(3/20)=117/800$.
+This is a particular legal common representation, not a claim that
+it saturates any lower cut or that all representations have these
+masses. Nesting permits additional mass in $M_7\setminus M_5$,
+so a lower bound on the larger set cannot be assigned to the smaller.
+
+Let $\eta$ be the uniform error of a $T_7$ competitor. If it is
+infinite the asserted bound holds immediately. Otherwise actual
+witnesses for the six finite chain patterns give the three pair
+rows and three correct rows with error at most $\eta$.
+Thus $\Phi\ge3+a_3+a_4+a_5-6\eta$ while its restricted support
+is at most three. It follows that
+
+$$
+\eta\ge\frac{a_3+a_4+a_5}{6}
+       =\frac{61}{200},\qquad
+\frac{61}{200}-\frac{233}{800}=\frac{11}{800}.
+$$
+
+This is exclusion of the declared $T_7$ method at the constructed
+cap. The full catalogs both have score support four by Theorem 177.2,
+and the full stopped attainer is explicit, so it supplies no
+whole-class separation. $\square$
+

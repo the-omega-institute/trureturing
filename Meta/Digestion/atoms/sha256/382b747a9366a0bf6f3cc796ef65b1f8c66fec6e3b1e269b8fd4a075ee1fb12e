@@ -1,0 +1,24 @@
+**Definition 17.1 (directed intervals and ordinary derivatives).** For $D_{300}=2^{300}$ enclose a rational $x$ by $[\lfloor D_{300}x\rfloor,\lceil D_{300}x\rceil]/D_{300}$. After addition, multiplication, reciprocal, or square-root operations round the lower endpoint down and upper endpoint up on that grid. Products use all four endpoint products; a square has lower endpoint zero if its interval crosses zero. A reciprocal is taken only after zero exclusion. For a nonnegative $[l,h]$, integer comparisons $m^2\le D_{300}^2l$ and $n^2\ge D_{300}^2h$ give the outward square-root endpoints. Exact rational arithmetic with no rounding is also admissible. The final tiny radii in §22 use exact fractions and relative square-root enclosures: for $x>0$, choose an integer $e$ with $1\le2^{-2e}x<4$, enclose that rescaled square root on a dyadic grid and rescale by $2^e$. Thus no fixed absolute grid can underflow a positive radius.
+
+For ordinary, unnormalized derivative jets, products and quotients obey
+
+$$
+\begin{aligned}
+(fg)^{(j)}&=\sum_{i=0}^j\binom ji f^{(i)}g^{(j-i)},\\
+q^{(0)}&=1/d^{(0)},\qquad
+q^{(j)}=-\frac1{d^{(0)}}\sum_{i=1}^j\binom ji d^{(i)}q^{(j-i)}
+\quad(q=1/d).
+\end{aligned}
+$$
+
+The corresponding multi-index identities give all partial derivatives. No Taylor factorial is omitted when a tensor is formed. Whole-circle bounds use $u,v\in[-1,1]$, $u'=-v$, $v'=u$, $u''=-u$, $v''=-v$, through the required order, allowing the two zeroth-order coordinates to vary independently for an upper enclosure. In the zeroth capacity denominator retain the nonnegative squares:
+
+$$
+d_{\rm cap}=h_0^2\delta+(b_{\rm src}^2/\alpha)u^2+
+(d_{\rm src}^2/\beta)v^2\ge h_0^2\delta>0.0152221568385.
+$$
+
+Derivatives of $d_{\rm cap}$ use the product identities, not the derivative of this lower bound. Use the $\Gamma,H$ formulas of Definition 16.3 for normalized angular derivatives. On branch boxes use Definition 10.1's cleared polynomials, $r_c=1+x^2$ and the specified three bases. For a polynomial $\sum c_jx^j$, its $m$th jet is exactly $\sum_{j\ge m}j!c_jx^{j-m}/(j-m)!$. Moment derivatives still use the normalized rational columns. These prescriptions determine every matrix and tensor below from the pinned source/event/branch rectangles.
+
+For a tensor enclosure $\mathbf T$ put $\operatorname{maj}(\mathbf T)=(\sum_{i_1,\ldots,i_d}\sup|\mathbf T_{i_1\cdots i_d}|^2)^{1/2}$. This full Frobenius bound dominates the Euclidean multilinear operator norm by Cauchy–Schwarz. It includes both orders of each symmetric mixed pair, and every order of a third derivative with multiplier indices. Norms in what follows are Euclidean unless explicitly marked $\infty$ or scaled.
+

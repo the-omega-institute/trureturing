@@ -1,0 +1,10 @@
+### 定义 12.2（重构与可见纤维）
+
+对任意 $X,Y,Z,\kappa\in\mathbb R$，按上述状态顺序定义
+
+$$
+R(X,Y,Z,\kappa)=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa),
+\qquad
+\mathcal F_{X,Y,Z}=\{p\in\mathcal L:\operatorname{Prob}(p),\ V(p)=(X,Y,Z)\}.
+$$
+

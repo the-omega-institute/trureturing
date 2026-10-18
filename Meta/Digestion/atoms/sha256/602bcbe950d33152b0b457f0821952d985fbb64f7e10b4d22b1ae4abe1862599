@@ -1,0 +1,80 @@
+**定理 65.2（Exhaustive shallow boundary and exact paid exception）。** For every actual child of Definition 65.1, under both original alphabets,
+
+$$
+D_{\rm ad}=D_{\rm child\text{-}pre}=0
+\quad\Longleftrightarrow\quad
+A=\varnothing\ \text{or}\ \lambda\text{ is constant}.
+\tag{65.4}
+$$
+
+For nonconstant $\lambda$,
+
+$$
+D_{\rm ad}\le1
+\quad\Longleftrightarrow\quad
+D_{\rm child\text{-}pre}\le1
+\quad\Longleftrightarrow\quad
+\mathsf Q_1\ \text{and not}\ \mathsf E,
+\tag{65.5}
+$$
+
+and these prices are exactly one. In $\mathsf E$ the actual parent is forced to be $101\cdots01$, its child tail is $\sigma=1$, and
+
+$$
+D_{\rm ad}=D_{\rm child\text{-}pre}=2,
+\qquad\text{attained from index }b\text{ by }0^m\mid110^{m-2}.
+\tag{65.6}
+$$
+
+For every other nonconstant case failing (65.5), each continuation price is between two and $T-1$, inclusive. No equality of the two prices at general higher depths is asserted.
+
+**证明（necessity and the separating row）。** At fee zero there is no further observation: all candidates have the same acquired archive, so a correct stop exists precisely for a constant INITIAL label. This gives (65.4), including the empty convention.
+
+At a common-tail child every fixed next word either succeeds on all candidates or rejects all of them: since $m<k$, rejection depends only on $\sigma$ and the word's leading run. Rejection creates one absorbing archive and cannot finish a nonconstant target, at this endpoint or after later actions. A successful endpoint has only the binary difference $q$; outside $W_b$ it is zero by (1.4). Thus any one-block completion forces $\mathsf Q_1$. Adaptive and child-preset depth one have the same single next word.
+
+For nonconstant $\mathsf Q_1$ there are exactly two labels. If $A\setminus W_b$ is nonempty, prescribe $q=0$ to its common label and $q=1$ to the other label. If it is empty either label orientation is allowed. A one-block completion exists exactly when such a separating row has a safe literal realization. These binary-row constraints also occur in the credited safe-cut interface; here they follow from the preceding common-tail argument without assuming an earlier issued zero. The remaining proof exhausts them using the actual positive parent.
+
+**证明（zero-containing parents and the only unsafe row）。** Put $u=am\pmod T$ solely as a coordinate translation of this archive, so $W_a=u+\{0,\ldots,m\}$ and the next path starts at $u+m$. No emitted block, phase displacement or observation is supplied by this notation. Local vertices $1,\ldots,h$ of $W_b$ are outside $W_a$, hence outside $A$.
+
+Write the next word's bits as $x_0,\ldots,x_{m-1}$, and pin $x_{-1}=x_m=0$. At local vertex $i$ its charge equation is $x_{i-1}\oplus x_i=q_i$. A missing vertex deletes this equation. Between two deleted equations the bit component has a freely chosen orientation; a component reaching a pinned endpoint has its orientation fixed. These are the supplied signed-path components [S15, Definition 2.1], applied to the holes of this same $A$.
+
+Suppose first that $B$ contains a zero. Its child's actual tail is $\sigma=\rho(B)\le m-1$, irrespective of mixed tails before $B$. If $h\ge2$, missing vertices 1 and 2 isolate $x_1$ as a free component. Set $x_1=0$. All remaining prescribed charges can be solved component by component: no observed equation joins the two pinned endpoints, and no observed equation joins this free bit across either deleted edge. The resulting word has leading run at most one. Its seam obeys $\sigma+\alpha\le m<k$, so it safely realizes every prescribed separating row.
+
+Let $h=1$. Vertex 1 is always missing. If vertex 0 is also missing, set $x_0=0$ and use the missing vertex 1 to compensate full-path parity; the inverse then solves all other prescribed charges. Otherwise, if any additional vertex is missing, choose the first such vertex $j>1$. The component $x_1,\ldots,x_{j-1}$ is free between the deleted equations 1 and $j$; orient it with $x_1=0$, and solve the other components. Again the leading run is at most one and the same strict safe seam holds.
+
+The only remaining hole pattern has exactly the single missing local vertex 1. Here $T=m+2$, and the actual two windows satisfy
+
+$$
+W_b\setminus W_a=\{u+m+1\},\qquad
+W_a\setminus W_b=\{u+m-1\}.
+\tag{65.7}
+$$
+
+Consequently $A$ contains all of $W_a\cap W_b$ and, since $A\subseteq W_a$, is either that intersection or all of $W_a$. In the intersection case all phases of $A$ are available. Choose the label orientation giving charge zero at the leading vertex of $W_b$. The single hole fixes the remaining full-path parity, giving the unique inverse with $x_0=0$, safe from every inherited tail.
+
+If $A=W_a$, the parent charges one at all $m+1$ vertices. Its even full-path charge forces $m$ odd, and (1.5) forces $B=101\cdots01$, with $\sigma=1$. The outside phase $u+m-1$ fixes the zero-label orientation. For that row the one-hole inverse is unique. Every inverse containing zero has $\alpha\le m-1$, hence $1+\alpha\le m<k$. The only unsafe inverse can therefore be $1^m$: its actual leading seam is $1+m=k$.
+
+The charge of this all-one inverse on $A$ is one exactly at
+
+$$
+H=\{u+m,u+2m\}=\{u+m,u+m-2\}\pmod{m+2}.
+\tag{65.8}
+$$
+
+It separates the labels exactly when one label class is $H$ and the other is $A\setminus H$, namely $\mathsf E$. Conversely that label table forces this unique unsafe row: the unavailable phase $u+m-1$ belongs to the complementary class and fixes its response to zero. This exhausts every $\mathsf Q_1$ obstruction for zero-containing parents, with arbitrary repeated labels and every absolute offset retained.
+
+**证明（all-one parents, the paid repair and finite bounds）。** The remaining parent is $B=1^m$, whose positive support is contained in $\{u,u+m\}$. A nonconstant child therefore contains both endpoints with different labels. Its common current tail may exceed $m-1$; no low-tail assertion is used. At the next actual index emit
+
+$$
+0^{h+1}1\,0^{m-h-2}.
+\tag{65.9}
+$$
+
+This is a complete $m$-bit word because $h\le m-2$. Its isolated one at local position $h+1$ has physical charge $\{u,u+1\}$, selecting exactly $u$ from the child's two endpoints. It begins zero, so it is safe from every $\sigma<k$. This proves that no all-one-parent child adds another exception. Together with the preceding cases, it establishes all one-block attainments in (65.5).
+
+In $\mathsf E$, any successful separating one-block action must realize the forced row and hence must be $1^m$, which rejects every candidate from the actual tail one. Every other successful word fails to separate the two labels; every rejecting word merges them. Thus no one-block adaptive action works, an all-action lower bound of two rather than a failure of one chosen protocol.
+
+For attainment, issue the whole paid word $0^m$ at index $b$. Its difference is zero on all candidates and its actual tail becomes zero; it does not identify either label. At index $b+1$, the path starts at $u+2m=u+m-2\pmod{m+2}$. The whole word $110^{m-2}$ has charge exactly $\{u+m-2,u+m\}=H$. Its leading run two is strictly below $k=m+1$ from tail zero, and its terminal tail is zero. Its endpoint difference returns $L$ on one and $M$ on zero. Both complete blocks, including the uninformative clearing block, are emitted and paid. This proves (65.6).
+
+Finally apply the supplied safe phase-recovery stream of [S1, Theorem 3.1], starting at this actual offset: repeat $010^{m-2}$ for $T-1$ complete blocks. Every word begins zero, so every candidate is safe. Its $T$ chronological samples traverse the matched coefficient cycle by coprimality. Equality of two phases' first $T-1$ differences forces the last differences equal by the common integer total of two ones; equality of the whole shifted cycle then forces equal phases by its exact period $T$ [S2, Theorem 14.1]. Recovering the current phase and subtracting the known paid displacement gives INITIAL $j$ and hence $\lambda(j)$. This is credited reuse of a finite upper bound, not a new phase-recovery theorem. Failure of (65.5) and (65.4) gives the lower bound two; the safe stream gives each upper bound $T-1$. It supplies no further equality between adaptive and child-preset minima. ∎
+

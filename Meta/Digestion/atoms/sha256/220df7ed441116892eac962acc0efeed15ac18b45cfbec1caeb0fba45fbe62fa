@@ -1,0 +1,50 @@
+**Theorem 8.3 (legitimate overlap application and its interface limit).**
+For the row-only interface put
+$D=\max(\{0\}\cup\{|p|:p\in P_i,\ i<m\})$ and
+
+$$
+S_i=\{w\in\{L,R\}^D:\nexists p\in P_i,\ p\preceq w\},\qquad
+i\sim j\ \Longleftrightarrow\ i\ne j,\ S_i\cap S_j\ne\varnothing.
+\tag{CNA.14}
+$$
+
+The supplied [NAR, Theorems 12.3 and 12.5][NAR] now apply:
+differences within each connected component are uniformly effectively
+recoverable; the entire vector $(n_i)$ is uniformly recoverable on the
+all-source, all-chronological-epoch domain if and only if this overlap
+graph is connected. A specified difference is uniformly recoverable
+if and only if its indices share a component.
+For the richer interface the positive implication remains valid, but
+the row-only necessities do not transfer.
+
+**Proof.** Theorem 8.1 supplies the actual family of NAR Assumption 12.1;
+Definition 8.2 supplies its entire input restriction.
+An edge's two acquired exterior clock factors subtract to $n_j-n_i$.
+Summing along a spanning forest gives componentwise coordinates.
+NAR Lemma 12.4 supplies the simultaneous whole-row collision for the
+negative all-source assertions, preserving every partition and guard.
+
+Every promised finite row family is attainable by pausing the writer
+during each finite acquisition and executing the prescribed finite
+bursts between captures. Thus this acquisition method followed by a
+complete retention cut does not remove the collision inputs. This is
+an application of the supplied uniform criterion, not a new overlap
+theorem or a claim that every disconnected attained fiber is ambiguous.
+
+For richer input, discard additional data to retain sufficiency.
+For necessity, reuse the native right clock
+
+$$
+c(\alpha)=0,\quad c(\beta)=1,\quad
+c(\langle x,y\rangle)=2+c(y),\qquad c(\rho^n t)=c(t)+n.
+\tag{CNA.15}
+$$
+
+The last law is [DelayedOriginalReadout][DOR] *right_clock_iterate*,
+with its private *clock_step* supplier. Validated trees determine
+$n_i=c(T_i)-c(T_0)$ by finite local computation; accepted transcripts
+first reconstruct those trees. This works even with only root cuts,
+whose rows are constant and whose overlap graph is disconnected for
+$m>1$. It uses paid descriptions, not a new clock port.
+Row-only necessity is therefore false in the larger interface. $\square$
+

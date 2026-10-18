@@ -1,0 +1,32 @@
+## 196. Only the fifth return axis survives actual continuation
+
+Genuineness and the special-pair exclusion leave Q in {M,Z,D,U}; Q=C
+would contradict q>c. For Q=M, each residual face is {Z,M,M}: an axial
+Z target would need repeated reservoir pair {M,M}, and a transverse
+target has pair {Z,M}, hence owner rho. For Q=Z, a residual face is
+{Z,Z,M}; both its possible target roles again have pair {Z,M}. Thus
+these cases confine the complete Z circle to tau and rho, at most four
+slots, which is impossible.
+
+For Q=D, two other possible roles across a residual face {Z,M,D} must
+be considered. An axial Z target has pair {M,D}. It is genuine and
+its exact response satisfies theta_Z+2*beta_M>pi because d<m-2 and
+z>m+2, by the parameter-sum calculation of Section 168. It differs
+from tau and rho by fixed pair, so its M/Z expenditure would exceed
+the complete capacity together with theirs. It cannot occur.
+A transverse Z target either has pair {Z,M}, hence is rho, or has
+pair {Z,D} and axial M. In the latter case Section 169's parameter-sum
+calculation, using exactly d<m-2,z>m+2, gives
+theta_M+2*gamma_Z>pi. This owner also differs from tau and rho by pair,
+and is excluded by the same capacity contradiction.
+Thus Q=D likewise confines the Z circle to tau and rho and is impossible.
+
+Only Q=U remains. Genuineness of (C,Z,M,U,Z,M) gives
+(c+1)(u+1)>(z-m)^2, proving the displayed lower bound on u. Its right
+side is at least c because z>=1+m+c, and the strict genuine inequality
+makes u>c. The argument has preserved every actual slot and allows
+repeated axes and self-glued faces. The residual faces {Z,M,U} still
+admit roles not excluded by the small-D estimates; those are the
+remaining joint-star cases, not a closed five-reservoir contradiction.
+
+

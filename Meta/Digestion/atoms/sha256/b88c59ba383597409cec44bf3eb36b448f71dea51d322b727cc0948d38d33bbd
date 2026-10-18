@@ -1,0 +1,75 @@
+**Theorem 8.1 (localization and the uniform cubic lower).** For the
+fixed admitted input there are finite constants $C_-,\epsilon_->0$
+such that every original competitor at $s=s_*+\epsilon$ satisfies
+
+$$
+\operatorname{tr}(G_{\rm acq}E\rho E^\dagger)
+ \geq F+K_{\rm onset}\epsilon^2-C_-\epsilon^3
+ \qquad(0<\epsilon<\epsilon_-).
+\tag{QO.40}
+$$
+
+The constants do not depend on the competitor, its alphabet or its
+fibre dimensions.
+
+Proof. First justify using local coordinates for all designs capable
+of a cost improvement. Write their actual cost as $A_{\rm act}$ and
+apply Proposition 6.1. The resulting aggregate $H$ lies in the compact
+set $0\preceq H\preceq I$ and has $F\leq W\leq A_{\rm act}$.
+Every such $H$ satisfies the two nonnegative certificate inequalities
+in (QO.28). Suppose a sequence has $W\to F$. A convergent
+subsequence of $H$ has a limit satisfying those same continuous
+inequalities, with equality. The proof of Lemma 5.1 forces its
+limit to be $H_*$. Thus every sequence with $W\to F$ converges to
+$H_*$. No closure or attainment of the space of full decoder
+measures is being assumed.
+
+For designs with
+$A_{\rm act}-F\leq2K_{\rm onset}\epsilon^2$, a compactness
+contradiction now puts every normalized array in the same neighborhood
+of §7 for all sufficiently small $\epsilon>0$. Otherwise a sequence
+outside that neighborhood with $\epsilon\downarrow0$ would have
+$W\to F$ and a limit $H_*$ inside it. The same reasoning at a
+fixed $s>s_*$ excludes an infimum $F$: the continuous record inequality
+would limit to $s\leq s_*$.
+
+Inside the neighborhood, (QO.37), strict $\lambda>0$, bounded positive
+$P$ and $m$, and $1-\cos u\geq c u^2$ give
+
+$$
+\eta=O(\epsilon^2),\qquad x=O(\epsilon),\qquad
+u=O(\epsilon)
+\tag{QO.41}
+$$
+
+uniformly on the threshold set. For example the $x^2/P$ term controls
+$x^2$, and the angular term alone controls $u^2$; no cancellation of
+nonnegative summands is used. Substituting (QO.41) in (QO.39) gives
+
+$$
+\begin{aligned}
+A_{\rm act}-F&\geq
+ \lambda\eta+a_{\rm curv}x^2+c_{\rm curv}u^2-C\epsilon^3,\\
+x+b_{\rm rec}u&\geq\epsilon-C'\epsilon^2 .
+\end{aligned}
+\tag{QO.42}
+$$
+
+For small positive $\epsilon$ the last right side is positive.
+Weighted Cauchy--Schwarz yields
+
+$$
+(x+b_{\rm rec}u)^2\leq
+D_{\rm onset}(a_{\rm curv}x^2+c_{\rm curv}u^2).
+\tag{QO.43}
+$$
+
+Consequently (QO.42) is at least
+$K_{\rm onset}(\epsilon-C'\epsilon^2)^2-C\epsilon^3$.
+This proves (QO.40) on the threshold set with one cubic constant.
+Designs above the threshold already have
+$A_{\rm act}-F>2K_{\rm onset}\epsilon^2$ and satisfy the same
+lower estimate after reducing the radius. These two cases exhaust the
+entire original finite class. Taking an infimum preserves (QO.40);
+no original minimizer or implemented averaging was required. $\square$
+

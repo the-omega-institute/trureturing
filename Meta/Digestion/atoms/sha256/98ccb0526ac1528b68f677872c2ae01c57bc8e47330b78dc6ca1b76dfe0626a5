@@ -1,0 +1,30 @@
+**Definition 1.4 (progress and safety quantifiers).** Observer progress
+means that a pending observer can perform its next finite local transition
+or atomic operation after finitely many intervening events. A finite
+calculation of finitely many such transitions therefore completes.
+There is no delay bound. A fair infinite history gives a pending observer
+infinitely many transitions and gives an indefinitely active writer
+infinitely many transitions. A halted writer has no progress obligation.
+A completed call can be extended with a halted observer; fairness requires
+no further observer work after Return.
+
+Universal coherent safety for $P$ means that on every legal history
+where the observer returns $R$, some actual version between invocation
+and Return has complete row $R$.
+Validation safety is stronger: a success identifies an in-call Read $v$
+and returns a finite tree $T=U_v$, hence $R_P(T)=R_P(U_v)$.
+Invocation safety requires $R=R_P(U_{\rm in})$.
+Return safety requires $R=R_P(U_{\rm ret})$ at the separate Return event.
+Neither follows from validation safety.
+
+A finite certificate is sound if, for every legal history realizing its
+authentic ordered observer transcript, acceptance implies the asserted
+validation equality. Deciding a transcript predicate does not establish
+that a handed-in string really came from this register.
+Finite-total-interference termination quantifies over every $u,P$ and
+every observer-progressing history with finitely many writer updates
+during the pending call, without supplying their number or last position.
+A budget $B$ means at most $B$ total updates during that call.
+Unrestricted fair termination also includes histories with infinitely
+many updates.
+

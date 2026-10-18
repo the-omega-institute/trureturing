@@ -1,0 +1,23 @@
+**推论 26.3.2（所有 proper 边缘相同）。** 对任意 $v,w\in[0,1]$，有
+
+$$
+\boxed{
+\mathcal R_{\mathrm{loc}}(v)=\mathcal R_{\mathrm{loc}}(w).
+}
+$$
+
+更强地，对每个非空真子系统 $S\subsetneq\{A,B,C\}$：
+
+$$
+\operatorname{Tr}_{S^c}(\rho_v)
+=
+\operatorname{Tr}_{S^c}(\rho_w)
+=
+\frac12\bigl(|0\cdots0\rangle\langle0\cdots0|
+ +|1\cdots1\rangle\langle1\cdots1|\bigr).
+$$
+
+**证明。** 对任意非空真子集取偏迹时，非对角项至少在一个被迹掉的量子比特上出现 $|0\rangle\langle1|$ 或其伴随，因而消失。于是所有局部效果概率都与 $v$ 无关。证毕。
+
+<a id="section-26-4"></a>
+

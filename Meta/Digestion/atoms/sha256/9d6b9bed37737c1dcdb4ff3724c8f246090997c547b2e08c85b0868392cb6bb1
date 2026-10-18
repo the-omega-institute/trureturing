@@ -1,0 +1,102 @@
+## 3. Terminal interfaces and their established positive chart
+
+For a world in $\mathcal C_d(H)$ set
+
+$$
+X=f(7)QP=\begin{pmatrix}a&b\\c&e\end{pmatrix},\qquad
+S=Q^{-1}X=f(7)P.
+\tag{3.1}
+$$
+
+Every entry of $X$ is nonzero and has the sign of $f(7)$, and
+$ae=bc$. Direct multiplication gives the complete terminal table:
+
+$$
+\begin{array}{c|c|c}
+\text{chronological word }EF&FE& r_{EF}\\ \hline
+JJ&I&A=d+a+e\\
+JM&\begin{pmatrix}1&0\\1&1\end{pmatrix}&B=d+a+b+e\\
+MJ&\begin{pmatrix}1&1\\0&1\end{pmatrix}&C=d+a+c+e\\
+MM&\begin{pmatrix}1&1\\1&2\end{pmatrix}&D=d+a+b+c+2e.
+\end{array}
+\tag{3.2}
+$$
+
+The word $EF$ means execute and immediately read sixth $E$, then
+execute and immediately read seventh $F$; the cumulative terminal
+matrix is $FEQ$. The four entries are response functions on fixed
+candidates, rather than four readings on a single trajectory.
+
+For clarity, the established four-terminal inverse is fully algebraic:
+
+$$
+b=B-A,\quad c=C-A,\quad e=D-C-B+A,\quad
+a=bc/e,\quad d=A-a-e.
+\tag{3.3}
+$$
+
+The divisor $e=f(7)(QP)_{22}$ is nonzero. Rank one gives $a=bc/e$.
+Next $f(7)=\operatorname{tr}(Q^{-1}X)\ne0$ and
+$P=Q^{-1}X/\operatorname{tr}(Q^{-1}X)$. The recovered source and
+drift determine $f(0),\ldots,f(3)$ through the positive first four
+trace factors in (1.7). Four distinct arguments determine a polynomial
+of degree at most three: their difference has four roots and must
+vanish. This recovers the complete world, including degree drops
+and repeated roots. This interface is established in
+[Nonzero-Terminal, Lemma 2.3](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md)
+and [VII, equation (4.2)](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md),
+which credits V, Theorem 7.1.
+
+The positive chart from VII, Definition 1.3, also fixes the exact
+comparison with nonzero-sixth results. Put $\eta=(QP)_{22}>0$,
+$R=P/\eta$, $F=\eta f$. Defining $x=(QR)_{12}$ and
+$y=(QR)_{21}$, rank one and $(QR)_{22}=1$ give
+
+$$
+QR=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+R=\begin{pmatrix}(1-2x)y&1-2x\\(3x-1)y&3x-1\end{pmatrix},
+\qquad \frac13<x<\frac12,\quad y>0.
+\tag{3.4}
+$$
+
+The second identity is multiplication by $Q^{-1}$; positivity gives
+exactly the displayed strip. Conversely the strip makes every entry
+positive and the columns proportional. Its trace $T_0>0$ normalizes
+it to $P=R/T_0$. Also $T_0=1/\eta$ and $f=T_0F$.
+With $s=x+y$, $p=xy$, the six traces are
+
+$$
+(T_0,T_1,T_2,T_3,T_4,T_5)
+=(s+2x-2p-1,\ 1-x-s+3p,\ s-2p,\ 1-x+p,\ s-p,\ p+1).
+\tag{3.5}
+$$
+
+For verification, $T_0=\operatorname{tr}R$,
+$T_1=R_{12}+R_{21}$, $T_2=T_0+R_{12}$,
+$T_3=T_1+T_2$, $T_4=2R_{11}+R_{21}+R_{12}+R_{22}$,
+and $T_5=\operatorname{tr}(QR)$. These yield (3.5); all are positive.
+The entire ancestor is $d+F(i)T_i=c_i$, with
+$c=(0,24,48,312/5,\widehat Y,\widehat z)$.
+
+The traces of $JQR,MQR$ are $s,s+1$; those of
+$QR,MJQR,JMQR,M^2QR$ give respectively
+$p+1,p+x+1,p+y+1,p+s+2$. Thus the two sixth predictions and four
+terminal predictions are
+
+$$
+\begin{gathered}
+U=d+F(6)s,\qquad V=d+F(6)(s+1),\\
+A=d+F(7)(p+1),\quad B=A+F(7)x,\quad
+C=A+F(7)y,\quad D=A+F(7)(s+1).
+\tag{3.6}
+\end{gathered}
+$$
+
+In the present class $F(6)=0$, so $U=V=d$ gives no common-$s$
+conclusion. In particular the common-source-sum step of
+Nonzero-Terminal, Theorem 4.1, requires $F(6)\ne0$ and is not
+available here. Its five monotone ratios are not applied here.
+Likewise its Theorem 6.1 cancels a common
+$q=f(6)/f(7)\ne0$; the present $q=0$ does not satisfy that
+hypothesis. Neither argument is used to settle this stratum.
+

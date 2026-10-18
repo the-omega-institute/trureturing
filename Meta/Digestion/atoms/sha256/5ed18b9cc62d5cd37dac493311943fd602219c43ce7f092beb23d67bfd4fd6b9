@@ -1,0 +1,57 @@
+**Theorem 4.2 (Realization and exact complete count; T4).** Definition
+4.1 is one common deterministic table realizing (3.12) at completed
+post-first-tick gaps. Its exact listed number of configurations is
+
+$$
+M_L=3+(2H-1)(L+2)
+=3+\bigl(2\lceil AN\rceil-1\bigr)(L+2).
+\tag{4.4}
+$$
+
+All installed probabilities and initialization belong to the fixed
+alphabet $\{0,1\}$, independently of $s,L$ and every budget. In
+particular $B_*=1$ suffices for direct dyadic rows. A literal immutable
+description needs at most
+
+$$
+2M_L\lceil\log_2M_L\rceil
+\tag{4.5}
+$$
+
+destination bits, plus a header for the format, dimensions and
+distinguished states.
+
+Proof. Each row gives a unique successor in the declared state set.
+The waiting state consumes all initial zeros and the first tick,
+including the case $\tau=0$. Induction on the zeros after any read
+tick shows that $z$ is their exact count up to $L$ and is overflow
+thereafter. At the actual closing one its integer increment is
+$b_K-a$ if $K\le L$ and zero if $K>L$. In units $\delta=1/N$
+this is exactly (3.12). At a nonterminal closing tick the next phase
+is zero. This resets the finite phase without resetting the source.
+
+On a rejected gap the overflow state reads every remaining zero and
+its actual closing one. Consecutive-one input rows at phase zero are
+also defined, even though $f_i(0)=0$ makes those post-first-tick
+histories impossible. Label rows specify both unused inputs; they
+do not undertake further reads after entry.
+
+There are $2H-1$ evidence indices and $L+2$ zero-count phases.
+Every pair is counted, including unreachable pairs. Adding the waiting
+state and both labels proves (4.4). The only active retained
+distinctions are the two coordinates in (4.2). The bounded zero
+counter is part of this counted product. There is no retained gap
+index, read count, unbounded gap length, source age, clock, seed,
+archive, real score, residual, pending update or arithmetic workspace.
+An evidence overshoot is sent immediately to its label and is not
+stored as another configuration. The integer center changes immutable
+successors identically under both labels.
+
+All rows and initialization are deterministic, so their probabilities
+are in $\{0,1\}\subset2^{-B}\mathbb Z$ for every integer $B\ge1$.
+No fresh transition randomness or internal coin step is required.
+Numbering the states, each of their two rows has one successor index
+of $\lceil\log_2M_L\rceil$ bits, which gives (4.5). This is a
+description upper for the immutable table, separate from the number
+of persistent configurations. $\square$
+

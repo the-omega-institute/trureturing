@@ -1,0 +1,45 @@
+**Corollary 13.4 (Hard-budget risk, return, and paid-cost attainment).**
+For $v\in\mathcal V_{k,j,p,\nu}$ define
+
+$$
+\begin{aligned}
+Q(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}d\,v(h,o,d,n),\\
+\Lambda(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}
+ d\,\mathbf1_{\{o\ne h\}}v(h,o,d,n),\\
+C(v)&=\sum_{(h,o,d,n)\in\mathcal Z_k}n\,v(h,o,d,n).
+\end{aligned}
+\tag{13.5}
+$$
+
+Their exact jointly attainable region is
+
+$$
+\{(Q(v),\Lambda(v),C(v)):v\in\mathcal V_{k,j,p,\nu}\}
+=\left\{\sum_{i=1}^m w_i(Q(v_i),\Lambda(v_i),C(v_i)):
+ w\in W_m(\nu)\right\}.
+\tag{13.6}
+$$
+
+For every attainable prescribed return probability $q$, the minimum
+of $\Lambda(v)$ subject to $Q(v)=q$ is attained. More generally, the
+same is true on any nonempty closed subset of the finite law region,
+including one imposing also $C(v)\le c_0$ for a prescribed real $c_0$.
+The cost $C(v)=\mathbb E_pN$ includes every nonreturning path; its
+nonreturn contribution is exactly
+
+$$
+\sum_{h\in\mathcal A}\sum_{n=0}^k n\,v(h,\bot,0,n).
+\tag{13.7}
+$$
+
+Proof. All three functions in (13.5) are finite linear functions of the
+law coordinates, and Theorem 13.2 and its converse give (13.6). The
+slice $Q(v)=q$ is a nonempty closed subset of the compact finite law
+region. The extra weak cost inequality is also closed. Any nonempty
+closed subset is compact, and the continuous function $\Lambda$
+attains its minimum there. The representing measurable partition and
+Theorem 12.3 realize each minimizing vector with the same seed law.
+The sum in (13.7) is the part of $C$ with $D=0$, not a return-conditioned
+mean. This proof asserts attainment under a fixed finite hard cap;
+it does not evaluate the minimum. $\square$
+

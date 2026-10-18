@@ -1,0 +1,39 @@
+**定理 33.2（Exact arbitrary-INITIAL preset law in the noncoprime proper-narrow region）。** For every arbitrary immutable INITIAL target $f$, with the joint sources, free readings, independent bottom and actual emitted fees in Convention 31.1, under either original alphabet,
+
+$$
+\boxed{\displaystyle
+C_{\rm pre}(f)=\min\bigl(\mathcal A(f)\cup\mathcal Z(f)\bigr),\qquad
+\min\varnothing=+\infty.}
+\tag{33.4}
+$$
+
+Every admitted depth constructs one lawful preset stream of at most that many actual emitted complete blocks. Every uniformly bounded stopping rule supplies an admitted depth no greater than its bound. In particular, any finite optimum is at most $D+p$. The law optimizes the first-zero location, every possible response of that same first-zero parent, and all subsequent chronological rows on one global stream. It asserts no equality between the arbitrary INITIAL adaptive and preset fees.
+
+Proof. First construct the protocols supplied by each certificate. For $d\in\mathcal A(f)$ issue the all-one stream $(1^m)^d$. At depth $t+1$, a newly rejected source has prior successful archive $\beta$ and belongs exactly to the rectangle in the first line of (31.6). Its joined label is fixed, so return it immediately. At depth $d$, each still-successful archive is precisely $S_d(\beta)\times[0,h_d)$ and has a fixed joined label by the second line. All sources have now stopped. Any earlier homogeneous archive can stop as soon as it is homogeneous. Initial bottom remains its separate zero-fee branch. Each running source pays exactly its emitted prefix length, at most $d$; no first-zero word is appended to this stream.
+
+For $d\in\mathcal Z(f)$ choose its eligible cut and matrix. Issue $q$ all-one blocks. Choose the one actual parent word constructed in Theorem 31.3 for the prescribed row at $q$. Then choose every later word by (32.1). Theorem 31.3 gives exactly the eligible partial rejection band at the parent, while Lemma 32.1 guarantees the simultaneous legal suffix on every surviving archive. Earlier rejections and the parent rejection return the joined labels of their homogeneous rectangles in (31.5), using the previous archive as well as the absorbing endpoint. Every final successful source has $s<k-a$, hence label $\Lambda(j)$ by (31.5), and has acquired the complete column $x_{<d}(j)$ from its actual chronological endpoint differences. Equation (33.2) makes decoding to that INITIAL label well-defined. Remembering the free INITIAL value returns the appropriate scalar component of the pair. This supplies $f$ itself with fee at most $d$ by the reused value-join law. Any homogeneous archive may stop earlier; such a source emits only its actual prefix. A row with no response is still a literal complete block and costs one on every source that reaches it. There are no free rotations, skipped windows, repairs or omitted padding payments.
+
+For necessity, start with any correct preset controller of uniform fee $H$. By Theorem 29.2 its very same stream, with the supplied symmetry decoder, computes the joined target with bound at most $H$. Stop joined-homogeneous archives immediately. If the first zero is not actually reached on any running source, the executed common stream is all ones. If its next block would cross the $k$th emitted one, every remaining successful source would reject in that block. Each previous archive would therefore have to be joined-homogeneous before the block, because all its candidates would give the same absorbing output and could never separate afterwards. Stop there and omit that block. This puts the maximal actual stopping depth at some $d\le\min(H,D)$. The earlier newly rejected rectangles and the final surviving rectangles must be homogeneous: they are exact archive fibres of the full joint prior, or subsets of earlier homogeneous stopping leaves. Thus (31.6) holds and $d\in\mathcal A(f)$.
+
+The same argument applies if the first zero in the written stream is at or beyond the $k$th emitted bit: any still-running source would already have been rejected before that zero and must be stopped before the crossing block. A correct controller in this case again supplies an all-one option. This is a stopping normalization, not an instruction to charge an unexecuted zero.
+
+It remains to consider an actually reached first-zero block after $a<k$ ones. Its index is $q$ and necessarily $H\ge q+1$. Lemma 32.2 supplies an eligible cut and a matrix satisfying (33.1)–(33.2) at depth $H$. If $H\le D+p$, this is already an admitted depth. If $H>D+p$, use the finite bound proved next to replace its eligible-cut continuation by a certificate of depth at most $D+p\le H$.
+
+For that bound, fix any eligible cut and choose any one parent row in its nonempty cube. At indices
+
+$$
+t=q+1,q+2,\ldots,q+p-1
+\tag{33.5}
+$$
+
+query just the actual vertex $j_t=u_t+g\pmod T$. These $p-1$ vertices are distinct: after division by $g$, their indices are $t(m/g)+1$ modulo $p$, and $\gcd(m/g,p)=1$. Exactly one of the $p$ phases is omitted. Every queried phase has its own distinct unit suffix column; the omitted phase has the all-zero suffix column. Thus even the full INITIAL phase is identified, independently of the parent and earlier columns, and arbitrary $\Lambda$ is decoded. Each singleton row is realized by (32.1): a one at bit position $g$ if $m/g\ge2$, or at bit position $m-1$ if $m/g=1$, with all other bits actually zero. Lemma 32.1 proves the seams after any chosen parent. This pays $q+1$ prefix blocks and $p-1$ continuation blocks, for total
+
+$$
+q+1+(p-1)=q+p\le D+p.
+\tag{33.6}
+$$
+
+This is the paid single-phase recovery bound supplied by [D11, Theorem 3.4], instantiated on the union of the parent archives; the new optimization uses it only to bound the exact global search horizon. Since $p\ge2$, there is no missing degenerate continuation case.
+
+We have proved that every finite controller yields a member of $\mathcal A(f)\cup\mathcal Z(f)$ with no greater fee, and every member yields a correct controller with no greater fee. If the set is nonempty, its least member therefore equals the least possible integer worst-branch fee and its constructed stream attains it. If the set is empty, any hypothetical finite controller would contradict the necessity just established. This proves (33.4), including infinity. ∎
+

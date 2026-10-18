@@ -1,0 +1,61 @@
+**Convention 5.2 (KI hypotheses and redundant factors).** Koashi and Imoto,
+*What is Possible Without Disturbing Partially Known Quantum States?*,
+[arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2),
+Theorem 5 (PDF p. 17), treats a possibly infinite state family with
+finite-dimensional common support, standard blank ancillary states, an
+isometry for faithful transfer, and a prescribed isomorphism from the input
+support to a subspace of the output. Its support decomposition is the
+maximal state-set structure, not an arbitrarily chosen grouping of states.
+
+In the notation of their equations (85)–(88) (PDF p. 12),
+
+$$
+\rho_s=\bigoplus_l p(s,l)\rho_J^{(s,l)}\otimes\rho_K^{(l)},
+\qquad
+\mathcal H_A=\bigoplus_l\mathcal H_J^{(l)}\otimes\mathcal H_K^{(l)}.
+\tag{QC.35}
+$$
+
+The redundant-factor state $\rho_K^{(l)}$ is independent of $s$.
+Preservation is constrained by both identity action on the $J$ factor and
+
+$$
+\operatorname{tr}_E\!\left[
+ U_{KE}^{(l)}(\rho_K^{(l)}\otimes\Sigma_E)
+ U_{KE}^{(l)\dagger}\right]=\rho_K^{(l)}.
+\tag{QC.36}
+$$
+
+Dropping (QC.36) would not give their equivalence for state-preserving
+operations. Preserving a redundant marginal also does not by itself preserve
+an arbitrary pre-existing purification of that marginal.
+
+For the present four-state certificate, the bridge to this structure is
+explicit. A pure block-diagonal state in (QC.35) occupies exactly one direct
+summand. Nonzero overlaps in (QC.27) force the four states into the same
+summand. A pure tensor-product state has pure factors, so the common
+$\rho_K$ is rank one. The common support is the span of the actual states,
+which by (QC.28) is all of $V$. Hence there are no additional occupied
+summands, and no redundant-factor directions beyond that one-dimensional
+support. The nonclassical factor has dimension three. The elementary
+dilation calculation (QC.29)–(QC.31) states this special case without
+silently imposing another decomposition.
+
+The known isomorphism for faithful transfer is the calibrated identification
+by $W$ in (QC.5), restricted to the live space. KI applies to the composite
+encode–decode transfer with standard ancillas; the intermediate block bound
+still needs the finite-branch rank argument above. Neither KI Theorem 5 nor
+equations (85)–(88) directly state the connected-overlap dimension conclusion
+used for these source states. The arbitrary actual reference is preserved
+here by (QC.13) and (QC.17), which hold on the entire supported operator
+algebra; it is not inferred from a marginal-only use of KI.
+
+The pure-state no-imprinting, support compression, Stinespring and Choi
+arguments in these proofs are `literature-attested` mature ingredients.
+Their related joint-support use for a different emission source is already
+present in [Phase Boundary](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md),
+§2. That source's emission law and capacity are not transferred. The
+calculations (QC.10), (QC.17), (QC.24)–(QC.28) and their use in the exact
+original-control coding task are `repo-derived` source-specific deductions.
+No worldwide originality statement follows from this attribution.
+

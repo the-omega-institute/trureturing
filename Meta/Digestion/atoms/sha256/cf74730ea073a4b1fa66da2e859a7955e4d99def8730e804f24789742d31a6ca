@@ -1,0 +1,13 @@
+**Theorem 7.2 (causal raw recovery and holding).** Under Hypothesis 7.1, for every $h\in\mathcal H_3(\mu)$ the actually held record
+
+$$
+\mathsf M(h)=(R,w,Q^+,Z,U,J_1,J_2,J_3)
+\tag{SC.3}
+$$
+
+determines the complete raw past $h$, including every seed retry and all three segments' returns. Conversely $h$ determines $\mathsf M(h)$. This inverse uses only already acquired data and remains valid for the held selected record along the continuing original execution.
+
+Proof. Before the first Read, $U$ is empty and $\mathbf J=0$. Induction through the seed control shows that $U$ contains exactly the completed rejected pairs in their actual order; partial pairs and the accepting pair do not append. Induction through the payload control shows that $J_i$ counts exactly the completed returns in segment $i$; a pending first $\beta$ has not yet incremented it. Thus at the third completion $U=u$ and $\mathbf J=\mathbf j$ from (SC.1). The original seed supplies $\rho$ and Theorem 6.2 supplies all three $b_i$. Concatenation in (SC.1) therefore reconstructs precisely the actual raw word, and deterministic parsing/writing provides the converse.
+
+All these invariants are adapted to the acquired filtration: each write uses an actual returned letter and its old original phase. The latch follows the third record write, including the all-equal triples' unmatched event. At that instant every required value is already present. The phase $p_4$ and later original phases prohibit further selected-record writes, so the same reconstruction continues to name the past at the latch while the fourth segment advances. This is holding of one acquired record, not retrospective recovery from future observations. $\square$
+

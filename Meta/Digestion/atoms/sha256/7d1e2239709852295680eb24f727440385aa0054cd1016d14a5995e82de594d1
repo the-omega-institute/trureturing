@@ -1,0 +1,68 @@
+**Theorem 22.1 (one finite feasible law, including every signed history).**
+At the source of Assumption 1.2 define
+
+$$
+\begin{aligned}
+h_{z,\pm}&=(1,\pm1/\sqrt\alpha,0),&p_{z,\pm}&=\alpha/2,
+ &B_z&=m_2h_1^2/b^2=V,\\
+h_{w,\pm}&=(1,0,\pm1/\sqrt\beta),&p_{w,\pm}&=\beta/2,
+ &B_w&=m_1h_2^2/d^2=W,\\
+c_z&=\mathfrak c(h_{z,+})=\mathfrak c(h_{z,-})>0,
+ &c_w&=\mathfrak c(h_{w,+})=\mathfrak c(h_{w,-})>0,\\
+A_{\rm axes}&=\log\left(1+\max\{B_z/c_z,B_w/c_w\}\right)<\infty.
+\end{aligned}
+\tag{GC.93}
+$$
+
+Use failure capacity $b_j=B_z$ on each $z$ atom and $b_j=B_w$
+on each $w$ atom. For every finite $A\ge A_{\rm axes}$ this SAME
+four-atom law satisfies all the complete joint equations (GC.9) and
+has achieved contrast $\sqrt\theta<s_0$. Thus for every request
+$0\le s\le\sqrt\theta$ it has the §10 weak constructor with error
+$E_*$, sharp joint cost $\mathsf C(s)$ and exactly five actual
+acquisition labels, each with positive probability on EVERY one of
+the original twelve histories. It is a feasible witness, not a
+height optimizer or a minimum-alphabet theorem.
+
+Proof. Each point lies on the original ellipse. The opposite signs
+cancel both first moments; $zw=0$ pointwise. The three diagonal
+entries of $\sum phh^T$ are $\alpha+\beta,1,1$, so this is exactly
+$I_3$, including all off-diagonals. On the $z$ pair
+$n_h=(0,0,-bz/h_1)^T$, giving
+
+$$
+\sum_{z\text{ pair}}p_jb_jn_{h_j}n_{h_j}^T
+ =\operatorname{diag}(0,0,B_zb^2/h_1^2)
+ =\operatorname{diag}(0,0,m_2).
+\tag{GC.94}
+$$
+
+On the $w$ pair the result is $\operatorname{diag}(0,m_1,0)$.
+Consequently the complete covariance is $M$ for the very law that
+has the complete live Gram $I_3$. These are not independently
+chosen marginal decompositions. Positivity of the capacity follows
+from (GC.8), and it depends only on squared coordinates. The stated
+$A$ makes every $b_j\le(e^A-1)\mathfrak c(h_j)$. Finally
+$s_0\sum p_j|z_j|=s_0\sqrt\alpha=\sqrt\theta$; since
+$\omega>0$, this is strictly below $s_0$.
+
+Each live $K_h$ has rank two by §10. Its kernel is spanned by
+$(s_0,-bz/h_1,-dw/h_2)^T$. On a $z$ axis the third coordinate
+of this vector is zero, and on a $w$ axis the second is zero.
+Every signed $U_{\epsilon,\chi}a_y$ has all three coordinates
+nonzero. It therefore lies in none of these four kernels. Each
+low acquisition mass
+$p_j\langle U_{\epsilon,\chi}a_y,
+(K_h^\dagger K_h+b_jn_hn_h^T)U_{\epsilon,\chi}a_y\rangle$
+is strictly positive. The single high mass is
+$(1-\delta)\sum_i h_i^2p_{yi}>0$. These exhaust the five
+acquisition outputs and sum to one by root TP and (GC.52).
+
+Proposition 10.1 now applies to this common law on the entire complex
+$M_5$ input and all passive references. Its four qubit fibres have
+positive terminal survivor effects and activity at most $A$; its
+high fibre has dimension five, zero rate and the coherent complement.
+The sharp-cost and $E_*$ identifications use their separate inherited
+suppliers, including the unaveraged JR face. The witness does not
+reverify those suppliers or choose an optimal height. $\square$
+

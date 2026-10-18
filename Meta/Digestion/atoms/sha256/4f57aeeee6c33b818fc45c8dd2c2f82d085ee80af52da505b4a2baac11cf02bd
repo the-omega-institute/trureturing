@@ -1,0 +1,31 @@
+**Lemma 15.1 (original allocation neutrality of actual history flights).**
+Let $H:P\longrightarrow R$ be a nonempty finite sequence of accepted
+canonical GENERAL history flights from an authentic Ready $P$ to a later
+Ready $R$, without an intervening01 source call or00 original-client
+continuation. Require actually supplied finite inputs and the termination
+premises of GENERAL Theorem 8.2 for these completed flights. Then, for
+its actual positive finite row count $L_H$,
+
+$$
+\mu(R)=\mu(P),\qquad A_{55}(R)=A_{55}(P),\qquad
+n(R)=n(P)+L_H,\quad L_H>0.
+$$
+
+Proof. GENERAL Definitions 2.1–2.3 place the real word assignments on
+banks64/65, scratch66/67, descriptors68 and staging69, with ingress70.
+Its §7 channels, publications and receivers use71/72/73 and the same
+annex work. The only imported old archives are the closed owned26/28/29
+prefixes with their actual checks and head restoration. No converter
+borrows producer1–12, source16, producer13/17 or verifier32–39. Reading
+an original cell creates no new cell there. A represented historical
+EX or event inside Step/replay is data computed in the annex; it is
+not an actual EX or event commitment on an original port. Induction
+over these real row operands therefore gives $\Delta A_{55}=0$.
+ARC Proposition 10.4 gives $\Delta\mu=0$ for these history/compiler/client
+rows. GENERAL Theorem 8.2 supplies their completed finite return.
+The actual gate, request, conversion, publication, check, ACK and return
+rows have positive total length and each appends a meter receipt.
+Concatenating the flights proves all three equations. This asserts no
+equality of the remaining original fields: physical control, latches,
+receipts and their actual changes remain in the full state. ∎
+

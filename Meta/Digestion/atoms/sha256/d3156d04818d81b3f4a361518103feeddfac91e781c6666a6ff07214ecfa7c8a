@@ -1,0 +1,15 @@
+**Theorem 6.2 (one retained actual reply lowers the extra range from two to one).** Use $P=\{R\}$ and $C=\langle\beta,X\rangle$ with one class. For empty history the spectrum is $\{0,1,2\}$ and the minimum extra complete range is two. A common controller first reads $R$ and, on its branch reply, obtains an attained prefix $h_0=((R,\mathsf{br}))$ with spectrum $\{0,1\}$ and minimum extra range still two. It next reads $RR$ once. In its attained $\alpha$ branch,
+
+$$
+D(R,h')=\{\langle\beta,\langle s,\alpha\rangle\rangle:s\in\mathcal T\},
+\qquad
+\Sigma(R,h')=\{0,1\},\qquad m(R,h')=1.
+\tag{LRD.19}
+$$
+
+The spectra immediately before and after this last event are both $\{0,1\}$. Zero further reads still do not identify the target, but one paid $\mathsf{Read}(RL)$ does. Thus a genuinely acquired history changes later acquisition ability while preserving exactly the same nonsingleton root spectrum.
+
+**Proof.** Before refinement (LRD.1) gives depth two for $X=\alpha$ and otherwise depth $\min(1,\nu(X))$. All three values occur. Non-atomic rank-zero and rank-one class values with arbitrarily deep common branch prefixes exist by Theorem 2.2; therefore no uniform finite-call no-code consumer can separate the latter two targets. A two-value acquired field suffices: the producer retains $\mathbf1_{\{\nu(X)\ge1\}}$, and the consumer reads $R$, returns two for reply $\alpha$, and otherwise returns the retained bit. These are actually attained values of that field and give a correct one-call service. Theorem 4.4's lower bound, or its two-target separator directly, proves that two is minimal. On the attained $R/\mathsf{br}$ prefix $X$ is a pair, so the exceptional $X=\alpha$ is excluded and the spectrum is exactly $\{0,1\}$. The same deep rank-zero and rank-one witnesses are pairs and satisfy this additional guard, preserving the two-value lower bound. The same acquired bit supplies the upper bound, now by returning it directly.
+
+The new response $RR=\alpha$ says precisely $X=\langle s,\alpha\rangle$. Every such source is finite and the same canonical producer outputs the old row. The declared controller actually obtains $R/\mathsf{br}$ followed by $RR/\alpha$ on each such source. The inner pair has depth two when $s=\beta$, and depth zero otherwise; its atomic flag is one only in the former case. Pairing it with the fixed $\beta$ then gives root depth one when $s=\beta$ and zero otherwise. Both occur, for $s=\beta$ and $s=\alpha$. Reading $RL$, the root of $s$, returns $\beta$ precisely when $s$ is that literal leaf; every other reply gives target zero. Hence the extra range is one although the target spectrum remains nonsingleton. The old optimal normal-form field can be updated to this one-value field by (LRD.17). Both the original $R$ event and the new $RR$ event stay in the retained history and are charged. $\square$
+

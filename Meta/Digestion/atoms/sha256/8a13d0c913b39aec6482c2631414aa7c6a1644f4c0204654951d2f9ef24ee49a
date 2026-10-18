@@ -1,0 +1,128 @@
+**Theorem 63.2 (gluing, contact uniqueness and genuine onset).**
+The boundary in (RC.19) satisfies
+
+$$
+\frac{Z_2}{Z_1}(a_\dagger)=t_\dagger,\qquad
+\tau_c=h(t_\dagger)=\tau_\dagger.
+\tag{RC.42}
+$$
+
+The two exact value branches and their normalized multipliers agree
+there, so the value is $C^1$ at this finite contact. At the contact the
+unique aggregate is the original three orthogonal rank-one null
+projections. The fourth distinct contact has zero weight. Immediately
+above $\tau_\dagger$, and throughout $\tau_\dagger<\tau\leq1$,
+there are four distinct positive real-null atoms and aggregate ranks
+$(2,1,1)$. There is no later interior support or rank transition.
+
+Proof. At $a_\dagger$ three positive rank-one matrices sum to $I$;
+putting their scaled vectors into a square matrix proves that these
+vectors form an orthonormal basis. Their negative-height column is
+$f_0=-Z/\|Z\|$, and its last-coordinate ratio is in (RC.20).
+Its first coordinate is positive, its last two negative. The $A$ ray
+has positive $01$ product by (RC.31); the $B$ ray has negative product
+by $U<0$. The unsquared branch and sign choices in JR.140 therefore
+identify the frame, in $(C_0,A,B)$ order, with JR's $F(t_c)$,
+$t_c=Z_2/Z_1$.
+
+Gauge the new dual by $Y\mapsto Y+\nu_CQ$,
+$\nu_i\mapsto\nu_i-\nu_C$, so that $\nu_C=0$.
+Complementarity with the three frame columns imposes exactly the
+linear equations JR.146–.148. Their remaining compatibility equation
+fixes $\lambda=2\psi'(t_c)/h'(t_c)$, since $h'(t_c)>0$.
+The ranks of the three active slacks are $(1,2,2)$ in $(A,B,C_0)$
+order by Theorem 61.1. Their compression determinants are respectively
+$4\lambda d_+$, $4\lambda d_-$ and $4d_N$. Thus
+$d_+(t_c)=0$, $d_-(t_c),d_N(t_c)>0$. Proposition 63.1 and (RC.20)
+force $t_c=t_\dagger$. Equation (RC.30) then matches JR.150's value;
+(RC.39) matches its multiplier. The two support-slope arguments give
+$C^1$ gluing. This is at the finite contact, not at $\tau=1$.
+
+For precision, the reduced active dual is unique at the contact after
+fixing $\nu_C=0$. For any optimal reduced dual, complementarity with
+$f_0,f_1,f_2$ imposes the three kernel equations. The first fixes the
+first column of $F^TYF$; the other two determine all its remaining
+entries and $\nu_A,\nu_B$ as JR.146. Their compatibility determines
+$\lambda$ by the nonzero denominator of (RC.39). This leaves no
+freedom in the reduced dual. The original fourth scalar is allowed to
+vary and is not claimed unique. Aggregate uniqueness at the contact
+already follows from Theorem 62.1, including the zero coefficient.
+
+It remains to identify which weight vanishes and quantify its onset.
+At $t=t_\dagger$ use $M_{\rm fr},c,q$ of (RC.39), put
+
+$$
+\begin{aligned}
+k_+^{\rm fr}&=q_{02}c_{12}/q_{12}-c_{02},\\
+a_g&=-\lambda_\dagger k_+^{\rm fr},\qquad
+b_g=-(M_{\rm fr})_{00}-\lambda_\dagger c_{00},\\
+g_{\rm loc}&=a_g f_0+b_g f_2,\\
+z_{\rm raw}&=g_{\rm loc}
+ -\frac{g_{\rm loc}^TQg_{\rm loc}}{2f_1^TQg_{\rm loc}}f_1,
+\qquad z_{\rm new}=z_{\rm raw}/\|z_{\rm raw}\|.
+\end{aligned}
+\tag{RC.43}
+$$
+
+The rank-one compression in JR.148 annihilates $g_{\rm loc}$.
+Its kernel plane contains $f_1$ and $g_{\rm loc}$; (RC.43) produces
+the second null line because $f_1^TQf_1=0$. The same interval rules
+on the narrow $t$ bracket give
+
+$$
+\begin{gathered}
+a_g<0<b_g,\qquad .00048130<f_1^TQg_{\rm loc}<.00048132,\\
+.6491799<(z_{\rm new})_0<.6491801,\\
+.6813365<(z_{\rm new})_1<.6813368,\\
+.3381503<(z_{\rm new})_2<.3381505,\qquad
+z_{\rm new}^TGz_{\rm new}>.00510289.
+\end{gathered}
+\tag{RC.44}
+$$
+
+In particular this contact is nondegenerate and has positive height.
+It has positive third coordinate, whereas the old $f_1$ in JR.140 has
+negative third coordinate. Therefore it is $\mathbb Rq_+$, and
+$w_+(a_\dagger)=0$, $w_-(a_\dagger)>0$. The four projectors are
+independent even here; in the frame the new one has a nonzero $02$
+entry proportional to $a_gb_g$, whereas the old three are diagonal.
+
+Define
+
+$$
+K_A=\|q_+\|^2\|q_-\|^2-(q_+^Tq_-)^2>0.
+$$
+
+Taking the product of the two nonzero eigenvalues in (RC.32) gives
+$w_+w_-K_A=\omega$. All functions are analytic near $a_\dagger$ and
+$\omega'(a_\dagger)<-.9$, whence
+
+$$
+\lim_{a\uparrow a_\dagger}
+\frac{w_+(a)}{a_\dagger-a}
+=\frac{-\omega'(a_\dagger)}{w_-(a_\dagger)K_A(a_\dagger)}>0.
+\tag{RC.45}
+$$
+
+There is a useful explicit lower onset bound on $7/25\leq a<a_\dagger$.
+Here $\omega(a)>.9(a_\dagger-a)$ by (RC.19), $w_-\leq A_{00}\leq1$,
+and $\|q_\pm\|^2\leq1+1/\beta<10$, so $K_A<100$. Consequently
+
+$$
+w_+(a)>\frac9{1000}(a_\dagger-a).
+\tag{RC.46}
+$$
+
+The strict rank-two property for every smaller $a$, and the four-line
+independence and positive weights of Theorem 62.1, prove the genuine
+three-to-four transition and absence of any later interior transition
+on the entire contrast interval supplied by (RC.33). Its minimum
+real-null rank-one atom count is exactly four: each optimizing aggregate
+requires at least its rank, and the actual decomposition has four.
+At $\tau=1$ this uses the inherited endpoint corner rigidity of
+JR.157–.158 and JR Theorem 43.2, with the same four weights and sectors.
+At the contact it is three, with a fourth exposed zero-weight line.
+These conclusions concern the normalized coefficient face, not a
+minimum physical acquisition alphabet with arbitrary multi-Kraus
+labels. $\square$
+

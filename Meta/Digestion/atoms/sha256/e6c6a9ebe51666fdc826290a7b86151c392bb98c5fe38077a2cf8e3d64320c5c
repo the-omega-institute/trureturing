@@ -1,0 +1,30 @@
+**Proposition 7.2 (the two comparisons genuinely differ).** There is
+a public two-state selector for which the root boundary has different
+bare and selected tuple relations but identical source projections.
+There is also a selector for which these source projections differ.
+
+Proof. Let the states be the labels of the leftmost leaf, with
+$\delta(x,y)=x$, and accept $\beta$. For the root-hole boundary,
+$H_b(u,n)$ holds for all $u,n$. Every positive iterate has leftmost
+leaf $\beta$: the images of both leaves start with $\beta$, and
+pairing preserves the leftmost descent. Thus
+
+$$
+E_b(u,n)\ \Longleftrightarrow\
+ n\ge1\ \lor\ \text{the leftmost leaf of }u\text{ is }\beta.
+\tag{NRF.34}
+$$
+
+The tuple $(\alpha,0)$ fails selection, but every original source
+is selected at epoch one. Both source projections are $\mathcal T$.
+Even the epoch projections agree, since a selected witness exists
+at epoch zero. Thus neither one-dimensional projection determines
+the joint relation.
+
+Instead let $A$ accept exactly the single tree $\alpha$. No positive
+$\rho$-image has root $\alpha$. The same selected root boundary
+then has exactly $(u,n)=(\alpha,0)$, whereas its bare row has all
+$u,n$. Its selected source projection is $\{\alpha\}$, a proper
+subset of $\mathcal T$. These are separate quantified conclusions,
+not an inference from the first failed tuple. $\square$
+

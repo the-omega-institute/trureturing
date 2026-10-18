@@ -1,0 +1,29 @@
+**Definition 2.2 (regular table and complete mean laws).** A regular stationary table has (2.1), synthetic alpha probabilities $u_x,v_y\in[a,b]$, and exact complete raw laws
+
+$$
+Q_x=u_x\delta_\alpha+(1-u_x)\beta\sum_yB_{xy}W_y,
+$$
+
+$$
+W_y=(1-v_y)\delta_\beta+v_y\alpha\sum_xA_{yx}Q_x.
+\tag{2.3}
+$$
+
+Every synthetic return has probability at most $(2/3)(2/5)=4/15$. These are normalized complete laws; the legal infinite outcomes remain with mass zero. Write
+
+$$
+\overline Q=\sum_x\pi_xQ_x,\qquad
+\overline W=\sum_y\tau_yW_y.
+$$
+
+Suppose nonnegative $\epsilon_p,\epsilon_\beta$ bound the two endpoint mean losses:
+
+$$
+\operatorname{TV}(\overline Q,P_{p,r})\le\rho_p+\epsilon_p,\qquad
+\operatorname{TV}(\overline W,P_{\beta,r})\le\rho_\beta+\epsilon_\beta,
+\quad r\in\{a,b\}.
+\tag{2.4}
+$$
+
+Expected endpoint configuration losses with these bounds imply (2.4) by convexity. No individual configuration is assumed to be a minimax center.
+

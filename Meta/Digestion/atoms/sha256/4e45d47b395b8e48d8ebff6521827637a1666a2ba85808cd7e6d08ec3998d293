@@ -1,0 +1,78 @@
+**定理 C-112.3（满秩等谱二／四分叉及正匹配噪声邻域）。** 对每个
+$127/129<t<1$，$C_t^{\rm F},C_t^{\rm E}\in\mathcal I$ 均正定，
+共同全谱、秩与纯度为
+
+$$
+\begin{gathered}
+\left\{\frac{1+t}{5},\frac{1+t}{5},\frac15,
+       \frac{1-t}{5},\frac{1-t}{5}\right\},\qquad
+\operatorname{rank}C_t^{\rm F}=\operatorname{rank}C_t^{\rm E}=5,\\
+\operatorname{tr}((C_t^{\rm F})^2)
+=\operatorname{tr}((C_t^{\rm E})^2)=\frac{5+4t^2}{25},\\
+k(C_t^{\rm F})=4,\qquad k(C_t^{\rm E})=2.
+\end{gathered}
+\tag{C112.10}
+$$
+
+原匹配态的全谱均再添二十个零；此处满秩只指五维匹配支持上的正定性，
+不指二十五维环境正定。二者的原 $A\mid B$ Schmidt number 与各自
+$T_C(X)=(5C)\circ X$ 的 $q_{\rm exact}$ 分别为四与二。
+在 C-108.1 的实际菜单合同下，二者与 $S$ 的全部有限自适应双边历史律相同。
+
+更一般地，$127/129<t<1$ 时，对任意迹一 PSD 系数噪声 $N$，
+
+$$
+D_{t,\eta}=(1-\eta)C_t^{\rm F}+\eta N,\qquad
+0\le\eta<\frac{\delta_t}{21+\delta_t}
+\quad\Longrightarrow\quad D_{t,\eta}\succ0,\quad k(D_{t,\eta})\ge4.
+\tag{C112.11}
+$$
+
+若 $N\in\mathcal I$，则 $D_{t,\eta}\in\mathcal I$，其 $k$ 恰为四且全部历史律仍与
+$S$ 相同。C-112.2 的球内成员另在
+$\|D-C_t^{\rm F}\|_1<(1-t)/5$ 时必正定。
+区间 $127/129<t\le1$ 是该证书的充分区间，不是所断言的锐转变位置；
+$t=127/129$ 的零配对本身不提供三稀疏分解。
+
+证明。两条线段的端点已由 C-111.3 证明属于凸集 $\mathcal I$。
+恒等矩阵与任一端点对易，故其五个特征值逐一变成 (C112.10) 的数；
+$t<1$ 时最小值为 $(1-t)/5>0$。平方和为 $(5+4t^2)/25$。
+C-112.2 的负配对给 $k(C_t^{\rm F})\ge4$。
+其实际有限上界可以完全显式写出：沿用 (C111.12) 的五个四稀疏 $z_r$，取
+
+$$
+\left\{\sqrt t\,z_r:0\le r\le4\right\}
+\quad\cup\quad
+\left\{\sqrt{\frac{1-t}{5}}e_j:0\le j\le4\right\}.
+\tag{C112.12}
+$$
+
+十个向量的秩一和恰为 $C_t^{\rm F}$，支撑均至多四。
+对边族置 $g_{04,\pm}=(e_0\mp i e_4)/\sqrt2$、
+$g_{13,\pm}=(e_1\mp i e_3)/\sqrt2$。其五个因子为
+
+$$
+\sqrt{\frac{1+t}{5}}g_{04,+},\quad
+\sqrt{\frac{1-t}{5}}g_{04,-},\quad
+\sqrt{\frac{1+t}{5}}g_{13,+},\quad
+\sqrt{\frac{1-t}{5}}g_{13,-},\quad
+\frac{e_2}{\sqrt5}.
+\tag{C112.13}
+$$
+
+$g_{jk,\pm}$ 在对应二坐标块中正交归一。
+展开这五个秩一项，其对角恒为 $1/5$，$(0,4)$、$(1,3)$ 元为 $it/5$，
+其余非对角元为零，故恰得 $C_t^{\rm E}$。
+$t>0$ 的非零非对角元排除一稀疏分解，因此 $k(C_t^{\rm E})=2$。
+这证明资源二／四并包含 $t=99/100$ 的正噪声例子。
+同源 Schmidt 与通道资源关系直接用 C-109.3；
+历史相等用 C-108.3，不以独立来源假设替代相关匹配源。
+
+对 (C112.11)，$\operatorname{tr}(\mathsf WN)\le21$，故
+$\operatorname{tr}(\mathsf W D_{t,\eta})\le-(1-\eta)\delta_t+21\eta<0$。
+$\eta<1$ 且 $C_t^{\rm F}\succ0$ 保证该混合正定。
+若 $N\in\mathcal I$，凸性及 C-111.2 给余下结论。
+最后 Hermitian 扰动满足
+$D\succeq((1-t)/5-\|D-C_t^{\rm F}\|_{\rm op})I_5$，
+而算子范数不超过迹范数，这给球内正定条件。证毕。
+

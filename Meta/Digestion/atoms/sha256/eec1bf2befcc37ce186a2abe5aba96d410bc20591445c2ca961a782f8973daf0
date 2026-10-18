@@ -1,0 +1,64 @@
+**Proposition 6.3 (installed union, known shape and the unresolved sharp
+memory problem).** The all-shape factor $2^{h-1}$ in (2.2) is an
+installed union across different comb tips, not a per-run query count.
+For one supplied fixed shape its own cone/lag bound remains applicable,
+but it cannot supply this all-shape factor. Conversely, a known comb
+shape still has a leaf at depth $h-1$ and is subject to the autonomous
+long-frame obstruction; knowing a shape does not supply an advancing
+head. A balanced known shape has a different depth term.
+
+A bound on one run's sum $A$ does not bound the number of prefixes of
+the installed menu. For example, add to a correct installation any
+number of unreachable rows whose fixed literals are distinct. Every
+actual run and its $A$ stay unchanged while the union of menu prefixes
+increases. Write $\operatorname{Pref}(\mathcal A)$ for the union of
+prefixes of words in $\mathcal A$, with the empty word included. For
+the complete **native macro table** $C$, let $\mathcal M_{\rm nat}$ be
+its fixed Read literals, including unreachable native rows. Then
+
+$$
+|\operatorname{Pref}(\mathcal M_{\rm nat})|
+\le 1+\sum_{p\in\mathcal M_{\rm nat}}|p|
+\le 1+|\mathcal M_{\rm nat}|P
+\le 1+n_RP\le 1+W_*P.
+$$
+
+The same bound holds for any subset of those native literals, including
+the literals selected on lawful executions of the refinement. It uses
+the native installation, not a single run's $A$. The **totalized composite**
+menu of Definition 4.6 is instead $\mathcal M_{\rm comp}=\{L,R\}^{\le P}$.
+It is prefix-closed, so its separate exact count is
+
+$$
+|\operatorname{Pref}(\mathcal M_{\rm comp})|
+=|\mathcal M_{\rm comp}|=2^{P+1}-1.
+$$
+
+For the active table with $h=2,T=100$, (5.1) gives $k=12$, $B_0=104$,
+$W_*=4294967296$ and $P=53$. Thus the native bound is $227633266689$,
+whereas the composite prefix count is $18014398509481983$. These are
+different installed menus; the native bound is not a bound on the
+composite menu. At $P=0$ both prefix counts are one.
+
+The bounds proved here leave a genuine gap between the universal lower
+order $\Omega(h+\log(T+1))$ and the attained flat-allocation upper order
+$O(h+T)$. No sharp total-memory theorem, compressed-receiver attainment
+of the lower order, or impossibility of such an attainment follows.
+An improved receiver would have to preserve the exact original
+commitments and raw trace, materialize the operand under the original
+port, and charge its decoder, heads and intermediate storage. A
+source-walk solution would answer a different interface question.
+
+Proof. The first assertion is the supplier's equal-depth comb-cone
+union argument; a single supplied shape removes that union. The
+long-frame proof counts an actual chosen leaf depth, so persists for
+a known comb. Unreachable added rows prove the prefix counterexample;
+counting at most $P$ nonempty prefixes per native Read literal proves
+the native bound. Definition 4.6 supplies every binary receiver word
+of every length up to $P$, giving the composite geometric sum; the
+phase convention imposes no restriction on those installed issue rows.
+Finally Theorems 2.2 and 4.7
+have precisely the two different allocation premises displayed above;
+neither supplies the missing compression/materialization construction
+or a matching impossibility proof. ∎
+

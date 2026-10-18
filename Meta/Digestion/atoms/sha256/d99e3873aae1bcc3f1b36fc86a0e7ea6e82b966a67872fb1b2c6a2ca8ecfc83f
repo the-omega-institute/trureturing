@@ -1,0 +1,18 @@
+**Corollary 10.4 (necessary extracted and clipped concentration for an original observer).** Let $M$ satisfy Definitions 1.1–1.3 for its one fixed finite or countable prior, with $\mu(1),\mu(2)>0$. Use the one common-row extraction on (1.5) of [PAID97, Lemma 14.1], followed by the emission clipping of Citation 2.1, keeping the extracted actual kernels and both rows. Denote its clipped p emission by $\widehat u$ and its variation by $\widehat V_\pi$. Then this same extracted, regenerated regular table satisfies
+
+$$
+\begin{aligned}
+\widehat{\mathcal C}&\le5000\widehat V_\pi
+                         \le5000\mathcal V(M),\\
+\pi[(\widehat u-a)(b-\widehat u)]
+&\le\frac{31720}{11}e(M)+50000\mathcal V(M).
+\end{aligned}
+\tag{10.20}
+$$
+
+Writing $N_M=31720e(M)/11+50000\mathcal V(M)$, the same table also satisfies $\pi\operatorname{dist}(\widehat u,\{a,b\})\le30N_M$ and, for $0<d\le1/30$, $\pi\{a+d\le\widehat u\le b-d\}\le\min\{1,N_M/[d(1/15-d)]\}$. All supported depths retain their configuration-risk bounds on these same extracted rows.
+
+Proof. The initialized paid-history extraction retains the actual-return statistic on the same Cesaro rows as both phase losses, as established in (9.19). Thus the unclipped extracted variation is at most $\mathcal V(M)$. Scalar clipping is 1-Lipschitz and retains $B,A,\pi,\tau$, so (9.20) gives $\widehat V_\pi\le\mathcal V(M)$. The common-row clipping consequence (2.2), supplied by [CLIP97, Theorem 3.1], bounds both clipped slacks by $61e(M)/11$, simultaneously for every supported depth. Apply Theorem 10.2 and Corollary 10.3 to this one table, and use $520\cdot61=31720$. These extraction and clipping steps require no supported nonendpoint for this conclusion. $\square$
+
+The assertions in (10.20) concern the extracted clipped stationary emissions and their regenerated complete laws. They do not assert the same functional inequality for unclipped emissions outside $[a,b]$, or concentration at every original history. Original transient labels and every positive paid history remain in the suprema defining $e(M)$ and $\mathcal V(M)$; omission from a stationary support removes no original risk obligation. The extraction begins with the original source-independent initialization before the first paid seed Read, not a substituted stationary initialization of the actual observer.
+

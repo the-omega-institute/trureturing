@@ -1,0 +1,37 @@
+**Acquisition and resource correspondence.** Proposition 2.1 supplies a
+compatible actual producer for this fixed schedule. Paid traversal at
+epoch zero computes the entire old row and acquires the complete subtree
+at $R$. After one real update, paid traversal at $L$ acquires its entire
+current subtree; finite comparison of the two paid descriptions supplies
+the sign in (CS.26.1). Every literal occurrence is actually read at its
+own epoch, including repeated requests and absent replies. The earlier
+description is kept until comparison is possible, and further stipulated
+updates reach the certified service epoch. No access to an old physical
+register is needed to compare already acquired descriptions.
+
+Under the complete access cut of Assumption 1.3 the accessible state is
+exactly the stated records, certified epoch and common parameters and
+control. Every finite source producing this retained state satisfies its
+old row and all records; conversely every finite source in (CS.26.3)
+produces that same successful retained state under the fixed schedule
+and cut. The original $R$ and the entire original source stay fixed
+throughout. Acquisition traversal lengths, source descriptions and any
+other source-bearing fields cannot remain as undeclared information.
+The complete cut is the same conditional access assumption as before,
+not a conclusion of the algebraic equation.
+
+All consumers operate on the same register at its certified epoch.
+A test (CS.26.23) has physical address length $r+t+1$; the example has
+length $r+1$. Requests and any repetitions are paid. Address formation
+and transmission, pre-cut acquisition, finite comparison, local tree
+construction and row computation, installation, entry, working memory,
+retention, epoch/version evidence, real updates, archives and complete
+output remain separate resource coordinates. Bounds above concern new
+raw calls only; no joint-resource optimum or general price formula is
+asserted. A finite pre-cut cost for each source need not have a uniform
+bound. There is no reset, reroot, clone, identity port, free subtree
+comparison, or observable source-dependent update timing. A later entry
+after an absorbing halt remains separately supplied and paid. Producing
+a row does not erase accessible old data or new replies; any subsequent
+cut owes its own complete-state correspondence.
+

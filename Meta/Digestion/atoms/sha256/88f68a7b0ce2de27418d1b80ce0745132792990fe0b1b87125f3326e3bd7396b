@@ -1,0 +1,93 @@
+**Theorem 11.1 (grid order and the resulting improvement).** Let
+$R^{\rm grid}_{n,\kappa}$ be the Bayes risk when the only positive
+queries are $j\tau/n$, $j=1,\ldots,n$. There are constants
+$0<c_\tau<C_\tau<\infty$ and $n_0$, uniform on the original family,
+such that
+
+$$
+c_\tau n^{-1/2}\le R^{\rm grid}_{n,\kappa}
+\le C_\tau n^{-1/2}\qquad(n\ge n_0).
+\tag{11.1}
+$$
+
+This is the supplied L Theorems 58.3 and 59.1 at their grid scope.
+Together with Theorem 8.1 it implies that both the optimal risk and
+the actual cluster risk, divided by the grid risk, are of order
+$n^{-1/2}$ uniformly in $\kappa$. No grid leading coefficient is
+asserted.
+
+Proof. A direct account of the credited grid argument also fixes its
+source dependence. Let $\Delta=\tau/n$, $m=\lceil\sqrt n\rceil$ and
+$h=m\Delta$. Use the last $m$ real increments as comparison and put
+$S=(m\Delta)^{-1}\sum(\Delta_jv)^2$. Conditional on height,
+
+$$
+\mathbf E(S\mid K)=\frac1h\int_{\tau-h}^\tau a_\kappa(K_s)ds,
+\qquad
+\operatorname{Var}(S\mid K)
+=\frac{2\sum V_j^2}{(m\Delta)^2}\le\frac{2a_+^2}{m}.
+\tag{11.2}
+$$
+
+By (1.6) the mean squared difference of the conditional mean from
+$a_\kappa(K_\tau)$ is at most $C_\tau h$. Applying $F_\kappa$
+therefore gives risk at most $C_\tau(m^{-1}+h)$. For actual wrapped
+increments the additional loss is at most
+$2d^2m\exp[-\pi^2/(2a_+\Delta)]$. This proves the upper bound.
+
+For the lower bound take the grid-aligned final window $[s,\tau]$
+of length $h=m\Delta$ and enlarge by the exact past, centered bridge
+and its $m$ real grid increments, as in Lemma 5.1. Choose a fixed
+compact interval $J\Subset I$ of positive length and $\rho>0$ such
+that all $x\in J$ are at distance at least $3\rho$ from both faces.
+Let $0\le\psi\le1$ be a nonzero smooth function supported in
+$(-1,1)$. Multiply the exact joint density by
+
+$$
+\mathbf1_{\{x\in J\}}\mathbf1_{\{\sup|b|\le\rho\}}
+\psi((z-x)/\sqrt h)^2
+\tag{11.3}
+$$
+
+to get a dominated subprobability $\widetilde\nu_h$. For small $h$,
+$|z-x|\le\sqrt h\le\rho$ on this support, so the interpolated
+height is strictly interior and the survival indicator is constant
+there. Stationarity gives $\pi(J)>0$; the bridge cutoff has probability
+tending to one. With $z=x+\sqrt h\,v$, the Gaussian endpoint integral
+against $\psi(v)^2$ has a positive fixed mass, and the exact Q ratio
+$\phi(z)/\phi(x)$ is bounded above and below. Thus
+$\widetilde\nu_h(1)\ge c>0$ independently of small $h$ and parameter.
+
+The endpoint score, including this cutoff, is
+
+$$
+-\frac{z-x}{\sigma^2h}+\frac{\phi'(z)}{\phi(z)}
++\frac2{\sqrt h}\frac{\psi'((z-x)/\sqrt h)}
+{\psi((z-x)/\sqrt h)}.
+\tag{11.4}
+$$
+
+Its integrated square is $O(h^{-1})$: the Gaussian scaling controls
+the first term, the compact interior controls the second, and the
+squared cutoff cancels the last denominator. Each grid observation
+has information bounded by a constant by (5.5), and their conditional
+scores are orthogonal to one another and to (11.4). The full squared
+score integral is consequently at most $C(h^{-1}+m)$. The cutoff
+gives zero endpoint boundary terms. The unweighted integration by
+parts identity
+$\int(g-z)\partial_z\log p_{\widetilde\nu_h}
+\,d\widetilde\nu_h=\widetilde\nu_h(1)$, justified exactly as in
+Lemma 6.2, and Cauchy--Schwarz give
+
+$$
+\mathbf E(g-K_\tau)^2\ge\frac{c}{h^{-1}+m}
+\ge c_\tau n^{-1/2}.
+\tag{11.5}
+$$
+
+This is a bound on the same stationary source, with its exact Q
+weight, both original faces and the actual endpoint target. It proves
+the lower half of (11.1). The positive upper and lower coefficient
+bounds in Proposition 3.2 and Theorem 8.1 then prove the ratio
+assertion, also for the actual cluster risks by (4.3). $\square$
+

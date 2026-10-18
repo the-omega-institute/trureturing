@@ -1,0 +1,64 @@
+### 455.1. 对象、精确边界及来源合同
+
+对实数 \(x\ge e\)，记 \(\ell=\log x\)、\(L=\log2\)，沿用
+
+\[
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+\]
+\[
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),
+\quad \mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s).
+\tag{CC.1}
+\]
+
+这里 \(s\) 可以为正实数；整数 \(m\) 时有精确完整纤维
+
+\[
+\mathscr D_x(m)=\sum_{n=m}^{2m-1}J_x^\eta(n).
+\tag{CC.2}
+\]
+
+取同一个真实素数面板
+
+\[
+\mathcal P_x=\{p\text{ prime}:2x<p\le4x\},\qquad
+Q_x^{\mathrm p}=\#\mathcal P_x,\qquad
+\mathcal A_x=\sum_{p\in\mathcal P_x}\mathscr D_x(p).
+\tag{CC.3}
+\]
+
+其真实奇源系数为 \(\mu(p)=-1\)。设
+
+\[
+\mathcal U_x(n)=-\#\{p\in\mathcal P_x:p\le n\},\quad
+\mathcal L_x(n)=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1),
+\]
+\[
+\mathscr H_x(N)=\sum_{n=1}^N\mathcal U_x(n)\mathcal L_x(n),\qquad
+\mathscr E_x(N)=Q_x^{\mathrm p}\mathscr D_x(N+1).
+\tag{CC.4}
+\]
+
+§454（BC.13）–（BC.14）已经证明，对每个整数 \(N\ge\lceil8x\rceil\)，
+
+\[
+\boxed{\mathscr H_x(N)=-\mathcal A_x+\mathscr E_x(N),\qquad
+\sum_{n>N}\mathcal U_x(n)\mathcal L_x(n)=-\mathscr E_x(N).}
+\tag{CC.5}
+\]
+
+补偿项的端点始终是 **\(N+1\) 和 \(2N+2\)**。这一精确身份不是本稿的新结论；下文支付同时增长的 \(x,N\) 下的大小，而不使用固定 \(x\) 的尾趋零来代替共同精度。
+
+使用以下已证明结果与文献：
+
+1. §453（DP.9）–（DP.10）的精确低商积分与完整高商绝对预算；其高商界来自 §429.2 的经典阶乘夹逼，保留实际 \(\eta\)。
+2. §454（BC.13）–（BC.14）的同一个真实整数截止与奇端点。
+3. Johnston–Yang, *Some explicit estimates for the error term in the prime number theorem*, arXiv:2204.01980v2，2022-04-20 修订版，Theorem 1.1、式（1.3）、印刷页 2。其所有素幂误差为
+   \[
+   |\psi(t)-t|\le9.39t(\log t)^{1.515}e^{-0.8274\sqrt{\log t}}\quad(t\ge2).
+   \tag{CC.6}
+   \]
+   所需计数误差由该素幂界与有限 Abel 求和导出。
+

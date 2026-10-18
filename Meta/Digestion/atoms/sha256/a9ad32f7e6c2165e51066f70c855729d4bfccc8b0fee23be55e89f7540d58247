@@ -1,0 +1,47 @@
+**Assumption 3.1 (two phases and supplied services).** The actual origin
+is one $u\in\mathcal U_*$. Exactly one genuine authenticated substitution
+has updated that same register to $t=\rho u$, with the same root and cut.
+There are no intervening resets, rotations, source replacements, arbitrary
+edits or extra updates. Authentication and version binding certify this
+relationship without distinguishing $u$ within the fiber.
+The complete current row is lawfully acquired on that stationary version.
+
+In the first phase a producer lawfully possesses genuinely acquired finite
+current data from this same stationary version: either the lossless tree
+$t$, or the complete row $R_*$ and one finite acquired value $x_d$ for
+each of the six classes. The complete partition's equality tests are
+comparisons of acquired terms. The producer may make finite local
+computations on these data. It computes the specified complete binary
+code and actually exports it with the complete current row before a
+complete access cut. This premise neither grants equality tests on
+unknown subtrees nor supplies the predecessor as input.
+
+In the second phase a supplied lawful common entry initializes a common
+reader using exactly the complete code, $P,R_*$ and source-independent
+controls. These declared inputs must be recoverable from its entry state.
+No further source-dependent field is accessible: predecessor data, origin
+identity, acquired values, alpha labels, traces, caches, old outputs,
+archives, pointers, allocation, control fields, acquisition order or
+counts, lengths, meters, timing and update packets convey no extra
+distinction. Data determined by the declared payload do not add a
+distinction; any other accessible field changes this assumption.
+Inaccessibility of discarded material does not require physical erasure.
+
+The same current register stays stationary during reading. Its sole
+source port accepts each finite literal address and returns the four
+native replies of Definition 1.1. No equality, image, provenance,
+generation, inverse or extra subtree port is supplied. Every invocation
+is charged, including repeats, absent continuations and addresses used
+in prior acquisition. Every origin in $\mathcal U_*$ must terminate with
+the complete $F(u)$.
+
+Acquisition, finite acquired-term computation, actual export, access
+isolation, common installation, authentication, version binding and lawful
+entry are supplied operations with separate prices. In particular a stopped
+producer has an absorbing stop; any subsequent reader entry is a separately
+supplied invocation. A full traversal can acquire a finite tree, but its
+retained trace alone does not provide this narrower handoff. These are
+the operational premises of the owning volume's Assumptions 1.3, 8.1,
+9.2 and Definition 15.1, specialized to one update. They are hypotheses
+of the results below, not deductions from a row equation.
+

@@ -1,0 +1,9 @@
+**定义 78.1（局部有向树表示）。** 在第 76.2 条的块内，令 $B(U,W)=(UW-WU)/(2i)$，定义
+
+$$
+q(\alpha)=X_P,\qquad q(\beta)=Y_P,
+\qquad q(\langle s,t\rangle)=B(q(s),q(t)).
+$$
+
+$\gamma=\rho(\beta)=\langle\beta,\alpha\rangle$ 的像为 $-Z_P$。该括号是一项表示规则，不是输入密度算子的 CP 更新。
+

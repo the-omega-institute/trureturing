@@ -1,0 +1,25 @@
+**命题 4.2（不固定祖先末两读时的边界）。** Even for one fixed
+legal source in a positive finite trace corridor, no drift bound
+uniform over all $y,\zeta\in\mathbb R$ is possible while the first
+four readings remain $(0,24,48,312/5)$.
+
+**证明。** Fix any $P\in\mathcal P$ and use its first-four-reading
+polynomial $U$ from (1.8). For every $d\in\mathbb R$ put
+$f_d=U-dV_P$ and choose
+
+$$
+y_d=d+t_4f_d(4),\qquad \zeta_d=d+t_5f_d(5).
+\tag{4.6}
+$$
+
+These are six compatible readings of the same fixed source and
+the indicated gain and drift. The gain is always nonzero, because
+otherwise its initial and first readings would require $d=0=24$.
+Its constant coefficient is $f_d(0)=-d$, and $d$ is arbitrary.
+Moreover $(y_d,\zeta_d)$ is affine in $d$ with slope
+$(\alpha_4,\alpha_5)\ne(0,0)$, so these ancestor vectors are
+unbounded as $|d|\to\infty$. This does not contradict Theorem 4.1,
+whose reading vectors are fixed or bounded. That theorem also makes
+no uniform assertion as $\varepsilon\downarrow0$ or $R\uparrow\infty$,
+or when the original normalization parameters are unbounded. ∎
+

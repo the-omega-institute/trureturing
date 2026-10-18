@@ -1,0 +1,55 @@
+**Theorem 61.1 (no singular supported failure at the original error).**
+For any admitted original common processor with $E(\Phi)=E_*$,
+each of its five canonical-failure CP measures is absolutely continuous
+with respect to Lebesgue measure on the supported input algebra, at all
+passive-reference amplifications. In particular acquisition-time and
+deadline atoms cannot be inserted while preserving $E_*$. This theorem
+requires neither sharp acquisition cost nor a chosen simulator density.
+
+Proof. Use the original full-output effects of CG Theorem 14.1, not
+just the compressed output of CG.155. At each of the four height-$5$
+histories the effect is $U_{e,n}R_5U_{e,n}^\dagger$ on live and
+identity on the ENTIRE five-label failure register, including every
+time and stopped support. The four height-$27$ effects vanish on all
+nonlive sectors. All eight weights are strictly positive. As in CG.157
+and Corollary 17.3, equality of the original maximum to the lower
+certificate forces each effect to attain its individual HALF full-cq
+norm; a slack in one cannot be compensated by another.
+
+Write the Hermitian operator measure of ideal minus actual output as
+$H$, and dominate both outputs by a common positive scalar measure
+on each classical sector. Since the full difference has trace zero,
+its half norm is the total trace of its positive part. For an effect
+$0\preceq Q\preceq I$ the deficit is
+
+$$
+\tfrac12\|H\|_{1,\rm cq}-\operatorname{tr}(QH)
+=\operatorname{tr}((I-Q)H_+)+\operatorname{tr}(QH_-)\ge0.
+\tag{JRH.21}
+$$
+
+The traces include integration and direct sums. On a failure sector of
+a height-$5$ witness $Q=I$, so equality makes $H_-=0$ there.
+Equivalently, for every Borel $B\subseteq[0,1]$ and each original
+label $\ell$, its actual positive output measure obeys
+
+$$
+0\preceq\Phi^f_\ell(B)(E\rho_{5,e,n}E^\dagger)
+\preceq w_\ell\left(\int_B f_5(t)dt\right)P_f.
+\tag{JRH.22}
+$$
+
+This is operator-measure domination of each separately labelled full
+output, not an inequality of pooled total failure probabilities.
+It also excludes wrong stopped support and the two zero-target labels.
+For a Lebesgue-null set $B$ the positive CP effect
+$H_\ell(B)=(\Phi^f_\ell(B)\circ\operatorname{Ad}_E)^\dagger(I)$
+has zero trace against every $\rho_{5,e,n}$. Their four-sign mean
+is $\operatorname{diag}(p_5)\succ0$. Positivity and this faithful
+mean give $H_\ell(B)=0$. A CP map with zero effect has zero output
+on every positive input, hence on every complex matrix by linearity.
+Its passive-reference amplifications are zero as well. Thus there is
+no singular part on the supported algebra. Nothing in this proof fixes
+the density of the absolutely continuous part for all optimizers.
+In particular no common $g(t)$ is a premise. $\square$
+

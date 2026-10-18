@@ -1,0 +1,30 @@
+**Definition 1.3 (all correlated competitors and pressure).** A nonempty
+$B\subseteq S_d^n$ is admissible when, for every $(i,q)$, its target
+$g_q(x_i)$ is constant on $B$, or there are $j,a$ and a total reply
+decoder $\delta$ such that
+
+$$
+g_q(x_i)=\delta(r_a(x_j))\qquad(x\in B).
+\tag{RCE.6}
+$$
+
+The witnesses may depend on $B,i,q$, may query any coordinate, and may
+form any cycles. All equations hold on the same tuples. Complete
+templates select one equation for every target; their solution sets
+are $C_\Theta$. The same-witness saturation of [NDR, Theorem 2.2]
+identifies nonnegative mass maxima over admissible sets and complete
+templates. For $w:S_d\to[0,\infty)$ set
+
+$$
+A_n^{(d)}(w)=\max_{B\text{ admissible}}
+       \sum_{x\in B}\prod_{i=1}^nw(x_i),\qquad
+\beta_d(w)=\sup_{n\ge1}A_n^{(d)}(w)^{1/n}.
+\tag{RCE.7}
+$$
+
+Every weight is owned once by its original whole block. It can correlate
+all constructor coordinates within that block. No factorization of
+that weight is assumed. [CBN, Theorems 4.2 and 6.2] give an exact
+equality-aware constructor representation of these same weighted sums;
+they give no independent copies of a reply and no uniform width bound.
+

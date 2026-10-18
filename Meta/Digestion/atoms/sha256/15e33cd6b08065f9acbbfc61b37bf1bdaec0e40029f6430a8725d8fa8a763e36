@@ -1,0 +1,19 @@
+**定义 4.1（实际初始状态与输出）。** 给定定义 1.1 的产生器和任意概率行 $\pi$，令 $J$ 是先取 $H_0\sim\pi$，再按标记边转移产生 $Y_0,Y_1,\ldots$ 的实际联合律；其输出边缘律记为 $P$。设
+
+$$
+\mathcal F_n=\sigma(Y_0,\ldots,Y_{n-1}),\qquad
+\mathcal F_\infty=\sigma(Y_j:j\geq0),
+\qquad
+p_n(i)=J(H_0=i\mid\mathcal F_n).
+$$
+
+$\mathcal F_0$ 是平凡场，$p_\infty(i)=J(H_0=i\mid\mathcal F_\infty)$。全部熵和 KL 采用自然对数，$0\log0=0$。定义
+
+$$
+\ell_n=
+H_J(H_0\mid\mathcal F_n)-H_J(H_0\mid\mathcal F_\infty)
+=\mathbb E_J D_{\mathrm{KL}}(p_\infty\Vert p_n).
+$$
+
+最后的等式来自 $p_n=\mathbb E[p_\infty\mid\mathcal F_n]$。若 $p_n(i)=0$，则同一事件上 $p_\infty(i)=0$ 几乎处处；对非负交叉熵用条件期望，得到 $\mathbb E[-p_\infty(i)\log p_n(i)]=\mathbb E[-p_n(i)\log p_n(i)]$。所以不需要假设后验坐标有正下界。终端条件熵可以严格为正；它在 $\ell_n$ 中明确扣除。
+

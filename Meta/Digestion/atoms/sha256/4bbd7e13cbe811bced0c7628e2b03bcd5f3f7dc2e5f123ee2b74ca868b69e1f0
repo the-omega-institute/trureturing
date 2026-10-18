@@ -1,0 +1,95 @@
+**Theorem 27.3 (Full support: least largest window three and constrained coherent cost five).** For $K=\{1,2,3,4\}$ and every fixed known positive $p$, the least identifying largest window in Definition 27.1 is $L=3$. Within $L\le3$, the least identifying coherent cost is $C=5$, attained by $(2,3)$, and at least two nontrivial windows are necessary. Four quadrature settings, with setting retained, give a twelve-label law identifying exactly the affine, averaged-channel and labeled-instrument orbits. Without the cap $L\le3$, the least coherent cost is four, attained by a single window of length four from Theorem 26.3.
+
+Proof. Put $A=p_2\sqrt{p_1p_3}>0$ and $B=\sqrt{p_1p_2p_3p_4}>0$, the constants of (26.15). The only nonzero history vectors at lengths two and three are
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{length two}&K_wx&\text{length three}&K_wx\\ \hline
+00&S^2x=c_4e_2+c_3e_3+c_2e_4&000&S^3x=c_4e_3+c_3e_4\\
+01&c_1x&001&c_2x\\
+&&010&c_1Sx
+\end{array}
+$$
+
+Also $\Omega_1=|0\rangle\langle0|$. Using (27.7), define
+
+$$
+d_1=c_4\overline c_1\overline c_2,\qquad
+d_2=d_1+c_3\overline c_1^{\,2},\qquad
+C_3=p_1p_2+A e^{i\phi_1}+B e^{i\phi_2}.
+\tag{27.9}
+$$
+
+The complete untwirled densities, in ordered supports $(00,01)$ and $(000,001,010)$, are
+
+$$
+\Omega_2=\begin{pmatrix}1-p_1&d_2\\\overline d_2&p_1\end{pmatrix},\qquad
+\Omega_3=\begin{pmatrix}
+p_3+p_4&d_1&d_2\\
+\overline d_1&p_2&\overline C_3\\
+\overline d_2&C_3&p_1
+\end{pmatrix}.
+\tag{27.10}
+$$
+
+Every omitted word row and column is zero. For example $\Omega_2[00,01]=\overline c_1\langle x,S^2x\rangle=d_2$, since $\langle x,S^2x\rangle=\overline c_2c_4+\overline c_1c_3$. Likewise $\Omega_3[000,001]=\overline c_2\langle x,S^3x\rangle=d_1$, $\Omega_3[000,010]=d_2$, and $\Omega_3[010,001]=c_1\overline c_2\langle x,Sx\rangle=C_3$. The latter contains all three terminal-tail pairs of (26.19)–(26.20); its formal characters remain aggregated in one measured coefficient.
+
+For the pair batch, the complete product Gram vectors are
+
+$$
+\begin{array}{c|c|c}
+\text{joint word}&\text{memory-history vector}&\text{total count}\\ \hline
+00|000&S^2x\otimes S^3x&0\\
+00|001&S^2x\otimes c_2x&1\\
+00|010&S^2x\otimes c_1Sx&1\\
+01|000&c_1x\otimes S^3x&1\\
+01|001&c_1x\otimes c_2x&2\\
+01|010&c_1x\otimes c_1Sx&2
+\end{array}
+\tag{27.11}
+$$
+
+They are actual history vectors for two independent five-level memories; the serial preparation (27.5) gives the same flag product. Tracing these memories and retaining only equal-total-count pairs specifies the whole $\mathsf Q_{(2,3)}$. In particular $u=00|001$ and $v=01|000$ give
+
+$$
+Z=\mathsf Q_{(2,3)}[00,001;01,000]
+=\langle c_1x\otimes S^3x,S^2x\otimes c_2x\rangle
+=d_2\overline d_1=p_1p_2p_4+p_1B e^{-i\phi_2}.
+\tag{27.12}
+$$
+
+The second-window terminal marginal supplies $C_3$. Consequently the actual inversion is
+
+$$
+\boxed{
+e^{-i\phi_2}=\frac{Z-p_1p_2p_4}{p_1B},\qquad
+e^{i\phi_1}=\frac{C_3-p_1p_2-B e^{i\phi_2}}{A}.}
+\tag{27.13}
+$$
+
+All denominators are fixed known positive numbers. No division by $d_2,Z,C_3$ or argument of a vanishing observed number occurs. This covers $C_3=0$ and $Z=0$. Since $d_1\ne0$, $Z=0$ is equivalent to $d_2=0$, which requires $p_1p_3=p_2p_4$ and $e^{i\phi_2}=-1$; (27.13) still applies. Equality of the two observations is exactly equality of the two complete source characters, and the affine converse follows from (27.8).
+
+For the largest-window lower bound, use the gauge in Definition 27.1. Then
+
+$$
+d_2=e^{i\phi_1}\sqrt{p_1}
+\left(\sqrt{p_1p_3}+\sqrt{p_2p_4}e^{i\phi_2}\right).
+\tag{27.14}
+$$
+
+At fixed $\phi_2$, replacing $\phi_1$ by $\phi_1+t$ gives $\Omega_2'=U_2(-t)\Omega_2U_2(-t)^*$; $\Omega_1$ is unchanged. Hence the entire product for every finite list with $L\le2$ changes only by a common global count rotation and has unchanged $\mathsf Q$. Taking $t\ne0$ modulo $2\pi$ gives distinct affine classes. This obstruction holds even for arbitrarily many short windows.
+
+For a common collision across all batch types with $L\le3,C\le4$, use the established pair (26.21) of Theorem 26.3. Explicitly, for any $0<h<\min(A,B)$ it supplies
+
+$$
+\alpha=\arcsin(h/A),\quad \beta=-\arcsin(h/B),\qquad
+\theta^+=(0,0,\alpha,\alpha+\beta),\quad \theta^-=-\theta^+,
+\tag{27.15}
+$$
+
+with distinct affine classes and identical full $T_3$, as proved in (26.20)–(26.22). The additional joint compatibility follows from (27.14): $d_2(\theta^-)=\overline{d_2(\theta^+)}$, so their moduli agree. If this common modulus is nonzero, choose $t$ with $e^{-it}d_2(\theta^+)=d_2(\theta^-)$. If it is zero, either angle works. Then every whole state at lengths one and two is carried from $\theta^+$ to $\theta^-$ by $U_n(t)$. Thus their globally twirled data agree for every all-short list, with one common actual phase pair, including zero-coherence cases.
+
+Every other allowed list contains one length-three window and only pure length-one companions, since $C\le4$. Its global twirl is that same $T_3$ tensored with count-zero pure flags. Therefore the single pair (27.15) defeats every permitted batch type, every permitted terminal measurement, and any pooling of these capped batches. The $(2,3)$ separator attains five. At $L\le3$ any list with at most one nontrivial window has only a single $T_n$ with $n\le3$ and pure companions, and the same collision defeats it; two nontrivial windows are necessary.
+
+For the unrestricted coherent comparison, every list of $C\le3$ is covered by this common collision. Theorem 26.3 supplies a single length-four separator using its actual $C_4=p_1p_3+B e^{i\phi_2}$ and the terminal $C_3$ marginal, with inversion (26.27). Thus the unrestricted minimum is four, with a different $L$ and one herald. This is a source result consumed for the comparison, not a new single-window theorem. Theorem 27.5 supplies the claimed finite law. The recovery of information by permitted joint charge exchanges uses the established activation principle in [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §III.C.2](https://arxiv.org/html/quant-ph/0610030v3); here the finite renewal consumer is the actual pair (27.11) and the common lower-bound compatibility just proved. $\square$
+

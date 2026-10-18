@@ -1,0 +1,40 @@
+**Theorem 6.1 (depth-three all-correlated fractional dual).** For every
+$n\ge1$ and every jointly admissible $B\subseteq S_3^n$,
+
+$$
+\Omega_w(B)\le169^n.
+\tag{NCE.41}
+$$
+
+Consequently the explicit rational dual weights
+
+$$
+y_n(x)=169^{-n}\prod_{i=1}^nw(x_i)
+\tag{NCE.42}
+$$
+
+give, for every $n\ge1$,
+
+$$
+\boxed{\quad
+Z_3(n)\ge\left(\frac{33}{13}\right)^n,\qquad
+K_3(n)\ge\left\lceil\left(\frac{33}{13}\right)^n\right\rceil,
+\qquad\sigma_3\ge\log_2\frac{33}{13}.
+\quad}
+\tag{NCE.43}
+$$
+
+Proof. Apply Theorem 2.2 with $S=S_3$, $m=4$, the seven
+native targets, all boundary native experiments and a constant,
+and the weights (NCE.31). Theorem 4.3 verifies its hypothesis;
+indeed it verifies nonrecoverability even for the larger menu
+of every finite word. This proves (NCE.41).
+
+The total mass of (NCE.42) is
+$(429/169)^n=(33/13)^n$, while every legal joint set has mass
+at most one. Summing any integral or fractional cover proves
+the first two bounds. The bound holds for every joint length,
+so division by $n$ and the supplied limit in (NCE.11) gives
+the bound on $\sigma_3$. No conclusion is inferred from only
+one finite $K_3(n)$. $\square$
+

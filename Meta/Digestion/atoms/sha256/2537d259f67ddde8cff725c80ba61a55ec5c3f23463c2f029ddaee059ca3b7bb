@@ -1,0 +1,56 @@
+**Corollary 16.7 (strict simpler inequality and original variation floors).** Under Theorem 16.6, put $A_e=14274671/121$ and $B_v=22500090/11$. Then
+
+$$
+e(M)+18\mathcal V(M)>\frac{\eta}{16000000}.
+\tag{16.17}
+$$
+
+If $e(M)<H/A_e$, then $\mathcal V(M)\ge(H-A_ee(M))/B_v>0$. If an exact finite common configuration-risk attainer exists, its zero excess obeys
+
+$$
+\mathcal V(M)\ge\frac{H}{B_v}
+=\frac{215069610437}{1258253737896675076171875}>0.
+\tag{16.18}
+$$
+
+For any sequence of lawful finite observers for one fixed such prior with $e(M_n)\to0$,
+
+$$
+\liminf_n\mathcal V(M_n)
+\ge\frac{215069610437}{1258253737896675076171875}.
+\tag{16.19}
+$$
+
+The finite carriers may grow. No existence or equality attainment is asserted by these conditional necessities.
+
+Proof. The exact margins are
+
+$$
+\begin{aligned}
+\frac{11}{1404}-\frac1{128}&=\frac1{44928}>0,\\
+18A_e-B_v&=\frac{9443088}{121}>0,\\
+\frac{H}{A_e\eta}&=\frac{1331}{20041638084},\\
+\frac{1331}{20041638084}-\frac1{16000000}
+&=\frac{313590479}{80166552336000000}>0.
+\end{aligned}
+\tag{16.20}
+$$
+
+Nonnegativity of variation gives $A_e(e+18\mathcal V)\ge A_ee+B_v\mathcal V\ge H$. Divide by $A_e$ and use the last margin for (16.17), even if the main bound is an equality. Isolating variation proves the conditional bound and (16.18); taking the lower limit with $e(M_n)\to0$ proves (16.19). The strictly weaker $\eta/128$ consequence also gives, at zero excess,
+
+$$
+\mathcal V(M)>\frac{\eta}{128B_v}
+=\frac{19551782767}{114712591489155562500000}.
+$$
+
+The stronger closed floor (16.18) is the one used for the lower-limit assertion. $\square$
+
+Theorem 9.3 remains a separate necessary condition. At $\mathcal V(M)=0$, it gives the stronger strict risk bound $e(M)>11\eta/24400000$, whereas (16.15) only gives $e(M)\ge H/A_e=4731531429614/1596541004324451031640625$. Their exact comparison is
+
+$$
+\frac{11\eta/24400000}{H/A_e}
+=\frac{82137861}{12100000}>1.
+$$
+
+At zero excess the new closed variation floor exceeds the older lower-limit floor $(11\eta/7600000)^2$; their ratio is $7600000^2/(1404\cdot22500090\cdot\eta)>1$. This is a comparison at zero or vanishing excess. The linear and square-root inequalities do not dominate each other everywhere at positive risk.
+

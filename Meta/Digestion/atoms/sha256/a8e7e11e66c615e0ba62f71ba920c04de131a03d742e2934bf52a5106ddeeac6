@@ -1,0 +1,29 @@
+**Lemma 15.6 (the actual two-dimensional probability fiber).** For (15.17), the whole constrained fiber in (15.4) is
+
+$$
+\mathcal F=\left\{f\in\mathbb R_+^4:
+ \sum_k f_k=1,\quad -3f_1-f_2+f_3+3f_4=0\right\}.
+\tag{15.21}
+$$
+
+It has affine dimension two and exactly the four vertices
+
+$$
+f^{13}=(1/4,0,3/4,0),\quad f^{14}=(1/2,0,0,1/2),
+$$
+
+$$
+f^{23}=(0,1/2,1/2,0),\quad f^{24}=(0,3/4,0,1/4).
+\tag{15.22}
+$$
+
+**Proof.** For any probability row $f$ the full mixture is
+
+$$
+\sum_i f_iQ_i=(f\cdot u)\delta_\alpha+(1-f\cdot u)\beta W.
+$$
+
+Its equality to $G$ is equivalent, by testing alpha and then using this full formula, to $f\cdot u=c_*$. Hence (15.21) is equivalent to every complete-law coordinate equation, including infinity. Normalization and the displayed mean equation are independent. They have a strictly positive solution, for example $(1/4,1/4,1/4,1/4)$, so the probability fiber has the full affine dimension $4-2=2$.
+
+If a feasible point has at least three positive coordinates, on that support the two linear equations have a nonzero common homogeneous direction. A sufficiently small displacement in either sign stays nonnegative. Such a point is not a vertex. A singleton support is impossible because none of $-3,-1,1,3$ is zero. A two-point support must choose one negative and one positive coefficient. The four choices give exactly (15.22). Each is extreme: any convex decomposition preserves its zero coordinates, and its two remaining masses are uniquely determined by the two equations. This also proves exhaustiveness of the vertex list; it is a proof on the entire fiber rather than a finite sampling of it. ∎
+

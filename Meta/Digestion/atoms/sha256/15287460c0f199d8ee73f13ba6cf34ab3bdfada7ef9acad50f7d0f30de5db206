@@ -1,0 +1,84 @@
+**Lemma 11.2 (exact primitive relations, Boolean closure and witnesses).**
+On any fixed finite list of nonempty finite-tree coordinates, the
+relations
+
+$$
+\rho^a(x)=\rho^b(y),\qquad \rho^a(x)=g
+\tag{ARH.11.1}
+$$
+
+have effectively constructible finite bottom-up tree automata on valid
+convolutions, for fixed $a,b\ge0$ and ground $g$. Coordinates $x,y$ may
+be the same coordinate. Any finite Boolean combination of these atoms
+has an exact such automaton. Its emptiness is decidable, and a nonempty
+language has an effectively extractable finite tuple witness.
+
+Proof. Use the image parser and injectivity already used in (ARH.3.5).
+Their relevant algebra is short: no $\rho$-image has root $\alpha$;
+the images of $\alpha$, $\beta$ and a pair are respectively $\beta$,
+$\langle\beta,\alpha\rangle$ and a pair whose right child is itself an
+image, hence not $\alpha$. These cases are disjoint, and the last case
+recursively parses its children. This gives a unique partial inverse
+on each finite ground tree and injectivity of every iterate. Cancel
+$\min(a,b)$ in the first atom. It suffices to recognize
+$y=\rho^e(x)$ for fixed $e\ge0$.
+
+Here is a finite checking construction, including padding. Its main state
+checks two selected coordinates at the current common suffix. If the
+$x$ coordinate is branch, require branch in $y$ and the main state at
+both children. If $x$ is the leaf $\lambda$, check the selected pair of
+whole subtrees against the two fixed templates
+$(\lambda,\rho^e\lambda)$. Template states are pairs of subtrees of these
+fixed templates, also allowing an empty component. They check the current
+selected labels and pass their child templates to the children. Once
+both selected components are empty, a blank state requires both labels
+to be $\bot$ and propagates itself wherever other coordinates continue.
+If the selected components have ended but other coordinates give the
+current convolution node rank two, the child states are also blank.
+Thus all ranks and all deeper padding forced by other tracks are handled.
+
+There are finitely many main, template and blank states. These top-down
+rules can be read as a finite nondeterministic bottom-up transition
+relation, with the main state required at the root. Intersect with $V_k$.
+Induction on the finite $x$ tree proves that its successful run exists
+exactly when the selected $y$ tree is $\rho^e(x)$: pairs use the two
+induction hypotheses, and leaves use the complete fixed images. Blank
+states add no selected-coordinate nodes. Reading one physical coordinate
+for both selected tracks gives the same proof when $x=y$; it does not
+make two independent copies of that coordinate's value.
+
+For $\rho^a(x)=g$, apply the partial inverse $a$ times to $g$. If it
+fails, the atom is false; otherwise it is exactly equality of $x$ to
+one computed finite template. A template recognizer, with the same blank
+handling for other coordinates, recognizes that condition.
+
+For completeness, the finite automata operations used here are the
+standard finite ranked-tree ones. Intersection takes products of states;
+union takes disjoint runs; subset determinization assigns each subtree
+the set of its possible old states. Include the empty subset to make the
+transition function total. Complement swaps acceptance in that complete
+deterministic automaton and is then intersected with $V_k$. This is
+complement relative to valid **finite** tuples. Induction on a Boolean
+formula gives its exact language, including negated conjunctions and
+repeated coordinates.
+
+For emptiness, start with states reached by nullary transitions and
+repeatedly add targets of binary transitions whose children were already
+added. The finite state set makes this terminate. Structural induction
+shows that the final set consists exactly of states reached by finite
+terms. Store the first producing transition for each new state; its
+children were produced earlier, so this record unfolds into a finite
+witness. An accepting productive state is therefore equivalent to a
+nonempty language and supplies a genuine finite tuple by Definition 11.1.
+These are mature automata constructions [TATA, Theorems 1.1.9, 1.3.1
+and 1.7.4][TATA]; the argument specifies their exact hypotheses and
+padding interface here. $\square$
+
+Every compiled $D_\eta$ is consequently represented on the **joint**
+coordinate tuple. Arbitrary finite networks of these compiled atoms,
+including cycles, different epoch offsets and disequalities, require no
+factorization of that tuple language. This is why recognizing the graph
+of a fixed iterate is useful despite the ordinary-cell obstruction in §8.
+It does not imply that all contextual comparisons are recognizable; §17
+exhibits the precise missing closure.
+

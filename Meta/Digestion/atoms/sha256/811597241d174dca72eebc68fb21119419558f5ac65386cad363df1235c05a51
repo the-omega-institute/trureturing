@@ -1,0 +1,29 @@
+**Definition 1.2 (prices).** For a service $A$ and the same original source
+$u$, let
+
+$$
+c_A(u)=(q_A(u),a_A(u),\ell_A(u)),\qquad
+\ell_A(u)=\sum_{\text{actual reads }p}|p|.
+\tag{CAR.4}
+$$
+
+Every actual $\mathsf{Read}$ call, including repetition and an absent
+reply, contributes one to $q$. The coordinate $a$ counts only actual
+post-entry $\mathsf{ApplyRho}$ calls; $\mathsf{Halt}$ contributes to neither
+count. Define
+
+$$
+\begin{aligned}
+b(A)&=(\sup_D q_A,\sup_D a_A,\sup_D\ell_A),\\
+W_\lambda(A)&=\sup_{u\in D}
+ (\lambda_q q_A(u)+\lambda_a a_A(u)+\lambda_\ell\ell_A(u)),
+ \qquad \lambda\in\mathbb Q_{\ge0}^{3}.
+\end{aligned}
+\tag{CAR.5}
+$$
+
+The suprema in $b(A)$ need not have a common maximizer. The sum in
+$W_\lambda$ always uses one source. Computation, installation, address
+generation, storage, authentication, retention and physical time have
+separate costs. Simulated events never constitute actual receipts.
+

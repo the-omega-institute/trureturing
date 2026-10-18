@@ -1,0 +1,35 @@
+**Assumption 1.1 (owning mathematical inputs).** Fix one consistent isolated
+original source, with the dictionary, positivity, ranks and root TP identity
+of [CG, §§13–16][CG] and [GC, Definition 3.1][GC]. The complete stopped-output
+minimax certificate is the separate CG premise. The sharp worst-history cost
+of jointly acquired dimension at least three and the **unaveraged** equality
+face of [JR, Theorem 42.1][JR] are additional premises. In particular, for
+every original instrument satisfying exact minimax error and sharp cost,
+assume on the supported qutrit:
+
+$$
+\begin{gathered}
+\Lambda^L=\Lambda_*:=D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger,
+\qquad G_f=M,\qquad G_o=0,\\
+Q_L^{\rm coeff}=\operatorname{diag}(\delta,1,1),\qquad
+Q_H^{\rm coeff}=\operatorname{diag}(1-\delta,0,0).
+\end{gathered}
+\tag{QS.1}
+$$
+
+Every supported high label has zero failure effect. Every nonzero supported
+low live Kraus product is, up to a common complex phase, a real product
+$xD+zT+wS$ with $x\ne0$ and $x^2=\theta z^2+\omega w^2$.
+These assertions apply before height optimization. The sign-averaged
+conclusions of CG Theorem 17.2 alone do not provide (QS.1).
+
+The original full-class setting, whole-fibre survival, actual-label
+rigidity and physical capacity are those of [FA, Conventions 67.1–67.3,
+Theorems 69.1–69.2 and 87.2][FA] and [RC, §67][RC]. Finite common laws
+have the simultaneous constructor of [GC, Proposition 10.1][GC] and
+[RC, Proposition 75.1][RC]. The equivalence between the common law and
+the physical joint moments is [GC, Proposition 12.2][GC]. The arguments
+below make their parameter correspondence explicit. They do not establish
+the original source, minimax or sharp-cost premises anew. All conclusions
+are ordinary conditional mathematics.
+

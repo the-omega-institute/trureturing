@@ -1,0 +1,38 @@
+**Definition 8.1 (reuse and adaptation map).** The load-bearing supplier
+correspondences and their limits are the following.
+
+| Source | Exact supplied premise and use here |
+| --- | --- |
+| ARC §§1–4 | Actual source/target, occupied old roles, added A-owned 64–73, normalized parked entry, finite word expansion, owned 26/28/29 import, $E$ versus captured $\Delta$, canonical paid activation. These give lineage and current rights, not a unary compiler. |
+| ARC §§5–6 | Literal retained gates, distinct 13/70 sites, actual raw-code decoder/effect grammar and Step74. Definition 2.3 extends the structural table to their actual finite raw patterns; §3 derives the two-ingress retention instance. |
+| ARC §§7–10 | Receiver-acquired $c,p$, immutable Issue/Call, strict Zero binding and exact callbacks, fixed beta original INITIAL continuation and same-run recurrences. §7 transports these rows without enlarging targets or inputs. |
+| CAP Definitions 2.2, 4.6, 5.1 and §6 | Original owners/loans, retained three-block ingress, preallocated five-row payload, Reserve versus Raise and original request/dependency/ACK route. These justify §3's frontier and §5's exact original-source family. |
+| SSA §§3–6 and CSA §§2–4, 8 | Priced seven-port basis, $F_m$, spine/head routes, ordered alias/stencil method and absent/present finite slots. Their fixed-64-role/fixed-control continuing-task theorems are not asserted at 74 roles. §§2–4 give the new unary/74/raw-control instance. |
+| RCA Definitions 12.2–12.4, 13.2, 14.1 | Physical versus bookkeeping coordinates, literal local-effect codec, tested six-row append ingress, fixed finite raw/active version stores. They supply no all-owner scanner or automatic natural-view serializer. |
+| AIF Definitions 2.2–2.6, frontier and unfinished-address results; LJA §§5–6 | Actual input retention and complete-original-successor task coordinates; exact codecs/provenance and elementary fibre method. §5 uses their original port-13 coordinate; it does not claim a new generic counting theorem. |
+| CAP §§16–19 and ARC §11 | Original terminal fibres, Ready-only horizons, old-image endpoint limits and the distinction between $Q$ and $Q_G$. These remain restrictions on every full-task assertion here. |
+
+The repository's
+[`typed_finite_view_kernel`](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs)
+take independently given typed edges, labels and readouts; legality and
+successor refinement are premises of a concrete instance. The
+[`predictive_memory_minimal_quotient`](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs)
+require both readout and update factorization. They do not manufacture
+either a current-owner factor or a 74-role task bridge. The current-A
+family in §5 rules out the relevant readout factor for that projection.
+Postprocessing/effective-image kernel criteria likewise require fibre
+constancy and do not confer tokens.
+
+NativeSerialMachine's `nativeStep`, `replay_deterministic`,
+`reached_prefix_replay` and `actual_register_execution`, and
+NativeFullSourceProducer's `sourceControl`, `native_source_producer` and
+private `traverse`, `production_reads`, `stationary`, with their owning
+Scribes, describe single-register truthful chronology and stationary
+acquisition at their abstract level. Their controls may be unbounded;
+proof-side subtrees are not native input, and their terminal observations
+do not replace $Q$. The finite native row/input/price joins used here
+are ARC's and those proved above. These are ordinary mathematical
+adaptations, not a claim of a compiled application of those declarations.
+

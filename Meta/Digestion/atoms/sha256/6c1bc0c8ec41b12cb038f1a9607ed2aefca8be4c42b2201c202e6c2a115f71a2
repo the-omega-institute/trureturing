@@ -1,0 +1,45 @@
+## 12. 十二、软到刚：$\tau$ 改变的是支持图，$\kappa$ 改变的是纤维内部
+
+soft-to-rigid 项目中的几何过程可以抽象为一个参数化支撑族，例如
+
+$$
+S_{\gamma,\tau}=
+\gamma\big((1-\tau)P\oplus\tau\rho D\big),
+$$
+
+其中 $\tau$ 调整形状从柔性到刚性之间的几何关系。
+
+把它与 AURIC 结合时，最稳妥的数学解释是：
+
+- $\tau$ 是外层几何参数；
+- $\tau$ 改变冲突图或可行支持；
+- $\kappa$ 是在某一个固定支持图上的运输环流坐标。
+
+因此不能直接把 $\tau$ 认作 $\kappa$。真正的关系是：
+
+$$
+\tau
+\longmapsto
+D_\tau
+\longmapsto
+\bigl(E_\tau,V_\tau,c_\tau\bigr)
+\longmapsto
+g_\tau=E_\tau-V_\tau+c_\tau.
+$$
+
+如果刚化过程删除的是一个环上的边，则 cycle rank 下降一个，隐藏自由度减少一个。
+
+如果删除的是桥，边数减少一个，同时连通分量数增加一个，通常有
+
+$$
+\Delta g=(-1)+(+1)=0.
+$$
+
+因此：
+
+> 几何刚化只有在改变支持图的环结构时，才会真正减少 AURIC 隐藏填充自由度。
+
+这给出了 soft-to-rigid 与 AURIC 之间一个比“参数类比”更严格的桥接方式。
+
+---
+

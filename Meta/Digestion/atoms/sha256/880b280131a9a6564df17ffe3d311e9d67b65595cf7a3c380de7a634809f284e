@@ -1,0 +1,63 @@
+**Example 227.1 (Complete six-coordinate score and supports).** At $L=6$
+define the full score $Y$ by the following nonzero rows, with $T=9$.
+
+| Word | $A$ | $C$ | $P$ |
+| --- | --- | --- | --- |
+| $000001$ | $0$ | $0$ | $3$ |
+| $001100$ | $0$ | $0$ | $2$ |
+| $010100$ | $0$ | $0$ | $8$ |
+| $011101$ | $0$ | $5$ | $0$ |
+| $100000$ | $0$ | $0$ | $6$ |
+| $100100$ | $0$ | $0$ | $5$ |
+| $100111$ | $0$ | $0$ | $2$ |
+| $110000$ | $0$ | $4$ | $0$ |
+| $110010$ | $0$ | $6$ | $0$ |
+| $110101$ | $0$ | $6$ | $0$ |
+| $111010$ | $8$ | $0$ | $0$ |
+| $111011$ | $0$ | $9$ | $0$ |
+| $111100$ | $0$ | $3$ | $0$ |
+| $111101$ | $0$ | $5$ | $0$ |
+| $111110$ | $0$ | $11$ | $0$ |
+
+It has $W_Y=48$, $Q(Y)=(5,0,16,1,8,11;92)$.
+All 22 schedule supports, including every legal label, are as follows.
+The last column also records the sharp convex-mask score $Z_*$ defined
+in 227.2, whose anchor is the same 48.
+
+| Schedule | $B_N^S(Y)$ | $B_O^S(Y)$ | $B_N^S(Z_*)$ |
+| --- | --- | --- | --- |
+| $\varnothing$ | $43$ | $43$ | $43$ |
+| $1$ | $48$ | $48$ | $48$ |
+| $2$ | $43$ | $43$ | $43$ |
+| $3$ | $43$ | $43$ | $43$ |
+| $4$ | $43$ | $43$ | $43$ |
+| $5$ | $43$ | $43$ | $43$ |
+| $6$ | $43$ | $43$ | $43$ |
+| $12$ | $48$ | $48$ | $48$ |
+| $13$ | $51$ | $51$ | $1119/22$ |
+| $14$ | $48$ | $48$ | $48$ |
+| $15$ | $48$ | $48$ | $48$ |
+| $16$ | $48$ | $48$ | $48$ |
+| $23$ | $51$ | $51$ | $557/11$ |
+| $24$ | $45$ | $45$ | $4406/99$ |
+| $25$ | $48$ | $48$ | $6301/132$ |
+| $26$ | $43$ | $43$ | $43$ |
+| $34$ | $45$ | $44$ | $4406/99$ |
+| $35$ | $53$ | $49$ | $1119/22$ |
+| $36$ | $45$ | $44$ | $395/9$ |
+| $45$ | $44$ | $43$ | $17299/396$ |
+| $46$ | $49$ | $43$ | $1613/33$ |
+| $56$ | $51$ | $46$ | $3299/66$ |
+
+Thus $\Delta_N(Y)=5$, $\Delta_O(Y)=3$. At
+$o,p,u_3,v_3,u_4,v_4,u_5,v_5,u_6,v_6$, its signed hull readings are
+
+$$
+(-5,0,11/2,-2,7/3,-61/5,5/2,-31/2,16/5,-116/7).
+$$
+
+These support entries follow directly by summing the displayed
+$A,C,P,T$ rewards in each complete cell and taking the maximum over
+$0,\ldots,6$. In particular they do not combine independently chosen
+input representations or remove zero-score words.
+

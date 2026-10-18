@@ -1,0 +1,26 @@
+**Proposition 5.3 (a label constraint beyond the total bound).** For
+$n=8,k=4$, if $j$ is the label of the Boolean running start, then
+
+$$
+\sum_{i\ne j}m_i\ge15.
+\tag{CP.27}
+$$
+
+Consequently a graph attaining the lower total $m=17$ could have at
+most two installed states labelled $j$. The constraint (CP.27) does
+not follow just from $m\ge17$, $m_i\ge1$ and at most two
+singleton labels.
+
+Proof. Give the initial query answer one. Its actual prefix is live,
+has $N=7$ and residual threshold three. Equation (CP.25) proves
+(CP.27). Subtracting it from $m=17$ gives $m_j\le2$.
+
+For the nonimplication, take the numerical multiplicity vector with
+$m_j=5$, two other entries equal to one and the remaining five
+entries equal to two. Its sum is seventeen, all entries are positive,
+and exactly two are singletons, but its sum away from $j$ is twelve.
+This is an arithmetic counterexample to the implication between
+coarse inequalities, not a proposed feasible graph. The singleton
+conditions themselves are supplied by [PCA, Lemma 24.2][PCA] through
+the full-fiber lift. $\square$
+

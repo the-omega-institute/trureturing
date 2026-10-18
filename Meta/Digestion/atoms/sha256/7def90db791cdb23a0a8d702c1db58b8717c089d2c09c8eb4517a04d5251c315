@@ -1,0 +1,83 @@
+**Theorem 10.1 (E4: actual occupation pays for harmonic separation).** For a compliant observer, take the actual target epoch chain $U_i$ from its actual row $\nu_i$, with first label epoch $N$. Let $h$ satisfy
+
+$$
+0\le h\le1,
+\qquad W_ih=h,
+\qquad h(d_0)=0,
+\qquad h(d_1)=1.
+\tag{10.1}
+$$
+
+Then
+
+$$
+|p_i-\nu_ih|\le\sqrt{\frac{d_i(q,L)\mathbb E_iN}{2}}.
+\tag{10.2}
+$$
+
+Only the actual target's almost-sure stopping supplies the limiting decision. Its finite paid mean supplies finite occupation. No termination or finite mean of the auxiliary $W_i$ chain is required.
+
+Proof. For an integer $m\ge1$, let $P_m$ be the law of $(Y_0,\ldots,Y_m)$ under $U_i$ from $\nu_i$, with fixed label rows. Let $R_m$ be the law on the same finite path space from the same row $\nu_i$, with kernel $W_i$ and the same fixed labels. Common row support from Lemma 7.1 gives common positive path support. Initial zero masses vanish under both laws.
+
+For a positive path the initial factor cancels, and its likelihood ratio is the product of its $m$ transition ratios. Expanding the logarithm and summing over the finite path space proves the chain rule
+
+$$
+\begin{aligned}
+\operatorname{KL}(P_m\Vert R_m)
+&=\sum_{r=0}^{m-1}\mathbb E_i
+\operatorname{KL}(U_i(Y_r,\cdot)\Vert W_i(Y_r,\cdot))\\
+&\le d_i(q,L)\sum_{r=0}^{m-1}\mathsf P_i(N>r)
+=d_i(q,L)\mathbb E_i(N\wedge m).
+\end{aligned}
+\tag{10.3}
+$$
+
+Each live row costs at most $d_i$; every row after the actual label costs zero. The expectation is under the actual target, not an auxiliary stopping law. By (6.2), $\mathbb E_iN<\infty$.
+
+For completeness, the variation inequality has the following precise constant. For finite laws $P,R$, take $A=\{z:P(z)\ge R(z)\}$ and $t=\|P-R\|_{\rm TV}=P(A)-R(A)$. Log-sum on $A$ and its complement gives
+
+$$
+\operatorname{KL}(P\Vert R)
+\ge\operatorname{KL}(\operatorname{Bern}(u)\Vert\operatorname{Bern}(v)),
+\quad u=P(A),\quad v=R(A).
+\tag{10.4}
+$$
+
+For $0<v<1$, the right side as a function $F_v(u)$ has $F_v(v)=F_v'(v)=0$ and
+
+$$
+F_v''(u)=\frac1{u(1-u)}\ge4\quad(0<u<1).
+\tag{10.5}
+$$
+
+Integrating twice from $v$ to $u\ge v$ gives $F_v(u)\ge2(u-v)^2$. Endpoint values of $u$ follow by continuity. If $v$ is zero or one, absolute continuity either forces $t=0$ or entropy is infinite. Thus
+
+$$
+\|P-R\|_{\rm TV}\le\sqrt{\frac{\operatorname{KL}(P\Vert R)}2}.
+\tag{10.6}
+$$
+
+For any $[0,1]$-valued $F$, its expectation difference is at most variation: split $P-R$ into positive and negative mass, each of total mass $t$. This proves the expectation form of Pinsker with the stated constant.
+
+Apply it to $F(y_0,\ldots,y_m)=h(y_m)$. Harmonicity by finite-step conditioning under $R_m$ gives
+
+$$
+\mathbb E_{R_m}h(Y_m)=\nu_iW_i^mh=\nu_ih.
+\tag{10.7}
+$$
+
+It holds at every finite $m$ whether or not the auxiliary chain ever reaches a label. Hence
+
+$$
+\left|\mathbb E_i h(Y_m)-\nu_ih\right|
+\le\sqrt{\frac{d_i(q,L)\mathbb E_i(N\wedge m)}2}
+\le\sqrt{\frac{d_i(q,L)\mathbb E_iN}2}.
+\tag{10.8}
+$$
+
+Under the actual target, $N<\infty$ almost surely and labels remain fixed. Thus $h(Y_m)\to h(Y_N)=D$ almost surely. Bounded convergence gives $\mathbb E_i h(Y_m)\to p_i$ and proves (10.2). Monotone convergence also gives the corresponding limit of $\mathbb E_i(N\wedge m)$.
+
+Conditioning here uses the ordinary epoch filtration, with fresh future gaps and coins unexposed. No likelihood at an unproved auxiliary stop, auxiliary optional stopping or full-gap payment identity appears. A stop in zeros is represented by its frozen label at a later analytical tick, with no additional operational observation. $\square$
+
+For any stochastic kernel fixing both labels, the actual probability of ever reaching $d_1$ is a $[0,1]$-valued function with those boundary values. First-step conditioning makes it harmonic, even with reducible or nonabsorbing classes. This supplies $h=h_{W_i}$ in (10.1) without auxiliary termination.
+

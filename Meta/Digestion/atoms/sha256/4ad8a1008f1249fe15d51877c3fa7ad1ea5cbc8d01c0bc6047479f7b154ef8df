@@ -1,0 +1,15 @@
+**开放问题 5.3（保留的缺口）。** 任意内部整数 $q$ 上的精确全局最优 Bayes 与 minimax 值、minimax 下一阶项、优化八阶系数、有限正 $x$ 的精确准备与接收器、显式数值余项常数及对增长 $n$ 的一致性，在本卷中仍未解决。优化乘积准备与受限局部、LOCC 读出类各自保留独立范围。这里没有校准误差、噪声、记忆源、完整物理价格或实际网络定理。所引来源比较和有限范围的原始论文搜索不确立世界优先性。这一个有限结果不认证持续研究目标的完成。
+
+[Recovery]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[Minimax]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/docs/develop/theory/FIB_ATOM_WHITEBOX_LEGAL_EDGE_MINIMAX.md
+[Quartic]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/docs/develop/theory/FIB_ATOM_WHITEBOX_OPTIMAL_PREPARATION_QUARTIC.md
+[Calibration]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/D5/S3/ConceptDynamics/Control/CalibrationHistoryCoarsestQuotient.lean
+[Foundations]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md
+[Stage]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/D5/S3/Arith/FibonacciAtomic/StageScalarAddressCertificate.lean
+[KBonacci]: https://github.com/the-omega-institute/trureturing/blob/fbb859bf0cb3e06ff21c5a0d542af0d4e5645770/docs/develop/theory/KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md
+[SG]: https://arxiv.org/abs/1407.5389v5
+[EF]: https://arxiv.org/abs/quant-ph/0005132v2
+[Tyson]: https://arxiv.org/abs/0907.1884v1
+[DSK]: https://arxiv.org/abs/quant-ph/0504048v5
+[CK]: https://arxiv.org/abs/quant-ph/0702245v5
+

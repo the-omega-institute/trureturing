@@ -1,0 +1,136 @@
+**Theorem 3.1 (evaluated weighted-return compatibility).** Every regular stationary return-conserved table satisfies
+
+$$
+\begin{aligned}
+\pi Q(E_p)-\chi\tau W(E_\beta)-\zeta_0
+\le{}&106\sum_x\pi_x(b-u_x)\bigl(Q_x(w_{2,1})-T_a\bigr)\\
+&+365\sum_x\pi_x(u_x-a)\bigl(Q_x(w_{3,1})-q_*\bigr)\\
+&-\frac1{10}\sum_x\pi_x(u_x-a)(b-u_x).
+\end{aligned}
+\tag{3.2}
+$$
+
+Here $v$ is arbitrary in $[a,b]^Y$. In particular (2.4) implies
+
+$$
+\pi[(u-a)(b-u)]\le520\epsilon.
+\tag{3.3}
+$$
+
+Proof. Partition the positive p support by its emission value $c$. If $B_{xy}>0$ and $A_{yx'}>0$, return conservation gives $u_{x'}=u_x$. Every positive-row suspended label therefore has all its incoming and outgoing p labels in the same class. Both kernels preserve these classes; their p and suspended row masses agree. Condition the rows on one class and write $U=1-c$.
+
+Let $Y_0,Y_1,\ldots$ be the stationary analysis chain with conditional row $\tau$ and actual unweighted kernel $AB$. Write $V_i=v_{Y_i}$ and
+
+$$
+N_j=\mathbb E\prod_{i=0}^{j-1}V_i,\qquad N_0=1.
+$$
+
+Expanding (2.3), on this same acquired circulation, gives
+
+$$
+\overline Q_c(w_{j,0})=cU^jN_j,\qquad
+\overline Q_c(w_{j,1})=U^{j+1}(N_j-N_{j+1}),
+\tag{3.4}
+$$
+
+$$
+\overline W_c(E_\beta)=1-cN_1-UN_2.
+\tag{3.5}
+$$
+
+Indeed a synthetic return uses $UB\operatorname{diag}(v)A$, whereas the stationary analysis uses $AB$ at suspension and $BA$ at p. No weighted return is replaced by a normalized actual kernel. The index $i$ is an analysis index, not a runtime clock.
+
+Put
+
+$$
+P_c=U(1-N_1)+U^2(N_1-N_2)+U^3(N_2-N_3),
+\quad H_c=1-cN_1-UN_2,
+$$
+
+$$
+T_c=U^3(N_2-N_3),\qquad Z_c=U^4(N_3-N_4).
+$$
+
+We prove the following joint bound for every such stationary process:
+
+$$
+P_c-\chi H_c-\zeta_0
+\le106(b-c)(T_c-T_a)+365(c-a)(Z_c-q_*)
+   -\frac{(c-a)(b-c)}{10}.
+\tag{3.6}
+$$
+
+Conditionally on the stationary $Y$ path, independently round each $V_i$ to $a$ or $b$, with probability $(V_i-a)/(b-a)$ of $b$. Each conditional rounded mean is $V_i$. Products at distinct time positions therefore retain every $N_j$, $j\le4$. The rounded binary process is stationary. This is a proof coupling of finite moments, not a change to any decoder, configuration risk or runtime operation.
+
+Its four-bit probabilities form a nonnegative unit circulation on the binary overlap graph: vertices are triples, and $z_0z_1z_2z_3$ is the edge from $z_0z_1z_2$ to $z_1z_2z_3$. Prefix and suffix triple masses agree by stationarity. Any finite nonnegative circulation decomposes into directed simple cycles: follow positive edges until a vertex repeats, subtract the smallest edge mass on the resulting cycle, and repeat. Balance survives and at least one positive edge disappears at each subtraction. Dividing each cycle's total edge mass by the original unit mass gives convex weights summing to one. Thus it suffices to prove (3.6) on every simple cycle of this eight-vertex, sixteen-edge graph.
+
+Here is a complete exact certificate. Write $L=3/5$, $H=2/3$, $U(t)=L+t/15$, $0\le t\le1$. For a cyclic binary word $s$ of length $\ell$, put $v_i=a$ for bit zero and $b$ for bit one, with cyclic indices, and
+
+$$
+n_j(s)=\frac1\ell\sum_{i=0}^{\ell-1}\prod_{h=0}^{j-1}v_{i+h}.
+$$
+
+Use these four moments in $P_c,H_c,T_c,Z_c$, and define the polynomial
+
+$$
+\begin{aligned}
+R_s(t)={}&P_c-\chi H_c-\zeta_0
+ -106(U-L)(T_c-T_a)-365(H-U)(Z_c-q_*)\\
+&+(U-L)(H-U)/10,\qquad c=1-U(t).
+\end{aligned}
+\tag{3.7}
+$$
+
+Its degree is at most five. If $R_s(t)=\sum_{j=0}^5 d_jt^j$, its degree-twelve Bernstein coefficients are
+
+$$
+\beta_i(s)=\sum_{j=0}^{\min(i,5)}d_j
+             \frac{\binom{i}{j}}{\binom{12}{j}},\qquad 0\le i\le12.
+\tag{3.8}
+$$
+
+Consequently $R_s(t)=\sum_i\beta_i(s)\binom{12}{i}t^i(1-t)^{12-i}$. This identity follows by expanding $(t+(1-t))^{12-j}$ in each monomial. Each basis polynomial is nonnegative.
+
+All directed simple cycles, up to rotation, are the words in the table. Words grouped in a row have identical four moments. The column $m$ states that every nonzero $\beta_i$ is at most $-m/10^9$; the zero column lists every zero coefficient. Substituting the displayed rational moments in (3.7)–(3.8) gives these rational inequalities by integer multiplication.
+
+| Cyclic words | $n_1$ | $n_2$ | $n_3$ | $n_4$ | Zero indices | $m$ |
+| --- | ---: | ---: | ---: | ---: | --- | ---: |
+| $0$ | $1/3$ | $1/9$ | $1/27$ | $1/81$ | $12$ | $73680$ |
+| $0001$ | $7/20$ | $11/90$ | $23/540$ | $2/135$ | none | $681704$ |
+| $0001011,0001101$ | $38/105$ | $206/1575$ | $223/4725$ | $134/7875$ | none | $869821$ |
+| $00010111,00011101$ | $11/30$ | $121/900$ | $1331/27000$ | $9/500$ | none | $771811$ |
+| $00011$ | $9/25$ | $146/1125$ | $157/3375$ | $56/3375$ | none | $1159118$ |
+| $000111$ | $11/30$ | $91/675$ | $1001/20250$ | $182/10125$ | none | $1016286$ |
+| $001$ | $16/45$ | $17/135$ | $2/45$ | $32/2025$ | none | $561249$ |
+| $001011,001101$ | $11/30$ | $181/1350$ | $11/225$ | $181/10125$ | none | $712008$ |
+| $0010111,0011101$ | $13/35$ | $31/225$ | $134/2625$ | $446/23625$ | none | $882070$ |
+| $0011$ | $11/30$ | $121/900$ | $11/225$ | $4/225$ | none | $935808$ |
+| $00111$ | $28/75$ | $157/1125$ | $292/5625$ | $12/625$ | none | $1188992$ |
+| $01$ | $11/30$ | $2/15$ | $11/225$ | $4/225$ | none | $38387$ |
+| $011$ | $17/45$ | $32/225$ | $4/75$ | $68/3375$ | none | $176847$ |
+| $0111$ | $23/60$ | $11/75$ | $7/125$ | $8/375$ | none | $685092$ |
+| $1$ | $2/5$ | $4/25$ | $8/125$ | $16/625$ | $0$ | $70688$ |
+
+For completeness, cycle enumeration can be performed directly on triples $0,\ldots,7$: the successors of $x$ are $2x\bmod8$ and $(2x+1)\bmod8$. Start each cycle at its least vertex and forbid repeated vertices before returning to it. The resulting vertex lists are
+
+$$
+\begin{gathered}
+(0),\ (0124),\ (0125364),\ (01253764),\ (01364),\
+(0136524),\ (013764),\ (01376524),\ (124),\
+(125364),\ (1253764),\ (1364),\ (136524),\
+(13764),\ (1376524),\ (25),\ (365),\ (3765),\ (7).
+\end{gathered}
+$$
+
+Their leading triple bits give exactly the listed nineteen cyclic words. This finite graph classification concerns the moment circulation, not the number of observer states. Every coefficient in (3.8) is nonpositive, so $R_s(t)\le0$ on the entire interval. Convex cycle decomposition and the rounding equality prove (3.6) for every original stationary $V$ process.
+
+Multiply (3.6) by each class mass and sum. Equations (3.4)–(3.5) give exactly (3.2). By (2.5), its left side has absolute value at most $\epsilon_p+\chi\epsilon_\beta$. On $[a,b]$, the two nonnegative weights in (3.2) are bounded by $106/15$ and $365/15=73/3$. Equation (2.6), applied to the two selected upper-coordinate violations together, bounds their weighted positive parts by $(146/3)\epsilon_p$. Thus
+
+$$
+\frac1{10}\pi[(u-a)(b-u)]
+\le\frac{149}{3}\epsilon_p+\chi\epsilon_\beta
+<52\epsilon
+$$
+
+when $\epsilon>0$; the non-strict bound at zero follows directly. This proves (3.3). $\square$
+

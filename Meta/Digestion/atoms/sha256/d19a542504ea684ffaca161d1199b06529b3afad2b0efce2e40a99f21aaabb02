@@ -1,0 +1,17 @@
+**Lemma 2.5 (Exact conditional square discrepancy).** If $P,Q$ are two permitted finite visible-order laws, then
+
+$$
+\mathbb E_P\ell_Q
+=d(P)+\mathbb E_P[(p_P-p_Q)^2].
+\tag{2.10}
+$$
+
+**Proof.** The functions $p_P,p_Q$ are defined on every legal exterior, so the second is meaningful under $P$ as well. Expand
+
+$$
+(X_0-p_Q)^2=(X_0-p_P)^2
++2(X_0-p_P)(p_P-p_Q)+(p_P-p_Q)^2.
+$$
+
+The cross term has zero conditional expectation given the exterior under $P$, by Proposition 2.2. Lemma 2.4 identifies the first expectation with $d(P)$. In a forced-zero exterior both posteriors are zero. This is the scalar binary squared-loss identity, with its exact conditional hypotheses, rather than a log-loss or entropy formula. $\square$
+

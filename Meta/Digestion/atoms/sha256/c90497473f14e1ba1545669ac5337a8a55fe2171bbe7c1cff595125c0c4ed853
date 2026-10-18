@@ -1,0 +1,25 @@
+**Definition 1.2 (Calibrated experiment with a recorded site).** Choose
+$i$ independently of the signal with probability $\omega_i\ge0$,
+$\sum_i\omega_i=1$, and retain both $i$ and the complete output word.
+Use the same-phase reference, basis phase $\alpha=\pi/2$ and pulse of
+Parent/Readout Theorem 8.11. Equivalently, the Hamiltonian convention of (8.6) has
+$\beta=-\pi$ and pulse duration $\tau=\pi/4$. The signal family is
+
+$$
+|\psi_\theta\rangle
+=\sum_u\sqrt{p_u}e^{-i\theta f_u}|u\rangle,\qquad f:B_n\to\mathbb R.
+\tag{1.3}
+$$
+
+The unknown signal $\theta$ and the supplied pulse duration $\tau$ are
+different parameters. Write $J_\omega[f]$ for the classical Fisher
+information at $\theta=0$, and write $\mathcal Q_p[f]$ for the pure-state
+quantum Fisher information of (1.3). Set
+
+$$
+\mathcal E_i(f,f)=
+\sum_{\substack{\{u,v\}\in E(\Gamma_n)\\u,v\text{ differ at }i}}
+\frac{p_up_v}{p_u+p_v}(f_u-f_v)^2.
+\tag{1.4}
+$$
+

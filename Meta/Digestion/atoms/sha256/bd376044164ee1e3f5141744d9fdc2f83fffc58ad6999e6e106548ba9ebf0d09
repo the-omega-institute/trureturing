@@ -1,0 +1,91 @@
+**Theorem 5.2 (equal-clock $2^r$ fiber and attained complement).** For each
+fixed $d,r$ and either cut family in Definition 5.1, there are exactly
+$2^r$ actual histories, one for each $x\in\{L,R\}^r$. They have the same
+current labelled source, ordered support, leaf frontier, actual epoch,
+absolute primitive ordinal, completed semantic word, sealed producer and
+receiver prefixes, pending event $P=\varepsilon$, prior completed-command
+histogram/rank, phase, marked-head locations, references and token layout.
+Their task relation is exactly
+
+$$
+h_{d,r,x}\sim_Q h_{d,r,y}\quad\Longleftrightarrow\quad x=y.
+\tag{AIF.8}
+$$
+
+Thus, conditional on these common coordinates, any sufficient supplement
+must have at least $2^r$ values and needs at least $r$ fixed-width bits.
+The acquired prefix $x$ attains that width. At a latch cut, its attaining
+representation is the $r-1$ written letters and the occupied input bit.
+
+Proof. The two warm-ups in AIF.7 are actual accepted modifications, and the
+producer acquisition leaves the source unchanged. Setup depends on the
+common tag and $d$ only. Definition 3.1 has a bit-independent five-row
+control graph. By induction, every choice word $x$ is supplied by the
+same accessible actor at those actual IN ports. The fixed TagRead header
+admits all $d$-bit address words, so both bits are in the task-input domain
+at every payload IN in these families. Equal $d,r$ give the same
+native states, head locations, allocated intervals, test values and receipt
+pattern. Only the consumed payload values differ. Theorem 3.3 gives the
+same full ordinal $n_0+5r$ or $n_0+5r-3$, respectively.
+
+No TagRead response has committed at either cut, including the body cut
+with $r=d$: its final length test and service are still ahead. Ingress has
+not modified the source. Consequently its new request has added nothing
+to $E$, $A_P$ or $P$; old complete-order data and all prior copied rows
+remain common. The busy request belongs to $B$. Prior source-call,
+modification and semantic-event counts are also common. This proves the
+fiber and all the claimed equalities.
+
+For separation, use one common continuation: supply L at every remaining
+address position, finish the prescribed routine through its actual row
+seal and delivery acknowledgement, and fetch the row of this request
+from its authentic complete prefix. Every such completion is a canonical
+TagRead frame, so this experiment is in the task domain at every member
+of the fiber. At a latch cut this first executes the prescribed WR; it
+does not resupply the bit already acquired. The
+submitted address is
+
+$$
+p_x=xL^{d-r}.
+\tag{AIF.9}
+$$
+
+All such words have length $d\ge2$. The root of $t_*$ has two leaf
+children, so every one returns the same literal response `absent`. The
+source remains $t_*$ throughout. Nevertheless the returned row's complete
+request field is exactly $p_x$. For $x\ne y$ these fields differ. There is
+no hypothetical public read of a private latch or request buffer.
+
+The lookup uses the delivered row's actual reference, or its index obtained
+from the common preceding row ordinal by the paid counter routine. Its
+complete-prefix descriptor and ownership token are those produced by the
+completed delivery. Constructing and supplying these lookup arguments is
+part of the experiment's paid work. The varying $p_x$ is a returned request
+field, not a source-dependent choice of Fetch argument.
+
+Each continuation terminates by the supplied finite service and row-access
+theorems. A finite adaptive experiment can Advance while the publicly
+indicated service is unfinished and then Fetch when its token is available.
+For fixed $d,r$ there are finitely many $x$, so the maximum of these finite
+run lengths and Fetch lengths gives a finite decision-tree bound common
+to the family. Different intermediate labels, times or running/terminal
+types would already separate the task; equality of later service clocks
+is not needed. The eventual request field gives separation even when all
+those earlier differences are suppressed.
+
+Conversely, if $x=y$, the scaffold and every consumed input bit agree.
+Induction through the explicit setup and loop gives the same full actual
+prefix and endpoint, including old cells, latches and receipts. Every
+future experiment tree therefore has the same domain membership at these
+identical endpoints. On that domain it has the same legality, labels,
+outputs and whole successors by deterministic evaluation with its same
+future supplied bits. This proves the other direction of AIF.8.
+
+If a sufficient supplement merged two different prefixes, the equal common
+side data and that supplement would have to determine the same response
+to their separating experiment, a contradiction. Hence it has at least
+$2^r$ values. A width-$b$ binary alphabet has at most $2^b$ values, so
+$b\ge r$. Keeping $x$ supplies exactly $2^r$ values and, by the preceding
+equal-prefix reconstruction, all task responses. It therefore attains the
+conditional bound. ∎
+

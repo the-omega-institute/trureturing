@@ -1,0 +1,53 @@
+**Lemma 3.1 (Power sums, normalization, and moments).** There is a source-only
+neighborhood $(0,s_1)$ and positive constants $z_-,z_+,G,C_\mu,C_\beta$ such that,
+for $0<s<s_1$,
+
+$$
+ z_-s^{-2r}\le Z_0(s)\le z_+s^{-2r},
+ \qquad 0<g(s):=\frac{R_{r-1}(s)}{R_{2r-1}(s)}\le Gs^r,
+$$
+
+and $\mu_i\le C_\mu/s$, $1+\beta_i\le C_\beta/s$ for both sources. The exact
+normalized likelihood ratio is
+
+$$
+\frac{f_1(k)}{f_0(k)}=\frac{1+ck^{-r}}{1+cg(s)},
+\qquad
+g(s)=\sum_{k\ge1}f_0(k)k^{-r}.
+$$
+
+**Proof.** The geometric identity $R_0(s)=(e^s-1)^{-1}$ can be written
+$e^s-1=sE(s)$ with $E$ analytic and $E(0)=1$. Thus $R_0(s)-1/s$ extends analytically
+through zero. Termwise differentiation on compact positive intervals gives
+
+$$
+R_m(s)=(-\mathrm d/\mathrm ds)^mR_0(s)=m!s^{-(m+1)}+O(1).
+$$
+
+Only finitely many orders are needed. Hence
+$Z_0=R_{2r-1}$ and $Z_1=R_{2r-1}+cR_{r-1}$ have the displayed bounds, while
+$g(s)=((r-1)!/(2r-1)!)s^r(1+O(s))$. Since
+$Z_1=Z_0(1+cg)$, division of the two exact source masses gives the likelihood ratio.
+
+The numerator of $\mu_i$ is
+
+$$
+R_{2r}+R_{2r-1}+ic(R_r+R_{r-1}),
+$$
+
+and the numerator of $2\beta_i$ times that same numerator is
+
+$$
+R_{2r+1}+R_{2r}+ic(R_{r+1}+R_r).
+$$
+
+Their leading terms give
+$\mu_i=2r/s+O(1)$ and $\beta_i=(2r+1)/(2s)+O(1)$. The perturbation terms are at
+least one degree lower even when $r=1$. Shrinking one common neighborhood and enlarging
+constants proves the bounds. $\square$
+
+The cap constant $\eta$ will be chosen only after the occupation constants in Section 5
+have been displayed. It is chosen once from the fixed source parameters, before any
+$s$ or $J$ is selected. The source-only interval from Lemma 3.1 is then shrunk once to
+a fixed interval $0<s<s_0$.
+

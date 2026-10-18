@@ -1,0 +1,20 @@
+**定义 1.1（非空有序来源与原生替换）。** 来源集合 $\mathcal T$ 由有限语法
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle
+$$
+
+生成。左右次序、每层括号和两种叶标签都属于来源身份；不施加交换律、结合律，也没有空树。固定
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+记实际叶数组成为 $\nu(t)=(m,n)\in\mathbb N^2$，满足 $m+n\ge1$，两个叶的组成为 $(1,0),(0,1)$，节点组成相加。复用 [Atomic §3](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的
+
+$$
+\nu(\rho t)=M\nu(t),\qquad M(m,n)=(n,m+n),\qquad M^2=M+I.
+$$
+

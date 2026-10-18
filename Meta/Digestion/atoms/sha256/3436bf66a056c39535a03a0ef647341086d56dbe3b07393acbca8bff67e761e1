@@ -1,0 +1,81 @@
+**Theorem 8.1 (finite repeated-excursion optimum).** Take
+
+$$
+c=\frac3{10},\quad Z=\frac25,\quad r=\frac35,\qquad
+k_H=\frac14,\quad k_L=\frac18.
+\tag{PR.26}
+$$
+
+For each integer $n\geq0$, perform $n$ prescribed horizontal excursions
+$k_H\to k_L\to k_H$, requiring the exact target after every one of the
+$2n$ legs, on every initial $\beta\in\mathbb R$ and signed $m\in\mathbb Z$.
+Under the complete retained-token contract with initial overlap $\mu$,
+the sharp common and worst-parity probability of all checkpoints succeeding
+is
+
+$$
+P_n^*(\mu)=1-\mu+\mu\,7^{-n}.
+\tag{PR.27}
+$$
+
+The optimum has complete retained quantum memory at every success and
+absorbing retained failure. It is a finite-cut assisted instrument result,
+not equality with the canonical exact-time/mode instrument.
+
+Proof. Here $D_H=2/5$, $D_L=-1/10$. Proposition 7.3 permits equal
+survivor probabilities $q_j$. Set $A=1-\mu$. The first overlap-difference
+constraint in (PR.25), telescoped from $h_0=\mu$, gives
+
+$$
+\operatorname{Re}h_j\geq\mu-(1-q_j)=q_j-A.
+\tag{PR.28}
+$$
+
+If $q_{2n}\leq A$, the claimed upper bound is immediate. Otherwise let
+$e_j=q_j-A>0$ for every cut. Consecutive $D$ values have opposite signs.
+The modulus of their difference is at least the appropriately signed real
+part, and (PR.28) therefore implies
+
+$$
+r(e_{j-1}-e_j)
+ \geq |D_{k_{j-1}}|e_{j-1}+|D_{k_j}|e_j.
+\tag{PR.29}
+$$
+
+Consequently
+
+$$
+e_j\leq
+ \frac{r-|D_{k_{j-1}}|}{r+|D_{k_j}|}\,e_{j-1}.
+\tag{PR.30}
+$$
+
+The outbound factor is $2/7$ and the return factor is $1/2$. Since
+$e_0=\mu$, their product yields
+$q_{2n}\leq A+\mu7^{-n}$, including complex survivor overlaps through
+their real parts. For $n=0$ the bound is the identity value one.
+
+For attainment define
+
+$$
+S_{2a}=7^{-a},\qquad S_{2a+1}=\frac27\,7^{-a},\qquad
+q_j=A+\mu S_j,\qquad h_j=\mu S_j.
+\tag{PR.31}
+$$
+
+Then $0\leq h_j\leq q_j$, and
+$q_{j-1}-q_j=h_{j-1}-h_j$. Also the choice of the two factors gives
+
+$$
+r(q_{j-1}-q_j)
+ =|D_{k_{j-1}}|h_{j-1}+|D_{k_j}|h_j.
+\tag{PR.32}
+$$
+
+All constraints in (PR.25) hold. Theorem 7.2 constructs the complete
+sequence of actual contractions and their retained failure residues.
+At a nonzero survivor cut the normalized token overlap is $h_j/q_j$;
+the token itself remains a quantum system. The controller advances using
+the actually obtained success flag, retained token and public cut index.
+It uses no classical $\beta$, winding or parity input. $\square$
+

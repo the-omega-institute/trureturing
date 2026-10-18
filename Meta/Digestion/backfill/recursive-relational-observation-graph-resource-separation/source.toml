@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-graph-resource-separation"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_GRAPH_RESOURCE_SEPARATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,61 @@
+**Theorem 9.1 (sharp direct-cycle norm bound).** For every $d\ge2$
+and every even $N\ge4$, optimizing over all the tables and vertex
+measures of Definition 7.3 gives
+
+$$
+\boxed{\displaystyle
+\inf_{\Psi,\tau}U(\Psi,\tau)=\frac{82^{N/4}}{B^N}.}
+\tag{GCB.27}
+$$
+
+The infimum is attained by $\Psi_i=\Phi$ and counting vertex
+measures. In particular the optimum includes arbitrary positive real
+global compensations, not only independently normalized edge tables.
+
+Proof. The constants $c_i$ in (GCB.22) cancel from the product of
+norms by positive homogeneity. Put $h_i(a)=\ln g_i(a)$ and consider
+the finite real-valued function
+
+$$
+F(h)=\sum_i\ln\left\|
+ \Phi(a,b)\exp\bigl(h_i(a)-h_{i-1}(b)\bigr)
+                         \right\|_{K_{2,2}}.
+\tag{GCB.28}
+$$
+
+Each summand is one quarter of a log-sum-exp of affine functions of
+all entries of $h$. The exponent in its $(a,a',b,b')$ term is
+$2[h_i(a)+h_i(a')-h_{i-1}(b)-h_{i-1}(b')]$, with a positive
+coefficient made from four entries of $\Phi$. Log-sum-exp is convex:
+its Hessian is the covariance matrix of the affine coefficient vectors
+under their normalized positive exponential weights. Hence $F$ is
+convex on the whole finite-dimensional space.
+
+Let $h_i^{\rm flip}(a)=h_i(1-a)$. Since
+$\Phi(1-a,1-b)=\Phi(a,b)$, reindexing the four summation bits at
+every edge gives $F(h^{\rm flip})=F(h)$. Convexity therefore gives
+
+$$
+F(h)\ge F\bigl((h+h^{\rm flip})/2\bigr)=F(0).
+\tag{GCB.29}
+$$
+
+For the last equality, the midpoint has the constant value
+$k_i=(h_i(0)+h_i(1))/2$ at vertex $i$. Its edge table is
+$\exp(k_i-k_{i-1})\Phi$; those scalar multipliers telescope in
+the product of homogeneous norms. Zero vertex functions are feasible,
+so this proves both optimization inequalities without presuming that
+an arbitrary minimizing sequence converges.
+
+Finally, directly from (GCB.20) with counting measures,
+
+$$
+\|\Phi\|_{K_{2,2}}^4
+=B^{-4}\operatorname{tr}\bigl((MM^{\mathsf T})^2\bigr)
+=\frac{3^4+1}{B^4}=\frac{82}{B^4}.
+\tag{GCB.30}
+$$
+
+Multiplying the $N$ identical optimal norms proves (GCB.27).
+$\square$
+

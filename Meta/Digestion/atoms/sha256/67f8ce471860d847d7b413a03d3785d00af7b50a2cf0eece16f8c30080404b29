@@ -1,0 +1,58 @@
+**候签定理 50.3（同源几何与深度的构造闭合）。** 记实际树的组成为 $c(t)=(u(t),v(t))$，按列向量使用原子卷定理3.4的矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+c(\rho t)=Mc(t).
+$$
+
+由于 $\det M=-1$，整数环境中的 $M^{-n}$ 对每个 $n\ge0$ 有定义。在实际来源上有
+
+$$
+e(t)=1\quad\Longleftrightarrow\quad
+M^{-\nu(t)}\binom{u(t)}{v(t)}=\binom10.
+\tag{JM.142}
+$$
+
+特别地，若 $n=\nu(t)$，判据为
+
+$$
+\begin{cases}
+(u,v)=(1,0),&n=0,\\
+(u,v)=(F_{n-1},F_n),&n\ge1,
+\end{cases}
+\tag{JM.143}
+$$
+
+其中 $F_0=0,F_1=1$，递推同命题37.4。
+令
+
+$$
+\mathcal R=\{(G(t),\nu(t)):t\in\mathcal T\}\subseteq\mathbb Z^5\times\mathbb N_0,
+$$
+
+并在该实际像上用（JM.142）定义 $\varepsilon(g,n)$。$g$ 的前两坐标就是同一来源的 $u,v$。
+令 $B((a,e),(b,f))$ 表示（JM.136）的分段右端；以 $g\odot h$ 记约定2.1已经供应的五量有序拼接。则代表无关的构造为
+
+$$
+\begin{aligned}
+\overline\rho(g,n)&=(Lg,n+1),\\
+\overline{\operatorname{Pair}}((g,a),(h,b))
+&=\bigl(g\odot h,\,\pi_1 B((a,\varepsilon(g,a)),(b,\varepsilon(h,b)))\bigr).
+\end{aligned}
+\tag{JM.144}
+$$
+
+两式分别映射 $\mathcal R\to\mathcal R$、$\mathcal R\times\mathcal R\to\mathcal R$，并与实际 $\rho$、配对交换。
+
+证明。将唯一分解代入组成运输，得到
+
+$$
+c(t)=M^{\nu(t)}c(p(t)),\qquad
+M^{-\nu(t)}c(t)=c(p(t)).
+$$
+
+一个实际非空树组成 $(1,0)$ 当且仅当它是唯一的单叶 $\alpha$：该组成规定总叶数为一，而每个配对至少有两叶。因此逆组成等于 $(1,0)$ 恰当 $p(t)=\alpha$，证明（JM.142）。Fibonacci 矩阵递推给（JM.143），包括 $n=1$ 的单叶 $\beta$，不省去同叶数的第一次替换。
+
+若两个代表有相同 $(g,n)$，它们由（JM.142）有同一个标志，从而有相同 $Q$。对两组实际代表使用定理49.2，便得到（JM.144）的深度；约定2.1及复用38.2分别给对应的几何坐标。取任意实际代表构造所得树，本身就是右端属于 $\mathcal R$ 的见证；同摘要的其他代表给相同右端，故运算良定。
+这里只对实际像断言闭合；任意整数五量与任意非负深度的自由配对不获得来源资格，整数逆矩阵也不供应原树前像。所用拼接与运输是原结果，新连接是用真实原始端点的单叶刚性恢复标志，再将（JM.136）下降到同源几何细化。$\square$
+

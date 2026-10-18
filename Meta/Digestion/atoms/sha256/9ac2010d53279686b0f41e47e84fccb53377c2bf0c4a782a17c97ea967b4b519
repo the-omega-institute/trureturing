@@ -1,0 +1,122 @@
+**Theorem 14.1 (complete decision on $\mathfrak S$).** Under Assumption
+1.3, suppose the complete input is in $\mathfrak S$. On each nonempty
+cell with variables, construct the automaton of Proposition 12.1 and
+compute its $F_\eta\cap Z_{\eta,\infty}$. The following are equivalent:
+
+1. Every one of those intersections is empty.
+2. There exists one finite original depth $H$ satisfying
+   $\operatorname{PrefDet}(U,Q,H)$ on the entire $U$.
+3. At the certified $N$, a deterministic effective source-total static
+   service outputs the entire original $R_Q$ with a uniform finite
+   new-read budget.
+4. Such a service exists allowing paid real serial $\mathsf{ApplyRho}$
+   on the same register.
+
+The first condition is decidable. On a yes answer the procedure computes
+$H$ and a legal static consumer. On a no answer it computes, for any
+requested original depth $h$, two finite sources in the entire retained
+fiber agreeing through depth $h$ and having different complete original
+rows. No minimum-budget or uniform local-work bound is asserted.
+
+Proof. All pattern lists and comparison tests are finite. Lemma 11.2
+supplies exact feasibility and finite automata, and Theorem 13.1 supplies
+a terminating test on each. Thus condition 1 is effective. Nonempty $U$
+guarantees at least one nonempty cell; zero-variable cells always pass.
+
+Suppose condition 1 holds. For each cell with variables choose a computed
+$j_\eta\ge0$ with $F_\eta\cap Z_{\eta,j_\eta}=\varnothing$; choose
+$j_\eta=0$ for a ground cell. Let $a_b$ be the original representative
+of old class $b$ and put
+
+$$
+A=d+\max\bigl(\{0\}\cup\{|a_b|:b\in\mathcal B\}\bigr),
+\qquad H=A+\max_\eta j_\eta.
+\tag{ARH.14.1}
+$$
+
+This is a deliberately sufficient bound. If two sources in $U$ agree
+at all original addresses of length at most $H$, their old class replies
+at $a_bs$, $|s|<d$, give the same pattern tuple $\eta$. Every residual
+variable has an original representative occurrence $a_bs_x$, $|s_x|=d$,
+of length at most $A$. The two sources therefore agree on that variable's
+replies at all relative lengths $<j_\eta$. Theorem 13.1 excludes
+$\mathsf{Bad}_\eta$ for these two feasible tuples. Proposition 12.1
+says that their **entire** rows coincide. This proves condition 2 across
+all cells, not just separately inside a selected cell. Different cells
+are distinguished by the same bounded original prefix.
+
+If condition 1 fails, choose its failing nonempty cell. For any $h\ge0$,
+use Theorem 13.1 with $j=h+1$ to construct two finite feasible tuples
+$v,w$ agreeing at every relative address of length at most $h$ but
+satisfying $\mathsf{Bad}_\eta$. Filling the fixed $W_\eta$ preserves
+agreement through original depth $h$: an address either remains in its
+fixed constructors or enters a variable at some nonnegative prefix
+length and uses a relative suffix no longer than $h$. This includes
+absence below leaves. Proposition 10.3 places both filled sources in
+the entire actual $U$, and Proposition 12.1 gives their different full
+rows. They disprove condition 2 at that $h$. Witness extraction is a
+finite recursion of prescribed depth from stored productive completions;
+it is an algorithm on finite objects for each requested $h$.
+
+For $2\Rightarrow3$, use the already supplied decoder [SLH, Theorem
+2.2][SLH], exactly as in §2. At the actual static epoch $N$, acquire enough
+current raw replies to recover every original reply at $|s|\le H$.
+A sufficient uniform count and address-length bound are
+
+$$
+K=2(2^{H+1}-1),\qquad
+\max |p_{\rm physical}|\le H+\lceil N/2\rceil.
+\tag{ARH.14.2}
+$$
+
+Repeated physical calls may be made and paid; deduplication is optional.
+The finite recovered original prefix is a decoded mathematical value.
+The newly acquired raw evidence is only the actual $N$-epoch address/reply
+list, not invented epoch-zero acquisition events.
+
+Enumerate all finite original trees by size and encoding. For each,
+compute its old row, all stipulated literals, both endpoint guards and
+all complete signed comparisons, and test its agreement with the decoded
+prefix. These are decidable finite computations. The actual unknown
+source is one enumerated candidate satisfying all tests, so this local
+search terminates on every actual run. Compute the entire $R_Q$ of the
+first passing witness, including its concrete outside, reached original
+holes in order and full equality partition. Condition 2 proves this is
+the actual required row. The witness is used to compute a value already
+proved common to the conditioned fiber; it is not declared to be the
+actual source. An automaton witness after intersection with the decoded
+prefix gives another implementation, but is unnecessary for this consumer.
+
+The implication $3\Rightarrow4$ is service-class inclusion. For
+$4\Rightarrow2$, reuse the verified operational bridge (ARH.2.3), whose
+needed hypotheses do not concern the syntax of $D_\eta$. To make the
+interface explicit, a deterministic source-total $K$-read service has
+finitely many reachable four-valued reply prefixes. At each such prefix,
+its computation and real updates before its next read or output are
+fixed by common state and those replies, and are finite by source-totality.
+Therefore the addresses submitted anywhere in this finite reply tree
+have some finite maximum length $h$. The original-address locality
+(SLH.74.7) says that a physical reply at any epoch and address $p$ depends
+only on the original prefix through $|p|$. Equal original $h$-prefixes
+force identical serial replies, updates and output by induction along
+the service. Correctness gives condition 2. This uses no reset, reroot,
+clone, identity port or observable update timing; those are excluded by
+Assumption 1.3. It neither extracts $h$ from arbitrary code nor compares
+the minimum static and serial budgets.
+
+All computations described above terminate on their stated domains.
+The computed $H$ and sufficient raw bound are independent of the allowed
+$N$; decoder addresses depend on $N$. Historical acquisition, certification,
+entry, installation, automaton construction, finite-tree enumeration,
+address formation and lengths, working memory, retention, actual updates,
+archives and the complete output remain separately charged. The consumer
+makes no new update and no unknown-tree equality query. Outputting a new
+row does not remove any accessible history; a later cut needs its own
+complete-state correspondence. $\square$
+
+For a presentation outside $\mathfrak S$, the procedure returns
+$\mathsf{outside\ family}$ before applying this yes/no test. That result
+is neither a negative service decision nor an emptiness decision for
+arbitrary coupled morphic constraints. The unrestricted question in
+Definition 9.1 is preserved.
+

@@ -1,0 +1,17 @@
+**Convention 9.1 (source and evidence boundary).** Sections 9–14 use
+public repository suppliers at revision
+`17de5db8995ffd6391ab2b5dc3a2a6b5d3496b6b`. Their results below are
+ordinary mathematics, without new Lean certification. The source,
+substitution, four-reply literal port, paid complete handoff and
+source-independent request family are exactly Definitions 1.2–1.4.
+In particular, one actual initial source remains stationary; the
+expressions involving its substituted versions are predictions, not
+additional observations or updates of that source.
+
+Write $\Gamma_q=G_q$ for the credited factor in Convention 2.1.
+Its all-count decoder and the equivalence of factors and trajectories
+are reused from [AAR, Definition 12.2, Theorem 12.3 and Proposition
+13.3][CombAAR]. The canonical normalization and paid boundary scan
+below are reused from [FMR, Definition 2.1, Lemma 2.2 and Theorems
+2.3–2.5][CombFMR] and [RRN, §7][CombRRN].
+

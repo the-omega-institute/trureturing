@@ -1,0 +1,54 @@
+**Definition 1.2 (inherited families and one simultaneous cover).**
+Write $d(a,b)=a-b$. Reuse the complete families of [NARC, Definition
+14.1 and Theorem 15.2][NARC] by setting
+
+$$
+\mathcal F_{q,t}^{\lambda}=
+\begin{cases}
+\mathcal P_t^+,&q=19,\ \lambda=1,\\
+\mathcal P_t^0,&q=19,\ \lambda=0,\\
+\mathcal A_t^{\lambda},&q=18,
+\end{cases}
+\qquad 0\le t<q.
+\tag{NAGC.1.3}
+$$
+
+Throughout, a cover means one choice $C_t\in\mathcal F_{q,t}^{\lambda}$
+for each $t$, with pairwise disjoint classes and union $\Omega_q$.
+Each class has its unique diagonal anchor $(t,t)$ and $d$ is
+injective on it. The label $t$ is just the inherited bijective
+relabeling by this anchor. [NARC, Theorems 14.2 and 15.2][NARC]
+already identify these covers with the respective unrestricted
+two-read encoder problems. On the empty cut, the two normalized acquired
+current clocks give $d$; its injectivity in the known class fixes the original
+and lag without fresh Reads, as in [NARC §§5, 9 and 12][NARC].
+
+At nineteen labels every class has nineteen points. Its increasing-$d$
+list has six consecutive pure triples, three $AAA$ and three $BBB$,
+where $A$ increases $a$ and $B$ decreases $b$. Every middle edge is
+unit. All twenty macro words, all initial points and all positive
+integer outer lengths are permitted, subject only to square membership
+and the specified anchor.
+The nonnegative family imposes precisely [NARC, Theorem 13.4][NARC]'s
+additional exclusion of an initial point with $a=0$ followed by a
+unit first $B$ edge. These are inherited local results.
+
+At eighteen labels the family retains every nonempty $d$-injective
+class passing both full origin-indexed $D_2$ reference tests of
+[NARC, Theorem 10.2][NARC]. For $\lambda=0$ it also retains the
+requirement $D_2$ on every complete state
+
+$$
+\bigl((z+a-b,b)\bigr)_{(a,b)\in C,\ b\le z}
+\quad\text{whenever }(0,z)\in C,\quad 0\le z<18.
+\tag{NAGC.1.4}
+$$
+
+The two axis-monotone defect-one cases still require their nine-run
+target tests. Fused classes can change both coordinates, revisit a
+coordinate value and fail axis monotonicity. Saturated classes and
+all higher-defect mixtures remain admitted by the same exact tests.
+The saturated first-step exclusion is not substituted for (NAGC.1.4).
+No anchor belt or monotone-deletion restriction is imposed; [NARC,
+Propositions 15.3 and 15.4][NARC] rule out those local transfers.
+

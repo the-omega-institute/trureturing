@@ -1,0 +1,29 @@
+**Definition 14.1 (the loss and actual sections).** For one law $P$
+on a realizable owned-seed network, let $O_v$ be its whole owned
+tuple and $B_{v,1},\ldots,B_{v,k_v}$ its incoming groups partitioned
+by their actual outside owner, exactly as in COK Definition 2.1.
+Write
+
+$$
+\begin{aligned}
+\gamma_k(J)&=\frac{|J|!(k-|J|)!}{(k+1)!},\\
+\mathcal L(P)&=\sum_v\sum_{J\subseteq[k_v]}
+ \gamma_{k_v}(J)H_P(O_v\mid B_{v,J}),\\
+\Delta(P)&=\mathcal L(P)-H_P(s).
+\end{aligned}
+\tag{GDB.62}
+$$
+
+All entropies use base two and the same joint law. Averaging the
+entropy chain rule over block permutations proves $\Delta(P)\ge0$.
+For the actual Gibbs law this is exactly COK's chain loss, not its
+additional kernel-divergence or pointwise-slack losses.
+
+When actual owner replies $s_P=a$ are pinned, replace all their
+occurrences by their constants, delete those seed variables and their
+owner declarations, and keep every original block and its conditioned
+whole-block potential. This is precisely the same-coordinate section
+of [SIR, Theorem 3.1][ParitySIR]. Compute (GDB.62) with the remaining
+owned tuples and remaining incoming groups. Empty tuples have entropy
+zero; no block or weight is dropped.
+

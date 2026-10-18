@@ -1,0 +1,68 @@
+**既有结果 4.5（V 的任意基数同父粘合与精细消费者）。** 固定同一个 $y\in\mathcal I$、$Y=D_0+\lambda y$ 及 (4.7) 的 $\mathcal A_y$。记
+
+$$
+\begin{gathered}
+\mathcal P_Y=\mathcal F(H_p(Y)),\qquad
+\mathcal F_Y^E(\zeta)=\mathcal F((H_p(Y),E,\zeta)),\\
+H_{M0}=(H_p(Y),M,D_0),\qquad
+\beta_Y=D_0+\lambda(48/5-y)=2D_0+48\lambda/5-Y.
+\end{gathered}                                                    \tag{4.9}
+$$
+
+下标 $M0$ 的零指归一化第五响应；其实际读数是 $D_0$。对任意实 $\zeta$ 和任意基数的
+
+$$
+\mathcal B\subseteq\mathcal F_Y^M(\zeta),\qquad
+L_2(\mathcal B,(H_p(Y),M,\zeta)),
+$$
+
+固定世界族 $\mathcal U=\mathcal A_y\cup\mathcal B$ 满足
+
+$$
+L_3(\mathcal U,H_p(Y)).                                      \tag{4.10}
+$$
+
+更一般地，对每个 $\mathcal A_y\subseteq K\subseteq\mathcal P_Y$，有完整条件等价
+
+$$
+\begin{aligned}
+L_3(K,H_p(Y))\quad\Longleftrightarrow\quad
+\exists\zeta\in\mathbb R:\ 
+L_2(K\cap\mathcal F_Y^M(\zeta),(H_p(Y),M,\zeta)).
+\end{aligned}                                                    \tag{4.11}
+$$
+
+特别地可取 $K=\mathcal P_Y$。在实际第五响应 $D_0$ 子纤维内，对每个
+$\mathcal A_y\subseteq K_0\subseteq\mathcal F_Y^M(D_0)$，又有
+
+$$
+\begin{aligned}
+L_2(K_0,H_{M0})\quad\Longleftrightarrow\quad
+\exists v\in\mathbb R:\
+L_1(K_0\cap\mathcal F((H_{M0},M,v)),(H_{M0},M,v)).
+\end{aligned}                                                    \tag{4.12}
+$$
+
+于是任意实 $v$ 与任意基数的族
+
+$$
+\mathcal T\subseteq\mathcal F((H_p(Y),M,D_0,M,v)),\qquad
+L_1(\mathcal T,(H_p(Y),M,D_0,M,v))                             \tag{4.13}
+$$
+
+给出同一个绑定并集 $\mathcal U_0=\mathcal A_y\cup\mathcal T$，满足
+
+$$
+L_2(\mathcal U_0,H_{M0}),\qquad L_3(\mathcal U_0,H_p(Y)).       \tag{4.14}
+$$
+
+这些是 V 定理 12.2、12.3 的物理参数版本。$\mathcal B,\mathcal T$ 必须包含于所写的整个同一实际历史纤维，但不要求有限、共同漂移、共同增益射线或另一个第五动作的共同响应；不要求它们包含一个二目标失败子集。$v$ 不必等于 $\beta_Y$。$\mathcal T$ 的 $L_1$ 必须同时覆盖两个最后动作，但各自的碰撞对可以不同、可以没有共同端点。
+
+证明。$\mathcal B$ 的实际子纤维成员资格确保每个世界满足完整的同一个 $H_p(Y)$，而 $\mathcal A_y$ 已由 (4.7) 固定在该父历史上。并集的第五 $J$ 响应 $D_0$ 子纤维包含 $\mathcal A_y$ 的 $L_2$；第五 $M$ 响应 $\zeta$ 子纤维包含 $\mathcal B$ 的 $L_2$。由向上单调性及 (1.2) 的两个动作合取得 (4.10)。两个第五响应值无需相同。
+
+(4.11) 的正向正是 (1.2) 的第五 $M$ 子句。反向中，所假设的第五 $M$ 子句加上第五 $J$ 响应 $D_0$ 处所包含的 $\mathcal A_y$，给出两个子句；$K$ 本身也包含两个不同完整目标，排除停止，因此得 $L_3$。这不从任意失败族中抽取一个共同碰撞对。
+
+在 $H_{M0}$，(4.8) 保证 $\mathcal A_y$ 属于第六 $J$ 响应 $\beta_Y$ 的实际子纤维且有 $L_1$。故包含它的每个 $K_0$ 已有第六 $J$ 子句；第六 $M$ 子句恰为 (4.12) 的右侧。这给出双向等价。
+
+最后，(4.13) 的所有世界与 $\mathcal A_y$ 共享完整 $H_{M0}$。并集的第六 $J$ 响应 $\beta_Y$ 子纤维包含 $\mathcal A_y$，第六 $M$ 响应 $v$ 子纤维包含 $\mathcal T$，各有 $L_1$，所以递归给出 $L_2(\mathcal U_0,H_{M0})$。回到原父节点，第五 $M$ 响应 $D_0$ 子纤维含该 $L_2$，第五 $J$ 响应 $D_0$ 子纤维含 $\mathcal A_y$ 的 $L_2$，再次递归得到 $L_3$。每次包含关系都保留同一实际祖先、同一 $Y$ 和不随分支变化的完整世界；两个最后动作的见证响应可以分别选择。∎
+

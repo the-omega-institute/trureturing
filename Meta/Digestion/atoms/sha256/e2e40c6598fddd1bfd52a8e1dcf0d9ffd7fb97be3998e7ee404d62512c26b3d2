@@ -1,0 +1,55 @@
+**Lemma 9.2 (Positive initialization cells and actual instruction
+sections).** If a table in Definition 9.1 has $q_3=1$ and
+$L_3=1-S_3$, every initial row $r$ with
+$\omega_r:=\nu(c_{\rm init}^{-1}\{r\})>0$, used deterministically,
+has $q_3(r)=1$ and correctness $S_3$ under $J_p$.
+For such a start, a reachable positive source section after three
+reads has a halt instruction next. At an earlier section the actual
+instruction is either a read or a halt; its fixed output must maximize
+the joint state mass whenever equality in the corresponding scalar
+bound is attained.
+
+Proof. The finite partition and independence give exactly the argument
+of Two Read, Lemma 8.2, now using Theorem 7.1:
+
+$$
+\begin{aligned}
+1=q_3&=\sum_{r\in K}\omega_r q_3(r),\\
+S_3=q_3-L_3&=\sum_{r\in K}\omega_r C_3(r),
+\qquad \sum_{r\in K}\omega_r=1.
+\end{aligned}
+\tag{9.2}
+$$
+
+First $q_3(r)=1$ on every positive cell, then $C_3(r)\le S_3$ on
+those cells forces $C_3(r)=S_3$. No divisibility or atomlessness of the
+seed law is used.
+
+By Lemma 2.1 every actual prefix has its full reply-cylinder section.
+A fourth read on a positive section already excludes that whole
+section from $E_3$. Thus a read after three calls there is impossible.
+The closed instruction set then forces a halt. A nonmaximizing label
+on a positive leaf loses its strict positive difference from $m(C)$;
+all inequalities used here are upper bounds and cannot compensate
+that loss on another leaf.
+
+The scalar bounds of Sections 3--5 apply also to a subtree that stops
+early: for any contemplated extra read, the two refined sections
+partition the old section, and
+$m(C)\le m(C\cap\{X_t=0\})+m(C\cap\{X_t=1\})$.
+This observation is used only for scalar upper bounds. No hypothetical
+read, padding node, address representative or replacement state is
+included in the state argument below. $\square$
+
+For a deterministic attaining start, write $\alpha$ for the parity of
+its first address, $\beta=1-\alpha$, and $T=v_\alpha$ for the actual
+target spin index in phase $\alpha$. An edge $E=\{d,d+1\}$ in the
+following sections always denotes the actual instruction address
+$2d+\alpha$, not a freely observable spin pair. Distinct edge letters
+do not by themselves assert distinct controller states. A fresh
+extension of one of two disjoint edges means a line edge sharing one
+endpoint with that edge and having its other vertex outside both
+edges. A join of two disjoint components means one actual line edge
+with one endpoint in each component; it exists only when the geometry
+of the integer line permits it.
+

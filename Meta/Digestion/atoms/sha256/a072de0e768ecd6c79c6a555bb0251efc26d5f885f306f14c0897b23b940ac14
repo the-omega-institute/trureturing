@@ -1,0 +1,13 @@
+## 11. Diagonal generators and the complete legal-chain normal form
+
+Continue at $d=1$ with the six actual nodes $0,\ldots,5$ and hypotheses (10.1): for every real $k$, the pencil has rank three and the same safe kernel line. These hypotheses are the necessary residual supplied by Theorem 5.1 and Corollary 6.3. The results of Sections 11–15 extend the preceding mathematical proposal *Diagonal safe-kernel word normal form and a two-or-three initial lower-shear restriction at the unrecorded affine endpoint*. That proposal supplies the diagonal classification and collision route; it is preceding mathematical work, with ordinary conditional proofs. Section 10 uses the preceding proposal *Exact affine-drift classification and different-slope collisions in the common-safe-kernel stratum recording M or JMJ*. Neither proposal is independent certification. The complete arguments and source realizations used here are given below.
+
+We first record two consequences of the residual hypotheses. The whole matrix list spans four dimensions. Indeed $\mathcal L(K)=\mathbf1\ne0$ is killed by $\Lambda$, so
+
+$$
+3=\operatorname{rank}B\le\operatorname{rank}\mathcal L-1\le3.
+\tag{11.1}
+$$
+
+Also deletion of any noninitial read must leave four-dimensional matrix span. If the survivors spanned at most three dimensions, choose $X\ne0$ annihilating them under the nondegenerate trace pairing. Since $I$ survives, $\operatorname{tr}X=0$, so $X\notin\mathbb RK$ because $\operatorname{tr}K=1$. At $k=-1/j$ the vector $(1-i/j)\operatorname{tr}(A_iX)$ vanishes at every survivor and at the erased position $j$. Thus $X\in\ker T_{-1/j}$, a contradiction. This argument includes repeated endpoints and uses the actual noninitial index $j$, which is a nonzero integer.
+

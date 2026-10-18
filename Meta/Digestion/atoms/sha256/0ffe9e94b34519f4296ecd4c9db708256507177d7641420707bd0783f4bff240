@@ -1,0 +1,37 @@
+**引理 91.2（Exterior-edge realization and its exact incoming restriction）。** Every unchanged row list of Definition 91.1 has a literal realization if $h=0$, or if
+
+$$
+\tau<k-1\quad\text{or}\quad e\notin A\quad\text{or}\quad r_1(e)=0.
+\tag{91.2}
+$$
+
+If $h>0$, $\tau=k-1$, $e\in A$ and $r_1(e)=1$, no successful realization exists. In particular, when $P$ contains zero, every availability-compatible row list of length at most $T-1$ is realized unchanged, irrespective of label count, density or class constancy.
+
+证明（the same literal words）。 Translate the arithmetic coordinates by $u$ for the calculation only. Thus $W_a=[0,m]$, while its exterior vertices and their internal edges are
+
+$$
+J=\{m+1,\ldots,T-1\},\qquad
+E=\{(x,x+1):m+1\le x\le T-2\},\qquad |E|=b-1\ge2.
+\tag{91.3}
+$$
+
+At suffix index $a+i$ write $v=(a+i)m-u\pmod T$. Use the supplied signed-path components [S15, Definition 2.1]: put $x_{-1}=x_m=0$ and impose only
+
+$$
+x_{l-1}\oplus x_l=r_i(u+v+l)
+\quad\text{when }u+v+l\in A,\quad0\le l\le m.
+\tag{91.4}
+$$
+
+Arguments of $r_i$ and all vertices are modulo $T$. Since $1\le i<T$ and the actual gcd is one, $W_{a+i}\ne W_a$. Equal-length proper arcs with different starts cannot contain one another. Thus $W_{a+i}\setminus W_a$ is nonempty, and at least one constraint edge in (91.4) is absent. The two boundary pins lie in different path components. The credited component inversion therefore solves every prescribed row, with no parity condition imposed on $A$.
+
+Whenever the literal bit at local position $l<m$ has both arithmetic endpoints $v+l,v+l+1$ in $J$, neither of its two constraint edges is present. That bit is an isolated unpinned component. Set it to zero. Orient every other unpinned component so that its smallest-index variable is zero; orient a pinned component from its boundary pin and the prescribed differences. This specifies one complete word $B_i$ before execution. It is just the existing literal/component inverse, with free bits selected in this way. Its full even charge agrees with $r_i$ on $A\cap W_{a+i}$ and vanishes outside that window. On unavailable phases the intended row was already zero. None of the vertices used to prescribe free bits supplies an observation.
+
+证明（incoming seam and every cross-block seam）。 The first suffix starts at rotated vertex $m$. Its bit at local position one has endpoints $m+1,m+2\in J$, so that bit is zero. Its leading run is at most one. If $P$ contains zero, its actual outgoing tail is $\rho(P)\le m-1$, giving $\tau+\alpha(B_1)\le m<k$. If $P=1^m$, retain its true outgoing tail $\tau=\sigma+m$, not $\rho(P)$: when $\tau\le k-2$, the same leading-run bound gives $\tau+\alpha(B_1)\le k-1$.
+
+When $\tau=k-1$, safety requires the first bit to be zero. Its only possible observed constraint is the charge at $e$. If $e\notin A$, that first bit is itself isolated because the next vertex is in $J$, and our orientation sets it to zero. If $e\in A$, the first bit equals $r_1(e)$ by the supplied endpoint identity. Hence (91.2) is exactly the needed incoming condition. If it fails, every word begins one and is absorbed immediately; the entire issued block still costs one. Later endpoints cannot restore its putative scalar row.
+
+Across the whole suffix, literal bit positions advance successively around the known arithmetic cycle. Every occurrence of an edge in $E$ is zero, including occurrences next to block boundaries. A string of $k=T-1$ consecutive suffix bits visits all but one cycle edge and therefore contains a prescribed zero, because $|E|\ge2$. More precisely the longest possible run between this consecutive zero band is $T-(b-1)=m+2<k$. Thus no run of length $k$ occurs within the suffix, across any number of its boundaries. The incoming check handles a run beginning in $P$. This proves strict actual execution of the same words, without density, waiting, padding, repair or final cleanup.
+
+Some $B_i$ can be all ones if its particular window avoids all the zero edges. Its successful outgoing tail is then the incoming tail plus $m$. The run argument retains that whole inherited run and bounds it before the next zero; it never substitutes the literal trailing run for the true tail. All blocks are internally legal because $m<k$, under either original alphabet. Their actual common scalar updates are their prescribed rows, by the credited charge identity. Issuing all $h$ words costs exactly $h$ additional complete blocks on every nonempty continuing support. A lawful earlier homogeneous endpoint Stop pays only its actual prefix and does not observe the unused words. The empty support has no execution obligation. ∎
+

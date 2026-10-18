@@ -1,0 +1,25 @@
+**Proposition 3.3 (why generic compactness alone is insufficient).** The
+parameter space underlying Theorem 3.2 can be written as the finite
+disjoint union, over shapes and epoch assignments, of
+$(\mathcal W\cup\{\infty\})^V$, where $V$ is the finite read-vertex set.
+For each original $u$, its auxiliary leaf and $(q,a)$ path pair are
+continuous finite-valued functions on this space. For each pair $u,v$,
+the condition that a common leaf implies $R_Q(u)=R_Q(v)$ is closed.
+Budget conditions are closed as well. Finite collections of these
+conditions involve finitely many original sources.
+
+Proof. Equation (NFO.8) makes each reply function continuous at $\infty$
+in the cofinite-neighborhood topology; continuity at ordinary words is
+immediate because they are isolated. Finite tree evaluation is then
+continuous by induction. Equality of finite-valued leaves and membership
+in the supplied finite budget set are clopen. If the two fixed target
+rows disagree, the pair condition is simply different leaves; otherwise
+it is automatic. This proves the assertions.
+
+The existing compact-realization suppliers therefore describe the
+intersection principle in the middle of the proof. They do not establish
+(NFO.8), eliminate auxiliary vertices into actual same-register actions,
+handle full original rows by pairs, or give either effective search in
+§4. Those are indispensable native hypotheses and constructions.
+$\square$
+

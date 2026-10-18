@@ -1,0 +1,58 @@
+**Proposition 259.2 (Nonstopped laws with a positive changed mass and no extra cap).**
+Let $L\ge3$, $0<e<t\le1$, $c=t-e$, and choose
+
+$$
+\gamma>c,\qquad \gamma+(L-2)c\le e.
+\tag{259.1}
+$$
+
+For $r\in\{3,\ldots,L\}$ and $a_i=t$ on the finite prefix,
+use mass $c$ on each constant numerical output $n\ne2$,
+mass $B_0=1-(L-1)c-\gamma$ on constant zero, and mass
+$\gamma$ on $N(1,2;r,0,2,0)$.
+This law is cap-$e$ feasible, is not a stopped kernel, has changed
+mass $\mu=\gamma>0$, and its fixed endpoint repair is feasible
+at the same cap.
+
+**Proof.** The weights sum to one and
+$B_0\ge1-c-e=1-t\ge0$ by (259.1).
+For the original law, correct probability is $c$ in class one,
+$\gamma$ in class two, and $c$ in every later class. These are
+at least $t-e=c$. The repair keeps these correct probabilities:
+it merely changes the exceptional $00$ output from $r$ to zero,
+which can occur only in first-zero class one. In either law, base
+probability is at least $B_0\ge1-t$, which is stronger than the
+base singleton demand. The minimum union probabilities in the
+three types of classes are, respectively,
+$B_0+c$, $B_0+\gamma$, and $B_0+\gamma+c$.
+Their deficits from one are bounded by
+$(L-2)c+\gamma$, $(L-1)c$, and $(L-2)c$.
+The first is at most $e$ by hypothesis; the second is strictly
+less than the first because $\gamma>c$; the third is also at
+most $e$. The positive base is $B_0+\gamma$ and satisfies
+the same bound. Thus every independent row holds for both laws,
+including every suffix. Its graph is the single edge $1\to2$,
+with no singletons, so Theorem 258.3 also explains this same-cap
+repair.
+
+To verify nonstoppedness of the original law, use its unique
+multilinear coefficients at output $r$. The exceptional contribution
+is $\gamma(1-w_1)(1-w_2)$, added to its constant mass $c$.
+Thus its constant coefficient at that label is $c+\gamma$,
+its two linear coefficients are $-\gamma,-\gamma$ and its
+quadratic coefficient is $\gamma$. In the coefficient criterion
+of Theorem 109.1, $V_1(r)=V_2(r)=0$ and
+$h_1(r)=h_2(r)=\gamma$, giving $H(r)=2\gamma>c+\gamma$.
+The vector inequality fails, so this normalized kernel is not in
+$\mathscr O_L$ even though its endpoint repair is cap feasible.
+
+For a concrete original instance take $L=7$, $t=4/5$, $e=7/10$,
+$c=1/10$, $\gamma=1/5$, $r=3$, $B_0=1/5$.
+Here $D=2$. Append any positive monotone vanishing actual tail
+bounded by $7/10$. The positive nonbase mass is $3/5$, so
+(251.9) gives tail error $\max\{3/5,a_n\}\le7/10$ for both
+laws, including equality tails. This verifies nonvacuity of the
+transfer criterion with $\mu>0$ and a genuinely nonstopped
+starting kernel. The old amplitude feasibility on this profile
+receives no additional comparison content. $\square$
+

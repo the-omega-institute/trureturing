@@ -1,0 +1,71 @@
+### 87.1. Original equations and normalization
+
+Throughout §§87–91 use the actual paired-circulant family and input
+convention of §§60,75,78, with \(0<|b|<1\). Put
+\[
+ R=3-b^2,\qquad B=3+b^2,\qquad
+ \kappa=(b-i)\sqrt{R/(1+b^2)}.                         \tag{87.1}
+\]
+The generic chart selects a channel with three distinct unit entries and
+dephases its mean to \(\sum_jx_j=3\sqrt q>0\). Write \(G=x+iy\),
+\(Z=u+iv\), with all four coordinates real. The scaled lower entries
+are \(y_j\); original inputs are \((x_j,y_j/\kappa)\). In particular
+physical mean and interpolation coefficients are \(G/\kappa,C/\kappa,
+D/\kappa\). Bars below fix all real coordinates and conjugate \(i\).
+
+The necessary-and-sufficient selected-channel quotient of §§75,78.2 is
+\[
+\begin{aligned}
+ \alpha&=3-ib-\bar G,&\beta&=R+(3+ib)\bar G,\\
+ C&=(Z-R\alpha/2)/\beta,&D&=(-\bar Z-R\bar\alpha/2)/\beta,\\
+ Y_c&=\bar GC+G\bar D-|C|^2-|D|^2+C\bar D,\\
+ L&=R(b+i)+(-2b+iB)\bar G,&
+ N&=(-2b-iB)-(b-i)\bar G,\\
+ T&=3(L+NC+\bar N\bar D)-2iB(\bar G+2\bar D-\bar C),\\
+ E&=\bar CT-2iBY_c,&
+ J&=18(b+i)G+3L+3NG+2iB(G-C+2D),\\
+ A_c&=|C|^2+|D|^2,\\
+ N_Y&=(A_c-R)|T|^2+4B^2|D|^2[|G|^2-A_c+4\Re(C\bar D+Y_c)],\\
+ N_D&=\Re(2iBC)|T|^2+4B^2|D|^2\Re(J+2T).
+\end{aligned}                                                    \tag{87.2}
+\]
+The equations are \(E=N_Y=N_D=0\), on the strict domain
+\[
+ \beta CDY_c\ne0,\quad q=|CD|^2/|Y_c|^2,\quad
+ e=-Y_c/(\bar CD),\quad 0<q<1,\quad
+ \delta=q^2(3-8\Re e)+6q-1<0.                         \tag{87.3}
+\]
+All six root orders are retained. Explicitly, with \(t=\sqrt q\) and
+\(\xi=t\bar e\), take the three distinct unit roots of
+\[
+ X^3-3tX^2+3t\xi X-\xi=0,
+ \qquad y_j=Gt+C(x_j-t)+D(\bar x_j-t).                \tag{87.4}
+\]
+These are precisely the original rays in the selected chart. Section 75
+retains the optional \(\Theta\) channel choice and all aligned finite
+and pole charts. No restriction on candidate root order is introduced.
+
+Here are polynomial definitions of every coefficient used below. Set
+\[
+\begin{aligned}
+ d&=\beta\bar\beta,& C_n&=Z-R\alpha/2,&D_n&=-\bar Z-R\bar\alpha/2,\\
+ Y_n&=\bar GC_n\bar\beta+G\bar D_n\beta
+       -C_n\bar C_n-D_n\bar D_n+C_n\bar D_n,\\
+ T_n&=3(Ld+NC_n\bar\beta+\bar N\bar D_n\beta)
+        -2iB(\bar Gd+2\bar D_n\beta-\bar C_n\beta),\\
+ E_n&=\bar C_nT_n-2iBY_n\bar\beta,\\
+ \mathscr F&=\Re(E_n)/6,& I&=\Im(E_n),&
+ \mathcal Y&=d^3N_Y,&\mathcal D&=d^3N_D/B.
+\end{aligned}                                                    \tag{87.5}
+\]
+The last two expressions are polynomials; the division by \(B\) is
+exact. One has \(E_n=\bar\beta dE\). Expansion gives an affine real
+polynomial
+\[
+ \mathscr F=A u+D_0v+C_0,\qquad
+ A=\partial_u\mathscr F,\quad D_0=\partial_v\mathscr F,\quad
+ C_0=\mathscr F|_{u=v=0},\quad \sigma=A^2+D_0^2.       \tag{87.6}
+\]
+Thus (87.2) implies \(\mathscr F=I=\mathcal Y=\mathcal D=0\),
+and the converse holds on (87.3).
+

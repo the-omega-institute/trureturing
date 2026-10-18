@@ -1,0 +1,40 @@
+**Definition 3.1 (arc and strict rational certificate).** Reuse PH14–17's constants and functions, distinguishing the arc coefficient $g$ from the source floor:
+
+$$
+\begin{aligned}
+c&=11758471/22781250,&C&=1944/390625,&d_0&=5261/6750,&N&=2c+C,\\
+S_a&=1+a+a^2,&H_a&=2S_a+a^3,&g&=N/H_a,\\
+u&=1-a-g,&v&=a/(a+g),&
+e&=(ga^3-C)/2,&f&=g(1+a)/(a+g)-d_0.
+\end{aligned}
+\tag{3.1}
+$$
+
+Let $a_*$ be PH17's isolated algebraic root $e=f$, $t_*=e(a_*)$, and $a_1$ the arc endpoint $f=0$. Fix a rational requested near-optimal tolerance $\tau>0$ and write $\zeta=\min\{\tau,1/1000\}$. Rational bisection using the strictly decreasing $f-e$ chooses a root bracket $a_-<a_*<a<a_1$ with
+
+$$
+0<f<e,\qquad e(a)-e(a_-)<\zeta/4.
+\tag{3.2}
+$$
+
+All comparisons are finite rational comparisons, including the signs at the two bracket endpoints; hence $0<e-t_*<\zeta/4$. Existence and termination use the published monotonicity, root isolation and continuity, not a risk oracle. Define $l=1-u$, $k=(1-v)S_a>0$ and $k_2=(1-v)(S_a+a^3)>0$. Choose $\lambda$ to be one half the minimum of
+
+$$
+\begin{gathered}
+2/5-u,\quad l\left(1-\frac{2/27}{ua}\right),\quad
+l\left(1-\frac{32/6561}{ga^3}\right),\quad
+l\left(1-\frac{C}{ga^3}\right),\quad
+\rho_p-4/125,\quad \frac{\zeta}{4k}.
+\end{gathered}
+\tag{3.3}
+$$
+
+These rationals are strictly positive: PH15 gives $u<2/5$, $ua>2/27$, $ga^3>C>32/6561$ and $\rho_p>4/125$. Thus $\lambda>0$ is computable independently of the automaton, prior and history. Set
+
+$$
+\Delta=k\lambda>0,\qquad \epsilon_0=\Delta/8.
+\tag{3.4}
+$$
+
+The rational certificate comprises the bracket signs, stochastic parameter ranges and the finite inequalities (3.2)–(3.3). Its production, serialization and checking are separately paid offline work.
+

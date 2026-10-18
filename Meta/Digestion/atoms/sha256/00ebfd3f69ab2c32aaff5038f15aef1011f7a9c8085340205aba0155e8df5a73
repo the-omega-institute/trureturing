@@ -1,0 +1,32 @@
+### 106.4. A finite endpoint with strictly smaller first rank
+
+**Theorem 106.4.** Under (106.2), suppose \(D\ne0\). There is a finite \(\tau_*>0\) such that \(G_\tau\succeq0\) exactly for \(0\le\tau\le\tau_*\). At the endpoint the original full calibrated Grams satisfy
+\[
+\begin{aligned}
+G_{\tau_*}\odot H_{\tau_*}&=G\odot H,\\
+\operatorname{rank}G_{\tau_*}&<\operatorname{rank}G,\\
+\operatorname{rank}H_{\tau_*}&=h+o.
+\end{aligned}
+\tag{106.16}
+\]
+If the original pair is a global minimum, so is the endpoint. No endpoint local-minimum assertion is made for an arbitrary local minimum.
+
+**Proof.** For \(|O|=1\), the first-Gram endpoint factorization is the single-record projection construction in the proof of [B. Lovitz, *On decomposable correlation matrices*, Theorem 1, equations (9)–(13), arXiv:1812.01449v1](https://arxiv.org/pdf/1812.01449v1); see the [source note](../../../Library/QuantumChannels/lovitz2019decomposable.md). The argument below treats all outside coordinates simultaneously and controls the opposite Gram's rank while preserving the original fibre constraints and exact product.
+
+Theorem 106.1 gives a positive interval of feasible \(\tau\) and \(D\ker G=0\). The feasible set of \(\tau\ge0\) is closed and convex. Since \(D\) is Hermitian, nonzero and has trace zero, it has a negative eigenvalue. A corresponding eigenvector \(x\) lies in \(K=(\ker G)^\perp\), because \(D\) annihilates \(\ker G\). Hence
+\[
+x^*(G+\tau D)x=x^*Gx+\tau x^*Dx<0
+\quad\text{for every sufficiently large }\tau.
+\tag{106.17}
+\]
+The feasible interval is bounded and has a positive finite maximum \(\tau_*\).
+
+If \((G+\tau_*D)|_K\) were positive definite, its positive least eigenvalue would permit a further increase of \(\tau\), contradicting maximality. Thus a new vector of \(K\) enters the kernel. The old kernel is still annihilated, proving the strict rank decrease. Equations (106.8)–(106.9) hold for every finite positive feasible \(\tau\), so they prove the other assertions in (106.16). Since the complete objective is unchanged, a global minimum stays global at the endpoint. The near-zero neighbourhood argument of Theorem 106.1 is not invoked at this distant point. \(\square\)
+
+If \(O\ne\varnothing\) and \(F(G,H)<1/2\), then the hypothesis \(D\ne0\) is automatic. Indeed choose \(i\in O\) and \(j\) in any different original fibre. If \(D=0\), then \(G_{ij}=0\), whereas the original matrix-unit test gives
+\[
+\frac12=|T_{ij}-G_{ij}H_{ij}|\le F(G,H)<\frac12,
+\tag{106.18}
+\]
+a contradiction. This uses an actual original-channel matrix unit and involves no entrywise division.
+

@@ -1,0 +1,15 @@
+**Definition 1.2 (The original harmonic objective).** The graph $\Gamma_n$
+has vertex set $B_n$ and every legal Hamming-one edge. There is no wraparound
+constraint. Define on the entire simplex $\mathcal P(B_n)$
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu_b,\mu_c),
+\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+The constant $c_\star$ is the supplied limit $\lim_n\kappa_n/n$. When it
+exists, write $d(P)=\lim_n\Phi_n(P_n)/n$.
+

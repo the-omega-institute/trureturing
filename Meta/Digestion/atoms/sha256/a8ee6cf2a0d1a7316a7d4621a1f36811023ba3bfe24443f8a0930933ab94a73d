@@ -1,0 +1,118 @@
+**定理 16.2（固定精确点的合法不同伴随世界）。** Set
+
+$$
+\begin{gathered}
+t=\frac{5(y_*-12)}{96},\qquad q=\frac85t,\qquad
+s_0=\frac8{5\ell_-},\qquad a_0=q-s_0,\\
+a_1=\frac{66}5-13a_0-8s_0,\qquad
+s_1=21a_0+13s_0-\frac{99}5,\qquad
+B_{\rm new}=W(a_1,s_1).
+\end{gathered}                                                     \tag{16.5}
+$$
+
+Then $B_{\rm new}$ is a legal complete target in $\mathcal C$ distinct from every member of $\mathcal K_5$. The affine map in (16.5) preserves $C(a,s)$ and $3a+2s$ and is an involution. At this particular point,
+
+$$
+\begin{gathered}
+0.2810<a_1<0.2813,\qquad 1.1581<s_1<1.1585,\qquad
+0.002<a_1-a_0<0.0025,\\
+29.27<12(1+a_1+s_1)<29.28<y_*.
+\end{gathered}                                                     \tag{16.6}
+$$
+
+Every terminating decimal in this section and the sections below denotes its exact rational value.
+
+Proof. Multiplying the source $P_\ell$ of (10.3) by $s=8/(5\ell)$ gives $R(q-s,s)$, with $q=8t/5$. Direct substitution gives
+
+$$
+C(q-s,s)=s^2Q_t(\ell),\qquad s=\frac8{5\ell}.
+                                                                  \tag{16.7}
+$$
+
+Thus $W(a_0,s_0)=U_-$ as a complete target, including its gain and drift.
+
+For the root exchange, put $k=3a+2s$ and substitute $s=(k-3a)/2$. Then
+
+$$
+4C\left(a,\frac{k-3a}{2}\right)
+=a^2+\left(4k-\frac{66}5\right)a
+-k^2+\frac{22}5k-\frac{96}{25}.
+                                                                  \tag{16.8}
+$$
+
+The replacement $a'=66/5-4k-a$ preserves this quadratic, and $s'=(k-3a')/2$ gives
+
+$$
+(a',s')=\left(\frac{66}5-13a-8s,\ 
+21a+13s-\frac{99}5\right).
+                                                                  \tag{16.9}
+$$
+
+It preserves $k$, applying it twice returns $(a,s)$, and (16.8) proves preservation of $C$ even at a tangency. Positivity and distinction for the point in (16.5) require separate bounds.
+
+The projection (14.9) confines $y_*$ to $(29.286821,29.286822)$. On the closed interval with these endpoints, using $t=5(y-12)/96$ in the exact quadratic (10.1) gives
+
+$$
+\begin{array}{c|c}
+\ell&\text{strict containing interval for }Q_t(\ell)\\ \hline
+1.37728&(0.0000007397,\ 0.0000011329)\\
+1.37730&(-0.0000017816,\ -0.0000013884)\\
+1.6666&(-0.0000083124,\ -0.0000077913)\\
+1.6667&(0.0000042928,\ 0.0000048139).
+\end{array}                                                       \tag{16.10}
+$$
+
+These are rational endpoint comparisons under (14.3). For example each row encloses
+$(t^2-3/8)\ell^2+(11/8-3t)\ell+1$ with the same fixed rational $\ell$ in that row. The leading coefficient is positive, and the signs locate its two roots as
+
+$$
+1.37728<\ell_-<1.37730,\qquad
+1.6666<\ell_+<1.6667.
+                                                                  \tag{16.11}
+$$
+
+There are no additional roots, and both intervals satisfy $1<\ell<8/3$ and $0<t\ell-1<1$ as in Theorem 11.1.
+
+To bound (16.5), first retain the relation $a_0=q-s_0$ by using the equivalent formulas
+
+$$
+\begin{aligned}
+a_1&=\frac{66}5-13q+5s_0,&
+s_1&=21q-8s_0-\frac{99}5,\\
+a_1-a_0&=\frac{66}5-14q+6s_0,&
+a_1+s_1&=8q-3s_0-\frac{33}5.
+\end{aligned}                                                     \tag{16.12}
+$$
+
+Substitution of (16.11) and (14.9), with reciprocal endpoints reversed for $s_0=8/(5\ell_-)$, yields the strict rational enclosures
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{containing interval}\\ \hline
+a_1&(0.281075338,\ 0.281160770)\\
+s_1&(1.158256452,\ 1.158393158)\\
+a_1-a_0&(0.002200006,\ 0.002302390).
+\end{array}                                                       \tag{16.13}
+$$
+
+The wider bounds in (16.6) follow. In particular, the four entries of $R(a_1,s_1)$ have the strict lower bounds
+
+$$
+a_1>0.2810,\quad \frac85-s_1>0.4415,\quad
+s_1-\frac35>0.5581,\quad s_1-a_1>0.8768.
+                                                                  \tag{16.14}
+$$
+
+Equations (16.7)–(16.9) give determinant zero; positivity gives rank one and positive trace $s_1$. Consequently $R(a_1,s_1)/s_1$ has trace one, $s_1h$ is a nonzero cubic, and $B_{\rm new}$ is legal.
+
+Writing $q_1=a_1+s_1$, preservation of $3a+2s$ gives
+
+$$
+q_1-q=-\frac{a_1-a_0}{2}<0.
+                                                                  \tag{16.15}
+$$
+
+Both old $U$ worlds have $a+s=q$ and fourth-$J$ reading $12(1+q)=y_*$. The new world's fourth-$J$ reading is $12(1+q_1)$: the fourth cumulative matrix is $I+JL$, whose trace against $R(a,s)$ is $1+a+s$. Equations (16.12)–(16.13) give the last line of (16.6), distinguishing the new world from both $U$ worlds. Its drift is zero, whereas (15.5) gives strictly positive drifts for all members of $\mathcal T$, so it differs from those three as well.
+
+The root exchange used in (16.8) is Vieta's quadratic identity. Line-intersection involutions have established broader treatments, for example van der Kamp–McLaren–Quispel, *Generalised Manin transformations and QRT maps*, [Journal of Computational Dynamics 8, 183–211](https://doi.org/10.3934/jcd.2021009). Here a single conic and the single linear response $3a+2s$ suffice; no pencil, integrability or measure-preservation conclusion is used. The concrete positive point (16.5) and its history consumers below are the specific content of this construction. ∎
+

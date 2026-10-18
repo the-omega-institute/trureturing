@@ -1,0 +1,16 @@
+**定义 C-128.2（无条件风险与指定目标功效）。** 对 $n\ge1$ 个已供应输入，
+目标为 $P^{\otimes n}$。对其联合零假设域 $\mathcal N$ 和无条件宣告效果 $0\preceq T\preceq I$，定义
+
+$$
+\beta_{\mathcal N}(T)=\sup_{\rho\in\mathcal N}\operatorname{Tr}(T\rho),\qquad
+\alpha_n(T)=\operatorname{Tr}(TP^{\otimes n}),\qquad
+A_{\mathcal N}(\delta)=
+\sup_{\substack{0\preceq T\preceq I\\\beta_{\mathcal N}(T)\le\delta}}\alpha_n(T),
+\quad 0\le\delta\le1.
+\tag{C128.3}
+$$
+
+风险计算包括全部输出，不能先丢弃失败分支再把条件成功率代入。
+$A$ 首先允许全部测量效果，因而是原生菜单的放松；原生达到性须另行给出实际供应。
+单输入时记 $\alpha=\alpha_1$。以下计算固定目标的功效，不要求对全部四相干态具有同一功效。
+

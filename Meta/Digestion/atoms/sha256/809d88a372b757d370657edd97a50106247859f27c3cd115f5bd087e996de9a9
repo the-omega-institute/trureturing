@@ -1,0 +1,35 @@
+**Assumption 1.2 (entire acquired input and complete handoff).** For service
+applications use exactly [ARH, Assumption 1.3][ARH]. Finite prefix-free
+original cuts $P,Q$, the full old row $R$, finite literal history $H_0$
+and finite signed guarded history $H_{\rm rel}$ determine
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\}.
+\tag{NLC.4}
+$$
+
+A signed record $(a,p,b,q,\bowtie)$ compares the entire subtrees
+$(\rho^a u)|_p$ and $(\rho^b u)|_q$ and requires both endpoints reached,
+for either $\bowtie={=}$ or $\bowtie={\ne}$. Every constraint is imposed
+on the same original $u$. All repeated old classes, all cross-class and
+off-task disequalities, the old concrete exterior, old absent-address
+conditions and every additional record remain. The service premise is
+$D\ne\varnothing$; consistency tests may also return an empty set.
+
+The records were actually acquired before the cut. The one physical
+original-root register is at $\rho^N u$, with authentic $N$ at least
+all acquired epochs. The entire accessible state is a fixed recoverable
+encoding of the retained input and common parameters. Every accessible
+source-bearing cache, address, length, count, program position, timing
+field, reference, permission, output and archive belongs to that state.
+No unlisted field selects a smaller source fiber. These are handoff
+premises, not consequences of a logical description of $D$. Pre-cut
+acquisition may terminate sourcewise without a uniform sourcewise cost
+bound.
+
+The target is the full original row $R_Q(u)$: reached original holes in
+their fixed order, numbered-hole concrete exterior and the complete
+whole-subtree equality partition. A row label below always includes all
+three fields. A limit object's recomputed partition never replaces a
+finite source's label.
+

@@ -1,0 +1,45 @@
+**Theorem 94.1 (endpoint acquisition through the declared archive).** Suppose the extra archive of [supplier Definition 76.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) supplies the same three historical vectors and frame, with finite dyadic replies $y_i$ satisfying $\|y_i-x_i\|\leq2^{-b}$ simultaneously at every requested $b\geq1$. Replies may be correlated, off-image, nonorthogonal, zero, tiny or wrong in their computed sign. On every source of Definition 89.1, a finite interval selection terminates for every such valid name and yields either endpoint core with the semantic contract of Definition 92.1.
+
+**Proof.** Use discovery precisions $b=1,2,4,\ldots$, put $e=2^{-b}$ and $l_i=[1-\|y_i\|^2]_0^1$ for $i=1,2$. True read norms are at most one, so squared-norm error is at most $(2+e)e\leq3e$; clipping is nonexpansive. Therefore
+
+$$
+D\in[\mathrm{lo},\mathrm{hi}],\quad
+\mathrm{lo}=\max(0,l_1+l_2-6e),\quad
+\mathrm{hi}=\min(2,l_1+l_2+6e).
+$$
+
+Stop discovery only if $\mathrm{lo}>0$ and $\mathrm{hi}\leq2\mathrm{lo}$. Select $\sigma$ as the largest dyadic at most $\min(\mathrm{lo},1)$ by finite rational comparisons, including equality. If $\mathrm{lo}\leq1$, then $\sigma\leq\mathrm{lo}<2\sigma$, while $D\leq\mathrm{hi}\leq2\mathrm{lo}\leq4\sigma$; if $\mathrm{lo}>1$, then $\sigma=1$ and $D\leq2$. Thus the same factor-four bin holds. No exact true-bin equality or real logarithm is inferred from approximate data.
+
+Let $b_* =\max(1,\lceil\log_2(48/D)\rceil)$. For $b\geq b_*$, $e\leq D/48$, and the outward bounds give $\mathrm{lo}\geq D-12e\geq3D/4$ and $\mathrm{hi}\leq D+12e\leq5D/4$. Every valid name meets the guard there. The first successful doubling precision satisfies $b_c\leq2b_*$. Early success preserves the bin. Make exactly one final request at
+
+$$
+b_f=\max(b_c,h+14,28),
+$$
+
+even if a precision repeats. Then $e_f\leq\eta\sigma/16$ and $e_f\leq2^{-28}$. Round final clipped losses to the $\eta\sigma$ grid; their total error is less than $3e_f+\eta\sigma/2<\eta\sigma$.
+
+For the first anchor put $w'=y_2\times y_1$ and $Z=\operatorname{sgn}(y_0\cdot w')w'$, using only a finite rational comparison. Bilinearity gives $\|w'-w\|\leq3e$ and
+
+$$
+|y_0\cdot w'-x_0\cdot w|
+\leq e\|w\|+(q_0+e)3e\leq7e.
+$$
+
+If the sign is correct, anchor error is at most $3e$. If it is wrong or zero when the true sign is nonzero, the actual projection in 89.3 gives $q_2^2\leq|x_0\cdot w|\leq7e$ and $\|w\|=q_1q_2\leq\sqrt{7e}$. Hence
+
+$$
+\|Z-x_3\|\leq3e+2\sqrt{7e}\leq9\sqrt e.
+$$
+
+If the true scalar triple product is zero, the actual projection forces $q_2=0$, so $w=0$ and the same bound holds. This estimate is an ordinary proof; it requires no executable square-root or exact-real sign test. For the other raw anchors use $[\|y_2\|^2]_0^1y_1$ and $[\|y_1\|^2]_0^1[\|y_2\|^2]_0^1y_2$. Clipped-factor error at most $3e$ gives vector errors at most $4e$ and $7e$. At $b_f\geq28$ all three raw errors are less than $\eta$; nearest coordinate-grid rounding adds less than $\eta$. Thus every stored anchor error is less than $2\eta$, and the coordinate and significand bounds in 92.1 hold. Close the archive after compression; subsequent decoding uses only the complete word. $\square$
+
+**Interface and finite framing 94.2.** This theorem reuses the truthful archive contract, not a new source Read. A reply is the $11001001$ mode, natural gamma($b$), and nine signed-numerator gamma fields with $|n_{ik}|\leq2^{b+1}$, no trailing data, and $y_i=n_i2^{-b}$. Its length is at most $18b+2\log_2(b+1)+80$. Arity, precision, range, nonbinary, truncation and trailing-data checks establish syntax only; same-history truth and accuracy remain supplier premises. Repeated requests refer to the same immutable name.
+
+The outgoing grammar is exactly [supplier §76.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md)'s discovery header $01011010$ and final header $01011011$ followed by natural gamma($b_f$). A session starts with stored precision one; each discovery serves it and doubles it. Zero or more discovery commands, exactly one final command and closure are allowed. Unknown, unfinished, zero-final-precision or trailing requests are invalid. Schedule state, command parsing, doubling, setup, capture and archive storage are paid. A mathematical precision callback alone does not establish this wire bound.
+
+**Original finite replies and certificates 94.3.** The source-aware upper in Theorem 89.2 preserves the once-only finite-reply impossibility of [supplier Theorem 70.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) and [supplier §82](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) on the unrestricted plateaus at $0<E\leq1/2$. On the unbounded neutral-free bank, a hypothetical finite adaptive three-report path with positive reply slack has common replies for sufficiently late Family B histories with small opposite proper rotations, together with a fixed contracting member. Fixed-query limits followed by the contracting tail would require one radius-$E$ ball to contain $0,u_+,u_-$. For a small positive angle $2\theta<\pi/2$, that ball needs radius $1/(2\cos\theta)>1/2$. The contradiction uses jointly realizable sources and the same finite transcript. For nearest-true-dyadic replies, small rotations and deficits must lie inside the common grid cells, as checked in [supplier §§70,82](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md); a different deterministic production rule needs its own fiber verification. Exact rational replies and source-dependent truthful certificates lack this noisy finite-fiber premise.
+
+A single issued triple can use the same selector only if its outward guard holds and $b\geq\max(h+14,28)$; otherwise it rejects insufficient precision and makes no further request. A truthful represented pre-read gap, size or domain certificate can ensure sufficient precision before the original three Reads. Its issuance, binding, validation and mandatory retained evidence have their actual costs. For the size certificate of [supplier §67.3](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md), with $\overline N\geq m+n$ and rational $1<d_-\leq d_0$, put $z_-=(d_--1)/(2d_-)$, $t_-=z_-/\overline N$ and $\kappa=1-t_-/2$. That theorem gives $q_2\leq e^{-t_-}\leq(1+t_-)^{-1}\leq\kappa<1$, supplying a paid positive gap for a fixed reply schedule.
+
+More explicitly, a truthful rational bound $q_2\leq\kappa<1$ gives $D\geq g=1-\kappa^2>0$. Set $h_{\max}=\lceil\log_2(4/g)\rceil$ and choose the single reply precision $b=\max(1,\lceil\log_2(48/g)\rceil,h_{\max}+14,28)$. The proof in 94.1 gives the guard for every valid triple, and its selected $h\leq h_{\max}$ because $\sigma\geq D/4\geq g/4$. Thus the fixed-reply selector accepts without another request. Each displayed ceiling is determined by finite dyadic comparisons with the represented positive rational $g$; it is not a real-logarithm input operation. A bare integer $h$ or $\overline N$ proves no source truth. The exact finite rational instrument is a separate paid contract. A nonzero sensor error floor cannot provide arbitrarily refining names. Original once-issued replies do not become an archive after Stop.
+

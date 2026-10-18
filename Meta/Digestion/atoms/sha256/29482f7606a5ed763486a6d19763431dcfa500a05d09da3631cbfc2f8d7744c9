@@ -1,0 +1,21 @@
+**Lemma 5.1 (convolution orientation and positive source mass).** Let $f=Vp$ and $m=\int f$. Then $f\in L^1\cap L^2$, $0<m<\infty$, and
+
+$$
+p(\xi)=\gamma\int\mathcal G(\eta^{-1}\xi)f(\eta)d\eta
+\quad\text{for a.e. }\xi.
+\tag{5.1}
+$$
+
+Proof. The boxes $\{N\le R\}$ have volume $16R^7$. Since $V\le C(1+N)^{-5}$, its squared integral over successive dyadic annuli is bounded by a summable multiple of $2^{-3j}$. Thus $V\in L^2\cap L^\infty$. Cauchy–Schwarz with $p\in L^2$ gives $f\in L^1$, while boundedness of $V$ gives $f\in L^2$. Positivity of $V,p$ gives $m>0$.
+
+The fields are left invariant. With source first and output second, left translation gives
+
+$$
+p_E(t;\eta,\xi)=k_t(\eta^{-1}\xi).
+\tag{5.2}
+$$
+
+Indeed a process started at $\eta$ is the left translate by $\eta$ of the process from the identity. Haar measure is unchanged. Symmetry of the selfadjoint heat is consistent with $k_t(g)=k_t(g^{-1})$, so (5.2) is also the kernel of $P_tf$ integrated over its input $\eta$.
+
+On finite time intervals Tonelli applies to the nonnegative kernel and $f$. The positive integrals $\int_0^T P_tfdt$ increase pointwise as $T\to\infty$ and converge in $L^2$ by (2.8). An almost everywhere convergent subsequence of this $L^2$ convergence identifies their monotone pointwise limit with $p/\gamma$. A second application of Tonelli gives (5.1). This uses precisely the supplied reconstruction on $Vp$, without a bounded inverse assertion on general $L^2$. $\square$
+

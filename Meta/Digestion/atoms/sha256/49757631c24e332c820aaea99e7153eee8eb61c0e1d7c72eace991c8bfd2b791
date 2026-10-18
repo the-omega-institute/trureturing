@@ -1,0 +1,68 @@
+**Proposition 7.1 (a closed singleton can force its only code value).**
+There is an explicit finite reader on the same entire $\mathcal U_*$,
+with distinct fixed labeled entries and finite $L$, for which both bits
+are good at one actual source but one of those good labels occurs there
+in no member of $\mathcal C_L(T)$.
+
+Proof. Use the concrete branch images $B_n$ of (FCS.8) and fix the tuple
+
+$$
+X^*=(x_a,x_c,x_{b_1},x_{b_2},x_{b_3},x_{b_4})
+    =(B_1,B_2,B_3,B_4,B_5,B_6).
+\tag{FCS.25}
+$$
+
+These six values are distinct branch images. Hence
+$t^*=\mathscr S(X^*)$ has the actual inverse $u^*=\delta(t^*)\in Z_*$,
+with whole target $R_0$. Let $n_a=1,n_c=2,n_{b_1}=3,n_{b_2}=4,
+n_{b_3}=5,n_{b_4}=6$. Its exact node-address set is the finite set
+
+$$
+\mathcal N=\{v:|v|<3\}\ \cup\
+ \bigcup_{p\in P}\{pw:|w|\le n_{[p]}\}.
+\tag{FCS.26}
+$$
+
+Order it first by length and then lexicographically as
+$v_1,\ldots,v_N$. Its expected constructor $c_i$ is branch at
+$|v_i|<3$, branch at $v_i=pw$ with $|w|<n_{[p]}$, and beta when
+$|w|=n_{[p]}$. Thus (FCS.25)–(FCS.26) specify every test and its
+expected reply without an unknown-source parameter.
+
+Install disjoint Reads $A_1,\ldots,A_4,D_1,\ldots,D_N,D_\infty$
+and the five Halts $H_0,\ldots,H_4$ storing the whole rows of §2.
+The following formulas specify all four successors at every Read:
+
+| Read | Fixed literal | Successor for every $r\in\mathcal A$ |
+| --- | --- | --- |
+| $A_j$, $1\le j\le4$ | $p_{b_j}$ | $H_j$ if $r=\alpha$; otherwise $A_{j+1}$ if $j<4$, and $H_0$ if $j=4$ |
+| $D_i$, $1\le i\le N$ | $v_i$ | $D_{i+1}$ if $r=c_i$ and $i<N$; $H_0$ if $r=c_i$ and $i=N$; $D_\infty$ otherwise |
+| $D_\infty$ | $\varepsilon$ | $D_\infty$ for every reply |
+
+Take $e_0=A_1$, $e_1=D_1$ and $L=\max\{4,N\}$. Every listed
+state and transition is installed and counted. The zero entry correctly
+tests the four possible right alphas and returns the whole required row
+on every actual source within four calls, by Proposition 1.4.
+
+Agreement with every expected constructor at the actual nodes of a
+fixed finite tree is equivalent to equality with that tree. Structural
+induction proves this: a matching leaf ends both subtrees, and a matching
+branch requires its two child inductions. A missing or extra branch
+fails at a tested constructor, including at a leaf boundary. Therefore
+the one entry reaches $H_0$ exactly when the current tree is $t^*$;
+on every other tree a first mismatch enters the divergent self-loop.
+Injectivity of $\rho$ makes that unique source exactly $u^*$.
+
+Consequently $G(u^*)=\{0,1\}$ and $G(u)=\{0\}$ for every other
+actual $u$. The acquired-term code equal to one exactly on $X^*$ and
+zero elsewhere is lawful and compatible. Both bits are attained, for
+example at $u^*$ and any positive source. But any both-attained
+compatible code must assign one at $u^*$: there is no other source at
+which one is good. Hence its good label zero is not extendible.
+
+All Read words have maximum relative hole suffix depth six, so this
+table's $b$ is six. Each $B_i$ is fully exposed at that depth, including
+its beta leaves. The cell of $u^*$ is therefore closed and singleton,
+in agreement with (FCS.19) and (FCS.24). This example also shows why
+divergence at unchosen entries must remain allowed. $\square$
+

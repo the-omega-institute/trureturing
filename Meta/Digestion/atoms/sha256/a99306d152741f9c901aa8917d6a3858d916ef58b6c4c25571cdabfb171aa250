@@ -1,0 +1,11 @@
+**Theorem 108.2.** If either correct-output Gram is left-translation-invariant for either of these central partner actions, then
+
+$$
+ \delta(A,B)\ge\tfrac12.
+ \tag{108.13}
+$$
+
+The conclusion also holds after the reciprocal phase changes and original-fibre-preserving relabelings of §107.7. For each group the bound is sharp, with an explicit calibrated physical rank-$(3,3)$ attainer. Its infimum is also $1/2$ in each corresponding calibrated exact-rank class $(7,4)$ and $(7,5)$ with full-support first kernel.
+
+The central-partner condition is substantive. In particular the theorem does not assert the same bound for $D_8$ when a noncentral reflection defines the original partner operation.
+

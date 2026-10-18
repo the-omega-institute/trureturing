@@ -1,0 +1,49 @@
+**Proposition 359.1 (Five addresses with positive singleton stock).** For every $0<\varepsilon<1/11$, there is a normalized complete five-address kernel satisfying Theorem 358.2 for which no alternative family $g$ satisfies both (357.6) and the T edge/triangle condition. Thus the sufficient finite-kernel domain is strictly enlarged, even when the T representation may change.
+
+Put
+
+$$
+\tau=\frac{1-\varepsilon}{10},\qquad \sigma=\frac\varepsilon5,
+\qquad v=e_0-e_5,\qquad (b_1,b_2,b_3,b_4,b_5)=(1,-1,1,-1,1).
+\tag{359.1}
+$$
+
+Give each of the ten pairs mass $\tau$, with $N$ cell labels
+$(5,0,0,5)$ for equal signs and $(0,5,5,0)$ for opposite signs. Give each singleton $i$ mass $\sigma$ and labels $(i,0)$. These fifteen tables define $p$. Its stopped partner keeps these masses and singletons and uses pair labels $(5,0,5)$ or $(0,5,0)$, respectively.
+
+*Proof.* The masses sum to $10\tau+5\sigma=1$. Their gauge is
+$g_{ij}=\tau b_ib_jv$, one five-list generator, and $Q_{ij}=-2g_{ij}$. For (357.5),
+
+$$
+D_i=\sum_{j>i}g_{ij}+\sigma(e_0-e_i),\qquad
+U_i=R_i+\sigma e_i,\qquad
+\sum_iU_i=c,\qquad
+\sum_i\max\{u_i,T_i\}=10\tau+5\sigma=1.
+\tag{359.2}
+$$
+
+Indeed $s_{ij}=(g_{ij})_+$ and $S_i-D_i=R_i-\sigma e_0+\sigma e_i$, giving the formula for $U_i$. Also $u_i=(5-i)\tau+\sigma$ and $T_i=(5-i)\tau$. Thus the same gauge meets both budgets. Theorem 358.2 gives the displayed stopped law.
+
+Now take *any* alternative gauge satisfying (357.6). Its inverse supplies a complete representation of this same whole kernel. Let $m_{ij}$ be its aggregate pair mass. The coefficient at label zero is
+$Q_{ij}(0)=-2\tau b_ib_j$. Since each scalar cell lies in $[0,m_{ij}]$,
+$|Q_{ij}(0)|\le2m_{ij}$. Write $m_{ij}=\tau+\delta_{ij}$; then
+$\delta_{ij}\ge0$ and the one schedule budget gives $\sum_{i<j}\delta_{ij}\le\varepsilon$. If its four scalar cells are $a,b,d,e$, then $g'_{ij}(0)=b-a$ and $Q_{ij}(0)=e-d-g'_{ij}(0)$, so both $g'$ and $Q+g'$ lie in $[-m_{ij},m_{ij}]$. Intersect these two intervals to obtain
+
+$$
+\left|g'_{ij}(0)-\tau b_ib_j\right|\le\delta_{ij}.
+\tag{359.3}
+$$
+
+This covers all empty, singleton and pair allocations, including unused labels; the quadratic coefficient of a pair receives no contribution from any other schedule type.
+
+Set $u_{ij}=2$ for equal signs and $u_{ij}=1$ otherwise. All forward triangle inequalities $u_{ik}\le u_{ij}+u_{jk}$ hold: the only largest left side is two and both terms on the right are at least one. Therefore every T edge and triangle has nonpositive $u$-pairing at label zero. Every T gauge must have $\sum u_{ij}g'_{ij}(0)\le0$. But there are four equal-sign pairs and six opposite-sign pairs, and (359.3) yields
+
+$$
+\sum_{i<j}u_{ij}g'_{ij}(0)
+\ge2\tau-2\sum_{i<j}\delta_{ij}
+\ge2\tau-2\varepsilon=\frac{1-11\varepsilon}{5}>0.
+\tag{359.4}
+$$
+
+This contradiction excludes every T-certified representation of $p$, not just the displayed gauge. Every T certificate is already a special case of Definition 358.1, proving strict inclusion. $\square$
+

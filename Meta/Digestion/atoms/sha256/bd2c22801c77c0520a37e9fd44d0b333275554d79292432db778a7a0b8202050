@@ -1,0 +1,38 @@
+**Definition 17.2 (charge, yield and calibration score).** For each path put
+
+$$
+\begin{aligned}
+\lambda_{\varepsilon,u}(t)
+ &=\frac{(k'_{\varepsilon,u}(t))_+}{k_{\varepsilon,u}(t)}
+  +\frac{(-k'_{\varepsilon,u}(t))_+}{c-k_{\varepsilon,u}(t)},\\
+\Lambda_{\varepsilon,u}
+ &=\int_0^{T_u}\lambda_{\varepsilon,u}(t)\,dt,\qquad
+q_\varepsilon(u)=e^{-\Lambda_{\varepsilon,u}}.
+\end{aligned}
+\tag{PR.62}
+$$
+
+Fix a finite bound $C\geq0$, set $\ell=e^{-C}$, and require
+$\Lambda_{\varepsilon,u}\leq C$ for every parity and seed. This is the
+canonical survival charge (OC.15), not a physical energy or memory price.
+
+For this binary calibration score only, give the two parities equal prior,
+at any fixed $\beta$ and one actual signed winding of each parity. No prior
+on the whole original history is asserted. Decoders use the actually
+retained classical record, with no specimen measurement or additional
+quantum calibration token. Define
+
+$$
+\begin{aligned}
+P&=\Pr(\mathsf L)=\frac12\sum_u\nu(u)(q_0(u)+q_1(u)),\\
+B_*&=\inf_d\Pr(\mathsf L,\ d(U)\ne\varepsilon),\qquad
+R_*=\frac{B_*}{P}.
+\end{aligned}
+\tag{PR.63}
+$$
+
+Here $\mathsf L$ is survival of this acquisition, and randomized decoders
+are allowed. All these probabilities are measured from the actual
+initially live cut. Earlier preparation survival is a separate multiplier;
+conditioning on an actually reached cut supplies no reset or extra copy.
+

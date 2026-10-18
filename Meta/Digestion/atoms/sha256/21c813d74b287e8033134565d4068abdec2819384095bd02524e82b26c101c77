@@ -1,0 +1,64 @@
+**Proposition 10.2 (rank-one high branch and exact feasibility ellipse).**
+For $s<1$, retain the total binary live matrices $Z_r^0(s)$ and the
+half-weight failure maps. For real $x,z$ put
+
+$$
+v=(1,x,z)^T,\qquad
+\delta(x,z)=1-\alpha x^2-\beta z^2,\qquad
+\theta(x,z)=\frac{k}{2\delta(x,z)},\qquad
+H_r=\theta(x,z)vv^T.
+\tag{IR.59}
+$$
+
+When $\delta(x,z)>0$, this is a feasible high coefficient matrix
+$H_r\preceq Z_r^0(s)$ if and only if
+
+$$
+A_s x^2-2krsx+(s^2-\ell)+B_s z^2\leq0,
+\qquad
+A_s=1-\beta-\alpha s^2>0,\quad
+B_s=(1-\alpha)(1-s^2)>0.
+\tag{IR.60}
+$$
+
+Every such point has an actual finite common realization with high
+matrix $\sqrt\theta(D+xT+zS)$ for this record, at most three low
+matrices for its residual, and the same conditioned complete output.
+
+Proof. $Z_r^0(s)\succ0$ for $s<1$. For any positive definite $Z$,
+$\theta vv^T\preceq Z$ is equivalent to
+$\theta v^TZ^{-1}v\leq1$: conjugate by $Z^{-1/2}$ and use the
+single nonzero eigenvalue of the rank-one matrix. Here the inverse of
+the $D,T$ block is
+$2(1-s^2)^{-1}\left(\begin{smallmatrix}1&-rs\\-rs&1\end{smallmatrix}\right)$,
+and the $S$ inverse entry is $2$. The condition becomes
+
+$$
+k\left(\frac{1-2rsx+x^2}{1-s^2}+z^2\right)
+ \leq1-\alpha x^2-\beta z^2.
+\tag{IR.61}
+$$
+
+Multiplying by the positive $1-s^2$ and collecting terms yields
+(IR.60). Its two coefficients are positive since $A_s\geq k>0$
+and $s<1$.
+
+The residual $L_r=Z_r^0-H_r$ is real positive and has
+$\operatorname{tr}(B_0L_r)=k/2-\theta\delta=0$. Its encoder effect
+is at most $\Theta(Z_r^0)\preceq I$, because $\Theta$ preserves
+positive order and the remaining record and failure effects are positive.
+Lemma 10.1 therefore supplies at most three rank-two low matrices and their
+actual two-dimensional encoders and TP decoders. The high matrix is
+invertible because its determinant is
+$\theta^{3/2}h_0h_1h_2\delta\ne0$. Use it as encoder into a
+three-dimensional fibre with live decoder $E$. For the other record
+use any fixed feasible split, in particular Definition 7.1. Add the
+scalar half failures and complement branches from §7. Both records
+retain $Z_r^0$, so the same coefficient, effect and scalar-map sums
+prove joint normalization, (IR.13), and exactly (IR.44) and (IR.10).
+Theorem 7.2's tensor-Kraus and Borel-set argument applies verbatim to
+these specified matrices: it preserves the full complex/reference map,
+each original time measure, complement and cross-support action and
+zero extra sectors. Only the actual fibre and generated label are
+retained. The high acquisition mass equals its high live mass. $\square$
+

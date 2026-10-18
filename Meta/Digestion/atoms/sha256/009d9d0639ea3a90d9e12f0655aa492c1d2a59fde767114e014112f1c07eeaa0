@@ -1,0 +1,34 @@
+**Proposition 12.2 (unnormalized positive inputs).** For any positive
+five-mode $\sigma$ with $E^\dagger\sigma E=t\rho$, $t>0$, including
+complement and cross-support components,
+
+$$
+E_{s_*+\epsilon}(\sigma)
+=tF+tK_{\rm onset}\epsilon^2+O(t\epsilon^3).
+\tag{QO.61}
+$$
+
+If the compression is zero, $E_s(\sigma)=0$ at every strength.
+
+Proof. Proposition 3.3 gives
+$\operatorname{tr}(G_{\rm acq}\sigma)\geq
+\operatorname{tr}(\Theta(H)E^\dagger\sigma E)
+=t\operatorname{tr}(CH)$ for each competitor.
+Thus the normalized-input lower proof multiplies by $t$.
+The matching high effect is supported on $V$, so its expectation
+also multiplies by $t$, proving the upper. There is no division by
+acceptance. Equivalently $A,B,C_S,\gamma,\lambda,d_{\rm cert},
+a_{\rm curv},c_{\rm curv},F,K_{\rm onset}$ scale by $t$;
+$p,q,s_*,b_{\rm rec},t_x,v_\theta$ do not change.
+
+When compression is zero, positivity kills the cross-support block.
+At any $s\in[0,1]$ factor the PSD coefficient matrices
+$(I+r sX_c)/2$ into finitely many columns and assign their products
+supported dimension-three fibres with live isometry decoders. Add
+the same scalar supported and complement branches of §10.
+Equations (QO.52)--(QO.55) give a normalized full instrument.
+Its high effects are supported, so its acquired high mass on this
+$\sigma$ is zero. Nonnegativity proves the minimum is zero. No
+positive-definite formula was applied to a zero or singular Gram.
+$\square$
+

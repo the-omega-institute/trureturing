@@ -1,0 +1,20 @@
+**Corollary 10.4 (label capacity and a compact equality family).** For a menu of $N$ distinct parameters and $0\le\epsilon<1$, the minimum number of authentic calibration labels, allowing arbitrary retained memory, is
+
+$$
+L_\epsilon(N)=\left\lceil\frac{N}{K_\epsilon}\right\rceil.
+\tag{10.11}
+$$
+
+At positive tolerance this label minimum admits finite conditional predictive memory. At zero tolerance finite memory does so exactly for equality menus. In particular $\epsilon<1/2$ forces an injective label, whereas at $\epsilon=1/2$ two parameters may share one label.
+
+The compact continuum
+
+$$
+\Theta_{\rm eq}=\{(t,t,2t):1/10\le t\le1/8\}
+\tag{10.12}
+$$
+
+has a finite exact observer for each fixed known member, but no common finite-label observer at any $\epsilon<1$, even with unlimited retained memory.
+
+**Proof (10.4).** Equation (10.8) gives the lower label count. Partition the menu into cells of size at most $K_\epsilon$. Theorem 10.3 attains their bounds at positive tolerance. At zero tolerance, retain the whole finite history in each singleton cell and decode its exact law; this proves the arbitrary-memory label assertion, while Theorem 2.2 gives the stated finite-memory boundary. The equality continuum is strictly admissible, with $p=q$ and $r=p+q$ throughout. All its pointwise finite exact realizations are those of Theorem 2.2, but its infinitely many distinct frequency vectors force the finite-label obstruction of Theorem 10.3. For explicit same-transcript witnesses, $(1/8,1/8,1/4)$ and $(1/10,1/10,1/5)$ both give $[0]$ mass $1/5$ and known hidden state $0$, yet their future $01$ frequency limits are $1/40$ and $1/50$. Parameter uncertainty remains after hidden-state synchronization. $\square$
+

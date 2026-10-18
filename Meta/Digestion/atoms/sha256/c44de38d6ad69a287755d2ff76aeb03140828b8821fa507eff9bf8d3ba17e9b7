@@ -1,0 +1,12 @@
+**定义 1.4（重叠参数与合法词图）。** 置
+
+$$
+x=\cos\left(\frac{\pi q}{2L}\right)=\cos(2q\theta),
+\qquad
+p=\frac{1+\sqrt{1-x^2}}2.
+$$
+
+于是 $0\le x\le1$、$1/2\le p\le1$。$x$ 是同一输入连续酉迭代后的重叠，不是 $(\cos(2\theta))^q$；此实验不是 $q$ 份重新准备的样本。
+
+令 $h(b,c)$ 为 Hamming 距离。$A_n$ 是顶点集 $B_n$ 上的实对称邻接矩阵，$A_n(b,c)=1$ 当且仅当 $h(b,c)=1$。记无向边数为 $e_n$，顶点 $b$ 的度数为 $d_b$。计数辅助约定为 $B_0=\{\text{空词}\}$、$M_0=1$、$e_0=0$；实际源始终满足 $n=3N\ge3$。Hilbert–Schmidt 范数记为 $\|T\|_{\mathrm{HS}}^2=\operatorname{Tr}(T^\dagger T)$，算子范数记为 $\|T\|_{\mathrm{op}}$。
+

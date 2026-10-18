@@ -1,0 +1,23 @@
+**Definition 14.1 (How the two relations apply to the same channel).**
+For any selected real-atom realization with unit independent factors,
+write $x=\sum_fw_fk(a_f,b_f)$ and $p^{(f)}_i=\|R_ia_f\|^2$,
+$q^{(f)}_j=\|R_jb_f\|^2$. On the TP slice,
+
+$$
+\sum_fw_f=5,\qquad
+L=\frac15\sum_fw_fp^{(f)}(q^{(f)})^T,
+\qquad \sum_fw_fq^{(f)}=(1,2,2)^T.
+\tag{14.1}
+$$
+
+These are the same weights as in the full channel, not independently
+chosen population weights. Theorem 12.4 supplies a finite exact
+representation of those full coordinates on each fixed positive
+nonzero-cubic face. Theorem 13.2 supplies a representation-independent
+necessary condition on its joint table. At a port at or below the
+credited upper, that table must satisfy (13.11). Neither relation
+replaces the three TP equations or the thirty signed event LMIs;
+both can be used on their common weights. The strict-extension
+example (13.16) demonstrates that aggregate independence is a
+separate obstruction from constant-population realizability.
+

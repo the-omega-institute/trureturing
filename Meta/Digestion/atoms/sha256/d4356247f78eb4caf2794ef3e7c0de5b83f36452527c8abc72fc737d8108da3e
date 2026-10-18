@@ -1,0 +1,12 @@
+## 476. Direct hypotheses and conclusion
+
+Use a finite actual ideal face pairing with fixed-point-free involution on original face occurrences, vertex-induced fixed frames (R,A,B,O,A,B) in edge order (12,13,14,34,24,23), and distinct transverse actual labels A,B. Axes may repeat transverse labels. Retain every original slot, face map and normal interval. Use one common positive generalized length field with all original angle equations 2*pi.
+
+Assume exactly six actual labels E={M,C,D,Z,U,V}, with distinct names and values greater than one. Suppose:
+
+1. Every actual label has a genuine occurrence; every flat owner selects its two axial slots, each contributing pi.
+2. M is a maximal-valued label selected by a flat pi slot. There is a source flat sigma of fixed pair {C,D} and one M axis, and a genuine source tau=(Z,M,C,D,M,C).
+3. m>=1+c+d, z>=1+m+c and u>m. Thus c,d<m-2 and z,u>m.
+4. No flat has a transverse occurrence of any label with value greater than m-2.
+5. There are exactly two actual flat owners.
+

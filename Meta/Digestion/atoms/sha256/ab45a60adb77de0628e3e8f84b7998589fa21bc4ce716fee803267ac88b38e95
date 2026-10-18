@@ -1,0 +1,30 @@
+**Theorem 6.1 (four actual histories force orthogonal pure helpers).** For
+$k\ne l$, the four source histories with $m=0,1$ and
+$\beta=0,\pi/2$ already prohibit deterministic exact specimen conversion
+under (PR.8) unless $\mu=0$. The output helper need not be returned for
+this necessity result.
+
+Proof. Dilate the deterministic channel, keeping its environment in the
+proof. For each parity, the two same-parity input and target specimen
+overlaps both equal $Z-ir\ne0$, independent of height. Isometry therefore
+forces the two corresponding unit environment vectors to be equal. Write
+$\nu$ for the overlap between the resulting plus and minus environment
+vectors, including all output records. Cross-parity comparisons at equal
+phase and at phase difference $\pi/2$ give
+
+$$
+\mu(Z+ru)=\nu(Z+rv),\qquad
+\mu(Z-iru)=\nu(Z-irv).
+\tag{PR.21}
+$$
+
+Add $i$ times the first equation to the second. Since $Z>0$ this gives
+$\mu=\nu$ without dividing by any unknown specimen overlap. Substitution
+yields $\mu(u-v)=0$, hence $\mu=0$. Proposition 2.2 realizes all four
+inputs at the same preparation, duration and height waveform, and
+Convention 2.3 supplies their common legal continuation. $\square$
+
+This finite certificate selects $m=0,1$; the uniform theorems still quantify
+over all positive, negative and zero windings. It is a certificate within
+the actual source, not an independently postulated four-state ensemble.
+

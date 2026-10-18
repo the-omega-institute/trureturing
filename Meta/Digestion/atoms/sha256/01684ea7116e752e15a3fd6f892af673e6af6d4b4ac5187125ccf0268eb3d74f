@@ -1,0 +1,2 @@
+**Open Problem 5.2 (Optimizers and constant terms).** Determine the structure of the maximizing priors for $\Phi_n$: uniqueness, full support, dependence on $k(b)$ and possible additional word relations. Determine whether $\kappa_n-c_\star n$ converges, or converges separately along even and odd lengths. These are the optimizer and constant-term questions of [Growth], Open Problem 9.5; the bounded remainder for the specific prior in Theorem 3.1 does not determine the remainder for $\kappa_n$.
+

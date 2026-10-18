@@ -1,0 +1,168 @@
+**Theorem 15.1 (four prefix tests, every final word).** Assume Lemma 14.1's prefix hypotheses, and define
+$$
+\mathbf d=(1,4/3,2,4)^{\mathsf T},\qquad
+\mathsf P=\mathcal L_{\rm pre}^{-1}
+\operatorname{diag}(\mathbf d)\mathcal L_{\rm pre},\qquad
+X_\star=\mathcal L_{\rm pre}^{-1}\mathbf d.
+\tag{15.1}
+$$
+Suppose the following four prefix-only coefficient tests hold:
+$$
+(X_\star)_{21}\ge0,\qquad (X_\star)_{12}\le0,
+\qquad
+(\mathsf P E_{12})_{21}<0,\qquad
+(\mathsf P E_{21})_{12}>0.
+\tag{15.2}
+$$
+For every predetermined finite legal final word $W$, including the empty word, set $A_4=WA_3$. Then there is $\epsilon_0>0$ such that every $0<\epsilon<\epsilon_0$ gives a finite collision of distinct strictly positive rank-one effective sources, at slopes
+$$
+k_0=-1/4,\qquad k_1=-1/4+\epsilon,
+\tag{15.3}
+$$
+with one entire constant drift per run and with all five original observations equal. The first run has its final gain zero, and the second has all five sampled gains strictly positive. The threshold may depend on the fixed final word; no single threshold or source pair for all words is asserted.
+
+**Proof: exact transfer including the erased reading.** Put $k_\circ=-1/4$. The fourth row of $\mathsf T_{k_\circ}Y$ is $-\operatorname{tr}Y$. If $\mathsf T_{k_\circ}Y=0$, then $\operatorname{tr}Y=0$, and its first three rows give
+$$
+(1-i/4)\operatorname{tr}(A_iY)=0\qquad(i=1,2,3).
+$$
+These three gains are nonzero, so $\mathcal L_{\rm pre}Y=0$. Lemma 14.1 gives $Y=0$. Thus $\mathsf T_{k_\circ}$ is invertible for every final word, even when $\mathsf B$ is singular. Set
+$$
+\mathsf H=\mathsf T_{k_\circ}^{-1}\mathsf C,
+\qquad f_i=\operatorname{tr}(A_iS).
+$$
+The fourth row of $\mathsf T_{k_\circ}\mathsf H S=\mathsf C S$ gives
+$$
+\operatorname{tr}(\mathsf H S)=-4f_4.
+\tag{15.4}
+$$
+For $i=0,1,2,3$, let $d_i=(1-i/4)^{-1}$, the entries of $\mathbf d$. The other three rows, together with (15.4) at $i=0$, give
+$$
+\operatorname{tr}(A_i\mathsf H S)
+=i d_i f_i-4d_i f_4
+=4(d_i-1)f_i-4d_i f_4.
+$$
+Here $id_i=4(d_i-1)$. Applying the exact prefix inverse yields
+$$
+\boxed{\ \mathsf H S=4\bigl(\mathsf P S-S-f_4X_\star\bigr).\ }
+\tag{15.5}
+$$
+This identity holds on every auxiliary full matrix, with no determinant restriction. In the normalization of Lemma 14.1, $X_\star=\mathsf P N$ also follows directly from (15.1). No inverse or determinant condition on the final multiplier was used.
+
+**Proof: opposite signs at finite actual sources.** Let $F(S)=\mathfrak b(S,\mathsf H S)$. On rank-one $S$, (14.5) gives $\mathfrak b(S,S)=2\det S=0$, so (15.5) implies
+$$
+F(S)/4=\mathfrak b(S,\mathsf P S)
+-\operatorname{tr}(A_4S)\mathfrak b(S,X_\star).
+\tag{15.6}
+$$
+Write $b_4=(A_4)_{12}\ge0$ and $c_4=(A_4)_{21}\ge0$. Substitution of the auxiliary boundary matrices into this identity gives exactly
+$$
+F(E_{12})/4=-(\mathsf P E_{12})_{21}
++c_4(X_\star)_{21}>0,
+$$
+$$
+F(E_{21})/4=-(\mathsf P E_{21})_{12}
++b_4(X_\star)_{12}<0.
+\tag{15.7}
+$$
+The strict terms in (15.2) keep these inequalities strict even if either final off-diagonal entry is zero.
+
+Replace these boundary matrices by the actual positive rank-one sources
+$$
+S_+(t)=\begin{pmatrix}t&1\\t^2&t\end{pmatrix}
+=\binom{1}{t}(t,1),\qquad
+S_-(t)=\begin{pmatrix}t&t^2\\1&t\end{pmatrix}
+=\binom{t}{1}(1,t),\qquad t>0.
+\tag{15.8}
+$$
+Since $\mathsf H$ is linear, each $F(S_\pm(t))$ is a polynomial of degree at most four. Write
+$$
+F(S_\pm(t))=c_\pm+\sum_{j=1}^4a_{\pm,j}t^j,
+\qquad c_+=F(E_{12})>0>c_-=F(E_{21}).
+$$
+Let $A_\pm=\sum_{j=1}^4|a_{\pm,j}|$ and choose the finite positive values
+$$
+t_\pm=\min\{1/2,\ |c_\pm|/[4(1+A_\pm)]\}.
+\tag{15.9}
+$$
+For $0<t\le1$, the nonconstant terms have magnitude at most $A_\pm t$. At (15.9) this is strictly less than $|c_\pm|/4$. Hence $S^+=S_+(t_+)$ and $S^-=S_-(t_-)$ have the required opposite strict signs. Their entries and factors are strictly positive; the boundary matrices have not been used as sources.
+
+**Proof: finite determinant-corrected sources.** Take the positive factors $S^\pm=f^\pm\ell^\pm$ displayed in (15.8), and interpolate the factors:
+$$
+f(\theta)=(1-\theta)f^++\theta f^-,\qquad
+\ell(\theta)=(1-\theta)\ell^++\theta\ell^-,\qquad
+S(\theta)=f(\theta)\ell(\theta),\quad0\le\theta\le1.
+$$
+All these sources are positive rank one. Let $m_f$ and $m_\ell$ be the smallest entries among the two endpoint columns and among the two endpoint rows, respectively. Every entry of $S(\theta)$ is at least $m=m_fm_\ell>0$. Write
+$$
+S(\theta)=V_0+\theta V_1+\theta^2V_2,
+$$
+$$
+V_0=f^+\ell^+,\quad
+V_1=(f^--f^+)\ell^++f^+(\ell^--\ell^+),\quad
+V_2=(f^--f^+)(\ell^--\ell^+),
+$$
+and set
+$$
+K=1+\max_{a,b}\sum_{j=0}^2|(\mathsf HV_j)_{ab}|,
+\qquad \eta=\min\{F(S^+),-F(S^-)\}>0.
+$$
+Then every entry of $\mathsf HS(\theta)$ has magnitude less than $K$, and its determinant has magnitude at most $2K^2$. Choose any
+$$
+0<\epsilon<\min\{m/(2K),\ \eta/(4K^2),\ 1/4\}.
+\tag{15.10}
+$$
+Any further prescribed positive upper bound may be imposed. The polynomial
+$$
+g_\epsilon(\theta)=F(S(\theta))+
+\epsilon\det(\mathsf HS(\theta))
+$$
+has degree at most four. Its correction at either endpoint has magnitude less than $\eta/2$, so its endpoint signs are opposite and strict. The intermediate value theorem gives a zero in $(0,1)$. The polynomial is nonzero because of those signs; successive division by distinct root factors bounds its number of roots by four. Its smallest root in that interval, $\theta_\epsilon$, is therefore an exact finite root choice. Put
+$$
+S_1=S(\theta_\epsilon),\qquad
+S_0=S_1+\epsilon\mathsf H S_1.
+\tag{15.11}
+$$
+Every entry of $S_0$ is greater than $m/2$. The exact determinant identity (14.5) gives
+$$
+\det S_0=\epsilon\bigl[F(S_1)+
+\epsilon\det(\mathsf H S_1)\bigr]=0.
+$$
+Thus $S_0,S_1$ are finite strictly positive rank-one matrices, not merely tangent vectors or limiting boundary matrices. Their exact quotient equality is
+$$
+\mathsf T_{k_\circ}S_0
+=\mathsf T_{k_\circ}S_1+\epsilon\mathsf C S_1
+=\mathsf T_{k_\circ+\epsilon}S_1.
+\tag{15.12}
+$$
+
+**Proof: all five original equations and whole drifts.** Define
+$$
+\Delta=\operatorname{tr}(S_0-S_1)
+=\epsilon\operatorname{tr}(\mathsf HS_1)
+=-4\epsilon\operatorname{tr}(A_4S_1)<0,
+\qquad D_0(\tau)=0,\quad D_1(\tau)=\Delta
+\quad(\tau\in\mathbb R).
+\tag{15.13}
+$$
+The strict inequality holds because every legal endpoint is a nonzero nonnegative matrix and $S_1$ is entrywise positive. In particular $S_0\ne S_1$. Equation (15.12) and the initial trace identity give the following five original equalities, with their actual recorded gains:
+$$
+\begin{aligned}
+\operatorname{tr}S_0
+&=\operatorname{tr}S_1+\Delta,\\
+\tfrac34\operatorname{tr}(A_1S_0)
+&=(\tfrac34+\epsilon)\operatorname{tr}(A_1S_1)+\Delta,\\
+\tfrac12\operatorname{tr}(A_2S_0)
+&=(\tfrac12+2\epsilon)\operatorname{tr}(A_2S_1)+\Delta,\\
+\tfrac14\operatorname{tr}(A_3S_0)
+&=(\tfrac14+3\epsilon)\operatorname{tr}(A_3S_1)+\Delta,\\
+0&=4\epsilon\operatorname{tr}(A_4S_1)+\Delta.
+\end{aligned}
+\tag{15.14}
+$$
+The last equality also follows directly from (15.13); it checks the erased final reading rather than discarding it. The first gains are $1,3/4,1/2,1/4,0$; the second are $1,3/4+\epsilon,1/2+2\epsilon,1/4+3\epsilon,4\epsilon$. The slopes differ, and (15.13) shows the sources and whole drifts differ as well. These targets are not representation fibres.
+
+Finally realize each source by (14.2), with $k_j$ its specified slope. Each run uses one unchanged positive row, and every unread atom on the original predetermined words preserves its positive column. No word is chosen in response to data. This proves the theorem on the full actual-source model. The collisions at these admissible slopes obstruct uniform recovery on the arbitrary-real-slope domain; no assertion of collisions at every slope is needed. ∎
+
+The theorem assumes no invertibility of the zero-slope quotient $\mathsf B$, no survivor-span condition, and no final-word length bound. Prefix geometry ensures the particular pencil member $\mathsf T_{-1/4}$ is invertible for all final words; other pencil members may be singular. The only reciprocal gains used in (15.1) are the four fixed nonzero gains at indices $0,1,2,3$. No unknown or zero gain is divided out.
+
+<a id="erased-gain-four-parameter-family"></a>

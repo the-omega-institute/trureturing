@@ -1,0 +1,12 @@
+**数学引文 19.5（供应、归属及未决范围）。** 源码对应取钉版 [7f720fbf1d1d3bec91d5b08ab241fa33721cac99](https://github.com/the-omega-institute/trureturing/tree/7f720fbf1d1d3bec91d5b08ab241fa33721cac99)。本卷 §1–2 的原树／四值几何和零滞后价格、§10–15 的任意有限历史任务调用定理保持原范围；其完整状态和资源排除不能由语义支持或最坏调用正规化消去。这里的增量是无界原树上的指定四值任务、完整原始保留及全历史粗动作之间的准确分离，不是重做任意 $F$ 的 minimax。
+
+[ActualFiniteObserverAbsentElimination](../../../D5/S3/Arith/FibonacciAtomic/ActualFiniteObserverAbsentElimination.lean) 的 Observer、queryReply、cacheUpdate、Legal 和 actualPrefix_semantics 供应名义行、命中、首次出现、实际更新与外部历史语义；Allowed 的叶数界和 Positive 的 Boolean 目标不用于本合同。[ActualObserverAbsorbingNormalization](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.lean) 的 run_length_bound 只供应逐源停止轨道计数，不运输其 bounded normalization。[ActualObserverBoundedLowerBounds](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverBoundedLowerBounds.lean) 的私有缓存谱证明供应不同实际缓存计数，不供应新 $3d+4$ 来源分离。[ActualObserverPairReach](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverPairReach.lean) 的全历史桥用于定义 16.2；动作输出类型的替换已明确。
+
+[Joint Moment Fibers §§59–64](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md) 已供应固定完整词域 $W_n$ 的“原始证据充分但粗控制不能停止”、准确续读谱与实际／名义缓存区别，这些机制不是本节新内容。新增承重步骤是深于任意完整菜单的真实满树、逐前缀替叶的全菜单差异支持，以及将同一分支运行的缓存谱与 $2(d+1)$ 个独特叶终止缓存合计，得到全竞争类准确下界和同一总表达到。generic quotient、Bellman 递推和有限原型枚举不承担此证明。
+
+[Transport Memory Completion §§55–57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) 的来源／守卫／整上下文／Clifford Read 与构造磁带模型不同于本无叶数界静止字面口；[Context Geometry §§56–57](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 的有限模轨道、单位等待、高位读和原初态标签也不同。它们供应各自完整控制和安装／物理区分的实例，不供应本字面菜单行数、定位费用或物理实现。没有已证来源、操作、实际后继和费用对应，不运输其容量与物理界。
+
+Buhrman–de Wolf，*Complexity Measures and Decision Tree Complexity: A Survey*，2002，[作者全文](https://homepages.cwi.nl/~rdewolf/publ/qc/dectree.pdf)，DOI 10.1016/S0304-3975(01)00144-X，供应成熟的证书／查询不可区分性背景。有限 Boolean 坐标和证书复杂度不等于本无界树、四值精确保留及全历史动作限制，也不提供 (SLH.17.1) 的树状态公式。本节为 repo-derived 普通数学综合：已知重放、缓存谱和证书方法保留归属，实际无界树关系和完整总表承担新增部分；没有全球原创或新 Lean 核验主张。
+
+本切片连接指定空间地址、认证原纪元、原始保留与下一合法动作；粗投影的存在缺口由同源祖先关系补足。纪元零是公共合同，不是树形年龄、物理时刻或事件档案。准确结算的是这个切片的四个最坏坐标与同表同时达到。任意混合纪元／目标族、未知或未认证纪元、演化来源、忘却、随机化逐源剖面、含安装与物理实现的联合总资源最小值、任意新任务及持续自主观察者，以及空间、时间、边界、记忆在完整长期目标中的互恢复，仍未由本定理解决。
+

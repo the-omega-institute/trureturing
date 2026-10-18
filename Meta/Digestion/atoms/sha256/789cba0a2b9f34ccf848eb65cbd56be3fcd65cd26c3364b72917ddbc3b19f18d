@@ -1,0 +1,35 @@
+# FIB two reads: the exact installed-state classification-risk frontier
+
+For the original stationary biased XOR source, the best correct mass
+with almost-sure return within two paid calls and at most $m$ installed
+complete-controller rows is
+
+$$
+C_m=
+\begin{cases}
+a/2,&m=1,2,\\
+a/2+a\eta,&m=3,\\
+a/2+a\eta(1+c),&m=4,5,\\
+a/2+a\eta+a^2\eta,&m\ge6,
+\end{cases}
+\qquad
+\eta=ab,\quad c=a^2+b^2,
+$$
+
+where $a=\max(p,1-p)$ and $b=\min(p,1-p)$ for a fixed biased
+interior parameter. All these values are attained on the same original
+source, for either original endpoint and every unchanged independent
+seed law. The minimum classification error is $R_m=1-C_m$.
+In particular the exact error penalty at four or five rows relative
+to six is $\eta^2(a-b)>0$.
+
+This volume presents the supplied ordinary installed-state frontier
+derivations with complete proofs. The additional content relative to
+the three preceding theory sources is the quantitative four/five-row
+plateau, the bounds on all installed tables, and the exact positive
+penalty. The unrestricted one- and two-read optima, their attainers,
+and their attainment rigidity and minimum three/six-row costs retain
+their ownership in Original, Risk and Endpoint as specified in §11.
+These are ordinary mathematical arguments, without a formal-kernel,
+physical-memory, empirical-learning or worldwide-priority claim.
+

@@ -1,0 +1,10 @@
+## 304. Additional correct rows and one collective residual constraint
+
+All source, carrier, target, resource, event-row and complete-allocation
+conventions in 297 remain in force. In particular, the original nonatomic
+targets and consumer are those of 297.1; error statements here concern the
+separately selected marked laws (297.1). A finite profile need not be
+ordered or belong to $H_L$ unless explicitly stated. Scores are
+nonnegative event weights, whereas an allocation is the single vector
+$\lambda$ satisfying every row of $G_C\lambda\ge h(b,e)$.
+

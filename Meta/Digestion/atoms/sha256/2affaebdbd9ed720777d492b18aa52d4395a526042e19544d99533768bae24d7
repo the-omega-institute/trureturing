@@ -1,0 +1,10 @@
+**定理 12.5（Exact guarded injective-table fees）。** For the entire parameter and label domain of Definition 10.1, under both original alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f)=1+d,\qquad
+C_{\rm pre}(f)=1+d+\mathbf1_{\{g=1,\ n=2^d,\ C\ne D\}}.}
+\tag{12.10}
+$$
+
+Proof. Lemma 10.2 gives the paid global-parent and binary lower bounds on both free-value fibres. Lemmas 11.1–11.3 verify the actual safe code lists; Construction 12.1 and Proposition 12.2 realize the adaptive bound and every compatible preset case with literal actions. Lemma 12.3 supplies the remaining all-stream lower bound, and Construction 12.4 attains it. Both fibres have identical fees because the protocols use their own successive endpoint differences and the sources exist on each fibre. The initial-bottom archive is independent and stops freely. None of these arguments requires freshness of $R$, $C$, $D$, or $L_\bot$ relative to the outside table. ∎
+

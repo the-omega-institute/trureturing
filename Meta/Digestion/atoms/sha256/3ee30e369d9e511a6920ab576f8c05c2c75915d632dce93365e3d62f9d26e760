@@ -1,0 +1,94 @@
+**Convention 19.2 (credited suppliers and primary attribution).**
+The law (NCE.82), the classification of its heavy supports,
+the exact fixed-law pressure and the strengthened original
+converse are `repo-derived` deductions. Finite entropy,
+Gibbs domination, functional dependencies and positive-weight
+monotonicity are mature machinery. There is no worldwide
+originality, independent-review or Lean-certification claim.
+
+Theorem 2.2 owns the cyclic-donor entropy argument. Lemmas
+3.2 and 8.2–8.3 own the separation, count and collision
+suppliers. AAR owns the exact temporal factor. [FMR,
+Lemma 2.2, Theorems 2.3–2.5, 3.3 and 6.3–6.4][FMRa]
+owns canonical all-word simulation, paid cover realization,
+native scaffold restriction and rate existence. [NPC,
+Definitions 2.2 and 5.1, Theorem 7.1][NPCa] owns the
+complete-template pressure formulation and unrestricted
+original-competitor transport. Proposition 11.1 already
+owns the paid $100^n$ equality-fiber construction used
+in §18. [COK, Theorem 5.2][COKa] supplies the finite
+envelope sandwich. [D3, Theorems 2.3 and 4.1][D3a]
+owns $M_1(3)=4$ and $\lambda<3/16$. The law and
+lower endpoint of §§8–12 retain their credited scope;
+they are not counted again as new results.
+
+| Primary source | Checked correspondence and transfer boundary |
+| --- | --- |
+| Gogacz and Toruńczyk, *Entropy bounds for conjunctive queries with functional dependencies*, [arXiv:1512.01808v1](https://arxiv.org/html/1512.01808v1), Theorem 1 and Corollary 1 | Each native decoder gives a functional dependency under the same joint law. Their fixed-schema almost-entropic characterization and submodular upper relaxation do not supply this particular weight law, its finite squared-cell checks, or a native all-length cutoff as the schema size and donor choices vary. The native all-cyclic rule used here remains Theorem 2.2. |
+| Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, [arXiv:1012.0065v2](https://arxiv.org/html/1012.0065v2), Theorems 25 and 33 | Rational local pseudo-marginals are lift-realizable on finite covers, and fixed-base cover-average partition exponents have the stated Bethe interpretation. Changing to a cover and averaging over covers do not give a universal upper bound on every native template. COK §§12–17 supply the exact native specialization and leave its low-charge completion premise explicit. |
+| Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, [arXiv:1202.6035v2](https://arxiv.org/html/1202.6035v2), Theorem 4.1 | The inequality $Z(H)\le Z(G)^k$ for a $k$-cover assumes a binary log-supermodular factorization. Arbitrary native hard compatibility and joint block weights have not been shown to satisfy that premise; no cover-domination theorem is transferred. |
+| Atserias and Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, [arXiv:2009.09488v1](https://arxiv.org/html/2009.09488v1), Lemma 12 and Theorems 4–5 | Pairwise-consistent local relations or laws extend on the specified acyclic/join-tree attribute families. Arbitrary cyclic native donor systems are not made acyclic by this proof. No unrestricted global completion theorem is inferred. |
+
+These primary hypotheses support the stated correspondence
+boundaries. They do not close the global native gap, and
+this bounded assessment is not a nonexistence claim.
+No differently scoped predecessor-row, finite-reader code
+synthesis or quantum theorem is transferred to the present
+stationary-source pressure or preparation problem.
+
+**Open problem 19.3 (what the strict converse leaves unresolved).**
+Exact all-length pressure at $\mu_{\rm a}$ does not
+identify a globally minimizing law, exact $\sigma_3$,
+sharp original $\lambda$, general exact $M_1(D)$,
+or covers attaining the displayed memory lower bound.
+The fixed-law equality (NCE.100) does not prove
+
+$$
+a_d:=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+=b_d:=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)
+=2^{-\sigma_d}
+\quad\text{at general depth}.
+\tag{NCE.110}
+$$
+
+The finite-envelope real/rational optimization and algebraic
+attainment are already settled in [NWO, §§3–7][NWOa].
+Their remaining equality is (NCE.110), not density of
+rational weights. [COK, Open problems 9.3 and 17.3][COKa]
+still lack matching near-optimal owner populations with
+small normalized information charge, or a controlled
+same-base global completion. Completion on a finite cover
+does not select a prescribed Gibbs law on the unlifted
+base; the cover average supplies a lower pressure witness,
+rather than the universal upper needed for a cap.
+
+The unchanged effective target of [NPC, Definition 8.1][NPCa]
+and [GDB, Definition 11.1][GDBa] is a total sound verifier
+whose accepted weight-optimized endpoints are cofinal at
+every original $\sigma_d$, or a uniform effective native
+length error sufficient for terminating two-sided
+approximation of $\lambda$. The strictly positive
+counting law here does not remove hard template zeros,
+give a length cutoff, force small global entropy loss,
+or establish optimizer-cofinality. [SCP][SCPa]'s valid
+additive all-size softening bounds retain their scope;
+its specified relative-gate obstruction and GDB's
+specified method obstructions are not enlarged to
+impossibility of the effective target.
+
+The new result is a strict all-competitor quantitative
+converse inside the original late-target interface.
+The minimal-relations/internal-observer programme,
+including the original space/time/boundary/memory
+mutual-recovery objective and its paid access and
+resource obligations, remains open beyond the
+requested-factor recovery in (NCE.109).
+
+[NPCa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COKa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CONDITIONAL_OWNER_KERNELS.md
+[FMRa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md
+[D3a]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_DEPTH_THREE_MEMORY_AND_FRACTIONAL_SEED.md
+[NWOa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[GDBa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GLOBAL_DEPENDENCE_BOUNDARIES.md
+[SCPa]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SOFT_CONSTRAINT_PRESSURE.md
+

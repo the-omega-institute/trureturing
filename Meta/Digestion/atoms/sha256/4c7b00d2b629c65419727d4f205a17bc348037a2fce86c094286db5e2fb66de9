@@ -1,0 +1,47 @@
+**Definition 1.2 (typed action words and complete continuation trace).**  A
+finite word $u=a_1\cdots a_n$ is type compatible when the target type of
+each action is the source type of the next.  Fix a declared final-state
+projection $\operatorname{fin}$; it may be the constant symbol
+$\bot$, or any task-visible projection, but it is not the hidden full state.
+Set $\operatorname{fin}(\bot)=\bot$.  Starting at $x$, execute the word
+until the first missing or illegal action; if no successor exists, the final
+field below is this explicit $\bot$ value.
+For an initialized meter $m$ in the source type, write
+
+$$
+\operatorname{Trace}_m(x,u)=
+  (\text{initial type},\text{ordered names},\text{types},\text{statuses},
+   \text{events},\text{outputs},\text{failure reasons},
+   \text{records},\text{clock labels},\text{meter updates},
+   \operatorname{fin}(\text{final state or }\bot)).
+\tag{1.2}
+$$
+
+The unmarked notation is the identity-meter trace:
+
+$$
+\operatorname{Trace}(x,u)=\operatorname{Trace}_{e_{\kappa(x)}}(x,u).
+$$
+
+When the next name fails a type or namespace check, the trace contains an
+explicit illegal-token outcome, so such a word can still be included in a
+test family even though no successor is taken.
+
+The trace retains a legal failure, an illegal attempt, normal termination and
+the empty word as different values whenever the contract distinguishes them.
+The **complete continuation profile** is
+
+$$
+\Phi_{\mathcal U}(x):\mathcal U\longrightarrow\mathcal L,
+\qquad
+\Phi_{\mathcal U}(x)(u)=\operatorname{Trace}(x,u),
+\tag{1.3}
+$$
+
+for a declared family $\mathcal U$ of finite typed tests.  A test may
+carry an explicit illegal or missing-action token when the contract observes
+that outcome.  If a controller is part of the task, $\mathcal U$ also
+contains the words that can be produced by its selector.  A current readout
+without the complete
+continuation trace is not yet a residual resource boundary.
+

@@ -1,0 +1,27 @@
+**Definition 1.1 (Words, cylinders and exterior fields).** Let
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\text{ for all }j\in\mathbb Z\},
+\qquad (Tx)_j=x_{j+1},
+$$
+
+with its Borel sigma-field. Write $X_j(x)=x_j$ and
+
+$$
+\mathcal E_i=\sigma(X_j:j\ne i),\qquad
+F_i=\{X_{i-1}=X_{i+1}=0\}.
+$$
+
+For $n\ge1$, put
+
+$$
+B_n=\{w\in\{0,1\}^n:w_jw_{j+1}=0\ (1\le j<n)\},
+\qquad k(w)=\sum_{j=1}^n w_j.
+$$
+
+The cylinder $[w]_a$ specifies $X_{a+j-1}=w_j$ for $1\le j\le n$;
+$[w]=[w]_1$. For a stationary probability law $P$ on $X$, $P_n$ is its
+actual marginal on coordinates $1,\ldots,n$. Every cylinder probability and
+conditional probability below belongs to this one law, rather than to a
+separately specified collection of rows.
+

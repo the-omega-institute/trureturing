@@ -1,0 +1,19 @@
+**Proposition 15.3 (Spectral relation of full neighbor vacancy).**
+For $T=N(v)$, let $X_0=X-\alpha$ and $Y_0=Y-\rho$.
+For every positive eigenvalue $\ell$,
+
+$$
+\rho=q_v\alpha,\qquad
+H_{\rm cl}Y=\omega_v(Y-q_vX),\qquad
+\Pi_\ell X_0=
+\frac{\omega_v-\ell}{\omega_vq_v}\Pi_\ell Y_0.
+\tag{15.8}
+$$
+
+Proof. Conditioning on the entire complement of site $v$ gives
+$E_vY=q_vX$; other site updates leave $Y$ unchanged.
+Taking its expectation and using stationarity proves the first
+identity. The update formula gives the second. Project onto
+the $\ell$ eigenspace and subtract constants; positive
+$\omega_vq_v$ permits the last division. $\square$
+

@@ -1,0 +1,14 @@
+## 61. Actual first-zero arrivals and a fully priced recorded-zero spine
+
+The $K$ used below is the supplied availability-code minimum of Definition 27.1, on physical INITIAL indices and actual chronological offset:
+
+$$
+K(A,\lambda;b)=\min\left\{d\in\{0,\ldots,T-1\}:\begin{array}{l}
+\exists z_j\in\mathbb F_2^d\ (j\in A),\quad z_j[i]=0\text{ if }j\notin W_{b+i},\\
+\lambda(j)\ne\lambda(l)\Longrightarrow z_j\ne z_l
+\end{array}\right\}.
+\tag{61.1}
+$$
+
+It is zero for empty or homogeneous supports. On every support used below its finite range is justified by the safe phase-recovery stream of [S1, Theorem 3.1]. This is a finite code-assignment predicate, not an unknown adaptive continuation fee. The coprime literal constructions of Theorems 27.2 and 27.4 are supplied results; D11's noncoprime realization is not used here.
+

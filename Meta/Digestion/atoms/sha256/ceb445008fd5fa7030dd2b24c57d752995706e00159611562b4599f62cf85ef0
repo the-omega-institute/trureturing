@@ -1,0 +1,6 @@
+**定义 14.4（该对应未附加的操作与来源合同）。** $L_p^F$、$\sigma_\vartheta$ 和 $\theta_{\mathrm h}$ 是完整概率律上的数学映射。将它们作为操作族，另须给出实际可达域、制备与合法干预、共同输出核及完整记录；本节没有在这些定义中增加读取未知 $p$ 或优势比的操作。SPLIT §§7、9–10 及 [OBSERVER《观察者相对局部模型》](AURIC_FIB_ATOM_OBSERVER_RELATIVE_LOCAL_MODELS_AND_FUTURE_IDENTIFIABILITY.md) §§5–6 的精确律、有限样本及完整停止历史合同继续适用。绝对连续曲线的两个几何分量不构成两个可分别执行的干预，也不提供新硬币、后选择、条件重采样、重置、时钟或免费路径记录。
+
+这里的平坦性只属于 $P$ 的水平运输。[SEAM《静态 seam 与转移环流》](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md) 定理 2.2、2.4 区分状态导数与边流，并给出同一概率曲线的不同边记录；本节没有对其边环流施加消失条件。[SYMM《对称混合变化与路径缺陷》](AURIC_FIB_ATOM_SYMMETRIC_SEAM_PATH_DEFECT_AND_FIBONACCI_HIERARCHY.md) Q1–Q4 的实际算子次序合同也不由 (14.3) 的几何括号替代。
+
+完整五态律、确定性词来源、带边记录的动态模型、[SIGNED《带符号阶乘核》](AURIC_FIB_ATOM_SIGNED_FACTORIAL_KERNEL_AND_GOLDEN_COMPATIBILITY.md) 定义 1.1、3.1、5.1 的有符号核及谱密度、付费停止观察律分别保留其原定义域；没有给出保留全部质量、标签和记录的映射时，不因同名、均值、秩或黄金数值相等而识别这些来源。对 native/物理接口、概率与作用的资源取得、确定性因子化及付费停止历史、精确或有效可达性，仍需各自的完整假设和证明。本节没有给这些开放对应增加公理；严格正域只是上述对数与 Fisher 断言的定义域，不替代其他开放对应的原问题域。
+

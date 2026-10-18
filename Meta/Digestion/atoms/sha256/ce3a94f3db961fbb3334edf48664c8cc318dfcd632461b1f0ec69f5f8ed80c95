@@ -1,0 +1,31 @@
+**定理 178.9（原记录中的加权任务纤维与相位正确的端点方向）。** 定义同一实际记录空间内的单位向量
+
+$$
+\tau_\beta=\frac1{\sqrt{\Pi_N(\beta)}}
+\sum_{h:B(h)=\beta}\sqrt{p_h}|r_h\rangle,
+\qquad
+\eta_j=\frac1{\sqrt{T_N(j)}}
+\sum_{h:i_N=j}\sqrt{p_h}\,\sigma_{B(h)}|r_h\rangle.
+\tag{178.11}
+$$
+
+分别在可达 $\beta$ 和 $j$ 上定义。$\{\tau_\beta\}$ 是 $C_N$ 个正交单位方向，$\{\eta_j\}$ 是 $|\mathcal J_N|$ 个正交单位方向，且
+
+$$
+\eta_j=\sum_{\beta=(j,w)}
+\sqrt{\frac{\Pi_N(\beta)}{T_N(j)}}\,\sigma_\beta\tau_\beta,
+$$
+
+$$
+S_N\psi=
+\sum_{\beta=(j,w)}\sqrt{\Pi_N(\beta)}
+|j\rangle\otimes U_\beta\psi\otimes\tau_\beta
+=\sum_{j\in\mathcal J_N}\sqrt{T_N(j)}
+|j\rangle\otimes G_j\psi\otimes\eta_j.
+\tag{178.12}
+$$
+
+证明（178.9）。原 $r_h$ 的两两正交使同纤维范数平方为该纤维质量；不同任务纤维或端点纤维支撑不交，故方向正交。代入 (178.2) 再按 $B$ 或端点分组给两个等式。符号只在 $\eta_j$ 的相干和内出现，同任务纤维中是同一 $\sigma_\beta$，在 $U_\beta$ 中保留。正负闭路不会使某个向量的范数抵消，因为它们伴随不同的正交历史记录。
+
+若有额外历史副本，所有式逐项改用定义178.2的 $r_h^{\rm all}$，证明仍成立，但操作域变成所有这些记录的联合空间。只访问其中一个而迹掉另一个时，交叉历史块被消去，不能据此假定仍保留这里的纯 $\eta_j$；单路径纤维等退化情形须按实际输出单独判断。$\square$
+

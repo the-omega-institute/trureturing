@@ -1,0 +1,39 @@
+**Corollary 9.1 (at most two directed paired groups).** Under Theorem
+8.1's hypotheses, suppose separately that $R_-$ is indefinite. Every
+compatible paired group in the complete inventory, including unused
+ones, has $\ell(x)>0$, $\eta_1(x)\ge0$ and $R_+x=0$.
+There are at most two such directed groups.
+
+Proof. Theorem 4.1 already proves the positive-pure and common-kernel
+necessity for every supplied pair. Its local ingredients are the
+value-and-tangency argument of
+[RC Theorem 70.1](https://github.com/the-omega-institute/trureturing/blob/321589a8be98de4fe179f99f6e593d8784952db1/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md)
+and the negative-pair exclusion in FC Theorem 34.3. In the complete
+endpoint setting used here, the nonzero pure-height fact is FC19/20.
+At a compatible pair, the two smooth nonnegative signed gaps and
+their angular derivatives vanish. Thus $x^TR_\sigma x=0$ and
+$(x^\perp)^TR_\sigma x=0$. These two equations give
+$R_\sigma x=0$, rather than inferring a kernel vector from a quadratic
+isotropic zero alone. Indefiniteness makes $R_-$ invertible, excluding
+the negative sign. For the positive sign Theorem 8.1 gives $R_+\ne0$.
+A nonzero $2\times2$ matrix has kernel dimension at most one. A kernel
+line meets the directed circle in two distinct antipodes; an invertible
+$R_+$ gives no pair. Existence of either allowed direction as a contact
+is not implied. $\square$
+
+The algebraic zero-$R_+$ possibilities retained by Theorem 4.1 and
+Definition 6.2 are therefore excluded only in Theorem 8.1's additional
+domain. This does not exclude weak-zero saturated heights. No inertia
+theorem is transported to $10000$: FC34.3's full dichotomy uses its
+small-mass range, and RB Corollary 7.2 supplies indefiniteness only at
+$t\ge\max(t_0,2000000000)$. At the latter range its own supplied
+finite attained-class premises can supply the separate inertia premise.
+
+Both independent columns of every allowed pair remain in (IC.31),
+with all nonnegative masses and all fractions
+$\xi=a_1/(a_0+a_1)$ for positive total mass. Antipodes remain separate.
+The bound concerns only paired groups, with no saturated-singleton,
+total-group or actual minimum-count bound. Negative pure singletons,
+reverse singletons, other saturated singletons and unused contacts
+remain in the complete inventory.
+

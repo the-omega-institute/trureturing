@@ -1,0 +1,25 @@
+**Proposition 19.2 (matrix mass rank does not count recovered labels).**
+A node count, the sum of ranks of positive matrix masses, and the
+number of original height-preserving fractional labels are different
+quantities. Rank-one matrix quadrature by itself does not justify
+identifying these three counts in (GC.85).
+
+Proof. With diagonal matrix tests, a rank-one positive matrix
+$vv^*$ may have two positive diagonal entries at the same angular
+node. Discarding its off-diagonal entries leaves a positive pure
+and a positive saturated endpoint mass, while preserving those
+diagonal tests. After the positive $D_c$ recovery in Proposition
+19.1, these are two original endpoint coefficient masses at one
+$h$. They may be combined into one legal fractional label, preserving
+all joint moments and contrast, but Theorem 15.1 proves that height
+is preserved exactly when their signed endpoint heights have the
+same weak sign, or a mass is zero. Rank one does not impose that
+sign condition. Theorem 15.2 supplies a finite original common law
+with strictly opposite signs and positive masses at the same node,
+where the recovered fractional merge has a strict actual TV loss.
+Thus matrix rank or angular-node counting alone cannot bound the
+number of original labels while retaining the optimal height.
+This obstruction does not prohibit keeping two legal endpoint
+labels and does not prove that the exhibited law is optimal.
+$\square$
+

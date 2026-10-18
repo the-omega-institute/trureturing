@@ -1,0 +1,27 @@
+**Theorem 12.3 (disjoint-depth pool correction).** Every consecutive
+gap of every original graph satisfies
+
+$$
+\begin{aligned}
+E_B&\ge P_B+\mu_B=(\beta_B-1)+\Delta_B+\mu_B,\\
+D_B-E_B&\le D_B-(\beta_B-1)-\Delta_B-\mu_B,\\
+|Q_B|&\ge |V_B|+(\beta_B-1)+\Delta_B+\mu_B-D_B.
+\end{aligned}
+\tag{CL.50}
+$$
+
+Proof. Choose a largest subfamily in (CL.49). Apply (CL.48) to each
+of its pairs, and apply $e_d\ge p_d$ to every internal depth outside
+those pairs. Each depth occurs exactly once in the resulting sum.
+Thus $E_B\ge\sum_{a<d<b}p_d+\mu_B=P_B+\mu_B$.
+Subtract from $D_B$ for the second line and use (CL.10) for the third.
+The host and support data, including every duplicate incidence, are
+from the unchanged graph. No edge, witness, baseline or overlapping
+depth is charged twice.
+
+An empty interior has $P_B=\Delta_B=\mu_B=0$. An empty trigger set,
+or the absence of an internal adjacent pair, gives $\mu_B=0$ and
+recovers (CL.25). Isolated demand coordinates contribute nothing to
+$\nu_v$. These conventions include the last internal layer and all
+boundary deletions without inserting a fictitious child. $\square$
+

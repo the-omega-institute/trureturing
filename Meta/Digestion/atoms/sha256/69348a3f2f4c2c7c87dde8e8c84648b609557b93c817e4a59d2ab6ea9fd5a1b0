@@ -1,0 +1,23 @@
+**Proposition 2.3 (finite self-occurrence and a rejection boundary).**
+The equation
+
+$$
+\rho(x)=\langle x,z\rangle
+\tag{CAR.11}
+$$
+
+has finite solutions and forces both coordinates to be atomic. In
+contrast, the equation $x=\langle x,z\rangle$ has no finite solution.
+A bare equality $\rho^a(x)=\rho^b(y)$ alone does not force atomicity when
+$a=b$.
+
+Proof. Equation (CAR.11) gives a strict self-edge at $x$ and an edge to
+$z$. Theorem 2.2 forces both. The actual assignment $(x,z)=(\beta,\alpha)$
+is a solution by (CAR.1). More generally its complete scalar
+classification is the supplied [ARH, Application 26.1][ARH26], not an
+additional classification here. For the second equation leaf count gives
+$\#\operatorname{leaves}(x)=\#\operatorname{leaves}(x)+
+\#\operatorname{leaves}(z)$, which is impossible for nonempty trees.
+For the last assertion choose $x=y=\langle\alpha,\alpha\rangle$;
+this is non-atomic by (CAR.6), and the equation holds. $\square$
+

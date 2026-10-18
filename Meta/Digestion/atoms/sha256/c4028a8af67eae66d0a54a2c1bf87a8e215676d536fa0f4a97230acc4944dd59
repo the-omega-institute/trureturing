@@ -1,0 +1,31 @@
+**Proposition 4.1 (Actual nearest-anchor posterior).** Let $P$ be any proper stationary renewal law. For integers $a,b\ge1$ let $C_{a,b}\in\mathcal E_0$ specify nearest exterior ones at $-a$ and $b$: those two coordinates are one and every intervening coordinate other than coordinate $0$ is zero. Then
+
+$$
+P(C_{a,b},X_0=0)=\iota f(a+b),\qquad
+P(C_{a,b},X_0=1)=\iota f(a)f(b).
+\tag{4.1}
+$$
+
+Whenever $f(a+b)+f(a)f(b)>0$, the actual full-exterior posterior on this event is
+
+$$
+q(a,b)=\frac{f(a)f(b)}{f(a+b)+f(a)f(b)}.
+\tag{4.2}
+$$
+
+If $a=1$ or $b=1$, a retained neighbor one forces the center to zero. If both masses in (4.1) vanish, $C_{a,b}$ is null and no ratio is required. If exactly one mass is positive, (4.2) gives the corresponding posterior zero or one.
+
+**Proof.** Conditional on the one at $-a$, the center-zero completion is a single gap of length $a+b$, and the center-one completion consists of gaps $a,b$. The Palm iid property gives (4.1), including $f(1)=0$ in illegal center-one completions.
+
+To identify conditioning on the entire exterior, add arbitrary finite collars to the left of $-a$ and right of $b$. Under the Palm law at $-a$, the left past gaps are independent of the specified middle gap or gaps. Conditional on either middle completion, the future after the specified one at $b$ is a fresh sequence of gaps with the same law, independent of those middle gaps and the left past. Consequently each completed collar mass has the form
+
+$$
+\iota L\,f(a+b)R\quad\text{or}\quad
+\iota L\,f(a)f(b)R,
+\tag{4.3}
+$$
+
+where $L,R\ge0$ are the same outer likelihoods. For a rank-one representation this is also immediate from repeated use of (3.5) in the original ordered matrix product. Zero outer likelihoods make both masses zero.
+
+Refining an arbitrary finite exterior cylinder into such collars and summing (4.3) proves the conditional integral identity for $X_0$ and the constant (4.2) on $C_{a,b}$. Finite exterior cylinders form a generating algebra for $\mathcal E_0$; uniqueness of finite measures extends the identity to every exterior event. The countably many nearest-anchor events cover almost surely by properness. This proves the full-exterior assertion, with every supported, forced and null case included. The formula, extended arbitrarily on its null cases and outside the two-sided-anchor set, defines a Borel exterior version. Its translates give compatible versions at all sites. $\square$
+

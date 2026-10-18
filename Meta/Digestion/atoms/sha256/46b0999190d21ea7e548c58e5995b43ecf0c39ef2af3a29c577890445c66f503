@@ -1,0 +1,116 @@
+**定义 10.15（交替五态链）。** 给整数 $m\ge1$，在 $\mathcal H^{\otimes m}$ 固定所有 $z_j=0$，并选定 $y_j\in\{0,1\}$ 使 $y_j\ne y_{j+1}$。每点保留两个低标签，局部嵌入按定义 10.3 的 $y=0$ 或 $y=1$ 情况选取，得
+
+$$
+E_m:(\mathbb C^2)^{\otimes m}\longrightarrow\mathcal H^{\otimes m},
+\qquad \mathcal I_m=\operatorname{im}E_m,\qquad\dim\mathcal I_m=2^m.
+$$
+
+$m=1$ 时无邻接条件。命题 10.2 在每条边适用，所以各 $K_{j,j+1}$ 保持 $\mathcal I_m$，其限制为
+
+$$
+h_j=R_jL_{j+1}+L_jR_{j+1},\qquad 1\le j<m.
+$$
+
+所有 $h_j$ 的实参数动作可独立选择。这里的 $m$ 是有序五态复制的点数，不是单个 no-$11$ 长窗口内的位置数。
+
+在逻辑扇区上，令
+
+$$
+P_j=\prod_{\ell<j}Z_\ell^{\rm sf},\qquad
+c_j=P_jL_j,\qquad c_j^\dagger=P_jR_j.
+$$
+
+以下 CAR 和单位算子都仅指 $\mathcal I_m$。若把这些表达式用五态升降算子写在整个 $5^m$ 维空间上，单点反交换子在中态处为零而不是一，故不能声称全空间 CAR。
+
+Jordan–Wigner 变换及二次费米子方法是经典方法。[Pereira–Mueller §II A，式 (1)–(5)][C10-pereira] 的具体约定对应为
+
+$$
+a_j=c_j,\quad n_j^{\rm paper}=n_j,\quad
+\sigma_j^+=2R_j,\quad \sigma_j^-=2L_j,
+\quad \sigma_j^z=2n_j-I=-Z_j^{\rm sf}.
+$$
+
+该文 $J(\sigma_j^x\sigma_{j+1}^x+\sigma_j^y\sigma_{j+1}^y)=2Jh_j$，本章的边角等于该单边固定耦合的 $2Jt$。其无穷链均匀演化及特定自旋螺旋准备不在本章的有限独立控制假设内。
+
+本章所需的符号与闭合推导如下。$P_j^2=I$ 且与第 $j$ 点的 $L_j,R_j$ 交换，所以
+
+$$
+c_j^2=0,\qquad c_jc_j^\dagger+c_j^\dagger c_j
+=L_jR_j+R_jL_j=I.
+$$
+
+对于 $a<b$，令 $P_{(a,b)}=\prod_{a<\ell<b}Z_\ell^{\rm sf}$。消去重复前缀得
+
+$$
+c_ac_b=L_aZ_a^{\rm sf}P_{(a,b)}L_b
+=-L_aP_{(a,b)}L_b,
+$$
+
+$$
+c_bc_a=Z_a^{\rm sf}L_aP_{(a,b)}L_b
+=L_aP_{(a,b)}L_b.
+$$
+
+故两者之和为零。将 $L_b$ 换成 $R_b$，同一计算给 $c_ac_b^\dagger+c_b^\dagger c_a=0$。取伴随及交换指标即覆盖所有异点组合。因此
+
+$$
+\{c_a,c_b\}=0,\qquad
+\{c_a,c_b^\dagger\}=\delta_{ab}I.
+$$
+
+端点系数也须计算：利用 $R_aZ_a^{\rm sf}=R_a$，
+
+$$
+c_a^\dagger c_b
+=R_aZ_a^{\rm sf}P_{(a,b)}L_b
+=R_a\left(\prod_{a<\ell<b}Z_\ell^{\rm sf}\right)L_b,
+\qquad a<b.
+$$
+
+这里没有额外负号；负号只在用 $L_aZ_a^{\rm sf}=-L_a$ 的组合中出现。邻点之间字符串为空，所以
+
+$$
+h_j=c_j^\dagger c_{j+1}+c_{j+1}^\dagger c_j.
+$$
+
+以外文自旋记号写，一般字符串是
+
+$$
+c_a^\dagger c_b
+=\frac14\sigma_a^+
+\left(\prod_{a<\ell<b}(-\sigma_\ell^z)\right)\sigma_b^-.
+$$
+
+Pereira–Mueller 式 (9) 的印刷自旋表达式没有按式 (2)–(4) 展示此 $1/4$ 和每个中点的负号；其式 (11) 的振幅表达式则使用 $|A_{\downarrow}|^2-|A_{\uparrow}|^2$，对应这里的 $Z^{\rm sf}$。因此本章用 CAR 和局部矩阵乘法确定系数，不将式 (9) 的印刷式直接作本章恒等式。其式 (10) 的乘积因子化还依赖该文的无关联初态；这里不使用该准备假设。
+
+对于任意复矩阵 $M\in\mathbb C^{m\times m}$，定义二次算子
+
+$$
+Q(M)=\sum_{a,b=1}^mM_{ab}c_a^\dagger c_b.
+$$
+
+由 CAR，逐矩阵单位计算
+
+$$
+\begin{aligned}
+[c_a^\dagger c_b,c_c^\dagger c_d]
+={}&\delta_{bc}c_a^\dagger c_d
+-\delta_{da}c_c^\dagger c_b\\
+&-c_a^\dagger c_c^\dagger c_bc_d
++c_c^\dagger c_a^\dagger c_dc_b.
+\end{aligned}
+$$
+
+最后一项先交换两个产生算子，再交换两个湮灭算子，得到正的 $c_a^\dagger c_c^\dagger c_bc_d$，恰好抵消前一四次项。因此
+
+$$
+[c_a^\dagger c_b,c_c^\dagger c_d]
+=\delta_{bc}c_a^\dagger c_d-\delta_{da}c_c^\dagger c_b,
+$$
+
+$$
+[Q(M),Q(N)]=Q(MN-NM)=Q([M,N]).
+$$
+
+这一步对任意 $M,N$ 都成立。$M$ Hermitian 时 $Q(M)$ Hermitian。局部自旋表示中 $c_a^\dagger c_b$ 可支撑整段 $a,\ldots,b$，而在费米子记号中仍是二次项；两种“阶数”不是同一概念。
+

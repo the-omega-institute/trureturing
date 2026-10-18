@@ -1,0 +1,20 @@
+#### 24.6　三量可见性三角形
+
+现在让私有状态由类型决定。令 $H\in\{0,1\}$，
+
+$$
+r_\theta=\Pr(H=1\mid\Theta=\theta),
+\qquad
+\delta=|r_1-r_0|.
+$$
+
+记
+
+$$
+V_{\mathrm{hid}}=\operatorname{TV}(P_1^A,P_0^A),
+\qquad
+V_{\mathrm{pub}}=\operatorname{TV}(P_1^{U,A},P_0^{U,A}).
+$$
+
+<a id="claim-24-6-1"></a>
+

@@ -1,0 +1,29 @@
+**Proposition 68.2 (actual class membership and minimal rank).** Every (S.113) is an actual original-real CPTP map on complex $M_3$, has $\lambda=f(\tau,\bar\tau)=1$, the prescribed half-beta phase-difference spectrum, and minimal encoder Kraus rank $2+\operatorname{rank}Q$.
+
+Proof. Proposition 48.2 already supplies the base realization. To check the changed third columns against the same first two columns, use
+
+$$
+\begin{gathered}
+\|t_1\|^2=\frac34,\quad\|t_2\|^2=\frac14,\qquad
+\frac{\langle b_1,t_1\rangle+\langle b_2,t_2\rangle}{\sqrt2}
+=\frac14-\frac14=0,\\
+\frac{\langle g_1,t_1\rangle+\langle g_2,t_2\rangle}{\sqrt2}=0,\qquad
+\sum_\alpha\|K_\alpha^{\epsilon,Q}|2\rangle\|^2
+=d_\epsilon^2+\epsilon\operatorname{Tr}Q=1.
+\end{gathered}
+\tag{S.114}
+$$
+
+Thus the third-to-code TP sums still vanish, while the code-column Gram sums are unchanged. Hence $\sum_\alpha(K_\alpha^{\epsilon,Q})^\dagger K_\alpha^{\epsilon,Q}=I_3$. These real matrices have the form $(x,Jx,t)$ in (R.8)–(R.9), with every third-column component retained. Their Kraus sum is CP on all complex matrices, so this verifies the actual class rather than a complementary relaxation.
+
+For $f_j^\pm=(b_j\pm ig_j)/\sqrt2$, the only nonzero phase Kraus vectors are $K_j^{\epsilon,Q}\chi_\pm=f_j^\pm/\sqrt2$, $j=1,2$. The four $f_j^\pm$ are orthonormal. The actual phase outputs and their environment data therefore satisfy
+
+$$
+\operatorname{spec}(N_{\epsilon,Q}(\chi_+)-N_{\epsilon,Q}(\chi_-))
+=(1/2,1/2,0,-1/2,-1/2),\qquad
+\tau=\bar\tau=\operatorname{diag}(1/2,1/2,0,\ldots,0),\qquad\lambda=1.
+\tag{S.115}
+$$
+
+Here $N(\chi_\pm)$ denotes the output on the phase projector, as in the first volume. In a complex linear relation among the Kraus matrices, their first columns force the coefficients of $K_1^{\epsilon,Q},K_2^{\epsilon,Q}$ to vanish. The remaining coefficients vanish because $\epsilon>0$ and the real independent $q_\ell$ are also complex independent. Thus the vectorized Kraus matrices are independent and the encoder Choi rank is exactly $2+s$, equal to the minimal Kraus number. Choosing $Q=\Pi_s/s$ for any real rank-$s$ orthogonal projection realizes each rank $3,4,5,6,7$. The unchanged code columns and $d_\epsilon t_1$ also span all five output directions, so retained-output support is five-dimensional. $\square$
+

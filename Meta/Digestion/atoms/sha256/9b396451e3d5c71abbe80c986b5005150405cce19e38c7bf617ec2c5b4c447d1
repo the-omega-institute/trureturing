@@ -1,0 +1,44 @@
+## 12. Either-interface complete-redraw obstruction
+
+The next result isolates the relation that is lost when a private successor law is redrawn from a row independent of the current phase label. It uses the same complete stopped carriers and the same actual-flow table as Definitions 1.1–2.1. A redraw below is a change to the observer's finite private update kernel; it is not a reset of the source draw, the original control, a held record, or a paid history.
+
+For a period-one table write
+
+$$
+\bar Q=\sum_x\pi_xQ_x,\qquad \bar W=\sum_y\tau_yW_y,
+$$
+
+and put
+
+$$
+L_x=\sum_yB_{xy}W_y,\qquad J_y=\sum_xA_{yx}Q_x.
+$$
+
+The complete-word events used below are
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\}.
+$$
+
+Direct substitution in the stopped laws gives
+
+$$
+\begin{aligned}
+P_{p,1}(E_p)&=\frac{412}{729},&
+P_{p,2}(E_p)&=\frac{7299}{15625},&
+C&:=\frac{P_{p,1}(E_p)+P_{p,2}(E_p)}2=\frac{11758471}{22781250},\\
+P_{\beta,1}(E_\beta)&=\frac{22}{27},&
+P_{\beta,2}(E_\beta)&=\frac{93}{125},&
+H&:=\frac{P_{\beta,1}(E_\beta)+P_{\beta,2}(E_\beta)}2=\frac{5261}{6750}.
+\end{aligned}
+$$
+
+The half-distances of the two endpoint laws are the supplied
+$\rho_p=1116529/22781250$ and $\rho_\beta=239/6750$. Also set
+
+$$
+U:=P_{p,2}(w_{3,1})=\frac{1944}{390625},\qquad
+S(t):=1+t+t^2,\qquad \eta:=\frac1{100000}.
+$$
+

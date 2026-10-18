@@ -1,0 +1,60 @@
+**Definition 7.1 (Affine continuation with approximate original readout).**
+Keep Definition 1.1, including arbitrary fixed preparation phases and
+$k_0\in(0,H)$, and fix $0<a<b<H$. The current source is
+$\mathcal M_{ab}=[a,b]\times\mathbb T^2$ of actual rays, in the
+$(k,\alpha,\beta)$ coordinates of Lemma 1.2. Write $P_s=T_s$ for the
+straight probability command of Proposition 3.1. The two relative commands
+are
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),
+\qquad \operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M_{ab}:a\le k+s\le b\},
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+ \left(k,\alpha+\frac t2,\beta+\left(\frac12-\frac kr\right)t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M_{ab}.
+$$
+
+Here $s,t$ are real numbers. They prescribe respectively
+$(\dot k,\dot\chi)=(s,0)$ and $(0,t)$ on a unit interval. The angles are
+circle classes; the commanded increment $t$ is not reduced modulo
+$2\pi$. Every finite word whose successive guards hold is included, with
+no uniform bound on word length or total phase variation.
+
+For $\epsilon\ge0$, the contract asks for a finite integer $n\ge0$,
+an arbitrary function $E:\mathcal M_{ab}\to\mathbb R^n$, a fixed affine
+readout $c+D_*z$ into the original ten outputs of Definition 2.1, and,
+for every real $s,t$, fixed affine maps
+
+$$
+\mathcal U_s(z)=A_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t
+$$
+
+such that
+
+$$
+\sup_{x\in\mathcal M_{ab}}\|c+D_*E(x)-y(x)\|_2\le\epsilon,
+$$
+
+$$
+E(P_sx)=\mathcal U_sE(x)\quad(x\in\operatorname{dom}P_s),
+\qquad
+E(Q_tx)=\mathcal V_tE(x)\quad(x\in\mathcal M_{ab}).
+$$
+
+The matrices and offsets may depend on the fixed source, band, preparation
+and prescribed command, but not on the current height, phases or producing
+history. Both readout and update offsets are allowed. No regularity,
+boundedness or injectivity of $E$ is assumed, nor any regularity in the
+command parameter or ambient matrix group law. Approximate outputs may be
+arbitrary vectors of $\mathbb R^{10}$. There is no external height
+selector choosing the update matrix.
+
+The contract starts from exact initialization at a band state. If the
+preparation lies outside the band, lawful original positive-fiber prefixes
+may first enter it; no band-confined history is asserted to start outside
+the band. Exact initialization and updates mean exact real arithmetic.
+

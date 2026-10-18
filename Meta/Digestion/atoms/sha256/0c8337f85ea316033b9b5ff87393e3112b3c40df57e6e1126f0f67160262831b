@@ -1,0 +1,44 @@
+**Lemma 4.2 (the simultaneous filling calculation for these profiles).**
+For a retained tuple, all its whole-class negatives can be satisfied
+simultaneously by finite branch-image fillings of its live names. For
+any finite $M\ge0$ they can all have minimum leaf depth greater than
+$M$, while every closed piece stays literal.
+
+Proof. This is the elementary height-tag filling of TCR Lemma 5.2,
+used for PCA Theorem 11.2's exact attainment. Here are its needed
+details. Let $h\ge1$ bound the heights of the six free terms, treating
+names as leaves. List the live names as $z_1,\ldots,z_n$ and use the
+all-beta images (FCS.8). Set
+
+$$
+N_i=\max\{h,M\}+1+i(h+1),\qquad z_i\longmapsto B_{N_i}
+\quad(1\le i\le n).
+\tag{FCS.17}
+$$
+
+The heights $N_i$ exceed $h,M$ and have gaps greater than $h$.
+Induction on a free term shows that its evaluated height is the maximum
+of its concrete-leaf depths and the numbers $N_i+$ the depths of its
+occurrences of $z_i$.
+
+For different free terms descend through equal ordered pair constructors
+to a first syntactic mismatch. Different concrete constructors stay
+different; different names have different assigned heights. For a name
+$z_i$ against a nonvariable subterm $A$, a ground $A$ has height at
+most $h<N_i$. Otherwise let $N_j$ be the largest assigned height among
+names occurring in $A$. If $N_j<N_i$, the evaluated height of $A$ is
+at most $\max\{h,N_j+h\}<N_i$. If $N_j>N_i$, it is at least
+$N_j>N_i$. If $N_j=N_i$, that name occurs at positive depth in the
+nonvariable $A$, whose evaluated height is then greater than $N_i$.
+These cases exclude equality at every possible mismatch. Injectivity
+of the pair constructor carries the distinction back to the original
+terms. Thus one assignment satisfies every syntactically nontrivial
+whole-class negative, including negatives against closed ground classes.
+
+Each assigned value is a finite branch image with minimum leaf depth
+$N_i>M$. Only genuine frontier branches are replaced. An early leaf,
+its absent cone, or a fully exposed $E$ stays literal. If there are no
+live names the empty assignment suffices for the already unequal ground
+terms. This is the needed specialization, not a new general filling or
+prescribed-rank theorem. $\square$
+

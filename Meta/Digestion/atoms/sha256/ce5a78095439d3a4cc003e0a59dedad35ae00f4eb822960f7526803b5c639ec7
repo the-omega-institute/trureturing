@@ -1,0 +1,9 @@
+**Definition 6.1 (owner-relative acquired material).** An owner's materialized
+record consists of the data actually acquired at its permitted reads or IN
+occurrences, retained finite latches and cells, and its acquired metadata.
+An inaccessible producer bit is not in a receiver's materialized record.
+A callable-memory object can additionally contain a genuinely bound handle
+with authorized backing material and future paid operations. Its mathematical
+value includes that backing relation and permissions; it is not just the
+pointer's wire string.
+

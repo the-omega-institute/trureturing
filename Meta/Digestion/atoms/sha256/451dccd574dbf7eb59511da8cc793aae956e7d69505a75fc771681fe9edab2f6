@@ -1,0 +1,36 @@
+**Lemma 5.3 (The nominal two-query cycle is absorbed by $\mathsf A$).** If neither query is final, a correct four-row competitor has $r=2$ and satisfies (2.3).
+
+Proof. Each query has one distinct lower Halt $L_v$ and one exercised emitting edge. A self-edge can only return that query's own Halt label, contrary to its nonconstant table. If both emitting edges lead to roots, Lemma 5.1 makes all continuing sources take root-zero edges and finish at queries with only one lower Halt. Both component tables are then functions of the same first charge, giving at most two joined classes. Thus both edges cross to the other query; the stream is $L\mid B\mid B\mid B$. This nominal cycle is retained.
+
+Let $t_v$ be the raw Halt bit of $b_v$. If $t_0\ne t_1$, both components either halt first or cross together, and only the two off-diagonal pairs can return. Hence $t_0=t_1=t$. Fixed raw updates give exactly
+
+$$
+q_2^B(j)=1\Longrightarrow \Lambda(j)=(L_{q(j)\oplus t},L_{q(j)\oplus t}),
+$$
+$$
+q_2^B(j)=0\Longrightarrow
+\Lambda(j)=(L_0,L_1),\qquad q_3^B(j)=1.
+\tag{5.1}
+$$
+
+The last equality is the actual termination requirement, not an assumed guard. Both diagonal pairs and the displayed off-diagonal pair occur.
+
+Homogeneous nonempty $H$ cannot be the off-diagonal class. To prove this with the actual gcd, use reduced actual coordinates $u=m/g$, $n=T/g$ and $v=n-u$. Then
+
+$$
+H/g=\{u-v+1,\ldots,u-1\},\qquad
+(H/g)+v=\{u+1,\ldots,n-1\}.
+$$
+
+An off-diagonal $H$ forces $q=0$ on both intervals. Translating the termination requirement in (5.1) says
+
+$$
+q(x)=0\Longrightarrow q(x+v)=1\qquad(x\notin\{0,v\}).
+$$
+
+Thus nonempty $H/g$ is contained in $\{v\}$. Its cardinality $v-1$ forces $v=2$, and $u-1=v$ forces $(u,n)=(3,5)$. The forced actual charges on $J/g=\{1,2,4\}$ are $(1,0,0)$, whose second charges are $(0,0,1)$. They give only one diagonal and the off-diagonal pair, contradicting three joined classes. Therefore $H$ is empty or has diagonal label $(L_t,L_t)$.
+
+Choose $i=1-t$ and the whole class $A=M_i$, namely the other diagonal together with the off-diagonal. It misses $H$. For a diagonal point in $M_i$, $q(j-m)=1$, so its shifted actual argument belongs to $A$. For an off-diagonal point, $q(j-m)=0$ and $q(j-2m)=1$; its shifted argument is the opposite diagonal and lies outside $A$. At $j=a$ that argument is the excluded leading vertex $m$ and both the shifted class indicator and the required equality indicator are zero. No argument is the excluded donor zero. These are exactly (2.4). The existing even completion supplies $\mathsf A$ on the full physical path. This argument uses no acyclicity assumption on the control graph. ∎
+
+**Proof of necessity in Theorem 2.2.** Lemmas 4.1–4.2 exclude both shared-root shapes. Lemma 4.3 extracts $r=2$ and $\mathsf B$ from distinct roots with a shared query. With distinct roots and queries, four lower Halt labels would make both queries final and acquire the target in two blocks. Three lower labels require an early final query, but Lemma 5.2 forces equal lower-label sets. The remaining binary allocations are an early final query or one different Halt per query, covered by Lemmas 5.2–5.3. Thus every four-word-row competitor has $r=2$ and $\mathsf A\lor\mathsf B\lor\mathsf R$. All arguments used actual original sources, fixed raw updates and actual words at their paid indices. Delayed homogeneous branches, zero-Halt queries, all-one success and late rejection, waits, root entry and nominal cycles have remained in the case partition. ∎
+

@@ -1,0 +1,100 @@
+**Theorem 9.2 (equal complete endpoint coordinates, distinct scan
+continuations).** For every $P,N,m$ of Definition 9.1 the specified
+history belongs to GENERAL Definition 1.4's canonical domain. There
+are finite common integers $n_{P,N}$ and $D_{P,N}$ such that
+
+$$
+n(s_{N,m,k})=n_{P,N}+k,\qquad
+O^+(x_{N,m})=O^+(x_{N,m'})\quad(0\le m,m'<N).
+$$
+
+For $m<m'$, before the backward scan's read of payload position
+$m'+1$ (positions start at zero), all $O^+$ successors from the two
+starts agree. At that read their successor latch4 values are respectively
+1 and0. Thus their complete sequences of $O^+$ successors on this
+finite chart differ, without any further input. All these reads have
+the existing current authority.
+
+Proof. GCA Definition 3.2's mode1 syntax parses $p_{N,m}$ as
+SourceOffset$(m,N-1-m)$. Both unary fields terminate, their arguments
+are nonnegative, and
+
+$$
+|p_{N,m}|=1+(m+1)+(N-m)=N+2,\qquad |w_{N,m}|=2N+8.
+$$
+
+GENERAL Definition 1.4 allows physically length-delimited history
+frames even when their later occurrence or range check rejects. It
+therefore includes these acquired unfinished requests from the same
+$P$, including when no source occurrence $m$ exists. No successful
+SourceOffset binding is needed before import and parsing. The supplied
+gate is history choice1, so outer00 is not reached.
+
+Apply the literal ingress used in Theorem 2.2, with common length
+$N+2$. Every positive payload iteration is precisely
+
+$$
+\mathrm{RD}(\text{length},5);\ \mathrm{IN}(6);\ \mathrm{EX}(70);
+\ \mathrm{WR}(70,6);\ \mathrm{MR}(70);\ \mathrm{MR}(\text{length}).
+$$
+
+The test depends on the length word and there is no payload-dependent
+branch or bank assignment. Gate, mode, tag and length are common. At
+the chosen cuts the last input has overwritten latch6 with0, latch5
+has the same length-test value, and all other finite slots agree.
+In zero-based payload positions, $p_{N,m}$ is1 except for its zeros
+at $m+1$ and $N+1$. The latter is the common pending final bit.
+For $m\ne m'$ the raw endpoints consequently differ only in the two
+already written70 symbols at payload positions $m+1,m'+1$.
+
+This proves equality of every retained coordinate in $O^+$, not just
+its public source or tally. Tapes0–63, parked client, source16,
+verifier/INITIAL consumer, all raw and active finite code/control
+stores, latches, owner/phase/invocation/read/mailbox slots and tokens
+are the same. So are all74 port head positions, including both meter
+lanes. Each common executed row appends the same ordinary or fence
+receipt under TMC PR57.D1; input and write operands are not receipt
+values. Hence the entire meter, with both heads, agrees. Allocations,
+scratch, descriptors, bank parity and seal status also agree at these
+cuts. The external supplier has returned to its common ready state
+after each bit as in AIF Definition 2.2. Its future choices are not an
+endpoint field. This gives the common absolute tally $n_{P,N}$.
+Distinct supplied histories are also distinguished separately by each
+of GENERAL Corollary 4.4's four natural views; that existing history
+kernel is not being re-established here.
+
+The remaining ingress executes EX70, WR70,6, MR70, MR(length), the
+terminal RD(length,5) reading0, and the existing EX/WR/MR/F-seal
+sequence. These are nine common rows. RCA Definition 13.2 then
+constructs the whole-frame length $U(2(N+2)+4)$ from the copied length,
+counts preceding descriptor Fs and writes the actual descriptor.
+Its finite loops use only common base/length/ordinal data and existing
+scratch/banks64–68. They do not inspect either differing70 symbol.
+GENERAL Definition 2.1 preserves the positioned70 importer head during
+bank rebuilds. The descriptor work is finite, has identical effects
+on $O^+$, and requires no IN.
+
+The next positioning routine is the existing RCA Definition 11.2
+LastBank70: Tail; ML; ML; then RD and, unless F, ML and repeat; at
+the preceding F, MR. It first passes the final F and reads the frame
+backwards, starting at its final payload0. Every frame cell is binary;
+the scan's sole exit test is F and takes the same branch on0 and1.
+Its reads use ordinary latch4. Thus every binary cell of this full
+frame, including both variable unary fields, is read before parsing.
+For $m<m'$, the first differing cell encountered from the right is
+payload position $m'+1$: the $m$ frame has1 there and the $m'$ frame
+has0. Earlier scan cells, local control, heads and receipts agree,
+and the complete successors at this RD differ in latch4. No later
+semantic refusal can remove that already executed successor.
+
+The final MR reaches the first tag bit. Binary values do not alter
+the scan schedule, so its complete row count, as well as the preceding
+descriptor schedule, is common to all $m$. This defines finite
+$D_{P,N}$. Each row adds one actual receipt, giving the stated tally
+at every cut. The70 sentinel, frame cells and final F all exist. ARC's
+$A$ ownership, actual current read slot and the just-completed seal
+authorize this scan; the descriptor and historical ownership are not
+permissions. No producer workspace, busy-cut semantic audit, historical
+Call or extra input is used. This proves the complete native segment
+claimed, independently of all subsequent parsing and binding. ∎
+

@@ -1,0 +1,127 @@
+**Theorem 72.10 (correctly typed full physical norm-resolvent relation).**
+For every fixed nonempty compact $K\subset\mathbb C\setminus\mathbb R$,
+there are $\varepsilon_0>0$ and $C<\infty$ such that for
+$0<\varepsilon<\varepsilon_0$,
+
+$$
+\begin{aligned}
+ H_\varepsilon&=\frac a\delta A_\varepsilon^+,
+ &J_\varepsilon&=S_\varepsilon^*\Theta_\varepsilon W_{\rm dbl}
+       :\mathcal H_\delta\longrightarrow L^2(\Omega_\varepsilon^+),\\
+ J_\varepsilon^*J_\varepsilon&=I,
+ &\sup_{z\in K}\big\|(H_\varepsilon-z)^{-1}
+       -J_\varepsilon(L-z)^{-1}J_\varepsilon^*\big\|
+          _{\mathcal B(L^2(\Omega_\varepsilon^+))}
+       &\le\frac\delta a C\varepsilon.
+\end{aligned}
+\tag{72.26}
+$$
+
+The physical generator scale is $a/\delta$. The estimate is on the
+entire physical $L^2$ space, including its complement to
+$\operatorname{Ran}J_\varepsilon$. It is not a root, harmonic,
+edge-only or calibrated-state compression. Its constants can depend
+on $D,\delta,a,s,(m_g)_g$, the chosen fixed geometry and $K$.
+It supplies no uniformity for growing sources, shrinking $\delta$,
+growing spectral sets or increasing $s$.
+
+**Proof.** Verify first the precise interface to the mature convergence
+theorem. The full structure is finite, connected and has straight
+length-one cylinders with the fixed smooth unit-area cross-section
+dilated by $\varepsilon$. Chambers are connected, have the smooth
+noncontact boundary and flat contacts at angles uniformly below $\pi$
+required in Section2. Their reference-volume representation is exactly
+(72.6), with $|Q_v^0|=m_v>0$. The three local inputs of Section3,
+Proposition3.1 and Lemmata3.3/3.5, are the explicit uniform bounds
+(72.10); thus they are not inferred merely from a volume-preserving
+homeomorphism. The transverse decoupling uses the fixed disk gap noted
+in72.6. The longitudinal Dirichlet edge gap is $\pi^2$, and(72.10)
+gives a uniform positive lower bound on the complete decoupled
+operator for all sufficiently small $\varepsilon$. For the normalized
+constant plate vector
+$\psi_v=|\Gamma_v^\varepsilon|^{-1/2}\mathbf1$, harmonic extension is
+the same constant throughout its chamber, so
+$\|\Pi_v^\varepsilon\psi_v\|_2^2=m_v/k_v>0$ exactly. Thus the
+finite-dimensional constant-mode lower bound used in the paper's
+Section4 is uniform as well. Standard mixed transmission operators
+are well defined on
+these piecewise smooth Lipschitz pieces, with the local mixed normal
+traces justified in72.6. The full exterior operator is all-Neumann,
+exactly the operator considered by the paper. No mixed-exterior
+convergence theorem is substituted for it.
+
+Apply Theorem4.5, with equations(16)–(18) giving(72.18), on
+$K'=(\delta/a)K$. This is a fixed compact nonreal set with
+
+$$
+ \sigma'=\frac\delta a\min_{z\in K}|\operatorname{Im}z|>0,
+ \qquad R'=\frac\delta a\max_{z\in K}|z|<\infty.
+ \tag{72.27}
+$$
+
+It lies in the paper's fixed $K_{\sigma'}$ class from Section2.
+Only that fixed-set statement of Theorem4.5 is used, not a statement
+uniform over growing-frequency sets or its additional analytic
+continuation to real spectral gaps. Since $s\ge3$, its exponent
+$\gamma$ is zero. In the full physical Hilbert space it gives
+
+$$
+ \sup_{\zeta\in K'}
+ \|(A_\varepsilon-\zeta)^{-1}
+       -\Theta_\varepsilon(B-\zeta)^{-1}\Theta_\varepsilon^*\|
+       \le C\varepsilon.
+ \tag{72.28}
+$$
+
+This is the paper's full resolvent theorem, rather than its
+edge-compressed Theorem4.2. All normalizations in its constant-mode
+map have the full-space extension(72.19).
+
+Both terms in(72.28) reduce the odd subspace. Compress with
+$S_\varepsilon^*$ and $S_\varepsilon$, each of norm one. On the
+odd effective space use the onto unitary $W_{\rm dbl}$ and(72.23),
+and set $\zeta=\delta z/a$. The scaling identities are
+
+$$
+ (H_\varepsilon-z)^{-1}
+   =\frac\delta a S_\varepsilon^*
+                      (A_\varepsilon-\zeta)^{-1}S_\varepsilon,
+ \qquad
+ W_{\rm dbl}(L-z)^{-1}W_{\rm dbl}^*
+   =\frac\delta a(B-\zeta)^{-1}\widehat P_{\rm odd}.
+ \tag{72.29}
+$$
+
+Equivariance and(72.29) turn(72.28) into(72.26). No factor two is
+lost in the compression. The isometry statement follows because
+$\Theta_\varepsilon W_{\rm dbl}$ has odd range and all three
+identifications preserve the corresponding norms.
+
+More explicitly, $J_\varepsilon F$ equals
+$\sqrt\delta\,\varepsilon^{-(s-1)/2}u_e(x)$ on each upper cylinder,
+$\sqrt\delta\,\varepsilon^{-(s-1)/2}f_p$ on each source chamber,
+and zero on every upper half of a ground chamber. Its adjoint, with
+respect to the norm(72.2), is
+
+$$
+\begin{aligned}
+ (J_\varepsilon^*h)_p
+    &=\sqrt\delta\,\varepsilon^{-(s-1)/2}
+                                 \int_{Q_{p_+}^\varepsilon}h,\\
+ (J_\varepsilon^*h)_e(x)
+    &=\delta^{-1/2}\varepsilon^{-(s-1)/2}
+                         \int_{Q_{e_+}^{\rm c,\varepsilon}}h(x,y)\,dy.
+\end{aligned}
+\tag{72.30}
+$$
+
+This also checks the actual atomic mass one and cable density $\delta$.
+The ground chamber coordinates introduced in the full all-Neumann
+supplier vanish in its odd effective sector; no ground atom is added
+to the original source. Finite-thickness ground half-chambers do retain
+physical $L^2$ functions, and(72.26) controls their resolvent responses
+as part of the full physical norm. In particular it implies
+$\|(H_\varepsilon-z)^{-1}(I-J_\varepsilon J_\varepsilon^*)\|
+\le(\delta/a)C\varepsilon$ uniformly on $K$, not their deletion
+from the physical carrier. $\square$
+

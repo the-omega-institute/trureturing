@@ -1,0 +1,4 @@
+**Limitation 6.4 (Periodic and noncontractive scope).** Assumption 6.1 covers a periodic component only when the stated period-compatible flag block exists. It is not a consequence of finite hiddenness, legality or branching. In a hidden chain of period $d>1$, equal-length paths from two different cyclic classes preserve their distinct phase offsets, so they cannot reach the same state. Thus Corollary 6.3's all-pair path-mergeability condition cannot hold across those classes. This obstruction to that sufficient condition does not refute every period-compatible flag-block instance.
+
+Components without the flag-block hypothesis remain covered by the universal comparisons (3.1) and (4.2), with possibly infinite bounds. Their weighted finiteness or another independent actual-tail supplier is still needed. No hidden-state identification, global matrix positivity, uniform-$N$ rate, efficient block length or numerical acquisition of $C_c,\alpha_c$ is asserted.
+

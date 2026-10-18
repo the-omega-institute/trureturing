@@ -1,0 +1,63 @@
+## Theorem (the sharp 3-adic limit)
+
+The recurrence has a complete 3-adic description, beyond any fixed modulus.
+Define
+\[
+ c_j=(-1)^{j+1}u_j\qquad(j\ge1).
+\]
+Then \(c_1=1\), and (M27.3) rewrites as
+\[
+ c_{j+1}=c_j\left(1-4\cdot3^{\,2j+1}c_j^2\right).
+ \tag{L3.1}
+\]
+Inductively \(3\nmid c_j\) for every \(j\). Consequently
+\[
+ c_{j+1}-c_j=-4\cdot3^{\,2j+1}c_j^3,
+ \qquad
+ v_3(c_{j+1}-c_j)=2j+1.
+ \tag{L3.2}
+\]
+
+There is a unique \(C\in\mathbb Z_3\) such that \(c_j\to C\), and the
+convergence order is exact:
+\[
+ \boxed{v_3(C-c_j)=2j+1\qquad(j\ge1).}
+ \tag{L3.3}
+\]
+Indeed, for \(n>j\),
+\[
+ c_n-c_j=\sum_{t=j}^{n-1}-4\cdot3^{\,2t+1}c_t^3.
+\]
+The summands have strictly increasing 3-adic valuations
+\(2j+1,2j+3,\ldots\), so the first summand is the unique lowest-order
+term. Passing to the limit proves (L3.3).
+
+Equivalently, for every integer \(K\ge1\),
+\[
+ \boxed{
+ u_j\equiv(-1)^{j+1}C\pmod {3^K}
+ \quad\Longleftrightarrow\quad
+ K\le2j+1.}
+ \tag{L3.4}
+\]
+Thus \(3^{\,2j+1}\) is the maximal stabilization modulus at index \(j\);
+the next modulus \(3^{\,2j+2}\) fails exactly. The first residues of \(C\)
+(which determine all lower congruences) are
+\[
+\begin{array}{c|rrrrrrrr}
+K&1&2&3&4&5&6&7&8\\ \hline
+C\bmod3^K&1&1&1&55&136&379&1108&3295 .
+\end{array}
+\]
+For \(K=3\), (L3.4) recovers M27; for \(K=4\), \(C\equiv55\pmod{81}\)
+gives \(u_j\equiv26(-1)^j\pmod{81}\), exactly the M81 residue.
+
+Two useful exact valuations follow immediately:
+\[
+ \boxed{v_3(B_j-1)=j+1,\qquad
+ v_3(u_{j+1}+u_j)=2j+1.}
+ \tag{L3.5}
+\]
+The first uses \(B_j-1=2\cdot3^{j+1}u_j\) and \(3\nmid u_j\); the second
+is (M27.3) with the sign changed.
+

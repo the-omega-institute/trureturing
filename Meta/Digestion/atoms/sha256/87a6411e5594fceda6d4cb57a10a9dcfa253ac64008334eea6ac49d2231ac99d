@@ -1,0 +1,79 @@
+**Theorem 6.2 (sharp size of the count relaxation).** Both without and
+with the fixed-successor requirement (SI.20), the minimum number of
+labels in the count-incidence relaxation of Definition 6.1 is
+
+$$
+2K+2L-4=2n-2.
+\tag{SI.21}
+$$
+
+The maximum antichain size in (SI.9) has the same value. The minimum
+is attained already by the functional labeling
+
+$$
+\gamma(h,z)=(h+z,h\bmod2).
+\tag{SI.22}
+$$
+
+Proof. The set
+
+$$
+\mathcal C=\{(h,z)\in V:h\le1\text{ or }z\ge L-2\}
+\tag{SI.23}
+$$
+
+has size $2L+2(K-2)$. Two cells in its first two rows have hit
+gap at most one, and two in its last two columns have zero gap
+at most one. For a remaining comparison, the cell with the larger
+hit count has zero count at least $L-2$, so the oriented zero
+decrease is at most one. Thus $\mathcal C$ is an antichain and
+the nonempty label sets at its cells must be disjoint. This gives
+the lower bound even for multiple labels at a cell.
+
+In (SI.22), two different cells with the same label have equal
+depth and distinct hit counts of the same parity. Their oriented
+hit increase and zero decrease are equal positive even integers.
+Both gaps are at least two. Thus the singleton label sets of this
+labeling are allowed.
+
+Depths $0$ and $n-1$ each contain one cell. Every intermediate
+depth contains at least two cells: its admissible hit counts are
+the interval
+
+$$
+\max(0,d-L+1)\le h\le\min(K-1,d),
+$$
+
+which has at least two integers when $1\le d\le n-2$ and
+$K,L\ge2$. Consecutive hit counts supply both parities. There
+are consequently $1+2(n-2)+1=2n-2$ labels.
+
+For a fixed label $(d,e)$, every existing live zero successor has
+label $(d+1,e)$, and every existing live one successor has label
+$(d+1,1-e)$. These are independent of the representative cell.
+Install that successor whenever at least one representative has
+a live successor for the reply; when none does, install the
+corresponding terminal $\mathsf0$ or $\mathsf1$. This defines
+two fixed successors and proves (SI.20) for these singleton sets.
+All running edges increase $d$, so the resulting label graph terminates.
+
+Finally every label class in (SI.22) is a chain under (SI.9).
+An antichain meets each such chain at most once, giving the upper
+bound on antichain size as well. Alternatively, repeatedly joining
+$(h,z)$ to $(h+2,z-2)$ partitions the rectangle into chains whose
+initial points are exactly (SI.23). No general chain decomposition
+theorem is needed. $\square$
+
+For the threshold parameters in (SI.4), this relaxation has the
+strict positive gap
+
+$$
+G-(2n-2)=(K-2)(L-2).
+\tag{SI.24}
+$$
+
+Thus count separation together with (SI.20), by itself, cannot
+exclude a $2n-2$-label object. This says exactly what those
+requirements permit; it does not bound a method that also uses
+actual supports, assignments, weighted charges or terminal correctness.
+

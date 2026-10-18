@@ -1,0 +1,13 @@
+### 定义 56.2（有限可见阶密度）
+
+令 \(Q\) 是
+\[
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\}
+\]
+上的平稳律，且可见 Markov 阶数不超过 \(m\)。令 \(Q_n\) 为长度 \(n\) cylinder 分布，定义
+\[
+D_m(Q)=
+\sum_{\substack{a,v\in B_m\\a_m=v_1=0}}
+h\!\left(Q_{2m+1}(a0v),Q_{2m+1}(a1v)\right).
+\]
+

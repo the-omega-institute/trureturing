@@ -1,0 +1,14 @@
+**定义 0.2（响应画像与不可区分纤维）。** 对 $\Gamma\subseteq\mathcal E$，记
+
+$$
+\mathcal R_\Gamma(\theta)=(P_\theta^e)_{e\in\Gamma},
+\qquad
+\theta\sim_\Gamma\theta'
+\iff
+\mathcal R_\Gamma(\theta)=\mathcal R_\Gamma(\theta').
+$$
+
+目标可识别，是指 $T$ 在每个 $\sim_\Gamma$ 纤维上恒定。核包含与因子化判据分别见定理 1.2.3 与推论 1.2.4；查询增加怎样细化纤维、以及成本怎样限制充分查询，分别见第 1.2 节与第 1.14 节。这里的画像是模型给出的全部响应律，不表示有限档案已经精确估计了这些概率。
+
+<a id="claim-0-3"></a>
+

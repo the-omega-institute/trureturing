@@ -1,0 +1,53 @@
+**Definition 2.1 (positive double-wall source).** Fix
+
+$$
+0<Z<1,\qquad r=1-Z=2c,\qquad b=(c,c,Z),\qquad
+0<\eta<c/2,\qquad a\in[\eta,c-\eta].
+\tag{SC.1}
+$$
+
+Modes are ordered $(0,1,2,3,13)$, with index $4$ denoting mode $13$.
+The supplied probabilities and signed weights are
+
+$$
+p(k)=(k,c-k,Z,c-k,k),\qquad
+w(k)=\tfrac12(1,0,0,0,1)-\frac{k}{r}(1,1,0,1,1).
+\tag{SC.2}
+$$
+
+Fix the same positive preparation and calibrated reference where actually
+supplied. An original control has finite $T\geq0$, continuous real $k,\chi$,
+strict $0<k<c$, finite variation of $\chi$, and either absolute continuity of
+both coordinates or the original finite-piecewise-$C^1$ alternative with
+continuous derivative rates on its closed pieces. The latter also implies
+absolute continuity by the supplied finite fundamental-theorem argument.
+Put $\xi(t)=\chi(t)-\chi(0)$. The real lift is kept before any phase reduction.
+
+For the certificate impose the additional source promises
+
+$$
+\begin{gathered}
+k(0)=k(T)=a,\qquad \eta\leq k(t)\leq c-\eta,\qquad
+|k'|\leq L\quad\text{a.e.},\\
+\operatorname{TV}(\chi)\leq V,\qquad
+v=k'\text{ a.e. for a BV representative }v,\qquad
+\operatorname{TV}(v)\leq W,
+\end{gathered}
+\tag{SC.3}
+$$
+
+where $L,V,W$ are finite nonnegative supplied upper bounds. BV variation may
+equivalently be bounded by the distributional variation on the open interval;
+no artificial jumps from zero outside $[0,T]$ are charged. Values of $v$ at
+individual partition points do not affect any integral. One may choose the
+regulated representative with endpoint traces. These promises restrict both
+original regularity alternatives; they do not replace the original class.
+There is no bound on $\chi'$ and no exclusion of either sign of winding.
+The current-loop variant adds $\xi(T)=2\pi m$, $m\in\mathbb Z$. A fixed $V$
+contains only its compatible sectors; the union over finite $V$ contains all
+signed integers. Unknown preinitial phase and winding are not inputs.
+
+The exact return height is a source/generator guarantee, not an inference
+from noisy endpoint readings. It supplies the actual matching guard for
+later controls based at $a$.
+

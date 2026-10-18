@@ -1,0 +1,18 @@
+**Definition 87.1 (critical notation).** Retain all the fixed data,
+operators and full complex domains of Definition 81.1. In particular
+the heat semigroup is $P_t=e^{-t\mathcal E}$, the potential is exactly
+$V=j_0^{-1}\int_1^\infty p_E(t;0,\cdot)dt$, and $a>0$ is not inserted
+into that heat clock. Let $M$ denote multiplication by $V^{1/2}$,
+and write
+
+$$
+v[f]=\|Mf\|_2^2,\qquad
+\|f\|_{\mathcal Q_E}^2=\|f\|_2^2+b[f],\qquad
+h_c=h_{\chi_c},\qquad H_c=H_{\chi_c}.
+\tag{87.1}
+$$
+
+The constants $C_*$ and $\chi_c=a/C_*$ remain those of (84.1).
+All $L^p$ spaces in §§87--89 use unit Lebesgue Haar measure on the
+real Engel group (82.1).
+

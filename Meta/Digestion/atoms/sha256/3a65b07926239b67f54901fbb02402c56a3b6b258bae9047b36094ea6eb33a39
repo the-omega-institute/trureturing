@@ -1,0 +1,26 @@
+## 5. 有限坐标运输的统一零条件与原始截断商
+
+令 $T,I$ 为有限集合，$T$ 取离散拓扑。令 $S\subseteq\mathbb R^I$ 为任意在坐标排列下不变的集合，取子空间拓扑，记 $K=S$。对 $\rho\in\mathfrak S_I$ 定义
+
+$$
+(P_\rho z)_i=z_{\rho^{-1}(i)}.
+$$
+
+给定任意函数 $n:T\times I\to T$ 和 $\sigma:T\times I\to\mathfrak S_I$。在 $X=T\times K$ 上定义实际生成关系
+
+$$
+(t,z)\leadsto(u,w)
+\quad\Longleftrightarrow\quad
+\exists f\in I:\ z_f=0,\quad u=n(t,f),\quad
+w=P_{\sigma(t,f)}z.
+$$
+
+令 $R$ 为此关系的等价闭包。对 $t,u\in T$、$\rho\in\mathfrak S_I$、$Z\subseteq I$ 定义
+
+$$
+G(t,u,\rho,Z)\quad\Longleftrightarrow\quad
+\forall z\in K:\
+\left(\forall i\in Z,\ z_i=0\right)
+\Longrightarrow R((t,z),(u,P_\rho z)).
+$$
+

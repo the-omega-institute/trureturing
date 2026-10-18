@@ -1,0 +1,63 @@
+**Definition 1.1 (the unchanged observation task).** Let
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle u,v\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle u,v\rangle)=1+\max\{h(u),h(v)\}.
+$$
+
+Pairing is free and ordered. Every finite word in $L,R$, including
+$\varepsilon$, is a legal original-root literal. Its reply $r_t(a)$ is
+alpha or beta at the corresponding leaf, branch at a pair, and absent
+when traversal passes a leaf. Write
+
+$$
+\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\},
+\qquad \rho\alpha=\beta,
+\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For public $D\ge1$, retain exactly
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+W_D=\{q:|q|\le D-1\},\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+\tag{RCE.1}
+$$
+
+One actual initial source $t$ remains stationary through preparation and
+later acquisition. The iterates $\rho^kt$ specify prediction targets.
+A deterministic effective preparation starts source-blind from $D$ and
+common installed tables, receives no later target, acquires source
+dependence only by charged literal Reads, and terminates on every $t$.
+Its export $E(t)$ includes every accessible surviving source distinction:
+selectors, control, buffers, operands, lengths, allocation, counters,
+handles and accessible timing. All other accessible fields are functions
+of this complete code and public data. A separately paid handoff and
+access-isolation service removes access to the remaining preparation
+dependence and supplies lawful entry.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. A deterministic reader uses $E(t),D,p$ and common tables to
+choose zero Reads or one fresh Read of that same $t$ at any finite
+original-root word. The choice precedes its reply and every supplied
+count. The resulting predictor $Z$ must satisfy
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad\text{for every }t\in\mathcal F_D,\ p\in\mathcal P_D,
+\text{ and subsequently supplied authentic }k\ge0,
+\tag{RCE.2}
+$$
+
+without further Reads. Define $M_1(D)=\min|E[\mathcal F_D]|$ over these
+jointly correct procedures. There is no subtree, equality, source-identity,
+age, reset, copying, free-navigation or advice port. Handoff, isolation,
+source continuity, entry and authentication are declared services.
+Preparation Reads and work, temporary storage, installed tables,
+post-request workspace, final predictor size, submitted address length
+and letters, count representation and physical time are separate
+resources. These are the original [FMR, §§1–2] and [NPC, §1] premises.
+

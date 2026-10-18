@@ -1,0 +1,43 @@
+**Definition 23.2 (Stationary history and its payment convention).** For $i\in\{0,1\}$ and $q\in(0,1)$ define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,&
+f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),&f_{i,q}(0)&=0,\\
+S_{i,q}(b)&=\sum_{k\ge b}f_{i,q}(k)\quad(b\ge0),&
+\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.
+\end{aligned}
+\tag{23.4}
+$$
+
+The sums defining $S_{i,q}$ use $f_{i,q}(0)=0$, so $S_{i,q}(0)=S_{i,q}(1)=1$. The source $\mathsf P_{i,q}$ is the stationary binary renewal law with $K$ zeros between consecutive ones and $K$ distributed as $f_{i,q}$. Its one-sided history $X_0,X_1,\ldots$ has the following exact description. First draw $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=\frac{S_{i,q}(b)}{\mu_i(q)}\quad(b\ge0),
+\qquad \mathbb E_{i,q}\tau=\beta_i(q).
+\tag{23.5}
+$$
+
+Place zeros at $0,\ldots,\tau-1$ and a one at $\tau$. Independently of $\tau$, draw iid $K_1,K_2,\ldots$ with law $f_{i,q}$ and put subsequent ones at
+
+$$
+\tau_n=\tau+\sum_{j=1}^n(K_j+1)\quad(n\ge1),\qquad \tau_0=\tau.
+\tag{23.6}
+$$
+
+All other bits are zero. This is the equilibrium forward-wait convention of the owning source's Theorem 17.4 and Definition 20.1. The first wait is not distributed as $K$. The normalization in (23.5) is $\sum_{b\ge0}S_{i,q}(b)=\mu_i(q)$, and its mean is the triangular sum in (23.4). These identities are the classical finite-mean stationary renewal formulas; they also specify the observation law without referring to an unobserved initial age.
+
+The source promise consists of the two full families $\{\mathsf P_{0,q}:0<q<1\}$ and $\{\mathsf P_{1,q'}:0<q'<1\}$. The parameters $q$ and $q'$ are separate nuisance parameters. A reading action returns the next bit of this single history, in order, and costs one. If an observer reads $X_0,\ldots,X_{T-1}$ and then stops, its paid cost is $T$; stopping before any read has cost zero. A source tick is a bit equal to one; an observed tick is one that has actually been read. Neither the parameters nor the variables in (23.4)–(23.6) are source responses.
+
+For $s=-\log q\downarrow0$, the polynomial-geometric moment estimates of equations (18.13) and (20.29) in the owning source give
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),\qquad
+\mu_i(e^{-s})=\frac{10}{s}+O_H(1),\qquad
+\beta_i(e^{-s})=\frac{11}{2s}+O_H(1).
+\tag{23.7}
+$$
+
+Each moment in (23.4) is finite at every $q\in(0,1)$. The stationary sources here are the actual output laws identified in the owning source; their generating instruments have dimension $D=6$. That dimension is not an observer state count.
+

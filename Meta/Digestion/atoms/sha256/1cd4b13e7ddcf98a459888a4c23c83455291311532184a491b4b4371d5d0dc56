@@ -1,0 +1,41 @@
+**Corollary 9.2 (all-original-competitor mass consequences).** For every
+$D\ge9$, the cap proved by the range leaf yields
+
+$$
+M_1(D)\ge\left\lceil(16/3)^{2^{D-9}}\right\rceil,
+\qquad
+\lambda\ge2^{-9}\log_2(16/3).
+\tag{RCE.35}
+$$
+
+The full-support cap $7/32$ also yields
+$M_1(D)\ge\lceil(32/7)^{2^{D-9}}\rceil$.
+These hold against every original competitor, not just the
+constructions in Theorem 9.1.
+
+Proof. Apply [NPC, Theorem 7.1] to the proved all-length caps.
+Concretely, restrict the same arbitrary original code to the
+actual perfect scaffold with $2^{D-9}$ depth-nine blocks. Every
+original-root literal is constant or a function of one boundary
+reply in one actual block. Correctness for all counts makes each
+restricted code fiber admissible, without splitting it or imposing
+a common donor for different targets. The product law has total
+mass one and each fiber mass at most $C^{2^{D-9}}$. Count the
+unchanged complete names. This is the credited transport with
+the new cap, preserving all variable shapes, all original targets
+and arbitrary off-target queries in the competitor class.
+$\square$
+
+The numerical lower in (RCE.35) is weaker than the credited NCE
+bound. The new conclusions are exact pressure on a family of joint
+whole-block supports and strict certificate-language separation.
+The unchanged best interval supplied here is
+
+$$
+\frac18\log_2(33/13)\le\lambda<\frac3{16},
+\tag{RCE.36}
+$$
+
+with lower credited to NCE and upper to D3. D3 also supplies
+$M_1(3)=4$. No new numerical improvement is asserted.
+

@@ -1,0 +1,24 @@
+## 证据边界先行：拒绝 BIND-ONLY 信息
+
+这一轮采用严格的“证据类型系统”。
+
+当前公开仓库把理论 prose、实验、Lean 形式证明和开放问题分开，并明确说明：理论叙述与数值一致性本身不构成 Lean 定理；可复用的结果必须有明确声明、假设、证明和依赖闭包。[github.com](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com) 当前公开 PR 列表虽然包含 AURIC FIB、FIB escape-audit、common cyclic control、future laws 等方向，但 PR 标题和绑定关系只能说明研究意图，不能自动成为已证明事实。[github.com](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+定义三类证据：
+
+$$
+\mathrm{EvidenceLevel}
+\in
+\{\mathrm{BIND\text{-}ONLY},\mathrm{COMPUTED},\mathrm{VERIFIED}\}.
+$$
+
+其中：
+
+- $\mathrm{BIND\text{-}ONLY}$：绑定、标题、未验证 Blueprint、理论草案、未闭合引用；
+- $\mathrm{COMPUTED}$：有限枚举、矩阵秩、可复核计算；
+- $\mathrm{VERIFIED}$：明确形式定义、无 `sorry` 的 Lean 证明、依赖闭包可检查。
+
+本回答拒绝使用 BIND-ONLY 信息作为证明前提。项目进展只用来确定待形式化问题，下面的数学结论独立来自有限代数、概率和图论。
+
+---
+

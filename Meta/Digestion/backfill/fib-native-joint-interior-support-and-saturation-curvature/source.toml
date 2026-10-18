@@ -1,0 +1,5 @@
+source_id = "fib-native-joint-interior-support-and-saturation-curvature"
+path = "docs/develop/theory/FIB_NATIVE_JOINT_INTERIOR_SUPPORT_AND_SATURATION_CURVATURE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

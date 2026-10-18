@@ -1,0 +1,39 @@
+**Example 11.3 (a selected chart cover without global closure).**
+Take $P=\{L,R\}$, the pair exterior with two distinct old classes,
+literal record $(0,L,\alpha)$, and signed record
+$(2,RL,2,RR,\ne)$. The entire fiber is
+
+$$
+D=
+\{\langle\alpha,\beta\rangle\}
+\ \cup\
+\{\langle\alpha,\langle x,y\rangle\rangle:x\ne y\}.
+\tag{NSF.27}
+$$
+
+To verify it, write the old source as $\langle z,w\rangle$ with
+$z\ne w$. The literal forces $z=\alpha$. Apply the exact calculation
+of Example 11.2 to $w$: the signed record permits $\alpha,\beta$
+or an unequal-child pair. The old disequality removes $w=\alpha$
+and removes nothing else. Conversely every source displayed in
+(NSF.27) satisfies every old and new constraint and both guards.
+
+For $Q=\{RL,RR\}$ use one ground chart
+$W_0=\langle\alpha,\beta\rangle$ and one constructor chart
+$W_1(x,y)=\langle\alpha,\langle x,y\rangle\rangle$ with domain
+$x\ne y$. The latter domain is invariant under simultaneous $\rho$;
+its target children remain distinct. Its reached set is both cuts,
+whereas the ground chart has neither reached. Each chart has a
+constant whole row. The original root reply at the known-reached
+address $R$ selects the chart: $\beta$ selects the first, branch the
+second. One actual read at $RR^{\lceil N/2\rceil}$ recovers that
+reply at entry $N\ge2$ using the known-reached decoder.
+
+The whole fiber is not globally forward-closed, since its fixed
+original left $\alpha$ becomes $\beta$ under global $\rho$.
+Thus Definition 10.1 applies beyond the global-closure premise.
+The construction retains the old cross-class disequality even
+though it is outside the new cut cones. The paid producer is ARH's
+whole-source acquisition, and the chart selector is an actual
+literal read, not an atomicity test.
+

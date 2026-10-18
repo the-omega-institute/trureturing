@@ -1,0 +1,77 @@
+## 144. 同一原编码器类中的两个实际通道
+
+**定义 C-144.1（完整 Kraus 列与物理坐标）。** 固定 $0<\beta\le1/2$、
+$a=1-\beta$，令 $H=\mathbb C^3$、$K=\mathbb C^5$。
+本批中 $P_j=|j\rangle\langle j|$ 是 $H$ 上的投影，
+$R_j=|e_j\rangle\langle e_j|$ 是 $K$ 上的投影；
+物理五态顺序、$\mathcal B$、$E=(\psi,\eta,e_2)$ 仍为 C-128.1 的对象。
+定义两个被动坐标通道 $N\in\{\mathcal A,\mathcal B_c\}$：
+
+$$
+\begin{aligned}
+A_0&=(\sqrt a\,e_0,\sqrt a\,e_1,e_4),&
+A_1&=(\sqrt\beta\,e_2,\sqrt\beta\,e_3,0),\\
+B_0&=(\sqrt a\,e_0,\sqrt a\,e_1,\sqrt a\,e_2),&
+B_1&=(\sqrt\beta\,e_3,\sqrt\beta\,e_4,\sqrt\beta\,e_1),\\
+\mathcal A(X)&=\sum_{j=0}^1A_jXA_j^\dagger,&
+\mathcal B_c(X)&=\sum_{j=0}^1B_jXB_j^\dagger.
+\end{aligned}
+\tag{C144.1}
+$$
+
+下标 $c$ 只将通道 $\mathcal B_c$ 与固定能量基 $\mathcal B$ 区分。
+两者的物理 Kraus 矩阵均为 $DK_jL^\dagger$，其中
+$D=\operatorname{diag}(1,i,i,i,1)$、$L=\operatorname{diag}(1,i,i)$，即
+
+$$
+N^{\rm ph}=\operatorname{Ad}_D\circ N\circ\operatorname{Ad}_{L^\dagger}.
+\tag{C144.2}
+$$
+
+这是[相位恢复卷 (P.1)、(P.5)](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#1-actual-channels-physical-coordinates-and-the-native-contract)
+的同一坐标合同，未安装 $L^\dagger$ 或 $D$ 为物理门。
+以下始终保留 (C144.1) 的全部原始 Kraus 项与第三列。
+
+**定理 C-144.2（实际 CPTP、相位谱与原生增益）。** 两个物理通道均属于上述
+相位恢复卷定义 1.3 的原实被动 Kraus 类 $\mathcal R_\beta$，且原菜单相位增益均为 $\beta$。
+
+证明。Kraus 形式给完全正性，且
+
+$$
+\begin{aligned}
+A_0^\dagger A_0+A_1^\dagger A_1
+&=\operatorname{diag}(a,a,1)+\operatorname{diag}(\beta,\beta,0)=I_3,\\
+B_0^\dagger B_0+B_1^\dagger B_1&=aI_3+\beta I_3=I_3.
+\end{aligned}
+\tag{C144.3}
+$$
+
+这些实矩阵定义整个复矩阵代数上的通道。具体地，对任意复 $X=(X_{ij})$，
+
+$$
+\begin{aligned}
+\mathcal A(X)
+&=a\sum_{i,j=0}^1X_{ij}|e_i\rangle\langle e_j|
++\beta\sum_{i,j=0}^1X_{ij}|e_{i+2}\rangle\langle e_{j+2}|+X_{22}R_4\\
+&\quad+\sqrt a\sum_{i=0}^1
+\left(X_{i2}|e_i\rangle\langle e_4|+X_{2i}|e_4\rangle\langle e_i|\right),\\
+\mathcal B_c(X)
+&=a\sum_{i,j=0}^2X_{ij}|e_i\rangle\langle e_j|
++\beta\sum_{i,j=0}^2X_{ij}|e_{f(i)}\rangle\langle e_{f(j)}|,
+\qquad(f(0),f(1),f(2))=(3,4,1).
+\end{aligned}
+\tag{C144.4}
+$$
+
+故第三输入方向及全部复跨块项都未被截断。令
+$J_{pq}=i(|e_q\rangle\langle e_p|-|e_p\rangle\langle e_q|)$，
+$\chi_\pm=(|0\rangle\pm i|1\rangle)/\sqrt2$。两个实际输出差分别为
+$aJ_{01}+\beta J_{23}$ 与 $aJ_{01}+\beta J_{34}$，各自的两个平面正交，
+谱均为 $(a,\beta,0,-\beta,-a)$，且为纯虚反对称 Hermitian 矩阵。
+物理输入 $\theta_\pm=(|0\rangle\pm|1\rangle)/\sqrt2$ 满足
+$L^\dagger\theta_\pm=\chi_\mp$；因此物理差在被动坐标中取上述差的负号，
+仍有同一对称谱。相位恢复卷定理 2.1 的参数为 $d=5,p=1,r=2$、
+权重 $(a,\beta)$，直接给 $B_0=0,B_1=a,B_k=1$（$k\ge2$）及
+$\gamma=B_2-B_1=\beta$。这是该原生相位任务的既有结论；
+不由它推出以下其他输出效果的原生实现或源的制备。证毕。
+

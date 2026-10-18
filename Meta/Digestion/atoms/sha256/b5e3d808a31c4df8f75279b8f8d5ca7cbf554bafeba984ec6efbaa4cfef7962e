@@ -1,0 +1,36 @@
+**定理 C-29.3（四边校准树的完整通道证书）。** 已知 C-29.2 的精确 Schur 分类成立，并使用 C-29.1 另供的成对检查。精确报告 $\operatorname{Re}\Gamma_{st}=1$ 在一个连通比较图的所有边上成立，当且仅当 $\mathcal N_\Gamma=\mathrm{id}$。在这种逐对边检查合同中，五标签至少需要四条边，树
+
+$$
+E_{\mathrm{tree}}=\{OL,LJ,OR,OT\}
+\tag{29.3}
+$$
+
+即已足够，根 $O$ 的最大深度为二。更一般地，若一棵根深度为 $D$ 的五标签生成树在同一校准中满足 $\operatorname{Re}\Gamma_{st}\ge1-\varepsilon$，$\varepsilon\ge0$，则对每个未触及的有限维参考 $A$，
+
+$$
+\sup_{\rho_{\Sigma A}}\frac12
+\| (\mathcal N_\Gamma\otimes\mathrm{id}_A)(\rho_{\Sigma A})-\rho_{\Sigma A}\|_1
+\le\min\{1,D\sqrt{2\varepsilon}\}.
+\tag{29.4}
+$$
+
+本图给 $\min\{1,2\sqrt{2\varepsilon}\}$。只测模长一的连通边则只保证一个对角酉通道；使它成为已校准恒等目标仍须已知且可执行的补偿。
+
+**证明。** 指定输入与读出的期望为 $\operatorname{Re}\Gamma_{st}$。共同单位记录给
+
+$$
+\|e_s-e_t\|^2=2-2\operatorname{Re}\Gamma_{st}.
+$$
+
+精确等于一时，两记录相同，连通性把这个等式传到全部标签，故 $\Gamma_{st}=1$ 对所有标签对成立。少于四条边不连通；给每个连通分量一个互相正交的记录，分量内的全部检查都通过而跨分量相干被消去。此下界仅属于声明的逐对检查，不约束另供的集合式仪器。若只给 $|\Gamma_{st}|=1$，Cauchy–Schwarz 的等号只给记录共线；路径传播得到 $e_s=e^{i\phi_s}e_O$ 和 $\mathcal N_\Gamma=\operatorname{Ad}_U$，$U=\operatorname{diag}(e^{i\phi_s})$。
+
+近似时，每条树边的记录距离至多 $\sqrt{2\varepsilon}$；沿根路径三角求和，得 $\max_s\|e_s-e_O\|\le D\sqrt{2\varepsilon}$。在同一环境中置
+
+$$
+V|s\rangle=|s\rangle e_s,\qquad W|s\rangle=|s\rangle e_O.
+$$
+
+系统标签正交给 $\|V-W\|=\max_s\|e_s-e_O\|$。对任意与参考关联的单位输入，两个输出向量之差范数不超过这个算子范数；单位向量 $a,b$ 的纯态迹距离满足 $\sqrt{1-|\langle a,b\rangle|^2}\le\|a-b\|$。取环境迹的收缩、密度态的凸分解和距离至多一给 (29.4)。这里用的是固定共同等距的直接估计，其一般连续性背景为 [Kretschmann–Schlingemann–Werner](../../../Library/QuantumChannels/kretschmann2008continuity.md) 定理 1；没有对未知膨胀取最优值的步骤。
+
+本证明要求已知精确 Schur 家族和同一相位校准。仅有近似占位保持，或分别给每条边选一个相位参照，均不满足这些前提。长链局部误差也必须与深度一起读：下述文献注中的半圆记录有邻边误差 $1-\cos(\pi/m)$，路径深度随 $m$ 增长，不能从邻边趋近一推出整体误差趋零。证毕。
+

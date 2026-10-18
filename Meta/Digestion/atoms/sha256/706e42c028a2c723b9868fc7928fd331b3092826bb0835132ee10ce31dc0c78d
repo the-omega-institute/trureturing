@@ -1,0 +1,38 @@
+**References 9.2 (primary literature and bounded scope).** The
+finite-intersection and one-point compactification principles are
+literature-attested standard topology, used as intermediate methods.
+The proof in Lemma 3.1 states the elementary finite-product selection
+argument explicitly, so no stronger compactness or computability theorem
+is imported. The pinned formal suppliers in References 9.1 specify its
+mathematical hypotheses independently of historical attribution.
+
+Solar-Lezama, Tancau, Bodik, Saraswat and Seshia,
+[*Combinatorial Sketching for Finite Programs*][SKETCH], §5.4, give the
+counterexample-guided synthesis method for their finitely represented
+program setting. Candidate search and counterexample refinement are
+literature-attested methods. Their termination argument exhausts the
+finite $2^m$ input space of the Boolean encoding; it does not give an
+arbitrary-word stopping rule on the infinite domain (NFO.2). Theorem 4.2 gets that rule
+from Theorem 3.2 and a separate finite-sample all-comparator decision;
+no termination premise is borrowed merely from the name of the method.
+
+Kuncak and Rinard, [*On the Theory of Structural Subtyping*][KR],
+arXiv:cs/0408015v1, §6, Theorem 90 and Corollary 91, supply quantifier
+elimination and sentence decision for their specified term-power
+language with a decidable base structure. That primary language and its
+sentence-decision result do not assert definability of the native normal
+subdomain or the physical-address sort. [TPO][TPO] retains its exact
+normal-domain obstruction. This volume uses NSF's native fixed-word
+queries and a separate search over physical words; it does not insert
+an unsupported predicate into a term-power language.
+
+The comparison is bounded to these synthesis and term-power sources,
+the cited compactness interfaces, and the adjacent native repository
+results. It supports no literature-wide novelty, priority or general
+undecidability claim. Theorems 3.2 and 4.2 and their paid correspondence
+are classified as repo-derived; §§5–7 are repo-derived applications of
+that new bridge together with the exact NSF/JRF suppliers. NPL's
+projection, finite-source and exterior results, and the existing
+serial/static/prefix existence bridge, are reused rather than asserted
+as new results.
+

@@ -1,0 +1,21 @@
+**定义 9.1（失败递归和八槽共同实现）。** 对任意基数的合法族 $K\subseteq\mathcal F(H)$，置
+
+$$
+\begin{aligned}
+L_0(K,H)&\iff |K|\ge2,\\
+L_{s+1}(K,H)&\iff |K|\ge2\ \land\
+\bigwedge_{E\in\{J,M\}}\exists\alpha\in\mathbb R:
+L_s(K\cap\mathcal F(H,E,\alpha),(H,E,\alpha)).
+\end{aligned}
+\tag{9.1}
+$$
+
+所用预算只及剩余原时钟，空集、单点和提前停止均保留其原义。在同一 $H_4$ 之后固定第五 $M$，两个第六动作及其最终迹为
+
+| 第六动作 $E$ | 第六迹 $\tau_E$ | 最终 $J$ 迹 $\tau_{EJ}$ | 最终 $M$ 迹 $\tau_{EM}$ |
+| --- | --- | --- | --- |
+| $J$ | $1+2r+2b+c$ | $1+r+3b+c$ | $2+5b+c$ |
+| $M$ | $n+2u$ | $t+2n+2r$ | $3+2r+8b+2c$ |
+
+各响应始终是同一世界的 $d+g(6)\tau_E$ 或 $d+g(7)\tau_{EG}$，第五响应始终是 $d+g(5)(n+u)$。
+

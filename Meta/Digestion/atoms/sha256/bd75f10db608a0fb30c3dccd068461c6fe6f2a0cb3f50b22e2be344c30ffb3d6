@@ -1,0 +1,28 @@
+**Corollary 5.3 (uniform reconstruction floors for the coarse-only task).**
+Suppose a reconstruction procedure has access only to the binned
+instrument of Definition 5.1 and common fields independent of the choice
+of $\gamma_+$ or $\gamma_-$. It may even know the two candidate
+constructions and their complete binned law. It is not given their actual
+programme identity. Any common reconstructed exact-time marked law has
+worst-case error at least $c/2$ on this pair. Any common reconstructed
+complete quantum instrument has worst-case $d_{\rm op}$ error at least
+$1/4$.
+
+**Proof.** The input operations to the reconstruction procedure coincide
+by (EM.23), with equal success and common references. Its output law or
+operation is consequently one common object $Q$. Triangle inequality
+bounds the exact distance between the two targets by the sum of their
+distances from $Q$. Apply (EM.19) in the respective metrics. A common
+randomized procedure has the same conclusion after its independent
+randomness is averaged. $\square$
+
+This is an unknown-programme reconstruction statement, not a failure of
+the known-programme conditional law calculation in §6. A separately
+retained programme archive can distinguish the candidates and invalidates
+the coarse-only hypothesis. The equality does persist under common lawful
+finite postprocessing or continuation of the retained coarse output,
+provided every accessible controller, selector, archive and external input
+is jointly matched. Failed branches remain absorbing. It supplies no
+equivalence for a menu additionally reading the omitted old timestamp or
+an intermediate live cut.
+

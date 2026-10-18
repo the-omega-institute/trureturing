@@ -1,0 +1,42 @@
+**Definition 2.1 (Literal affine factor with arbitrary readout).** For
+some finite integer $m\ge0$, take any function
+$E:\mathcal M\to\mathbb R^m$. For each real $s,t$ take fixed ambient
+affine maps
+
+$$
+\mathcal U_s(z)=A_sz+b_s,\qquad
+\mathcal V_t(z)=C_tz+d_t,
+$$
+
+and require exactly
+
+$$
+E(P_sx)=\mathcal U_s(E(x))\quad(x\in\operatorname{dom}P_s),\qquad
+E(Q_tx)=\mathcal V_t(E(x))\quad(x\in\mathcal M).
+$$
+
+An empty probability domain imposes no identity. The coefficients may
+depend on the fixed task, preparation, model and command, but not on
+the current state or its producing history. Both update offsets are
+allowed. No ambient invertibility or group law is assumed.
+
+The readout is one fixed deterministic function
+$\mathcal R:E(\mathcal M)\to\mathbb R^{10}$. Define
+
+$$
+q(x)=\mathcal R(E(x)),\qquad
+\operatorname{err}(E,\mathcal R)
+=\sup_{x\in\mathcal M}\|q(x)-y(x)\|_2\in[0,+\infty].
+$$
+
+There is no continuity, measurability, computability, boundedness or
+injectivity requirement on $E$ or $\mathcal R$, and no parameter
+regularity requirement on the command maps. An arbitrary affine readout
+$c+Lz$, with any offset $c$, is included in this readout class. Thus the
+change of class does not discard a readout offset. An ambient extension
+of $\mathcal R$ is optional. Its only varying input is the current
+encoded point: neither height, an angle lift, a history, nor an external
+selector is supplied separately. Decoded vectors need not be native
+physical outputs. Initialization and affine updates are exact real
+operations.
+

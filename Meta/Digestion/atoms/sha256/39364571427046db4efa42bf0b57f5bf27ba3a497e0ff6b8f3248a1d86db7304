@@ -1,0 +1,73 @@
+**Theorem 5.1 (Exact rational containment at level 52).** Every
+$\chi\in\mathcal R_{52}^{\rm P}$ satisfies
+
+$$
+\frac{63}{64}\chi+\frac1{64}\chi_*\in\mathcal F.
+\tag{5.1}
+$$
+
+For $L=L_{52}^{\rm P}$,
+
+$$
+L\le\varepsilon_1\le\frac{63}{64}L+\frac1{80},
+\qquad L\ge L_0:=\frac{129931}{250000}.
+\tag{5.2}
+$$
+
+Proof. For $n=52$ the polynomial in (2.5) is $P_{27}^{(3,0)}$.
+Its exact binomial expression is
+
+$$
+P_m^{(a,b)}(x)=2^{-m}\sum_{j=0}^m
+\binom{m+a}{j}\binom{m+b}{m-j}(x-1)^{m-j}(x+1)^j.
+\tag{5.3}
+$$
+
+In particular,
+
+$$
+\begin{aligned}
+P_{27}^{(3,0)}(39/40)
+&=\frac1{80^{27}}\sum_{j=0}^{27}
+\binom{30}{j}\binom{27}{27-j}(-1)^{27-j}79^j\\
+&=-\frac{3699076981653450378355112312523193564930362582897147}
+{151115727451828646838272000000000000000000000000000}<0,\\
+P_{27}^{(3,0)}(1)&=\binom{30}{27}=4060>0.
+\end{aligned}
+\tag{5.4}
+$$
+
+Thus there is a root in $(39/40,1)$. All roots are in $(-1,1)$,
+by orthogonality for the positive Jacobi weight. The largest root
+therefore has $0<g_{52}<1/40$, and
+$p_{52}^{\rm P}=(5/8)g_{52}<1/64$. Theorem 2.2 with additional
+depolarizing mixing proves (5.1), and Theorem 3.1 gives the first
+two inequalities in (5.2).
+
+For the remaining inequality, every positive state in $\mathcal W$
+is separately input-transpose invariant, hence is PPT on its two-body
+space. The QJM Theorem 2.3 witness bounds the entire complex PPT TP
+Choi slice, not only separable points. Explicitly its credited survival
+moment $\mathcal V$, marginal multiplier $Y$, witness gap
+$\gamma=1/25000$ and same-plane projection $Q$ give
+
+$$
+\begin{gathered}
+\operatorname{tr}(\chi(I_O\otimes Y-\mathcal V))
+\ge\gamma\left(1-\tfrac12\operatorname{tr}(\chi Q)\right),
+\qquad \operatorname{tr}Y/5=4803/10000,\\
+Q=R_+\otimes R_++R_-\otimes R_-,\qquad
+Q\preceq I_O\otimes(R_++R_-).
+\end{gathered}
+\tag{5.5}
+$$
+
+The same full TP marginal gives
+$\operatorname{tr}(\chi Q)\le4/5$. Consequently the survival is at
+most $4803/10000-3/125000$. The QEC actual-time moment inequality
+$e(T)\ge1-\operatorname{tr}(\chi\mathcal V)$ holds for every
+CPTP map; it does not require separability. Together with (1.11)
+this yields $f(x)\ge L_0$ for every feasible relaxed point, proving
+$L\ge L_0$. This use of the old lower is a credited consequence on
+the correct outer slice. $\square$
+

@@ -1,0 +1,27 @@
+**Proposition 5.3 (Universal depth-three bound).** Every tree in (2.3)
+satisfies
+
+$$
+\sum_{x,y,z}m(C_{xyz})\le S_3,
+\qquad S_3=\frac a2+3a^2\eta+2\eta^3.
+\tag{5.10}
+$$
+
+Proof. The actual two subtrees satisfy $B_0\le Z$ and $B_1\le D$.
+Their sum is
+
+$$
+\begin{aligned}
+Z+D
+&=\frac a2+a^2\eta(2+c)+2a\eta^2\\
+&=\frac a2+3a^2\eta+2a(1-a)\eta^2\\
+&=\frac a2+3a^2\eta+2\eta^3,
+\end{aligned}
+\tag{5.11}
+$$
+
+because $c=1-2\eta$ and $a(1-a)=ab=\eta$. This proves the
+inequality uniformly over every address tree. Equality still requires
+one policy attaining both subtree bounds with the same first call and
+source. $\square$
+

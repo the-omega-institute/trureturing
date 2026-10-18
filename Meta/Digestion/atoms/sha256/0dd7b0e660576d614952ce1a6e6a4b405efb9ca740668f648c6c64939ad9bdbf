@@ -1,0 +1,24 @@
+**Assumption 1.1 (The five-mode preparation).** Let $\mathcal H=\mathbb C^5$
+with ordered orthonormal basis $\mathsf S=(N,2,3,5,25)$, and write
+$\Pi_s=e_se_s^\dagger$. Every complex density matrix on $\mathcal H$ is an
+allowed input. Fix
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},
+\qquad U(t)=e^{-itK},\quad t\ge0.
+\tag{1.1}
+$$
+
+These are exactly the preparation hypotheses of
+[QMB, Assumption 1.1](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md).
+Here $N$ labels a unit vector. This preparation is an independent
+hypothesis; the native composition maps
+[GraftAffineClosure.step, quantity, run](https://github.com/the-omega-institute/trureturing/blob/65e4b82851f0d321f9211ef6cb7ef2bb343c9306/D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean)
+do not supply it.
+

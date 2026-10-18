@@ -1,0 +1,24 @@
+**Lemma 7.2 (short probes cannot separate beta from a branch).** For
+every finite branch tree $z$, every $j\ge2$, and every word
+$s$ with $|s|<\lceil j/2\rceil$,
+
+$$
+r_{\rho^j\beta}(s)=r_{\rho^j z}(s)=\mathsf{branch}.
+\tag{CRF.21}
+$$
+
+Proof. Write $r=|s|$, so $2r\le j-1$.
+The supplied all-source branch bound JRF (2.4) says that
+$w(t)\le n-2$ implies $r_{\rho^n v}(t)=\mathsf{branch}$
+for every finite $v$, where $w(t)=\#_L(t)+2\#_R(t)$.
+For $\rho^j\beta=\rho^{j+1}\alpha$ use
+$w(s)\le2r\le j-1=(j+1)-2$.
+
+For $z=\langle z_L,z_R\rangle$, the empty suffix sees its
+preserved root branch. Otherwise remove its first letter.
+The remaining suffix $t$ has weight at most $2(r-1)\le j-3$,
+and lies in $\rho^j z_L$ or $\rho^j z_R$.
+The same bound with $n=j$ gives branch. It proves existence as
+well as the label, so absence cannot distinguish these short
+words. $\square$
+

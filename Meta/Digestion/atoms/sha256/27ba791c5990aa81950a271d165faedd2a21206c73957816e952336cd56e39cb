@@ -1,0 +1,14 @@
+**Proposition 16.2 (positive primitive work need not be a completed
+service).** The inference from positive original primitive work to
+$E+J>0$ is false on the existing source domain.
+
+Proof. At a reached prescribed header IN inside the canonical ReadE
+source body, Supply its next canonical bit. AIF Definition 2.2 and TMC
+PR57.D1 make this one actual IN: it changes its input latch/control and
+adds a receipt, without writing, moving or constructing an ordinary
+cell. The following matching EX/WR has not occurred, nor has a service
+committed. Thus on this one-row interval $\Delta A_{55}=\Delta\mu=0$
+and $\Delta n=1$. GENERAL Theorem 9.1 supplies this original action on
+its unchanged fixed-entry chart. It is a genuine unfinished source
+prefix, outside the whole-completed-service subclass. ∎
+

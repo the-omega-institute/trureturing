@@ -1,0 +1,19 @@
+**Definition 7.2 (The remaining value and resource distinctions).** The
+unrestricted exact-value problem is to evaluate the minimum (6.5),
+with its entire cone $\mathcal K$, matrix marginal and fifteen norm
+constraints, and exhibit a matching legal attaining port. The
+coordinate bijection and affine-dimension statement specify that
+problem but do not evaluate its minimum. The lower of QPC Theorem
+6.4 and the sufficient construction of
+[QFA, Theorem 5.1](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_FINITE_PORT_ATTAINMENT.md)
+are separate quantitative assertions; neither is a premise of
+Theorems 2.2–7.1.
+
+The boundary coordinates describe a class of fixed quantum channels.
+Exact coefficient descriptions, finite flag counts and whole-block
+CPTP design are distinct resources from coefficient synthesis,
+finite precision, state-preparation acquisition, clocks, storage
+duration and physical transport. Mutual recovery of native tree
+relations, space, time, boundary and memory additionally requires
+maps and hypotheses connecting those objects to Assumption 1.1.
+

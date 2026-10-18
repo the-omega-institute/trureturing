@@ -1,0 +1,27 @@
+**The real period and the small logarithm.** The ordered roots of the short cubic are
+
+$$e_1=105D,\qquad e_2=-30D,\qquad e_3=-75D.$$
+
+Write $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The usual substitution in the elliptic integral gives the period basis
+
+$$\omega=\frac{2K_{\rm ell}(1/2)}{\sqrt{180D}},\qquad
+\omega'=\frac{2iK_{\rm ell}(\sqrt3/2)}{\sqrt{180D}}.$$
+
+The real-period parameter is $(e_2-e_3)/(e_1-e_3)=1/4$. Thus $\tau=\omega'/\omega$ is purely imaginary with $\operatorname{Im}\tau>1$, so this basis is already reduced. Choose the real principal logarithm $u$ of $P$, with $|u|\le\omega/2$, and an integer $b$ such that
+
+$$\Lambda=au+b\omega,\qquad |\Lambda|\le\omega/2.$$
+
+The point $P$ lies on the identity component. Hence $\Lambda$ is a real principal logarithm of $aP$, $|b|\le(a+1)/2<a$, and $\Lambda\ne0$ because $P$ is nontorsion.
+
+Its short coordinate is $x_a=45DB_n-30D$. Since $B_n>B\ge144$, one has $x_a\ge B_n$ and $x_a>210D=2\max_i|e_i|$. Ingram's Lemma 8 gives
+
+$$\log|\Lambda|\le\frac32\log2-\frac12\log x_a
+\le\frac32\log2-\frac12\log B_n.$$
+
+The normalized upper height bound gives $a^2\widehat h\le\tfrac12\log B_n+\log24/6$. Therefore
+
+$$\log|\Lambda|\le-\frac{a^2s}{3}+\frac{\log24}{6}+\frac32\log2
+<-\frac{a^2s}{3}+2\le-\frac{a^2s}{6}. \tag{93.4}$$
+
+The last step uses $a\ge3$ and $s>40$.
+

@@ -1,0 +1,87 @@
+**Theorem 21.2 (complete optimum on fixed proper scopes).** Fix the
+mixture $(\theta_j,F_j)$ of Definition 20.3 and positive $A>B$. A feasible
+global identity requires $\rho_v>0$ at every vertex. If these appearances
+are positive, the minimum over all positive real tables satisfying
+(GDB.85), with arbitrary global compensation, is exactly
+
+$$
+\min_{\boldsymbol\psi} U
+=2n+\sum_{v\in V} f(\rho_v),\qquad
+f(t)=t\log_2\frac{A^{1/t}+B^{1/t}}2\quad(0<t\le1).
+\tag{GDB.88}
+$$
+
+It is attained by $\psi_{jv}(u)=\Phi_v(u)^{1/\rho_v}$. For rational
+$A,B$ and rational mixture data these attaining tables are algebraic.
+The lower bound includes nonalgebraic positive tables as well.
+
+Proof. First average the local logarithms over the common cycle action:
+
+$$
+\bar\ell_{jv}(u)=\frac1{|K|}\sum_{z\in K}
+    \log_2\psi_{jv}(u+z|_{\operatorname{st}(v)}).
+$$
+
+Every translate of the global log identity has the same right side,
+since $H(s+z)=Hs$. Averaging therefore preserves that identity. For
+fixed $j$, log-partition is convex in all its local log-table entries:
+its Hessian, up to the positive logarithm conversion factor, is a
+covariance matrix. Equivalently this convexity follows from finite
+Hölder. Translating all tables simultaneously by a fixed $z$ merely
+reindexes the same common summation variable $s$, leaving $Z_j$
+unchanged. Jensen thus shows that replacing the tables by
+$2^{\bar\ell_{jv}}$ cannot increase $\log_2 Z_j$, and hence cannot
+increase $U$. This is finite-sum symmetrization, not an action made
+available on the unknown source.
+
+By (GDB.87), the averaged table is constant on each parity class.
+Write its two values as $\alpha_{jv},\beta_{jv}$. Proper-row independence
+in Lemma 21.1 gives, including $F_j=\varnothing$,
+
+$$
+\log_2 Z_j=2n+\sum_{v\in F_j}
+          \log_2\frac{\alpha_{jv}+\beta_{jv}}2.
+\tag{GDB.89}
+$$
+
+Let $\varphi_v(0)=A$, $\varphi_v(1)=B$, and
+$h_v(b)=\sum_{j:v\in F_j}\theta_j\log_2\psi_{jv}(b)$ for these
+symmetrized tables. The image of $H$ is exactly the even-total-parity
+subspace by Theorem 13.1. Thus (GDB.85) is
+$\sum_v[h_v(y_v)-\log_2\varphi_v(y_v)]=0$ for every even-total $y$.
+At $y=0$ it gives $\sum_v c_v=0$, where
+$c_v=h_v(0)-\log_2 A$. Comparing it with every two-bit flip gives
+$d_u+d_v=0$ for distinct $u,v$, where
+$d_v=h_v(1)-\log_2 B-c_v$. With at least three vertices, three such
+pair comparisons force every real $d_v$ to vanish. Consequently
+
+$$
+h_v(0)=\log_2 A+c_v,\qquad h_v(1)=\log_2 B+c_v,
+\qquad\sum_v c_v=0.
+\tag{GDB.90}
+$$
+
+If $\rho_v=0$, both values of $h_v$ are zero, contradicting $A>B$.
+This proves necessity of positive appearances even before optimization.
+
+For $\rho_v>0$, apply convexity of
+$L(a,b)=\log_2[(2^a+2^b)/2]$ with probabilities
+$\theta_j/\rho_v$ over the submodels containing $v$. Its contribution
+to $U-2n$ is at least
+
+$$
+\rho_v L\left(\frac{\log_2 A+c_v}{\rho_v},
+               \frac{\log_2 B+c_v}{\rho_v}\right)
+=c_v+f(\rho_v).
+\tag{GDB.91}
+$$
+
+The constants sum to zero. Together with the preceding symmetrization
+this proves the lower bound for every original feasible table array.
+For the stated power tables, each vertex's aggregate exponent in
+(GDB.85) is one. They are therefore feasible without compensation.
+They depend only on parity, and (GDB.89) evaluates their objective as
+exactly the right side of (GDB.88). This proves attainment and both
+directions of the optimum. Rational powers of positive rationals are
+positive algebraic numbers. $\square$
+

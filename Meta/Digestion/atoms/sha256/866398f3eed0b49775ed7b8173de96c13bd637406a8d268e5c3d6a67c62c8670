@@ -1,0 +1,57 @@
+**Theorem 26.2 (The integral relation kernel used by the explicit complex).**
+One has $\ker\varphi=I$ over $\mathbb Z$, and the identical generating
+list describes the kernel over every field. Its sector normal forms
+have one basis monomial for every feasible $(m,c_1,c_2,c_3,c_4)$.
+
+Proof and supplier correspondence. Correlation §§26.1–26.2 already
+prove the general field-valued Hibi kernel and its finite sorting
+normal form. Here their $n$ is four, their $u$ is the incidence vector
+of $I\in B_4$, and their alternating complement is
+
+$$
+y=(u_1,1-u_2,u_3,1-u_4),\qquad y_1\le y_2\ge y_3\le y_4.
+$$
+
+The corresponding distributive lattice of eight binary vectors is
+closed under coordinatewise minimum and maximum. The complete list of
+incomparable unordered mode pairs is
+
+| Pair | Meet and join, in mode names | Join–meet difference |
+| --- | --- | --- |
+| $(0,14)$ | $(4,1)$ | $-f_2$ |
+| $(1,3)$ | $(0,13)$ | $f_1$ |
+| $(2,4)$ | $(24,0)$ | $f_3$ |
+| $(2,14)$ | $(24,1)$ | $f_4$ |
+| $(3,14)$ | $(4,13)$ | $-f_5$ |
+
+The pair order in the middle column names meet first and join second
+in the $y$ order. This explicit list and its signs connect the existing
+Hibi supplier to exactly (25.14), rather than to an unnamed isomorphic
+ideal. For instance the $y$ vectors of modes $0,14$ are $0101,1100$;
+their meet $0100$ is mode $4$ and join $1101$ is mode $1$.
+
+For the integral extension needed here, the supplier's sorting proof
+uses no division. For two incomparable rows with $a>0$ one-coordinates
+exclusive to one and $b>0$ exclusive to the other, replacing them by
+meet and join increases
+$E=\sum_{\text{rows }y}(\sum_i y_i)^2$ by $2ab$.
+For $m$ rows, $0\le E\le16m$, so sorting terminates.
+The terminal chain is uniquely determined by its column sums: in each
+column the zeros precede the ones and the number of ones is fixed.
+Those column sums are $c_i$ for odd $i$ and $m-c_i$ for even $i$.
+Thus monomials of equal image differ, modulo the five listed quadrics,
+by zero: both reduce to the same chain monomial.
+
+For a polynomial in the kernel, group terms by their image monomial.
+The target is free over $\mathbb Z$ on monomials, so the coefficient sum
+in each group is zero. Subtract that group's common normal monomial
+from each term, using the sorting congruences; its residual coefficient
+is zero. This proves the reverse inclusion over $\mathbb Z$.
+The same argument over a field proves the field claim directly, without
+an unsupported assertion that arbitrary base change preserves exactness.
+It also proves independence of the sector normal forms. The classical
+join–meet interpretation is Hibi theory, with the exact alternating
+complement and Laurent monomial correspondence supplied in Correlation
+Theorem 26.6; it is an intermediate input to the integral complex here.
+$\square$
+

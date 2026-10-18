@@ -1,0 +1,9 @@
+**Remark 7.2 (a separately known singleton alphabet).** Outside the
+two-call premise, if a code is known to attain only $z$, it is
+identically $z$. The same four-root chain with that original bit
+entered at $Q_1$ serves it faithfully; an unused second label can
+be assigned $Q_2$ without altering a run. This does not relabel
+the attained value. Proposition 3.4 proves that a singleton
+alphabet is incompatible with the original full-fiber two-call
+promise, so it is not a hidden extra assumption of Theorem 7.1.
+

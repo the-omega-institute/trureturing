@@ -1,0 +1,32 @@
+**Proposition 4.1 (Complete singleton coefficient data).** In the ordered
+splitting $L=(N,25)$, $V=(2,3,5)$, define coefficients by
+
+$$
+22848S(\Pi_s)=
+\begin{pmatrix}a_s&b_s\\b_s&c_s\end{pmatrix}_L
+\oplus
+\begin{pmatrix}d_s&e_s&f_s\\e_s&g_s&h_s\\f_s&h_s&k_s\end{pmatrix}_V.
+\tag{4.1}
+$$
+
+Their exact values are as follows; every cross-block entry is zero.
+
+| $s$ | $a_s$ | $b_s$ | $c_s$ | $d_s$ | $e_s$ | $f_s$ | $g_s$ | $h_s$ | $k_s$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $N$ | $11340-84r$ | $-744-168r$ | $1920$ | $2780+28r$ | $-124-28r$ | $876-84r$ | $4028+28r$ | $-124-28r$ | $2780+28r$ |
+| $2$ | $2780+28r$ | $-372+196r$ | $2966-70r$ | $9127+441r$ | $-558+294r$ | $-1345-63r$ | $2656-168r$ | $-558-154r$ | $5319-231r$ |
+| $3$ | $4028+28r$ | $744-56r$ | $3656+56r$ | $2656-168r$ | $1116-84r$ | $752+168r$ | $9852+252r$ | $1116-84r$ | $2656-168r$ |
+| $5$ | $2780+28r$ | $-372+196r$ | $2966-70r$ | $5319-231r$ | $-558-154r$ | $-1345-63r$ | $2656-168r$ | $-558+294r$ | $9127+441r$ |
+| $25$ | $1920$ | $744-168r$ | $11340+84r$ | $2966-70r$ | $124-28r$ | $1062+42r$ | $3656+56r$ | $124-28r$ | $2966-70r$ |
+
+For every singleton or pair $J$, the full residual is
+$H_J=\Pi_J-\sum_{s\in J}S(\Pi_s)$.
+
+Proof. In (3.6), substitute $t_j=(R_j)_{ss}$ and
+$R_i\Pi_sR_j=(R_ie_s)(R_je_s)^T$, using the explicit matrices
+(1.6). Reducing by $r^2=17$ gives the nine entries in each row.
+For example the active block of $H_{\{N\}}$ is
+$\left(\begin{smallmatrix}959+7r&62+14r\\62+14r&-160\end{smallmatrix}\right)/1904$.
+All these substitutions are identities in $\mathbb Q(r)$;
+linearity gives every pair from the same channel. $\square$
+

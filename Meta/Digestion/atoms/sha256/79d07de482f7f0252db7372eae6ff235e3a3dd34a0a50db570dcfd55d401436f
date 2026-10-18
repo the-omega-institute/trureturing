@@ -1,0 +1,72 @@
+**Corollary 1.4 (Unit refresh, parent refresh and phase curvature).**
+For the same activity law, let $\mathscr L_p$ be the function generator
+of Parent/Readout Proposition 8.13, with one unit refresh rate at each site, and let
+$\gamma(p)$ be its variational gap. Define $H_{\rm hb}=\sum_iK_i$.
+Then
+
+$$
+H_{\rm hb}=-D\mathscr L_pD^{-1},\qquad
+\operatorname{gap}(H_{\rm hb})=\gamma(p).
+\tag{1.11}
+$$
+
+Consequently
+
+$$
+\min_i(1+a_i)\gamma(p)
+\le\Delta_{\rm loc}
+\le\max_i(1+a_i)\gamma(p).
+\tag{1.12}
+$$
+
+For uniform activity $a_i=a$, $H_{\rm loc}=(1+a)H_{\rm hb}$.
+For the matched experiment (1.7),
+
+$$
+J_\omega[f]=\frac2R
+\left.\frac{d^2}{d\theta^2}
+\langle\psi_\theta|H_{\rm loc}|\psi_\theta\rangle
+\right|_{\theta=0}.
+\tag{1.13}
+$$
+
+Proof. The edge block of $-\mathscr L_p$ is
+$(p_u+p_v)^{-1}\begin{pmatrix}p_v&-p_v\\-p_u&p_u\end{pmatrix}$.
+Conjugating by $D$ gives (1.9). Summing each unordered edge once proves
+the first equality in (1.11), without an extra factor $1/2$.
+This is the stochastic-matrix-form transform of
+Castelnovo–Chamon–Mudry–Pujol, equations (19b), (22a–e) and (26a–c),
+with their column generator equal to $\mathscr L_p^{\mathsf T}$;
+see the [source note][SMF1].
+The graph $\Gamma_n$ is connected because every occupied word can
+delete bits to reach $0^n$. The common zero ray is therefore simple,
+and similarity proves the gap equality.
+
+The positive terms $K_i$ give
+$\min_i(1+a_i)H_{\rm hb}\preceq H_{\rm loc}
+\preceq\max_i(1+a_i)H_{\rm hb}$. All three operators have the same
+zero ray. The Rayleigh principle on its orthogonal complement gives
+(1.12). Equivalently, $H_{\rm loc}$ is the transform of the reversible
+chain having insertion rate $a_i$ and deletion rate $1$ at site $i$:
+it uses site refresh rate $1+a_i$.
+
+On a phase-rotated edge, the $K_i$ energy is
+$2p_up_v[1-\cos(\theta(f_u-f_v))]/(p_u+p_v)$.
+Its second derivative at zero is twice the edge contribution in (1.4).
+Summing with coefficients $1+a_i$ and using (1.7) proves (1.13).
+$\square$
+
+In matrix coordinates, (1.6) reads
+$J_\omega=4DH_\omega D$ and
+$\mathbf Q_p=4(D^2-pp^{\mathsf T})$.
+Thus the ordinary Fisher matrix is related by congruence to the
+parent. Its ordinary eigenvalues are not the parent energies.
+The comparison in Theorem 1.3 is a generalized spectrum, or equivalently
+a Rayleigh quotient normalized by quantum Fisher information.
+The semigroup identity from (1.11) is
+$e^{-sH_{\rm hb}}=De^{s\mathscr L_p}D^{-1}$ for $s\ge0$;
+it concerns imaginary-time evolution, rather than real-time unitary
+motion. Multiplying every refresh rate by $r$ scales classical gaps by
+$r$; multiplying the Hamiltonian by an energy unit $\varepsilon$
+scales energy gaps by $\varepsilon$.
+

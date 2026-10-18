@@ -1,0 +1,48 @@
+**Proposition 1.3 (the exact inherited presentation).** Effectively choose
+one accepted cover and one accepted elimination schedule in ARH
+Definition 20.2. After discarding exactly empty charts, obtain finitely
+many data $(Y_\eta,D_\eta,F_\eta)$ with
+
+$$
+\coprod_\eta\{v:Y_\eta\to\mathcal T:D_\eta(v)\}
+ \ \xrightarrow[\quad]{(\eta,v)\mapsto F_\eta[v]}\ D
+\quad\text{bijectively}.
+\tag{CRF.5}
+$$
+
+Each $F_\eta$ is a finite normalized constructor template with leaves
+$\alpha,\beta$ or $\rho^e(y)$ for fixed $e\in\mathbb N$.
+Each $D_\eta$ is a Boolean combination of the aligned atoms
+$\rho^i(y)=\rho^j(z)$ and $\rho^i(y)=g$ for finite ground $g$.
+Its automaton accepts exactly complete finite satisfying tuples.
+A zero-coordinate chart has one ground source or is empty.
+The original-prefix recovery decision and its positive determining
+prefix and negative finite all-depth witnesses are those of ARH
+Theorem 22.1.
+
+Proof. Use ARH Propositions 19.4, 20.3, 20.4, Lemma 21.1 and
+Theorem 22.1 at their stated accepted-input scope. The precise local
+substitution fact is the following: a selected mandatory equation
+$\rho^e(x)=T$, with successful factoring $T=\rho^e(V)$ and
+$x\notin V$, is equivalent, by injectivity, to $x=V$.
+Restriction of assignments and extension by the unique value $V[v]$
+are inverse maps. Substituting in every constraint, source term,
+exterior and target term therefore preserves the whole conjunction,
+not merely that selected equation. Iterating this identity and the
+original chart bijection proves both directions of (CRF.5).
+Every surviving variable remains an actual original subtree at its
+fixed representative address. No statement about an unaccepted chart
+is inferred from Proposition 20.3.
+
+The two original-prefix implications and the bounded prefix chart
+selector in Proposition 20.4 are exactly the hypotheses used by
+Theorem 22.1. Its negative witnesses fill finite productive assignments
+satisfying the entire $D_\eta$. Its positive decision includes a
+computable original determining prefix and an actual static service.
+These are reused results, including their full-row and access
+conditions. $\square$
+
+The new work does not select a source or chart by using this
+mathematical presentation. It constructs common physical actions
+quantified before all feasible tuples in every chart.
+

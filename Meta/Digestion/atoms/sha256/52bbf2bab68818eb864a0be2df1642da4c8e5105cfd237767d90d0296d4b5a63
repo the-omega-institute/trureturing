@@ -1,0 +1,29 @@
+**Theorem 3.2 (Biased actual posteriors and tails).** For $0<p<1$, $p\ne1/2$, and every $r\ge0$, the actual full posterior satisfies $q_{P_p}=X_0$ almost surely and
+
+$$
+e_{L,P_p}(r)=e_{R,P_p}(r)=\tfrac12v_{\lfloor r/2\rfloor}(p).
+\tag{3.2}
+$$
+
+For every $R\ge0$, with $M=\lfloor R/2\rfloor$,
+
+$$
+\tau_{P_p}(0)=2\sum_{m\ge0}v_m(p)\le\frac{\beta(p)}{2(1-\beta(p))}<\infty,
+\qquad
+\tau_{P_p}(R)\le\frac{\beta(p)^{M+1}}{2(1-\beta(p))}.
+\tag{3.3}
+$$
+
+Proof. Conditional expectation is orthogonal projection. The residual variance for recovering $S_0$ from $Y_{-m:-1}$ is $v_m(p)\to0$, since $\beta(p)<1$. Increasing these finite fields to the whole past therefore makes $S_0$ measurable from that past. The identical argument on $Y_{1: m}$ recovers $S_1$ from the whole future. At an active center the two erased-record half-lines recover both endpoints of $Y_0=S_0\oplus S_1$, while Lemma 2.2 identifies their phase. At a separator the center is zero. This proves $q_{P_p}=X_0$ under its own law.
+
+Condition now on the active-center phase. The field $\mathcal G^L_r$ contains exactly $m=\lfloor r/2\rfloor$ negative active XORs and the entire future $Y_1,Y_2,\ldots$, which determines $S_1$. The left spin block $S_{-m:0}$ is independent of that future spin half-line $S_{1:\infty}$. If $a_m=\mathbb E_p[S_0\mid Y_{-m:-1}]$, the left predictor is $a_m$ when $S_1=0$ and $1-a_m$ when $S_1=1$. Its squared discrepancy from $X_0$ is $(S_0-a_m)^2$. Averaging gives $v_m$ on active centers and zero on separators; their stationary masses are $1/2$ each. Reflection at an active center is realized by $S'_k=S_{1-k}$, which sends $Y_k$ to $Y_{-k}$ and preserves the iid spin law. It gives the right formula with its whole past retained. Conditional projections and independence here are all under the one $J_p$.
+
+Each $m$ occurs at offsets $r=2m,2m+1$. Hence
+
+$$
+\tau_{P_p}(2M)=2\sum_{m\ge M}v_m(p),\qquad
+\tau_{P_p}(2M+1)=v_M(p)+2\sum_{m\ge M+1}v_m(p).
+$$
+
+Summing (3.1) proves (3.3), with harmless overcount for odd $R$. $\square$
+

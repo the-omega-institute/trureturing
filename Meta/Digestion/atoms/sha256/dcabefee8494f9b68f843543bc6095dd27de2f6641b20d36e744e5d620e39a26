@@ -1,0 +1,85 @@
+## 8. Mathematical suppliers, primary methods and recovery boundary
+
+**Source correspondence 8.1 (published native suppliers and their limits).**
+All repository references in this volume use the revision in Convention
+1.1. AAR Definitions 13.1 and 16.1 have the exact stationary family
+and four-reply port used here, but declare the target or menu before
+acquisition. AAR Theorems 12.3 and 12.6 supply the trajectory factor
+and fixed-menu minimum retained alphabet; Theorems 13.8 and 16.8
+supply singleton and joint acquisition prices. They do not supply
+the one common pre-request code plus one late Read. AAR Theorem
+16.14 explicitly retains the later-unknown-menu boundary. Theorem
+16.4 compares acquisition minima through canonical completions;
+it does not preserve every arbitrary pre-existing encoder fiber.
+The descriptor collision in AAR Proposition 13.3 also remains:
+at $p=RLL$, the different blocking positions of
+$\langle\alpha,\beta\rangle$ and
+$\langle\alpha,\langle\alpha,\alpha\rangle\rangle$ have the same
+factor $(3,0)$. Predictor sufficiency is not full descriptor recovery.
+
+[Native Birth Provenance, Assumption 14.1 and Theorem 14.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#14-paid-common-start-preparation-and-code-only-two-phase-feasibility)
+supplies the paid common-start, code-only, stationary two-phase
+discipline for its full predecessor-fiber task and coupled finite
+tables. That task uses an authenticated image source, a known row
+and fixed whole-predecessor output. Its attained chart and budget
+correspondence are not a late-target future-trajectory optimizer.
+The service assumptions are reused as service assumptions, rather
+than attributed to an inferred physical implementation.
+
+[Word Retention and Geometric Reaccess, Theorems 3.2 and 4.2](RECURSIVE_RELATIONAL_OBSERVATION_WORD_RETENTION_AND_GEOMETRIC_REACCESS.md#4-固定编码器的准确调用与加权价格)
+classifies all literals on a selected comb family as equality tests
+and prices a fixed geometric target on fixed retained fibers. Its
+constant-word retention and source family differ from $\mathcal F_D$.
+AAR Definition 10.1 instead concerns an unknown lag on an updated
+version after retention. Neither operation is substituted for the
+stationary late-task interface. The guarded same-origin future law
+and paid declared-task acquisition in
+[Sparse Literal History Transport, §§35--38](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md)
+are suppliers for Convention 2.1, not a target-blind optimum.
+
+The no-later-Read universal property of
+[TargetFamilyMinimalQuotient](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean)
+is `target_family_minimal_quotient`, a joint kernel quotient.
+It supplies a static sufficiency relation, rather than legal one-query
+experiments on a common retained fiber. Reading these declarations
+does not certify a new compiled application.
+
+**Source correspondence 8.2 (primary intermediate methods).** The
+literature status of the native bounds and counterexamples is
+`repo-derived`: their ordinary proofs are §§3--7. The following
+primary interfaces are `literature-attested` intermediate methods,
+with the stated operation correspondence. No worldwide originality
+or exhaustive absence claim is made.
+
+Miltersen, Nisan, Safra and Wigderson,
+[*On Data Structures and Asymmetric Communication Complexity*,
+BRICS RS-94-41, §1.1, printed pp. 1--2](https://www.brics.dk/RS/94/41/BRICS-RS-94-41.pdf),
+defines static data $d$, a later query $q$, preprocessing $\phi(d)$
+into $s$ cells of $b$ bits and a $t$-probe reader. Its forward
+communication simulation sends cell addresses and cell contents.
+Here a source holder first exports $E(t)$ before $p$ exists, and
+the later requester sends $w(E,D,p)$ and receives a native reply.
+Our fresh reply is constrained to $r_t(w)$, and cannot be an arbitrary
+computed cell or target value. All of $E$ is available as local
+input after handoff. Address length and installed state are separate
+resources. Thus the classical framework motivates the partition
+analysis, but its unrestricted communication converses or general
+data-structure bounds do not implement a native reader here.
+
+Gál and Miltersen,
+[*The Cell Probe Complexity of Succinct Data Structures*, BRICS
+RS-03-44, §1 and §3, printed pp. 1--5 and 11](https://www.brics.dk/RS/03/44/BRICS-RS-03-44.pdf),
+defines systematic representations $\phi(x)=x\cdot\phi^{\ast}(x)$
+with an index accompanying the input, and discusses source-dependent
+help bits in its prefix-sum argument. Our retained code has the
+role of an index while the original source remains readable, but
+it is prepared by paid native Reads and probed through constructors,
+not through arbitrary representation bits. The source-dependent
+index may correlate coordinates; this is the reason to preserve
+joint fibers. Neither its parity lower bound nor the separately
+cited help-bit theorem is a premise of Lemma 4.3. That lemma proves
+the needed weighted dependence bound for the actual five native
+gadgets. The box-cover upper in Theorem 6.3 uses the elementary
+probabilistic method and union bound, with its complete argument
+given there, not a claimed new general covering method.
+

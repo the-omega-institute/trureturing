@@ -1,0 +1,43 @@
+### 92.3. All original lifts and units
+
+Construct \(G=x+iy\), the original affine-line coefficients
+\(A,D_0,C_0,\sigma\), and the global arrays \(a_Y,\mu_Y,F_8\) from
+§87. Then
+
+\[
+ \tau=-\mu_Y/a_Y,\quad
+ u=(-AC_0-D_0\tau)/\sigma,\quad
+ v=(-D_0C_0+A\tau)/\sigma.
+\]
+
+Construct \(C,D,Y_c,q,e,\bar e,\Delta,\delta\) by the original equations
+of §§87,89. Here the original input coefficients remain
+\(G/\kappa,C/\kappa,D/\kappa\), not the scaled quantities themselves.
+
+The following are exact multiplication norms in algebra (92.1), modulo 97 at
+\(b=9,i=22\). The derivative is that of the unnormalized \(F^\vee\).
+
+```text
+1+l^2:73; Fvee_l:81; radial discriminant:94; Y:24;
+aY:1; \sigma:17; beta:89; barbeta:17;
+C:16; barC:62; D:95; barD:12; Yc:44; barYc:23;
+q:29; e:81; bare:37; F8:38; G:49; barG:94;
+\Delta:47; \delta:65.
+```
+
+The radial discriminant is \(s^2+4R(1+\ell^2)\). The determinant of
+the columns \(1,Y,\ldots,Y^{19}\) in the ordered basis
+\((1,\ell,\ldots,\ell^9,Y,Y\ell,\ldots,Y\ell^9)\) is \(33\bmod97\).
+Every division in this reconstruction is therefore valid over \(K_L\).
+Direct finite-algebra multiplication also gives both parts of \(E=0\) and the two
+original equations \(N_Y=N_D=0\) in the entire specialized algebra.
+Those modular checks corroborate the transported characteristic-zero
+identities; they are not their proof.
+
+Necessity gives a point of algebra (92.1) before any \(F_8\) division. The nonzero
+norm of \(F_8\) then proves it cannot vanish at that point. The complete
+line-lift uniqueness and sufficiency of §87 now apply. This handles all
+original leading and pivot strata noncircularly. Both channels are
+three-distinct because the centered lower interpolation determinant
+\(-\Delta\) is a unit. Every root order and phase gauge is retained.
+

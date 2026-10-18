@@ -1,0 +1,8 @@
+### Q8：原生 Fibonacci 未来商的限定域
+
+**适用：第一部分§七定理4；第二部分§七与§八(iii)–(iv)。** 相位／计数等价仅归属于[原生未来响应来源](RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md) §§21、34–35 与[动态未来商来源](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)的原生模型：第三标记写入并锁存后的实际正概率第四段活动历史；一个固定有限或可数的正整数深度先验，至少两个正支持深度；一次抽取并由全部条件独立付费 Read 共享的 $K$。计数从首次付费 Read 开始，包含拒绝、重试、合法返回及部分解析，不以未来接受为条件。可达摘要不必填满任意计数笛卡尔格。
+
+必须保留原 parser、控制、完整记录载体、renderer 与 Read/Stop 权限，或给出保留这些操作与记录的明确对应。active、pending0、pending1、delivered 是不同的未来域：待 Stop 阶段禁止 Read、保留原强制 Stop，delivered 未来为空，不能继续沿用活动阶段的计数区分。不同当前记录的 renderer 也不能从比较中删除。
+
+相同三元组在这些规则下给相同后验与完整合法残余概率律；反向推断还依赖来源专有的相位／未来律到后验可识别性及 Fibonacci 整数比率分离。非单例混合或 Bayes 归一化本身不是一般可识别性定理。比较对象不是均值、单个结果、真实 $K$ 或已经实现的未来；相同三元组符号不把结论推广到任意事件图、任意 $U$ 或变化先验。本卷只作来源归属，不断言这些引文已获当前 Lean 核验。
+

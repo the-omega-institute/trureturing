@@ -1,0 +1,19 @@
+**Definition 4.2 (the precise restricted verifier $V_{\mathrm{core}}$).**
+A certificate is a finite topologically ordered list of labels
+$(d,\mu,C)$, where $\mu$ is a rational probability on the entire
+$S_d$ and $C>0$ is rational. Its last label equals its input. A node
+has one of the following justifications:
+
+1. A core leaf: $d=h+3$ for some $h\ge0$, $\mu(U_h)=1$, and
+   $C\ge\mathcal R_h(\mu)$, checked using all $4^{2^h}$ boxes.
+2. A scaffold node referring to an earlier $(d_0,\nu,C_0)$: for
+   some $r\ge0$, $d=d_0+r$, $\mu=\nu^\uparrow$ as a full-table
+   equality, and $C\ge C_0^{2^r}$.
+3. A stability node referring to an earlier $(d,\nu,C_0)$:
+   $C\ge C_0+\operatorname{TV}(\mu,\nu)$.
+
+Malformed tables, nonprobabilities and failed comparisons are rejected.
+This grammar retains the exact JTC scaffold and probability-stability
+rules. Its leaves are precisely the restricted atlas just defined; it
+is not the full $V_{\mathrm{rec}}$ of [JTC, Definition 9.1][JTC].
+

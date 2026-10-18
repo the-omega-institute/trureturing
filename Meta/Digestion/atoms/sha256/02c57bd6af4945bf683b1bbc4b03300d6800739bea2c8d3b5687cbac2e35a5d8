@@ -1,0 +1,22 @@
+**命题 22.2（A genuine adaptive-three, preset-four target）。** At the same parameters, put $\lambda(4)=B\ne A$ and $\lambda(7)=C\ne A$, with all other outside phases labelled $A$. The labels $B,C$ may coincide with each other or any endpoint, high, or initial rejection label. With $D\ne E$,
+
+$$
+C_{\rm ad}(f)=3,\qquad C_{\rm pre}(f)=4.
+\tag{22.3}
+$$
+
+Proof. The two nonempty batches are $O_1=\{4\}$ and $O_2=\{7\}$; Theorem 21.2 applies. An explicit adaptive controller starts with $111$. Its high-rejection archive returns $R$. On its endpoint archive issue $000\mid010$; the last support $\{7,0\}$ selects only zero among $\{0,3\}$ and returns $D,E$.
+
+On the root-zero archive issue $011$, with support $\{4,6\}$. The positive child is $\{4,6\}$ with labels $B,A$; there issue $100$ at index two, whose support $\{6,7\}$ restricts to $\{6\}$. Difference zero returns $B$ and difference one returns $A$. The zero child is $\{1,2,5,7\}$; there issue $010$ with support $\{7,0\}$, returning $C$ on difference one and $A$ on difference zero. Each source follows only its own chronological actions, with no mixed-branch output. All these branches clear at the second block's first bit and end by fee three, so (20.4) proves every seam safe on every low INITIAL tail.
+
+For a direct all-action preset exclusion at three, the frozen phase two has label $A$. The first post-root word must start zero; write its bits $0ab$. Since phase four's only opportunity is this word, it must have charge one, hence $a=1$. Phase five has label $A$ and no later opportunity; its charge must be zero, hence $a\oplus b=0$ and $b=1$. Thus phase six is selected with charge one. Its label $A$ differs from phase four's $B$, so the common final word must have charge one at six to repair that acquired positive child. On the zero child, phase seven must have charge one to separate $C$ from frozen $A$, and phase one must have charge zero because its baseline label cannot share the final positive child with $C$. The endpoint sibling requires charge one at zero. The last window is $[6,7,0,1]$; the four required charges are consequently $1,1,1,0$, of odd total, which no literal word realizes. This includes arbitrary common-stream early stopping: the cited nonconstant children cannot already stop. All fees below three are excluded by (20.1).
+
+A common stream of fee four is
+
+$$
+111\mid000\mid010\mid001,
+\tag{22.4}
+$$
+
+with post-root supports $\varnothing$, $\{7,0\}$, $\{3,4\}$. The third block distinguishes $C$ at seven from all other root-zero sources, and also distinguishes $D,E$ on the endpoint sibling. On the remaining root-zero archive the fourth block selects only phase four, returning $B$ versus $A$. Sources already identified stop at their own endpoints. The second word clears every low INITIAL tail, the last two pulses are isolated, and all intervening zeros are paid. Hence the upper bound four is actual and exact. ∎
+

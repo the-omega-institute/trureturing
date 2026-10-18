@@ -1,0 +1,40 @@
+### 89.5. Analytic descent through D↦D*D, including its singular vertex
+
+We prove the precise invariant-analytic fact needed here. Let ψ(m,D) be jointly real-analytic near (m₀,0), for D∈C^{p×2}, p≥2, and invariant under U(p) acting on the left. Then there is a jointly real-analytic function g(m,E), defined for all Hermitian 2×2 matrices E in an open neighborhood of zero, such that
+
+\[
+ \psi(m,D)=g(m,D^*D).                                    \tag{15}
+\]
+
+In particular the domain of g is not restricted to the singular positive-semidefinite cone.
+
+To prove this, complexify D and its conjugate to independent p×2 matrices Z,W. The convergent power series of ψ groups into homogeneous polynomials. Scalar unitary invariance forces each surviving term to have equal degree k in Z and W. Each such polynomial P_k is U(p)-invariant under (Z,W)↦(VZ,bar(V)W).
+
+The infinitesimal action of the skew-Hermitian matrices annihilates P_k. Its complex-linear extension is the action of all of gl(p,C), since the complex span of the skew-Hermitian matrices is gl(p,C). Exponentiation and connectedness of GL(p,C) therefore give invariance under (Z,W)↦(AZ,A^{-T}W).
+
+Let J=[I₂;0]. On the dense set where Z has rank two and WᵀZ is invertible, choose A taking Z to J. The first two rows of the transformed W are (WᵀZ)ᵀ. The stabilizer of J consists of blocks [[I₂,C],[0,B]]; its inverse-transpose action can remove every remaining row of W because the first two rows form an invertible matrix. Thus the transformed pair is exactly (J,[Eᵀ;0]), where E=WᵀZ. It follows that
+
+\[
+ P_k(Z,W)=q_k(W^TZ),\qquad
+ q_k(E):=P_k(J,[E^T;0]),                                 \tag{16}
+\]
+
+first on that dense set and hence as a polynomial identity everywhere. Each q_k is homogeneous of degree k. This argument includes p=2, for which there are no remaining rows to remove.
+
+It remains essential to prove convergence. Choose a fixed nonzero complex number t small enough that Z=tJ lies strictly inside the convergence neighborhood of the complexified series. For E sufficiently small, W=t^{-1}[Eᵀ;0] also lies inside that neighborhood. Equal bidegrees give
+
+\[
+ P_k(tJ,t^{-1}[E^T;0])=q_k(E).                           \tag{17}
+\]
+
+Therefore Σ_k q_k(E) converges normally on a full complex neighborhood of E=0, uniformly also on a smaller m-neighborhood. It defines the analytic g. Substitution in the original convergent series proves (15). Its restriction to Hermitian E is real: each homogeneous coefficient is real on positive-definite Hermitian E by the original reality of ψ, and thus on all Hermitian E by a real polynomial identity. This proves analytic descent and derivative control at the vertex, rather than appealing to smooth invariance alone.
+
+Apply this lemma to (13). From (14), the quadratic part of g(m₀,E) on traceless Hermitian E is
+
+\[
+ q(E)=\sum_ac(u_a)r_a^2
+     \ge\frac{35}{2048}\|E\|_F^2,
+ \qquad \overline E=\sum_ar_a\sigma_a,\quad\operatorname{Tr}E=0.
+                                                               \tag{18}
+\]
+

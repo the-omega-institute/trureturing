@@ -1,0 +1,98 @@
+**Lemma 2.2 (finite-marker conversion).** Let
+$\varphi(z_1,\ldots,z_k)$ be a WS2S formula on the rooted binary
+successor tree with these first-order positions as its only free
+variables. It can contain arbitrary quantifiers over positions and
+finite sets. One can effectively construct a finite word automaton
+accepting exactly the padded encodings of its satisfying tuples.
+The case $k=0$ is the decidable truth value of the sentence.
+Boolean operations, emptiness and finite word witnesses are effective.
+
+Proof. Replace each free position by a singleton finite-set track,
+and conjoin singleton validity. The ordinary WS2S automaton
+construction supplies a finite bottom-up tree automaton for these
+free tracks after all other variables have been quantified. Use the
+finite support-tree convention of MONA §7.2: a support is either
+an empty boundary or a labelled node with two support children.
+A label is a subset of $\{1,\ldots,k\}$, and track $i$ labels its
+unique node $z_i$. An empty boundary carries no marker and denotes
+no further support, not an absent node of the infinite address tree.
+The relevant interface is acceptance of a finite support encoding,
+allowing finite all-zero extensions. Equivalently, the tuple satisfies
+$\varphi$ exactly when some such finite support, containing its
+marked paths, has an accepting run. The WS2S decision construction
+handles projections and finite-support padding before this interface.
+This is the standard finite-set interpretation supplied by
+[MONA, §§7.1–7.2][MONA].
+
+Here is an explicit conversion of that interface to words. Let $S$ be
+the finite state set, including any finite guide-state component.
+Compute $Z\subseteq S$, the states attainable by finite all-zero
+supports: start from the empty-boundary states and close under
+zero-labelled binary transitions. This is a least fixed point on
+$S$, so it terminates and every state in $Z$ has a finite zero-support
+witness, possibly the empty boundary. Nonproductive states are
+excluded.
+
+Read the padded words from their roots toward their ends. At depth
+$i$, group the unfinished tracks by their identical length-$i$
+prefixes. The groups describe exactly those nodes at depth $i$ that
+are ancestors of at least one as-yet-unfinished marked position.
+There are at most $k$ groups. Initially all tracks are in the root
+group. Store the groups and a guessed state in $S$ for each. Guess
+the root state from the accepting states.
+
+For a current group $B$, the next column has the following meaning.
+The tracks in $B$ reading $\#$ end at this node; their indices are
+exactly its marker label. The tracks reading $L$ form its continuing
+left group, and those reading $R$ form its continuing right group.
+Guess states for the nonempty continuing groups. A missing group
+has no markers anywhere below its child position and may use exactly
+a state from $Z$, including a boundary state. Check the binary
+transition with those two child states and the specified current
+label. Even when all tracks in the group end, the current node is
+present with that marker label; only its two children may be empty.
+Remove ended tracks, retain the new groups and guessed states, and
+advance one column. Permanently ended tracks must continue to read
+padding. After all tracks end and all transitions have been checked,
+accept and allow any remaining all-padding columns.
+
+Only partitions of subsets of a fixed $k$-element set, track-ending
+flags, and at most $k$ states are stored. Thus this is a finite
+nondeterministic word automaton. The edge letters determine group
+refinement, so distinct prefixes never incorrectly merge. Several
+tracks ending at the same node put all their indices on that one
+node; a marker that is an ancestor of another is handled by ending
+some tracks while the rest continue.
+
+An accepting finite support-tree run restricts to exactly these
+states and transitions on the trie of the marked words. Every
+off-trie support is finite and zero-labelled, or is an empty
+boundary, so its state is in $Z$. This gives an accepting word run.
+
+Conversely an accepting word run prescribes a consistent tree run
+on the finite trie of the words. At each missing child attach a
+finite zero-support witnessing its chosen state in $Z$. There are
+only finitely many attachment sites. The result is a finite support
+tree with the required markers and an accepting root. It witnesses
+$\varphi$ by the supplied WS2S interface. This proves exactness in
+both directions. Finite-state determinization and complement
+relative to valid padded tuples give Boolean operations.
+Reachable-state search decides emptiness and records a finite word
+witness when nonempty. $\square$
+
+The quantifier order in this lemma is substantive. For example, if
+
+$$
+\varphi(\mathbf z)=
+ \exists X\,[\operatorname{TreeTuple}(X)\land
+                  D_\eta(X)\land\operatorname{Tests}(X,\mathbf z)],
+\tag{CRF.6}
+$$
+
+the complete arbitrary finite trees and their continuations have
+already been quantified in WS2S before constructing the marker
+automaton. The zero-labelled subtrees in its proof are support
+encodings after that quantification. They are not declarations that
+the original source ends at a marker. Applying the trie argument
+to a source truncated at the markers would not prove (CRF.6).
+

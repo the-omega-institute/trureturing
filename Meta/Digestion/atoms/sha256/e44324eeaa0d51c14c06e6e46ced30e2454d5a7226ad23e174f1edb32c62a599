@@ -1,0 +1,95 @@
+**例 220.6（Interleaved reset and its existing quotient coverage）。**
+For $3<j<k<r<s\le L$, $a\ge1$, $g>0$, $h\ge0$, write $w(Z)$ for
+the word with exactly zero set $Z$. All unlisted coefficients vanish;
+coincident contributions add. Start with
+
+$$
+\begin{array}{c|ccc}
+ Z&A&C&P\\\hline
+ \{3,j,k,r\}&a&0&0\\
+ \{3,j,k\}&0&a&0\\
+ \{j,k\}&0&1&0\\
+ \{j\}&0&0&a-1\\
+ \{r\}&h&0&0
+\end{array}
+$$
+
+Add the existing equal-triple zero core on guards $1,2,3$ and
+$J=\{j,k,s\}$: $P=g/3$ at every $w(\{i,q\})$, $P=g/6$ at
+$w(\{i\}\cup J)$, and $C=g$ at each $w(\{q\})$.
+Take $T=0$. The complete score has
+
+$$
+\begin{gathered}
+ \beta_j=1+g,\quad\beta_k=g,\quad\beta_r=-h,\quad\beta_s=g,\\
+ K=3a+13g/2+h,\quad W=2a-1+7g/2+h,\\
+ K-\sum|\beta|=3a-1+7g/2.
+\end{gathered}
+$$
+
+There is cancellation at class three, pair mass, positive stock and
+an eligible negative coordinate between positive coordinates.
+For the base without $A_h$, forgetting $r$ makes the $A=a$ and
+$C=a$ words have the same observed bits and class three. Their joint
+largest reward is $a$; the other rows have largest rewards $1$ and
+$a-1$. Thus every schedule avoiding $r$ is bounded by $2a$;
+after resetting $r$ this holds for every schedule.
+
+Every original stopped pair involving $r$ has the same bound.
+For $(3,r)$ its merged zero branch contributes at most $a$ and the
+other base rows at most $a$. For $(j,r)$ all four base rows are in
+the merged branch, with maximum $2a-1$. For $(k,r)$ that branch
+contributes $a$ and the other branch $a-1$. Any other first address
+below $r$ is one on these base words, so $r$ separates the $A=a$
+word from rows of joint maximum $a$. When $r$ is first, its zero
+branch contributes $a$, and its positive branch has all later bits
+one and maximum $a$. Short schedules are coarser. The stopped table
+$O(3,j;3,j,0)$ attains $2a$.
+
+For the core the zero-label vectors in $N$ cell order are
+$(0,7g/6,7g/6,7g/6)$ for two guards,
+$(g/2,2g/3,g,4g/3)$ for guard/positive, and
+$(g/2,g,g,g)$ for two positives. Early-label rewards are subsets
+of the zero reward; each positive reward $g$ lies in a cell with
+at least $g$ of zero reserve. Unused addresses are constantly one.
+Thus zero attains all cell maxima and both supports are $7g/2$.
+The same $O(3,j;3,j,0)$ attains that support.
+
+The extra $A_h$ has support and baseline $h$. Subadditivity and
+this common attaining table give $\Delta_O(y)=1$.
+Every $N$ pair avoiding $r$ has support at most $W+1$.
+Every word with $C>A$ has $r=1$, so $r\in E(y)$.
+Theorem 220.4 gives repaired $N$ cost at most one; the attaining
+stopped table survives and both repaired costs equal one.
+The original $N(3,r;0,3,0,j)$ collects
+$3a+h+13g/6$, with excess $a+1-4g/3$.
+Thus $a>4g/3$ gives a strict improvement of the actual input score.
+No formula for the original maximum at every parameter is asserted.
+
+At $L=7$, $(j,k,r,s)=(4,5,6,7)$ and $(a,g,h)=(2,1/2,1/2)$,
+
+$$
+ \beta=(0,0,0,3/2,1/2,-1/2,1/2),\quad K=39/4,\quad W=21/4.
+$$
+
+Here $E(y)=\{1,2,6\}$, the original costs are $(7/3,1)$, and
+$\rho_{\{6\}}y$ has costs $(1,1)$. Pair $(3,6)$ has original cell
+maxima $(2,31/12,1/2,5/2)$, whose sum is $91/12$.
+
+This example contributes no additional certificate-covered quotient.
+Its whole quotient family already has an exact-$Q$ zero-cost score.
+Indeed its base quotient has $\beta_j=1$, $\beta_r=-h$,
+$K=3a+h$. In the existing one-pivot formula XI 214.2 put
+$H=3a+h-1$. Its protection quantity is
+
+$$
+ J=\max\left(h,\frac{H+(j-2)h}{j-1},\frac{2H}{j}\right).
+$$
+
+Since $H-h=3a-1\ge2$ and $j\ge4$, each displayed term is at most
+$H-1$. Formula 214.2 therefore gives minimum zero. Adding the
+same old zero-cost core gives one exact-$Q$ zero-cost representative
+of the entire displayed family. The structural reset, edge criterion
+and bounded saturation in 220.4–220.5 are the content of this unit;
+the family illustrates their operation.
+

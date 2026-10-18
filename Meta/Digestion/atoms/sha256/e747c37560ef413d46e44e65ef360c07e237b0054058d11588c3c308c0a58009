@@ -1,0 +1,17 @@
+**Definition 2.2 (The inherited two-coordinate value on all parameters).**
+For $0<\tau<1$ and $t>\tau$ define
+
+$$
+\begin{aligned}
+v_t(x)&=\sqrt{t-\tau x},\\
+\lambda_t&=\frac12\log\frac{t-\tau}{t},\\
+f_t(x)&=\sqrt t\,e^{\lambda_t x}
+       =t^{(1-x)/2}(t-\tau)^{x/2},\\
+\Phi_\tau(t)&=\max_{0\le x\le1}\{s(x)-v_t(x)-f_t(x)\}.
+\end{aligned}
+$$
+
+Let $T_2(\tau)$ be the unique zero of $\Phi_\tau$ for $0<\tau<1$,
+and set $T_2(\tau)=\tau$ for $\tau\ge1$. Thus $T_2$ is defined
+throughout the parameter range of the main theorems.
+

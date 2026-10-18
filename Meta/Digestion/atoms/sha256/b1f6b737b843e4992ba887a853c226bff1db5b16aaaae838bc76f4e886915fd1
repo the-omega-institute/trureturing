@@ -1,0 +1,60 @@
+**Definition 6.3 (basic extraction without callable data).** From decoded
+raw $W$, or from the corresponding basic family records of an M-body, the
+following finite procedure constructs consumed input and the stopping
+ordinal. It reads no family-5 payload, package $I_k$, completed-cycle $M$
+or saved Image.
+
+Read the genuine seed syntax through its acquired interval and boot/origin
+binding. Apply ARC Definition 6.1's slot-counted syntax conversion and pad
+to the original $2H_0-1$ tokens; this yields the original single private
+packet, rather than the current source. Fixed public/prior/controller
+words and $E(L),\Delta(G_\circ),E(G_\circ)$ are the public apparatus code
+parameters, consumed only at their real distinct original sites. Count
+actual selected meter receipt cells, excluding its L/R boundaries, to
+obtain $1^n$. Its marks remain data; no moving live meter end is scanned.
+
+Recover the consumed 70 prefix as its written binary material after the
+sentinel, skipping literal block Fs. A blank after EX is not a bit. The
+outer body is IN(6), EX, WR(6), MR; history length additionally has its
+distinct latch-5 test; history payload is RD(length,5), IN(6), EX, WR(6),
+MR(70), MR(length). At an occupied IN-to-WR cut append its latch-6 bit
+once; at/after WR it is already in backing and pending is empty.
+
+Port 13 uses its **preallocated** CAP payload grammar. Header and unary
+length use their actual IN/EX/WR/test/move rows. Allocation and zeroing
+before payload input supply no payload bits. During its payload loop let
+$b$ be the actual payload base and $p$ its marked position; compute their
+difference by unary cancellation of actual positional words.
+
+| Actual substage | Written payload extent | Extra pending bit |
+| --- | --- | --- |
+| Before IN, including after bound RD | $p-b$ | None |
+| After IN, before WR | $p-b$ | Actual latch 5 |
+| After WR, before payload MR | $p-b+1$ | None |
+| After payload MR, before length MR/next RD | $p-b$ | None |
+| Setup before first IN | Zero | None |
+| After terminal length RD(0) | Full declared length | None |
+
+Use actual PC and role permutation to select the row case. During incomplete
+Base/length/descriptor work use its retained raw scratch/head frontier,
+not a nonexistent completed descriptor. After completion the literal
+sep/status boundaries and actual descriptors fix the three blocks even
+if later helpers moved the head. Include an occupied header/length bit
+by the same IN-to-WR rule. Never count unwritten initialized zeros as input.
+
+Replay the fixed initial portion through acquisition to identify its
+initial 13 prefix to skip. No variable outer input precedes activation;
+at a target during activation both later variable prefixes are empty.
+Replay of the requested endpoint still stops at its own n, without
+requesting future input. Merge later reservoirs by the installed
+prefix-free 70 gates:
+00 ends external input for the fixed original Stop continuation; 01 admits
+exactly one next 13 header/length/payload frame, whose complete source
+return/CaptureCAP precedes another gate; 1 admits exactly one next 70
+length-delimited history frame, whose entire five-stage return precedes
+another gate. An unfinished gate/frame contributes only its consumed
+prefix. Callbacks, bank work and original computed commands have no IN.
+Frame headers/lengths are parsed by the real finite grammar, so repeated
+equal inputs keep their distinct occurrences. No timestamp, outer completed
+list or guessed scheduling choice is needed.
+

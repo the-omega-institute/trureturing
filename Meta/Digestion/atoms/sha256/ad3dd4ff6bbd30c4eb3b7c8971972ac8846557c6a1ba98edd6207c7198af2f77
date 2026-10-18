@@ -1,0 +1,46 @@
+**Theorem 6.1 (all-length native weight stability).** For all nonnegative
+$w,v$ and $N\ge1$,
+
+$$
+\beta_N(w+v)\le\beta_N(w)+\sum_xv(x),\qquad
+\beta(w+v)\le\beta(w)+\sum_xv(x).
+\tag{NPC.23}
+$$
+
+In particular $|\beta(w)-\beta(v)|\le\|w-v\|_1$. On the probability
+simplex the sharper estimate is
+
+$$
+|\beta(\mu)-\beta(\nu)|\le\operatorname{TV}(\mu,\nu).
+\tag{NPC.24}
+$$
+
+The same bounds hold for $\beta_N$.
+
+Proof. For $B\in\mathcal B_n$, expand
+$\prod_i(w(x_i)+v(x_i))$ by the positions $I$ using $v$. Sum first
+over their fixed values $z$. Each nonempty complementary section is
+admissible by Lemma 3.1, so its $w$-mass is at most $A_{n-|I|}(w)$.
+Summing the $v$ factors over all $z$ gives $(\sum_xv(x))^{|I|}$.
+Therefore
+
+$$
+\Omega_{w+v}(B)
+\le\sum_{m=0}^n\binom nm A_{n-m}(w)
+                  \left(\sum_xv(x)\right)^m.
+\tag{NPC.25}
+$$
+
+For $n\le N$, use $A_{n-m}(w)\le\beta_N(w)^{n-m}$; when
+$n=m$ this means $A_0=1$, with $0^0=1$ in that term. The binomial
+theorem bounds (NPC.25) by
+$(\beta_N(w)+\sum_xv(x))^n$. Maximize over $B,n\le N$.
+Using $\beta$ instead gives the same result at every $n$, hence
+(NPC.23).
+
+Monotonicity and $w\le v+(w-v)_+$ imply
+$\beta(w)\le\beta(v)+\sum_x(w(x)-v(x))_+$, and conversely
+with $w,v$ exchanged. This gives the $\ell^1$ estimate. For two
+probabilities both one-sided sums equal their total variation, giving
+(NPC.24). The argument applies unchanged to $\beta_N$. $\square$
+

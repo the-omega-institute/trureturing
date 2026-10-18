@@ -1,0 +1,17 @@
+**Definition 1.4 (Actual density and window risk).** Let $P$ be a stationary Borel probability on $\mathsf X$, with coordinate maps $X_i(x)=x_i$ and shift $(Tx)_i=x_{i+1}$. Write $P_{[1,n]}$ for its actual marginal on coordinates $1,\ldots,n$. Set
+
+$$
+\begin{gathered}
+\mathcal E_i=\sigma(X_j:j\ne i),\qquad F_i=\{X_{i-1}=X_{i+1}=0\},\qquad
+q_i=q_0\circ T^i,\quad q_0=\mathbb E_P[X_0\mid\mathcal E_0],\\
+\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\qquad
+q_r=\mathbb E_P[X_0\mid\mathcal F_r],\qquad
+D_r(P)=\mathbb E_P(X_0-q_r)^2,\quad r\ge1,\\
+d(P)=\lim_{n\to\infty}\frac{\Phi_n(P_{[1,n]})}{n},\qquad
+\ell_i(x)=(x_i-q_i(x))^2.
+\end{gathered}
+\tag{1.5}
+$$
+
+Choose Borel exterior-measurable posterior versions in $[0,1]$. All expectations refer to the same actual law $P$; in the finite-hidden assertions it is $P_\theta$. Premise 2.1 identifies the limit in (1.5) with the full-exterior risk. A retained neighbor one forces $q_i=0$. Null conditional fibers have zero weighted contribution and require no division.
+

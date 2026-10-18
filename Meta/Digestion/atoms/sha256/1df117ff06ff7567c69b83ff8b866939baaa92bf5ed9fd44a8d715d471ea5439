@@ -1,0 +1,15 @@
+**Definition 2.1 (Collar and intrinsic kernel).** For a specified
+$\theta\in\Theta_N$ and $L\ge1$, set $n=N-1$ and
+
+$$
+\begin{aligned}
+\mathcal C_{n,L}&=\sigma(X_{1-n},\ldots,X_0,X_{L+1},\ldots,X_{L+n}),\\
+E_{\theta,L}((u,v),w)&=\lambda M_uM_wM_v\mathbf1=P([uwv]),
+\quad u,v\in\{0,1\}^n,\ w\in B_L,\\
+\mathcal K_L(P)&=\{f\in\mathbb R^{B_L}:\mathbb E_P[f_C\mid\mathcal H_C]=0\}.
+\end{aligned}
+$$
+
+The collar is empty when $n=0$. Its rows include every binary collar word,
+including illegal concatenations, with their actual zero probabilities.
+

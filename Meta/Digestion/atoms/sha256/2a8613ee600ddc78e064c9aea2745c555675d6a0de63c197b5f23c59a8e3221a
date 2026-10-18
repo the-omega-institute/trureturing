@@ -1,0 +1,29 @@
+### 107.6. Arbitrary original leakage
+
+Return to arbitrary original channels satisfying §107.1. Define
+\[
+ \widetilde G=G+\operatorname{blockdiag}_f(I_2-G_{ff}),
+ \qquad
+ \widetilde H=H+\operatorname{blockdiag}_f(I_2-H_{ff}).
+ \tag{107.23}
+\]
+The added matrices are positive semidefinite, so the completions are calibrated Grams. They remain circulant: a Hermitian circulant \(G\) has common fibre block \(\left(\begin{smallmatrix}d&c\\c&d\end{smallmatrix}\right)\), with \(c\) real, and its added matrix is \((1-d)I-cJ\). The same argument applies to \(H\). The completions may increase rank.
+
+Cross-fibre products are unchanged. On each original fibre, Schur-product positivity gives
+\[
+ 0\le G_{ff}\odot H_{ff}
+   \le I_2\odot H_{ff}=\operatorname{diag}(H_{ff})\le I_2.
+ \tag{107.24}
+\]
+Indeed the middle inequality is \((I_2-G_{ff})\odot H_{ff}\ge0\). Thus, for \(L=T-G\odot H\) and \(\widetilde L=T-\widetilde G\odot\widetilde H\), the matrix \(L-\widetilde L\) is positive semidefinite and fibre-block diagonal. Write \(\mathcal D\) for the original fibre-block densities. The leakage-safe adaptive bound of RT III §91 yields
+\[
+ \begin{aligned}
+ \delta(A,B)&\ge\mathcal B(L)
+   :=\max_{\rho\in\mathcal D,\ 0\le W\le\rho}2\operatorname{Tr}(LW)\\
+ &\ge\mathcal B(\widetilde L)
+   =F(\widetilde G,\widetilde H)\ge\sqrt2-1.
+ \end{aligned}
+ \tag{107.25}
+\]
+The second inequality uses only \(L-\widetilde L\ge0\) and \(W\ge0\). It does not require a physical transfer of a compressed block, a rank-preserving calibration, or local-minimum preservation. The calibrated attaining pair is also admissible in the larger leaking class, proving sharpness there and completing Theorem 107.1. \(\square\)
+

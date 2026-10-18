@@ -1,0 +1,67 @@
+**定理 34.2（参考完整的二维精确码）。** 对每个 $k\ge1$，置
+$h=1+\lfloor\log_2k\rfloor$、$L=2^{h-1}$。
+存在同一个守恒置换 $U_{\mathrm{arb}}$、输入等距映射
+$W_0:\mathbb C^2\to S$ 及等距映射 $W_j:\mathbb C^2\to S$，使
+
+$$
+(\mathcal C_{k,j;U_{\mathrm{arb}}}\otimes\operatorname{id}_R)
+ [(W_0\otimes I_R)Z(W_0^\dagger\otimes I_R)]
+ =(W_j\otimes I_R)Z(W_j^\dagger\otimes I_R)
+\tag{34.2}
+$$
+
+对每个 $Z\in M_2\otimes\mathcal B(\mathcal H_R)$ 和 $1\le j\le h$ 成立。
+因此优化的非 EB 与非 CBC 存活次数同为 $h$，而
+
+$$
+n_{\mathrm{EB}}(\Psi_k)=n_{\mathrm{CBC}}(\Psi_k)=2,
+\qquad
+n_{\mathrm{EB}}^{\mathcal U_N}(\Psi_k)
+=n_{\mathrm{CBC}}^{\mathcal U_N}(\Psi_k)=h+1.
+\tag{34.3}
+$$
+
+证明。使用定理 30.1 的同一个置换，但验证完整码代数，而不只验证相干元。
+为明确其环境标签，令
+
+$$
+f(0)=2,\quad f(a)=4\ (a\ne0),\qquad
+\ell(0)=\ell(2)=0,\quad\ell(1)=1,\quad\ell(3)=3,\quad\ell(4)=4.
+$$
+
+局部 Stinespring 等距映射为 $e_a\mapsto e_{f(a)}\otimes|\ell(a)\rangle$；
+两输入标签不同但环境标签相同的唯一可能是 $0,2$。
+逐坐标张量化得到复线性恒等式
+
+$$
+\Psi_k(|a\rangle\langle b|)
+ =\mathbf1_{\ell(a)=\ell(b)}|f(a)\rangle\langle f(b)|.
+\tag{34.4}
+$$
+
+取 $W_0|0\rangle=|0^L4^{k-L}\rangle$、
+$W_0|1\rangle=|0^{L-1}2\,4^{k-L}\rangle$。
+第 $j$ 次后取 $m=L/2^{j-1}$，令
+$W_j|0\rangle=|\xi_m\rangle$、$W_j|1\rangle=|\eta_m\rangle$，
+其中 $\xi_m,\eta_m$ 为 (30.5) 的不同基字。
+第一次噪声把四个码单位分别送到
+$P_{\xi_L},|\xi_L\rangle\langle\eta_L|,
+|\eta_L\rangle\langle\xi_L|,P_{\eta_L}$，系数均一。
+每个后续槽的 (30.6) 对换保持缺额，并把这对字送到
+$0^{m/2}4^{k-m/2}$、$0^{m/2-1}2\,4^{k-m/2}$。
+它们环境标签相同，下一噪声又把四个单位精确送到下标 $m/2$ 的四个单位。
+对换在不同扇区内互不相交，$m=2$ 的第二项是固定点，故无未完成的酉延拓。
+这证明 (34.2) 的全部四个系统单位；参考系数可为任意复算子，故也证明其完整参考版本。
+
+以 $Z$ 为一个逻辑 qubit 与参考 qubit 的 Bell 投影，输出仍是 Bell 投影。
+其 Schmidt 秩为二，故非可分，给出非 EB 见证；
+以逻辑 $|+\rangle$ 的投影为输入，输出有系统非对角元 $1/2$，给非 CBC 见证。
+在第 $h+1$ 次，定理 29.3 对每个控制列都给精确替换
+$P_{4^k}\otimes\operatorname{Tr}_S$，同时 EB 且 CBC。
+这给受限指数的上下界；同一置换已经见证每个较短长度。
+无插入时，(27.8) 的二次替换和上述一次码给其余两式。证毕。
+
+码的两个初始字分别有缺额 $2L,2L-1$，所以 Bell 扩张不满足联合不变性。
+这里完整量子码是相对于授予的输入与全局守恒控制而言；
+它不授予跨电荷相干的制备，不是定义 33.3 的原恢复问题。
+

@@ -1,0 +1,54 @@
+### 89.2. Analytic comparison coordinates and the flat kernel
+
+Fix A-environment dimension d≥4 and B-environment dimension 2+p, where p≥2. Every nearby B-isometry has the unique old/new polar representation
+
+\[
+ V_B=U\sqrt{I-R^*R}\ \oplus\ R,
+ \quad U\in U(8),\quad
+ R:\mathbb C^8\longrightarrow\mathbb C^4\otimes\mathbb C^p.
+                                                               \tag{3}
+\]
+
+Indeed its old square block is invertible near the base. Both its polar factor and the positive square root in (3) are real-analytic. The comparison point x=(V_A,U) belongs to
+X=St(C⁸,C⁴⊗Cᵈ)×U(8).
+
+Section 86 supplies a local minimum manifold M⊂X, with f(m,0)=1/4, df(m,0)=0, and old Hessian kernel exactly TM. Its normal Hessian is positive definite, with all A-environment and original leakage directions included. In calibrated notation its points are
+
+\[
+ \begin{gathered}
+ C_f=S+\tfrac12 WN_f,\qquad \sum_fN_f=0,\qquad
+ N_f=\overline{B_f}ZB_f^T,\quad Z=\operatorname{diag}(1,-1),\\
+ S^*S=(\tfrac12-h/8)I_2,\quad W^*W=(h/2)I_2,\quad
+ S^*W=i\beta I_2,\quad h\sim\tfrac12,\quad\beta\sim0.
+ \end{gathered}                                             \tag{4}
+\]
+
+The manifold is real-analytic, not merely smooth: [S W] is a Stiefel frame times the positive square root of its positive-definite 4×4 scalar-block Gram; balance is a real-analytic regular constraint, whose differential is surjective because the four Bloch axes span three dimensions. The recovery of all these parameters is analytic. Choose an analytic normal frame locally and an analytic Stiefel polar retraction. The inverse function theorem then gives real-analytic coordinates x=χ(m,n), with n=0 precisely on M. In particular no analyticity of an unspecified nearest-point projection is assumed.
+
+At m define the tight fixed-bit matrices
+
+\[
+ B_i^m=[b_{1i},\ldots,b_{4i}],\quad B_i^m(B_i^m)^*=2I_2,
+ \quad P_i^m=(B_i^m)^*B_i^m/2.                            \tag{5}
+\]
+
+For each new environment coordinate, extract the four correct-output bit-i entries of R; together they form a p×4 matrix R_i. All other entries form R_wrong. The exact quadratic noise coefficient is
+
+\[
+ L_m(R)=\frac18\left(\|R_{\rm wrong}\|_F^2+
+                    \sum_i\|R_i(I-P_i^m)\|_F^2\right).
+                                                               \tag{6}
+\]
+
+This is the rowwise extension of section 88: the old attenuation contributes Tr(R*R)/8 and the new correct Gram contributes −Σ_i‖R_iP_i^m‖²/8. Its complex kernel consists exactly of calibrated records r_fi=L_i b_fi with L_i∈C^{p×2}.
+
+Let Π_m be the analytic orthogonal projection onto this kernel. For an arbitrary R, its kernel coefficients are L_i=R_i(B_i^m)*/2. Put
+
+\[
+ S_R=L_0+L_1,\qquad D_R=L_1-L_0,\qquad
+ R_\perp=(I-\Pi_m)R.
+                                                               \tag{7}
+\]
+
+Then L_m(R)=‖R_perp‖²/8 and ‖R‖²=‖R_perp‖²+‖S_R‖²+‖D_R‖². The p×2 matrix S_R is a physical environment-gauge coordinate. We next remove it exactly, rather than treating it as a small remainder.
+

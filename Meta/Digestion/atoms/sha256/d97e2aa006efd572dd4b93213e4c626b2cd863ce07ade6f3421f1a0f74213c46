@@ -1,0 +1,67 @@
+**Definition 26.2 (finite positive source constants).** Let $S(x)$ be the
+full nine-dimensional slack (CG.129), formed from (CG.112)–(CG.113) in
+a neighbourhood of $x_*$. Use the coordinate order
+$x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ of Definition 13.1.
+All unmarked data in the following definitions are evaluated at $x_*$.
+Let $P$ be the orthogonal projection onto $\ker S_*$, and put
+
+$$
+\begin{aligned}
+s&=\min\{\nu:\nu\text{ is a positive eigenvalue of }S_*\},\\
+c_f&=\zeta_{0,*}-\lambda_*p_{50},
+&z_{\min}&=\min_i\zeta_{i,*},\\
+\mathcal B_0&=(1000\operatorname{adj}S_{0,*})\oplus0\oplus0\oplus0,\\
+\mathcal B_1&=0\oplus\operatorname{adj}S_{01,*}\oplus0\oplus0,\\
+\mathcal B_2&=0\oplus0\oplus\operatorname{adj}S_{02,*}\oplus0,\\
+M_j&=\left.\frac{\partial S(x)}{\partial x_j}\right|_{x_*}
+\quad(1\leq j\leq6),
+&L&=\left(\sum_{j=1}^6\|M_j\|_{\rm op}^2\right)^{1/2},\\
+b&=\left(\sum_{k=0}^2\|\mathcal B_k\|_1^2\right)^{1/2},
+&G&=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_*},\\
+\sigma&=\min_{\|u\|_2=1}\|Gu\|_2,
+&a&=2\sqrt{3/s},\\
+r_\lambda&=\lambda_*^{-1}+(1-\lambda_*)^{-1}
+                        +p_{50}/c_f+z_{\min}^{-1},
+&r_z&=c_f^{-1}+z_{\min}^{-1},\\
+A&=\left(r_\lambda^2+r_z^2
+       +\frac{16\lambda_*}{\|v_{5,*}\|_2^2}
+       +\frac{16(1-\lambda_*)}{\|v_{27,*}\|_2^2}\right)^{1/2},\\
+C&=a+\frac b\sigma(A+La).
+\end{aligned}
+\tag{CG.204}
+$$
+
+The direct sums use exactly (CG.128). Matrix trace norm is denoted by
+$\|\cdot\|_1$, operator norm by $\|\cdot\|_{\rm op}$, and vector
+Euclidean norm by $\|\cdot\|_2$. Thus $\sigma$ uses real vectors in
+$\mathbb R^3$ and the Euclidean norm in $\mathbb R^6$. The constant
+$C$ is distinct from the root-isolation box called $C$ in §13.
+The positive certificate slack $c_f$ has no identification with a signed
+weak-binding parameter or with an occupancy.
+
+Here every denominator is positive and every constant is finite, with
+$s,c_f,z_{\min},b,\sigma,a,A,C>0$ and $L\geq0$. Indeed Corollary 13.3
+gives the ranks $2,1,1,2$ of the four slack blocks. Thus $S_*$ has rank
+six, its kernel has dimension three, and its six positive eigenvalues
+have a finite positive minimum. Equation (CG.115) gives $c_f>0$;
+$\zeta_{1,*}=\lambda_*p_{51}>0$ and
+$\zeta_{2,*}=\lambda_*p_{52}>0$, while
+$\zeta_{0,*}>\lambda_*p_{50}>0$. The three $\mathcal B_k$ are
+nonzero positive rank-one matrices, so their trace norms are their
+positive finite traces. The chart denominators
+$1+\alpha_1^2+\alpha_2^2$ and $1+\beta_1^2+\beta_2^2$ are positive;
+hence all six Hermitian derivatives $M_j$ exist and have finite norms.
+
+For injectivity, use precisely the credited block Jacobian (CG.164).
+If $Gu=0$, then $D\Psi(u_*)(0,u)^T=0$, so $u=0$ by its credited
+invertibility. The continuous function $u\mapsto\|Gu\|_2$ attains
+its minimum on the compact unit sphere in $\mathbb R^3$. A zero minimum
+would give a unit vector in the kernel. Therefore $\sigma>0$ and
+$\|Gu\|_2\geq\sigma\|u\|_2$ for every $u$, including $u=0$.
+This is the finite-dimensional injective-map norm principle represented
+by pinned mathlib's `LinearMap.exists_antilipschitzWith`; the displayed
+minimum fixes the particular modulus used here. The fixed coordinates
+of $v_5,v_{27}$ are $-1,1$, respectively, so their norms are nonzero.
+Finally $0<\lambda_*<1$ by (CG.115). These facts justify every operation
+in (CG.204), without estimating a new numerical certificate.
+

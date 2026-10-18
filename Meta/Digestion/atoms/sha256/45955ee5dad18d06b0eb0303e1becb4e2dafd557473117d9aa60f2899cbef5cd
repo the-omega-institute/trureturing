@@ -1,0 +1,31 @@
+**Corollary 8.2 (the chronological relation that source rereading misses).**
+On the terminal sweep image, given the acquired full label vector, the
+least alphabet needed to distinguish the actual orders is $R$. One
+attaining relation is the first address together with the directed
+$\mathsf{Next}$ edges between consecutive distinct addresses in the
+actual sweep; the empty order has a separate public empty convention.
+This relation and the label map recover the event trace, and the trace
+recovers both. A direct online record has a sufficient
+$O(r\log(r+1))$-bit workspace implementation; the minimum attained
+order-code width is $\lceil\log_2R\rceil$ bits.
+
+Proof. The fixed-source lower bound in Theorem 8.1 still applies when
+all labels are supplied. Ranking attains it. Since a sweep is a
+permutation, its first address and successor chain visit each address
+exactly once and end after $r$ occurrences. Following the chain and
+attaching each known label reconstructs the trace. Consecutive events
+in a trace give exactly this chain. A list of $r$ indices in a public
+$r$-element address list uses the stated workspace; finite ranking can
+scan the installed enumeration with an index of at most
+$\lceil\log_2(r!)\rceil$ bits. $\square$
+
+The alphabet result does not minimize local computation, transient
+storage, installed enumeration size, archive creation, authentication,
+handoff or access costs. Retaining a larger record while computing its
+rank is allowed before isolation and is charged as workspace. A surviving
+schedule buffer or accessible time field must join the complete export.
+When $R=1$, there is no conditional order supplement: the public sweep
+can be replayed from its labels. The factorial term arises only from the
+explicit choice interface, never from a claim that one deterministic
+preparer has several executions on the same source.
+

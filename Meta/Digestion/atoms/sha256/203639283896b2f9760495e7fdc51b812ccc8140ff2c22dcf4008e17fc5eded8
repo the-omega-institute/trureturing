@@ -1,0 +1,36 @@
+**Definition 14.2 (actual counterpart and existing response selection).**
+For $h\in\mathcal I_\sigma$, its counterpart $\tau h$ is the history
+from the other actual entry $e_{1-\sigma}$ that consumes the identical
+source-IN bits at corresponding sites and executes exactly $m(h)$
+source-body rows. Theorem 13.3 supplies this actual continuation in both
+directions, including its entry dispatch. Define the reference-entry
+counterpart by
+
+$$
+\nu(h)=
+\begin{cases}
+h,&h\in\mathcal I_0,\\
+\tau h,&h\in\mathcal I_1.
+\end{cases}
+$$
+
+The construction refers to actual prescribed paths, not an invocation,
+a physical erasure, an installed decoder or a new snapshot. Its
+well-definedness and interval preservation are used explicitly below.
+
+Let
+
+$$
+K(z)=\bigl(\operatorname{old}_{13}(z),\ \operatorname{latch}_5(z),\ n(z)\bigr),
+$$
+
+where $\operatorname{old}_{13}$ is precisely the actual original13 byte
+record used by SOURCECALL Theorem 3.3. For an executed original primitive
+response $R$ with actual successor $z$, let $\operatorname{sel}(R)=K(z)$.
+This selection is available mathematically from the existing complete
+original joint successor, by AIF Definitions 2.5–2.6 and SOURCECALL
+Definitions 1.3–1.4. It neither specifies the other response coordinates
+nor grants an actor access to these three. The count is the actual
+absolute receipt count, including the paid entrance and all intervening
+work, not an event count or a newly started source-call clock.
+

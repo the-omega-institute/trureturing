@@ -1,0 +1,32 @@
+**Theorem 361.1 (Sharp original one-partition optimum).** For every entire sequence (357.2) with $a_i=b_i$ for $1\le i\le7$ and $a_8\le15/64$, the attained minimum selected-law error over $\mathcal B_2$ is $137/512$. The inherited unrestricted original $N$ and $O$ minima are both $15/64$. The strict difference between this subclass optimum and the unrestricted optimum is $17/512$.
+
+*Proof of necessity.* Fix any original $\mathcal B_2$ competitor of cap $e$, with its one partition. The class-preserving proof of 110.2 applies with an additional invariant: every retained low pair uses that same partition. Here is the full reduction needed for that assertion, including caps smaller than the tail amplitudes.
+
+The countability of $X$ gives one conull seed event on which the executions are lawful, finite and within the hard bound at every actual source. The entire preselected schedule has at most two addresses; on a null complement replace it by the empty schedule. If $M_S$ is its finite maximum address, with value zero for the empty schedule, then
+
+$$
+\gamma_m=\mathsf P\{M_S>m\}\longrightarrow0.
+\tag{361.1}
+$$
+
+For every $m\ge8$ and every $w\in\{0,1\}^7$, choose before seeds an actual source $x_{w,m}$ with this low word and zero replies at every address $8,\ldots,m$. Boundaries 35.2 supplies the entire finite family. Project all tapes except $\theta_1,\ldots,\theta_7$ to $\theta_0$. This measurable projection contracts TV. Its projected target is $(1-b_n)e_0+b_ne_n$ for a low zero word and $e_0$ for the positive low word, regardless of whether its actual tail amplitude exceeds $e$.
+
+Choose a finite transition cutoff $t_m$ for this finite witness family with handoff failure probability at most $1/m$ at each witness. Sourcewise almost-sure finite handoff supplies it. Simulate the seed-fixed rule with low replies $w$ and high replies zero up to $m$, using output zero upon exceeding the address or transition cutoff. Finite-record transport from [Source-Correlated Laws 45.3](KBONACCI_SELF_CALIBRATING_SOURCE_CORRELATED_LAWS.md#45-lawful-acquisition-through-one-inherited-seed) couples this simulation with each actual witness on a common seed event of complement at most $\gamma_m+1/m$. Thus its low laws meet all exact target rows with cap at most $e+\gamma_m+1/m$.
+
+For a retained two-low-address schedule its pair is still root-to-leaf in the same partition. A low zero stops before any high continuation. A positive low exhaustion has a fixed high continuation, because all high replies are fixed and larger addresses follow low addresses. Removing the high requests therefore produces only singleton or empty schedules. A transition cutoff is constant on each stopped low cell, since the seed and acquired transcript agree there. Consequently no new low pair edge is introduced. The projected output functions belong to the finite catalog for the original partition restricted to $[7]$. Choose representatives *within that catalog*, rather than unrestricted representatives of the same functions. Finite-record measurability gives one common weight vector on this finite catalog.
+
+Its probability simplex is compact. A subsequence of these common weight vectors converges to one allocation in the same catalog. Finitely many law coordinates and row inequalities are continuous, so the limit satisfies every closed-cap row exactly at $e$. Proposition 360.3 gives $e\ge137/512$. This argument retains arbitrary original addresses, full-carrier outputs and all actual finite witnesses. If an exact zero-error competitor existed, it would be feasible at any smaller positive cap and would give the same contradiction. Necessity transports feasibility, not an arbitrary competitor's entire laws.
+
+*Proof of attainment.* Execute the single allocation of Proposition 360.4 on actual primes. Partition one uniform seed into the stated schedule masses and refine all counterfactual label partitions as in Corollary 358.3. Each seed selects a complete table before replies; a pair stops at its first queried zero or exhaustion. There are at most two actual requests, zero advice and finite handoff, with the actual marks emitted to the unchanged consumer. All pairs use roots $\{1,2,5\}$. For actual $n\le7$, Propositions 360.3–360.4 give precisely the prefix rows. For actual $n>7$, (358.9) and (360.8) give
+
+$$
+\operatorname{TV}(p_{1^7},\lambda_x^a)
+=\max\{137/512,a_n\}=137/512,
+\tag{361.2}
+$$
+
+since $a_n\le15/64<137/512$. This proves attainment for every allowed tail.
+
+Finally, XIX 346.1 already supplies the fourteen-schedule original $O$ attainer at $15/64$ and the matching full-$N$ lower at the same entire profile. Its lower has $\beta=(1,0,4,5,5,5,5)$, $K=42$, $C_0=17$, and full-$N$ support $B_N=18$; its inequality is
+$b_1+4b_3+5(b_4+b_5+b_6+b_7)\le1+42e$. Its upper has positive law $(49e_0+5e_3+5e_4+5e_7)/64$, hence exact tail error $\max\{15/64,a_n\}$. These are reused suppliers, not new optimum or profile claims. Subtracting the two optima gives $137/512-15/64=17/512$. $\square$
+

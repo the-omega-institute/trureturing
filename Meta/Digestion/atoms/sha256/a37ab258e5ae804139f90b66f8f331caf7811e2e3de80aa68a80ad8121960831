@@ -1,0 +1,19 @@
+**Proposition 9.3 (soft marginalized-defect control).** The tables of Theorem 9.2 satisfy
+
+$$
+|\Delta_{\rm all}(\widehat M)-\Delta_{\rm all}(M)|
+\le4t+2\xi.
+\tag{9.19}
+$$
+
+This permits positive defect in both tables and does not preserve a prescribed closed hard-defect budget.
+
+Proof. The global p-$\beta$ probability $q=\pi(1-u)=\bar\pi(1-\bar u)\ge3/5$ and suspended-$\alpha$ probability $b=\tau v=\bar\tau\bar v\ge1/3$ are unchanged exactly. The two p forecasts have identical mass on the completing word $\alpha$; their TV is $q$ times the TV between their p-$\beta$ residuals. By (9.5) that residual comparison is at most $(5/3)a_p$. Their actual successor forecasts differ by at most $a_\beta$. The difference between the two p-$\beta$ defects is therefore at most $(5/3)a_p+a_\beta$. The suspended forecasts have identical mass on the completing word $\beta$, so the analogous defect difference is at most $3a_\beta+a_p$. These are the only potentially nonzero defects: earlier synthesis is fair with its own latch sampler, and completing, pending and delivered transitions have the identical deterministic residuals, as in Theorem 5.2. Both models have stationary rows at every active history. The maximum of the two differences bounds the difference of their defect suprema. Substitution from (9.4) gives
+
+$$
+\frac53a_p+a_\beta=\frac{100}{33}t+\frac{47}{33}\xi,
+\qquad 3a_\beta+a_p=4t+2\xi,
+$$
+
+with the second no smaller. No emission–successor independence or covariance equality has been assumed. ∎
+

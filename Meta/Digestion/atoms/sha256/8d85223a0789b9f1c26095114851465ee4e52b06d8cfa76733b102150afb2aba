@@ -1,0 +1,39 @@
+**Definition 6.1 (balanced finite source slice).** Fix $s\ge1$, put $n=4s$,
+$H=8s$, and let $\mathcal B_s$ be every actual ordered tree of composition
+$(2s,2s)$, with all leaf orders and all bracketings retained. Write
+$C_r=\frac1{r+1}\binom{2r}{r}$ for the Catalan number. The credited actual
+shape/label correspondence gives
+
+$$
+T_s:=|\mathcal B_s|=C_{4s-1}\binom{4s}{2s}.
+\tag{DAF.9}
+$$
+
+The source's first three candidate sizes are $4s,6s,10s$, so its initial
+numerical boundary is tag 1:
+
+$$
+q_H(t)=(1,(2s,2s),E(t),E(\rho t)).
+\tag{DAF.10}
+$$
+
+Use the faithful normal coordinates from TM28:
+
+$$
+N(\epsilon,k,p)=(-1)^\epsilon S^kA^p,\qquad
+(\epsilon,k,p)(f,\ell,q)
+=(\epsilon+f+p\ell\bmod2,\ k+(-1)^p\ell,\ p+q\bmod2).
+\tag{DAF.11}
+$$
+
+For a word in this slice number beta occurrences $j=0,\ldots,2s-1$, and let
+$a_j$ be the number of alpha leaves preceding beta $j$. Put
+
+$$
+z_j=(-1)^{a_j},\qquad
+P=\sum_{j\text{ even}}z_j,\qquad
+Q=\sum_{j\text{ odd}}z_j,\qquad
+I_s=\{-s,-s+2,\ldots,s\}.
+\tag{DAF.12}
+$$
+

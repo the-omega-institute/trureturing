@@ -1,0 +1,13 @@
+**定义2.3（第四段切面与尾空间）。** $\mathcal H_3$ 是第三次记录刚锁存且尚无第四段 Read 的正有限历史；$\mathcal H_p,\mathcal H_\beta$ 是其后全部 p 与悬置切面，包括任意有限第四段返回圈。置 $a_r=r(1-r)$。p 的有限完成词为 $w_{j,0}=(\beta\alpha)^j\alpha$、$w_{j,1}=(\beta\alpha)^j\beta\beta$；悬置的有限完成词为 $\beta$ 或 $\alpha w_{j,b}$。已取得的悬置 $\beta$ 不计为未来 Read。固定深度的完整字母律为
+
+$$
+\begin{aligned}
+P_{p,r}(w_{j,0})&=ra_r^j,&P_{p,r}(w_{j,1})&=(1-r)^2a_r^j,\\
+P_{\beta,r}(\beta)&=1-r,&P_{\beta,r}(\alpha w_{j,0})&=r^2a_r^j,&
+P_{\beta,r}(\alpha w_{j,1})&=r(1-r)^2a_r^j.
+\end{aligned}
+\tag{2.2}
+$$
+
+每个相位还保留唯一合法无限不完成字母词；实际质量零，预测可以有正质量，不删去或重新归一化。
+

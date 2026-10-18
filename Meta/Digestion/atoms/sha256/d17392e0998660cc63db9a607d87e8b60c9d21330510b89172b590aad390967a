@@ -1,0 +1,26 @@
+### 82.9. The equality normal form is a fixed-marker construction
+
+The original-channel rigidity proof in sections 82.2--82.8 supplies, for every original exact-quarter product with a rank-two B party, calibrated matrices
+
+    C_f=S+(epsilon_f/2)W N_f,
+    N_f=conjugate(B_f)Z B_f^T,
+    epsilon_f in {+1,-1},   sum_f epsilon_f N_f=0,
+    S^*S=7I_2/16,  W^*W=I_2/4,  S^*W=0.
+
+Set U_0=4S/sqrt(7) and U_1=2W. They are isometries with orthogonal ranges. Since A_f=sqrt(2)C_f conjugate(B_f), its columns are
+
+    a_fi=sqrt(7/8)U_0 conjugate(b_fi)
+          +epsilon_f(-1)^i sqrt(1/8)U_1 conjugate(b_fi).
+
+Identify their four-dimensional collective range with C^2 tensor C^2 by U_0 u=u tensor e_0 and U_1 u=u tensor e_1. This is a unitary identification on the minimal environment span, or an environment isometry in a larger presentation, and does not change the physical channel. Swap the two input bit labels in each fibre with epsilon_f=-1, simultaneously for both local maps. These independent bit swaps preserve the target, whose diagonal bit blocks are I_2 and whose off-diagonal bit blocks are J_2/2; hence they preserve the approximation error. After these swaps, the local records have the form
+
+    a_fi=conjugate(b_fi) tensor m_i,
+    m_i=sqrt(7/8)e_0+(-1)^i sqrt(1/8)e_1,
+    <m_0,m_1>=3/4.                                  (27)
+
+The overlap in (27) is the forward overlap <m_0,m_1>; because it is real, it agrees with section 79's reverse-overlap parameter as well. The corresponding traceless Hermitian unitaries are now N'_f=epsilon_f N_f and satisfy sum_f N'_f=0. Thus their Bloch axes n_f are balanced:
+
+    ||n_f||=1,   sum_f n_f=0.                        (28)
+
+Conversely (27) with any four qubit bases defines genuine calibrated Stinespring isometries. All subsequent norm assertions are on the resulting full physical product, allowing arbitrary reference systems.
+

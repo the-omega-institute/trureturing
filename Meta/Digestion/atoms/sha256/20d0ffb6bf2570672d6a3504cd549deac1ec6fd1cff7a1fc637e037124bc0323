@@ -1,0 +1,42 @@
+**Theorem 224.1 (Normalized full-table counting rigidity).** Let $k=L\ge3$,
+$b=(1,\ldots,1)$, $e=(k-2)/(k+1)$ and $s=1-e=3/(k+1)$.
+Suppose one normalized common mixture of complete $N$ tables, or of
+complete $O$ tables, satisfies every row of $d(b,e)$. Then every
+sole-zero word has correct probability exactly $s$, the positive word
+has base probability exactly $s$, and in every deterministic decomposition
+almost every table uses two distinct queried indices, is correct at each
+of its two queried sole-zero words, and outputs either zero or an unqueried
+numerical label at the positive word. Its total numerical-exhaustion mass
+is exactly $e$. In sorted full $N(i,j)$ order its $01$ output is $i$
+and its $10$ output is $j$. This theorem leaves its $00$ output unclassified.
+
+**Proof.** Let $w^{(n)}$ have just one zero, at $n$, and let $w^+=1^k$.
+For one deterministic table let $S$ be its set of distinct queried
+coordinates, $|S|\le2$, and let $\ell$ be its output at $w^+$.
+Every sole-zero word outside $S$ has the positive transcript. Hence
+
+$$
+\sum_{n=1}^k\mathbf1_{D(w^{(n)})=n}
+ \le |S|+\mathbf1_{\ell\in[k]\setminus S}
+ \le2+\mathbf1_{\ell\ne0}.
+$$
+
+Integrate under the same normalized mixture. The full correct and
+positive rows give
+
+$$
+ks\le\sum_{n=1}^kp_{w^{(n)}}(n)
+ \le3-p_{w^+}(0)\le3-s=2+e=ks.
+$$
+
+Every inequality is equality. Each of the $k$ correct probabilities
+is at least $s$ and their sum is $ks$, so each equals $s$; also
+$p_{w^+}(0)=s$. The nonnegative deterministic slack has integral zero.
+Thus each positive-mass table attains both deterministic bounds: it has
+two distinct queried coordinates, is correct on both corresponding
+sole-zero words, and, if $\ell\ne0$, then $\ell\notin S$.
+The numerical-exhaustion mass is $1-p_{w^+}(0)=e$.
+For $i<j$, sole-zero $i$ reaches full cell $01$, and sole-zero $j$
+reaches $10$, proving the asserted full-cell entries. No step fixes
+$00$, and no such classification is inferred. $\square$
+

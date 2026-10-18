@@ -1,0 +1,35 @@
+**Proposition 150.3 (Explicit rational mixing retains noncontainment).**
+Under Proposition 150.1's premise there is a rational full $N$ lift with
+
+$$
+0<e<a_L\le\cdots\le a_1<1
+\tag{150.3}
+$$
+
+whose parameter point still lies outside $\Pi_{O,L}$.
+
+**Proof.** With $g_z=g(x_z)-\beta$, take the explicit positive rational
+
+$$
+t=\frac{\delta}{2(\delta+|g_z|)},\qquad 0<t\le\frac12,
+\qquad
+(x,w,T)=(1-t)(x_v,w^v,T^v)+t(x_z,w^z,T^z).
+\tag{150.4}
+$$
+
+All rows and equalities are affine in the entire extended lift, so all
+remain valid. Its violated-row excess satisfies
+
+$$
+g(x)-\beta=(1-t)\delta+t g_z
+ \ge\delta-t(\delta+|g_z|)=\delta/2>0.
+\tag{150.5}
+$$
+
+Order is preserved, while $e>0$,
+$a_L-e=(1-t)(a_{L,v}-e_v)+t/(4L)>0$, and $a_1<1$ because
+$a_{1,v}\le1$ and $a_{1,z}<1$. Every parameter, mass and terminal entry
+is rational. Mixing changes the starting head, cap and law; the result
+is an existential normal form, not an exact-law conversion or a statement
+that the original starting data are preserved. $\square$
+

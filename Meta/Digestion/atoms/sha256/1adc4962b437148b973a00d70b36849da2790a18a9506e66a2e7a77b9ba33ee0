@@ -1,0 +1,99 @@
+**Determinant and its sign.** At fixed $u$, write $g_j=1+jk$. Differentiating (9.8) in the order $(t,v,k)$ gives
+
+$$
+DF_u=\begin{pmatrix}
+g_1&g_1&t+v+u\\
+mg_a&g_a&a(mt+v)\\
+(m+1)g_b&g_b&b((m+1)t+v)
+\end{pmatrix}.
+$$
+
+Expansion along its last column gives
+
+$$
+\begin{aligned}
+\mathcal J&=-(t+v+u)g_ag_b
+ +am(mt+v)g_1g_b-b(m-1)((m+1)t+v)g_1g_a\\
+&=[(a-m^2)t+(a-m)v-u]\\
+&\quad+[(a^2-m^2)t+(a^2-m)v-(2a+1)u]k-abuk^2.
+\end{aligned}
+\tag{9.9}
+$$
+
+Let $R_0=a^2-5a+5$ and $R_1=-2a+5$. Substitution of (9.3), with $m=a-2$, gives the exact identity
+
+$$
+-\mathcal J=pP_p(k)+qP_q(k)+rP_r(k),
+\tag{9.10}
+$$
+
+where
+
+$$
+\begin{aligned}
+P_p(k)&=(w-1)abk^2+[wR_1+a^2-3a+1]k+wR_0+1,\\
+P_q(k)&=(w-1)abk^2+[(2a+1)w-a^2-a-3]k+w-3,\\
+P_r(k)&=abk^2+R_1k+R_0.
+\end{aligned}
+\tag{9.11}
+$$
+
+For clarity, the constant part of $-\mathcal J$ before substitution is $(R_0-1)t-2v+u$, and its linear part is $-(4a-4)t-(a^2-a+2)v+(2a+1)u$, which give exactly the coefficients displayed in (9.11).
+
+All three quadratics are strictly positive for every real $k$. At $a=w=4$, they are precisely the three completed squares in (4.2). For $a\ge5$, $R_0=a(a-5)+5\ge5$, and
+
+$$
+4abR_0-R_1^2\ge20a(a+1)-(2a-5)^2
+=16a^2+40a-25>0.
+$$
+
+For even $a\ge6$, $w=a$, the leading, linear, and constant coefficients of $P_q$ are
+
+$$
+(a^3-a,\ a^2-3,\ a-3).
+$$
+
+Its discriminant is
+
+$$
+-3a^4+12a^3-2a^2-12a+9
+=-3a^3(a-4)-2a^2-12a+9<0.
+$$
+
+For odd $a\ge5$, $w=a+1$, the corresponding coefficients are
+
+$$
+(a^2(a+1),\ a^2+2a-2,\ a-2),
+$$
+
+and its discriminant is
+
+$$
+-3a^4+8a^3+8a^2-8a+4
+=-a^2(3a^2-8a-8)-8a+4<0,
+$$
+
+since $3a^2-8a-8=27+(a-5)(3a+7)\ge27$.
+
+For $P_p$ in the even case, its coefficients are
+
+$$
+A=a^3-a>a^2,\quad B=-a^2+2a+1,\quad
+C=a^2(a-5)+5a+1>a^2.
+$$
+
+Here $|B|<a^2$, so $B^2-4AC<a^4-4a^4<0$. In the odd case they are
+
+$$
+A=a^2(a+1)>a^2,\quad B=-a^2+6,\quad
+C=a^2(a-4)+6>a^2,
+$$
+
+and the same strict discriminant bound applies. In every case the leading coefficient is positive. The identity
+
+$$
+4A(Ak^2+Bk+C)=(2Ak+B)^2+4AC-B^2
+$$
+
+then proves positivity. Since $p,q,r>0$, (9.10) proves $\mathcal J<0$ throughout the full domain, without a gain-sign restriction.
+

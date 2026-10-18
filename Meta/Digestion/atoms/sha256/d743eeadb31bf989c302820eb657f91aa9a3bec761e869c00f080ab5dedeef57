@@ -1,0 +1,24 @@
+## 277. The remaining low-only owners exceed the entire available budget
+
+A low-only residual selected slot has r<b and opposite label either
+C,D or special. In the first case its opposite value is below 1+a+b.
+In the second case the connected special circle has the same fixed pair
+{C,D}, so its value is below 1+a+b by the special fixed-pair barrier.
+Thus (275.1) applies to every one of these original slots.
+
+Charge beta_C+beta_D to each such selected slot. An actual owner has at
+most two selected special axial slots, across all labels in S0. It
+therefore receives at most two such charges, which its actual transverse
+C/D expense 2*(beta_C+beta_D) pays. This remains true for a repeated R
+axis and for an owner whose two axes are the two different selected
+special labels. Summing (275.1), the genuine C/D expense of these low-only
+owners is strictly greater than T_low>pi.
+
+These owners are disjoint from A1,A2, whose transverse C/D expense E_A
+is greater than 2*pi. The combined genuine C/D expense is therefore
+greater than 3*pi, contradicting the exact genuine C/D budget after
+the low flat-opposite pi slot. This excludes the entire assumed
+no-extra-core-M branch. At least one of the remaining interacting
+owners eta,xi must contain M. The residual cases with that extra core
+M occurrence remain open, with all original equations still required.
+

@@ -1,0 +1,11 @@
+# Native FIB continuation: exact affine obstruction and compact-band approximation
+
+The native double-wall source has three-dimensional current rays and an exact
+four-coordinate affine readout. Nevertheless, no finite-dimensional encoder,
+however irregular, can combine an exact fixed affine readout with
+state-independent affine updates for every lawful probability displacement.
+On every closed positive interior band, a different finite encoding has exact
+affine probability updates and a fixed linear readout with any prescribed
+positive uniform error. These are separate statements about the same source,
+the same ten outputs and the same output norm.
+

@@ -1,0 +1,4 @@
+**Corollary 4.7 (The symmetry converse fails on the nine-cycle).** The potential of Definition 4.2 is bad on $C_9$ and shares no nontrivial orthogonal symmetry with the Laplacian. Hence the converse question of Lindblad and Guerrero, whether every bad potential shares a nontrivial symmetry with the Laplacian, has a negative answer on the cycle of length nine, already under the weakest reading in which any orthogonal $O\ne\pm I$ counts as a symmetry. Stance: suspected-novel (§8).
+
+**Proof.** Theorem 4.4 and Theorem 4.6. ∎
+

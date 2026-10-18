@@ -1,0 +1,23 @@
+**Definition 164.3 (Exact unrestricted support).** For $y\ge0$, put
+$B_C(y)=\max_{D\in\mathcal D_C}y\cdot z_D$. For a schedule $S$, its
+acquired $N$ cell $c$ and a label $r$, put
+
+$$
+g_S^c(r)=\sum_{j:c_N(w_j,S)=c}y_j\mathbf1_{r\in E_j}.
+$$
+
+The exact $N$ support is the maximum, over all schedules, of
+$\max_rg_\varnothing(r)$ for the empty schedule,
+$\sum_{u=0,1}\max_rg_i^u(r)$ for a singleton, and
+$\sum_{uv}\max_rg_{ij}^{uv}(r)$ for a pair. The exact $O$ pair value is
+
+$$
+\max_r\bigl[g_{ij}^{00}(r)+g_{ij}^{01}(r)\bigr]
+       +\max_rg_{ij}^{10}(r)+\max_rg_{ij}^{11}(r).
+\tag{164.5}
+$$
+
+Each maximum runs over every $r\in J_L$. The maximizing labels constitute
+one complete deterministic table before answers, so these expressions
+are whole-class supports, not independent per-word maxima.
+

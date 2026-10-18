@@ -1,0 +1,71 @@
+**Theorem 5.2 (both acquired joint-prefix directions).** For every complete
+input and finite attained $B$ as above,
+
+$$
+\forall h\;J_B(h)\quad\Longleftrightarrow\quad
+\exists\mathbf b,\mathbf A,\mathbf F,\mathbf c,\mathbf f,
+       (\boldsymbol\eta_r)_{r\in B},v\quad
+ [\text{(FNS.24) and }\mathbf c\in
+       \mathcal G_{\mathbf b,\mathbf A,\mathbf F,\mathbf f}],
+\tag{FNS.27}
+$$
+
+where the residual completions have finite part exactly $\mathbf f$ as in
+Definition 5.1. A common completed output is separately required, in addition
+to cofinal arithmetic support. When these conditions hold, every requested
+finite depth has actual finite signed witnesses from the original full
+strata. This is an exact existence criterion; it does not decide or synthesize
+the existentially unknown completed outputs or finite profiles.
+
+**Proof (necessity).** For each increasing $h$ choose a tuple witnessing
+$J_B(h)$. Lemma 4.2 supplies parameters for that same original source in each
+row. There are finitely many chart choices, so pass to an unbounded-depth
+subsequence with one tuple $\mathbf b$. The finite-prefix completion is
+compact: there are finitely many reply patterns at each depth, and a diagonal
+subsequence gives compatible prefixes of one finite or infinite full native
+tree. The scalar compactification is compact as well: an integer sequence
+has a constant subsequence or a subsequence tending to infinity. These
+arguments apply to the finite product of all row parameter spaces. Pass to
+one convergent joint parameter subsequence with limits
+$(\lambda_r,\boldsymbol\eta_r)$.
+
+Each finite scalar limit is eventually its fixed $c_{r,j}$, and each finite
+residual limit is eventually its actual $f_{r,i}$, because finite native trees
+are isolated. All other residual limits have infinite branches. The mixed
+maps are continuous: pairs gain one prefix level, fixed $\rho$ powers are
+prefix nonexpanding, and $T_n\to\Omega$ since every two updates increase the
+minimum finite-leaf depth. Thus their output limits agree. Indeed the source
+outputs agreed through increasing depths before taking the subsequence.
+This proves the one common source equation (FNS.24).
+
+For each $M$, choose a subsequence term past stabilization of all finite
+coordinates and above $M$ in every divergent coordinate. The original finite
+parameter tuples still satisfy every $P_{r,b_r}$ and the complete
+$\Delta_{r,b_r}$. They therefore supply the single joint tuple in (FNS.26).
+The same finite original profiles were fixed before every $M$. This proves
+the right side of (FNS.27).
+
+**Proof (sufficiency).** First take the common completed-map proof (FNS.24).
+For a requested $h$, continuity of its finite mixed maps supplies finite
+prefix requirements on every infinite residual coordinate and one finite
+simultaneous lower bound $M$ on all divergent scalar coordinates such that
+satisfying these requirements makes each output agree with $v$ through $h$.
+The finite coordinates remain exactly $(\mathbf c,\mathbf f)$.
+
+The joint support (FNS.26) supplies one tuple of feasible ranks at this same
+$M$. At those ranks and finite profiles, use [SLP, Lemma 2.1 and Corollary
+3.2][SLP] on every row's entire negative conjunction to prescribe its infinite
+prefixes and reconstruct one finite residual tuple. Repeated names share
+one filling; independent frontier holes are introduced only for distinct
+names within that normalized chart. Lemma 4.2 then maps each tuple to an
+actual original $u_r\in D_r$. All outputs agree with the single $v$ through
+$h$, hence with one another through $h$. Every old positive identification,
+exterior, negative, guard, sign, epoch and full target row holds on those
+finite sources by the source correspondence, not by evaluation at $v$.
+This proves $J_B(h)$ for every $h$.
+
+If (FNS.27)'s right side is false, some finite $H$ has $\neg J_B(H)$ by the
+necessity direction. This existence implication is not an effective test for
+absence of unknown contacts. The same argument includes zero scalar or
+residual dimensions, empty conjunctions and empty chart families. $\square$
+

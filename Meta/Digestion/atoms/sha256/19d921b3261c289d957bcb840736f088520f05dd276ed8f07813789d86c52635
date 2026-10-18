@@ -1,0 +1,16 @@
+**Definition 8.1 (the counted labels).** A low live-bearing acquisition
+label is an actual CP acquisition outcome with whole joint fibre
+dimension at most two and nonzero supported decoded live CP map.
+Ignore null outcomes and outcomes with zero supported decoded live map.
+The count is a count of actual labels, not projective-ray classes,
+analytic Kraus products, total alphabet or original failure labels.
+
+For a stipulated integral record, a finite count means that its
+live-bearing CP subinstrument is supported on that many actual labels
+of nonzero CP mass, modulo null outcomes. A positive nonatomic
+live-bearing component has infinitely many actual labels. A pointwise
+count of a chosen density representative is not intrinsic. If an
+integral variable is not acquired, it belongs to inaccessible encoder
+Kraus multiplicity of the coarse actual label; it cannot select a
+separate decoder. These conventions retain the original integral scope.
+

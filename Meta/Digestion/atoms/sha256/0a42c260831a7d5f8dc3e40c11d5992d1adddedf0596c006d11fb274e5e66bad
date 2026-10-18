@@ -1,0 +1,70 @@
+## Theorem 10. Complete finite integral reset defect
+
+On the original lattice \(M_q=(\mathbb Z[C_2])^q\), let
+\(L_q=\mathrm{id}+T_q\), with \(T_q\) the original right-row reset
+transition. Write \([1]\) and \([\tau]\) for the two integral group
+basis elements. For a row \(y\), define the integer character
+\[
+\ell_q(y)=\sum_{\substack{0\le i<q\\i\text{ even}}}
+       \bigl(\operatorname{coeff}_1(y_i)-
+             \operatorname{coeff}_\tau(y_i)\bigr).
+\]
+For every positive even \(q\), \(L_q\) is an integral bijection.
+Its kernel and cokernel vanish. For every positive odd \(q\),
+\[
+\ker L_q=\mathbb Z w,\qquad
+\operatorname{im}L_q=\ker\ell_q,\qquad
+M_q/\operatorname{im}L_q\cong\mathbb Z,
+\]
+where \(w_i=(-1)^i([1]-[\tau])\) is the row of Proposition 4.
+Its kernel coefficient is unique, and \(\ell_q\) is surjective.
+Every solvable equation \(L_qv=y\) has the complete solution family
+\(v=v^*(y)+kw\), with unique \(k\in\mathbb Z\) and an explicit
+integral particular solution \(v^*(y)\).
+
+Proof. The actual right multiplication \(J(x)=x[\tau]\) swaps both
+integer coefficients. Proposition 9 therefore applies to the unchanged
+\(M_q\) and \(T_q\). At even length the residual map is identity;
+apply \(C\) to \(y\) and solve the tail recurrence with initial value
+\((C y)_0\). Both equivalences are invertible, giving uniqueness and
+vanishing kernel and cokernel.
+
+At odd length the residual map is
+\[
+a[1]+b[\tau]\longmapsto(a+b)([1]+[\tau]).
+\]
+Its kernel is exactly the primitive anti-diagonal
+\(\mathbb Z([1]-[\tau])\), and its image is exactly the primitive
+diagonal \(\mathbb Z([1]+[\tau])\). Zero tails force
+\(v_i=(-1)^iv_0\), so the original kernel is precisely \(\mathbb Zw\).
+The identity coefficient of \(v_0\) determines the generator coefficient.
+
+Put \(z=(C y)_0\). Multiplication by \([\tau]\) negates coefficient
+difference. Since \(q\) is odd, \(K_q\) consists of the positive even
+suffix indices, and consequently
+\[
+\operatorname{coeff}_1(z)-\operatorname{coeff}_\tau(z)=\ell_q(y).
+\]
+When \(\ell_q(y)=0\), both coefficients of \(z\) equal an integer
+\(d\). Choose \(v_0=d[1]\); then \((\mathrm{id}+J)v_0=z\).
+The recurrence \(v_j=y_j-v_{j-1}\) constructs the particular solution.
+Conversely, a residual in the image has equal coefficients, so
+\(\ell_q\) vanishes on every image row. Subtracting a particular
+solution reduces all solutions to the already classified kernel.
+
+The row with coordinate zero \(k[1]\) and every other coordinate zero
+has character \(k\), so \(\ell_q\) is onto \(\mathbb Z\).
+The first isomorphism theorem gives the displayed cokernel equivalence.
+The quotient is therefore torsion-free, not merely nonzero.
+
+For \(q=1\), the transition is \(T_1(a,b)=(b,a)\), and
+\(L_1(a,b)=(a+b,a+b)\). The image contains the primitive diagonal
+vector \((1,1)\), since \(L_1(1,0)=(1,1)\); it is not restricted to
+even diagonal vectors. The vectors \((1,1),(1,-1)\) have determinant
+\(-2\), so diagonalizing in that eigenframe would replace the original
+lattice by an index-two sublattice. By contrast, Proposition 9 with
+\(A=\mathbb Z\), \(J=\mathrm{id}\) and \(q=1\) really leaves
+\(2\mathrm{id}\), with cokernel \(\mathbb Z/2\mathbb Z\).
+The absence of order-two torsion in the reset case follows from the
+actual swap on the original lattice, not from involutivity alone.
+

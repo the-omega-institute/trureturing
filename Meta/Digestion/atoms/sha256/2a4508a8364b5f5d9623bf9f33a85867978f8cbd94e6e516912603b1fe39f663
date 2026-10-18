@@ -1,0 +1,38 @@
+**Corollary 6.2 (Full-range comparison of the two lower points).**
+
+$$
+\begin{aligned}
+V-F&=\frac{a\eta d}{4}(2-3d-d^3),\\
+S_3-V&=d\eta\left(\eta+\frac{ac}{2}\right)>0.
+\end{aligned}
+\tag{6.4}
+$$
+
+In particular $C_6>C_5$ whenever $d^3+3d<2$.
+
+Proof. Direct subtraction gives
+$V-F=a\eta(1/2+a^2-c-c^2)$. With
+$a=(1+d)/2$ and $c=(1+d^2)/2$, the bracket is
+$d(2-3d-d^3)/4$. To obtain the other identity, set
+$Z_V=a/2+a\eta/2+a^3\eta$, the actual zero-subtree correctness
+above. Then
+
+$$
+\begin{aligned}
+Z-Z_V
+&=a\eta\left[a(1+c)-\frac12-a^2\right]
+=\frac{ad\eta c}{2},\\
+D-a\eta&=d\eta^2.
+\end{aligned}
+\tag{6.5}
+$$
+
+For the first equality of brackets, use
+$a-a^2=\eta$ and $\eta-1/2=-c/2$. Since $V=Z_V+a\eta$
+and $S_3=Z+D$, (6.4) follows. The function $d^3+3d$ is strictly
+increasing from zero to four as $d$ runs from zero to one: for
+$d_2>d_1$, its difference is
+$(d_2-d_1)(d_2^2+d_2d_1+d_1^2+3)>0$. Thus the strict-gain
+condition describes a nonempty interval without a sampled comparison.
+It compares attained points and does not evaluate $C_6$. $\square$
+

@@ -1,0 +1,40 @@
+**Definition 2.4 (solved scalar coordinates).** Choose a deterministic
+spanning forest of the equality graph, ignoring the numerical values
+of its affine labels. Root the component containing $o$ at $o$ and every
+other component at one of its rank vertices. Set its root potential to
+zero and propagate signs along the forest, obtaining affine forms
+$\delta_u(\mathbf n)$ with
+$\delta_u-\delta_v=a_e$ for each forest edge
+$r_u-r_v=a_e$. Let $C(u)$ denote a component. Use a natural base $b_C$
+for each component other than $C(o)$, and abbreviate $b_{C(o)}=0$.
+The entire arithmetic guard is
+
+$$
+\begin{aligned}
+A(\mathbf n,\mathbf b):\quad &G(\mathbf n),\\
+&\delta_u(\mathbf n)-\delta_v(\mathbf n)=a_e(\mathbf n)
+                 &&\text{for every equality edge }e=(u,v),\\
+&b_{C(u)}+\delta_u(\mathbf n)\ge0
+                 &&\text{for every rank vertex }u,\\
+&b_{C(u)}-b_{C(v)}+\delta_u(\mathbf n)-\delta_v(\mathbf n)\ne d
+                 &&\text{for every }(u,v,d)\in D.
+\end{aligned}
+\tag{SFP.10}
+$$
+
+Both endpoints of an equality edge lie in the same component. Thus its
+bases cancel in the second line. In particular a cycle with symbolic
+sum $n_i-n_j$ imposes $n_i=n_j$; it is not discarded for having a
+nonzero formal label. The zero vertex has potential zero and fixed
+rank zero. Every other rank is reconstructed by
+
+$$
+r_u=b_{C(u)}+\delta_u(\mathbf n).
+\tag{SFP.11}
+$$
+
+For fixed $\mathbf K,\boldsymbol\eta$, (SFP.10) is an explicitly
+constructed finite quantifier-free Presburger condition. It contains
+no equality of native trees, no $\rho$, no source variable, no recursive
+normality predicate and no unresolved whole-block comparison.
+

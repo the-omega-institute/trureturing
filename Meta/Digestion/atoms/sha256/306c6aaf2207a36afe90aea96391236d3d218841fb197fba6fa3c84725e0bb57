@@ -1,0 +1,136 @@
+**Theorem 4.2 (Universal risk curve).** Let $L_{\mathrm{univ}}(q)$
+be the infimum risk at mass $q$ over protocols and all allowed
+independent auxiliary probability spaces. For every $0\le q\le1$,
+
+$$
+L_{\mathrm{univ}}(q)
+=\sup_{\lambda\in\mathbb R}
+   \bigl[(1-\lambda)q-B(\lambda)\bigr].
+\tag{4.1}
+$$
+
+This is a finite piecewise affine curve and its infimum is attained
+at every $q$. One may choose a uniform independent seed law at the
+outset and, for each $q$, select between at most two policies of
+$\mathcal K$ by a measurable interval of that seed. The inequality
+in (4.1) applies to every specified unchanged auxiliary law; the
+attainment statement does not append randomness to such a law.
+
+Proof. Theorem 3.2 and the explicit independent branch choices give
+
+$$
+\max_{k\in\mathcal K}(C_k-\lambda q_k)=B(\lambda)
+\quad(\lambda\in\mathbb R).
+\tag{4.2}
+$$
+
+Indeed choosing an accepting subset realizes independently each
+positive part, and the fourteen trees realize all choices of the
+retained subtree maxima. Immediate return and rejection supply
+the remaining entries. Thus (4.2) is a support formula for the
+finite polygon
+
+$$
+P=\operatorname{conv}\{(q_k,C_k):k\in\mathcal K\},\qquad
+g(q)=\max\{C:(q,C)\in P\}.
+\tag{4.3}
+$$
+
+The convex hull is compact: it is the continuous image of the
+finite-dimensional compact simplex of convex weights. It has
+points at masses zero and one, so its vertical section is
+nonempty and compact at every $q\in[0,1]$. Hence $g$ is defined
+there. All its points obey $0\le C\le q$.
+
+We give the support argument including the endpoints. Every extreme
+point of this finite convex hull is one of its defining points:
+otherwise a convex representation with at least two distinct
+positive-weight points expresses it nontrivially as a convex
+combination of one point and the combination of the others.
+
+To see directly why the upper graph has finitely many affine
+pieces, maximize height among convex weights with a fixed
+horizontal coordinate, and choose a maximizer with the fewest
+positive weights. If it has at least three, there is a nonzero
+perturbation of those weights preserving both their sum and
+their weighted horizontal coordinate: these are only two
+homogeneous linear equations in at least three unknowns.
+Both signs of a sufficiently small perturbation preserve
+nonnegativity. A nonzero change in height would contradict
+maximality by choosing its increasing sign. A zero change
+allows the perturbation to be extended until one weight
+vanishes, contradicting the minimal support. Thus at most
+two weights are needed at each upper point. There are
+finitely many pairs, each providing an affine segment on
+its horizontal interval, so their upper envelope has finitely
+many affine pieces. At either endpoint the best point there
+can be joined to a point at the opposite endpoint; this
+also ensures that the graph meets its endpoint value
+continuously. Its maximal affine pieces join upper vertices,
+which are extreme points of $P$ unless they are redundant
+collinear points, so their endpoints are defining points.
+
+Convexity of $P$ implies concavity of $g$: the convex combination of two
+upper points lies in $P$, so its height is at most $g$ at its
+combined coordinate. In particular successive upper-segment
+slopes are nonincreasing.
+
+At a point in an upper segment choose its slope $\lambda$.
+At an interior upper vertex choose any slope between the
+outgoing and incoming upper slopes. Monotonicity of slopes,
+summing the horizontal increments to either side, proves
+that the resulting line through the point lies above the
+entire upper graph, and hence above $P$. At $q=0$ choose a
+finite slope at least the first upper-segment slope; at $q=1$
+choose one at most the last upper-segment slope. The same
+argument proves support there. If the upper graph is a single
+segment, use that segment's slope throughout. No vertical
+support or infinite slope is necessary.
+
+A linear functional has maximum on $P$ equal to its maximum
+on the finite defining points, since its value at any convex
+combination is the corresponding combination of values.
+Consequently the line just constructed has intercept
+$B(\lambda)$ by (4.2), and
+
+$$
+g(q)=\inf_{\lambda\in\mathbb R}
+     \bigl[\lambda q+B(\lambda)\bigr]
+\quad(0\le q\le1).
+\tag{4.4}
+$$
+
+The reverse inequality for every slope also follows directly
+from (4.2). In particular (4.4) includes both endpoints as
+an attained finite-slope support identity.
+
+Theorem 3.2 bounds every original protocol's correct mass by
+the right side of (4.4), so $C\le g(q)$ under every seed law.
+Conversely an upper-boundary point is an upper vertex or lies
+between the endpoints of one upper segment. Those vertices
+are pairs from $\mathcal K$. Write such a point as
+
+$$
+(q,g(q))=(1-\theta)(q_k,C_k)+\theta(q_\ell,C_\ell),
+\qquad 0\le\theta\le1.
+\tag{4.5}
+$$
+
+Choose the allowed auxiliary space to be $[0,1]$ with uniform
+law, independently of $J_p$, before specifying the protocol.
+Run policy $\ell$ on the event $u<\theta$ and policy $k$
+otherwise. Each complete policy uses the same original $J_p$
+and same fixed endpoint. Independence integrates their actual
+joint masses to exactly (4.5). No branch borrows a phase or
+spin from a different realization, and every selected call
+remains paid. If the two policies agree or $\theta$ is an
+endpoint, no random choice is needed.
+
+Therefore the universal maximal correct mass equals $g(q)$
+and is attained. Subtracting it from $q$ proves (4.1).
+The finite upper polygon makes the risk finite and piecewise
+affine. A specified seed law supplies (4.5) only if its
+needed selection is available, or some other policy realizes
+the same pair; (4.4) alone does not establish that availability.
+$\square$
+

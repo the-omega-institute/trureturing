@@ -1,0 +1,36 @@
+**定理 C-108.4（不可见来源的锐利整态纯度包络）。** 对所有满足 (C108.5) 的态，
+
+$$
+\boxed{\qquad \frac15\le\operatorname{tr}(\Gamma^2)\le\frac9{25}.\qquad}
+\tag{C108.8}
+$$
+
+下界等号当且仅当 $\Gamma=S$。上界等号当且仅当 $iA$ 的谱为
+$\{1/5,1/5,0,-1/5,-1/5\}$（计重数）；此时 $C$ 和 $\Gamma$ 的秩都是三。
+除 $S$ 外，该不可见纤维的全部态对原来的 $A\mid B$ 分割纠缠。
+
+证明。$H=iA$ 为 Hermitian，且逐项共轭满足 $\overline H=-H$。
+若 $Hz=\lambda z$，$\lambda\in\mathbb R$，则
+$H\overline z=-\lambda\overline z$。
+共轭给 $\lambda$ 与 $-\lambda$ 特征空间之间的反线性双射，故重数相等。
+五维 Hermitian 谱定理因此允许把 $H$ 的全部谱写为
+$0,+a,-a,+b,-b$，其中 $a,b\ge0$，包括退化的 $a=0$ 或 $b=0$。
+$C=I_5/5+H\succeq0$ 当且仅当 $a,b\le1/5$。
+这里的谱配对由共轭与谱定理得到，不把一个额外的正交正规形当作新测量。
+等距嵌入给
+
+$$
+\operatorname{tr}(\Gamma^2)=\operatorname{tr}(C^2)
+=\frac15+2(a^2+b^2)
+\in\left[\frac15,\frac15+\frac4{25}\right].
+\tag{C108.9}
+$$
+
+下界等号迫使 $a=b=0$，Hermitian 性再给 $A=0$。
+上界等号迫使 $a=b=1/5$，此时 $C$ 的非零谱恰为 $2/5,2/5,1/5$。
+最后直接消费 C-106.2 的唯一可分离点结论，或 C-107.5 的同一整态纯度判据；
+并非对一般混态以纯度单独判纠缠。
+相应部分转置的已知块谱来源为 Rains，
+[quant-ph/0008047v2](https://arxiv.org/html/quant-ph/0008047v2)，
+§6 Lemma 6.3 的证明、式 (6.20)–(6.21)。证毕。
+

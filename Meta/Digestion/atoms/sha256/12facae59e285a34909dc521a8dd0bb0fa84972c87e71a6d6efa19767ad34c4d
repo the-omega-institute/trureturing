@@ -1,0 +1,22 @@
+**Definition 5.1 (coefficient effects).** Use the unnormalized
+output-input vectorization
+$|K\rangle\!\rangle=\sum_{a,i}K_{ai}|a\rangle|i\rangle$.
+Let $\mathcal V$ have columns
+$|D\rangle\!\rangle,|T\rangle\!\rangle,|S\rangle\!\rangle$,
+ordered $D,T,S$. They are independent and orthogonal, but not normalized.
+For a Hermitian coefficient matrix $Z$, set
+
+$$
+\Lambda_Z(A)=\sum_{i,j\in\{D,T,S\}}Z_{ij}K_iAK_j^\dagger,
+\qquad
+\Theta(Z)=\sum_{i,j}Z_{ij}K_j^\dagger K_i.
+\tag{IR.23}
+$$
+
+Thus $J_{\Lambda_Z}=\mathcal VZ\mathcal V^\dagger$ and
+$\Lambda_Z^\dagger(I)=\Theta(Z)$. In this Choi convention
+$\operatorname{Tr}_{\rm out}J_{\Lambda_Z}=\Theta(Z)^T$;
+$\Theta$ is the actual effect, with no missing transpose. In
+particular $\Theta(I_3)=I_3-M$, and $Z\succeq0$ implies
+$\Theta(Z)\succeq0$ by a rank-one decomposition.
+

@@ -1,0 +1,19 @@
+**推论 27.3（驻留位的对数阶，工作区与安装分开）。** 定义 $B_{\rm lit}(\varepsilon)$ 为该族实现 $J(G)-t_*\le\varepsilon$ 所需的最小完整驻留预算。对 $\varepsilon\downarrow0$，
+
+$$
+\begin{aligned}
+B_{\rm lit}(\varepsilon)
+&\ge B_{\rm fix}+\frac17\log_2(1/\varepsilon)
+-\frac17\log_2(35M),\\
+B_{\rm lit}(\varepsilon)
+&\le B_{\rm fix}+2\log_2(1/\varepsilon)
++O(\log\log(1/\varepsilon)),\\
+B_{\rm lit}(\varepsilon)&=B_{\rm fix}+\Theta(\log(1/\varepsilon)).
+\end{aligned}
+\tag{27.7}
+$$
+
+采样可写工作区为 $4r_n+f_0+2s_0=O(\log n)$ 加原固定成本，因此所给方案额外可写采样位只需 $O(\log\log(1/\varepsilon))$；没有证明对应的工作区下界。若安装与采样合计峰值，所给算法仍有 $O(\log(1/\varepsilon))$ 阶上界，其时间与随机性账户保持分列。
+
+**证明。** 对宽 $n$ 的任何成功机器，(27.6)给 $14n\ge\log_2(1/\varepsilon)-\log_2(35M)$，而 $\mathcal B_n\ge B_{\rm fix}+2n$。反向取 $n=\max\{4,\lceil\log_2(90/(17\varepsilon))\rceil\}$，定理27.2的构造满足精度。(25.3)及 $\gamma(n)\le2w_n-1$ 给 $\mathcal B_n\le B_{\rm fix}+2n+6w_n+11$，遂有上式。增加付费 $O(n)$ 安装临时空间不会改变对数阶，但会改变截距和主系数，不能称为同一精确预算。证毕。
+

@@ -1,0 +1,52 @@
+**Proposition 82.5 (five actual labels at explicit finite budgets).**
+For $0<\varepsilon<1/(1+\beta)$ define, explicitly,
+
+$$
+\begin{gathered}
+u=\delta-\varepsilon\omega,\qquad
+k=-\frac{\varepsilon\sqrt\omega}{\sqrt{u(1-\varepsilon)}},\qquad
+q_{\sigma\upsilon}=\frac{1+\upsilon k}{4}>0,\\
+K_{\sigma\upsilon}=\sqrt{q_{\sigma\upsilon}}
+ K(\sqrt u,\sigma,\upsilon\sqrt{1-\varepsilon}),\qquad
+K_a=\sqrt\varepsilon K(\sqrt\omega,0,1),\\
+N_{\sigma\upsilon}=\frac{V_f}{4}
+ n(\sqrt u,\sigma,\upsilon\sqrt{1-\varepsilon})
+ n(\sqrt u,\sigma,\upsilon\sqrt{1-\varepsilon})^T,\\
+N_a=[W_f-V_f(1-\varepsilon)]
+ n(\sqrt\omega,0,1)n(\sqrt\omega,0,1)^T,\\
+t_5(\varepsilon)=\max\left\{
+ \frac{V_f}{(1-|k|)\mathfrak c(\sqrt u,1,\sqrt{1-\varepsilon})},
+ \frac{W_f-V_f(1-\varepsilon)}
+      {\varepsilon\mathfrak c(\sqrt\omega,0,1)}\right\}.
+\tag{FA.69}
+\end{gathered}
+$$
+
+This five-label family has contrast $s_0\sqrt{1-\beta\varepsilon}$
+and required activity exactly $\log(1+t_5(\varepsilon))$. Hence for
+every $\tau<1$ it gives a finite five-label realization by taking
+$\varepsilon\le(1-\tau^2)/\beta$ in the stated open range.
+For $\tau>\tau_4^{\rm ub}$ and
+$A\ge\log(1+t_5(\varepsilon))$ this proves
+$n_{\rm feas}(s_0\tau,A)=5$.
+
+**Proof.** The open bound on $\varepsilon$ makes $|k|<1$ and
+$u>0$, so all five live weights are positive. Every displayed
+coefficient is null. Sum the four main coefficient projectors and the
+auxiliary one: the diagonal is $(\delta,1,1)$ and the only possible
+cross term is $k\sqrt{u(1-\varepsilon)}+
+\varepsilon\sqrt\omega=0$. The failure sums have diagonal
+moments $V_f$ and
+$V_f(1-\varepsilon)+W_f-V_f(1-\varepsilon)=W_f$;
+the cross moment cancels. Thus their total effect is $M$.
+The main reports $\sigma$ give contrast $\sqrt u$; the auxiliary
+$z=0$ needs no report contribution. The failure/live ratios are
+$V_f/(1+\upsilon k)$ on the main directions and
+$[W_f-V_f(1-\varepsilon)]/\varepsilon$ on the auxiliary one.
+FA.9 therefore gives exactly the maximum in FA.69, attained by §86.
+The four-label obstruction gives the matching lower count in the stated
+region. This is feasibility; it does not assert height optimality of
+these five labels, nor five-label sufficiency at every smaller feasible
+budget. The zero endpoint $\varepsilon=0$ is excluded and is not a
+finite-budget constructor. $\square$
+

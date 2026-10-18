@@ -1,0 +1,9 @@
+**Definition 1.2 (Harmonic objective).** On the entire probability simplex $\mathcal P(B_n)$, define
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}
+\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu(b),\mu(c)).
+\tag{1.1}
+$$
+

@@ -1,0 +1,45 @@
+**Theorem 293.2 (One-allocation ratio stability).**
+For every one full feasible $N$ allocation of any finite mass, at any
+real profile $(b,e)$ satisfying its full rows, one has
+
+$$
+R_J\ge0,\qquad
+|b_{j_a}-r^\star_a e|\le B_a R_J\quad(a=1,\ldots,5).
+\tag{293.1}
+$$
+
+The same conclusion holds for $O$. No hull membership or normalization
+of the mass is needed. At equality $R_J=0$, the five amplitudes must
+be exactly $r^\star e$. This conclusion specifies five ratios, not the
+complete face of feasible allocations; the constants $B_a$ are not
+asserted optimal.
+
+**Proof.** First, the all-length embedding preserves the support proof
+for each constructed nonnegative score. A queried inactive coordinate
+is constantly one on its support, so such observations yield an empty
+or singleton partition of that support. An output outside
+$\{0,1,2\}\cup J$ has reward zero, which is at most the nonnegative
+zero-label reward. The active labels satisfy the core cell identities.
+Thus every all-label $N$ schedule, and every stopped coarsening, has
+the same zero-cost bound. This argument covers arbitrary gaps and
+earlier or unqueried numerical outputs, not just a sequence of finite
+lengths checked separately.
+
+Pair $Z$ with the same full feasible $\lambda$ to get
+$-3R_J=F_{Q(Z)}\le M\Delta_N(Z)=0$. Pair each of the ten nonnegative
+scores with that same allocation. Formula (292.3) gives
+
+$$
+\begin{aligned}
+-B_aR_J+(b_{j_a}-r^\star_a e)&\le0,\\
+-B_aR_J-(b_{j_a}-r^\star_a e)&\le0.
+\end{aligned}
+$$
+
+These are precisely (293.1). Each pairing uses
+$U h\le U G_N\lambda\le M\Delta_N(U)=0$, including all independent
+pair rows and any negative singleton demands. No factor $M$ remains,
+and no separately optimized allocation is substituted. An $O$
+allocation has a counted $N$ completion with identical incidence rows,
+or the same proof uses its zero-cost $O$ support. $\square$
+

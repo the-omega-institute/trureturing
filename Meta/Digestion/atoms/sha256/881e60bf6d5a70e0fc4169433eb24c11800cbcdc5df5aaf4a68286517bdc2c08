@@ -1,0 +1,67 @@
+**Lemma 4.1 (two failure slopes).** The source data imply
+
+$$
+t_-<0,\qquad \frac{192}{275}<t_+<\frac{272}{275}<1.
+\tag{TA.22}
+$$
+
+Proof. Since $z_f<0$ and
+$\lambda_++d_f>0>\lambda_-+d_f$, the two entries of $b_+$ have
+signs $(-,+)$ and those of $b_-$ signs $(-,-)$. This gives the slope
+signs. Let $d_h=\sqrt{59}-\sqrt{37}$ and $R_K=b_Kh_2/(d_Kh_1)$.
+Use the supplied JR52 bounds
+
+$$
+10^6(h_0,h_1,h_2,a_K,b_K,c_K,d_K)
+ \in\prod_{j=1}^7(n_j,n_j+1),\quad
+n=(984341,706284,809497,65664,145993,15496,98783).
+\tag{TA.23}
+$$
+
+They give $8/5<R_K<17/10$ by the exact rational comparisons
+
+$$
+\begin{aligned}
+\tfrac85(.098784)(.706285)&<(.145993)(.809497),\\
+(.145994)(.809498)&<\tfrac{17}{10}(.098783)(.706284).
+\end{aligned}
+\tag{TA.24}
+$$
+
+Likewise $m_1=1-h_1^2-a_K^2$ and $m_2=1-h_2^2-c_K^2$ give
+
+$$
+\begin{aligned}
+.495&<1-.706285^2-.065665^2<m_1
+ <1-.706284^2-.065664^2<.498,\\
+.343&<1-.809498^2-.015497^2<m_2
+ <1-.809497^2-.015496^2<.346.
+\end{aligned}
+\tag{TA.25}
+$$
+
+All decimals in these comparisons are exact rationals. In particular
+$m_2/m_1<7/10$, since $.346<(7/10)(.495)$.
+Elementary square comparisons give $3/2<d_h<8/5$: use
+$7.6<\sqrt{59}<7.682$ and $6.082<\sqrt{37}<6.1$.
+Set $r_f=|z_f|/d_f=(4d_h/11)\sqrt{m_2/m_1}$. Then
+
+$$
+r_f^2<(32/55)^2(7/10)<1/4,\qquad
+0<\frac{\lambda_+}{d_f}
+ =\frac{\sqrt{1+4r_f^2}-1}{2}<r_f^2<1/4.
+\tag{TA.26}
+$$
+
+The explicit spectral row gives the exact identity
+
+$$
+t_+=R_K\frac{4d_h}{11(1+\lambda_+/d_f)}.
+\tag{TA.27}
+$$
+
+The lower bound follows from $(8/5)(6/11)/(5/4)=192/275$;
+the upper from $(17/10)(32/55)=272/275$. These are symbolic
+consequences of supplied enclosures, without numerical reauthentication
+of the source root. $\square$
+

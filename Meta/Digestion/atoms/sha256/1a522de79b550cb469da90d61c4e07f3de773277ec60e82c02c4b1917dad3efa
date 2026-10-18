@@ -1,0 +1,59 @@
+## 10. Mathematical attribution, literature boundary and remaining original gaps
+
+The direct argument combines the actual-law square budget (3.5), the one-sided conditional-block estimate (4.5), the two summable test series (5.2)–(5.3), the proved uniform integrability in §6 and the exact response comparison in §7. Cylinder separation and nonsingular zero replacement then give the full pathwise conclusion. This is a synthesis relative to the following canonical results; the finite optimization identity, legal cocycle, converse and rank consumer retain their supplier ownership.
+
+| Canonical source | Exact use and boundary |
+| --- | --- |
+| [Universal posterior defect and finite-hidden separation][U], Convention 1.3, Lemma 2.1, Theorem 3.1, Definition 4.1, Proposition 4.2 and Theorem 6.2 | Original finite optimizers and square identity, growth and actual-risk formulas, attainment-implied band and support, whole $\Theta_N$ and actual joint law, and the fixed-dimension separation equivalence. No consistent optimizer marginals are supplied or required. |
+| [Exterior localization and actual loss-cocycle balance][E], Theorem 3.1 | Compatible-fiber positivity, nonsingular replacements, the integrable absolute cocycle and version/saturation mechanism. These make the fixed original losses legitimate after zero replacement. |
+| [Second-order loss localization and local tilt averaging obstruction][S], Convention 2.1 and Theorems 3.1, 3.2, 6.1, 7.1 | Centered-score notation and integrability, square-contrast and tilt interpretations. The single fixed local-tilt averaging result remains unchanged; the direct proof constructs no stationary continuation. |
+| [Guarded replacement, attainment and conditional-rank obstruction][G], Lemma 2.2, Lemmas 3.3 and 8.1, Theorems 4.2 and 5.1, Corollary 6.4 | General stationary-law scope of surgery, finite band floor and coercivity, the guarded converse, and the inherited rank budget. The present implication supplies its strong-zero premise under attainment plus the root sum. |
+| [One-sided erasure summability and output-filter boundaries][R], Definition 1.3 | Only the actual-law one-sided fields, defects and root-sum definition. No sufficient-filter, rectangle-word, flag-block or example statement is a premise of this volume. |
+
+Conditional expectation as an $L^2$ projection, martingale orthogonality, Cauchy–Schwarz, Minkowski, dominated convergence and uniqueness of finite signed measures are classical tools. The particular fourth-moment and pairing estimates needed here are proved in §6. No mixing or ergodic theorem is needed for the direct bridge.
+
+The bounded literature comparison is inherited through [Exterior][E], [Second-order][S] and [Guarded][G]. Dawid–Lauritzen–Parry's *Proper Local Scoring Rules on Discrete Sample Spaces*, §4.2, describes conditional Brier scoring and squared conditional discrepancy. Its everywhere-positive full-product strict-propriety argument does not by itself cover hard no11; the constrained-graph coercivity used here is the explicitly credited finite ratio argument. Chandgotia–Meyerovitch's finite-modification cocycle language does not supply finite-boundary dependence or an identity with conditional log-probability ratios for the loss cocycle. Neither a Gibbs specification nor a finite visible Markov order is inferred. The forward–backward matrix comparison discussed by Balle–Panangaden–Precup provides no stationary positive realization merely from a rank bound. These comparisons import no additional theorem into the proof and establish no priority claim or absence of another solution.
+
+**Open Problem 10.1 (Unchanged original finite-attainment alternative).** On the entire parameter domain (1.2), set
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad r\ge1.
+\tag{10.1}
+$$
+
+[Universal, Theorem 6.2][U] supplies attainment of $C_N$ and
+$C_N=\inf_{r\ge1}U_{N,r}\le c_\star$. The original alternatives are still
+
+$$
+\exists N\ge1\ \exists\theta\in\Theta_N:\ d(P_\theta)=c_\star,
+\qquad\text{or}\qquad
+\forall N\ge1:\ C_N<c_\star.
+\tag{10.2}
+$$
+
+The second alternative is equivalently
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\quad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{10.3}
+$$
+
+Zero-mass states remain allowed, so a presentation with fewer than $N$ states can be padded by zero stationary masses as in the supplied theorem. The parameter domain is never replaced by a positive, irreducible, aperiodic or finite-visible-memory subclass.
+
+Theorem 1.5 settles the conditional implication under actual attainment and $A_P<\infty$. The following obligations remain distinct and unresolved here:
+
+- Root summability for every law in the original finite-hidden domain, for every band-qualified law, or even for every hypothetical finite-hidden attainer. The convergence of individual erasure defects to zero gives no root-sum conclusion.
+- A rank-discrepancy or common-transfer lower bound strong enough to violate the inherited budget for every intended finite dimension. No actual rank growth or determinant magnitude is supplied.
+- Strong zero or square cancellation under only the band, root sum and intrinsic-null first-order balance, without actual attainment.
+- An actual finite-hidden attainer or a strict finite separation pair for every $N$. The conditional equivalence alone constructs neither.
+
+No sparse stationary continuation, jointly realized positive-density modification process, common family of optimizer marginals or finite-hidden competitor is constructed. Such a route would need its own existence and risk arguments. The direct bridge does not require it. The cocycle remains a measurable object on a saturated conull finite-modification relation; no continuous extension to every legal configuration, locality, Gibbs property, uniform parameter-family bound or empirical learning consequence follows from this proof.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[E]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[S]: FIB_LEGAL_EDGE_LOAD_SECOND_ORDER_LOSS_LOCALIZATION_AND_LOCAL_TILT_AVERAGING_OBSTRUCTION.md
+[G]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[R]: FIB_LEGAL_EDGE_LOAD_ONE_SIDED_ERASURE_SUMMABILITY_AND_OUTPUT_FILTER_BOUNDARIES.md
+

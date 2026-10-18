@@ -1,0 +1,58 @@
+**定理 46.4（整个初始码纤维上的最小终端记录范围）。** 令 $\mathfrak A_N$ 遍历所有确定、有限终止、在每个 $u\in U_{\mathbf c}$ 上正确输出原始边界 $B_Q(u)$ 的交易；$R_{\mathfrak A,N}(u)$ 是其实际有序地址—回复终端记录。则
+
+$$
+\min_{\mathfrak A_N}\left|\{R_{\mathfrak A,N}(u):u\in U_{\mathbf c}\}\right|
+=
+\begin{cases}
+1,&k=0,\\
+2^k,&k>0,\ N=0\text{ 或 }N\ge2,\\
+3^k,&k>0,\ N=1.
+\end{cases}
+\tag{SLH.46.4}
+$$
+
+探针交易 (SLH.46.2) 达到上界；每次调用的地址长度为
+
+$$
+|a_{p_i,N}|=d_i+\left\lceil\frac N2\right\rceil,
+\tag{SLH.46.5}
+$$
+
+其中 $N=0$ 时右侧为 $d_i$，$N=1$ 时为 $d_i+1$。
+
+**证明。** 引理 46.3 给出探针交易的逐位值。$F$ 是前缀反链，故各局部锥不交；除 $N=1$ 的展开孔所选二值外，孔完成不改变这些回复。于是 $N=0$ 和 $N\ge2$ 的值域恰为二元位词的像，$N=1$ 的值域恰为每位 $\alpha,\beta,\operatorname{branch}$ 三种组合，分别达到 $2^k$ 与 $3^k$。每个记录按引理 46.3 解码 $e$，再由定理 42.2 恢复 $B_Q(u)$。
+
+在 $N=1$ 的下界中，只限制到整个纤维内如下 $3^k$ 棵实际来源；其余孔一律填 $\alpha$。在每个 $p$ 独立取局部树
+
+$$
+t_0=\beta,\qquad t_1=\langle\alpha,\alpha\rangle,
+\qquad t_2=\langle\alpha,\beta\rangle.
+$$
+
+它们的一次像分别为
+$\langle\beta,\alpha\rangle,\langle\beta,\beta\rangle,
+\langle\beta,\langle\beta,\alpha\rangle\rangle$。
+在这个固定三元族上，任意深度的地址列只有以下非恒定类型：
+
+$$
+\begin{array}{c|ccc}
+\text{地址}&0&1&2\\ \hline
+pR&\alpha&\beta&\operatorname{branch}\\
+pRL&\operatorname{absent}&\operatorname{absent}&\beta\\
+pRR&\operatorname{absent}&\operatorname{absent}&\alpha.
+\end{array}
+\tag{SLH.46.6}
+$$
+
+其它列恒定；因为 $F$ 为前缀反链，一个列至多涉及一个三元坐标。特别地，首个请求不必有三个回复。
+
+固定任意实际终端记录。确定性及共同入口保证：与其全部地址—回复相符的每棵来源都走同一路径并在同一处终止。故该记录在固定三元族中的相容集合是非空矩形 $\prod_p V_p$，其中 $V_p$ 是各次该坐标回复纤维的交。由 (SLH.46.6)，可能的非空 $V_p$ 只有
+
+$$
+\{0,1,2\},\quad\{0,1\},\quad\{0\},\quad\{1\},\quad\{2\}.
+$$
+
+输出边界必须确定每个二元位 $e_p=\mathbf1_{\{1,2\}}$。前两个集合都同时含零位与一位，故任何正确终端矩形的每个 $V_p$ 必为单点。因此 $3^k$ 棵实际来源两两产生不同的终端记录，给出全部自适应地址交易的下界。每棵来源有限终止足够，不需要整个无限纤维有共同时间上限。
+
+$N=0$ 或 $N\ge2$ 时，固定全部孔为 $\alpha$ 的 $2^k$ 棵来源具有不同原始边界；同一终端记录不能正确输出两个边界，故至少有 $2^k$ 个记录值。$k=0$ 时共同代码已确定边界，空交易达到唯一值。地址长度由 (SLH.46.1) 逐项计算。$\square$
+

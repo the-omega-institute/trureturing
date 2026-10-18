@@ -1,0 +1,40 @@
+## 449. Strict angles and a common positive generalized field
+
+The original volume's Theorem 42.2 applies to the manifold, boundary
+and original degree hypotheses of Section 448. Starting from the
+normalized angles a_o=2/d(P(o)), it preserves every original edge sum
+while transporting vertex deficits along the actual boundary-link
+surfaces. The total deficit on a link S_nu is
+
+    F_nu-2*V_nu=-2*chi(S_nu)>0.
+
+The theorem makes every angle positive and every local vertex sum
+strictly less than pi, while every original edge sum stays 2*pi.
+The argument counts source and target occurrences separately even
+for self-gluings. It does not assume the unmodified angles already
+have strict vertex sums. The constructed angle structure need not
+respect equality of a fixed frame's transverse angle pairs; this
+is unnecessary at the existence step.
+
+Restore the ideal vertices to the original finite face pairing.
+All original faces are paired, so this is the closed triangulated
+pseudo 3-manifold used by the hyperideal variational theorem.
+Its restored vertices have the prescribed boundary surfaces as
+links; truncation recovers N. Closed in this usage does not assert
+that the restored quotient is a closed smooth 3-manifold.
+
+The strictly positive angle structure satisfies Luo–Yang's hyperideal
+Definition 6.1. Theorem 6.3(a),(c) and Theorem 1.4 provide a volume
+maximizer and one common vector ell in R_{>0}^E producing its angles.
+Every original edge has angle sum 2*pi, and each owner is genuine
+or has two opposite pi angles and four zeros. These are the reused
+inputs of the original volume's Corollary 43.1 and Section 285.
+The source is Luo–Yang, *Volume and rigidity of hyperbolic polyhedral
+3-manifolds*, https://arxiv.org/html/1404.5365v2 .
+
+At this point the field is only generalized: positive coordinates
+do not themselves exclude a flat owner. Nor does a strict angle
+structure alone ensure that its separate local geometric blocks
+have matching lengths. The variational theorem supplies this common
+field; no new existence theorem is inferred from flat exclusion.
+

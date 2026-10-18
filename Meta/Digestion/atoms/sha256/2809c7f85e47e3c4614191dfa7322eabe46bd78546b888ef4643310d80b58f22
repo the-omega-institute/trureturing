@@ -1,0 +1,17 @@
+### 106.3. The exact twist-change obstruction
+
+Put f(z)=z(z+1)(z-3). Direct factorization gives
+
+ G(z)+1=(z+1)(z-2)^2,  G(z)-3=z^2(z-3),
+ f(G(z))=f(z) z G(z)(z-2)^2.
+
+The original curve E_D:y^2=x(x+5D)(x-15D) becomes w^2=5D f(z) under x=5D z, w=y/(5D). Thus replacing z by G(z) changes its squareclass by the factor zG(z), besides the constant D'/D and the square (z-2)^2. The rational function zG(z) is not a square even over the algebraic closure: it has a simple zero at z=0, since G(0)=3.
+
+In particular, the polynomial map z -> G(z) does not lift to a morphism between these two elliptic curves over any constant extension. For completeness, in the quadratic function field every candidate w' is a(z)+b(z)w. If its square is rational, 2a(z)b(z)=0. The case b=0 would make f(G(z)) a rational-function square, impossible because it has a simple zero at z=-1 (G(-1)=-1 and G'(-1)=9). The case a=0 would require (D'/D)zG(z)(z-2)^2 to be a square, again impossible. This is an obstruction to this particular recurrence map; it makes no general claim that all correspondences between twists are impossible.
+
+At the actual pair z=B, the missing squareclass is exactly
+
+ B B'=M (C C')^2.
+
+It is this identity, retaining both arbitrary square multipliers, that leads to the companion curve rather than an assumed multiplication law on E_D.
+

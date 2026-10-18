@@ -1,0 +1,14 @@
+**定义 19.2（精确消元的回流核）。** 反复展开第二式，得到标准线性消元式
+
+$$
+z_n=D^nz_0+\sum_{j=0}^{n-1}D^{n-1-j}Cx_j,
+$$
+
+$$
+x_{n+1}=Ax_n+BD^nz_0+\sum_{j=0}^{n-1}BD^{n-1-j}Cx_j.
+$$
+
+令 $K_j=BD^jC$。其中 $Ax_n$ 为当前直接项，$BD^nz_0$ 为隐藏初态残余，$K_j$ 为边界信息经内部再返回的作用。$n=0$ 时和为空。
+
+消去未解析变量后的记忆项属于 Mori–Zwanzig 的既有机制，参见 [A Priori Estimation Of Memory Effects In Coarse-Grained Nonlinear Systems Using The Mori-Zwanzig Formalism](https://arxiv.org/abs/1611.06277)。精确改写不预设计算复杂度降低。矩阵 $D^j$ 的路径展开给“边界—内部—边界”的关系传播；旧区别在新事件位置形成响应，不定义逆向因果。
+

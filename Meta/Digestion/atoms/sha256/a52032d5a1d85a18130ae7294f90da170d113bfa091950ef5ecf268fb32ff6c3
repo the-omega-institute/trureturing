@@ -1,0 +1,69 @@
+**Theorem 63.1 (strong finite instruments).** For every $s\ge s_0$
+the lower bounds in Theorem 62.1 are sharp. At $s=s^\dagger$ they
+give an instrument in $\mathfrak P_s$.
+
+Proof. Reuse JR.34's rank-three and rank-two live matrices
+
+$$
+H_\sigma=\frac{\sqrt{1-u}D+\sigma\sqrt{1-v}T}{\sqrt2},\qquad
+L_{\sigma\tau}=\frac{\sqrt uD+\sigma\sqrt vT+\tau S}{2}.
+\tag{JRH.33}
+$$
+
+Their coefficient Grams sum to $I_3$. Their ranks, including both
+endpoints, are JR.37: the high determinant has strictly positive
+factor $(1-u)-\theta(1-v)=k$, and the low $(1,2)$ minor is
+$uh_1h_2/4>0$. Set
+
+$$
+\begin{gathered}
+\widetilde m_1=\min(m_1,Rm_2),\quad
+\widetilde m_2=\min(m_2,m_1/R),\quad
+\widetilde m_1=R\widetilde m_2,\\
+b_{\sigma\tau}=(0,\sqrt{\widetilde m_1},
+ -\sigma\tau\sqrt{\widetilde m_2})^T,\quad
+N_{\sigma\tau}=b_{\sigma\tau}b_{\sigma\tau}^\dagger/4.
+\end{gathered}
+\tag{JRH.34}
+$$
+
+One has $N_{\sigma\tau}\nu_{\sigma\tau}=0$. Apply JRH.30 to
+$(L_{\sigma\tau},N_{\sigma\tau})$ into dimension two; use $H_\sigma$
+as a dimension-three encoder with pure live TP decoder. All these
+actual branches report $r=\sigma$. For every nonzero remainder
+$m_j-\widetilde m_j$, add scalar rows
+$\sqrt{(m_j-\widetilde m_j)/2}\langle j|$, one for each
+fair report $r=\pm1$, with full-failure TP decoder JRH.31 for $F=1$.
+Zero rows are omitted. The scalar rows are needed only for the general
+sharp-face bound; they are absent at $v=v^\dagger$.
+
+The mixed failure effects sum to
+$\operatorname{diag}(0,\widetilde m_1,\widetilde m_2)$, so
+$\sum N_\alpha=M$ and the residual actual certain-failure effect is
+
+$$
+Z_{\rm cf}=\operatorname{diag}(0,m_1-\widetilde m_1,
+ m_2-\widetilde m_2).
+\tag{JRH.35}
+$$
+
+No other branch has zero live map. The diagonal formula attains each
+four-sign mean and the worst-history bound in JRH.26. Failure effects
+attached to report $\sigma=+1$ sum to half their total, since the
+$\sigma\tau$ terms cancel on summing $\tau$. The residual fair
+rows contribute half their effect. Expanding the live signed effect
+therefore gives
+
+$$
+F_+=\frac{I_3}{2}+\frac{\kappa\mathfrak f(v)}2X_{01},\quad
+X_{01}=|0\rangle\langle1|+|1\rangle\langle0|,\quad
+Q_H=(1-u)D^\dagger D+(1-v)T^\dagger T.
+\tag{JRH.36}
+$$
+
+Thus $\mathsf V=s$ and each history has high probability $P_y(s)$,
+with maximum $\mathsf C(s)$. At $v^\dagger$, $\widetilde M=M$
+and the only failure-bearing branches have strictly positive whole-fibre
+live effect by JRH.30. Section 67 proves $v_0<v^\dagger<1$,
+so this is an interior strong point. $\square$
+

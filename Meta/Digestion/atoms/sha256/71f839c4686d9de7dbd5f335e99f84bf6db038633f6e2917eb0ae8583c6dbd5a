@@ -1,0 +1,21 @@
+**Open question 7.2 (Original universal law-only radius growth).** For the complete original problem, does every total-budget-$k$ rule admit an exact full-joint-law representative in a polynomial-in-$k$ radius, or is there a superpolynomial obstruction for law alone? This is Address Open question 5.3 and Stopping Open question 8.1, with their original source, endpoint, clock, fixed public bias, all lawful acquired-record rules, arbitrary unchanged independent seed, actual-call charging, and total-cap quantifiers retained. The established information is now
+
+$$
+\rho_{\mathrm{law}}(0;p,j,\nu)=0,\qquad
+\rho_{\mathrm{law}}(1;p,j,\nu)=3,\qquad
+\rho_{\mathrm{law}}(2;p,j,\nu)=5,
+\tag{7.4}
+$$
+
+and
+
+$$
+2k+1\le\rho_{\mathrm{law}}(k;p,j,\nu)\le2^{k+1}-1
+\qquad(k\ge3).
+\tag{7.5}
+$$
+
+The general question remains open. Theorem 6.1 excludes only continuation of the specified frozen prefix for the specified law. It does not exclude other prefixes or other law-equivalent trees, prove a new universal radius-seven lower bound, establish a superpolynomial obstruction, or settle all-$k$ growth. The original bridge rule itself remains an actual radius-seven representative of its law. The obstruction identifies a concrete compatibility obligation: early placements must leave edges capable of producing the future conditional correlations between previously queried components. Equality of a prefix law alone does not supply that extension.
+
+The exponential whole-oriented-signature requirement in Address Theorem 5.2 is stronger than the objective here. Its witness always has $O=a_0,D=1,N=k$; reading the actual address $j$ exactly $k$ times, paying every occurrence and ignoring all replies before returning $a_0$, gives that same full law at radius zero. Thus the inherited exponential signature obstruction supplies no exponential law-only lower bound. The two-read construction likewise does not preserve the full oriented signature or the potential-reply joint law across incompatible siblings; its executed-law proof is the branch partition in (3.3).
+

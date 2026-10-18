@@ -1,0 +1,37 @@
+**Convention 1.3 (Reused intrinsic spaces).** For an interval $C=[a,b]$
+of length $L$, let $\mathcal H_C=\sigma(X_j:j\notin C)$,
+$Y=X_{C^c}$, $\mu_C=P\circ Y^{-1}$, and
+
+$$
+\begin{aligned}
+\mathcal K_C(P)&=\{f\in\mathbb R^{B_L}:
+\mathbb E_P[f(X_C)\mid\mathcal H_C]=0\},\\
+V_C&=\mathcal K_C(P)^\perp,\qquad r_C=\dim V_C.
+\end{aligned}
+\tag{1.4}
+$$
+
+The orthogonal complement uses the ordinary coordinate pairing over
+all of $B_L$. [Intrinsic, Theorem 2.2 and Corollary 2.3][I] gives,
+after translating $C$, $\mathcal K_C(P)=\ker E_{\theta,L}$ and
+$V_C=\operatorname{range}(E_{\theta,L}^{\mathsf T})$, where
+
+$$
+E_{\theta,L}((u,v),w)=\lambda M_uM_wM_v\mathbf1,
+\qquad u,v\in\{0,1\}^{N-1},\quad w\in B_L.
+\tag{1.5}
+$$
+
+Illegal collar concatenations give zero rows; $N=1$ has an empty
+collar. The same finite-realization factorization gives $r_C\le N^2$:
+each row is obtained by applying a linear functional on $N\times N$
+matrices to the family $(M_w)_w$. This is the inherited rank bound,
+not a new collar or minimality theorem. Choose actual conditional masses
+$p_C(w;y)=P(X_C=w\mid Y=y)$ at $C=[1,L]$ for each $L$, and translate
+these versions to other intervals; stationarity justifies the choices.
+Finite bases in (1.4) give
+$p_C(\cdot;y)\in V_C$ almost everywhere. The spaces depend on $P$,
+even when two presentations have different dimensions or collars.
+Their finite dimension implies no visible Markov order or posterior
+locality.
+

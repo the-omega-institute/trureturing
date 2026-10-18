@@ -1,0 +1,18 @@
+**定义 1.1（同一阶乘余项与完整高段响应）。** 全文使用自然对数，令 $\ell=\log2$，并对 $y\ge1$ 定义
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad
+C(Y)=\int_1^Y\frac{\eta(y)}{y^2}\,dy\quad(Y\ge1).
+$$
+
+对 $r>0$，定义
+
+$$
+h(r)=\int_1^\infty\frac{\eta(y)}{y^2}
+\left[\frac1{r+\log y}+\frac1{(r+\log y)^2}\right]dy.
+\tag{1.1}
+$$
+
+这里保留完整的有符号 $\eta$、整个积分域及两个核项。这些定义对应 [ActualFactorialRobinHighDerivative 的 `eta_factorial`、`highKernel_formula` 与 `highRemainder`](https://github.com/the-omega-institute/trureturing/blob/c1b1f24da3ffc4aff376259b96685604d55525ea/D5/S3/Arith/Robin/ActualFactorialRobinHighDerivative.lean)。下文所有平移和差分都作用于式 (1.1) 的这个函数。
+

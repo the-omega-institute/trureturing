@@ -1,0 +1,130 @@
+**Theorem 9.5 (sharp actual-label minimum at optimal height).** Define
+$n_{\rm opt}(s)$ as the minimum number of actual low live-bearing
+acquisition labels among instruments attaining RH.6, with its original
+contrast inequality and sharp acquired cost. All original complex,
+potentially noncovariant optimizers, arbitrary inaccessible Kraus
+multiplicities and the stipulated countable/integral scope remain in
+this minimization. With $s_\dagger=s_0\tau_\dagger$,
+
+$$
+\boxed{\displaystyle
+n_{\rm opt}(s)=
+\begin{cases}
+3,&0\leq s\leq s_\dagger,\\
+4,&s_\dagger<s\leq s_0.
+\end{cases}}
+\tag{RH.89a}
+$$
+
+The contact belongs to the three-label branch, and the closed endpoint
+$s=s_0$ belongs to the four-label branch. This is an attained minimum
+of actual low live-bearing labels. It does not minimize the total
+acquisition alphabet or classify complete channels or decoders.
+
+Proof. First consider a sharp-cost original instrument with finitely
+many such labels. Lemma 8.2 gives to each label $\alpha$ a real-null
+rank-one normalized coefficient matrix
+$M_\alpha=f_\alpha f_\alpha^T\ne0$, obtained by summing all its
+encoder/live-decoder products and applying $L^{-1}$ on both sides.
+Theorem 2.2 gives
+
+$$
+\sum_\alpha M_\alpha=I,\qquad
+f_\alpha^TQf_\alpha=0.
+\tag{RH.89b}
+$$
+
+In particular at least three labels are necessary by rank, at every
+weak parameter, including $s=0$. Attached later-failure subeffects
+are PSD summands of $M$ and kill coordinate $0$, so they contribute
+no $01$ winding coordinate. Neither high branches nor failure-only
+labels contribute that coordinate. If $r_\alpha\in[-1,1]$ is the
+mean binary report of the actual acquisition label, RH.5 therefore
+implies, after a single global report reversal if needed,
+
+$$
+\tau\leq\mathsf V(F)/s_0
+=\left|\sum_\alpha r_\alpha(f_\alpha)_0(f_\alpha)_1\right|
+\leq\sum_\alpha|(f_\alpha)_0(f_\alpha)_1|.
+\tag{RH.89c}
+$$
+
+For an upper-bound construction only, assign each $M_\alpha$ to the
+slot with $r=\operatorname{sgn}((f_\alpha)_0(f_\alpha)_1)$ and
+$\epsilon=\operatorname{sgn}(f_\alpha^TGf_\alpha)$, choosing either
+sign at a zero. Their grouped tuple $X$ is feasible in RH.11 by
+RH.89b,c. It changes no competitor and grants no readable refinement.
+Splitting the actual record analytically into its supported live,
+high and failure pieces, using the triangle inequality and RH.15,
+gives the full original height bound
+
+$$
+\begin{aligned}
+T_{\rm actual}
+&\leq\frac{(1-\delta)\Delta A+L_f+
+                  \sum_\alpha|f_\alpha^TGf_\alpha|}{2}\\
+&=\frac{(1-\delta)\Delta A+L_f+
+       \sum_{r,\epsilon}\epsilon\operatorname{tr}(GX_{r,\epsilon})}{2}
+\leq\mathcal T(s_0\tau).
+\end{aligned}
+\tag{RH.89d}
+$$
+
+This includes labels which later fail and the entire actually generated
+record. No probability is divided by survival. If the original
+instrument is height-optimal, both inequalities are equalities; hence
+$X$ is an optimizer of the original four-slot problem. This equality
+step is required: a necessary real-atom reduction alone would not
+identify the actual-label optimum.
+
+For $\tau_\dagger<\tau<1$, choose the unique $0<a<a_\dagger$
+with $\tau=\tau(a)$. Proposition 7.5's credited aggregate uniqueness
+forces $X=(A_a,0,B_a,C_a)$. The rank-two $A_a$ is supported on
+$W_a^\perp$, whose real $Q$-null set consists of exactly the two
+distinct lines $q_+,q_-$. Positivity of each summand forces every
+label contributing to $A_a$ into that plane. Its two null-line masses
+are exactly $w_+,w_->0$ by RH.67d. Therefore at least one actual
+label is needed on each line. Likewise the nonzero rank-one $B_a,C_a$
+force labels on the lines $n_a,Z_a$. All four lines are distinct.
+Lemma 8.2 forbids one actual label, with its one common decoder, from
+serving two of them. Thus at least four actual low live-bearing labels
+are necessary on this whole open post-contact interval. In particular
+an inaccessible Kraus index or a split inside a grouped rank-two slot
+cannot be used to reduce this count.
+
+At $\tau=1$ the universal feasibility theorem 8.3 already excludes
+three labels since $\tau_3<1$. Alternatively RH.90 forces the four
+corner rays, and their Gram fixes a positive $1/4$ coordinate-$0$
+mass on each; Lemma 8.2 again requires four actual labels. This
+endpoint argument needs no finite optimal dual, which does not exist.
+
+It remains to exhibit matching height-optimal actual instruments.
+For $0\leq\tau\leq\bar\tau$, the plateau frame $(v,u,w)$ of
+Proposition 3.2 has exactly three low live-bearing labels and contrast
+$s_0\bar\tau\geq s_0\tau$. The requirement is an inequality, so
+attenuation or extra labels are unnecessary. For
+$\bar\tau<\tau\leq\tau_\dagger$, use Theorem 6.1's three-vector
+frame and Proposition 7.1, including the contact. For
+$\tau_\dagger<\tau\leq1$, use exactly the four nonzero vectors
+RH.67f, including their finite endpoint values. Definition 5.1 and
+RH.35–43 establish simultaneously total encoder effect $I_5$, whole-
+fibre TP decoders, all-complex/passive-reference/separate-five-label
+Borel output identities, all twelve original HALF complete-cq errors,
+sharp jointly counted acquired cost and the optimal height value.
+No channel or additional binary-effect coordinate has been imposed
+on the necessity class. These constructions prove the claimed upper
+counts and attainment at both closed boundaries.
+
+For countably many labels the same sums converge positively. Under
+the specified measurable finite-fibre, measurable-Kraus and integrable
+effect/live-Choi extension they are the corresponding integrals;
+support and equality hold almost everywhere. In particular a proposed
+counterexample with at most three actual labels has at most three
+nonzero CP-mass atoms and the finite argument applies to their CP
+maps. A positive nonatomic live-bearing component already has
+infinitely many actual labels. An unacquired integral variable is
+hidden encoder multiplicity with one common decoder and is governed
+by Lemma 8.2. No unrestricted disintegration is invoked. The finite
+constructions therefore achieve the minimum even in these larger
+comparison classes. $\square$
+

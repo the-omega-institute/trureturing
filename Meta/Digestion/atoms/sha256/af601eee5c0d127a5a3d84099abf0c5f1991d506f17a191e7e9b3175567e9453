@@ -1,0 +1,16 @@
+**定义 20.6.1（二状态选择门）。** 令 $\mathcal U=\mathcal X=\mathcal Y=\{0,1\}$，取 $0\le\varepsilon\le1$，并令
+
+$$
+S_\varepsilon=
+\begin{pmatrix}
+1&\varepsilon\\
+\varepsilon&1
+\end{pmatrix},
+\qquad
+s_x(u)=(S_\varepsilon)_{x,u}.
+$$
+
+令 $\pi(0)=\pi(1)=1/2$、$q(0)=q(1)=1/2$，并令 $Y=U$。无条件时 $Y$ 与 $X$ 独立；选择事件 $Z=1$ 的概率由 $S_\varepsilon$ 给出。
+
+<a id="claim-20-6-2"></a>
+

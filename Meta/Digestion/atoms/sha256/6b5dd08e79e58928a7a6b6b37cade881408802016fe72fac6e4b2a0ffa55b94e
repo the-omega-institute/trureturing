@@ -1,0 +1,25 @@
+**Theorem 7.2 (Precision-provisioned dyadic subclass).** For every
+$0<s<s_0$ and finite integer $M\ge M_0$, choose $J$ by (7.3), any
+$B\ge B_0(s,J)$ and a midpoint meeting (5.3), with rows (5.2).
+The resulting one common dyadic table has at most $M$ complete
+configurations and satisfies
+
+$$
+\max_i\mathbb E_iT\le C_{\rm fp}C_3\Psi(s,M).
+\tag{7.5}
+$$
+
+Every compliant dyadic table with at most $M$ configurations still obeys
+(7.2). Thus the existing complete-budget order transfers to dyadic
+tables when sufficient transition precision and midpoint accuracy are
+available. This statement does not characterize a separately imposed
+insufficient joint $(M,B)$ budget.
+
+Proof. The inherited selection facts ensure that Theorems 4.1 and 5.1
+apply and that their unchanged state count is at most $M$. By (7.4),
+$C_{\rm fp}s^{-(2r+1)}/J\le C_{\rm fp}C_3\Psi(s,M)$, proving
+the upper on one common table. Dyadic tables are a subclass of the
+unrestricted competitors in Assumption 7.1, so its lower applies
+unchanged. No selection argument or universal lower is being claimed
+as a new result. $\square$
+

@@ -1,0 +1,15 @@
+**Proposition 60.1 (repo-derived).** For every \(|b|<1\), the actual
+common-flat input rays orthogonal to any specified \(c_l^\epsilon\)
+are exactly the other five canonical rays. Equivalently, among common-
+unbiased column rays for \((I,H_0)\), the rays orthogonal to a specified
+\(H_0c_l^\epsilon\) are exactly the other five \(H_0c_j^\delta\).
+No covariance condition is imposed on the ray or on a basis containing it.
+
+The zero-mode cases are Proposition 58.1 and the central seed is
+Proposition 59.1. The new part is \(l=1,2\), \(0<|b|<1\).
+The proof below gives an explicit positive sextic identity in the original
+flatness equations. Algebraic enumeration of common-unbiased vectors is
+also considered by Brierley–Weigert,
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2);
+that enumeration is not a premise of the parameter-uniform identity here.
+

@@ -1,0 +1,24 @@
+**Corollary 313.2 (The reused projection and its newly sharp interior).**
+The head domain (313.2) is nonempty exactly when
+$24\tau+80\sigma\le1$. If $a_2=a_3$, its finite profile is in
+$H_N$ with the same mass-one allocation. The only new optimality
+scope relative to 307.1 and 300.1 is $\sigma>0$ with both head
+inequalities strict; the old sufficient head-tightness conclusion
+remains valid.
+
+**Proof.** Necessity of the scale bound was shown in (313.7).
+Conversely take $a_1=a_2=a_3$: the second head inequality is exactly
+that bound, and the first follows since
+$20\tau+69\sigma\le24\tau+80\sigma$.
+For $a_2=a_3$, the hull excess is
+$\sum_{3}^7a_n-8E=6\tau+20\sigma>0$ and
+$a_1+6\tau+20\sigma\le1-\tau-3\sigma<1$.
+Order, $a_7>E$ and equality of the second and third amplitudes give
+all other hull conditions. The one law just proved supplies full
+mass-one feasibility. These projection, hull and primal facts are
+those of 307; the lower certificate 312 supplies the previously
+unclaimed interior optimality. When $\sigma=0$ the old ray theorem
+300.1 already proves optimality, including strict heads. When a
+head is tight 307.1 already proves it. That theorem said "if", not
+"only if", so no old result is reversed. $\square$
+

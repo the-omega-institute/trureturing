@@ -1,0 +1,45 @@
+### 88.2. Uniform old/new coordinates and the witness
+
+Use the marker-aligned base coordinates from section 82. It is enough initially to work in the fixed finite A-environment dimension d≥4 and in B-environment dimension three, split into the old two dimensions and one new dimension. Write
+
+\[
+ V_B=U\sqrt{I-R^*R}\ \oplus\ R,
+ \qquad U\in U(8),\quad R:\mathbb C^8\longrightarrow\mathbb C^4,
+ \qquad r=\|R\|_F.                                      \tag{4}
+\]
+
+Every such pair with ‖R‖op<1 is a physical Stinespring isometry. Conversely, every nearby isometry with this old/new split has this form because its old square block W is invertible and its polar factor U satisfies W=U√(I−R*R).
+
+Let x=(V_A,U) belong to the original comparison space
+X=St(C⁸,C⁴⊗Cᵈ)×U(8). For chosen Stinespring isometries, let a_fi=(〈f|⊗I)V_A|f,i〉 and b_fi=(〈f|⊗I)V_B|f,i〉 be the correct-output environment records. Their forward Grams are G_(fi,gj)=〈a_fi,a_gj〉 and H_(fi,gj)=〈b_fi,b_gj〉, with inner products conjugate-linear in the first argument. Set K=G⊙H and let T be the 8×8 matrix with diagonal 2×2 blocks I₂ and off-diagonal blocks J₂/2. Define
+
+\[
+ f(x,R)=F(A,B)={1\over4}\Lambda_2(T-K).
+ \qquad \delta(A,B)\ge\operatorname{Tr}(T-K)_+/4\ge f(x,R).
+                                                               \tag{5}
+\]
+
+The original reference input has compression Kᵀ/8 on {|f,i〉_R⊗|ff〉_out}; its complementary positive trace is 1−Tr K/8. Keeping that trace proves (5), including arbitrary original output leakage and cross-sector coherences.
+
+At the equality pair the top two eigenvalues of T−K are 1/2,1/2, separated from the others by at least 1/2, including boundary disphenoids. Thus f is real-analytic in a fixed neighborhood of (x₀,0). It is invariant under R↦−R, indeed under a common phase on the new Kraus vector. All Taylor estimates below are uniform after shrinking to the closure of a sufficiently small coordinate neighborhood. No new eigenvector regularity is used here.
+
+Section 86 supplies a smooth embedded minimum manifold M in X, with f(m,0)=1/4, df_old=0, and old Hessian kernel exactly TM. Its normal Hessian is positive definite. All extra A-environment and original leakage directions are included in this assertion. In calibrated notation its points satisfy
+
+\[
+ C_f=S+\tfrac12WN_f,\quad \sum_fN_f=0,\quad
+ S^*S=(\tfrac12-h/8)I_2,\quad W^*W=(h/2)I_2,\quad
+ S^*W=i\beta I_2,                                       \tag{6}
+\]
+
+with h near 1/2 and β near zero. In (6), W denotes the coefficient matrix, not the old Stinespring block in the preceding paragraph.
+
+The fixed-A_m witness property holds on the whole M. Put T_i=√2(S+(−1)^iW/2). Then T_i^*T_i=I₂ and a_fi=T_i conjugate(b_fi). Balance gives Σ_f|b_fi〉〈b_fi|=2I₂. If H_i^m is this tight fixed-bit Gram and H_i is any original B correct-output fixed-bit Gram, then H_i^m≤2I₄ and Tr H_i≤4. The rank-two projection P₀=(J₄/4)⊗I₂ therefore gives
+
+\[
+ \operatorname{Tr}(P_0K)=\tfrac14\sum_i\operatorname{Tr}(H_i^mH_i)\le4,
+ \qquad \operatorname{Tr}(P_0T)=5,
+ \qquad F(A_m,B)\ge1/4.                                 \tag{7}
+\]
+
+This proof includes complex marker overlaps and arbitrary original B leakage.
+

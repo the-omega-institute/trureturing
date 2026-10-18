@@ -1,0 +1,11 @@
+**Mathematical citation 8.4 (primary references).** [EN] S. Eckstein and
+M. Nutz, *Quantitative Stability of Regularized Optimal Transport and
+Convergence of Sinkhorn's Algorithm*, arXiv:2110.06798v3, Definition 3.1
+and Lemma 3.2. [AWR] J. Altschuler, J. Weed and P. Rigollet,
+*Near-linear time approximation algorithms for optimal transport via
+Sinkhorn iteration*, arXiv:1705.09634v2, Algorithm 2 and Lemma 7.
+[LV] L. Leskelä and M. Vihola, *Conditional convex orders and measurable
+martingale couplings*, arXiv:1404.0999v3, Theorems 1.2–1.4.
+[BVP] J. Backhoff-Veraguas and G. Pammer, *Applications of weak transport
+theory*, arXiv:2003.05338v1, §3.
+

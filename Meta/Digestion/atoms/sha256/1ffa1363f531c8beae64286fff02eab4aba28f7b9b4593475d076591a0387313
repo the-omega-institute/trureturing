@@ -1,0 +1,29 @@
+**Definition 8.4 (publication and importer leaves).** Each `Publishj`
+uses ARC Definition 7.1 **literally** with the new wrapper word. On 71
+measure Base, dry-count/export candidate, append one F and seal, create
+the complete descriptor. Allocate/initialize distinct full mailbox 72 and
+receiver 73 payload intervals and single F delimiters. Prepare their full
+68 descriptors. Immediately stage complete sender, mailbox and receiver
+placement records on 69, in that order, each measured, copied, described
+once and sealed. Completion records go on 71. Reacquire sender payload
+length from its actual staged placement before each allocation and copy;
+a staging-wire length is not a payload length.
+
+Use native unary copies and Seek for both endpoints, then both tested
+six-row payload copy bodies, final seals and TOKs, including the second
+handoff. During this protected native copy/print segment no bank assignment
+or extra 69 staging occurs, so the latest-three invariant remains true.
+Recover actual receiver base and payload length from those records and
+execute mandatory print: RD(length,5), then per 1 RD(73,4), OUT(4),
+MR(73), MR(length); terminal RD(0) exits. Current receiver-read authority
+comes from this actual seal/TOK, not a bit in $v_j$.
+
+On entering each callback, **before any assignment**, use that still-latest
+receiver placement to Seek(73) to its first actual bit. Then import using
+RD, finite bit case, compiled literal cons, MR(73), until its existing F,
+and Reverse. Helpers touch 64–68 and preserve head 73; do not use scratch
+67's length across those bank rebuilds. After import staging recency is
+not assumed. Later publication starts fresh measured/staged records.
+ACK and mailbox return follow the current check, before any next handler.
+All unchanged persistent fields are copied by every bank assignment.
+

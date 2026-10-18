@@ -1,0 +1,13 @@
+**Convention 6.5 (full failure boundary).** All finite Read words
+in this source interface are legal and return one of the four
+labels. Every absent reply has an actual successor. There are no
+executed hardware-failure, permission-revocation or crash outcomes in
+these theorems. An unexecuted illegal action is different from
+$\operatorname{some}(\mathsf{failure},s')$. To compile an
+extension with such outcomes, one must specify and transport its
+same-source full failure label, work/reference/permission successor
+and archive effect. Formula (NVC.7) alone supplies none of these.
+Using two actual Reads exceeds an original one-Read resource cap;
+that mathematical resource violation does not create a recorded
+runtime failure event. Halting itself makes no further Read.
+

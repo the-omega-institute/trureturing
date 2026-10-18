@@ -1,0 +1,35 @@
+**theorem 9.2 (The three-copy protocols use quantum retention).**
+For $c>0$, the processor in Theorem 7.2 has error strictly less than
+the supplied program-first real-record, memory-free value $c$.
+It therefore lies outside that smaller comparison class, although
+it uses real local Kraus matrices throughout.
+
+Proof. The comparison class in C-132.1 acts only on programs first,
+retains a classical record with real effects $F_z$, and keeps no
+quantum subsystem or correlation with the original program for later
+data interaction. Any retained state is prepared from the record
+alone. For a real effect $F_z^T=F_z$, while
+$\rho_-^{\otimes3}=(\rho_+^{\otimes3})^T$. Thus
+
+$$
+\operatorname{tr}(F_z\rho_+^{\otimes3})
+ =\operatorname{tr}(F_z\rho_-^{\otimes3}).
+\tag{9.8}
+$$
+
+Adaptive real program-only Kraus histories have real symmetric
+effects as well. Any later data channel chosen only from that record
+has the same average for the opposite signs, even if complex later
+channels are allowed. Their target distance is $2c$, forcing worst
+error at least $c$; the common zero-program diagonal channel attains
+$c$. This is the already supplied C-132.2 comparison, reused here at
+three copies.
+
+For $c>0$, $F_3=2u(1+r+r^2)>0$, so the selected coefficient
+$\min(c,K_3)$ is positive. Theorem 7.2's error is consequently
+strictly less than $c$. Its Bell step uses an actual retained
+distributed pair; in the all-hit majority branch Theorem 6.1 keeps
+the unknown global sign quantum while reading relative signs.
+Equation (9.8) never applies as a memory-discarding restriction on
+the full class of Definition 1.2. QED.
+

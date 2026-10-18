@@ -1,0 +1,9 @@
+**Definition 3.5 (degenerate and cyclic cases).** If the initial state is
+halt $h$, the empty path proves $J=N$. If $E_H=\varnothing$, every eventual
+halt disjunction is empty. A pure-read cycle has zero update weight and
+cannot escape by positing a later phase: no crossing path exists. An
+update-containing cycle may cross a distant boundary, but $P$ and $X$
+retain the actual endpoint, including a cut inside a cycle. An update-only
+cycle with no route to halt has no halt support. These follow from the
+path definitions and are not extra assumptions of termination.
+

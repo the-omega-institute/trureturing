@@ -1,0 +1,64 @@
+**候签定理 52.2（所有规模的独立位置与准确回复支持）。** 对全部整数 $n\ge3$，$P_n$ 是有限地址反链，
+
+$$
+|P_n|=F_{n-2},\qquad F_0=0,\quad F_1=1.
+\tag{JM.153}
+$$
+
+每个 $A\subseteq P_n$ 同时实现为一个实际树，且
+
+$$
+\begin{aligned}
+w(V_A)&=w(T_n),&G(V_A)&=G(T_n),\\
+V_\varnothing&=T_n,&Q(V_\varnothing)&=(n,1),\\
+A\ne\varnothing&\Longrightarrow V_A\notin\rho[\mathcal T],&
+A\ne\varnothing&\Longrightarrow Q(V_A)=(0,0).
+\end{aligned}
+\tag{JM.154}
+$$
+
+族映射 $A\mapsto V_A$ 单射。更准确地，对每两个子集 $A,A'\subseteq P_n$，整个无限地址域上的差异支持都是
+
+$$
+\begin{aligned}
+\{q:r(q,V_A)\ne r(q,V_{A'})\}
+&=\bigcup_{p\in A\mathbin\triangle A'}S_p,\\
+\{q:\kappa r(q,V_A)\ne\kappa r(q,V_{A'})\}
+&=\bigcup_{p\in A\mathbin\triangle A'}S_p.
+\end{aligned}
+\tag{JM.155}
+$$
+
+特别地，与 $T_n$ 比较时右端是 $\bigcup_{p\in A}S_p$。不同 $p$ 的 $S_p$ 两两不交。
+
+证明。复用原子关系生成卷定理3.2的结构递推 $T_{j+2}=(T_{j+1},T_j)$ 及叶数 $\ell(T_j)=F_{j+1}$（$j\ge1$）。$T_0,T_1,T_2$ 均不含三叶子树 $B$，$P_3=\{\varepsilon\}$。当 $n>3$，$T_n$ 的叶数严格大于三，故根不在 $P_n$；每个其他位置准确位于左孩子或右孩子。因此
+
+$$
+P_4=L P_3,\qquad
+P_{n+1}=L P_n\ \sqcup\ R P_{n-1}\quad(n\ge4).
+\tag{JM.156}
+$$
+
+这里 $L P=\{Lp:p\in P\}$，$R P$ 同理；$P_2=\varnothing$ 时第二式也适用于 $n=3$。得到 $|P_3|=|P_4|=1$，以后按 Fibonacci 递推，证明（JM.153）。这是实际子树出现次数，未把叶词中可能重叠的 $bab$ 字段当作树位置。
+
+若不同 $p,p'$ 可按前缀比较，则较深的 $B$ 是较浅的 $B$ 的真子树。但有限满二叉树的真子树叶数严格小于全树，两个三叶子树不能如此包含。故 $P_n$ 是反链。沿每个位置的左右路径剖开 $T_n$，得到孔地址恰为 $P_n$ 的有序多孔上下文；各孔可独立填入非空树 $B$ 或 $D$。这给全部子集的共同实现，且与逐孔填入的次序无关。
+
+两种填入都具有完整标签词 $bab$。保持外围及左右叶序便保持整个 $w(T_n)$，所以由约定2.1的词读数保持 $G$。空集给原树；$\alpha$ 不在一阶像内，定理36.3的原射线唯一性给 $\nu(T_n)=n$、原始端点 $\alpha$，无需以第49–51章的候签深度合成律为前提。
+
+对非空 $A$ 取 $p\in A$，填入的 $D$ 在 $pR$ 的左孩子 $pRL$ 保留叶 $\alpha$。反链使其他填入不能改变这个孩子。约定36.2的一阶像语法中，特殊块 $(\beta,\alpha)$ 的左叶是 $\beta$，一般配对的两个孩子都在一阶像内，而 $\alpha$ 不在该像内。对这三种互斥语法结构归纳，任意一阶像在任意地址都不可能有左孩子叶 $\alpha$。因此 $V_A$ 不在一阶像，深度零。它至少有三叶，原始端点不可能为单叶 $\alpha$，给（JM.154）。此障碍比仅排除第三像更强。
+
+在一个孔内，根回复都是 $\mathsf{br}$，六个可能不同的回复逐项为
+
+$$
+\begin{array}{c|rrrrrr}
+q&L&R&LL&LR&RL&RR\\ \hline
+r(q,B)&\mathsf{br}&\beta&\beta&\alpha&\mathsf{abs}&\mathsf{abs}\\
+r(q,D)&\beta&\mathsf{br}&\mathsf{abs}&\mathsf{abs}&\alpha&\beta
+\end{array}
+\tag{JM.157}
+$$
+
+每列的粗回复也不同。长度至少三的孔内地址在两边均缺席，故不存在遗漏的深地址差异。孔的真祖先回复仍为分支，不进入任何孔的地址也未变。每个地址至多进入一个孔，因为孔地址是反链；由此六列在外围准确加上前缀 $p$，得（JM.155），包括任意长的缺席地址。反链也使不同孔的整个前缀锥不交，所以 $S_p$ 两两不交。若 $A\ne A'$，任选 $p\in A\mathbin\triangle A'$，地址 $pL$ 的回复不同，证明单射。
+
+上述同时实现、实际位置数及准确六地址支持属于 `repo-derived`。单个左射线位置的比较已由（JM.148）供应，经典保叶序重结合见 Loday，*Realization of the Stasheff polytope*，[原文](https://arxiv.org/pdf/math/0212126v1) §1、§2.8；其平面树边关系不包含本替换的原始性或地址回复断言。这里只按本卷实际语法推导这些关系，不声称全球优先性。$\square$
+

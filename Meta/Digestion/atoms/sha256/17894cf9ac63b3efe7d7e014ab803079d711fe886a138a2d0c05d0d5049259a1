@@ -1,0 +1,46 @@
+### 定理 49.4（可逆图的 Dirichlet 自伴谱）
+
+令 \(\Omega=V\times\Sigma\)，取 \(\pi_i>0\) 和转移核 \(P\)，满足
+
+\[
+\pi_iP_{ij}=\pi_jP_{ji}.
+\]
+
+在 \(L^2(\pi)\) 内积
+
+\[
+\langle f,g\rangle_\pi=\sum_i\pi_if_ig_i
+\]
+
+下，\(L=I-P\) 自伴半正定，并且
+
+\[
+\langle f,Lg\rangle_\pi
+=
+\frac12\sum_{i,j}\pi_iP_{ij}(f_i-f_j)(g_i-g_j).
+\tag{49.3}
+\]
+
+于是 \(f_t=e^{-tL}f_0\) 满足
+
+\[
+\frac{d}{dt}\|f_t\|_\pi^2
+=
+-2\langle f_t,Lf_t\rangle_\pi
+\le0.
+\]
+
+这给出了“地势沿图传播并耗散”的有限精确版本。若总场 Hessian 可写成
+
+\[
+B=L_G\otimes K,
+\]
+
+其中 \(L_G\) 是节点图拉普拉斯，\(K\) 是内部五态曲率型，则在相应度量下全局能级为
+
+\[
+\Lambda_{ab}=\mu_a\lambda_b,
+\]
+
+这里 \(\mu_a\) 是 \(L_G\) 的特征值，\(\lambda_b\) 是 \(K\) 的广义 Fisher 特征值。图传播与局部五态能级因此可以先分离，再研究耦合。
+

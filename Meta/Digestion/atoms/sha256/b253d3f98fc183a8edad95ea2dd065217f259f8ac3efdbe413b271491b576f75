@@ -1,0 +1,61 @@
+**Lemma 8.2 (the complete native menu, including unreachable rows).**
+For these particular complete native tables the exact distinct literal
+menu, and also its prefix union, is
+
+$$
+\begin{aligned}
+\mathcal D_{H,J}
+ &=\{pR^j: |p|\le H,\ 0\le j\le J\}\\
+ &=\{p:|p|\le H\}\ \cup\
+   \{xR^j:|x|=H,\ 1\le j\le J\},\\
+\mathcal M_{\rm nat}&=\operatorname{Pref}(\mathcal M_{\rm nat})
+ =\mathcal D_{H,J},\qquad
+|\mathcal D_{H,J}|=2^H(J+2)-1,\qquad
+P_{\rm inst}^{\rm nat}=H+J.
+\tag{8.1}
+\end{aligned}
+$$
+
+Proof. At $T=0$, every valid VALUE code permits every path of length
+at most $H$: choose its padding zero and its independent branch, leaf
+and parity counters zero. Its literal is that path. GUARD, POLL and
+UPDATE are unavailable in this case; malformed codes and routing rows
+read the root. Thus its exact menu is $\mathcal D_{H,0}$, including
+$H=0$.
+
+For $T>0$, inspect the total intermediate table $I_{12}$, rather than
+only its lawful executions. At cell $c$ its installed candidates are
+
+$$
+N\in[\max(0,2c-2h+1),\ \max(0,2c-2h+1)+2h],
+\qquad 0\le c<J.
+\tag{8.2}
+$$
+
+Here $J\ge h+1$. The intervals for $c<h$ are $[0,2h]$;
+subsequent lower endpoints increase by two, and the last upper endpoint
+is $2J-1$. Their union is exactly $[0,2J-1]$. Hence VALUE supplies
+every $pR^j$ in (8.1): choose a candidate with $\lceil N/2\rceil=j$
+and choose that valid path $p$. For $j=0$ use $N=0$; for $j>0$ one
+may use $N=2j-1$. Counter bounds do not impose a reachable-traversal
+condition on these installed rows.
+
+A GUARD literal is $p^-R^{\lfloor N/2\rfloor+1}$, with
+$1\le |p|\le H$ and $1\le N\le2J-1$. Its prefix has length at most
+$H-1$ and its right suffix at most $J$. SEARCH and POLL use respectively
+$R^m$, $1\le m<J$, and $R^c$, $0\le c<J$. Invalid intermediate
+codes use the empty literal. Construction 11.6 only adds root Reads:
+in ready phases it exposes every intermediate instruction, including
+each valid VALUE row; every other Read is a root Read. It introduces
+no additional nonempty literal even on malformed bank/flag combinations.
+This proves equality, not merely a reachable-menu containment.
+
+To obtain the second description in (8.1), split a word at position
+$H$ when its length exceeds $H$; the remaining letters are all $R$.
+Conversely its full length-$H$ prefix can serve as $p$. Short words
+contribute $2^{H+1}-1$, and each positive excess length contributes
+$2^H$ disjoint words. Prefix closure and the attained maximum follow.
+The actual D5 query syntax `originalQueries` has precisely the VALUE
+and GUARD forms used here; its private `original_query_bounds` is
+already a supplier of the length bound. ∎
+

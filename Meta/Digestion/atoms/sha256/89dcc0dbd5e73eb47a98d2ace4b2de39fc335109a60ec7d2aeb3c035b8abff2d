@@ -1,0 +1,25 @@
+**Lemma 5.1 (all sheets and all arcs).** On both whole circles,
+
+$$
+Y\cdot\Gamma_\eta(\phi)\ge |H_\eta(\phi)|+\lambda|u(\phi)|.
+\tag{7}
+$$
+
+The zeros are exactly the seven contacts in §3. The pure and saturated equality directions are disjoint.
+
+Proof. Use base $0$ on $u\ge0$ and base $\pi$ on $u\le0$, each with the full closed interval $x\in[-1,1]$. Together they cover both axes and the infinity omitted by either single half-angle chart. Check the eight cases in lexicographic order $\eta=(0,1)$, $\epsilon=(-1,+1)$, $\sigma=(-1,+1)$. Their occupied root lists are respectively $[2],[],[1],[0,5],[6],[4],[],[3]$, with quotient degrees $2,4,2,0,6,6,8,6$. Contact 4 is converted to base $0$ by $x=(x_4-1)/(x_4+1)$; this chart change has nonzero derivative and the clearing denominator stays positive.
+
+At the actual zero of (5), each occupied polynomial has exactly $P(a_i)=P'(a_i)=0$. The polynomial remainder theorem therefore gives exact divisibility by $(x-a_i)^2$. Distinct contacts, certified in Lemma 4.2, permit successive divisions. Equivalently, after dividing at one root, the other root's quotient and derivative still vanish because its removed factor is nonzero. This proves exact factorization of the whole polynomial. An interval remainder containing zero would not prove any of these equalities and is not used to do so.
+
+For specificity, ascending coefficients $c_0,\ldots,c_n$ divide once at $a$ by $b_{n-1}=c_n$, $b_{k-1}=c_k+ab_k$ for $k=n-1,\ldots,1$, with remainder $c_0+ab_0$. Apply this twice for each listed root. Enclosing these expressions gives the quotient coefficients. For a leaf $[a,b]$, $x=a+(b-a)y$, define
+
+$$
+A_j=\sum_{k=j}^nq_k\binom{k}{j}a^{k-j}(b-a)^j,\quad
+C_i=\sum_{j=0}^i A_j\frac{\binom{i}{j}}{\binom{n}{j}},\quad
+Q(x)=\sum_{i=0}^n C_i\binom ni y^i(1-y)^{n-i}.
+$$
+
+Every supplied leaf's degree and ordered rational endpoints are in Appendix B. On each arc they start at $-1$, abut exactly and end at $1$: 35 leaves per cell, 400 complete arcs and 1750 leaves in all. Nonnegative Bernstein basis functions sum to one, so strictly positive enclosing control lower endpoints prove positivity at every point, including leaf boundaries.
+
+The independent **full-box** control bound is $>0.00012057$. This alone does not establish the stronger $>0.0001206$ bound. On the contracted fixed-point image specified after (6), recomputation gives the exact refined fractions in Appendix C and a uniform lower bound $>0.00016645$, which does establish $>0.0001206$ for the actual root family. All leaves are retained in this refinement. The direct-polynomial Appendix D evaluation gives $>0.00016650$ on those same images and partitions; either sufficient lower bound proves the claimed $>0.0001206$. The positive quotients and nonnegative removed squares give the exact zero sets. The opposite report sign is weaker by $2\lambda|u|$, with $\lambda>0$. Checking both height signs therefore proves (7) everywhere. ∎
+

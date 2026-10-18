@@ -1,0 +1,10 @@
+**Proposition 157.2 (Necessity in the full model).**
+$\Pi_N\cap Q_6\subseteq P$.
+
+**Proof.** The domain supplies rows 0--9, and Proposition 156.2 supplies
+every remaining row. No label or schedule in the full $N$ class has been
+removed, and no error allowance has been assigned separately to an event.
+The eight rows 62--69 involve both the first amplitude and the later
+coordinates; their status as actual facets is proved in Section 158.
+$\square$
+

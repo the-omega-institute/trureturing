@@ -1,0 +1,48 @@
+## 一、变化优先本体
+
+令 $\mathcal E$ 是事件或局部状态的集合。
+
+不预设外部空间，也不预设全局时间，只定义允许的局部变化关系：
+
+```math
+e\longrightarrow e'.
+```
+
+一条有限因果历史是：
+
+```math
+h=(e_0\longrightarrow e_1\longrightarrow\cdots\longrightarrow e_n).
+```
+
+真正原始的对象不是某个外部容器，而是：
+
+```math
+\boxed{
+\mathscr D=(\mathcal E,\longrightarrow,\delta)
+}
+```
+
+其中：
+
+- $\mathcal E$：局部状态；
+- $\longrightarrow$：允许发生的变化关系；
+- $\delta(e,e')$：从 $e$ 到 $e'$ 的变化内容。
+
+如果坚持“只有变化”这一更强的观点，可以把状态本身也降为历史的端点：
+
+```math
+e_i=\partial_i h.
+```
+
+此时基本对象不再是“物体在空间中的位置”，而是：
+
+```math
+\boxed{
+\text{哪些局部变化可以连接，}
+\quad
+\text{以及这些变化如何继续变化。}
+}
+```
+
+---
+

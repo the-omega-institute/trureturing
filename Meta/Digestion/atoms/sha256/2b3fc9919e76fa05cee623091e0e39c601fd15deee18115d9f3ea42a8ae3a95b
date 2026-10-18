@@ -1,0 +1,21 @@
+**Theorem 7.2 (Exact productive response and finite certificate).** At $t=10^{-100}$, the complete actual response has absolute sum less than $11$ and $S_{P_t}(f_t)>1/2000$. It also strictly violates Theorem 3.1's finite necessary bound at $R=104$, $r=10^{12}$.
+
+Proof. For the ten sites $i=-1,\ldots,8$, the comparison integrand $f_0(X_C)(X_i-g_i)^2$ depends on fourteen coordinates $[-3,10]$ and has absolute value at most one. Equation (7.2) changes its expectation by at most $4600t$; coefficient replacement costs at most $10^{11}t$, and replacing $g_i$ by the actual posterior costs at most $2\delta_t$ since $F<1$. Each actual response differs from its reference by less than $2\cdot10^{11}t$, so all ten cost less than $2\cdot10^{12}t$. These include six interior and four near exterior/seam sites.
+
+For $i=-r,7+r$ with $2\le r\le103$, $(X_i-g_i)^2$ is $\mathcal H_C$-measurable. The same conditional-null square expansion as Lemma 2.1, now with the exterior-measurable comparison $g_i$, gives $\mathbb E_t[f_C\ell_i]=-\mathbb E_t[f_C(q_i-g_i)^2]$, of magnitude at most $\delta_t^2$. There are exactly $204$ such sites. For $r\ge104$, Lemmas 2.1 and 6.2 bound both exterior tails by $5\cdot10^{-40}$. Reference exterior terms are zero. Hence
+
+$$
+|S_{P_t}(f_t)-S_Q(f_0)|<2\cdot10^{12}t+204(20000t)^2+5\cdot10^{-40}<1/10000.
+\tag{7.3}
+$$
+
+This gives $S_{P_t}(f_t)>1/1200-1/10000>1/2000$. The same partition bounds its entire absolute sum by $10+204\delta_t^2+5\cdot10^{-40}<11$. No exterior cancellation at positive $t$ has been assumed.
+
+For the finite certificate, $I_{104}=[-103,110]$ has $214$ sites. For every $r\ge5$, Lemma 6.1 applies also to the finite posteriors: the ten near terms have the same reference error bound $2\cdot10^{12}t$. On the other $204$ retained sites the comparison loss has expectation zero against $f_t$, and replacing $g_i$ by $q_{r,i}$ costs at most $2\delta_t$ per site. Therefore
+
+$$
+U_{104,r}(P_t,f_t)>1/1200-2\cdot10^{12}t-408\delta_t>1/2000\quad(r\ge5).
+$$
+
+At $r=10^{12}$, the threshold with $\bar c<1/4$ and $F<1$ is smaller than $5\cdot10^{-40}+214/10^6<1/4000$. This proves a strict finite violation using exact inequalities; no large-window evaluation or efficiency claim is involved. [Conditional Response, Theorem 3.1][R] also directly forbids this nonzero complete response under same-law attainment. $\square$
+

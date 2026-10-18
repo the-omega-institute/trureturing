@@ -1,0 +1,34 @@
+**Theorem 4.1 (optimization over all correlated core weights).** For
+every $h\ge0$, with $k=2^h$ and $d=h+3$,
+
+$$
+\min_{\substack{\mu\in\Delta(S_d)\\\mu(U_h)=1}}
+                   \beta_d(\mu)=(3/4)^k.
+\tag{JPL.20}
+$$
+
+The uniform probability on $U_h$ attains this minimum. Thus the
+largest normalized lower endpoint from any whole-block probability
+on any of these supports is exactly
+
+$$
+L_{\mathrm{core}}=\frac18\log_2(4/3).
+\tag{JPL.21}
+$$
+
+Proof. A fixed state $T_h(u_{s_1},\ldots,u_{s_k})$ belongs to exactly
+$3^k$ of the $4^k$ boxes $L_c$: in each position the excluded index
+may be any of the three other labels. Therefore, for every probability
+$\mu$ on $U_h$,
+
+$$
+4^{-k}\sum_c\mu(L_c)=(3/4)^k.
+$$
+
+Its maximum box mass is at least this average. Theorem 3.3 identifies
+that maximum with $\beta_d(\mu)$. Under the uniform probability,
+each box has exactly $3^k$ of the $4^k$ states, so every box mass is
+$(3/4)^k$. This proves the minimum, including probabilities with zero
+coordinates. Finally $2^d=8k$, and
+$-2^{-d}\log_2(3/4)^k=\log_2(4/3)/8$. $\square$
+

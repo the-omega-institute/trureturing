@@ -1,0 +1,40 @@
+**Theorem 75.1 (Harmonic marked versus one-request laws).** There are two
+selected families on exactly the original sources, tapes and consumer of
+Theorem 67.5 with the identical intrinsic modulus
+
+$$
+\Omega(m)=\frac1{m+1}\qquad(m\in\mathbb N_0),
+\tag{75.1}
+$$
+
+such that one admits an exact acquisition using exactly one request at every
+source and seed, whereas every exact acquisition of the other has infinite
+supremal mean request count. Both admit uniformly tight request counts.
+Thus the intrinsic modulus does not determine the existence of a uniformly
+finite mean request count.
+
+**Proof.** Take $a_i=1/i$ in (73.4). Theorem 73.2 gives (75.1), and the first
+line of (74.1) gives
+
+$$
+\min_{A\in\mathcal A(\lambda^a)}\sup_x\mathsf E_A K_{A,x}
+=\sum_{i\ge1}\frac1i=\infty.
+\tag{75.2}
+$$
+
+The divergence follows, for example, by grouping indices
+$2^j,\ldots,2^{j+1}-1$, each group contributing at least $1/2$.
+Nevertheless the prefix acquisition has sourcewise finite mean
+$\sum_{i=1}^{n(x)}1/i$ and uniform count tail $1/(m+1)$.
+
+For the comparison reuse exactly the selected two-tape family (70.9) in
+Source-Correlated Laws, with weights $w_i=1/(i(i+1))$. Its one shared integer
+seed selects index $i$ with probability $w_i$, requests $p_i$ once, and emits
+the original tape $\theta_{q_i(x)}$. Equations (70.9)--(70.10) give its exact
+intrinsic modulus (75.1) and $K=1$. Its zero-depth common submeasure has
+mass zero by (70.10), so (71.5) at $m=0$ forces every exact acquisition to
+make at least one request almost surely. Its minimum uniform mean count
+is therefore exactly one. This reuses that existing family and its modulus,
+rather than replacing its source model. Both families have uniformly tight
+count tails, respectively by $K=1$ and Theorem 73.2. $\square$
+

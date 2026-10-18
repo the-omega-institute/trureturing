@@ -1,0 +1,27 @@
+**Theorem 282.3 (Exact named unrestricted fibre threshold).**
+For every $L\ge7$, consider all full nonnegative scores whose quotient
+has $\beta_3=\cdots=\beta_7=1$ and every other $\beta_i=0$.
+For every such score with its actual total $K$,
+
+$$
+\Delta_O(y)\ge\frac{46-5K}{34}.
+\tag{282.6}
+$$
+This unrestricted fibre contains a zero-cost score in either class
+exactly when $K\ge46/5$.
+
+**Proof.** In 282.2 take $\tau=1/34$ and heads $13/34$.
+Pair an arbitrary full score in the stated fibre against that one
+mass-one stopped law. It dominates all demands at cap $5/34$ and
+late sum $46/34$, so its excess is at least $(46-5K)/34$.
+For $L>7$ extend this auxiliary finite target by $b_n=0$, $n>7$.
+The unchanged positive-word law has error $5/34$ against the base
+target, so every extended finite row also holds. Additional score
+coordinates and unrestricted $A,C,P,T$ cancellations therefore obey
+the same lower bound. This zero extension is solely a finite algebraic
+lower-score test; the original tails in 282.2 are positive.
+A zero-cost $O$ or $N$ score must have $K\ge46/5$.
+Theorem 281.2 attains equality, and positive-row padding attains every
+larger $K$. No optimality on a different weighted or gapped fibre is
+asserted. $\square$
+

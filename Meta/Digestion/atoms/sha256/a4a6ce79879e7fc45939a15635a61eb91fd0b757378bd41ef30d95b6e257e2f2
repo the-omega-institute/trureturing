@@ -1,0 +1,9 @@
+**Amplitude-path consequence.** Suppose both original channels admit C² Stinespring paths V_A(t),V_B(t) in fixed finite environments through the equality pair. Split B into its base two-dimensional environment and its orthogonal complement. If the first new-environment derivative is flat, use (5) to define D. Then
+
+\[
+ \liminf_{t\downarrow0}{\delta(A(t),B(t))-1/4\over t^4}
+       \ \ge\ \sum_{a=1}^3c(u_a)r_a^2.                  \tag{9}
+\]
+
+If that derivative is not flat, the liminf is +∞. It is also +∞ whenever the first old comparison tangent has a nonzero component normal to the section-86 minimum manifold. Equation (9) will be proved separately in section 87.7; it is not inferred merely from substituting s=t² into (6).
+

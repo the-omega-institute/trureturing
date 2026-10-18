@@ -1,0 +1,17 @@
+**Definition 5.1 (coordinate refinement by further retained signs).**
+Let $I^+$ add a finite list of signed links between already reached holes
+of the same proposed rows, retaining all old data. On a scheme of $I$
+and a supplied shape tuple, locate the existing names of the compared
+class values. For a new positive comparison, reject that shape tuple if
+the ground shapes differ; otherwise add all corresponding zero-offset
+leaf edges. For a new negative, apply Definition 2.3 and retain all
+old mismatch witnesses. Recompute the forest and (SFP.10).
+
+This operation uses finite shape comparison and affine arithmetic only.
+It does not require expanding a native tree. A new positive comparison
+can connect previously separate rank components; it never identifies
+ranks merely from shape equality without those new code-equality edges.
+This is an update on a supplied shape tuple. For a new finite scheme
+list before shape assignment, apply Corollary 4.2 to $I^+$; the
+per-shape update does not silently enlarge the scheme instruction grammar.
+

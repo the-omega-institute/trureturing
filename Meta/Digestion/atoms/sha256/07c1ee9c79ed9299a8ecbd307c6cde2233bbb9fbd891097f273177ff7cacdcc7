@@ -1,0 +1,30 @@
+**Lemma 2.2 (zero weights and finite norm structure).** The maximum
+in (RCE.10) is unchanged if only subsets of $\operatorname{supp}(w)$
+are used, with value zero when $w=0$. The function $J_I$ is monotone,
+positively homogeneous, subadditive and convex on nonnegative weights.
+It satisfies $J_I(w)\le\sum_xw(x)$ and, for probabilities,
+
+$$
+|J_I(\mu)-J_I(\nu)|\le\operatorname{TV}(\mu,\nu).
+\tag{RCE.11}
+$$
+
+Proof. For $P^+=P\cap\operatorname{supp}(w)$, removing states can
+only make additional experiments determine targets. Thus
+$H_I(P^+)\subseteq H_I(P)$, and its joint partition coarsens the
+old partition restricted to $P^+$. Merging nonnegative cells cannot
+decrease their squared mass sum. Consequently
+$\kappa_I(w,P)\le\kappa_I(w,P^+)$ when $P^+\ne\varnothing$;
+if it is empty the original norm is zero. Feasibility is inherited
+by subsets, proving the first assertion.
+
+For fixed $P$, its cell masses are a fixed nonnegative linear map
+$A_Pw$, and $\kappa_I(w,P)=\|A_Pw\|_2$. The norm triangle
+inequality and monotonicity on nonnegative vectors give the asserted
+properties after maximizing over the finite support list. Each norm
+is at most its total cell mass, proving $J_I(w)\le\sum_xw(x)$.
+Finally $\mu\le\nu+(\mu-\nu)_+$ gives
+$J_I(\mu)\le J_I(\nu)+\sum_x(\mu(x)-\nu(x))_+$.
+For probabilities that sum is their total variation. Exchange the
+two probabilities. $\square$
+

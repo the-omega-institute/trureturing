@@ -1,0 +1,88 @@
+**Assumption 1.1 (fixed original mathematical and operational premises).**
+Let FC mean [*Complete finite-face criteria for original optimal acquisition
+alphabets*, §§1–41](https://github.com/the-omega-institute/trureturing/blob/0512cd17cf4807864a7097fb3169847fcf3eef68/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_FACE_ALPHABET_CRITERION.md),
+and let GC mean [*Global actual acquisition counts for the complete finite
+continuation*](https://github.com/the-omega-institute/trureturing/blob/321589a8be98de4fe179f99f6e593d8784952db1/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md).
+All references to FC and GC below have these fixed meanings.
+Retain GC Assumption 1.2 and FC Assumptions 1.1, 17.1 and 23.1 at their
+respective scopes. There is one consistent isolated positive source,
+with membership in all nine dyadic rows of GC Definition 6.1. Source
+existence, isolation, Jacobian, ranks and root TP are premises about that
+root, not consequences of evaluating expressions on its enclosing box.
+
+Retain the complete stopped-output minimax supplier, the sharp
+worst-history cost of the jointly future-accessible input-dependent
+fibre, JR's separate unaveraged supported equality face, the full-complex
+multi-Kraus actual-label necessity, physical capacity and common
+constructor named in GC Assumption 1.2. Averaged-live equality does not
+replace the separate unaveraged supplier. No additional source,
+independently optimized marginal, or new dual-attainment supplier is
+assumed.
+
+More explicitly, the original experiment is GC Definitions 2.1–2.2.
+In the ordered modes $0,1,2,3,13$, put
+
+$$
+\begin{gathered}
+E=\big((e_0+e_{13})/\sqrt2,\ (e_1+e_3)/\sqrt2,\ e_2\big),\qquad
+p_y=(y/128,(64-y)/128,1/2),\qquad a_y=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,\\
+U_{\epsilon,\chi}=\operatorname{diag}(\epsilon,\chi,1),\qquad
+\rho_{y,\epsilon,\chi}=U_{\epsilon,\chi}a_ya_y^TU_{\epsilon,\chi}^{\dagger},\qquad
+y\in\{5,16,27\},\quad\epsilon,\chi\in\{\pm1\}.
+\end{gathered}
+$$
+
+There is one unknown normalized specimen
+$E\rho_{y,\epsilon,\chi}E^\dagger$, with no prior on these twelve
+histories. The ideal live output is
+$EU_{\epsilon,\chi}\xi_y\xi_y^TU_{\epsilon,\chi}^\dagger E^\dagger$,
+where $\xi_y$ is positive and has squared coordinates
+
+$$
+\left(\frac y{128},\frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right).
+$$
+
+The five separately labelled failure Borel components have densities
+$w_\ell f_y(a)\,da\,P_f$, where
+
+$$
+(w_0,w_1,w_2,w_3,w_{13})=(0,1/4,1/2,1/4,0),\qquad
+f_y(a)=\frac{6y}{(y+6a)^2},\qquad 0\le a\le1.
+$$
+
+Both zero-target components remain separate. The error is the maximum,
+over all twelve histories, of HALF the complete stopped-cq trace norm
+against this ideal output. It includes live coherences, all five
+failure measures, singular-time parts, abort and wrong-support sectors.
+Arbitrary passive references retain their conditional operators.
+The comparison class is the original common full complex CP acquisition
+instrument with all hidden Kraus multiplicities, all admitted failure-time
+laws and full-output TP conditional decoders; it is not replaced by a
+real-only, LOSR, PPT or diamond-norm problem.
+
+The cost counts specimen, memory, controller, accessible environments
+and entangled shares jointly. Precisely, $\mathsf W$ is the maximum
+over the twelve histories of the probability that this joint
+future-accessible input-dependent fibre has dimension at least three.
+The original constraints are
+
+$$
+\mathsf E(\Phi)=E_*,\qquad
+\mathsf V(F)=\frac{2|\operatorname{Re}F_{01}|}{h_0a+h_1b}\ge s,\qquad
+\mathsf W=\mathsf C(s),\qquad
+\max_{j\ {\rm actually\ generated}}\int_0^1\|R_j(a)\|\,da\le A.
+$$
+
+The binary report is produced by the same acquisition.
+$E_*$ and $\mathsf C(s)$ have their inherited minimax and sharp JOINT
+meanings. Activity is the integral of the operator norm on each entire
+counted fibre, maximized over actual generated labels. Survivors are
+strictly positive at finite budget; survivor controls are TP; FIRST is the absolute time $6+a$; after failure there
+is no later positive-carrier action. Retain the original finite and
+convergent countable necessity classes and only the stipulated measurable
+finite-dimensional-fibre/Kraus/integrable-effect extension of GC
+Convention 2.3. Physical attainments invoked here are finite. There is
+no extra specimen, helper, copy, history oracle, reset, retry,
+postselection, acceptance or survival division, quantum bypass or
+uncounted accessible share.
+

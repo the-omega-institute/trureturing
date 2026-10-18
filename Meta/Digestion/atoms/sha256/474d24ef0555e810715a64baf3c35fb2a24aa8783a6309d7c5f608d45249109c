@@ -1,0 +1,33 @@
+**Proposition 174.2 (The exact excess identity).** For the construction
+of Theorem 173.1, define
+
+$$
+D_{\rm core}=\sum_{i=3}^m(A_i-e_0),\qquad
+D_3(a,\varepsilon)=\sum_{i\ge3}(a_i-\varepsilon)_+,
+$$
+
+with $D_{\rm core}=0$ when $m=2$. Then
+
+$$
+\begin{aligned}
+D_3(a,\varepsilon)&=rD_{\rm core}+3E,\\
+D_3(a,\varepsilon)-3\varepsilon
+  &=r(D_{\rm core}-3e_0),\\
+1-a_i&=r(1-A_i)\quad(i\le m).
+\end{aligned}
+\tag{174.2}
+$$
+
+**Proof.** The head residuals in (173.6) and the late residuals $g_i$
+are nonnegative, and every actual tail residual is zero. Their sum is
+
+$$
+rD_{\rm core}+(m-2)g_{m+1}+\sum_{i=m+1}^Lg_i
+=rD_{\rm core}+(m-1)g_{m+1}+\sum_{i=m+2}^Lg_i.
+$$
+
+Equation (173.4) identifies the last two terms with $3E$.
+Subtract $3(re_0+E)$ to obtain the second equality; $r+W=1$
+gives the third. Thus positive core excess survives precisely when
+the core coefficient $r$ is positive. $\square$
+

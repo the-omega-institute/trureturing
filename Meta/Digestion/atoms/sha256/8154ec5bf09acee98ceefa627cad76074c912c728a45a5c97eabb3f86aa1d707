@@ -1,0 +1,25 @@
+**Proposition 8.1 (equality at zero coupling).** For the same fixed
+positive $\varepsilon$ and native free domains, at $g=0$ one has
+
+$$
+E_{\rm full}(0)=E_{\rm base}(0)=\frac{\varepsilon^2\pi^2}{d^2}.
+\tag{8.1}
+$$
+
+Proof. Height Poincare on each phase fiber gives on the full smooth core
+
+$$
+T[f]\ge\varepsilon^2\|Pf\|_2^2
+       \ge\frac{\varepsilon^2\pi^2}{d^2}\|f\|_2^2.
+\tag{8.2}
+$$
+
+This extends to $\mathcal F$ by its defining closure. The same bound
+holds for $\overline T$. With
+$\phi_1(k)=\sqrt{2/d}\sin(\pi(k-l)/d)$, the normalized vectors
+$\phi_1/(2\pi)$ on $\Omega$ and $\phi_1/\sqrt{2\pi}$ on $D$
+have no angular energy and attain (8.2). They belong to the declared
+form domains by the one-dimensional Dirichlet approximation.
+This proves (8.1). At this endpoint $a_\chi=0$, so the definition of
+$t_\chi$ in (7.4) is not used. $\square$
+

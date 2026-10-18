@@ -1,0 +1,24 @@
+**Definition 7.1 (one fully guarded acquired fiber).** Put
+
+$$
+A(x,y)=\langle\langle\alpha,\beta\rangle,\langle x,y\rangle\rangle.
+$$
+
+The old cut is $P=\{\varepsilon\}$ with its complete one-hole row.
+The actual epoch-zero literal list is
+
+$$
+\{(0,\varepsilon,\mathsf{branch}),
+  (0,L,\mathsf{branch}),(0,R,\mathsf{branch}),
+  (0,LL,\alpha),(0,LR,\beta)\}.
+$$
+
+Retain the signed records
+
+$$
+(1,LL,0,LR,=),\qquad (0,LL,0,LR,\ne),
+$$
+
+the authentic final epoch $N=1$, and target cut $Q=\{RL,RR\}$.
+There is no extra source discriminator at the complete cut.
+

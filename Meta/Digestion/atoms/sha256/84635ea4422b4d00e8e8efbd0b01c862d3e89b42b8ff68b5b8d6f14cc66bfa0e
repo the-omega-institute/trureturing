@@ -1,0 +1,36 @@
+**Convention 2.1 (the supplied all-count factor).** Use [AAR,
+Definition 12.2, Theorem 12.3 and Proposition 13.3][AAR], also stated
+in [PPF, Convention 2.1][PPF]. Write
+$s(w)=\#L(w)+2\#R(w)$ and $e(\alpha)=0,e(\beta)=1$. If $q$
+ends at an original branch, put $\Gamma_q(u)=(0,0)$. Otherwise let
+$a$ be the first original blocking leaf, of label $\ell$, and write
+$q=ar$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{NPH.4}
+$$
+
+Its supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1\text{ and }k=b-1,\\
+\alpha,&c=1\text{ and }k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{NPH.5}
+$$
+
+On attained factors this equals $r_{\rho^ku}(q)$ for every $k\ge0$.
+Conversely the entire trajectory recovers $b$ as its first branch
+count and $c$ by whether an alpha stage occurs. Thus distinct factors
+are distinct complete prediction trajectories. No actual chronology is
+reconstructed by this supplier.
+

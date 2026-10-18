@@ -1,0 +1,40 @@
+**Theorem 61.2 (declared finite-activity obstruction).** In the
+finite-label, finite-dimensional decoder class specified in Theorem
+59.2, no instrument attains all four conditions
+$E=E_*$, $\mathsf V\ge s$, $\mathsf W=\mathsf C(s)$ and
+actual height TV $=\mathcal T(s)$, for any $0\le s\le1$.
+
+Proof. In a decoder fibre let $\sigma(t)\succeq0$ be its unnormalized
+not-yet-failed state. The declared regularity means its survival trace
+is absolutely continuous between TP controls and obeys
+
+$$
+p'(t)=-\operatorname{tr}(R_\alpha(t)\sigma(t))
+\ge-\|R_\alpha(t)\|p(t),\qquad p(t)=\operatorname{tr}\sigma(t).
+\tag{JRH.23}
+$$
+
+Hamiltonians and other TP controls contribute zero trace derivative;
+instantaneous TP controls preserve $p$. Integrating the differential
+inequality, or its integrating-factor form on every piece, gives
+
+$$
+p(1)\ge e^{-A_\alpha}p(0),\qquad
+A_\alpha=\int_0^1\|R_\alpha(t)\|dt<\infty,\qquad
+L_\alpha\succeq e^{-A_\alpha}I\succ0.
+\tag{JRH.24}
+$$
+
+There is no additional singular or terminal absorption in this class.
+Every nonzero acquired state therefore has positive terminal live mass,
+so its supported live-zero acquisition effect is zero. This contradicts
+Theorem 60.1's $Z_{\rm cf}\succeq B_-\ne0$.
+
+A model with at most one absorbing jump can still have infinite
+integrated hazard; finite jump count does not imply JRH.24. Replacing a
+failure-destined acquired label by an already executed failure at the
+cut or by forced absorption at the deadline instead violates Theorem
+61.1's no-atom consequence at $E_*$. The conclusion is restricted to
+the declared decoder class, not a classification of native operations.
+$\square$
+

@@ -1,0 +1,7 @@
+# k-bonacci 自校准获取资源续卷 X：完整证书坐标与条件库存阈值
+
+This volume continues
+[Continuation IX, §§207–209](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md).
+The statements are ordinary mathematical results. Write $x_+=\max(x,0)$;
+empty sums are zero. Every weak inequality includes its equality case.
+

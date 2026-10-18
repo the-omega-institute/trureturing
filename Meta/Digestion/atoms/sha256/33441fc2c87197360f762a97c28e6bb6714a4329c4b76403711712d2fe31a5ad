@@ -1,0 +1,21 @@
+**命题 7.3（尾的付费取得与同制备接合）。** 三次尾向量读、两次 $\rho$ 得 $y,z,w$，可取得
+
+$$
+\epsilon=\frac{w\cdot(z\times y)}{|z\times y|^2}
+$$
+
+在非零分支上的准确 $\pm1$；零分支取 $+1$。两次连续尾读不能统一确定下一向量，定理7.2的两实际见证即为反例。若另供原树码，可从码算单位符号，树码权限仍单独计费。对任意初始来源，定理5.1用 $W_3$ 算其未来尾符号，无须第四次初始向量读。
+
+两个实际同制备尾记录可接合：令
+
+$$
+\begin{aligned}
+Y&=y_s\times y_t,&Z&=z_s\times z_t,\\
+W&=[\epsilon_s(z_s\times y_s)]\times[\epsilon_t(z_t\times y_t)].
+\end{aligned}
+$$
+
+若 $Z\times Y=0$，新符号取 $+1$；否则取 $W\cdot(Z\times Y)/|Z\times Y|^2$。
+
+证明。三读商公式由定理7.2的实际第三值给出。$\rho(\mathcal T)$ 对同制备接合闭合，因为 $\langle\rho s,\rho t\rangle=\rho\langle s,t\rangle$。三个所列接合值正是该实际树的连续输出，故定理4.3保证非零商为 $\pm1$，并给正确第三值及像内闭合。零分支的下一项以后全零。此结论保留实际同制备守卫，不声称任意环境 $\theta$ 元组可以合法接合。
+

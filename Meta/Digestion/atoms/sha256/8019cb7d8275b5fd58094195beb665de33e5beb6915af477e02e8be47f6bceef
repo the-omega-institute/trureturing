@@ -1,0 +1,21 @@
+**Definition 1.2 (interior suspended emission mass).** For an allowed observer $M$, let $v_y$ be its next synthetic alpha probability at a suspended configuration $y$. At a positive actual suspended history $h$, let $\rho_h$ be its actual conditional configuration row. Set
+
+$$
+\psi(t)=\min\{(t-a)_+,(b-t)_+\},
+\qquad
+\mathcal I_h(M)=\sum_y\rho_h(y)\psi(v_y),
+\qquad
+\mathcal I(M)=\sup_{h\in\mathcal H_\beta}\mathcal I_h(M).
+\tag{1.2}
+$$
+
+Here $(t)_+=\max(t,0)$. The tent function $\psi$ vanishes outside $(a,b)$ and equals the distance to the nearer endpoint inside $[a,b]$. The row is an analysis object. It is not a runtime probability-vector input. This statistic is neither an alpha-edge change nor complete-return motion: it concerns the present suspended emission itself.
+
+Write
+
+$$
+e(M)=\max\{R_{\mathrm{conf},p}(M)-\rho_p,
+                 R_{\mathrm{conf},\beta}(M)-\rho_\beta\}.
+\tag{1.3}
+$$
+

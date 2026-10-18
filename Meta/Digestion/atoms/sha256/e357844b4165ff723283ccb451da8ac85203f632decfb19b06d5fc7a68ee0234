@@ -1,0 +1,98 @@
+**Theorem 4.2 (Exact commutant and TP coordinates).** A real-linear map
+on $\operatorname{Sym}_5(\mathbb R)$ commutes with all the rotations
+$\operatorname{Ad}_{G(\theta,\phi)}$ and with $\operatorname{Ad}_J$
+if and only if it has the unique form
+
+$$
+S_{M,\eta}(E)=\sum_{i,j\in\{0,+,-\}}
+M_{ij}\langle H_j,E\rangle H_i
++\sum_{\nu\in\mathcal N}\eta_\nu P_\nu(E),
+\qquad M\in M_3(\mathbb R),\quad \eta\in\mathbb R^6.
+\tag{4.3}
+$$
+
+Its complex-linear extension annihilating transpose-antisymmetric
+matrices is TP exactly when
+
+$$
+M^T\tau=\tau.
+\tag{4.4}
+$$
+
+These are three independent affine equations on fifteen real
+coefficients. The six entries $M_{+j},M_{-j}$ and the six $\eta_\nu$
+are twelve affine coordinates, with
+
+$$
+M_{0j}=\tau_j-\sqrt2(M_{+j}+M_{-j}).
+\tag{4.5}
+$$
+
+Every $S\in\mathcal C_{\mathbb R,J}$ has this form on all complex
+matrices. No condition $M=M^T$ or $M\tau=\tau$ is imposed.
+
+Proof. The torus action on the vector complexification has weights
+$0,e_1,-e_1,e_2,-e_2$. On its symmetric square the zero weight occurs
+three times. The nonzero weights are
+
+$$
+\pm e_1,\quad\pm e_2,\quad\pm2e_1,\quad\pm2e_2,
+\quad\pm(e_1-e_2),\quad\pm(e_1+e_2),
+\tag{4.6}
+$$
+
+each once. Indeed these are all fifteen unordered sums, counting zero
+three times. The corresponding real decomposition is the three
+trivial directions (4.1) and the six rotation planes (4.2). The formulas
+can also be checked by rotating $u_\pm,v_\pm$: the last two pairs
+rotate through $\theta-\phi$ and $\theta+\phi$, respectively.
+Each displayed matrix has unit squared norm, and matrices from
+different displayed subspaces are orthogonal. In the mixed planes,
+the four original $F$ matrices are orthonormal and their sum/difference
+pairs are orthogonal changes of basis. These observations prove the
+normalizations and exhaust the dimension $3+6\cdot2=15$.
+
+Distinct pairs of opposite nonzero characters in (4.6) are
+inequivalent. An intertwiner between different such real planes is
+zero: after complexification it would map a character line to a
+different character, and some torus element gives different scalars.
+The same argument excludes cross terms with the trivial part. On a
+single rotation plane the matrices commuting with all rotations are
+$aI_2+b\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$,
+as follows by commuting with a quarter turn. On the trivial part the
+commutant is arbitrary $M_3(\mathbb R)$.
+
+Conjugation by $J$ fixes every $H_i$. Its matrices on the first two
+pairs in (4.2) are $\operatorname{diag}(-1,1)$ and on each other pair
+are $\operatorname{diag}(1,-1)$. A reflection anticommutes with the
+nonzero skew matrix in the preceding commutant. Requiring commutation
+with that reflection forces $b=0$ in each plane. The surviving
+coefficients are exactly (4.3), and the converse follows from the same
+decomposition.
+
+QPC Lemma 6.2 identifies the closure of the actual nonnegative orbit
+with this torus. Its hypothesis is met because
+$\omega_+^2/\omega_-^2=(21+5\sqrt{17})/4$ is irrational, so
+$\omega_+/\omega_-$ is irrational. Continuity therefore makes actual
+stationarity equivalent to commuting with all these rotations. A real
+product channel annihilates $X^T=-X$, since $b^TXb=0$, and maps real
+symmetric matrices to real symmetric matrices. Thus its action on
+that space determines its action on every complex matrix.
+
+Finally, every $F_{\nu a}$ is traceless. If $t_j=\langle H_j,E\rangle$,
+then $\operatorname{tr}S(E)=\tau^TMt$ and
+$\operatorname{tr}E=\tau^Tt$. This proves (4.4); skew inputs have zero
+trace and zero output. The three column equations are independent
+because each involves its own $M_{0j}$ with coefficient one.
+Equation (4.5) follows. The identity $M\tau=\tau$ would instead impose
+unitality, and $M=M^T$ would impose self-adjointness on the invariant
+block. Neither follows from TP.
+
+This is a decomposition of the observable-space representation, not
+of individual rank-one Kraus operators. Consequently the
+definite-character obstruction of QPC Proposition 9.3 does not apply
+to the argument. In particular,
+[unitary_kraus_mixing_invariance](https://github.com/the-omega-institute/trureturing/blob/de4128dc7165bb668a0080dee9b94bf41f968814/D5/S3/QuantumChannels/UnitaryKrausMixingInvariance.lean),
+whose hypothesis is column orthogonality of a Kraus mixing matrix,
+is not used to preserve individual ranks. $\square$
+

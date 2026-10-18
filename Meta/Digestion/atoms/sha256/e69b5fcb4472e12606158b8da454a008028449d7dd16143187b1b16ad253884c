@@ -1,0 +1,97 @@
+**Theorem 2.2 (Exact preparation-stabilizer normal form).** The whole cone
+in (1.7) satisfies
+
+$$
+\mathcal K=\operatorname{cone}\{k(a(p),b):p\in\Delta_2,\ \|b\|=1,
+                  \ b\in V_{\rm rad}\ \text{or}\ b\in V_{\rm tan}\}.
+\tag{2.2}
+$$
+
+More precisely, every original generator is a convex combination of
+at most two generators on the right. The equality preserves all nine
+entries of $M$ and all six entries of $\eta$. Applied to a finite sum,
+it preserves its whole channel, full TP marginal and every event
+residual, rather than only its objective value.
+
+Proof. For every $g\in\mathcal G$,
+
+$$
+k(ga,gb)=k(a,b).
+\tag{2.3}
+$$
+
+Indeed the $h_i$ are fixed, while on each of the six orthonormal
+matrix pairs the coordinates $z_\nu$ transform by the same orthogonal
+two-by-two matrix for both factors. Their scalar product is unchanged.
+An overall sign of either factor also has no effect.
+
+Given a real unit preparation $a$, choose its overall sign so that
+its dark coordinate is nonnegative. Independently rotate each nonzero
+plane component to a nonnegative multiple of $u_\pm$. If a plane
+component is zero, choose any rotation on that plane. Thus for some
+torus element $g$, the preparation projector becomes $a(p)a(p)^T$,
+where $p_i=\|R_ia\|^2$. Apply the same $g$ to the independent
+measurement vector, giving a unit vector $b'$.
+
+In the adapted basis of Definition 1.3,
+
+$$
+g_*=\operatorname{diag}(-1,-1,1,-1,1).
+\tag{2.4}
+$$
+
+It fixes the preparation projector for every $p$, acts by $-I$ on
+$V_{\rm rad}$ and by $I$ on $V_{\rm tan}$. Write
+$b'=b_r+b_t$ using these orthogonal subspaces. Averaging its projector
+with $g_*b'b'^Tg_*^T$ gives exactly
+$b_rb_r^T+b_tb_t^T$. By (2.3) and linearity in the measurement
+projector,
+
+$$
+k(a(p),b')=k(a(p),b_r)+k(a(p),b_t).
+\tag{2.5}
+$$
+
+For an explicit check of every coefficient, write
+$b'=x_0d+x_+u_++y_+v_++x_-u_-+y_-v_-$ and let
+$q=(x_0^2,x_+^2+y_+^2,x_-^2+y_-^2)$. Substitution in (1.6) gives
+
+$$
+\begin{aligned}
+M_{ij}&=\frac{p_iq_j}{\sqrt{n_in_j}},\\
+\eta_+&=\sqrt{p_0p_+}\,x_0x_+,&
+\eta_-&=\sqrt{p_0p_-}\,x_0x_-,\\
+\eta_{2+}&=\frac{p_+}{4}(x_+^2-y_+^2),&
+\eta_{2-}&=\frac{p_-}{4}(x_-^2-y_-^2),\\
+\eta_\Delta&=\frac{\sqrt{p_+p_-}}2(x_+x_-+y_+y_-),&
+\eta_\Sigma&=\frac{\sqrt{p_+p_-}}2(x_+x_--y_+y_-).
+\end{aligned}
+\tag{2.6}
+$$
+
+There are no radial–tangent cross terms, but the tangent contributions
+and their signs are retained. Formula (2.6) proves (2.5) even when
+one or several populations vanish.
+
+If $r_b=\|b_r\|$ and $t_b=\|b_t\|$, then $r_b^2+t_b^2=1$ and
+(2.5) becomes
+
+$$
+k(a(p),b')=r_b^2k(a(p),b_r/r_b)
+                    +t_b^2k(a(p),b_t/t_b),
+\tag{2.7}
+$$
+
+omitting a term whose coefficient is zero. No zero vector is divided
+by its norm. This proves one cone inclusion; every generator on the
+right side of (2.2) was already an allowed generator, proving the other.
+By (1.8)–(1.10), coordinate equality is equality of the entire
+complex-linear channel and its complete matrix marginal. Its adjoint
+and all fifteen event matrices are consequently identical. Every
+complex input therefore has the same decoded state and the same
+retained-history law under each common actual finite protocol,
+including the permitted random controls. This equality concerns the
+selected real channel, whereas Definition 1.5 only promises a
+no-worse replacement of an arbitrary original complex channel.
+$\square$
+

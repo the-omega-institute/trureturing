@@ -1,0 +1,35 @@
+## 442. The complete four-high role partition
+
+Under (435.4), a frame with four distinct actual labels contains at
+least two H labels, because the complement has only C,D. The complete
+fixed-word partition is:
+
+| High-label placement | Fixed words | High slots | Conclusion |
+|---|---:|---:|---|
+| Two high labels, both axial; C,D transverse | 24 | 2 | Not genuine |
+| Two high labels, one axial and one transverse | 96 | 3 | >pi by Sections 431-434 |
+| Two high labels, both transverse; C,D axial | 24 | 4 | >pi by Section 436 |
+| Three high labels, low label transverse | 96 | 4 | >pi by Sections 437-440 |
+| Three high labels, low label axial | 96 | 5 | >pi by Section 441 |
+| Four high labels | 24 | 6 | >pi by Section 441 and positivity |
+
+The six counts sum to 360. With exactly two high labels there are
+six choices of their pair, and their four positions give counts
+4,16,4 per choice. With three high labels there are four choices
+of high triple and two choices of low label; twelve permutations
+place that low label axially and twelve transversely. With four high
+labels there are 24 permutations.
+
+For the first row, the distinct actual high axes obey (435.4), so
+L=(c+d)^2-(r-1)*(o-1)<=0; strict genuineness fails. In the second
+row, the transverse high p is at least s>c+d, so Theorem 431.1 in
+Sections 431-434 applies with {a,b}={c,d}. In every later row use the
+same s>2, with each low value strictly below s-1. This proves
+that every genuine owner spends strictly more than pi on H.
+
+The census is by fixed actual label words, before numerical
+coincidences. Original owners with repeated role vectors remain
+separate. Every axial occurrence counts once and every transverse
+label has its two separate original slots. No receiver, distinct-role
+assumption, or prohibition on loops or self-gluings is introduced.
+

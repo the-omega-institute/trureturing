@@ -1,0 +1,61 @@
+**Theorem 5.3 (N4, exact seventh-power feasible value).** The profile
+$R_\tau$ has minimal order two, is good, and
+
+$$
+J_\tau(R_\tau)=\tau+\frac{a^7}{144}.
+\tag{5.3}
+$$
+
+Thus $T_4(\tau)\le\tau+a^7/144$ on $[3/4,1)$.
+
+**Proof.** The exponents $0,L$ are distinct and both coefficients in (5.1)
+are nonzero, so the order is two. The positive real exponent makes the
+profile good under Theorem 1.5.
+
+Put $y=1-x$, $u=y/c^2$,
+
+$$
+r(y)=b+c(1-e^{-u}),\quad S(y)=\sqrt{y(1-y)},\quad
+V(y)=\sqrt{b^2+\tau y}.
+$$
+
+It suffices to prove $|r-S|\le V$ on $[0,1]$. For $0\le y\le1/2$,
+Lemma 5.2 gives
+
+$$
+0\le c(1-e^{-y/c^2})\le\sqrt{y/2}\le S(y),
+$$
+
+so $r\le S+V$. For $1/2\le y\le1$, $b/c=a^2/6<1$, hence
+$r<b+c<2c=a^{3/2}$. Since $a\le1/4$ and $\tau\ge3/4$,
+
+$$
+a^3\le1/64<3/8\le\tau/2\le\tau y,
+$$
+
+so $r<\sqrt{\tau y}\le V\le S+V$. This proves the upper side.
+
+For the lower side let $\ell=S-V$. If $y\ge a$, then $1-y\le\tau$, so
+$\ell\le0<r$. If $0\le y\le a$, discard $b^2$ from $V$:
+
+$$
+\ell\le\frac{(a-y)\sqrt y}{\sqrt{1-y}+\sqrt\tau}.
+$$
+
+The denominator is at least $2\sqrt\tau\ge\sqrt3$, while the maximum of
+$(a-y)\sqrt y$ on $[0,a]$ is $2a^{3/2}/(3\sqrt3)$. Therefore
+$\ell\le2a^{3/2}/9<c/2$. If $u\le1$, Lemma 5.2 and $b=a^2c/6$ give
+
+$$
+r\ge b+\frac y{2c},\qquad
+b+\frac y{2c}-\frac{a\sqrt y}{\sqrt3}
+=\left(\sqrt{\frac y{2c}}-a\sqrt{\frac c6}\right)^2\ge0,
+$$
+
+so $r\ge a\sqrt y/\sqrt3\ge\ell$. If $u\ge1$, then
+$r\ge b+c(1-e^{-1})>c/2>\ell$. Thus the corridor holds. At $x=1$,
+$R_\tau(1)=b$ and $s(1)=0$, giving equality $\tau+b^2$; hence
+$J_\tau(R_\tau)=\tau+a^7/144$. The endpoint is a scalar limit, not a
+native endpoint state. This is a feasible value only, not an optimum claim.
+$\square$
+

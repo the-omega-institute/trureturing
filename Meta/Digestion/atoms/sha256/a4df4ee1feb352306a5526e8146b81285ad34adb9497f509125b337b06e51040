@@ -1,0 +1,62 @@
+**Definition 11.3 (Different normalized comparison laws).** To distinguish E's law from (4.2), write it as $\widetilde g_i^L$. With $j=1-i$ and $\pi_i=\sum_{k=1}^Lf_i(k)$, E's (7.4)–(7.8) are exactly
+
+$$
+\widetilde g_i^L(k)=
+\begin{cases}
+f_j(k),&k\le L,\\
+\dfrac{1-\pi_j}{1-\pi_i}f_i(k),&k>L,
+\end{cases}
+\qquad
+\widetilde d_i(q,L)=D(a_i^L\Vert a_j^L)
+=D(f_i\Vert\widetilde g_i^L),
+\tag{11.1}
+$$
+
+where $a_i^L=(f_i(1),\ldots,f_i(L),1-\pi_i)$. This copies the opponent's entire short law and rescales the target tail to the opponent's tail mass. The normalization drift is retained in the collapsed tail symbol. Its stochastic image is E's $W_i$.
+
+Equations (4.1)–(4.2) instead use $P=f_0$, $r(k)=H_c(k)/k^9$, $G_L=1+\delta/(L+1)$ and $v=\min\{r,G_L\}$ to form
+
+$$
+g_1=\frac{Pv}{\mathbb E_Pv},\qquad
+g_0=\frac{Pr/v}{\mathbb E_P(r/v)}.
+\tag{11.2}
+$$
+
+The cap excess $e=r-v$ is nonnegative and supported on $k\le L$, but need not be nonzero at every short index. These laws normalize two different modifications of the shape ratio, rather than copying every short opponent mass. Normalization affects the full law. Equations (4.8)–(4.10) retain it exactly and give the separate bounds $D(f_1\Vert g_1)\le\mathbb E_Pe^2$ and $D(f_0\Vert g_0)\le\tfrac12\mathbb E_P(e/v)^2$. Thus both directions are controlled by $d_L(q)=\delta^2Z_0(q)^{-1}\sum_{k\le L}k^7q^k$ for every interior $q$ and finite $L$, without a small-$sL$ condition. This $d_L$ is an upper coefficient, not E's exact collapsed entropy $\widetilde d_i$. Both pairs are $G_L$-comparable to the actual opponent and are averaged through the same channel $k\mapsto A^kC$ of the same actual observer; their images $V_i$ and $W_i$ need not coincide.
+
+For an exact coefficient comparison, choose one source-only $s_H$ satisfying (2.8) and E's (2.9), and use the identical
+
+$$
+s_\alpha=\min\{s_H,1,5b/(8\delta)\},\qquad
+L_M=\max\{1,\lceil2\delta(M-2)/b\rceil\},\qquad
+X_M=1+2\delta(M-2)/b.
+\tag{11.3}
+$$
+
+Since $b+2\delta(M-2)=bX_M$, on $0<s<s_\alpha$, for the same compliant observer and each target, E's (12.2) and the second bound in (6.5) give, respectively,
+
+$$
+\begin{aligned}
+\mathbb E_iT&\ge C_\alpha\max\{s^{-3},s^{-11}/X_M^8\},
+&C_\alpha&=\frac{b^2}{8B\delta^2},\\
+\mathbb E_iT&\ge\frac{9!b^2}{4B\delta^2}\frac{s^{-11}}{X_M^8}
+=2\cdot9!\,C_\alpha\frac{s^{-11}}{X_M^8}.
+\end{aligned}
+\tag{11.4}
+$$
+
+The eighth-power displayed coefficients therefore have ratio $2\cdot9!$ with the same neighborhood and denominator. This algebraic comparison concerns those two estimates only; it orders neither their exact directed entropies nor optimal constants. E's proof (9.8) also retains the sharper intermediate estimate $\widetilde d_i\le(16\delta^2/9!)s^{10}L^8$ when $sL\le1$, so the displayed ratio does not compare every refinement available in that proof. E also retains its separate cubic floor, so (11.4) asserts no universal ordering of the whole lower bounds. The two-label budget $M=2$ is empty in both classes. The necessity exponent and E's conditional matching order remain established results; the paired-cap construction supplies the distinct explicit quantitative derivation.
+
+Public mathematical-code context includes [StoppedLikelihoodAbsorption](../../../D5/S3/Estimation/SequentialDecisionRisk/StoppedLikelihoodAbsorption.lean), [BernoulliCommonEndpointCharge](../../../D5/S3/Estimation/SequentialDecisionRisk/BernoulliCommonEndpointCharge.lean), and [SequentialHellingerLocalization](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SequentialHellingerLocalization.lean). These concern stopped likelihood/moment, Bernoulli common-endpoint and sequential Hellinger interfaces, with no compiled exact application asserted here. E supplies the already established renewal-state converse and growth consequence; these related code interfaces are not premises of the distinct paired-cap estimate.
+
+The primary papers below have their model interfaces checked from their original texts. No finite-memory testing theorem for an incompatible observation or decision criterion is transferred as a theorem about this experiment.
+
+| Primary source | Verified interface and use |
+| --- | --- |
+| Flower and Hellman, *Hypothesis Testing With Finite Memory in Finite Time*, IEEE Transactions on Information Theory 18, 429–431, [author copy](https://ee.stanford.edu/~hellman/publications/10.pdf), DOI [10.1109/TIT.1972.1054820](https://doi.org/10.1109/TIT.1972.1054820) | The problem statement uses iid observations, a finite-valued statistic, observation-dependent stochastic update matrices and a decision at a specified horizon. Its finite-state and randomized-counter methods are background; its reported structural conjectures and finite searches supply no renewal paid-stopping converse. |
+| Berg, Ordentlich and Shayevitz, *Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*, [arXiv:2005.07445v1](https://arxiv.org/pdf/2005.07445v1), Section I and main model | Iid Bernoulli input, deterministic time-invariant transitions and long-time Bayes error. Its lower results do not quantify over the stochastic stopped raw-bit class used here. Deterministic and stochastic state requirements are not interchanged. |
+| Kaufmann, Cappé and Garivier, *On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*, [arXiv:1407.4443v2](https://arxiv.org/pdf/1407.4443v2), Lemma 1 and Remark 2 | Expected acquisition counts times directed KL control decision-event binary entropy, with a Pinsker consequence. This is mature sequential information charging. Here Lemmas 5.1–5.2 prove the needed common-initial-row finite Markov-path version directly; no bandit action, free gap sample or comparison stopping assumption is imported. |
+| Zamparo, *Renewal model for dependent binary sequences*, [arXiv:2108.11293v2](https://arxiv.org/pdf/2108.11293v2), Theorem 2.1 and Proposition 2.1 | Stationarity is $\mathbb E[S_2]\mathsf P(S_1=n)=\mathsf P(S_2\ge n)$. With its interval $S_2=K+1$ and initial delay $S_1=\tau+1$, this is exactly (2.5) after shifting the time origin. Dependent visible bits are not automatically a fully observed finite-state Markov source, and this renewal model supplies no testing-memory exponent. |
+
+Primary author/arXiv retrieval and bounded bibliographic queries cover finite-memory sequential testing, stochastic automata and dependent renewal inference. Within these inspected interfaces, none supplies the exact fixed-$H_c$ configuration threshold. Results about predictive causal-state memory, quantizer alphabet size, fully observed Markov transitions, fixed-horizon error or deterministic automata do not by themselves control the full mutable state and stopped paid reads here. The entropy and binary inequalities needed in this volume have explicit proofs, so unread or inapplicable external theorem statements are not load-bearing premises.
+

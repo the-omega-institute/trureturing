@@ -1,0 +1,40 @@
+**Theorem 81.2 (Harmonic mean correction and equal diameters with unequal
+centers).** For $a_n=1/n$, the unique optimal zero-query law is
+$(\delta_{\theta_0}+\delta_{\theta_1})/2$, with uniform radius $R_0=1/2$.
+At cap $\varepsilon=1/2$ the attained minimum uniform mean count is zero,
+whereas $\sum_i(a_i-\varepsilon)_+=1/2$. For every positive cap, putting
+$L=\max(\{i:1/i>\varepsilon\}\cup\{0\})$ and
+$H_L=\sum_{i=1}^L1/i$, $H_0=0$, gives
+
+$$
+\min_{A\in\mathcal A_\varepsilon(a)}\sup_x\mathsf E_A K_{A,x}
+=(H_L-(L+1)\varepsilon)_+<\infty.
+\tag{81.5}
+$$
+
+The harmonic family and the family in (81.1) both have pairwise TV
+diameter one on $X$, but their zero-query radii are respectively $1/2$
+and $2/3$.
+
+**Proof.** For the harmonic sequence,
+$S_0(1/2)=(1-1/2)=1/2$, with all later summands zero. Theorem 77.2 gives
+$R_0=1/2$ and the asserted unique law. Its distance to $\lambda_1$ is
+$1/2$. For $n\ge2$, (77.7) gives distance
+$\max\{1/2,1/n\}=1/2$, so its uniform error is exactly $1/2$ and it
+requires no observations. Nonnegativity of request counts proves the
+zero mean optimum, also given by Theorem 79.2. The proposed expression
+$\sum_i(a_i-\varepsilon)_+$ without a collective allowance therefore
+cannot be the approximate count optimum. Theorem 79.2 instead gives
+(81.5), since $S_0(\varepsilon)=H_L-L\varepsilon$. At error zero the
+existing exact harmonic identity (75.2) is infinite; the positive-error
+formula does not change that endpoint.
+
+For distinct $i,j$, direct comparison on the three relevant atoms gives
+$\operatorname{TV}(\lambda_i,\lambda_j)=\max\{a_i,a_j\}$.
+Both sequences have $a_1=1$, and their occupied $D_i$ realize this
+diameter. For (81.1),
+$S_0(2/3)=2(1-2/3)=2/3$ with no later positive term, so its radius is
+$2/3$ by Theorem 77.2. Thus the diameter gives a necessary half-diameter
+bound by the TV triangle inequality, but it does not determine the
+multilaw center radius. $\square$
+

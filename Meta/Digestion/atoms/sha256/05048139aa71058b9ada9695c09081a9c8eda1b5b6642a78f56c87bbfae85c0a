@@ -1,0 +1,38 @@
+**Proposition 5.3 (source growth is another simultaneous coordinate).**
+If the original contains $b_\beta$ beta leaves and the run makes $U$
+Updates after lag $t$, its maximum current node count is
+
+$$
+V(t+U)=2\bigl((h-b_\beta)F_{t+U+1}
+                       +b_\beta F_{t+U+2}\bigr)-1.
+\tag{5.5}
+$$
+
+A whole-source traversal implementation of Update has input-node-volume
+bill $\sum_{a=0}^{U-1}V(t+a)$, in addition to any allocation of successor
+versions. Serial refinement changes none of these versions. It adds
+its own address/work allocation, not a physical time bound on the source.
+
+Proof. This is SLHC.11.16 on the preserved source trace. Source-free
+frames leave the current version fixed, and each retained Update is
+one actual application of $\rho$. The given Fibonacci expression is
+nondecreasing in absolute epoch. Physical traversal and allocation
+costs depend on the chosen source provider; the formula does not give
+an extra observation of these costs. If that provider has immutable
+code length $K_{\rm src}$ and transient workspace $M_{\rm src}(y,p)$,
+these are additional coordinates, not parts of $T_G$ or free zeros.
+Similarly the run carries the separate bills
+
+$$
+\sum_{\text{actual Reads }i} C_R(y_i,p_i),\qquad
+\sum_{\text{actual Updates }i} C_U(y_i),
+\tag{5.6}
+$$
+
+besides source entry, promise authentication, initialization and output.
+No numerical bound on these physical-service functions or on source
+representation bits is supplied here. Equation (5.5) counts nodes;
+converting it into storage bits requires a representation contract.
+The observer installation peak (4.7) therefore is not a bound on the
+joint physical apparatus including the source. ∎
+

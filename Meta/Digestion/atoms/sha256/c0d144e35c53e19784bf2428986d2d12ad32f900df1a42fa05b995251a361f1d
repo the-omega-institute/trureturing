@@ -1,0 +1,33 @@
+**Theorem 3.1 (attained conditional supplemental count).**
+For every $A,B$ of Definition 1.4, the minimum cardinality of a single
+supplemental alphabet is
+
+$$
+M(A,B,G)=\max_{b\in B(A)}|Q_G(A_b)|
+       =\max_{b\in B(A)}|V_G(A_b)|.
+\tag{SCC.12}
+$$
+
+An alphabet of that size suffices with one early encoder and one
+uniform decoder. For a known fixed fiber $A_b$ its exact count is
+$|Q_G(A_b)|$. A fixed-width binary supplement therefore needs and
+suffices with $\lceil\log_2 M(A,B,G)\rceil$ bits. This is zero bits
+when $M=1$.
+
+Proof. Within one fiber, choose one source for each distinct $Q_G$
+value. Theorem 2.2 forces all their supplement labels to differ,
+although the conflicting edge and epochs may depend on the pair.
+Hence every alphabet has at least the displayed maximum size.
+Conversely, order the distinct $V_G$ values within each fiber and
+encode the rank of $V_G(a)$ in its own fiber. A public table indexed
+by $b$ and that rank recovers its calibration. Label ranks can be
+reused across different $b$'s. Theorem 2.2 proves correctness.
+Finite tables give an effective attainment; their cost is not zero.
+The bit claim is the finite-alphabet pigeonhole bound and binary
+encoding of its ranks. $\square$
+
+In particular an existing code need not itself recover any reference
+coordinate. The answer is not the ratio of the unrestricted minimum
+to the number of old labels: different old fibers can contain
+different numbers of still-conflicting relative profiles.
+

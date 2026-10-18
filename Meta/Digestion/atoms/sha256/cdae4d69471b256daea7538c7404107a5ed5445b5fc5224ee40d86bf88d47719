@@ -1,0 +1,118 @@
+**Theorem 55.1 (all commuting weights and both order cones).** At
+
+$$
+\beta=\frac12,\quad \omega=\operatorname{diag}(s,t),\quad
+s=\frac7{10},\quad t=\frac3{10},\quad
+h=\frac1{\sqrt2},\quad T=\frac{1+h}{2},\quad d=\frac{1-h}{2},
+\tag{S.31}
+$$
+
+the global minimum over every positive definite $X$ commuting with $\omega$ and every $c\geq0$ is
+
+$$
+\begin{aligned}
+\min_{X>0,\ [X,\omega]=0,\ c\geq0}
+\left[S_5\!\left(\operatorname{diag}(\omega X^{-1},\omega X^{-1},c\omega)\right)+2m_X-cT\right]
+&=2\sqrt{\frac75}+2\sqrt{\frac45-\frac1{2\sqrt2}}\\
+&=:G_1.
+\end{aligned}
+\tag{S.32}
+$$
+
+It is attained uniquely at
+
+$$
+X_* =\operatorname{diag}\!\left(\sqrt{\frac75},\sqrt{\frac45-\frac1{2\sqrt2}}\right),
+\qquad c_* =\left(\frac45-\frac1{2\sqrt2}\right)^{-1/2}.
+\tag{S.33}
+$$
+
+Proof. The center has distinct eigenvalues, so every commuting positive weight is $X=\operatorname{diag}(x_1,x_2)$ with $x_i>0$. The substitution
+
+$$
+u=\frac{s}{x_1}>0,\qquad z=\frac{t}{x_2}>0
+\tag{S.34}
+$$
+
+is a bijection of the positive quadrant. At half beta, $2m_X=x_1+x_2=s/u+t/z$, regardless of the ordering of the $x_i$. The six eigenvalues in the Ky Fan term are $u,u,z,z,cs,ct$. Since $s\geq t$, their smallest is $\min(u,z,ct)$, and the complete objective is
+
+$$
+\Phi(u,z,c)=\frac{s}{u}+\frac{t}{z}+2u+2z+cd-\min(u,z,ct).
+\tag{S.35}
+$$
+
+No ordering of the other five eigenvalues is omitted. For $q=\min(u,z)>0$, its $c$-dependent term is
+
+$$
+cd-\min(q,ct)=
+\begin{cases}
+c(d-t),&0\leq c\leq q/t,\\
+cd-q,&c\geq q/t.
+\end{cases}
+\tag{S.36}
+$$
+
+Here $0<d<t$: $h>2/5$ follows by squaring positive sides, since $1/2>4/25$. Thus the slopes are strictly negative before $q/t$ and strictly positive after it. The unique minimizing multiplier is $c=q/t$; this includes the search endpoint $c=0$ and the breakpoint. The reduced objective is
+
+$$
+\Phi_0(u,z)=\frac{s}{u}+\frac{t}{z}+2u+2z-
+\left(1-\frac dt\right)\min(u,z).
+\tag{S.37}
+$$
+
+Put $\mu=1+d/t=(t+d)/t>0$. On the entire closed order cone $u\geq z>0$,
+
+$$
+\Phi_0=\frac{s}{u}+2u+\frac{t}{z}+\mu z
+\geq2\sqrt{2s}+2\sqrt{\mu t}=G_1.
+\tag{S.38}
+$$
+
+The unique simultaneous equality point is
+
+$$
+u_0=\sqrt{s/2},\qquad z_0=\frac{t}{\sqrt{t+d}}.
+$$
+
+It lies strictly inside the cone because
+
+$$
+u_0^2-z_0^2=\frac{s(t+d)-2t^2}{2(t+d)}>0,
+\qquad s(t+d)-2t^2=\frac3{100}+\frac7{10}d>0.
+\tag{S.39}
+$$
+
+On the other closed cone $0<u\leq z$,
+
+$$
+\Phi_0=\frac{s}{u}+\mu u+\frac{t}{z}+2z.
+\tag{S.40}
+$$
+
+It is strictly convex, with Hessian $\operatorname{diag}(2s/u^3,2t/z^3)>0$. Its unconstrained critical point has $u_1^2=s/\mu$ and $z_1^2=t/2$, so
+
+$$
+u_1^2-z_1^2=\frac{t(2s-t-d)}{2(t+d)}>0.
+\tag{S.41}
+$$
+
+Indeed $2s-t=11/10>d$. The critical point is outside this second cone. Reciprocal terms keep bounded sublevels away from zero and positive linear terms keep them away from infinity. A constrained minimum exists. An interior minimum would be that inadmissible critical point, so the minimum lies on the shared boundary $u=z=w>0$. There
+
+$$
+\Phi_0(w,w)=\frac1w+\left(3+\frac dt\right)w
+\geq2\sqrt{3+\frac dt}=:G_2,
+\tag{S.42}
+$$
+
+with equality uniquely at $w=(3+d/t)^{-1/2}$. Thus the full opposite cone and common boundary have been included. Moreover
+
+$$
+\left(\frac{G_2}{2}\right)^2-\left(\frac{G_1}{2}\right)^2
+=\left(\sqrt{\mu s}-\sqrt{2t}\right)^2>0.
+\tag{S.43}
+$$
+
+Strictness is $\mu s>2t$, proved in (S.39). Both $G_i$ are positive; hence $G_2>G_1$ and (S.38) is the global minimum. Substituting $s,t,d$ gives (S.32), and converting $u_0,z_0,c=z_0/t$ back to the weights gives (S.33).
+
+Finally (S.36) is a global lower bound in $c$ for every $u,z$. The reduced objectives have compact bounded sublevels, so no sequence with $u$ or $z$ approaching zero or infinity can improve the minimum. With $u,z$ bounded, $cd-q$ tends to infinity with $c$. These facts include all boundary limits in the original positive-weight domain as well as $c=0$. $\square$
+

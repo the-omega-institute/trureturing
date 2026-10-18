@@ -1,0 +1,40 @@
+**Lemma 2.1 (exact polynomial quotient).** If $\operatorname{ev}(P)=(P(i))_{i=0}^{n-1}$, then
+
+$$
+\ker\Lambda=\operatorname{ev}(\mathcal P_d).
+$$
+
+Proof. One forward difference lowers the degree of a nonconstant polynomial: the highest terms of $(t+1)^h$ and $t^h$ cancel. It kills a constant. The binomial expansion of the iterated difference gives the displayed coefficients. Applying $d+1$ differences therefore gives $\Lambda\operatorname{ev}(P)=0$ for every $P\in\mathcal P_d$.
+
+Evaluation is injective on $\mathcal P_d$ by the polynomial root bound, as stated in Lemma 2.1 of [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md). Its image consequently has dimension $d+1$. The four rows of $\Lambda$ are independent: in a nonzero row combination, take the largest row index $j$ with nonzero coefficient. Coordinate $j+d+1$ has coefficient one in that row and is absent from every earlier row, so the combination cannot vanish. Thus $\Lambda$ has rank four and its kernel has dimension $n-4=d+1$. The inclusion already proved is therefore equality. This includes $d=0$, zero polynomials, and lower actual degrees. ∎
+
+Put
+
+$$
+\mathcal B=\Lambda\mathcal L,\qquad
+\mathcal C=\Lambda\mathcal I\mathcal L,\qquad
+\mathcal T_\kappa=\mathcal B+\kappa\mathcal C.
+$$
+
+Each $\mathcal T_\kappa$ maps the four-dimensional real matrix space to $\mathbb R^4$. Whenever $\mathcal T_{\kappa_0}$ is invertible, define the slope-transfer operator
+
+$$
+\mathcal H=\mathcal T_{\kappa_0}^{-1}\mathcal C.
+$$
+
+This inverse is an algebraic operation on the observation quotient, not an allowed acquisition operation. For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ define
+
+$$
+Q_{\mathcal H}(S)
+=s\,\mathcal H(S)_{11}+p\,\mathcal H(S)_{22}
+-r\,\mathcal H(S)_{12}-q\,\mathcal H(S)_{21}.
+$$
+
+Here $\det(\mathcal H(S))$ below is a determinant of a two-by-two matrix. Expanding that source determinant gives, for rank-one $S$,
+
+$$
+\det\bigl(S+\varepsilon\mathcal H(S)\bigr)
+=\varepsilon Q_{\mathcal H}(S)
+ +\varepsilon^2\det\bigl(\mathcal H(S)\bigr).
+$$
+

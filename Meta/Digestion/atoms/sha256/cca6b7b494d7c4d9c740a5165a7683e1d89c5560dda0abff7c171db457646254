@@ -1,0 +1,16 @@
+## 222. Setting and response
+
+Retain the exact paired five-reservoir hypotheses and the proved
+whole-high-core and single-high-M conclusions. In particular each
+transverse pair consists of distinct reservoir labels; the actual
+quotient has complete circular edge links and degree at least six;
+all original edge angle sums are 2*pi. The only flat owner has pair
+{C,D} and no Z or U slot. Put P={M,Z,U}, with
+ m>1+c+d>3, z>m, u>m, c,d<m-2.
+The interacting high core has at most four actual owners and contains
+ tau=(Z,M,C,D,M,C).
+For X=Z or U write x=x_X. Its entire original star is genuine and
+has total angle 2*pi. We classify owners containing X and no other
+label from P. A special edge has a fixed transverse pair throughout
+its complete star and occurs only axially.
+

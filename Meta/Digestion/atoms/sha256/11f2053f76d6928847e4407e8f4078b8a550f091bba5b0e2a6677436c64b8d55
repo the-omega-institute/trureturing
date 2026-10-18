@@ -1,0 +1,55 @@
+#### 468.1 固定截止上的整数商算子
+
+固定自然数 $N$，定义实线性空间
+
+$$
+V_N=\{f:\{0,1,\ldots,N\}\to\mathbb R:f(0)=0\}.
+$$
+
+对每个正整数 $d$，定义
+
+$$
+(T_df)(k)=f(\lfloor k/d\rfloor),\qquad 0\le k\le N.
+$$
+
+这是 $V_N$ 上的线性自映射，且 $T_1=I$。以下经典有限算子身份用于同一实际前缀的运输：对任意正整数 $d,e$，
+
+$$
+\boxed{T_dT_e=T_{de}=T_eT_d.}
+\tag{FG.1}
+$$
+
+**证明。** 对每个 $0\le k\le N$，准确整数除法恒等式
+
+$$
+\left\lfloor\frac{\lfloor k/d\rfloor}{e}\right\rfloor
+=\left\lfloor\frac{k}{de}\right\rfloor
+$$
+
+给逐坐标相等，包括 $k=0$。证毕。
+
+若 $p\ge2$，则 $T_p^j=T_{p^j}$。每当 $p^K>N$，所有坐标都落在 $f(0)=0$，故 $T_p^K=0$。定义
+
+$$
+A_p=p^{-1}T_p,\qquad U_p=I-A_p,\qquad
+G_{p,K}=\sum_{0\le j<K}A_p^j.
+$$
+
+对全部自然数 $K$，包括 $K=0$，有
+
+$$
+\boxed{U_pG_{p,K}=G_{p,K}U_p=I-A_p^K.}
+\tag{FG.2}
+$$
+
+**证明。** 在有限和中展开 $(I-A_p)\sum_{j<K}A_p^j$，相邻幂次正负抵消，只剩 $I-A_p^K$；反向乘积相同。若 $K=0$，和为空，且 $I-A_p^0=0$。证毕。
+
+若 $p^K>N$，FG.2 的右边为 $I$，所以
+
+$$
+\boxed{U_p^{-1}=G_{p,K}.}
+\tag{FG.3}
+$$
+
+FG.1 给不同 $p$ 的 $T_p,A_p,U_p,G_{p,K}$ 全部交换。在 $V_N$ 的递增非零坐标基中，$T_p$ 严格下三角，$U_p$ 对角线恒为一，且上述有限几何和给其实际两侧逆。$N=0$ 时 $V_0$ 为零空间，这些身份仍作为零空间上的映射成立；以下范数及最小非零阶的陈述取 $N\ge1$。
+

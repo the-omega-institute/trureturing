@@ -1,0 +1,30 @@
+**Convention 1.2 (Fixed original-law losses).** Let $(Tx)_i=x_{i+1}$,
+$\mathcal E_i=\sigma(X_j:j\ne i)$ and
+$F_i=\{X_{i-1}=X_{i+1}=0\}$. Choose a $[0,1]$ Borel exterior version of
+$q_0=\mathbb E_P[X_0\mid\mathcal E_0]$ and set $q_i=q_0\circ T^i$.
+Stationarity makes these versions of the actual posteriors. Define
+
+$$
+\ell_i(x)=(x_i-q_i(x))^2,\qquad
+q_{r,i}=\mathbb E_P[X_i\mid\sigma(X_{i-r},\ldots,X_{i-1},X_{i+1},\ldots,X_{i+r})],
+\quad D_r(P)=\mathbb E_P(X_0-q_{r,0})^2.
+$$
+
+At $r=0$ the field is trivial, so $q_{0,i}=\mathbb E_PX_i$, where the
+two-index symbol denotes the radius-zero predictor, not the full $q_i$.
+A retained neighbor one forces a finite posterior to zero; an omitted
+neighbor supplies no such information. Full posteriors are zero on $F_i^c$
+almost surely.
+Null finite fibers have arbitrary versions and zero weighted contribution.
+The actual risk and growth facts supplied in [Universal, §§1–3][U] are
+
+$$
+D_r(P)\downarrow d(P)=\mathbb E_P\ell_0=\lim_n\Phi_n(P_n)/n\le c_\star,
+\qquad nc_\star\le\kappa_n\le(n+1)c_\star.
+\tag{1.3}
+$$
+
+In every expression below, including at a modified configuration,
+$q_i$ and $\ell_i$ remain these original $P$ functions. No posterior is
+recomputed under a replacement pushforward.
+

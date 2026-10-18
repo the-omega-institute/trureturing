@@ -1,0 +1,132 @@
+**Theorem 49.1 (all-angle, all-complex-density plane obstruction).** For the single encoder (R.244),
+
+$$
+p(\rho)\geq L:=\frac{\bigl(\sqrt{5+2\sqrt5}+\sqrt5\bigr)^2}{32}
+>\frac78>T
+\quad
+\text{whenever }\rho\in\mathsf D(\mathbb C^3),\quad
+\operatorname{supp}\rho\subseteq\mathcal L_\theta,\quad\theta\in\mathbb R.
+\tag{R.248}
+$$
+
+For each plane one completed transpose recovery works for every density in that plane, including arbitrary complex off-diagonal entries, arbitrary weights, mixed states and singular states. The recovery is allowed to depend on the plane.
+
+**Proof.** Fix any $u,v\in\mathbb R$ with $u^2+v^2=1$. Let $A_\alpha=K_\alpha W_\theta$ be the Kraus matrices of the code channel $N_\theta(\sigma)=\sum_\alpha A_\alpha\sigma A_\alpha^\dagger$, from $M_2$ to $M_5$, and concatenate them in Kraus-first order:
+
+$$
+F_\theta=[A_0\ A_1]
+=c\begin{pmatrix}
+u&1/2&0&0\\
+v&0&0&1/2\\
+0&0&u&-1/2\\
+0&1/2&v&0\\
+0&1&0&0
+\end{pmatrix},\qquad
+G_\theta=F_\theta^\dagger F_\theta,\quad S_\theta=F_\theta F_\theta^\dagger.
+\tag{R.249}
+$$
+
+First compute its spectrum without sampling angles. The permutation from $(\alpha,i)$ to $(i,\alpha)$, namely the order $(0,2,1,3)$, transforms $G_\theta$ into
+
+$$
+M_\theta=\begin{pmatrix}I_2/2&C_\theta/4\\C_\theta/4&D_0\end{pmatrix},
+\qquad C_\theta=uZ+vX,\quad D_0=\operatorname{diag}(3/4,1/4).
+\tag{R.250}
+$$
+
+The reality of $A_\alpha$ makes this shuffled Gram matrix agree with the restricted complementary Choi matrix in (R.247). Since $C_\theta=C_\theta^T$ and $C_\theta^2=I_2$, the orthogonal matrix $U_\theta=\operatorname{diag}(C_\theta,I_2)$ gives
+
+$$
+U_\theta M_\theta U_\theta^T
+=\begin{pmatrix}I_2/2&I_2/4\\I_2/4&D_0\end{pmatrix}
+\simeq
+\begin{pmatrix}1/2&1/4\\1/4&3/4\end{pmatrix}
+\oplus
+\begin{pmatrix}1/2&1/4\\1/4&1/4\end{pmatrix}.
+\tag{R.251}
+$$
+
+The two block traces are $5/4,3/4$ and their determinants are $5/16,1/16$. Thus, independently of $\theta$,
+
+$$
+\operatorname{spec}G_\theta
+=\left\{\frac{5+\sqrt5}{8},\frac{5-\sqrt5}{8},
+\frac{3+\sqrt5}{8},\frac{3-\sqrt5}{8}\right\},\qquad
+\operatorname{Tr}\sqrt{G_\theta}
+=\frac{\sqrt{5+2\sqrt5}+\sqrt5}{2}.
+\tag{R.252}
+$$
+
+All four eigenvalues are positive. In particular $S_\theta$ has rank four, even at $u=0$ or $v=0$. Its kernel is spanned by the unit vector
+
+$$
+n_\theta=\frac1{\sqrt5}(-2v^2,2uv,2uv,-2u^2,1)^T.
+\tag{R.253}
+$$
+
+Indeed $F_\theta^\dagger n_\theta=0$ and $\|n_\theta\|^2=[4(u^2+v^2)^2+1]/5=1$. These identities divide by neither $u$ nor $v$.
+
+Now define $P_\theta$ to be the projection onto $\operatorname{ran}S_\theta$ and $Q_\theta=(S_\theta^+)^{1/2}$, zero on the kernel. The code-valued recovery has Kraus matrices
+
+$$
+B_\alpha=A_\alpha^\dagger Q_\theta\quad(\alpha=0,1),\qquad
+B_\perp=|0\rangle_{\mathrm{code}}\langle n_\theta|.
+\tag{R.254}
+$$
+
+It is completely positive and trace preserving on the entire $M_5$, because
+
+$$
+\sum_{\alpha=0}^1B_\alpha^\dagger B_\alpha+B_\perp^\dagger B_\perp
+=Q_\theta S_\theta Q_\theta+|n_\theta\rangle\langle n_\theta|
+=P_\theta+(I_5-P_\theta)=I_5.
+\tag{R.255}
+$$
+
+Composing each Kraus matrix with $W_\theta$ gives an actual qutrit-valued CPTP recovery on the same whole output. No inverse of the singular $S_\theta$ on its kernel is taken.
+
+Let $\Phi_\theta$ be the qubit channel obtained by composing the code encoder with this code-valued recovery. It is TP. Also $B_\perp A_\beta=0$, and
+
+$$
+\Phi_\theta(I_2)
+=\sum_\alpha A_\alpha^\dagger Q_\theta S_\theta Q_\theta A_\alpha
+=\sum_\alpha A_\alpha^\dagger P_\theta A_\alpha
+=\sum_\alpha A_\alpha^\dagger A_\alpha=I_2.
+\tag{R.256}
+$$
+
+Thus the qubit composite is unital. This does not assert unitality of the dimension-changing recovery $M_5\to M_2$.
+
+To cover all densities, take any Kraus list $L_j$ of a TP unital qubit channel and expand $L_j=a_jI_2+\boldsymbol b_j\cdot\boldsymbol\sigma$, using all three Hermitian Pauli matrices, including $\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$. The coefficients $a_j,\boldsymbol b_j$ may be complex. Adding the Pauli-vector parts of $\sum_jL_j^\dagger L_j=I_2$ and $\sum_jL_jL_j^\dagger=I_2$ gives $\operatorname{Re}\sum_j\bar a_j\boldsymbol b_j=0$. Every qubit density is $\sigma=(I_2+\boldsymbol r\cdot\boldsymbol\sigma)/2$ for a real vector $\|\boldsymbol r\|\leq1$, so
+
+$$
+\begin{aligned}
+F_e(\sigma,\Phi_\theta)
+&=\sum_j|a_j+\boldsymbol b_j\cdot\boldsymbol r|^2\\
+&=\sum_j|a_j|^2+\sum_j|\boldsymbol b_j\cdot\boldsymbol r|^2
+\geq F_e(I_2/2,\Phi_\theta).
+\end{aligned}
+\tag{R.257}
+$$
+
+This covers the full Bloch ball, with no positivity-of-determinant or reality restriction on $\sigma$. If $\rho=W_\theta\sigma W_\theta^\dagger$, cyclicity of trace identifies each qutrit overlap $\operatorname{Tr}(\rho W_\theta B_jK_\beta)$ with $\operatorname{Tr}(\sigma B_jA_\beta)$. Consequently the same recovery achieves (R.257) at every density on that plane.
+
+Finally a singular-value decomposition of $F_\theta$ gives the support-aware identity
+
+$$
+F_\theta^\dagger Q_\theta F_\theta=\sqrt{G_\theta}.
+\tag{R.258}
+$$
+
+Its $(\alpha,\beta)$ block in Kraus-first order is the composite Kraus matrix $A_\alpha^\dagger Q_\theta A_\beta$. Define the two-by-two environment matrix $Z_\theta=\operatorname{Tr}_{\mathrm{code}}\sqrt{G_\theta}$. The zero completion Kraus products contribute nothing, whence
+
+$$
+F_e(I_2/2,\Phi_\theta)
+=\frac14\|Z_\theta\|_F^2
+\geq\frac18|\operatorname{Tr}Z_\theta|^2
+=\frac18(\operatorname{Tr}\sqrt{G_\theta})^2=L.
+\tag{R.259}
+$$
+
+The inequality is the Frobenius Cauchy–Schwarz inequality against $I_2$. Equations (R.252), (R.257) and (R.259) prove the lower bound. For its strict numerical separation, $L>7/8$ is equivalent to $\sqrt{25+10\sqrt5}>9-\sqrt5$, then to $28\sqrt5>61$; all quantities squared are positive and $3920>3721$. Also $T<7/8$ follows from $1/2<9/16$. These are exact comparisons. $\square$
+

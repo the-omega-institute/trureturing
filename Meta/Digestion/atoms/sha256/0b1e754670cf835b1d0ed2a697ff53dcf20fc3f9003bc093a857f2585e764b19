@@ -1,0 +1,52 @@
+**Theorem 4.4 (finite optimization and the identical transversal
+formulation).** Let $z_{\rm own}(d)$ be the fractional set-cover optimum
+of $S_d$ by $\mathscr R_d$. Then
+
+$$
+\min_{\mu\in\Delta(S_d)}\mathcal U_d(\mu)=z_{\rm own}(d)^{-1},
+\tag{OCB.33}
+$$
+
+and consequently
+
+$$
+\sigma_d\ge\log_2z_{\rm own}(d),\qquad
+M_1(D)\ge\left\lceil z_{\rm own}(d)^{2^{D-d}}\right\rceil,
+\qquad \lambda\ge2^{-d}\log_2z_{\rm own}(d).
+\tag{OCB.34}
+$$
+
+The alternative finite owner-transversal expression
+
+$$
+\max_{\substack{\varnothing\ne P\subseteq S_d\\
+                         |g_q(P)|\le4\ (q\in W_d)}}
+ \sum_{y\in v_P(P)}\max_{u\in P:v_P(u)=y}w(u)
+\tag{OCB.35}
+$$
+
+is exactly $\mathcal U_d(w)$, not a distinct cap mechanism.
+
+Proof. Finite set-cover linear-programming duality gives nonnegative
+weights $a$ of maximum total $z_{\rm own}(d)$ subject to
+$a(P)\le1$ for every $P\in\mathscr R_d$. Singletons guarantee finite
+coverage and a positive finite optimum. For any probability $\mu$,
+the vector $\mu/\mathcal U_d(\mu)$ is dual feasible, so
+$1/\mathcal U_d(\mu)\le z_{\rm own}(d)$. Conversely normalize an
+optimal dual of total $z_{\rm own}(d)$ to a probability; its
+$\mathcal U$ is at most the reciprocal. This proves equality, and
+rational LP data give a rational attaining vector. Theorem 4.3 and
+the credited (OCB.10)–(OCB.11) imply (OCB.34).
+These auxiliary fractional cover members are test sets, not native upper
+code constructions. Their dual yields lower bounds against all original
+competitors.
+
+To prove (OCB.35), in each nonempty $v_P$ cell choose a maximizing
+state and let $Q$ be the chosen set. The old $E(P)$ remains
+self-decodable on $Q$ and separates its chosen states, so
+$Q\in\mathscr R_d$. Its mass is the sum in (OCB.35), proving that
+expression is at most $\mathcal U$. A reply-basis test set has only
+singleton cells, giving the reverse inequality. Thus separate use of
+the transversal description supplies no additional pressure bound.
+$\square$
+

@@ -1,0 +1,53 @@
+**引理 3.2（覆盖同和割线的三个严格正子式）。** On
+$1/3\le m\le1/2$ and $0\le v\le1/144$, the substitutions (3.2) satisfy
+
+$$
+\begin{array}{c|c}
+\text{interval for }q&\text{strictly positive polynomial}\\ \hline
+[0,1/4]&C_{03}\\
+[1/4,2/3]&-C_{01}\\
+[2/3,1]&-C_{13}.
+\end{array}                                                     \tag{3.6}
+$$
+
+Proof. The exact polynomial identities furnished by (3.1)–(3.5) are
+
+$$
+G_r\left(\frac13+\frac X6,\ a_r+(b_r-a_r)U,\ \frac V{144}\right)
+=\frac1{D_r}\sum_{i,j=0}^4\sum_{k=0}^2
+N^{(r,k)}_{ij}B_{i,4}(X)B_{j,4}(U)B_{k,2}(V).                 \tag{3.7}
+$$
+
+Here the argument order on the left is $(m,q,v)$ after (3.2).
+For a direct coefficient specification of every entry, let
+$c^{(r)}_{abc}$ be the coefficient of $X^aU^bV^c$ in that left side.
+Expansion of the displayed quadratic factors gives degree at most
+$(4,4,2)$, and the data (3.3)–(3.5) obey
+
+$$
+\frac{N^{(r,k)}_{ij}}{D_r}
+=\sum_{a=0}^i\sum_{b=0}^j\sum_{c=0}^k
+c^{(r)}_{abc}
+\frac{\binom ia}{\binom4a}
+\frac{\binom jb}{\binom4b}
+\frac{\binom kc}{\binom2c}.                                  \tag{3.8}
+$$
+
+Thus all coefficients in (3.7) are specified by rational arithmetic
+from (3.1), with no unspecified fitted coefficient. To verify the
+conversion, expand the binomial theorem after factoring $X^a$ to obtain
+$X^a=\sum_{i=a}^n\binom ia\binom na^{-1}B_{i,n}(X)$, and apply it in
+each of the three variables. This gives exactly (3.8) and (3.7).
+For example the least coefficients for $r=1,2,3$ are respectively
+
+$$
+\frac{1021536}{18432}=\frac{3547}{64},\qquad
+\frac{9446544}{497664}=\frac{7289}{384},\qquad
+\frac{2420142}{62208}=\frac{403357}{10368},
+$$
+
+all positive. Every integer in the nine matrices is positive. On the
+unit cube the tensor Bernstein terms are nonnegative and sum to one.
+Consequently (3.7) is strictly positive on that whole cube, proving
+all three closed-box assertions. ∎
+

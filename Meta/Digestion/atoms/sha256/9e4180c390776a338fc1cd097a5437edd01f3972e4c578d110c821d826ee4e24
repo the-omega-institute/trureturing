@@ -1,0 +1,16 @@
+**Corollary 2.4 (edge cases).** If $A$ is a singleton, $M=1$ and a constant field
+supports zero reads; this is zero additional information in the usual coding
+sense. With zero post-entry reads and finite $A$, exactly $|A|$ complete field
+values are necessary and sufficient. If $A$ is infinite, no finite complete field
+supports any uniform finite-read exact service. The empty fiber is outside the
+attained-entry promise.
+
+*Proof.* The singleton and zero-read claims follow by counting outputs. For an
+infinite $A$, a field of size $m$ and a $K$-read four-reply tree have at most
+$m4^K$ terminal outputs, contradicting the infinitely many distinct rows. $\square$
+
+The closure formula in (SJM.9) is deliberately restricted to finite $A$. For
+example, with $Q=\varnothing$ and all finite sources admitted, each source is a
+singleton row stratum and the target image is infinite; the finite-image closure
+identity must not be applied to that case.
+

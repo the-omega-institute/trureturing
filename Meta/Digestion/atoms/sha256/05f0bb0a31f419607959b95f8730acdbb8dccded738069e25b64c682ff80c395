@@ -1,0 +1,16 @@
+**定理 78.5（Exact acquisition criterion and a bounded representative）。** Under 78.1, an exact deterministic policy exists if and only if
+
+$$
+a\ne b\quad\Longrightarrow\quad j(a)\not\sim j(b).
+$$
+
+For $n=1$ immediate return uses zero reads and restores. For $n\ge2$ satisfying the condition there is one policy valid for every original using at most $n-1$ probes, $n-2$ restores and $(n-1)(N-1)$ paid reads. The read bound can be sharpened to $(n-1)(K_A-1)$.
+
+Proof. If two roots are equivalent, couple both executions using the same deterministic controller history. At every common history the next action agrees. Successor compatibility gives the same immediate bit report and equivalent active successors. The chosen-bit counts agree, so terminal-depth reports agree. A restoration produces equivalent roots again and no identifying report. Induction preserves identical histories through all partial-run restorations and terminal/restart episodes. Any finite return is the same label on both originals and cannot be correct for both; failure to return also violates exactness.
+
+For sufficiency partition $A$ initially into one block. With a chosen finite word family $W$, group originals by their vectors $(R(j(a),w))_{w\in W}$. If a block is nonsingleton, choose two of its members and add a separating word supplied by 78.3. This strictly splits at least one block and never merges blocks. After at most $n-1$ additions all blocks are singletons. Each word is nonempty and has length at most $N-1$, or $K_A-1$ on the reachable quotient.
+
+Execute the first word from the supplied initial root and each later word after one SAMEoriginal restoration, stopping each run at its first terminal. The reports form the signature of that one chosen original, not reports from separately sampled originals. Its signature is injective, so decoding returns the actual $a$. A family of $k\le n-1$ words costs at most $k-1$ restores and $k(N-1)$ reads. Early singleton return can reduce these costs.
+
+This is a sufficient representative bound, not a bound on every padded policy, a minimum read law for every machine, or a claim that it preserves each policy's own tradeoff. The criterion implies $n\le K_A\le N$. For $n=2$ one word and no restoration suffice. If $T$ is empty all reports stay active and exact acquisition is possible only for $n=1$. Duplicate $j$ values and distinct but response-equivalent roots both fail the criterion. $\square$
+

@@ -1,0 +1,18 @@
+**Lemma 6.2 (exactness of the finite good-entry table).** For every
+actual origin $u$,
+
+$$
+G_T(u)=\Gamma_T(\eta_b(u)).
+\tag{TCR.21}
+$$
+
+Proof. Proposition 5.3 fixes every installed reply and the whole
+target on that profile. From either identical entry, induction on
+the at most two running visits gives identical states and identical
+call counts for the bounded check and actual execution. A Halt's
+fixed output is the same in both. A state still running at the
+limit supplies no free Halt or decoder in either contract. Hence
+their acceptances are equivalent for each label. This proves
+(TCR.21) even for incorrect or nonterminating other-entry behavior.
+$\square$
+

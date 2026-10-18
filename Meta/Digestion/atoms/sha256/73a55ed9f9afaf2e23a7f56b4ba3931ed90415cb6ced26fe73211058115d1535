@@ -1,0 +1,129 @@
+**Theorem 11.1 (Uniform fixed-dimension gap).** For every $0<Z<2/3$ and
+every integer $n\ge0$, there is a number
+$\Gamma(n,Z)>0$ such that, for every allowed preparation and every
+$A\in\mathfrak F_{\le n}(Z)$,
+$$
+\operatorname{err}(A)^2\ge 4ZH+\Gamma(n,Z).
+\tag{11.1}
+$$
+Consequently
+$$
+e_n^{\mathrm{aff}}(Z)\ge
+\sqrt{4ZH+\Gamma(n,Z)}>e_*.
+\tag{11.2}
+$$
+The number $\Gamma(n,Z)$ is defined exactly in §11.4 below. It depends on
+$n$ and $Z$ only, not on any model parameter or preparation.
+
+**Proof.** A model with infinite error satisfies (11.1) trivially, so take a
+finite-error model whenever a residual is used. The preceding
+bounded-observable theorem and Proposition 4.1 apply to Definition 2.1 with
+both affine offsets present. They give a single scalar affine observable
+$g(k)$ and, with
+$$
+\Delta=\operatorname{err}(A)^2-4ZH\ge0,
+$$
+the residual
+$$
+\left|g(H-x)-2\sqrt{(H-x)x}\right|
+ \le\sqrt{Zx+\Delta/4}
+\qquad(0<x<H).
+\tag{11.3}
+$$
+The coefficient $\Delta/4$ is the coefficient from the fourfold first-pair
+metric in Proposition 4.1.
+
+Suppose, for contradiction, that $e_n^{\mathrm{aff}}(Z)=e_*$. Put
+$N=n+1$. For each integer $\ell\ge1$ set
+$$
+h_\ell=\frac{H}{\ell+1}.
+$$
+Since $\sqrt{4ZH+h_\ell^2}>e_*$, the infimum definition supplies a model
+$A_\ell\in\mathfrak F_{\le n}(Z)$ with finite error
+$\varepsilon_\ell<\sqrt{4ZH+h_\ell^2}$. For its residual $\Delta_\ell$,
+$$
+0\le\Delta_\ell\le h_\ell^2.
+\tag{11.4}
+$$
+All parameters of $A_\ell$ may depend on $\ell$.
+
+Let $g_\ell$ be the scalar from (11.3), and define, for $1\le j\le\ell$,
+$$
+u_j^{(\ell)}
+ =\frac{g_\ell(H-jh_\ell)}{\sqrt{h_\ell}}.
+$$
+The fixed preparation reaches $(H-h_\ell,0,0)$ by one phase-free
+probability leg. Repeating $P_{-h_\ell}$ at most $\ell-1$ times reaches all
+heights $H-jh_\ell$. The minimum is $h_\ell>0$, so every leg and every
+intermediate point is lawful. Applying (11.3) with $x=jh_\ell$ and using
+(11.4) gives
+$$
+\left|u_j^{(\ell)}
+      -2\sqrt{j(H-jh_\ell)}\right|
+ \le \sqrt{Zj+\frac{\Delta_\ell}{4h_\ell}}
+ \le \sqrt{Zj+\frac{h_\ell}{4}}.
+\tag{11.5}
+$$
+Hence, uniformly in $\ell$ and in the varying model,
+$$
+|u_j^{(\ell)}|
+ \le \left(2\sqrt H+\sqrt{Z+\frac H4}\right)\sqrt j.
+\tag{11.6}
+$$
+
+For the one-step command in $A_\ell$, let $T_\ell$ be its homogeneous
+update matrix and let $v_\ell$ be the homogeneous state at
+$(H-h_\ell,0,0)$. If $\lambda_\ell$ is the fixed homogeneous decoder row
+for $g_\ell$, exact intertwining gives
+$$
+u_j^{(\ell)}
+ =\lambda_\ell T_\ell^{\,j-1}v_\ell/\sqrt{h_\ell}.
+\tag{11.7}
+$$
+Therefore
+$$
+u_{p+q+1}^{(\ell)}
+ =(\lambda_\ell T_\ell^{\,p})
+   (T_\ell^{\,q}v_\ell/\sqrt{h_\ell})
+\tag{11.8}
+$$
+whenever $p+q+1\le\ell$. This factors every finite Hankel submatrix through
+$d_\ell+1\le N$ coordinates. It uses only the separately finite lawful
+chain; no common matrix, latent bound, ambient inverse, or infinite
+execution is assumed.
+
+For each fixed $j$, (11.6) places all defined scalars in a common compact
+interval. Successive scalar subsequences and a diagonal choice with
+indices eventually at least $j$ produce limits $u_j$ for every $j\ge1$.
+Since $h_\ell\to0$ and
+$0\le\Delta_\ell/h_\ell\le h_\ell\to0$, (11.5) yields
+$$
+(2\sqrt H-\sqrt Z)\sqrt j
+ \le u_j\le
+(2\sqrt H+\sqrt Z)\sqrt j.
+\tag{11.9}
+$$
+The lower coefficient is strictly positive because $Z<4H$.
+
+Fix any finite row and column sets in the array
+$(u_{p+q+1})_{p,q\ge0}$. For all sufficiently large diagonal indices the
+corresponding entries occur in (11.8), so every $(N+1)$-minor is zero.
+Determinants are finite polynomials in their scalar entries; taking the
+coordinatewise limit preserves those zero minors. Thus every finite Hankel
+submatrix of the limit has rank at most $N$.
+
+Apply Lemma 5.1 of the preceding volume to $b_j=u_{j+1}$. Its finite-rank
+hypothesis is exactly the conclusion of the preceding paragraph, and its
+square-root upper bound is (11.9). The lemma makes $(u_j)$ bounded, while
+the positive lower coefficient in (11.9) makes it unbounded. This
+contradiction proves $e_n^{\mathrm{aff}}(Z)>e_*$. The finite certificate in
+§11.4 turns this strict conclusion into the model-uniform number in
+(11.1). $\square$
+
+The quantifiers in Theorem 11.1 are stronger than the assertion that each
+individual finite model has error strictly above $e_*$. They allow the
+models, their dimensions, all affine parameters, and their decoders to
+vary with $\ell$, while the final rank bound is the common number $n+1$.
+They also remain compatible with
+$\inf_n e_n^{\mathrm{aff}}(Z)=e_*$.
+

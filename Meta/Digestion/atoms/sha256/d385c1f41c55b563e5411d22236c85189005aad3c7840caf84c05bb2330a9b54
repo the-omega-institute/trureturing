@@ -1,0 +1,63 @@
+**Corollary 9.20 (Exact marginal variance-pair region with external noise).**
+If independent, parameter-free classical output randomization
+is allowed, the complete set of finite positive marginal
+variance pairs of regular locally unbiased estimators at
+this reference, over the measurements allowed in
+Proposition 9.16, is
+
+$$
+\mathcal V_N=
+\left\{(V_\kappa,V_\chi)\in(0,\infty)^2:
+\frac1{NI_0V_\kappa}+\frac{I_0}{4NV_\chi}\le1\right\}.
+\tag{9.66}
+$$
+
+This statement concerns the two marginal variances, not
+a characterization of all attainable covariance matrices.
+
+Proof. Necessity is Theorem 9.17; independent classical
+randomization can be incorporated in the POVM outcome,
+so it does not avoid the bound.
+For sufficiency, take a proposed pair in (9.66). The interval
+
+$$
+\frac1{NI_0V_\kappa}\le t
+\le1-\frac{I_0}{4NV_\chi}
+\tag{9.67}
+$$
+
+is nonempty, and every member is strictly between zero
+and one because both variances are finite and positive.
+Choose one such fixed $t$. Theorem 9.19 gives variances
+$v_\kappa=1/(NtI_0)\le V_\kappa$ and
+$v_\chi=I_0/[4N(1-t)]\le V_\chi$.
+Independently of all data, settings and each other, draw
+two symmetric signs $\epsilon_\kappa,\epsilon_\chi$
+with probabilities $1/2,1/2$. Add the noises
+
+$$
+Z_\kappa=\sqrt{V_\kappa-v_\kappa}\,\epsilon_\kappa,\qquad
+Z_\chi=\sqrt{V_\chi-v_\chi}\,\epsilon_\chi
+\tag{9.68}
+$$
+
+to the respective estimates, taking a zero noise when its
+coefficient is zero. Their laws are fixed constants of
+the design and the supplied reference, independent of
+the unknown $(\kappa,\chi)$. Each has mean zero for every
+parameter, so all local expectation derivatives remain
+those in (9.57). Independence adds precisely the desired
+variance deficits, with no cross covariance. This realizes
+the proposed pair. $\square$
+
+No fixed upper bound on the magnitude of this optional
+output noise is imposed across designs. It is explicit
+classical randomization, not an extra quantum preparation
+or a hidden source of parameter information. The construction
+realizes each marginal pair, here with zero covariance;
+it asserts nothing about realizing a separately prescribed
+nonzero covariance. Estimator outputs are real numbers and
+need not lie in the physical parameter interval on every
+sample. Clipping them to that interval would require
+rechecking local unbiasedness.
+

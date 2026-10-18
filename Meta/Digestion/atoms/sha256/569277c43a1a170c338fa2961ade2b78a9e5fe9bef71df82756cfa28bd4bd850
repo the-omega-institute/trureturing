@@ -1,0 +1,4 @@
+**Lemma 1.3 (Same-law positive-mass trimming).** Restricting (1.1) to $I_+=\{i:\lambda_i>0\}$ preserves every output cylinder, gives a stationary stochastic presentation, and makes $M_1^2=0$ entrywise. This is the trimming operation of [Renewal, Lemma 8.2][R].
+
+Proof. If $j\notin I_+$, then $0=\lambda_j=\sum_{i\in I_+}\lambda_iA_{ij}$. Nonnegativity forces $A_{ij}=M_x(i,j)=0$ for every retained $i$. The retained set is closed, and every path with positive initial mass stays there. Restriction therefore preserves (1.2), normalization and stationarity. On this set, $\lambda>0$ and $\lambda M_1^2\mathbf1=0$ force every entry of the nonnegative matrix $M_1^2$ to vanish. Consequently every nonzero trimmed word product has positive visible probability and is legal. Trimming is a proved same-law operation; zero-mass presentations remain allowed in the original domain. $\square$
+

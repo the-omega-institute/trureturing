@@ -1,0 +1,53 @@
+**Proposition 72.2 (the complete target norm and its massive-port operator).**
+Use an orientation of each of the $2n$ unit cables, and write
+$F=(f,(u_e)_e)$. Then the exact target Hilbert space, form domain and form are
+
+$$
+\begin{aligned}
+\mathcal H_\delta
+ &=\mathbb C^D\oplus\bigoplus_{e\in\mathcal E_D}L^2((0,1),\delta\,dx),\\
+\|F\|_\delta^2
+ &=\sum_{p\in D}|f_p|^2+\delta\sum_e\int_0^1|u_e(x)|^2\,dx,\\
+\mathcal Q_\delta
+ &=\{F:u_e\in H^1(0,1),\ u_e(p)=f_p
+       \text{ at each source end},\ u_e(g)=0
+       \text{ at each ground end}\},\\
+\ell[F,V]&=a\sum_e\int_0^1u'_e\overline{v'_e}\,dx.
+\end{aligned}
+\tag{72.2}
+$$
+
+The atomic and cable coordinates in $\mathcal H_\delta$ are independent;
+endpoint matching is a domain condition. Define the derivative directed
+from an endpoint into its cable by
+$\partial_{\rm in}u_e=u'_e(0)$ at its initial end and
+$\partial_{\rm in}u_e=-u'_e(1)$ at its terminal end. The represented operator
+has precisely the domain and action
+
+$$
+\begin{aligned}
+\operatorname{Dom}L
+ &=\{F\in\mathcal Q_\delta:u_e\in H^2(0,1)\text{ for every }e\},\\
+(LF)_e&=-\frac a\delta u''_e,\qquad
+(LF)_p=-a\sum_{e\sim p}\partial_{\rm in}u_e(p).
+\end{aligned}
+\tag{72.3}
+$$
+
+There is no additional zero-flux condition at a massive source port.
+There is no ground atomic coordinate.
+
+**Proof.** Formula(72.2) is Definition64.5's measure and one-coordinate
+kinetic form, with no omitted interval. Integration by parts gives the
+interior term $-a u''_e$ and the endpoint term
+$-a\partial_{\rm in}u_e(p)\overline{f_p^V}$ at a source port.
+The Hilbert norm has cable density $\delta$ and atomic mass one, giving
+exactly (72.3). Conversely these terms represent the form for every test
+in $\mathcal Q_\delta$. Testing on compactly supported cable functions
+shows that membership in the operator domain forces $u''_e\in L^2$;
+in one dimension this gives $H^2$. The remaining tests determine the
+atomic output and impose no extra equation on its flux. At grounded ends
+the test trace is zero. Closed-form representation, used in64.5a, supplies
+self-adjointness; no multidimensional corner regularity enters this
+calculation. $\square$
+

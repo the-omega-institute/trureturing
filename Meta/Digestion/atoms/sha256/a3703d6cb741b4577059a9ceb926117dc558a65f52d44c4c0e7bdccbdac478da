@@ -1,0 +1,29 @@
+**Proposition 11.1 (one common vector, strictly dominated on the original twelve).**
+For fixed admitted parameters the single plateau instrument of §7 has
+all twelve original acquired costs
+
+$$
+\left(pA_y+qB_y\right)_{y,e,n},\qquad
+A_y=\sum_i h_i^2p_{yi},\quad B_y=b^2p_{y0}+a^2p_{y1}.
+\tag{NP.67}
+$$
+
+At every strength on its plateau, this vector is strictly dominated in
+EVERY coordinate by the existing JR weak common vector $(kA_y)_{y,e,n}$.
+It supplies no new original-twelve Pareto point.
+
+Proof. The high effect is the ONE matrix $E\Theta(H_*)E^\dagger$.
+All original $\rho_{y,e,n}$ are real symmetric; because $D,T,S$ are
+real, their coefficient Grams are real symmetric. The imaginary $DT$
+entry $(H_*)_{DT}=-ir_0$ cancels in the trace pairing and the $SS$
+entry is zero, giving (NP.67) for every independent sign pair.
+By (NP.32),
+$p=k+\beta(1-c_\xi)+\alpha q>k$ and $q>0$, while $A_y,B_y>0$.
+Thus $pA_y+qB_y>kA_y$ individually. Proposition 4.3 gives
+$s\leq s_*<\sqrt\ell$, precisely within the credited JR weak regime
+where ONE common instrument attains every $kA_y$. There is no prior,
+averaging substitution or combination of separate pointwise minimizers
+in this coordinatewise domination. The nonreal pointwise optimum and
+this negative original-vector conclusion concern different test states
+within the SAME original class. $\square$
+

@@ -1,0 +1,37 @@
+**Definition 6.2 (the actual current consumer).** Keep ARC Definitions
+7.1–7.3's following installed callbacks and channel order, substituting
+Boundary/Prefix and the general tagged equality tests just specified.
+
+| Entry | Required actual data, authority and successor |
+| --- | --- |
+| Recover | Retain mode/frame; freeze predecessor M; compute and append cover; Publish CoverRef$(c,a,b)$; print/check/ACK and mailbox return; TOK handler to ClientCover. |
+| ClientCover | Before bank work use the still-latest receiver placement on69 and native Seek73; clear the internal numeral, import F-bounded received CoverRef, check $B,\xi$, retain received $c$; TOK to Bind. |
+| Bind | Resolve that immutable acquired $c$, run the selected legacy/general binder, check target range and full tagged binding; Issue; Publish PackageRef$(p,c,k,\varrho)$; print/check/ACK/mailbox return; TOK to ClientIssue. |
+| ClientIssue | Position73 before bank work from its actual staging record; clear the internal package numeral; import received PackageRef and check $B,\xi,c,k$ and the whole expected $\varrho$; retain this received $p$; TOK client to Call handler. |
+| Call | Resolve this immutable $p$ with its copied manifest/$I_k$/$k$; Prefix; full raw HistoricalImage serialization; Publish Image$(p,c,k,\varrho,\mathrm{image})$; print; TOK to ClientImage. |
+| ClientImage | Import the actual sealed receiver codec; check all bindings against the expected copy and image type; ACK; return mailbox availability; append complete five-field history item to M; TOK invocation to outer client; actual Ready CTL to $R_r$. |
+
+For each Publish, measure sender71, allocate initialized distinct mailbox72
+and receiver73 intervals, append their actual descriptors on68, and stage
+the sender/mailbox/receiver placement records in that order on69, each
+immediately after its descriptor is created. Use ARC's two-pass native
+descriptor copy: dry-count/copy the unchanged source descriptor, F/seal
+its measured stage, then describe that stage once. Never stage its own
+staging descriptor recursively. Reload actual endpoint bases and sender
+payload length from these records before each tested copy. Complete
+seals/TOKs and native completion records on71 preserve the latest-three
+staging invariant. No bank assignment intervenes in this positioned channel
+or its mandatory print. Printing uses the distinct data/test latches and
+actual receiver length. Each callback then positions73 from staging before
+any bank rebuild, and imports to its existing F delimiter, not through
+length scratch67 that the importer changes.
+
+Cover/Package ACK and mailbox return precede their fixed reference
+callbacks. Image's final check precedes its ACK/mailbox return. Every
+new handler invocation receives a real phase TOK. Retained receiver read
+rights and seals permit these imports; numerals alone do not. The complete
+captured code and request data are finite words, and all fixed-arity tests,
+serialization, backing resolution and equality are the actual §2 macros.
+There is no external copier of $c$ or $p$ and no hidden selector input
+between these callbacks.
+

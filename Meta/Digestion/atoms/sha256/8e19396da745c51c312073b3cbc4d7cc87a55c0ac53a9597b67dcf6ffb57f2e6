@@ -1,0 +1,68 @@
+**Proposition 17.1.** The laws in (17.4) are normalized and lie in their full
+endpoint coordinate boxes and in $\mathcal K_p,\mathcal K_\beta$ of
+[PAIRED, (11.2)]. Their level-five projections lie in the exact prescribed
+outer domains. They have
+$$
+Q(E_p)=C,\qquad W(E_\beta)=H,\qquad
+Q(w_{3,1})=P_{p,b}(w_{3,1})=\frac{1944}{390625}.              \tag{17.5}
+$$
+
+**Proof.** The definitions imply
+$$
+Uv=c,\qquad
+d_0=u+q-1+c,\qquad
+u+q+\frac{uc+s}{1-c}=1.
+$$
+Thus $Q^0$ sums to one, and the modification in (17.4) preserves that sum.
+Also
+$$
+s=-1+\frac{1-H+cH}{v},\qquad
+q+s(1+c)=-c+\frac{c(1+cH)}v=C.
+$$
+The modification is outside $E_p$, and
+$1-v+vq=H$; this proves the two means in (17.5). The remaining equality
+in (17.5) follows from (17.2).
+
+Here are finite rational bounds proving all exceptional endpoint-box
+comparisons. For a phase and atom let $l,h$ be its smaller and larger
+native endpoint masses and let $x$ be its mass in (17.4). Each table entry
+$(L,R)$ asserts $10^{12}(x-l)\ge L$ and
+$10^{12}(h-x)\ge R$; the p upper margin at $(3,1)$ is exactly zero.
+Every entry follows by substitution in (17.1)--(17.4) and cross multiplication.
+
+| $(n,i)$ | p lower and upper bounds | suspended lower and upper bounds |
+|---|---:|---:|
+| $(0,0)$ | $(32443160865,34223505801)$ | $(23555628002,25333260886)$ |
+| $(0,1)$ | $(40835085962,43609358482)$ | $(3574146520,574001627)$ |
+| $(1,1)$ | $(7083412411,5282019687)$ | $(1495672409,142516891)$ |
+| $(2,1)$ | $(1092376798,119497001)$ | $(720524372,257917694)$ |
+| $(3,0)$ | $(1118987582,752633450)$ | $(539393875,453119802)$ |
+| $(3,1)$ | $(99334711,0)$ | $(206464890,158422679)$ |
+| $(4,1)$ | $(106286597,4261383)$ | $(76885224,39590342)$ |
+
+On marker zero the larger endpoint is b for every $n$; on p marker one
+it is b for $n\ge3$; on suspended marker one it is b for $n\ge1$.
+These orders follow from the endpoint ratios in [CLIP, Section 6].
+On every unmodified geometric range, increasing $n$ multiplies the
+candidate mass by $c$, the lower endpoint by $2/9$, and the upper
+endpoint by $6/25$. By (17.3), a valid comparison propagates to all larger
+$n$. Use the $(0,0)$ base for both zero branches except their modified
+$n=3$, the three separate small one-branch checks, and the $(4,1)$
+base for the remaining one branches. The table therefore proves every
+finite coordinate inequality and nonnegativity. The standalone suspended
+beta lies in its box since $a<v<b$; infinity lies in its zero endpoint box.
+
+The modification exchanges mass within one return depth. Consequently
+$$
+Q(T_p(0))=1,\qquad
+Q(T_p(j))=T_1c^{j-1}\ (j\ge1),\qquad
+T_1=1-u-q=\frac{1267861698065}{5432410480941}<\frac4{15},
+                                                               \tag{17.6}
+$$
+and $W(T_\beta(j))=vQ(T_p(j))$. Equations (17.3) and (17.6) prove every
+original tail bound. They prove vanishing mass at infinity without
+conditioning on completion. For the level-five tail endpoint box, every
+constituent finite coordinate has the same endpoint order; sum the full
+coordinate inequalities, including infinity. Thus all projected
+normalization, box, emission and retained tail constraints hold. $\square$
+

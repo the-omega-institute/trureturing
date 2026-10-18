@@ -1,0 +1,69 @@
+**定义 2.1（完整增益及显式多项式）。** 固定正则 $d,m$，记
+
+$$
+E=48-d,\quad B=X-d,\quad A=C-d,\quad V=24-d,\quad w=m-d,\quad D(t)=t(2t-1)=tu.
+\tag{2.1}
+$$
+
+这里 $A,B,D$ 是标量或多项式，不是累积矩阵或原根合同矩阵。对候选 $t>1$，置 $f=E/t,r=B/u$，取同一个完整多项式
+
+$$
+g_t(Y)=\frac d{56}(Y-2)(Y-4)(Y-7)
++\frac f{20}Y(Y-4)(Y-7)-\frac r{24}Y(Y-2)(Y-7).
+\tag{2.2}
+$$
+
+其升幂四系数为
+
+$$
+\left(-d,\ \frac{25d}{28}+\frac{7f}{5}-\frac{7r}{12},\
+-\frac{13d}{56}-\frac{11f}{20}+\frac{3r}{8},\
+\frac d{56}+\frac f{20}-\frac r{24}\right).
+\tag{2.3}
+$$
+
+这使用分区卷引理 5.2 的四节点插值；不要求三次系数非零。定义
+
+$$
+\begin{aligned}
+I(t)&=126Eu-35Bt-45dD,\\
+H(t)&=42Eu+35Bt+5dD,\\
+Q_5(t)&=-14Eu+35Bt-3dD,\\
+K_6(t)&=-21Eu+35Bt-5dD.
+\end{aligned}
+\tag{2.4}
+$$
+
+完整采样表为
+
+$$
+\bigl(g_t(i)\bigr)_{i=0}^7
+=\left(-d,\frac I{140D},\frac Et,\frac H{70D},\frac Bu,
+\frac{Q_5}{28D},\frac{K_6}{35D},0\right).
+\tag{2.5}
+$$
+
+进一步定义
+
+$$
+\begin{aligned}
+Z&=H+70At,\qquad L_s=AI-2VH,\qquad E_s=140VD-(t-1)I,\\
+j(t)&=\frac{140VD}{I},\qquad n(t)=\frac{70AD}{H},\\
+a(t)&=\frac{70DL_s}{HI}=n-j,\qquad b(t)=t-1,\qquad e(t)=\frac{E_s}{I}=j-b,\\
+R(t)&=(t-1)E_sH^2I-70DL_s(HI-70DL_s),\\
+F_{d,w}(t)&=Q_5(t)Z(t)-28wtH(t).
+\end{aligned}
+\tag{2.6}
+$$
+
+此处 $L_s$ 是具名多项式，与失败谓词 $L_s(K,H)$ 区别。每个符号均由 $d,m,t$ 决定，不是独立拟合变量。定义两实际第六响应的公共分母与分子
+
+$$
+\begin{aligned}
+\mathrm{Den}(t)&=35DHI,\\
+N_M(t)&=2uIK_6(H+35At),\\
+N_J(t)&=tK_6\bigl[HI+140u(AI-VH)\bigr].
+\end{aligned}
+\tag{2.7}
+$$
+

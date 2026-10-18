@@ -1,0 +1,44 @@
+**Definition 7.1 (binding and public inputs).** The immutable target binding
+is the exact ten-field tuple
+
+$$
+b=[\mathsf{unary74maskcontour},U(H_0),r_{\rm seed},r_{\rm boot},
+       r_{\rm code},U(p),U(c),U(k),\varrho,\theta].
+$$
+
+The layout literal is binary `01010100`. The seed/boot/code entries are
+the complete authentic acquired origin/version/capture bindings, not
+numerals interpreted as permission. $\theta$ is the actual target
+version/raw-installation phase. $\varrho$ is ARC's complete occurrence/
+request-origin tuple. No seed contents, input word, endpoint, meter or
+history is appended to $b$.
+
+`PublicCode` consists of the fixed original graph/boot/prior/controller
+parameters, $L$, the actually acquired $\Delta(G_\circ)$, corresponding
+installation serialization and the fixed compiler/layout conventions.
+It excludes variable manifest seed contents, request reservoirs, package
+$I_k$ and the acquired Image. Its own code is not assumed physically present
+at an older pre-capture target: its fixed later code parameter determines
+the canonical supply, whose construction replay still performs only at
+the actual rows. Later code/package references are checked against current
+immutable acquired records; target fields are checked against the derived
+old prefix. Later origins are not required to exist at an earlier cut.
+
+More precisely, at an acquired-Zero target check its actual $\xi,H_0,k$,
+version/raw phase, old unified count $m$ and producer-local request
+references at the recognized $F^A$ occurrence. Resolve those same complete
+request references through the later acquired origin copies. The unified
+row's later delivery origin in $\varrho$ is checked in the frozen acquired
+cover chain, not demanded inside the earlier Zero state. The cover/package
+creation references and current invocation are likewise current-service
+checks. These tests never substitute future origin payload for the body's
+missing seed/input material.
+
+Write $\mathcal Z_\circ$ for the subset of $\mathcal C_\circ$ consisting of
+target prefixes actually selected by that acquired strict-Zero route.
+The service decoder's positive domain is an authentic view of
+$h\in\mathcal Z_\circ$ with its corresponding acquired $b$. The shape
+inverses on $\mathcal R_\circ$ and input-complete semantic replay on
+$\mathcal C_\circ$ do not assert a current acquired binding, selector or
+converter invocation for every member of those larger domains.
+

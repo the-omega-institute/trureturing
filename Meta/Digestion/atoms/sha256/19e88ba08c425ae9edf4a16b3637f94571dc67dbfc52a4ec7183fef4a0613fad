@@ -1,0 +1,72 @@
+**Lemma 14.2 (Only the useful observable module is bounded).** Let
+$\ell_1,\ell_2\in X_{\mathbb C}^{\vee}$ be the homogeneous rows
+of $a$, where $X_{\mathbb C}$ is the complexification of $X$. Let
+$W$ be the complex span of $\lambda_0$ and all rows
+$\ell_iV_\delta$. Then $W$ has a basis of common eigencovectors
+for right multiplication by all $V_\delta$. Their eigenvalues are
+abstract unitary characters of $\mathbb T$. There is at most one
+nontrivial conjugate pair, and each member of that pair has
+multiplicity one. Trivial-character rows may have different height
+profiles.
+
+**Proof of Lemma 14.2.** Each generating row is a bounded function
+on actual states, since
+$\ell_iV_\delta F(k,\alpha)=a_i(k,\alpha+\delta)$ and $a$ is
+uniformly bounded. Every finite linear combination is also bounded.
+On $W$ set
+
+$$
+\|\ell\|_{\rm obs}=
+\sup_{0<k<H,\ \alpha\in\mathbb T}|\ell F(k,\alpha)|.
+$$
+
+It is a genuine norm: a row vanishing on all actual states vanishes
+on their span $X_{\mathbb C}$. Right multiplication by $V_\delta$
+is an invertible isometry, since it permutes the phase circle at
+every height. These maps commute. The finite-dimensional argument
+of Lemma 3.2 now applies to this normed space: eigenvalues have
+modulus one, nontrivial Jordan chains would have unbounded iterates,
+and induction over invariant eigenspaces simultaneously diagonalizes
+the entire commuting family. This argument uses no norm on $E$.
+
+For a common eigenrow $\ell\ne0$, write
+$\ell V_\delta=\chi(\delta)\ell$. Equation (14.1) proves that
+$\chi$ is a group homomorphism into the unit circle, and
+
+$$
+\ell F(k,\alpha)=\chi(\alpha)\,\ell F(k,0).
+\tag{14.2}
+$$
+
+The coefficient at a particular height is allowed to vanish. Two
+independent eigenrows with the same character would represent two
+independent height profiles; they are not identified by evaluation
+at one height.
+
+The space $W$ is closed under conjugation, because its original rows
+and phase operators are real. The covector $\lambda_0$ gives a
+nonzero trivial-character row. Any real unitary character is trivial:
+for every circle element $\delta$ choose a half-element $\eta$;
+then $\chi(\delta)=\chi(\eta)^2=1$ if its values lie in
+$\{1,-1\}$. Thus each nontrivial character is distinct from its
+conjugate and consumes at least two dimensions together with it.
+Since $\dim_{\mathbb C}W\le d+1\le4$, there is at most one
+such pair. A multiplicity of two for one member would force two for
+its conjugate and, together with $\lambda_0$, at least five
+dimensions. Each member therefore has multiplicity one. The
+trivial eigenspace need not have dimension one. $\square$
+
+Identify the useful output plane with $\mathbb C$ and put
+$z(k,\alpha)=a_1(k,\alpha)+i a_2(k,\alpha)$ and
+$\xi(\alpha)=e^{i\alpha}$. If $W$ has a nontrivial pair
+$\chi,\overline\chi$, Lemma 14.2 gives
+
+$$
+z(k,\alpha)=c(k)+u(k)\chi(\alpha)
+                  +v(k)\overline{\chi(\alpha)}.
+\tag{14.3}
+$$
+
+The term $c(k)$ may depend on height. No common affine center is
+implicit in this formula.
+

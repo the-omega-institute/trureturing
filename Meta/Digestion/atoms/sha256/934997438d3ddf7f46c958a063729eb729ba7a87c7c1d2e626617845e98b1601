@@ -1,0 +1,18 @@
+**Theorem 7.1 (quadratic deficit at the output-extinction event).** Let $\mathcal T_A^{\rm full}$ be the original unconstrained optimum. For the interval in Theorems 6.1–6.2,
+$$
+\mathcal T_A^{\rm full}(s)=V_7(s),\qquad
+\mathcal T_A^{(\le7\ {\rm total})}(s)=V_6(s),
+$$
+and
+$$
+\mathcal T_A^{\rm full}(s)
+-\mathcal T_A^{(\le7\ {\rm total})}(s)
+=
+\frac{\alpha}{4s_0^2}
+\left(\frac1{k_6'}-\frac1{k_7'}\right)
+(s-s_e)^2+o\!\left((s-s_e)^2\right).
+$$
+The coefficient is strictly positive.
+
+**Proof.** The first equality is the inherited full original optimum on the seven physical side of [OE, Theorem 1.4]. The second is Theorem 6.2. Both branches have the same event value and first strength derivative by Proposition 3.1. Their second derivative difference is the positive quantity in Theorem 3.2. Taylor expansion of the two analytic extensions gives half that second-derivative difference as the quadratic coefficient, yielding the formula. The neighborhood is existential; no explicit interval length or certified midpoint enclosure is asserted here. $\square$
+

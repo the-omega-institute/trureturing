@@ -1,0 +1,61 @@
+**Definition 2.3 (consecutive cuts and pools).** List all common-support
+depths in $\{0,\ldots,n-1\}$, together with the formal endpoint $n$.
+Their common supports are $T_d$, with $T_0=\varnothing$ and
+$T_n=[n]$. Let $\mathcal I$ be the open gaps $I=(a,b)$ between
+consecutive listed depths; the span is $b-a$. Define
+
+$$
+\begin{aligned}
+V_I&=\{(h,z)\in V:a<h+z<b\},&
+Q_I&=\bigcup_{p\in V_I}F_p,\\
+E_I&=\sum_{p\in V_I}(b_p-1),&
+D_I&=\sum_{q\in Q_I}(|\{p\in V_I:q\in F_p\}|-1).
+\end{aligned}
+$$
+
+Let $E_{\rm reg}$ be the sum of $b_p-1$ on actual cut diagonals;
+there is no live diagonal at the formal endpoint $n$.
+
+The credited localization [SI, Lemma 9.2 and Theorem 9.3][SI] gives
+
+$$
+\begin{gathered}
+|Q_I|=|V_I|+E_I-D_I,\qquad
+m-G=\nu+E_{\rm reg}+\sum_{I\in\mathcal I}(E_I-D_I),\\
+|Q_{\rm live}|=G+E-D,\qquad m-G=E-D+\nu.
+\tag{TS.9}
+\end{gathered}
+$$
+
+To see the localization directly, every live history extends to each later
+live depth through actual fresh live children: away from the final corner
+at least one reply stays live. Hence cut supports form a strictly increasing
+chain of their indicated sizes. Inside a consecutive gap, ancestry and
+extension give
+
+$$
+T_a\subseteq S\subsetneq T_b,\qquad i(q)\in T_b\setminus S.
+\tag{TS.10}
+$$
+
+At $b=n$ this follows from freshness and $T_n=[n]$. Cut hosts are
+exclusive by equal- and nested-support exclusion. The disjoint coordinate
+blocks $X_I=T_b\setminus T_a$ partition $[n]$ and contain the labels
+of all live states in the corresponding half-open depth range. Thus no live
+state can belong to different ranges or different interior pools. Restricted
+and global double counting give (TS.9). If $m_i$ counts all installed
+coordinate-$i$ states, $\nu_I$ counts the never-live ones labelled in
+$X_I$, and $E_a$ is the lower cut excess, the stronger same-vector identity
+is
+
+$$
+m(X_I)-(|V_a|+|V_I|)=E_a+E_I-D_I+\nu_I,
+\qquad \sum_I\nu_I=\nu.
+\tag{TS.11}
+$$
+
+This includes empty interiors and all unused states. Certified visits do
+not obey a live envelope and are not deleted by this proof decomposition.
+Every internal diagonal of a consecutive nonempty gap is ambiguous and
+therefore contributes at least one to $E_I$.
+

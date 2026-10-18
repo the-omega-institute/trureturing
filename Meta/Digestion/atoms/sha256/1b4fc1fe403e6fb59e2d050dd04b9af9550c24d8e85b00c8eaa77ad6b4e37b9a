@@ -1,0 +1,9 @@
+**定义 29.1（异或份额的共同实现）。** 取整数 $n\ge2$，$Z,R_1,\ldots,R_{n-1}$ 为相互独立的公平比特，来源域为全部 $2^n$ 个赋值，初始 $M$ 恒定。令
+
+$$
+S_i=R_i\quad(i<n),\qquad
+S_n=Z\oplus R_1\oplus\cdots\oplus R_{n-1}.
+$$
+
+$S_i$ 是同一准备的第 $i$ 份记录；配对标签标识共同准备而不公开全部来源赋值。此处使用加法份额的标准秘密分享结构作为中间工具。阈值秘密分享的恢复与隐私问题参见 Shamir, [How to Share a Secret，第 1、2 节](https://web.mit.edu/6.857/OldStuff/Fall03/ref/Shamir-HowToShareASecret.pdf)；这里给定的是全体份额必需的二元加法实例，不把它等同于该文的多项式阈值构造。本节及涉及有限随机变量的后续熵均用 $\log_2$，单位为比特。
+

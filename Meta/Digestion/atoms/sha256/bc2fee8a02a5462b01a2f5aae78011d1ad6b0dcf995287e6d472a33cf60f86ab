@@ -1,0 +1,31 @@
+**Definition 6.2 (the finite predicate $V_{\rm swap}$).** Input is
+$d,L$, rational probability $\mu$ on the entire canonical $S_d$,
+rational $C>0$, and a finite string supplying the following data.
+Malformed indices, missing/duplicate entries and failed tests reject.
+
+1. Partition all types with $R_\eta(\mu)\ne\varnothing$ into low
+   and high. Types with empty relation are marked zero. Supply positive
+   rational normalized full rows $Q_{\eta,A}$ for every nonzero type,
+   every subset and every full context. Supply rational
+   $0<c_0\le c_1$ and $0<\delta<1$.
+2. At each nonzero type and each $s\in R_\eta(\mu)$, with
+   $r=(k+1)!$, check the exact rational COK inequality
+
+$$
+\Phi_\eta(s)^r\le c_b^r\prod_{A\subseteq[k]}
+ Q_{\eta,A}(O\mid B_A)^{|A|!(k-|A|)!},
+\quad b=0\text{ for low},\ b=1\text{ for high}.
+\tag{OOA.21}
+$$
+
+3. Recompute the complete finite pattern list of Definition 6.1. Patterns
+   with a zero vertex need no swap witness. In every remaining pattern
+   whose root is high, require a supplied incident edge and, for every
+   $P,u,a,b$ in Definition 4.1, rational $h_{P,u,a,b}\ge0$ with
+
+$$
+h_{P,u,a,b}^{\,2}\ge K_e^+(a,b\mid u)K_e^-(a,b\mid u),
+\qquad \sum_{a,b}h_{P,u,a,b}\le1-\delta\quad(P,u\text{ fixed}).
+\tag{OOA.22}
+$$
+

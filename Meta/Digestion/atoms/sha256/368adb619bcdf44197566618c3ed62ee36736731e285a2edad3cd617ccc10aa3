@@ -1,0 +1,96 @@
+**Theorem 388.2 (Exact restricted optimum).** For every entire profile in Theorem 387.1,
+
+$$
+\min_{A\in\mathcal O_2^{[8]}}e_a(A)=E=\frac{421}{1728},
+\qquad E-c=\frac{775}{426816}>0.
+\tag{388.1}
+$$
+
+The minimum is attained by one complete normalized $23$-schedule rule. This is a restricted-class gap above the inherited unrestricted optimum $c$.
+
+*Proof.* For the lower bound, let a competitor in this subclass have error $\varepsilon$. Apply the marked finite reduction in the proof of Theorem 387.1, with cap $\varepsilon+\eta_m$. Projection fixes $\theta_8$, and no simulation emits label $8$ before its retained actual query to $8$; cutoffs emit base. Its positive blind stock is consequently zero. Theorem 386.2 gives $324(\varepsilon+\eta_m)\ge1263/16$. Letting $m\to\infty$ gives $\varepsilon\ge421/1728$. Equivalently, compactness of the finite marked schedule/table simplex retains this restriction and the closed cap. This argument uses no assumption that other labels were queried, and applies to arbitrary original addresses and full-carrier outputs.
+
+For attainment let $D=1728$. Every entry in the following table is an integer numerator over $D$, including the owning mass. Cells are in stopped order $0,10,11$, and $e_j$ is the unit label vector. All omitted schedules and cells have mass zero.
+
+$$
+\begin{array}{c|r|l|l|l}
+s&Dm_s&DX^0&DX^{10}&DX^{11}\\ \hline
+12&436&436e_1&436e_2&197e_0+103e_3+100e_4+36e_5\\
+13&197&9e_0+188e_1&197e_3&197e_0\\
+14&47&47e_1&47e_4&47e_0\\
+15&36&36e_1&36e_5&36e_0\\
+16&25&25e_1&25e_6&25e_0\\
+17&8&8e_1&8e_7&8e_0\\
+23&197&136e_0+61e_2&197e_3&197e_0\\
+24&47&47e_0&47e_4&47e_0\\
+25&36&36e_0&36e_5&36e_0\\
+26&25&25e_0&25e_6&25e_0\\
+27&8&8e_0&8e_7&8e_0\\
+34&168&168e_0&168e_4&62e_0+80e_5+26e_6\\
+35&51&51e_0&51e_5&51e_0\\
+36&40&40e_0&40e_6&40e_0\\
+37&23&23e_0&23e_7&23e_0\\
+45&69&69e_0&69e_5&51e_0+11e_6+7e_7\\
+46&40&40e_0&40e_6&40e_0\\
+47&23&23e_0&23e_7&23e_0\\
+56&87&87e_0&87e_6&29e_0+58e_7\\
+57&23&23e_0&23e_7&23e_0\\
+67&23&23e_0&23e_7&23e_0\\
+68&65&65e_0&65e_8&65e_0\\
+78&54&54e_0&54e_8&54e_0
+\end{array}
+\tag{388.2}
+$$
+
+All numerators are nonnegative, each cell sums to its owning mass, and the masses sum to $D$. Label $8$ occurs only in middle cells of $(6,8),(7,8)$, where address $8$ is actually queried. For every first-zero-$n$ word, summing its correct coordinate gives the constant $C_n/D$ in the following table. The base minima over the whole first-zero fiber, and hence the union minima, are also displayed in integer units of $1/D$.
+
+$$
+\begin{array}{c|r|r|r|c}
+n&\min Dp_w(0)&C_n=Dp_w(n)&\min D(p_w(0)+p_w(n))&\text{a base minimizer}\\ \hline
+1&567&740&1307&00101100\\
+2&810&497&1307&10001100\\
+3&810&497&1307&11000110\\
+4&960&362&1322&11100010\\
+5&999&308&1307&11110000\\
+6&1063&254&1317&11111000\\
+7&1134&173&1307&11111100\\
+8&1188&119&1307&11111110
+\end{array}
+\tag{388.3}
+$$
+
+Here is an explicit finite expression for the minima, including all suffix zero patterns. Let
+
+$$
+A=(9,252,282,132,110,88,54,0),\qquad
+B_{ij}=DX^{11}_{ij}(0),
+$$
+
+where $B_{ij}=0$ for an omitted pair and the other $B_{ij}$ are the base coefficients in (388.2). Every middle cell has zero base, so
+
+$$
+Dp_w(0)=\sum_{i=1}^8 A_i(1-w_i)+\sum_{i<j}B_{ij}w_iw_j.
+\tag{388.4}
+$$
+
+For a first zero $n$, substitute $w_1=\cdots=w_{n-1}=1,w_n=0$ in (388.4). Its constant term is $\sum_{i\ge n}A_i+\sum_{i<j<n}B_{ij}$, its coefficient of $w_j$, $j>n$, is $\sum_{i<n}B_{ij}-A_j$, and its remaining pair coefficients are $B_{ij}$ for $n<i<j$. Successive Boolean minimization uses exactly $\min_{t\in\{0,1\}}(U+tV)=U+\min\{0,V\}$, pointwise in the remaining bits. These substitutions give the eight minima in (388.3); the listed words attain them. Correct coordinates are constant because every nonzero entry at label $n$ is visited identically on its first-zero fiber. Thus the union minimum is the sum of the first two numerical columns, rather than an independently chosen output law.
+
+In units of $1/D$ the eight amplitudes are $(1161,918,918,783,729,675,594,540)$ and the cap is $421$. The correct demands are exactly $(740,497,497,362,308,254,173,119)$, the base demands are $1307$ minus those amplitude numerators, and the union demand is $1307$. Every row of (388.3) meets all three floors. The positive law is
+
+$$
+p_{1^8}=\frac{1307e_0+103e_3+100e_4+116e_5+37e_6+65e_7}{1728},
+\tag{388.5}
+$$
+
+whose base is $1-E$. This proves every finite cap row in one complete allocation.
+
+Realize (388.2) by the inherited interval-seed construction: the seed first selects a schedule interval and, within it, fixes all cell-label partitions by their common refinement before replies. Execute the chosen increasing pair on the actual primes and stop at its first queried zero. No second seed or free reply is used, and there are at most two actual paid requests. The label-$8$ restriction holds on every cell. For actual $n(x)\le8$, its entire low word satisfies the checked cap rows. For every actual $n(x)>8$, (388.5) emits no $\theta_{n(x)}$, and the inherited exact tail identity XXIII (373.1) gives
+
+$$
+\operatorname{TV}(p_{1^8},\lambda_x^a)
+=\max\{1-p_{1^8}(0),a_{n(x)}\}
+=\max\{E,a_{n(x)}\}=E.
+$$
+
+This uses the entire positive ordered vanishing tail $a_9\le c<E$, permits $a_9=c$ and all later ties, and requires no summability. It proves attainment and the matching lower bound. $\square$
+

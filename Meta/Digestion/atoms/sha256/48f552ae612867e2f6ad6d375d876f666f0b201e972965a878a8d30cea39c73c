@@ -1,0 +1,46 @@
+**Theorem 18.3 (source-specific counting certificate, including incomplete parses).** Define
+
+$$
+E(a,b)=
+\begin{cases}
+\displaystyle\binom{(a+b)/2}{a/2},&a,b\in2\mathbb N,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{SC.41}
+$$
+
+Then $G_s(A,B)=E(A,B)$, $G_{s_\alpha}(A,B)=E(A-1,B)$ and $G_{s_\beta}(A,B)=E(A,B-1)$. For $P_{\rho,v}$ or $Q_{\rho,v}$ put $e=0$ or $1$, respectively, and for $L_{\rho,v}$ put $e=0$. Set
+
+$$
+\begin{aligned}
+a&=A-(1+t-w),& b&=B-(1+2w+e),\\
+d&=t+1\quad(t<3),&d&=3\quad(t=3),\\
+\mathcal S(a,b)&=\{j\in\mathbb N:j\le\min(a,b),\ a-j,b-j\in2\mathbb N\}.
+\end{aligned}
+\tag{SC.42}
+$$
+
+An empty feasible set contributes zero, including any negative margin. For both seeds and every admissible marker prefix,
+
+$$
+G_\kappa(A,B)=
+\sum_{j\in\mathcal S(a,b)}
+\binom{(a+b-2j)/2}{(a-j)/2}\binom{j+d-1}{d-1}.
+\tag{SC.43}
+$$
+
+In particular $G_{L_{1,100}}(A,B)=F(A,B)$ of (SC.8), without an acceptance condition. For any nonempty dictionary of acquired length $n=A+B$, $1\le G_\kappa(A,B)\le2^n$.
+
+Proof. At $s$ the word is any ordered string of rejected pairs $X,Y$. Its counts are $(2p,2q)$ and it has $\binom{p+q}{p}$ possibilities, including the empty string. At either pending seed state append its single pending letter. These descriptions include arbitrarily many rejected pairs and all subsequent returns to $s$.
+
+After seed acceptance the unique partial normal form is
+
+$$
+u\,s_\rho\mid
+\left(\prod_{i=1}^{t}(\beta\alpha)^{j_i}c_{v_i}\right)
+(\beta\alpha)^{j_{t+1}}\beta^e\qquad(t<3),
+\tag{SC.44}
+$$
+
+with $u\in\{X,Y\}^{*}$ and nonnegative return counts. At $L$ use the complete form (SC.1), with three return slots and no fourth-segment factor. The original seed/parser table uniquely parses both forms and their pending letters. Conversely each displayed tuple reaches that tag and never previously crosses the latch. Returns in the current segment are included even when the tag was already visited. The accepted pair contributes $(1,1)$, completed markers contribute $(t-w,2w)$, the pending letter contributes $(0,e)$, and $j$ total returns contribute $(j,j)$. Thus the retry counts are $(a-j)/2,(b-j)/2$. Their ordering count is the first binomial in (SC.43), and distributing returns among $d$ slots gives the second. Uniqueness makes this a disjoint exhaustive count, for $j=0$, either absent retry kind and every pending phase as well. At $L_{1,100}$ the margins are $A-3,B-3$ and $d=3$, exactly (SC.6)–(SC.8). The binary length-$n$ ambient set gives $G\le2^n$. $\square$
+

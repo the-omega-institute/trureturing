@@ -1,0 +1,16 @@
+**Proposition 5.3 (why a single witness section cannot perform this task).**
+If a history fiber at one epoch tuple contains two different sources,
+retaining only one source witness at that tuple cannot preserve every
+later complete-row refinement of that fiber.
+
+Proof. Let the retained witness be $t_*$ and choose another actual
+source $t\ne t_*$. Append an empty-cut row with literal exterior
+$\rho^{n_{m-1}}t$, at a new last epoch tied to $n_{m-1}$. This is a
+finite permitted row. The same $(t,\mathbf n)$, with its repeated final
+epoch, realizes the refinement. The witness $t_*$ does not, because
+$\rho^{n_{m-1}}$ is injective by ABC. Thus the refinement is nonempty
+and discards the retained witness. Corollary 4.2 recompiles the extended
+finite record while retaining this original $t$. This is a failure of
+witness replacement as a memory representation, not a new existential
+undecidability result or a new decision procedure. $\square$
+

@@ -1,0 +1,55 @@
+**命题 2.2（全变量实际响应的仿射形式）。** 定义只依赖 $t$ 的系数
+
+$$
+\begin{aligned}
+A&=\frac{t-18+5/t}{2},&B&=2t-28+\frac9t,\\
+K&=240-\frac{120}{t}+\frac{15Y}{4},&
+N&=864-\frac{432}{t}+9Y,
+\end{aligned}
+\tag{2.7}
+$$
+
+以及依赖 $(t,x)$ 的四个函数
+
+$$
+\begin{aligned}
+p_0&=(x+1)\left(K-\frac{5z}{x}\right),&
+v_0&=(x+2)\left(N-\frac{16z}{x}\right),\\
+p_1&=A(x+1)+6+\frac5x,&
+v_1&=B(x+2)+17+\frac{32}{x}.
+\end{aligned}
+\tag{2.8}
+$$
+
+则实际第五、第六响应恰是
+
+$$
+p=p_0+dp_1,\qquad v=v_0+dv_1.
+\tag{2.9}
+$$
+
+这些函数是隐藏源坐标的系数，不是额外读数。
+
+证明。由 $u=2t-1$ 和式 (2.1)–(2.3)，
+
+$$
+\begin{aligned}
+uQ&=\frac{120u}{t}+\frac{15Y}{4}
++d\left(\frac u4-\frac{5u}{2t}-\frac{15}{4}\right)=K+Ad,\\
+uR&=\frac{432u}{t}+9Y+d\left(u-\frac{9u}{t}-9\right)=N+Bd.
+\end{aligned}
+\tag{2.10}
+$$
+
+使用 $n=ux$、$e=(z-d)/(ux)$，式 (2.5) 的中间两式分别成为
+
+$$
+\begin{aligned}
+p&=d+(x+1)\left(K+Ad-\frac{5(z-d)}x\right),\\
+v&=d+(x+2)\left(N+Bd-\frac{16(z-d)}x\right).
+\end{aligned}
+\tag{2.11}
+$$
+
+收集 $d$，系数分别为 $A(x+1)+1+5(x+1)/x$ 和 $B(x+2)+1+16(x+2)/x$，即式 (2.8)。每个端点都使用自己的 $t,x,d$。∎
+

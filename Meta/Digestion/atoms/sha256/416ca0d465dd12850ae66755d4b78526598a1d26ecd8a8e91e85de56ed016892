@@ -1,0 +1,24 @@
+### 34.5. 全部分支和局部失败的精确范围
+
+**entire class coverage.**
+
+The degree-at-most-two domain initially retains constants, affine gains, genuine quadratics, all signs, repeated roots, arbitrary sampled zeros, zero gain intercepts and arbitrary compatible drifts. Only e3!=0 then forces degree exactly two. Empty and incompatible records remain possible. The source chart includes q=1, r=1/2, both diagonal-side alternatives, equal or unequal off-diagonals and their original lack of upper bounds. The proof never assumes a positive gain.
+
+**permitted divisions in the proof.**
+
+The chart uses b>0. Interpolation uses fixed nonzero node differences. Nonexceptional reconstruction uses declared eta!=0, necessary Lq!=0 and accepted b>0. Exceptional drift uses 1-alpha>0; its root uses eligible zeta<-2alpha<0 and an exactly verified polynomial factor. Final exceptional rational denominators are 1+7b/2>0. The explicit B3 simplification cancels only kappa!=0 and delta=alpha-qstar!=0 and uses D>0; s+9 is positive wherever its nonzero status matters. All such facts were shown before cancellation. Polynomial cancellation of t-7 in the independence proof uses a nonzero polynomial in an integral domain, not a pointwise division at its root.
+
+**quantities never divided out.**
+
+No physical g(i), acquired response, gain intercept, a1, source determinant, source discriminant, repeated-root discriminant, drift difference, 1-q, p-23 or k1 is divided out. Leading gain coefficients are not silently assumed nonzero: a2!=0 is derived from e3!=0 and b>0. Kappa is nonzero by the explicit family quantifier. A sampled zero remains the undivided equation yi=d. Formal roots enter the world count only after the required real, distinctness, strict-source and whole-identity checks.
+
+**illegal boundaries and repeated roots.**
+
+r=0, r=1, b=0 and c=0 remain excluded by the original strict model. In the exceptional chart zeta=-2alpha gives r=1 and is correctly excluded; zeta=0 is not an eligible source factor. Repeated F and H roots are counted once, and remaining gain multiplicity is retained. No square-free assumption or diagonal-branch selection is used.
+
+**unclassified cases.**
+
+No classification or finite-fiber assertion for e3=0 is asserted here. For e3!=0 a successful last action, if any, must be checked on the ENTIRE reconstructed list, including any extra nonexceptional world. Internal M separation of the exceptional group does not by itself settle the union. The exact family proves a uniform-prefix obstruction, not an entire quadratic lower bound.
+
+定理 34.2 给的是实际时钟六的 L1：父有两个不同完整目标，每个末动作都有共同响应 d 的 L0 子片。它排除把前六动作统一固定为 JMJMJM 的八读二次解码器，包括任意提前停止或依历史选末动作。它不迫使一般策略选择这个前缀，不给原根 L7，也不证明所有二次策略失败。真实三次增益的必要性仍须尚未得到的整个二次恢复结果，不能从这个局部障碍推出。
+

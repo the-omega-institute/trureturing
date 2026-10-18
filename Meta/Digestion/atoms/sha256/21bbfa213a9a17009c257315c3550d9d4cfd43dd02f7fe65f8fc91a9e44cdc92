@@ -1,0 +1,38 @@
+### 73.1 Controlled-form hypothesis and conclusion
+
+**Theorem 73.1.** Let
+
+\[
+ R_\theta=\begin{pmatrix}\cos\theta&\sin\theta\\
+ \sin\theta&-\cos\theta\end{pmatrix},\qquad
+ H=(R_\alpha\otimes I_3)\operatorname{diag}(V,W)(R_\beta\otimes I_3),
+ \tag{73.1}
+\]
+
+where \(V,W\) are order-three unitaries,
+\(0<\alpha,\beta\le\pi/4\), and
+\((\alpha,\beta)\ne(\pi/4,\pi/4)\). Suppose \(H\) is complex Hadamard
+and the two controlled blocks have opposite dephased Fourier orientations
+in the same row and column order. Their flatness follows in the proof, so
+this last condition is well defined without a separate flatness assumption.
+
+Then \(H\) reduces to \(H_0(b)\) for some \(0<b\le1\), using unitary
+monomial factors, complex conjugation, and optionally transpose. More precisely,
+
+\[
+ \cot2\alpha\cot2\beta=\frac12,
+ \tag{73.2}
+\]
+
+both angles are strictly below \(\pi/4\), and after optional exchange of
+angles one has \(\alpha\le\beta\) and \(b=\sqrt3\cos2\beta\).
+The value \(b=1\) is an algebraic endpoint; it is retained in the theorem
+rather than silently included in the actual open branch.
+
+This is a reduction of the explicitly assumed controlled stratum.
+The source formula \(H_2(\alpha,\beta,\gamma,V,W)\) in
+[Chen--Yu, arXiv:1610.04875v3, equation (39)](https://arxiv.org/pdf/1610.04875v3)
+has an additional left factor \(\operatorname{diag}(1,e^{i\gamma})\otimes I_3\),
+which is monomial and can first be removed. No assertion that every rank-two
+Hadamard has the form (73.1), and no rank-two no-quartet theorem, is imported.
+

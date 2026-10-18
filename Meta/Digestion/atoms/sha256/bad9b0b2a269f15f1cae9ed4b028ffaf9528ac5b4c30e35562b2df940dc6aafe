@@ -1,0 +1,10 @@
+**定义 58.1（振幅及 Pauli 符号）。** 对 $A,B\in\mathbb C$，令
+
+$$
+S=|A|^2+|B|^2,\quad c=A\overline B,\quad
+X_B=2\operatorname{Re}c,\quad Y_{\mathrm{int}}=2\operatorname{Im}c,\quad
+Z=|A|^2-|B|^2.
+$$
+
+以标准 Pauli $Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix}$ 表示 $\binom AB\binom AB^\dagger$，非对角为 $c$，所以 Pauli 坐标为 $(x,y,z)=(X_B,-Y_{\mathrm{int}},Z)$；$S=1$ 时这是密度矩阵，$S>0$ 才能按总质量归一。经典表示见 [IBM Quantum Learning，Bloch sphere](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/density-matrices/bloch-sphere)。
+

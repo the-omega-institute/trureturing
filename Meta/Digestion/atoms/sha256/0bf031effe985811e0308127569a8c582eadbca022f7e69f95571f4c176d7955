@@ -1,0 +1,13 @@
+#### 局部时钟读数
+
+局部时钟核对 $\kappa$ 敏感，当且仅当：
+
+~~~math
+\boxed{
+\operatorname{Curv}_K
+=
+K_{s_0}-K_{s_1}-K_{s_3}+K_{s_{13}}
+\neq0.
+}
+~~~
+

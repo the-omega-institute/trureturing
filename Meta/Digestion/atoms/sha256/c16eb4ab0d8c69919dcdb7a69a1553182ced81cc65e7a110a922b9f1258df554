@@ -1,0 +1,25 @@
+**Definition 1.3 (finite parameters and the logical supplier).** A
+parameter tuple $\bar a$ consists of finitely many fixed elements of
+the term, shape and leafset sorts, and, if present as truth constants,
+fixed Boolean values. All its trees and leafsets are finite. Its values
+are fixed before the varying input $X$ is chosen. In particular the tuple
+cannot contain a family of shapes, a leaf-selector oracle, or parameters
+chosen as a function of $X$.
+
+The logical supplier used here is precisely [KR, Lemma 47, Proposition 55, Theorem 56(a)
+and Corollary 57][KR]. Lemma 47 replaces a well-defined Figure 9 formula
+by a well-defined simple formula: lifted relations and inner quantifiers
+occur within instances of base inner formulas. Theorem 56(a) produces
+an equivalent finite formula in selector language without the outer
+term, shape and leafset quantifiers. Its remaining inner quantifiers
+are permitted within (TPO.4); they are not discarded. KR's Proposition 55, using Corollary 51,
+gives this selector form in the simple language. Corollary 57 supplies decision of sentences when
+the base theory is decidable. No subterm quantifier, recursive predicate
+or arbitrary-element selection is added by these statements. KR §6.6
+treats element selection separately.
+
+These cited results are suppliers. The finite-expression invariance
+proved below concerns their selector output and the particular native
+domain (TPO.1). It uses no decision result about arbitrary inductively
+specified subsets of $\mathcal K$.
+

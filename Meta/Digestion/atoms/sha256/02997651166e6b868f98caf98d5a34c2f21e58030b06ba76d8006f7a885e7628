@@ -1,0 +1,32 @@
+## 204. The remaining bound is strictly greater than one
+
+For fixed m, both terms in this last expression are strictly increasing
+in z on m+2<=z<3*m+2. For the first term, the derivative of
+sqrt(z^2-1)/(z+m) is
+ (m*z+1)/[sqrt(z^2-1)*(z+m)^2]>0.
+For the second term, the derivative is
+ (2*m+2)/(3*m+2-z)^2>0.
+Our actual z is greater than m+2, and J0(m)>0 ensures it lies in this
+interval. Therefore
+
+ F(m)>sqrt((m+3)*(m-1))/(m+1)+1/m
+      =sqrt(1-4/(m+1)^2)+1/m>1.
+
+The final strict inequality follows by squaring the positive quantities
+sqrt(1-4/(m+1)^2) and 1-1/m. The difference of their squares is positive
+because
+ (2*m-1)*(m+1)^2-4*m^2
+   =2*m^3-m^2-1=(m-1)*(2*m^2+m+1)>0.
+All denominators are positive since m>3.
+
+Combining Sections 202--204 gives theta+2*gamma>pi, contradicting the forced
+third owner's complete-budget bound. Thus u>m.
+Maximality of the selected reservoir M gives p_U=0. Every flat selects
+its axes, so a U axis in a flat would be pi-selected; a U transverse slot
+would be a flat zero, which the five-witness theorem excludes for U.
+Hence every U occurrence is genuine and its original edge equation is
+its genuine 2*pi budget. In particular U cannot be an axis of the source
+flat. The proof preserves original occurrences and the whole remaining
+u>m branch is still open.
+
+

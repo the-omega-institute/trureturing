@@ -1,0 +1,32 @@
+**Proposition 11.5 (favorable representatives on the same table).**
+The table $B_M$ also admits an injective live-cell representative map
+$f_{\rm good}$ whose image consists entirely of retained original-tree
+vertices.
+
+Proof. For $(h,z)\in\mathcal D_{n,k}$ put $d=h+z\le n-1$.
+If $d\le M$, choose a prefix of the routing tree with $h$ ones and
+$z$ zeros, and take its vertex at depth $d$. Every such vertex is
+retained, since the deletions start at depths $n-j-2>M$.
+
+If $d>M$ and $h\ge2$, set exactly $a=\min(h,M)$ routing bits to
+one, taking the first $a$ for definiteness. There are enough routing
+zeros: $M-a\le z$, since either $a=M$ or $d>M$ and $a=h$.
+The routing vector has at least two ones, so its whole cylinder is
+untouched. In the next $d-M$ positions of its fixed remaining order,
+put $h-a$ ones and $z-(M-a)$ zeros. These counts are nonnegative
+and sum to $d-M$, so the complete tree contains that prefix.
+
+If $d>M$ and $h=0$ or $1$, use $R=0^M$. Here $z\ge M$.
+In its next $d-M$ positions put $h$ ones and $z-M$ zeros. There
+are enough positions and this cylinder too is untouched. In all cases
+the resulting vertex is running because $d<n$, has the required
+counts and is live. Its preceding prefixes are live as well, since
+neither count can exceed its final live value. Actual cube completions
+realize each chosen history.
+
+Different cells cannot select the same retained vertex: its unique
+inherited tree prefix has one fixed pair of exposed counts. Thus the
+map is injective. This is an existence assertion on $B_M$, distinct
+from allowing arbitrary representatives to be fixed in advance.
+$\square$
+

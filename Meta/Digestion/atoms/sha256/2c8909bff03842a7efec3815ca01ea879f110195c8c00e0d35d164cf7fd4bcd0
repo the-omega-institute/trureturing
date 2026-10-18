@@ -1,0 +1,36 @@
+**proposition 9.1 (The actual menu is not orthogonally invariant).** The
+closed actual singleton-effect set is not invariant under $O(5)$. Even
+restricted to real input states, replacing it by all orthogonal-basis reads
+changes the operational distance for some pairs.
+
+Proof. The dark vector $d=(e_2-e_5)/\sqrt2$ is fixed by every actual
+$O(t)$ and every matrix in its closure. Therefore
+
+$$
+\operatorname{tr}(R_0Q_s(t))=|d^Te_s|^2\in\{0,1/2\},
+\qquad \operatorname{tr}(R_0^2)=1.
+\tag{9.1}
+$$
+
+The same invariant holds throughout the closed orbit. An orthogonal
+transformation exchanging $e_N$ and $d$ sends the actual wait-zero effect
+$\Pi_N$ to $R_0$, which is absent from that closed singleton orbit.
+Higher-cardinality event effects have larger rank, so do not repair this
+failure of set invariance.
+
+More operationally take the frame states
+$\rho=R_0$ and $\sigma=(I-R_0)/4$. They are fixed by every wait.
+Their full mode distributions are
+
+$$
+(0,1/2,0,1/2,0),\qquad(1/4,1/8,1/4,1/8,1/4),
+\tag{9.2}
+$$
+
+with TV $3/4$ at every wait and, by the supplied first-read theorem, over
+all actual finite histories. A real orthogonal basis containing $d$ gives
+TV one. Thus the larger measurement menu really changes a performance
+comparison. This refutes the proposed menu-invariance premise, not the
+possibility that some orthogonally covariant channel happens to minimize
+the original problem. $\square$
+

@@ -1,0 +1,9 @@
+**Definition 47.2 (unchanged original full target).** For arbitrary $0<\beta\leq1/2$, $a=1-\beta$, the original problem still ranges over all actual original-real-Kraus CPTP encoders $M_3\to M_5$ of phase-difference spectrum $(a,\beta,0,-\beta,-a)$, with arbitrary actual Kraus rank, potentially requiring nine real Kraus terms as in Theorem 1.3. It asks for
+
+$$
+\delta_N\geq1-\sqrt{1-\beta}
+\tag{R.243}
+$$
+
+uniformly in that class, or an actual encoder and one complex CPTP whole-output recovery with a rigorous full-reference unhalved diamond upper bound strictly below it. This full target remains open. The two-dimensional environment and the maximally mixed complementary output on all of $\mathcal C$ in (R.222) are essential hypotheses of the present weighted argument; the general class is not assumed to satisfy them. Auxiliary success at half beta and actual rank two does not settle arbitrary beta or higher actual ranks. Failure of a sufficient input route, or of a stronger fidelity threshold outside its proved domain, does not by itself refute (R.243).
+

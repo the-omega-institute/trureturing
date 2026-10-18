@@ -1,0 +1,85 @@
+**Corollary 15.1 (all laws, all lengths and mixed whole-block weights).**
+For arbitrary nonnegative $w_1,\ldots,w_n$ on the entire $S_2$,
+
+$$
+\max_{B\subseteq S_2^n\ \mathrm{admissible}}
+\sum_{x\in B}\prod_{i=1}^nw_i(x_i)
+=\prod_{i=1}^nM(w_i)\qquad(n\ge1).
+\tag{RCE.53}
+$$
+
+The maximum over complete templates has the same value. In particular,
+
+$$
+A_n^{(2)}(w)=M(w)^n\qquad(n\ge1),\qquad
+\beta_2(w)=M(w).
+\tag{RCE.54}
+$$
+
+The homogeneous assertion is a direct application of
+[NCM, Theorem 2.2][NCM]; the mixed assertion is a direct consequence
+of Theorem 3.4 and (RCE.51).
+
+Proof. To make the NCM application explicit, first let $w>0$.
+In NCM Theorem 2.2 take $m=4$, $r=3$ and
+$C_0=c_0=M(w)>0$. The inherited maximal local sets bound every
+local projection by $M(w)$. For every nonlocal feasible $P$,
+Proposition 14.2 gives two root leaves and child projections of
+size at most two. Its root experiment has at most three replies;
+each side experiment has absent and at most two child replies;
+longer words add no replies beyond a boundary function. Some side
+varies between two children, and its target has exactly four values.
+Every cell of that target is either a singleton root leaf or a
+set of branches with one child fixed. Each such cell is local,
+so has $w$-mass at most $M(w)$. These verify every local and
+cell-mass premise of NCM Theorem 2.2. Its same-tuple section
+argument bounds every admissible mass by $M(w)^n$, and products
+of a maximizing local set attain it.
+
+For nonzero $w$ with zero entries, restrict a competitor to its
+positive-product-weight rows, retaining its equations. On the finite
+interface restricted to $\operatorname{supp}(w)$ the weights are
+positive. Its local sets and feasible sets are exactly the subsets
+with the same properties under the original experiments; all the
+just verified bounds persist. Its maximum local mass is $M(w)$:
+intersect a maximizing original local set with the positive support,
+which preserves its mass and witnesses. Thus the same NCM application
+applies to the restricted rows. An empty restriction has mass zero,
+and $w=0$ is immediate. This establishes (RCE.54) as the claimed
+direct sufficient-transport application.
+
+For the mixed statement take the product interface of Definition
+3.3 on $n$ copies of the full depth-two interface. Its targets are
+exactly $\Gamma_q(x_i)$, and an experiment returns exactly one
+$r_{x_j}(a)$ or a constant. Arbitrary finite donor words reduce
+within that same donor block by Convention 1.2. Therefore each
+admissibility equation for any $B$ is precisely a single-experiment
+determination of that target in this product interface. Every target
+is easy on $B$ and has at most four values there, so $B$ is a
+feasible support with empty hard vector. Its cell norm is exactly
+its original product-weight mass. Theorem 3.4 and Theorem 14.3 give
+
+$$
+\sum_{x\in B}\prod_iw_i(x_i)
+=\kappa_{\mathrm{prod}}(\otimes_iw_i,B)
+\le J_{\mathrm{prod}}(\otimes_iw_i)
+=\prod_iJ_2(w_i)=\prod_iM(w_i).
+\tag{RCE.55}
+$$
+
+This is an identity of the stated finite interfaces; the product
+interface is not being substituted for a different native alphabet.
+Neither $B$ nor any original whole-block weight was required to
+factor between its children. Every arbitrary donor, reused donor,
+cycle and correlation of $B$ is retained.
+
+Choose a nonempty maximizing local set for each $w_i$. Their
+Cartesian product has own-coordinate witnesses and attains the
+right side of (RCE.53), including when a weight is identically
+zero. Same-witness saturation of Definition 1.3 places each such
+admissible set in its complete simultaneous solution set. That
+solution set is itself admissible when nonempty and is bounded by
+(RCE.55); nonnegativity gives equality of the two maxima. Taking
+identical weights and all-length roots also gives (RCE.54).
+$\square$
+

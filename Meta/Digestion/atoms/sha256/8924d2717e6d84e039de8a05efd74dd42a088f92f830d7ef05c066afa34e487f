@@ -1,0 +1,32 @@
+## 417. Twelve necessary aggregate profiles
+
+The maximum genuine P-slot total for these counts is
+
+    D<=a+5*f+4*(k-f)+3*(n-k)=a+3*n+k+f.
+
+Indeed noncheap owners outside k have at most three P slots. Since
+D>=17, one more necessary integer condition is
+
+    a+3*n+k+f>=17.                                (417.1)
+
+Enumerating only the small integer ranges already proved gives exactly
+the following twelve tuples (f,k,a,n,g):
+
+    (1,1,2,5,7), (1,1,3,4,7), (1,1,3,5,8),
+    (1,1,4,4,8), (1,1,5,4,9),
+    (1,2,2,4,6), (1,2,3,4,7), (1,2,5,3,8),
+    (2,2,2,4,6), (2,2,3,4,7), (2,2,4,3,7),
+    (2,2,5,3,8).
+
+This finite list is exactly the set satisfying
+
+    f in {1,2}, f<=k<=2, 2<=a<=5,
+    k+1<=n, n+k<=6, a+n>=6,
+    3*a+4*n+4*k<=35, a+3*n+k+f>=17.
+
+For example, the only g=9 profile is f=k=1,a=5,n=4. The list is
+merely an aggregate restriction: it does not merge individual labels,
+solve the six per-label degree inequalities, assert feasibility of
+any role inventory, or produce face pairings. Repeated roles and
+self-gluings remain unrestricted by this list.
+

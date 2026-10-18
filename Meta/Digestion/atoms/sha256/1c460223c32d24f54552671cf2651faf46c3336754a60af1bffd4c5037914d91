@@ -1,0 +1,19 @@
+**引理 463.6（严格密度 Jensen）。** 若连续密度 f 在正轴处处严格正，
+f、vf、$|\log v|f$ 完整可积，r=∫f>0、m=∫vf>0，则
+
+$$
+\mathcal J(f):=-\int\log v\,f(v)\,dv>\mathcal F(r,m).
+\tag{RVF.29}
+$$
+
+**证明。** 置 μ=m/r>0。对每个 v>0，实对数切线给
+
+$$
+\log v\le\log\mu+\frac{v-\mu}{\mu},
+$$
+
+等号仅在 v=μ。切线差乘以 f 后绝对可积；在 [μ+1,μ+2] 上连续
+严格正，故完整积分严格正。于是
+$\int\log v\,f<r\log\mu+(m-\mu r)/\mu=r\log\mu$。
+取负号并用 $-\log\mu=\log(r/m)$ 得 RVF.29。证毕。
+

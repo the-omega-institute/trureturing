@@ -1,0 +1,34 @@
+**Definition 258.1 (The schedule graph and its simultaneous map).**
+Fix a normalized whole-table mixture $\pi$. Its directed support
+graph $G$ has edge $i\to j$ precisely when its schedule $(i,j)$
+has positive mass, with $i<j$. Retain also the set of positive-mass
+singleton schedules. Define a proof map $F=f_G(w)$ by
+
+$$
+F_j=w_j\vee[\exists i\to j\text{ with }w_i=0].
+\tag{258.1}
+$$
+
+All updates use the original $w$, simultaneously. The map preserves
+the first zero, fixes $w^+$ and is idempotent. It is a proof device,
+not an operational use of unqueried answers.
+
+For an event $E\subseteq J_L$, define the signed transfer
+$C_E(w)$ by summing the following terms with the weights of the
+same original tables:
+
+$$
+\begin{array}{c|c|c}
+\text{schedule}&\text{condition}&\text{term}\\\hline
+(i)&w_i=0,\ F_i=1&[\ell_1\in E]-[\ell_0\in E]\\
+(i,j)&w_i=0,\ F_i=1&[\ell_{11}\in E]-[\ell_{01}\in E]\\
+(i,j)&w_i=1,\ w_j=0,\ F_j=1&[\ell_{11}\in E]-[\ell_{10}\in E].
+\end{array}
+\tag{258.2}
+$$
+
+No other term is included. Terms are signed and aggregated before
+taking any positive part. On a row $E$ at $w$, let $d_E(w)$
+be its demand in (251.1) and put
+$s_E(F)=p_F(E)-d_E(F)$.
+

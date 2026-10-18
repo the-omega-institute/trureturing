@@ -1,0 +1,65 @@
+**Proposition 4.1 (Tail-qualified norm limit).** Fix $P=P_\theta$ and
+$L\ge1$. Suppose independently that $\tau_P(0)<\infty$ and that finite
+allowances $\tau_P(R)\le\eta_P(R)$ satisfy $\eta_P(R)\to0$. For
+$f\in\mathcal K_L(P)$, define
+$S_P(f)=\sum_{i\in\mathbb Z}\mathbb E_P[f_C\ell_i]$ and put
+
+$$
+\gamma_L(P)=\max_{f\in\mathcal K_L(P),\ \|f\|_\infty\le1}|S_P(f)|.
+$$
+
+Then this is the norm of a bounded linear functional, and
+
+$$
+|a_{L,R,r}(P)-\gamma_L(P)|
+\le\eta_P(R)+2(L+2R)\sqrt{D_r(P)-d(P)},\qquad
+\gamma_L(P)=\lim_{R\to\infty}\lim_{r\to\infty}a_{L,R,r}(P).
+\tag{4.1}
+$$
+
+Proof. [Multiword, Lemma 2.1][M] gives, for each actual-null direction,
+the exterior projection identity
+$\mathbb E_P[f_C\ell_i]=-\mathbb E_P[f_C(q_i-p_i)^2]$ outside $C$,
+where $p_i$ conditions on the exterior half-line containing $i$, except
+$i$. It bounds the absolute omitted sum outside $I_R$ by $F\tau_P(R)$.
+Thus $S_P$ converges absolutely on this kernel, with total absolute sum
+at most $F(L+\tau_P(0))$, and is bounded and linear there.
+
+For each retained site, actual projection gives
+$\mathbb E_P(q_i-q_{r,i})^2=D_r(P)-d(P)$. Since
+$|(x-a)^2-(x-b)^2|\le2|a-b|$ for $x,a,b\in[0,1]$,
+
+$$
+|U_{R,r}(P,f)-S_P(f)|
+\le F\eta_P(R)+2(L+2R)F\sqrt{D_r(P)-d(P)}.
+$$
+
+This holds uniformly on the kernel unit ball. Taking norms proves the
+inequality in (4.1). For fixed $R$, the finite sums with $q_{r,i}$ converge
+to those with $q_i$, uniformly on that ball by the same estimate. Their
+norm limit differs from $\gamma_L$ by at most $\eta_P(R)$. Then let
+$R\to\infty$. Compactness of the unit ball gives the stated maximum.
+$\square$
+
+Consequently $\gamma_L(P)>0$ is exactly existence of a nonzero full
+response at this length. Under these tail hypotheses, [Multiword,
+Theorem 3.1][M]'s detectability result supplies some finite strict
+certificate. Its converse is not established here: a strict finite
+certificate contradicts a hypothetical attainer's projection budget as
+well as its zero response. It cannot be identified with $S_P(f)\ne0$.
+The full responses of nonnull word indicators are never defined or summed;
+only finite vectors and their restrictions to $\mathcal K_L(P)$ are used.
+
+[Predictive Quotient, Theorem 2.3, Proposition 3.2 and Theorem 3.3][QT]
+supplies one existing allowance:
+for each fixed finite row-unifilar law it bounds both actual
+defects by $D\rho^{\lfloor j/\ell\rfloor}$ and supplies
+$\eta_P(R)=2D\ell\rho^{\lfloor R/\ell\rfloor}/(1-\rho)$, with law-dependent
+$D\ge0$, $\ell\ge1$ and $0\le\rho<1$; the single-class case has zero
+defects. When $\rho=0$, use $0^0=1$. Its direct finite-pair proof includes
+reducible and periodic presentations. This is a reused allowance, without
+a productive sign.
+Another independently proved summable actual tail is equally admissible.
+General nonunifilar summability, a fixed-$N$ uniform allowance, and an
+uncontrolled simultaneous $R,r$ limit are not consequences of (3.1).
+

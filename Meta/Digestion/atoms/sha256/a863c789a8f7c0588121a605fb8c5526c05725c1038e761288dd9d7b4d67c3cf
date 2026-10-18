@@ -1,0 +1,203 @@
+**Theorem 9.1 (arbitrary fourth endpoint after $I,J,L$).** Consider any legal prefix
+$$
+A_0=I,\qquad A_1=J,\qquad A_2=L,\qquad
+A_3=\begin{pmatrix}a&b\\x&e\end{pmatrix}.
+$$
+Define
+$$
+E=b+e-1,\qquad F=a+b-1,\qquad
+\lambda=F/E,\qquad c_*=\lambda-1,
+$$
+and assume
+$$
+E>0,\qquad\lambda>1,\qquad
+\Delta=F(x-3)+E(a-2x+2)>0.
+\tag{9.1}
+$$
+Then every legal final endpoint $A_4=WA_3$, where $W$ is any predetermined finite $M/J$ word including the empty word, has a finite collision of distinct effective sources on all five original readings. If $\mathsf B$ is invertible, the slopes can be $0,\epsilon$ for every sufficiently small $\epsilon>0$, and both sources and slopes differ. If $\mathsf B$ is singular, both slopes can be zero and the sources differ. Every sampled gain is positive in both branches. Each run has one entire constant drift.
+
+The first two transitions can be $J$ and $M$, since $MJ=L$. The endpoint $A_3$ must be a legal left continuation of $L$; no additional factorization, diagonal pattern, word-length bound, or survivor-span hypothesis is imposed. All legal implementations of these recorded endpoints are covered.
+
+**Proof.** Use Section 2's quotient operators at the actual indices $0,1,2,3,4$. In entry order $(p,q,r,s)$, the first three rows of $\mathsf B$ are
+$$
+(-1,1,1,-1),\qquad(0,1,0,0),\qquad(a-1,x,b,e-1).
+\tag{9.2}
+$$
+A vector in their kernel has $q=0$ and $r=p+s$. The last equation becomes $Fp+Es=0$. Thus these three rows have rank three and their kernel is exactly $\mathbb RN$, where
+$$
+N=\begin{pmatrix}1&0\\-c_*&-\lambda\end{pmatrix},\qquad
+\det N=-\lambda<0.
+\tag{9.3}
+$$
+This line depends only on the first four recorded endpoints.
+
+For an arbitrary auxiliary full matrix $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, put
+$$
+Q=2(p+q+s),\qquad V_*=r-q-2p-2s,
+$$
+$$
+T=\frac{(3a+2b-2x)p+(x+b)q+2br+(3e+2b-2x)s}{E},
+\qquad R_*=T+V_*,
+$$
+$$
+GX=\begin{pmatrix}0&Q\\R_*&T\end{pmatrix}.
+\tag{9.4}
+$$
+The first three equations $\mathsf B(GX)=\mathsf C X$ are
+$$
+Q+R_*-T=q+r,\qquad Q=2(p+q+s),
+$$
+$$
+xQ+bR_*+(e-1)T=3(ap+xq+br+es).
+\tag{9.5}
+$$
+The first two follow by substitution. For the third, the left side is $xQ+bV_*+ET$, and expansion of
+$$
+ET=3(ap+xq+br+es)-xQ-bV_*
+$$
+is precisely (9.4). Hence all three equations hold on every full matrix. If $\mathsf B$ is invertible, $\mathsf H=\mathsf B^{-1}\mathsf C$ satisfies the same three equations, so $(\mathsf H-G)X$ is a scalar multiple of $N$ for every $X$. Only that scalar functional can depend on the final endpoint.
+
+For $u>0$ consider the positive rank-one tangent section
+$$
+Z(u)=\begin{pmatrix}u+c_*u^2&\lambda u^2\\1+c_*u&\lambda u\end{pmatrix}
+=\binom u1(1+c_*u,\lambda u).
+\tag{9.6}
+$$
+Since $c_*,\lambda>0$, every entry is strictly positive. Direct substitution gives
+$$
+\mathfrak b(Z(u),N)=\lambda u-\lambda(u+c_*u^2)+c_*\lambda u^2=0.
+$$
+Consequently, whenever $\mathsf H$ exists,
+$$
+\mathfrak b(Z(u),\mathsf HZ(u))=\mathfrak b(Z(u),GZ(u)).
+\tag{9.7}
+$$
+The final endpoint's contribution vanishes on this entire positive section, not merely at a limiting matrix.
+
+Here is the complete sign calculation. Write
+$$
+Z(u)=Z_0+uZ_1+u^2Z_2,
+$$
+$$
+Z_0=\begin{pmatrix}0&0\\1&0\end{pmatrix},\qquad
+Z_1=\begin{pmatrix}1&0\\c_*&\lambda\end{pmatrix},\qquad
+Z_2=\begin{pmatrix}c_*&\lambda\\0&0\end{pmatrix}.
+$$
+Let $J_*(u)=\mathfrak b(Z(u),GZ(u))$. This polynomial has degree at most four and zero constant term, since $Q(Z_0)=0$. Formula (9.4) gives
+$$
+GZ_0=\begin{pmatrix}0&0\\1+2b/E&2b/E\end{pmatrix}.
+$$
+Thus its linear coefficient is
+$$
+\gamma=\mathfrak b(Z_1,GZ_0)+\mathfrak b(Z_0,GZ_1)
+=\frac{2b}{E}-2(1+\lambda)
+=-\frac{2(a+b+e-2)}E<0.
+\tag{9.8}
+$$
+Indeed $E$ is a positive integer, so $b+e\ge2$; and $\lambda>1$ is equivalent to $a>e$, so $a\ge1$. Hence $a+b+e-2>0$.
+
+For the coefficient of $u^4$, put $A_*=3a+2b-2x$ and $B_*=x+b$. At $Z_2$,
+$$
+T_2=(A_*c_*+B_*\lambda)/E,\qquad R_2=T_2-\lambda-2c_*.
+$$
+Therefore
+$$
+\mathfrak b(Z_2,GZ_2)=c_*T_2-\lambda R_2
+=-T_2+\lambda^2+2\lambda c_*.
+$$
+Multiplying by $E^2$ and using $\lambda=F/E$, $c_*=(F-E)/E$, gives
+$$
+F^2+2F(F-E)-A_*(F-E)-B_*F
+=F(3F-A_*-B_*)+E(A_*-2F).
+$$
+The brackets are $x-3$ and $a-2x+2$. Thus this coefficient is
+$$
+\ell_* =\Delta/E^2>0.
+$$
+In particular the exact polynomial is
+$$
+J_*(u)=\gamma u+j_2u^2+j_3u^3+\ell_*u^4,
+\qquad\gamma<0<\ell_*.
+\tag{9.9}
+$$
+The remaining coefficients are fully specified, if desired without collecting monomials, by
+$$
+j_2=\mathfrak b(Z_0,GZ_2)+\mathfrak b(Z_1,GZ_1)+\mathfrak b(Z_2,GZ_0),
+$$
+$$
+j_3=\mathfrak b(Z_1,GZ_2)+\mathfrak b(Z_2,GZ_1).
+$$
+The matrices with zero entries in this coefficient calculation are proof devices. Every source used in the collision has $u>0$.
+
+To obtain finite strictly signed sources, set
+$$
+A_{\mathrm{bd}}=|j_2|+|j_3|+\ell_*,\qquad
+u_-=\min\{1/2,|\gamma|/[4(1+A_{\mathrm{bd}})]\},
+$$
+$$
+u_+=2+\frac{|\gamma|+|j_2|+|j_3|+1}{\ell_*}.
+\tag{9.10}
+$$
+Then $0<u_-<1<u_+$. At $u_-$ the last three terms have total magnitude at most $A_{\mathrm{bd}}u_-^2<|\gamma|u_-/4$, so $J_*(u_-)<0$. At $u_+$ the first three terms have total magnitude at most $(|\gamma|+|j_2|+|j_3|)u_+^3<\ell_*u_+^4$, so $J_*(u_+)>0$. Both are actual positive rank-one sources.
+
+If $\mathsf B$ is singular, (9.2)'s rank implies $\ker\mathsf B=\mathbb RN$. Define
+$$
+S_1=\begin{pmatrix}c_*/\lambda+1&1\\2c_*+2\lambda&2\lambda\end{pmatrix},\qquad
+S_0=\begin{pmatrix}c_*/\lambda+2&1\\c_*+2\lambda&\lambda\end{pmatrix}.
+\tag{9.11}
+$$
+All entries are positive, $S_0-S_1=N$, and
+$$
+(c_*/\lambda+1)2\lambda=2c_*+2\lambda,\qquad
+(c_*/\lambda+2)\lambda=c_*+2\lambda
+$$
+prove that both determinants vanish. They are distinct. The equation $\mathsf BN=0$ says their unweighted signal difference is the same constant $\operatorname{tr}N=1-\lambda$ at every original index, including zero. Take slopes $k_0=k_1=0$ and whole constant drifts $D_0(\tau)=0$, $D_1(\tau)=1-\lambda$. Then all five observations agree, and all gains are one. This includes every singular final endpoint, whether or not its word is empty.
+
+If $\mathsf B$ is invertible, put $\mathsf H=\mathsf B^{-1}\mathsf C$ and
+$$
+\eta=\min\{-J_*(u_-),J_*(u_+)\}>0,\qquad
+m=\min_{a,b}Z(u_-)_{ab}>0.
+$$
+All entries of $Z(u)$ are nondecreasing for $u>0$, so $m$ bounds them below on $[u_-,u_+]$. Set $Y_j=\mathsf HZ_j$ and
+$$
+K=1+\max_{a,b}\bigl(|(Y_0)_{ab}|+u_+|(Y_1)_{ab}|+u_+^2|(Y_2)_{ab}|\bigr).
+$$
+Every entry of $\mathsf HZ(u)$ has magnitude less than $K$, and $|\det(\mathsf HZ(u))|\le2K^2$ throughout the interval. For any
+$$
+0<\epsilon<\min\{m/(2K),\eta/(4K^2),1/8\},
+\tag{9.12}
+$$
+the polynomial
+$$
+f_\epsilon(u)=J_*(u)+\epsilon\det(\mathsf HZ(u))
+$$
+has degree at most four and opposite strict endpoint signs. The correction at each endpoint has magnitude less than $\eta/2$. The intermediate value theorem gives a root in $(u_-,u_+)$. Opposite signs make the polynomial nonzero, and successive division by root factors makes its distinct-root set finite. Its smallest root in that interval, denoted $u_\epsilon$, is an exact finite algebraic choice.
+
+Set
+$$
+S_1=Z(u_\epsilon),\qquad S_0=S_1+\epsilon\mathsf H S_1.
+\tag{9.13}
+$$
+Every entry of $S_0$ exceeds $m/2$. Equations (2.4), (9.7), and the root identity give
+$$
+\det S_0=\epsilon\bigl[J_*(u_\epsilon)+\epsilon\det(\mathsf HZ(u_\epsilon))\bigr]=0.
+$$
+Thus both sources are positive rank one. They are distinct because every coordinate $i\operatorname{tr}(A_iS_1)$ of $\mathsf C S_1$ is positive; $\mathsf B\mathsf H S_1=\mathsf C S_1$ therefore forbids $\mathsf H S_1=0$.
+
+Choose $k_0=0$, $k_1=\epsilon$ and the entire constant polynomials
+$$
+D_0(\tau)=0,\qquad D_1(\tau)=\operatorname{tr}(S_0-S_1).
+$$
+The exact identity
+$$
+\mathsf T_0S_0=\mathsf B S_1+\epsilon\mathsf C S_1=\mathsf T_\epsilon S_1
+$$
+means, at each original $i=1,2,3,4$,
+$$
+\operatorname{tr}(A_iS_0)-(1+\epsilon i)\operatorname{tr}(A_iS_1)
+=\operatorname{tr}(S_0-S_1).
+$$
+At $i=0$ this is the definition of the right side. Adding $D_1$ to the second run proves equality of all five readings. Both sources and slopes differ; all gains are strictly positive. An arbitrary further positive upper bound can be imposed on $\epsilon$. No gain is divided out.
+
+Finally Proposition 1.2 realizes every source in (9.11) or (9.13) as $\alpha_j=1$, $\beta_j=k_j$, $R_j=S_j$, with a positive column $(p_j,r_j)^{\mathsf T}$ and a single unchanged row $(1,q_j/p_j)$. All unread columns on the originally prescribed words are positive. The singular and nonsingular branches exhaust every final endpoint. A collision in this positive-gain subdomain obstructs uniform recovery on the full arbitrary-real-slope domain. ∎
+

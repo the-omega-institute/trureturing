@@ -1,0 +1,52 @@
+**Theorem 4.2 (simultaneous common-extension consumer).** Fix any one
+finite labelled Full tree $T$ whose leaves are exactly $I$, with the
+disjoint sibling coordinate sets required by
+`FixedTreeCommonExtension.Full`. On the same promise $\mathcal D$,
+the full and reduced tasks have equal upward closures of their
+common-total-extension capacity vectors at every original node of $T$.
+For every coordinatewise monotone cost into a linearly ordered set,
+their attained capacity minima and their attained fixed-tree protocol
+minima are equal. The protocol reachable-vector families themselves
+are equal. These assertions hold for arbitrary correlated $B$.
+
+Proof. Given any total extension $H_J:X\to Y_J$ of $f_J$, use the
+single extension $LH_J$ of $f_{\rm full}$. At every cut, two response
+functions of $LH_J$ agree if and only if those of $H_J$ agree:
+one direction is postcomposition, and the other applies injectivity
+of $L$ pointwise. Hence
+
+$$
+\kappa_A(LH_J)=\kappa_A(H_J)\qquad\text{for every }A\subseteq I.
+                                                               \tag{SCE.14}
+$$
+
+Conversely any total extension $H:X\to Y$ gives $\pi H$, extending
+$f_J$, and postprocessing gives
+
+$$
+\kappa_A(\pi H)\le\kappa_A(H)\qquad\text{for every }A\subseteq I.
+                                                               \tag{SCE.15}
+$$
+
+Equations (SCE.14) and (SCE.15) give the two upward-closure
+inclusions, using one common extension simultaneously at every node.
+No extensions are chosen independently at different cuts.
+
+Now apply the credited exact
+[`FixedTreeCommonExtension.result`][FTE]. Its coordinate index $I$
+is finite, every coordinate alphabet is the finite nonempty
+$\mathcal A$, $T$ is Full and has all coordinates as leaves, and
+$\mathcal D$ is nonempty because $B$ is. Its task is $f_J$ or
+$f_{\rm full}$ on that same promise. The supplier identifies each
+task's protocol and extension upward closures and gives attained
+monotone-cost minima. Combining it with (SCE.14)–(SCE.15) proves
+the asserted equal minima.
+
+There is also a direct equality of protocol vector families: keep all
+leaf encoders, messages and internal mergers of any correct reduced
+protocol and compose its final read map with $L$. Conversely compose
+the full protocol's final read map with $\pi$. Equation (SCE.13)
+proves correctness; every actual promised message remains identical
+at every node. This proves both inclusions of those vector families.
+$\square$
+

@@ -1,0 +1,134 @@
+**Theorem 210.6 (Five- and seven-slot minima with three peaks).**
+Let $E=0$ and let exactly five, or exactly seven, designated late
+slots contain all positive late totals. Suppose at least three totals
+equal $\mu=\max\gamma_j$, and let $d>0$. In the respective ranges
+
+$$
+2d\le\mu\le5d\quad\text{(five slots)},\qquad
+2d\le\mu\le11d/3\quad\text{(seven slots)},
+\tag{210.19}
+$$
+
+the least $B=S+T$ permitting $\Delta_O\le d$, or permitting
+$\Delta_N\le d$, is exactly $4\mu-3d$.
+Competitors are the entire input family with those totals and $E=0$,
+allowing arbitrary early $00$, correct suffixes, joint projections and
+$S/T$ splits. An attainer has $T=\mu-d$ and $S=3\mu-2d$.
+Consequently an actual input in this profile with
+$\delta=\Delta_O(y)>0$ satisfying the corresponding (210.19) with
+$d=\delta$ has a same-$Q$, same-$W$ representative of $N$ cost at
+most $\delta$. If $\delta\le1$, its certificate has $\theta=0$.
+
+**Proof.** Apply the actual-input inequalities of 208.2 at three
+ordered peak addresses $i<j<k$. They give
+$m_i\ge2(\mu-d)$ and $m_i+2\mu\le B+d$, hence
+$B\ge4\mu-3d$. Early $00$ is included in that owner's disjoint-loss
+proof, and no suffix condition is imposed on a competitor.
+
+For the upper witness first construct equal totals at two endpoints
+with $d=1$. At $s=1$, give the fair product measure on all nonterminal
+selected bits total mass four, force the terminal bit zero, and use
+the threshold placement with totals two and $T=1$.
+This is 210.5 with $r=1,u=2,a=2$; a conditional binomial law realizes
+the required moments. Its costs are one.
+
+For five slots take $h=3,s=4,u=9/4,r=1/4,a=1$. In the slot order
+$(j_1,j_2,j_3,p,z)$ one realizing measure is
+
+| Answer words | Mass of each word |
+| --- | --- |
+| $00010$ | $1$ |
+| $00100,01000,10000$ | $2$ |
+| $00110,01010,10010$ | $1$ |
+| $01100,10100,11000$ | $1$ |
+
+It has $S=13$, marginals $(8,8,8,9,13)$, and $T=4$.
+Here $x_+=9/4$, $x_-=5/3$, and
+$\phi(9/4)+(9/4)\phi(5/3)=6$, so (210.17) is equality.
+With all five totals five, $B=W=17$ and the full support is 18.
+For example the complete $N$ cell maxima are
+
+$$
+\begin{array}{c|c}
+\text{head}&(0,13/2,13/2,5)\\
+\text{early}/j_i&(4,5/2,5,13/2)\\
+\text{early}/p&(9/2,2,5,6)\\
+\text{early}/z&(13/2,0,13/2,4)\\
+j_i/j_l&(4,4,5,5)\\
+j_i/p&(5,3,5,5)\\
+j_i/z&(8,0,5,4)\\
+p/z&(9,0,5,4).
+\end{array}
+\tag{210.20}
+$$
+
+The head is a stopped attainer. These arrays are also direct readings
+of the general complete bound in 210.5.
+
+For seven slots use $h=5,s=8/3,u=19/8,r=3/8,a=1$.
+Force $z=0$. On $x_p=1$, give total masses $7s/8,s/8$ to uniform
+zero subsets of sizes $3,4$ among the first five slots. On $x_p=0$,
+give total masses $s/4,17s/8$ to uniform zero subsets of sizes $2,3$.
+These four conditional layers give $S=9$, first-five marginals $16/3$,
+$m_p=19/3$, $T=8/3$, and all totals $11/3$.
+The two conditional factorial lower contributions, divided by $s$,
+are $27/4$ and $53/4$, summing to $20=h(h-1)$.
+Thus $B=W=35/3$ and both supports are $38/3$ by 210.5.
+
+Interpolate entire endpoint scores with one convex parameter, then
+scale by $d$. For five slots this gives every $s\in[d,4d]$;
+for seven it gives every $s\in[d,8d/3]$. The resulting totals are
+$s+d$, $S=3s+d$, $T=s$, and $B=4s+d$.
+Convexity bounds the single complete excess by $d$.
+Reduce each late correct measure proportionally to the prescribed
+$\gamma_j\le\mu=s+d$, leaving the pair rows and terminal unchanged.
+A peak remains, so the head attains $\mu-T=d$.
+This proves the minimum and its attainment. For an actual input the
+lower bound makes this construction affordable at $d=\delta$;
+add the surplus $B-(4\mu-3\delta)$ to $T$ to preserve its quotient.
+This yields an upper bound $\delta$, without claiming the same cost
+is the minimum at surplus stock.
+
+The five-slot endpoint $\mu=5d,B=17d$ is also the equal-profile
+endpoint of 210.8 below. It is one attained stock value with two
+possible carriers, not two separate increments. Relative to the
+displayed aggregate test 205.10, the stricter thresholds supplied here
+begin at $4d<\mu\le5d$ for five slots and
+$3d<\mu\le11d/3$ for seven: its respective competing branches are
+$(13/3)(\mu-d)$ and $(9/2)(\mu-d)$.
+The endpoint values of those branches are $52d/3$ and $12d$.
+Earlier portions of (210.19) retain that supplier's ownership.
+
+There is also a bounded single-template comparison at the contiguous
+five-slot endpoint. For the named template 202.11, let
+$u_0=\max_j\eta_j$ be its retained late maximum, $D\in[0,1]$ its
+cost and $\theta$ its sole residual charge; normalize $d=1$.
+Its pair stock is at least $13u_0/4$, and its head forces
+$T'\ge u_0-D$, hence $W'\ge17u_0/4-D$.
+Overscaling that template only increases this reserve.
+Since $\sum\eta_j\le5u_0$, the $u_7,v_7$ residual readings in
+207.8 are at least
+
+$$
+\frac{25-5u_0}{6},\qquad
+\frac{25u_0/4-10-5D}{8}.
+$$
+
+The one budget $D+\theta\le1$ would require both
+$u_0\ge19/5+6D/5$ and $u_0\le72/25-12D/25$, which are incompatible.
+This excludes only that entire specified single-template family,
+including its $D=0,\theta=1$ case; mixtures with other suppliers
+are not excluded. The use of $u_0=\max\eta$ is essential.
+
+Finally $E=0$ is essential for the necessity above. At $L=7$ put
+correct mass $\mu$ at each absorbing-chain word
+$1^{j-1}0^{8-j}$ for $1\le j\le7$, take $A=P=0$ and
+$T=\mu-d$, where $\mu\ge2d>0$.
+Each pair has at most three nonempty chain cells, each label earns
+at most $\mu$, and a stopped table collecting three classes attains
+$3\mu$. Thus $E=2\mu$, $B=\mu-d$, $W=3\mu-d$, and both costs
+are $d$, although $B<4\mu-3d$. This is the absorbing-chain
+supplier 206.7 applied inside the boundary argument. It is already
+an affordable score, not a separator. The ratios in (210.15)–(210.19)
+require $d,s>0$; no division at $d=0$ is intended. $\square$
+

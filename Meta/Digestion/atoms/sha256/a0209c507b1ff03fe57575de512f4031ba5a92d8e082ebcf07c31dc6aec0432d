@@ -1,0 +1,23 @@
+**Definition 11.3 (oriented certificates and public pruning).** On a
+right-visible entry set $(h,u,v)=(z,a-b,b)$; on a left-visible entry
+set $(h,u,v)=(q+z,b-a,a)$. Symmetry of $e_q$ makes the same class
+tables apply in both orientations. The exact candidate set is its
+class restricted by $v\le z-\lambda$, and the hidden age and lag
+are $h+u$ and $z-v$, by Theorem 5.2.
+
+Write $Q(s)$ for the four-cell partition
+
+$$
+u<s,\qquad u=s,\qquad u=s+1,\qquad u\ge s+2,
+\tag{NARC.11.4}
+$$
+
+in reply order $(\bot,\alpha,\beta,\mathsf b)$. When $h+s\ge2$
+it is the actual hidden-slot-prefixed $P_{h+s}$ request. At other
+thresholds this is partition notation only; the actual replacements
+are specified below. Initially and after each reply, halt whenever
+the surviving public candidates have constant $v$. A partition
+constant on all remaining candidates can be followed locally without
+a request. Both decisions use the finite candidate table and the
+acquired entry, not a hidden tree or origin oracle.
+

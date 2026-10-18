@@ -1,0 +1,57 @@
+**Theorem 8.1 (sweep recollection frontier).** For every public
+$D\ge1$, attained acquired $c\in S_D$, nonempty public
+$\Sigma\subseteq\operatorname{Sym}(U_c)$, and integer $q\ge0$, under
+Definitions 7.1–7.3 the least complete attained export alphabet conditional
+on $c,\Sigma$ is
+
+$$
+M_{c,\Sigma}^{\rm recall}(q)
+=R\,2^{\max\{r-q,0\}}.
+\tag{CCF.24}
+$$
+
+In particular unrestricted sweep order has $R=r!$, zero-fresh-Read
+recollection needs exactly $2^r r!$ names, and even unlimited fresh
+source Reads require at least $r!$ retained history distinctions.
+
+Proof of necessity. Fix $\theta$. Every subsequent source reply depends
+on $\theta$ only, so two different $\sigma$ values sharing an export
+would replay identically under any deterministic recollector. They have
+different ordered traces because their distinct addresses occur in
+different positions. Correctness therefore requires $R$ different names
+on this one source: $m\ge R$.
+
+For any fixed export, Theorem 6.2 gives at most two reply branches at
+each fresh query node. A depth-$q$ tree has at most $2^q$ terminal
+transcripts. A correct terminal transcript identifies at most one old
+trace. The map $(\theta,\sigma)\mapsto T_{\theta,\sigma}$ is injective:
+the trace lists every address once with its label and actual order.
+Thus all $2^rR$ distinct traces require
+
+$$
+m2^q\ge2^rR.
+\tag{CCF.25}
+$$
+
+Combining (CCF.25) with $m\ge R$ gives (CCF.24), including $q\ge r$.
+The argument restricts no correlations of the export and permits every
+arbitrary-word adaptive recollection protocol.
+
+Proof of attainment. Let $a=\max\{r-q,0\}$. During the actual sweep
+record its address order and compute its rank in a public enumeration
+of $\Sigma$. Retain this rank together with the first $a$ labels in
+the fixed order of $U_c$. Those labels were actually Read during the
+sweep. Export exactly this pair and isolate every other dependence.
+Every rank/label tuple occurs on (CCF.22), so exactly $R2^a$ names
+are attained.
+
+On recollection Read the other $r-a=\min\{r,q\}$ labels at their
+original-root addresses. Combine them with the retained labels and list
+the events in the retained permutation order. This yields exactly
+$T_{\theta,\sigma}$. The fresh charges are
+$r-a$ Reads, $(D+1)(r-a)$ letters and peak $D+1$ when nonzero.
+For $r=0$, the permutation and label vector are both empty and the
+single name needs no Reads. Ranking and decoding are effective finite
+computation from public $\Sigma$, not an optimal-strategy oracle.
+$\square$
+

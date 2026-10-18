@@ -1,0 +1,29 @@
+**Corollary 15.2 (exact threshold for the whole original grammar).**
+For every rational probability $\nu$ on $S_2$ and rational $C>0$,
+
+$$
+\exists\pi\ V_{\mathrm{rec+range}}(2,\nu,C,\pi)
+\quad\Longleftrightarrow\quad C\ge M(\nu).
+\tag{RCE.56}
+$$
+
+Proof. If $C\ge M(\nu)=J_2(\nu)$, use the exhaustive ungrouped
+old leaf of Theorem 4.4 at this exact label. More explicitly, its
+tables are the native tables of Convention 14.1, and its supports
+are every nonempty feasible subset of $\operatorname{supp}(\nu)$.
+Proposition 14.2 identifies all their hard cells: a local support
+has the one cell of mass $\nu(P)$, while a nonlocal feasible
+support has singleton cells with masses $\nu(x)$. Theorem 14.3
+proves every squared sum at most $M(\nu)^2\le C^2$. All listed
+entries and squared comparisons are rational. The classification
+also covers supports with zero-weight states, consistently with
+Lemma 2.2. Hence the specified old leaf supplies the same-cap
+attainment without an additional inference rule.
+
+Conversely Theorem 8.2 is sound for the entire grammar of
+Convention 12.1, including all $r=1,2,3,4$ leaves and arbitrary
+finite homogeneous scaffold and stability ancestry from arbitrary
+rational laws. Acceptance therefore gives
+$C\ge\beta_2(\nu)=M(\nu)$ by Corollary 15.1. This proves both
+directions for every rational input. $\square$
+

@@ -1,0 +1,23 @@
+**Definition 4.1 (constant cycle and its actual realization).** Fix
+$n\ge3$, binary variables $s_1,\ldots,s_n$ cyclically indexed, and
+one table $\Phi_i(s_i,s_{i+1})=a>0$ per edge. Thus
+$Z=(2a)^n$. For the native instance take $a=1/11$ and the strictly
+positive law $\mu=\operatorname{Unif}(S_2)$, since $|S_2|=2+3^2=11$.
+The credited [GCB, Theorem 1.2][GCB] realization has
+
+$$
+x_i=\langle\operatorname{bit}(s_i),\operatorname{bit}(s_{i+1})\rangle,
+\qquad \operatorname{bit}(0)=\alpha,\quad
+\operatorname{bit}(1)=\beta.
+\tag{INB.12}
+$$
+
+Its complete target equations are root factor $(0,0)$, $L$ factor
+decoded from own $L$, and $R$ factor decoded from block $i+1$'s $L$.
+The total terminal decoder sends alpha to $(2,1)$, beta to $(1,0)$,
+and branch or absent to $(2,1)$. The root forces a pair, the own $L$
+equation forces a labelled left leaf, and the $R$ equation makes its
+right leaf equal the next left leaf. Conversely every binary $s$
+produces exactly this actual tuple. This is the supplied embedding
+specialized to constant weights; it has $2^n$ distinct solutions.
+

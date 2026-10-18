@@ -1,0 +1,42 @@
+**Theorem 3.2 (support and host multiplicity inequalities).** If
+$\mathcal A\subseteq V$ is an antichain, its live-host sets are
+pairwise disjoint and
+
+$$
+m\ge\sum_{p\in\mathcal A}b_p
+   \ge\sum_{p\in\mathcal A}a_p.
+\tag{SI.11}
+$$
+
+Each $\mathcal A_j$ is an antichain of size $w_0$, and their union
+is $V$. In particular, for every such $j$,
+
+$$
+\begin{aligned}
+\sum_{p\in\mathcal A_j}(b_p-1)&\le m-w_0,\\
+\sum_{p\in\mathcal A_j}(a_p-1)&\le m-w_0.
+\end{aligned}
+\tag{SI.12}
+$$
+
+Proof. If $F_p$ and $F_q$ intersect for different cells, their actual
+histories satisfy (SI.7), so $p$ and $q$ are comparable. Antichain
+cells therefore have disjoint host sets. Their union lies in $Q$;
+Theorem 2.2 then proves (SI.11). This counts distinct installed states,
+including every host at each chosen cell, rather than adding costs
+or separators from incompatible source runs.
+
+For (SI.10), two middle-row cells have hit gap at most one. Two cells
+in the earlier rows have zero gap at most one, as do two cells in the
+later rows. From an earlier row to a middle row the zero decrease is
+at most one, since the earlier zero count is at most one. From a
+middle row to a later row it is at most one, since the later zero
+count is at least $L-2$. From an earlier row to a later row it is
+also at most one. None can satisfy (SI.9).
+
+The three row ranges are disjoint, giving
+$|\mathcal A_j|=2L+2(K-2)=w_0$. A cell in row $h$ belongs to the
+middle rows for some $j$: use $j=h$ if $h\le K-2$, and $j=K-2$
+for the last row. Thus these sets cover $V$. Subtracting their
+cardinality from (SI.11) gives (SI.12). $\square$
+

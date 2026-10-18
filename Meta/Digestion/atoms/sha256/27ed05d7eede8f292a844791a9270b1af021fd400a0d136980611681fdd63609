@@ -1,0 +1,4 @@
+**Corollary 47.2 (Endpoint rows).** The two formulas include all endpoints. If $h=0$, both values are zero and the zero-proposal row is attained. If $B=0$, then $b\equiv0$ and $R=h/2$. If $B=1$, the unrestricted value is zero and is attained by the same construction, whereas the finite-carrier value remains $h/2$. Strictness or a plateau does not change either unrestricted infimum. The split $d+z=1-h$ enters only the endpoint laws, not the two radii.
+
+**Proof.** These are the endpoint substitutions and the explicitly normalized seed and target laws in Theorem 47.1. $\square$
+

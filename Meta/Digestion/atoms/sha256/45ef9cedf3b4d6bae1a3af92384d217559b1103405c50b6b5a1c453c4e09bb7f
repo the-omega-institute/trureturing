@@ -1,0 +1,21 @@
+**Assumption 28.1 (complete positive-multiplier attained face).** In
+addition to Assumption 23.1, supply a finite $y\in\mathbb R^8$
+and $\lambda>0$ with
+
+$$
+d(x)=y\cdot\Gamma(x)-g_t(x)-\lambda k(x)\ge0\quad(x\in X),
+\qquad y\cdot B(t)=C_t(\lambda).
+\tag{FC.112}
+$$
+
+This is feasibility on the entire fractional cylinder, not a test on
+selected endpoints, local stationary points or a sample grid. Use the
+complete endpoint inventory $Z$, all eight full-circle signed tests,
+weak-sign compatible groups $\mathscr G$, endpoint polytope $\mathcal P$,
+and the attained interval $[r_-,r_+]$ of §§2–5. No selected contact
+or zero-weight column is removed from that inventory. Theorem 4.2
+applies to every optimum at every $r\in[r_-,r_+]$, including a
+singleton interval, and forces $K=r$ and zero integrated gap.
+At a boundary $t=t_0$ or an endpoint request these conclusions require
+the same supplied (FC.112); existence of such duals is not inferred.
+

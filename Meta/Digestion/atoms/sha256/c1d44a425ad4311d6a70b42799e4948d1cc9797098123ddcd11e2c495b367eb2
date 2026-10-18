@@ -1,0 +1,85 @@
+**Theorem 10.2 (the exact achieved error).** Put
+
+$$
+r_y=\frac12+
+\frac{\sqrt{y(y+6)}+\sqrt{(64-y)(58-y)}}{128}
+                         \quad(y\in\{5,16,27\}).
+\tag{CG.75}
+$$
+
+The error of the single processor (CG.73), over all twelve histories and
+their complete outputs, is exactly
+
+$$
+E(\Phi_0)=M=\frac1{22}\max\left\{
+2+\sqrt{144-140r_5^2},\quad
+1+\sqrt{225-224r_{16}^2},\quad
+2+\sqrt{256-252r_{27}^2}\right\}.
+\tag{CG.76}
+$$
+
+Proof. For every one of the four actual sign choices at a height $y$,
+the inner product of the input vector and its shifted target vector is
+$r_y$: the signs cancel coordinate by coordinate in (CG.7). Lemma 5.1
+therefore gives the live-block difference norm
+
+$$
+N_y=\sqrt{(7/11+s_y)^2-4(7/11)s_y r_y^2}.
+\tag{CG.77}
+$$
+
+The stopped blocks have the same nonnegative weights $(w_i)$ summing to
+one. With their original labels and exact times kept separate, their
+summed difference norm is
+
+$$
+a_y=\sum_iw_i\int_0^1|g(t)-f_y(t)|\,dt
+                    =\int_0^1|g(t)-f_y(t)|\,dt.
+\tag{CG.78}
+$$
+
+The complete error for every sign history at that height is
+$(N_y+a_y)/2$. There is no success renormalization.
+
+By (CG.32), $f_5>f_{27}$ pointwise, so
+$a_5=a_{27}=\tfrac12\int(f_5-f_{27})=2/11$.
+For the middle height, the sign of the density difference must also be
+checked. Set $w=6t$ and subtract the survival functions to obtain
+
+$$
+J_0(t)=\frac{16}{16+w}-\frac12\left(\frac5{5+w}+\frac{27}{27+w}\right)
+       =\frac{121w}{(w+5)(w+16)(w+27)}.
+\tag{CG.79}
+$$
+
+This is the specialization of [AC, (AC.21)][AC]. A direct derivative
+check is as follows. The denominator before squaring is
+$D(w)=w^3+48w^2+647w+2160$, so
+
+$$
+\begin{aligned}
+D(w)-wD'(w)&=-2w^3-48w^2+2160\\
+           &=2(6-w)(w^2+30w+180),\\
+J_0'(t)&=g(t)-f_{16}(t)
+ =6\,\frac{242(6-w)(w^2+30w+180)}
+              {(w+5)^2(w+16)^2(w+27)^2}\geq0
+                         \quad(0\leq w\leq6).
+\end{aligned}
+\tag{CG.80}
+$$
+
+The factor $6$ is the time/displacement chain factor. It follows that
+
+$$
+a_{16}=\int_0^1(g-f_{16})\,dt
+                       =\frac4{11}-\frac3{11}=\frac1{11}.
+\tag{CG.81}
+$$
+
+This evaluates the full exact-time variation, rather than inferring it
+from total survival alone. Substituting $s_5=5/11$, $s_{16}=8/11$ and
+$s_{27}=9/11$ into (CG.77)–(CG.81) gives the three expressions in
+(CG.76). Each applies to all four sign histories at that height, so
+their maximum is exactly the twelve-history error of one common map.
+No maximizing height or optimality over processors is asserted. $\square$
+

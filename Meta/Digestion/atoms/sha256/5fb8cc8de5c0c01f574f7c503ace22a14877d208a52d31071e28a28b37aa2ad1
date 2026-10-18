@@ -1,0 +1,21 @@
+**Definition 2.1 (finite native constraint language).** Fix $d\ge1$.
+Set $S=S_d$, $A=Q=W_d$, and $G_q=g_q(S)$. For every $z\in G_q$ allow
+the unary relation $U_{q,z}=\{x:g_q(x)=z\}$. For $q\in Q,a\in A$
+and every total map
+$\delta:\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}\to G_q$,
+allow the binary relation
+
+$$
+R_{q,a,\delta}=\{(x,y)\in S^2:g_q(x)=\delta(r_a(y))\}.
+\tag{NDR.10}
+$$
+
+A complete decoder template $\Theta$ on $n$ vertices chooses, for every
+$(i,q)$, either $U_{q,z}(x_i)$ or one constraint
+$R_{q,a,\delta}(x_i,x_j)$, with any $j$, including $j=i$.
+Let $C_\Theta\subseteq S^n$ be the simultaneous solution set.
+The language depends only on $d$; graph size, donors, decoders and
+topology are unrestricted. Constants are zero-Read witnesses. Self-donor
+constraints are unary restrictions on the same coordinate, even though
+written using (NDR.10).
+

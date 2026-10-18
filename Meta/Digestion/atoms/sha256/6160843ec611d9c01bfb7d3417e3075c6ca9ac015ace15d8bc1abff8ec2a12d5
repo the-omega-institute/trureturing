@@ -1,0 +1,11 @@
+**Definition 84.1 (scope reconciliation).** The sentence in Section 82 that leaves S.155 unproved is retained as the status of an unconditional, premise-free all-class proof and of any proof that does not establish the scalar premise. Sections 83.2–83.3 add a different statement: after Definition 80.1 is assumed and Theorem 80.2 supplies $g_N^2\leq T_\beta$, the already established attained minimax and fixed-input SDP yield the encoder-dependent pair $(\rho_N,Y_N)$. Thus the current boundary is
+
+$$
+\text{unconditional S.155 over the raw actual class: open},
+\qquad
+\text{S.155 under Definition 80.1 and Theorem 80.2: conditional consequence}.
+\tag{S.201}
+$$
+
+This reconciliation does not promote the conditional statement to S.154, does not remove any inherited premise, and does not turn the direction-dependent projection witness into a common input. $\square$
+

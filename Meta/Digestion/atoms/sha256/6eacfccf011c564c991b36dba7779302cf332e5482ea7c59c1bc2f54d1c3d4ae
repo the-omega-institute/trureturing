@@ -1,0 +1,41 @@
+**Proposition 10.10 (Two full-mode settings).** At the supplied reference,
+setting $A$ measures the basis $|I\rangle$. Introduce, as an additional
+global calibrated operation,
+
+$$
+\Pi_0=|\psi_0\rangle\langle\psi_0|,\qquad
+U_\star=\Pi_0+i(I-\Pi_0).
+\tag{10.34}
+$$
+
+Setting $B$ first applies $U_\star$ and then measures the same full-mode
+basis. Its availability is an extra measurement assumption. The
+one-copy information matrices, in the order $(\xi,\Phi)$, are
+
+$$
+F_A=\begin{pmatrix}G&0\\0&0\end{pmatrix},\qquad
+F_B=\begin{pmatrix}0&0\\0&4G^{-1}\end{pmatrix}.
+\tag{10.35}
+$$
+
+Proof. The orthogonal projectors $\Pi_0,I-\Pi_0$ sum to the identity,
+so $U_\star^\dagger U_\star=I$.
+It fixes $\psi_0$ and multiplies every horizontal vector by $i$.
+In setting $A$ the probabilities are $p^\xi_I$, independent of $\Phi$,
+and (10.6) gives scores $(s(I),0)$.
+For setting $B$, at the reference,
+$U_\star A=iA$ and $U_\star C=P^{-1/2}DG^{-1}$.
+The first derivative of a Born probability in a direction $x$ is
+$2\operatorname{Re}(\sqrt{p^0_I}\,x_I)$.
+Therefore its probability derivatives are zero in $\xi$ and
+$2(DG^{-1})_{I,\cdot}$ in $\Phi$.
+The resulting score is $(0,2h(I))$, with covariance
+$\operatorname{diag}(0,4G^{-1})$ by (10.15). All reference probabilities
+are $p^0_I>0$, so the two likelihoods are regular there. $\square$
+
+Both settings read all their respective target directions
+simultaneously. In particular the phase block is $4G^{-1}$, with its
+full correlations. Formula (10.34) specifies a unitary on the entire
+legal space; it is not identified with a single site operation of
+Definition 9.1 or assigned a depth in that menu.
+

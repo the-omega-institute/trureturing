@@ -1,0 +1,24 @@
+**Definition 1.3 (three different optimization objects).** Write
+
+$$
+ b(A)=\bigl(\sup_D q_A,\sup_D d_A,\sup_D\ell_A\bigr)
+ \in(\mathbb N\cup\{\infty\})^3,
+ \qquad
+ \mathcal F=\{b\in\mathbb N^3:\exists A\in\mathcal C(D,N,Q),\ b(A)\le b\}.
+\tag{JRF.1.3}
+$$
+
+Thus $\mathcal F$ consists of simultaneous upper budgets, not necessarily exactly attained cost vectors. Its Pareto basis means its coordinatewise minimal elements. Sourcewise dominance means $c_{A'}(u)\le c_A(u)$ for every same source $u$. It is stronger than $b(A')\le b(A)$, and neither inequality means equality of profiles.
+
+For a supplied rational vector $\lambda=(\lambda_q,\lambda_d,\lambda_\ell)\ge0$, the separate weighted objective is
+
+$$
+ W_\lambda(A)=\sup_{u\in D}
+       \bigl(\lambda_q q_A(u)+\lambda_d d_A(u)+\lambda_\ell\ell_A(u)\bigr),
+ \qquad
+ W_\lambda^*=\inf_{A\in\mathcal C(D,N,Q)}W_\lambda(A).
+\tag{JRF.1.4}
+$$
+
+The sum is formed on each actual finite run before taking the supremum. A zero weight ignores that coordinate's magnitude; no $0\cdot\infty$ convention is needed inside the sum. In general (JRF.1.4) is different from $\lambda\cdot b(A)$.
+

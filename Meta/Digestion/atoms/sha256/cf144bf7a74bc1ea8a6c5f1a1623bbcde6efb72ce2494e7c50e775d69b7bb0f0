@@ -1,0 +1,20 @@
+**Definition 5.1 (four observations).** Define
+$\mathcal H_C=\{(h,j):h\text{ is eligible},\ 0\le j\le24\}$.
+This is a one-fragment family over original canonical acquired entries,
+not an already composed all-row fine runtime. On its actual executions
+define the following observations independently.
+
+| View | Actual object observed |
+| --- | --- |
+| $S_C$ | Root-relative L/R child-path reachability in the whole current carrier, including the partial append. Access links are not child edges. |
+| $B_C$ | Paths ending at actual vertices with both child slots empty. This geometric terminal boundary is unrelated to the machine's halt output. |
+| $T_C$ | The chronological word of actual UAS patch occurrences through $h$, followed by the $j$ typed attachment occurrences, with actual operands, values and creation roles. This is actual process order, not a retained log. |
+| $M_C$ | UAS Definition 3.3's actual joint retained selection $M_J$, together with the actual bounded source-16 subtree reached by its original head and P,R, including its current attachment and ownership relations. |
+
+The last view selects material, not a serialized history key. It is a
+joint mathematical observation across owners, including private
+material. It does not make $M_J$ or source 16 an A-owned input.
+The source append leaves every selected family in $M_J$ unchanged:
+source 16 is outside that selection, and code, ingress, frontier
+words, native PC, latches, tokens and meter are fixed here.
+

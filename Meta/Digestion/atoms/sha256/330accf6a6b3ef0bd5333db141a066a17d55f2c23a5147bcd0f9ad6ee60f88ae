@@ -1,0 +1,100 @@
+## 5. Mathematical sources and comparison of hypotheses
+
+**Mathematical citation 5.1 (repository suppliers and exact delta).**
+[REPAIR, Theorem 3.1 and §7] supplies repair and transport for given
+analytical complete-law edges and explicitly leaves their acquisition
+and statistical error control separate. Its cancellation example and
+unchanged-kernel obstruction do not specify a stopped observation
+experiment. [PAIR, §§11, 20] and [PAID, §§9–10, 16–18] supply complete
+law spaces, common-flow regeneration, rational installation and
+certificate machinery. They are used here for those constructions;
+they are not restated as new regeneration or certificate theorems.
+
+[NATIVE-STATE, `finiteRead`, `writeMarker`, `finiteStop`],
+[NATIVE-EVENTS, `completionEvents`, `eventBlock`], and
+[NATIVE-DRIVE, `nextOperation`, `nativeDrive`] specify the native
+operations and write-before-latch/Stop semantics used in the installation
+and observation map. [NATIVE-JOINT, `ordered_history_factorization`,
+`conditional_history_product`, `sameK_private_tail`] supply the
+source/private separation at positive actual cuts. Theorem 3.2 uses
+the pathwise product of the specified kernels as well as this cut
+correspondence; a one-cut marginal identity alone would not prove it.
+
+[BLIND] omits B from a coarse event/prefix interface and proves an exact
+complete-law identification obstruction. [BRANCH] concerns branching
+necessity for common stopped-law calibration. [WHITEBOX, §§1–13] and
+[LOSS-FIBRE] distinguish observational fibres from internal mechanism
+and learning claims. The additional result here is the balanced
+four-label sign construction with both cancellations (2.10), a genuine
+zero full A defect, the exact configured consumer (4.4), and the
+same-source *whole stopped-episode* comparison (3.2). These are
+repo-derived statements, with no worldwide originality assertion.
+
+**Mathematical citation 5.2 (calibration testing and collision suppliers).**
+Donghwan Lee, Xinmeng Huang, Hamed Hassani and Edgar Dobriban,
+*T-Cal: An optimal test for the calibration of predictive models*,
+[arXiv:2203.01850v4](https://arxiv.org/abs/2203.01850v4),
+Proposition 5.1, proves impossibility of detecting a fixed positive
+$\ell_p$ expected calibration error over general continuous
+miscalibration curves from finitely many independent validation samples.
+Its Theorem 5.2 imposes a fixed $(s,L)$ Hölder condition and gives the
+$n^{-2s/(4s+K-1)}$ separation lower bound for $K$ classes. Its Theorem 3.1
+additionally uses Assumption 3.1's upper and lower bounds on marginal
+density on the prediction simplex. The present label supports are finite
+and growing, and no fixed Hölder regularity is asserted. Those testing
+results provide classical context, not a theorem transferring independent
+validation samples to this native stopped source.
+
+Jarosław Błasiok, Parikshit Gopalan, Lunjia Hu and Preetum Nakkiran,
+*A Unifying Theory of Distance from Calibration*,
+[arXiv:2211.16886v2](https://arxiv.org/abs/2211.16886v2),
+§§2.1–2.2 distinguish prediction-only access from access to the underlying
+input. Theorem 9.10 estimates the *lower* calibration distance from
+$n=\Omega(\varepsilon^{-2})$ independent prediction/label pairs with
+probability $2/3$. This is a different functional from the full
+outgoing-descriptor-conditioned TV in (1.6); the theorem does not supply
+a bound for that functional on growing finite descriptor supports.
+
+Mingda Qiao, *Computational and Statistical Hardness of Calibration
+Distance*, [arXiv:2603.18391v1](https://arxiv.org/abs/2603.18391v1),
+Theorem 5, requires sufficiently large $k$ and
+$\varepsilon,\delta\in(0,0.01)$ and gives a
+$\sqrt{k}/(25\varepsilon)$ sample lower bound for PAC estimation of
+calibration distance on a domain of size $4k+3$. It uses independent
+samples with input/prediction/label access. Theorem 3 distinguishes
+two-sided estimation from the one-sided empirical-distance bound; the
+latter needs only $O(\varepsilon^{-3})$ samples, independent of domain
+size. These results concern calibration distance to a calibrated
+predictor, not (1.6). Its Lemma 15 couples the two sample experiments
+until a repeated input appears, bounding their TV by a collision
+probability. Collision and mixture testing arguments are
+literature-attested methods. Equations (3.3)–(3.6) prove the additional
+native source embedding rather than applying an independent-sample
+lower bound to dependent stopped observations without a map.
+
+Konstantina Bairaktari, Lunjia Hu, Huy L. Nguyen and Jonathan Ullman,
+*Testable and Actionable Calibration for Full Swap Regret*,
+[arXiv:2605.17749v1](https://arxiv.org/abs/2605.17749v1),
+Theorem 1.2 bounds expected SCDL estimation error by
+$O(T^{-1/2}\log^{3/2}T)$ from $T\ge2$ independent binary
+prediction/outcome pairs. Its Theorem 7.1 gives a high-probability bound
+for $\delta\in(e^{-T/2},1/T)$. Its actionability Theorem 4.2 uses a
+specified softened response, a dyadic $m$ with
+$\mathsf{SCDL}(\mathcal D)<2/m$, and utilities in $[0,1]$.
+SCDL, its response rule and its independent-sample interface are not
+identified with the complete-law residual (1.6) or with a stopped
+episode. Theorem 3.2 therefore neither contradicts its testability nor
+claims a new generic calibration-testing lower bound.
+
+[PAIR]: RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[PAID]: RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_PAID_HISTORY_CERTIFICATES.md
+[REPAIR]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_CALIBRATION_OWN_LAW_REPAIR.md
+[BLIND]: RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md
+[BRANCH]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_WORD_BRANCHING_NECESSITY.md
+[WHITEBOX]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[LOSS-FIBRE]: WHITE_BOX_LOSS_FIBER_LAW.md
+[NATIVE-STATE]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean
+[NATIVE-EVENTS]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFullResidual.lean
+[NATIVE-DRIVE]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixCylinder.lean
+[NATIVE-JOINT]: ../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeObserverJointLaw.lean
+

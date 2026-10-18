@@ -1,0 +1,28 @@
+### 66.2 Complete positivity and branchwise pure-output records
+
+Put u=(1,...,1)/sqrt(d). The nonzero Choi block of F has diagonal blocks I_d and off-diagonal blocks uu*. It is the sum of the positive matrices
+
+    I_k⊗(I_d−uu*) + J_k⊗uu*,
+
+where J_k is the all-ones matrix. Thus F is completely positive. The matrix-unit prescription is trace preserving, including distinct labels in one fibre.
+
+For each input basis state, exactness gives
+
+    Σ_t w_t A_t(|f,i><f,i|)⊗B_t(|f,i><f,i|)=|ff><ff|.
+
+A convex combination of density matrices equals a rank-one projector only if every positive-weight term equals that projector: take expectations on its orthogonal complement, whose summands are nonnegative. Taking marginals therefore forces each local output to be |f><f|. In Stinespring dilations the corresponding vectors have the form
+
+    U_A,t|f,i>=|f> e_(t,f,i),
+    U_B,t|f,i>=|f> h_(t,f,i).
+
+For each fixed t,f the d records e_(t,f,i) form an orthonormal family, as do the h records, because the dilation is isometric. No relation between different fibres has yet been assumed.
+
+For two distinct fibres f,g define the cross-record matrices
+
+    R_(t,fg)[i,j]=<e_(t,g,j),e_(t,f,i)>,
+    T_(t,fg)[i,j]=<h_(t,g,j),h_(t,f,i)>.
+
+They are d×d contractions, being cross-Gram matrices of two orthonormal families (up to entrywise conjugation, which preserves norm). The actual branch coefficient of |ff><gg| is R_ij T_ij. The target requires
+
+    Σ_t w_t R_(t,fg)[i,j] T_(t,fg)[i,j]=1/d.             (2)
+

@@ -1,0 +1,65 @@
+**Proposition 31.4 (Sharp nilpotence and the ideal it does not identify).**
+The positive-deficit ideal satisfies
+
+$$
+J_k^{k-2}\mathcal C_k=0,\qquad
+J_k^{k-3}\mathcal C_k\ne0,
+\tag{31.17}
+$$
+
+and the full annihilator is
+
+$$
+\operatorname{Ann}_{R_k}\mathcal C_k
+=\operatorname{span}_{\mathbb C}
+ \{X^s:s\in\mathcal S_k,\ \delta(s)\ge k-2\}.
+\tag{31.18}
+$$
+
+Its radical is $J_k$. For $k=3$, (31.18) is $J_k$; for $k\ge4$
+it is strictly larger than $J_k^{k-2}$ and strictly smaller than $J_k$.
+
+Proof. Every product of $r$ positive-deficit monomials has deficit at
+least $r$. Formula (31.7) annihilates all layers at deficit at least
+$k-2$, which proves the first assertion of (31.17).
+The legal set $I=\{0,2,\ldots,2k-4\}$ has size $k-1$ and its
+mode $s_I=(1,\mathbf1_I)$ has deficit one. Consequently
+
+$$
+(X^{s_I})^{k-3}e_{k-1}
+=y^{(k-3)a(s_I)}e_2\ne0.
+\tag{31.19}
+$$
+
+For $k=3$ the exponent is zero: $J_k^0=R_k$, the monomial power is
+$1$, $N^0=\mathrm{id}$, and the right side is $e_2\ne0$.
+This proves sharpness in that endpoint case as well.
+
+All monomials on the right of (31.18) annihilate $\mathcal C_k$.
+For the converse, combine equal monomials in a nonzero polynomial
+$f=\sum_s\lambda_sX^s$ and apply it to the highest layer $e_{k-1}$.
+The surviving terms have $0\le\delta(s)\le k-3$ and are
+
+$$
+\lambda_s y^{a(s)}e_{k-1-\delta(s)}.
+\tag{31.20}
+$$
+
+Different deficits give different basis layers. At a fixed deficit,
+different semigroup exponents have different slack vectors by
+(31.4), so their face monomials are linearly independent. No
+cancellation of surviving terms is possible. Thus $f$ annihilates
+the module only if every term has deficit at least $k-2$, proving
+the entire polynomial annihilator, not just its monomial elements.
+
+The inclusions $J_k^{k-2}\subseteq\operatorname{Ann}\mathcal C_k
+\subseteq J_k$, together with $R_k/J_k=A_k$ a domain, give the
+radical assertion. For $k\ge4$, the deficit-one mode just used lies
+in $J_k$ but not in the annihilator. On the other side the empty
+mode $X^{(1,0)}$ has deficit $k$ and therefore belongs to the
+annihilator. It cannot lie in $J_k^{k-2}$: each nonzero homogeneous
+element of $J_k$ has degree at least one, and $k-2\ge2$, whereas
+this empty mode has degree one. Hence the inclusions are strict.
+The nilpotence of an ideal action consequently does not identify
+its annihilator with that ideal power. $\square$
+

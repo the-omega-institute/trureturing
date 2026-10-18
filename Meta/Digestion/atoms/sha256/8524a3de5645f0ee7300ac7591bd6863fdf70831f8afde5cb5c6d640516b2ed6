@@ -1,0 +1,30 @@
+**定义 C-94.1（任意密度算子及固定均值的闭集合）。** 在 C-84.1 的正交五模式空间
+$\mathcal H_5=\operatorname{span}\{|0\rangle,|1\rangle,|2\rangle,|3\rangle,|13\rangle\}$ 上，
+取任意 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，令 $p_s=\langle s|\rho|s\rangle$。
+不要求 $\rho$ 纯，也不要求中模式与底面之间的矩阵元为零。沿用
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad\kappa=p_{13}.
+\tag{C94.1}
+$$
+
+固定 $0<r<1$、$0<X,Y<r$。C-84.1–C-84.2 的概率反解及宽度在此仍为
+
+$$
+\begin{aligned}
+p&=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa),\\
+\kappa_-&=\max(0,X+Y-r),\qquad\kappa_+=\min(X,Y),\\
+w&=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\},\\
+x&=X/r,\qquad y=Y/r,\qquad\nu=w/r=\min\{x,1-x,y,1-y\}.
+\end{aligned}
+\tag{C94.2}
+$$
+
+这里 $\mathfrak D(r,X,Y)$ 指满足这些固定均值的所有五维密度算子，
+允许 $\kappa\in[\kappa_-,\kappa_+]$ 变化并允许合法零对角元。
+这些式子只使用对角非负及迹一，因此适用于任意秩。
+完整混态另有非对角自由度；本集合不等于以 $(\kappa,\chi)$ 为坐标的纯态相位商。
+C-84.3 的 $\mathcal A=2\pi w$ 仍只属于那里指定尺度的纯振幅辛完成，
+不是本混态集合的面积或维数公式。
+

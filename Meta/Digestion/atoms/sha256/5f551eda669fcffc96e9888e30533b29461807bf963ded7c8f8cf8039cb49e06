@@ -1,0 +1,39 @@
+### 105.1. Actual hypotheses and cut spaces
+
+Let N=3^j>=81 and let
+
+ B_N=L_N^2+3=D C^2,  D=q_1...q_h,
+
+be the complete factorization into the positive squarefree kernel D and an arbitrary positive integer C. The q_i are distinct primes. The original block supplies q_i>5, q_i=1 modulo 3, (5/q_i)=1, D=19 modulo 120, the exact original Fibonacci rank and golden-matrix order rho(q_i)=tau_(q_i)=6N, and order 3N for the squared golden unit. These are retained as actual-support hypotheses, not replaced by congruences. The full factorization must account for primes of even valuation and for primes shared by C and D; no squarefreeness of B_N or coprimality of C and D is imposed.
+
+All vector spaces and matrices below are over F_2, and 1 denotes the all-one vector. For a prime p=1 modulo 4 and a nonzero quadratic residue a modulo p, (a/p)_4 is the sign represented by a^((p-1)/4) modulo p. Put
+
+ delta_i=[-1/q_i],  t_i=[2/q_i],  [epsilon]=(1-epsilon)/2.
+
+Let A_ij=[q_j/q_i] for i!=j, with zero row sums, and let K=ker A, K'=ker A^T. Theorem 95.1 gives
+
+ A+A^T=diag(delta)+delta delta^T,
+ A1=A^T1=0,  delta^T1=t^T1=1,
+ dim K=dim K'=r+1.
+
+It also gives the full Selmer parametrization by (y0,x,y) in F_2 x K' x K, with pair coordinates
+
+ b1=(-1)^(y0+delta^T x) 3^y0 5^(y0+t^T x+delta^T y) product q_i^x_i,
+ b2=5^y0 product q_i^y_i.
+
+The two rational torsion classes have parameters (0,1,0) and (1,0,1). The pure Selmer quotient has dimension 2r+1. The actual non-torsion golden point has class S with parameters (1,0,0), and S is in the radical of the Cassels pairing. The rational Kummer image lies in the radical without a finiteness assumption on Sha. The exact rational torsion is E_D[2] for
+
+ E_D: Y^2=X(X+5D)(X-15D).
+
+For v in K let d_v=product_(v_i=1) q_i and e_v=D/d_v. Theorem 95.1's cut equivalence says
+
+ (d_v/p)=1 for p|e_v, and (e_v/p)=1 for p|d_v.       (105.1)
+
+Define
+
+ U4={v in K: v_i=0 whenever delta_i=1},
+ U0={v in U4: t^T v=0},
+ U24={v in K: v_i=0 unless q_i=1 modulo 24}.
+
+Thus U24 is a subspace of U0. No additional restriction is imposed on the other support primes or on any individual mutual Legendre symbol. The rank-one conclusions below are conditional on complete actual support and the stated quartic signs. No actual ternary block realizing the new four-prime criterion is established here; its applicability remains unresolved.
+

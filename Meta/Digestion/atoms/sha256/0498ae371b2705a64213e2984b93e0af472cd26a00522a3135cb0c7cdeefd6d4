@@ -1,0 +1,4 @@
+**Definition 14.2 (event-to-branch containment).** The two rational margins below bound the minimum remaining coordinate distance from the embedded event box to the six and seven branch tube boundaries, respectively. The seven embedding inserts angle $x_6$ after $x_5$, zero weight after $p_5$, and retains the same $Y$; the six embedding drops only the event parameter coordinate. In both cases $\lambda$ remains its full event interval.
+
+Exact JSON data (1 record): [section-14-embedding-margins.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/connected-interval/section-14-embedding-margins.json).
+

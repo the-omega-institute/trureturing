@@ -1,0 +1,18 @@
+### Q7 更正命题：取得核变化与固定五态方向之间尚缺桥梁
+
+供文第三节“这个定理直接解释了最新项目里的‘取得核盲方向’”及“在更长的回流词上，$R_wU_wd$ 第一次变成非零”，在本卷只采用为待验证的结构类比。[AK 的固定修订](https://github.com/the-omega-institute/trureturing/blob/4da8b2e9c9c6439548fbbc5bea42df65ec2ae2ba/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_KERNEL_BLIND_DIRECTIONS_AFTER_PAIRED_CALIBRATION.md)是一份 622 行理论文档，给出实际 Reads 前安装一次深度抽取、原有停机 parser／记录／Stop 合同，以及使用相同私有 acquired updates 的合成生成器；它提供数学散文，没有在该交付中新增 Lean 声明。
+
+该构造对每个 $q\ge3$ 在每个 phase 使用 $N=2q+2$ 个私有标签。固定实际来源的 $A=(I+J)/2$、发射 $u=v$ 和均匀实际行，变化的是接口省略的 $p$-beta 取得核：
+
+```math
+B_\theta=(I+J)/2+\theta zb^{\mathsf T},\qquad
+z=e_0-e_1,\qquad
+b_i=(-1)^{N-1-i}\binom{N-1}{i}.
+```
+
+这里 $z$ 是 AK 的私有标签向量，不是五态占据函数 $z$。这是固定实际来源上的核参数变化，不是沿五态 $d$ 改变同一个核的初始概率。AK 定理 5.1 给出配置索引配对数组相同、整个 $p$ transcript 前缀至 $N-1$ 次 Reads 相同、suspended 前缀至 $N$ 次 Reads 相同；首个分离的完成 $p$ 词为 $w_{q,1}=(\beta\alpha)^q\beta\beta$，长度 $N$，suspended 比较再添开头的 $\alpha$。定理 6.1 保留同一实际行边缘化之后的分离。推论 5.2 对指定有限 horizon 增大 $N$，并明确排除“某个固定状态数永远无法最终有限识别”的推论；不能把它输入为固定五态仪器的任意迟延可见性。
+
+AK 命题 6.2 在更大的共同块对角程序中嵌入了这些符号，却没有把该载体及其有符号初始差识别为这里的五态 $d$。要取得直接对应，仍须给出共同来源、初始态、核、读出与合法词之间的映射，并保留各个完整律及所选风险序。现有引述没有提供此桥梁，因此不能由类比推出一般风险差或物理后果；这也不宣称这样的桥梁不可能。
+
+[PAIR 定理 4.1 的固定修订](https://github.com/the-omega-institute/trureturing/blob/a8e0ab756490c6e7dc9822b40f4070a223d25242/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md)固定相同的随机核 $B,A$、正平稳行 $\pi,\tau$，并把发射限制在其声明的正则区间；配对数组的逆在该固定核域内恢复发射和完整律。AK 的接口明确省略 $B$。可读取已安装核表的接口属于另一信息前提；两者不能当成在同一个未知核接口上成立的矛盾结论。
+

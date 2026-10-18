@@ -1,0 +1,12 @@
+### 52.4 未位移的共轭分支
+
+若 `y=gamma conjugate(x)`，令 `z_j=(x_j,y_j)`、`r_jk=Re<z_j,z_k>`。其 Gram 矩阵是实矩阵、对角元为二，且秩至多二，因为 `<z_j,z_k>=2 Re(conjugate(x_j)x_k)`。循环正交给出 `r01+r12+r20=0`；严格换位正性给出 `p_jk=1+r_jk>0`。展开行列式得
+
+```math
+\det(\langle z_j,z_k\rangle)
+=2\bigl(p_{01}p_{12}+p_{12}p_{20}+p_{20}p_{01}
+       +p_{01}p_{12}p_{20}\bigr)>0,
+```
+
+与秩约束矛盾。
+

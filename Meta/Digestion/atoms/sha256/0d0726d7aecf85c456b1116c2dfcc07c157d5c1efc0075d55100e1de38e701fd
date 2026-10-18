@@ -1,0 +1,41 @@
+**Convention 5.1 (Suppliers and the new deduction).** The objective and
+growth identities belong to [Growth][P6], and the actual exterior-risk
+identity to [Stationary][P1]. The full producer correspondence and
+all-$N$ separation equivalence belong to [Universal][P4]. The constructor,
+four-fiber mechanism and predictor belong to [Slice][Slice]; its
+fixed-entry polynomial $z=(14/3)\rho^2-(7/5)\rho+21/100$ applies on
+$y=3/20$. The unrestricted moment inequality (2.9), consumed by
+(2.11)–(2.13), gives the `repo-derived` whole-class conclusion. The
+distinct actual-law and infinite-memory witness in Proposition 3.1
+locates additional coverage. The sufficient constant and finite length
+are not asserted optimal.
+
+[TwoStep, §§2–4][TwoStep] supplies the actual comparison law and its exact
+risk. Its common full-word ratios justify equality with the full-exterior
+value; a finite-window risk alone is an upper bound. Conditional
+expectation as an $L^2$ projection and its increasing-field convergence
+are established probability machinery, with the precise same-law proof
+given in [Universal, Lemma 1.4][P4] and the reference to Gray §5.9 there.
+The new proof uses no external scoring-rule, Gibbs or estimation theorem.
+The literature attribution is confined to those stated mechanisms and
+the supplied corpus; no claim of world priority follows.
+
+The results are ordinary mathematical derivations. They determine neither
+the exact function $K\mapsto d(P_K)$, a maximizing kernel, an exact
+$c_\star$ nor an attainer. The five states count the specified producer
+presentation, without a minimality or observer-resource assertion.
+No acquisition efficiency, universal renewal $1/7$ ceiling or empirical
+machine-learning benefit is a consequence claimed here.
+
+[P0]: FIB_LEGAL_EDGE_LOAD_ERGODIC_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[P1]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[P2]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[P3]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md
+[P4]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[P5]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[P6]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[P7]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[P8]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[TwoStep]: FIB_LEGAL_EDGE_LOAD_TWO_STEP_BULK_SEPARATION.md
+[Slice]: FIB_LEGAL_EDGE_LOAD_REVERSIBLE_FIVE_STATE_SLICE_UNIFORM_SEPARATION.md
+

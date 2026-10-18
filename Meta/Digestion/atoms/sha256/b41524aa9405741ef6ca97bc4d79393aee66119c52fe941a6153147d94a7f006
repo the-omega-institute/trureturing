@@ -1,0 +1,48 @@
+**Lemma 3.1 (Exact finite score under an arbitrary actual law).** For every $n\ge1$ and every $w\in B_n$,
+
+$$
+\sum_{i=1}^n(w_i-a_{n,i}(w_{-i}))^2=\kappa_n.
+\tag{3.1}
+$$
+
+For the fixed stationary $P$, evaluate $a_{n,i}$ at $X_{[1,n]\setminus\{i\}}$ and put
+
+$$
+v_{n,i}=a_{n,i}-q_i,\qquad \Xi_n=\sum_{i=1}^nv_{n,i}^2.
+\tag{3.2}
+$$
+
+Then, pointwise with the chosen versions,
+
+$$
+\sum_{i=1}^n\ell_i-\kappa_n
+=2\sum_{i=1}^n(X_i-q_i)v_{n,i}-\Xi_n,
+\tag{3.3}
+$$
+
+and
+
+$$
+0\le\Xi_n\le n,\qquad \mathbb E_P\Xi_n=\kappa_n-nd(P).
+\tag{3.4}
+$$
+
+In particular, actual attainment gives the uniform budget
+
+$$
+\mathbb E_P\Xi_n=\kappa_n-nc_\star\le c_\star.
+\tag{3.5}
+$$
+
+**Proof.** Apply the supplied identity (2.2) to the point mass $\delta_w$. Its edge objective is zero. On each fiber seen by this measure its posterior is $w_i$, including a forced zero singleton. Thus (2.2) becomes (3.1). This is a direct use of the original finite optimizer identity, with no new optimization assertion.
+
+For each site, write $X_i-a_{n,i}=(X_i-q_i)-v_{n,i}$. Expanding its square, subtracting from $\ell_i$, and summing (3.1) gives (3.3). Both $a_{n,i}$ and $q_i$ are $\mathcal E_i$-measurable, while
+
+$$
+\mathbb E_P[X_i-q_i\mid\mathcal E_i]=0.
+$$
+
+Consequently $\mathbb E_P[(X_i-q_i)v_{n,i}]=0$. Stationarity and (1.5) make the expectation of the loss sum $nd(P)$, proving (3.4). The pointwise bound uses $|v_{n,i}|\le1$. Under attainment, (2.3) gives (3.5). $\square$
+
+At an open endpoint a neighbor outside $[1,n]$ can force $q_i=0$ although the optimizer's fiber remains free. That discrepancy is included in $\Xi_n$. Every expectation in (3.3)–(3.5) is under $P$, not under an optimizer law or a limiting law of optimizers.
+

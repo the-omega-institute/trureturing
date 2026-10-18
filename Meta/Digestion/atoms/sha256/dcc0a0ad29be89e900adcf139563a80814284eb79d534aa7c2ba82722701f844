@@ -1,0 +1,44 @@
+**Proposition 7.1 (Mixture transport with visible labels).** Suppose
+
+$$
+P=\sum_{c=1}^J w_cP_c,\qquad
+J<\infty,\quad w_c>0,\quad\sum_cw_c=1,
+\tag{7.1}
+$$
+
+where each $P_c$ is stationary binary. Assume there is a measurable label $Z\in\{1,\ldots,J\}$ such that $P_c(Z=c)=1$, and $Z$ is measurable, modulo $P$-null sets, from each of the two complete visible half-lines $\sigma(X_j:j\le-1)$ and $\sigma(X_j:j\ge1)$. Then
+
+$$
+\begin{aligned}
+e_{L,P}(r)&=\sum_cw_ce_{L,P_c}(r),\\
+e_{R,P}(r)&=\sum_cw_ce_{R,P_c}(r),\\
+\tau_P(R)&=\sum_cw_c\tau_{P_c}(R).
+\end{aligned}
+\tag{7.2}
+$$
+
+If every positive-mass component has $T_{P_c}<\infty$, an independent vanishing allowance is
+
+$$
+\eta_P(R)=\sum_cw_c\sum_{k\ge R}(k-R+1)a_{c,k}.
+\tag{7.3}
+$$
+
+If each component instead has the constants of Corollary 6.2, one may use
+
+$$
+\eta_P(R)=\sum_cw_c\frac{C_c\alpha_c^R}{(1-\alpha_c)^2}.
+\tag{7.4}
+$$
+
+Proof. Every field $\mathcal E_0,\mathcal G_L(r),\mathcal G_R(r)$ contains a complete visible half-line, so it contains $Z$. For any one of these fields $\mathcal A$, choose the corresponding component posterior $p_c=\mathbb E_{P_c}[X_0\mid\mathcal A]$. Testing integrals on $D\in\mathcal A$ gives
+
+$$
+\int_D\sum_c\mathbf1_{\{Z=c\}}p_c\,dP
+=\sum_cw_c\int_Dp_c\,dP_c
+=\sum_cw_c\int_DX_0\,dP_c
+=\int_DX_0\,dP.
+$$
+
+Thus the mixture posterior equals the appropriate component posterior on $\{Z=c\}$. Integrating squared differences gives the first two identities in (7.2); nonnegative summation gives the third. Corollary 4.2 gives (7.3), and Corollary 4.3 gives (7.4). Finitely many components make both allowances finite and vanishing under their respective hypotheses. $\square$
+

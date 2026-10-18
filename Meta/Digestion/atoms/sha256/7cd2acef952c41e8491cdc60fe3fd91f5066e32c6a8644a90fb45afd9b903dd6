@@ -1,0 +1,59 @@
+**Proposition 12.2 (the current joint-transfer interface has a different resource).**
+[Joint Transfer Interface][JG] §§9–14 concerns a single-slot supermap
+
+$$
+\mathcal S(\Phi)=\sum_c\mathcal D_c
+ (\Phi\otimes\operatorname{id}_{m_c})\mathcal E_c,
+\quad \sum_c\mathcal E_c^*(I)=I_d,
+\quad\mathcal S(\Lambda)=\Lambda
+ \ \text{for every TP complex Schur channel }\Lambda.
+\tag{NP.69}
+$$
+
+Its decoders are TP on all of $M_d\otimes M_{m_c}$; $m_c$ is the
+JOINT quantum bypass past the separately supplied $d$-dimensional slot.
+Its distance is the UNHALVED diamond distance to the entire TP Schur
+class. Its sharp auxiliary capped-memory and high-memory-mass frontiers
+are not numerical values or lower bounds for (NP.15) or for the original
+half-cq error.
+
+Proof and scope correspondence. Identity fixing in that task forces
+$\mathcal D_c\mathcal E_c=p_c\operatorname{id}$ by rank-one Choi
+support, with $\mathcal E_c^*(I)=p_c I$ by full TP of the decoder.
+Thus its ACTUAL branch probabilities $p_c$ are input independent.
+They differ from the history-dependent acquired masses in (NP.15).
+Even when $m_c=1$, the slot still retains a $d$-dimensional system;
+its total coherent code is not an original dimension-one acquired fibre.
+Conversely the original acquisition charges its ENTIRE joint future
+quantum payload, not only a bypass around another supplied operation.
+Its every-input binary law (NP.13) does not require all-Schur fixing
+or fixing dephasing.
+
+At one original height the four pure vectors
+$(e\sqrt{y/128},n\sqrt{(64-y)/128},1/\sqrt2)$ span $\mathbb C^3$
+by their three signed sums. Their single-sign-flip overlaps are
+$1-y/64$ and $y/64$, both positive; their simultaneous-flip overlap is
+zero. If a CPTP repair fixes these four densities, a Stinespring
+isometry maps each to the same vector tensored with an environment
+state. Inner-product preservation on the connected four-cycle of
+nonzero overlaps forces all environment states identical. Spanning
+then forces identity on the embedded qutrit, including references,
+but not on $V^\perp$ or its cross-support operators. This is JG's
+source application of the known Mayer–Knill rigidity theorem.
+The original simulator instead changes its live states to successors
+and produces the failure laws (NP.5); it is not required to fix those
+four source states. That repair calibration is therefore EXTRA.
+The auxiliary sharp uniform lower bound also uses dephasing fixing,
+which source-state calibration alone does not imply.
+
+A transfer into the original problem would require a proved
+transformation of the FULL original instrument preserving all twelve
+target comparisons, contracting their full half-cq errors, and not
+increasing actual jointly counted acquisition cost. Equation (NP.69)
+and its auxiliary diamond or bypass bounds supply no such map.
+Consequently no slot cap, branch probability, high-memory allowance or
+distance is inserted into $E_s$, $E_*$, $F$ or the twelve-vector frontier.
+A specialized non-source-preserving reduction is not excluded by this
+argument. JG's distinct-slot results neither subsume nor invalidate the
+nonreal plateau proved here. $\square$
+

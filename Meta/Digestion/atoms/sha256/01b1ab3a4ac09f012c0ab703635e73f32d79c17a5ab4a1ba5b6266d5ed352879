@@ -1,0 +1,13 @@
+**Definition 2.1 (padded word tuples).** Let $\Sigma=\{L,R\}$ and let
+$\#$ be a padding symbol. A padded encoding of
+$(z_1,\ldots,z_k)\in(\Sigma^*)^k$ is a column word whose $i$th track
+is $z_i$ followed by padding. Require a final all-padding column;
+additional all-padding columns are permitted. No track resumes after
+its first padding symbol. Thus the tuple of empty words is encoded,
+and tracks of different lengths are allowed. This is a regular
+encoding domain. A relation is word-regular here when the set of all
+such encodings of its tuples is a regular finite-word language.
+
+This definition encodes only finitely many address words. It does not
+encode an unknown source as a path or truncate a tree at a marked node.
+

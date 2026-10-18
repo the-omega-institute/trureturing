@@ -1,0 +1,26 @@
+## 7. A published correlated fiber and the transformations it excludes
+
+**Source correspondence 7.1 (the attained off-target supplier).** Reuse
+LTR Theorem 7.1 with
+
+$$
+\begin{aligned}
+(x_0,x_1,x_2,x_3)&=(\alpha,\beta,
+ \langle\alpha,\alpha\rangle,\langle\beta,\alpha\rangle),\\
+(y_0,y_1,y_2,y_3)&=(\alpha,\langle\alpha,\alpha\rangle,
+ \langle\beta,\alpha\rangle,
+ \langle\langle\alpha,\alpha\rangle,\alpha\rangle),\\
+t_i&=\langle\alpha,\langle x_i,y_i\rangle\rangle\in\mathcal F_3.
+\end{aligned}
+\tag{FMR.44}
+$$
+
+That theorem supplies a paid whole-family encoder with exactly these
+four sources as one attained fiber. Their $RRL$ replies are absent,
+alpha, beta and branch, respectively, so this one query identifies
+the row and serves every permitted target and every subsequent $k$.
+At $p=RLL$ their factors are the four distinct values
+$(3,0),(2,0),(2,1),(1,0)$. Every prefix of that target merges
+two distinct factors. These facts and whole-family attainment are
+reused; they are not counted as independent new constructions.
+

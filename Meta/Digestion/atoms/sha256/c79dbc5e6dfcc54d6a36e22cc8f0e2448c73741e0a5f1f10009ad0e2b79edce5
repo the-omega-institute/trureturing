@@ -1,0 +1,51 @@
+**Definition 10.1 (eight moments and the matching hypothesis).** At
+fixed $t>t_0$ use circle coordinates
+$u=\cos\phi$, $v_{\rm circ}=\sin\phi$,
+$h(\phi)=(1,u/\sqrt\alpha,v_{\rm circ}/\sqrt\beta)^T$.
+For a sheet index $\eta\in\{0,1\}$ put
+
+$$
+\begin{gathered}
+\Gamma_\eta(\phi)=
+(1,u,v_{\rm circ},u^2,uv_{\rm circ},
+ \eta c,\eta cu^2,\eta cuv_{\rm circ}),\\
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0),\qquad
+H_\eta(\phi)=\ell(h(\phi))+\eta tc(h(\phi))f(h(\phi)).
+\end{gathered}
+\tag{AC.46}
+$$
+
+Here $c=c(h(\phi))$. The eight equations
+$\sum_i p_i\Gamma_{\eta_i}(\phi_i)=B(t)$ are exactly the full live
+Gram and physical failure covariance. The circle identity restores
+the omitted live square moment, and
+$\mu=\alpha V+\beta W$ restores the omitted failure square moment.
+
+The matching hypothesis $\mathrm M$ consists of five positive
+weights and five pairwise distinct circle points, with
+$(\eta_0,\ldots,\eta_4)=(0,0,0,1,1)$, satisfying those eight
+moments, and $d\in\mathbb R^8$ satisfying
+
+$$
+d\cdot\Gamma_\eta(\phi)\ge|H_\eta(\phi)|
+\quad\text{on the whole circle, for }\eta=0,1.
+\tag{AC.47}
+$$
+
+The entire geometric zero set consists exactly of these five contacts;
+the pure and saturated zero sets are disjoint. Require
+$H_{\eta_i}(\phi_i)\ne0$, $z_i\ne0$, and, for its maximizing
+height sign $\epsilon_i$,
+
+$$
+q_i(\phi)=d\cdot\Gamma_{\eta_i}(\phi)
+ -\epsilon_iH_{\eta_i}(\phi),\quad
+q_i(\phi_i)=q_i'(\phi_i)=0,\quad
+\gamma_i=q_i''(\phi_i)>0.
+\tag{AC.48}
+$$
+
+The functions are analytic in the angles with positive denominators.
+No Jacobian nonsingularity or contrast-response assumption is included
+in $\mathrm M$.
+

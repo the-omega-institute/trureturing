@@ -1,0 +1,22 @@
+**Corollary 11.3 (mean menu and small-menu fraction).** Give the slice
+the analytical uniform law, let $X$ be its slot vector and let
+$Y=E(t_X)$. For finite entropy with base-two logarithms,
+
+$$
+\mathbb E b_Y\ge N-\frac{H(Y)}{\log_2s}
+             \ge N-\log_s m,\qquad
+\Pr[b_Y\le b]\le\min\{1,m s^{b-N}\}.
+\tag{RRN.45}
+$$
+
+Proof. Conditional on $Y=e$, $X$ is uniform on $B_e$. The injective
+signature of Theorem 11.2 gives
+$H(X\mid Y=e)=\log_2|B_e|\le b_e\log_2s$.
+Because $Y$ is a deterministic function of $X$,
+$H(X)=N\log_2s=H(Y)+H(X\mid Y)$.
+Average the conditional bound and use $H(Y)\le\log_2m$.
+The probability estimate is (RRN.43) divided by $s^N$.
+The uniform law is a counting device; it is not a source prior,
+source-dependent request or independence assumption inside $B_e$.
+$\square$
+

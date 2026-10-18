@@ -1,0 +1,49 @@
+**Proposition 5.3 (exact finite feasibility and its scope).** Each supplied
+finite $h$ has a terminating feasibility decision in the original
+question (NIC.23). For any one piece-pair its predicate (NIC.22) also
+has a terminating finite feasibility decision. Neither statement provides
+a terminating choice in the all-depth alternative of (NIC.24).
+
+Proof. For (NIC.23) apply [NSF, Lemma 5.1 and Theorem 5.2][NSF] to two
+independent source variables, each subject to the *whole* predicate
+(NIC.17), and impose agreement at the finitely many original words
+$|p|\le h$ and inequality of their complete rows. All coordinates and
+all epochs are supplied finite values.
+
+For a fixed piece-pair, choose finite original prefix patterns for
+its residual variables strictly beyond $h$. Fixed residual decorations
+$\rho^a z_i$ are then handled by the same finite navigation cases.
+Variable-rank atoms require a further finite arithmetic split. At an
+atom $T_r$, the cases $r=0$, $r=1$ and $r\ge2$ give respectively
+$\alpha$, $\beta$ and, by (NIC.6),
+$\langle T_{r-1},T_{r-2}\rangle$. For a supplied address, recurse on its
+remaining letters, decreasing that length at each step. Each reached
+atomic remainder has a natural rank $q=n_j+c-d$ for a fixed integer
+$d\ge0$ in that case, represented by the affine equality
+$q+d=n_j+c$ with a natural auxiliary $q$. A lower bound $q\ge2$ can
+likewise be represented by $q=t+2$ with natural $t$. A path extending a
+terminal leaf has the absent reply; at a reached remainder its root
+label is decided by the same three rank cases. Thus finitely many
+Presburger cases evaluate every literal in the supplied inclusive
+prefix, including absence, without bounding the unknown ranks. On each
+case the remaining whole-tree conditions are native mixed expressions
+with natural atomic rank parameters, together with affine scalar
+conditions. Apply the scalar-preserving extension of NSF described in
+[URR, Corollary 3.2, proof][URR]: a primitive definition $Z=[n_j+c]$ has primitive shape
+$c$, and its scalar offsets enter the same finite arithmetic systems.
+The actual designated scalars are retained in NSF's completeness proof
+when it replaces residual blocks. Conjoin both $P$ predicates to those
+systems and existentially quantify their scalar auxiliaries and designated
+scalars. Presburger feasibility terminates; NSF's soundness expands a
+finite native witness, and its completeness keeps every designated
+scalar and all signed constraints. Thus the decision applies to the
+fixed piece-pair, without using a rank-dependent cutoff. All recovered
+parameter values are finite.
+
+These procedures take $h$ as input. Repeating NO answers for increasing
+$h$ cannot by itself certify that no determining depth exists; nor does
+repeating YES answers for one pair certify its all-depth persistence.
+The finite monotonicity proof in Theorem 5.2 supplies an equivalence,
+not a bound for the first failed depth or a complete finite persistence
+certificate. $\square$
+

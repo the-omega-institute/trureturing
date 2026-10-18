@@ -1,0 +1,45 @@
+**Theorem 5.1 (Two orientations and their full remainder).** For every fixed $m\ge2$ and $i\in\{0,1\}$,
+
+$$
+d_{i,m}(n)=\frac{a^2v_m}{2n^2}+O_{H,m}(n^{-3})
+=\frac{a^2m(m-1)(10m-1)}{648n^2}+O_{H,m}(n^{-3}).
+$$
+
+The remainder has a bound on all integers $n\ge m$ after enlarging its constant. Both divergences are finite and nonnegative at every legal total. They vanish at $n=m$ and $n=m+1$, and are strictly positive for every sufficiently large $n$.
+
+Proof. All expectations in this calculation are under $G_{0,m,n}$. Put $U=w_n-1\ge0$ and $\eta=\mathbb EU=c_n-1$. The exact identities from Theorem 2.2 are
+
+$$
+\begin{aligned}
+d_{0,m}(n)&=\log(1+\eta)-\mathbb E\log(1+U),\\
+d_{1,m}(n)&=\frac{\mathbb E[(1+U)\log(1+U)]
+-(1+\eta)\log(1+\eta)}{1+\eta}.
+\end{aligned}
+$$
+
+The variable $U$ lies in $[0,\mathcal R_m-1]$. On this entire interval Taylor's theorem gives
+
+$$
+\begin{aligned}
+\log(1+u)&=u-\frac{u^2}{2}+r_0(u),
+&|r_0(u)|&\le\frac{u^3}{3},\\
+(1+u)\log(1+u)&=u+\frac{u^2}{2}+r_1(u),
+&|r_1(u)|&\le\frac{u^3}{6}.
+\end{aligned}
+$$
+
+The third derivatives are respectively $2/(1+u)^3$ and $-1/(1+u)^2$, which prove those bounds for every $u\ge0$. Linear terms cancel after expectation. Thus
+
+$$
+\begin{aligned}
+d_{0,m}(n)&=\tfrac12\operatorname{Var}(U)
++O(\mathbb EU^3+\eta^3),\\
+d_{1,m}(n)&=\frac{\operatorname{Var}(U)}{2(1+\eta)}
++O(\mathbb EU^3+\eta^3).
+\end{aligned}
+$$
+
+Lemma 4.2 gives $\eta=O_{H,m}(n^{-1})$, $\mathbb EU^3=O_{H,m}(n^{-3})$ and $\operatorname{Var}(U)=a^2v_mn^{-2}+O_{H,m}(n^{-3})$; Jensen also bounds $\eta^3$ by $\mathbb EU^3$. The divisor $1+\eta$ in the second direction changes the quadratic term by only $O_{H,m}(n^{-3})$. This proves both expansions under one reference measure, with no assumption of a uniformly small endpoint tilt.
+
+Finiteness follows from the finite positive supports and $\mathcal R_m^{-1}\le G_1/G_0\le\mathcal R_m$. Nonnegativity follows from Jensen applied to $-\log$ and $x\log x$ in the exact formulas. At $n=m$ the sole composition is all ones. At $n=m+1$ exactly one coordinate is two and the rest are one; all $m$ permutations have equal mass under either label, so both conditional laws are uniform and equal. Their divergences therefore vanish. Since $a>0$ and $v_m>0$, the proved asymptotic makes each divergence positive at every sufficiently large total. Any finite initial range has finite divergences and can be absorbed in the remainder constant. $\square$
+

@@ -1,0 +1,35 @@
+**Proposition 7.6 (source projection and ordinal correspondence).** Suppose
+a certified boot-installed extension runs any sequence of the original
+source frames with arbitrary admitted service frames between them. Erasing
+the service frames preserves the actual source request/response sequence,
+whole guarded acceptance/rejection and source tree evolution from $u$.
+It need not preserve complete endpoints, reference numerals or clocks.
+
+If a particular finite lowering maps each logical edge $e_i$ to an actual
+nonempty native word $w_i$, logical cut $j$ corresponds to
+
+$$
+\theta(j)=|w_{\rm entrance}|+\sum_{i<j}|w_i|,
+\qquad
+\theta(j+1)-\theta(j)=|w_j|>0.
+\tag{RCA.8}
+$$
+
+A cut inside $w_j$ is specified by its additional actual prefix length.
+Historical references must use that version and those actual lengths.
+
+Proof. The service graph has no private-source operation. Each original
+source fragment therefore sees the tree left by the preceding original
+fragment and has its unchanged literal or whole-guarded semantics. Induct
+on those fragments. Added work changes storage, placement and meter, so
+there is no stronger complete-state conclusion from this induction.
+Concatenation of the actual finite words gives (RCA.8); nonemptiness makes
+it strictly increasing. Restriction to an interior prefix gives its exact
+microcut. The formula gives no acquired numeral until the words' lengths
+have been computed and serialized by paid operations. ∎
+
+Theorem 7.4 isolates a sufficient repeated-service criterion. AIF alone
+does not discharge it. Lemma 7.2 rules out using only old source input.
+The late-installed realization and its repeated-service proof are given
+in §§14–16. Neither adds immediate busy admission to the original graph.
+

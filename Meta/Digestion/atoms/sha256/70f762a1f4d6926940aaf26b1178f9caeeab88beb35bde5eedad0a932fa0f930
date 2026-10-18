@@ -1,0 +1,25 @@
+**Theorem 69.3 (derived actual-prefix transport).** Under Hypothesis 69.2, for every $0\le
+k\le j$ and $\sigma\in\{\mathsf{br},\mathsf{abs}\}^k$, there are $U\in W_n$ and $e\in E$
+with $\operatorname{ActualPrefix}(M,U,e,h_{k,\sigma})$, where
+$h_{k,\sigma}=((q_i,\sigma_i))_{i=1}^{k}$. The execution makes all $k$ queries before
+any halt, and its reached row satisfies $e=\operatorname{historyState}(M,h_{k,\sigma})$
+and $\operatorname{decoder}(e)=h_{k,\sigma}$.
+
+Proof. Choose one whole-word source by Theorem 68.2 and use it throughout. Induct on
+$i=0,\ldots,k$. Initially `ActualPrefix.initial` gives the common row, and Legal gives
+its empty decoder. Suppose the source prefix of length $i<k$ is actual. By
+[actualPrefix_semantics][Native] its row is historyState and its decoder is $C(h)$,
+where $h$ is that raw prefix. The actual $T_n$ prefix of length $i$ has the same coarse
+history: the same $q_1,\ldots,q_i$
+and only coarse-none replies. ALL-HISTORY factorization therefore equates their
+historyAction values. By the supplied $T_n$ emission, the next action is the query
+$q_{i+1}$, so this source has not halted. The exact prefix decoder contains only the
+first $i$ distinct addresses, hence $q_{i+1}$ is a cache miss; its raw reply is
+$r(q_{i+1},U)=\sigma_{i+1}$. Native `ActualPrefix.query` extends the actual prefix by
+this pair. Legal appends it to the decoder, and actualPrefix_semantics identifies the
+new row with its response fold. This proves the induction, including the last reached
+row even if it halts. More generally [queryReply_eq_readout][Native] handles every
+truthful hit; cacheUpdate retains the first occurrence, including raw absence. No
+posthalt report is added to an actual prefix, although the all-history contract still
+covers its absorbing counterfactual fold. $\square$
+

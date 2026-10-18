@@ -1,0 +1,48 @@
+**Definition 34.1 (joint optimization at the credited error).** Retain
+the sole normalized reached-cut experiment (JR.1), all four real signs
+at each of the three heights, and the full complex common-processor
+contract of [CG, Definitions 3.1 and 21.2]. The calibrated five-mode
+input, fixed common metadata, ideal coherent live block, five ORIGINAL
+exact-time failure measures, and HALF full cq norm are unchanged.
+The isolated point, coefficient enclosures and optimum $E_*$ of
+[CG, §§13–17] are ordinary source-conditional premises throughout.
+
+Allow any optimal common full-output processor $\Phi$, not just
+$\widehat\Phi_*$. Its acquisition is an ACTUAL factorization
+$\Phi=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha$ with CP encoders,
+$\sum_\alpha\mathcal E_\alpha^\dagger(I)=I$, full-output TP decoders,
+and jointly counted future-accessible quantum fibres of dimension
+$d_\alpha$. Countable and explicitly supplied integral factorizations
+have exactly [CG, Convention 21.3]'s measurability and integrability
+hypotheses. A binary record $r\in\{+1,-1\}$ is classical processing
+of the acquired label, with independent coins absorbed into that label.
+It is acquired before execution; it is not a measurement retrospectively
+chosen on a discarded environment. Write $F$ for its plus effect on
+the supported qutrit. Define
+
+$$
+\begin{aligned}
+\mathsf V(F)&=\frac{|\Gamma_y(F)|}{\kappa q_y}
+             =\frac{2|\operatorname{Re}F_{01}|}{\kappa},\\
+Q_H&=\sum_{\alpha:d_\alpha\geq3}
+                     \mathcal E_\alpha^\dagger(I),
+&p_H(\rho)&=\operatorname{tr}(Q_H\rho),\\
+\overline p_{H,y}&=\frac14\sum_{e,n}p_H(\rho_{y,e,n}),
+&\mathsf W&=\max_{y,e,n}p_H(\rho_{y,e,n}),\\
+\mathsf C(s)&=\inf\{\mathsf W:E(\Phi)=E_*,\ \mathsf V(F)\geq s,
+                  \text{with such an actual factorization and record}\}.
+\end{aligned}
+\tag{JR.20}
+$$
+
+Here $\Gamma_y$ is the ORIGINAL winding Fourier coefficient (JR.14),
+and (JR.19) proves that its normalized value is independent of $y$.
+The denominator is positive. The four-term sums are mathematical tests
+of four conditional laws, with no source prior. Every quantum system
+available to execution is included in $d_\alpha$, including retained
+specimen, controller, environment and entanglement shares. There is no
+helper, readable history, callback, retry, bypass or normalization.
+The cost concerns acquisition, including branches later destined for
+failure; it is not conditioned on live output. Extra acquired classical
+labels are allowed and are not presumed to be unknown source labels.
+

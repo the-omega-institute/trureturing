@@ -1,0 +1,43 @@
+**Proposition 6.2 (strict exceptional inequality).** Under the
+source-enclosure premise, the following rational enclosures hold.
+Every endpoint integer in this table is divided by $10^{25}$.
+
+| Expression | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $u_F$ | $7226550620205194187464273$ | $7226550620205194187491411$ |
+| $v_F$ | $29906450227381110568953095$ | $29906450227381110569085941$ |
+| $\mathfrak c_f$ | $1259947042588917333362731$ | $1259947042588917333370829$ |
+| $\nu$ | $885457917523522290190443942$ | $885457917523522290198785534$ |
+| $t_0$ | $2648090313885774784411626004$ | $2648090313885774784432478599$ |
+| $t_b$ | $3533548231409297074602069947$ | $3533548231409297074631264132$ |
+| $H_0$ | $795273560426923433145088$ | $795273560426923433145905$ |
+| $B_z(t_b)$ | $-6469634636316157424434$ | $-6469634636316157403374$ |
+| $B_w(t_b)$ | $-17426011732742545104987$ | $-17426011732742545082488$ |
+| $\lvert B_w(t_b)\rvert-\lvert B_z(t_b)\rvert$ | $10956377096426387658054$ | $10956377096426387701613$ |
+
+In particular,
+$$
+0.00109563770964263
+ < |B_w(t_b)|-|B_z(t_b)|
+ < 0.00109563770964265.
+\tag{GC.29}
+$$
+
+Proof. Apply the rational operations of Definition 6.1 to the displayed
+source rows, with (GC.28), (GC.6)–(GC.8), (GC.12)–(GC.13), and then
+(GC.17)–(GC.18) at $t_b$. The endpoint square roots are rounded
+outward by (GC.27); matrix multiplication and trace use rational sums
+and products. Outward rounding the resulting rational endpoints to
+denominator $10^{25}$ gives the table. Both Fourier intervals are
+strictly negative, so subtracting their negative intervals in the
+order $-B_w+B_z$ gives the last row. The lower numerator is strictly
+positive. Comparing that row with the two terminating rationals in
+(GC.29) gives the strict displayed inequalities.
+
+This is a finite scalar certificate conditional on the input
+enclosures. It neither isolates the original root nor proves TP on
+off-root points of its box. Those are separate premises of
+Assumption 1.2. Together with Theorem 5.2 it resolves the occurrence
+of the exceptional boundary point, rather than leaving its scalar
+comparison unevaluated. $\square$
+

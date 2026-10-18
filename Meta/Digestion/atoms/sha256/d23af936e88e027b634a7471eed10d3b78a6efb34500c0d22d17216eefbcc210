@@ -1,0 +1,20 @@
+**Convention 4.1 (entry correspondence obligations).** The relevant
+installed-entry clauses have the following parameter map.
+
+| Actual source clause | Supplied fact | Obligation at the added cuts used here |
+| --- | --- | --- |
+| AIF Definition 2.6 | Original prescribed IN/non-IN experiments and finite lawful semantic protocols, with the original partial response meanings. | Identify an added row as that prescribed original action; raw native enabledness alone is insufficient. |
+| CAP Definition 4.6 | Resident source admission at acknowledged idle; journal entry through its actually installed public caller or the producer's held frozen-prefix continuation. No arbitrary-busy-cut journal entry is granted. | Establish the actual caller/PC/phase/token relation for any proposed original source or audit invocation during annex work. A source token at its dispatcher does not identify that entry. |
+| ARC Definitions 4.1 and 5.1–5.3 | Parked original client, outer Ready relation, gate dispatch, invocation transfer and native70 history ingress. | Relate the resulting handler-owned history phase to an original experiment, rather than merely to its own native next row. |
+| GCA Definitions 2.2 and 3.1 | Actual latch4 public reads, latch6 ingress, mode seal/import and subsequent frame import. | Establish the original Advance judgment at EX70 and along the finite completion/LastBank segment, preserving actual original successor fields. |
+| SOURCECALL Lemma 2.3 and GENERAL Theorem 9.1 | Direct original correspondence inside unchanged $F^A$, at a fixed actual reached entry, excluding the changed final idle CTL. | These hypotheses do not hold at the history-ingress cuts of Definition 2.1 or the mode cut of §6. |
+| ARC Definition 11.1, UAS Definition 1.4 and GENERAL obligation 10.3 | $Q$ uses the original installed relation; $Q_G$ additionally exposes new history entries. Added-phase original correspondence is a separate obligation. | Supply the selected original admission/domain/response cases; neither universal admission nor universal unexecuted `none` follows from the distinction. |
+
+In particular, the next raw row after $x_i$ is EX70, and the handler holds
+the history invocation while the original client is parked. The original
+source frame has not thereby been admitted. AIF's permission to finish
+an already admitted original request cannot be applied just by renaming
+this history request. Conversely, these facts do not prove that every
+original semantic/audit experiment is unavailable. Its actual entry
+must be checked on its own source clauses.
+

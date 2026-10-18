@@ -1,0 +1,29 @@
+**Construction 8.1 (ordinary weak points).** Choose the credited
+height-optimal normalized real-null family: the fixed initial frame
+for $s\leq\bar s$, the moving frame TA.28 for
+$\bar s<s\leq s_\dagger$, or the four nonzero vectors TA.33 for
+$s_\dagger<s\leq s_0$. Let its size be $m=3$ or $4$ and write
+$c_i=Lf_i$, $K_i=K(c_i)$. Their projectors sum to $I_3$ in
+normalized coordinates and their low live coefficient Gram is
+$\operatorname{diag}(\delta,1,1)$.
+
+Each $K_i$ has rank two by TA.20. Fix an image isometry
+$V_i:\mathbb C^2\to\operatorname{ran}K_i$ and use one actual label
+with encoder matrix $V_i^\dagger K_iE^\dagger$ and full decoder
+$X\mapsto EV_iXV_i^\dagger E^\dagger$ in live. Such a $V_i$ can be
+fixed by Gram–Schmidt on columns $1,2$ of $K_i$; their nonzero
+lower-right minor makes every normalization nonzero. Give these
+labels their credited maximizing reports. No report attenuation is
+needed below $\bar s$, because the original constraint is an inequality.
+
+Use one supported high matrix $H_0=\sqrt{1-\delta}D$ and two scalar
+failure encoders $b_+E^\dagger,b_-E^\dagger$, with separate actual
+spectral labels. The scalar full decoder sends $z$ to
+$zw_\ell g(t)dt\,P_f$ in every original label $\ell$.
+The high and scalar reports may be chosen deterministically, for
+example all plus. Their supported effects have zero $01$ coordinate,
+so these choices do not change the winding contrast. Merging the
+two formerly fair proportional high copies preserves their positive
+height-difference sum; fair reports outside winding-bearing branches
+are not required by TA.6.
+

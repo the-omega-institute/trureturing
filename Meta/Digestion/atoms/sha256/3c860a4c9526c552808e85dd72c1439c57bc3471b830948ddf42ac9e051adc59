@@ -1,0 +1,165 @@
+**Theorem 20.1 (uniform whole-circle certificate).** At the selected
+source-root family of Theorem 19.2,
+
+$$
+d(t,\lambda)\cdot\Gamma_\eta(\phi)
+\ge |H_\eta(\phi)|+\lambda|\cos\phi|
+\quad(\eta=0,1,\ \phi\in\mathbb R/2\pi\mathbb Z).
+\tag{AC.102}
+$$
+
+The maximum-report absolute-height gap has exactly the five specified
+zeros. The pure and saturated zero sets are disjoint. All used weights,
+height signs, report signs, curvatures and ranks remain nondegenerate
+throughout the closed parameter rectangle.
+
+Proof. Fix the same $t$ and compare the selected $\lambda$ root with
+its zero-multiplier root. The moment numerator bounds, AC.97 and
+AC.100 imply for every needed signed report polynomial
+
+$$
+\|P_\lambda-P_0\|_1<7\cdot10^6\lambda,
+\qquad \|P_0\|_1<20,
+\qquad |x_i(t,\lambda)-x_i(t,0)|<10^5\lambda.
+\tag{AC.103}
+$$
+
+For the first estimate an explicit majorant is
+$5\cdot10^9\lambda[4(3\cdot10^{-6})+(4/25)(8\cdot10^{-3})]
++4\lambda<7\cdot10^6\lambda$. All these are coefficient bounds,
+not evaluations on an angular grid.
+
+Let $\mathscr D_a^2$ mean twice taking the quotient upon division
+by $x-a$. The descending synthetic-division recurrence gives, for
+$|a|<0.3$,
+
+$$
+\|\mathscr D_a^2\|_{1\to1}\le(1-0.3)^{-2}<3,
+\qquad
+\|\partial_a\mathscr D_a^2\|_{1\to1}
+\le2(1-0.3)^{-3}<6.
+\tag{AC.104}
+$$
+
+At a designated contact the remainder is **exactly** zero by AC.95;
+an interval containing zero is not used as zero. For its deflated
+quotient, AC.103–AC.104 give
+
+$$
+\|Q_\lambda-Q_0\|_1
+<3(7\cdot10^6)\lambda+6(20)(10^5)\lambda
+<4\cdot10^7\lambda\le4\cdot10^{-5}.
+\tag{AC.105}
+$$
+
+FA97's exact double-root divisions and covering Bernstein partitions
+supply the following normalized margins at $\lambda=0$:
+
+| Sheet and height sign | Contact's chart | Quotient degree $n$ | Usable margin $m$ |
+| --- | --- | --- | --- |
+| Pure, $-$ | $\pi$ | $2$ | $9/1000$ |
+| Saturated, $+$ | $0$ | $6$ | $6\cdot10^{-5}$ |
+| Saturated, $-$ | $3\pi/2$ | $6$ | $4\cdot10^{-4}$ |
+
+More precisely, for both signs of the real chart, every Bernstein
+control of $(1-y)^nQ_0(\pm y/(1-y))$ on its specified closed
+dyadic leaf exceeds $m$. Hence
+$Q_0(x)>m(1+|x|)^n\ge m(1+x^2)^{n/2}$ on the full real axis.
+For any degree-at-most-$n$ perturbation,
+
+$$
+\frac{|(Q_\lambda-Q_0)(x)|}{(1+x^2)^{n/2}}
+\le\|Q_\lambda-Q_0\|_1.
+\tag{AC.106}
+$$
+
+The least margin $6\cdot10^{-5}$ exceeds $4\cdot10^{-5}$.
+Thus all three deflated quotients stay strictly positive, including
+their positive homogeneous leading coefficients at infinity. These
+prove the needed inequalities on the report half containing each
+contact.
+
+The two pure positive-height contacts require two report polynomials.
+At zero multiplier, in the base-zero chart,
+
+$$
+P_0(x)=a_*(x-a_0)^2(x-b_1)^2,\qquad
+0.0029<a_*<0.003,\quad |a_0|<0.025,\quad3.38<b_1<3.4,
+\tag{AC.107}
+$$
+
+where $a_0=x_0(t,0)$ and $b_1=-1/x_1(t,0)$.
+On $u\ge0$, base-zero $x\in[-1,1]$ covers the entire closed
+half-circle. Removing its designated contact leaves
+$Q_0=a_*(x-b_1)^2>1/100$. On $u\le0$ use the base-$\pi$
+coordinate $y\in[-1,1]$. The homogeneous change $x=-1/y$
+gives, after removal of the first contact in this chart,
+$\widetilde Q_0=a_*b_1^2(1+a_0y)^2>1/100$.
+AC.105 preserves both strict margins. At positive multiplier the
+two contacts have opposite reports and are not required to be zeros
+of one common polynomial.
+
+It remains to check the other report half for each of the three
+single-contact gaps. Their designated $|u_i|$ exceed $0.9,0.9,0.4$,
+respectively. If $\phi$ belongs to the opposite half-circle, elementary
+circle geometry gives
+
+$$
+\sin^2\frac{\phi-\phi_i}{2}\ge\frac{u_i^2}{4},\qquad
+\frac{(x-a)^2}{1+x^2}
+=(1+a^2)\sin^2\frac{\phi-\phi_i}{2}.
+\tag{AC.108}
+$$
+
+The saturated physical denominator
+$D_c/(1+x^2)^2$ is less than one by AC.98. Dividing the old
+polynomials by their positive denominators therefore gives opposite-half
+gaps strictly greater than $0.0018$, $0.00001215$ and $0.000016$.
+
+For an uncleared-gap perturbation use $0<c(h)<1/4$ on the whole
+circle. To verify this last bound write its numerator and denominator
+as affine functions of $u^2\in[0,1]$. At $u^2=1$ their bounds are
+$N<9/1000$, $D>3/80$, and at $u^2=0$ they are
+$N<7/1000$, $D>2/25$. Thus $4N<D$ at both endpoints and
+everywhere between. The physical gap change is at most
+
+$$
+5\cdot10^9\lambda
+ [3\cdot10^{-6}+(1/4)(8\cdot10^{-3})]+\lambda
+<1.1\cdot10^7\lambda\le1.1\cdot10^{-5}.
+\tag{AC.109}
+$$
+
+This is smaller than every opposite-half margin. All height signs
+and report signs, both sheets, both axes and every chart infinity
+have now been covered. The strict quotient and opposite-half bounds
+exclude all additional maximum-report zeros.
+
+For completeness, positive weights and the height signs follow on
+the same entire box from FA99's intervals. The angular curvatures of
+the perturbed signed gaps have the following strict rational relaxations:
+
+| Contact | Curvature interval |
+| --- | --- |
+| $0$ | $(0.0167826,0.0167865)$ |
+| $1$ | $(0.0167814,0.0167877)$ |
+| $2$ | $(0.0603113,0.0603166)$ |
+| $3$ | $(17.2374,17.2419)$ |
+| $4$ | $(0.85197,0.85710)$ |
+
+They are obtained from
+$(P_i''-\lambda\sigma_iW_i'')D_{\eta_i}^{-1}
+((1+x_i^2)/2)^2$ when $P_i$ here denotes the zero-report-term
+polynomial evaluated with the current $d$; equivalently use
+$P_{i,\lambda}''$ directly. The exact value and first derivative
+vanish at the selected root. The normalized pure frame
+$((1,u_i,v_i))_{i=0}^2$ has determinant in $(1.5240,1.5244)$,
+and the moment minor with rows $(1,u,v,\eta c,\eta cu^2)$
+lies in $(-0.015478,-0.015475)$. These are the normalized circle
+coordinates, before rescaling to $h_i$. Every pairwise normalized
+projection determinant has magnitude $>0.0459$. Consequently the
+five weight columns are independent, the pure Gram has rank three,
+and the two saturated rank-one physical effects have rank-two sum.
+No zero weight, height zero, axis contact or line collision occurs.
+$\square$
+

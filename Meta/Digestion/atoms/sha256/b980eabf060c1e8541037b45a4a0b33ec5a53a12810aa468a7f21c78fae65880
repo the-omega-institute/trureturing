@@ -1,0 +1,24 @@
+**Corollary 284.3 (All-active specialization and a positive-tail exclusion).**
+For $L=6k+1$ and $\gamma_j=s=1$ at all late addresses,
+
+$$
+E_b\le(2-1/k)e.
+\tag{284.6}
+$$
+At $k=2$, the entire sequence
+
+$$
+a_1=\cdots=a_{13}=17/240,\qquad e=1/20,
+\qquad a_{13+r}=e/r\quad(r\ge1)
+\tag{284.7}
+$$
+has no original $N_2$ or $O_2$ attainer at this closed cap.
+
+**Proof.** Subtract $(L+1)e$ in (284.4) to obtain (284.6).
+For (284.7), $E_b=19/240$, whereas $(2-1/2)e=18/240$.
+The profile is positive, nonincreasing and vanishing, with the actual
+closed tail tie $a_{14}=e$ and active length thirteen. It lies in
+$H_{13}$ but outside $H_N$, by 110.2 and (284.6). Its violation
+$1/240$ is an infeasibility exclusion, not an $N/O$ separator: there
+is no full feasible $N$ witness at this point. $\square$
+

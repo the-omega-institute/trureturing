@@ -1,0 +1,23 @@
+## 82. 接触前系数、全类下界和共同修复上界
+
+对 $\epsilon=\pm1$  定义
+
+$$
+Z_\epsilon(r)=\mathcal Y(r)-\epsilon G,
+$$
+
+$$
+a_\epsilon(r)=
+(Z_\epsilon)_{00}
++(Z_\epsilon)_{11}z_\epsilon^2
++(Z_\epsilon)_{22}w_\epsilon^2
++2(Z_\epsilon)_{12}z_\epsilon w_\epsilon
+-\lambda z_\epsilon,
+$$
+
+$$
+b_\epsilon(r)=
+(Z_\epsilon)_{01}z_\epsilon+(Z_\epsilon)_{02}w_\epsilon.
+\tag{RC.134}
+$$
+

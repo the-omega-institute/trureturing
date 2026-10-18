@@ -1,0 +1,39 @@
+**Definition 263.1 (Signed three-daughter loss).** For every full
+score $y\ge0$, every pair $i<j$ and label $r\in J_L$, set
+
+$$
+H^{ab}_{ij}(r)=\sum_{w:w_i=a,w_j=b}g_y(w,r),\qquad
+d_{ij}=H^{00}_{ij}-H^{01}_{ij}.
+\tag{263.1}
+$$
+
+The sums include the positive reward $T$ in cell $11$.
+For a changed pair $D=N(i,j;u,v,s,t)$ define
+
+$$
+\ell_y(D)=\frac{d_{ij}(u)-d_{ij}(v)
+ +H^{10}_{ij}(s)-H^{10}_{ij}(u)
+ +H^{11}_{ij}(t)-H^{11}_{ij}(v)}3.
+\tag{263.2}
+$$
+
+Define two equivalent forms of its maximal positive signed loss:
+
+$$
+\begin{split}
+\Upsilon_y&=\max\{0,\max_{i<j,\ u\ne v,\ s,t}\ell_y(D)\},\\
+\Omega_y&=\frac13\max\left\{0,\max_{i<j,\ u\ne v}
+ \left(d_{ij}(u)-d_{ij}(v)-H^{10}_{ij}(u)-H^{11}_{ij}(v)
+       +\max_rH^{10}_{ij}(r)+\max_rH^{11}_{ij}(r)\right)\right\},\\
+\Gamma_{\rm all}(y)&=\sum_w\operatorname{osc}_r g_y(w,r)
+ =T+\sum_{w\ne+}\bigl(P_w+\max(A_w,C_w)\bigr)
+ =K_y-\sum_{w\ne+}\min(A_w,C_w),\\
+C_y&=\min\{\omega_y,\Xi_y,\Omega_y\}.
+\end{split}
+\tag{263.3}
+$$
+
+All maxima include every terminal label. The endpoint sensitivity
+$\omega_y$ and midpoint sensitivity $\Xi_y$ retain Definitions
+253.1 and 255.1; no new endpoint or midpoint result is required.
+

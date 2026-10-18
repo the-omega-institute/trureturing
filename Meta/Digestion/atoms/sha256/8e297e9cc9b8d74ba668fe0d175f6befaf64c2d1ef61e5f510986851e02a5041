@@ -1,0 +1,3 @@
+**Definition 33.0 (source and cross-volume conventions).** The source trees, substitution, acquired input, entire source fiber and complete original-row target are those of [Acquired Relation History](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md), Definitions 1.1–1.2 and Assumption 1.3. References to its items 1–26 and equations with prefix ARH retain that meaning; items 33–37 and equations with prefix LAC are local to this continuation. The normal-code, atomic-orbit and term-power suppliers are the references specified in Definition 37.1.
+## 33. An acquired local atomic cover
+

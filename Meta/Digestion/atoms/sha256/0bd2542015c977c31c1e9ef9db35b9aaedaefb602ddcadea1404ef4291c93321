@@ -1,0 +1,27 @@
+**Definition 2.3 (the allowed public future path).** Fix $T\in[0,\infty)$,
+$0<x_1<x_2<c$, and real relative controls $a,b$ on $[0,T]$, with
+$a(0)=b(0)=0$. The function $a$ is nondecreasing, and
+
+$$
+k_j(t)=x_j+a(t)\in(0,c)\quad(j=1,2; 0\le t\le T).
+\tag{CP.6}
+$$
+
+The controls obey either original alternative: both are absolutely continuous,
+or both are continuous finite piecewise $C^1$ with derivative rates continuous
+on each closed partition piece. Repeated partition times are allowed, and
+$b$ has finite variation. The latter alternative implies absolute continuity:
+integrate each continuous rate on its piece, apply the fundamental theorem,
+and telescope the endpoint values; empty pieces contribute zero. Thus write
+$v=a'\ge0$ and $\omega=b'$ almost everywhere, with both rates integrable.
+There is no common speed or derivative-variation bound. Each individual path
+has a positive compact support margin.
+
+At actual current lift $\chi_*$ this means $\chi_*+b(t)$, not a supplied
+reading of $\chi_*$. The original relative-command domain is
+$(0,c-a(T))$ in this monotone case; both catalogue heights must belong to it.
+This is the partial-operation convention of [Probability/Phase Transport][PP],
+Section 9.1. At a join the height must match and the real phase is translated
+as in `concatenate_original`. Zero duration is the matching identity, not an
+instantaneous nonzero displacement.
+

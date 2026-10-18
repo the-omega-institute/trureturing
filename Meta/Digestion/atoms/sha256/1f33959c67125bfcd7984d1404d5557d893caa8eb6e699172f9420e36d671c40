@@ -1,0 +1,12 @@
+### 462.6 来源与证明范围
+
+原对象、完整端点、积分质量和对数矩复用 §§444、450 及
+PrimorialGlobalLaplaceEnvelope、PrimePrefixPhiCurvature、PrimePrefixOriginalA、
+PrimePrefixCurvatureMoments 的对应结果；完整 Gamma 对数矩保持
+Mertens.Gamma 及其 PrimeNumberTheoremAnd 端口来源。指数函数、均值定理、完整积分线性性、
+严格对数切线及 Gamma 对数矩属于经典工具。
+本节的新增解析结论是 EFA.5–EFA.11；EFA.13 将既有严格对数切线缺口写为
+原曲率律与其按变量加权的概率律之间的相对熵。
+上述局部解析结论来自本仓原对象的推导，不作全球文献首创声明。
+新增结论在此给出完整纸面证明，其 Lean 形式化另行交付。
+

@@ -1,0 +1,40 @@
+### 72.4 Reference tags prove the error comparison
+
+Let Δ' be the difference between the repaired mixture and J_out F_K. By the preceding formulas it vanishes on all within-fibre input matrix units and maps every cross-fibre matrix unit to a scalar multiple of |ff><gg|. For a normalized arbitrary pure input with reference R, write
+
+    |ψ>=Σ_(f,i)|f,i>⊗|r_(f,i)>.
+
+Introduce an orthogonal reference tag and define the equally normalized input
+
+    |ψhat>=Σ_(f,i)|f,i>⊗|f>_tag⊗|r_(f,i)>.
+
+The output (Δ'⊗id)(|ψhat><ψhat|) is the isometric embedding of (Δ'⊗id)(|ψ><ψ|) under
+
+    |ff>_out⊗|r> ↦ |ff>_out⊗|f>_tag⊗|r>.
+
+This identity holds for every surviving cross term and hence preserves its entire trace norm, with all input coherences and arbitrary reference vectors retained. Denote the tagged repaired error by C. It is supported on
+
+    S=⊕_f (span{|ff>_out|f>_tag}⊗R).
+
+On the same tagged input, the unrepaired twirled mixture has error C−D+X, where D≥0 is the missing correct-output population supported on S, and X≥0 is supported on S-perpendicular. We now verify these assertions without assuming calibration.
+
+For one branch and fibre put M_f=P^A_(f,f)⊙P^B_(f,f). Both factors are positive contractions, so the Schur product theorem gives
+
+    0≤M_f≤I⊙P^B_(f,f)=diag(P^B_(f,f))≤I.                 (7)
+
+Consequently the correct-output deficit on that fibre is the positive operator
+
+    Σ_(i,j)(I−M_f)[i,j]|r_(f,i)><r_(f,j)|,
+
+placed in output |ff> and tag |f>. Weighted sums of these deficits define D≥0. For any wrong output pair (a,b)≠(f,f), its coefficient matrix is P^A_(a,f)⊙P^B_(b,f)≥0. These positive operators have output |ab> and tag |f>, and are orthogonal to S: equality with a correct sector would require simultaneously a=b=g and f=g, contradicting (a,b)≠(f,f). Their weighted sum is X≥0. Equation (5) shows that every cross-fibre output term is in S and agrees with its repaired value, so no omitted coherence connects S to its orthogonal complement. Trace preservation gives Tr X=Tr D.
+
+The orthogonal supports and the triangle inequality therefore imply
+
+    ||(Δ'⊗id)(|ψ><ψ|)||₁=||C||₁
+      ≤||C−D||₁+Tr D
+      =||C−D||₁+Tr X
+      =||(Δbar⊗id)(|ψhat><ψhat|)||₁
+      ≤||Δbar||diamond.                                 (8)
+
+Here Δbar is the twirled original error. For a Hermiticity-preserving map the diamond norm is maximized on a pure state with a reference; alternatively mixed input states follow by convexity and purification. Taking the supremum in (8), and then using the twirling comparison, proves (2).
+

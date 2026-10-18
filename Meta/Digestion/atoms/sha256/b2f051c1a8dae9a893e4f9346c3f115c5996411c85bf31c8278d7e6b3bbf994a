@@ -1,0 +1,49 @@
+**Theorem 66.2 (Nonlinear lossless original-radius reduction).** Under Definition 66.1, $\mathfrak R$ preserves positive mass, is order-preserving and positively homogeneous, and its probability image is exactly $\iota(\mathcal M)$. It fixes every law in this image, including every original target. For any original-tape probabilities $v,w$,
+
+$$
+ \operatorname{TV}(\mathfrak Rv,\mathfrak Rw)
+ \le\operatorname{TV}(v,w),\qquad
+ \operatorname{TV}(\mathfrak Rv,\mu_y)
+ \le\operatorname{TV}(v,\mu_y)\quad(y\in X).
+\tag{66.5}
+$$
+
+For every occupied actual cylinder $C$,
+
+$$
+ \inf_{g\in\mathcal M}\sup_{y\in C}
+       \operatorname{TV}(\iota(g),\mu_y)=\rho_\mu(C).
+\tag{66.6}
+$$
+
+In particular the unchanged original sharp value is
+
+$$
+ R_\mu=\sup_{x\in X}\inf_{m\ge0}\inf_{g\in\mathcal M}
+       \sup_{y\in C_m(x)}\operatorname{TV}(\iota(g),\mu_y).
+\tag{66.7}
+$$
+
+The transfer is not additive, so it is outside the transfer class of Definition 63.1.
+
+**Proof.** First consider the unsorted measure $P\nu=(a_\nu\circ t)\tau$. The conditional-expectation and singular-mass argument of Theorem 59.2 applies with reference $\tau$ and subalgebra $\sigma(t)$: these are a probability measure and a sub-sigma algebra, all targets have measurable densities there, and $P$ is positive, additive, homogeneous, mass-preserving and target-fixed. Conditional expectation exists by Radon--Nikodym on $(\Theta,\sigma(t),\tau|_{\sigma(t)})$, without regularity of the full tape space. For completeness, if $\rho$ is the greatest common submeasure of probabilities $v,w$, positivity gives $P\rho\le Pv,Pw$ and $P\rho(\Theta)=\rho(\Theta)$. Equation (59.7) then gives $\operatorname{TV}(Pv,Pw)\le1-\rho(\Theta)=\operatorname{TV}(v,w)$. Since the two output laws have densities $a_v\circ t,a_w\circ t$, this bounds $\frac12\|a_v-a_w\|_1$.
+
+The classical rearrangement step has the following layer-cake proof for the nonnegative integrable functions needed here. For such an $a$, its distribution function $F_a(s)=\lambda\{a\le s\}$ increases to one as $s\to\infty$. Its quantile is therefore finite at every rank in $I$. The quantile definition and right continuity of $F_a$ give $\lambda\{a^\uparrow>s\}=1-F_a(s)=\lambda\{a>s\}$ for every $s\ge0$; changing the quantile at its countably many discontinuities preserves this identity. This proves the required equimeasurability even for unbounded $L^1$ densities. Write $A_s=\{u:a(u)>s\}$ and $B_s=\{u:b(u)>s\}$. Their rearranged superlevel sets are upper intervals $A_s^\uparrow,B_s^\uparrow$ with the same respective lengths, up to null sets. Consequently
+
+$$
+ \begin{aligned}
+ \|a^\uparrow-b^\uparrow\|_1
+ &=\int_0^\infty\lambda(A_s^\uparrow\mathbin\triangle B_s^\uparrow)\,ds\\
+ &=\int_0^\infty|\lambda(A_s)-\lambda(B_s)|\,ds\\
+ &\le\int_0^\infty\lambda(A_s\mathbin\triangle B_s)\,ds
+ =\|a-b\|_1.
+ \end{aligned}
+\tag{66.8}
+$$
+
+Tonelli applies to the nonnegative indicator differences, and integrability makes the final expressions finite. In particular when $b=f_y$ its rearrangement is $f_y$ itself. This is the usual monotone-rearrangement contraction, not a new general rearrangement theorem. Chernozhukov, Fernandez-Val and Galichon, [*Improving Point and Interval Estimates of Monotone Functions by Rearrangement*, Proposition 1 and equation (2.1)](https://arxiv.org/html/0806.4730v3), [*Biometrika* **96** (2009), 559--575](https://doi.org/10.1093/biomet/asp030), state the bounded-function version and relate it to Lorentz's rearrangement inequality. Here (66.8) supplies the required nonnegative $L^1$ extension inside the original-source deduction; no statistical sampling assumption is used.
+
+Equimeasurability preserves $\int a_\nu=\nu(\Theta)$. If $a\le b$ almost everywhere, then $\lambda\{a>s\}\le\lambda\{b>s\}$ for every $s$, so their quantiles satisfy $a^\uparrow\le b^\uparrow$ almost everywhere. Thus sorting preserves order, and scaling a nonnegative function scales its quantile. These facts prove the asserted order and homogeneity properties of $\mathfrak R$. Every $g\in\mathcal M$ is fixed by both $P$ and sorting; normalization identifies the probability image. Combining the $P$ contraction with (66.8) proves (66.5).
+
+Applying (66.5) to each unrestricted center gives one inequality in (66.6); inclusion of $\iota(\mathcal M)$ in all original-tape probabilities gives the other. No cylinder center is assumed to attain its infimum. Taking the same $\sup_x\inf_m$ proves (66.7), without exchanging extrema. Finally the two probabilities with rank densities $2\mathbf1_{(0,1/2)}$ and $2\mathbf1_{(1/2,1)}$ both sort to $2\mathbf1_{(1/2,1)}$, whereas their average sorts to the constant density $1$. Hence $\mathfrak R$ does not preserve averages and is not additive. $\square$
+

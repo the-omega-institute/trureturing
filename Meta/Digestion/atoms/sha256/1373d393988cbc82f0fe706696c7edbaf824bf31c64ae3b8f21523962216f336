@@ -1,0 +1,25 @@
+**Theorem 4.4 (exact actual multiplicities).** Define
+
+$$
+m_\eta=
+\begin{cases}
+1,&\eta\text{ has no live name},\\
+\aleph_0,&\eta\text{ has at least one live name}.
+\end{cases}
+\qquad |\mathcal U_\eta|=m_\eta.
+\tag{FCS.19}
+$$
+
+Proof. A closed profile fixes every whole class value as a finite ground
+term. Its whole current filling is fixed and has a unique inverse, so
+the actual cell is a singleton. For a live profile, replace each $N_i$
+in (FCS.17) by $N_i+k$ for $k=0,1,2,\ldots$. All gaps and lower
+bounds used in Lemma 4.2 persist. Every assignment still satisfies the
+whole-class negatives and image test and has the identical exposed
+profile. At any one fixed live occurrence its inserted subtree height
+strictly increases. Hence the class tuples, current trees and inverse
+origins are all different. This supplies countably many actual points,
+including two explicit distinct ones at $k=0,1$. All finite ordered
+alpha/beta terms form a countable set, giving the reverse cardinal
+bound. Thus a live cell is exactly countably infinite. $\square$
+

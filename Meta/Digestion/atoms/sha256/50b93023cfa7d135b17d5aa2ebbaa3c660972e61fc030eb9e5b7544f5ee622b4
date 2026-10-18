@@ -1,0 +1,43 @@
+**Lemma 6.2 (true block-cone membership, including plane slack).**
+For a PSD matrix
+
+$$
+L=\frac12\begin{pmatrix}U&v+iR&0\\v-iR&V&0\\0&0&1\end{pmatrix},
+\qquad d=U-\alpha V>0,\qquad
+m=\sqrt{d^2+4\alpha R^2},
+\tag{QO.34}
+$$
+
+where $v,R$ are real, one has $L\in\mathcal C_2$ if and only if
+$m\leq\beta$.
+
+Proof. Choose $\cos\theta=d/m>0$,
+$\sin\theta=2\sqrt\alpha R/m$. Lemma 5.1 gives
+$0\geq\operatorname{tr}(B_\theta L)=(m-\beta)/2$.
+This proves necessity against both components of the complex locus.
+
+Conversely, replace the SS entry inside the bracket by $m/\beta$.
+The resulting matrix is PSD because its DT and SS blocks are separated.
+Inverse congruence by $R_\theta$ makes the DT block real with
+diagonal difference $m$. Indeed, if a block has difference $d$ and
+imaginary off-diagonal $R$, this inverse sends their two-vector
+$(d,2\sqrt\alpha R)$ to $(m,0)$, and leaves real off-diagonal $v$
+unchanged. Its $B_0$ trace is therefore
+$(m-\beta(m/\beta))/2=0$. Lemma 5.2 decomposes this real PSD
+matrix into finitely many real null projectors. Transform those
+vectors by $R_\theta$; bilinear preservation makes them genuine
+quadratic-null atoms. Restore the removed SS part as the plane atom
+$\frac12(1-m/\beta)|S\rangle\langle S|$. This proves sufficiency.
+
+When $m=\beta$, $v\ne0$ and the DT determinant is zero, the inverse block
+has positive diagonals $u_L,v_L$ determined by
+$u_L-\alpha v_L=\beta$ and $u_Lv_L=v^2$. For $v\ne0$ the two
+vectors
+$R_\theta(\sqrt{u_L},\operatorname{sign}(v)\sqrt{v_L},\pm1)^T/2$
+give the entire block. The matching path below uses $v>0$.
+The transformation is not a full-cone automorphism: it need not send
+a plane atom to a singular atom. Only its stated action on quadratic
+null vectors was used. Thus this local iff neither substitutes a
+scalar trace relaxation for the general complex cone nor eliminates
+plane slack globally. $\square$
+

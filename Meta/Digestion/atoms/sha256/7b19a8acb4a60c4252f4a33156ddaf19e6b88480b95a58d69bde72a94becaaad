@@ -1,0 +1,27 @@
+### 95.3. Joint face tangents with the full kernel constraint
+
+Continue with the general support S. Fix one pair in 𝒜₀ only to define R by (6). Let D be any Hermitian matrix on all eight coordinates, supported on S×S, such that
+
+\[
+ D_{ff}=0\text{ on every original fibre},\qquad
+ D\ker H=0.
+                                                                    \tag{11}
+\]
+
+Define D_G=−overline R⊙D on S×S and extend it by zero elsewhere. All subsequent Hadamard expressions involving this principal R and full eight-coordinate directions are formed on S×S and extended by zero outside that set. It is Hermitian and has zero original fibre blocks. Since range(P_B)⊆ker H, (11) implies DP_B=0 and therefore
+
+\[
+ D_S\operatorname{diag}(a_S)R=0,\qquad
+ (D_Ga)_i=-\sum_j D_{ij}a_jR_{ji}=0.                         \tag{12}
+\]
+
+For the second equality, the sum is the i-th diagonal entry of the first matrix in (12); outside S it vanishes by support. Thus D_G annihilates the entire kernel of G. Equation (7) also gives
+
+\[
+ D_G\odot H+G\odot D=0,\qquad
+ T-(G+sD_G)\odot(H+sD)
+       =L+s^2\overline R\odot(D\odot D).                   \tag{13}
+\]
+
+The entrywise square in this formula is not an absolute square. Both Gram paths are feasible for every sufficiently small real s. Indeed a Hermitian direction annihilating the full kernel acts only on its orthogonal complement, where the unperturbed Gram is positive definite. Small perturbations remain PSD, and every original fibre block remains I₂.
+

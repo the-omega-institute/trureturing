@@ -1,0 +1,137 @@
+**Theorem 210.4 (The full-certificate $0010$ bound and its exact minimum).**
+For $L\ge4$ set
+
+$$
+m(V)=\sum_{w_1w_2w_3w_4=0010}P_w,\qquad
+b^*=(3/4,3/4,3/4,3/4,1/4,\ldots,1/4;1/4).
+$$
+
+For every full $V\ge0$,
+
+$$
+F_{Q(V)}(b^*)\le\Delta_O(V)+m(V)/4
+                       \le\Delta_N(V)+m(V)/4.
+\tag{210.11}
+$$
+
+Consequently every complete certificate for any signed $q$ satisfies
+$m(V)\ge4\max(0,F_q(b^*)-1)$.
+There are explicit scores $Y,Z$ below such that, for every real
+$\tau\ge0$,
+
+$$
+\begin{aligned}
+\Delta_N(Y+\tau Z)&=\Delta_O(Y+\tau Z)=1,\\
+q_\tau=Q(Y+\tau Z)&=(0,1+\tau/2,4+2\tau,4+2\tau,0,\ldots;
+                                      37/2+11\tau),\\
+\min_{(V,\theta)\text{ satisfying }(210.4)\text{ for }q_\tau}m(V)
+ &= (1+\tau)/2.
+\end{aligned}
+\tag{210.12}
+$$
+
+The minimum is attained by $V=(1+\tau)Z$, $\theta=1$.
+The auxiliary point $b^*$ belongs to $H_L$ but not to $H_N$.
+
+**Proof.** By 198.5, $b^*=(3/8)u_4+(5/8)v_4\in H_L$.
+Average these four legal stopped tables with weights $1/4$:
+
+$$
+(1,2;1,2,4),\quad(1,3;1,3,0),\quad
+(2,3;2,3,0),\quad(3,4;0,4,0).
+\tag{210.13}
+$$
+
+Every first-zero class $n\le4$ has correct mass $1/2$.
+For completeness the zero masses on all four-prefixes are
+
+| Prefix | $0000$ | $0001$ | $0010$ | $0011$ | $0100$ | $0101$ | $0110$ | $0111$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Zero mass | $1/4$ | $1/4$ | $0$ | $1/4$ | $1/4$ | $1/4$ | $1/4$ | $1/2$ |
+
+| Prefix | $1000$ | $1001$ | $1010$ | $1011$ | $1100$ | $1101$ | $1110$ | $1111$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Zero mass | $1/4$ | $1/4$ | $1/4$ | $1/2$ | $1/4$ | $1/4$ | $1/2$ | $3/4$ |
+
+For $n\le4$ the three demands at $b^*$ are $(0,1/2,3/4)$;
+for $n>4$ they are $(1/2,0,3/4)$. The positive-word demand is
+$3/4$. Hence the averaged event vector dominates every demand except
+the pair row on prefix $0010$, where its deficit is exactly $1/4$.
+Suffixes never enter these tables, so this is an all-word statement
+for every $L$. Multiplying by arbitrary independent $A,C,P,T$ gives
+$W_V+F_{Q(V)}(b^*)\le B_O(V)+m(V)/4$, proving (210.11).
+Adding the one residual reading at $b^*$ and using (210.4) proves
+the certificate bound, without any restriction on the event support
+of its $V$.
+
+Here are the full nonzero atoms defining $Y,Z$. Each displayed word
+is padded by $1^{L-4}$; blank entries mean zero. Both have $A=0$.
+
+| Word | $P_Z$ | $C_Z$ | $P_Y$ | $C_Y$ |
+| --- | --- | --- | --- | --- |
+| $0010$ | $1/2$ | $0$ | $1$ | $0$ |
+| $0100$ | $3/2$ | $0$ | $2$ | $0$ |
+| $0110$ | $1/2$ | $0$ | $1/2$ | $0$ |
+| $1000$ | $1$ | $0$ | $3/2$ | $0$ |
+| $1001$ | $1/2$ | $0$ | $1/2$ | $0$ |
+| $1010$ | $1/2$ | $1/2$ | $1/2$ | $1/2$ |
+| $1011$ | $0$ | $0$ | $0$ | $1/2$ |
+| $1100$ | $0$ | $2$ | $0$ | $7/2$ |
+| $1101$ | $0$ | $0$ | $0$ | $1/2$ |
+| $1110$ | $0$ | $2$ | $0$ | $4$ |
+| $1^L$ | — | $T_Z=2$ | — | $T_Y=7/2$ |
+
+Summing each label's atoms in each cell gives the following complete
+$N$ maxima, in cell order $00,01,10,11$:
+
+| Schedule | $Z$ maxima | $Y$ maxima |
+| --- | --- | --- |
+| $12$ | $(1/2,2,5/2,2)$ | $(1,5/2,7/2,4)$ |
+| $13$ | $(3/2,1,2,5/2)$ | $(2,3/2,4,4)$ |
+| $14$ | $(5/2,0,2,5/2)$ | $(7/2,0,4,4)$ |
+| $23$ | $(3/2,1,2,5/2)$ | $(2,3/2,4,4)$ |
+| $24$ | $(2,1/2,2,2)$ | $(3,1,4,7/2)$ |
+| $34$ | $(5/2,1/2,2,2)$ | $(7/2,1/2,4,7/2)$ |
+
+The anchors are $W_Z=7$, $W_Y=21/2$, so the maxima imply
+$\Delta_N(Z)=0$, $\Delta_N(Y)=1$. The stopped table
+$(1,3;1,3,0)$ attains excesses $0,1$ respectively. Nonnegative
+homogeneity and subadditivity of the full support, together with this
+same lower table, give both costs one for every $Y+\tau Z$.
+For $L>4$, inactive coordinates are constant one on every scored atom;
+queries there reduce to shorter information types. Empty and singleton
+$N$ functions embed in distinct pairs; repetitions and reversals add no
+information, without cancelling actual request counts. Additional output
+labels earn zero. This establishes the complete-catalog claim at all
+lengths, while leaving every unscored row in the domain.
+
+For $V=(1+\tau)Z$ the residual is independent of $\tau$:
+$q_\tau-Q(V)=(0,1/2,2,2,0,\ldots;15/2)$.
+The exact signed hull readings from 198.5 are
+
+$$
+\begin{array}{c|c}
+o,p&-1/2\\
+u_3&3/4\\
+u_k\ (k\ge4)&-1/2+9/[2(k-1)]\\
+v_3&5/8\\
+v_k\ (k\ge4)&4-(15/2)(k-2)/(k+1).
+\end{array}
+\tag{210.14}
+$$
+
+Their maximum is one, attained at $u_4,v_4$; both expressions for
+$k\ge4$ decrease. Thus $\theta=1$ with this nonzero zero-cost
+core satisfies (210.4). Direct substitution gives
+$F_{q_\tau}(b^*)=(9+\tau)/8$, so (210.11) forces
+$m(V)\ge(1+\tau)/2$. The displayed core has exactly that mass.
+
+Finally $F_{Q(Z)}(b^*)=1/8$ but $\Delta_N(Z)=0$.
+Any finite feasible $G_N\lambda\ge h(b^*)$ would, on multiplication
+by $Z$, imply $1/8\le0$. Thus $b^*\notin H_N$.
+The four-table law is short of the independent pair demand and is not
+a cap attainer there. All $q_\tau$ are in $E_N$; the obstruction is
+to certificates whose final score has $m=0$, including their one-budget
+convex, signed and zero-core combinations only while $m=0$ remains.
+Suppliers which introduce this cylinder are not excluded. $\square$
+

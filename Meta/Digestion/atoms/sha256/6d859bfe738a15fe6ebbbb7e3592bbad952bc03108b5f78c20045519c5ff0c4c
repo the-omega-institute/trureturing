@@ -1,0 +1,26 @@
+**Theorem 7.1 (effective same-family numerical transfer).** Keep exactly $M$, the original source and $\mu_\delta=(1/4,3/4-\delta,\delta)$ for $0<\delta\le1/4$. Supply a rational certificate $0<b\le\delta$ and a rational accuracy $\epsilon>0$ as data for mathematical witness construction, not as runtime observer inputs. Put
+
+$$
+\Gamma=f_2/f_3=\frac{1459166279268040704}{1490116119384765625}<1,
+\qquad C=b_2/b_3=2097152/1953125.
+\tag{7.1}
+$$
+
+Choose by exact rational multiplication the first integer $n\ge1$ such that $C\Gamma^n\le40b\epsilon$, and let $H=16n+6$. This procedure terminates and, simultaneously for all four objective pairs and every member of this family with $\delta\ge b$,
+
+$$
+0\le\Phi_\infty(M,\mu_\delta)-\Phi_H(M,\mu_\delta)\le\epsilon.
+\tag{7.2}
+$$
+
+**Proof.** $b_1<b_2$, $f_1<f_2<f_3$ and $\mu_\delta(1)+\mu_\delta(2)\le1$. Equation (5.5) bounds the actual endpoint posterior odds by $(C/b)\Gamma^n$, so $1-\nu_{h_n}(3)\le(C/b)\Gamma^n$. The endpoint mean lies in $[3/8,r_2]$, whence
+
+$$
+0\le m(h_n)-3/8\le(r_2-3/8)(1-\nu_{h_n}(3))
+\le C\Gamma^n/(40b)\le\epsilon.
+$$
+
+The special score is exactly $L-(m(h_n)-3/8)$. It is a member of the original capped domain at $16n+6$ Reads. Equation (5.3), rather than merely a lower bound for a different limiting row, now proves (7.2). Since $0<\Gamma<1$, exact rational iteration terminates for every positive rational $b,\epsilon$. Its rational arithmetic storage, iteration counter, output length and computation time must be charged to the external witness-construction procedure. The observer retains none of these values. $\square$
+
+An endpoint floor does not supply this $b$. The floor, fixed support cardinality, maximum depth and bounded depth moments or entropy all hold in this three-depth family while the interior mass tends to zero. Any prior-data repair admitting the family must quantitatively exclude or resolve that behavior. Theorem 7.1 proves sufficiency for this same observer and family; a floor at depth 3 is not asserted sufficient for every observer or every countable prior. More generally the relevant data would be a mass/likelihood-domination certificate for the components selected by the observer's reachable history strata.
+

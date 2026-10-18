@@ -1,0 +1,33 @@
+**Definition 8.1 (finite resolutions as a logical relation).** On the
+construction trees used here, every choice has two existing children
+and no choice can produce empty output. A finite complete resolution can be
+described by a finite selected-node set containing the root, with
+one selected child at each selected choice node and all existing
+children at each selected ordinary node, and no selected
+$\mathsf{nd}_{\bot}$. The selection is prefix closed and has no
+unaccounted continuation at its leaves. Child-direction tracks may
+record the choice when needed. These are weak monadic conditions.
+Contracting the selected choice nodes gives the resolved finite
+output; ordinary successor in that output is the selected finite
+path through zero or more intervening choice nodes. This path
+relation is also weak monadic, since each witnessing path is finite.
+
+In $T_{\mathcal G_{m,\mathcal V}}$ every successful complete finite
+resolution has one payload root $z$. Its selected tick ancestors
+are exactly the $n$ nodes on the certificate spine. To express
+unboundedness of accepted outputs it would suffice to supply a legal
+formula for acceptance of that selected resolution and to use
+
+$$
+\mathsf U X.\ \exists_{\mathrm{fin}} S\ \exists z\quad
+\operatorname{Resolution}(S,z)
+\ \land\ X=\{v\in S:v\text{ is a tick ancestor of }z\}
+\ \land\operatorname{Accept}_{I,B}(S,z).
+$$
+
+The equality describing $X$ is a weak monadic set equality, not
+whole-subtree equality. The term $\operatorname{Accept}_{I,B}$ in
+this displayed specification denotes the finite checker semantics
+of Definition 3.3; no definability of that term is assumed. It is
+not an added predicate in the Badyl–Parys syntax.
+

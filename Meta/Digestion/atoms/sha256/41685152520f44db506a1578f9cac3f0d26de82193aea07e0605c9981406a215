@@ -1,0 +1,18 @@
+**Definition 8.5 (Prefix affine capacity).** Apply the contract of
+Definition 4.1 to the domain $\mathcal M_b$ instead of the closed-loop
+endpoint domain. Thus $\operatorname{cap}^{\rm pre}_{\rm aff}(b)$ is the
+least integer $n$ for which
+
+$$
+y(\kappa,h)=c+D z(\kappa,h)\qquad((\kappa,h)\in\mathcal M_b)
+\tag{8.10}
+$$
+
+with an arbitrary encoder into $\mathbb R^n$, one linear
+$D:\mathbb R^n\to\mathbb R^{10}$ and one offset $c\in\mathbb R^{10}$.
+Both $D$ and $c$ are fixed over all current probabilities, phases and
+histories in this fiber. They may depend on the fixed means and fixed
+preparation. The output metric is the original Euclidean metric on the
+ten doubled expectations. This is a current-output contract, without an
+additional linear continuation contract.
+

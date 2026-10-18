@@ -1,0 +1,29 @@
+**Corollary 17.2 (worst-height conditional-error infimum).** Add the
+requirement
+$\Pr(\mathsf L\mid X=a)=\Pr(\mathsf L\mid X=b)=P>0$.
+Over this class, allowing any record-only decoder, the infimum of
+the worst-height conditional error is
+
+$$
+\inf\max_{x\in\{a,b\}}
+ \Pr(\widehat X\ne x\mid\mathsf L,X=x)
+ =
+\max\left\{0,\frac{P-P_0}{(2-H)P}\right\}.
+\tag{AC.67}
+$$
+
+For $0<P<1$ it is not attained; for $P=1$ a wait with fair retained
+guess attains $1/2$.
+
+Proof. For any decoder let $b_x=\Pr(\mathsf L,\widehat X\ne x\mid X=x)$.
+Its equal-prior wrong mass is $(b_a+b_b)/2\geq B_*$.
+Under the common-yield requirement the average conditional error is
+$(b_a+b_b)/(2P)$, so the maximum is at least $B_*/P$.
+The two constructions in Theorem 17.1 have $b_a=b_b=B_n$ and
+equal yield, proving the infimum. The strict lower bound for finite
+mixtures proves nonattainment. Conditioning on a height-specific live
+event is legitimate since its probability is $P>0$.
+Without the common-yield requirement, $B_*/P$ is the equal-prior
+live Bayes error; it is not an asserted sharp worst-height formula.
+$\square$
+

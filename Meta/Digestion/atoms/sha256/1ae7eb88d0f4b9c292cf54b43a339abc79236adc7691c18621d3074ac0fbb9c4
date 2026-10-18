@@ -1,0 +1,45 @@
+**Proposition 2.6 (Convex optimization and path row recurrence).**
+With $y_i=\log x_i$, the function $\max_SR_x(S)$ is convex
+and coercive in $y\in\mathbb R^V$. On a path its value for a
+fixed $y$ is given by the following three-state recurrence.
+Put
+
+$$
+A_i=a_i(1+e^{y_i}),\qquad D_i=d_i(1+e^{-y_i}),\qquad
+T_i(a,b,c)=D_ib+A_i(1-a)(1-b)(1-c).
+\tag{2.15}
+$$
+
+Use legal pair states $00,01,10$, and let $F_i(a,b)$ be the
+maximum of $\sum_{r=1}^{i-1}T_r(s_{r-1},s_r,s_{r+1})$
+over prefixes ending in $(s_{i-1},s_i)=(a,b)$, with $s_0=0$.
+Impossible prefixes have value $-\infty$. Initialize
+$F_1(0,0)=F_1(0,1)=0$, $F_1(1,0)=-\infty$. Then
+
+$$
+F_{i+1}(b,c)=\max_{\substack{a\in\{0,1\}\\ab=bc=0}}
+\bigl(F_i(a,b)+T_i(a,b,c)\bigr),
+\tag{2.16}
+$$
+
+and
+
+$$
+\max_SR_x(S)=\max_{\substack{a,b\in\{0,1\}\\ab=0}}
+\bigl(F_n(a,b)+T_n(a,b,0)\bigr).
+\tag{2.17}
+$$
+
+Proof. Each row ratio is a sum of positive exponential terms
+and constants, so their finite maximum is convex. The sublevel
+bounds (2.5), after taking logarithms, give coercivity.
+For a legal path word, its occupied and insertible contributions
+are exactly $\sum_iT_i(s_{i-1},s_i,s_{i+1})$. Appending a bit
+settles precisely the previous position's triple contribution.
+This proves (2.16) by induction, and the fixed terminal zero
+settles the last contribution in (2.17). There are five legal
+triples at each internal step. This bounds the number of real
+arithmetic transitions for evaluating a fixed profile; it does
+not bound the precision or iterations needed to minimize it.
+$\square$
+

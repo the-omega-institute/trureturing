@@ -1,0 +1,22 @@
+**Corollary 3.2 (three-depth exclusion on the exact recurrence branch).**
+No pair satisfying (3.1) has $\mathcal J=0$ in the unchanged fixed
+positive-three-depth problem. If it also has both midpoint means
+(1.9), its p loss at the supported depth 3 satisfies
+
+$$
+\int\operatorname{TV}(Q,P_{p,3/8})\,d\nu_p
+\ge\rho_p+\frac{\delta_3}{2}>\rho_p,\qquad
+\delta_3=\frac{344076471}{6553600000000}.
+\tag{3.8}
+$$
+
+**Proof.** The endpoint p event values are distinct, so (1.9) and
+(3.2) force $\theta=1/2$. At $w_{3,1}$ the depth-3 target exceeds
+the larger endpoint mass by the supplied complete-word gap
+$\delta_3$ [SEVEN, (3.3)--(3.4)]. The coordinate triangle identity
+then gives (3.8). A zero-excess pair would supply both boxes and both
+means while requiring the contrary depth-3 budget. The suspended
+depth-3 condition remains part of the original problem; violation
+of the p budget alone is sufficient for this exclusion.
+$\square$
+

@@ -1,0 +1,250 @@
+## 94. 五模式混态、底面张量结构与完整双副本测量
+
+**定义 C-94.1（任意密度算子及固定均值的闭集合）。** 在 C-84.1 的正交五模式空间
+$\mathcal H_5=\operatorname{span}\{|0\rangle,|1\rangle,|2\rangle,|3\rangle,|13\rangle\}$ 上，
+取任意 $\rho\succeq0$、$\operatorname{Tr}\rho=1$，令 $p_s=\langle s|\rho|s\rangle$。
+不要求 $\rho$ 纯，也不要求中模式与底面之间的矩阵元为零。沿用
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad\kappa=p_{13}.
+\tag{C94.1}
+$$
+
+固定 $0<r<1$、$0<X,Y<r$。C-84.1–C-84.2 的概率反解及宽度在此仍为
+
+$$
+\begin{aligned}
+p&=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa),\\
+\kappa_-&=\max(0,X+Y-r),\qquad\kappa_+=\min(X,Y),\\
+w&=\kappa_+-\kappa_-=\min\{X,Y,r-X,r-Y\},\\
+x&=X/r,\qquad y=Y/r,\qquad\nu=w/r=\min\{x,1-x,y,1-y\}.
+\end{aligned}
+\tag{C94.2}
+$$
+
+这里 $\mathfrak D(r,X,Y)$ 指满足这些固定均值的所有五维密度算子，
+允许 $\kappa\in[\kappa_-,\kappa_+]$ 变化并允许合法零对角元。
+这些式子只使用对角非负及迹一，因此适用于任意秩。
+完整混态另有非对角自由度；本集合不等于以 $(\kappa,\chi)$ 为坐标的纯态相位商。
+C-84.3 的 $\mathcal A=2\pi w$ 仍只属于那里指定尺度的纯振幅辛完成，
+不是本混态集合的面积或维数公式。
+
+**定义 C-94.2（条件底面及可分离性）。** 令
+
+$$
+P_{\mathrm b}=|0\rangle\langle0|+|1\rangle\langle1|
++|3\rangle\langle3|+|13\rangle\langle13|.
+$$
+
+以等距嵌入 $\iota:\mathbb C_A^2\otimes\mathbb C_B^2\longrightarrow\mathcal H_5$ 指定
+
+$$
+\iota|00\rangle=|0\rangle,\quad
+\iota|10\rangle=|1\rangle,\quad
+\iota|01\rangle=|3\rangle,\quad
+\iota|11\rangle=|13\rangle.
+\tag{C94.3}
+$$
+
+于是 $\iota^\dagger\iota=I_4$、$\iota\iota^\dagger=P_{\mathrm b}$，定义
+
+$$
+\sigma=\frac{\iota^\dagger\rho\iota}{r},\qquad
+\iota\sigma\iota^\dagger=\frac{P_{\mathrm b}\rho P_{\mathrm b}}r,
+\qquad\sigma_A=\operatorname{Tr}_B\sigma,\quad
+\sigma_B=\operatorname{Tr}_A\sigma.
+\tag{C94.4}
+$$
+
+$\sigma$ 是正半定迹一算子，因为压缩保持正性且
+$\operatorname{Tr}(P_{\mathrm b}\rho)=r$。按标准张量基 $(00,01,10,11)$，
+其对角为 $(p_0,p_3,p_1,p_{13})/r$，并有
+
+$$
+(\sigma_A)_{ac}=\sum_b\sigma_{ab,cb},\qquad
+(\sigma_B)_{bd}=\sum_a\sigma_{ab,ad},\qquad
+\operatorname{diag}\sigma_A=(1-x,x),\quad
+\operatorname{diag}\sigma_B=(1-y,y).
+\tag{C94.5}
+$$
+
+本组“底面可分离”恰指存在有限分解
+
+$$
+\sigma=\sum_j t_j\alpha_j\otimes\beta_j,
+\qquad t_j\ge0,\quad\sum_jt_j=1,
+\tag{C94.6}
+$$
+
+其中 $\alpha_j,\beta_j$ 各为二阶密度算子。
+这一定义的对象是已指定的底面两因子；五维载体本身没有被识别为两个物理子系统。
+
+**假设 C-94.3（实际成对输入及读口）。** 一次完整试验实际接收
+$\rho\otimes\rho$，即同一密度算子的两份独立制备，并允许执行下述联合测量。
+相同的两个单份边缘不作为乘积输入的替代条件；也不假设未知态克隆。
+此处只规定单轮来源，跨轮独立同分布另在取得成本定理中规定。
+
+在 $\mathcal K=(\mathbb C_A^2\otimes\mathbb C_B^2)^{\otimes2}$ 上，写基向量为
+$|a,b,a',b'\rangle$，定义
+
+$$
+F_A|a,b,a',b'\rangle=|a',b,a,b'\rangle,\qquad
+F_B|a,b,a',b'\rangle=|a,b',a',b\rangle.
+\tag{C94.7}
+$$
+
+等价地，在重排
+$R|a,b,a',b'\rangle=|a,a'\rangle\otimes|b,b'\rangle$ 后，
+$F_A$ 是第一对因子的交换，$F_B$ 是第二对的交换。
+二者自伴、平方为恒等，且交换不同坐标所以彼此对易。
+令 $s,t\in\{+1,-1\}$，定义
+
+$$
+P_s^A=(I+sF_A)/2,\qquad P_t^B=(I+tF_B)/2,
+\qquad\Pi_{st}=P_s^AP_t^B.
+\tag{C94.8}
+$$
+
+它们满足 $\Pi_{st}^\dagger=\Pi_{st}=\Pi_{st}^2$；
+若符号对不同，至少一个因子的异号投影相乘为零，故四个投影正交，且
+$\sum_{s,t}\Pi_{st}=I_{16}$。令 $J=\iota\otimes\iota$，实际五维双副本测量的效果为
+
+$$
+Q_{st}=J\Pi_{st}J^\dagger,\qquad
+Q_{\mathrm f}=I_{25}-P_{\mathrm b}\otimes P_{\mathrm b}.
+\tag{C94.9}
+$$
+
+因 $J^\dagger J=I_{16}$，四个 $Q_{st}$ 仍是互相正交的正投影，
+其和为 $JJ^\dagger=P_{\mathrm b}\otimes P_{\mathrm b}$，与正投影 $Q_{\mathrm f}$ 相加为恒等。
+故这是包含底面选择失败在内的完整五结果测量。
+定义未条件化概率
+
+$$
+q_{st}=\operatorname{Tr}[Q_{st}(\rho\otimes\rho)],\qquad
+q_{\mathrm f}=\operatorname{Tr}[Q_{\mathrm f}(\rho\otimes\rho)].
+\tag{C94.10}
+$$
+
+这里的“失败”包括恰一份及两份都未进入底面的全部情况。
+
+**定理 C-94.4（五模式测量的压缩、四符号概率及纯度字典）。** 在假设 C-94.3 下，
+令 $\mathcal P=\operatorname{Tr}\sigma^2$、
+$\mathcal P_A=\operatorname{Tr}\sigma_A^2$、$\mathcal P_B=\operatorname{Tr}\sigma_B^2$。
+上述实际测量满足
+
+$$
+q_{st}=\frac{r^2}{4}(1+s\mathcal P_A+t\mathcal P_B+st\mathcal P),\qquad
+\sum_{s,t}q_{st}=r^2,\quad q_{\mathrm f}=1-r^2.
+\tag{C94.11}
+$$
+
+并且 C-91.2 的归一化向量
+
+$$
+|\Omega\rangle=\tfrac12(|0,13\rangle+|13,0\rangle-|1,3\rangle-|3,1\rangle)
+\tag{C94.12}
+$$
+
+满足 $Q_{--}=|\Omega\rangle\langle\Omega|$，从而 $q_\Omega=q_{--}$。
+
+证明。首先按实际输入作双侧压缩：
+
+$$
+\begin{aligned}
+&(P_{\mathrm b}\otimes P_{\mathrm b})(\rho\otimes\rho)
+(P_{\mathrm b}\otimes P_{\mathrm b})\\
+&\hspace{12mm}=(P_{\mathrm b}\rho P_{\mathrm b})\otimes(P_{\mathrm b}\rho P_{\mathrm b})
+=r^2J(\sigma\otimes\sigma)J^\dagger.
+\end{aligned}
+\tag{C94.13}
+$$
+
+取迹给两份都在底面的概率 $r^2$，取各 $Q_{st}$ 的迹给
+$q_{st}=r^2\operatorname{Tr}[\Pi_{st}(\sigma\otimes\sigma)]$。
+这一步没有交换 $\rho$ 与 $P_{\mathrm b}$，所以没有假设
+$[\rho,P_{\mathrm b}]=0$；任意底面—中位相干都已被实际投影正确处理。
+
+二元交换的反对称空间是一维，由
+$|\varepsilon\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 张成。
+因此 $R\Pi_{--}R^\dagger$ 是
+$|\varepsilon\rangle_{AA'}\otimes|\varepsilon\rangle_{BB'}$ 的秩一投影。
+将其四项逆重排并用 $J$ 嵌入，依次得到
+$\tfrac12(|0,13\rangle-|3,1\rangle-|1,3\rangle+|13,0\rangle)$，正是 $\Omega$。
+四个不同有序基向量正交，所以其范数平方为 $4/4=1$。
+
+为展开每个交换迹，令矩阵元为 $\sigma_{ab,cd}$，所有指标遍历 $\{0,1\}$。
+按定义直接有
+
+$$
+\begin{aligned}
+\operatorname{Tr}[F_A(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cb,ab}\sigma_{ad,cd}
+=\sum_{a,c}(\sigma_A)_{ca}(\sigma_A)_{ac}=\mathcal P_A,\\
+\operatorname{Tr}[F_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{ad,ab}\sigma_{cb,cd}
+=\sum_{b,d}(\sigma_B)_{db}(\sigma_B)_{bd}=\mathcal P_B,\\
+\operatorname{Tr}[F_AF_B(\sigma\otimes\sigma)]
+&=\sum_{a,b,c,d}\sigma_{cd,ab}\sigma_{ab,cd}=\mathcal P,\\
+\operatorname{Tr}(\sigma\otimes\sigma)&=1.
+\end{aligned}
+\tag{C94.14}
+$$
+
+$F_AF_B$ 在第三式中交换完整的两份底面。把
+$\Pi_{st}=(I+sF_A+tF_B+stF_AF_B)/4$ 代入即得
+
+$$
+\begin{aligned}
+q_{--}&=\tfrac{r^2}4(1-\mathcal P_A-\mathcal P_B+\mathcal P),\\
+q_{-+}&=\tfrac{r^2}4(1-\mathcal P_A+\mathcal P_B-\mathcal P),\\
+q_{+-}&=\tfrac{r^2}4(1+\mathcal P_A-\mathcal P_B-\mathcal P),\\
+q_{++}&=\tfrac{r^2}4(1+\mathcal P_A+\mathcal P_B+\mathcal P).
+\end{aligned}
+\tag{C94.15}
+$$
+
+相加只余 $r^2$，其补数就是失败概率。证毕。
+
+本推导消费经典交换—纯度恒等式。Mintert–Buchleitner，
+*An observable entanglement measure for mixed quantum states*，
+[quant-ph/0605250v3](https://arxiv.org/abs/quant-ph/0605250v3)，式 (1)–(3)，
+分别给纯态 $4P_-^A\otimes P_-^B$、混态 concurrence 下界和整体—局部纯度差；
+这里的 $J$、五维效果及 $r^2$ 因子明确了这些中间结构在当前来源中的参数。
+
+**命题 C-94.5（纯态极限、经典混合和被遗漏的混合性）。** 若条件底面纯，
+写 $|\phi\rangle=\sum_{a,b}B_{ab}|ab\rangle$，$\operatorname{Tr}BB^\dagger=1$，
+则 $\mathcal P=1$，两约化谱相同，且
+
+$$
+\mathcal C(\phi)=2|\det B|,\qquad
+q_{--}=\frac{r^2\mathcal C(\phi)^2}{4},\qquad q_{-+}=q_{+-}=0.
+\tag{C94.16}
+$$
+
+对一般条件混态则只有
+
+$$
+q_{-+}+q_{+-}=\frac{r^2}{2}(1-\mathcal P),
+\tag{C94.17}
+$$
+
+不能用 $q_{--}=r^2\mathcal C^2/4$ 定义混态 concurrence。
+
+证明。纯态的约化矩阵为 $BB^\dagger$ 和 $B^{\mathsf T}\bar B$，
+其相同非零谱由奇异值给出；二阶迹一矩阵满足
+$\operatorname{Tr}\sigma_A^2=1-2\det\sigma_A=1-2|\det B|^2$。
+代入式 (C94.15) 即得纯态式，式 (C94.17) 则由两个异号式相加得到。
+为展示混态边界，取
+
+$$
+\sigma_{\rm cl}=\tfrac12|00\rangle\langle00|+\tfrac12|11\rangle\langle11|.
+\tag{C94.18}
+$$
+
+它是纯乘积态混合，故可分离；其整体及两个局部纯度都是 $1/2$。
+所以 $q_{--}=q_{-+}=q_{+-}=r^2/8$、$q_{++}=5r^2/8$。
+在任意 $r>0$ 时，$q_{--}$ 为正却无底面纠缠。
+经典混合和纯态不可分解性都能贡献同一事件，式 (C94.17) 保留了区分它们所需的一项信息。证毕。
+

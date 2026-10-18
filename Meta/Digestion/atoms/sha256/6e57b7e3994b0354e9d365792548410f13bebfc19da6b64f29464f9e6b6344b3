@@ -1,0 +1,30 @@
+## 294. Even multiplicities in the five cyclic-type family
+
+This is a **structural obstruction only for the five cyclic types**
+`sigma_i=(i,i+1,i+2,i+3,i+1,i+2)`, `i mod 5`, retaining their five distinct global
+label names. It is not a nonexistence theorem for six-tetrahedron paired examples.
+
+The face-color triples are `T_i={i,i+1,i+2}`. A copy of type `i` has two faces of
+triple `T_i` and two of triple `T_(i+1)`. Every allowed color-preserving map
+between faces with the same triple extends to an even permutation of the four
+listed vertices. For same-type maps the possibilities are identity or `2143`.
+For a low face of type `i` mapped to a high face of type `i-1`, the four full
+maps are `4213`, `3124`, `2431`, `1342`, all even; reverse maps are even too.
+These exhaust the possibilities because each triangle has three distinct colors.
+
+Suppose an orientable face pairing exists, and let `d_i` be the number of
+positive copies minus the number of negative copies of type `i`, where signs
+are relative to its listed vertex order. Every allowed face map is even, so
+it must pair opposite signs. Counting faces of triple `T_i` gives
+
+`2*d_i + 2*d_(i-1) = 0`.
+
+Thus `d_i=-d_(i-1)` around an odd five-cycle, forcing every `d_i=0`.
+Every type multiplicity must be even. In particular `(2,1,1,1,1)` is impossible
+in this specified family, independent of the face matching choices.
+If all five original types occur and each nominal color is to be exactly one
+actual global edge, each type occurs at least twice and every edge degree is
+at least 12. This five-type family, with all five types present, therefore
+cannot give a degree below nine. The eight-tetrahedron example instead uses
+the four types in Section 289.
+

@@ -1,0 +1,58 @@
+**Theorem 4.1 (native simultaneous minimum-depth decision).** Given
+$(\Phi,\mathbf t)$ of Definition 1.1, an effective terminating procedure
+returns exactly one of the following three kinds of result.
+
+1. **EMPTY:** $\operatorname{Sol}(\Phi)=\varnothing$.
+2. **DEEP:** for every natural $h$ it constructs a complete original
+   finite assignment $\mathbf x_h$ satisfying $\Phi$ and
+   $\mu(t_i(\mathbf x_h))>h$ for every $i$.
+3. **BARRIER:** $\operatorname{Sol}(\Phi)\ne\varnothing$, an original
+   solution, and a computable natural $C$ such that
+   $m_{\mathbf t}(\mathbf x)\le C$ for every original solution.
+
+The bound is on the minimum of the designated depths. It is not claimed
+optimal. The procedure does not need a supplied prefix, source-size
+bound or physical budget.
+
+Proof. Form the finite branch list of §2, with all output definitions,
+and decide each branch's feasibility by NSF. If none is feasible,
+Lemma 2.2 proves EMPTY in both source directions.
+
+Otherwise inspect $A_b$ on each feasible branch. If some $A_b$ is empty,
+use Lemma 3.4 on that branch. For a given $h$, choose
+
+$$
+k=\max(k_0,2h+2).
+\tag{NLC.11}
+$$
+
+Every primitive leaf of every output is either an explicit free scalar
+or lies inside one of the constant-rank markers: there is no anchored
+output occurrence by the branch test. Hence its rank is at least $k$.
+Formula (NLC.9) gives minimum native leaf depth at least
+$\lfloor k/2\rfloor\ge h+1$ for every output. Lemma 3.4 supplies all
+original variables and all constraints, proving DEEP with effective
+finite witnesses for every requested $h$.
+
+If every feasible branch has a nonempty anchor set, compute
+
+$$
+C=\max_{b\text{ feasible}} C_b.
+\tag{NLC.12}
+$$
+
+Any original solution chooses one of these branches by Lemma 2.2.
+Lemma 3.3 gives its bound $C_b\le C$, including original solutions
+not belonging to any marker witness family. A feasible branch supplies
+the promised original solution. This proves BARRIER.
+
+The three outcomes are exhaustive and mutually exclusive: EMPTY has
+no solutions, and choosing $h=C$ makes DEEP incompatible with BARRIER.
+Termination uses only finitely many Boolean, collapse and negative
+choices, finite shape unification, finite equation-graph calculations
+and finite anchor inspection. No increasing-depth loop is used for the
+classification, and no appeal to finite image, Dickson finiteness or
+compactness supplies its stopping rule. The construction at (NLC.11)
+is invoked only after the classification has already returned DEEP.
+$\square$
+

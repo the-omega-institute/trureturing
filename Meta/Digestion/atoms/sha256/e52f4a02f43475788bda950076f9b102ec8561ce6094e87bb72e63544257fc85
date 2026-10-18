@@ -1,0 +1,12 @@
+**Proposition 3.3 (arbitrary further signed information).** Once a core
+certificate is available, arbitrary additional finite literal records,
+signed guarded relations and finite prefix-free target cuts are permitted.
+They require no additional atomicity or synchronous-comparison premise.
+The representation (CAR.13) retains all these records jointly.
+
+Proof. The previous core and its certificate remain among the finite
+recognizer choices. Extra records only restrict $S_\eta$ and the target
+cut does not occur in its construction. Theorem 3.2 imposes the records
+in their original finite-tree meanings. Their effective interpretation,
+including arbitrary whole-subtree comparisons, is proved next. $\square$
+

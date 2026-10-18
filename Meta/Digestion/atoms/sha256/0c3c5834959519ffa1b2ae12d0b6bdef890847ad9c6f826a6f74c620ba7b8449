@@ -1,0 +1,28 @@
+**Proposition 9.1 (a nonregular selected source fiber).** Even at
+fixed epoch zero, a complete selected-row source fiber need not be
+an ordinary regular tree language.
+
+Proof. Let $A$ record the parity of total leaf count, with both
+leaf states $1$, transition addition modulo two, and $F=\{1\}$.
+Consider $P=\{L,R\}$, exterior
+$C=\langle\square_L,\square_R\rangle$, and a single shared class.
+The exact epoch-zero fiber is
+
+$$
+\{\langle t,t\rangle:t\in\mathcal T,
+                        \ N_\alpha(t)+N_\beta(t)\text{ odd}\}.
+\tag{NRF.41}
+$$
+
+Both holes accept and their parent has even leaf count and rejects,
+so Theorem 2.2 proves the displayed equality of fibers. There are
+infinitely many distinct odd-leaf trees. Any finite deterministic
+bottom-up recognizer for (NRF.41) assigns the same state to two
+distinct such trees $s,t$. Acceptance of $\langle s,s\rangle$
+then forces acceptance of $\langle s,t\rangle$, a contradiction.
+Determinization of ordinary finite tree automata extends this
+argument to nondeterministic recognizers [ENG, Theorem 3.8][ENG].
+This is the diagonal obstruction of [BCGJV, Example 3.3][BCGJV]
+inside the precise native selection family. It does not contradict
+the finite constrained presentation (NRF.22). $\square$
+

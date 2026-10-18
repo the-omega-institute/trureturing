@@ -1,0 +1,35 @@
+**Definition 1.3 (Original decoder coordinates).** Use the edge order
+
+$$
+\mathcal E=((0,1),(0,2),(0,3),(1,13),(3,13)),\qquad
+\delta_{ij}=\theta_i^{\rm in}-\theta_j^{\rm in}.
+$$
+
+For each edge, the two observables are
+
+$$
+A_{ij}=|i\rangle\langle j|+|j\rangle\langle i|,\qquad
+B_{ij}=-i|i\rangle\langle j|+i|j\rangle\langle i|.
+$$
+
+Let $y:\mathcal M\to\mathbb R^{10}$ concatenate their expectation
+pairs in this order. Put
+
+$$
+U(a)=\binom{\cos a}{\sin a},\quad
+R_a=\begin{pmatrix}\cos a&-\sin a\\\sin a&\cos a\end{pmatrix},\quad
+J=\operatorname{diag}(1,-1),
+$$
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B(k)=2\sqrt{Zk},
+$$
+
+$$
+D_0(a,b)=(a,b,a,Ja,Ja),\qquad
+O=\bigoplus_{e\in\mathcal E}R_{\delta_e},\qquad D=OD_0.
+$$
+
+The letters $a,b$ in $D_0$ denote arbitrary planar vectors. The error
+norm is the original Euclidean norm on all ten entries.
+

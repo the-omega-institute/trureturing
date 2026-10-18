@@ -1,0 +1,21 @@
+**Definition 6.2 (supplier and consumer binding).** The local completion
+interface has the following actual consumers; their operation remains
+part of the original run.
+
+| Material or boundary | Supplier and current consumer |
+| --- | --- |
+| Actual payload bit | CAP 4.6 and ARC $F^A$ IN(5), then the original WR(13,5), payload MR and counter MR; 70 instead uses its own retained ingress and native EX/WR path. |
+| Code and initial control | ARC 4.2–4.3's first bootstrap, captured $101U(\delta)\Delta(G)$, second $E(G)$ bootstrap, empty-bank prelude and actual asset imports. $E$ and $\Delta$ have different grammars. |
+| Core phase and authority | The extra row-bound continuing mechanism; ARC 6.2's current native TOKs remain original admission conditions. Half-written callback slots cannot replace the continuing mechanism. |
+| Head and receipt | UAS 2.2–2.4's actual ordinary head, both meter lanes and one append. The original meter readout consumes completed original receipts, not an invented fine-event receipt chain. |
+| Historical reference and return | ARC 6.4–7.4's Boundary74, Prefix74, Issue, acquired $c,p$, sender 71, mailbox 72 and receiver 73, with actual reads, print/check/ACK/TOK and Ready return. Step74 describes a historical OUT; it does not perform that live output. |
+| Original INITIAL continuation | ARC 9.2's 00 branch loans the original workspace to the actual parked client. Output on 31 returns via 49 to producer 21. Original snapshot/dependencies and SEG-P1 reach verifier 32–39 via 50, with CAP descriptors on 33. SEG-R1 reaches consumer 40–47 via 51; binding checks, target copy, OUT, ACK and return precede the actual global halt CTL. |
+
+Existing native historical codecs consume completed original endpoints.
+They do not already serialize an inserted fine phase, acquire its core
+snapshot or grant a new receiver callback. A present owner route and
+an installed fine-cut codec/driver would have to supply those concrete
+operands under current permissions. The local repairs put continuation
+and publication at the core writer; they do not move that responsibility
+to the verifier, INITIAL consumer or historical Image reader.
+

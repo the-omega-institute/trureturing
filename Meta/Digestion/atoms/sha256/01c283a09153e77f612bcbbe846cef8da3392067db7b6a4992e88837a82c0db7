@@ -1,0 +1,17 @@
+**Definition 4.4 (rank-only refinements).** A rank region is a structural
+position whose displayed subtemplate contains no residual occurrence.
+It includes the atomic cells and fixed ground exterior pieces. Permit
+additional literals at fixed epochs and arbitrary fixed suffixes below
+such regions, and additional positive links between two such endpoints.
+Their values and reach depend only on $\mathbf n$. Apply [CAR, Lemma
+4.1][CAR] to these residual-free templates to obtain a Presburger formula
+$K(\mathbf n)$ for **all** these records. In a positive link its formula
+contains both endpoint guards and its equality. In a literal it includes
+the precise reply, with absence allowed only when that is the retained
+literal reply. Let $K$ be true for the empty refinement list.
+
+This permits arbitrary fixed ground restrictions and actual rank tests
+within the family, without permitting a new restriction on a residual
+subtree. An optional external rank policy is a further mathematical
+restriction; it is not an extra acquired rank port.
+

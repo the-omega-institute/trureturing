@@ -1,0 +1,47 @@
+### 3.5 四阶准备泛函
+
+对非空偶数大小的 $S$，取任意固定实系数集合 $a_S$，并考虑 $m_S=a_Sx^2+O(x^4)$、奇数矩全零的准备。Gram 公式给出
+
+$$
+H=xA+x^2B+x^3C+O(x^4).
+\tag{3.9}
+$$
+
+$B$ 实对称、对角为零，只支撑在偶数 Hamming 距离；$C$ 只支撑在至少为三的奇数 Hamming 距离。因此 $\operatorname{Tr}(AB)=\operatorname{Tr}(AC)=0$。合法图为二部图，故 $\operatorname{Tr}(A^3)=0$。
+
+对 $b\ne c$、$D=b\oplus c$，二阶矩阵精确为
+
+$$
+B_{bc}=
+\begin{cases}
+\mathbf1_{\{|D|=2\}}+(-1)^{|D|/2}s_D(b)a_D,
+&|D|\text{ 为偶数},\\
+0,&|D|\text{ 为奇数}.
+\end{cases}
+\tag{3.10}
+$$
+
+代入式（3.5）得到
+
+$$
+\begin{aligned}
+E&=C_nx^2+Q(B)x^4+O(x^5),\\
+Q(B)&=\frac{\operatorname{Tr}(B^2)}{4M}
+-\frac{3\operatorname{Tr}(A^2B)}{8M}
++\frac{5\operatorname{Tr}(A^4)-\sum_b d_b^2}{64M}.
+\end{aligned}
+\tag{3.11}
+$$
+
+对解析偶最优分支，余项提高为 $O_n(x^6)$。Walsh 反演说明任意固定集合 $a_S$ 在充分小 $x$ 时都可行。把精确全局最优值与每个这样的试验准备比较，最优分支的系数集合必须在全部这些实 $a_S$ 上最小化 $Q(B)$。这一比较没有限制原协议类，因为 §3.3 已将每个全局最优准备局部化。
+
+由于 $\operatorname{diag}(B)=0$，$Q(B)$ 中依赖准备的部分在相差一个常数后为
+
+$$
+\frac1{4M}\left\|B-\frac34
+\bigl(A^2-\operatorname{diag}(d)\bigr)\right\|_{\mathrm{HS}}^2.
+\tag{3.12}
+$$
+
+因此可按对称差集合分别最小化，随后还须检查这些系数能否由一个准备同时实现。
+

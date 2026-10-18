@@ -1,0 +1,62 @@
+**Theorem 60.2 (Restricted intrinsic cap criterion with the original carrier retained).** Under (60.1), use the actual signature space $Q$ and every original label, and apply the target refinement (54.3)--(54.5) on $\mathcal P(J)$ to the vectors $p_y$. Denote its stable values by $K_{\infty,J}^{\eta}(q)$. Then, for every $\eta\in[0,1]$,
+
+$$
+\begin{aligned}
+&\text{a lawful original-tape preparation within cap }\eta\text{ exists}\\
+&\qquad\Longleftrightarrow\quad
+K_{\infty,J}^{\eta}(q)\ne\varnothing\quad\text{for every actual }q\in Q.
+\end{aligned}
+\tag{60.3}
+$$
+
+Every occupied-cylinder radius equals that of the vector targets, so the cap $\eta=R_\mu$ in (60.3) gives the endpoint criterion with the original sharp value. If $J$ is finite, that endpoint is always attained. The refinement and its countable-carrier selection theorem are reused from Section 54; the additional assertion is their lossless lift to this subclass of arbitrary original tape spaces.
+
+**Proof.** On a positive-mass $\mathcal G$-atom, each real $\mathcal G$-measurable function is constant almost everywhere: its rational sublevel sets have either zero or full atom mass, which determines one essential value. Applying this to all $f_i$ and all atoms, with one countable union of exceptional null sets, gives
+
+$$
+\mu_y=\sum_{j\in J}p_y(j)\kappa_j.
+\tag{60.4}
+$$
+
+In particular every original target vector is a normalized probability. More generally define
+
+$$
+\mathcal L(u)=\sum_{j\in J}u(j)\kappa_j\qquad(u\in\mathcal P(J)).
+\tag{60.5}
+$$
+
+The same atom argument identifies $P_{\mathcal G}$ exactly with these mixtures. For probabilities $u,v$, an event $A\in\mathcal F$ gives discrepancy $\sum_j(u(j)-v(j))\kappa_j(A)$, with every coefficient $\kappa_j(A)$ between zero and one. Its absolute value is bounded by half the sum of the absolute vector discrepancies. The measurable union of the $A_j$ for which $u(j)>v(j)$ achieves the positive discrepancy. Therefore
+
+$$
+\operatorname{TV}(\mathcal L(u),\mathcal L(v))
+=\operatorname{TV}(u,v)=\frac12\sum_{j\in J}|u(j)-v(j)|.
+\tag{60.6}
+$$
+
+Define a measurable index map $T:\Theta\to J$ by $T=j$ on $A_j$, and send the measurable null remainder to one fixed $j_0\in J$. Countability of the partition makes preimages of all subsets of $J$ measurable. Equation (60.4) gives $T_*\mu_y=p_y$, and preimages in the event definition give
+
+$$
+\operatorname{TV}(T_*v,p_y)\le\operatorname{TV}(v,\mu_y)
+\qquad(v\in\mathcal P(\Theta,\mathcal F)).
+\tag{60.7}
+$$
+
+Thus compression of arbitrary centers and the isometric lift of vector centers prove equality of the radius in each unchanged occupied cylinder. This also follows from (59.4) and (60.6), and preserves the order $\sup_x\inf_m\inf_v\sup_y$ without requiring attained local centers.
+
+A lawful original-tape cap preparation can be compressed by declaring $T$ of its terminal tape. This adds a measurable terminal operation and no source observation. Its index laws have the same cap or a smaller one by (60.7), and its sourcewise almost-sure finite stopping is unchanged. The necessity of Theorem 54.2 therefore gives the all-source nonemptiness condition in (60.3).
+
+Conversely, suppose all stable vector fibers are nonempty. Theorem 54.2 supplies a TV-continuous selected vector family $u([y])$ within cap $\eta$ of every original $p_y$, and acquires its index $J_y$ by the finite-prime uniform-seed certificates (54.11). In one common seed, include that uniform coordinate and independent original-tape coordinates $W_j$ of laws $\kappa_j$. The index acquisition uses only the uniform coordinate and actual prime answers, so it is independent of the $W_j$. At its finite termination hand $W_{J_y}$ to the unchanged consumer. For every $A\in\mathcal F$,
+
+$$
+\mathsf P\{W_{J_y}\in A\}
+=\sum_{j\in J}\mathsf P\{J_y=j\}\kappa_j(A)
+=\mathcal L(u([y]))(A).
+\tag{60.8}
+$$
+
+The output preimage is the countable union of $\{J_y=j\}\cap\{W_j\in A\}$, hence is measurable. Normalization is exact; index acquisition terminates almost surely at each original source, and the handoff is one further finite operation. The original consumer subsequently runs on that source. Equation (60.6) proves the cap against every fixed $\mu_y$. No constancy of the consumer within an atom is needed, because (60.8) identifies its entire tape law on $\mathcal F$.
+
+The source set in this application of Section 54 is still $X$: in particular its initial vector fiber intersects the cap balls for every label with signature $q$. All occupied prefix neighborhoods and all-source gates are retained. The index construction is only an auxiliary representation; its final output is the actual original tape. For finite $J$, reuse Theorem 51.1 on that finite index carrier and the same lift to attain the original $R_\mu$. The common product seed may still have diffuse tape coordinates and supplies no common finite execution bound. $\square$
+
+Condition (60.1) can equivalently be checked by essential countability of the joint likelihood profile $(f_i(\theta))_{i\ge1}$. Indeed each atom makes all its coordinates constant outside one common null set, so the profile has countable range almost everywhere. Conversely, if it has countable range on a full-measure measurable set, its positive-mass fibers are measurable by countably many coordinate equalities. These fibers cover almost all tapes and are atoms of the generated sigma algebra, since every generating level set is constant on each fiber. This equivalence concerns likelihood information, not countability of the original tapes. Domination, standard Borel structure and separable $L^1$ alone do not imply the condition.
+

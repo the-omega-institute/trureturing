@@ -1,0 +1,36 @@
+**Theorem 4.4 (complete-row consumer).** Replace the guard search in
+Construction 2.4's row variant by Construction 4.1. After its
+successful anchor Read, keep the chosen guard fields unchanged, run the
+unchanged CWS body, and reread that guard. On equality return
+
+$$
+\bigl(R_P(U_v),a,e,z\bigr),\qquad z=2|a|+e=m(U_v)
+\tag{AAR.12}
+$$
+
+at the final guard validation $v$. On disagreement discard the entire
+candidate and restart the level scan at zero. Optional output modes
+retain only the scalar and row, or only the anchor and row; the mode
+is a declared public input. For every finite source and every finite
+prefix-free $P$ this is safe and has finite-interference liveness.
+
+Proof. Theorem 4.2 gives a minimum certificate at the first guard
+Read. Equal leaf validation excludes every update from that Read
+through the row body and final validation. Thus both the minimum
+and complete row hold at $v$. The CWS traversal and comparisons
+preserve reached holes, concrete blocking leaves and every partition
+bit under this stationary interval. They are finite even in failed
+attempts under finite interference. A failed final validation
+encloses an update; its interval starts after every failed-beta
+interval in that scan and ends before the next attempt starts.
+All such intervals are disjoint, so there are at most $b$ outer
+failures when $b$ updates occur. After the last update a finite
+attempt succeeds. Cleanup and Return are finite paid operations;
+they do not relocate the validation. $\square$
+
+No CWS §§8–12 routing extension is invoked to change its protected
+decoded guard or control. If additional routing is introduced, it
+must preserve this new algorithm's actual state and separately
+satisfy that supplier's operation and cleanup obligations. The
+protected-entry scheduling variant in CNA is not used.
+

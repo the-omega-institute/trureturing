@@ -1,0 +1,49 @@
+**Definition 3.1 (actual acquired mass).** For $s\in[0,1]$ prescribe
+on every five-mode input the binary effects
+
+$$
+F_r(s)=\frac{I_5+r s\kappa EX_{01}E^\dagger}{2},\qquad
+X_{01}=|0\rangle\langle1|+|1\rangle\langle0|,\qquad r=\pm1 .
+\tag{QO.13}
+$$
+
+A competitor has any finite actually generated accessible classical
+alphabet $\Xi$, report function $r(\xi)$, finite joint fibre dimensions
+$d_\xi\geq1$, common CP encoders $\mathcal C_\xi:M_5\to M_{d_\xi}$
+and common full-output CPTP decoders $\mathcal R_\xi$, satisfying
+
+$$
+\sum_\xi\mathcal C_\xi^\dagger(I)=I_5,\quad
+\sum_{\xi:r(\xi)=r}\mathcal C_\xi^\dagger(I)=F_r(s),\quad
+\sum_\xi\mathcal R_\xi\mathcal C_\xi=\Phi_* .
+\tag{QO.14}
+$$
+
+Independent report coins can be absorbed into generated labels.
+The whole future-accessible input-dependent quantum system is counted
+jointly: specimen, memory, quantum controller, accessible environment,
+returned systems and entanglement shares. A coherent flag counts as
+quantum until an actual classical direct sum is generated. Other dilation
+systems are permanently inaccessible before the cut. Passive references
+are inaccessible to execution. There is no prior, sensor, readable
+history, helper, bypass, hidden share, extra specimen or postselection.
+Every decoder is TP on its entire carrier; its live restriction is
+only TNI.
+
+Define
+
+$$
+G_{\rm acq}=\sum_{\xi:d_\xi\geq3}\mathcal C_\xi^\dagger(I),\qquad
+E_s(\sigma)=\inf_{\text{(QO.14)}}\operatorname{tr}(G_{\rm acq}\sigma).
+\tag{QO.15}
+$$
+
+This is unnormalized acquired mass, including high acquisition later
+failing. For supported $\rho$ abbreviate
+$E_s(\rho)=E_s(E\rho E^\dagger)$. A public selected test input and
+strength may determine the fixed instrument before execution; that
+instrument is still common on all unknown inputs. Separate selected
+minima are not a common all-input minimizer. The lower arguments impose
+no real, covariant, isometric, pure, wholly-live, JR-conditioned or
+chosen-failure restriction.
+

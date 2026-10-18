@@ -1,0 +1,74 @@
+**命题 10.5（三体接缝及其线性独立性）。** 在 $\mathcal I_3$ 上定义
+
+$$
+T=R_AZ^{\rm sf}_BL_C+L_AZ^{\rm sf}_BR_C.
+$$
+
+它是 Hermitian 算子，并且
+
+$$
+[h_{BC},n_C]=R_BL_C-L_BR_C,
+\qquad [h_{AB},[h_{BC},n_C]]=T.
+$$
+
+$T$ 的每个单因子偏迹为零，$\operatorname{Tr}T^2=4$，所以它不在所有至多二体算子的线性张成空间中。
+
+证明。二态矩阵的直接乘法给
+
+$$
+RL=n,\quad LR=I-n,\quad [L,R]=Z^{\rm sf},
+\quad R^2=L^2=0,
+$$
+
+$$
+[R,n]=-R,\qquad[L,n]=L,
+\qquad RZ^{\rm sf}=R,\quad Z^{\rm sf}R=-R,
+$$
+
+$$
+LZ^{\rm sf}=-L,\qquad Z^{\rm sf}L=L.
+$$
+
+异点因子彼此交换。首先只在 $C$ 点使用 $[L,n]=L$、$[R,n]=-R$，得到第一个交换子。再展开第二个交换子，两个含 $R_B^2$ 或 $L_B^2$ 的项为零，其余为
+
+$$
+[R_AL_B,R_BL_C]=R_A[L_B,R_B]L_C=R_AZ^{\rm sf}_BL_C,
+$$
+
+$$
+[L_AR_B,-L_BR_C]=-L_A[R_B,L_B]R_C=L_AZ^{\rm sf}_BR_C.
+$$
+
+两项互为伴随，故和为 $T=T^\dagger$。
+
+由于 $\operatorname{Tr}R=\operatorname{Tr}L=\operatorname{Tr}Z^{\rm sf}=0$，对 $A,B,C$ 中任何一个因子取偏迹，$T$ 的两项都给零。令
+
+$$
+\mathcal S=\{001,011,100,110\}.
+$$
+
+逐基作用为
+
+$$
+T|001\rangle=|100\rangle,\quad T|100\rangle=|001\rangle,
+$$
+
+$$
+T|011\rangle=-|110\rangle,\quad T|110\rangle=-|011\rangle,
+$$
+
+且消去其余四个基向量。因此
+
+$$
+T^2=\sum_{r\in\mathcal S}|r\rangle\langle r|,
+\qquad \operatorname{Tr}T^2=4.
+$$
+
+若 $O$ 只支撑于至多两个因子，选不在其支撑中的点 $j$，有
+
+$$
+\operatorname{Tr}(TO)=\operatorname{Tr}((\operatorname{Tr}_jT)O)=0.
+$$
+
+这里右边的 $O$ 表示删去该单位因子后的算子。同理 $T$ 正交于所有这类算子的和。若 $T$ 自己属于该张成空间，就应有 $\operatorname{Tr}T^2=0$，与四矛盾。这不仅证明 $T\ne0$，还证明它不能由任意二体算子的线性组合代替。证毕。
+

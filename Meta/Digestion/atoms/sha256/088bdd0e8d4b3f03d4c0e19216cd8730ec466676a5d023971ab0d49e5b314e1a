@@ -1,0 +1,17 @@
+**定义 C-133.1（边缘域与同边缘子域）。** 对同一个 $\mathcal F$，定义
+
+$$
+\begin{aligned}
+\mathcal M_n(\mathcal F)&=\{\Omega\in\mathsf D(\mathcal K_3^{\otimes n}):
+\Omega_i=\operatorname{Tr}_{\ne i}\Omega\in\mathcal F\ (\forall i)\},\\
+\mathcal M_n^{=} (\mathcal F)&=\{\Omega\in\mathcal M_n(\mathcal F):
+\Omega_1=\cdots=\Omega_n\}.
+\end{aligned}
+\tag{C133.1}
+$$
+
+允许任意复联合态，包括纠缠态。$\mathcal F=\mathcal F_Q$ 时，正性实际还迫使联合态支持于
+$Q^{\otimes n}$：对每个位置，$\operatorname{Tr}((I-P_Q)_i\Omega)=0$，
+正性使其支持落在每个局部投影的核，取交即得。
+但该支持事实不使联合态成为独立乘积。
+

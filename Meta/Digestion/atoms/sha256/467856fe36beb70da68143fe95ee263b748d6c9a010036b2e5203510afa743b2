@@ -1,0 +1,41 @@
+**Definition 8.3 (all successful entries and native handoffs).** The
+following table, with Definition 2.3's inlining convention, specifies the
+complete new successful finite control. No next publication starts with
+the previous mailbox busy.
+
+| Entry | Word/native work in order | Next actual entry |
+| --- | --- | --- |
+| Original ClientImage success | Position/import actual 73; original Image codec/binding checks. Construct $b$ from that acquired target. ACK Image, TOK mailbox availability back. Keep this flight's client invocation; do not append $M$ or enter Ready. TOK client→handler; CTL RenderS. | RenderS |
+| RenderS | Parse the imported Image raw projection; component walker emits initial S candidate. Clear acquired Image work fields after construction; no later direct decoder reads them. | Publish0 |
+| Publish0 | Export exact View stage 0, execute Definition 8.4, TOK handler→client, CTL CheckS0. | CheckS0 |
+| CheckS0 | Position 73 from its current placement; clear candidate; actual F-bounded import into received, parse body to sourceBody, $D_S$/re-encode/binding checks; copy this received S to firstS. ACK/mailbox return, TOK client→handler, CTL FromS. | FromS |
+| FromS | Clear derived work; Definition 7.3 FromS on sourceBody only; set candidate B. | Publish1 |
+| Publish1 | Same publication with stage 1; actual handler→client TOK, CTL CheckB. | CheckB |
+| CheckB | Position 73; clear candidate; import actual stage-1 B; $D_B$/re-encode/binding checks. ACK/mailbox return, TOK client→handler, CTL FromB. | FromB |
+| FromB | Clear derived work; direct B→M on sourceBody; candidate is only M-body. | Publish2 |
+| Publish2 | Same publication with stage 2; actual handler→client TOK, CTL CheckM. | CheckM |
+| CheckM | Position 73; clear candidate; import actual M; $D_M$/reselect/binding checks. ACK/mailbox return, TOK client→handler, CTL FromM. | FromM |
+| FromM | Clear derived work; direct M→T; candidate is only occurrence list. | Publish3 |
+| Publish3 | Same publication with stage 3; actual handler→client TOK, CTL CheckT. | CheckT |
+| CheckT | Position 73; clear candidate; import actual T; $D_T$/record/binding checks. ACK/mailbox return, TOK client→handler, CTL FromT. | FromT |
+| FromT | Clear derived work; direct T→S; candidate is only final mask word. | Publish4 |
+| Publish4 | Same publication with stage 4; actual handler→client TOK, CTL CheckS1. | CheckS1 |
+| CheckS1 | Position 73; clear candidate; import final S; run $D_S$/re-encode/binding checks; Equal its received body with firstS. Serialize its independently decoded historical prefix/raw record as the legacy Image value and apply original ClientImage's Image checker subgraph. | FinalReturn |
+| FinalReturn | ACK this channel once; TOK mailbox availability back; append one completed history-cycle item with original supplied frame and typed outcome/bindings; TOK invocation to outer client; CTL Ready. | Actual $R_r$ |
+
+All callback checks use a body actually read from 73. Neither the initial
+Image nor firstS repairs a decoder: firstS is read only by the final Equal
+comparison. The original checker at CheckS1 consumes the decoded value,
+not the initial Image. There is no repair branch. No external input or
+optional scheduling step occurs between these entries.
+
+The reused `CheckImageValue` is exactly ClientImage's finite word parser
+and source/version/$p,c,k,\varrho$ comparison subgraph, factored after its
+receiver import and before its ACK. It is inlined with a word argument.
+At CheckS1 construct the exact legacy Image wrapper
+`[0010,serviceBinding,xi,U(p),U(c),U(k),rho,image]` from the newly decoded
+prefix/raw record and apply that subgraph. It performs no second receiver
+import or synthetic channel handoff. The one ACK is FinalReturn's actual
+ACK for the received S publication. Initial Image success still performs
+its own actual import/check/ACK before RenderS.
+

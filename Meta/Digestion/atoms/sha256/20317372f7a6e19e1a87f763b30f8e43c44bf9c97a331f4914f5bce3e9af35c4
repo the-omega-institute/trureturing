@@ -1,0 +1,13 @@
+**Condition $\mathsf R$ ([OWN, (11.2)]).** There are $v\in\mathbb F_2$, $w=1-v$, a zero-leading literal $B$, a bijection $G:\mathbb F_2\to U_Y$ and a literal label $z$ such that, with $I=\{j\in J:q_1^B(j)=1\}$ and $U=J\setminus I$,
+
+$$
+\lambda_w(j)=G(w\oplus q_1^B(j))\quad(j\in J),\qquad
+\lambda_v(j)=z\quad(j\in U),
+$$
+$$
+j'=j-2m\in J,\qquad \lambda_v(j)=\lambda_w(j')\quad(j\in I).
+\tag{2.6}
+$$
+
+Only the original-fee-four restriction on the sufficient application of this predicate is removed. None of its word, label, translation or source requirements is removed. A failure of any sufficient predicate alone gives no exclusion.
+

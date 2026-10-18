@@ -1,0 +1,75 @@
+**Theorem 8.3 (one-run resource correspondence).** With $K_0=2$ and $c_0$
+the actually endowed finite bits, let
+
+$$
+\begin{aligned}
+V_0&=223+2q+4c_0,\qquad L_0=112+q+2c_0,\\
+g_0&=1+8V_0,\\
+G(h)&=g_0+\sum_{j=1}^{n(h)}g_j,\\
+V(h)&=V_0+\sum_jv_j,\qquad
+L(h)=L_0+\sum_j(24e_j+2s_j).
+\end{aligned}
+\tag{CSA.13}
+$$
+
+Charge also the finite description $d_\Pi$ and its explicitly endowed
+primitive mechanism. The vector
+
+$$
+\bigl((n_{p,o}(h))_{p,o},\ n(h),\ 2n(h),\ G(h),
+       V(h),L(h),7V(h),d_\Pi\bigr)
+\tag{CSA.14}
+$$
+
+is evaluated on this one execution. The opcode/purpose coordinates and
+native $n,2n$ are exactly RCA's recurrence, including original boot and
+acquisition. $G$ is the declared structural replacement price. If both
+tariffs are levied, the additive price is explicitly $2n+G$, with
+apparatus separate; it is not a sum of two executions or two receipts
+for one native row.
+
+Proof. The foundation has the stated components, one commitment, $V_0$
+vertex charges and seven initialized slots per vertex, giving $g_0$.
+At each row CSA.11 counts precisely the chosen ordered probe list. Existing
+bit targets cost four assignments, old cell and finite-slot roots each
+cost two append/constructor assignments, head links cost three/two, and
+every new vertex initializes seven slots. This is CSA.12. Induction gives
+CSA.13 at every interior native cut. If the immutable rule description
+were installed as tape material instead of endowed apparatus, all its
+ingress, construction, descriptors, movement, receipts and token work
+would be additional actual preparation cuts; that implementation is not
+silently included in $g_0$.
+
+CSA.3 indexes patches by the very same native occurrences used by RCA
+Definitions 11.5 and 16.1 and Proposition 16.2. Therefore the full native
+bill is retained, with each occurrence assigned once to its native purpose
+and opcode. In particular it includes the following concrete contributors.
+
+| Native contribution retained in the common event word | Exact inclusion rule |
+| --- | --- |
+| Original boundary construction, private preparation, validation, no-update acquisition and delivery | Their original individual rows, from the primitive entrance, including every receipt |
+| Activation and both fresh bootstraps | One Install CTL and the tested $4(m_L+m_1)+4$ bootstrap rows, plus actual fresh control bits |
+| Capture and initialization | Actual code-frame ingress, eight lane TOKs, head saves/restores, asset copies, manifest fields, bank construction, importer and final handoffs |
+| Full manifest import | Both entrance MRs, all sentinel/field/bit tests, empty-field work and compiled word helpers; the native scan subtotal is $2h_{37}+4+3s+3z+4o$ with helpers separately expanded |
+| Later external ingress | All $2d+4$ INs and actual retention/length/descriptor/import work; $11d+22$ is only its displayed body subtotal |
+| Source adapter | Actual RD/MR in place of each old IN, unchanged real source computation, new row-version fields and lengths, delivery and common return; no second external IN charge |
+| Word/compiler and replay work | Actual bank versions, scans, row/cell lookups, counters, descriptor/seal work and represented history serialization, at their actual intervening heads |
+| Publication and transport | Actual sender, mailbox and receiver allocation, lengths, staged descriptors, positioning, both $6l+3$ copy bodies, completion records and seals |
+| Mandatory printing and return | Its $5l+1$ body plus fresh length recovery, positioning, read authority, acknowledgement, token transfers and Ready return |
+
+Here $m_L,m_1$ are the literal lengths of the actual prescribed $E(L)$
+and $E(D_1)$. Symbolic helper costs use RCA's explicit ordered recurrence,
+not a constant per field or an old empty-port offset. A represented old
+primitive can require arbitrarily many later interpreter rows; its cost
+is not replaced by the represented primitive count. Every one of those
+later rows also receives its actual structural stencil charge.
+
+All simultaneous sender/mailbox/receiver cells, old banks, staged fields,
+inactive code and receipts remain in $K,c,V,L$. Native bit storage retains
+RCA's own $S_0+b_{\rm ctl}+8A+8n$ coordinate; it is the native comparison
+size, not a second physical byte store in the structural machine. No
+endpoint-bit width, wire length, physical latency, energy or storage
+optimality follows from CSA.14. Repeated fixed probes and assignments
+are not omitted depending on private values; any public precommit
+schedule claim uses the supplier's original public-history assumptions. ∎
+

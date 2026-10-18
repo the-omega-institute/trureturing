@@ -1,0 +1,46 @@
+**Corollary 6.3 (conditional mutual recovery of two boundary coordinates).**
+On every actual continuation, with the authentic prepared $d$ retained,
+the acquired right-spine coordinate and intrinsic depth recover each other:
+
+$$
+(d,K)\longmapsto(d,K-d),\qquad
+(d,n)\longmapsto(d,n+d),\quad n=\nu(y).
+\tag{IDC.6.5}
+$$
+
+They are inverses on their actual image. Moreover $(d,n)$ determines the
+entire current right-spine reply map through (IDC.2.9) with $K=n+d$.
+It does not recover the raw read events that acquired those replies.
+
+**Proof.** Theorem 6.2 establishes $K=n+d$ on the promised image, so
+the two arithmetic maps are inverse there. Substitution into the already
+supplied four-reply formula determines each reply value. Neither map
+constructs a request event, timestamp or receipt. $\square$
+
+The persistent calibration is constant along the authentic forward ray,
+while the later decoded depth is nonconstant and unbounded. The same
+retained $d$ can serve any finite sequence of separately supplied quiescent
+invocations on that ray, by applying Theorem 6.2 in each call. Newly retained
+transcripts and fields are paid additional state; a fresh complete cut must
+isolate them if the next call is again claimed to start with only $d$.
+This is continued use of one actually acquired relational boundary, not
+an event counter or an entitlement to a next invocation.
+
+**Resource boundary 6.4 (indices, literal words and complete storage).**
+The search can materialize one current address buffer and overwrite it
+between reads. With binary integer representations, its indices, bracket
+endpoints, $d\le K$, parity and output integers need $O(\log(K+2))$ bits; the literal $R^j$ buffer needs
+$O(K)$ workspace. Thus the logarithmic read bound does not give logarithmic
+complete working memory or erase the submitted-word costs. If an actual
+implementation retains a growing raw archive or multiple buffers, it must
+add their storage. Preparation's tree description, traversal stack and
+inverse parser have their own sourcewise storage and work.
+
+For unbounded defects, the label is a finitely encoded natural for each
+source, with no uniform finite alphabet. Known-$D$ payload widths in
+Theorem 5.4 count only persistent calibration distinctions. They do not
+count a program counter, installed decoder, framing, address workspace,
+output, authentication material, protected storage or any other complete
+controller field. No optimum for those fields, acquisition work, isolation,
+energy or physical time is asserted.
+

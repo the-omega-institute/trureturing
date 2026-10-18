@@ -1,0 +1,28 @@
+**Theorem 66.2 (actual half-beta lower bound through the inherited interfaces).** Assume the actual phase-marginal and supported common-projection interfaces (S.8)–(S.12), (S.55)–(S.60), the rectangular-contraction identity (S.6), compact affine minimax (S.26), unrestricted CPTP recovery/complement identity (S.7), and pure-target diamond lower bound (S.27), with their stated domains and conventions. Then every actual original-real CPTP $N:M_3(\mathbb C)\to M_5(\mathbb C)$ of Definition 52.1 with phase-difference spectrum $(1/2,1/2,0,-1/2,-1/2)$ and actual minimal Kraus rank $r\leq9$ satisfies
+
+$$
+g_N^2\leq T,\qquad
+\inf_{R:M_5\to M_3\ {\rm CPTP}}\|RN-\mathrm{id}_3\|_\diamond
+=\delta_N\geq1-\frac1{\sqrt2}.
+\tag{S.110}
+$$
+
+All admissible third columns, all complex CPTP recoveries on the whole output, and every finite complex reference are retained; the diamond norm is unhalved.
+
+Proof. Fix one actual $V$ and then any center $\omega$ on its environment and any single rectangular contraction $U$ of (S.5). The center has support rank $1\leq k\leq r$, which is not the actual Kraus rank. If $k=1$, (S.8) and Cauchy–Schwarz give $r_\psi\leq\sqrt a<v_a$, as proved in Theorem 52.3. In particular no projection of rank five is required on a three-dimensional space.
+
+For $k\geq2$, restrict the center and contracted vector to the exact center support as in Section 52, leaving the actual encoder and its environment intact. Complete the range of this supported $U$ to one five-dimensional subspace, and choose its projection $P$ before testing directions. This step is valid because $3k\geq6$ and $\operatorname{rank}U\leq5$; it does not compress an existing rank-five projection and presume its rank unchanged. By Theorem 57.2, if every phase-direction real overlap and the third-basis overlap exceeded $v=\sqrt T$, this one common $V,\omega,U,P$ would yield the strict system (S.59). Proposition 66.1 excludes $k=2$ and Theorem 64.2 excludes $3\leq k\leq9$. Therefore for each fixed $V,\omega,U$ the restricted minimum in (S.15) is at most $v$; its witnessing direction may depend on $\omega$ and $U$.
+
+The least eigenvalue of $\operatorname{Herm}A_{\omega,U}$ is at most that restricted minimum. The assumed compact-affine minimax identity (S.26) consequently gives, for every center,
+
+$$
+\min_\rho F_\rho(\Gamma,\mathcal C_\omega)
+=\max_{U^\dagger U\preceq I_5}\lambda_{\min}(\operatorname{Herm}A_{\omega,U})
+\leq v.
+\tag{S.111}
+$$
+
+Only now maximize over centers in (S.7), obtaining $g_N\leq v$. For every unrestricted recovery, (S.27) uses an input purification and the binary measurement onto the pure identity target to bound its full diamond norm. Taking the recovery infimum gives $\delta_N\geq2(1-g_N^2)\geq2(1-T)=1-1/\sqrt2$. Phase-plane and third-basis tests are a subset used to bound the least eigenvalue; they impose no restriction on recoveries or on the finite-reference supremum.
+
+The complete actual-rank-two theorem is already Theorems 44.2–45.1 of the first volume. Proposition 66.1 extends its supported boundary calculation to rank-two centers inside any allowed actual environment; it does not identify center rank with actual Kraus rank or claim that earlier theorem anew. The present consequence uses the inherited interfaces explicitly stated in the hypothesis. $\square$
+

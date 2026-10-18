@@ -1,0 +1,18 @@
+**命题 19.3（其它有限列表与同一阈值）。** 在 $1<\eta<\varphi$，也可用全部支持的 $n>m\ge1$ 且
+
+$$
+m+n\le\frac{\varphi^3}{\varphi-\eta}
+$$
+
+计算 $\min(\{1\}\cup\{G_\eta\})$；或使用较小加权列表 $m+\varphi n\le\varphi^3/(\varphi-\eta)$。两者均给 $\psi(\eta)$，与定理18.4的区间优化相同。
+
+证明。令 $a_0=(1+\eta)m-\eta n,b_0=n-\eta m$，则
+
+$$
+a_0+\varphi b_0=(\varphi-\eta)(n+m/\varphi),\qquad
+G_\eta\ge\frac{(\varphi-\eta)(m+\varphi n)}{\varphi^3}
+\ge\frac{(\varphi-\eta)(m+n)}{\varphi^3}.
+$$
+
+超出任何所列截止的组成的最大值大于1，不能改善或持平。另一方面 $\gamma=z(\varphi-\eta)/\varphi^2$，故加权截止恰是定理18.4的 $\mathcal F$ 截止。纯组成及 $n\le m$ 已由定理19.2排除改善，$n>m$ 的区间最小值确在端点，故两个优化相同。较宽列表不意味着其每个组成都可行；必须仍计算完整最大值。
+

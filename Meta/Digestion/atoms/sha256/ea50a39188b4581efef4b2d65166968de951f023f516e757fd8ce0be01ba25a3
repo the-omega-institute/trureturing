@@ -1,0 +1,30 @@
+**定义 C-105.1（两份分割、置换与分开执行的测量设置）。** 沿用 C-104 的正交标签
+$B=\{0,1,2,3,13\}$、$H=\mathbb C^5$、$P_s=|s\rangle\langle s|$，
+两份系统记作 $H^{(1)}\otimes H^{(2)}$。本章的可分离与纠缠一律相对于
+$H^{(1)}\mid H^{(2)}$；它与 C-94.2 在每一份底面内指定的
+$\mathbb C_A^2\mid\mathbb C_B^2$ 是不同分割。定义对合置换
+
+$$
+f(0)=13,\quad f(13)=0,\quad f(1)=3,\quad f(3)=1,\quad f(2)=2,
+\qquad e_s=|s,f(s)\rangle.
+\tag{C105.1}
+$$
+
+五个 $e_s$ 正交归一。令 $I_{25}$ 为二份空间的恒等算子，
+$Q=|\Omega\rangle\langle\Omega|$，其中 $\Omega$ 是 C-104.2 的向量。
+完整菜单 $\mathcal M$ 包含两个分别执行的设置：计算基 PVM
+$\{P_s\otimes P_u:s,u\in B\}$，以及二元 PVM $\{Q,I_{25}-Q\}$。
+对二份密度算子 $\Gamma$ 定义观察映射
+
+$$
+\mathcal O_{\mathcal M}(\Gamma)
+=\left(\bigl(\operatorname{tr}((P_s\otimes P_u)\Gamma)\bigr)_{s,u\in B},
+\operatorname{tr}(Q\Gamma)\right).
+\tag{C105.2}
+$$
+
+二元设置的补事件概率由 $1-\operatorname{tr}(Q\Gamma)$ 决定。
+这里的 $25$ 个基效果与 $Q$ 不组成一个 $26$ outcome POVM：前者之和已经是
+$I_{25}$，再加 $Q$ 得 $I_{25}+Q$。纤维指映射 (C105.2) 的逆像，
+比较的是同一二份状态在这些不同设置下的精确期望。
+

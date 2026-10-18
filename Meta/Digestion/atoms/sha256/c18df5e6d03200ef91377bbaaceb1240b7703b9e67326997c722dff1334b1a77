@@ -1,0 +1,27 @@
+**Corollary 4.3 (exact third-hit and third-miss families).** For every
+$n\ge6$, every original $A$ and every $r\ge0$,
+
+$$
+\boxed{
+\begin{aligned}
+m_{\mathrm{exec}}(c,3)
+ &=m_{\mathrm{exec}}(c,n-2)=3n-6,\\
+H_{\mathrm{exec}}(A,3;r)
+ &=H_{\mathrm{exec}}(A,n-2;r)=3n-2+r.
+\end{aligned}}
+\tag{CP.21}
+$$
+
+The existing full-domain grid attains both execution maxima
+simultaneously on one actual source and produces the original code
+and original complete entry.
+
+Proof. If $a=3$ or $b=3$, the larger of the two separated witness
+families in Theorem 3.3 has size $ab=3n-6$. The lower bound equals
+the grid upper bound of PCA Theorem 26.1. That theorem supplies one
+actual cube source attaining its $n+1$ queries and $W+3$ letters
+together; its upper-domain proof covers all eleven original profiles
+and arbitrary allowed branch images. Equation (CP.19) gives the native
+counts. The five-coordinate third-threshold equality already belongs
+to [PCA, Theorem 38.5][PCA] and is not needed here. $\square$
+

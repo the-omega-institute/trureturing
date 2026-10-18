@@ -1,0 +1,140 @@
+**Theorem 186.2 (Sparse all-word feasibility and the anchor budget).**
+The law in (186.2) belongs to the finite full stopped class and
+meets every cap-$\varepsilon$ row on every word, with exact uniform
+error $\varepsilon$ on the original sources. Its actual-tail error is
+
+$$
+\max\{t_{\rm tail},a_{n(x)}\},\qquad
+t_{\rm tail}=r\bigl(1-q_{1^m}(0)\bigr)+E\le\varepsilon
+\quad(n(x)>L).
+\tag{186.3}
+$$
+
+It has one full-$O$ conic allocation at the unscaled profile
+$(a_1,\ldots,a_L;\varepsilon)$ of mass $1-g_{m+1}$. Consequently
+
+$$
+\rho_N\le\rho_O\le1-g_{m+1}.
+\tag{186.4}
+$$
+
+If $q\in\operatorname{conv}(E_m)$, the allocation is in $E_L$
+and also gives $\rho_O\le\rho_E\le1-g_{m+1}$. The upper bound is
+strictly below one exactly when $g_{m+1}>0$. It is a feasible upper
+bound, not an optimum or an equality of the two costs.
+
+**Proof.** The sparse branch is normalized because
+$3+(h-2)=h+1$. Each numerical label belongs to three cyclic windows.
+For first zero $n\in\{3,\ldots,h\}$, such a window emits $n$
+exactly when it contains it: preceding selected labels are positive,
+and the first-zero label can be the unqueried final output.
+Only $R$ emits one or two, and its correct mass in either of those
+classes is $3/(h+1)$. Thus for every suffix word,
+
+$$
+P_{h,u}^{\rm num}(n)=\frac3{h+1}\quad(n\le h),\qquad
+P_{h,u}^{\rm num}(0)+P_{h,u}^{\rm num}(n)\ge\frac3{h+1},\qquad
+P_{h,u}^{\rm num}(0)=\frac3{h+1}u_1u_2.
+\tag{186.5}
+$$
+
+When the first absence exceeds $h$, correct mass is zero and
+outside-pair mass is exactly $(h-2)/(h+1)$. At $h=6$, the numerical
+cycle has four vertices and its four windows are the four distinct
+triples of $\{3,4,5,6\}$. The stated support descriptions require
+no minimum claim about all possible designs.
+
+The existing residual telescoping and amplitude argument is reused:
+
+$$
+\sum_hw_h=W,\qquad
+\sum_h\frac{3w_h}{h+1}=g_{m+1},\qquad
+\sum_hw_h\frac{h-2}{h+1}=E,\qquad
+W=E+g_{m+1},\qquad r+W=1.
+\tag{186.6}
+$$
+
+All masses are nonnegative. The join is
+$a_m-a_{m+1}=r(A_m-e_0)\ge0$, and
+$\varepsilon=1-g_{m+1}-r(1-e_0)\le1$.
+If $r>0$ then $\varepsilon\ge re_0>0$; if $r=0$ then
+$W=1$ and $E>0$ because all indices $h\ge6$ have positive
+$(h-2)/(h+1)$. This proves positive ordered amplitudes at most
+one, with the unchanged positive vanishing tail. These algebraic
+conditions and the amplitude sandwich are the suppliers of
+Sections 172--174, not a new amplitude projection.
+
+For $n\le m$, the three rows of the same mixture obey, separately,
+
+$$
+\begin{aligned}
+p_u(n)&\ge r(A_n-e_0)+g_{m+1}=a_n-\varepsilon,\\
+p_u(0)+p_u(n)&\ge r(1-e_0)+g_{m+1}=1-\varepsilon,\\
+p_u(0)&\ge r(1-A_n-e_0)=1-a_n-\varepsilon+E.
+\end{aligned}
+\tag{186.7}
+$$
+
+No singleton projection has been substituted for the pair row.
+For $m<n\le L$, the correct mass is exactly
+
+$$
+p_u(n)=\sum_{h=n}^L\frac{3w_h}{h+1}=g_n.
+\tag{186.8}
+$$
+
+Every such word has $u_1=u_2=1$, and the core sees $1^m$.
+Numerical windows never emit zero. Hence throughout this whole
+first-zero class, regardless of all later bits,
+
+$$
+p_u(0)=r q_{1^m}(0)+g_{m+1}=1-t_{\rm tail}.
+\tag{186.9}
+$$
+
+The outside-pair mass is $t_{\rm tail}-g_n\le\varepsilon$;
+the base deficit is $t_{\rm tail}-a_n\le\varepsilon$;
+the correct deficit is $a_n-g_n=\varepsilon$.
+Equation (182.2) gives TV exactly $\varepsilon$. The same base
+identity (186.9) holds at $1^L$. For every actual $n(x)>L$,
+the original finite rule outputs no label $n(x)$ and has this same
+base mass. The supplied tail identity (110.9) gives (186.3), with
+every later-zero pattern retained. The actual first-zero class
+$m+1$ witnesses uniform equality even if $g_{m+1}=0$.
+If $q_{1^m}(0)=1-e_0$, then $t_{\rm tail}=\varepsilon$ and all
+actual tails have error exactly $\varepsilon$. For a slack core
+only the maximum in (186.3) is asserted; equality on every tail
+does not follow from its cap rows.
+
+The new budget fact follows by separating one anchor before any
+row projection. In (186.2), the explicit $R$ component from all
+residual branches has total mass $g_{m+1}$. Their numerical
+tables have total mass $E$. Refine the core into full stopped
+complete tables using the supplier of Definition 164.2 and
+Proposition 140.3, with all weights multiplied by $r$.
+Keep those core tables and numerical triples as conic coefficients
+$\lambda_D$. Their one total mass is
+
+$$
+\tau=r+E=1-g_{m+1},\qquad
+z_p=z_R+\sum_D\lambda_D(z_D-z_R)\ge d(a,\varepsilon).
+\tag{186.10}
+$$
+
+This is the common-budget definition of $\rho_O$, and completing
+each table gives the $N$ inequality. The argument does not require
+$(a,\varepsilon)\in H_L$; the same finite conic LP is defined at
+that profile. If the core is in $E_m$, use its $E_m$ refinement
+instead and the natural embedding into $E_L$, giving the additional
+$\rho_E$ bound. Possible core $R$ mass remains inside the retained
+conic coefficients; removing the displayed residual anchor is enough.
+
+Plateaus have $w_h=0$, so their intervals are omitted. At $W=1$
+the core is omitted, with no division by $r$. If $g_L=0$, $L$ is
+an auxiliary length rather than necessarily the active length;
+only amplitudes strictly above the cap are active. If every residual
+is zero, $W=E=0$, $r=1$, and (186.4) gives the non-strict bound
+one. Non-strict core endpoints are allowed throughout.
+The same-seed original execution and arbitrary-address transport
+are given in Section 189. $\square$
+

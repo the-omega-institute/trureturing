@@ -1,0 +1,14 @@
+**Definition 1.4 (the full target and inclusive prefixes).** The target is
+$f(u)=R_Q(u)$, consisting of the reached original $Q$ addresses, the concrete
+numbered-hole exterior and the complete equality partition of the whole reached
+subtrees. For $h\ge0$, write
+
+$$
+ p_h(u)=(r_u(w))_{|w|\le h},
+ \qquad u\equiv_h v\;:\Longleftrightarrow\;p_h(u)=p_h(v).
+\tag{SJM.7}
+$$
+
+The absent reply is included in $p_h$. A source prefix is an attained finite
+reply table, not an arbitrary word over four symbols.
+

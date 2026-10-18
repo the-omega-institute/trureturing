@@ -1,0 +1,17 @@
+# Native complete records with unknown unbounded epochs
+
+This volume gives an exact effective description of the chronological
+realization fiber in [NAR, Proposition 12.6][NAR]. The sources remain all
+nonempty finite ordered native trees. The essential additional statement
+is that the truth of each fixed complete row eventually stabilizes on
+every individual original source, at a threshold computed from the row.
+Consequently a finite family of fixed-epoch predicates represents both
+the entire unbounded epoch fiber and every original-source fiber.
+
+The arguments are ordinary mathematical proofs, not new Lean-verified
+declarations. The fixed-epoch decision and witness theorem is reused from
+[NSF, Theorem 5.2][NSF]. A decision procedure specified mathematically is
+distinct from an implemented solver and from a physical observation
+procedure. The broader mutual-recovery problem for space, time, boundary
+and memory retains the additional obligations in Section 8.
+

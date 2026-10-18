@@ -1,0 +1,31 @@
+**Supplier 2.4 (all actual profiles and their targets).** Apply NBP
+Propositions 9.3 and 15.2, equivalently NRN Supplier 2.4, on (TCR.5).
+Let $g(1)=g(2)=a$ and $g(3)=g(4)=c$. The following eleven nonempty
+sets are disjoint and exhaust the entire domain:
+
+$$
+\begin{aligned}
+\Pi_j:&\quad x_{b_j}=\alpha,\quad x_{g(j)}=\beta,
+       \quad\text{the other four values are branch images},\quad j\in J;\\
+Z_d:&\quad x_d=\beta,
+       \quad\text{the other five values are branch images},\quad d\in D;\\
+Z_*:&\quad\text{all six values are branch images}.
+\end{aligned}
+\tag{TCR.8}
+$$
+
+Every indicated finite filling is allowed subject to the original
+whole-class disequalities, and has its actual inverse origin. The whole
+target is $R_j$ on $\Pi_j$ and $R_0$ on every $Z_d,Z_*$.
+Thus zero includes beta at either partner, at any of the four right
+classes, and nowhere. No branch-family restriction is introduced.
+Every word shorter than three reads the common exterior branch. Every
+word of length at least three is uniquely $pw$ with $p\in P$, and (TCR.2) reads the
+suffix in the actual value of class $[p]$; this includes arbitrary
+depth, either repeated occurrence and every absent continuation.
+
+Each $\Pi_j$ is infinite. Fix three of its four free branch values
+distinctly and vary the fourth through the infinite branch-image set
+avoiding those three. Supplier 2.4 and injectivity of $\rho$ give
+different actual finite origins for all these choices.
+

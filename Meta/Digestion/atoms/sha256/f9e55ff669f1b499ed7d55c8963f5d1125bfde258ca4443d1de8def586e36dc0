@@ -1,0 +1,35 @@
+**Lemma 3.2 (retained auxiliaries and mixed assistance do not evade
+rigidity).** Fix $m,y$. Any success map in Definition 2.4 induces a
+trace-nonincreasing CP map from $M(\mathcal V)$ to the specimen matrices
+by appending the fixed $\tau_{m,y}$ and tracing its actual successful
+auxiliary outputs. Choose Kraus operators $K_\alpha$ for this induced
+finite-input, finite-output map. For every $j\in S_y$,
+
+$$
+K_\alpha e=\lambda_\alpha e,\qquad
+K_\alpha n_{(-1)^m}(x_j)=\lambda_\alpha n_{(-1)^m}(l_y).
+\tag{RB.10}
+$$
+
+The scalar $\lambda_\alpha$ is common to all these $j$. Thus the branch
+success probability is
+$p_{m,y}=\sum_\alpha|\lambda_\alpha|^2$, independent of $z$ and of the
+actual candidate $j$ within this record.
+
+Proof. A positive sum of rank-one Kraus outputs with a pure specimen
+marginal can have no summand outside that specimen ray: its expectation
+on any perpendicular vector is a sum of nonnegative numbers equal to
+zero. This applies also when the whole sum is zero. Apply Lemma 3.1 to
+each $K_\alpha$ and each $j$. The image of the common vector $e$ makes
+the scalar common across $j$. On every promised normalized input the
+Kraus image is consequently $\lambda_\alpha\psi(l_y,z,m)$; summing
+norms proves the probability formula.
+
+Appending a fixed normal state and tracing outputs is CP even for an
+unrestricted assistance Hilbert space; the induced map has finite-dimensional
+input and output and therefore a finite Kraus representation. Any actual
+retained success residue is still present in the original map. A zero
+positive specimen marginal has zero total trace and hence zero joint
+successful output. Discarding auxiliaries in this necessity argument cannot
+hide a nonzero retained success. $\square$
+

@@ -1,0 +1,97 @@
+**引理 83.2（Simultaneous root and missing-coordinate selection with a unit omission）。** Under Definition 83.1 there are an index $r\in\{1,\ldots,h-1\}$ and an injection
+
+$$
+c:L\longrightarrow\mathbb F_2^h\setminus\{\varepsilon_r\}
+\tag{83.6}
+$$
+
+onto that set, satisfying
+
+$$
+\begin{aligned}
+c(U)\oplus c(V)&=\varepsilon_r,\\
+c_0(\widehat C)&=0,\qquad
+c_0(\Gamma(0))=c_0(\Gamma(1))=1,\\
+c_t(\Gamma(e_t))&=0\quad(1\le t<h).
+\end{aligned}
+\tag{83.7}
+$$
+
+In particular the omission never has two adjacent coordinates equal to one. Repeated classes accumulate every displayed restriction.
+
+证明。 Let $K=\{\Gamma(0),\Gamma(1)\}$ be the set of root-positive classes. It has one or two members, none equal to $\widehat C$. For each $D\in L$ put
+
+$$
+Z_D=\{t:1\le t<h,\ \Gamma(e_t)=D\},\qquad
+F_D=\{1,\ldots,h-1\}\setminus Z_D.
+\tag{83.8}
+$$
+
+The sets $Z_D$ are pairwise disjoint and partition the suffix-coordinate set. In particular $Z_{\widehat C}=\varnothing$. Before reserving vectors, the list for $D$ consists of all $y\in\mathbb F_2^h$ with $y_t=0$ for $t\in Z_D$, additionally $y_0=1$ for $D\in K$, and $y_0=0$ for $D=\widehat C$.
+
+First reserve the codes of $U,V$ and the omitted vector. Suppose no $D\in K\setminus\{U,V\}$ has $F_D=\varnothing$. Exclude from the choice of $r$ the unique member of $F_D$ whenever such a $D$ has $|F_D|=1$. There are at most two excluded coordinates and $h-1\ge3$ choices, so choose a remaining $r$. At most one of $U,V$ owns the coordinate-$r$ zero restriction. Interchange their names if needed so that $r\notin Z_V$, and reserve
+
+$$
+a=\varepsilon_r,\qquad
+c(U)=\varepsilon_0,\qquad
+c(V)=\varepsilon_0\oplus\varepsilon_r.
+\tag{83.9}
+$$
+
+These codes satisfy all restrictions on these two classes, including either root-positive requirement. Their XOR is $a$. Each remaining root-positive list remains nonempty after reservation: its root-one subcube has $2^{|F_D|}$ vectors; if $|F_D|=1$, the choice of $r$ prevents both its vectors from being reserved; if $|F_D|\ge2$, removal of two vectors cannot empty it.
+
+The other case is a $D\in K\setminus\{U,V\}$ with $F_D=\varnothing$. It owns every suffix zero restriction, so neither even class owns any, and any other root-positive class owns none. Choose distinct $p,r\in\{1,\ldots,h-1\}$ and reserve
+
+$$
+a=\varepsilon_r,\qquad
+c(U)=\varepsilon_0\oplus\varepsilon_p,\qquad
+c(V)=\varepsilon_0\oplus\varepsilon_p\oplus\varepsilon_r.
+\tag{83.10}
+$$
+
+Again the two reserved class codes satisfy all their restrictions and have XOR $a$. The root-positive class owning every zero restriction retains $\varepsilon_0$. Any other remaining root-positive class has the whole root-one half cube before removal of two vectors and therefore retains a vector. This case includes all possible exhausted suffix restrictions, rather than assuming that every root-positive class has a free suffix coordinate.
+
+In either case set
+
+$$
+Q=\mathbb F_2^h\setminus\{a,c(U),c(V)\},\qquad
+\mathcal A_D=\{y\in Q:y\text{ satisfies the restrictions of }D\}
+\quad(D\in L\setminus\{U,V\}).
+\tag{83.11}
+$$
+
+The three deleted vectors are distinct; none is zero, the two reserved class vectors have root coordinate one, and $a$ has root coordinate zero. Thus $|Q|=N-3$, equal to the number of remaining classes. Every non-root-positive list contains zero, including the outside list, and the preceding reservation argument proves that every remaining root-positive list is nonempty.
+
+We verify the union inequalities for the finite Hall theorem [H]. A subfamily containing a list equal to $Q$ has union size $N-3$, at least its number of classes. Otherwise every member owns a restriction. There are at most $h+2$ such classes: at most two root-positive owners, the outside owner, and $h-1$ suffix zero occurrences. Let $q$ be the subfamily size.
+
+For $q=0,1$ the assertion is immediate from the nonemptiness just proved. For $q=2$ with one root-positive and one non-root-positive member, a root-one representative of the former and zero in the latter are distinct. If both are non-root-positive, zero and every $\varepsilon_i$ with $1\le i<h$, $i\ne r$, belong to the union: a suffix coordinate has only one zero owner and cannot be forbidden on both lists; all these vectors remain in $Q$. If both are root-positive, their zero-owner sets are disjoint. One has at most $\lfloor(h-1)/2\rfloor$ zero coordinates, hence a root-one subcube with at least
+
+$$
+2^{h-1-\lfloor(h-1)/2\rfloor}\ge4
+\tag{83.12}
+$$
+
+vectors. At most two root-one vectors were deleted, so its remaining list alone has at least two. This proves every two-list inequality.
+
+For $q=3$, each of the $h$ root-one vectors
+
+$$
+\varepsilon_0,\quad \varepsilon_0\oplus\varepsilon_i
+\quad(1\le i<h)
+\tag{83.13}
+$$
+
+is forbidden on at most two classes: the outside class and at most one suffix zero owner. Every such vector still in $Q$ therefore belongs to the three-list union. Reservation (83.9) deletes two of them, leaving $h-2$; zero is also in the union because only the at most two root-positive classes forbid it. This gives $h-1\ge3$ vectors. Reservation (83.10) deletes only one vector of (83.13), leaving $h-1\ge3$ directly.
+
+For $q\ge4$, consider all vectors with root coordinate zero and suffix weight at most one, together with all vectors with root coordinate one and suffix weight at most two. A vector in the first set violates restrictions on at most three classes: at most two root-positive owners and one suffix zero owner. A vector in the second set also violates at most three: outside and at most two suffix zero owners. Every such vector in $Q$ therefore belongs to the union. Their number after removal is at least
+
+$$
+2h+\binom{h-1}{2}-3\ \ge\ h+2\ \ge\ q
+\qquad(h\ge4).
+\tag{83.14}
+$$
+
+The first inequality already holds at $h=4$, where its left side is eight; its difference from $h+2$ increases thereafter. These cases prove every Hall inequality, including arbitrary identifications among the restriction owners.
+
+Apply the credited finite Hall distinct-representative theorem to (83.11). It assigns the remaining classes different vectors in $Q$, necessarily exhausting $Q$. Add the reserved codes. The resulting injection exhausts the cube except $a=\varepsilon_r$, and (83.7) holds. The finite matching theorem is reused; the reservation, accumulated-constraint inequalities and unit omission are the reader-specific selection proved here. ∎
+

@@ -1,0 +1,50 @@
+## 140. A proper dominant Z run and its return block
+
+The whole Z star cannot be axial. Otherwise its reservoir pair is {M,C}
+everywhere, by transport from tau. No genuine owner can contain two axial
+Z occurrences, since (z-1)^2>(m+c)^2 would make it axial-flat. Thus its
+n>=6 occurrences have distinct owners. Their angles theta_i sum to 2*pi.
+Their transverse M angles beta_i consume two distinct M slots each, so
+2*sum(beta_i)<=pi. Since m>c, delta_i<beta_i, hence
+sum(beta_i+delta_i)<pi. Summing (137.1) gives
+
+    n*pi < 2*(2*pi)+sum(beta_i+delta_i) < 5*pi,
+
+contrary to n>=6.
+
+Let I be the proper maximal axial run containing the occurrence in tau.
+Its reservoir pair is {M,C}, and it is strictly dominant by (137.5). There
+are two distinct transverse Z boundary occurrences: the total number of
+transverse Z slots in the full circle is even, because each owner with Z
+as a reservoir contributes exactly two such slots.
+
+More generally, consider a boundary of any dominant axial Z run with
+pair {A,B}. Across its actual face the boundary block has reservoirs
+{Z,A}, shared axial label B, and other axial label Q, after interchanging
+A,B if necessary. Put a=x_A,b=x_B,q=x_Q. If Q is in H, q<=z<1+z+a;
+if Q is in S, the special-edge bound gives q<1+z+a. Dominance gives
+z>=1+a+b. Equations (137.2)--(137.3) therefore show N(q)<0. Hence every such
+boundary Z angle is strictly greater than pi/2.
+
+Every transverse Z owner has two equal Z angles. Thus two different
+owners with obtuse Z angles would contribute more than 2*pi to the same
+actual Z edge. There is exactly one such owner rho, and both endpoints
+of I are its two distinct transverse Z occurrences. Write their common
+angle as gamma; then gamma>pi/2. Every other transverse Z owner has its
+Z angle at most pi/2.
+
+There is exactly one dominant axial Z run. To prove this, at a transverse
+Z occurrence in a block with pair {Z,A} and axes B,Q, the two incident
+faces have complementary label pairs {A,B} and {A,Q}. If it bordered a
+dominant axial run on both sides, then
+
+    z>=1+a+b,          z>=1+a+q.
+
+These imply (z-a)^2>=(b+1)(q+1), contradicting genuineness. Thus each of
+rho's two transverse Z occurrences borders a dominant run on at most
+one side. The run I already uses both of those available incidences;
+any other dominant run would also have to use them. This is impossible.
+
+The argument is on actual local slots in one circular edge link. It does
+not require different boundary owners, and it does not discard self-gluing.
+

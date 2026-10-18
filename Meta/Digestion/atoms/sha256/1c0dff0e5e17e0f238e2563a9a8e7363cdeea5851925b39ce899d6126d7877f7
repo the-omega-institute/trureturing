@@ -1,0 +1,40 @@
+**Corollary 209.14 (Early zero-zero rows and the remaining obstruction).**
+Let one probability measure $\kappa$ on all late bits and six
+nonnegative numbers $a,b,c,u,v,w$ specify the early rows by
+
+$$
+\begin{array}{lll}
+P_{00x}=a\kappa(x),&P_{01x}=b\kappa(x),&P_{10x}=c\kappa(x),\\
+C_{00x}=u\kappa(x),&C_{01x}=v\kappa(x),&C_{10x}=w\kappa(x).
+\end{array}
+\tag{209.33}
+$$
+
+Keep arbitrary $t$ and arbitrary late correct rows. Condition (209.26)
+holds. With $H=\max(a+b+c,a+b+u+v,c+w)$ and
+$\bar\kappa_n$ the suffix projection of
+$\kappa|_{\{x_n=0\}}$, the matching region is exactly
+$\mathcal D_n=\mathcal Z(H\bar\kappa_n)$.
+In the full input family, any unit-$O$ score with $Q(y)\notin E_N$
+must fail (209.26) or at least one signed cut (209.31).
+At $E=0$, (209.26) is automatic and the cuts reduce to the single
+actual pair carrier $\omega_{0,n}$.
+
+**Proof.** For a late first query, the three early label rewards are
+$a+b+c,a+b+u+v,c+w$ times the same $\kappa$ cell mass. A largest
+coefficient maximizes both split cells.
+For first query 1, label 1 wins both cells. For first query 2 followed
+by a late query the coefficients are $a+c,a+u,c+w$, again with the
+same factor. Pair $(1,2)$ has label 1 maximizing both first-zero
+pieces. This proves (209.26) even with nonzero early $00$ rows.
+The three carriers are scalar multiples of $\bar\kappa_n$ and the
+largest contains the other two, giving the stated moment box.
+This common-factor calculation reuses the mechanism of 198.2 only
+on the early score; the original late rows need not have any common
+Markov suffix law. The nonmembership implication is the contrapositive
+of 209.13. At $E=0$ nonnegativity deletes early correct rows, zero
+then dominates every early-only reward, and
+$\zeta_1,\zeta_2\le\zeta_0$. This proves both simplifications.
+Failure of a cut is failure of this matching route, not proof of
+nonmembership. $\square$
+

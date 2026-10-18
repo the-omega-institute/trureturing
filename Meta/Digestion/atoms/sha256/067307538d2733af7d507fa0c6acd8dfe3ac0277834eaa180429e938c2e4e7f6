@@ -1,0 +1,23 @@
+**Lemma 6.1 (First-one alternatives).** Universally $C_1\le D$.
+Unless the actual next instruction reads an edge $H$ of parity
+$\alpha$ disjoint from $E$, one has $C_1\le a\eta$ and loses
+$D-a\eta=g_1$. In the disjoint case the actual continuations
+at $10,11$ have caps $K,J$ respectively, summing to $D$.
+
+Proof. First reply one certifies phase $\alpha$. An immediate halt,
+separator or repeat leaves at most one further informative call, so
+Lemma 4.2 bounds the sum by $a\eta$. If the second edge is
+adjacent, either reply leaves a mixed triple. Each continuation is
+at most $a\eta/2$, again totaling at most $a\eta$. If the
+second edge is disjoint, Lemmas 4.3–4.4 give $K$ on $10$ and
+$J$ on $11$, with independently chosen last addresses allowed.
+There is no other parity or edge relation. Finally
+
+$$
+D-a\eta=a\eta(a-1+2\eta)=d\eta^2=g_1,
+\tag{6.1}
+$$
+
+using $1-a=b$. The caps are individual-state joint masses, so
+all actual label choices and early halts are included. $\square$
+

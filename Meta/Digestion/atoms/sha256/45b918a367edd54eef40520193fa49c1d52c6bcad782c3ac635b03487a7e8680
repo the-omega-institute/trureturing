@@ -1,0 +1,80 @@
+**Corollary 6.4 (compactness, actual pointwise minima and vector frontier).**
+$\mathcal K_s$ is nonempty and compact. For every positive five-mode test
+input $\sigma$,
+
+$$
+\min_{\mathfrak F\ \mathrm{in\ Definition\ }2.3}
+ p_H^{\rm acq}(\sigma;\mathfrak F)
+ =\mathsf E_s(E^\dagger\sigma E),
+\tag{CA.32}
+$$
+
+also with supported live high mass as objective. Each minimum has an
+actual common attainer with at most twenty-four branches, dimensions at
+most three, and genuine rank-three high matrices. The undominated
+original twelve-vectors are exactly the undominated vectors of the compact
+image
+
+$$
+\mathscr W_s=\left\{
+ (\operatorname{tr}(\Theta(H_++H_-)\rho_{y,e,n}))_{y,e,n}:
+ (H_+,H_-,L_+,L_-)\in\mathcal K_s\right\}.
+\tag{CA.33}
+$$
+
+Each has such an actual finite representative.
+
+Proof. The unit singular locus is compact, and its projector set is
+compact. The six-atom theorem makes its convex hull the image of a compact
+six-point simplex times six copies of that set. A bounded-trace slice of
+$\mathcal C_2$ is the image of this compact hull times a bounded interval,
+including zero. Thus the cone is closed. Each positive variable of
+(CA.27) is bounded above by $I$, and all its other conditions are closed;
+so $\mathcal K_s$ is compact. The common designs in §7, reused from JR,
+prove nonemptiness for all $s$.
+
+The objective in (CA.28) is continuous. Theorem 6.2 gives the lower bound
+for every original design and Theorem 6.3 realizes a minimizing point.
+Reassignment of a singular high atom cannot strictly decrease that chosen
+positive objective, since it remains feasible. Hence it preserves the
+minimum and yields the asserted genuine high representation. This proves
+(CA.32), including zero, singular and subnormalized inputs. A complement
+input has zero compression and minimum zero; a cross-support input uses
+its unnormalized compression throughout.
+
+Every coefficient vector in (CA.33) is achievable by Theorem 6.3, and
+below every original vector Theorem 6.2 supplies a coefficient vector.
+These two facts prove both directions of the undominated-vector
+correspondence: any strict dominator in either set would give one in the
+other. A nonzero singular high atom would weakly lower all twelve
+coordinates on reassignment and strictly lower at least one, since
+
+$$
+\frac14\sum_{e,n}\operatorname{tr}(K(z)^\dagger K(z)\rho_{y,e,n})
+ =\operatorname{tr}(K(z)^\dagger K(z)\operatorname{diag}(p_y))>0.
+\tag{CA.34}
+$$
+
+Every $\operatorname{diag}(p_y)$ is positive definite. Thus an undominated
+vector admits no such loss in its chosen spectral realization.
+
+Compact reduction and actual attainment are credited to IR §11, whose
+bound is thirty using nine low atoms per record. The additional cone
+theorem replaces nine by six and gives (CA.31). It does not evaluate
+(CA.28). The quantifier is $\forall\sigma\ \exists\mathfrak F_\sigma$,
+with constants chosen from a public test state before execution and maps
+common on all unknown inputs. It is not one design minimizing every
+input. $\square$
+
+The absence of a fixed JR-conditioned restriction is substantive. For
+example IR §5's feasible baseline
+$Z_+^0=\tfrac12\left(\begin{smallmatrix}1&s&0\\s&1&0\\0&0&1\end{smallmatrix}\right)$
+can, for $s<1$, be perturbed by a sufficiently small nonzero real multiple
+of $Y_0=\operatorname{diag}(d^2,0,-h_0^2)$. Its effect image is
+$\Theta(Y_0)=\operatorname{diag}(0,h_1^2d^2,h_2^2d^2-h_0^2c^2)$.
+Both live coefficient matrices are initially positive definite, and
+$M/2$ is strictly between $0,M$ on coordinates $1,2$. Small perturbations
+therefore preserve $0\preceq Z\preceq I$ and
+$0\preceq F_+^V-\Theta(Z)\preceq M$. Theorem 6.3 realizes them by
+taking $L_r=0$. Thus interior binary live freedom remains in (CA.27).
+

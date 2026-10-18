@@ -1,0 +1,40 @@
+**Proposition 7.4 (closed plateau instruments, credited to NP/QO).**
+For $0\leq s\leq s_*$ take high vectors $h_*/\sqrt2$ at the two
+reports. Put
+
+$$
+u_*=\frac{\beta+\sqrt{\beta^2+4\alpha s_*^2}}2,\quad
+v_*=\frac{-\beta+\sqrt{\beta^2+4\alpha s_*^2}}{2\alpha},\quad
+T_r=\frac12\begin{pmatrix}u_*&r s&0\\r s&v_*&0\\0&0&1\end{pmatrix}.
+\tag{AS.55}
+$$
+
+Each $T_r$ is real PSD with $\operatorname{tr}(B_0T_r)=0$,
+rank three below $s_*$ and rank two at $s_*$. Decompose it into
+rank-many real quadratic-null projectors, then apply $R_{\theta_0}$
+to each vector. Their sum is
+$L_r=(I_3-H_*+r sX_c)/2$.
+
+For completeness the finite decomposition requires no oracle: factor
+$T=YY^T$ on its support. The real symmetric compression
+$Y^TB_0Y$ has trace zero. If nonzero, a zero Rayleigh unit vector
+exists between a positive and a negative eigenvector; remove it and
+repeat on its orthogonal complement, whose trace remains zero.
+A zero compression permits any orthonormal basis. Multiplication by
+$Y$ gives rank-many real null vectors. This is the IR/CA real-null
+decomposition on the support. A nonzero real null vector has nonzero
+$D$ coefficient; its transform under $R_{\theta_0}$ still has
+nonzero real $D$ part. All low physical products therefore have rank
+two. The claimed moment identity follows from the same congruence
+calculation as Lemma 7.1: the complementary $DT$ block has
+$U-\alpha V=\beta c_0$, imaginary entry $r_0$ and real entry $rs$.
+Its inverse congruence is exactly the real block in (AS.55).
+
+Both high physical products have imaginary nonzero $T/D$ ratio,
+so remain rank three even at $s_*$. Add the four supported scalar
+labels and two complement labels of Definition 7.2 with the same
+whole TP decoders. There are fourteen labels for $s<s_*$ and
+twelve at $s_*$. Equations (AS.51)–(AS.54) apply verbatim and give
+actual cost $F$. Here a complete low coefficient block drops rank;
+the high physical Kraus rank does not drop. $\square$
+

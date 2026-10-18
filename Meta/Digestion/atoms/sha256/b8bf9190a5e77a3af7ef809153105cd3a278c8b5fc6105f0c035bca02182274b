@@ -1,0 +1,40 @@
+**引理 220.8（Exact prefix-label inactivity and contraction）。**
+D1–D2 are equivalent to each prefix numerical label being dominated
+by zero in every legal pooled query cell. For $y\in\mathcal D_k$,
+each fixed complete $N$ or $O$ schedule satisfies
+$B_C^S(\rho_ky)\le B_C^S(y)$.
+
+**证明。** Necessity uses the mixed $N$ cell $w_i=0,v_a=t$,
+which contains only donor $i$, and the four suffix-pair cells.
+For sufficiency sum D1 over $t$ to get $|h_i|\le s_i$.
+Empty and suffix-singleton cells are dominated. In a prefix singleton
+or prefix pair, donor $i$ is on its own zero side or in $11$, and
+its total numerical reward is at most $s_i$. In a mixed pair, donor
+$i$ on the zero side satisfies D1; every other donor $\ell$ on the
+one side has $h_\ell(H)\le u_\ell(H)\le(U-u_i+z)(H)$.
+D2 covers suffix pairs. Every stopped cell is an $N$ cell or a
+union of them, so summing the same inequalities covers $O$.
+This proves equivalence without changing the output catalog.
+
+Now reduce temporarily to labels zero and $j>k$. The old full
+support bounds this reduced support, whereas on the pooled score they
+are equal by the proved domination. For the reduced labels a partition
+has support equal to its total zero reward plus
+
+$$
+ \sum_H\bigl(\max_{j>k}r_j(H)-\operatorname{base}(H)\bigr)_+.
+$$
+
+With no prefix query, each reading is unchanged. With one prefix
+query, all tail numerical mass lies on its one side. Moved zero mass
+exits a tail-reward-free zero side and enters the one side, with suffix
+replies unchanged. The former surplus is zero and the latter can only
+decrease. In a mixed stopped pair the prefix is first and its zero
+side is the stopped cell. With two prefix queries, tail numerical
+mass lies entirely in $11$; its zero mass can only increase, since
+all donors other than the two queried first-zero classes move toward
+$11$. Other cells have no tail numerical reward. This exhausts all
+fixed schedules, including shorter ones, and proves contraction.
+It is a score operation, not a source garbling or a free query.
+$\square$
+

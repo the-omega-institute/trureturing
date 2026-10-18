@@ -1,0 +1,29 @@
+**Definition 1.2 (unchanged source and observations).** Trees form the
+free ordered binary magma
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad \operatorname{ht}(\alpha)=\operatorname{ht}(\beta)=0,
+\quad \operatorname{ht}\langle u,v\rangle=1+\max(\operatorname{ht}u,\operatorname{ht}v).
+$$
+
+Every finite original-root word over $L,R$, including the empty word,
+is a legal literal Read. Its reply $r_t(a)$ belongs to
+$\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$;
+traversal beyond a leaf gives absent. Retain exactly
+
+$$
+\begin{aligned}
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle,\\
+\mathcal F_D&=\{\langle\alpha,v\rangle:\operatorname{ht}(v)\le D\},&
+W_D&=\{q:|q|\le D-1\},&\mathcal P_D&=\{Rq:q\in W_D\},
+\end{aligned}
+\tag{OOA.1}
+$$
+
+for public $D\ge1$. One actual initial source $t$ stays stationary
+through preparation and acquisition; $\rho^kt$ is a prediction target.
+There is no subtree, equality, source-identity, age, reset, copying,
+navigation or advice port.
+

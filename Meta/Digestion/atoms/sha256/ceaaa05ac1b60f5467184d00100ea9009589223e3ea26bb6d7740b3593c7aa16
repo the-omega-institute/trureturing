@@ -1,0 +1,29 @@
+### 14.2 The six disagreement fibers
+
+The endpoint probabilities needed for a direct expansion are
+\[
+\Pr(H_j=1)=\Pr(L_j=1)=2s,\quad
+\Pr(H_j=L_j=1)=s,\quad
+\Pr(H_j=L_j=0)=1-3s.
+\]
+Expanding the two priority tests over the independent coordinates gives the six nonempty disagreement fibers in the order
+\[
+(0,1),(0,2),(1,0),(1,2),(2,0),(2,1)
+\]
+with masses \(4s^2b_i\), where
+\[
+(b_1,\ldots,b_6)=
+(1-3s,\ 1-2s,\ 1-2s-2s^2,\ 2s^2,\ 1-3s+2s^2,\ s). \tag{14.1}
+\]
+Conditioning on \(H_0\) gives the expansion. If \(H_0=0\), the only disagreements are \((0,2)\) and \((2,0)\), each of mass
+\(4s^2(1-3s+2s^2)\). If \(H_0=1\), the contributions to
+\((0,1),(0,2),(1,0),(1,2),(2,1)\) are respectively
+\[
+4s^2(1-3s),\quad4s^3(1-2s),\quad
+4s^2(1-2s-2s^2),\quad8s^4,\quad4s^3.
+\]
+These disjoint cases sum to (14.1). Hence the total disagreement mass is
+\[
+D=4s^2\sum_i b_i=16s^2-36s^3+8s^4=2T(1,s). \tag{14.2}
+\]
+

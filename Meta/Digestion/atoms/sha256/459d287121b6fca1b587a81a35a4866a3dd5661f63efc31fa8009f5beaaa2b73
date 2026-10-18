@@ -1,0 +1,23 @@
+**Definition 2.2 (physical skeleton and its exact leaves).** Use NSF
+Definition 7.1. A finite four-reply tree has read vertices labelled by
+fixed physical words $p_v$ and epochs $n_v\ge N$, nondecreasing along
+paths, and absorbing halt leaves. Before each read it performs the actual
+forward difference from the previous epoch. A halt performs no further
+updates. Its full path fiber and path cost are
+
+$$
+\begin{aligned}
+D_t&=\{u\in D:r_{\rho^{n_v}u}(p_v)=c(v,t)
+                         \text{ for every }v\prec t\},\\
+c_t&=(k_t,n_t-N,L_t),
+&L_t&=\sum_{v\prec t}|p_v|,
+\end{aligned}
+\tag{NFO.5}
+$$
+
+where $n_t$ is the last read epoch, and a root halt has cost $(0,0,0)$.
+Correctness means that each nonempty $D_t$ has a constant full $R_Q$.
+Empty leaves impose no output or budget restriction. NSF gives exactly
+these tests on entire signed path fibers and supplies a realizing source
+for every nonempty leaf. No output-image finiteness premise is needed.
+

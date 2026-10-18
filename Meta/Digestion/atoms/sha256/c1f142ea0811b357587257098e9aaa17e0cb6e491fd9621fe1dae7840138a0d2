@@ -1,0 +1,208 @@
+**Theorem 5.1 (strict $AC$ obstruction).** If two distinct worlds in
+$\mathcal K_{\mathbf c,d}$ agree in $A,C$, then necessarily
+
+$$
+\begin{array}{ll}
+\text{I:}&0<d<24,\quad y<d,\quad \zeta<d,\\
+\text{II:}&24<d<48,\quad y>d.
+\end{array}
+\tag{5.1}
+$$
+
+In alternative I, every world on the same full ancestor with this
+same $d$ and $f(6)=0$ is exactly cubic with three simple roots
+$\rho\in(0,1)$, $\tau\in(3,4)$ and six. Its normalized leading
+coefficient and $f(7)$ are positive, as is the leading coefficient
+of $h=f/f(7)$. In alternative II every sixth root on that entire
+same-ancestor zero-sixth slice is simple. There is no additional
+terminal-sign or other-root assertion in alternative II, and neither
+alternative asserts existence or sufficiency.
+
+**Proof, the nonzero parameters and every zero-difference case.**
+Use the $AC$ row in (3.7). If $\epsilon=0$, the two matrices have
+the same $a,c,e$. Their nonzero common $c$ and rank-one equations
+$ae=bc$ then give the same $b$, contradicting distinctness.
+Thus $\epsilon\ne0$.
+
+Equal $A$ gives equal nonzero $\sigma_5$. The actual fifth equation
+gives $h_1(5)=h_2(5)$, including a possible zero sample.
+Both polynomials agree at six and seven, so
+
+$$
+h_2(T)-h_1(T)=kR(T),\qquad R(T)=(T-5)(T-6)(T-7).
+\tag{5.2}
+$$
+
+The difference has degree at most three; factorization proves this
+identity also for $k=0$ and all lower degrees. We first exclude
+$k=0$. Then $h_1=h_2=h$, and the difference of (3.2) is
+$h(j)\Delta\sigma_j=0$ at every ancestor clock.
+
+If $d\notin\{24,48\}$, both $h(1),h(2)$ are nonzero, so
+$\epsilon+\beta=0$ and $2\epsilon+\beta=0$.
+If $d=24$, both $h(0),h(2)$ are nonzero, so
+$\epsilon+3\beta=0$ and $2\epsilon+\beta=0$.
+If $d=48$, both $h(0),h(1)$ are nonzero, so
+$\epsilon+3\beta=0$ and $\epsilon+\beta=0$.
+These cases exhaust all real $d$; each system forces
+$\epsilon=\beta=0$, a contradiction. Thus $k\ne0$.
+
+**Proof, full coefficients, samples and excluded breakpoints.**
+Multiplication gives
+
+$$
+R(T)=(T^2-12T+35)(T-6)=T^3-18T^2+107T-210.
+\tag{5.3}
+$$
+
+Its complete increasing-power row is $(-210,107,-18,1)$, and its
+complete samples at the displayed clocks, directly from the three
+factors, are
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&0&1&2&3&4&5&6&7\\ \hline
+R(j)&-210&-120&-60&-24&-6&0&0&0.
+\end{array}
+\tag{5.4}
+$$
+
+Thus $h_2(j)-h_1(j)\ne0$ at every $j=0,\ldots,4$.
+At any such clock, $c_j=d$ would make both $h_i(j)=0$ by
+(3.2), which is impossible. Also $\Delta\sigma_j=0$ would
+make the two $h$ values equal by their common nonzero trace,
+again impossible. Consequently
+
+$$
+d\notin\{0,24,48,312/5,y\}.
+\tag{5.5}
+$$
+
+Define $\theta=\beta/\epsilon$ only now that $\epsilon\ne0$.
+The entire trace-difference vector is $\epsilon F$, where
+
+$$
+F=(1+3\theta,-2(1+\theta),2+\theta,-\theta,1+\theta,0).
+\tag{5.6}
+$$
+
+Nonvanishing of its first five entries proves
+$\theta\notin\{-2,-1,-1/3,0\}$. These are all its breakpoints.
+No exclusion of $d=\zeta$ is inferred: the clock-five sample may
+vanish. All exclusions so far are consequences of the distinct
+$AC$ hypothesis, not deletions from the model.
+
+**Proof, the exact sign identity and exhaustive table.** The common
+$A-d=f_i(7)\operatorname{tr}(QP_i)$ is nonzero and its trace
+factor is positive. Thus $f_1(7),f_2(7)$ have the same sign and
+$\sigma_{1,j}\sigma_{2,j}>0$ at every clock. Subtracting
+$h_i(j)=(c_j-d)/\sigma_{i,j}$ gives the identity
+
+$$
+kR(j)=-\frac{(c_j-d)\epsilon F_j}
+                         {\sigma_{1,j}\sigma_{2,j}},
+\qquad 0\le j\le4.
+\tag{5.7}
+$$
+
+All divisors here are nonzero. Because $R(j)<0$ at these clocks,
+
+$$
+\operatorname{sgn}(k/\epsilon)
+ =\operatorname{sgn}((c_j-d)F_j),\qquad 0\le j\le4.
+\tag{5.8}
+$$
+
+The first four entries of (5.6), and their global negatives, have
+exactly the following signs on all five intervals:
+
+| $\theta$ interval | $(F_0,F_1,F_2,F_3)$ | Global negative | Compatible reading-sign row |
+| --- | --- | --- | --- |
+| $\theta<-2$ | $(-,+,-,+)$ | $(+,-,+,-)$ | none |
+| $-2<\theta<-1$ | $(-,+,+,+)$ | $(+,-,-,-)$ | first row, $0<d<24$ |
+| $-1<\theta<-1/3$ | $(-,-,+,+)$ | $(+,+,-,-)$ | first row, $24<d<48$ |
+| $-1/3<\theta<0$ | $(+,-,+,+)$ | $(-,+,-,-)$ | none |
+| $\theta>0$ | $(+,-,+,-)$ | $(-,+,-,+)$ | none |
+
+Each entry follows from the signs of the four linear factors
+$1+3\theta$, $-2(1+\theta)$, $2+\theta$, $-\theta$.
+For clarity, all drift intervals from the increasing actual readings
+$0<24<48<312/5$, after the excluded endpoints (5.5), give
+
+$$
+\begin{array}{c|c}
+d\text{ interval}&\operatorname{sgn}(c_0-d,c_1-d,c_2-d,c_3-d)\\ \hline
+(-\infty,0)&(+,+,+,+)\\
+(0,24)&(-,+,+,+)\\
+(24,48)&(-,-,+,+)\\
+(48,312/5)&(-,-,-,+)\\
+(312/5,\infty)&(-,-,-,-).
+\end{array}
+\tag{5.9}
+$$
+
+Equation (5.8) requires this reading-sign row to be the $F$ row
+when $k/\epsilon>0$, or its global negative when $k/\epsilon<0$.
+The table lists both choices for every interval. Only its second
+and third $F$ rows occur in (5.9); no global negative occurs.
+Therefore
+
+$$
+\begin{gathered}
+k/\epsilon>0,\\
+-2<\theta<-1,\quad 0<d<24,
+\qquad\text{or}\qquad
+-1<\theta<-1/3,\quad 24<d<48.
+\end{gathered}
+\tag{5.10}
+$$
+
+At clock four, (5.8) now requires
+$(y-d)(1+\theta)>0$. Hence $y<d$ in the first case and
+$y>d$ in the second. This uses the fixed actual fourth reading.
+
+**Proof, the entire-slice root and fifth-reading consequences.**
+In the first case, take any legal world on the same ancestor with
+this $d$ and $f(6)=0$, whether or not it belongs to the collision
+pair. Positivity of every trace and (1.6) give
+
+$$
+f(0)<0,\quad f(1),f(2),f(3)>0,\quad f(4)<0.
+\tag{5.11}
+$$
+
+The intermediate value theorem gives a root $\rho\in(0,1)$ and
+a root $\tau\in(3,4)$. Along with six these are three distinct
+roots. The nonzero gain has degree at most three, so it is exactly
+
+$$
+f(T)=\kappa(T-\rho)(T-\tau)(T-6),\qquad \kappa\ne0,
+\tag{5.12}
+$$
+
+and all three roots are simple, with no further root. At $T=3$ the
+three factors have signs $(+,-,-)$; (5.11) forces $\kappa>0$.
+At five their signs are $(+,+,-)$, giving $f(5)<0$.
+The actual fifth equation with its positive trace now forces
+$\zeta<d$. At seven all three factors are positive, giving
+$f(7)>0$. The leading coefficient of $h=f/f(7)$ is therefore
+also positive. This proves every assertion of alternative I on the
+entire same-ancestor slice; it even forces terminal nonvanishing
+without assuming it for this last argument.
+
+In the second case, $24<d<48$. G, Theorem 2.1, at exactly this
+same fixed ancestor and common $d$, permits a repeated sixth root
+only for $d<0$, $0<d<24$, or $48<d<312/5$. None meets this
+interval. Thus every sixth root on the same zero-sixth slice is
+simple. No further sign or existence conclusion is taken from
+that baseline theorem. This proves (5.1) and all whole-slice claims. ∎
+
+The proof divided only by promised terminal gains, nonzero ancestor
+traces, the proved nonzero $\epsilon$, and fixed integers.
+The $k=0$ branch and every sampled-zero and sign breakpoint were
+settled before the corresponding sign argument. No sixth ratio,
+leading gain coefficient, discriminant or root difference was canceled.
+In original coordinates the forced-positive normalized terminal gain
+in alternative I means $\operatorname{sgn}g(7)=\operatorname{sgn}\lambda$;
+it does not assume positivity of the original gain.
+

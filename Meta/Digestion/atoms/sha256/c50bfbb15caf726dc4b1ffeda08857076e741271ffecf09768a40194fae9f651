@@ -1,0 +1,52 @@
+**Application 7.1 (a root-certificate row family).** Let
+$p=e_1\cdots e_h\ne\varepsilon$, put
+$w(p)=\#_L(p)+2\#_R(p)$, and let $\bar L=R,\bar R=L$.
+Define the full path frontier
+
+$$
+P(p)=\{p\}\cup\{e_1\cdots e_{j-1}\bar e_j:1\le j\le h\}.
+\tag{NCE.19}
+$$
+
+Its exterior is the full path context, all of whose leaves are holes.
+Give it the complete partition $q\sim q'$ exactly when $w(q)=w(q')$;
+call this row $R(p)$. Consider three records: root-cut singleton rows
+at epochs $0,a$, and $(P(p),R(p))$ at epoch $b\ge a$. Retain the
+link equating the root hole at epoch $a$ to the hole $p$ at epoch $b$.
+Then the exact epoch support is
+
+$$
+\{(0,a,a+w(p)):a\in\mathbb N\}.
+\tag{NCE.20}
+$$
+
+At such a tuple the entire original-source fiber is
+$\{T_s:s+a\ge\eta(p)\}$, where $\eta(p)=1$ if the last letter
+is $L$, and $\eta(p)=0$ if it is $R$.
+
+Derivation from the supplier. [ARH, Theorem 4.2][ARH] already
+classifies the guarded root-to-descendant record at any supplied
+$a,b$: it forces $b=a+w(p)$ and exactly those atomic originals.
+This application adds no new root-certificate rigidity theorem.
+It remains to check the proposed complete last row, rather than
+only the linked endpoint. On $t=T_s$ the last tree is
+$T_{s+a+w(p)}$. The guard for $p$ is precisely
+$s+a\ge\eta(p)$ by [ARH, (4.3)][ARH]. Every sibling of its path
+is also reached. At each frontier hole $q$ its whole value is
+$T_{s+a+w(p)-w(q)}$. Atomic index injectivity makes the full
+partition exactly the one specified above. All proper prefixes in
+the path context are branches, so its entire exterior is correct.
+This proves both inclusions of the asserted history and source
+fibers. The single source $\beta=T_1$ witnesses every tuple in
+(NCE.20). With the link deleted, the same three rows admit every
+$0\le a\le b$: choose $t=T_s$ with $s+b$ large enough to reach
+the whole frontier and use the same weight calculation.
+
+Thus a literal addressed relation can recover an arbitrarily late
+exact relative lag without fixing the source or the earlier epoch.
+Every positive integer lag occurs by taking $p=L^h$. The address
+and full partition are part of the input, not a free numerical offset.
+For $p=LL$, for example, the frontier is $\{R,LR,LL\}$ and its
+partition equates $R$ with $LL$, while $LR$ is distinct. Ignoring
+this repeated class would change the example's record.
+

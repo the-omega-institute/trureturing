@@ -1,0 +1,12 @@
+## 11. Fibonacci 中的坐标搬运与同名声明
+
+仓内 Fibonacci 理论给出
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\quad
+C=MJ=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+$$
+
+以及 $J^2=I$、$C^2=-I$、$C^4=I$ 和 $CMC^{-1}=-M^{-1}$。这里的四相位来自这个指定算子的阶，不能独自解释五窗口分类或宇宙结构。
+

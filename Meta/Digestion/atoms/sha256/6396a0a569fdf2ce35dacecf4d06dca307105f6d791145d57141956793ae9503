@@ -1,0 +1,40 @@
+**Lemma 15.1 (Boundary and Prefix on the actual version).** Let $J$ be the
+immutable complete predecessor-frame backing at a reached installed Ready.
+Then compiled Boundary terminates and constructs the exact absolute $a,b$
+of that acquisition and Ready. For every constructed $a\le k\le b$,
+compiled Prefix terminates with precisely the actual length-$k$ history,
+complete state and consumed frame-input prefix. Later reservoir bits do
+not change that result. This applies when the selected history contains
+earlier recovery computations, installation work and all paid copies.
+
+Proof. Proposition 14.3 and Lemma 13.2a supply the actual initialized
+manifest with code in field zero and the exact old-frame and head-table
+fields. Thus the old source prefix and activation position are fixed by
+acquired fields in their declared positions. Seed conversion gives the
+actual original canonical packet by the supplier's bijection. Boot descriptions and fixed
+public inputs likewise coincide. Proposition 12.5 gives one actual row
+per simulated row, including bootstrap and all service-native rows.
+Follow the finite actual predecessor to its actual installed Ready.
+Its code and chronology include both manifest-entry MRs, every import
+test, compiled field assignment, copied descriptor and final token/Ready
+row of this same $D_1$. Step interprets those rows individually; it does
+not replace initialization by an abstract state change. In particular the
+cut on the sentinel, the cut after the second MR and cuts inside field
+or code parsing are ordinary represented native cuts with their actual
+heads, latches, partial banks, ownership and receipt successors.
+Its complete frame count and activation-completed flag satisfy Boundary's
+stopping test, and no earlier installed Ready has all those frames.
+In particular the old pre-installation Ready with $j_A$ frames does not
+satisfy the activation-completed flag. Boundary therefore stops at this
+$b$, with one tally mark per actual row and the acquisition tally at $a$.
+
+Prefix has an actually constructed countdown and executes exactly that
+many Step invocations. Induct on its finite number of leading ones and
+use Proposition 12.5. IN pops only the next bit actually needed before
+that stop, including an acquired unwritten bit at its last row. Nothing
+queries an unavailable old destination or interprets an invalid raw source
+packet as a valid current tree. Its complete cells and finite fields are
+those of the actual endpoint. Represented service code is treated exactly
+like represented original code, one row at a time. No recursive evaluation
+of a historical semantic Call occurs in this induction. ∎
+

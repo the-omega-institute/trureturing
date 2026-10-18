@@ -1,0 +1,76 @@
+**Definition 27.4 (Ehrhart data supplied to the ambient index).**
+Let $N_n(m)=\dim(R_n)_m=|mP_n\cap\mathbb Z^n|$ for $m\ge0$.
+The numerator in
+
+$$
+\sum_{m\ge0}N_n(m)t^m=\frac{h_n^*(t)}{(1-t)^{n+1}}
+$$
+
+has degree $n-2$ and is palindromic:
+
+$$
+h_n^*(t)=t^{n-2}h_n^*(t^{-1}).
+\tag{27.7}
+$$
+
+For the small path lengths,
+
+$$
+\begin{aligned}
+h_3^*&=1+t,\\
+h_4^*&=1+3t+t^2,\\
+h_5^*&=1+7t+7t^2+t^3,\\
+h_6^*&=1+14t+31t^2+14t^3+t^4.
+\end{aligned}
+\tag{27.8}
+$$
+
+The Ehrhart polynomial extension satisfies
+
+$$
+N_n(-m)=(-1)^nN_n(m-3).
+\tag{27.9}
+$$
+
+This evaluates a polynomial at negative integers; it does not count
+negative replicas.
+
+Supplier correspondence for Theorem 27.5. The lattice polytope hypotheses
+were verified above. Theorem 1.6 and §3 of [Jiang–Yang–Zhong][PA27], with
+$a=1$, supply codegree three, degree $n-2$, reciprocity and palindromy.
+In the present coordinates their interior count is exactly
+$|\operatorname{int}(mP_n)\cap\mathbb Z^n|=N_n(m-3)$ for $m\ge3$,
+by (27.2). Ehrhart reciprocity identifies the left count with
+$(-1)^nN_n(-m)$; equality at infinitely many positive integers proves
+(27.9) as a polynomial identity. Equivalently the canonical shift of
+ordinary degree three makes the Hilbert numerator symmetric of degree
+$(n+1)-3$. This is the same supplied theorem in the algebra used here.
+
+For completeness the small numerators in (27.8) can be obtained without
+unspecified tabulated data. Let $a_1^{(m)}(j)=1$ for $0\le j\le m$ and
+
+$$
+a_{r+1}^{(m)}(j)=\sum_{k=0}^{m-j}a_r^{(m)}(k),\qquad
+N_r(m)=\sum_{j=0}^ma_r^{(m)}(j).
+\tag{27.10}
+$$
+
+These formulas count legal occupancy columns by their last value.
+They give $N_3(1)=5,N_4(1)=8,N_5(1)=13,N_6(1)=21$;
+for $m=2$, the three-coordinate recurrence gives, through lengths one
+to six, the vectors
+$(1,1,1),(3,2,1),(6,5,3),(14,11,6),(31,25,14),(70,56,31)$,
+whose last two sums give $N_5(2)=70$ and $N_6(2)=157$.
+The coefficient identity
+
+$$
+h_{n,j}^*=\sum_{q=0}^j(-1)^q\binom{n+1}{q}N_n(j-q)
+$$
+
+gives $h_{n,1}^*=D_n-(n+1)$, namely $1,3,7,14$.
+For $n=6$, $h_{6,2}^*=157-7\cdot21+21=31$.
+Degree and palindromy determine the remaining coefficients for
+$n=3,4,5,6$, giving (27.8). The recurrence specializes the supplier to the concrete mode counts
+needed by Theorem 27.5. Codegree, reciprocity and palindromy here are
+intermediate literature inputs, not additional standalone path theorems.
+

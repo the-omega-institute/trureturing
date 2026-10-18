@@ -1,0 +1,23 @@
+**Definition 1.4 (two descriptor grammars).** CAP native records on 29 have
+physical form
+
+$$
+00\mathsf{sep}\;w_0\mathsf{sep}\cdots
+w_9\mathsf{sep}\;\mathsf{seal}.
+$$
+
+Their fields, in order, are owner, port, base, length, creation ordinal,
+type, initialized, mutable, status address and origin. Numeric fields are
+$U(n)=1^n0$. The CAP creation ordinal is one-based. An immutable bit block
+has payload at $[b,b+\ell)$, following sep at $b+\ell$, and status at
+$b+\ell+1$. Its origin is empty or the complete framed remote reference,
+not a native address at the recipient.
+
+The compiler's descriptors on 68 instead have RCA Definition 11.3's
+concatenated unary owner, port, base, length, flags 10, creation ordinal,
+then F and seal. Their ordinal is the number of preceding descriptor Fs,
+hence zero-based. History records contain explicit kind tags. These two
+grammars are parsed separately; neither a CAP seal nor a CAP sep is an
+RCA bank delimiter. This distinction implements the origin and grammar
+separation required by CAP Proposition 14.2.
+

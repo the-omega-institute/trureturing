@@ -1,0 +1,109 @@
+**Theorem 8.1 (phase-sensitive Gram with globally admissible products).**
+For $k=4$, there are two families of correct-output blocks satisfying
+(PC.32), each extending to one pair of global RT81 local CPTP maps,
+such that the classical qubit instrument
+
+$$
+\mathcal I_f(X)=X/4,\qquad f=1,2,3,4,
+\tag{PC.35}
+$$
+
+is identical for both families, but their fixed-target positive-part
+traces are respectively $6$ and $7$.
+
+Proof. Choose $\varepsilon\in\{\pm1\}^4$ and set
+
+$$
+A_f=\varepsilon_f I_2/2,\qquad H_f=I_2.
+\tag{PC.36}
+$$
+
+Each block is a contraction and
+$A_fXA_f^\dagger=X/4$. Moreover
+$\sum_f A_f^\dagger A_f=I_2$, so (PC.35) is an actual CP
+instrument on a single qubit with four readable labels. It is a
+comparison instrument for this transfer question, not a new original
+GC law. Identifying its four qubit domains with the four logical
+fibres specifies the displayed correct-output blocks.
+
+These blocks satisfy the global compatibility required by RT81,
+not only its independent-contraction relaxation. Let
+
+$$
+\begin{gathered}
+D_\varepsilon=\operatorname{diag}(\varepsilon_1,\ldots,\varepsilon_4),
+\quad U_\varepsilon=D_\varepsilon(I_4-J_4/2),\\
+V_A=U_\varepsilon\otimes I_2:
+\mathbb C^8\longrightarrow\mathbb C^4\otimes\mathbb C^2,
+\qquad V_B=I_8:
+\mathbb C^8\longrightarrow\mathbb C^4\otimes\mathbb C^2.
+\end{gathered}
+\tag{PC.37}
+$$
+
+The identifications send $|f,i\rangle$ to $|f\rangle\otimes|i\rangle$.
+Since $J_4^2=4J_4$, $(I_4-J_4/2)^2=I_4$, and both $V_A,V_B$
+are global isometries. Taking their environment partial traces
+therefore gives local CPTP maps of the precise RT81 dimensions,
+with pure environments of dimension two. Their correct-output
+blocks are
+
+$$
+\begin{aligned}
+(\langle f|\otimes I_2)V_A|f,i\rangle
+ &=(U_\varepsilon)_{ff}|i\rangle
+   =\varepsilon_f|i\rangle/2,\\
+(\langle f|\otimes I_2)V_B|f,i\rangle&=|i\rangle.
+\end{aligned}
+\tag{PC.38}
+$$
+
+Thus they realize exactly (PC.36), including any output leakage
+outside the correct output. Their product records and full Gram are
+
+$$
+x_{fi}=\frac{\varepsilon_f}{2}|i\rangle\otimes|i\rangle,
+\qquad
+K_\varepsilon=E_\varepsilon\otimes I_2,\qquad
+E_\varepsilon=\varepsilon\varepsilon^T/4.
+\tag{PC.39}
+$$
+
+Here $E_\varepsilon$ is a rank-one orthogonal projection. Applying
+the full plus/minus transform gives
+
+$$
+\widehat K_\varepsilon=\operatorname{diag}(E_\varepsilon,E_\varepsilon),
+\qquad
+\widehat T_4=\operatorname{diag}(J_4,I_4).
+\tag{PC.40}
+$$
+
+The cross block vanishes by the explicit records; it has not been
+discarded as an approximation.
+For $\varepsilon=(1,1,1,1)$, $E_\varepsilon=J_4/4$ projects onto
+the all-ones line. The two blocks of $\widehat T_4-\widehat K$
+have spectra $(3,0,0,0)$ and $(1,1,1,0)$. Thus
+
+$$
+\operatorname{spec}(T_4-K)=(3,0,0,0,1,1,1,0),\qquad
+\operatorname{Tr}(T_4-K)_+=6.
+\tag{PC.41}
+$$
+
+For $\varepsilon=(1,1,-1,-1)$, the projection line is orthogonal
+to the all-ones line. Now the spectra are $(4,-1,0,0)$ and
+$(1,1,1,0)$, so
+
+$$
+\operatorname{spec}(T_4-K)=(4,-1,0,0,1,1,1,0),\qquad
+\operatorname{Tr}(T_4-K)_+=7.
+\tag{PC.42}
+$$
+
+Both Grams have trace two; the missing correct-output trace is
+retained, as in RTII §81.3–81.4. Both examples satisfy the RT81
+lower bound. The global channels in (PC.37) change with
+$\varepsilon$, while all four classical CP branches in (PC.35)
+remain identical. This proves the assertion. $\square$
+

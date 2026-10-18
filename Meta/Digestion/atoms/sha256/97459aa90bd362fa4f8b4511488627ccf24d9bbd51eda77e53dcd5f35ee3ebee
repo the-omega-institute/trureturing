@@ -1,0 +1,21 @@
+**Definition 15.1 (the interior-singleton class).** Retain the whole
+model of Definitions 1.1–1.2 and Convention 1.3. Thus $n\ge6$,
+$3\le k\le n-2$, $K=k$, $L=n-k+1$, $G=KL$, and
+$c_i=s_i+4$ for distinct positive integers $s_1<\cdots<s_n$.
+One complete stationary graph is correct and terminates on every
+$\theta\in\{0,1\}^n$, with both $t_P(\theta)\le n$ and
+$J_P(\theta)\le W$ on that same input. Let $\mathfrak I$ be
+the class of these graphs satisfying only
+
+$$
+a_{h,z}=1\qquad
+(0\le h\le K-2,\quad 0\le z\le L-2).
+\tag{SI.134}
+$$
+
+These are exactly the cells whose zero and one children are both
+live. No support-uniqueness condition is imposed on $h=K-1$ or
+$z=L-1$, including their common corner. There is no uniqueness
+condition on hosts, and no order restriction on certified traffic.
+All installed unused states and all paid repeats remain counted.
+

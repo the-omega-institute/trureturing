@@ -1,0 +1,19 @@
+### 101.5. Minimality and evaluation of the fixed gamma field
+
+Let gamma=8+3sqrt5, E=Q(sqrt5,sqrt19), K=Q(sqrt95), and F=E(sqrt gamma). Its conjugate is 8-3sqrt5, and their product is 19. Both are positive in the real embeddings.
+
+At odd primes other than 19, gamma is a unit. At 5, 19 is a local square and E=K locally; the unit extension is unramified. At 19, use the unit conjugate of gamma, whose residue is 16 at the appropriate prime. The two square roots define the same extension over E because their product19 is a square there. Thus the extension is unramified over K at all odd primes, including19.
+
+For the dyadic condition, interchange the norm construction as in Corollary 5.2 and put alpha=2(8+sqrt19). One may see the equality of the resulting fields from (sqrt gamma+sqrt gamma_bar)²=alpha. With varpi=1+sqrt19,
+
+ alpha/varpi²=(8+sqrt19)/(10+sqrt19) in 1+2 O_(Q_2(sqrt19)),
+ Norm(alpha/varpi²)=5/9.
+
+The denominator is a unit, the numerator differs from it by-2, and the removed varpi² is a square. Definition 7.5 gives the exact conductor-two minimality for the (19,5) case. This verifies Definition 7.6 for discriminants 76 and5; it does not incorrectly assert unramifiedness at 2.
+
+By reciprocity R(5,19,-D)=+1. Its third argument is negative, so an infinite factor must be included; it is +1 because gamma is totally positive. For every p|D, both 5 and 19 are local squares, p is unramified in F, and gamma has residue8+3s_p. Equations (45)–(47) evaluate the finite factor as chi(p). Therefore
+
+ +1=R(5,19,-D)=product_(p|D) chi(p),
+
+which proves the stated odd-depth balance. No individual symbol R(5,19,p) is used without checking its own hypotheses; the single composite third argument -D carries the complete admissibility and infinite-place calculation.
+

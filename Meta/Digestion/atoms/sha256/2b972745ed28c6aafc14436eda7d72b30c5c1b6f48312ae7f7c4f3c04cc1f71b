@@ -1,0 +1,14 @@
+#### 定理 6：单调粗粒化的时间箭头定理
+
+若每一步观察记录都满足
+
+```math
+M_{t+1}=G_t\circ M_t,
+```
+
+则局部不可区分关系单调增加：
+
+```math
+\sim_0\subseteq\sim_1\subseteq\sim_2\subseteq\cdots.
+```
+

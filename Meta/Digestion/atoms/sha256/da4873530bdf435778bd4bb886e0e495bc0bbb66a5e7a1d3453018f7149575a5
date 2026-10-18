@@ -1,0 +1,33 @@
+**定理 6.1（三向量像与组成标记的两向量像）。** 固定 $p$，$\mathcal B_{3,p}=W_3(\mathcal T\times\{p\})$ 恰为 $V^3$ 中由
+
+$$
+(a,b,K),\qquad(b,K,N)
+$$
+
+生成的最小逐坐标有序叉积子 magma。未知制备像为 $\bigcup_p\mathcal B_{3,p}$。
+
+另一实际记录为 $\eta_p(t)=(\nu(t),E_p(t),E_p(\rho t))$。定义
+
+$$
+D_p(0,0)=\varnothing,\quad D_p(1,0)=\{(a,b)\},\quad
+D_p(0,1)=\{(b,K)\}.
+$$
+
+对 $m+n\ge2$，$D_p(m,n)$ 为所有有序非空分拆 $(m,n)=d+e$ 的以下集合之并：
+
+$$
+\{(u\times u',v\times v'):(u,v)\in D_p(d),\ (u',v')\in D_p(e)\}.
+$$
+
+则 $\eta_p(\mathcal T)$ 恰为 $\bigcup_{m+n\ge1}\{(m,n)\}\times D_p(m,n)$，每个 $D_p(m,n)$ 有限并带实际树见证。
+
+证明。解释和 $\rho$ 都保持有序节点，故 $W_3(\langle s,t\rangle,p)$ 是两子记录的逐坐标叉积。结构归纳给生成集合的一侧包含，反向将任意有限生成表达式解释成对应原树。两向量递归的一侧包含用实际根分拆；反向对叶数归纳，为所选两个孩子记录取得实际树，再在同一 $p$ 下有序 graft。每个分拆的孩子叶数严格减少，有限分拆及有限子集合保证有限性。这里未将两个边缘像改成自由乘积或线性张成。
+
+组成为 $(m,n)$ 的原树数直接复用 GenealogicalFiberTransport 的
+
+$$
+\operatorname{Catalan}_{m+n-1}\binom{m+n}{m}\quad(m+n\ge1).
+$$
+
+其来源对应为：$L=m+n$ 个有序叶的满二叉形状有 $\operatorname{Catalan}_{L-1}$ 种，每形状选择 $m$ 个叶位标 $\alpha$。求值可合并这些树，不能把此数当作 $|D_p(m,n)|$。零组成的实际来源纤维为空，不套用自然数减法总化的数值表达式。
+

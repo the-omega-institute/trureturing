@@ -1,0 +1,32 @@
+**Definition 7.1 (current JR's diagonal parameters).** Let
+$q_{\max}=k/(1-\alpha)\in(0,1)$. For $0\leq s\leq\sqrt\ell$ put
+$(p,q)=(k,0)$. For $\sqrt\ell<s\leq1$ let
+
+$$
+p=k+\alpha q,\qquad 0<q\leq q_{\max},\qquad
+s=\sqrt{pq}+\sqrt{(1-p)(1-q)}.
+\tag{CA.35}
+$$
+
+This uniquely determines $q$. One closed expression, also in IR, is
+
+$$
+\mathscr H_s=(1-\beta)\ell-\alpha s^2\geq\beta k>0,\qquad
+\nu_s=\frac{s^2-\ell}{s\sqrt{1-s^2}+\sqrt{\mathscr H_s}},\qquad
+q=\frac{\nu_s^2}{1+\nu_s^2},\quad p=k+\alpha q.
+\tag{CA.36}
+$$
+
+At the threshold it gives $q=0$; at $s=1$ it gives $p=q=q_{\max}$.
+Define the known resource effect and means
+
+$$
+G_0(s)=pD^\dagger D+qT^\dagger T,\qquad
+g_y(s)=\operatorname{tr}(G_0(s)\operatorname{diag}(p_y)).
+\tag{CA.37}
+$$
+
+Under (CA.1), JR (JR.32) is exactly this $g_y(s)$. Its worst-history
+minimum is $g_{27}(s)$, attained simultaneously with all three means.
+These are reused laws, not new diagonal or worst-history theorems.
+

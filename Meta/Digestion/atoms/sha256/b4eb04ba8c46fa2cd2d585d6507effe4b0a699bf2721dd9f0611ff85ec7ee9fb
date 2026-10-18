@@ -1,0 +1,6 @@
+## 89. An unrestricted local quarter minimum from analytic descent at the scalar cone
+
+This section proves a path-free local theorem for the original product channels, with arbitrary Kraus rank and original output leakage on both sides. It uses the full comparison Hessian theorem of [section 86](ARITHMETIC_HOLOGRAPHIC_RT_II.md#86-local-quartic-stability-from-the-rank-two-ky-fan-minimum-manifold), the all-disphenoid minimized coefficient of [section 87](ARITHMETIC_HOLOGRAPHIC_RT_II.md#87-exact-anisotropic-quartic-coercivity-at-every-disphenoid-equality-pair), and the flat-noise and gauge identities proved in [section 88](#88-a-path-free-local-quarter-minimum-for-a-party-of-kraus-rank-at-most-three). The analytic descent and scalar-cone remainder argument below are additional proof steps; nonnegative quartic coefficients alone would not imply the conclusion.
+
+No unrestricted global optimum is asserted. The local center is any classified quarter-error pair with one party of Kraus rank two. The new theorem concerns all nearby channels, including ranks four and higher.
+

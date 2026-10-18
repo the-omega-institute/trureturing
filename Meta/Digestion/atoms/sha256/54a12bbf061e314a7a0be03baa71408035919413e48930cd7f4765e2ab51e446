@@ -1,0 +1,43 @@
+**Definition 56.4 (public finite family and total original decoder).** For every public parameter
+$\rho\in(\rho_*,\rho_+]$, reuse exactly original (54.12)–(54.14), replacing their single selected value $\rho_+$ by this $\rho$. Explicitly set
+
+$$
+\alpha=(3/5)K(\rho)-(4/5)\rho,\qquad
+\nu=(4/5)K(\rho)+(3/5)\rho,\qquad q=\alpha+\nu i,
+\quad c_1=j,\quad c_2=-\alpha j+\nu k,\quad
+h=\frac{7K(\rho)+24\rho}{25},\quad T=\frac{7+25h}{2}.
+\tag{56.11}
+$$
+
+These are public exact constants, $c_1,c_2$ are unit pure imaginary controls, and $c_1c_2=q$. The controller $\pi_\rho$ executes the fixed original events
+
+$$
+\operatorname{Read}(y_0);\ A_{c_1};\
+\operatorname{Read}(y_1);\ A_{c_2};\
+\operatorname{Read}(y_2);\ A_d;\
+\operatorname{Read}(y_3);\ \operatorname{Stop}.
+\tag{56.12}
+$$
+
+Keep all four reports and all three action identities and Stop. On the entire report space $E^4$, put $r=|y_3|$, select $R=7$ if $r\le T$ and $R=25$ otherwise, and use the unchanged scalar decoder and closed-ball projection (54.14):
+
+$$
+\begin{aligned}
+d_R^-&=\min\{R,\max(0,r-\delta)\},&
+d_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(d_R^+)^2},&
+u_R&=\sqrt{R^2-(d_R^-)^2},\\
+\widehat s&=
+\begin{cases}
+(\ell_R+u_R)/2,&\ell_R>R\rho,\\
+(u_R-R\rho)/2,&\ell_R\le R\rho,
+\end{cases}
+&\widehat w&=P_R(y_3),\\
+\widehat x_\rho&=(y_0,(\widehat s+\widehat w)q^{-1}).&&
+\end{aligned}
+\tag{56.13}
+$$
+
+Here $P_R(y)=y$ for $|y|\le R$, and $P_R(y)=Ry/|y|$ otherwise. In particular zero reports require no division. For every report, including impossible reports, $0\le d_R^-\le d_R^+\le R$, so this is a total $W$-valued decoder. The two middle report values need not enter the output formula, but their actual acquisition and retention are part of (56.12).
+The computational branch $R$ is determined from $y_3$, not supplied at initialization as a cap tag. The only initial $a$ estimate is its acquired first report $y_0$.
+

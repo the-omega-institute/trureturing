@@ -1,0 +1,27 @@
+**Definition 8.3 (remaining feasibility and operational bridges).** The
+simultaneous feasibility problem still asks for one pair with both full
+residual equations, the common unweighted marginals, both complete boxes,
+both midpoint means and every supported configuration-loss budget.
+Theorem 6.3 and Corollaries 7.2--7.3 are necessary constraints; they
+construct no such pair and determine no general value of $j_c$.
+Uniformity in (7.4) is in the normalized word-return coordinate.
+The absolute lower correction in (7.8) tends to zero with $n$; no
+uniform absolute correction, uniform source-depth risk gap or general
+positive value of $j_c$ is asserted.
+
+The operational bridge additionally requires an admissible finite
+representation, allowed exact samplers, source-independent installation,
+actual paid acquisition and execution with identical acquired/synthetic
+updates, matching Stop and all COMPLETE charges. Analytical kernels
+and their bounds add no observable register, posterior port, clock,
+reset or free randomness. Neither finite representation, exact sampling,
+installation, physical attainment nor any fixed-resource optimum follows
+from the necessary normalized estimate. The original common source,
+both seeds and every paid history remain part of those obligations.
+
+[LATE15403]: https://github.com/the-omega-institute/trureturing/blob/e0b3be330ba79b298ea9e02d67ff3ddea04b75a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LATE_CONTACT_RIGIDITY.md
+[PAIR-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PAIRED_CALIBRATION_OBSERVABILITY.md
+[NULL-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FIXED_FULL_RESIDUAL_NULL.md
+[CUT-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualCutPartitionClassification.md
+[LEX-STABILITY]: https://github.com/the-omega-institute/trureturing/blob/f5f879b599ff134790bedfb493cac21cd0fe6f53/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md
+

@@ -1,0 +1,25 @@
+**Construction 2.2 (original constructor cells).** Use either one of the
+complete covers of [ARH, Definitions 19.3 and Proposition 19.4][ARH],
+with [NSF, Lemma 5.1][NSF] for any additional fixed full-row predicate.
+It gives finitely many original constructor patterns $W_\eta(X_\eta)$
+and conjunctions, or finitely distributed Boolean branches,
+$\Phi_\eta(X_\eta)$. Every frontier variable has a fixed reached
+representative original address $a_{\eta,x}$. The source is recovered
+by filling $W_\eta$; its inverse takes these actual subtrees.
+
+Navigation uses the actual finite iterate of an early original leaf.
+An endpoint born during such an iterate is evaluated there; an endpoint
+absent at its recorded epoch rejects either sign. Literal repetitions
+and all old class inequalities stay in the same cell. The reached
+target set $I_\eta$, its complete native mask $M_\eta$, and all whole
+target-hole expressions $H_{\eta,q}$ are retained simultaneously.
+The mask replaces only reached target holes by $\alpha$, and retains
+every uncut residual term. Its reached positions recover the numbered
+exterior, by [ABC, Theorem 4.2][ABC].
+
+These are exact source and recutting suppliers, not new navigation or
+feasibility theorems. The cell cover can resolve a finite list of
+requests without bounding the unresolved frontier trees. Its
+constructor distinctions must not be confused with the later
+algebraic branches.
+

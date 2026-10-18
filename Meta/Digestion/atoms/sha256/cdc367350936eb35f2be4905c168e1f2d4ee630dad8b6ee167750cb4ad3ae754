@@ -1,0 +1,67 @@
+**Theorem 21.2 (full complex and reference correspondence).** The map
+$\mathcal V$ is unitary and transports the specified five-mode source,
+controls, effects and full instruments without any real-input restriction.
+In particular, with $E$ from (GC.1),
+
+$$
+\begin{gathered}
+E_N=\mathcal VE=
+ \left(\frac{|000\rangle+|101\rangle}{\sqrt2},
+       \frac{|100\rangle+|001\rangle}{\sqrt2},|010\rangle\right),\\
+E_N^\dagger E_N=I_3,\qquad P_N=E_NE_N^\dagger=\mathcal VP\mathcal V^\dagger,\\
+n_1=\operatorname{diag}(0,1,0,0,1),\qquad
+ E_N^\dagger n_1E_N=\operatorname{diag}(1/2,1/2,0),\\
+S_{\star,3}=\operatorname{diag}(1,1,1,1,i).
+\end{gathered}
+\tag{GC.91}
+$$
+
+The three restricted native flips have, respectively, the edge lists
+
+$$
+\{000\leftrightarrow100,\ 001\leftrightarrow101\},\qquad
+\{000\leftrightarrow010\},\qquad
+\{000\leftrightarrow001,\ 100\leftrightarrow101\}.
+\tag{GC.92}
+$$
+
+An encoder $C_j$ in (GC.44), or $C_H$ in (GC.51), becomes
+$C_j\mathcal V^\dagger$ or $C_H\mathcal V^\dagger$. Every live
+output matrix $A$ from a conditional fibre becomes $\mathcal VA$.
+The failure output $P_f$, original labels and physical clock are kept.
+These substitutions preserve every complex matrix unit and every
+conditional reference operator.
+
+Proof. A complex-linear map sending an orthonormal basis to an
+orthonormal basis is unitary. Applying it to the three columns of $E$
+gives (GC.91); their norms are one and their supports disjoint.
+The two occupied-first-site native basis vectors are $100,101$.
+Their squared overlaps with the first two columns are $1/2$, and
+with the third column zero; mixed entries vanish. The flip edges are
+Native Proposition 43's restricted operators, and $n_1n_3$ is the
+projector onto $101$ on $\mathcal K_3$, giving the fixed phase.
+Thus no passive real-frame matrix such as Native's $D_3$ is being
+mistaken for an available gate or inserted into the source dictionary.
+
+For arbitrary complex $X$, input conjugation gives
+$(C_j\mathcal V^\dagger)(\mathcal VX\mathcal V^\dagger)
+(C_j\mathcal V^\dagger)^\dagger=C_jXC_j^\dagger$.
+Conjugating each live Kraus matrix gives the corresponding live output
+identity. Effects transform by the inverse pullback. Tensor these
+identities with $I_R$ for any finite passive reference $R$; partial
+trace on the five-mode factor gives the failure reference operators
+in (GC.54), with $EME^\dagger$ replaced in native coordinates by
+$E_NME_N^\dagger$. All five weights, including the two separate zeros,
+are retained. Summing the encoder effects is still $I_5$, and each
+conditional decoder remains TP on its ENTIRE block. Hence the
+correspondence applies to the complete instrument, not merely its
+probabilities on the twelve histories. $\square$
+
+The dictionary is a coordinate identification. It supplies no preparation,
+control, acquisition or read service. A terminal PVM probability formula
+alone supplies neither its Lüders post-state nor a reusable carrier.
+In particular the elementary compressed effect in (GC.91) is not the
+original $M$. Native Theorem 65.2 matches that supported effect after
+an exact word, while leaving the full acquisition and chronological
+instrument requirements distinct.
+

@@ -1,0 +1,16 @@
+**定义 10.2.1（状态与动作）。** 令 $S=\mathbb R^n$，动作字母表为有限集 $\mathcal A$。每个动作 $a\in\mathcal A$ 是一个确定映射
+
+$$
+T_a:S\to S.
+$$
+
+对词 $w=a_1\cdots a_m$，约定右端先执行：
+
+$$
+T_w=T_{a_m}\circ\cdots\circ T_{a_1},
+\qquad
+T_{\varepsilon}=\operatorname{id}_S.
+$$
+
+<a id="claim-10-2-2"></a>
+

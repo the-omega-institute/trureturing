@@ -1,0 +1,18 @@
+**命题 15.11（单位体相在指定 Pauli 读口下各向异性）。**
+
+
+只在另行供应 U_O=I、U_L=σ_x、U_T=U_J=σ_y、U_R=σ_z 的数学实现时，定义 Φ_p(M)=∑_s p_s U_s M U_s*。此处 p 必须是实际所选五态律；先前原始局部 p 不自动代入体相或当前律。对 M=½(aI+r·σ)，共轭逐项给保迹且 Bloch 对角乘数
+
+$$
+(p_O+p_L-p_T-p_J-p_R,\ p_O-p_L+p_T+p_J-p_R,\ p_O-p_L-p_T-p_J+p_R).
+$$
+
+若要该 Pauli 混合对任意三维 Bloch 旋转协变，各轴乘数必须相同，即 p_L=p_R=p_T+p_J。单位权体相 p_∞ 不满足它；以 κ_∞=p_J=1-2/√5，映射为 (r_x,r_y,r_z)↦κ_∞(-r_x,3r_y,-r_z)，是各向异性的。沿给定可微 p 路径的响应仅由这些系数的导数计算，限于声明的 Pauli 实现。
+
+
+
+
+本节采用 [SecondOrder 定义 112.1、定理 112.2](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#112-五模式权重与固定基架旋转) 的同一 Pauli 字典，$O,L,T,R,J$ 对应该条目的 $0,2,3,5,25$。一般 Bloch 表示使用该卷第 66 章：Hermitian $M=\tfrac12(aI+r\cdot\sigma)$ 的迹为 $a$，特征值为 $(a\pm\|r\|)/2$，所以 $M\ge0$ 当且仅当 $a\ge\|r\|$。这是本应用的矩阵中间步骤。其代数对应为 `D5.S3.Quantum.Information.ActualPureQubitCostInfimum` 的 `blochMatrix_trace`、`bloch_blochMatrix`、`bloch_geometry_of_isHermitian` 和 `norm_bloch_le_trace_of_posSemidef`：该处 Hermitian 矩阵、迹与三维 Bloch 向量分别对应本节的 $M,a,r$。
+
+证明。$\sigma_j$ 共轭保持第 $j$ 个坐标、反转另外两个，按同一 $p$ 加权便得到三个系数。与所有旋转交换的实对角矩阵只能是标量矩阵，三系数相等给 $p_L=p_R=p_T+p_J$。将命题 15.6 的五概率代入得到 $\kappa_\infty(-1,3,-1)$，其中 $\kappa_\infty=1-2/\sqrt5>0$，所以三系数不同。经典二守卫比值不包含非对角历史块或再用环境；本结果须有声明的 Pauli 实现。
+

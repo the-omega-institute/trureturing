@@ -1,0 +1,6 @@
+**定义 11.1（证书数据及算术不变量）。** 支持程序为 [fib_atomic_boundary_certificate.py](../../reports/fib-atomic-boundary/fib_atomic_boundary_certificate.py)，结果为 [fib_atomic_boundary_certificate.json](../../reports/fib-atomic-boundary/fib_atomic_boundary_certificate.json)。程序仅用标准库整数和 `Fraction`。其输入固定为素数 $(2,3,5,7)$、有限阈值 120000、指数上限 $(16,10,7,6)$、$H_{1024}$、对数项数 $J=20$ 和 $2^{-80}$ 的向外网格。
+
+原附件的 sandbox 链接不承担本卷的文件来源；这里提供的是依据所列数学合同重新构造的程序和结果，不声称取得原附件或与原字节相同。结果文件保留有限域内的每个 $n$、指数和精确 $Z(n)$，十六个 Möbius 响应、外支撑端点、相位格的存活对数、各层有理区间及原子尾预算。它们是证明所需的结果数据，不是独立的机器证明状态。
+
+结果对象按全部字段的精确相等关系比较，不根据小数打印或浮点容差。JSON 的 `lower`、`upper` 字符串是精确有理端点；`decimal_outward` 是另外用整数地板、天花板取得的九位小数外包，仍不是浮点运算。
+

@@ -1,0 +1,8 @@
+**Example 10.1 (distinct Read ports).** For
+$t_L=\langle\langle\alpha,\alpha\rangle,\beta\rangle$ and
+$t_R=\langle\alpha,\langle\alpha,\beta\rangle\rangle$, the leaf words and
+numerical evaluations agree, while TagRead($L$) returns branch and alpha.
+This is the existing TM shape-collision witness. Paid ownership/copying of
+numerical rows does not add the missing distinction; the new literal
+permission acquires it. Theorem 3.4 does not hide it after commitment.
+

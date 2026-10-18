@@ -1,0 +1,47 @@
+**Definition 1.1 (unchanged native contract).** Sources belong to
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+\tag{CRF.1}
+$$
+
+They are complete finite trees, with no uniform size or depth bound.
+Let $P,Q$ be the original finite prefix-free cuts, $R$ the acquired
+complete old row, $H_0$ the complete retained literal list and
+$H_{\rm rel}$ the complete retained signed relation list. Fix
+
+$$
+D=\mathcal U_R(H_0,H_{\rm rel})\ne\varnothing.
+\tag{CRF.2}
+$$
+
+The defining predicates are exactly ARH (1.2)–(1.4): every old repeated
+class, every different-class inequality, concrete old exterior,
+absent-address guard, literal repetition and signed comparison remains
+on the same source. A relation compares entire reached subtrees at its
+two recorded epochs. If either endpoint is absent, either sign fails.
+
+Assume this input belongs to $\mathcal E_{\rm CE}$. Its common complete
+accessible state and actual original-root register at certified
+$N\ge\max(\{0\}\cup\operatorname{epochs}(H_0,H_{\rm rel}))$
+satisfy ARH Assumption 1.3. Every remaining source-bearing cache,
+address, count, program position, timing field, reference, permission
+and archive belongs to that stated input. No unreported source choice
+or chart label is available.
+
+A legal service is deterministic and effective, terminates correctly
+on each $u\in D$, and returns the entire original $R_Q(u)$: concrete
+exterior, reached original holes in their specified order, and their
+complete equality partition. It uses actual $\mathsf{Read}(p)$,
+forward $\mathsf{ApplyRho}$ on the same register, and absorbing
+$\mathsf{Halt}$. Every finite original-root physical word $p$ is legal,
+including words with absent replies. Updates disclose no additional
+source-dependent information. Local computation depends only on common
+input and acquired replies. There is no equality, identity, reset,
+reroot, clone, inverse or hidden chart port.
+

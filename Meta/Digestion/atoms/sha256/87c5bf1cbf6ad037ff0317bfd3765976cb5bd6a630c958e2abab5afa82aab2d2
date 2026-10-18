@@ -1,0 +1,18 @@
+**Definition 4.2 (distinct indices and their actual material).** Let $q$ count
+completed source calls, including ReadE, TagRead and executed rejects; let $g$
+count accepted modifications of any kind; let $e$ count accepted $\rho$ calls;
+let $j$ count all completed semantic events, including exposed controller-local
+and Halt markers. The primitive meter counts $n$, separately. At boot they are
+zero. All accessible names use actual unary strings and complete descriptors.
+
+An increment is not a one-step integer primitive. Before a commit, construct
+both old and incremented versions of needed public counters using PR57.D2.
+For a modification, prepare both possible next $g,e$ versions without testing
+the private guard. After response release, the acquired accept/reject selects
+the applicable version through paid public copying/descriptor work. At cuts
+within that work, the old and prepared strings, committed response and phase
+specify which version represents the semantic count. The row is written only
+after the selected fields are fully materialized. The finite release `CTL`
+changes availability, not an unbounded numeral. Event indices in proofs do not
+supply their stored wire representations for free.
+

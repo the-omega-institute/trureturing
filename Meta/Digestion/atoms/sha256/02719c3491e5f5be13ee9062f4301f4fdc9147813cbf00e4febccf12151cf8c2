@@ -1,0 +1,23 @@
+**Theorem 9.3 (static exact labels and success with future side information).** On any fixed nonempty count fiber let $F=F(A,B)$, let $f$ be a deterministic past label with at most $D\ge1$ values, and allow a decoder independent local randomization and the full original $V$. Its best conditional exact reconstruction success is
+
+$$
+\sup_{\mathrm{decoder}}\Pr(\widehat H_3=H_3\mid\mathcal F_{A,B})
+=\frac{|f[\mathcal F_{A,B}]|}{F}.
+\tag{SC.17}
+$$
+
+Optimizing the static assignment as well gives $\min(D,F)/F$. Every positive compatible past/future pair is recoverable exactly if and only if $f$ is injective on the fiber. Thus the least static supplementary alphabet has $F$ values and $\lceil\log_2 F\rceil$ fixed-width data bits.
+
+When $(A,B,C)$ is already supplied, the corresponding fixed-class statements replace $F$ by $F(A,B,C)$. One alphabet serving every $C$ class at these fixed counts needs exactly $\max_C F(A,B,C)$ values. Its optimal conditional average success, averaged over the actual $C$ distribution at those counts, is
+
+$$
+\frac1{F(A,B)}\sum_{C:F(A,B,C)>0}\min\{D,F(A,B,C)\}.
+\tag{SC.18}
+$$
+
+In particular the count-only exact alphabets on the three cells of Theorem 8.4 have sizes $1,8,33$, whereas after supplying $C$ they have sizes $1,2,4$.
+
+Proof. Theorem 9.2 makes the past uniform within each nonempty label class and independent of the entire future, even after the label is given. For a class $A_z$ and any future, the sum of a randomized decoder's probabilities of its different possible pasts is at most one; its success there is at most $1/|A_z|$. Selecting one representative attains this value. The class probability is $|A_z|/F$, so each nonempty class contributes $1/F$, proving (SC.17). At most $\min(D,F)$ classes are possible, and an assignment with that many classes attains the bound.
+
+Every complete legal future is positive for every history in the fiber. Hence two distinct pasts with the same label cannot both be recovered on a shared positive future input. An injective finite label can be inverted, proving the zero-error equivalence. These are the finite-label and actual-image principles already supplied by Boundary Dynamics §102.2 and [LosslessEncodingCriterion](../../../D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lean), lossless_iff_injective_on_image. Finite enumerative coding supplies an index and inverse for each finite dictionary; it does not acquire the missing past. For given $C$, apply the same argument within that class, reuse labels across disjoint known $C$ classes, and weight by $F(A,B,C)/F(A,B)$ to obtain (SC.18). The exact sizes follow from the complete table. $\square$
+

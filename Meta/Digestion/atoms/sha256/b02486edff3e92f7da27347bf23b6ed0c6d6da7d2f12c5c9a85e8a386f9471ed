@@ -1,0 +1,39 @@
+### 65.5 Exact persistence and the bipartite graph
+
+There is no unresolved higher-order case among the remaining 66
+pairs. Their six orbit representatives are respectively obtained
+from the first ray by \(R\Theta\) with the following synchronous
+three-coordinate permutation:
+
+\[
+\begin{array}{c|cccccc}
+ (j,k)&(0,2)&(0,6)&(12,14)&(12,18)&(12,22)&(12,34)\\
+ R_3&I&(1\ 2)&I&(1\ 2)&(0\ 1)&(0\ 2).
+\end{array}
+\tag{65.10}
+\]
+
+Each \(R_3\) is real symmetric. The identity (63.7) therefore makes
+\(w^*R\Theta w=0\) for every vector \(w\), at every parameter.
+Conjugating by any of the 24 projective symmetries preserves this
+class of relations; when \(X\) occurs, both curves undergo the same
+parameter reflection. Uniqueness of each unrestricted ray curve
+identifies the transported curve with its named continuation.
+Consequently every pair in these six orbits persists exactly.
+
+The four connected components are indexed by the seed type \(s\)
+and the flag \(c\) in (65.3). The two parts in each component are
+\(e=0\) and \(e=1\). For \(s=0\), the four operations \(R\Theta\)
+with \(R_3\) the identity or a transposition give three distinct
+neighbors, hence \(K_{3,3}\). For \(s=1\), they give four distinct
+neighbors in the opposite part. These twelve-vertex graphs are
+connected because the three transpositions generate \(S_3\).
+The table excludes every other edge, including all edges between
+these components. Thus the graph is bipartite and triangle-free.
+
+An arbitrary common-flat orthogonal triple in the union of the 36
+neighborhoods would have to consist of three of these unique ray
+curves. Distinct orthogonal rays cannot coincide, and the graph has
+no triangle. This proves Theorem 65.1 without a covariance assumption
+on the candidate triple. \(\square\)
+

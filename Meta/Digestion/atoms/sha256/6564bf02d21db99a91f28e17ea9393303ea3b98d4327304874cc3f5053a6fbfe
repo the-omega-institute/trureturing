@@ -1,0 +1,18 @@
+**Corollary 75.12 (the mesoscopic alternative and the necessary-range account).** The same full target theorem, exact multipliers, maps and both hard-carrier comparisons hold if(75.13) is replaced by
+
+$$
+R_\varepsilon\longrightarrow0,\qquad
+R_\varepsilon/r_\varepsilon\longrightarrow\infty.
+\tag{75.49}
+$$
+
+For the fixed chamber radius of75.4 the necessary hard-range quotient of74 is
+
+$$
+\frac{R_\varepsilon^{s-2}}{\varepsilon^{s-1}}
+ =\kappa^{s-2}r_\varepsilon^{-2}\longrightarrow\infty.
+\tag{75.50}
+$$
+
+**Proof.** Under(75.49) every chamber pair is eventually fully covered by(75.16), and $R_\varepsilon/\varepsilon\to\infty$ gives the full same-cylinder forbidden strip. The core and exact form lift are unchanged; recovery uses $\omega_D(R_\varepsilon+2C_Dr_\varepsilon)\to0$, which still holds. Thus75.5–75.10 apply verbatim to these stated inequalities, proving the whole conclusion. Equation(75.50) follows from $r_\varepsilon^s=\varepsilon^{s-1}$. It is compatible with74.8's necessary range condition. Its divergence alone is not used as a sufficient criterion for arbitrary interactions of74.2. The selected radius has $R_\varepsilon/\varepsilon\to\infty$ and therefore lies outside that chapter's separate microscopic assumption $h_\varepsilon=o(\varepsilon)$. The mesoscopic route requires a larger asymptotic range than75.4 and supplies the same stated target conclusion; these mathematical statements give no physical cost ordering between installations. $\square$
+

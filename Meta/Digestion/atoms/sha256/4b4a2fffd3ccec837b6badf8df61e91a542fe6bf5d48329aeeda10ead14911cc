@@ -1,0 +1,189 @@
+**Theorem 52.2 (one common missing direction, with a varying phase-plane marginal).** For every actual rank-two encoder in Definition 52.1, every environment density $\omega$, and every rectangular contraction $U:\mathbb C^5\to\mathbb C^3\otimes\mathbb C^2$, let $V_\omega\psi=\psi\otimes|\omega\rangle_{FE}$ purify the constant channel and set $A_{\omega,U}=V_\omega^\dagger(U\otimes I_E)V$. Then
+
+$$
+\min\left\{
+\min_{\substack{\psi\in\mathcal C\\\|\psi\|=1}}
+\operatorname{Re}\langle\psi|A_{\omega,U}|\psi\rangle,
+\operatorname{Re}\langle2|A_{\omega,U}|2\rangle
+\right\}\leq v.
+\tag{R.270}
+$$
+
+All phase-plane tests here are complex. The contraction is an Uhlmann variable, not a restriction on the allowed physical recoveries.
+
+**Proof.** The zero phase cross block in (R.3) gives, for every complex unit $\psi\in\mathcal C$,
+
+$$
+\tau_\psi:=\Gamma(|\psi\rangle\langle\psi|)
+=|\langle\chi_+|\psi\rangle|^2\tau_+
+ +|\langle\chi_-|\psi\rangle|^2\tau_-,\qquad
+\operatorname{Tr}\tau_\psi=1,\qquad 0\preceq\tau_\psi\preceq aI_2.
+\tag{R.271}
+$$
+
+Both phase marginals have eigenvalues $a,\beta$, so their convex combinations have the displayed spectral cap. They need not coincide, commute, or be simultaneously real diagonalizable. Equation (R.222) is recovered at $\beta=1/2$; no general-beta constancy is used.
+
+Fix the same actual $V,\omega,U$ throughout the proof. Diagonalize only the center, writing $\omega=\operatorname{diag}(s,t)$, $s\geq t\geq0$, $s+t=1$, and choose matching conjugate coordinates on $F=\mathbb C^2$, so $|\omega\rangle=\sqrt s|0_F0_E\rangle+\sqrt t|1_F1_E\rangle$. The antiunitary and actual marginals are transported as in Definition 52.1. The spectral cap (R.271) survives this change. Since the target of $U$ has dimension six and its source dimension five, choose one unit $\eta\in\ker U^\dagger$ and write, in these matching coordinates,
+
+$$
+\eta=\sum_{i=0}^1|i\rangle\otimes\overline{\ell_i}
+       +|2\rangle\otimes\bar b,\qquad
+L=[\ell_0,\ell_1],\quad G=LL^\dagger,\quad
+\operatorname{Tr}G+\|b\|^2=1.
+\tag{R.272}
+$$
+
+These bars specify the coefficient convention for this vector; they do not replace the transported original antiunitary. For $\Pi=I_6-\eta\eta^\dagger$ and $z=L\psi$, the projected target vector $(\Pi\otimes I_E)V_\omega\psi$ has environmental marginal
+
+$$
+M_\psi=\omega-\sqrt\omega\,zz^\dagger\sqrt\omega\succeq0,
+\qquad
+|\langle\psi|A_{\omega,U}|\psi\rangle|
+\leq f(\tau_\psi,M_\psi),\qquad
+|\langle2|A_{\omega,U}|2\rangle|^2\leq1-b^\dagger\omega b.
+\tag{R.273}
+$$
+
+Indeed $(\eta^\dagger\otimes I_E)V_\omega\psi=\sqrt\omega L\psi$, giving the first formula. The contracted actual vector $(U\otimes I_E)V\psi$ lies in $\operatorname{ran}\Pi\otimes E$ and its marginal $Q_\psi$ obeys $Q_\psi\preceq\tau_\psi$, since $U^\dagger U\preceq I_B$. Purification overlap is at most $f(Q_\psi,M_\psi)\leq f(\tau_\psi,M_\psi)$. The latter monotonicity follows by taking the trace of the positive square root of $\sqrt{M_\psi}Q_\psi\sqrt{M_\psi}\preceq\sqrt{M_\psi}\tau_\psi\sqrt{M_\psi}$. For $|2\rangle$, the projected target has squared norm $1-b^\dagger\omega b$, and the actual vector has norm at most one. Thus (R.273) holds for contractions and singular projected marginals, with this same $\eta$ for every input.
+
+Suppose, to the contrary, that all real overlaps in (R.270) are strictly greater than $v$. The third-input bound forces
+
+$$
+b^\dagger\omega b<d.
+\tag{R.274}
+$$
+
+For positive semidefinite, possibly singular or subnormalized $Q,M$, and every $X\succ0$, use
+
+$$
+f(Q,M)\leq\sqrt{\operatorname{Tr}(QX)\operatorname{Tr}(MX^{-1})}
+\leq\tfrac12\bigl(\operatorname{Tr}(QX)+\operatorname{Tr}(MX^{-1})\bigr).
+\tag{R.275}
+$$
+
+The polar trace formula expresses fidelity as a maximum of $|\operatorname{Tr}(\sqrt Q\sqrt M W)|$ over unitaries $W$. Insert $X^{1/2}X^{-1/2}$ between the roots and apply Hilbert–Schmidt Cauchy–Schwarz, then arithmetic–geometric mean. No inverse of $Q$ or $M$ is needed. This is the variational fidelity inequality in [Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, Section 2.1, (6), Theorem 3](https://arxiv.org/pdf/1207.5726v2), used here only as this intermediate estimate.
+
+For $0<t\leq\beta$, put
+
+$$
+X=\operatorname{diag}\!\left(\sqrt{s/a},\sqrt{t/\beta}\right),\qquad
+D=\operatorname{diag}\!\left(\sqrt{as},\sqrt{\beta t}\right),\qquad
+f_t=\sqrt{as}+\sqrt{\beta t}.
+\tag{R.276}
+$$
+
+Here $X_{11}\geq X_{22}$ because $\beta s\geq at$ is equivalent to $t\leq\beta$. By (R.271),
+
+$$
+\begin{aligned}
+\operatorname{Tr}(\tau_\psi X)
+&=X_{22}\operatorname{Tr}\tau_\psi+(X_{11}-X_{22})(\tau_\psi)_{11}
+\leq aX_{11}+\beta X_{22}=f_t,\\
+\operatorname{Tr}(M_\psi X^{-1})&=f_t-z^\dagger Dz,\qquad
+f(\tau_\psi,M_\psi)\leq f_t-\tfrac12z^\dagger Dz.
+\end{aligned}
+\tag{R.277}
+$$
+
+On $[0,\beta]$, $f_t$ increases: in the interior its derivative has the sign of $\beta(1-t)-at=\beta-t$. Also $f_d=\gamma\sqrt T+\sqrt{\beta d}=(\gamma+2d)\sqrt T=v$. Consequently $0<t\leq d$, including $t=d$ or equivalently $s=T$, already contradicts the supposed overlaps. At $t=0$, $M_\psi\preceq|0\rangle\langle0|$, so its fidelity with $\tau_\psi$ is at most $\sqrt{(\tau_\psi)_{00}}\leq\sqrt a=\gamma<v$. This treats singular centers without using $X^{-1}$.
+
+It remains in the weighted branch to consider $d<t\leq\beta$. The inequalities for every complex $\psi$ now imply
+
+$$
+L^\dagger DL\prec2(f_t-v)I_2,\qquad
+G\prec2(f_t-v)D^{-1},\qquad
+\operatorname{Tr}G<\frac{2(f_t-v)f_t}{\sqrt{a\beta st}}.
+\tag{R.278}
+$$
+
+To obtain the middle inequality, apply the equality of the largest eigenvalues of $(D^{1/2}L)^\dagger(D^{1/2}L)$ and $(D^{1/2}L)(D^{1/2}L)^\dagger$, then conjugate by $D^{-1/2}$. Strictness follows from compactness of the unit sphere. This uses no inverse of $L$.
+
+The needed scalar bound is uniform over this entire interval:
+
+$$
+\frac{2(f_t-v)f_t}{\sqrt{a\beta st}}\leq\frac{t-d}{t}.
+\tag{R.279}
+$$
+
+For an exact proof, set $x=\sqrt{Tt/(ds)}$. Its range is $1<x\leq1+1/\gamma$: the endpoint follows from $\beta=4dT$ and $s=a=\gamma^2$ at $t=\beta$. In these variables
+
+$$
+s=\frac{T}{T+dx^2},\qquad t=\frac{dx^2}{T+dx^2},\qquad
+f_t=\frac{\sqrt T[\gamma+(1-\gamma)x]}{\sqrt{T+dx^2}},\qquad
+\frac{f_t-v}{t-d}
+=\frac{(1+2\gamma)-(2\gamma-1)x}{(x+1)(f_t+v)}.
+\tag{R.280}
+$$
+
+For the last identity, subtract $v^2=T$ from $f_t^2$ and use the exact factorization
+
+$$
+[\gamma+(1-\gamma)x]^2-(T+dx^2)
+=d(x-1)[(1+2\gamma)-(2\gamma-1)x].
+\tag{R.281}
+$$
+
+All canceled factors are positive in this branch. Using $t/\sqrt{a\beta st}=x/(2\gamma T)$, (R.279) is equivalent to
+
+$$
+\frac{f_t}{f_t+v}H_\gamma(x)\leq\frac{\gamma(1+\gamma)}2,\qquad
+H_\gamma(x)=\frac{x[(1+2\gamma)-(2\gamma-1)x]}{x+1}.
+\tag{R.282}
+$$
+
+Here $H_\gamma(x)>0$ by $f_t>v$ and (R.280). The following quadratic is strictly positive:
+
+$$
+\begin{aligned}
+\bigl(\tfrac{11}{10}-H_\gamma(x)\bigr)(x+1)
+&=(2\gamma-1)x^2-(2\gamma-\tfrac1{10})x+\tfrac{11}{10},\\
+\operatorname{disc}
+&=4\gamma^2-\tfrac{46}{5}\gamma+\tfrac{441}{100}<0.
+\end{aligned}
+\tag{R.283}
+$$
+
+Indeed for $7/10\leq\gamma\leq1$ the leading coefficient is positive, the discriminant has derivative $8\gamma-46/5<0$, and its value at $7/10$ is $-7/100$. Our range $\gamma\geq1/\sqrt2>7/10$ is contained in that interval. Thus $H_\gamma(x)<11/10$. Cauchy–Schwarz gives $f_t\leq\sqrt{(a+\beta)(s+t)}=1$, and $T>17/20>81/100$ gives $v>9/10$. Therefore
+
+$$
+\frac{f_t}{f_t+v}H_\gamma(x)
+<\frac{11}{19}<\frac{119}{200}
+<\frac{\gamma(1+\gamma)}2.
+\tag{R.284}
+$$
+
+The last comparison uses $\gamma>7/10$; the middle one is the integer inequality $2200<2261$. This proves (R.279) without a finite-sample replacement.
+
+For the other branch, $\beta\leq t\leq1/2$, take $X=I_2$ in (R.275). Trace one in (R.271) gives $f(\tau_\psi,M_\psi)\leq1-z^\dagger\omega z/2$. The supposed overlaps imply, by the same singular-value argument used in (R.278),
+
+$$
+L^\dagger\omega L\prec2(1-v)I_2,\qquad
+\operatorname{Tr}G<2(1-v)\operatorname{Tr}\omega^{-1}
+=\frac{2(1-v)}{st}\leq\frac{t-d}{t}.
+\tag{R.285}
+$$
+
+To verify its last scalar comparison, $(1-t)(t-d)$ increases on $[\beta,1/2]$, because its derivative is $1+d-2t\geq d>0$. Its minimum is $a(\beta-d)$. Moreover $\beta-d=d(1+2\gamma)$ and
+
+$$
+\begin{aligned}
+2(1-v)&=\frac{2d}{1+v}\leq a\,d(1+2\gamma)=a(\beta-d),\\
+(1+v)\gamma^2(1+2\gamma)
+&\geq(1+\gamma)\gamma^2(1+2\gamma)
+\geq1+\frac{3\sqrt2}{4}>2.
+\end{aligned}
+\tag{R.286}
+$$
+
+Here $v\geq\gamma$; the product in the second line increases for positive $\gamma$, and its value at $1/\sqrt2$ is the displayed constant. Dividing the first line by $st>0$ proves (R.285).
+
+In either remaining branch, (R.272), (R.278)–(R.279), and (R.285) yield the same contradiction:
+
+$$
+\|b\|^2=1-\operatorname{Tr}G>\frac dt,\qquad
+b^\dagger\omega b\geq t\|b\|^2>d,
+\tag{R.287}
+$$
+
+contrary to (R.274). This proves (R.270). The branch union includes $t=\beta$, $t=1/2$ and $\beta=1/2$, as well as the separately treated $t=0$ and $t=d$. The only center inverses occur at $t>0$; no input, projected marginal, actual third-column matrix or recovery dual is inverted. Beta zero is excluded from the positive-beta divisions. The proof uses the third column only through this actual $V$ and its norm bound in (R.273), and hence covers its complete admissible domain. $\square$
+

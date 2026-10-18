@@ -1,0 +1,19 @@
+**定理 24.2（原全来源的完整全时间制度）。** 对每组站立参数，$\Omega(0)=0$。正误差下的制度如下；$\Theta$ 均指 $\varepsilon\downarrow0$、系数可依固定 $L,H,d_0$。
+
+| 24实际参数制度 | 全时间结论 |
+| --- | --- |
+| 24收缩叶界 $L<1$，任意 $H>0$ | $\Omega(\varepsilon)=\Theta(\varepsilon)$ |
+| 24单位叶界 $L=1,H<1$ | $\Omega(\varepsilon)=\Theta(\varepsilon)$ |
+| 24单位叶界 $L=1,H\ge1$ | $\Omega(\varepsilon)=1$，$0<\varepsilon\le(2+6/c)^{-1}$ |
+| 24可达收缩 $L>1,d_0<D_{\rm crit},H<1$ | $\Omega(\varepsilon)=\Theta(\varepsilon)$ |
+| 24可达临界近似 $L>1,d_0<D_{\rm crit},H=1$ | $\Omega(\varepsilon)=1$，$0<\varepsilon\le(2+6/c)^{-1}$ |
+| 24超单位读界 $L>1,d_0<D_{\rm crit},H>1$ | 每个 $\varepsilon>0$ 都有 $\Omega(\varepsilon)=+\infty$ |
+| 24临界排除 $L>1,d_0=D_{\rm crit},H\le1$ | $\Omega\equiv0$ |
+| 24临界超单位读界 $L>1,d_0=D_{\rm crit},H>1$ | 每个 $\varepsilon>0$ 都有 $\Omega(\varepsilon)=+\infty$ |
+| 24正增长但未达阈值 $L>1,d_0>D_{\rm crit},H<H_*$ | $\Omega\equiv0$ |
+| 24正增长且达到阈值 $L>1,d_0>D_{\rm crit},H\ge H_*$ | 每个 $\varepsilon>0$ 都有 $\Omega(\varepsilon)=+\infty$，包括 $H=H_*$ |
+
+在线性行，令 $M=\min(L,H)<1$，则每个误差下 $\Omega\le2M^2$，且有定理26.2的全时间线性上界。在两个单位平台行，所有误差下 $\Omega\le2$，并且 $\varepsilon\ge2$ 时恰等于2。除此之外的有限误差完整曲线及最优线性系数未在此确定。
+
+证明。定理5.1在实际三读像上恢复完整未来，故 $d_3=0$ 迫使全部未来相同。零 cherry 在任意允许正交制备处供应全零历史，$\mathcal D$ 非空。引理25.1–25.2给增长制度，定理26.2–26.3给全部线性行，定理27.1–27.4给两平台行及两个误差端点，定理28.1–28.2给零与无穷行。若 $L\le1$，站立条件 $z<2\ell$ 强迫 $G<0$；若 $L>1$，$G$ 的符号恰为 $d_0-D_{\rm crit}$ 的符号。因此各行互斥且穷尽全部参数。
+

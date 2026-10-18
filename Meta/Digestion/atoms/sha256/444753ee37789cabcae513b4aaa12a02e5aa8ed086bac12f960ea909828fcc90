@@ -1,0 +1,65 @@
+### 85.1. A division-free positive mode-norm identity
+
+**Theorem 85.1.** For every \(0<|b|<1\), there is no orthogonal
+triple consisting entirely of aligned common-flat rays of \(H_0(b)\).
+Singleton positions and symmetry unions need not agree.
+
+Write an arbitrary aligned input with singleton position \(j\) as
+\[
+ w_j=a\otimes\mathbf1+d\otimes e_j,
+ \quad a=(a_0,a_1)^{\mathsf T},\quad
+ c=(c_0,c_1)^{\mathsf T},\quad d=c-a,\quad S=2a+c=3a+d. \tag{85.1}
+\]
+The tensor convention is channel-first. All four entries of \(a,c\)
+have modulus one, and \(\|w_j\|^2=6\). Equivalently,
+\[
+ w_j=(S/3)\otimes\mathbf1+d\otimes(e_j-\mathbf1/3).
+\]
+The two actual mode blocks are
+\[
+ U_0=\frac1{\sqrt6}\begin{pmatrix}3+P&3+Q\\3+\bar Q&-3-\bar P\end{pmatrix},
+ \qquad
+ U_1=\frac1{\sqrt6}\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+                                                               \tag{85.2}
+\]
+They are unitary, and
+\[
+ U_0-U_1=\sqrt3\,K_2,\qquad
+ K_2=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+\]
+Consequently \(V=U_0^*U_1\) obeys
+\[
+ V+V^*=-I_2.                                               \tag{85.3}
+\]
+The repeated and singleton input spinors are \((S-d)/3\) and
+\((S+2d)/3\). Both have squared norm two. Subtract their norm equations
+to obtain \(\operatorname{Re}\langle S,d\rangle=-\|d\|^2/2\).
+The output is aligned at the same singleton position, with mode spinors
+\(U_0S,U_1d\); its original flatness similarly gives
+\[
+ \operatorname{Re}\langle S,d\rangle
+ =\operatorname{Re}\langle S,Vd\rangle=-\|d\|^2/2.      \tag{85.4}
+\]
+Using \(V^*=-I_2-V\) in (85.4) yields
+\(\operatorname{Re}\langle S,V^*d\rangle=\|d\|^2\).
+Thus the following identity is exact and division-free:
+\[
+ \boxed{\ \|S-V^*d\|^2=\|S\|^2-\|d\|^2\ \geq0.\ }   \tag{85.5}
+\]
+It includes \(d=0\) and every phase pole directly in original coordinates.
+
+Choose a synchronous transposition \(R\) that moves the singleton
+position. Expanding (85.1) gives
+\[
+ \langle w_j,Rw_j\rangle=(\|S\|^2-\|d\|^2)/3.           \tag{85.6}
+\]
+If equality held in (85.5), Theorem 81.1 would make \(w_j\) one of
+the four nonzero-Fourier canonical rays. Each has three distinct entries
+in each channel and is not aligned. Therefore every aligned input has
+\[
+ \|S\|^2>\|d\|^2.                                        \tag{85.7}
+\]
+For a constant input, \(d=0\) and \(\|S\|^2=18\), consistent
+with strictness. No phase difference, Cayley denominator, channel sum,
+or parameter polynomial was divided by in this argument.
+

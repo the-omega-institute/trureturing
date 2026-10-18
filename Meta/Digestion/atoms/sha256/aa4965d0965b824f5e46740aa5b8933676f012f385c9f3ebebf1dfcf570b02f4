@@ -1,0 +1,130 @@
+**Theorem 210.5 (Exact conditional-moment criterion and its score construction).**
+Choose actual late addresses $J=\{j_1<\cdots<j_h<p<z\}$,
+$h\ge2$, containing every positive late correct total; zero-total
+slots are allowed. Suppose
+
+$$
+s>0,\quad 0<d\le s,\quad r=d/s,\quad
+2\le u\le\min(2+r,3-r),\quad a=3+r-u,
+$$
+
+and define
+
+$$
+\phi(x)=2\lfloor x\rfloor x-\lfloor x\rfloor(\lfloor x\rfloor+1),
+\quad x_+=\frac{h(3-u)}a,\quad x_- =\frac{h(u-1)}u.
+\tag{210.15}
+$$
+
+There is a finite nonnegative Boolean measure of mass $(3+r)s$,
+with $z$ always zero and moments
+
+$$
+m_{j_i}=2s,\quad \nu(x_{j_i}=x_{j_l}=0)=s\ (i\ne l),\quad
+m_p=us,\quad \nu(x_{j_i}=x_p=0)=(u-1)s
+\tag{210.16}
+$$
+
+if and only if
+
+$$
+a\phi(x_+)+u\phi(x_-)\le h(h-1).
+\tag{210.17}
+$$
+
+When this holds, every input-family profile with
+$0\le\gamma_j\le s+d$ and $B\ge4s+d$ has an explicit
+same-$Q$, same-$W$ score with $\Delta_N\le d$.
+Arbitrary early correct rows may be retained. This last condition
+on $B$ is sufficient; the moment equivalence concerns exactly (210.16).
+
+**Proof.** Let $K$ count zeros among the first $h$ selected slots.
+Conditioning on $x_p=1,0$ gives masses $as,us$ and conditional means
+$x_+,x_-$, respectively. Both masses are positive and both means lie
+in $[0,h]$: $a\ge1$, $0\le3-u\le a$, and $0\le u-1\le u$.
+For an integer variable $K\in\{0,\ldots,h\}$ of mean $x$, putting
+$q=\lfloor x\rfloor$ gives
+$(K-q)(K-q-1)\ge0$. Its expected factorial moment is therefore at
+least $\phi(x)$, attained by the adjacent-integer law at
+$\lfloor x\rfloor,\lceil x\rceil$. The upper bound
+$K(K-1)\le(h-1)K$ is attained by the law on $\{0,h\}$ with mean
+$x$. Integral means use a single atom in the first construction.
+
+Summing the specified pair intersections requires
+$\int K(K-1)=h(h-1)s$. The sum of the two conditional lower
+bounds is $s[a\phi(x_+)+u\phi(x_-)]$, while their upper bounds sum
+to $2h(h-1)s$, since $ax_++ux_-=2h$. This proves necessity of
+(210.17). For sufficiency let $L_0$ be that combined lower bound and
+$U_0=2h(h-1)s$. Mix each conditional minimum law with its respective
+maximum law using the same parameter
+
+$$
+\lambda=\frac{h(h-1)s-L_0}{U_0-L_0}\in[0,1].
+$$
+
+The denominator is positive. Conditional on each chosen $K$, choose a
+uniform $K$-subset of the first $h$ slots. Set $x_p$ to the chosen
+conditioning bit and $x_z=0$. This is one actual finite measure.
+Symmetry gives each first-slot marginal $2s$, each pair intersection
+$s$, and each intersection with $p$ equal to $(u-1)s$, proving all
+moments simultaneously. No exchangeability hypothesis was used for
+necessity; symmetry is only a constructive choice for sufficiency.
+
+To construct the score, put inactive coordinates to one, lift half of
+each atom to each early prefix $01,10$, and use the threshold placement
+of [203.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_VII.md).
+In detail, set $a_{nk}=\nu(x_n=0,x_k=1)$ for selected $n<k$.
+For $t\in[0,\gamma_n)$ the correct word has every earlier bit one,
+bit $n$ zero, and later selected bit $k$ equal to one exactly when
+$t<a_{nk}$. Its coefficient is the length of the corresponding
+parameter interval. Finitely many cutoffs define nonnegative atoms;
+threshold equalities have zero length. Inactive bits are one.
+Set $T=s+(B-4s-d)$ and retain the original early $C$ rows.
+All class totals, $B$, $Q$ and $W$ are preserved.
+
+For the whole-table bound first set every selected total to
+$\mu=s+d$, remove early $C$, and set $T=s$. The actual pair cells
+of the carrier, in answer order $00,01,10,11$, are
+
+$$
+\begin{array}{c|c}
+j_i,j_l&(s,s,s,d)\\
+j_i,p&((u-1)s,(3-u)s,s,d)\\
+i,z&(m_i,0,(3+r)s-m_i,0).
+\end{array}
+\tag{210.18}
+$$
+
+Every selected marginal is at least $2s\ge\mu$; for $p$ use $u\ge2$,
+and for $z$ use $m_z=(3+r)s$. Every ordered target capacity is at
+least $s$: on pairs with $z$ the smallest is $as\ge s$, using
+$u\le2+r$. Thus the quantity $\kappa$ of (203.6) is at most $d$.
+The non-$11$ part of the proof of 203.2 bounds all those cells
+together by this one $\kappa$, independently of $T$.
+In particular its off-diagonal clipped-threshold bounds retain
+earlier labels, and its simultaneous $00,10$ argument uses
+
+$$
+g_{00}+g_{10}
+ \le\gamma_n+\gamma_l-\nu(\{x_n=0\}\cup\{x_l=0\})\le\kappa
+\quad(n\le i<l\le j)
+$$
+
+when both gains are positive. This is the union estimate (203.18),
+not two copies of $d$.
+
+No extra $11$ allowance is needed. At a late pair not involving $z$,
+its baseline including $T$ is $s+d=\mu$.
+At early/$j_i$ it is $s+(s+d)/2\ge\mu$.
+At early/$p$ it is $s+as/2\ge\mu$, because
+$a\ge2r$ follows from $u\le3-r$.
+Every correct word has $z=0$, since $a_{nz}=0$, so a pair involving
+$z$ has no correct reward in $11$. The head pair has excess $d$.
+These cases account for all labels and every pair type. Inactive queries
+give shorter information types, handled by 207.2's catalog completion.
+Hence both complete excesses of the equal-total core are exactly $d$.
+Reducing a late class to its prescribed total cannot increase support
+and leaves the anchor unchanged. Adding early $C$ or terminal surplus
+increases each table by at most the added anchor mass, so excess cannot
+increase. This proves the asserted general upper bound. $\square$
+

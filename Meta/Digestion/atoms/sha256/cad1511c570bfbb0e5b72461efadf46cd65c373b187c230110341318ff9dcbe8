@@ -1,0 +1,289 @@
+**Proposition 11.8 (strict enlargement with actual live sharing and
+paid post-certificate repeats).** For every integer $v\ge3$, set
+
+$$
+n=2v+4,\qquad k=v+2,\qquad s_i=i,\quad c_i=i+4,
+\qquad a=v+2.
+\tag{SI.70}
+$$
+
+There is a complete correct Boolean graph in $\mathfrak C$ whose
+common-support depths are exactly $0,1,\ldots,a$, with formal
+endpoint $n$. It has a consecutive late gap $(a,n)$ of span $v+2$,
+genuine sharing by different live count cells, and actual paid repeated
+queries after certification. Its exact installed running count and
+attained simultaneous maxima are
+
+$$
+M_v=2^{2v+4}-2^{v+2}+2v+3,\qquad
+\max t=n,\qquad \max J=W.
+\tag{SI.71}
+$$
+
+Its full-fiber native lift has exactly $M_v+4+r$ preparation states,
+attains both maxima $n+1,W+3$ on one actual source, and retains the
+original separate eight-state reader. The family is above-grid and
+lies outside the class of Corollary 10.6. It proves a strict infinite
+enlargement of that class, with no strict-subgrid upper assertion.
+Only the legitimate original cost family in (SI.70) is claimed here.
+
+Proof, complete fixed table. Use the coordinate partition
+
+$$
+C=\{1,2,\ldots,v+2\},\quad I=\{3,\ldots,v+2\},\quad
+x=v+3,\quad y=v+4,\quad
+u_j=v+4+j\ (1\le j\le v),\quad U=\{u_1,\ldots,u_v\},
+\tag{SI.72}
+$$
+
+so $C,\{x\},\{y\},U$ partition $[n]$ and $|C|=a$.
+First define a full binary decision
+tree with a distinct running state at every vertex of depth less
+than $n$. It queries $1,2,\ldots,v+2$ in that order. At a depth-$a$
+vertex use the remaining order $(y,x,u_1,\ldots,u_v)$ precisely
+when its old assignment is $(\theta_1,\theta_2)=10$, $I=1^v$;
+at every other depth-$a$ vertex use $(x,y,u_1,\ldots,u_v)$.
+Each of these orders is fixed in the literals of its separate subtree.
+Every zero or one edge goes to its corresponding child; a depth-$n$
+edge goes to the common terminal $\mathsf0$ or $\mathsf1$ according
+to the threshold of that leaf's complete assignment. This specifies
+every state, query and successor of the full tree. No order is selected
+or evaluated by an auxiliary runtime operation.
+
+Delete exactly the two entire subtrees whose incoming histories are
+
+$$
+\begin{aligned}
+\mathcal A:&\quad (\theta_1,\theta_2)=01,\quad I=0^v,\quad x=0,\\
+\mathcal B:&\quad (\theta_1,\theta_2)=10,\quad I=1^v,\quad y=0.
+\end{aligned}
+\tag{SI.73}
+$$
+
+Each incoming history has depth $v+3$ and $v+1$ unread
+coordinates. Redirect its incoming edge to the same new state $V$.
+Install only the following additional running states, all distinct
+from retained tree vertices and from the two terminals:
+
+| State | Queried coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $V$ | $u_1$ | $Z_2$ | $B_Y$ |
+| $Z_j$, $2\le j<v$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_v$ | $u_v$ | $B_X$ | $J$ |
+| $B_X$ | $x$ | $\mathsf0$ | $\mathsf1$ |
+| $B_Y$ | $y$ | $J$ | $A_2$ |
+| $A_j$, $2\le j<v$ | $u_j$ | $\mathsf0$ | $A_{j+1}$ |
+| $A_v$ | $u_v$ | $\mathsf0$ | $\mathsf1$ |
+| $J$ | $1$ | $\mathsf0$ | $\mathsf1$ |
+
+The start is the retained tree root. All edges are now specified;
+there is no transition to a deleted vertex. In particular $J$ is a
+new ordinary query state at old coordinate $1$, not an uncharged
+context selector. State names carry no accessible indices beyond the
+counted current state. The $A_j$ rows form a distinct installed AND
+chain; they are not an implicit call to a free residual solver.
+
+Proof, correctness on every input. An input avoiding (SI.73) follows
+a retained full-scan tree path and receives its exact threshold. The
+only inputs entering $V$ are precisely those two contexts. Context
+$\mathcal A$ has one old one and therefore needs all $v+1$ unread
+bits in $\{y\}\cup U$; context $\mathcal B$ has $v+1$ old ones
+and needs at least one unread bit in $\{x\}\cup U$. Their residuals
+are AND and OR, respectively. Their old coordinate $1$ is respectively
+zero and one, and their old private values are $x=0$ and $y=0$.
+
+If $u_1=0$, the $Z$ chain reads until the first later one or until
+all $U$ bits have been read. A later one makes the AND context
+negative and the OR context positive; $J$ rereads coordinate $1$
+and returns these respective values. If all $U$ bits are zero,
+$B_X$ returns the correct zero from old $x=0$ on $\mathcal A$,
+and computes the only remaining OR variable $x$ on $\mathcal B$.
+If $u_1=1$, $B_Y$ reads $y$. When it is zero, $J$ returns the
+negative AND answer and positive OR answer. When it is one, only
+$\mathcal A$ is possible, since $\mathcal B$ has old $y=0$.
+The remaining $A$ chain computes exactly the conjunction of
+$u_2,\ldots,u_v$. These cases exhaust every completion of each
+context and hence every Boolean input. Every tree path and every
+suffix chain is finite, so all actual inputs terminate. Acyclicity
+of this constructed example is not a restriction on competitors.
+
+Proof, both caps with repeats charged. Write $C_X=\sum_{i\in X}c_i$
+for subsets here, and $U_{\le j}=\{u_1,\ldots,u_j\}$. The two
+prefixes pay respectively $C_C+c_x$ and $C_C+c_y$, with $v+3$
+queries. The suffix has at most $v+1$ queries: an all-zero $U$
+route uses $v$ scan states and $B_X$; a first later one at $u_j$
+uses $j$ scan states and $J$; a $u_1=1,y=0$ route uses
+$V,B_Y,J$, with $3\le v+1$; the remaining route uses $V,B_Y$
+and at most $v-1$ AND states. Thus every such input has at most
+$2v+4=n$ queries on this same table.
+
+For all-zero $U$, the complete selected letter charges are
+
+$$
+\begin{aligned}
+\mathcal A:&\ C_C+2c_x+C_U=W+c_x-c_y<W,\\
+\mathcal B:&\ C_C+c_y+C_U+c_x=W.
+\end{aligned}
+\tag{SI.74}
+$$
+
+The first line includes the genuine repeated $x$. For the first
+later one at $u_j$, $2\le j\le v$, the respective charges are
+$C_C+c_x+C_{U_{\le j}}+c_1$ and
+$C_C+c_y+C_{U_{\le j}}+c_1$, both at most $W$, because
+$c_1<c_y$ and $c_1<c_x$, respectively. For $u_1=1,y=0$ they are
+
+$$
+C_C+c_x+c_{u_1}+c_y+c_1\le W,\qquad
+C_C+2c_y+c_{u_1}+c_1\le W.
+\tag{SI.75}
+$$
+
+The first uses $c_1<c_{u_2}\le C_{U\setminus\{u_1\}}$.
+The second uses
+$c_y+c_1<c_x+c_{u_2}\le c_x+C_{U\setminus\{u_1\}}$;
+indeed $c_1<c_x$ and $c_y<c_{u_2}$ for the costs in (SI.70).
+This pays for both the old $y$ and old coordinate $1$ on
+$\mathcal B$. If $u_1=y=1$, only $\mathcal A$ occurs, and
+all its queried coordinates are distinct, so it pays at most $W$.
+Every retained ordinary tree route queries all $n$ coordinates once,
+with charge $W$, including all visits after an early certificate.
+Both caps have now been proved on every input, without deleting a
+repeat or substituting a different table for a cost objective.
+
+For simultaneous equality take a retained path with
+$(\theta_1,\theta_2)=00$, $I=1^v$, $x=1$, $y=0$, and $U=0^v$.
+It avoids both redirected prefixes, reads all coordinates and pays
+$n,W$. For actual interaction, take $\mathcal A$ with $U=0^v$:
+the AND is already negative after $u_1$, but $B_X$ still rereads $x$.
+The same $B_X$ is live on $\mathcal B$ with $U=0^v$, where it
+must decide the unread $x$. Likewise $\mathcal A$ and
+$\mathcal B$ with $u_1=0,u_2=1$ both reach the paid $J$, after
+opposite certificates, and require opposite outputs. These are real
+old-coordinate visits in a shared continuation, not a common
+certificate permitting that continuation to be erased globally.
+
+Proof, exact installed count. The full tree has $2^n-1$ running
+vertices. Each of the two deleted, disjoint subtrees has
+$2^{v+1}-1$ running vertices. The replacement has one $V$,
+$v-1$ states $Z_j$, two states $B_X,B_Y$, $v-1$ states $A_j$
+and one $J$, totaling $2v+2$. Thus
+
+$$
+(2^n-1)-2(2^{v+1}-1)+(2v+2)=M_v.
+\tag{SI.76}
+$$
+
+The Boolean total including its two distinct terminals is $M_v+2$.
+All retained tree states after certification are still installed and
+counted. Every retained running vertex is reachable by a completion
+of its tree prefix, and every new suffix state has a realizing input;
+no unused running states are added. This does not exclude genuinely
+nonlive states: for example $J$ is reached only after certification.
+The retained core alone contains $2^{v+2}-1>(v+2)(v+3)=G$
+running states for $v\ge3$. The inequality holds at $v=3$ and
+persists by doubling the exponential term. Hence $M_v>G$.
+
+Proof, all-history class membership. A retained tree vertex has a
+unique incoming prefix. Every actual live prefix of $Z_j$ or $B_X$
+is in context $\mathcal B$ with all previously read $U$ bits zero;
+context $\mathcal A$ was already certified by $u_1=0$. Every
+actual live prefix of $B_Y$ or $A_j$ is in context $\mathcal A$
+with all previously read residual bits one; context $\mathcal B$
+was certified by $u_1=1$, and cannot enter $A_2$ because its old
+$y$ is zero. These statements specify one live prefix per such state.
+The incoming contexts of $J$ have both been certified, so it has no
+live prefix. Only $V$ has two distinct live prefixes. Their one and
+zero sets are
+
+$$
+\begin{array}{c|cc}
+& A_H&B_H\\
+\mathcal A&\{2\}&\{1\}\cup I\cup\{x\}\\
+\mathcal B&\{1\}\cup I&\{2,y\}.
+\end{array}
+\tag{SI.77}
+$$
+
+Both are live: their count pairs are $(1,v+2)$ and $(v+1,2)$,
+within $0\le h\le v+1$, $0\le z\le v+2$. Every completion is
+an actual Boolean input. The two directed intersections are
+$\{2\}$ and $\{1\}\cup I$, both nonempty. Thus every live
+state of this example satisfies (SI.63), in particular every state
+of its remaining late-long pool. At $V$ its exact mass is
+
+$$
+\lambda(V)=\binom{v+3}{1}^{-1}
+             +\binom{v+3}{v+1}^{-1}
+           =\frac{v+4}{(v+3)(v+2)}<1.
+\tag{SI.78}
+$$
+
+This verifies genuine cross-count live sharing while retaining the
+full family of histories rather than discarding either context.
+
+Proof, consecutive late gap. All live histories through depth $a$
+have support equal to the corresponding prefix of $C$, so every depth
+$0,\ldots,a$ is common-support. At each depth $a+j$,
+$1\le j\le v+1$, context $\mathcal B$ with its first $j-1$
+$U$ bits zero is still live and has support
+
+$$
+S_j^{\mathcal B}=C\cup\{y\}\cup U_{\le j-1}.
+\tag{SI.79}
+$$
+
+At $j=v+1$ this is its live prefix at $B_X$, before reading $x$.
+For comparison the retained input used for cap equality has live
+prefixes all the way to depth $n-1$: after $x=1$ its hit count is
+$v+1$, and its zeros never exceed $v+2$. Their supports are
+
+$$
+S_1^{\mathrm{tree}}=C\cup\{x\},\qquad
+S_j^{\mathrm{tree}}=C\cup\{x,y\}\cup U_{\le j-2}
+\quad(2\le j\le v+1).
+\tag{SI.80}
+$$
+
+Use $U_{\le0}=\varnothing$. At $j=1$ the two supports differ
+by $x,y$; thereafter they differ by $x,u_{j-1}$. Thus no depth
+strictly between $a$ and $n$ is common-support. The pair $(a,n)$
+is consecutive, with span $v+2\ge5$ and right endpoint
+$n>e_*=v+3$. Its span is unbounded over this infinite family.
+Equations (SI.77) and the preceding singleton analysis prove membership
+in $\mathfrak C$, whereas this very gap excludes the family from
+Corollary 10.6. Together with that corollary's class inclusion, this
+proves strict enlargement, not just a different numerical instance.
+
+Proof, complete native realization of this table. Apply the existing
+full-fiber lift of WTF Theorem 4.1 to exactly this Boolean graph.
+Every coordinate-$i$ row above and every retained tree row queries
+the fixed original literal $a_i=LLL L^iR$. Its four successors are
+installed as $(\mathsf{alpha},\mathsf{beta},\mathsf{branch},
+\mathsf{absent})\mapsto(\delta_0,\delta_0,\delta_1,\delta_0)$,
+with the two terminals replaced by the original latches. Add the
+original profile rows $D,T$ from that theorem: $D$ queries $RLR$
+with successors $(\widehat e_1,\text{tree root},T,\widehat e_0)$,
+and $T$ queries $RRR$ with successors
+$(\widehat e_1,\widehat e_0,\widehat e_0,\widehat e_0)$ in the
+same four-reply order. Start at $D$ and install all $r$ further
+mandated distinct latches even though unused. This specifies all
+native edges; no auxiliary phase state, reset or service is added.
+
+On any source in $Z_{b_3}$, including arbitrary noncomb branch
+images and absent selected nodes, the original all-address occurrence
+identity gives one fixed Boolean indicator vector. The every-input
+proof above therefore gives its exact prescribed latch. The other
+ten profiles are handled by the unchanged profile front. This is a
+full-$\mathcal U_*$ upper on the identical original code, not an
+upper restricted to the cube. All selected runs pay their original
+literal charges, including the actual repeats; $D$ adds one call and
+three letters. Other profiles use at most two calls and six letters.
+The actual cube supplier realizes the cap-attaining vector above by
+a finite original source with every original disequality, so one
+source attains $n+1,W+3$ together. There are exactly $M_v$ selected
+running states, two profile states, two original-entry latches and
+$r$ additional latches, totaling $M_v+4+r$. The separate reader
+and every complete whole-row output are unchanged as in Theorem
+11.7. $\square$
+

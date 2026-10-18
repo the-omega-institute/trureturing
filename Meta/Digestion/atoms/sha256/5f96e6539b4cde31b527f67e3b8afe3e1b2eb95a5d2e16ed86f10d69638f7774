@@ -1,0 +1,33 @@
+**Theorem 8.3 (sound, complete and terminating certificate specification).**
+These finite certificate contracts decide exactly nonemptiness of
+$\mathcal C_L(T)$ and certify a lawful BOTH-bit-attained code on a
+positive answer, with the original table and entries unchanged.
+
+Proof. The bounded recursion enumerates a finite candidate family.
+Structural tests and finite free-term equality terminate. Proposition
+4.3 proves that the regenerated retained inventory has no spurious
+actual cell and omits none. Lemma 4.2 and Theorem 4.4 justify every
+multiplicity flag and the constructed actual witnesses. Proposition
+2.2 and Lemma 5.2 justify all full target rows, response vectors and
+bounded acceptance paths. In particular initial Halts, last-call Halts,
+wrong entire outputs, cycles, absent replies and unused-entry divergence
+have exactly their prescribed treatment.
+
+With positive checks, Theorem 6.1 makes the regenerated encoder lawful,
+both-attained and correct on the entire actual domain. Conversely a
+nonempty class implies (A),(B), and the finite witness and default
+construction gives a certificate of that form. If a negative cell has
+no good label, its actual ground realization admits neither entry
+within the bound, excluding every compatible code. If (A) holds but
+(B) fails, any purported both-attained code would give two different
+actual points contradicting that exhaustive failure, by Theorem 6.1's
+necessity. Every empty class therefore has one of the stated negative
+certificates. The finite scans, ground checks and bounded state paths
+all terminate.
+
+These are mathematical verifier contracts, not executed checks or a
+claim that any arbitrary code program can be semantically verified.
+Certificate completeness does not give a small certificate or an
+efficiency bound. No determining assignment for an original code, source
+oracle or promised compatible computation is used. $\square$
+

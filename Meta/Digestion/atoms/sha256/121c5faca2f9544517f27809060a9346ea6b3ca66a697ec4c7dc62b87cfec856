@@ -1,0 +1,42 @@
+## 173. Statement and scope
+
+Keep the actual finite ideal face pairing, complete circular edge links,
+minimum actual degree six, fixed vertex-induced paired frames
+
+    (R,A,B,O,A,B), A,B in H, A != B,
+
+one common positive generalized length field, and every original 2*pi
+edge equation. There is no bound on |H| and no assumption that every H
+label has a genuine occurrence. All counts below count actual local
+slots and retain repeated axes, self-pairings and repeated owners.
+
+Assume a flat exists. Choose the maximal pi-selected reservoir M and
+its genuine escape as in the maximal-selected theorem of Sections 130--136:
+
+    tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0.
+
+Here M,C,D,Z are four distinct actual H labels, and lower-case letters
+denote cosh of their common positive lengths. The genuine M budget is
+pi; the genuine Z budget is 2*pi, even if Z has flat zero occurrences.
+
+Let H_Z be the set of actual H labels appearing in any tetrahedron that
+contains an actual Z slot, in any role.
+
+**Theorem 173.1.** There is an actual reservoir label
+
+    U in H_Z \ {M,C,D,Z} with x_U > m-2.
+
+In particular, when |H|=5, its fifth label must satisfy u>m-2. Equivalently,
+a flat is impossible if every reservoir in H_Z other than M,Z has value
+at most m-2. The latter exclusion allows arbitrarily many reservoir labels.
+
+This does not assert u<=z, that U is witnessed, or that U is pi-selected.
+It is a necessary constraint, not a solution of the five-reservoir case.
+
+The proof reuses the actual-slot maximal-selected escape theorem, the
+paired-angle formulas and convexity in Section 95, the special-edge
+barrier of Section 112, and the algebraic estimates of the
+four-reservoir core closure in Sections 156--172. The new assertion is that its complete-star
+closure remains valid for an arbitrary number of additional low labels.
+

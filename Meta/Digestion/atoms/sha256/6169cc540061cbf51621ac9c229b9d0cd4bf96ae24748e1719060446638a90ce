@@ -1,0 +1,34 @@
+**定义 1.1（自价格与完整有符号尾项）。** 对 $x>1$ 置
+
+$$
+f(x)=\log\log x,\qquad
+g(x)=f'(x)=\frac1{x\log x},\qquad
+k(x)=-g'(x)=\frac{1+\log x}{x^2\log^2x},\qquad
+T(x)=\sqrt x\log x.
+\tag{1.1}
+$$
+
+对普通整数 $N>e$，实际响应是 $Z(N)=\sigma(N)/N$，
+$G(N)=Z(N)/\log\log N$，自价格为 $g(\log N)$。
+本文使用的实际来源条件是：$N$ 在这个价格上全局 CA 最优，
+$G(m)\le G(N)$ 对全部整数 $m\ge N$ 成立，且
+$G(N/p)\le G(N)$、$N/p>e$ 对全部素因子 $p\mid N$ 成立。
+这些条件中的 $N$ 必须是同一个整数。
+
+[Caveney–Nicolas–Sondow 的同源选取应用](../../../Library/Arith/caveney2012sacaga.md#the-same-power-excess-family-also-supplies-proper-ga1-sources)
+给出所用来源族；
+[Mantovanelli 存档原稿 §4 的 `thm:direct-bridge`](../../../Library/Analytic/mantovanelli2026primeworkload.md#the-existing-prime-local-bridge)
+直接提供该族的 regular 身份。
+这两项既有结果不在本文重新证明。
+实际尾项是
+
+$$
+I_\psi(A)=\int_A^\infty(\psi(t)-t)k(t)\,dt,
+\qquad A=\log N,
+\tag{1.2}
+$$
+
+其中 $\psi$ 是普通素数幂的 Chebyshev 函数。
+[既有端点应用](../../../Library/ArithSums/nicolas2025comparison.md#the-endpoint-condition-at-actual-self-tangent-sources)
+提供 $A-\vartheta(A)=\sqrt{2A}(1+o(1))$，不提供式（1.2）的下界。
+

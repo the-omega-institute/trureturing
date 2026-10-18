@@ -1,0 +1,33 @@
+**Definition 3.1 (raw bootstrap conditions).** For either fixed fresh
+version $v=L,G$ in [ARC] Definition 4.2, let $e_v=|E(v)|$ be its
+actual finite installation-slot count. Separate the prescribed literal
+word $E(v)$, actual supplied installation bits $z$, active fixed
+bootstrap and inactive partially written main store. [RCA] Definition
+14.1 gives NEXT, INPUT, WRITE, ADVANCE and DONE; [CSA] Definition 3.3
+distinguishes a latched boot bit from a prescribed literal constructor
+value. [ARC] Definitions 5.3 and 6.2 and [UAS] Definition 2.3 extend
+the carrier to raw supply and actual post-DONE decoding.
+
+Define $\mathsf{Load}_v(z)$, for $z\in\{0,1\}^{e_v}$, to mean the
+following concrete conditions all hold from that actual bootstrap
+entrance: each NEXT selects its actual fixed next slot; each prescribed
+INPUT is enabled and consumes the corresponding actual bit; each WRITE
+passes its actual owner/constructor/fresh-slot and operand guard and
+installs that bit at that slot; each ADVANCE and the final NEXT/DONE
+are enabled. The bootstrap mechanism's own active control and cursor
+must remain separate from those supplied raw bits until DONE. Any
+literal-value guard of the selected boot variant is included, rather
+than replaced by an unconditional latch-copy rule.
+
+Write $W_v^+(z)$ for the resulting actual original post-DONE record
+when these conditions hold. Define $\mathsf{Blocked}_v(z)$ by
+
+$$
+\text{not genuinely halted at }W_v^+(z),\qquad
+N(W_v^+(z),a)\text{ undefined for every prescribed raw main action }a.
+$$
+
+Sufficient reasons include no unique well-typed current row, an invalid
+actual entry field, or a failed actual entry guard. An unprovided input
+bit at an otherwise enabled IN is not this structural blockedness.
+

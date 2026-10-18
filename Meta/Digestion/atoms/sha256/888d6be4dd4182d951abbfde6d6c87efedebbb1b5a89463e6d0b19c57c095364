@@ -1,0 +1,43 @@
+## 404. The genuine P degree and angle budgets
+
+The three actual P edges have original degree at least six, so the
+total original P degree is at least eighteen. The flat source sigma
+has exactly one P slot, at its M axis. In the ordered label list
+(M,Z,U), the componentwise genuine degree requirement is therefore
+
+    genuine P degrees >= (5,6,6).
+
+Tau contributes (2,1,0), so the genuine owners other than tau must
+contribute at least (3,5,6), componentwise. These three requirements
+remain separate; the following sum is only a necessary consequence:
+
+    sum over genuine T of n_P(T) >= 17.                 (404.1)
+
+The total angle on the three P edges is 6*pi. Sigma uses pi at M and
+zero at Z,U, so the total genuine P expense is exactly
+
+    sum over genuine T of expense_P(T) = 5*pi.         (404.2)
+
+Both formulas count original incidences, even when owners repeat in
+an actual edge circle. Neither formula replaces degree by graph
+valence or counts a transverse label only once.
+
+For every genuine owner, the role table gives the strict bound
+
+    expense_P(T) > (pi/3)*(n_P(T)-I_f(T)-I_a(T)),       (404.3)
+
+where I_f is one on a five-P-slot owner and zero otherwise, while I_a
+is one on a cheap axial-P owner and zero otherwise. These two classes
+are disjoint. For a cheap owner, (404.3) is the positivity of its genuine
+axial angle. For a five-slot owner, its right side is 4*pi/3. For all
+other rows, the displayed bound is at least the required n_P*pi/3,
+with strictness as stated.
+
+Summing (404.3), then applying (404.1) and (404.2), gives
+
+    5*pi > (pi/3)*(17-f-a).
+
+Thus f+a>2; since both are integer owner counts,
+
+    f+a>=3.                                           (404.4)
+

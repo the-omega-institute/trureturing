@@ -1,0 +1,38 @@
+### 77.4. Identifying the entire overlap ideal
+
+Let \(\mathcal B=\mathbb K[D,s]/(f(D),s^2-K(D))\), of dimension ten.
+The substitution
+\[
+ \varphi:\mathcal A\longrightarrow\mathcal B,\qquad
+ E\longmapsto D,\quad t\longmapsto-s                         \tag{77.13}
+\]
+is surjective. The exact norm identity from §77.2 implies
+\(\varphi(G)=-1\), and the phase formulas give
+\[
+ z(D,-s)=\bar r(D,s),\qquad r(D,-s)=\bar z(D,s).
+\]
+Hence \(\varphi(O_m)=\varphi(O_d)=0\). The image of multiplication by
+either overlap lies in the 90-dimensional space \(\ker\varphi\).
+The lower rank bounds (77.12) therefore prove equality of ideals:
+\[
+ (O_m)=\ker\varphi=(O_d).                                    \tag{77.14}
+\]
+In particular \(E-D\) and \(t+s\) belong to either overlap ideal.
+Any complex evaluation with \(O_m=0\) or \(O_d=0\) must consequently
+have \(E=D,t=-s\). This is a characteristic-zero conclusion obtained
+from a modular lower rank bound and an exact matching upper rank bound.
+
+For every real quintic root, the opposite signs give zero overlap at all
+three-by-three pairs of positions, by the same identities. Equal signs
+cannot give an edge because \(s\ne0\). Distinct roots cannot give an edge
+by (77.14). The induced graph is therefore exactly three copies of
+\(K_{3,3}\). Finally, synchronous permutations preserve channel sums and
+\(\Theta\) sends a spinor \((X,Y)\) to \((-\bar Y,\bar X)\), orthogonal
+to it. Division of the input vectors by \(\sqrt6\) multiplies overlaps
+by \(1/6\), preserving their zeros. This proves Theorem 77.1. ∎
+
+The generic–generic and generic–aligned failure systems of §76 remain
+unresolved. Neither this induced graph nor the pair reduction supplies
+an arbitrary-triple or whole-branch no-quartet conclusion.
+
+[Continue with the exact half-parameter census and all-pair rigidity in §§78–80](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_III.md).

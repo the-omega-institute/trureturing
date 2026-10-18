@@ -1,0 +1,72 @@
+**Definition 243.1 (The original carrier and separately selected targets).**
+Let $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$, and let $p_i$ be the
+increasing primes. The labeled source and its static replies are
+
+$$
+\begin{aligned}
+X&=\{(r,g):r\text{ prime},\ g\in\mathbb Z,
+       \lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor\},\\
+N(r,g)&=1+F_rg,\qquad q_i(x)=[p_i\mid N(x)],\qquad
+n(x)=\min\{i:q_i(x)=0\}.
+\end{aligned}
+\tag{243.1}
+$$
+
+This is a countable source set with no source prior. Each integer has
+finite prime support, so its first absence exists. The finite-pattern
+interface of §110.2 and Boundaries 35.2 supplies every prescribed pattern
+on finitely many arbitrary prime addresses. Its classical entry-rank
+hypothesis permits a sufficiently large prime $r$ with $F_r$ invertible
+modulo all specified primes. Prescribe $g=-F_r^{-1}$ modulo primes
+whose desired answer is one, and $g=0$ modulo those whose desired
+answer is zero. CRT gives a residue modulo their product. A sufficiently
+large original Fibonacci window is longer than that product and contains
+a representative of that residue. This proves the stated pattern
+correspondence under the supplied entry-rank interface; no additional
+entry-rank result is inferred here. Witnesses are fixed before seeds.
+It includes arbitrary gaps, multiple zeros and an all-one finite prefix
+followed by a prescribed later zero. The finite positive word is not
+an additional infinite all-positive actual source.
+
+The full tape carrier is the disjoint-union Borel space
+$\Theta=\bigsqcup_{j\ge1}B_j\sqcup\bigsqcup_{j\ge1}P_j$,
+each block a copy of $(0,1)$. The unchanged consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. The original nonatomic targets
+of Source-Correlated Laws 67.5 remain as follows. For fixed
+$0<h_0<1$, put $s(x)=\sum_{i\ge1}3^{-i}q_i(x)$;
+let $\nu_x$ have density
+$e^{s(x)u}/\int_0^1e^{s(x)v}\,dv$ on $B_{n(x)}$,
+let $\pi_j$ be uniform on $P_j$, and let $\Omega(x)$ count the
+distinct prime divisors of $N(x)$. Then
+$\mu_x=(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$.
+These targets, carrier and consumer are unchanged.
+
+The distinct original marks $\theta_j=(B_1,1/(j+2))$, $j\ge0$,
+support the separately selected laws
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                       +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+1\ge a_1\ge a_2\ge\cdots>0,\quad a_n\longrightarrow0.
+\tag{243.2}
+$$
+
+The optimal errors in §§238, 240–242 concern (243.2).
+A finite marked law has TV distance one from each original nonatomic
+$\mu_x$: its finite Borel support has masses one and zero respectively.
+Selected-law approximation therefore asserts no approximation of the
+nonatomic targets and makes no correctness claim for the unchanged
+consumer. Original competitors still permit the whole Borel carrier.
+
+For an original rule $A$, its uniform error means
+$e_a(A)=\sup_{x\in X}\operatorname{TV}(\mathcal L_U(A(x,U)),\lambda_x^a)$,
+where TV is the supremum over all Borel events. The original classes
+$\mathcal N_2,\mathcal O_2$ are those of §90.1, with the preselected
+schedules, stopping and actual-request requirements stated below.
+At the strict active horizon, $\mathcal F_N(a,c)$ denotes the complete
+normalized N probability configurations satisfying (237.1), as in
+§110.1; $\mathscr C_L$ is the region of normalized kernels represented
+by one full O catalog law, identified by §109.1. The intersection in
+(243.4) views such stopped kernels through their counted N completions.
+The class-preserving equivalence with original feasibility is §110.2.
+

@@ -1,0 +1,81 @@
+**定理 38.2（全门的必要资源界）。** 在 (38.1) 的固定乘积探针菜单中，
+$V_{\mathrm{cyc}}$ 不可能被精确实现；此排除允许无界探针电荷，
+不要求探针电荷有有限期望。
+在 [QI-TSS] 的守恒酉演化假设下，若
+$\varepsilon_I\le\varepsilon$、$0<\varepsilon\le\sqrt2$，则
+
+$$
+\sqrt{F_Q(\sigma_B,N_B)}
+ \ge\max\left\{0,\frac{3}{2\varepsilon}-4\right\}.
+\tag{38.3}
+$$
+
+若整个探针的电荷谱包含于 $[0,J]$，则实际误差必满足
+
+$$
+\varepsilon_I\ge\frac{3}{2(J+4)}.
+\tag{38.4}
+$$
+
+所有携带电荷或非对称性的辅助资源都须计入 $B$。
+
+证明。逐个基向量相减得到
+
+$$
+V_{\mathrm{cyc}}^\dagger NV_{\mathrm{cyc}}-N
+ =\operatorname{diag}(2,0,-1,0,-1).
+\tag{38.5}
+$$
+
+[Kuramochi–Tajima，arXiv:2208.13494v3，定理 2、式 (1)、(3)–(4)][QI-KT]
+的接口是：固定密度探针、任意系统输入、联合酉及输入输出可加守恒观测量；
+若精确实现一个系统酉通道，则
+$U_S^\dagger L'_S U_S=L_S+\gamma I$。
+取 $L'_S=L_S=N$，同一有限系统上的迹使 $\gamma=0$。
+(38.5) 并非零，甚至不是标量，故矛盾。
+该全酉通道定理不需要测量情形的 Yanase 条件，也不对探针均值另加有限性。
+
+近似部分采用 [QI-TSS，式 (1)–(3)、(9)–(14)，定理 1]：
+有限系统、固定乘积探针、由与 $A_S+A_B$ 对易的联合 Hamiltonian 生成的酉，
+及 (38.2) 的误差不超过 $\varepsilon$，蕴含
+
+$$
+\sqrt{F_Q(\sigma_B,A_B)}
+ \ge\frac{A_U}{\varepsilon}-4\|A_S\|,
+\qquad
+A_U=\frac{\lambda_{\max}(U^\dagger A_SU-A_S)
+              -\lambda_{\min}(U^\dagger A_SU-A_S)}2.
+\tag{38.6}
+$$
+
+有限维守恒 $W$ 可以逐总电荷块取 Hermitian 对数，得到同样守恒的生成元，
+所以任意有限梯守恒酉属于这个接口。
+取 $A_S=N-I$、$A_B=N_B$，则 $\|A_S\|=1$，
+(38.5) 的谱直径是三，故 $A_U=3/2$。
+结合 QFI 非负性得到 (38.3)。
+零误差由前述精确排除处理，不在 (38.6) 中除以零。
+
+这里 QFI 的约定为纯态时 $4\operatorname{Var}(N_B)$。
+例如对 $\sigma_B=\sum_a p_a|a\rangle\langle a|$，
+
+$$
+F_Q(\sigma_B,N_B)
+ =2\sum_{a,b:p_a+p_b>0}\frac{(p_a-p_b)^2}{p_a+p_b}
+       |\langle a|N_B|b\rangle|^2
+ \le4\operatorname{Var}_{\sigma_B}(N_B).
+\tag{38.7}
+$$
+
+上界可先将 $N_B$ 减去其均值，再用
+$(p_a-p_b)^2/(p_a+p_b)\le p_a+p_b$ 逐项求和。
+若谱在 $[0,J]$，则 $N_B^2\preceq JN_B$，从而
+$\operatorname{Var}(N_B)\le J\mu-\mu^2\le J^2/4$，其中 $\mu=\operatorname{Tr}\sigma_BN_B$。
+故 $\sqrt{F_Q}\le J$，与 (38.6) 合得
+$J+4\ge3/(2\varepsilon)$。
+取实际的正误差 $\varepsilon=\varepsilon_I$ 即 (38.4)。证毕。
+
+(38.3)–(38.4) 是必要条件。[QI-TSS，定理 2 及 §VII、引理 2] 的充分性构造
+使用连续位置探针与 Gaussian 态，不能据此推出有限整数梯对完整循环的充分性。
+定义 37.2 的梯回收只访问同一升降模的码，与完整门的 (38.5) 非标量变荷不同，
+所以不与精确阻断矛盾。这里没有作向 diamond 范数的误差转换。
+

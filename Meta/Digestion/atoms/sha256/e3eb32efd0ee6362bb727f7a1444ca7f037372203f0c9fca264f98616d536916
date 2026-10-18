@@ -1,0 +1,100 @@
+**Lemma 3.2 (uniform symbolic matching and exact preimages).** Fix one
+anchor piece, one companion piece for every other selected row, and a
+finite/divergent mode on their combined rank tuple. Names in different
+source copies are renamed apart; every shared occurrence within a copy is
+retained. Let $F$ be the finite
+coordinates, $A$ the divergent coordinates, and let $\mathbf c$ denote the
+values at $F$. Replace their atoms respectively by $T_{c_i+a}$ and
+$\Omega$. The anchor becomes $K(\mathbf c)$, a finite description of the
+form (PAC.9).
+
+There is a terminating finite compiler, uniform over all $\mathbf c$, for
+completed equality of all these source maps with $K(\mathbf c)$. It
+returns finitely many cases $\tau$ with Presburger guards
+$E_\tau(\mathbf c,\mathbf d)$ and a generalized description
+$Z_{r,j,\tau}(\mathbf c,\mathbf d)$ for each source-visible residual.
+The auxiliary natural indices $\mathbf d$ obey fixed affine equations.
+In a case, completed equality holds exactly when its guard holds and every
+visible residual equals its specified $Z$. Repeated occurrences impose
+equality of their specified values. Invisible residuals are unrestricted.
+Finite versus infinite $Z$ is decided by the fixed description shape.
+
+The compiler has both completed-source directions, including arbitrary
+completed residual assignments; no finite occurs-check or free-unary rule
+is used.
+
+Proof. Normalize (PAC.9) from the bottom up by the two rules
+
+$$
+F([q+1],[q])\mapsto[q+2],\qquad
+F([\infty],[\infty])\mapsto[\infty].
+\tag{PAC.10}
+$$
+
+All other pairs remain. Finite cases are the ordinary ABC normalization,
+and the second rule is $\langle\Omega,\Omega\rangle=\Omega$.
+This normal form is faithful. By induction, a normal pair cannot expand to
+a finite atom: the children would have to be consecutive finite atoms,
+forcing the first forbidden pattern. It cannot expand to $\Omega$:
+both children would have to be $\Omega$, forcing the second forbidden
+pattern. A remaining pair cancels by actual ordered pairing. Finite atomic
+roots have their unique rank by ABC; $\Omega$ is infinite. These cases
+prove injectivity of normal descriptions by induction on their finite
+syntax. A normal description is infinite precisely when it contains
+$[\infty]$. Every other leaf expands to an actual finite atomic tree.
+
+With parameter ranks, each pair contributes finitely many guarded cases
+$q_L=q_R+1$ or its negation, or the fixed infinity case. The resulting
+normal shapes are finite, and equality reduces to equality of corresponding
+finite ranks and identical leaf types. This is the finite arithmetic
+normalization of [CAR, Lemma 4.1][CAR], extended by the single second rule
+in (PAC.10). No unbounded $T_c$ is expanded.
+
+For a fixed address, a normal pair follows the selected child. The token
+$[q]$ branches exactly when $q\ge2$, with children $[q-1],[q-2]$;
+$[\infty]$ has two $[\infty]$ children. The cases $q=0,1$ are leaves
+and block a further edge. This navigation consumes the supplied finite
+word, so its branch list is finite. Every reached subtree again has a
+finite generalized description. Introduce a fresh natural index with an
+affine defining equation whenever an index is subtracted. Nonnegativity is
+a guard, and no truncated subtraction is used.
+
+The extended $\rho$ is injective on the entire completion. Its output root
+is never $\alpha$; output $\beta$ comes only from input $\alpha$.
+An input leaf $\beta$ outputs $\langle\beta,\alpha\rangle$, which cannot
+be the output of an input pair because the latter's right child is in the
+image of $\rho$, and $\alpha$ is not. All other possible paired outputs
+therefore have paired inputs and cancel into equal child outputs.
+Induction on finite input-prefix depth recovers every reply of two inputs
+with the same output. Hence their completed trees are equal. Infinite
+branches persist under $\rho$, so a finite output has a finite input.
+Also $\rho\Omega=\Omega$, and injectivity gives its unique preimage.
+
+On a normal generalized description, $\rho^e$ adds $e$ to every finite
+rank, fixes $[\infty]$, and preserves every retained $F$: finite rank
+differences and the forbidden infinity pattern are unchanged. Its unique
+preimage among all completed trees exists exactly when every finite rank
+is at least $e$, and is then obtained by subtracting $e$ there. To verify
+exhaustiveness, decode one step by the root cases just proved. A finite
+atomic output has its finite atomic preimage by ABC; $\Omega$ has only
+$\Omega$; a normal non-atomic, non-$\Omega$ pair cannot come from a leaf,
+so decode its children. This finite recursion proves the criterion,
+including a pure $[\infty]$ description with no finite-rank guards.
+Repeating gives the stated fixed-$e$ inverse, with arithmetic guards.
+
+Now traverse each companion's finite source syntax against $K$. At a
+source pair require a branch in the corresponding $K$ subtree and recurse.
+A ground or finite/divergent atomic token is checked by description
+equality. At each occurrence $\rho^e z_j$, take the unique preimage of
+the matched subtree. Equalities between the preimages at all occurrences
+of one name retain its sharing; different names may happen to have equal
+values without being identified as coordinates. The traversal consumes
+finite source syntax, and normalization and inversion consume finite
+description syntax. This yields the asserted finite guards and $Z$.
+
+Conversely, a completed assignment giving equal outputs follows exactly
+those guarded navigation cases, and completed injectivity forces each
+specified inverse. Any assignment of those inverses satisfying the guards
+reassembles all source pairs and tokens to $K$. Hidden names affect no
+output. These prove both directions. $\square$
+

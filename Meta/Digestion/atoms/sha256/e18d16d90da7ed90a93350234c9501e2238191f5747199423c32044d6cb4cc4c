@@ -1,0 +1,14 @@
+**定义 45.1（只限制已经取得的长度）。** 固定定义1.2的同一个来源和安装先验，沿用定义37.1–37.2的完整数字类别 $\mathfrak D_\mu(B)$。对 $H\in\mathbb N$ 定义
+
+$$
+\begin{aligned}
+\mathcal H_s^{\le H}&=\{h\in\mathcal H_s:A(h)+B(h)\le H\},\\
+R_{j,s}^{\le H}(M)&=\sup_{h\in\mathcal H_s^{\le H}}e_j(h),\\
+\Phi_H^{j_p,j_\beta}(M)&=\max\{R_{j_p,p}^{\le H}(M)-\rho_p,
+ R_{j_\beta,\beta}^{\le H}(M)-\rho_\beta\}.
+\end{aligned}
+\tag{45.1}
+$$
+
+取 $H\ge7$，两活动域均非空。误差 $e_j(h)$ 仍是(1.5)的完整无界原残余转录 TV，未来字母、全部原记录保持、completion、唯一 Stop、delivery 及合法无限不完成结果均未截断。这里改变的只有取得过滤中的查询长度；没有新增计数输入、停止权限或试验仪器。$\Phi_\infty$ 表示原全历史的(20.1)。线性矩阵只作同一有限数字程序的分析工具；表示类别仍是非线性的归一化随机生成律，不把实坐标数解释为位数。
+

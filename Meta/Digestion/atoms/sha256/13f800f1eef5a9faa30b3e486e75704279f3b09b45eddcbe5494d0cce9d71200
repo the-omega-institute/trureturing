@@ -1,0 +1,32 @@
+**Lemma 11.3 (L2: a host outside two exhausted families).**
+If $\mathsf a,\mathsf M,\mathsf b=(1,4)$ and
+$\mathsf N=(2,3)$ each have one exposed support, there is an actual
+live $\mathsf d$ host outside
+$F_{\mathsf b}\cup F_{Z_4}$.
+
+**Proof.**
+The axis cell $Z_4$ has its unique support. The consecutive
+singleton-support diagonal segment $Z_4,\mathsf a,\mathsf M$ has a
+common size-four support $S$. This follows by taking actual histories
+at the common parents $Z_3$ and $\mathsf P$ and using their two
+live children. Likewise the adjacent singleton-support cells
+$\mathsf b,\mathsf N$ have a common size-five support $T$; an
+actual parent at $\mathsf a$ identifies them.
+
+Take an actual history at $\mathsf M$, whose support is $S$.
+Its live zero child at $\mathsf N$ has support $T$, so
+$S\subsetneq T$. Its live one child at $\mathsf d$ has that same
+support $T$, since the two children of this particular query expose
+the same new coordinate. Let $q_*$ be this actual one successor.
+
+If $q_*\in F_{\mathsf b}$, the singleton-support premise at
+$\mathsf b$ gives a $\mathsf b$ occurrence at $q_*$ with support
+$T$. Its hit count is one, whereas the displayed $\mathsf d$
+occurrence has three hits. Equal-support unequal-hit exclusion
+forbids this. If $q_*\in F_{Z_4}$, that occurrence has support $S$,
+properly contained in $T$, contradicting nested-support exclusion.
+Thus the specific actual child $q_*$ lies outside the stated union.
+
+This supplies one installed host on the original graph. It allocates
+no independent residual graph or free state. $\square$
+

@@ -1,0 +1,66 @@
+**Proposition 70.1 (one actual low label).** Let $K=K(\mathbf c)$ and
+$N=\beta nn^T$ be as in Theorem 69.2, with finite $\beta\ge0$.
+Choose a fixed row-space isometry
+$J:\mathbb C^2\to\operatorname{ran}K^\dagger$ and set
+
+$$
+Q=J^\dagger(K^\dagger K+N)J,\quad
+C=Q^{1/2}J^\dagger,\quad B=KJQ^{-1/2},\quad
+F=Q^{-1/2}J^\dagger NJQ^{-1/2}.
+\tag{FA.11}
+$$
+
+These satisfy on the entire two-dimensional domain
+
+$$
+BC=K,\quad C^\dagger FC=N,\quad B^\dagger B+F=I_2,\quad
+B^\dagger B\succ0.
+\tag{FA.12}
+$$
+
+A fixed convenient attained time law uses
+
+$$
+\begin{gathered}
+g(t)=2/(1+t)^2,\quad G(t)=2t/(1+t),\\
+K_{\rm dec}(t)=\sqrt{I-G(t)F},\qquad
+R(t)=g(t)F(I-G(t)F)^{-1}.
+\tag{FA.13}
+\end{gathered}
+$$
+
+Its first-event map from the initial decoder input is, separately in
+each original label, $Y\mapsto w_\ell g(t)\operatorname{tr}(FY)P_f$.
+Its terminal live map is $\operatorname{Ad}_B$. Its activity is FA.9,
+and equals $A$ when $\beta=t_A\mathfrak c$. These are full-fibre
+CP/TP statements, not just effects on a chosen test input.
+
+**Proof.** Both $G_K=K^\dagger K$ and $N$ are supported on
+$\operatorname{ran}K^\dagger$; $G_K$ is strictly positive there.
+Consequently $Q\succ0$, $JJ^\dagger$ fixes $K^\dagger$ and $N$,
+and multiplication gives all four identities in FA.12.
+In particular $0\preceq F\prec I$ and $B$ is injective.
+The current-survivor jump CP density, rather than its initial-input
+pullback, is explicitly
+
+$$
+\mathcal J_\ell(t)(Y)
+ =w_\ell g(t)\operatorname{tr}
+ \bigl(FK_{\rm dec}(t)^{-1}Y K_{\rm dec}(t)^{-1}\bigr)P_f.
+$$
+
+Its total effect is $R(t)$. Here $F$ commutes with the no-jump path,
+so $\dot K_{\rm dec}=-R K_{\rm dec}/2$ with Hamiltonian zero.
+Precomposition with $\operatorname{Ad}_{K_{\rm dec}(t)}$ gives exactly
+the stated initial-input density. At time one use the isometry
+$U=B(I-F)^{-1/2}$ on survivors only; $U^\dagger U=I$ by FA.12.
+It produces $B$ as the live matrix. The integrated failure effect is
+$F$ since $G(1)=1$, complementary to $B^\dagger B$.
+Intermediate chronological completeness follows as in Theorem 68.1.
+Only the not-yet-failed carrier evolves; after a first jump the stopped
+successor and its label/time are retained with no positive-carrier
+operation. There is no failure atom at the deadline. The nonzero
+eigenvalue of $F$ is $\beta/(\mathfrak c+\beta)$, so integration of
+its hazard gives FA.9. This includes $F=0$ with zero jumps and zero
+rate. All choices are fixed before the unknown input. $\square$
+

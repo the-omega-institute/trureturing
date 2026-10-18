@@ -1,0 +1,39 @@
+**定理 6.1（每个实际小纤维上的同一恢复策略）。** Fix the parameters
+$D_0,\lambda,\varepsilon$ in Definition 4.1.
+
+1. For any $Y$ and any known $K\subseteq\mathcal F(C_4(Y))$, if every
+   actual fifth-$J$ response fiber $K_z=K\cap\mathcal F(C_5(Y,z))$
+   has at most two distinct targets, one deterministic strategy
+   recovers all of $K$ within three further readings.
+2. For any known $K\subseteq\mathcal F(C_3)$, if every actual
+   fourth-$M$, fifth-$J$ joint response fiber has at most two distinct
+   targets, one deterministic strategy recovers all of $K$ within four
+   further readings.
+
+Both assertions permit infinite families, varying actual response
+values, mixed drifts and arbitrary legal gain shapes and signs.
+
+Proof. In the first assertion execute fifth $J$ and immediately read
+$z$. Stop if $K_z$ is a singleton. If $K_z$ contains a pair, Theorem
+5.1 excludes $L_2$ for this actual pair. Select the first word in
+$MM,MJ,JM,JJ$ for which the pair's sixth or seventh predictions differ.
+Execute its sixth atom and read; stop if it separates, otherwise
+execute and read its seventh atom. Equality of all these predictions
+would be exactly two-target $L_2$, so a separating word always exists.
+The returned target is the unique member matching the acquired
+history. This choice uses the whole known actual $K_z$, not an unknown
+choice of pair in a larger fiber. Empty fibers are unreachable.
+
+For the second assertion execute fourth $M$ and read its actual $Y$;
+then execute fifth $J$ and read its actual $z$. The retained joint
+fiber is now a singleton or the pair just treated, so use only the
+remaining two-atom separating rule. The fifth $J$ is already acquired
+and is not repeated by invoking the first assertion's continuation.
+
+There is one policy for every actual $Y,z$ and every retained target.
+Its choices can depend arbitrarily on the known family and the
+actual reads; no regularity assumption or extra counterfactual
+acquisition is needed. The budgets are $5+1+2=8$ and $4+2+2=8$,
+respectively. All acquired atoms are individually read on original
+clocks through seven. ∎
+

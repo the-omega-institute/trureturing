@@ -1,0 +1,23 @@
+**Definition 1.4 (Actual exterior predictors and risk).** For any stationary legal $P$, $i\in\mathbb Z$ and integer $r\ge1$, let
+
+$$
+\begin{gathered}
+\mathcal E_i=\sigma(X_j:j\ne i),\qquad F_i=\{X_{i-1}=X_{i+1}=0\},\qquad
+q_i=\mathbb E_P[X_i\mid\mathcal E_i],\\
+\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\qquad
+q_{r,0}=\mathbb E_P[X_0\mid\mathcal F_r],\qquad
+D_r(P)=\mathbb E_P(X_0-q_{r,0})^2.
+\end{gathered}
+\tag{1.7}
+$$
+
+Take $[0,1]$ exterior-measurable versions, with $q_i=q_0\circ T^i$ for $(Tx)_j=x_{j+1}$. [Universal, (1.5)][U] supplies, on the entire stationary legal class,
+
+$$
+D_r(P)\downarrow d(P)=\mathbb E_P(X_0-q_0)^2
+=\lim_{n\to\infty}\frac{\Phi_n(P_{[1,n]})}{n}\le c_\star.
+\tag{1.8}
+$$
+
+The band $\mathsf B(P)$ means that, almost surely for every $i$, $q_i=0$ on $F_i^c$ and $1/4\le q_i\le1/2$ on $F_i$. [Universal, Theorem 3.1][U] makes it necessary for attainment. It is not an additional restriction in (1.5).
+

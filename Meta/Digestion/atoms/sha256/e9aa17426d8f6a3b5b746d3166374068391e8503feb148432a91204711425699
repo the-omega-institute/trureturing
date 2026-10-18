@@ -1,0 +1,11 @@
+## 4. Drift-compensated gain erasure on every fixed history
+
+For each noninitial index $1\le j<n$ define
+
+$$
+\mathcal E_j=\left\{\Delta:\ \exists Q\in\mathcal P_{d-1},
+\ \operatorname{tr}(A_i\Delta)=Q(i)\text{ for every }i\ne j\right\},
+$$
+
+where $\mathcal P_{-1}=\{0\}$ when $d=0$. There is no condition on the unweighted signal at $j$.
+

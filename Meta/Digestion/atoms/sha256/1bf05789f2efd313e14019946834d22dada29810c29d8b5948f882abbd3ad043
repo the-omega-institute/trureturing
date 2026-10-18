@@ -1,0 +1,33 @@
+**Definition 5.1 (paired interfaces and the specified rule class).** A
+finite paired interface has finite states and paired maps $(g_q,r_q)$
+with each reply alphabet of size at most four, together with constants.
+Define $E(P)$, $\mathscr R_I$ and $\mathcal U_I$ as in Definition 4.2,
+using the designated reply paired with each target. A product of such
+interfaces has constituent pairs $(g_{j,q}(x_j),r_{j,q}(x_j))$.
+One port returns one constituent reply, never a reply vector. Test
+supports in the product may be arbitrarily correlated.
+
+A finite $V_{\rm own}$ derivation has rational labels $(d,\mu,C)$,
+with $\mu$ on the entire $S_d$ and $C>0$. Its only rules are:
+
+1. The exhaustive owner-proportional leaf, testing
+   $C\ge\mathcal U_d(\mu)$; equivalently it checks the complete
+   finite envelope of Theorem 4.3.
+2. An arbitrary finite product-grouped leaf, for any $m\ge1$, testing
+   $C^m\ge\mathcal U_{I_d^{\times m}}(\mu^{\otimes m})$ on every
+   product test support. Groupings can be nested and parenthesized
+   arbitrarily.
+3. The actual scaffold rule: from $(d_0,\nu,C_0)$ and $h\ge0$,
+   conclude $(d_0+h,\nu^\uparrow,C)$ if $C\ge C_0^{2^h}$, where
+   $\nu^\uparrow(T_h(x))=\prod_{j=1}^{2^h}\nu(x_j)$ and is zero
+   off the actual perfect-scaffold image.
+4. The probability-stability rule: from $(d,\nu,C_0)$ conclude
+   $(d,\mu,C)$ if $C\ge C_0+\operatorname{TV}(\mu,\nu)$.
+
+Every rule retains all supports and zeros. The last two are exactly the
+corresponding [JTC, Definition 9.1][JTC] rules. Product grouping here
+means product interfaces and these owner-only leaves; it does not add an
+arbitrary exact joint calculation across a cluster of original owner
+blocks. A rule retaining such a joint relation is outside this specified
+class and remains available as a different method.
+

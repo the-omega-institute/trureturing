@@ -1,0 +1,46 @@
+### 104.3. Prescribed shapes of the same common normer
+
+In (104.5) fix an invertible real \(C_1\), a nonzero symmetric traceless \(Q_0\), and \(j>0\). Suppose
+\[
+S=E^{-1}C_1=s_0I+kQ_0\succ0,\qquad
+w_0^2=\tfrac12\operatorname{Tr}Q_0^2>0.
+\tag{104.14}
+\]
+The coefficients are \(s_0=\operatorname{Tr}S/2\) and \(k=\operatorname{Tr}(SQ_0)/(2w_0^2)\), so \(s_0>|k|w_0\).
+
+**Lemma 104.3.** A positive-density optimal fixed pair and a scale \(\alpha>0\) have
+\[
+W_{FJ}=\alpha C_1,\qquad
+W_{JJ}-\tfrac12\operatorname{Tr}(W_{JJ})I=\alpha Q_0,
+\qquad\pi=\alpha j/t
+\tag{104.15}
+\]
+if and only if, with \(Y_0=-kI/2+2Q_0/j\),
+\[
+M_EY_0+Y_0M_E=J_0,\qquad
+j^2=s_E(js_0+4w_0^2).
+\tag{104.16}
+\]
+Its positive norm is fixed by
+\[
+t^{-2}=2s_0/j+k^2/4+4w_0^2/j^2.
+\tag{104.17}
+\]
+
+**Proof.** Formula (104.9) and (104.15) give the traceless part \(2Q_0/j\) of \(Y_0\). Cayley–Hamilton in dimension two gives \((Y_0^2)_{\rm tl}=(\operatorname{Tr}Y_0)(Y_0)_{\rm tl}\); the cross formula then gives \(k=-\operatorname{Tr}Y_0\). Its scalar part proves (104.17). Tracing the Sylvester equation and using \(\operatorname{Tr}J_0=0\) gives
+\[
+\operatorname{Tr}(M_EQ_0)=jks_E/4,\qquad
+\gamma=s_E(4w_0^2/j^2-k^2/4).
+\tag{104.18}
+\]
+Combining (104.17) with \(t^2=s_E/(2-\gamma)\) gives the second equation of (104.16).
+
+Conversely define \(t>0\) by (104.17). Under (104.16), equations (104.18) give \(t^2=s_E/(2-\gamma)\). Moreover
+\[
+t^{-2}-\|Y_0\|_{\mathrm{op}}^2
+=\frac{2(s_0-|k|w_0)}j>0,
+\qquad\|Y_0\|_{\mathrm{op}}=|k|/2+2w_0/j.
+\]
+Lemma 104.2 applies. Set \(\alpha=\pi t/j\). The scalar and traceless parts of
+\(j(I-t^2Y_0^2)/(2t^2)=s_0I+kQ_0\) give (104.15). The proof never divides by \(k\); it includes \(k=0\) and repeated eigenvalues of \(M_E\). This is a coefficient-level criterion, with no assertion that arbitrary coefficient data have physical Gram realizations. \(\square\)
+

@@ -1,0 +1,46 @@
+**Lemma 4.1 (exact negative-certificate verification).** Given a finite
+list $S\subseteq D$ and a supplied $\mathcal B$ as in Theorem 3.2, one
+can decide $\operatorname{Win}_S(\mathcal B)$ by a finite calculation,
+covering every same-interface adaptive physical comparator, including
+arbitrarily long words. Membership of each listed source in $D$ is also
+decidable from the full original input.
+
+Proof. Compute each finite $\rho^n u$ for $u\in S$ and
+$N\le n\le N+A$, together with its literal reply table and full original
+$R_Q(u)$. At epoch $n$ let
+
+$$
+\mathcal P_{S,n}=\bigcup_{u\in S}\operatorname{Pos}(\rho^n u).
+\tag{NFO.10}
+$$
+
+This is a finite effectively listed set, and every word outside it
+returns absent on every source in $S$. Enumerate depth-at-most-$K$
+skeletons with monotone epochs in $[N,N+A]$ and words in
+$\mathcal P_{S,n}$ at epoch $n$. Use the table to determine each leaf's
+exact subset of $S$. Accept just when every nonempty subset has a
+constant full row and its path pair lies in $\mathcal B$.
+A passing skeleton physically realizes that table with the installed
+row at every reachable halt, so it is a lawful comparator on $S$.
+
+For completeness take any allowed comparator on $S$, unroll it as in
+Convention 2.3, and at any vertex whose reply is constant on its current
+candidate subset supply that reply locally and remove the read. In
+particular every read outside (NFO.10) is removed. Keep the absolute
+epochs of surviving reads; combine intervening updates into their actual
+forward differences and omit final unused updates. On every same source
+the output is unchanged and each cost weakly decreases. Every remaining
+read lies in (NFO.10), every nonempty halt subset has a constant full row,
+and downward closure preserves $\mathcal B$. Thus one enumerated tree
+passes. This proves all-comparator completeness of a failing table test.
+
+This is exactly the finite-support menu principle in NPL Lemma 7.2 and
+Theorem 8.1, applied to the explicitly relaxed comparison set $S$.
+It does not assert that $S=D$ or that sample membership is a runtime port.
+The physical calculations on candidate trees are offline mathematics;
+only the service's actual reads select its branch on its unknown source.
+Checking $u\in D$ computes its entire old row, every finite recorded
+iterate, both endpoint guards and every signed whole-tree comparison.
+No constraint is discarded. The empty sample is feasible vacuously and
+is never a negative certificate. $\square$
+

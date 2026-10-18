@@ -1,0 +1,22 @@
+**Convention 2.4 (full class, actual-label and capacity hypothesis).** FA69–72 and corrected RC67/75 supply reduction on each existing supported-nonzero actual low label, double rank rigidity, capacity necessity, endpoint value reduction and the common constructor interface. The competitor class is the original full complex, arbitrary multi-Kraus finite/countable class and only its explicitly stipulated measurable extension: measurable finite-dimensional fibres and Kraus fields, integrable effects and live Choi fields, and full-output TP decoders almost everywhere. No unrestricted disintegration or infinite-dimensional extension is assumed.
+
+Specifically each such actual low label has a real direction $h=(1,z,w)$ with $\alpha z^2+\beta w^2=1$, weight $p>0$, live product $\sqrt p(s_0D+zT+wS)$ and attached failure $pb_hn_hn_h^T$, where
+
+$$
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad\ell(h)=h^TGh,\quad f(h)=n_h^T\Delta n_h,\quad
+c(h)=\frac{\delta h_1^2h_2^2+a^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}{\delta h_0^2+b^2z^2+d^2w^2}>0.
+\tag{2}
+$$
+
+Here $0\le b_h\le tc(h)$ and, for that same joint law,
+
+$$
+\sum p hh^T=I_3,\quad\sum p b_hn_hn_h^T=M,\quad\sum p|z|\ge s/s_0,\quad
+2T_{\rm actual}=H_{\rm high}+\sum p|\ell(h)+b_hf(h)|.
+\tag{3}
+$$
+
+The contrast available from a law bounds its actual contrast above. Distinct supported live directions cannot share one existing low label by exposing a hidden Kraus index. Every supported-nonzero low fibre is exactly two dimensional; its supported encoder and live decoder have CP Kraus rank one, with an onto encoder and injective live decoder. Finite whole-fibre activity gives survivor effect at least $e^{-A}I$, excluding a nonzero supported encoder with zero live composition. Supported-zero full-$M_5$ encoders remain legal, count if generated and obey their whole-fibre activity bound; they contribute zero to (3). Positive compulsory high mass requires another actual label. These statements retain their full complex/multi-Kraus and stipulated measurable scopes.
+
+FA78 supplies only the additional feasibility interface used here: with $V=m_2h_1^2/b^2$, $W=m_1h_2^2/d^2$, $\mu=\alpha V+\beta W$, $r_f=V/\mu$, $c_f=c(1,\sqrt{r_f},\sqrt{(1-\alpha r_f)/\beta})$, $\nu=\mu/c_f$, $t_0=W/c_f$ and $q=\nu/t$, the weak maximum strength is $s_0[q\sqrt{r_f}+\sqrt{(1-q)(1-qr_f)}]$ for $t\ge t_0$. The bounds in Appendix A give $t_0<265$ and this strength $>0.12520565$ throughout the budget interval. No boundary classification or global count theorem is needed for Theorem 1.1.
+

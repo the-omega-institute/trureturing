@@ -1,0 +1,118 @@
+## 11. The exact remaining common-world obligation and boundary scope
+
+For the same fixed $\mathbf c=(0,24,48,312/5,y,\zeta)$ and common
+$d$, choose three pairwise distinct sources and impose
+
+$$
+\begin{gathered}
+P_i=\begin{pmatrix}s_i&p_i\\q_i&1-s_i\end{pmatrix},\quad
+0<s_i<1,\quad p_i,q_i>0,\quad p_iq_i=s_i(1-s_i),\\
+\mathcal C(P_i;\mathbf c)=0,\quad d_{P_i}=d,\quad
+f_{P_i}(6)=0,\quad f_{P_i}(7)\ne0,\qquad i=1,2,3,\\
+X_i=f_{P_i}(7)QP_i,\qquad
+\Pi(A)=\Pi(B)=\Pi(C)=\Pi(D)=0.
+\end{gathered}
+\tag{11.1}
+$$
+
+The gains in these equations are the same reconstructed polynomials
+(2.7); both actual late equations remain in compatibility.
+For clarity, their unreduced common-world form is, for every $i$,
+
+$$
+\begin{aligned}
+f_i(0)+d&=0,\\
+(p_i+q_i)f_i(1)+d&=24,\\
+(1+p_i)f_i(2)+d&=48,\\
+(1+2p_i+q_i)f_i(3)+d&=312/5,\\
+(1+s_i+p_i+q_i)f_i(4)+d&=y,\\
+(2-s_i+3p_i+q_i)f_i(5)+d&=\zeta.
+\end{aligned}
+\tag{11.2}
+$$
+
+There is no separate selection of $y,\zeta$, gains or drifts for
+individual worlds or terminal words.
+
+By (2.10) and (10.4), solutions of (11.1) correspond bijectively to
+ordered distinct legal triples with $L_2(K,H)$ through
+$W_i=(P_i,\lambda f_{P_i},D_0+\lambda d)$.
+For necessity, project a legal triple onto its three distinct sources,
+apply the exact IX graph and then (10.4).
+For sufficiency, legality and compatibility give all six equations,
+a nonzero interpolated gain and the prescribed drift; the two future
+sample conditions give membership in (1.7), and the four products
+give the actual recursive witnesses. Projection and reconstruction
+are inverse. This proves the equivalence without replacing joint
+realizability by pairwise compatibility.
+
+The results above require any solution to have $d\notin[48,312/5]$
+and exactly one canonical assignment from (8.1), with common nonzero
+terminal sign. At $d=24$ the repeated-$BD$ assignment is excluded
+as well, leaving only repeated $BC$ or $CD$.
+At $H_*$ every member also avoids $d=0$ and $[48/5,24]$.
+These necessary restrictions do not make any remaining assignment
+sufficient or exhibit a legal solution.
+
+The inherited repeated-sixth theorem has its exact limited role.
+[G, Theorem 2.1](FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md)
+gives at most one world with $f(6)=f'(6)=0$ per fixed full ancestor
+and $d$. Such a gain is exactly cubic, has exactly a double sixth
+root and one simple root $\rho_0$, has positive normalized leading
+coefficient and $f(7)>0$, and requires one of
+
+$$
+\begin{array}{c|c}
+d<0&-3<\rho_0<0\\
+0<d<24&0<\rho_0<1\\
+48<d<312/5&2<\rho_0<3.
+\end{array}
+\tag{11.3}
+$$
+
+These are necessary ranges, not existence statements.
+Quadratic double-sixth and triple-sixth gains are excluded by that
+baseline theorem. Corollary 10.1 excludes TT throughout the last
+range, including all-simple triples there; it does not exclude the
+individual repeated-root worlds. A TT triple containing a
+repeated-sixth member has common positive normalized seventh sign
+and at most one such member. A negative-sign triple has only simple
+sixth roots. The large baseline coefficient and Bernstein certificates
+are reused only through their stated theorem, not presented as new
+calculations.
+
+The new positivity theorem and both $H_*$ world exclusions hold
+throughout $\mathcal N_1$, without a seventh promise.
+In particular a finite nonnegative limit of zero-sixth $H_*$ worlds
+still cannot have $d=0$ or $d\in[48/5,24]$, even if its limiting
+$f(7)$ is zero: the six equations and $f(6)=0$ pass to the limit.
+The gain remains nonzero since the readings zero and 24 differ.
+The pair-map theorems, in contrast, are asserted on the legal
+strictly positive class with $f(7)\ne0$.
+The legal chart in Section 7 is not extended across arbitrary
+nonnegative sources. If $f(7)=0$, $h=f/f(7)$ is undefined and
+none of the normalized pair arguments is applied there.
+If two members coalesce, their identical copies are not distinct
+targets or a triple witness.
+
+For geometric context,
+[IX, Theorem 7.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md)
+gives the exact source-escape locus, in the normalized late coordinates,
+
+$$
+\zeta=12y-288/5,\qquad -1788/25<y\le-5268/155.
+\tag{11.4}
+$$
+
+IX, Theorems 8.1, 9.2 and 10.1 give a positive finite trace corridor
+for the fixed $H_*$ fiber and its compact complete-world closure
+obtained by adjoining six nonnegative source-boundary targets.
+The legal positive fiber itself is nonclosed and noncompact.
+These are fixed-history results, transported to each fixed affine
+copy, not arbitrary-$y,\zeta$ compactness.
+IX, Definition 11.1 retains possible incidence on diagonals and
+nonlegal boundary targets. Compactness alone neither produces nor
+excludes a distinct legal TT triple. It also does not settle the
+seventh-zero strata. None of these geometric statements is a premise
+of the new pair or positivity proofs.
+

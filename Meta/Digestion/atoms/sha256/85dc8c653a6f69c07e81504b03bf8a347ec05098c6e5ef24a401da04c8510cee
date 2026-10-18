@@ -1,0 +1,172 @@
+**Theorem 4.2 (Joint-weight optimum and branch classification).**
+For every $a,b,c>0$, the unique globally optimal distribution is
+
+$$
+\boxed{
+\omega^*=\frac{(F_*,1,F_*)}{1+2F_*},\qquad
+\gamma^*=\frac{t_*F_*}{1+2F_*},\qquad F_*=F(t_*).
+}
+\tag{4.8}
+$$
+
+If $\widehat t<d$, the gap is a simple reflection-even mode.
+If $\widehat t=d$, the reflection-even and reflection-odd modes
+meet, while an even rank-one real certificate still suffices.
+If $\widehat t>d$, the optimal gap has exactly those two active
+modes and admits a rank-two real certificate.
+
+Proof. Put $e_+=(e_1+e_3)/\sqrt2$ and
+$o=(e_1-e_3)/\sqrt2$. Define
+
+$$
+\begin{aligned}
+g&=\frac{e_0+\sqrt{2a}\,e_++\sqrt c\,e_{13}}{\sqrt T},\\
+h&=\frac{\sqrt2(a+c)e_0+\sqrt a(c-1)e_+
+-\sqrt{2c}(1+a)e_{13}}{\sqrt{TU}},\\
+k&=\sqrt{\frac{ac}U}e_0-\sqrt{\frac{2c}U}e_+
++\sqrt{\frac aU}e_{13},\\
+u&=\frac{\sqrt b\,g-\sqrt T\,e_2}{\sqrt Z}.
+\end{aligned}
+\tag{4.9}
+$$
+
+Then $(\psi,u,h,k,o)$ is orthonormal and
+$\psi=(\sqrt T\,g+\sqrt b\,e_2)/\sqrt Z$. Direct substitution
+in (4.2), with $A=K_1+K_3$ and $\Delta=K_1-K_3$, gives
+
+$$
+A|_{\psi^\perp}=\operatorname{diag}(0,q,2,d)
+\quad\text{in the order }(u,h,k,o),
+\tag{4.10}
+$$
+
+$$
+\Delta u=\Delta k=0,\qquad
+\Delta h=-\sqrt{dq}\,o,\qquad
+\Delta o=-\sqrt{dq}\,h,
+\tag{4.11}
+$$
+
+$$
+K_2=ww^{\mathsf T},\qquad
+w=\sqrt{C_0}\,u+\sqrt{C_1}\,h+\sqrt{C_2}\,k.
+\tag{4.12}
+$$
+
+Thus positive symmetric weights $(x,y,x)$ give the odd
+eigenvalue $dx$ and the even matrix
+
+$$
+M(x)=\operatorname{diag}(0,qx,2x)+y\,CC^{\mathsf T},
+\qquad C=(\sqrt{C_0},\sqrt{C_1},\sqrt{C_2})^{\mathsf T}.
+\tag{4.13}
+$$
+
+Its strictly increasing secular function has one root in each
+of $(0,qx)$, $(qx,2x)$ and $(2x,\infty)$, by the same pole
+argument as §4.2. In particular the lowest even eigenvalue is
+simple. Writing it as $xt$, its secular equation gives
+
+$$
+x=\frac{F(t)}{1+2F(t)},\qquad
+y=\frac1{1+2F(t)},\qquad
+\gamma(x)=x\min\{t,d\}.
+\tag{4.14}
+$$
+
+The interval $0<t<t_0$ parameterizes all $0<x<1/2$.
+The even branch $tF(t)/(1+2F(t))$ has derivative with sign
+$F(t)-R(t)$, since its numerator is
+
+$$
+2F(t)^2-\frac{qC_1}{(q-t)^2}-\frac{2C_2}{(2-t)^2}
+=2(F(t)-R(t))(F(t)+R(t)).
+\tag{4.15}
+$$
+
+It increases until $\widehat t$ and decreases afterward.
+Where $t>d$, the odd branch is $dF(t)/(1+2F(t))$,
+strictly decreasing in $t$. Therefore the unique symmetric
+maximizer is $t_*=\min\{\widehat t,d\}$.
+
+For global certificates, use the even vector
+
+$$
+v=\frac{\sqrt{C_0}}{t_*}u
+-\frac{\sqrt{C_1}}{q-t_*}h
+-\frac{\sqrt{C_2}}{2-t_*}k,\qquad
+L=v^{\mathsf T}v,\qquad \bar v=v/\sqrt L.
+\tag{4.16}
+$$
+
+It satisfies $H_{\omega^*}v=\gamma^*v$.
+Its normalized endpoint and center energies are
+
+$$
+E=\bar v^{\mathsf T}K_1\bar v
+=\bar v^{\mathsf T}K_3\bar v=\frac{R(t_*)^2}L,\qquad
+G=\bar v^{\mathsf T}K_2\bar v=\frac{F_*^2}L.
+\tag{4.17}
+$$
+
+If $t_*=\widehat t$, then $E=G=\gamma^*$ and
+$Y_*=\bar v\bar v^{\mathsf T}$ supplies the common Rayleigh
+upper bound for all distributions as in (3.20).
+
+If $t_*=d<\widehat t$, then $G>E$. The odd vector has
+site energies $(d/2,0,d/2)$. Define
+
+$$
+\eta=\frac d{d+2(G-E)}\in(0,1),\qquad
+Y_*=\eta\bar v\bar v^{\mathsf T}+(1-\eta)oo^{\mathsf T}.
+\tag{4.18}
+$$
+
+This is positive semidefinite, has trace one, and annihilates
+$\psi$. The eigenvector identity gives
+$\gamma^*=2xE+yG=dx$ and $x/y=F_*$, hence
+$G=F_*(d-2E)$ and
+
+$$
+\eta G=\frac{dF_*}{1+2F_*}=\gamma^*,\qquad
+\operatorname{Tr}(Y_*K_i)=\gamma^*\quad(i=1,2,3).
+\tag{4.19}
+$$
+
+For every distribution, its smallest eigenvalue is at most the
+trace against this same trace-one certificate. Thus
+$\gamma(\omega)\le\operatorname{Tr}(Y_*H_\omega)=\gamma^*$.
+The candidate attains the bound by the even and odd spectra.
+
+For uniqueness, an optimal distribution makes
+$H_\omega-\gamma^*(I-\psi\psi^{\mathsf T})$ positive
+semidefinite. Its zero trace against $Y_*$ forces
+$H_\omega v=\gamma^*v$; the coefficient of the even vector in
+the certificate is positive in both cases. Write
+$x=(\omega_1+\omega_3)/2$ and
+$\delta=(\omega_1-\omega_3)/2$. Its odd component is
+$-\delta\sqrt{dq}\,v_h o$. Since
+$v_h=-\sqrt{C_1}/(q-t_*)\ne0$, $\delta=0$.
+The $u$ coordinate fixes
+$(1-2x)F_*=\gamma^*/t_*$, and therefore fixes the candidate
+weights. Every zero-weight boundary disconnects the positive
+legal graph, so its gap is zero. $\square$
+
+The crossing branch can be selected without solving an eigenvalue
+problem. It occurs precisely when
+
+$$
+d<q,\qquad F(d)>0,\qquad F(d)>R(d).
+\tag{4.20}
+$$
+
+Equality in the last comparison is the meeting surface.
+If $d\ge q$, or $F(d)\le0$ when $d<q$, the crossing branch
+is absent. For rational parameters all comparisons in (4.20)
+are rational after squaring the last one under $F(d)>0$.
+
+The general spectral certificate mechanism retains the ownership
+documented in [DG3]. The result here concerns the explicit
+three-parameter projectors (4.2), their two sectors, selected
+root and all-weight equality conditions.
+

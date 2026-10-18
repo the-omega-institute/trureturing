@@ -1,0 +1,38 @@
+**Corollary 5.2 (A strictly narrower unrestricted interval).** For the
+original complex scalar-port problem,
+
+$$
+\boxed{\frac{5197}{10000}\le\varepsilon_1\le\xi},\qquad
+\xi-\frac{5197}{10000}=0.00901214445486778799\ldots .
+\tag{5.5}
+$$
+
+The necessary endpoint strictly exceeds the credited QPC lower
+$L=1-((5556+423r)/13414+63/125)/2$.
+The sufficient endpoint strictly improves the QFA construction's displayed
+error
+
+$$
+a_\star=\frac{17r+3+\sqrt{10458+198r}}{80r},\qquad
+\xi<\frac{529}{1000}<\frac{27}{50}<a_\star.
+\tag{5.6}
+$$
+
+Proof. Apply Theorem 2.5 to all competitors and Theorems 3.2 and 5.1
+to the exhibited port. For the lower comparison,
+$m=(5556+423r)/13414>1/2$ since $r>4$; hence
+$L<249/500<5197/10000$.
+For the upper comparison, direct algebra makes $a_\star$ the positive
+root of
+
+$$
+z^2-\frac{289+3r}{680}z-\frac{173+3r}{3400}.
+\tag{5.7}
+$$
+
+Its constant term is negative and its value at $27/50$ is
+$(1907-555r)/170000<0$. Therefore its unique positive root exceeds
+$27/50$. This verifies the comparison using QFA's exact algebraic
+endpoint; the new upper's feasibility and all-event certificate have
+been established independently in §§3–5. $\square$
+

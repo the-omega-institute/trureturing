@@ -1,0 +1,13 @@
+**Definition 253.1 (The changed-cell oscillation).** For a full
+score $y$, put
+
+$$
+H_{ij}^y(r)=\sum_{w:w_i=w_j=0}g_y(w,r),\qquad
+\omega_y=\max_{i<j}\left(\max_{r\in J_L}H_{ij}^y(r)
+                              -\min_{r\in J_L}H_{ij}^y(r)\right).
+\tag{253.1}
+$$
+
+Then $0\le\omega_y\le K_y$. It sums the actual changed $00$
+cell before taking its oscillation; all terminal labels are included.
+

@@ -1,0 +1,25 @@
+### 2.6. Existence of one law and the visible-memory consequence
+
+All conclusions so far hold for every $\lambda$ in the single set
+$\Lambda_\star$. The only exceptional sets removed were the
+component-fiber condition, those indexed by countably many coordinates
+and exterior cylinders, the one event $E$, and the one density equality.
+After (2.8), all exterior-event, word,
+length, translation and finite-extension conclusions followed for each
+fixed component without further exceptional-set choices.
+
+Since $W$ is a probability measure and $W(\Lambda_\star)=1$,
+$\Lambda_\star$ is nonempty. Choose any one member and take its actual
+law $R_\lambda$; every marginal and certificate above then belongs to
+that single normalized two-sided stationary ergodic process.
+
+If this law had finite visible order $m\ge1$, it would satisfy every
+hypothesis of [Finite Memory, Definition 1.4 and Theorem 1.5][Finite Memory]:
+normalization, two-sided stationarity, positive legal cylinders, actual
+finite-history transition rows, positive legal next-extensions and
+forced zero after one. The supplier would give $d(R_\lambda)<c_\star$,
+contradicting (2.4). Order zero is excluded too: a stationary order-zero
+law is iid, and positive one-bit probability for $1$ would give positive
+probability for the forbidden cylinder $11$. Thus no finite visible
+order is possible. $\square$
+

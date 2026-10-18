@@ -1,0 +1,28 @@
+**定义 39.1（初始化的单个保留电池菜单）。** 本节只用一份 $S=\mathbb C^5$ 和
+一个非简并 $B_J$，$J$ 为非负整数，初态严格为 $P_{0,B}$。
+噪声为 $\Phi\otimes\operatorname{id}_B\otimes\operatorname{id}_R$；
+$R$ 仍为任意有限、平凡电荷、始终不受触碰的复参考。
+恰有 $r$ 次噪声及 $r-1$ 个与 $H=N+N_B$ 对易的中间复酉。
+控制可以不同，且可按指定的终止长度选择。
+没有初始或末端控制，没有电池重置、替换、丢弃、测量或其他辅助系统。
+对输入 $X_{SR}$，记第 $j$ 次噪声后的联合输出为 $\Gamma_j(X_{SR})$，
+系统参考输出为 $T_j(X_{SR})=\operatorname{Tr}_B\Gamma_j(X_{SR})$。
+
+终端目标要求 $T_r=\Phi\otimes\operatorname{id}_R$ 对每个复输入成立；
+前缀目标要求同一控制列对每个 $1\le j\le r$ 都有此等式。
+联合记忆目标在授予的输入码
+$C_{\mathrm{in}}=\operatorname{span}\{e_0,e_2\}$ 上要求完整 $M_2$ 等距保留到 $S B$：
+存在等距 $V_r:\mathbb C^2\to S B$，使
+
+$$
+\Gamma_r[(V_{\mathrm{in}}\otimes I_R)Z(V_{\mathrm{in}}^\dagger\otimes I_R)]
+ =(V_r\otimes I_R)Z(V_r^\dagger\otimes I_R)
+\tag{39.1}
+$$
+
+对全部 $Z\in M_2\otimes\mathcal B(\mathcal H_R)$ 成立，其中
+$V_{\mathrm{in}}|0\rangle=e_0$、$V_{\mathrm{in}}|1\rangle=e_2$。
+它不要求逻辑信息留在 $S$，也不含免费的最终解码。
+三种最小 $J$ 分别记为 $J_T(r),J_P(r),J_M(r)$。
+容量只指初始化梯的电荷范围，不指能量、功或实现噪声的浴成本。
+

@@ -1,0 +1,31 @@
+**命题 48.3（尾记录相同的实际异号对）。** 在三维中取正向正交单位基 $\mathbf e_1,\mathbf e_2,\mathbf e_3$，令 $L=2,H=1,d_0=1/1024$，故 $\kappa=1/128$。两个实际来源
+
+$$
+(t,p)=\bigl(\alpha,(\mathbf e_1/32,\mathbf e_2)\bigr),\qquad
+(t',p')=\bigl(\langle\alpha,\langle\alpha,\beta\rangle\rangle,
+(\mathbf e_3/8,2\mathbf e_1)\bigr)
+$$
+
+均属于主域，且其字面连续历史为
+
+$$
+\begin{aligned}
+(x_0,x_1,x_2,x_3)
+&=(\mathbf e_1/32,\mathbf e_2,-\mathbf e_3/32,\mathbf e_1/32),\\
+(x'_0,x'_1,x'_2,x'_3)
+&=(-\mathbf e_1/32,\mathbf e_2,-\mathbf e_3/32,-\mathbf e_1/32).
+\end{aligned}
+$$
+
+所以 $w=w'=\mathbf e_1/32$，$e_1=e_2=0$，初始读数差 $e_0=|x_0-x'_0|=1/16$，目标差 $|x_3-x'_3|=1/16$。这两个差在该实例中数值相等；$e_0$ 始终按定义48.1指初始读数差，不以目标差定义。定理48.2的方向界在此取等号；对这组固定参数，任一在全主域成立的界 $|x_3-x'_3|\le A_0e_0+B_0|w-w'|$ 必须有 $A_0\ge1$，不由此确定 $C_{\rm dir}$ 的最优性。
+
+证明。第一叶对有 $\Delta=1/1024$，第二叶对有 $\Delta'=1/16$；全部叶范数不超过2，所列前三向量范数不超过1。第二来源的原括号求值为 $a\times(a\times b)$，按定理3.1依次在
+
+$$
+F^jp'=(\mathbf e_3/8,2\mathbf e_1),\ (2\mathbf e_1,-\mathbf e_2/4),\
+(-\mathbf e_2/4,\mathbf e_3/2),\ (\mathbf e_3/2,\mathbf e_1/8)
+\quad(0\le j\le3)
+$$
+
+求值，得到所列四向量；第一来源是叶，直接求原连续替换得所列结果。两尾叉积和目标差随即成立；代入 $w-w'=0$ 给 $A_0\ge1$。这是原来源的投影灵敏度见证，不是环境三元组、噪声报告或付费控制的反例。
+

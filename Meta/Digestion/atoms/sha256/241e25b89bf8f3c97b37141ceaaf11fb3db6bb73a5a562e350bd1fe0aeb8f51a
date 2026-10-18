@@ -1,0 +1,44 @@
+**Proposition 4.2 (timed noisy height certificate).** Under (SC.3) and
+(SC.8), define
+
+$$
+\begin{aligned}
+\delta&=d_k+L\tau,&
+\Delta&=\min(Lh/2,Wh/4)+\delta,\\
+E&=Wh/2+2n\delta,&
+M&=LT+2nd_k,\\
+B&=E/\eta+M\Delta/\eta^2,& h_*&=h+2\tau.
+\end{aligned}
+\tag{SC.11}
+$$
+
+Then both heights lie in the same positive band and
+
+$$
+\|k-\widetilde k\|_\infty\leq\Delta,\qquad
+\|k'-\widetilde k'\|_{L^1}\leq E,\qquad
+\operatorname{TV}(\widetilde k)\leq M.
+\tag{SC.12}
+$$
+
+Proof. Before clipping, every nominal nodal error is at most
+$d_k+L\tau$. Projection to the known interval is nonexpansive relative to
+a true height in that interval. The endpoint replacement is exact at both
+actual and nominal endpoints. Thus the interpolated nodal errors have
+supremum at most $\delta$. Their derivative has $L^1$ norm
+$\sum_j|e_{j+1}-e_j|\leq2n\delta$. Add Lemma 4.1 to get the first two
+claims. For the variation use ordered actual times, not nominal times:
+
+$$
+\sum_j|y_{j+1}-y_j|
+\leq\sum_j|k(s_{j+1})-k(s_j)|+2nd_k\leq LT+2nd_k.
+$$
+
+Linear interpolation stays in the convex band and has exactly this nodal
+variation. $\square$
+
+Timing affects the derivative estimate through $2nL\tau$. Only the
+phase-area calculation below is invariant under changing individual cell
+durations. The exact-time loss measure is not reparameterized; its error is
+compared on the nominal physical clock using (SC.12).
+

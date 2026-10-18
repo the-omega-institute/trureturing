@@ -1,0 +1,21 @@
+**Convention 10.3 (exact formal-interface boundaries).** The declaration
+[`FiniteNaturalJoin.join_covers`][Join] requires both `Covers` premises
+for the same full assignment. It preserves that assignment through a
+finite join; it supplies no automatic global realization or all-size
+mass estimate. Theorems 3.2 and 7.2 prove their own unique actual lifts.
+
+[`NativeDepthPatterns.original_present_transport`][Depth] assumes
+`subtree a u = some t`; (GDB.45) uses precisely that actual presence.
+`original_prefix_locality` requires equality of all original replies
+through the requested word length. These declarations give no free
+boundary table or subtree input.
+
+[`NativeFiniteRootMinimax.finite_root_minimax`][Minimax] and its
+[Blueprint][MinimaxB] concern a finite attained three-reply chart and
+complete predecessor-row recovery. [`NativeEffectiveRootCriterion`][Criterion]
+and its [Blueprint][CriterionB] require a prefix-free cut, a complete
+row with nonempty `OriginFiber`, $r\ge1$, a returned package and
+compatible acquired image values; the reader runs on the substituted
+source. That target and handoff differ from (GDB.1)–(GDB.2). No native
+all-length cap verifier is inferred from those finite decisions.
+

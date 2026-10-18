@@ -1,0 +1,10 @@
+**Definition 1.2 (Complete identity-target SIC time archive).** Let $F_k^{\mathcal F}$ be exactly the product-qubit-SIC functional in Definition 2.3 of [the SIC Pauli-weight volume][SIC], with its normalization and identity target. A frame $\mathcal F$ consists of one qubit SIC on each labeled factor. Define
+
+$$
+\mathcal H(s)=
+\left(F_k^{\mathcal F}(\Lambda_s^m)
+:m\in\mathbb Z_{\ge0},\ 0\le k\le n,\ \mathcal F\text{ a product qubit SIC frame}\right).
+$$
+
+The archive grants these exact aggregated values as mathematical data. It grants neither the individual transition records $\operatorname{Tr}(\rho_b\Lambda_s^m(\rho_a))$, other target operations, nor SIC frames on the full system that fail to be products of qubit SICs. No finite acquisition cost for this infinite archive is assumed. Write $Q_w(m;s)$ for the Pauli-weight coordinates of $\Lambda_s^m$ in Convention 2.1 of [SIC]. Products over empty sets and zeroth powers, including $0^0$ in coefficient formulas, have value one.
+

@@ -1,0 +1,63 @@
+**Convention 1.1 (source premises).** This volume concerns the same
+complete-output experiment as [CG, §§13–17][CG], [JR, §§41–57][JR],
+[FA, §§67–79, 87–92][FA] and [RC, §§58–73][RC]. The source is the
+positive-pivot algebraic source specified by CG.112–.117 and CG.134.
+Its root existence, isolation, Jacobian certificate, exact ranks,
+root trace-preservation identity, minimax identification and the
+sharp acquired-cost equality characterization are inherited premises,
+`ASSUMED-UNVERIFIED`. All theorems below are ordinary conditional
+mathematics under these premises. Inequalities on a surrounding
+coefficient box do not assert trace preservation away from the root.
+No Lean/kernel or physical implementation certification is asserted.
+
+Let the five physical modes be indexed by $0,1,2,3,13$, and set
+
+$$
+E=((e_0+e_{13})/\sqrt2,(e_1+e_3)/\sqrt2,e_2),\qquad P=EE^\dagger.
+\tag{AC.1}
+$$
+
+The sole unknown normalized reached-cut specimen is one of
+$E\rho_{y,e,n}E^\dagger$, where
+
+$$
+\begin{gathered}
+y\in\{5,16,27\},\quad e,n\in\{\pm1\},\qquad
+p_y=(y/128,(64-y)/128,1/2),\\
+a_y=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,\quad
+U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger.
+\end{gathered}
+\tag{AC.2}
+$$
+
+For $d_y=(y/128,y(58-y)/(128(y+6)),y/(2(y+6)))$ and
+$\xi_y=(\sqrt{d_{yi}})_i$, the ideal live block is
+$EU_{e,n}\xi_y\xi_y^TU_{e,n}^\dagger E^\dagger$.
+The five separately labelled ideal failure measures have labels
+$\ell\in\{0,1,2,3,13\}$, weights
+
+$$
+(w_0,w_1,w_2,w_3,w_{13})=(0,1/4,1/2,1/4,0),\qquad
+f_y(u)=\frac{6y}{(y+6u)^2},\quad 0\le u\le1,
+\tag{AC.3}
+$$
+
+and densities $w_\ell f_y(u)P_f$. Here $P_f$ is the absorbing
+failure state; elapsed time $u$ means absolute time $6+u$.
+The error is HALF the complete stopped classical-quantum norm,
+maximized over all twelve histories. It counts live coherences,
+all five Borel measures, singular-time components, aborts, wrong
+supports and zero-target sectors.
+
+An actual acquisition is a common complex CP instrument
+$\{\mathcal E_j\}$ on $M_5$ with total encoder effect $I_5$.
+The retained label is actually generated. Its conditional decoder
+is TP on its whole quantum fibre. That fibre jointly counts every
+subsequently accessible input-bearing specimen, memory, controller,
+environment and entanglement share. Inaccessible Kraus indices are
+not actual labels. There is no prior, helper specimen, readable
+history, copy, reset, retry, postselection, acceptance division or
+uncounted quantum bypass. Arbitrary complex encoders and arbitrary
+hidden Kraus multiplicity remain in the comparison class.
+

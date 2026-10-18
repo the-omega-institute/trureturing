@@ -1,0 +1,95 @@
+**Theorem 63.3 (full completion and the individual twelve-history laws).**
+The finite constructions of this continuation extend to a lawful common
+all-complex five-mode CPTP map with a coherent, counted complementary
+qubit. Their supported complete output is the original approximate
+channel, with error $E_*$; it is not the ideal target itself.
+
+Proof. Put $P=EE^\dagger$, $Q_5=I_5-P$, and choose fixed
+isometries $W:\mathbb C^2\to V^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. Precompose each supported
+encoder with $E^\dagger$. Add one dimension-two encoder
+$A\mapsto W^\dagger AW$ with pure live decoder by $EJ_0$,
+and a generated fair report. Its full complementary qubit is retained
+coherently. The forgotten complete channel is explicitly
+
+$$
+\begin{aligned}
+\Phi_{\rm new}^L(A)&=E[\Lambda_*(E^\dagger AE)+
+ J_0W^\dagger AWJ_0^\dagger]E^\dagger,\\
+\Phi_{{\rm new},\ell}^f(\mathcal B)(A)&=
+w_\ell\left(\int_{\mathcal B}g(t)dt\right)
+ \operatorname{tr}(ME^\dagger AE)P_f.
+\end{aligned}
+\tag{JRH.40}
+$$
+
+These are CP compressions/Kraus maps and positive trace functionals.
+Their total effect is $P+Q_5=I_5$. They kill cross-support blocks
+and preserve arbitrary complex operators within the complement through
+an isometry. The terminal live effect is
+$E(I_3-M)E^\dagger+Q_5\succ0$. The complementary branch has
+zero probability on every original history, but is still a real,
+counted dimension-two branch with a TP decoder on its entire domain.
+It is neither reset nor an uncounted bypass.
+
+JRH.40 agrees with CG.135 on every supported complex matrix unit.
+JRH.32 gives its exact passive-reference failure factors, with the
+corresponding Kraus conjugations for live output. Integrating the
+explicit density proves every Borel identity, including the absence
+of singular mass and separate zero labels $0,13$. Common fixed metadata
+are preserved. Thus the twelve original HALF complete-cq errors are
+exactly those of the credited channel, including height $16$.
+Only the high fibres in the specified supported constructions count
+dimension at least three; any extra accessible correlated share would
+change this cost statement.
+
+For explicit individual probabilities write $\psi=U_{e,n}a_y$ and
+for real $K=xD+zT+wS$ define
+
+$$
+\begin{aligned}
+\mathsf p_K(y,e,n)=\|K\psi\|^2
+={}&x^2A_y+z^2B_y+w^2C_y
+ +2xz\kappa en\sqrt{p_{y0}p_{y1}}\\
+&+2xw(h_0c+h_2d)e\sqrt{p_{y0}p_{y2}}
+ +2zwacn\sqrt{p_{y1}p_{y2}}.
+\end{aligned}
+\tag{JRH.41}
+$$
+
+A pair $(K,N)$ in JRH.30 has unnormalized encoder mass
+$\mathsf p_K+\langle\psi,N\psi\rangle$; a generated report coin
+multiplies it by its stated conditional probability, without dividing
+by any live or acceptance mass. In Theorem 63.1 these masses are
+
+$$
+\begin{aligned}
+p(H,\sigma)&=P_y(s)/2+
+ \sigma\sqrt{(1-u)(1-v)}\kappa en\sqrt{p_{y0}p_{y1}},\\
+p(L,\sigma,\tau)&=\mathsf p_{L_{\sigma\tau}}+
+ \tfrac14(n\sqrt{\widetilde m_1p_{y1}}-
+ \sigma\tau\sqrt{\widetilde m_2p_{y2}})^2,\\
+p(f,j,r)&=(m_j-\widetilde m_j)p_{yj}/2,\qquad
+p(\perp,r)=0,\\
+\Pr(r=+)&=\tfrac12+\kappa s\,en\sqrt{y(64-y)}/128.
+\end{aligned}
+\tag{JRH.42}
+$$
+
+In Theorem 63.2 the pre-coin masses are $kA_y$,
+$\mathsf p_{A_\sigma}+m_2/4$,
+$\mathsf p_{B_\tau}+m_1(64-y)/256$ and
+$\mathsf p_{C_{\sigma\tau}}$, with exactly the coins in its proof.
+These formulas specify every $y,e,n$, and high probability is $kA_y$.
+Zero-probability coin refinements are omitted.
+
+The distinction from CA.10 is essential. If instead that full completion
+were fixed, every nonzero complementary input would have zero live
+probability. For an arbitrary TP acquisition with $L_\alpha\succ0$
+on all entire fibres, its nonzero acquired mass would have strictly
+positive total live probability $\sum_\alpha
+\operatorname{tr}(L_\alpha\mathcal E_\alpha(\rho))$. This is a
+contradiction. Thus the separately fixed CA.10 problem has no such
+all-positive-decoder factorization for ANY $s$. The original JR class
+does not impose that completion. $\square$
+

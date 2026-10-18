@@ -1,0 +1,80 @@
+**Theorem 18.1 (Schur live maps cannot approach the credited optimum).**
+Call a common full-output map zero-transfer when its live compression
+satisfies $T_{ij}=0$ for every $i\ne j$ in the fixed basis $(+,-,2)$.
+For a CP trace-nonincreasing live map this condition is equivalent to
+having diagonal Kraus operators, and to
+$\Lambda(A)=C\odot A$ with $C\succeq0$, $0\leq C_{ii}\leq1$.
+There exists a constant $\epsilon_0>0$, depending only on this fixed
+twelve-history task, such that every zero-transfer common full-output
+map satisfies
+
+$$
+E(\Phi)\geq E_*+\epsilon_0.
+\tag{CG.167}
+$$
+
+This is an existential gap in the original half full cq norm. No
+numerical value of $\epsilon_0$ or solution of the restricted minimax
+is asserted.
+
+Proof. The Schur characterization is a mature finite-dimensional fact;
+its trace-nonincreasing version is Theorem 2 in de Vicente and Streltsov,
+[*The power of the resource theory of genuine quantum coherence*,
+arXiv:1604.08031v2](https://arxiv.org/html/1604.08031v2), §II.2.
+For clarity, its exact zero-transfer hypothesis here can be checked
+without imposing covariance. A finite Kraus family exists for any
+finite-dimensional CP map, and
+
+$$
+T_{ij}=\sum_a|(L_a)_{ij}|^2.
+\tag{CG.168}
+$$
+
+All terms are nonnegative. Zero off-diagonal $T_{ij}$ therefore makes
+every $L_a$ diagonal in every Kraus representation. Writing its diagonal
+as $l_a$ gives $C=\sum_a l_al_a^\dagger\succeq0$ and
+$\Lambda(A)=C\odot A$. Conversely a spectral factorization of $C$
+gives diagonal Kraus operators and no transfer. The effect is
+$\operatorname{diag}(C_{ii})$, so trace nonincrease is exactly
+$C_{ii}\leq1$. This standard characterization is an intermediate step;
+the task-specific conclusion is the strict gap (CG.167).
+
+Consider ALL finite-output candidates (CG.155), independently of whether
+they came from a full instrument. Their Choi/effect feasible set
+$\mathcal K$ is compact: it is closed in the real vector space of
+Hermitian triples, and its positive variables obey
+
+$$
+\operatorname{tr}J+\operatorname{tr}G_f+\operatorname{tr}G_o=3.
+\tag{CG.169}
+$$
+
+Thus each positive variable is bounded. Let $\mathcal K_0$ impose the
+closed conditions $J_{ij,ij}=0$ for all $i\ne j$. This subset is
+nonempty, for example $J=0,G_f=I,G_o=0$, and compact. The twelve
+finite-output errors are continuous functions of the triple, as is
+their maximum. Hence
+
+$$
+\mu_0=\min_{\mathcal K_0}E_c
+\quad\text{exists},\qquad \mu_0\geq E_*.
+\tag{CG.170}
+$$
+
+If $\mu_0=E_*$, a minimizing finite-output channel in $\mathcal K_0$
+would satisfy Theorem 17.2. Its transition diagonals are unchanged by
+sign averaging, yet (CG.165)–(CG.166), applied to that theorem's same
+blocks, give four strictly positive transfers. This contradicts its
+membership in $\mathcal K_0$. Therefore $\mu_0>E_*$; define
+$\epsilon_0=\mu_0-E_*$. This excludes equality for the relaxed finite
+output task itself, not by assuming that a marginal optimizer lifts to
+a full optimizer.
+
+For every original full-output zero-transfer $\Phi$, the reduction
+$\mathcal C\Phi$ belongs to $\mathcal K_0$ and retains its live map.
+Consequently
+$E(\Phi)\geq E_c(\mathcal C\Phi)\geq\mu_0$, which proves (CG.167).
+The finite test contracts the complete norm; it supplies a lower bound
+on the unchanged exact-time task, without identifying that norm with
+a survival marginal or discarding its singular/other outcomes. $\square$
+

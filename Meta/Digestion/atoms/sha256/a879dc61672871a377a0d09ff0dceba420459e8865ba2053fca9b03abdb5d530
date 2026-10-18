@@ -1,0 +1,110 @@
+**定理 19.1（整条正源曲线并三目标的精确逆与最少读数）。** Let
+
+$$
+\mathcal E=\mathcal C\cup\mathcal T,
+                                                                  \tag{19.1}
+$$
+
+with $\mathcal C$ the entire class (16.1) and $\mathcal T$ exactly the three fixed targets of (15.1). At $H_2$, the minimum remaining deterministic reading count on this known class is exactly two. One policy takes third $J$, immediately reads $\sigma$, takes fourth $M$, immediately reads $z$, and recovers the whole target by original clock four.
+
+More generally, for every selection $\theta_i\in\mathcal B_i$, $i=1,2,3$, the same minimum and an inverse of the same form hold for the known class
+
+$$
+\mathcal E_{\theta_1,\theta_2,\theta_3}
+=\mathcal C\cup\{W(\theta_1),W(\theta_2),W(\theta_3)\}.
+                                                                  \tag{19.2}
+$$
+
+The selected triples are part of the known class; they are not additional unknown continuously varying parameters promised only to lie in the boxes. All of these classes contain the entire infinite $\mathcal C$.
+
+Proof. For $R\in\mathscr R$ write
+
+$$
+R=\begin{pmatrix}A_0&B_0\\C_0&D_0'\end{pmatrix},\qquad
+C_0=1-B_0,\qquad D_0'=\frac85-A_0-B_0.
+                                                                  \tag{19.3}
+$$
+
+The two actual cumulative matrices are exactly (17.5), and $h(3)=24$, $h(4)=12$. Thus
+
+$$
+\sigma=24(1+A_0),\qquad z=12(8/5+B_0).
+                                                                  \tag{19.4}
+$$
+
+Both multipliers are nonzero known rational numbers. Consequently (17.2) reconstructs the entire $R$, and hence the entire target
+
+$$
+\left(\frac{\widehat R}{\operatorname{tr}\widehat R},
+(\operatorname{tr}\widehat R)h,\ 0\right).
+                                                                  \tag{19.5}
+$$
+
+In the conic coordinates this is equivalently
+
+$$
+a=\frac{\sigma}{24}-1,\qquad
+s=\frac{16}5-\frac z{12},\qquad W=W(a,s).
+                                                                  \tag{19.6}
+$$
+
+This proves injectivity of the two-read response on every member of $\mathcal C$, including every legal branch of the conic. For example the pairs $\mathcal A_y$ for all $y$ in the open windows (11.2) belong to $\mathcal C$, and different $y$ give different fourth-$J$ responses. Thus $\mathcal C$ is indeed infinite.
+
+Its exact joint response image can be expressed without a parametrization: a real pair $(\sigma,z)$ arises from $\mathcal C$ if and only if all four entries of $\widehat R(\sigma,z)$ are strictly positive and $\Delta(\sigma,z)=0$. For the reverse implication, these conditions give a positive rank-one matrix whose two trace constraints in (16.1) hold by (17.2); (19.4) then gives exactly the prescribed pair. Its trace is positive, so (19.5) is legal. The determinant condition has the explicit polynomial form
+
+$$
+5(\sigma-24)(504-5\sigma-10z)
+-4(5z-96)(156-5z)
+=14400\,\Delta(\sigma,z)=0.
+                                                                  \tag{19.7}
+$$
+
+This is a relation on the two responses of the same world. It retains strict source positivity, as required in addition to the polynomial equality.
+
+Theorem 17.2 now separates the entire joint image of $\mathcal C$ from each extra world's response pair, uniformly for every allowed point of each box. On the first box, $\Delta>1/1000$ contradicts (19.7). On the second and third boxes, respectively $\widehat C<-15/1000$ and $\widehat C<-36/100$ contradict strict positivity of the reconstructed source. The three $\sigma$ intervals in (17.3) are pairwise disjoint, so the three selected extra worlds also have different joint responses. These exclusions concern the entire specified parameter boxes and the entire conic class, not separate marginal comparisons or finitely many conic targets.
+
+For any fixed known selection in (19.2), denote its extra worlds' exact joint response pairs by
+$(\sigma_i,\zeta_i)=(\sigma(\theta_i),\zeta(\theta_i))$. A complete policy on every reachable history of this known class is therefore
+
+$$
+\operatorname{Decode}(\sigma,z)=
+\begin{cases}
+W(\theta_i),&
+(\sigma,z)=(\sigma_i,\zeta_i)\text{ for some }i,\\[2pt]
+\displaystyle
+\left(\frac{\widehat R(\sigma,z)}
+{\operatorname{tr}\widehat R(\sigma,z)},
+\bigl(\operatorname{tr}\widehat R(\sigma,z)\bigr)h,0\right),&
+\text{otherwise}.
+\end{cases}                                                       \tag{19.8}
+$$
+
+On reachable pairs the two cases are exclusive, the first index is unique, and the second case is guaranteed to have a legal positive rank-one reconstruction. Thus (19.8) is total on the known class. It may be extended arbitrarily on unreachable histories. The deterministic-policy model of Definition 1.1 requires no regularity or computability beyond dependence on the acquired history, so exact equality with these known response pairs is an allowed decision rule. For $\mathcal E$, the exact triples are those selected by the single inherited $x_*$ of Theorem 14.2, and (19.8) gives the asserted inverse without replacing them by decimal approximations.
+
+Only the actual third-$J$ and fourth-$M$ responses are acquired. The already acquired readings at clocks $0,1,2$ remain $0,24,48$, and the gain samples used by the inverse are those at original clocks three and four. No response along the unchosen third-$M$ continuation, no reset and no independent experiment is used. Early singleton stops may be added but are unnecessary for the two-read upper bound.
+
+To prove the matching lower bound, consider the two matrices
+
+$$
+R^{(1)}=
+\begin{pmatrix}2/5&3/5\\2/5&3/5\end{pmatrix},\qquad
+R^{(2)}=
+\begin{pmatrix}2/5&4/5\\1/5&2/5\end{pmatrix}.
+                                                                  \tag{19.9}
+$$
+
+Both have strictly positive entries, determinant zero, and satisfy $\operatorname{tr}(JR)=1$, $\operatorname{tr}(LR)=8/5$. They define distinct complete targets in $\mathcal C$ by injectivity in Definition 16.1; in particular their traces are $1$ and $4/5$. If the one chosen action at $H_2$ is third $M$, both read $312/5$, as does all of $\mathcal C$. If it is third $J$, both have $A_0=2/5$ and by (19.4) both read
+
+$$
+\sigma=24(1+2/5)=168/5.
+                                                                  \tag{19.10}
+$$
+
+A deterministic policy sees the same literal $H_2$ on these two worlds, so it must choose the same action or the same immediate stop there. Stopping cannot distinguish them, and either possible single read leaves this collision. One remaining read is therefore insufficient even on $\mathcal C$. This proves the exact minimum two for every class (19.2), including (19.1), and includes all deterministic early stops.
+
+In particular $\neg L_2(\mathcal E,H_2)$ and hence $\neg L_5(\mathcal E,H_2)$: after third $J$, every reachable response child is recovered by one fourth-$M$ read. Since $\mathcal K_6\subseteq\mathcal E$, closing the six-world support under all of $\mathcal C$ still does not realize the missing $JMJ$ alternative in (18.8). Membership in $\mathcal E$ is prior knowledge for this inverse. Neither $H_2$ nor the pair $(\sigma,z)$ certifies that membership for an unrestricted world in $\mathcal W_3$; the inverse therefore makes no claim of recovery on $\mathcal F(H_2)$.
+
+The mathematical dependencies are precisely the positive normalization (1.2), the entire conic class (16.1), the actual-word traces (17.5), and the whole-box joint exclusions (17.4). The exact three-world definition and its existence are reused from (13.1), (14.7) and (15.1); no new nine-variable existence assertion is needed. The known gain-space inverse of [III, Theorem 4.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md), the complementary-parent inverses of Theorems 5.2 and 6.1, and the unrestricted systems of [IV, Theorems 9.2–9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) retain their own domains. None is identified with the earlier actual history and promised class of this theorem.
+
+For the literature correspondence, the scaling orbit in Li–Lee–Bresler, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), explains why positive trace normalization removes source/gain scale while leaving drift in the target. It supplies no prescribed-word reading threshold here. Whole-set discrimination in van den Bos–Vaandrager, [Theorem 6.1](https://arxiv.org/html/1907.11034v2), has finite suspension-automaton and injective-split hypotheses; those hypotheses are not transferred to this continuous class. Likewise the generic-linear-map quantifier in Breiding–Gesmundo–Michałek–Vannieuwenhoven, *Algebraic compressed sensing*, [Answer 9](https://arxiv.org/html/2108.13208v2), does not apply to the fixed $M/J$ words and their gain-weighted original-clock observations. Vieta exchange, interpolation, trace normalization, interval inclusion and the failure recursion are the reused methods. The concrete companion, its common-history six-world consumer, and this entire-known-class inverse with its joint exclusions are repo-derived calculations; no external priority assertion is made. The unrestricted root question remains the one stated in Open Problem 8.2. ∎
+

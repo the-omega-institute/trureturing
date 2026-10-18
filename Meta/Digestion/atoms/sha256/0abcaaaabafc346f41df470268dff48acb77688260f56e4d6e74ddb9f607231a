@@ -1,0 +1,48 @@
+**definition 1.3 (Weights and a faithful pair decomposition).**
+Use the following notation throughout this volume:
+
+$$
+\begin{aligned}
+c&=(1-\eta)t,&u&=c/5,&s&=1-4\eta/5,\\
+w&=s/5=(5-4\eta)/25,&n&=\eta/25,&h&=w+n=(5-3\eta)/25,\\
+q&=2h,&r&=1-q=(15+6\eta)/25,&[x]_+&=\max\{x,0\}.
+\end{aligned}
+\tag{1.4}
+$$
+
+In particular,
+
+$$
+u=t(w-n),\quad 0\le u\le w,\quad w\ge n\ge0,\quad
+5w+20n=1,\quad 3/5\le r\le21/25.
+\tag{1.5}
+$$
+
+For either $d=(j,k)\in\{d_a,d_b\}$, a local bit means its prescribed
+original pair: Alice uses $|B_j\rangle,|B_k\rangle$, and Bob uses
+$|f(B_j)\rangle,|f(B_k)\rangle$. These are real local restrictions,
+not a change of cut. On this local pair product put
+
+$$
+\begin{aligned}
+A&=i(|00\rangle\langle11|-|11\rangle\langle00|),\\
+P&=|00\rangle\langle00|+|11\rangle\langle11|,\\
+Q&=|01\rangle\langle01|+|10\rangle\langle10|.
+\end{aligned}
+\tag{1.6}
+$$
+
+For the opposite labels on $d$, the actual full source is
+
+$$
+\rho_\pm=D\pm uA,\qquad D=wP+nQ+O.
+\tag{1.7}
+$$
+
+The positive real diagonal $O$ is supported outside the entire
+four-dimensional local pair product. It contains three other matching
+coordinates of weight $w$ and eighteen unmatched coordinates of weight
+$n$, so $\operatorname{tr}O=3w+18n=r$. The other two unmatched modes
+are precisely $Q$. Thus (1.7) keeps all 25 modes. In particular a local
+pair-product test accepts $P+Q$, with probability $q$, rather than $P$.
+

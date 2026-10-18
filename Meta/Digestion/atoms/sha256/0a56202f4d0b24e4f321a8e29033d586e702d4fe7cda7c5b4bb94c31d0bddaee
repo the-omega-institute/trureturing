@@ -1,0 +1,39 @@
+**定义 2.2（Every legal skew state）。** The class in this volume is exactly
+
+$$
+\mathfrak I=
+\left\{\Gamma(X)=J C(X)J^\dagger:
+ X\in M_5(\mathbb R),\quad X^T=-X,\quad
+ C(X)=\frac{I_5+iX}{5}\succeq0\right\}.
+\tag{2.1}
+$$
+
+In the inherited notation $C=I_5/5+iA$, one has $X=5A$.
+No sign pattern, sparsity condition, fixed rank or particular block family is
+imposed in (2.1). The skew condition gives zero diagonal, so every such $C$
+has trace one and diagonal $1/5$.
+
+Define
+
+$$
+\begin{aligned}
+s(X)&=\sum_{i<j}X_{ij}^2,&
+L(X)&=\sum_{i<j}|X_{ij}|,\\
+p(X)&=\operatorname{tr}(\Gamma(X)^2),&
+\mathcal N(X)&=\frac{\|\Gamma(X)^{\mathsf T_2}\|_1-1}{2}.
+\end{aligned}
+\tag{2.2}
+$$
+
+Here $\mathsf T_2$ transposes the original second five-dimensional factor:
+
+$$
+(|s,u\rangle\langle a,v|)^{\mathsf T_2}
+ =|s,v\rangle\langle a,u|.
+$$
+
+The trace norm is the sum of singular values. In particular $p$ is the purity
+of the whole $25$-dimensional source, not a marginal purity or a conditional
+four-mode purity. This negativity is not concurrence in a single source's
+bottom face, nor negativity across a later pair of independent source copies.
+

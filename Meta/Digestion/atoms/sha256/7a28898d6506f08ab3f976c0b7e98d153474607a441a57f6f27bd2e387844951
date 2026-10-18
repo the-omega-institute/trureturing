@@ -1,0 +1,32 @@
+**Proposition 5.1 (weight-optimized bounds).** Put
+
+$$
+b_{d,L}=\inf_{\mu\in\Delta(S_d)}\beta_{d,L}(\mu),\qquad
+\tau_{d,L}=-\log_2 b_{d,L},
+$$
+
+and define $b^{\mathrm{ker}}_{d,L,\varepsilon}$,
+$b^{\mathrm{fl}}_{d,L,\varepsilon}$, and $b^{\mathrm{def}}_{d,L,\varepsilon}$
+by taking the corresponding infima over $\mu$. Then
+
+$$
+\begin{aligned}
+0&\le -\log_2b_{d,L}+\log_2b^{\mathrm{ker}}_{d,L,\varepsilon}
+ \le\log_2(1+s_d\varepsilon),\\
+0&\le -\log_2b_{d,L}+\log_2b^{\mathrm{fl}}_{d,L,\varepsilon}
+ \le\log_2(1+s_dR_d\varepsilon),\\
+0&\le -\log_2b_{d,L}+\log_2b^{\mathrm{def}}_{d,L,\varepsilon}
+ \le\log_2(1+s_d\varepsilon),
+\end{aligned}
+\tag{SCP.19}
+$$
+
+on exactly the domains defined above. Here $s_d=|S_d|$, and the lower
+bound $b_{d,L}\ge1/s_d$ comes from a one-block constant network. For
+$L=\infty$, $\tau_{d,\infty}=\sigma_d$ by the credited NPC identity.
+
+**Proof.** The pointwise pressure bounds give
+$b\le b^\star\le b+c\varepsilon$. Divide by
+$b\ge1/s_d$ and take logarithms. No infimum is asserted to be attained
+for an auxiliary soft pressure. $\square$
+

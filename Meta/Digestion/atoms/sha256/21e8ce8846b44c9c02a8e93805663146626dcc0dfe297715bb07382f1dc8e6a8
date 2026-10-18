@@ -1,0 +1,53 @@
+#### 30.1　核心关系：箭头本身不携带跨域不变量
+
+令域标签为 $d\in\{s,t\}$，分别表示源域和目标域。固定有限上下文集 $Z$、二元处理 $a\in\{0,1\}$ 和二元结果 $Y\in\{0,1\}$。
+
+域 $d$ 的分层干预核为
+
+$$
+K_d^a(y\mid z)
+=
+\Pr_d(Y=y\mid \operatorname{do}(A=a),Z=z),
+$$
+
+域上下文分布为 $\mu_d\in\Delta(Z)$。总体干预效应定义为
+
+$$
+\theta_d
+=
+\sum_{z\in Z}\mu_d(z)
+\left[
+K_d^1(1\mid z)-K_d^0(1\mid z)
+\right].
+$$
+
+记分层响应差为
+
+$$
+\delta_d(z)=K_d^1(1\mid z)-K_d^0(1\mid z)\in[-1,1].
+$$
+
+于是
+
+$$
+\theta_d=\langle\mu_d,\delta_d\rangle.
+$$
+
+这条等式把「机制」与「上下文」拆开：
+
+- $\delta_d$ 描述在同一个分层内改变处理会怎样；
+- $\mu_d$ 描述目标域实际把多少质量放在各个分层；
+- $\theta_d$ 是两者的加权组合。
+
+$$
+\boxed{
+\text{机制不变}\ (\delta_t=\delta_s)
+\quad\not\Rightarrow\quad
+\text{总体效应不变}\ (\theta_t=\theta_s),
+}
+$$
+
+除非上下文权重也满足相应的积分相等式。
+
+<a id="section-30-2"></a>
+

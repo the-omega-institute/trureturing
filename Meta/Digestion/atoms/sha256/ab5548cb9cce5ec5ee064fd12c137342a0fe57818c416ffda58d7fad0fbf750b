@@ -1,0 +1,40 @@
+**Convention 2.2 (Absolute cocycle and nonsingular replacements).** Under $\mathsf B(P)$ and $A_P<\infty$, [Exterior, Theorem 3.1][E] supplies the cocycle (1.9), with its general stationary-law scope stated explicitly in [Guarded, Lemma 2.2][G]. For every finite interval $C$, almost every exterior has
+
+$$
+\begin{aligned}
+p_C(0^L;y)&\ge2^{-L},\\
+3^{-k(w)}p_C(0^L;y)&\le p_C(w;y)\le p_C(0^L;y)
+&&\text{for each compatible }w.
+\end{aligned}
+\tag{2.5}
+$$
+
+Incompatible words have mass zero. Zero replacement satisfies
+
+$$
+(Z_C)_*P\le2^LP,
+\tag{2.6}
+$$
+
+and every fixed total legal replacement $R_{C,w}$ is nonsingular: it replaces $C$ by $w$ on compatible exteriors and is the identity on incompatible ones. Here nonsingularity means that the inverse image of every $P$-null set is $P$-null.
+
+There is a shift-invariant Borel conull set $\Omega$, saturated under all finite legal modifications, on which (1.9) converges absolutely and is antisymmetric and additive. The supplied integrable majorant is
+
+$$
+V_C(x)=\sum_{i\in\mathbb Z}|\ell_i(x)-\ell_i(Z_Cx)|,
+\qquad
+\mathbb E_PV_C\le L+2(1+2^{L/2})A_P<\infty.
+\tag{2.7}
+$$
+
+It includes the zero-offset erasure terms at both seams. Any two fixed collections of original-law posterior versions agree on a common saturated conull domain. This is not a null set uniform over all conceivable version choices.
+
+Set $D_C(x)=\Delta_P(x,Z_Cx)$ on $\Omega$, extending it by zero on its null complement, and choose an exterior-measurable version of its conditional mean. The centered score notation of [Second-order, Convention 2.1 and Theorem 3.1][S] is
+
+$$
+m_C=\mathbb E_P[D_C\mid\mathcal H_C],\qquad a_C=D_C-m_C.
+\tag{2.8}
+$$
+
+The localization in §8 uses only the integrability in (2.7). The stronger $L^2$ estimate, centered-score interpretation and square-contrast framework of [Second-order, Theorem 3.1][S] keep their source attribution; no second-moment estimate for $D_C$ is needed for the direct bridge.
+

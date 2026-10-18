@@ -1,0 +1,31 @@
+**Proposition 4.6 (A fixed-marginal active-sector crossing).**
+At $X=9/16$ and $z=1/28$, three strictly positive laws in
+the same occupation fiber have the following exact data:
+
+| $\kappa$ | $(a,b,c)$ | $d$ | $F(d)$ | $R(d)^2$ | Active sector |
+| --- | --- | --- | --- | --- | --- |
+| $1/4$ | $(7/2,2/5,14/5)$ | $2/3$ | $5/6$ | $1/4$ | Strict crossing |
+| $9/32$ | $(7/3,8/27,7/3)$ | $4/5$ | $2/3$ | $4/9$ | Meeting surface |
+| $5/16$ | $(28/17,4/17,35/17)$ | $14/15$ | $10/63$ | $265/96$ | Even only |
+
+The conditional-independence point of this same fiber is
+$\kappa_0=21/64>5/16$.
+
+Proof. Reconstruct the parameters of each actual law by
+
+$$
+p_0=1-z-2X+\kappa,\qquad
+a=\frac{X-\kappa}{p_0},\quad
+b=\frac z{p_0},\quad c=\frac\kappa{p_0}.
+\tag{4.42}
+$$
+
+All five entries are positive. Substitution in
+(4.3)--(4.5) gives the displayed fractions, and (4.20)
+selects the three sectors. Equation (4.31) gives
+$\kappa_0=X^2/(1-z)=21/64$. Thus the active meeting surface
+can be crossed before the determinant changes sign.
+All spectral coefficients change with the actual law in
+(4.42); none is held fixed while only $\kappa$ is replaced.
+$\square$
+

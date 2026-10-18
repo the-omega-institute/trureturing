@@ -1,0 +1,14 @@
+**Corollary 73.1 (code-compression rank at most one cannot witness the threshold).** For each fixed $N_{\epsilon,Q}$ and each complex unit $\xi$, the same $R_\xi$ works simultaneously for every density $\rho$ supported on $\operatorname{span}\{\xi,|2\rangle\}$, with arbitrary complex coherences, weights and rank, and every purification. In particular
+
+$$
+F_e(\rho,R_\xi N_{\epsilon,Q})\geq1-b/2>
+\frac{55}{64}>T_{1/2}:=\frac{1+1/\sqrt2}{2}.
+\tag{S.146}
+$$
+
+For this actual family, no density with $\operatorname{rank}(P_{\mathcal C}\rho P_{\mathcal C})\leq1$ can be a fixed-input witness satisfying $\max_R F_e(\rho,RN_{\epsilon,Q})\leq T_{1/2}$, or admit a threshold dual of (S.121).
+
+Proof. A supported density is $V_\xi\sigma V_\xi^\dagger$ for a qubit density, including singular endpoints. Any purification lies on that plane tensored with its reference. Thus (S.141) bounds its recovered trace error by $b$. Combining with the binary lower inequality (S.121) gives (S.146); $55/64>T_{1/2}$ is equivalent to the middle comparison of (S.145).
+
+If a code vector $z$ is in the kernel of $P_{\mathcal C}\rho P_{\mathcal C}$, then $0=\langle z,\rho z\rangle=\|\rho^{1/2}z\|^2$, so $\rho z=0$. With code-compression rank one this confines the support to the orthogonal complement of its zero code direction, namely one plane $\operatorname{span}\{\xi,|2\rangle\}$. With code-compression rank zero both code directions vanish, and any unit $\xi$ supplies such a plane. The preceding recovery contradicts a uniform upper fidelity threshold at that input. Weak duality gives the same exclusion for a threshold dual. $\square$
+

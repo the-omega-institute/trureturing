@@ -1,0 +1,4 @@
+### 定义 12.9（行列式缺陷）
+
+对任意 $p\in\mathcal L$，令 $\Delta(p)=(1-Z(p))\kappa(p)-X(p)Y(p)$。
+

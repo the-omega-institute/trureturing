@@ -1,0 +1,62 @@
+**定理 68.2（The exact mixed-tail pair fee and its necessary leading cut）。** Under Definition 68.1, for every arbitrary pair table induced by $f$ and both alphabets,
+
+$$
+\Delta_{\rm ad}(v)=\Delta_{\rm child\text{-}pre}(v)=
+\begin{cases}
+0,&F_v\text{ constant on }\{0,m\}\times[0,h),\\
+1,&F_v\text{ nonconstant and }\exists r\in[0,h):\mathcal C_v(r),\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{68.4}
+$$
+
+A nonconstant table has at most one eligible $r$. If a finite correct continuation exists, that cut exists and its zero-containing first next word must have that leading run. This does not assert uniqueness of the whole word or that every correct protocol stops after it. For a nonconstant table with an eligible cut, an optimal continuation finishes there, using at absolute issued index one
+
+$$
+B_r=
+\begin{cases}
+0^{h+1}1\,0^{m-h-2},&r=0,\\
+1^r0^{m-r},&1\le r<h.
+\end{cases}
+\tag{68.5}
+$$
+
+Consequently the exact shared-suffix additional fee is
+
+$$
+\Gamma(I)=
+\begin{cases}
+0,&I_{\rm live}=\varnothing,\\
+1,&\text{every live table has a cut and all its unique cuts agree},\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{68.6}
+$$
+
+With separate adaptive continuations the selected-archive fee is $\max_{v\in I}\Delta_{\rm ad}(v)$, taking an empty maximum as zero. These are additional local prices; the root already costs one.
+
+**证明（actual sources and the paid archive）。** The joint-source witness is the credited (1.3), [S1, Convention 1.3; S15, Section 1]. Explicitly, for every $(v,-j,s)$ choose $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$ and $\ell\ge s+2$. Coprimality gives arbitrarily large such $\ell$. Put $d=\bigoplus_{i=\ell-s}^{\ell-1}c_i$. The one history $(v\oplus d)0^{\ell-s-1}1^s$ is legal, of complete-block length, has phase $-j$, tail $s$ and value $v$: its separated first bit contributes $v\oplus d$ and the terminal run contributes $d$. The construction includes $s=0$ and both free values. Each history is a source in both alphabets, although their unobserved lengths need not coincide. An all-one complete-block history of length at least $k$ separately realizes initial $\bot$.
+
+By the matched cycle [S2, Theorem 14.1] and (1.4), the root's successful charge is exactly $\{0,m\}$. It succeeds precisely when $s+m<k$, or $s<h$. Appending this same root to the above appropriate histories therefore gives exactly (68.2), including every tail at each phase and their common scalar $v\oplus1$. No fabricated current-state prior replaces these sources.
+
+**证明（every first action, including delayed protocols）。** A nonconstant pair archive cannot stop without a new observation. The sole zero-free word is $1^m$; it rejects all candidates since $s+2m\ge k$. They then have one common absorbing archive, so unequal INITIAL labels cannot be recovered at any later depth. A word whose first zero follows $r\ge h$ leading ones has the same all-rejecting obstruction.
+
+For $0\le r<h$, the candidates rejected before that zero are exactly both phases with $s\ge h-r$, because $m+s+r\ge k$. They have the same previous archive and the same bottom endpoint, with no observed rejection time, so their entire two-phase band must have one INITIAL label. At either fixed surviving phase all lower tails have the same scalar and phase before the zero. That zero clears their tails and merges their complete current records. Every remaining bit, subsequent output, deterministic action and stopping decision is identical on those merged records. Their INITIAL labels must thus be separately constant on $[0,h-r)$. The remainder cannot cause a new rejection: after a zero every run inside this length-$m$ word is shorter than $k$. These are precisely (68.3), the first-zero losses of [S1, Lemma 4.3; S15, Definition 4.1 and Proposition 4.2]. Stopping, zero-free words and all first-zero positions exhaust every next action in both alphabets; later waits, repairs or adaptive choices cannot recover a lost distinction.
+
+**证明（one physical block attains every eligible cut）。** At index one the ordered path starts at $m$. Its local vertex zero is phase $m$, and phase zero is local vertex $T-m=h+1$. Hence (1.4) gives
+
+$$
+q(m)=x_0,\qquad q(0)=x_h\oplus x_{h+1}.
+\tag{68.7}
+$$
+
+Both bit positions exist because $h\le m-2$. For $r=0$, (68.5) begins zero and clears every incoming tail $m+s<k$ safely. Its isolated one at local bit $h+1$ has physical charge $\{0,1\}$, so $q(0)=1$ and $q(m)=0$. All candidates succeed and every later run has length at most one. The observed difference from the retained root endpoint returns the phase-zero lower label on one and the phase-$m$ lower label on zero.
+
+For $1\le r<h$, $B_r$ has physical support $\{m,m+r\}$, where $m+r<k<T$. Thus $q(m)=1$, $q(0)=0$. Exactly the prescribed high band rejects, and its common INITIAL label is returned at this completed endpoint. Every survivor obeys $m+s+r\le k-1$, reaches the first zero, and then reads only zeros. Successful difference zero returns the phase-zero lower label; difference one returns the phase-$m$ lower label. Each decoder keeps INITIAL $v$ and evaluates $F_v$, never $f$ at an updated record. Arbitrary coincidences between these labels are allowed. All $m$ bits, including the suffix after any rejection, belong to this paid complete action. At $h=m-2$, $B_0$ ends in one but its endpoint is legal; stopping requires no extra cleanup.
+
+A constant archive stops immediately. Nonconstancy forces at least one further block, and the constructions attain one whenever a cut exists. If no cut exists, the exhaustive first-action argument rules out the first action of every finite correct controller. This proves (68.4), including semantic infinity without any finite-search inference.
+
+**证明（unique cut and actual shared suffix）。** If $r<t<h$ both satisfy (68.3), the nonempty interval $[h-t,h-r)$ lies in each phase's lower band for $r$ and in the common high band for $t$. Both lower labels for $r$ therefore equal that high-band label. Those lower bands together with the high band for $t$ cover the entire rectangle, making $F_v$ constant. This contradiction proves uniqueness for a nonconstant table, including $r=0$; at $h=1$ only cut zero is possible.
+
+Each selected live archive must receive the same first literal suffix word. The all-action argument requires its leading run to equal each archive's unique cut; a zero-free delay rejects all its candidates. A missing cut or unequal cuts therefore preclude every finite shared suffix. If the cuts agree, the same $B_r$ completes every selected archive, with its own remembered value and root endpoint supplying the appropriate decoder. Homogeneous archives have already stopped and emit no suffix. Nonempty live archives contain actual histories that pay this block, giving the lower bound one. Separate adaptive choices attain their maximum local price. This proves (68.6) and the adaptive statement without borrowing observations across sources. ∎
+

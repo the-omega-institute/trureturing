@@ -1,0 +1,4 @@
+**Definition 12.1 (the fixed source rectangles).** In the following record `D` is $2^{224}$; every pair in `RC` and `box_derived` is divided by `D`. The names `g0,g1,g2,x,y,z` denote the entries of $G$ in Definition 1.4. The enclosed `beta` is used with $\alpha=1-\beta$; redundant direct and cancelled expressions are retained with their positive denominator. `h` orders $h_0,h_1,h_2$, and `m` orders $0,m_1,m_2$. These are enclosing data at the inherited source, without a new root-isolation or off-root TP claim.
+
+Exact JSON data (1 record): [section-12-source-enclosures.json](https://github.com/the-omega-institute/trureturing-experiments/blob/08cfceafd9500530ffa128764313472b003a72ab/experiments/theory/fib-native-complete-continuation/connected-interval/section-12-source-enclosures.json).
+

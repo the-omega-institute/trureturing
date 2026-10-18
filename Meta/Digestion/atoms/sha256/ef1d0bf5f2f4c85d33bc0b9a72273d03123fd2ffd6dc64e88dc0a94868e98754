@@ -1,0 +1,21 @@
+**Assumption 8.3 (conditions for operational use).** An operational
+consumer must be supplied a producer bridge establishing that its
+rows and links were acquired on one continuing native register under
+the stated concurrency contract. Source evidence consists of actual
+replies to $\mathsf{Read}(p)$ at fully materialized literal addresses,
+with replies in $\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$,
+and lawful forward updates.
+Exact comparisons must use acquired operand descriptions or another
+proved paid comparison procedure. An old row that erased its hidden
+values does not itself supply their descriptions for a later comparison.
+
+Charge every actual read, the sum and maximum of literal address
+lengths, address generation and delivery, full descriptions, local
+comparison work, workspace, storage between captures, retained rows
+and signs, actual updates, validation failures, cleanup and handoff.
+Indices and lengths must be represented at their actual bit costs.
+The final accessible state must not retain unlisted source information
+in caches, control, timing or archives. These requirements are
+premises for a physical interpretation, not extra operations provided
+by the offline support algorithm.
+

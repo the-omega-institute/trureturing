@@ -1,0 +1,20 @@
+**Definition 2.1 (Natural entropy units).** All logarithms are natural. Let
+
+$$
+b(t)=-t\log t-(1-t)\log(1-t),\qquad b(0)=b(1)=0,
+$$
+
+and define conditional entropy by $H_P(X_0\mid\mathcal A)=\mathbb E_P b(\mathbb E_P[X_0\mid\mathcal A])$. Put
+
+$$
+\begin{aligned}
+h_k&=H_P(X_0\mid X_{-k:-1}),\qquad k\ge0,\\
+h&=H_P(X_0\mid X_j:j\le-1)=\lim_{k\to\infty}h_k,\\
+a_k&=h_k-h,\qquad
+B_P(n)=H_P(X_{0:n-1}),\qquad B_P(0)=0.
+\end{aligned}
+\tag{2.1}
+$$
+
+Thus $h_0=H_P(X_0)$ and $a_k\ge0$. The sequence $h_k$ decreases. The infinite-field identity follows from bounded conditional-projection convergence and continuity of $b$ on $[0,1]$ [Probability][K]. Entropy chain rules and conditional mutual information are used in their standard finite-alphabet form [Information, §2.5][CT]; finite target variables conditioned on infinite fields are obtained by these same bounded limits.
+

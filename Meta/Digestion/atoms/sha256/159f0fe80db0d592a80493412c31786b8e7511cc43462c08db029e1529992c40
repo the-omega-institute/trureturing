@@ -1,0 +1,27 @@
+## 16. Credits, theorem scope, and the remaining original target
+
+The original common positive rank-one model, fixed row, effective target, actual recorded clock, and positive relation/gain fibre are credited through *Shared affine gain and zero-crossing recovery* and the supplied original recovery programme. That companion's Theorem 5.1 supplies the all-fixed-history $d+5$ lower bound, fully reproduced in Section 7. Its $\max(d+6,7)$ upper construction and its particular-prefix obstruction are prior results; they are not discoveries of this volume. The broader polynomial-gain construction also retains its own domain and prefix scope. Its affine target conversion is
+
+$$
+R_0=S/\operatorname{tr}S,\qquad H(\tau)=(\operatorname{tr}S)(1+k\tau),
+\qquad S=H(0)R_0,\qquad k=H'(0)/H(0),\qquad H(0)>0,
+$$
+
+with the entire $D$ unchanged. Its broader $H(0)=0$ domain is outside the present positive-intercept model.
+
+*Sharp six-read affine-drift recovery in the diagonal a=2 branch, with a global cubic inverse* supplies the specific history, coordinates, determinant, midpoint method, cubic, exact kernel, and conditional $a=3$ collision retained in Sections 2–8. The sharp-six result and the credited lower bound are not relabelled as new discoveries. *Recorded-clock collapse and a common safe kernel at the affine endpoint* supplies the diagonal-stratum context. The $a=3$ proof here is directly conditional on its displayed actual endpoints and rank hypothesis and does not use an unproved normal-form sufficiency criterion. The other constant-drift, secant, and critical-point companions supply their stated path-specific and necessary-obstruction context; those results are not treated as global sufficiency theorems.
+
+The supplied candidate *Sharp d+5 fixed-history recovery for every positive drift upper degree* supplies the parity family and determinant proof in Section 9, including its higher-degree common-kernel consequence. The candidate *The prescribed family attains d+5 reads for every integer d>=1* supplies the explicit $w=2d+2$ verification in Section 10 and credits those endpoints to its caller. The candidate *Uniform inverse stability on every positive calibrated-invariant slice, and precise source, drift, and slope boundaries* supplies the quantitative six-read bounds and actual-source failure families in Sections 11–15. These are mathematical supplier credits, not independent approval or external priority claims. The complete arguments and actual-source correspondences used here are given in this volume.
+
+The proved read optimum is $C_{\mathrm{fix}}(d)=d+5$ for every positive integer upper degree, with the original $(S,k,D)$ target, every real slope, every gain-zero crossing, and one whole drift per run. The unresolved constant-drift endpoint remains
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6.
+$$
+
+The original all-degree programme therefore remains incomplete. The equality does not classify all optimal histories. The conditional $a=3$ exclusion does not classify other $a=2$ histories, non-diagonal safe kernels, or regular pencils. No such classification is required for the positive-degree optimum once a legal family attains the all-history lower bound.
+
+Quantitative global stability here concerns only the stated six-read domains and target components. The constants are not optimized. Other constrained source/slope families and unrestricted higher-degree stability are not classified. All inequalities compare pairs of compatible exact data; they do not specify a globally stable decoder for arbitrary off-image noisy data. The finite algebraic image tests do not themselves establish numerical root-selection stability.
+
+All conclusions are ordinary conditional textual mathematics, without Lean or empirical certification or a worldwide-originality claim. They preserve strict positivity, rank one, the positive initial gain intercept, known $M,J$, a counted initial scalar read, arbitrary finite predetermined forward words including empty words, and one fixed positive row per run. Literal atom counts are construction counts; they are separate from reads and are not proved optimal. No adaptive lower bound, precision, bit/time, physical-resource, acquisition-cost, or general neural-network conclusion follows. The exact representation freedoms are the positive relation/gain scale and the internal factor scale already proved in Section 6.
+

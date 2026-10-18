@@ -1,0 +1,8 @@
+## 4. Uniform coverage while the prefix stays diagonal-one
+
+Put
+$$
+P_c=\begin{pmatrix}c&1\\c-1&1\end{pmatrix},\qquad
+N_c(v)=\begin{pmatrix}cv-1&v\\c&1\end{pmatrix}.
+$$
+

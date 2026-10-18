@@ -1,0 +1,25 @@
+**Corollary 2.6 (parametric finite templates).** The same compiler applies
+when a finite coordinate is a mixed native template $f_i(\mathbf c)$ rather
+than a ground tree fixed independently of $\mathbf c$. In that case it
+produces one Presburger formula in $(\mathbf c,\mathbf w)$ for
+
+$$
+P_b(\mathbf c,\mathbf w)\land
+\exists\mathbf z\;\Delta_b(\mathbf c,\mathbf w,
+                    \mathbf f(\mathbf c),\mathbf z).
+\tag{FNS.16a}
+$$
+
+This is the uniform arithmetic step used later in (FNS.25); it does not
+enumerate the values of $\mathbf c$.
+
+**Proof.** Leave the designated atomic ranks in $\mathbf c$ as scalar
+variables while expanding the finite template $\mathbf f(\mathbf c)$.
+The mass-and-clock construction in [URR, Theorem 3.1][URR] depends only on
+the finite syntax and on the number of residual decorations, not on the
+values of atomic ranks. Its single residual tuple therefore works for all
+$(\mathbf c,\mathbf w)$ at once. The scalar-preserving branch construction
+of [NSF, Lemma 5.1 and Theorem 4.3][NSF] then yields a finite Presburger
+projection. Substitution of the same template in every repeated occurrence
+preserves the original shared-coordinate relation. $\square$
+

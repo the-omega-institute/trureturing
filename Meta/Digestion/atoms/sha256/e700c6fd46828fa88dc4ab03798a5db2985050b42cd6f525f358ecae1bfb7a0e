@@ -1,0 +1,36 @@
+**Proposition 9.2 (an actually obtained unmeasured programme).** Prepare one
+probe $(|0\rangle+|1\rangle)/\sqrt2$, apply action $A$ and retain it without
+measurement. Conditional on height $x_j$ its programme is
+
+$$
+r_j(A)=\frac{|0\rangle+e^{ix_jA/r}|1\rangle}{\sqrt2},\qquad
+\left|\langle r_1(A),r_2(A)\rangle\right|
+ =\cos\frac{(x_2-x_1)A}{2r}
+\quad\left(0\le A\le\frac{\pi r}{x_2-x_1}\right).
+\tag{CP.31}
+$$
+
+For each actual history the full output is
+
+$$
+\rho^h_{SAR}\longmapsto
+ \rho^h_{SAR}\otimes|r_{j(h)}(A)\rangle\langle r_{j(h)}(A)|.
+\tag{CP.32}
+$$
+
+Thus this is acquired coherent height dependence, conditional on the supplied
+RA port, independent of the unknown $\beta,m$ at each height. It is not an
+installed unknown-height bit. When the overlap satisfies (CP.10), the common
+processor of Section 5 consumes this programme for the causal original
+request and returns it on live success.
+
+Proof. Apply (CP.30) to the prepared probe. The overlap is
+$(1+e^{i(x_2-x_1)A/r})/2$, whose modulus is the stated cosine on that interval.
+Choose fixed representatives of the two known rays to make their overlap
+nonnegative for Section 5. Rephasing a programme ket changes no input state
+and no eigenvector-defined operator. Equation (CP.32) is precisely the RA
+joint identity law, valid for every conditional old joint state; integrate
+against the actual history measure to obtain its correlated mixture. The native
+hold adds no survival charge or original phase increment. Clock advancement
+and the calibration event are appended to the old archive. $\square$
+

@@ -1,0 +1,8 @@
+**数学来源。** AB/BA 的零特征值块交错、Weyr 特征方法、基本二分图编码、SSE/共轭接口及 BDR 的同 tuple 同滞后等价，按 literature-attested 记录。本批的固定共同均匀项下全分拆族、明确最短路径、精确距离组合，以及第 22.4 条固定 C2 对的两步因子和模四障碍，按 repo-derived 记录。针对 AB/BA、Flanders、Jordan blocks、strong shift equivalence length 的检索未定位到与这些完整正系数组合相同的陈述；这不是全球首创证明。新结果的有效性由本卷所列证明承担，不由检索缺失承担。
+
+[^rrosft5-ls09]: Ross A. Lippert and Gilbert Strang, *The Jordan forms of AB and BA*, The Electronic Journal of Linear Algebra 18 (2009), DOI [10.13001/1081-3810.1313](https://doi.org/10.13001/1081-3810.1313)。本批核对期刊页面的元数据与摘要；其摘要将相关 AB/BA 块结构结果追溯到 Harley Flanders (1951)。未据此声称读完该文 PDF 证明。第 30.2 条所需像空间—商空间推导在本卷完整给出。
+
+[^rrosft5-bdr26]: Boris Bilich, Adam Dor-On and Efren Ruiz, *Shift equivalence relations through the lens of C*-correspondences*, Mathematische Annalen 396, article 29, published 4 September 2026, DOI [10.1007/s00208-026-03544-z](https://doi.org/10.1007/s00208-026-03544-z)。本批通过出版方检索返回的全文片段核对 Definitions 2.1、3.2–3.3、Theorem 3.5、Remark 3.8。借用的结论严格限于同一 concrete tuple、同一正滞后的三种兼容条件等价；第 34 节自证实际长链证书，不从该文推断任意呈示的最小 SSE 步数等于最小证书滞后。
+
+[^rrosft5-epperlein26]: Jeremias Epperlein, *Eventual conjugacy of free inert G-SFTs*, Ergodic Theory and Dynamical Systems, online 25 May 2026, DOI [10.1017/etds.2026.10309](https://doi.org/10.1017/etds.2026.10309)。本批核对期刊 HTML 的引言、群扩张框架及原时间/充分高次时间的区分。这里不把新正系数族或固定 C2 解归给该文，也不宣称解决其一般原时间问题。
+

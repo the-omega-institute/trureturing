@@ -1,0 +1,56 @@
+**Construction 12.1 (finite structural cases).** Use ABC Theorems 2.2–2.3
+and the flattening of Theorem 4.2, keeping its native normal coordinates
+$[r],F$, smart pairing $J$, and translation $\tau_a$. These identities
+hold at every natural $a$, so their use at $a(\mathbf z)$ preserves
+that identical tuple. Convert the Boolean formula into a finite disjunction
+of conjunctions. Negated regular membership uses the complement of a
+completed deterministic automaton. Keep a shared code name for each tree
+variable and each subexpression, with positive definitions even below
+negative atoms. Split each $J$ into its actual collapse and ordinary
+normal-$F$ cases, as in (NCE.11)–(NCE.12).
+
+There is one additional structural split for each code disequality
+$X\ne Y$: either their actual erased shapes differ, retaining that
+$c/f$ term disequality, or their shapes agree, adding that equation to
+the positive shape system. Solve all positive free-shape equations
+jointly by an idempotent finite-tree unifier. An occurs-check failure
+has no finite shape solution. This check is on $c/f$ only, after native
+collapse splitting. It does not discard the native solution $x=\beta$
+of $\rho x=\langle x,\alpha\rangle$.
+
+The successful unifier supplies finite shape terms $S_Z$ in residual
+variables $w_j$. Split every residual variable into the cases $w_j=c$
+and $w_j$ nonleaf. Substitute $c$ in the first case before decorating
+any template. The remaining residual variables have nonleaf roots;
+their ground shapes need not be distinct. Retain all selected shape
+inequalities after these substitutions, including any now impossible
+ones. A later shape decision rejects an identical pair so obtained.
+
+Decorate every explicit $c$ occurrence in each named template with a
+scalar rank, and every residual occurrence with its own block name of
+that residual sort. Every use of one code name reuses its decorated
+template. Different block occurrences sharing a shape are not identified
+as values. Traverse the positive definitions, shifts and comparisons
+through their identical unified templates. They give scalar affine
+rank equations or pointwise affine block equations within one residual
+sort. There is no scalar/block alignment: a residual position in one
+side is the same residual position on the other. Ordinary pairing aligns
+the two children separately. Collapse gives primitive offsets $1,2$;
+constants give scalar ranks $0,1$.
+
+For every disequality assigned equal shapes, traverse the equal templates
+and choose an aligned scalar or whole block at which the values differ.
+This is a finite disjunction, distributed jointly across all negatives.
+Retain each selected scalar mismatch or whole-block mismatch with its
+actual affine offset. Any actual unequal codes on one shape select such
+a position. Reassembly makes a selected mismatch sufficient. Disequalities
+assigned unequal shapes retain the selected ground-shape inequality
+instead. No syntactic shape disagreement is presumed to survive an
+arbitrary residual substitution.
+
+Require normality at each explicit $c/c$ cherry of every named template.
+The nonleaf split ensures that there is no untested primitive cherry
+across a template/residual insertion. Internal residual cherries will be
+checked by Lemma 11.3. Thus these are all the normality requirements,
+including those exposed when a residual was specialized to $c$.
+

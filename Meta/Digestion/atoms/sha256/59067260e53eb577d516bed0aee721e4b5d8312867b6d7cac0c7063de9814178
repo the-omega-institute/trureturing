@@ -1,0 +1,76 @@
+**Theorem 26.2 (uniform fixed-retry inverse, sharply at degree three).** For every fixed retry word $u$, seed $\rho$ and marker triple $b$, the least whole raw cutoff separating all return vectors $\mathbf j\in\mathbb N^3$ in (SC.55), with $\mathcal B$ supplied, is exactly three. With a supplied actual $U=u$, the inverse below recovers every return vector and hence the raw and relational past at unbounded lengths. More generally, if two seed-accepted prefixes have equal $G_3$ and the same marker triple, equality of their whole raw $G_3$ implies equality of their return vectors. The latter statement concerns equality of return targets and need not recover their differing retry words.
+
+Proof. The moments are read from whole $G_3$ by the identities
+
+$$
+\mathsf D=2c_{\alpha\beta}-B^2,\qquad
+\mathsf E=6(c_{\alpha\alpha\beta}-c_{\alpha\beta\beta}-c_{\beta\alpha\beta})+B^3.
+\tag{SC.64}
+$$
+
+For a beta occurrence write $h_r=a_r-b_r$ for its preceding counts. Summing $a_r$ gives $c_{\alpha\beta}$ and summing $b_r$ gives $\binom B2$. Also
+
+$$
+\begin{aligned}
+\sum_r a_r^2&=2c_{\alpha\alpha\beta}+c_{\alpha\beta},\\
+\sum_r a_rb_r&=c_{\alpha\beta\beta}+c_{\beta\alpha\beta},\\
+\sum_r b_r^2&=2\binom B3+\binom B2.
+\end{aligned}
+$$
+
+Substitution proves (SC.64), using $6\binom B3+6\binom B2+B=B^3$. For concatenated words $x,y$, every suffix beta height is shifted by $\eta(x)$; expanding (SC.63) gives
+
+$$
+\begin{aligned}
+\eta(xy)&=\eta(x)+\eta(y),& B(xy)&=B(x)+B(y),\\
+\mathsf D(xy)&=\mathsf D(x)+\mathsf D(y)+2\eta(x)B(y),\\
+\mathsf E(xy)&=\mathsf E(x)+\mathsf E(y)+3\eta(x)\mathsf D(y)+3\eta(x)^2B(y).
+\end{aligned}
+\tag{SC.65}
+$$
+
+Given the actual $u,\rho$, compute $M(x)$ for $x=u s_\rho$. From the whole moments obtain those of the payload $y$ by
+
+$$
+\begin{aligned}
+B_y&=B-B(x),\\
+\mathsf D_y&=\mathsf D-\mathsf D(x)-2\eta(x)B_y,\\
+\mathsf E_y&=\mathsf E-\mathsf E(x)-3\eta(x)\mathsf D_y-3\eta(x)^2B_y.
+\end{aligned}
+\tag{SC.66}
+$$
+
+This subtraction has a supplied prefix, not a freely cancelled unknown factor. Put $q_i=1-3b_i\in\{1,-2\}$ and $z=c_{b_1}c_{b_2}c_{b_3}$. Return $T$ has zero height change and $(B,\mathsf D,\mathsf E)=(1,-1,1)$. Its slots begin at the three heights $0,q_1,q_1+q_2$. Returns do not change subsequent marker heights, so the marker contributions are exactly those of $z$. Therefore
+
+$$
+\begin{aligned}
+S_0&=B_y-B(z),\\
+S_1&=\frac{\mathsf D_y-\mathsf D(z)+S_0}{2},\\
+S_2&=\frac{\mathsf E_y-\mathsf E(z)+3S_1-S_0}{3},\\
+S_r&=\sum_{i=1}^3 h_i^rj_i\quad(r=0,1,2),
+\qquad (h_1,h_2,h_3)=(0,q_1,q_1+q_2).
+\end{aligned}
+\tag{SC.67}
+$$
+
+The nodes are distinct: $q_1,q_2$ are nonzero and $q_1+q_2\in\{2,-1,-4\}$. The finite Vandermonde inverse gives
+
+$$
+j_3=\frac{S_2-q_1S_1}{(q_1+q_2)q_2},\qquad
+j_2=\frac{(q_1+q_2)S_1-S_2}{q_1q_2},\qquad
+j_1=S_0-j_2-j_3.
+\tag{SC.68}
+$$
+
+All divisions are exact and the outputs nonnegative on the actual image. This proves sufficiency uniformly in both seeds, every marker triple and all finite return counts. Equal prefix $G_3$ supplies equal prefix moments in (SC.66), proving the more general assertion without assuming the prefixes are literal equals.
+
+For sharpness, let $g=\gcd(|q_1|,|q_2|)$ and take the positive and negative parts of
+
+$$
+\Delta=\frac1g(q_2,-q_1-q_2,q_1).
+\tag{SC.69}
+$$
+
+They are distinct nonnegative return vectors, each of total two, with $\sum_i\Delta_i=\sum_i h_i\Delta_i=0$ but
+$\sum_i h_i^2\Delta_i=q_1q_2(q_1+q_2)/g\ne0$. Their payload counts and $\mathsf D$ agree; hence (SC.64) gives equal $c_{\alpha\beta}$, which together with counts determines the entire binary $G_2$ by Definition 12.2. Their $\mathsf E$ differs, so $G_3$ separates them. A common seed-accepted prefix preserves equal $G_2$ by (SC.25), and preserves the first nonzero degree-three difference because its constant term is one. Theorem 6.3 makes both words positive histories of length $2|u|+9+w$ in the fixed tag. Their original acquired boundaries and future rows agree. This proves necessity of degree three for every fixed retry word and tag, rather than only the earlier $100$ witness. $\square$
+

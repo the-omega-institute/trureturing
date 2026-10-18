@@ -1,0 +1,101 @@
+**Proposition 10.15 (The abstract image need not be an algebraic subgroup).**
+There is a choice of $\sigma$ in Proposition 10.8 for which
+the common-circle image on its affine hull is a proper infinite
+subgroup of a real translation line. Its Zariski closure is
+the whole line, so the image itself is not Zariski closed.
+
+**Proof.** Choose a transcendence basis $T_0$ of $\mathbb R$
+over $\mathbb Q$ and put $F_0=\mathbb Q(T_0)\subset\mathbb R$.
+The field $\mathbb R$ is algebraic over $F_0$, and
+$\mathbb C=\mathbb R(i)$ is therefore algebraic over $F_0$.
+Since $\mathbb C$ is algebraically closed, it is an algebraic
+closure of $F_0$.
+
+We need $\sqrt2\notin F_0$. Otherwise, using finitely many
+elements of $T_0$, write $\sqrt2=p(T)/q(T)$ for rational
+polynomials with $q(T)\ne0$. Algebraic independence would
+give the polynomial identity $p^2=2q^2$ over $\mathbb Q$.
+Choose a monomial order on these finitely many variables.
+The leading coefficient of a product is the product of its
+leading coefficients. Comparing the leading coefficients in
+this identity would make the square of a nonzero rational
+number equal to two, which is impossible. Thus $X^2-2$ is
+irreducible over $F_0$.
+
+The $F_0$-isomorphism of $F_0(\sqrt2)$ sending $\sqrt2$
+to $-\sqrt2$ extends, by the algebraic-closure part of
+Lemma 10.7, to an automorphism $\sigma$ of $\mathbb C$
+fixing $F_0$ pointwise. Here $\mathbb C$ is also an
+algebraic closure of $F_0(\sqrt2)$.
+Let $j$ be ordinary complex conjugation; it too fixes $F_0$.
+
+For any $x\in\mathbb R$, let $L\subset\mathbb C$ be the
+splitting field of its minimal polynomial over $F_0$.
+It is a finite normal separable extension: finitely many
+algebraic roots generate a finite extension, all roots are
+included, and characteristic zero gives separability.
+Both $\sigma$ and $j$ permute those roots and preserve $L$.
+Their restrictions generate a finite subgroup
+$G\subset\operatorname{Aut}(L/F_0)$, since every such
+automorphism is determined by its permutation of this finite
+generating root set. Because $x$ is real,
+
+$$
+f(x)=\frac{\sigma(x)+j\sigma(x)}2-x\in L.
+$$
+
+Define the finite orbit sum
+$T_G(y)=\sum_{g\in G}g(y)$ for $y\in L$.
+Right multiplication of $G$ by $\sigma|_L$ or by
+$(j\sigma)|_L$ permutes $G$. Hence
+
+$$
+T_G(f(x))
+ =\frac12\sum_{g\in G}g\sigma(x)
+   +\frac12\sum_{g\in G}gj\sigma(x)
+   -\sum_{g\in G}g(x)=0.
+$$
+
+This is the finite Galois orbit-sum, or trace, argument; no
+commutation of $\sigma$ with $j$ was assumed. If $f(x)=1$,
+the same sum would equal the positive integer $|G|$ in a
+characteristic-zero field. Therefore $1\notin f(\mathbb R)$.
+On the other hand $f(\sqrt2)=-2\sqrt2\ne0$.
+Additivity now makes $f(\mathbb R)$ a proper infinite
+additive subgroup of $\mathbb R$.
+
+For this $E_\sigma$, common turns act by the ambient translations
+
+$$
+(X,W,F)\longmapsto(X,W,F+f(c/(2\pi))).
+$$
+
+Their restriction to the affine image hull is the action
+$\mathcal R$ of Proposition 10.5, since both maps agree on
+every encoded state. At a fixed height, two attainable last
+coordinates differ by the nonzero value $f(\sqrt2)$.
+Thus the vertical coordinate direction belongs to the
+direction space of the affine hull. All real translations in
+that direction preserve the hull, and restriction to the hull
+is faithful on this translation line. As $c$ runs over
+$\mathbb T$, $c/(2\pi)$ runs over $\mathbb R/\mathbb Z$;
+period one gives exactly the parameter set $f(\mathbb R)$.
+
+In affine coordinates on the hull, the full translation line
+is an algebraic subgroup: its linear part is the identity and
+its translation vector lies on a fixed one-dimensional real
+subspace. A polynomial in the ambient matrix entries restricts
+to a polynomial in the line parameter. If it vanishes on the
+infinite set $f(\mathbb R)$, it vanishes on the whole line,
+since a nonzero one-variable polynomial has finitely many
+roots. The Zariski closure of the common-circle image is
+therefore the whole translation line, while the image omits
+the translation with parameter one. It is not Zariski closed.
+
+The matrices of all these translations are unipotent after
+homogenization, so this example is fully compatible with
+Theorem 10.6. It disproves the additional standard assertion
+that the image must itself be an algebraic subgroup; the
+abstract-action assertion is the precise structural result.
+$\square$
+

@@ -1,0 +1,26 @@
+**Theorem 89.1 (residue condition on the square part).** Let $j,C,c,k$ be positive integers, let $N=3^j\ge81$, and suppose $k$ is odd, $3\nmid k$, and
+
+$$B_N=DC^2,\qquad B_{Nk}=Dc^2,\qquad B_n=L_n^2+3,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Write $k=s^2$ or $k=rs^2$ as in Theorem 88.1. Every prime $q\mid s$ is an invertible square residue modulo $L_N^2$. In particular, $q\equiv1\pmod8$.
+
+If no prime divisor of the full block $B_N$ is an invertible square residue modulo $L_N^2$, then $k=1$ or $k$ is prime. This applies, in particular, when $B_N$ itself is prime.
+
+**Proof.** For odd $q$, the recurrence $V_0=2$, $V_1=X$, $V_{m+2}=XV_{m+1}+V_m$ makes $V_q$ an odd polynomial. Thus the integral quotient
+
+$$Q_q(X)=\frac{V_q(X)^2+3}{X^2+3}$$
+
+is even, and $Q_q(0)=1$. Consequently $Q_q(X)\equiv1\pmod{X^2}$. For any positive odd $m$, $X\mid V_m(X)$ and $L_{Nm}=V_m(L_N)$, so $L_N\mid L_{Nm}$.
+
+If $q\mid s$, then $q^2\mid k$. Set $t=Nk/q$. The two-step descent in §88 supplies a positive integer $y$ with $Q_q(L_t)=qy^2$. Since $t$ is an odd multiple of $N$, reduction modulo $L_N^2$ gives
+
+$$qy^2\equiv1\pmod{L_N^2}.\tag{89.1}$$
+
+Both $q$ and $y$ are units modulo $L_N^2$. Multiplying by the inverse square of $y$ proves the asserted square-residue condition.
+
+The Lucas sequence modulo $4$ has period $6$, with $L_n\equiv0\pmod4$ for $n\equiv3\pmod6$. Thus $4\mid L_N$. Equation (89.1) modulo $16$ makes $y$ odd and $q\equiv1$ or $9\pmod{16}$, giving $q\equiv1\pmod8$.
+
+If every prime factor of $B_N$ fails the condition, no prime divides $s$. Hence $s=1$, and Theorem 88.1 leaves $k=1$ or $k=r$ prime. If $B_N$ itself is prime, its residue $B_N\equiv3\pmod8$ excludes its sole prime factor. ∎
+
+The support here is the full support of $B_N$, including primes of even original depth. A prime $D$ does not imply that $B_N$ is prime: the factors in $C$ must still be tested.
+

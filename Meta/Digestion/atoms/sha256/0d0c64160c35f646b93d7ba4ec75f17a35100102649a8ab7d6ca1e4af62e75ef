@@ -1,0 +1,34 @@
+**Definition 1.2 (five modes and the twelve actual histories).** The original modes have basis $e_0,e_1,e_2,e_3,e_4$, where $e_4$ names original mode $13$. Define
+
+$$
+E=\left(\frac{e_0+e_4}{\sqrt2},\frac{e_1+e_3}{\sqrt2},e_2\right),
+\qquad P_5=EE^\dagger,\qquad Q_5=I_5-P_5,\qquad V=\operatorname{ran}E.
+\tag{RG.1}
+$$
+
+Supported coordinates $0,1,2$ denote $(+,-,2)$ and are separate from the five failure labels. For $y\in\{5,16,27\}$ and independently $e,n\in\{+1,-1\}$ put
+
+$$
+p_y=\left(\frac y{128},\frac{64-y}{128},\frac12\right),\quad
+ a_y=\sqrt{p_y},\quad U_{e,n}=\operatorname{diag}(e,n,1),\quad
+\rho_{y,e,n}=U_{e,n}a_ya_y^TU_{e,n}^\dagger.
+\tag{RG.2}
+$$
+
+The square root is entrywise. The actual normalized sole specimen at the already reached old live cut is $E\rho_{y,e,n}E^\dagger$. Original parameters are $x=y/256$, $e=(-1)^{\beta_{\rm hist}/\pi}$ and $n=e(-1)^m$, with $\beta_{\rm hist}\in\{0,\pi\}$, $m\in\{0,1\}$. Thus $en=(-1)^m$ is original winding parity. Neither sign is given to the processor.
+
+For clarity, the credited common preparation is the double-wall population and signed real phase lift
+
+$$
+\begin{aligned}
+p(k)&=(k,1/4-k,1/2,1/4-k,k),\\
+w(k)&=\left(\frac{1/4-k}{1/2},-\frac{k}{1/2},0,-\frac{k}{1/2},\frac{1/4-k}{1/2}\right),\\
+\psi_i(t)&=\sqrt{p(k(t))_i}\exp\left(-i\int_0^t w_i(k(v))\chi'(v)\,dv\right).
+\end{aligned}
+\tag{RG.3}
+$$
+
+Starting at height $1/8$, the six unit-duration legs in CG Proposition 2.2 are phase $0\to2\pi m$, descent to $1/16$, phase $2\pi m\to2\pi m+B_{\rm hist}$, ascent to $1/8$, phase return to $2\pi m$, and height change to $x$, where $B_{\rm hist}=8\beta_{\rm hist}-4\pi m$. Their residual phase vector is $(\beta_{\rm hist},\beta_{\rm hist}-\pi m,0,\beta_{\rm hist}-\pi m,\beta_{\rm hist})$. These histories reach absolute time six; the old live masses $32/177,2/9,32/111$ are earlier positive branch masses, not priors or new acceptance weights.
+
+The requested continuation is $k(t)=x+6t/256$, with phase fixed, for elapsed $0\le t\le1$, in the original common legal command domain $(0,58/256)$. Retain finite duration, strict continuous height domain, signed real phase lifts of finite variation, the absolute-continuity or specified finite-piecewise-$C^1$ alternative, and literal chronological composition. Zero duration permits only a matching zero-displacement identity. Known denial, visible unexecuted rejection, permissions, source and epoch identity, calibrations, controller updates and clock alignment retain their original contracts. A partial command supplies no unknown-height sensor.
+

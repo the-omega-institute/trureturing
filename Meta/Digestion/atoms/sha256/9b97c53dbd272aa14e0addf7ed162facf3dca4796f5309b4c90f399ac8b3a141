@@ -1,0 +1,36 @@
+### 83.3. Exact global best responses for every disphenoid equality member
+
+Consider any original quarter-error pair (A_0,B_0) having a rank-two party. Exchange the parties if necessary so that B_0 has rank two. The classification in section 82 allows an environment isometry and independent simultaneous input-bit swaps to write its calibrated records as
+
+    a_(f,i)^0=conjugate(b_(f,i)^0) tensor m_i,
+    ||m_i||=1, <m_0,m_1>=3/4,
+    N_f=conjugate(B_f^0)Z(B_f^0)^T,
+    sum_f N_f=0.                                    (10)
+
+The allowed disphenoids include every x^2,y^2,z^2>=2/7 with sum one. The following argument uses balance, not equal axis lengths.
+
+For each fixed i in the relabelled coordinates, balance gives
+
+    sum_f |conjugate(b_(f,i)^0)><conjugate(b_(f,i)^0)|
+       =2I_2.
+
+Conjugating gives the same tight-frame identity for b_(f,i)^0. Hence its four-vector Gram H_0 has nonzero eigenvalues 2,2 and satisfies
+
+    H_0^2=2H_0,  Tr H_0=4,  ||H_0||op=2.
+
+Because the marker is fixed within that bit sector and has norm one, the other party's Gram is G_0=conjugate(H_0)=H_0^T. Therefore
+
+    ||G_0||op=||H_0||op=2,
+    Tr(G_0^T H_0)=Tr(H_0^2)=8.                     (11)
+
+In the original unpermuted labels, the two fixed-bit sets become two complementary transversals. This is why section 83.1 allows arbitrary transversals: the constant-bit Grams in the original labels need not themselves have norm two. The actual witness uses the corresponding selected input labels, so it does not require changing either physical channel.
+
+It follows from (7) that
+
+    delta(A_0,B)>=1/4  for every original CPTP B,
+    delta(A,B_0)>=1/4  for every original CPTP A.     (12)
+
+Since the partner (A_0,B_0) attains 1/4, the global best-response minimum in each line is exactly 1/4. In particular fixing the rank-four equality party blocks every unilateral escape that raises the other party's rank to three or higher, even with leakage. The second line is also consistent with section 81's original rank-two-party theorem.
+
+The same one-party tight-frame certificate applies to any balanced fixed-marker construction with arbitrary unit markers: their overlap is irrelevant to the selected single-marker Gram. Quarter attainment, however, is being asserted here only for the classified equality family.
+

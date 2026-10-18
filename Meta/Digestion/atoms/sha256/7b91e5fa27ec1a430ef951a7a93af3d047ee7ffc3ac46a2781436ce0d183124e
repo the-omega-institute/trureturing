@@ -1,0 +1,37 @@
+**Lemma 4.2 (Local independence of square-root translates).** Let $I$ be
+a nonempty open real interval, and let $s_1,\ldots,s_m$ be distinct, with
+$k+s_j>0$ for every $k\in I$ and every $j$. For every integer $m\ge1$,
+the functions $k\mapsto\sqrt{k+s_j}$ are linearly independent on $I$.
+
+**Proof.** Suppose $\sum_{j=1}^m c_j\sqrt{k+s_j}=0$ on $I$, and fix
+$k_*\in I$. Differentiate this finite sum $q$ times for
+$q=0,\ldots,m-1$. The power rule gives
+
+$$
+0=\gamma_q\sum_{j=1}^m c_j(k_*+s_j)^{1/2-q},\qquad
+\gamma_0=1,\qquad
+\gamma_q=\prod_{\ell=0}^{q-1}\left(\frac12-\ell\right)
+\quad(q\ge1).
+$$
+
+Every $\gamma_q$ is nonzero. Set
+$a_j=c_j\sqrt{k_*+s_j}$ and $t_j=(k_*+s_j)^{-1}$. After division,
+
+$$
+\sum_{j=1}^m a_j t_j^q=0,\qquad q=0,\ldots,m-1.
+$$
+
+The $t_j$ are distinct. For each $i$ the polynomial
+$P_i(t)=\prod_{j\ne i}(t-t_j)$ has degree at most $m-1$, hence is a
+linear combination of those monomials. Therefore
+
+$$
+0=\sum_{j=1}^m a_jP_i(t_j)
+ =a_i\prod_{j\ne i}(t_i-t_j).
+$$
+
+The product is nonzero, including the empty product $1$ when $m=1$.
+Thus $a_i=0$, and positivity of $k_*+s_i$ gives $c_i=0$. This proves
+independence by the elementary Vandermonde interpolation argument. Only
+explicit smooth square-root functions were differentiated. $\square$
+

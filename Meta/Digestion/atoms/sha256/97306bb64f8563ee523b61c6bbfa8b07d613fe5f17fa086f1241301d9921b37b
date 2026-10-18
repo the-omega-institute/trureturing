@@ -1,0 +1,53 @@
+**Lemma 19.2 (the algebraic interfaces used in elimination).** The following
+operations and identities hold on finite trees.
+
+1. $\rho$ is injective and has an effective partial inverse on finite trees.
+2. Every normalized template preserves $\equiv_h$ in all its arguments.
+3. For a fixed template $A$ and two assignments $v,w$,
+   $A[v]=A[w]$ exactly when $v(x)=w(x)$ for all variables occurring in $A$.
+4. A bare-variable equation $x=A$ with $x$ occurring in $A$ is false unless
+   $A$ is syntactically $x$.
+
+Proof. No $\rho$-image is $\alpha$. The only leaf image is
+$\rho(\alpha)=\beta$. The tree $\langle\beta,\alpha\rangle$ has preimage
+$\beta$ and cannot have a paired preimage, since the right child of the
+image of a pair is itself an image and is not $\alpha$. Every other paired
+image has a paired preimage exactly when both children have preimages.
+Recursion on the strictly smaller children supplies the partial inverse
+and proves its uniqueness. Finite iteration handles any fixed power.
+
+For a physical address $p$ in $\rho^n(t)$, follow $p$ in the original $t$.
+Until the first original leaf, every encountered pair persists. After
+that leaf, the remaining reply is computed in its known finite
+$\rho^n$-image. If no leaf has been encountered by $p$, its reply is branch.
+Consequently the reply depends only on original replies at prefixes of
+$p$, never on a deeper original reply. This includes an address born
+inside an expanded leaf and an address still absent. Powers of $\rho$
+therefore preserve $\equiv_h$. Pairing and ground insertion do also;
+structural induction proves item 2.
+
+For item 3 compare the same normalized template under the two assignments.
+Cancel its identical pair skeleton. At every decorated occurrence the
+remaining equality is $\rho^a(v(x))=\rho^a(w(x))$, equivalent to
+$v(x)=w(x)$ by injectivity. Ground parts impose no condition. Repetition
+only repeats a condition. The same argument works for an outside context
+with fixed, distinct numbered hole symbols.
+
+For item 4, let $\ell$ count leaves. Induction gives
+$\ell(\rho(t))\ge\ell(t)$. If an occurrence of $x$ in $A$ lies below a pair,
+its decorated value contributes at least $\ell(x)$ leaves and a nonempty
+sibling contributes at least one more. Thus $\ell(A)>\ell(x)$. Otherwise
+$A=\rho^a(x)$. For
+
+$$
+\kappa(\alpha)=0,\qquad \kappa(\beta)=1,\qquad
+\kappa(\langle s,t\rangle)=2+\kappa(t),
+$$
+
+induction gives $\kappa(\rho(t))=\kappa(t)+1$. Hence $a>0$ makes equality
+impossible, and $a=0$ is the identity case. These are the elementary
+parser and clock interfaces already used in §§2–3 and [SLH, §§2, 55][SLH],
+with the bare-variable size consequence stated explicitly. Item 4 does
+not apply to $\rho^a(x)=A$: the finite solution $x=\beta$ of
+$\rho(x)=\langle x,\alpha\rangle$ prevents that inference. $\square$
+

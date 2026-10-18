@@ -1,0 +1,39 @@
+**Proposition 474.1.** If the source flat is
+
+    sigma=(M,C,D,C,C,D),
+
+selecting its two axial occurrences, then z>2*m+1.
+
+**Proof.** Its axial-flat inequality is
+
+    (m-1)*(c-1)>=(c+d)^2.
+
+The polynomial division identity
+
+    (c+d)^2=(c-1)*(c+2*d+1)+(d+1)^2
+
+therefore gives
+
+    m>=c+2*d+2+(d+1)^2/(c-1)>c+2*d+2.
+
+Put t=m-c-2*d-2>0. The transverse M cosine numerator in tau is
+
+    N(z)=c*(z+d)+m*(z*d+c^2-m^2+1).
+
+Its denominator is positive. The two equal M angles fit at most pi,
+so each is at most pi/2 and N(z)>=0. Also N is strictly increasing
+in z, with derivative c+m*d>0. Direct substitution gives
+
+    -N(2*m+1)
+      =t^3+(3*c+4*d+6)*t^2
+       +(2*c^2+8*c*d+10*c+4*d^2+15*d+11)*t
+       +2*(d+1)*(c^2+2*c*d+3*c+3*d+3)>0.
+
+Consequently N(z)>=0 requires z>2*m+1.
+
+If the hypotheses of Theorem 467.1 also hold, including the connected
+original circle and complete budgets, then z<1+2*w for
+w=max_{e!=Z}x_e. Combining the inequalities gives w>m.
+This is only a quantitative consequence in this repeated-C source case;
+it does not exclude that source or replace Corollary 466.1. QED.
+

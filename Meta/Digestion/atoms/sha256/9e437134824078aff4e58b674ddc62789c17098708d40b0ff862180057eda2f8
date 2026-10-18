@@ -1,0 +1,117 @@
+**Proposition 17.3 (complete held accuracy and exact own death).**
+The command in Definition 17.2 is an original finite piecewise linear
+native history at the specified start. Its own censored exit is exactly
+$\zeta_\eta=\zeta$, its execution horizon is $S_\eta=S$, and its
+whole-height source guard is
+
+$$
+k+\min_{[0,T]}a_\eta\ge l>0,\qquad
+k+\max_{[0,T]}a_\eta\le u<H.
+\tag{17.8}
+$$
+
+Its entire held chronological triple satisfies
+
+$$
+\begin{aligned}
+\|a_\eta-W^1_{\cdot\wedge S}\|_\infty&\le4\rho,\\
+\|b_\eta-W^2_{\cdot\wedge S}\|_\infty&\le5\rho,\\
+\|J_\eta-J^\lambda_{\cdot\wedge S}\|_\infty
+                                  &\le5K_*\rho+6\rho^2.
+\end{aligned}
+\tag{17.9}
+$$
+
+Every triple agrees exactly with the target at partition endpoints,
+including $S$, and therefore throughout the terminal hold. With the
+fixed real phase representatives from Section 2, one has the stronger
+direct phase estimates
+
+$$
+\begin{aligned}
+\|\widetilde\alpha_\eta-\widetilde\alpha^\lambda_{\cdot\wedge S}
+  \|_\infty&\le\tfrac52\rho,\\
+\|\widetilde\beta_\eta-\widetilde\beta^\lambda_{\cdot\wedge S}
+  \|_\infty&\le\tfrac52\rho+6\rho^2/r\le4\rho.
+\end{aligned}
+\tag{17.10}
+$$
+
+Consequently
+
+$$
+D_{\max}(\bar q_\eta,\bar q^\lambda)\le4\rho=\eta
+\quad\text{on the entire }[0,T].
+\tag{17.11}
+$$
+
+These deterministic estimates hold on one probability-one target event
+for every $0<\eta\le\eta_*$. They include every partial leg and the
+merged terminal interval, not just the mesh endpoints.
+
+Proof. Equations (16.7) and (17.7) satisfy all the connector hypotheses.
+Each target height at a partition start is interior. Only the last
+partition endpoint can be on the killing boundary, and it is on that
+boundary exactly on $\{\zeta<\infty\}$. Lemma 17.1 proves that the
+command first reaches it at $S$, if it reaches it at all. If there
+is no target death on the horizon, even the endpoint at $S=T$ is
+interior, and the command has no death. A death at $T$ is also
+handled exactly. This proves the claimed own-exit and death mark,
+without using a limiting crossing argument.
+
+The concatenation is continuous at each join because both first-level
+endpoints are exact. Its integral at the next endpoint is the previous
+integral plus $W^1_sY+C_{s,t}$, by (17.6). Induction and (16.3) prove
+that it is exactly $J^\lambda_t$. In particular the state at every
+join is one continuous chronological state, with no reset of phases,
+height, or integral. All heights lie in $[l,u]$, proving (17.8) and
+original source lawfulness. The exact numerical command domain is still
+$(-\min a_\eta,H-\max a_\eta)$. For a different starting-height
+promise its extrema must obey (2.4); the construction does not silently
+recompute its cutoff for other starts.
+
+Fix any partition interval $[s,t]$ and any $v\in[s,t]$. Let
+$x_*(v)=W^1_v-W^1_s$, $y_*(v)=W^2_v-W^2_s$, and
+$c_*(v)=C_{s,v}$. Equations (16.7) and (17.4) give
+
+$$
+|x(v)-x_*(v)|\le4\rho,\qquad
+|y(v)-y_*(v)|\le5\rho,\qquad
+|j(v)-c_*(v)|\le6\rho^2.
+\tag{17.12}
+$$
+
+The exact chronological matching at $s$ then gives
+
+$$
+J_\eta(v)-J^\lambda_v
+ =W^1_s\{y(v)-y_*(v)\}+j(v)-c_*(v).
+\tag{17.13}
+$$
+
+Since $|W^1_s|\le K_*$, this proves all of (17.9) before $S$.
+After $S$ the errors are zero. It is important that the local integral
+in (17.13) is the relative chronological increment, with its cross
+term retained; adding merely scalar area endpoints without that term
+would not prove this estimate.
+
+To control the actual phases, apply (2.5) on the same interval from
+its matched starting state. The $\beta$ difference at $v$ is exactly
+
+$$
+\left(\tfrac12-\frac{k+W^1_s}{r}\right)
+       \{y(v)-y_*(v)\}
+       -\frac{j(v)-c_*(v)}r.
+\tag{17.14}
+$$
+
+The starting height is in $(0,r/2)$, so the coefficient in parentheses
+has absolute value at most $1/2$. This proves (17.10), using
+$\rho\le r/4$. The $\alpha$ difference is half the $b$ difference.
+Circle projection with period $2\pi$ cannot increase either error;
+(17.11) follows together with the height bound. The calculation uses
+the actual affine native action, so it controls the complete response
+and its chronological coordinate rather than just a scalar projection.
+Continuity and the explicit finite formulas establish all these
+statements on the common continuous target event. $\square$
+

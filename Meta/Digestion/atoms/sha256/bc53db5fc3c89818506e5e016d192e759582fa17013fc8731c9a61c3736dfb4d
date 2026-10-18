@@ -1,0 +1,33 @@
+## 377. Exact cap calculation
+
+For \(n=1,\ldots ,8\), let \(A_n,C_n,P_n\) be respectively the minima over all words with first zero (n) of \(p_w(0),p_w(n),p_w(0)+p_w(n)\). Adding the displayed vectors gives the following exact table. A word in the last column attains all three entries in its row except where a separate word is shown; the listed words also show that the minima are attained, not merely bounded.
+
+$$
+\begin{array}{c|c|c|c|c}
+ n&A_n&C_n&P_n&\text{attaining words }(A,C,P)\\ \hline
+1&21/64&20395/47424&8989/11856&(00110000,00000000,00110000)\\
+2&15/32&6863/23712&8989/11856&(10001000,10000000,10001000)\\
+3&15/32&6863/23712&8989/11856&(11000100,11000000,11000100)\\
+4&8757/15808&10021/47424&9073/11856&(11100000,11100000,11100000)\\
+5&3491/5928&8539/47424&36467/47424&(11110000,11110000,11110000)\\
+6&10445/15808&7057/47424&4799/5928&(11111000,11111000,11111000)\\
+7&550/741&2417/23712&20017/23712&(11111100,11111100,11111100)\\
+8&35767/47424&419/5928&39119/47424&(11111110,11111110,11111110)
+\end{array}
+$$
+
+The calculation is finite and direct: for a word (w), choose (0,10,11) in each of the twenty rows according to its two bits, add the nine coordinates, and then group by the first zero. The table includes all \(2^8-1\) zero words and every one of the nine labels; in particular, multiple-zero words are not discarded. The positive word is
+
+$$
+ p_{1^8}=\frac1{47424}(35956,0,0,2776,2889,1725,0,915,3163),
+ \qquad p_{1^8}(0)={8989\over11856}=1-c.
+$$
+
+At either endpoint \(h=17/32\) or \(h=43/64\), the literal demands (1-b_n-c, b_n-c, 1-c) are no larger than the corresponding entries of the table. For \(n=1\), the largest base demand is (1-17/32-c=5381/23712<21/64), while at \(h=43/64\) the correct demand is (43/64-c=20395/47424). For \(n=2,\ldots ,8\), the correct rows are equalities at (n=2,3,4,5,6,7,8) after the displayed rational substitutions, and every base and union row has nonnegative slack. Since each demand is affine in \(h\), the same allocation satisfies all rows for every (h) in the closed interval. For a source with first zero \(n>8\), [XXIII 373.1] gives
+
+$$
+\operatorname{TV}(p_{1^8},\lambda_x^a)=\max\{1-p_{1^8}(0),a_n\}=c.
+$$
+
+Consequently the allocation has selected-law error at most (c), and the word attaining a zero row in the table or the positive tail gives equality.
+

@@ -1,0 +1,75 @@
+**Theorem 84.1 (four exactly at two budgets, five otherwise).** Use the
+strong substitution explicitly:
+
+$$
+\begin{gathered}
+v=v^\dagger=V_f/W_f,\quad u=u^\dagger=\theta v^\dagger+\omega,\\
+K_{\sigma\upsilon}^{\rm str}
+ =\sqrt{u^\dagger}D+\sigma\sqrt{v^\dagger}T+\upsilon S,\quad
+ d_{\sigma\upsilon}=
+ \operatorname{tr}((K_{\sigma\upsilon}^{\rm str})^\dagger
+ K_{\sigma\upsilon}^{\rm str}\Delta),\\
+g_\chi=d_f+2\chi z_f,\quad r=t/t_0\ge1.
+\tag{FA.74}
+\end{gathered}
+$$
+
+The superscript $\rm str$ denotes the strong family. These are exactly
+the four matrices in Theorem 71.2.
+For every feasible budget at $s^\dagger$,
+
+$$
+n_{\rm feas}(s^\dagger,A)=4,\qquad
+n_{\rm opt}(s^\dagger,A)=
+\begin{cases}4,&r=1\ \text{or}\ r=2,\\5,&r>1,\ r\ne2.
+\end{cases}
+\tag{FA.75}
+$$
+
+There is no six-label strong region at this fixed source.
+
+**Proof.** The strong equality class requires four distinct rays of
+positive total live mass $1/4$, proving the feasible lower count.
+The four labels with failure coefficient $q=1/4$ on each, in FA.15's
+normalization, already have activity $A_0$ and prove feasibility with
+four at every larger budget.
+For optimality use the exact allocation and chord formula FA.17, not
+a new strong height calculation. The directed source intervals give
+
+$$
+\begin{gathered}
+d_{--}<0,\qquad
+2.412<d_{++}/g_+<2.414,\\
+.0101<d_{+-}/g_-<.0102<.0244<d_{-+}/g_-<.0246.
+\tag{FA.76}
+\end{gathered}
+$$
+
+These follow by evaluating FA.74 on JR.52's coarse box with the
+root-normalization expressions for $m_i$, exactly as in Lemma 78.2.
+For a ray of positive live height $d$, an interior failure allocation
+$0<Q<r/4$ needs two actual endpoint labels to attain its chord exactly
+when $r>d/g$. If $r=d/g$, the saturated endpoint has zero height and
+the unsplit label already attains the chord. If $d\le0$, no split
+is required. These are the equality conditions for the scalar triangle
+inequality, and apply to arbitrary hidden multiplicity by Theorem 69.1.
+
+At $1<r<2$, the $\chi=+$ pair puts $r/4$ on the negative ray
+and $(2-r)/4$ on the positive one. The latter never needs splitting,
+since $r<2<d_{++}/g_+$. In the $\chi=-$ pair the costs are
+strictly ordered $d_{+-}/r<d_{-+}/r<g_-$. Optimality uniquely fills
+the cheaper ray to $r/4$ and leaves $(2-r)/4$ on the other, strictly
+inside its capacity. Its positive live and negative saturated heights
+force exactly one split. Thus five labels suffice and are necessary.
+At $r=1$ all four rays are saturated. At $r=2$ each pair puts all
+failure on one saturated ray and leaves the other pure. Both cases
+need exactly four labels, including zero-weight omissions.
+For $r>2$ the negative ray carries $Q=1/2$ without a split, and the
+strictly cheaper positive ray in the other pair carries $Q=1/2<r/4$.
+It necessarily splits, while the remaining rays are pure. This gives
+exactly five. Equal marginal costs in an abstract allocation would
+allow arbitrary allocation on the tied face; FA.76 shows that no such
+additional positive-pair tie or sign threshold changes this fixed-source
+count. Every stated endpoint split is actually generated and realized
+with §86's strong high pair. $\square$
+

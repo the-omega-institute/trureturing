@@ -1,0 +1,35 @@
+**Proposition 8.1 (a capacity profile for every original code).** For
+the canonical fibers $B_e$ of any original $m$-name competitor,
+choose complete witnesses and perform Theorem 4.2's normalization.
+Let $J_e$ index its surviving nontrivial seeds, with domain sizes
+$t_{e,c}\in\{2,3,4\}$. Nonempty fibers have no empty seed domains;
+singleton seeds have been constantized. Then
+
+$$
+|B_e|\le\prod_{c\in J_e}t_{e,c},\qquad
+\sum_{e\in I}\prod_{c\in J_e}t_{e,c}\ge |S_D|.
+\tag{RRN.34}
+$$
+
+In particular some attained canonical name satisfies
+
+$$
+\sum_{c\in J_e}\log_2t_{e,c}
+   \ge\log_2|S_D|-\log_2m.
+\tag{RRN.35}
+$$
+
+Proof. A seed tuple determines the full factor vector at every port,
+and Lemma 2.4 makes at most one canonical block compatible with that
+vector. Thus the map from a solution to its owner replies is
+injective. The fiber is contained in that complete solution set,
+giving the first inequality. Sum over the partition (RRN.28).
+There are $|I|\le m$ terms, so at least one is at least
+$|S_D|/|I|\ge |S_D|/m$. Taking logarithms gives (RRN.35),
+with an empty product interpreted as one. $\square$
+
+This is a bound on unresolved representative capacity. The product
+can overcount incompatible seed tuples. It asserts neither their
+independence nor simultaneous acquisition of their replies, and
+does not charge a seed vector as the retained code.
+

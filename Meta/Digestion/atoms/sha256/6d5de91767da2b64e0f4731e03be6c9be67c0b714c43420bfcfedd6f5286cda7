@@ -1,0 +1,61 @@
+## 八、与最新项目中的输出分支闭包连接
+
+当前项目最新理论线强调，不能只看动作的平均转移核。
+
+设动作 $a$ 和输出 $o$ 对应输出分辨子核：
+
+~~~math
+M_{a,o}.
+~~~
+
+平均转移核是：
+
+~~~math
+K_a=\sum_o M_{a,o}.
+~~~
+
+定义递归观察空间：
+
+~~~math
+V_0=\operatorname{span}(G),
+~~~
+
+~~~math
+V_{n+1}
+=
+V_n+
+\operatorname{span}
+\left\{
+M_{a,o}f:
+a,o,\ f\in V_n
+\right\}.
+~~~
+
+令：
+
+~~~math
+V_\infty=\bigcup_{n\ge0}V_n.
+~~~
+
+对于输出词：
+
+~~~math
+\omega=(a_1,o_1,\ldots,a_n,o_n),
+~~~
+
+记对应复合核为 $M_\omega$。
+
+若使用行向量约定，某个末端测试 $g$ 的记录概率是：
+
+~~~math
+pM_\omega g.
+~~~
+
+于是两个同一 $(X,Y,Z)$ 但不同 $\kappa$ 的分布之间，未来记录概率差为：
+
+~~~math
+(p_\kappa-p_{\kappa'})M_\omega g
+=
+(\kappa-\kappa')dM_\omega g.
+~~~
+

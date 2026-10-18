@@ -1,0 +1,113 @@
+**Proposition 48.2 (feasibility and a strictly decreasing atom).**
+Throughout this closed interval, $Y_\tau,Z_\tau>0$,
+$c_\tau^TQ_0c_\tau=0$, and $R_\tau$ is PSD of rank two with
+$\operatorname{tr}(Q_0R_\tau)=0$. Moreover
+
+$$
+-\frac{1095}{10^6}<\phi'(\tau)<-\frac{998}{10^6}
+ <-\frac1{2000},\qquad
+\frac{1046}{10^9}<\phi(\tau_0)-\phi(\tau_1)
+ <\frac{1048}{10^9}.
+\tag{JR.68}
+$$
+
+Proof. The positive coefficient bounds used here are consequences of
+the exact rational box in CG Proposition 13.2 and its formulas
+(CG.112), (CG.113), (CG.116), (CG.134), not additional fitted
+parameters. They give $\theta-\omega>0$ and the following strict
+rational enclosures; terminating decimals in this table are exact
+rationals.
+
+| Quantity | Lower bound | Upper bound |
+| --- | --- | --- |
+| $\delta$ | $0.0156$ | $0.0159$ |
+| $s_0$ | $0.124$ | $0.127$ |
+| $\chi$ | $1.475$ | $1.52$ |
+| $\Delta A$ | $0.0807$ | $0.0809$ |
+| $\Delta B$ | $0.00291$ | $0.00294$ |
+| $\Delta C$ | $0.00167$ | $0.00169$ |
+| $\xi$ | $0.0188$ | $0.0191$ |
+| $\eta$ | $0.0175$ | $0.0178$ |
+| $-\zeta$ | $0.000100$ | $0.000104$ |
+
+In particular $Y_\tau\geq1/3$ and
+$Z_\tau\geq1/3-2.52/1000>0$. The definitions give exactly
+
+$$
+\tau+Y_\tau+Z_\tau=1,\qquad
+\delta\tau=\theta Y_\tau+\omega Z_\tau,\qquad
+c_\tau^TL_0^{-1}c_\tau=1.
+\tag{JR.69}
+$$
+
+For $a_\tau=(\sqrt\tau,-\sqrt{Y_\tau},-\sqrt{Z_\tau})^T$,
+therefore,
+$R_\tau=L_0^{1/2}(I-a_\tau a_\tau^T)L_0^{1/2}$.
+This proves its positivity, rank and trace claim. No new general
+null-decomposition assertion is needed; the residual decomposition is
+the rank-two case of IR Lemma 10.1 and CA Theorem 5.1.
+
+Differentiating the displayed radicals, whose arguments are positive,
+gives
+
+$$
+\begin{aligned}
+\phi'(\tau)={}&\delta\Delta A+\chi\Delta B-(1+\chi)\Delta C\\
+ &-s_0\xi\frac{Y_\tau+\chi\tau}{\sqrt{\tau Y_\tau}}
+ -s_0\eta\frac{Z_\tau-(1+\chi)\tau}{\sqrt{\tau Z_\tau}}\\
+ &+\zeta\frac{\chi Z_\tau-(1+\chi)Y_\tau}
+                   {\sqrt{Y_\tau Z_\tau}}.
+\end{aligned}
+\tag{JR.70}
+$$
+
+For example, at $\tau_0$ this simplifies to
+$\delta\Delta A+\chi\Delta B-(1+\chi)\Delta C
+-s_0(1+\chi)\xi+s_0\chi\eta-\zeta$.
+The table gives the entirely rational upper bound
+
+$$
+\begin{aligned}
+\phi'(\tau_0)<{}&
+0.0159(0.0809)+1.52(0.00294)-2.475(0.00167)\\
+&-0.124(2.475)(0.0188)+0.127(1.52)(0.0178)+0.000104\\
+={}&-\frac{151937}{250000000}<-\frac1{2000}.
+\end{aligned}
+\tag{JR.71}
+$$
+
+The stronger whole-segment and endpoint bounds in (JR.68) use the
+original rational coefficient box, rather than just this coarse table.
+Their directed evaluation can be specified entirely by rational
+operations: use mesh $2^{-224}$, enclose each exact input interval
+outwards, and round each lower/upper endpoint after every sum, product
+or quotient respectively down/up to that mesh. For a nonnegative
+endpoint $k/2^{224}$, bound its square root by
+$\lfloor\sqrt{k2^{224}}\rfloor/2^{224}$ and
+$\lceil\sqrt{k2^{224}}\rceil/2^{224}$. Division is used only for
+intervals separated from zero. Reconstruct $H,Q^{01},Q^{02}$ from
+the CG adjugate formulas, and their positive-pivot factors from
+(CG.134); all nine box radii are exactly $10^{-24}$.
+Inserting $[1/3,1003/3000]$ into (JR.70), with $Y,Z$ expressed
+relative to $1/3$ as in (JR.66), yields the first two bounds below.
+Inserting the two exact rational endpoints separately into (JR.67)
+yields the last two:
+
+$$
+\begin{gathered}
+\inf\phi'([\tau_0,\tau_1])>-0.001095,\qquad
+\sup\phi'([\tau_0,\tau_1])<-0.000998,\\
+\inf\bigl(\phi(\tau_0)-\phi(\tau_1)\bigr)>0.000001046,\qquad
+\sup\bigl(\phi(\tau_0)-\phi(\tau_1)\bigr)<0.000001048.
+\end{gathered}
+\tag{JR.72}
+$$
+
+Here infimum and supremum refer to the outward arithmetic enclosures;
+these contain every value on the inherited box. Thus the comparisons
+are strict rational inequalities. Integrating just the derivative
+bound would give $1/2000000$; the direct endpoint calculation supplies
+the larger $1/1000000$ margin needed below. None of these operations
+isolates the original root or proves its minimax identification.
+$\square$
+

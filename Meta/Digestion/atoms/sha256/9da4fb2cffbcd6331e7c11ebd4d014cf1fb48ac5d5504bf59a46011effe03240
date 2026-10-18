@@ -1,0 +1,47 @@
+**Proposition 7.2 (Image and accuracy).** The actual image of (7.6) is
+
+$$
+\mathscr S_m=\left\{(K,f_0,\ldots,f_m):
+0<K<H,\quad\|f_0\|_2=1,\quad
+f_j=K^jf_0\ (1\le j\le m)\right\}.
+\tag{7.8}
+$$
+
+Its fibers are exactly the $\beta$ circles at fixed $k,\alpha$. Its
+uniform original-output error is at most $\epsilon$.
+
+**Proof.** Every encoded ray satisfies (7.8). Conversely a unit vector
+$f_0$ equals $U(\alpha)$ for one circle class. Together with $k=K$,
+the remaining equations identify the point as (7.6), and Proposition
+1.2 realizes it with every value of $\beta$. Equality of $K$ and
+$f_0$ proves the fiber assertion.
+
+On an encoded state the decoder gives $D(P_m(k)U(\alpha),0)$.
+The original Gram identity gives the exact squared error
+
+$$
+\|L_mE_m(k,\alpha,\beta)-y(k,\alpha,\beta)\|_2^2
+=4(P_m(k)-A(k))^2+4Zk.
+$$
+
+By (7.2) and the choice of $m$,
+
+$$
+4(P_m(k)-A(k))^2+4Zk
+\le\frac{8H^2}{\sqrt m}+4ZH
+\le\Delta_\epsilon+4ZH=\epsilon^2.
+\tag{7.9}
+$$
+
+The inequalities hold on the whole open source and for both entire
+phase circles. They include the case where the specified $m$ is one.
+This is one finite full-domain model for the given tolerance, not a
+collection of separate models on an increasing sequence of bands.
+$\square$
+
+The $02$ pair of (7.7) is zero, whereas every actual native ray has
+positive $02$ radius $B(k)$. Its decoded vector is therefore outside
+the native output image. This is expressly permitted by Definition 2.1.
+The exact encoded state remains in (7.8). Approximation of the output
+does not alter the probability law or support of that state.
+

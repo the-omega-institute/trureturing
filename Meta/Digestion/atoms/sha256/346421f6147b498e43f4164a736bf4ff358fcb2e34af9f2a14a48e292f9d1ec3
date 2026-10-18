@@ -1,0 +1,28 @@
+**Convention 10.2 (literature state and verification boundary).** The
+literature state of the new quantitative deduction is `repo-derived`:
+Lemmas 7.1–7.3, the zero-transfer application of Lemma 8.1, Theorem 8.2
+and its two performance corollaries are established here from the credited
+data and the supplied proposal. Standard Kraus/Choi positivity, the Schur
+characterization, finite-dimensional spectral and Schur-complement facts,
+trace-norm/effect comparison and elementary differentiation are mature tools.
+
+The current source attributes these tools, within their exact scopes, to
+de Vicente–Streltsov for genuine-coherence/Schur operations,
+Heinosaari–Jivulescu–Reeb–Wolf for finite quantum-operation extension,
+Nechita–Park for sign-covariant maps with transfer and reverse coherence,
+and Terhal–Horodecki, Chruściński–Kossakowski and Sekatski for
+Schmidt-number/bottleneck facts. Those are SOURCE-REPORTED literature
+attributions; no external text was consulted or independently authenticated
+for this volume. No `suspected-novel` or worldwide-priority assertion is
+made. External originality has not been assessed.
+
+The new proof is symbolic ordinary analysis. No new numerical evaluation,
+enumeration, experiment, SDP, CAS, mathematical test, build, ingestion or
+kernel verification establishes its claims. Raw source seals establish
+identity only; the precise credited mathematical premises are in §5, and
+the complete new deduction is in §§6–8. If one of those premises fails,
+the claimed additive gap above the original optimum is not established by
+this volume. In particular, without (ZG.22) the argument supplies the
+conditional lower witness above $F(x_\star)$, not a claimed comparison with
+an independently known optimum.
+

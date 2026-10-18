@@ -1,0 +1,19 @@
+**Definition 3.5 (exact unary layout inverse).** From either parser's
+node list use Find for the fixed outer socket paths. Decode a tape at path
+$p$ by repeating: if both children are absent stop at its trailing terminal;
+otherwise require both children, parse the left $F_8$ cell, and continue at
+$p1$. Each of its eight sockets must have exactly one terminal child, left
+or right, giving that track bit. A finite-location socket may instead have
+no child, giving absent. Scaffold parsing uses the fixed consecutive
+floor/ceiling split. Reject malformed scaffolds, missing required child,
+nonterminal bit child, extra socket children or missing fixed component.
+
+Emit the raw 74 lists and finite vector. Re-run the component walker and
+require equality with the complete parsed node list; this excludes unused
+nodes. Check cursor/access-link consistency under the native carrier's
+actual mark convention. Do not demand a valid source tree, sealed bank,
+complete descriptor, valid active main code, or completed copy. Raw eight
+tracks and absent locations are decoded literally. S/B→raw is asserted
+on the actual carrier image, including its malformed-source/partial-code
+states; history decoding has the smaller domain in §7.
+

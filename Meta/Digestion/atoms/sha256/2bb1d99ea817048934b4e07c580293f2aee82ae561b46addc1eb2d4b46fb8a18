@@ -1,0 +1,15 @@
+## 九、单一场的严格版本
+
+如果要把“只有一个场”写成一个正式对象，可以定义统一关系场：
+
+```math
+\Phi:
+\mathcal E\times\mathcal E
+\longrightarrow
+\mathcal A.
+```
+
+它不只记录每个事件的状态，还记录事件之间的关系变化。
+
+然后从 $\Phi$ 派生：
+

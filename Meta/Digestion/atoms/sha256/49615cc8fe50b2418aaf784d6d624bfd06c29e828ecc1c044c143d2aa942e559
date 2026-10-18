@@ -1,0 +1,11 @@
+**定义 7.1（一般四块盒）。** 对 $A,B,C,D\in\mathbb N$，包括零，令
+
+$$
+\mathcal B_{A,B,C,D}
+=\{0,\ldots,A\}\times\{0,\ldots,B\}
+\times\{0,\ldots,C\}\times\{0,\ldots,D\},
+\qquad q(a,b,c,k)=(a+k,b,c+k).
+$$
+
+纤维的逆式仍采用定理58.1；其 $v$ 范围按 [原卷命题89.1的更正](FIBONACCI_ATOMIC_RELATION_GENERATION.md#89-第-75-节纤维定义域与合数块完整性的更正) 保留，不能只检查关联区间。
+

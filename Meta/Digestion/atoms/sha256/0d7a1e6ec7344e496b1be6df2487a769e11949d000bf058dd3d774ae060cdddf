@@ -1,0 +1,43 @@
+**Theorem 4.4 (the general full-family lower).** Under Definitions
+1.2--1.4, every correct complete preparation and one-Read reader
+satisfies, for $D\ge2$ and $N=2^{D-2}$,
+
+$$
+|E[\mathcal F_D]|\ge\left\lceil(7/5)^N\right\rceil.
+\tag{LTR.15}
+$$
+
+Proof. Restrict its actual code fibers to the simultaneous sources
+$t_x$ of Definition 4.1, without altering the encoder. Fix an attained
+code $z$ and its restricted fiber $B_z$. For target $p_i$, the
+reader's pre-query inputs are constant on this same $B_z$. Its zero-Read
+decision or submitted word is consequently fixed. If it makes a Read,
+Lemma 4.2 makes that reply either constant or a function of one
+coordinate $x_j$, possibly $j\ne i$. The final predictor depends only
+on this reply and the common inputs.
+
+The required five trajectories in (LTR.14) are distinct. Therefore,
+on $B_z$, correctness imposes $x_i=f_i(x_j)$, where $f_i$ factors
+through this native reply partition. Assign any fixed gadget state
+to replies whose predictor does not represent one of those five
+trajectories. This extends $f_i$ to all five input states without
+increasing its image beyond the number of reply cells. Such arbitrary
+extensions do not change the equation on $B_z$. A constant query
+or zero Reads instead impose a constant $x_i$. The reader is not
+operationally executed for multiple targets at once: these equations
+express its required correctness for every permitted alternative
+late request on the one unchanged source.
+
+These equations for all $i$ define a superset of $B_z$. Lemma 4.3
+therefore gives $\mu^N(B_z)\le(5/7)^N$, even with arbitrary
+correlations inside the actual fiber, off-target queries, very deep
+words and code-dependent selectors. The restricted fibers partition
+the whole $5^N$ actual-source product, of total analytical mass one.
+Hence their number is at least $(7/5)^N$, and the attained full-family
+alphabet is at least that large. Integer rounding proves (LTR.15).
+
+The measure is a lower-bound witness, not a prior on correctness.
+No independence of retained fibers, source-dependent request,
+unavailable preparation transcript or prefix-only query assumption
+has been used. $\square$
+

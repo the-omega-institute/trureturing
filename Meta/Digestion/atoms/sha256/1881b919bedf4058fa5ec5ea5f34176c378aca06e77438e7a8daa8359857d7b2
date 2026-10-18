@@ -1,0 +1,145 @@
+**Theorem 9.5 (Repeated-bracket classification for every allowed mean).**
+On $\mathcal M_b$ let $h_a$ be the increment coordinate of pole group
+$a$ from Theorem 3.2. The vector fields of the two original velocity
+inputs and their successive brackets are
+
+$$
+P=\partial_k,\qquad
+Q_n=\sum_{a=1}^g w_a^{(n)}(k)\partial_{h_a}\quad(n\ge0),
+\qquad Q=Q_0.
+\tag{9.18}
+$$
+
+Their generated real Lie algebra, meaning finite real linear
+combinations of vector fields and their brackets, is exactly
+
+$$
+\mathfrak l_b=\mathbb RP+\operatorname{span}_{\mathbb R}
+                   \{Q_n:n\ge0\},\qquad
+[P,Q_n]=Q_{n+1},\quad[Q_n,Q_j]=0.
+\tag{9.19}
+$$
+
+Its complete classification is
+
+| Fixed mean regime | Real vector-field Lie algebra | Pointwise tangent rank |
+| --- | --- | --- |
+| Neither wall | Countably infinite dimensional; $P,Q_0,Q_1,\ldots$ independent | $5$ |
+| $E_-$ only | Countably infinite dimensional; the same basis | $4$ |
+| $E_+$ only | Countably infinite dimensional; the same basis | $4$ |
+| Both walls | Three dimensional, with basis $P,Q_0,Q_1$ and $[P,Q_0]=Q_1$ central | $3$ |
+
+There are no further exceptional allowed values of $X,Y,Z$ in this
+classification. It concerns real constant coefficients, not a module
+allowing arbitrary coefficient functions. The three-dimensional case
+is the Heisenberg algebra realized by (9.11), not the rotation algebra.
+None of the ranks or algebra dimensions asserts globally available
+flows on the full positive source.
+
+Proof. Vertical coefficients depend only on $k$, so vertical fields
+commute and bracketing with $P$ differentiates their coefficients.
+Thus the right side of (9.19) is a Lie algebra containing $P,Q$ and
+every listed field is an iterated bracket. This proves the equality.
+To determine its dimension, let the distinct poles be $\lambda_a$,
+with signed multiplicities $c_a=m_a\varepsilon_a$ as in §3.3. Put
+
+$$
+F(k)=\prod_{a=1}^g(k-\lambda_a),\qquad
+N(k)=\sum_{a=1}^g c_a\prod_{j\ne a}(k-\lambda_j).
+\tag{9.20}
+$$
+
+The original positive information coefficient and grouped weight are
+
+$$
+I(k)=\sum_a\frac{c_a}{k-\lambda_a}=\frac{N(k)}{F(k)},\qquad
+w_a(k)=\frac{\prod_{j\ne a}(k-\lambda_j)}{N(k)}.
+\tag{9.21}
+$$
+
+This is a formula for one coordinate per pole group, not a sum of
+its equal components. The four signed modes give
+
+$$
+\sum_a c_a=0,\qquad
+\sum_a c_a\lambda_a=(X+Y-r)-X-Y=-r\ne0.
+\tag{9.22}
+$$
+
+Hence $N$ has degree exactly $g-2$, with leading coefficient $-r$.
+Furthermore
+
+$$
+N(\lambda_a)=c_a\prod_{j\ne a}(\lambda_a-\lambda_j)\ne0.
+\tag{9.23}
+$$
+
+Thus none of its roots can cancel a numerator in (9.21). The positivity
+of $I$ excludes roots in $J_b$. If $g>2$, $N$ is nonconstant and has
+a complex root, so every $w_a$ has a genuine pole. At a pole of order
+$q\ge1$, its $n$th derivative has pole order $q+n$ with nonzero leading
+coefficient. In a finite constant linear relation among
+$w_a,w_a',\ldots,w_a^{(n)}$, the largest derivative has the unique
+highest pole order and cannot cancel. A relation holding on the real
+interval would be a rational-function identity after clearing
+denominators, so this complex-pole argument applies. Therefore all
+$Q_n$ are linearly independent over $\mathbb R$ when $g>2$.
+The $\partial_k$ component then makes $P$ independent as well.
+
+The possible pole exceptions can also be enumerated explicitly.
+Before grouping, the numerator over the four mode factors is
+
+$$
+N_4(k)=-rk^2+2XYk+XY(r-X-Y),\qquad
+\operatorname{disc}(N_4)=4XY(r-X)(r-Y)>0.
+\tag{9.24}
+$$
+
+In the neither-wall regime its two distinct roots are
+$(XY\pm\sqrt{XY(r-X)(r-Y)})/r$, and (9.23) rules out any cancellation.
+On $E_-$ only the duplicated factor is $k$, and grouping gives
+$N(k)=-rk+2XY$. On $E_+$ only, writing $X=Y=x$, the duplicated
+factor is $k-x$, and grouping gives
+$N(k)=-rk+x(2x-r)$. Each is genuinely linear, and (9.23) still
+excludes cancellations. On both walls the grouped numerator is the
+nonzero constant $-r$. These cases exhaust the allowed same-sign
+collisions; opposite-sign collisions are excluded by the strict
+mean inequalities of Definition 2.1. In particular neither a choice
+of the positive middle mass nor a special interior height introduces
+an extra finite-dimensional case.
+
+When $g=2$, Theorem 3.7 gives affine $w$, so $Q_n=0$ for $n\ge2$.
+The determinant of $Q_0,Q_1$ in $(u,v)$ is $-1/(2r)\ne0$.
+Thus $P,Q_0,Q_1$ are a basis, with the central bracket asserted.
+Theorem 9.3 supplies its actual chronological representation and
+lawful histories. Its nonzero center and vanishing further brackets
+also distinguish it from $\mathfrak{so}(3)$.
+
+For pointwise rank in every regime, set $f_a(k)=1/(k-\lambda_a)$.
+At a fixed interior $k$, the matrix with columns $f^{(n)}(k)$,
+$0\le n<g$, has entries
+
+$$
+f_a^{(n)}(k)=(-1)^n n!\,(k-\lambda_a)^{-n-1}.
+\tag{9.25}
+$$
+
+Its determinant is nonzero: factor $1/(k-\lambda_a)$ from each row
+and $(-1)^n n!$ from column $n$, leaving the Vandermonde matrix in
+the distinct numbers $1/(k-\lambda_a)$. Multiplication by the
+nonzero scalar function $1/I$ changes this derivative-column matrix
+by a triangular column transformation with diagonal $1/I$.
+Consequently $w,w',\ldots,w^{(g-1)}$ also have independent values
+at every $k$. These supply all $g$ vertical tangent directions;
+$P$ adds the remaining one. This proves the stated ranks without
+identifying tangent rank with the dimension of the vector-field algebra.
+
+The phase flow of $Q$ is lawful for all finite times because it fixes
+$k$. The probability flow of $P$ is lawful only while $k+t\in J_b$.
+Even the central double-wall endpoint flow, though defined everywhere
+as a phase formula, requires an excursion for a nontrivial command
+of that central type. By Theorem 9.2 no such excursion command is
+lawful on the whole unknown-height fiber. Global flow existence as a
+mathematical vector field therefore does not remove the command-domain
+restriction. $\square$
+

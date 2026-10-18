@@ -1,0 +1,26 @@
+**定义 5.1（先例、标准方法与具体对应）。** The mathematical
+dependencies and distinctions are as follows.
+
+| Source | Precise correspondence |
+| --- | --- |
+| [I](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md), Definitions 39.1, 44.1; [II](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), Definitions 51.1–51.2, 56.1 | Original-clock acquisition, normalized complete targets, the separate $MMJM$ history and the whole-set failure recursion. |
+| II, Theorem 62.1; Propositions 63.1 and 63.3 | The whole known zero-drift $MMJM$ inverse, its noncontainment consequence and its exceptional actual consumer are reused results. Since the initial read there is zero, their zero-drift stratum is exactly their initial-root stratum. |
+| II, Propositions 59.3, 63.4 and 68.2 | Four-point interpolation and the implicit function theorem already construct continuous families at other $MMJM$ histories or promises. The method is shared; the six equations and the exact mixed-drift $H^*$ family in Theorem 4.2 are different. |
+| [III](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md), Theorem 4.1 and Proposition 7.1 | The known factor $(1+t^2)(a+bt)$ and the collision for one fixed acquisition word retain their stated domains. They provide neither the arbitrary-gain inverse here nor a general adaptive lower bound. |
+| [IV](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), Theorem 2.1 | Its losing $JMMM$ continuation and the complementary fourth-$J$ continuation share the $JMM$ ancestors; the present parent is the latter. |
+| [V](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md), Definition 5.1; Theorem 5.2, equation (5.5) | The literal $JMMJ$ history and the baseline-drift root-seven inverse. The zero fifth-response branch of Theorem 2.1 is exactly this inverse after (2.18). |
+| [VI](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md), Theorem 3.2 | The arbitrary-drift $MMJM$ consumer for known sets of at most three targets, and its at-least-four necessary size bound for $L_3$. Its separate $MJMMJ$ child is a different literal history. |
+| [VII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), Definitions 1.1–1.3; Theorems 4.1 and 5.1; Corollary 5.2 | The same $JMMJM$ history, its arbitrary-drift pair exclusion and the at-most-two-target actual-child consumer. The initial-root policy here instead covers arbitrary cardinalities; Corollary 4.3 prevents inferring its promise from the six readings. |
+| Yanjun Li, Kiryung Lee, Yoram Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1) | `literature-attested`: identification up to a specified transformation group quantifies over every compatible solution and decomposes into a factor-orbit condition and a conditional-fiber condition. Here trace normalization removes positive scaling, and drift is retained. No fixed-$M,J$ adaptive sampling theorem is transferred. |
+| Petra van den Bos, Frits Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [Theorem 6.1 and Example 7](https://arxiv.org/html/1907.11034v2) | `literature-attested`: the suspension-automaton construction uses mutually incompatible distinct states and injective splits; Example 7 shows why the incompatibility hypothesis cannot be dropped from that equivalence. The continuous classes and read budgets here are supplied by their own explicit inverses. |
+| Michael Kech, Felix Krahmer, *Optimal Injectivity Conditions for Bilinear Inverse Problems with Applications to Identifiability of Deconvolution Problems*, [Theorems III.1–III.3](https://arxiv.org/html/1603.07316v1) | `literature-attested`: stable injectivity on constrained complex rank-one domains, with lower thresholds and almost-all linear or structured measurement maps. These quantifiers do not give a threshold for positive real sources with drift, fixed atoms and deterministic feedback. |
+
+The nonzero-response inverse and its assembly in Theorem 2.1,
+the actual consumer in Proposition 3.2, and the specific family and
+label obstruction in Theorem 4.2 and Corollary 4.3 are
+`repo-derived` model-specific deductions. Lagrange interpolation,
+linear trace reconstruction, monotonic inversion and the implicit
+function theorem are standard methods within their proofs; no new
+general version of these methods is asserted. Their use gives no
+external originality or literature-completeness assertion.
+

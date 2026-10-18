@@ -1,0 +1,24 @@
+**Definition 2.1 (row strata and prefix multiplicity).** Assume first that
+$A=f(D)$ is finite and nonempty. For $r\in A$ put
+$D_r=\{u\in D:f(u)=r\}$. For an attained prefix $p$, set
+
+$$
+S_h(p)=\{r\in A:\exists u\in D_r\text{ with }p_h(u)=p\},
+\qquad
+m_h=\max_{p\ {\rm attained}}|S_h(p)| .
+\tag{SJM.8}
+$$
+
+The sequence $m_h$ is nonincreasing. Let $I=(P,Q,R_P,H_0,H_{\rm rel},N)$.
+An admissible extra field is a source-total effective map $E:\mathcal T\to C$,
+actually computed from the same acquired finite source before the complete cut,
+with finite nonempty conditional image $E(D)$. Its program and installed data
+are common functions of $I$ and declared source-independent parameters. The
+entire accessible initial state factors through $(I,E(u))$ and recovers these
+fields; no source-dependent program, selector, length, timing or archive lies
+outside them. Define $M(D,Q)$ to be the least $|E(D)|$ over such fields for
+which one common effective consumer terminates correctly on every $u\in D$,
+has a uniform finite number of post-entry reads, and returns $f(u)$.
+Only complete conditional values are minimized. The acquisition, computation,
+installation and complete cut must actually be supplied and paid.
+

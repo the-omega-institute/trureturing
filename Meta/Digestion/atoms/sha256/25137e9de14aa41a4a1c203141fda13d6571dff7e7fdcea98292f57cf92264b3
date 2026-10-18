@@ -1,0 +1,20 @@
+### Theorem 4.1 (critical eight-input lower bound)
+
+Every complete correct graph of the original model with $n=8$, $k=4$, and both caps (1) has
+
+$$
+ m\ge18. \tag{13}
+$$
+
+**Proof.** Suppose $m\le17$. Since $m<20$, (4) implies that some consecutive gap $B=(a,b)$ has $D_B>E_B$. Every gap of span at most four has $D_B\le E_B$, and every gap ending at $b\le5$ has $D_B=0$. Thus the positive-deficit gap has span at least five and ends at $b=6$, $7$, or $8$. Depth $1$ is a common-support cut, so $a\ge1$.
+
+If $b=6$, Lemma 3.2 rules out the deficit. If $b=7$, then $a=1$ or $a=2$. For $a=1$, all depths $2,3,4,5,6$ are internal and noncommon, contradicting Lemma 3.1. For $a=2$, the gap is $(2,7)$ and Lemma 3.3 gives $E_B-D_B\ge-2$. There are no other interior depths in the complete cut list: the only remaining gaps are the span-one intervals between $0,1,2,7,8$. Hence (4) gives
+
+$$
+ m-20=E_{\rm cut}+u+E_B-D_B\ge-2,
+$$
+
+so $m\ge18$, contradicting $m\le17$.
+
+If $b=8$, then $a=1,2,$ or $3$. For $a=1$ or $a=2$, all depths $3,4,5,6,7$ are internal and noncommon, contradicting Lemma 3.1. For $a=3$, Lemma 3.4 rules out the deficit. These cases exhaust every possible positive-deficit gap, proving (13). Every quantity in the argument belongs to the one original installed graph; no state is copied, unrolled, discarded after certification, or assigned to incompatible residual computations. \(\square\)
+

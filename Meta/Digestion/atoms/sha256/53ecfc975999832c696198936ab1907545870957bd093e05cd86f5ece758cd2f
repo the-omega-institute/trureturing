@@ -1,0 +1,58 @@
+**Theorem 3.1 (Eventwise transport and the original-value enclosure).**
+For either containment of Theorem 2.2, use a permitted $p$ and put
+$x_p=(1-p)x+px_*$. Then for every $J\in\mathcal J_{15}$,
+
+$$
+\begin{aligned}
+\mathcal H_J(x_p)
+&=(1-p)\mathcal H_J(x)+p(\Pi_J-|J|I_5/5),\\
+\|\mathcal H_J(x_p)\|_{\rm op}
+&\le(1-p)\|\mathcal H_J(x)\|_{\rm op}+p c_J,\\
+c_J&=\begin{cases}4/5,&|J|=1,\\3/5,&|J|=2.\end{cases}
+\end{aligned}
+\tag{3.1}
+$$
+
+In particular the repaired fixed scalar port satisfies
+
+$$
+e(T_{x_p})\le(1-p)f(x)+\frac45p.
+\tag{3.2}
+$$
+
+With $L$ the corresponding $L_n$ or $L_n^{\rm P}$,
+
+$$
+\boxed{L\le\varepsilon_1\le(1-p)L+\frac45p.}
+\tag{3.3}
+$$
+
+Both sides concern (1.3), including every original complex competitor
+for the necessary direction and every complex input and actual finite
+history for the sufficient direction.
+
+Proof. The adjoint of $\Delta$ maps $E$ to
+$\operatorname{tr}(E)I_5/5$. Linearity of the adjoint gives the
+first identity in (3.1). The eigenvalues of
+$\Pi_J-|J|I_5/5$ are $1-|J|/5$ on its range and $-|J|/5$ on
+its orthogonal complement. This gives the two constants and the norm
+inequality. Taking the maximum and using (1.11) proves (3.2). The
+sharper eventwise bounds in (3.1) remain simultaneous bounds on one
+channel; their replacement by $4/5$ in (3.2) is only an upper estimate.
+
+For any original $T\in\mathfrak C_1$, the credited no-worse QRC
+representative has Choi state in $\mathcal F$, hence in both outer
+sets by (2.4). Thus $L\le e(T)$ for every original complex competitor.
+This proves the lower in (3.3), without restricting the original class
+to real designs.
+
+The feasible extension sets are compact. Normalized positive operators
+on a fixed finite-dimensional support form a compact set, and the
+marginal, support and partial-transpose conditions are closed.
+The projected marginal determines $x$ uniquely; $f$ is continuous.
+Both sets are nonempty by (2.6) applied to $\chi_*$. Hence a minimizer
+exists. Repair such a minimizer by Theorem 2.2 and apply (3.2) to prove
+the upper in (3.3). Its finite fixed-port realization is given in
+Theorem 4.1. Neither the minimizer of the outer problem nor its
+unperturbed marginal has thereby been declared a scalar port. $\square$
+

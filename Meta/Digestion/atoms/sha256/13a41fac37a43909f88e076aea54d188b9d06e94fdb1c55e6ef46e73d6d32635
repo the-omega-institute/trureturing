@@ -1,0 +1,66 @@
+**定理 15.1（One diagonal pair always admits five word rows）。** Under Convention 13.1 with $r=2$ and exactly one diagonal pair, there is a complete five-word-row GLOBAL controller of deadline four.
+
+Proof. Write the three literal pairs as $(L,L),(L',L),(L,L')$, with $L\ne L'$. Choose $e\in\mathbb F_2$ and first charge $q$ on $J$ by
+
+$$
+q(j)=\begin{cases}
+e\oplus1,&\Lambda(j)=(L',L),\\
+e,&\Lambda(j)=(L,L'),\\
+0,&\Lambda(j)=(L,L).
+\end{cases}
+\tag{15.1}
+$$
+
+If $H$ is a leaf class, choose $e$ so its charge is zero. If $H$ is central or empty, choose $e$ so $q(a)=0$. Such a choice exists in both cases. Then $q=0$ on $H$, and a raw first response $e$ always has label $L$ on both values. Set
+
+$$
+E_1=\widehat{\{j\in J:q(j)=1\}}^{\,0},\qquad
+B=\mathcal B_1(E_1),\qquad
+\mu(j)=\mathbf1_{\{\Lambda(j)\ne(L,L)\}},\qquad \beta=1-e.
+\tag{15.2}
+$$
+
+The continuing raw-$\beta$ child has one actual initial value at every $j$, and target $L$ or $L'$ according as $\mu(j)=0$ or $1$. The full inverse begins zero and safely clears every original root tail. Put
+
+$$
+A_2=\{j\in J\cap W_2:\mu(j)=1\}.
+\tag{15.3}
+$$
+
+If $B$ ends zero, take $F_2=A_2$. Otherwise, if $a\in A_2$ and $a+1$ is nonactual, take $F_2=A_2\cup\{a+1\}$; in all other cases take $F_2=A_2$. Let $D=\mathcal B_2(\widehat F_2^{\,m})$.
+
+These are charges of this very middle word. If $B$ ends zero, incoming tail zero makes every length-$m$ word safe, including all ones. If it ends one, the choice of $e$ shows that $H$ is a leaf class, $q(a)=1$ and $\mu(a)=1$. The first interior vertex $a+1$ lies in the ambient missed interval of $W_1$: when actual it is in that homogeneous leaf class, so its charge in $A_2$ is one; when nonactual the displayed addition makes its charge one. The leading two charges of $D$ are consequently $1,1$, making its actual first bits $1,0$. The parity donor $m$ lies strictly later, at path position $h+1\ge2$. Since $\tau(B)\le m-1$, this seam satisfies $\tau(B)+1\le m<k$, and the following zero clears it. Thus the same literal $D$ is safe, with no cleanup block.
+
+Use the actual third-window donor $d_3$ of (1.6), and put
+
+$$
+F=\mathcal B_3\left(\widehat{\{j\in O:\mu(j)=1\}}^{\,d_3}\right).
+\tag{15.4}
+$$
+
+This word starts zero, safely clears the actual tail of $D$, and distinguishes the only missed $L'$ phases from every remaining $L$ phase.
+
+Install two roots $a_v$ with $c(v)=a_v$, $u(a_v)=1^m$, $V(a_v,v)=b$, $V(a_v,1-v)=H_C$ and $V(a_v,\bot)=H_R$. Install three more word rows $b,X,F_0$, with words $B,D,F$ and
+
+$$
+V(b,e)=H_L,\quad V(b,\beta)=X,\qquad
+V(X,e)=H_{L'},\quad V(X,\beta)=F_0,\qquad
+V(F_0,e)=H_{L'},\quad V(F_0,\beta)=H_L.
+\tag{15.5}
+$$
+
+All other word-row bottom updates are $H_R$. Install exactly the $N$ actual Halt rows and their self-updates; initialize $c(\bot)=H_{L_\bot}$. In the notation (9.8), the exact word supports are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,\qquad
+\Gamma_b=\mathcal S_0\cup\mathcal S_1,\\
+\Gamma_X&=\{(L_{\mu(j)},(\beta,-j+2m,\tau(B))):j\in J\},\\
+\Gamma_{F_0}&=\{(L_{\mu(j)},(\beta,-j+3m,\Phi_D(\tau(B)))):
+j\in J,\ q_2^D(j)=0\},
+\end{aligned}
+\tag{15.6}
+$$
+
+where $L_0=L$, $L_1=L'$. Exact Halt supports are (5.6), including the independent initial-bottom pair. Ranks $4,3,2,1,0$ on roots, $b,X,F_0$, Halts strictly descend. Every source follows a prefix of $1^m\mid B\mid D\mid F$. Both labels occur on $O$ and have middle charge zero, so actual sources issue all four blocks. This gives the complete $N+5$ attainment used in (14.6); it places no restriction on competitors. ∎
+

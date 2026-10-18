@@ -1,0 +1,6 @@
+## 88. A path-free local quarter minimum for a party of Kraus rank at most three
+
+This is a new consequence of the full original-channel comparison geometry in [section 86](ARITHMETIC_HOLOGRAPHIC_RT_II.md#86-local-quartic-stability-from-the-rank-two-ky-fan-minimum-manifold) and the all-disphenoid coefficient in [section 87](ARITHMETIC_HOLOGRAPHIC_RT_II.md#87-exact-anisotropic-quartic-coercivity-at-every-disphenoid-equality-pair). The proof is a uniform finite-dimensional neighborhood argument. It does not infer a neighborhood statement merely from the individual C² path limits of section 87.
+
+The perturbed A channel may have arbitrary Kraus rank and both channels may leak into wrong output fibres. The perturbed B channel is required to have Kraus rank at most three. No path, differentiability, or choice of a continuous third Choi eigenvector is assumed. The unrestricted case, in which both local ranks may be larger, remains open.
+

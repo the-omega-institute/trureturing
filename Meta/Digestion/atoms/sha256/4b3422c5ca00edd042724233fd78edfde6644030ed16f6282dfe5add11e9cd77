@@ -1,0 +1,26 @@
+**定义 60.3（The actual root pair and its finite price）。** The successful positive child of the original root $1^m$ has $S=\{0,m\}$, paid depth one, current value $v\oplus1$, and original tails $[0,h)$, where $h=k-m\ge m$. Set
+
+$$
+R=\left\lceil\frac{T}{m}\right\rceil-1
+=\left\lfloor\frac{k}{m}\right\rfloor.
+\tag{60.5}
+$$
+
+Let $\chi_v$ be the least finite entry in the following list, or infinity if none is finite:
+
+$$
+\begin{array}{c|l}
+\text{additional fee}&\text{condition}\\ \hline
+0&F_v\text{ constant on }\{0,m\}\times[0,h)\\
+R&F_v(j,\cdot)\text{ constant on }[0,h)\text{ for each }j=0,m\\
+1&\exists r\in\{1,\ldots,m-1\}:\quad
+ F_v\text{ constant on }\{0,m\}\times[h-r,h),\quad
+ F_v(j,\cdot)\text{ constant on }[0,h-r)\text{ for each }j=0,m\\
+1+\max\{\eta_v(0,2),\eta_v(m,2)\}
+&h>m,\quad F_v\text{ constant on }\{0,m\}\times[h-m,h).
+\end{array}
+\tag{60.6}
+$$
+
+Only the last row calls height $h_2=k-2m$, and only under $h>m$. In particular no height-zero singleton is called at $k=2m$.
+

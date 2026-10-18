@@ -1,0 +1,77 @@
+**Lemma 4.2 (complete acquired-source normalization).** For every input
+(FNS.2), and for every supplied complete original $Q$-row $r$, one can
+construct finite families of mixed maps and predicates such that
+
+$$
+\begin{aligned}
+D&=\bigcup_{b\in\mathcal B_I}
+ \{U_b(\mathbf n,\mathbf z):P_b(\mathbf n)\land\Delta_b(\mathbf n,\mathbf z)\},\\
+D_r&=\bigcup_{b\in\mathcal B_{I,r}}
+ \{U_{r,b}(\mathbf n,\mathbf z):
+       P_{r,b}(\mathbf n)\land\Delta_{r,b}(\mathbf n,\mathbf z)\}.
+\end{aligned}
+\tag{FNS.21a}
+$$
+
+Before each negative conjunction, its residual carrier is the full Cartesian
+product of finite native trees. Every old positive identification, concrete
+exterior, reached/absent fact, literal and positive record is already true on
+the source map whenever $P_b$ holds. The entire remaining native negative
+list, including off-task old comparisons, is in $\Delta_b$. Both inclusions
+in (FNS.21a) reconstruct original sources; an empty family denotes the empty
+source set. No assumption that $P$ is the root cut or the target cut is made.
+
+**Proof.** This is the acquired instantiation of [NIC, Theorems 3.2--3.3 and
+4.3][NIC]. The following construction specifies its old-class and target
+correspondence. Start with (FNS.17a). Choose an original-prefix depth larger
+than all listed cut and endpoint lengths. Refine each old class value by a
+finite native prefix pattern with independent frontier variables. Repeated
+old occurrences use the same pattern and the same frontier tuple. There are
+finitely many such patterns; actual class values select their actual patterns
+and actual frontier subtrees. Filling them in $L_R$ returns the same original
+source. Early leaves retain their absent descendants.
+
+At every fixed actual epoch, distribute $\rho$ through original branch
+nodes. Navigation to a listed endpoint either reaches a mixed expression in
+the frontiers, reaches a subtree of an explicitly expanded early leaf, or is
+absent. The chosen depth ensures that no listed address enters an unspecified
+frontier. Decide all literal replies and both endpoint guards in each case;
+an absent endpoint rejects either signed record. Keep every surviving whole
+positive or negative comparison at its recorded epochs, including repeats.
+
+For the target, check its entire reached set and form the mask by replacing
+exactly those reached $Q$ subtrees by $\alpha$. Equality of this mask to the
+concrete mask of $r$ preserves its entire exterior, including uncut frontier
+subtrees. For every pair of reached target holes, retain the positive equality
+or negative comparison specified by its full partition. Old within-class
+equalities are already literal sharing in $L_R$; all distinct-old-class
+comparisons in (FNS.17a) remain negative tests. No comparison is selected by
+whether it is relevant to $Q$.
+
+Each surviving finite case now has one native source term $W(\mathbf x)$,
+a finite positive presentation $\mathscr E(\mathbf x)$ and the full native
+negative list $\Delta(\mathbf x)$. Declare every frontier and definitional
+auxiliary, even if it is not used in the output. Apply NIC's positive image
+construction to $\mathscr E$ alone. Its finite smart-pair cases, free-shape
+factorization, scalar equations and connected offset blocks produce
+$F_b(\mathbf n,\mathbf z)$ on
+$\{\mathbf n:P_b(\mathbf n)\}\times\mathcal T^{m_b}$, with no residual
+positive predicate. The sound ambient expansion and the reconstruction of
+actual normal codes are the two directions of [NIC, Theorem 3.2]. In
+particular dropping ambient normality creates overlapping native images,
+not extra positive solutions. This is why no native equality is silently
+left to a negative-only separator.
+
+Set $U_b=W\circ F_b$ and pull back every original negative through $F_b$,
+evaluating it after native expansion, as required by NIC Theorem 3.3. Fixed
+powers distribute through the resulting maps, so their syntax and all
+negative sides have (FNS.9)'s mixed form. Forward, each parameter tuple gives
+one finite source with the old row, all records and, where imposed, exactly
+$r$. Reverse, any source in $D$ or $D_r$ supplies its actual old class values,
+prefix pattern, frontiers and named subexpressions. NIC reconstructs that
+whole tuple; hence $W\circ F_b$ reconstructs that same source. The actual
+old partition, target partition, masks, guards, signs and epochs all survive
+both inclusions. All branches are finite and each supplier construction
+terminates. This proves (FNS.21a), without selecting a URR section as the
+source image. $\square$
+

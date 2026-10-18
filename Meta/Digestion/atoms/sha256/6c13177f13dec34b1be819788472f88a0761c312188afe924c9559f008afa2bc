@@ -1,0 +1,19 @@
+**Assumption 10.1 (protected first Read, unprotected continuation).**
+Use the source, complete row, deterministic read-only observer and separate
+Return of Definitions 1.1–1.4. Fix any public finite prefix-free cut $P$.
+The invocation source ranges over all of $\mathcal T$, including both
+one-leaf trees. Observer initialization and every source-free transition
+before the first Read depend only on $P$ and the fixed effective program.
+No writer update is allowed before that first Read. Subsequently the writer
+may perform any unknown finite number of global $\rho$ updates on the same
+register and root, including during local computation and before Return.
+Every pending observer has the progress of Definition 1.4.
+
+An invocation solver must terminate on every such history and return
+$R_P(u)$ for its invocation source $u$. The target remains $R_P(u)$ after
+any later source change. No source-dependent initial record, literal,
+program, size bound, epoch or scheduling observation is supplied.
+A retained finite tree must be acquired by paid Reads. Correctness covers
+the literal exterior, every reached address, every concrete strict-prefix
+blocking guard, and the entire equality/disequality partition.
+

@@ -1,0 +1,39 @@
+**Theorem 8.1 (plane law and its maximal interval).** For every nonzero positive supported $\rho$ with $\rho_{00}=0$, let
+$A=h_1^2\rho_{11}+h_2^2\rho_{22}>0$. Then
+
+$$
+\mathsf E_s(\rho)=kA\quad\Longleftrightarrow\quad 0\le s\le\sqrt\ell .
+\tag{PG.40}
+$$
+
+There are actual fourteen-label instruments below the endpoint and twelve-label instruments at it. This includes complex pure plane specimens and mixed plane specimens, whose Grams may be positive definite.
+
+Proof. Positivity of $\rho$ kills its first row and column. Equation (PG.19) gives
+$C=A|D\rangle\langle D|\oplus C_N$ with $C_N\succeq0$. Thus
+
+$$
+C-AB=0\oplus(C_N+A\operatorname{diag}(\alpha,\beta))
+$$
+
+is positive definite on the lower coefficient plane and has kernel $e_D$. For every scalar-feasible $H$,
+
+$$
+\operatorname{tr}(CH)-kA
+ =A[\operatorname{tr}(BH)-k]+\operatorname{tr}((C-AB)H)\ge0.
+$$
+
+Equality uniquely forces $H=k|D\rangle\langle D|$. Let
+$L_0=\operatorname{diag}(\ell,1,1)$. For $s\le\sqrt\ell$ take
+
+$$
+H_r=\tfrac k2|D\rangle\langle D|,\qquad
+L_r=\tfrac12(L_0+rsX_c),\qquad N_r=M/2 .
+\tag{PG.41}
+$$
+
+The lower trace of each $L_r$ is zero. Its $D,T$ block is positive exactly when $s^2\le\ell$, so Lemma 3.2 and Theorem 3.4 give actual equality.
+
+Conversely equality in an arbitrary design forces the same high aggregate, whose report pieces have no $DT$ entry. Hence $L_++L_-=L_0$ and the first-row report condition forces $(L_+)_{DT}=s/2$, real. Congruence by $L_0^{-1/2}$ makes $0\preceq L_+\preceq L_0$ a positive contraction; an off-diagonal entry of any positive contraction has absolute value at most $1/2$, since $2Z-I$ is a contraction. Therefore $s/2\le\sqrt\ell/2$. Compactness in (PG.17) proves strict larger minimum after the endpoint.
+
+In (PG.41), each low matrix has rank three below the endpoint and rank two at it. Rank-many factors give six or four low labels. Add two high, four supported scalar failure and two complement labels, giving fourteen or twelve. Their full complex, reference and labelled-time identities are Theorem 3.4. The diagonal overlap is credited to the inherited JR/RG law; extending it to the entire complex/mixed specimen plane and proving maximality uses the preceding equality argument. $\square$
+

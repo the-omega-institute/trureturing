@@ -1,0 +1,20 @@
+**Proposition 12.3 (prescribed incidence is preserved exactly).**
+For every group-permutation cover, a copied seed has exactly the
+prescribed block incidence of its base seed. In particular covers
+of a network in [SIR, Definition 2.2][SIRbase]'s
+$\mathfrak N_{d,L}(n)$ lie in $\mathfrak N_{d,L}(nm)$.
+The same assertion holds for the $m!$-sheet construction.
+
+Proof. Let $c$ be owned at $j$ and fix its owner copy $(j,\ell)$.
+It occurs in that block. For each other base block $i$ containing
+$c$, the whole edge $(j,i)$ routes it to exactly the recipient
+copy $k=\sigma_{ji}^{-1}(\ell)$. All of its occurrences in that
+recipient block stay together. It occurs in no other copies of $i$.
+Distinct base blocks give distinct copied blocks. Thus the incidence
+is one plus the number of distinct outside base recipients, exactly
+the original incidence. Assigned constant tables still count in this
+argument, as SIR requires. Internal repeated references add no block.
+For any sheet set and edge bijections, including left multiplication
+on $\operatorname{Sym}([m])$, the same inverse-bijection argument
+applies. $\square$
+

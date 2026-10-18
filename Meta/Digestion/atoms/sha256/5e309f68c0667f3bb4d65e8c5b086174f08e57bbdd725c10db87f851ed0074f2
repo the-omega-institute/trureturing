@@ -1,0 +1,57 @@
+#### 定义 1：局部 FIB 纤维
+
+五态集合为：
+
+$$
+\Sigma=
+\{0,2,3,5,25\},
+$$
+
+对应：
+
+$$
+F[\mathrm{null}],
+\quad
+F[1],
+\quad
+F[2],
+\quad
+F[3],
+\quad
+F[1,3].
+$$
+
+每个事件 $e$ 上附着一个五态概率单纯形：
+
+$$
+\mathcal F_e
+=
+\Delta(\Sigma).
+$$
+
+局部状态为：
+
+$$
+p_e=(p_0,p_2,p_3,p_5,p_{25}).
+$$
+
+满足：
+
+$$
+p_\sigma\ge0,
+\qquad
+\sum_{\sigma\in\Sigma}p_\sigma=1.
+$$
+
+因此整个系统不是一个单独的概率向量，而是：
+
+$$
+\mathcal F
+=
+\bigsqcup_{e\in\mathcal E}\mathcal F_e.
+$$
+
+这就是一个离散的 FIB 状态纤维。
+
+---
+

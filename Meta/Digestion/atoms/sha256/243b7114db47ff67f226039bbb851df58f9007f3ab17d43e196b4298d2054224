@@ -1,0 +1,55 @@
+**Theorem 4.1 (isometry, derivative-range density and local representatives).** Let $\mathscr F_o=C_c^\infty(\mathbb R;\mathbb R)_{\rm odd}$ and equip it with
+
+$$
+\|F\|_\rho^2=\int_{\mathbb R}\rho(r)|F'(r)|^2dr.
+\tag{4.1}
+$$
+
+Let $\mathscr W_o$ be its completion and let $L^2_{\rm even}(\rho dr)$ be the real even weighted $L^2$ space. Differentiation extends to an onto isometry
+
+$$
+\partial_r:\mathscr W_o\longrightarrow L^2_{\rm even}(\rho dr).
+\tag{4.2}
+$$
+
+Every element has the unique odd locally absolutely continuous representative $F(r)=\int_0^r q(t)dt$ with $q\in L^2_{\rm even}(\rho dr)$. Define
+
+$$
+\mathcal H_h=\overline{\{pF:F\in\mathscr F_o\}}^{\,h}\subset\dot{\mathcal H}_-.
+\tag{4.3}
+$$
+
+Then $F\mapsto pF$ extends onto $\mathcal H_h$ as an isometry with squared norm multiplied by $a$. For real odd compact smooth $F,G$,
+
+$$
+h(pF,pG)=a\int\rho F'G',\qquad
+\ell(pF)=a\int f F=a\int J F'.
+\tag{4.4}
+$$
+
+The image of any $F\in\mathscr W_o$ has local $L^2$ representative $pF$. These statements assert no global $L^2$ or native-domain membership of that product.
+
+Proof. Bounded smooth height multipliers with bounded derivatives preserve $\mathcal Q_E$, by the horizontal product rule and core approximation. Hence $pF\in\mathcal Q_E$ is odd. Multiplying core approximants and averaging parity puts it in $\dot{\mathcal H}_-$. Test the critical weak equation $h(p,\cdot)=0$ with $F^2p$. Using $XF=F'$ and $YF=0$ cancels all terms except
+
+$$
+h[pF]=a\int p^2|F'|^2=a\int\rho|F'|^2.
+\tag{4.5}
+$$
+
+Polarization proves the first identity in (4.4). Also $Y(pF)=F Yp$, so the exact functional (2.8) gives $\ell(pF)/a=\int fF$. Integration by parts with $J'=-f$ and compact $F$ gives $\int JF'$. All terms are absolutely integrable by Lemma 3.1. No phase averaging replaces the original joint realization.
+
+To prove the range in (4.2) is dense, let an even $q\in L^2(\rho dr)$ be orthogonal to every derivative $F'$, $F\in\mathscr F_o$. The even function $w=\rho q$ is locally integrable by Cauchy–Schwarz. Its distributional derivative annihilates odd tests by the assumed orthogonality, and annihilates even tests because their derivatives are odd while $w$ is even. Every test splits into these parities. Thus $w'=0$ as a distribution, and $w=c$ for a constant. If $c\ne0$, then $\int\rho q^2=c^2\int\rho^{-1}=\infty$ by (3.4), a contradiction. Therefore the orthogonal complement is zero. Differentiation is an isometry on the core and has dense range, so its completed range is the whole even Hilbert space.
+
+For an even $q$ in this range, local positivity of $\rho$ gives $q\in L^1_{\rm loc}$, and $F(r)=\int_0^r q$ is odd and locally absolutely continuous. If $F_n'\to q$ in $L^2(\rho dr)$, with $F_n\in\mathscr F_o$, then $F_n(0)=0$ and
+
+$$
+\sup_{|r|\le R}|F_n(r)-F(r)|
+ \le\left(\int_{-R}^R\rho|F_n'-q|^2\right)^{1/2}
+       \left(\int_{-R}^R\rho^{-1}\right)^{1/2}\longrightarrow0.
+\tag{4.6}
+$$
+
+Conversely every odd locally absolutely continuous $F$ with finite (4.1) has even derivative in $L^2(\rho dr)$ and is recovered this way. This describes the entire completion, without an extra unweighted integral constraint on its derivative.
+
+Equation (4.5) and the equivalence $a\theta b\le h\le ab$ on odd vectors extend the product map into the homogeneous completion, with closed image exactly (4.3). For local representatives, the form bound $\int V|u|^2\le C_*b[u]$ and positive minimum of $V$ on each compact set show that $h$-Cauchy odd core sequences are Cauchy in local $L^2$. The global $L^2$ limits of the two horizontal derivative sequences are the distributional derivatives of this local limit, by compact testing. If its local representative is zero, both derivative limits vanish and its homogeneous norm is zero; thus this realization is injective. Meanwhile (4.6) and $p\in L^2$ give $pF_n\to pF$ in $L^2$ on every bounded height strip, hence on every compact set. Thus the local representative of the image is exactly $pF$. All isometries concern homogeneous energy and its completion. $\square$
+

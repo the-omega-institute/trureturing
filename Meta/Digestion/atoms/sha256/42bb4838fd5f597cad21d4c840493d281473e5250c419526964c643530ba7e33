@@ -1,0 +1,20 @@
+#### 31.6　路径效应的接口层级
+
+对中介问题，至少应区分以下接口：
+
+$$
+\boxed{
+\text{观察世界的 }(M,Y)
+\quad|
+\text{单世界 do 核}
+\quad|
+\text{controlled 核}
+\quad|
+\text{跨世界联合 }(M_{a'},Y_{a,m}).
+}
+$$
+
+总效应只需要自然结果的两端；controlled direct effect 使用同一 $(a,m)$ 的单世界响应；自然直接/间接效应还需要把 mediator 的一个世界与 outcome 的另一个 treatment 响应缝合。接口越粗，可识别的目标越少；增加单世界边缘不能凭空补出缺失的联合耦合。
+
+<a id="section-31-7"></a>
+

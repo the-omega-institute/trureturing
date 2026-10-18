@@ -1,0 +1,19 @@
+# Native support barriers and short-block compensation
+
+The bounded increment in this volume is a strict unit of surplus on every
+nonempty maximal block of one or two support-ambiguous depths, and the
+resulting slack in the necessary global deficit. The complete current
+[SI, Sections 9--10][SI] already supplies common-support cuts, localization
+on the original installed coordinate-multiplicity vector, exact accounting,
+nonnegative compensation through span four, no sharing in early-ending
+gaps, the terminal span-four margin, enlarged qualified grid minima and
+actual-prefix inheritance. These results are credited and proved below.
+SI's stated nonnegative bounds at spans two and three leave the strict
+short-block unit as an additional bounded inequality. The current remaining
+frontier consists of late gaps of span at least five; the strict units
+contribute to its exact compensation sum on one actual graph. The boundary
+fixed-prefix statement composes [CP, Theorem 5.1][CP] with [Third, Lemma
+7.1][Third]; the inherited-cut application also credits SI Theorem 10.8.
+The weighted appendix reproduces [WTF, Section 11][WTF]. The unrestricted
+intermediate-threshold comparison remains unresolved.
+

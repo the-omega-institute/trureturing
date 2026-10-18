@@ -1,0 +1,39 @@
+**引理 86.2（All-action lower bounds and the compulsory splitting of both doubles）。** In Definition 86.1, every correct first action on either nonbottom free-value fibre has prefix $110$. Under either original alphabet,
+
+$$
+C_{\rm ad}(\widetilde f)\ge d+1,\qquad
+C_{\rm pre}(\widetilde f)\ge 2d+1.
+\tag{86.8}
+$$
+
+The GLOBAL bound includes every preset stream and endpoint stopping rule, rather than only streams constant on each joined class.
+
+证明。 Fix either free INITIAL value and any phase. The actual tails $m-1,m$ have unequal low/high labels because $R$ is fresh. A root with at most one leading one reaches its first zero on both sources: even the larger tail then satisfies $m+1<k$. Their value and phase agree, and that zero merges their tails. Their unequal INITIAL labels cannot be recovered at any later endpoint. A root with at least three leading ones, including $1^m$, rejects both by the third bit. Both completed archives are then absorbing bottom; their unobserved rejection positions cannot distinguish them. Free stopping is also impossible. The supplied first-zero and rejection-loss interfaces therefore force exactly two leading ones, hence prefix $110$ [IC, Interface 1.4; S1, Lemmas 4.2–4.3].
+
+Every such root rejects precisely INITIAL tails $m,m+1$. Each low tail survives because $s+2\le m+1<k$, reaches the zero and completes safely. Its first-zero merger preserves the tail-independent label. All low sources acquire the same actual current tail $\rho(B_0)$, independent of phase and initial tail. In a fixed successful scalar-output archive their current scalar is common as well.
+
+Thereafter any literal word on such an archive either succeeds on all its candidates or rejects all, since safety depends only on the current tail and the word. A successful word gives at most two endpoint scalars, with a common tail in each child. A common rejecting word cannot finish an archive with unequal INITIAL labels, since all later endpoints are bottom; a homogeneous archive can already stop. Induction gives at most $2^a$ distinct-label leaves with $a$ further paid words [S10, Lemma 3.2]. This includes all literal words and the true all-one transfer $\sigma\mapsto\sigma+m$, zero waits, padding, repair attempts, absorbed suffixes and early homogeneous stops. It does not regard bottom as a useful third outcome on a common-tail archive.
+
+On either component, the $r+1$ full low labels must fit below the two successful root outcomes of any controller with worst fee $H$. Hence $r+1\le2^H$ and $H\ge d+1$. The root may depend on the remembered free value; this inequality holds on each such fibre separately.
+
+For GLOBAL control apply the exact value-join law [IC, Definition 29.1 and Theorem 29.2] to the entire target (86.4). Its scalar-independent low table is $\widetilde\Lambda$, high label is $(R,R)$ and initial bottom is separate. The law retains one actual stream and its fee, including arbitrary stops and absorption. It uses scalar complementation to decode the pair from the source's own archive; it executes no second experiment.
+
+Let $q_0$ be the actual charge row of the compulsory root of any correct joined controller. The literal equations (84.4) give
+
+$$
+q_0(0)=1,\qquad q_0(1)=0,\qquad q_0(2)=1,\qquad
+q_0(N-1)=q_0(N)=0.
+\tag{86.9}
+$$
+
+Thus both $X$ and $Y$ occur in both successful root-difference children, regardless of every other bit of the root. No other joined class can occur in both, since every other class is singleton. If $L_e$ is the joined label image of child $e$, then
+
+$$
+|L_0\cup L_1|=N-1,\qquad
+L_0\cap L_1=\{X,Y\},\qquad
+|L_0|+|L_1|=N+1.
+\tag{86.10}
+$$
+
+Each child has at most $H-1$ further paid words and therefore $|L_e|\le2^{H-1}$. Consequently $N+1\le2^H$, forcing $H\ge h+1=2d+1$. This counts distinct labels separately on the actually acquired children, allowing a repeated label to have different full codes. Early stops do not combine the two archives or return two unequal labels from one homogeneous leaf. Paid waits still occupy their chronological slots. The argument excludes a price at most $2d$ for this fixed target even with phase-wise splitting, arbitrary later words or attempted common rejection. ∎
+

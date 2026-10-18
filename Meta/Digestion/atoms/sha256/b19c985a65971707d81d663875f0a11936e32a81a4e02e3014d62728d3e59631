@@ -1,0 +1,35 @@
+## 134. Exact genuine escape theorem
+
+Take the proper maximal axial run containing sigma. It has two distinct
+transverse boundary M occurrences. Both are genuine: by Lemma 132.1 a flat
+transverse M occurrence would contribute two pi angles, contradicting
+p_M=1. Call their angles u,v. The flat pi at sigma and nonnegativity of
+all other M angles imply u+v<=pi. At least one endpoint has angle at most
+pi/2. Select that endpoint block tau.
+
+By actual face transport, tau has reservoir labels {M,C}, shared axial
+label D, and other axial label Z, where {C,D}={A,B}. Write c=x_C,
+d=x_D, z=x_Z. After a vertex relabel its six values are
+
+       (z,m,c,d,m,c).
+
+Its transverse M angle is at most pi/2, so N(z)>=0 in (N). The coefficient
+of z in N is c+md>0. At z0=1+m+c there is the exact factorization
+
+       N(z0) = [c+m(1+m+c)]*(1+c+d-m) <= 0,        (F)
+
+where the last inequality is (L). If z<z0 then N(z)<N(z0)<=0, a
+contradiction. Thus
+
+       z >= 1+m+c > m.                            (E)
+
+If m>1+a+b, (F) is strictly negative and z>1+m+c follows.
+
+The label Z cannot be special: if Z were in S, its actual reservoir pair
+in tau would be {M,C}, and (S) would give z<1+m+c. Hence Z belongs to H.
+Because z>m and M was maximal among pi-selected H labels, Z has NO flat
+pi occurrence anywhere in the original pairing. It already has a genuine
+witness, namely tau.
+
+We have proved the following precise theorem.
+

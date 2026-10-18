@@ -1,0 +1,49 @@
+**Convention 17.1 (primary attribution and exact representation).**
+The following is a native specialization of mature graph-cover
+machinery, with the additional actual-owner, incidence, pressure
+and paid-query correspondences proved above.
+
+| Primary supplier | Exact use and limit |
+| --- | --- |
+| P. O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, version 2, Definition 19 and Lemma 20 [Vontobel][VontobelCOK] | Labeled covers independently permute full edges. Here one full edge alphabet is the whole tuple $\prod_{c\in B_{ji}}T_c$, with projections of the same actual $O_j$ at its owner. Several outgoing projections of $O_j$ are constrained at that vertex; they are not independent owner assignments. |
+| Vontobel, Theorem 25 and Lemma 29, same version | Rational local consistency is finite-cover lift-realizable; the exact average type count is the product of vertex multinomials divided by full-edge multinomials. Theorems 12.1 and 13.2 give the constructive native realization and count, retaining guards, actual compatibility and every whole-block weight once. |
+| Vontobel, Theorems 30 and 33, same version | Bethe entropy and partition values are exponents or limsups of averaged cover counts and masses. Theorem 13.5 uses precisely this averaged direction. It gives no domination of individual covers or comparison that would prove a universal native upper. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, Theorem 4.1 and Corollary 4.2 [Ruozzi][RuozziCOK] | The binary log-supermodular hypothesis is not supplied by arbitrary native joint weights and compatibility zeros. No such cover-domination theorem is transferred here. The credited [GCB][GCBbase] counterexamples to unrestricted upper substitutions retain their scope. |
+
+To express this correspondence as a normal factor graph, attach
+one function vertex to each actual block $i$ and one full edge
+with the above tuple alphabet to each $(j,i)$. Add a private
+dangling variable $a_i\in R_i$ at $i$. Its vertex function is
+$w_i(x_i(a_i))$ when every incoming full-edge value equals its
+group in $a_i$ and every outgoing value equals its projection
+of $O_i(a_i)$, and is zero otherwise. Distinct $a_i$ label
+distinct local configurations even if their nonowner tables have
+the same image. The dangling variable is a formal summation
+label, not a native observation.
+
+For any fixed edge permutations, satisfying normal-factor-graph
+assignments give exactly the edge-consistent local lists in the
+proof of Theorem 13.2. Those lists give a unique actual seed
+assignment, and actual owner replies give the inverse. Both
+directions preserve all weights and the number of original
+blocks. Private half-edges have no matching permutation and no
+denominator multinomial. This supplies the full-edge alphabet
+mapping required for the cited abstract count; forgetting the
+private configurations or splitting whole groups into independently
+permuted seeds would change it.
+
+The repository-derived content is this exact native specialization,
+the identical-copy-marginal completion, incidence preservation,
+the consumers (COK.70)–(COK.72), the information identity
+(COK.74), and the full-family realization (COK.80). The finite
+type bounds and entropy identities are mature ingredients. FMR
+and RRN retain credit for canonicalization, guards, actual
+converse templates and paid scans; NPC retains credit for
+$\alpha_d$ and semantic pressure completeness; SIR retains
+credit for its incidence reduction and conditional verifier
+transfer. The existing COK, GDB and SCP results supply respectively
+the cap envelope, global dependence boundaries and softening
+bounds. No transfer from a finite-reader synthesis or predecessor-
+row task is used. There is no new Lean certification, independent
+review assertion or worldwide originality claim.
+

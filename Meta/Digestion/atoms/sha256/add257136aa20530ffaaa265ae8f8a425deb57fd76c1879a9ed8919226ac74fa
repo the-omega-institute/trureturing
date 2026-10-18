@@ -1,0 +1,50 @@
+**theorem 8.2 (Strict endpoint exclusion).** For $q=1,2,3,4$,
+
+$$
+\varepsilon_q>\frac{7(5-q)}{68}.
+\tag{8.5}
+$$
+
+This statement gives no explicit uniform additive gap for $q=2,3,4$.
+The separate Theorem 6.4 gives a quantitative bound for $q=1$.
+
+Proof. For any finite rank-at-most-$q$ Kraus representation of any legal
+channel, QMB's proof uses the survival average $S(T)$ and the chain
+
+$$
+\begin{aligned}
+e(T)&\ge1-S(T),\\
+S(T)&=\frac15\sum_i\langle C_i,\mathcal M(C_i)\rangle_{\rm HS}\\
+&\le\frac15\sum_i\left[
+\frac{33}{68}\|C_i\|_{\rm HS}^2
++\frac{35}{68}\frac{|\operatorname{tr}C_i|^2}{5}\right]\\
+&\le\frac{33}{68}+\frac{35}{68}\frac q5.
+\end{aligned}
+\tag{8.6}
+$$
+
+TP supplies $\sum_i\|C_i\|_{\rm HS}^2=5$. If $e(T)=b_q$,
+every inequality in (8.6) must be equality. The individual spectral
+deficits and individual rank-trace deficits are nonnegative, with positive
+coefficients. Their finite sums vanish only when each vanishes. Lemma 8.1
+therefore forces every nonzero $C_i$ both to have the form $aI+bZ$ and
+to be a nonzero scalar multiple of a rank-$q$ orthogonal projection.
+
+But $Z$ has three distinct eigenvalues
+$-4,1-5/\sqrt{17},1+5/\sqrt{17}$, on subspaces of dimensions $1,2,2$.
+If $b\ne0$, $aI+bZ$ has three distinct eigenvalues, also for complex
+$a,b$. A nonzero scalar times a proper nonzero projection has exactly two
+eigenvalues. If $b=0$, a nonzero $aI$ has rank five, again impossible for
+$q<5$. Thus no nonzero Kraus term can meet both equality conditions,
+contradicting TP. Every legal channel has $e(T)>b_q$.
+
+Finally the supplied compactness and continuity give an attained minimum.
+Applying the preceding contradiction to a minimizer makes the infimum
+strict as well. Pointwise strict inequalities alone would not suffice for
+this last step. $\square$
+
+Theorem 5.1 can in principle find a rational lower endpoint strictly above
+$b_q$: repeat its exact bisection until its lower endpoint exceeds $b_q$.
+The positive attained gap proves termination of this further search. No
+explicit rational additive gap for $q=2,3,4$ is specified.
+

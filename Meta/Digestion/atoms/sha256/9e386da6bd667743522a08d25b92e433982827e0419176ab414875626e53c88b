@@ -1,0 +1,38 @@
+**Proposition 10.2 (Every scalar value is approximated in the combined class).**
+For every $R\in\mathcal E_2$ and every positive tolerance above
+$4H\sqrt{J_\tau(R)}$, an actual at-most-four $\mathsf{GP}$ model
+has error below that tolerance.
+
+Proof. A confluent realization already has height recovery by
+Lemma 10.1. In a nonzero diagonal or single-mode representation,
+replace the profile by
+
+$$
+R_\delta(x)=e^{\delta x}R(x),\qquad \delta\in\mathbb R.
+$$
+
+Choose a sequence $\delta\to0$ avoiding the finitely many values
+$-\operatorname{Re}\lambda_j$ of the stored nonzero modes.
+Each exponent is shifted to $\lambda_j+\delta$, so the same
+number of complex coordinates suffices and a stored radius
+recovers height. Proposition 8.3 and Lemma 10.1 make every such
+model a $\mathsf{GP}$ model with all original full guards.
+
+On $[0,1]$ the profiles $R_\delta$ converge uniformly to $R$.
+If $U,V$ are two continuous scalar profiles, the elementary
+estimate
+
+$$
+\bigl||U-s|^2-|V-s|^2\bigr|
+\le |U-V|\,(|U-s|+|V-s|)
+$$
+
+shows that this uniform convergence gives
+$J_\tau(R_\delta)\to J_\tau(R)$. Their exact original errors
+therefore converge as well, proving the asserted strict-tolerance
+approximation. For $R=0$, use the one-coordinate height encoder
+with zero decoder; its exact error is the same zero-profile
+objective and it has all full guards and paths. No perturbation
+claim asserts attainment by the unshifted diagonal profile.
+$\square$
+

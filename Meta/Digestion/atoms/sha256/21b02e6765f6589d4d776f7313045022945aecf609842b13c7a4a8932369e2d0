@@ -1,0 +1,32 @@
+### 3.6 任意探针最优首项的夹逼
+
+固定 $n$。当 $x\to0$ 时，
+
+$$
+\ell_n(x)=\frac{e_n}{2M_n}x^2+O_n(x^3).
+$$
+
+$u_n$ 的分子为 $(2e_n/M_n)x^2+O_n(x^4)$，分母为 $4+O_n(x)$，所以
+
+$$
+u_n(x)=\frac{e_n}{2M_n}x^2+O_n(x^3).
+$$
+
+在足够小的 $x$ 下，(A)、(B) 同时适用，并有
+
+$$
+\ell_n(x)\le\varepsilon_n^\star(L,q)
+\le1-P_{\mathrm{SRM}}\le u_n(x).
+$$
+
+两端首项相同，得到式（2.5），也得到 $1-P_{\mathrm{SRM}}$ 的相同展开。此论证不假定最优探针随 $x$ 连续，不把一个固定态族的测量优化等同于源输入优化。
+
+固定 $r\ge1$、$q=L-r$ 时
+
+$$
+x=\sin\left(\frac{\pi r}{2L}\right)
+=\frac{\pi r}{2L}+O_r(L^{-3}),
+$$
+
+代入式（2.5）即得式（2.6），证明 (C)。固定先验纯态族趋于正交时的测量渐近最优性是已有结果，见 [Tyson，*Error rates of Belavkin weighted quantum measurements and a converse to Holevo’s asymptotic optimality theorem*](https://arxiv.org/abs/0907.1884v1)，§§1.3–1.4；等先验下各幂权版本相同。那项结果不供应本卷对全部源输入的统一下界，后者由 §§3.2–3.3 给出。
+

@@ -1,0 +1,27 @@
+### 2.3 Complete-tail comparison under the actual stopping law
+
+For $h\in\mathcal H_3$, write $t=T_3(h)=A(h)+B(h)$. When $t<N$, analytically couple the true conditional future and the predictive generator while their letters agree, until original fourth completion or total acquired count $N$. At each matched active prefix before that boundary, the monitor has the true acquired counts. Its two next-letter laws are Bernoulli rows whose parameters differ by at most $\delta$; an optimal two-letter coupling has mismatch probability at most $\delta$ [LPW, Proposition 4.7][LPW]. There are at most $N-t$ such comparisons. A union bound bounds a mismatch by $(N-t)\delta$. This coupling is an analytic comparison, not another actual sample, acquisition port or source operation.
+
+If no such mismatch occurs and the actual $T_4\le N$, all future letters through completion agree. The unchanged original updates then give identical current records, future derived events, fourth marker and Stop. Completion on the Read reaching $N$ is included: pending prediction is already the prescribed deterministic Stop, even when the monitor has just overflowed. Beyond the boundary both coupled marginals may continue according to their own full laws; the remaining possible discrepancy is charged by the actual event $T_4>N$. The coupling inequality therefore gives
+
+$$
+e_{\rm law}^O(h)=e_{\rm conf}^O(h)
+\le (N-t)_+\delta+\Pr_\mu(T_4>N\mid H_3=h).
+\tag{2.5}
+$$
+
+When $t\ge N$, the same bound holds because $T_4>t\ge N$ on that third-latch atom and TV is at most one. The supplied injective transcript map includes all future letters, not just the fourth outcome, so this is a bound for the required complete residual law.
+
+Multiply (2.5) by the actual $p_\mu(h)$ and sum over the whole stopping partition. The tower identity and (1.4) give
+
+$$
+\mathcal A_{\rm law}^\mu(O)=\mathcal A_{\rm conf}^\mu(O)
+\le N2^{-b}+\Pr_\mu(T_4>N)
+\le N2^{-b}+\frac{183}{14N}.
+\tag{2.6}
+$$
+
+No synthetic history weights, independently mixed segments or favorable-history condition enter this calculation. In particular future overflow is paid even when the queried $h$ itself has not overflowed; exact full-tail decoding before overflow is not claimed.
+
+Choose finite $N>2C/\varepsilon$ and $b\ge4$ with $N2^{-b}<\varepsilon/2$. Both averages are then below $\varepsilon$. Nonnegativity and $\mathcal F_{\rm det}\subset\mathcal F_{\rm coh}$ prove the four zero infima.
+

@@ -1,0 +1,16 @@
+**定理 15.3.4（首项和路径相消）。** 若 $\nu=\nu_A(J,K)<\infty$，把反馈强度整体缩放为 $A\mapsto tA$，则干预增量 $\delta\alpha_J$ 诱导的响应为
+
+$$
+\delta x_K=t^\nu A_{KK}^{\nu-1}A_{KJ}\delta\alpha_J+O(t^{\nu+1}).
+$$
+
+**证明。** 将 $tA$ 代入定理 15.3.1，得到
+
+$$
+(I-tA_{KK})^{-1}(tA_{KJ})=\sum_{r\ge0}t^{r+1}A_{KK}^{r}A_{KJ}.
+$$
+
+取首个非零项即可。证毕。
+
+<a id="section-15-4"></a>
+

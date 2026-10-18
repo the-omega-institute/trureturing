@@ -1,0 +1,67 @@
+**Proposition 10.3 (whole-run native and structural bill).** For the same
+finite occurrence word of length $N=\sum N_{o,p}$,
+
+$$
+\mathrm{tick}=N,\qquad \mathrm{nativeFee}=2N,\qquad
+\mathrm{material}=S_{\rm irreducible}+b_{\rm ctl}+8A+8N.
+$$
+
+At each actual successor use $C=2+A+N$, current $c$ and installed head-link
+count $\ell\le75$. Its exact unary carrier has
+
+$$
+V=147+2q_\circ+c+24C,\quad L=74+q_\circ+8C,\quad
+\mathrm{occupiedSlots}=2(V-1+\ell),\quad\mathrm{slotCapacity}=7V.
+$$
+
+Use UAS Definition 4.1's **actual ordered** role/probe lists for this new
+table: finite-component route/inspection, repeated cell-role routes and
+68 probes per cell, append-site routes, old head endpoint routes and fresh
+finite-socket routes. With its $p_i$ and actual distinct target/birth/head
+counts,
+
+$$
+\begin{aligned}
+p_i={}&d_r+6q_\circ+3c_{i-1}-4
+ +\sum_{x\in\mathcal D_i}(|\pi_x|+68)\\
+ &+\sum_{z\in\mathcal A_i}(|\pi_z|+2)
+ +\sum_{w\in\mathcal J_{i,\mathrm{old}}}|w|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2).
+\end{aligned}
+$$
+
+Here $d_r$ is the fixed finite-component root route; $\mathcal D_i$ is
+core/neighbors, ordered finite-effect marker roles, then old meter append,
+with repeated identities retained; $\mathcal A_i$ is core/receipt append
+sites in that order; $\mathcal J_{i,\mathrm{old}}$ is old head-slot routes
+in port/lane order, final probe included; $\mathcal Z_i$ is the fresh
+finite-socket route list. These are the actual same-row lists of UAS
+Definition 4.1. Thus the row's full birth/assignment/commit account is
+
+$$
+v_i=24e_i+s_i,\qquad
+w_i=3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\qquad
+g_i=1+p_i+w_i+v_i.
+$$
+
+The complete structural replacement bill is
+
+$$
+\rho_\circ+1+8(195+2q_\circ+c_0)+\sum_{i=1}^N g_i.
+$$
+
+If both tariffs are imposed, add $2N$ instead of calling the replacement
+bill the total. The additional finite apparatus $\rho_\circ$ is not included
+in the charged foundation and is not a free installation.
+
+Proof. The native equations telescope the complete leaf recurrence.
+UAS's local recount applies with this actual catalog because Lemma 9.1
+re-establishes its templates/ordered rows. Every receipt and core birth,
+every empty new slot and prescribed unchanged assignment is charged.
+Alias target deduplication does not remove repeated inspections. The
+foundation has two actual meter cells, giving $195+2q_\circ+c_0$ vertices;
+construction plus seven initialized slots and one commit gives its stated
+charge. Summation is along this same actual run, including enlarged banks
+and all callbacks. No garbage, deactivation or overwrite subtracts retained
+material. ∎
+

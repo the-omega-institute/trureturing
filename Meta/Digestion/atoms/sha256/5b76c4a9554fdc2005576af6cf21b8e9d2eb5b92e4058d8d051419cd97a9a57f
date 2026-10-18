@@ -1,0 +1,69 @@
+**Theorem 3.2 (joint rank and defect identities).** For every cover
+of Definition 1.2 set $S_q=q(q^2-1)/6$. Then
+
+$$
+\begin{aligned}
+\sum_t p_t&=\sum_t n_t=\frac{q(q-1)}2,\\
+H^+&=S_q-\sum_t\frac{p_t(p_t+1)}2,&
+H^-&=S_q-\sum_t\frac{n_t(n_t+1)}2,\\
+2(H^+-H^-)&=\sum_t\delta_t(p_t-n_t),\\
+H_t^+&\ge g_t^+\ge0,&H_t^-&\ge g_t^-\ge0.
+\end{aligned}
+\tag{NAGC.3.3}
+$$
+
+At $q=19$ the signed moments are equal. At $q=18$ their exact
+imbalance is coupled to the whole defect allocation by the third
+equation, with $\sum_t\delta_t=18$. If no eighteen-label class
+is saturated, the inherited defect theorem forces every
+$\delta_t=1$, and these moments are again equal. No common-size
+hypothesis is needed for the general identity.
+
+**Proof.** Counting occupied cells above and below the diagonal gives
+the first equality. Weight each positive band by its difference:
+
+$$
+\sum_t\sum_{i=1}^{p_t}x^+_{t,i}
+=\sum_{k=1}^{q-1}k(q-k)
+=\frac{q(q^2-1)}6.
+\tag{NAGC.3.4}
+$$
+
+The last equality follows by substituting
+$\sum_{k=1}^{q-1}k=q(q-1)/2$ and
+$\sum_{k=1}^{q-1}k^2=q(q-1)(2q-1)/6$ into
+$q\sum k-\sum k^2$. Negative bands have the same absolute
+weighted total. Subtracting the respective sums of ranks $i$ proves
+both moment formulas. Their difference is
+
+$$
+\begin{aligned}
+2(H^+-H^-)
+ &=-\sum_t\bigl(p_t(p_t+1)-n_t(n_t+1)\bigr)\\
+ &=-\sum_t(p_t-n_t)(p_t+n_t+1)\\
+ &=-\sum_t(19-\delta_t)(p_t-n_t)\\
+ &=\sum_t\delta_t(p_t-n_t),
+\end{aligned}
+\tag{NAGC.3.5}
+$$
+
+because $p_t+n_t+1=m_t$ and $\sum_t(p_t-n_t)=0$.
+
+For a nonempty signed list, its $i$th value is at least $i$.
+Every summand defining its $H_t$ is nonnegative, and its last
+summand is its endpoint minus its length, exactly $g_t$ for that
+sign. An empty list has endpoint, gap count and moment all zero.
+This proves the inequalities without excluding a class with only
+one sign, or even a singleton anchor. More precisely, $x_i-i$
+counts omitted positive integers below $x_i$; hence the signed
+moment counts each missing rank once for each occupied rank above
+it. Every omitted rank in the span has the endpoint above it.
+Thus $H_t^\pm=0$ holds exactly when $g_t^\pm=0$, including
+the empty case, although their positive values need not agree.
+
+At nineteen labels all defects vanish. At eighteen labels the
+general equation uses the inherited total defect; if every defect
+is one, its right side is $\sum_t(p_t-n_t)=0$. None of these
+calculations constrains a double-coordinate edge or replaces a
+complete zero-containing state by a substate. $\square$
+

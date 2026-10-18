@@ -1,0 +1,24 @@
+**定理 4.1（二阶单叶翻转障碍）。** 对全部 $T\in I_2$ 与全部 $p\in F(T)$，令 $\operatorname{flip}_p(T)$ 只交换地址 $p$ 的 $\alpha/\beta$ 标签，保持全部括号及其他标签。则
+
+$$
+\operatorname{flip}_p(T)\notin I_2,\qquad
+\nu(\operatorname{flip}_p(T))\le1.
+\tag{NIC.11}
+$$
+
+证明。复用 [Readout 的 source_foundation][Readout] 的两个低阶局部必要条件：一阶像中每个 $\alpha$ 叶是终端 $(\beta,\alpha)$ 的右孩子；二阶像中每个终端二叶节点的标签恰为 $(\beta,\alpha)$。后者对应 cherryValid 在每个 $\rho^2S$ 上为真，前者对应 alphaValid 在每个 $\rho S$ 上为真。$I_2\subseteq I_1$，所以二阶像同时服从两条件。
+
+写 $T=\rho^2S$。对原树 $S$ 的每个叶出现，两次替换给以下两种完整块：
+
+$$
+C=\rho^2\alpha=(\beta,\alpha),\qquad
+D=\rho^2\beta=((\beta,\alpha),\beta)=(C,\beta).
+\tag{NIC.12}
+$$
+
+$\rho$ 保有序配对，故 $\rho^2S$ 由 $C,D$ 按 $S$ 的括号配对。归纳于 $S$，每个当前叶都处于某个这样的块内；原叶块的地址锥不交，因此只需检查该叶所属块。
+
+在 $C$ 内，翻左叶得到 $(\alpha,\alpha)$，翻右叶得到 $(\beta,\beta)$；两者都使该终端节点违反二阶终端标签条件。在 $D=(C,\beta)$ 内，翻 $C$ 中的任一叶仍产生上述终端违例。剩下一种是翻 $D$ 的右 $\beta$，所得 $(C,\alpha)$ 的右 $\alpha$ 叶，其左兄弟是分支 $C$，不是叶 $\beta$，违反一阶的 $\alpha$ 伴随条件。全部违例都位于块内部，保持块以上的括号并接入任意外部原树不会消除它们。
+
+因此任何一个叶的翻转都违反 $I_2$ 的必要条件，得到第一式。第二式由 (NIC.1) 与自然数深度得到。本证明不使用三阶正成员翻叶障碍。$\square$
+

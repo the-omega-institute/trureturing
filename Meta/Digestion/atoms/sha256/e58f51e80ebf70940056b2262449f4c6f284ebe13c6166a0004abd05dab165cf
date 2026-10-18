@@ -1,0 +1,64 @@
+**Proposition 8.11 (Realification, zero dimension and support scope).**
+Theorem 8.4 also excludes finite complex affine lossless
+realizations. Its actual-ray conclusion uses full positive
+support and does not automatically extend to vanishing-support
+sources.
+
+**Proof.** A complex affine map on $\mathbb C^n$ becomes a real
+affine map on $\mathbb R^{2n}$ with linear part
+
+$$
+\begin{pmatrix}
+\operatorname{Re}A&-\operatorname{Im}A\\
+\operatorname{Im}A&\operatorname{Re}A
+\end{pmatrix}
+$$
+
+and offset $(\operatorname{Re}c,\operatorname{Im}c)$.
+Injection and the intertwining identity are preserved, so the
+real theorem applies. In real dimension zero the target is a
+singleton, while the stated source contains distinct rays;
+injectivity already fails. The common-exponent proof includes
+that dimension. An empty source would be vacuous and a singleton
+source could be encoded in dimension zero, but neither is the
+source here.
+
+Positivity of $Z$ fixes the common phase, and positivity of
+$k,H-k$ makes both grouped phases observable as ray coordinates.
+At $k=0$ or $k=H$ one group disappears, and its circle is no
+longer a ray coordinate. At $Z=0$, in the corresponding
+limiting bottom action the common bottom shift of $Q_{4\pi}$
+is a common phase of the remaining support and becomes
+ray-trivial. At $Z=1$ there is no positive interval $0<k<H$.
+These changes prevent treating those boundary tasks as instances
+of this proof. The approximation constants of Lemma 7.6 also
+require the positive interior band. $\square$
+
+All witness heights in Lemma 8.2 are strictly between $a$ and $b$.
+Thus the lossless obstruction also holds with open or half-open
+band conventions, using their corresponding interval guards.
+Probability maps have only partial native domains; an empty
+domain imposes no condition. No partial-domain identity is
+promoted to an ambient affine group law. The single obstructing
+phase command, in contrast, is globally lawful on the stated
+source.
+
+Every exponent, selected affine-spanning set, prime cycle and
+preparing history in the lossless proof is finite. Their sizes
+may depend on a proposed realization. A restriction on described
+execution budgets does not remove the algebraic implication
+
+$$
+E(Tx)=F(E(x))\ \hbox{on all of }\mathcal M_{ab}
+ \quad\Longrightarrow\quad
+E(T^jx)=F^j(E(x))\ \hbox{for every finite }j.
+$$
+
+Consequently a finite-horizon reformulation must change the
+domain or identities to which it applies; merely keeping the
+same full-domain one-step contract and declaring that only a
+bounded number of steps will be run does not evade Theorem 8.4.
+The same care applies to the repetition argument of Theorem 7.4.
+Neither theorem executes an infinite history or proves a
+finite-horizon realization for an altered contract.
+

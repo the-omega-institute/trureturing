@@ -1,0 +1,49 @@
+**Definition 81.1 (unitary microscopic problem).** Retain Definition
+75.1 without changing any datum. In particular $\kappa$ is one fixed
+admissible signed nonzero number, $a>0$, the heat clock is that of $B$,
+and both height faces are Dirichlet. Put $s=\sqrt\tau$ and use exactly
+$\Xi_s$, $c_j$ and $j_0$ of (78.1). Define
+
+$$
+\begin{aligned}
+I_s&=((l-k_0)/(\varepsilon s),(u-k_0)/(\varepsilon s)),&
+\Omega_s&=I_s\times\mathbb R^3,\\
+(\mathcal U_s\psi)(\xi)&=(j_0s^7)^{1/2}\psi(\Xi_s(\xi)),&
+\mathcal Q_s&=\mathcal U_s\mathcal Q,\\
+X&=\partial_r,& Y_s&=v_s(r)\cdot\partial_{y,z,w},\\
+b_s[f]&=\|Xf\|_2^2+\|Y_sf\|_2^2,& A_s&=X^*X+Y_s^*Y_s,\\
+U_s(\xi)&=s^5W_{s^2}(\Xi_s(\xi)),&
+\chi&=g s^{-3}.
+\end{aligned}
+\tag{81.1}
+$$
+
+Here $A_s$ is the Friedrichs operator with form domain $\mathcal Q_s$.
+Vectors and potentials on $\Omega_s$ are extended by zero when compared
+in $L^2(\mathbb R^4,d\xi)$ or in supremum norm. This extension does not
+replace either moving Dirichlet face by a reflecting face. The fields
+$v_s$ are the exact pulled-back fields of (78.4), not their Taylor
+polynomials. Let
+
+$$
+Y=\partial_y+r\partial_z+\tfrac12r^2\partial_w,
+\quad b[f]=\|Xf\|_2^2+\|Yf\|_2^2,
+\quad \mathcal Q_E=\overline{C_c^\infty(\mathbb R^4)}^{(\|\cdot\|_2^2+b)^{1/2}},
+\quad \mathcal E=X^*X+Y^*Y.
+\tag{81.2}
+$$
+
+This is exactly G (31.2), on unit Lebesgue measure. Write its kernel
+as $p_E(t;\eta,\xi)$, and set
+
+$$
+V(\xi)=\frac1{j_0}\int_1^\infty p_E(t;0,\xi)dt,
+\qquad h_\chi[f]=a b[f]-\chi\int V|f|^2d\xi,
+\qquad e(\chi)=\inf_{\substack{f\in\mathcal Q_E\\\|f\|_2=1}}h_\chi[f].
+\tag{81.3}
+$$
+
+The kernel uses $e^{-t\mathcal E}$, independently of $a$. In particular
+(81.3) contains neither $p_E(at;0,\xi)$ nor a unit-source potential
+with the factor $1/j_0$ removed.
+

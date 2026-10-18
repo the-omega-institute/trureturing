@@ -1,0 +1,21 @@
+**Definition 4.3 (typed outcomes).** The semantic source labels and successors
+are as follows; every result in the table is an executed call.
+
+| Port | Complete response | Source and counters at response commitment |
+| --- | --- | --- |
+| TagRead($p$) | one of alpha, beta, branch, absent | same source; $q+1$, same $g,e$ |
+| ReadE | exact current Clifford $E$ in its complete coefficient encoding | same source; $q+1$, same $g,e$ |
+| $\rho$ | accept if the whole $\rho t$ has at most $H$ leaves, otherwise reject | accept installs $\rho t$ and gives $g+1,e+1$; reject retains $t,g,e$; both give $q+1$ |
+| Left($v$), Right($v$) | accept/reject for the entire actual candidate | accept installs $\langle v,t\rangle$ or $\langle t,v\rangle$ and gives $g+1$; reject retains $t,g$; both give $q+1$ and unchanged $e$ |
+
+Every row in this table also increments $j$. Rejection exposes no candidate
+value. The complete context packet, name and code reference are retained for
+grafts, even when the candidate is too large. Equality at capacity accepts.
+
+A `NativeLocal` marker commits after one declared controller instruction has
+actually completed; it changes its encoded control/workspace, increments $j$,
+and changes none of $q,g,e$ or the source. Its many tape microsteps are distinct
+from this one marker. A `Halt(o)` marker commits only when the complete finite
+output block $o$ is written and sealed. It increments $j$ but is not a Native
+`Event`; terminal recording/delivery still finishes before global halt.
+

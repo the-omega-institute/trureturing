@@ -1,0 +1,25 @@
+**Definition 4.1 (defect carrier).** A complete native template $\Theta$
+on $n$ canonical blocks has one target prescription for each $(i,q)$:
+either a constant in $G_q$ or a donor reply followed by a total decoder.
+For $x\in S_d^n$, let $v_\Theta(x)$ be the number of these prescriptions
+that $x$ violates. For a probability $\mu$ and $0\le\varepsilon\le1$,
+
+$$
+Z^{\mathrm{def}}_{\Theta,\varepsilon}(\mu)
+ =\sum_{x\in S_d^n}\prod_i\mu(x_i)
+       \varepsilon^{v_\Theta(x)},\qquad 0^0=1.
+\tag{SCP.15}
+$$
+
+The carrier is the ambient actual-tuple space $S_d^n$: a defective
+$x$ is an analytical assignment, not a legal solution or an attained
+code fiber. This differs from (SCP.9), whose carrier is the seed space
+$\prod_cT_c$ and whose incompatible seed vectors may reconstruct no
+actual tuple.
+
+For $0<\varepsilon\le1$, the constraint factor
+$\varepsilon^{v_\Theta(x)}$ is positive on all of $S_d^n$.
+The complete weighted summand is strictly positive exactly on
+$(\operatorname{supp}\mu)^n$; positivity on the entire ambient
+actual-tuple space additionally requires full support of $\mu$.
+

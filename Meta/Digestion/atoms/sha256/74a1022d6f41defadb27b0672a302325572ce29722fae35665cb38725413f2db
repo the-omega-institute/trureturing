@@ -1,0 +1,17 @@
+**Definition 13.1 (Finite residue sectors).** For a finite Laurent-polynomial
+window, let
+
+$$
+\mathcal P_r
+=\operatorname{span}\{T^i:i\equiv r\pmod4\},
+\qquad r\in\{0,1,2,3\}.
+\tag{13.2}
+$$
+
+The DEV residue-orthogonality theorem says that distinct $\mathcal P_r$ are
+orthogonal for the Riesz moment form. Every finite Laurent polynomial is the
+sum of its four residue components, so this is an orthogonal sector
+decomposition of the finite spectral window. Equation (13.1) transports the
+zero-residue address under decimation; it does not identify the residue label
+with a coordinate direction.
+

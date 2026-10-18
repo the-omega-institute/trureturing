@@ -1,0 +1,21 @@
+**Theorem 71.2 (error transfer at the unchanged target).** On such common
+spaces,
+
+$$
+|E(\Phi)-E(\Psi)|\le d_{\rm ref}(\Phi,\Psi).
+\tag{JRH.75}
+$$
+
+In particular, conditional on the inherited $E(\Psi)=E_*$ supplier,
+$d_{\rm ref}(\Phi,\Psi)\le\eta$ gives $E(\Phi)\le E_*+\eta$.
+It gives neither equality to $E_*$ nor exact resource optimality.
+
+Proof. For each of the twelve unchanged normalized inputs the reverse
+triangle inequality against its fixed ideal output bounds the difference
+of HALF errors by HALF the norm of $(\Phi-\Psi)$ on that input.
+This is at most (JRH.74), already with the trivial reference. Taking
+the maximum over the same finite twelve-element set proves (JRH.75).
+Any specified forgetting of records contracts the norm and preserves
+the same upper bound. No average over histories or source prior is
+introduced. $\square$
+

@@ -1,0 +1,57 @@
+**Definition 9.3 (outstanding requirements and applicability).** The
+unrestricted all-$n,k$ middle-range equality, a general proof of the
+state-shortage-to-obstruction implication in Theorem 9.1, and the
+equivalent surviving global SI inequality for late intervals of span
+at least five remain open here. The seven-coordinate collision list
+does not cover larger rectangles: for example $(0,4),(2,2)$ is
+an additional count-eligible pair at $n=8,k=4$. No complete correct
+strict-subgrid graph is supplied. The current total bounds at
+$n=8,k=4$ remain $17\le m_{\mathrm{exec}}\le20$; Corollary
+5.3 is an additional constraint on one installed vector.
+
+The exact seven-coordinate result, its residual-seven consumer, and
+the complete-run cost deductions above are repository deductions with
+their ordinary proofs. The grid, local support and polarity exclusions,
+prefix restriction, SI span-four and early-ending results, and exact
+native transfer are reused at their cited scopes. Finite rational
+duality is the literature-attested supplier [DK]; Cramer's rule,
+Hadamard's inequality and finite conic elimination are established
+linear algebra used inside the cost application. No priority claim
+follows from these attributions or from absence of a textual match.
+
+The classical symmetric-function normalization in [Wegener, Chapter
+14, Section 4, printed pages 423--425][Wegener] is for BP1; its
+proof on page 424 explicitly relies on realizability of every graph
+path. [Bryant, Section 2, Definition 1][Bryant] imposes strictly
+increasing variable indices. [Cook--Edmonds--Medabalimi--Pitassi,
+Section 2.1][CEMP] uses acyclic graphs and read-once consistent
+accepting paths. [Li--McKenzie, Section 2.7][LM] likewise defines
+its deterministic programs as DAGs and its read-$k$ condition
+syntactically. Those hypotheses do not follow from freshness only
+while live. None of those results is used to normalize the arbitrary
+shared tables of Definition 1.1.
+
+The wider alpha/beta programme still requires the same-source internal
+observer and conditions for recovering the four expressions of space,
+time, boundary and memory. Finite installed cardinalities alone do not
+settle those recoveries. Acquired data versus callable source access,
+arbitrary busy cuts, coherent infinite-source constructions, late-target
+requirements and acquisition/authentication/export services retain their
+original obligations. The ordered tree and observation interfaces are
+declared model structure; neither their mathematical existence nor a
+finite native table asserts physical realization or total physical
+runtime. The finite theorem (TC.8) discharges one parameter slice of
+the installed-state frontier, rather than these larger requirements.
+
+[PCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md
+[CP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_COMMON_PREFIX_MEMORY_FRONTIER.md
+[SI]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SUPPORT_INCIDENCE_AND_COUNT_RELAXATION.md
+[PE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_PRIVATE_EXCHANGE.md
+[WTF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHTED_THRESHOLD_FRONTIER.md
+[DK]: https://arxiv.org/html/2409.08119v3
+[FS]: ../../../Blueprint/D5/S3/Analytic/Convexity/FarkasAlternative.scribe.cs
+[Wegener]: https://eccc.weizmann.ac.il/resources/pdf/cobf.pdf
+[Bryant]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
+[CEMP]: https://doi.org/10.4230/LIPIcs.ICALP.2016.36
+[LM]: https://arxiv.org/html/2305.11276
+

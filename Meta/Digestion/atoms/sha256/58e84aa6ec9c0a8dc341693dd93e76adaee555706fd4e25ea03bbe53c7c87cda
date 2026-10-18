@@ -1,0 +1,19 @@
+**Definition 33.1 (The polynomial presentation in all cyclic modes).**
+Let
+
+$$
+S_n=\mathbb C[z_I:I\in\mathcal B_n],\qquad
+z_I\longmapsto X^{(1,\mathbf1_I)},\qquad
+\gamma_I=\deg z_I=(1,\mathbf1_I).
+\tag{33.1}
+$$
+
+This is the cyclic mode presentation of (28.14), now using the
+zero-based positions of Definition 31.1. Its image is $R_k$ by the
+common-copy integer decomposition. Put $D_n=|\mathcal B_n|$ and
+$\Sigma_n=\sum_{I\in\mathcal B_n}\gamma_I$.
+Use $F_\bullet$ for a minimal multigraded free resolution of $R_k$
+over $S_n$. The symbol $F_i$ for a free module is distinct from the
+Fibonacci numbers $F_r^{\mathrm{Fib}}$, which here satisfy
+$F_0^{\mathrm{Fib}}=0$, $F_1^{\mathrm{Fib}}=1$ and the usual recursion.
+

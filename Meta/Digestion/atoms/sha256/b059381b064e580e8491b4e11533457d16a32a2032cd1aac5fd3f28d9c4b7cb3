@@ -1,0 +1,33 @@
+**Lemma 7.2 (Useful PF blocks and residue limits).** There exist an integer $p\ge1$ and constants $C_r\in[1/3,1]$, $r\in\mathbb Z/p\mathbb Z$, such that
+
+$$
+F_n\longrightarrow C_r\quad\text{as }n\longrightarrow\infty, n\equiv r\pmod p.
+\tag{7.5}
+$$
+
+This conclusion allows reducible zero-emission matrices, periodic irreducible blocks and Jordan coupling between blocks.
+
+**Proof.** Use the actual representation $f(n)=\alpha B^{n-1}b$ from Lemma 3.3. In its scalar path expansion only states reachable by positive $B$ paths from the support of $\alpha$ and able to reach the support of $b$ by positive $B$ paths contribute. Call these states useful. Every contributing path stays within the useful set. Thus the same scalar products can be analyzed on its principal submatrix; this is an identity for those products, with no change to the original parameter domain or actual law.
+
+Put the useful submatrix in Frobenius block form. Its diagonal blocks are irreducible nonnegative matrices, including possible one-state zero blocks. Consider a useful irreducible block of positive spectral radius $R$. Choose fixed positive entrance and exit paths connecting $\alpha$ to a state $u$ of the block and a state $v$ of the block to $b$. The cyclic Perron–Frobenius theorem gives a period $d$ and an allowed residue of $k$ for which, for all sufficiently large $k$ in that residue,
+
+$$
+(B_{\rm block}^k)_{uv}\ge\eta R^k
+\tag{7.6}
+$$
+
+with some $\eta>0$. This is the positive Perron limit for the appropriate primitive block of the $d$th power. Nonnegativity and the fixed entrance and exit paths then give $f(k+t)\ge\eta'R^k$ with fixed $t$ and $\eta'>0$. If $R>\rho$, this contradicts $f(k+t)\le\rho^{k+t}$ from (7.1). Thus every useful block has spectral radius at most $\rho$.
+
+If every useful block had radius strictly below $\rho$, the finite-dimensional Jordan expansion of the useful submatrix, including its off-diagonal couplings, would make $\alpha B^{n-1}b/\rho^n$ tend to zero: every term is a polynomial in $n$ times a strictly decaying exponential, with zero-eigenvalue terms eventually zero. This contradicts the lower bound $F_n\ge1/3$. Therefore the largest useful spectral radius is exactly $\rho$.
+
+For an irreducible nonnegative block of radius $\rho$, every peripheral eigenvalue is $\rho$ times a root of unity, by the cyclic Perron–Frobenius theorem. The spectrum of the Frobenius form is the union of its diagonal-block spectra. Choose $p$ divisible by the periods of all blocks of radius $\rho$. Jordan expansion of the scalar sequence now has the following form on each residue $r$ modulo $p$:
+
+$$
+F_n=P_r(n)+o(1),\qquad n\equiv r\pmod p,
+\tag{7.7}
+$$
+
+where $P_r$ is a real polynomial. Indeed, peripheral phase factors are constant on that residue, their Jordan terms give a polynomial, and all remaining eigenvalues have modulus strictly below $\rho$ and give a decaying remainder even after multiplication by a polynomial. The use of $B^{n-1}$ instead of $B^n$ changes only the coefficients. The real form, or conjugate pairing, gives real $P_r$.
+
+The scalar bounds $1/3\le F_n\le1$ force each $P_r$ to be constant; a nonconstant real polynomial is unbounded on the infinite positive residue progression. Call that constant $C_r$. Passing to the limit gives $C_r\in[1/3,1]$. This rules out nonconstant leading Jordan contributions by a bound on the exact scalar sequence, without assuming their cancellation or imposing primitivity. $\square$
+

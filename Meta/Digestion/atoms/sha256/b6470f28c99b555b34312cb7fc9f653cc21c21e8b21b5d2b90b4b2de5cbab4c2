@@ -1,0 +1,38 @@
+**命题 21.9.2（隐藏路径的混合反例）。** 若随机路径 $h$ 未被保留，两个协议的有效选择似然是
+
+$$
+F(u)=\sum_h w_hF_h(u),
+\qquad
+G(u)=\sum_h w_hG_h(u).
+$$
+
+一般有
+
+$$
+\log\frac{F(u)}{G(u)}
+\ne
+\sum_h w_h\log\frac{F_h(u)}{G_h(u)}.
+$$
+
+甚至每个分支都可能满足零投影扩张，而忘记路径后得到正扩张。取两个等权分支：
+
+$$
+G_1=F_1=(1,\varepsilon),
+\qquad
+G_2=(\varepsilon,1),
+\qquad
+F_2=cG_2,
+$$
+
+其中 $c\ne1$ 且 $0<\varepsilon<1$。每个分支内 $F_h/G_h$ 都是常数，分支投影扩张为零；但混合后
+
+$$
+G=\frac12(1+\varepsilon,1+\varepsilon),
+$$
+
+$$
+F=\frac12(1+c\varepsilon,\varepsilon+c),
+$$
+
+除非 $c=1$，否则 $F/G$ 非常数，出现正投影扩张。
+

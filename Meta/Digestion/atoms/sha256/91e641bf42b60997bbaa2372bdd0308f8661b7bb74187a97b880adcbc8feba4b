@@ -1,0 +1,39 @@
+**Theorem 16.2 (universal finite-mixture lower bound and strictness).**
+Every finite dictionary in this class satisfies
+
+$$
+B_*\geq\max\left\{0,\frac{P-P_0}{2-H}\right\}.
+\tag{AC.57}
+$$
+
+If $0<P<1$, its $B_*$ is strictly above the right side. At $P=1$
+all survival probabilities equal one and $B_*=1/2$.
+
+Proof. At a seed write $M=\max(q_a,q_b)$ and $m=\min(q_a,q_b)$.
+Theorem 15.1 gives $M\leq f(m)$. Direct differentiation gives
+
+$$
+f'(v)=\frac{c^2}{(2b-(b-a)v)^2},\qquad
+f''(v)=\frac{2(b-a)c^2}{(2b-(b-a)v)^3}>0.
+\tag{AC.58}
+$$
+
+Since $f(0)=H$ and $f(1)=1$, its graph lies below the endpoint chord,
+strictly at every $0<v<1$. Hence
+
+$$
+M+m\leq H+(2-H)m,
+\qquad P\leq P_0+(2-H)B_*.
+\tag{AC.59}
+$$
+
+The average is over the full original seed law $\nu$, not its
+survival-renormalized law. This proves (AC.57).
+Every seed has $m>0$ by Proposition 14.5, so $B_*>0$.
+If $P<1$, at least one positive-weight seed has $m<1$ and its chord
+inequality is strict. Therefore $P<P_0+(2-H)B_*$.
+For $P>P_0$ this makes the positive lower bound strict; for
+$P\leq P_0$ positivity makes the zero lower bound strict.
+If $P=1$, averaging numbers at most one forces every $q_x(u)=1$,
+and (AC.56) gives $B_*=1/2$. $\square$
+

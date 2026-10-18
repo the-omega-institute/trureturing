@@ -1,0 +1,33 @@
+## 471. The three-slot owner: the two exact face-map alternatives
+
+The remaining case has fixed frame
+
+    rho=(B,Z,A,Z,Z,A), B!=Z, A!=Z.
+
+Its Z slots are edges 13,24,34. The two original faces 134 and 234
+have multiset {Z,Z,A}; the other two faces have multiset {B,Z,A}.
+The preceding receiving-role argument forces both {Z,Z,A} faces to
+pair within rho. Since B!=Z, they are exactly rho's two such faces,
+so the original fixed-point-free face involution pairs them to each
+other. They cannot pair to one and the same original face.
+
+There are precisely two label-preserving vertex maps from 134 to 234.
+The unique A edge 14 must map to 23, while the common vertex 3 of
+the two Z edges must map to vertex 4. Thus the maps, written by the
+images of (1,3,4), are
+
+    (2,4,3), or (3,4,2).                            (471.1)
+
+For the first map, edge 34 maps to itself with reversed endpoint
+order. Its one original normal interval has its two endpoints paired
+to each other. It is a closed one-interval component, impossible in
+a connected original circle of degree at least six. The other two
+Z intervals do not erase this component.
+
+For the second map, edge 13 maps to 34 and edge 34 maps to 24.
+The three original Z intervals form one path, in order 13,34,24,
+whose two external endpoints lie on the remaining faces 123 and 124.
+Reversing the face-map direction merely reverses this path. No
+interval interior is identified, and all three intervals remain
+original occurrences of rho.
+

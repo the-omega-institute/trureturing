@@ -1,0 +1,20 @@
+**Proposition 8.1 (no finite sample can refute every finite budget).**
+For every finite nonempty $S\subseteq D$, some finite static physical
+service at entry $N$ recovers the full original $R_Q$ on $S$. In
+particular, even on a whole fiber with no uniformly bounded recovery,
+no one finite sample is an obstruction to all read budgets.
+
+Proof. Native $\rho^N$ is injective, as supplied by ABC's all-source
+conjugacy and the native injectivity results. Distinct original trees in
+$S$ therefore have distinct current finite trees. Their union of present
+positions is finite and distinguishes them by literal replies. Use NPL
+Lemma 7.2's exact finite-source procedure: whenever the surviving source
+subset has more than one full target row, choose a physical word that
+separates two of those sources and read it at epoch $N$. Each nonempty
+reply subset is a strict subset. At most $|S|-1$ such reads suffice;
+the finite menu also gives finite total literal length. Stop as soon as
+the surviving full rows agree. There are zero updates and no source
+identity port. The list $S$ is common program data, and only actual paid
+replies narrow it. This proves the claim in the relaxed comparison class
+of Definition 1.3. $\square$
+

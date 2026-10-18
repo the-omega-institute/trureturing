@@ -1,0 +1,31 @@
+**定理 139.5（包含退化子树的全树三周期相容）。** 令
+
+$$
+R_3=\begin{pmatrix}0&0&-1\\1&0&0\\0&-1&0\end{pmatrix}.
+$$
+
+它保持标准内积及定向，满足 $R_3^3=I$，并对全部原树 $t$ 有
+
+$$
+q_{\mathrm{cross}}(\rho t)=R_3q_{\mathrm{cross}}(t).
+$$
+
+证明（139.5）。$R_3$ 的列为 $e_2,-e_3,-e_1$，是正交单位基，其行列式为一；它使 $e_1\mapsto e_2\mapsto-e_3\mapsto e_1$，因此三次幂为恒等。命题139.3在固定单位体积下给
+
+$$
+(R_3u)\times(R_3v)=R_3(u\times v).
+$$
+
+叶 $\alpha$ 的等式为 $e_2=R_3e_1$；叶 $\beta$ 的等式为 $e_2\times e_1=-e_3=R_3e_2$。若两子树已成立，则
+
+$$
+\begin{aligned}
+q_{\mathrm{cross}}(\rho\langle s,t\rangle)
+&=q_{\mathrm{cross}}(\rho s)\times q_{\mathrm{cross}}(\rho t)\\
+&=(R_3q_{\mathrm{cross}}(s))\times(R_3q_{\mathrm{cross}}(t))\\
+&=R_3q_{\mathrm{cross}}(\langle s,t\rangle).
+\end{aligned}
+$$
+
+结构归纳覆盖全部树。它不在节点上归一化；例如 $q_{\mathrm{cross}}(\langle\alpha,\alpha\rangle)=0$，零向量仍满足相容公式，所以退化子树并未被排除。$\square$
+

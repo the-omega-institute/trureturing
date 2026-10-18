@@ -1,0 +1,16 @@
+### 96.4. Places not dividing d
+
+At infinity d is positive. At 2 it is 1 modulo8, at 3 it is 1 modulo3, and at 5 it is a quadratic residue because every prime in d is 5-split. Therefore d is a square at these places. At every p|e, the cut condition (d/p)=1 makes d a local square. All these pairing factors equal one.
+
+Consider an odd prime p not dividing 30de. If d is a square locally its contribution again equals one. Otherwise d is a nonsquare unit. The norm equation forces a and b to be p-integral: a negative minimum valuation could not cancel, since such cancellation would make d a square in the residue field. Choose a primitive integral point of the covering. Its t-coordinate must be a unit, since t=0 modulo p would force z1=z2=0 from H3 and then z3=0 from H2, contradicting primitivity. Normalize t=1.
+
+The following exact identities give the needed parity of tangent valuations. On H3 set M3=a z2-d b z1, W3=a z1-b z2, c3=5de. Then
+
+ (M3-c3)(M3+c3)=d W3^2.
+
+On H2 set M2=A0 z1-B0 z3, W2=A0 z3-B0 z1, c2=15e. Then
+
+ (M2-c2)(M2+c2)=W2^2.
+
+Here all quantities are p-integral, and 2,c2,c3,d are units. If L_i=M_i-c_i has positive valuation, M_i+c_i is a unit, so its valuation is even. A unit evaluation already has even valuation zero. Avoiding zero evaluations is legitimate: the locally soluble smooth covering has an infinite p-adic neighborhood, while each tangent cuts out only finitely many points. For a nonsquare unit d, the Hilbert symbol (z,d)_p depends only on the parity of v_p(z). Thus all these factors are one, including any auxiliary primes in denominators of the rational conic solution at places where d is locally square.
+

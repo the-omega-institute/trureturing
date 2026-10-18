@@ -1,0 +1,14 @@
+**引理 459.1（统一小窗口域）。** 存在仅依赖 $c,B$ 的固定
+$0<h_0<\eta/2$，使所有 $0<h<h_0$ 与所有
+$0\le\varepsilon\le K_h$ 同时满足
+$$
+r_*:=2(\sqrt2-1)<r_\varepsilon<1.
+\tag{SNC.7}
+$$
+
+**证明。** $K_h=O(h^2)$，故 $U,V,Z\to c/2$ 对整个
+$\varepsilon\in[0,K_h]$ 一致成立，$\Delta_\varepsilon=O(h^2)$
+也一致成立。（SNC.5）的连续公式由正分母支付，所以
+$r_\varepsilon\to1$ 一致成立。由于 $r_*<1$，可选共同
+$h_0$ 使下界成立，上界已经由（SNC.6）逐点支付。证毕。
+

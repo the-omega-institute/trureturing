@@ -1,0 +1,19 @@
+**Open problem 8.6 (finite certified numerical convergence).** Find
+effective lower certificates approaching $\lambda$. The fractional
+infimum in (FMR.21) gives decreasing computable upper endpoints;
+its finite-depth dual does not automatically transport to a lower
+endpoint at growing depth. The joint-block supremum in (FMR.41)
+has geometric depth error, but $\sigma_d$ is itself an infinite
+infimum over block lengths. For example a proved bound
+
+$$
+\sigma_d\ge n^{-1}\log_2K_d(n)-\eta_d(n),
+\qquad \eta_d(n)\longrightarrow0,
+\tag{FMR.47}
+$$
+
+with an effective certified error, or a convergent family of
+all-correlated-fiber dual witnesses, would address this gap.
+No such estimate is assumed here; no undecidability or
+noncomputability conclusion follows from its absence.
+

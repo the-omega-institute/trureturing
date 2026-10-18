@@ -1,0 +1,23 @@
+### 动态未来律
+
+设五个模式对应未来律 $\mathscr L_I$，则：
+
+$$
+R_{\mathrm{future}}(h)=
+\mathscr L_{13}
+-\mathscr L_1
+-\mathscr L_3
++\mathscr L_{\mathrm{null}}=
+J_{\mathscr L}.
+$$
+
+因此：
+
+$$
+J_{\mathscr L}\neq0
+$$
+
+是未来响应恢复 $\kappa$ 的必要充分条件。
+
+---
+

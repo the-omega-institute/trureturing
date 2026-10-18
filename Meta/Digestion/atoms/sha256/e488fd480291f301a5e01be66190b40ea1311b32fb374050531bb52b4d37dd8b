@@ -1,0 +1,39 @@
+**定理 460.1（精确对偶缺口恒等式）。** 若 $E_h(\sigma)\le\varepsilon$，定义
+$$
+d_{\rm box}=r^2\bigl(U-L_\sigma(h)\bigr)
+ +2r\bigl(L_\sigma(3h/2)-V\bigr)
+ +\bigl(Z-L_\sigma(2h)\bigr).
+\tag{SDD.2}
+$$
+则下列三项均非负，且有精确身份
+$$
+\boxed{\quad
+M\bigl(N_-(\sigma)-n\bigr)
+=d_{\rm box}+\int q\,d\sigma^+
+ +\int(M-q)\,d\sigma^-.
+\quad}
+\tag{SDD.3}
+$$
+每个积分都对整条非负轴进行，没有截尾。
+
+**证明。** 三节点误差盒给 $L_\sigma(h)\le U$、
+$L_\sigma(3h/2)\ge V$、$L_\sigma(2h)\le Z$；由于 $r>0$，
+（SDD.2）的三个加数均非负。§459 的同一平方见证满足 $0\le q\le M$，
+故其余两个积分也非负，且有界核对有限 Jordan 部真正可积。
+令 $Q=\int q\,d\sigma$。有限线性组合与 §459 的原数据恒等式给
+$$
+Q=L_\sigma(2h)-2rL_\sigma(3h/2)+r^2L_\sigma(h)
+ =-Mn-d_{\rm box}.
+$$
+而 Jordan 分解给
+$$
+Q=\int q\,d\sigma^+-MN_-(\sigma)
+       +\int(M-q)\,d\sigma^-.
+$$
+整理得到（SDD.3）。证毕。
+
+这将最优性的剩余成本精确分成节点误差盒缺口、正部偏离平方零点的成本，
+以及负部偏离平方最大点的成本。三个成本都不能靠另一个成本的符号取消。
+当 $N_-=n$ 时，它们同时为零，复得 §459 的唯一两原子；
+下面同时给出接近最优时的定量控制。
+

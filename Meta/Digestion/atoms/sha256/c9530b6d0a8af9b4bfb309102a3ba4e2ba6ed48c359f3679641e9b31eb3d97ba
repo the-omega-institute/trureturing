@@ -1,0 +1,18 @@
+**定义 13.2（原来源上的前缀与后缀模数）。** 固定一个成功实际命令词，置 $D=D_s$。切面 $i$ 已完成 $i$ 个事件，$0\le i\le L$。若事件 $j$ 是Read，其原边前缀为 $A_jt+C_j$、顶点为 $v_j$，置
+
+$$
+q_j=\frac{d_{v_j}}{\gcd(d_{v_j},A_j)};
+\qquad q_j=1\quad\text{当事件 }j\text{ 是Ack边事件}.
+\tag{13.3}
+$$
+
+前缀及未读后缀模数为
+
+$$
+P_i=\operatorname{lcm}_{j\le i}q_j,\qquad
+Q_i=\operatorname{lcm}_{j>i}q_j,\qquad P_0=Q_L=1.
+\tag{13.4}
+$$
+
+$Q_i$只取尚未实际读取、但已固定在该词中的原观察，不取任意可选未来路径的 $D_{v_i}$，不取完整当前相位，也不把旧根响应加入未来。定理12.2给 $\operatorname{lcm}(P_i,Q_i)=D$；过去已得响应准确确定 $t\bmod P_i$，剩余全部响应相等准确等价于 $t\equiv t'\pmod{Q_i}$。
+

@@ -1,0 +1,37 @@
+**lemma 3.1 (Finite acquired sections).** For a measurable next-event
+representative at a fixed seed, a consistent finite acquired record
+has source section exactly
+
+$$
+C(r)=\bigcap_{i=1}^n\{X_{t_i}=x_i\}.
+\tag{3.1}
+$$
+
+An inconsistent sequence of prescribed choices has empty section.
+An output after a consistent terminal record is fixed on its section.
+These assertions also hold for reachable prefixes.
+
+Proof. The empty record imposes no condition. At a fixed seed and
+prefix, the next action and internal waiting are fixed. Requesting
+$t$ and receiving $x$ intersects the preceding section with
+$\{X_t=x\}$. A finite return imposes no new source condition;
+indefinite internal waiting gives the same nonreturn on the entire
+section. Induction proves the claim, including adaptive requests and
+contradictory repeated replies. Completed-product versions agree with
+representatives on source sections for almost every seed, up to source
+null sets, by Tonelli; thus they give the same integrated masses.
+This is the elementary finite-section
+interface in Original, Theorems 9.2–10.1. $\square$
+
+For any source event $C$ write
+
+$$
+M(C)=\max_{h\in\mathcal A}J_p(C,H_j=h).
+\tag{3.2}
+$$
+
+This is a maximum of four joint masses. It bounds the correctness of
+every label, including minority and wrong-phase choices. On a leaf
+compatible with two phases the maximum is over their disjoint label
+sets, rather than a sum of their separate maxima.
+

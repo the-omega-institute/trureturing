@@ -1,0 +1,22 @@
+**定义 32.1（完整世界与实际采集）。** 每个世界只有一个从开始固定的整个目标
+
+$$
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),\qquad
+0\ne g\in\mathbb R[t],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{32.1}
+$$
+
+源逐项正、秩一、迹一，不要求对称，正非对角元无上界。增益可带任意符号、降次、有采样零及重根。令
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad
+y_i=d+g(i)\operatorname{tr}(Q_iP),\quad a_0=y_0=d+g(0).
+\tag{32.2}
+$$
+
+初读计数，七个动作后的立即读数使用原时钟 1—7，共八次总读。一条轨迹不能重置、复制、跳读、加空动作、重编号或增加端口。可选动作的函数值只比较已固定世界；不同时取得两个互择观察。确定性策略可依实际历史停止或选动作，目标必须恢复整个 P、g、d；精确实数规则不附可计算性条件。
+

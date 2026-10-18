@@ -1,0 +1,139 @@
+**Theorem 42.1 (every sharp-cost error optimizer).** Every actual
+implementation in (JR.43), for every $0\leq s\leq1$, has on the
+supported qutrit algebra the following equalities. Here $\Lambda_\Phi$
+is its supported live compression and $G_f,G_o$ are its total canonical
+failure and other effects, as in (CG.155):
+
+$$
+\begin{aligned}
+\Lambda_\Phi&=\Lambda_*:=D(\cdot)D^\dagger+
+ T(\cdot)T^\dagger+S(\cdot)S^\dagger,\\
+G_f&=M,\qquad G_o=0,\\
+Q_H&=(1-u)D^\dagger D+(1-v)T^\dagger T.
+\end{aligned}
+\tag{JR.44}
+$$
+
+Each high-fibre branch has zero later nonlive mass on supported inputs,
+or this holds almost everywhere in the stipulated integral case.
+These are supported live/effect equalities. They assert neither full
+five-mode channel uniqueness nor uniqueness of the individual
+labelled failure-time CP measures.
+
+Proof. Apply CG Theorem 17.2 and Corollary 17.3 to the original full
+optimizer, with the finite compression only as a necessary test. Before
+averaging, the live Choi support lies in
+$\operatorname{span}\{|D\rangle\!\rangle,|T\rangle\!\rangle,
+|S\rangle\!\rangle\}$, $G_o=0$, $G_f|0\rangle=0$, and every
+positive-weight endpoint witness individually saturates (CG.157).
+The averaged Choi equality fixes the diagonal of the unaveraged
+coefficient Gram to $(1,1,1)$. These are the credited CG consequences,
+not a premise that the unaveraged live map is already $\Lambda_*$.
+
+Choose the actual encoder/live-decoder products and write them uniquely
+as $K_j=x_jD+z_jT+w_jS$. Kraus refinements here are analytic devices;
+$j$ is not declared observable. Define the low-fibre squared masses
+$(u_L,v_L,w_L)$ from these same products. The proof of (JR.27) applies
+to their masses without altering the original instrument: sign averaging
+only reads diagonal moments and four-sign cost means. In particular
+
+$$
+\begin{aligned}
+u_L&\leq\theta v_L+\omega w_L,\\
+s\leq\mathsf V(F)&\leq
+ \sqrt{u_Lv_L}+\sqrt{(1-u_L)(1-v_L)},\\
+\mathsf W\geq\overline p_{H,27}&\geq
+ A_{27}(1-u_L)+B_{27}(1-v_L)+C_{27}(1-w_L).
+\end{aligned}
+\tag{JR.45}
+$$
+
+For the middle line, TP and $G_f|0\rangle=0$ give zero real total
+$DT$ moment. The failure plus effect is dominated by $G_f$, so its
+$01$ entry vanishes. Therefore the signed winding identity is
+$2\operatorname{Re}F_{01}/\kappa
+=\sum_j r_j\operatorname{Re}(\overline x_jz_j)$, after absorbing
+actual binary coins. This uses no height-TV average. Let $G_H^L$ denote the sum of the
+supported high-live effects
+$(\mathcal R_\alpha^L\mathcal E_\alpha)^\dagger(I_3)$ over
+$d_\alpha\geq3$. The cost line uses full TP of each decoder, whose
+live restriction alone is TNI, so $Q_H-G_H^L\succeq0$.
+
+For $s\leq s_0$, $u_L\leq\delta$ and $v_L,w_L\leq1$.
+For $s>s_0$, the monotonicity argument of Theorem 37.2 gives
+$v_L\leq v_s$, $u_L\leq\theta v_s+\omega$, $w_L\leq1$.
+Since $A_{27},B_{27},C_{27}$ are strictly positive and
+$\mathsf W=P_{27}(s)$, equality forces
+$(u_L,v_L,w_L)=(u,v,1)$ in both regimes. Also
+$Q_H-G_H^L\succeq0$ has zero trace against
+$\operatorname{diag}(p_{27})\succ0$. It is zero. Each nonnegative
+branch slack consequently vanishes, or vanishes almost everywhere.
+This excludes hidden high-fibre failure mass.
+
+The low singular products saturate the determinant/triangle budget:
+
+$$
+x_j^2=\theta z_j^2+\omega w_j^2,\qquad
+|x_j|^2=\theta|z_j|^2+\omega|w_j|^2.
+\tag{JR.46}
+$$
+
+Indeed the summed nonnegative slack is zero; a product with $x_j=0$
+then has $z_j=w_j=0$. Every nonzero product is on the quadratic
+component of the complex singular locus. CA Theorem 5.1, equation
+(CA.21), supplies precisely this exposed real equality face: after a
+common phase is removed, its coefficients are real. In its pointwise
+proof, divide (JR.46) by $x_j^2$ and use equality in the complex triangle
+inequality; both squared ratios are nonnegative real. This also handles
+one zero ratio. The complex singular plane and relative complex phases
+are excluded by equality, not by an imposed real implementation class.
+
+High products have $w_j=0$. On $s\leq s_0$ they also have $z_j=0$,
+and hence are phase multiples of $D$. On $s\geq s_0$, the signed
+Cauchy–Schwarz inequalities in (JR.45) all saturate, after one global
+binary reversal if necessary. Thus
+
+$$
+z_j=r_j\sqrt{v/u}\,x_j\quad\text{on low products},\qquad
+z_j=r_j\sqrt{(1-v)/(1-u)}\,x_j\quad\text{on high products}.
+\tag{JR.47}
+$$
+
+Here $u,1-u>0$; the second ratio is zero at $s=s_0$, and at $s=1$
+one has $u=v=v_0>0$. Equality with the positive low/high sums forces
+a high product with $x_j=0$ to be zero. Consequently high coefficient
+projectors are real too. No phases were assumed real before equality.
+
+Let $Z$ be the total real coefficient Gram. Its diagonal is one.
+The $01$ and $02$ entries of TP, together with $G_f|0\rangle=0$,
+give $\kappa Z_{DT}=\kappa_{02}Z_{DS}=0$, where
+$\kappa_{02}=h_0c+h_2d>0$. The only possible remaining perturbation is
+
+$$
+\Lambda_\Phi=\Lambda_*+
+ t\{T(\cdot)S^\dagger+S(\cdot)T^\dagger\},\qquad t\in\mathbb R.
+\tag{JR.48}
+$$
+
+At height $27$ the credited endpoint effect is $U_{e,n}R_{27}U_{e,n}^\dagger$
+on live and zero on every nonlive sector. Write
+$R_{27}=\zeta_{27}\zeta_{27}^T$ with the positive unit vector
+$\zeta_{27}=(\beta_{1,*},\beta_{2,*},1)^T/
+\|(\beta_{1,*},\beta_{2,*},1)\|$ from (CG.112).
+The perturbation changes its live pairing by
+$nt\,C_{TS}$, where
+$C_{TS}=2(\zeta_{27}^TTa_{27})(\zeta_{27}^TSa_{27})>0$.
+Every one of the four endpoint payoffs equals $E_*$, as does the
+credited channel's payoff. Both signs of $n$ therefore force $t=0$.
+A change of failure measures cannot compensate a witness that vanishes
+on those sectors. Thus $Z=I$, $\Lambda_\Phi=\Lambda_*$, and TP gives
+$G_f=M$.
+
+Only a real $DT$ cross moment can now remain in the high coefficient
+Gram, since it has diagonal $(1-u,1-v,0)$. Its four height-$27$
+acquisition probabilities have mean $P_{27}(s)$ and are each at most
+$\mathsf W=P_{27}(s)$. All four equal their mean; $q_{27},\kappa>0$
+kill that cross moment. This proves the final operator identity in
+(JR.44). Nonnegative sum/integral equalities propagate pointwise or
+almost everywhere under exactly Definition 41.1's hypotheses. $\square$
+

@@ -1,0 +1,83 @@
+## 2. Finite exterior risk
+
+Let
+
+$$
+X=\{x\in\{0,1\}^{\mathbb Z}:x_jx_{j+1}=0\text{ for all }j\},
+$$
+
+and write $[w]$ for a cylinder. For a probability law $P$ on $X$ and $r\geq1$, set
+
+$$
+\mathcal F_r=\sigma(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),
+\qquad
+D_r(P)=\mathbb E_P\!\left[(X_0-\mathbb E_P[X_0\mid\mathcal F_r])^2\right].
+$$
+
+The two-point fiber identity gives the explicit formula
+
+$$
+D_r(P)=\sum_{\substack{a,v\in B_r\\a_r=v_1=0}}
+h\bigl(P([a0v]),P([a1v])\bigr).
+\tag{2.1}
+$$
+
+Indeed, after the exterior word $av$ is fixed, the center is either forced to
+zero or has the two masses $s=P([a0v])$ and $t=P([a1v])$. Its conditional
+squared risk is $st/(s+t)$, including the cases $s=0$, $t=0$, and $s=t=0$ by
+the displayed definition of $h$. Consequently $D_r$ is continuous and
+concave in $P$, because $h$ is continuous and concave ([Growth, Lemma 3.1]).
+
+The fields $\mathcal F_r$ increase to $\mathcal F_\infty=\sigma(X_j:j\neq0)$.
+The bounded martingale convergence theorem therefore gives
+
+$$
+D_r(P)\downarrow D_\infty(P):=
+\mathbb E_P\!\left[(X_0-\mathbb E_P[X_0\mid\mathcal F_\infty])^2\right].
+\tag{2.2}
+$$
+
+In particular, $D_\infty=\inf_rD_r$ is upper semicontinuous for weak
+convergence, since each $D_r$ is continuous.
+
+For a probability vector $\mu$ on $B_n$, let $\Phi_{n,i}(\mu)$ be the sum of
+$h(\mu_b,\mu_{b+e_i})$ over the legal fibers at coordinate $i$. The same fiber
+calculation gives
+
+$$
+\Phi_n(\mu)=\sum_{i=1}^n\Phi_{n,i}(\mu),\qquad
+0\leq\Phi_{n,i}(\mu)\leq\frac14.
+\tag{2.3}
+$$
+
+The bound follows from $h(s,t)\leq(s+t)/4$ and the fact that the coordinate
+fibers form a matching. If $P$ is stationary and $P_n$ is its actual marginal
+on an interval of length $n$, conditioning on all other coordinates in that
+interval is a finite exterior conditioning. Conditional variance decreases
+under refinement, so for $n\geq2r+1$,
+
+$$
+D_\infty(P)\leq {\Phi_n(P_n)\over n}
+\leq { (n-2r)D_r(P)+r/2\over n}.
+\tag{2.4}
+$$
+
+The left inequality holds at every coordinate. For the right inequality, the
+$n-2r$ coordinates at distance at least $r$ from both endpoints have risk at
+most $D_r(P)$, and the remaining $2r$ terms satisfy (2.3). First let
+$n\to\infty$ in (2.4), then let $r\to\infty$. Thus every stationary $P$ has
+
+$$
+d(P):=\lim_{n\to\infty}{\Phi_n(P_n)\over n}=D_\infty(P).
+\tag{2.5}
+$$
+
+Since $\Phi_n(P_n)\leq\kappa_n$, (1.1) and (2.5) imply
+
+$$
+d(P)\leq c_\star
+\tag{2.6}
+$$
+
+for every stationary $P$, without a support or memory assumption.
+

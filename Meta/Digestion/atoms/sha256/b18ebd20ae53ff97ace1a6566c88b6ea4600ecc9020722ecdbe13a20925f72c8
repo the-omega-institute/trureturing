@@ -1,0 +1,59 @@
+**Theorem 7.2 (full variable-shape realization with counted shape).**
+For integers $d,L\ge1$ and $h\ge0$, put $D=d+h$ and $n=2^h$.
+There is a correct
+original preparation and reader with complete attained alphabet at most
+
+$$
+U_hK_{d,L}(2^h)
+\le U_hQ_{d,L,2^h}K_d(2^h).
+\tag{SIR.39}
+$$
+
+It serves every original target and authentic subsequent count,
+on every $t\in\mathcal F_D$, with sufficient preparation bounds
+
+$$
+T\le2^D-1,\qquad Q\le D,\qquad A\le(D-1)2^D+1.
+\tag{SIR.40}
+$$
+
+The optional one late original-root Read has length at most $D$.
+
+Proof. Apply the credited full-family cutting construction of FMR
+Theorem 6.3, using a restricted joint cover. Retain the unlabelled
+top shape through height $h$, whose possible alphabet has size
+$U_h$. At each actual depth-$h$ slot use its canonical $S_d$
+block; at each slot blocked by a shallow leaf put the public
+dummy alpha in the analytical tuple. Retain the shape and the
+tuple's first-containing-member cover name. If using Theorem 4.2
+to obtain that cover, its section selector is already included
+in this second component. The possible pair alphabet has the
+first bound in (SIR.39), and Theorem 4.2 gives the second.
+Only attained pairs count; their number need not equal this upper.
+
+Acquire the complete canonical boundary by the actual original-root
+words $Rq$, $q\in W_D$, before receiving a target. It determines
+the shape and the entire padded tuple. Compute and export their
+fixed-width complete pair name, isolating all other source dependence
+under Assumption 1.2. The word count and length sum are (SIR.40).
+
+After the request, a target ending at a branch above the cut has
+constant branch trajectory. If it meets a shallow leaf, the retained
+shape locates that actual leaf. One Read at its original-root word
+gives its label and (SIR.3) supplies the target factor, including
+initially absent targets below it. Otherwise it enters one actual
+slot and invokes its joint section witness. A surviving donor in
+an actual slot is queried at its original-root literal. A donor
+in a dummy slot is simulated from the public alpha tree, without
+a source-bearing Read; the retained shape specifies which case
+applies. Every request therefore uses at most one actual Read,
+and (SIR.4) answers all subsequently supplied authentic counts.
+
+This construction counts the cut shape instead of treating it as
+free navigation. The top shape varies with the source and belongs
+to the complete code. Its shallow leaf labels are reacquired only
+when required after the request. It implements an upper bound,
+not an independent-child restriction on competing original codes.
+The scan replaces old preparation costs and gives no bound on
+total installation, workspace, work or physical time. $\square$
+

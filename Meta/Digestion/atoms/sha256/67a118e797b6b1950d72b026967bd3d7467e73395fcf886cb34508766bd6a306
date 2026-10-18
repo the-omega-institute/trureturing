@@ -1,0 +1,14 @@
+**Proposition 10.1 (a split switch is outside the claimed image).** The
+bit assignment of Definition 4.1 does not preserve its structural image
+when its two root-edge updates are separately observable.
+
+Proof. Initially bit 0 has ordered root targets $(f,t)$. To obtain bit 1,
+changing only the left target first yields $(t,t)$ and detaches $f$ from
+the root. Changing only the right target first yields $(f,f)$ and detaches
+$t$. Either has repeated target occurrences and is not the stipulated
+full ordered occurrence tree. Parent endpoint slots also fail their
+inverse agreement until coherently updated. Hence the switch's final
+correctness proves no all-cut theorem for either split order. A different
+carrier could explicitly store maintenance phases and preserve their
+own inverses; that would be another domain and proof. ∎
+

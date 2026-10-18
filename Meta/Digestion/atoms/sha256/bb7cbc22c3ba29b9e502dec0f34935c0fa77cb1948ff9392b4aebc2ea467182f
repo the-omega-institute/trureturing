@@ -1,0 +1,13 @@
+## 2. A same-boundary full-support separation at $D=8$
+
+Take
+
+$$
+D=8,\qquad p=RLLLLLLL,\qquad n=8.
+\tag{2.1}
+$$
+
+For a word $a$ and a tree $u$, let $C_a[u]$ be the tree with branches on
+the strict prefixes of $a$, the tree $u$ at $a$, and $\alpha$ at every
+off-path sibling. This is the published AAR13.6 comb construction.
+

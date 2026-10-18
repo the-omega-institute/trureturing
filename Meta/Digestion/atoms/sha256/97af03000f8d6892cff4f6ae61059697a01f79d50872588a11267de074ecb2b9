@@ -1,0 +1,102 @@
+**Theorem 5.1 (joint finite choice for the prescribed five-hole pair).**
+For every finite protected history $\mathcal H$ just specified, there is
+a terminating choice for
+
+$$
+J(h)\iff\exists u_0\in D_=^\circ,\ u_1\in D_F^\circ,
+\quad u_0\equiv_h u_1.
+\tag{SLP.16}
+$$
+
+If either stratum is empty, $\neg J(0)$. If both are nonempty, a finite
+construction supplies actual witnesses for $J(h)$ for every supplied
+$h\ge0$, retaining both complete labels and all of $\mathcal H$.
+
+Proof. Finite NSF feasibility decides each full stratum predicate and
+returns a finite seed when nonempty. This is a terminating test on the
+entire negative conjunction, not a search through a chosen subfamily.
+If either predicate is empty, no pair can satisfy (SLP.16), even at zero.
+If both are empty there is no surviving stratum. If exactly one is
+nonempty, its returned seed retains its label and all history, but is
+not a witness for $J$.
+
+Suppose now both are nonempty. Apply [SPC, Theorem 4.2][SPC] to the
+proper one-hole context $\langle\alpha,\text{hole}\rangle$ and shift
+$a=1$. It supplies the infinite native completion
+
+$$
+K=\langle\alpha,\rho K\rangle=F(K).
+$$
+
+Let $\Omega$ be the all-branch completion and put
+
+$$
+W=V(K,K,\Omega).
+\tag{SLP.17}
+$$
+
+Both source maps agree at these residuals:
+$V(K,K,\Omega)=V(F(K),K,\Omega)$. This equality uses the interpreted
+fixed point, not arbitrary common residual limits. No signed history or
+finite partition is assigned to $W$.
+
+Here is the required source-level locality. If two finite or completion
+trees agree through depth $d$, their images under any fixed $\rho^a$
+agree through depth $d$. For one update, prove this by induction on
+$d$: matching leaf roots have identical entire finite images; matching
+branch roots remain branches and their children are handled at $d-1$.
+At $d=0$ only the matching root cases are needed. Absent descendants of
+matching leaves therefore agree as well. Iterate for $a$ updates.
+Pairing and substitution into a fixed finite constructor context also
+preserve depth-$d$ agreement. Consequently, if finite $y,z$ satisfy
+$y\equiv_h K$ and $z\equiv_h\Omega$, then
+
+$$
+\begin{aligned}
+V(y,y,z)&\equiv_h W,\\
+V(F(y),y,z)&\equiv_h V(F(K),K,\Omega)=W.
+\end{aligned}
+\tag{SLP.18}
+$$
+
+This checks every original word of length at most $h$. Inside a reached
+hole at address $q$, only residual replies through depth $h-|q|$ are
+required; the supplied residual depth $h$ suffices for every hole and its
+fixed transforms. The complete fixed exterior agrees outright.
+
+For an explicit finite construction of the required prefixes, compute
+$q_h=F^{h+1}(\alpha)$. SPC's fixed-point proof gives agreement below
+$t$ for consecutive $F^t(\alpha),F^{t+1}(\alpha)$; stabilization therefore
+gives $q_h\equiv_h K$. Use the replies of $q_h$ through $h$ for $y$,
+and branch replies at every word through $h$ for $z$. These are valid
+prefixes of the infinite $K,\Omega$ and have independent live frontiers.
+Apply Lemma 2.1 to the entire first stratum conjunction using its NSF
+seed, obtaining finite $y_0,z_0$ with these prefixes. Apply it to the
+entire second conjunction using its seed, obtaining finite $y_1,z_1$.
+Both applications keep every history predicate at its supplied epochs,
+every repetition and all six pairwise comparisons of the four distinct
+values. Form the actual finite original sources
+
+$$
+u_h^=V(y_0,y_0,z_0),\qquad
+u_h^F=V(F(y_1),y_1,z_1).
+\tag{SLP.19}
+$$
+
+By (SLP.8) they belong to $D$, with exactly $r_=$ and $r_F$.
+By (SLP.18) each agrees with $W$ through $h$, so
+$u_h^=\equiv_h u_h^F$. Thus these two actual sources witness $J(h)$.
+Every operation in this mathematical construction is finite for supplied
+$h$. The finite feasibility choices plus this proved construction terminate
+for every history in the declared class. $\square$
+
+A nonempty surviving stratum in the either-empty case has the same
+individual prefix lifting toward $W$, by the corresponding half of the
+construction; the pair still has exclusion depth zero. When both are
+nonempty the joint witnesses show failure of whole-row prefix determination
+on the entire $D$ at every depth. Under the paid common-state premises,
+[ARH, (ARH.2.3)][ARH] then excludes a uniform finite-new-read lawful service
+on that entire fiber. In the either-empty case, exclusion of this pair
+says nothing about the remaining row pairs or their service. All other
+row labels belonging to $D$ remain included in both cases.
+

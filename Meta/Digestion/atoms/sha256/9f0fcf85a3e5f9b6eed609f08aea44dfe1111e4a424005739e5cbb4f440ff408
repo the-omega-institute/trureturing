@@ -1,0 +1,17 @@
+**Definition 7.3 (the additional total domain guard).** Fix $M\geq2$,
+$h=c/(M+1)$ and $k_j=jh$, $1\leq j\leq M$. A public catalogue request
+has an integer $s\in\{-(M-1),\ldots,M-1\}$ and the unit relative
+control
+
+$$
+a_s(t)=sht,\qquad b_s(t)=0,\qquad 0\leq t\leq1.
+\tag{QC.39}
+$$
+
+The actual height is $k_j+a_s(t)$ and the actual phase is the old lift
+plus $b_s(t)$. The relative-command domain in the probability-phase source,
+§9.1, is $(-\min a_s,c-\max a_s)$. Thus the request is legal at
+$k_j$ exactly when $1\leq j+s\leq M$.
+
+The proposed consumer additionally requires one common total request
+handler to report **executed** on every legal catalogue input and

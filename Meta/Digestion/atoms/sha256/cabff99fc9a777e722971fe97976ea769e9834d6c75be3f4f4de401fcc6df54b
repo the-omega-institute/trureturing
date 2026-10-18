@@ -1,0 +1,22 @@
+**Definition 357.1 (Complete finite mass allocation).** Fix an integer $L\ge0$, labels $J=\{0,\ldots,L\}$ and a finite mass $M\ge0$. Write $m(v)=\sum_{z\in J}v(z)$; positive parts and vector maxima are coordinatewise. A complete $N$ allocation has one nonnegative empty vector, two nonnegative vectors for each singleton, and four nonnegative vectors $(a_{ij},b_{ij},d_{ij},e_{ij})$ for each $i<j$, in cell order $00,01,10,11$. All cells of a schedule have its same mass. Schedule masses, each counted once, sum to $M$. A stopped allocation instead has pair cells $0,10,11$ of equal mass. At $M=1$ these are probability allocations. Neither labels nor independent counterfactual cells are required to have separate budgets.
+
+The entire kernel has the multilinear expansion
+
+$$
+p(w)=c+\sum_{i=1}^L\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j,
+\qquad w\in\{0,1\}^L,
+\qquad m(c)=M,\quad m(\ell_i)=m(Q_{ij})=0.
+\tag{357.3}
+$$
+
+Every word and label is included. For mass one and a word with first zero $n$, the cap-$e$ rows are independently
+
+$$
+p_w(0)\ge1-a_n-e,\qquad p_w(n)\ge a_n-e,
+\qquad p_w(0)+p_w(n)\ge1-e;
+\qquad p_{1^L}(0)\ge1-e.
+\tag{357.4}
+$$
+
+These are the exact TV rows of 110.2. In particular the union row is not inferred from its singleton rows, and a negative singleton demand remains literal. The finite positive word is a table endpoint, not an infinite all-positive source.
+

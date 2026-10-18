@@ -1,0 +1,35 @@
+**命题 479.2（有限窗与无限边界的同一公式）。** 对全部 $1<x\le y$，
+
+$$
+\int_{(x,y]}(\psi(t)-t)w(t)\,dt=\Phi(x)-\Phi(y),
+\qquad
+\Phi(x)=I_\psi(x).
+$$
+
+证明。对 $v(t)=1/(t\log t)$ 使用完整有限 Abel 求和，因 $v'(t)=-w(t)$，得到
+
+$$
+P_0(y)-P_0(x)
+=\frac{\psi(y)}{y\log y}-\frac{\psi(x)}{x\log x}
+ +\int_{(x,y]}\psi(t)w(t)\,dt.
+$$
+
+平滑主项的原函数为 $\log\log t-1/\log t$，即
+
+$$
+\int_{(x,y]}t w(t)\,dt
+=\left[\log\log t-\frac1{\log t}\right]_x^y.
+$$
+
+两式相减即得有限窗恒等式，包括 $x=y$ 及两端的完整素数幂约定。
+原 Mertens 误差 $P_0(y)-\log\log y-\gamma$ 趋于零。
+实际线性 Chebyshev 界 $0\le\psi(y)\le Cy$ 给出
+
+$$
+\left|\frac{\psi(y)-y}{y\log y}\right|\le\frac{C+1}{\log y}\longrightarrow0.
+$$
+
+故 $\Phi(y)\to0$。命题 479.1 的实际可积性允许完整有限物理窗趋于
+$(x,\infty)$ 的积分，得到第二式。
+这个上端点估计不要求额外的有效素数定理。
+

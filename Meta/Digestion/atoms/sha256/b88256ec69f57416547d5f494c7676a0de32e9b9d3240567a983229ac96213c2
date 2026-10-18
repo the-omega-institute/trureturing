@@ -1,0 +1,12 @@
+4. Finally check
+
+$$
+C\ge c_0,\qquad C^{2B}\ge c_1^{2B}(1-\delta/\Delta).
+\tag{OOA.23}
+$$
+
+All arrays use the finite canonical orders just specified. There is no
+search for an unspecified extension, no oracle for global feasibility,
+and no implicit square-root comparison. The specification defines a
+mathematical predicate; it installs no repository judge or tool.
+

@@ -1,0 +1,29 @@
+**定理 33.4.1（干预签名识别的充要条件）。** 对目标 $C:\mathcal M_0\to\mathcal Z$，在候选纤维 $\mathcal F_o$ 上，干预族 $\mathcal I$ 能识别 $C$，当且仅当
+
+$$
+\boxed{
+\mathsf I_{\mathcal I}(M)=\mathsf I_{\mathcal I}(N)
+\Longrightarrow
+C(M)=C(N)
+\qquad\forall M,N\in\mathcal F_o.
+}
+$$
+
+等价地，存在唯一映射 $\bar C$ 使
+
+$$
+C|_{\mathcal F_o}=\bar C\circ\mathsf I_{\mathcal I}.
+$$
+
+**证明。**
+
+若识别成立，相同干预签名的模型必须给出相同目标值，得到核包含。反过来，在干预签名像上定义
+
+$$
+\bar C(\mathsf I_{\mathcal I}(M))=C(M).
+$$
+
+核包含保证定义与代表模型无关；像上的满射性给出唯一性。证毕。
+
+<a id="claim-33-4-2"></a>
+

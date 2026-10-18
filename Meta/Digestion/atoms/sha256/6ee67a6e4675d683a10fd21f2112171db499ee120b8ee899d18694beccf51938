@@ -1,0 +1,30 @@
+## 12. Mathematical correspondence and remaining interface obligations
+
+**Mathematical citation 12.1 (suppliers and application boundaries).**
+The finite-stuttering proof method in citation 8.4 is
+literature-attested; it is used as an intermediate argument, not
+as a new standalone general simulation theorem. [SLD, Proposition 4.5][SLD]
+already represents a macro successor by the old node and a typed flag,
+then carries out a paid local continuation. Its literal-delivery
+setting does not introduce the independent writer of Definition 1.1.
+[SLHC, Construction 11.6][CWS-SLHC] and [CWS-TBI] supply the exact
+two-bank rows, typed transfer paths, physical encoding and serial
+native counts. [SLHC, §13][CWS-SLHC] uses that construction for a
+particular bounded-update parity table; its Theorem 13.3's separation
+windows and address lower bounds retain that task's parameters.
+[FIB IV, §§51–52][CWS-FIB-IV] instead assumes a complete finite
+controller and selection/response services preserving its original
+call trace; those services do not supply the paid root-Read chronology
+or RA's unbounded operand interface.
+
+The repo-derived application here is the combination with this
+volume's protected leaf guard, cut-only candidate and all-finite
+moving traversals: every concurrent writer event survives, designated
+responses match, finite routing cannot obstruct finite-interference
+RA termination, and the native address/event and retention statements
+follow on that same history. The finite-table case obtains its
+universal local routing progress from the actual installed rows;
+it does not assume a complete concurrent simulation. Proposition 11.3
+supplies a native equal-row pair with explicitly calculated retained
+routing state. These scopes make no worldwide originality claim.
+

@@ -1,0 +1,5 @@
+source_id = "fib-jmj-exceptional-collision-and-hybrid-decoding"
+path = "docs/develop/theory/FIB_JMJ_EXCEPTIONAL_COLLISION_AND_HYBRID_DECODING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

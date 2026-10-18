@@ -1,0 +1,20 @@
+**Definition 5.1 (actual input channels and activation).** Let $J_0(h)$
+be the variable external source-frame bits consumed after acquisition and
+before Install, or all such bits if Install has not occurred. Let
+$J_1(h)$ be the variable source/service-frame bits consumed on port 38
+after installation, empty until then. They include unfinished prefixes
+and the acquired-but-unwritten bit. Fixed canonical code/bootstrap inputs
+are a separate kind; later source-clone RD(38) is not an IN.
+
+Put $A(h)=\bot$ before Install and $A(h)=j_A$ after it, where $j_A$
+is the actual number of completed original external frames at that Ready.
+This number is not a supplied meter ordinal. Write $n(h)=|h|$ for the
+absolute native receipt count and define the mathematical extraction key
+
+$$
+K_+(h)=\bigl(\operatorname{code}(u),J_0(h),J_1(h),A(h),n(h)\bigr).
+\tag{CSA.4}
+$$
+
+This key is not another maintained store or an acquired package.
+

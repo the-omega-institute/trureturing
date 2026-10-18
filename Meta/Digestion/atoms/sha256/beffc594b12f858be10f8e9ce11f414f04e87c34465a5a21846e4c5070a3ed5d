@@ -1,0 +1,38 @@
+**Definition 2.1 (a mixed source chart).** A chart piece $b$ has dimensions
+
+$$
+\mathbf c\in\mathbb N^k,\qquad
+\mathbf w\in\mathbb N^q,\qquad
+\mathbf f\in\mathcal T^p,\qquad
+\mathbf z\in\mathcal T^m.
+\tag{FNS.7}
+$$
+
+The coordinates $\mathbf c$ are finite atomic coordinates held fixed in a
+profile, $\mathbf w$ are the coordinates allowed to escape to infinity,
+$\mathbf f$ are arbitrary finite **original** trees retained as finite
+barriers, and $\mathbf z$ are unrestricted Cartesian finite residuals. The
+chart supplies a finite mixed native source map
+
+$$
+U_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)
+\tag{FNS.8}
+$$
+
+and a Presburger rank condition $P_b(\mathbf c,\mathbf w)$. Its signed
+condition is one finite conjunction
+
+$$
+\Delta_b(\mathbf c,\mathbf w,\mathbf f,\mathbf z)
+ =\bigwedge_{\ell=1}^{s_b}
+ A_{b,\ell}(\mathbf c,\mathbf w,\mathbf f,\mathbf z)
+ \ne B_{b,\ell}(\mathbf c,\mathbf w,\mathbf f,\mathbf z),
+\tag{FNS.9}
+$$
+
+where every side is a mixed native expression built from finite grounds,
+$T_{n+d}$, fixed powers of $\rho$, ordered pairing, and the shared names in
+(FNS.7). The complete list, including repeated names and repeated
+inequalities, is retained. There is no hidden positive residual equation or
+image restriction in the Cartesian $\mathbf z$ coordinates.
+

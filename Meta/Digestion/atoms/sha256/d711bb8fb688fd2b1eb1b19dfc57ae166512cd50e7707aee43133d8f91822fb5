@@ -1,0 +1,24 @@
+**定义 34.3.4（自适应策略与风险）。** 一个 $n$ 轮策略包含一个与 $\theta$ 独立的
+随机种子 $R$、可测动作核和终端随机化判向器 $\delta$。第 $t$ 轮动作是
+
+$$
+A_t=(u_t,v_t)=F_t(R,A_1,H_1,\ldots,A_{t-1},H_{t-1}),
+$$
+
+并要求每个可能输出都属于 $\mathcal A(B,h)$。终端输出
+$\delta(R,A_1,H_1,\ldots,A_n,H_n)\in\{+1,-1\}$。
+
+当可行集非空时，定义精确的 minimax 风险
+
+$$
+R_n(B,h)=
+\inf_{\pi,\delta}
+\max_{\theta\in\{+1,-1\}}
+\Pr_\theta^\pi[\delta\ne\theta].
+$$
+
+当 $\mathcal A(B,h)$ 为空，本章约定 $R_n(B,h)=+\infty$；也可以把该问题标为无可行
+策略，但不能把空问题的风险写成 $1/2$。
+
+<a id="section-34-4"></a>
+

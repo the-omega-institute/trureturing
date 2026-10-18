@@ -1,0 +1,21 @@
+## 9. Unchanged arbitrary-finite target
+
+**Open Problem 9.1 (Productive attained-law gap).** With $C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and $U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$, still decide whether some exact finite $\theta$ attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. By [Universal, Theorem 6.2][U], the latter remains equivalent to
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+$$
+
+This one law and its two pointwise certificates do not bound a full compact-domain maximum. The next response-route obligation is to construct a productive actual conditional-null direction, or another strict finite certificate, for every remaining hypothetical finite attainer, with justified exterior control. Contraction and matrix null-space dimension alone supply no productive sign. Positive pair availability, uniform contraction, universal block length and a tail envelope on arbitrary noncontractive boundaries remain unproved. All original zero, reducible and periodic cases remain in $\Theta_N$.
+
+There is no hidden-minimality, observer/producer resource equality, effective-radius, empirical machine-learning benefit, exact optimum or kernel-verification claim. The exact illustration's productive response is distinct information from its already cheaper risk exclusion; the original arbitrary-finite problem remains open.
+
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[R]: FIB_LEGAL_EDGE_LOAD_CONDITIONAL_NULL_RESPONSE_AND_FINITE_CERTIFICATE.md
+[T]: FIB_LEGAL_EDGE_LOAD_TWO_STEP_BULK_SEPARATION.md
+[W]: FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md
+[P7]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[DLP]: https://arxiv.org/html/1104.2224v2
+[LN]: https://arxiv.org/html/1304.7921v1
+

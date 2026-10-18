@@ -1,0 +1,21 @@
+**Definition 1.1 (Actual visible law and clock).** Let $P$ be a normalized, two-sided stationary probability law on $\{0,1\}^{\mathbb Z}$, and let $X_i$ be its coordinate variables. Every entropy, conditional expectation and information quantity below belongs to this same $P$. The integer index is the original emitted-bit clock. Write $X_{a:b}=(X_a,\ldots,X_b)$, taking this block to be empty when $a>b$. An empty block generates the trivial sigma-field. All sigma-fields may be completed under the law being used.
+
+For integers $r,R\ge0$, define
+
+$$
+\begin{aligned}
+\mathcal E_0&=\sigma(X_j:j\ne0),\\
+\mathcal G_L(r)&=\sigma(X_{-r:-1},X_j:j\ge1),\\
+\mathcal G_R(r)&=\sigma(X_j:j\le-1,X_{1:r}),\\
+q&=\mathbb E_P[X_0\mid\mathcal E_0],\\
+p_{L,r}&=\mathbb E_P[X_0\mid\mathcal G_L(r)],\qquad
+p_{R,r}=\mathbb E_P[X_0\mid\mathcal G_R(r)],\\
+e_L(r)&=\mathbb E_P[(q-p_{L,r})^2],\qquad
+e_R(r)=\mathbb E_P[(q-p_{R,r})^2],\\
+\tau_P(R)&=\sum_{r\ge R}\bigl(e_L(r)+e_R(r)\bigr).
+\end{aligned}
+\tag{1.1}
+$$
+
+These are the actual-tail fields of [Multiword, §2][MW] and [Predictive, Definition 1.2][PQ]. Each predictor retains its entire opposite half-line. The series has values in $[0,\infty]$. Conditional expectations have measurable $[0,1]$ versions; changes on null sets do not change any displayed quantity.
+

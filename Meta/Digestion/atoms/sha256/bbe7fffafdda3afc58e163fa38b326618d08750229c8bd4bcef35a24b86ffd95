@@ -1,0 +1,123 @@
+**Theorem 4.3 (optimal local domination and its all-network bound).**
+For every nonnegative whole-block weight and every local fragment with
+nonempty domains, the least $K$ in (OCB.26) is exactly $L_\eta(w)$.
+Moreover, for every $d,n$, every actual owned-seed network and arbitrary
+nonnegative $w_i$,
+
+$$
+Z(\mathcal N;\boldsymbol w)
+\le\prod_i L_{\eta_i}(w_i)
+\le\prod_i\mathcal U_d(w_i),
+\qquad \beta_d(w)\le\mathcal U_d(w).
+\tag{OCB.29}
+$$
+
+The universal one-block envelope is exact:
+
+$$
+\max_\eta L_\eta(w)=\mathcal U_d(w),
+\tag{OCB.30}
+$$
+
+where fragments may have actual outside owners supplied in a finite
+completion. The completion's additional blocks remain charged original
+blocks; (OCB.30) does not assert that all one-block maximizing choices
+coexist in a fixed network.
+
+For a positive network mass $Z$ define its actual seed law
+$Q(s)=Z^{-1}\prod_i\Phi_i(s)$ on the positive-mass realizable
+assignments. Put $L_i=L_{\eta_i}(w_i)$ and
+$q_i=\mathcal L_Q(s_{O_i})$. Then the exact defect of this domination is
+
+$$
+\begin{aligned}
+\log_2 Z
+={}&\sum_i\log_2L_i-\operatorname{TC}_Q(s_{O_1},\ldots,s_{O_n})\\
+&-\sum_iD_2\left(q_i\middle\|M_{\eta_i}/L_i\right)
+ -\sum_i\mathbb E_Q\log_2
+       \frac{M_{\eta_i}(s_{O_i})}{\Phi_i(s)}.
+\end{aligned}
+\tag{OCB.31}
+$$
+
+Here $\operatorname{TC}(Y_1,\ldots,Y_n)=\sum_iH(Y_i)-H(Y)$.
+Every displayed defect is nonnegative and every logarithm is taken
+only on positive $Q$ support. If $Z=0$, (OCB.29) already applies
+without such a law. The same identity holds on any retained subrelation
+of the realizable seed assignments, with $Z$ and $Q$ restricted to that
+subrelation and the same local maxima $M_{\eta_i}$. It does not replace
+the subrelation by its witness completion.
+
+Proof. Any (OCB.26) gives $M_\eta(a)\le K\pi_\eta(a)$;
+summing yields $L_\eta\le K$. If $L_\eta>0$, the choice
+$\pi_\eta=M_\eta/L_\eta$ attains equality. If $L_\eta=0$,
+any probability on the nonempty owned product works at $K=0$.
+This is elementary finite probability domination, used here with all
+of a block's owned variables jointly.
+
+Multiply the pointwise dominations and sum on the same original seed
+assignment. Because the $O_i$ partition all seeds,
+
+$$
+\sum_s\prod_i\pi_i(s_{O_i})=\prod_i\sum_{s_{O_i}}\pi_i(s_{O_i})=1.
+$$
+
+This proves the first inequality in (OCB.29). The product probabilities
+are a dominating measure, not the actual seed law. No shared incoming
+seed was copied or chosen independently in the actual network.
+
+For every owned tuple $a$ with $M_\eta(a)>0$, select one maximizing
+incoming tuple and its actual reconstructed block $u_a$. Different
+owned tuples give different blocks because each owned coordinate is
+its actual owner reply. Their set $P$ is range-feasible: each prescribed
+target is constant or has at most four seed values. At each owner $q$,
+$g_q(u_a)=B_q(r_q(u_a))$, so $q\in E(P)$, and these owned replies
+separate all $u_a$. Thus $P\in\mathscr R_d$ and
+$L_\eta(w)=\sum_aw(u_a)\le\mathcal U_d(w)$. If no positive maximum
+exists the inequality is immediate. RRN's exact correspondence now
+proves the all-template pressure cap, with no restriction on topology,
+correlations, repeated seeds or zeros.
+
+For the reverse envelope inequality choose a maximizing
+$P\in\mathscr R_d$. Put a distinct owned seed at every $q\in E(P)$,
+with domain $r_q(P)$ and table decoding $g_q$ from that same reply.
+At each other target use a separate incoming seed to encode its at-most-four
+factor values. Each $u\in P$ has a compatible local assignment;
+its owned tuple is unique to $u$. Therefore $L_\eta(w)\ge w(P)$.
+All such incoming seeds have genuine outside owners. For $d\ge2$,
+the four actual trees
+
+$$
+\alpha,\quad\langle\alpha,\alpha\rangle,\quad
+\langle\beta,\alpha\rangle,\quad\langle C_0,\alpha\rangle
+\tag{OCB.32}
+$$
+
+belong to $S_d$ and have respectively absent, alpha, beta and branch
+at $L$. A subset realizes any required incoming domain, with every
+target in that donor block decoded from this identifying actual $L$
+owner. Use a separate such block for each incoming seed and retain its
+weight once. At $d=1$ the three root states suffice, and the root is
+already self-decodable on every test support. Extending unused table
+entries with RRN's actual guards completes these fragments legally.
+Together with the proved upper this establishes (OCB.30).
+
+For (OCB.31), the owner groups partition the full seed tuple, so
+$H_Q(s)=\sum_iH(q_i)-\operatorname{TC}_Q(O)$. The definition of $Q$
+gives $\log_2Z=H_Q(s)+\sum_i\mathbb E_Q\log_2\Phi_i(s)$.
+For each $i$ use the elementary relative-entropy identity
+
+$$
+H(q_i)+\mathbb E_Q\log_2\Phi_i(s)
+=\log_2L_i-D_2(q_i\|M_{\eta_i}/L_i)
+ -\mathbb E_Q\log_2\frac{M_{\eta_i}(s_{O_i})}{\Phi_i(s)}.
+$$
+
+Sum these equalities. For a retained subrelation use its restricted
+normalized law in the same identities; its owner map remains injective
+and it is never replaced by its completion. The ratio is at least one,
+and the other two defects are the usual finite entropy defects. These mature common-law
+identities, as in [Madiman–Tetali][MT], serve here to quantify exactly
+the lost compatibility in the native domination (OCB.29); they are not
+additional standalone entropy results. $\square$
+

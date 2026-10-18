@@ -1,0 +1,9 @@
+**Definition 5.2 (response and its coefficient).** Let $\dot{\mathcal H}_-$ be the completion of the real odd compact smooth core in $\sqrt b$. Define on that core
+
+$$
+\ell(u)=2a\int r(Yp)(Yu)+\chi\int V_1p u,
+\qquad
+S_1=\int(V_1^2/V)p^2\le K_1.
+\tag{5.3}
+$$
+

@@ -1,0 +1,44 @@
+**Theorem 3.5 (Fixed-area zero-winding fibers).** For a zero-winding loop let
+
+$$
+\mathcal A_{\rm s}=\oint\kappa\,d\chi
+$$
+
+be its signed coordinate area, and keep the real unwrapped residual $h$.
+Then
+
+$$
+p_{\kappa_0}^{\mathsf T}h=-\mathcal A_{\rm s}.
+$$
+
+For each prescribed real area $A$, the exact set of residuals is
+$\{h\in V_b:p_{\kappa_0}^{\mathsf T}h=-A\}$, a nonempty affine space of
+dimension $\dim V_b-1$. The dimensions are two, one and zero in the generic,
+single-collision and double-collision cases, respectively.
+
+Proof. Along the path,
+
+$$
+p_{\kappa_0}=p_\kappa-(\kappa-\kappa_0)d,
+\qquad p_{\kappa_0}^{\mathsf T}w(\kappa)=-(\kappa-\kappa_0).
+$$
+
+Integration and $\oint d\chi=0$ give the asserted identity. The linear
+functional on $V_b$ is nonzero: for any other height $\kappa_1$,
+
+$$
+p_{\kappa_0}^{\mathsf T}\bigl(w(\kappa_1)-w(\kappa_0)\bigr)
+=-(\kappa_1-\kappa_0)\ne0.
+$$
+
+It is consequently onto $\mathbb R$. Each affine level is nonempty and has
+codimension one. For any $h$ on it, Theorem 3.2 constructs an exact loop;
+the proven identity forces that loop's signed area to be $A$. This proves
+sufficiency with the prescribed area as well as necessity. $\square$
+
+Only at double symmetry does the area determine the entire real zero-winding
+residual. Passing to phases can identify additional real vectors. In
+particular, the real quantity $p_{\kappa_0}^{\mathsf T}h$ is not intrinsically
+a function of $h\bmod2\pi$: changing a lift by $2\pi z$ changes it by
+$2\pi p_{\kappa_0}^{\mathsf T}z$. Area statements here retain the actual lift.
+

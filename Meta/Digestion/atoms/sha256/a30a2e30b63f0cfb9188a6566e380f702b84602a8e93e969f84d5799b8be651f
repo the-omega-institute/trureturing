@@ -1,0 +1,69 @@
+**Theorem 10.2 (attained restricted acquisition price).** For the zero-phase
+ramp of Corollary 7.1, the minimum action in Definition 10.1 sufficient for its
+exact causal consumer is
+
+$$
+\boxed{\mathcal A_{\rm causal}
+   =\frac{2r}{x_2-x_1}\arccos\mu_{\rm causal}.}
+\tag{CP.34}
+$$
+
+The unmeasured probe (CP.31) attains it, followed by the complete processor of
+Section 5. This is a minimum over the stated spectator acquisition class,
+not over protocols interacting with the old specimen or reading additional
+correlated archives.
+
+Proof, lower bound. Purify the common initial probe and ancillas and retain
+every outcome environment. Because acquisition is spectator and all source
+dependence enters through (CP.33), its two complete final vectors $\eta_1,
+\eta_2$ are a pure programme pair independent of $\beta,m$. Granting the
+subsequent processor all purification residues only enlarges its access;
+it can simulate the actual retained-record protocol by common dephasing and
+discarding. Thus Theorem 4.1 applies to that enlarged pair, giving
+$|\langle\eta_1,\eta_2\rangle|\le\mu_{\rm causal}$. This argument includes
+all acquisition outcomes; it does not renormalize an accepted subensemble.
+
+Let $W_j(t)$ be the two dilated unitaries and
+$V_{\rm rel}=W_1^\dagger W_2$. On each continuous piece its generator is
+
+$$
+i\dot V_{\rm rel}=L(t)V_{\rm rel},\qquad
+L(t)=-\frac{x_2-x_1}{r}W_1(t)^\dagger G(t)W_1(t).
+\tag{CP.35}
+$$
+
+Common instantaneous unitaries cancel in $V_{\rm rel}$. Subtracting the
+instantaneous expectation of $L$ from the ray velocity gives projective speed
+$\sqrt{\langle L^2\rangle-\langle L\rangle^2}$. If the spectrum of $L$ lies
+in $[a,b]$, positivity of $(L-aI)(bI-L)$ bounds its variance by
+$(b-\langle L\rangle)(\langle L\rangle-a)\le(b-a)^2/4$.
+Hence projective length is at most $(x_2-x_1)\mathcal A/(2r)$.
+
+For completeness the endpoint angle bound holds for these merely integrable
+generators. Multiply the absolutely continuous unit path by the phase
+$\exp(i\int\langle L\rangle)$ to obtain a horizontal path $w$ of that
+variance speed. In the real Hilbert sphere, set
+$u(t)=\operatorname{Re}\langle w(0),w(t)\rangle$. Tangency and
+Cauchy–Schwarz give $|u'|\le\sqrt{1-u^2}\|w'\|$. Integrating the derivative
+of $\arccos u$, with limiting truncations at $u=\pm1$, bounds spherical
+endpoint distance by length. Projective angle is no larger, since the absolute
+inner product is at least its real part. Therefore
+
+$$
+\arccos|\langle\eta_1,\eta_2\rangle|
+ \le\frac{(x_2-x_1)\mathcal A}{2r}.
+\tag{CP.36}
+$$
+
+Combining the required overlap bound with (CP.36) proves (CP.34) from below.
+This is the mature query-angle argument used in RA; its different endpoint
+here is the necessary causal programme overlap, rather than orthogonal labels.
+
+Proof, attainment. Put $A=\mathcal A_{\rm causal}$ in (CP.31). Since
+$0<\mu_{\rm causal}<1$ for distinct heights and $d>0$, this action is between
+$0$ and $\pi r/(x_2-x_1)$. Its programme overlap is exactly
+$\mu_{\rm causal}$. One positive scalar drive $G(t)=u(t)|1\rangle\langle1|$
+with $\int u=A$ has action $A$ and gives (CP.32) without measurement or
+acquisition loss. Corollary 7.1 and Section 5 supply the required causal
+consumer and all its failure successors. $\square$
+

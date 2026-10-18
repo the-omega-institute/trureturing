@@ -1,0 +1,24 @@
+**定义 2.1（权重、守卫与填充字）。** 令 $w(s)=\#_L(s)+2\#_R(s)$，$\lambda_0=\alpha,\lambda_1=\beta$。SLH 定义29.1的已有带守卫公式为
+
+$$
+\theta(n,b,s)=r_{\rho^n\lambda_b}(s)=
+\begin{cases}
+\mathsf{absent},&s\ne\varepsilon,\ n+b<w(s^-)+2,\\
+\alpha,&\text{守卫通过且 }n+b-w(s)=0,\\
+\beta,&\text{守卫通过且 }n+b-w(s)=1,\\
+\mathsf{branch},&\text{守卫通过且 }n+b-w(s)\ge2.
+\end{cases}
+\tag{SCR.2.1}
+$$
+
+空字自动通过守卫。对整数 $t\ge2$ 及 $e\in\{L,R\}$，定义
+
+$$
+z_e(t)=
+\begin{cases}L^t,&e=L,\\L^{t-2}R,&e=R.
+\end{cases}
+\tag{SCR.2.2}
+$$
+
+它非空、以 $e$ 结尾且权重为 $t$。$e(p)$ 取非空 $p$ 的最后一个字母，$e(\varepsilon)=R$。
+

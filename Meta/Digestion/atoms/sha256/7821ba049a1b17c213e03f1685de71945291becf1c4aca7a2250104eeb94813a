@@ -1,0 +1,14 @@
+**命题4.2（逐行小扰动不控制实际最坏历史）。** 取只支持两个端点的同一正先验，复用公平持久标签，各相位标签发射分别为 $r_1,r_2$。原第四段 B、A 都是单位矩阵，p-conf 风险为 $\rho_p$。仅把 p 的实际 $\beta$ 更新改成
+
+$$
+B_\varepsilon=\begin{pmatrix}1-\varepsilon&\varepsilon\\0&1\end{pmatrix},\qquad A=I,
+\quad 0<\varepsilon<1,
+\tag{4.3}
+$$
+
+并让预测生成使用同一个新更新；其余实际控制及发射不改。
+
+**证明。** 两字母发射均正，每行更新 TV 扰动至多 $\varepsilon$，每个模型仍固定有限。完成前实际经历 j 圈后的标签2概率为 $1-(1-\varepsilon)^j/2$，标签2的完整律仍为 $P_{p,r_2}$。
+
+对每个固定 j，取正历史 $(\beta\beta)^nS(\beta\alpha)^j$，先让 n 趋于无穷；实际后验集中深度1，标签行却保持上述值。p-conf 风险至少为 $[1-(1-\varepsilon)^j/2]\operatorname{TV}(P_{p,r_2},P_{p,r_1})$。再取 j 趋于无穷，得风险至少 $2\rho_p$，而 $\varepsilon=0$ 为 $\rho_p$。n、j 只是正有限历史见证，不是运行时计数器。逐行稠密性没有解决此源的最坏历史问题；(4.2)正是排除这种累计漂移的额外关系。
+

@@ -1,0 +1,35 @@
+## FourCycle consequence
+
+The merged box theorem supplies a single `η > 0` with
+
+```
+η = min(π,
+        2π − 8 arccos(293/400),
+        8 arccos(1577/2236) − 2π,
+        12 arccos(37/43) − 2π),
+```
+
+```
+x_e = a_e ⇒ K_e(x) ≥ η,
+x_e = b_e ⇒ K_e(x) ≤ −η.
+```
+
+Applying the preceding lemma gives one shared vector `x : E → ℝ` such that
+
+```
+∀ e, a_e < x_e < b_e,
+∀ t, D_t(x) > 0,
+∀ e, ∑ o ∈ star s e, angle s x o = 2π.
+```
+
+Thus the actual FourCycle bottleneck—simultaneous strict block admissibility
+and all global angle sums—is closed at the paper level by either route above.
+A Lean completion still needs (i) either the finite-product
+Brouwer/Poincaré–Miranda adapter or the extended co-volume API and (ii)
+routine continuity/gradient lemmas; `fourcycle_curvature_box` already proves
+the shared box, strict cosine domain, and uniform face margins.  No claim here
+identifies the resulting zero-curvature vector with a complete manifold
+realization unless the usual face-pairing and zero-curvature-to-metric
+hypotheses are supplied separately.
+
+

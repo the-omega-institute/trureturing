@@ -1,0 +1,56 @@
+**Theorem 258.2 (Exact transfer and exact extra cap).**
+For the endpoint repair $\bar p$ of this fixed $\pi$,
+
+$$
+\bar p_w(E)=p_{f_G(w)}(E)-C_E(w)
+\qquad\text{for every }w\in B_L,\ E\subseteq J_L.
+\tag{258.3}
+$$
+
+If $p$ is feasible at cap $e$, the exact extra cap required by
+this fixed repair is
+
+$$
+\begin{split}
+\rho_G&=\max\{0,\max_{\text{all independent rows at }w}
+                        (C_E(w)-s_E(f_G(w)))\}\\
+ &=\left(\max_{w\in B_L}\operatorname{TV}(\bar p_w,\eta_w)-e\right)_+.
+\end{split}
+\tag{258.4}
+$$
+
+Here $\eta_w=(1-a_n)e_0+a_ne_n$ on $\Omega_n$ and
+$\eta_{w^+}=e_0$. Thus this repair is same-cap feasible if and
+only if $C_E(w)\le s_E(f_G(w))$ at every independent row.
+
+**Proof.** Bits can only change from zero to one. If $n$ is
+the first zero, no earlier bit is zero, and every predecessor of
+$n$ is earlier. Thus $F_n=0$ and the first zero is preserved.
+The positive word is fixed. If a bit remains zero, all its
+predecessors were originally one, and those predecessors remain
+one under $F$. Applying the update again creates no new one.
+This proves idempotence.
+
+Now check each original table against its repaired output at $w$.
+A singleton can differ from its output at $F$ only when its bit
+flips, giving the first term of (258.2). For an edge $(i,j)$,
+if $w_i=0,F_i=0$, the edge forces $F_j=1$, so the original
+table at $F$ visits $01$, exactly the repaired first cell at $w$.
+If $w_i=0,F_i=1$, the original visits $11$ and the repair visits
+its old $01$, giving the second term. If $w_i=1,w_j=0,F_j=1$,
+the original visits $11$ and the repair visits $10$, giving the
+third term. If $w_i=1,w_j=0,F_j=0$, both visit $10$; if
+$w_i=w_j=1$, both visit $11$. Constants have no difference.
+These cases exhaust every cell and every legal label. Integrating
+their indicator differences proves (258.3) for every event.
+
+The demand at $F$ equals that at $w$, because its first zero is
+the same. Consequently
+$\bar p_w(E)-d_E(w)=s_E(F)-C_E(w)$ exactly. The maximum
+deficit over the three independent events and the positive event
+equals the maximum TV excess over cap by (251.2).
+Taking its positive part proves (258.4), including ties and negative
+singleton demands. The union event is a separate row throughout.
+The displayed maximum is after all signed transfers have been
+summed under one realization. $\square$
+

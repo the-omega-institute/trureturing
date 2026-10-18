@@ -1,0 +1,109 @@
+## 13. Exact all-slope rank and a global inverse on every prescribed-slope slice
+
+Take any list in Theorem 12.2. Let $j<\ell$ be the two actual $Q$ indices, and let $i_1<i_2<i_3$ be the three actual $T$ indices. Define their parameters by
+
+$$
+A_{i_b}=T_{\nu_b},\qquad h_b=\nu_b-1\quad(b=1,2,3).
+$$
+
+The $h_b$ are distinct; they are attached to the actual $i_b$, including a possible early $T_1$. For a source $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})\in\mathcal R_+$ put
+
+$$
+a_S=p+s,\qquad
+u=(w-1)p+(w+\sigma)q+r,\qquad
+t=wp+r,\qquad v=\sigma(p-q).
+\tag{13.1}
+$$
+
+The symbol $u$ is a source coordinate, distinct from the integer tail parameter $\nu_b$. Since $w\ge1$, $w+\sigma\ge0$ and $r>0$, one has $u>0$. The linear map $(p,q,r)\mapsto(u,t,v)$ has inverse
+
+$$
+p=\frac{u-t+\sigma(w+\sigma)v}{d_*},\qquad
+q=p-\sigma v,\qquad r=t-wp.
+\tag{13.2}
+$$
+
+Indeed $u-t=-p+(w+\sigma)q$, so the numerator in the first equation equals $d_*p$. No sign of $d_*$ is assumed; only its nonvanishing is used.
+
+For $D(x)=\delta_0+\delta_1x$, set
+
+$$
+\zeta=a_S+\delta_0,\qquad
+\eta=\delta_1+k(a_S+u).
+$$
+
+The exact original equations at all six positions become
+
+$$
+\begin{aligned}
+z_0&=\zeta,\\
+z_j&=\zeta+u+\eta j,\qquad z_\ell=\zeta+u+\eta\ell,\\
+z_{i_b}&=\zeta+u+\eta i_b+(1+ki_b)(h_bt+v)\quad(b=1,2,3).
+\end{aligned}
+\tag{13.3}
+$$
+
+These follow from $\operatorname{tr}(QS)=a_S+u$ and
+
+$$
+\operatorname{tr}((T_{\nu_b}-Q)S)
+=(\nu_b-1)(wp+r)+\sigma(p-q)=h_bt+v.
+$$
+
+The whole drift, rather than separate sampled values, is
+
+$$
+D(x)=\zeta-a_S+[\eta-k(a_S+u)]x.
+\tag{13.4}
+$$
+
+The output coordinates change invertibly to
+
+$$
+\zeta=z_0,\qquad
+\eta=\frac{z_\ell-z_j}{\ell-j},\qquad
+u=z_j-\zeta-j\eta,\qquad
+Y_b=z_{i_b}-\zeta-u-\eta i_b.
+\tag{13.5}
+$$
+
+Equations (13.3) reconstruct all original outputs, so this is a linear isomorphism of the six data coordinates.
+
+Define
+
+$$
+\mathbf a=(h_1,h_2,h_3)^{\mathsf T},\quad
+\mathbf e=(1,1,1)^{\mathsf T},\quad
+\mathbf i=(i_1,i_2,i_3)^{\mathsf T},\quad
+\boldsymbol\omega=(i_1h_1,i_2h_2,i_3h_3)^{\mathsf T},
+$$
+
+$$
+P_k=[\mathbf a+k\boldsymbol\omega,\ \mathbf e+k\mathbf i].
+\tag{13.6}
+$$
+
+Then $Y=P_k(t,v)^{\mathsf T}$. Its row $b$ is $(1+ki_b)(h_b,1)$. The gain with intercept one has at most one zero among three distinct actual nodes. Any two surviving rows $b,c$ have determinant
+
+$$
+(1+ki_b)(1+ki_c)(h_b-h_c)\ne0.
+$$
+
+Thus $P_k$ has rank two for every real $k$, including an erased third row and arbitrary negative gains. For a prescribed $k$, recover $\zeta,\eta,u$ from (13.5), choose any two nonerased rows and set
+
+$$
+V_b=\frac{Y_b}{1+ki_b},\qquad V_c=\frac{Y_c}{1+ki_c},\qquad
+t=\frac{V_b-V_c}{h_b-h_c},\qquad v=V_b-h_bt.
+$$
+
+Equations (13.2) then give $p,q,r$, actual positivity gives $p>0$, and $s=qr/p$ recovers the source. Finally (13.4) recovers the entire original affine drift. The divisors are the positive integer $\ell-j$, selected nonzero gains, distinct $h_b-h_c$, $d_*\ne0$, and $p>0$. Each step returns the actual parameters, so equal data at a fixed slope give equal targets globally. At a zero gain the original equation is retained; no erased gain is divided out.
+
+To establish the exact quotient rank, apply the same linear coordinates to an arbitrary real full matrix $X$ and an affine compensating drift. If all six observations vanish, (13.5) gives $\zeta=\eta=u=0$, and rank two of $P_k$ gives $t=v=0$. Equations (13.2) give $p=q=r=0$; $s$ is free and the drift is $-s(1+kx)$. Conversely this cancels every observation because every endpoint has lower-right entry one. Since $\ker\Lambda$ is exactly affine evaluation, these homogeneous full-matrix equations characterize $\ker T_k$. Hence
+
+$$
+\ker T_k=\mathbb RE_{22},\qquad\operatorname{rank}T_k=3\quad(k\in\mathbb R).
+\tag{13.7}
+$$
+
+Also $\operatorname{tr}(A_iE_{22})=1$ at every node. This completes the converse in Theorem 12.2. The full-matrix calculation analyzes a linear kernel; positive sources in the inverse and collision are the single rank-one sources explicitly displayed.
+

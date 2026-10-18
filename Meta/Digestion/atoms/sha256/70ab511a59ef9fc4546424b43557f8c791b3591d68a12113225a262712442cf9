@@ -1,0 +1,56 @@
+**定义 83.1（The original full target and the two-even unsaturated domain）。** Use the original integer weights, matched $V_k\bmod2$ reader, joint complete-history prior, record updates and complete-block fees of [IC, Definitions 1.1–1.3 and Interface 1.4]. Fix
+
+$$
+h\ge4,\qquad N=2^h,\qquad m\ge N-1\text{ odd},\qquad
+k=m+1,\qquad T=m+2,\qquad \gcd(m,T)=1.
+\tag{83.1}
+$$
+
+Let $A=\{0,\ldots,m\}$, $z=m+1$, and let $\lambda_0,\lambda_1:A\to Y$ be finite tables with arbitrary repetitions. Set
+
+$$
+\Gamma(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+\mathcal J=\Gamma[A],\qquad |\mathcal J|=N-2.
+\tag{83.2}
+$$
+
+For $D\in\mathcal J$, let $n_D=|\Gamma^{-1}(D)|$. Exactly two classes, denoted $U,V$, have positive even $n_D$; every other $n_D$ is odd. These are multiplicities of ordered joined phase classes in one actual table, rather than separate component multiplicities.
+
+Choose common distinct $R,C$ fresh relative to both component images. The entire immutable INITIAL target is
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+R,&s=m,\\
+\lambda_v(j),&0\le s<m,\ j\in A,\\
+C,&0\le s<m,\ j=z,
+\end{cases}
+&&v\in\mathbb F_2,\\
+f(\bot)&=L_\bot,&&F(w)=f(q_{\rm INITIAL}(w)).
+\end{aligned}
+\tag{83.3}
+$$
+
+The label $L_\bot$ is arbitrary and independent, including possible coincidences with other labels. The history pullback in (83.3) is part of the target. It is never reevaluated on a later record. Put
+
+$$
+\widehat C=(C,C),\qquad
+L=\mathcal J\cup\{\widehat C\},\qquad
+\Lambda(j)=\begin{cases}\Gamma(j),&j\in A,\\\widehat C,&j=z.\end{cases}
+\tag{83.4}
+$$
+
+Thus $|L|=N-1$, the outside class has multiplicity one, and the only even classes on the full low cycle are $U,V$.
+
+Index literal words by their actual issued indices $t=0,1,\ldots$. Coordinates of an $h$-bit code are also numbered $0,\ldots,h-1$; let $\varepsilon_i$ be their unit vectors. Since $m\equiv-2\pmod T$, the path $W_t=[tm,(t+1)m]\pmod T$ misses only
+
+$$
+e_0=z,\qquad e_t=m+1-2t\quad(1\le t<h).
+\tag{83.5}
+$$
+
+The latter phases are distinct members of $A$, separate from $0,1,z$: $e_{h-1}\ge N-2h+2\ge10$ at $h=4$, and the bound increases with $h$. A phase calculation uses known issued indices, without reading the unknown INITIAL history length.
+
+Both alphabets contain all width-$m$ words since $m<k$. Only completed endpoints are observed. Every issued word costs one full block and $m$ emitted bits, including waits, padding, repair and a word absorbed before its endpoint. GLOBAL means ONE preset literal stream for this fixed target, on both free INITIAL values and all actual sources, with source-owned endpoint stopping and decoding. There is no reset, copy, intermediate read, hidden INITIAL clock or borrowed sibling observation.
+

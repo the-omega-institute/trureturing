@@ -1,0 +1,27 @@
+## Proposition 3. What the state detects
+
+Under the hypotheses of Proposition 2,
+\[
+\Phi_q\sigma_q=\Phi_q,\qquad
+\Phi_q\Theta_q=\beta\Phi_q,\qquad
+\Phi_q((\mathrm{id}+\Theta_q)x)=(1+\beta)\Phi_q(x).
+\]
+Consequently
+\(\ker(\mathrm{id}+\Theta_q)\subseteq\ker\Phi_q\), and
+\(\Theta_q\ne\sigma_q\) for \(q\ge2\).
+
+Proof. Complement swaps the coefficients, whereas the transition obeys
+\(\ell_qT_q=\beta\ell_q\). Apply these identities to the stage formula;
+every colimit element has a stage representative. If
+\((\mathrm{id}+\Theta_q)x=0\), then
+\((1+\beta)\Phi_q(x)=0\). Finally
+\(\Phi_q(\operatorname{of}_0(e_0[1]))=h_0=1\), and the two multipliers
+are respectively \(\beta>1\) and one.
+
+The state identifies \(G_q/\ker\Phi_q\) with its image in \(\mathbb R\).
+It does not identify the action on the state kernel. In particular,
+invariance of this state does not prove inertness: inertness requires the
+identity action on the full dimension group. Nor do the rational projections
+\((\mathrm{id}\pm\sigma_q)/2\) provide an integral splitting, since they
+send \([1]\) to \(([1]\pm[\tau])/2\), outside the vertex lattice.
+

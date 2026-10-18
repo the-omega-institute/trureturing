@@ -1,0 +1,70 @@
+**Theorem 6.2 (native exterior limitedness with a paid consumer).** For a
+nonempty arbitrary admitted signed fiber $D$, the following are
+equivalent and decidable:
+
+1. $m_Q(D)$ is finite.
+2. The reached set and entire concrete exterior have uniformly bounded
+   height after holes are treated as leaves.
+3. A legal static service at the supplied epoch $N$ recovers
+   $\operatorname{Ext}_Q(u)$ with uniform finite $q,a,\ell$ bounds.
+4. A legal serial service recovers that exterior with a uniform finite
+   raw-read bound.
+5. The full semantic row image $R_Q(D)$ is finite.
+
+A positive answer supplies an effective actual consumer for the exterior.
+It does not assert a full-row consumer unless the partition is separately
+recovered. A negative answer excludes uniformly bounded full-row recovery.
+
+Proof. A mask has exactly the shape of its exterior when numbered holes
+are treated as leaves, so finiteness of masks gives a height bound.
+Conversely there are only finitely many ordered binary trees of bounded
+height with leaf labels in $\{\alpha,\beta\}$. Thus 1 and 2 are equivalent.
+The finite reached set introduces no unbounded field. Equivalence of
+1 and 5 is (NPL.12), and Theorem 5.3 decides them.
+
+For 1 implying 3, compute the exact nonempty finite mask image and let
+$h$ be its largest native tree height, with root depth zero. Traverse the
+original source mathematically from its root. At a reached position
+$p\in Q$, put its numbered hole in the output and do not inspect that
+subtree. At any other reached position recover its original root reply.
+An original leaf is placed in the concrete output and ends that branch;
+an original branch causes visits to its two children. Only original
+positions outside target holes are visited. The mask-height bound makes
+every such position have depth at most $h$.
+
+Each visited position is known originally reached: the root is reached,
+and a decoded original branch certifies both original children. Use the
+known-reached case of SLH Theorem 2.2: one actual epoch-$N$ read at the
+full physical word
+
+$$
+pR^{\lceil N/2\rceil}
+\tag{NPL.14}
+$$
+
+recovers the original root reply through its parity decoder. For even
+$N$ the label is unchanged on these known-reached cases; for odd $N$,
+current absent, alpha, and beta/branch decode to original alpha, beta,
+and branch respectively. This is an actual read at the original root,
+not a reroot operation. Its current reply can be absent without the
+original position being absent. At $N=0$ it is simply the read at $p$.
+
+No updates are performed. The traversal therefore constructs exactly
+the reached holes and all concrete nodes, orders the holes and halts.
+It reads at most $B_h=2^{h+1}-1$ visited non-hole positions, giving
+
+$$
+q\le B_h,\qquad a=0,\qquad
+\ell\le B_h\bigl(h+\lceil N/2\rceil\bigr).
+\tag{NPL.15}
+$$
+
+These are sufficient bounds, not asserted optima. The finite source
+witnesses used to compute masks supply no hidden runtime selector.
+The traversal uses only actual decoded replies, and covers every $u\in D$.
+
+Static inclusion gives 3 implying 4. Lemma 6.1 gives a finite exterior
+image from 4, and (NPL.12) gives 1. This proves all equivalences. A
+negative answer has infinitely many rows by 5, so Lemma 6.1 excludes a
+uniform raw bound for the full target as well. $\square$
+

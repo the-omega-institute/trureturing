@@ -1,0 +1,48 @@
+**引理 7.1（既有仿射引理的完整应用）。** 对 $D\in\mathbb R$、$\lambda\ne0$，令
+
+$$
+\Phi_{D,\lambda}(P,g,\delta)=(P,\lambda g,D+\lambda\delta),\qquad
+\Phi_{D,\lambda}^{-1}(P,G,\Delta)
+=(P,G/\lambda,(\Delta-D)/\lambda).
+\tag{7.1}
+$$
+
+它是完整域双射，把 $H_3(c)$ 变为
+
+$$
+(D,J,D+24\lambda,M,D+48\lambda,J,D+\lambda c),
+\tag{7.2}
+$$
+
+并保持所有已取得与未来原时钟、实际子集、全部停止、$L_s$ 与同预算的完整目标恢复，两种 $\lambda$ 符号都成立。
+
+证明。源不变，非零增益的次数和根保持。对每个动作词及每个原时钟 $i$，包括已经取得的零至三时钟，
+
+$$
+(\lambda g(i))\operatorname{tr}(A_iP)+D+\lambda\delta
+=D+\lambda\bigl(g(i)\operatorname{tr}(A_iP)+\delta\bigr).
+\tag{7.3}
+$$
+
+响应映射 $z\mapsto D+\lambda z$ 对两种符号都是双射，所以
+
+$$
+\Phi_{D,\lambda}(K\cap\mathcal F(H,E,z))
+=\Phi_{D,\lambda}(K)\cap
+\mathcal F(\Phi_{D,\lambda}H,E,D+\lambda z).
+\tag{7.4}
+$$
+
+基数保持给出 $s=0$；将式 (7.4) 代入两个动作分句归纳，便保持每项 $L_s$。实际策略对每个取得读数先作 $(z_{\rm phys}-D)/\lambda$，交给原策略选择同一个单独动作或停止，最后返回 $\Phi_{D,\lambda}$ 作用后的整个目标。逆向同理。所有停止处的整个返回都保持，没有增添读数或移动时钟。∎
+
+此为 V 9.2 和既有 JMJ 第 9 节的 **REUSE/APPLICATION**。基线根七承诺变成 $\delta=D,g(7)=0$；例外变成 $\delta\ne D$ 或 $g(7)\ne0$。物理三元组应先归一为
+
+$$
+x=(x_{\rm phys}-D)/\lambda,\quad
+y=(y_{\rm phys}-D)/\lambda,\quad
+z=(z_{\rm phys}-D)/\lambda,
+\tag{7.5}
+$$
+
+再应用 N1/N3 的符号关系。负 $\lambda$ 不保持物理读数的大小次序；不能不经归一直接沿用式 (4.5)。输运不提供未知承诺的传感器，也不提供缺失的不受限失败族。
+

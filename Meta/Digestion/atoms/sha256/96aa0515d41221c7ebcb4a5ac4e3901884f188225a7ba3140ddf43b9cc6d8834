@@ -1,0 +1,49 @@
+**Theorem 5.1 (joint moments and a universal original-class bound).** The selected law has the complete live Gram and physical failure covariance of Assumption 2.2. For every original competitor in $\mathfrak F_{s,A}$, at $t=1000$ and for either selected dual pair,
+
+$$
+T_{\rm actual}\le
+\frac{H_{\rm high}+\mathbf d^TB(1000)-\lambda\sqrt\alpha\,s/s_0}{2}.
+$$
+
+This includes every joint oriented failure allocation and every live-height decomposition, including decompositions below maximum contrast for a fixed allocation.
+
+Proof. The first five moment equations give
+
+$$
+\sum p_i=1,\quad\sum p_iu_i=\sum p_iv_i=\sum p_iu_iv_i=0,
+\quad\sum p_iu_i^2=\alpha,\quad\sum p_iv_i^2=\beta.
+$$
+
+After $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$, they are exactly $\sum p_ih_ih_i^T=I_3$, with all mixed entries. The last three equations give
+
+$$
+t\sum p_i\eta_i\operatorname{cap}_i=\mu,\quad
+t\sum p_i\eta_i\operatorname{cap}_iz_i^2=V,\quad
+t\sum p_i\eta_i\operatorname{cap}_iz_iw_i=0.
+$$
+
+The circle identity gives $t\sum p_i\eta_i\operatorname{cap}_iw_i^2=W$. Congruence by $(z,w)\mapsto(dw/h_2,-bz/h_1)$ gives
+
+$$
+\sum p_i\eta_it\operatorname{cap}_i n_in_i^T
+=\operatorname{diag}(0,d^2W/h_2^2,b^2V/h_1^2)=M.
+$$
+
+Thus both matrices come from the same weights and directions. There is no combination of independently attainable marginal optima.
+
+Now take an arbitrary admitted competitor in Assumption 2.2, with its existing actual low labels. At each label let $r_j=b_j/(t\operatorname{cap}_j)\in[0,1]$. Convexity of absolute value gives
+
+$$
+|\ell_j+b_jf_j|\le(1-r_j)|H_0(h_j)|+r_j|H_1(h_j)|.
+$$
+
+Apply Theorem 4.1 to both endpoints and integrate with masses $p_j(1-r_j)$ and $p_jr_j$. Their first five moments are the competitor's live Gram; their last three moments are its full physical failure covariance. They therefore sum to the same $B(1000)$. The report coordinate is unchanged by endpoint splitting, so
+
+$$
+\sum_jp_j|\ell_j+b_jf_j|
+\le\mathbf d^TB(1000)-\lambda\sum_jp_j|u_j|
+\le\mathbf d^TB(1000)-\lambda\sqrt\alpha\,s/s_0.
+$$
+
+The final inequality uses original contrast $\mathsf V\ge s$ and $\lambda>0$. It does not impose maximal contrast at a chosen allocation. Adding the fixed positive high height and dividing by two proves the bound. Nonnegative slack has zero integral only if it vanishes almost everywhere in the stipulated measurable extension; the same argument holds for convergent countable sums. Supported-zero labels contribute zero supported height, and are not removed from the original class. Arbitrary complex/multi-Kraus competitors and every admitted time law enter through the explicitly inherited full-class reduction, without additional realness or single-Kraus restrictions. $\square$
+

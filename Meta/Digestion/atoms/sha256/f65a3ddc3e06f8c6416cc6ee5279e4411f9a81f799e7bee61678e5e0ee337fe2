@@ -1,0 +1,23 @@
+**Proposition 11.4 (two entire-fiber consumers).** On the fiber of
+Proposition 9.1 no successful finite native table exists, despite its
+finite complete target image. On the entire restricted fiber of
+Proposition 9.2, the least complete state cardinality is exactly three.
+Three states attain the sourcewise cost $(1,0,7)$, with their fixed
+literal installation paid separately.
+
+Proof. Proposition 9.1 gives negative (CAR.16), so Corollary 11.3
+excludes every finite table, regardless of the lengths of its finitely
+many installed words. This uses its whole coupled fiber and its original
+finite same-fiber witnesses, not a finite subset as a replacement domain.
+
+For Proposition 9.2 install one state reading $R^7$, one halt carrying
+its complete row with the specified cross-sector equalities, and one
+halt carrying its complete row without them. The absent and $\alpha$
+successors go to the former halt; $\beta$ and branch go to the latter.
+That proposition proves correctness and the stated costs on its whole
+infinite fiber. The two distinct rows require two distinct halt states.
+The common initial state cannot already be a halt because both rows
+occur, so at least one additional running state is necessary. This
+proves the minimum three without identifying an output partition label
+with the complete row installed at its halt. $\square$
+

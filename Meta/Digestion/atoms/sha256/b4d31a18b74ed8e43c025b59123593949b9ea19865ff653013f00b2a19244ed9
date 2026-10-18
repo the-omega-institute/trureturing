@@ -1,0 +1,51 @@
+**Definition 48.1 (the local curve in the unchanged original class).**
+Keep the sole specimen, all twelve histories, HALF complete-cq error,
+actual record $R$, binary effect $F$, joint cost and necessity scope of
+Definition 41.1. All source-root, normalization, rank and minimax
+premises remain those of that definition. In coefficient coordinates
+$(D,T,S)$, the matrix $N$ of Theorem 45.1 is explicitly
+
+$$
+N=\begin{pmatrix}
+\Delta A&\xi&\eta\\
+\xi&\Delta B&\zeta\\
+\eta&\zeta&\Delta C
+\end{pmatrix},\qquad
+L_0=\operatorname{diag}(\delta,1,1),\quad
+Q_0=\operatorname{diag}(1,-\theta,-\omega).
+\tag{JR.65}
+$$
+
+These entries follow by expanding
+$\operatorname{tr}(K_i\Delta K_j^\dagger)$ with (JR.2) and (JR.49).
+They concern the two actual positive-sign heights, without replacing
+any acquisition law by its sign average. Set
+
+$$
+\begin{gathered}
+\tau_0=\frac13,\qquad \tau_1=\frac{1003}{3000}
+ =\tau_0+\frac1{1000},\qquad
+\chi=\frac{\theta+2\omega}{\theta-\omega},\\
+Y_\tau=\frac13+\chi(\tau-\tau_0),\qquad
+Z_\tau=\frac13-(1+\chi)(\tau-\tau_0),\\
+c_\tau=(\sqrt{\delta\tau},-\sqrt{Y_\tau},-\sqrt{Z_\tau})^T,
+\qquad R_\tau=L_0-c_\tau c_\tau^T,
+\qquad \tau\in[\tau_0,\tau_1].
+\end{gathered}
+\tag{JR.66}
+$$
+
+Here $Z_\tau$ is a scalar, distinct from the four matrices
+$Z_{r,\epsilon}$ in (JR.58); $R_\tau$ is a coefficient matrix,
+not the classical record. Let
+
+$$
+\begin{aligned}
+\phi(\tau)&=c_\tau^TNc_\tau\\
+ &=\delta\tau\Delta A+Y_\tau\Delta B+Z_\tau\Delta C
+ -2s_0\xi\sqrt{\tau Y_\tau}-2s_0\eta\sqrt{\tau Z_\tau}
+ +2\zeta\sqrt{Y_\tau Z_\tau}.
+\end{aligned}
+\tag{JR.67}
+$$
+

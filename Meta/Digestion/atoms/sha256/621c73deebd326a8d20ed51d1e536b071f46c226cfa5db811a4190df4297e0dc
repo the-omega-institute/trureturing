@@ -1,0 +1,17 @@
+**Regime boundary 96.1.** Retain the standing $L,H>0$ and $0<d_0<L^4$, put $D_{\mathrm{crit}}=L^{2/\varphi^2}$, and use the complete ten-row classification of [supplier §§24–32,53,65,84](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md). Theorem 89.2 refines the endpoint left open in [supplier §§82,85,88](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md) only on row five with $d_0>1$. It changes none of the other hypotheses or proofs.
+
+| Row | Original condition | Reused whole-future class |
+|---|---|---|
+| 1 | $L<1$, any $H>0$ | Linear contraction |
+| 2 | $L=1$, $H<1$ | Linear contraction |
+| 3 | $L=1$, $H\geq1$; standing $d_0<1$ | Plateau with neutral sources |
+| 4 | $L>1$, $d_0<D_{\mathrm{crit}}$, $H<1$ | Linear contraction |
+| 5 | $L>1$, $d_0<D_{\mathrm{crit}}$, $H=1$ | Plateau; neutral exactly when $d_0\leq1$ |
+| 6 | $L>1$, $d_0<D_{\mathrm{crit}}$, $H>1$ | Growth |
+| 7 | $L>1$, $d_0=D_{\mathrm{crit}}$, $H\leq1$ | Zero future, including $H=1$ |
+| 8 | $L>1$, $d_0=D_{\mathrm{crit}}$, $H>1$ | Growth |
+| 9 | $L>1$, $d_0>D_{\mathrm{crit}}$, $H<H_*$ | Zero future |
+| 10 | $L>1$, $d_0>D_{\mathrm{crit}}$, $H\geq H_*$ | Growth, including attained equality |
+
+The actual supported counts and finite three-line threshold optimization are precisely those of [supplier §§18–19,53,65.4](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md); $H_*$ is their attained threshold. In particular $H_*(6,4)=32/27$ is reused at the eight-leaf $(3,5)$ source with preparation $(6e_1,e_2/3)$ and reads $(0,0,8/9)$, $(-32/27,0,0)$, $(0,-256/243,0)$, followed by $(0,0,8192/6561)$. Its finite coverage proof and exact certificate establish the equality case. No new enumeration, threshold or arbitrary-real effective equality classifier is needed here. Exactly rows one, two and four are linear; their finite-reply acquisition requires the represented truthful rational contraction bounds of [supplier §§73,84](RECURSIVE_RELATIONAL_OBSERVATION_PARAMETERIZED_CROSS_PRODUCT_RECOVERY.md).
+

@@ -1,0 +1,19 @@
+**定义 220.19（Fixed remainder, zero-face funding and singleton gates）。**
+Take one full feasible allocation $\lambda=\kappa+\eta$ with masses
+$M-s$ and $s$. Suppose $\eta$ outputs only $\mathcal A\cup\{0\}$,
+where $\mathcal A\subseteq\{1,\ldots,L\}$. For its actual wordwise
+output measures write
+
+$$
+ r_w=(1-M)e_{R(w)}+\kappa_w,\qquad
+ \delta_a=\max\left(0,b_a-e-\min_{w\in\Omega_a}r_w(a)\right),
+ \quad \zeta_a=\min_{w:w_a=0}\eta_w(a).
+ \tag{220.15}
+$$
+
+The remainder may be signed. The maximum with zero makes a gate mass
+nonnegative; it does not clip an original event demand.
+The stopped singleton $O(a;a,0)$ queries $a$, outputs $a$ on zero
+and zero on one. All minima in (220.15) use the same actual block and
+fixed remainder.
+

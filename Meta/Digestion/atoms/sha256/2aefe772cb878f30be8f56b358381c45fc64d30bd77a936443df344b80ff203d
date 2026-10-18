@@ -1,0 +1,49 @@
+**定理 7.6.1（稳定 Hankel 秩等于最小因果维数）。** 若 $d=d_{\mathrm{causal}}>0$，则对所有 $r,s\ge d$，
+
+$$
+\boxed{
+\operatorname{rank}\mathsf H_{r,s}=d.
+}
+$$
+
+**证明。**
+
+在商模型上定义长度为 $r$ 的可观测矩阵和长度为 $s$ 的可控矩阵：
+
+$$
+\mathsf O_r=
+\begin{bmatrix}
+\bar C\\
+\bar C\bar A\\
+\vdots\\
+\bar C\bar A^{r-1}
+\end{bmatrix},
+\qquad
+\mathsf C_s=
+\begin{bmatrix}
+\bar B&\bar A\bar B&\cdots&\bar A^{s-1}\bar B
+\end{bmatrix}.
+$$
+
+逐块相乘得到
+
+$$
+\mathsf H_{r,s}=\mathsf O_r\mathsf C_s.
+$$
+
+商模型按定义既可达又可观测：$\operatorname{im}\mathsf C_d=\mathcal Z$，且
+
+$$
+\bigcap_{k=0}^{d-1}\ker(\bar C\bar A^k)=\{0\}.
+$$
+
+前者意味着 $\mathsf C_d$ 满行秩，后者意味着 $\mathsf O_d$ 满列秩。有限维线性代数给出
+
+$$
+\operatorname{rank}(\mathsf O_d\mathsf C_d)=d.
+$$
+
+当 $r,s\ge d$ 时，$\mathsf O_d$ 和 $\mathsf C_d$ 都是相应矩阵的子矩阵，故秩至少为 $d$；而乘积的中间空间维数为 $d$，秩至多为 $d$。因此秩恰为 $d$。证毕。
+
+<a id="claim-7-6-2"></a>
+

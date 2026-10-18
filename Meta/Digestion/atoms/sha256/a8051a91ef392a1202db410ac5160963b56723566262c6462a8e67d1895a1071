@@ -1,0 +1,12 @@
+**Corollary 9.3 (location of any larger-count obstruction).** A genuine
+need for nine or ten total optimal labels cannot occur only on the
+minimum-budget boundary, on an isolated interior transition, on the
+strong line, or at an unattained infinite-budget limit. A maximal
+count occurs on a nonempty open strict weak region. No location,
+quantitative width, connectedness, ordering or uniqueness of its
+optimal laws is asserted.
+
+Proof. Theorem 9.2 gives the open region. Theorem 8.1 additionally
+gives a relatively open maximal neighborhood at every weak
+maximal-count point. $\square$
+

@@ -1,0 +1,130 @@
+## 14. Exact finite different-slope collisions for every $a=1$ list
+
+For the actual vectors in (13.6), define
+
+$$
+\begin{aligned}
+J(t,v,k)&=\det_3[\mathbf a+k\boldsymbol\omega,\ \mathbf e+k\mathbf i,
+ t\boldsymbol\omega+v\mathbf i],\\
+J_0(t,v)&=\det_3[\mathbf a,\mathbf e,t\boldsymbol\omega+v\mathbf i],\\
+L_t&=\det_3[\mathbf a,\mathbf i,\boldsymbol\omega],\qquad
+L_v=\det_3[\boldsymbol\omega,\mathbf e,\mathbf i].
+\end{aligned}
+$$
+
+Multilinearity gives
+
+$$
+J(t,v,k)=J_0(t,v)+k(tL_t+vL_v),
+\tag{14.1}
+$$
+
+because the quadratic coefficient is exactly
+
+$$
+\det_3[\boldsymbol\omega,\mathbf i,t\boldsymbol\omega+v\mathbf i]=0.
+$$
+
+The vector $\boldsymbol\omega$ consists of the actual index–parameter products, and $\mathbf i$ of actual tail indices. The last column is a linear combination of the first two.
+
+The constants $L_t,L_v$ cannot both vanish. If $L_v=0$, independence of $\mathbf e,\mathbf i$ gives $\boldsymbol\omega=A\mathbf e+B\mathbf i$, so $h_b=B+A/i_b$. All $i_b$ are positive integers. Distinct $h_b$ force $A\ne0$. If $\mathbf a=C\mathbf e+E\mathbf i$, then
+
+$$
+A+(B-C)i_b-Ei_b^2=0\quad(b=1,2,3).
+$$
+
+The three distinct nodes would be roots of a nonzero polynomial of degree at most two, contradicting the root bound. Thus $\det_3[\mathbf a,\mathbf i,\mathbf e]\ne0$, and $L_t=A\det_3[\mathbf a,\mathbf i,\mathbf e]\ne0$.
+
+The linear coefficient in actual source coordinates is
+
+$$
+tL_t+vL_v=(wL_t+\sigma L_v)p-\sigma L_vq+L_tr.
+\tag{14.2}
+$$
+
+Its three coefficients cannot all vanish: the coefficient of $r$ would give $L_t=0$, and that of $q$ would give $L_v=0$. Choose a strictly positive triple explicitly by the following symbolic rule. Start at $p=q=r=1$. If (14.2) is nonzero there, keep this triple. Otherwise select any coordinate with a nonzero coefficient and replace its value by $2$, leaving the others $1$; (14.2) then equals that nonzero coefficient. Set $s=qr/p>0$ and define $u,t,v$ by (13.1). With
+
+$$
+F_*=tL_t+vL_v\ne0,\qquad k_*=-\frac{J_0(t,v)}{F_*},
+$$
+
+one has $J(t,v,k_*)=0$. This is an unexecuted symbolic source selection for each actual history.
+
+Rank two of $P_{k_*}$ implies that $\mathbf b=t\boldsymbol\omega+v\mathbf i$ is in its range, since the displayed three-column determinant vanishes. Its preimage $(X_t,X_v)$ is unique. To exhibit every divisor, select rows $b,c$ with nonzero gains $g_b=1+k_*i_b$, $g_c=1+k_*i_c$, and put
+
+$$
+R_b=\frac{i_b(h_bt+v)}{g_b},\qquad
+R_c=\frac{i_c(h_ct+v)}{g_c},\qquad
+X_t=\frac{R_b-R_c}{h_b-h_c},\qquad X_v=R_b-h_bX_t.
+\tag{14.3}
+$$
+
+Two such rows always exist and have different parameters. The zero determinant ensures the third equation $P_{k_*}(X_t,X_v)^{\mathsf T}=\mathbf b$ as well, even when that row has zero gain.
+
+Hold $u$ fixed and define
+
+$$
+\Delta_p=\frac{-X_t+\sigma(w+\sigma)X_v}{d_*},\qquad
+\Delta_q=\Delta_p-\sigma X_v,\qquad
+\Delta_r=X_t-w\Delta_p.
+$$
+
+Choose any nonzero real $\epsilon$ with
+
+$$
+|\epsilon|<\min\left\{
+\frac{p}{2(1+|\Delta_p|)},\quad
+\frac{q}{2(1+|\Delta_q|)},\quad
+\frac{r}{2(1+|\Delta_r|)}\right\}.
+\tag{14.4}
+$$
+
+All three upper bounds are strictly positive. Run $1$ uses $(p_1,q_1,r_1)=(p,q,r)$ and $k_1=k_*+\epsilon$. Run $0$ uses
+
+$$
+(p_0,q_0,r_0)=(p,q,r)+\epsilon(\Delta_p,\Delta_q,\Delta_r),\qquad k_0=k_*.
+$$
+
+The inverse linear formulas (13.2) give the same $u$ in both runs, while $(t_0,v_0)=(t+\epsilon X_t,v+\epsilon X_v)$ and $(t_1,v_1)=(t,v)$. Each perturbed entry is greater than half its original positive value. Set, for $b=0,1$,
+
+$$
+s_b=\frac{q_br_b}{p_b},\qquad
+S_b=\begin{pmatrix}p_b&q_b\\r_b&s_b\end{pmatrix},\qquad a_b=p_b+s_b,
+$$
+
+$$
+D_b(x)=-a_b-k_b(a_b+u)x.
+\tag{14.5}
+$$
+
+Both $S_b$ are strictly positive and of rank one. Each $D_b$ is one entire allowed affine polynomial, giving $\zeta=\eta=0$ in (13.3). The equality of tail data is the exact finite identity
+
+$$
+\begin{aligned}
+P_{k_0}\binom{t_0}{v_0}
+&=P_{k_*}\binom tv+\epsilon\mathbf b\\
+&=P_{k_*+\epsilon}\binom tv
+=P_{k_1}\binom{t_1}{v_1}.
+\end{aligned}
+\tag{14.6}
+$$
+
+Consequently at the actual initial index both readings are zero. At the two actual $Q$ indices both readings equal $u$. At each of the three actual $T$ indices the two readings are
+
+$$
+u+(1+k_0i_b)(h_bt_0+v_0),\qquad
+u+(1+k_1i_b)(h_bt_1+v_1),
+$$
+
+and (14.6) makes them equal row by row. This verifies every original observation equation at the six actual nodes. No sampled gain was required to be positive or nonzero; erased and negative samples satisfy these undivided identities. The collision is finite and exact, rather than an inference from a singular derivative alone.
+
+For each run choose the original parameters
+
+$$
+\alpha_b=1,\quad\beta_b=k_b,\quad R_b=S_b,\qquad
+c_b=(p_b,r_b)^{\mathsf T},\quad\ell_b=(1,q_b/p_b).
+\tag{14.7}
+$$
+
+The only new source divisor is $p_b>0$. These positive factors multiply to $S_b$, since $p_bs_b=q_br_b$, and $\ell_bA_ic_b=\operatorname{tr}(A_iS_b)$. Along exactly the original words, $M$ sends a positive column $(x,y)^{\mathsf T}$ to $(y,x+y)^{\mathsf T}$ and $J$ sends it to $(y,x)^{\mathsf T}$. Every read and unread state is therefore positive with the same unchanged row during its run. The fixed parameters and the single polynomial (14.5) are used at every node. The two slopes differ by $\epsilon\ne0$, so the effective targets differ irrespective of any exceptional coincidence of source entries. There is no reset, lifted-source replacement, row change, alternative-history combination, or per-read choice of drift. The argument supplies an affine-drift collision; it does not assert a constant-drift collision.
+

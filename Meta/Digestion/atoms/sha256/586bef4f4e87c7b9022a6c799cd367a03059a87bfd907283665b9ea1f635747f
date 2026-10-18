@@ -1,0 +1,35 @@
+## 237. The exceptional neighbor forces a short U link
+
+Rho has one U axis and two incident faces {U,M,Z}. Their partners cannot
+be tau, which has no U slot. They cannot pair to each other, since this
+closes rho's unique U normal interval at degree one.
+
+Eta has a face {M,Z,C}. If eta contains U, that U is its other axis
+and is unique: its two transverse labels lie in {M,Z,C}, and its first
+axis is the remaining label. Every U-incident face of eta is then
+marked. In particular, if both rho U faces pair to eta, eta's two U
+faces are exactly those paired faces. The two U intervals close,
+forcing degree(U)=2. Thus avoiding these immediate contradictions
+requires at least one rho face {U,M,Z} to pair to xi.
+
+A face {U,M,Z} in xi forces its transverse pair to consist of two of
+these three high labels, and one axis to carry the third. Every U slot
+in xi then has both incident faces marked, whether U is transverse,
+axial, or also repeats at its other axis. Xi contains at most three U
+slots: at most two transverse and one additional axis, or at most two
+axes when U is not transverse.
+
+Every U slot in K now has both incident faces marked: rho's unique
+axis, eta's possible unique axis, and xi's at most three slots. Tau
+has none. All their interval ends therefore pair inside K. This is a
+nonempty closed subset of the actual U normal circle with at most
+1+1+3=5 original slots. Completeness of the circle forces degree(U)<=5,
+contradicting the standing minimum degree six. No assumption about
+single-high owners outside K is needed: marked interval ends cannot
+exit to them.
+
+The supposed two-distinct-neighbor pattern is impossible. Hence both
+marked tau faces meet the same actual owner, proving the claim. Other
+four-core return patterns and the external low-only boundary remain;
+no five-reservoir exclusion or realization is asserted.
+

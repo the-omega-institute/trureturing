@@ -1,0 +1,41 @@
+**Theorem 7.2 (entry obstruction without pre-first-Read updates, for an
+uncovered ray).** Suppose the finite cut $P$ leaves an infinite binary
+ray uncovered: none of its elements is a prefix of that ray.
+Even if writer updates before the first Read are forbidden, no
+read-only observer correct on all sources and terminating on quiescent
+inputs can guarantee the invocation row when one hidden update after
+its first Read is permitted.
+
+**Proof.** Let $D=\max(\{0\}\cup\{|p|:p\in P\})$.
+The depth-$D$ prefix $w$ of an uncovered ray is incomparable with
+every member of $P$, and $wR^\infty$ is also uncovered.
+Follow that ray to its terminal leaf in a finite tree. Sum weight one
+per $L$, two per $R$, and finally zero for alpha or one for beta,
+obtaining $J_w(u)$. All constructors needed lie in the literal exterior;
+an early blocking leaf also ends the computation. Thus $J_w$ factors
+through $R_P(u)$.
+
+This is the visible right-clock factor of [NAR, §11 and Theorem 12.3][NAR].
+Its one-step law is also direct: alpha becomes beta, increasing the
+sum by one; beta becomes the pair beta,alpha, so the ray's next edge
+contributes either $1+1$ or $2+0$ in place of the old one. Therefore
+
+$$
+J_w(\rho u)=J_w(u)+1,\qquad R_P(\rho u)\ne R_P(u).
+\tag{CNA.12}
+$$
+
+The observer's first literal $a$ is fixed by source-blind initialization
+and its local control. A return without a Read cannot be universally
+correct; never reaching a first Read violates quiescent termination.
+Choose a finite $u$ giving branch at $a$, for example
+$\rho^{2(|a|+1)}\alpha$. The first reply is branch both at $u$ and
+at $\rho u$.
+
+Compare entry $u$, first Read, then one update with entry $\rho u$
+and no writer update. Neither has a pre-first-Read update. The first
+replies agree, and after that gap the registers agree permanently.
+The observer's remaining records and output therefore agree, and the
+second history supplies quiescent termination. The entry rows differ
+by (CNA.12). $\square$
+

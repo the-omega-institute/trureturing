@@ -1,0 +1,33 @@
+**Definition 104.1 (common-space reconstruction and the native time split).**
+Retain Definitions 75.1, 81.1 and 87.1, including the fixed admissible
+signed $\kappa\ne0$, raw unit source, both height Dirichlet faces,
+all real phase frequencies and the full complex horizontal domains.
+On $L^2(\Omega_s,d\xi)$ set
+
+$$
+\begin{aligned}
+C_s&=A_s-\lambda s^2
+     =s^2\mathcal U_sS\mathcal U_s^{-1}\ge0,\\
+Q_s(t)&=e^{-tC_s},&R_s(h)&=(C_s+h)^{-1}\quad(h>0),\\
+q_s(t;\eta,\xi)&=e^{\lambda s^2t}P_s(t;\eta,\xi),\\
+U_s^{<}(\xi)&=s^5D_{s^2}(\Xi_s\xi)
+       =\frac1{j_0}\int_1^{s^{-2}}q_s(t;0,\xi)dt,\\
+U_s^{>}(\xi)&=s^5W_1(\Xi_s\xi),&U_s&=U_s^{<}+U_s^{>},\\
+K_{\rm rec}&=TM=\int_0^\infty P_tV\,dt=\mathcal E^{-1}V.
+\end{aligned}
+\tag{104.1}
+$$
+
+Here $0<s<1$, $P_t=e^{-t\mathcal E}$ and $M$ is multiplication
+by $V^{1/2}$ as in §87. An expression such as $P_tV$ means heat
+composed with multiplication. All finite-native operators in this
+section act on the common complex $L^2(\mathbb R^4,d\xi)$ by
+restriction to $\Omega_s$ followed by zero extension. Their operator
+domains before extension are $D(C_s)=D(A_s)=\mathcal U_sD(S)$.
+The last inverse in (104.1) is only the bounded reconstruction on
+the specified right sides, justified by Theorem 87.2; it does not
+assert bounded invertibility of $\mathcal E$ on all of $L^2$.
+In particular $K_{\rm rec}$ is compact and has range in
+$D(\mathcal E)$. The time split occurs at original heat time one,
+not at a clock containing the kinetic coefficient $a$.
+

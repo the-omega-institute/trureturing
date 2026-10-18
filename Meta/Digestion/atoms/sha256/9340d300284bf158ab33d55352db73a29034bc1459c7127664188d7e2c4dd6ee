@@ -1,0 +1,67 @@
+### 定理 22.2（边界到 seam 的商同构）
+
+由于 \(\Gamma\) 连通，有
+
+\[
+\operatorname{im}B=T.
+\]
+
+边界算子在 \(C\) 上下降为一个规范同构
+
+\[
+\overline B:
+C/K
+\longrightarrow
+S,
+\qquad
+[f]\longmapsto Bf.
+\]
+
+因此存在短正合列
+
+\[
+\boxed{
+0\longrightarrow K
+\longrightarrow C
+\xrightarrow{\ B\ }
+S
+\longrightarrow0
+}
+\]
+
+以及自然维数公式
+
+\[
+\dim C=\dim K+\dim S.
+\]
+
+对于 Fibonacci cube \(\Gamma_n\)，这给出
+
+\[
+\dim C_n=c_n+h_n,
+\qquad
+\dim(C_n/K_n)=h_n.
+\]
+
+#### 证明
+
+有限连通图的 incidence 边界满足
+
+\[
+\operatorname{im}B=T.
+\]
+
+这是因为每条边界都具有总质量零，而从一个固定根到任意顶点的路径边界给出 \(\mathbf e_v-\mathbf e_{\mathrm{root}}\)，这些差向量生成 \(T\)。
+
+若 \(f\in C\)，则 \(ABf=0\)，且 \(Bf\in\operatorname{im}B=T\)，故
+
+\[
+Bf\in\ker(A|_T)=S.
+\]
+
+于是 \(B\) 从 \(C\) 映射到 \(S\)。若 \(f'=f+k\)，其中 \(k\in K\)，则 \(Bf'=Bf\)，所以该映射对商类 \([f]\) 良定义。
+
+给定 \(s\in S\)，由 \(\operatorname{im}B=T\) 可取 \(f\in\mathbb R^E\) 使 \(Bf=s\)。于是 \(ABf=As=0\)，所以 \(f\in C\)，说明 \(\overline B\) 满射。
+
+若 \(\overline B([f])=0\)，则 \(Bf=0\)，故 \(f\in K\)，即 \([f]=0\)。因此 \(\overline B\) 单射。短正合列及维数公式随即成立。证毕。
+

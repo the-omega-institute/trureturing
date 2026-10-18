@@ -1,0 +1,66 @@
+**定理 199.3（任意有符号商的完整单预算替代）。** 对任意固定
+$q\in\mathbb R^{L+1}$，恰有一项成立：
+
+* (I) $q\in E_N$；
+* (II) 存在 $b\in H$ 以及完整 $N$ 目录上的有限向量
+  $\lambda=(\lambda_D)_{D\in\mathcal D_N}\ge0$，使
+  $$
+  G_N\lambda\ge h(b),\qquad
+  M=\sum_{D\in\mathcal D_N}\lambda_D\ge1,
+  \qquad F_q(b)>M.
+  \tag{199.5}
+  $$
+
+**证明。** 取定理 198.5 给出的 $H$ 的有限顶点表示
+$H=\operatorname{conv}\{v^1,\ldots,v^m\}$，其中 $m=2L-2$。由于 $F_q-F_{Q(V)}$
+关于 $b$ 仿射，(I) 等价于非负变量 $(V,\theta)$ 的有限系统
+$$
+\begin{cases}
+ a_D\!\cdot V+\theta\le1,&D\in\mathcal D_N,\\
+ -h(v^j)\!\cdot V-\theta\le-F_q(v^j),&1\le j\le m,\\
+ V\ge0,\quad\theta\ge0.
+\end{cases}
+\tag{199.6}
+$$
+第一组中 $D=R$ 的列为零，所以它同时给出 $\theta\le1$；闭端点没有被删去。
+
+对形如 $Mx\le d, x\ge0$ 的系统应用等式形 Farkas 替代：系统不可行当且仅当
+存在乘子 $w\ge0$ 使 $M^{\mathsf T}w\ge0$ 且 $d\!\cdot w<0$。这是把非负松弛并入
+有限生成锥后的形式，见 Volker Kaibel, *Basic Polyhedral Theory*,
+[arXiv:1001.2161v1, Theorem 1(ii)](https://arxiv.org/abs/1001.2161)；有限锥闭性
+和点—射线表示亦见该文 Theorems 7、8、10。将目录行乘子记为
+$\lambda_D\ge0$，顶点行乘子记为 $\mu_j\ge0$，不可行性给出
+$$
+G_N\lambda\ge\sum_j\mu_jh(v^j),\qquad
+S:=\sum_D\lambda_D\ge u:=\sum_j\mu_j,\qquad
+\sum_j\mu_jF_q(v^j)>S.
+\tag{199.7}
+$$
+严格不等式迫使 $u>0$；若 $u=0$，则最后一式变成 $0>S\ge0$。置
+$$
+\bar b=\frac1u\sum_j\mu_jv^j\in H,
+\qquad \bar\lambda=\lambda/u,
+\qquad M=\sum_D\bar\lambda_D=S/u.
+$$
+由 $h$ 与 $F_q$ 的仿射性，(199.7) 变为
+$$
+G_N\bar\lambda\ge h(\bar b),\qquad M\ge1,\qquad F_q(\bar b)>M,
+$$
+即 (II)。
+
+反过来若 (I)、(II) 同时成立，则对 (II) 中的 $b,\lambda$，由
+$V\ge0$、$G_N\lambda\ge h(b)$ 及弱对偶性得
+$$
+\begin{aligned}
+F_q(b)&\le F_{Q(V)}(b)+\theta
+       =V\!\cdot h(b)+\theta\\
+&\le V\!\cdot G_N\lambda+\theta
+ \le M\Delta_N(V)+\theta\\
+&\le M(1-\theta)+\theta\le M,
+\end{aligned}
+$$
+最后一步用 $M\ge1$ 与 $\theta\ge0$。这与 $F_q(b)>M$ 矛盾，故两项互斥；
+Farkas 替代又保证其中一项必有，结论涵盖 $M=1$、$\theta=0,1$ 和所有零权重。取
+$q=Q(y)$ 即得全部非负事件评分的结论；这只是本定理在非负评分像上的特例，不另立
+第二个替代定理。$\square$
+

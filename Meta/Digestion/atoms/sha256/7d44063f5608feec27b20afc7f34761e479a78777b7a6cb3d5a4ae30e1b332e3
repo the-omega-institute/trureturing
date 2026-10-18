@@ -1,0 +1,140 @@
+**定理 3.1（六读祖先上的源条件恢复）。** For every
+$P\in\mathcal N$, the real $6\times5$ matrix
+
+$$
+\mathsf B_P=
+\bigl(t_i,\ i t_i,\ i^2t_i,\ i^3t_i,\ 1\bigr)_{i=0}^5
+\tag{3.1}
+$$
+
+has rank five. Thus for every $\mathbf c\in\mathbb R^6$ there is
+at most one pair $(f,d)\in\mathbb R[T]_{\le3}\times\mathbb R$
+satisfying all six equations $t_if(i)+d=c_i$.
+Such a pair exists if and only if $\mathcal C(P;\mathbf c)=0$,
+and when it exists it is
+
+$$
+\begin{aligned}
+d(P;\mathbf c)&=
+ \frac{\alpha_4\beta_4+\alpha_5\beta_5}{\Delta(P)},\\
+f_{P;\mathbf c}(T)&=U_{P;\mathbf c}(T)-d(P;\mathbf c)V_P(T).
+\end{aligned}
+\tag{3.2}
+$$
+
+For the particular ancestor vector in (1.4), define the source set
+
+$$
+\mathcal S_{\mathbf c}
+ =\{P\in\mathcal P:\mathcal C(P;\mathbf c)=0\}.
+\tag{3.3}
+$$
+
+Then $\mathcal F(H)$ is exactly the rational graph
+
+$$
+P\in\mathcal S_{\mathbf c}\longmapsto
+\bigl(P,\lambda f_{P;\mathbf c},D_0+\lambda d(P;\mathbf c)\bigr).
+\tag{3.4}
+$$
+
+Projection onto $P$ is a bijection between these two sets. In
+particular distinct complete targets on $H$ have pairwise distinct
+sources. These statements recover gain and drift once the source
+is supplied; they do not identify the unknown source from $H$.
+
+**证明。** Write $V_P(T)=\sum_{j=0}^3v_jT^j$, and let $C_j$
+be the column of $\mathsf B_P$ corresponding to $T^j$, $0\le j\le3$.
+Replace the last column $C_{\mathrm{last}}$ by
+$C_{\mathrm{last}}-\sum_{j=0}^3v_jC_j$. The new last column is
+
+$$
+(0,0,0,0,\alpha_4,\alpha_5)^{\mathsf T}.
+\tag{3.5}
+$$
+
+The first four rows of the polynomial columns form the product of
+$\operatorname{diag}(t_0,t_1,t_2,t_3)$ and the Vandermonde matrix
+at $0,1,2,3$. Its determinant is
+$12t_0t_1t_2t_3\ne0$. Thus these four columns are independent, and
+no nonzero vector in their span has its first four entries zero.
+By Theorem 2.1 the column (3.5) is nonzero, so it supplies a fifth
+independent column. This also proves that rank five is equivalent
+to $\Delta>0$ in these coordinates.
+
+The first-four-equation interpolation in Definition 1.4 leaves
+exactly $\alpha_4d=\beta_4$ and $\alpha_5d=\beta_5$.
+For the value $d$ in (3.2), direct subtraction gives
+
+$$
+\begin{pmatrix}\beta_4\\\beta_5\end{pmatrix}
+ -d\begin{pmatrix}\alpha_4\\\alpha_5\end{pmatrix}
+ =\frac{\mathcal C(P;\mathbf c)}{\Delta(P)}
+       \begin{pmatrix}-\alpha_5\\\alpha_4\end{pmatrix}.
+\tag{3.6}
+$$
+
+Because $\Delta>0$, the two residual equations hold exactly when
+$\mathcal C=0$, and their solution is unique. No choice between
+dividing by $\alpha_4$ and dividing by $\alpha_5$ is needed.
+This establishes (3.2) for every real vector $\mathbf c$.
+
+For (1.4), the reconstructed $f$ cannot be the zero polynomial:
+otherwise all six readings would equal $d$, whereas $c_0=0$ and
+$c_1=24$. Thus each $P\in\mathcal S_{\mathbf c}$ gives a legal
+nonzero gain, all six equations, and exactly one complete world.
+Conversely every world on $H$ has its source in (3.3) and its
+gain and drift forced by (3.2). This proves the bijection and the
+assertion about distinct sources. Rank five also proves conditional
+uniqueness for other reading vectors, including constant vectors;
+for a constant vector its unique pair has zero gain and hence is
+excluded from the legal-world set.
+
+An explicit polynomial form of the source condition makes the
+rational-graph assertion precise. Put
+
+$$
+\begin{gathered}
+S=uv(u+v)>0,\qquad p_i=SV_P(i),\qquad
+q_i=SU_{P;\mathbf c}(i),\\
+H_i=S-t_ip_i,\qquad K_i=Sc_i-t_iq_i\quad(i=4,5).
+\end{gathered}
+\tag{3.7}
+$$
+
+Here $S/t_0=S$, $S/t_1=v(u+v)$, $S/t_2=u(u+v)$ and
+$S/t_3=uv$ are polynomials. Thus every $p_i,q_i,H_i,K_i$ is
+polynomial in source entries and reading coordinates, with rational
+coefficients. In particular
+
+$$
+\begin{aligned}
+p_4&=-S+4v(u+v)-6u(u+v)+4uv,\\
+p_5&=-4S+15v(u+v)-20u(u+v)+10uv.
+\end{aligned}
+\tag{3.8}
+$$
+
+The source set (3.3) is exactly
+
+$$
+\left\{(a,b,c):
+0<a<1,\ b,c>0,\ bc=a(1-a),\ H_4K_5-H_5K_4=0\right\},
+\tag{3.9}
+$$
+
+with $u=b+c$, $v=1+b$ and the same fixed $\mathbf c$ everywhere.
+Indeed its last expression is $S^2\mathcal C$. Moreover
+
+$$
+H_4^2+H_5^2=S^2\Delta>0,\qquad
+d=\frac{H_4K_4+H_5K_5}{H_4^2+H_5^2}.
+\tag{3.10}
+$$
+
+Formula (3.2) and $S>0$ now show explicitly that all four gain
+coefficients and the drift are rational functions on this source
+set, without a deleted denominator-zero stratum. This is the exact
+graph of the full actual fiber, rather than a local parametrization
+or a restriction to one gain shape. ∎
+

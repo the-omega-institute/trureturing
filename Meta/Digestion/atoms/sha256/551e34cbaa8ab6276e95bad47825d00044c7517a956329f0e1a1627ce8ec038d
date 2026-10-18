@@ -1,0 +1,36 @@
+### Theorem 48.4 (Seam observability criterion)
+
+For two states in the same FIB visible fiber,
+
+\[
+p_\kappa-p_{\kappa'}=(\kappa-\kappa')d,
+\]
+
+the future observations satisfy
+
+\[
+O(F_wp_\kappa)-O(F_wp_{\kappa'})
+=
+(\kappa-\kappa')OA_wd.
+\]
+
+Consequently, if the fiber is nondegenerate, \(\kappa\) is distinguished by some finite future experiment if and only if there exists \(w\) with
+
+\[
+OA_wd\ne0.
+\]
+
+If \(OA_wd=0\) for every word, then the entire \(\kappa\)-fiber collapses in the predictive quotient \(Q_O\).
+
+#### Proof
+
+Affine offsets cancel in the difference of two trajectories. The remaining difference is
+
+\[
+A_w(p_\kappa-p_{\kappa'})
+=
+(\kappa-\kappa')A_wd.
+\]
+
+Applying \(O\) gives the displayed formula. If one coefficient is nonzero, the corresponding future observation separates every pair with \(\kappa\ne\kappa'\). If all coefficients vanish, all future observations coincide, so the states are equivalent under Definition 48.1. ∎
+

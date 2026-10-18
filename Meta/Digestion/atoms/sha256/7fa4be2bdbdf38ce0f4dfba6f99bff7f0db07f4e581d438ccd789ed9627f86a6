@@ -1,0 +1,27 @@
+**Theorem 10.3 (maximal individual original initial endpoints).** For each unsigned $y$, retain the inherited RG $\lambda_y,\mu_y,v_y$ of $C^{(y)}$, with
+$v_{y,D}>0$, $v_y^TBv_y=k$, and $F_y=k\lambda_y-\mu_y$.
+Define $s_y^{\max}=s_{\max}(v_y)$ by (PG.33)–(PG.36). Then
+$0<s_y^{\max}<1$ and
+
+$$
+\mathsf E_s(\rho_{y,e,n})=F_y
+\quad\Longleftrightarrow\quad 0\le s\le s_y^{\max}.
+\tag{PG.56}
+$$
+
+The constants are identical at all four signs of one height. Each selected case has twelve actual labels below its endpoint and at most eleven at the endpoint. In particular $\min_y s_y^{\max}>0$ is one common interval of validity for all twelve separately optimized values.
+
+Proof. Lemmas 10.1–10.2 place every case in Theorem 7.2. The selected signed vector is $C_gv_y$. Direct substitution into (PG.33)–(PG.34), with $U=U_{e,n}$, gives
+
+$$
+J_{C_gv}=en\,C_gJ_vC_g,\quad
+\tau_{C_gv}=en\,\tau_v,\quad
+Q_{C_gv}=C_gQ_vC_g,\quad
+W_{C_gv}=en\,UW_vU^\dagger .
+\tag{PG.57}
+$$
+
+Indeed $v_T$ gains $en$, $v_S$ gains $e$, $R_v$ is unchanged, and
+$\Theta(C_g ZC_g)=U\Theta(Z)U^\dagger$ with
+$UX_{01}U^\dagger=enX_{01}$. Hence $V_c$ changes by the same signed coefficient congruence. Absolute $\tau$, its norm and the normalized failure-block norm are invariant, since $M_2$ commutes with the sign block. Formula (PG.36) is therefore sign independent. Theorem 7.2 proves the exact equivalence, strict later infimum and counts. This supplies maximality of the plateau of the already known $F_y$; it does not reevaluate the inherited vector or compute a later-coordinate curve. $\square$
+

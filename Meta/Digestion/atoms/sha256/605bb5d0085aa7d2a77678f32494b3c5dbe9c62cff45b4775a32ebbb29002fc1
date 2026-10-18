@@ -1,0 +1,30 @@
+**Theorem 5.3 (exact four-consumer correspondence and all-history bounds).** Put $m_h=\sum_k\nu_h(k)r_k$ and $z_h=\sum_k\nu_h(k)(1-r_k)^2$, analysis quantities only. For Construction 4.1, at every actual query history,
+
+$$
+\begin{array}{ll}
+s=p:& e_{\rm law}(h)=e_{\rm conf}(h)=g+\lambda A_h-z_h,\\
+s=\beta:&e_{\rm law}(h)=e_{\rm conf}(h)=m_h-v.
+\end{array}
+\tag{5.3}
+$$
+
+Consequently each of its four $\Phi_H$ agrees for $H\ge7$ and is its $p$-phase maximum. Every uncapped history has score at most $C+\lambda V_A$, where
+
+$$
+C=g-\frac9{25}-\rho_p
+=\frac{1279089913}{2916000000}.
+\tag{5.4}
+$$
+
+**Proof.** Two normalized countable laws with one positive difference have TV equal to that excess atom. Lemma 5.2 gives $\operatorname{TV}(Q_q,T_h)= (1-q)(1-v)-z_h$. On actual first-$p$ configurations $q$ takes only $d,u$; on later $p$ configurations it is $u$. Averaging configuration TV gives $g+\lambda A_h-z_h$. The marginal mixture of $Q_q$ has the same unique excess atom with the averaged mass, so its TV gives the identical expression. At $\beta$ there is only the common law $V$, yielding $(1-v)-(1-m_h)=m_h-v$. The equality of risk orders is a consequence of this verified affine sign cell, not an identification of law with conf in arbitrary observers.
+
+For all histories, $1/3\le m_h\le2/5$ and $9/25\le z_h\le4/9$. Hence every $p$ score is at least $g-4/9-\rho_p$, and every $\beta$ score is at most $2/5-v-\rho_\beta$. Their strict separation is
+
+$$
+(g-4/9-\rho_p)-(2/5-v-\rho_\beta)
+=\frac{60822913}{2916000000}>0.
+\tag{5.5}
+$$
+
+A $p$ history of length 6 and a $\beta$ history of length 7 exist. Thus the phase maximum in every cap $H\ge7$ is the $p$ maximum regardless of the orders. For all valid first-$p$ histories $A_h=p_A(w)\le V_A$, and for every other $p$ history $A_h=0\le V_A$. The lower bound on $z_h$ then proves the asserted *all-history* upper bound. Pending/delivered full-law errors are zero. Their fidelity is kept even though they are not separate terms of (1.2). ∎
+

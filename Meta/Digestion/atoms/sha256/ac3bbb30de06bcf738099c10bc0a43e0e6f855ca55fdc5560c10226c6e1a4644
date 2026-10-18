@@ -1,0 +1,109 @@
+### 217.6 E — common-chain multi-positive containment
+
+Let $q=(\beta,K)$ satisfy $K\ge\sum_i|\beta_i|$, and let
+$J=\{j\ge3:\beta_j>0\}=\{n_1<\cdots<n_r\}$ be the entire positive
+late support, with $r\ge3$,
+$n_1=k+1$ with $k\ge3$. Let $\gamma_t=\beta_{n_t}>0$,
+$\mu=\max_t\gamma_t$, $\xi_i=(-\beta_i)_+$,
+$D_0=\sum_{i\le k}\xi_i$, $D_1=\sum_{i>k}\xi_i$,
+$E=\xi_1+\xi_2$, $E_+=(\beta_1)_++(\beta_2)_+$,
+$B=K-\sum_i|\beta_i|$, $S=B+D_0$, and $\rho=(k-1)/k$.
+Suppose there are $c_t\ge0$ with $\sum_tc_t=S$, $c_t\ge\gamma_t$,
+
+$$
+\rho\sum_{t\le i}c_t\ge\max_{t\le i}\gamma_t,\quad
+\rho\sum_{t>i}c_t\ge\max_{t>i}\gamma_t\quad(1\le i<r),\quad
+(1-2/k)S\ge\mu,\quad \xi_a\le S/k\ (a\le k).
+\tag{217.12}
+$$
+
+Then one full score with $T=0$ has exact quotient and
+$\min\Delta_N=\min\Delta_O=E$ over all full competitors.
+Write $J_t=\{n_t,\ldots,n_r\}$. The unsigned core has rows
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w(\{a\}\cup J_t)$ | $c_t/k$ | $0$ |
+| $w(J_t)$ | $0$ | $\gamma_t$ |
+
+The first row occurs for each $1\le a\le k,1\le t\le r$, the second
+once per t. Initially A and T vanish. Convert any total $\xi_a$ of
+donor-a P to A at the same words; its total $S/k$ funds this conversion.
+For definiteness proportional conversion uses fraction $k\xi_a/S$ of
+each of that donor's atoms. Here $S>0$ follows from positive $\gamma_t$.
+Add sole-zero A of mass $\xi_i$ for each negative coordinate $i>k$,
+and early sole-zero C of mass $(\beta_a)_+$ for a=1,2. Unlisted rows
+vanish; no other positive late coordinate exists outside J.
+
+For the proof, a donor pair has zero cells $(0,S/k,S/k,(1-2/k)S)$;
+the last capacity protects all positive labels. A donor/positive pair at $n_i$
+has zero masses $(C_i/k,C_{>i}/k,\rho C_i,\rho C_{>i})$, where
+$C_i=\sum_{t\le i}c_t$; (217.12) protects every block maximum. A positive/positive
+pair at $n_i<n_j$ has an empty 01 cell and zero masses
+$\sum_{t\le i}c_t$, $\sum_{i<t\le j}c_t$ and $\sum_{t>j}c_t$ in
+00,10,11. Each block sum covers every earlier, intermediate and later
+label by $c_t\ge\gamma_t$. In the donor/positive case at i=r, the
+empty suffix maximum is zero and $\rho S\ge\mu$ follows from the
+donor-pair condition. Thus zero dominates all labels for every core full
+pair, including arbitrary numerical gaps; core-inactive coordinates are one
+and reduce to short partitions. Conversion leaves zero reward unchanged.
+For an old/new pair after an outside sole-zero A addition, its new-zero
+branch has only base reward, and its new-one branch contains the old core
+whose singleton zero reward already dominates every numerical label.
+For two new addresses, the old core lies in 11, where its empty zero
+reward dominates, while every other cell has only base additions. These
+cases cover negative positions before, between and after J and prove both
+supports $S+D_1$ before adding early C. Adding early C of total $E_+$ increases any schedule support by at most
+$E_+$ and W by exactly $E_+$. The modified early anchor attains the upper
+bound, so the two full supports are $S+D_1+E_+$ and
+$W=S+D_1-E+E_+$; their excess is E. The unrestricted lower bound is the modified early anchor, giving
+$\Delta_O\ge E$.
+Direct totals give $A=D_0+D_1$, $P=S-D_0=B$,
+$C=\sum_t\gamma_t+E_+$ and
+$K=S+D_1+\sum_t\gamma_t+E_+=\sum_i|\beta_i|+B$.
+
+For $r=3$, a sufficient explicit allocation is
+$c_1=\gamma_1/\rho$, $c_3=\gamma_3/\rho$ and
+$c_2=S-c_1-c_3$, provided
+
+$$
+S\ge\max\left\{\frac{\gamma_1+\gamma_3}{\rho}+
+\max\left(\gamma_2,\frac{\gamma_2-\min(\gamma_1,\gamma_3)}{\rho}\right),
+\frac{k\mu}{k-2}, k\max_{a\le k}\xi_a\right\}.
+\tag{217.13}
+$$
+
+For equal $\gamma_t=g$, the first stock term is
+$(3+2/(k-1))g$. This permits unequal and nonadjacent triples; it is a
+sufficient common-chain cone, not a sharp unrestricted threshold.
+The two outer cumulative constraints hold at equality for this allocation.
+The inner constraints say
+$c_2\ge(\gamma_2-\gamma_1)/\rho$ and
+$c_2\ge(\gamma_2-\gamma_3)/\rho$, as well as $c_2\ge\gamma_2$.
+Their simultaneous maximum is exactly the first stock term in (217.13).
+The other two terms fund donor-pair protection and every conversion.
+For equal g, the combined first and donor-pair terms reduce to
+$(3+2/(k-1))g$: at k=3 the first term is $4g$ and the donor-pair
+term is $3g$; for $k\ge4$ the first term also dominates $kg/(k-2)$.
+No necessity for unrestricted scores is inferred.
+
+At $L=8$, donors $a=1,2,3,4$, positives $5,6,7$, and one late negative at 8,
+put P masses $1,3/4,1$ respectively at
+$w(\{a,5,6,7\})$, $w(\{a,6,7\})$, $w(\{a,7\})$ for every donor.
+Convert the first P atom at a=1 entirely to A, and add $A_{w(\{8\})}=1$.
+Put C mass 3 at each of $w(\{5,6,7\})$, $w(\{6,7\})$, $w(\{7\})$.
+Then $Q=(-1,0,0,0,3,3,3,-1;21)$, absolute B=10, $S=11$,
+$W=11$ and both supports are 12. For $0\le u\le3$, move C mass u
+from $w(\{5,6,7\})$ to $w(\{5,7\})$. Q and W stay fixed and costs
+become $(1+u,1)$; u=1 is repaired from (2,1) to (1,1).
+Pair (5,6) has N maxima $(4,u,3,5)$ and O maxima $(4,3,5)$.
+At pair (6,7) the zero baselines 7 in 00 and 4 in 10 cover both pieces
+of label 5; donor/6 receiving baselines are $21/4$ and 3. At (6,8)
+the new-zero cell is base only and old singleton baselines 7 and 4 cover
+the move. All other schedules are unchanged or coarser. This proves the
+whole stated relocation interval with every label retained.
+The fair-suffix sufficient plateau of §215.2 requires absolute
+$B\ge4\mu$ and $B+D_l\ge5\mu$, whereas here $\mu=3,D_l=1$,
+$B=10$ and $B+D_l=11$. That particular test fails; no claim excludes
+all earlier signed or conic closures.
+

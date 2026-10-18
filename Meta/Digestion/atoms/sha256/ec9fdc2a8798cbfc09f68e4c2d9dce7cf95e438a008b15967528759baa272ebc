@@ -1,0 +1,10 @@
+**定理 51.2。** 在有条件域 $|a|,|b|\le L,\Delta\ge d_0>0$，供应 $0<c_-\le c$，$e\le1$ 时，同一核满足
+
+$$|Z-x_3|\le C_ce,\qquad C_c=4(\bar H^2+2\bar H+1)/c_-.$$
+
+证明。只须考虑符号错误分支。若 $q_0<2e$，$|w|\le\bar H^2q_0$ 给误差 $\le4\bar H^2e+B_e$。若 $q_0\ge2e>0$，投影下界及 $|w|\le\bar H^2q_0$ 给
+
+$$c_-q_0|w|\le e|w|+(q_0+e)B_e\le\bar H^2q_0e+\tfrac32q_0B_e.$$
+
+因此 $2|w|+B_e\le2\bar H^2e/c_-+(3/c_-+1)B_e\le4(\bar H^2e+B_e)/c_-$，即所列界。$e=0$ 由准确公式承担。该线性结论与无行列式下界的平方根结论是不同条件。
+

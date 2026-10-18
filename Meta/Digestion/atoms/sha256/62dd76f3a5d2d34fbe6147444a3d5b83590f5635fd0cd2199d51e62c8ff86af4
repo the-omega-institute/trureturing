@@ -1,0 +1,70 @@
+**定理 11.5（Equal joint flag law and equal separable erased output, conditionally）。**
+Under Assumption 11.4, for every legal $X$ and every one of the fixed
+$14\times14$ flag pairs,
+
+$$
+\begin{aligned}
+p_{\nu\mu}(X)
+ &=\operatorname{tr}((E_\nu\otimes E_\mu)\Gamma(X))\\
+ &=\frac{c_\nu c_\mu}{5}\sum_{s\in B}
+       v_\nu(s)^2v_\mu(f(s))^2
+ =p_{\nu\mu}(0).
+\end{aligned}
+\tag{11.10}
+$$
+
+The same correlated input therefore obeys
+
+$$
+\begin{aligned}
+(\widetilde T\otimes\widetilde T)(\Gamma(X))
+ &=(\widetilde T\otimes\widetilde T)(S)\\
+ &=\sum_{\nu,\mu}p_{\nu\mu}(0)R_\nu\otimes R_\mu\\
+ &=\frac15\sum_{s\in B}
+ \widetilde T(|s\rangle\langle s|)\otimes
+ \widetilde T(|f(s)\rangle\langle f(s)|).
+\end{aligned}
+\tag{11.11}
+$$
+
+This common output is separable on the original split.
+
+Proof. For one fixed pair put $r_s=v_\nu(s)v_\mu(f(s))\in\mathbb R$ and
+$Z=\operatorname{diag}(1,-1,-1,-1,1)$. Directly
+$(D_\phi\otimes D_\phi)J=JZ$, so the same joint source gives
+
+$$
+\begin{aligned}
+p_{\nu\mu}(X)
+ &=\frac{c_\nu c_\mu}{5}\,r^TZ(I_5+iX)Zr\\
+ &=\frac{c_\nu c_\mu}{5}
+   \left(\sum_sr_s^2+i\,r^TZXZr\right)\\
+ &=\frac{c_\nu c_\mu}{5}\sum_sr_s^2.
+\end{aligned}
+$$
+
+The matrix $ZXZ$ is real skew; its diagonal terms vanish and its opposite
+off-diagonal terms cancel in this quadratic form. This proves (11.10) for
+each actual flag pair. These probabilities are nonnegative, and (11.8) gives
+
+$$
+\sum_{\nu,\mu}p_{\nu\mu}(X)
+ =\frac15\sum_s
+ \left(\sum_\nu c_\nu v_\nu(s)^2\right)
+ \left(\sum_\mu c_\mu v_\mu(f(s))^2\right)
+ =\frac15\sum_s1=1.
+$$
+
+Applying the two local measure-and-prepare channels to a general correlated
+input uses these joint Born probabilities, so it yields the middle sum of
+(11.11). Each $R_\nu$ is a normalized pure state; this is an explicit convex
+combination of normalized product states and is separable. Expanding the
+middle sum first in $s$ gives the last line of (11.11), which is also the
+direct channel image of $S$. No product of marginal input probabilities
+has replaced the joint source probability. $\square$
+
+This proves a containment of the stated invisible fiber in a channel fiber.
+It does not classify every input of that channel fiber, change the port,
+or turn a single-system attained history error into a correlated-input
+uniform error, a diamond distance or an unconstrained minimax value.
+

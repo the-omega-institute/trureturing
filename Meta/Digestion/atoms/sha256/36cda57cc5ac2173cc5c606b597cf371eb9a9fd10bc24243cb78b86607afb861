@@ -1,0 +1,21 @@
+**定义 49.1（完整旧域与新供应）。** 沿用第 48 节 $n\ge10$、$d=n-2\ge8$、$m=d+1$ 及固定标签 $p,q,z_1,\ldots,z_d$。将全部指定偶前缀窗口耗尽后的供应集、$D$ 域及实际圈分别记为 $\mathcal S_{\mathrm f}$、$\mathcal D_{\mathrm f}$、$C_{\mathrm f}$；其数量 $e_{\mathrm f},K_{\mathrm f}$ 由推论 48.9 给出。最后枢轴记为 $R$，$C_{\mathrm f}$ 从 $L_0^{A_R}$ 开始，并以实际边 $R_{m-1}^{A_R}c=L_0^{A_R}$ 闭合。
+
+在任何新接合证明前定义
+
+$$
+\begin{aligned}
+G&=(z_1,[p,q,z_2,\ldots,z_{d-2},z_d,z_{d-1}]),\\
+D_G&=[p,q,z_1,z_2,\ldots,z_{d-2},z_d,z_{d-1}],\\
+\mathcal S_{\mathrm g}&=\mathcal S_{\mathrm f}\cup\{G\},\qquad
+\mathcal D_{\mathrm g}=N(\mathcal S_{\mathrm g}).
+\end{aligned}
+$$
+
+对实际 $D$ 圆序定义删除两参考标签的投影
+
+$$
+\Pi(D)=D\setminus\{p,q\}.
+$$
+
+这里投影仍是无向圆序。
+

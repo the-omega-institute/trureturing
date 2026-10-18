@@ -1,0 +1,62 @@
+**Proposition 30.2 (the qualifying event mass is at label six).** Under
+Assumptions 23.1 and 30.1, the qualifying subset of the occupied
+saturated labels is exactly $\{6\}$, and
+
+$$
+\pi_e\{\Psi>0,\xi=1\}=p_6>\frac1{1250}.
+\tag{FC.125}
+$$
+
+No new threshold for the minimum actual count follows.
+
+Proof. For the event chart parameters $x_5,x_6$ of LOE Definition
+4.1, the directed coordinates are
+
+$$
+(u_5,v_5)=\frac{(-1+x_5^2,-2x_5)}{1+x_5^2},\qquad
+(u_6,v_6)=\frac{(2x_6,-1+x_6^2)}{1+x_6^2}.
+\tag{FC.126}
+$$
+
+Their exact enclosing parameter intervals have the following endpoints,
+each divided by $2^{150}$, from LOE Appendix 15.1:
+
+| Parameter | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $x_5$ | $480446814528720897719479693101385819199828982$ | $480446814528720897771081870996477472926098555$ |
+| $x_6$ | $708306830358679276407978779638517259838045794$ | $708306830358679276465779590025414253336955549$ |
+
+Substitution in the factored quadratic, retaining positive denominators,
+is the rational evaluation
+
+$$
+\begin{aligned}
+\Psi_5&=\frac{(-2x_5+(-1+x_5^2)/10)
+                    (-2x_5-4(-1+x_5^2))}{(1+x_5^2)^2},\\
+\Psi_6&=\frac{(-1+x_6^2+x_6/5)
+                    (-1+x_6^2-8x_6)}{(1+x_6^2)^2},\\
+-1.766363670868&<\Psi_5<-1.766363670867<0,\\
+0<1.990421810819&<\Psi_6<1.990421810820.
+\end{aligned}
+\tag{FC.127}
+$$
+
+Thus only label $6$ among $\{5,6\}$ is in $T^+$; label $5$
+is outside even the closed $T$. By the complete inherited inventory,
+there is no other occupied saturated endpoint that could carry the
+mandatory mass. Corollary 27.2 gives
+$4/(5t)=1/1250$ at $t=1000$, proving (FC.125). As compatible
+numerical context, the inherited old-weight bounds give
+$p_5,p_6>0.0442721$, and the exact event weight intervals imply
+
+$$
+0.088545791771<p_5+p_6<0.088545791772.
+\tag{FC.128}
+$$
+
+These are coefficient weights; their sum is not a physical failure
+probability. The asserted new event consequence is the location of
+the forced reversing mass within the complete old inventory. The
+six-low/seven-TOTAL event count and its optimality remain inherited;
+there is no eight-low necessity seed here. $\square$
+

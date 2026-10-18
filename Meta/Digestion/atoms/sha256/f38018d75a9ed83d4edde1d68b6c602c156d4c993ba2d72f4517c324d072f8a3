@@ -1,0 +1,55 @@
+**Theorem 12.3 (inward orientation, all active subsets and quantitative activity).** At the event the inward multipliers are exactly
+$$
+\nu_i^e=p_i^e(R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp})
+                 \ge p_*c_{\rm sh}\Delta^2\ge m_\mu,
+\qquad\lambda_e\ge m_\mu .
+$$
+The $15$ columns of $Q_e$ are independent. If a constrained local maximizer lies at $\|x-x_e\|_2<R_x$, every active constraint subset satisfies LICQ, its contrast and all six inward multipliers are positive, and
+$$
+K=\kappa,\qquad r=0.
+$$
+
+Proof. The inward computation refines the multiplier identity already used in §5. For an occupied endpoint let
+$Q_h=Y_{e,5}+Y_{e,6}u^2+Y_{e,7}uv$.
+Differentiate the raw fractional gap in the actual inward coordinate
+$\xi=\eta+(1-2\eta)r$. The occupied nonzero height has sign $\epsilon$, so
+$$
+\partial_rD_e\big|_{r=0}
+ =(1-2\eta)c_h(Q_h-\epsilon\,1000f_h).
+$$
+For $\eta=0$ the prefactor is $+1$; for $\eta=1$ it is $-1$, using that endpoint's own occupied sign. By the occupied equality and affineness, the same expression is
+$$
+Y_e\cdot\Gamma_{1-\eta}-\lambda_e|u|-\epsilon H_{1-\eta}
+ =D_{1-\eta}^e+|H_{1-\eta}|-\epsilon H_{1-\eta}.
+$$
+If $\epsilon H_{1-\eta}\ge0$, including a zero opposite height, the last added term vanishes. If $\epsilon H_{1-\eta}<0$, it equals $2|H_{1-\eta}|$. No opposite-sign term is discarded and no same-sign premise is introduced. Opposite-sheet contact separation and Theorem 10.2's endpoint estimate give
+$R_i\ge c_{\rm sh}\Delta^2$.
+
+Use the minimization Lagrangian
+$$
+\mathscr L(x,Y,\lambda,\nu)
+ =Y\cdot(\mathcal M(x)-B)-\mathcal J(x)
+                        +\lambda(\kappa-\mathcal K(x))-\nu\cdot r.
+$$
+Differentiating in $r_i$ multiplies the raw inward gap by $p_i$. Its stationarity therefore derives $\nu_i^e=p_i^e\chi_i$; the coefficient weight is essential. This proves the lower bounds because $p_i^e>p_*$ and $\lambda_e>190$, and gives
+$Q_ey_e=\nabla\mathcal J(x_e)$.
+
+For rank, restrict a relation among the columns of $Q_e$ to variations with $dr=0$. In the twelve coordinates $z=(p,\phi)$ the eight moment rows $A=D_z\mathcal M(x_e)$ have rank eight, and $q=\nabla_z\mathcal K(x_e)$ is nonzero on $\ker A$, by the retained event geometry. Consequently $[A^T,-q]$ has nine independent columns; the relation's first nine coefficients vanish. The remaining six coordinate columns $-E_r^T$ are independent, so the other coefficients vanish too. In particular every subfamily consisting of all moment columns and any active subset of the seven inequality columns is independent.
+
+For $\|x-x_e\|<R_x$, singular-value perturbation gives
+$$
+\sigma_{\min}(Q(x))
+ \ge\sigma-\|Q(x)-Q_e\|_2\ge\sigma/2.
+$$
+The chart ball removes weight-boundary and upper-$r$ constraints and fixes the height/report signs. At a constrained local maximizer KKT thus applies to its active subset. Extend the inactive contrast or inward multipliers by zero into a full vector $y=(Y,\lambda,\nu)$. Stationarity reads $Q(x)y=\nabla\mathcal J(x)$. A left inverse of $Q(x)$ has norm at most $2/\sigma$, so
+$$
+\begin{aligned}
+\|y-y_e\|_2
+&\le\frac2\sigma
+\left(\|\nabla\mathcal J(x)-\nabla\mathcal J(x_e)\|_2
+            +\|Q(x)-Q_e\|_2\|y_e\|_2\right)\\
+&\le C_\mu\|x-x_e\|_2<m_\mu/2 .
+\end{aligned}
+$$
+Every inequality multiplier is strictly positive, since its event value is at least $m_\mu$. An extended inactive multiplier could not have that property. Complementarity forces all six endpoints and the contrast active. In particular the overshoot controlled globally in Theorem 12.2 is now zero. $\square$
+

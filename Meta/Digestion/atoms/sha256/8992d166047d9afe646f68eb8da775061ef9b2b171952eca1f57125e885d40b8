@@ -1,0 +1,61 @@
+## 368. Every opposite-M exit is globally impossible
+
+Suppose any actual owner has fixed frame
+
+    kappa=(W,M,D,C,M,D), W in {V,Z,U}.                    (368.1)
+
+It is genuine. Let r denote its W cosh. From (366.3), (366.6), and the
+upper gap, every possible r is below R(m,c). In particular v<m<R,
+u<Zb(m,m-2,d0)<R, and z<R. Also c<3*m/7.
+
+We have c*R<m^2. To verify this explicitly, R equals
+
+    [c^2*m-2*c*m^2+2*c*m+4*c+3*m^3-5*m^2-2*m+8]
+      /[m*(m-1)].
+
+The derivative of c*R has numerator
+
+    3*m*c^2-(4*m^2-4*m-8)*c+3*m^3-5*m^2-2*m+8.
+
+For 1<c<3*m/7,m>4 it is bounded below by
+(9*m^3-23*m^2+10*m+56)/7>0. At c=3*m/7,
+
+    m^2-c*R=(m^3+266*m^2+42*m-1176)/[343*(m-1)]>0.
+
+For kappa put
+
+    D(t)=t^2+m^2+d^2+2*t*m*d-1,
+    N=d*(r+c)+m*(r*c+d^2-m^2+1).
+
+Its M cosine is N/sqrt(D(r)*D(c)). The r derivative has sign
+
+    (m^2-1)*[d*(c*r+m^2-d^2+1)+m*(c+r)]>0.
+
+At r=R, its d derivative has sign (m^2-1)*P, where
+
+    P=(c+r)*d^4+4*m*(c*r+1)*d^3+6*m^2*(c+r)*d^2
+      +4*m*[c*r*(m^2-c*r)+m^2+c^2+r^2-1]*d
+      +(c+r)*[m^4-c^2*r^2+c^2+r^2-1]>0.
+
+The positivity uses c*r<m^2. Hence increasing r to R and then d
+to d0 strictly raises the M cosine. Define
+
+    B(m,c)=m^2*(m-1)^2*[D(R)*D(c)-4*N(R,c,d0)^2]          (368.2)
+
+with d=d0 in D. It has degree six in c. For B=sum B_j(m)*c^j,
+
+    PB(a,b)=7^6*sum_{j=0}^6 B_j(m)
+                *[1+(3*m/7)*a]^j*(1+a)^(6-j), m=4+b,    (368.3)
+
+has the 76 positive integer coefficients in Section 374. This covers
+1<=c<3*m/7, b>0, and proves B>0. The comparison cosine therefore
+has absolute value less than 1/2. Thus beta_M(kappa)>pi/3.
+
+Kappa and eta are distinct: kappa contains C and eta does not. Their
+actual original M slots cost
+
+    2*beta_M(kappa)+theta_M(eta)>pi,
+
+contradicting the complete genuine M capacity. This excludes every
+owner of type (368.1), whether or not it meets a source face.
+

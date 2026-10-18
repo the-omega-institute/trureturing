@@ -1,0 +1,36 @@
+**Definition 2.1 (trees, factors and canonical states).** Write
+$A=\alpha$, $B=\beta$ and $C_0=\langle A,A\rangle$. Pairing is
+free and ordered. Put
+
+$$
+S_1=\{A,B,C_0\},\qquad
+S_{d+1}=\{A,B\}\sqcup\{\langle u,v\rangle:u,v\in S_d\},
+\qquad W_d=\{q\in\{L,R\}^*:|q|\le d-1\}.
+$$
+
+Write $\varnothing$ for the empty word. A Read reports the leaf label
+or branch at its endpoint, and absent if traversal has already passed a
+leaf. To specify the inherited native
+factors explicitly, let $e(A)=0,e(B)=1$. If $q$ ends at an original
+branch, $\Gamma_q(u)=(0,0)$. Otherwise write $q=av$, where $a$ is
+the path to its first original leaf $z$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(z),1-e(z)),&v\text{ is empty},\\
+(\#L(v)+2\#R(v)+2-e(z),\mathbf1_{\{v\text{ ends in }R\}}),
+  &v\text{ is nonempty}.
+\end{cases}
+$$
+
+The factor vector on $W_d$ separates $S_d$, as stipulated in
+Assumption 1.3. In particular root factors distinguish a branch from
+both leaves, and
+
+$$
+\Gamma_{\varnothing}(A)=(2,1),\quad
+\Gamma_{\varnothing}(B)=(1,0),\quad
+\Gamma_L(A)=(3,0),\quad\Gamma_L(B)=(2,0).
+$$
+

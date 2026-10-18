@@ -1,0 +1,37 @@
+**Convention 1.4 (the supplied exact temporal factor).** Put
+$s(q)=\#L(q)+2\#R(q)$ and $e(\alpha)=0,e(\beta)=1$. Use precisely
+the AAR Definition 12.2 and Proposition 13.3 factor $\Gamma_q(u)$.
+At an original branch endpoint it is $(0,0)$. If the first original
+leaf along $q$ is a leaf $\ell$ at $a$, and $q=ar$, then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{NCM.5}
+$$
+
+The supplied decoder is
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1,\ k=b-1,\\
+\alpha,&c=1,\ k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+\tag{NCM.6}
+$$
+
+On attained factors $c=1$ implies $b\ge2$. AAR Theorem 12.3 gives
+$r_{\rho^ku}(q)=\operatorname{Pred}(\Gamma_q(u),k)$ for every
+$k\ge0$. Conversely the trajectory recovers $b$ as its first branch
+count and $c$ from the presence of an alpha stage. Equality of factors
+is exactly equality of trajectories. It is not equality of first-leaf
+descriptors: the distinct blocking positions in AAR Proposition 13.3
+can give equal factors. In the actual wrapper,
+$\Gamma_{Rq}(\langle\alpha,v\rangle)=\Gamma_q(v)$.
+

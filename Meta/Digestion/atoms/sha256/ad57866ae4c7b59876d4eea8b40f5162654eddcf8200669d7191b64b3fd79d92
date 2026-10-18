@@ -1,0 +1,4 @@
+**命题 21.3（第二替换规则不可省）。** 仅指定 $\rho\alpha=\beta$ 以及替换保持配对，不能唯一确定 $\rho^2\alpha$。
+
+证明。任意指定一棵树作为 $\rho\beta$，都可按树结构递归扩展成保持配对的替换。例如令 $\widetilde\rho\alpha=\beta$、$\widetilde\rho\beta=\alpha$，并逐节点扩展。它满足同一个第一替换规则，却给 $\widetilde\rho^2\alpha=\alpha$；定义 21.1 则给 $\rho^2\alpha=\gamma$。两棵树不同，故第一规则不足。三周期的来源若要出现，必须说明额外观察或商，而不能由 $\beta=\rho\alpha$ 这一个等式推出。$\square$
+

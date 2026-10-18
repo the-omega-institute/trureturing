@@ -1,0 +1,58 @@
+**Theorem 4.2 (exact residual source correspondence).**
+Let $\varphi:\{1,\ldots,N-k\}\to U$ be a public bijection. The map
+
+$$
+\Psi(b)=b,\qquad
+\Psi(n,J)=\bigl(n,\varphi^{-1}(J\setminus K)\bigr)
+\tag{4.2}
+$$
+
+is a bijection from $X_K$ to $X_{N-k,t-k}$. It preserves the target.
+Under the address identification $\varphi$, the two continuation
+problems have exactly the same legal responses, ordered continuation
+records, stopping decisions, outputs and continuation charges on each
+tape. Every policy in either problem transports to a policy in the
+other with those properties. For $0\le r\le t-k$, the continuation
+minimax error is therefore
+
+$$
+V_K(r)=\frac{\binom{t-k}{r}}{\binom{N-k}{r}}.
+\tag{4.3}
+$$
+
+For $t-k+1\le r\le N-k$, it is zero. The least zero-error number of
+new distinct queries is $t-k+1$, and the total threshold including
+acquisition is $k+(t-k+1)=t+1$.
+
+**Proof.** The inverse of (4.2) sends $(n,J')$ to
+$(n,K\cup\varphi(J'))$; the two pieces are disjoint and have total
+cardinality $t$. Both maps leave the same numerical target $n$ intact,
+and send the baseline to the baseline. For each remaining address $i$,
+
+$$
+f_x(\varphi(i))=f_{\Psi(x)}(i).
+\tag{4.4}
+$$
+
+Translate each query using $\varphi$, retain the same tape and all
+control rules, and append the public fixed prefix when interpreting
+an original record. Induction on actual transitions using (4.4) gives
+equal replies and decisions, including repeats of remaining addresses,
+internal work, stopping and output. Conversely remove that fixed prefix
+and use $\varphi^{-1}$. The fixed initialized state and independent
+continuation randomness ensure that this inverse introduces no hidden
+advice or source-dependent tape law.
+
+The bijection preserves the number of distinct continuation addresses,
+number of actual continuation calls and every numerical reply length.
+It also preserves the declared continuation transitions. In original
+coordinates these costs add to the already incurred prefix costs;
+in particular $D_{\rm total}=k+D_{\rm continuation}$ and
+$R_{\rm total}=k+R_{\rm continuation}$. The image source in (4.2) is a
+coordinate description of the same fixed original source, not a reset.
+Thus the two sourcewise error families and admissible policy classes
+correspond. Apply Theorem 2.1 and Corollary 3.5 to obtain (4.3) and the
+thresholds. The same correspondence transports the fibres of Theorem
+3.2 and hence both its target and full future-response recovery tests.
+$\square$
+

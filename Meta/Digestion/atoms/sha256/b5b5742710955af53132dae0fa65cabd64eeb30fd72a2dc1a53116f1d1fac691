@@ -1,0 +1,8 @@
+**Definition 1.1 (Fibonacci cubes).** For every integer $n\ge1$, let
+
+$$
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\text{ for }1\le j<n\}.
+$$
+
+The graph $\Gamma_n$ has vertex set $B_n$ and an edge between two words precisely when they differ at one coordinate. The word constraint is imposed along an open path: there is no constraint between $b_n$ and $b_1$. In particular, every all-zero word and every legal word beginning or ending with $1$ belongs to the domain. Put $b_0=b_{n+1}=0$. An upward-flippable coordinate of $b$ is an $i$ with $b_{i-1}=b_i=b_{i+1}=0$; write $b+e_i$ for the corresponding insertion of $1$. Let $k(b)$ count its ones and $u(b)$ its upward-flippable coordinates. This is the domain of [Growth], Definitions 2.4–2.5, including its subsequence $n=3N$ for positive integers $N$.
+

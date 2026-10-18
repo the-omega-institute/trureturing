@@ -1,0 +1,31 @@
+**Definition 3.1 (Parameters and finite rational conditions).** Choose exact reals
+
+$$
+\frac13<a<b<\frac38,\qquad0<p<1,
+\quad c=1-p,\quad s=1-a,\quad t=1-b,
+\tag{3.1}
+$$
+
+and write
+
+$$
+\begin{gathered}
+k=pa+cb,\qquad k_1=pa s+cb t,\qquad k_2=pa s^2+cb t^2,\qquad
+Z=1+\frac pa+\frac cb,\\
+L(p)=\frac{p^2a^2}{ks^2},\qquad
+U(p)=\frac{k^2}{pa s^2},\qquad
+H(p)=\frac{ps^2}{a}+\frac{ct^2}{b},\qquad
+\mathsf D_1(p)=\frac{H(p)}{Z(H(p)+1)}.
+\end{gathered}
+\tag{3.2}
+$$
+
+The subfamily $\mathcal S$ is specified by (3.1) and the three strict inequalities
+
+$$
+L(p)>\frac13,\qquad U(p)<1,\qquad \mathsf D_1(p)<c_0.
+\tag{3.3}
+$$
+
+The symbol $k$ in (3.2) is a scalar; $k(w)$ still counts ones in a word. The function $\mathsf D_1$ will be proved to be the actual radius-one risk of the law, not a surrogate density.
+

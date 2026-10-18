@@ -1,0 +1,40 @@
+**Definition 3.1 (finite paths are descriptions of the original graph).**
+Fix a natural action horizon $T$ and enumerate the finite graph
+choices of [CAR, Theorem 12.1][CAR]: a state set
+$E=\{0,\ldots,s-1\}$, $1\le s\le K$, initial state, instruction
+types and all required successors. Choose one descriptor type for
+each read state. The resulting numeric descriptor tuple
+$\boldsymbol\delta$ is shared by every source and visit.
+
+Let $\Pi_T$ contain all formal paths from $e_*$ ending at their first
+halt after at most $T$ nonhalt actions. Paths retain repeated
+states, repeated and absent reads, and every update including
+updates after the final read. No path continues through a halt.
+The path of length zero is included precisely for an initial halt.
+
+For a path $\pi$ and its $i$th read, let $e_i$ be its read state,
+$c_i$ its reply and $a_{\pi,i}$ the number of preceding actual
+updates. Define
+
+$$
+\begin{aligned}
+A_{\eta,\pi}(\mathbf n;\boldsymbol\delta)
+&=\operatorname{Adm}_\eta(\mathbf n)\ \land\
+ \bigwedge_{i:\,\mathrm{read}}
+ \operatorname{Reply}_{\eta,c_i}
+       (\mathbf n,N+a_{\pi,i},\delta_{e_i}),\\
+v_\pi(\boldsymbol\delta)
+&=\left(q_\pi,a_\pi,
+       \sum_{e\in E_R}m_{\pi,e}|\delta_e|\right),\\
+S_{\eta,h}(\mathbf n;\boldsymbol\delta)
+&=\bigvee_{\pi\in\Pi_T:\,\mathrm{end}(\pi)=h}
+                         A_{\eta,\pi}(\mathbf n;\boldsymbol\delta).
+\end{aligned}
+\tag{NRF.14}
+$$
+
+Here $q_\pi,a_\pi,m_{\pi,e}$ are fixed natural counts of the
+finite path, not symbolic unbounded repetition counts. Every read
+test on a path uses the same source tuple. The paths are proof
+objects; their vertices are not installed as additional states.
+

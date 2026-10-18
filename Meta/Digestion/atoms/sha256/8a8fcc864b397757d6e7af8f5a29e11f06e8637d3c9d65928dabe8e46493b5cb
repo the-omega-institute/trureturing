@@ -1,0 +1,51 @@
+**引理 447.1（完整指数平均恒等式）。** 令
+
+\[
+h(y)=k(\log(y/2)+\gamma_E)+\frac1y,\qquad y>0.
+\]
+
+则对每个 \(x>0\)，完整地有
+
+\[
+G(x)=e^x\int_x^\infty e^{-y}h(y)\,dy
+ =\int_0^\infty e^{-v}h(x+v)\,dv,
+\qquad
+e^x\int_x^\infty e^{-y}\,dy=1.
+\tag{EA.1}
+\]
+
+**完整可积性。** 固定 \(x>0\)。原 Gamma 积分供应给
+\(\int_0^\infty e^{-y}|\log y|\,dy<\infty\)，而
+\(e^{-y}/y\le e^{-y}/x\) 对全部 \(y>x\) 成立。
+因此
+
+\[
+e^{-y}|h(y)|
+\le k e^{-y}|\log y|
+ +k(|\log2|+|\gamma_E|)e^{-y}+\frac{e^{-y}}y
+\]
+
+在整个 \((x,\infty)\) 上可积。这也支付下文的全部完整平均和
+常数差积分；没有从一个积分值等式反推可积性。
+
+**恒等式证明。** 原完整有限／无限 FTC 给
+
+\[
+\int_x^\infty e^{-y}\log y\,dy
+ =e^{-x}\log x+E_1(x),\qquad
+\int_x^\infty e^{-y}\,dy=e^{-x}.
+\]
+
+代入 \(h\)，利用准确的 \(k+1=C\)，得到
+
+\[
+\begin{aligned}
+e^x\int_x^\infty e^{-y}h(y)\,dy
+ &=k(\log(x/2)+\gamma_E)+(k+1)e^xE_1(x)\\
+ &=G(x).
+\end{aligned}
+\]
+
+完整平移 \(y=x+v\) 给（EA.1）的第二式。权重质量由完整指数尾
+精确计算为一。这里无须寻找 \(G\) 的全局极小点。证毕。
+

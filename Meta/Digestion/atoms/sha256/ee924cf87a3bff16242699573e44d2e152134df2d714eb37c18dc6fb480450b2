@@ -1,0 +1,50 @@
+**Definition 77.1 (Selected-law approximation).** Retain the actual labeled
+sources, static answers, zero advice and common-rule acquisition contract of
+Definition 71.1, and exactly the original carrier and consumer of Definition
+73.1. Fix a sequence satisfying (73.3). For brevity write
+
+$$
+\lambda_n=(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n},
+\qquad \lambda^a_x=\lambda_{n(x)},
+\qquad H_m=\{x:n(x)>m\}\quad(m\in\mathbb N_0).
+\tag{77.1}
+$$
+
+Thus $H_0=X$, and $H_m$ is precisely the actual all-positive depth-$m$
+cylinder. Every $D_n$, and every finite comparison pattern used below, is
+occupied by Boundaries, Theorem 35.2. There is no additional source with an
+infinite all-positive signature.
+
+For $0\le\varepsilon\le1$, let $\mathcal A_\varepsilon(a)$ consist of all
+lawful acquisitions whose original-tape output probabilities satisfy
+
+$$
+\sup_{x\in X}\operatorname{TV}(\widehat\lambda_{A,x},\lambda^a_x)
+\le\varepsilon,
+\qquad
+\operatorname{TV}(\nu,\lambda)=\sup_{E\in\mathcal F}|\nu(E)-\lambda(E)|.
+\tag{77.2}
+$$
+
+The seed probability space may vary with $A$, but within each acquisition
+its law is source-independent and its seeded deterministic rule is common
+to every actual source. Arbitrary adaptive addresses, repeated requests,
+measurable finite records and outputs, and sourcewise almost-sure finite
+handoff are retained. The laws $\widehat\lambda_{A,x}$ may have mass on any
+original tapes, including outside the marked points. No extra support or
+proposal-row condition is imposed in (77.2). The error in (77.2) is relative
+to the selected laws (73.4); the nonatomic original targets $\mu_x$ of
+Theorem 67.5 are unchanged. The resources $K,M,S_c$ and their nonhandoff
+values retain Definitions 71.2 and 72.1.
+
+For $t\ge0$ put
+
+$$
+S_m(t)=\sum_{n>m}(a_n-t)_+,
+\qquad v_+=\max\{v,0\}.
+\tag{77.3}
+$$
+
+At $t=0$ the sum is an extended nonnegative real number. At every $t>0$
+it has finite support, since $a_n\to0$.
+

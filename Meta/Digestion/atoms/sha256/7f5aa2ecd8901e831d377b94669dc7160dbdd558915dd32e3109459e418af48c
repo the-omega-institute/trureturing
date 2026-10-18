@@ -1,0 +1,52 @@
+**Lemma 2.2 (Reduction to unrestricted depth-three trees).** A uniform
+upper bound for
+
+$$
+\sum_{x,y,z\in\{0,1\}}m(C_{xyz}),\qquad
+C_{xyz}=\{X_t=x,\ X_{t_x}=y,\ X_{t_{xy}}=z\},
+\tag{2.3}
+$$
+
+over every integer $t,t_0,t_1,t_{00},t_{01},t_{10},t_{11}$ bounds the
+correct probability of every protocol satisfying (1.6), under every
+unchanged independent auxiliary probability space.
+
+Proof. Tonelli applied to the nonnegative indicator of $E_3^c$ gives
+$J_p(E_3^c\text{ at }u)=0$ for almost every $u$. These are sections of
+the independent product; no regular conditional law on $\mathsf U$ is
+required.
+
+Fix such a seed. By Lemma 2.1 a positive-mass reachable prefix is its
+entire reply cylinder. Internal nonreturn there would exclude that
+positive-mass cylinder from $E_3$. A fourth call before returning would
+do the same, irrespective of all subsequent behavior. After three calls
+a positive-mass branch must therefore return after finite waiting.
+
+Pad each earlier return, including zero-, one- and two-read returns, to
+three calls by predetermined calls, for example repetitions of address
+zero. Keep its already chosen output on every resulting subleaf. The
+subleaf cylinders partition its old return cylinder, so their correct
+masses sum to exactly its old correct mass. This constructs a comparison
+tree; it does not retroactively charge the original early return for
+extra calls. Fill source-null or inconsistent branches with arbitrary
+finite actions and outputs. Further intersections of a null cylinder
+stay null.
+
+The resulting tree has arbitrary first address, a second address
+depending on the first reply, and a third depending on both earlier
+replies, exactly as in (2.3). Its correct probability equals that of the
+fixed-seed protocol and is at most the displayed sum. In particular this
+reduction imposes no connectedness, address size, sign or parity
+restriction.
+
+For completed versions, take measurable representatives outside the
+product-null exceptional sets. There are countably many finite
+integer-address/reply records, so the relevant exceptional sets can be
+combined into a product-null set. Tonelli makes its sections null for
+almost every seed as well. Thus completion alters none of the integrated
+masses or the preceding comparison. Integrate the uniform bound against
+the original measurable correctness event. There is no need to choose
+the padded trees or their maximizing outputs measurably as functions of
+$u$. Neither an atomic nor a nonatomic auxiliary law needs any additional
+property. $\square$
+

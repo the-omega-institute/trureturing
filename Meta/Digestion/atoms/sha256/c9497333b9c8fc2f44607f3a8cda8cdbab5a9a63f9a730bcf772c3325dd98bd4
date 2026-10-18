@@ -1,0 +1,32 @@
+**Theorem 6.3 (four individual exact kernels).** Separately for every
+$V\in\{S,T,B,M\}$ and all $h,k\in\Omega$,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h\sim_{Q_+}k.
+\tag{CSA.6}
+$$
+
+Proof. For $S$, equal supports give equal raw $Y$ by Lemma 3.4. Extract
+CSA.4 and apply Lemma 5.4 to obtain $h=k$, hence equal task maps by
+Lemma 6.2. In the reverse direction task equivalence gives $h=k$ by
+Lemma 6.2 and therefore equal supports. These are both inclusions for $S$.
+
+For $B$, prefix closure gives the identical whole support independently
+from that boundary. Lemma 3.4, extraction and identification again give
+$h=k$ and task equivalence. Conversely task equivalence gives $h=k$ and
+therefore identical terminal antichains. These are both inclusions for $B$.
+
+For $T$, erase each actual patch occurrence to its native occurrence,
+including its actual input, operands, labels and receipt. This gives
+exactly $h$ by CSA.3, so equal temporal words give equal task maps.
+Conversely task equivalence gives $h=k$, whose literal compiler entries,
+operand occurrences and auxiliary construction roles coincide. Hence their
+actual ordered patch words agree. These are both inclusions for $T$.
+
+For $M$, equal selected memory structures give equal extracted keys by
+Lemma 5.3, equal histories by Lemma 5.4, and equal task maps by Lemma 6.2.
+Conversely task equivalence gives identical histories, hence exactly the
+same selected retained material, frontier and actual rights. These are
+both inclusions for $M$. No intersection of four insufficient kernels
+has been used. ∎
+

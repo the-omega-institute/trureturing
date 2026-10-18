@@ -1,0 +1,34 @@
+**Theorem 4.2 (traffic and candidate bounds).** Write $m_* =\max(1,M-1)$ and
+$F=N+K+\binom M2+2$. For successes and failures of the same RA program,
+
+$$
+\begin{aligned}
+J&\le b+1,\qquad d_j\le D_{\rm read}\le H,\\
+T_j&\le H+2+m_*N,\\
+T&\le(b+1)(H+2+m_*N),\qquad A\le HT,\\
+\text{candidate cells in attempt }j&\le F.
+\end{aligned}
+\tag{CWS.6}
+$$
+
+Proof. Let $O_j$ be the holes actually emitted on this attempt. They are
+present in $V$ and prefix-free, whether or not the candidate is ultimately
+correct. Let $n_p$ be the number of positions below $p$ in $V$.
+Each comparison visits at most $\min(n_p,n_q)$ relative words, so
+
+$$
+2\sum_{p<q}|Z_{j,pq}|
+ \le \sum_{p<q}(n_p+n_q)=(r_j-1)\sum_{p\in O_j}n_p
+\quad(r_j\ge2).
+$$
+
+The exterior Read positions and these descendant sets are disjoint subsets
+of $\operatorname{Pos}(V)$. For $r_j\ge2$ their weighted sum is at most
+$\max(1,r_j-1)N$; for $r_j=0,1$ no comparisons occur and exterior Reads
+are at most $N$. Add the guard and validation. All operands are present
+addresses of $V$, yielding $D_{\rm read}\le H$ and $A\le HT$.
+An exterior contributes at most $N$ node tokens plus at most $K$ additional
+hole-address/delimiter tokens. Its upper triangle has at most $\binom M2$
+bits and there are two framing tokens. This also bounds rejected candidates
+that are inconsistent with every instantaneous source. $\square$
+

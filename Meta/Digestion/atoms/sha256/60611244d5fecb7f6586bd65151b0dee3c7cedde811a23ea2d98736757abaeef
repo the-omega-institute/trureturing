@@ -1,0 +1,92 @@
+**Theorem 7.4 (one-composition entropy ceilings give all-length caps).**
+Fix $d$, a probability $\mu$ on $S_d$, its nonempty support $F$, and
+$m=\min_{x\in F}\mu(x)>0$. Suppose two real numbers $L,U$ satisfy
+
+$$
+\alpha_d(\mu)\le H(\mu)-L,\qquad \sigma_d\le U.
+\tag{OCB.59}
+$$
+
+Then for every $0<\tau\le m$,
+
+$$
+\beta_d(\mu)\le
+2^{-L+(U-L)/\tau+2\tau/m}.
+\tag{OCB.60}
+$$
+
+Thus any rational cap $C$ at least this expression bounds every length
+and complete original native template and has the original consequence
+(OCB.11). A finite native cover gives an upper $U$ through
+$\sigma_d\le N^{-1}\log_2K_d(N)$. The other premise is an all-length
+entropy ceiling at the one specified composition; it is not supplied
+by a finite type computation. For rational $\mu$ of denominator $r$,
+that premise is exactly
+
+$$
+\forall k\ge1\quad a_{kr}(kr\mu)
+              \le2^{kr(H(\mu)-L)}.
+\tag{OCB.61}
+$$
+
+There is no assumption on the number of blocks, their donor topology,
+their shared seed incidences or their once-owned joint weights.
+
+Proof. The pressure variational identity of NPC Theorem 5.2 has the
+following face version for this $\mu$:
+
+$$
+\log_2\beta_d(\mu)
+=\max_{p\in\Delta(F)}
+ \left[\alpha_d(p)+\sum_{x\in F}p(x)\log_2\mu(x)\right].
+\tag{OCB.62}
+$$
+
+Here it is used only as an intermediate identity, with its boundary
+conditions justified as follows. Positive-mass rows lie in $F^n$;
+their type intersections remain admissible, and each type maximum is
+bounded by $2^{n\alpha_d(p)}$ by (OCB.49). At most $(n+1)^{|S_d|}$
+types occur. The product closure of actual native relations gives
+supermultiplicativity of maximal masses, whose logarithms have a
+finite lower remainder bound because $F$ is nonempty. Their normalized
+limit equals the all-length supremum. Letting $n\to\infty$ removes
+the polynomial type count and proves the upper direction of (OCB.62).
+Attaining type sets along multiples of every rational $p\in\Delta(F)$
+give its lower direction by (OCB.49); continuity on that face supplies
+all $p$. No logarithm of a zero coordinate is taken.
+
+For any $p\in\Delta(F)$ put $q=(1+\tau)\mu-\tau p$ on $F$.
+It is normalized and nonnegative, since $\tau\le m$. Concavity at
+$\mu=(\tau p+q)/(1+\tau)$ and the first premise of (OCB.59), together
+with $\alpha_d(q)\ge H(q)-U$, imply
+
+$$
+\alpha_d(p)+\sum_xp(x)\log_2\mu(x)
+\le -L+\frac{U-L+D_2(q\|\mu)}{\tau}.
+\tag{OCB.63}
+$$
+
+Indeed
+$D_2(q\|\mu)=(1+\tau)H(\mu)-H(q)
+                  +\tau\sum_xp(x)\log_2\mu(x)$,
+which gives precisely (OCB.63) after substitution. This uses the same
+whole-block distributions on the same alphabet throughout.
+
+The elementary inequality $\ln t\le t-1$ gives
+
+$$
+D_2(q\|\mu)\le\frac{\chi^2(q,\mu)}{\ln2},\qquad
+\chi^2(q,\mu)=\tau^2\left(\sum_x\frac{p(x)^2}{\mu(x)}-1\right)
+       \le\frac{\tau^2}{m}.
+$$
+
+Since $\ln2\ge1/2$, (OCB.63) is at most
+$-L+(U-L)/\tau+2\tau/m$. Maximize using (OCB.62), proving (OCB.60).
+For rational $\mu$, (OCB.49) makes its ceiling equivalent to all of
+(OCB.61), in both directions. This is why one finite checked type is
+insufficient. Finally (OCB.11) applies to the resulting genuine
+all-length cap and all original competitors. Rational enclosures of a
+proved endpoint are numerical precision choices, separate from proving
+(OCB.61). This implication constructs neither a cofinal family of those
+ceilings nor an effective length modulus. $\square$
+

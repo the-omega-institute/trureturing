@@ -1,0 +1,20 @@
+**定义 45.1（有限前缀上的就绪与取得）。** 保留定义 42.1–42.3 的同一实际来源、局部视图、部分操作、任务端口及非空允许极大运行集。对已经发生的有限前缀 $h$，记 $\mathsf{Ready}_{\mathcal T}(h,\omega)$ 为任务规定的构造、身份绑定和验收均已合法完成，输出正确，且当前残余状态仍有一个满足寿命、访问、权限、资源与预算的有限可执行承接。这里的就绪正是 $\mathsf{Acq}_{\mathcal T}(h,\omega)$，所以实际 $\mathsf{Done}$ 不要求消费者已经执行；执行使用仍由 $\mathsf{Used}$ 判断。若任务要求使用本身，才将它列入完成义务。
+
+对固定协议 $\pi$，安全性和进展分别为
+
+$$
+\begin{aligned}
+\mathsf{Safe}_{\mathcal T}(\pi)&:\quad
+ \forall\omega\ \forall\rho\in\mathsf{Max}(\pi,\omega)
+ \ \forall h\sqsubseteq\rho\text{ 有限},\quad
+ \mathsf{Finish}_{\pi,\mathcal T}(h)
+ \Rightarrow\mathsf{Ready}_{\mathcal T}(h,\omega),\\
+\mathsf{Prog}_{\mathcal T}(\pi)&:\quad
+ \forall\omega\ \forall\rho\in\mathsf{Max}(\pi,\omega)
+ \ \exists h\sqsubseteq\rho\text{ 有限},\quad
+ \mathsf{Finish}_{\pi,\mathcal T}(h).
+\end{aligned}
+$$
+
+极大运行可以无限延续；要求的是任务在其有限前缀完成，整个观察者不须停止。$\mathsf{Max}(\pi,\omega)\ne\varnothing$ 单独声明，公平、及时服务、无时间停滞或期限也各按所用合同声明。统一能力是存在一个只读原局部视图的固定 $\pi$，同时满足安全性和进展；带预算能力另在同一完成前缀上约束真实费用。结构决定仍是实际来源像上的因子化 $Z=gR$。它不授予读取 $R$、执行 $g$ 或形成证据的操作；一个协议的能力也不表示当前实际历史已经完成。
+

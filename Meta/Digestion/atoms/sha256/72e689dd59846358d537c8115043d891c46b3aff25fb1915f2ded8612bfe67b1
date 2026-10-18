@@ -1,0 +1,6 @@
+**数学引文 C-28.L（使用范围）。** [C28-L1] 为 Richard Ehrenborg、Gábor Hetyei，*The topology of the independence complex*，European Journal of Combinatorics 27 (2006)，906–923，DOI 10.1016/j.ejc.2005.04.010，作者站提供的期刊排版全文；§2 的初等塌缩定义及 §6、Proposition 6.2(ii)、Corollary 6.3 承担本章路径同伦中间先例，n 为顶点数。[C28-L2] 为 Kazuhiro Kawamura，*Homotopy types of independence complexes of forests*，Contributions to Discrete Mathematics 5(2) (2010)，67–75，DOI 10.55016/ojs/cdm.v5i2.62064，期刊九页全文，Example 3.4 的 n 是边数。[C28-L3] 为 Thomas Lam、David E. Speyer，*Cohomology of cluster varieties. II. Acyclic case*，arXiv:2111.12759v1（2021-11-24），§7.3、Corollary 7.8，仅作同伦先例和边数索引对照；所给期刊 DOI 10.1112/jlms.12809 不替代此确切预印本版本，亦不把 cluster variety 的上同调结论移植给 FIB 来源。原始 Kozlov 结果的归属只由上述已读文献的引用给出，不声称直接使用其原证明。包含关联代数、二项计数和球面悬挂均为经典中间工具；本章承重应用为带源的矩—原生目标—可行边界及任务闭包，不主张这些工具的原创性。已有 C26/C27 的证明仍归各自条目。
+
+[C28-L1]: https://www.ms.uky.edu/~jrge/Papers/Independence.pdf
+[C28-L2]: https://cdm.ucalgary.ca/article/download/62064/46709
+[C28-L3]: https://arxiv.org/abs/2111.12759v1
+

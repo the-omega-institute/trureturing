@@ -1,0 +1,155 @@
+**Theorem 9.2 (Uniform obstruction, including mixed complex decoders).**
+Every original complex scalar port admitting (9.1) satisfies
+
+$$
+e(T)\ge \frac{11}{20}+c_{\rm pop}>\frac{11}{20},\qquad
+c_{\rm pop}=\frac{21456}{9370805}.
+\tag{9.2}
+$$
+
+The same inequality covers pure and mixed decoders under their
+respective hypotheses in Definition 9.1. It is a lower bound for
+this restricted representation class, not a new unrestricted lower
+on $\varepsilon_1$.
+
+Proof. Use the weighted actual-time survival moment of
+[QEC, Proposition 2.2](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md).
+For clarity its normalizations and the coefficients used here are
+
+$$
+\begin{gathered}
+\chi_T=\frac15\sum_f\sigma_f\otimes M_f^T,\qquad
+\mathcal W=\lim_{H\to\infty}\frac1H\int_0^H
+\sum_sa_sQ_s(t)\otimes Q_s(t)\,dt,\qquad
+a=(9/4,3/4,5/4,3/4,0),\\
+\mathscr S(T)=\operatorname{tr}(\chi_T\mathcal W),\qquad
+e(T)\ge1-\mathscr S(T),\\
+\kappa_0=\frac18,\quad
+\kappa_+=\frac{331-3r}{2176},\quad
+\kappa_-=\frac{331+3r}{2176},\\
+b_{0+}=\frac{51+9r}{544},\quad
+b_{0-}=\frac{51-9r}{544},\quad b_{+-}=\frac{49}{272},
+\qquad r=\sqrt{17}.
+\end{gathered}
+\tag{9.3}
+$$
+
+All six coefficients are positive. The moment and survival comparison
+hold before any stationarity or real replacement. The comparison uses
+only allowed inputs $DQ_s(t)D^\dagger$, actual wait $t$, a full
+mode read and Stop: the unreplaced input yields $s$ with probability
+one, and the replaced survival probability is
+$\operatorname{tr}(Q_s(t)\widehat T(Q_s(t)))$.
+
+For real-sector projections $R_i$ and unit complex vectors $a,c$,
+put $p_i=\|R_ia\|^2$, $q_i=\|R_ic\|^2$. QEC's moment expansion
+gives the following upper bound on its complex product expectation:
+
+$$
+\begin{aligned}
+\langle a\otimes c,\mathcal W(a\otimes c)\rangle
+\le{}&\sum_i3\kappa_i p_iq_i\\
+&+\sum_{i<j}b_{ij}
+\left(p_iq_j+p_jq_i+4\sqrt{p_ip_jq_iq_j}\right).
+\end{aligned}
+\tag{9.4}
+$$
+
+Indeed the same-sector identity, swap and trace-projector terms
+have expectations $p_iq_i$, $|a_i^\dagger c_i|^2$ and
+$|a_i^Tc_i|^2$. Each of the last two is at most $p_iq_i$.
+For a pair of sectors, each of the cross swap and cross trace terms
+is at most $2\sqrt{p_ip_jq_iq_j}$ by Cauchy–Schwarz and taking
+real parts. The identity terms are $p_iq_j+p_jq_i$. This proves
+(9.4) with complex phases retained, rather than assuming real Kraus
+factors. Here $a_i=R_ia$, $c_i=R_ic$.
+
+Spectrally refine each $M_f$ and each $\sigma_f$ independently.
+The input factor of a product Choi term is the conjugate of a
+measurement eigenvector. Conjugation preserves its populations
+because the $R_i$ are real. If
+$\sigma_f=\sum_\alpha\lambda_{f\alpha}
+a_{f\alpha}a_{f\alpha}^\dagger$, its pure-state populations
+$p_{f\alpha}$ need not be constant, but satisfy
+
+$$
+\sum_\alpha\lambda_{f\alpha}p_{f\alpha,i}=p_i,\qquad
+\sum_\alpha\lambda_{f\alpha}
+\sqrt{p_{f\alpha,i}p_{f\alpha,j}}
+\le\sqrt{p_ip_j}.
+\tag{9.5}
+$$
+
+The inequality is Cauchy–Schwarz for the two nonnegative square-root
+sequences. Average (9.4) over this spectral refinement first.
+Its linear population terms use the first identity of (9.5), and
+its square-root terms use the second. Thus it is bounded by (9.4)
+with the stipulated common mixed-state population $p$ for every
+measurement eigenvector.
+
+The measurement eigenvectors have total normalized weight one,
+with weights equal to their effect eigenvalues divided by five.
+Their mean populations, by the same full TP sum $\sum_fM_f=I$,
+are exactly
+
+$$
+\overline q_i=\frac{\operatorname{tr}R_i}{5}
+=q_{{\rm TP},i},\qquad
+\overline{\sqrt{q_iq_j}}
+\le\sqrt{q_{{\rm TP},i}q_{{\rm TP},j}}.
+\tag{9.6}
+$$
+
+Averaging again in (9.4) proves
+$\mathscr S(T)\le x^TPx$, where $x_i=\sqrt{p_i}$,
+$\|x\|=1$, and the single real symmetric matrix is
+
+$$
+P=\begin{pmatrix}
+3/20&\sqrt2(51+9r)/1360&\sqrt2(51-9r)/1360\\
+\sqrt2(51+9r)/1360&(1487+9r)/5440&49/340\\
+\sqrt2(51-9r)/1360&49/340&(1487-9r)/5440
+\end{pmatrix}.
+\tag{9.7}
+$$
+
+For example its diagonal entries are
+$3\kappa_iq_{{\rm TP},i}+\sum_{j\ne i}b_{ij}q_{{\rm TP},j}$,
+and its off-diagonal entries are
+$2b_{ij}\sqrt{q_{{\rm TP},i}q_{{\rm TP},j}}$.
+These identities fix every normalization in (9.7).
+
+There is an exact positive-definiteness certificate. For
+$E=\operatorname{diag}(1/\sqrt2,1,1)$, put
+
+$$
+N=5440E\left(\frac9{20}I-P\right)E
+=\begin{pmatrix}
+816&-204-36r&-204+36r\\
+-204-36r&961-9r&-784\\
+-204+36r&-784&961+9r
+\end{pmatrix}.
+\tag{9.8}
+$$
+
+Its leading principal minors are
+$816$, $720528-22032r>610368$ (using $r<5$), and $93376512$.
+They are positive, so Sylvester's criterion gives $N\succ0$.
+Also $\operatorname{tr}N=2738$. If its positive eigenvalues
+are ordered increasingly, their product and sum give
+
+$$
+N\succeq\frac{\det N}{(\operatorname{tr}N)^2}I,\qquad
+\frac9{20}I-P
+\succeq\frac{93376512}{5440\cdot2738^2}I
+=c_{\rm pop}I.
+\tag{9.9}
+$$
+
+For the second inequality, conjugate by $E^{-1}$ and use
+$E^{-2}\succeq I$. Thus $\mathscr S(T)\le9/20-c_{\rm pop}$,
+and (9.3) proves (9.2). All arguments include zero populations and
+zero spectral eigenvalues, which are simply omitted rather than
+divided by. No symmetry, unitality, self-adjointness or purity of
+the original complex channel was used. $\square$
+

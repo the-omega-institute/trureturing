@@ -1,0 +1,34 @@
+**Definition 5.3 (Four deterministic equality rules).** Put
+
+$$
+q_H=\eta c,\qquad Q=\eta(1+c).
+\tag{5.4}
+$$
+
+Each rule below ignores the auxiliary variable, makes two actual
+calls on every path, and returns only on its explicitly accepted
+leaves. On every other leaf it continues internally forever
+without another call. Delays may be chosen zero.
+
+The rule $K_0$ first reads $2(j+4)$. After a first one it reads
+$2j$ and accepts just a second zero, outputting $h_0(\sigma)$.
+After a first zero it makes a paid repeat and rejects.
+
+The rule $K_h$ first reads $2j$. After a first zero it reads
+$2(j+2)$, accepts just a second one, and outputs $h_0(\sigma)$.
+After a first one it reads $2(j+1)$, accepts just a second one,
+and outputs $h_0(\sigma)$.
+
+The rule $K_c$ first reads $2(j+4)$. Its first-one branch is
+that of $K_0$. After a first zero it reads $2(j+8)$, accepts
+just a second one, and outputs $h_0(\sigma)$.
+
+The rule $K_1$ first reads $2(j+4)$. Its first-one branch is
+again that of $K_0$. After a first zero it reads $2(j+8)+1$,
+accepts just a second one, and outputs $h_1(\sigma)$.
+
+All unlisted outputs on rejected or impossible leaves can be
+assigned a fixed state, giving total measurable rules. A phase
+label in these descriptions specifies an output state via (1.2);
+it is not a preliminary phase observation.
+

@@ -1,0 +1,26 @@
+## 420. The weighted degree discount forces a=f=2
+
+The noncheap owners have D-a original P slots. The role table of Section 402
+charges each such slot strictly above pi/3, except that each five-slot
+owner is discounted by one slot. Thus their total P expense satisfies
+
+    P_noncheap>(pi/3)*(D-a-f)
+                >=(pi/3)*(17-a-f).
+
+Every noncheap V expense is nonnegative. Summing (419.1) and using (418.2),
+
+    11*pi >= 2*P_noncheap+sum_cheap W_T
+           >(2*pi/3)*(17-a-f)+pi*a
+           =(pi/3)*(34+a-2*f).
+
+Hence a<2*f-1. Since a,f are integers,
+
+    a<=2*f-2.
+
+Together with a>=2 and f<=2, this forces
+
+    a=f=k=2.                                    (420.1)
+
+No upper bound on repeated role multiplicities was assumed in making
+this deduction.
+

@@ -1,0 +1,6 @@
+**约定 14.2（主要文献与所用数学）。** 经典基础为 `literature-attested`：Erik Darpö, *Vector product algebras*, [arXiv:0810.5464v1](https://arxiv.org/pdf/0810.5464v1)，Lemma2及证明，*Bull. London Math. Soc.* 41(5), 898–902，[DOI](https://doi.org/10.1112/blms/bdp066)，其交替积、非退化对称型、循环配对与范数条件在本卷取正定实情形。John C. Baez, *The Octonions*, *Bull. Amer. Math. Soc.* 39, 145–205，[DOI](https://doi.org/10.1090/S0273-0979-01-00934-X)，作者原文 [预备定义与交替性](https://math.ucr.edu/home/baez/octonions/node2.html) 和 [叉积／$G_2$](https://math.ucr.edu/home/baez/octonions/node14.html) 支持实八元数及二生成切面；不支持完整 $SO(7)$ 控制。所需重复向量公式已在引理2.2直接证明。
+
+Soledad Villar 等，*Scalars are universal: Equivariant machine learning, structured like classical physics*, [arXiv:2106.06610v2](https://arxiv.org/pdf/2106.06610v2)，Proposition5及AppendixB，为经典多项式等变 Gram 系数表示的背景；本卷只需两输入三维情形，并直接证明其特定树递归和唯一性，不据一般等变形式推定实际像。Mihály Petreczky、Laurent Bako、Jan H. van Schuppen，*Realization theory of discrete-time linear switched systems*, [arXiv:1103.1343v2](https://arxiv.org/pdf/1103.1343v2)，Remark6说明响应表可能需要不同切换实验；其线性实现定理未用作本卷前提，也不供应单历史中的反事实重播。
+
+本卷全树符号恢复、实际尾像、校准联合边界和已知节点取得是上述准确源合同下的仓内综合推导（`repo-derived`）。普通证明与实际反例承担结论，不作全球原创性或穷尽检索声明。J. C. Turner, *On Vector Sequence Recurrence Equations in Fibonacci Vector Geometry*, [DOI](https://doi.org/10.1007/978-94-011-4271-7_32) 的完整原文假设尚未取得；它只是未核查线索，不充当前提或新颖性证据。
+

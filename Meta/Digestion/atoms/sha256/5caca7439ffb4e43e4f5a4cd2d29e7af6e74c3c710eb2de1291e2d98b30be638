@@ -1,0 +1,92 @@
+**Theorem 8.1 (integer witness with $c_n\le n^n$).** Fix
+$n\ge6$, $3\le k\le n-2$ and $P\in\mathcal T_{n,k}$.
+If this same Boolean table is weighted-feasible at any original
+position set, then it is weighted-feasible at another original position
+set $A'$ with
+
+$$
+5\le c'_1<\cdots<c'_n\le n^n,
+\qquad 1\le s'_1<\cdots<s'_n\le n^n-4.
+\tag{TC.18}
+$$
+
+Every installed state, fixed label, successor, actual input trajectory
+and query count is preserved. This is an existence statement across
+admissible cost instances, rather than a modification of a specified
+original instance.
+
+Proof. Form the real polyhedron
+
+$$
+\mathcal P=\left\{c\in\mathbb R^n:
+\begin{array}{l}
+e(x)\cdot c\le0\quad\text{for every }x\in\{0,1\}^n,\\
+-c_1\le-5,\\
+c_i-c_{i+1}\le-1\quad(1\le i<n)
+\end{array}\right\}.
+$$
+
+The hypothesis makes it nonempty. Its constraints imply $c_i\ge i+4$.
+For any feasible point $c^0$, the sublevel
+$\{c\in\mathcal P:\sum_i c_i\le\sum_i c_i^0\}$ is
+closed and bounded, since each coordinate has a fixed lower bound and
+the coordinate sum has an upper bound. It is compact, so the sum
+has a minimum. Its minimizing face is nonempty and compact. Successive
+minimization of coordinates on this face produces a unique point
+$c^*$. If $c^*$ were a nontrivial midpoint of two feasible points,
+their sums would both be minimal, then their first coordinates would
+both be minimal on that face, and so on through all coordinates.
+They would coincide with $c^*$. Thus $c^*$ is an extreme point
+of $\mathcal P$.
+
+The active constraint normals at $c^*$ span $\mathbb R^n$.
+Otherwise a nonzero vector orthogonal to all of them would permit
+sufficiently small perturbations in both signs: active equalities
+would persist and all finitely many strict inequalities would remain
+strict. This would express $c^*$ as a nontrivial midpoint.
+Choose $n$ independent active rows. Write their integer system as
+$Hc^*=b_H$, so $\det H\ne0$. Budget rows have right-hand
+side zero, the floor row has right-hand side $-5$, and gap rows
+have right-hand side $-1$.
+
+We bound the determinant of each matrix $H_i$ obtained by replacing
+column $i$ of $H$ by $b_H$. A budget row has normal $e=v-\mathbf1$,
+where $v\ge0$ is integral and $t=\sum_jv_j\le n$. Hence
+
+$$
+\|e\|_2^2=\sum_jv_j^2-2t+n
+ \le t^2-2t+n\le n(n-1).
+$$
+
+The last bound follows by maximizing the convex quadratic on
+$[0,n]$ at its endpoints: their values are $n$ and $n(n-1)$.
+Replacing one entry by its zero right-hand side cannot increase this
+norm. A gap row has norm at most $\sqrt3$ after replacement:
+its original two nonzero entries have magnitude one and the new
+right-hand-side entry has magnitude one. The floor row has norm
+at most $\sqrt{26}$ after replacement, since its original entry
+has magnitude one and its right-hand side has magnitude five.
+For $n\ge6$ every row of every $H_i$ consequently has norm
+at most $n$.
+
+Hadamard's inequality now gives $|\det H_i|\le n^n$. Indeed,
+successive orthogonalization of independent rows preserves the
+absolute determinant and makes it the product of their orthogonal
+lengths, each at most the original row norm; dependent rows have
+determinant zero. Set $D=|\det H|\in\mathbb Z_{\ge1}$ and
+$c'=Dc^*$. Cramer's rule gives
+
+$$
+c'_i=\operatorname{sgn}(\det H)\det H_i\in\mathbb Z,
+\qquad 0<c'_i\le n^n.
+$$
+
+Moreover $c'_1\ge5D\ge5$ and
+$c'_{i+1}-c'_i\ge D\ge1$. All budget inequalities are
+homogeneous, so they remain true under this scaling. The original
+positions $s'_i=c'_i-4$ therefore have exactly the properties in
+(TC.18), and every actual input of $P$ meets its new weighted cap.
+Neither graph surgery nor an assumption on full-run realizability was
+used. All installed unreachable states are still installed.
+$\square$
+

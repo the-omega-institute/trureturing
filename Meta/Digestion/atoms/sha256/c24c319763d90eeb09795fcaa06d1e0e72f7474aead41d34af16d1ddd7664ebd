@@ -1,0 +1,11 @@
+**Definition 1.4 (constant emission on the designated held-record fibre).** Use the original seed-1, marker-100 held-record fibre reached by
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{1.5}
+$$
+
+Let $\mathcal Z_\beta^*(M)$ be the union of suspended configurations having positive probability after some positive finite actual history on this fibre, as in [PAID, Section 14]. Say that $M$ has constant suspended emission on this fibre if there is one $s_0\in[0,1]$ such that every $y\in\mathcal Z_\beta^*(M)$ has next synthetic alpha probability $s_0$.
+
+This condition permits arbitrary finite private kernels, arbitrary p emissions, transient modes, zero and unit transition entries, and arbitrary behavior on other record fibres. In particular $s_0$ may be strictly interior, zero or one. It asserts no equality of complete suspended laws or successor kernels.
+

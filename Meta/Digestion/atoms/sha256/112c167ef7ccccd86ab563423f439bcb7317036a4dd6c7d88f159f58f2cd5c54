@@ -1,0 +1,54 @@
+**Theorem 6.2 (Uniform dyadic affinity).** There are fixed $h_-,h_+>0$ such that
+
+$$
+ h_-s^{2r}(J-1)\le u(s,J):=1-\sum_{j=1}^J\sqrt{a_0(j)a_1(j)}
+ \le h_+s^{2r}(J-1),
+$$
+
+for every $0<s<s_0$, $J\ge2$, and $s2^J\le\eta$. In particular $0<u(s,J)<1$.
+
+**Proof.** For normalized laws,
+
+$$
+2u=\sum_{j=1}^J\bigl(\sqrt{a_1(j)}-\sqrt{a_0(j)}\bigr)^2.
+$$
+
+For $j<J$ the summand is
+$a_0(j)v_j^2/(\sqrt{1+v_j}+1)^2$. Lemma 6.1 gives
+$v_j\le c$ and a positive lower bound of order $2^{-rj}$, while $a_0(j)$ has a lower
+bound of order $s^{2r}2^{2rj}$. The powers cancel, so each of the $J-1$ noncap levels
+contributes at least a fixed multiple of $s^{2r}$. For example one may take
+
+$$
+ h_-=
+ \frac{\lambda c^2b_-^2}
+ {8z_+(1+c)^2(\sqrt{1+c}+1)^2}.
+$$
+
+For the upper bound let
+
+$$
+Q=\sum_{j<J}a_0(j)v_j^2,\qquad
+m=\sum_{j<J}a_0(j)v_j.
+$$
+
+Normalization gives $a_1(J)-a_0(J)=-m$. The full chi-square divergence against $a_0$ is
+
+$$
+Q+\frac{m^2}{1-\sum_{j<J}a_0(j)}.
+$$
+
+Weighted Cauchy--Schwarz gives $m^2\le(\sum_{j<J}a_0(j))Q$, and the preceding mass
+bound makes this at most $2Q$. Since
+$(\sqrt p-\sqrt q)^2\le(p-q)^2/q$,
+$u\le Q$. The upper bounds in Lemma 6.1 then give
+
+$$
+Q\le \frac{c^2B_{2r-1}b_+^2}{z_-}\,s^{2r}(J-1),
+$$
+
+so this coefficient is a valid $h_+$. Strict positivity follows from the positive
+noncap contribution; $A=1-u$ is positive because both category laws have positive
+support and affinity is at most one. The cap normalization term is included in the
+chi-square calculation, so long gaps and normalizer drift are charged. $\square$
+

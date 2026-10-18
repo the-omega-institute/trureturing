@@ -1,0 +1,27 @@
+**Proposition 333.4 (Two actual requests are necessary on this region).**
+No common-seed original law with at most one actual request attains
+the error of Theorem 333.1.
+
+**Proof.** On the positive word and the nine sole-zero words, fix
+one seed of a one-query table. The positive-base indicator plus
+the nine corresponding correct-label indicators has sum at most
+two. If the query is in the nine coordinates, only one sole-zero
+word differs in its reply from the positive word; the two reply
+outputs contribute at most one indicator each. If the query is
+outside, all these words have the same reply and one output can
+contribute at most one indicator. Arbitrary earlier, unqueried and
+full-carrier outputs are included in this count. For unbounded
+addresses first cut off the seed-selected address, use actual
+finite-pattern witnesses from 331.2, and let the exceptional seed
+probability decrease to zero. Integrating the indicators and the cap
+rows gives $10e\ge h+8t-1$. But at $e=e_*(t)$,
+
+$$
+h+8t-1-10e_* =\frac{974t+496(h-t)-346}{496}
+                    \ge\frac{141}{496}>0.
+\tag{333.9}
+$$
+
+This proves the one-call obstruction with the original resources.
+$\square$
+

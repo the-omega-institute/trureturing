@@ -1,0 +1,18 @@
+## 459. 把最新有限 Mertens 乘积界接入同一预算
+
+Broadbent--Fiori--Kadiri--Ng--Wilk 的
+[逆素数乘积上界](../../../Library/Weil/broadbent2026mertens.md)给出以下前置：对
+$\ell\in\{1,2,3,4,5\}$ 及 $P\ge x_0\ge2$，存在其文中定义的正数
+$\mathcal D_\ell(x_0),\mathcal D'_\ell(x_0)$，使
+
+$$
+e^\gamma\log P\left(1-\frac{\mathcal D_\ell(x_0)}{(\log P)^\ell}\right)
+\le \mathcal M(P)
+\le
+e^\gamma\log P\left(1+\frac{\mathcal D'_\ell(x_0)}{(\log P)^\ell}\right).
+\tag{459.1}
+$$
+
+下界只在左侧因子为正时使用；上界无需这一附加条件。这里复用的是该文的
+有限乘积定理及其适用范围，不把文中的数值表当作本项目重新认证的计算。
+

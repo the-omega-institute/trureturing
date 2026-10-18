@@ -1,0 +1,32 @@
+### Q8：自然数域、完整 monomial 基与成熟数学应用
+
+对应第二部分 §§一–四（原行 1180–1643）、§七和定理八（1989–2101），以及候选 A–D。
+
+取 $n,r\in\mathbb N_0$，其中 $n$ 是位置数，不是合法状态数。$\Sigma_0=\{\varnothing\}$、$a_0=1$、$a_1=2$、$h_0=0$，且 $\dim V_0^{(r)}=1$。递推 $a_n=a_{n-1}+a_{n-2}$ 只用于 $n\ge2$。
+
+独立集计数为
+
+$$
+N(n,k)=\begin{cases}
+\binom{n-k+1}{k},&0\le k\le\lfloor(n+1)/2\rfloor,\\
+0,&\text{其余大小 }k.
+\end{cases}
+$$
+
+不在可用范围隐含负上指标的二项式。$i_j\mapsto i_j-(j-1)$ 给出不相邻位置与普通子集的双射。故
+
+$$
+\dim V_n^{(r)}=\sum_{k=0}^{\min(r,\lfloor(n+1)/2\rfloor)}\binom{n-k+1}{k}.
+$$
+
+$r\ge\lfloor(n+1)/2\rfloor$ 时单项式空间已完整。相应 $h_{n,r}$ 是全局线性核维数，在全支撑纤维达到；边界限制仍适用。
+
+按包含关系排序，评价矩阵 $x_A(I)=\mathbf1_{A\subseteq I}$ 为对角线全一的三角矩阵，故这些单项式成基。每个区间 $[A,I]$ 是 Boolean 区间，Möbius 系数为 $(-1)^{|I|-|A|}$，既给出原稿的函数展开，也给出概率反演
+
+$$
+p_I=\sum_{J\supseteq I}(-1)^{|J|-|I|}\kappa_J,\qquad
+\kappa_J=\sum_{I\supseteq J}p_I.
+$$
+
+路径独立集计数、向下封闭集合的包含关系/Möbius 反演、独立集 monomial 基及 Fibonacci/Zeckendorf 唯一性均为成熟数学。Rota 原文 §3 是反演的经典定位；本稿给出其应用，不是已证明的优先权或新增形式定理。
+

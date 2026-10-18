@@ -1,0 +1,44 @@
+### 87.1. Statement and original-channel consumer
+
+Let (A₀,B₀) be any section-82 original quarter-error pair, with B₀ of Kraus rank two. Use its allowed simultaneous fibrewise bit swaps and fixed environment isometries to put it in marker form. Write
+
+\[
+ N_f=\overline {B_f}ZB_f^T
+     =\sum_{a=1}^3 n_a\chi_a(f)\sigma_a,
+ \qquad u_a=n_a^2,\quad \sum_a u_a=1,\quad u_a\ge2/7.       \tag{1}
+\]
+
+Here Z=diag(1,−1), the σ_a are the standard Pauli matrices, n_a>0, and the four characters are
+
+\[
+ \chi_0=(1,1,1,1),\quad \chi_1=(1,1,-1,-1),\quad
+ \chi_2=(1,-1,1,-1),\quad\chi_3=(1,-1,-1,1).              \tag{2}
+\]
+
+Each u_a lies in [2/7,3/7]. The coefficient matrices at the base can be chosen as
+
+\[
+ C_f=A_fB_f^T/\sqrt2={1\over4}
+       \begin{bmatrix}\sqrt7 I_2\\N_f\end{bmatrix}.       \tag{3}
+\]
+
+Extra A-environment coordinates are zero. All record Grams are forward Grams. For arbitrary original channels, retain their correct-output contractions and set K=G⊙H. With the target T having diagonal blocks I₂ and off-diagonal blocks J₂/2, let
+
+\[
+ F(A,B)={1\over4}\Lambda_2(T-K).
+ \quad
+ \delta(A,B)\ge {\operatorname{Tr}(T-K)_+\over4}\ge F(A,B). \tag{4}
+\]
+
+The first inequality includes the entire lost trace. Indeed the normalized maximally entangled logical/reference input has correct joint reference/output compression Kᵀ/8 on the orthonormal support {|f,i〉_R⊗|ff〉_out}; pinching gives
+(‖K−T‖₁+8−Tr K)/8=Tr(T−K)₊/4. Thus no leakage calibration or physical channel transfer is being assumed.
+
+A flat new-environment derivative has correct records r_fi=L_i b_fi and no wrong-output records, by section 85. An environment gauge removes the common L₀. Its remaining records are
+
+\[
+ r_{f0}=0,\qquad r_{f1}=D b_{f1},\qquad D=L_1-L_0.
+ \quad E=\overline{D^*D}=r_0I_2+\sum_{a=1}^3r_a\sigma_a. \tag{5}
+\]
+
+The coefficients r_a are real. The conjugation in E fixes the convention relative to N_f in (1).
+

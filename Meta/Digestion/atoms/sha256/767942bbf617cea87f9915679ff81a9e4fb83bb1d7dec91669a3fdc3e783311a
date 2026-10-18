@@ -1,0 +1,71 @@
+**Theorem 5.3 (unrestricted product-pressure completeness).** At every
+fixed native depth $d\ge1$,
+
+$$
+\boxed{\displaystyle
+\sigma_d=\sup_{w>0}
+\left\{\log_2\sum_xw(x)-P_d(w)\right\}.}
+\tag{NPC.21}
+$$
+
+The supremum is unchanged when $w$ ranges over strictly positive
+rational vectors, or over strictly positive rational probability
+vectors. Every pressure in this formula retains all $n\ge1$ and all
+$B\in\mathcal B_n$.
+
+Proof. Write $\alpha=\alpha_d$,
+$P(\theta)=\max_p\{\alpha(p)+p\cdot\theta\}$ and
+$L(\theta)=\log_2\sum_x2^{\theta_x}$. Theorem 5.2 identifies
+$P(\theta)=P_d(2^\theta)$. The finite Gibbs variational identity is
+$L(\theta)=\max_p\{H(p)+p\cdot\theta\}$: subtracting the expression
+in braces from $L$ is the nonnegative relative entropy of $p$ to the
+probability proportional to $2^\theta$. These are standard finite
+entropy and convex-duality intermediates.
+
+For completeness, the precise concave duality needed is
+
+$$
+\alpha(p)=\inf_{\theta\in\mathbb R^S}
+\{P(\theta)-p\cdot\theta\}\qquad(p\in\Delta(S)).
+\tag{NPC.22}
+$$
+
+One inequality follows immediately from the definition of $P$.
+For the other, the hypograph
+$\{(q,t):q\in\Delta(S),\ t\le\alpha(q)\}$ is closed and convex,
+by Theorem 4.3. Strictly separate it from
+$(p,\alpha(p)+\epsilon)$ in the finite-dimensional affine space of
+the simplex times $\mathbb R$, using the standard separation theorem
+of [Rockafellar, §§11–12][R]. In an inequality with the hypograph on
+the lower side, the coefficient of $t$ is nonnegative because the
+hypograph is unbounded downward. It cannot be zero, since the
+hypograph also contains $(p,\alpha(p))$ with the same base coordinate
+as the separated point. Normalize that coefficient to one. For some
+$\theta$ the separation then says
+$P(\theta)-p\cdot\theta<\alpha(p)+\epsilon$.
+Let $\epsilon\downarrow0$, proving (NPC.22), including boundary $p$.
+
+It follows that
+
+$$
+\begin{aligned}
+\sigma_d
+&=\sup_p\sup_\theta
+  \{H(p)+p\cdot\theta-P(\theta)\}\\
+&=\sup_\theta\{L(\theta)-P(\theta)\}.
+\end{aligned}
+$$
+
+Only two suprema are exchanged; there is no minimax assumption.
+This proves (NPC.21). It uses no graph semiring, Shannon-cone
+achievability, restricted donor topology or bounded-width premise.
+
+If $\max_x|\log_2w(x)-\log_2v(x)|\le\delta$, every length-$n$
+word mass changes by a factor between $2^{-n\delta}$ and
+$2^{n\delta}$. Taking maxima and the all-length supremum gives
+$|P_d(w)-P_d(v)|\le\delta$. The log of the total weight has the
+same bound. Positive rational vectors are dense in this logarithmic
+metric, so their endpoint error is at most $2\delta$. Finally
+$P_d(cw)=\log_2c+P_d(w)$, and normalizing a rational positive vector
+preserves rationality. This proves both restrictions. $\square$
+

@@ -1,0 +1,16 @@
+**Theorem 10.1 (Independent simulated uses require fresh program batches).** Let $n\ge1$. Conditional on the same unknown fixed $X$, supply $n$ independent batches of $m$ actual copies, initially independent of the entire possibly correlated complex block data and reference. Apply (4.6) to each data factor, with fresh response environments. Put $\varepsilon_m=[c-D_m]_+$. Then the induced channel on the whole block is $N_X^{\otimes n}$ and
+
+$$
+\sup_{X\in U_4}\|N_X^{\otimes n}-\Phi_{t,\eta,X}^{\otimes n}\|_\diamond
+ \le\min\{2,n\varepsilon_m\}.
+\tag{10.1}
+$$
+
+This bound also holds after any common whole-block CPTP encoder and decoder. In an exact one-use regime the fresh-batch block is exactly the desired tensor channel.
+
+Proof. The full conditional program is $\rho_{t,\eta}(X)^{\otimes nm}$. The tensor product of the whole-algebra processors, applied to these regrouped independent batches, equals $N_X^{\otimes n}$ on every simple input tensor, hence on the entire block algebra by linearity. Tensoring an identity on a reference preserves that equality. No independence of the data factors is used.
+
+Telescope the tensor-channel difference into $n$ terms, each having one factor $N_X-\Phi_{t,\eta,X}$ and channel factors before and after it. Ancillary stability and CPTP contraction bound each term by $\varepsilon_m$ in diamond norm. Summing gives $n\varepsilon_m$. Two channels have unhalved diamond distance at most two, proving (10.1). Pre- and postcomposition with common CPTP block maps cannot enlarge the bound. In particular, an ideal code with reference-state error $\epsilon_n$ has implemented error at most $\epsilon_n+\min(2,n\varepsilon_m)$. If $\varepsilon_m=0$, equality with the ideal tensor channel is exact. QED.
+
+For the separated route this consumes $nm$ actual copies and $nm$ five-dimensional program-half transfers, together with $n$ forward qubits (aggregate port dimension $2^n$) and at most $25^n$ flag strings ($5n$ classical bits suffice). The product of the fixed isometric decoders, followed by any supplied common block decoder, is CPTP on the full port algebra, including correlated ports. The local block encoder and decoder are additional supplied operations. At the coherent corner the credited error is $\varepsilon_m=(3/5)^m$, so $n(3/5)^m\le\delta$ suffices for added block error at most $\delta$; for $0<\delta<n$, one may take $m\ge\lceil\log(n/\delta)/\log(5/3)\rceil$. These are paid simulation bounds, not a capacity per source copy.
+

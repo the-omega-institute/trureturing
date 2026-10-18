@@ -1,0 +1,11 @@
+**Theorem 6.1 (marginal root summaries lose the shared realization).** Use $P=\{L,R\}$ and the single-class row $C=\langle X,X\rangle$. A common controller reads $LL$ and then $RR$. The attained replies $\beta,\alpha$ give exactly
+
+$$
+D(R,h)=\{\langle T_2,T_2\rangle\},\qquad \Sigma(R,h)=\{2\}.
+\tag{LRD.18}
+$$
+
+Nevertheless each literal separately permits class summary $Q(X)=(0,0)$. Intersecting these marginal summary sets falsely preserves that summary for the joint history.
+
+**Proof.** The actual source $\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$ produces this same single-class row and the prescribed replies. Both old occurrences share one $X$. Reply $LL=\beta$ makes its left child exactly $\beta$; reply $RR=\alpha$ makes its right child exactly $\alpha$. Therefore $X=T_2$, and (LRD.1) gives root depth two. For the first literal alone take $X=\langle\beta,\langle\alpha,\alpha\rangle\rangle$, of non-atomic depth zero. For the second alone take $X=\langle\alpha,\alpha\rangle$, again of non-atomic depth zero. Each gives an actual finite same-row source by using that same value at both holes. These are separate witnesses to the marginals and not a single witness to both. Shared constructor refinement excludes them jointly, whereas independent summary filtering does not. $\square$
+

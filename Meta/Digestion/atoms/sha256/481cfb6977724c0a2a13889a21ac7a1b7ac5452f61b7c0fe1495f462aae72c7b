@@ -1,0 +1,36 @@
+**引理 35.1（解释映射与五符号闭包）。** 记
+
+$$
+\begin{aligned}
+A&=\|a\|^2,& B&=\|b\|^2,& C&=a\cdot b,& \Delta&=AB-C^2,\\
+K&=b\times a,& U&=K\times a=Ca-Ab,& N&=K\times b=Ba-Cb.
+\end{aligned}
+$$
+
+解释映射 $F(a,b)=(b,K)$ 满足
+
+$$
+E_p(\rho^jt)=E_{F^j(p)}(t),\qquad
+(A,B,C)\longmapsto(B,\Delta,0).
+$$
+
+每棵树有一个普适描述子，形如零或
+
+$$
+\varepsilon A^hB^kC^\ell\Delta^dZ,\qquad
+h,k,\ell,d\in\mathbb N,\quad \varepsilon\in\{1,-1\},
+\quad Z\in\{a,b,K,U,N\}.
+$$
+
+**证明。** 两个叶上的解释等式就是两条原替换；有序叉积节点保等式，故结构归纳证明一步，再迭代证明任意 $j$。欧氏叉积恒等式给出 $b\perp K$ 及 $\|K\|^2=\Delta$。完整乘法表为
+
+$$
+\begin{aligned}
+a\times b&=-K,&a\times K&=-U,&a\times U&=AK,&a\times N&=CK,\\
+b\times K&=-N,&b\times U&=CK,&b\times N&=BK,\\
+K\times U&=-\Delta a,&K\times N&=-\Delta b,&U\times N&=-\Delta K.
+\end{aligned}
+$$
+
+对角项为零，逆序项取负。各式由双线性及 $u\times(v\times u)=\|u\|^2v-(u\cdot v)u$ 得到；例如 $K\times(K\times a)=-\Delta a$，展开 $(Ca-Ab)\times(Ba-Cb)$ 得 $-\Delta K$。节点处乘子单项式相乘，再用此表归约，即得描述子的结构归纳。证明不作除法，因而包括 $C=0$ 和 $\Delta=0$；描述子不要求唯一。若 $\Delta=0$，则 $F(p)=(b,0)$、$F^2(p)=(0,0)$，所以即使早期向量非零，也有 $x_j=0$ 对所有 $j\ge2$。$F$ 是解释恒等式，不是可执行的制备操作。证毕。
+

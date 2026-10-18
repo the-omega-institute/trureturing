@@ -1,0 +1,18 @@
+### 33.6. 零样本、降次、重根、严格源与全部除法
+
+**affine sample zeros.**
+
+If alpha=0,beta!=0, every positive F sample used by the source inverses is nonzero. If beta=0, all F samples are the same nonzero constant. If F(1)=0, J uses rows 3,5 and the switch chooses J. If F(3)=0, J uses rows 1,5 and the M inverse uses the actual fifth-M row. If F(5)=0, both F(1),F(3) are active; J and M use those two earlier rows and keep the fifth equation zero. If F(2)=0 or F(4)=0, the zero even equation stays inside E; the odd sample inverses remain legitimate. Two different F sample zeros are impossible for nonzero affine F. Zeros at 6 or 7 repeat a required physical root and cause no normalization or source-row exception. Unsampled roots are allowed.
+
+**repeated and lower degree cases.**
+
+A repeated even root is one q candidate. A repeated source root is one strict source. F constant gives physical degree two; a genuine affine F gives degree three even when its root repeats 6 or 7. No square-free assumption is used. Physical degree zero or one is incompatible with the two-root plane, not excluded from the broader original problem. Neither a leading coefficient nor a discriminant is divided out.
+
+**source completeness.**
+
+All source reconstruction paths impose the same strict equations 0<r<1,b,c>0,bc=r(1-r). The determinant is zero and trace one excludes rank zero. There is no division by 1-2\*r or a choice of a preferred diagonal root. The case r=1/2, symmetric and asymmetric sources, both diagonal sides and arbitrarily large positive off-diagonals remain covered. The finite intervals in collision classifications are consequences of those particular pair equations. Illegal boundaries r=0,1,b=0,c=0 are not included as limiting actual worlds.
+
+**division inventory.**
+
+Common inversion uses only fixed 42,H(1),...,H(5),8,2. The alpha=0 branch divides by L only after L=beta!=0. J divides only the selected active F samples and an odd-row spacing 1 or 2. M divides F(1),F(3) in the ordinary case; F(1),F(5) after proving activity in the F(3)=0 case; and F(3) in the F(1)=0 case. Its source equation is monic and kept whole. The pair proofs divide alpha only after the two-root lemma or F(1)=0 makes it nonzero, use nonzero evaluation factors when s!=k, and positive 1+3\*s,1+3\*k,b,kappa only within their proved domains. Whole polynomial cancellation uses a nonzero polynomial in an integral domain. No inverse divides H(6),H(7),g(6),g(7),a possibly zero alpha,beta,F sample,Psi,drift difference,source determinant or discriminant. All normalized responses are formed only after actual y6.
+

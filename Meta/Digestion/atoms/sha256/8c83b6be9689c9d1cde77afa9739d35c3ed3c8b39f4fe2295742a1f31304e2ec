@@ -1,0 +1,15 @@
+**Proposition 453.1.** The finite face pairing below gives a connected orientable compact 3-manifold
+after ideal-vertex truncation, with one connected genus-5 boundary component,
+ten original tetrahedra, and exactly six actual global edges. Their original
+degrees are (20,8,8,8,8,8). Every owner has a vertex-induced paired frame with
+four distinct labels. Every simultaneous selection of such paired frames has
+all six actual labels in its union of transverse labels.
+
+Thus this is a strict separation from the at-most-five-transverse-reservoir
+condition, even when the paired frame is allowed to vary on each owner. It is
+not a separation claim from every older geometric criterion, a minimality
+claim, an unrestricted CFMP result, or a kernel-certified theorem.
+
+The proof is the actual face and interval calculation in Sections 454-457.
+No topological property is inferred from an unspecified general family.
+

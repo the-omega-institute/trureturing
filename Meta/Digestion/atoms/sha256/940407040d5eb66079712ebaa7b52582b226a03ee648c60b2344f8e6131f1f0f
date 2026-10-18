@@ -1,0 +1,19 @@
+**定义 1.2（状态函数与概率载体）。** 令
+
+$$
+x(s_I)=\mathbf1_{1\in I},\qquad z(s_I)=\mathbf1_{2\in I},\qquad
+y(s_I)=\mathbf1_{3\in I}.
+$$
+
+函数恒等式 $xz=zy=0$ 表示相邻排斥；$xy$ 不是零函数，它恰是 $s_{13}$ 的指示函数。状态载体、概率单纯形与质量零空间分别为
+
+$$
+\begin{aligned}
+H&=\mathbb R^\Sigma\cong\mathbb R^5,\\
+\mathcal D&=\{p\in H:p_I\ge0,\ \sum_Ip_I=1\},\\
+T&=\{v\in H:\sum_Iv_I=0\}.
+\end{aligned}
+$$
+
+$T$ 是 $\mathcal D$ 的仿射包络的平移空间，维数为四。记 $e_I$ 为 $H$ 的坐标基。为区别载体 $H$ 与向量读出，后者写为 $\mathsf H:\Sigma\to V$，其中 $V$ 是固定有限维实向量空间。
+

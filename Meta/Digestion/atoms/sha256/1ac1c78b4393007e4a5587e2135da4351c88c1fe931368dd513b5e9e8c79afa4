@@ -1,0 +1,25 @@
+**Definition 1.4 (separate resources).** For actual submitted words
+$p_1,\ldots,p_T$, count
+
+$$
+T,\qquad A=\sum_{i=1}^T|p_i|,\qquad
+Q=\max(\{0\}\cup\{|p_i|:1\le i\le T\})
+\tag{AAR.3}
+$$
+
+as query count, total literal letters and maximum operand length.
+Separately count writable auxiliary state, the complete operand buffer,
+candidate/output payload, immutable code and installed literals, local
+bit/cell work, and the entire inter-call retained interface. An installed
+word still costs its bytes and every submission of its full literal.
+A binary integer costs its bit length, not one unbounded cell. Source
+storage and writer/port implementation costs are additional coordinates.
+The port does not conceal a free observer buffer.
+
+For row costs use [CWS]'s explicit finite-sequence implementation: each
+cell in its sixteen-symbol alphabet costs four bits; a row of $c$
+exterior cells and $r$ holes has $s=c+\binom r2+2$ cells, including
+framing and the complete upper-triangular partition. An accepted private
+candidate becomes output by ownership transfer. No second payload copy
+is required.
+

@@ -1,0 +1,32 @@
+**world 2 trace prefix.**
+
+(1,1,5/4,7/4,3/2,5/2,3/2)
+
+**normalized prefix equations.**
+
+clock 0: -5+5=0
+
+clock 1: -5+j\*0=-5 for each source
+
+clock 2: -5+(5/4)\*(-3)=-35/4
+
+clock 3: -5+(7/4)\*(-4)=-12
+
+clock 4: -5+(3/2)\*(-3)=-19/2
+
+clock 5: -5+(j+2r)\*0=-5 for each source
+
+clock 6: -5+(3/2)\*5=5/2
+
+**final J.**
+
+Its two actual traces are 9/4 and 5/2; with clock-7 gain 12, the responses are -5+27=22 and -5+30=25.
+
+**final M.**
+
+Both actual traces are 1+j+r+2b=13/4; with the same clock-7 gain, the responses are -5+39=34 and 34.
+
+**transport.**
+
+Every normalized response z in these equations becomes a0+kappa z. Thus each fixed complete world satisfies every equation on either possible eight-read word, using only one actual last read. Necessity excluded every other competitor and these checks establish sufficiency, proving equality with the entire seven-read fiber.
+

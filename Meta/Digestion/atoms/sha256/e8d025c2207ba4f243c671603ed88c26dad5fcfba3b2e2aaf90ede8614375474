@@ -1,0 +1,72 @@
+**Corollary 28.3 (The pure-reset restriction is substantive for SNS).**
+No finite-dimensional, time-homogeneous quantum
+instrument with one Kraus operator A for zero and
+one B for one can realize the SNS gap law if its
+one-emission resets the reachable conditional
+memory to one fixed unit vector $\psi$.
+
+Proof. Pure reset gives
+$BA^k\psi=z_k\psi$ for every k. Choose a fixed
+linear functional l with $l(\psi)=1$; then
+$z_k=l(BA^k\psi)$. Cayley–Hamilton gives a finite
+constant-coefficient recurrence for this scalar
+sequence. The actual next-one probability after
+k zeros is $\|BA^k\psi\|^2=|z_k|^2$.
+SNS would require $|z_k|^2=k/2^{k+1}$, violating
+Lemma 28.2 with $p(n)=n/2$ and $q=1/2$.
+$\square$
+
+Proposition 28.1 supplies a finite mixed-memory
+implementation outside that restriction. The even
+degree law (27.3) supplies a finite pure-reset
+implementation, so the restriction is not vacuous.
+Even degree is only a necessary condition in
+Lemma 28.2, not a sufficiency theorem for arbitrary
+polynomials or quantum completeness constraints.
+
+There is a separate, existing single-cut mechanism:
+$|\sqrt{x}+i\sqrt{y}|^2=x+y$, giving an additive
+probability matrix a complex amplitude matrix of
+rank at most two. See Glasser et al.,
+arXiv:1907.03741v2, supplementary Lemma 15 and
+its proof. The SNS boundary matrix (24.5) has
+this additive form after positive row and column
+scaling, with extended coordinates
+$x_i=i,x_*=\ell+1$ and $y_j=j,y_*=r+1$.
+In fact, put $u_i=2^{-i/2}$,
+$u_*=\sqrt2\,2^{-\ell/2}$ and similarly
+$v_j=2^{-j/2}$, $v_*=\sqrt2\,2^{-r/2}$.
+Then
+
+$$
+(C_{\ell,r})_{a,b}
+=\frac{u_av_b}{2\sqrt2}\sqrt{x_a+y_b},\qquad
+Q_{a,b}=\frac{u_av_b}{2\sqrt2}
+ (\sqrt{x_a}+i\sqrt{y_b}).
+\tag{28.8}
+$$
+
+Q has the same entry magnitudes and rank at most
+two by its two outer products. The submatrix at
+indices $0,*$ has nonzero determinant, so its
+rank is exactly two. Lifting Q by the disjoint
+word-class isometries of Theorem 24.2 preserves
+every complete-word coefficient magnitude: each
+word belongs to exactly one group on either side.
+This supplies phases of rank two at any separately
+selected cut, including its all-zero boundaries,
+for the same complete occupation law.
+This is not one common choice of
+phases for all cuts. Corollary 28.3 excludes only
+the stated finite homogeneous scalar reset model;
+it does not settle arbitrary site-dependent,
+non-reset or length-dependent global phase MPS.
+
+The standard recurrence and finite-geometric-sum
+ingredients, the classical Kraus embedding and the
+known additive complex square root are distinguished
+from the law-specific comparisons here. No physical
+realization, original-parent energy, all-dimensional
+harmonic-edge optimum, complete general Lean
+formalization or literature-priority claim follows.
+

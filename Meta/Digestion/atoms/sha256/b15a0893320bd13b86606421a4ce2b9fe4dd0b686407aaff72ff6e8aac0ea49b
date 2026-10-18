@@ -1,0 +1,67 @@
+**lemma 7.1 (One-phase output bound).** If all installed halt labels
+belong to one of the two target phases, every deterministic start
+with $q(r)=1$ has correct mass at most
+
+$$
+\frac U2<T,\qquad
+U=a^2+2a\eta=a+\eta(a-b).
+\tag{7.1}
+$$
+
+Proof. Let $\gamma$ be that phase. Correctness is zero in the other
+phase. Because its prior is positive, $q(r)=1$ still implies return
+within two calls almost surely conditional on $\gamma$. To bound
+this execution we allow every terminal leaf its best spin label,
+and allow the two second addresses to differ. This enlarges a
+numerical upper bound; it does not construct a new state-preserving
+or phase-observing controller.
+
+An initial halt gives conditional spin correctness at most $a$.
+A first separator gives no information and leaves at most one
+active-edge observation, whose total spin correctness is at most
+$a$ by Lemma 4.1. Now suppose the first call reads active edge $e$.
+
+If its target lies in $e$, the first-zero subtree has conditional
+correct mass at most $a^2$. A separator or repeat leaves this mass
+unchanged. A disjoint second edge partitions the independent
+target masses $a^2,b^2$, so the sum is still $a^2$. An adjacent
+second edge gives maxima $a^3$ on $00$ and $a^2b$ on $01$, summing
+to $a^2$. On first one a separator, repeat or disjoint second edge
+leaves total maximum $\eta$, whereas an adjacent edge gives two
+mixed-leaf maxima $a\eta$, totaling $2a\eta$.
+
+If the target is outside $e$, the first-zero subtree gives $ac$
+for a separator or repeat. A disjoint second edge also gives $ac$:
+if it contains the target, multiply the first-zero probability $c$
+by the one-XOR total $a$; otherwise the target is independent of
+both constraints. For an adjacent second edge, a target at its
+new vertex lies in the triple; its leaf maxima are $a^3$ and
+$a^2b$, totaling $a^2$. If the target is exterior to the triple,
+its independent factor gives total $ac$. Hence every first-zero
+case is at most $a^2$, using $c<a$.
+
+For this exterior first target, first reply one gives $2a\eta$
+for a separator or repeat. A disjoint second edge gives the same
+total: either its one-XOR spin total is $a$ independently of the
+first-one event of probability $2\eta$, or the target remains
+independent of both. An adjacent second edge gives $a\eta$ on
+each mixed leaf, whether or not the target lies in the triple.
+Thus every first-one case is at most $2a\eta$.
+
+Early halts obey the respective first-zero and first-one bounds
+in all these cases. We have exhausted both first parities, all
+second-address incidences, and every target position. The total
+conditional spin correctness is at most $U=a^2+2a\eta$.
+The initial-halt and first-separator cases also satisfy this bound
+because $U-a=\eta(a-b)>0$. Multiplication by the original phase
+prior $1/2$ gives (7.1), and
+
+$$
+T-\frac U2=\eta\left(\frac12+ac\right)>0.
+\tag{7.2}
+$$
+
+The bound includes any fixed subset of the two phase-$\gamma$
+labels. Null sections do not affect these conditional masses.
+$\square$
+

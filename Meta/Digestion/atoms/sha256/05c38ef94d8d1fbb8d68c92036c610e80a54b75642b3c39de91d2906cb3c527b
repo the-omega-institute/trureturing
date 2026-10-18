@@ -1,0 +1,43 @@
+**Definition 6.1 (context replacement witnesses).** Put
+
+$$
+B_0=C[\beta,\ldots,\beta],\qquad
+B_i=C[\beta,\ldots,\underset{i}{E},\ldots,\beta]
+\quad(1\le i\le n).
+\tag{PCA.16}
+$$
+
+The context's root is an internal node because $n\ge2$. All these
+trees are branch images by (PCA.11); they are pairwise different.
+At slot $w_i$, $B_0$ has beta and $B_i$ has branch, while the other
+slots of $B_i$ have beta. Thus $f_C(B_0)=0$ and $f_C(B_i)=1$.
+
+Choose four further branch images $D_1,D_2,D_4,D_c$, pairwise distinct
+and different from every $B_i$, including $B_0$. Such choices exist:
+NBP Proposition 15.2 supplies infinitely many branch images, so a finite
+forbidden set can be avoided. Define current valuations $x^{(i)}$ by
+
+$$
+x_a^{(i)}=B_i,\quad x_{b_3}^{(i)}=\beta,\quad
+x_{b_j}^{(i)}=D_j\ (j=1,2,4),\quad x_c^{(i)}=D_c.
+\tag{PCA.17}
+$$
+
+Every valuation is injective, all its values are images, and hence
+NBP Proposition 9.3 supplies its actual finite origin $u_i$. Every
+$u_i$ belongs to the entire $Z_{b_3}$ and has full target $R_0$.
+Only the prescribed code differs: $\sigma_C(u_0)=0$ and
+$\sigma_C(u_i)=1$ for $i>0$. Both occurrences of $a$ contain exactly
+the same $B_i$ in each source.
+
+For each slot define its two-occurrence cone
+
+$$
+\mathcal C_i=
+ \{p w_i v:p\in\{LLL,LRL\},\ v\in\mathcal W\}.
+\tag{PCA.18}
+$$
+
+These $n$ sets are pairwise disjoint. Any address in $\mathcal C_i$
+has length at least $3+|w_i|$.
+

@@ -1,0 +1,77 @@
+**Definition 13.3 (unchanged source service and normalized return).** In
+the new dispatcher, a source frame is first actually acquired by Definition
+13.2. Clone the entire original per-frame fragment from its reserve row
+at old Ready through its final acknowledged return, with fresh finite PC
+names. Replace each original public frame IN row by RD(38,that same input
+latch); MR(38), on the same raw frame bits at their actual start. Give
+that RD equal successors, preserving the original IN's lack of a test.
+Redirect the original fragment's final return edge to the new common
+return; do not enter another old-frame reserve. This replacement is a
+finite two-row expansion; no source-dependent reply is submitted by it.
+The old ingress retention, parsing and context conversion really execute
+again on their original ports. Their cells and receipts are additional
+actual storage/work, distinct from the new port-38 retention. It is not
+the row interpreter Step. All producer and private-source rows execute
+on the actual original source ports.
+
+Before that path, position the actual frame reader at its start using
+LastBank(38). After it, finish all original mandatory source commitment,
+counter/row construction, copy and acknowledgement. Original native
+control is cloned at finite renamed states. At each source row writer,
+replace only its old fixed version-field constructor with the following
+fixed finite word: the original $v_0$ tag, the literal bit tag 10100101, and
+$U(37)U(0)$ naming the code-capture field's actual port and first descriptor.
+The capture is the first block descriptor on the formerly unused 36;
+its creation scan actually constructs ordinal zero. The fixed pointer is
+therefore proved to name that captured installed-description block, not
+an arbitrary asserted transcript. Its descriptor contains the acquired
+actual base/length and authentic creation chain. The version word itself
+is emitted by literal Append rows; its finite framed length is emitted
+by the same fixed finite construction. This embeds neither $D_1$ nor
+its bit length in $D_1$. The installation predecessor is the version's
+manifest binding; there is only one activation in this version.
+
+Keep the original row prefix and its old version fields immutable. New
+rows' fences, descriptors and source-counter fields are their actual
+new-run ones. The original native row-length arithmetic consumes this
+new field's actual framed length in place of the old field's length;
+all other fields and that arithmetic's loops are unchanged. When a total
+row length is constructed, use those actual lengths before allocation.
+No old fixed version-width bound is reused. This adapter uses literal
+appends and the existing native row writer, not a word-program call
+inside an original fragment. It has no bank or service-scratch effect,
+no import of partly built private rows, and no new return-address
+convention. Public frame material supplied
+to it is bit for bit its original canonical frame; TagRead is not replaced
+by a semantic answer and reject is not bypassed. All original auxiliary
+heads on ports 0–31 are as at their previous source-ready return; the word
+compiler touches only 32–39; service receiver 40 is separate from those
+source-frame arenas. Mailbox setup always starts with its actual Base and
+Seek, so extra earlier mailbox blocks do not supply a free or wrong head.
+Its public scratch latches 4–6 may have new
+values. The source reader overwrites its incoming frame and length-test
+latches before use, and the original gate fetch overwrites operand latches
+before BF. No prior scratch-latch value is a parameter of a source request.
+These are the PR57.D4 and AIF reader entry contracts. Finite dispatcher
+phase and port tokens are set to that canonical source-ready entry by
+explicit CTLs/TOKs, not reconstructed from the old historical state.
+
+Clone each original source continuation for the two possible bank
+parities, since entry and common return must remember which bank was
+active before that source fragment. There is no bank assignment within
+this clone. This finite product has no native return-address stack or
+hidden register. New service bytes are delivered on 40, preserving the
+source row stream's own framing.
+Malformed complete source payloads take a separate InvalidSourceFrame
+raw-domain exit without an executed source call; canonical source payloads
+never take it. This specifies a finite fallback where the original
+supplier left post-noncanonical behavior unspecified.
+
+The common return appends the actual current frame to completed-frames
+by AppendItem, updates its descriptor-backed bank, performs the specified
+outcome publication/acknowledgement, and restores Ready by a CTL. New
+service handlers use no further IN. The source path's original output is
+acknowledged before this return; a service outcome uses Definition 13.4.
+The next frame is not admitted during either path. There is no optional
+idle or return scheduling choice to be inferred later from the clock.
+

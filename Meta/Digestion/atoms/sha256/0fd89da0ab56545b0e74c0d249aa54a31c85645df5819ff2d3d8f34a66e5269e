@@ -1,0 +1,16 @@
+**Corollary 9.3 (Core determinant).** Under Definition 9.1,
+
+$$
+\det K_z=\prod_{I\in\mathcal I_m}c_I.
+\tag{9.6}
+$$
+
+It is nonzero exactly when every $z_h\ne1$. Positive
+inhomogeneous activity factors cannot change this condition.
+
+Proof. In (9.5), $\det Z=1$, so determinant multiplicativity
+gives (9.6). Each singleton belongs to $\mathcal I_m$;
+therefore a zero coefficient $c_i$ makes the product zero,
+while nonzero coefficients make every $c_I$ nonzero.
+$\square$
+

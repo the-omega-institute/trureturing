@@ -1,0 +1,30 @@
+**Theorem 7.1 (Disjoint-block accumulation under one optimizer).** Fix $N,n\ge1$ and disjoint nonempty intervals $C_1,\ldots,C_J\subseteq[1,n]$. For $W\sim\pi_n$, let $\eta=W_{[1,n]\setminus C_j}$ denote the entire complement of the indicated block and set
+
+$$
+p_j^\eta(w)=\pi_n(W_{C_j}=w\mid W_{[1,n]\setminus C_j}=\eta).
+$$
+
+Let $a_j(\eta),b_j(\eta)$ be the adjacent complement bits, using zero at an open endpoint of $[1,n]$. On every extendible complement the conditional is positive and band-compatible on $K_{|C_j|}^{a_j,b_j}$. Then
+
+$$
+\mathcal R_{N,n}\ge\sum_{j=1}^J
+\mathbb E_{\pi_n}\delta_{N,|C_j|}^{a_j,b_j}(p_j^\eta).
+\tag{7.1}
+$$
+
+Proof. If the whole-word minimizing family is empty, the left side is $+\infty$ and the inequality holds in the extended order. Otherwise fix any $r\in\mathscr F_{N,n}^{0,0}$. Both $r$ and $\pi_n$ are positive on every legal word, so they give positive probability to exactly the extendible complement words. For each such $\eta$, let $r_j^\eta$ be the corresponding conditional under this same $r$. Fixing the complement preserves all internal insertion ratios and the same two boundary constraints.
+
+At an internal cut of $C_j$, fixing the prefix outside $C_j$ selects rows of the corresponding whole-word flattening, and fixing its outside suffix selects columns. Dividing this submatrix by the positive complement probability gives the conditional flattening. Restriction and positive scaling cannot increase nonnegative rank. Hence $r_j^\eta\in\mathscr F_{N,|C_j|}^{a_j,b_j}$.
+
+For a site in $C_j$, conditioning on all other $n$ bits is exactly conditioning within this block given its complete complement. Disintegrating (3.1) at those sites therefore gives
+
+$$
+\sum_{i\in C_j}\mathbb E_{\pi_n}(\pi_{n,i}(W_{-i})-r_i(W_{-i}))^2
+=\mathbb E_{\pi_n}\mathcal D_{K_{|C_j|}^{a_j,b_j}}(p_j^\eta\Vert r_j^\eta)
+\ge\mathbb E_{\pi_n}\delta_{N,|C_j|}^{a_j,b_j}(p_j^\eta).
+$$
+
+The disjoint intervals count each site at most once; the omitted sites have nonnegative discrepancies. Sum, then minimize over $r$, to prove (7.1). Every reference conditional $p_j^\eta$ and every weight is from this one $\pi_n$; the comparison conditionals all come from the same candidate $r$. Blocks may be adjacent or dependent. Disjointness prevents double counting and asserts no independence. $\square$
+
+In particular $p_j^\eta$ cannot be replaced by the stand-alone optimizer $\pi_{|C_j|}$ or by a limiting stationary law without an additional proved bridge. No such bridge is assumed.
+

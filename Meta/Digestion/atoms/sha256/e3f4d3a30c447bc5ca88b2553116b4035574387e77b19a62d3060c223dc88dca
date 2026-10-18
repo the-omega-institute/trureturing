@@ -1,0 +1,15 @@
+**定义 1.2（参数化结构解释）。** 主载体为定向欧氏空间 $V=\mathbb R^3$，二元运算为原定向叉积。制备 $p=(a,b)\in\mathcal P=V^2$ 是额外供应的实向量数据。同一棵树中每个 $\alpha$ 都取同一个 $a$，每个 $\beta$ 都取同一个 $b$；不允许给每次叶出现独立赋值。结构解释唯一地满足
+
+$$
+E_p(\alpha)=a,\quad E_p(\beta)=b,\quad
+E_p(\langle s,t\rangle)=E_p(s)\times E_p(t).
+$$
+
+实际增广来源为 $\mathcal J=\mathcal T\times\mathcal P$，实际源更新为
+
+$$
+S(t,p)=(\rho t,p),\qquad x_j(t,p)=E_p(\rho^jt)\quad(j\ge0).
+$$
+
+这直接使用 [Atomic §2](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的唯一结构延拓，没有改变原构造。
+

@@ -1,0 +1,20 @@
+**定义 2.3（唯一的整增益插值）。** 给定合法源和任意漂移 $d$，前四个读数强制
+
+$$
+q_0=-d,\quad q_1=\frac{24-d}{k\ell},\quad
+q_2=\frac{48-d}{\ell},\quad
+q_3=\frac{312/5-d}{(k+1)\ell}.                              \tag{2.5}
+$$
+
+定义
+
+$$
+\begin{aligned}
+\lambda_0(T)&=-\frac{(T-1)(T-2)(T-3)}6,&
+\lambda_1(T)&=\frac{T(T-2)(T-3)}2,\\
+\lambda_2(T)&=-\frac{T(T-1)(T-3)}2,&
+\lambda_3(T)&=\frac{T(T-1)(T-2)}6,\\
+f_{P,d}(T)&=\sum_{i=0}^3q_i\lambda_i(T).
+\end{aligned}                                             \tag{2.6}
+$$
+

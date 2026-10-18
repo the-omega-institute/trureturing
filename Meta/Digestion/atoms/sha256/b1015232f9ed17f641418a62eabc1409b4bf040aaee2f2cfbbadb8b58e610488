@@ -1,0 +1,64 @@
+**Theorem 8.2 (Exact full-marginal convex-hull criterion).** The zero
+face contains a TP point if and only if
+
+$$
+q_{\rm TP}\in\operatorname{conv}\mathcal Q_{\mathfrak d}.
+\tag{8.2}
+$$
+
+Whenever (8.2) holds, some TP point in that face is a sum of at
+most three canonical split seeds and has a fixed scalar-port
+realization with at most $75$ flags and whole-block CPTP decoders.
+This is a representative for face and TP feasibility. It need not
+equal any specified channel in the face, preserve that channel's
+event residuals or satisfy its event bounds. In particular it is
+not a three-seed or $75$-flag reduction of the original minimax.
+
+Proof. The input marginal of a unit canonical atom is the invariant
+measurement matrix
+
+$$
+\operatorname{Tr}_{\rm out} Z(k(a(p),b))
+=\sum_i\frac{q_i(b)}{n_i}R_i.
+\tag{8.3}
+$$
+
+This follows either by averaging $bb^T$ or by (1.9): its invariant
+coordinates are $h_i(b)=q_i(b)/\sqrt{n_i}$. Suppose a TP point
+of the face has a split zero-seed decomposition
+$x=\sum_jw_jk(a(p_j),b_j)$, omitting zero weights. By (8.3),
+its full TP equations are
+
+$$
+\sum_jw_jq_i(b_j)=n_i\quad(i=0,+,-).
+\tag{8.4}
+$$
+
+Summing gives $\sum_jw_j=5$, so (8.4) is precisely the convex
+representation $q_{\rm TP}=\sum_j(w_j/5)q(b_j)$.
+Conversely any finite convex representation
+$q_{\rm TP}=\sum_j\lambda_jq(b_j)$ supplies
+$x=5\sum_j\lambda_jk(a(p_j),b_j)$ in the zero face, and
+(8.3) proves its whole matrix marginal is $I_5$, not just that
+its trace is five.
+
+The points $q(b_j)$ lie in the affine two-dimensional simplex.
+The elementary affine-dependence proof of Carathéodory's theorem
+reduces any such convex representation to at most three points:
+with more than three positive weights, choose a nonzero affine
+dependence, whose coefficients sum to zero, and subtract a maximal
+nonnegative multiple until one weight vanishes. Repeat. This
+changes the chosen point $x$ in general, while preserving (8.4)
+and zero pairing.
+
+For $m\le3$ remaining seeds, apply exactly the $25$-point formula
+(2.8). With $g_{kl}$ as there, use per-flag coefficients
+$c_{jkl}=\lambda_j/5$, measurement vectors $g_{kl}b_j$ and
+preparation vectors $g_{kl}a(p_j)$. Their measurement sum is $I_5$
+by (8.3)–(8.4), and every preparation is unit. Formula (2.9)
+therefore gives a TP encoder and a CPTP decoder on each entire
+scalar block; each nonzero composite Kraus matrix has rank one.
+There are at most $25m\le75$ flags, all fixed and consumed in
+decoding. This proves precisely the asserted feasibility and resource
+statement. $\square$
+

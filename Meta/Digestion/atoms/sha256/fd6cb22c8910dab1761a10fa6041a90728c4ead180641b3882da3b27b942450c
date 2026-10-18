@@ -1,0 +1,136 @@
+**Theorem 3.2 (whole-graph injection by interval covering).** Every
+graph satisfying Definition 3.1 has an injection
+
+$$
+\Phi:V_{\rm count}\longrightarrow Q_{\rm live},
+\qquad \Phi(h,z)\in F_{(h,z)}.
+\tag{IC.17}
+$$
+
+Consequently, on that same complete installed graph,
+
+$$
+|Q_{\rm live}|\ge G=k(n-k+1),\qquad D\le E,
+\qquad m\ge G+u.
+\tag{IC.18}
+$$
+
+There is no assertion of an attained minimum for each fixed partition
+or each fixed nonconstant $f$.
+
+Proof. A live history of depth $d$ follows the first $d$ coordinates
+of its prescribed permutation, by Convention 2.2 and the actual-live
+rule. We first select and separate representatives at each fixed depth.
+
+During queries in $\mathsf I$ or $\mathsf V$, the exposed support is
+the same for both modes. Different cells at that depth have different
+hit counts. Equal-support exclusion separates any choices of hosts
+from their nonempty $F_{(h,d-h)}$.
+
+During either exchanged block, the depth determines the within-block
+position $\ell$. In the early block the two next labels are
+$x_\ell,y_\ell$, and in the late block they are $y_\ell,x_\ell$.
+They differ because the blocks are disjoint. One installed state has
+only one coordinate label, so histories in different modes cannot share
+it there. Within a mode the supports agree, and unequal-hit exclusion
+again separates different cells. Choose any actual host for each such
+cell. This covers every depth except queries in $\mathsf U$.
+
+For a common-scan query write
+
+$$
+d=p+b+t,\qquad 0\le t<|\mathsf U|,
+\qquad a_- =\min\mathcal A,\quad a_+=\max\mathcal A.
+$$
+
+Using integer intervals, (IC.16) implies
+
+$$
+\bigcup_{a\in\mathcal A}[a,a+b+t]_{\mathbb Z}
+       =[a_-,a_++b+t]_{\mathbb Z}.
+\tag{IC.19}
+$$
+
+Indeed, consecutive intervals either overlap or have consecutive integer
+endpoints, since their starting points differ by at most $b+1\le b+t+1$.
+The first and last endpoints give exactly the displayed union. This also
+covers a singleton $\mathcal A$.
+
+For each live cell $(h,d-h)$ select an exposed assignment as follows.
+
+| Range of $h$ | Assignment on $\mathsf I$ | Mode and remaining exposed values |
+| --- | --- | --- |
+| $h<a_-$ | Any assignment of weight $h$ | Mode $X$; all $\mathsf X$ and $\mathsf U^{\le t}$ values zero |
+| $a_-\le h\le a_++b+t$ | A weight-$a$ assignment selecting $Y$, where $h\in[a,a+b+t]$ | Mode $Y$; place $h-a$ ones on $\mathsf Y\cup\mathsf U^{\le t}$ |
+| $h>a_++b+t$ | Any assignment of weight $h-b-t$ | Mode $X$; all $\mathsf X$ and $\mathsf U^{\le t}$ values one |
+
+Every entry in this table is feasible. In the low range,
+$0\le h<a_-\le p$, and no assignment of that weight selects $Y$.
+In the high range,
+
+$$
+a_+<h-b-t\le p,
+$$
+
+where the upper bound follows from $h\le d=p+b+t$.
+Again that weight is outside $\mathcal A$, so its mode must be $X$.
+In the middle range (IC.19) supplies $a$ and
+$0\le h-a\le b+t$, exactly the available capacity. Endpoints are
+included, and either extreme range may be empty.
+
+These selected assignments are actual live prefixes. Complete any one
+to all coordinates. Along the specified permutation, every earlier
+prefix has at most $h$ ones and at most $d-h$ zeros. Since the final
+cell is live, every such prefix is live. Induct from the sole fixed
+start: a correct graph cannot halt while both outputs have completions;
+the actual-live rule fixes its next coordinate; and its fixed successor
+follows the assigned reply. Upon completing $\mathsf I$, the prescribed
+assignment selects exactly the mode used in the table. This realizes
+the whole chosen prefix on that one actual completing input. No claim
+about arbitrary syntactic paths is needed.
+
+Let $S_X=\mathsf I\cup\mathsf X\cup\mathsf U^{\le t}$ and
+$S_Y=\mathsf I\cup\mathsf Y\cup\mathsf U^{\le t}$.
+Representatives within one mode have the same support and different hit
+counts, and hence different hosts. This also separates low and high
+$X$ representatives from each other. For a low $X$ representative
+and a middle $Y$ representative, the first has fewer hits,
+
+$$
+S_X\setminus S_Y=\mathsf X,
+\qquad S_Y\setminus S_X=\mathsf Y,
+\qquad \eta_{S_X}|_{\mathsf X}=0.
+$$
+
+If they shared a host, PE Theorem 3.1(1), the first line of (IC.10),
+would give $C_{\mathsf X}\le C_{\mathsf Y}$, contradicting (IC.13).
+For a middle $Y$ representative and a high $X$ representative,
+the latter has more hits and its entire private block $\mathsf X$ is
+one. PE Theorem 3.1(2), the second line of (IC.10), would give the
+same contradictory inequality. The two applications use different
+polarities. They require neither equal old values on $\mathsf I$ nor
+equal values on the common exposed part of $\mathsf U$. Thus the
+selected hosts at every common-scan depth are pairwise distinct.
+
+It remains to exclude a common host at two different depths. Such
+occurrences must have the same next coordinate. A coordinate of
+$\mathsf I$, $\mathsf U$ or $\mathsf V$ has only one possible
+position in the two permutations, so cannot occur at different depths.
+For $x_\ell$, its two possible predecessor supports are exactly
+
+$$
+\mathsf I\cup\mathsf X^{<\ell}
+\quad\subsetneq\quad
+\mathsf I\cup\mathsf Y\cup\mathsf U\cup\mathsf X^{<\ell}.
+\tag{IC.20}
+$$
+
+They are strictly nested. PE Lemma 4.1 excludes their sharing a live
+host. For $y_\ell$ the same argument interchanges $\mathsf X$ and
+$\mathsf Y$. These are all coordinates and all possible repeated
+positions. Consequently no selected host at one depth is selected at
+another. Choose one of the constructed actual hosts at every cell to
+obtain (IC.17). Finally (IC.12) gives $D\le E$ and $m\ge G+u$.
+The argument compares actual histories of one complete graph, including
+its unchanged paid certified traffic. $\square$
+

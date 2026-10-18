@@ -1,0 +1,54 @@
+**Theorem 7.3 (acquired callable history on the same carrier).** Under
+RCA's actual Ready-to-Install permission, canonical code supply, genuine
+copy authorities and finite canonical completion conditions, every
+$h\in\Omega$ has a later actually acquired immutable package and an
+authorized Call whose delivered wire value denotes precisely CSA.8 for
+that $h$. For an actual complete Call fragment $r:z\leadsto z'$ with
+that target, its structural lift satisfies
+
+$$
+\begin{aligned}
+\operatorname{wire}(\widehat r)&=\operatorname{wire}(r),\\
+\mathcal W_\Pi(\operatorname{payload}_{\rm Image}(\operatorname{wire}(r)))&=
+        \operatorname{HistoricalImage}_\Pi(h),\\
+\operatorname{end}(\widehat z\,\widehat r)&=
+        \Gamma_+(Y(z')).
+\end{aligned}
+\tag{CSA.9}
+$$
+
+The old target and the complete later return are different endpoints.
+
+Proof. RCA Theorems 15.2–15.3 already supply the actual finite completion,
+Cover, issued Next directory, immutable package backing and Call. For an
+old pre-installation cut first complete to authorized old Ready and really
+install; for a cut inside installation finish its actual installation;
+for a later busy cut finish its canonical finite fragment. A subsequent
+Cover freezes an actual predecessor interval containing the target.
+Repeated Next acquires its entries. Choosing a particular intended entry
+still requires RCA Theorem 3.3's acquired choice, or a genuinely supplied
+Select argument. No mathematical $n$ is promoted to an acquired input.
+
+Apply CSA.3 to every native row of those actual fragments. Seed, old
+ingress and captured descriptions enter by their actual paid owned copies.
+The manifest importer, raw/active control stores, bank changes, archive
+copies, descriptor staging, sender/mailbox/receiver construction, completion
+records, seals, printing, acknowledgement and token return all have their
+structural rows. Each OUT releases exactly the original wire bit. The
+supplier identifies those bytes with the exact native $h,Y(h),X(h)$ and
+binding; Lemma 7.2 identifies their exact structural denotation. This
+proves the first two equations. The last equation is CSA.3 composed along
+the entire later fragment, including its work and receipts.
+
+The package number alone grants no call. Without the live invocation
+token a known number has no transition; with it an unknown number yields
+executed NoPackage. Partial delivery is not acquired complete output;
+only the final receiver seal enables reading. Invocation uses actual
+acquired immutable backing and the live token, never represented old
+permission bits or a new producer query. The token returns only through
+the actual acknowledgement/common-return graph. Thus the structural wire
+interpretation supplies neither a missing package nor a missing authority.
+RCA's induction on completed frames, with every represented old row
+implemented by its finite word expansion, remains the finite-completion
+argument; no semantic self-Call oracle has been added. ∎
+

@@ -1,0 +1,58 @@
+**实例 88.3（Both four-block mechanisms on entire targets）。** For the first example choose doubles $\{0,1\}$ and $\{3,4\}$. Enumerate its fifteen joined classes by increasing least phase and write $\ell(j)\in\{0,\ldots,14\}$ for the class index. Take pairwise distinct labels $L_0,\ldots,L_{14}$ and put $\lambda_0(j)=\lambda_1(j)=L_{\ell(j)}$. This has equal component partitions and exactly the required joined classes. Give tails $14,15$ a fresh common $R$ and bottom any independent label, as in (88.2). The double $\{3,4\}$ misses $P$, so the zero-double construction applies.
+
+For the second example choose doubles $\{0,3\}$ and $\{2,4\}$, and enumerate its classes in the same way. Take mutually distinct $A_0,\ldots,A_3,B_0,\ldots,B_3$ and put
+
+$$
+\lambda_0(j)=A_{\lfloor\ell(j)/4\rfloor},\qquad
+\lambda_1(j)=B_{\ell(j)\bmod4}.
+\tag{88.22}
+$$
+
+The fifteen ordered pairs are distinct. Its component partitions differ: class indices zero and one agree only in the first component; zero and four agree only in the second. Again use the entire low/high/bottom target (88.2), with fresh $R$. Both doubles meet $P$ and neither meets $N$, so the second construction applies with $r=1$, $A=1000$, $B=1100$, $H=0100$.
+
+Full chronological code assignments for these examples are:
+
+| $j$ | $Z^{\rm I}(j)$ | $Z^{\rm II}(j)$ |
+| --- | --- | --- |
+| $0$ | $1011$ | $1000$ |
+| $1$ | $0111$ | $0111$ |
+| $2$ | $1111$ | $1100$ |
+| $3$ | $0000$ | $1000$ |
+| $4$ | $0000$ | $1100$ |
+| $5$ | $0100$ | $1111$ |
+| $6$ | $1000$ | $1110$ |
+| $7$ | $1110$ | $0110$ |
+| $8$ | $0011$ | $0010$ |
+| $9$ | $1100$ | $1101$ |
+| $10$ | $1101$ | $1001$ |
+| $11$ | $0010$ | $0001$ |
+| $12$ | $1010$ | $1011$ |
+| $13$ | $1001$ | $1010$ |
+| $14$ | $0001$ | $0000$ |
+| $15$ | $0110$ | $0101$ |
+| $16$ | $0101$ | $0011$ |
+
+证明。 In the first column the zero-double phases have the only repeated code; the other fifteen phases exhaust the nonzero cube. In the second, codes $1000$ and $1100$ are repeated exactly on the doubles and $0100$ is the only absent cube vector. These descriptions prove full XOR zero and separation between unequal joined labels. The displayed entries give coordinate zero one on $P$ and zero on $N$, and every later coordinate zero on its own omission pair (88.12). Thus both columns satisfy the full-row restrictions. Their literal inverses (88.18) are respectively
+
+$$
+\begin{aligned}
+B_0^{\rm I}&=11000010010010,&B_0^{\rm II}&=11010100010010,\\
+B_1^{\rm I}&=01001000110010,&B_1^{\rm II}&=01110110101100,\\
+B_2^{\rm I}&=10001101000001,&B_2^{\rm II}&=01000110000101,\\
+B_3^{\rm I}&=11000100101000,&B_3^{\rm II}&=01010001001111.
+\end{aligned}
+\tag{88.23}
+$$
+
+Their leading/trailing run pairs are
+
+$$
+\begin{aligned}
+(\alpha,\rho)^{\rm I}&=((2,0),(0,0),(1,1),(2,0)),\\
+(\alpha,\rho)^{\rm II}&=((2,0),(0,0),(0,1),(0,4)).
+\end{aligned}
+\tag{88.24}
+$$
+
+Both roots reject precisely the two high tails and preserve every low tail. The same actual low-source seams have sums $(0,1,3)$ and $(0,0,1)$, all strictly below sixteen. Each word contains zero and has fourteen bits. These are two safe four-word concatenations on both free values. Their completed differences are the displayed column, so (88.21) returns the correct immutable component at fee four; high tails pay one whole root and initial bottom pays zero. The all-action lower bound makes both worst fees exactly four and fifty-six bits. These examples exhibit both mechanisms; their finite tables are not the classification proof. ∎
+

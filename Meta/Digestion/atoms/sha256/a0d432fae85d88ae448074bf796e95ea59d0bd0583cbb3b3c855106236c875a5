@@ -1,0 +1,18 @@
+**Theorem 74.1 (half-parameter reflection-edge classification).**
+For \(b=1/2\) or \(b=-1/2\), suppose \(w=(x,y)\) and \(H_0(b)w\)
+have all six coordinates of modulus one, and \(w^*Rw=0\).
+Then the projective ray of \(w\) is one of exactly four rays
+\[
+ \left(f_m,\ \varepsilon\frac{b+i}{\sqrt{1+b^2}}f_m\right),
+ \quad m\in\{1,2\},\quad\varepsilon\in\{-1,1\},
+ \qquad f_m=(1,\omega^m,\omega^{2m}),\quad
+ \omega=\frac{-1+i\sqrt3}{2}.                              \tag{74.2}
+\]
+The same statement holds for either other synchronous transposition.
+Here \(w/\sqrt6\) is the normalized input vector; (74.1) acts on that
+input, so no input/output basis identification is implicit.
+
+The proof below prints the original reduction, every exceptional chart,
+and two finite rational ideal certificates. They use elementary polynomial
+operations only. No ray census or external no-quartet theorem is assumed.
+

@@ -1,0 +1,25 @@
+**References 9.2 (suppliers and precise boundaries).** Repository
+statement numbers refer to the source files in the immutable
+[baseline catalogue][BASE]. The listed ordinary results are
+reused at their stated hypotheses.
+
+| Source | Used conclusion and limit |
+| --- | --- |
+| [ARH §§1–3, 19–25][ARH] | Exact acquired full fiber, paid producer and access assumptions; accepted elimination charts with arbitrary finite residuals; both prefix implications; productive original-prefix decision; complete six-hole fiber and supplied upper consumer. No general cyclic interpreted decision is presumed. |
+| [ARH §§27–32][ARH] | Entire one-step graph with arbitrary literals and cuts; exact original-prefix recovery decision and sufficient lawful service. It is not a minimum-resource supplier for all those cuts. |
+| [SRF Lemma 1.4, Proposition 1.5, §§2–3][SRF] | Aligned WS2S source/reply run encoding and determining-cell label construction; common-header synchronous resources. Here only the aligned formula and cell arguments are reused, with the new marker/word interface replacing common headers. Counterexample 1.6 excludes a direct-convolution shortcut. |
+| [JRF Lemma 2.2, Theorem 3.1, Lemma 3.2, §§5, 7][JRF] | All-source length-nonincreasing transport, actual update cap, cleanup, finite cofinal rectangle and rational same-source threshold optimization. Its literal-only source predicates are not applied to the signed domain. |
+| [ABC §§5–8][ABC] | Whole-source coordinate correspondence, opaque actual ports, sourcewise paid normalization, and the distinction between supplied-prefix testing and unbounded decision. No access to hidden canonical codes is introduced. |
+| [CAR §§2–10][CAR] | Its cycle-mass recognizer, exact joint atomic charts and paid resource interface. Forced atomicity is its premise; arbitrary residuals here use no atomic-rank substitution. |
+| [TPO Definition 1.2 and §§4–5][TPO] | Obstruction for its exact normal-domain language only. It supplies no undecidability or native no-service theorem for the present sources. |
+| [SLH Theorem 2.2 and §§59, 74][SLH] | Current-epoch decoding of original literals, full old-row meaning and serial-to-prefix locality. These are actual read interfaces, not historical receipts or free subtree tests. |
+| N. Klarlund and A. Møller, [MONA Version 1.4 User Manual §§7.1–7.2, pp. 39–40][MONA] | `literature-attested`: binary-tree positions, finite set variables, and bottom-up automata deciding WS2S and producing finite examples. Lemma 2.2 proves the additional marker-to-word conversion used here. |
+
+The only general logical supplier required is WS2S on finite sets
+with its finite support-tree automata. Product, determinization,
+finite-state reachability and the fixed-prefix word tests are
+given explicitly above. No appeal is made to closure under
+unmatched presentations, arbitrary word equations with length
+arithmetic, a stronger term-power language, infinite-tree
+satisfiability or Dickson finiteness as a stopping algorithm.
+

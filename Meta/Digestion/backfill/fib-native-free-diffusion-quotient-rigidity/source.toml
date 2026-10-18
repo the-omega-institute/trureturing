@@ -1,0 +1,5 @@
+source_id = "fib-native-free-diffusion-quotient-rigidity"
+path = "docs/develop/theory/FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

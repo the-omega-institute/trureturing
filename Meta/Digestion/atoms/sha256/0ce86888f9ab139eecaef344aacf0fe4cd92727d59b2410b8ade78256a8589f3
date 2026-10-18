@@ -1,0 +1,23 @@
+**Corollary 5.4 (unbounded actual family and its boundary).** For
+each fixed $d\ge2$, choose dyadic $n>k$ and the simple circulant
+with offsets $\pm1,\ldots,\pm k/2$. It is $k$-regular, connected
+because it contains the step-one cycle, and satisfies Theorem 5.3.
+Every local coordinate is essential: flipping it changes parity and
+changes the positive table because $\epsilon>0$. The limiting
+logarithmic loss per block is $(k-1)/2>0$.
+
+Proof. The offsets are nonzero and distinct modulo $n$, giving degree
+$k$ without loops or repeated edges. The limit follows from
+$0<\log_2(1+\epsilon^n)<1$. The essential-coordinate assertion
+follows directly from (INB.17). $\square$
+
+This theorem optimizes unary port and seed gauges, not the arbitrary
+full-scope tables of §4. It retains the entire cyclic graph, so it
+is not a forest or proper-star restriction as in GDB §§20–25. It
+also does not supply pressure-maximizing templates: at this very law
+the one-block perfect-leaf set is admissible and has mass $a$, so
+$\beta_d(\mu)\ge a>a/\sqrt2$. Full-potential Finner at
+$\epsilon=0$ is exact on this graph, while its direct incidence
+estimate still has (INB.20). No failure of Finner, joint-scope
+compensation or optimizer-cofinality follows.
+

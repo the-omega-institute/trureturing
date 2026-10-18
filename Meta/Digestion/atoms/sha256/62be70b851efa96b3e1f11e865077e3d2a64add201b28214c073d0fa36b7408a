@@ -1,0 +1,31 @@
+**Definition 2.6 (continuation-and-audit task, before the views).** A primitive
+task experiment can Supply($b$) at the next prescribed IN exactly when
+$b\in\operatorname{Adm}(h)$, or Advance the prescribed next enabled non-IN
+primitive. A physically enabled Supply outside this set is outside the
+task-transport domain; the task does not invoke it or assign it an
+illegal-unexecuted response. The physical actor can still execute it as
+in Definition 2.2. A semantic experiment can run the finite
+lawful protocols of Definition 2.4 at their admission points. It may finish
+an already admitted request, wait by actual prescribed work for delivery,
+and fetch a complete actual row. Source-frame inputs in these protocols
+obey the same admissibility rule. A finite adaptive experiment uses only
+acquired public phase, availability and responses to choose its branches.
+It has a finite decision tree, not a private-state test.
+
+Responses retain legality, actual labels and released finite outputs, and
+the complete original joint successor after every executed action. The
+empty response retains running/terminal type and any terminal output.
+All specified failure types in Definition 2.4 remain distinct. Trials of
+physically disabled or unauthorized operations retain their `none` response;
+they do not execute a primitive. A physically enabled noncanonical Supply
+instead leaves the experiment undefined on this lawful task domain. More
+precisely, each endpoint gives a partial response map on finite experiment
+trees, defined exactly when no executed branch attempts such a Supply.
+Write $h\sim_Q k$ if these maps have the same domain and equal responses
+there. Undefinedness is a mathematical domain distinction, not an output,
+receipt, rejection or physical prevention of raw IN.
+This task concerns actual continuation and authentic row audit, not a
+request to output one of the views defined later. In particular, its public
+row experiment below suffices for the lower bound even if the private
+successor coordinates are omitted from the observable output.
+

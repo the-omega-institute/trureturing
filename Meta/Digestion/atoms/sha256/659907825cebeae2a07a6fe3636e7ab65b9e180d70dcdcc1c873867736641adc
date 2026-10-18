@@ -1,0 +1,9 @@
+## 5. Two entire late-and-terminal-root classes have at most two worlds
+
+For $a\in\{4,5\}$ define the known root class
+
+$$
+\mathcal Z_{a7}=\{W\in\mathcal F(H):f(a)=f(7)=0\}.
+\tag{5.1}
+$$
+

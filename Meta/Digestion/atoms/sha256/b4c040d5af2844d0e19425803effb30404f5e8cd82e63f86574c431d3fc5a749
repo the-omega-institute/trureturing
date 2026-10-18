@@ -1,0 +1,21 @@
+**Definition 3.1 (The pointwise compliant class).** Fix an integer $M\ge2$, a number $0<\alpha<1/2$, and a known common $q\in(0,1)$. An observer may be designed separately for this $q$; its state set, source-independent initialization and real transition probabilities may depend arbitrarily on $(q,H,\alpha,M)$. The same design and initialization are used under $\mathsf P_{0,q}$ and $\mathsf P_{1,q}$. Neither the true label nor source-dependent advice is supplied.
+
+The observer has at most $M$ complete persistent configurations. They include initialization configurations, all active configurations, both internally emitted decision labels, every control phase, register, retained random choice and stored seed. A counter selecting random updates is persistent information and is counted. Fresh independent randomness may be used in updates, but retaining any part of it requires a counted configuration. Known $q$ and the fixed transition description are immutable design data; every mutable use of information must pass through the configuration set. No bound is imposed on the precision of immutable transition probabilities, no continuity across $q$ is assumed, and positive transitions may be arbitrarily small.
+
+At an action the observer reads the next actual bit or stops and emits $D\in\{0,1\}$. Its choices use only its current configuration, the bit just read when applicable, and fresh randomness independent of the source and previous fresh randomness. Access is to the one uninterrupted consecutive history of Definition 2.2. There is no external time, age, clock, action count, program counter, archive, skipped bit, free gap, reset, second source, hidden-state observation, probability response or parameter query. The cost tally is not an input. The decision is the emitted label, with no external decoding from stopping time or read length.
+
+If $X_0,\ldots,X_{T-1}$ are read, the paid cost is $T$. It includes every read zero, tick, initial wait and terminal partial gap. Initial stopping has cost zero. The class $\mathfrak A_M(q,\alpha)$ consists of these observers satisfying all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad \mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,
+\qquad \mathbb E_{i,q}T<\infty
+\quad(i=0,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+The risks here concern just this selected pair with known common $q$. The two separate termination and mean conditions are pointwise. A full-family guarantee is stronger and is not required. This is the uniform companion's Definition 3.1; it differs from the continuation's single fixed $q$-free observer across separate nuisance families.
+

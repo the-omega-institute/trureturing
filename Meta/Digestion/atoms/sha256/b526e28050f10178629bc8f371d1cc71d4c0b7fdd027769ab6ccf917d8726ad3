@@ -1,0 +1,84 @@
+**Theorem 4.2 (a necessary geometry for any strict subgrid improvement).**
+Let $G=k(n-k+1)$ in the scope of Theorem 3.1. If an original-contract
+preparer satisfying both caps has
+
+$$
+H<G+4+r,                                             \tag{PE.10}
+$$
+
+then its original installed table contains an incomparable collision of
+two actual live histories at a selected state, oriented with $h<g$,
+for which at least one of the following holds:
+
+- $|S\setminus T|=|T\setminus S|$ and $C_{S\setminus T}=C_{T\setminus S}$;
+- the $S$ history has an old one in $S\setminus T$, or the $T$ history
+  has an old zero in $T\setminus S$.
+
+If the original costs satisfy, for all $B,D\subseteq[n]$,
+
+$$
+B,D\ne\varnothing,\quad B\cap D=\varnothing,\quad |B|=|D|
+             \quad\Longrightarrow\quad C_B\ne C_D,    \tag{PE.11}
+$$
+
+then some such collision must have the second, polarity-defect property.
+This is a necessary condition; it asserts neither a strict improvement
+nor sufficiency of any collision.
+
+Proof. For every pair of integers
+
+$$
+0\le h\le k-1,\qquad 0\le z\le n-k,                 \tag{PE.12}
+$$
+
+choose one actual live history with $h$ exposed ones and $z$ exposed
+zeros, ending just before a selected invocation. To see existence,
+feed its first $h$ fresh selected queries ones and its next $z$ fresh
+selected queries zeros. Every such prefix is live; arbitrary native
+addresses cannot obstruct this choice, by the all-address saturation
+facts. Between fresh selected queries the only possible live detour is
+one paid $RLR$ call. After the prescribed replies, follow such a call
+if present and stop just before the next selected query. Termination
+and liveness guarantee that query exists. Every partial assignment has
+actual cube completions. There are exactly $G$ pairs in (PE.12).
+These histories are mathematical witnesses, not an installed rectangle
+or an uncharged memory register.
+
+There are also at least two installed running states disjoint from all
+selected states. Here is the actual-source argument of [PCA, Lemma
+7.1][PCA]. Choose $x_c=\beta$ and pairwise distinct branch images for
+the other five classes. This is an actual $Z_c$ origin of code zero.
+Replacing only $x_{b_3}$ by alpha gives an actual $\Pi_3$ origin of
+code one, differing only in the $RLR$ occurrence cone. An installed
+query in that cone is therefore necessary. Replacing only $x_{b_4}$
+by alpha similarly forces a query in the disjoint $RRR$ cone. Both
+cones are disjoint from every $E_i$ in (PE.2). The two original-entry
+latches are different and both attained, and the $r$ mandated further
+latches are distinct and counted. Thus, if $M$ is the number of all
+installed selected states, including unused ones,
+
+$$
+H\ge M+2+2+r.                                       \tag{PE.13}
+$$
+
+This is a disjoint count in the installed alphabet; no path copies,
+residual classes or reachable-message capacities replace $H$.
+
+By (PE.10)–(PE.13), $M<G$. Two chosen histories must therefore end
+at the same original selected state. They came from different pairs
+in (PE.12). Equal supports and equal hits would make those pairs
+equal. Equal supports with unequal hits are excluded by PCA Theorem
+35.1; properly nested supports and different supports with equal hits
+are excluded by Lemma 4.1. The collision is consequently incomparable
+with unequal hits. Orient it by $h<g$. If it has no polarity defect,
+every old $X$ bit is zero and every old $Y$ bit is one. Theorem 3.1
+then forces equal private sizes and sums. Under (PE.11) this is
+impossible because the private sets are nonempty and disjoint.
+
+For an explicit admissible original input satisfying (PE.11), take
+$c_i=5\,2^{i-1}$ and $s_i=c_i-4$. They are increasing positive
+original positions. All subset sums differ: the greatest differing
+power exceeds the sum of all lower powers. This uniqueness is an
+input property, not a modification of an existing prescribed code.
+Neither that property nor (PE.10) proves grid optimality. $\square$
+

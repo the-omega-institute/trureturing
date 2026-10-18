@@ -1,0 +1,13 @@
+**Definition 3.1 (a realized scaffold subfamily).** Fix
+$d=D-2$ and $Q=2^d$. For a tuple
+$\mathbf u=(u_a)_{a\in\{L,R\}^d}\in U^Q$, let
+$v(\mathbf u)$ be the perfect ordered scaffold of depth $d$ whose
+leaf at address $a$ is replaced by $u_a$, and set
+$t(\mathbf u)=\langle\alpha,v(\mathbf u)\rangle$.
+For $d=0$ this means $v(\mathbf u)=u_\varepsilon$.
+All these distinct sources lie in $\mathcal F_D$. Their coordinate
+cones consist of the original words $Raw$. They are pairwise
+disjoint; every nonconstant literal on this family enters exactly one
+cone. Above those cones every reached scaffold node is a fixed branch;
+the left wrapper and all its descendants give fixed replies as well.
+

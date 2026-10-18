@@ -1,0 +1,23 @@
+**Definition 21.1 (all off-root entries).** For an old contact define the signed normalized gap
+
+$$
+g_i(\phi;Y,\lambda)=Y\cdot\Gamma_{\eta_i}(\phi)
+ -\epsilon_iH_{\eta_i}(\phi)-\lambda\sigma_i\cos\phi.
+$$
+
+On the endpoint face use $z=(p_O,\phi_O)$ and $w=(z,Y_0,\ldots,Y_7,\lambda)$. At any point of the enclosing rectangle, not just an exact contact root, the full Hessian block is
+
+$$
+H_{p_ip_j}=0,\qquad
+H_{p_i\phi_j}=H_{\phi_jp_i}=\delta_{ij}g_i',\qquad
+H_{\phi_i\phi_j}=\delta_{ij}p_i g_i''.
+$$
+
+The moment block has $A_{j,p_i}=\Gamma_{i,j}$ and $A_{j,\phi_i}=p_i\Gamma_{i,j}'$, while $q_{p_i}=\sigma_i u_i$, $q_{\phi_i}=-p_i\sigma_i v_i$. These formulas form every entry of
+
+$$
+\mathbf B_e=\begin{pmatrix}H&A^T&-q\\A&0&0\\-q^T&0&0\end{pmatrix}
+$$
+
+by interval evaluation on the exact event rectangle. The block sizes are $12,8,1$, in precisely that order. The mixed $g_i'$ terms are enclosed as raw expressions; they are not set to zero on a rectangular box by imposing root equations at its other points. This is the full $21\times21$ fixed-contrast face system, distinct from $F_6,F_7$ and the $22$-variable event system.
+

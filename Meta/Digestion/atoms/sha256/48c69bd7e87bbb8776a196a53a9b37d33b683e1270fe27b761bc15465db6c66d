@@ -1,0 +1,32 @@
+## 1. 一、最新项目进展与 AURIC 的对应关系
+
+trureturing 当前的研究方法仍然强调：理论文档、实验结果和 Lean 内核检查必须区分；最终可信的形式真值来自可检查的形式化证明，而不是单独的理论叙述。[GitHub](https://github.com/the-omega-institute/trureturing?utm_source=chatgpt.com)
+
+当前开放工作线中已经出现了与 AURIC FIB 金字塔直接相关的几个方向。项目的开放 PR 列表还把“AURIC FIB 金字塔到 escape dynamics 的 typed bridge”列为独立任务，说明静态 FIB 结构与动态逃逸、返回和热力学量之间的桥接仍处在研究阶段。[GitHub](https://github.com/the-omega-institute/trureturing/pulls?utm_source=chatgpt.com)
+
+| 项目进展 | 对 AURIC 的数学含义 | 当前状态 |
+|---|---|---|
+| [PR #14965：joint FIB projection and response fibers](https://github.com/the-omega-institute/trureturing/pull/14965) | 明确把基础投影 $(X,Y,Z)$、隐藏纤维 $\kappa$ 与未来响应律放到同一个公式中 | 开放理论参考；桥接到统一实际未来事件空间仍需证明 |
+| [PR #14999：dynamic future quotient](https://github.com/the-omega-institute/trureturing/pull/14999) | 将静态隐藏变量与 activity-scoped future law quotient、future-closed memory 联系起来 | 条件性理论；有限记忆是否存在取决于可辨识性与计数是否有界 |
+| [PR #15014：paired readout inversion](https://github.com/the-omega-institute/trureturing/pull/15014) | 研究两个读出是否足以反演隐藏参数 | 已有固定核下的反演公式；资源与无约束 attainability 仍未完全解决 |
+| [PR #15020：complete-tail calibration](https://github.com/the-omega-institute/trureturing/pull/15020) | 给出实际返回变化的 source-specific variation floor | 是下界，不等于通用最优值或有限实现定理 |
+| [PR #15044：finite common generators](https://github.com/the-omega-institute/trureturing/pull/15044) | 将兼容的 complete-law flows 通过有限划分、重心与收缩构造成有限共同生成器 | 需要额外假设；没有自动给出固定资源预算或 Lean 证明 |
+
+这些进展可以被统一成一条结构链：
+
+```mermaid
+flowchart TD
+    A["五态合法模式"] --> B["基础投影 (X,Y,Z)"]
+    B --> C["隐藏环流 κ"]
+    C --> D["未来响应对比 J_L"]
+    C --> E["路径/环的闭合与 holonomy"]
+```
+
+关键变化是：$\kappa$ 不再只是一个“没有被观测到的概率”，而被解释为同时具有三种身份：
+
+1. 固定边缘下的运输环流；
+2. 局部 $2\times 2$ contingency table 的 Markov move；
+3. 未来响应律中的一个可见或不可见方向。
+
+---
+

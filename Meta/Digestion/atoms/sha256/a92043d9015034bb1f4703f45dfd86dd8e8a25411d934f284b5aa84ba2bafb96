@@ -1,0 +1,21 @@
+**Definition 5.2 (source item resolution).** For SourceOffset, traverse
+the frozen M by ReadList, constructing its zero-based item index $j$ by
+literal unary cons. For each source01 item parse its acquired SEG-U1 and
+request dependencies by ARC Definitions 3.3–3.4. Compare its old all-event
+ordinal with the actually supplied $m$. Validate source $\xi$, initial/
+prior binding, predecessor/order, unified-row origin, complete request
+origins and corresponding header/length/payload. History items are skipped
+by their type. Require exactly one matching source01 item, retaining its
+actual $j$ and origin fields. Absence is NoOccurrence; a malformed or
+inconsistent acquired record follows its first descriptor/dependency/
+binding failure, not a source answer. Cardinality, all unary fields and
+all tuple suffixes are checked.
+
+There is no strict-Reserve predicate here. All seven returning auxiliary
+source commands, their legal refusals and unchanged outcomes qualify.
+$m$ is CAP's old unified event ordinal, not cycle index $j$ or semantic
+$j_{\rm CAP}$. The initial acquisition and interleaved history cycles
+make those differences material. Source01 items remain authentic acquired
+records on the same source; equal frame bytes at another occurrence do
+not have the same complete row origin and old $m$.
+

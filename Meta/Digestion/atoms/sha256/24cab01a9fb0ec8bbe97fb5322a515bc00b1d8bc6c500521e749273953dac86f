@@ -1,0 +1,33 @@
+### 73.4 Parameter coverage and fixed-pair transport
+
+The two blocks in §72 are symmetric, and therefore
+
+\[
+ \mathcal H(\alpha,\beta)^T=\mathcal H(\beta,\alpha).
+ \tag{73.12}
+\]
+
+After optional transpose take \(\alpha\le\beta\), and set
+\(b=\sqrt3\cos2\beta>0\), \(h=\sqrt3\cos2\alpha\ge b\).
+Equation (73.2) gives
+
+\[
+ (3-h^2)(3-b^2)=4h^2b^2,\qquad
+ h^2=\frac{3-b^2}{1+b^2}.
+ \tag{73.13}
+\]
+
+Since \(h\ge b\), one has \((b^2-1)(b^2+3)\le0\), hence
+\(0<b\le1\). Conversely every such \(b\) gives exactly the positive
+angles of §72, with \(\alpha\le\beta\) and cotangent product \(1/2\).
+The explicit product-monomial identity (72.10) completes the reduction.
+
+Transpose preserves the fixed-pair problem even though it need not be a
+monomial equivalence. If \(w,Hw\) are both normalized flat vectors, then
+\(v=\overline{Hw}\) is flat and \(H^Tv=\bar w\) is flat. This
+antiunitary bijection preserves absolute inner products and orthogonality
+of collections. Equivalently, conjugate a collection of bases and multiply
+all of them by \(H^T\); this exchanges the fixed pair for \((H^T,I)\).
+The permitted operations therefore preserve quartet existence, without
+asserting that any quartet exists.
+

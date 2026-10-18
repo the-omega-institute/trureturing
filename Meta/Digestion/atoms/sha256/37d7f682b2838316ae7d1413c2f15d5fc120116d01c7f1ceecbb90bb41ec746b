@@ -1,0 +1,72 @@
+**Theorem 4.2 (all-optima activity and complete-face parametrization).**
+Under Assumptions 1.1 and 2.2, $\mathcal P$ is nonempty and compact.
+Its points are exactly the endpoint multiplier-optimal laws, and
+every fractional multiplier-optimal law splits into it. Moreover
+
+$$
+\kappa^T\mathcal P=[r_-,r_+],\qquad
+R_t(r)=C_t(\lambda)-\lambda r\quad(r\in[r_-,r_+]).
+\tag{FC.11}
+$$
+
+For each such request, **every** optimal common law has $K=r$ and
+zero integrated $d$; conversely every common law supported on the
+complete contact set with moments $B$ and $K=r$ is optimal. Thus
+the complete moment, contrast and height data of every original
+optimal law at that request, including all alternative atom tables,
+are represented by $\mathcal P\cap\{\kappa^Tw=r\}$ and the height-preserving
+group merges. In particular
+
+$$
+n_t(r)=\min\{\gamma(w):w\in\mathcal P,\ \kappa^Tw=r\}.
+\tag{FC.12}
+$$
+
+Proof. For any common law the integrated dual gap is
+$C_t(\lambda)-J_t-\lambda K\ge0$. A multiplier maximizer exists
+by GC Proposition 12.2 and has gap integral zero. Nonnegative gap
+therefore vanishes at each positive atom. For the stipulated measure
+extension it vanishes almost everywhere; the continuous
+zero-integral support principle gives the same contact restriction.
+Theorem 3.3 splits and collects the law into finitely many endpoint
+coordinates, proving $\mathcal P\ne\varnothing$. Its first row
+is $\sum w_i=1$, so $\mathcal P$ is closed and bounded. Each
+$w\in\mathcal P$ integrates only contacts and hence has
+$J_t+\lambda K=y\cdot B=C_t(\lambda)$. Conversely every
+multiplier optimum splits into $\mathcal P$. Its contrast image
+is consequently a compact interval, with both extrema attained;
+this proves the first equality in (FC.11), including $r_-=r_+$.
+
+For $r$ in that interval choose $w$ with $\kappa^Tw=r$.
+It gives height $C_t(\lambda)-\lambda r$. Every competitor for
+the original inequality request has $K\ge r$ and obeys
+
+$$
+J_t\le C_t(\lambda)-\lambda K
+                         \le C_t(\lambda)-\lambda r.
+\tag{FC.13}
+$$
+
+Equality of its height with the attained value, together with
+$\lambda>0$, forces both $K=r$ and zero integrated gap. Theorem
+3.3 therefore applies to **each** optimum, not just the first law
+chosen. The converse follows by integrating $d=0$. These arguments
+use the original inequality $K\ge r$; they do not impose activity
+in advance. For $\lambda=0$ that inference would fail.
+
+Necessity in Assumption 1.1 sends every original optimal instrument
+to the same complete moment equations and actual height, with
+$K\ge r$. Its physical binary contrast is at most
+$s_0K/\sqrt\alpha$ and at least the requested $s$; the just-proved
+activity makes both equal to $s$. Each positive supported low
+label belongs to one listed group. Collecting these labels produces
+a point of the slice with no more groups than the original number
+of labels. Conversely merge a point of that slice group by group.
+GC Proposition 12.2 and Proposition 10.1 realize the resulting
+finite law by an original optimal instrument with exactly one low
+label per occupied group. This proves (FC.12). The countable or
+stipulated measurable classes cannot lower this finite minimum:
+their contact laws collect into the same finite group data, while
+the finite constructor attains those data. This is a correspondence
+of laws and minima, not a bijection of full instruments. $\square$
+

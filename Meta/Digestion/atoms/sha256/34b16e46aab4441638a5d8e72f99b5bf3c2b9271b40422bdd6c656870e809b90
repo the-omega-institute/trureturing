@@ -1,0 +1,49 @@
+**Theorem 7.3 (balanced post-update literal-query lower bound).** Under
+Definition 7.2's exact hypotheses,
+
+$$
+|L|\,4^R\ge|\mathcal F_s|\ge K_s.
+\tag{DAF.19}
+$$
+
+In particular, if $|L|\le2^b$ then
+
+$$
+b+2R\ge\log_2K_s.
+\tag{DAF.20}
+$$
+
+Proof. Initially every source has the same initial boundary and the same
+accepted-update response and current tag-0 boundary. Fix one supplementary label
+and an acquired literal-answer branch. Equal complete acquired data gives the
+same next numerical request, actual context, local operation, archive access,
+or literal address. TM30.1/TM30.2 preserve equality of numerical boundaries and
+original responses under every original numerical action, including actual
+acceptance and rejection. Literal Reads preserve the source and its numerical
+boundary. PR57.T3 gives equality of the full original paid microtrace between
+literal responses; the added-port visibility hypothesis does the same for each
+literal segment. All archives, copies, verification and outputs are computations
+on those acquired data. No complete executed event is discarded by this argument.
+
+Contract the intervening determined segments only for counting. Each remaining
+literal node has at most four reply branches. Sourcewise finite termination and
+common deterministic stopping make the terminal reply paths prefix-free, including
+variable stopping depths. Induction gives at most $4^R$ leaves per label; this
+is the credited existing four-valued decision-tree argument.
+
+Suppose two distinct initial sources reached one terminal leaf. Their complete
+acquired states and all actual choices on that branch agree. Lemma 7.1 says
+their current actual trees are still distinct, even after the common accepted
+prelude, further accepted actions and rejects. At some literal address those
+current trees differ. The common local decoder, receiving the same terminal
+state and that address with no source access, would give the same answer for
+both, contradicting the required exact current-tree response. Hence each leaf
+contains at most one initial source. Summing over labels proves (DAF.19);
+(DAF.18) and $|L|\le2^b$ give (DAF.20).
+
+This proof cannot grant the full leaf word for free: unlike the bracket regime,
+the selected balanced fiber can contain different words. Its source-dependent
+ingress is restricted to the numerical response stream, added literal replies
+and complete label. Publishing private word data, rejected candidate values or
+source-dependent literal latency would change these hypotheses.
+

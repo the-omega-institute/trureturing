@@ -1,0 +1,32 @@
+**推论 4.1（共同白盒质量的缺口）。** 在式(1.5)的风险与有限完整保持类中，令 $W_j(\mathcal H)=1-R_j(\mathcal H)$。任意一个满足两项生成义务的共同模型，任取两个风险次序，均有
+
+$$
+17[(1-\rho_p)-W_{j_p}(\mathcal H_p)]
++7[(1-\rho_\beta)-W_{j_\beta}(\mathcal H_\beta)]>\sigma.
+$$
+
+至少一个完整相位质量低于其单独最佳质量，差严格大于 $\sigma/24$。若任务只要求第三书签起点与悬置域，定理3.1给一个共同模型达到两个单独最佳质量。
+
+**证明。** 代入 $W=1-R$，定理2.1及式(2.2)的逐模型不等式给前两句；定理3.1给最后一句。证毕。
+
+这里的白盒质量指固定任务的预测损失及可检查更新，不是实际训练网络的普遍可解释性。有限保持的自然职责是沿原字母保留自己的配置；实际源后验仍由同一个 $K$ 的已取得过滤决定。共同条件更新属于预测律族自身的职责，不能交给一个每次重新取公平标签的边缘读出。障碍在这两项职责的交接：共同有限保持的端点碰撞，加上完整返回词的条件更新，使两个近中心事件必须满足式(2.8)，从而在一个实际完整词上发生定量冲突。没有把配置风险的三深度方法反例升级为本定理；定理2.1另给了全类的普通证明，并首先作用于 law 风险。
+
+[未来响应充分性][FR] §§21–26 的长度—完整转录对应、固定先验实际像上的两窗口恢复与计数恢复，保持成立。那些精确窗口是律的坐标；§25 明确计费的计数与数值精度可随实际历史增长。本定理不否定这种精确可识别性，也不把两个精确数视作两个固定宽度存储单元。若完整计数无界保持被允许，式(1.4)的真实完整条件律本身沿真实似然更新相容；这不是当前固定有限完整配置类的达到器。
+
+[ST] 的终局 $13/266,9/266$、两深度完整尾值、任意随机有限机器的有限正历史见证，以及实际三深度公平端点标签的配置风险反例，均不改判。[PH] 的单独相位精确值与模型 $A$ 的联合域标量最优也不改判。本卷的新内容是：同一模型在整个 $p$ 与悬置域的相容性价格严格分离，且有统一正的定量余量；第三书签域则有一个新增有限位的共同尖锐生成器。这两个域的差别由同一实际返回动作承担。
+
+[FIB ATOM 白盒卷][WB] §§1–2 的五分类是无相邻占位三位窗 $\{000,100,010,101,001\}$ 的局部语法；§§6–8 分开五个输入、四个结构状态、无界精确数值保持，以及指定任务的合法域与更新交换关系。这里同样必须先固定任务及允许续接，再判断一个表示和生成器承担什么义务；这是一项方法对应，不是把其五窗自动机映到当前二字母付费来源。五模式被动记忆、张量符号取得、整树几何、实际地址下界、KBonacci 的 INITIAL 费用与合法边增长均使用不同的来源、动作或损失。本卷不从它们转移半径、维数、取得成本或物理结论；当前桥仅是原付费 Read 词、原控制记录和原 Stop。公开实矩阵是数学常数，不是免费精确实数物理接口。
+
+Berg–Ordentlich–Shayevitz 的[有限记忆综述][Survey] §§2.3、4、6.1、7.3 给有限状态、来源独立随机性、时间不变规则、长期检验与累计预测损失的成熟背景；其[确定性二元检验论文][BOS] §I、式(1)–(9) 使用固定 iid 假设下的长期分类错误。这些损失不等于同一实际停止历史上的完整尾条件 TV，也不提供这里两个相位的共同条件生成器。TV 三角等号、凸性、有限单纯形紧性、介值定理及收缩估计均是成熟中间方法；新增结论由原停止词及式(2.8)、(2.16)的源特定关系承担，不单独重命名通用方法。
+
+严格不等式(2.1)及下界(2.2)尚未给出尖锐联合 Pareto 前沿、其达到性、最小完整配置数、固定配置预算的最优风险或真实历史平均风险。没有声称只有某个确定性或固定相位参数族才受限制；定理2.1覆盖任意随机有限核。没有把无限计数模型、精确后验运算、有限历史截断或总物理成本纳入该覆盖。所有证明为普通数学，不主张 kernel 核验、世界范围优先权、统计或模型独立性、物理实现或持久研究目标完成。
+
+[PH]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md
+[ST]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RANDOMIZED_STOPPED_TAIL_MINIMAX.md
+[FR]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FUTURE_RESPONSE_SUFFICIENCY.md
+[E1]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_FULL_E1_SCOPE_EXTENSION.md
+[BD]: https://github.com/the-omega-institute/trureturing/blob/c633bce93ac6ffd5fa44ae3d9489c87c7557a531/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md
+[WB]: https://github.com/the-omega-institute/trureturing/blob/d54b775b50754d407dd4e39ea1d4c6c7d67d5021/docs/develop/theory/FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[Survey]: https://arxiv.org/html/2312.15225v1
+[BOS]: https://arxiv.org/pdf/2005.07445v1
+

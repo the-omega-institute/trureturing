@@ -1,0 +1,63 @@
+**Theorem 3.3 (uniform additive pressure bounds).** Define the all-size
+soft pressures by taking the supremum of the corresponding $n$th roots
+over $\mathfrak N_{d,L}(n)$, denoted
+$\beta^{\mathrm{ker}}_{d,L,\varepsilon}(w)$ and
+$\beta^{\mathrm{fl}}_{d,L,\varepsilon}(w)$ in the homogeneous case.
+The kernels may be any normalized nonnegative kernels of Definition
+3.1, including kernels with zeros. Then
+
+$$
+\beta_{d,L}(w)\le\beta^{\mathrm{ker}}_{d,L,\varepsilon}(w)
+ \le\beta_{d,L}(w)+\varepsilon,
+\tag{SCP.11}
+$$
+
+and
+
+$$
+\beta_{d,L}(w)\le\beta^{\mathrm{fl}}_{d,L,\varepsilon}(w)
+ \le\beta_{d,L}(w)+R_d\varepsilon.
+\tag{SCP.12}
+$$
+
+For nonhomogeneous floors or kernels, if the hard cap is
+$\beta_{d,L}(w)\le C$, then
+
+$$
+Z^{\mathrm{ker},\boldsymbol\varepsilon}_{\mathcal N}
+ \le\prod_{i=1}^n(C+\varepsilon_i),\qquad
+Z^{\mathrm{fl},\boldsymbol\varepsilon}_{\mathcal N}
+ \le\prod_{i=1}^n(C+R_d\varepsilon_i).
+\tag{SCP.13}
+$$
+
+Consequently the same inequalities hold whenever
+$\sup_i\varepsilon_i\le\varepsilon$.
+
+**Proof.** Expand the product over a subset $B$ of blocks at which the
+added term is selected. For the kernel, conditioning on the owners of
+$B$ gives (SCP.5), and the owner kernels sum to one over those owners.
+Thus the term for $B$ is at most
+$\varepsilon^{|B|}C^{n-|B|}$. The binomial theorem gives
+$(C+\varepsilon)^n$. For the floor, the same conditioning leaves at
+most $R_d^{|B|}$ assignments by (SCP.6), giving
+$(C+R_d\varepsilon)^n$. Distinct deleted blocks have disjoint owner
+sets, while every incoming shared seed is summed only once in the
+residual section. This proves (SCP.13) and the pressure bounds.
+
+More generally, let a nonnegative perturbation $\Psi_i(s)$ use the
+same seed scope and define
+
+$$
+\kappa_i=\sum_{a\in\prod_{c\in O_i}T_c}
+ \max_{b\in\prod_{c\in I_i\setminus O_i}T_c}\Psi_i(a,b),
+\tag{SCP.14}
+$$
+
+with the empty-product conventions. The same proof gives
+$Z(\Phi+\Psi)\le\prod_i(C+\kappa_i)$. The kernel has
+$\kappa_i=\varepsilon_i$; the floor has
+$\kappa_i=|\prod_{c\in O_i}T_c|\varepsilon_i\le R_d\varepsilon_i$.
+This is a nonhomogeneous perturbation statement, not a claim that
+heterogeneous block weights have one common pressure cap. $\square$
+

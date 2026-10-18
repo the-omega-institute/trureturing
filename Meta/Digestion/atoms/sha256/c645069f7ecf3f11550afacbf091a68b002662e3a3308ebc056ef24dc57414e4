@@ -1,0 +1,25 @@
+### 75.4 Full-reference diamond bound and resource consequence
+
+For completeness, the coefficient norm from §72 can be used directly here. On any normalized pure input with arbitrary reference write
+
+    |ψ>=Σ_(f,i)|f,i>⊗r_(f,i),
+    T_f e_i=r_(f,i),  ρ=direct_sum_f(T_f*T_f).
+
+Then ρ is block diagonal, positive semidefinite and has trace one. After identifying the MC output isometrically with C⁴, the output difference is TDT*, where T=direct_sum_f T_f maps into direct_sum_f R. Polar decomposition, including singular blocks, gives
+
+    ||TDT*||₁=||√ρ D √ρ||₁.
+
+Since −Z≤D≤Z, the trace-norm dual bound gives
+
+    ||√ρ D √ρ||₁≤Tr(ρZ)
+      =Σ_f Tr(ρ_ff Z_ff)
+      ≤max_f λ_max(Z_ff)<3/8.                           (2)
+
+For example, the first inequality follows by writing the positive and negative spectral projections of √ρD√ρ and applying the two operator inequalities separately. The last strict inequality follows from all four strict 2×2 inequalities in (1), so its margin is uniform over all input states and all references. The standard pure-input characterization of the diamond norm for Hermiticity-preserving channel differences now proves the asserted bound. Isometric MC output embedding preserves this norm.
+
+If either local Kraus rank in this construction were smaller than its stated value two or three, their product would be at most four. Section 74 would then force error at least 1/2, contradicting (2). Thus the two local Kraus ranks are exactly two and three. Exchanging the parties exchanges their resource dimensions without changing G_A⊙G_B or the error.
+
+For any local CPTP map C⁸→C⁴, a pure Stinespring isometry C⁸→C⁴⊗C^a requires 8≤4a. Therefore each local Kraus rank is an integer at least two. If the product ab is smaller than six, it must be four, with a=b=2; §74 then rules out error below 1/2. The displayed ranks (2,3) attain error below 3/8, so the minimum product resource for beating 1/2 is exactly six. This argument uses the fixed full local input and output dimensions, not only their encoded subspaces.
+
+The lower bound for budget (2,2) comes directly from §74 applied to the original effective Choi matrix. No dimension-preserving use of the calibration theorem is made. The threshold conclusion therefore concerns actual original physical channels, even though the upper witness happens to be calibrated.
+

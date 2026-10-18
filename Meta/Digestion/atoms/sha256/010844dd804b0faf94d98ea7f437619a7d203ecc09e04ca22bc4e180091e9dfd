@@ -1,0 +1,14 @@
+## 2. Exact entropy-deficit decomposition and quantitative rigidity
+
+All logarithms in this section are natural unless a base is shown. Define
+
+$$a=\frac16,\quad b=\frac12,$$
+
+$$p(x)=\frac{4-3\ln3}{8}+\frac{-11+2\ln2+12\ln3}{2}x+\frac{36-39\ln3}{2}x^2+18(\ln3-1)x^3,$$
+
+$$g(x)=p(x)+x\ln x,\qquad 0\ln0:=0,$$
+
+and
+
+$$A=\frac{11+2\ln2-9\ln3}{2},\quad B=\frac32(5\ln3-6)<0,\quad C=54(\ln3-1)>0.$$
+

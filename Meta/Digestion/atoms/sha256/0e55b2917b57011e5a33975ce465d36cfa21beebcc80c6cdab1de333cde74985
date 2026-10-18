@@ -1,0 +1,37 @@
+**定理 17.2（Exact symbolic boundary fee for every tour count）。** For every target (17.2), under both original alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f_5)=C_{\rm pre}(f_5)=Q+2.}
+\tag{17.3}
+$$
+
+Proof. On a fixed free-value fibre, choose one of the low labels $A,B,C$ different from $R$ and a phase carrying it. Compare INITIAL tails $k-6$ and $k-5$ at that phase. A root first zero after fewer than five ones merges them alive; their labels differ. Thus every correct root is $11111$, which rejects exactly the high band. This excludes every competing parent even with a nonfresh $R$.
+
+Take the three actual low sources at phases $1,3,4$, INITIAL tail $k-6$, and the fixed free value. Their labels are $B,C,A$ and their root differences are all zero. Their current tails after the root are all $k-1$. The next action on this archive must start zero: a first one would reject all three into one archive. Until index $Q$, no block can split them. Indeed for $1\le t<Q$ its window is $[5t,5(t+1)]$ without wrap, and misses all of $1,3,4$. Every successful difference is zero; rejection cannot resolve their three different labels. Once zero clears their tails, these remain common within their acquired archive. At index $Q$ one successful complete-block observation gives at most two children, and a rejecting action would again merge all remaining labels. Therefore a worst fee of $Q+1$ cannot distinguish these three sources. Adaptive choices, homogeneous earlier leaves on other archives, and every paid wait are included in this lower bound. Hence $C_{\rm ad}(f_5)\ge Q+2$.
+
+For attainment use the one common literal stream
+
+$$
+11111\ \mid\ \underbrace{00000\mid\cdots\mid00000}_{Q-1\ \text{paid blocks}}
+\ \mid\ 00100\ \mid\ 11000.
+\tag{17.4}
+$$
+
+The first word rejects exactly INITIAL tails $s\ge k-5$; return $R$ at that leaf. Every low source survives and the first paid zero wait safely clears even current tail $k-1$. All later waits are also paid. At index $Q$ the ordered path and the actual word $00100$ give
+
+$$
+W_Q=[5Q,5Q+1,0,1,2,3],\qquad E_Q=\{0,1\}.
+\tag{17.5}
+$$
+
+At index $Q+1$ the actual word $11000$ gives
+
+$$
+W_{Q+1}=[3,4,5,6,7,8],\qquad E_{Q+1}=\{3,5\}.
+\tag{17.6}
+$$
+
+These are literal charges from (1.4), not arbitrary parity queries. On the successful root-positive archive the only INITIAL phases are $0,5$. The first query has respective differences one and zero, returning $D,E$; these sources stop before the charge at $5$ in the last block. On the root-zero archive a first-query difference one occurs exactly at phase $1$, and returns $B$. Of the remaining sources, a last-query difference one occurs exactly at phase $3$, returning $C$; all others return $A$. The extra last-query charge at $5$ belongs to the already completed endpoint archive and does not supply an additional source to this decoder. Thus every low source returns its immutable INITIAL label, even if another completed label happens to coincide with it.
+
+The zero waits end at tail zero; $00100$ starts and ends zero and is strictly legal. The last block has only two leading ones and ends zero, so it is also strictly legal for $k\ge11$. Each word has length $5<k$ and hence belongs to both original alphabets, and every actual cross-block seam has been checked. The same stream and differences work for either free value, while initial $\bot$ returns its independent label freely. Its fee is $1+(Q-1)+2=Q+2$, proving (17.3). ∎
+

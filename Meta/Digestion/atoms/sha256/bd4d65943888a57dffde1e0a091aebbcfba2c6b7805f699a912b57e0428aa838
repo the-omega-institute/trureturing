@@ -1,0 +1,17 @@
+**Example 9.2 (a boundary cherry is not a new normal code).** The
+ambient expression $F([1],[0])$ expands to
+$\langle\beta,\alpha\rangle=T_2$, whose canonical code is $[2]$.
+It is therefore not an admissible ordinary-branch value.
+Condition (PDC.12) excludes it there, while the collapse branch
+represents the same actual tree.
+
+This matters on an entire acquired fiber, not only in syntax. Take
+the old cut $\{L,R\}$ with two different classes and exterior
+$\langle\square_1,\square_2\rangle$, and retain the literal
+$(0,L,\beta)$. Its full fiber is exactly
+$\{\langle\beta,z\rangle:z\ne\beta\}$. The member $z=\alpha$ must be
+retained, but through its actual collapse case. A blanket restriction
+to nonprimitive residuals would omit it. Sections 3–4 instead keep
+the primitive branch and enforce normality wherever an ordinary
+constructor is asserted.
+

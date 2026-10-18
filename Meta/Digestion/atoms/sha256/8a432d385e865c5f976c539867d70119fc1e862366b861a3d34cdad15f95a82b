@@ -1,0 +1,32 @@
+**定义 56.1（The unzeroed rectangle）。** After $q$ successful words $11$, with no zero yet issued, put
+
+$$
+h_q=k-2q>0.
+\tag{56.1}
+$$
+
+If the acquired phase support is $S$, the INITIAL candidates are exactly $\{(v,-j,s):j\in S,\ 0\le s<h_q\}$. Their current tails are $s+2q$, their current phases are $-j+2q$, and their current value is the common observed value. This is the actual rectangle of (51.17), supplied by [S1, Lemma 4.2], with the remembered *initial* value $v$ in $F_v$. In particular, a positive response does not replace $v$ by the current value in the target.
+
+For a known phase $j$ on such an actually acquired archive, define, for $0\le n\le h_q/2-1$, the condition
+
+$$
+\mathcal R(j,q,n):\quad
+F_v(j,\cdot)\text{ is constant on }[h_q-2i-2,h_q-2i)
+\quad(0\le i<n).
+\tag{56.2}
+$$
+
+Intervals here and below contain integer INITIAL tails. Define the explicit tail price
+
+$$
+\begin{aligned}
+\eta_v(j,q)=\min\Bigl(&\{n:\mathcal R(j,q,n),\
+ F_v(j,\cdot)\text{ constant on }[0,h_q-2n)\}\\
+&\cup\{n+1:\mathcal R(j,q,n),\
+ F_v(j,\cdot)\text{ constant on }[0,h_q-2n-1)\}\Bigr),
+\end{aligned}
+\tag{56.3}
+$$
+
+where $n$ in each set has the range just stated, and an empty minimum is $+\infty$. This is a finite comparison of the original tail table. The first set includes zero precisely for a constant remaining table.
+

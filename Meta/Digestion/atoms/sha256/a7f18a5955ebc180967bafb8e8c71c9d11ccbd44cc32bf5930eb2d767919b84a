@@ -1,0 +1,14 @@
+### 61.3. Every two-label restriction has one finite physical implementation
+
+For each pair {i,j}, restrict the logical input to span{|i>,|j>} while retaining the full qutrit output and the same physical encoding J. Exact implementability means equality of the two channels on that entire two-dimensional input algebra, including its off-diagonal units and all references; it does not require the output to remain within the chosen pair of labels.
+
+Let I denote identity on both physical qutrits and R3 the product channel resetting both to |3>. For a deterministic label function f:{1,2,3}→{1,2,3}, define the local CPTP map M_f(T)=Σ_i <i|T|i>|f(i)><f(i)|. The product M_f⊗M_f destroys every off-diagonal code matrix unit and maps |ii><ii| to |f(i)f(i)><f(i)f(i)|.
+
+The following are three distinct allowed choices of a common physical channel, one for each restriction:
+
+- On {1,2}, use p I+(q−p)(M_f⊗M_f)+(1−q)R3, where f(1)=3,f(2)=2,f(3)=3. The weights are nonnegative because p≤q(1−q)≤q. Input1 has survival p, input2 survival q, and the12 coherence multiplier is p.
+- On {2,3}, use q I+(1−q)R3. Input2 has survival q, input3 remains3, and the23 coherence multiplier is q.
+- On {1,3}, use p(M_id⊗M_id)+(1−p)R3. Input1 has survival p, input3 remains3, and the13 coherence is killed.
+
+Direct checking of the four matrix units in each restricted algebra proves exact channel equality. By linearity the same equality holds after tensoring with every passive reference. These constructions use at most three product-CPTP branches and act on all coherent inputs of their respective pair; no input-dependent branch selection or postselection is used.
+

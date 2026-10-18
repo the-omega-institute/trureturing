@@ -1,0 +1,22 @@
+**Proposition 71.2 (uniform rescaled potential comparison).** Put
+$U_g(z)=g^{-1}\overline W(z/g)$. On every bounded subset of
+$H^1(\mathbb R^3)$,
+
+$$
+\sup_h\left|\int(U_g-U)|h|^2dz\right|\longrightarrow0
+\quad(g\downarrow0).
+\tag{71.5}
+$$
+
+Proof. Formula (70.3), integrated against the actual height density
+$\phi^2$, gives $\overline W(q)=\beta/d(q)+O(|q|^{-3})$ at infinity.
+Thus $U_g\to U$ uniformly on every compact annulus away from zero.
+Both $U_g$ and $U$ are bounded by $C/|z|$, since
+$U_g(z)\le C/(g+|z|)$ and $d(z)\asymp|z|$.
+For a ball of radius $b$, Hardy gives
+$\int_{|z|<b}|h|^2/|z|\le4b\|\nabla h\|_2^2$.
+Outside a ball of radius $R$ the integral is at most $R^{-1}\|h\|_2^2$.
+On the intermediate annulus use uniform convergence. Let first
+$g\downarrow0$, then $b\downarrow0$ and $R\to\infty$.
+This proves (71.5) without a tightness hypothesis. $\square$
+

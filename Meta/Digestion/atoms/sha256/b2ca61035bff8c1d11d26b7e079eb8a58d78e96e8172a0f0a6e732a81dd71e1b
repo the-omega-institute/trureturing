@@ -1,0 +1,10 @@
+**Convention (mathematical scope).** The carrier in this volume is one actual
+jointly generated source, with a declared task and partial operation language.
+The claims and proofs are ordinary mathematics. The mathematical ingredients
+from [Typed Residual Resource Boundary](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_RESOURCE_BOUNDARY.md),
+[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md),
+[Context Geometry](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) and
+[Transport--Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+retain their stated hypotheses. Source-code citations below identify reused
+statements; they do not identify the present adaptations with Lean proofs.
+

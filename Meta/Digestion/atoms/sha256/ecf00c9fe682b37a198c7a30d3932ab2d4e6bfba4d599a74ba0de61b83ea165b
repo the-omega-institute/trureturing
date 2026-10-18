@@ -1,0 +1,25 @@
+**Definition 1.4 (endpoint coordinates and independent views).** Let $W(x)$
+be GENERAL's raw physical record. Let $O^+(x)$ retain all original tape
+material on0–63, the entire actual meter, every physical finite
+control/code-version/latch/token slot of the installed apparatus, and
+head positions on all74 ports, including both meter heads, identified by
+port and creation-chain position.
+It omits annex64–73 tape contents. This is a mathematical projection,
+not an actor read interface or an alternative task. The original
+coordinates used by SOURCECALL Definition 1.4 and Theorem 3.3 factor through
+this projection. Actual occurrence history is not an additional physical
+tape field in $W$; a receipt does not encode the input value.
+
+Use $S,B,M_J,T$ exactly as GENERAL Definition 3.1 defines them: actual
+child support, terminal boundary, selected retained material/relations,
+and chronological patch occurrences. GENERAL Corollary 4.4 supplies,
+separately for every such $V$,
+
+$$
+V(x)=V(y)\quad\Longleftrightarrow\quad x=y,
+\qquad x,y\in\mathcal C_{\mathrm{gc}}.
+$$
+
+This existing history kernel is used below without reconstructing a
+selector, codec or replay routine.
+

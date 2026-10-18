@@ -1,0 +1,36 @@
+### 3.1. The fixed activity law and its spectral coordinates
+
+Retain the five legal words and the recorded-site, calibrated reference
+experiment of §Parent/Readout §8–10. Fix $a,b>0$, write $s=1+a$ and $Z=s^2+b$, and use
+the single actual law and positive reference vector
+
+$$
+p=\frac{(1,a,b,a,a^2)}Z,\qquad
+\psi=\frac{(1,\sqrt a,\sqrt b,\sqrt a,a)}{\sqrt Z}.
+\tag{3.1}
+$$
+
+This is the hard-core activity family with equal endpoint activities.
+Its joint weight is $a^2$; an independently adjustable pair interaction
+is not part of (3.1). Define
+
+$$
+\begin{aligned}
+K_1&=\frac{
+(\sqrt a\,e_0-e_1)(\sqrt a\,e_0-e_1)^{\mathsf T}
++(\sqrt a\,e_3-e_{13})(\sqrt a\,e_3-e_{13})^{\mathsf T}}s,\\
+K_2&=\frac{(\sqrt b\,e_0-e_2)(\sqrt b\,e_0-e_2)^{\mathsf T}}{1+b},\\
+K_3&=\frac{
+(\sqrt a\,e_0-e_3)(\sqrt a\,e_0-e_3)^{\mathsf T}
++(\sqrt a\,e_1-e_{13})(\sqrt a\,e_1-e_{13})^{\mathsf T}}s.
+\end{aligned}
+\tag{3.2}
+$$
+
+These are orthogonal projections annihilating $\psi$. For
+$\omega\in\Delta_3$, put $H_\omega=\sum_i\omega_iK_i$ and
+$\gamma(\omega)=\lambda_{\min}(H_\omega|_{\psi^\perp})$.
+The identity of §1 identifies this gap with the minimum
+Fisher/QFI ratio for the same law and experiment. The site budget
+continues to tie both endpoint blocks to one weight.
+

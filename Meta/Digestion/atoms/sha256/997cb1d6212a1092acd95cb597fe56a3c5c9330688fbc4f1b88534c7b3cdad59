@@ -1,0 +1,33 @@
+**Proposition 7.1 (sixteen rows and thirty-five separating columns).**
+Let the rows be $s\in\mathbb F_2^4$. For every two-dimensional
+subspace $U$ of $(\mathbb F_2^4)^*$ choose the lexicographically
+first ordered basis $(\ell_1,\ell_2)$, using the ordinary binary
+ordering of nonzero linear forms. Give that column the symbol
+
+$$
+H(s,U)=2\ell_1(s)+\ell_2(s)\in\{0,1,2,3\}.
+\tag{RCE.28}
+$$
+
+There are $35$ such columns; padding them by $29$ constant-zero
+columns gives a perfect four-hash with $16$ rows and $64$ columns.
+Consequently (RCE.25) gives an explicit sixteen-state support
+$P\subset S_9$ satisfying Theorem 6.4.
+
+Proof. The number of two-dimensional subspaces is
+$(15\cdot14)/(3\cdot2)=35$, since each has six ordered bases.
+For four distinct rows translate one to zero and call the other
+three differences $a,b,c$. Their span has dimension two or three.
+In dimension two they are exactly its three nonzero vectors, so
+an isomorphism to $\mathbb F_2^2$ sends them to its three nonzero
+vectors. In dimension three they are a basis, so prescribing their
+images as the three distinct nonzero vectors defines a linear map
+onto $\mathbb F_2^2$. Extend either map to $\mathbb F_2^4$.
+Its two component functionals are independent and span one of the
+listed subspaces $U$. Replacing those components by the selected
+basis of $U$ applies an invertible output map. The four outputs,
+and hence their symbols, remain distinct. Padding does not remove
+this column. This independently proves the explicit binary
+construction; terminology from perfect hashing is not a substitute
+for this argument. $\square$
+

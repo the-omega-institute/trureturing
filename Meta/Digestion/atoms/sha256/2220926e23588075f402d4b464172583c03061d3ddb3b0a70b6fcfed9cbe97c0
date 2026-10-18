@@ -1,0 +1,30 @@
+**定义 199.2（预算像、有序锥、有限方向和完整证书集）。** 对 $C\in\{N,O\}$ 和
+$t\ge0$，置
+$$
+\Delta_C(y)=\max_{D\in\mathcal D_C}a_D\!\cdot y\ge0,
+\qquad
+D_C(t)=\{Q(y):y\ge0,\ \Delta_C(y)\le t\}.
+\tag{199.2}
+$$
+令
+$$
+P_H=\{q:F_q(b)\le0\ \text{对所有 }b\in H\},
+\qquad q\preceq_Hq'\ \Longleftrightarrow\ q-q'\in P_H,
+\tag{199.3}
+$$
+并记 $\rho_C$ 为定义 166.1 的完整目录锥质量；定义 190.3 定义受限成本并保留这一
+完整成本记号，此处始终使用完整目录。令
+$$
+H_C=\{b\in H:\rho_C(b)<\infty\}.
+$$
+定义完整 $N$ 证书集
+$$
+E_N=\left\{q:\begin{array}{l}
+\exists V\ge0\ \exists\theta\in[0,1],\\
+\Delta_N(V)\le1-\theta\ \text{且}\ \sigma_H(q-Q(V))\le\theta
+\end{array}\right\}.
+\tag{199.4}
+$$
+特别地，当 $\theta=1$ 时允许每一个满足 $V\ge0$、$\Delta_N(V)=0$ 的非零
+$V$；零评分、零预算和 $\theta=0$ 也不被删除。
+

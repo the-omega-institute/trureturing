@@ -1,0 +1,17 @@
+**开放问题 7.4（任意有限隐藏维数的精确达到）。** 是否存在某个有限 $N$ 与 $\theta\in\Theta_N$ 使 $d(P_\theta)=c_\star$，或是否对每个有限 $N$ 都有 $C_N<c_\star$？定理 6.2 将后一项等价地写成
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\quad U_{N,r}<\kappa_m/(m+1).
+\tag{7.6}
+$$
+
+本卷没有给出对每个 $N$ 的分离对，也没有给出一个有限隐藏精确达到者。（4.6）只是必要条件，命题 7.1–7.2 已表明其不足。紧性给出固定维数的极值及有限分离等价，不决定（7.6）。推论 7.3 给出的跨维数逼近也不决定有限维数达到；即使每个 $C_N<c_\star$，仍可有 $C_N\uparrow c_\star$。这些量词保持原完整 no11 域与原调和目标。
+
+[G]: FIB_LEGAL_EDGE_LOAD_GROWTH_CONSTANT.md
+[O]: FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md
+[S]: FIB_LEGAL_EDGE_LOAD_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[E]: FIB_LEGAL_EDGE_LOAD_ERGODIC_FULL_SUPPORT_STATIONARY_ATTAINMENT.md
+[N]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[C]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md
+[Gray]: https://www-ee.stanford.edu/~gray/arp.pdf "Robert M. Gray, Probability, Random Processes, and Ergodic Properties，作者版 January 2, 2010；§5.9、定理 7.2.1"
+

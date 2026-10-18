@@ -1,0 +1,27 @@
+**Supplier 77.4 (the precise simple-polygon minimum-area theorem).**
+Use Böröczky–Kertész–Makai, *The minimum area of a simple polygon with
+given side lengths*, Theorem1, in the Euclidean case. For $m\ge3$ and
+positive $b_1,\ldots,b_m$ satisfying
+$b_i\le\sum_{k\ne i}b_k$, its infimum over simple polygons with these
+sides in any order is the minimum area of the following finite nonempty
+family of possibly degenerate triangles. Partition $\{1,\ldots,m\}$
+into three nonempty classes $N_1,N_2,N_3$, choose each
+$\sigma_i\in\{-1,1\}$, and require
+
+$$
+t_j=\sum_{i\in N_j}\sigma_i b_i\ge0\quad(j=1,2,3),
+\qquad t_j\le t_k+t_l\quad\{j,k,l\}=\{1,2,3\}.
+\tag{77.11}
+$$
+
+There is a further restriction: if the triangle area is positive, no
+class $N_j$ may be partitioned as $N'_j\sqcup N''_j$ so that both
+$\sum_{i\in N'_j}\sigma_i b_i$ and
+$\sum_{i\in N''_j}\sigma_i b_i$ are positive. This is part of the
+supplier, not an optional condition. Its theorem also states nonattainment
+when $m>3$; that assertion is not needed here. We use only the lower
+bound for an actual simple polygon. An infimum allowing every side order
+is a lower bound for any one actual order. We do not use the fixed-order
+refinement of its Proposition1, a converse realization of the infimum,
+or an extension to self-intersecting polygons.
+

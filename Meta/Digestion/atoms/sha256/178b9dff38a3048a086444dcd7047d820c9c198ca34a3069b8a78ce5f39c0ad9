@@ -1,0 +1,23 @@
+**Theorem 5.1 (full surviving matrix span is necessary).** If deletion of some noninitial position $j$ leaves
+
+$$
+\dim\operatorname{span}_{\mathbb R}\{A_i:i\ne j\}\le3,
+$$
+
+the fixed path fails uniform recovery for every $d\ge0$. It has two distinct positive rank-one effective sources with the same $\alpha=1$, the same $\kappa=-1/j$, and the shared drift $D=0$. The statement allows arbitrary read counts and arbitrary finite words between reads.
+
+Proof. Each cumulative matrix is a nonnegative integer matrix with determinant $\pm1$, since both atoms have these properties. The survivors include $I$. Select survivors $A,B$ so that $I,A,B$ span the surviving space, repeating $I$ if fewer generators are needed. On trace-zero matrices
+
+$$
+\Delta=\begin{pmatrix}a&b\\c&-a\end{pmatrix},\qquad
+A=\begin{pmatrix}u&v\\w&x\end{pmatrix},
+$$
+
+one has $\operatorname{tr}(A\Delta)=(u-x)a+wb+vc$. The two homogeneous equations for $A,B$ in three variables have a nonzero solution.
+
+If this solution has $a\ne0$ or $bc<0$, retain it. Otherwise $a=0,bc\ge0$; change its sign so that $b,c\ge0$, not both zero. For each selected matrix the equation is $wb+vc=0$, a sum of nonnegative terms. If $b>0$ its lower-left entry is zero; if $c>0$ its upper-right entry is zero. Thus both selected matrices are triangular. Their nonnegative integer diagonal entries have product $\pm1$, hence product $1$ and both entries $1$. Therefore $\Delta_0=\operatorname{diag}(1,-1)$ also annihilates $I,A,B$. Replace the solution by $\Delta_0$.
+
+In either case Proposition 2.2 supplies distinct positive rank-one endpoints with difference $\Delta$ and identical surviving traces. The common gain $1-i/j$ hides the only possibly unequal signal at $j$; it is zero there. The shared zero drift meets every degree bound. Every surviving observation and the erased observation are equal. Proposition 1.1 supplies the positive fixed-row realizations on precisely the prescribed history. ∎
+
+The trace-zero secant and triangular unimodular argument are inherited from §§14–15 of *FIB 自校准关系数学*. Their one-erasure formulation applies them to affine gain and all legal fixed histories. Theorem 4.1 additionally permits polynomial surviving trace differences. Section 9 exhibits a family excluded by that additional mechanism despite full surviving matrix span.
+

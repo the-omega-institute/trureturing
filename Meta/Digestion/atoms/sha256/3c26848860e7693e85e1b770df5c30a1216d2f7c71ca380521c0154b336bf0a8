@@ -1,0 +1,105 @@
+**定义 10.1（五态载体与占据）。** 取正交单位基，次序固定为
+
+$$
+\Sigma=(0,1,2,3,13),\qquad
+\mathcal H=\operatorname{span}_{\mathbb C}\{|s\rangle:s\in\Sigma\},
+$$
+
+$$
+(x_s,y_s,z_s)=
+\begin{cases}
+(0,0,0),&s=0,\\
+(1,0,0),&s=1,\\
+(0,0,1),&s=2,\\
+(0,1,0),&s=3,\\
+(1,1,0),&s=13.
+\end{cases}
+$$
+
+$x,y,z$ 依次指低、高、中占据。$s_0$ 对应单位向量 $|0\rangle$，不是零向量。中态 $s_2$ 不属于四个底角。精确的直和分解为
+
+$$
+\mathcal H=\mathbb C|2\rangle\oplus\mathcal H_{\rm bot},
+\qquad
+\mathcal H_{\rm bot}\simeq\mathbb C_x^2\otimes\mathbb C_y^2,
+$$
+
+$$
+|0\rangle\leftrightarrow|0,0\rangle,\quad
+|1\rangle\leftrightarrow|1,0\rangle,\quad
+|3\rangle\leftrightarrow|0,1\rangle,\quad
+|13\rangle\leftrightarrow|1,1\rangle.
+$$
+
+这是四维底面的张量分解；整个五维空间并非两个二态系统的张量积。定义全空间算子
+
+$$
+N_x=|1\rangle\langle1|+|13\rangle\langle13|,
+\qquad N_y=|3\rangle\langle3|+|13\rangle\langle13|,
+$$
+
+$$
+N_z=|2\rangle\langle2|,
+\qquad R=|1\rangle\langle0|+|13\rangle\langle3|.
+$$
+
+$R,R^\dagger$ 均消去 $|2\rangle$；它们只翻转底面低占据，保留高占据。
+
+数学引文与符号对应。[Circulation §24.1][C10-circulation] 的质量—占据矩阵、核方向和五函数基，在本章直接使用为
+
+$$
+W=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad
+\ker_{\mathbb R}W=\mathbb R(1,-1,0,-1,1)^{\mathsf T},
+$$
+
+$$
+\mathbb R^\Sigma=\operatorname{span}\{1,x,y,z,xy\}.
+$$
+
+基础公式的标签 $(0,2,3,5,25)$、隐藏关系的标签 $(O,L,T,R,J)$，均依次对应本章 $(0,1,2,3,13)$；旧标签中的字母 $R$ 不指本章升算子。对概率律，令 $X=\mathbb E x,Y=\mathbb E y,Z=\mathbb E z,\kappa=\mathbb E(xy)$，已有反解为
+
+$$
+p=(1-X-Y-Z+\kappa,\ X-\kappa,\ Z,\ Y-\kappa,\ \kappa).
+$$
+
+[Symplectic §35.8][C10-symplectic] 的目标四角系数恰为
+
+$$
+J_f=f_0-f_1-f_3+f_{13},
+$$
+
+$$
+\mathbb E_p f=f_0+(f_1-f_0)X+(f_3-f_0)Y+(f_2-f_0)Z+J_f\kappa.
+$$
+
+它说明静态目标对隐藏坐标的依赖；正宽度纤维上 $J_f=0$ 是均值充分性的判据。零宽度纤维没有两点分离的必要性。这里消费该坐标公式，不把它再立为一般核定理。
+
+相位背景采用同一来源的负相位约定
+
+$$
+\psi_s=\sqrt{p_s}e^{-i\theta_s},\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13},
+$$
+
+$$
+\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3}
+=\sqrt{p_0p_1p_3p_{13}}e^{-i\chi}.
+$$
+
+与正相位记法的精确对应为 $\theta_s^{\rm old}=-\theta_s$、$\Phi^{\rm old}=-\chi$。若任一底角概率为零，使用上式多项式乘积，不给零振幅指定相位。该来源的 $\iota_{X_H}\omega=dH$、$\omega_{\rm red}=d\chi\wedge d\kappa$ 给 $\dot\chi=\partial_\kappa H$、$\dot\kappa=-\partial_\chi H$，所以对角目标有 $\dot\chi=J_f$。
+
+[Symplectic §35.9][C10-symplectic] 另给单份五态振幅上的四次实 Hamilton 函数
+
+$$
+H_{\rm int}=2g_0\operatorname{Re}
+(\psi_0\psi_{13}\overline{\psi_1}\,\overline{\psi_3})
+=2g_0\sqrt{p_0p_1p_3p_{13}}\cos\chi.
+$$
+
+这是射影纯态上的非线性动力学背景，不是作用于有序双系统的线性 Hermitian 矩阵。本章下节的 $K$ 精确取自 [Circulation 定理 24.3][C10-circulation] 的 $V$，且 $A_{ab}$ 就是该定理的 $A$。两种载体、两种 Hamilton 对象不得互换。该卷命题 24.7 已给相同独立纯准备时每份能量及初始导数的联系；这种初始联系不使任意链态在每次接触前恢复为相同乘积准备。
+

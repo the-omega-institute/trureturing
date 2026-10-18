@@ -1,0 +1,62 @@
+**Theorem 10.5 (Common commands act on the base quotient).** Let
+$\gamma=(a,b)$ be an absolutely continuous or piecewise $C^1$ relative path
+starting at zero, and use the notation of [Transport §9.1][T10]:
+
+$$
+A=a(T),\quad B=b(T),\quad K=\int a\,db,
+\quad m=\min a,\quad M=\max a.
+$$
+
+The command is legal at height $\kappa$ exactly when
+
+$$
+\kappa+m>0,\qquad \kappa+M<L.
+\tag{10.10}
+$$
+
+Its endpoint, with $r=2L$, is
+
+$$
+\kappa'=\kappa+A,\quad
+u'=u+B/2-(\kappa B+K)/r,\quad
+v'=v-(\kappa B+K)/r.
+\tag{10.11}
+$$
+
+Consequently the base quotient update is
+
+$$
+(\kappa,e^{i(u-v)})\longmapsto
+(\kappa+A,e^{i(u-v)+iB/2}),
+\tag{10.12}
+$$
+
+on the partial domain (10.10). The command action and its legal domain are determined by the
+summary $(A,B,K,m,M)$: it determines the full partial map on $\mathcal M$
+and, by descent, the partial map on $\mathcal B$. Evaluating these maps
+uses the corresponding current state. The summary
+need not be unique, because different paths can have the same endpoint and
+phase class.
+
+A stationary command $a=b=0$ is legal on all $(0,L)$. An out-and-back path
+with $b=0$ and $a$ going from $0$ to $\varepsilon$ and back, where
+$0<\varepsilon<L$, has the same $(A,B,K)=(0,0,0)$ but is legal only on
+$(0,L-\varepsilon)$. Thus endpoint data alone does not determine the
+partial operation.
+
+Proof. The legality criterion and endpoint formula are the direct
+specialization of [Transport Theorems 9.2 and 9.3][T10]. Subtracting the
+last two equations in (10.11) gives (10.12), while the real lift retains
+$K$ and the phase law. The stationary and excursion paths have the stated
+extrema, proving the domain distinction. For concatenation, the supplied
+chronological law is
+
+$$
+(A,B,K)\star(A',B',K')=(A+A',B+B',K+K'+AB'),
+$$
+
+with
+$m''=\min(m,A+m')$ and $M''=\max(M,A+M')$; the path followed by its
+reverse is the identity only on its actual lawful domain, not a globally
+lawful identity command. $\square$
+

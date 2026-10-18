@@ -1,0 +1,11 @@
+**Proposition (the conservation test has no global monotone representative).** The conservation test \(g=\mathcal W'/w\) has no globally
+nondecreasing or globally nonincreasing representative on
+\((1,\infty)\). It vanishes almost everywhere before and after the
+compact support \([\ell,2\mathcal R]\). A monotone representative
+with those two properties must vanish everywhere. Then absolute
+continuity forces \(\mathcal W\) to be constant, and compact support
+forces it to be zero, contrary to \(\int\mathcal W=\mathcal D>0\).
+This rules out the global monotone-test shortcut for the actual weight.
+
+
+

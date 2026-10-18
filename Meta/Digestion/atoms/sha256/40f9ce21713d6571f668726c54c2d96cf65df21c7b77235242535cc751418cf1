@@ -1,0 +1,42 @@
+**Second rectangle.** Substitute $a=4+X$, $b=5+Z$ with
+$0\le X,Z\le1$. Then $p=20+5X+4Z+XZ$, $s=9+X+Z$. Put
+
+$$
+\begin{aligned}
+E_3&=28pL_0-15D
+ =382p^2-1962ps+8022p+1620s^2-10620s+12600,\\
+E_4&=5D-28pK_0
+ =-202p^2+1102ps-4802p-540s^2+3540s-4200.
+\end{aligned}
+\tag{2.12}
+$$
+
+The full rows in exactly the same basis are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+ &1&X&Z&X^2&XZ&Z^2&X^2Z&XZ^2&X^2Z^2\\ \hline
+E_3&8320&7520&1876&1360&6506&-116&1858&1094&382\\
+E_4&5440&1040&4004&-80&-2206&636&-918&-514&-202
+\end{array}
+\tag{2.13}
+$$
+
+Dropping nonnegative terms and bounding the remaining monomials by one,
+
+$$
+E_3\ge8320-116=8204>0,\qquad
+E_4\ge5440-80-2206-918-514-202=1520>0.
+\tag{2.14}
+$$
+
+Now
+
+$$
+\frac{E_3}{10D}=\ell-\frac32=u-\frac12,\qquad
+\frac{E_4}{10D}=v-\frac12.
+\tag{2.15}
+$$
+
+Both $u,v>1/2$, contradicting $uv\le1/4$ again.
+

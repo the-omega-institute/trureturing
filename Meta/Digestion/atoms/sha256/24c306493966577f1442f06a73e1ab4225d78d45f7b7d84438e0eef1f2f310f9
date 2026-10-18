@@ -1,0 +1,45 @@
+**Proposition 90.5 (identity survives while both actual observations collapse).**
+For every $h\ge1$ and every labelling, $\nu_{h,\omega}\in\mathcal D_{\rm CE}$.
+The map $\omega\mapsto\nu_{h,\omega}$ is injective,
+$|\mathcal F_h|=2^m$, and the families have no finite bound on cardinality.
+On their union the native row is the single row with reached set $Q$,
+exterior $C_Q$ and six singleton classes; $q(\nu_{h,\omega})=(0,0,0)$.
+The complete subtree valuation remains injective, also across different $h$.
+Consequently, on each $\mathcal F_h$, the source and $V_Q$ equality quotients
+have $2^m$ classes, while the $R_Q$, $q$ and joint $(R_Q,q)$ quotients each
+have one class.
+
+Proof. The right-spine clock is
+$\kappa(\alpha)=0,\kappa(\beta)=1,
+\kappa(\langle s,t\rangle)=2+\kappa(t)$ (ARH.4.2).
+It gives $\kappa(X)\in\{2h,2h+1\}$, $\kappa(Y)=2h+6$, and hence
+
+$$
+\kappa(X)<\kappa(\rho X)<\kappa(Y)<\kappa(\rho^2Y).
+\tag{90.8}
+$$
+
+All four CE inequalities hold. The construction and Proposition 90.2 retain
+every old-class, literal and reached-endpoint guard, not just these clocks.
+Different labellings differ at an actual $LLp$ leaf; $X$ has exactly height
+$h$, so different heights cannot coincide either. There are $m$ independent
+binary labels and therefore $2^m$ different sources.
+
+Both $X,Y$ are branches. So are $\rho X,\rho^2Y$; their mutual
+inequalities are already established. None equals either constant leaf,
+and $\alpha\ne\beta$. Thus (90.4) gives six singleton classes at every
+height. For $j\ge1$, $q(B_j)=0$, since $a\times a=0$ at the first pairing
+and $0\times0=0$ thereafter. In particular $q(Y)=0$, whence
+$q(\langle X,Y\rangle)=q(X)\times0=0$ and $q(\nu)=0$.
+Injectivity of $V_Q$ follows from its first entry and the source formula.
+This proves all the quotient assertions. $\square$
+
+The row collapse holds on this family, not on all of $\mathcal D_{\rm CE}$.
+For example, $y=\langle\alpha,\alpha\rangle$ and either $x=\alpha$ or
+$x=\beta$ satisfy $D$ but have different partitions in (90.4). On the full
+domain ARH Proposition 23.2 supplies a static at-most-two-read service:
+at the actual $\rho^N u$ it reads $LLR^{\lceil N/2\rceil}$ and
+$LRR^{\lceil N/2\rceil}$, decodes the original root cases of $x,y$, and
+outputs (90.3)--(90.4). On the promised union of (90.7), the constant row
+can instead be output with zero new raw reads. Neither task identifies $\omega$.
+

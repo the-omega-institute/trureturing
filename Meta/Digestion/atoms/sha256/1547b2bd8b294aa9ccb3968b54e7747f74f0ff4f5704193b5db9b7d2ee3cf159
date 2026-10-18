@@ -1,0 +1,44 @@
+**Theorem 79.1 (microscopic energy order and divergence).** Suppose
+$g\downarrow0$, $\tau(g)\to0$ and $\chi(g)\to\infty$.
+There are constants $c,C>0$ such that eventually
+
+$$
+-Cg\tau(g)^{-5/2}\le E_{\tau(g)}(g)
+                  \le-cg\tau(g)^{-5/2}.
+\tag{79.1}
+$$
+
+In particular
+
+$$
+E_{\tau(g)}(g)\longrightarrow-\infty,\qquad
+\frac{E_{\tau(g)}(g)}{g^2}\longrightarrow-\infty.
+\tag{79.2}
+$$
+
+This contradicts the quadratic Coulomb energy law in this regime
+by actual admissible competitors, while each positive-cutoff
+problem remains separately bounded below and attained.
+
+Proof. Take $s=\sqrt{\tau(g)}$ in Proposition 78.2. Its normalized
+native vector has energy at most
+
+$$
+\tau(g)^{-1}\bigl(aC_0-c_0'\chi(g)\bigr).
+\tag{79.3}
+$$
+
+Once $\chi(g)\ge2aC_0/c_0'$, this is at most
+$-(c_0'/2)g\tau(g)^{-5/2}$, giving the upper bound in (79.1).
+The independent full-domain lower bound follows from $T\ge0$ and
+$\|W_\tau\|_\infty\le C\tau^{-5/2}$ in (76.2).
+Since $g\tau^{-5/2}=\chi/\tau\to\infty$, the first limit in
+(79.2) follows. Dividing the upper bound by $g^2$ gives
+$-c\tau^{-5/2}/g\to-\infty$, proving the second.
+Only the order in (79.1) is identified; its bounds do not identify
+an exact microscopic coefficient or a microscopic ground profile.
+The witness proves a variational upper direction, and the matching
+lower order uses the separate all-height heat estimate. Failure of
+a sufficient smallness estimate alone was not used as a
+counterexample. $\square$
+

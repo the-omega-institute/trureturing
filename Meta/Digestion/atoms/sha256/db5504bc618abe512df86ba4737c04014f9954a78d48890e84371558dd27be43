@@ -1,0 +1,31 @@
+**Convention 1.1 (reference input).** This volume contains
+ordinary mathematical definitions and proofs, without new Lean verification,
+physical implementation or a completion claim. Lean declarations remain the
+repository's mathematical source of truth.
+
+All repository suppliers here are read at immutable revision
+`5094da88f161741b61de3b6b16dbc3a115a83d63`. The four credited volumes are
+[Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md),
+[Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md),
+[Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md)
+and [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md).
+Their classification, sharp canonical survival, signed-loss image, phase-order
+and winding witnesses, stability boundaries, exact qutrit correspondence,
+coding minimum and area/winding acquisition certificates are reused.
+
+The concrete consumer is Instrument Stability §5: certifying the complete
+terminal operation requires time/mode loss-density error and terminal Kraus
+error. Area/winding accuracy alone does not supply the first datum. Here a
+finite simultaneous timed height/relative-phase record, together with an
+externally justified bound on variation of height velocity, supplies both.
+Theorem 7.1 gives a complete exact-time, five-mode certificate. Theorem 9.4
+gives the deterministic sample/noise order for predicting this complete
+instrument in one actual positive zero-phase source subclass.
+
+A coordinate sampler is an added service. Its existence, lawful delivery,
+calibration, disturbance and joint law are not consequences of transport.
+Section 3 distinguishes a programme-source recorder continuing through
+specimen failure from a recorder available only while the specimen is live.
+Section 8 states an extra joint-kernel premise before making a joint-output
+claim. A pointwise accurate table by itself establishes no such premise.
+

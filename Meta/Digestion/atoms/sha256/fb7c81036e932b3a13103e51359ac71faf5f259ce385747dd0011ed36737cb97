@@ -1,0 +1,47 @@
+**Theorem 14.1 (critical strip for every complete actual record).**
+There are source constants $K,\epsilon_0,t_*>0$ such that every
+feasible original instrument with $t\ge t_*$ and
+$0\le\epsilon=tq-C_{\rm end}\le\epsilon_0$ has
+
+$$
+|T_{\rm instr}-B_0|\le K(\epsilon+t^{-1}).
+\tag{JS.65}
+$$
+
+This strengthens the WE/§9 universal critical limit quantitatively.
+The double-sided statement concerns its entire generated acquisition
+record; a subsequent coarsening has only the corresponding upper bound.
+
+Proof. Let $\epsilon_\nu=z_\nu-C_{\rm end}$ and
+$\Delta_\nu=\epsilon-\epsilon_\nu\ge0$. The strict tangent gap
+$F_c(x)-F_c(r)-F_c'(r)(x-r)$ has integral $\epsilon_\nu$ against
+$\nu$. Choose a fixed open radial neighborhood $O$ of $r$, whose
+closure misses $1$, in which every sign of $k(z,w)$ is strictly
+negative. Such a choice exists by (JS.18)–(JS.19). Its complementary
+tangent gap has a positive minimum. Therefore
+
+$$
+\nu\{z^2\notin O\}\le K\epsilon_\nu,
+\qquad 0\le\int|k|d\nu-d_f\le K\epsilon_\nu.
+\tag{JS.66}
+$$
+
+The latter uses $\int k\,d\nu=-d_f$ and bounds $k_+$ outside $O$.
+Since $H$ has a positive minimum on $\overline O$, (JS.61)–(JS.62)
+also give $P\{z^2\in O\}\le K(1+\Delta_\nu)/t$.
+The exact actual-label triangle loss (JS.44) is at most
+$2[\|f\|_\infty P(O)+\|k\|_\infty\nu(O^c)]$.
+Using (JS.63), (JS.66) and (JS.12) on this same record yields
+
+$$
+|T_{\rm instr}-B_0|
+\le K\left[\epsilon_\nu+
+\sqrt{\Delta_\nu/t}+t^{-1}\right].
+\tag{JS.67}
+$$
+
+The bounded $\Delta_\nu/t$ term was absorbed into $K/t$.
+Now $\sqrt{x/t}\le(x+t^{-1})/2$ proves (JS.65). No optimizing
+assumption, chosen time law or hidden record refinement entered.
+$\square$
+

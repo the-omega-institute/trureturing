@@ -1,0 +1,213 @@
+**Theorem 4.1 (positive-gain collisions with full surviving spans).** For every $d\ge0$ and $m\ge2$, the history
+
+$$
+A_i=I\quad(0\le i\le d),\qquad
+A_{d+j}=C_j\quad(1\le j\le4)
+$$
+
+has $d+5$ reads and admits distinct positive rank-one effective sources with slopes $0$ and $\varepsilon>0$, degree-at-most-$d$ drifts, and identical observations. Every recorded gain is strictly positive. Deletion of any single noninitial recorded position leaves four-dimensional matrix span. For $d=0$ the five recorded matrices are distinct.
+
+Proof. We first verify the legal history, then identify its slope-transfer operator and construct the actual collision.
+
+After the initial read and $d$ empty-word repeats, use the following chronological atom blocks, with no intermediate reads within a block:
+
+| Endpoint index | Chronological block | Cumulative matrix |
+| --- | --- | --- |
+| $d+1$ | $(M,J)$ | $U$ |
+| $d+2$ | $(J,M)$ | $LU$ |
+| $d+3$ | $(M,J,M,J)$ | $U^2LU$ |
+| $d+4$ | $m$ repetitions of $(J,M)$ | $L^mU^2LU$ |
+
+The blocks have $2,2,4,2m$ atoms, for $8+2m$ in total. There are $d+1$ baseline reads and four tail reads. These are the actual consecutive read indices; the unread atoms do not change them. Multiplication gives
+
+$$
+C_1=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+C_2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad
+C_3=\begin{pmatrix}3&5\\1&2\end{pmatrix},\quad
+C_4=\begin{pmatrix}3&5\\3m+1&5m+2\end{pmatrix}.
+$$
+
+Each has determinant one. They and $I$ are distinct for $m\ge2$; different $m$ give different final matrices, so this is an infinite family of histories.
+
+For any real matrix $T=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, put $a=p+s$ and
+
+$$
+V_j(T)=\operatorname{tr}(C_jT)-a.
+$$
+
+Expanding the traces gives
+
+$$
+V(T)=\bigl(r,\ q+r+s,\ 2p+q+5r+s,
+2p+(3m+1)q+5r+(5m+1)s\bigr).
+$$
+
+This linear map is invertible. For $v=V(T)$ its inverse is
+
+$$
+r=v_1,\qquad
+p=\frac{v_3-v_2}{2}-2r,\qquad
+s=\frac{(v_4-v_3)/m-3(v_2-v_1)}2,\qquad
+q=v_2-v_1-s.
+$$
+
+Indeed $v_3-v_2=2p+4r$, $v_4-v_3=m(3q+5s)$, and $v_2-v_1=q+s$, which verify all four recovered entries. The only divisors are the fixed positive numbers $2,m$.
+
+Thus $C_j-I$ span the four-dimensional matrix space under the nondegenerate trace pairing. The five matrices $I,C_1,C_2,C_3,C_4$ have rank four and satisfy
+
+$$
+-2I+C_1+4C_2+(1/m-1)C_3-(1/m)C_4=0.
+$$
+
+To check the relation, use $C_4=C_3+m(\begin{smallmatrix}0&0\\3&5\end{smallmatrix})$; the expression reduces entrywise to zero. Rank four makes this dependence unique up to scale. Every coefficient is nonzero for $m\ge2$, so any four of these five matrices are independent. Deleting a tail read leaves $I$ and three other tails. Deleting a noninitial baseline repeat, when one exists, leaves an $I$ and all four tails. These are precisely all single noninitial deletions, and each surviving span has dimension four.
+
+At slope zero the quotient map $\mathcal B$ of Section 2 is invertible for this history. If $\mathcal B(T)=0$, Lemma 2.1 says the signal vector equals the values of a polynomial $P\in\mathcal P_d$. Its first $d+1$ values are the constant $a=\operatorname{tr}T$, so polynomial uniqueness gives $P=a$. The four tail values then give $V(T)=0$, hence $T=0$. A linear map between two four-dimensional spaces with zero kernel is invertible.
+
+Define the comparison operator
+
+$$
+N_0=V^{-1}W,\qquad W_j(T)=j\operatorname{tr}(C_jT),
+$$
+
+and set
+
+$$
+E=V^{-1}(1,2,3,4)
+=\begin{pmatrix}
+-3/2&(5-1/m)/2\\
+1&(1/m-3)/2
+\end{pmatrix}.
+$$
+
+Substitution into the inverse of $V$ verifies $E$. Since $\operatorname{tr}(C_jT)=V_j(T)+a$,
+
+$$
+V^{-1}\operatorname{diag}(1,2,3,4)V(T)=N_0(T)-aE.
+$$
+
+For $d\ge1$ put
+
+$$
+N_d=d\operatorname{Id}+N_0-(\operatorname{tr}\,\cdot)E
+=V^{-1}\operatorname{diag}(d+1,d+2,d+3,d+4)V.
+$$
+
+For $d=0$, the entries of $\mathcal L(N_0T)-\mathcal I\mathcal L(T)$ all equal $\operatorname{tr}(N_0T)$: at index zero this is immediate, and at index $j$ it follows from $V_j(N_0T)=j\operatorname{tr}(C_jT)$. For $d\ge1$, writing $a_N=\operatorname{tr}(N_dT)$, the entries of $\mathcal L(N_dT)-\mathcal I\mathcal L(T)$ equal $a_N-ia$. This holds at each baseline index and at each tail index $i=d+j$, where $V_j(N_dT)=iV_j(T)$ cancels the residual. The respective differences are constant or affine, of degree at most $d$. Applying $\Lambda$ yields
+
+$$
+\mathcal B N_d=\mathcal C
+$$
+
+in both cases, with $N_d=N_0$ when $d=0$. Consequently the transfer operator $\mathcal H=\mathcal B^{-1}\mathcal C$ at slope zero is exactly this $N_d$.
+
+Consider the actual rank-one sources
+
+$$
+S(y)=\begin{pmatrix}1&y\\1&y\end{pmatrix}
+=(1,1)^{\mathsf T}(1,y),\qquad y>0.
+$$
+
+For completeness, the vector used to compute $N_0$ at a general matrix is
+
+$$
+W(T)=\bigl(p+r+s,\ 2p+2q+2r+4s,
+9p+3q+15r+6s,
+12p+4(3m+1)q+20r+4(5m+2)s\bigr).
+$$
+
+Using the displayed inverse of $V$ gives the following entries on $S(y)$:
+
+| Entry | $N_0(S(y))$ | $(N_0-(\operatorname{tr}\,\cdot)E)(S(y))$ |
+| --- | --- | --- |
+| $11$ | $6-y/2$ | $15/2+y$ |
+| $21$ | $2+y$ | $1$ |
+| $22$ | $4/m-3+(17/2+3/(2m))y$ | $7/(2m)-3/2+(10+1/m)y$ |
+| $12$ | $5-4/m-(7/2+3/(2m))y$ | $5/2-7/(2m)-(6+1/m)y$ |
+
+The second column of values follows from subtracting $(1+y)E$. For $S(y)$ the mixed determinant is $yN_{11}+N_{22}-N_{12}-yN_{21}$. Thus
+
+$$
+Q_{N_0}(S(y))=Q_0(y)
+=8/m-8+(16+3/m)y-\frac32y^2.
+$$
+
+The mixed determinant of $dS(y)$ with $S(y)$ is $2d\det S(y)=0$. Therefore for every $d\ge1$,
+
+$$
+Q_{N_d}(S(y))=Q_1(y)
+=7/m-4+(45/2+2/m)y+y^2.
+$$
+
+For all $m\ge2$ these have opposite signs at the same positive endpoints:
+
+$$
+\begin{aligned}
+Q_0(1/100)&\le-4+\frac{35}{200}<0,
+&Q_0(1)&=13/2+11/m>0,\\
+Q_1(1/100)&\le-1/2+\frac{47}{200}+\frac1{10000}
+=-\frac{2649}{10000}<0,
+&Q_1(1)&=39/2+9/m>0.
+\end{aligned}
+$$
+
+These follow from $1/m\le1/2$; the negative quadratic term of $Q_0$ was discarded only for its upper bound. They prove the sign-change hypothesis of Theorem 3.1 at slope zero for every member of the family.
+
+We now give the sources and full observation equations explicitly. Write $N=N_0$ if $d=0$ and $N=N_d$ otherwise, and choose the corresponding $Q_0$ or $Q_1$. On the compact interval $[1/100,1]$ put
+
+$$
+K=1+\max_{y,a,b}|N(S(y))_{ab}|,
+\qquad \eta=\min(-Q(1/100),Q(1))>0.
+$$
+
+Choose any
+
+$$
+0<\varepsilon<\min\left(\frac1{200K},\frac\eta{4K^2}\right).
+$$
+
+Every entry of $S(y)$ is at least $1/100$, so every entry of $S(y)+\varepsilon N(S(y))$ exceeds $1/200$. Also $|\det(N(S(y)))|\le2K^2$, so $Q(y)+\varepsilon\det(N(S(y)))$ retains its opposite strict endpoint signs. There is an interior $y_\varepsilon$ where it vanishes. Define
+
+$$
+S_1=S(y_\varepsilon),\qquad
+S_0=S_1+\varepsilon N(S_1),\qquad
+\kappa_0=0,\qquad\kappa_1=\varepsilon.
+$$
+
+The determinant expansion in Section 2 and the entrywise bound make both sources strictly positive of rank one. They are distinct: $(N_0(S_1))_{21}=2+y_\varepsilon>0$ for $d=0$, while $(N_d(S_1))_{21}=d+1>0$ for $d\ge1$. Hence $(S_0)_{21}>1=(S_1)_{21}$. Every sampled gain is $1$ or $1+\varepsilon i>0$.
+
+Let $a_b=\operatorname{tr}S_b$. If $d=0$, use the single constant polynomials
+
+$$
+D_0(t)=0,\qquad D_1(t)=\varepsilon\operatorname{tr}(N_0(S_1)).
+$$
+
+The initial readings agree because $a_0=a_1+\varepsilon\operatorname{tr}(N_0(S_1))$. At each actual tail index $j=1,2,3,4$, the difference between run 0 and run 1 is
+
+$$
+\begin{aligned}
+\operatorname{tr}(C_jS_0)
+ -(1+\varepsilon j)\operatorname{tr}(C_jS_1)-D_1(j)
+&=\varepsilon\bigl[
+V_j(N_0(S_1))-j\operatorname{tr}(C_jS_1)\bigr]\\
+&=0.
+\end{aligned}
+$$
+
+Thus all five original equations hold with the same constant used throughout each run.
+
+If $d\ge1$, use the single entire polynomials
+
+$$
+D_0(t)=-a_0,\qquad D_1(t)=-a_1(1+\varepsilon t).
+$$
+
+Their degrees are at most one and therefore at most $d$. All initial $I$ readings at indices $0,\ldots,d$ are zero in both runs. At actual tail index $i=d+j$ the observations are respectively
+
+$$
+V_j(S_0),\qquad (1+\varepsilon(d+j))V_j(S_1).
+$$
+
+They agree since $V_j(N_d(S_1))=(d+j)V_j(S_1)$. This checks every baseline and tail equation at its original clock index, with no per-sample choice of drift.
+
+Finally take $\alpha_0=\alpha_1=1$, $\beta_0=0$, $\beta_1=\varepsilon$, and $R_b=S_b$. Run 1 has the explicit fixed positive factors $c_1=(1,1)^{\mathsf T}$ and $\ell_1=(1,y_\varepsilon)$. Run 0 has $c_0=(p_0,r_0)^{\mathsf T}$ and $\ell_0=(1,q_0/p_0)$; positivity and $p_0s_0=q_0r_0$ make their product exactly $S_0$. Each row remains fixed along the full chronological word list, and the atomic positivity formulas in Theorem 3.1 cover every unread state as well. These are two actual original-model runs with distinct effective sources and slopes. Their equality of observations is an additional ambiguity beyond the representation fibre. ∎
+

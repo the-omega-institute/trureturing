@@ -1,0 +1,81 @@
+**Definition 1.2 (source, coordinates and histories).** Original modes have
+basis $e_0,e_1,e_2,e_3,e_4$, with index $4$ naming original mode $13$.
+Write
+
+$$
+\begin{gathered}
+c_{\rm src}=1/4,\quad Z_{\rm src}=1/2,\quad
+\mathfrak a=16/256,\quad \mathfrak h=11/256,\quad
+\delta_{\rm ramp}=6/256,\quad L=1,\\
+|+\rangle=(e_0+e_4)/\sqrt2,\quad
+|-\rangle=(e_1+e_3)/\sqrt2,\quad |2\rangle=e_2,\\
+E=(|+\rangle,|-\rangle,|2\rangle):\mathbb C^3\longrightarrow\mathbb C^5,
+\quad P=EE^\dagger,\quad Q_5=I_5-P,\quad V=\operatorname{ran}E.
+\end{gathered}
+\tag{IR.1}
+$$
+
+Supported matrix indices $0,1,2$ mean $(+,-,2)$, rather than the five
+failure labels. The actual normalized reached-old-live-cut inputs are
+
+$$
+\begin{aligned}
+p_y&=(y/128,(64-y)/128,1/2),&
+a_y&=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,\\
+U_{e,n}&=\operatorname{diag}(e,n,1),&
+\rho_{y,e,n}&=U_{e,n}a_ya_y^TU_{e,n}^\dagger,\\
+y&\in\{5,16,27\},& e,n&\in\{+1,-1\}.
+\end{aligned}
+\tag{IR.2}
+$$
+
+Their source dictionary is
+
+$$
+x=y/256\in\{\mathfrak a-\mathfrak h,\mathfrak a,
+\mathfrak a+\mathfrak h\},\qquad
+ e=(-1)^{\beta_{\rm hist}/\pi},\qquad
+ n=e(-1)^m,\qquad \beta_{\rm hist}\in\{0,\pi\},\quad m\in\{0,1\}.
+\tag{IR.3}
+$$
+
+In particular $en=(-1)^m$. These twelve states come from one preparation,
+not a selectable ensemble. To specify the credited source correspondence,
+the double-wall populations and phase rates are
+
+$$
+\begin{aligned}
+p(k)&=(k,c_{\rm src}-k,Z_{\rm src},c_{\rm src}-k,k),
+\qquad 0<k<c_{\rm src},\\
+w(k)&=\left(\frac{c_{\rm src}-k}{2c_{\rm src}},
+-\frac{k}{2c_{\rm src}},0,-\frac{k}{2c_{\rm src}},
+\frac{c_{\rm src}-k}{2c_{\rm src}}\right),\\
+\psi_i(t)&=\sqrt{p(k(t))_i}\exp\left(-i\int_0^t
+ w_i(k(u))\chi'(u)\,du\right).
+\end{aligned}
+\tag{IR.4}
+$$
+
+CG Proposition 2.2 gives six unit-duration legs from preparation height
+$1/8$: a phase leg $0\to2\pi m$, descent to $1/16$, phase leg
+$2\pi m\to2\pi m+B$, ascent to $1/8$, phase return to $2\pi m$,
+and height change to $x$, where $B=8\beta_{\rm hist}-4\pi m$.
+The resulting real residual is
+$(\beta_{\rm hist},\beta_{\rm hist}-\pi m,0,
+\beta_{\rm hist}-\pi m,\beta_{\rm hist})$, which gives (IR.2).
+The positive old reach masses are $32/177,2/9,32/111$, respectively.
+The experiment starts with the normalized specimen conditioned on that
+already reached cut at time six. Those earlier masses are neither
+history priors nor new acceptance weights.
+
+All original path conditions remain: finite duration, continuous strict
+height coordinates, a signed real phase lift of finite variation, and
+absolute continuity or the specified finite-piecewise-$C^1$ alternative.
+Composition is literal chronological composition of the same real lift.
+The requested continuation is $k(t)=x+\delta_{\rm ramp}t$ with phase
+fixed, $0\leq t\leq1$, legal on the common relative-command domain
+$(0,58/256)$. Zero duration allows only the matching zero-displacement
+identity. Denial, visible unexecuted rejection, permissions and controller
+updates keep their original meanings. A partial command supplies no
+unknown-height detector, waveform read or new original actuator.
+

@@ -1,0 +1,99 @@
+**Theorem 65.7 (lawful all-source refinement and buffered killed targets).**
+Let $t$ be any original nonempty finite source and let
+$D_j(t)=\operatorname{Pos}(\rho^jt)$ retain the actual irregular domain,
+root and history interpretation of Definition55.1. For every actually reached
+version, or every separately legal finite prefix, with $j\ge6$, the common
+full-table target has
+
+$$
+E_{D_j(t)}^{\rm c}\ge\varepsilon_{{\rm c},5}
+\ge\varepsilon_{{\rm c},8}.
+\tag{65.24}
+$$
+
+Set $\lambda=3-2\sqrt2$, $\varrho=1-\lambda/3$ and, for an integer $R\ge3$,
+
+$$
+\eta_R=\frac{64\varrho^{R-2}}{\lambda}.
+\tag{65.25}
+$$
+
+For every such separately legal $j\ge2R$, the killed full-table target obeys
+
+$$
+E_{D_j(t)}^{\rm k}\ge
+\max\{0,\varepsilon_{{\rm c},5}-\eta_R\}.
+\tag{65.26}
+$$
+
+In particular the finite choice $R=241$, $j\ge482$, certifies, uniformly
+over all original finite $t$ and all sourcewise refits,
+
+$$
+E_{D_j(t)}^{\rm k}\ge\tfrac12\varepsilon_{{\rm c},8}>0.
+\tag{65.27}
+$$
+
+These quantifiers permit arbitrary varying finite $t$ with separately legal
+indices; they do not permit an increase of a running cap, installation of a
+refused candidate, an event after Stop or an event after an infinite prefix.
+
+Proof. Equation (55.2) gives $B_3\subset D_j(t)$ for $j\ge6$.
+The common coefficients on its eight terminals are exactly the unchanged
+common table of Theorem65.3. Restriction and Theorem65.6 prove (65.24).
+For $j\ge2R$ one has $B_R\subset D_j(t)$. Every depth-three address then
+has an occurrence-metric buffer of radius $R-3$ contained in that actual
+domain. Lemma63.6, applied with this buffer, gives on the terminal pairs
+
+$$
+0\le G^{\rm c}(p,q)-G_{D_j(t)}^{\rm k}(p,q)
+\le\frac{\varrho^{R-2}}\lambda,
+\qquad
+0\le1-\frac{G_{D_j(t)}^{\rm k}(p,q)}{G^{\rm c}(p,q)}\le\eta_R,
+\tag{65.28}
+$$
+
+since their common minimum is $1/64$. If a modeled response has relative
+killed error $e_{pq}$ and
+$d_{pq}=1-G_{D_j(t)}^{\rm k}(p,q)/G^{\rm c}(p,q)$, then
+
+$$
+\frac{\widehat G(p,q)}{G^{\rm c}(p,q)}-1
+=(1-d_{pq})e_{pq}-d_{pq}.
+$$
+
+Positivity and killed domination give $0\le d_{pq}<1$, and hence its absolute
+value is at most $|e_{pq}|+\eta_R$. Apply the common five-terminal bound to
+the same modeled responses on $\mathcal S_5$. Their maximum killed error
+is at least $\varepsilon_{{\rm c},5}-\eta_R$, proving (65.26).
+This comparison uses one actual table and one configuration throughout, rather
+than combining independently attainable fits.
+
+For the stated finite threshold, the rational inequalities
+
+$$
+\sqrt2<\frac{99}{70},\qquad
+\lambda>\frac6{35},\qquad\varrho<\frac{33}{35},\qquad
+64\frac{35}{6}\left(\frac{33}{35}\right)^{239}
+\le\frac1{3392}<\frac{\varepsilon_{{\rm c},8}}2
+\tag{65.29}
+$$
+
+give $\eta_{241}<\varepsilon_{{\rm c},8}/2$. The power inequality is an
+exact rational certificate, equivalently
+$3392\cdot64\cdot35\cdot33^{239}\le6\cdot35^{239}$.
+The last strict inequality follows from
+$\varepsilon_{{\rm c},8}>1/1696$. Equations (65.26) and
+$\varepsilon_{{\rm c},5}>\varepsilon_{{\rm c},8}$ imply (65.27).
+$\square$
+
+At each finite prefix the cap must cover that source's actual candidate leaf
+counts; no assertion here supplies its bank, preparation or price for free.
+The domain remains $D_j(t)$, not $B_R$. Under actual accepted renewal, the
+common old-pair values retain (62.7), whereas the killed values undergo the
+authentic mask-dependent Schur update (62.8). At a refusal or Read the installed
+source and operator version do not change. A static obstruction with arbitrary
+sourcewise refitting is already a necessary failure for any stronger demand
+of one persistent geometric assignment through those versions; this implication
+does not establish a retained-state switching law.
+

@@ -1,0 +1,34 @@
+**Definition 1.1 (acquisition model).** A complete world is
+$W=(P,g,\delta)$, where $P$ is a strictly entrywise positive real
+$2\times2$ matrix of rank one and trace one,
+$0\ne g\in\mathbb R[T]$ has degree at most three, and
+$\delta\in\mathbb R$. Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{J,M\}.
+\tag{1.1}
+$$
+
+The reading at original clock $i$ is
+
+$$
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.2}
+$$
+
+The initial reading counts. Each individual atom is immediately read
+on one unresettable, uncopyable trajectory. Eight total readings use
+clocks $0,\ldots,7$. There are no skipped readings, unread compound
+actions, empty-action readings, clock renumberings or extra ports.
+Actions, stops and complete-target answers may be arbitrary
+deterministic functions of the entire actual history, without
+regularity or computability assumptions. The source need not be
+symmetric. Both gain signs, every lower actual degree, all sampled
+roots, other roots and repeated roots are initially allowed.
+
+These are the acquisition and complete-target conventions of
+[VII, Definition 1.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md)
+and [VIII, Definition 1.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md).
+

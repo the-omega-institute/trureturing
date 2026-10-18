@@ -1,0 +1,14 @@
+## 8. 来源与证据范围
+
+| 来源 | 支持的范围 |
+| --- | --- |
+| 仓内 QueryFamilyIdentification、DeterministicInterfaceEquivalence | 指定目标的识别条件和实际像上的操作下降；直接复用既有形式结果。 |
+| 仓内 CircleDoubleCoverNoSection、CircleDoubleCoverHistoryLift、CircleDoubleCoverLipschitzError | 无全局连续平方根选择、带起点的路径提升、所有预算下界与高预算取得。 |
+| 仓内 LocalDescentGlobalCompatibility、DaoConceptBoundarySpecialization | 相容线程的全局实现障碍，以及明确非穷尽前提下的概念余部条件式。 |
+| Allen Hatcher, [Algebraic Topology](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf), §1.3 | `literature-attested`：覆盖空间与路径／同伦提升的经典背景；精确圆周结论仍由上述仓内声明承担。 |
+| Almut Burchard, [A Short Course on Rearrangement Inequalities](https://www.math.utoronto.ca/almut/rearrange.pdf), 2009, §1.2, Lemma 1.6 | `literature-attested`：层集与重排优化的经典背景；该引理不直接给出本卷的有界密度公式，式（5.5）另给显式证明。 |
+| Stanford Encyclopedia of Philosophy, [Structural Realism](https://plato.stanford.edu/entries/structural-realism/), §3–5 | 认识论／本体论结构实在论及其争议的哲学地图；不用于证明本卷数学。 |
+| 第 5 章的密度归约、阈值证书与低预算公式 | `repo-derived`：本卷的普通数学综合推导；尚未完成 Lean 形式化，不申报文献原创。 |
+
+本卷不重复冻结既有结果，不把候选推导或数值核对写作新的 kernel 真值。文献背景与对公式的原始出处查新是不同工作；目前没有完成足以判定该精确公式文献新颖性的检索。
+

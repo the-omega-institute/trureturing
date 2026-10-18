@@ -1,0 +1,15 @@
+**Proposition 9.1 (omission creates a finite countermodel).** If any one of
+the fields above can vary on two actual states while all retained boundary
+fields agree, and some declared continuation, selector or response actually
+depends on that field, then there is a finite continuation task for which the
+retained boundary is not sufficient.
+
+**Proof sketch.** Choose the first action whose legality, selector, output,
+failure label, archive order or meter update differs.  A finite continuation
+containing that action separates the states; its length need not be one or
+two.  For an omitted clock or permission field, use the continuation whose
+threshold or access predicate reads that field.  This is exactly the “same
+current value, different future response” construction of [Boundary Dynamics
+§§19--20](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md).
+$\square$
+

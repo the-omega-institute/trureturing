@@ -1,0 +1,58 @@
+**Lemma 10.1 (Exact equality after a zero edge and a one edge).**
+Suppose two vertex-disjoint phase-$\alpha$ active edges have been
+read, one with label zero and one with label one. The phase is certified.
+The inherited bound for their continuation with at most one further
+read is $a^2\eta$, including the phase prior. Its equality cases are:
+
+| Target position | Equality instructions and labels |
+| --- | --- |
+| In the zero edge | Halt with $h_\alpha(\sigma)$, or make any last actual read and halt with that same label on each positive reply section. |
+| In the one edge | Read the joining edge between the two pairs; both replies are positive and have unique maximizing target spins of opposite values. |
+| Outside both edges | Read the edge joining the target singleton to the zero pair; both replies are positive, with unique maximizing target spins $\sigma$ on zero and $1-\sigma$ on one. |
+
+In the latter two rows such a line edge must exist; otherwise equality
+is impossible. A required last read cannot be replaced by an early halt.
+Instructions after null replies are unrestricted by this statement.
+
+Proof. The two pair weights are $(a^2,b^2)$ and $(\eta,\eta)$.
+These are precisely the cases in Lemma 3.4; we inspect its equality
+comparisons rather than recompute the unrestricted optimum.
+
+If the target is in the zero pair, its best mass before another read
+is already $a^2\eta$. Its preferred spin is uniquely $\sigma$.
+A fresh extension of that pair changes its orientation odds $R^2$
+to $R^3$ or $R$, both strictly greater than one. A join to the tie
+pair preserves the preferred orientation. A repeat, separator, or
+query outside its component only repeats a constraint or partitions
+the common factors. Thus every last read retains that unique
+maximizing target spin on each positive section. This proves both
+necessity of its labels and sufficiency for every address in the
+first row.
+
+If the target is in the one pair, the no-read mass is $c\eta/2$,
+strictly below $a^2\eta$ because $c<2a^2$. A fresh extension gives
+$ac\eta<a^2\eta$, and an operation not reaching the zero pair
+cannot do better. The only remaining improving operation is its join
+to the zero pair, by the exhaustive line geometry of Lemma 3.1.
+In the heavier four-spin completion the zero pair is both $\sigma$,
+and the one pair has one spin of each value. If the joining reply is
+$z$, the endpoint of the one pair next to the zero pair is
+$\sigma\oplus z$; its other endpoint is the complement. Each heavier
+completion has weight $a^3b$, versus $ab^3$ for its complement.
+Thus the target's maximizing values are opposite for the two joining
+replies, uniquely so since $a>b$. Each best full-law mass is
+$a^3b/2=a^2\eta/2$, proving equality.
+
+For an exterior target, its singleton has odds $R$. A join to the
+tie pair, an edge to a fresh vertex, or an operation not reaching the
+target leaves best sum $ac\eta<a^2\eta$. A join between the two
+nontarget pairs also leaves the target independent and has that same
+sum. Joining the target to the zero pair is the remaining possibility.
+A zero joining reply gives the constant triple with weights $a^3,b^3$;
+a one gives weights $a^2b,ab^2$, with the target minority in the
+heavier assignment. Multiplication by the independent one-pair factor
+and the phase prior gives best masses $a^3\eta$ and $a\eta^2$.
+Their sum is $a^2\eta$, and the stated labels are unique. All required
+edges here are new active edges on a finite line forest; both replies
+therefore have positive mass. $\square$
+

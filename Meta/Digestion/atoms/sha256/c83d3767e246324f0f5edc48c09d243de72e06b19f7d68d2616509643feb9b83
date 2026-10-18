@@ -1,0 +1,37 @@
+**定理 35.2（完整尾序列与零边界）。** 取左手单位标架
+
+$$
+f_1=e_1,\quad f_2=e_2,\quad f_3=e_2\times e_1,
+\qquad \chi(t)=E_{(e_1,e_2)}(t).
+$$
+
+$\chi(t)$ 为零或 $\sigma f_i$，其中 $\sigma\in\{1,-1\}$。若 $\Delta>0$，令
+
+$$
+r=\sqrt B,\qquad s=\sqrt\Delta,\qquad
+ g_1=\frac b r,\quad g_2=\frac K s,\quad g_3=\frac N{rs}.
+$$
+
+它们是左手正交单位轴，循环指标满足 $g_{i+1}\times g_i=g_{i+2}$。设实际叶计数为 $\nu(t)=(m,n)$。在 $\chi(t)=\sigma f_i$ 分支中，
+
+$$
+\begin{aligned}
+x_1&=\sigma r^ms^ng_i,\\
+x_2&=\sigma r^ns^{m+n}g_{i+1},\\
+q_{j+2}&=q_jq_{j+1},\qquad
+x_{j+2}=\sigma(x_{j+1}\times x_j)\quad(j\ge1),
+\qquad q_j=\|x_j\|>0.
+\end{aligned}
+$$
+
+若 $\chi(t)=0$，所有 $x_j$（$j\ge1$）为零。结合 $\Delta=0$ 分支可得
+
+$$
+x_2=0\quad\Longleftrightarrow\quad F_2\text{ 全零}
+\quad\Longleftrightarrow\quad F_+\text{ 全零}.
+$$
+
+**证明。** 五符号表在 $A=B=\Delta=1,C=0$ 时的符号为 $f_1,f_2,f_3,-f_2,f_1$，有限单位标签集对叉积闭合。因此归纳选定的描述子给出非零标签恰在非零描述子且 $\ell=0$ 时。标签为零不要求非正交制备下的 $x_0$ 为零，只要求正交尾部为零。
+
+计数替换为 $M(m,n)=(n,m+n)$，且 $M^2=M+I$。在正交对 $F(p)=(rg_1,sg_2)$ 及后继 $(sg_2,rsg_3)$ 上，双叶齐次性由结构归纳得到前两式。单位标签的循环替换在叶上成立，并由节点叉积保持。$M^2=M+I$ 使后继幅值的每个指数等于前两个指数之和；左手标架乘法和 $\sigma^2=1$ 给出向量递推。轴每三步重复。零标签在任意正交制备上评价为零，故整个尾部为零；$\Delta=0$ 已由引理 35.1 处理。这些分支穷尽全部制备和树。证毕。
+

@@ -1,0 +1,64 @@
+**Proposition 90.12 (finite codebook separation and sufficient resolution).**
+At fixed $h$, the exact minimum separations of (90.16) and of the named
+projection code are
+
+$$
+\Delta_E=2\cdot3^{-(4m-h-1)},\qquad \Delta_P=2\cdot3^{-m}.
+\tag{90.21}
+$$
+
+For $p\in\mathbb N_0$ and $z\in[0,1)$ specify the uniform binary quantizer
+$Q_p(z)=\lfloor2^pz\rfloor$, with exactly $2^p$ possible labels.
+A sufficient resolution for injectivity on either codebook is
+
+$$
+2^{-p}\le\Delta_E\quad\hbox{or, respectively,}\quad2^{-p}\le\Delta_P.
+\tag{90.22}
+$$
+
+These are sufficient conditions, not necessary conditions for this
+finite codebook and this alignment of bins. The necessary cardinality
+condition for any injective $p$-bit output on $\mathcal F_h$ is only
+$p\ge m$; no stronger necessary precision bound is inferred here.
+
+Proof. For selected exponents $n_1<\cdots<n_m$ and first difference at
+$n_j$, bounding the tail by all integer positions through $n_m$ gives
+
+$$
+\left|\sum_l2(\omega_l-\omega'_l)3^{-n_l}\right|
+\ge 2\cdot3^{-n_j}-\sum_{r=n_j+1}^{n_m}2\cdot3^{-r}
+=3^{-n_j}+3^{-n_m}\ge2\cdot3^{-n_m}.
+$$
+
+Equality is attained by changing only the last bit. Use (90.15) for
+$Z^E$ and $n_j=j$ for $Z^P$ to get (90.21). Two points in one half-open
+quantizer bin are separated by strictly less than its width $2^{-p}$;
+(90.22) thus suffices. Necessity of $p\ge m$ follows instead from
+$2^p\ge|\mathcal F_h|=2^m$ and uses no metric or bin-width argument.
+For example, at $h=1$ the projected codebook is
+$0,2/9,2/3,8/9$; $Q_3$ gives $0,1,5,7$. Thus an alleged necessary
+$p>m\log_2 3$ would already fail on this codebook. $\square$
+
+A sharp cardinality representation exists for every $h$: with $h$ known,
+
+$$
+W_h(\nu_{h,\omega})=\sum_{j=1}^m\omega(p_j)2^{-j},\qquad
+Q_m(W_h)=\sum_{j=1}^m\omega(p_j)2^{m-j}.
+\tag{90.23}
+$$
+
+The integer on the right ranges bijectively over $0,\ldots,2^m-1$;
+its $m$-bit expansion reconstructs the entire source by (90.7).
+Its finite codebook separation is $2^{-m}$. This proves sufficiency of
+$m$ bits for identity at fixed $h$, without preserving either specified
+metric with uniform distortion. For $d^A$ this follows from Proposition
+90.7 with $k=1$. For $d^E$, the two endpoint-bit changes have $W_h$ distance
+ratio $2^{m-1}$, while their event-distance ratio is (90.19). The quotient
+$2^{m-1}/3^{4m-2h-4}$ tends to zero, excluding uniform multiplicative
+constants even after per-$h$ rescaling. Knowing $h$ in this representation task
+is an explicit side input, not an extra field of the CE retained $I$.
+The radix separations (90.21) tend to zero. A single exact real coordinate
+therefore supplies no uniform positive separation for these codebooks;
+Proposition 90.13 also excludes a fixed-bit exact source output across all
+$h$. The acquired-tree and trace counts remain those of (90.20).
+

@@ -1,0 +1,11 @@
+## §6. 验证命令表
+
+下表命令均从仓库根目录执行；`real` 为 `/usr/bin/time -p` 的墙钟秒数。第一行要求预先将 `DRAT_TRIM` 设为可执行检查器的路径。前三项重建有限对象并核验结论，第四项核对 §5 的结构与计数。
+
+| 有限命题 | 命令 | `real`（秒） |
+| --- | --- | ---: |
+| 三份 CNF 与独立 RUP/DRAT 核验 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/kneser-certificates.py --drat-trim "$DRAT_TRIM"` | 15.44 |
+| 两幅映射及半群、克隆覆盖 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/kneser-embeddings.py` | 0.12 |
+| 三个小参数的避免着色 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/kneser-sharpness.py` | 0.09 |
+| \((9,5)\) 的等价消去与六集合子句 | `/usr/bin/time -p python3 -B tools/scripts/agent/openproblem/kneser-95-reduction.py` | 3.81 |
+

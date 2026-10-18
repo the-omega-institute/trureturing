@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-actual-return-forecast-motion"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_RETURN_FORECAST_MOTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

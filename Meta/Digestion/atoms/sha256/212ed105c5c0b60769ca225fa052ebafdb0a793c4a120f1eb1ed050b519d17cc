@@ -1,0 +1,35 @@
+**Definition 40.1 (one actual complement and its normalized kernel effect).** Retain Definition 1.1, the original real Kraus frame, and the actual blocks (R.3)–(R.4). Write $J_0=J_\Gamma$ in original input coordinates, and use the reference/input transpose convention of (R.27). All reference and environment densities below may be complex and singular. A single environment center is fixed before minimizing over inputs:
+
+$$
+ h(\omega):=F(\Gamma,\mathcal C_\omega)
+ =\min_{q\in\mathsf D(\mathbb C^3)}f(A_q,q\otimes\omega),
+ \qquad A_q=(\sqrt q\otimes I_E)J_0(\sqrt q\otimes I_E),
+ \qquad g_N=\max_\omega h(\omega).
+\tag{R.186}
+$$
+
+Here $q$ is the reference density and its actual input marginal is $q^T$, exactly as in (R.27). For a unit vector $\xi\in\ker J_0$, define
+
+$$
+ \begin{aligned}
+ D_R&=\operatorname{Tr}_E|\xi\rangle\langle\xi|,
+ &D_E&=\operatorname{Tr}_R|\xi\rangle\langle\xi|,\\
+ \ell&=\operatorname{Tr}\sqrt{D_R}=\operatorname{Tr}\sqrt{D_E},
+ &E_\xi&=\frac{D_E}{\ell^2},
+ &t_\xi&=\operatorname{Tr}(\tau E_\xi).
+ \end{aligned}
+\tag{R.187}
+$$
+
+The equality defining $\ell$ uses the common nonzero Schmidt spectrum. The normalized $D_R,D_E$ have trace one. Consequently, if $k$ is the Schmidt rank,
+
+$$
+ 1\leq\ell^2\leq k,\qquad
+ 0\preceq E_\xi\preceq I_E,\qquad
+ \operatorname{Tr}E_\xi=\ell^{-2},\qquad
+ 0\leq t_\xi\leq a/\ell^2\leq a\leq1.
+\tag{R.188}
+$$
+
+Indeed $\sum_j\sqrt{\lambda_j}\geq\sum_j\lambda_j=1$, Cauchy–Schwarz gives its square at most $k$, and $D_E\preceq I_E$, $\tau\preceq aI_E$. Thus $E_\xi$ is an actual effect, including at zero beta and for a nonminimal environment. These inequalities and the use of (R.28) retain its support-restricted inverse convention.
+

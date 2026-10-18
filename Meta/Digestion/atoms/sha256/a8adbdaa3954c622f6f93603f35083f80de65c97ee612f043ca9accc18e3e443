@@ -1,0 +1,14 @@
+## 12. Credited suppliers, classical principles and limits of transfer
+
+All repository supplier links below select the public committed snapshot
+`df12d01189bdf8196457773d7f9e8eda168cb3cc`. They identify the statements
+used, not a new compilation or a certification of this volume.
+
+| Supplier | Used result and retained boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), [owning Blueprint](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.md) | Exact positive source, signed weights, `finite_rectangles_realize`, `weight_compatible`, original all-sector lifts, reachable domains and full fixed-base coherence decoder. Source synthesis and these classifications remain credited suppliers. |
+| [OriginalControlComposition](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/D5/S3/Quantum/Fibers/OriginalControlComposition.lean), `OriginalControl`, `concatenate_original` | Actual chronological prefix and shifted tail; real increments and every continuous scalar weighted integral add. No sensor, waveform acquisition or execution permission is inferred. |
+| [Original probability/phase transport theory](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §§3.1, 3.12 and 4 | Original admissibility, signed winding and ideal readout convention. Public prescribed controls and unknown actual inputs remain different interfaces. |
+| [Transport--Memory Completion](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§1--2 | Future-menu minimality, inverse permissions, closed predictor, common-port acquisition and overlap conditions; these are not discharged by the certificate. |
+| [Process Geometry](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [atlas-compatible stable cores](https://github.com/the-omega-institute/trureturing/blob/df12d01189bdf8196457773d7f9e8eda168cb3cc/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), §§1--3 | Actual joint source and routes, legality versus executed failure, complete records, forward closure and selector/update fields. No duplicate generic factorization theorem is offered. |
+

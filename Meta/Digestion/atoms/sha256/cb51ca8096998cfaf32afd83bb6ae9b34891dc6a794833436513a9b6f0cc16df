@@ -1,0 +1,13 @@
+**约定 1.1（Original sources, observations and fees）。** Retain [IC, Definitions 1.1–1.3 and Interface 1.4]: the original integer KBonacci weights, matched $V_k\bmod2$ reading, full jointly attainable complete-history prior, immutable INITIAL labels, free initial scalar or independently labelled absorbing bottom, and observations only at complete endpoints. Every actually issued length-$m$ block costs one, including waits, padding, repairs and blocks rejecting before their observed endpoint. There is no reset, copy, hidden initial clock, intermediate observation or borrowed branch archive. Assume
+
+$$
+3\le m<k\le2m-2,\qquad T=k+1,\qquad
+g=\gcd(m,T),\qquad P=g\mathbb Z/T\mathbb Z,
+$$
+$$
+h=k-m\in[1,m-2],\qquad a=2m-T=m-h-1\ge1.
+\tag{1.1}
+$$
+
+No coprimality is imposed. Both original alphabets are preserved: because $m<k$, every literal length-$m$ word is internally legal in either, but cross-block rejection remains part of its execution. Let $W_t=[tm,(t+1)m]\pmod T$ be the ordered physical path at absolute issued-block index $t$, with the root indexed zero.
+

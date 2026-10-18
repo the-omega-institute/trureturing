@@ -1,0 +1,14 @@
+**Definition 8.3 (Multiplicative occupation coefficients).** For
+every legal marked set $I$, define
+
+$$
+\eta_\chi(I)=\prod_{T\subseteq I}
+\chi(T)^{(-1)^{|I|-|T|}}.
+\tag{8.5}
+$$
+
+Exponents are $1$ or $-1$ in $U(1)$. Every subset of $I$
+is legal, so this expression stays on the original carrier.
+It is the usual Boolean-interval Möbius inversion, used as
+an intermediate coordinate system for the phase fiber.
+

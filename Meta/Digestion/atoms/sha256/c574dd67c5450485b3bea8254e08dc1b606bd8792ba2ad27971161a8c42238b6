@@ -1,0 +1,14 @@
+**Proposition 101.1 (Original-target and resource boundary).** Every
+attainer above has TV distance one from each unchanged original
+nonatomic target $\mu_x$ of Source-Correlated Laws, Theorem 67.5,
+and the unchanged original consumer returns unknown on every handed
+tape.
+
+**Proof.** Its support is the finite Borel set
+$\{\theta_0,\ldots,\theta_4\}\subset B_1$. This set has output
+probability one and original nonatomic target probability zero. The
+event definition gives TV equal to one. The original consumer returns
+unknown immediately on $B_1$ by (73.1). Neither the selected-law cap
+nor the finite first-absence label changes that consumer or target
+family. $\square$
+

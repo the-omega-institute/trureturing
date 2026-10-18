@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-kappa-charge-exponent-fibers-and-golden-norm-readout"
+path = "docs/develop/theory/AURIC_FIB_ATOM_KAPPA_CHARGE_EXPONENT_FIBERS_AND_GOLDEN_NORM_READOUT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

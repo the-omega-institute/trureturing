@@ -1,0 +1,25 @@
+**定理 119.2（独立追加的可加强度与有界熵）。** 定义
+
+$$
+\mathcal V_0=1,\qquad
+\mathcal V_m=c^m=|\kappa|^{2m}\quad(m\ge1),\qquad
+S_m=h\!\left(\frac{1+\mathcal V_m}{2}\right).
+$$
+
+当 $0<|\kappa|<1$ 时，
+
+$$
+\tau_{\rm rec}(m)=-\log\mathcal V_m=-2m\log|\kappa|,
+\qquad \tau_{\rm rec}(m+\ell)=\tau_{\rm rec}(m)+\tau_{\rm rec}(\ell).
+$$
+
+此时 $\tau_{\rm rec}(m)$ 随 $m$ 无界增长，而 $S_m$ 非减、$0\le S_m\le\log2$，且趋于 $\log2$。边界 $|\kappa|=0$ 时 $\mathcal V_m=0,S_m=\log2$ 对每个 $m\ge1$ 成立；$|\kappa|=1$ 时所有 $\mathcal V_m=1,S_m=0$。所有情形 $m=0$ 均给 $\mathcal V_0=1,S_0=0$。
+
+证明（119.2）。独立张量因子使重叠为 $\prod_{j=1}^m c$，空积为一，不需使用未定义的 $0^0$。前卷第108.2条的控制矩阵本征值公式给熵与可见度。对 $0<c<1$，乘积变成对数的和，$-\log c>0$，得到可加性及无界增长。$\mathcal V_m$ 从一向零下降，$p_m=(1+\mathcal V_m)/2$ 从一向 $1/2$ 下降；在 $1/2<p<1$，
+
+$$
+h'(p)=\log\frac{1-p}{p}<0,
+$$
+
+所以 $h(p_m)$ 非减，连续延拓及 $h(1/2)=\log2$ 给界和极限。两个端点直接由空积及正次数乘积得到。若将强度扩到 $c=0$，只能记 $\tau_{\rm rec}(0)=0$、正次数为 $+\infty$；它不是有限熵。$\square$
+

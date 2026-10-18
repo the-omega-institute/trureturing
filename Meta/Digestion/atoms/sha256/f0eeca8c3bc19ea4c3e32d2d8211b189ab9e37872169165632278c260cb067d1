@@ -1,0 +1,28 @@
+**Definition 3.3 (completed inputs and replay sites).** A completed source
+item of $M$ is ARC Definition 5.4's unchanged choice01, actual three-block
+CAP input frame, SEG-U1 occurrence/origin and all acquired dependencies.
+A completed history item additionally records its imported one-bit mode
+before its entire actual frame, typed outcome and received-reference
+bindings. Its fixed tuple schema uses exactly these five fields: choice,
+mode, frame, outcome, received bindings. A source item's type and codec
+stay ARC's. Its actual choice01 and the history item's actual choice1
+are the two literal type cases; any other completed-item tag is rejected.
+
+Append a history item only after final check/ACK. Completed-cycle count
+is updated at the actual outer Ready after M append and token return,
+not at an earlier list-write or callback. Initial acquisition has its
+separate original annotation. Current mode/frame and gate remain retained
+on70 but outside the frozen predecessor M. This is no acquisition of
+current request data by that earlier cover.
+
+Add HistoryMode as one disjoint kind to ARC Definition 6.1's reservoir.
+Its predicate is the represented actual version, physical PC and inlined
+call site of Definition 3.1. All other kinds remain original public boot,
+original private preparation, the two bootstraps, capture ingress, outer
+gate, auxiliary CAP and history frame. Bootstrap/capture reservoirs use
+the actual $E(L),\Delta(G_{\rm sel}),E(G_{\rm sel})$. Each earlier history
+item provides exactly its mode at that site, then its frame at its frame
+sites. Callback and computed command bytes are produced by literal RD/WR
+work, with no external IN. The physical raw-prefix model separately retains
+actually consumed current bits and an occupied IN-to-WR latch.
+

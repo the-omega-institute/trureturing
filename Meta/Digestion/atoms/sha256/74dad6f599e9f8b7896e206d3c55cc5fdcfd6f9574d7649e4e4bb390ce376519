@@ -1,0 +1,15 @@
+### 75.1 The asymmetric resource threshold
+
+Use the four-fibre, two-dimensional-fibre channel F_(4,2) of §§66 and 74, with fixed MC input and output encodings. Its logical input basis is |f,i>, where 1≤f≤4 and i∈{0,1}, and
+
+    F_(4,2)(|f,i><f,j|)=δ_ij|f><f|,
+    F_(4,2)(|f,i><g,j|)=(1/2)|f><g|  for f≠g.
+
+There is a single physical product channel A⊗B, with local Kraus ranks exactly two and three respectively, whose encoded unhalved diamond error from J_out F_(4,2) is strictly below 3/8. Exchanging the parties gives the same statement for ranks (3,2).
+
+By §74, every physical product with both local Kraus ranks at most two has error at least 1/2, with equality attained by the tetrahedral product. Consequently, if one side is allowed local Kraus rank at most two, increasing the other side's bound from two to three is necessary and sufficient to permit error strictly below 1/2. This is an environment-resource threshold, not a formula for the optimum at budget (2,3). All competitors in the lower statement may have leakage and unequal, nonconjugate local maps. The explicit upper construction below calibrates the basis outputs, which is a valid construction rather than an assumption on those competitors.
+
+More generally, among all physical product channels with these fixed local input and output dimensions, the minimum product of the two local Kraus ranks permitting error strictly below 1/2 is exactly six. It is attained at (2,3) or (3,2).
+
+Local environment dimensions mean pure Stinespring dimensions, equivalently local Kraus ranks. No statement about bare unpurified mixed-ancilla dimensions is intended.
+

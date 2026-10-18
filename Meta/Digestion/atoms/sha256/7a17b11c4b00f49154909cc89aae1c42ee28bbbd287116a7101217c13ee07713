@@ -1,0 +1,29 @@
+#### 情形四：吸收后热化
+
+真实吸收体通常不会只留下一个干净的单一记录，而会把能量和相位扩散到大量电子、声子、分子和再辐射模式中。光子吸收后转化为可测温升或电阻变化，是实际探测器的基本工作方式之一。[www.nist.gov](https://www.nist.gov/programs-projects/microcalorimeter-spectrometers-x-ray-and-gamma-ray-spectroscopy?utm_source=chatgpt.com)
+
+可写成：
+
+```math
+A[I]\otimes E_0
+\longrightarrow
+A[I]\otimes E[I].
+```
+
+如果观察者只能看到粗粒化温度：
+
+```math
+\Theta(A[I]),
+```
+
+而 $`\Theta`$ 不是单射，那么不同微观状态会产生相同温度：
+
+```math
+\Theta(A[I])=\Theta(A[J]),
+\qquad I\ne J.
+```
+
+于是挡板虽然吸收了射线，却把信息扩散进更大的隐藏纤维。
+
+这正是退相干的结构：信息被转移到环境，与环境发生纠缠后，局部系统的相干可见性下降。[journals.aps.org](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.76.1267?utm_source=chatgpt.com)
+

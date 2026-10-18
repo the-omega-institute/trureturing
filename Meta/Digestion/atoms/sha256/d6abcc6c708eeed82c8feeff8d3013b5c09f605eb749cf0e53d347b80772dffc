@@ -1,0 +1,35 @@
+**Theorem 7.2 (independent state lower bound and exact hierarchy).**
+Every finite accurate preparer for $\sigma_C$ on the entire original
+fiber has
+
+$$
+|V|\ge n+2,\qquad |\mathcal B|\ge n+4.
+\tag{PCA.20}
+$$
+
+Together with Theorems 5.1 and 6.3 this proves the simultaneous exact
+preparation frontier (PCA.15): every feasible budget vector dominates
+$(n+4,n+1,\Lambda(C))$ coordinatewise, and that vector is attained.
+Increasing either of the other two preparation coordinates cannot
+reduce any one of these minima. The reader remains the credited
+$K=8,q_R\le2,\ell_R\le6$ reader with its original entry.
+In NBP Definition 14.2's seven-coordinate notation this attains
+$(2,n+4,8,n+1,\Lambda(C),2,6)$ with the specified encoder held fixed.
+
+Proof. For each $i$, Lemma 6.2 and the different-code sources $u_0,u_i$
+force an installed address in $\mathcal C_i$. These are $n$ distinct
+running states because the cones are disjoint and each state has one
+fixed address. Lemma 7.1 forces two more running states, in $b_3$ and
+$b_4$, outside every $a$ cone and each other. Thus $|V|\ge n+2$.
+Both codes occur on $\Pi_1$ and $\Pi_3$, so their different original
+entries require two distinct terminal latches. All these states count,
+giving $|\mathcal B|\ge n+4$.
+
+This argument is about the installed menu of an arbitrary successful
+graph. It does not unroll its paths or count separate copies of shared
+states. Convergence, cycles, repeated fixed words, queries at other
+addresses and unused installed states cannot remove a required cone
+state. In particular, the state bound remains valid when call or
+literal budgets increase. The other two coordinatewise lower bounds
+are Theorem 6.3, and their simultaneous upper is Theorem 5.1. $\square$
+

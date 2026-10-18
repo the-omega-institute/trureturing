@@ -1,0 +1,94 @@
+**Theorem 6.3 (complete finite sufficiency and improved branch bound).**
+Every point of $\mathcal K_s$ has a full finite realization with acquired
+high effect $E\Theta(H_++H_-)E^\dagger$, at most twenty-four actual
+acquisition branches, and fibres of dimensions at most three. A new
+realization may instead move singular high atoms to low, weakly lowering
+every positive-input resource cost, and then use only genuine rank-three
+high matrices with the same bound.
+
+Proof. Spectrally factor each $H_r$ into at most three vectors. For a
+nonzero coefficient vector $z$ use encoder matrix $K(z)$ into a declared
+three-dimensional fibre and full TP live decoder $X\mapsto EXE^\dagger$.
+This literal implementation also permits a singular $K(z)$ in a declared
+three-dimensional fibre; dimension is an actual payload choice, not a
+rank convention. Decompose each $L_r$ into at most six singular atoms by
+Theorem 4.3. For each use the dimension-two encoder and fixed full TP
+range decoder (CA.15). Their product is exactly $EK(z)$ and their
+supported effect is exactly $K(z)^\dagger K(z)$.
+
+Let $N_+=N$, $N_-=M-N$. Since $0\preceq N_r\preceq M$ and $M|0\rangle=0$,
+positivity makes each $N_r$ kill coordinate $0$ and have rank at most two.
+For its positive spectral eigenpairs $(\lambda_{rj},v_{rj})$ use scalar
+encoder row $\sqrt{\lambda_{rj}}\langle v_{rj}|$. The full TP scalar
+decoder sends mass $z$ to $z w_i g(t)dt\,P_f$ in **each** original label
+$i$. It is TP because $\sum_iw_i=\int_0^1g=1$. Every live decoder is TP
+on its entire fibre because its defining isometry has $U^\dagger U=I$.
+
+For five modes precompose every supported matrix/row with $E^\dagger$.
+Add, at each record $r$, the scalar CP encoder
+$A\mapsto\operatorname{tr}(Q_5A)/2$, decoded to $zg(t)dt\,P_f$ only at
+original label $2$. It can be implemented with the two rows associated
+with $(e_0-e_4)/\sqrt2$ and $(e_1-e_3)/\sqrt2$, each divided by $\sqrt2$.
+Their multiplicity is discarded permanently; there is one scalar output
+branch, not an accessible two-dimensional memory.
+
+The supported effect at record $r$ is
+$\Theta(H_r+L_r)+N_r$. By (CA.27) this is the required supported plus
+effect, and subtraction from $\Theta(I)+M=I_3$ gives the required minus
+effect. Total encoder normalization on five modes is exactly
+
+$$
+E[\Theta(I_3)+N_++N_-]E^\dagger+Q_5
+ =E[\Theta(I_3)+M]E^\dagger+Q_5=I_5.
+\tag{CA.30}
+$$
+
+Thus each positive encoder effect is bounded by $I_5$ and every branch
+is CP/TNI. The binary complement effects $Q_5/2$ give precisely (CA.11).
+The coefficient sum gives the live line of (CA.10). The failure effects
+sum to $M$ and the complement effects to $Q_5$, with the specified
+$g(t)dt$ and separate weights, giving its full failure line. The chosen
+binary failure densities use $N_r$; other lawful implementations need
+not have this particular binary time split.
+
+These are identities of Kraus conjugations on arbitrary complex matrix
+units. At a passive-reference amplification replace each matrix by its
+tensor product with the reference identity. A scalar row leaves the
+conditional operator $(C\otimes I)X(C^\dagger\otimes I)$, and the
+complement branch leaves $\operatorname{Tr}_5[(Q_5\otimes I)X]/2$.
+Their supported failure sum at record $r$ is
+$\operatorname{Tr}_5[(EN_rE^\dagger\otimes I)X]$. On each Borel set
+$B\subseteq[0,1]$ multiply by $\int_Bg(t)dt$, the separate label weight
+and $P_f$. These formulas prove equality of all conditional reference
+operators and each original CP measure. They preserve both named zero
+sectors, have no endpoint atoms or singular additions, kill every
+cross-support operator, have no live complement and no extra-sector map.
+Common fixed metadata can be carried identically. Hence all twelve
+complete outputs and the inherited error remain those of the fixed
+channel. No claim is made for a different task exposing the finer labels.
+
+For reassignment, remove a singular spectral atom $zz^\dagger$ from $H_r$
+and add it to $L_r$. Their sum, all binary effects and the complete channel
+stay fixed, while the high effect decreases by the positive
+$K(z)^\dagger K(z)$. Remove every singular atom of the chosen high spectral
+factorizations and decompose the enlarged low matrices afresh by Theorem
+4.3. At most three high atoms per record remain, each nonsingular. This
+constructs a new design with new specified generated flags; it does not
+relabel an inaccessible port in an old implementation.
+
+Per record the literal or reassigned construction uses at most three high
+live branches, six low live branches, two supported-failure scalar rows
+and one scalar complement branch. The full bound is therefore
+
+$$
+2(3+6+2+1)=24.
+\tag{CA.31}
+$$
+
+Zero atoms and zero eigenvalues contribute no branch. All other dilation
+systems are permanently inaccessible before the cut. Continuous failure
+time is still supplied by the scalar decoder's entire measure; the
+branch count does not make that time variable a finite alphabet. High
+branches decode wholly live, so acquired and supported live high effects
+agree in these constructions. $\square$
+

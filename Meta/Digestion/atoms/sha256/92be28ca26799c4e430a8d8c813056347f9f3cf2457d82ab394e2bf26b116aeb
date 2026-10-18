@@ -1,0 +1,42 @@
+**Corollary 15.4 (Two-component determinant threshold).**
+Let $\beta>0$ be an independently established lower bound on
+$1-\Lambda$. If $e/u\ge\beta$ and $d/z\ge\beta$, then
+the joint minimum meets that sufficient threshold exactly when
+
+$$
+r_-\le\beta
+\quad\Longleftrightarrow\quad
+(e-\beta u)(d-\beta z)\le\beta^2c^2.
+\tag{15.9}
+$$
+
+Whenever this holds, $\gamma\le1-\Lambda$ follows. If either
+component is already below $\beta$, its separate quotient
+suffices without the determinant test.
+
+Proof. The diagonal entries of $A-\beta V$ are nonnegative
+under the stated hypotheses. This symmetric matrix has a
+nonpositive eigenvalue exactly when its determinant is
+nonpositive; a positive determinant makes both eigenvalues
+positive. Congruence by $V^{-1/2}$ identifies these signs with
+the signs of the generalized eigenvalues minus $\beta$.
+Expanding the determinant proves (15.9), and (15.6) gives the
+gap comparison. $\square$
+
+For example, Chapter 9 supplies $\beta=D_{\mathcal M}$ for
+any matching with a positive lower bound. Equations
+(15.2)--(15.3) evaluate every matrix entry on the actual
+inhomogeneous path and yield a sufficient domain at every
+length. The strictly improved local menu does not establish
+that these domains cover all positive parameter vectors;
+failure of the test neither disproves the two-edge conjecture
+nor rules out other joint profiles. The matching lower bound
+can itself be nonsharp.
+
+The displayed joint-phase consequences are deductions for the
+stipulated law. Their covariance-pencil minimization uses
+classical finite-dimensional variational algebra; their
+literature priority is not claimed. As in Chapters 10--12,
+the diagonal phase interpretation supplies no control protocol
+or physical energy scale.
+

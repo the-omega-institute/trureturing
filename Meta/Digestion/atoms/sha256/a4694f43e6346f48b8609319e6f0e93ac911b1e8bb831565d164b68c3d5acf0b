@@ -1,0 +1,36 @@
+**Proposition 9.1 (natural views on the same terminal sweep image).** On
+$H_{c,\Sigma}$ define the following maps before assessing recovery:
+
+| Expression | Concrete value | Equality kernel on $H_{c,\Sigma}$ |
+| --- | --- | --- |
+| Bare spatial support | Actual node addresses and ordered parent/child incidence of $t_\theta$ | All pairs |
+| Labelled spatial expression | That actual support with its original alpha/beta leaf labels | Equality of $\theta$ |
+| Actual event time | The ordered executed Read trace $T_{\theta,\sigma}$ | Equality of $(\theta,\sigma)$ |
+| Original predictive boundary | Every $r_{\rho^k(t_\theta)}(p)$, $p\in\mathcal P_D$, $k\ge0$ | All pairs |
+| Stationary literal boundary | Every $r_{t_\theta}(w)$ for finite $w$ | Equality of $\theta$ |
+
+Here the kernels are for the stated readout-content tasks. They do not
+replace PG's full dynamic response contract, which also contains original
+joint successors, archive/writer append and legality/failure fields.
+
+Proof. The shape of $t_\theta$ is fixed by $c$, so bare support is
+constant. Theorem 6.2 identifies all original labels with $\theta$,
+and hence the labelled spatial expression is injective in $\theta$.
+The trace is injective in the full pair as in Theorem 8.1. Equation
+(CCF.4) makes the predictive boundary constant. The literal boundary
+reads every $u\in U_c$, so it recovers $\theta$; conversely $\theta$
+fixes the actual source and all its replies. These are direct native
+kernel calculations on one actual image. $\square$
+
+When $r>0$, the predictive boundary cannot recover original labels;
+when $R>1$, even complete labelled spatial data cannot recover the actual
+sweep order. A memory nonredundant for the original predictive task must
+forget all these conditional distinctions. A memory sufficient for the
+literal task must retain or acquire the labels but need not distinguish
+the sweep orders. A memory for exact old-trace recall must distinguish
+both. These conclusions use the task-sufficiency versus nonredundancy
+direction of [PG, Proposition 43.1][PG]; no new generic quotient or
+factorization theorem is asserted. [Atlas, Theorem 6.3][Atlas] requires
+each view individually to have the task kernel, rather than only their
+joint map.
+

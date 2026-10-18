@@ -1,0 +1,38 @@
+**命题 489.1（每个连续实区间的准确储备预算）。** 对每个整数 $3\le k\le22$ 和每个实数 $2^k\le x\le2^{k+1}$，
+
+$$
+\boxed{R(x)\ge\frac{c_k}{2P_k(P_k+1)}
+>\frac1{80k2^{\lfloor k/2\rfloor}}
+>\frac1{120\sqrt x\log x}.}
+\tag{489.2}
+$$
+
+**证明。** 对每个 $p\in S_k$，式（489.1）给
+
+$$
+2x\le2^{k+2}\le p^2,
+\qquad p+1\le2^k\le x.
+$$
+
+因此 $S_k$ 全部属于同一实际储备的掩码；复用已有聚合身份和逐项下界，并保留补集非负性，得到
+
+$$
+R(x)\ge\sum_{p\in S_k}\frac1{2p(p+1)}
+\ge\frac{c_k}{2P_k(P_k+1)}.
+$$
+
+所有因子为正，表中最后一列的严格正性恰给第二个不等式。又 $x\ge2^k$ 以及 $\log2>2/3$ 给
+
+$$
+\sqrt x\ge2^{\lfloor k/2\rfloor},\qquad
+\log x\ge k\log2>\frac{2k}3,
+$$
+
+故
+
+$$
+120\sqrt x\log x>80k2^{\lfloor k/2\rfloor}>0.
+$$
+
+取倒数便是最后一个严格不等式。两端 $x=2^k$ 和 $x=2^{k+1}$ 均保留在证明中。$\square$
+

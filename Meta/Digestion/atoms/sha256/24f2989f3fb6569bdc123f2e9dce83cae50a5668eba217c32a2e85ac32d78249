@@ -1,0 +1,42 @@
+**命题 12.2（Independent whole-source copies are a separate interface）。** If
+one additionally supplies an actual input
+$\Gamma_{AB}\otimes\Gamma_{A'B'}$ with identical independent whole-source
+copies and permits the whole-copy swap $W$ with its spectral instrument,
+then $\operatorname{tr}(W(\Gamma\otimes\Gamma))=p$. This statement concerns
+the four factors $A,B,A',B'$ with $A=H^{(1)}$, $B=H^{(2)}$; it does not
+change the original $A\mid B$ split of the negativity. Equal whole-source
+marginals alone do not imply the swap identity.
+
+Proof. Define $W|a,b,a',b'\rangle=|a',b',a,b\rangle$. For any two matrices
+$G,H$ on the original $25$-dimensional space, a basis expansion gives
+
+$$
+\operatorname{tr}(W(G\otimes H))
+ =\sum_{u,v}G_{vu}H_{uv}=\operatorname{tr}(GH).
+$$
+
+Taking $G=H=\Gamma$ gives the conditional identity. To see the failure of
+equal marginals as a substitute, take the positive trace-one state
+
+$$
+\Xi=\frac15\sum_{s\in B}
+ |e_s\rangle\langle e_s|_{AB}\otimes
+ |e_s\rangle\langle e_s|_{A'B'}.
+$$
+
+Both whole-source marginals are $S$, by taking either partial trace.
+Each vector $e_s\otimes e_s$ has swap eigenvalue $+1$, so
+$\operatorname{tr}(W\Xi)=1$, whereas $\operatorname{tr}S^2=1/5$.
+Thus the actual tensor-square input is essential. This reuses the C-107
+source-copy boundary; it supplies no new copy or instrument permission.
+$\square$
+
+The menu and port in Section 11 grant none of the extra resources in
+Proposition 12.2. Independent re-preparation is a source contract, and the
+mathematical expression $\Gamma\otimes\Gamma$ is not a cloning operation
+on one unknown input. Neither the state matrices nor the orthogonal path
+give physical preparation, local phase references, free controls, physical
+storage, empirical learning or a cost advantage. No setting count, sample
+complexity, native waiting cost or instrument equivalence follows from
+the two-coordinate optimization.
+

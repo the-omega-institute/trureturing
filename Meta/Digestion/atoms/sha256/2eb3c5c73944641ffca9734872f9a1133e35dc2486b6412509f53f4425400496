@@ -1,0 +1,88 @@
+**Construction 12.2 (membership reduction and the finite shape problem).**
+Guess the product-automaton state of each explicit primitive occurrence
+and of each residual block. The primitive guesses have the Presburger
+conditions $q_r=s$ from Lemma 11.1. Evaluate each finite template bottom-up
+with these guessed states and $\delta$, and require the accepting or
+rejecting component specified by every membership atom. Normal expansion
+uses actual native pairing at every $F$, so this evaluation tests exactly
+the expanded native memberships. State equality does not replace any
+positive or negative native comparison.
+
+For each remaining residual sort apply Lemma 11.3 to all its block names,
+pointwise equations and selected whole-block mismatches simultaneously.
+This gives its regular shape domain by a finite transition table with
+Presburger guards. Partition the parameter space by the complete truth
+vector of all these finitely many guards. Each region $\Theta(\mathbf z)$
+is Presburger. On that region every residual automaton is an ordinary
+fixed finite $c/f$ tree automaton. The remaining shape question is exactly
+
+$$
+\exists K_1,\ldots,K_s\quad
+\bigwedge_j K_j\in\mathcal L_j\ \land\
+\bigwedge_\ell S_\ell(\mathbf K)\ne T_\ell(\mathbf K),
+\tag{NCE.29}
+$$
+
+where the $\mathcal L_j$ are those fixed regular languages and all terms
+use only $c:0,f:2$. Repeated occurrences of $K_j$ remain one variable.
+Empty residual lists and ground shape inequalities are included.
+
+For completeness of this final decision step, regular languages over
+$c/f$ satisfy the admissibility hypotheses of Comon–Delor, Lemma 1,
+Theorem 4 and Corollary 2 [NCE-CD]. Boolean combinations of these languages
+are effective regular languages. The preimage of a regular state language
+under $f$ is a finite union of products of child-state languages, obtained
+from its finite transition table; the $c$ case is a finite leaf test.
+Product determinization gives the same decomposition for Boolean sorts.
+Emptiness and finiteness are decidable: trim the finite automaton to
+productive states usable at an accepting root; an arbitrarily repeatable
+state along a productive path gives unbounded height, while no such cycle
+bounds accepting height. In the finite case enumerate all accepted trees
+through that bound. These are precisely effective constructor
+preimages and finite-sort operations required by admissibility.
+Consequently the cited theorem decides (NCE.29), including all its shared
+constructor-term disequalities. It sees no native $\rho$, integer rank,
+free-power symbol or non-flat rewriting law. A product of automata, with
+separate membership symbols for its accepting sets, supplies a single
+finite regular-membership structure if required by the paper's notation.
+
+**Proof of Theorem 10.2.** There are finitely many Boolean, collapse,
+shape-equality, leaf/nonleaf, mismatch and state choices. Fix one such
+choice and one guard region. The answer to (NCE.29) is a constant Boolean,
+independent of the numerical tuple. If false discard this choice. If true,
+conjoin its region with $G$ and all explicit scalar-rank equations,
+mismatches, nonnegativity and primitive-state conditions. Existentially
+project the finitely many scalar ranks. Taking the finite disjunction
+constructs a Presburger $F_{G,\Phi}$.
+
+For soundness at an accepted $\mathbf z$, extract scalar ranks, a solution
+to (NCE.29), and accepting runs of the fixed shape automata. Lemma 11.3
+chooses simultaneous local ranks at that same $\mathbf z$. Each named
+normal code is then assembled once and reused at all of its occurrences.
+Every positive aligned equation, collapse definition and ordinary-pair
+definition reassembles. A negative either has different actual shapes or
+its chosen genuine scalar/block mismatch. All primitive cherries are
+normal, and bottom-up evaluation gives every demanded native membership.
+Expanding by ABC's $E$ therefore supplies one joint original assignment.
+
+For completeness, start with any original native assignment at a guarded
+$\mathbf z$. Its normal codes select their actual collapse cases and
+actual shape comparisons. Their shape solution factors through the
+unifier; each residual selects its actual leaf/nonleaf case. Decorated
+codes retain their actual scalar ranks and block fields. For each
+same-shape negative choose an actual differing template position. Their
+native states give the state guesses; their residual fields give accepting
+runs by Lemma 11.3. Thus their shapes solve (NCE.29) on the selected guard
+region, and their scalar ranks satisfy the remaining arithmetic at the
+unchanged $\mathbf z$. This proves both directions of (NCE.23).
+
+All constructions terminate. Arithmetic witness extraction can follow a
+positive Presburger decision by finite-tuple enumeration. After a positive
+shape decision one may enumerate finite shape tuples and their finite runs
+until a solution to (NCE.29) is found; the decision proves this search will
+terminate. At each local rank choice Presburger witness extraction likewise
+terminates. Negative decisions use the terminating arithmetic and shape
+deciders, not failed unbounded witness searches. Every expansion is finite.
+Finally deciding $\exists\mathbf z\ F_{G,\Phi}$ gives global nonemptiness
+and a parameter witness when nonempty. $\square$
+

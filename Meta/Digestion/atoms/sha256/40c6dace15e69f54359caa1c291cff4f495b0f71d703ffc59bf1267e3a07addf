@@ -1,0 +1,67 @@
+**定义 23.1（另供的五模式对称载体）。** 本章的模式顺序固定为
+
+$$
+\Sigma=(0,1,2,3,13)
+=(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]).
+$$
+
+它们的原印字分别为空、$[2]$、$[3]$、$[5]$、$[2,5]$。低、高、中占位按 $(x,y,z)$ 排列，模式列为
+
+$$
+v_0=(0,0,0),\quad v_1=(1,0,0),\quad v_2=(0,0,1),
+\quad v_3=(0,1,0),\quad v_{13}=(1,1,0).
+$$
+
+归一化及三个占位评价组成矩阵
+
+$$
+A=\begin{pmatrix}
+1&1&1&1&1\\
+0&1&0&0&1\\
+0&0&0&1&1\\
+0&0&1&0&0
+\end{pmatrix},\qquad d=(1,-1,0,-1,1)^{\mathsf T}.
+$$
+
+本卷 §11 的整数关系和[《基础公式与关系》](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)命题 12.3 已给出 $\ker_{\mathbb Z}A=\mathbb Z d$。后者的标签对应为
+
+$$
+(0,2,3,5,25)_{\rm old}\longmapsto(0,1,2,3,13)_{\rm here}.
+$$
+
+具体地，关系向量 $\xi$ 的末分量取整数 $t$，其余分量被原结果固定为 $\xi_1=\xi_3=-t,\xi_2=0,\xi_0=t$。因此所有保持质量及三个占位的整数交换都沿同一原始四角方向；这不是五个模式本身相同，也不是任意五态律都满足独立关系。计数多项式的主理想由该卷命题 12.4 承担，本卷 §12 须连同卷首 Q12、Q13 的模型条件和核生成补足一起使用。
+
+为把此方向接回实际数量，令整数 $\ell\ge0$ 表示一个单窗之后追加的实际空窗数，置
+
+$$
+q=(2,3),\qquad M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad S=M^3.
+$$
+
+[《关联与原生接续》](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)§23.3 定理 23.1 和《基础公式与关系》§1.2 供应
+
+$$
+qM^{3\ell}=(F_{3\ell+3},F_{3\ell+4}),\qquad
+c_s=(x(s)+y(s),y(s)+z(s))^{\mathsf T}.
+$$
+
+这里 $F_0=0,F_1=1$。该对应使用单窗零初始化后的组成位移 $c_s$，故运输权重 $\varepsilon_s(\ell)=qS^\ell c_s$ 为
+
+$$
+\begin{aligned}
+\varepsilon_0&=0,&\varepsilon_1&=F_{3\ell+3},&
+\varepsilon_2&=F_{3\ell+4},\\
+\varepsilon_3&=F_{3\ell+5},&
+\varepsilon_{13}&=\varepsilon_1+\varepsilon_3.
+\end{aligned}
+$$
+
+所有 $\ell$ 都有 $\varepsilon_0+\varepsilon_{13}=\varepsilon_1+\varepsilon_3$，在 $\ell=0$ 即 $0+7=2+5$。因而 $m$ 个对称副本的加和数量为
+
+$$
+\sum_s n_s\varepsilon_s
+=F_{3\ell+3}U+F_{3\ell+5}V+F_{3\ell+4}W,
+\quad U=n_1+n_{13},\ V=n_3+n_{13},\ W=n_2.
+$$
+
+这个式子只提升单副本运输量的和。原有序读者则逐窗执行 $C'=SC+c_s$ 并保留接缝守卫；两窗终组成是 $Sc_{s_1}+c_{s_2}$，一般不等于 $c_{s_1}+c_{s_2}$。对称副本的占位态不是任意长度 $3m$ 的合法位词或原树历史。基础卷 §13.2 的谱投影与复群属于另一连续组成表示，不承担这里整数空窗运输的出处。
+

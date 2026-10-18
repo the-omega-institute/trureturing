@@ -1,0 +1,50 @@
+**Theorem 62.1 (a fixed leading eigenvalue and a full rectangle).** At half beta, (S.59) is infeasible at every ordered positive center of ranks $3$ through $9$ in either of the following regions:
+
+$$
+s=\frac7{10},\quad \frac{29}{100}\leq t<\frac3{10};
+\qquad
+\frac{699}{1000}\leq s\leq\frac{701}{1000},\quad
+0<\epsilon=1-s-t\leq\frac1{100}.
+\tag{S.83}
+$$
+
+Proof. In the fixed-$s$ band, $\Delta=17/50$ and $0<\epsilon\leq1/100$. The function $t/(4t+2h)$ increases with $t$, with derivative $2h/(4t+2h)^2>0$. Using $h>7/10$ and $t\leq3/10$ in the positive denominators gives
+
+$$
+C(s,t)\leq\frac5{21}+\frac{15}{91}=\frac{110}{273}.
+$$
+
+Consequently the exact rational margin is
+
+$$
+f(s,t)\geq\frac{29}{100}-\frac{17}{50}\frac{110}{273}
+=\frac{4177}{27300}=\frac3{20}+\frac{41}{13650}>d,
+\tag{S.84}
+$$
+
+where $d<3/20$ follows from $h>7/10$. This contradicts (S.75), including the $t=29/100$ endpoint. The upper endpoint $t=3/10$ is the zero-tail boundary, used only for the upper estimate of $C$.
+
+In the rectangle, $289/1000\leq t\leq301/1000$, and $\Delta>0$. Since $\Delta$ decreases with $s>1/2$, it obeys $\Delta\leq85399/250000$, its value at $s=699/1000$. Each summand of $C(s,t)$ decreases with $s$ and with $h$, while the second increases with $t$. Thus
+
+$$
+\begin{aligned}
+C(s,t)&\leq\frac1{4(699/1000)+7/5}
++\frac{301/1000}{(699/1000)(4(301/1000)+7/5)}\\
+&=\frac{27528500}{68192343}.
+\end{aligned}
+$$
+
+All factors used to clear denominators are positive. Because $C\geq0$ and $\Delta>0$, simultaneous upper bounds on these two factors give
+
+$$
+\begin{aligned}
+f(s,t)&\geq\frac{289}{1000}
+-\frac{85399}{250000}\frac{27528500}{68192343}\\
+&=\frac{10303961641}{68192343000}
+=\frac3{20}+\frac{75110191}{68192343000}>d.
+\end{aligned}
+\tag{S.85}
+$$
+
+This contradicts (S.75) on the full closed $s$ interval and at $\epsilon=1/100$, with $\epsilon=0$ excluded from the asserted positive-support region. These are rational inequalities for the whole rectangle, not sampled sign tests. $\square$
+

@@ -1,0 +1,15 @@
+**Definition 4.3 (Anchor-deletion masses and response).** For $j\in\{i-2,i+2\}$ and $x\in\{0,1\}$ define
+
+$$
+\begin{aligned}
+\beta_{j,x}(y)&=\pi_n(w^x(y)-e_j),\\
+u_{j,x}(y)&=a_{n,j}((w^x(y))_{-j})
+=\frac{\pi_n(w^x(y))}{\pi_n(w^x(y))+\beta_{j,x}(y)},\\
+H_i(y)&=\sum_{j\in\{i-2,i+2\}}
+\bigl[(1-u_{j,0}(y))^2-(1-u_{j,1}(y))^2\bigr].
+\end{aligned}
+\tag{4.4}
+$$
+
+Deleting an anchor always produces a legal word outside $E_i$, so each $\beta_{j,x}(y)>0$. Both neighbors of each occupied anchor are zero when present. Thus each anchor fiber is free and $u_{j,x}\in[1/4,1/2]$, also when the anchor is an endpoint. The scalar $H_i$ is the decrease in the two occupied-anchor squared losses as the center changes from zero to one. The predictors used in both losses are the fixed full-complement functions of $\pi_n$. In particular the deleted-word masses are not replaced by marginals of a five-site law.
+

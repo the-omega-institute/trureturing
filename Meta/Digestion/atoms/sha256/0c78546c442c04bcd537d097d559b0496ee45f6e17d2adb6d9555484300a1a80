@@ -1,0 +1,84 @@
+**Theorem 11.3 (Exact four-block description of the boundary cone).**
+For the either-factor boundary cone of Definition 4.1,
+
+$$
+\boxed{\mathcal K_\partial
+=\Phi_{r,0+}(\mathcal P)+\Phi_{r,0-}(\mathcal P)
+ +\Phi_{r,+-}(\mathcal P)+\Phi_{t,+-}(\mathcal P).}
+\tag{11.6}
+$$
+
+The equality preserves the entire fifteen-coordinate tuple. Every
+point on the right has a decomposition into at most eight homogeneous
+radial/tangent product seeds. If it satisfies $M^T\tau=\tau$,
+there is one fixed legal scalar port for this same channel with at
+most $200$ quadrature flags and whole-block CPTP decoders.
+
+Proof. First reduce a missing measurement sector to missing preparation
+sectors, without changing any coordinate. If $R_ib=0$, then
+
+$$
+k(a,b)=k(R_ia,b)+k((I-R_i)a,b).
+\tag{11.7}
+$$
+
+For the population block, $h(a)$ is additive under this orthogonal
+split. Every cross-sector preparation coordinate involving $i$ pairs
+with a zero measurement coordinate. A second-harmonic preparation
+coordinate within $i$ likewise pairs with zero; those within other
+sectors are unchanged. This checks all six $\eta$ coordinates in
+(1.7), for arbitrary plane directions and zero populations. Both
+preparations on the right miss a sector. Normalize only nonzero
+factors and absorb squared norms into weights. Thus boundary
+preparations alone generate exactly the either-factor boundary cone.
+
+Apply Theorem 2.2 to each such term. Its canonical preparation is
+supported in at most a sector pair, and its measurement is radial
+or tangent. For a radial measurement, split off the components outside
+the preparation's support. Formula (2.6) has no surviving cross term
+with those components. Their population contributions further split
+into ordered disjoint-sector rays. The measurement supported within
+the preparation pair gives one of the first three maps (11.2):
+embed $\alpha,\beta$ from (11.3) into $(d,u_+)$, $(d,u_-)$
+or $(u_+,u_-)$. The disjoint-sector rays also belong to these
+maps, by taking just $B$ or $C$ positive. Single-sector radial
+terms are the corresponding $A$ or $D$ rays.
+
+For a tangent measurement and a preparation supported on $(+,-)$,
+embed $\alpha$ into $(u_+,u_-)$ and $\beta$ into $(v_+,v_-)$.
+Formula (2.6) gives exactly the fourth map, including the opposite
+signs of its mixed-plane coefficients. For a preparation supported
+on $(0,+)$ or $(0,-)$, only one bright preparation sector is
+nonzero. The tangent measurement's two components then have no
+mixed-plane pairing. Their population terms split into disjoint-sector
+rays and, possibly, a same-bright-sector term with coefficient
+$\eta_{2j}=-\Lambda_{jj}/4$. The former belong to the radial
+blocks and the latter to the tangent block. This argument includes
+single-sector preparations. It exhausts every split boundary seed
+and proves containment in the right side of (11.6).
+
+Conversely every product (11.3) embedded as just described is an
+actual homogeneous boundary atom, and gives the indicated full
+coordinates by (2.6). Lemma 11.2 therefore proves reverse containment,
+with at most two products per block and eight seeds in total. Negative
+radial amplitudes cause no restriction: simultaneous half-turns and
+an irrelevant factor sign put the preparation into canonical form,
+leaving the measurement radial or tangent and preserving its atom.
+
+For each nonzero seed normalize its two independent factors, absorbing
+the squared norms into its weight. Apply the $25$-point identity
+(2.8). Since all fifteen coordinates are preserved, the full marginal
+remains $\operatorname{Tr}_{\rm out}Z=I_5$ when TP is imposed.
+The resulting finite measurement sum is consequently $I_5$.
+Equation (2.9) supplies the encoder and every whole-block CPTP
+scalar decoder, with nonzero composite Kraus matrices of rank one.
+There are at most $8\cdot25=200$ flags, all consumed in decoding.
+
+Equality of the coordinates means equality of $S_x$ on every complex
+matrix, by (1.8), rather than only equality of a marginal or an error.
+Its adjoint, all fifteen $H_J(x)$ and all retained-history laws for
+every complex input and common actual finite protocol are unchanged.
+This is an exact description of $\mathcal K_\partial$, which is
+proper in $\mathcal K$ by Theorem 4.3; it is not an optimizer-support
+restriction. $\square$
+

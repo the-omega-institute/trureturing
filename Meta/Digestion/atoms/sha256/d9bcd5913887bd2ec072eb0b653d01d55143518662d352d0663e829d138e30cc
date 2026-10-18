@@ -1,0 +1,25 @@
+**Lemma 11.2 (the supplied advancing boundary coordinate).** For every
+finite $u$, every eventually-right $\omega=qR^\infty$ and every $k\ge0$,
+
+$$
+ h_u(\omega)=J^c_q(u),\qquad
+ h_{\rho^k u}(\omega)=h_u(\omega)+k,\qquad
+ \varphi^{h_u(\omega)}=W(u)f_u(\omega).
+\tag{AAR.44}
+$$
+
+Here $J^c$ is the absence-safe right-clock coordinate, and $f_u$ is the
+canonical locally constant density, not an arbitrary almost-everywhere
+representative. These are precisely [NAR, Theorem 11.3 and Proposition
+12.8] and §9, with their existing boundary and scale suppliers.
+
+Proof of the parameter correspondence. If navigation toward $q$ stops
+at a blocking leaf $a$, the longest-reached-prefix rule gives
+$J^c_q(u)=s(a)+e(u|_a)$. Otherwise the leaf on the ray is $qR^r$, and
+the right-clock recurrence gives $c(u|_q)=2r+e(u|_{qR^r})$.
+Both cases give (AAR.42), including a descriptor ending at a leaf or
+strictly beyond one. The supplied advancement and canonical-density
+identities now have exactly the displayed parameters. Thus a descriptor
+never has to be reached for its table entry to make sense. This reuse
+does not supply a boundary point-evaluation port. $\square$
+

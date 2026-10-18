@@ -1,0 +1,18 @@
+**Proposition 2.3 (effective finite depths and the optimizer boundary).** For each
+fixed $h$, the exact finite list of $S_h(p)$ and the value $m_h$ are decidable.
+Consequently $m_h$ gives a computable decreasing approximation to $M(D,Q)$, and
+$M\le k$ is semidecidable by searching for an $h$ with $m_h\le k$. For every
+fixed attained finite-image input, some finite minimizing $h$ exists and (SJM.11)
+gives an effective optimal installation once that $h$ is supplied. No uniform
+terminating procedure for finding a minimizing $h$ on arbitrary signed input is
+claimed.
+
+*Proof.* Apply the exact full-row-list and one-source compiler (SJM.35).
+It returns every $S_h(p)$, its realizing original sources and the maximum
+cardinality $m_h$. Refining a prefix can only remove labels, which proves
+monotonicity. A nonempty finite image bounds this decreasing integer sequence
+between $1$ and $|A|$, so its minimum is attained. The final sentence is a
+quantifier distinction: existence of a finite minimizer supplies an effective construction
+parameterized by that witness, but does not provide a terminating search that
+knows no later depth lowers the value. $\square$
+

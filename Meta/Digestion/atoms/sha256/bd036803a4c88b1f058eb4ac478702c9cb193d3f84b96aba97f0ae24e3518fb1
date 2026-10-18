@@ -1,0 +1,42 @@
+**Definition 39.1 (A shared induced separator and its attainable histograms).**
+Let $H$ be a finite simple graph with $q$ vertices, and let
+$G_1,\ldots,G_b$, $b\ge1$, be finite simple graphs whose pairwise
+vertex intersections are exactly $V(H)$. Each induces exactly $H$
+there. Their private vertex sets are disjoint. The union graph $G$
+has precisely the union of their edge sets, with no extra cross edges.
+Write $\Sigma_H=\operatorname{Ind}(H)$, including the empty set.
+A realization of local totals $c^{(a)}$ in degree $m\ge0$ is an
+array of $m$ independent sets of $G_a$, with occupancy $c^{(a)}_v$
+at each vertex $v$. All branches use the same number $m$ of rows.
+For such an array define the separator histogram
+
+$$
+h_J=\#\{r:I_r\cap V(H)=J\},\qquad J\in\Sigma_H.
+\tag{39.1}
+$$
+
+Its entries are nonnegative integers satisfying
+
+$$
+\sum_{J\in\Sigma_H}h_J=m,\qquad
+c_v=\sum_{J\ni v}h_J\quad(v\in V(H)).
+\tag{39.2}
+$$
+
+Thus one-point separator totals are a projection of the full
+histogram. For specified local totals put
+
+$$
+\mathcal B_a(m,c^{(a)})=
+\{h:\text{some local realization of }c^{(a)}\text{ has histogram }h\}.
+\tag{39.3}
+$$
+
+This set ranges over every realization of those totals. It is not
+the histogram of one arbitrarily chosen array. Unless otherwise
+stated the local totals are realizable and agree on $V(H)$.
+A global realization asks for one array of independent sets of $G$
+with all those restrictions; it does not ask to recover a supplied
+ordered array. This is the occupancy observation of Definition 28.1
+on an overlapping family of graphs.
+

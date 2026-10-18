@@ -1,0 +1,14 @@
+#### 定理 5：动态未来商定理
+
+在先验 $`\mu`$ 至少包含两个不同的正概率深度时：
+
+```math
+\boxed{
+h\sim_{\mathrm{Fut}}h'
+\Longleftrightarrow
+\bigl(a(h),A_h,B_h\bigr)
+=
+\bigl(a(h'),A_{h'},B_{h'}\bigr).
+}
+```
+

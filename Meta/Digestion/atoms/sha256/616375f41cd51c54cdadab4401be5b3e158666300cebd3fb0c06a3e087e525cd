@@ -1,0 +1,11 @@
+**Corollary 2.4 (published prior stability on the same actual words).** For the same fixed observer, let finite or countable PH priors $\mu,\widetilde\mu$ satisfy
+
+$$
+(1-\zeta)\mu(k)\le\widetilde\mu(k)\le(1+\zeta)\mu(k)
+\quad\text{for every }k,\qquad 0\le\zeta<1,
+\qquad \kappa=\zeta/(1-\zeta).
+\tag{2.3}
+$$
+
+The full true law, each error order, each capped/uncapped phase risk and each $\Phi$ change by at most $\kappa$. A cap with gap $\epsilon$ transfers to gap at most $\epsilon+2\kappa$, and a strict witness transfers on the identical actual word with score allowance $\kappa$.
+

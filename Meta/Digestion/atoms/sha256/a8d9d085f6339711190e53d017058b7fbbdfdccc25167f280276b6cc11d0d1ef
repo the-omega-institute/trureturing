@@ -1,0 +1,68 @@
+**Theorem 289.3 (A sufficient full-input payment criterion).**
+Let $y\ge0$ be any full score with $\beta_1,\beta_2\le0$. Define
+
+$$
+\begin{aligned}
+s&=-\beta_1-\beta_2,\qquad U=\sum_{j=3}^L(\beta_j)_+,\\
+T_3&=\text{sum of the three largest }(\beta_j)_+\ (j\ge3),\\
+D_k&=\sum_{j=3}^k\beta_j,\qquad n_k=\min(4,k-2),\\
+t&=\max\left(0,\max_{3\le k\le L}\frac{D_k-s}{n_k}\right).
+\end{aligned}
+$$
+
+Pad the list for $T_3$ by zeros. If $8t\le U+T_3$, set
+$V=tY^4_{(3,4,5,6)}$ and $\theta=\sigma_H(Q(y)-Q(V))$. Then
+
+$$
+\Delta_N(V)=0,\qquad
+s\le\theta\le s+\frac{L-2}{L+1}(8t-K)_+\le\Delta_O(y).
+\tag{289.1}
+$$
+
+In particular, every such unit input $\Delta_O(y)\le1$ has one certificate
+$V\ge0$, $0\le\theta\le1$, $\Delta_N(V)+\theta\le1$. This includes
+actual inputs with $K<8t$. If $K\ge8t$, the exact residual support is $s$.
+
+**Proof.** Constant zero minus the input's own anchor reward is $s$, so
+$\Delta_O(y)\ge s$. Nonnegativity of the full input gives
+
+$$
+K-W_y=\sum_{n\le2}A_n+\sum_{n\ge3}C_n\ge s+U.
+$$
+
+Choose the addresses of the three largest positive late coefficients in
+increasing order $i<j<k$. The single table $O(i,j;i,j,k)$ earns all the
+correct rewards of those three classes on every suffix; all its other
+rewards are nonnegative. If fewer coefficients are positive, fill the
+three addresses arbitrarily. Hence $B_O(y)\ge T_3$, and
+
+$$
+\Delta_O(y)\ge s+U+T_3-K.\tag{289.2}
+$$
+
+These are two support readings of the same input, with its actual $W_y,K$.
+They are not a sum of budgets from separately optimized scores.
+
+The residual late coefficients $a_j=\beta_j-t[3\le j\le6]$ have
+prefix sums $D_k-tn_k\le s$. Put $b_{L+1}=0$. Abel summation gives
+
+$$
+\sum_{j=3}^La_jb_j
+=\sum_{k=3}^L(D_k-tn_k)(b_k-b_{k+1})\le s b_3.
+$$
+
+Since $b_2=b_3$, $b_1\ge b_3$ and both head coefficients are nonpositive,
+$\beta_1b_1+\beta_2b_2\le-sb_3$. Therefore, throughout $H_L$,
+
+$$
+F_{Q(y)-Q(V)}\le s+(8t-K)e.
+$$
+
+Also $(L+1)e\le\sum_{j=3}^Lb_j\le L-2$. The hull origin gives
+residual value $s$. These facts prove the first two bounds in (289.1).
+If $K<8t$, (289.2) and the hypothesis give
+$\Delta_O(y)\ge s+8t-K$, which is at least the displayed residual bound.
+If $K\ge8t$, use $\Delta_O(y)\ge s$. This proves the single payment
+claim, without requiring the payer's coefficient total to be at most $K$.
+$\square$
+

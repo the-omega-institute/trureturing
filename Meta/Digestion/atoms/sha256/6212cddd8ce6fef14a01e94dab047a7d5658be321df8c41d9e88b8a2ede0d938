@@ -1,0 +1,20 @@
+**Corollary 9.1 (the precisely defined diagonal closure).** The explicit
+bound (ZG.1) holds for the implementation class of CG18.2–18.3: the sole
+specimen has live interactions diagonal in the common calibrated basis;
+with an actually retained apparatus/record $R$, the allowed live Kraus
+operators are $\sum_jP_j\otimes B_{a,j}$. Record-local operations
+$I_V\otimes B$, choices from actually acquired classical records, independent
+randomization, finite composition and summation over unobserved branch
+records are allowed. All coefficients and permissions are common, initial
+apparatus is independent, and failure is absorbing with no return to live.
+No other specimen-bearing interaction is included. The bound also holds
+for explicitly defined Choi-norm limits of these live maps.
+
+Proof. The prior closure argument preserves each specimen subspace
+$|j\rangle\otimes R$ through every surviving branch. Products, sums,
+independent mixtures and discarding records therefore give $T_{ij}=0$ for
+$i\ne j$; absorption prevents later live contributions from failed branches.
+Those zero Choi diagonal entries are closed under the stipulated limits.
+Apply Theorem 8.2. This conditional class is not an exhaustive native-menu
+classification. $\square$
+

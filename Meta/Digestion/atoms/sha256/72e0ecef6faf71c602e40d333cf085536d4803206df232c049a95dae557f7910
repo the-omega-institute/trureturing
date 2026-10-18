@@ -1,0 +1,45 @@
+## 5. All private demands at one cell
+
+For every interior $v=(g,z)$ form the finite simple undirected graph
+$\Gamma_v$ on the entire coordinate set $X_B$. An unordered pair
+$\{x,y\}$ is an edge if some actual shared state $q\in Q_B$ hosts
+an oriented pair $p=(h,z),p'=(g,w)$ satisfying (CL.15), with
+$x\in S_p(q)\setminus S_{p'}(q)$ and
+$y\in S_{p'}(q)\setminus S_p(q)$, or conversely. Include all such
+private cross-pairs from all eligible witnesses. The private coordinates
+are in $X_B$ by (CL.9). Repeated generation of an edge leaves one edge.
+An isolated coordinate remains a vertex. Write $\chi_v$ for the minimum
+number of colors in a proper coloring; an edgeless graph on the nonempty
+$X_B$ has $\chi_v=1$.
+
+For a positive integer $c$ define
+
+$$
+\tau(c)=\min\{j\ge1:\tbinom{j}{\lfloor j/2\rfloor}\ge c\}.
+\tag{CL.18}
+$$
+
+This is finite. For $c=1$, $j=1$ suffices. For $c\ge2$ the middle
+coefficient in row $c$ is at least $\binom c1=c$: consecutive binomial
+coefficients increase to the middle, as follows from their ratio
+$(c-j)/(j+1)$. No asymptotic estimate is needed.
+
+Let $d=g+z$ and $t_v=d-a$, so $1\le t_v\le\beta_B-1$. When
+$\Gamma_v$ has an edge, put
+
+$$
+\begin{aligned}
+M_v&=\max_{\substack{R\subseteq X_B\\|R|=t_v}}
+       |\{e\in E(\Gamma_v):|e\cap R|=1\}|,\\
+\kappa_v&=\max\left(\tau(\chi_v),
+              \left\lceil\frac{2|E(\Gamma_v)|}{M_v}\right\rceil\right).
+\end{aligned}
+\tag{CL.19}
+$$
+
+Here $M_v>0$: choose one edge, include one endpoint and exclude the other,
+and fill $t_v-1$ places from the remaining $\beta_B-2$ coordinates.
+For an edgeless $\Gamma_v$ set $\kappa_v=1$, without a ratio involving
+zero. These are finite mathematical definitions; no enumeration,
+optimizer or new resource is provided to the running graph.
+

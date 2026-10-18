@@ -1,0 +1,32 @@
+**定理 120.2（FIB历史可见接续的比值判据）。** 在定义120.1下，存在上述 CPTP 映射 $\Lambda$，使
+
+$$
+\Phi_{\Gamma_2}=\Lambda\circ\Phi_{\Gamma_1}
+$$
+
+对全部密度输入成立，当且仅当
+
+$$
+C_{hk}=\frac{\Gamma_{2,hk}}{\Gamma_{1,hk}}
+$$
+
+所成矩阵 $C$ 半正定。若存在，$\Lambda$ 唯一且等于 Schur 映射 $\Phi_C$。
+
+证明（120.2）。前卷定理109.2已经给出相关矩阵与 Schur 通道的共同实现条件，此处使用其线性映射及 Choi 形式。密度矩阵的实线性包络是全部 Hermitian 矩阵：任意 Hermitian 矩阵的正、负谱部分各为非负标量乘密度矩阵；一般复矩阵再分为两个 Hermitian 部分。故两复线性映射若在全部密度态上一致，即在全部矩阵上一致。
+
+在矩阵单位 $|h\rangle\langle k|$ 上，$\Phi_{\Gamma_1}$ 乘以非零标量 $\Gamma_{1,hk}$，因此线性可逆；其逆不必为正映射。唯一候选为
+
+$$
+\Lambda=\Phi_{\Gamma_2}\Phi_{\Gamma_1}^{-1}=\Phi_C.
+$$
+
+相关矩阵的 Hermitian 性及非零分母给 $C_{kh}=\overline{C_{hk}}$，对角为一。经典 Choi 完全正判据作为中间工具给归一化 Choi 矩阵
+
+$$
+J(\Phi_C)=\frac1d\sum_{h,k}C_{hk}|h,h\rangle\langle k,k|.
+$$
+
+令 $F|h\rangle=|h,h\rangle$，则 $J(\Phi_C)=FCF^\dagger/d$；在 $F$ 的像上同构于 $C/d$，正交补上为零。因此 $\Phi_C$ 完全正当且仅当 $C\ge0$。对角为一又使 $\operatorname{tr}\Phi_C(A)=\operatorname{tr}A$ 对全部 $A$ 成立。反向 $C\ge0$ 时直接用前卷定理109.2或其记录分解，得 CPTP 接续及所需复合等式。$\square$
+
+Satvik Singh、Nilanjana Datta，[*Detecting positive quantum capacities of quantum channels*, npj Quantum Information 8，50，DOI:10.1038/s41534-022-00550-2](https://www.nature.com/articles/s41534-022-00550-2)，式(55)以相关矩阵参数化广义退相干通道，Theorem II.28的证明给其 Choi 矩阵形式。该文的目标是量子容量；这里只取 Schur/Choi 的成熟中间工具，全部输入上的接续比值等价由本条线性可逆性论证承担。
+

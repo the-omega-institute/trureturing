@@ -1,0 +1,13 @@
+**Proposition 5.3 (Count and lawful access).** The table has exactly
+
+$$
+M(s,L)=3+(2H-1)(L+2)
+\tag{5.5}
+$$
+
+listed complete configurations and obeys the access and accounting contract of Definition 2.2.
+
+Proof. There are $2H-1$ live integer evidence coordinates and $L+2$ categories. They coexist, so their full product is counted; $w$ and both labels contribute three further configurations. Counting unreachable pairs only enlarges the sufficient budget. Every row has nonnegative probabilities summing to one, and every destination is listed.
+
+The old counted state and the actual bit select the row. A fresh coin has no persistent effect except its destination. Score addition and boundary comparison describe how destinations were compiled, not external runtime arithmetic. Runtime needs no exact likelihood, logarithm, division, floor, square root, sum, gap number, overshoot register or extra output phase. Full model probabilities enter only source-blind design from the public pair and known common $q$, not a query to the true source. Neither $\tau$ nor the countdown nor future gaps are available to the table. The waiting rows pay the stationary wait and first one; saturated rows pay arbitrarily long overflow suffixes. $\square$
+

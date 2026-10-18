@@ -1,0 +1,41 @@
+**Definition 75.3 (explicit additional installation hypotheses).** Install the Dirichlet domain(75.9) and, separately for each prescription, the following real bounded multiplication operator. With $\chi_p^\varepsilon=\mathbf1_{Z_p^\varepsilon}$ set
+
+$$
+\begin{aligned}
+\Phi_\varepsilon(x)&=\sum_{p\in D}2^{-|p|}\chi_p^\varepsilon(x),
+&W_{\varepsilon,0}&=0,\\
+W_{\varepsilon,\diamond}(x,y)
+ &=-g\bigl(\Phi_\varepsilon(x)+\Phi_\varepsilon(y)\bigr)
+ -\nu\sum_{p\ne q}G_D^\diamond(p,q)
+                         \chi_p^\varepsilon(x)\chi_q^\varepsilon(y),
+&M&=2g+\nu/\lambda.
+\end{aligned}
+\tag{75.11}
+$$
+
+The one-body field is zero on every cylinder and ground half-chamber. An ordered distinct chamber pair activates exactly one term of the ordered sum, without a factor two. Hence every $W_{\varepsilon,C}$ is exchange symmetric and has norm at most $M$, independently of $\varepsilon$. Let $H_{\varepsilon,R,C}^{\rm D}$ be the operator on $\mathcal P_{\varepsilon,R}$ of
+
+$$
+h_{\varepsilon,C}[u]=q_{0,\varepsilon}[\iota_\varepsilon u]
+       +\int_{G_{\varepsilon,R}}W_{\varepsilon,C}|u|^2,
+\qquad u\in\mathcal Q_{\varepsilon,R}^{\rm D}.
+\tag{75.12}
+$$
+
+It is self-adjoint and bounded below by $-M$, by the closed form of74.2 and bounded perturbation. To specify the actual operator domains without any corner regularity assumption, polarize the forms and use
+
+$$
+\begin{aligned}
+\operatorname{Dom}H_{\varepsilon,R,C}^{\rm D}
+&=\{u\in\mathcal Q_{\varepsilon,R}^{\rm D}:\exists w\in\mathcal P_{\varepsilon,R},\quad
+h_{\varepsilon,C}(u,v)=\langle w,v\rangle
+\text{ for every }v\in\mathcal Q_{\varepsilon,R}^{\rm D}\},\\
+\operatorname{Dom}C
+&=\{f\in\mathcal Q^{\rm hc}:\exists h\in\mathcal K,\quad
+q_C(f,v)=\langle h,v\rangle
+\text{ for every }v\in\mathcal Q^{\rm hc}\},
+\end{aligned}
+$$
+
+with outputs $w$ and $h$, respectively, where $q_C=a k_{\delta,2}+\langle U_C\,\cdot,\,\cdot\rangle$. Density makes those outputs unique. These are exact weak operator domains, retaining the natural exterior conditions and every stipulated essential trace; no global piecewise-$H^2$ description is substituted. Bounded multiplication leaves the corresponding kinetic operator domains unchanged, since its contribution can be moved to the representing Hilbert vector in these identities. These exact step multipliers and the exclusion are added mathematical installation hypotheses. No native force, acquired switch, local field mediator, source service or physical control follows from declaring them. The common and killed forms are distinct prescriptions on one common source and geometry.
+

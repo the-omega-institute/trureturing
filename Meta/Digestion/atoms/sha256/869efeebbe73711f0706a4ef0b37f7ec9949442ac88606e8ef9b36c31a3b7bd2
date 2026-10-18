@@ -1,0 +1,34 @@
+**Definition 1.2 (complete retained input).** Fix
+$I=(P,R,H_0,H_{\rm rel},Q,N)$ as in [ARH, Definitions 1.1–1.2][ARH].
+Both cuts are finite and prefix-free. A complete row at a cut retains its
+ordered reached subset, its entire concrete exterior with numbered holes,
+and the equality partition of the whole native subtrees at those holes.
+In particular the empty cut retains the whole source, and the root cut has
+one hole. The attained old row $R$ includes all three fields.
+
+A literal $(a,p,c)$ means $r_{\rho^a u}(p)=c$. A signed record
+$(a,p,b,q,\bowtie)$ means
+
+$$
+p\in\operatorname{Pos}(\rho^a u)\ \land\
+q\in\operatorname{Pos}(\rho^b u)\ \land\
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q,
+\qquad \bowtie\in\{=,\ne\}.
+\tag{PAC.3}
+$$
+
+Absence invalidates either sign. Lists retain repetitions, and every
+record inside a realization concerns the same original source. Define
+
+$$
+D=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\},
+\qquad
+D_r=\{u\in D:R_Q(u)=r\}.
+\tag{PAC.4}
+$$
+
+Thus the entire old exterior, old absent addresses, repeated old classes,
+all old cross-class and off-task inequalities, every literal, every sign,
+and both endpoint guards are imposed jointly. Rows outside any selected
+family remain part of $D$.
+

@@ -1,0 +1,41 @@
+## 414. Separate cheap P and low-transverse charges
+
+Define
+
+    X=sum over cheap T of theta_P0(T),
+    Y=sum over cheap T of [2*beta_V(T)+2*beta_companion(T)].
+
+X is their exact total P expense. In Y, the companion is C for A(P0)
+and D for B(P0). In particular Y uses only genuine V,C,D slots, with
+all multiplicities, so
+
+    Y<=pi+2*pi+2*pi=5*pi.                         (414.1)
+
+This is a necessary aggregate bound, not a replacement for the three
+individual budgets. The omitted noncheap V,C,D expenses are positive
+where present; no such strengthening is needed.
+
+The noncheap owners have D-a original P slots. Every noncheap role
+costs strictly more than its P-slot count times pi/3, except that each
+five-slot role is charged only four slots. The role table gives
+
+    5*pi-X > (pi/3)*(D-a-f)
+             >=(pi/3)*(17-a-f).
+
+Consequently
+
+    X < (pi/3)*(a+f-2).                            (414.2)
+
+Because X>0, this also reproduces a+f>=3. Summing the unconditional
+four-theta inequality (407.2) over all cheap owners gives
+
+    2*pi*a < 4*X+Y
+             < (4*pi/3)*(a+f-2)+5*pi.
+
+Thus 2*a<4*f+7. Integrality yields
+
+    a<=2*f+3.                                     (414.3)
+
+No low-angle cost was assigned to the wrong actual companion, and no
+normal interval or repeated owner was removed in this sum.
+

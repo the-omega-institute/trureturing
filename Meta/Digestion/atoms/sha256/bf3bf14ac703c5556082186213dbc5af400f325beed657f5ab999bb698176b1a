@@ -1,0 +1,28 @@
+**Theorem 6.4 (even full current recovery does not recover ordered history).**
+An exact current boundary can uniquely determine the entire current source
+snapshot and still fail to determine the ordered operation history, its
+intermediate cut sequence or its intermediate states.
+
+Proof. Let $H=I_2$ over $\mathbb F_2$, so the sole codeword is $00$. Start at
+$(k,d,u)=(2,2,00)$. The two words
+
+$$
+\begin{aligned}
+w_1&=\operatorname{delete}_0\operatorname{append}_0
+      \operatorname{delete}_0\operatorname{append}_0,\\
+w_2&=\operatorname{delete}_0\operatorname{delete}_0
+      \operatorname{append}_0\operatorname{append}_0
+\end{aligned}
+\tag{6.2}
+$$
+
+are both legal and end at $(2,0,00)$ with the same boundary. Their cut
+sequences are respectively $(2,1,2,1,2)$ and $(2,1,0,1,2)$, so their ordered
+histories and intermediate prefixes differ. At the terminal type,
+$H_A=I_2$ and $H_F$ is empty; (5.5) holds, giving exact recovery of the unique
+full source. Nonetheless no function of this terminal boundary can return
+both distinct words or cut sequences. An explicitly retained path archive
+would be a different input and a different task, as in
+[Process Geometry, Theorems 6.4–6.5](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+$\square$
+

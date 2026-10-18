@@ -1,0 +1,31 @@
+**Definition 5.1 (Product-atom coefficients and the cone).** For real
+unit $a,b\in\mathbb R^5$, define
+
+$$
+\begin{gathered}
+h_i(a)=\langle H_i,aa^T\rangle
+=a^TR_ia/\sqrt{d_i},\qquad (d_0,d_+,d_-)=(1,2,2),\\
+z_\nu(a)=(a^TF_{\nu1}a,\ a^TF_{\nu2}a)^T,\\
+k(a,b)=(M(a,b),\eta(a,b)),\qquad
+M(a,b)=h(a)h(b)^T,\qquad
+\eta_\nu(a,b)=\tfrac12 z_\nu(a)^Tz_\nu(b),\\
+\mathcal K=\operatorname{cone}\{k(a,b):a,b\in\mathbb R^5,
+\ \|a\|=\|b\|=1\}.
+\end{gathered}
+\tag{5.1}
+$$
+
+Here cone means finite sums with nonnegative coefficients, with no
+restriction $a=b$. Define the output-first unnormalized Choi map
+
+$$
+Z(M,\eta)=\sum_{i,j}M_{ij}H_i\otimes H_j
++\sum_{\nu\in\mathcal N}\eta_\nu
+(F_{\nu1}\otimes F_{\nu1}+F_{\nu2}\otimes F_{\nu2}).
+\tag{5.2}
+$$
+
+For the associated channel its normalized Choi matrix is $Z(M,\eta)/5$.
+No positive-semidefinite, PPT or extension relaxation is included in
+the definition of $\mathcal K$.
+

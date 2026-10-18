@@ -1,0 +1,23 @@
+### 96.1. Original domain and common-witness compression
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four two-coordinate fibres, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain 𝓔={G=G*≥0:G_ff=I₂}, sections 91 and 95 give
+
+\[
+ \begin{aligned}
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,\
+                  \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g).
+ \end{aligned}                                                     \tag{1}
+\]
+
+Assume (G,H) is a local minimum on the full domain 𝓔×𝓔, with rank G=7 and 0<t=F(G,H)<1/2. Fix a nonzero vector a spanning ker G, and put S=supp(a). The opposite full rank is not specified. Section 95 supplies a common norming witness with first stress αaa*, α>0, and
+
+\[
+ W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}}
+       \quad(i,j\text{ in different fibres}).                 \tag{2}
+\]
+
+Every cross-fibre denominator is nonzero by the original matrix-unit bound |1/2−G_ijH_ij|≤t<1/2.
+

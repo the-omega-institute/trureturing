@@ -1,0 +1,5 @@
+source_id = "kbonacci-mixed-tail-root-zero-cut-price"
+path = "docs/develop/theory/KBONACCI_MIXED_TAIL_ROOT_ZERO_CUT_PRICE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,5 @@
+source_id = "fib-native-nonlinear-readout-capacity-and-minimal-dimension"
+path = "docs/develop/theory/FIB_NATIVE_NONLINEAR_READOUT_CAPACITY_AND_MINIMAL_DIMENSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

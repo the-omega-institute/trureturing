@@ -1,0 +1,64 @@
+**Proposition 7.2 (an actual equality face and the correctness
+premise).** Let $P_{43}$ be the Boolean selected graph specified by
+the thirteen-state table and four disjoint fallback grids in [PCA,
+Proposition 36.1][PCA]. It is a correct seven-query threshold-four
+table with forty-three running states. For every original increasing
+cost vector on its seven labels,
+
+$$
+P_{43}\in\mathcal F_{c,4}
+\quad\Longleftrightarrow\quad c_2+c_5=c_3+c_4
+\quad\Longleftrightarrow\quad g_2=g_4.
+\tag{TC.15}
+$$
+
+In contrast, a positive full-length cost cone need not imply
+threshold correctness when the premise $P\in\mathcal T_{n,k}$
+is omitted.
+
+Proof. Use the complete fixed graph at the cited location, including
+all thirty fallback states, rather than just its local merger. Its
+all-input correctness and seven-query bound follow from the supplied
+head, scan and exit analysis. Write $X=\{2,5\}$,
+$Y=\{3,4\}$ and $U=\{6,7\}$. Its shared heads are
+$\lambda:(x_1,x_2,x_5)=(0,0,0)$ and
+$\mu:(x_1,x_3,x_4)=(1,1,1)$.
+After scanning $U$, a shared route exits through OR on $X$, a
+single query to coordinate one, or AND on $Y$.
+
+The all-zero input follows coordinates $(1,2,5,6,7,2,5)$ and
+has excess $C_X-C_Y$. The all-one input follows
+$(1,3,4,6,7,3,4)$ and has excess $C_Y-C_X$. Both have
+length seven, proving necessity of equality and its invariance under
+any common offset. Conversely, if $C_X=C_Y$, a shared head and
+scan cost $c_1+C_X+C_U$. A two-query exit costs at most
+$C_X=C_Y$, while the single-query exit costs $c_1<C_X$.
+Thus every shared route costs at most $W$; fallback routes query
+distinct coordinates and also cost at most $W$. This proves
+sufficiency. The equation $C_X-C_Y=g_4-g_2$ gives the gap
+form. Full-length fallback routes read every coordinate once. The
+two-query shared exits either do likewise or repeat exactly $X$
+while omitting $Y$, or repeat exactly $Y$ while omitting $X$.
+Consequently their full-length suffix rows are exactly
+
+$$
+0,\qquad (0,-1,0,1,0,0),\qquad(0,1,0,-1,0,0).
+$$
+
+The zero row is attained, for example, on $0100111$, whose fallback
+route reads all seven distinct coordinates. The all-zero and all-one
+inputs above attain the other two rows.
+
+This is a correct above-grid sharing graph; its size is $43>16$.
+Its cost dependence does not prove cost dependence of the optimal
+minimum.
+
+For the final assertion use the complete ten-state graph in [SI,
+Theorem 7.2][SI]. Every run queries a prefix of its six coordinates
+without repetition, so it satisfies both cost caps for all positive
+costs and all its length-six suffix rows are zero. Its positive gap
+cone is therefore the whole positive orthant. Yet on $000011$ it
+returns one after coordinates $(1,2,3,4,5)$, while threshold three
+is zero. This explicit source-specified graph proves that passing the
+cost conditions cannot replace correctness. $\square$
+

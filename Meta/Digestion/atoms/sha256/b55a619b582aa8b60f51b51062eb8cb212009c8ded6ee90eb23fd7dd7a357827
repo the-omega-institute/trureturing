@@ -1,0 +1,46 @@
+**Definition 42.1 (hypotheses, full domains and coefficient notation).** Fix one admitted original datum of Definitions 1.1–2.2 before $s\downarrow0$. Retain every conditional analytic antecedent of Theorem 22.1 and Definitions 29.1 and 36.1. These are the canonical heat, Gaussian and bridge-moment estimates, hypoellipticity and horizontal Sobolev realization, the specified compact reconstruction and simple critical mode, the homogeneous-energy complement gap, the particular first-response representative and its stated derivative tails, and the original native domain, attainment, heat and actual-state reconstruction statements at their owning scopes. In particular the actual weak-disk conclusion, P §§104–105, Theorem 27.1 and Theorem 10.2 retain their original hypotheses. Suppose throughout §§42–50 that this fixed datum satisfies $C_{\rm resp}=0$.
+
+All actual vectors have the entire complex form or operator domains (1.5), transported only by the original $\mathcal U_s$ and determinant-one $\mathcal T_s$. Both original moving Dirichlet faces, every real phase frequency, the signed nonzero $\kappa$ and full jointly realized rational vector (1.2), fixed denominator margins, raw unit source and $j_0$ remain unchanged. The field heat clock is $B$, independently of $a$. Constants may depend on the fixed datum and its antecedent constants; no uniformity for varying data or approaching a pole is asserted.
+
+Use precisely $\mathsf Q_j,G_j,\mathcal V_j,\mathcal N_s,\mathcal B_s(h)$ of §§23 and 29–33, with $\mathcal V_0=V$. Set
+
+$$
+\gamma=\chi_c/a,\qquad \mu=\int Vp^2,\qquad
+g_0=Vp/\mu,\qquad v=\nu\Psi,\qquad
+A=I-\gamma\mathcal N_0,\qquad
+\omega=1+|r|,\qquad \mathfrak d=d_E(0,\cdot).
+\tag{42.1}
+$$
+
+The first charge $g_1$ is exactly (37.1). Inner products are conjugate linear in the first slot. To distinguish differential coefficients from the scalar $D_4$ in (24.5), write
+
+$$
+\begin{aligned}
+\mathscr D_1&=2\nu rY^2,&
+\mathscr D_2&=-3\nu^2r^2Y^2-\lambda,\\
+\mathscr D_3&=4\nu^3r^3Y^2,&
+\mathscr D_4&=-5\nu^4r^4Y^2.
+\end{aligned}
+\tag{42.2}
+$$
+
+They are the coefficients of
+$-X^2-(1+\nu sr)^{-2}Y^2-\lambda s^2$.
+Since $Yr=0$, integration by parts on compact tests gives exactly
+
+$$
+\mathfrak a_j(f,z)
+ =a\langle\mathscr D_jf,z\rangle
+   -\chi_c\int\mathcal V_j\bar fz
+\tag{42.3}
+$$
+
+with the forms (24.1); this notation extends only to pairings justified below. In particular $\mathscr D_2$ includes $-\lambda$. The complete field coefficients retain $\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$. No scalar is redefined: throughout this append
+
+$$
+C_4=D_4-h[\Upsilon]
+\tag{42.4}
+$$
+
+means exactly (24.5).
+

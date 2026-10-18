@@ -1,0 +1,21 @@
+**Proposition 1.5 (A parent gap alone does not bound local sensitivity).**
+For $n=2$, uniform $a>0$ and the uniform recorded-site experiment,
+
+$$
+\operatorname{spec}H_{\rm loc}=\{0,1,1+2a\},\qquad
+\inf_{\mathcal Q_p[f]>0}\frac{J_p[f]}{\mathcal Q_p[f]}
+=\frac1{2(1+a)}.
+\tag{1.14}
+$$
+
+Proof. In the ordered basis $(00,10,01)$ the parent is
+$\begin{pmatrix}2a&-\sqrt a&-\sqrt a\\-\sqrt a&1&0\\
+-\sqrt a&0&1\end{pmatrix}$.
+Its ground vector is proportional to $(1,\sqrt a,\sqrt a)$;
+$(0,1,-1)$ has eigenvalue $1$, and
+$(-2\sqrt a,1,1)$ has eigenvalue $1+2a$.
+These nonzero mutually orthogonal vectors form a basis.
+Uniform sampling is the matched choice, with $R=2(1+a)$,
+so Theorem 1.3 gives (1.14). The parent gap remains $1$ while the
+information ratio tends to zero as $a\to\infty$. $\square$
+

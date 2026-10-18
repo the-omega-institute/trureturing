@@ -1,0 +1,52 @@
+**Proposition 5.2 (trace relaxation fails and has an explicit separator).**
+Let
+
+$$
+z=\frac{(\sqrt\alpha,i,0)^T}{\sqrt{1+\alpha}},\quad L_0=zz^\dagger,
+\quad G=\operatorname{diag}(\|D\|_F^2,\|T\|_F^2,\|S\|_F^2),
+\quad t_0=z^\dagger Gz,\quad
+\mu=\sigma_{\min}(K(z))^2.
+\tag{CA.23}
+$$
+
+Then $0\preceq L_0\preceq I_3$, $\operatorname{tr}(B_0L_0)=0$ but
+$L_0\notin\mathcal C_2$. The Hermitian matrix
+
+$$
+W_0=(t_0-\mu)G-Gzz^\dagger G
+\tag{CA.24}
+$$
+
+satisfies $\operatorname{tr}(W_0L)\geq0$ for every $L\in\mathcal C_2$,
+whereas $\operatorname{tr}(W_0L_0)=-\mu t_0<0$. In particular $W_0$ is
+a dual-cone separator, not a positive semidefinite matrix.
+
+Proof. $z$ is unit and its weighted trace is zero. Its quadratic square
+is $z^TB_0z=2\alpha/(1+\alpha)\ne0$ and its first coordinate is nonzero,
+so $K(z)$ is invertible by (CA.14), giving $t_0,\mu>0$. Every positive
+summand of a rank-one positive matrix has range in that same line, by
+the positive-kernel argument. Thus a singular-atom decomposition of
+$L_0$ would require a singular vector parallel to $z$, impossible by
+homogeneity of the determinant. Alternatively its imaginary $DT$ entry
+violates (CA.21).
+
+For a singular $K(x)$ take the projection $R$ onto its row space, of
+rank at most two, so $K(x)=K(x)R$. Hilbert–Schmidt Cauchy–Schwarz gives
+
+$$
+|\operatorname{tr}(K(z)^\dagger K(x))|^2
+ \leq\|K(z)R\|_F^2\|K(x)\|_F^2
+ \leq(t_0-\mu)\|K(x)\|_F^2.
+\tag{CA.25}
+$$
+
+The last inequality follows from $K(z)^\dagger K(z)\succeq\mu I$ and
+$\operatorname{rank}(I-R)\geq1$. Disjoint matrix supports make $D,T,S$
+Frobenius-orthogonal, so the left pairing is $|z^\dagger Gx|^2$ and
+the last norm is $x^\dagger Gx$. Therefore $x^\dagger W_0x\geq0$ for
+every singular atom and hence for their sums. Substitution of $z$ into
+(CA.24) gives $-\mu t_0$. No singular value has to be evaluated to
+obtain this strict separation. The counterexample refutes trace-budget
+sufficiency, not the original optimization or its valid necessary bound.
+$\square$
+

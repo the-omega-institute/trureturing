@@ -1,0 +1,26 @@
+**Proposition 150.1 (Rational witness for failed containment).** If
+$\Pi_{N,L}\not\subseteq\Pi_{O,L}$, there is a rational full extended $N$
+lift outside $\Pi_{O,L}$ and a rational closed halfspace of $\Pi_{O,L}$
+that its parameter point strictly violates.
+
+**Proof.** Choose $x_0\in\Pi_{N,L}\setminus\Pi_{O,L}$.
+From a finite rational closed halfspace description of $\Pi_{O,L}$,
+select a violated row $g(x)\le\beta$, with $g,\beta$ rational.
+If a defining equality fails, use its violated inequality orientation.
+Maximize $g$ over the entire extended compact polytope $P_{N,L}$.
+The maximizing face contains a vertex. A vertex of a rational polytope
+is rational because an independent full-rank system of active rational
+constraints uniquely determines it, and Cramer's rule gives rational
+coordinates. This includes lower-dimensional polytopes: the affine-hull
+equations occur among the active rows. Choose this rational vertex
+$(x_v,w^v,T^v)$. Then
+
+$$
+\delta=g(x_v)-\beta\ge g(x_0)-\beta>0
+\tag{150.1}
+$$
+
+is rational. The lift, not only its parameter projection, is rational.
+This prevents rounding a parameter point while losing its full common
+allocation. $\square$
+

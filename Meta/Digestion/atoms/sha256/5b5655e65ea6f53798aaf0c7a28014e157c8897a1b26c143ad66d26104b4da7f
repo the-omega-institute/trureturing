@@ -1,0 +1,40 @@
+**Convention 24.1 (one shared full-family realization).** Theorem 17.1
+and Convention 17.3 supply the original-task realization for every
+$G$ above, with no new code construction needed. With
+$H_0=\lceil\log_2n\rceil$ and $D=H_0+3$, its scaffold and fixed alpha
+padding merge exactly the $2^{2n}$ canonical graph states into one name.
+Every other canonical state has its singleton name; the complete
+attained alphabet on the entire variable-shape $\mathcal F_D$ is
+$|S_D|-2^{2n}+1$. The deterministic source-blind preparer scans all
+original-root $Rq$, $q\in W_D$, before learning the later target.
+Its exact costs on every source are $2^D-1$ Reads, maximum address
+length $D$, and $(D-1)2^D+1$ submitted letters. Export is only the
+fixed-width complete name. Paid handoff and isolation remove every
+other accessible acquired distinction, including selectors, control,
+buffers, lengths, allocation, timing and preparation transcripts.
+
+Only after export does any source-independent permitted request arrive.
+Singletons, internal scaffold/graph targets and padding factors use
+zero Reads. A graph terminal target uses its edge's actual owner at
+(GDB.81), one original-root literal of length $D$, selected from the
+name, $D,p$ and public tables before its reply and every supplied count.
+The reply determines the full requested factor, and (GDB.4) supplies
+every subsequently supplied authentic $k\ge0$ without further Reads.
+Padding includes initially absent suffixes. Canonicalization preserves
+the queried reply and full target factor on every assigned original
+source; transport is used only at actually present occurrences. Thus
+all original sources and all original requests retain their simultaneous
+correctness. The uniform-cycle and positive trial laws in §22 are
+analytical laws on this same attained fiber, with no added observation.
+
+The graph, mixtures, rank witnesses, reweighting tables, laws, public
+codebook and decoder tables are source-independent mathematical or
+installed data. No seed vector, full marginal tuple or syndrome is
+exported or handed to the reader. Installed table generation and size,
+preparation work/control and temporary storage, post-request workspace,
+address construction, final predictor and count representation, lawful
+entry/authentication, continuity, handoff/isolation and physical time
+remain separate resources. The factor alone retains the credited
+$\lceil\log_2(2D+1)\rceil+1$ bit bound. This deliberately nonoptimal
+code supplies no value or lower bound for optimized $M_1(D)$.
+

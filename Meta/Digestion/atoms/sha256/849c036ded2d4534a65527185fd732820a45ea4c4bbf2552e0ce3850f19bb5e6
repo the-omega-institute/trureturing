@@ -1,0 +1,161 @@
+**Theorem 17.2 (rigidity of the averaged live Choi matrix).** For every
+CPTP $\Theta$ in (CG.155) with $E_c(\Theta)=E_*$, its mathematical
+average under the four actual signs has live Choi matrix
+
+$$
+\overline J_\Lambda=H_*\oplus Q_*^{01}\oplus Q_*^{02}\oplus0
+\tag{CG.156}
+$$
+
+in precisely the output-input block order (CG.128). Before averaging,
+$G_o=0$, $G_f|0\rangle=0$ and
+$\operatorname{range}J_\Lambda\subseteq\ker S_*$.
+
+Proof. Let $e_h$ be an individual finite-output error, $M_h$ the endpoint
+effect used in Theorem 14.1, $\pi_h=\lambda_*/4$ at height $5$ and
+$\pi_h=(1-\lambda_*)/4$ at height $27$. Put
+$P_h=\operatorname{tr}M_h(\Omega_h^c-\Theta(\rho_h))$.
+Equations (CG.130)–(CG.133), now on $\mathcal A_c$, give
+
+$$
+\begin{aligned}
+E_*&\leq\sum_h\pi_hP_h\leq\sum_h\pi_he_h\leq E_*,\\
+0&=\operatorname{tr}(S_*J_\Lambda)
+ +\operatorname{tr}((Z_{d,*}-D_{f,*})G_f)
+ +\operatorname{tr}(Z_{d,*}G_o),
+\qquad D_{f,*}=\lambda_*\operatorname{diag}(p_5).
+\end{aligned}
+\tag{CG.157}
+$$
+
+Every weight is strictly positive, so every endpoint test saturates:
+$P_h=e_h=E_*$. Each of the three nonnegative budget terms is zero.
+The credited inequalities imply $Z_{d,*}\succ0$ and
+$Z_{d,*}-D_{f,*}=\kappa P_0$ with $\kappa>0$. Thus $G_o=0$ and
+$(G_f)_{00}=0$. Positivity gives $G_f|0\rangle=0$, since a zero
+positive diagonal entry has zero row and column. Likewise, for positive
+$S,J$, $\operatorname{tr}(SJ)=\|S^{1/2}J^{1/2}\|_2^2=0$
+forces $\operatorname{range}J\subseteq\ker S$.
+
+Average the channel by (CG.60), with the two scalar flags fixed.
+This is a mathematical operation on candidates. It permutes the four
+actual input/target pairs at each height and contracts their maximum
+error, while the lower bound in Convention 17.1 prevents any decrease
+below $E_*$. Thus the averaged channel also satisfies (CG.157).
+Its Choi matrix is the average of conjugations by $U\otimes U$;
+the input representation is $\overline U=U$ here. Its character blocks
+are (CG.128). Their ranges lie in the respective slack kernels.
+The credited ranks (CG.123) therefore imply that for some real numbers
+$\widetilde\eta_k\geq0$,
+
+$$
+\begin{aligned}
+\overline H&=1000\widetilde\eta_0\operatorname{adj}S_{0,*},\\
+\overline Q^{01}&=\widetilde\eta_1\operatorname{adj}S_{01,*},
+&\overline Q^{02}&=\widetilde\eta_2\operatorname{adj}S_{02,*},
+&\overline Q^{12}&=0.
+\end{aligned}
+\tag{CG.158}
+$$
+
+Indeed a positive Hermitian operator supported on a one-dimensional
+real kernel is a nonnegative real multiple of its rank-one real
+adjugate. This also proves that all surviving blocks are real; no
+complex-conjugation operation has been imposed on the channel.
+
+Define $\widetilde r_i$, $\widetilde C_y$ using (CG.116) with these
+blocks, and put
+$\widetilde\Delta_y=B_y-\widetilde C_y$ and
+$\widetilde\delta_y=\operatorname{tr}(R_{y,*}\widetilde\Delta_y)$.
+Covariance makes the averaged failure effect diagonal. The budget,
+$G_o=0$ and $G_f|0\rangle=0$ give
+
+$$
+\widetilde r_0=1,\qquad
+\overline G_f=\operatorname{diag}(0,1-\widetilde r_1,
+                                      1-\widetilde r_2),\qquad
+\widetilde q_y=p_{y1}(1-\widetilde r_1)
+                         +p_{y2}(1-\widetilde r_2).
+\tag{CG.159}
+$$
+
+Saturation for the unsigned endpoint histories reads
+
+$$
+\widetilde\delta_5+\frac6{11}-\widetilde q_5
+             =E_*=\widetilde\delta_{27}.
+\tag{CG.160}
+$$
+
+There is a further consequence of Helstrom equality that is needed to
+identify the coefficients. Hold the averaged channel and its output
+differences fixed. Vary just the rank-one live projector $R_y$ in its
+two real chart coordinates of (CG.112), keeping the failure/other
+parts of $M_y$ fixed. Every perturbed $M_y$ remains an effect, and
+its pairing with that fixed difference is at most $e_y=E_*$. At the
+credited projector equality holds, so its first derivative vanishes:
+
+$$
+\operatorname{tr}(dR_5\,\widetilde\Delta_5)=0,\qquad
+\operatorname{tr}(dR_{27}\,\widetilde\Delta_{27})=0
+\quad\text{in both projector coordinates at each endpoint}.
+\tag{CG.161}
+$$
+
+This is a local maximum of a differentiable scalar pairing, not an
+assumption that an arbitrary optimizer satisfies the ansatz equations.
+Equivalently, using (CG.144) with $\widetilde\Delta_y$ fixed,
+its first two coordinates give
+$(\widetilde\Delta_yv_y)_i=\widetilde\delta_y(v_y)_i$ for $i=0,1$.
+The identity
+$v_y^T(\widetilde\Delta_yv_y-\widetilde\delta_yv_y)=0$ and
+$(v_y)_2=\pm1$ give the third coordinate. Thus these projectors are
+also eigenprojectors of the averaged live differences.
+
+Now evaluate the FIRST differential of (CG.114) at $x_*$ with
+$\eta=\widetilde\eta$ held fixed. The determinant differential used
+in (CG.139) is valid for these coefficients too. It says
+
+$$
+\left.d_x\mathcal L(x,\widetilde\eta)\right|_{x_*}
+ =\sum_{y=5,27}\operatorname{tr}(dA_y\,\widetilde\Delta_y)
+   +\sum_i(\widetilde r_i-1)d\zeta_i+\frac6{11}d\lambda.
+\tag{CG.162}
+$$
+
+In this identity $\overline H,\overline Q$ are fixed adjugate
+coefficients at $x_*$. Differentiating them as functions of $x$ would
+produce an incorrect extra term. The $z$ coefficient is zero by
+$\widetilde r_0=1$. The four projector coefficients are zero by
+(CG.161) and the positive weights $\lambda_*,1-\lambda_*$. Since
+$d\zeta_1=p_{51}d\lambda$, $d\zeta_2=p_{52}d\lambda$, the remaining
+$\lambda$ coefficient is
+
+$$
+\widetilde\delta_5-\widetilde\delta_{27}
+ -\widetilde q_5+\frac6{11}=0
+\tag{CG.163}
+$$
+
+by (CG.160). This essential equal-payoff equation completes all six
+components of $\nabla_x\mathcal L(x_*,\widetilde\eta)=0$.
+
+Let $G=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_*}$, a real
+$6$ by $3$ matrix. The credited Jacobian has the form
+
+$$
+D\Psi(u_*)=\begin{pmatrix}A&G\\G^T&0\end{pmatrix}.
+\quad
+Gc=0\ \Longrightarrow\
+D\Psi(u_*)\binom{0}{c}=0\ \Longrightarrow\ c=0.
+\tag{CG.164}
+$$
+
+Here $A$ is its $6$ by $6$ Hessian block, not an input operator.
+Invertibility of $D\Psi(u_*)$ therefore makes $G$ injective. Subtracting the
+credited equation $\nabla F(x_*)+G\eta_*=0$ from (CG.162)'s
+stationarity gives $G(\widetilde\eta-\eta_*)=0$.
+Hence $\widetilde\eta=\eta_*$, proving (CG.156). The argument uses
+nonsingularity at the credited point, not uniqueness of arbitrary
+solutions of $\Psi$ outside its box. $\square$
+

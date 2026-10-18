@@ -1,0 +1,95 @@
+**Theorem 7.2 (two paid comparator directions and terminating feasibility).**
+For every cycle-covered nonempty input and integers $k,d,L\ge0$, both
+questions below are decidable:
+
+$$
+\begin{aligned}
+&\exists A\quad\sup_Dq_A\le k,\quad\sup_Da_A\le d;\\
+&\exists A\quad b(A)\le(k,d,L).
+\end{aligned}
+\tag{CAR.28}
+$$
+
+The first question puts no bound on physical address lengths. Each true
+answer yields a finite actual source-total service within the budgets.
+These decisions compare with every legal adaptive serial competitor of
+Assumption 1.1.
+
+More generally, for any fixed read-depth bound and nonnegative rational
+weights, a threshold on the same-source weighted costs of all reachable
+paths is decidable, including zero weights and unbounded descriptor
+lengths.
+
+Proof. The all-source cap of [JRF, Theorem 3.1][JRF] applies without any
+source-language premise. Its Lemma 2.2 preserves all four replies for
+arbitrary physical words on every finite source. Thus, for every original
+comparator $A$, the capped comparator satisfies on each same source
+
+$$
+q_{A^c}=q_A,\qquad a_{A^c}=\min(a_A,U),\qquad
+\ell_{A^c}\le\ell_A.
+\tag{CAR.29}
+$$
+
+It retains the original actions before the cap, including early epochs
+zero through four and early halt. Simulated later events are local
+control only. This is the joint nonexpansive supplier; the additive
+address bound of [SCR, §§9–10][SCR] is not used as a substitute.
+
+For necessity, take a comparator meeting either requested budget and
+cap it. Remove actual updates after its last read on a halting branch,
+retaining any needed simulated epoch in its local computation. This
+cannot affect any later source reply, since there is no later read.
+Unroll its reachable reply prefixes. There are at most
+$1+4+\cdots+4^k$ such prefixes. At each reachable prefix, the deterministic
+segment up to the next read or halt is fixed by the common acquired state
+and the preceding replies; it is finite because at least one source
+reaches it and the program is source-total there. Hence the unrolling
+has fixed finite read words and monotone epochs in
+$[N,N+\min(d,U)]$. Install an immediate halt on unreachable children.
+No algorithm extracting reachability from arbitrary program text is
+required for this existence implication.
+
+Replace each word by its descriptor. Theorem 6.2 preserves its replies
+on every chart at every epoch and its physical length exactly. Therefore
+(CAR.26) holds and (CAR.25) is its same-source cost. For every reachable
+leaf impose $k_t\le k$, $j_t-N\le d$, and, when required, $L_t\le L$.
+All-comparator necessity follows without a source, rank or address cutoff.
+Repetitions and absent calls are permitted vertices, and early halts
+remain unpadded halts.
+
+For decision, enumerate the finite tree shapes of depth at most $k$,
+the finitely many epoch labels, and each descriptor type: a short literal
+word, or a choice of $z,e$ for a long descriptor. Its unbounded $t,l$
+are existential natural variables subject to (CAR.19). Conjoin (CAR.26)
+and, for each leaf, the implication from (CAR.27) to its budget
+inequalities. Every clause is Presburger by Lemma 4.1 and Theorem 6.2.
+Quantify all descriptor variables outside the source quantifiers and
+decide the finite disjunction. The length-unbounded question simply
+omits the length inequalities; it is the same terminating arithmetic
+decision, not an unbounded enumeration of word lengths.
+
+For sufficiency, extract a satisfying descriptor tuple after a true
+decision and realize its physical words by (CAR.22). At each reachable
+leaf, extract a source tuple from (CAR.27), expand that finite source
+and compute its complete $Q$ row. Formula (CAR.26) makes this the same
+row for every source reaching the leaf, across all charts. Install that
+finite output; unreachable leaves receive arbitrary outputs. Execute
+the actual forward epoch differences and reads and then halt. Induction
+on the received replies puts the actual source in its path formula and
+at a reachable leaf. The output is correct and the path costs are exactly
+(CAR.25). All runs are finite. This constructs the legal paid comparator
+in the reverse direction.
+
+For a rational threshold $z$, replace the budget inequalities by
+
+$$
+\operatorname{Reach}_t\ \Longrightarrow\
+\lambda_q k_t+\lambda_a(j_t-N)+\lambda_\ell L_t\le z.
+\tag{CAR.30}
+$$
+
+Clear denominators. The formula remains Presburger even if some weights
+are zero and there is no length bound. The same two operational directions
+prove its threshold meaning. $\square$
+

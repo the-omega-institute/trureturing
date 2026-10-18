@@ -1,0 +1,38 @@
+**Theorem 5.2 (requirements for a strict saving).** If $m<G$, then
+at least two distinct cells are support-ambiguous. They lie off both
+axes and each has at least two live hosts. There is also a state
+shared by different count cells, necessarily obeying (SI.7). The exact
+incidence identity holds for every graph; under $m<G$ its strict-saving
+consequence is
+
+$$
+m-G=E-D+u,\qquad D>E+u.
+\tag{SI.19}
+$$
+
+Every such graph must also satisfy all inequalities (SI.12) and the
+actual fixed-label successor law (SI.8).
+
+Proof. Theorem 4.2 rules out zero or one support-ambiguous cell when
+$m<G$. The axis assertion and $b_p\ge a_p$ follow from Theorem 2.2.
+If the host sets of different cells were disjoint, their nonemptiness
+would already force $m\ge G$, so a shared state exists. Its actual
+histories satisfy (SI.7).
+
+Double-counting the finite incidence relation between $V$ and
+$Q_{\mathrm{live}}$ gives
+
+$$
+\sum_{p\in V}b_p
+=\sum_{q\in Q_{\mathrm{live}}}d(q)
+=|Q_{\mathrm{live}}|+D.
+$$
+
+The left side is $G+E$, and $m=|Q_{\mathrm{live}}|+u$. Substitution
+proves (SI.19). The other conditions have already been proved for
+every qualifying graph. In particular a proposed compensation for
+sharing must account for all live incidences: a paid separator that
+is live elsewhere does not automatically contribute to $u$, and
+one separator cannot be counted several times as distinct installed
+states. $\square$
+

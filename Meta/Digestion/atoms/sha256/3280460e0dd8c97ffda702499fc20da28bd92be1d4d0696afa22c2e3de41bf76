@@ -1,0 +1,48 @@
+**定义 14.2（不受限延伸与原根的未决命题）。** On the unrestricted
+parent fiber define
+
+$$
+\mathcal U_{x,w}=\mathcal F(H_{x,w}),\qquad
+R(W)=d+f(7)(k+1)\ell,\qquad
+S(W)=d+f(7)((k+2)\ell-r).
+\tag{14.3}
+$$
+
+The actual fifth and sixth readings are still (12.5). A sufficient
+remaining assertion for the fixed fifth-$J$, sixth-$J$ continuation
+is that, for every nonempty $\mathcal U_{x,w}$, at least one of
+$R,S$ is injective on that entire fiber. Its last-action obstruction
+is one and the same $\mathcal U_{x,w}$ with both
+
+$$
+\begin{gathered}
+W_1\ne W_2,\quad R(W_1)=R(W_2),\\
+W_3\ne W_4,\quad S(W_3)=S(W_4),\qquad
+W_1,W_2,W_3,W_4\in\mathcal U_{x,w}.
+\end{gathered}
+\tag{14.4}
+$$
+
+The two pairs may differ or be disjoint. Thus injectivity of a
+two-coordinate prediction map, without the proved two-world bound,
+would not supply a single lawful last action. Lemmas 12.3 and 13.1
+settle this requirement on each known root-six restriction, not on
+the unrestricted $\mathcal U_{x,w}$. Constructing or excluding
+these mixed-root actual children remains unresolved here. In
+particular $H_p$ has not been proved to certify root-six membership,
+and a sixth reading on an unrestricted input has not been proved to
+reveal its drift. The sixth-root equality is a premise of the decoder.
+
+A result on this unrestricted fixed continuation would still be a
+local parent result. The original problem also requires the other
+parent actions, other literal histories and every earlier actual
+response. A lower-bound tree must supply losing children for both
+actions at every required earlier node, consistently retaining the
+same complete worlds and ancestors and accounting for early stops.
+An original-root decoder must specify lawful actions and complete
+answers on all reachable histories. Neither bridge is supplied by
+the root-six theorem. The unresolved full-domain alternative is
+$n_{\mathrm{det}}(3,0)\ge9$ versus complete-target recovery on all
+of $\mathcal W_3$ in at most eight total original-clock readings.
+No nine-reading upper bound follows from the conditional decoder.
+

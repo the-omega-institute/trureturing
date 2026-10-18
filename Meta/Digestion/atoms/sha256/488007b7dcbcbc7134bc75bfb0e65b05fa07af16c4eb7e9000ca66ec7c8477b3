@@ -1,0 +1,38 @@
+**Definition 2.1 (Exact rational-center source).** Fix the polynomial
+
+$$
+\begin{aligned}
+H_c(x)=x^9+\frac1{35\cdot10^{24}}\bigl(&55800726477138x-224986136658885x^2
++420664314485485x^3\\
+&-540138133491075x^4+518234977000797x^5
+-254383031435085x^6\\
+&+77668004560980x^7+43377331415040x^8\bigr).
+\end{aligned}
+\tag{2.1}
+$$
+
+Throughout put
+
+$$
+\begin{gathered}
+H=H_c,\qquad F_0(x)=x^9,\qquad F_1(x)=H(x),\\
+\delta=\frac{2749658638697}{10^{24}}>0,\qquad
+B=1+\delta,\qquad
+a=\frac{43377331415040}{35\cdot10^{24}}>0.
+\end{gathered}
+\tag{2.2}
+$$
+
+The supplied all-integer envelope is exactly
+
+$$
+\begin{gathered}
+k^9\le F_i(k)\le Bk^9\quad(i=0,1),\\
+1\le\frac{H(k)}{k^9}\le1+\frac\delta k
+\quad\text{for every integer }k\ge1.
+\end{gathered}
+\tag{2.3}
+$$
+
+These are fixed-observer-source Definition 23.1, equations (23.1)–(23.3), and lower-source and uniform-source Definition 2.1. The fixed-observer source attributes the envelope to its owning source's Theorem 15.5 and the rational center to that source's Definition 12.1 and equation (19.7). Those nested proofs are supplied premises, not independently established here. The shape is the displayed rational-center polynomial, not a limiting residual-zero vector. Neither its coefficients nor $\delta,B,a$ vary with the observer or with $q$.
+

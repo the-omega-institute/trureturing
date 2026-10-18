@@ -1,0 +1,22 @@
+**定义 78.1（Finite first-stop contract）。** Let $A,Q$ be finite nonempty sets, let $T$ be a finite set of distinct terminal colours disjoint from $Q$, and let
+
+$$
+n=|A|,\qquad N=|Q|,\qquad
+\delta:Q\times\{0,1\}\longrightarrow Q\sqcup T,\qquad j:A\longrightarrow Q.
+$$
+
+The stationary deterministic table and $j$ are known. One $a\in A$ is chosen once; the initial state is $j(a)$ and its only initial report is active. Injectivity of $j$ is not assumed.
+
+From an active state a chosen bit executes one transition and costs one paid read. The report is active, or the first terminal colour together with the number of bits executed in this run. A terminal transition costs one read and stops the run immediately. No further bit is legal until restoration. From either active or stopped, SAMEoriginal restoration returns this same $a$ to $j(a)$, costs one restore, and gives no identifying output. It neither resamples $a$ nor reveals it. Restoration is unrestricted unless a budget is stated.
+
+A deterministic controller has original-independent initial data, sees only its actual action/report history and the known table, and chooses a legal bit, restoration, or return. Its computation is uncharged and adds no information. An exact policy must return the actual original after finitely many actions for every $a$, including originals with zero weight or zero prior probability. Partial-run restorations, repeated tests, nonseparating bits, extra restorations, and actions after identity becomes inferable are admitted. Word ends and pauses add no sensor: without restoration, subsequent bits continue the current state. There is no external deadline, prehistory access, hidden clock or state sensor.
+
+For a finite binary word $w$, define $R(q,w)=\mathsf{act}$ if its entire word is executed without reaching a terminal; otherwise $R(q,w)=(t,d)$, where $t$ is the first terminal colour and $d$ its executed-bit position. In particular $R(q,\varepsilon)=\mathsf{act}$. Unexecuted suffixes are neither read nor billed. An active word end is a censored finite report, not evidence of infinite nontermination. Write
+
+$$
+q\sim q'\quad\Longleftrightarrow\quad
+R(q,w)=R(q',w)\text{ for every finite binary word }w.
+$$
+
+For an exact policy $P$, write $c_P(a),r_P(a)$ for its actual read and restore counts. All cost comparisons below retain the $2n$ original coordinates.
+

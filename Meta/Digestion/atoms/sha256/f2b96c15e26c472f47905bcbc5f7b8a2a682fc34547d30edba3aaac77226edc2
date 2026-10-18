@@ -1,0 +1,25 @@
+**定理 91.4（Every actual positive-child fee）。** For all parameters and archives of Definition 91.1, under both original alphabets,
+
+$$
+\boxed{D_{\rm ad}(A,\lambda;a+1,\tau)
+=D_{\rm child\text{-}pre}(A,\lambda;a+1,\tau)
+=K(A,\lambda;a+1).}
+\tag{91.6}
+$$
+
+These are additional fees, excluding the paid prefix. No unrelated live sibling is required to execute this child's suffix.
+
+证明。 The successful-path extraction of [S15, Theorem 3.4; IC, Theorem 27.2] uses no independent-row safety premise: prune homogeneous endpoints, record each phase's actual successful differences and pad its code with zero after its leaf. A nonconstant common-tail node cannot gain a distinction by uniform absorbing rejection. Equal padded codes would give the same acquired prefix at the earlier Stop, contradicting unequal labels. Unavailable coordinates are zero. Hence $K\le D_{\rm ad}$, with arbitrary adaptive actions and endpoint stops included.
+
+The supplied safe phase scan [S1, Theorem 3.1] gives $K\le T-1$ at every actual chronological offset and inherited tail. If $P$ contains zero, apply Lemma 91.2 to a minimizing code on the whole fixed $A$. Its one suffix realizes that exact code, and the code identifies a unique INITIAL label even when same-label phases have different codes. Return that label at its own final endpoint. This gives $D_{\rm child\text{-}pre}\le K$.
+
+If $P=1^m$, its positive support is contained in $\{u,e\}$. A nonconstant label map therefore has exactly these two phases with unequal labels. Since $k<2m$, both are in the next window. Thus $K=1$, and the one actual word at index $a+1$ is
+
+$$
+0^b1\,0^{m-b-1},\qquad
+\text{charge support }\{u-1,u\}\pmod T.
+\tag{91.7}
+$$
+
+It clears every legal incoming tail, selects $u$ and not $e$, and separates their labels in one paid endpoint. Here $3\le b<m$, so the word has exactly $m$ bits. This supplies a safe choice of code even when a different minimizing code has the incoming obstruction. Homogeneous or empty supports stop with fee and $K$ zero. Combining these cases with $D_{\rm ad}\le D_{\rm child\text{-}pre}$ proves (91.6). No compensating code modification is asserted to preserve an arbitrary given row list. ∎
+

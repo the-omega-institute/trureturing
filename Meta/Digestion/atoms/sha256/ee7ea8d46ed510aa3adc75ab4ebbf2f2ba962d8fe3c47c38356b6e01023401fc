@@ -1,0 +1,40 @@
+**Proposition 2.3 (credited physical nonemptiness and margins).** The
+admitted family is nonempty for every positive $\tau$. Its states and
+coefficient Grams are positive definite and genuinely nonreal;
+$A>B>0$, $pq=r_0^2$, $p-\alpha q=\delta_0$, $p>k$,
+$0<s_*<\sqrt\ell$, and $F>0$.
+
+Proof. Set
+
+$$
+\begin{aligned}
+T_0&=2\beta+\frac{\beta^2(1+\alpha)}{\alpha k},\quad
+G_0=4A\sqrt\alpha+\frac{\beta(B+2\alpha A)}{\sqrt\alpha k},\\
+\xi_0&=\min\left\{\frac14,\sqrt{\frac\ell{2T_0}},
+\sqrt{\frac{k}{4(1-\alpha)}},
+\sqrt{\frac{A\alpha k^2}{2B\beta^2}},
+\frac{\chi\sqrt{\tau_0\tau_1}}{2G_0}\right\}>0.
+\end{aligned}
+\tag{AS.16}
+$$
+
+For $0<\xi\leq\xi_0$, $c_0>1/2$, $\sigma_0\leq2\xi$,
+$p\geq k$, and $q=r_0^2/p\leq\beta^2\xi^2/(\alpha k)$. Hence
+$p+q=k+\beta(1-c_0)+(1+\alpha)q\leq k+T_0\xi^2\leq1-\ell/2$,
+$k_{\rm tilt}\geq k/2$, $Ap-Bq\geq Ak/2$,
+$\lambda_0\leq2A$, and
+$\gamma\leq G_0\xi\leq\chi\sqrt{\tau_0\tau_1}/2$.
+This proves admission. For arbitrary admitted parameters the leading
+minor of $\rho$ is $\tau_0\tau_1-(\gamma/\chi)^2>0$;
+its trace is one and $\gamma>0$. Direct trace expansion yields exactly
+$C_{ij}=\operatorname{tr}(K_i^\dagger K_j\rho)$ with
+$(K_D,K_T,K_S)=(D,T,S)$: its $DT$ entry is $i\gamma$ and the other
+cross entries vanish. For $z\ne0$, $K(z)=\sum_i z_iK_i\ne0$ by
+independent supports, and $\rho>0$ gives
+$z^\dagger Cz=\operatorname{tr}(K(z)^\dagger K(z)\rho)>0$.
+The source bounds give $A>.498$ and $B<.036$, thus $A>B$.
+The identities for $p,q$ follow from (AS.13); $\xi>0$ gives
+$p\geq\delta_0>k$, so $p+q>k$ and $s_*<\sqrt\ell$.
+This is the NP/QO nonemptiness argument, retained as an antecedent.
+$\square$
+

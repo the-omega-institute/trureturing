@@ -1,0 +1,42 @@
+**定理 42.1（端点极限行和全部实际历史的统一数字间隙）。** 对每个固定定义1.2先验、每个可行有限整数预算 $B\ge1$、每台 $M\in\mathfrak D_\mu(B)$、每个 PH21 合法周期公倍数选择及每个 $(j_p,j_\beta)\in\{\mathrm{law},\mathrm{conf}\}^2$，令
+
+$$
+\Delta_\mu^{j_p,j_\beta}(M)=\Phi_\mu^{j_p,j_\beta}(M)-t_*.
+$$
+
+则
+
+$$
+\begin{aligned}
+\Delta_\mu^{j_p,j_\beta}(M)
+&\ge\Psi^{\rm end}(M)-t_*\\
+&\ge \frac{2^{-5376\mathsf N^4}}{L_TD_0^7}
+>2^{-8192\mathsf N^4}
+=2^{-2^{4B+13}}>0,
+\qquad\mathsf N=2^B.
+\end{aligned}
+\tag{42.1}
+$$
+
+因此必要位数对 $0<\varepsilon<1$ 满足
+
+$$
+\Delta_\mu^{j_p,j_\beta}(M)\le\varepsilon
+\quad\Longrightarrow\quad
+B\ge\frac14\log_2\log_2(1/\varepsilon)-\frac{13}4.
+\tag{42.2}
+$$
+
+这是每个可行预算的有效正下界和 $\varepsilon\downarrow0$ 的 $\Omega(\log\log(1/\varepsilon))$ 必要性。没有声称非可行预算存在机器，也没有声称常数、系数 $1/4$ 或最小可行预算尖锐。
+
+**证明。** (39.2)及 law 不超过 conf 给第一行，不限制所选风险次序。分两种情形。如果 $\Psi^{\rm end}\ge t_*+1/10$，额外间隙至少 $1/10$，已经大于(42.1)的固定小量。
+
+否则 $A_s^{\rm end}<\rho_s+t_*+1/10<1/3$，最后严格比较由原 $t_*<1/10000$、所列两个半径的精确有理值给出。因此引理39.2–40.1适用，推论41.2和(38.5)给
+
+$$
+\Psi^{\rm end}-t_*\ge w-t_*
+\ge(L_TD_0^7)^{-1}2^{-56\cdot96\mathsf N^4}.
+$$
+
+由(41.2)及 $\mathsf N\ge2$，$344+5376\mathsf N^4<8192\mathsf N^4$，所以两种情形均得(42.1)。代入 $\mathsf N=2^B$ 并两次取以2为底的对数，得到(42.2)。状态计数仅在最后把原微状态数转为位数；数值间隙由原完成事件、实际历史相容关系和整数分离提供。证毕。
+

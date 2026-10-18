@@ -1,0 +1,43 @@
+**Theorem 294.1 (An explicit single zero-cost score).**
+For any finite embedding in 293.1, let
+
+$$
+\gamma=t\mathbf1_J+d,\qquad t\ge\sum_{a=1}^5B_a|d_a|.
+\tag{294.1}
+$$
+
+Then $t\ge0$, $\gamma\ge0$. For every $K\ge\gamma\cdot r^\star$
+there is one full nonnegative score $V$ with $\beta_V=\gamma$ on $J$,
+zero elsewhere, $K_V=K$, and $\Delta_N(V)=\Delta_O(V)=0$.
+Every actual full input of this quotient, regardless of its row
+placements or cancellations, therefore has the single certificate
+$(V,\theta=0)$ on all of $H_L$.
+
+**Proof.** Since $B_a\ge1$, (294.1) implies $t\ge|d_a|$ for every $a$.
+Use the following one score, adding its coefficients at coincident rows:
+
+$$
+\begin{aligned}
+V_0={}&\left(t-\sum_aB_a|d_a|\right)Z/3\\
+&+\sum_{d_a>0}d_a U_{j_a}^+
++\sum_{d_a<0}|d_a| U_{j_a}^-,\\
+V={}&V_0+(K-\gamma\cdot r^\star)T_+.
+\end{aligned}
+\tag{294.2}
+$$
+
+Here $T_+$ is the unit positive-row score. All scalar multipliers and
+all constituent score coefficients are nonnegative. Formula (292.3)
+gives $\beta_{V_0}=t\mathbf1_J+d$ and
+
+$$
+K_{V_0}=(46/5)t+\sum_a d_a r^\star_a=\gamma\cdot r^\star,
+$$
+
+because $\sum r^\star_a=46/5$. Each summand has zero excess and
+$T_+$ has zero excess; support subadditivity gives $\Delta_C(V)\le0$.
+The zero $R$ column gives the reverse inequality. Thus the actual sum
+$V$ has zero cost, exact quotient and zero residual. This combines
+nonnegative full coefficients once, without adding independent
+residual budgets. $\square$
+

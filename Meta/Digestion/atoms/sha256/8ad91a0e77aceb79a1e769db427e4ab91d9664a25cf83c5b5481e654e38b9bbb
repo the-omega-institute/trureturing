@@ -1,0 +1,47 @@
+**Theorem 6.1 (a rate/variation comparison without a phase-speed cap).** On
+the fixed source (3.4), assume $\operatorname{Lip}(k)\leq L$,
+$\operatorname{TV}(\chi)\leq V$, with $L,V,T>0$, and restrict to
+zero-winding based loops in the same band. For at most $q$ interior ideal
+samples, put
+
+$$
+s=1/10,\qquad
+b_q=\min\left(\pi,\frac{V}{2r}
+                 \min\left(s,\frac{LT}{8(q+1)}\right)\right).
+\tag{6.1}
+$$
+
+Every deterministic strategy has worst-case normalized $02$ character
+error at least $\sin(b_q/2)$. Conversely, $n$ equal time cells and their
+$n+1$ samples give character error at most
+
+$$
+\min\left(2,\frac{LVT}{rn}\right).
+\tag{6.2}
+$$
+
+The resulting deterministic asymptotic order is again $1/n$, but these
+constants and promises differ from Section 5.
+
+Proof. The constant-history run leaves a gap $\Delta\geq T/(q+1)$.
+Place a pulse of total duration $\Delta/2$ strictly inside it. Its four leg
+durations are $\Delta/8$. Choose
+
+$$
+\delta=\min(s,L\Delta/8),\qquad
+a=\min(V/2,\pi r/\delta)
+$$
+
+and use the negative orientation. The height speed is $8\delta/\Delta\leq L$,
+and its phase variation is $2a\leq V$. Its residual is
+$\beta=a\delta/r=\min(V\delta/(2r),\pi)\in[b_q,\pi]$.
+The constant history and this actual pulse give the same transcript. Their
+character distance is $2\sin(\beta/2)$, proving the lower bound. This
+comparison uses variation upper bounds, not equal exact totals.
+
+For the upper bound the same left sum as (5.4) satisfies
+$|A-\widehat A|\leq L(T/n)\int_0^T|\chi'|\leq LTV/n$.
+For sufficiently large $q$, (6.1) is $VLT/(16r(q+1))$; elementary sine
+bounds and (6.2) give the stated order. No bound on $\chi'$ was used in
+this upper proof. $\square$
+

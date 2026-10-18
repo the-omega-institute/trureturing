@@ -1,0 +1,184 @@
+**Theorem 35.1 (single-datum reconstruction and principal comparison).** Retain the original-data analytic hypotheses of Definition 32.1. The comparison in this theorem does not require the two equalities (32.1). Define, on the original transported complex space,
+
+$$
+R_s(h)=(C_s+h)^{-1},\qquad
+\mathscr K_s(h)=U_s^{1/2}R_s(h)U_s^{1/2},\qquad
+k_d(h)=\|\mathscr K_s(h)\|,\quad h>0.
+\tag{35.1}
+$$
+
+The early operator $L_s$ has an eventually simple principal value $\ell_s\to C_*$ and a nonnegative unit vector $u_s\to p$ in $L^2$. There are $M_{0,d}\ge1$ and $C_d<\infty$ such that for every separately fixed finite $M\ge M_{0,d}$,
+
+$$
+0\le\liminf_{s\downarrow0}
+ \frac{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5}{s^5}
+\le\limsup_{s\downarrow0}
+ \frac{k_d(Ms^8)-\ell_s-\mathscr A W_{1,d}(o)s^5}{s^5}
+\le C_d(M^{-1/4}+M^{-1/2}).
+\tag{35.2}
+$$
+
+For each $q=6,7$ one also has
+
+$$
+k_d(s^q)=\ell_s+\mathscr A W_{1,d}(o)s^5+o_d(s^5).
+\tag{35.3}
+$$
+
+This theorem concerns an arbitrary separately fixed original datum within the stated analytic window; membership in J Definition 51.1's translated family is not a hypothesis.
+
+Proof. All constructions below use the original-domain P104 and J29 suppliers. First justify the early vector at this scope. At each fixed $s$, $Q_s(t)F_s$ is Hilbert–Schmidt for $t>0$: its squared kernel norm is at most $C_{s,t}\|F_s\|_2^2$ by the both-endpoint column $L^2$ bound. Removing $(0,\delta)$ from $H_sF_s$ costs at most $\delta\|F_s\|_\infty$, and on $[\delta,T]$ operator-norm continuity of the selfadjoint heat gives compactness of the integral. The sandwich $F_s^{1/2}H_sF_s^{1/2}$ is likewise compact. Indeed its positive-time squared Hilbert–Schmidt norm is at most
+
+$$
+\sup_{\eta,\xi}q_s(t;\eta,\xi)\,
+       \langle F_s,Q_s(t)F_s\rangle
+ \le C_{s,t}\|F_s\|_2^2,
+\tag{35.4}
+$$
+
+and the same small-time truncation applies. It is positive selfadjoint and positivity preserving; taking absolute values in its Rayleigh quotient supplies a nonnegative top eigenvector. Bounded product factorization transfers its nonzero eigenvalue to $H_sF_s$ with a nonnegative nonzero right vector.
+
+P (104.9) gives $H_sF_s\to K_{\rm rec}$ in norm; compact conjugation by the strongly convergent shears preserves this convergence. P §§87–88 identify its isolated algebraically simple nonzero top $C_*$ and right vector $p$. Compact spectral perturbation makes the early top eventually simple and convergent. The equation $u_s=\ell_s^{-1}H_sF_su_s$ gives precompactness of its unit vectors. Every nonnegative unit cluster is $p$, so $u_s\to p$. P (104.6) and (24.6) then give
+
+$$
+\begin{aligned}
+x:=F_su_s&\longrightarrow Vp\quad\text{in }L^1\cap L^2,\\
+m:=\int F_su_s^2&\longrightarrow\mu,&
+\|x\|_1+\|x\|_2&\le C.
+\end{aligned}
+\tag{35.5}
+$$
+
+For example the $L^1$ difference is bounded by $\|F_s\|_2\|u_s-p\|_2+\|F_s-V\|_2\|p\|_2$; the $L^2$ difference uses the bounded multiplier and $(F_s-V)p\to0$. This proves the early-vector statements without translated-family membership. The residual/Riesz argument (24.17)–(24.18) applies at this same scope if its $O(s)$ rate is needed.
+
+Write $h>0$, $y=J_su_s$, $d_s=\int J_su_s^2$, $n=m+d_s$, and
+
+$$
+\begin{aligned}
+z&=U_s^{1/2}u_s/\sqrt n,&
+H^h&=\int_0^Te^{-ht}Q_s(t)dt,\\
+L^h&=\int_T^\infty e^{-ht}Q_s(t)dt,&
+D&=H_s-H^h,&R_s(h)&=H^h+L^h.
+\end{aligned}
+\tag{35.6}
+$$
+
+The multiplier $W_1$ is bounded and continuous at $o$, hence
+
+$$
+d_s/s^5\to W_1(o),\qquad n\to\mu,\qquad\|y\|_2\le Cs^5.
+\tag{35.7}
+$$
+
+For $h=Ms^8$, P (104.2) gives
+
+$$
+\|R_s(h)U_s-K_{\rm rec}\|
+\le\eta_s+CM^{3/4}s^6+C(M^{-1/4}+M^{-1/2}),\qquad\eta_s\to0.
+\tag{35.8}
+$$
+
+Choose a fixed small perturbation neighborhood of the compact reconstruction whose simple top is $C_*$. The resolvent identity on a contour around $C_*$, and on a compact spectral exclusion set outside that contour, preserves one simple eigenvalue near $C_*$ and excludes all remaining spectrum above $C_*-3\zeta$, for some fixed $\zeta>0$. First choose $M_{0,d}$ so the retained $M$-error is inside half this neighborhood. For each fixed finite $M\ge M_{0,d}$, choose $s$ small so the other errors fit. At $h=s^6,s^7$, all errors of P (104.2) tend to zero and the same neighborhood applies.
+
+At each $s,h>0$, positive-cutoff relative compactness P70 makes $\mathscr K_s(h)$ positive compact selfadjoint on the full complex space. The bounded products $(R_s(h)U_s^{1/2})U_s^{1/2}$ and $U_s^{1/2}(R_s(h)U_s^{1/2})$ have identical nonzero spectra and algebraic multiplicities. Thus the full principal value $k$ is bounded and simple, and its remaining spectrum is at most $k_2\le C_*-3\zeta$. This is a compact reconstruction separation; it is not an $L^2$ gap of the critical Hamiltonian. In particular (35.8) is not called norm convergence at fixed $M$.
+
+Exact scaling and L41 give the globally bounded late kernel
+
+$$
+s^{-5}L^h(\eta,\xi)=j_0\int_1^\infty
+ e^{-(h/s^2)t}K_d(t;Y_s\eta,Y_s\xi)dt,
+\quad |s^{-5}L^h(\eta,\xi)|\le C.
+\tag{35.9}
+$$
+
+At any of the present probes $h/s^2\to0$. Dominated convergence on the full product space, followed by (35.5), yields
+
+$$
+\langle x,L^hx\rangle=j_0W_1(o)A_p^2s^5+o(s^5).
+\tag{35.10}
+$$
+
+Moving an input costs its $L^1$ error under the bounded kernel. Contraction below time one and J (29.5) above it give
+
+$$
+0\le\langle x,Dx\rangle\le Ch,\quad
+\|Dx\|_2\le Chs^{-1/2},\quad
+0\le\langle y,R_s(h)y\rangle\le Cs^9h^{-1/2}.
+\tag{35.11}
+$$
+
+The first estimate integrates $ht\|Q_s(t/2)x\|_2^2$, whose large-time majorant is $Ct^{-5/2}h$. The second integrates $ht\|Q_s(t)x\|_2$ up to $T$, giving $ChT^{1/4}$. The last uses the original long-multiplier estimate P (104.14), $\|R_s(h)J_s\|\le Cs^4h^{-1/2}$, and $\|y\|_2\le Cs^5$. Spectral Cauchy–Schwarz for $0\le L^h\le R_s(h)$ consequently gives
+
+$$
+|\langle x,L^hy\rangle|\le Cs^7h^{-1/4},\qquad
+|\langle y,Dx\rangle|\le Cs^5hs^{-1/2}.
+\tag{35.12}
+$$
+
+Since $H_sx=\ell_su_s$, the full unit quotient is exactly
+
+$$
+\mathcal Q_s:=\langle z,\mathscr K_s(h)z\rangle
+=\frac{\ell_sm+2\ell_sd_s+\langle x,L^hx\rangle-\langle x,Dx\rangle
+ -2\operatorname{Re}\langle y,Dx\rangle
+ +2\operatorname{Re}\langle x,L^hy\rangle+\langle y,R_s(h)y\rangle}{m+d_s}.
+\tag{35.13}
+$$
+
+Subtracting $\ell_s$ leaves one early cross copy. At fixed $M$, (35.7), (35.10)–(35.12) give the upper quotient error $C(M^{-1/4}+M^{-1/2})s^5+o_M(s^5)$. For the lower limit, $x,y$ and the late heat kernels are nonnegative. Therefore $\langle x,L^hy\rangle$ and $\langle y,R_s(h)y\rangle$ are nonnegative scalars, while both damping terms are $o_M(s^5)$. Since $k\ge\mathcal Q_s$, this proves the lower inequality in (35.2). At $h=s^q$, the normalized damping, long self and late cross bounds are respectively
+
+$$
+O(s^{q-5}),\qquad O(s^{4-q/2}),\qquad O(s^{2-q/4}),
+\tag{35.14}
+$$
+
+all tending to zero for $q=6,7$. Thus the quotient has the equality in (35.3).
+
+To upgrade its upper bound to the full principal value, keep the exact residual
+
+$$
+R_s(h)U_su_s=\ell_su_s+e_s,\qquad e_s=-Dx+L^hx+R_s(h)y.
+\tag{35.15}
+$$
+
+The following weighted squared bounds hold:
+
+$$
+\begin{aligned}
+\|U_s^{1/2}Dx\|_2^2&\le Ch^2s^{-1},\\
+\|U_s^{1/2}L^hx\|_2^2&\le C(s^8+s^9h^{-1/2}),\\
+\|U_s^{1/2}R_s(h)y\|_2^2&\le Cs^9h^{-1/2}.
+\end{aligned}
+\tag{35.16}
+$$
+
+For the middle line, the raw killed-source mass up to $T$ gives $\int F_s\le Cs^{-2}$. Equation (35.9) gives $\|L^hx\|_\infty\le Cs^5$, so the $F_s$-weighted square costs $Cs^8$. The long-time $1\to2$ bound J (29.5), integrated with $e^{-ht}$, gives $\|L^hx\|_2\le Cs^2h^{-1/4}$. Multiplication by $\|J_s\|_\infty\le Cs^5$ gives its other weighted square $Cs^9h^{-1/2}$. The first line follows from (35.11) and bounded $U_s$. For the last, bounded product factorization gives
+
+$$
+\|U_s^{1/2}R_s(h)y\|_2^2
+\le\|R_s(h)^{1/2}U_sR_s(h)^{1/2}\|\,
+                   \langle y,R_s(h)y\rangle
+=k\langle y,R_s(h)y\rangle.
+\tag{35.17}
+$$
+
+The norm $k$ is already bounded by the spectral neighborhood. No $L^2$ norm is assigned to $J_s$ itself. Since $n\to\mu$,
+
+$$
+\|(\mathscr K_s(h)-\ell_s)z\|_2^2
+\le C(h^2s^{-1}+s^8+s^9h^{-1/2}).
+\tag{35.18}
+$$
+
+For a unit vector with quotient $\mathcal Q_s>k_2$, integrating $(k-t)(t-k_2)\le0$ over its spectral measure gives
+
+$$
+0\le k-\mathcal Q_s
+\le\frac{\|(\mathscr K_s(h)-\mathcal Q_s)z\|_2^2}{\mathcal Q_s-k_2}
+\le C\|(\mathscr K_s(h)-\ell_s)z\|_2^2.
+\tag{35.19}
+$$
+
+Here $\mathcal Q_s\to C_*$, and subtracting the quotient minimizes the residual. At fixed $M$, (35.18) is $C(M^2s^{15}+s^8+M^{-1/2}s^5)$; after division by $s^5$ it adds exactly a retained $CM^{-1/2}$ error. At $h=s^q$, its normalized bound is $C(s^{2q-6}+s^3+s^{4-q/2})\to0$. Combining with (35.13)–(35.14) proves (35.2)–(35.3). This proves the original-domain extension directly from its suppliers. $\square$
+
+

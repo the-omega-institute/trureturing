@@ -1,0 +1,69 @@
+**Theorem 208.7 (Complete support of the relocated carrier).** Put
+$e_1=010^{L-2}$, $e_2=100^{L-2}$ and
+$z_n=1^{n-1}0^{L-n+1}$ for $n\ge3$. The full score
+
+$$
+C_{e_a}=c_a,\quad P_{e_a}=p_a\quad(a=1,2),\qquad
+C_{z_n}=\gamma_n\quad(n\ge3),\qquad T=t
+\tag{208.22}
+$$
+
+with all other coefficients zero preserves $Q,W$ and has
+
+$$
+B_N(V)=B_O(V)=\max(q_3,S+U_2).
+\tag{208.23}
+$$
+
+**Proof.** Its actual late pair measure is $S\delta_{0^{L-2}}$;
+all correct suffixes and both early lifts have been specified on the
+same word space. Class totals, $K$ and $W$ are unchanged.
+Maximizing over every label gives the following complete cell values.
+Empty maxima in the table are zero.
+
+| Schedule | $N$ maxima in order $00,01,10,11$ |
+| --- | --- |
+| $(1,2)$ | $(0,r_1,r_2,\max(t,\mu))$ |
+| early/late $(a,j)$, other early label $b$ | $(r_a,0,\max(r_b,\max_{3\le n\le j}\gamma_n),\max(t,\max_{n>j}\gamma_n))$ |
+| late/late $i<j$ | $(\max(S,r_1,r_2,\max_{3\le n\le i}\gamma_n),0,\max_{i<n\le j}\gamma_n,\max(t,\max_{n>j}\gamma_n))$ |
+
+For early/late pairs the other early class's zero-label reward is
+$p_b\le r_b$. For late pairs, zero earns the pooled mass $S$ in
+$00$, each early label earns its $r_a$ there, and every other label
+earns only its own correct mass. This explains all entries, including
+earlier and unqueried labels.
+
+If a late pair's first entry uses a class weight rather than $S$,
+the three nonzero maxima are distinct entries of the multiset defining
+$q_3$. If it uses $S$, the other two maxima are distinct entries
+from $\{\gamma_4,\ldots,\gamma_L,t\}$ and sum to at most $U_2$.
+The early-pair and early/late bounds are at most $q_3$ as well.
+The full $N$ upper bound follows by the catalog completion in 207.2.
+
+For the lower bound, reuse the three-label collection from 198.4
+and 203.7, now assigning early label $a$ its weight $r_a$.
+Order any three selected distinct labels from $\{1,\ldots,L,*\}$,
+where $*$ means output zero and is last. Query the first two
+increasingly and output their labels at their first zero; on positive
+exhaustion output the third label. Every selected first-zero class
+is collected, for every suffix. An early class contributes all its
+$C+P$, and selection of $*$ collects $t$. Thus this one legal
+stopped table supplies the selected three weights, and
+$B_O\ge q_3$ on $V$ (indeed on any input with that early split).
+
+For $L\ge4$, select the two entries defining $U_2$. If they are
+$\gamma_j,\gamma_k$ with $4\le j<k$, table $(3,j;0,j,k)$
+collects at least $S+\gamma_j+\gamma_k$ on $V$. If they are
+$\gamma_j,t$, use $(3,j;0,j,0)$. Zero-weight ties may be selected
+as distinct multiset entries. At $L=3$, $U_2=t$ and
+$S+t\le W\le q_3$, so this second lower table is unnecessary.
+This proves the matching $O$ lower bound and (208.23).
+
+At $(1,2)$ the nonempty first-zero $N$ cell is $01$.
+For both choices of the early address in an early/late pair it is
+$00$, and a late pair likewise has empty $01$. Thus merging
+$00,01$ before maximizing is consistent with the stated stopped
+attainers. All zero totals, unordered late weights, ties and $t=0$
+are included. This changes joint support; it imposes no preservation
+of an input's auxiliary pair projection. $\square$
+

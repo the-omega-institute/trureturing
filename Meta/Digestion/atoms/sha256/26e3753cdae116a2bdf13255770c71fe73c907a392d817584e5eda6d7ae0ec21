@@ -1,0 +1,5 @@
+- The six-sector grouping, full-face adjacency, and explicit (8,9) edge count are the argument here, not a claim that Marshall stated this mixed packet.
+
+The direct Coxeter-chamber quotient without coarsening has degree 2m, not m. It fails for odd degree 9. The present construction avoids that failure by two Q-sectors per high edge, one per low edge, and does not identify sectors via torsion.
+
+

@@ -1,0 +1,14 @@
+## 226. Whole-star counts and scope
+
+The complete X star has at most four interacting-core owners, two
+single-high transverse owners, and five axial-{C,D} owners. This is
+an exhaustive cover: a noninteracting owner containing X either has
+X transverse or has low distinct pair {C,D} and X axial.
+Each interacting or transverse owner contributes at most four X
+slots, whereas each axial-{C,D} owner contributes one. For Z, tau
+is one interacting owner and has only one Z slot, so degree(Z)<=26.
+For U, tau has no U slot, so at most three core owners contribute,
+and degree(U)<=25. The corresponding owner counts are at most11
+for Z and10 for U. No claim of five-reservoir exclusion follows.
+
+

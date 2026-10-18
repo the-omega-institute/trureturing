@@ -1,0 +1,79 @@
+**Theorem 60.1 (a stronger pencil bound and its scalar consequence).** Specialize to $\beta=1/2$ and set
+
+$$
+h=\frac1{\sqrt2},\qquad T=\frac{1+h}{2},\qquad d=\frac{1-h}{2},\qquad
+\Delta=4s(1-s)-\frac12.
+\tag{S.72}
+$$
+
+For $s\geq1/2$, every pencil of Theorem 59.2 satisfies the upper bound
+
+$$
+H_{1/2}(B_\psi)^2
+\leq\frac{1-q}{2}+\sqrt{st(1-\kappa)+s\epsilon}.
+\tag{S.73}
+$$
+
+If (S.59) is feasible, its one common $L$ must then satisfy, for every complex unit $\psi$,
+
+$$
+\begin{gathered}
+4st\kappa+2hq+q^2<\Delta,\qquad \Delta>0,\\
+B_0:=4stI_2+2h\Omega_2\succ0,\qquad
+L^\dagger B_0L\prec\Delta I_2,\qquad
+G\prec\Delta B_0^{-1}.
+\end{gathered}
+\tag{S.74}
+$$
+
+In particular the scalar necessary condition is
+
+$$
+q_2>f(s,t):=t-\Delta\left[\frac1{4s+2h}
++\frac{t}{s(4t+2h)}\right],\qquad f(s,t)<d.
+\tag{S.75}
+$$
+
+The notation $f(s,t)$ in this section is this scalar function; the two-operator root fidelity remains $f(Q,M)$.
+
+Proof. Put $b=1-q$ and let $\mu\geq\nu\geq0$ be the eigenvalues of $A_\psi$. Positive order $A_\psi\preceq\Omega_2$ gives $\mu\leq s$, while
+
+$$
+\mu+\nu=b-\epsilon,\qquad \mu\nu=st(1-\kappa),\qquad0\leq b\leq1.
+$$
+
+If $\mu\geq b/2$, every other eigenvalue of $B_\psi$ is at most the sum of those other eigenvalues, $b-\mu\leq\mu$. Formula (S.57), including its branch boundary, gives
+
+$$
+H_{1/2}(B_\psi)^2=\frac b2+\sqrt{\mu(\nu+\epsilon)}
+\leq\frac b2+\sqrt{\mu\nu+s\epsilon}.
+$$
+
+If $\mu\leq b/2$, then $\mu\in[(b-\epsilon)/2,b/2]$. The polynomial $x(b-\epsilon-x)$ decreases on this interval, because its derivative is $b-\epsilon-2x\leq0$. Thus
+
+$$
+\mu\nu\geq\frac{b^2}{4}-\frac{b\epsilon}{2},\qquad
+\mu\nu+s\epsilon\geq\frac{b^2}{4},
+$$
+
+where the second inequality uses $s\geq1/2\geq b/2$. For every $B\succeq0$, (S.58) and trace Cauchy–Schwarz give $H_a(B)^2\leq\operatorname{Tr}B=b$. Hence in this second case $H_{1/2}(B_\psi)^2\leq b\leq b/2+\sqrt{\mu\nu+s\epsilon}$. The case $b=0$ also satisfies the inequality. This proves (S.73) without selecting a cap branch on the basis of the tail spectrum, and permits singular pencils.
+
+Feasibility and (S.68) force the right side of (S.73) to exceed $T$. Therefore
+
+$$
+2\sqrt{st(1-\kappa)+s\epsilon}>h+q>0.
+$$
+
+Both sides are positive, so squaring preserves the strict inequality. Since $t+\epsilon=1-s$ and $h^2=1/2$, its rearrangement is the first inequality of (S.74). Its left side is nonnegative, proving $\Delta>0$.
+
+Drop only the nonnegative term $q^2$. The resulting inequality is $\psi^\dagger L^\dagger B_0L\psi<\Delta$ for every complex unit $\psi$. A largest-eigenvalue unit eigenvector is among these directions, so $L^\dagger B_0L\prec\Delta I_2$. In particular testing only two basis directions or only real directions would not justify this conclusion for a general complex $L$.
+
+Let $K=B_0^{1/2}L$. The equality $\|K\|_{\rm op}=\|K^\dagger\|_{\rm op}$ gives $KK^\dagger\prec\Delta I_2$ from $K^\dagger K\prec\Delta I_2$. Congruence by $B_0^{-1/2}$ now proves $G\prec\Delta B_0^{-1}$, without requiring $L$ to be invertible. Here
+
+$$
+B_0=\operatorname{diag}\bigl(s(4t+2h),t(4s+2h)\bigr),\qquad
+\operatorname{Tr}G<\Delta\left[\frac1{t(4s+2h)}+\frac1{s(4t+2h)}\right].
+$$
+
+All denominators are positive because $s,t,h>0$. Multiplying the strict trace bound by $t>0$ and using (S.68) gives $q_2\geq t(1-\operatorname{Tr}G)>f(s,t)$. Combining this with $q_2<d$ proves (S.75). The only inverse is of the positive definite $B_0$; neither $L$, $M_\psi$ nor $A_\psi$ is inverted. $\square$
+

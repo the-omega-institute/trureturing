@@ -1,0 +1,85 @@
+**Proposition 4.1 (bounded multiplier at the stated second threshold).**
+Under the rank-one hypotheses above, every finite
+$t\ge\max(t_0,14400000)$ satisfies
+
+$$
+0<\lambda<19200<20000.
+\tag{RB.21}
+$$
+
+Proof. First, (RB.1) and (RB.5), together with
+$u^2+v^2=1$ and $2|uv|\le1$, give the uniform bounds
+
+$$
+\begin{aligned}
+\|\ell\|_\infty
+&\le B_\ell+a_\ell+l_u+l_v
+<0.03852<0.04,\\
+\|f\|_\infty&\le e+d_*<0.03.
+\end{aligned}
+\tag{RB.22}
+$$
+
+For every feasible common law in the original problem,
+
+$$
+0\le J_t\le\int(|\ell|+b_x|f|)\,d\pi
+<0.04+0.03\mu<0.4.
+\tag{RB.23}
+$$
+
+This estimate uses $\int b_x\,d\pi=\mu$ in that same law.
+
+Use the maximum-contrast feasible family of GC.12–GC.13 and
+GC.62–GC.64 as a legal comparison for the same moment target.
+In its notation $q=\nu/t$, $\nu=\mu/c_f<300$,
+$u_R=(1-qu_F)/(1-q)$ and $v_R=(1-qv_F)/(1-q)$.
+Its four saturated directions
+$(1,\sigma\sqrt{u_F},\upsilon\sqrt{v_F})$ have mass $q/4$,
+and its four pure directions
+$(1,\sigma\sqrt{u_R},\upsilon\sqrt{v_R})$ have mass $(1-q)/4$,
+with $\sigma,\upsilon\in\{\pm1\}$. Coincident directions and zero
+pieces at a supplied floor are collected or omitted.
+
+Independent signs cancel all first and mixed live moments and the
+mixed failure moment. The live $u^2$ moment is
+$q\alpha u_F+(1-q)\alpha u_R=\alpha$. The saturated failure
+moments are $qc_f=\mu/t$ and $qc_f\alpha u_F=m_u/t$.
+Thus every coordinate of (RB.2) is matched, with legal endpoint
+capacity. GC Propositions 12.2 and 10.1 make this a finite original
+comparison, not a formal replacement asserted to preserve counts.
+Its contrast, the original $r_{\max}(t)$, is
+
+$$
+K_{\rm cmp}=r_{\max}(t)
+=a\left[q\sqrt{u_F}+\sqrt{(1-q)(1-qu_F)}\right]
+\ge a(1-q)>a-\frac{300}{t}.
+\tag{RB.24}
+$$
+
+Here $0<u_F<1$, $0<q<1$ and $a<1$; no optimal height is
+assigned to this comparison.
+
+For any multiplier optimizer of the hypothetical face,
+Proposition 3.1 and (RB.24) imply
+
+$$
+K_{\rm cmp}-K>\frac1{24000}-\frac{300}{t}
+\ge\frac1{48000}\qquad(t\ge14400000).
+\tag{RB.25}
+$$
+
+Joint attainment in (RB.3) compares the full functional on these
+two feasible laws:
+$J_t+\lambda K\ge J_{\rm cmp}+\lambda K_{\rm cmp}$.
+Since $J_{\rm cmp}\ge0$, (RB.23) yields
+
+$$
+\lambda(K_{\rm cmp}-K)\le J_t-J_{\rm cmp}\le J_t<\frac25.
+\tag{RB.26}
+$$
+
+Dividing by the strict gap in (RB.25) proves
+$\lambda<(2/5)48000=19200$. All comparisons retain the original
+$\Gamma$, capacity, $K$ and absolute-height problem. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "recursive-relational-observation-quantum-classical-port-exact-certificates"
+path = "docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_CLASSICAL_PORT_EXACT_CERTIFICATES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

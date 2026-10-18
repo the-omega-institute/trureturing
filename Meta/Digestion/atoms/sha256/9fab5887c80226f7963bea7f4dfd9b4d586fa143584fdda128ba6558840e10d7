@@ -1,0 +1,8 @@
+**命题 78.7（Common permutation attainers）。** For a permutation $\pi=(x_1,\ldots,x_n)$ of the originals put $t_i=\min(i,n-1)$. There is an exact policy in this same machine with
+
+$$
+c_\pi(x_i)=Lt_i,\qquad r_\pi(x_i)=t_i-1.
+$$
+
+Proof. Fix a length-$L$ preimage under $\sigma$ for each original. Test $x_1,x_2,\ldots$ in order. Return on a hit; after a miss return the sole remaining original if one remains, otherwise restore once and run the next complete test. An original in position $i<n$ has $i-1$ misses followed by its hit. The final original is inferred from $n-1$ misses without another query or restoration. Hence the displayed counts follow from the actual transitions, simultaneously for all originals. For $n=2$, $L=1$ and both cost pairs are $(L,0)$. $\square$
+

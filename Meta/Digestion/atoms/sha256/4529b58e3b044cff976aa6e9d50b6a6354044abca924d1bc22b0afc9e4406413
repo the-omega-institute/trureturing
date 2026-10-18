@@ -1,0 +1,11 @@
+**Corollary 5.3 (the remaining five-pure pattern).** Under Theorem 5.2's
+hypotheses, a complete inventory with five pure contacts has exactly
+three positive-height and two negative-height pure contacts. Its
+positive branch counts are $(N_R,N_L)=(2,1)$ or $(1,2)$.
+
+Proof. There are no zero-height pure contacts. The negative test has
+at most two zeros, while Theorem 5.2 bounds the two positive tests
+together by three. Equality in a total of five forces both bounds.
+The per-test bound two gives the two possible ordered patterns.
+$\square$
+

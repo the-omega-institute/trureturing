@@ -1,0 +1,16 @@
+**Proposition 169.3 (Exact relation to a radial budget failure).** At an
+interior direction $b$ with finite $\rho_N(b)$, condition
+$\rho_O(b)>\max\{1,\rho_N(b)\}$ yields data as in Definition 169.1.
+Conversely any such data imply that condition.
+
+**Proof.** Take an attained $N$ minimum and put
+$M=\max\{1,\rho_N(b)\}$. By the dual supremum of Theorem 166.2, including
+its infinite case, choose $y\ge0$ with $\Delta_O(y)\le1$ and
+$y\cdot h(b)>M$. Then (169.1) holds.
+Conversely if $\Delta_O(y)>0$, dividing (169.1) by it and using weak
+duality gives $\rho_O(b)>M\ge\max\{1,\rho_N(b)\}$.
+If $\Delta_O(y)=0$, the positive scored demand makes the $O$ cone
+infeasible by Farkas, so $\rho_O(b)=\infty$ and the same conclusion
+holds. This is a certificate specification, not an actual separator.
+$\square$
+

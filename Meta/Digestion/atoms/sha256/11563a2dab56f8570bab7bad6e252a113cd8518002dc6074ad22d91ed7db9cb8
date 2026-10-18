@@ -1,0 +1,22 @@
+**Lemma 2.3 (local terminal cost and its splitting inequality).** Every
+nonempty $B\subseteq U$ has finite $c(B)$; $c(B)=1$ exactly when
+$B$ is locally admissible. For every word $w$, with nonempty cells
+$B_y=\{u\in B:r_u(w)=y\}$,
+
+$$
+c(B)\le\sum_{y:B_y\ne\varnothing}c(B_y).
+\tag{NPH.7}
+$$
+
+Proof. Read the local root. Its leaf cells are singletons. On its pair
+cell the root factor is constantly $(0,0)$, while either child target
+is solved by reading that child: its present alpha, beta and branch
+replies give respectively $(2,1),(1,0),(0,0)$. The same construction
+restricted to $B$ has at most three nonempty terminal leaves. Thus
+the minimum exists as a positive integer. An admissible set needs no
+preparatory test. Conversely a decision tree with one nonempty
+terminal leaf places all of $B$ in its one admissible terminal cell.
+Finally, query $w$ first and append a minimizing tree for each
+nonempty reply cell. The resulting leaf count is the right side of
+(NPH.7). $\square$
+

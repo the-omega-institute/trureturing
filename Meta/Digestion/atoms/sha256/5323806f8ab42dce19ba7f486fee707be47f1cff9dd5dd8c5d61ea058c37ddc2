@@ -1,0 +1,79 @@
+**Theorem 27.6 (Uniform dephasing boundary and fixed count-offset reference extensions).** Independent uniform per-window count rotations remove the activation in the two pair protocols. A single common rotation preserves their datum. In contrast, suppose the same internal $\theta$ is used, but window one and window two have arbitrary fixed unknown count offsets $\beta_1,\beta_2\in\mathbb T$, constant across repetitions. The $(2,3)$ protocol still identifies the full-support internal affine orbit using six quadrature settings and eighteen retained labels; $(2,4)$ identifies the sparse orbit using four settings and twelve labels. These claims include the full-support zero-reference case. They concern fixed count rotations, not arbitrary different internal phase vectors or general noise.
+
+Proof. If each window acquires $U_{n_j}(\beta_j)$ and its angle is independently uniform and averaged before observation, then
+
+$$
+\int\bigotimes_j U_{n_j}(\beta_j)\Omega_{n_j}U_{n_j}(\beta_j)^*
+\prod_j\frac{d\beta_j}{2\pi}
+=\bigotimes_jT_{n_j}.
+\tag{27.28}
+$$
+
+This state is already globally invariant. For full $(2,3)$ the common collision (27.15) therefore has equal whole data $T_2\otimes T_3$; for sparse $(2,4)$ the whole datum $T_2\otimes T_4$ is phase independent by Theorem 25.3. Neither specified pair then identifies. More generally independent local randomization removes every cross-window unequal-count entry, reducing any batch to its product of local data; it does not exclude longer single-window separators. One common uniform angle gives (27.1) instead and leaves (27.12), (27.20) intact. This is the established shared-reference distinction, not a new general twirl result: [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, §III.C.2 and §IV.A.4](https://arxiv.org/html/quant-ph/0610030v3).
+
+For fixed offsets put $\delta=\beta_2-\beta_1$ and define the datum precisely by
+
+$$
+\mathsf Q^\beta_{(n_1,n_2)}
+=\mathcal D_{\rm tot}\!\left(\bigotimes_{j=1}^2
+U_{n_j}(\beta_j)\Omega_{n_j,\theta}U_{n_j}(\beta_j)^*\right).
+$$
+
+Every selected joint pair whose row counts are $(0,m+1)$ and column counts $(1,m)$ gains exactly $e^{i\delta}$ by (27.3). The lifted equal-local-count observation $C_3$ is unchanged. In full support measure additionally
+
+$$
+\begin{aligned}
+Z^\beta&=\mathsf Q^\beta_{(2,3)}[00,001;01,000]
+=e^{i\delta}(p_1p_2p_4+p_1B e^{-i\phi_2}),\\
+R&=\mathsf Q^\beta_{(2,3)}[00,010;01,000]
+=e^{i\delta}d_2\overline d_2=e^{i\delta}|d_2|^2.
+\end{aligned}
+\tag{27.29}
+$$
+
+Both reference words have total count one. Their actual vectors are $S^2x\otimes c_1Sx$ and $c_1x\otimes S^3x$, present in (27.11); their inner product is $d_2\overline d_2$. Thus the reference is itself an accessible coherence, with no separately supplied phase calibration.
+
+If $R\ne0$, its exact law supplies $R/|R|=e^{i\delta}$. Put $\widehat Z=Z^\beta\overline R/|R|$ and use (27.13) with $\widehat Z$. This divides by an observed reference only after its nonvanishing is established. If $R=0$, positivity and $d_1\ne0$ imply $d_2=0$. Its two summands in (27.9) must have equal magnitudes and opposite phases, giving
+
+$$
+p_1p_3=p_2p_4,\qquad e^{i\phi_2}=-1,\qquad Z^\beta=0,\qquad
+e^{i\phi_1}=\frac{C_3-p_1p_2+B}{A}.
+\tag{27.30}
+$$
+
+Thus the internal orbit is still identified although the relative offset itself is undetermined there. The denominator is known positive, and $C_3=0$ creates no exception. There is no division by a vanishing reference or by $Z^\beta$. This zero-case diagnosis concerns exact laws; finitely many observations do not certify that a continuous probability difference is exactly zero.
+
+The two reference quadratures use (27.22) for $00|010,01|000$. Together with the four main settings, uniformly chosen and retained, they give eighteen effects $P^s_o/6$. Their reference masses are
+
+$$
+D_u^R=p_1(1-p_1),\qquad D_v^R=p_1(p_3+p_4),\qquad M_R=D_u^R+D_v^R.
+\tag{27.31}
+$$
+
+The first factors $S^2x,x$ again prove strict Cauchy–Schwarz, $|R|<\sqrt{D_u^RD_v^R}\le M_R/2$, even when $R=0$. The excluded word $01|001$ has diagonal $p_1p_2>0$, so $1-M_R>0$. Offsets only multiply entries by unit scalars, preserving every main mass and strict inequality of Theorem 27.5. Hence all eighteen labels are positive, and (27.23) with probability factor $1/6$ proves legality and recovery of the three complex observations.
+
+For sparse support the additional equal-total-count reference is always nonzero:
+
+$$
+\begin{aligned}
+Z_s^\beta&=e^{i\delta}p_1R_6e^{i\phi},\\
+R_s&=\mathsf Q^\beta_{(2,4)}[00,0010;01,0000]
+=e^{i\delta}d\overline d=e^{i\delta}p_1p_2p_4,\\
+\boxed{e^{i\phi}}&=\frac{Z_s^\beta\overline R_s}{(p_1R_6)(p_1p_2p_4)}.
+\end{aligned}
+\tag{27.32}
+$$
+
+The reference row and column both have total count one, with actual vectors $S^2x\otimes c_2Sx$ and $c_1x\otimes c_4e_4$ from (27.19). Formula (27.18) gives their inner product $d\overline d$. Only known positive constants divide the final inverse. The main two settings and the two reference quadratures, chosen uniformly, give twelve effects $P^s_o/4$. The reference masses are
+
+$$
+D_u^{R_s}=(1-p_1)p_2,\qquad D_v^{R_s}=p_1p_4,\qquad M_{R_s}=D_u^{R_s}+D_v^{R_s}.
+\tag{27.33}
+$$
+
+Their product vectors are nonproportional in the first factors, so $|R_s|<\sqrt{D_u^{R_s}D_v^{R_s}}\le M_{R_s}/2$. The omitted word $01|0101$ has mass $p_1^3>0$, proving $1-M_{R_s}>0$. The twelve labels are all strictly positive by (27.23), with factor $1/4$.
+
+All extension effects are tensored with identity on preparation records and are measured only after the windows. They use the same flag storage, herald and coherent-use counts; their setting registers and terminal records have respectively six/eighteen or four/twelve values. The pointer realization (27.27) applies unchanged. Relational phase measurements and additional reference resources are established principles, including [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §VI.A.2](https://arxiv.org/html/quant-ph/0610030v3); here the reference cancellation is performed on the two specific non-fictitious coherences (27.29), (27.32), with its required degeneracy clause.
+
+The offset model preserves one internal device $\theta$, the product preparation, and relative count rotations constant across the measured trials. It does not include independently different internal branch-phase vectors, random resampling of the offsets, drift, correlated preparation noise or arbitrary channels on the flags. Common additional offsets remain gauge, while independent uniform resampling gives (27.28). These exact-law statements do not supply a uniform finite-sample stability bound near $R=0$ or as known positive coefficients tend to zero. For protocols required to identify every internal orbit at every fixed offset, all sharp resource lower bounds of Theorems 27.3–27.4 remain valid by restriction to zero offsets, provided the flag-only batch restrictions are retained. $\square$
+

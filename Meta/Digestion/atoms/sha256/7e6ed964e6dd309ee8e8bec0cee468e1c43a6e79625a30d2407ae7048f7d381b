@@ -1,0 +1,37 @@
+**定理 C-147.1（四域、全部份数及风险额度）。** 对 $N=\mathcal A,\mathcal B_c$，
+$n\ge1$、$\delta\in[0,1]$，以及
+$\mathcal D_n\in\{\mathrm{IID}_n,\mathrm{cIID}_n,\mathrm{Prod}_n,\mathrm{cProd}_n\}$，
+
+$$
+f_{N,\mathcal D_n}(\delta)=\min\{1,\delta/m^n\},\qquad m=2/3.
+\tag{C147.1}
+$$
+
+同一个达到效果为 $T=tQ_N^{\otimes n}$，$t=\min\{1,\delta/m^n\}$。
+
+证明。复用 C-132.2 的正张量见证机制，但见证与目标均先经过所比较的实际通道。
+同一实际源 $\sigma^{\otimes n}$ 已属于最小 IID 域，而
+
+$$
+N^{\otimes n}(\sigma^{\otimes n})=\vartheta_N^{\otimes n}
+=\bigl(m\tau_N+(1-m)\kappa_N\bigr)^{\otimes n}
+\succeq m^n\tau_N^{\otimes n}.
+\tag{C147.2}
+$$
+
+有限展开的其余每项均为 PSD 张量积，故任意复正效果均有
+$r(T)\ge m^np(T)$，无需与见证对易。这给 (C147.1) 的上界。
+反向由 (C145.3)，同一实际效果满足
+
+$$
+\operatorname{Tr}\!\left[Q_N^{\otimes n}N^{\otimes n}
+(\rho_1\otimes\cdots\otimes\rho_n)\right]
+=\prod_{i=1}^n\operatorname{Tr}(P_0\rho_i)\le m^n.
+\tag{C147.3}
+$$
+
+全部因子同时取 $P_{u_+^p}$ 就在 IID 域达到等号，凸混合保持上界。
+目标的全通过概率为一；因此 $tQ_N^{\otimes n}$ 的风险恰为 $tm^n$、功效恰为 $t$。
+在 $\delta=0$ 取零效果，在 $\delta=m^n$ 及整个 $\delta\ge m^n$ 区间取未缩放事件，
+包括 $\delta=1$，不要求用尽额度。证毕。
+

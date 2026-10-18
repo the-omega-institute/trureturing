@@ -1,0 +1,26 @@
+**Theorem 57.4 (exact depth solvability and independence above the frontier).** Define
+
+$$
+H=d+n-2+\mathbf1_{b>0}.
+\tag{57.10}
+$$
+
+A uniform correct policy exists if and only if $h\ge H$. At every feasible cap,
+
+$$
+D_h(a,b;d)=D_H(a,b;d)=D_\infty(a,b;d).
+\tag{57.11}
+$$
+
+The equality is on this exact composition contract; it adds no height promise for negatives.
+
+Proof. A positive tree substitutes blocks into an $n$-leaf macro tree. Every macro leaf has depth at most $n-1$; its block height is $d-1$ for $\alpha$ and $d$ for $\beta$. This gives the upper bound $H$. A comb attains depth $n-1$ at a leaf of type $\beta$ when $b>0$; otherwise all leaves have type $\alpha$. For $n=1$ the appropriate sole block attains the same expression. Thus $H$ is the exact maximum positive height. Its attaining tree has a deepest $\alpha$ leaf: (57.4), or the twice-image cherry description, shows this first for each block and then for their assembled tree. Its $\beta$ sibling has the same depth $H$.
+
+If $h<H$, exchange this deepest cherry's labels. It is a same-composition negative, unchanged at every endpoint of depth at most $h$. Every causal history remains common, so correct opposite returns are impossible. If $h\ge H$, query the finite union of all positive alpha frontiers and accept exactly when some candidate's entire alpha frontier has returned $\alpha$. Theorem57.3 proves correctness on every complete competitor, with no positive-height restriction on it. This gives finite termination and solvability.
+
+For independence, take any correct policy with unrestricted finite query depths. Keep only its finitely many positive terminal executions, making the finite decision tree of these actual histories. Repeated queries can be suppressed by using their already acquired exact replies. Any edge with no positive-compatible continuation returns false. Every positive terminal leaf names one particular $V$, because its paid set contains a complete colour frontier and that frontier determines $V$ within $\mathcal T_C$.
+
+An address deeper than $H$ has reply $\varnothing$ on *every positive candidate*. Delete that query node and retain its $\varnothing$ continuation. The compressed selector uses only its actual acquired history and a public decision-tree template. Deleted replies are not entered as acquired reports; the common candidate prediction merely specifies which public continuation replaces the removed node. Every complete colour frontier from a positive terminal execution lies at depth at most $H$, so its actual requests remain in the compressed tree. A positive follows its former path and pays no more. A negative either reaches a rejected edge or a positive-labelled terminal leaf; the latter would require the actual matching complete colour frontier and hence, by Theorem57.3, would equal that positive. Wrong acceptance is impossible. The resulting finite tree is therefore a genuine depth-$H$ policy correct on all competitors, with no larger positive cost. This proves $D_H\le D_\infty$; the reverse inequality and (57.11) follow from nested policy permissions.
+
+Minima in (57.3) exist when feasible. The competitor set and depth-$H$ alphabet are finite, exact replies are deterministic, and repeats add no information. One may minimize over finite trees without repeated queries on a path; the exhaustive finite address scan already solves the target. Thus (57.11) compares attained integer minima, not an unattained limit of controllers. □
+

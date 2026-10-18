@@ -1,0 +1,27 @@
+**定义 3.1（Band labels and spectrum）。** Restrict to $Q\ge2$, $m\ge3$, $k=Qm$, and $T=Qm+1$. Then $g=1$ and all phases are actual. Set $I=\{1,\ldots,m-1\}$, take an arbitrary nonconstant table $\lambda:I\to Y$, an outside label $A$, and a fresh high label $R\notin\{A\}\cup\lambda[I]$. Band labels may repeat in arbitrary order, and $A$ may be a band label. Define
+
+$$
+f_{\rm band}(v,-j,s)=
+\begin{cases}
+R,&s\ge k-m,\\
+\lambda(j),&s<k-m,\ j\in I,\\
+A,&s<k-m,\ j\notin I,
+\end{cases}
+\qquad f_{\rm band}(\bot)=L_\bot.
+\tag{3.1}
+$$
+
+For $1\le t\le m-1$, count distinct labels, not occurrences:
+
+$$
+n_t=\left|\lambda[\{1,\ldots,m-t\}]\right|,
+\qquad
+h=\min\{r\in\{1,\ldots,m-2\}:n_{r+1}\le2^r\},
+$$
+$$
+e=\mathbf1_{\{n_h>2^h\ \text{or}\ (Q=2,\ m\text{ odd},\ h=1,\ A\notin\lambda[I])\}}.
+\tag{3.2}
+$$
+
+The minimum exists because $n_{m-1}=1$. Also $n_h>2^{h-1}$: for $h>1$ this follows from minimality, and for $h=1$ from nonconstancy. If $n_h>2^h$, removal of one phase gives $n_h=2^h+1$ and $n_{h+1}=2^h$; the removed phase has a label absent from that shorter prefix.
+

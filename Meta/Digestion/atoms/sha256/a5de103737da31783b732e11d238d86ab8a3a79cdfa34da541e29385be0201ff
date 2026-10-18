@@ -1,0 +1,72 @@
+**Theorem 3.2 (Integer reward and common integer center; T2).** Under
+Theorem 3.1, choose
+
+$$
+N=\left\lceil\frac8{DI}\right\rceil,
+\qquad \delta=1/N,
+\qquad b_k=\left\lfloor\frac N{k^r}\right\rfloor
+\quad(1\le k\le L).
+\tag{3.11}
+$$
+
+Choose any integer $a\in\{0,\ldots,N\}$ satisfying
+$|a/N-\theta|\le\delta$; $a=\lfloor N\theta\rfloor$ is one such
+choice. For an actual full gap set
+
+$$
+U(K)=
+\begin{cases}
+(b_K-a)/N,&1\le K\le L,\\
+0,&K>L.
+\end{cases}
+\qquad V=8W+8.
+\tag{3.12}
+$$
+
+The same choice of $a$ gives
+
+$$
+|U|\le1,\qquad
+-\mathbb E_{g_0}U\ge\Delta/4,\qquad
+\mathbb E_{g_1}U\ge\Delta/4,\qquad
+\mathbb E_{g_i}U^2\le VI.
+\tag{3.13}
+$$
+
+Proof. From (3.11),
+
+$$
+\delta\le DI/8\le\Delta/8,\qquad
+\delta\le I\le1,
+\tag{3.14}
+$$
+
+where $0<D<1$. Each $b_k$ and $a$ is in $\{0,\ldots,N\}$,
+so $|(b_k-a)/N|\le1$ exactly. For every accepted integer $k$,
+
+$$
+0\le h(k)-b_k/N<\delta,\qquad
+\left|\frac{b_k-a}{N}-(h(k)-\theta)\right|\le2\delta.
+\tag{3.15}
+$$
+
+The unquantized conditional means are $-\Delta/2$ and $\Delta/2$.
+Thus either oriented mean after quantization is at least
+$\Delta/2-2\delta\ge\Delta/4$. No unbiased rounding is used, and
+the center is common to both labels.
+
+Put $x=h-\theta$. Theorem 3.1 gives
+$\mathbb E_{g_i}x^2\le2\mathbb E_{g_i}h^2+2\theta^2\le4WI$.
+Using (3.15), $(x+y)^2\le2x^2+2y^2$ and $\delta^2\le I$ proves
+
+$$
+\mathbb E_{g_i}U^2\le8WI+8\delta^2\le(8W+8)I=VI.
+\tag{3.16}
+$$
+
+The support bound also holds on rejected gaps, where $U=0$.
+Exact grid equalities and endpoint centers require no exclusions.
+The integers specify immutable destination choices. Neither $a/N$
+nor an arithmetic calculation of $b_k-a$ is a mutable field of the
+table constructed below. $\square$
+

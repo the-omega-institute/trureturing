@@ -1,0 +1,60 @@
+**Theorem 11.2 (the entire shifted fiber and all three exact strata).**
+The data (NLC.32) have precisely the source fiber and row strata
+
+$$
+\begin{aligned}
+D&=\{U(x,y):x,y\in\mathcal T\},\\
+D_0&=\{U(y,y):y\in\mathcal T\},\\
+D_1&=\{U(G(y),y):y\in\mathcal T\},\\
+D_2&=\{U(x,y):x,y\in\mathcal T,\ x\ne y,\ x\ne G(y)\}.
+\end{aligned}
+\tag{NLC.35}
+$$
+
+All three rows are attained, and these are the entire row image.
+
+Proof. The four literals decompose each source uniquely as
+$u=\langle x,\langle y,\langle\alpha,z\rangle\rangle\rangle$.
+Its original subtree at $RRR$ is $z$. The actual leaf and pair laws give
+
+$$
+\rho(u)=
+ \langle\rho(x),\langle\rho(y),\langle\beta,\rho(z)\rangle\rangle\rangle.
+\tag{NLC.36}
+$$
+
+Thus the epoch-one subtree at $RL$ is $\rho(y)$, and both compared
+endpoints are reached. The retained whole-subtree equality is exactly
+$z=\rho(y)$, proving the forward inclusion in (NLC.35). Conversely every
+finite $U(x,y)$ has the complete old root row, the four stated literal
+replies and both reached equal endpoints. Recovering $x=u|_L$ and
+$y=u|_{RL}$ is inverse to this parameterization. It is a mathematical
+inverse, not an observer operation. No finite source satisfying the
+original input has been omitted.
+
+Let $\ell(t)$ count leaves and $b(t)$ count $\beta$ leaves. The native
+laws give $\ell(\rho(t))=\ell(t)+b(t)$ by induction. Consequently
+
+$$
+\ell(G(y))=1+\ell(y)+b(y)>\ell(y),\qquad y\ne G(y)
+ \quad(y\in\mathcal T).
+\tag{NLC.37}
+$$
+
+The entire target values are $(x,y,G(y))$. Their fixed geometry and
+(NLC.37) give exactly the three alternatives in (NLC.35), including
+every cross-class inequality. The first two rows are attained for
+every finite $y$; $U(\alpha,\beta)$ attains the third. In particular
+$D$ is nonempty and is not replaced by $D_0\cup D_1$.
+
+The acquisition correspondence is [ARH, Proposition 2.1][ARH] applied
+to exactly these coordinates: acquire the epoch-zero data and the
+whole $RRR$ description by paid finite traversal, advance the same
+register, acquire the epoch-one $RL$ description, compare the paid
+descriptions, and continue to the common $N$. Under the complete cut
+of Assumption 1.2, the successful retained output has exactly the
+fiber just calculated, in both directions. Source-dependent traversal,
+timing, cache and control information is subject to that same cut;
+the calculation does not establish physical erasure or free equality.
+$\square$
+

@@ -1,0 +1,8 @@
+### 74.4 Physical rank budgets and exact four-fibre attainment
+
+Choose local Kraus families with a_t and b_t operators. Their tensor products give a_t b_t Kraus operators for A_t⊗B_t. Precomposing with the fixed input MC isometry cannot increase this count. Multiplying by √w_t and concatenating across branches gives a Kraus family of size Σ_t a_t b_t for LJ_in. This proves (2) from (1), regardless of linear dependence between the displayed Kraus operators.
+
+At k=4,d=2, every pair of local channels admitting pure two-dimensional Stinespring environments has local Kraus ranks at most two, so its effective encoded channel has Kraus rank at most four. Equation (1) gives error at least 1/2 for all such products. The tetrahedral construction of §70 uses exactly such local environments and has full-reference error 1/2, so the lower bound is attained. That same example belongs to the larger class of all effective CPTP maps of Kraus rank at most four; consequently the minimum over that larger class is also 1/2.
+
+The rational qutrit-environment product of §73 has error below 1/3 and therefore cannot have effective Choi rank at most four. Its improvement over all two-dimensional-local-environment products is strict. No optimality of its particular error, no classification of mixed budgets such as (2,3), and no equality claim for (1) at all k,d are asserted.
+

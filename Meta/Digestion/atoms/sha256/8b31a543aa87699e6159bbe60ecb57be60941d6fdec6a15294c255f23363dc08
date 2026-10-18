@@ -1,0 +1,22 @@
+**Corollary 2.3 (finite length bounds and exact path witnesses).** One can
+also decide every triple of finite upper budgets $(q,d,L)$ and construct
+a service when feasible. For an extracted skeleton, exact reachability,
+all worst-coordinate costs and every same-run weighted maximum are
+computable, with actual sources attaining each nonempty path cost.
+
+Proof. For the triple decision enumerate physical words of length at
+most $L$ and the finite skeletons; impose (SRF.9), and require $L_t\le L$
+only for reachable leaves, using (SRF.8). A comparator with total length
+at most $L$ uses only such words on reachable reads, and its unreachable
+children can be replaced by immediate halts, so necessity loses nothing.
+Every passing skeleton has the asserted actual costs by Theorem 2.2.
+This finite-length test is separate from the unbounded-address negative
+stopping rule in that theorem; no general WS2S predicate comparing variable
+word lengths is asserted.
+
+With all words fixed, decide (SRF.8) for each leaf and extract a satisfying
+chart tuple when nonempty. Filling its source term gives an actual member
+of $U$ attaining $(k_t,d_t,L_t)$. Maximize each coordinate over these
+leaves, or first form a weighted sum at each leaf and then maximize.
+Different coordinate maxima need not share a witness. $\square$
+

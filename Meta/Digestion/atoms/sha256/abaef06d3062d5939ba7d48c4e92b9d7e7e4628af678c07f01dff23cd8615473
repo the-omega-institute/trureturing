@@ -1,0 +1,124 @@
+**Theorem 3.1 (Exact cycle compatibility under explicit additional
+hypotheses).** In (2.1) suppose
+
+$$
+\Gamma=tt^T,\quad t_i>0,\quad\Lambda_{ii}=t_i^2,
+\quad\Lambda_{ij}>0,\quad
+\Lambda_{ij}\Lambda_{ji}=t_i^2t_j^2\quad(i\ne j).
+\tag{3.1}
+$$
+
+Then $x(\Lambda,\Gamma)\in\mathcal K$ if and only if
+
+$$
+\sigma:=
+\frac{\Lambda_{0+}\Lambda_{+-}\Lambda_{-0}}
+     {\Lambda_{+0}\Lambda_{-+}\Lambda_{0-}}=1.
+\tag{3.2}
+$$
+
+With all three TP equations $\sum_i\Lambda_{ij}=n_j$, this
+is equivalent to a legal complex scalar-port realization of this
+specified whole channel. When it holds, a single radial generator
+and its $25$ fixed quadrature flags suffice. The two face equations,
+rank-one $\Gamma$, strictly positive $t_i$ and pair saturations
+are hypotheses; none is asserted for an unrestricted optimizer.
+
+Proof. In a factorization (2.2), put
+$c_f=(\alpha_{fi}\beta_{fi})_i$. The rank-one equation
+$\sum_fc_fc_f^T=tt^T$ forces $c_f=s_ft$ for real scalars
+$s_f$, with $\sum_fs_f^2=1$. Indeed each vector orthogonal to
+$t$ has a sum of squared pairings equal to zero. At least one
+$s_f$ is nonzero, and that term has every $\alpha_{fi}$ and
+$\beta_{fi}$ nonzero.
+
+For $i\ne j$ form the real vectors, indexed by $f$,
+$U_f=\alpha_{fi}\beta_{fj}$ and $V_f=\alpha_{fj}\beta_{fi}$.
+Their squared norms are $\Lambda_{ij},\Lambda_{ji}$, and their
+inner product is $\Gamma_{ij}=t_it_j>0$. Equality in
+Cauchy–Schwarz, from (3.1), gives
+
+$$
+U=\kappa_{ij}V,\qquad
+\kappa_{ij}=\frac{\Lambda_{ij}}{t_it_j}>0,\qquad
+\kappa_{ij}\kappa_{ji}=1.
+\tag{3.3}
+$$
+
+On a term of full support, multiply the three ratios in the
+orientation $0\to+\to-\to0$. All factor entries cancel, giving
+$\kappa_{0+}\kappa_{+-}\kappa_{-0}=1$. By the reciprocal
+relations, (3.2) is the square of this product; hence it is one.
+
+Conversely, (3.2) and positivity make that product one. Therefore
+there are positive $r_i$ with $\kappa_{ij}=r_i/r_j$ for all
+pairs: take $r_0=1$, $r_+=1/\kappa_{0+}$,
+$r_-=1/\kappa_{0-}$, and use the cycle for the remaining pair.
+Set
+
+$$
+\alpha_i=\sqrt{t_ir_i},\qquad
+\beta_i=\sqrt{t_i/r_i}.
+\tag{3.4}
+$$
+
+Then $\alpha_i^2\beta_j^2=\Lambda_{ij}$ and
+$(\alpha_i\beta_i)(\alpha_j\beta_j)=\Gamma_{ij}$.
+Theorem 2.2 gives the single homogeneous generator.
+That theorem and the HSR correspondence also show that allowing
+arbitrary complex scalar-port factors does not evade necessity.
+
+For the promised port, embed (3.4) by (2.5), and put
+
+$$
+a=\widetilde a/\|\widetilde a\|,\qquad
+b=\widetilde b/\|\widetilde b\|,\qquad
+w=\|\widetilde a\|^2\|\widetilde b\|^2.
+\tag{3.5}
+$$
+
+The TP columns give
+$\|\alpha\|^2\beta_j^2=n_j$ for every $j$; in particular
+$w=\sum_{i,j}\Lambda_{ij}=5$. For $0\le k,l<5$ put
+$g_{kl}=G(2\pi k/5,2\pi l/5)$ and define
+
+$$
+\begin{gathered}
+B_{kl}=\sqrt{w/25}\,(g_{kl}b)^TD^\dagger,
+\qquad R_{kl}=Dg_{kl}a,\\
+\operatorname{Enc}(X)=(B_{kl}XB_{kl}^\dagger)_{kl},\qquad
+\operatorname{Dec}_{kl}(y)=R_{kl}yR_{kl}^\dagger.
+\end{gathered}
+\tag{3.6}
+$$
+
+Both vectors in (3.5) are radial. The group element
+$G(\pi,\pi)\mathsf J$ acts as $-I$ on their radial subspace,
+so their joint product projector's torus average is already reflected.
+The quartic Fourier support lies in $|m|+|n|\le4$; only the zero
+frequency survives both five-point sums. Thus the finite sum is
+exactly $Z(x)$, by the credited quadrature in
+[QAP, Theorem 2.3](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_ATOM_POSITIVITY_AND_SUPPORT.md).
+No continuous flag or future choice of angles is introduced.
+Its matrix marginal, or the TP column identity above, gives
+$\sum_{kl}B_{kl}^\dagger B_{kl}=I_5$; and
+$R_{kl}^\dagger R_{kl}=1$. Each sandwich remains positive at
+every reference extension. Hence the encoder and every whole-block
+decoder are CPTP, the composite matrices have rank one, and flags
+are consumed in decoding. This is an actual fixed scalar port.
+Its original all-history error is (1.10), not an unevaluated
+relaxation used as an upper. $\square$
+
+The equality mechanisms in this proof are mature: rank-one PSD sums,
+equality in Cauchy–Schwarz, and consistency of ratios around a
+cycle. Singh–Nechita Theorem 5.13, pp. 22–23, uses rank-one factors
+and saturated AM–GM for PCP/TCP extreme rays. Johnston–MacLean
+Example 1, p. 5, already has
+$X=\mathbf1\mathbf1^T$ and
+$Y=\left(\begin{smallmatrix}1&a&1/a\\1/a&1&a\\a&1/a&1\end{smallmatrix}\right)$,
+which satisfy all pair inequalities but are PCP exactly when $a=1$.
+Thus cyclic failure of pairwise consistency is not a new phenomenon.
+The walk-space face, its full TP slice and the port (3.6) are the
+specific correspondence proved here. No assertion about arbitrary
+complex PCP pairs having real factors is needed.
+

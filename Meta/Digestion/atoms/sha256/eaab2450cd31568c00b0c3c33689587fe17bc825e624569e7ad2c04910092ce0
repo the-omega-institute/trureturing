@@ -1,0 +1,44 @@
+**Theorem 8.17 (Exact depth equals Hamming distance).** For any distinct
+$u,v\in B_n$, put $d=|\{i:u_i\ne v_i\}|$. The minimum depth, within
+Definition 8.16, at which some final outcome probability has a nonzero
+coefficient of $\rho_{uv}$ is exactly $d$.
+
+Proof of the lower bound. If fewer than $d$ pulses occur, at least one
+differing site $j$ is never pulsed. For $i\ne j$, $H_i(\beta)$ commutes
+with $N_j$: a neighbor factor is diagonal at $j$, and otherwise the
+operators have disjoint supports. Thus the whole product commutes with
+$N_j$. Since $u_j\ne v_j$, their evolved states remain in orthogonal
+occupation sectors at $j$. For every complete final word $w$, at least
+one of $U_{wu},U_{wv}$ is zero. The cross coefficient therefore vanishes.
+The argument allows arbitrary angles, phases and repetitions at the
+other sites.
+
+Proof of attainment. Write the occupied sets as $u,v$, put
+$D=u\mathbin{\triangle}v$ and $K=u\cap v$, and identify $K$ with its
+legal word. Choose any fixed order of the $d$ sites in $D$, pulse each
+once at angle $\pi/4$, and measure outcome $K$. Starting from $u$, any
+path contributing to $U_{Ku}$ must delete each initial one in
+$u\setminus K$ and must leave each initial zero in $D$ unchanged.
+A site is never pulsed again, so any other choice at that site prevents
+the final word from being $K$. The contributing path is unique.
+
+Along it all changes are deletions, so every intermediate occupied set
+is a subset of the legal set $u$. Every deletion is enabled and has
+nonzero factor $-i e^{-i\beta_i}/\sqrt2$. A zero that stays zero has
+factor $1/\sqrt2$ if enabled and factor one if blocked. Their product
+is nonzero. Exactly the same reasoning from $v$ proves $U_{Kv}\ne0$.
+Uniqueness excludes cancellation between different paths. Consequently
+$U_{Ku}\overline{U_{Kv}}\ne0$ after $d$ pulses, proving attainment and
+the theorem. $\square$
+
+This attainment uses only legal modes and does not restrict intermediates
+to the support of the input density matrix. In particular, an initially
+zero-probability mode can be part of either deletion path. A disconnected
+positive support blocks the static phase propagation of Theorem 8.6,
+but does not block all control in $\mathcal K_n$. The lower bound is
+specific to sequential single-position pulses and final word measurement;
+it is not a lower bound for arbitrary gates, ancillas, intermediate
+measurements, parallel circuits or general laboratory protocols. A
+nonzero, known cross coefficient establishes sensitivity, without a
+uniform lower bound on its size or statistical conditioning.
+

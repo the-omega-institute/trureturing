@@ -1,0 +1,20 @@
+**References 6.2 (ordinary literature).** Martelli–Montanari, *An Efficient
+Unification Algorithm*, ACM TOPLAS 4(2), 258–282,
+[doi:10.1145/357162.357169](https://doi.org/10.1145/357162.357169), supplies
+the standard finite free-term occurs-check method used by the cell MGU. Comon
+and Lescanne, *Equational Problems and Disunification*, §3.2 and Appendix
+B.3, [PDF](https://perso.ens-lyon.fr/pierre.lescanne/PUBLICATIONS/jsc-diseq.pdf),
+supplies the ordinary finite-term disequality perspective and explicitly
+warns that arbitrary equational theories need separate arguments. Barguñó,
+Creus, Godoy, Jacquemard and Vacher, “Decidable Classes of Tree Automata Mixing Local and Global
+Constraints Modulo Flat Theories,” [arXiv:1302.6960](https://arxiv.org/abs/1302.6960),
+Theorem 5.22 and Corollaries 5.23–5.24, provides related finite-tree constraint feasibility in its stated language.
+Reuß, *Normalization of Horn Clauses with Disequality Constraints*,
+[PDF](https://mediatum.ub.tum.de/doc/1116533/document.pdf), Theorem 18 and
+Corollary 17, gives finite ground elimination for its homomorphic
+Horn/automata classes. These sources attest the component methods only; none
+states the native guarded acquired-fiber correspondence or the theorem here.
+The NPL image split, the source-faithful cell composition and the
+Fibonacci-count finite-forbidden bridge are classified as repo-derived. No
+literature-wide novelty or priority claim is made.
+

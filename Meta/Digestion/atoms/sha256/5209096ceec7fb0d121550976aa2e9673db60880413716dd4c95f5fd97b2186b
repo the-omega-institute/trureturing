@@ -1,0 +1,63 @@
+**Theorem 36.2 (joint physical trace and intensity witnesses).** Every
+common law of Definition 36.1 satisfies
+
+$$
+\begin{gathered}
+\operatorname{tr}F_{\rm rev}\ge C_{\rm tr}
+:=S_\Psi L(b_f^2,a_f^2)
+=0.046934492735440449795\ldots,\\
+\sigma(\mathcal R_+)\ge I_\Psi
+:=\frac{20S_\Psi}{6+\sqrt{1717}}
+=0.52682112884988570054\ldots,
+\end{gathered}
+\tag{FC.157}
+$$
+
+where for $a,b>0$
+
+$$
+L(a,b)=\frac{200}{1681}\left[
+\frac25b-a+\sqrt{(a-\tfrac25b)^2+\frac{1681}{100}ab}\right].
+\tag{FC.158}
+$$
+
+The trace bound and the intensity bound are distinct. Intensity is not
+physical probability, and the trace of an effect is not a probability
+on an unspecified input. Each bound is sharp over feasible original
+common laws at $s=0$ for every finite $t\ge3000$, by §38.
+
+Proof. The elementary pointwise integration certificate used here is:
+if $\mathsf W\succeq0$, $\lambda>0$ and
+$\mathsf W-\lambda Q_\Psi\succeq0$, then
+
+$$
+\int_{\mathcal R_+}x^T\mathsf Wx\,d\sigma
+\ge\lambda\int_{\mathcal R_+}\Psi\,d\sigma
+\ge\lambda S_\Psi.
+\tag{FC.159}
+$$
+
+The second inequality uses the nonpositive contribution on $\Psi\le0$
+of the same measure. This is the mature moment-bound method of
+Bertsimas–Popescu, *Optimal inequalities in probability theory: A convex
+optimization approach*, [§2, Theorem 2.1 and proof](https://web.mit.edu/dbertsim/www/papers/MomentProblems/Optimal-inequalities-in-probability-theory-A-convex-optimization-approach-SIAM15.pdf).
+Here the weighted functional is proved directly; their indicator
+objective, interior conditions and strong duality are not assumed.
+
+For $\mathsf W=\operatorname{diag}(a,b)$,
+
+$$
+\det(\mathsf W-\lambda Q_\Psi)
+=ab+\lambda(2b/5-a)-\frac{1681}{400}\lambda^2.
+\tag{FC.160}
+$$
+
+Its positive root is (FC.158). At that root the first diagonal entry
+$a+2\lambda/5$ is positive and the determinant is zero, so the matrix
+is PSD of rank one. For larger $\lambda$ its determinant is negative.
+The trace integrand is $b_f^2u^2+a_f^2v^2$, giving the first bound.
+The largest eigenvalue of $Q_\Psi$ is $(6+\sqrt{1717})/20$; taking
+$\mathsf W=I_2$ gives the second bound. The $uv$ equation as well as
+both squared moments were used in $S_\Psi$; no independent marginal
+optimization has occurred. $\square$
+

@@ -1,0 +1,57 @@
+**Corollary 7.1 (the consumer at its actual hypotheses).** For each
+chart of Theorem 5.2, [URR, Theorem 3.1 and Corollaries 3.2–3.3][URR]
+supply one finite tuple $\mathbf z_i^\star$ and an effective Presburger
+formula $\Psi_i$ such that, for every $\mathbf n\in\mathbb N^{k_i}$,
+
+$$
+\begin{aligned}
+\exists\mathbf z\in\mathcal T^{m_i}\quad
+  K_i(\mathbf n)\land\Gamma_i(\mathbf n,\mathbf z)
+&\Longleftrightarrow
+  K_i(\mathbf n)\land\Gamma_i(\mathbf n,\mathbf z_i^\star)\\
+&\Longleftrightarrow K_i(\mathbf n)\land\Psi_i(\mathbf n).
+\end{aligned}
+\tag{PDC.19}
+$$
+
+The tuple is independent of the ranks and of any later rank policy.
+On the entire feasible rank set
+
+$$
+S_i=\{\mathbf n:K_i(\mathbf n)\land\Psi_i(\mathbf n)\},
+\tag{PDC.20}
+$$
+
+the map $\mathbf n\mapsto(\mathbf n,\mathbf z_i^\star)$ is a section
+of the rank projection of the full domain $\mathcal C_i$.
+Its source image $\Theta_i(\mathbf n,\mathbf z_i^\star)$ belongs to
+the complete original $D$ at every such rank.
+
+Proof. Use URR's dimensions $k=k_i,m=m_i$ and its finite list consisting
+of all pairs in $\Gamma_i$, including every sort negative (PDC.13).
+Every side has exactly (PDC.14), with only fixed nonnegative offsets
+and exponents. Repeated variables and repeated list members retain
+their shared interpretation. URR evaluates this native list over all
+$\mathcal T^{m_i}$; the producer has left no residual restriction
+outside the list. Its common-completion equivalence applies at every
+rank. Conjoining the independent scalar $K_i$ gives (PDC.19), with
+URR's exact Presburger support. Theorem 5.2 supplies the original
+source membership. Projection of the displayed section is the
+identity on all of $S_i$.
+
+For any policy $P\subseteq\{\mathbf n:K_i(\mathbf n)\}$, URR's
+same-tuple quantifier exchange applies to $\Gamma_i$ on $P$.
+An arbitrary policy is not claimed effectively Presburger. Empty
+policies, no residuals, no ranks and empty negative lists have URR's
+literal empty-product interpretations. $\square$
+
+The section is not the full domain: no equality
+$\mathcal C_i=\{(\mathbf n,\mathbf z_i^\star):\mathbf n\in S_i\}$
+is claimed. It does not preserve all target rows or prefix contacts,
+identify the actual source, or choose its chart. Every member of
+$\mathcal C_i$ remains in the source correspondence. The injective
+producer supplies this application on its canonical coordinate domains.
+NIC Proposition 3.5 already supplies the analogous section for its
+noninjective images; common completion, scalar projection and feasibility
+remain credited to NIC, URR and NSF.
+

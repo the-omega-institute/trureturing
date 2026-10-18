@@ -1,0 +1,46 @@
+### 定理 20.2（紧相容载体的逆极限非空性）
+
+设 \(\{\mathsf C_j^R,\rho_j\}_{j\ge0}\) 是相容有限层系统，且每个 \(\rho_j\) 连续、仿射、满射。则
+
+\[
+\mathsf C_\infty^R
+=
+\varprojlim_j(\mathsf C_j^R,\rho_j)
+=
+\left\{
+(c_j)_j:
+\rho_j(c_{j+1})=c_j
+\right\}
+\]
+
+是非空紧凸集。
+
+#### 证明
+
+令
+
+\[
+\mathsf K=\prod_{j\ge0}\mathsf C_j^R.
+\]
+
+由于每个 \(\mathsf C_j^R\) 是紧空间，\(\mathsf K\) 是紧空间。对每个 \(m\) 定义
+
+\[
+F_m
+=
+\left\{
+(c_j)_j\in\mathsf K:
+\rho_j(c_{j+1})=c_j,\ 0\le j<m
+\right\}.
+\]
+
+每个 \(F_m\) 是闭集。它非空的原因是从任意 \(c_m\in\mathsf C_m^R\) 开始，利用 \(\rho_{m-1},\ldots,\rho_0\) 的满射性逐层选取 \(c_{m-1},\ldots,c_0\)，再任意补充尚未约束的更高层坐标。更直接地，对任意有限指标集，只涉及有限条相容方程，而满射性保证这些方程有解。因此 \(\{F_m\}\) 具有有限交性质。由紧性，
+
+\[
+\bigcap_{m\ge0}F_m\neq\varnothing.
+\]
+
+该交集正是 \(\mathsf C_\infty^R\)。仿射映射的相容方程定义了凸集，所以逆极限也是凸的。证毕。
+
+这个结论只保证截断载体的非空性。若要去掉 \(R\) 或 \(\delta\)，必须再证明截面族在相应极限中的紧性或下半连续性。
+

@@ -1,0 +1,139 @@
+**定理 3.1（Prefix-label spectrum law）。** For every $Q\ge2$, $m\ge3$, every nonconstant $\lambda:I\to Y$, and every outside-label coincidence allowed in Definition 1.2, with $h,e$ defined by (2.2)–(2.3),
+
+$$
+C_{\rm ad}(f)=C_{\rm pre}(f)=hQ+1+e.
+\tag{3.1}
+$$
+
+Proof. We first prove the lower bound for every adaptive action tree, and then exhibit a preset stream of the same fee.
+
+At each fixed $v,j$, the actual tails $k-m-1$ and $k-m$ have different INITIAL labels. By the first-zero loss principle [S1, Lemma 4.3 and Theorem 5.2], a root with a zero after fewer than $m$ leading ones would merge these two sources before any acquired endpoint. Their lost distinction cannot be recovered. A root cannot stop either. Hence the root is necessarily $1^m$. It rejects exactly the high tails, has successful response support $\{0,m\}$, and puts every band phase in its successful zero-difference child. All high sources then return $R$.
+
+The full-block structural boundary [S18, Theorem 2.1] applies to this nonconstant table without any injectivity assumption. On the root-zero child, two differently labelled band phases with INITIAL tail $k-m-1$ have current tail $k-1$ and the same current value and archive. A second block beginning with one rejects and permanently merges them. Thus this second block starts zero. It succeeds for all remaining low sources and makes their current tail common. The band has a common zero-difference archive through the first $Q$ paid blocks, since every first-tour window after the root misses $I$.
+
+After this compulsory zero, within any acquired archive all its candidates have the same current value and tail. An action's rejection depends on that tail and its literal bits, not on phase. A rejecting action therefore supplies no extra distinguishing leaf at a nonconstant node: all its candidates become the same absorbing record. Such a node cannot occur in a correct tree. Constant nodes can stop before any further action. Every useful endpoint is consequently binary, and its successful difference is (2.4).
+
+Restrict to the jointly realized sources with one fixed free value, INITIAL tail zero, and phases
+
+$$
+K_h=\{1,\ldots,m-h\}.
+\tag{3.2}
+$$
+
+Up to total fee $hQ$, their only possible informative indices are $Q,2Q,\ldots,(h-1)Q$. To verify this for all literal actions, an index after the root and before $hQ$ has the form $rQ+b$. If $b\ge1$, then $r\le h-1$ and its window starts at $bm-r\ge m-h+1$, strictly above $K_h$; its right endpoint is at most $k-r<T$, so there is no wrap into that prefix. If $b=0$ and $r\ge1$, it is one of the stated main indices. The root itself has zero response throughout $I$. Thus even an adaptive tree has at most $h-1$ binary branching opportunities on these sources. Pruning constant restricted nodes gives at most $2^{h-1}$ label leaves. But $K_h$ contains $n_h>2^{h-1}$ different labels by Definition 2.1. Hence total fee $hQ$ is impossible.
+
+At total fee $hQ+1$, exactly one more main endpoint, at index $hQ$, is available to the same prefix. Its label capacity is at most $2^h$. Therefore $n_h>2^h$ forces one more paid block. These counts use only actual sources on each tree branch. They do not combine observations from different branches, or presume that sources with the same label need the same code.
+
+The other condition in (2.3) has $h=1$. If $n_1>2$, the preceding prefix count already excludes fee $Q+1$. Otherwise nonconstancy gives exactly two band labels. For $Q=2$ and odd $m$, [S18, Theorem 2.1] says every correct first tour retains at least one actual outside phase on the band's zero archive. Its label $A$ is fresh in the exceptional condition. Thus three different INITIAL labels share that archive after two blocks, with common current value and tail; one remaining endpoint can provide at most two successful readings, and uniform rejection cannot distinguish them. Fee $Q+1$ is impossible. Equivalently this is the fresh-outside case of [S18, Theorem 3.1]. All conditions in (2.3), including when both hold, therefore imply the lower bound $hQ+1+e$.
+
+We now construct actual words attaining this bound. Put
+
+$$
+p=h-1+e,\qquad n=m-1-p=m-h-e,\qquad
+K=\{1,\ldots,n\},\qquad H_r=m-r\ (1\le r\le p).
+\tag{3.3}
+$$
+
+The core $K$ is nonempty. Its distinct-label count is at most $2^h$: when $e=0$ it is $n_h\le2^h$, and when $e=1$ it is $n_{h+1}\le2^h$. Choose an injective code assignment
+
+$$
+c:\lambda[K]\longrightarrow\{0,1\}^h,
+\qquad c(y)=(c_1(y),\ldots,c_h(y)).
+\tag{3.4}
+$$
+
+Codes are assigned to core labels, not to occurrences. The $p$ other band phases $H_1,\ldots,H_p$ are treated individually. A repeated label may occur in the core and at several of these phases; its several acquired codes are permitted to differ.
+
+Use the supplied first-tour scans [S18, Theorem 2.1 and Convention 2.2]. Their literal choices, needed for the later donor and seam conditions, are as follows. Index zero is $1^m$. If $m$ is even, indices $1,\ldots,Q-1$ use the length-$m$ word $Z_m=(0,1,0,1,\ldots)$. If $m$ is odd and $Q\ge3$, index one uses $Z_m$ and indices $2,\ldots,Q-1$ use $O_m=(1,0,1,0,\ldots,1)$. On the root-zero child their continuing zero archive is exactly $I$; every scan-positive archive has label $A$ and stops. Phase $k$ is excluded there.
+
+If $Q=2$ and $m$ is odd, instead use the second word
+
+$$
+Z'_m=00(10)^{(m-3)/2}1.
+\tag{3.5}
+$$
+
+Its support is $\{m+2,\ldots,2m\}$, so the continuing root-zero archive is exactly $I\cup\{z\}$, where $z=m+1$. Its sole extra source has label $A$. Phases $0,m,k$ are excluded from this same archive. The scan-positive sources again stop with label $A$. The index-one word begins zero, hence is safe even from root tail $k-1$; subsequent scan seams are strict. These are the actual screening facts of [S18], reused here.
+
+There is one code convention when the exceptional scan has no frontier row. Namely, if $Q=2$, $m$ is odd, and $p=0$, then $h=1$, $e=0$, $\lambda[I]$ has exactly two labels, and $A\in\lambda[I]$. Here $K=I$; choose $c(A)=0$ and the other label's bit one. The extra source $z$ will have zero main response and can correctly share the code of $A$.
+
+For $1\le r\le h$, let
+
+$$
+F_r=\{j\in K:c_r(\lambda(j))=1\}.
+\tag{3.6}
+$$
+
+At the first main index $Q$, put
+
+$$
+L_1=F_1\cup\{0\}\cup
+\begin{cases}
+\{H_1\},&Q=2,\ m\text{ odd},\ p\ge1,\\
+\varnothing,&\text{otherwise},
+\end{cases}
+$$
+$$
+E_Q=L_1\cup
+\begin{cases}
+\{k\},&|L_1|\text{ odd},\\
+\varnothing,&|L_1|\text{ even}.
+\end{cases}
+\tag{3.7}
+$$
+
+All these vertices lie in the ordered window $W_Q=[k,0,1,\ldots,m-1]$. Phase $k$ is absent from the continuing root-zero archive in either scan. Phase 0 is also absent there, so its deliberately fixed response one does not alter the band or the extra source. For every later main index $rQ$, $2\le r\le h$, use
+
+$$
+E_{rQ}=F_r\cup
+\begin{cases}
+\{0\},&|F_r|\text{ odd},\\
+\varnothing,&|F_r|\text{ even}.
+\end{cases}
+\tag{3.8}
+$$
+
+The whole core belongs to $W_{rQ}=[-r,m-r]\pmod T$, since $n\le m-h\le m-r$. Phase 0 is in this window and absent from the acquired root-zero archive. The left endpoint $-r$ is unselected. Both (3.7) and (3.8) have even charge. Emit their actual inverses (2.5).
+
+For $1\le r\le p$, at index $rQ+1$ use
+
+$$
+E_{rQ+1}=
+\begin{cases}
+\{H_1,z\},&Q=2,\ m\text{ odd},\ r=1,\\
+\{H_r,m\},&\text{otherwise}.
+\end{cases}
+\tag{3.9}
+$$
+
+These are actual even supports in $W_{rQ+1}=[m-r,2m-r]$. In the ordinary rows, phase $m$ was excluded at the root. The row's literal word is $1^r0^{m-r}$; it selects only the band phase $H_r$ among continuing band sources. In the exceptional first row, both $H_1$ and $z$ are actual continuing sources, and the inverse is $110^{m-2}$. No absent-donor assertion is made for $z$.
+
+Every core phase is strictly below every frontier window: its largest possible value is $m-h-e$, whereas the smallest frontier endpoint is $m-p=m-h+1-e$. Of the other band phases, exactly $H_r$ has response one at frontier row $r$; those numerically above it lie in the window but were prescribed zero. All unmentioned absolute indices between the scan and the last selected row use the literal paid wait $0^m$.
+
+For decoding, retain successive endpoint differences together with the root and scan archive. Ignore the coordinates at paid zero waits, which are known to be zero. On the continuing root-zero archive, write a code as its $h$ main coordinates and $p$ frontier coordinates. Each core label $y$ has code $(c(y),0^p)$. Every ordinary frontier phase $H_r$ has main code $0^h$ and frontier unit vector with coordinate $r$ one. These codes cannot coincide with a core code or with each other. Different occurrences of the same band label may have these different codes; each code is decoded to its own INITIAL label $\lambda(H_r)$ or $y$. Thus repetitions across any of these geometric regions cause no false identification.
+
+For the exceptional scan with $p\ge1$, $z$ and $H_1$ share the first frontier coordinate one, but (3.7) assigns their first main coordinates zero and one respectively. All later main coordinates of both are zero. Indeed $H_1$ is beyond the right endpoint of every later main window, and $z=m+1$ is outside every main window through $h\le m-2$: it exceeds each nonnegative right endpoint and lies below the negative segment's least residue $T-h\ge m+3$. At later frontier rows, $z$ is prescribed zero and $H_1$ is prescribed zero. Hence their two full codes differ. Neither has the all-zero frontier code of a core source, and neither shares another frontier phase's unit vector. Decode $z$ to $A$ and $H_1$ to $\lambda(H_1)$. This remains correct whether $A$ is fresh or coincides with any core or frontier label. For $p=0$, the special one-bit convention already decodes the same $z$ correctly. Thus every remaining archive has a unique INITIAL label.
+
+All words are legal at their actual seams. After the compulsory index-one zero, a scan tail is at most one. The first main word has response one at the interior vertex 0: if its first bit is one, its second bit is zero; if its first bit is zero, it already has a zero. Its leading run is at most one and its terminal run at most $m-1$. Each later main word starts zero, because its left endpoint $-r$ is unselected. Each ordinary frontier word has leading run $r\le p\le h\le m-2$ and terminal run zero. The exceptional frontier word has leading run two and terminal run zero. Every post-scan word contains zero, so every leading or terminal run is at most $m-1$. The general seam bound is the strict inequality
+
+$$
+2m-2<k=Qm.
+\tag{3.10}
+$$
+
+In particular a main word's terminal ones followed by the exceptional leading two have total length at most $m+1<2m\le k$. Paid zero waits are safe and clear the tail. No terminal cleanup is needed; the final word's actual terminal tail is simply retained.
+
+The last index is $hQ$ when $e=0$ and $hQ+1$ when $e=1$, so exactly $hQ+1+e$ complete blocks are available on the stream's longest branch. The counts include all intervening waits. Initial $\bot$ stops free; root rejection stops at fee one with $R$; the successful root-positive child stops at fee one with $A$; scan-positive children return $A$ at their acquired endpoints; all other children use the displayed decoder and stop by the final endpoint. Every decoder uses only its own archived outputs and the stream's known emitted indices. Both free values use the same literal stream and endpoint differences. The adaptive lower bound and this preset attainment coincide, proving (3.1). ∎
+
+The smallest width is included without a separate convention: for $m=3$, $h=1$ and the two band labels are different. When $Q=2$ and $A$ is fresh, $e=1$, the core is $\{1\}$, and the first frontier row handles $H_1=2$ and $z=4$. When $A$ is a band label, $e=0$ and the special zero-code convention applies. For $Q\ge3$ the ordinary scan removes all outsiders. At the limiting permitted $h=m-2$, the construction still has $n=m-h-e\ge1$ and $p\le m-2$; every donor, window, and strict seam used in the proof remains valid.
+
+The law also exhibits arrangement dependence with equal multiplicities beyond the first returning window. Take $m=12$ and any $Q\ge2$. The two band tables
+
+$$
+(B,B,B,C,C,C,L,L,L,U,V),\qquad
+(U,V,B,B,B,C,C,C,L,L,L)
+\tag{3.11}
+$$
+
+have the same five distinct labels and multiplicities $(3,3,3,1,1)$. For the first table, $n_2=4$ and $n_3=3$, so $h=2,e=0$ and the fee is $2Q+1$. For the second, $n_2=n_3=5$ and $n_4=4$, so $h=3,e=0$ and the fee is $3Q+1$. These fees hold for any allowed $A$. In the second construction the label $L$ appears both in the core and at the two separately queried frontier phases, illustrating why codes need not be constant on a label outside the core. This example is an application inside (3.1), rather than a claim that total label count or multiplicities determine the fee.
+

@@ -1,0 +1,31 @@
+**Theorem 5.3 (Reads and addresses, including all failures).**
+A completed first-leaf attempt pays exactly $N_j+1$ Reads and $A_j+d_j$
+letters. A completed bracketed attempt pays exactly $N_j+d_j+2$ Reads
+and $A_j+d_j(d_j+1)/2+d_j$ letters. Thus the entire call has bounds
+
+$$
+\begin{array}{c|c|c}
+ & \text{Reads} & \text{submitted letters}\\ \hline
+\text{first leaf}&(B+1)(N_B+1)&(B+1)(A_B+H_B)\\
+\text{bracketed}&(B+1)(N_B+H_B+2)&
+(B+1)(A_B+H_B(H_B+1)/2+H_B).
+\end{array}
+\tag{CNA.6}
+$$
+
+In both cases the maximum queried literal length is at most $H_B$,
+and at most $N_B$ different addresses are queried in the entire call.
+On an accepted attempt, $N_j=N(U_v)$ and $A_j=A(U_v)$.
+Its first-leaf bill is $N(U_v)+1$ Reads; its bracketed bill is
+$N(U_v)+d_j+2$ Reads.
+
+**Proof.** Traversal pays once per visited address and validation once
+at the guard. Separate guard search reads exactly the $d_j+1$ literals
+$L^h$, $0\le h\le d_j$, whose lengths sum to $d_j(d_j+1)/2$.
+Each is separately submitted from the root; this is not a source-walk
+port. Traversal addresses form a subset of $\operatorname{Pos}(V_B)$,
+without repetition, so $N_j\le N_B$, $A_j\le A_B$ and $d_j\le H_B$.
+Sum over at most $B+1$ attempts. Persistence also puts the union of all
+queried addresses in that finite position set. An accepted complete
+grammar is the validated tree, proving the final equalities. $\square$
+

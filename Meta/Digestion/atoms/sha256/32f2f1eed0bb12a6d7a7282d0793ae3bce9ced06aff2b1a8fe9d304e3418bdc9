@@ -1,0 +1,17 @@
+### 73.4 Why every conjugate-paired qubit environment costs at least one half
+
+Consider any four orthonormal bases v_(f,0),v_(f,1) in C², with conjugate records on the other party. Let n_f∈R³ be the unit Bloch vector of |v_(f,0)><v_(f,0)|. Their retained cross coefficients are
+
+    C_(fi,gj)=[1+(−1)^(i+j)n_f·n_g]/2  (f≠g).
+
+Take the normalized logical input
+
+    |ψ>=(1/2)Σ_(f=1)^4 |f,−>,
+    |f,−>=(|f,0>−|f,1>)/√2.
+
+The difference between the physical and target outputs, after identifying the output MC code with C⁴, is (G−I₄)/4, where G_fg=n_f·n_g. This follows by summing the four internal signs for each cross-fibre block; all diagonal output errors vanish. The Gram matrix G is positive semidefinite, has trace four and rank at most three. Hence G−I₄ has trace zero and an eigenvalue −1, so its trace norm is at least two. This input already gives diamond error at least 1/2. Section 70's tetrahedral bases attain 1/2, proving the exact restricted optimum.
+
+The qutrit-environment construction above therefore shows that imposing a common qubit environment with conjugate records can change the one-product approximation optimum. It neither settles the optimum over all qubit-environment products nor the unrestricted optimum.
+
+The Gram, Schur-product and diamond-order ingredients are standard and credited in §§54 and 72 and in [Watrous, The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/). The displayed finite channel and rational certificate supply the strict counterexample to tetrahedral optimality for this fixed coherent target. No general RT recovery claim is made.
+

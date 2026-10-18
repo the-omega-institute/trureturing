@@ -1,0 +1,14 @@
+### 93.6. Consumer and exact boundary
+
+The complete §75 charts include all noncanonical rays. All-generic triples
+are excluded above; all-aligned triples by uniform §§83–85; every mixed
+triple has a forbidden mixed edge. A complete common-flat basis containing
+a canonical ray is canonical by §60. A basis containing none contradicts
+the triple obstruction. The exact \(W=H_0^*B\) transport of §91 gives
+the output-basis uniqueness and fixed-pair quartet exclusion.
+
+No ray census or numerical continuation is used. This closes only the six
+specified fibres of \(Q\). Every other retained guard fibre, remains outside this section. The four simple-discriminant fibres are
+handled separately in §94.
+The center and endpoints are not included.
+

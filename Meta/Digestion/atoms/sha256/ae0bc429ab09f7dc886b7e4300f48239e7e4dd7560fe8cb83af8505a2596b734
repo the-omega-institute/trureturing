@@ -1,0 +1,5 @@
+**引理 126.3（唯一共同后继强制正交记录）。** 若 $i\ne k$ 只有一个共同后继 $j$，且 $P_{ij}P_{kj}>0$，则
+$\langle e_{ji},e_{jk}\rangle=0$。
+
+证明中 (126.1) 只剩非零标量乘以可逆酉 $U_{ji}^{\dagger}U_{jk}$，故该标量必须为零。若共同后继不止一个，各项可以在算子意义下相消，不能把“合流必正交”推广到这种情形。该判据与有限维通道的 Kraus/Stinespring 表示相容；参见 M.-D. Choi, “Completely positive linear maps on complex matrices”, *Linear Algebra Appl.* 10 (1975), 285–290，以及 W. F. Stinespring, “Positive functions on $C^*$-algebras”, *Proc. Amer. Math. Soc.* 6 (1955), 211–216。有限维表示的教学来源为 IBM Quantum Learning, [“Channel representations”](https://quantum.cloud.ibm.com/learning/en/courses/general-formulation-of-quantum-information/quantum-channels/representations-of-channels)：其 Kraus、Choi 与 Stinespring 表示说明实现框架，不提供额外的原生取得权限。
+

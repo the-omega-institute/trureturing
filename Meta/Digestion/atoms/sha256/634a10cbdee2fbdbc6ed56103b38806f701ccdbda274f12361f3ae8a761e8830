@@ -1,0 +1,71 @@
+**Theorem 43.1 (central-noise floors at positive risk).**
+Use the $t_0$ above and define, for sufficiently small $\eta>0$,
+
+$$
+A_\eta=\left[(2\nu^2-4r|\lambda|\eta)t_0/2
+                            -4r^2\eta^2\right]_+.
+\tag{43.1}
+$$
+
+Every policy in $\mathcal C(\eta,\delta)$, $0<\delta<1/4$, obeys
+
+$$
+\begin{aligned}
+\mathbb EV^a&\ge A_\eta/(8r\eta^2),&
+\mathbb EV^b&\ge A_\eta/(4r\eta^2),\\
+\mathbb EL&\ge\sqrt5 A_\eta/(8r\eta^2),&
+\mathbb EE&\ge5A_\eta^2/(64r^2\eta^4t_0).
+\end{aligned}
+\tag{43.2}
+$$
+
+No lifetime convergence is assumed. All four resources include every
+failed, aborted, interrupted and post-target-death executed prefix.
+
+Proof. Let $\sigma$ be the first time the continuous native held error
+exceeds $\eta$, with infinity if it never does, and put
+$\theta=t_0\wedge S\wedge\sigma$. This is a stopping time in the
+full enlarged Brownian filtration, used only in this converse. At a
+finite first violation continuity gives error $\eta$. Until $\theta$
+the connected-lift argument therefore gives
+$|e|\le\eta$, $|f|\le2\eta$ and the same beta residual bound as in
+Theorem 33.2. In particular $|R_1|,|R_2|\le2r\eta$ there, with
+exactly the residuals (33.6). On success and $\{S\ge t_0\}$,
+$\theta=t_0$, so
+
+$$
+\mathbb E\theta\ge t_0(1-\delta-\mathbb P(S<t_0))\ge t_0/2.
+\tag{43.3}
+$$
+
+Apply the exact differential identities (33.7) and Itô's square formula
+only through $\theta$. Their independent central martingale still has
+quadratic variation $2\nu^2dt$ there. Bounded residuals and integrands
+make the stopped stochastic integrals mean zero. As in (33.8),
+
+$$
+\begin{aligned}
+2\nu^2\mathbb E\theta
+ &\le4r^2\eta^2+4r\eta^2\mathbb E\operatorname{TV}_{[0,\theta]}b
+                       +4r|\lambda|\eta\mathbb E\theta,\\
+2\nu^2\mathbb E\theta
+ &\le4r^2\eta^2+8r\eta^2\mathbb E\operatorname{TV}_{[0,\theta]}a
+                       +4r|\lambda|\eta\mathbb E\theta.
+\end{aligned}
+\tag{43.4}
+$$
+
+Localization by accumulated variation justifies these inequalities
+without finite expected variation; an infinite relevant expectation
+already gives its lower bound. For $2\nu^2-4r|\lambda|\eta\ge0$,
+(43.3) proves the two variation floors. Minkowski gives the displayed
+length floor for the execution through $\theta$, and Cauchy–Schwarz
+on probability times $[0,\theta]$ gives
+$(\mathbb EL_{[0,\theta]})^2\le\mathbb E\theta\,
+\mathbb EE_{[0,\theta]}\le t_0\mathbb EE$.
+This proves (43.2). All stopped costs are bounded above by the actual
+total costs, rather than by a success-conditioned cost. Since
+$A_\eta\to\nu^2t_0>0$, the necessary powers are $\eta^{-2}$ for
+both variations and length and $\eta^{-4}$ for unhalved energy.
+$\square$
+

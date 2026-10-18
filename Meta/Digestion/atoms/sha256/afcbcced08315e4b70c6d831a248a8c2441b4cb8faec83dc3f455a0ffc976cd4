@@ -1,0 +1,28 @@
+**Lemma 2.2 (The marginal cap).** For every positive normalized Choi
+matrix with $\operatorname{Tr}_{\rm out}\chi=I_5/5$,
+
+$$
+\operatorname{tr}(\chi Q)\le\frac45.
+\tag{2.3}
+$$
+
+Proof. The exact operator difference is
+
+$$
+I\otimes(R_++R_-)-Q
+=(I-R_+)\otimes R_++(I-R_-)\otimes R_-\succeq0.
+\tag{2.4}
+$$
+
+Each summand is a tensor product of positive projections. Pairing
+with the same positive $\chi$ and using its input marginal gives
+
+$$
+\operatorname{tr}(\chi Q)
+\le\operatorname{tr}\bigl(\chi[I\otimes(R_++R_-)]\bigr)
+=\frac{\operatorname{tr}(R_++R_-)}5=\frac45.
+\tag{2.5}
+$$
+
+The argument is valid on the entire complex tensor space. $\square$
+

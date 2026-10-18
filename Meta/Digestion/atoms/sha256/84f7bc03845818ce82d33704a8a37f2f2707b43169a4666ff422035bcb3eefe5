@@ -1,0 +1,26 @@
+**Definition 1.1 (source and history).** Use exactly [CNA, Definitions 1.1–1.4][CNA].
+The source is any finite nonempty ordered full tree, with
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\quad \rho\alpha=\beta,
+\quad \rho\beta=\langle\beta,\alpha\rangle,
+\quad \rho\langle x,y\rangle=\langle\rho x,\rho y\rangle.
+$$
+
+One atomic `Read(p)` accepts an entire materialized finite $L/R$ word and
+returns alpha, beta, branch or absent. Every finite address is legal.
+An independent internal writer may apply genuine global $\rho$ to this same
+register between observer events, including during local computation.
+There are no other source changes, resets, rerootings, locks, snapshots,
+subtree-equality ports, source-walk handles, size queries, epochs or schedule
+notifications. The observer's fixed program and initialization are independent
+of the unknown source. The public cut is its only variable input.
+
+Observer progress means that every pending local step or Read eventually
+occurs after finitely many intervening events. Finite interference means a
+finite total number of writer updates during the pending call, without a
+known bound or a known last-update event. Safety below holds on every legal
+history on which the procedure returns; termination additionally requires
+finite interference and observer progress.
+

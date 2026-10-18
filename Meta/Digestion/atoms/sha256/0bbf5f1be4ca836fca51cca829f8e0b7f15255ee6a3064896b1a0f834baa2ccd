@@ -1,0 +1,74 @@
+**Theorem 8.3 (exact three-versus-four inequality-feasibility minimum).**
+The minimum number $n_{\rm low}(s)$ of actual low live-bearing labels
+in the original sharp-cost contrast-inequality feasibility class is
+
+$$
+\boxed{
+n_{\rm low}(s)=
+\begin{cases}
+3,&0\leq s\leq s_0\tau_3,\\
+4,&s_0\tau_3<s\leq s_0.
+\end{cases}}
+\tag{RH.71}
+$$
+
+This is not a minimum total alphabet, an exact-contrast attenuation
+count, an optimal-height sufficiency statement or an optimal-contact
+threshold.
+
+Proof. The normalized low coefficient Gram is $I_3$ by Theorem 2.2.
+Lemma 8.2 makes each actual low live-bearing label's contribution rank
+one, so there must be at least three such labels, also for $s=0$.
+If there are at most three, there are exactly three. Absorb their
+positive weights into real vectors $f_i$ and form the square column
+matrix $F_0$. The identity $F_0F_0^T=I$ implies $F_0^TF_0=I$;
+thus they are a unit orthonormal $Q$-null frame. Arbitrary assigned
+reports, including stochastic mean reports in $[-1,1]$, have normalized
+contrast at most $\sum_i|(f_i)_0(f_i)_1|$.
+The three products sum to zero. For three real numbers summing to zero,
+their absolute sum is twice the largest absolute one: if two have the
+same sign, their sum is the opposite of the third; zero cases obey the
+same identity.
+
+For any unit null vector, RH.48 gives
+
+$$
+AB=\frac{(\alpha-\gamma Z)(1-eZ)}{d^2}\leq\frac\alpha{d^2},
+\qquad
+\alpha-(\alpha-\gamma Z)(1-eZ)
+ =Z(\alpha e+\gamma-\gamma eZ)\geq0,
+\tag{RH.72}
+$$
+
+strictly when $Z>0$, since $0\leq Z\leq1/e$ and $\alpha e>0$.
+It follows that $2|f_0f_1|\leq2\sqrt\alpha/d=\tau_3$.
+Every implementation with at most three actual low live-bearing labels
+therefore has $\mathsf V(F)\leq s_0\tau_3$.
+
+The frame RH.47 has products
+$\sqrt\alpha/d,-\sqrt\alpha/(2d),-\sqrt\alpha/(2d)$.
+Its reports $(+,-,-)$ reach $\tau_3$ with exactly three actual low
+live-bearing labels, error $E_*$, sharp cost and the full output of
+Section 5. Because the requirement is $\mathsf V(F)\geq s$, that
+one instrument is feasible for every required $s\leq s_0\tau_3$.
+For larger requirements, the four-low-ray endpoint instrument of
+Proposition 6.2 has contrast $s_0$ and is feasible, with exactly four
+such labels. The obstruction excludes three, proving RH.71.
+Neither sufficiency uses report attenuation that might add labels.
+
+If the actual record is countable, nonnegative sums give the same
+rank-one contribution for each nonzero CP label. If it is an allowed
+integral and has only finitely many actual live-bearing labels, their
+CP masses are atoms and the same finite Gram sum applies. A positive
+nonatomic live-bearing component has infinitely many labels, so cannot
+be a counterexample with at most three. Null density values or arbitrary
+changes on null sets do not alter this conclusion. Inaccessible integral
+indices remain multiplicity, as in Lemma 8.2.
+
+Every height-optimal implementation above $s_0\tau_3$ must in
+particular have at least four such labels. The construction proving
+four-label feasibility does not itself prove height-optimal attainment.
+Theorem 9.5 uses the complete RC curve and common-decoder rigidity to
+prove the different optimal-height threshold and exact counts. The
+feasibility count alone supplies neither that threshold nor that proof. $\square$
+

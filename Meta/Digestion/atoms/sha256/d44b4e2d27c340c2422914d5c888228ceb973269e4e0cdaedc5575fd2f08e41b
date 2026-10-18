@@ -1,0 +1,46 @@
+**Lemma 335.1 (repo-derived).** Under the same hypotheses, m>9, v,d>5
+and c+2<2*m/5.
+
+**Proof.**
+
+Flatness and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1.
+
+Since c+d>2 and m>3, it follows that m>2+sqrt(5)>4 and
+
+    c+d<m-2, hence d<m-c-2<m-3.                 (335.1)
+
+By (334.6), c>1, v<=m-2 and (335.1),
+
+    (m-1)*(m+2)<Q<(m-2)^2+(m-3)^2,
+
+so m^2-11*m+15>0. If 4<m<=9, however,
+
+    m^2-11*m+15=(m-4)*(m-9)+2*m-21<0.
+
+Thus m>9. Moreover v>5 and d>5. Otherwise the respective upper
+bounds for Q contradict (334.6), because
+
+    25+(m-3)^2-(m-1)*(m+2)=36-7*m<0,
+    (m-2)^2+25-(m-1)*(m+2)=31-5*m<0.             (335.2)
+
+In particular,
+
+    K^2>24/25.                                  (335.3)
+
+We also have
+
+    c+2<2*m/5.                                  (335.4)
+
+To prove this, define
+
+    F(c)=(m-2)^2+(m-c-2)^2-(m-1)*(m+c+1).
+
+Equations (334.6) and (335.1) require F(c)>0. For c<m-2,
+F'(c)=2*c-3*m+5<1-m<0. At c0=2*m/5-2,
+
+    F(c0)=-(m^2+40*m-75)/25<0
+
+since m>9. Hence c<c0, proving (335.4). QED.
+

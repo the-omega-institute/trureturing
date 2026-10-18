@@ -1,0 +1,18 @@
+**命题 12.3（已有有限桥梁的作用边界）。** 相似三角形、正方形、多边形、圆盘及三维体供应命题 2.3 的尺度表达；素数段乘积供应命题 3.2 的体积表达；有限层差分供应命题 4.2 的端点截断；独立圆周平均供应命题 5.2 的正平方读出；正确关联纤维供应命题 6.5 的聚合读出；带已证明全点上界的区间线段供应命题 11.4 的比较。它们不能由各自名称、局部闭合、固定维数或相位相消推出定义 12.1 的全支撑联合估计。
+
+证明。每个所列接口都已在其对应命题的假设下接到同一 $Z(n)$，或在已供应算术弦上界下接到严格余量。命题 1.4 排除仅用 $M$ 就沿用合法标签；命题 2.4 排除并集面积取代标签总和；命题 3.3 排除固定方向数覆盖全部支持；命题 5.3 排除共用或固定相位取代独立平均；命题 6.4–6.5 排除只数纤维或同相合振幅；命题 9.4 排除尺度项恒非负；命题 9.5 排除固定相对或对数安全间隙；命题 10.3 排除单一正幂上支撑自动给出双对数上界；命题 11.5 排除安全端点自动供应区间全点上界。
+
+对 $\{2,3,5,7\}$ 族，命题 8.3 中所引用的旧结论已经提供全部 $n>5040$ 的安全性；这个范围不能被称为新的未解四方向目标。对不断增长的任意素数支持，剩余义务则仍是实际共同实现上的 $\mathfrak G(n)>0$。任何实际来源、操作取得或物理空间解释都还须有独立模型及接口，不能从这里的交换约数配置反推原始有序来源、历史或物理量。故这些几何实现把原问题分解为可保持、可计算、可比较的关系，同时完整保留了尚待证明的全局符号。证毕。
+
+[FIB]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[ZECK]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/docs/develop/theory/ZECKENDORF_EULER_5040.md
+[SevenSmooth]: ../../../D5/S3/Arith/Robin/SevenSmooth.lean
+[SigmaOpt]: ../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean
+[Choie]: https://arxiv.org/abs/math/0604314v2
+[ChoieNote]: ../../../Library/ArithSums/choie2006robincriterion.md
+[MertensNote]: ../../../Library/notes/pntplus2026mertens.md
+[LichtmanNote]: ../../../Library/Scale/lichtman2020mertens.md
+[GronwallNote]: ../../../Library/notes/gronwall1913asymptotic.md
+[DLMFGamma]: https://dlmf.nist.gov/5.11
+[GammaNote]: https://github.com/the-omega-institute/trureturing/blob/05149fa5456f6eb47259bab8138572902863368e/Library/Analytic/nist2026asymptotic.md
+

@@ -1,0 +1,73 @@
+**Definition 65.1 (separately commissioned sources and their actual history).**
+Keep the free nonempty ordered source algebra of [Continuation Definition1.1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md),
+the whole substitution (55.1), and the fixed-cap TM30/PR57 contract used in
+Definitions55.1 and60.1. Define a family of original sources by
+
+$$
+T_0=\beta,\qquad T_{h+1}=\langle T_h,T_h\rangle,\qquad
+B_h=\operatorname{Pos}(T_h)=\{p\in\{L,R\}^*:|p|\le h\}.
+\tag{65.1}
+$$
+
+The two subtrees in this mathematical definition have distinct ordered occurrences.
+Each $T_h$ is a separately supplied INITIAL source, as in Proposition62.5;
+(65.1) is not a source-copy operation on a running unknown tree. INITIAL,
+labels, brackets, left/right order, the root and all addressed occurrences belong
+to the full source. The domain $B_h$ is its actual initial domain, rather than a
+ball substituted for an irregular source domain.
+
+For $h\ge3$, fix the public cap $H=2^{h+1}$ before execution. The source-independent
+command word $\operatorname{Read};\rho;\operatorname{Read};\rho;
+\operatorname{Read};\operatorname{Stop}$ has the actual record
+
+$$
+\operatorname{Read}[B^{2^h}];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\operatorname{Stop}.
+\tag{65.2}
+$$
+
+Here $A=E(\alpha)$ and $B=E(\beta)$ are the original Clifford readings,
+not spatial coordinates or Green coefficients. Their source relations are
+$A^2=1$, $B^2=-1$ and $AB+BA=1$. The initial, first-candidate and
+second-candidate leaf counts are $2^h$, $2^{h+1}$ and $3\cdot2^h$.
+Equality with the cap is accepted. The rejected candidate produces no candidate
+Read, and the following Read is of the unchanged accepted current source.
+The accepted domain is $B_{h+1}$, but its depth-$(h+1)$ child labels are
+$\beta,\alpha$ at each former beta leaf: this successor is not the separately
+commissioned all-beta INITIAL $T_{h+1}$.
+
+In particular $h=3$, $H=16$ gives eight beta leaves and fifteen initial sites.
+Writing $S=BA$, the identity $S^2=S+1$ gives $S^8=13+21S$, whereas $B^8=1$.
+Thus (65.2) becomes
+
+$$
+\operatorname{Read}[1];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[13+21BA];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[13+21BA];\quad\operatorname{Stop}.
+\tag{65.3}
+$$
+
+The installed site counts are $15,31,31$; the refused candidate has twenty-four
+leaves. In TM30's literal field order the immutable original target is
+$q_{16}(T_3)=(1,(0,8),1,13+21BA)$. It is not the boundary of the stopped current
+source. These statements follow from the actual ordered leaf substitution and
+the complete candidate guard, not from the unlabelled domain alone. For example,
+the all-alpha depth-three INITIAL has the same domain $B_3$ and initial Read
+$A^8=1$, but its first two candidates have eight and sixteen leaves and are both
+accepted. Its readings in the same command word are $1,1,13+21BA$, and its
+INITIAL boundary has tag two. An equality of initial geometric domains therefore
+does not authenticate the source or its history.
+
+All original source services and charges remain attached. At $H=16$, PR57's
+source packet has $2H-1=31$ slots and sixty-two ingress bits; the separately
+supplied §62 address bank has $K=2^H-1=65535$ address qubits and $K+4=65539$
+total qubits. These different counts retain their original meanings. A Green
+coefficient is no additional public Read, and the geometric calculations below
+provide no source acquisition, free preparation, cap increase or event after Stop.
+The full original menu also retains each named, actually supplied nonempty
+Left/Right whole-context request, with its complete candidate guard and actual
+response. The witness (65.2) simply chooses whole substitution. An accepted graft
+keeps Definition60.1's distinct occurrence injection and ends its commissioned
+whole-rho comparison; it is not silently treated as same-address renewal.
+

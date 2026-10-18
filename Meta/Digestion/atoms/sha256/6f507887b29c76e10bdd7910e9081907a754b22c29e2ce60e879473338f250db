@@ -1,0 +1,22 @@
+### 定义 33.1（量子连接）
+
+令 \(G=(V,E)\) 为有限有向图。为每条边 \(e:u\to v\) 指定一个 CPTP 映射
+
+\[
+\mathcal E_e:\mathsf L(H_u)\to\mathsf L(H_v).
+\]
+
+若路径
+
+\[
+\gamma=e_n\cdots e_1
+\]
+
+首尾 Hilbert 空间相同，则定义路径传输
+
+\[
+\mathcal E_\gamma
+=
+\mathcal E_{e_n}\circ\cdots\circ\mathcal E_{e_1}.
+\]
+

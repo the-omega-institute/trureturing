@@ -1,0 +1,64 @@
+**Definition 16.1 (complete law spaces and the two actual edges).** Let $\Omega_p,\Omega_\beta$ be the two complete countable raw carriers of Definition 1.2, including their respective infinite noncompletion outcomes $\infty_p,\infty_\beta$. Prefixing $\beta:\Omega_\beta\to\Omega_p\setminus\{\alpha\}$ and $\alpha:\Omega_p\to\Omega_\beta\setminus\{\beta\}$ includes these outcomes. Put $\lambda=4/15$, and for integers $L\ge0$ set
+
+$$
+\begin{aligned}
+T_{p,L}&=\{w_{j,b}:j\ge L,\ b=0,1\}\cup\{\infty_p\},\\
+T_{\beta,L}&=\{\alpha w_{j,b}:j\ge L,\ b=0,1\}\cup\{\infty_\beta\}.
+\end{aligned}
+\tag{16.1}
+$$
+
+Define spaces of normalized probability laws, with the full TV metric, by
+
+$$
+\begin{aligned}
+\mathcal K_p&=\{q:u(q):=q(\alpha)\in[1/3,2/5],\quad
+                  q(T_{p,L})\le\lambda^L\ (L\ge0)\},\\
+\mathcal K_\beta&=\{w:v(w):=1-w(\beta)\in[1/3,2/5],\quad
+                  w(T_{\beta,L})\le(2/5)\lambda^L\ (L\ge0)\}.
+\end{aligned}
+\tag{16.2}
+$$
+
+The infinite atoms are present, although these bounds force their mass to zero. Let $\mathcal K=\mathcal K_p\times\mathcal K_\beta$. Use two separately normalized Borel probability measures $\gamma,\zeta$ on $\mathcal K$, with shared marginals
+
+$$
+\gamma_p=\zeta_p=\sigma_p,\qquad
+\gamma_\beta=\zeta_\beta=\sigma_\beta.
+\tag{16.3}
+$$
+
+The coordinates of $\gamma$ are the current p law and successor suspended law on the acquired p-$\beta$ edge. The coordinates of $\zeta$ are the successor p law and current suspended law on the acquired suspended-$\alpha$ edge. Their coordinate order is the same, but their conditional equations condition on different coordinates. Neither edge is weighted by a synthetic emission probability. Define
+
+$$
+\begin{aligned}
+\mathcal E_{B,z}(q,w)&=q(\beta z)-(1-u(q))w(z),&&z\in\Omega_\beta,\\
+\mathcal E_{A,t}(q,w)&=w(\alpha t)-v(w)q(t),&&t\in\Omega_p.
+\end{aligned}
+\tag{16.4}
+$$
+
+A pair is feasible when (16.3) holds and, for every indicated complete outcome and every real continuous state test,
+
+$$
+\int f(q)\mathcal E_{B,z}(q,w)\,d\gamma=0
+\quad(f\in C(\mathcal K_p)),\qquad
+\int g(w)\mathcal E_{A,t}(q,w)\,d\zeta=0
+\quad(g\in C(\mathcal K_\beta)).
+\tag{16.5}
+$$
+
+Write $\mathcal F$ for these pairs. Their configuration losses and value are
+
+$$
+\begin{aligned}
+\Phi_\mu(\gamma,\zeta)
+ &=\max\left\{\sup_{r\in R_\mu}\left[\int\operatorname{TV}(q,P_{p,r})\,d\sigma_p-\rho_p\right],
+ \sup_{r\in R_\mu}\left[\int\operatorname{TV}(w,P_{\beta,r})\,d\sigma_\beta-\rho_\beta\right]\right\},\\
+V_\mu&=\min_{(\gamma,\zeta)\in\mathcal F}\Phi_\mu(\gamma,\zeta).
+\end{aligned}
+\tag{16.6}
+$$
+
+The minimum notation is justified next. These measures are analysis objects, not an installed infinite configuration carrier or an online probability register. In particular (16.5) is a family of conditional complete-measure constraints, not merely an equality of the two marginalized forecasts.
+

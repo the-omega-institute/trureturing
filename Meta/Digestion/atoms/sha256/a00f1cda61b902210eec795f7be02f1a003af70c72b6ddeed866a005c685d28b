@@ -1,0 +1,4 @@
+## 41. Exact complete-controller memory at fee at most one for full INITIAL even supports
+
+Section 27 supplies the full INITIAL internal even-support family and its emitted-block fee classification. Here the resource is the number of states of a complete finite controller at worst emitted-block fee at most one. The complete-controller convention of Definition 40.1 is used with length-$m$ literal actions. Its seven-phase fee-three minima $18$ and $26$ retain their separate parameters and targets. The result below concerns the Section 27 family, permits adaptive selection using the single free INITIAL reading, and counts every running and persistent output state.
+

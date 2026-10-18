@@ -1,0 +1,18 @@
+**Theorem 3.3 (all-source validation safety).** For every finite nonempty
+source, every finite prefix-free cut and every legal history on which RA
+Returns, its readable output equals $R_P(U_v)$ at its final guard Read $v$.
+No complete auxiliary tree or transcript is retained at any phase.
+
+Proof. The saved $(g,\ell)$ is an authentic leaf observation. Acceptance
+rereads exactly this whole address and obtains exactly this leaf label.
+The supplied native guard theorem implies zero updates between these two
+Reads. All candidate construction, both replies of every comparison, all
+local scans and the validation lie in that interval. Lemma 3.2 gives the
+entire literal exterior and partition of $U_v$. Ownership transfer preserves
+those bytes. The list of live records in Definition 2.4 contains only paths,
+scalars, constant-size replies and the row candidate. In particular no hidden
+subtree value is saved. For an empty cut the candidate itself necessarily
+contains the source tree, which is permitted output, not an auxiliary copy.
+The safety proof does not require finite interference outside this successful
+interval. $\square$
+

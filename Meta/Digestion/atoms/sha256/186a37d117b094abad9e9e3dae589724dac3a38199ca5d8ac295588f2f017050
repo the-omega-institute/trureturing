@@ -1,0 +1,17 @@
+**Corollary 83.3 (what the all-beta projection theorem supplies).** Theorem 80.2 supplies (S.192), still under every actual phase, support, projection, rectangular-contraction, fixed-center minimax, unrestricted recovery/complement, and pure-target interface listed in Definition 80.1. Consequently, within exactly those inherited premises, Proposition 83.2 conditionally closes the encoder-dependent existential route (S.155) for every $0<\beta\leq1/2$ and every admissible third column.
+
+The quantifiers are
+
+$$
+\forall N\quad
+\bigl[\text{Definition 80.1 premises}\ \wedge\ g_N^2\leq T_\beta\bigr]
+\Longrightarrow
+\exists(\rho_N,Y_N)\quad
+\forall R.
+\tag{S.196}
+$$
+
+The witness depends on $N$ and is selected before $R$. The direction-dependent witnesses in (S.187) are not reused as a common input, and no exchange of the center maximum with an input minimum is made.
+
+The earlier Section 74 sentence that recorded (S.155) as unproved described the proof boundary before this conditional composition. It remains correct for an unconditional proof of (S.155) over arbitrary actual channels: that proof still requires the scalar premise and all Definition 80.1 interfaces. The composition here does not close the fixed-input route (S.154), because $\rho_N$ need not equal $\rho_\star$.
+

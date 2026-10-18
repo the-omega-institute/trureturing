@@ -1,0 +1,32 @@
+**Lemma 2.1 (Coordinate fibers, including zero masses).** For $1\le i\le n$, let
+
+$$
+\Phi_{n,i}(\mu)=
+\sum_{\substack{b\in B_n\\b_{i-1}=b_i=b_{i+1}=0}}
+h(\mu(b),\mu(b+e_i)).
+$$
+
+Then $\Phi_n(\mu)=\sum_{i=1}^n\Phi_{n,i}(\mu)$ and
+
+$$
+0\le\Phi_{n,i}(\mu)\le\frac14.
+\tag{2.1}
+$$
+
+Moreover $\Phi_{n,i}(\mu)$ is the conditional Bayes squared-error risk for the bit at $i$, given every other bit in this finite word.
+
+**Proof.** Fix the other $n-1$ bits. A nonempty legal fiber has either two words, with center bits $0,1$, or the single word with center $0$ forced by a neighboring $1$. For a two-word fiber with masses $s,t$ and $s+t>0$, its center posterior is $p=t/(s+t)$ and
+
+$$
+s p^2+t(1-p)^2=\frac{st}{s+t}=h(s,t).
+\tag{2.2}
+$$
+
+This also holds when exactly one mass is zero. If $s=t=0$, the fiber has zero probability, its conditional action may be chosen arbitrarily, and both its weighted risk and $h(0,0)$ are zero. A singleton has posterior zero and risk zero. Thus no division by a zero-total fiber is used. Each two-word fiber is precisely one original coordinate edge, proving the risk identity and the sum decomposition. Coordinate edges form a matching, and
+
+$$
+h(s,t)\le\frac{s+t}{4}
+$$
+
+follows from $(s-t)^2\ge0$, also at $(0,0)$. The total mass of the endpoints in a matching is at most one, proving (2.1). This includes the unique coordinate at $n=1$ and every open endpoint. $\square$
+

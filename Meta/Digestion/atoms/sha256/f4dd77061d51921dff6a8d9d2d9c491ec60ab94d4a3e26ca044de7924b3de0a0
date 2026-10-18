@@ -1,0 +1,45 @@
+**引理 455.2。** 当实数 \(x\to\infty\) 时，
+
+\[
+Q_x^{\mathrm p}=\frac{2x}\ell+O\!\left(\frac{x}{\ell^2}\right).
+\tag{CC.14}
+\]
+
+**证明。** （CC.6）与 \(u^{3.515}e^{-0.8274\sqrt u}\to0\) 给
+
+\[
+\psi(t)=t+O(t/\log^2t).
+\]
+
+对素幂余项用有限层求和与 \(\vartheta(y)\le y\log y\)，得到
+
+\[
+0\le\psi(t)-\vartheta(t)
+=\sum_{k=2}^{\lfloor\log_2t\rfloor}\vartheta(t^{1/k})
+\ll\sqrt t\log^2t=o(t/\log^2t).
+\]
+
+所以 \(\vartheta(t)=t+O(t/\log^2t)\)，并有全部 \(t\ge2\) 上的 \(\vartheta(t)\ll t\)。包含素数 2 的精确有限 Abel 求和为
+
+\[
+\pi(t)=\frac{\vartheta(t)}{\log t}
++\int_2^t\frac{\vartheta(u)}{u\log^2u}\,du.
+\tag{CC.15}
+\]
+
+积分由 \(\vartheta(u)\ll u\) 及在 \(\sqrt t\) 分段，界为 \(O(t/\log^2t)\)。故
+
+\[
+\pi(t)=\frac{t}{\log t}+O(t/\log^2t).
+\]
+
+在精确端点相减，
+
+\[
+Q_x^{\mathrm p}=\pi(4x)-\pi(2x)
+=\frac{4x}{\ell+2L}-\frac{2x}{\ell+L}+O(x/\ell^2)
+=\frac{2x}\ell+O(x/\ell^2).
+\]
+
+这证明（CC.14）。普通无误差 PNT 的 \(\sim\) 本身没有被用来声称这个 \(O\) 率。证毕。
+

@@ -1,0 +1,26 @@
+**Corollary 4.2 (the first middle instance).** For every positive
+integer seven-element position set $A$,
+
+$$
+m_{\mathrm{exec}}(c,4)=16.
+\tag{TC.6}
+$$
+
+Every minimizing graph has $u=0$ and $b_{1,1}\le2$.
+In the full incidence accounting of [SI, Theorem 5.2][SI], every
+such graph satisfies $D\le E$.
+
+Proof. Theorem 4.1 gives the lower bound. The reused grid upper has
+states $(h,z)\in\{0,1,2,3\}^2$, labels $h+z+1$, and the
+fixed successors advancing the appropriate count until the fourth one
+or fourth zero, then entering its output terminal. The invariant is
+the actual numbers of exposed ones and zeros. It reads an initial
+segment of coordinates $1,\ldots,7$, without repetition, computes
+threshold four, and fits both caps on every input. There are sixteen
+running states. The input $1110000$ uses all seven coordinates and
+attains $7,W$ together. This is the supplied grid specialized to this
+slice, not a restriction on competing tables. Equality and the two
+minimizer conditions follow from (TC.5). Finally SI's exact identity
+is $|Q_{\mathrm{live}}|=16+E-D$, so (TC.5) gives $D\le E$.
+$\square$
+

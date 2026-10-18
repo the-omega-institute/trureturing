@@ -1,0 +1,32 @@
+**Theorem 5.4 (Exact frontier at budgets one through five).** For every
+fixed allowed $p,j,\nu$, the correct-mass maxima and complementary
+error minima are
+
+| Installed budget | $C_m$ | $R_m$ |
+| --- | --- | --- |
+| $1,2$ | $a/2$ | $1-a/2$ |
+| $3$ | $S_1=a/2+a\eta$ | $1-S_1$ |
+| $4$ | $T=a/2+a\eta(1+c)$ | $1-T$ |
+| $5$ | $F=a/2+a\eta(1+c+c^2)$ | $1-F$ |
+
+Proof. At most two rows either all halt or, if a read is installed,
+leave at most one halt label. Lemmas 3.1 and 3.3 give at most $a/2$.
+The one-row table attains it.
+
+With at most three rows, two or more read rows leave at most one halt
+label. Otherwise at most one read row gives the one-read bound $S_1$
+by Lemma 3.2. Proposition 5.2 attains $S_1$ with three rows.
+
+With at most four rows, at most two read rows give the bound $T$ by
+Lemma 3.2. Three or more read rows leave at most one halt label, bounded
+by $a/2<T$. The four-row table attains $T$.
+
+With at most five rows, at most two read rows again give $T$. Otherwise
+at most two halt rows give at most two distinct halt labels, so Theorem
+4.1 gives $F$. Since $F-T=ac^2\eta>0$, this bounds every five-row
+table by $F$, and Proposition 5.3 attains it. A table with no halt rows
+cannot satisfy $q_3=1$. All splits count unused and duplicate rows.
+The initialization reduction includes arbitrary measurable initializations
+and all exceptional null paths. Since $q_3=1$, each complementary risk
+is attained as well. $\square$
+

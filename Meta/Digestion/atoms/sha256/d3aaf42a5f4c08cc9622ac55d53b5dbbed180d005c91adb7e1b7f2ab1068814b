@@ -1,0 +1,37 @@
+**定理 19.4.1（基础合同下的单轮等价）。** 对统一最优构造 $q^*,a^*$，对所有 $x,y$ 有
+
+$$
+\Pr_A(S=1,O=y\mid\operatorname{do}(X=x))
+=
+\Pr_G(S=1,O=y\mid\operatorname{do}(X=x))
+=\lambda^*K_x(y),
+$$
+
+并且
+
+$$
+\Pr_A(S=0,O=\bot\mid\operatorname{do}(X=x))
+=
+\Pr_G(S=0,O=\bot\mid\operatorname{do}(X=x))
+=1-\lambda^*.
+$$
+
+当 $\lambda^*>0$ 时，两模型在接受记录上的条件输出律都为 $K_x$：
+
+$$
+\Pr_A(O=y\mid\operatorname{do}(X=x),S=1)
+=
+\Pr_G(O=y\mid\operatorname{do}(X=x),S=1)
+=K_x(y).
+$$
+
+**证明。** 箭头模型的第一式由定义直接给出。门模型中
+
+$$
+q^*(y)a^*(x,y)=\frac{M_y}{C(K)}\frac{K_x(y)}{M_y}=\frac{K_x(y)}{C(K)}=\lambda^*K_x(y)
+$$
+
+（$M_y=0$ 的项两边均为零）。对 $y$ 求和得拒绝质量；再除以 $\lambda^*$ 得条件律。证毕。
+
+<a id="claim-19-4-2"></a>
+

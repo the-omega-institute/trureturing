@@ -1,0 +1,42 @@
+**Definition 3.1 (weighted components).** For one fixed branch, maintain a
+weighted forest of equalities among the slots in $S$. Each component has a
+representative $v$ and integer potentials $\delta_s$ expressing
+
+$$
+C_s=\sigma^{\delta_s}V_v,\qquad \delta_v=0.
+\tag{NAC.11}
+$$
+
+A component may additionally be marked leafless. A mark means that every
+slot in it has value $O$. In an unmarked component every equality processed
+so far has its indicated relative potential. In a marked component all
+integer offsets are semantically irrelevant, since shifts fix $O$.
+
+To impose $C_s=\sigma^dC_t$, merge different components with the potential
+required by $\delta_s=d+\delta_t$ after their representatives are related.
+If the components already agree and this equality of potentials fails,
+mark the component leafless. If either of two merged components was marked,
+the merged component is marked. An explicit $O$ record marks its component.
+Keep every original leaf and pair descriptor attached to its original slot.
+
+For pair descriptors $p=F(l,r)$ and $p'=F(l',r')$ with parents in the same
+unmarked component, impose both equations
+
+$$
+C_l=\sigma^{\delta_p-\delta_{p'}}C_{l'},
+\qquad
+C_r=\sigma^{\delta_p-\delta_{p'}}C_{r'}.
+\tag{NAC.12}
+$$
+
+For a pair descriptor whose parent is marked, mark both child components.
+A component with a leaf descriptor and a pair descriptor is inconsistent,
+and a marked component with a leaf descriptor is inconsistent. For two
+leaf descriptors in the same unmarked component retain the arithmetic
+condition
+
+$$
+a_s(p,q)-\delta_s=a_t(p,q)-\delta_t.
+\tag{NAC.13}
+$$
+

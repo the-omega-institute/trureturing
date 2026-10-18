@@ -1,0 +1,6 @@
+**Theorem 95.1.** Suppose (G,H) is such a local minimum with 0<F(G,H)<1/2, rank G=7, and a vector spanning ker G has all eight coordinates nonzero. Then rank H≠6. The statement also holds with the two parties interchanged.
+
+The proof first obtains a supported positive correlation quotient for any rank-seven first Gram, and then a necessary quadratic inequality with its full opposite-kernel constraint. In the full-support rank-(7,6) case, explicit complex directions contradict that inequality for every possible number, from zero to four, of singular quotient fibre blocks. No positivity or reality of cross-fibre entries is assumed.
+
+This theorem excludes a class of calibrated local minima at every positive subhalf value. It makes no claim about arbitrary rank-(7,6) competitors, rank-seven kernels with missing coordinates, or smaller opposite ranks. The calibration comparison in section 72 may enlarge ranks and does not transfer local minimality from an arbitrary leaking pair. The unrestricted optimum remains between √3−3/2 and 1/4.
+

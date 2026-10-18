@@ -1,0 +1,37 @@
+**Definition 5.3 (history receiver and invalid domain).** After choice 1,
+acquire a three-bit tag, unary length and length-bounded payload on 70
+by RCA Definition 13.2's literal native ingress, with scratch 66/67 and
+descriptors 68. Header bits have IN/EX/WR/MR; unary length bits additionally
+have their distinct RD test; payload bits have the tested six-row append
+ingress. Following F, seal, measured whole-frame length and descriptor
+construction, import the frame by actual RD/cons/MR/Reverse.
+The canonical request is
+
+$$
+111\;U(|U(m)U(z)U(s)|)\;U(m)U(z)U(s).
+$$
+
+The payload contains exactly three unary fields and no suffix. Other
+complete tags/payloads take paid MalformedRecovery or range/occurrence
+rejection, with full publication, ACK and the same return. They never
+become source replies. A raw unterminated length remains in ingress.
+Every supplied raw bit at an enabled IN executes its latch/control/receipt
+successor, whether or not it preserves canonical extendibility. Source
+frame-fault is CAP's actual retained raw branch. A missing token, busy
+second entry or premature unsealed read has no executed edge or receipt.
+Invalid private preparation and intermediate invalid source overwrite
+packets likewise remain the original raw states. Wrong bootstrap supply
+has its actual partial-store successor; it is outside the canonical-version
+premise, not silently replaced by the prescribed bit or an initialized bank.
+The carrier retains such states without a successful-recovery assertion.
+More generally its raw control-store coordinate admits every finite supplied
+bit pattern. After a raw DONE, main-row enabledness uses its actually
+decoded row and finite local effect: absent, duplicate or out-of-range row
+fields give no enabled main row. The preceding IN/WRITE/DONE occurrences
+remain executed history. A uniquely well-typed row has the primitive
+successor of that actual table, subject to its actual tokens and boundaries.
+No canonical table is substituted for a malformed one. The positive graph
+and code-lineage assertions concern the canonical-version subdomain only;
+raw data and raw later continuations are not collapsed to a success or
+silently removed from the carrier.
+

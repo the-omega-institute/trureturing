@@ -1,0 +1,34 @@
+**Theorem 3.4 (explicit legacy protocol embedding).** On canonical
+installations the map from an old typed input script to the new script
+that keeps every outer choice and source frame, and inserts a separately
+supplied HistoryMode zero before each whole old history frame, preserves
+the old parser's frame classification and its strict-Zero selector meaning.
+Complete old rejected frames stay rejected in that branch. Returning source
+calls keep their original source effects and historical guards. This is
+an embedding of protocols and corresponding source occurrences/phases;
+it asserts no equality of raw old/new execution words, times, addresses,
+code captures, history outputs or complete response maps.
+
+Proof. The outer choice receiver is unchanged, including the first-zero
+second bit. Its choice1 still grants only the original history invocation
+slot. Definition 3.1 consumes exactly the new typed bit and retains it;
+the next IN is the first original frame-header IN. Mode zero dispatches
+to the original grammar, tests and failure order. Its supplied $m,z,s$
+therefore refer to the corresponding acquired strict source occurrence
+and the same local Zero phase. Native row numbering, global tallies and
+origins in that occurrence are those of the new run, so its Issue binds
+the new run's actual $n_0+5z+s$, not an old absolute ordinal. Source01
+executes the same separately inlined $F^A$ and CAP branches, with the same
+source packet/guard relation. History work touches no CAP event counter
+or source writer. Induction over returning cycles proves these assertions.
+
+The distinction is necessary for the claimed rejection preservation.
+For example an old complete valid-$m$ selector with $s=5$ executes its
+old invalid-phase/range rejection. Reinterpreting that identical frame as
+success in the same branch would contradict preservation of that outcome.
+Here its mode-zero behavior is retained; mode-one frames are distinguishable
+by actually supplied data before their header. The outer prefix code
+$\{00,01,1\}$ is unchanged and gains no fourth word. Extra reception,
+registers, code and bank work alter actual clocks and bindings; equality
+of entire wire outputs is neither a premise nor a consequence. ∎
+

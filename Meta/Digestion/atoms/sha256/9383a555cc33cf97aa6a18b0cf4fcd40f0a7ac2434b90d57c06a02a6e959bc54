@@ -1,0 +1,63 @@
+**Definition 10.3 (Attribution and unresolved mathematical resources).**
+The zero-face conclusions, their actual radial-cubic rank refinement,
+the full-marginal population test and the constant-population/boundary
+contact obstruction are repository-derived applications with the
+proofs above. Mature ingredients are nonnegative-polynomial contact,
+PSD kernels and Schur complements, Cauchy–Schwarz, affine
+Carathéodory reduction and finite Fourier quadrature. The product-zero
+and derivative framework is discussed by
+[Hansen–Hauge–Myrheim–Sollid, §3–3.2](https://arxiv.org/pdf/1305.2385v2),
+which also credits Lewenstein and collaborators for the preceding
+witness-zero analysis. It is not a theorem evaluating this minimax.
+[Vollbrecht–Werner, §II.2](https://arxiv.org/html/quant-ph/0010095v1)
+supplies the invariant-product convex-hull framework; the actual
+group and full marginal here remain those of QRC and §§1–3.
+[Fuchs–Sasaki, §3, equations (13)–(16)](https://arxiv.org/html/quant-ph/0302092v3)
+studies the related ensemble-survival optimization. Its objective
+is used here only through the actual-menu lower comparison (9.3).
+
+[Horodecki–Shor–Ruskai, Theorem 4(A–D), version 2](https://arxiv.org/html/quant-ph/0302031v2)
+has complex measure-and-prepare, separable-Choi and rank-one-Kraus
+equivalences; its TP version explicitly adds POVM/Kraus completeness.
+In (9.1)–(9.6) the normalization is $\sum_fM_f=I_5$ and Choi
+order is output first, with transposed input effect. Neither
+separability alone nor correct total trace replaces this marginal.
+The PCP/TCP factor matrices in
+[Singh–Nechita, Definitions 2.6–2.7 and Theorem 2.9, version 2](https://arxiv.org/html/2010.07898v2)
+are complex. Their local diagonal symmetry classes and Proposition
+6.7 do not provide a real-factor extraction, PPT sufficiency or a
+matching theorem for the present $1+2+2$ walk. The real factors used
+in §§7–8 and 10 arise from the credited QRC replacement, which may
+change an original complex channel, followed by the unchanged-channel
+normal form of Theorem 2.2. No worldwide originality is asserted for
+these applications or their elementary ingredients.
+
+All results use exactly Assumption 1.1, one fixed finite scalar port
+and all complex inputs and actual finite histories in (1.3).
+The at-most-$75$ flags quantify existence on a specified zero face
+with TP; the credited $225$ bound concerns realization of a specified
+selected channel. Neither counts total design, synthesis or physical
+resources. Exact coefficients, finite classical flags and whole-block
+CPTP maps do not bound coefficient acquisition, finite-precision
+robustness, physical preparation, clock precision, transport, storage
+duration or sample cost. The finite tests (9.10) specify alternative
+mathematical waits and inputs under the independent preparation
+hypothesis; they add no allowed future operation.
+
+The unresolved joint obligation remains to supply one actual
+normalized all-fifteen-event tuple with all three TP multipliers,
+prove its global atom positivity including the interior cubic,
+and realize a legal port on its kernel face that satisfies the
+same TP and complementary signed event equations at the same value.
+The equality-face classification covers the line, zero-polynomial
+and rank exceptions but does not choose which occurs in a matching
+tuple. Positive contact, TP feasibility and event feasibility remain
+distinct conditions. PPT-to-scalar exact extraction is not supplied;
+the QME marginal-preserving repair remains conditional on its stated
+same-problem exact certificates. The original complex optimum,
+legal matching attainment, the $q=2,3,4$ optima, native preparation
+and cofinality, and complete mutual recovery among space, time,
+boundary and memory remain unresolved. These are ordinary
+mathematical arguments, without an additional Lean-verification
+or physical-realization claim.
+

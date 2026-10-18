@@ -1,0 +1,26 @@
+## 341. The complete preselected coefficient cone
+
+The fixed objects and resource classes are those of
+[73.1 and 90.1–90.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES.md#90-adaptive-preselected-and-increasing-first-zero-stop-acquisitions).
+Thus $X$ consists of $(r,g)$ with $r$ prime and
+$\lceil F_r/10\rceil\le g\le\lfloor F_r/5\rfloor$,
+$N=1+F_rg$, $q_i=[p_i\mid N]$, and $n=\min\{i:q_i=0\}$.
+Every finite word is an actual pattern, by Boundaries 35.2;
+there is no probability distribution on $X$. The original carrier
+is the disjoint-union Borel space of interval blocks $B_j,P_j$.
+Its consumer returns unknown on $B_j$ and proposes $j$ on $P_j$.
+The distinct marks are $\theta_j=(B_1,1/(j+2))$, $j\ge0$.
+For an entire sequence $1\ge a_1\ge a_2\ge\cdots>0$ tending to zero,
+the comparison target is the separately selected law
+$(1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}$.
+The original nonatomic targets remain distinct from these selected laws.
+
+One source-independent common seed fixes an entire schedule and all
+its counterfactual outputs before any reply. There is zero advice,
+sourcewise almost-sure finite handoff, and a hard bound of two actual
+requests, including repeated or ignored requests. Class $N$ acquires
+its whole preselected schedule; class $O$ preselects increasing addresses
+and stops at the first queried zero or exhaustion. The second address
+is never chosen from the first reply. Original competitors retain
+arbitrary addresses and full-carrier outputs.
+

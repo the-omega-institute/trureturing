@@ -1,0 +1,28 @@
+**定理 11.3（观察者相对的五态局部源几何综合）。** 固定一个观察者 $\omega$ 的五态模型、截面 $L_\omega$、共同初始来源及完整记录合同。设路径在实际概率域内可微，向量读出 $\mathsf H_\omega$ 与标量读出 $K_\omega$ 固定，或按定理 5.2 和 11.2 给出移动项。则其局部源几何由下列共同关系确定：
+
+$$
+\begin{aligned}
+\dot p_\omega
+ &=L_\omega(\dot X_\omega,\dot Z_\omega,\dot Y_\omega)
+   +\dot\kappa_\omega d_\omega,\\
+\dot h_\omega
+ &=\langle\mathsf H_\omega,L_\omega(\dot b_\omega)\rangle
+   +\dot\kappa_\omega\Delta_{13}\mathsf H_\omega
+   +\langle\dot{\mathsf H}_\omega,p_\omega\rangle,\\
+\dot\tau_\omega
+ &=\langle K_\omega,L_\omega(\dot b_\omega)\rangle
+   +\dot\kappa_\omega\Delta_{13}K_\omega
+   +\langle\dot K_\omega,p_\omega\rangle,\\
+N_{\omega,\infty}
+ &=\ker(DP_\omega)\cap\bigcap_{w\text{ 合法}}\ker A_{\omega,w}.
+\end{aligned}
+$$
+
+固定读出时，移动项为零；移动读出时，应按其实际导数保留这些项。更换 $L_\omega$ 时，隐藏系数按定理 4.3 变化而总响应不变。将实际总源称为纯隐藏源，需要 $DP_\omega(\dot p_\omega)=0$，此时总源本身为 $\dot\kappa_\omega d_\omega$；一般源的规范隐藏分量只是相对于 $L_\omega$ 的组成部分。它能否单独执行仍由 $C_{p_\omega}$、$B_{p_\omega}$ 及实际操作合同决定。
+
+对固定 $P_\omega$ 的非退化纤维，一个非零已知线性响应分离其精确律；多维隐藏源须检验整个联合响应的秩。未来可见性使用同一初始源上的完整记录 $A_{\omega,w}$，而不是忽略分支质量的末态摘要。对受限制备域，识别判据还须限制到实际差异集。
+
+证明。第一行由定理 4.2，第二、三行由定理 5.2；变动载体时先用定理 11.2 拉回共同表示。边界可行性由定理 3.3–3.4，分量及相消边界由定理 4.5、6.2，联合秩由定理 6.4、8.3，未来识别由定理 10.2–10.4。这些关系组合的是同一来源、同一参数与明确运输下的结果，不能把不同制备、不同未知核或未配对读数拼成一个源。
+
+本综合是局部模型的应用性数学推导，不把成熟线性代数、有限概率混合、包含关系反演或测度唯一性认作新一般定理。$\tau_\omega$ 的状态统计含义由定义 5.1 给出；实际等待和路径累计须满足假设 5.4。赋予 $h_\omega$ 空间意义、赋予 $\tau_\omega$ 物理时间单位，或将两个响应解释为引力，需要额外的物理载体、动力学、仪器及校准映射。同源秩一关系没有认证这些实现，也不推出所有全局对象或全局时间都不存在。∎
+

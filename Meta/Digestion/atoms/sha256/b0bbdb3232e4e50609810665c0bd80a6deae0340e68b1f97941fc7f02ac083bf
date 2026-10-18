@@ -1,0 +1,36 @@
+### 定理二：保留、遮蔽和消除的严格判据
+
+设：
+
+```math
+p_\kappa=p_\ast+\kappa d.
+```
+
+则沿路径 $w$ 的读出为：
+
+```math
+R_wU_wp_\kappa
+=
+R_wU_wp_\ast
++
+\kappa R_wU_wd.
+```
+
+因此：
+
+```math
+\boxed{
+\begin{aligned}
+U_wd=0
+&\Longleftrightarrow
+\text{完整状态层面的隐藏差异被消除},\\[1mm]
+U_wd\neq0,\ R_wU_wd=0
+&\Longleftrightarrow
+\text{隐藏差异仍在，但当前读口盲},\\[1mm]
+R_wU_wd\neq0
+&\Longleftrightarrow
+\text{该路径实际暴露 }\kappa.
+\end{aligned}
+}
+```
+

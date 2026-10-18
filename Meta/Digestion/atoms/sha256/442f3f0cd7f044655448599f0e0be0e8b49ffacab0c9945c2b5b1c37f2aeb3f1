@@ -1,0 +1,99 @@
+**Theorem 3.1 (One side, two sides and complete five-state channels).**
+Under Assumption 1.3, a return endpoint admits a left correction, a right
+correction, or two-sided corrections giving the exact matrix $S$ if and
+only if
+
+$$
+\lambda_m=i,\qquad \operatorname{Re}(g)\sin\theta_m=0.
+$$
+
+For equality of the complete unrestricted five-state channel of $S$, each
+of these three correction arrangements has instead the criterion
+
+$$
+\lambda_m\in\{i,-i\},\qquad \operatorname{Re}(g)\sin\theta_m=0.
+$$
+
+A nonreturn pulse cannot give an all-input deterministic $V$ unitary by
+these pre/post corrections. These conclusions concern the stipulated
+correction group in the original $D_3$ frame.
+
+Proof. $D_3$ commutes with $U_m$ and $S$, since its entries on $e_1,e_3$
+coincide. Thus in passive $D_3$ coordinates the two displayed endpoints
+are unchanged and corrections are in $SO(5)$. Write $u=e^{i\phi}$ and
+$w=-\cos\phi\sin\theta_m$. Entrywise imaginary parts satisfy
+
+$$
+\operatorname{Im}B(\theta_m)=\begin{pmatrix}0&w\\w&0\end{pmatrix}.
+$$
+
+Hence $B$ is real if and only if the asserted realness condition holds;
+when real, its unitarity and determinant one make it an $SO(2)$ matrix.
+
+For completeness, two unitaries give the same conjugation on all densities
+if and only if they differ by a scalar. Their relative unitary must commute
+with every rank-one projector, hence preserve every line. Basis lines make
+it diagonal and lines through pairwise sums make all diagonal scalars equal.
+This also shows why the full density domain matters.
+
+For a left correction, $OU_m=\zeta S$ forces
+$O=\zeta S U_m^\dagger$. Its entries on $e_0,e_2$ are $\zeta$;
+reality requires $\zeta=\pm1$. The determinant condition is
+
+$$
+1=\det O=\zeta^5i/\lambda_m.
+$$
+
+The one-particle block must be real. With $\zeta=1$ this gives
+$\lambda_m=i$; with $\zeta=-1$ it gives $\lambda_m=-i$.
+For right corrections the same calculation applies, since $S$ commutes
+with $U_m$.
+
+To prove necessity for arbitrary two-sided mixing, suppose
+$O_LU_mO_R=e^{i\gamma}S$ with $O_L,O_R\in SO(5)$.
+Real orthogonal multiplication preserves the rank and singular values of
+the entrywise imaginary part. Those of $\operatorname{Im}U_m$ are
+
+$$
+|w|,|w|,|\operatorname{Im}\lambda_m|,0,0.
+$$
+
+Their rank is at most three, whereas
+
+$$
+\operatorname{Im}(e^{i\gamma}S)
+ =\operatorname{diag}(\sin\gamma,\sin\gamma,\sin\gamma,
+                      \sin\gamma,\cos\gamma)
+$$
+
+has rank at least four if $\sin\gamma\ne0$.
+Thus $e^{i\gamma}=\zeta=\pm1$. The target now has exactly one nonzero
+imaginary singular value, equal to one. The doubled value $|w|$ must vanish,
+and $|\operatorname{Im}\lambda_m|=1$. Finally
+$\lambda_m=\zeta^5i=\zeta i$ by determinants. For literal $S$ the sign
+is positive. This proves two-sided necessity without restricting the
+corrections to the two-plane block.
+
+Conversely let $O_0$ equal $B(\theta_m)^{-1}$ on $(e_1,e_3)$ and the
+identity on the other three coordinates. If $B$ is real then $O_0\in SO(5)$.
+For $\lambda_m=i$ it gives $O_0U_m=U_mO_0=S$.
+For $\lambda_m=-i$, use also
+
+$$
+F=\operatorname{diag}(-1,-1,-1,-1,1)\in SO(5);
+\qquad FO_0U_m=-S.
+$$
+
+Conjugating the corrections back by $D_3$ gives the required members of
+$G_{\mathbb R}$. The one-sided constructions also establish two-sided
+sufficiency. At nonreturns a right correction maps $V$ onto $V$ and
+preserves $\|QUP\|$; a $V$-preserving post correction cannot remove the
+outside component. Thus a unitary $V$ endpoint still requires a return.
+
+Determinant alone is insufficient for the projective statements:
+$e^{-i\pi/10}S$ has determinant one, and in odd dimension a real orthogonal
+matrix of determinant $-1$ has the same channel as its negative in $SO(5)$.
+The imaginary-part argument supplies the additional obstruction.
+In particular no scalar multiple of $S$ is real, since its first four
+entries and its last entry have relative phase $i$. $\square$
+

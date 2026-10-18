@@ -1,0 +1,26 @@
+### 定义 28.6（POVM 输出映射）
+
+有限输出集 \(A\) 上的 POVM 是一族正半定算子
+
+\[
+(M_a)_{a\in A},
+\qquad
+M_a\succeq0,
+\qquad
+\sum_{a\in A}M_a=I_H.
+\]
+
+它定义概率映射
+
+\[
+\operatorname{out}_M:\mathsf D(H)\to\Delta(A),
+\qquad
+\operatorname{out}_M(\rho)(a)
+=
+\operatorname{tr}(M_a\rho).
+\]
+
+非负性来自 \(M_a,\rho\succeq0\)，归一化来自 \(\sum_aM_a=I_H\)。
+
+---
+

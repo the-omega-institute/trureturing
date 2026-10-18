@@ -1,0 +1,39 @@
+**Definition 3.1 (Independent measurement and preparation atoms).** Let
+$\alpha_k=2\pi k/3$, $\beta_k=2\pi k/5$ and
+
+$$
+F=\{(\mathrm A,k,l):0\le k,l<3\}
+\sqcup\{(\mathrm B,k):0\le k<5\}.
+\tag{3.1}
+$$
+
+Define real unit measurement vectors $b_f$, preparation vectors $a_f$
+and positive per-flag weights $c_f$ by
+
+$$
+\begin{aligned}
+b_{\mathrm A,k,l}
+&=\frac{9w_+(\alpha_k)+\sqrt{119}\,w_-(\alpha_l)}{\sqrt{200}},
+&c_{\mathrm A,k,l}&=\frac{400}{1071},\\
+a_{\mathrm A,k,l}
+&=\frac{1521w_+(\alpha_k)+166\sqrt{119}\,w_-(\alpha_l)}{\sqrt{5592605}},\\
+b_{\mathrm B,k}
+&=\frac{\sqrt{119}\,d+\sqrt{76}\,w_+(\beta_k)}{\sqrt{195}},
+&c_{\mathrm B,k}&=\frac{39}{119},\\
+a_{\mathrm B,k}
+&=\frac{71\sqrt{119}\,d+94\sqrt{76}\,w_+(\beta_k)}{\sqrt{1271415}}.
+\end{aligned}
+\tag{3.2}
+$$
+
+These are exact algebraic data. Circle values are the same exact
+three-point and five-point values as QFA equation (2.1); equivalently
+they are fixed roots of unity with the displayed real angles. No angle
+is selected after the input. Set
+
+$$
+S(X)=\sum_fc_fa_fa_f^T\operatorname{tr}(b_fb_f^TX),\qquad
+T_\lambda(X)=DS(D^\dagger XD)D^\dagger.
+\tag{3.3}
+$$
+

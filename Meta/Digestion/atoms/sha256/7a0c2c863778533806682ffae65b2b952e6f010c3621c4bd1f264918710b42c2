@@ -1,0 +1,37 @@
+**Theorem 10.3 (a quantitative gap with the same input, channel and strength).**
+For every admitted state and EVERY $s\in[0,s_*]$,
+
+$$
+R_{\rm tr}(s,C)\leq\frac{k}{\delta_\xi}F<F=E_s(\rho),\qquad
+E_s(\rho)-R_{\rm tr}(s,C)
+ \geq\frac{F\beta(1-c_\xi)}{\delta_\xi}>0.
+\tag{NP.65}
+$$
+
+No exact value of $R_{\rm tr}$ is asserted.
+
+Proof. Since $\delta_\xi=p-\alpha q=k+\beta(1-c_\xi)>k$, put
+$\zeta_{\rm tr}=k/\delta_\xi\in(0,1)$ and set
+
+$$
+H_r^{\rm tr}=\zeta_{\rm tr}H_*/2,\qquad
+L_r^{\rm tr}=\frac{I-\zeta_{\rm tr}H_*+r sX_c}{2}.
+\tag{NP.66}
+$$
+
+These are positive: $L_r^{\rm tr}=L_r+(1-\zeta_{\rm tr})H_*/2$.
+Their report totals remain $(I+r sX_c)/2$, so the entire effect
+relation gives $N=M/2$. All coefficient, normalization and record
+constraints except the replaced memberships are unchanged. In addition
+$\operatorname{tr}(B_0L_r^{\rm tr})=
+[k-\zeta_{\rm tr}(p-\alpha q)]/2=0$. Their objective is
+$\zeta_{\rm tr}F$. However
+$\operatorname{Im}(L_r^{\rm tr})_{DT}=\zeta_{\rm tr}r_0/2\ne0$,
+so Lemma 10.1 excludes them from the actual low cone.
+The actual true minimum is attained and equals $F$ by §7.
+Subtract the exhibited relaxed value to obtain (NP.65).
+This is a strict resource separation at the SAME physical input, full
+channel and strength. The earlier abstract cone obstruction supplies
+the face mechanism; it alone would not evaluate this actual optimum
+or yield this quantitative same-strength gap. $\square$
+

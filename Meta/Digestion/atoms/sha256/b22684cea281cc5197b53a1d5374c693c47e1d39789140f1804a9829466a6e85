@@ -1,0 +1,14 @@
+**Proposition 5.2 (A specified posterior comparison and no finite fair anchor).** Define on all legal exterior records the Borel function $g=1/2$ when the first one in the positive half-line has even index, and $g=0$ otherwise, including when no such one occurs. It is an actual fair-law posterior version. For every biased $0<p<1$,
+
+$$
+\mathbb E_{P_p}(q_{P_p}-g)^2=1/8,\qquad
+\operatorname*{ess\,sup}_{P_p}|q_{P_p}-g|=1/2.
+\tag{5.3}
+$$
+
+No function of finitely many exterior coordinates equals the fair full posterior almost surely.
+
+Proof. Under every interior member the first future one exists and identifies the active parity. Thus $g=A_0/2$ almost surely under each such law. At fairness this is the actual posterior; at biased parameters $q=X_0$, so the squared difference is $1/4$ on active centers and zero on separators. This proves (5.3). It compares with the specified Borel extension $g$: a fair-law-only almost-sure equivalence class has no intrinsic norm under a different law, and arbitrary changes on fair-null sets need not preserve this cross-law comparison.
+
+For any finite exterior coordinate set, the all-zero atom has positive probability under both fair phases: it fixes finitely many independent active fair bits to zero, while separator bits are already zero. On its active-center part the full posterior is $1/2$, and on its separator part it is zero. A function of those finite coordinates must have one value on the atom, so cannot be the full posterior. $\square$
+

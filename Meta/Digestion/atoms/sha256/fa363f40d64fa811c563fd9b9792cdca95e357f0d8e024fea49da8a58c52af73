@@ -1,0 +1,67 @@
+**Theorem 9.2 (exact values and exact first caps).** For these tests the direct spectral constants are
+
+$$
+\begin{aligned}
+F&=A(x-\sqrt\eta\,y)^2
+ =\frac{A[\sqrt{1-\zeta}-\sqrt{\eta\ell}]^2}{1+\eta},\\
+\lambda&=\frac{A(1-\sqrt\eta\,t)(1+\sqrt\eta/t)}{1+\eta},\qquad
+\mu=\frac{A\sqrt\eta(1-\sqrt\eta\,t)^2}{(1+\eta)t}>0.
+\end{aligned}
+\tag{PG.44}
+$$
+
+The corresponding $v$ is $(x,-y,0)$ in the $T$ case and $(x,0,-y)$ in the $S$ case. The exact maximal initial endpoints are
+
+$$
+s_{T,\max}=\frac{xy}{h_0^2p+b^2q},\qquad
+s_{S,\max}=y=\sqrt{\frac{\ell}{1+\beta}} .
+\tag{PG.45}
+$$
+
+The instruments have twelve actual labels below each endpoint and exactly ten at the endpoint.
+
+Proof of the radicals. For $\psi_T$, the $D,T$ Gram block is
+$A\begin{pmatrix}1&\sqrt\alpha\\\sqrt\alpha&\alpha\end{pmatrix}$,
+and the remaining entry is $d^2r_T/(1+r_T)>0$, with no coupling. For $\psi_S$, the analogous $D,S$ block uses $\beta$, and the remaining entry is $b^2r_S/(1+r_S)>0$. These follow either from (PG.19) or from the proportional output columns in (PG.23). In the relevant two-dimensional block, the equations
+$(C-\lambda B+\mu I)(x,-y)^T=0$ reduce to
+$\mu=\lambda-A+A\sqrt\eta\,t$ and
+$\mu=A\sqrt\eta/t-A\eta-\eta\lambda$.
+Solving gives (PG.44). Since $p-\eta q=k>0$, $1-\sqrt\eta\,t>0$; all constants have the displayed positive signs. The other diagonal entry of $C+\mu I-\lambda B$ is strictly positive, and the two-dimensional block has one zero and one positive eigenvalue. The eigenvector has $B$ value $k$, so it is exactly the unique selector of Theorem 6.1. Its quadratic form is the displayed $F$.
+
+For the $T$ cap write $\omega=h_0^2p+b^2q$. Substitution in (PG.33)–(PG.34), using $q-\alpha p=\beta$, gives
+
+$$
+J=\frac{Q}{xy},\qquad
+\tau=-\frac{1-\omega}{xy},\qquad
+V_c=\frac{\omega Q}{xy},\qquad
+W_{ii}=\frac{\omega(1-m_i)-g_i}{xy}\quad(i=1,2),
+\tag{PG.46}
+$$
+
+where $g_1=h_1^2p+a^2q$, $g_2=h_2^2p$, and $W_2$ is diagonal. The source margins give
+$p>35/36$, $q<1/36$, $.9<\omega<1$,
+$g_1<.500+.036/36=.501<\omega$, $g_2<.656<\omega$,
+$g_1>.498(35/36)>.4$, and $g_2>.655(35/36)>.6$.
+Because $m_1>.49,m_2>.34$, these imply
+
+$$
+1-2m_i<g_i/\omega<1.
+$$
+
+Consequently $|W_{ii}|/m_i<\omega/(xy)$; the normalized failure norm is strictly below the low cap norm. The high cap norm $(1-\omega)/(xy)$ is strictly smaller too. Finally $xy/\omega<1$, since $xy\le1/2$ and $\omega>.9$. Thus the first active cap is exactly the low cap in (PG.45), with every other positivity inequality strict. At this endpoint $L_+=Q,L_-=0$; their total rank is two, giving two low labels rather than four. Both high weights and all supported failure eigenvalues stay positive, so the count is $2+2+4+2=10$.
+
+For the $S$ cap, $v_T=0$ gives
+
+$$
+\tau=0,\quad J_{DT}=1,\quad J_{TS}=x/y,\quad
+J_{DD}=J_{DS}=J_{TT}=J_{SS}=0,\quad
+V_c=J,\quad \|J\|=1/y,\quad
+W_2=(acx/y)X_{12}.
+\tag{PG.47}
+$$
+
+The eigenvalues of $J$ on $v^\perp$ are $\pm1/y$. Its failure cap is
+$y\sqrt{m_1m_2}/(acx)>y$: indeed $\sqrt{m_1m_2}>.4$, whereas
+$ac<.018$ by $2ac\le a^2+c^2<.036$, and $x\le1$.
+Also $0<y<1$ and the high weight cap is absent. Hence (PG.45) is exactly the first cap. Each low matrix has rank one at it; high and failure ranks remain unchanged, again giving ten labels. Below either endpoint all the ranks of Corollary 7.3 hold, giving twelve. These counts describe actual full instruments through Theorem 3.4, and make no minimum-record assertion. $\square$
+

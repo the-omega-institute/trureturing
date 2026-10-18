@@ -1,0 +1,26 @@
+**Corollary 12.4 (two distinct edges obstruct the old baseline).**
+If $\Delta_B=0$ and some $\Gamma_v$ has at least two distinct edges,
+then
+
+$$
+\mu_B\ge1,\qquad E_B\ge\beta_B.
+\tag{CL.51}
+$$
+
+In particular $E_B=\beta_B-1$ is impossible under this trigger,
+including for bipartite demand graphs.
+
+Proof. Each $p_d\ge1$, so $\Delta_B=0$ forces every $p_d=1$ and
+$\Lambda_d\le1$. At the specified cell an edge gives
+$\kappa_v\ge2$, and $\Lambda_{d(v)}\le1$ forces $\kappa_v=2$.
+Two distinct edges of a simple graph have at least three incident
+vertices. Thus $\nu_v\ge3>\kappa_v$. Its children are distinct and
+internal by Lemma 11.2. They cannot both have $\kappa\ge2$, which
+would give $\Lambda_{d(v)+1}\ge2$. At least one has $\kappa=1$,
+so this depth belongs to $\mathcal T_B$ and $\mu_B\ge1$.
+Now $P_B=\beta_B-1$ and (CL.50) prove (CL.51). No odd cycle is
+required. A single simple edge has $\nu_v=\kappa_v=2$: a size-$t_v$
+cut can cut it, so $M_v=1$, while both terms of (CL.19) equal two.
+It therefore supplies no $\nu_v>\kappa_v$ trigger by itself.
+$\square$
+

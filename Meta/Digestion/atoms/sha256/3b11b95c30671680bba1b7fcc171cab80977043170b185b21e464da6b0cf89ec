@@ -1,0 +1,75 @@
+**Proposition 85.2 (redesigned aggregation and record loss).** For the
+supported families in §§77–84, with the supported-zero complementary
+branch kept separate as in §86, branches on the same ray can be
+redesigned as one new encoder-decoder factorization preserving the
+forgotten total complete output on all $M_5$. Its live coefficient is
+$p=\sum p_i$ and its complete failure CP measures are their sum.
+Its failure/live ratio is the live-weighted average
+$\bar b=\sum p_ib_i/p$, and its minimum activity is no larger
+than the largest original label activity. This is a new realization,
+not automatic control-free erasure in the old implementation.
+For arbitrary additional action on $V^\perp$, the full-component
+factorization criterion below is necessary; equality only on the
+supported qutrit does not assert preservation of that action.
+The record-height loss for merging any two actual labels with signed
+height differences $x_1,x_2$ is exactly
+
+$$
+\frac{|x_1|+|x_2|-|x_1+x_2|}{2}.
+\tag{FA.78}
+$$
+
+Consequently preservation of the forgotten output does not guarantee
+preservation of acquisition-record TV.
+
+**Proof.** Sum the live maps and each prescribed Borel failure map.
+On the supported qutrit the new rank-one failure effect has ratio
+$\bar b$. FA.9 and Theorem 68.1 realize its summed admitted time
+law and live map with minimum $\log(1+\bar b/\mathfrak c)$,
+bounded by the largest $\log(1+b_i/\mathfrak c)$. Normalize using
+FA.11. For §86's supported encoders, precomposition by $E^\dagger$
+then proves this equality on every $M_5$, with the separate coherent
+complement untouched. This changes the factorization and generated
+label; it need not use any old decoder.
+
+Here is the exact additional criterion when the original encoders act
+arbitrarily outside $V$. Write their summed full live map in qutrit
+output coordinates as $\Phi^L:M_5\to M_3$; its range is supported
+on the common two-dimensional $\operatorname{ran}K$. Apply FA.11
+to the summed supported data to obtain the injective live decoder $B$
+and its complete failure decoder measures $\mathcal F_\ell(\mathcal B)$.
+Let $B^+=(B^\dagger B)^{-1}B^\dagger$ and define the CP encoder
+$\mathcal E=\operatorname{Ad}_{B^+}\Phi^L$. Exact redesigned
+aggregation of the full maps is equivalent to
+
+$$
+\Phi^f_\ell(\mathcal B)=
+ \mathcal F_\ell(\mathcal B)\mathcal E
+\quad\text{on all }M_5,\quad\text{for every }\ell,\mathcal B.
+$$
+
+Necessity follows because the injective $B$ fixes the encoder from the
+live map. Sufficiency follows by the displayed factorization and
+$\operatorname{Ad}_B\mathcal E=\Phi^L$. The TP decoder makes
+$\mathcal E^\dagger(I)$ exactly the target branch's total effect,
+so it is TNI when that branch is. Any other factorization of the same
+supported complete composites is unitarily equivalent by Proposition
+85.1's supported equivalence, giving the same full-component criterion.
+Its admitted rank-one time law has the activity just computed. Thus no
+extra full-$M_5$ equality follows from mere proportionality of supported
+effects; the five Borel components must all pass this criterion.
+
+The scalar absolute-value identity proves FA.78, positive exactly when
+the two nonzero differences have opposite signs. For more labels apply
+the same triangle inequality iteratively. If fine binary report
+components must also be preserved, include them in FA.77 or retain
+those report sublabels. If only the original contrast inequality is
+required, reporting the common ray's $\operatorname{sgn}z$ maximizes
+its available contribution and preserves that inequality.
+
+Different rays can always retain their control in an orthogonal direct
+sum, but two complete qubit blocks then occupy dimension four and are
+high payload. Charge that entire joint fibre on acquisition, including
+branches which later fail. Such a sum is no longer a low aggregation
+with unchanged sharp low/high allocation. $\square$
+

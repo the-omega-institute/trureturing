@@ -1,0 +1,72 @@
+**Definition 2.1 (Same-word charges).** For an even full ambient support $E\subseteq W_t$, retain the credited inverse
+
+$$
+\mathcal B_t(E)_b=\bigoplus_{z=0}^b\mathbf1_E(tm+z),\qquad 0\le b<m.
+\tag{2.1}
+$$
+
+Full ambient parity is required; restriction to the actual subgroup need not be even. If $B=\mathcal B_1(E)$, set $q(j)=\mathbf1_E(j)$, extended by zero outside $E$. Repeating this same literal word gives
+
+$$
+q_2^B(j)=q(j-m),\qquad q_3^B(j)=q(j-2m).
+\tag{2.2}
+$$
+
+The first bit is $q(m)$ and the last bit is $q(a)$. Write $\tau(B)$ for its terminal one-run and $\alpha(D)$ for a word's leading one-run, including $\alpha(1^m)=m$. For the zero-leading first query, $m\notin E$, so $B_0=0$ and
+
+$$
+\tau(B)=m-1-\max\left\{b\in\{0,\ldots,m-1\}:
+\bigoplus_{z=0}^b\mathbf1_E(m+z)=0\right\}.
+$$
+
+The maximum is defined because it includes $b=0$. This first zero clears every incoming successful tail, so every successful arrival after $B$ has this same terminal tail. An arbitrary literal word $D$ following this first query is safe exactly when $\tau(B)+\alpha(D)<k$. Later internal runs have length less than $k$. If $D=1^m$, its successful arrival tail is $\tau(B)+m$; if $D$ contains zero, its successful arrival tail is its own terminal one-run $\tau(D)$.
+
+For $r=2$, fix a notation-only bijection $\kappa:U_Y\to\mathbb F_2$, and put $b_v=\kappa\lambda_v$. All targets and outputs remain the literal labels of (1.2). Let $M_i$ be the unique whole $\lambda_i$ class on which $\lambda_{1-i}$ is nonconstant. Three occupied corners of a binary rectangle give this unique class and make the other component constant on its complement.
+
+The following are exactly the original physical predicates, with no controller existential hidden in their definitions.
+
+**Condition $\mathsf A$ ([OWN, (9.2)]).** For some $i,\eta\in\mathbb F_2$ and even $E\subseteq W_1$ with $m\notin E$,
+
+$$
+q(j)=b_i(j)\oplus\eta\quad(j\in J),\qquad
+q(j-m)=1\oplus b_0(j)\oplus b_1(j)\quad(j\in M_i).
+\tag{2.3}
+$$
+
+Equivalently, a whole $\lambda_i$ class $A$ misses $H$ and satisfies
+
+$$
+M_i\cap(A+m)=\{j\in M_i:\lambda_i(j)=\lambda_{1-i}(j)\}.
+\tag{2.4}
+$$
+
+Its even completion uses the excluded donor zero. That donor cannot affect the shifted tests, since $j-m\ne0$ on $J$.
+
+**Condition $\mathsf B$ ([OWN, (9.3)–(9.4)]).** There are distinct literal labels $L,L'$, bits $e,\delta$, and even full supports $E\subseteq W_1$, $F\subseteq W_2$, with $m\notin E$, such that
+
+$$
+\Lambda[J]=\{(L,L),(L',L),(L,L')\},\qquad
+\mu(j)=\mathbf1_{\{\Lambda(j)\ne(L,L)\}},
+$$
+$$
+\lambda_{e\oplus\mathbf1_E(j)}(j)=L\quad(j\in J),\qquad
+\mathbf1_F(j)=\mu(j)\oplus\delta\quad(j\in J),
+\qquad \tau(\mathcal B_1(E))+\alpha(\mathcal B_2(F))<k.
+\tag{2.5}
+$$
+
+Safe all-one final words are included.
+
+**Condition $\mathsf R$ ([OWN, (11.2)]).** There are $v\in\mathbb F_2$, $w=1-v$, a zero-leading literal $B$, a bijection $G:\mathbb F_2\to U_Y$ and a literal label $z$ such that, with $I=\{j\in J:q_1^B(j)=1\}$ and $U=J\setminus I$,
+
+$$
+\lambda_w(j)=G(w\oplus q_1^B(j))\quad(j\in J),\qquad
+\lambda_v(j)=z\quad(j\in U),
+$$
+$$
+j'=j-2m\in J,\qquad \lambda_v(j)=\lambda_w(j')\quad(j\in I).
+\tag{2.6}
+$$
+
+Only the original-fee-four restriction on the sufficient application of this predicate is removed. None of its word, label, translation or source requirements is removed. A failure of any sufficient predicate alone gives no exclusion.
+

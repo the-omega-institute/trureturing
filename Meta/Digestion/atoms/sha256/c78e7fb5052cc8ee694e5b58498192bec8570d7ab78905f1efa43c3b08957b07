@@ -1,0 +1,38 @@
+**Definition 28.1 (A common array of histories and its observed sector).**
+Fix integers $n\ge1$ and $m\ge0$. An open history is a binary word
+$u=(u_1,\ldots,u_n)$ with $u_iu_{i+1}=0$ for $1\le i<n$.
+Write $B_n^{\mathrm{op}}$ for these words, identifying a word with its
+occupied subset of $[n]$. A common-copy realization is an array
+$(u^{(r)})_{r=1}^m$ of such words on the same row set $[m]$.
+Its observation is
+
+$$
+\mathcal A_m(u^{(1)},\ldots,u^{(m)})
+=(m,c),\qquad c_i=\sum_{r=1}^m u_i^{(r)}.
+\tag{28.1}
+$$
+
+The empty array has observation $(0,0)$. The integer $n$ counts
+positions in one word; $m$ counts copies, or ordinary homogeneous degree.
+Let $L_n^{\mathrm{op}}(m)$ count distinct possible $c$, with each
+observation counted once regardless of the number of arrays realizing it.
+For $n\ge3$, a closed history additionally satisfies $u_nu_1=0$.
+Write $B_n^{\mathrm{cyc}}$ for this subset of $B_n^{\mathrm{op}}$, and set
+
+$$
+Q_n=\operatorname{conv}\{\mathbf1_I:I\in B_n^{\mathrm{cyc}}\},
+\qquad L_n^{\mathrm{cyc}}(m)=|mQ_n\cap\mathbb Z^n|.
+\tag{28.2}
+$$
+
+All cyclic subscripts below are interpreted modulo $n$.
+A seam is tested in each row before applying (28.1).
+The local five-mode dictionary is Definition 25.1: on three consecutive
+positions it is $0,1,2,3,13$, with the same incidence columns and
+relation $z_1z_3-z_0z_{13}$. The distinction between a common realization
+and separate marginal completions is that of [Hidden Relations,
+Definition C-16.1 and Proposition C-16.2][SE28]. Their two-window
+condition preserves prescribed full five-state marginals; (28.1) retains
+only position totals and asks for existence of some array. The domains
+and conclusions of those two questions are different.
+

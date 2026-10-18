@@ -1,0 +1,35 @@
+## 17. 平稳初始代价与完整发射路径的相对熵
+
+本节使用自然对数。对有限共同支撑上的概率行 $\alpha,\beta$，记经典 Kullback–Leibler 相对熵及 Pearson 卡方散度为
+
+$$
+D(\alpha\Vert\beta)=\sum_j\alpha_j\log\frac{\alpha_j}{\beta_j},\qquad
+\chi^2(\alpha\Vert\beta)=\sum_j\frac{(\alpha_j-\beta_j)^2}{\beta_j}.
+\tag{17.1}
+$$
+
+求和只在共同正支撑上进行。由 $\log z\le z-1$，
+
+$$
+0\le D(\alpha\Vert\beta)\le\chi^2(\alpha\Vert\beta).
+\tag{17.2}
+$$
+
+右侧通过 $\sum_j\alpha_j(\alpha_j/\beta_j-1)=\sum_j(\alpha_j-\beta_j)^2/\beta_j$ 得到；左侧通过对 $\log(\beta_j/\alpha_j)$ 使用同一不等式得到。
+
+还使用经典相对熵数据处理不等式和 Pinsker 不等式，约定常数为
+
+$$
+D(\varphi_\#\alpha\Vert\varphi_\#\beta)\le D(\alpha\Vert\beta),\qquad
+\operatorname{TV}(\alpha,\beta)\le\sqrt{D(\alpha\Vert\beta)/2}.
+\tag{17.3}
+$$
+
+这里第一式所需的 $\varphi$ 是有限集合上的确定映射。按其纤维拆分相对熵，原散度等于像散度加上以像质量加权的条件散度；由（17.2）的非负性得到第一式。为核对第二式的常数，取 $A=\{j:\alpha_j>\beta_j\}$，则 $\alpha(A)-\beta(A)=\operatorname{TV}(\alpha,\beta)$。投影到 $\mathbf1_A$ 后，第一式把问题归为 Bernoulli 散度
+
+$$
+b(u\Vert v)=u\log\frac uv+(1-u)\log\frac{1-u}{1-v}.
+$$
+
+固定 $0<v<1$，此函数在 $u=v$ 的值及一阶导数均为零，二阶导数为 $1/[u(1-u)]\ge4$。向 $v$ 的任一侧积分两次，得到 $b(u\Vert v)\ge2(u-v)^2$；端点用连续性处理。若 $v\in\{0,1\}$，共同支撑使 $u=v$，相应总变差为零。这证明（17.3）在所用约定下的形式。这些信息不等式及引理 16.2 的有界损失比较均为经典工具。
+

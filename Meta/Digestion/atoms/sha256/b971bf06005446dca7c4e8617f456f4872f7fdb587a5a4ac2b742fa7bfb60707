@@ -1,0 +1,16 @@
+### 1. RelationKernel
+
+$$
+\mathrm{RelationKernel}(\pi)=
+\ker\pi
+\cap
+\{\text{总质量为零的关系}\}.
+$$
+
+AURIC 中应证明：
+
+$$
+\mathrm{RelationKernel}(\pi_{\mathrm{AURIC}})=
+\operatorname{span}\{h_{\mathrm{AURIC}}\}.
+$$
+

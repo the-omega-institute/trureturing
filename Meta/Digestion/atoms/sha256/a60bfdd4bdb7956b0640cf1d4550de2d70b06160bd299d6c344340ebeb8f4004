@@ -1,0 +1,44 @@
+**Convention 12.1 (what is inherited and what is added).** The references
+and named sources below keep their own hypotheses. An inherited ordinary
+computer-assisted or literature statement is not kernel authority.
+
+| Source | Precise inherited content and correspondence |
+| --- | --- |
+| [CG] §§1–4,13–16,21–28 | Original path/calibration/targets, exact isolated coefficient source and minimax, actual jointly counted factorization, positive product-rank bottleneck and homogeneous Schmidt cone; averaged-live stability, individual transfer penalties and near-optimal high-mass/error bounds. The full five-mode completion (NP.11) is the specified source channel. |
+| [JR] §§29–40, especially §§34–40 | Evaluated all-strength diagonal law, one common attainer, sharp original sign means and worst-history law, with its stated broader all-error-optimizer/countable/integral scope. In its notation $\theta_{\rm JR}=\alpha$, $\omega_{\rm JR}=\beta$, $\delta_{\rm JR}=\ell$, $p_s=1-\beta-\alpha v_{\rm JR}$, $q_s=1-v_{\rm JR}$. Weak strengths have $(p_s,q_s)=(k,0)$; strong strengths have $p_s-\alpha q_s=k$ and $s=\sqrt{p_sq_s}+\sqrt{(1-p_s)(1-q_s)}$, ending at $p_s=q_s=k/(1-\alpha)$. The height cost is $p_sA_y+q_sB_y$, worst at $y=27$. |
+| [RE] §§6–10 | Forced endpoint binary live maps, exhaustive endpoint singular lines, evaluated pointwise clipped scalar law, full separate attainers and paired/Pareto/nonattainment statements. Its earlier interior family is an upper construction. The feasible $U_1$ in §9 is not a replacement for its sharper evaluated endpoint law. |
+| [IR] §§5,10–12 | Interior binary-live freedom, lawful coherent perturbations and mate reversal, no simultaneous pointwise optimizer/nonleast effects, compact full-complex coefficient reduction and pointwise attainment/frontier correspondence. Its integrated diagonal attribution belongs to current JR, as recorded in the companion. |
+| *Native complex atomic cone and optimal resource faces*, §§3–9 (CA) | Full plane-plus-quadratic complex cone, Takagi lift with plane slack, at most six low atoms, trace-zero real face and concrete scalar-trace obstruction/separator, generic twenty-four-label exact reduction and sharp-mean equality-face classification, including singleton and exceptional-segment vectors. These are established inputs rather than new conclusions of this volume. |
+| *Real coefficient Grams and a small-record resource law*, §§3–9 (RG) | Real symmetric PD-Gram two-branch spectral evaluation and certificate, explicit positive sufficient record caps, full fourteen-label attainers, rational source ratios, all original pure Grams and selected-coordinate Pareto points beyond sharp-mean faces. Those sufficient caps were not claimed maximal. Its real-Gram evaluation is not asserted for (NP.29). |
+| This volume §§4–11 | An explicitly nonempty genuinely nonreal physical continuum; tilted inequality on the full singular locus, evaluated attained value and unique high aggregate; true-cone lift with fourteen/twelve actual labels; exact maximal plateau, quantitative quartic/affine later bracket and same-strength scalar-trace gap. Its original twelve-vector is strictly dominated, as §11 proves. |
+
+The IR/CA/RG coefficient order is the same $(D,T,S)$, with exactly
+the $h_i,a,b,c,d,M,\kappa$ in (NP.8), the compression $E$, and
+$\alpha,\beta,\ell,k$ in (NP.10). CA uses $B_0$ and $\mathcal C_2$
+as in (NP.17); RG's real spectral budget matrix $B$ is this $B_0$.
+Its Gram entries are precisely (NP.16). The three diagonal Gram
+entries on $\operatorname{diag}\tau$ are $A,B_T,C_S$ in the notation
+of this volume; $C$ here always denotes the entire Gram matrix.
+The high aggregate $H$ is a coefficient matrix and is distinct from the source matrix $H^{\rm src}$.
+
+For positive diagonal input $\operatorname{diag}\tau$, JR's law is
+$p_sA+q_sB_T$. The comparison $kA$ in (NP.36) refers to that known
+weak diagonal value, not to a lower bound imposed on each coherent
+state. Original four-sign means use the identity
+$\frac14\sum_{e,n}\rho_{y,e,n}=\operatorname{diag}p_y$; this is a
+linear relation, not an input prior. In arbitrary error optimizers,
+record-preserving sign averaging relabels $r\mapsto en\,r$ and fixes
+AVERAGED live Choi data and total failure effect. It does not prove
+whole forgotten-channel uniqueness. The new individual lower theorem
+is for (NP.11) and the full finite class in Definition 3.1. It makes no
+new extension claim for countable or integral acquisition alphabets.
+
+CA's general spectral test retains a PSD plane slack, then applies the
+Takagi triangle condition to the bilinear form on the residual. It is
+not only $\operatorname{tr}(B_0L)\leq0$, and the special transformation
+$R$ in §6 does not remove that slack for arbitrary competitors. Similarly,
+RG's selected-coordinate Pareto vectors and CA's classified sharp-mean
+faces do not imply that every pointwise nonreal attainer is Pareto for
+the original twelve. Proposition 11.1 gives the contrary conclusion
+for this particular new construction.
+

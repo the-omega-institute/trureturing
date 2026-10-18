@@ -1,0 +1,83 @@
+**Definition 17.2 (complete source-to-matrix dictionary).** To distinguish
+source amplitudes from actual-label failure intensities, write
+$a_s=a$, $b_s=b$, $c_s=c_{\rm src}$ and $d_s=d$ in (FC.1).
+In qutrit coordinates the matrices and normalization are
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=\begin{pmatrix}0&a_s&0\\b_s&0&0\\0&0&0\end{pmatrix},\quad
+S=\begin{pmatrix}0&0&c_s\\0&0&0\\d_s&0&0\end{pmatrix},\quad
+M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\qquad
+\theta=\frac{a_sb_s}{h_0h_1},\quad
+\omega=\frac{c_sd_s}{h_0h_2},\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad
+\alpha=\frac\theta\delta,\quad\beta=\frac\omega\delta,\\
+q_*=\frac{11}{64},\quad
+\Delta=\begin{pmatrix}
+q_*&\Delta_{01}&\Delta_{02}\\
+\Delta_{01}&-q_*&\Delta_{12}\\
+\Delta_{02}&\Delta_{12}&0
+\end{pmatrix},\\
+\Delta_{01}=\frac{\sqrt{999}-\sqrt{295}}{128},\quad
+\Delta_{02}=\frac{\sqrt{27}-\sqrt5}{16},\quad
+\Delta_{12}=\frac{\sqrt{37}-\sqrt{59}}{16}.
+\end{gathered}
+\tag{FC.55}
+$$
+
+All radicals are positive roots. The TP line applies at the root only.
+For $(K_0,K_1,K_2)=(D,T,S)$ put
+$N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$,
+$L=\operatorname{diag}(s_0,1,1)$ and $G=LNL$. Explicitly, the matrix
+already identified in (FC.30) is
+
+$$
+N=\begin{pmatrix}
+q_*(h_0^2-h_1^2)&(h_0a_s+h_1b_s)\Delta_{01}&(h_0c_s+h_2d_s)\Delta_{02}\\
+(h_0a_s+h_1b_s)\Delta_{01}&q_*(b_s^2-a_s^2)&a_sc_s\Delta_{12}\\
+(h_0c_s+h_2d_s)\Delta_{02}&a_sc_s\Delta_{12}&q_*d_s^2
+\end{pmatrix}.
+\tag{FC.56}
+$$
+
+Use $x=(u,v)^T$ on the directed unit circle and
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$. The capacity, failure pairing
+and height are precisely (FC.26):
+
+$$
+\begin{gathered}
+K_h=s_0D+(u/\sqrt\alpha)T+(v/\sqrt\beta)S,\qquad
+n_h=(0,d_sv/(h_2\sqrt\beta),-b_su/(h_1\sqrt\alpha))^T,\\
+D_c=D_u u^2+D_v v^2,\quad
+D_u=h_0^2\delta+b_s^2/\alpha,\quad
+D_v=h_0^2\delta+d_s^2/\beta,\\
+N_c=N_u u^2+N_v v^2,\quad
+N_u=h_1^2h_2^2\delta+a_s^2h_2^2/\alpha,\quad
+N_v=h_1^2h_2^2\delta+c_s^2h_1^2/\beta,\qquad
+\mathfrak c=N_c/D_c>0,\\
+f=n_h^T\Delta n_h=2euv-d_*v^2=x^T\mathsf F x,\quad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\\
+e=-\frac{b_sd_s\Delta_{12}}{h_1h_2\sqrt{\alpha\beta}}>0,\quad
+d_*=\frac{11d_s^2}{64\beta h_2^2}>0,\quad\chi=\frac{2e}{d_*},\\
+\ell=x^TE_\ell x+l_u u+l_v v,\quad
+E_\ell=\begin{pmatrix}
+\delta N_{00}+N_{11}/\alpha&N_{12}/\sqrt{\alpha\beta}\\
+N_{12}/\sqrt{\alpha\beta}&\delta N_{00}+N_{22}/\beta
+\end{pmatrix},\\
+l_u=2\sqrt{\delta/\alpha}N_{01},\qquad
+l_v=2\sqrt{\delta/\beta}N_{02}.
+\end{gathered}
+\tag{FC.57}
+$$
+
+In particular $D_c,N_c$ are strictly positive on every circle direction.
+For the dual, keep $P_y$ of (FC.7) and
+$Q=\left(\begin{smallmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{smallmatrix}\right)$,
+so $Q_y=x^TQx$, $R_-=Q+t\mathsf F$ and $R_+=Q-t\mathsf F$.
+These are the same signed endpoint tests and matrices as (FC.7),
+(FC.27) and RC.70, with $\lambda_{\rm RC}=\sqrt\alpha\lambda$.
+The $b_i=t\mathfrak c(h_i)\xi_i$ below are actual-label failure
+intensities and are distinct from $b_s$.
+

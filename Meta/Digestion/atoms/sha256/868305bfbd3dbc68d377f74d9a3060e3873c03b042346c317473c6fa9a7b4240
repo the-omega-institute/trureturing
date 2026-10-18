@@ -1,0 +1,79 @@
+**Proposition 14.1 (fixed interval, interior pole and signed window).**
+Write $R=\lambda/\nu^2$ and $L=u-l$. For any fixed admitted $H,I,\kappa\ne0$,
+varying only $k_0\in(l,u)$ gives exactly the open interval
+
+$$
+R=\pi^2\frac{(k_0-\alpha_\kappa)^2}{L^2},\qquad
+\mathscr R_\kappa=
+\left(\frac{\pi^2(l-\alpha_\kappa)^2}{L^2},
+      \frac{\pi^2(u-\alpha_\kappa)^2}{L^2}\right).
+\tag{14.1}
+$$
+
+More specifically fix $0<H<1/2$, $0<l<u<H$ and an explicit radius
+$0<b<\min\{l/4,(H-u)/2,H/4\}$ as in G (16.2).
+With $k_0$ varying over $I$, the respective images for $0<\kappa\le b$
+and $-b\le\kappa<0$ are exactly
+
+$$
+\mathscr R_+=\left(\frac{\pi^2(l-b-b^2/H)^2}{L^2},
+                          \frac{\pi^2u^2}{L^2}\right),\qquad
+\mathscr R_-=\left(\frac{\pi^2l^2}{L^2},
+                          \frac{\pi^2(u+b-b^2/H)^2}{L^2}\right).
+\tag{14.2}
+$$
+
+Every interior value in (14.1)–(14.2) is attained; neither endpoint is.
+With $k_0$ fixed instead, the positive and negative window images are
+
+$$
+\left[\frac{\pi^2(k_0-b-b^2/H)^2}{L^2},\frac{\pi^2k_0^2}{L^2}\right),\qquad
+\left(\frac{\pi^2k_0^2}{L^2},\frac{\pi^2(k_0+b-b^2/H)^2}{L^2}\right].
+$$
+
+The included endpoints occur only at $\kappa=b,-b$, respectively;
+the excluded endpoints require $\kappa=0$.
+This explicit window meets the larger-height-interval geometric and
+scalar-fibre requirements of L Definition 35.1, with the original rational
+coefficients. The heat, domain, mode and complete-field antecedents of
+this volume retain their supplied ordinary conditional status.
+
+Proof. The factors $\varepsilon^2$ cancel in $\lambda/\nu^2$.
+Since $l-\alpha_\kappa>0$, the map in (14.1) is strictly increasing
+and continuous in $k_0$, with precisely the displayed endpoint limits.
+On $[-b,b]$, $\alpha_\kappa'=1+2\kappa/H>0$.
+For positive $\kappa$, its range is $(0,b+b^2/H]$; for negative
+$\kappa$, it is $[-b+b^2/H,0)$. The differences $k_0-\alpha_\kappa$
+therefore have infimum and supremum $l-b-b^2/H,u$ in the first case,
+and $l,u+b-b^2/H$ in the second. None is attained because $k_0$
+is interior (and the zero parameter is excluded). Each parameter-pole
+rectangle is connected and the difference is continuous, so its image
+is an interval. These infima and suprema thus prove every intermediate
+value occurs. All differences are positive, so squaring preserves the
+intervals and their endpoint exclusions. Subtracting the same alpha
+intervals from a fixed $k_0$ proves the half-open images as well.
+
+For the analytic neighbourhood, strictness of the bound on $b$ allows
+$b'>b$ and $0<l'<l<u<u'<H$ with
+$b'<\min\{l'/4,(H-u')/2,H/4\}$. On the compact rectangle
+$[-b',b']\times[l',u']$, the original five probabilities
+$(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$ have positive margins.
+For $\kappa\ge0$, $\alpha_\kappa\le5b'/4<5l'/16$; for
+$\kappa<0$, $\alpha_\kappa<0$. Thus $k-\alpha_\kappa$ has a
+positive margin. Formula (1.3) is nonzero there since $b'<H/4$;
+compactness gives a uniform determinant lower bound and bounded
+coefficient derivatives of every fixed order.
+The numerator coefficient map $e\mapsto P_{\kappa,e}$ in G (26.7)
+is invertible throughout this rectangle: a zero polynomial would give
+$e\cdot c_\kappa=e\cdot c_\kappa'=e\cdot c_\kappa''=0$, forcing
+$e=0$. Its inverse is uniformly bounded by compactness.
+Consequently the sublevel, height Poincare and scalar semigroup proof
+of G (26.6), (26.12) applies on the whole explicit window, with constants
+depending on this fixed rectangle. The determinant and derivative bounds
+are exactly G (32.2)'s larger-cylinder hypotheses for its supplied local
+heat estimate. Restriction to $[-b,b]$ therefore supplies the neighbourhood
+required in L Definition 35.1; no unknown further parameter shrink is
+needed for these conditions. The pole may be any interior point, and
+none of these restrictions depends on a subsequent heat time.
+The inherited analytic suppliers retain their conditional status. $\square$
+

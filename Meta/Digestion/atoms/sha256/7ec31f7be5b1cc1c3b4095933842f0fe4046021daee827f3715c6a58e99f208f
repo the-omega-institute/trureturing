@@ -1,0 +1,124 @@
+**Proposition 10.6 (the exact installed-state residual and its coordinate
+blocks).**
+A nineteen-state competitor, if one exists, has cuts (49),
+$`D_B-E_B=1`$, $`E_{\rm cut}=u=0`$ and (50).
+There are seven distinct cut hosts and exactly twelve interior hosts.
+The latter host thirteen count cells:
+
+$$
+\begin{aligned}
+V_3&=\{Z_3,\mathsf P,\mathsf R,O_3\},&
+V_4&=\{Z_4,\mathsf a,\mathsf M,\mathsf c\},\\
+V_5&=\{\mathsf b,\mathsf N,\mathsf d\},&
+V_6&=\{\mathsf U,\mathsf V_6\}.
+\end{aligned}
+\tag{52}
+$$
+
+Write $`T_1=\{x\}`$, $`T_2=\{x,y\}`$,
+and $`[8]\setminus T_7=\{j\}`$ for its common supports.
+Every actual live run begins with the coordinates $`x,y`$ in that
+order. Exactly one installed state queries $`x`$, exactly two query
+$`y`$, exactly one queries $`j`$, and the other fifteen query
+coordinates in $`T_7\setminus T_2`$.
+
+**Proof.** The cut depths before the formal endpoint are zero, one,
+two and seven, containing respectively one, two, three and one
+count cells. Their excesses are zero by $`E_{\rm cut}=0`$.
+Each cell therefore has one host, and the seven hosts are mutually
+distinct and disjoint from the interior by the supplied localization.
+The cells in (52) are exactly the internal diagonals of $`(2,7)`$;
+they number $`4+4+3+2=13`$. Since $`u=0`$, every installed
+state is live somewhere. The remaining $`19-7=12`$ states are
+exactly its interior pool. This also agrees with
+$`|Q_B|=|V_B|+E_B-D_B=13-1=12`$.
+
+The supplied common-support envelope places the fixed label of every
+live host in the coordinate block between its two surrounding cuts.
+The four disjoint blocks for (49) are
+
+$$
+T_1=\{x\},\quad T_2\setminus T_1=\{y\},\quad
+T_7\setminus T_2,\quad [8]\setminus T_7=\{j\}.
+\tag{53}
+$$
+
+At the first depth, extension to the depth-one common support forces
+the query $`x`$. At depth one, extension to the depth-two common
+support forces the next query $`y`$. Freshness makes these different
+coordinates. The half-open depth ranges $`[0,1),[1,2),[2,7),[7,8)`$
+have respectively one, two, fifteen and one live states: the third
+range consists of the three depth-two cut hosts and the twelve
+interior hosts. Their fixed labels belong to the respective blocks
+in (53). The blocks partition the coordinates, and $`u=0`$
+leaves no further installed states to query any block. This proves
+all four label-multiplicity assertions.
+
+The conclusion describes installed labels and actual live prefixes.
+It does not require certified traffic to follow those prefixes or
+support envelopes, nor erase its original query and weighted charges.
+$`\square`$
+
+**Attribution and remaining boundary 10.7.**
+The equality-residual arguments R1–R4 supply the four deductions
+proved as Lemmas 10.2–10.3, Theorem 10.4 and Corollary 10.5.
+The critical companion's Theorem 9.1 and Corollary 9.2 own the
+nineteen lower bound and its two equality cut lists.
+Its Lemmas 7.2–7.3 own the sharing classification, unique axis
+incidences and the earlier depth-two axis fork. Its endpoint estimates
+and twenty-state grid remain credited; the grid is not new progress.
+The support-incidence source [SI][SI19], specifically Theorem 2.2,
+the local diagonal argument of Theorem 4.1, Theorems 5.2 and 9.3,
+the short-gap results and Lemma 10.2, owns the incidence, support,
+localization and resource interfaces used here. The nested PCA, PE
+and WTF statements retain their displayed conditional scope; no
+unlisted supplier is authenticated by these deductions.
+
+The additional content is necessary actual-support propagation:
+the $`Z_3,\mathsf R`$ fork forces ambiguity at $`\mathsf N`$;
+a shared $`\mathsf a,\mathsf c`$ host with unique outer supports
+forces ambiguity at both depth-six cells; and these implications
+exclude one full equality architecture and the all-singleton-endpoint
+case of the other. No condition has been imposed as a new graph
+class, and no separately optimized graphs or incompatible estimates
+have been combined.
+
+The exact numerical critical interval remains
+
+$$
+19\le m_{\min}(8,4)\le20.
+\tag{54}
+$$
+
+The twelve-state interior in Proposition 10.6 remains to be realized
+or excluded with globally compatible actual supports, fixed coordinate
+labels and successors, all-input correctness, actual termination and
+both original caps. At least one endpoint must have multiple hosts.
+Lemma 10.2 can be paid by ambiguity at $`\mathsf N`$, and the
+unique-support hypothesis of Lemma 10.3 need not hold.
+The necessary conditions are not a nineteen-state construction.
+No unrestricted twenty-state lower bound is established.
+
+For every original instance with $`\min(k,n-k+1)\ge4`$, the original
+all-size alternative remains unchanged: prove
+$`m\ge G=k(n-k+1)`$ on every complete correct original graph at both
+caps $`n,W`$, equivalently prove the collective inequality (39),
+or construct one complete correct strict-subgrid graph satisfying
+both caps on every input. Neither alternative follows from this
+section. Separate compensation in each late pool remains stronger
+than the collective target. The unrestricted-budget minimum and
+fixed-specification attainment remain separate unresolved questions.
+
+The entire original unbounded source fiber, homomorphism, eleven
+profiles, prescribed pointwise code, original latches and literal
+complete entries, all four replies, and the separately priced
+eight-state whole-row predecessor reader are retained. Any native
+consequence continues to depend on (2), equivalently (SI.5), and the
+original source and service assumptions. In particular the existing
+conditional interval $`23+r\le H_{\min}^{\,9,W+3}\le24+r`$
+is unchanged. No complete original native acquisition/service bridge
+is established here. These are ordinary symbolic conditional proofs;
+there is no Lean or kernel verification, executed search,
+physical-resource, general neural-network, empirical-learning,
+worldwide-priority or programme-completion claim.
+

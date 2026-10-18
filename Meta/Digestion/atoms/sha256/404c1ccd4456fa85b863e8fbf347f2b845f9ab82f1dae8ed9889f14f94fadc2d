@@ -1,0 +1,12 @@
+**定义 A-23.2（成熟数学引文）。** 文献只支持下表准确范围；本卷的三个指定消费者为来源保持的模型内合成，不给全球原创断言。
+
+| 代号 | 文献 | 对应数学范围 |
+| --- | --- | --- |
+| A-L1 | Giovanni Puccetti、Ruodu Wang，*Extremal Dependence Concepts*，Statistical Science 30(4), 2015, 485–517，[DOI](https://doi.org/10.1214/15-STS525)；[arXiv:1512.03232v3，2025-03-10](https://arxiv.org/abs/1512.03232v3)；项目 [固定文献注](https://github.com/the-omega-institute/trureturing/blob/b432abd6e992f82a8c80127c720b45ff69064835/Library/Estimation/puccettiwang2015dependence.md) | §3.1 式 (3.5) 的二变量 Fréchet–Hoeffding 界及成熟归属；本卷五支撑逆式直接消元 |
+| A-L2 | Aaron Crighton，*Hensel's Lemma for the p-adic Integers*，Archive of Formal Proofs, 2021-03-23，[条目](https://isa-afp.org/entries/Padic_Ints.html) | 该条目摘要明确逆极限、赋值、完备性；本卷使用其定义背景，不搬运形式验证身份 |
+| A-L3 | Lawrence Somer、Michal Křížek，*On Primes in Lucas Sequences*，Fibonacci Quarterly 53(1), 2015, 2–23，[全文](https://www.fq.math.ca/Papers1/53-1/SomerKrizek5222014.pdf) | §1 印刷 p.2 的索引必要条件，§2、Lemma 2.7 的数列身份，Theorem 1.3(ii)、Example 1.4 印刷 p.3 的梅森 Lucas 因子；不是 2025 年的另篇均匀子序列文献 |
+| A-L4 | Christian Ballot、Michele Elia，*Rank and period of primes in the Fibonacci sequence. A trichotomy*，Fibonacci Quarterly 45(1), 2007, 56–63，[DOI](https://doi.org/10.1080/00150517.2007.12428243) | 原稿所供 DOI 的题录身份；本卷首次秩和半周期证明由第九节与 R4、L3 承担，不以未给出的内部页码作证明 |
+| A-L5 | Terence Tao，*The prime tuples conjecture, sieve theory, and the work of Goldston–Pintz–Yildirim, Motohashi–Pintz, and Zhang*，2013-06-03，[作者全文](https://terrytao.wordpress.com/2013/06/03/the-prime-tuples-conjecture-sieve-theory-and-the-work-of-goldston-pintz-yildirim-motohashi-pintz-and-zhang/) | 实际 Conjectures 1–2：固定可容许整数偏移及奇异级数；全球渐近保持猜想身份 |
+| A-L6 | Sheldon Axler，*Linear Algebra Done Right*, fourth edition, 2024，[作者书页](https://linear.axler.net/)；项目 [固定文献注](https://github.com/the-omega-institute/trureturing/blob/2e1060d5ce7d7be8a24ed93fb7cd07266ba2ab72/Library/Quantum/axler2024innerproduct.md) | 经典内积及 Gram 背景；本卷三角式直接由共同记录范数与行列式证明，不依赖未验证内部定位 |
+| A-L7 | Mateus Araújo、Adrien Feix、Fabio Costa、Časlav Brukner，*Quantum circuits cannot control unknown operations*，arXiv:1309.7976，2014-02-03 修订正文，[论文](https://arxiv.org/abs/1309.7976v2)，New Journal of Physics 16, 093026 (2014), [DOI](https://doi.org/10.1088/1367-2630/16/9/093026) | 任意未知酉在标准黑盒电路内的一次调用不能普遍构造受控酉；物理子空间实现可给额外信息，未禁止本卷已供应比较门 |
+

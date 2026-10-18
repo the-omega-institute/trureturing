@@ -1,0 +1,65 @@
+**Proposition 1.2 (Full current-ray domain).** From the one fixed
+preparation the exact reachable current-ray space is
+
+$$
+\mathcal M=(0,H)\times\mathbb T^2,
+$$
+
+in coordinates $(k,\alpha,\beta)$. Every point has a finite lawful
+producing history using just the original controls.
+
+**Proof.** Fix $k_1\in(0,H)$ different from $k_0$ and write
+$d_k=k_1-k_0$. For a target choose real representatives $u,v$ merely
+to specify a producing path. Set
+
+$$
+L=2(u-v),\quad
+u_L=\left(\frac12-\frac{k_0}{r}\right)L,\quad
+v_L=-\frac{k_0}{r}L,\quad
+q=u-u_L=v-v_L.
+$$
+
+The equality defining $q$ follows from $u_L-v_L=L/2=u-v$.
+Take the real rectangle parameter $A_{\rm rect}=-rq/d_k$.
+First move from $k_0$ to $k_1$ at fixed $\chi$, then increase
+$\chi$ by $A_{\rm rect}$ at $k_1$, return to $k_0$ at fixed
+$\chi$, and decrease $\chi$ by $A_{\rm rect}$ there. The net
+increment in each of $u,v$ is
+
+$$
+A_{\rm rect}\bigl(w_\pm(k_1)-w_\pm(k_0)\bigr)
+=-A_{\rm rect}d_k/r=q.
+$$
+
+Next apply one phase leg of increment $L$ at $k_0$, and then a
+probability leg from $k_0$ to the target $k$. The resulting increments
+are $(q+u_L,q+v_L)=(u,v)$. All heights along the probability legs lie
+between interior endpoints, and all phase parameters are finite. This is
+a finite piecewise linear history. Lemma 1.1 gives the converse inclusion
+of all reachable rays in the displayed domain. The representative above
+proves that the parameterization identifies precisely equal rays.
+Independent reachable phase coordinates have thus been obtained without
+introducing independent phase controls. $\square$
+
+For every real command parameter $s$ or $t$, the original straight legs
+induce
+
+$$
+P_s(k,\alpha,\beta)=(k+s,\alpha,\beta),
+\qquad \operatorname{dom}P_s=\{(k,\alpha,\beta)\in\mathcal M:0<k+s<H\},
+$$
+
+$$
+Q_t(k,\alpha,\beta)=
+\left(k,\alpha+\frac t2,\beta+\left(\frac12-\frac kr\right)t\right),
+\qquad \operatorname{dom}Q_t=\mathcal M.
+$$
+
+Indeed $P_s$ prescribes $k(\tau)=k+\tau s$ with $\chi$ fixed, and
+$Q_t$ prescribes constant $k$ and phase increment $t$ on a unit interval.
+Lemma 1.1 integrates to these formulas. Convexity of $(0,H)$ makes
+$0<k+s<H$ necessary and sufficient for the whole straight probability
+leg to be lawful. The real phase parameter $t$ is not reduced modulo
+$2\pi$ or any other period. Circle reduction applies to the resulting
+state coordinates.
+

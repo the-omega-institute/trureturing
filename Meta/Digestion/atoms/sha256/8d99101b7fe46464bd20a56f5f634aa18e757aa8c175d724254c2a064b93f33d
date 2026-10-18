@@ -1,0 +1,20 @@
+**定理 125.2（共同有限历史的兼容性与记录分解）。** 定义125.1的 $V$ 为等距，且对任意目标密度态，迹掉记录后得到
+
+$$
+\Omega=\sum_{h,k}\sqrt{p_hp_k}\,\Gamma_{hk}
+|h\rangle\langle k|\otimes U_h\varrho U_k^\dagger\ge0,
+\qquad\operatorname{tr}\Omega=1.
+$$
+
+历史测量概率为 $p_h$；再忽略历史得到目标随机酉通道 $\sum_hp_hU_h\varrho U_h^\dagger$，但共同历史间的相干还依赖 $\Gamma$ 及具体酉相位。任意给定的有限概率权重、酉族和相关矩阵都在此抽象等距合同内有联合实现。
+
+证明（125.2）。标签正交消去 $V^\dagger V$ 中的 $h\ne k$ 交叉项，单位记录及酉性给
+
+$$
+V^\dagger V=\sum_hp_hU_h^\dagger U_h=I.
+$$
+
+展开 $V\varrho V^\dagger$，记录块为 $|e_h\rangle\langle e_k|$；其迹恰为 $\langle e_k|e_h\rangle=\Gamma_{hk}$，得到所列 $\Omega$。等距共轭及部分迹保持正性与迹；同一操作对任意未触及参考也完全正。取 $h$ 对角块的迹得 $p_h$，再取历史迹则消去非对角块，给随机酉通道。若起初只给 $\Gamma\ge0$、对角一，前卷第109.2条在同一个有限记录空间构造全部 $e_h$，再使用本定义即得兼容性。它不允许把不同实际对象中分别合法的最优记录拼成未满足共同正性的矩阵。
+
+这种分解不是对三类参数的唯一反演断言。零权重历史不影响输出；而替换 $U_h\mapsto e^{i\theta_h}U_h$、$e_h\mapsto e^{-i\theta_h}e_h$ 不改变每个联合项及 $V$，使记录矩阵变为 $\Gamma_{hk}\mapsto e^{-i\theta_h+i\theta_k}\Gamma_{hk}$。所以分别解释过程相位与记录相位须固定共同参照。已有参照后，改变 $p$ 改变对角历史质量，改变相对 $U$ 改变目标作用及历史间过程关系，改变 $\Gamma$ 改变记录所保留的相干；不能由相同经典概率反演全部三类数据。$\square$
+

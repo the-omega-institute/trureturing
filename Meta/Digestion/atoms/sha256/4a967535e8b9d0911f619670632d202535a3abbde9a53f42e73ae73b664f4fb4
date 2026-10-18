@@ -1,0 +1,22 @@
+**Proposition 7.1 (finite verification without an all-size cutoff).**
+Fix one graph, positive algebraic $A,B$, rational exponents
+$\theta_v\ge0$, positive algebraic reference entries, tables and
+scalar. Feasibility of (WBF.7), and the comparison $F\le C$ for
+a positive algebraic $C$, are decidable by finite algebraic checks.
+The global majorant uses at most $2^{2n}$ same-assignment
+inequalities. This assertion supplies neither a size cutoff nor
+optimizer-cofinality.
+
+Proof. Check that each binary reference sums to one, that entries
+are positive and that the rational incidence inequalities hold.
+There are finitely many common assignments, and each side of their
+majorant is algebraic. For positive $\theta_v$, both
+$1/\theta_v$ and $\theta_v$ are rational. Rational powers of
+positive real algebraic numbers have unique positive algebraic
+values, whose comparisons are decidable; finite sums and products
+remain algebraic. At exponent zero take the maximum of the sixteen
+algebraic entries. This computes (WBF.8) and decides its comparison
+with $C$. The number of assignments is $2^{|E|}=2^{2n}$.
+No claim about any unexamined graph or larger template follows
+from this finite verification alone. $\square$
+

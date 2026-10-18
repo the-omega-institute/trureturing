@@ -1,0 +1,14 @@
+**Definition 4.1 (type maxima).** For $\nu\in\mathbb N^S$ with
+$\sum_x\nu_x=n\ge1$, let $T_\nu$ be the words in $S^n$ with symbol
+counts $\nu$. Define
+
+$$
+a_n(\nu)=\max_{B\in\mathcal B_n}|B\cap T_\nu|,\qquad
+f_n(\nu/n)=\frac1n\log_2a_n(\nu).
+\tag{NPC.10}
+$$
+
+These are exactly [NDR, Definition 3.1][NDR]'s template type maxima.
+Singletons give $a_n(\nu)\ge1$; finiteness attains every maximum.
+By restriction, an attaining type subset is itself admissible.
+

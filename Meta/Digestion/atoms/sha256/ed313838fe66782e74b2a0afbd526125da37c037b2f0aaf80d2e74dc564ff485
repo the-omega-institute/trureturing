@@ -1,0 +1,54 @@
+**Proposition 206.16 (A clipping family and a whole-family limitation).**
+For every $L\ge6$ and $c>4$, put $P_{01v}=P_{10v}=c/2^{L-2}$
+for every suffix $v$. Put early correct mass $c/2-1$ at each of
+$w(\{1\}),w(\{2\})$. For each late $j$ put correct mass $c/2$
+at $w(\{j\})$ and $c/2$ at $v_j^{\rm ch}$, adding coefficients
+when the words coincide. Set $T=c-1$ and all other rows to zero.
+Then $E=c-2,S=2c,W=4c-3$, and both excesses are one.
+The $s=1$ certificate of 206.15 applies.
+
+**Proof.** At $(1,2)$ the complete $N$ maxima are
+$(0,3c/2-1,3c/2-1,c)$. At every early/late pair they are
+$(c/2,c-1,c,3c/2-1)$. At every late pair they are
+$(c/2,c/2,c,3c/2-1)$.
+To check all labels in the last list, a preceding correct class puts
+at most $c/2$ in a cell, class $i$ puts half in each first-zero cell,
+class $j$ contributes all $c$ in $10$, and later classes at most
+$c$ in $11$. Zero reward in $11$ is $3c/2-1\ge c$; each early
+numerical reward there is at most $3c/4-1$. The other lists follow
+by the same split of the sole-zero and chain masses. On $O$ the first
+two cell maxima merge with the same total: $3c/2-1$ for an early
+first query, and $c$ for a late one. The pair supports are therefore
+$4c-2$ for early-containing pairs and $7c/2-1\le4c-2$ for late
+pairs. Pair embedding handles shorter schedules and $(1,2)$ attains
+the upper bound in $O$. Subtraction of $W$ proves the exact excess.
+Here $E=c-2$, $W\ge3c-1$, so (206.40) applies.
+
+This quotient is also in the stock region of 206.17 at
+$\mu=c,d=1,S=2c,E=c-2,t=c-1$. It is not counted twice.
+For comparison, zero score fails at $u_L$ with value
+$2m/(m+1)>1$, $m=L-2$. The actual fair pair projection has
+$\kappa=c/2>1$, $\pi=1$.
+The old fair-profile threshold $5(c-1)$ exceeds $W$ by $c-2$.
+The 202.6 threshold $c+a_m(c-1/2)$ with
+$a_m=4-2/\lceil m/2\rceil\ge3$ also exceeds $W$.
+The maximal zero core at the actual projection retains $c/2$ per late
+class, whose residual charge is $(c/2+2)m/(m+3)>1$.
+The precise 205.10 comparison is in 206.22.
+
+The clipping criterion is nevertheless incomplete even on known unit
+scores. For every $L\ge3$ and $c>2$, take
+
+$$
+y=\mathcal V((0,0),(2(c-1),2(c-1)),(c,\ldots,c),c-1).
+\tag{206.42}
+$$
+
+Its second-largest late total is at most $c\le2(c-1)$, so 203.6
+gives both excesses exactly one. This actual score is its own unit
+certificate. But for every $s\in[0,1]$, the clipping residual at
+$u_3$ is $(c-2s)/2>1-s$, the strict difference being $c/2-1$.
+Thus no such clipping test succeeds. This also demonstrates why the
+$u$ column cannot be dropped in the general residual formula.
+$\square$
+

@@ -1,0 +1,81 @@
+**Corollary 7.1 (finite rational repair and its precise representation premise).**
+Suppose $G_B,G_A$ have finite support and rational edge weights, and the
+emissions of all positive outgoing labels are rational. Then the balanced
+kernels in Theorem 3.1 can be chosen with finite support and rational
+entries, with the exact same error bounds. Zero outgoing weights can be
+deleted. With these rational tables and latch row supplied as finite
+represented data, the repaired own laws have a finite original-domain
+product realization with the same acquired and synthetic update kernels.
+For that new realization the full configuration risks satisfy
+
+$$
+R_{\mathrm{conf},s}\le
+ \sup_{k:\mu(k)>0}\int d_s(D,P_{s,r_k})d\sigma_s(D)+D_s.
+\tag{7.1}
+$$
+
+The rational existence assertion does not give an algorithm for comparing
+arbitrary supplied real complete-law transport costs.
+
+**Proof.** In each finite transport problem the coupling constraints form
+a nonempty bounded rational polytope. A linear objective with arbitrary
+real cost coefficients attains its minimum at some vertex. Each vertex
+solves a full-rank subsystem of rational equalities and active coordinate
+constraints, and is rational by Gaussian elimination. Thus rational
+optimal $C_p,C_\beta$ exist even if selection among their vertices is not
+effective from the descriptions of the complete laws.
+
+For clarity, on the union of the relevant finite input and output labels,
+write $g^B_{ij}=G_B(Q_i,W_j)$ and
+$c^\beta_{jk}=C_\beta(W_j,W_k)$. The balanced B edge is
+
+$$
+h^B_{ik}=\sum_{j:\tau_\beta(j)>0}
+               g^B_{ij}\frac{c^\beta_{jk}}{\tau_\beta(j)}.
+\tag{7.2}
+$$
+
+Its outgoing row is $\sigma_p$ and incoming row is $\sigma_\beta$.
+The reversed formula defines $h^A$. Divide by positive outgoing weights
+to get the rational kernels. A zero incoming weight has a zero coupling
+row and a zero incident input edge, so its omitted summand is exactly
+zero, not a division convention. Balance prevents positive outgoing rows
+from entering labels with zero opposite outgoing weight. Deleting those
+labels changes no positive-row law, integral or bound.
+
+Now apply [PAID, Definition 2.1 and Lemma 2.1.1] with period one, p row
+$\sigma_p$, suspended row $\sigma_\beta$, these $B,A$, and the preserved
+emission vectors. The latch samples the p row once in the original
+third-write-before-latch update; it does not reset the source. All
+pre-latch original controls, both seeds, paid rejections and records
+remain. Completing letters clear private labels and preserve the matching
+Stop. Induction with (3.1) gives exactly these rows at every actual
+fourth-phase history. Its decoders are the own laws (3.2), so the supplied
+supported-target risk identity [PAID, (2.3)] and (3.6) prove (7.1), also
+for countable supported priors. It is one simultaneous installation,
+not independently optimized phase machines.
+
+To realize a rational categorical row, choose a common positive integer
+denominator $N$, draw $k=\lceil\log_2 N\rceil$ independent fair private
+bits, accept the integer if it is below $N$, and otherwise repeat; use
+the prescribed integer intervals for the output. For $N=1$ no bits are
+needed. For $N>1$ each trial accepts with probability $N/2^k>1/2$;
+termination is almost sure, expected bit use is $k2^k/N<2k$, and no
+deterministic trial bound is asserted. The sampler has a finite program
+and finite partial-trial states, which belong to COMPLETE. Independent
+emission and update services realize exactly their joint transition,
+without source Reads within the private service.
+
+The storage cost includes the rational table numerators and denominators,
+table-selection control, original $C_0$, current p or suspended label,
+sampler program and all its internal states, workspace and any persistent
+random choices. A direct label representation needs
+$\lceil\log_2 n_p\rceil$ or $\lceil\log_2 n_\beta\rceil$ bits at
+the corresponding phase; this is only the label component of the total.
+The stochastic rule does not need a runtime port holding a complete-law
+descriptor, its TV distances, the source depth or its posterior.
+Selecting and representing the rational repair and its cost bounds is a
+separate offline data obligation. No preassigned hard total-state,
+precision, work, random-bit, defect or acquisition budget is preserved.
+$\square$
+

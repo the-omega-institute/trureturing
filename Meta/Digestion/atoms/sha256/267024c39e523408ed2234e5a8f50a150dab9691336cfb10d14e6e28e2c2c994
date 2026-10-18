@@ -1,0 +1,2 @@
+**Remark 7.1 (Dependency order).** Theorem 3.2 feeds Corollary 3.3. Example 4.1 uses Theorem 3.2 and the nodal step of its proof. Theorem 4.4 uses Lemma 4.3, the nodal step of the proof of Theorem 3.2 and the proof of Corollary 3.3. Corollary 4.7 uses Theorems 4.4 and 4.6. Proposition 5.1 uses the proof of Corollary 3.3 and cites Lemma 3.2 of Lindblad and Guerrero.
+

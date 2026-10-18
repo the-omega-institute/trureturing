@@ -1,0 +1,15 @@
+**Proposition 8.3 (Stationary-state transport uses the full complex fixed space).** Under the hypotheses of Theorem 8.2,
+
+$$
+L_{\eta,\theta}(\rho_\theta)=\rho_\eta.
+\tag{8.4}
+$$
+
+This assertion uses no positivity assumption on $L_{\eta,\theta}$.
+
+Proof. Put $A=L_{\eta,\theta}(\rho_\theta)$. Intertwining gives $\mathcal E_\eta(A)=A$, while trace preservation gives $\operatorname{Tr}A=1$. Source's full-complex identity (2.1), originally (23.13), now gives $A=A_{HH}R_\eta$ and $1=A_{HH}\mu$. Hence $A=R_\eta/\mu=\rho_\eta$. Uniqueness only among positive densities would not suffice at this step, because $A$ has not been shown positive before the conclusion. The full fixed-space premise supplies exactly what is needed. $\square$
+
+For the pair of Section 7, the $(0,2)$ entries of the reset projectors are $1/3$ and $-1/3$. Their difference is nonzero, so Theorem 8.2 applies to $L_{-,+}$ and its inverse. They intertwine the averaged channels and send the actual stationary states to one another, yet fail positivity at the specific density $E_{00}$. They therefore are not quantum channels. This claim concerns these constructed intertwiners only; it is not a classification of all possible positive similarities between arbitrary phase choices.
+
+The construction intertwines the sums of the branches. It establishes no equation intertwining the two outcome branches separately. The unitary-nonequivalence of the pair remains the credited Source Theorem 23.4 conclusion: a memory unitary intertwining the averages would carry the unique stationary density to the other one and preserve its purity, contradicting (7.3). Branchwise unitary equivalence would imply that averaged identity after summation. Scalar phases on Kraus representatives do not alter their CP maps.
+

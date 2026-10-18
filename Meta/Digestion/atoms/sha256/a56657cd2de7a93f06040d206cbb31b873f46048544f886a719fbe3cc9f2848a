@@ -1,0 +1,31 @@
+**定义 40.1（跨来源的名义支持及位置集合）。** 固定 $m(g)>0$ 的合法前像候选，$N=u+v$。在整个 $\mathcal F^+_{L^3g}$ 上令
+
+$$
+\Lambda_g=\bigcup_{P\in\mathcal F^+_{L^3g}}\operatorname{Leaf}(P).
+$$
+
+这是假择来源之间的地址并集，不是一棵输入上同时缓存的集合。令 $\mathcal W_g$ 为约定38.1计数的整个实际词纤维，对 $c\in\{a,b\}$ 定义
+
+$$
+J_c(g)=\{i\in\{1,\ldots,N\}:\exists w\in\mathcal W_g,\ w_i=c\}.
+$$
+
+一个非空地址 $q$ 的长度为 $d$，其中左步和右步数为 $l,r$。在 $d\le N-1$ 时置
+
+$$
+\begin{aligned}
+I_N(q)=\{i\in\{1,\ldots,N\}:\ &
+(r=0\Rightarrow i=1),\ (r>0\Rightarrow i-1\ge r),\\
+& (l=0\Rightarrow i=N),\ (l>0\Rightarrow N-i\ge l)\}.
+\end{aligned}
+$$
+
+同时使用原第三像块及其准确叶后缀
+
+$$
+A=((\beta,\alpha),\beta),\quad B=(A,(\beta,\alpha)),
+\qquad S_a=\{LL,LR,R\},\quad S_b=\{LLL,LLR,LR,RL,RR\}.
+$$
+
+$J_c$ 仅由真实词见证定义，不是假定观察者能读取未知位置或未取得的词。
+

@@ -1,0 +1,12 @@
+**B5 both terminal fibers and every served stop.**
+
+For either final action the actual response d is shared by both elements of K because their fixed whole gains vanish at original clock 7. An eighth equation can only restrict the already exact seven-read fiber, and here restricts neither element. Thus BOTH alternative terminal fibers are still exactly K. At clock 6, |K|=2 gives the cannot-stop guard. For EACH of J,M, its actual response d has full compatible slice K, and |K|=2 gives L0 there. These are precisely the two action clauses and guard for L1(K,H6). Every earlier served history contains the same two distinct complete targets, so stopping there cannot return a unique correct target for both worlds. A deterministic policy fixing the first six actions to this prefix sees the same records, makes the same stopping/final-action decision, and ends with that same ambiguous pair. All worlds and ancestor equations were fixed together; no pair from a different parent or action arm was substituted.
+
+**exact policy scope.**
+
+No policy which fixes its first six actions to JMJMJM can recover all strict degree-at-most-two worlds with at most eight TOTAL reads, even if it chooses the final action or stop from the full history. More generally any policy actually following this prefix on this common record cannot recover both displayed worlds within the budget. This does not force an arbitrary adaptive policy to take the prefix. The witness is a reached-clock-6 L1, not a root L7, not a different-history L2, and not n_det(3,0)>=9.
+
+**parameter boundaries.**
+
+The family allows all real a0 and either sign of nonzero kappa. Its drift is d=a0+7\*kappa\*u\*v, not a0. The assumptions u,v>14 and u!=v are sufficient for this explicit family, not a classification of all obstructions or a sharp range. If u=v the two choices coincide and the claimed pair does not apply. No impossibility at u=14 or v=14 is asserted. The number 14 is used only in this family proof and is not a source-domain bound. All actual sources are strict interior sources; no limiting boundary supplies a world.
+

@@ -1,0 +1,18 @@
+**Definition 1.3 (owners and admissible operations).** The producer owns
+the private source. The seed recipient owns its acquired seed. An ingress
+or archive principal owns the retained complete request material and its
+actual read/copy tokens. A service principal $O$ may use both only when
+it actually possesses them, either initially or through paid authorized
+copies. A downstream client $C$ needs its own actual delivery and invocation
+rights. Equal bit strings held by different principals do not identify
+their authorities.
+
+The original source ports are literal TagRead($p$), numerical ReadE, and
+guarded Rho, Left($t$), Right($t$). During unfinished work only the
+prescribed next native primitive is enabled. At a prescribed IN the
+external actor supplies a bit; at other phases Advance executes the
+prescribed row. Existing complete-prefix Fetch and closed-fence scans are
+usable only at their admitted entry states with their actual descriptors,
+constructed arguments and tokens. There is no original RecoverAt opcode,
+arbitrary busy interrupt, private-latch read or instantaneous snapshot.
+

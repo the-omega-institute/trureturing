@@ -1,0 +1,59 @@
+## 33. Exact correspondence with the quadratic-gap qubit
+
+The parameter correspondence to Chapter 27 is literal after fixing the
+index convention.  In (27.1)--(27.2), put
+
+$$
+q=r^2,\qquad d_0=1-q,
+\qquad \tau=|\psi\rangle\langle\psi|,
+\qquad \Phi=\mathcal E_0,\quad \Psi=\mathcal E_1.
+\tag{33.1}
+$$
+
+Here $\tau$ is the actual conditional density immediately after a
+positive emission; the stationary density $\rho_*$ in (27.8) is a
+different, pre-emission density.  With $B=bv\ell$ as in (27.4)--(27.6),
+
+$$
+\operatorname{Tr}\Psi(\Phi^j(\tau))
+ =\|BA^j\psi\|^2
+ =
+ \begin{cases}
+ 0,&j=0,\\[2mm]
+ \displaystyle\frac{d_0^3}{1+q}j^2q^{j-1},&j\ge1.
+ \end{cases}
+\tag{33.2}
+$$
+
+Thus the Chapter 27 sequence is exactly of the form (32.2) with
+$m=1$ and
+
+$$
+C=\frac{d_0^3}{q(1+q)},
+\qquad
+\gamma_j=Cj^2q^j\quad(j\ge0).
+\tag{33.3}
+$$
+
+The factor $q^{-1}$ in $C$ is only the conversion from the Chapter 27
+$ q^{j-1}$ display to the present preceding-zero index.  Equivalently,
+if the chapter's gap variable is written as $k=j$, its formula is exactly
+(27.3).  The normalization follows from
+$\sum_{j\ge1}j^2q^j=q(1+q)/(1-q)^3$.
+
+For $0<r<1$, the vectors $\psi$ and $A\psi$ are linearly independent,
+so the zero-Kraus reachable subspace is the full two-dimensional memory:
+$d=2$.  Theorem 32.2 therefore reads $D\ge d\ge2$ and is attained by
+this qubit model.  This is a relation between an actual conditional law
+and the memory that generates it.  It does not turn the Chapter 27
+construction into a general-$m$ upper construction, and it does not
+construct a coherent occupation-state preparation or a physical/native
+implementation.
+
+The same distinction explains why the stationary state in (27.8) should
+not be substituted for $\tau$ in (33.1): $\rho_*$ describes the state
+before a stationary first tick, whereas (32.1) describes the conditional
+zero-run beginning after the previous tick.  Both are actual densities in
+their respective experiments, but they define different conditional
+questions.  The theorem is about the latter question.
+

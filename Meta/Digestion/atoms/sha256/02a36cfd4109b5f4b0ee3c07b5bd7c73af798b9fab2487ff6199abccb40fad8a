@@ -1,0 +1,21 @@
+## 454. Original labels and all possible paired frames
+
+Use tetrahedra P0,...,P4,M0,...,M4 with vertices 1,2,3,4. Edge order is
+(12,13,14,34,24,23). Both copies of each type have this word:
+
+| Type | Label word | Forced transverse pair |
+|---|---|---|
+| 0 | `(5, 0, 1, 2, 0, 1)` | `{0,1}` |
+| 1 | `(1, 0, 2, 3, 0, 2)` | `{0,2}` |
+| 2 | `(2, 0, 3, 4, 0, 3)` | `{0,3}` |
+| 3 | `(3, 0, 4, 5, 0, 4)` | `{0,4}` |
+| 4 | `(4, 0, 5, 1, 0, 5)` | `{0,5}` |
+
+All four selected labels are distinct. Each word has exactly two labels of
+multiplicity two and two labels of multiplicity one. In any vertex-induced
+paired word, the transverse labels each occur twice, so they must be exactly
+the two multiplicity-two labels displayed here. This proves the forced-pair
+claim for every possible frame, not just the displayed frame. Their union is
+{0,1,2,3,4,5}. Thus allowing any of the 24 vertex permutations on each
+owner cannot lower the union of transverse labels.
+

@@ -1,0 +1,73 @@
+**Theorem 7.2 (The exact established parameter map).**
+Define a common upper increment by
+
+$$
+\mathcal H(u,v)=
+\begin{cases}
+24u/253,&253v\le24u,\\
+(1272u+1222v)/14631,
+ &u>0,\quad24u/253\le v\le75u/181,\\
+11(u+v)/128,&181v\ge75u.
+\end{cases}
+$$
+
+At $u=v=0$ set $\mathcal H=0$; overlapping boundary formulas agree.
+For every fixed actual profile and every entire continuation in 1.2,
+
+$$
+5\tau+\max\{d_0,d_{256},d_{\rm sum}\}
+ \le m_N\le m_O\le5\tau+\mathcal H(u,v).
+$$
+
+The established exact and open regions are as follows.
+
+| Parameters | Original conclusion established here |
+| --- | --- |
+| $u=v=0$ | $m_N=m_O=5\tau$ |
+| $u>0$, $253v\le24u$ | $m_N=m_O=5\tau+24u/253$ |
+| $u>0$, $181v\ge75u$ | $m_N=m_O=5\tau+11(u+v)/128$ |
+| $u>0$, $24u/253<v<75u/181$ | Both values remain unevaluated; the displayed necessary/achievable interval has strictly positive width |
+
+In every solved region the common law attains the minimum and every
+positive closed cap is feasible exactly when it is at least that
+value. In the open intermediate sector, equality or separation of the
+two minima is unproved.
+
+Proof. The lowers are 3.4. The upper uses, respectively, the complete
+law 4.1, the single mixture 6.1, or the old complete wedge law 5.3.
+Thus one whole law supplies each upper, without combining independent
+event optima. On the low region, $d_{256}\le d_0$, and for $u>0$,
+
+$$
+d_{\rm sum}(u,v)\le d_{\rm sum}(u,24u/253)
+ =d_0-\frac{25u}{128\cdot253}<d_0.
+$$
+
+The matching $253$ bound proves equality there. The old wedge has
+the matching $128$ lower. At $u=v=0$ both reduce to $5\tau$.
+Closed-cap equivalence follows from 7.1, including every boundary.
+
+In the open intermediate sector $d_{256}>d_0$, and
+
+$$
+d_{256}-d_{\rm sum}=\frac{2u-19v}{256}.
+$$
+
+The effective lower is $d_{256}$ when $19v\le2u$ and
+$d_{\rm sum}$ when $19v\ge2u$. Exact upper-minus-lower differences are
+
+$$
+\begin{aligned}
+\mathcal H-d_{256}
+ &=\frac{1063(253v-24u)}{14631\cdot256}>0,\\
+\mathcal H-d_{\rm sum}
+ &=\frac{25(75u-181v)}{14631\cdot128}>0.
+\end{aligned}
+$$
+
+Both are strictly positive throughout the open sector, including the
+internal lower-bound switch. The strip $24u/253<v<2u/19$ is
+nonempty for $u>0$ and is precisely where the $256$ lower improves
+both other displayed lowers. Positive necessary/achievable width
+proves neither upper optimality nor an $N/O$ separation. $\square$
+

@@ -1,0 +1,48 @@
+**Definition 2.1 (histories and incidence).** A history is an actual
+finite run prefix ending immediately before a query. Its exposed
+support $S\subseteq[n]$ consists of coordinates already read. Its
+exposed assignment is denoted by $\eta_S$. Put
+
+$$
+h=|\eta_S^{-1}(1)|,\qquad z=|\eta_S^{-1}(0)|.
+$$
+
+It is live when both threshold outputs have completions, equivalently
+$(h,z)\in V$. For $p=(h,z)\in V$, define
+
+$$
+\begin{aligned}
+F_p&=\{q\in Q:\text{some actual live history of counts }p
+                         \text{ ends at }q\},\\
+\mathcal S_p&=\{S:\text{some such history has support }S\},\\
+\mathcal R&=\{(p,S,q):\text{one actual live history witnesses all three}\},\\
+b_p&=|F_p|,\qquad a_p=|\mathcal S_p|.
+\end{aligned}
+\tag{SI.6}
+$$
+
+A state in $F_p$ is a live host of $p$. A cell is support-ambiguous
+when $a_p>1$. These sets are mathematical indices of actual histories;
+they add no accessible coordinates to the running graph.
+
+The native lift in (SI.5) transports every actual Boolean history to
+an actual cube history after its paid profile front. The saturation
+and exclusion facts used below are precisely [PCA, Theorems 34.3 and
+35.1][PCA], [PE, Lemma 4.1][PE], and [WTF, Convention 6.1 and Theorem
+9.1][WTF]. In Boolean language they give fresh queries at live histories;
+exclude properly nested supports at a common state; exclude different
+supports with equal hits at a common state; exclude equal supports with
+unequal hits; and, for different count pairs at a common state, require
+the orientation
+
+$$
+(h,z),(g,w),\ h<g
+\quad\Longrightarrow\quad g-h\ge2,
+\qquad z-w\ge2.
+\tag{SI.7}
+$$
+
+Their hypotheses include both caps in (SI.3) and the original distinct
+costs. These are supplied local facts, not consequences of assigning
+abstract count labels to nodes.
+

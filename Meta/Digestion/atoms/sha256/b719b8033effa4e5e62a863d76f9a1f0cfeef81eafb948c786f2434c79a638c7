@@ -1,0 +1,51 @@
+**Theorem 6.2 (Conditional rank from the original matrices).** Impose $P=P_\theta$ for a fixed $\theta\in\Theta_N$ and assume the band. For every $n$, the actual guarded conditional $r_n^y$ in (4.2) is band-compatible and satisfies
+
+$$
+\operatorname{rank}_+\mathsf F_k(r_n^y)\le N\quad(1\le k<n)
+\tag{6.1}
+$$
+
+for $\mu_C$-almost every exterior. This assertion itself does not require $A_P<\infty$ or strong zero.
+
+Proof. Let $u=X_{[-m,-1]}$ and $v=X_{[n+2,n+1+m]}$ be finite adjacent exterior collars. Condition additionally on the guard event $H=\{X_0=X_{n+1}=0\}$. On a positive conditioning event the actual conditional mass is
+
+$$
+r_{n,m}^{u,v}(w)=
+\frac{\lambda M_uM_0M_wM_0M_v\mathbf1}{Z_m(u,v)},\qquad
+Z_m(u,v)=\sum_{z\in B_n}\lambda M_uM_0M_zM_0M_v\mathbf1>0.
+\tag{6.2}
+$$
+
+For any binary split $w=st$, its numerator is
+
+$$
+\lambda M_uM_0M_sM_tM_0M_v\mathbf1
+=\sum_{h=1}^N(\lambda M_uM_0M_s)_h(M_tM_0M_v\mathbf1)_h.
+\tag{6.3}
+$$
+
+Thus the whole probability flattening is a sum of at most $N$ nonnegative rank-one matrices, with the positive normalizer absorbed into one factor. Illegal words or seams give actual zero cylinder probabilities. Their nonnegative scalar sums in (6.3) are zero without requiring entrywise $M_1^2=0$. Null collar events are not divided by.
+
+Now work under $P^H=P(\cdot\mid H)$; $P(H)>0$ by (2.3). The increasing collar fields generate the full exterior field. Bounded conditional-expectation convergence, applied to each of the finitely many middle-word indicators, gives $r_{n,m}^{u,v}(w)\to r_n^Y(w)$ almost surely under $P^H$. The exterior marginal under this measure is
+
+$$
+d\mu_C^H(y)=\frac{g_C(y)}{P(H)}\,d\mu_C(y),\qquad g_C(y)\ge2^{-(n+2)}.
+\tag{6.4}
+$$
+
+These exterior measures are equivalent. Consequently the coordinatewise limit is valid on a $\mu_C$-conull set, with the actual conditional versions in (4.2). This is a limit of increasing collars, not finite visible memory.
+
+For a fixed finite matrix size, the probability matrices of nonnegative rank at most $N$ form a closed set. Indeed any such matrix can be written
+
+$$
+R=\sum_{h=1}^Nt_h a_hb_h^{\mathsf T},\qquad
+t_h\ge0,\quad\sum_ht_h=1,
+\tag{6.5}
+$$
+
+where each $a_h,b_h$ is a probability vector. Normalize each nonzero pair of nonnegative factors by its two coordinate sums and use their product as $t_h$; choose arbitrary probability factors at weight zero. The total matrix mass is one, so the weights sum to one. Conversely (6.5) has the required rank bound. Its parameter space is a compact product of finite simplexes and its image is continuous, hence compact and closed. Passing (6.3) to the limit proves (6.1), simultaneously over the finitely many cuts and countably many lengths.
+
+Finally condition the integrated insertion inequalities from Lemma 2.2 on $Y$, both guards and all other middle bits. For each legal edge $u\to v$ this gives $p_C(0u0;y)/3\le p_C(0v0;y)\le p_C(0u0;y)$ almost surely. Division by the same positive $g_C(y)$ proves band compatibility, using only the band and conditional support. All statements concern the same matrices and joint law (1.4); no trimming, mixing or hidden-state minimality is used. $\square$
+
+This is an $N$-term factorization for a probability flattening at a fixed actual exterior. It is not the context-by-word matrix $E_{\theta,L}$ of [Intrinsic, Theorem 2.2][I], with the general upper bound $\operatorname{rank}E_{\theta,L}\le N^2$. The latter tests linear conditional nullity. Neither its finite collar nor its annihilator turns a full posterior into a finite visible function.
+

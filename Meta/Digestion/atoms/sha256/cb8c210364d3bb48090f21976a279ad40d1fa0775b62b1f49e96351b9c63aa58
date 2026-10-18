@@ -1,0 +1,28 @@
+**定义 200.2（较早零守卫及代表相关的冲突量）。** 写 $x_w=A_w+P_w$。
+对 $3\le j\le L$、$1\le i<j$ 定义
+
+$$
+\begin{aligned}
+\kappa_j(i;y)&=\sum_{\substack{w\ne1^L:\ n(w)<j,\ w_j=0,\ w_i=1}}x_w,\\
+c_j(y)&=\min_{1\le i<j}\kappa_j(i;y),\\
+\Gamma_k(y)&=\frac1{k-1}\sum_{j=3}^kc_j(y),\qquad
+\Gamma(y)=\max_{3\le k\le L}\Gamma_k(y).
+\end{aligned}
+\tag{200.7}
+$$
+
+这些是有限非负和与达到的有限最小值。每个 $j$ 选一个最小化地址 $i_j<j$，
+选择只依赖固定的整个评分，在任何来源回答之前完成。令
+
+$$
+J_{i,j}=(i,j;0,j,0),\qquad
+U_k=\frac1{k-1}\left(R+\sum_{j=3}^kJ_{i_j,j}\right).
+\tag{200.8}
+$$
+
+$J_{i,j}$ 先查询 $i$，零时输出 $0$；正时查询 $j$，在零时输出 $j$，否则输出 $0$。
+它属于定义 190.2 的 $S_O$，从而属于完整 $\mathcal D_O$。
+$U_k$ 是 $k-1$ 个完整停止表的等权概率混合；这些表不连续执行。
+$\Gamma$ 依赖评分代表 $y$，不定义为仅依赖 $Q(y)$ 的函数。
+这里的最小化只比较所显示的各 $j$ 独立选守卫的混合族，不是完整 $O$ 类的最优性断言。
+

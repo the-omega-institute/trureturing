@@ -1,0 +1,58 @@
+**Proposition 3.1 (credited projection and its local derivative meaning).** Define
+
+$$
+\begin{aligned}
+\rho(r)&=\int p(r,\mathbf z)^2d\mathbf z,&m_Y(r)&=\int|Yp(r,\mathbf z)|^2d\mathbf z,\\
+v_1(r)&=\int V_1(r,\mathbf z)p(r,\mathbf z)^2d\mathbf z,&
+f_h(r)&=2r m_Y(r)+\gamma v_1(r),\\
+J(r)&=\int_r^\infty f_h(t)dt,&q_*(r)&=J(r)/\rho(r),\\
+I_h&=\int_{\mathbb R}J^2/\rho,&F_*(r)&=\int_0^r q_*(t)dt.
+\end{aligned}
+\tag{3.1}
+$$
+
+H supplies $I_h<\infty$ and the $h_0$-orthogonal projection $U_h$ of $\Psi$ onto the entire closed height subspace
+
+$$
+\mathcal H_h=\overline{\{pF:F\in C_c^\infty(\mathbb R;\mathbb R)_{\rm odd}\}}^{\,h_0}.
+\tag{3.2}
+$$
+
+It has local representative $pF_*$, with
+
+$$
+\begin{gathered}
+h_0[U_h]=\mathcal L(U_h)=I_h,\qquad
+\delta_h=h_0[\Psi-U_h]\ge0,\qquad D_{\rm resp}/a=I_h+\delta_h,\\
+G_{\rm resp}=3A-\gamma C_2-I_h-\delta_h,\qquad
+XU_h=F_*Xp+p q_*,\quad YU_h=F_*Yp.
+\end{gathered}
+\tag{3.3}
+$$
+
+The weight $\rho$ is even, continuous, integrates to one and has a positive minimum on compact height intervals. The functions $J,q_*$ are even and continuous; $F_*$ is odd and locally absolutely continuous. These are homogeneous/local assertions and assume no global $L^2$ or native-domain representative for the projection.
+
+Proof and correspondence. The following checks specify the H ingredients used here. Since $p,Xp\in L^2$, $p$ is a Hilbert-valued $H^1$ function of height, so $\rho$ is continuous and $\rho'=2\int pXp$ is integrable. The positive bounded-potential semigroup gives $p\ge P_t p$ for $t>0$ for the operator $\mathcal E-\gamma V$. Restrict its input to a compact set with positive integral of $p$ and its output to a compact height interval times a fixed compact phase box. Positivity and continuity of the heat kernel give a uniform positive lower bound there. Continuity of $\rho$ extends the resulting lower bound to every height in the interval. Also
+
+$$
+(B-A)^2\le\left(\int_A^B\rho\right)\left(\int_A^B\rho^{-1}\right)
+\le\int_A^B\rho^{-1}.
+\tag{3.4}
+$$
+
+Thus the reciprocal-weight integral diverges on each unbounded half-line. Parity gives even $m_Y$, odd $v_1$ and odd $f_h$. The weighted mode and bounded $V_1$ give $f_h,rf_h\in L^1$. Therefore $J$ is even, locally absolutely continuous, tends to zero at both infinities, is integrable, and $\int J=\int rf_h=t_0$.
+
+For odd compact smooth height functions $F,G$, the critical weak equation tested with $F^2p$ and polarized gives
+
+$$
+h_0(pF,pG)=\int\rho F'G',\qquad
+\mathcal L(pF)=\int f_hF=\int JF'.
+\tag{3.5}
+$$
+
+All tests preserve the canonical form domain by the horizontal product rule. Differentiation of odd compact height functions has dense range in $L^2_{\rm even}(\rho dr)$: if an even $q$ is orthogonal to every $F'$, then the even locally integrable distribution $\rho q$ has zero derivative. Odd tests give this from the orthogonality, and even tests give it by parity. Hence $\rho q$ is constant. A nonzero constant contradicts (3.4) and $\int\rho q^2<\infty$. This proves the density and the onto isometry after completion.
+
+Continuity of $\mathcal L$ on $\dot{\mathcal H}_-$ makes $q\mapsto\int Jq$ a bounded functional on this entire weighted derivative space. If $\widetilde q$ is its Riesz representative, the same distributional argument gives $\rho\widetilde q-J=c$. Since $J\to0$ at both ends, a nonzero $c$ would again violate the divergent reciprocal-weight tails. Thus $\widetilde q=J/\rho$, proving the finite quadrature. The image of this derivative is exactly the orthogonal projection by (3.5), and Pythagoras proves (3.3)'s norm identities. This is H's projection, rather than a new projection theorem.
+
+For local representatives, choose compact odd $F_n$ whose derivatives converge to $q_*$ in $L^2(\rho dr)$. Cauchy–Schwarz with $\rho^{-1}$ on a compact interval and $F_n(0)=0$ gives uniform convergence there to $F_*$. The isometry and odd energy gap make $pF_n$ Cauchy in horizontal energy. The potential bound and positive compact minima of $V$ identify its local $L^2$ representative with $pF_*$. Compact distributional tests identify its derivative limits. The local product rules yield the last two identities of (3.3). This verifies every projection pairing used below without a global $L^2$ substitution. $\square$
+

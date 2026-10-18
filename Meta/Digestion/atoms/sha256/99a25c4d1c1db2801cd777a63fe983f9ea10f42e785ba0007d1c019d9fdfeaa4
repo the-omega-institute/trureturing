@@ -1,0 +1,91 @@
+**Theorem 9.13 (One selected site attains the phase-target benchmark).**
+For any $i\in T$, putting all budget on site $i$ makes $\Phi_T$
+locally estimable in all phase directions and gives
+
+$$
+R_{\eta_i=1}(d_T)=I_T,\qquad
+\min\operatorname{Var}_0\widehat\Phi_T=\frac{I_T}{4N}.
+\tag{9.40}
+$$
+
+The minimum agrees with the quantum single-target lower bound,
+even allowing regular joint measurements on $N$ independent copies.
+Moreover
+
+$$
+I_TP_T\ge4^k,\qquad
+\operatorname{Var}_0\widehat\Phi_T
+\ge\frac{4^{k-1}}{NP_T}.
+\tag{9.41}
+$$
+
+Proof. For every $J\subseteq T\setminus\{i\}$, both $J$ and
+$J\cup\{i\}$ are legal. Since $T$ has no adjacent positions,
+inserting $i$ is permitted even at the endpoints of the word.
+The site-$i$ matching pairs these two vertices, and
+
+$$
+d_T(J\cup\{i\})=-d_T(J).
+$$
+
+A vertex outside the subsets of $T$ has coefficient zero; its
+site-$i$ partner, if present, is also outside those subsets.
+Every other pair and every blocked singleton therefore has
+total source zero. This proves component balance on the full
+graph, not just on a selected subgraph.
+
+Orient a relevant edge from $J$ to $J\cup\{i\}$ and assign
+$j_e=d_T(J)\in\{-1,1\}$. Assign zero to every other site-$i$
+edge. A matching has no cycles, so this is the unique feasible
+flow. Its energy is
+
+$$
+\sum_{J\subseteq T\setminus\{i\}}
+\left(\frac1{p_J}+\frac1{p_{J\cup\{i\}}}\right)
+=\sum_{I\subseteq T}\frac1{p_I}=I_T.
+$$
+
+Propositions 9.5 and Theorem 9.4 now give (9.40), including
+exact finite-$N$ reference-score attainment. An explicit
+one-sample statistic is
+$-d_T(J)/(2\sqrt{p_Jp_{J\cup\{i\}}})$ on that pair's $+$
+outcome and its negative on $-$, with zero on all other
+outcomes. Its mean is
+
+$$
+-\sum_{J\subseteq T\setminus\{i\}}d_T(J)
+\sin(\theta_{J\cup\{i\}}-\theta_J).
+$$
+
+At the reference its full gradient is $d_T$ and its second
+moment is $I_T/4$. Averaging independent samples gives the
+same variance directly. All nonrelevant outcomes remain in
+the record and are assigned zero, not postselected away.
+
+Since $\sum_I d_T(I)^2/p_I=I_T$, Theorem 9.10 proves quantum
+optimality. Finally Cauchy–Schwarz on the $2^k$ positive
+subset probabilities gives
+
+$$
+\left(\sum_{I\subseteq T}p_I\right)
+\left(\sum_{I\subseteq T}p_I^{-1}\right)
+\ge\left(\sum_{I\subseteq T}1\right)^2=4^k.
+$$
+
+Equality requires all $p_I$, $I\subseteq T$, equal. Combining
+with (9.40) proves (9.41). $\square$
+
+For $k=1$ this is the ordinary phase difference between the
+empty word and one occupied site; the proof includes $n=1$.
+For $T=\{1,3\}$ it recovers $d$ and the endpoint designs above.
+The bound refers to the fixed integer coefficient coordinate
+(9.37), with all other phase directions unconstrained nuisance
+directions. Rescaling $\Phi_T$ rescales its variance bound;
+a prior restricting the nuisance family changes the estimation
+problem. The exponential coefficient in (9.41) is a local
+sample cost for that specified coordinate. One legal pulse
+per preparation suffices for this readout under the added
+menu. That does not implement the separate task of changing
+probabilities while preserving lower moments, nor prove a
+universal exponential computation or physical-time bound.
+

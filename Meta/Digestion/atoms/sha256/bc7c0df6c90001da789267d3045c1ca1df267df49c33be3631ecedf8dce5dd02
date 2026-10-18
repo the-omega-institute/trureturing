@@ -1,0 +1,23 @@
+**Definition 2.2 (explicit base heat and Green).** In this theorem's
+normalization the base heat density is
+
+$$
+\begin{aligned}
+\overline p_t((k_o,\alpha_o),(k,\alpha))
+&=h_t^I(k_o,k)\,s_t(\alpha-\alpha_o),\\
+h_t^I(k_o,k)&=\frac2d\sum_{j=1}^\infty
+ e^{-\varepsilon^2(j\pi/d)^2t}
+ \sin\frac{j\pi(k_o-l)}d\sin\frac{j\pi(k-l)}d,\\
+s_t(a)&=\frac1{2\pi}\sum_{m\in\mathbb Z}e^{-m^2t/4}e^{ima},\\
+\overline\Gamma_{\pi o}(x)&=\int_0^\infty\overline p_t(\pi o,x)dt.
+\end{aligned}
+\tag{2.7}
+$$
+
+The heat series and their derivatives converge locally uniformly for
+$t>0$, by their exponential coefficients. The Green integral, rather than
+an unjustified pointwise rearrangement of a double resolvent series, fixes
+its positive representative. It is the unit-source Green kernel for
+$\overline L$ relative to $\nu$. The height gap
+$\varepsilon^2\pi^2/d^2>0$ makes its total mass finite.
+

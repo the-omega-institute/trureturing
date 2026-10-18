@@ -1,0 +1,4 @@
+**Definition 16.1 (power and leaf controls).** Every integer pair in this appendix has denominator $D_{150}=2^{150}$. The coefficient row gives the whole vector of ascending power-coefficient intervals in $x$. The subsequent rows give every leaf $(l,d)$ and its whole ordered Bernstein-control interval vector. The exact identities and the unused constant have the meanings in Definition 6.1.
+
+### 16.1. Event box
+

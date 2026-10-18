@@ -1,0 +1,34 @@
+**Proposition 5.1 (Joint zero statistics).** Let
+
+$$
+C_m=\{z:h_a(z)=h_b(z)=0\},\qquad R_m=\Pr_X(C_m).
+$$
+
+The probability $R_m$ is the same under all four actual source laws and equals
+
+$$
+R_m=\sum_{2r+2q+k=m}\frac{m!}{(r!)^2(q!)^2k!}
+       (w^2-u^2)^r w^{2q}\nu^k.
+\tag{5.1}
+$$
+
+All indices are nonnegative integers. In particular $R_0=1$, $R_1=\nu$, and
+
+$$
+\nu^m\le R_m<1\quad(m\ge1),\qquad R_m>0\quad(m\ge0).
+\tag{5.2}
+$$
+
+Define
+
+$$
+K_0=1,\qquad K_m=\min\left\{1,\frac{s}{1-R_m}\right\}\quad(m\ge1).
+\tag{5.3}
+$$
+
+Then $s\le K_m\le1$. For $m\ge1$ and $\eta>0$, $K_m>s$.
+
+Proof. Sign exchange within either pair and exchange of the two pairs preserve $C_m$ and take the four laws into one another. Thus its probability is common. Under the $a,+$ law, group $o,*$ into a neutral outcome of total probability $\nu=w+20\eta/25$. A string in $C_m$ has counts $r,r,q,q,k$ for the four signal outcomes and the neutral outcome, with $2r+2q+k=m$. Its probability factor is $(w+u)^r(w-u)^rw^{2q}\nu^k$, and the multinomial coefficient gives (5.1). The rank-$20$ probability is retained in $\nu$; it is never discarded. This derivation remains valid for every zero probability under the convention $0^0=1$.
+
+The empty string gives $R_0=1$. At one copy only $o,*$ have both signs zero. All-neutral strings give $R_m\ge\nu^m>0$. For $m\ge1$, the all-$a_+$ string under $a,+$ has positive probability $(w+u)^m$ and lies outside $C_m$, so $R_m<1$. Formula (5.3) is therefore defined. Since $0<1-R_m<1$, $s/(1-R_m)>s$; also $1\ge s$. This proves $K_m\ge s$. If $\eta>0$, then $s<1$, so both quantities in the minimum are strictly larger than $s$, proving $K_m>s$. At zero noise $K_m=1$, and the separately defined $K_0$ is always one. QED.
+

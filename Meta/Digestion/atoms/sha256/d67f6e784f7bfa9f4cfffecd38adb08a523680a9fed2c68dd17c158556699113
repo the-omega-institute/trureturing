@@ -1,0 +1,9 @@
+**定义 2.1（二阶关系提升）。** 令
+
+$$
+\nu_2:\mathbb R^2\longrightarrow\mathbb R^3,\qquad
+\nu_2(a,b)=(a^2,ab,b^2)^T=(U,V,W)^T.
+$$
+
+三个坐标分别记录第一来源的自身关系、两来源的交叉关系和第二来源的自身关系。本卷在这一层取对称关系；若有序关系的交换产生独立信息，反对称部分须另行保留。经典支撑是 $\operatorname{Sym}^2(\mathbb R^2)$ 的三维性；[Mathlib 的对称代数定义](https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/SymmetricAlgebra/Basic.html) 给出将张量乘法交换化的代数背景，本卷所用坐标和维数论证如下。
+

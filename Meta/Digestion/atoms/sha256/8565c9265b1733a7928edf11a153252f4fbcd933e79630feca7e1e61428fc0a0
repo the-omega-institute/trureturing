@@ -1,0 +1,49 @@
+**Theorem 106.1.** Under (106.2), every sufficiently small \(\tau>0\) gives \(G_\tau,H_\tau\in\mathcal E\) with
+\[
+\begin{aligned}
+(G_\tau)_S&=G_S,&(H_\tau)_S&=H_S,\\
+G_\tau\odot H_\tau&=G\odot H,&
+\ker G_\tau&=\ker G,\\
+\operatorname{rank}H_\tau&=h+o.&
+\end{aligned}
+\tag{106.5}
+\]
+The pair converges to \((G,H)\) as \(\tau\downarrow0\). If \((G,H)\) is a full-domain local minimum, every sufficiently small such pair is a full-domain local minimum of exactly the same value.
+
+**Proof.** The matrix \(B_H\) is positive semidefinite. Its original fibre blocks are identities even if a fibre is split between \(S\) and \(O\): the cross entry is zero, as required. Thus \(H_\tau\in\mathcal E\) for every \(\tau\ge0\). The Hermitian matrix \(D\) has zero entire original fibre blocks.
+
+For \(x\in\ker G\), condition (106.2) gives \(x_O=0\). Its \(S\) coordinates in \(Dx\) vanish because \(D_{SS}=0\); on \(O\),
+\[
+(Dx)_i=\sum_{j\in S}G_{ij}x_j=(Gx)_i=0.
+\tag{106.6}
+\]
+Consequently \(D\ker G=0\). Hermiticity makes \(K=(\ker G)^\perp\) invariant under both \(G\) and \(D\). Let \(\eta>0\) be the smallest eigenvalue of \(G|_K\). If \(D\ne0\), then
+\[
+0\le\tau<\frac{\eta}{\|D\|_{\rm op}}
+\quad\Longrightarrow\quad
+G_\tau|_K\succ0,
+\qquad \ker G_\tau=\ker G.
+\tag{106.7}
+\]
+If \(D=0\), the same conclusion holds for every \(\tau\ge0\). This proves feasibility and the first-kernel assertion near zero.
+
+For positive semidefinite matrices, the kernel of a positive linear combination is the intersection of the kernels, since a zero quadratic form makes each nonnegative summand vanish. Any vector in \(\ker H_S\), extended by zero, lies in \(\ker H\) by the same zero-quadratic-form argument. Therefore for every \(\tau>0\),
+\[
+\ker H_\tau=\ker H\cap\ker B_H
+           =\ker H_S\oplus\{0\}_O,
+\qquad
+\operatorname{rank}H_\tau=h+o.
+\tag{106.8}
+\]
+No invertibility assumption on \(H_{OO}\) or on a principal Gram is needed.
+
+Both principal blocks on \(S\) and every diagonal entry are unchanged. For \(i\ne j\) with an endpoint in \(O\),
+\[
+(G_\tau)_{ij}=(1+\tau)G_{ij},\qquad
+(H_\tau)_{ij}=\frac{H_{ij}}{1+\tau}.
+\tag{106.9}
+\]
+Their product is unchanged, including original partner zeros. Hence the entire eight-coordinate coefficient \(T-G\odot H\), every complete-norm witness objective and the exact error are unchanged. This is stronger than equality of a principal or uniform-input bound.
+
+The paths (106.4) are continuous at zero. If \((G,H)\) is a local minimum of value \(t\), choose a relatively open neighbourhood \(U\subseteq\mathcal E^2\) on which \(F\ge t\). Every sufficiently small constructed pair lies in \(U\) and has value \(t\). A relatively open neighbourhood of that pair contained in \(U\) witnesses its own full-domain local minimality. This proves the theorem. \(\square\)
+

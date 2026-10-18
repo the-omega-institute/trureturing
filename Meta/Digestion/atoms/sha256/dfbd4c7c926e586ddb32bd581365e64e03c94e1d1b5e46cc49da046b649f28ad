@@ -1,0 +1,52 @@
+**Theorem 22.1 (loss for every compatible common law).** In the
+actual cover of §21, let $P$ be any common law with all copied
+local laws (COK.106). If $\operatorname{cyc}(h)$ counts the
+cycles of $h$, including fixed points, then
+
+$$
+\Delta(P)\ge\bigl(m-\operatorname{cyc}(h)\bigr)I_0.
+\tag{COK.111}
+$$
+
+If $f(h)$ is its number of fixed points, consequently
+
+$$
+\frac{\Delta(P)}{2m}
+ \ge\frac14\left(1-\frac{f(h)}m\right)I_0.
+\tag{COK.112}
+$$
+
+A zero-defect common completion exists exactly when $h$ is the
+identity. In particular fixed-point-free covers have loss at
+least $I_0/4$ per original block for every such completion.
+
+Proof. Every owned seed is fair and the mutual information on
+each actual incoming edge is $I_0$. In the $2\ell$-owner
+component of each permutation cycle, choose a spanning path of
+$2\ell-1$ distinct undirected edges. For $\ell=1$ this is
+the one edge of its reciprocal pair; for $\ell\ge2$ it is a
+cycle with one edge deleted. The union is a forest with
+$2m-\operatorname{cyc}(h)$ edges, and the same $P$ has mutual
+information $I_0$ on every selected edge. Lemma 20.2, applied
+here to the individual owned tuples, yields
+
+$$
+\sum_iH_P(O_i)-H_P(s)
+ \ge\bigl(2m-\operatorname{cyc}(h)\bigr)I_0.
+$$
+
+This remains true when $P$ correlates different cover components.
+Formula (COK.97) subtracts half the $2m$ directed incoming
+informations, namely $mI_0$, proving (COK.111). Each nonfixed
+cycle uses at least two sheets, so
+$\operatorname{cyc}(h)\le f(h)+(m-f(h))/2$. Substitute and
+divide by $2m$ for (COK.112).
+
+If $h$ is the identity, take the product over its $m$ reciprocal
+pairs of law $p$ on $(a_i,b_i)$. It is an actual common law
+with independent units and both incoming projections equal to
+the entire other owner's bit. Theorem 20.3 gives $\Delta=0$.
+If $h$ is not the identity, then $m-\operatorname{cyc}(h)>0$,
+and $I_0>0$ makes (COK.111) exclude zero defect. This proves
+both directions. $\square$
+

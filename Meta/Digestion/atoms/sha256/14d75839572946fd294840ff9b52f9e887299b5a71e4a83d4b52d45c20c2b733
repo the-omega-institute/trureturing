@@ -1,0 +1,58 @@
+**Lemma 78.2 (strict convexity on the entire scalar domain).** Set
+$w_c=1/c_*$. The function $(u_m-u)w_c(u)$ is strictly convex on
+$[0,u_m]$. For every $1\le r\le\sqrt{u_m}$ the function
+
+$$
+h_r(u)=(\sqrt u-r)^2w_c(u)
+\tag{FA.39}
+$$
+
+is strictly convex on that same closed interval.
+
+**Proof.** Direct differentiation gives
+$w_c'=-E_c/(A_c+B_cu)^2$,
+$w_c''=2B_cE_c/(A_c+B_cu)^3$ and
+
+$$
+[(u_m-u)w_c]''=
+ \frac{2E_c(A_c+B_cu_m)}{(A_c+B_cu)^3}>0.
+$$
+
+For $g=(\sqrt u-r)^2$, one has $g''=r/(2u^{3/2})$ for $u>0$.
+When $u\le r^2$, every term in
+$h_r''=g''w_c+2g'w_c'+gw_c''$ is nonnegative and the first is
+positive. When $u>r^2$, bound it below by
+
+$$
+\frac{\min w_c}{2u_m^{3/2}}
+ -2(1-1/\sqrt{u_m})\frac{E_c}{A_c^2}>1.942-1.639>0.
+\tag{FA.40}
+$$
+
+The strict rational margins follow on the whole inherited JR.52 amplitude
+box. They can be reproduced by taking its seven intervals
+$[N_i,N_i+1]/10^6$, using
+$m_1=1-h_1^2-a^2$, $m_2=1-h_2^2-c^2$, and substituting into FA.38.
+These equalities identify the expressions at the source root only.
+Rational endpoint arithmetic with square roots enclosed at denominator
+$2^{128}$ gives
+
+| Expression | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $u_f$ | $.7226$ | $.7228$ |
+| $u_m$ | $1.1392$ | $1.1394$ |
+| $B_c$ | $.001965$ | $.001967$ |
+| $D_c$ | $-.048734$ | $-.048720$ |
+| $E_c$ | $.0004846$ | $.0004849$ |
+| $\min w_c/(2u_m^{3/2})$ | $1.942$ | $1.946$ |
+| $2(1-1/\sqrt{u_m})E_c/A_c^2$ | $1.635$ | $1.639$ |
+| $\tau_*$ | $.99448$ | $.99499$ |
+
+For example $\min w_c=w_c(u_m)$ since $w_c'<0$. The interval
+operations are ordinary outward rational sums/products/quotients and
+$[\lfloor 2^{128}\sqrt a\rfloor,\lceil2^{128}\sqrt b\rceil]/2^{128}$
+for a nonnegative interval $[a,b]$. Thus the displayed comparisons are
+whole-box inequalities, not sampled root or TP certificates. Continuity
+at zero and strict positivity on the interior prove strict convexity on
+the closed interval, including its square-root endpoint. $\square$
+

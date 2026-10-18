@@ -1,0 +1,5 @@
+source_id = "graham-obryant-inverse-sine"
+path = "docs/develop/theory/GRAHAM_OBRYANT_INVERSE_SINE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,79 @@
+**Proposition 5.1 (Toeplitz and failure-moment estimate for this dual).**
+Under the rank-one hypotheses let $M_P=\max_{S^1}P$. Define
+$\mathcal L_\alpha$ on real trigonometric polynomials of degree at
+most two by its values on $(1,u,v,u^2,uv)$:
+$(1,0,0,\alpha,0)$. Then
+
+$$
+\begin{gathered}
+\mathcal L_\alpha(P)=y_0+\alpha y_3
+=J_t+\lambda K-d_*m_v+\frac{\rho}{t}w^T\Lambda_fw,\\
+0<M_P<\frac{25}{2}\mathcal L_\alpha(P)
+<5+\frac{25}{2}\lambda+\frac{150\rho}{t}.
+\end{gathered}
+\tag{RB.27}
+$$
+
+Proof. Entire pure feasibility gives
+$P\ge|\ell|+\lambda|u|\ge0$ on the full circle; $\lambda>0$
+also ensures $P$ is not identically zero. Apply the classical scalar
+Fejér–Riesz theorem in the form stated in Dritschel–Rovnyak,
+*The Operator Fejér–Riesz Theorem*,
+[§1](https://arxiv.org/html/0903.3639v1): a nonnegative scalar
+Laurent polynomial on the entire unit circle has an analytic
+polynomial factor of no greater degree. Zeros on the circle and
+degree drops are allowed. This is a survey formulation of the
+classical scalar theorem, not an operator-rank assertion. Here it
+gives complex numbers $c_0,c_1,c_2$, not all zero, with
+
+$$
+P(\theta)=|c_0+c_1e^{i\theta}+c_2e^{2i\theta}|^2.
+\tag{RB.28}
+$$
+
+The prescribed first and second angular moments give
+$\mathcal L_\alpha(e^{i\theta})=0$ and
+$\mathcal L_\alpha(e^{2i\theta})=2\alpha-1$.
+For $\mathbf c=(c_0,c_1,c_2)^T$ the associated Toeplitz matrix is
+
+$$
+T_\alpha=\begin{pmatrix}
+1&0&2\alpha-1\\
+0&1&0\\
+2\alpha-1&0&1
+\end{pmatrix},\qquad
+\mathcal L_\alpha(P)=\mathbf c^\dagger T_\alpha\mathbf c.
+\tag{RB.29}
+$$
+
+Its eigenvalues are $2\alpha,1,2\beta$, and its least is
+$2\beta>6/25$ by (RB.5). Pointwise Cauchy–Schwarz in (RB.28)
+therefore gives
+
+$$
+M_P\le3\|\mathbf c\|^2
+<\frac{25}{2}\mathcal L_\alpha(P).
+\tag{RB.30}
+$$
+
+The strict inequality follows because $\mathbf c\ne0$.
+
+To identify this angular functional with the actual dual target,
+use all three failure moments in (RB.2):
+
+$$
+y\cdot B=\mathcal L_\alpha(P)+\frac1t\operatorname{tr}(Q\Lambda_f)
+=\mathcal L_\alpha(P)+d_*m_v-\frac{\rho}{t}w^T\Lambda_fw.
+\tag{RB.31}
+$$
+
+The sign follows from $\operatorname{tr}(\mathsf F\Lambda_f)
+=-d_*m_v$ and $Q=-t\mathsf F-\rho ww^T$.
+Joint attainment now proves the first identity of (RB.27).
+Since $d_*m_v>0$, $K\le1$, and
+$w^T\Lambda_fw\le\operatorname{tr}\Lambda_f=\mu<12$,
+(RB.23) and (RB.30) give its last strict bound. This controls
+the dual polynomial's coefficients and maximum; it gives neither
+a dependence of the augmented $(\Gamma,k)$ rows nor a quadrature
+or actual-label bound. $\square$
+

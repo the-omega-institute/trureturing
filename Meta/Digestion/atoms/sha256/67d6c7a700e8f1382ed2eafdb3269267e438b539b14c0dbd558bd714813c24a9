@@ -1,0 +1,60 @@
+## 439. Exact axial-pair reduction and comparison branch
+
+Define local auxiliary scalars
+
+    z0=sqrt((r+1)*(o+1)), y0=sqrt((r-1)*(o-1)),
+    h=(z0+y0)/2, k=(z0-y0)/2.
+
+Then
+
+    h>=s, 1<=k<=h/s.                              (439.1)
+
+The first bound follows from z0>=s+1 and y0>=s-1. The identity
+z0^2-(y0+2)^2=2*(sqrt(r-1)-sqrt(o-1))^2>=0 proves k>=1.
+Finally y0/z0>= (s-1)/(s+1) gives k/h<=1/s.
+
+Put alpha=(theta_r+theta_o)/2, X=sqrt(L*J)>0, and
+
+    Np=p*(h^2+k^2+q^2-p^2)+2*q*h*k,
+    Nh=h*(p^2+q^2+k^2-h^2)+2*k*p*q.
+
+The original genuine factors are
+
+    L=(p+q)^2-(h-k)^2,
+    J=(h+k)^2-(p-q)^2.
+
+The exact half-angle identities, obtained by tangent addition, are
+
+    cot(alpha)=Nh/(sqrt(h^2-1)*X),
+    cot(beta_p)=Np/(sqrt(p^2-1)*X).               (439.2)
+
+For example, with a_r=sqrt((r-1)/(r+1)), a_o similarly, one has
+a_r*a_o=(h-k)/(h+k) and a_r+a_o=2*sqrt(h^2-1)/(h+k).
+These give the first formula. The second uses the sum and product
+of the two transverse arctangent coefficients. Both sines are
+positive, so the cotangent formulas retain right-angle cases.
+
+Define alpha0,beta0 in (0,pi) by cot(alpha0)=Nh/(h*X) and
+cot(beta0)=Np/(p*X). Applying (438.1) at u=h,p gives
+
+    E/2=alpha+beta_p>alpha0+beta0-2/s^2.           (439.3)
+
+Let T0=alpha0+beta0. Initially T0 is in (0,2*pi), and
+
+    cot(alpha0)+cot(beta0)
+      =[2*(q^2+k^2)+2*q*k*(p/h+h/p)]/X>0.
+
+As both individual sines are positive, this implies sin(T0)>0,
+hence T0 is in (0,pi). Exact polynomial identities are
+
+    Np^2+p^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Nh^2+h^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Np*Nh-p*h*L*J
+      =-2*(h*k+p*q)*(h*q+k*p)*(h^2+p^2-q^2-k^2).
+
+Their positive normalization gives
+
+    cos(T0)=-(h^2+p^2-q^2-k^2)/(2*(h*p+k*q)).     (439.4)
+

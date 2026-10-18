@@ -1,0 +1,40 @@
+**Proposition 5.1 (the operational suppliers on this same domain).** Put
+
+$$
+M_N=\max(N,5),\qquad U_N=M_N-N,\qquad s_N=\max(0,2-N).
+\tag{CRF.13}
+$$
+
+Every legal comparator on $D$ has a legal sourcewise dominating
+replacement with at most $U_N$ actual updates, followed by a
+sourcewise dominating cleanup with $q(u)\le\ell(u)+s_N$.
+All actual actions through the cap retain their early-epoch options.
+
+Proof. Reuse JRF Theorem 3.1 and Lemma 3.2, also applied to signed
+fibers by ABC Proposition 6.4. The underlying transport identity
+is JRF Lemma 2.2:
+
+$$
+r_{\rho^n u}(p)=r_{\rho^m u}(S(n,m,p)),\qquad
+|S(n,m,p)|\le |p|\quad(n\ge m\ge5),
+\tag{CRF.14}
+$$
+
+for every finite source $u$, with a computable source-independent
+word transformation. Restricting its universal source quantifier
+to the exact $D$ changes neither side. The common initial state,
+one physical register, four replies, source-free update result and
+absorbing halt are exactly the interfaces of Definition 1.1.
+
+The supplied simulation keeps actual epoch $\min(n,M_N)$ while
+running the comparator's local control. It preserves the raw count,
+caps actual updates sourcewise, and decreases each actual submitted
+length. Cleanup uses only previously paid same-epoch replies and
+the universally known root replies at epochs at least two.
+It removes redundant calls, does not add updates, and leaves at
+most $s_N$ zero-length information opportunities. The supplier
+therefore proves the asserted inequality and sourcewise dominance
+on this domain, with pointwise termination. Simulated later events
+remain local records rather than actual receipts. No literal-only
+source-language decision is used. $\square$
+

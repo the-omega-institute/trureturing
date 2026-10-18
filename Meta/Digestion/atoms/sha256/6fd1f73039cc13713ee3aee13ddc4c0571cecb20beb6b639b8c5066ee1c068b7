@@ -1,0 +1,26 @@
+**Definition 2.4 (two exact output distances).** On
+$\Omega_T=\{\mathsf s\}\sqcup((0,T]\times\{0,1,2,3,4\})$ let
+$d_{\rm mark}$ be total variation, in the probability convention, of the
+complete source-family marked laws. For a common normalized live input
+with any common reference define
+
+$$
+\begin{aligned}
+D_\rho(\gamma,\widetilde\gamma)=\frac12\bigg(&
+ \|\omega_{\gamma,\mathsf s}(\rho)
+       -\omega_{\widetilde\gamma,\mathsf s}(\rho)\|_1\\
+ &+\sum_i\int_0^T
+ \|\omega_{\gamma,i}(t;\rho)
+       -\omega_{\widetilde\gamma,i}(t;\rho)\|_1\,dt\bigg),\\
+d_{\rm op}(\gamma,\widetilde\gamma)&=\sup_{R,\rho}D_\rho(\gamma,\widetilde\gamma).
+\end{aligned}
+\tag{EM.5}
+$$
+
+These are precisely the supplier's terminal-output metrics. Arbitrary
+tests of this declared output are part of their mathematical definition;
+no additional laboratory measurement permission is inferred. Exact time
+is a measurable classical variable, not an uncountable Hilbert basis.
+The actual-event recovery metric in §4 instead compares two coordinates
+coupled to one and the same acquired input event.
+

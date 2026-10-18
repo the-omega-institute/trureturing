@@ -1,0 +1,5 @@
+source_id = "symplectic-predictive-completion-arithmetic-continuation"
+path = "docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION_ARITHMETIC_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

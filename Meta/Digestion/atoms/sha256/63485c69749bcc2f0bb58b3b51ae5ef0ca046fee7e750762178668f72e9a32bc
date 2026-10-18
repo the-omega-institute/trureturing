@@ -1,0 +1,34 @@
+**Definition 13.1 (A channel-level joint table).** For any original
+legal complex scalar port, without making a stationary or real
+replacement, let $\chi_T$ be the normalized output-first Choi state
+of $\widehat T$. Define
+
+$$
+\begin{gathered}
+q_j=n_j/5,\qquad
+L_{ij}=\operatorname{tr}[\chi_T(R_i\otimes R_j)]
+      =\frac15\operatorname{tr}[R_i\widehat T(R_j)],\\
+p_i=\sum_jL_{ij},\qquad Q_{ij}=p_iq_j,\qquad
+\mathfrak R_{\rm pop}(L)
+ =\sum_{i,j}(\sqrt{L_{ij}}-\sqrt{p_iq_j})^2.
+\end{gathered}
+\tag{13.1}
+$$
+
+The projections $R_j$ are real, which fixes the transpose in the
+Choi equality. The table is a mathematical diagnostic of the channel;
+it is not a newly permitted sector instrument or joint-reference test.
+The discrepancy has no factor $1/2$. Keep the exact positive
+coefficients $h_i=3\kappa_i,b_{ij}$ of (9.3), and put
+
+$$
+\begin{aligned}
+F(L)&=\sum_i h_iL_{ii}
+ +\sum_{i<j}b_{ij}
+    \left(L_{ij}+L_{ji}+4\sqrt{L_{ii}L_{jj}}\right),\\
+B_{\rm pop}&=\frac{11}{20}+c_{\rm pop},\qquad
+c_{\rm pop}=\frac{21456}{9370805}.
+\end{aligned}
+\tag{13.2}
+$$
+

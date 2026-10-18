@@ -1,0 +1,10 @@
+**假设 176.1（固定表示及乘序）。** 复用[前卷第101–107章，钉版b9b4a62b69908c14f2b3ceb07204620db61aa862](https://github.com/the-omega-institute/trureturing/blob/b9b4a62b69908c14f2b3ceb07204620db61aa862/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)的固定表示，
+
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+\mathsf a=-iX,\quad \mathsf b=-iY.
+$$
+
+词 $h$ 的矩阵读出 $U(h)$ 按印刷顺序将字母替为 $\mathsf a,\mathsf b$ 后相乘；空贡献给 $I$。作为矩阵对态的作用，右因子先执行。几何路径的叶事件从左到右累计，这是另一条合同；若要将矩阵的实际时间执行与叶事件对应，须另供相应编译和取得合同，不能仅借同一个词把二者次序混同。
+

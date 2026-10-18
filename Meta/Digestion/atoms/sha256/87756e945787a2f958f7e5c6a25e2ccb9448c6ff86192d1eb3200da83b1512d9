@@ -1,0 +1,83 @@
+**Lemma 3.2 (seven exclusions and two remaining collisions).** The
+only possible equalities between different members of this
+representative system are
+
+$$
+f(0,3)=f(3,0),\qquad f(1,3)=f(3,1).
+\tag{TC.2}
+$$
+
+Proof. The following are reused facts about the full actual graph at
+both caps, as collected and proved in SI Section 2 from PCA Theorems
+34.3 and 35.1, PE Lemma 4.1, and WTF Theorem 9.1. Live queries are
+fresh. Equal-hit histories with different supports cannot share a host;
+equal-support histories with unequal hits cannot share; properly nested
+supports cannot share. Different count cells sharing a host must, after
+orienting their hits by $h<g$, satisfy
+
+$$
+g-h\ge2,\qquad z-w\ge2.
+\tag{TC.3}
+$$
+
+These statements use the original distinct costs and both execution
+caps. In particular they are stronger than abstract count-cell rules.
+
+In the rectangle $\{0,1,2,3\}^2$, (TC.3) allows exactly nine
+unordered pairs:
+
+$$
+\begin{aligned}
+&(0,2)(2,0),\quad(0,2)(3,0),\quad(0,3)(2,0),\\
+&(0,3)(3,0),\quad(0,3)(2,1),\quad(0,3)(3,1),\\
+&(1,2)(3,0),\quad(1,3)(3,0),\quad(1,3)(3,1).
+\end{aligned}
+$$
+
+Here juxtaposition denotes a pair of cells. Completeness follows by
+listing $h=0,1$, then $g\ge h+2$, $z\ge2$ and $w\le z-2$.
+
+For a hypothetical collision let $S$ be the smaller-hit history's
+support and $T$ the larger-hit history's support. If they are equal or
+nested the preceding exclusions already apply. For incomparable
+supports use [PE, Theorem 3.1][PE]: if the old assignment on
+$S\setminus T$ is all zero and that on $T\setminus S$ is all one,
+then
+
+$$
+|S\setminus T|=|T\setminus S|,\qquad
+C_{S\setminus T}=C_{T\setminus S}.
+\tag{TC.4}
+$$
+
+No agreement on $S\cap T$ is required. We check both polarity
+premises separately for all seven excluded pairs.
+
+For $00$ versus $111$, and $000$ versus $11$, the lower history
+is all zero and the higher history all one. For $000$ versus
+$0111$, the higher history's only zero is at $j\in S\cap T$;
+the lower history is all zero. For $1000$ versus $111$, the
+lower history's only one is at $j\in S\cap T$; the higher
+history is all one. Thus (TC.4) applies in each of these four
+comparisons. It forces $|S|=|T|$, contradicting their respective
+lengths $2,3$; $3,2$; $3,4$; and $4,3$.
+
+For the other three exclusions the supports have equal size and share
+all but at most one coordinate. The details are:
+
+| Reply words | Guaranteed common coordinates | Private polarities |
+| --- | --- | --- |
+| $00,11$ | the first coordinate $j$ | lower all zero, higher all one |
+| $000,011$ | the first two queried coordinates, since the first reply is $0$ in both | lower all zero; the higher history's only zero is $j$ |
+| $100,111$ | the first two queried coordinates, since the first reply is $1$ in both | the lower history's only one is $j$; higher all one |
+
+The common-prefix claims follow from the common start and the fixed
+successors, and freshness makes the listed coordinates distinct. In
+each incomparable case the two private sets are therefore disjoint
+singletons. Both polarity premises hold, so (TC.4) would equate the
+costs of two different individual coordinates, contrary to
+$c_1<\cdots<c_7$. The equal-support cases were already excluded.
+Exactly the two pairs in (TC.2) remain. Their four endpoints are
+distinct cells; no state can realize both pairs, since that would
+also identify an excluded cross pair. $\square$
+

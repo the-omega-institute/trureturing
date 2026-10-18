@@ -1,0 +1,27 @@
+**Definition 10.1 (Finite equivariant path family).** Let $\mathcal W$ be a
+finite set of declared paths. For every $w\in\mathcal W$, let
+
+$$
+\mathscr R_w:\mathcal V\longrightarrow\mathcal Y_w,
+\qquad
+G_w=\mathscr R_w^{\mathsf T}\mathscr R_w,
+$$
+
+and suppose that each path has the same source rotation action and an
+orthogonal output action:
+
+$$
+\mathscr R_w(I_m\otimes Q)=W_{w,Q}\mathscr R_w,\qquad Q\in SO(3).
+\tag{10.1}
+$$
+
+Put
+
+$$
+\mathscr R_{\mathcal W}v=(\mathscr R_wv)_{w\in\mathcal W},\qquad
+\mathcal Y_{\mathcal W}=\bigoplus_{w\in\mathcal W}\mathcal Y_w.
+$$
+
+The direct-sum output carries the block-diagonal orthogonal action
+$W_{\mathcal W,Q}=\bigoplus_wW_{w,Q}$.
+

@@ -1,0 +1,17 @@
+**Corollary 13.2 (all-size formula at the positive law).** For connected
+$G$ on $n$ vertices, at the fixed law (GDB.53),
+
+$$
+Z_G=2^n\left[
+\left(\frac{64}{619}\right)^n+
+\left(\frac{62}{619}\right)^n
+\right].
+\tag{GDB.57}
+$$
+
+For disconnected $G$, with component sizes $n_1,\ldots,n_c$, the
+answer is the product of (GDB.57) at those sizes.
+
+Proof. Substitute $e=2n$, $A_v=63/619$ and $B_v=1/619$ in
+(GDB.54). $\square$
+

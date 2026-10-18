@@ -1,0 +1,27 @@
+### 80.3. A variance bound restricted to the actual Pauli kernel
+
+Put
+
+    S = (1/k) sum_f C_f,
+    E_f = C_f-S,
+    a = sum_f ||E_f||_F^2 = k-k||S||_F^2.              (6)
+
+The final equality uses ||C_f||_F=1. Define a linear map Zeta:C^k -> A tensor B by giving its f-th column the coefficient matrix E_f N_f. Since N_f is unitary,
+
+    ||Zeta||_F^2 = sum_f ||E_f N_f||_F^2 = a.           (7)
+
+Let D:C^k -> A tensor B have columns d_f. For every v in the complexification of L, (5) gives
+
+    Mat(Dv) = sum_f v_f C_f N_f
+            = sum_f v_f E_f N_f + S sum_f v_f N_f
+            = Mat(Zeta v).
+
+Consequently DV=Zeta V. If M=D^*D is the Gram matrix of the original d_f, then
+
+    Tr(Pi M) = ||DV||_F^2 = ||Zeta V||_F^2
+             = Tr(Pi Zeta^*Zeta) <= Tr(Zeta^*Zeta)=a.  (8)
+
+The projection contraction in (8) is essential: the bound is a, not r times a. No d_f is replaced, no equality frame is independently chosen, and their mutual Gram matrix and phases are unchanged.
+
+This is a restricted-environment statement. The three-dimensional nullity bound does not extend to arbitrary B environments: the matrices then need not lie in one common three-dimensional Pauli space.
+

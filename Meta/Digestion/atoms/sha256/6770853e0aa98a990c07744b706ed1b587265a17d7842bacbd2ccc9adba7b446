@@ -1,0 +1,26 @@
+**Lemma 3.2 (canonical target vectors distinguish actual states).**
+For every $d\ge1$, the map
+$u\mapsto(\Gamma_q(u))_{q\in W_d}$ is injective on $S_d$.
+Consequently any two distinct branches in $S_3$ differ at some
+nonempty target $q\in W_3$. For each such nonempty $q$,
+$\Gamma_q(A)\ne\Gamma_q(B)$, and $\Gamma_q(A)$ differs
+from the factor of every branch in $S_3$.
+
+Proof. At $d=1$, $\Gamma_\varepsilon$ takes the distinct values
+$(2,1),(1,0),(0,0)$ on $A,B,C_0$. Inductively the root factor
+separates both leaves from every branch. On a branch,
+$\Gamma_{Lq}(\langle x,y\rangle)=\Gamma_q(x)$ and
+$\Gamma_{Rq}(\langle x,y\rangle)=\Gamma_q(y)$ for
+$q\in W_{d-1}$. Equality of the full vectors therefore gives
+equality of both children by induction. Distinct branches agree
+at the root target, so their distinguishing target is nonempty.
+
+For a nonempty $q$, the first coordinates of the factors on $A,B$
+are respectively $s(q)+2$ and $s(q)+1$, hence differ. For any
+finite $u$ and word $r$, (NCE.5) gives $b_r(u)\le s(r)+2$:
+a branch endpoint has $b=0$, and a blocking leaf contributes at
+most the weight of the whole word plus two. Write $q=sr$ with
+$s\in\{L,R\}$. On a branch its factor is the factor at $r$
+of one child, with first coordinate at most $s(r)+2<s(q)+2$.
+It cannot equal the factor on $A$. $\square$
+

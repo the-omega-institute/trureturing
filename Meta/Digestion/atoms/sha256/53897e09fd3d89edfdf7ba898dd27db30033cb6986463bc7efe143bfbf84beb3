@@ -1,0 +1,30 @@
+**Proposition 7.3 (global finite calls do not give a global address cap).**
+If $f$ is nonconstant, no globally correct reader for this encoder
+and menu has a finite literal-address peak bound uniform over all
+entries and legal lags. Its selected-entry frontier remains finite,
+and Theorem 2.2 still gives a finite uniform global call bound.
+
+**Proof.** Choose $b,b'$ with different task values. Their codes are
+zero and their reference ages $K-f(b)$ and $K-f(b')$ differ.
+At displayed singleton $S_*$ they are a zero-read conflict in
+[NAR, (NAR.16.7)][NAR]. Theorem 16.6 there therefore rules out a
+uniform address cap for this feasible encoder.
+
+Concretely, add $u\ge0$ to both selected lags in (NTL.10). At
+each $u$ the complete later entries of the two histories still
+agree, including all hidden comparisons, while their outputs differ.
+Their every slot exponent is at least $K+\lambda_0+u$. Hence all
+whole words shorter than
+$D+\lfloor(K+\lambda_0+u)/2\rfloor$ reply branch on both.
+A deterministic correct reader must eventually obtain a differing
+reply. The length of that word is at least this diverging bound.
+Repeating shallow or absent calls does not defeat the equal-history
+induction. $\square$
+
+For a constant task this particular two-selected-history witness is
+absent. The exact all-entry criterion is still NAR16.6: a fixed
+encoder admits a uniform finite word cap exactly when it already
+separates every zero-read menu conflict. A constant task at one
+entry is not a claim about that condition at every other entry.
+Nor does Theorem 3.2 assert a Boolean fiber at every cut or row.
+

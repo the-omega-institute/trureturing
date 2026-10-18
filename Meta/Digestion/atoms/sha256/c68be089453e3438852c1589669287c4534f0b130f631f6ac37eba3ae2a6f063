@@ -1,0 +1,24 @@
+**Corollary 2.3 (finite total verifier).** For rational $\mu$ on $S_d$ and
+rational $C>0$, define $V_{\mathrm{joint}}(d,\mu,C,\pi)$ as follows. The
+finite certificate $\pi$ lists, for every nonempty range-feasible
+$P\subseteq\operatorname{supp}(\mu)$, the hard-target cells of $Y_P$ and
+rational values for their masses. The verifier recomputes all target tables,
+checks that the list is complete, and accepts exactly when
+
+$$
+\kappa_\mu(P)^2\le C^2
+\quad\text{for every listed }P.
+\tag{JTC.7}
+$$
+
+Malformed or incomplete tables are rejected. There are finitely many subsets,
+targets and rational comparisons, so this is a total computable predicate.
+If it accepts, every length-$n$ complete arbitrary-donor native template has
+mass at most $C^n$ for every $n$. Thus the accepted cap satisfies the universal
+mass premise of [NPC, Definition 8.1], with full joint block weights and all
+correlations retained.
+
+The verifier is a pointwise soundness result. It does not assert that accepted
+caps are cofinal in the optimizing pressure, and it does not provide the
+uniform finite-length modulus absent from [NPC, Proposition 8.3].
+

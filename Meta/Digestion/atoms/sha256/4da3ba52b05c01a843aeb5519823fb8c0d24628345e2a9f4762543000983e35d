@@ -1,0 +1,10 @@
+### 94.5. Consequence for the attained calibrated global problem
+
+**Corollary 94.3.** If the unrestricted original-channel optimum is strictly below 1/4, an attained calibrated minimizer has local Gram ranks between three and seven, with at least one rank at most six.
+
+**Proof.** Apply the physical global calibration theorem of section 72 and the compact Gram formulation. The common-stress and earlier rank-two bounds in section 92.3 place both ranks in {3,4,5,6,7}. A global minimizer is a local minimum, so Theorem 94.1 excludes the pair (7,7).
+
+This corollary excludes neither unequal pairs with one rank seven nor pairs with both ranks at most six. The active-support equalization and full one-dimensional-kernel face directions used above do not automatically extend to those cases. No rank-preserving calibration, convex extreme-point reduction, or transfer of local minimality from leaking channels has been used. The unrestricted original optimum remains in [√3−3/2,1/4].
+
+The dependencies are the original calibrated adaptive norm of section 91; the same-witness, support, fixed-direction, support-size, and two-fibre results of section 92; and the quantitative three-singleton exclusion of section 93. The additional argument here is the explicit complex quartet tangent and its weighted row contradictions. It does not require the earlier singular-error or interior-density necessary conditions for three-singleton support, or a real gauge, small-norm transversal, or reciprocal-Gram positivity assertion.
+

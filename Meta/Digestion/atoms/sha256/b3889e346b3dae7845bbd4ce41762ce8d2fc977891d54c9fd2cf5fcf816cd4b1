@@ -1,0 +1,22 @@
+**Theorem 5.2 (the fixed physical embedding at zero gain).** Retain the physical isometry
+
+$$
+E=\bigl((e_0+e_4)/\sqrt2,\ (e_1+e_3)/\sqrt2,\ e_2\bigr),
+\quad E^\dagger E=I_3,\quad D^\dagger EL=E.
+\tag{P.18}
+$$
+
+The physical channels $N_0^{\rm ph}(X)=EXE^\dagger$ and $N_1^{\rm ph}(X)=E\Phi(X)E^\dagger$ have the identical native $\theta$ outputs, belong to $\mathcal R_0$, and satisfy
+
+$$
+\gamma(N_0^{\rm ph})=\gamma(N_1^{\rm ph})=0,
+\qquad \delta(N_0^{\rm ph})=0,\qquad\delta(N_1^{\rm ph})=1.
+\tag{P.19}
+$$
+
+**Proof.** The two channels agree on the $P$-supported algebra. By the intertwining identity in (P.18), their passive phase outputs are $E\chi_\mp$, conjugate states with difference spectrum $(1,0,0,0,-1)$. Their physical populations are $(1/4,1/4,0,1/4,1/4)$ and $\langle n_1n_3\rangle=1/4$. Hence their actual $B_0=0$ and $B_k=1$ for $k\geq1$.
+
+Set $f_0=(e_0-e_4)/\sqrt2$, $f_1=(e_1-e_3)/\sqrt2$. The full physical decoder with Kraus matrices $E^\dagger$, $|2\rangle\langle f_0|$, $|2\rangle\langle f_1|$ has TP sum $I_5$ and composites $\mathrm{id}_3$ and $\Phi$ respectively on every complex input matrix. The first error is zero. The orthogonal physical states $(|0\rangle\pm|2\rangle)/\sqrt2$ have identical $N_1^{\rm ph}$ outputs; contraction forces error at least one, attained by this decoder. This proves (P.19) using the particular $E$, without replacing it by (P.11)'s embedding.
+
+Using physical $\chi_\pm$ instead would yield passive inputs $L^\dagger\chi_\pm=\theta_\pm$ and real output states $E\theta_\pm$. Their difference has nonzero real part and fails oldblindness. Spectrum and populations do not repair this different-input failure. $\square$
+

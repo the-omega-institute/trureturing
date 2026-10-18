@@ -1,0 +1,49 @@
+## 三、第二定理：隐藏信息必须经过三个不同算子
+
+本轮最重要的新抽象是把 FIB 动力学分解为三个算子：
+
+```math
+\boxed{
+\text{状态投影}
+\quad+\quad
+\text{因果转移}
+\quad+\quad
+\text{实际读出}
+}
+```
+
+设：
+
+- $\mathcal H=\mathbb R^\Sigma$ 是五态 signed-law 空间；
+- $P:\mathcal H\to\mathbb R^4$ 是当前投影；
+- $U_w:\mathcal H\to\mathcal H$ 是一条合法动作词或因果路径 $w$ 的转移；
+- $R_w:\mathcal H\to\mathcal Y_w$ 是这条路径上的实际输出读出。
+
+当前投影可以取：
+
+```math
+P(p)=
+\bigl(
+p\cdot1,\,
+p\cdot x,\,
+p\cdot y,\,
+p\cdot z
+\bigr).
+```
+
+由于：
+
+```math
+\ker P=\operatorname{span}\{d\},
+```
+
+当前看不见的空间是一维的。
+
+定义沿路径 $w$ 的隐藏响应：
+
+```math
+\mathcal V_w(d)=R_w(U_wd).
+```
+
+它区分三种状态。
+

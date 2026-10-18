@@ -1,0 +1,17 @@
+**Definition 27.3 (Quantifiers and distinct resource coordinates).** The asymptotic assertion of Theorem 25.4 has quantifier order
+
+$$
+\begin{gathered}
+\forall\mathcal A\ \exists c_{\mathcal A}>0\ \exists s_{\mathcal A}>0\\
+\forall s\in(0,s_{\mathcal A})\ \forall i\in\{0,1\}:
+\mathbb E_{i,e^{-s}}T\ge c_{\mathcal A}s^{-11}.
+\end{gathered}
+\tag{27.5}
+$$
+
+where $\mathcal A$ ranges over the full-contract fixed machines. It does not exchange the first quantifier with an infimum over machines chosen separately at each $s$. In particular it supplies no uniform converse for machines retuned to a band width $\epsilon$, even if their numbers of states are bounded while their transition probabilities or transition-description precision vary. Proposition 27.2 demonstrates an obstruction to that exchange in the kernel argument, without settling the testing performance of such retuned machines.
+
+The upper bound (26.4) is an achieved number of states, not a minimum. The comparison with Section 22 neither gives a sharp state or bit lower bound nor proves that cubic mean is optimal among all growing-memory rules. Its statement is that fixed total persistent state cannot realize the published cubic order under this contract, while the specified growing-memory procedure does realize it. A lower bound for deterministic deadlines on supplied bands is a different optimization from a lower bound for expected unbounded stopping and is not substituted for one here.
+
+All the assertions refer to the one fixed $H_c$, its ninth-degree comparison shape and the stated stationary read/stop experiment. A changing residual, a generic family of residual polynomials, hidden-state observations, exact probability responses, external elapsed-time decisions or source resets would require other hypotheses. The producer dimension $D=6$, finite observer states, retained transition descriptions, growing arithmetic workspace and number of paid reads remain different resources. No all-lag discrete-tree memory assertion is a premise or conclusion of this experiment; neither is a physical memory or elapsed-time assertion.
+

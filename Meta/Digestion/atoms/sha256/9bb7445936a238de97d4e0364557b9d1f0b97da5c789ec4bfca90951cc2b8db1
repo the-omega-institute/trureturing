@@ -1,0 +1,25 @@
+**Definition 1.3 (Entire exact-real domain).** For every finite $N\ge1$ retain
+
+$$
+\Theta_N=\left\{(\lambda,M_0,M_1):
+\begin{array}{l}
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\\
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\quad
+\lambda M_1^2\mathbf1=0
+\end{array}\right\}.
+\tag{1.5}
+$$
+
+$\lambda$ is a row, $M_0,M_1$ are $N\times N$ matrices with arbitrary exact-real entries, and $\mathbf1$ is the all-one column. Structural zeros, zero stationary masses, reducibility, periodicity and noncontractive presentations are allowed. The legality condition is scalar; entrywise $M_1^2=0$ is not required of this domain. Set $M_w=M_{w_1}\cdots M_{w_n}$ and $M_\varepsilon=I$.
+
+For a word $w$, $[w]_a$ specifies $X_a,\ldots,X_{a+|w|-1}=w$, and $[w]=[w]_1$. The common-matrix convention is the single actual joint law
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\qquad
+P_\theta([w]_a)=\lambda M_w\mathbf1.
+\tag{1.6}
+$$
+
+Here $P_\theta$ is the visible marginal. Right consistency follows from $A\mathbf1=\mathbf1$, left consistency from $\lambda A=\lambda$, and normalization from $\lambda\mathbf1=1$. The consistent finite distributions therefore extend to a stationary probability on the two-sided finite-alphabet space, as in [Universal, Proposition 4.2][U]. Scalar legality makes each adjacent $11$ event null; their countable union is null. Every seam is evaluated by the ordered product in (1.6), with the clock counting original emitted bits.
+

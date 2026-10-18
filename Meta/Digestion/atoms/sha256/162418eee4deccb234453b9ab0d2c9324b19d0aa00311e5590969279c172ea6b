@@ -1,0 +1,47 @@
+**Theorem 6.1 (Exact fixed-parent joint-phase energy).** On the
+same law and parent of Definitions 1.1–1.2, put
+$\mu_{ij}=\mathbb E_p(s_is_j)$. Then
+
+$$
+\langle\psi_z,H\psi_z\rangle
+=|z-1|^2\mu_{ij}
+\left(\frac{w_i}{1+\lambda_i}+
+\frac{w_j}{1+\lambda_j}\right).
+\tag{6.1}
+$$
+
+For an adjacent pair it vanishes. For a nonadjacent pair
+it is positive exactly when $z\ne1$.
+
+Proof. For any complex function $f$ on legal configurations,
+write $\Psi_f=\sum_S\sqrt{p(S)}f(S)|S\rangle$.
+Detailed balance and the ground-state transform give the
+occupied-endpoint form
+
+$$
+\langle\Psi_f,H\Psi_f\rangle
+=\sum_Sp(S)\sum_{h\in S}\frac{w_h}{1+\lambda_h}
+\left|f(S)-f(S\setminus\{h\})\right|^2.
+\tag{6.2}
+$$
+
+Each undirected edge is counted once, so no extra factor
+one half occurs. The unit-deletion occupied-endpoint and
+joint-monomial computations are established ingredients of
+[Miao–Yin, §3.2, equations (13), (21), (22)][MY]; (6.2)
+uses the actual coordinate deletion rates.
+
+For $f(S)=z^{s_is_j}=1+(z-1)s_is_j$, only deletion of
+$i$ or $j$ from a set containing both changes $f$.
+The squared change is $|z-1|^2$. Summing those occupied
+configurations gives (6.1). Equivalently, for the projector
+$F=n_in_j$, use $U_z=I+(z-1)F$ and $H\psi_+=0$ to get
+$|z-1|^2\langle F\psi_+,HF\psi_+\rangle$.
+Adjacent joint occupation is forbidden; a nonadjacent legal
+pair has positive mass. $\square$
+
+This finite-angle formula is an application of the known
+Dirichlet mechanism, not a new general energy principle.
+Its relation to the full-support cut classification keeps
+the preparation, law, control and parent fixed simultaneously.
+

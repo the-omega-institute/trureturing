@@ -1,0 +1,59 @@
+## 136. 同一五态源上的数守恒效应与已供应参考
+
+**定义 C-136.1（物理粒子数与固定源的记号）。** 保持 (C128.1)–(C128.2)
+的物理五态、能量基 $\mathcal B$、$\psi,\eta,Q,P_Q,P$ 及两个零假设域不变，记
+
+$$
+\begin{aligned}
+\widehat N&=\operatorname{diag}(0,1,1,1,2)_{(e_0,e_1,e_2,e_3,e_4)},\\
+S&=\operatorname{span}(e_0,e_4),\qquad \Pi_S=P_{e_0}+P_{e_4},\\
+\psi_-&=(e_0-e_4)/\sqrt2,\qquad P_-=P_{\psi_-}.
+\end{aligned}
+\tag{C136.1}
+$$
+
+$\widehat N$ 是物理粒子数算符，不是恢复问题中的通道 $N$。
+(C128.1) 的等距矩阵 $E=(\psi,\eta,e_2)$ 在此亦记作 $E_N$；
+它始终是固定嵌入 $\mathbb C^3\to\mathcal K_3$，不是以下联合宣告效果 $\mathsf E$。
+相干数仍按物理能量基 $\mathcal B$ 定义，不按 $\widehat N$ 的本征基定义。
+复振幅、全部有限混态分解及 $\mathcal F_Q=\mathcal F_{\rm all}\cap\mathsf D(Q)$
+的量词均沿用 C-128.1、C-129.1。
+
+**假设 C-136.2（单输入与参考的共同供应）。** 每次试验供应一份未知系统输入，
+目标为 $P$，零假设为 $\mathcal F_{\rm all}$ 或 $\mathcal F_Q$ 中的任意态。
+参考空间 $R$ 为有限维，带固定整数电荷表示
+$\widehat N_R=\sum_\ell\ell R_\ell$；允许各电荷有简并。
+若供应参考，则它是一个固定、已给定的密度态 $\zeta$，与系统输入独立，
+目标和每个零假设下均为同一个 $\zeta$。每次试验重新供应一份；
+不附参考返还、保持、跨试验复用、重置或制备服务。
+所有设置均不依赖未知的实际假设标签，也不附额外源副本或可访问的标签旗标。
+
+**定义 C-136.3（新声明的测量比较菜单）。** 无参考时允许全部
+$0\preceq T\preceq I$、$[T,\widehat N]=0$ 的系统效果。
+有参考时允许全部
+
+$$
+0\preceq\mathsf E\preceq I,\qquad
+[\mathsf E,L]=0,\qquad
+L=\widehat N\otimes I_R+I\otimes\widehat N_R.
+\tag{C136.2}
+$$
+
+这是按效果声明的数学菜单，未把 C-130.1 的独立翻转、相位调用预算与末端
+$n_1$ PVM 合成能力扩充为 (C136.2)。无条件宣告概率为
+
+$$
+\alpha^\zeta(\mathsf E)=\operatorname{Tr}(\mathsf E(P\otimes\zeta)),\qquad
+\beta^\zeta_{\mathcal F}(\mathsf E)
+=\sup_{\rho\in\mathcal F}\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C136.3}
+$$
+
+令 $A^0_{\mathcal F}(\delta)$ 为无参考菜单在
+$\beta_{\mathcal F}(T)\le\delta$ 下的最大目标功效，
+$A^\zeta_{\mathcal F}(\delta)$ 为 (C136.2) 在
+$\beta^\zeta_{\mathcal F}(\mathsf E)\le\delta$ 下的最大目标功效，$0\le\delta\le1$。
+下文的构造与有限维紧性给出这些最大值的存在。
+不加上标的 $A_{\mathcal F}$ 保留 C-128.2 的不限系统效果含义。
+效果只规定一个事件的概率，不规定条件输出态或测量仪器。
+

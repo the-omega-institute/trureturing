@@ -1,0 +1,52 @@
+**Theorem 6.2 (exact rational threshold decisions).** For every
+$\lambda\in\mathbb Q_{\ge0}^3$ and supplied finite rational
+$z\ge0$, the sentence
+
+$$
+\exists C\in\mathcal C_K\quad W_\lambda(C)\le z
+\tag{NRF.27}
+$$
+
+is decidable, with literal extraction when true. This includes
+every pattern of zero weights.
+
+Proof. If all weights vanish, (NRF.27) is exactly
+$\mathcal C_K\ne\varnothing$, decided by NPS Theorem 4.2.
+Assume some weight is positive. Multiply by a common positive
+integer denominator $d$ for the weights, and put
+$w=d\lambda\in\mathbb N^3$ and $B=\lfloor dz\rfloor$.
+The weighted run sums $w\cdot c_C(u)$ are integers, so
+(NRF.27) is equivalent to their being at most $B$ for all $u$.
+
+Choose any $i$ with $w_i>0$. Nonnegativity of every summand gives,
+on the same run,
+
+$$
+w\cdot c_C(u)\le B
+\quad\Longrightarrow\quad
+c_{C,i}(u)\le\left\lfloor B/w_i\right\rfloor.
+\tag{NRF.28}
+$$
+
+Consequently every candidate satisfying the objective has an
+action horizon from (NRF.13), using this coordinate. One may
+take the minimum over all positive-weight coordinates. Apply
+Proposition 3.3 at that horizon with the single path inequality
+
+$$
+w_q q_\pi+w_a a_\pi+
+w_\ell\sum_{e\in E_R}m_{\pi,e}|\delta_e|\le B.
+\tag{NRF.29}
+$$
+
+Its coefficients are numerals, so it is Presburger even when
+descriptor lengths are unbounded. The action horizon follows
+from the actual objective of every allowed comparator; it is
+not an installation cutoff or an extra promise. Zero-weight
+coordinates contribute zero to (NRF.29) and impose no independent
+price restriction. In particular a sole positive length weight
+uses Theorem 2.1, not a deletion of free root reads. A sole
+positive update weight uses the read-block bound in (NRF.13).
+The necessity and sufficiency of Proposition 3.3 give the
+exact threshold decision and extraction. $\square$
+

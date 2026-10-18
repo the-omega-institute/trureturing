@@ -1,0 +1,23 @@
+**Proposition 5.2 (averaging a residual before its norm loses a defect).**
+There is an input B edge on (1.3) for which the averaged signed residual
+is zero on every complete coordinate, but $e_B=1/6$.
+
+**Proof.** Put $r=1/3$ and
+
+$$
+W_\pm=(1-r)\delta_\beta+
+ r\left[\left(\frac12\pm\frac14\right)\delta_{\alpha\alpha}
+       +\left(\frac12\mp\frac14\right)\delta_{\alpha\beta\beta}\right],
+\quad Q_\pm=r\delta_\alpha+(1-r)\beta W_\pm.
+\tag{5.8}
+$$
+
+Each $W_\pm$ has suspended emission $r$ and no depth-one suspended tail;
+each $Q_\pm$ has p emission $r$, depth-one tail $2/9\le\lambda$ and
+zero later tail. Hence all four descriptors lie in their required spaces.
+Take $G_B=\tfrac12\delta_{(Q_+,W_-)}+\tfrac12\delta_{(Q_-,W_+)}$.
+Its two conditional residual errors are $W_+-W_-$ and its negative,
+so their signed average is zero. Their individual TV is $r/2=1/6$,
+and (2.3) gives $e_B=1/6$. The input descriptors are distinct, so this
+is cancellation across different full conditioning fibres. $\square$
+

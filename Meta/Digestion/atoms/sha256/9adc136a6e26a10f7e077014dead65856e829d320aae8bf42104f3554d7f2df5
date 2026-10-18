@@ -1,0 +1,24 @@
+**Proposition 150.2 (One globally feasible stopped strictifier).** For
+every $L\ge1$, set
+
+$$
+e_z=\frac12,\qquad a_{i,z}=A_z=\frac12+\frac1{4L} (1\le i\le L),
+\qquad p_z(0)=\frac12,\quad p_z(i)=\frac1{2L}.
+\tag{150.2}
+$$
+
+Use only the empty schedule with $w^z_{\varnothing}=1$ and that output
+vector; every other complete $w,T$ entry is zero. This is one rational
+$O$ and $N$ allocation on all words, with
+$0<e_z<a_{L,z}=A_z<1$, and cap at most $e_z$.
+
+**Proof.** It is one normalized vector on one empty schedule, so all
+common-mass equations hold. At any zero-containing word the overlap with
+its target is $(1-A_z)+1/(2L)$: $1-A_z<1/2$ and $1/(2L)\le A_z$.
+Thus its TV is $1/2-1/(4L)\le e_z$, independently of its first-zero index
+or later zero pattern. At $1^L$ the TV is $1/2=e_z$.
+By the exact TV-row calculation this checks all rows simultaneously.
+The strict inequalities also hold at $L=1$, where $A_z=3/4$.
+No event-specific or word-specific allocation is mixed into the construction.
+$\square$
+

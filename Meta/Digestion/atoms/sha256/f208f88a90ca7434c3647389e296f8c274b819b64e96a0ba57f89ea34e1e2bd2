@@ -1,0 +1,9 @@
+**Counterexample 3.4 (shortest now is insufficient).** In
+$u=\langle\beta,\alpha\rangle$ both leaves have length one. Choosing
+$L$ is initially shortest. After one update its shortest descendant
+has length two, while $R$ remains a leaf of length one. The minimizing
+phase chooses $R$. For any initially shortest leaf, its score is at
+most $m(u)+1$, so its future shortest descendant is at most one letter
+longer than the global minimum. This additive-one statement does not
+give the exact permanent property.
+

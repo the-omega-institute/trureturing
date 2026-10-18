@@ -1,0 +1,39 @@
+**定义 41.2（Credited common cuts and all-one options in quotient coordinates）。** For $0\le t\le p-1$ put
+
+$$
+I_t(i)=\mathbf1_{\{t,t+1\}}(i),\qquad
+S_t(\beta)=\{i:(I_0(i),\ldots,I_{t-1}(i))=\beta\},\qquad
+h_t=k-2t.
+\tag{41.4}
+$$
+
+Write $\operatorname{Const}$ for image size at most one, including empty images. A common eligible cut is $a=2q+r$ with $0\le a<k$ and $r\in\{0,1\}$, satisfying
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(i,s):i\in S_t(\beta),\ h_t-2\le s<h_t\}
+&& (0\le t<q,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(i,s):i\in S_q(\beta),\ h_q-r\le s<h_q\}
+&& (\beta\in\mathbb F_2^q),\\
+&\Gamma(i,s)=\Lambda_i
+&& (0\le i<p,\ 0\le s<k-a).
+\end{aligned}
+\tag{41.5}
+$$
+
+These are exactly (24.4)–(24.6) on the value join, with $\theta=-2i$. The last interval contains $s=0$, so its constant is $\Lambda_i$. Cut zero is eligible exactly when $\Gamma$ is independent of INITIAL tail. Common-cut existence, including infinity, is supplied by Theorem 24.2; (41.5) is notation for that supplier, not a new existence criterion.
+
+Let $\mathcal A$ consist of $d\in\{0,\ldots,p-1\}$ such that
+
+$$
+\begin{aligned}
+&\operatorname{Const}\{\Gamma(i,s):i\in S_t(\beta),\ h_t-2\le s<h_t\}
+&& (0\le t<d,\ \beta\in\mathbb F_2^t),\\
+&\operatorname{Const}\{\Gamma(i,s):i\in S_d(\beta),\ 0\le s<h_d\}
+&& (\beta\in\mathbb F_2^d).
+\end{aligned}
+\tag{41.6}
+$$
+
+These are the all-one stopping conditions (31.6), instantiated directly from their archive meaning at width two; the parameter restriction of Theorem 33.2 is not invoked. In particular $0\in\mathcal A$ exactly when the joined target is constant on all successful INITIAL records. Its two components need not equal each other or $f(\bot)$.
+

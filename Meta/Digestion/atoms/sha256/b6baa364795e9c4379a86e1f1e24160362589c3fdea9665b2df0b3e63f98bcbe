@@ -1,0 +1,39 @@
+**Definition 2.2 (fixed-response paths).** For a vector
+$v\in\mathcal C^{E_R}$, form the partial function $F_v$ on $E$ by
+selecting the $v(e)$ successor at a read state and the sole successor
+at an update state. Give its edge weight zero or one, respectively.
+There is no outgoing edge at a halt: this graph describes actions up to
+first halt, rather than an absorbing self-loop after termination.
+
+Let $P_v(x,y,d)$ mean that a finite path of this partial function starts
+at $x$, ends at $y$, and contains exactly $d$ update edges. Its edges
+are all nonhalt actions. The empty path is included when $x=y,d=0$.
+This is an exact endpoint-and-update-count relation, not a sum of
+independently selected cycles.
+
+Its effective arithmetic description is the standard unary regular-path
+specialization: read edges are epsilon transitions and update edges
+consume one unary letter; see [To, §§1–2][TO]. For this functional graph
+one can obtain the formula directly from its unique orbit. Iterate from
+$x$ until halt or the first repeated vertex. Before a repetition, each
+occurrence of $y$ gives a fixed update count $a$. If $y$ occurs on the
+resulting simple cycle, let $a$ be its first update count and let $b$ be
+the number of update edges on that cycle. Its later occurrences give
+exactly
+
+$$
+d=a+bz,\qquad z\in\mathbb N.
+\tag{NPS.6}
+$$
+
+Take the finite disjunction of these singleton and progression formulas;
+if $y$ never occurs the formula is false. This is the usual finite
+orbit construction, with the native edge weights specified. Every $a,b$
+is a computed integer of $G,v,x,y$, and $0\le b\le s$. In particular
+$b$ is not a source, descriptor or epoch variable. A zero-update cycle
+contributes the singleton $d=a$, with no division by zero and no exit
+from that cycle. A target halt can only occur on the finite terminating
+orbit, since it has no successor. Formula (NPS.6) therefore constructs
+$P_v$ effectively in Presburger arithmetic, without invoking a general
+parametric-counter reachability decision.
+

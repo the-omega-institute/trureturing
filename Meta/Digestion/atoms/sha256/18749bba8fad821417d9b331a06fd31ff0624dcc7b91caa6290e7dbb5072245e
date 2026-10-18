@@ -1,0 +1,27 @@
+**定义 34.1（纠缠破坏与控制指数）。** 系统、参考、噪声与控制沿用
+定义 27.1–27.2；特别是 $R$ 为任意有限复参考，电荷为零且不受操作。
+一条系统通道为 EB，指它与 $\operatorname{id}_R$ 的张量积把每个联合态送成
+$S:R$ 可分态。这里可分正算子允许未归一化，指有限个正乘积算子之和。
+固定基完全 CBC 使用定义 27.1，因而 CBC 蕴含 EB：输出具有
+$\sum_a P_a\otimes B_a$ 的形式，$B_a\succeq0$。
+反向不成立；不能用一个非 CBC 输出代替非 EB 证据。
+
+令 $\mathcal U_N=\{\operatorname{Ad}_U:[U,N_{\mathrm{tot}}]=0\}$。
+对 $\mathsf P\in\{\mathrm{EB},\mathrm{CBC}\}$，定义
+
+$$
+\begin{aligned}
+n_{\mathsf P}(\Psi_k)
+ &=\min\{n\ge1:\Psi_k^n\text{ 具有 }\mathsf P\},\\
+n_{\mathsf P}^{\mathcal U_N}(\Psi_k)
+ &=\min\{n\ge1:\text{每个 }U_1,\ldots,U_{n-1}
+ \text{ 均使 }\mathcal C_{k,n;\mathbf U}\text{ 具有 }\mathsf P\}.
+\end{aligned}
+\tag{34.1}
+$$
+
+空集的最小值为 $\infty$。控制可以不同；恰有 $n$ 次噪声、$n-1$ 个中间槽，
+没有初始或末端控制。EB 的受限插入量词直接采用
+[arXiv:1411.2517v4，定义 1、式 (9)–(12)][QI-I]；
+该文的定义不提供本通道的数值，也不建立 EB 与 CBC 的一般等价。
+

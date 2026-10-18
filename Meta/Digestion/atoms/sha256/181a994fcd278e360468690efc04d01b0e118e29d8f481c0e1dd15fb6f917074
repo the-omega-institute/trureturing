@@ -1,0 +1,48 @@
+**Corollary 12.2 (intersection with the published pattern obstructions).**
+Under Corollary 12.1, the $AB$ and $AD$ repeated collision pairs
+are impossible by the entire-class injections of Zero-Sixth Pairs,
+Theorem 4.1. Its Theorem 6.2 leaves exactly the following necessary
+pattern alternatives:
+
+1. A constant column can only be $C$; the proper columns $A,B,D$
+   use three different pairs.
+2. With no constant column and pair counts $(2,2,0)$, only
+   $AC\mid BD$ remains, with different pairs for its two blocks.
+3. With no constant column and counts $(2,1,1)$, the repeated
+   subset is one of $AC,BC,BD,CD$.
+
+Every configuration containing an $AC$ pair additionally requires
+
+$$
+24<d<48,\qquad y_4>d.
+\tag{12.2}
+$$
+
+In particular for $72<d<96$ only alternative 3 with repeated
+subset $BC,BD$ or $CD$ can remain.
+
+Proof. The published pattern theorem applies to exactly
+$\mathcal Z_6(d)\cap\mathcal F^{\ne0}_7(H)$, without a
+cardinality restriction on its pair injections and with its stated
+three-world hypothesis for the pattern list. Thus it applies to
+this same triple. Its strict $AC$ theorem (Theorem 5.1) requires
+either $0<d<24$, $y_4<d$, $\zeta<d$, or $24<d<48$, $y_4>d$.
+Intersecting with (12.1) removes the first alternative and gives
+(12.2). The pattern alternatives containing $AC$ are precisely
+constant $C$, $AC\mid BD$, and the $AC$ repeat in type $(2,1,1)$.
+The other three repeat types acquire no additional $AC$ restriction.
+These are intersections of necessary conditions on one common class,
+not new pair-injectivity proofs or sufficient realizations. ∎
+
+Consequently the remaining common-drift terminal-nonzero triple
+question is the simultaneous solvability of (7.1)–(7.7) with
+$d_i=d$, $h_i=0$ and all four products (7.8) zero, localized by
+(12.1) and the patterns above. Equivalently one may retain the
+source-graph system of Zero-Sixth Pairs, Proposition 7.1, with
+these additional necessary restrictions. No gains, late readings,
+pair witnesses or extrema can be fitted independently in either
+system. Conversely, a legal triple satisfying the original full
+system with $h_i=0$ and its four terminal collision products is
+$L_2$ by Proposition 7.2; the new restrictions are consequences,
+not substitutes for those full equations.
+

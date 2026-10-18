@@ -1,0 +1,15 @@
+**定义 15.2.2（局部干预）。** 对指标集 $J\subseteq\{1,\ldots,n\}$ 与固定值 $\alpha_J$，干预 $\operatorname{do}(x_J=\alpha_J)$ 替换 $J$ 行方程；其余坐标 $K=J^c$ 仍满足
+
+$$
+x_K=A_{KJ}\alpha_J+A_{KK}x_K+B_Ku+\xi_K.
+$$
+
+若 $I-A_{KK}$ 可逆，则干预后的其余平衡为
+
+$$
+\boxed{
+x_K=(I-A_{KK})^{-1}(A_{KJ}\alpha_J+B_Ku+\xi_K).}
+$$
+
+<a id="claim-15-2-3"></a>
+

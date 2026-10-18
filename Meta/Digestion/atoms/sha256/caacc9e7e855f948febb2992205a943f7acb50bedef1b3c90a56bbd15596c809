@@ -1,0 +1,8 @@
+**Definition 6.1 (Squeezing parameter).** For $N\ge2$ and $a\ge1$ let $s=a^2-1$,
+
+$$
+e^-=\frac{s(N-2)-\sqrt s\sqrt{sN^2+4(N-1)}}{2a(N-1)},\qquad \varepsilon(a)=\frac{a+(N-1)e^-}{a-e^-}.
+$$
+
+Here $e^-$ is the off-diagonal entry of Camargo and Nishida, §3.1. With $J$ the all-ones matrix and $u$ as in Theorem 3.8, the matrix $\mathbf W=(a-e^-)I+e^-J$ equals $\lambda(I-(1-\varepsilon(a))uu^\top)$ with $\lambda=a-e^-$, since its eigenvalue on $u$ is $a+(N-1)e^-$ and on $u^\perp$ is $a-e^-$. Stance: definition (source attested).
+

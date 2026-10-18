@@ -1,0 +1,29 @@
+**定义 43.1（标记完整星域）。** 取 $m\ge7,n=m+1$，互异标签 $x,y,z,u,t$ 与有序词
+
+$$
+B=(b,p,D),\qquad |B|=m-4,\quad |D|=m-6\ge1,
+\qquad C=(b,D),\quad W=(p,z,\operatorname{rev}(C),u,y).
+$$
+
+$B$ 的各项互异，且均与 $x,y,z,u,t$ 不同。
+
+下层操作为
+
+$$
+E_0=(x,[W]),\quad h_1=(x,z,\operatorname{rev}(B),u,y),\quad
+h_2=(p,u,C,z,x,y),\quad h_3=(u,y,\operatorname{rev}(B),x,z).
+$$
+
+令 $L$ 为它们的全部下层 $D$ 邻域之并。在每个 $S\in L$ 上取 $t$ 的全部 $m$ 个插入间隙及其完整原生 $ab$ 圈，得到顶点域 $V$。保留除 $S_0=[x,W]$ 外的全部零层供应 $(t,S)$，再施加四个标准开关
+
+$$
+\begin{aligned}
+g_0&=(t,p,z,\operatorname{rev}(C),u,y,x),&
+g_1&=(y,u,B,z,t,x),\\
+g_2&=(y,x,z,\operatorname{rev}(C),u,t,p),&
+g_3&=(u,y,\operatorname{rev}(B),x,t,z).
+\end{aligned}
+$$
+
+所得因子记为 $F$。伴随供应以 $p_0=(t,y,z,\operatorname{rev}(B),u,x)$ 为起点，实际字为 $(cb)^m$，端点顺次为 $p_0,\ldots,p_{2m-1}$。
+

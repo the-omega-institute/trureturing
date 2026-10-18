@@ -1,0 +1,34 @@
+## 451. The prescribed face gluing and compact completeness
+
+Reuse the cardinality-independent face argument of Section 287.
+Each genuine truncated hyperideal tetrahedron has right-angled
+hexagonal faces. Across a paired original face, the prescribed
+vertex map matches three alternating original-edge sides with the
+same lengths ell_e. A right-angled hyperbolic hexagon is determined
+by these lengths, so the prescribed side correspondence is realized
+by an isometry, with the inverse used on its paired occurrence.
+Orientation reversals are kept exactly as prescribed.
+
+The endpoints of each compact side fix its interval isometry;
+there is no extra shear parameter. Equal numerical lengths do not
+replace the specified map by an arbitrary hexagon symmetry. Thus
+the pieces glue using the original face and edge identifications,
+including loops and distinct-face self-gluings, and their quotient
+is N itself.
+
+At an original interior edge, its connected circular normal link
+and total angle 2*pi give a smooth hyperbolic neighborhood without
+a cone defect. The actual manifold hypothesis excludes an edge
+reversal orbifold. The truncation triangles meet adjacent hexagonal
+faces orthogonally, so their planes continue across the seams
+without bending. At a boundary-link vertex, its triangle-angle sum
+is the original 2*pi edge-end angle sum. Hence the boundary has no
+residual cone point and is smooth and totally geodesic.
+
+There are finitely many compact genuine truncated tetrahedra.
+Their glued metric on N is compact and therefore complete as an
+intrinsic path metric including its boundary. Equivalently, doubling
+across the totally geodesic boundary gives a compact smooth closed
+hyperbolic manifold. This is not a completeness assertion for the
+open interior with the boundary deleted or for a cusp end.
+

@@ -1,0 +1,24 @@
+### 71.1 Physical channel and resource statement
+
+Let k≥2 and let F=F_(k,2) be the uniform channel of §66, from a logical input with basis |f,i>, 1≤f≤k and i∈{0,1}, to a logical output with basis |f>. Thus
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  (f≠g).
+
+Use the fixed MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. Consider any finite physical LOSR channel
+
+    L=Σ_(t=1)^r w_t (A_t⊗B_t),  w_t>0,  Σ_t w_t=1,
+
+where A_t,B_t map C^(2k) to C^k and are arbitrary CPTP maps. Set
+
+    δ=||L∘J_in−J_out∘F||diamond,
+    β(δ)=10δ+18√(20δ),    M_k(δ)=1+(k−1)β(δ).
+
+The diamond norm is unhalved. Local ancillas, populations, extra coherences and leakage outside the output MC code are unrestricted. Every such implementation satisfies
+
+    w_t ≤ min{1, 3M_k(δ)/k}  for every t,                  (1)
+    r ≥ ceil(k/[3M_k(δ)]),                                (2)
+    H(w) ≥ max{0, log(k/[3M_k(δ)])}.                       (3)
+
+The logarithm in H uses the same arbitrary fixed base greater than one as the logarithm on the right. In particular, the exact shared-weight cap 3/k is stable under physical diamond error, uniformly in the number of branches and all environment dimensions. These are necessary resource bounds; no optimality of their positive-error constants is asserted.
+

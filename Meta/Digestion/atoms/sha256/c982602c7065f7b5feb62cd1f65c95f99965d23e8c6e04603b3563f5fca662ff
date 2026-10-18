@@ -1,0 +1,40 @@
+**Theorem 5.1 (B3: evaluated ranges and every equality case).** Put $L_a=C(p_a)$, $L_b=C(p_b)$. Then
+
+$$
+C_{\rm end}<L_a<L_b<C_{\rm sat}.
+$$
+
+For every $C_{\rm end}<\lambda\le L_a$, select the unique $q\in(1-p_b,1/2)$ satisfying $L(q)=\lambda$, where $P(q)$ is selected as the unique root of $T(P,q)=0$ in $(p_z,p_b)$. Both selected roots are simple. Formula (TB.7) has $m<1$ and all three masses strictly positive, and
+
+$$
+\Phi(\lambda)=m g(P).
+\tag{TB.14}
+$$
+
+For every $L_b\le\lambda<C_{\rm sat}$, select the unique $p\in[p_b,p_s)$ satisfying $C(p)=\lambda$. This inverse is simple, the optimizer is the orthogonal unit pair of Proposition 2.1, and
+
+$$
+\Phi(\lambda)=g(p).
+\tag{TB.15}
+$$
+
+On either range every equality case has exactly the indicated lines and weights, modulo antipodes and proportional splitting. Mapping them back by Proposition 2.1 gives every whole-ellipse equality measure. These are selected algebraic evaluations over the conditional source field. The middle interval $(L_a,L_b)$ is not evaluated here.
+
+Proof. Strict convexity gives $C'(p)=\Delta_J(p,1-p)>0$ for $p>1/2$. Theorem 4.1 proves the endpoint ordering and simple projective inverse. Its $c(p)<0$ gives the whole-circle certificate (TB.6), whose only two contacts force unit weights.
+
+For the initial family put $q_b=1-p_b$. For all $q\in[q_b,1/2]$, $T(p_z,q)>0$. At $p_b$, $g(p_b)=(2p_b-1)g'(p_b)$, whereas
+
+$$
+B(p_b,q)/\Delta_J(p_b,q)<p_b-q\le2p_b-1.
+$$
+
+Therefore $T(p_b,q)<0$. Strict $T_p<0$ selects a unique simple $P(q)\in(p_z,p_b)$ on this whole closed interval; it extends analytically across the endpoints. Formula (TB.10) gives $L'<0$, also at $q=1/2$ by continuity, where $m=0$ and the first negative term in $Z'$ remains strict. At that endpoint $L=C_{\rm end}$. At $q_b$, $P(q_b)<p_b$ implies
+
+$$
+m(q_b)=\frac{2p_b-1}{P(q_b)+p_b-1}>1.
+$$
+
+The continuous set of $m=1$ points is nonempty, compact and misses both endpoints. Let $q_*$ be its largest point, only for this proof. On $(q_*,1/2]$ one has $m<1$. At any $m=1$ point, $P=1-q$ and $T=0$ is exactly $c(P)=0$. Theorem 4.1 forces $P\in(p_a,p_b)$, so $L=C(P)>L_a$ there. In particular $L(q_*)>L_a$.
+
+Since $L$ strictly decreases to $C_{\rm end}$, every budget in (TB.14)'s range has a unique inverse in $(q_*,1/2)$, hence in the explicit prescribed interval $(1-p_b,1/2)$. This proves the essential $m<1$. Also $m>0$ and $2-m>0$; (TB.8) proves $\omega_+,\omega_->0$. The certificate (TB.9) matches the value, and its contact lines plus covariance classify every equality case. Strict $T_p$ and $L'$ prove simplicity. The proof-only $q_*$ is absent from the scalar prescription; neither its value nor a single-crossing assumption is needed. $\square$
+

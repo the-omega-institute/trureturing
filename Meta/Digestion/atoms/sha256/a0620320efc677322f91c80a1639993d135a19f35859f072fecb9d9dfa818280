@@ -1,0 +1,32 @@
+**Proposition 246.3 (A closed nonempty region and noncontainment).**
+The independent closed box of radius $1/1000$ about
+
+$$
+(t,u,v,w,z)=(9/10,17/20,4/5,3/4,7/10)
+\tag{246.8}
+$$
+
+belongs to $\mathcal P$. At its center, $h=h_0=23/25$, $e_*=49/100$,
+and the stocks $(k,A,B,C,D,F,G,H,I)$ are
+$(1/50,3/100,19/100,3/20,17/50,1/25,3/100,3/50,2/25)$.
+The region (246.2) and the capacity region (244.2) do not contain one
+another.
+
+Proof. Every defining inequality is affine in the five box parameters.
+For an affine form its minimum on this box is its central value minus
+$\sum|\text{nonconstant coefficients}|/1000$. The terminal-stock
+slacks are positive; the smallest is $A-k\ge321/40000$.
+The final three slacks are at least $19/2500,37/5000,183/5000$,
+respectively. Also $e\ge19571/40000$, $k\le101/5000$,
+$S/8\le801/1600<699/1000\le z$; order gaps remain positive.
+These calculations prove the whole closed box, not only its center.
+
+At the center, the capacity floor at coordinate four would require
+$u\ge t-k=22/25$, whereas $u=17/20$. Its capacity degree at six is
+also $3/4-49/100-4/50-21/100=-3/100$. Thus an actual feasible law of
+Theorem 246.2 lies outside the stated capacity hypotheses.
+Conversely a flat capacity-seven point with $28/33\le t<1$ has
+$u=w=t$ and $G=-k<0$, outside (246.2). These witnesses establish
+noncontainment of the stated sufficient regions; they do not assert
+that the regions are disjoint or prohibit a larger unifying theorem. ∎
+

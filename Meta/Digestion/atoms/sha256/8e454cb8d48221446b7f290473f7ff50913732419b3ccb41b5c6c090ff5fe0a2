@@ -1,0 +1,16 @@
+### 锚点 36.2（三角网络量子非局域性的实验语义）
+
+Wang 等人的 *Experimental genuine quantum nonlocality in the triangle network*（arXiv:2401.15428）报告了三角网络结构中的量子相关实验，并针对 elegant distribution 给出量子非局域性的实验证据。
+
+该结果只能作为以下桥接的实验语义背景：
+
+\[
+\text{有限量子源}
+\longrightarrow
+\text{局部节点测量}
+\longrightarrow
+\text{三角输出分布}.
+\]
+
+它不改变本卷的数学边界：实验相关性不提供 FIB 五态编码，也不证明任意 FIB 概率律具有三个独立量子源分解。
+

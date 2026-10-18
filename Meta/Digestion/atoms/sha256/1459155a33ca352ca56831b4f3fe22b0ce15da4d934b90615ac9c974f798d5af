@@ -1,0 +1,85 @@
+**Proposition 13.2 (recognition and both domain directions).**
+The entire fiber in Definition 13.1 is exactly
+
+$$
+\mathcal D_m=
+\left\{U_{D_m}(T_n,T_{n\bmod2},T_h):
+2\le n\le2m+1,\quad h\ge2m+2\right\}.
+\tag{CAR.61}
+$$
+
+It is nonempty, infinite and cycle-covered. Its complete original
+$Q_m$ row has exactly two values $Y_0,Y_1$, indexed by $n\bmod2$.
+Each $Y_e$ has the full marked outside of (CAR.57), the concrete leaf
+$T_e$ at $b$, and the two reached, unequal holes at $a,c$.
+
+Proof. The exact old-row correspondence gives $u=U_{D_m}(x,z,w)$ with
+three pairwise distinct nonempty finite trees. The branch literal at
+$a$ gives $x=\langle s,t\rangle$. Its positive record (CAR.59) reads
+
+$$
+\rho^2(t)=\langle s,t\rangle.
+\tag{CAR.62}
+$$
+
+This has a strict self-edge at $t$ and a strict edge from $t$ to $s$.
+Theorem 2.2 forces both to be atomic. If $t=T_i$, free constructor
+equality and (CAR.7) give $s=T_{i+1}$ and $x=T_{i+2}$. Conversely
+every $x=T_n$, $n\ge2$, satisfies this record at reached endpoints.
+The same argument at $c$ gives $w=T_h$ for $h\ge2$.
+
+The absence at $bL$ makes $z$ a leaf, hence $z=T_e$ for exactly one
+$e\in\{0,1\}$. Indeed a branch would have a reached left child.
+By the guarded atomic formula (CAR.23), $R^mL$ is reached in $T_n$
+exactly when $n\ge2m+2$. Thus its absence gives $n\le2m+1$.
+The reply at $R^m$ in $T_h$ is branch exactly when $h\ge2m+2$.
+
+Every endpoint in (CAR.60) is reached: $a,b$ are reached original
+holes, and forward substitution preserves them. The relations say
+$T_n\ne T_{e+j}$, hence $n\ne e+j$, for every indicated odd $j$.
+If $e=0$, these exclusions remove precisely the odd members of
+$[2,2m+1]$. If $e=1$, they remove precisely the even members. Thus
+$e=n\bmod2$. The inequalities $e<2\le n<2m+2\le h$ imply all
+three old class inequalities. This proves the inclusion of the whole
+acquired fiber in (CAR.61), with every literal, sign and old class used.
+
+Conversely choose any two integers in the displayed ranges and set
+$e=n\bmod2$. The three subtrees are distinct, the old marked outside
+is exactly the specified one, and the preceding guard calculations
+verify all five literals. Identity $\rho^2(T_{r-2})=T_r$ verifies
+both positive records for $r=n,h$. Every negative record has reached
+endpoints and unequal ranks by parity. Therefore this actual finite
+source has exactly the retained input. There are no other sources, and
+letting $h$ increase gives infinitely many distinct ones.
+
+For recognition, use as a core the old row, the branch literals at
+$a,c$, the absence at $bL$, and the two positive records. Choose the
+navigation cover of ARH Definition 19.3, with empty auxiliary cut as
+in Definition 3.1. Its literal processing first splits $x$ into its
+two children, excludes the branch case for $z$ by the absence at $bL$,
+and splits $w$ into its two children. Thus $z$ has two concrete leaf
+charts. Each subsequent relation endpoint stops at a whole template:
+$\rho^2(t)$ and $\langle s,t\rangle$, or their $w$ counterparts.
+It requires no further split. In each surviving chart the four remaining
+variables are exactly these two pairs of children. Equation (CAR.62)
+and its counterpart cover them all by strict cycles and their forward
+closure. The old inequalities remain mandatory chart constraints;
+no disequality is used to create a cycle. This proves membership in
+Definition 3.1 using one of its actual cover procedures, with the
+remaining records imposed jointly by Theorem 3.2.
+
+The fixed public lists of (CAR.58)–(CAR.60), the old cut and the final
+epoch are inputs to the supplied ARH Proposition 2.1 producer. It
+acquires every literal and signed comparison using finite paid work on
+each source. Under its complete-cut hypothesis, the successful retained
+outcome has exactly the two-direction fiber just proved. This does not
+give a uniform acquisition cost or a physical erasure procedure.
+
+The target replaces exactly $x$ and $w$ by holes. Their indices are
+unequal for every source, so their entire partition consists of two
+singleton classes. Everything else in the outside is fixed except
+the concrete leaf $z=T_e$ at $b$. Thus the full row is precisely $Y_e$.
+Both values occur, at $n=2$ and $n=3$, for any allowed $h$. The hidden
+unbounded $T_h$ remains an actual target hole and retains its inequality
+with the other hole. $\square$
+

@@ -1,0 +1,59 @@
+**Corollary 10.6 (enlarged qualified exact whole-table minima).**
+Consider the class of complete original Boolean graphs for which
+
+$$
+B=(a,b)\in\mathcal B,\quad b>e_*
+\quad\Longrightarrow\quad b-a\le4.
+\tag{SI.52}
+$$
+
+Intervals ending at $b\le e_*$ may have arbitrary lengths.
+Every graph in this class satisfies
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,\qquad m\ge G+u.
+\tag{SI.53}
+$$
+
+The minimum Boolean running-state count in this class, at both
+uniform caps $n,W$, is exactly $G=K L$. The subclass with all
+gaps of span at most four has the same exact minimum. For complete
+original native preparers whose supplied Boolean projection in
+(SI.5) belongs to either stated class, at both native caps
+$n+1,W+3$, the exact preparation minimum is $G+4+r$.
+
+If a graph in the enlarged class actually has a consecutive terminal
+gap $(n-4,n)$, its stronger lower bound is $m\ge G+u+2$.
+The corresponding native preparation count is at least $G+6+r$.
+These stronger conditional bounds carry no attainment assertion.
+
+Proof. Every interval ending early has $D_B=0$ by Lemma 10.2.
+The other intervals have span at most four and satisfy $D_B\le E_B$
+by Theorems 9.4 and 10.4. Sum in (SI.32) to obtain (SI.53).
+If the terminal span-four gap is present, Corollary 10.5 contributes
+at least two to that sum and gives the stronger bound.
+
+The supplied grid of [PCA, Theorem 26.1][PCA] has $G$ Boolean
+running states and every depth common-support. It belongs to both
+classes and satisfies both caps on all inputs in the same graph,
+giving equality for the class minima. For a native competitor the
+projection of [WTF, Theorem 4.1][WTF] has
+$m\le H_P-4-r$ and both Boolean caps, so the respective Boolean
+lower bounds give the native lower bounds. The supplied full-fiber
+grid lift gives $G+4+r$ preparation states and both uniform native
+caps in one table, proving the exact class minima.
+
+This native upper is over every source in the unbounded original
+$\mathcal U_*$, with its original $\rho$, prescribed pointwise
+code, literal latches and complete $e_0,e_1$ entries. Its four
+successors at every installed address remain those of the supplied
+construction. The unchanged, independently priced eight-state reader
+returns the entire predecessor row, including ordered exterior,
+occurrences, equality partition, repetitions, disequalities and
+strict-prefix guards. The cube is a lower-witness projection only.
+Every installed running, output, unused and latch state retains its
+price, as does every actual constant, repeated or post-certificate
+invocation. Acquired binding, authentication, permission, same-source
+export, isolation, handoff and continuity remain the separate
+operational services of Convention 1.3. $\square$
+

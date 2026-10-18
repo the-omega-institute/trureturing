@@ -1,0 +1,29 @@
+**Definition 2.3 (serial paid dispatcher and retention).** At idle the
+dispatcher reserves its ingress phase. It acquires the frame bit by bit,
+parses it, and retains all its consumed material. A newly acquired bit stays
+in a designated input latch until its corresponding WR; no other operation
+overwrites that latch first. Its test latch is different. The complete frame
+is sealed before dispatch to the adapter's legal source admission point.
+No second source frame is acquired until the current request has committed,
+its row has sealed, and mandatory delivery has been acknowledged.
+
+The native control graph uses the finite expansion rules of PR57.D1.
+Header recognition uses finitely many native states; lengths, trees,
+addresses and dynamic programs are tape data. Parsing, public context
+conversion, gate generation, source execution, row writing, allocation,
+copying and acknowledgement use the cited terminating routines with their
+actual primitive expansion. There is no independently chosen interrupt,
+idle duration, allocator, local nondeterminism or scheduling decision.
+For each legal finite frame the public dispatcher work terminates. In
+particular no arbitrary potentially nonterminating selector is postulated.
+
+Earlier frame blocks are retained immutably. Their physical representation
+may consist of header, length and payload blocks with actual descriptors;
+their chronological concatenation is determined by those created blocks and
+the serial protocol. They are not a second log of private computation.
+Lossless handoff to retained complete request material may replace this
+retention, but only after that material has actually become available to the
+same authorized owner. Optional diagnostic or archive-service choices, if
+added to this runtime, must use their own canonical consumed frames and the
+same retention rule. They are not inferred from the clock.
+

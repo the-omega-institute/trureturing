@@ -1,0 +1,4 @@
+### 3.3. Finite order-probe application
+
+The three-clock-bit, two-target-bit modulus-two companion circuit in the parent Section 14 is a known five-qubit circuit. Theorem 3.1 therefore gives an exact native implementation on nine sites with a single chosen second-quadrature data address. Its all-input intertwiner retains the complete clock distribution (14.1); this finite-clock law alone does not certify an integer period.
+

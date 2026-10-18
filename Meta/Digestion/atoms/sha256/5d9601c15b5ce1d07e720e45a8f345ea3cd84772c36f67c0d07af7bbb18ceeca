@@ -1,0 +1,10 @@
+## 13. 二十边修复与完整星上的混合 $\mathcal T$ 提升
+
+本节取 $n\ge6$，$x,y,0$ 互异，$A$ 是其余 $n-3\ge3$ 个标签的实际顺序，$\bar A=\operatorname{rev}A$。在本节重新命名 $g=(0,x,A,y)$、$h=(0,y,A,x)$，影子为 $U=[x,A,y]$、$V=[y,A,x]$，其余生成元约定不变。令
+
+$$
+p=g\delta=(0,\bar A,x,y),\quad q=h\delta=(0,\bar A,y,x),\quad
+v=pb=(x,A,0,y),\quad r=va=(y,0,\bar A,x),\quad
+u=qb=(y,A,0,x),\quad s=ua=(x,0,\bar A,y).
+$$
+

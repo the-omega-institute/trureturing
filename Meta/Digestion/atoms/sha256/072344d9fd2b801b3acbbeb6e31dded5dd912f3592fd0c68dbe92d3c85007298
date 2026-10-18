@@ -1,0 +1,41 @@
+**Theorem 13.2 (the original nonnegative-lag cover needs fourteen gaps).**
+For every chosen complete cover $\mathcal C$ of Definition 1.2 with
+$q=19$ and $\lambda=0$,
+
+$$
+G(\mathcal C)\ge14,\qquad
+\sum_{t=0}^{18}(U_t-L_t)\ge356.
+\tag{NAGC.13.4}
+$$
+
+These are necessary inequalities for the chosen cover, with $G$
+counting the missing integer differences of Definition 2.1, including
+class multiplicity. They are not counts of uncovered cells or prices
+of native Reads.
+
+**Proof.** Theorem 8.1 already gives $G(\mathcal C)\ge13$.
+Suppose equality holds. Each $\mathcal P_t^0$ is a subfamily of
+$\mathcal P_t^+$, so Theorem 13.1 applies to this very cover and
+gives $g_0=0$. Return now to the actual original class $C_0$,
+with the original coordinate roles and the original lag convention.
+[NARC, Theorem 14.3, part 1][NARC] supplies its $B^9A^9$ order
+and corner $(0,0)$. Theorem 13.1 makes all its lengths unit;
+therefore its first point is $(0,9)$ and its first edge is the
+unit $B$ edge to $(0,8)$.
+
+This is exactly the excluded conjunction in [NARC, Theorem
+13.4][NARC]: initial first coordinate zero and a unit first $B$
+edge. That theorem's saturated-class hypothesis holds because
+$C_0$ has nineteen points and the supplied normal form, and its
+full native readability hypothesis is precisely the requirement
+$C_0\in\mathcal P_0^0$ of Definition 1.2. It excludes this
+original class under $\lambda=0$. Thus $G=13$ is impossible
+in the original nonnegative-lag cover. Integrality and the already
+supplied lower bound give $G\ge14$.
+
+Theorem 2.2, applied to the same $q=19$, class difference sets
+and gap count, gives $\sum_t(U_t-L_t)=342+G\ge356$.
+The zero-lag gate has been applied only to the original $C_0$;
+none of the geometric symmetries in Theorem 13.1 is asserted to
+preserve that asymmetric gate. $\square$
+

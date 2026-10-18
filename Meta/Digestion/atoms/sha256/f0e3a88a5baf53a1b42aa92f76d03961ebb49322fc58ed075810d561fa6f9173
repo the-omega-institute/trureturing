@@ -1,0 +1,103 @@
+**Theorem 37.2 (negative heat finite part, actual mass and the full Coulomb endpoint).** Fix one datum satisfying Definition 32.1 and suppose instead $\mathfrak m_d<0$. There exist one finite $M\ge M_{0,d}$ and constants $\eta_d,C_d>0$, all fixed before $s\downarrow0$, such that
+
+$$
+k_d(Ms^8)\le C_*-\eta_ds^5,\qquad
+0<-\epsilon_c(s)/a\le Ms^8
+\tag{37.8}
+$$
+
+for sufficiently small $s$. For every actual normalized complex choice put $f_s=\mathcal T_s\mathcal U_s\psi_s$. Its full sheared potential expectation satisfies
+
+$$
+\mathcal M_s:=\int_{\Omega_s}U_s|f_s|^2d\xi
+\le\frac{C_*^2M}{\eta_d}s^3.
+\tag{37.9}
+$$
+
+For every fixed compact $K\subset\mathbb R^4$,
+
+$$
+\|f_s\|_{L^2(K)}^2+\|\mathcal U_s\psi_s\|_{L^2(K)}^2
+\le C_{d,K}s^3,
+\qquad \mathcal U_s\psi_s\rightharpoonup0\text{ in }L^2(\mathbb R^4).
+\tag{37.10}
+$$
+
+The bounds hold uniformly over actual choices at each sufficiently small $s$, and the weak assertion holds in the every-choice sequential sense of Definition 32.1.
+
+For the endpoint constants use precisely J Definition 10.1. In raw native coordinates set
+
+$$
+\begin{aligned}
+\phi(k)&=\sqrt{2/(u-l)}\sin\frac{\pi(k-l)}{u-l},&
+\mathsf M_d&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk>0,\\
+d_{C,d}(\mathbf z)&=\sqrt{\mathbf z^{\mathsf T}\mathsf M_d^{-1}\mathbf z},&
+\beta_{C,d}&=\frac{\phi(k_0)\int_I\phi(k)^3dk}
+                       {4\pi\sqrt{\det\mathsf M_d}},\\
+e_{C,d}&=-\frac{\beta_{C,d}^2}{4a}<0,&
+\rho_{C,d}&=\frac{\beta_{C,d}}{2a},\\
+h_{C,d}(\mathbf z)&=(\det\mathsf M_d)^{-1/4}
+ \left(\frac{\rho_{C,d}^3}{\pi}\right)^{1/2}
+                    e^{-\rho_{C,d}d_{C,d}(\mathbf z)},&
+(\mathcal D_gv)(k,\mathbf z)&=g^{-3/2}v(k,\mathbf z/g).
+\end{aligned}
+\tag{37.11}
+$$
+
+Then along every prescribed $s_n\downarrow0$ and every actual choice on it,
+
+$$
+\begin{aligned}
+E_s/g_s^2&\longrightarrow e_{C,d},&
+E_s&=\chi_c^2e_{C,d}s^6+o_d(s^6),\\
+\epsilon_c(s)&=\chi_c^2e_{C,d}s^8+o_d(s^8),&
+r_s&\longrightarrow-\chi_c^2e_{C,d}>0,\\
+\operatorname{dist}_{L^2(dk\,d\mathbf z)}
+ (\mathcal D_{g_s}\psi_s,\mathbb T(\phi h_{C,d}))
+ &\longrightarrow0,&
+\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb Tp)
+ &\longrightarrow\sqrt2.
+\end{aligned}
+\tag{37.12}
+$$
+
+The macroscopic phase orbit is centred at the original phase source and has full unit mass.
+
+Proof. Choose $M$ once, after fixing the datum, so that the upper error in (36.3) is less than $-\mathscr A\mathfrak m_d/2$. Its upper limsup is then strictly negative, giving a fixed $\eta_d>0$ and the first inequality in (37.8). The threshold equivalence (37.4)–(37.5) and negative attainment give the other inequality. Set $h=Ms^8$, $\alpha_s=-\epsilon_c(s)/a\in(0,h]$ and $t_s=\|C_s^{1/2}f_s\|_2^2$. The actual eigen-equation, valid on the full transported operator domain, is
+
+$$
+(aC_s-\chi_cU_s)f_s=\epsilon_c(s)f_s,\qquad
+t_s=\gamma\mathcal M_s-\alpha_s.
+\tag{37.13}
+$$
+
+For all complex form-domain vectors $f$, the same bounded factorization gives
+
+$$
+\int U_s|f|^2\le k_d(h)\{\|C_s^{1/2}f\|_2^2+h\|f\|_2^2\}.
+\tag{37.14}
+$$
+
+Apply it to the actual unit vector $f_s$ and substitute (37.13). With $k=k_d(h)<C_*$,
+
+$$
+\frac{C_*-k}{C_*}\mathcal M_s\le k(h-\alpha_s),\qquad
+\mathcal M_s\le\frac{C_*k(h-\alpha_s)}{C_*-k}
+                 \le\frac{C_*^2M}{\eta_d}s^3.
+\tag{37.15}
+$$
+
+This repeats the form algebra in (28.4)–(28.8) on the present original domain; here the signed supplier is (36.3), so translated-family membership is unnecessary. All constants are independent of the actual normalized complex eigenvector.
+
+The full field $U_s\to V$ uniformly, and $V$ has positive minimum on each fixed compact set. Such a compact lies inside $\Omega_s$ for small $s$. Hence (37.9) gives the first local bound in (37.10). The inverse shears send a fixed compact into one fixed larger compact and preserve measure; (37.7) gives the unsheared bound with the same order. Testing against compactly supported $L^2$ functions now gives weak convergence to zero; approximation of an arbitrary $L^2$ test and unit norm give global weak zero. This does not give global strong zero, since every state still has norm one.
+
+This is exactly J (10.2)'s additional actual weak-zero hypothesis, with the original source, path, cutoff-one normalization and complex domains. J Theorem 10.2 therefore yields the first four assertions and the macroscopic orbit in (37.12) with exactly (37.11). Both $\phi$ and $h_{C,d}$ have norm one: after $\mathbf z=\mathsf M_d^{1/2}y$, the latter normalization reduces to $4\rho_{C,d}^3\int_0^\infty R^2e^{-2\rho_{C,d}R}dR=1$. This verifies the full unit mass without a new endpoint theorem. Finally unit norm and weak zero imply
+
+$$
+\operatorname{dist}(\mathcal U_s\psi_s,\mathbb Tp)^2
+ =2-2|\langle p,\mathcal U_s\psi_s\rangle|\longrightarrow2.
+\tag{37.16}
+$$
+
+The argument began with arbitrary actual choices. Any failure of its every-choice limiting statements supplies a sequence of failing actual choices, contradicting the same estimates and the same application of J Theorem 10.2. $\square$
+

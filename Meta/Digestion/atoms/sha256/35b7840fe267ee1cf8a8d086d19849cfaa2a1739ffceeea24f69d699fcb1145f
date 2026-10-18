@@ -1,0 +1,46 @@
+**Definition 5.1 (Every event of the same channel).** Let
+
+$$
+\mathcal J_{15}=\{\{s\}:s\in\mathsf S\}
+\ \cup\ \{\{s,t\}:s,t\in\mathsf S,\ s<t\},
+\qquad
+H_J=\Pi_J-\mathcal A(\Pi_J).
+\tag{5.1}
+$$
+
+All fifteen matrices are block diagonal in $L|V$ and have entries in
+$\mathbb Q(r)$ by (2.3)–(2.4) and (4.10).
+Put $C_2=H_{\{2\}}|_V$. The following exact coefficient table makes the
+cubic fully explicit. With
+
+$$
+Q=3970630424917410837589475743639983799408656540384,
+\tag{5.2}
+$$
+
+write $Q(C_2)_{ij}=A_{ij}+B_{ij}r$ in the ordered coordinates
+$V=(2,3,5)$; fill the other entries symmetrically.
+
+| $ij$ | $A_{ij}$ | $B_{ij}$ |
+| --- | ---: | ---: |
+| $11$ | $2462447872393907165594742826748064690060193918633$ | $-97149978487090015194554054260372481474396926665$ |
+| $12$ | $77526457255990821914612636164388646712073853330$ | $-57763577519389231503693111648403110923979492442$ |
+| $13$ | $88136602052124428246561281896349695359065648441$ | $18833083584870050850167099228156384114403073335$ |
+| $22$ | $-449874008591688900130441339844682516567218533300$ | $25148131890936974098744618018584369823144623996$ |
+| $23$ | $77526457255990821914612636164388646712073853330$ | $35337363500625109920237237544142043194420507558$ |
+| $33$ | $-716824553853381769891324948755285299342062621751$ | $42501433042931496941341469528445249703203073335$ |
+
+For $x=(C_2)_{11}$, $y=(C_2)_{22}$, $z=(C_2)_{33}$,
+$u=(C_2)_{12}$, $v=(C_2)_{13}$, $w=(C_2)_{23}$, define the monic
+$\mathbb Q(\sqrt {17})$ cubic
+
+$$
+p(X)=X^3-(x+y+z)X^2+
+(xy+xz+yz-u^2-v^2-w^2)X
+-(xyz+2uvw-xw^2-yv^2-zu^2).
+\tag{5.3}
+$$
+
+Thus $p(X)=\det(XI_3-C_2)$ with exact displayed coefficients, not an
+unevaluated minimization prescription.
+

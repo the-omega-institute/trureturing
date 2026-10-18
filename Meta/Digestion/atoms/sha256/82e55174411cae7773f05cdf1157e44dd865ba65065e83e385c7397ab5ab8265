@@ -1,0 +1,144 @@
+**定理 472.1（实际完整调和率向奇调和率的有限运输）。** 令 $\mu$ 为标准算术 Möbius 函数，保持
+
+$$
+H(N)=\sum_{1\le m\le N}\frac{\mu(m)}m,
+\qquad
+H_{\mathrm o}(N)=\sum_{\substack{1\le m\le N\\m\text{ 奇}}}\frac{\mu(m)}m,
+\qquad H(0)=H_{\mathrm o}(0)=0.
+$$
+
+完整调和率的来源是 dbsanfte/RiemannGaussian 不可变修订 [`24444671cee3bf643ff1307909b961a329372a9e`](https://github.com/dbsanfte/RiemannGaussian/tree/24444671cee3bf643ff1307909b961a329372a9e) 中 [`MoebiusHarmonicCancellation.lean`](https://github.com/dbsanfte/RiemannGaussian/blob/24444671cee3bf643ff1307909b961a329372a9e/RiemannGaussian/MoebiusHarmonicCancellation.lean) 的 `exists_moebiusHarmonicPrefix_cubic_rate`，即 RLB.7。取该来源给出的任一实数见证 $h_0\ge22$，并取其固定常数 $C_{\rm harmonic}=6+4C_{\rm finite}>0$；准确供应为
+
+$$
+\forall h\in\mathbb R\ (h\ge h_0),\quad
+\forall q\in\mathbb N:\quad
+\exp(2\cdot10^{15}h^3)\le q
+\ \Longrightarrow
+|H(q)|\le C_{\rm harmonic}e^{-h/8}.
+\tag{OH.1}
+$$
+
+在此来源合同及同一实际前缀的 HG.2 下，定义
+
+$$
+A=2\cdot10^{15},\qquad
+c_{\mathrm o}=\frac1{8(4A)^{1/3}},\qquad
+C_{\mathrm o}=2C_{\rm harmonic}+16,\qquad
+D_0=\left\lceil\exp\!\bigl(\max\{8,4Ah_0^3\}\bigr)\right\rceil.
+\tag{OH.2}
+$$
+
+则 $D_0$ 是自然数，$C_{\mathrm o}>0$、$c_{\mathrm o}>0$，且同一对常数对全部自然数后继成立：
+
+$$
+\boxed{\quad
+\forall n\in\mathbb N\ (n\ge D_0):\qquad
+|H_{\mathrm o}(n)|\le
+C_{\mathrm o}\exp\!\left(-c_{\mathrm o}(\log n)^{1/3}\right).
+\quad}
+\tag{OH.3}
+$$
+
+$h_0$ 是来源的存在见证，OH.2 保留这一依赖，不指定其数值或阈值的计算可行性。该结论是上述来源命题与 HG.2 之上的普通数学推导，不表示该上游证明闭包或本节在本库取得新的 kernel、公理闭包或冻结验收。
+
+**证明。** 固定任意自然数 $n\ge D_0$，记
+
+$$
+t=\log n,\qquad L=\log2,\qquad
+h=\left(\frac{t}{4A}\right)^{1/3},\qquad
+J=\left\lfloor\frac{t}{2L}\right\rfloor,\qquad
+K=n+1,\qquad q_a=\left\lfloor\frac{n}{2^a}\right\rfloor.
+$$
+
+由自然数上取整的定义，$n\ge\exp(\max\{8,4Ah_0^3\})$，所以 $t\ge8$、$t\ge4Ah_0^3$、$h\ge h_0$。所有立方根取非负实立方根。特别地 $n\ge e^8>16$，且 $J\ge1$。由 $\log n\le n-1$ 与 $2\log2>1$ 得 $J<K$，故下面的两个有限区间覆盖 $0\le a<K$，没有漏层。
+
+应用 HG.2 于这个 $n,K$，保留原末项，得
+
+$$
+H_{\mathrm o}(n)
+=\sum_{a=0}^{J-1}2^{-a}H(q_a)
+ +\sum_{a=J}^{K-1}2^{-a}H(q_a)
+ +2^{-K}H_{\mathrm o}(q_K).
+\tag{OH.4}
+$$
+
+§466 已给 $2^{n+1}\ge n+2>n$，因此 $q_K=0$，OH.4 的末项恰为 $2^{-K}H_{\mathrm o}(0)=0$。这一步使用准确整数截止，没有以极限删除余项。
+
+先处理 $0\le a<J$。因为 $a<J\le t/(2L)$，有
+
+$$
+\frac{n}{2^a}\ge e^{t/2}\ge2.
+$$
+
+对任意实数 $u\ge2$，$\lfloor u\rfloor\ge u-1\ge u/2$。于是每个这样的原整数商满足
+
+$$
+q_a\ge\frac12e^{t/2}\ge e^{t/4}
+=\exp(Ah^3),
+\tag{OH.5}
+$$
+
+其中第二个不等式由 $t\ge8>4\log2$ 支付。故 $q_a$ 是 OH.1 允许的自然数截止；已经支付的 $h\ge h_0$ 给
+
+$$
+|H(q_a)|\le C_{\rm harmonic}e^{-h/8}
+=C_{\rm harmonic}e^{-c_{\mathrm o}t^{1/3}}.
+$$
+
+这些未归一化的几何系数总量准确为 $2(1-2^{-J})$，从而
+
+$$
+\left|\sum_{a=0}^{J-1}2^{-a}H(q_a)\right|
+\le 2C_{\rm harmonic}e^{-c_{\mathrm o}t^{1/3}}.
+\tag{OH.6}
+$$
+
+再处理整个 $J\le a<K$，不要求这些整数商满足 OH.1。标准 Möbius 函数满足 $|\mu(m)|\le1$。因此，对任何 $1\le q\le n$，有限三角不等式与递减函数 $u\mapsto1/u$ 的积分比较给
+
+$$
+|H(q)|\le\sum_{m=1}^{q}\frac1m
+\le1+\int_1^q\frac{du}{u}
+=1+\log q\le1+t.
+\tag{OH.7}
+$$
+
+$q=1$ 时积分为零，准确包括单位源 $\mu(1)/1=1$；$q=0$ 时使用 $H(0)=0$，同一上界仍成立。所有 $q_a$ 都在 $0,\ldots,n$ 内，故 OH.7 或零值逐项支付整个后段。这里仅对实际有符号前缀作上界估计，没有以绝对 Möbius 前缀替换 OH.1 或 OH.4 的对象。
+
+后段有限系数总量及 floor 损失分别为
+
+$$
+\sum_{a=J}^{K-1}2^{-a}
+=2^{1-J}\bigl(1-2^{-(K-J)}\bigr)\le2^{1-J},
+\qquad
+2^{-J}\le2e^{-t/2},
+\tag{OH.8}
+$$
+
+后一个不等式来自 $J\le t/(2L)<J+1$。因而
+
+$$
+\left|\sum_{a=J}^{K-1}2^{-a}H(q_a)\right|
+\le4(1+t)e^{-t/2}.
+\tag{OH.9}
+$$
+
+这包括全部未达到来源阈值的小商；若 $2^a>n$，其 $q_a=0$ 项准确为零，没有为零商取对数。此估计也允许后段中仍有大商，故没有遗漏任何过渡层。
+
+最后，把 OH.9 吸收到同一个立方对数率。由 $e^{t/4}\ge1+t/4$，得到 $1+t\le4e^{t/4}$。又由 $A>0$ 及其准确数值，有 $0<c_{\mathrm o}\le1$；$t\ge8$ 给 $t^{1/3}\le t/4$。因此
+
+$$
+4(1+t)e^{-t/2}
+\le16e^{-t/4}
+\le16e^{-c_{\mathrm o}t^{1/3}}.
+\tag{OH.10}
+$$
+
+将 OH.6、OH.9–OH.10 与 OH.4 的准确零末项合并，得到
+
+$$
+|H_{\mathrm o}(n)|
+\le(2C_{\rm harmonic}+16)e^{-c_{\mathrm o}t^{1/3}},
+$$
+
+即 OH.3。整个论证对任意 $n\ge D_0$ 成立；$h,J,K$ 可随 $n$ 选取，但 $C_{\mathrm o},c_{\mathrm o},D_0$ 先由同一个来源合同确定，不随 $n$ 改变。所有和始终有限。证毕。
+

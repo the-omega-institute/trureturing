@@ -1,0 +1,22 @@
+**Proposition 3.3 (pairwise feasibility can exhaust the same budget).** The
+matrix
+
+$$
+C=\frac25I+\frac35\mathbf1\mathbf1^\dagger
+\tag{JG.22}
+$$
+
+defines a valid zero-transfer CP/TP live map, but fails the joint test,
+even though all its pair minors are positive.
+
+Proof. Its eigenvalues are $11/5,2/5,2/5$, its diagonal is one, and its
+pair minors are $16/25$. Its comparison is
+$M=(8/5)I-(3/5)\mathbf1\mathbf1^\dagger$, so $q=\mathbf1$ gives
+$q^TMq=-3/5$. Equivalently any positive two-coordinate block supplying
+an edge of modulus $3/5$ has diagonal sum at least $6/5$, by its
+determinant inequality and AM–GM. In a decomposition, grouping all terms
+on each pair gives those three costs, whose sum is at least $18/5$;
+only trace $3$ is available. Singletons cannot reduce that cost.
+Testing pairs with separate budgets therefore misses the obstruction.
+$\square$
+

@@ -1,0 +1,182 @@
+**Theorem 4.7 (finite attained parity refinement and simultaneous bills).**
+For the particular table $C$ of Definition 4.1, Definitions 4.2–4.6
+give an autonomous serial refinement with the same original source
+family and all original observations. Its erasure is the entire macro
+trace of $C$, with the same common initialization, every root routing
+Read, every literal, raw reply and genuine source successor, termination
+and firstHalt. At every paid microstep cut of each Read frame, (4.4a)
+is exactly its actual arrived prefix. Its actual receipt is one-bit
+legal as in Proposition 4.5. On a run with original counts
+$Q,U,A,P_{\rm run}$,
+
+$$
+\begin{aligned}
+Q_{\rm serial}&=Q,&U_{\rm serial}&=U,
+&P_{\rm serial}&=P_{\rm run},\\
+E_{\rm receiver}&=A,&E_{\rm two\ channels}&=2A,
+&I_{\rm copy\ core}&=8A+4Q.
+\end{aligned}
+\tag{4.8}
+$$
+
+There is a choice of the described bit routines for which initialization
+and all local work up to firstHalt satisfy the deliberately coarse
+simultaneous bound
+
+$$
+I+I_{\rm init}\le (Q+U+2)\,2^{40}(Z+1)^8.
+\tag{4.9}
+$$
+
+The graph writer's installation work also has a polynomial upper bound
+$2^{40}(Z+1)^8$ under the same bit/move convention. Width, all installed
+rows, immutable storage and installation peak are exactly or bounded
+as in (4.3)–(4.7). Source growth and physical-service costs are the
+original supplier's on this very run, with the address operand now
+coming from the receiver.
+
+Proof. The graph writer reads the original table sequentially. For each
+native row it emits its $P+16$ fixed graph records in order. It finds a
+response's successor by copying the row's native key into a scratch
+array, making the indicated hold/flip, and scanning the original table
+for the resulting key. The key occurs exactly once and the successor
+is an installed word. It writes the target block index in the graph
+row's successor field, with zero padding elsewhere. At most five such
+scans per native row suffice. Each row's literal symbols and padding
+are read from its actual native row. This specifies all graph records,
+including every error record, without an oracle or source access.
+Two length-$\ell$ scratch words, a sequential output image, the input
+native table and bounded index/bit-loop slots suffice during this work.
+They fit (4.7). The writer is distinct from the online interpreter and
+is paid whether its output is later useful or unreachable.
+
+Every array index is at most $P$, every graph index at most $N$, and
+every row offset and its repeated-addition intermediate is at most a
+product of two quantities bounded by $Z$. PH8.1's generous squared
+slot range covers these. Its allocation-header argument also covers
+head positions through the loaded image and scratch. More explicitly,
+$r\le12+2Z$, and all the image/header, slot and three-array positions
+used by these scans are below the actual slot limit
+$256(Z+1)^2$ for this installation: $N\ge16W_*$ and the retained
+row images give $Z\ge T_G\ge10N$, while the direct sum of the header,
+code, slots and arrays, including interleaving separators, is at most
+$256r+32Z+2048$. For $Z\ge160$ this sum is less than $256(Z+1)^2$; the displayed
+construction has at least that $Z$. Thus there is no unbounded numeric
+workspace or circular allocation assumption.
+
+For completeness, the following coarse work accounting fixes a
+polynomial rather than merely asserting computability. A row fetch,
+field test/copy, increment, or bounded-addition routine can use full
+scans instead of shortcuts. It uses at most $2^{12}(Z+1)^3$ elementary
+bit/move/control occurrences: each field has at most $r$ bits, the
+occupied tape intervals total at most $256r+32Z+2048$, a field operation
+uses a fixed number of scans per bit, and row seeking uses at most
+$T_G$ unit moves. Allowing $2^{12}(Z+1)^2$ such routine invocations per
+macro frame overbounds its at most $P+16$ graph visits, $3P$ clearing
+writes, sender filling, both copies, all loop/length work and LINK.
+No loops are nested except row/field scans, bounded addition, and
+these bounded cell loops. Initialization has the same bound. The
+product $2^{24}(Z+1)^5$ is below the looser per-frame allowance in
+(4.9). During graph writing, at most $5W_*$ table scans with key
+comparisons and $N$ record writes add at most two further loops of
+length $Z$ to this bound. The allowance $2^{40}(Z+1)^8$ includes them.
+No step in this estimate supplies a whole-word random lookup or an
+advancing uncounted head. The constants are conservative analytic
+bounds for the specified scan choices, not measured running times.
+
+Induct on the $d$ PUT nodes: after them $S[0:d]=p$, and all other sender
+cells remain reset. By PR57.D7's indexed copying induction, the sealed
+mailbox satisfies $B[0:b]=p$, $b=d$. To cover every paid cut of the
+receiver loop, let $H_c$ be the word of actual receiver arrivals in the
+current frame up to cut $c$. This is proof notation, not another stored
+log. The strengthened indexed invariant is:
+
+- In $\mathsf{pre}$, $H_c=\varepsilon$; old cells and a partially reset
+  length are irrelevant to (4.4a).
+- In $\mathsf{ready}$, $|H_c|=q=a\le b$ and
+  $D[0:q]=H_c=B[0:q]$.
+- In $\mathsf{written}$, $|H_c|=q+1\le b$, the receiver head still
+  names the just-written cell, and $D[0:q+1]=H_c=B[0:q+1]$.
+  The length bits may be at any stage of the specified increment.
+- In $\mathsf{sealed}$, $|H_c|=a=b=d$ and $D[0:a]=H_c=p$;
+  receiver and work heads may be moving without altering that prefix.
+
+Initially and throughout RESET/preparation the first clause holds.
+The ready entry has $q=a=0$. In a ready iteration, only the receiver
+write appends a letter to $H_c$; it stores exactly the bit just read
+from $B_q$ and changes phase at that very cut, proving the written
+clause even when the stored bit does not change. Neither another data
+write to $D$ nor a new arrival is possible while written. All length
+bit writes, carry changes, work-head and mailbox moves, loop-index
+updates, tests and intermediate return/continuation copies therefore
+preserve that clause: they change neither $D[0:q+1]$, $q$ nor $\phi$.
+
+For termination and the stable length, suppose the old length is $q$
+and its first zero bit is at position $m$. Such a position exists below
+$r$ because $q<b\le P<2^r$, hence $q+1<2^r$. At the test of bit $j\le m$
+after clearing the $j$ lower one bits, the current numeric length is
+$q-(2^j-1)$. Clearing the next one bit changes it to
+$q-(2^{j+1}-1)$, also at the cut before the work-head move. At $j=m$,
+setting the zero bit gives $q-(2^m-1)+2^m=q+1$, including the cut before
+carry clearing. Seeking, bit tests, carry clearing and return steps do
+not alter that value. This proves the increment's endpoint for every
+legal $q$; it does not pretend that its intermediate numeric value is
+an occupied length. The invariant during those cuts instead uses the
+unchanged receiver head and written phase. After the mailbox move,
+the receiver move simultaneously advances $q$ and restores ready, so
+$q=a=|H_c|$ again. The last iteration reaches $q=b$, the seal establishes
+the sealed clause, and all homing/check/continuation steps preserve it.
+At the next frame entry the phase becomes pre and the new frame's
+arrival word is empty, even while old payload cells await RESET.
+This proves $\operatorname{received}(c)=H_c$ at every paid microstep
+cut of every lawful frame, including $d=0$ and $P=0$.
+
+At increment-complete cuts, including ready cuts and the completed
+seal, the ordinary view $D[0:a]$ agrees with this projection. It also
+agrees after RESET has finished and before the first receiver write,
+when $a=0$. During unfinished length increments or partial RESET it
+has no such guarantee. The receiver remains unavailable to the source
+until its seal; recovery as a projection does not enable a prefix
+Read. At that seal $a=d$ and $D[0:a]=p$. Hence (4.4), not a fresh
+unchanged lookup of the macro row, determines the committed original
+Read. All frames, including root-literal frames,
+terminate because their cell bounds and graph chains are finite.
+The two loop bodies contribute precisely $8d+4$; all other local work
+is included in (4.9). Each final receiver write is one actual letter
+arrival. Summing proves (4.8).
+
+At a returned cut suppose the current graph block is that of macro
+word $w$ and the actual source is $y$. RESET, graph rendering, copies,
+seeks and checks preserve $y$ and the macro relation to $w$. The final
+Read submits exactly $I(w)$'s literal; Update performs precisely the
+one prescribed $\rho$; no other node has a source action. The same
+raw reply $r$ sets one counted flag. At that cut set the macro relation
+to $(y',\delta(w,r))$. During response tests it is determined by the
+old block and flag; in a LINK by that link's fixed successor; during
+node transfer by the retained old/link node and pending successor.
+The continuation slot keeps these stages separate until the next
+block is installed. Clearing a flag therefore does not destroy the
+pending continuation. The intermediate bit copies never enable a
+source call. The new returned cut represents exactly the successor.
+This gives a cutwise simulation relation, including the moment of
+receipt, rather than just an equality of final parity.
+
+Erasure now follows by induction on original calls. A macro routing
+root Read enters its own Read block, has a sealed empty payload,
+executes the real source Read and receives its actual raw reply. It is
+not deleted. Halt blocks output their fixed bit at node 0, and no other
+node outputs a Halt. Finite local frames combined with the supplier's
+finite macro run yield finite firstHalt with exactly its parity.
+
+Finally, a single prefix simulator starts from the common image and
+initial node, executes these same local routines and transmitted
+payloads, and pauses only at each original response receipt. It then
+consumes that one acquired reply and sets the matching flag. Before
+that point no local choice has depended on it. Induction on microsteps
+gives all local instruction/head/availability/fee labels and their
+prefix compatibility. The source transition itself is the unchanged
+primitive, not simulated by address transport. This is the exact
+specialization of PR57.T3's causal proof to the present observation
+alphabet; it does not import PR57's coefficient response or guarded
+source operations. ∎
+

@@ -1,0 +1,9 @@
+**数学引文 5.1（供应归属）。** 定理 2.2、3.2 的定量组合归为 `repo-derived` 普通数学推导；本卷没有新增 Lean kernel 核验，也不主张全球文献优先权。它们承重的新增部分分别是任意旧地址含不存在回复的两次当前字面取得上界、每个正滞后的任意深单查询下界，以及每条至多两坐标的有限实际历史共同像。下列供应保留原条件及所有者：
+
+- [Transport Memory Completion §22.1](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)：（RA.2205）–（RA.2207）的实际地址、子树与单孔运输和唯一像解析；§23.1–23.2 的右边界时钟、出生及父前缀半径；§23.5–23.7 的（RA.2321）、有限条件重放和已声明来源／观察费用。父前缀半径及逐边访问费用不是本卷的字面调用数。
+- [Joint Moment Fibers §36–39、49–65](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md)：原始射线、入口纤维、条件记录容量、深度配对律、固定词域上的证书与真实前缀余额、全历史粗控制限制、共同缓存非乘积关系和有效入口初始化。那些证书以不同任务、词许诺或完整树取得为条件，不供应任意认证滞后下单个旧字面回复的本界。
+- [Atomic Boundary Trichotomy §4、8、10](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md)：闭前缀容量、两步差异深移和奇数前沿纤维、固定已知原点时钟的有限时域端点。整窗纤维和半径不计为单字面查询最优性。
+- [Process Geometry §37.3、44.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)：已取得完整 $(k,y)$ 的同源恢复及不可变 acquisition／付费读口的权限分界。本卷不重新认领完整取得后的解析或一般纤维因子化。
+- `D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean` 的 `readout`、`Policy`、`execute`，以及 `Observer/ActualExactTraceCompiler.lean`、`ActualExactSupportPruning.lean`、`ActualCompletionPhaseReplay.lean`：字面四值口及其不可变来源编译、首次出现缓存和阶段重放。定义 1.3 是另声明的串行理论合同，不是这些声明已提供的实现。
+- [AURIC FIB ATOM Dynamic Future Quotient](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)的资格矩阵 Q1–Q6，及[Acquired Return p-Emission Variation 定义 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md)：共同先验下的概率活动历史和完整未来律；[KBonacci Self-Calibrating Boundaries §29–32](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md)：原 Boolean 块和共同 INITIAL 档案。它们的词、概率、phase 或块费用均没有未经对象与操作对应的自由树字面恢复含义。
+

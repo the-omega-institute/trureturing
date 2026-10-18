@@ -1,0 +1,58 @@
+**Theorem 30.2 (one common complete channel, all complex inputs).**
+The maps of Definition 30.1 form one finite acquisition/execution
+factorization with full TP decoders. Forgetting $(r,j)$ gives exactly
+$\widehat\Phi_*$, for every complex five-mode input and at every passive
+reference amplification. This equality includes each exact-time failure
+CP measure, all five labels, all cross-support entries and all zero
+additional sectors. Its canonical twelve-history error is therefore the
+credited $E_*$ for every $s$.
+
+Proof. Write $L_r=(D+rsT)/\sqrt2$. The elementary Kraus mixing identity
+already supplied by `UnitaryKrausMixingInvariance` gives
+
+$$
+\sum_rL_rAL_r^\dagger
+ =DAD^\dagger+s^2TAT^\dagger.
+\tag{JR.6}
+$$
+
+The $T$ branches sum to $(1-s^2)TAT^\dagger$, because
+$V_TV_T^\dagger T=T$; the $S$ branches sum to $SAS^\dagger$.
+Their live sum is precisely the fixed live map, without any reality
+restriction on $A$. The $f_k$ branches sum to
+$w_\ell g(t)dt\,\sum_km_kA_{kk}P_f$ in each original sector.
+Each equality is an equality of CP maps, not just traces on twelve inputs.
+
+Likewise, summing encoder effects gives
+
+$$
+\begin{aligned}
+\sum_rL_r^\dagger L_r
+ +(1-s^2)T^\dagger T+S^\dagger S+M
+ &=D^\dagger D+T^\dagger T+S^\dagger S+M\\
+ &=I_3
+\end{aligned}
+\tag{JR.7}
+$$
+
+by (CG.141). Every individual effect is positive and at most this sum,
+so every finite encoder branch is TNI. All live decoders are isometric
+channels and the scalar decoders are TP by their exact integrals.
+On five modes the supported effects sum to $P$; the two scalar
+$\perp$ effects sum to $I_5-P$. Their decoded measure is exactly the
+extra term in (CG.142). The compression and trace branches annihilate
+all $V$–$V^\perp$ coherences, as does that fixed completion.
+
+For a joint matrix $X$ with reference $R$, a scalar row $C$ acts by
+$(C\otimes I_R)X(C^\dagger\otimes I_R)$, not by replacing the
+reference by its unconditional marginal. The $\perp$ branch gives
+$\operatorname{Tr}_5[((I_5-P)\otimes I_R)X]/2$. Multiplying these
+reference operators by the respective output measures proves the same
+identity at every amplification. The identities hold on every Borel
+time set: there is no time binning or marginal substitution. Both
+zero-weight labels stay zero, $g$ is finite at both endpoints and has
+no endpoint atoms, and no singular or additional output sector is
+introduced. The last claim now reuses Theorem 16.1 on identical complete
+outputs; it asserts no error bound for a new task exposing $(r,j)$.
+$\square$
+

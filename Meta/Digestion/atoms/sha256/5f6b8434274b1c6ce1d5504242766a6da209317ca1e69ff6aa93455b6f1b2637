@@ -1,0 +1,32 @@
+**Definition 30.1 (A resolved module on the smooth ambient space).**
+Keep the actual $29$-variable ring $S$ of (29.1), and let $M$ be a
+finitely generated ordinarily graded $S$-module. Choose a finite graded
+free resolution $F^M_\bullet\to M$ and an integer twist $d$.
+On $X=\mathbb {CP}^{28}$ put
+
+$$
+E^{-i}_{M,d}=\widetilde F^M_i(d),\qquad
+C^j_{M,d}=\bigoplus_{q-i=j}\Omega^{0,q}(X,E^{-i}_{M,d}),
+\qquad
+\delta=\bar\partial+(-1)^q d_M.
+\tag{30.1}
+$$
+
+The algebraic differential $d_M$ raises the cochain degree $-i$ by
+one and is holomorphic. With smooth Hermitian metrics and the
+Fubini–Study metric, define
+
+$$
+D_{M,d}=\sqrt2(\delta+\delta^\dagger),\qquad
+D^+_{M,d}:H^1(X,\mathscr E^{\mathrm{even}}_{M,d})
+\longrightarrow L^2(X,\mathscr E^{\mathrm{odd}}_{M,d}).
+\tag{30.2}
+$$
+
+Total degree is $q-i$, so negative odd degrees are retained.
+This is the construction of Theorems 25.3 and 26.5 with the particular
+cyclic relation presentation in place of the one-relation or
+four-position presentation. Its general module meaning is sheaf
+hypercohomology; equality with a module's degree piece requires a
+separate vanishing argument.
+

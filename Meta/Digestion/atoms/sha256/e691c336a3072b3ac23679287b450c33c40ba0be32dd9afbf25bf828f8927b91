@@ -1,0 +1,56 @@
+**Lemma 6.2 (actual core membership, norm and kinetic energy).** The
+vector $f_0$ is a unit member of $\mathcal F$ with $q_g[f_0]=E$.
+The vector $w$ is a nonzero member of the original core
+$C_c^\infty(\Omega)$, with support separated from the source height.
+Its norm and free energy are
+
+$$
+\begin{aligned}
+0<N&=\frac12\int_D b^2d\nu<\infty,\\
+K&=\frac12\int_D
+  \left(\varepsilon^2b_k^2+\tfrac14b_\alpha^2+c(k)^2b^2\right)d\nu
+  <\infty.
+\end{aligned}
+\tag{6.3}
+$$
+
+Moreover
+
+$$
+\Pi w=0,\qquad \langle f_0,w\rangle=0,\qquad
+T(f_0,w)=0,
+\tag{6.4}
+$$
+
+and both $q_g[w]$ and the mixed potential integral with $f_0$ are finite.
+
+Proof. Equations (1.8), (1.15) and (2.5) give the assertions about
+$f_0$. On the compact strip $\overline I_0\times\mathbb T$, the
+minimizer is smooth and has a positive minimum by Theorems 4.1--4.2.
+It is smooth on a neighborhood of this strip as well. Thus $\chi/v$
+is smooth there. Since $\chi$ vanishes on neighborhoods of the two
+endpoints of $I_0$, the zero extension of $b$ is smooth. Its support is
+compact in height and every derivative is bounded on that support.
+This proves $w\in C_c^\infty(\Omega)$ for exactly the core in (1.4).
+It is nonzero because $\chi$ is nonzero and $v$ is finite and positive.
+
+For $\vartheta=\beta-\beta_o$ the derivatives are
+
+$$
+Pw=\frac{b_k\cos\vartheta}{\sqrt{2\pi}},\qquad
+Qw=\frac{\tfrac12b_\alpha\cos\vartheta-c(k)b\sin\vartheta}
+          {\sqrt{2\pi}}.
+\tag{6.5}
+$$
+
+The hidden integrals of $\cos^2\vartheta$ and $\sin^2\vartheta$ are
+both $\pi$, and that of $\cos\vartheta\sin\vartheta$ is zero.
+These identities give (6.3), including the original hidden kinetic term
+$c(k)^2b^2$ and the base coefficient $1/4$.
+The zero hidden mean gives $\Pi w=0$ and orthogonality to $f_0$.
+The closed free form splitting (1.8) gives $T(f_0,w)=0$ on the actual
+form domains. Finally the full field is smooth and bounded on the
+compact support of $w$, while $f_0$ is continuous there. This proves
+the asserted finiteness directly; (1.12) and weighted
+Cauchy--Schwarz give it as well. $\square$
+

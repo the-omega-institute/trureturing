@@ -1,0 +1,14 @@
+**命题 8.2（raw entry is a different task）。** If the closed interpreter is required to receive a fully materialized raw triple of actual length $R_{\rm raw}$ before compression, that input itself immediately costs $R_{\rm raw}$ bits. For a sufficient canonical final reply the encoder uses
+$O(R_{\rm raw}+h+K+1)$ peak bits. On the neutral-free proof stratum, the worst raw-entry and preclosure numerical costs of this specific canonical pipeline have order
+
+$$
+\Theta_{L,d_0,E_0}(1+K+\log(N+2))
+$$
+
+for sufficiently large $N$, whereas the compact closed peak has the smaller order in Theorem 6.3.
+
+**证明。** The upper follows from Theorem 8.1 and Lemma 2.2. In the actual family of Lemma 6.2,
+$D=1-e^{-2z/F_k}=\Theta(1/F_k)$, so every valid returned bin has
+$h=\log_2F_k+O(1)=\Theta(\log N_k)$. The pipeline requests at least $h+P+80$ and $4K+96$. In its exact unit-axis $x_1$, a coordinate numerator in any valid canonical reply at precision $b$ has magnitude at least $2^b-1$, and hence gamma length $\Theta(b+1)$. The final reply and the required received/working precision therefore cost
+$\Omega(h+K+1)$. Choosing the largest allowed $k$ proves the worst-case order. This is a lower for the named raw representation and pipeline, not a received-bit lower for arbitrary compressed supplier messages.
+

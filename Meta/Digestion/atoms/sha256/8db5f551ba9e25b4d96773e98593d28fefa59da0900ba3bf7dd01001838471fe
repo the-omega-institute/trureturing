@@ -1,0 +1,4 @@
+# Affine slope transfer and sign-change obstructions at the minimum read count
+
+Removing the additive drift leaves a four-dimensional quotient at the candidate minimum read count. At an invertible slope, that quotient determines a linear transfer between nearby slopes. A sign change of the transferred source determinant then forces a collision between actual positive rank-one sources. This gives a necessary condition for arbitrary minimum-length fixed histories and excludes an infinite family of legal histories whose matrix spans survive every single noninitial deletion.
+

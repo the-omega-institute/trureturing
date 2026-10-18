@@ -1,0 +1,82 @@
+### 七、动态未来商是因果历史的记忆纤维
+
+对路径历史 $h$，项目中定义：
+
+$$
+\sigma(h)
+=
+\bigl(
+\mathrm{phase}(h),A_h,B_h
+\bigr).
+$$
+
+其中 $A_h,B_h$ 是沿因果路径取得的事件计数。
+
+令：
+
+$$
+r_k=\frac{\mathrm{Fib}_{k+1}}{\mathrm{Fib}_{k+3}},
+\qquad
+s_k=\frac{\mathrm{Fib}_{k+2}}{\mathrm{Fib}_{k+3}}.
+$$
+
+则：
+
+$$
+\nu_h(k)
+\propto
+\mu(k)r_k^{A_h}s_k^{B_h}.
+$$
+
+在非单例先验下：
+
+$$
+\mathscr L_h=\mathscr L_{h'}
+\Longleftrightarrow
+\sigma(h)=\sigma(h').
+$$
+
+这说明动态状态不是一个瞬时点，而是：
+
+$$
+\boxed{
+\text{当前 FIB 局部状态}
++
+\text{因果历史的最小摘要}.
+}
+$$
+
+于是完整的 FIB 因果状态应该写成：
+
+$$
+\mathfrak S(h)
+=
+\bigl(
+e_h,p_h,\kappa_h,\sigma(h)
+\bigr).
+$$
+
+若再加入局部钟场：
+
+$$
+\omega|_h,
+$$
+
+则完整的局部观察状态为：
+
+$$
+\boxed{
+\mathfrak O(h)
+=
+\bigl(
+\omega|_h,
+e_h,
+P(p_h),
+W_h,
+\sigma(h)
+\bigr).
+}
+$$
+
+---
+

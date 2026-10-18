@@ -1,0 +1,26 @@
+## 10. Mathematical ownership and bounded primary comparison
+
+The compound consumer consists of the exact independent replacement identity (4.4), the strong-zero implication in Theorem 5.1, and the conditional-rank budgets and accumulation in §§6–9. This is a synthesis relative to the supplied canonical results. The original domain, finite optimizers, growth bounds, actual-law correspondence and cocycle construction keep their source ownership; projection, matrix factorization, conditional convergence, compactness and the determinant expansion are mature tools. The rank discrepancy is nonlinear in a probability law and compares it with $\pi_n$; it is not a repackaging of an intrinsic annihilator or a finite-visible-memory exclusion.
+
+| Source | Exact use and boundary |
+| --- | --- |
+| [Universal][U], Convention 1.3, Lemma 2.1, Theorem 3.1, Definition 4.1, Proposition 4.2 and Theorem 6.2 | Original optimizer and growth interfaces, actual $J_\theta/P_\theta$, necessary band and support, entire compact-domain separation equivalence. The finite optimizer and its original square-discrepancy identity remain supplied results. |
+| [Localization][L], Definitions 2.1–2.2, Theorem 3.1, Convention 1.3 and Theorem 4.2 | Legal-surgery domination, square-root integrability and the original loss cocycle. Lemma 2.2 states the same proof's general stationary-law scope. The existing first-order conditional balances do not supply strong zero. |
+| [Intrinsic][I], Theorems 2.2 and 3.2, Corollary 3.4 | Exact conditional-null collar and linear dual residual distinguish the earlier response interface from the probability cut-rank constraint. No productive sign is transferred. |
+| [Two-word][W], Theorems 2.1 and 3.1 | Existing positive-pair exterior cancellation and finite response certificate. Their existence and productivity hypotheses are not replaced by the rank budget. |
+| [Dawid, Lauritzen and Parry][DLP], arXiv:1104.2224v2, complete §4.2, including Examples 4.3–4.4 and (12)–(14) | Conditional Brier scoring and squared conditional discrepancy. Its strict-propriety argument uses everywhere-positive full-product laws; §3 provides the constrained-graph equality argument. No statistical-performance theorem is imported. |
+| [Balle, Panangaden and Precup][BPP], arXiv:1501.06841v3, §§2.2 and 3.1 | Real weighted realizations and the explicit forward–backward product factorization. No positivity realization follows from real Hankel rank. The summable-series SVD, canonical-form, approximation and minimality results are not used: stationary cylinder probabilities have total mass one at every length, not over all finite words. Probability nonnegative-rank closure is proved in (6.5). |
+| [Van Enter and Verbitskiy][EV], arXiv:1001.3122v1, §§2–3, Definition 4, Theorems 5–6 and §3.2's local-variational discussion | Exterior Shannon uncertainty and variations preserving the exterior marginal are a conceptual comparison. The specification conclusion adds a Gibbs hypothesis; no Shannon-to-Brier, Gibbs or isomorphism-invariance conclusion is used. The finite-state language in the isomorphism discussion concerns a finite alphabet, not a fixed hidden-state budget. |
+| [Chazottes and Ugalde][CU], arXiv:0907.0528v4, §§2–3, especially Theorem 3.1 and its proof there | The stated theorem starts with a real Hölder potential on a full shift and a symbol amalgamation onto another full shift; its locally constant case retains those hypotheses. It does not establish the needed posterior regularity or $A_P$ for all scalar-no11 presentations with structural zeros. |
+
+These primary passages support the indicated credits and restrictions only. They establish neither worldwide priority for this synthesis nor absence of another solution. The results here are handwritten mathematics, without a formal-verification, source-admission or original-target-completion claim.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[L]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[W]: FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md
+[DLP]: https://arxiv.org/html/1104.2224v2 "A. Philip Dawid, Steffen Lauritzen and Matthew Parry, Proper Local Scoring Rules on Discrete Sample Spaces"
+[BPP]: https://arxiv.org/html/1501.06841v3 "Borja Balle, Prakash Panangaden and Doina Precup, A Canonical Form for Weighted Automata and Applications to Approximate Minimization"
+[EV]: https://arxiv.org/html/1001.3122v1 "A. C. D. van Enter and Evgeny Verbitskiy, Erasure entropies and Gibbs Measures"
+[CU]: https://arxiv.org/html/0907.0528v4 "Jean-Rene Chazottes and Edgardo Ugalde, On the preservation of Gibbsianness under symbol amalgamation"
+

@@ -1,0 +1,34 @@
+**Convention 1.5 (actual native lift and credited partition).** Use
+exactly [GDB, Definition 12.2 and Theorem 12.3][GDB]. At each block
+$v$, the three internal targets $\varepsilon,L,R$ have factor
+$(0,0)$. At the terminal slot of edge $a$, the factor is $(2,1)$
+for $s_a=0$ and $(1,0)$ for $s_a=1$. Each terminal reads that
+edge's actual owner, including a self Read at an owner. Its total
+decoder sends branch and absent to $(2,1)$. At the owner these
+excluded inputs disagree with the alpha reply predicted by $(2,1)$,
+so the owner equation enforces its actual binary guard.
+
+All seven targets in $W_3$ are specified. Every solution is the
+perfect height-two tree at each vertex with the four prescribed
+terminal bits; conversely every edge assignment builds exactly one
+such actual tuple. Owners recover the inverse. Thus the complete
+native solution set is in bijection with $\mathbb F_2^E$, has
+$2^{2n}$ rows, and each edge has incidence two. The equality of the
+two occurrences is part of this bijection. For arbitrary nonnegative
+original weights $w_v:S_3\to[0,\infty)$ its exact mass is
+$\sum_s\prod_v w_v(x_v(s))$, with each $w_v$ once. In (WBF.5)
+the restriction of $w_v$ to those sixteen perfect trees is $\Phi_v$;
+its other values do not affect this solution set.
+
+The credited incidence-rank and syndrome calculation [GDB, Theorem
+13.1 and Corollary 13.2][GDB] gives, on this connected carrier,
+
+$$
+Z_G=2^n\big[(A+B)^n+(A-B)^n\big].
+\tag{WBF.6}
+$$
+
+This exact partition, the carrier itself and its paid realization are
+existing results. The new calculation below evaluates a different
+certificate class on that carrier.
+

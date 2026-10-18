@@ -1,0 +1,28 @@
+### 推论 53.9（量子半群只给出 Fisher 单调性，不能自动给出 QCD 指数率）
+
+若 \(T_t^\ast\) 是 Schrödinger 表示的 CPTP 半群，且 \(\rho_t=T_t^\ast(\rho_0)\)、\(X_t=T_t^\ast(X_0)\)，则
+
+\[
+F_Q(\rho_t;X_t)
+\le
+F_Q(\rho_0;X_0).
+\]
+
+若同时满足 §38 的 detailed balance 和 \(QCD(K)\)，则 GNS Dirichlet 能量满足
+
+\[
+\mathcal E_\sigma(T_tA)
+\le
+e^{-2Kt}\mathcal E_\sigma(A),
+\]
+
+但不能仅由 \(QCD(K)\) 推出
+
+\[
+F_Q(\rho_t;X_t)
+\le
+e^{-2Kt}F_Q(\rho_0;X_0).
+\]
+
+后一个指数 Fisher 衰减需要额外的比较不等式，将 SLD Fisher 二次型与 GNS Dirichlet 型在同一切空间上联系起来。这个区分防止把量子曲率证书误读成未经证明的物理耗散率。
+

@@ -1,0 +1,30 @@
+**Proposition 7.5 (actual strength-one equality).** With
+$z_0=\beta/(1-\alpha)$ and $q_{\rm end}=1-z_0$, use
+
+$$
+h_r=\sqrt{q_{\rm end}}(1,r,0)^T/\sqrt2,\qquad
+z_{r,\pm}=(\sqrt{z_0},r\sqrt{z_0},\pm1)^T/2 .
+\tag{AS.56}
+$$
+
+Their moments are (AS.24) with
+$P=Q=t=q_{\rm end}$, $R=0$, $U=V=v=z_0$.
+The low vectors are quadratic-null with nonzero $D$ coefficient,
+so their physical products have rank two. The high determinant is
+nonzero, since its $T/D$ ratio is $r$ and $1-\alpha>0$;
+$q_{\rm end}>0$ follows from $k>0$. The range encoders and all
+six scalar/complement labels from Definition 7.2 give twelve actual
+labels, with every full normalization, effect, complex/reference and
+Borel-time identity proved in Theorem 7.3. Their acquired cost is
+$q_{\rm end}(A+B)$, proving the reverse inequality in Proposition 6.2.
+$\square$
+
+Every construction fixes all matrices, range choices and kernels
+before receiving the sole specimen. A finite dilation uses the
+encoder Kraus matrices with an orthogonal environment copy of branch
+and multiplicity. The joint effect identity makes that map isometric;
+tracing the copy dephases the actual label. All unretained shares
+are discarded permanently before the cut. This specifies new supplied
+CP operations; it grants no access to an environment discarded by
+some other implementation.
+

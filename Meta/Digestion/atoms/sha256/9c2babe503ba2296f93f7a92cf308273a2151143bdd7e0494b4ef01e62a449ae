@@ -1,0 +1,22 @@
+**Definition 36.1 (Legal, interior and exceptional root sectors).**
+For one cycle define
+
+$$
+\begin{aligned}
+L_k(m,t)&=\#\{(m,c)\in\mathcal S_k:c_0=t\},\\
+I_k(m,t)&=\#\{(m,c)\in\mathcal S_k^\circ:c_0=t\},\\
+B_k(m,t)&=L_k(m-3,t-1),\\
+E_k(m,t)&=I_k(m,t)-B_k(m,t).
+\end{aligned}
+\tag{36.1}
+$$
+
+A count is zero for negative degree, negative root occupancy or root
+occupancy exceeding the degree of the object counted; the interior
+count is also zero whenever its strict inequalities are infeasible.
+In particular $I_k(0,t)=0$ and $L_k(0,t)=\mathbf1_{t=0}$.
+The two-argument $E_k(m,t)$ here is an exceptional canonical count.
+It is different from the one-argument local-trace error $E_k(q)$ of
+Definition 32.1; the latter counts locally feasible tuples without a
+common-copy lift. No equality between those two counts is implicit.
+

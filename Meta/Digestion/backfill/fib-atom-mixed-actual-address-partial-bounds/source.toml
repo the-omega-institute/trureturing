@@ -1,0 +1,5 @@
+source_id = "fib-atom-mixed-actual-address-partial-bounds"
+path = "docs/develop/theory/FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

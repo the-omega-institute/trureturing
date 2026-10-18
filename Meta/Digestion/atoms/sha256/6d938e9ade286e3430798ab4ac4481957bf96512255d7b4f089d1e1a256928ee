@@ -1,0 +1,44 @@
+**Theorem 4.4 (A persistent nodal branch on the nine-cycle).** For every real $t$ and every real $\lambda$ with $c(\lambda,t)=0$, the vector $z\in\mathbb R^9$ with coordinates
+
+$$
+\begin{aligned}
+z_8&=1, & z_0&=b, & z_1&=ab-1, & z_2&=a^2b-a-b, & z_3&=2a-a^2b,\\
+z_4&=1-ab, & z_5&=-a, & z_6&=-1, & z_7&=0, &&
+\end{aligned}
+$$
+
+where $a=2-\lambda+t$ and $b=2-\lambda-t$, satisfies $H_tz=\lambda z$. For every real $t$ such a real $\lambda$ exists. Hence for every real $t$ the matrix $H_t$ has an eigenvector vanishing at site $7$, the potential $V$ is bad, and $c$ divides both $p$ and $q_7$ in $\mathbb R[t][\lambda]$. Stance: suspected-novel (§8).
+
+**Proof.** The equation at site $i$ reads $(2+tv_i-\lambda)z_i-z_{i-1}-z_{i+1}=0$, with coefficient $a$ at the sites $0,1,3,4,6$ and $b$ at the sites $2,5,7,8$. For an arbitrary pair $(\lambda,t)$ the residuals $r_i=((H_t-\lambda I)z)_i$ are:
+
+$$
+\begin{aligned}
+r_8&=b\cdot1-z_7-z_0=b-0-b=0,\\
+r_0&=a\,b-z_8-z_1=ab-1-(ab-1)=0,\\
+r_1&=a(ab-1)-z_0-z_2=a^2b-a-b-(a^2b-a-b)=0,\\
+r_4&=a(1-ab)-z_3-z_5=a-a^2b-(2a-a^2b)+a=0,\\
+r_5&=b(-a)-z_4-z_6=-ab-(1-ab)+1=0,\\
+r_6&=a(-1)-z_5-z_7=-a+a-0=0,\\
+r_7&=b\cdot0-z_6-z_8=1-1=0,
+\end{aligned}
+$$
+
+while the two remaining residuals are
+
+$$
+\begin{aligned}
+r_2&=b(a^2b-a-b)-(ab-1)-(2a-a^2b)=a^2b^2+a^2b-2ab-2a-b^2+1=(b+1)\,k(a,b),\\
+r_3&=a(2a-a^2b)-(a^2b-a-b)-(1-ab)=-(a^3b+a^2b-2a^2-ab-a-b+1)=-(a+1)\,k(a,b).
+\end{aligned}
+$$
+
+The factorizations follow by expanding $(b+1)(a^2b-2a-b+1)=a^2b^2-2ab-b^2+b+a^2b-2a-b+1$ and $(a+1)(a^2b-2a-b+1)=a^3b-2a^2-ab+a+a^2b-2a-b+1$. Hence
+
+$$
+(H_t-\lambda I)z=k(a,b)\,\big((b+1)e_2-(a+1)e_3\big),
+$$
+
+and by Lemma 4.3 the right side is zero whenever $c(\lambda,t)=0$. Since $z_8=1$, $z$ is a nonzero real eigenvector with $z_7=0$.
+
+For fixed real $t$, Lemma 4.3 shows that $\mu\mapsto k(\mu+t,\mu-t)$ is a real cubic in $\mu$ with leading coefficient $1$; it has a real root $\mu_0$, and $\lambda_0=2-\mu_0$ is a real root of $c(\cdot,t)$. So for every real $t$ the matrix $H_t$ has an eigenvector vanishing at site $7$, and by Convention 2.4 and the first paragraph of the proof of Corollary 3.3 the potential is bad. By the nodal step in the proof of Theorem 3.2, $\lambda_0$ is a common root of $p(\cdot,t)$ and $q_7(\cdot,t)$ for every real $t$, so $\operatorname{Res}_\lambda(c,p)$ and $\operatorname{Res}_\lambda(c,q_7)$ vanish on $\mathbb R$ and are zero. Thus $c$ shares a factor with $p$ and with $q_7$ in $\mathbb R(t)[\lambda]$; being irreducible (Lemma 4.3), it divides both, and since $c$ is monic the quotients lie in $\mathbb R[t][\lambda]$. ∎
+

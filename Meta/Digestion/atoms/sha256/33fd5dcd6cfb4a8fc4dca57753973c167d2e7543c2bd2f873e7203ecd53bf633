@@ -1,0 +1,12 @@
+4. Append the terminal program header. Execute all records in order. The final
+   two accumulator bits form the response; seal the complete typed block before
+   releasing its availability token.
+
+Each expression in step 2 is one permitted Boolean truth table; NOT is inside
+that table. References to $x_i$ are operand addresses and add no projection
+gate. Every gate destination is fresh. Unused operand fields reference the
+constructed zero cell. The two output bits and every equality value remain private
+until the complete response commits. Transmission and journal writing are subsequent
+paid actions. Preallocating a zero cell is initialization, not a fourth constant
+gate hidden in the count below.
+

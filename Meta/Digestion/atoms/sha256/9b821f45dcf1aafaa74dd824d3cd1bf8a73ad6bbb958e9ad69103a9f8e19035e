@@ -1,0 +1,9 @@
+**假设 61.1（正交配置与态公设）。** 单窗口合法配置 $L=\{000,100,010,001,101\}$ 的可区分标签被赋予正交复单位基。固定顺序为
+
+$$
+(|N\rangle,|2\rangle,|3\rangle,|5\rangle,|25\rangle),
+\qquad\mathcal H_F=\mathbb C^5,\qquad\Pi_s=|s\rangle\langle s|.
+$$
+
+$|N\rangle$ 是归一化空占位基态，不是零向量。纯态为 $|\psi\rangle=\sum_sc_s|s\rangle$、$\sum_s|c_s|^2=1$；混态为 $\varrho\ge0,\operatorname{tr}\varrho=1$。本卷仍以 $\rho$ 记原生树替换，量子态记 $\varrho$。正交性、复线性叠加、正性和 Born 概率是额外假设，五模式语法本身没有指定相位或相干。
+

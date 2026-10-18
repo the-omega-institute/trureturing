@@ -1,0 +1,42 @@
+**Theorem 4.2 (right search as the row guard).** Replace RA's left search
+by Definition 4.1 at the root. On INVALID clear and restart. On a leaf
+at $R^d$ with bit $e$, save $d,e$, execute the unchanged complete-row
+body, and validate by rereading $R^d$. Accept only the identical leaf,
+and return the complete row and $z=2d+e$. This single source-blind
+program returns exactly $(R_P(U_v),c(U_v))$ for every source, cut and
+returning history. It terminates under unknown finite interference and
+observer progress. The total number of failed searches and failed row
+validations together is at most $b$.
+
+With $h_R=\lfloor c(V)/2\rfloor$ and
+$S_R=2\lceil\log_2(h_R+2)\rceil+4$, each round satisfies
+
+$$
+T_j\le S_R+1+m_*N,\qquad
+Q\le\max(H,2h_R),\qquad A_j\le\max(H,2h_R)T_j.
+\tag{CAB.10}
+$$
+
+There are at most $b+1$ rounds. For the root cut the body has no Reads,
+so $T_j\le S_R+1$, $Q\le2h_R$ and $A_j\le2h_RT_j$.
+
+Proof. For a rightmost leaf at depth $d$, [DOR] gives $c=2d+e$.
+Matching this leaf at final validation makes the entire intervening
+row body stationary by the native certificate. Earlier search Reads
+need not belong to that interval. This proves joint correctness at
+$v$ and, by the supplied advancement law, relative-lag recovery by
+subtraction of the acquired $z$ values.
+
+For termination, the finite final right depth bounds every exponential
+branch reply. If it is positive, the first power of two at least that
+depth is at most twice it and cannot reply branch. Bisection decreases
+the positive numerical width strictly, even if the upper reply is stale.
+There are at most $S_R$ search Reads, and no search word exceeds
+$2h_R$; when $h_R=0$ the root Read is already a leaf. Every RA body
+is finite by its final-tree bound. A search INVALID cannot occur with
+no update during that search, and a failed validation cannot occur with
+no update between its leaf and reread. The successive failure intervals
+are disjoint, including across these two kinds of failure. Their
+combined number is therefore at most $b$. They are not two independent
+retry allowances. RA's body bound then gives (CAB.10). $\square$
+

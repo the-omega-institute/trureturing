@@ -1,0 +1,142 @@
+**Lemma 77.6 (cyclic blocks, the infinity exception and actual paths).**
+In any hypothetical drawing of77.3, at least $32767$ vertex-disjoint
+actual five-edge ground-to-ground paths can be selected in different
+pendant $S_0$ occurrences. Closing them by their ground segments gives
+simple polygons with pairwise disjoint boundaries and interiors.
+
+**Proof.** Complete the grounding line through infinity to a boundary
+circle. Its cyclic order concerns only the finite set of distinct tips;
+infinity is not a new graph vertex. The elementary Jordan crosscut
+consequence used here is that two disjoint simple arcs in the closed
+upper half-plane, whose open arcs lie in the open half-plane, cannot
+have alternating boundary endpoints. One can map the compactified
+half-plane to a disk. Close the first arc by one boundary arc between
+its endpoints. Jordan separation puts the two alternating endpoints
+of the second arc on the opposite boundary sides of this crosscut;
+the second open arc would have to cross the first. Equivalently, in
+linear order $u_1<v_1<u_2<v_2$, closing the $u_1$--$u_2$ arc by its
+ground interval gives a Jordan polygon. A small upper neighbourhood
+of $v_1$ is on its interior side, whereas $v_2$ is outside its closure.
+The $v_1$--$v_2$ arc must cross the first arc, since its open arc never
+crosses the grounding line. This proves the crosscut consequence.
+
+For a pendant $S_0$ occurrence with root address $r$, cut its single
+attachment seam to its parent as a mathematical proof device. The
+augmented tree separates into two connected components: the five source
+vertices at $r$ and their six ground tips, and the connected complement.
+If the two tip sets alternated around the boundary circle, the unique
+tree paths joining the two chosen tips in each component would be
+disjoint crosscuts with alternating endpoints. Their open arcs are
+above the line because ground vertices have degree one and all source
+vertices have positive height. This contradicts the crosscut consequence.
+
+A nonempty proper subset of a finite cyclic order that is not one cyclic
+block has at least two membership runs, separated by runs of its complement;
+choosing endpoints from those four runs produces precisely such an
+alternation. Thus each pendant occurrence's six-tip set is one cyclic
+block. These sets are disjoint and partition all tips. A block that is
+not contiguous in the finite left-to-right order must contain both
+extreme tips and wrap through infinity. At most one block can do so,
+because the blocks are disjoint. Retain all the other blocks; their
+number $M$ satisfies
+
+$$
+M\ge32768-1=32767.
+\tag{77.16}
+$$
+
+Within each retained linear six-tip block, the shallow leaf $rR$ supplies
+two tips and the deep leaves $rLL,rLR$ supply four. Both groups occur,
+so the six-entry linear sequence has an adjacent transition between
+the groups. These adjacent entries are also consecutive globally.
+Select one such pair. For a deep leaf $rL\sigma$, $\sigma\in\{L,R\}$,
+their unique actual path, in one of the two orientations, is
+
+$$
+g_R\;--\;rR\;--\;r\;--\;rL\;--\;rL\sigma\;--\;g_{L\sigma}.
+\tag{77.17}
+$$
+
+It consists of its two actual stubs and three actual inherited seams,
+exactly five edges. In particular this is not a same-leaf two-stub path.
+No geometric ordering is identified with the literal left/right syntax,
+and no equal-stub or opposite-side assumption is used. Paths selected
+from different pendant occurrences have disjoint vertex sets and hence
+disjoint images under the required drawing.
+
+Close each selected path by the positive-length interval between its
+distinct ground endpoints. Its open arc lies strictly above the line;
+its closure is a simple six-sided Jordan boundary, possibly with
+straight-through vertices. Ground intervals belonging to different
+retained linear blocks are disjoint closed intervals. Paths cannot meet
+any such interval except at their own endpoints. Thus the selected
+full polygon boundaries are pairwise disjoint.
+
+For completeness, the closed Jordan region of each polygon meets $y=0$
+exactly in its base. Every point below the line connects to infinity
+below the line, so it is exterior. A point on the line outside the base
+is off the compact boundary and has a neighbourhood meeting that
+exterior, hence is exterior too. The bounded interior therefore lies
+strictly above the line. Disjoint Jordan boundaries can have overlapping
+interiors only if one lies inside the other: by Jordan separation each
+connected boundary is wholly in one complementary component of the
+other, which gives this usual disjoint-or-nested alternative. Nesting
+here is impossible, since the proposed inner polygon has ground
+endpoints on a base disjoint from the outer closed region's base. Those
+endpoints are exterior to the outer region, whereas an enclosed polygon
+with disjoint boundary would have its boundary inside that region.
+The interiors are consequently pairwise disjoint. All cuts, closing
+segments and enclosed regions in this argument are proof devices;
+they add no installed cable, native action, control or record. $\square$
+
+**Proof of Theorem77.3 (the retained-root disk and exact packing).**
+Suppose the required drawing exists and apply77.6. Retain the entire
+tree, including the upper seams not used by the selected paths. Every
+source vertex is at most17 seams from the actual root, and every ground
+tip at most18 edges from it. Triangle inequalities along these actual
+root paths and(77.10) place every vertex in the root-centred closed disk
+of radius
+
+$$
+R=18\frac{21}{20}=\frac{189}{10}.
+\tag{77.18}
+$$
+
+All edges and proof bases lie in that convex disk. A polygon's bounded
+interior is contained in the convex hull of its vertices: a point
+outside that hull has a separating half-plane through which it connects
+to infinity without meeting the boundary, so it is exterior. Thus every
+selected closed region lies in the same disk and in its enclosing square
+of area $4R^2$. All tips have horizontal span at most $2R$.
+
+Partition the selected regions according to their base widths. Let
+$N_{\rm wide}$ have $w\ge1/4$ and $N_{\rm small}$ have $w<1/4$.
+Their disjoint bases and the total ground span give
+$N_{\rm wide}/4\le2R$, so $N_{\rm wide}\le8R$.
+Lemma77.5 gives area greater than $1/16$ to each small-base region;
+their disjoint interiors and the enclosing square give
+$N_{\rm small}/16\le4R^2$, so $N_{\rm small}\le64R^2$.
+Hence
+
+$$
+32767\le M=N_{\rm wide}+N_{\rm small}
+ \le8R+64R^2
+ =\frac{756}{5}+\frac{571536}{25}
+ =\frac{575316}{25}.
+\tag{77.19}
+$$
+
+This is impossible because
+
+$$
+32767-\frac{575316}{25}
+=\frac{819175-575316}{25}
+=\frac{243859}{25}>0.
+\tag{77.20}
+$$
+
+The disk bound follows from retained lengths and depth; it imposes no
+height band. The argument concerns ordinary enclosed area, not an
+apparatus area or a resource price. This proves the full exact-length
+statement. $\square$
+

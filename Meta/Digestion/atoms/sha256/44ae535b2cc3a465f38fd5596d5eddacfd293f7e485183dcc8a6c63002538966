@@ -1,0 +1,131 @@
+**Theorem 6.2 (the representation-invariant budget and an extensive
+native failure of owner-correlation-only accounting).** For every
+code, law and witness choice in Definition 6.1,
+
+$$
+\begin{aligned}
+H(E)&=B_{\rm local}+B_{\rm import}+\operatorname{TC}(O\mid E)
+       \le\log_2|E[\mathcal F_D]|,\\
+B_{\rm import}+\operatorname{TC}(O\mid E)
+ &=\operatorname{TC}(X\mid E)
+  =H(E)-\sum_iI(X_i;E).
+\end{aligned}
+\tag{OCB.45}
+$$
+
+The combined term is independent of the witness completion. Neither
+summand separately is invariant. There exist actual full-family codes
+for every dyadic $n\ge2$ with the same actual fibers admitting two
+legal witness choices with respective values
+
+$$
+(B_{\rm local},B_{\rm import},\operatorname{TC}(O\mid E))
+=(0,n/2,0)\quad\text{and}\quad(0,0,n/2).
+\tag{OCB.46}
+$$
+
+Consequently a proposed bound
+$\operatorname{TC}(X\mid E)\le\operatorname{TC}(O\mid E)+a_n$
+with $a_n=o(n)$ fails even when the owned groups are conditionally
+independent in actual native data.
+
+Proof. For each actual fiber, owner-reply reconstruction is injective
+and the owner tuple is a deterministic function of the blocks. Hence
+$H(X\mid E)=H(O\mid E)$. Also
+
+$$
+H(X_i\mid E)=H(O_i\mid E)+H(X_i\mid O_i,E).
+$$
+
+Subtracting gives
+$\operatorname{TC}(X\mid E)=B_{\rm import}+\operatorname{TC}(O\mid E)$.
+The blocks are independent before conditioning, and $E$ is a
+deterministic function of them on this fixed source slice. Therefore
+
+$$
+\operatorname{TC}(X\mid E)
+=\sum_iH(X_i\mid E)-H(X\mid E)
+=H(E)-\sum_iI(X_i;E).
+$$
+
+All three terms are nonnegative and the full attained alphabet bounds
+$H(E)$. These are the credited finite chain rules and RRN's injectivity
+applied on the actual fibers, without changing their conditional law.
+The native content is the invariant accounting and the following
+quantified realization, not a new standalone chain rule.
+
+Write $\operatorname{bit}(0)=\alpha$, $\operatorname{bit}(1)=\beta$,
+$u_{ab}=\langle\operatorname{bit}(a),\operatorname{bit}(b)\rangle$
+and $U=\{u_{ab}:a,b\in\{0,1\}\}\subset S_2$. Let $n=2^H$,
+$H\ge1$, $r=n/2$ and $D=H+2$. Group consecutive actual blocks as
+
+$$
+X_{2j-1}=u_{a_jb_j},\qquad X_{2j}=u_{c_jd_j},\qquad
+E=(b_j\mathbin\oplus c_j)_{j=1}^r.
+\tag{OCB.47}
+$$
+
+Under independent uniform blocks in $U^n$, this has $2^r$
+equiprobable names and $2^{3r}$ rows per actual fiber, each of mass
+$2^{-r}$. Each one-block projection is $U$, and each block is
+independent of the exported parity vector, so $B_{\rm local}=0$.
+
+For the first witnesses, in each pair keep the three seeds $a_j,b_j,d_j$
+owned at odd $L$, odd $R$ and even $R$. Internal block roots are
+constant branch. Even $L$ reads the odd $R$ port and decodes the
+bit xor the known name bit $e_j$. Other leaf targets read their own
+owner. Guard all leaf seeds to alpha or beta and use factors $(2,1)$
+and $(1,0)$ for these actual replies. These are complete native
+representative equations whose full solution set is exactly the
+specified $B_e$: they impose precisely $c_j=b_j\oplus e_j$.
+Conditional on $E$, all $3r$ retained owner bits are independent
+uniform bits. Odd blocks are determined by their own owner tuples;
+each even block still has one independent imported bit given its
+own $d_j$ and $E$. Thus $\operatorname{TC}(O\mid E)=0$ and
+$B_{\rm import}=r$.
+
+For the second witnesses use self Reads at every leaf. Their complete
+solution set is $U^n$, which contains the same actual $B_e$ but is
+not asserted to equal it. On the unchanged conditional law of the
+actual fiber, each $O_i$ now determines $X_i$. Thus $B_{\rm import}=0$
+and $\operatorname{TC}(O\mid E)=\operatorname{TC}(X\mid E)=r$.
+Replacing the fiber by its completion would erase exactly this term
+and is not part of the argument.
+
+The local mass accounting agrees with both choices. Under uniform
+$\mu(U)=1$, in the first representation odd blocks have $L_i=1$
+and even blocks $L_i=1/2$; the remaining defects of (OCB.31) vanish,
+giving mass $2^{-r}$. In the self-Read completion $L_i=1$ for all
+blocks, but restricting to the actual $B_e$ gives owner correlation
+$r$ and all other defects zero. Its mass is still $2^{-r}$.
+Here (OCB.31) is applied to that retained subrelation; the mass of
+the full self-Read completion itself is one.
+
+To realize the complete code on every original variable shape, scan
+all $Rq$, $q\in W_D$, before the request. If $\pi_D(v)$ lies in
+$T_H(U^n)$, export its parity vector; otherwise export its own distinct
+canonical name. The complete attained alphabet is exactly
+
+$$
+|S_D|-4^n+2^r.
+\tag{OCB.48}
+$$
+
+Every name is attained. Scan bounds are (OCB.23). At $H=1$, these
+are $109$ names, seven Reads and seventeen submitted letters.
+At a parity name, above-cut and block-root targets are branch;
+leaf targets use one installed self or cross-owner original-root
+literal, of length at most $H+2=D$. The name supplies the parity
+decoder, not an extra observation. Canonicalization preserves the
+queried replies and requested factors throughout its full variable-shape
+inverse image. Singleton canonical names need zero Reads. The credited
+all-count decoder supplies every subsequent authentic count, and all
+other acquired dependence is isolated as in Theorem 3.4. Table, work,
+workspace, predictor, count and physical service costs remain separate.
+
+Finally $r=n/2$ along every dyadic $n$, so any $a_n=o(n)$ eventually
+fails the proposed shortcut. This family has a locally admissible
+support $U$ and $\beta_2(\operatorname{Unif}(U))=1$. It is a precise
+obstruction to the stated accounting rule, not an optimized pressure
+obstruction or a new rate lower. $\square$
+

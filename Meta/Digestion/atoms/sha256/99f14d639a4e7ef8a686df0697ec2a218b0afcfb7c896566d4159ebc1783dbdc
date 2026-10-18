@@ -1,0 +1,27 @@
+**Definition 4.3 (foundation and naming).** At ordinal zero use $F_{65}$,
+$F_q$ with exactly the $c_0$ actually endowed primitive bits present, the
+two meter boundary cells and two meter links, and empty other tapes.
+All other sockets are absent. Charge this finite foundation and $\Pi$ as
+in §8. Then execute the original boundaries, finite-bit installation,
+private IN/WR/MR preparation, zeroing, validation, acquisition, output,
+seals and copies, one patch for each native row. No post-acquisition
+rendering is inserted. Later Install uses the already reached original
+Ready and its actual permissions.
+
+Original cells retain port/creation occurrence identity. Expanded terminals
+retain their root occurrence; new switch roles have the constructor's
+fixed role order. Existing bit reassignment moves its fork/singleton
+incidences without renaming those occurrences. The fixed scaffold's
+auxiliary roles and all later auxiliary roles are determined by this one
+execution. No fresh arbitrary name input is admitted.
+
+Write $\mathsf R(h,g)$ when $g=\Gamma_+(Y(h))$ with those actual
+construction occurrences, the unchanged preparation/source binding and
+the native owner/token correspondence of Definition 2.3. This is the
+phase-total initialized compatibility relation. The graph rules were
+specified independently by local templates in Definition 4.1; the
+commuting equation for $\mathsf R$ is proved next, not assumed as a
+definition of their execution. Its current consumers are the enlarged
+support/boundary inverses, current-memory identification and actual Call
+square in §§5–7.
+

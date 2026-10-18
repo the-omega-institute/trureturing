@@ -1,0 +1,67 @@
+**Theorem 54.2 (both composition corrections from the same lists).**
+With precisely the lists in (54.1), define
+
+$$
+\begin{aligned}
+V_n(t)&=B_n(2t)-B_n(t)^2\\
+ &=\sum_iw_{b,i}^{(n)}
+          [T_{c_{b,i}^{(n)}}(t)-B_n(t)]^2\ge0,\\
+D_n(t)&=A_n(2t)-S_tA_n(t)-A_n(t)S_t\\
+ &=\sum_i a_{s,i}^{(n)}
+          [T_{d_{s,i}^{(n)}}(t)-S_t]^2\ge0.
+\end{aligned}
+\tag{54.6}
+$$
+
+For every fixed $0\le T<\infty$, uniformly for $0\le t\le T$,
+
+$$
+\begin{aligned}
+\|V_b(t)-V_n(t)\|
+ &\le E_{b,n}(2T)+2e^{C_bPT}E_{b,n}(T),\\
+\|D_s(t)-D_n(t)\|
+ &\le E_{s,n}(2T)+2E_{s,n}(T).
+\end{aligned}
+\tag{54.7}
+$$
+
+In particular both errors tend to zero in operator norm. The
+RAW expression approximates the original first-order $D_s$
+of (46.9), not $A_s(2t)-A_s(t)^2$.
+
+Proof. Each individual $T_c(t)$ is selfadjoint and obeys its
+own semigroup law. Expanding the UNIT square sum and using
+$\sum_iw_iT_{c_i}(t)=B_n(t)$ and $\sum_iw_i=1$ gives
+$\sum_iw_iT_{c_i}(t)^2-B_n(t)^2$; no two distinct fibres have
+been commuted. This proves the first identity and positivity.
+For the second identity put $T=T_{d_i}(t)$ and $S=S_t$.
+The contribution of a single branch to its first line is
+
+$$
+(T^2-S^2)-S(T-S)-(T-S)S
+ =T^2-ST-TS+S^2=(T-S)^2.
+\tag{54.8}
+$$
+
+This uses both cross orders, and proves positivity after the
+positive weighted sum. The same calculation under the
+compensated integral is exactly (46.9).
+
+Both $B_n(t)$ and $B_b(t)$ have norm at most $e^{C_bPt}$.
+The identity $X^2-Y^2=X(X-Y)+(X-Y)Y$ therefore bounds the
+difference of their squares by
+$2e^{C_bPT}E_{b,n}(T)$, and their responses at $2t$ differ by
+at most $E_{b,n}(2T)$. This proves the first inequality in
+(54.7). Subtract the two cross expressions for $D_s$ and
+$D_n$, and use $\|S_t\|\le1$, to obtain the second.
+
+One may also see the first-order meaning directly: if a
+bookkeeping scalar $r$ is used in $S_t+rA_n(t)$, its equal-step
+composition difference is $rD_n(t)-r^2A_n(t)^2$.
+Only its coefficient of $r$ is the raw correction. The
+compensated bound
+$\|A_n(t)\|\le M_sPt\,e^{C_sPt}$ follows from (54.4)--(54.5),
+so this expansion introduces no divergent total-weight term.
+The scalar $r$ here does not assert any new finite-$\kappa$
+error estimate or replace the inherited scale $r_s$. $\square$
+

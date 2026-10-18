@@ -1,0 +1,23 @@
+**Proposition 5.1 (Reused finite-cut information bound).** For an actual $\theta\in\Theta_N$, define $E_P=\sum_{k\ge0}a_k$. Then
+
+$$
+E_P
+=I_{P_\theta}(X_{-\infty:-1};X_{0:\infty})
+\le H_{J_\theta}(H_0)\le\log N.
+\tag{5.1}
+$$
+
+This bounds excess entropy, without supplying the weighted condition $T_P<\infty$.
+
+Proof. For every $n\ge1$, the standard entropy chain rule gives
+
+$$
+\begin{aligned}
+I_P(X_{-\infty:-1};X_{0:n-1})
+&=B_P(n)-nh
+=\sum_{k=0}^{n-1}a_k.
+\end{aligned}
+$$
+
+Increasing the finite future block gives the information of the two complete half-lines. Under the actual joint factorization (1.3), $H_0$ separates $X_{-\infty:-1}$ from $X_{0:\infty}$ conditionally. The standard data-processing bound therefore gives $I_P(\text{past};\text{future})\le H_{J_\theta}(H_0)$ [Information][CT]. No division by a zero stationary mass is involved, and the entropy of an $N$-valued variable is at most $\log N$. This mature finite-cut argument also holds for reducible and periodic stationary presentations. $\square$
+

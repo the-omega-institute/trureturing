@@ -1,0 +1,9 @@
+## 243. The axial-Z role is impossible
+
+The three roles at a face {M,Z,C} are axial Z with pair {M,C}, axial M
+with pair {Z,C}, and axial C with pair {M,Z}. In the first, rho's other
+axis cannot also be Z, because (z-1)^2>(m+c)^2 would make rho flat.
+Its unique Z slot therefore has its two incident faces paired to tau's
+two Z faces. The two original Z intervals close and force degree(Z)=2.
+This excludes the first role. The axial-M role is exactly (A).
+

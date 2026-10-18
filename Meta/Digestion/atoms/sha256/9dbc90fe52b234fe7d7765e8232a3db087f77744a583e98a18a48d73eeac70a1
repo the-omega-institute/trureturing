@@ -1,0 +1,64 @@
+**Theorem 86.1 (five and seven cannot enter the relative index).** Let $j,C$ be positive integers, $N=3^j$, and $B_n=L_n^2+3$ for positive odd $n$. Let $D$ be the full positive squarefree kernel of $B_N$, so $B_N=D C^2$. If
+
+$$B_{Nk}=D c^2$$
+
+for a positive integer $c$ and a positive odd integer $k$ with $3\nmid k$, then
+
+$$\boxed{\gcd(k,35)=1.}$$
+
+Thus every multiplier divisible by five or seven is excluded, including arbitrary powers and additional factors.
+
+**Proof.** For odd $n$, the Lucas multiplication formula is $L_{nm}=V_m(L_n)$, where
+
+$$V_0(X)=2,\qquad V_1(X)=X,\qquad V_{m+2}(X)=X V_{m+1}(X)+V_m(X).$$
+
+Indeed the two Binet roots $\phi^n$ and $-\phi^{-n}$ have sum $L_n$ and product $-1$. Modulo $X^2+3$, the first six values $V_0,\ldots,V_5$ are $2,X,-1,0,-1,-X$, while $V_6=2$ and $V_7=X$. The recurrence therefore gives $V_{m+6}=V_m$ in this quotient for every $m\ge0$. For positive odd $m$ with $3\nmid m$, one has $V_m\equiv\pm X\pmod{X^2+3}$, proving
+
+$$B_n\mid B_{nm}.$$
+
+Suppose $p\mid k$ for $p\in\{5,7\}$, and put $t=Nk/p$. Then $t$ is a positive odd multiple of three, and $t/N$ is odd and not divisible by three. Thus $B_N\mid B_t$, so every prime in $D$ divides $B_t$. The Lucas recurrence modulo four has period six, with values $2,1,3,0,3,3$. Consequently
+
+$$x=L_t\equiv0\pmod4,\qquad x\ge4.$$
+
+For $p=5$, direct multiplication gives
+
+$$B_{5t}=B_t Q_5(x),\qquad Q_5(X)=X^8+7X^6+14X^4+8X^2+1.$$
+
+Since $Q_5(X)\equiv-5\pmod{X^2+3}$, the gcd of $B_t$ and $Q_5(x)$ divides five. But five never divides $L_t^2+3$, because $-3$ is a nonsquare modulo five. Hence
+
+$$\gcd(B_t,Q_5(x))=1.$$
+
+The number $A_5=x^4+\tfrac72x^2$ is an integer, and
+
+$$Q_5(x)-A_5^2=\tfrac74x^4+8x^2+1>0,\qquad (A_5+1)^2-Q_5(x)=\frac{x^2(x^2-4)}4>0.$$
+
+Thus $Q_5(x)$ lies strictly between consecutive integer squares.
+
+For $p=7$, the corresponding identities are
+
+$$B_{7t}=B_t Q_7(x),\qquad Q_7(X)=X^{12}+11X^{10}+44X^8+78X^6+60X^4+16X^2+1.$$
+
+Now $Q_7(X)\equiv7\pmod{X^2+3}$, so the gcd divides seven. Since $t$ is odd, the exact Pell identity is
+
+$$5F_t^2=L_t^2+4=B_t+1.$$
+
+If seven divided $B_t$, this would give $F_t^2\equiv3\pmod7$, impossible. Therefore $\gcd(B_t,Q_7(x))=1$ as well. Set
+
+$$A_7=x^6+\tfrac{11}2x^4+\tfrac{55}8x^2+1\in\mathbb Z,$$
+
+where integrality uses $4\mid x$. Exact subtraction gives
+
+$$Q_7(x)-A_7^2=\frac{3x^2(8x^4+37x^2+48)}{64}>0,$$
+
+and
+
+$$(A_7+1)^2-Q_7(x)=\frac{104x^6+593x^4+736x^2+192}{64}>0.$$
+
+Hence $Q_7(x)$ also lies strictly between consecutive integer squares.
+
+For either $p$, the positive nonsquare integer $Q_p(x)$ has a prime divisor $\ell$ of odd valuation. Coprimality gives $\ell\nmid B_t$, hence $\ell\nmid B_N$ and $\ell\nmid D$. Nevertheless
+
+$$v_\ell(B_{Nk})=v_\ell(B_{pt})=v_\ell(Q_p(x))$$
+
+is odd, contradicting $B_{Nk}=D c^2$. This proves the theorem. The odd valuation is obtained from the explicit nonsquare factor and its exact gcd; it is not inferred from primitive-divisor existence. ∎
+

@@ -1,0 +1,89 @@
+**Theorem 209.10 (Full-mass dominated classes and original-table charging).**
+For an arbitrary input $y$ of 209.1, let $S>0$, $E\le S$,
+$\delta=\Delta_O(y)$ and $\mu=\max_{n\in I}\gamma_n$.
+Choose actual separate measures
+
+$$
+0\le\rho_n\le\nu_n,\qquad |\rho_n|=\gamma_n.
+\tag{209.20}
+$$
+
+In particular $\gamma_n\le m_n$ is required; unit $O$ cost does not
+by itself imply this condition. Use 209.8 with
+$c_a=\gamma_a$, $\mu_n=\rho_n$, $\eta_n=\gamma_n$ and $T=t$,
+so $Q(V)=Q(y)$. Reuse its $U_j,Z_j,U_{ij},Z_{ij}$, put
+$p_j=S-m_j$, $H=(S+E)/2$, and define
+
+$$
+\begin{aligned}
+\kappa_{aj}&=\min\left\{t,\frac{\gamma_{3-a}p_j}{S},
+                 \left(\frac{Hp_j}{S}+t-\mu\right)_+\right\},\\
+D_{\rm early}&=\max_{a=1,2;\ j\in I}
+       \left((U_j-Hm_j/S)_+-\kappa_{aj}\right)_+,\\
+D_{\rm late}&=\max_{i<j}(U_{ij}-d_{ij}-E)_+,\qquad
+D_P=\max(D_{\rm early},D_{\rm late}).
+\end{aligned}
+\tag{209.21}
+$$
+
+Then
+
+$$
+\Delta_N(V)=\Delta_O(V)\le\max\{\delta,D_P\}.
+\tag{209.22}
+$$
+
+Thus $\delta\le1,D_P\le1$ give the same-$Q$ certificate $(V,0)$,
+and $D_P\le\delta$ gives comparison at the original budget.
+No order of the correct profile, common terminal-zero coordinate or
+constant class density is required.
+
+**Proof.** The construction and support identity are the lower-stock
+specialization of 209.8, not a second catalog theorem.
+Substituting (209.20) into that identity gives the head term
+$(\mu-t)_+$, early terms
+
+$$
+J_{aj}=(U_j-Hm_j/S)_+
+ +\max\{-t,-\gamma_{3-a}p_j/S,Z_j-Hp_j/S-t\},
+\tag{209.23}
+$$
+
+and late terms
+$J_{ij}=(U_{ij}-d_{ij})_++(Z_{ij}-h_{ij}-t)_+-E$.
+The original head table forces $(\mu-t)_+\le\delta$.
+
+For a late pair where both positive gains occur, choose winning labels
+$k,l>i$. If they are distinct, the single original stopped schedule
+$(i,\min(k,l))$, with outputs $0,\min(k,l),\max(k,l)$, earns at
+least $m_i+\gamma_k+\gamma_l$.
+Since $d_{ij}+h_{ij}=S-m_i$, this bounds
+$J_{ij}=U_{ij}+Z_{ij}+m_i-W\le\delta$.
+If $k=l$, its two disjoint $\rho_k$ pieces sum to $\gamma_k$;
+the original singleton $(i;0,k)$ proves the same bound.
+If only the $10$ gain is present use $D_{\rm late}$; if only the
+$11$ gain is present use $\mu-t\le\delta$ whenever that gain
+is positive. If neither occurs the term is $-E\le0$.
+
+For an early pair set
+$g=(U_j-Hm_j/S)_+$, $z=Z_j-Hp_j/S-t$ and
+$s_0=\min(t,\gamma_{3-a}p_j/S)$, so $J_{aj}=g+\max(-s_0,z)$.
+In the original input put $H_a=\sum_{\Omega_a}(P+C)$.
+Their sum is $S+E=2H$, including arbitrary early $00$ rows, so
+some $a_0$ has $H_{a_0}\ge H$.
+If $g,z>0$ have distinct winning late labels $k,l$, the original
+stopped $(a_0,\min(k,l))$ collects at least
+$H_{a_0}+\gamma_k+\gamma_l$.
+This bounds $J_{aj}=U_j+Z_j-H-t$ by $\delta$.
+If the labels coincide use the original singleton $a_0$ and the two
+complementary pieces of $\rho_k$. If $g=0,z>0$ use
+$J_{aj}\le\mu-t\le\delta$.
+
+Finally if $z\le0$, then $Z_j\le\mu$ gives
+$-z\ge\max(0,Hp_j/S+t-\mu)$. Therefore
+$\min(s_0,-z)\ge\kappa_{aj}$ and
+$J_{aj}\le g-\kappa_{aj}\le D_{\rm early}$.
+This uses negative slack in the same table, not an extra positive
+budget. Taking the maximum proves (209.22). The preserved $Q$ gives
+zero residual in (207.10). $\square$
+

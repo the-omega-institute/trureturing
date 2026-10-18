@@ -1,0 +1,50 @@
+### 91.3. Exact calibrated norm and the reference dimension
+
+For a coefficient matrix C define
+
+\[
+ \mathcal M_C(|f,i\rangle\langle g,j|)
+       =C_{fi,gj}|f\rangle\langle g|.
+                                                               \tag{13}
+\]
+
+At calibration the target-minus-product logical map is exactly ℳ_(Lᵀ), followed by the fixed output isometry. Consider any normalized pure reference/input state
+
+\[
+ |\psi\rangle=\sum_{f,i}|r_{fi}\rangle_R\otimes|f,i\rangle,
+ \qquad \sum_{f,i}\|r_{fi}\|^2=1,
+                                                               \tag{14}
+\]
+
+with no restriction on its reference dimension. Set V|f,i〉=|r_fi〉⊗|f〉. Its output difference is VLᵀV*, and
+
+\[
+ V^*V=S=\bigoplus_f S_f,\qquad
+ (S_f)_{ij}=\langle r_{fi},r_{fj}\rangle,
+ \qquad \operatorname{Tr}S=1.
+                                                               \tag{15}
+\]
+
+The output labels force this block structure regardless of cross-fibre reference overlaps. Polar decomposition V=U√S preserves the nonzero spectrum on the support of S, including when S is singular. With ρ=Sᵀ it follows that
+
+\[
+ \|VL^TV^*\|_1
+     =\|\sqrt S L^T\sqrt S\|_1
+     =\|\sqrt\rho L\sqrt\rho\|_1,
+ \qquad \rho\in\mathcal D.
+                                                               \tag{16}
+\]
+
+Conversely, each 2×2 block ρ_fᵀ is the Gram of two vectors in C². All four factorizations may use the same reference C², because their cross-fibre overlaps do not enter (15). The resulting state (14) is normalized and realizes the value associated with ρ. Thus every value on the right of (6), including its maximum, is attainable with a reference qubit.
+
+To pass from normalized states to the defining diamond norm, convexity first handles mixed positive inputs. A uniform bound for positive inputs and arbitrary references extends to Hermitian inputs by Jordan decomposition. For an arbitrary operator X, apply that Hermitian bound to
+
+\[
+ \frac12\begin{bmatrix}0&X\\X^*&0\end{bmatrix}
+                                                               \tag{17}
+\]
+
+on one additional reference qubit. The dilation's input trace norm is ‖X‖₁ and its output trace norm equals the original output norm on X. This proves the full operator-input upper bound. Finally L_ff=0 at calibration, so TrρL=0 for every ρ∈𝒟 and the trace norm in (6) equals twice the positive-part trace. This proves (6).
+
+Rank-one blocks ρ_f correspond exactly to scalar reference vectors, hence to pure no-reference inputs. This observation does not imply that rank-one blocks always maximize (6).
+

@@ -1,0 +1,96 @@
+**构造 81.3（An explicit inhabited family at every $d\ge3$）。** Choose any integer $d\ge3$ and put
+
+$$
+r=2^{d-1}\ge4,\qquad n=2r-1=2^d-1,\qquad
+h=2d-1,\qquad N=2^h=2r^2,\qquad
+m=N+2d-3,\quad k=m+1,\quad T=m+2.
+\tag{81.17}
+$$
+
+Let $I=\{0,\ldots,2r-2\}$ and write $*=2r-2$. Use distinct row labels $a_i$ and column labels $b_i$, $i\in I$, with the two label sets disjoint. Choose fresh common $R,C$ outside both sets and independent $L_\bot$.
+
+The following explicitly deleted rectangles define a bipartite edge set on $I\times I$:
+
+$$
+\begin{aligned}
+I_0&=\{0,\ldots,r-3\},&
+I_1&=\{r-2,\ldots,2r-3\},\\
+J_0&=\{0,\ldots,r-1\},&
+J_1&=\{r,\ldots,2r-3\},\\
+\mathcal D&=(I_0\times J_0)\ \cup\ (I_1\times J_1)\
+                \cup\bigl(\{0,1\}\times\{r,r+1\}\bigr),\\
+\mathcal H&=(I\times I)\setminus
+                 \bigl(\mathcal D\cup\{(*,*)\}\bigr).
+\end{aligned}
+\tag{81.18}
+$$
+
+The three rectangles in $\mathcal D$ are disjoint. Indeed the first two have disjoint row sets, and the third uses rows in $I_0$ but columns in $J_1$. All its displayed indices exist for $r\ge4$. Define three excluded pairs
+
+$$
+u=(0,r),\qquad v=(1,r+1),\qquad w=(0,r+1).
+\tag{81.19}
+$$
+
+They are distinct members of the third deleted rectangle, hence absent from $\mathcal H$, and none uses row or column $*$. Set $A=\{0,\ldots,m\}$ and
+
+$$
+M=\{m+1-2t:1\le t<h\}.
+\tag{81.20}
+$$
+
+Define a pair table $G:A\to I\times I$ by
+
+$$
+G(0)=G(2)=u,\qquad G(1)=G(3)=v,\qquad
+G(j)=w\quad(j\in M).
+\tag{81.21}
+$$
+
+On the remaining phases assign the pairs of $\mathcal H$ in lexicographic order to the remaining phases in increasing order. The cardinalities agree, as proved below, so this is a fully specified bijection, not an optimization prescription. If $G(j)=(i,\ell)$, put
+
+$$
+\lambda_0(j)=a_i,\qquad \lambda_1(j)=b_\ell.
+\tag{81.22}
+$$
+
+Extend these tables to the full INITIAL target and history target exactly by (81.4).
+
+**证明（counts, positivity, marginal parities and placements）。** The first two rectangles in $\mathcal D$ each have $r(r-2)$ edges, and its third has four. The exceptional pair $(*,*)$ lies in none of them. Therefore
+
+$$
+|\mathcal H|=(2r-1)^2-2r(r-2)-4-1
+           =2r^2-4=N-4.
+\tag{81.23}
+$$
+
+Every row and column of $\mathcal D$ has even degree. A row in $I_0$ has degree $r$, with two extra edges for rows $0,1$; a row in $I_1$ has degree $r-2$; row $*$ has zero. A column in $J_0$ has degree $r-2$; a column in $J_1$ has degree $r$, with two extra edges for columns $r,r+1$; column $*$ has zero. All these numbers are even.
+
+The complete bipartite graph has odd degree $n=2r-1$ at every vertex. Deleting $\mathcal D$ preserves that odd parity everywhere. Deleting $(*,*)$ then changes parity only in row $*$ and column $*$, giving each of them the positive even degree $n-1=2r-2$. Every other degree of $\mathcal H$ is positive and odd: the largest deleted degree is $r+2$, so its remaining degree is at least $n-(r+2)=r-3\ge1$. Hence all $n$ row labels and all $n$ column labels will occur.
+
+The $h-1=2d-2$ phases of $M$ are distinct and disjoint from $\{0,1,2,3\}$. Its least member is
+
+$$
+m+1-2(h-1)=N-2d+2\ge4;
+\tag{81.24}
+$$
+
+the inequality follows from $2^{2d-1}\ge2d+2$ for $d\ge3$, by induction, and its greatest member is $m-1$. The unassigned phase count in (81.21) is consequently
+
+$$
+|A|-4-|M|=(N+2d-2)-4-(2d-2)=N-4=|\mathcal H|.
+\tag{81.25}
+$$
+
+Thus the stated ordered bijection exists without changing any assignment. The joined classes consist precisely of the $N-4$ distinct pairs from $\mathcal H$, each with multiplicity one, and the three distinct pairs $u,v,w$ with respective multiplicities $2,2,2d-2$. All three latter multiplicities are positive and even. After translating pairs to labels, put
+
+$$
+U=(a_0,b_r),\qquad V=(a_1,b_{r+1}),\qquad
+W=(a_0,b_{r+1}).
+\tag{81.26}
+$$
+
+The join has exactly $N-1=2^h-1$ classes and obeys every condition (81.3). Adding the even multiplicities of $u,v,w$ to the degrees of $\mathcal H$ changes none of the row or column parities. Therefore $\lambda_0$ has exactly $2^d-1$ classes with unique positive even class $a_*$, and $\lambda_1$ has exactly $2^d-1$ classes with unique positive even class $b_*$. Every other component class has positive odd multiplicity. Both even classes avoid phases $0,1$, since those phases use $u,v$.
+
+Finally $m=N+2d-3$ is odd and at least $2^h-1$, with $k=m+1$ and actual $\gcd(m,m+2)=1$. Thus Definition 81.1 holds for this entire target. The same single-history witnesses (81.6) realize every row of both component tables with every original tail; no marginal reachability assumption was introduced. ∎
+

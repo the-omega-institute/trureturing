@@ -1,0 +1,64 @@
+**Theorem 3.4 (both directions on the same original source).** Under
+Assumptions 1.3–1.5, for every fixed graph and descriptor-type choice,
+$\mathcal H_{\eta,h}$ and $H_{\eta,h}$ are effective Presburger formulas,
+jointly in their displayed numeric arguments. For every valid common
+$\boldsymbol\delta$, every admitted $(\eta,\mathbf n)$, every $h\in E_H$
+and every $J\in\mathbb N$,
+
+$$
+\begin{aligned}
+\mathcal H_{\eta,h}(\mathbf n,J;\boldsymbol\delta)
+\ \Longleftrightarrow\
+&\text{the installed literal graph on the original }u=\Theta_\eta(\mathbf n)\\
+&\text{from }(e_*,U^Nu)\text{ first reaches halt }h
+  \text{ at epoch }J.
+\end{aligned}
+\tag{UDB.15}
+$$
+
+Consequently $H_{\eta,h}$ is equivalent to eventual first halt at $h$ on
+that source. Arrival says nothing yet about the correctness of $Y_h$.
+
+Proof 3.4. Suppose first that the actual execution first halts at $h,J$.
+Its trace is finite, and $J\ge N$. Every integer epoch from $N$ to $J$
+is visited, since the only epoch-changing action increments by one.
+Partition $[N,J]$ into its maximal constant response-vector intervals.
+Theorem 2.3 supplies at most $qr+1$ intervals. Give the last interval right
+endpoint $J+1$. Cut the trace at every internal interval boundary
+immediately after the update that first enters its new epoch. The state
+at that cut is the shared $x_i$.
+
+Each internal segment uses its old vector $v_i$, has update count $d_i$
+with $t_i+d_i=t_{i+1}$ and ends in an update. It therefore satisfies
+$X_{v_i}$. The last segment is an $F_{v_{m-1}}$ path to $h$ with total
+weight $J-t_{m-1}$ and satisfies the final $P$. Exact Reply gives each
+$\Gamma$ on the one original source. These are all witnesses in
+(UDB.13), proving this direction without choosing new phase sources.
+
+Conversely, suppose (UDB.13) holds. Every $P$ assertion expands to an
+actual finite path of its specified $F_v$, by Definition 3.1. Every $X$
+assertion expands to such a path followed by its stipulated final update.
+Concatenate these paths at the same states $x_i$. Every action in an
+internal segment starts in $[t_i,t_{i+1})$ by Definition 3.2. Nonnegative
+weights place all starts in the final segment in $[t_{m-1},J]$. The final
+guard includes that last epoch.
+
+Induct through this finite concatenation with original register $U^Nu$.
+At a read, (UDB.11) and (UDB.4) give exactly the actual literal reply on
+$U^ju$, and hence the actual response successor. At an update the register
+becomes $U^{j+1}u$ and control takes its sole successor. The register,
+control and epoch therefore agree with the actual execution throughout.
+No path can continue through an earlier halt: $F_v$ has no outgoing halt
+edge. If the final crossing itself enters $h$, the remaining segment must
+be the empty path at that same epoch. A different earlier halt cannot
+have a path to $h$. The resulting trace is exactly first halt at $h,J$.
+
+For arithmetic effectiveness, (UDB.12) is a finite outer enumeration.
+$P_v$ uses singleton and fixed-coefficient progression formulas; $X_v$
+uses a finite disjunction and a natural existential. Each $\Gamma$ is a
+first-order quantified supplied Reply formula. The remaining operations
+are conjunction, disjunction, order, addition and first-order natural
+quantification. The same closure gives the projection (UDB.14).
+Presburger closure and decision are used at their established scope
+[GS, §1][GS]. $\square$
+

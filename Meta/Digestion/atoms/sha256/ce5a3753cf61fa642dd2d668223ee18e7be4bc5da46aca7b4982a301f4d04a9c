@@ -1,0 +1,24 @@
+### 105.3. Symmetry of the same principal norming pair
+
+Let \(\Pi\) swap 1 with 2 and 3 with 4. Formula (105.5) gives \(\Pi H_S\Pi=H_S\), since interchanging \(e_1,e_2\) implements that permutation on the records. Also \(\Pi T_S\Pi=T_S\). The principal density domain, consisting of one unrestricted \(F\) block and two scalar singleton blocks, is invariant under \(\Pi\).
+
+The reflected principal Gram \(\Pi G_S\Pi\) and its midpoint with \(G_S\) are feasible. The fixed-\(H_S\) principal objective is convex and invariant under \(\Pi\). The full-domain compression and completion result makes \(G_S\) a global principal one-party best response, so all three Grams have minimum value \(t\). Any norming pair at the midpoint norms both endpoints: its endpoint objectives are at most \(t\), while their average is \(t\). Uniqueness of every principal norming pair at the original coefficient forces the midpoint pair to be the same original \((\rho,W)\). Reflecting it gives another midpoint normer. Therefore
+\[
+\Pi\rho\Pi=\rho,\qquad \Pi W\Pi=W.
+\tag{105.8}
+\]
+This argument neither assumes symmetry of the full physical \(H\) nor replaces the physical pair by an average of the same rank. The permutation extends to the eight original coordinates by also exchanging the singleton partners and leaving the fourth fibre fixed. That extension preserves the target and original fibre partition; invariance of outside data is not required.
+
+Since \(H_{13}=H_{24}\) and \(H_{14}=H_{23}\), (105.4) and (105.8) imply
+\[
+a_1\overline a_3=a_2\overline a_4,
+\qquad a_1\overline a_4=a_2\overline a_3.
+\]
+All factors are nonzero. Dividing the two equations gives \(a_4=\sigma a_3\) for some \(\sigma\in\{1,-1\}\), and either equation gives \(a_2=\sigma a_1\). Thus
+\[
+a_S=(a,\sigma a,b,\sigma b),\qquad
+\sigma\in\{1,-1\},\qquad a,b\ne0.
+\tag{105.9}
+\]
+Both parity branches are retained. The ratio \(r=a/b\) may be genuinely complex.
+

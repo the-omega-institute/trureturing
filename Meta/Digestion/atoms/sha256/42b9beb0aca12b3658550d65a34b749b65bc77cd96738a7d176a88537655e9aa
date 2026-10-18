@@ -1,0 +1,47 @@
+## 9. Supplier correspondence, literature and reusable scope
+
+The following are documentary supplier correspondences at the fixed source
+basis. Reading a declaration and its owning Scribe is not a current kernel build.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean`: `Source`, `substitution`, `composition`, `fiberCount`, `fiberMap`, `result`; owning `Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs` | Actual ordered trees, $C_{a+b-1}\binom{a+b}{a}$ for $a+b\ge1$, and injectivity of iterated substitution on positive composition fibers. Global substitution injectivity is a local proof inside `result`, not a separately exported theorem or inverse operation. |
+| `D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean`: `Address`, `Reply`, `readout`, `source_foundation`, `restore`, `acquisition_foundation`; owning Scribe at the corresponding Blueprint path | Literal reply semantics and existing whole-path separation/truthful traversal reconstruction. Its original Strategy target is `Positive U`, membership in the third substitution image; this volume does not change that target. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean`: `Op`, `Event`, `nativeStep`, `Run`, `Replay`, `reached_prefix_replay`, `actual_register_execution`; owning Scribe at the corresponding Blueprint path | Actual same-register unconditional update, repeated literal calls, complete chronology and source-free replay at reached prefixes. Supplied old history is not authenticated; grafts belong only to the explicitly declared comparison/hybrid menus. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean`: `OriginalState`, `afterOriginalRead`, `afterOriginalUpdate`, `OriginalCodeRealization`, `original_code_service_simulation`; owning Scribe at the corresponding Blueprint path | Accessible acquired finite history and exact supplied-code simulation with full external output. No extra paid storage/access/encoding theorem; evaluator `none` remains local. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean`: `sourceControl`, `initialControl`, `productionTrace`, `native_source_producer`; owning Scribe at the corresponding Blueprint path | Existing stronger actual finite-tree acquisition: one fixed stack program, one Read per node and two local steps per branch. No later-task isolated handoff or paid source-writer adapter follows. |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialImage.lean`: `terminal_prefix_free`, `bounded_serial_output_image`; owning Scribe at the corresponding Blueprint path; Native Selector Common Extension Theorem 5.2 | Credited prefix-free variable-stopping/four-reply counting. The source-specific new ingredient in the bracket regime is binary locality under actual updates and known grafts. |
+| [Atomic Boundary Trichotomy, §§2–3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md) | Existing composition/word/structure distinction, exact literal separation and small same-word bracket witness. Neither those general distinctions nor the two-bracket example are new results here. |
+| [Transport Memory Completion, §§28–30,49,57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | Normal group law and phase formulas; exact $q_H$ behavior and single-occurrence closure; static actual-tree fibers, optimal supplemental widths and paid-input rank/unrank; PR57.T1–T5 and L4 actual installation, updates, numerical observation and callable archives. These are positive ordinary-mathematical suppliers with their exact finite-$H$ menu. |
+| [Process Geometry, §§34,39,43,44.4](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | Actual joint-image/successor obligations, separate nonredundancy direction, and actual-image tree decoder/injectivity. Its direction-valued $\eta$ elsewhere is not identified with Clifford $E$ or $q_H$. |
+
+**Literature status.** Generic decision-tree counting, Catalan enumeration,
+Stirling asymptotics, lenses with retained complements, tree zippers and
+operational state-identification/refinement relations are credited tools. The
+following primary sources delimit their hypotheses.
+
+| Primary source | Verified condition and use |
+| --- | --- |
+| J. N. Foster, M. B. Greenwald, J. T. Moore, B. C. Pierce and A. Schmitt, *Combinators for Bidirectional Tree Transformations: A Linguistic Approach to the View-Update Problem*, [author PDF](https://www.cis.upenn.edu/~bcpierce/papers/lenses-toplas-final.pdf), [DOI](https://doi.org/10.1145/1232420.1232424), lens and well-behavedness definitions in §3 | `literature-attested`: putback receives both the abstract view and the old concrete object. GetPut/PutGet are round-trip laws, with definedness/totality conditions; they do not acquire an erased concrete complement, authenticate source execution or preserve costs. This maps to the acquired bracket label, not a free inverse of numerical Read. |
+| G. Huet, *The Zipper*, [author manuscript](https://gallium.inria.fr/~huet/PUBLIC/zip.pdf), §1.2, PDF p.3 | `literature-attested`: navigation uses a retained focus plus context. Its implementation-specific navigation costs do not grant reroot or replace literal original-root address charging in (DAF.8). |
+| P. van den Bos and F. Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [primary text](https://arxiv.org/html/1907.11034v2), Definition 16, Lemma 11 and Theorem 6.1 | `literature-attested`: adaptive distinguishing graphs require admissible observations and preservation of distinguishability through injective splits; the stated completeness theorem assumes all distinct states incompatible. The finite growing-tree interface is not silently declared to satisfy their whole finite-automaton synthesis contract. Our branch and injectivity proofs supply the particular distinctions used here. |
+| G. Reissig, A. Weber and M. Rungger, *Feedback Refinement Relations for the Synthesis of Symbolic Controllers*, [primary text](https://arxiv.org/html/1503.03715v3), Definition V.2 and Theorem V.4 | `literature-attested`: controller transfer requires related states, admissible inputs and appropriately related actual successors. Behavior inclusion is not bidirectional exact recovery, acquisition or resource equivalence. A relation retaining only numerical labels omits the literal distinctions in Proposition 8.1. |
+| P. Flajolet and R. Sedgewick, *Analytic Combinatorics*, [primary book PDF](https://algo.inria.fr/flajolet/Publications/book.pdf), printed pp.4,6–7 | `literature-attested`: Stirling and ordered binary-tree Catalan enumeration/asymptotics. A full tree with $n$ leaves has $n-1$ internal nodes, hence the index $C_{n-1}$ in (DAF.9); this supplies only the asymptotic conversion, not the dynamic observation or acquisition theorem. |
+
+**Repo-derived increment.** The consolidated additions are the preserved bracket
+product's dynamic one-coordinate locality and complete numerical-archive
+non-bypass; their sharp mixed label/probe, read-only handoff and per-run literal
+letter bounds; the balanced tag-1 exact two-window image and explicit moment
+concentration; and the resulting actual post-accepted-update local-completion
+query price. Existing static complement ranks, generic kernel factorization,
+finite-state enumeration, same-word blindness, Catalan multiplicity and native
+full acquisition are not counted again as new mathematics. No worldwide
+originality or physical-realization claim is made.
+
+The committed-source comparison covers the named suppliers and targeted
+bracketing/probe, balanced-window/fiber and label/call searches in the recursive
+relational observation theory family. Primary-source discovery includes the
+bidirectional-transformations title/DOI search and the original texts listed
+above. This scope supports attribution and hypothesis checks, not a claim that
+all relevant literature has been exhausted.
+

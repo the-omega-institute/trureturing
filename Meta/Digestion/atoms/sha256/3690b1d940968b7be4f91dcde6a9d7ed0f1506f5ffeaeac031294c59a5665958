@@ -1,0 +1,25 @@
+**Corollary 8.2 (the three explicit consumers).** For the constant
+cycle $|B|=2^n$, for a connected parity graph $|B|=2^{nk/2}$,
+and for $m$ paired motifs on $n=2m$ blocks $|B|=5^m$.
+Consequently (INB.35) and (INB.36) realize the counterfamilies
+in §§4, 5 and 7 on the unchanged full original task.
+
+Proof. Definition 4.1 gives an injective bit assignment per cycle
+variable. Definition 5.1 gives one assignment per graph edge and
+its owner replies recover all $nk/2$ bits. Lemma 7.2 gives five
+choices per independent paired component. Public scaffold assembly
+is injective in each case, so Proposition 8.1 applies. $\square$
+
+Codebook generation and storage, membership work, temporary arrays,
+preparation control, padding, post-request workspace, address generation,
+count representation, entry, handoff, access isolation, authentication
+and physical time are separate costs. The public tables are finite and
+computable, with no useful size or time bound asserted. Temporary
+storage may contain the full $2^D-1$-reply boundary. The final factor
+has $0\le b\le2D,c\in\{0,1\}$ and can be held in at most
+$\lceil\log_2(2D+1)\rceil+1$ bits, separately from the complete
+name and count. The scan is a sufficient acquisition construction,
+not an acquisition optimum. Analytical laws, tuple vertices, shared
+seeds and gauge values never become additional exported fields or
+free observations. These attained codes are deliberately nonoptimal.
+

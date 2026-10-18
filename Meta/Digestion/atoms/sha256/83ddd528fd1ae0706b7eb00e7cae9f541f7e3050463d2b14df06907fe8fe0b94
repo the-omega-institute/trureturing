@@ -1,0 +1,95 @@
+**Lemma 7.3 (span four; SI Lemma 10.3 and Theorem 10.4).** If
+$\beta_B=4$, then $D_B\le E_B$.
+
+Proof. Put $d=a+1$, $\alpha=d-L+1$, $\beta=K-1$, and label the
+following formal cells:
+
+$$
+\begin{array}{lll}
+A=(\alpha,L-1),& C=(\alpha+1,L-2),&
+Y=(K-2,d-K+2),\\
+Z=(K-1,d-K+1),& U=(\alpha+1,L-1),&
+V'=(K-1,d-K+2).
+\end{array}
+\tag{CL.27}
+$$
+
+The first four have depth $d$, the last two depth $d+1$. Omit invalid
+cells, coincident endpoints and pairs failing (CL.3). The last layer
+$d+2$ is exclusive. At depth $d+1$, a common live reply at a shared
+state would share two last-layer cells, so the only possible pair has
+opposite singleton live replies, namely $UV'$. Between depths $d$
+and $d+1$ the same reasoning forces opposite singleton live replies,
+giving only $AV'$ and $ZU$.
+
+For two shared cells at depth $d$, no common live reply gives $AZ$.
+A common zero reply must give $UV'$ at the successor; subtracting
+$(0,1)$ gives $CZ$. A common one reply similarly gives $AY$.
+Thus all possible pairs are
+
+$$
+AZ,\quad CZ,\quad AY,\quad UV',\quad AV',\quad ZU.
+\tag{CL.28}
+$$
+
+Every $CZ$ host has its actual zero successor at a shared $UV'$ host;
+every $AY$ host has its actual one successor there. No injectivity of
+these successor maps is asserted.
+
+No host has three cells. Indeed $H=\beta-\alpha=n-1-d\ge2$.
+If $H=2$, (CL.3) deletes every pair except $AZ$. If $H\ge3$, the
+six formal cells are distinct and the depth-$d$ pairs form the path
+$C-Z-A-Y$, with no triangle. The two depth-$d+1$ cells have opposite
+singleton live replies. A mixed triple containing both would require
+an earlier cell with a nonempty live-reply set disjoint from both,
+which is impossible. A mixed triple with two earlier cells would
+require both to have the same specified singleton live-reply set;
+there is at most one such cell at a given depth. Boundary deletions
+cannot introduce a triple. This proves that every shared host has
+exactly two incidences.
+
+Let $s$ be the number of shared hosts, so $D_B=s$. Regard them as a
+multigraph on the cells in (CL.27), with one edge per distinct state.
+This multigraph is an incidence device, distinct from the simple
+coordinate-demand graph $\Gamma_v$. Let $v_0\le6$ be its number of
+incident cells. A cell's host count is at least its degree. Every
+internal layer is noncommon, so writing their excesses as $e_1,e_2,e_3$
+gives $e_j\ge1$. The last layer has no incident cell, and hence
+
+$$
+E_B\ge3,\qquad E_B\ge2s-v_0+1\ge2s-5.
+\tag{CL.29}
+$$
+
+This uses no positive degree assumption for a cell outside the edge
+relation. If $E_B<s$, these integer inequalities force $s=4,E_B=3$
+and then $v_0=6$. All six cells must therefore be distinct and valid;
+any missing or identified boundary cell has already made a deficit
+impossible. Also $e_1=e_2=e_3=1$. The incident cells have exactly
+their degree many hosts, and every other cell of the first two layers
+has one host, since equality holds in the incidence bound.
+
+Let $x,y,z_0,u_0,v_1,w_1$ be the edge multiplicities of
+$CZ,AY,UV',AZ,AV',ZU$. The pendant cells $C,Y$ give $x,y\ge1$;
+their successor obligations give $z_0\ge1$. Counting all edges and
+degrees on the two layers yields
+
+$$
+\begin{aligned}
+x+y+z_0+u_0+v_1+w_1&=4,\\
+2x+2y+2u_0+v_1+w_1-4&=1,\\
+2z_0+v_1+w_1-2&=1.
+\end{aligned}
+\tag{CL.30}
+$$
+
+Thus $z_0=1$, $v_1+w_1=1$, $x=y=1$ and $u_0=0$.
+If $v_1=1$, only $A$ on the first layer has more than one host.
+All cells from $C$ through $Z$ have singleton support families;
+the adjacent-child argument of Section 2 makes those supports equal.
+Their shared $CZ$ host contradicts equal-support/unequal-hit exclusion.
+If $w_1=1$, the same argument from $A$ through $Y$ contradicts
+their shared $AY$ host. Both possibilities are excluded, proving
+$D_B\le E_B$. No certified edge or continuation was constrained.
+$\square$
+

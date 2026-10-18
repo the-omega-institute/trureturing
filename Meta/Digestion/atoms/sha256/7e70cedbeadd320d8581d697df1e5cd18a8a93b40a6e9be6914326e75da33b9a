@@ -1,0 +1,13 @@
+**定义 9.1（含停止的实际失败谓词）。** 对 $K\subseteq\mathcal F(H)$，设
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_{s+1}(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z:
+L_s(K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}                                             \tag{9.1}
+$$
+
+$s$ 不超过剩余原时钟数。它表示在给定整族上的每种确定性策略均失败，包含提前停止。
+

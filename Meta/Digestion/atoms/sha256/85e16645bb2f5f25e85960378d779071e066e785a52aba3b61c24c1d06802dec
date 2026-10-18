@@ -1,0 +1,159 @@
+**Theorem 218.3 (A same-mass operation with its exact constant test).**
+Let $\lambda=\kappa+\eta$ be one actual full N configuration of mass M,
+with $\eta$ of mass $s\in[0,M]$. Let
+$\mathcal A\subseteq\{1,\ldots,L\}$ and suppose $\eta_w$ outputs
+only $\mathcal A\cup\{0\}$ on every word.
+Put $r_w=(1-M)e_{R(w)}+\kappa_w$, so $f_w=r_w+\eta_w$.
+For each $a\in\mathcal A$ assume $J_a\subseteq\{a+1,\ldots,L\}$
+and $\eta_w(a)=v_a(w|_{J_a})$ on every word.
+On $\Omega_a$, assume $r_w(a)$ invariant under changes of the $J_a$ bits.
+These sets may overlap or be empty. Put $c_a=\min v_a$,
+$C=\sum_{a\in\mathcal A}c_a$.
+
+Replace $\eta$ by empty-table masses $c_a$ at a and $s-C$ at zero.
+The new configuration has exactly mass M; its base, pair and positive
+rows are pointwise no smaller, and every correct-class minimum
+$m_n(f)=\min_{\Omega_n}f_w(n)$ is unchanged. Thus every complete cap
+is preserved, including signed anchors, negative demands and endpoints.
+
+Without suffix dependence or invariance, retain a cap-feasible original
+$\lambda$, the same block support and fixed r. Define
+
+$$
+d_a=\max\{0,b_a-e-\min_{\Omega_a}r_w(a)\},\quad
+D=\sum_{a\in\mathcal A}d_a,\qquad d_n=0\ (n\notin\mathcal A).
+$$
+
+A constant nonnegative replacement of mass s exists exactly when
+
+$$
+\begin{gathered}
+D\le s,\\
+r_w(0)+s-D\ge1-b_n-e,\qquad
+r_w(0)+r_w(n)+s-D+d_n\ge1-e
+ \quad(w\in\Omega_n,\ 1\le n\le L),\\
+r_{w_+}(0)+s-D\ge1-e.
+\end{gathered}
+\tag{218.11}
+$$
+
+Then masses $d_a$ at a and $s-D$ at zero work.
+This iff concerns a constant replacement with r fixed, not arbitrary
+stopped feasibility or automatic existence of a suitable decomposition.
+
+**Proof.** Every $\eta_w$ is nonnegative with total mass s.
+For all a simultaneously $0\le c_a\le\eta_w(a)$, so $C\le s$.
+The base increase is $\sum_a(\eta_w(a)-c_a)$.
+On $\Omega_n$ with $n\in\mathcal A$, the pair increase is
+$\sum_{a\ne n}(\eta_w(a)-c_a)$; outside $\mathcal A$ it is the
+base increase. The positive base increases too, on the same allocation.
+
+All $J_a$ bits are free Cartesian factors of $\Omega_a$, strictly
+after its first zero. The remainder is invariant in that factor and the
+block coordinate depends only on it. Hence
+
+$$
+\min_{\Omega_a}(r_w(a)+\eta_w(a))
+ =\min_{\Omega_a}r_w(a)+c_a.
+$$
+
+This is the new correct minimum; other correct coordinates are unchanged.
+The anchor is constant on each first-zero class, so the argument includes
+$M>1$. Different labels need not attain their minima at the same word:
+their requirements are separate universal inequalities, while common
+normalization was proved first. All correct rows follow.
+The proof includes $s=0$, empty directions, zero weights, ties and exhaustion.
+
+For the constant test, mass at labels outside $\mathcal A$ may be moved
+to zero: r already meets their correct demands, since the original block
+supplied none. This improves affected base and pair rows.
+Write the constant masses as $t_a\ge0$ and $s-\sum_at_a$ at zero.
+Correct feasibility is exactly $t_a\ge d_a$.
+Replacing t by d increases the base and positive readings and each pair
+reading $r_w(0)+r_w(n)+s-\sum_{a\ne n}t_a$.
+Thus a feasible constant vector exists precisely when the least one d
+passes (218.11). Conversely these inequalities and the definition of d
+verify every row. The positive part enforces nonnegative replacement
+masses; it does not clip original demands. $\square$
+
+A stopped conclusion requires a remainder condition.
+The constructor catalog $W_N$ of Continuation VI 190.3 permits arbitrary
+empty outputs; singleton i permits $\{0,i\}$ on zero and
+$\{0,i+1,\ldots,L\}$ on one; pair $i<j$ permits $\{0,i\}$ on 00,01,
+$\{0,i+1,\ldots,j\}$ on 10 and
+$\{0\}\cup(\{i+1,\ldots,L\}\setminus\{j\})$ on 11.
+If $\kappa$ belongs to $W_N$, the replacement does too, and existing
+194.1 gives a same-mass $W_O$ allocation meeting the same cap.
+If $\kappa$ already belongs to the full O catalog, the new empty tables
+give an O allocation directly. Otherwise this is an N operation only.
+For the resulting stopped allocation $\mu$ and any full score y,
+
+$$
+F_{Q(y)}(b,e)\le y\cdot G_O\mu\le M\Delta_O(y).
+\tag{218.12}
+$$
+
+In particular $\rho_O(b,e)\le M$.
+The desired comparison at that point follows if a qualifying allocation
+has $M\le\max(1,\rho_N(b,e))$; existence at every point is unproved.
+The 194 conversion and direct weak-duality application are suppliers.
+
+For a genuinely quadratic block, choose $k\ge3$,
+$\mathcal A\subseteq\{1,\ldots,k\}$ and, for each a, an odd cycle
+of $r_a\ge3$ distinct addresses greater than k. Put edge weight
+$h_{a,t}\ge0$ on N table $(i,j;a,0,0,a)$, $i<j$.
+Cycles may share addresses. Their union has mass $s=\sum_{a,t}h_{a,t}$:
+
+$$
+\eta_w(a)=\sum_t h_{a,t}\mathbf1_{\text{edge t has equal endpoints}},
+\qquad c_a=\min_t h_{a,t}.
+$$
+
+Every binary odd cycle has an equal edge. Alternating on the complementary
+even path makes any chosen edge the only equal edge, proving the minimum
+for all real nonnegative weights. If $\kappa$ uses only addresses at most k,
+all invariance premises hold simultaneously, including shared cycles
+and zero edge weights. Neither output laws nor score quotients are preserved.
+
+There is an exact fixed-remainder obstruction.
+For $k\ge3$, $0<s\le1/3$, $L\ge2k$, put $j_a=k+a$ and let
+$a^+=a+1$ cyclically on $1,\ldots,k$. The block contains singleton
+$(j_a;a,a^+)$ of mass $s/k$ for each a. The remainder contains
+
+$$
+(a,j_a;0,a,0,0),\qquad(a^+,j_a;a^+,0,0,0)
+$$
+
+with mass $s/k$ each and empty-zero mass $1-3s$.
+This is one probability allocation: block mass s and remainder mass $1-s$.
+Every remainder table belongs to $W_N$.
+On $\Omega_a$, the edge a supplies complementary correct contributions
+$(s/k)(1-w_{j_a})$ and $(s/k)w_{j_a}$ from block and remainder.
+The preceding cyclic edge supplies $(s/k)w_{j_{a^-}}$ and
+$(s/k)(1-w_{j_{a^-}})$. Correct mass is therefore exactly $2s/k$.
+Take $a_n=1$ for $n\le k$ and
+
+$$
+e=1-2s/k,\qquad a_{k+r}=e\,2^{1-r}\quad(r\ge1).
+\tag{218.13}
+$$
+
+Early errors equal e, including the independent pair row.
+For every actual first zero beyond k, all first addresses in the remainder
+are positive, so it outputs zero; the block outputs in $1,\ldots,k$.
+Its exact TV is $\max(s,a_n)\le e$, including $a_{k+1}=e$ and
+multiple-zero words even when queried suffix addresses exceed the active prefix.
+
+On $\Omega_a$, the remainder correct reading is
+$(s/k)(w_{j_a}+1-w_{j_{a^-}})$, of minimum zero on freely varying
+distinct suffix bits. A constant substitute needs $2s/k$ at each label,
+a total $2s>s$. It cannot replace that block with r fixed.
+A different empty O law assigns $2s/k$ to each early label and $1-2s$
+to zero. Early errors are e; later errors are $\max(2s,a_n)\le e$,
+because $2s\le2/3<e$. At $k=3,s=1/3$, available block mass is $1/3$,
+required constant mass $2/3$, cap $7/9$, and alternative O masses are
+$(1/3,2/9,2/9,2/9)$. This is a local-operation failure, not an
+$H_N$ hard-region witness or original separator.
+The full catalog still contains $(3,4;1,0,0,0)$, correct at 0100.
+Preserving correct-class minima does not authorize pruning that label.
+

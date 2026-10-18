@@ -1,0 +1,14 @@
+**Definition 3.1 (actual occurrence and literal cone).** If $a$ is an
+actually present relative address in $v$, its original-root literal
+cone in $t=\langle\alpha,v\rangle$ is
+
+$$
+\mathcal C(a)=\{Raw:w\in\{L,R\}^{<\omega}\}.
+\tag{PPF.12}
+$$
+
+The empty $a$ is allowed. A set of addresses is prefix-free when no
+distinct member is a prefix of another. Occurrences, replacements and
+cones below are proof objects; they are not inputs or new actions
+available to a preparer.
+

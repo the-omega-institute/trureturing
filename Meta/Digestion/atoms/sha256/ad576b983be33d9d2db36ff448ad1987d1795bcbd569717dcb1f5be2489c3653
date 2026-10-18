@@ -1,0 +1,29 @@
+**定理 52.6（完整十二端口单圈与真闭合 $c$）。** 将两中心完整路径、外链 $X,Y$ 及四条中心真 $c$ 合成，得到端点轨迹
+
+$$
+\begin{split}
+0&\xrightarrow{\beta_R}2L-3\xrightarrow c2L-2
+\xrightarrow{\beta_R}2L-4\xrightarrow{Y^{-1}}L+1
+\xrightarrow{\beta_S}L-2\xrightarrow cL-3\\
+&\xrightarrow{\beta_S}L\xrightarrow cL-1
+\xrightarrow{\beta_S}L-4\xrightarrow{X^{-1}}1
+\xrightarrow{\beta_R}2L-1\xrightarrow c0.
+\end{split}
+$$
+
+十二中心端口恰各用一次，两完整外链恰各用一次。每个中心及非中心块的真实删边分解已被穷尽，展开后因此为覆盖全部 $2nK_4$ 顶点的一个简单圈，无隐藏分量。最后的实际边为
+
+$$
+t_{2L-1}=(p,\operatorname{rev}B,x,q,y)
+\xrightarrow c(x,B,p,q,y)=g=t_0.
+$$
+
+轨迹中每字均是所列原生字或明确定义的 $W(S),W(R)$、第 51 节三标签圈真实子字；因生成元为对合，反向子字即原字倒序。这给出完全确定的原始 $a/b/c$ 圈字，不假定一般宏端口共轭。
+
+两中心删边各贡献 $M-3$ 边，其余 $n-5$ 个双标签、三标签补路径分别贡献 $(n-5)(M-1)$、$(n-5)(N_3-1)$，$\mathcal T$ 加 $L=2n-4$ 条 $c$。总边数为
+
+$$
+2(M-3)+(n-5)(M-1)+(n-5)(N_3-1)+(2n-4)
+=(n-3)M+(n-5)N_3=(n-4)N_3=2nK_4.
+$$
+

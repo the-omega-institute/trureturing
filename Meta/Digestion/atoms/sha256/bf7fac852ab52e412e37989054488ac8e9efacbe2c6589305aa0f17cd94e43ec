@@ -1,0 +1,36 @@
+**Definition 10.3 (dual quadratics and odd orientation).** Keep $P_y$
+and $Q_y$ from (FC.7), and set
+
+$$
+\begin{gathered}
+P_y=y_0+y_1u+y_2v+y_3u^2+y_4uv,\qquad
+Q=\begin{pmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{pmatrix},\qquad
+Q_y=x^TQx,\\
+R_-=Q+t\mathsf F,\qquad R_+=Q-t\mathsf F,\\
+a_o=y_1-l_u,\qquad b_o=y_2-l_v,\qquad
+L_o(x)=a_ou+b_ov,\qquad w_o=(b_o,-a_o)^T.
+\end{gathered}
+\tag{FC.27}
+$$
+
+The subscript $o$ distinguishes these two odd coefficients from the
+source amplitudes $a,b$. If using RC's symmetric failure dual $Z_f$,
+let
+
+$$
+J_f=\begin{pmatrix}0&d/(h_2\sqrt\beta)\\
+-b/(h_1\sqrt\alpha)&0\end{pmatrix},\qquad
+\Delta_f=\begin{pmatrix}-11/64&\Delta_{12}\\\Delta_{12}&0\end{pmatrix}.
+\tag{FC.28}
+$$
+
+Then $\widehat n_h=J_fx$, $\mathsf F=J_f^T\Delta_fJ_f$,
+$Q=tJ_f^TZ_fJ_f$ and
+$R_\pm=tJ_f^T(Z_f\mp\Delta_f)J_f$. These equations identify
+the source-specific quadratics; they introduce no alternative failure
+covariance. In (RC.70), RC's report sign $r$ is the present
+$\epsilon$, and RC's height sign $\epsilon$ is the present
+$\sigma$. Its multiplier conjugate to $|z|$ is
+$\lambda_{\rm RC}=\sqrt\alpha\lambda$. Thus the saturated test is
+exactly $D_cF_{0,\epsilon,\sigma}+N_cx^T(Q-\sigma t\mathsf F)x$.
+

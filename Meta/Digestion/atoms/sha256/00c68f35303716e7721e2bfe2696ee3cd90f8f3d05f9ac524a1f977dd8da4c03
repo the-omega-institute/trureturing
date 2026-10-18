@@ -1,0 +1,35 @@
+**Proposition 6.2 (regular infinite witness with an early exit).** For $n=1,c=3,v=3$ and every integer $m\ge1$, take final multiplier $U^m$. The endpoints are
+$$
+I,\quad \begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}3&1\\2&1\end{pmatrix},\quad
+\begin{pmatrix}8&3\\11&4\end{pmatrix},\quad
+\begin{pmatrix}8+11m&3+4m\\11&4\end{pmatrix}.
+\tag{6.6}
+$$
+Deletion of any endpoint leaves four independent matrices, and $\mathsf B$ is invertible. Theorem 6.1 still gives a collision.
+
+**Proof.** Legality follows from Theorem 6.1 and multiplication by $U^m$. The first three quotient rows have kernel $\mathbb RN$ with
+$$
+N=\begin{pmatrix}1&0\\-2&-1/3\end{pmatrix},\qquad \operatorname{tr}N=2/3.
+$$
+Any annihilator of all first-four trace functionals lies in this line and has trace zero, so it vanishes. Thus the first four matrices are independent.
+
+Their unique five-matrix dependence has coefficients
+$$
+(4m,\ m,\ -17m,\ 3m-2,\ 2).
+$$
+Its four entry sums are
+$$
+4m+m-51m+8(3m-2)+2(8+11m)=0,
+$$
+$$
+-17m+3(3m-2)+2(3+4m)=0,
+$$
+$$
+m-34m+11(3m-2)+22=0,
+$$
+$$
+4m+m-17m+4(3m-2)+8=0.
+$$
+Every coefficient is nonzero for integer $m\ge1$, so uniqueness excludes dependence among any four survivors. To check the quotient as well, the difference between its last and third rows is $(11m,0,4m,0)$; its product with the entry vector of $N$ is $3m\ne0$. Hence the last row removes the first-three-row kernel and $\mathsf B$ is invertible. This supplies a regular subclass whose collisions are not consequences of the one-erasure test. ∎
+

@@ -1,0 +1,34 @@
+### 5.3. The same conjugate information budget
+
+For any real unit $h\in V$, the two conjugate tangent
+directions $h$ and $ih$ have normalized information
+$1-rh^{\mathsf T}B_\omega h$ and
+$rh^{\mathsf T}B_\omega h$. Their sum is one. Restricting
+to the supplied relation family of Parent/Readout §9.10,
+with $h_s=d_s/(\sqrt{\bar p_s}\sqrt{I_0})$, therefore gives
+
+$$
+\frac{F_{\kappa\kappa}}{I_0}=1-t,\qquad
+\frac{I_0F_{\chi\chi}}4=t,\qquad
+F_{\kappa\chi}=0,\qquad t=rh^{\mathsf T}B_\omega h.
+\tag{5.11}
+$$
+
+The local model's vanishing classical cross term does not
+remove its imaginary horizontal Gram pairing. Equation
+(5.11) lies inside the arbitrary-measurement directional
+budget already proved in Parent/Readout §§9.11 and 10.7.
+It does not give both individual QFI limits simultaneously.
+
+Likewise the $2\dim V$ generalized eigenvalues in (5.7)
+sum to $\dim V$: each eigenvalue of $rB_\omega$ is paired
+with its complement. This consumes the existing pure-state
+Fisher trace budget, rather than creating a new uncertainty
+principle. The unrestricted local half-QFI measurement of
+[FSIC5] and Parent/Readout §10.9 uses additional calibrated
+global operations. It is a different menu from the single-site
+controls studied here. Parent/Readout §8.5 already records
+the separate mixed-state observation kernel.
+
+[FSIC5]: https://arxiv.org/abs/1507.06904v2
+

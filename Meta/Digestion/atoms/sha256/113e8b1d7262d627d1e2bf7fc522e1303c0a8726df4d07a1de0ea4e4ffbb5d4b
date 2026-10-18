@@ -1,0 +1,28 @@
+## 394. At most two double-P-pair owners
+
+Tau has exactly three P slots: its Z axis and two transverse M slots.
+The published mixed high-axis/transverse estimate in Section 376 gives
+
+    theta_Z(tau)+2*beta_M(tau)>pi.
+
+Tau's pair is MC, so it is distinct from every owner counted by this
+refinement. If k actual genuine owners have both transverse labels in
+P, their disjoint original P slots and tau's slots give
+
+    5*pi >= P_expense(tau)+sum_{i=1}^k P_expense(i)
+         > pi+k*(4*pi/3).
+
+Thus k<3 and k<=2. Repeated copies of one role count as separate actual
+owners; no bound on their multiplicity was assumed. Self-gluings do
+not identify original angle slots or change this sum.
+
+The only five-P-slot owners and the four-P-slot owners with both
+transverse labels in P together have at most two members. The original
+P-degree contributions remain five or four respectively, so repeated
+role vectors cannot evade this count.
+
+This does not cover the other four-P-slot class, whose two axes and
+exactly one transverse label belong to P. It also does not eliminate
+the cheap single-P axial families of Section 378 or prove full six-edge
+flat exclusion. No general degree-weighted infeasibility claim is made.
+

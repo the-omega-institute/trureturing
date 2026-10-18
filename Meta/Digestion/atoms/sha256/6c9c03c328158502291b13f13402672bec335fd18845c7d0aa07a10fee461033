@@ -1,0 +1,7 @@
+## 464. 素秩 Fibonacci 支撑的局部修复分层
+
+上一节的超丰数整除条件只给出 $F_r$ 与小素数库存互素。这里接入一个不同
+的近期局部结果：[Chuysurichay--Jaidee--Panraksa--Ward 的 Dold 文献卡](../../../Library/Scale/chuysurichay2026fibdold.md)
+的 Theorem 2.4 给出 Fibonacci 序列在每个素数 $p$ 处的精确修复因子。文献把
+入口秩记作 $\varphi(p)$；本节改写为 $z(p)$，以免与黄金比混淆。
+

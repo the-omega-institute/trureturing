@@ -1,0 +1,97 @@
+**Lemma 6.1 (cutoffs, exact endpoint score and recovered mass).** Fix
+$0<\eta<d/8$. Choose smooth $0\le\chi_\eta\le1$, supported where
+$\operatorname{dist}(x,\partial I)\ge\eta$ and equal to one where
+that distance is at least $2\eta$. Choose smooth $0\le\rho_\eta\le1$
+equal to one on $|v|\le\eta/8$ and supported in $|v|<\eta/4$.
+Multiply the actual joint law in Lemmas 5.1--5.2 by
+
+$$
+\chi_\eta(x)\,
+\mathbf1_{\{\sup_{r\le h}|b_r|\le\eta/4\}}\,
+\rho_\eta(z-x)^2
+\tag{6.1}
+$$
+
+to obtain a subprobability $\nu=\nu_{h,\eta,\kappa}$. Its record
+coordinates also depend on the chosen policy. It is dominated
+by the original joint law with target and enlarged data. On its
+density support every interpolated height stays at distance at least
+$\eta/2$ from both faces. Its full score at fixed enlarged record is
+$S=S_0+\sum_iU_i$, where
+
+$$
+S_0=-\frac{z-x}{\sigma^2h}+\frac{\phi'(z)}{\phi(z)}
++2\frac{\rho_\eta'(z-x)}{\rho_\eta(z-x)}.
+\tag{6.2}
+$$
+
+For all sufficiently small $h>0$, independently of the policy, seed
+law and parameter,
+
+$$
+\int S_0^2d\nu\le\frac{C_\eta}{h},\qquad
+\int M_hd\nu\le C_\eta\sqrt h,
+\qquad M_h=\sup_{0\le r\le h}|K^z_r-z|.
+\tag{6.3}
+$$
+
+Define $A_{h,\eta,\kappa}=\int w_\kappa(z)d\nu$. It is independent
+of the chosen policy and
+
+$$
+A_{h,\eta,\kappa}\longrightarrow
+A_{\eta,\kappa}:=\int_I\chi_\eta(k)w_\kappa(k)\pi(dk)
+\tag{6.4}
+$$
+
+uniformly over the entire original family as $h\downarrow0$. For any
+fixed nonzero $\chi_\eta$, this limit has a common positive lower
+bound.
+
+Proof. On (6.1), the linear displacement from $x$ is at most $\eta/4$
+and the bridge displacement is at most $\eta/4$. Both faces are
+therefore avoided with the indicated margin. In a neighborhood of the
+$z$ support the survival indicator in (5.2) is identically one.
+The bridge cutoff and $\chi_\eta(x)$ have zero $z$ derivative in
+these coordinates. Differentiating the remaining endpoint density
+gives exactly (6.2), including the Q factor $\phi'/\phi$.
+
+The expression involving $\rho_\eta'/\rho_\eta$ is used only where
+$\rho_\eta>0$; its integrated square cancels the factor $\rho_\eta^2$
+and leaves $4\rho_\eta'^2$. All $\phi$ ratios and log derivatives
+are bounded on the relevant interior compact sets. Integrating the
+Gaussian displacement square gives $O(h)$ and hence $O(h^{-1})$
+for the first term of (6.2). The other terms are bounded in integrated
+square by constants depending on $\eta$; taking $h\le1$ proves the
+first bound in (6.3). At zeros of the cutoff its density derivative
+is understood as $2\rho_\eta\rho_\eta'$, so no division is needed.
+
+Write the bridge as $\sigma(W_r-rW_h/h)$. The Brownian maximal
+inequality gives $\int\sup|b|^2d\beta_h\le C\sigma^2h$.
+Also $M_h\le|z-x|+\sup|b|$. The endpoint Q weight is bounded on
+the cutoff by a constant times the Gaussian/bridge reference.
+The observation likelihood integrates to one, so these two reference
+moment bounds prove the second part of (6.3).
+
+In fact integrating out all sequential observations and then the past
+except for $x\sim\pi$ yields the explicit policy-independent formula
+
+$$
+\begin{aligned}
+A_{h,\eta,\kappa}
+={}&e^{\lambda h}\beta_h\{\sup|b|\le\eta/4\}\\
+&\ \cdot\int_I\frac{\chi_\eta(x)}{\phi(x)}\pi(dx)
+\int_I\gamma_h(z-x)\phi(z)\rho_\eta(z-x)^2w_\kappa(z)dz.
+\end{aligned}
+\tag{6.5}
+$$
+
+The bridge probability tends to one by its maximal second moment.
+The Gaussian displacement has second moment $\sigma^2h$, the
+endpoint cutoff is one near zero displacement, and $\phi w_\kappa$
+is uniformly Lipschitz on the compact sets involved. Approximation
+by its value at $x$, with Gaussian tails outside $|z-x|\le\eta/8$,
+gives error $O_\eta(\sqrt h)$ in (6.5). This proves (6.4).
+Finally $w$ has a common positive lower bound and
+$\int\chi_\eta d\pi>0$. $\square$
+

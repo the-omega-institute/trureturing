@@ -1,0 +1,56 @@
+**Theorem 15.2 (exact COK-minus-cover information identity).** For
+every positive matching collection, rational or real,
+
+$$
+\mathcal U_{\mathcal N}(p;\boldsymbol w)
+ -\mathcal B_{\mathcal N}(p;\boldsymbol w)
+ =\mathcal I_{\rm cov}(p)\ge0.
+\tag{COK.74}
+$$
+
+For uniform $w$, each $p_i$ is a law on the corresponding
+$R_{\eta_i}(w)$ of Definition 2.3, and consequently
+
+$$
+\mathcal U_{\mathcal N}(p;w)/n\le\log_2\Omega_d(w).
+\tag{COK.75}
+$$
+
+Proof. Each edge entropy in $H_{\rm cov}$ is precisely the entropy
+of one incoming group. Also
+$H(p_i)=H_{p_i}(I_i)+H_{p_i}(O_i\mid I_i)$. Since
+$\sum_A\gamma_{k_i}(A)=1$, the local entropy difference is
+
+$$
+\begin{aligned}
+&\sum_A\gamma_{k_i}(A)H_{p_i}(O_i\mid B_{i,A})
+ -H(p_i)+\sum_gH_{p_i}(B_{i,g})\\
+&\qquad=\operatorname{TC}_{p_i}(I_i)
+   +\sum_A\gamma_{k_i}(A)
+       \left[H_{p_i}(O_i\mid B_{i,A})-H_{p_i}(O_i\mid I_i)\right]\\
+&\qquad=\operatorname{TC}_{p_i}(I_i)
+   +\sum_A\gamma_{k_i}(A)
+       I_{p_i}(O_i;B_{i,A^c}\mid B_{i,A}).
+\end{aligned}
+\tag{COK.76}
+$$
+
+Total correlation is nonnegative by entropy subadditivity;
+conditional mutual information is nonnegative as a conditional
+relative entropy. The energy terms cancel exactly, proving (COK.74).
+
+For (COK.75), take any positive incoming group value $b$ under
+$p_i$. Matching gives positive mass to that projection under
+$p_j$. Some supported local configuration of that same owner $j$
+therefore has the whole projection $b$. Its one actual reconstructed
+tree has positive $w$, and all its owned ports carry the full owner
+tables for those values. This supplies the single joint owner-image
+witness required for that group in Definition 2.3. The local tree
+of $i$ supplies its first condition. Thus the support of $p_i$
+lies in $R_{\eta_i}(w)$ and its local COK functional is at most
+$h_{\eta_i}(w)\le\log_2\Omega_d(w)$. Summing proves the claim.
+For heterogeneous weights the same reasoning uses the respective
+owner supports, as specified after Definition 2.3; it does not give
+a common $\Omega_d(w_i)$ bound using the wrong outside support.
+$\square$
+

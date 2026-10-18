@@ -1,0 +1,66 @@
+**Theorem 11.4 (singleton nonregular contact for the prescribed pair).**
+For the entire input (NLC.32), put $L=\langle K,\langle K,K\rangle\rangle$.
+Then
+
+$$
+\overline{D_0}\cap\overline{D_1}=\{L\},\qquad
+L\ \hbox{is not ordinary regular}.
+\tag{NLC.40}
+$$
+
+For every inclusive depth $h$ there are actual finite sources
+$u_h^0\in D_0$ and $u_h^1\in D_1$ with
+$u_h^0\equiv_h L\equiv_h u_h^1$. Consequently the assertion that
+every prescribed pair of distinct attained full rows with finite
+same-prefix witnesses at all depths has an ordinary regular common
+limit is false.
+
+Proof. First prove that any common closure point is $L$, using the
+architecture of Theorem 8.4. A closure point retains the finite
+outer skeleton forced by (NLC.32). Equality of two subtrees at fixed
+reached positions is closed under original prefixes: a failed
+equality has a finite-address distinguishing reply. The graph of
+$\rho$, and therefore that of $G$, is also closed by (NLC.38).
+Indeed any difference at depth $d$ can be checked from finitely many
+argument and output replies through depth $d$; choosing an original
+prefix deeper by the fixed coordinate lengths tests those replies.
+
+Every point in either closure therefore has the form $U(x,y)$ with
+finite-or-infinite $x,y$. Membership in $\overline{D_0}$ forces $x=y$;
+membership in $\overline{D_1}$ forces $x=G(y)$. A common point has
+$y=G(y)$, so Theorem 11.3 forces $x=y=K$ and the point is $L$.
+Only equalities were passed to the limit, not the finite disequalities
+or their partition.
+
+For the reverse inclusion and finite productivity, set
+
+$$
+y_0=\beta,\qquad y_{n+1}=G(y_n),\qquad
+u_h^0=U(y_n,y_n),\qquad u_h^1=U(y_{n+1},y_n),
+ \quad n=h+1.
+\tag{NLC.41}
+$$
+
+Induction using the actual pair law shows that $y_n$ has teeth
+$T_0,\ldots,T_{n-1}$ at $L,RL,\ldots,R^{n-1}L$ and terminal subtree
+$\rho^n\beta=T_{n+1}$ at $R^n$. For any word of length less than $n$,
+either it remains on the shared branch spine, or it first enters one
+of the identical complete teeth. In the latter case its remaining
+reply, whether leaf, branch or absent, is identical. Such a word
+does not reach the terminal subtree. Thus $y_n\equiv_h K$ and
+$y_{n+1}\equiv_h K$ when $n=h+1$. Constructors and (NLC.38) now give
+both displayed sources' agreement with $L$ through $h$.
+
+All these trees are finite. Theorem 11.2 places the two sources in
+the entire original $D$, with every literal, both reach guards and
+the mixed-epoch equality, and gives exactly the distinct full rows
+$r_0,r_1$. In particular $y_n\ne G(y_n)$ retains every required
+finite inequality. This proves membership of $L$ in both closures.
+Since $L|_L=K$, Theorem 11.3 makes $L$ nonregular and excludes every
+ordinary regular common-contact tree for this prescribed pair.
+
+The three ideal subtrees at $Q$ in $L$ coincide. Their one-class
+partition is neither finite label in (NLC.41), and cannot replace
+those labels. Also $\mu(y_n)=1$ for $n\ge1$: this approximation is
+not an assertion of growing minimum leaf depth. $\square$
+

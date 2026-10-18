@@ -1,0 +1,34 @@
+**Theorem 6.2 (four individual exact original kernels on a reached chart).**
+For every $V\in\{S,B,T,M_J\}$ separately and $h,k\in Z_P$,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad Q(h)=Q(k).
+$$
+
+Proof. Every cut of this Zero chart has a prescribed non-IN original
+source row: bound RD, EX(16), WR(16,0 or sep), source MR, bound MR,
+or the next original reservation-field row at the final Zero return.
+The inlining retains that original row/effect on original ports; it has
+not yet reached the changed final return CTL. The projection of its
+complete successor to original CAP coordinates therefore includes the
+current retained 13 request triple and the original meter, as well as
+its other original fields. Equality of original $Q$ response maps
+implies equality of this successful Advance response. The current
+canonical $U(J)$ payload is still retained and unmodified, so equal
+original successors give the same $J$. Their one-per-row meter receipt
+counts give equal successor ordinals and hence equal predecessor
+ordinals. From the common actual $P$, choice 01 and that same $J$
+determine the entire intervening literal native history. Stopping at
+the same ordinal gives $h=k$, including EX-before-WR and the final
+delimiter-MR cut. Conversely $h=k$ gives the same original legal
+domains, labels, complete successors and readouts.
+
+For $S$, equal support decodes equal selected memory and hence equal
+histories by §3, giving equal $Q$; equal $Q$ gives $h=k$ and equal
+support. For $B$, prefix closure and extraction give the first implication;
+equal $Q$ gives identical terminal paths for the second. For $T$, native
+erasure gives equal histories and equal $Q$; equal $Q$ fixes the native
+history and its compiled occurrence word. For $M_J$, extraction gives
+equal histories and equal $Q$; equal $Q$ gives identical selected
+backing/rights. These prove the eight chart implications separately. ∎
+

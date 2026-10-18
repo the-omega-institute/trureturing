@@ -1,0 +1,44 @@
+**Definition 5.3 (finite geometric evaluation at a numeral).** Fix
+$S\in\Gamma(C)$ and a supplied numeral $r$. Expand each explicit
+original leaf of $S$ by $\rho^r$, and replace its variable at $p$
+by a formal opaque block $\rho^r(X_p)$ at that same position. Cut
+this symbolic tree at the public $P$, using the usual stopping and
+blocking rules. An opaque block occurs at a cut position and is
+never inspected. Compare the entire resulting addressed exterior
+with $C$. Let $\gamma_{S,r}$ be this finite equality test.
+
+If $\gamma_{S,r}$ is true, every hole value is one of exactly two
+forms:
+
+$$
+f_{r,p}(\mathbf x)=\rho^r(x_p)\quad\hbox{at an original hole},
+\qquad
+f_{r,p}(\mathbf x)=g_{r,p}\in\mathcal T\quad\hbox{at a born hole}.
+\tag{NRF.16}
+$$
+
+The latter is the computed ground subtree inside an expanded original
+leaf. There are finitely many such trees for this finite $S,r,C$.
+The predicate $\gamma_{S,r}$ and the list (NRF.16) do not inspect
+any residual value. Explicit ground expansions may be large, but
+are finite and effective.
+
+Reuse the native ground inverse from [ARH, Lemma 11.2][ARH]. Its one-step
+form is
+
+$$
+\begin{aligned}
+\iota(\alpha)&\text{ undefined},&\iota(\beta)&=\alpha,\\
+\iota(\langle\beta,\alpha\rangle)&=\beta,&
+\iota(\langle x,y\rangle)&=\langle\iota(x),\iota(y)\rangle
+ \quad\text{in all other defined pair cases}.
+\end{aligned}
+\tag{NRF.17}
+$$
+
+The last case requires both child inverses. The exceptional pair
+cannot overlap it, since $\alpha$ has no predecessor. The domain
+of $\iota_r=\iota^{\circ r}$ is exactly $\rho^r[\mathcal T]$, and
+$\iota_r(\rho^r x)=x$. This operation is applied only to known
+finite ground terms, not as a free source port.
+

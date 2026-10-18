@@ -1,0 +1,14 @@
+**Theorem 3.3 (necessity for every original finite complex implementation).** Every implementation in Definition 2.3 supplies an aggregate supported live high coefficient $H$ satisfying
+
+$$
+0\preceq H\preceq I_3,\qquad \operatorname{tr}(BH)\ge k,\qquad
+G_H^{\rm acq}\succeq G_H^L=E\Theta(H)E^\dagger.
+\tag{RG.18}
+$$
+
+Proof. Take finite Kraus matrices of each encoder and of each supported live-decoder compression. Their products through an actual fibre give positive rank-one Choi summands of the fixed five-mode live Choi matrix, whose support is the span of the independent columns $|EDE^\dagger\rangle\!\rangle$, $|ETE^\dagger\rangle\!\rangle$, $|ESE^\dagger\rangle\!\rangle$. A kernel vector of the sum has zero quadratic form in each positive summand, hence is killed by its positive square root. Every product vector therefore belongs to that support. Each product is uniquely $EK(z)E^\dagger$, with complex $z$ and zero complementary and cross-support action.
+
+The columns are independent but need not be normalized. A Gram left inverse of their column matrix applied to the sum of the Choi identities makes the sum of all coefficient projectors $zz^\dagger$ exactly $I_3$. Group products through actual high fibres into $H\succeq0$, the others into $L\succeq0$. Then $H+L=I_3$. A low product factors through dimension at most two and thus is singular; Lemma 3.2 gives $\operatorname{tr}(BL)\le0$, proving the first two requirements.
+
+For every actual high label, the full decoder is TP and its live compression is TNI. Applying the positive adjoint encoder to the difference of their effects gives a positive five-mode operator. Summing these differences proves the last inequality and identifies the live effect with $E\Theta(H)E^\dagger$. It includes high acquisition later decoded into failure, and possible acquired complement or cross-support terms. It holds before evaluation on any positive input. Kraus refinements in this proof are analytic only; they add no actual accessible flag to a competitor. $\square$
+

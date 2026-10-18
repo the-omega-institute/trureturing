@@ -1,0 +1,41 @@
+**Assumption 6.1 (the full boxed Borel domain).** In Sections 6--8 use
+exactly [LATE, Definitions 1.2--1.3 and Assumption 1.1][LATE15403]. Thus
+$a=1/3$, $b=2/5$, $z_r=r(1-r)$, $c_r=(1-r)^2$, and $\lambda=4/15$.
+The complete carriers, native laws, regular TV spaces, and endpoint
+coordinate boxes are (1.2)--(1.7) above. Both infinite outcomes remain
+in their carriers. The phase marginals have arbitrary Borel support.
+The two disintegrations satisfy the entire-measure equations
+
+$$
+\begin{aligned}
+Q&=u(Q)\delta_\alpha+(1-u(Q))\beta\!\int W\,B(Q,dW),\\
+W&=(1-v(W))\delta_\beta+v(W)\alpha\!\int Q'\,A(W,dQ'),\\
+\nu_pB&=\nu_\beta,\qquad \nu_\beta A=\nu_p.
+\end{aligned}
+\tag{6.1}
+$$
+
+Conditioning is on the whole input descriptor. The last line uses the
+original unweighted marginals; no continuation or survival factor is
+inserted into either marginal.
+
+The prior $\mu$ is any fixed finite or countable probability distribution
+with $\mu(1),\mu(2)>0$. One $K$ is drawn before the first paid Read;
+conditional on that same $K=k$, letters have alpha probability
+$r_k=F_{k+1}/F_{k+3}$. Every supported $k$ remains a target. This includes
+the three-depth source of Section 1 as its corresponding special case.
+The source parameters remain $(m,d,\ell,n)=(2,1,2,4)$; a subscript $n$
+below counts word returns and does not change a source parameter.
+Both accepted seeds, all positive finite paid rejections, partial parses
+and returns, marker triples, bare and held records, selectors, write
+and latch flags, permissions, third write before its latch, fourth
+completion, delivery and matching Stop retain their original meaning.
+Terminal states permit no Read. Initialization is source-independent;
+acquired and synthetic letters use identical updates. The complete-record
+renderer of [PAIR, Section 2][PAIR-STABILITY] retains future letters,
+operation blocks and noncompletion, and preserves TV. COMPLETE charges
+the original control, installed program and numbers, selectors, addresses,
+labels, output cursors, sampler states, workspace and persistent randomness.
+The descriptors and operators in (6.1) are analytical coordinates, not
+additional observer ports, resets or newly sampled depths.
+

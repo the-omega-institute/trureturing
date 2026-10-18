@@ -1,0 +1,14 @@
+**Corollary 8.4 (source recovery after authentic acquisition).** On a no-update
+complete producer traversal from boot, the fiber $F$ is $\{t_0\}$. Thus $V^+$
+can accept its actual initial syntax, or compute and accept the original
+initial $q_H$ on it, and deliver either through its corresponding consumer.
+
+**Proof.** Any surviving source has every recorded leaf reply at the producer's
+actual leaf addresses. The existing `source_foundation` tree-separation clause
+forces it equal to the acquired tree; equivalently apply the supplied truthful
+traversal/reconstruction argument. The actual source survives by Theorem 8.3,
+so the fiber is precisely that singleton. Computing either finite target on it
+and applying Theorem 8.3 gives the receipt and delivery. This invokes the
+existing reconstruction supplier rather than declaring a new acquisition
+theorem for the old numerical-only menu. $\square$
+

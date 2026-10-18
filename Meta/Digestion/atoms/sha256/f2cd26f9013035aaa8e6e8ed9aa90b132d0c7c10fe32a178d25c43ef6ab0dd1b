@@ -1,0 +1,15 @@
+**Theorem 7.2 (Feasible-witness sufficiency).** If $0<\tau<1$ and some
+$W\in\mathcal E_2$ satisfies
+
+$$
+J_\tau(W)\le\tau+\frac{(1-\tau)^6}{65536\pi^2},
+\tag{7.1}
+$$
+
+then every global minimizer is good and both guarded endpoints are attained.
+
+**Proof.** The inequality gives $T_4\le J_\tau(W)$; Theorem 1.5 supplies a
+global minimal-order-two minimizer. Theorem 4.1 strictly excludes every bad
+one, including equality in (7.1), and all remaining minimal forms are good.
+The credited native realization then attains both guarded endpoints. $\square$
+

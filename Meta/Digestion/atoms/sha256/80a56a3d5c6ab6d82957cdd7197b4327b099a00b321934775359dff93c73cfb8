@@ -1,0 +1,33 @@
+**Definition 1.1 (native sources and original prefixes).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle s,t\rangle&=\langle\rho s,\rho t\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{FJC.1}
+$$
+
+Every source is nonempty, finite, free and ordered as a binary tree.
+Repeated occurrences are retained. There is no common bound on size,
+depth or atomic rank. The operation $\rho$ is interpreted by (FJC.1).
+An original address is a finite word in $\{L,R\}$, with root
+$\varepsilon$. The four-valued reply $r_u(p)$ is $\alpha$, $\beta$,
+$\mathsf{branch}$ or $\mathsf{absent}$. Strict descendants of a leaf
+are absent. Put
+
+$$
+u\equiv_h v\quad\Longleftrightarrow\quad
+\forall |p|\le h\quad r_u(p)=r_v(p).
+\tag{FJC.2}
+$$
+
+Depth is inclusive. For a finite prefix-free original cut $A$, the full
+row $R_A(u)$ comprises the reached set $A\cap\operatorname{Pos}(u)$,
+in address order, its entire concrete exterior with precisely those
+subtrees replaced by numbered holes, and the complete partition of those
+holes by equality of their entire ordered subtrees. An absent cut
+address contributes no hole. Empty cuts and the root cut are allowed.
+

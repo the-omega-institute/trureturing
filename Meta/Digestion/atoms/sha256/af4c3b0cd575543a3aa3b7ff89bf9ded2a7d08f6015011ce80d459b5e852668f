@@ -1,0 +1,106 @@
+**Theorem 10.8 (Conjugate Fisher budget on independent pure copies).**
+Take $N\ge1$ identical independent copies of (10.21), and any fixed,
+parameter-independent positive operator-valued measure (POVM) on their
+full product Hilbert space. At the reference let $F$ be its regular
+classical Fisher matrix, partitioned by $(\xi,\Phi)$. Then
+
+$$
+F_{\xi\xi}+\tfrac14G F_{\Phi\Phi}G\preceq NG.
+\tag{10.25}
+$$
+
+This includes collective measurements. The reference-score convention
+uses only outcomes of positive reference density. For subsequent
+estimator inequalities assume square-integrable scores and valid
+differentiation under both likelihood and estimator integrals.
+
+Proof. For each real $v\in\mathbb R^r$ consider the two directions
+$\delta\xi=v$ and $\delta\Phi=Gv/2$. Their one-copy horizontal tangents
+are, by (10.23),
+
+$$
+a=Av=\tfrac12P^{-1/2}Dv,\qquad
+b=C(Gv/2)=-ia,\qquad
+4\|a\|^2=v^{\mathsf T}Gv.
+\tag{10.26}
+$$
+
+For one positive effect $M$, put
+$q=\langle\psi_0|M|\psi_0\rangle$ and
+$z=\langle\psi_0|M|a\rangle$. The two directional probability
+derivatives are $2\operatorname{Re}z$ and $2\operatorname{Im}z$;
+the second sign uses $\operatorname{Re}(-iz)=\operatorname{Im}z$.
+Cauchy–Schwarz for $M^{1/2}$ gives
+
+$$
+|z|^2\le q\,\langle a|M|a\rangle.
+\tag{10.27}
+$$
+
+On $q>0$, the sum of the two directional Fisher contributions is
+$4|z|^2/q\le4\langle a|M|a\rangle$. Summing effects gives
+$4\|a\|^2$. No assumption about other tangent directions was used.
+
+For $N$ copies write $\Psi=\psi_0^{\otimes N}$ and
+
+$$
+a_N=\sum_{\nu=1}^N
+ \psi_0^{\otimes(\nu-1)}\otimes a\otimes
+ \psi_0^{\otimes(N-\nu)},\qquad b_N=-ia_N.
+\tag{10.28}
+$$
+
+Different summands are orthogonal because
+$\langle\psi_0|a\rangle=0$. Hence
+$\langle\Psi|a_N\rangle=0$ and $\|a_N\|^2=N\|a\|^2$.
+Product differentiation gives exactly these tangents.
+Apply (10.27) with $\Psi,a_N$ to an arbitrary joint effect, without
+factoring that effect into one-copy effects. Summation yields
+
+$$
+v^{\mathsf T}F_{\xi\xi}v+
+(Gv/2)^{\mathsf T}F_{\Phi\Phi}(Gv/2)
+\le4\|a_N\|^2=Nv^{\mathsf T}Gv.
+\tag{10.29}
+$$
+
+Since this holds for all real $v$, it is (10.25).
+
+For a general measurable outcome space, use the finite control measure
+$\nu(E)=\operatorname{Tr}M(E)$ on the product space of dimension $d_n^N$.
+Every matrix entry of $M$ is dominated by $\nu$; its Radon–Nikodym
+densities form a positive matrix $m(y)$ almost everywhere, satisfying
+$\int m(y)\,d\nu(y)=I$. Positivity follows by testing a countable dense
+set of vectors, and the normalization follows entrywise. Put
+$q(y)=\langle\Psi|m(y)|\Psi\rangle$ and
+$z(y)=\langle\Psi|m(y)|a_N\rangle$. Finite-dimensional smooth state
+derivatives give the displayed first-derivative formulas under the
+integral; the trace density supplies an integrable bound.
+Inequality (10.27) holds almost everywhere and gives integrability of
+the score squares. The Fisher entries are
+
+$$
+F_{\alpha\beta}=
+\int_{\{q>0\}}
+\frac{(\partial_\alpha q)(\partial_\beta q)}q\,d\nu.
+\tag{10.30}
+$$
+
+At $q=0$, positivity gives $m(y)^{1/2}\Psi=0$, so $z=0$ and both
+first derivatives vanish. These outcomes have no reference-score
+contribution. Integration of (10.27) proves (10.29) again.
+Probabilities emerging to second order do not receive a
+direction-dependent limiting Fisher value in (10.30). $\square$
+
+The cross blocks $F_{\xi\Phi}$ can be nonzero; (10.25) does not discard
+or set them to zero. Richard D. Gill and Serge Massar,
+*State estimation for large ensembles*, [Theorem I, equation (27),
+and §V.A–B][GM10], give pure-state information tradeoffs and
+product-copy tangent methods. Their ambient-dimension bound is
+$\operatorname{tr}(H^{-1}F)\le N(d_n-1)$ here. It is not the directional
+matrix assertion (10.25). The proof above supplies the actual relation
+$b_N=-ia_N$ for each $v$ in this model and never substitutes an ambient
+dimension of two or an unproved restriction of the joint POVM.
+The corresponding claim for collective measurements on mixed inputs
+does not follow from this argument.
+

@@ -1,0 +1,37 @@
+**Theorem 3.2 (unchanged relations, covers and all nonnegative masses).**
+For every $d,n\ge1$ and every nonempty $B\subseteq S_d^n$, full and
+reduced admissibility are equivalent, without changing $B$. Every
+chosen reduced witness extends to omitted requirements with the same
+donor and literal. The integral and fractional cover optima are
+therefore identical. For every arbitrary nonnegative
+$\omega:S_d^n\to[0,\infty)$, the maximum $\omega$-mass over full
+complete-template solution sets equals that over reduced ones.
+
+Proof. Full admissibility implies reduced admissibility by restriction.
+For an omitted $q$, take the chosen witness at $(i,qL)$. If its factor
+is constant, compose that constant with $\Psi$. Otherwise compose
+its decoder with $\Psi$ and leave $(j,a)$ untouched. Equation
+(SCE.8) proves the omitted equation on this very same $B$. No
+projection, product replacement or independence assumption occurs.
+Thus the admissible subsets, hence both cover families and optima,
+are exactly the same.
+
+For clarity the template mass statement has two directions. Deleting
+omitted equations from a full template can enlarge its solution set,
+so nonnegative mass cannot decrease. Hence the full maximum is at
+most the reduced maximum. Conversely expand any reduced template by
+the composed equations just described. Every reduced solution satisfies
+them by (SCE.8), and a full solution still satisfies the original
+reduced equations. Its solution set is exactly unchanged, proving the
+opposite maximum inequality. Empty solution sets cause no exception.
+Simply deleting equations from an arbitrary full template is not an
+assertion of equality of that individual template's solution set.
+$\square$
+
+The weight $\omega$ may be fully correlated, or a product of arbitrary
+nonnegative whole-block potentials. Every repeated reply still refers
+to the same source coordinate and every original potential is used
+once. In particular this theorem preserves the credited $K_d(n)$,
+$Z_d(n)$, all-length product pressure, $\sigma_d$ and their original
+rate consumer. It gives no numerical improvement to these quantities.
+

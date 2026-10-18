@@ -1,0 +1,21 @@
+### 定义 5.1（随机读出核）
+
+令 \(W(a\mid s)\) 是有限随机核，满足
+
+\[
+W(a\mid s)\ge0,\qquad
+\sum_aW(a\mid s)=1.
+\]
+
+输出分布为
+
+\[
+q_a=\sum_sW(a\mid s)p_s.
+\]
+
+沿 \(d\) 的输出导数为
+
+\[
+q_a'=\sum_sW(a\mid s)d_s.
+\]
+

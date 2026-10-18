@@ -1,0 +1,20 @@
+**Corollary 9.2 (location of the new family relative to that closure).**
+For every nonnegative $w$ on $S_2$,
+
+$$
+\Omega_2(w)=J_2(w)=\beta_2(w)=M(w).
+\tag{COK.56}
+$$
+
+Proof. Insert the credited (COK.55) in the sandwich (COK.30).
+The identically zero case uses the zero conventions. $\square$
+
+Thus completeness of the new conditional family at depth two, in
+the sense of its cap infimum, is already forced by the credited
+closure. It supplies no new optimized rate progress at that depth.
+The old recursive-plus-range grammar additionally accepts the exact
+rational boundary cap; Corollary 4.4 asserts all strict rational
+caps above the local value and does not assert boundary attainment
+by strictly positive kernels. Further particular-network effects at
+$d=2$, including §8, do not change the optimized endpoint.
+

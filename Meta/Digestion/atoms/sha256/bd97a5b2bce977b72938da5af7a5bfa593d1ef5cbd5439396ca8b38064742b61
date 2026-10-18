@@ -1,0 +1,25 @@
+**Definition 59.1 (polynomials and exact division).** For
+
+$$
+(a,k)\in\mathcal R=[0,37/125]\times[7/20,2/5]
+$$
+
+put
+
+$$
+\begin{aligned}
+D&=\alpha(1-2a)+a^2,&U&=-\alpha+2a-a^2,&V&=\alpha-a^2,\\
+n&=(D,U,V)^T,&\sigma&=DU,\\
+W&=D Cn-2\beta ak Qn,&H&=-n^TQW,&R&=W^TQW,\\
+Z&=2HW+Rn,&\mathcal E&=2H W^TW+DR\sigma,\\
+g&=Z^TGZ,&\ell&=D^2\sigma Z^TCZ-\mathcal E^2,\\
+\ell_1&=\ell/a,&
+\mathcal P&=\frac1a\det[D^2\sigma CZ-\mathcal E W,\ QZ,\ GZ].
+\end{aligned}
+\tag{RC.8}
+$$
+
+The $g$ in (RC.8) is a scalar polynomial, distinct from the time density.
+The two divisions by $a$ mean division in the polynomial ring, before
+interval evaluation. They do not leave an undefined endpoint.
+

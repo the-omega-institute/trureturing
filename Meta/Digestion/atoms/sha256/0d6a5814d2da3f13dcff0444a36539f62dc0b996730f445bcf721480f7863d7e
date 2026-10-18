@@ -1,0 +1,16 @@
+**Theorem 4.1 (one ambiguous depth).** If $B=[\ell,\ell]$ is a maximal
+ambiguity block, then $D_B=0$ and $E_B\ge1$.
+
+Proof. Put $T_-=T_{\ell-1}$, $T_+=T_{\ell+1}$, using $T_n=[n]$
+at the endpoint. Since depth zero is unambiguous, $\ell\ge1$.
+Every support at depth $\ell$ adds one of the two coordinates in
+$C=T_+\setminus T_-$. Its next fixed label is the other coordinate:
+a live child stays inside $T_+$, or at depth $n-1$ freshness leaves
+only that unread coordinate. Distinct supports therefore demand different
+fixed labels and cannot share a state. Equal supports in distinct cells
+have unequal hits and cannot share by Lemma 2.3. Thus $D_B=0$.
+Ambiguity gives a cell with $a_p\ge2$, and Lemma 2.4 gives $b_p\ge2$,
+so $E_B\ge1$. The no-sharing argument is the spacing-two case of [SI,
+Theorem 9.4][SI]; retaining the positive ambiguity excess gives the strict
+unit asserted here. $\square$
+

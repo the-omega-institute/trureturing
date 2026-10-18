@@ -1,0 +1,75 @@
+**Theorem 3.2 (Mean-normalized pinning stability).** Every law
+in Definition 3.1 satisfies
+
+$$
+\operatorname{Cov}_{p_\theta^\tau}(s)
+\preceq [1+F_\lambda(\theta)]
+\operatorname{Diag}(\mathbb E_{p_\theta^\tau}s),
+\qquad F_\lambda(\theta)\le2\theta M.
+\tag{3.3}
+$$
+
+For $C(t)=1+F_\lambda(1-t)$, $0\le t<1$, the rate is
+nonincreasing, at least one, and has finite integral
+
+$$
+I_\lambda=\int_0^1\frac{C(t)-1}{1-t}\,dt
+=\int_0^1\frac{F_\lambda(\theta)}\theta\,d\theta
+\le2M.
+\tag{3.4}
+$$
+
+Proof. A positive pinning deletes its occupied sites and their
+neighbors. The remaining sites form disjoint path intervals,
+independent under the same conditional law, with activities
+$\theta\lambda_i$. Thus it suffices to treat one interval.
+Let $Z_h$ be its suffix partition function starting at $h$.
+At its terminal end set both empty suffix partition functions
+to one. Then
+
+$$
+Z_h=Z_{h+1}+\theta\lambda_hZ_{h+2},\qquad
+u_h=\frac{\theta\lambda_hZ_{h+2}}{Z_h}
+\le q_h(\theta).
+\tag{3.5}
+$$
+
+The last inequality uses $Z_{h+1}\ge Z_{h+2}>0$.
+Given its preceding bit, the probability that site $h$ is
+occupied is $u_h(1-s_{h-1})$. The coefficient of $s_i$ in
+$\mathbb E(s_j\mid s_i)$ is consequently
+$(-1)^{j-i}\prod_{h=i+1}^ju_h$. Hence, for $i<j$,
+
+$$
+\operatorname{Cov}(s_i,s_j)
+=(-1)^{j-i}\operatorname{Var}(s_i)
+\prod_{h=i+1}^ju_h.
+\tag{3.6}
+$$
+
+Reversing the interval gives the corresponding formula to the
+left. Put $m_i=\mathbb E s_i>0$ on retained coordinates and
+$D_m=\operatorname{Diag}(m)$. The diagonal entry of
+$D_m^{-1}\operatorname{Cov}(s)$ is $1-m_i\le1$.
+The absolute off-diagonal row sums, using (3.5)–(3.6), are
+bounded by (3.2): truncated interval sums are no larger than
+the full path sums. Thus the absolute row sums of this matrix
+are at most $1+F_\lambda(\theta)$.
+
+The matrix is similar to the symmetric positive semidefinite
+$D_m^{-1/2}\operatorname{Cov}(s)D_m^{-1/2}$. Its largest
+eigenvalue is bounded by the absolute row norm, proving the
+first part of (3.3). Independent residual intervals add blocks;
+an empty residual space imposes no condition.
+
+Every factor $q_h(\theta)$ is at most
+$r=\theta M/(1+\theta M)<1$. Each directional sum is at most
+$\sum_{\ell\ge1}r^\ell=\theta M$. This proves the second
+part of (3.3). The factors are nondecreasing in $\theta$,
+so $C(t)$ is nonincreasing. Integrating gives (3.4). $\square$
+
+The normalization in (3.3) uses the means $m_i$, not the
+variances $m_i(1-m_i)$. All positive pinnings are included;
+no claim depends on conditioning a zero-probability event at
+$\theta=0$.
+

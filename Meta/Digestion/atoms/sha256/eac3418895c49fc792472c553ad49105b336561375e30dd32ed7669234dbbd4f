@@ -1,0 +1,60 @@
+**Proposition 5.3 (interior nonuniqueness and the endpoint boundary).**
+Put
+
+$$
+Z_r^0(s)=\frac12\begin{pmatrix}1&rs&0\\rs&1&0\\0&0&1\end{pmatrix},
+\qquad Y=\operatorname{diag}(d^2,0,-h_0^2).
+\tag{IR.27}
+$$
+
+For every $s<1$ there is a nontrivial interval of distinct feasible plus
+live matrices $Z_+^0(s)+\epsilon Y$. At $s=1$, the criterion instead
+forces $Z=Z_+^0(1)$.
+
+Proof. Directly from (IR.23),
+
+$$
+\Theta(Y)=\operatorname{diag}
+ (0,h_1^2d^2,h_2^2d^2-h_0^2c^2)\ne0.
+\tag{IR.28}
+$$
+
+Also $\Theta(Z_+^0)=(I-M+s\kappa X_{01})/2$.
+For $s<1$, both $Z_+^0$ and $I-Z_+^0$ have least eigenvalue
+$\delta_s=(1-s)/2>0$. Let $\mu=\min(m_1,m_2)>0$. Any
+
+$$
+0<|\epsilon|<\min\left\{
+\frac{\delta_s}{\|Y\|_{\rm op}},
+\frac{\mu}{2\|\Theta(Y)\|_{\rm op}}\right\}
+\tag{IR.29}
+$$
+
+keeps $0\prec Z\prec I$ and
+$N=M/2-\epsilon\Theta(Y)$ strictly between $0,M$ on the
+$|1\rangle,|2\rangle$ support, with zero row and column at $0$.
+Both norm denominators are positive by $h_0,d,h_1>0$.
+Theorem 5.2 supplies finite realizations. Thus interior binary live
+maps are not uniquely determined even within real coefficient matrices.
+
+At $s=1$, $N|0\rangle=0$. The only contribution to the live $01$
+effect is
+
+$$
+\Theta(Z)_{01}=bh_1 Z_{DT}+h_0a\overline{Z_{DT}},\qquad
+\operatorname{Re}\Theta(Z)_{01}=\kappa\operatorname{Re}Z_{DT}.
+\tag{IR.30}
+$$
+
+The record law forces $\operatorname{Re}Z_{DT}=1/2$.
+The Hermitian contraction $2Z-I$ has $DT$ entry with real part one,
+so that entry is exactly one. Its two corresponding column norms are
+at most one and already contain an entry of squared modulus one.
+All their other entries vanish. Hence
+$Z_{DD}=Z_{TT}=Z_{DT}=1/2$, $Z_{DS}=Z_{TS}=0$.
+The coordinate-$0$ effect condition is
+$(h_0^2+b^2)/2+Z_{SS}d^2=1/2$.
+Coordinate $0$ of (IR.9) is $h_0^2+b^2+d^2=1$; $d>0$ therefore
+gives $Z_{SS}=1/2$. This endpoint fact agrees with RE Theorem 6.1.
+It supplies no interior uniqueness premise. $\square$
+

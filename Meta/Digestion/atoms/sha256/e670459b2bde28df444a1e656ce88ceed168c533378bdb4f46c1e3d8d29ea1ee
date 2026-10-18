@@ -1,0 +1,71 @@
+**Definition 182.1 (The original domain and the finite certificate).**
+Retain [Definition 172.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_V.md#172-finite-auxiliary-cores-within-the-original-acquisition-contract)
+and Acquisition Resources, Definition 90.1. Thus the actual source is
+
+$$
+X=\{(s,g):s\text{ prime},\ g\in\mathbb Z,
+       \lceil F_s/10\rceil\le g\le\lfloor F_s/5\rfloor\},\qquad
+N(s,g)=1+F_sg,
+$$
+
+with static prime replies $u_i(x)=\mathbf1_{p_i\mid N(x)}$ and
+finite actual first absence $n(x)=\min\{i:u_i(x)=0\}$. Every finite
+answer word has an actual witness by the supplier in Definition 110.1.
+There is no probability law on $X$. Keep the full original measurable
+tape carrier, its consumer and its nonatomic targets. The separately
+declared marked targets are
+
+$$
+\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
+                     +a_{n(x)}\delta_{\theta_{n(x)}},\qquad
+\theta_j=(B_1,1/(j+2)),\qquad
+1\ge a_1\ge a_2\ge\cdots>0,
+\quad a_i\longrightarrow0.
+\tag{182.1}
+$$
+
+Error means the uniform supremum of TV over all actual sources.
+There is zero advice and one source-independent common seed, with
+actual sourcewise almost-sure finite handoff. $N_2$ preselects a
+schedule and obtains all its replies; $O_2$ preselects an increasing
+schedule and stops at its first queried zero or exhaustion. Both
+have a hard bound of two actual requests, counting repetitions and
+ignored replies. Original competitors retain arbitrary addresses
+and outputs anywhere in the original carrier. No address, depth,
+runtime, mean-count or random-source bound replaces this resource.
+
+Fix $L\ge3$, $B_L=\{0,1\}^L$, $J_L=\{0,\ldots,L\}$ and the
+augmented complete-table catalog $E_L$ of Definition 176.1. In a
+pair table $(i,j;s,t,k)$, $i<j$, the labels $s,t,k$ are its outputs
+on stopped cells $0,10,11$. Equal schedule/table descriptions are
+identified, and each retained coefficient counts once in the total
+mass. Different schedules with identical kernels may remain.
+Use the full catalogs $\mathcal D_N,\mathcal D_O$ and event vectors
+$z_D$ of Definition 164.2 when no subcatalog is specified.
+
+For a profile $b=(b_1,\ldots,b_L;e)$, $d(b)$ is the demand vector
+of Definition 164.1: at every first-zero-$n$ word, the events
+$\{0\},\{n\},\{0,n\}$ demand respectively
+$1-b_n-e,b_n-e,1-e$; at $1^L$, event $\{0\}$ demands $1-e$.
+All negative singleton demands remain. The pair row is independent
+of the singleton rows. For probability vectors this is exactly
+
+$$
+\operatorname{TV}\bigl(p,(1-b_n)\mathbf e_0+b_n\mathbf e_n\bigr)
+=\max\{0,1-b_n-p(0),b_n-p(n),1-p(0)-p(n)\}.
+\tag{182.2}
+$$
+
+Here $\mathbf e_j$ is a unit vector, distinguished from scalar caps.
+Let $R=(1,2;1,2,0)$ and
+$\alpha=(1,1,0,\ldots,0;0)$, so $d(\alpha)=z_R$.
+The domain $H_L$, the attained full-catalog costs $\rho_N,\rho_O$,
+and $\rho_E$ are those of Definitions 165.1, 166.1 and 179.1.
+In particular, with $S=\sum_{i=3}^Lb_i$,
+
+$$
+H_L=\{1\ge b_1\ge\cdots\ge b_L\ge e\ge0,
+\ b_2=b_3,\ (L+1)e\le S,\ b_1+S-(L+1)e\le1\}.
+\tag{182.3}
+$$
+

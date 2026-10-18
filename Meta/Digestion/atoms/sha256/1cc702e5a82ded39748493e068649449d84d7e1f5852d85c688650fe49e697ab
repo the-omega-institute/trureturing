@@ -1,0 +1,66 @@
+**定义 7.1（全部原根槽与共享祖先）。** 令
+
+$$
+\begin{aligned}
+\mathcal S&=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\\
+\mathcal V&=\bigcup_{i=1}^7\{J,M\}^i,\\
+\mathcal P&=\left\{\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+\end{aligned}                                                   \tag{7.1}
+$$
+
+共有 $256$ 个槽、$254$ 个非空前缀和 $128$ 个叶对。固定一个合法源元组 $\mathbf P=(P_q)_{q\in\mathcal S}\in\mathcal P^{\mathcal S}$，保留其全部 $256$ 个秩一方程及严格正性。源可以重复；不同叶之间的目标也可以重复。对前缀 $v=E_1\cdots E_i$，令
+
+$$
+A_v=E_i\cdots E_1,\qquad
+\mathcal D_v=\{(w,e):v\text{ 是 }w\text{ 的前缀}\},
+$$
+
+并令 $q_v$ 是按 $J<M,0<1$ 排序的首个后代槽。根的后代集为 $\mathcal S$，累计矩阵为 $I$。置
+
+$$
+t_v(P)=\operatorname{tr}(A_vP),\qquad
+\ell_v(P)=(t_v(P)-1,\ i t_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+                                                               \tag{7.2}
+$$
+
+一个非零四维系数块 $x_q$ 对应完整的初读零世界
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad \delta_q=-x_{q0}.
+                                                               \tag{7.3}
+$$
+
+这是 $g_q(0)+\delta_q=0$，不是对 $g_q(0)$ 或 $\delta_q$ 各自为零的承诺。其前缀响应恰为 $\ell_v(P_q)x_q$。
+
+令 $B(\mathbf P)$ 作用于 $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$，其全部行是
+
+$$
+(Bx)_{v,q}=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},
+\quad v\in\mathcal V,\ q\in\mathcal D_v\setminus\{q_v\}.
+                                                               \tag{7.4}
+$$
+
+它为 $1538\times1024$ 矩阵，各深度的行数依次为
+
+$$
+(254,252,248,240,224,192,128).                               \tag{7.5}
+$$
+
+这些行数为 $2^i(2^{8-i}-1)$，保留每个后代与同一参考后代之间的响应相等。所有共享祖先方程与下式等价：
+
+$$
+\ell_v(P_q)x_q=z_v\ (q\in\mathcal D_v)
+\quad\Longleftrightarrow\quad
+ Bx=0,\quad z_v=\ell_v(P_{q_v})x_{q_v}.                     \tag{7.6}
+$$
+
+因此 $254$ 个共同响应不是逐叶独立拟合的量。对于 $P_q=\left(\begin{smallmatrix}a_q&b_q\\c_q&1-a_q\end{smallmatrix}\right)$，
+
+$$
+t_v(P_q)=(A_v)_{22}+((A_v)_{11}-(A_v)_{22})a_q
+ +(A_v)_{21}b_q+(A_v)_{12}c_q,                              \tag{7.7}
+$$
+
+故矩阵条目是 $768$ 个环境源坐标的整数仿射式；$768$ 不是删除源方程后的自由维数。
+

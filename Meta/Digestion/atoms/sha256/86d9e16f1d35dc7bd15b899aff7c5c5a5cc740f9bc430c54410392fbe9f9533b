@@ -1,0 +1,50 @@
+**Proposition 206.21 (A zero-cost limitation of the coupled stock test).**
+At $L=5$, specify all nonzero rows by
+
+$$
+\begin{aligned}
+P_{01000}=P_{10000}=P_{01101}=P_{10101}&=4,\\
+P_{01011}=P_{10011}=P_{01110}=P_{10110}&=1,\\
+C_{11011}=C_{11110}&=1,\qquad C_{11101}=8,\qquad T=10.
+\end{aligned}
+\tag{206.54}
+$$
+
+All $A$ and unspecified rows are zero. This is eight times the score
+owned by 203.12. Its data are
+$E=0$, $(\gamma_3,\gamma_4,\gamma_5)=(1,8,1)$, $S=20,t=10,W=30$.
+Both complete supports are $30$, so it is a zero-excess score.
+Nevertheless every permitted $(u,d)$ in the coupled test 206.18
+has $d+\Theta>1$.
+
+**Proof.** The pair projection has masses eight at $000,101$ and
+two at $011,110$. On any two late addresses, the correct word at
+$101$ has mass eight and each of the correct words at $011,110$
+has mass one. In its cell each is dominated by the corresponding
+projected pair atom. For an early/late pair, a correct word with
+late answer one shares the positive cell with $T=10$, which covers
+every correct class. With late answer zero, half of the zero marginal
+from the other early lift supplies capacities $5,8,5$ at addresses
+$3,4,5$, respectively. They cover all correct rewards there, including
+class four of mass eight at address four. At $(1,2)$, $T$ covers
+all correct rows in $11$. Early numerical labels collect only subsets
+of the zero-label pair reward. Thus zero maximizes every cell of
+every pair. Merging cells preserves this domination for singles,
+the empty schedule and stopped cells. Its total is always $S+T=30$.
+For example the $(3,5)$ maxima are $(8,2,2,18)$ in $N$ and
+$(10,2,18)$ in $O$.
+
+In (206.46), $E=0$ forces $c=0$, and hence
+$2(u-d)-10\le0$, or $u\le5+d$. Therefore
+$R_4=(1-u)_++(8-u)_+\ge3-d$. Since $E_{\rm lost}=0$,
+
+$$
+d+\Theta\ge d+\frac{3R_4}{5}
+ \ge\frac95+\frac{2d}{5}>1\qquad(0\le d\le1).
+\tag{206.55}
+$$
+
+This excludes every allowed parameter of that test on an actual
+zero-cost score. It does not exclude $E_N$ membership: the score
+itself with residual zero is a certificate. $\square$
+

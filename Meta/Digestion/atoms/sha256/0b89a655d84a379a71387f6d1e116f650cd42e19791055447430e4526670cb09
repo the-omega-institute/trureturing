@@ -1,0 +1,42 @@
+**Proposition 10.4 (local Reserve account and original counters).** In
+Definition 8.3, from $n_0$ to $k$ the Zero fragment has $5z+s$ rows and
+$2(5z+s)$ fee units. For $z<d$ it has constructed $z+[s\ge2]$ new source
+cells. For $z=d$ it has constructed $d+[s\ge2]$, the extra cell being the
+delimiter. Its complete fragment has $5d+4$ rows, $10d+8$ fee units and
+$d+1$ nonmeter cells; setup and all later Reserve work are additional.
+On the whole run, original CAP counters $q,g,e,j,m$ change only at their
+original source/local/Halt/maintenance events, with exactly CAP's cases.
+Every history/compiler/client row adds primitive work but no CAP event.
+
+Proof. Count the literal rows in Proposition 8.4. EX occurs at the second
+row of each positive iteration and second row of the final delimiter
+segment. All other rows create receipts but no ordinary source cell.
+The complete fragment is $d$ five-row iterations plus four terminal rows.
+Original source calls advance $q,j,m$, accepted modification advances $g$,
+accepted Rho also advances $e$; Local/Halt advance $j,m$; maintenance
+advances only $m$. The auxiliary caller executes those very original
+commitment rows, once each. History rows contain no such event-commit
+annotation or original journal writer, so they alter none of these five
+counters. Explicitly, writing $S_n,L_n,H_n,M_n$ for the indicators that
+row $n$ is respectively an original source, Local, Halt, or maintenance
+commit, and $G_n,E_n$ for accepted-modification and accepted-Rho commits,
+the interpreted event coordinates obey
+
+$$
+\begin{aligned}
+q_{n+1}&=q_n+S_n,&g_{n+1}&=g_n+G_n,&e_{n+1}&=e_n+E_n,\
+j_{n+1}&=j_n+S_n+L_n+H_n,&
+m_{n+1}&=m_n+S_n+L_n+H_n+M_n.
+\end{aligned}
+$$
+
+These are interpretations of the original prepared/selected counter words,
+not atomic updates added to the machine. The actual counter writes remain
+in $V$. At an authoritative strict-Reserve directory-seal WR, the interpreted
+$K,r,v$ become $J,r+1,v+1$; at a strict-Raise directory-seal WR,
+$h,p,v$ become $J,p+1,v+1$. All other rows preserve those interpreted
+parameters except their original boot initialization. Partial-record raw
+states keep their actual old/new phase rather than an invented committed
+entry. Separate actual cycle/cover/package/descriptor unary counts remain
+distinct from primitive tally and original event counts. ∎
+

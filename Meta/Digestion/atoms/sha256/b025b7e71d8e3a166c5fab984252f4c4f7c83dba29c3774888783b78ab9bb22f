@@ -1,0 +1,23 @@
+**Definition 4.2 (reply-basis test supports).** For nonempty
+$P\subseteq S_d$ let
+
+$$
+E(P)=\{q\in W_d:g_q\text{ is a function of }r_q\text{ on }P\},
+\qquad v_P(u)=(r_q(u))_{q\in E(P)}.
+\tag{OCB.27}
+$$
+
+Let $\mathscr R_d$ contain the nonempty $P$ with
+$|g_q(P)|\le4$ for every $q$ and $v_P$ injective on $P$. Define
+
+$$
+\mathcal U_d(w)=\max_{P\in\mathscr R_d}\sum_{u\in P}w(u),
+\qquad \mathcal U_d(0)=0.
+\tag{OCB.28}
+$$
+
+The test family is hereditary: on restriction, target ranges shrink,
+$E(P)$ can only grow, and its old separating replies remain separating.
+It contains every singleton. Its members are analytical test supports;
+they are not all asserted to be admissible native code fibers.
+

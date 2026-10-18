@@ -1,0 +1,33 @@
+**Hypothesis 1.3 (Published stationary-attainment input).** Let $Q_\star$
+be the normalized two-sided stationary law supplied by [Stationary,
+Theorem 3.1][Stationary]. No ergodicity hypothesis is imposed on $Q_\star$.
+The same source, equations (1.1), (2.5), (2.6), (3.4) and (4.2), supplies
+
+$$
+\kappa_n\le(n+1)c_\star\quad(n\ge1),\qquad
+d(P)=\mathbb E_P[(X_0-\mathbb E_P[X_0\mid\mathcal E_0])^2]
+\le c_\star
+\tag{1.1}
+$$
+
+for every stationary probability law $P$ on $X$, with no support or memory
+assumption on $P$, and $d(Q_\star)=c_\star$. Choose an
+$\mathcal E_0$-measurable Borel version
+$q_0=\mathbb E_{Q_\star}[X_0\mid\mathcal E_0]$ taking values in $[0,1]$.
+Its supplied bounds are
+
+$$
+q_0=0\text{ on }F_0^c,\qquad
+\frac14\le q_0\le\frac12\text{ on }F_0,
+\quad Q_\star\text{-almost surely}.
+\tag{1.2}
+$$
+
+For every $i\in\mathbb Z$ put $q_i=q_0\circ T^i$. Stationarity makes this
+a version of $\mathbb E_{Q_\star}[X_i\mid\mathcal E_i]$, and (1.2) holds
+at coordinate $i$. These inputs are reused without reconstructing the
+finite optimizers or the stationary law. The other project input is
+[Finite Memory, Theorem 1.5][Finite Memory]: every normalized two-sided
+stationary law on $X$ with positive legal cylinders and finite visible
+Markov order has density strictly below $c_\star$.
+

@@ -1,0 +1,33 @@
+**Theorem 5.4 (cost, later acquisition and a small pair).** Each family
+member has $5r_{\rm len}+2$ rows and $10r_{\rm len}+4$ native fee units
+after its common payload entry. The full bill includes its earlier
+zero-reservation/setup and all later service, acquisition and return.
+For $r_{\rm len}=1$ the frames are 01011000 and 01011010. Completing
+these same calls gives the actual original dependency-copy/ACK and
+CaptureCAP acquisition of the previously private request bits. It does
+not supply a busy-cut Call selector for this TagRead family.
+
+Proof. Count the first $r_{\rm len}$ five-row iterations and the next
+RD/IN. Setup and preallocation precede $n_0(d)$ and are not included
+in this subtotal. At fixed $d$ the same row sequence has the same
+$e_i,s_i,t_i,r_i,a_i$, control-component size and ordered route lengths
+in every member. A varying bit changes a unary child's side, not its
+component size or a route to a native cell root. Hence the §4 stencil
+charges also agree, including all designated no-op writes. The final
+three loop rows and terminal length test
+then enter the original status/seal, parser and TagRead service.
+CAP's original rows retain header, length and payload as separate
+referenced blocks. Its mandatory dependency channel delivers the
+actual bits into A archive 28 with local origin records on 29, completes
+the checks/ACK, then source TOK and InnerReturn normalization. ARC
+Propositions 3.5 and 5.5 import those closed owned assets with restored
+heads and CaptureCAP appends their actual origins/input to $M$.
+These are later paid rows of the same run, each with §4's stencil.
+The two displayed length-two addresses have common final input 0 but
+different first written address bits. On initial beta their later
+semantic replies are both absent; that does not erase their earlier
+complete-successor distinction. After actual return the original 00
+Stop continuation is still available. ARC's installed selector accepts
+strict Reserve Zero occurrences, so this later acquisition of TagRead
+input is not an installed selector for its earlier ingress cut. ∎
+

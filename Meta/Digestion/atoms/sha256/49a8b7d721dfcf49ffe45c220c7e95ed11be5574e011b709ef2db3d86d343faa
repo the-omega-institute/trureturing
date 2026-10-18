@@ -1,0 +1,66 @@
+**Proposition 91.1 (a conditional native selection criterion).**
+For prescribed $s_n\to0$ and $\delta_n\downarrow0$ put
+$\tau_n=s_n^2$, $g_n=(\chi_c+\delta_n)\tau_n^{3/2}$, and define,
+on the unchanged $\mathcal Q_{s_n}$,
+
+$$
+\begin{aligned}
+v_n[F]&=\int U_{s_n}|F|^2,\\
+q_n^c[F]&=a b_{s_n}[F]-\chi_cv_n[F]
+                           -a\lambda s_n^2\|F\|_2^2,\\
+\epsilon_n^c&=\inf_{\|F\|_2=1}q_n^c[F]
+ =\tau_nE_{\tau_n}(\chi_c\tau_n^{3/2}),\\
+\epsilon_n&=\tau_nE_{\tau_n}(g_n)
+ =\inf_{\|F\|_2=1}\{q_n^c[F]-\delta_nv_n[F]\}.
+\end{aligned}
+\tag{91.1}
+$$
+
+Suppose, in addition to the qualitative hypotheses already proved,
+that there are numbers $\alpha_n\ge0$ and normalized
+$U_n\in\mathcal Q_{s_n}$ with
+
+$$
+\epsilon_n^c\ge-\alpha_n,\qquad
+\alpha_n=o(\delta_n),\qquad
+q_n^c[U_n]=o(\delta_n),\qquad
+v_n[U_n]\longrightarrow\mu_c.
+\tag{91.2}
+$$
+
+Then $\epsilon_n=-\mu_c\delta_n+o(\delta_n)$. For every normalized
+complex native sequence whose rescaled vectors $F_n$ satisfy
+
+$$
+q_n^c[F_n]-\delta_nv_n[F_n]-\epsilon_n=o(\delta_n),
+\tag{91.3}
+$$
+
+there are constant phases with
+$\|F_n-e^{i\theta_n}\Phi_c\|_2\to0$.
+These are sufficient quantitative conditions; no assertion that
+they hold for every coupled native path is included.
+
+Proof. The trial vectors in (91.2) give
+$\epsilon_n\le-\mu_c\delta_n+o(\delta_n)$.
+The lower bound on $q_n^c$ and (91.3) then give
+
+$$
+v_n[F_n]\ge\mu_c-o(1).
+\tag{91.4}
+$$
+
+These sequences satisfy (85.5), since $o(\delta_n)=o(1)$.
+Theorem 90.1 applies. Along any weakly convergent subsubsequence,
+$v_n[F_n]\to|c|^2\mu_c$ with $|c|\le1$. Inequality (91.4)
+forces $|c|=1$, so the convergence is strong in global $L^2$.
+The usual subsequence argument gives distance to the phase orbit
+tending to zero for the whole sequence.
+For the energy conclusion one may take normalized vectors within
+$o(\delta_n)$ of each infimum in (91.1); they exist by the
+definition of the infimum. Their potential energies tend to
+$\mu_c$, and
+$\epsilon_n\ge-\alpha_n-\delta_nv_n[F_n]-o(\delta_n)$.
+Together with the trial upper bound this proves the asserted law.
+$\square$
+

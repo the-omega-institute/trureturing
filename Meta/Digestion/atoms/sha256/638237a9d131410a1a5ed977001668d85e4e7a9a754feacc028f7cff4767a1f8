@@ -1,0 +1,53 @@
+**Lemma 4.1 (strong mode and derivative tails).** For the identical canonical heat let
+
+$$
+\mathcal G(\xi)=\int_0^\infty k_t(\xi)dt\quad(\xi\ne0),\qquad
+c_\infty=\gamma\int Vp>0.
+\tag{4.1}
+$$
+
+N supplies the positive locally integrable fundamental solution, smooth off zero, with $\mathcal E\mathcal G=\delta_0$, homogeneity of degree $-5$, and $\mathcal G\le C d(0,\xi)^{-5}$. The E tails used here are
+
+$$
+\begin{gathered}
+p(\xi)\le C(1+d(0,\xi))^{-5},\qquad
+|Dp(\xi)|\le C(1+d(0,\xi))^{-6}\quad(D=X,Y),\\
+p_R:=R^5p\circ\delta_R\to c_\infty\mathcal G,\qquad
+Dp_R\to c_\infty D\mathcal G
+\quad\text{uniformly on compact sets avoiding zero}.
+\end{gathered}
+\tag{4.2}
+$$
+
+They have continuous representatives, and for $R\ge1$ are dominated away from zero by $C d^{-5}$ and $C d^{-6}$, respectively.
+
+Proof. The compact set $\{N=1\}$ and homogeneity give $d\le CN$, so the two gauges are comparable. Smoothness and homogeneity of $\mathcal G$ on the proper compact control sphere give $|D\mathcal G|\le Cd^{-6}$. Dyadic annuli with ball volume $v_d L^7$ give
+
+$$
+\int_{d<L}\mathcal G\le CL^2,\qquad
+\int_{d<L}|D\mathcal G|\le CL.
+\tag{4.3}
+$$
+
+These derivatives also hold distributionally through zero. Indeed a smooth dilation cutoff at radius $\epsilon$ has horizontal derivative $O(\epsilon^{-1})$ and is supported in a ball of comparable radius. Its integration-by-parts error is $O(\epsilon^{-1})O(\epsilon^2)=O(\epsilon)$; the omitted derivative integral is $O(\epsilon)$. Both vanish.
+
+The bounded nonnegative potential gives at time one $p\le e^{\gamma\|V\|_\infty}P_1p$. The heat column identity $\int p_E(1;\eta,\xi)^2d\eta=p_E(2;\xi,\xi)$ and (2.2) show $p$ is bounded. Put $f=Vp$. Decay of $V$ and dimension seven imply $V\in L^2\cap L^\infty$; thus $f\in L^1\cap L^2\cap L^\infty$, its mass $m$ is strictly positive, and initially $f\le C(1+d)^{-5}$.
+
+N's source reconstruction, whose orientation follows from left invariance, is
+
+$$
+p(\xi)=\gamma\int\mathcal G(\eta^{-1}\xi)f(\eta)d\eta.
+\tag{4.4}
+$$
+
+It also follows directly from (2.2)'s positive finite-time integrals, Tonelli and their $L^2$ limit. At an output distance $L=d(0,\xi)\ge2$, partition inputs into $d(0,\eta)\le L/2$; $d(0,\eta)>L/2$ with $d(\eta,\xi)\le L/2$; and the remaining set where both distances exceed $L/2$. The first and third contributions are at most $CmL^{-5}$. The middle is initially at most $CL^{-5}L^2=CL^{-3}$ by (4.3). Thus $p\le C(1+d)^{-3}$ and $f\le C(1+d)^{-8}$. Repeating the same split makes the middle $O(L^{-6})$, proving $p\le C(1+d)^{-5}$ and
+
+$$
+f\le C(1+d)^{-10}.
+\tag{4.5}
+$$
+
+A left invariant output derivative follows the path $\xi\exp(tD)$, so $D_\xi\mathcal G(\eta^{-1}\xi)=(D\mathcal G)(\eta^{-1}\xi)$. Compact testing, (4.3) and $f\in L^1\cap L^\infty$ justify differentiating (4.4) distributionally in this orientation. The same split bounds the first and third derivative contributions by $CmL^{-6}$ and the middle by $CL^{-10}L=CL^{-9}$. This proves the derivative bound. Removing an $\epsilon$-ball around the input-output singularity costs uniformly $O(\epsilon^2)$ for $\mathcal G$ and $O(\epsilon)$ for $D\mathcal G$. On its complement the cut-off kernels are bounded and continuous with an $L^1$ input majorant. Dominated convergence and then $\epsilon\downarrow0$ prove continuity of both convolution representatives.
+
+Set $f_R=R^7 f\circ\delta_R$. Its mass is $m$, it concentrates at zero, and outside every fixed input ball it satisfies $f_R\le CR^{-3}d^{-10}$. Exact group and Haar scaling express $p_R,Dp_R$ as convolutions of $f_R$ with $\gamma\mathcal G,\gamma D\mathcal G$. On a compact output set avoiding zero, a sufficiently small input ball about zero sees uniformly continuous kernels. The input mass there tends to $m$. Near an output singularity, inputs stay away from zero, so (4.3) bounds their contribution by $O(R^{-3})$, uniformly on that compact output set. On the remainder the kernels are uniformly bounded and input mass outside the small input ball tends to zero. Take $R\to\infty$ and then shrink that input ball. This proves the compact uniform limits, including the whole input tail. Finally degree one gives $Dp_R=R^6(Dp)\circ\delta_R$; the decay estimates give the stated uniform majorants. This checks the E tail ingredient from its supplied upstream antecedents. $\square$
+

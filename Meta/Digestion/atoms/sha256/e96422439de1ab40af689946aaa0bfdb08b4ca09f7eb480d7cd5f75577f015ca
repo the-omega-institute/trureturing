@@ -1,0 +1,11 @@
+**定义 7.1（整个根类）。** 对任意实 $C,X,m$，令
+
+$$
+\mathcal Z_3(C)=\mathcal F_3(C)\cap\{g(6)=g(7)=0\},\quad
+\mathcal Z(C,X)=\mathcal Z_3(C)\cap\mathcal F(H_4(C,X)),\quad
+\mathcal Z_5(C,X,m)=\mathcal Z(C,X)\cap\mathcal F(H_{5M}(C,X,m)).
+\tag{7.1}
+$$
+
+根是已知承诺；源、漂移和其余增益系数可在整个类中变化，类可为空或无限。根六根七形式、增益分层、第四 $M$ 乘积与差商方法复用 [V，20.9、20.15–20.18](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md)。下面把联合代数一次写在更一般的早读 $(0,J,A,M,B)$、$B>0$ 上；本卷规范历史对应 $A=24,B=48$。一般早读的 $C,X,m$ 仍分别是同世界第三 $J$、第四 $M$、第五 $M$ 响应，矩阵和原时钟完全不变。
+

@@ -1,0 +1,44 @@
+**Convention 2.1 (source hypothesis).** The original nine-coordinate CG point is the stipulated isolated consistent root in the radius-$10^{-24}$ box specified in Appendix A. At this one root its source slacks are PSD with the stipulated ranks, the positive pivots exist, the dictionary below is exact, and the normalization/TP equations hold. The source enclosure is a bound on that root. Independent coordinates in the surrounding box are used only for enclosing expressions; they are not asserted to satisfy ranks or TP.
+
+For completeness the dictionary is restated. In coordinate order $(\lambda_{\rm CG},\alpha_1,\alpha_2,\beta_1,\beta_2,z_{\rm CG},\eta_0,\eta_1,\eta_2)$ set $v_5=(\alpha_1,\alpha_2,-1)^T$, $v_{27}=(\beta_1,\beta_2,1)^T$,
+
+$$
+A_5=\lambda_{\rm CG}\frac{v_5v_5^T}{v_5^Tv_5},\quad A_{27}=(1-\lambda_{\rm CG})\frac{v_{27}v_{27}^T}{v_{27}^Tv_{27}},\quad N^{\rm dual}=A_5\odot\rho_{5,+,+}+A_{27}\odot\rho_{27,+,+},
+$$
+
+$$
+\zeta=(z_{\rm CG},59\lambda_{\rm CG}/128,\lambda_{\rm CG}/2),\quad S_0=\operatorname{diag}(\zeta)-N^{\rm dual},\quad
+S_{ij}=\begin{pmatrix}\zeta_j-\sum_{y=5,27}(A_y)_{ii}p_{yj}&-N^{\rm dual}_{ij}\\-N^{\rm dual}_{ij}&\zeta_i-\sum_{y=5,27}(A_y)_{jj}p_{yi}\end{pmatrix}.
+$$
+
+Put $H=1000\eta_0\operatorname{adj}S_0$, $Q^{01}=\eta_1\operatorname{adj}S_{01}$, $Q^{02}=\eta_2\operatorname{adj}S_{02}$. Their rank-one positive-pivot factors at the root are
+
+$$
+(h_0,h_1,h_2)^T=He_0/\sqrt{H_{00}},\quad(a,b)^T=Q^{01}e_0/\sqrt{Q^{01}_{00}},\quad(c_{\rm src},d)^T=Q^{02}e_0/\sqrt{Q^{02}_{00}}.
+$$
+
+Thus $H_{ij}=H_{i0}H_{0j}/H_{00}$, and analogously for $Q$, at the root. The factor $1000$ here belongs to the fixed source reconstruction and is not the varying activity parameter $t$. Define
+
+$$
+D=\operatorname{diag}(h_0,h_1,h_2),\quad T=ae_0e_1^T+be_1e_0^T,\quad S=c_{\rm src}e_0e_2^T+de_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),
+$$
+
+$$
+m_1=1-h_1^2-a^2,\quad m_2=1-h_2^2-c_{\rm src}^2,\quad D^\dagger D+T^\dagger T+S^\dagger S+M=I_3.
+$$
+
+In particular $1-h_0^2-b^2-d^2=0$ is a root equation. A zero-containing enclosure of its left side would not prove this equality. All amplitudes and $m_1,m_2$ are positive. Set
+
+$$
+\theta=ab/(h_0h_1),\quad\omega=c_{\rm src}d/(h_0h_2),\quad\delta=\theta+\omega\in(0,1),\quad s_0=\sqrt\delta,\quad\alpha=\theta/\delta,\quad\beta=\omega/\delta.
+\tag{1}
+$$
+
+These common definitions imply $\alpha+\beta=1$ exactly. Let $\Delta=\rho_{27,+,+}-\rho_{5,+,+}$, $K^{(0)},K^{(1)},K^{(2)}=(D,T,S)$,
+
+$$
+N_{ij}=\operatorname{tr}(K^{(i)}\Delta K^{(j)\dagger}),\quad G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1),\quad H_{\rm high}=(1-\delta)N_{00}>0.
+$$
+
+The physical $1,2$ submatrix of $\Delta$ is $\left(\begin{smallmatrix}-11/64&(\sqrt{37}-\sqrt{59})/16\\(\sqrt{37}-\sqrt{59})/16&0\end{smallmatrix}\right)$. Appendix A contains both source enclosures and the independent outward derived bounds. Either radical construction or the common enclosed dictionary gives expressions at the same root, never independent source choices.
+

@@ -1,0 +1,51 @@
+**Definition 4.2 (the installed parity graph).** Enumerate the $W_*$
+native words in the supplier's binary-bank order. Replace each word
+by a block of $P+16$ graph nodes, including unused nodes; hence
+
+$$
+N=W_*(P+16),\qquad w_G=\max(1,\lceil\log_2 N\rceil).
+\tag{4.2}
+$$
+
+For a Read word with literal $p=p_1\cdots p_d$, its block has these
+nodes in this fixed order. Node 0 invokes RESET. Nodes $1,\ldots,P$
+invoke PUT($p_i$) if $i\le d$ and NOP otherwise. Node $P+1$ invokes
+COPY; node $P+2$ is ISSUE-READ. Nodes $P+3,\ldots,P+6$ test in order
+$f_\alpha,f_\beta,f_{\mathsf{branch}},f_{\mathsf{absent}}$, stopping
+at the first set bit; an all-zero or wrong-typed result goes to the
+error control. Nodes $P+7,\ldots,P+11$ are the five typed LINK nodes.
+The LINK for $r$ names the node-0 address of the block for
+$\delta(w,r)$. The unused star LINK has an error successor. Nodes
+$P+12,\ldots,P+15$ are error nodes. Tests have at most two successors;
+all other used nodes have one.
+
+For an Update word, RESET and the $P$ NOP nodes are followed by a
+COPY bypass and ISSUE-UPDATE. The first response-test node tests
+$f_\star$ and selects its LINK; other response nodes are unused error
+nodes. For a Halt word, node 0 is HALT0 or HALT1 with that word's
+fixed output; every other node of its block is an error node. ERROR
+is a source-free nonhalting hold. Unused code fields and outgoing
+slots are fixed zero padding. Node labels distinguish sixteen local
+command/test/output labels, enough for RESET, PUT0, PUT1, NOP, COPY,
+ISSUE-READ, ISSUE-UPDATE, four Read tests, the star test, LINK, ERROR,
+HALT0 and HALT1. Thus $\sigma=4$ label bits suffice.
+
+Use PH8.1's fixed row format: three opcode bits, three legality bits,
+three $w_G$-bit successor slots, and a $\sigma$-bit label. Opcode and
+label select the fixed local routine; source issues have their own
+opcode. Four raw Read replies are handled by the five counted flags
+and the binary tests, not by a nonexistent four-way PH response slot.
+All fair-bit instructions are unused. A self-delimiting header $H_G$
+gives $N,w_G,16,4,T_0,\ell,P$ and the initial node. Its bit length is
+$|H_G|$. The retained graph and original dictionary length is
+
+$$
+T_G=|H_G|+N(6+3w_G+4)+T_0+\ell.
+\tag{4.3}
+$$
+
+For example encode these eight nonnegative integers as Elias gamma
+codes of their value plus one, in the displayed order. Offsets are
+computed after parsing the header. No header-length fixed point is
+used. Retaining $T_0$ is redundant but explicit, as in PH8.1.
+

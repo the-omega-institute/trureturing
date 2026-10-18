@@ -1,0 +1,112 @@
+**Theorem 9.2 (erasure, exact obstruction and fixed adverse slot).**
+Suppose (JG.51) fixes the identity channel. Then there are numbers
+$p_c\geq0$, $\sum_cp_c=1$, with
+
+$$
+\mathcal D_c\mathcal E_c=p_c\operatorname{id},\qquad
+\mathcal E_c^*(I)=p_cI.
+\tag{JG.54}
+$$
+
+These are actual input-independent branch probabilities. If $p_c=0$
+then $\mathcal E_c=0$; if $p_c>0$ then $\mathcal E_c/p_c$ is CPTP.
+For $\operatorname{Dep}_d(X)=\operatorname{tr}(X)I_d/d$ and
+$F(T)=d^{-1}\sum_i\operatorname{tr}(P_iT(P_i))$,
+
+$$
+F(\mathcal S(\operatorname{Dep}_d))
+       \leq\sum_cp_c\min(1,m_c/d).
+\tag{JG.55}
+$$
+
+If $\mathcal S(\operatorname{Dep}_d)$ is Schur, every positive branch
+has $m_c\geq d$. Thus an exact universal Schur-valued replacement that
+fixes $\operatorname{id}$ requires bypass dimension at least $d$ on
+EVERY positive branch, not merely on one branch or on average.
+
+If additionally $\mathcal S(\Delta)=\Delta$ and $m_c\leq r$ on every
+positive branch, the single CPTP slot
+
+$$
+K(X)=\frac{\operatorname{tr}(X)I_d-\Delta(X)}{d-1}
+\tag{JG.56}
+$$
+
+satisfies $\delta(\mathcal S(K))\geq2(d-r)/(d-1)$.
+
+Proof. Use the unnormalized Choi convention
+$J(\operatorname{id})=|\Omega\rangle\langle\Omega|$,
+$|\Omega\rangle=\sum_i|i,i\rangle$. The positive Choi matrices
+$J(\mathcal D_c\mathcal E_c)$ sum to this rank-one matrix.
+Testing any vector perpendicular to $\Omega$ forces every nonnegative
+summand to vanish there, so each summand is
+$p_c|\Omega\rangle\langle\Omega|$. This proves the first identity in
+(JG.54). TP of the FULL decoder gives its second identity by adjoints.
+The total effect gives $\sum_cp_c=1$. A CP map with zero effect is zero;
+division by a positive $p_c$ gives the claimed CPTP encoder. The same
+effect identity gives branch probability $p_c$ on every normalized
+input, also when entangled with a passive reference.
+
+For each positive branch define memory states, a full CPTP map and a
+POVM on $M_{m_c}$ by
+
+$$
+\tau_{ci}=\frac{\operatorname{tr}_{\rm slot}\mathcal E_c(P_i)}{p_c},
+\quad B_c(Y)=\mathcal D_c(I_d/d\otimes Y),
+\quad G_{ci}=B_c^*(P_i).
+\tag{JG.57}
+$$
+
+Each $\tau_{ci}$ is positive with trace one, and
+$\sum_iG_{ci}=I_{m_c}$. Since $\tau_{ci}\leq I_{m_c}$,
+$\sum_i\operatorname{tr}(G_{ci}\tau_{ci})\leq\sum_i\operatorname{tr}G_{ci}
+=m_c$. The same sum is at most $d$, since each term is a probability.
+The erased slot leaves exactly $I_d/d\otimes p_c\tau_{ci}$ before the
+decoder. Averaging proves (JG.55).
+
+If the erased-slot output is Schur, then
+$\sum_cp_cB_c(\tau_{ci})=P_i$. Positivity and purity force
+$B_c(\tau_{ci})=P_i$ on each positive branch. Consequently
+$\operatorname{tr}(G_{cj}\tau_{ci})=\mathbf1_{i=j}$: one POVM perfectly
+distinguishes $d$ memory states. The existing
+`finite_memory_history_capacity` theorem in
+[Finite Memory History Capacity][FMHC] applies with its number of states
+$N=d$ and its memory dimension equal to $m_c$, giving $d\leq m_c$.
+Its support argument is the same one needed here: the support of
+$\tau_{ci}$ lies in the $1$-eigenspace of $G_{ci}$ and in the kernels
+of $G_{cj}$ for $j\ne i$. These nonzero supports are pairwise orthogonal.
+This is a reuse of perfect-discrimination capacity, not a new capacity
+formula.
+
+For countably many branches, all preceding support tests are sums of
+nonnegative scalars with finite total. Once (JG.54) is known, the
+normalized branch maps are channels, so their contributions have norm
+bounded by their summable masses $p_c$. This also justifies the channel
+and amplified limits. Zero branches contribute nothing to any bound.
+
+The Kraus operators $|a\rangle\langle i|/\sqrt{d-1}$, $a\ne i$, prove
+that $K$ is CPTP on the full complex algebra. Moreover
+
+$$
+\operatorname{Dep}_d=\frac1d\Delta+\frac{d-1}{d}K,
+\qquad
+F(\mathcal S(K))=
+ \frac{dF(\mathcal S(\operatorname{Dep}_d))-1}{d-1}
+ \leq\frac{r-1}{d-1}.
+\tag{JG.58}
+$$
+
+For every Schur comparator $\Lambda$, input $P_i$ followed by the
+binary measurement $\{P_i,I-P_i\}$ gives
+
+$$
+\|\mathcal S(K)-\Lambda\|_\diamond
+ \geq\max_i2\bigl[1-\operatorname{tr}(P_i\mathcal S(K)(P_i))\bigr]
+ \geq2\bigl[1-F(\mathcal S(K))\bigr]
+ \geq\frac{2(d-r)}{d-1}.
+\tag{JG.59}
+$$
+
+This holds for every comparator, hence also for their infimum.
+$\square$
+

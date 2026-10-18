@@ -1,0 +1,34 @@
+**Lemma 3.2 (a nonlocal depth-two target requires a locally admissible
+donor).** Let $n\ge1$ and $\varnothing\ne B\subseteq S_2^n$ be jointly
+admissible. Write $P_i=\pi_i(B)$. If $P_i$ is locally inadmissible,
+then every finite native experiment in this coordinate has at most
+three replies on $P_i$, while at least one side target has exactly
+four values there. Each witnessing experiment for such a target must
+query a coordinate whose projection is locally admissible.
+
+Proof. Every target on every projection has at most four values, since
+its single witnessing experiment has at most four replies. By the
+credited classification, a locally inadmissible $P_i$ contains both
+root leaves and at least two distinct branches. For $s=L,R$, let
+$A_{i,s}\subseteq\{A,B,C\}$ be the child symbols appearing at that
+side among these branches. Table (NCM.14) gives
+
+$$
+|\Gamma_s(P_i)|=2+|A_{i,s}|\le4,
+\qquad |A_{i,s}|\le2.
+\tag{NCM.17}
+$$
+
+The root experiment has at most three replies. Each side experiment
+has absent on both root leaves and at most two child replies, hence
+at most three replies. A length-two experiment is a function of a side
+reply and has at most two; a longer experiment is constant absent.
+
+Two distinct branches differ at some side $s_i$, so
+$|A_{i,s_i}|\ge2$. Equation (NCM.17) makes it exactly two, giving
+four distinct target values. Its witness cannot be constant or query
+any locally inadmissible projection, since all such experiments have
+at most three replies. Its queried projection must be locally
+admissible. This uses a witness separately for each target on the
+same $B$; it places no locality requirement on that witness. $\square$
+

@@ -1,0 +1,17 @@
+**Proposition 36.2 (the one-way partial-trace comparison).** For every input density $\rho$, put $q=\rho^T$ as required by (R.27). For every environment density $\omega$,
+
+$$
+\Phi(q,\omega)=f(A_q,q\otimes\omega)
+\leq f(\Gamma(\rho),\omega).
+\tag{R.172}
+$$
+
+Consequently
+
+$$
+ g_N\leq F_{\rm marg}.
+\tag{R.173}
+$$
+
+**Proof.** The two states in (R.27) live on reference $\otimes$ environment. Partial trace over the reference sends $A_q$ to $\Gamma(q^T)=\Gamma(\rho)$ and sends $q\otimes\omega$ to $\omega$. Root-fidelity monotonicity under this CPTP map gives (R.172). The transpose is a bijection on density matrices, so taking the inner minimum and then the common-center maximum gives (R.173). No equality is inferred. At $\beta=1/2$, the input $q=\operatorname{diag}(0,1/2,1/2)$ and $\omega=I_2/2$ have marginal fidelity one, whereas (R.27) gives $\Phi=(2+\sqrt2)/4$; (R.40) also gives the strict global inequality $g_N<F_{\rm marg}$ at that endpoint.$\quad\square$
+

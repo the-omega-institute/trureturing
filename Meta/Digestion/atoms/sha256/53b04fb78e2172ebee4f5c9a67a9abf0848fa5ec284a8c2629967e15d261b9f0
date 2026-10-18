@@ -1,0 +1,52 @@
+**定理 36.1（整个父的精确分类与有限或连续统二分）。** 对任意实数记录 $y_0,\ldots,y_5$，在实际五动作 $J,M,J,M,J$ 后，所有严格来源、任意常漂移和所有非零次数至多二的整个实增益所给完整兼容父，恰为下述三个真正二次分支与整个继承仿射分支的不交并。每个所列合法参数固定唯一完整世界。父可为空；若有限，至多有 $22$ 个不同完整世界；若无限，基数恰为连续统。界为粗上界，不主张达到或尖锐性，也不主张通用恒等退化具有非空合法实例。
+
+完整世界及目标始终是
+
+$$
+W=(P,g,d),\qquad P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b,c>0,\quad bc=r(1-r),
+\qquad g(t)=\lambda+\mu t+\nu t^2\ne0,\quad d\in\mathbb R.
+\tag{36.1}
+$$
+
+不要求对称、固定对角侧、增益为正、无根、无采样零、恰好二次、已知增益方向或已知漂移；正非对角元无上界。每个世界只有一个固定源、一个整个增益及一个漂移，不能按动作重配。
+
+令 $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，$Q_0=I,Q_i=E_iQ_{i-1}$，$y_i=d+g(i)\operatorname{tr}(Q_iP)$。设 $a_0=y_0$、$x_i=y_i-a_0$；初读给 $d=a_0-\lambda$，故 $x_i=-\lambda+g(i)\operatorname{tr}(Q_iP)$。这是把漂移减去 $a_0$ 的整个世界双射，逆向加回 $a_0$；不把物理漂移置零，也不检测初根。
+
+对 $A=\left(\begin{smallmatrix}a&h\\v&e\end{smallmatrix}\right)$，直接取 $AP$ 的两个对角元得
+
+$$
+\operatorname{tr}(AP)=ar+hc+vb+e(1-r)=e+(a-e)r+vb+hc.
+\tag{36.2}
+$$
+
+左乘 $J$ 交换两行；左乘 $M$ 以旧第二行为第一行、旧两行之和为第二行。从 $I$ 出发给出全部已取得和互择未来乘积；记 $j=b+c$。
+
+| 原时钟与实际动作 | $Q$ | 迹 | 读数函数 |
+| --- | --- | --- | --- |
+| $0$ 初读 | $\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)$ | $1$ | $y_0=d+g(0)$ |
+| $1,J$ | $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ | $j$ | $y_1=d+jg(1)$ |
+| $2,M$ | $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ | $y_2=d+(1+b)g(2)$ |
+| $3,J$ | $\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $j+r$ | $y_3=d+(j+r)g(3)$ |
+| $4,M$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ | $y_4=d+(1+2b)g(4)$ |
+| $5,J$ | $\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ | $j+2r$ | $y_5=d+(j+2r)g(5)$ |
+| $6,J$，$n=2$ | $\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$ | $1+2b$ | $h_2=d+(1+2b)g(6)$ |
+| $6,M$，$n=3$ | $\left(\begin{smallmatrix}1&0\\3&1\end{smallmatrix}\right)$ | $1+3b$ | $h_3=d+(1+3b)g(6)$ |
+| $7,J$，在已选 $n$ 后 | $\left(\begin{smallmatrix}n&1\\1&0\end{smallmatrix}\right)$ | $j+nr$ | $f_{nJ}=d+(j+nr)g(7)$ |
+| $7,M$，在已选 $n$ 后 | $\left(\begin{smallmatrix}n&1\\n+1&1\end{smallmatrix}\right)$ | $1+nb+j+(n-1)r$ | $f_{nM}=d+(1+nb+j+(n-1)r)g(7)$ |
+
+这些表项可逐行用上述两条左乘规则及式 (36.2) 得到。例如 $Q_5=\left(\begin{smallmatrix}2&1\\1&0\end{smallmatrix}\right)$ 左乘 $J,M$ 分别给第六两行；在 $\left(\begin{smallmatrix}1&0\\n&1\end{smallmatrix}\right)$ 上再左乘，恰给末两行。因此统一记
+
+$$
+h_n=d+(1+nb)g(6),\qquad
+f_{nJ}=d+(j+nr)g(7),\qquad
+f_{nM}=d+(1+nb+j+(n-1)r)g(7),\quad n\in\{2,3\}.
+\tag{36.3}
+$$
+
+末 $M$ 减末 $J$ 为 $(1-r+nb)g(7)$。$n$ 只表示第六动作，不改变时钟。两第六函数都在原时钟六；四个末函数都在原时钟七。重访 $Q_4$ 或 $Q_5$ 不把 $g(6)$ 或 $g(7)$ 换成旧样本。
+
+$J,M$ 非负且可逆，其乘积非负、可逆、无零行。非零非负行与 $P$ 的严格正列配对为正，所以所有实际迹为正，不要求增益为正。$\det P=0$、迹一使来源非零且秩恰一；不求逆 $P$。
+
+五动作父已经取得含初读的六次 TOTAL 读数，只余时钟六、七两次。每个选定动作立即采集并保留读数；互择表只是比较相同固定世界的函数，不额外采集另一臂。全程一条轨迹，无重置、复制、跳读、空动作、重编号或增加端口。
+

@@ -1,0 +1,73 @@
+**Proposition 21.1 (Fixed cut data do not control the global orbit energy).**
+Let $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$. On $P_{2m}$,
+$m\ge3$, cut after site m and use the mirror phase of
+(18.2). Choose all update weights $w_i=1$ and activities
+
+$$
+\lambda_m=\lambda_{m+1}=1,\qquad
+\lambda_{m-1}=\lambda_{m+2}=\frac{F_m}{F_{m-1}},\qquad
+\lambda_i=1\ \text{at every other site}.
+\tag{21.1}
+$$
+
+Every activity belongs to $[1,2]$, all actual deletion
+clocks belong to $[1/3,1/2]$, and the three reference
+boundary sectors and the smaller Schmidt probability are
+exactly
+
+$$
+\alpha=\tfrac12,\qquad\beta=\zeta=\tfrac14,\qquad
+s_-=\frac{2-\sqrt3}{4},
+\tag{21.2}
+$$
+
+independent of m. Nevertheless
+
+$$
+E_{\rm orb}(\chi)\ge\frac{2(m-1)}{75}.
+\tag{21.3}
+$$
+
+Consequently there is no finite constant determined only
+by the two cut activities and the exact positive-reference
+Schmidt spectrum that bounds $E_{\rm orb}$ above by a
+constant times $\delta_{\rm local}$ or $\Delta_2$ on this
+family. The update weights, their uniform bounds and the
+global activity bounds are fixed as well.
+
+Proof. For one unjoined half-chain let $Z_0,Z_1$ be its
+partition sums with its cut endpoint vacant or occupied.
+The endpoint activity is one; occupation forces its neighbor
+vacant and leaves a unit-activity path of length $m-2$.
+Thus, putting $t=F_m/F_{m-1}$,
+
+$$
+Z_1=F_m,\qquad
+Z_0=F_m+tF_{m-1}=2F_m.
+\tag{21.4}
+$$
+
+The right half is its reflection. Gluing the two endpoints
+retains sectors $00,01,10$, with unnormalized weights
+$4F_m^2,2F_m^2,2F_m^2$. This proves the three sector
+masses in (21.2). The rank-two reference formula gives
+$s_-=(1-\sqrt{1-4\beta\zeta})/2=(2-\sqrt3)/4$.
+No limiting replacement of the exact spectrum is used.
+
+The Fibonacci recurrence gives $1\le t\le2$. Apply
+Theorem 18.2 with $\ell_0=1,M=2$, so $\eta=1/10$.
+There are $2(m-1)$ matched endpoints, each of weight one;
+(18.3) yields (21.3). The actual deletion clock at site i
+is $1/(1+\lambda_i)$ as asserted. Finally
+$\delta_{\rm local}\le2$ and $\Delta_2\le1$ while
+(21.3) is unbounded. All the proposed arguments of such
+a constant are identical for every member of this family,
+so no such finite constant exists. $\square$
+
+This fixed-spectrum family supplies the global-scale
+obstruction in the last paragraph of §18 with identical
+cut data, including the exact spectrum. The norm factor
+in (18.8) remains the actual global parent norm, and none
+of these dimensionless expectations determines a physical
+energy unit.
+

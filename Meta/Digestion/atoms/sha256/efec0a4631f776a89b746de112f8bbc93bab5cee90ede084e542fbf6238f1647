@@ -1,0 +1,119 @@
+**Corollary 30.1 (Precision at fixed dimension and mean step count).**
+Use the complete qubit instrument of (27.2), with
+$0<q=r^2<1$, initialized immediately after one tick
+in its actual pure reset state $\psi$. Let L be
+the number of further steps through the next tick.
+Its mean and variance are
+
+$$
+\mu_q=\frac{2(1+2q)}{1-q^2},\qquad
+\sigma_q^2=\frac{4q(1+q+q^2)}{(1-q^2)^2}.
+\tag{30.1}
+$$
+
+Every homogeneous classical counting process with
+at most two internal states, arbitrary initial
+law, almost-sure eventual tick on its reachable
+sector and the same mean step count
+has variance strictly greater than $\sigma_q^2$.
+The benchmark's two-state lower bound exceeds
+this qubit variance by
+
+$$
+\frac{\mu_q(\mu_q-2)}2-\sigma_q^2
+=\frac{6q^2}{(1-q^2)^2}>0.
+\tag{30.2}
+$$
+
+Proof. The rank-one tick branch in (27.2) maps
+all actual post-tick states to the same $\psi$.
+Thus the first-tick law from that state is exactly
+the interevent law (27.3), with
+
+$$
+P(L=k+1)=C k^2q^{k-1},\qquad
+C=\frac{(1-q)^3}{1+q},\qquad k\ge1.
+\tag{30.3}
+$$
+
+It has total mass one and finite moments of every
+order, since $q<1$. Its zero probability at L=1
+is included, not removed by a time shift.
+For completeness the required geometric moments are
+
+$$
+\begin{aligned}
+S_2(q)&=\sum_{k\ge1}k^2q^{k-1}
+ =\frac{1+q}{(1-q)^3},\\
+S_3(q)&=\sum_{k\ge1}k^3q^{k-1}
+ =\frac{1+4q+q^2}{(1-q)^4},\\
+S_4(q)&=\sum_{k\ge1}k^4q^{k-1}
+ =\frac{1+11q+11q^2+q^3}{(1-q)^5}.
+\end{aligned}
+\tag{30.4}
+$$
+
+They follow from the geometric series by applying
+$q\,d/dq$ to $qS_j$ to obtain $qS_{j+1}$.
+Termwise differentiation is valid on every compact
+subinterval of $(0,1)$: polynomial factors times
+a fixed geometric upper bound give uniform
+absolute convergence of each differentiated series.
+Consequently
+
+$$
+\mathbb E L=C(S_3+S_2),\qquad
+\mathbb E L^2=C(S_4+2S_3+S_2),
+\tag{30.5}
+$$
+
+and subtracting the squared mean gives (30.1).
+In particular
+$\mu_q-2=2q(2+q)/(1-q^2)>0$.
+
+A classical competitor has fixed nonnegative
+matrices $T_0,T_1$ with $(T_0+T_1)\mathbf1=\mathbf1$,
+no external input or correlated external memory,
+and its actual specified initial distribution.
+The external classical finite-memory variance bound
+is [Olamaei et al., arXiv:2608.26240v1,
+Theorem 1, §III A and Appendix A](https://arxiv.org/abs/2608.26240v1):
+for h internal states, any initial distribution and
+an eventual first tick,
+
+$$
+h\operatorname{Var}(L)\ge
+\mathbb E L\bigl(\mathbb E L-h\bigr).
+\tag{30.6}
+$$
+
+The h=2 case already appears in
+[Budroni–Vitagliano–Woods, *Ticking-clock performance
+enhanced by nonclassical temporal correlations*,
+Phys. Rev. Research **3**, 033051, §III A,
+equation (22), and Appendix A](https://doi.org/10.1103/PhysRevResearch.3.033051).
+The h=2 specialization
+of the cited theorem suffices here. With the same
+$\mathbb E L=\mu_q$, it gives the left benchmark
+in (30.2); h=1 obeys a stronger bound and is also
+excluded. Substitution of (30.1) proves (30.2),
+whose right side is positive for the full stated
+interval. $\square$
+
+This comparison has a weaker output-matching demand
+than Theorem 27.2: a classical competitor need only
+match the mean, not the gap law or every cylinder.
+It has a different resource demand: both devices
+use at most two internal states or dimensions and
+the same homogeneous step-count convention.
+The observed improvement is a smaller waiting-step
+variance under those conditions. No quantum
+optimality is asserted; the cited paper also studies
+stronger optimized qubit families. Step variance,
+Shannon or von Neumann memory entropy, thermodynamic
+work and laboratory time resolution are distinct
+quantities. Neither this corollary nor Theorem 29.1
+identifies the SNS with the product-activity parent
+of §1 or constructs a preparation of its coherent
+finite-window square root.
+

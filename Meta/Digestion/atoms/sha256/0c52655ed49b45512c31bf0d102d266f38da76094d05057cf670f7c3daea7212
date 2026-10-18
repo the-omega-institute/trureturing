@@ -1,0 +1,27 @@
+**Theorem 10.2 (degree two leaves linear worst-case residual information).** For every $m\ge0$ there is a nonempty degree-two class at counts $A=B=2m+3$ whose supplementary zero-error alphabet has at least
+
+$$
+\frac{\binom{2m}{m}}{(2m+3)^2+1}
+\tag{SC.21}
+$$
+
+values. In particular its necessary supplementary bits are at least
+
+$$
+2m-\log_2(2m+1)-\log_2((2m+3)^2+1),
+\tag{SC.22}
+$$
+
+so even the full fixed-letter degree-two boundary leaves growing linear worst-case loss. There is also an explicit positive same-degree-two source family: for each $m$, choose independently one of the retry blocks $XYYX$ and $YXXY$ in each of $m$ consecutive blocks, then append the actual seed $\beta\alpha$ and zero-return marker prefix $\beta\beta\alpha\alpha$. The $2^m$ resulting histories all have
+
+$$
+A=B=4m+3,\qquad N=8m+6,\qquad C=8m^2+12m+2.
+\tag{SC.23}
+$$
+
+They remain indistinguishable by the full original future. This is a fixed actual $C$ family, not an existence claim about arbitrary mixtures.
+
+Proof. At fixed counts, $C$ is an integer between $0$ and $AB$, so there are at most $AB+1$ degree-two classes. Distribute the complete count fiber among them and apply Theorem 10.1; a largest class has at least (SC.21) members. Theorem 9.3 then gives (SC.22). A possibly negative small-$m$ lower bound is simply weaker than the nonnegative bit bound; the linear asymptotic conclusion uses large $m$.
+
+For the explicit family, each displayed block consists entirely of four legal rejected equal pairs. Both raw expansions have four alphas, four betas and $C=8$. This is the reused two-letter $ABBA/BAAB$ step-two collision from [PrimeGoldenThirdOrderChronologyEscape](../../../D5/S3/Observer/Chronology/PrimeGoldenThirdOrderChronologyEscape.lean), step_two_signature_abba_eq_baab, applied to retry types, with Chen composition. Across $m$ blocks the alpha-before-beta count is $8m+16\binom m2=8m^2$. The final actual seed and marker prefix have counts $(3,3)$ and $C=2$, adding the cross contribution $12m$. This proves (SC.23). Fixed-length block boundaries and their distinct words make all $2^m$ choices different; normal-form parsing makes them positive histories of the same original source. Theorem 9.2 supplies their identical future rows. The generic collision is not new content: its legal prelude realization, common-prior equality and unbounded retained-loss consequence are the connection here. Together with (SC.13), it separates retry-order loss from the independent return-placement loss. $\square$
+

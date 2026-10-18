@@ -1,0 +1,27 @@
+**Theorem 6.1 (all-size cap equivalence).** Fix $d\ge1$,
+$w:S_d\to[0,\infty)$ and $C>0$. The following are equivalent:
+
+1. Every $n\ge1$ and every complete native template on $n$ blocks
+   satisfy
+
+$$
+\sum_{x\in C_\Theta}\prod_{i=1}^nw(x_i)\le C^n.
+\tag{RRN.22}
+$$
+
+2. Every $n\ge1$ and every network of Definition 5.1, with its
+   potentials formed from that same $w$ by (RRN.18), satisfy
+
+$$
+Z(\mathcal N;w,\ldots,w)\le C^n.
+\tag{RRN.23}
+$$
+
+Both directions preserve the number $n$ of original potential owners.
+
+Proof. To deduce (RRN.23) use the native template constructed in
+Theorem 5.2's converse and its exact weighted identity. To deduce
+(RRN.22) use the owned-seed network constructed from that native
+template and the other direction of the same identity. Empty sets
+and zero masses are included in both statements. $\square$
+

@@ -1,0 +1,10 @@
+**Convention 10.2 (separate resources).** Public table generation and
+installation, preparation work/control and temporary storage, selection
+work, post-request workspace, address construction, final predictor
+size, count representation, handoff, entry, isolation, authentication
+and physical time remain separate resources. For a selected factor
+$(b,c)$, $0\le b\le2D$ and $c\in\{0,1\}$, so the credited
+$\lceil\log_2(2D+1)\rceil+1$ predictor bits are separate from the
+complete retained name. No arbitrary competitor's preparation cost is
+preserved, and no free total-efficiency or physical erasure claim is made.
+

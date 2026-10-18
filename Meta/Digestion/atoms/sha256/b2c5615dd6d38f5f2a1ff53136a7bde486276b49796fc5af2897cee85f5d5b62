@@ -1,0 +1,38 @@
+**命题 470.1（完整单点商块）。** 设 $L\ge1$、$k\ge L(L+1)$ 为整数。对每个 $1\le d\le L$，写 $q_d=\lfloor k/d\rfloor$，则 $1\le q_d\le k$，并且
+
+$$
+\{e:1\le e\le k,\ \lfloor k/e\rfloor=q_d\}=\{d\}.
+\tag{QO.4}
+$$
+
+这些 $q_d$ 互不相同，实际商块系数满足
+
+$$
+c_{k,q_d}=\frac{\mu(d)}d.
+\tag{QO.5}
+$$
+
+**证明。** 因为 $k\ge L(L+1)\ge d(d+1)$，
+
+$$
+\frac{k}{d}-\frac{k}{d+1}=\frac{k}{d(d+1)}\ge1.
+$$
+
+对实数 $x\ge y+1$ 有 $\lfloor x\rfloor\ge\lfloor y\rfloor+1$，因此
+
+$$
+\lfloor k/d\rfloor>\lfloor k/(d+1)\rfloor.
+\tag{QO.6}
+$$
+
+若 $d>1$，同理由 $k\ge d(d-1)$ 得
+
+$$
+\lfloor k/(d-1)\rfloor>\lfloor k/d\rfloor.
+\tag{QO.7}
+$$
+
+函数 $e\mapsto\lfloor k/e\rfloor$ 在正整数上递减。任何 $e>d$ 的商不超过 QO.6 的右项，任何 $e<d$ 的商在 $d>1$ 时不小于 QO.7 的左项，因而都不能等于 $q_d$。当 $d=1$ 时不存在正整数 $e<d$。分母 $d$ 本身满足原窗口条件，故纤维准确为 $\{d\}$。
+
+$1\le d\le k$ 给 $q_d\ge1$，且 $q_d\le k$。若两个小分母给同一个商，QO.4 强制它们相等，所以这些商互异。对原有符号纤维求和即得 QO.5；其中没有其它分母的项可以抵消。证毕。
+

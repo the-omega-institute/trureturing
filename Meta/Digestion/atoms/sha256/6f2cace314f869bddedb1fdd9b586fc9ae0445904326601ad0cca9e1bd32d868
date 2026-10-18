@@ -1,0 +1,30 @@
+### 定义 3：边界映射
+
+设
+
+$$
+\mathcal P_n=
+\Delta(W_n)
+$$
+
+是所有合法长度 $n$ 词的概率单纯形。
+
+定义 prefix-suffix 边界映射：
+
+$$
+B_n:\mathcal P_n
+\to
+\Delta(W_{n-1})\times\Delta(W_{n-1})
+$$
+
+将一个 $n$-词分布送到其 prefix 和 suffix 边缘。
+
+固定边界后，内部所有可能分布构成
+
+$$
+\mathcal F_n(b)=
+B_n^{-1}(b).
+$$
+
+---
+

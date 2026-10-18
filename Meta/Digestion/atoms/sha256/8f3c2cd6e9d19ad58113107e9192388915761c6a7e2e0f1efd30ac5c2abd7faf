@@ -1,0 +1,38 @@
+**Definition 3.1 (finite certificate recognition).** An atomic-coverage
+certificate is constructed from the retained input as follows.
+
+Choose a sublist of the literal records and a sublist of the retained
+positive relation records. Keep the entire old row, including all its
+class inequalities. These choices define a *core* fiber containing $D$.
+They are used only to derive a cover and atomicity; the final domain will
+still be (CAR.3).
+
+Apply either complete original-prefix cover of [ARH, Definition 19.3 and
+Proposition 19.4][ARH] to this core, taking the auxiliary cut to be empty.
+There are finitely many disjoint charts $\eta$. Each has a pure source
+pattern $W_\eta(X_\eta)$, all core constraints, and a representative
+original address for each frontier variable. The chart is determined
+by finitely many original constructor questions and has a paid selector.
+
+One may apply any finite schedule of the exact acyclic substitutions of
+[ARH, Definition 20.2 and Proposition 20.3][ARH], without imposing its
+synchronous residual eligibility test. Such a substitution requires a
+mandatory positive equation $\rho^a(x)=A$, successful uniform factoring
+$A=\rho^a(V)$, and no occurrence of $x$ in $V$. It substitutes in every
+constraint and the source pattern. It removes one variable and retains
+original representatives of the remaining variables. Stopping immediately
+or after any permitted step is allowed.
+
+Write the resulting source template as $F_\eta(Y_\eta)$. Use the graph of
+Definition 2.1 on the remaining mandatory positive constraints. Require
+its marked forward closure to contain every member of $Y_\eta$. Empty
+$Y_\eta$ satisfies this condition. Charts rejected by an explicit sound
+constant contradiction may be discarded. No unknown interpreted
+constraint is treated as a contradiction.
+
+The input is *cycle-covered* when some choice of core, complete cover and
+substitution schedules meets this requirement on every surviving chart.
+The recognizer searches these finite choices. Failure means that the
+input is outside this family, not that recovery is impossible. The core
+choice is common input data, never a choice based on the unknown source.
+

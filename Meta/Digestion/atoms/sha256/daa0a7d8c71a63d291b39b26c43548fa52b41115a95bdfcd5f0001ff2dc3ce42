@@ -1,0 +1,51 @@
+**Premise 5.2 (credited isolated root, ranks and margins).** CG13.2–13.3
+supply a unique exact zero $u_\star=(x_\star,\eta_\star)$ of $\Psi$ in the
+closed box of radius $10^{-24}$ in EACH coordinate about the following
+rational center, in this order:
+
+| Coordinate | Exact rational center |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+The point is algebraic, $D\Psi(u_\star)$ is nonsingular, and the credited
+strict arithmetic margins include
+
+$$
+\begin{gathered}
+\frac{47}{100}<\lambda_\star<\frac{49}{100},\qquad
+\eta_{k,\star}>0\quad(k=0,1,2),\\
+\kappa:=z_\star-\lambda_\star p_{50}>\frac6{125},\qquad
+(S_{0,\star})_{00}>\frac6{125},\qquad
+\det S_{0,\star}[\{0,1\}]>\frac{23}{10000},\\
+S:=S_{0,\star}\succeq0,\quad\operatorname{rank}S=2,\qquad
+S_{01,\star},S_{02,\star}\succeq0\text{ of rank }1,\qquad
+S_{12,\star}\succ0.
+\end{gathered}
+\tag{ZG.21}
+$$
+
+CG16.1 further supplies the ORIGINAL full-output equality
+
+$$
+E_\star=F(x_\star).
+\tag{ZG.22}
+$$
+
+The box center is not substituted for its exact zero. Existence, uniqueness
+in that box, its algebraicity, nonsingularity, ranks, strict margins and the
+matching full-output optimum are credited ordinary computer-assisted
+premises. This volume does not rerun their arithmetic, claim uniqueness of
+all algebraic roots or full channels, or assert kernel verification. The
+new proof below needs the positive $\lambda_\star,1-\lambda_\star,
+\eta_{1,\star},\kappa$, rank-two positivity of $S$, stationarity,
+nonsingularity and (ZG.22); it does not require a new certificate at a
+perturbed point.
+

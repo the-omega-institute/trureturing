@@ -1,0 +1,20 @@
+**Definition 7.2 (arithmetic and control boundaries).** In
+Proposition 3.3 the action horizon is already a fixed numeral
+before path enumeration. Thus each visit multiplicity
+$m_{\pi,e}$ is a numeral multiplying a descriptor length.
+In the all-infinite case there is no length-cost expression:
+the proof invokes NPS's phase support at its supplied scope.
+Theorems 4.1 and 6.2 do not claim a single Presburger formula
+in a variable horizon for all budgets, a semilinear presentation
+of all installation/cost profiles, or a decision procedure for
+arbitrary nonlinear parameter products.
+
+Every source quantifier ranges over the full admitted chart
+domains in (NRF.7). Halt witnesses are construction data used
+to write one concrete row, and extremal witnesses are sources
+attaining an already verified whole-domain maximum. Neither
+kind of witness is given to the running controller or used
+to replace the domain. Descriptors, paths, phases, epochs and
+the Pareto search are external mathematical descriptions;
+the extracted controller is the selected original graph.
+

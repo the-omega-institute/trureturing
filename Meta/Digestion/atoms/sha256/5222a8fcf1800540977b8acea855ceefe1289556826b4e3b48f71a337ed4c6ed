@@ -1,0 +1,25 @@
+**Example 311.2 (Positive two-tail residuals in a common feasible law).**
+For a reused, nonempty feasible example take $a_1=\cdots=a_9=1/4$,
+$e=7/40$ and $a_n=e\,2^{-(n-10)}$ for $n\ge10$.
+Use the synthesis already provided by 113.3: mass $3/4$ emits zero
+and mass $1/4$ uses $P_{9,2}$. Explicitly, that subset rule chooses
+uniformly a three-subset of the ordered labels $1<\cdots<9<*$,
+where $*$ denotes zero. It queries the first two numerical labels
+in increasing order until a queried zero; if both are positive it
+emits the third label without querying it. Thus it uses at most
+two actual calls even when the output is an earlier unqueried label.
+Every three-subset can be chosen by intervals of the same seed.
+
+For a word with first zero $n\le9$, a subset emits $n$ exactly
+when it contains $n$, so the whole mixture has correct mass
+$(1/4)(3/10)=3/40=a_n-e$. It has base mass at least $3/4$;
+its mass outside $\{0,n\}$ is at most $1/4-3/40=7/40$.
+All three deficits in (309.2) are therefore bounded by $e$, and the
+correct deficit equals $e$. At the positive word its base mass is
+$3/4+(1/4)(3/10)=33/40$, so its nonbase mass is $e$.
+Every actual later first zero has exact error $\max\{e,a_n\}=e$.
+The counted $N$ completion uses the same seed and source.
+The hull excess at nine is zero, and both $a_8-e$ and $a_9-e$
+are $3/40>0$. This is a direct application of an existing construction,
+with no new construction or optimality credit.
+

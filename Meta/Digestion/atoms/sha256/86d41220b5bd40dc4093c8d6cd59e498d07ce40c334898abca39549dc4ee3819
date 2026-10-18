@@ -1,0 +1,65 @@
+**Reused calculation 372.1 (One shared vector and one budget).** Let $\mathcal C\subseteq B_L$ be a finite affected word set. A single vector $x\ge0$ of prescribed mass $m\ge0$ is to contribute at every $w\in\mathcal C$. The complementary contributions $k_w$ are fixed. All words outside $\mathcal C$ are fixed as well; if whole-allocation feasibility is sought, their rows must already hold. Put
+
+$$
+I=\{n(w):w\in\mathcal C,\ w\ne1^L\},
+\tag{372.1}
+$$
+
+and define
+
+$$
+\begin{aligned}
+A&=\max\bigl(\{0\}\cup\{d_A(w)-k_w(0):w\in\mathcal C,\ w\ne1^L\}
+ \cup\{d_T-k_{1^L}(0):1^L\in\mathcal C\}\bigr),\\
+c_n&=\max\bigl(\{0\}\cup\{d_C(w)-k_w(n):w\in\mathcal C,\ n(w)=n\}\bigr),\\
+u_n&=\max\{d_P(w)-k_w(0)-k_w(n):w\in\mathcal C,\ n(w)=n\}
+ \quad(n\in I).
+\end{aligned}
+\tag{372.2}
+$$
+
+The conditional set in the first line contributes an element only if the positive word belongs to $\mathcal C$. Each maximum defining $u_n$ is over a nonempty finite set; $u_n$ remains signed. There is one such shared $x$ satisfying all affected rows if and only if
+
+$$
+\sum_{n\in I}c_n+
+ \max\bigl(\{A\}\cup\{u_n-c_n:n\in I\}\bigr)\le m.
+\tag{372.3}
+$$
+
+For $I=\varnothing$ this means $A\le m$. A feasible selector is
+
+$$
+x(n)=c_n\ (n\in I),\qquad
+x(n)=0\ (n>0,\ n\notin I),\qquad
+x(0)=m-\sum_{n\in I}c_n.
+\tag{372.4}
+$$
+
+*Proof of the reused calculation.* Any feasible vector has $x(0)\ge A$ and $x(n)\ge c_n$. Consequently
+
+$$
+m\ge A+\sum_{n\in I}c_n.
+\tag{372.5}
+$$
+
+For each $n\in I$, its union rows also give $x(0)+x(n)\ge u_n$. The same vector and total mass therefore satisfy
+
+$$
+m\ge x(0)+x(n)+\sum_{j\in I\setminus\{n\}}c_j
+ \ge u_n+\sum_{j\in I\setminus\{n\}}c_j.
+\tag{372.6}
+$$
+
+These simultaneous inequalities are exactly (372.3). Nonnegative mass on unused labels cannot weaken them.
+
+Conversely (372.3) implies $m-\sum c_n\ge A\ge0$, so (372.4) is nonnegative of mass $m$ and meets all base, correct and applicable positive demands. For each $n\in I$ it gives
+
+$$
+x(0)+x(n)=m-\sum_{j\in I\setminus\{n\}}c_j\ge u_n,
+\tag{372.7}
+$$
+
+which meets every independent union demand. Thus one vector meets every affected row at once. Empty $\mathcal C$, positive-word-only $\mathcal C$, negative demands, zero mass and ties need no separate limiting argument. $\square$
+
+This is finite simplex elimination, used here as a proof tool. The same completion formula and pair-$23$ calculation occur in the mathematical supplier `shared_reserve_exact.py`, content SHA256 `68c71f7fee2cdd46b6d9e875e919fb1107fefb819a915824eff5e1caff93d5b7`, in `trureturing-experiments/calibration176-6ad1d8cacdf886317e33c9e4-attempt-1-proportional-containment`. The direct proof fixes its complete-cell interpretation and gives it no separate new-result or attainment claim. Finite coordinate elimination is mature polyhedral mathematics; compare Kaibel, arXiv:1001.2161v1, Theorem 18.
+

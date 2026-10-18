@@ -1,0 +1,67 @@
+**Theorem 73.2 (Exact marked modulus and sourcewise prefix resources).** For
+every $x\in D_n$,
+
+$$
+r_x(m)=
+\begin{cases}a_{m+1},&m<n,\\0,&m\ge n,\end{cases}
+\qquad \Omega_{\lambda^a}(m)=a_{m+1}.
+\tag{73.5}
+$$
+
+The positive-increment prefix acquisition has a realization, denoted $A^a$,
+which hands off by the $n$th request at every $x\in D_n$ for every seed.
+It satisfies, for $1\le i\le n$,
+
+$$
+\begin{aligned}
+\mathsf P_{A^a}\{\text{request }p_i\text{ at }x\}&=a_i,\\
+\mathsf E_{A^a}K_{A^a,x}&=\sum_{i=1}^na_i,\\
+\mathsf E_{A^a}S_{c,A^a,x}&=\sum_{i=1}^nc(i)a_i,\\
+\mathsf E_{A^a}Z_{c,A^a,x}&=\sum_{i=1}^n\Delta c(i)a_i.
+\end{aligned}
+\tag{73.6}
+$$
+
+It never requests indices greater than $n$. Its uniform request-count tail
+is exactly $a_{m+1}$, and hence tends to zero.
+
+**Proof.** If a depth-$m$ prefix has a negative answer, it fixes its first
+absence $n\le m$. All selected laws in that cylinder are then the same,
+so their common mass is one. Otherwise the prefix is all positive. Let
+$H_m=\{x:q_1(x)=\cdots=q_m(x)=1\}$, with $H_0=X$. It contains every
+occupied $D_j$, $j>m$, and contains only sources with $n(x)>m$.
+
+A common submeasure in $H_m$ is supported on the union of the displayed
+atoms, since it is dominated by any one of the laws (73.4). At every marked
+atom $\theta_j$, $j\ge1$, another member of $H_m$ has zero mass there:
+choose any occupied $D_k$ with $k>m$ and $k\ne j$. Hence the common measure
+has no marked-atom mass. Its mass at $\theta_0$ is at most
+
+$$
+\inf_{j>m}(1-a_j)=1-a_{m+1},
+$$
+
+and $(1-a_{m+1})\delta_{\theta_0}$ is dominated by all these laws. This proves
+the asserted greatest common submeasure and (73.5). Occupation of every
+$D_n$ ensures that the supremum deficit is exactly $a_{m+1}$.
+
+The existing positive-increment rule has a particularly simple realization
+here. Use one uniform seed $U\in(0,1)$. At an all-positive prefix of depth
+$m$, emit $\theta_0$ if $U<1-a_{m+1}$; otherwise query $p_{m+1}$. If its
+answer is negative emit $\theta_{m+1}$, and if positive continue at depth
+$m+1$. The thresholds increase because $(a_i)$ decreases. At $x\in D_n$
+the rule therefore reaches request $i\le n$ exactly when $U\ge1-a_i$, and
+hands off by request $n$. The output $\theta_n$ has probability $a_n$, and
+the only other output is $\theta_0$, proving exactness of (73.4).
+
+Finite records are measurable threshold events in $U$, and output events
+are unions of the corresponding threshold intervals; handoff is finite at
+every seed and actual source. The rule uses only the current prefix and its
+fixed thresholds. The increments at all-positive nodes are multiples of
+$\delta_{\theta_0}$, and at the first negative node the increment is
+$a_n\delta_{\theta_n}$, so this is a realization of the cited prefix
+construction. Counting each reached index once proves the first three
+lines of (73.6). The last line follows by (72.4), or by the tail (73.5).
+Since every $D_n$ is occupied, the supremum of
+$\mathsf P\{K_{A^a,x}>m\}$ over $x$ is $a_{m+1}$. $\square$
+

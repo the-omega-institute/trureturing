@@ -1,0 +1,16 @@
+**Proposition 3.5 (self-stopping the actual last row).** Suppose the
+original final halt CTL on [ARC] Theorem 9.2's original return route
+is split so that its raw halted condition becomes true before Finish.
+If every fine continuation requires that raw condition to be false,
+the final row cannot finish. Allowing its already admitted bounded
+continuation until Finish, and allowing no reaction after Finish to
+Halt, avoids this particular obstruction without posthalt service.
+
+Proof. At the first specified Busy cut, the outer nonhalt guard is
+false while the unique completion remains outstanding. This excludes
+the next step just as in Theorem 3.3. With the alternative phase rule,
+the already bound next stage, rather than that changed raw predicate,
+selects the remaining finite suffix. Its final transition completes
+the original receipt and selects Halt, which has no rules. Thus no
+scanner, input, historical entry or cleanup is enabled afterwards. ∎
+

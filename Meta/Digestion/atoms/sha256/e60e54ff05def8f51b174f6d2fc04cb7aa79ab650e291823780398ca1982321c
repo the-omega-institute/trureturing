@@ -1,0 +1,4 @@
+**Corollary 365.4 (Every funded representation is excluded).** For every $3/40<t\le5/64$, no whole gauge for the entire kernel $p_t$ both satisfies (364.3) and belongs to the cone of Definition 365.3. This excludes every alternative representation of that kernel, not only the explicit gauge (364.9). The same-cap original stopped survivor remains $p_*$.
+
+*Proof.* If such a gauge existed, [XXI 358.2](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXI.md) would produce one normalized complete stopped kernel $q$ with all three canonical event coordinates at every zero word at least those of $p_t$, and with $q_{1^7}=p_t(1^7)$ as a whole vector. That is the dominator excluded by Theorem 365.2. The implication uses the same whole gauge in both budgets and allows all odd lists to overlap. The narrower failed edge/triangle representation of XXI 359, whose kernel still has an odd-list representation, does not have this all-representation consequence. $\square$
+

@@ -1,0 +1,26 @@
+**Assumption 10.1 (unchanged task and a supplied determining certificate).**
+Use the arbitrary nonempty full fiber of Assumption 1.2, the prescribed
+code and complete recoverable entry of Definition 2.1, and the preparation
+apparatus of Definition 2.2. In particular, the original reader's entire
+installed table, alphabet, running/halt partition, whole-row halt labels
+and entry map remain fixed. The target is the complete canonical
+$F(u)=R_P(u)$, with all occurrence holes, retained equalities,
+different-class disequalities, canonical renaming and blocking guards.
+All finite origins in the original fiber remain in the domain.
+
+A supplied valid finite determining certificate is a finite menu $M$
+together with its well-defined attained-value assignment
+
+$$
+\chi:O_M[\mathcal U]\longrightarrow S,
+\qquad \chi(O_M(u))=s(u)=\iota(c(u)).
+\tag{PCA.22}
+$$
+
+One can equivalently supply $M$ and the validity assertion (PCA.7);
+then (PCA.22) defines the unique assignment. No method for finding $M$
+or establishing its validity from arbitrary program text is assumed.
+The complete values in $S$ are the original entries, not newly selected
+names for target classes. The assignment is mathematical task data;
+it is not a readout port or a decoder callable by a running state.
+

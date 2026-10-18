@@ -1,0 +1,13 @@
+## 5. A useful character pair, its common center and its modulus
+
+In this section let $a$ be the bounded two-coordinate encoder obtained in
+the rank-two case of Proposition 4.2. The common space of Lemma 3.1 now
+has the form
+
+$$
+V=\operatorname{span}_{\mathbb C}\{1,a_1(k,\cdot),a_2(k,\cdot)\},
+\qquad \dim_{\mathbb C}V\le3,
+$$
+
+and all its functions are bounded and $\beta$-independent.
+

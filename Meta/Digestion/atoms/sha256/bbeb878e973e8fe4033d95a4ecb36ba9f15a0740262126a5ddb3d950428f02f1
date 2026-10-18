@@ -1,0 +1,44 @@
+**Lemma 2.2 (One edge and complementary triples).** In a specified
+phase an active address $2\ell+\phi$ reads the spin-line edge
+$\{\ell,\ell+1\}$; an opposite-parity address is a separator.
+Conditional on that phase, one active edge has the following masses:
+
+| Target position | Zero reply: two target-spin masses | One reply: two target-spin masses |
+| --- | --- | --- |
+| In the edge | $a^2,b^2$ | $\eta,\eta$ |
+| Outside the edge | $ac,bc$ | $2a\eta,2b\eta$ |
+
+The edge-zero probability is $c$ and edge-one probability is
+$2\eta$. For two adjacent distinct active edges, zero-zero has
+conditional mass $a^3+b^3=1-3\eta$. Each of the other three label
+pairs has mass $\eta$, with complementary triple products
+$a\eta,b\eta$. On such a nonzero pair the maximal full-law
+endpoint-state mass, for every target position, is $a\eta/2$.
+
+Proof. Equal spins have products $a^2,b^2$; unequal spins have
+products $ab,ab$. If the target is outside the edge, independence
+multiplies its prior into the constraint probability. This proves
+the one-edge table.
+
+Write adjacent spins in their line order as $(s_0,s_1,s_2)$.
+The two XOR labels leave exactly a triple and its complement. For
+label pairs $01,10,11$, respectively, their larger-product triples
+are
+
+$$
+(\sigma,\sigma,1-\sigma),\qquad
+(1-\sigma,\sigma,\sigma),\qquad
+(\sigma,1-\sigma,\sigma).
+\tag{2.3}
+$$
+
+Their products are $a^2b=a\eta$; the complements have product
+$ab^2=b\eta$. Their sum is $\eta$. If the target lies in the
+triple, the two completions have opposite target spins, so the larger
+state mass, including phase prior, is $a\eta/2$. If the target
+is outside, its independent majority factor $a$ gives the same
+mass. Reversing the acquisition order only permutes the labels and
+does not change these conclusions. For $00$ all three spins agree,
+giving $a^3+b^3=(a+b)^3-3ab(a+b)=1-3\eta$.
+$\square$
+

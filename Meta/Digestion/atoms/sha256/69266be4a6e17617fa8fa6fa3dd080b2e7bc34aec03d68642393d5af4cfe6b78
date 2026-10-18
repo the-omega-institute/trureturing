@@ -1,0 +1,15 @@
+**定理 29.2（Exact preset value-join law, including infinity）。** For either original alphabet, for every record target and all original parameters,
+
+$$
+C_{\rm pre}(f)=C_{\rm pre}(\Gamma).
+\tag{29.2}
+$$
+
+Proof. A fixed literal stream has a value-independent phase/tail trajectory and rejection time. Before rejection, changing the INITIAL value bit complements every scalar endpoint output; after rejection both readings are $\bot$. This is the exact symmetry of the original bit updates [S1, Definition 1.2 and Convention 1.3; S24, (1.2)], valid also when $m\ge k$, when a block itself contains $1^k$, and for every allowed cross-block rejection. No intermediate reading is supplied by this symmetry.
+
+Suppose a preset controller for $f$ has uniform fee bound $d$. Use its very same literal stream on an actual source. From the actual acquired endpoint archive and known initial value $v$, deterministically form the two scalar-output archives whose initial values are zero and one by complementing precisely the successful readings as necessary. Issued words, paid depths and $\bot$ entries are the same in both. Run the original stopping/decoding rule on each of these archives. When one rule stops, retain its label; continue the actual stream until the other stops. Both stopping times are at most $d$, because the same phase and INITIAL tail with either value have actual whole-history realizations and the original controller was correct on both. The output pair is (29.1).
+
+This is a deterministic decoder applied to one actual chronological stream. It executes no second experiment, makes no source copy and imports no observation from another actual branch. The symmetry computes the other value's output string from the one already observed. Rejection cannot invalidate a label already decoded, and any rule still running sees the same prescribed absorbing suffix. The worst paid depth is the maximum of the two original stopping times, hence at most $d$. This proves $C_{\rm pre}(\Gamma)\le C_{\rm pre}(f)$ whenever the latter is finite.
+
+Conversely use a preset controller for $\Gamma$, remember the free INITIAL value, and return that component of the acquired pair. The initial bottom branch returns its independent prescribed $f(\bot)$ freely. This uses the same stream and no greater fee, giving the reverse inequality at every finite bound. Therefore existence of a controller bounded by each $d$ is equivalent in the two directions, which proves equality in $\mathbb N\cup\{+\infty\}$. ∎
+

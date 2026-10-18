@@ -1,0 +1,5 @@
+source_id = "fib-native-paid-point-observation-tracking"
+path = "docs/develop/theory/FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

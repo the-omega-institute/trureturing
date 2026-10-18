@@ -1,0 +1,25 @@
+**Proposition 8.1 (one sufficient finite allocation).** Let $u>0$ be an area
+error budget. For positive $L,V,T$, one sufficient choice in Theorem 7.2 is
+
+$$
+\begin{aligned}
+n&\geq\max(1,4LTV/u),\\
+\varepsilon_t&\leq\min\left(T/(4n),\frac{u}{16\max(LV,1)}\right),\\
+d_k&\leq\min\left(\frac1{2n},\frac{u}{8\max(V,1)}\right),\\
+d_c&\leq\min\left(\frac18,
+             \frac{u}{8(2K_{\max}+LT+1)}\right),\qquad
+\rho_A\leq u/8.
+\end{aligned}
+\tag{8.1}
+$$
+
+These choices give $E_A\leq3u/4\leq u$. If
+$\widetilde\pi\geq3$ and
+$\varepsilon_\pi\leq1/(8\max(M,1))$, they also imply (7.4).
+
+Proof. The five contributions $LTV/n$, $2L\varepsilon_tV$, $d_kV$,
+the phase-sensor term and $\rho_A$ are bounded respectively by
+$u/4,u/8,u/8,u/8,u/8$. Here
+$2(n-1)d_k\leq1$. Also $2d_c+2M\varepsilon_\pi\leq1/2<3$.
+These are sufficient allocations, not optimal constants. $\square$
+

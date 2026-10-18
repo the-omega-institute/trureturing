@@ -1,0 +1,11 @@
+**Definition 49.1 (exact baseline).** At (46.2) define the real scalar
+
+$$
+\mathcal B_s(h)=\ell_s+
+ \frac{\ell_s\delta_s+\langle x_s,L^hx_s\rangle
+                        -\langle x_s,Dx_s\rangle}{n_s}.
+\tag{49.1}
+$$
+
+It retains the actual early scalar, moving mass and damped late quadratic, rather than assigning them evaluated coefficients.
+

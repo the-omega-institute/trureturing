@@ -1,0 +1,16 @@
+**Corollary 7.2 (sharpness and the first failure of three calls).**
+The universal four-call conclusion in Theorem 7.1 cannot be replaced by
+three calls at the same state budget. Nine is the first installed-state
+budget at which the corresponding two-to-three implication fails.
+
+Proof. Directly apply NRE Theorem 8.6, Theorem 8.7 and Corollary 8.9
+to their prescribed bit $\sigma^\dagger$ of NRE Definition 8.2. They
+use exactly the finite sources (NRN.1), the full fiber (NRN.6), all five
+whole rows of Definition 2.3 and the acquired-code, faithful-entry,
+state-only stationary contract of §3. Corollary 8.9 supplies its
+nine-state arbitrary-literal two-call realization and the first-failure
+budget; Theorem 8.6 excludes every root competitor within nine states
+and three calls; Theorem 8.7 gives its exact root call minimum four
+at budget nine. These inherited proofs and their particular code are
+not repeated as new content here. $\square$
+

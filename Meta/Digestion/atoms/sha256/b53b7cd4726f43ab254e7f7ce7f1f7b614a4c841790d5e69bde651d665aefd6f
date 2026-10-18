@@ -1,0 +1,22 @@
+**定义 2.1（可用首零阈值）。** 对每个 $v$，记
+
+$$
+\lambda_v(\theta)=f_v(\theta,0),\qquad
+n_v=|\lambda_v[P]|\ge1.
+\tag{2.1}
+$$
+
+对 $0\le a<k$，令 $r=k-a$。称 $a$ 是该值纤维的可用阈值，若
+
+$$
+\begin{aligned}
+f_v(\theta,s)&=\lambda_v(\theta)
+&&\text{对所有 }\theta\in P, 0\le s<r,\\
+f_v(\theta,s)&=\rho_v
+&&\text{对所有 }\theta\in P, r\le s<k
+\end{aligned}
+\tag{2.2}
+$$
+
+成立，第二行在 $a>0$ 时要求一个共同标签 $\rho_v\in Y$，在 $a=0$ 时是空条件。$\rho_v$ 可以与一个或多个存活相位的标签相同；不要求它是另一个标签。$m\ge k$ 时，[S1] 定理6.2恰说 $f$ 可取得当且仅当两个值纤维各有这样的 $a$。
+

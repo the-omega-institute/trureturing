@@ -1,0 +1,50 @@
+**Proposition 20.3 (termination and exact elimination).** Membership in
+$\mathcal E_{\rm CE}$ is decidable. On an accepted input, write
+
+$$
+F_\eta=W_\eta[\sigma],\qquad
+\bar E_\eta=E_\eta[\sigma],\qquad
+\bar T_{\eta,q}=T_{\eta,q}[\sigma].
+$$
+
+Then $v\mapsto F_\eta[v]$ is a bijection from the finite assignments
+satisfying $D_\eta$ to the entire original fiber in that chart. At every
+surviving representative $a_{\eta,y}$ its original subtree is exactly
+$v(y)$. No extra original sources are lost or gained by the presentation.
+
+Proof. Comparison reduction terminates by recursive descent through two
+pairing heads, finite ground evaluation, or a terminal identity, atom,
+clash or bare occurs case. Common-power cancellation is done once on a
+pair of decorations, and factoring is a terminating test. A local rule
+is not repeatedly reoriented. Ground inversion and Boolean simplification
+are finite. Between eliminations no rewrite feeds a larger term back into
+an unrestricted root-splitting procedure.
+
+Every elimination removes one active variable. At a fixed stage there
+are only finitely many mandatory equalities and two orientations of each;
+each factoring test has at most one result. Hence the search tree has
+finite branching and depth at most $|X_\eta|$, even if terms grow.
+The two covers and all their charts are finite. The residual syntax test
+is decidable; its optional emptiness check is the finite construction of
+Lemma 21.1. This proves recognition termination without assuming a
+complete interpreted unification algorithm.
+
+By (CE.20.1) and injectivity, the selected equation is exactly $x=V$.
+Since $x$ does not occur in $V$, restriction to the other coordinates is a
+bijection from its conjunction with the remaining constraints to those
+constraints after substitution. The inverse assigns the unique finite
+value $V[v]$ to $x$. Substitution commutes with interpreted evaluation
+by induction on terms and formulas. It therefore preserves all signed
+constraints jointly, even when a variable repeats or occurs in many old
+inequalities. Induction on the number of eliminations gives (CE.20.2)
+and the asserted finite-assignment bijection. A contradiction discards
+only a genuinely empty chart.
+
+Combine this with (CE.19.3). Each remaining $y$ was originally a leaf
+variable of the source pattern at $a_{\eta,y}$. No other variable can be
+an ancestor of that occurrence in the pattern. Substituting for other
+variables leaves that occurrence literally $y$. Consequently restriction
+back to those original subtrees is the inverse map. Reconstructed values
+of eliminated coordinates are finite templates of finite trees, so they
+cannot be rational or infinite-tree solutions. $\square$
+

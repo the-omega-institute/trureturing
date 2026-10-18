@@ -1,0 +1,60 @@
+**Proposition 12.6 (A genuine line face with a full-TP kernel port).**
+Let $p=(p_0,p_+,p_-)$, $D_p=\operatorname{diag}(\sqrt p)$,
+$C_0=3I-\mathbf1\mathbf1^T$ and
+$v_p=(2\sqrt{p_+},-\sqrt{p_0},0)^T$. The actual QAP form with
+
+$$
+\begin{gathered}
+\mathcal R(p)=D_pC_0D_p+v_pv_p^T,\qquad
+\mathcal T(p)=\operatorname{diag}(p_0+2p_+,2p_-),\\
+y=0,\quad
+C=\begin{pmatrix}-2&-\sqrt2&0\\-4\sqrt2&-4&0\\0&0&-4\end{pmatrix},
+\quad\delta=(6,2,0,0,2,2)
+\end{gathered}
+\tag{12.15}
+$$
+
+in the six-plane order of (1.6) is globally positive and has
+
+$$
+\mathscr F(p)=3p_-(p_0-2p_+)^2\not\equiv0.
+\tag{12.16}
+$$
+
+Its zero face contains a TP point implemented by $25$ fixed flags.
+This example is not asserted to arise from normalized event
+multipliers or to improve the original upper bound.
+
+Proof. The constant matrix $C_0$ has eigenvalues $0,3,3$.
+Both summands of the radial block and the tangent diagonal are PSD
+on the entire nonnegative orthant. Their diagonals are
+$(2p_0+4p_+,p_0+2p_+,2p_-)$ and their signed couplings are
+$(u,v,w,t)=(3,1,1,0)$. Equations (3.2)–(3.4) therefore recover
+exactly the displayed $C,y,\delta$.
+
+The adjugate rank-one-update formula, or (3.4), gives (12.16):
+$\operatorname{adj}C_0=3\mathbf1\mathbf1^T$, so in the positive
+orthant the added determinant is
+$3p_0p_+p_-[2\sqrt{p_+/p_0}-\sqrt{p_0/p_+}]^2$.
+Polynomial continuity includes zero populations. Along
+$p=(2s,s,1-3s)$, $0<s<1/3$, a primitive polynomial kernel in
+(12.3) is $r(s)=(1-3s,2(1-3s),2s)$; direct multiplication
+annihilates it. At
+
+$$
+p_*=(1/2,1/4,1/4),\qquad
+b_*=(d+\sqrt2u_++\sqrt2u_-)/\sqrt5,
+\tag{12.17}
+$$
+
+one has $\mathcal R(p_*)b_*=0$ in radial coordinates and
+$q(b_*)=(1,2,2)/5$. Thus $x=5k(a(p_*),b_*)$ has its
+three TP column sums exactly $(1,2,2)$. With $g_{kl}$ from
+(2.8), take preparation $g_{kl}a(p_*)$, measurement $g_{kl}b_*$
+and per-flag weight $1/5$. The measurement sum is
+$5\int G b_*b_*^TG^T=I_5$, by its displayed populations.
+Equations (2.8)–(2.9) give a TP encoder and unit-column whole-block
+CPTP decoders, realizing this same zero-face channel on all complex
+inputs. No all-event error value is claimed for this example.
+$\square$
+

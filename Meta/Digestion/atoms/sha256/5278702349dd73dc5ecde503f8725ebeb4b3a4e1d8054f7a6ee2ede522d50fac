@@ -1,0 +1,23 @@
+**Proposition 66.3a (a nonzero full two-position transfer with zero atomic target).** For the actual singleton source $s=\beta$, followed by its accepted whole-rho at cap $H=2$, the old target $\mathscr H_{\{o\},2}$ is zero but the full-space transfer in Theorem66.3 has nonzero admissible mixed inputs. Parameterize its two old stubs from the root by $x\in[0,1]$. On every ordered root/stub slice use $g(x)=x(1-x)$, with no atomic pair. On each same-stub cell use
+
+$$
+h(x,y)=|x-y|(1-\max(x,y)),
+$$
+
+and on each different-stub cell use
+
+$$
+b(x,y)=g(y)(1-x)+g(x)(1-y).
+$$
+
+These functions define a symmetric form vector $F$ with
+
+$$
+\|F\|^2=\frac{2\delta}{15}+\frac{17\delta^2}{180},\qquad
+k_{\delta,2}(F)=\frac43+\frac{56\delta}{45}.          \tag{66.1a}
+$$
+
+Both quantities are preserved by its actual whole-rho transfer. In particular at $\delta=1/10$ they are $257/18000$ and $328/225$ respectively. This vector is full retained continuum data, not a unit two-port target preparation.
+
+Proof. The slice has zero trace at both endpoints. The same-stub function has root boundaries $g$, grounded boundaries zero, and zero traces on both sides of the diagonal. The different-stub function has root boundaries $g$ and grounded boundaries zero; its shared-root corner agrees with the missing atomic collision value zero. Exchange symmetry is literal. Each triangular polynomial is $H^1$, as is the different-stub polynomial, so these are the actual domain conditions without a corner trace assumption for general $H^1$ data. Direct polynomial integration gives slice norm/derivative integrals $1/30,1/3$, same-stub full-square integrals $1/90,1/3$, and different-stub integrals $13/360,13/45$. There are four ordered slices, two same-stub cells and two different-stub cells. Multiply their norm integrals by $\delta,\delta^2$ and their derivative integrals by $1,\delta$ as in (64.7), obtaining (66.1a). At renewal all these old functions are copied; their old ground boundaries are zero at the new atoms and all new strata are zero. Thus the positive-mass mixed input meets Theorem66.3, including the zero-target case. $\square$
+

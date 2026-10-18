@@ -1,0 +1,65 @@
+**Theorem 10.4 (universal complete invocation-row classification).**
+Under Assumption 10.1, a deterministic initially source-blind effective
+invocation solver for $P$ exists if and only if
+
+$$
+P=\{\varepsilon\}\quad\text{or}\quad P=\{L,R\}.
+\tag{CNA.18}
+$$
+
+This is unchanged if the allowed interference is restricted to at most
+one update after the first Read. Every solver for the nonconstant positive
+target $P=\{L,R\}$ must make its first Read at $\varepsilon$.
+More precisely, if a first Read at a specified literal $a$ is required,
+a solver exists exactly when
+
+$$
+P=\{\varepsilon\}\quad\text{or}\quad
+(P=\{L,R\}\ \text{and}\ a=\varepsilon).
+\tag{CNA.19}
+$$
+
+A zero-Read solver exists exactly for the root cut.
+
+**Proof.** For any nonroot cut a solver has a fixed first literal by
+Lemma 10.2. If it is nonempty, the first alternative of Theorem 10.3
+contradicts correctness. If it is the root and $P\ne\{L,R\}$, the
+second alternative does so. Each contradiction uses the lawful
+one-versus-zero-update histories of Lemma 10.2, not an infinite
+interference limit or a chosen distribution on sources. It applies
+without a bound on observer storage or the length of later literals.
+
+For sufficiency reuse the zero-Read root shortcut of Proposition 4.3
+and the root-first procedure of Proposition 7.3, with its effective
+paid capture and costs made explicit in §11. They terminate under
+unknown finite interference and give the full invocation row, so they
+also solve every at-most-one-update history. A root-cut procedure required
+to Read $a$ can materialize that public finite literal, perform the Read,
+discard its reply and return the constant root row. This costs an actual
+Read and the delivery of $a$; it is not the zero-Read shortcut.
+
+The first alternative of Theorem 10.3 forces the root first for
+$\{L,R\}$. The two leaf rows show that every other cut has a nonconstant
+target, excluding a universally correct zero-Read return. The root row
+is constant. These observations prove (CNA.19) and the final claim.
+$\square$
+
+**Mathematical consequence 10.5 (finite cuts, covering cuts and guards).**
+The new necessity includes the gap left by Theorem 7.2: a finite cut
+covering every infinite binary ray is still impossible unless it is
+one of the two cuts in (CNA.18). Coverage of rays concerns the public
+address tree, not the presence of those addresses in every finite source.
+For example, $\{L,RL,RR\}$ covers every ray. On the branch sources in
+(CNA.17), only $L$ is reached, and the concrete guard at $R$ changes
+from alpha to beta. At $\{LL,LR,RL,RR\}$ no cut address is reached
+on either branch source; both visible child guards change.
+
+The empty cut is covered by the same proof: it retains the entire source.
+A singleton nonroot cut leaves at least one child unhidden. Arbitrarily
+deep and mixed cuts either hide both children, forcing $\{L,R\}$,
+or expose the changed child of Theorem 10.3. These are applications of
+that one universal separation, without additional shape or reachability
+promises. Theorems 7.1 and 7.2 retain their respective pre-first-Read,
+Return-endpoint and uncovered-ray assumptions; their conclusions are
+not used outside those domains.
+

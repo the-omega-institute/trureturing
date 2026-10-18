@@ -1,0 +1,46 @@
+**Theorem 5.1 (general affine lower bound).** For every $c,Z$ as above,
+$d,L>0$ and $0<a<b<c-d$, every common specimen-only processor has
+worst complete-output error on
+$x\in[a,b]$, $\beta\in\{0,\pi\}$, $m\in\{0,1\}$ at least
+
+$$
+E_{\rm aff}(a,b,d)=
+\frac{d\bigl(\sqrt{b+d}-\sqrt{a+d}\bigr)^2}{2(a+d)(b+d)}.
+\tag{AC.11}
+$$
+
+This is exactly the best uniform approximation error of
+$F(x)=x/(x+d)$ by unrestricted real affine functions on $[a,b]$.
+That scalar statement does not assert an attaining complete instrument,
+or even physical attainability of every unrestricted affine function.
+The twelve histories at heights $a,b,x_*=\sqrt{(a+d)(b+d)}-d$ already
+force the lower bound.
+
+Proof. The completed-live output event pulls back under $\Phi$ to an
+effect $0\leq E\leq I_V$. Independent fixed inputs are absorbed into
+this effect. By (AC.7),
+$Q(x)=\operatorname{tr}(E\bar\rho_x)$ is affine. If every individual
+complete-output error is at most $\epsilon$, testing this event and
+averaging gives $|Q(x)-F(x)|\leq\epsilon$ at each height in scope.
+All acquisition aborts and failures contribute to this unconditional
+effect; a newly normalized accepted subfamily would not obey this argument.
+
+Put $A=a+d$, $B=b+d$, and let $\ell$ be the chord of $F$. Since
+$F'=d/(x+d)^2$ and $F''=-2d/(x+d)^3<0$, its chord has slope $d/(AB)$
+and its largest gap occurs at $x_*=\sqrt{AB}-d\in(a,b)$. Direct
+substitution gives
+
+$$
+g=F(x_*)-\ell(x_*)=
+\frac{d(\sqrt B-\sqrt A)^2}{AB}.
+\tag{AC.12}
+$$
+
+Write $x_*=\lambda a+(1-\lambda)b$, $0<\lambda<1$.
+Affineness of $Q$ and $\ell$ gives
+$g=(F-Q)(x_*)+\lambda(Q-F)(a)+(1-\lambda)(Q-F)(b)\leq2\epsilon$.
+This proves the bound using three heights. Conversely $0\leq F-\ell\leq g$
+on the interval, so $\ell+g/2$ has uniform error $g/2$. The three-height
+lower proof applies to every affine approximant, proving scalar sharpness.
+$\square$
+

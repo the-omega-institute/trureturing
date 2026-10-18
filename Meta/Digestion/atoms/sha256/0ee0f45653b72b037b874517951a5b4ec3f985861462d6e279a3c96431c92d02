@@ -1,0 +1,9 @@
+-\sum_{e\in E}
+c_e'(s)
+\bigl(q_e^{\mathsf T}\phi_s^{ab}\bigr)^2,
+}
+\]
+其中
+\[
+\phi_s^{ab}
+=

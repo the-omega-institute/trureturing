@@ -1,0 +1,9 @@
+**定义 10.1（响应价格与两个不同目标）。** 对 $\eta>0$、$n\ge1$ 定义
+
+$$
+\mathcal E_\eta(n)=\frac{Z(n)}{n^\eta},\qquad
+x_n=\log n,\quad y_n=\log Z(n).
+$$
+
+于是 $\log\mathcal E_\eta(n)=y_n-\eta x_n$。优化这一目标就是经典 colossally abundant 数使用的 $\sigma(n)/n^{1+\eta}$ 目标。约数计数目标 $\tau(n)/n^{3/10}$ 则把局部 $S_p(a)$ 换成 $a+1$；它不是此处消费的 $Z(n)/n^{1/25}$。例如 $7,10$ 的 $\tau$ 分别为 $2,4$，而 $Z$ 分别为 $8/7,9/5$。
+

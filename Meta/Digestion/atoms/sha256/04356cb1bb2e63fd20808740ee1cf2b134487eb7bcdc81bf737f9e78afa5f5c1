@@ -1,0 +1,20 @@
+**开放问题 8.2（Exact residual on the unchanged complete target）。** The exact adaptive count is (5.3). At the original GLOBAL deadline three, (6.8) closes all branches with $r=3$ or $r=4$. For $r=2$, the remaining exact choice is
+
+$$
+K_{\min}^{\rm GLOBAL}(3;f)\in\{N+4,N+5\};
+\tag{8.1}
+$$
+
+Theorem 7.1 closes its stated actual table, not every $r=2$ table. At the original deadline four, for every $r\in\{2,3,4\}$ the remaining exact choice is
+
+$$
+K_{\min}^{\rm GLOBAL}(4;f)\in\{N+4,N+5,N+6\}.
+\tag{8.2}
+$$
+
+No endpoint of these residual sets is a numerical conjecture. The missing proof is an all-controller existence/exclusion classification at four word rows for (8.1), and at four and five word rows for (8.2). Its domain remains every $3\le m<k\le2m-2$, actual $g,P,H,O$, all placements and sizes of the three joined phase classes, tail independence on the full original low rectangle, homogeneous possibly empty $H$, fresh $R,C$, and arbitrary bottom label. It must retain both two-label tables literally. Up to renaming their four component labels, the equality patterns, in order $(A,A',B,B')$, are $0101,0110,0102,0120,0112,0121,0123$; these cover all cross-table coincidences, but are not a classification of physical phase compatibility.
+
+For each proposed smaller count, either give full $c,u,V$ and all-source supports/ranks at that count, or exclude every such controller. In particular the remaining proof must cover shared and distinct initial roots; arbitrary words via their actual full-path charges; early and delayed stopping of $R,C$ and homogeneous component branches; zero waits and safe all-one words; rejection of homogeneous supports; and identifications across paid depths when the installed stream repeats a word. A state identification must use the same word and the same successor for each raw endpoint on the union of all its actual immutable-target/current-record supports, with the original leading-run/current-tail seam and remaining fee budget at each occurrence. Retaining phase-zero or phase-$m$ sources because $C$ was delayed changes the available parity donors. The isolated-class decoder of Theorem 2.1 and the five/six-row attainments are not asserted to be normal forms for these competitors. Selected word menus, finite samples, joined block prices and layered quotients do not prove their exclusion.
+
+This leaves a finite next proof assignment at this same owner: the four-row compatibility criterion for equal lower-label sets at fee three, and the four-/five-row criterion for each original fee-four target. The exact full-scope GLOBAL goal remains unresolved until those obligations are proved. The broader arbitrary-target/all-$k,m$ objective of [IC, Open Problem 9.1] also retains its original scope.
+

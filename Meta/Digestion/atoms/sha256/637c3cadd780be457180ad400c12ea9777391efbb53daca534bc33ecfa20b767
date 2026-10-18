@@ -1,0 +1,43 @@
+### 定理 15.4（FIB 纤维的自由能谱）
+
+固定 \((X,Y,Z)\)，令 \(r=1-Z\)，并假设纤维内部 \(p_s>0\)。给定状态能量 \(E_s\)，定义
+
+\[
+F_\beta(p)=\sum_sE_sp_s-\beta^{-1}
+\Bigl(-\sum_sp_s\log p_s\Bigr).
+\]
+
+沿 \(p_\kappa\) 有
+
+\[
+\frac{dF_\beta}{d\kappa}
+=\Delta E+\beta^{-1}\vartheta,\qquad
+\Delta E=E_0+E_{25}-E_2-E_5,
+\]
+
+\[
+\vartheta=\log\frac{p_0p_{25}}{p_2p_5},\qquad
+\frac{d^2F_\beta}{d\kappa^2}
+=\beta^{-1}\mathcal I(\kappa)>0,
+\]
+
+其中
+\[
+\mathcal I(\kappa)
+=p_0^{-1}+p_2^{-1}+p_5^{-1}+p_{25}^{-1}.
+\]
+
+所以自由能在每条合法纤维上严格凸，唯一平衡点满足
+
+\[
+\frac{p_0p_{25}}{p_2p_5}=e^{-\beta\Delta E}.
+\]
+
+在简并条件 \(\Delta E=0\) 下，平衡点正是最大熵点
+\[
+\kappa_*=\frac{XY}{r},
+\]
+并且 \(\Delta=r\kappa-XY=0\)。这里 \(\beta^{-1}\mathcal I_*\) 是 \(\kappa\) 方向的静态自由能曲率。
+
+证明：沿 seam 有 \(p_0'=p_{25}'=1\)、\(p_2'=p_5'=-1\)。对熵逐项微分得到 \(H'=-\vartheta\)，再次微分得到 \(\vartheta'=\mathcal I\)。代入自由能定义即得。证毕。
+

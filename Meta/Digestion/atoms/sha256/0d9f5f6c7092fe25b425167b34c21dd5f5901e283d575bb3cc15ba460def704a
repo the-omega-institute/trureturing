@@ -1,0 +1,173 @@
+**Theorem 10.1 (sharp uniform memory frontier).** For every $d\geq2$
+and $1\leq r\leq d$, there is one finite-flag $\mathcal S_r\in
+\mathfrak C_r$ such that, for EVERY complex CPTP slot $\Phi$,
+
+$$
+\begin{aligned}
+\delta(\mathcal S_r(\Phi))
+ &=\|\mathcal S_r(\Phi)-\Theta(\Phi)\|_\diamond\\
+ &=\frac{2(d-r)}{d-1}\max_i
+       \bigl[1-\langle i|\Phi(P_i)|i\rangle\bigr],\\
+\inf_{\mathcal S\in\mathfrak C_r}\sup_{\Phi\ {\rm CPTP}}
+       \delta(\mathcal S(\Phi))
+ &=\inf_{\mathcal S\in\mathfrak C_r}\delta(\mathcal S(K))
+ =\epsilon_r:=\frac{2(d-r)}{d-1}.
+\end{aligned}
+\tag{JG.60}
+$$
+
+The infimum over the whole Schur class is attained by the existing
+comparator $\Theta(\Phi)$; the same $\mathcal S_r$ works for every
+$\Phi$, and the same $K$ is a worst case for every memory cap. No
+slot-dependent choice of realization or partition is required.
+
+Proof. Choose any surjection $f:\{1,\ldots,d\}\to\{1,\ldots,r\}$,
+and set $G_m=f^{-1}(m)$, $n_m=|G_m|>0$. On slot times bypass define
+
+$$
+V_f|i\rangle=|i,f(i)\rangle,\qquad
+R_0=V_f^*,\qquad
+R_{a,m,i}=\frac{|i\rangle\langle a,m|}{\sqrt{n_m}}
+ \quad(f(a)\ne m,\ i\in G_m).
+\tag{JG.61}
+$$
+
+Let $D_f(Y)=R_0YR_0^*+\sum_{a,m,i}R_{a,m,i}YR_{a,m,i}^*$.
+The first Kraus adjoint product is the code projection $V_fV_f^*$.
+For each wrong-code basis vector $|a,m\rangle$, the $n_m$ remaining
+adjoint products sum to its projection. Therefore
+
+$$
+R_0^*R_0+\sum_{a,m,i}R_{a,m,i}^*R_{a,m,i}=I_{dr},
+\qquad D_f(V_fXV_f^*)=X.
+\tag{JG.62}
+$$
+
+Thus $D_f$ is TP on all of $M_{dr}$, not just on the code. This reuses
+the full-TP recovery principle of §4 and of the existing private
+`recoveryKraus`/`recovery_complete` construction in
+[Schur Channel Mixed-Unitary Distance][SCMD]. At $r=d$, singleton
+groups give precisely that recovery, after relabelling memory indices.
+
+To specify ACTUAL finite flags, let $\omega=\exp(2\pi i/3)$,
+$z\in\{0,1,2\}^d$, $U_z=\operatorname{diag}(\omega^{z_i})$, and let
+$\pi$ range over all $d!$ permutations. Put $f_\pi(i)=f(\pi(i))$.
+Generate the classical flag $c=(\pi,z)$ uniformly, with
+$p_c=(d!3^d)^{-1}$, and supply
+
+$$
+\begin{aligned}
+\mathcal E_c(X)&=p_c(U_z\otimes I_r)V_{f_\pi}X
+                    V_{f_\pi}^*(U_z^*\otimes I_r),\\
+\mathcal D_c(Y)&=D_{f_\pi}\bigl((U_z^*\otimes I_r)Y
+                                      (U_z\otimes I_r)\bigr).
+\end{aligned}
+\tag{JG.63}
+$$
+
+These are common CP encoders with effect $p_cI_d$, and full CPTP
+conditional decoders. The bypass is $r$-dimensional on every branch;
+the uniformly generated flag is classical, not an uncounted coherent
+register. Equations (JG.51) and (JG.54) hold. A Schur slot multiplies
+each encoded $|i,f_\pi(i)\rangle\langle j,f_\pi(j)|$ by $C_{ij}$,
+and diagonal phases cancel. Recovery returns $C_{ij}E_{ij}$. Hence
+EVERY normalized branch, and their average $\mathcal S_r$, fixes every
+Schur channel.
+
+Here is the action on all complex matrix units. Define
+
+$$
+t_{ai}=\langle a|\Phi(P_i)|a\rangle,\qquad
+a_{ij}=\langle i|\Phi(E_{ij})|j\rangle\quad(i\ne j),\qquad
+\alpha=\frac{r-1}{d-1}.
+\tag{JG.64}
+$$
+
+For a coefficient $\langle a|\Phi(E_{ij})|b\rangle$, averaging the
+phases in (JG.63) multiplies it by the mean of
+$\omega^{z_i-z_j-z_a+z_b}$. This mean is nonzero exactly when
+$\mathbf e_i-\mathbf e_j-\mathbf e_a+\mathbf e_b=0$: each coordinate
+is between $-2$ and $2$, so divisibility by $3$ implies zero. For
+$i=j$ this requires $a=b$; for $i\ne j$ it requires $a=i,b=j$.
+Consequently the effective twirled slot has exactly the actions
+
+$$
+P_i\longmapsto\sum_at_{ai}P_a,\qquad
+E_{ij}\longmapsto a_{ij}E_{ij}\quad(i\ne j).
+\tag{JG.65}
+$$
+
+This is a complex-linear identity; in particular reverse coherences
+$E_{ij}\mapsto E_{ji}$ are removed. Third roots, rather than just real
+signs, are needed for this conclusion.
+
+For input $P_i$, a population arriving at $a$ is decoded to $P_a$ if
+$f_\pi(a)=f_\pi(i)$, and otherwise to
+$n_{f_\pi(i)}^{-1}\sum_{k\in G_{f_\pi(i)}}P_k$, with groups understood
+for $f_\pi$. For any fixed $a\ne i$, uniform permutation averaging gives
+the probability of correcting that population to $i$ as
+
+$$
+\sum_{m=1}^r\frac{n_m}{d}\frac{d-n_m}{d-1}\frac1{n_m}
+ =\frac{r-1}{d-1}=\alpha.
+\tag{JG.66}
+$$
+
+Thus $\mathcal S_r(\Phi)(P_i)$ is diagonal, has trace one, and its
+$i$-th entry is $t_{ii}+\alpha(1-t_{ii})$. Every off-diagonal $E_{ij}$
+is sent to $a_{ij}E_{ij}$, since its surviving encoded output is on
+the code. Unequal group sizes cause no loss in (JG.66).
+
+Identify the Schur comparator by
+
+$$
+\Theta(\Phi)(P_i)=P_i,\qquad
+\Theta(\Phi)(E_{ij})=a_{ij}E_{ij}\quad(i\ne j).
+\tag{JG.67}
+$$
+
+This is the existing private `Theta`/`Theta_entry` comparator in
+[SCMD], not a newly postulated Schur map. Its positivity is also visible
+directly: $A_{ij}=\langle i|\Phi(E_{ij})|j\rangle$, including
+$A_{ii}=t_{ii}$, is a principal compression of $J(\Phi)\succeq0$.
+Then $C=A+\operatorname{diag}(1-t_{ii})\succeq0$ has unit diagonal,
+since $0\leq t_{ii}\leq1$. Schur multiplication by $C$ is CPTP and
+equals (JG.67).
+
+Put $L=\mathcal S_r(\Phi)-\Theta(\Phi)$ and $D_i=L(P_i)$. This map
+kills all off-diagonal matrix units. Each $D_i$ is diagonal with
+nonnegative entries except possibly its $i$-th entry, and
+
+$$
+\|D_i\|_1=2(1-\alpha)(1-t_{ii}).
+\tag{JG.68}
+$$
+
+For any reference dimension and any complex operator $X$, write
+$X_{ii}=(\langle i|\otimes I)X(|i\rangle\otimes I)$. Diagonal pinching
+is an average of unitary conjugations, so its trace-norm contraction
+gives $\sum_i\|X_{ii}\|_1\leq\|X\|_1$. Consequently
+
+$$
+\begin{aligned}
+\|(L\otimes\operatorname{id})(X)\|_1
+ &=\left\|\sum_iD_i\otimes X_{ii}\right\|_1\\
+ &\leq\max_i\|D_i\|_1\sum_i\|X_{ii}\|_1
+ \leq\max_i\|D_i\|_1\|X\|_1.
+\end{aligned}
+\tag{JG.69}
+$$
+
+The input $P_i$ attaining the maximum saturates this bound. Against
+ANY Schur comparator, the same input and binary output measurement
+give the lower bound $2(1-\alpha)(1-t_{ii})$, since that comparator
+fixes $P_i$. This proves the pointwise infimum and its attainment in
+(JG.60), for arbitrary passive references and non-Hermitian operators.
+For an infinite passive reference, the same pinching inequality holds
+on trace-class operators, or follows by finite-rank approximation.
+
+Since $t_{ii}=0$ for $K$, it attains the pointwise worst value
+$\epsilon_r$. Theorem 9.2 supplies the matching lower bound for every
+$\mathcal S\in\mathfrak C_r$. This proves both minimax equalities.
+$\square$
+

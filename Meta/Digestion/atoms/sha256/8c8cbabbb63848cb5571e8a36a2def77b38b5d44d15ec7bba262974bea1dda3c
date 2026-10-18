@@ -1,0 +1,46 @@
+**Lemma 2.2 (Fixed native decoder and its exact norm).** Write
+
+$$
+U(t)=\binom{\cos t}{\sin t},\qquad
+R_t=\begin{pmatrix}\cos t&-\sin t\\\sin t&\cos t\end{pmatrix},
+\qquad J=\operatorname{diag}(1,-1),
+$$
+
+$$
+A(k)=2\sqrt{k(H-k)},\qquad B(k)=2\sqrt{kZ},\qquad
+z_\alpha=A(k)U(\alpha),\qquad z_\beta=B(k)U(\beta).
+$$
+
+Define the fixed linear maps
+
+$$
+D_0(z_\alpha,z_\beta)
+ =(z_\alpha,z_\beta,z_\alpha,Jz_\alpha,Jz_\alpha),
+\qquad O=\bigoplus_{e\in\mathcal E}R_{\delta_e},\qquad D=OD_0.
+$$
+
+Then the original output, with zero offset, is
+
+$$
+y=D(z_\alpha,z_\beta),\qquad
+D^{\mathsf T}D=4I_2\oplus I_2.
+$$
+
+In particular, for arbitrary pairs $a,a',b,b'\in\mathbb R^2$,
+
+$$
+\|D(a,b)-D(a',b')\|_2^2
+ =4\|a-a'\|_2^2+\|b-b'\|_2^2.
+$$
+
+**Proof.** The negative amplitude exponential gives
+$\overline\psi_i\psi_j=\sqrt{p_ip_j}e^{i(\theta_i-\theta_j)}$.
+The two Hermitian expectations are respectively twice its real and imaginary
+parts. In edge order the increment differences are
+$\alpha,\beta,\alpha,-\alpha,-\alpha$. The last two signs are essential
+for open prefixes. Since $U(-t)=JU(t)$, the five blocks are exactly those
+of $D$. Each of the four bottom-edge blocks contributes one copy of $I_2$
+to its pullback Gram; the middle-reference block contributes the remaining
+copy. Both $O$ and $J$ are orthogonal. This proves the Gram and norm
+identities in the original output coordinates. $\square$
+

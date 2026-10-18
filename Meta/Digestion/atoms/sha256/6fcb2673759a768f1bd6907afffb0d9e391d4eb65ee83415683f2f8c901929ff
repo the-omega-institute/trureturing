@@ -1,0 +1,20 @@
+**Corollary 4.2 (exact joint-functional scaffold transport).** For all
+$d\ge1,h\ge0$ and nonnegative $w$,
+
+$$
+J_{d+h}(w^{\uparrow})=J_d(w)^{2^h}.
+\tag{RCE.18}
+$$
+
+Proof. Remove zero-weight states using Lemma 2.2. On the scaffold
+image, each target strictly above the frontier is constant branch;
+every other target is one constituent target in $W_d$. Every
+boundary experiment is constant or one constituent experiment.
+Conversely prefixing by that constituent's public frontier address
+realizes each of its targets and experiments in $W_{d+h}$.
+These maps identify feasibility and hard targets in both directions
+with the product interface of Definition 3.3. Weights occur once,
+as in (RCE.17). Apply Theorem 3.4. This statement concerns $J$;
+the distinct exact $\beta$ scaffold identity is credited to
+[JTC, Theorem 4.2]. $\square$
+

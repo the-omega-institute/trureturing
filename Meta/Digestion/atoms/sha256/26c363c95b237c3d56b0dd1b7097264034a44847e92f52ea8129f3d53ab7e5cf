@@ -1,0 +1,29 @@
+**Definition 3.1 (whitened cost and explicit threshold).** Set
+$A_*=\alpha V$, $B_*=\beta W$ and, for $0\le p\le1$, define
+
+$$
+A(p)=B_*+(A_*-B_*)p,\quad x(p)=Vp/A(p),\quad
+\mathcal J(p)=A(p)\mathcal F(x(p)),\quad
+\mathcal C(p)=\mathcal J(p)+\mathcal J(1-p).
+\tag{SC.13}
+$$
+
+The scalars $A_*,B_*$ are unrelated to activity and $B_0$. Put
+$p_z=d_f^2/L_f^2$, $p_s=1/(1+u_f^2)$ and
+
+$$
+\begin{gathered}
+R_1=\alpha Vd_f^2+4\beta Wz_f^2,\quad
+R_2=4\alpha Vz_f^2+\beta Wd_f^2,\\
+\boxed{C_{\rm two}=\frac{R_1}{L_f^2}
+\mathcal F\!\left(\frac{Vd_f^2}{R_1}\right)
++\frac{R_2}{L_f^2}
+\mathcal F\!\left(\frac{4Vz_f^2}{R_2}\right)=\mathcal C(p_z).}
+\end{gathered}
+\tag{SC.14}
+$$
+
+This is a finite rational/radical expression with no residual
+minimization or root selection. The $R_i$ in (SC.14) are local scalars,
+not JR's endpoint residues.
+

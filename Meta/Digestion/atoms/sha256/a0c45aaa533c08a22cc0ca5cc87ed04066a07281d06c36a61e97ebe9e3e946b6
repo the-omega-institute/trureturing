@@ -1,0 +1,112 @@
+**Example 207.19 (A rational dense profile and precise overlap).** Take
+
+$$
+L=8,\quad m=6,\quad c=7/2,\quad s=9/5,\quad
+r_3=r_4=1,\quad r_5=\cdots=r_8=9/10.
+\tag{207.45}
+$$
+
+Put $\nu(Z)=9/50$ on each three- or four-subset of $\{3,\ldots,8\}$,
+so all 70 early pair rows have weight $9/100$. The singleton input
+has $C=14/5$ at $w(\{3\}),w(\{4\})$, $C=27/10$ at each
+$w(\{j\})$, $5\le j\le8$, and $T=9/5$. The representative puts
+$9/5$ at each singleton and the corresponding residual $1$ or $9/10$
+at the absorbing suffix. Thus
+
+$$
+S=63/10,\quad W=81/10,\quad G=82/5,\quad K=49/2,
+\quad z=9/10,\quad b_*=27/20.
+\tag{207.46}
+$$
+
+At $(3,4)$ the input maxima are $(9/5,14/5,14/5,27/10)$ with sum
+$101/10$, and the representative maxima are
+$(9/5,9/5,14/5,27/10)$ with sum $91/10$. Both stopped maxima are
+$(18/5,14/5,27/10)$ with sum $91/10$. Formulas (207.40) and (207.44)
+give all other schedules and prove the exact costs $(2,1)$ and $(1,1)$.
+
+Here are comparisons with specific earlier families, using their stated
+domains and the signed residual (207.8).
+
+1. The actual 203.2 test has $\kappa=\pi=1$, so its sum is two;
+   its protected-tail exact-minimum clause does not apply since
+   $t<\mu=14/5$. The 205.9 positive-cell completion has
+   $\zeta=9/10$, added tail $1/10$, $D=1$ and residual charge
+   $(2/3)(1/10)$, totaling $16/15$. In 205.10, the least threshold
+   for $d\le1$ occurs at $d=1$, and equals
+   $\max((c+1)s,3s+\mu)=41/5>81/10$.
+
+2. The fixed-projection zero core retains at most $s$ per class and
+   has $v_4$ residual at least $6/5$. More generally, on the declared
+   scaled zero-core ray with common capacity $x$ and
+   $W'\ge(c+1)x$, retained late totals are at most $x$. If $x\ge s$,
+   (207.8) gives a $v_4$ reading at least $3x/5+3/25\ge6/5$.
+   If $x<s$, put $a=s-x$. Even at maximal retained totals $x$,
+   $u_8\le1$ requires $a\le7/30$, while $v_4\le1$ requires
+   $a\ge1/3$. Indeed these two lower readings are
+   $4/5+6a/7$ and $6/5-3a/5$. Smaller retained totals or extra
+   stock only increase these bounds. This excludes that scaled ray.
+
+3. Consider the entire single-zero core family of 202.4, including
+   arbitrary retained $\eta,p$, pair reserve $h$, terminal reserve
+   $\tau$ and signed residual. Put $B'=\sum p+h+\tau$, let its cost be at most
+   $d=1-\theta$, and set $u_j=(\eta_j-p_j)_+$. Its exact formula
+   in 202.10 gives $u_i+u_j\le d$ for every pair, hence
+   $\sum\eta_j\le\sum p_j+3d\le B'+3d$. The $u_8$ residual
+   forces $\sum\eta_j\ge82/5-7\theta$, giving
+   $B'\ge67/5-4\theta\ge47/5$. The $v_8$ residual, together
+   with the same upper bound on retained totals, forces
+
+   $$
+   3(82/5)-3B'-9d\le6(81/10-B')+9\theta.
+   \tag{207.47}
+   $$
+
+   Since $d+\theta=1$, this gives $B'\le14/5$, a contradiction.
+   Thus no parameter choice in that named family has budget one.
+
+4. In 201.3, $\Lambda=(10/3)(27/10)+3(1/10)=93/10$, and the
+   unit threshold is $\Lambda+\mu-1=111/10$. The displayed threshold
+   of 202.3 is $G+(\mu-1)+(\mu-2)=19$. For 202.6 the two largest
+   totals sum to $M_2=28/5$, giving
+   $\mu+(1-1/M_2)\Lambda=2923/280$. Each exceeds
+   $81/10$. The 202.8 internal remainder $109/10$ exceeds
+   $2\mu=28/5$; 202.11's five-label premise does not include these
+   six positive late classes. The 203.6 fair threshold is
+   $5(\mu-1)=9>81/10$. In the 203.4 product family the heavy
+   labels are both internal and $u\le81/20$. Their two non-$11$
+   deficits are at least
+   $2\mu(2\mu/u-1)\ge868/405>1$.
+
+5. Terminal-maximum and nondecreasing-profile premises fail since the
+   last total is $27/10<14/5$. The conditional shared-terminal
+   supplier also requires a forced-zero last bit, whereas
+   $\nu(x_8=1)=27/10$. One- or two-active-class results do not
+   apply. Zero score fails at $u_3$ with value $7/5$. Neither the
+   singleton input nor the threshold representative has the common
+   Markov suffix relation of 198.2: conditional on bit 3 zero, the
+   input's correct class 3 has bit 4 always one while the pair
+   class has bit 4 zero with probability $1/2$; in the
+   representative, correct class 3 conditional on bit 4 zero has
+   bit 5 zero with probability one, while the pair measure conditional
+   on bit 4 zero has bit 5 zero with probability $1/2$.
+
+6. The §206 chain parameter is $q=\max(\mu,2\mu-t)=19/5$, so
+   its exact cost contains $q-E>1$. A clipped-fair test would require
+   $\gamma_3\le2$ at $u_3$, which fails. In its coupled-stock
+   family $E=0$ forces $u\le d+63/40$; the $v_4$ residual gives
+   $\theta\ge6(\mu-u)/5$. Consequently
+
+   $$
+   d+\theta\ge147/100-d/5\ge127/100>1\quad(0\le d\le1).
+   \tag{207.48}
+   $$
+
+   For the entire balanced-fair family, (207.24)'s argument with
+   $E=0$ gives $D+\theta\ge\gamma_3/2=7/5>1$, independently
+   of retained totals, early masses and $W'$.
+
+The thresholds in item 4 are substitutions into the owning suppliers,
+not new minima. In particular the comparison is not separation from
+all consequences, mixtures or closures of earlier constructions.
+

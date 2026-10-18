@@ -1,0 +1,22 @@
+**定义 1.2（一个不变的实际过程）。** 固定 $m=2,d=1,\ell=2,n=4$。固定任意有限或可数深度概率先验 $\mu$，满足 $\mu(1),\mu(2)>0$。第一笔实际 Read 之前只抽取一次 $K$，前奏与全部载荷均使用这个共同 $K$。给定 $K=k$，合法实际 Read 新鲜条件独立，且
+
+$$
+r_k=\frac{F_{k+1}}{F_{k+3}},\qquad
+r_1=\frac13,\quad r_2=\frac25,\quad
+\frac38\le r_k\le\frac5{13}\quad(k\ge3).
+\tag{1.1}
+$$
+
+每个实际 Read 都付费。提种器将 $\alpha\beta$ 接受为种子0、$\beta\alpha$ 接受为种子1；相等对被拒绝并继续付费重试。取得种子后继续原四段载荷。第 $i$ 段在 $p_i$：$\alpha$ 完成标记0，$\beta$ 进入 $q_{\beta,i}$；在 $q_{\beta,i}$：$\alpha$ 返回 $p_i$，$\beta$ 完成标记1。前三段完成后进入下一段，第四段完成后进入 $z_b$，随后必须执行唯一的原 $\mathrm{Stop}_b$，进入 $z_{\rm done}$。两个终端阶段均无 Read 权限。
+
+令 $c=C_0(h)$ 为实际有限控制与原记录的完整配置：它包括取得的种子、原裸字段、选择器、全标记树上的 $B,Q^+,Z$ 写入和锁存、当前解析阶段、完成标记及 Stop 交付状态。第三次标记的记录写入完成后才锁存；锁存后记录保持，原第四段与 Stop 继续。两种种子、全部标记三元组和所有有限拒绝、返回圈均在定义域内；没有先行条件于未来 $E_1$。
+
+记 $\mathcal H_3$ 为第三标记刚锁存、第四段尚无 Read 的全部正概率有限实际历史；$\mathcal H_p,\mathcal H_\beta$ 分别为第三标记后处在 $p_4,q_{\beta,4}$ 的全部正概率有限实际历史，包含任意有限活动前缀。另记 $\mathcal H_{\rm pending},\mathcal H_{\rm delivered}$ 为原 Stop 待交付、已交付切面。置
+
+$$
+\mathcal H_{\rm all}=\mathcal H_p\cup\mathcal H_\beta
+ \cup\mathcal H_{\rm pending}\cup\mathcal H_{\rm delivered}.
+$$
+
+这些是原操作的切面，不新增等待、来源答复或控制端口。$\mathcal H_3\subset\mathcal H_p$。由于每个支持深度都有 $0<r_k<1$，这个有限历史结构域对所有上述先验相同。
+

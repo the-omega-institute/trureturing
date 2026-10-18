@@ -1,0 +1,40 @@
+**Theorem 3.2 (Integrable square residual and two-site expansion).** Under (1.5)–(1.6), for
+$f\in\mathcal K_C(P)$ set
+
+$$
+R_{C,f}(y)=\sum_w p_C(w;y)f(w)d_C(w;y)^2.
+\tag{3.7}
+$$
+
+It belongs to $L^1(\mu_C)$ with norm at most $\|f\|_\infty\mathsf B_L^2$. If additionally $T_{C,f}=0$
+almost surely, then
+
+$$
+\begin{aligned}
+R_{C,f}&=\mathbb E_P[f(X_C)a_C(X_C;Y)^2\mid\mathcal H_C]\\
+&=\sum_{i,j\in\mathbb Z}\mathbb E_P[f(X_C)u_{C,i}u_{C,j}\mid\mathcal H_C],
+\qquad \|R_{C,f}\|_1\le\|f\|_\infty K_L^2.
+\end{aligned}
+\tag{3.8}
+$$
+
+The double series converges absolutely in $L^1$ and almost surely, dominated by an integrable conditional
+sum of absolute products.
+
+Proof. The first assertion is conditional integration of $|f|D_C^2$ and Theorem 3.1. Write $d_C=a_C+m_C$.
+Intrinsic nullity gives $\sum p_Cf=0$; $T_{C,f}=0$ then gives $\sum p_Cfa_C=0$. Expanding the square
+leaves $\sum p_Cfd_C^2=\sum p_Cfa_C^2$. This is also an identity of integrable conditional quantities:
+$m_C(Y)\in L^2$ by conditional contraction, and all mixed terms are integrable by Cauchy–Schwarz. The
+centered bound gives the sharper norm estimate. Finally, Tonelli and Theorem 3.1 yield
+
+$$
+\sum_{i,j}\mathbb E_P|f(X_C)u_{C,i}u_{C,j}|
+\le\|f\|_\infty\mathbb E_P\left(\sum_i|u_{C,i}|\right)^2
+\le\|f\|_\infty K_L^2.
+\tag{3.9}
+$$
+
+Conditional Tonelli makes the conditional absolute majorant integrable and finite almost surely. Absolute
+summation therefore commutes with conditional expectation, and (3.2) proves (3.8). The two factors refer
+to the same actual configuration under $P$, not independent copies. $\square$
+

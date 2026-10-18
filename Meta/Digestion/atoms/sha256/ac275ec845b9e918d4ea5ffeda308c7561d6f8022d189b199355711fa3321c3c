@@ -1,0 +1,10 @@
+## Finite edge set is forced by the incidence hypotheses
+
+Write `O = T × Fin 6` and `source(t,i) = edge t i`.  If `s` satisfies
+`FourCycle`, then every `e : E` occurs in `source`: when `low e = true`,
+`card (star s e) = 8`; otherwise `card (star s e) ≥ 12`.  Thus `source : O → E`
+is surjective.  Since `O` is finite, `E` is finite as well.  Consequently the
+rectangle below is a finite-dimensional compact rectangle, even though the
+analytic theorem does not need a `[Fintype E]` argument as an extra
+hypothesis.
+

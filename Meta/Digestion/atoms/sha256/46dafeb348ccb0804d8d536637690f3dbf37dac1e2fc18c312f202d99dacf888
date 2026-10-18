@@ -1,0 +1,57 @@
+**Theorem 63.2 (Forced likelihood range and the finite-atom boundary).** Every transfer (63.1) has a unique real-linear signed extension $\widetilde T$ which is a variation-norm contraction. It fixes every real integrable likelihood density:
+
+$$
+\widetilde T(g\sigma)=g\sigma
+\qquad\bigl(g\in L^1(\sigma|_{\mathcal G};\mathbb R)\bigr).
+\tag{63.2}
+$$
+
+In particular its positive probability image contains $P_{\mathcal G}$. This forced range is sharp: the already defined $\Pi$ of (59.3) is in the transfer class and has probability image exactly $P_{\mathcal G}$.
+
+The following three existence statements are equivalent:
+
+1. Some transfer in this class has its probability image contained in a finite-dimensional real subspace of $\mathsf M_{\mathbb R}(\Theta,\mathcal F)$.
+2. Some transfer in this class has a relatively TV-compact probability image on the original tapes.
+3. Modulo $\sigma$-null sets, $\mathcal G$ has a finite partition into positive-mass atoms, that is, (60.1) holds with finite $J$.
+
+Thus countably infinitely atomic likelihood information, as well as any likelihood information with a nonatomic part, prevents both proposed kinds of positive target-fixed reduction. The finite atoms here are atoms of $\mathcal G$ under $\sigma$, and need not be point tapes or atoms of $\mathcal F$.
+
+**Proof.** For positive $\alpha,\beta$ define $\widetilde T(\alpha-\beta)=T\alpha-T\beta$. If $\alpha-\beta=\alpha'-\beta'$, then $\alpha+\beta'=\alpha'+\beta$; additivity makes the definition independent of the representation. Additivity and homogeneity give the unique real-linear extension. Positivity gives
+
+$$
+|\widetilde T\lambda|\le T|\lambda|,
+\qquad
+\|\widetilde T\lambda\|_{\mathrm{var}}
+\le T|\lambda|(\Theta)=\|\lambda\|_{\mathrm{var}}.
+\tag{63.3}
+$$
+
+For example the first inequality follows by applying positivity to $-|\lambda|\le\lambda\le|\lambda|$ and taking the least positive measure dominating both signs. Consequently the fixed space $V=\{\lambda:\widetilde T\lambda=\lambda\}$ is norm closed. It is a vector sublattice: for $\lambda\in V$, (63.3) gives $|\lambda|\le T|\lambda|$, and the two finite positive measures have the same mass, hence are equal. Absolute values and linear combinations give lattice minima and maxima in $V$.
+
+This fixed-sublattice fact is the classical input of Douglas, [*Contractive projections on an $L^1$ space*, Proposition 13, printed p. 460](https://msp.org/pjm/1965/15-2/pjm-v15-n2-p06-s.pdf), *Pacific Journal of Mathematics* **15** (1965), 443--462. Proposition 13 expressly includes positive contractions on the space of finite measures and requires no projection assumption. The preceding argument verifies its hypotheses and its real-measure consequence here; no classification of conditional expectations is invoked.
+
+Every $f_i\sigma=\mu_{x_i}$ belongs to $V$. Variation-norm convergence of the positive mixture gives $\sigma\in V$, since its finite partial sums are fixed and their omitted masses tend to zero. For rational $t$, lattice closure therefore puts $(f_i-t)_+\sigma$ and
+
+$$
+\min\{n(f_i-t)_+,1\}\sigma\quad(n\ge1)
+\tag{63.4}
+$$
+
+in $V$. These bounded densities converge in $L^1(\sigma)$ to $\mathbf1_{\{f_i>t\}}$. Thus $V$ contains the indicator measure of each rational likelihood superlevel set.
+
+The sets $B\in\mathcal F$ whose indicator measures $\mathbf1_B\sigma$ belong to $V$ form a sigma algebra: complements use $\sigma\in V$, finite intersections use lattice minima, and countable unions follow from finite unions and norm convergence of their increasing indicator measures under the finite measure $\sigma$. This sigma algebra contains every generator of $\mathcal G$. Hence $V$ contains all $\mathcal G$-simple signed density measures. Their $L^1$ density and closedness of $V$ prove (63.2), including unbounded integrable real densities. The properties and exact image of $\Pi$ needed for sharpness are those already proved in Theorem 59.2.
+
+For the compactness boundary, disjoint positive-mass sets $A_1,\ldots,A_k\in\mathcal G$ give probability measures
+
+$$
+v_j=\frac{\mathbf1_{A_j}}{\sigma(A_j)}\sigma\in P_{\mathcal G},
+\qquad \operatorname{TV}(v_i,v_j)=1\quad(i\ne j).
+\tag{63.5}
+$$
+
+They all belong to every transfer's probability image by (63.2). Relative compactness implies total boundedness, so a finite cover by balls of radius less than $1/2$ bounds the number of such disjoint sets. There is consequently a largest possible finite cardinality $k$ of a disjoint positive-mass collection. Choose a collection of that cardinality. Its complement is null, since otherwise it could be adjoined; each member is an atom, since otherwise it could be split into two positive-mass measurable sets. This is exactly the finite partition in statement 3. This argument also proves that failure of statement 3 supplies arbitrarily large finite sets of probability measures separated as in (63.5), without any topology on tapes.
+
+A probability image contained in a finite-dimensional real subspace is bounded in variation norm, since every probability has norm one. Its closure there is compact; the probability measures form a closed subset in variation norm, and event-TV on them is half that norm. Thus statement 1 implies statement 2. Conversely, under statement 3 the original-tape identification (60.4)--(60.6) makes $P_{\mathcal G}$ the compact finite simplex of mixtures of the fixed measures $\kappa_j$. Choosing $T=\Pi$ establishes statements 1 and 2. This proves the equivalence. $\square$
+
+The same rigidity acts directly on the proposed order repair. If a reduced cap family has laws $\lambda_q=g_q\sigma\in P_{\mathcal G}$, then $T\lambda_q=\lambda_q$ for all actual signatures. Its cylinder common submeasures are also fixed, since their densities $\inf_{q'\in U_m(q)}g_{q'}$ are nonnegative integrable $\mathcal G$-measurable functions. Thus neither that family nor its common-submeasure masses can change under this transfer class. In particular the already reduced continuous optimum in Section 62, supplied by Theorem 57.1, retains its published mass deficit under every such transfer; its example is not reconstructed here. The obstruction concerns a common additive, positively homogeneous, mass-preserving, target-fixed operation on all finite positive original-tape measures. It does not exclude nonlinear cap-specific selections, transfers that fail these hypotheses, or a different selection within the original cap constraints.
+

@@ -1,0 +1,28 @@
+## 1. Scope, status and canonical suppliers
+
+Fix a stationary arbitrary-literal Moore table with at most nine installed
+states, its two labeled faithful entries, and the class of all lawful
+acquired-term binary codes that it serves on the entire repeated-partner
+one-image fiber within two calls. Assuming this class is nonempty, this
+volume proves that one positive fiber forces the same unique correct entry
+for every member of the class. A terminating finite procedure on the table
+alone finds that fiber and entry, produces an exhaustive finite certificate,
+and specifies one nine-state, four-call representative-root reader serving
+every compatible code with its original pointwise value.
+
+The canonical abbreviations are NBP for [*Native cut-birth provenance and
+literal past-row recovery*][NBP], NRE for [*Prescribed binary codes: a
+nine-state escape from root-only two-call reading*][NRE], NRN for
+*Prescribed binary codes: nine-state root normalization*, and PCA for
+[*Native prescribed-code acquisition on the original one-image fiber*][PCA].
+Each use below identifies its numbered owner. In particular, NRN Theorem
+6.1 supplies the per-code constant-positive-fiber theorem; its proof is not
+a new result of this volume.
+
+This is `repo-derived` ordinary paper mathematics, authored by the sole
+Codex CLI author. The named suppliers retain ownership of inherited
+results. This reference input carries no Lean kernel certification,
+executed mathematical verification, literature-wide originality claim or
+empirical interpretation. Acquisition and service hypotheses remain
+conditions of the mathematical statements.
+

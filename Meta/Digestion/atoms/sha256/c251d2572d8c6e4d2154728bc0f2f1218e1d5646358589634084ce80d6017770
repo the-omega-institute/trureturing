@@ -1,0 +1,66 @@
+**定义 4.1（原 JMM 插值世界与第一闭盒）。** 取
+
+$$
+\theta_0=\frac1{10^{15}}
+(648261282725604,1661406963929015,2963341227084761),\qquad
+\mathcal B_1=\{\theta\in\mathbb R^3:
+\|\theta-\theta_0\|_\infty\le10^{-8}\}.
+\tag{4.1}
+$$
+
+这是 [V，定义 17.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_V.md) 的第一个完整闭盒。对 $\theta=(\alpha,\beta,D_0)\in\mathcal B_1$，沿用 V 13.1 的同一个世界
+
+$$
+\begin{gathered}
+H=1+\alpha\beta,\quad
+P=\frac1H\begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\quad
+a=\frac1H,\quad j=\frac{\alpha+\beta}{H},\quad
+\ell=1+\frac\beta H,\\
+q_0=-D_0,\quad q_1=\frac{24-D_0}{j},\quad
+q_2=\frac{48-D_0}{\ell},\quad
+q_3=\frac{312/5-D_0}{j+\ell},\\
+f_\theta(T)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le m\le3\\m\ne i}}\frac{T-m}{i-m},
+\qquad W(\theta)=(P,f_\theta,D_0).
+\end{gathered}
+\tag{4.2}
+$$
+
+$i-m$ 是非零整数，$j,\ell,j+\ell$ 为正；后面的明确界同时证明这些除法合法。$P$ 严格正、行列式零、迹一。原 JMM 矩阵为 $I,J,L,Q$，其中
+
+$$
+Q=ML=J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},
+$$
+
+迹是 $1,j,\ell,j+\ell$，故同一个 $f_\theta$ 在原时钟 $0,1,2,3$ 给出 $0,24,48,312/5$。这些读数不全相等，故 $f_\theta\ne0$。插值次数至多三，所有这些世界合法。
+
+其后续样本由同一个多项式恒等式给出：
+
+$$
+\begin{pmatrix}f_4\\f_5\\f_6\\f_7\end{pmatrix}
+=\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.
+\tag{4.3}
+$$
+
+每一行是 Lagrange 基多项式在相应原时钟的值，所以对所有三次及以下多项式成立，包含次数下降情形。
+
+在已取得 $H_2$ 处改选第三 $J$，只是把该时钟矩阵从 $Q$ 改为 $N$，没有重拟合多项式。字面第三读与随后 MJJ 元组为
+
+$$
+\begin{gathered}
+c_\theta=D_0+q_3(a+j),\qquad
+W(\theta)\in\mathcal F_3(c_\theta),\\
+u=2\ell-1,\quad v=2a+j,\qquad
+x=D_0+f_4u,\quad y=D_0+f_5v,\quad z=D_0+f_6u.
+\end{gathered}
+\tag{4.4}
+$$
+
+$N,U,V,U$ 的迹恰是 $a+j,u,v,u$，与式 (1.5) 完全相同。$312/5$ 只用于定义这个固定世界；执行 JMJ 轨迹的协议并未取得未选第三 $M$ 的读数。
+

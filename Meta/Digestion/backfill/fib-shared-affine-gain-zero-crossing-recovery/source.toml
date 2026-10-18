@@ -1,0 +1,5 @@
+source_id = "fib-shared-affine-gain-zero-crossing-recovery"
+path = "docs/develop/theory/FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

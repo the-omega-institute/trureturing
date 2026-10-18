@@ -1,0 +1,44 @@
+**Lemma 2.2 (mandatory charge on every cube run).** For every correct
+native preparer and every cube vector, its complete actual run has a
+nonselected invocation of length at least three. Also its installed
+table has two running states outside $\bigcup_iE_i$ with different
+words in the disjoint cones $RLR\mathcal W$ and $RRR\mathcal W$.
+Consequently, if $M$ is its total installed selected-state count,
+
+$$
+H_P\ge M+4+r.
+\tag{WTF.11}
+$$
+
+Proof. This reuses the all-weight comparison in the proof of PE Theorem
+3.1, with its parameter range unnecessary for this comparison. For a
+negative $\theta$, keep $B_\theta$ and $D_1,D_2,D_4$, replace $x_c$
+by beta and $x_{b_3}$ by alpha. This actual $\Pi_3$ origin has code
+one, with all selected replies unchanged. For a positive $\theta$,
+replace only $x_{b_3}=\beta$ by a fresh branch image avoiding all other
+class values. This actual $Z_*$ origin has code zero, again with
+unchanged selected replies. In both cases distinctness, repeated
+occurrences and the exterior before depth three persist. If the cube
+run never queried a distinguishing word, its comparison source would
+follow the same fixed successors to the same entry. Correctness forbids
+this. A distinguishing invocation on that very cube run is nonselected
+and has length at least three. This proves a charge on each run
+separately, with no summation over comparison sources.
+
+For the installed-state assertion reuse PCA Lemma 7.1, as exposed in
+PE Theorem 4.2. Choose $x_c=\beta$ and pairwise distinct branch images
+at the other five classes. This actual $Z_c$ source has code zero.
+Replacing only $x_{b_3}$ by alpha gives an actual $\Pi_3$ source of
+code one, differing only in the $RLR$ cone; hence some installed word
+in that cone is necessary. Replacing instead only $x_{b_4}$ by alpha
+gives the analogous necessity in the $RRR$ cone. The cones are disjoint
+from each other and from all selected words. Add the two original-entry
+latches and all $r$ mandated latches. Unused installed states still
+count, proving (WTF.11). $\square$
+
+A fixed-source terminating stationary run never revisits the same
+running state: its fixed reply and successor would repeat its entire
+suffix forever. This inherited principle, PCA Lemma 2.3 and NBP
+Proposition 12.5, does not prohibit cycles in the union of different
+actual paths, or repeated coordinates at different installed states.
+

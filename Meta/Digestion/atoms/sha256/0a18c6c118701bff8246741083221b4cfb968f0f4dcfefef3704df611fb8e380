@@ -1,0 +1,326 @@
+## 独立检查程序
+
+```python
+"""Self-contained verifier for the frozen n10 V7 pq native path certificate.
+
+Only Python standard library imports. Reconstructs the actual raw V2 factor,
+checks all raw paths and every higher old cut, literal c, child reference,
+complete child-domain partition, boundary degree and exhaustive trace.
+
+Higher one-cut references invoke the previously proved complete V3..V6 cycle
+and base-last-b-retention theorems. This program proves the precise finite
+identity conditional on those mathematical theorems; it is not the uniform
+refinement proof, a Lean kernel proof or an official Hamilton-cycle judge.
+
+Run with Python assertions enabled (do not pass -O):
+    python3 -B verify_v7_standalone.py
+Place the unchanged v7_pq_fixed_base_path_certificate.json next to this file.
+"""
+import json
+from collections import Counter, defaultdict
+from pathlib import Path
+
+
+def rotations(w):
+    w = tuple(w)
+    return [w[i:] + w[:i] for i in range(len(w))]
+
+
+def bracelet(w):
+    return min(rotations(w) + rotations(tuple(w)[::-1]))
+
+
+def inserted(w, label):
+    w = tuple(w)
+    return {bracelet(w[:i] + (label,) + w[i:]) for i in range(len(w))}
+
+
+def step(v, letter):
+    count = {'a': 10, 'b': 9, 'c': 8}[letter]
+    return v[:count][::-1] + v[count:]
+
+
+def walk(v, word):
+    result = [tuple(v)]
+    for letter in word:
+        result.append(step(result[-1], letter))
+    return result
+
+
+def leaf_factor():
+    base = tuple(range(3, 11))
+    circles = set().union(*(inserted(c, 1) for c in inserted(base, 2)))
+    assert len(circles) == 9 * 8
+    vertices = set().union(*(set(rotations(c) + rotations(c[::-1])) for c in circles))
+    assert len(vertices) == 1440
+    graph = {v: {step(v, 'a'), step(v, 'b')} for v in vertices}
+    switches = [walk((1,) + base + (2,), ('ac' + 'bc' * 7) * 2)]
+    switches += [walk(base[:i] + (2,) + base[i:] + (1,), 'bc' * 9)
+                 for i in range(1, len(base))]
+    selected = set()
+    for switch in switches:
+        assert switch[0] == switch[-1]
+        for i, (u, v) in enumerate(zip(switch, switch[1:])):
+            assert u in graph and v in graph
+            key = tuple(sorted((u, v)))
+            assert key not in selected
+            selected.add(key)
+            assert (v in graph[u]) == (i % 2 == 0)
+            if i % 2 == 0:
+                graph[u].remove(v)
+                graph[v].remove(u)
+            else:
+                graph[u].add(v)
+                graph[v].add(u)
+    assert all(len(neighbors) == 2 for neighbors in graph.values())
+    reached = {next(iter(graph))}
+    pending = list(reached)
+    while pending:
+        for vertex in graph[pending.pop()]:
+            if vertex not in reached:
+                reached.add(vertex)
+                pending.append(vertex)
+    assert reached == set(graph)
+    return graph
+
+
+
+
+def act(vertex, word, n):
+    vertex = tuple(vertex)
+    for letter in word:
+        count = {'a': n, 'b': n - 1, 'c': n - 2}[letter]
+        vertex = vertex[:count][::-1] + vertex[count:]
+    return vertex
+
+
+def T(vertex, n):
+    vertices = [tuple(vertex)]
+    for letter in ('ac' + 'bc' * (n - 3)) * 2:
+        vertices.append(act(vertices[-1], letter, n))
+    return vertices
+
+
+def oriented_insertion(C, A, x):
+    C, A = tuple(C), tuple(A)
+    offset = C.index(x)
+    directed = C[offset:] + C[:offset]
+    if directed[1:] not in rotations(A):
+        directed = (directed[0],) + directed[:0:-1]
+    assert directed[1:] in rotations(A)
+    return directed
+
+
+def make_block(base, n):
+    assert n == 10 and tuple(base) == tuple(range(3, 11))
+    return leaf_factor(), tuple(base)
+
+
+def check_fixed_domains(data):
+    assert data['n'] == 10
+    assert data['selected_prefix'] == list(range(1, 7))
+    assert data['marked_base'] == [7, 8, 9, 10]
+    prefix = (1, 2, 3, 4, 5, 6, 8, 9, 10)
+    root_r = [prefix[i:] + prefix[:i] + (7,) for i in range(9)]
+    root_l = [act(vertex, 'b', 10) for vertex in root_r]
+    assert data['outer_cuts'] == [[list(root_r[i]), list(root_l[i])] for i in range(7)]
+    assert len(set(root_r[:7] + root_l[:7])) == 14
+    assert all(act(root_l[i], 'c', 10) == root_r[(i + 1) % 9] for i in range(9))
+    assert data['hidden_loops'] == 0
+    assert Counter(row['k'] for row in data['records']) == {2: 20, 3: 9, 4: 8, 5: 4, 6: 1}
+    assert data['actual_V2_queries'] == data['raw_V2_certificate_rows'] == 20
+    assert data['all_parameter_proof'] is False and data['full_S_n_enumeration'] is False
+    for row in data['records']:
+        k, base = row['k'], tuple(row['base'])
+        assert base == tuple(range(k + 1, 11))
+        for cut in row['cuts']:
+            for vertex in cut:
+                assert sorted(vertex) == list(range(1, 11))
+                assert bracelet(tuple(a for a in vertex if a > k)) == bracelet(base)
+        if k > 2 and len(row['cuts']) > 1:
+            expected = {(k - 1, (k,) + word) for word in rotations(base)}
+            if k == 4:
+                special = (4,) + base
+                expected.remove((3, special))
+                expected.update((2, (3,) + word) for word in rotations(special))
+            actual = {(child['k'], tuple(child['base'])) for child in row['children']}
+            assert len(actual) == len(row['children']) and actual == expected
+            for child in row['children']:
+                ck, cb = child['k'], tuple(child['base'])
+                assert ck < k
+                for cut in child['cuts']:
+                    for vertex in cut:
+                        assert bracelet(tuple(a for a in vertex if a > ck)) == bracelet(cb)
+    assert len({bracelet(tuple(a for a in vertex if a > 6)) for vertex in root_r[:7]}) == 1
+    assert len({bracelet(tuple(a for a in vertex if a > 6)) for vertex in root_r}) == 3
+    assert act(root_l[-1], 'c', 10) == root_r[0]
+
+
+def edge(u, v):
+    return tuple(sorted((tuple(u), tuple(v))))
+
+
+def cuts_key(cuts):
+    return tuple(sorted(edge(u, v) for u, v in cuts))
+
+
+def matching_map(pairs):
+    result = {}
+    for u, v in pairs:
+        u, v = tuple(u), tuple(v) if v is not None else None
+        assert u not in result
+        result[u] = v
+        if v is not None:
+            assert v not in result and v != u
+            result[v] = u
+    return result
+
+
+def locate(k, base, vertex):
+    child_base = oriented_insertion(tuple(a for a in vertex if a >= k), base, k)
+    if k == 4 and child_base == (4,) + tuple(base):
+        lower = tuple(a for a in vertex if a >= 3)
+        return 2, oriented_insertion(lower, child_base, 3)
+    return k - 1, child_base
+
+
+def verify():
+    data = json.loads(Path(__file__).with_name('v7_pq_fixed_base_path_certificate.json').read_text())
+    check_fixed_domains(data)
+    n = data['n']
+    records = data['records']
+    index = {(r['k'], tuple(r['base']), cuts_key(r['cuts'])): r for r in records}
+    assert len(index) == len(records)
+    leaf_vertices = 0
+    for row in records:
+        k, base = row['k'], tuple(row['base'])
+        cuts = cuts_key(row['cuts'])
+        expected = matching_map(row['matching'])
+        assert row['hidden_loops'] == 0
+        if k > 2 and len(cuts) == 1:
+            u, v = cuts[0]
+            # This is the proved base-last-b-retention interface of the child.
+            assert u[-1] in base and v[-1] in base and act(u, 'b', n) == v
+            assert expected == {u: v, v: u}
+            continue
+        if k == 2:
+            factor, _ = make_block(base, n)
+            for u, v in cuts:
+                assert v in factor[u]
+                factor[u].remove(v)
+                factor[v].remove(u)
+            seen, actual = set(), {}
+            for path in row['raw_V2_paths']:
+                start, end = tuple(path['start']), tuple(path['end'])
+                current, local = start, {start}
+                assert len(factor[start]) in (0, 1)
+                for letter in path['word']:
+                    nxt = act(current, letter, n)
+                    assert nxt in factor[current] and nxt not in local
+                    local.add(nxt)
+                    current = nxt
+                assert current == end and len(factor[end]) in (0, 1)
+                assert path['edges'] == len(path['word'])
+                assert seen.isdisjoint(local)
+                seen.update(local)
+                if path.get('isolated'):
+                    assert start == end and not factor[start] and not path['word']
+                    actual[start] = None
+                else:
+                    assert start != end
+                    actual[start], actual[end] = end, start
+            assert seen == set(factor) and actual == expected
+            assert len(seen) == row['raw_V2_vertices_exhausted']
+            leaf_vertices += len(seen)
+            continue
+        if k == 4:
+            switch = T((3,) + base + (1, 2, 4), n)
+            old = list(zip(switch[0:-1:2], switch[1:-1:2]))
+            connectors = list(zip(switch[1:-1:2], switch[2::2]))
+        else:
+            prefix = ((1, 2) if k == 3 else (2, 1) + tuple(range(3, k))) + base
+            ports = [prefix[i:] + prefix[:i] + (k,) for i in range(n - 1)]
+            old = [(u, act(u, 'b', n)) for u in ports]
+            connectors = [(v, ports[(i + 1) % (n - 1)]) for i, (_, v) in enumerate(old)]
+        assert cuts_key(old) == cuts_key(row['actual_old_switch_edges'])
+        assert cuts_key(connectors) == cuts_key(row['actual_c_connectors'])
+        groups = defaultdict(list)
+        for u, v in old + list(cuts):
+            child = locate(k, base, u)
+            assert child == locate(k, base, v)
+            groups[child].append((u, v))
+        assert set(groups) == {(ch['k'], tuple(ch['base'])) for ch in row['children']}
+        edges = Counter()
+        isolated = set()
+        for child in row['children']:
+            ck, cb = child['k'], tuple(child['base'])
+            assert cuts_key(groups[(ck, cb)]) == cuts_key(child['cuts'])
+            relabel = {int(u): v for u, v in child['forward_relabeling'].items()}
+            assert relabel == dict(list(zip(range(1, ck + 1), range(1, ck + 1)))
+                                  + list(zip(cb, range(ck + 1, n + 1))))
+            ccuts = [(tuple(relabel[a] for a in u), tuple(relabel[a] for a in v))
+                     for u, v in child['cuts']]
+            cbase = tuple(range(ck + 1, n + 1))
+            assert tuple(child['canonical_base']) == cbase
+            assert cuts_key(ccuts) == cuts_key(child['canonical_cuts'])
+            target = index[(ck, cbase, cuts_key(ccuts))]
+            cm = matching_map(child['matching'])
+            canonical_cm = {tuple(relabel[a] for a in u):
+                            tuple(relabel[a] for a in v) if v is not None else None
+                            for u, v in cm.items()}
+            assert canonical_cm == matching_map(target['matching'])
+            for u, v in cm.items():
+                if v is None:
+                    isolated.add(u)
+                elif u < v:
+                    edges[('child full path', edge(u, v))] += 1
+        for u, v in connectors:
+            assert act(u, 'c', n) == v
+            edges[('literal c', edge(u, v))] += 1
+        degrees = Counter()
+        for (_, (u, v)), multiplicity in edges.items():
+            degrees[u] += multiplicity
+            degrees[v] += multiplicity
+        incidence = Counter(v for cut in cuts for v in cut)
+        all_vertices = set(degrees) | isolated
+        assert all(degrees[v] == 2 - incidence[v] for v in all_vertices)
+        assert set(expected) == set(incidence)
+        used, actual = Counter(), {}
+        used_vertices = set()
+        for path in row['exhaustive_boundary_traces']:
+            start, end = tuple(path['start']), tuple(path['end'])
+            if path.get('isolated'):
+                assert start == end and start in isolated and not path['steps']
+                assert degrees[start] == 0 and start not in used_vertices
+                used_vertices.add(start)
+                actual[start] = None
+                continue
+            current, local = start, {start}
+            for u, label, v in path['steps']:
+                u, v = tuple(u), tuple(v)
+                assert u == current and v not in local
+                used[(label, edge(u, v))] += 1
+                local.add(v)
+                current = v
+            assert current == end and start != end
+            assert degrees[start] == degrees[end] == 1
+            assert used_vertices.isdisjoint(local)
+            used_vertices.update(local)
+            actual[start], actual[end] = end, start
+        assert used == edges and actual == expected and used_vertices == all_vertices
+    root = index[(6, tuple(data['marked_base']), cuts_key(data['outer_cuts']))]
+    ports = {tuple(v): name for i, (u, v) in enumerate(data['outer_cuts'])
+             for v, name in ((u, 'R' + str(i)), (v, 'L' + str(i)))}
+    pairs = [[ports[tuple(u)], ports[tuple(v)]] for u, v in root['matching']]
+    assert pairs == data['beta_pairs']
+    assert {frozenset(pair) for pair in pairs} == {
+        frozenset(pair) for pair in [('R0', 'R1'), ('L1', 'L5'), ('L2', 'L3'),
+                                    ('R2', 'L0'), ('L4', 'R3'), ('R4', 'L6'),
+                                    ('R5', 'R6')]}
+    print('FIXED_V7_PQ_CERTIFICATE_VERIFIED', len(records),
+          'V2_native_vertices', leaf_vertices, flush=True)
+
+
+if __name__ == '__main__':
+    verify()
+```

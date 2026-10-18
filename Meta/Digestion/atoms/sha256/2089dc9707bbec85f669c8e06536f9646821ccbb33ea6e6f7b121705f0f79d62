@@ -1,0 +1,14 @@
+**Definition 2.2 (public candidate locator).** For a valid *public candidate*
+packet $z$, compute $\operatorname{loc}(z,p)$ as follows. Initially the cursor
+is at token zero. If no address letter remains, return that token's kind. If the
+cursor is a leaf and a letter remains, return `absent`. At PAIR, the left child's
+root is the next token. To find the right child's root, scan the left subtree
+starting with `need=1`; PAIR adds one and a leaf subtracts one. Stop when need
+first reaches zero; the following token starts the right child. Consume the
+chosen letter and repeat. An `absent` result remains absent for remaining letters.
+
+The stored $p$ and $z$ are public finite strings. Cursor offsets, need counters,
+increments and tests use the unary tape routines of PR57.D2. Every scan and every
+address-field construction is executed and charged. This locator is not run with
+private source-dependent control on the installed packet.
+

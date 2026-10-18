@@ -1,0 +1,8 @@
+**Claim.** Tau's two faces {M,Z,C}, incident to its unique Z axis, are
+paired to two faces of one and the same other actual owner.
+
+They cannot pair to each other, because this closes tau's one Z normal
+interval and forces degree(Z)=1. Suppose instead they meet two distinct
+owners rho and eta. Write xi for the fourth K owner. We exclude exactly
+this incidence pattern using actual angle and face-pairing constraints.
+

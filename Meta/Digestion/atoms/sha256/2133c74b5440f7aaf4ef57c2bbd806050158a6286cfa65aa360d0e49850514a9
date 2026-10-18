@@ -1,0 +1,14 @@
+#### 17.2.5 Fisher 与 Wasserstein 的区分
+
+Amari、Karakida 和 Oizumi 的 [Information Geometry Connecting Wasserstein Distance and Kullback–Leibler Divergence via the Entropy-Relaxed Transportation Problem](https://arxiv.org/abs/1709.10219) 在离散概率单纯形上区分 Fisher 几何、Wasserstein transport 和 KL divergence，并通过 entropy-relaxed transport 建立它们之间的关系。
+
+这里须区分两种度量：
+
+\[
+g_F
+\neq
+g_{\mathrm{transport}}
+\]
+
+在没有 comparison theorem 时不能把两者识别。FIB 的 \(\mathcal I(\kappa)\) 是概率单纯形上的 Fisher 线元；图边界 \(B_j\) 产生的是流和 transport 结构。若要把两者组合为统一度量，需要证明一个明确的 comparison map 或 block metric。
+

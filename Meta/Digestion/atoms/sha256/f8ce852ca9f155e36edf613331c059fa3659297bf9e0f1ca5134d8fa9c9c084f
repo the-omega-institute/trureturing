@@ -1,0 +1,26 @@
+**Lemma 3.2 (positive flow and full rank).** Every $A,B_\theta$ in (3.4) is doubly stochastic. Their entries obey
+
+$$
+A_{ij}\ge\frac1{2N},\qquad
+(B_\theta)_{ij}\ge\frac1{4N}.
+\tag{3.5}
+$$
+
+Both matrices have full rank. In particular the acquired circulation $B_\theta A$ is irreducible and aperiodic, and the rows (3.2) satisfy (2.3). If $\theta$ is rational, all table entries are rational.
+
+**Proof.** The alternating binomial identity gives $b^{\mathsf T}\mathbf1=0$, while $\mathbf1^{\mathsf T}z=0$. Thus the perturbation has zero row and column sums. Its entry magnitude is at most $\theta_0M=1/(4N)$, while the smallest entry of $C$ is $1/(2N)$. This proves stochasticity and (3.5); row sums one and positivity also bound every entry above by one.
+
+The matrix $C$ acts as the identity on constants and as multiplication by $1/2$ on zero-mean columns, so is invertible. To prove $B_\theta$ invertible, suppose $B_\theta x=0$. Its column sums give $\pi x=0$. Therefore
+
+$$
+x=-2\theta z(b^{\mathsf T}x).
+$$
+
+Since $s$ is odd, $b_0=-1$ and $b_1=s$, so $b^{\mathsf T}z=-N$. Applying $b^{\mathsf T}$ gives
+
+$$
+(1-2N\theta)b^{\mathsf T}x=0.
+$$
+
+But $|2N\theta|\le1/(2M)<1$, so $x=0$. Strictly positive finite stochastic matrices and their product are irreducible and have positive diagonal entries, hence are aperiodic. Rationality follows directly from the formulas. $\square$
+

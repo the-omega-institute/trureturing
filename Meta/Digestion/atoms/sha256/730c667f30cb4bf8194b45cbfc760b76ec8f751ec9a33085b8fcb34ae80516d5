@@ -1,0 +1,135 @@
+### 217.7 F — equal adjacent triple piecewise attained minimum
+
+Let $k\ge3$, $L\ge k+3$, $n=k+1,m=k+2,\ell=k+3$,
+$g,R\ge0$, and $0\le\xi_i\le R/k$ for $1\le i\le k$. Set
+$\beta_i=-\xi_i$, $\beta_n=\beta_m=\beta_\ell=g$, other beta zero,
+$D=\sum_{i\le k}\xi_i$, $E=\xi_1+\xi_2$, and $K=3g+R$. With literal stock R
+and absolute stock $R-D$, the exact unrestricted minimum is
+
+$$
+\min\Delta_N=\min\Delta_O=E+\Phi_k(g,R),\quad
+\Phi_k(g,R)=\max\left(0,3g-R,\frac{(3k-2)g-(k-1)R}{2k-1}\right).
+\tag{217.14}
+$$
+
+For $g>0$, the breakpoints are $R_1=(3k-1)g/k$ and
+$R_0=(3k-2)g/(k-1)$: the branches are $3g-R$, the second affine term,
+and zero on the three successive closed intervals. The formula includes
+$g=0,R=0$, exhausted donor capacities and all ties.
+
+For any competitor, $Z=A_{tot}+P_{tot}+T$ gives $W=Z-E$ and hence
+$\Delta_O\ge E$. The stopped table $(n,m;n,m,\ell)$ gives
+$\Delta_O\ge E+3g-R$. The joint lower bundle assigns weight $1/(k-1)$
+to $(i,n;0,n,0)$ for each $i\le k$ and weight one to
+$(n,m;0,m,\ell)$. Its mass is $H=(2k-1)/(k-1)$; guard classes have
+nonzero output weight at most one, pivot classes have weights $k/(k-1),1,1$,
+and later/positive classes weight one. Subtracting $HZ$ gives
+$H(\Delta_O-E)\ge(k/(k-1)+2)g-R$, yielding the third branch.
+N dominates O, so these are common lower cuts. More explicitly, for every
+competitor $R=2A_{tot}-D+P_{tot}+T$ and $A_{tot}\ge D$.
+The single triple-output table has nonnegative slack
+$(A_{tot}-D)+A_J$, where J is the three pivot classes. In the weighted
+bundle, pivot pair weight is H and correct weights are $k/(k-1),1,1$.
+On a guard class with z zero guard bits its nonzero-output weight is
+$(k-z)/(k-1)$ if the n bit is zero and one otherwise, so it loses at
+most its A+P mass relative to constant zero. Every later class has the
+same loss bound and the positive row loses at most T. Therefore
+
+$$
+H(\Delta_O-E)\ge(k/(k-1)+2)g-R
+ +(A_{tot}-D)+A_J+P_J.
+$$
+
+Dropping only this nonnegative slack gives the third cut. This separates
+the A,C,P and positive rows, including every multiple-zero word and every
+cancellation in unrestricted competitors.
+
+For each guard $i\le k$, let $w_i(v)$ have sole guard zero i, pivot
+bits $v\in\{0,1\}^3$ and ones after $\ell$. Let $w_0(v)$ have all
+guards one, pivot bits v and the same one padding. Initially A and T vanish.
+Put C mass g at each of
+$w_0(000)$, $w_0(100)$ and $w_0(110)$: their zero sets are
+$\{n,m,\ell\}$, $\{m,\ell\}$ and $\{\ell\}$.
+Every branch below retains these same three C atoms. The complete initial
+nonterminal measures, in terms of the branch parameters, are
+
+| Word | P mass | C mass |
+|---|---:|---:|
+| $w_i(000)$ | $x$ | $0$ |
+| $w_i(011)$ | $z$ | $0$ |
+| $w_i(101)$ | $y$ | $0$ |
+| $w_i(110)$ | $v_0$ | $0$ |
+| $w_0(000)$ | $0$ | $g$ |
+| $w_0(100)$ | $0$ | $g$ |
+| $w_0(110)$ | $0$ | $g$ |
+
+Each guard row occurs for all $i\le k$, $s=x+z+y+v_0$, and all
+unlisted coefficients vanish before the surplus additions below.
+
+For the middle branch put
+$d=((3k-2)g-(k-1)R)/(2k-1)$,
+$x=v_0=g/k$, $z=(g-kd)/(k(k-1))$, $y=(g-d)/k$ in the four pivot
+patterns $000,011,101,110$ on each guard. Their total is $R/k$ per guard.
+All complete pair supports are
+
+$$
+\begin{array}{c|l}
+GG&2s+\max((k-2)s,g)\\
+G n&s+\max((k-1)(x+z),g)+\max((k-1)(y+v_0),g)\\
+G m&s+\max((k-1)(x+y),g)+\max((k-1)(z+v_0),g)\\
+G\ell&s+\max((k-1)(x+v_0),g)+(k-1)(z+y)\\
+nm&\max(kx,g)+kz+\max(ky,g)+\max(kv_0,g)\\
+n\ell&\max(kx,g)+kz+\max(kv_0,g)+ky\\
+m\ell&\max(kx,g)+ky+\max(kv_0,g)+kz.
+\end{array}
+$$
+
+The guard/n, guard/m and nm supports equal $R+d$; guard/$\ell$,
+n$\ell$ and m$\ell$ supports equal R. For guard/guard, the needed
+inequality $(k-2)R/k\ge g-d$ is affine in d, with endpoint margins
+
+$$
+\frac{(2k^2-7k+4)g}{k(k-1)}\quad(d=0),\qquad
+\frac{2(k^2-3k+1)g}{k^2}\quad(d=g/k),
+$$
+
+both nonnegative for $k\ge3$. Also $(k-1)(2g-d)/k\ge g$ verifies
+the remaining maxima. Guard labels are pointwise subsets of zero reward;
+every possible winning label is among $0,n,m,\ell$. Short or repeated
+schedules are coarser, and after-$\ell$ queries are constant on the score
+support. Thus the complete N excess is at most d. The unrestricted O
+lower cut forces both excesses to equal d.
+
+At $R=0$ use only the three specified chain C atoms. For
+$0<R<R_1$, convexly mix the complete $R_1$ score with that C-only score
+in proportions $R/R_1$ and $1-R/R_1$. The C atoms agree, each guard has
+stock $R/k$, and support convexity gives $3g-R$, matched by the lower cut.
+Equivalently $x=v_0=R/(3k-1)$, $y=(k-1)R/[k(3k-1)]$, $z=0$.
+For $R\ge R_0$, use the $d=0$ score and add
+$(R-R_0)/k$ P at each $w_i(111)$. Every table gains at most the total
+surplus $R-R_0$ and W gains exactly it, so the cost remains zero.
+For $g=0$ put $R/k$ of P at each $w_i(111)$ and retain zero C masses.
+For $R>0$ convert fraction $k\xi_i/R$ of every donor
+P row to A; zero reward and all support maxima are unchanged, W drops by E,
+and the formula follows for the signed quotient. If $R=0$, all
+$\xi_i=0$ and no conversion or division is performed.
+
+The explicit unit input has $k=3,L=6,g=1,R=8/3$,
+$\xi=(1/3,1/3,2/3)$. The common score has $W=2$, $B_N=B_O=3$.
+Its guard P patterns are 000 with mass $1/3$, 101 with mass $2/9$,
+and 110 with mass $1/3$, converted to A in fractions $3/8,3/8,3/4$
+for guards 1,2,3. The C atoms remain $111000,111100,111110$, each
+with mass one. Both repaired and moved scores have
+$Q=(-1/3,-1/3,-2/3,1,1,1;17/3)$ and T=0.
+Move $1/3$ of C at $w(\{4,5,6\})$ to $w(\{4\})$, that is,
+$111000\longmapsto111011$, to obtain the same quotient
+with $(\Delta_N,\Delta_O)=(4/3,1)$; restoring it repairs both costs to one.
+For the moved score every empty and singleton support is $8/3$,
+guard/guard supports are $25/9$, guard/4 and guard/5 are 3, and
+guard/6 is $8/3$. Its remaining pair supports (N,O) are
+45:$(10/3,3)$, 46:$(3,8/3)$ and 56:$(3,3)$.
+In particular pair45 has full maxima $(1,1/3,1,1)$ and stopped
+maxima $(1,1,1)$. This includes all seven output labels and proves the
+exact unit-input gap. The g=0, R=0, breakpoint, tie and exhausted-capacity
+cases use the same closed formulas and the explicit no-division conventions.
+

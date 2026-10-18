@@ -1,0 +1,37 @@
+**Definition 32.2 (canonical coefficients and constants).** Retain the complete two-endpoint coefficients $\mathsf q_j,\mathsf Q_j$ of J (30.1), their field integrals $V_j$ of J (23.1), and their input-specific returns $G_j$ of Definition 24.1. They include every $\lambda$-clock term and the exact $\nu=\varepsilon/(k_0-\alpha_\kappa)$. Let $p>0$, $\|p\|_2=1$, be the canonical mode, $g_0=Vp/\mu$, $\mu=\int Vp^2$, and $g_1,\ldots,g_4$ the normalized charges of J §§36–45. Set
+
+$$
+A_p=\int Vp,\qquad a_0=\int g_0=A_p/\mu,\qquad
+\mathscr A=\frac{C_*+j_0A_p^2}{\mu}>0,\qquad
+\beta_*=\frac{C_*^2}{\mu}>0.
+\tag{32.6}
+$$
+
+Write $d_j^{\rm h}=j_0^{-1}\mathsf q_{2j}(1;0,0)$ for $j=0,1,2$. In the notation $p_j$ of J (30.2), these are
+
+$$
+\begin{aligned}
+d_0^{\rm h}&=j_0^{-1}p_0(1;0),\\
+d_1^{\rm h}&=j_0^{-1}\{\nu^2p_2(1;0)+\lambda p_0(1;0)\},\\
+d_2^{\rm h}&=j_0^{-1}\{\nu^4p_4(1;0)+\nu^2\lambda p_2(1;0)
+                       +\tfrac12\lambda^2p_0(1;0)\}.
+\end{aligned}
+\tag{32.7}
+$$
+
+These are coefficients of the same original source, not separately variable jets. The notation $d_j^{\rm h}$ is distinct from the pole distance in (1.1). Define
+
+$$
+\begin{aligned}
+\mathfrak m_d={}&W_{1,d}(o)-\frac{2d_0^{\rm h}}5
+                         -\frac{2d_1^{\rm h}}3-2d_2^{\rm h}\\
+&+\int_0^1\left[K_d(t;o,o)-d_0^{\rm h}t^{-7/2}
+                         -d_1^{\rm h}t^{-5/2}
+                         -d_2^{\rm h}t^{-3/2}\right]dt,\\
+Z_d&=\mathfrak m_d-W_{1,d}(o).
+\end{aligned}
+\tag{32.8}
+$$
+
+Thus $\mathfrak m_d$ is specified by the raw original heat before any spectral limit is considered.
+

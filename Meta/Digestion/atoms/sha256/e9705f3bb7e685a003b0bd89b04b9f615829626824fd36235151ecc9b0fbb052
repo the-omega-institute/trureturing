@@ -1,0 +1,27 @@
+#### 22.12　逆运行时放大定理
+
+把继续概率参数化为
+
+$$
+q(u)=\frac{e^u}{1+e^u},
+\qquad
+G_N(u)=\operatorname{logit}(q(u)^N).
+$$
+
+直接微分得到
+
+$$
+\boxed{
+G_N'(u)=\frac{N(1-q(u))}{1-q(u)^N}=\frac{N}{S_N(q(u))}.
+}
+$$
+
+令 $u_\theta=\operatorname{logit}(q_\theta)$，则 $\delta=u_1-u_0$，且
+
+$$
+\Delta_{\mathrm{flag}}
+=\int_{u_0}^{u_1}\frac{N}{S_N(q(u))}\,du.
+$$
+
+<a id="claim-22-12-1"></a>
+

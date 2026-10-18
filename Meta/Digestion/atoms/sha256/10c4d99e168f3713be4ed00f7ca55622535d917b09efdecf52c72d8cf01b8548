@@ -1,0 +1,23 @@
+**Definition 2.3 (exact-time operational error).** For two instruments on
+this same record space, use precisely Instrument Stability (IS.7):
+
+$$
+\begin{aligned}
+d_{\rm op}(\mathcal I,\widetilde{\mathcal I})
+=\sup_{R,\rho}\frac12\bigg(&
+\|(K_T\otimes I_R)\rho(K_T^*\otimes I_R)
+ -(\widetilde K_T\otimes I_R)\rho(\widetilde K_T^*\otimes I_R)\|_1\\
+&+\sum_{i=0}^4\int_0^T
+ \|(m_i(t)-\widetilde m_i(t))\rho^R_{ii}\|_1\,dt\bigg).
+\end{aligned}
+\tag{SC.7}
+$$
+
+The supremum is over common normalized inputs and arbitrary normal quantum
+references, including infinite-dimensional ones. There is no time binning,
+mode merging, postselected normalization, or restriction to classical source
+probabilities. The same definition with $K_T\oplus1_f$ covers the stopped
+extension. Complete normalized outputs have distance at most one. For the
+minimax task below it also defines distance to any complete predicted
+instrument on the same output space, by the corresponding output trace norm.
+

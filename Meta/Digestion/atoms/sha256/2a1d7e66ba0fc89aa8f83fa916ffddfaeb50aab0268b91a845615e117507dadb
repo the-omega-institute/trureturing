@@ -1,0 +1,25 @@
+**Proposition 26.2 (the arrival hypothesis and fixed-row boundary).**
+An initial query without an actual incoming transition need not have
+the additional neighbor in (NARC.26.1). A processing word used both
+before and after $q$ cannot evade Lemma 26.1 by changing its behavior
+unless the complete configuration or the fixed-row hypotheses change.
+
+**Proof.** For the first assertion, use the legal words
+$0000,1000,0100,0010,0001$ of $\Gamma_4$. Make $0000$ the
+initial query; assign its four replies in order to those four unit-word
+halts, with complete outputs $1,2,3,4$, respectively. Let the four
+stationary sources be indexed by $o\in\mathcal A$ and define that
+query's observation on source $o$ to be $o$. Each first halts in one Read.
+The query has degree four, exactly the four output neighbors, and
+has no actual incoming transition. This is a counterexample to an
+unconditional fifth-neighbor requirement, not a controller for the
+fifteen-origin native task.
+
+For the second assertion, a fixed internal predecessor necessarily
+returns to $q$ if selected as a response successor. Routing toward
+$q$ before acquisition but toward a halt afterward requires a retained
+reply, phase, history or other distinction. If that distinction is
+accessible, it belongs in the complete word; the two configurations
+then count separately. Permitting another query after $q$ also removes
+the selected last-Read hypothesis. $\square$
+

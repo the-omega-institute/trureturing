@@ -1,0 +1,39 @@
+**Definition 2.2 (complete residual law).** Put $a_r=r(1-r)$ and
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,
+\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,
+\qquad j\ge0.
+$$
+
+The p carrier consists of these finite words and its unique infinite noncompletion word. The suspended carrier consists of beta, $\alpha w_{j,c}$ and its infinite noncompletion word. The already acquired suspended beta is not a future Read. Fixed-parameter masses are
+
+$$
+P_{p,r}(w_{j,0})=ra_r^j,
+\qquad P_{p,r}(w_{j,1})=(1-r)^2a_r^j,
+$$
+
+$$
+P_{\beta,r}(\beta)=1-r,
+\qquad
+P_{\beta,r}(\alpha w_{j,0})=r^2a_r^j,
+\qquad
+P_{\beta,r}(\alpha w_{j,1})=r(1-r)^2a_r^j.
+\tag{2.1}
+$$
+
+Both infinite-word masses are zero. The current-record renderer $I_c$ retains every future Read and inserts its original event blocks, held records, permissions, completion and Stop. Reading back the letters is its inverse. This measurable bijection preserves TV and commutes with deleting the next original operation and its block [ST, Section 2.1].
+
+At a positive acquired history $h$, including every paid rejection and partial parse in its letter counts,
+
+$$
+\nu_h(k)=\frac{\mu(k)r_k^{A(h)}(1-r_k)^{B(h)}}
+ {\sum_j\mu(j)r_j^{A(h)}(1-r_j)^{B(h)}},
+\qquad
+T_h^\mu=(I_{C_0(h)})_*\sum_k\nu_h(k)P_{s,r_k}.
+\tag{2.2}
+$$
+
+The denominator is positive. The same actual $K$ supplies all acquired and unread letters. Counts and posterior probabilities are analysis quantities only.
+

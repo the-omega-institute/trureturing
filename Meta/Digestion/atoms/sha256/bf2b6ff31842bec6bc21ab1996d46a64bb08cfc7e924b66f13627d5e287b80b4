@@ -1,0 +1,34 @@
+**Definition 28.4 (The cyclic subalgebra with the unchanged degree map).**
+Let
+
+$$
+\mathcal S_n^{\mathrm{cyc}}
+=\{(m,c):m\ge0,\ c\in mQ_n\cap\mathbb Z^n\},\qquad
+R_n^{\mathrm{cyc}}=\mathbb C[\mathcal S_n^{\mathrm{cyc}}].
+$$
+
+Write $X^{(m,c)}=t_0^m\prod_{i=1}^n t_i^{c_i}$.
+Use the polynomial ring of mode names
+$S_n^{\mathrm{cyc}}=\mathbb C[z_I:I\in B_n^{\mathrm{cyc}}]$ and map
+
+$$
+\varphi_n^{\mathrm{cyc}}(z_I)=X^{(1,\mathbf1_I)},
+\qquad I_n^{\mathrm{cyc}}=\ker\varphi_n^{\mathrm{cyc}}.
+\tag{28.14}
+$$
+
+Write $S_n^{\mathrm{op}}=\mathbb C[z_I:I\in B_n^{\mathrm{op}}]$ and
+$I_n^{\mathrm{op}}$ for the kernel of its path map from Definition 27.1.
+The map (28.14) is its restriction to cyclically allowed generators.
+An exponent vector $\alpha$ in the
+mode variables is an unordered multiset of rows, and
+
+$$
+\deg z^\alpha
+=\left(\sum_I\alpha_I,\ \sum_I\alpha_I\mathbf1_I\right).
+\tag{28.15}
+$$
+
+Passing from $\alpha$ to (28.15) can forget correlations even after row
+ordering has already been discarded.
+

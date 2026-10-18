@@ -1,0 +1,6 @@
+# Extending the retained incidence to the full finite accepted cell
+
+The chronology construction in [Overlapping spatial records and retained chronology](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) deliberately restricts its exact recovery claim to the three-history cell $H$ of weight-one prefixes. The same source contract has a second positive weight-two cell in $E_1$. This continuation checks that remaining cell and identifies one source-derived incidence that removes its residual boundary collision.
+
+This is an ordinary finite classical construction with no Lean verification. It keeps the original source, parser, seed law, selector, bookmark, suffix, Stop and decoder. It does not claim a general scope theorem, a physical spacetime law, or a global completion.
+

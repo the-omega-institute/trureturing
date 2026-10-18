@@ -1,0 +1,111 @@
+**Theorem 23.3 (exact marginal factors, zero-limit convergence and its
+energy boundary).** For every small nonzero $\kappa$,
+
+$$
+\begin{aligned}
+\int_{\mathbb T_D}p_\kappa(t,o,(q,D))dD
+ &=\overline p_\kappa(t,q_0,q),\\
+\int_{\mathbb T_D}V_{\kappa,\tau}(q,D)dD
+ &=\overline V_{\kappa,\tau}(q),\\
+\frac1{2\pi}\int_{\mathbb T_D}V_{\kappa,\tau}(q,D)dD
+ &=\frac{\overline V_{\kappa,\tau}(q)}{2\pi}.
+\end{aligned}
+\tag{23.4}
+$$
+
+The first identity is an identity of smooth positive-time densities;
+the remaining ones hold for the nonnegative integral representatives.
+The isometry $Jh=(2\pi)^{-1/2}h(q)$ identifies the complete free
+$D$-independent subspace with $L^2(B,\nu_B)$, including
+
+$$
+\begin{aligned}
+\mathcal F_\kappa\cap\operatorname{Ran}J
+ &=J\overline{\mathcal F}_\kappa,\\
+\mathfrak q_{\kappa,\tau,g}[Jh]
+ &=\overline T_\kappa[h]
+  -\frac{g}{2\pi}\int_B\overline V_{\kappa,\tau}|h|^2d\nu_B.
+\end{aligned}
+\tag{23.5}
+$$
+
+The marginal regularized fields are uniformly bounded and converge
+locally uniformly, and in every finite $L^p(B,\nu_B)$, to $V_{0,\tau}$.
+The free marginal kernels converge smoothly on compact interior
+positive-time sets to the actual native zero-leaf kernel. In particular,
+for each fixed smooth normalized $h$ in the base core, the energy in
+(23.5) tends to
+
+$$
+\overline T_0[h]-\frac{g}{2\pi}\int_B V_{0,\tau}|h|^2d\nu_B.
+\tag{23.6}
+$$
+
+These sector energies have a lower bound uniform in small $\kappa$ for
+all normalized members of their complete sector domains. In contrast,
+the complete four-coordinate minima diverge as in (22.2). The actual
+zero-leaf regularized energy, with unit charge and coupling $g$, is a
+finite attained minimum on $\overline{\mathcal F}_0$ and uses $g$, not
+$g/(2\pi)$.
+
+Proof. The projected killed process forgets only $D$. Its drift-free
+fields are $\partial_k,\overline Q_\kappa$, driven by exactly the same
+two Brownian motions and killed at the same height exit. Uniqueness of
+this smooth diffusion identifies its semigroup with that of
+$\overline L_\kappa$. Integrating the full kernel against base tests
+therefore proves the first identity in (23.4); smoothness upgrades the
+density equality from almost everywhere to every interior base point.
+Tonelli proves the field identities. In particular integration and
+averaging differ by the actual hidden-circle volume $2\pi$.
+
+Core pullback gives $T_\kappa[Jh]=\overline T_\kappa[h]$ and the norm
+isometry. Conversely average any approximating full-core sequence over
+$D$. The averaging projection is contractive in $L^2$ and in the free
+form norm: Jensen applies to both horizontal derivatives, and the
+periodic $D$ derivative integrates to zero. For a limit in
+$\operatorname{Ran}J$ its averaged approximants converge to the same
+limit. This proves the completed-domain equality. Substituting
+$|Jh|^2=|h|^2/(2\pi)$ and (23.4) proves (23.5), first on the core and
+then throughout the domain by boundedness of the fields.
+
+At zero,
+
+$$
+\det\begin{pmatrix}A_0&A'_0\\B_0&B'_0\end{pmatrix}
+ =-\frac1{4H}.
+\tag{23.7}
+$$
+
+Thus the base family satisfies a uniform step-two strong Hörmander
+condition on the same larger height interval $I'$, after a common
+parameter shrink. The uniform local smoothing argument of
+(21.8)--(21.9), now on the fixed base torus, supplies uniform
+positive-time diagonal bounds. The free height gap supplies their
+uniform exponentially decreasing time tails. The parameter-dependent
+kernel theorem [H, Theorem 3.5] gives smooth convergence on compact
+interior positive-time sets. Splitting the integral in (23.3) at a
+large fixed time and bounding the remaining tail as in (21.11) proves
+local uniform convergence of the regularized marginal fields and a
+uniform bound on all of $B$. Since $\nu_B(B)<\infty$, dominated
+convergence proves every asserted finite $L^p$ convergence.
+Coefficient convergence and this field convergence prove (23.6).
+The uniform multiplier bound gives the uniform sector lower bound
+$\lambda_D-(g/(2\pi))\sup_\kappa\|\overline V_{\kappa,\tau}\|_\infty$.
+At zero, the fixed-leaf bounded-field and compact-embedding argument of
+Theorem 20.2 applies on the actual three-coordinate cylinder, so its
+unit-charge minimum is finite and attained for every fixed $g>0$.
+
+There is an exact analytic source distinction behind (23.5).
+Averaging the full fixed-pole field over translations of $D$ equals
+$\overline V_{\kappa,\tau}(q)/(2\pi)$. Before smoothing its source is
+$\delta_{q_0}\otimes dD/(2\pi)$, and after smoothing its source density
+is $\overline p_\kappa(\tau,q_0,q)/(2\pi)$. This follows from free
+translation symmetry and (23.4), exactly as for the marginal/source
+correspondence in the observation-quotient volume, Theorem 3.1.
+It does not identify the original fixed-pole multiplier with its average.
+The full witnesses (22.3) depend on $D$ and are allowed by the original
+form domain. Their energies cannot be bounded by restricting the
+infimum to $\operatorname{Ran}J$. Nor is a four-dimensional Lebesgue
+heat density at $\kappa=0$ used anywhere: the comparison density in
+(21.4) belongs to a different auxiliary operator. $\square$
+

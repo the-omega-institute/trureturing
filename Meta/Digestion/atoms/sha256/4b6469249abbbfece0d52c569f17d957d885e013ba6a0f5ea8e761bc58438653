@@ -1,0 +1,16 @@
+**Theorem 8.6 (two universal fixed-representative charging shortcuts fail).**
+There is no finite dimension-independent $C$ such that for every cap-feasible
+table, every lawful fixed representative system and every cell-disjoint
+family of the above collisions, allowed completions can be jointly selected
+so that each installed state is first separator for at most $C$ collisions.
+It is also impossible universally to choose an injective pack-state
+representative outside the fixed representative image; even for a single
+collision, dropping injectivity does not repair that assertion.
+
+Proof. Given $C$, choose $M$ with $M-1>C$ and take the hostile system
+in Proposition 8.5. Theorem 8.4 forces all $M-1$ first separators to be
+$J$, under every joint choice. For the external-pack assertion, every
+allowed pack for the one collision $L_2,H_2$ is already in the fixed
+image, leaving no external candidate at all. This reproduces [WTF,
+Theorem 11.7][WTF] with its universal quantifiers. $\square$
+

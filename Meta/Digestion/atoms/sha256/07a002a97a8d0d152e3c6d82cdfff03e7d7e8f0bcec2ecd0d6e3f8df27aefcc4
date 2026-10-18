@@ -1,0 +1,6 @@
+### 70.6 Attribution and scope
+
+The four-vector Gram estimate is the classical Welch bound in this instance, and the tetrahedral frame, qubit Bloch parametrization and polar decomposition are standard. For the original correlation bound see L. R. Welch, Lower bounds on the maximum cross correlation of signals, IEEE Transactions on Information Theory20 (1974),397–399, https://doi.org/10.1109/TIT.1974.1055219 . For the Gram/frame derivation see also Datta, Howard and Cochran, Geometry of the Welch Bounds, https://arxiv.org/abs/0909.0206 . Channel and diamond facts follow the conventions of Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . The exact physical target and two-branch zero-error realization are from §§66 and68.
+
+The quantitative step tracks actual wrong-output Stinespring components through record rounding, row saturation and common-span approximation. It establishes a nonzero physical approximation gap between one product channel and two shared branches for this fixed coherent channel, with unrestricted leakage and ancillas. The constants are not asserted sharp, the one-product optimum is not identified, and no arbitrary-channel or full-RT recovery claim is made.
+

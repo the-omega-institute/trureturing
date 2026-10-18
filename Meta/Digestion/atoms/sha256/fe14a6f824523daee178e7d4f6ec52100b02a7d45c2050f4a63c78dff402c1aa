@@ -1,0 +1,54 @@
+**Theorem 40.3 (Schur subfamily and its original reference coordinates).** For the same actual blocks let
+
+$$
+ T_A:=\tau^+C,\qquad
+ v_\eta:=\begin{pmatrix}-T_A\eta\\-\overline{T_A}\eta\\\eta\end{pmatrix},
+ \qquad 0\ne\eta\in\ker S,
+$$
+
+$$
+ G_\eta:=|T_A\eta\rangle\langle T_A\eta|
+ +|\overline{T_A}\eta\rangle\langle\overline{T_A}\eta|
+ +|\eta\rangle\langle\eta|.
+\tag{R.192}
+$$
+
+The inverse is only on $\operatorname{ran}\tau$. The symbol $T_A$ differs from the positive-spectrum coordinate matrix $T$ in (R.50). The barred matrix in (R.192) acts on $\eta$ itself; $\eta$ is not conjugated. Then
+
+$$
+ \begin{aligned}
+ &v_\eta\in\ker J_p,\qquad
+ \|v_\eta\|^2=\operatorname{Tr}G_\eta>0,\\
+ &\xi_p=\frac{v_\eta}{\sqrt{\operatorname{Tr}G_\eta}},\qquad
+ \xi_0=(\bar H\otimes I_E)\xi_p\in\ker J_0,\\
+ &E_{\xi_0}=\frac{G_\eta}{(\operatorname{Tr}\sqrt{G_\eta})^2},\qquad
+ t_{\xi_0}=\frac{\operatorname{Tr}(\tau G_\eta)}
+ {(\operatorname{Tr}\sqrt{G_\eta})^2}.
+ \end{aligned}
+\tag{R.193}
+$$
+
+Here $H$ is exactly (R.2). Therefore
+
+$$
+ \exists\,0\ne\eta\in\ker S:\quad
+ \operatorname{Tr}(\tau G_\eta)
+ \geq\beta(\operatorname{Tr}\sqrt{G_\eta})^2
+ \quad\Longrightarrow\quad
+ g_N^2\leq T_\beta,\quad\delta_N\geq1-\sqrt a.
+\tag{R.194}
+$$
+
+**Proof.** The actual range condition gives $\tau T_A=C$ and $\bar\tau\,\overline{T_A}=\bar C$. Thus the first two blocks of $J_pv_\eta$ vanish. Its third block is
+
+$$
+ \bigl(\sigma-C^\dagger\tau^+C
+ -C^T\overline{\tau^+}\,\bar C\bigr)\eta=S\eta=0,
+$$
+
+where $\overline{\tau^+}=(\bar\tau)^+$. This calculation is complex-linear in $\eta$. Tracing $|v_\eta\rangle\langle v_\eta|$ over the phase reference gives $G_\eta$, and its trace is the squared norm of $v_\eta$, at least $\|\eta\|^2>0$.
+
+Equation (R.2) gives $J_0=(\bar H\otimes I)J_p(H^T\otimes I)$ and $H^T\bar H=I$, proving the asserted kernel transport. The local unitary $\bar H$ on the reference preserves $D_E$ and the Schmidt eigenvalues, hence preserves $\ell$ and $E_\xi$. In this case $D_E=G_\eta/\operatorname{Tr}G_\eta$ and $\ell=\operatorname{Tr}\sqrt{G_\eta}/\sqrt{\operatorname{Tr}G_\eta}$, so the normalization cancels exactly as in (R.193). Apply Theorem 40.2.
+
+This is the zero-$u_+$, zero-$u_-$ subfamily of the existing complete kernel (R.52). That formula also allows independent $u_+\in\ker\tau$ and $u_-\in\ker\bar\tau$ in its first and second blocks. They remain available and can change the kernel effect. No completeness assertion for (R.192) replaces (R.52). The proof uses no inverse of a zero eigenvalue, no eigenvector selection at repeated eigenvalues, and no inversion of $S$. It therefore includes singular $\tau$, $S=0$, and the rank-at-most-three residual at beta zero. It does not assert a nonzero $\eta\in\ker S$ when that kernel is trivial. $\square$
+

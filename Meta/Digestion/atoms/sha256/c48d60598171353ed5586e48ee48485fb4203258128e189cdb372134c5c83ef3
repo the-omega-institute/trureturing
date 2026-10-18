@@ -1,0 +1,9 @@
+**定义 6.1（校准接口的标量—方向载体）。** 令 $\mathcal A=\mathbb R\oplus V$，并取
+
+$$
+(s,u)\odot(t,v)=\bigl(st-g(u,v),\ sv+tu+C(u,v)\bigr),
+\qquad 1=(1,0),\qquad N(s,u)=s^2+g(u,u).
+$$
+
+这个经典四元数乘法由 [二阶关系完成](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) §28 供应；这里消费它来同时保留同向收缩和面积项。标量槽是操作读出的组成部分，不是第四根物理位置轴。
+

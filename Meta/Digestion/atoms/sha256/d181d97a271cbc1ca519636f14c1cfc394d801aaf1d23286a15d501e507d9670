@@ -1,0 +1,29 @@
+**Citation 5.1 (suppliers and the specific implication).** [PAIR,
+Theorem 18.2] classifies finite-p-support flows from an eventual two-root
+recurrence. [NATIVE, Theorem 3.1] already removes that support restriction
+for its stated three-depth source, and Corollary 3.3 excludes preservation
+of an entire eventual endpoint tail. Those results assume an eventual
+sequence identity. Theorem 2.1 instead derives the original pure pair
+from one mean equality and neighboring boxes, with arbitrary Borel
+marginals and no recurrence premise. The present Corollary 3.3 excludes
+retaining even one NULL155 late mean. The operator recursion, positive
+kernel domination and stationary zero-integral argument are mature
+suppliers, already present in [NATIVE]; no new general maximum principle
+is claimed. Proposition 4.1 uses the existing singleton mechanism as a
+sharpness witness, not a new family of generators.
+
+The primary finite-matrix comparison is Li and Schneider,
+*Applications of Perron--Frobenius Theory to Population Dynamics*,
+[Theorem 2.1(a)][LS]: positive Perron vectors for an irreducible nonnegative
+finite matrix. Their normalized-power convergence in Theorem 2.3 needs
+primitivity. Neither finite-dimensional assumption is imposed here;
+(2.7) uses the original invariant probability directly.
+Leskelä and Vihola, *Conditional convex orders and measurable martingale
+couplings*, [Theorems 1.2(i) and 1.3(i)][LV], concern finite-first-moment
+vectors and parameterized probability kernels on $\mathbb R^d$.
+Bounded complete-word projections meet that integrability condition;
+[PAIR, Theorem 20.2] supplies the full-marginal compatibility criterion.
+Those coupling results do not supply the one-contact classification.
+The present implication is a source-specific deduction, with no global
+originality claim.
+

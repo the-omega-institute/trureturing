@@ -1,0 +1,48 @@
+**定理 29.2（每次噪声的算子支撑压缩）。** 对每个 $M\ge0$，
+$\Psi_k\otimes\operatorname{id}_R$ 把 (29.2) 的全部联合态送入
+$D\le\lfloor M/2\rfloor$ 的联合支撑。
+任意 (27.6) 的控制在每个缺额扇区内作用，保持每个 $Q_{\le M}$。
+因而任意初始联合态在恰好 $r$ 次噪声后满足
+
+$$
+\operatorname{supp}_S
+ [(\mathcal C_{k,r;\mathbf U}\otimes\operatorname{id}_R)(\rho_{SR})]
+ \subseteq\{D\le M_r\},
+\qquad
+M_r=\left\lfloor\frac{2k}{2^r}\right\rfloor.
+\tag{29.3}
+$$
+
+所有量词允许混态、纠缠、非不变态及槽间不同的复控制。
+
+证明。令 $f(0)=2$、$f(a)=4$ 对 $a\ne0$。
+每个非零的局部 Kraus 基向量像都在 $e_{f(a)}$ 上；
+所以对任意张量 Kraus
+$K_{\boldsymbol\alpha}=\bigotimes_{\ell=1}^kK_{\alpha_\ell}$，
+$K_{\boldsymbol\alpha}|a\rangle$ 或为零，或为 $|f(a)\rangle$。
+输出字只有 $2,4$，而其中 $2$ 的个数恰为 $z(a)$。
+因此每个非零像的缺额是
+
+$$
+D(f(a))=z(a)\le\left\lfloor\frac{2z(a)+s(a)}2\right\rfloor
+=\left\lfloor\frac{D(a)}2\right\rfloor.
+\tag{29.4}
+$$
+
+这给真正的 Kraus 像空间包含关系
+
+$$
+(I-Q_{\le\lfloor M/2\rfloor})K_{\boldsymbol\alpha}Q_{\le M}=0
+\quad\text{对每个 }\boldsymbol\alpha.
+\tag{29.5}
+$$
+
+张量上 $I_R$ 后，(29.2) 中的每个 Kraus 二次项左右均被
+$Q_{\le\lfloor M/2\rfloor}\otimes I_R$ 固定，求和仍如此。
+因此没有从总体分布的支撑跳到未证明的相干或纠缠支撑结论。
+控制与 $N_{\mathrm{tot}}$ 对易，等价于与 $D$ 对易，
+故与每个谱投影对易，不能改变此支撑上界。
+初始 $D\le2k$；逐次取整使用
+$\lfloor\lfloor a/2^j\rfloor/2\rfloor=\lfloor a/2^{j+1}\rfloor$，
+归纳给 (29.3)。证毕。
+

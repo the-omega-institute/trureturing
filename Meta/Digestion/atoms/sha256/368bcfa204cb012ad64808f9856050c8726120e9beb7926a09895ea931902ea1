@@ -1,0 +1,23 @@
+**Definition 1.1 (One stationary integer-clock law).** Fix a single real parameter and a single endpoint
+
+$$
+0<p<1,\qquad p\ne\tfrac12,\qquad j\in\{0,1\},\qquad
+\pi_0=1-p,\quad\pi_1=p.
+$$
+
+Let $\varphi$ be uniform on $\{0,1\}$, independently of iid Bernoulli$(p)$ spins $(S_\ell)_{\ell\in\mathbb Z}$. On the original integer emitted-bit clock define the joint hidden-visible law $J_p$ by
+
+$$
+\begin{aligned}
+H_{2\ell+\varphi}&=a_{S_\ell},&
+H_{2\ell+\varphi+1}&=b_{S_{\ell+1}},\\
+X_{2\ell+\varphi}&=S_\ell\mathbin\oplus S_{\ell+1},&
+X_{2\ell+\varphi+1}&=0.
+\end{aligned}
+\tag{1.1}
+$$
+
+The hidden alphabet is $\mathcal A=\{a_0,a_1,b_0,b_1\}$. An active transition takes $a_s$ to $b_t$ with probability $\pi_t$ and emits $s\oplus t$; the next transition copies $b_t$ to $a_t$ and emits zero. Each $a_s,b_s$ has stationary mass $\pi_s/2$: incoming mass at $b_t$ is $\sum_s(\pi_s/2)\pi_t=\pi_t/2$, and copying gives the same incoming mass at $a_t$. Independence of the newly chosen spin gives these transition factors on every finite interval, including intervals beginning in either state class. Uniform phase and reindexing of the iid spins preserve their law under an integer shift. Thus (1.1) is the one original stationary law, including its separators and negative coordinates; in particular $X_tX_{t+1}=0$ for every integer $t$.
+
+This source is inherited from *FIB harmonic-edge load: fixed-state tail nonuniformity and an erasure-risk jump*, Proposition 2.1 and (2.2), hereafter **Original**. Its realization is a description of the source, not an acquisition operation.
+

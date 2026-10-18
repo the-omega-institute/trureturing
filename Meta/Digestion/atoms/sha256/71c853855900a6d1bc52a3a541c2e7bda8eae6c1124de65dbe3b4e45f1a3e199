@@ -1,0 +1,32 @@
+**Corollary 60.5 (finite histories, executed parameters and complete spectral correspondence).** Commission $L$ finite interaction checkpoints at original idle cuts, with intervals $\theta_\ell\ge0$, total $S\le T<\infty$, and any finite number of intervening original Reads, refused requests and accepted whole-rho renewals. Let $U_{\rm hist}$ be §58.1's exact time-ordered finite-domain propagator with its forced transfers, represented in the fixed bank. Execute the circuits of Theorem60.4 on the current committed packet at each interval. For possibly different $m_\ell,b_\ell$ put
+
+$$
+E_{\rm circ}=
+\sum_{\ell=1}^L\left[
+\frac{\overline M^2\theta_\ell^2}{2m_\ell}
++F m_\ell2^{-b_\ell}
++\theta_\ell(6\delta_a+\delta_g)\right].
+\tag{60.11}
+$$
+
+At every completed commissioned checkpoint, the operator difference from $U_{\rm hist}$, on the initially active sector and the reference, is at most the corresponding prefix of this sum. It includes arbitrary hidden coefficients and their relative phases. Zero intervals need no gate slots.
+
+For a supplied unit prepared state with norm error $\eta_{\rm prep}$, actual unitary gates preserving the declared sector with deviations bounded there in operator norm by $\zeta_j$, accumulated sector-preserving unitary hold/locking error $\eta_{\rm hold}$, and a declared comparison-clock interval discrepancy sum $\eta_\tau$, the state bound gains at most
+
+$$
+\eta_{\rm prep}+\sum_j\zeta_j+\eta_{\rm hold}
++(6a+g)\eta_\tau.
+\tag{60.12}
+$$
+
+The ideal model executes the literal dyadic angles, so $\zeta_j=0$; its comparison clock is the commanded interval string, so $\eta_\tau=0$. For a perturbed angle law, a certificate $|\xi_j^{\rm exec}-\xi_j^{\rm cmd}|\le\gamma_j$ supplies $\zeta_j\le\gamma_j$. Other gate, reference or hold faults need their own bounds; they are not inferred from native Read errors. No error independence is required. The formula is conditional on the authentic packet, exact source guard and version lock; a wrong source or omitted channel is not a precision certificate.
+
+Proof. The bank is unchanged at switches and holds, so Theorem60.3 gives the exact transfer at every accepted renewal and identity on refusal/Read. Telescope the finite unitary factors, using (60.9) at each actually installed version. Unitarity propagates errors without amplification. The same argument for the actual gate products gives the sum of $\zeta_j$; the stipulated hold error is added on its actual cuts. The source-independent bound $6a+g$ and the clock comparison of §58.8 give the final term. Nothing takes an event after an infinite prefix or after Stop.
+
+For exact spectral correspondence, extend $V_s$ by the reference. Formula (60.5) implies for every Borel set $\Omega$ that the restriction of $E_{\widehat H_s}(\Omega)$ to the active sector is $V_sE_{\mathsf H_D}(\Omega)V_s^*$. Its reference block is $\mathbf1_{0\in\Omega}$, and the inactive zero blocks are explicitly outside the target. Thus every finite exceptional energy, full multiplicity, hidden eigenvector and full normalization in §55.5 survives in the installed target generator. For complete old/new orthonormal eigenbases, its renewal coefficients are exactly $\Gamma_{\nu\mu}$ of (58.3), because $V_{s'}J=V_s$. The actual finite gate product has the propagator error (60.11); it is not claimed to have the exact eigenvectors of $\mathsf H_D$ or to supply an acquired spectral archive.
+
+If the preparation and reached-domain hypotheses of §58.7, or of §58.8, are separately fulfilled, its common full-state comparison gains (60.11)–(60.12). That inference reuses the same common field, all contrast channels, actual irregular domains and full phases. The present source compiler does not prepare an unspecified infinite spectral state or remove those hypotheses. $\square$
+
+For example, given rational $\varepsilon>0$, $L\ge1$, a public $T$ and coefficient upper bounds, choose a common
+$m=\max\{1,\lceil2\overline M^2T^2/\varepsilon\rceil\}$ and a finite integer $b\ge0$ with $2^b\ge4LFm/\varepsilon$. The first two terms in (60.11) total at most $\varepsilon/4$ each, since $\sum\theta_\ell^2\le T^2$. Supply coefficient errors with $T(6\delta_a+\delta_g)\le\varepsilon/4$ and preparation/remaining errors at most $\varepsilon/4$. The total is at most $\varepsilon$. This supplies finite parameters for every commissioned finite accuracy, not a physical calibration or an accuracy uniform over unbounded $T$.
+

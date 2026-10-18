@@ -1,0 +1,32 @@
+**Theorem 7.2 (four individual exact original task kernels).** On the whole
+$\mathcal R_H$, separately for each
+$V\in\{S,B,T,M_{\mathrm{ret}}\}$,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h\sim_Q k.
+\tag{SSA.10}
+$$
+
+Proof. Equal $S$ gives equal physical records by the direct cellwise inverse
+of Theorem 4.4. Proposition 2.1 gives equal keys and replay gives identical
+histories, hence $Q$ equivalence. Conversely $Q$ equivalence gives $h=k$
+by Theorem 2.2, hence equal $S$. This proves both inclusions for $S$.
+
+Equal $B$ gives equal $S$ by SSA.6, then the same implication to $Q$.
+Conversely $Q$ equivalence gives identical histories and therefore equal
+actual terminal antichains. This proves both inclusions for $B$
+independently of taking any intersection with the other kernels.
+
+Equal $T$ gives the same original full prefix by erasure, so it gives equal
+task maps. Conversely $Q$ equivalence gives identical original prefixes,
+whose canonical compiled patch sequences and actual names coincide. Thus
+their $T$ values agree. This proves both inclusions for time.
+
+Equal $M_{\mathrm{ret}}$ gives the same surviving acquisition code, the
+same chronological $L$ and occupied pending bit, and the same number of
+receipts, hence the same $K$ by Proposition 2.1. AIF replay gives identical
+histories and $Q$ equivalence. Conversely $Q$ equivalence gives the same
+history, hence exactly the same retained material and binding relations.
+This proves both inclusions for retained memory. The last proof makes no
+claim that extraction is a permitted read by any selected receiver. ∎
+

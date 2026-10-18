@@ -1,0 +1,40 @@
+### 最大熵规范截面
+
+固定 $(X,Y,Z)$ 后，只有 $z=0$ 条件层中的 $2\times2$ 表仍然变化。条件熵关于 $\kappa$ 严格凹，因此最大熵点唯一。
+
+定义
+
+$$
+\kappa_0=\frac{XY}{1-Z},
+\qquad Z<1.
+$$
+
+则
+
+$$
+\Delta(\kappa_0)=0.
+$$
+
+所以 $\kappa_0$ 是最大熵截面，也是条件独立截面。
+
+这给出一个自然的规范选择：
+
+$$
+\boxed{
+\text{最大熵规范}
+\quad\Longleftrightarrow\quad
+\text{条件独立规范}
+\quad\Longleftrightarrow\quad
+\Delta=0
+}
+$$
+
+但必须区分两种性质：
+
+- $\Delta=0$ 表示源分布在局部条件层上没有额外相关；
+- $\kappa$ 是否能被未来响应看见，取决于响应对比 $J_{\mathscr L}$，不是只取决于 $\Delta$。
+
+换句话说，$\Delta=0$ 并不自动意味着“所有未来实验都看不见 $\kappa$”。
+
+---
+

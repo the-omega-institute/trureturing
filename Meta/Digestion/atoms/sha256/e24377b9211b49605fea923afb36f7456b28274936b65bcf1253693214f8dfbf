@@ -1,0 +1,37 @@
+**Definition 3.1 (incidence, cuts and maximal ambiguity blocks).** Put
+
+$$
+\begin{aligned}
+Q_{\rm live}&=\bigcup_{p\in V}F_p,&
+\nu&=|Q\setminus Q_{\rm live}|,\\
+d(q)&=|\{p\in V:q\in F_p\}|\quad(q\in Q_{\rm live}),&
+D&=\sum_{q\in Q_{\rm live}}(d(q)-1),\\
+E&=\sum_{p\in V}(b_p-1).&&
+\end{aligned}
+$$
+
+A depth $d\in\{0,\ldots,n-1\}$ is ambiguous if some cell at that depth
+has $a_p>1$. Let $\mathcal C$ be the unambiguous depths together with
+the formal endpoint $n$. For $t\in\mathcal C$ write $T_t$ for its
+common support, proved below, and set $T_n=[n]$. There is no live cell
+at $n$. The index set $\mathcal C$ need not contain every depth.
+Let $B=[\ell,r]$ run over maximal nonempty consecutive ambiguous-depth
+blocks. Its length $|B|=r-\ell+1$ counts interior depths. Define
+
+$$
+\begin{aligned}
+E_B&=\sum_{p:\,h+z\in B}(b_p-1),\\
+D_B&=\sum_{q\in Q}\max\bigl(|\{p:\,h+z\in B,\ q\in F_p\}|-1,0\bigr),\\
+E_{\rm reg}&=\sum_{p:\,h+z\in\mathcal C\setminus\{n\}}(b_p-1),\\
+b_{\rm short}&=|\{B:1\le |B|\le2\}|.
+\end{aligned}
+$$
+
+Here $\nu$ counts every installed state never live, including unused and
+exclusively certified states. A state live somewhere stays in $Q_{\rm live}$
+even if other inputs use it after certification. In [SI, Section 9][SI],
+our nonempty $B=[\ell,r]$ is the open cut interval $(\ell-1,r+1)$,
+whose boundary spacing is $|B|+1$; SI also includes empty interiors.
+Our $E_{\rm reg}$ is SI's cut excess. Thus a short block here corresponds
+to spacing two or three there, not to an independent kind of table.
+

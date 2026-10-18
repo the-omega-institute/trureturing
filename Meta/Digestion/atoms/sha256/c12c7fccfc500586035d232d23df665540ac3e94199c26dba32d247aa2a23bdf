@@ -1,0 +1,38 @@
+**Theorem 29.1 (linear and decomposable sufficient certificate for the exact dual).** Fix an actual channel as in Theorem 28.1 and $s\geq0$. A sufficient condition for (R.135) is a complex-linear Hermiticity-preserving map $W:M_3\to M_5$ such that
+
+$$
+\mathcal A\circ W=2s\Pi,\qquad
+\Phi_\pm:Z\longmapsto\operatorname{Tr}(Z)I_5\pm W(Z)
+\text{ are positive maps}.
+\tag{R.137}
+$$
+
+Use the unnormalized input-first Choi convention
+
+$$
+\begin{gathered}
+C_W=\sum_{i,j=0}^2E_{ij}\otimes W(E_{ij}),\qquad
+\Omega_3=\sum_{i=0}^2|i\rangle\otimes|i\rangle,\\
+C_\Pi=|\Omega_3\rangle\langle\Omega_3|
+       -\tfrac12P\otimes P-E_{22}\otimes E_{22},\\
+(\mathrm{id}_3\otimes\mathcal A)(C_W)=2sC_\Pi.
+\end{gathered}
+\tag{R.138}
+$$
+
+For a finite sufficient strengthening of positivity in (R.137), it is enough to find Hermitian matrices satisfying
+
+$$
+I_{15}\pm C_W=S_\pm+T_\pm^{\Gamma},\qquad
+S_\pm\succeq0,\quad T_\pm\succeq0,
+\tag{R.139}
+$$
+
+where $\Gamma$ is partial transpose on the three-dimensional INPUT factor, in the fixed original basis. The equality in (R.138) and these four PSD conditions are a finite sufficient system for $m_0(N)\geq s$. No converse from the pointwise choices $F_\psi$ to a single $W$, or from positivity to (R.139), is asserted.
+
+**Proof.** For each complex pure input $\rho_\psi=|\psi\rangle\langle\psi|$, set $F_\psi=W(\rho_\psi)$. Hermiticity preservation makes it Hermitian; positivity of $\Phi_\pm$ gives $I_5\pm F_\psi\succeq0$. The first equality in (R.137) gives its exact lift in (R.135), which is sufficient by Theorem 28.1.
+
+Expanding $\Pi(E_{ij})$ gives the stated $C_\Pi$: only $E_{00},E_{11}$ have the $-P/2$ term, and $E_{22}$ has the $-E_{22}$ term. Linearity of the Choi representation proves the last equality of (R.138) equivalent to the first in (R.137), on the whole complex matrix algebra. In particular the maximally entangled vector is unnormalized; normalizing it without changing the other coefficients would change the equation. The Choi matrix of $Z\mapsto\operatorname{Tr}(Z)I_5$ is $I_{15}$.
+
+For clarity, the standard Choi positivity ingredient can be consumed directly here. A PSD input-first matrix $S=\sum_r|v_r\rangle\langle v_r|$ can be reshaped as $v_r=\sum_i|i\rangle\otimes L_r|i\rangle$, giving the CP map $Z\mapsto\sum_rL_rZL_r^\dagger$. Applying input transpose changes its Choi matrix to $S^\Gamma$. Consequently the right side of (R.139) represents a CP map plus another CP map composed with input transposition. Transposition preserves PSD inputs, so this sum is positive on every complex PSD input. It is not necessary for $T_\pm^\Gamma$ itself to be PSD. This proves sufficiency for each sign and therefore (R.137). These are the usual Choi and decomposable-map ingredients inside this common-pair certificate. Neither Hahn–Banach nor this argument supplies a linear selection or proves that all positive maps are decomposable. $\square$
+

@@ -1,0 +1,111 @@
+**Proposition 6.1 (joint recoverability with no locally admissible
+coordinate projection).** Define
+
+$$
+\begin{aligned}
+A&=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,\quad Q=\langle C,A\rangle,\\
+(u_0,u_1,u_2,u_3,u_4)
+&=(\langle A,A\rangle,\langle B,A\rangle,
+\langle C,C\rangle,\langle J,J\rangle,\langle A,Q\rangle),\\
+P&=\{u_0,u_1,u_2,u_3,u_4\}\subset S_3.
+\end{aligned}
+\tag{NCM.25}
+$$
+
+Let $\tau$ interchange $1$ and $4$ and fix $0,2,3$, and put
+
+$$
+B_* =\{(u_s,u_{\tau(s)}):0\le s\le4\}\subset S_3^2.
+\tag{NCM.26}
+$$
+
+Both coordinate projections of $B_*$ equal the locally inadmissible
+$P$, but $B_*$ is jointly admissible for the complete depth-three target
+menu with every finite native experiment word allowed. All its targets
+have at most four values,
+and the experiment $RL$ on $P$ has four replies. Thus the implication
+in Lemma 3.2 that an inadmissible projection must obtain its missing
+target from an admissible projection fails at depth three.
+
+Proof. All seven boundary experiments on $P$, with columns ordered
+$u_0,u_1,u_2,u_3,u_4$, are
+
+$$
+\begin{array}{c|ccccc}
+\varepsilon&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}&\alpha\\
+R&\alpha&\alpha&\mathsf{branch}&\mathsf{branch}&\mathsf{branch}\\
+LL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{absent}\\
+LR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\mathsf{absent}\\
+RL&\mathsf{absent}&\mathsf{absent}&\alpha&\beta&\mathsf{branch}\\
+RR&\mathsf{absent}&\mathsf{absent}&\alpha&\alpha&\alpha.
+\end{array}
+\tag{NCM.27}
+$$
+
+The complete corresponding factor table is
+
+$$
+\begin{array}{c|ccccc}
+\varepsilon&(0,0)&(0,0)&(0,0)&(0,0)&(0,0)\\
+L&(2,1)&(1,0)&(0,0)&(0,0)&(2,1)\\
+R&(2,1)&(2,1)&(0,0)&(0,0)&(0,0)\\
+LL&(3,0)&(2,0)&(2,1)&(1,0)&(3,0)\\
+LR&(4,1)&(3,1)&(2,1)&(2,1)&(4,1)\\
+RL&(3,0)&(3,0)&(2,1)&(1,0)&(0,0)\\
+RR&(4,1)&(4,1)&(2,1)&(2,1)&(2,1).
+\end{array}
+\tag{NCM.28}
+$$
+
+The $LL$ target has four distinct values. Every boundary experiment
+except $RL$ has at most three replies. The experiment $RL$ merges
+$u_0,u_1$, whose $LL$ factors are different. No boundary experiment
+therefore determines this target on $P$. A length-three experiment
+returns alpha exactly when its length-two parent is branch, and
+absent otherwise; it is a function of that boundary reply. Every
+longer experiment is absent. A constant experiment also fails. Hence
+$P$ is locally inadmissible for the full arbitrary-word interface.
+
+For either coordinate of $B_*$, recover its $LL$ factor by reading
+$RL$ in the other coordinate. The reply decoder is
+
+$$
+\mathsf{absent}\mapsto(3,0),\qquad
+\alpha\mapsto(2,1),\qquad
+\beta\mapsto(1,0),\qquad
+\mathsf{branch}\mapsto(2,0).
+\tag{NCM.29}
+$$
+
+For the first coordinate these replies, in row order $s=0,1,2,3,4$,
+are absent, branch, alpha, beta, absent, exactly resolving its four
+$LL$ values in (NCM.28). Since $\tau^2$ is the identity, the same
+decoder works for the second coordinate.
+
+Every other target has an own-coordinate witness. The full selection
+rule is
+
+$$
+\begin{array}{c|ccccccc}
+\text{target}&\varepsilon&L&R&LL&LR&RL&RR\\ \hline
+\text{queried coordinate}&\text{none}&\text{own}&\text{own}&\text{other}&\text{own}&\text{own}&\text{own}\\
+\text{word}&\text{constant}&L&R&RL&L&RL&R.
+\end{array}
+\tag{NCM.30}
+$$
+
+The root factor is $(0,0)$. For $L$ and $R$, map constructor replies by
+$\gamma\circ\kappa^{-1}$ on the attained replies. For $LR$ with
+experiment $L$, use
+$\alpha\mapsto(4,1)$, $\beta\mapsto(3,1)$,
+$\mathsf{branch}\mapsto(2,1)$. For $RL$ with experiment $RL$,
+use absent $\mapsto(3,0)$, alpha $\mapsto(2,1)$,
+beta $\mapsto(1,0)$, branch $\mapsto(0,0)$.
+For $RR$ with experiment $R$, use alpha $\mapsto(4,1)$ and
+branch $\mapsto(2,1)$. These exhaust attained replies; values on
+unattained replies are immaterial. Tables (NCM.27)–(NCM.28) verify
+every target on both projections. The all-word reduction above
+also exhausts arbitrary native experiments. $\square$
+

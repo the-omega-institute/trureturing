@@ -1,0 +1,15 @@
+**Convention 1.1 (status and ownership).** This volume concerns the minimum
+number of actual acquisition labels among height-optimal instruments in the
+original finite-activity, sharp-joint-cost problem. It gives ordinary
+conditional mathematical proofs and an exact scalar interval certificate.
+It is reference mathematics, not Lean/kernel verification. The numerical
+source box is an enclosure of one stipulated isolated source; it does not
+define a family of independently variable TP channels.
+
+The new results are the complete weak minimum-budget boundary count,
+continuity of the weak optimal value, relative closedness of the sublevels
+of the minimum original actual count, an optimal strong upper bound, and
+localization of the attained maximum count to an open strict weak region.
+The sharp uniform count and the complete evaluated finite-plane frontier
+remain open.
+

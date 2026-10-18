@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-finite-visible-memory-completeness"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_COMPLETENESS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

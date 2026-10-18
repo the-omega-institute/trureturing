@@ -1,0 +1,13 @@
+**Proposition 4.2 (Lawfulness, full support and exact classes).** This parameter belongs to $\Theta_{12}$, all stationary masses are positive, its hidden chain is irreducible and aperiodic, and every legal output cylinder is positive. Its exact future-output classes are
+
+$$
+\{F_s,F_{s+3}\},\qquad\{T_s,T_{s+3}\},\qquad s=0,1,2.
+\tag{4.2}
+$$
+
+Proof. The free masses are $6/31,3/31,2/31$ repeated twice, totaling $22/31$; tail masses total $9/31$. Every row sums to one. Each event flow $\lambda(F_s)p_s=c$ supplies the incoming mass of $T_{s+1}$; the incoming mass of $F_s$ is $\lambda(F_s)(1-p_s)+c=\lambda(F_s)$. Thus $\lambda A=\lambda$. A one enters $T$, whose one row is zero, so $M_1^2=0$.
+
+The positive $10$ path advances $F_s$ to $F_{s+1}$; these paths connect the cycle and every tail state. Each free state has a positive zero self-loop. From any $F_s$, every no11 word follows a positive path, including leading or final ones and all-zero words. Positive initial free mass gives full legal support on the original clock.
+
+Shift by three preserves every marked probability, proving (4.2)'s within-pair equalities. Distinct free residues have different next-one probabilities $p_s$; distinct tail residues have different second-one probabilities $p_s$; free and tail states differ on the next-one event. There are exactly six classes, denoted $F_z,T_z$ for $z$ modulo three, with $\pi(F_z)=2c/p_z$ and $\pi(T_z)=2c$. This proves the classes, not minimality among all presentations. $\square$
+

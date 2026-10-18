@@ -1,0 +1,46 @@
+**定理 33.2.3（完整被动联合律相同）。**
+
+$$
+\boxed{
+\mathsf O(M_{\mathrm{chain}})=\mathsf O(M_{\mathrm{fork}}).
+}
+$$
+
+**证明。**
+
+令
+
+$$
+k_p(b\mid a)=
+\begin{cases}
+1-p,&b=a,\\
+p,&b\ne a.
+\end{cases}
+$$
+
+由于二元对称核满足
+
+$$
+k_p(b\mid a)=k_p(a\mid b),
+$$
+
+链模型的联合质量为
+
+$$
+\Pr_{\mathrm{chain}}(x,y,z)
+=\frac12 k_p(y\mid x)k_p(z\mid y),
+$$
+
+而叉模型的联合质量为
+
+$$
+\Pr_{\mathrm{fork}}(x,y,z)
+=\frac12 k_p(x\mid y)k_p(z\mid y).
+$$
+
+逐点使用对称性 $k_p(y\mid x)=k_p(x\mid y)$，两式相等。有限联合质量逐点相同即联合律相同。证毕。
+
+两模型都满足 $X\perp Z\mid Y$；这个条件本身也不能在被动数据中选择链方向还是叉方向。
+
+<a id="section-33-3"></a>
+

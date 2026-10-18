@@ -1,0 +1,25 @@
+## 169. No transverse-Z owner has pair {Z,D} and an axial M slot
+
+Suppose such an owner exists. Let theta be its axial M angle, gamma its
+transverse Z angle. It is genuine, and the two response parameters obey
+
+ lambda_plus+lambda_minus
+    =2 sqrt(z^2-1)/(z+d) * sqrt((m-1)/(m+1)).
+
+Their difference parameter is positive because z>d. For fixed m>3,
+ the function F(x)=(x^2-1)/(x+m-2)^2
+is strictly increasing for x>1: its derivative is
+ 2[x(m-2)+1]/(x+m-2)^3>0.
+Since d<m-2 and z>m+2,
+
+ (lambda_plus+lambda_minus)^2
+   >4 F(m+2)*(m-1)/(m+1)
+    =(m+3)(m-1)/m^2
+    =1+(2m-3)/m^2>1.
+
+The same arctangent argument as in Section 168 now gives
+ theta+2 gamma>pi.
+This owner differs from tau and rho by its fixed reservoir pair. Its
+actual M/Z contribution is at least theta+2 gamma, contradicting the
+complete 3*pi budget together with tau and rho. It cannot exist.
+

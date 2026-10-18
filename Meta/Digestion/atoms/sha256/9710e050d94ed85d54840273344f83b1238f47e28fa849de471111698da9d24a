@@ -1,0 +1,12 @@
+**Corollary 3.5 (the zero-error acquisition threshold).**
+The least worst-execution number of distinct addresses allowing an
+almost-surely finite upper proposal with zero error at every source is
+$t+1$. The same threshold holds for exact target output.
+
+**Proof.** For any bound $s\le t$, Theorem 2.1 gives positive worst-source
+error. For $s=t+1$, query $t+1$ distinct addresses until the first
+positive reply, outputting that reply, or output zero if all replies
+are zero. A high source has only $t$ zero addresses, so its target is
+encountered; an all-zero record certifies $b$ by (3.2). This terminates
+on every tape and source with the exact target. $\square$
+

@@ -1,0 +1,70 @@
+**Definition 1.2 (literal six-reading history).** Fix arbitrary real
+$D_0,Y,z$ and nonzero real $\lambda$. Throughout, the entire ancestor is
+
+$$
+H=(D_0,J,D_0+24\lambda,M,D_0+48\lambda,
+        M,D_0+312\lambda/5,J,Y,M,z).
+\tag{1.3}
+$$
+
+Write $\mathcal F(H)$ for the complete worlds realizing every action
+and every reading of this history. Put
+
+$$
+f=g/\lambda,\quad d=(\delta-D_0)/\lambda,\quad
+\widehat Y=(Y-D_0)/\lambda,\quad \widehat z=(z-D_0)/\lambda.
+\tag{1.4}
+$$
+
+The inverse is $g=\lambda f$, $\delta=D_0+\lambda d$.
+Every normalized response $w$ corresponds to the raw response
+$D_0+\lambda w$. This is bijective for either sign of $\lambda$,
+preserves equality and actual response children, and changes no clock.
+The observed $D_0$ is not assumed to be the drift.
+
+For
+
+$$
+P=\begin{pmatrix}r&u\\v&1-r\end{pmatrix},\qquad
+0<r<1,\quad u,v>0,\quad uv=r(1-r),
+\tag{1.5}
+$$
+
+the six cumulative matrices are
+
+$$
+\begin{gathered}
+I,\ J,\ L,\ J+L,\ C,\ Q,\qquad
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\\
+J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix},\qquad
+C=J(J+L)=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+Q=MC=\begin{pmatrix}1&1\\3&2\end{pmatrix}.
+\end{gathered}
+\tag{1.6}
+$$
+
+Consequently every world under discussion satisfies all six equations
+
+$$
+\begin{aligned}
+f(0)+d&=0,\\
+f(1)(u+v)+d&=24,\\
+f(2)(1+u)+d&=48,\\
+f(3)(1+2u+v)+d&=312/5,\\
+f(4)(1+r+u+v)+d&=\widehat Y,\\
+f(5)(2-r+3u+v)+d&=\widehat z.
+\end{aligned}
+\tag{1.7}
+$$
+
+All six trace factors are positive. In particular the last two
+equations are actual ancestor constraints, not adjustable future
+observations. The explicit stratum of this volume is
+
+$$
+\mathcal F^{\ne0}_7(H)=\{W\in\mathcal F(H):f(7)\ne0\}.
+\tag{1.8}
+$$
+
+There is initially no restriction on $f(6)$.
+

@@ -1,0 +1,22 @@
+**Proposition 5.3 (the two explicit codes have different objectives).**
+At $D=3$ the preparation-optimal construction in Theorem 4.2 has
+eleven attained names, with worst preparation charges $(T,L,H)=(2,4,2)$.
+It is not name-optimal, because the credited [D3, Theorem 2.3][D3]
+gives $M_1(3)=4$. Theorem 5.1 gives four attained names with the
+simultaneous preparation guarantees $(4,12,3)$. The credited full
+canonical scan had charges $(7,17,3)$.
+
+Proof. $N_2=2+3^2=11$. Substitute $D=3$ into Theorems 4.2 and
+5.1 and the scan formula in Convention 2.3; reuse the stated D3
+name optimum. $\square$
+
+This comparison proves that the displayed preparation-optimal code and
+the displayed name-optimal code differ. It does not prove that no other
+code can simultaneously attain the name minimum and the preparation
+minima. Such a disjointness claim would require a further theorem about
+the acquisition of minimum-cover names. More generally, for $D\ge2$
+the new sufficient call bound is strictly below $2^D-1$, and the
+letter saving relative to that scan is
+$(D-2)2^{D-1}+1>0$; the peak bound remains $D$. This changes no value
+of $M_1(D)$ and no memory-rate endpoint.
+

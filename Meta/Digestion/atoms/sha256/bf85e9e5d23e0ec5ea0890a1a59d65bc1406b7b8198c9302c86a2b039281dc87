@@ -1,0 +1,40 @@
+**Corollary 8.1 (consequences against every original complete code).**
+For $d=h+3$, $W=\sum_xw(x)>0$, and $w$ supported on $U_h$,
+
+$$
+M_1(D)\ge
+\left\lceil\left(\frac{W}{\mathcal R_h(w)}\right)^{2^{D-d}}\right\rceil
+\quad(D\ge d),\qquad
+\lambda\ge2^{-d}\log_2\frac{W}{\mathcal R_h(w)}.
+\tag{JPL.32}
+$$
+
+For the diagonal law $\mu_0$ the corresponding bound is
+
+$$
+M_1(D)\ge\left\lceil(5/4)^{2^{D-d}}\right\rceil
+\quad(D\ge d),\qquad
+\lambda\ge2^{-d}\log_2(5/4).
+\tag{JPL.33}
+$$
+
+Proof. Homogeneity and Theorems 3.3 and 5.2 supply the normalized
+caps. Apply the credited all-original-competitor transport (JPL.9).
+For clarity, that transport restricts an arbitrary original complete
+code to an actual perfect right-subtree scaffold of $2^{D-d}$
+canonical $S_d$ blocks. It retains the same source, each whole-source
+code fiber and every selected late query. A target in a block is
+the permitted original request $Ra_iq$. Any original-root query is
+an outer constant, a scaffold constant, or a literal in one unique
+actual donor block. Convention 1.3 simulates arbitrary long suffixes
+in that same donor block. Correctness for all authentic $k$ makes
+each restricted fiber admissible, with every off-target or cyclic
+witness still allowed.
+
+The analytical law has total mass one on this slice, even if its
+one-block coordinates vanish outside the stated support. Each
+restricted code fiber has mass at most the cap raised to the number
+of actual blocks. Counting the fibers proves (JPL.32) and (JPL.33).
+The support is a lower-witness slice, not a restriction on competing
+preparations, readers or their complete attained alphabets. $\square$
+

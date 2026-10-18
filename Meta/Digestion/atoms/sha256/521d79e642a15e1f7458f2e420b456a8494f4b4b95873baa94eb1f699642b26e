@@ -1,0 +1,88 @@
+## 1. Native model and the inherited four-state core
+
+Use the actual ordered trees
+
+$$
+\mathcal T ::= \alpha\mid\beta\mid\langle u,v\rangle,
+\qquad h(\alpha)=h(\beta)=0,
+\qquad h(\langle u,v\rangle)=1+\max(h(u),h(v)).
+$$
+
+The finite alphabets are
+
+$$
+S_1=\{\alpha,\beta,\langle\alpha,\alpha\rangle\},
+\qquad
+S_{r+1}=\{\alpha,\beta\}\sqcup\{\langle x,y\rangle:x,y\in S_r\}.
+$$
+
+Write $\varepsilon$ for the empty word, $|q|$ for word length, and $[m]=\{1,\ldots,m\}$. Every finite word in $L,R$, including $\varepsilon$, is a legal original-root literal. Its reply $r_t(a)$ is the encountered leaf label, $\mathsf{branch}$ at a pair, and $\mathsf{absent}$ after traversal has passed a leaf. Thus the reply alphabet is $\mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$. Define
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+For public $D\ge1$, the original source family and request sets are
+
+$$
+\mathcal F_D=\{\langle\alpha,v\rangle:h(v)\le D\},\qquad
+W_D=\{q\in\{L,R\}^*:|q|\le D-1\},\qquad
+\mathcal P_D=\{Rq:q\in W_D\}.
+$$
+
+One actual initial source $t\in\mathcal F_D$ remains stationary during preparation and acquisition; $\rho^kt$ specifies what is to be predicted. For any tree $u$ and finite word $q$, define its temporal factor $\Gamma_q(u)$ as follows. At a branch endpoint put $\Gamma_q(u)=(0,0)$. Otherwise let the first blocking leaf along $q$ have label $\ell$ at address $a$, and write $q=ab$. Set $e(\alpha)=0$, $e(\beta)=1$, and $s(b)=\#L(b)+2\#R(b)$. Then
+
+$$
+\Gamma_q(u)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&b=\varepsilon,\\
+(s(b)+2-e(\ell),\mathbf1_{b\text{ ends in }R}),&b\ne\varepsilon.
+\end{cases}
+$$
+
+The factor law and the following all-count decoder are credited to [RCE, Convention 1.2][RCE]. For every attained factor $(b,c)$,
+
+$$
+\operatorname{Pred}((b,c),k)=
+\begin{cases}
+\mathsf{branch},&k\ge b,\\
+\beta,&b\ge1\text{ and }k=b-1,\\
+\alpha,&c=1\text{ and }k=b-2,\\
+\mathsf{absent},&\text{otherwise}.
+\end{cases}
+$$
+
+This is $r_{\rho^ku}(q)$ for every $k\ge0$. Conversely the trajectory determines $b$ as its first branch count and $c$ by whether an alpha stage occurs. Initially absent targets are included.
+
+The credited canonical completion $\pi_D$ fixes $S_D$, preserves all $W_D$ replies and factors, and replaces a branch at depth $D-1$ by $\langle\alpha,\alpha\rangle$. The table of $W_D$ replies determines $\pi_D(v)$ for every $h(v)\le D$. On $S_D$, a length-$D$ reply is alpha exactly when its length-$(D-1)$ parent reply is branch, and is absent otherwise; longer words are absent. Thus every finite literal is a function of one boundary reply in the same actual block, or a constant. These are precisely the canonicalization and every-word premises of [RCE, Convention 1.2][RCE] and [JPL, Convention 1.3][JPL].
+
+Preparation is a deterministic effective procedure initialized source-blind from $D$ and common installed tables, given no later request, terminating on every source, and acquiring source dependence only by charged literal Reads. Its complete export $E(t)$ contains every accessible surviving source distinction. Only after export is a public source-independent $p\in\mathcal P_D$ supplied. Using $E(t),D,p$ and common tables, a deterministic reader chooses zero Reads or one fresh Read of the same stationary source, before its reply and before any authentic count. Its predictor must answer $r_{\rho^kt}(p)$ for every subsequently supplied authentic $k\ge0$, without further Reads. Let $M_1(D)$ be the minimum attained cardinality $|E[\mathcal F_D]|$ over such jointly correct procedures. Handoff, access isolation, lawful entry, source continuity and authentication are the declared paid services of [RCE, Definition 1.1][RCE]. Acquisition, workspace, tables, address costs and physical time remain separate resources, as specified in Section 6.
+
+Set
+
+$$
+A=\alpha,\quad B=\beta,\quad C=\langle A,A\rangle,
+\quad J=\langle B,A\rangle,
+$$
+
+and define the four inherited core trees
+
+$$
+(u_0,u_1,u_2,u_3)=
+(C,J,\langle C,C\rangle,\langle J,J\rangle)\subseteq S_3.
+$$
+
+The relevant native table is
+
+$$
+\begin{array}{c|cccc}
+ &u_0&u_1&u_2&u_3\\\hline
+r_L&\alpha&\beta&\mathsf{branch}&\mathsf{branch}\\
+r_{RL}&\mathsf{absent}&\mathsf{absent}&\alpha&\beta\\
+\Gamma_{LL}&(3,0)&(2,0)&(2,1)&(1,0)
+\end{array}
+$$
+
+For completeness, the root reply is constantly branch; the $R$ replies are $(\alpha,\alpha,\mathsf{branch},\mathsf{branch})$; the $LL$ row equals the $RL$ row; and the $LR$ and $RR$ rows are $(\mathsf{absent},\mathsf{absent},\alpha,\alpha)$. Every word of length at least three is absent. These rows exhaust all finite words and prove the three-reply bound. The literal $L$ identifies every triple omitting $u_2$ or $u_3$; $RL$ identifies every triple omitting $u_0$ or $u_1$. Smaller nonempty subsets inherit one of these identifying literals. The four displayed $LL$ factors are distinct by the factor formula. This core and its identification property are inherited from [RCE, Definition 6.1 and Lemma 6.2][RCE], consistently with [JPL, Definition 2.1][JPL]; they are not a new motif.
+

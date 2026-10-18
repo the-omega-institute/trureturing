@@ -1,0 +1,47 @@
+**Proposition 5.2 (the finite-tree and chronology content of the
+obstruction).** The strict-subtree obstruction in Proposition 5.1
+does not depend on an accidental contradiction among its concrete
+markers. If the outside $\alpha$ anchor is removed, and every cut
+address loses its initial $L$, the resulting three complete cuts
+still have no joint chronological realization. Each pair, however,
+is realized at every nonnegative lag by its corresponding six-leaf
+original. Allowing cyclic infinite trees would invalidate the finite
+occurrence argument, including its complete partitions.
+
+Proof. Without the anchor, the cuts are
+$Q_0=\{L,RLL,RLR,RR\}$,
+$Q_1=\{L,RL,RRL,RRR\}$ and
+$Q_2=\{LL,LR,RL,RR\}$.
+They are complete frontiers. Each pair witness from Proposition 5.1
+has all of its relevant holes already reached at epoch zero.
+Homomorphism and injectivity preserve both complete rows at every
+later epoch, establishing every lag for that pair.
+
+In a hypothetical joint history, transport the row-zero equality
+and the row-one equality to the third epoch. All addresses involved
+were reached at the capture supplying each equality, so this use
+of transport has its guards. At the third epoch define $A,B,C$ to
+be the subtrees at $L,RL,RR$. The transported equalities and the
+third row give (NUE.18) at that one epoch. The finite leaf-count
+contradiction again applies, without forcing equal epochs.
+
+To exhibit the forbidden change of domain, the guarded recursive
+equations
+
+$$
+A=\langle C,\alpha\rangle,\qquad
+B=\langle A,\beta\rangle,\qquad
+C=\langle B,\langle\alpha,\alpha\rangle\rangle
+\tag{NUE.20}
+$$
+
+unfold to rational infinite ordered trees satisfying (NUE.18).
+Their right children show $A,B,C$ pairwise unequal. The three class
+triples are respectively $(A,\beta,C)$,
+$(A,B,\langle\alpha,\alpha\rangle)$ and $(C,\alpha,B)$;
+each is pairwise distinct. Thus these infinite objects satisfy even
+the full partitions. They are not elements of $\mathcal T$ and
+cannot repair a finite-tree occurrence failure. This is a same-history
+record construction, distinct from prefix contact among different
+source strata. $\square$
+

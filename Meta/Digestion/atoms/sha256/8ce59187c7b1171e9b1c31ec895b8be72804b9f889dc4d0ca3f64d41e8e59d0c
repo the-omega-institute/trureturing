@@ -1,0 +1,57 @@
+### 66.2 Equivalent Fourier correlations and all pole strata
+
+Let \(F=(\omega^{jk})_{0\le j,k\le2}\),
+\(D=\operatorname{diag}(1,\omega^2,\omega^2)\), and
+\(E=\operatorname{diag}(\omega,1,1)\). Entrywise multiplication gives
+
+\[
+ A=E\bar FD,\qquad \bar A=\bar EF\bar D,
+ \qquad \bar DD^{-1}=D.
+\tag{66.1}
+\]
+
+For a unit-entry input \((x,y)\), put \(\alpha=Dx\), \(\beta=Dy\),
+and \(t_j=\beta_j/\alpha_j=y_j/x_j\). The two Fourier inputs are
+\(v=\alpha+\beta\) and \(w=D(\alpha-\beta)\).
+For either \(F\) or \(\bar F\), the three squared output moduli of
+a vector \(h\in\mathbb C^3\) equal six exactly when
+
+\[
+ \sum_j|h_j|^2=6,\qquad
+ \sum_j\bar h_jh_{j+1}=0,
+\tag{66.2}
+\]
+
+where indices are modulo three. This is the direct expansion of the
+three Fourier squared moduli, using \(1+\omega+\omega^2=0\).
+With \(e_j=\bar\alpha_j\alpha_{j+1}\), the original six output
+conditions are therefore equivalent to
+
+\[
+ \begin{gathered}
+ \sum_j\operatorname{Re}t_j=0,\qquad
+ \sum_je_j(1+t_j^{-1})(1+t_{j+1})=0,\\
+ \sum_j\rho_je_j(1-t_j^{-1})(1-t_{j+1})=0,
+ \qquad (\rho_0,\rho_1,\rho_2)=(\omega^2,1,\omega).
+ \end{gathered}
+\tag{66.3}
+\]
+
+Here \(|e_j|=|t_j|=1\) and \(e_0e_1e_2=1\).
+
+No \(t_j=-1\) is possible. If exactly one ratio equals \(-1\),
+exactly one coordinate of \(v\) is zero, and its cyclic correlation
+has precisely one nonzero summand. If at least two ratios equal
+\(-1\), at most one coordinate of \(v\) is nonzero, with squared
+modulus at most four, contradicting its norm six. The identical
+argument with \(w\) excludes \(t_j=1\). Thus every ratio has the
+unique finite nonzero real Cayley parameter
+
+\[
+ t_j=\frac{1+iu_j}{1-iu_j},\qquad u_j\in\mathbb R\setminus\{0\}.
+\tag{66.4}
+\]
+
+This treats both the infinite-parameter and zero-parameter strata,
+including the cases where two or all three ratios equal a pole.
+

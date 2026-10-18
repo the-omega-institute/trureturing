@@ -1,0 +1,115 @@
+**Theorem 66.1 (finite activity for each positive finite approximant).**
+Every decoder of Theorem 63.1 at $v=v^\dagger$, Theorem 63.2 and
+the approximants in §§64–65 has a conditional same-clock realization with the exact
+first-failure CP measures of JRH.31, terminal live map from JRH.30,
+finite integrated positive absorption and no later positive-carrier
+action after failure. This assumes access to the specified encodings,
+embeddings, stopped instruments and survivor isometries within the
+original aligned clock. It does not supply that access.
+
+Proof. A pure live decoder needs only its specified isometry. Every
+nontrivial mixed decoder has rank-one failure effect
+$F=f|q\rangle\langle q|$ with $0<f<1$ and
+$B^\dagger B=I-F$. This follows from JRH.30 and the rank-one
+attached $N$. Define, on its entire fibre,
+
+$$
+\begin{gathered}
+K(t)=\sqrt{I-G(t)F},\qquad
+R(t)=g(t)F(I-G(t)F)^{-1},\\
+J_\ell(t)=\sqrt{\frac{w_\ell g(t)f}{1-fG(t)}}
+ |f,\ell\rangle\langle q|,\qquad
+U=B(I-F)^{-1/2}.
+\end{gathered}
+\tag{JRH.54}
+$$
+
+Use zero Hamiltonian. Since $F$ commutes with its functions,
+$K'=-RK/2$ and $K(0)=I$; moreover
+
+$$
+\begin{gathered}
+\sum_\ell J_\ell(t)^\dagger J_\ell(t)=R(t),\qquad
+J_\ell(t)K(t)=\sqrt{w_\ell g(t)f}
+ |f,\ell\rangle\langle q|,\\
+U^\dagger U=I,\qquad UK(1)=B,\\
+K(t)^\dagger K(t)+\sum_\ell\int_0^t
+ K(\tau)^\dagger J_\ell(\tau)^\dagger J_\ell(\tau)K(\tau)d\tau=I.
+\end{gathered}
+\tag{JRH.55}
+$$
+
+Thus these are the no-event and actual FIRST-event CP operators, not
+a terminal draw of a timestamp. Each label's first-event density is
+$w_\ell g(t)\operatorname{tr}(FX)dt\,P_f$ with the reference
+factor JRH.32. The exact integration identity proves the instrument
+on every Borel set. At the deadline apply $U$ only to survivors;
+no terminal failure mass is added. Extend by identity on already
+stopped/archive sectors, let every jump vanish there, and stop all
+positive-carrier controls at first failure. The rates are bounded for
+each $f<1$ and
+
+$$
+\|R(t)\|=h_f(t)=\frac{2f}{(1+t)[1+(1-2f)t]},\qquad
+\int_0^1h_f(t)dt=-\log(1-f)<\infty.
+\tag{JRH.56}
+$$
+
+The same elapsed $t$ is translated to absolute $6+t$; no extra
+execution interval is introduced by these formulas.
+
+There is also an explicit correspondence with the PARTICULAR canonical
+instrument OC.19–OC.19b. At the double-wall base let
+$c_{\rm src}=1/4$, $p(k)=(k,c_{\rm src}-k,Z,c_{\rm src}-k,k)$,
+keep phases fixed, and take $k'\ge0$. Then its original rates are
+
+$$
+\gamma_0=\gamma_{13}=0,\qquad
+\gamma_1=\gamma_3=\frac{c_{\rm src}k'}{k(c_{\rm src}-k)},\qquad
+\gamma_2=k'/k.
+\tag{JRH.57}
+$$
+
+Indeed OC.19 has $\lambda=k'/k$ and
+$\gamma_i=\lambda-(\log p_i)'$. Put $\ell=1-f>0$ and
+$s_f(t)=1-fG(t)\in[\ell,1]$. For selectors $i=1,2,3$ use
+
+$$
+k_1(t)=k_3(t)=\frac{c_{\rm src}\ell}{s_f(t)+\ell},\qquad
+k_2(t)=\frac{c_{\rm src}\ell}{2s_f(t)}.
+\tag{JRH.58}
+$$
+
+They are smooth increasing strict-interior paths on $[0,1]$, with
+$k_i(1)=c_{\rm src}/2$. Substitute in JRH.57: on the occupied
+bad mode $i$, $\gamma_i=-s_f'/s_f=h_f$, and on good mode $0$
+the rate is zero. Embed the decoder's good eigenvector into mode $0$
+and $q$ into mode $i$ by a fixed calibrated isometry. The restriction
+of OC.19's no-event map is exactly
+$\operatorname{diag}(1,\sqrt{s_f(t)})$; OC.19b's first-event
+map is the corresponding single-mode version of JRH.55. The complete
+instrument therefore agrees on ALL complex operators in the occupied
+two-dimensional subspace, including its coherences and passive
+references, not just its endpoint survival probability.
+
+Generate an input-independent selector $i=1,2,3$ with probabilities
+$1/4,1/2,1/4$ and retain it as a classical control flag. Each selected
+branch still has positive terminal live effect. Its actual mode of first
+failure is $i$; forgetting only the selector gives exactly the five
+weights in JRH.2. No modes $0,13$ acquire failure mass on the
+occupied decoder input. The terminal survivor isometry can undo the
+chosen embedding before applying $U$. Stopped sectors carry identity,
+with no later positive-carrier action.
+
+Even on the complete canonical five-mode carrier the maximum rate is
+finite. For $i=1,3$, JRH.57's maximum is $h_f$ and its integral
+is $-\log\ell$. For $i=2$ the maximum is
+$\gamma_1=\gamma_3=-s_f'/(s_f-\ell/2)$ and its integral is
+$\log((2-\ell)/\ell)$. Thus the full canonical instrument, not
+only its occupied restriction, meets the finite integrated condition.
+The selectors, embeddings and rates describe that specified instrument;
+they neither classify all controls nor change the original unknown
+source ramp $x+6t/256$. These paths satisfy the regularity of
+OriginalControl, but geometric path existence does not grant its
+actuator calls. $\square$
+

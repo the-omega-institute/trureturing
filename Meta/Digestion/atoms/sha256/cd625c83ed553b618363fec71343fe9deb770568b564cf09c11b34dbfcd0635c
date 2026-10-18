@@ -1,0 +1,58 @@
+**Lemma 2.1 (noninitial erasure-span obstruction).** If deleting some $j\in\{1,2,3,4\}$ leaves matrices with span of dimension at most three, the five-read history has a finite collision between distinct positive rank-one sources at common slope $k=-1/j$ and common drift zero. Hence uniform recovery requires four independent survivors after every noninitial deletion.
+
+**Proof.** The survivors include $I$. Choose $A,B$ so that $I,A,B$ span them, repeating $I$ if necessary. Two homogeneous equations in three unknowns give a nonzero trace-zero matrix
+
+$$
+X=\begin{pmatrix}a&b\\c_1&-a\end{pmatrix}
+$$
+
+annihilating $A,B$ under the trace pairing. For $A=(\begin{smallmatrix}u&v\\w&e\end{smallmatrix})$ its equation is $(u-e)a+wb+vc_1=0$.
+
+If $a\ne0$ or $bc_1<0$, the coefficients $a,-b,-c_1,-a$ have both strict signs. Otherwise orient $X$ so that $b,c_1\ge0$, not both zero. Nonnegativity then forces the corresponding off-diagonal entry of each selected matrix to vanish. Such a triangular nonnegative integral unimodular matrix has diagonal entries both one. Consequently $\operatorname{diag}(1,-1)$ annihilates $I,A,B$ as well. Replace $X$ by it. In either case we have a nonzero annihilator $X=(\begin{smallmatrix}a&b\\c_1&e\end{smallmatrix})$ for which $a,-b,-c_1,e$ contain both strict signs.
+
+Put
+
+$$
+E(x,y)=\begin{pmatrix}xy&x\\y&1\end{pmatrix},\qquad
+f(x,y)=exy+a-c_1x-by\quad(x,y>0).
+$$
+
+This function takes both signs. Indeed its values at $(\epsilon,\epsilon)$ tend to $a$, while its values divided by $T^2$ at $(T,T)$, and divided by $T$ at $(T,T^{-2})$ and $(T^{-2},T)$, tend respectively to $e,-c_1,-b$. Each strictly signed coefficient supplies a positive point of that sign. Join two such points by a positive straight segment with endpoint values $f_-<0<f_+$. On this compact segment every entry of $E$ is at least some $m>0$.
+
+Write $\Delta=\det X$ and choose
+
+$$
+\lambda>\max\left\{\frac{\max_{a,b}|X_{ab}|}{m},
+\frac{|\Delta|}{\min(-f_-,f_+)}\right\}.
+$$
+
+The intermediate value theorem supplies a segment point with $f=-\Delta/\lambda$. At that point $S_0=\lambda E$ and $S_1=S_0+X$ are strictly positive, distinct, and have zero determinant, since $\det S_1=\lambda f+\Delta=0$. They are therefore rank one. Their surviving traces agree. The only remaining index has gain zero at $k=-1/j$, so all five observations agree with drift zero. Equation (1.2) and positivity under each atom realize these sources on the original words with one fixed row per run. ∎
+
+For the second bridge define auxiliary full-matrix maps
+
+$$
+\mathcal L(X)_i=\operatorname{tr}(A_iX),\qquad
+\mathcal Qv=(v_i-v_0)_{i=1}^4,\qquad
+(\mathcal Iv)_i=iv_i,
+$$
+
+$$
+\mathsf B=\mathcal Q\mathcal L,\qquad
+\mathsf C=\mathcal Q\mathcal I\mathcal L,\qquad
+\mathsf T_k=\mathsf B+k\mathsf C.
+\tag{2.1}
+$$
+
+The kernel of $\mathcal Q$ consists exactly of constant five-vectors. Use the bilinear determinant polarization
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y,
+$$
+
+$$
+\mathfrak b(S,Y)=sY_{11}+pY_{22}-rY_{12}-qY_{21}.
+\tag{2.2}
+$$
+
+In particular $\det(S+\epsilon Y)=\det S+\epsilon\mathfrak b(S,Y)+\epsilon^2\det Y$. Full matrices in these linear maps are auxiliary; actual sources retain positivity and rank one.
+

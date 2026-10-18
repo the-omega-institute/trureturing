@@ -1,0 +1,17 @@
+**Theorem 3.3 (dynamic one-coordinate locality).** At a fixed compatible prefix
+as in Lemma 3.2, any literal query depends on at most one bracket coordinate
+$x_i$ and has at most two attainable replies. If it distinguishes the two values
+of coordinate $i$, its submitted address length is at least $d_i+1$.
+
+Proof. Let $c_h$ be the hole path in $C_h$. The variable gadget roots occur at
+the common prefix-incomparable paths $c_hp_i$. An address stops in the context
+or scaffold, enters a known constant, exits the tree, or enters exactly one such
+gadget cone. In the first three cases its reply is independent of $x$; in the
+last it is a function of only $\rho^{e_h}G_{x_i}$. A single address cannot enter
+two cones. Hence the range has at most two elements, despite the four global
+reply constructors. Both possible gadget roots are branches at every epoch,
+so a distinguishing address must pass strictly below that root. Its length is
+at least $|c_h|+d_i+1\ge d_i+1$. Substitution never contracts the scaffold;
+outer grafts can only add this prefix. This is a claim about one common actual
+family under the same acquired prefix, not independent marginal realizability.
+

@@ -1,0 +1,20 @@
+**Definition 23.3 (One fixed finite stochastic observer).** Fix $0<\alpha<1/2$. An observer $\mathcal A$ has a finite set of persistent configurations, including every register, control phase, retained random choice and decision label. Its initialization is independent of the source and has a fixed distribution. At each action it either reads the next actual bit or stops with an internally emitted label $D\in\{0,1\}$. Its state transitions and choices use only the current configuration, the bit just read when applicable, and fresh random variables independent of the source and of earlier fresh random variables. Their probabilities are fixed real numbers. The initialization, state set and transition probabilities may depend on $H$, the prescribed risk and arbitrary fixed design constants; the same machine is used throughout $q\in(0,1)$. They do not depend on the true parameter or on the number of preceding actions except insofar as information about the latter is represented in the finite configuration. Choosing a new machine as an endpoint band shrinks is a different quantifier order.
+
+No externally available time, age, program counter, archive, reset, parallel source copy, skipped bit, parameter query or probability query is part of this experiment. In particular an external recipient does not infer the decision from the elapsed number of reads: $D$ is the label emitted by the observer itself. A mathematical cost tally $T$ supplies no input to it. A stored seed or a counter used to select random updates is persistent information and belongs in the state set; a fresh independent coin is not a persistent register.
+
+The correctness and termination contract is
+
+$$
+\begin{gathered}
+\sup_{0<q<1}\mathsf P_{0,q}(D=1)\le\alpha,
+\qquad
+\sup_{0<q'<1}\mathsf P_{1,q'}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,
+\qquad \mathbb E_{i,q}T<\infty
+\quad(i=0,1, 0<q<1).
+\end{gathered}
+\tag{23.8}
+$$
+
+The last two assertions are pointwise in the true parameter. A deterministic horizon and a mean bound uniform on $(0,1)$ are not hypotheses.
+

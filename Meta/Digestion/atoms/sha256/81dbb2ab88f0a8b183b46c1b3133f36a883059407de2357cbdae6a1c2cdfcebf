@@ -1,0 +1,48 @@
+**Proposition 8.9 (Finite nonlinear coordinates for the full menu).**
+The same $E_0$ gives a lossless finite current-state realization
+of every native command and every prescribed simultaneous
+continuation, with generally nonlinear updates.
+
+**Proof.** The actual image is
+$\{\xi\in[a,b],\|\mathbf u\|=\|\mathbf v\|=1\}$.
+The probability update is the translation of Proposition 8.8.
+A phase command acts by
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ \left(\xi,
+ R_{(1/2-\xi/r)t}\mathbf u,\,
+ R_{-\xi t/r}\mathbf v\right).
+$$
+
+These functions use the stored current height, require no
+external selector and respect both phase circles. Their
+dependence on that height makes them generally nonlinear.
+For a prescribed simultaneous path with parameters and
+all-times guard as in Theorem 7.11, integration or
+$u=\beta,\ v=\beta-\alpha$ gives
+
+$$
+u'=u+\left(\frac12-\frac kr\right)L-\frac Cr,
+\qquad
+v'=v-\frac krL-\frac Cr.
+$$
+
+The exact feature update is therefore
+
+$$
+(\xi,\mathbf u,\mathbf v)\longmapsto
+ \left(\xi+\Delta,
+ R_{(1/2-\xi/r)L-C/r}\mathbf u,\,
+ R_{-\xi L/r-C/r}\mathbf v\right),
+$$
+
+under $a\le\xi+\rho(\tau)\le b$ for all times.
+It preserves the actual feature image whenever lawful.
+Substituting each intermediate upper time limit and composing
+finitely many such maps proves exact realization of every
+finite valid history. The four-coordinate response realization
+of Theorem 3.2 is another finite nonlinear model, with an exact
+linear original-output decoder. Neither model asserts affine
+full-menu dynamics. $\square$
+

@@ -1,0 +1,35 @@
+**The normalized real arc.** The positive real change of variables
+
+$$z=\frac{X}{5D},\qquad w=\frac{Y}{(5D)^{3/2}}$$
+
+is a real group isomorphism to $E_0:w^2=z(z+1)(z-3)$. Its identity component consists of $z\ge3$ and $O$. With invariant differential $dz/(2w)$, its positive real period is
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}}.$$
+
+For $z>3$, define
+
+$$u(z)=\int_z^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+This decreases strictly from $\omega/2$ to $0$. Under the real group parametrization $\mathbb R/\omega\mathbb Z$, the two points of coordinate $z$ have parameters $\pm u(z)$. This is the inverse elliptic integral from analytic uniformization; see Silverman, *The Arithmetic of Elliptic Curves*, VI.1 and VI.5, especially Proposition 5.2, in the [primary text](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+Set $u=u(D)$. The original point has parameter $\pm u$, whereas $z(K)=B_n>D$ places the new point strictly in one of the two arcs
+
+$$(0,u)\quad\text{or}\quad(\omega-u,\omega)\pmod\omega.$$
+
+The coordinate function is even, so replace $m$ by $a=|m|\ge3$ when comparing coordinates. If $au\ge\omega$, then $a\ge\omega/u$. If $au<\omega$, it cannot lie in $(0,u)$ because $a>1$, and so it lies in $(\omega-u,\omega)$. Both cases give
+
+$$a>\omega/u-1.\tag{90.1}$$
+
+This treats negative multipliers, both ends of the high-coordinate arc, and the first wrap around the real component.
+
+For $t>3$, one has $t(t+1)(t-3)<t^3$, and for $t\ge D>3$ one has $t(t+1)(t-3)>(t-3)^3$. Therefore
+
+$$\omega>\int_3^\infty t^{-3/2}\,dt=\frac2{\sqrt3},\qquad
+u:=u(D)<\int_D^\infty\frac{dt}{2(t-3)^{3/2}}=\frac1{\sqrt{D-3}}.$$
+
+Substituting these bounds in (90.1) gives
+
+$$a>2\sqrt{\frac{D-3}{3}}-1>\sqrt D.\tag{90.2}$$
+
+For the last inequality, $D\ge144$ suffices: after squaring positive quantities it is equivalent to $D-15>6\sqrt D$, which follows from $(\sqrt D-3)^2>24$ when $\sqrt D\ge12$. Our $N\ge81$ ensures $D\ge144$. Consequently $m^2>D$.
+

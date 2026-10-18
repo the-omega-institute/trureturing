@@ -1,0 +1,38 @@
+**Definition 26.1 (Fixed marks and retention of short gaps).** Define the fixed rational constants
+
+$$
+\begin{aligned}
+C_i&=F_i(2)^2+2F_i(1)F_i(3),&
+\theta_i&=\frac{F_i(2)^2}{C_i},\\
+\Delta_\theta&=\theta_0-\theta_1,&
+V&=\max_{i=0,1}\theta_i(1-\theta_i).
+\end{aligned}
+\tag{26.1}
+$$
+
+The exact sum-four certificate in Theorem 20.2 of the owning source states $0<\theta_1<\theta_0<1$. Equivalently, writing $r_k=H(k)/k^9$, it supplies
+
+$$
+r_1r_3-r_2^2
+=\frac{520040714516414119558257878908551006355871}
+       {331776\cdot10^{48}}>0.
+\tag{26.2}
+$$
+
+In particular $\Delta_\theta>0$ and $V>0$; also $C_0=301510$. This finite certificate and the resulting conditional Bernoulli statistic are used as established source results.
+
+For the prescribed $0<\alpha<1/2$, choose once a rational $0<\alpha_0\le\alpha$ and set
+
+$$
+M=\left\lceil\frac{8V}{\alpha_0\Delta_\theta^2}\right\rceil,
+\qquad
+b_M=\left\lceil\frac{M(\theta_0+\theta_1)}2\right\rceil.
+\tag{26.3}
+$$
+
+These are fixed finite integers determined by the shapes and the chosen risk, independent of the unknown parameter. When $\alpha$ is rational one can take $\alpha_0=\alpha$.
+
+The observer first reads to the first actual tick. Thereafter it reads every subsequent gap through its closing tick and retains a category only for a completed gap of length $1$, $2$ or $3$. It pairs consecutive retained categories, leaving no retained category unused between pairs. A retained first category is preserved through any number of intervening gaps of length at least four. A retained pair is accepted exactly when its two categories sum to four. Its mark is one for $(2,2)$ and zero for $(1,3)$ or $(3,1)$. All other retained pairs are rejected. After each pair, accepted or rejected, the pending category is cleared.
+
+At the closing tick that supplies the $M$th accepted pair, let $v$ be the accumulated number of marks equal to one. The observer stops there, emitting zero if $v\ge b_M$ and one otherwise. The operational meaning of a gap category is a saturated zero count updated on actual consecutive reads; it is not a response supplying a gap length. Long gaps are read in their entirety even when their category is already known to be ineligible.
+

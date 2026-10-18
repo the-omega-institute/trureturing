@@ -1,0 +1,52 @@
+**Theorem 9.3 (exact localization on the original installed vector).**
+For every graph in Definition 9.1, the sets $X_B$, $B\in\mathcal B$,
+partition $[n]$, and all live sharing between different count cells is
+confined to one $V_B$. More precisely, all the pools $Q_B$ and
+$Q_a^{\mathrm{cut}}$ are pairwise disjoint, and a state in
+$Q_a^{\mathrm{cut}}$ hosts exactly one count cell. Consequently
+
+$$
+\begin{gathered}
+D=\sum_{B\in\mathcal B}D_B,\qquad
+E=E_{\mathrm{cut}}+\sum_{B\in\mathcal B}E_B,\qquad
+u=\sum_{B\in\mathcal B}u_B,\\
+m(X_B)-g_B=E_a+E_B-D_B+u_B\qquad(B=(a,b)),\\
+m-G=E_{\mathrm{cut}}+u+
+             \sum_{B\in\mathcal B}(E_B-D_B).
+\end{gathered}
+\tag{SI.32}
+$$
+
+Proof. The chain in Lemma 9.2 starts at the empty set and ends at
+$[n]$, so its successive differences $X_B$ partition $[n]$.
+Equation (SI.31) places the fixed label of every live host at depths
+$a\le d<b$ in $X_B$. Since these coordinate blocks are disjoint,
+one installed state cannot be live in two such half-open depth ranges.
+Within one range, Lemma 9.2 separates its lower cut pool from the
+interior and separates the cells of that cut. This proves every stated
+disjointness and localizes all duplicate incidences.
+
+Every live state belongs to one of these pools. In the coordinate block
+$X_B$ the installed states are precisely the disjoint union of
+$Q_a^{\mathrm{cut}}$, $Q_B$ and the states counted by $u_B$.
+The cut pool has cardinality $|V_a|+E_a$. Double-counting the
+incidences restricted to $V_B$ gives
+
+$$
+\sum_{p\in V_B}b_p=|Q_B|+D_B,\qquad
+|Q_B|=|V_B|+E_B-D_B.
+\tag{SI.33}
+$$
+
+Their sum proves the block identity in (SI.32). The half-open cell
+ranges partition $V$, so $\sum_B g_B=G$. The coordinate blocks
+partition all installed states by their fixed labels, including those
+that are never live. Thus $\sum_B m(X_B)=m$ and
+$\sum_B u_B=u$. Summation proves the remaining identities, also
+recovering (SI.19).
+
+A state live in one pool but visited after certification on another
+input stays in that one live pool. It is not included in any $u_B$.
+Actual certified traffic need not obey the live support envelope; none
+of its visits is deleted or made free by the decomposition. $\square$
+

@@ -1,0 +1,82 @@
+**Theorem 12.3 (Measurable same-seed representation and converse).** Fix
+$k,j,p$ and the original given $(\mathsf U,\mathcal U,\nu)$. Let
+$v_i(z)=J_p(Z^{\Pi_i}=z)$ be the finite law vector of representative
+$\Pi_i$. For every protocol with a pathwise hard total budget $k$, there
+is a measurable function $f:\mathsf U\to\{1,\ldots,m\}$ such that,
+for every $B\in\mathcal U$ and $z\in\mathcal Z_k$,
+
+$$
+\mathbb P_p(u\in B,Z=z)
+=\sum_{i=1}^m\nu(B\cap\{f=i\})v_i(z).
+\tag{12.6}
+$$
+
+The same assertion holds for an almost-sure hard total budget; its
+representing protocol has the pathwise cap. Conversely every measurable
+$f$ in (12.6) is attained by a legal pathwise-capped protocol on that
+same probability space with its unchanged law $\nu$. Thus the two
+budget conventions have exactly the same attainable joint laws of
+$(u,Z)$, though they remain different requirements on individual rules.
+
+Proof. Apply the boundary replacement and delay normalization in the
+proof of Theorem 12.2 with $u$ fixed. At each seed this leaves a finite
+deterministic tree with integer labels. The space of all such trees is
+countable: there are finitely many shapes and terminal label patterns,
+and a finite tuple of integers for each shape. Give this space its
+discrete sigma-algebra.
+
+The tree depends measurably on $u$. To see this without a conditional
+probability on singleton seeds, build its nodes successively. The record
+at each node takes values in the countable set of finite acquired
+integer-address/reply records. Evaluating a measurable next-event rule
+at that record is measurable: the preimage of an event is a countable
+union over the possible records of the intersection of the event
+specifying that record with the corresponding next-event condition.
+There are only finitely many node positions through depth $k$.
+Induction therefore proves measurability of the tree map. Finite versus
+indefinite waiting is part of the measurable event type; its finite
+numerical value has been discarded. The finite signature of this
+countably valued tree is measurable, so its selected representative
+index $f(u)$ is measurable as well.
+
+For each fixed seed, Theorem 12.2's signature argument identifies the
+source-section law of the normalized tree with $v_{f(u)}$. For a
+pathwise-capped input normalization preserves the source-section law
+of $Z$ at every seed, apart from any allowed completion-version choice.
+For an almost-sure-capped input the boundary replacement changes $Z$
+only on the product-null event $\{N>k\}$; equivalently, by Tonelli it
+preserves the source-section law for $\nu$-almost every seed. Integrate
+these finite-alphabet section identities over $B$ to obtain (12.6).
+No regular conditional distribution on an arbitrary auxiliary space is
+being assumed. Allowed measurable completions give the same identities;
+with countably many records, measurable versions can be chosen together
+and the exceptional null choices do not affect (12.6).
+
+For the converse, at seed $u$ choose the existing representative
+$\Pi_{f(u)}$, and follow its tree using only the actual replies of the
+same $J_p$ source. This is a measurable next-event rule: the selection
+has finitely many measurable seed cells, and each representative has a
+fixed finite labelled tree. On records incompatible with the selected
+tree, set the next event to internal nonreturn, making the rule total.
+Its actions are functions only of $u$ and its acquired record. No source
+observation enters the initial selection, and no extra random coin is
+introduced. All branches have the pathwise cap, including every internal
+nonreturn. Independence of
+the original source and the unchanged seed law gives (12.6) for this
+protocol. Since pathwise-capped protocols are almost-sure-capped, both
+attainable-law sets are therefore identical. $\square$
+
+The representation preserves the joint original target, output or
+$\bot$, finite-return indicator, and exact paid-count distribution,
+including their correlation with every measurable seed event. In
+particular it preserves state-classification error, return probability,
+and unconditional paid cost jointly. Repeated reads and separator reads
+are still visits to paid nodes; charges are not removed when their
+likelihood constraints are redundant. Every nonreturn of a representative
+is internal divergence after its terminal number of actual calls.
+The representation need not agree with the original rule on a source
+sample, and it preserves neither finite return-time values nor literal
+address names. It is an existence result for measurable rules; deciding
+which arbitrary seed belongs to which cell, or whether a given internal
+computation eventually has a next event, receives no effective procedure.
+

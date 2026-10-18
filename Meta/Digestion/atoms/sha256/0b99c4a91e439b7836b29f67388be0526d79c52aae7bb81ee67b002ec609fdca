@@ -1,0 +1,25 @@
+### Provenance, literature boundary, and formalization status
+
+The rank and depth identities remain the classical Lengyel valuation input
+(as recorded in Medina--Rowland, *p-regularity of the p-adic valuation of the
+Fibonacci sequence*, Fibonacci Quarterly 53 (2015), Theorem 1.4,
+[arXiv:0910.2907](https://arxiv.org/abs/0910.2907)) together with the
+repository's TBN.2--TBN.3 split-rank calculation. A targeted search of the
+current dev tree, the WSS PR history (including merged PR #11646), and the
+published residue literature found no statement of this weighted actual-depth
+congruence modulo \(81\). The closest residue reference is Bundschuh--Bundschuh,
+“Distribution of Fibonacci and Lucas Numbers Modulo \(3^k\),” *Fibonacci
+Quarterly* 49 (2011), 201--210
+([PDF](https://www.fq.math.ca/Abstracts/49-3/bundschuh.pdf)); it studies
+sequence residues and does not state the WSS depth-weighted product identity
+proved here. This provenance statement is a bounded repository/literature
+audit, not a claim of priority over unpublished work.
+
+M81 is paper-first. The repository currently has Lean support for Fibonacci,
+Lucas, and rank interfaces, but no formal block-factorization/depth-vector API;
+the existing M27 result is likewise not a Lean theorem. Adding a bind-only
+Lean wrapper would overstate the formal status, so no such wrapper is claimed
+here. The argument above is a complete elementary proof conditional only on
+the already-recorded TBN.2--TBN.3 identities.
+
+

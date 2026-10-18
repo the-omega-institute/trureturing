@@ -1,0 +1,22 @@
+**Definition 70.1 (one recovery for a whole complex plane).** For any $u,v\in\mathbb C$ with $|u|^2+|v|^2=1$, put $\xi=u|0\rangle+v|1\rangle$, $V_\xi=[\xi,|2\rangle]$, and $\iota_\xi(X)=V_\xi XV_\xi^\dagger$. Define
+
+$$
+N_\xi=N_0\iota_\xi,\quad L_\alpha=K_\alpha^0V_\xi,\quad
+S_\xi=\sum_{\alpha=1}^2L_\alpha L_\alpha^\dagger,\quad
+P_\xi=\operatorname{supp}S_\xi,\quad H_\xi=S_\xi^{-1/2},
+\tag{S.128}
+$$
+
+where $H_\xi$ is zero on $\ker S_\xi$. Reuse the supported transpose recovery and whole-output completion of Section 49 in the first volume, now at this complex direction:
+
+$$
+\begin{aligned}
+D_\xi(X)&=\sum_{\alpha=1}^2L_\alpha^\dagger H_\xi XH_\xi L_\alpha
++\operatorname{Tr}((I_5-P_\xi)X)|0\rangle\langle0|,\\
+R_\xi&=\iota_\xi D_\xi:M_5\longrightarrow M_3.
+\end{aligned}
+\tag{S.129}
+$$
+
+The supported core has Kraus completeness $H_\xi S_\xi H_\xi=P_\xi$. Choosing an orthonormal basis $n_j$ of $\ker S_\xi$, the reset branch has Kraus matrices $|0\rangle\langle n_j|$, with completeness $I_5-P_\xi$. Thus $D_\xi$ and $R_\xi$ are complex CPTP maps on all of $M_5$. The completion acts also on later perturbation output outside the old support; it is not discarded when $Q$ changes.
+

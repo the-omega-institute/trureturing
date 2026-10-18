@@ -1,0 +1,44 @@
+**Definition 3.2 (a bounded linear-cost design sentence).** Let
+$\Psi_\pi(\boldsymbol\delta)$ be any specified finite conjunction
+of linear inequalities on $v_\pi(\boldsymbol\delta)$, with fixed
+integer coefficients and constants. For a chosen graph and
+descriptor types require validity, and impose
+
+$$
+\begin{aligned}
+\mathrm{Total}_T:\quad&
+\bigwedge_\eta\forall\mathbf n\
+\left(\operatorname{Adm}_\eta(\mathbf n)
+       \Longrightarrow\bigvee_{h\in E_H}
+                         S_{\eta,h}(\mathbf n;\boldsymbol\delta)\right),\\
+\mathrm{Cost}_T:\quad&
+\bigwedge_{\eta\in\mathcal A,\,\pi\in\Pi_T}\forall\mathbf n\
+\left(A_{\eta,\pi}(\mathbf n;\boldsymbol\delta)
+       \Longrightarrow\Psi_\pi(\boldsymbol\delta)\right),\\
+\mathrm{Shared}_T:\quad&
+\bigwedge_{\eta,\theta,h}\forall\mathbf n\,\forall\mathbf m\
+\left(
+S_{\eta,h}(\mathbf n;\boldsymbol\delta)\land
+S_{\theta,h}(\mathbf m;\boldsymbol\delta)
+\Longrightarrow
+\operatorname{Same}_{\eta\theta}(\mathbf n,\mathbf m)
+\right).
+\end{aligned}
+\tag{NRF.15}
+$$
+
+In the last line $\eta,\theta$ range over $\mathcal A$ and
+$h$ ranges over $E_H$. All implications lie within the displayed
+universal quantifiers.
+The design sentence is
+
+$$
+\exists\boldsymbol\delta\quad
+\left(\bigwedge_{e\in E_R}V(\delta_e)\right)
+\land\mathrm{Total}_T\land\mathrm{Cost}_T\land\mathrm{Shared}_T.
+\tag{NRF.16}
+$$
+
+Take its finite disjunction over graphs and descriptor types.
+For $K=0$ this disjunction is false.
+

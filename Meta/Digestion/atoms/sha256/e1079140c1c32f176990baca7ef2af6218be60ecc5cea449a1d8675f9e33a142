@@ -1,0 +1,64 @@
+### 101.5. Conjugation symmetry forces the common kernel to be real
+
+Return to the full-domain local-minimum hypotheses of Theorem 101.2,
+but assume only that \(H_S\) is real; the kernel is initially allowed
+to be complex.
+
+**Lemma 101.4.**
+The unique principal norming density and witness are real, and the full
+kernel vector \(a\) can be chosen real.
+
+**Proof.**
+Let \(\mathcal E_S\) be the principal PSD Gram domain with identity on each
+original fibre intersection, and let
+\[
+\begin{aligned}
+\mathcal C_S
+&=\{(\sigma,V):\sigma\succeq0,\ \sigma\text{ block diagonal on }(2,1,1),\
+\operatorname{Tr}\sigma=1,\ 0\preceq V\preceq\sigma\},\\
+f_H(Q)&=\max_{(\sigma,V)\in\mathcal C_S}
+2\operatorname{Tr}[(T_S-Q\odot H_S)V].
+\end{aligned} \tag{29}
+\]
+Both domains are conjugation invariant, and \(\mathcal C_S\) is compact.
+Because \(H_S,T_S\) are real,
+\(f_H(\overline Q)=f_H(Q)\).
+Lemma 96.1 gives the global principal one-party best response
+\[
+f_H(G_S)=t,\qquad f_H(Q)\ge t\quad(Q\in\mathcal E_S). \tag{30}
+\]
+That result uses the full-domain orthogonal completion and the same common
+witness; it does not assert a joint principal local minimum.
+
+The midpoint \(G_0=(G_S+\overline{G_S})/2\) is feasible.
+Convexity of \(f_H\), its conjugation symmetry, and (30) imply
+\[
+f_H(G_0)=f_H(G_S)=f_H(\overline{G_S})=t. \tag{31}
+\]
+No rank or kernel property of \(G_0\) is used.
+Take a normer at \(G_0\). Its conjugate is also a normer there, since the
+coefficient is real. Their average \((\sigma_0,V_0)\) is therefore feasible,
+real and norming. With \(L_S=T_S-G_S\odot H_S\),
+\[
+t=\frac{2\operatorname{Tr}(L_SV_0)
+       +2\operatorname{Tr}(\overline{L_S}V_0)}2. \tag{32}
+\]
+Each endpoint objective is at most its norm \(t\), so both equal \(t\).
+Thus \((\sigma_0,V_0)\) is a principal normer at the original \(G_S\).
+Theorem 99.3, including singular competing densities, identifies it with
+the same unique principal common pair. Hence \(\rho_S,W_S\) are real.
+Only principal uniqueness is used, not uniqueness of every full
+eight-coordinate normer.
+
+The common cross formula is
+\[
+W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},
+\qquad \alpha>0. \tag{33}
+\]
+Every supported cross entry of \(H\) is nonzero, and every coordinate of
+\(a_S\) is nonzero. Reality of \(H_S,W_S\) makes
+\(a_i\overline{a_j}\) real and nonzero on these edges.
+Choose the scalar phase of \(a\) so that \(a_3>0\).
+Edges \(13,23\) make \(a_1,a_2\) real, and edge \(14\) then makes \(a_4\)
+real. The remaining coordinates are zero. \(\square\)
+

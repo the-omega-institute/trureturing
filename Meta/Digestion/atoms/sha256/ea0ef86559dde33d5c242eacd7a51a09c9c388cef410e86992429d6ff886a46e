@@ -1,0 +1,14 @@
+### 70.4 Four Bloch axes give a quantitative contradiction
+
+Identify S with C². The first projectors of its four bases have unit Bloch vectors n_1,...,n_4∈R³, and
+
+    |<Q_g e_0,Q_f e_0>|²=(1+n_f·n_g)/2.
+
+Thus (7) implies |n_f·n_g|≤2E(δ). Four unit vectors in R³ must have some pair with absolute inner product at least1/3. Indeed their 4×4 Gram matrix G is positive semidefinite, has rank≤3 and trace4, so Tr(G²)≥16/3 by Cauchy–Schwarz on its nonzero eigenvalues. If all off-diagonal inner products had modulus below1/3, its squared Frobenius norm would be below4+12/9=16/3, a contradiction.
+
+However sqrt20+4sqrt40<30. At δ≤1/40000,
+
+    E(δ)<30/200+165/40000=6165/40000<1/6.
+
+This contradicts the pair lower bound. No product competitor has error≤1/40000; in particular the infimum is at least1/40000, proving the lower side of (1). No compactness argument or exact-output ansatz enters this quantitative conclusion.
+

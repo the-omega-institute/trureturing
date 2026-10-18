@@ -1,0 +1,18 @@
+**定义 13.3.1（路径距离与代数距离）。** 令 $\mathsf W_n(A,B)$ 为所有长度为 $n$ 的块路径
+
+$$
+x_0\in A,\ x_n\in B,
+\qquad
+G_{x_{j+1}x_j}\ne0\quad(0\le j<n).
+$$
+
+若存在一条这样的路径，记 $\delta_{\mathrm{path}}(A,B)$ 为最小长度；不存在时记为 $\infty$。另定义
+
+$$
+\nu_G(A,B)=\inf\{n\ge0:P_BG^nP_A\ne0\}\in\mathbb N\cup\{\infty\}.
+$$
+
+路径距离忽略不同路径的数值相消，代数距离保留相消后的实际块幂。
+
+<a id="claim-13-3-2"></a>
+

@@ -1,0 +1,10 @@
+#### 11.7　干预调度与线性化不变量
+
+令每个事件 $e$ 携带一个状态变换 $T_e:S\to S$。对合法线性化 $\sigma=(e_1,\ldots,e_m)$，定义
+
+$$
+T_\sigma=T_{e_m}\circ\cdots\circ T_{e_1}.
+$$
+
+<a id="claim-11-7-1"></a>
+

@@ -1,0 +1,46 @@
+**Assumption 1.2 (complete paid export and late prediction).** A single
+deterministic effective preparation starts from common source-independent
+initialization, with public $D$ and common installed tables. It does not
+receive the later request. Every acquired source distinction comes from
+charged original-root literal Reads. It terminates on every source and
+exports a finite code $E(t)$. All accessible surviving source dependence
+is included in that code: selectors, operands, buffers, transcripts,
+control, lengths, allocation, handles, counters and accessible timing
+distinctions. Any other accessible field is a fixed function of the code
+and public data. A separately paid handoff isolates every other acquired
+distinction, including earlier transcripts, and supplies lawful reader
+entry. Source continuity, isolation, export, entry and authentication are
+declared services, without an assumed physical erasure operation.
+
+Only after export is a public source-independent $p\in\mathcal P_D$
+supplied. One common deterministic effective reader, given $E(t),D,p$
+and the common tables, chooses at most one fresh literal Read of the same
+stationary source. Its word can be any finite original-root word chosen
+from those inputs. Zero-Read branches are permitted. It exports a final
+predictor $Z$ satisfying
+
+$$
+\operatorname{Dec}(Z,D,p,k)=r_{\rho^kt}(p)
+\quad\text{for every }t\in\mathcal F_D,
+\ p\in\mathcal P_D,\ k\ge0,
+\tag{D3.3}
+$$
+
+with no further Reads. The authentic integer $k$ is supplied only after
+the query; it is not acquired or authenticated by the predictor itself.
+Define
+
+$$
+M_1(D)=\min |E[\mathcal F_D]|.
+\tag{D3.4}
+$$
+
+Only the complete attained retained alphabet is optimized. Preparation
+work and workspace, installed tables, post-request workspace, final
+predictor size, submitted address length and letters, count
+representation, paid services and physical time are separate resource
+coordinates. This is LTR's handoff contract, rather than an inference
+of these services from the tree algebra. The paid common-start interface
+of [NBP, Assumption 14.1 and Theorem 14.4](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md)
+has a different known-row predecessor objective.
+

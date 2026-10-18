@@ -1,0 +1,81 @@
+### 87.3. A complete Pauli-character formula
+
+Here are explicit finite-dimensional formulas for the quadratic form being minimized. They also provide algebraic certificates for the parameter reduction below.
+
+Put n=(x,y,z)=(n₁,n₂,n₃), σ₀=I₂, and fix the character χ₁. Write
+
+\[
+ \dot C_f={1\over4}\begin{bmatrix}\sqrt7 U_f\\V_f\end{bmatrix},
+ \quad U_f=\chi_1(f)\sum_{\mu=0}^3\chi_\mu(f)u_\mu\sigma_\mu,
+ \quad V_f=\chi_1(f)\sum_{\mu=0}^3\chi_\mu(f)v_\mu\sigma_\mu,
+ \quad \dot N_f=\chi_1(f)\sum_{a=1}^3\chi_a(f)d_a\sigma_a. \tag{13}
+\]
+
+The coefficients u,v are complex and d real. The complete first-order constraints are
+
+\[
+ 7\Re u_0+n\cdot\Re v=0,\qquad
+ 7\Re u+\Re v_0\,n-n\times\Im v=0,\qquad n\cdot d=0.  \tag{14}
+\]
+
+Take the following fourteen real coordinates, indexed from zero:
+
+\[
+ \xi=(\Im u_0,\Im u_x,\Im u_y,\Im u_z,
+       \Re v_0,\Re v_x,\Re v_y,\Re v_z,
+       \Im v_0,\Im v_x,\Im v_y,\Im v_z,d_x,d_y),          \tag{15}
+\]
+
+with d_z=−(xd_x+yd_y)/z and the real parts of u determined by (14). The same construction with χ₀,χ₂,χ₃ gives all four orthogonal fourteen-dimensional character blocks.
+
+Set \dot D_f=\dot C_fN_f+C_f\dot N_f. Let K_ξ be the first variation of the full Gram of the eight matrix columns (C₁,…,C₄,C₁N₁,…,C₄N₄). Its old quadratic coefficient is ξᵀHξ, where H is defined explicitly by
+
+\[
+ \begin{split}
+ \xi^TH\xi={}&{1\over4}\sum_f\|\dot C_f\|_F^2
+ -{1\over32}\sum_f\Re\operatorname{Tr}(V_f^*\dot N_f)
+ +{1\over32}\sum_f|\dot n_f|^2\\
+ &-{1\over16}\left(\|\sum_f\dot C_f\|_F^2+
+                         \|\sum_f\dot D_f\|_F^2\right)
+ +{1\over4}\operatorname{Tr}(PK_\xi\mathcal R K_\xi P).
+ \end{split}                                             \tag{16}
+\]
+
+Here \dot n_f is the Bloch vector of \dot N_f. This follows from (12) using normalized retractions with C_{2,f}=−C_f\dot C_f^*\dot C_f and N_{2,f}=−|\dot n_f|²N_f/2. In particular H is positive semidefinite because the comparison tuple is a minimum of F.
+
+For completeness, the mixed source and fixed-noise term can be computed without choosing eigenvectors of N_f. Use bit coordinates in the rest of this paragraph, transforming P,ℛ,K_ξ by the fixed plus/minus Hadamard. Define
+
+\[
+ p_f=(I_2-N_f)/2,\quad e_{f0}=0,\quad e_{f1}=\operatorname{Tr}(p_fE),
+ \quad J_{f1,g1}=\operatorname{Tr}(p_fp_gE),
+ \quad J_{fi,gj}=0\text{ otherwise},
+ \quad A_{\alpha\gamma}=(e_\alpha+e_\gamma)/2,
+ \quad L=J-A\odot K_0,
+ \quad Q_{\alpha\gamma}=-{(e_\alpha-e_\gamma)^2\over8}(K_0)_{\alpha\gamma}.
+                                                               \tag{17}
+\]
+
+Thus L,Q are the first two noise-only Gram coefficients in (6). Put Y_f=[U_f;V_f], X_f=[I₂;N_f], and
+
+\[
+ M_f={1\over8}[7I_2\ {-I_2}]
+       (Y_f+\tfrac12X_f\dot N_fN_f),\qquad
+ J'_{f1,g1}=\operatorname{Tr}\{p_f(M_f^*+M_g)p_gE\},
+ \qquad J'_{fi,gj}=0\text{ otherwise}.
+\]
+
+A horizontal lift of the qubit frame has \overline B_f'=\dot N_fN_f\overline B_f/2; substitution in A_f=√2C_f\overline B_f gives this M_f and J'. Consequently the mixed linear functional gᵀξ and noise constant q₀ are
+
+\[
+ g^T\xi={1\over4}\operatorname{Tr}\{P(A\odot K_\xi-J')
+             +PK_\xi\mathcal R LP+PL\mathcal R K_\xi P\},
+ \qquad q_0={1\over4}\operatorname{Tr}(-PQ+PL\mathcal R LP).
+                                                               \tag{18}
+\]
+
+Equations (13)–(18) specify every matrix entry and every source component.
+
+The Klein-four action combines the corresponding fibre permutation with Pauli conjugation. It preserves the base and (12), acts by χ_a on the Pauli coefficient r_a, and by χ₀ on r₀. Hence the old Hessian is block diagonal in the four character spaces, the σ_a source is in block a, and distinct noise characters have zero quadratic cross terms. Axes can therefore be permuted, so it suffices to compute E=σ₁ in block χ₁.
+
+The scalar source and scalar noise constant are zero. One direct reason is as follows. Scalar E describes a common bit marker on B. At the base, its noise-only curve preserves the top projection P and its trace, so F=1/4. For A-variations, the scalar marker can be transferred algebraically to A's records; the section-81 rank-two contraction witness gives F≥1/4 for every original A. For U-variations at fixed A₀, the fixed-A₀ global best-response bound gives F≥1/4. Thus both parts of the mixed derivative vanish. Equivalently one may substitute E=I₂ in (17)–(18). The distinction between a fixed R and the varying marked U does not alter this mixed derivative: the noise derivative, as a nonnegative quadratic form in R with value zero at the flat base R, has zero first derivative in R there. Character orthogonality also removes all scalar–anisotropic quadratic cross terms.
+

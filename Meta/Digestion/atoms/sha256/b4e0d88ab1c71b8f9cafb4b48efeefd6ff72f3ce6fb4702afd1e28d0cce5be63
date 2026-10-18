@@ -1,0 +1,8 @@
+**约定 8.3（供应归属与未含结论）。** SLH §§29、55、59–62、69、74的准确来源语法、模板证书、完整纤维、静止策略逻辑及 GB 存在性在各自普通证明范围内复用。本卷定理2.2、3.1、4.2、5.2、6.1及7.2给这些接口之间的 repo-derived 对应，不提出全球原创优先权。MONA 1.4和 TATA 2008只供应约定5.3列出的逻辑及自动机结论。
+
+仓内 [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean) 的 `Policy` 是固定来源上的查询或 Boolean 返回，`paid` 计不同地址；它不是定义1.2的更新动作及逐次 raw 费用。[ActualExactSupportPruning](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualExactSupportPruning.lean) 的 `support_pruning_contract` 及私有 `old_prefix`、`new_prefix`、`prescribed_actual_support` 使用固定来源、已给实际支持和相应准入域。[ActualExactTraceCompiler](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualExactTraceCompiler.lean) 的 `strategy_exact_run`、`strategy_admissible` 及私有 `exact_actual_prefix_replay`、`execute_suffix` 使用固定 $U$ 的准确回复和回放条件。它们提供各自形式合同的既有结论，不直接证明本卷的跨纪元更新归一化；旧版本缓存真值也不因此成为当前 raw 回复。本卷未给这些 Lean 声明的编译应用。
+
+准确最小化只针对定义1.2的 raw 坐标。没有由此得到地址长度、更新次数、局部计算、安装、档案、保留、whole-action 或物理耗费的联合最小值；定义7.1的严格 raw 改善明确使用了一个真实更新动作。通用有效算法的存在不声称一个已实施或具有实用性能的求解器。五是充分共同正纪元，本卷不判最早普遍阈值。
+
+任意未来任务必须重新给出完整入口和保留条件；随机 joint-flow 的实际共同概率实现、circle/reset-history 的额外操作、无限词的 sentinel/desubstitution 及 shorter-Q 条件，均非假设1.1的接口。没有已证的实际来源、动作和成本对应时，本卷确定有限树结论不能用于这些模型，也不构成它们的互恢复证明。
+

@@ -1,0 +1,19 @@
+**Convention 1.1 (scope and suppliers).** This is ordinary mathematical
+reference theory for the public source at revision
+`31da53e2b57cf3b20446f49f62b50858e94157b6`. It carries no Lean kernel
+certification or worldwide priority claim. The following abbreviations
+refer to the published suppliers:
+
+- [LTR, Late Target One Read Memory](RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_ONE_READ_MEMORY.md), supplied by PR17061;
+- [FMR, Late Target Fractional Memory Rate](RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md), supplied by PR17083;
+- [AAR, Adaptive Acquired Reference Frontier](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md), especially §§12, 13 and 16;
+- [NBP, Native Birth Provenance](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md), especially Assumption 14.1 and Theorem 14.4.
+
+The local fractional seed, canonical simulation, paid cover
+correspondence, native scaffold restriction, harmonic rounding, existence
+of the rate and its strict upper bound are reused from those sources.
+The lower transport proved below concerns all jointly admissible fibers,
+including correlated fibers and target-dependent off-coordinate queries.
+Published paragraphs are preserved; extensions follow the terminal
+append anchor.
+

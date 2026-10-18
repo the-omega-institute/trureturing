@@ -1,0 +1,20 @@
+**Definition 7.3 (resource coordinates).** Keep the following coordinates
+separate on the same execution. The cost evaluation of Definition 3.4 and
+the original purpose/opcode partition assign each executed occurrence
+exactly once. Recording its constructed cell in storage is not a second
+time charge.
+
+| Relation or object | Actual owner, operation and resource boundary |
+| --- | --- |
+| Source capacity and installation | The producer owns the original private $2N$ bits. Canonical source ingress, validation and all surrounding descriptors are paid. There is no second physical source used by replay. |
+| Literal instrument | TagRead uses the added same-source permission. $G(H)=(2N+3)4^N+3$ counts gate records only. At $H=2$, $N=3$ and $G(2)=579$, independent of unbounded submitted address length. Generator work, address scans, gate execution, framing and communication are separate. |
+| Acquired seed | For an $m$-leaf seed the supplied traversal makes $2m-1$ TagReads and $2(m-1)$ local markers. Its parser code has $3m-1$ payload bits. Source acquisition, serialization, ownership transfer and retained traversal work are paid separately from installation. |
+| Independent input | At the latch fiber, $r$ actual payload INs, $r-1$ WRs, $r-1$ payload moves, $r$ tests and $r-1$ length moves have executed: $5r-3$ primitives after $n_0$. The completed loop is $5d+1$; the chosen empty-port setup is $30d+40q+408$, including its template, three descriptors and two accounting-tag changes. |
+| Frame retention | The attaining logical prefix can already reside in existing request cells plus one occupied latch. It does not inherently require a duplicate $r$-bit log. Headers, length cells, descriptors, previous frames and all unused allocated payload capacity remain physical storage. |
+| Semantic pending event | At response commitment the complete actual request and response enter $P$; row seal transfers its logical event into $A_P$. This is not a physical bulk copy. No uncommitted address prefix is made into a semantic event. |
+| Archive and publication | Actual producer rows, immutable senders, sealed mailboxes and receivers have separate tokens and origins. AIF.11 prices the chosen full copy loops; allocation, unary identities, positioning, row access and printing are additional actual graphs. |
+| Actual time | The meter has $n$ real receipts, $n$ ticks and fee $2n$. A stored $U(n)$ is obtained by a paid scan of an already closed fence; its readout adds later receipts. No primitive receives the mathematical meter count as an input numeral. |
+| Replay | AIF.5 permits $n$ literal abstract-state simulations after reconstructing the fixed entrance. Parsing, finite-state representation, scans, code, arithmetic, workspace, key access and endpoint serialization all have their own implementation costs. This is not an $n$-primitive hardware runtime bound. |
+| Macro correspondence | Complete source calls project to their actual typed semantic events; noncommitting work stutters only under that declared projection. No equality of macro and micro ordinals, costs or inaccessible views is inferred. |
+| Callable memory | A usable handle consists of the real bound prefix/material, permissions and paid access operations. Its pointer width is not the payload capacity of its backing object. |
+

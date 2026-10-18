@@ -1,0 +1,30 @@
+**Definition 1.4 (canonical blocks and all correlated competitors).**
+Following [FMR, Definitions 2.1 and 6.1][FMR], put
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\quad
+S_1=\{\alpha,\beta,C_0\},\quad
+S_{d+1}=\{\alpha,\beta\}\sqcup
+\{\langle x,y\rangle:x,y\in S_d\}.
+\tag{NDR.5}
+$$
+
+These are actual trees of height at most $d$. Write $Q=W_d$,
+$g_q(x)=\Gamma_q(x)$ and $r_a(x)=r_x(a)$ for $q,a\in W_d$.
+A nonempty $B\subseteq S_d^n$ is jointly admissible when each target
+$g_q(x_i)$ is constant on $B$, or is determined there by one reply
+$r_a(x_j)$ for some $j,a$. Equivalently, for the selected donor experiment,
+
+$$
+r_a(x_j)=r_a(y_j)\ \Longrightarrow\ g_q(x_i)=g_q(y_i)
+\quad(x,y\in B).
+\tag{NDR.6}
+$$
+
+Choices may depend on the whole set $B$ and separately on $i,q$; donors
+may be self donors or off-coordinate donors. No independence, acyclicity,
+bounded component size or common experiment across targets is required.
+Let $K_d(n)$ and $Z_d(n)$ be the integral and fractional cover optima of
+$S_d^n$ over this entire family. Joint admissibility is downward closed on
+nonempty subsets and invariant under coordinate permutations.
+

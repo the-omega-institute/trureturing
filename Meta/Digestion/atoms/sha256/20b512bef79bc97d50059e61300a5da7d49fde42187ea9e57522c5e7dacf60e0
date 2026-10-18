@@ -1,0 +1,29 @@
+**定义 1.4（规范切口及原目标回复）。** 对 $0\le r<h$，令
+
+$$
+H_r=\{0,m\}\times\{h-r,\ldots,h-1\},\qquad
+L_{j,r}=\{j\}\times\{0,\ldots,h-r-1\}.
+$$
+
+以 $\mathcal P_r$ 表示 $H_r,L_{0,r},L_{m,r}$ 的非空胞组成的分割；$H_0=\varnothing$，故 $\mathcal P_0$ 有两个胞，正切口分割有三个胞。规范原块为
+
+$$
+B_r=
+\begin{cases}
+0^{h+1}1\,0^{m-h-2},&r=0,\\
+1^r0^{m-r},&1\le r<h.
+\end{cases}
+$$
+
+令 $O_r(q)$ 为从该候选的已付根后实际执行一次 $B_r$ 所得到的块末回复。取得卷命题5.2给出
+
+$$
+\begin{aligned}
+O_0(0,s)&=v,&O_0(m,s)&=v\oplus1,\\
+O_r(j,s)&=\bot &&(1\le r<h,\ s\ge h-r),\\
+O_r(0,s)&=v\oplus1,&O_r(m,s)&=v &&(1\le r<h,\ s<h-r).
+\end{aligned}
+$$
+
+这个向量是 INITIAL 的任务标签；它不表示在同一次破坏性运行中先后执行所有 $B_r$ 的端点档案。
+

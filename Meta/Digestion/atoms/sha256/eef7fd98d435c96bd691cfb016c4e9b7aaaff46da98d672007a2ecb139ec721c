@@ -1,0 +1,55 @@
+**Theorem 209.3 (The zero-early-credit fixed-data minimum).** Fix
+$\nu$ as in 209.2, arbitrary late totals $\gamma_j\ge0$ and $T=t$,
+and impose $E=0$. Among all input-family scores with this entire
+projection, these individual totals and this $t$, both complete
+excesses have attained minimum $D_F$, with parameters
+$g=\gamma,c_1=c_2=0,\tau=t$. The score in 209.2 attains both and
+preserves $Q$. Competitors may use arbitrary early $00$ pair rows
+and arbitrary correct suffixes. Every unit-$O$ competitor therefore
+has its same-$Q$ certificate $(V,0)$.
+
+**Proof.** For any competitor the head and late stopped lower tables
+in 209.2 still collect whole correct classes, independently of suffixes.
+For early address $a$ put
+$p_{a0}=P\{w_a=1,w_j=0\}$ and
+$p_{a1}=P\{w_a=1,w_j=1\}$.
+The stopped table, with zero on its first cell and independent switches
+to $j$ and a largest future class on the other cells, gives
+
+$$
+\Delta_O(y)\ge(\gamma_j-p_{a0})_++(f_j-p_{a1}-t)_+.
+\tag{209.6}
+$$
+
+On early pair support the two early-one sets are disjoint, including
+when some input atoms have early prefix $00$. Hence
+$p_{10}+p_{20}\le m$ and $p_{11}+p_{21}\le d+h$.
+The maximum of the two bounds (209.6) is at least their average.
+Convexity and decreasing dependence on both capacities bound that
+average below by $I_j$ with $c_*=0$. Thus every competitor costs
+at least $D_F$ in $O$, and consequently in $N$. The score of 209.2
+attains it. This extends 207.17 beyond $s\le\gamma_j\le2s$ and
+beyond equal cells, using $a=d=s,h=(\chi-3)s,\tau=s$ for that
+supplier's domain. Its $E=0$ equal-cell specialization is counted
+here only once. $\square$
+
+For later use, applying the existing residual identity (207.8) to
+209.2 with $g=\eta$ gives the exact nonnegative charge
+
+$$
+\Theta_F=\max\left\{0,c-E,c_2-\gamma_2,
+ \max_k\frac{R_k-(k-2)(E-c)}{k-1},
+ \max_k\frac{3R_k+(k-2)(W_V-W)}{k+1}\right\},
+\quad R_k=\sum_{j=3}^k(\gamma_j-\eta_j).
+\tag{209.7}
+$$
+
+Here the chosen carrier has mass $S$, $W=E+S+t$ and
+$W_V=S+c+\tau$; the input projection need not equal that carrier.
+One certificate exists whenever $D_F+\Theta_F\le1$, by (207.10).
+Both signed prefix columns are required. In particular
+$\eta=\gamma,c_a\le\gamma_a,\tau=t+E-c$ leave $W_V=W$ and
+residual $-\sum_{a=1}^2(\gamma_a-c_a)(1-b_a)\le0$.
+This is a substitution into the old hull, not another fixed-data
+minimum for $E>0$.
+

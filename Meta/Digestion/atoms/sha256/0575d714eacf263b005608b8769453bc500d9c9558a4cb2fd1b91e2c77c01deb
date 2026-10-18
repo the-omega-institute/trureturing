@@ -1,0 +1,36 @@
+## 293. Exactly five transverse reservoirs under all vertex frames
+
+Each type has exactly two equal opposite edge pairs, namely the pair labeled 0
+and the pair labeled `i+1`. The remaining opposite pair has two distinct labels,
+also distinct from `0,i+1`. Vertex permutations preserve opposite-pair incidence.
+Hence a frame `(R,A,B,O,A,B)` with `A!=B` must use precisely the two equal pairs
+as its transverse pairs. It follows that type `i` always forces `{0,i+1}`.
+
+For a local word `(r,a,b,o,a,b)` with four distinct labels, exactly eight of the
+24 vertex permutations yield paired frames. Their four words, each appearing
+twice, are
+
+- `(r,a,b,o,a,b)`;
+- `(r,b,a,o,b,a)`;
+- `(o,a,b,r,a,b)`;
+- `(o,b,a,r,b,a)`.
+
+The other sixteen permutations fail the required equalities. Across all 24
+permutations there are twelve distinct words, each occurring twice, and every
+word has multiplicity profile `(2,2,1,1)`. Indeed the unequal opposite pair
+must remain the axial pair; its stabilizer in the 24 vertex permutations has
+order eight. The four displayed words each occur twice. This accounts for all
+192 vertex-frame choices over the eight tetrahedra, and no triple-repeated
+label can appear by reframing.
+
+The union of the forced pairs `{0,1},{0,2},{0,3},{0,4}` is all five proved-distinct
+actual global edges. No reservoir set of size at most four works, even with
+independent vertex-frame choices in every tetrahedron. Conversely, all five
+work in the displayed frames. The minimum is exactly five.
+
+For reference, there is already an elementary strict angle structure: assign
+angle `pi/8` to each occurrence of edge 0 and `pi/4` to every other occurrence.
+Each edge sum is `2*pi`, and every local vertex sum is `5*pi/8 < pi`. This checks
+the angle-structure hypotheses directly. It does not by itself replace the
+common-length, nondegeneracy, and face-isometry steps of a geometric realization.
+

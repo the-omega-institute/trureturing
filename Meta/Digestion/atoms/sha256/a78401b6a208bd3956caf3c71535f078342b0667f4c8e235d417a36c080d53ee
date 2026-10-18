@@ -1,0 +1,108 @@
+**Theorem 65.1 (strict bound and exact exceptional supremum).**
+At $s=s^\dagger$, every member of $\mathfrak P_s$ satisfies
+$\operatorname{TV}<\mathcal T(s^\dagger)-\gamma_f$.
+There is a finite sequence in $\mathfrak P_s$ approaching this bound.
+
+Proof. At this point $R=m_1/m_2$. By JRH.28 every nonzero
+pulled failure Kraus term at a live-active low label is a positive
+multiple of the outer product of
+
+$$
+b_{\sigma\tau}=(0,\sqrt{m_1},-\sigma\tau\sqrt{m_2})^T.
+\tag{JRH.48}
+$$
+
+There are no supported live-zero labels in $\mathfrak P_s$ and no
+high failure. The height pairing of this outer product is
+$-d_f-2\sigma\tau z_f$, strictly negative for both signs, because
+$d_f>2|z_f|$ throughout the source box (§67). Thus every nonzero
+actual failure effect has negative height pairing, even if it combines
+multiple encoder Kraus terms. Their absolute sum is exactly
+$-\operatorname{tr}(M\Delta)=d_f$ instead of $L_f$.
+
+Both signs of $\sigma\tau$ must occur with nonzero pulled failure
+mass: all terms are supported in coordinates $(1,2)$, and the two
+families in JRH.48 have opposite, nonzero off-diagonal entries. A sum
+using only one sign cannot equal the diagonal matrix $M$.
+In particular some failure-bearing actual label has a term of type
+$\sigma\tau=-1$. Its encoder is onto and the decoder has nonzero
+live products by entire-fibre positivity. The same injective/surjective
+argument as in §60 gives at least one live product on the compatible
+ray of that sign. Both live rays $\ell_{-,+}$ and $\ell_{+,-}$
+are strictly positive throughout $v\in[v_0,1]$, by JR Theorem 43.2's
+interval-wide sign proof, expanded in §67. That label therefore contains
+a strictly positive live difference and a strictly negative failure
+difference. Even if it contains further products of either sign,
+the triangle inequality on the full list of products and failure is
+strict. Using the universal strong live sum $U_s$ yields
+
+$$
+2\operatorname{TV}<U_s+d_f
+=2\mathcal T(s)-(L_f-d_f).
+\tag{JRH.49}
+$$
+
+For sharpness retain $H_\sigma$ and $L_{\sigma\tau}$ of JRH.33
+at $v^\dagger$. Put $N_{\sigma\tau}=
+b_{\sigma\tau}b_{\sigma\tau}^\dagger/4$. Split each low matrix
+into two ACTUAL acquired branches:
+
+$$
+(\sqrt{1-\varepsilon}L_{\sigma\tau},0),\qquad
+(\sqrt\varepsilon L_{\sigma\tau},N_{\sigma\tau}),
+\qquad 0<\varepsilon<1.
+\tag{JRH.50}
+$$
+
+Apply JRH.30 and report $r=\sigma$ on both. All mixed decoders
+are positive on the whole fibre; pure branches have isometric live
+decoders. The total live map, failure effect and high effect do not
+change. The signed failure effect still vanishes, so the binary effect
+is exactly $I_3/2+\kappa s^\dagger X_{01}/2$.
+The coherent complement is JRH.40. On every original history the
+pure-low probability is $(1-\varepsilon)\mathsf p_{L_{\sigma\tau}}$,
+and the mixed-low probability is
+
+$$
+\varepsilon\mathsf p_{L_{\sigma\tau}}(y,e,n)+
+\tfrac14(n\sqrt{m_1(64-y)/128}-\sigma\tau\sqrt{m_2/2})^2.
+\tag{JRH.51}
+$$
+
+The high and binary probabilities are JRH.42 with $s=s^\dagger$;
+there are no scalar failure rows.
+
+Write $\ell_{\sigma\tau}=\ell(L_{\sigma\tau})$ and
+$n_{\sigma\tau}=\operatorname{tr}(N_{\sigma\tau}\Delta)<0$.
+Choose $\varepsilon$ smaller than $1$ and than
+$-n_{\sigma\tau}/\ell_{\sigma\tau}$ for every positive
+$\ell_{\sigma\tau}$. This is a positive explicit bound over four
+fixed numbers. Then each mixed total difference
+$\varepsilon\ell_{\sigma\tau}+n_{\sigma\tau}$ is negative.
+The low actual absolute-difference sum is
+
+$$
+\begin{aligned}
+\sum_{\sigma,\tau}\bigl[(1-\varepsilon)|\ell_{\sigma\tau}|
+ +|\varepsilon\ell_{\sigma\tau}+n_{\sigma\tau}|\bigr]
+&=\sum_{\sigma,\tau}|\ell_{\sigma\tau}|+d_f
+ -2\varepsilon\sum_{\sigma,\tau}(\ell_{\sigma\tau})_+.
+\end{aligned}
+\tag{JRH.52}
+$$
+
+Adding the unchanged high sum and dividing by two gives the exact law
+
+$$
+\operatorname{TV}_\varepsilon=
+\mathcal T(s^\dagger)-\gamma_f
+-\varepsilon\sum_{\sigma,\tau}(\ell_{\sigma\tau})_+.
+\tag{JRH.53}
+$$
+
+It approaches the strict bound. These deficits concern acquired height
+TV only; every approximant has exactly the same original error $E_*$.
+Neither $\gamma_f$ nor any certain-failure probability is added to that
+error. Together with §§62–64, this proves the full table in Theorem
+59.2. $\square$
+

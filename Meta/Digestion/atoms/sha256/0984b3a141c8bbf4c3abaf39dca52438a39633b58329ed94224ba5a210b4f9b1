@@ -1,0 +1,25 @@
+**Definition 4.1 (Perturbation and first variation).** With the exact
+$T,x_*,\lambda,f,v$ of §3, put
+
+$$
+b=e^{-1}-1,\qquad
+\psi(x)=1+bx-e^{-x},\qquad
+\eta=\frac{\psi(x_*)}{2},\qquad a=1-\eta.
+$$
+
+For $0\le u\le1$ define
+
+$$
+R_u(x)=f(x)\left[(1+ua)e^{ubx}-u e^{-x}\right],\qquad
+F_u(x)=(R_u(x)-s(x))^2+\tau x.
+$$
+
+In particular $R_0=f$ and the present $F_0$ is the same as in §3.
+For a fixed $u$, the two exponential terms have exponents
+$\lambda+ub$ and $\lambda-1$. Write
+
+$$
+h(x)=\left.\partial_uR_u(x)\right|_{u=0},\qquad
+W(x)=\left.\partial_uF_u(x)\right|_{u=0}.
+$$
+

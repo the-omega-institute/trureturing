@@ -1,0 +1,86 @@
+**定义 25.2（Phase expression, cleared suffix and root-archive expressions）。** For any table $\lambda:\{0,\ldots,k\}\to Y$, put
+
+$$
+J=\max\bigl(\{j\ge1:\lambda(j)\ne\lambda(0)\}\cup\{0\}\bigr),
+\tag{25.3}
+$$
+
+and let the supplied phase-only cost expression [S11, Theorem 3.1] be
+
+$$
+\phi_k(\lambda)=
+\begin{cases}
+0,&J=0,\\
+\max\bigl(J,2+\mathbf1_{\{\lambda(1)\ne\lambda(2)\}}\bigr),&k\ge3,\ J>0,\\
+3,&k=2,\ J=1,\\
+2,&k=2,\ J=2,\ \lambda(1)=\lambda(2),\\
+4,&k=2,\ J=2,\ \lambda(1)\ne\lambda(2).
+\end{cases}
+\tag{25.4}
+$$
+
+For $2\le a\le k$ define the following expression on the suffix $\{a,\ldots,k\}$:
+
+$$
+d(a,\lambda)=
+\begin{cases}
+0,&\lambda\text{ constant on }\{a,\ldots,k\},\\
+1,&\lambda(a)=\lambda(a+1)\text{ and }\lambda\text{ constant on }\{a+2,\ldots,k\},\\
+\max(2,B-a),&\text{otherwise},
+\end{cases}
+\tag{25.5}
+$$
+
+where the second line is considered only after the first fails, and
+
+$$
+B=\max\{j\in\{a,\ldots,k-1\}:\lambda(j)\ne\lambda(j+1)\}.
+\tag{25.6}
+$$
+
+The last case has a nonempty maximum. A singleton suffix uses the first line and never refers to $\lambda(k+1)$. The exact cleared-suffix interpretation of this expression is proved below, rather than taken as a supplied theorem.
+
+For each $v$, define $H_v$ by the first applicable line:
+
+$$
+H_v=
+\begin{cases}
+1,&\operatorname{Const}\{F_v(j,s):j\in\{0,1\},\ 0\le s<k-1\},\\
+k+1,&\ell_v(0),\ell_v(1)\ge k-1\text{ and }\lambda_v(0)\ne\lambda_v(1),\\
+\max(2,k-\ell_v(0),k-\ell_v(1)),&k\ge3\text{ and }F_v(0,k-2)=F_v(1,k-2),\\
++\infty,&\text{otherwise}.
+\end{cases}
+\tag{25.7}
+$$
+
+A cutoff $\tau\in\{1,\ldots,k-1\}$ is $v$-eligible when
+
+$$
+\operatorname{Const}\{F_v(j,k-z-1):z+1\le j\le k\}
+\quad\text{for every }1\le z<\tau,
+\tag{25.8}
+$$
+
+and
+
+$$
+\ell_v(j)\ge k-\tau\quad\text{for every }j\ge\tau+1.
+\tag{25.9}
+$$
+
+For such a cutoff set
+
+$$
+\begin{aligned}
+L_v(\tau)&=
+\begin{cases}
+\tau,&\lambda_v|_{\{\tau+1,\ldots,k\}}\text{ constant},\\
+\tau+1+d(\tau+1,\lambda_v),&\text{otherwise},
+\end{cases}\\
+M_v(\tau)&=\max\left(L_v(\tau),\ \max_{2\le j\le\tau}\max(j,k-\ell_v(j))\right).
+\end{aligned}
+\tag{25.10}
+$$
+
+The inner maximum is zero at $\tau=1$. All $H_v,L_v,M_v$ are total costs measured from the original root, not costs to concatenate.
+

@@ -1,0 +1,33 @@
+**Definition 9.1 (one fixed Ready and a finite scan chart).** Keep
+Assumption 1.2's single $G_{\mathrm{gc}}$ initialization and Definition
+1.4's full projection $O^+$. Fix any one authentic reached Ready $P$;
+first Ready is allowed. For each integer $N\ge1$ and $0\le m<N$, take
+alternative continuations of this same $P$, supply the existing gate1
+and HistoryMode1, and supply the frame
+
+$$
+w_{N,m}=111\,U(N+2)\,p_{N,m},\qquad
+p_{N,m}=1\,U(m)\,U(N-1-m),\qquad U(j)=1^j0.
+$$
+
+Let $x_{N,m}$ be the cut immediately after the final payload IN6(0),
+before its matching EX70. Continue by the prescribed native non-IN
+rows through the final MR of this frame's first LastBank70, stopping
+before the subsequent forward import. Denote the successive cuts by
+$s_{N,m,k}$, with $s_{N,m,0}=x_{N,m}$ and last index $D_{P,N}$ as
+justified below. Set
+
+$$
+\mathcal C_{P,N}=\{s_{N,m,k}:0\le m<N,\ 0\le k\le D_{P,N}\},
+\qquad
+\mathcal C^-_{P,N}=\{s_{N,m,k}:0\le m<N,\ 0\le k<D_{P,N}\}.
+$$
+
+Here and below a cut retains its actual finite history. Write $F$ for
+the actual next native row on $\mathcal C^-_{P,N}$. The chart contains
+every intervening atomic cut and is closed under these specified edges.
+Its last cuts are observation boundaries, with the actual forward
+import still pending; they are not terminal states or original `none`
+responses. No assertion about later target acceptance or flight return
+is included.
+

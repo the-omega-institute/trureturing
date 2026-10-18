@@ -1,0 +1,124 @@
+**Theorem 6.1 (Deterministic all-sufficient-budget attainment; T6).**
+Define the fixed constants
+
+$$
+C_N=8/D+1,\qquad K=4AC_N+4,\qquad
+M_{\rm det}=\left\lceil K(2L_0)^p\right\rceil.
+\tag{6.1}
+$$
+
+The exact count (4.4) obeys, for every allowed cap,
+
+$$
+M_L\le K\frac{L^p}{1+\log L}\le KL^p.
+\tag{6.2}
+$$
+
+Choose once
+
+$$
+0<s_0<\min\{s_*,s_-,1/(2L_0),1/2\}.
+\tag{6.3}
+$$
+
+For every $0<s<s_0$ and finite integer $M\ge M_{\rm det}$, set
+
+$$
+y=\min\{(M/K)^{1/p},1/s\},\qquad L=\lfloor y\rfloor.
+\tag{6.4}
+$$
+
+The table of Definition 4.1 then has at most $M$ complete configurations,
+belongs to $\mathfrak A_M^{\rm det}(e^{-s},\alpha)$, and satisfies
+
+$$
+\max_i\mathbb E_iT\le C_+\Psi(s,M)
+\tag{6.5}
+$$
+
+with one constant $C_+>0$ independent of $s,M$. The credited lower
+(2.4) holds on this same neighborhood separately for each label of
+every compliant deterministic or direct fixed-dyadic competitor at
+every finite $M\ge2$.
+
+Proof. Since $I\le1$, the ceiling in (3.11) gives
+
+$$
+N\le\frac{8/D+1}{I}
+=C_N\frac{L^{2r}}J,\qquad
+H\le AC_N\frac{L^{2r}}J+1.
+\tag{6.6}
+$$
+
+For $L\ge L_0\ge2$, $L+2\le2L$. Thus the exact count satisfies
+
+$$
+M_L\le3+4AC_N\frac{L^p}J+2L.
+\tag{6.7}
+$$
+
+Because $J\le L$ and $p\ge3$,
+$4L^p/J\ge4L^{p-1}\ge4L^2\ge3+2L$ for $L\ge2$.
+This proves (6.2) without deleting any listed configuration.
+
+The choices of $M_{\rm det}$ and $s_0$ imply $y\ge2L_0$.
+Consequently
+
+$$
+L\ge y/2\ge L_0,\qquad sL\le1,\qquad
+M_L\le KL^p\le Ky^p\le M.
+\tag{6.8}
+$$
+
+All hypotheses of Theorems 3.1–5.1 hold. In particular a single selected
+table supplies both risks, both almost-sure stops and both finite means
+throughout one neighborhood fixed before every budget.
+
+To compare the upper with the exact credited denominator (2.3), use
+$C_L$ from (2.5) and put
+
+$$
+C_*=\max\{1,C_LK^{1/r}\},\qquad
+C_3=1+\log C_*+\frac pr(1+\log2).
+\tag{6.9}
+$$
+
+If $y=(M/K)^{1/p}$ is the budget branch of (6.4), then
+
+$$
+\min\{L_M,1/s\}\le C_LM^{1/r}
+=C_LK^{1/r}y^{p/r}.
+\tag{6.10}
+$$
+
+If $y=1/s$ is the source branch, the minimum is at most
+$y\le y^{p/r}$, since $y\ge1$ and $p/r>1$. At a tie either
+argument applies. Together with $y\le2L$ these give
+
+$$
+\min\{L_M,1/s\}\le C_*(2L)^{p/r},\qquad
+1+\log\min\{L_M,1/s\}\le C_3(1+\log L)=C_3J.
+\tag{6.11}
+$$
+
+Indeed the logarithm of the first bound is at most
+$\log C_*+(p/r)(\log2+\log L)$, and the chosen $C_3$ bounds
+its constant and $\log L$ coefficients. Theorem 5.1 therefore yields
+
+$$
+\max_i\mathbb E_iT
+\le C_T\frac{s^{-p}}J
+\le C_TC_3\frac{s^{-p}}{1+\log\min\{L_M,1/s\}}.
+\tag{6.12}
+$$
+
+Take $C_+=C_TC_3$. All constants and the sufficient threshold precede
+every budget. No assumption of small $sM^{1/r}$ or budget-dependent
+shrinking of $s_0$ occurs.
+
+For the lower comparison, (1.7) places every compliant deterministic
+or fixed-dyadic table in the unrestricted class of (2.4). Applying
+that inherited theorem proves the last assertion. This step adds no
+new converse; in particular it does not infer any lower bound from
+the count of the constructed table. $\square$
+

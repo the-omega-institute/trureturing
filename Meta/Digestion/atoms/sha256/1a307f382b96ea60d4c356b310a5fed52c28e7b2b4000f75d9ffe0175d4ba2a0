@@ -1,0 +1,45 @@
+**Assumption 1.1 (separated original ages and authentic captures).**
+Fix integers $D,H\ge0$, put $r=2^D$, $q=H+1$, and let
+$I=\{0,\ldots,r-1\}$. Write $W_D=(w_0,\ldots,w_{r-1})$ for the
+lexicographically ordered words of length $D$ in $\{L,R\}$, so
+$w_0=L^D$. Sources are actual finite nonempty ordered full trees with
+leaf labels $\alpha,\beta$ and the substitution
+
+$$
+\rho\alpha=\beta,\qquad
+\rho\beta=\langle\beta,\alpha\rangle,\qquad
+\rho\langle u,v\rangle=\langle\rho u,\rho v\rangle.
+$$
+
+Let $T_n=\rho^n\alpha$ and let $\mathcal B_D$ be the complete
+ordered depth-$D$ skeleton. The source domain is the independent box
+
+$$
+\mathcal A=\{0,\ldots,H\}^{I},\qquad
+X_a=\mathcal B_D[(T_{iq+a_i})_{i\in I}].
+\tag{SCC.1}
+$$
+
+This is the family of [Native Alpha Recut Memory, Assumption 16.1][NAR].
+Its complete initial literal row is acquired before any future edge or
+epoch is selected. The right clock is
+
+$$
+c(\alpha)=0,\qquad c(\beta)=1,\qquad
+c(\langle u,v\rangle)=2+c(v).
+$$
+
+At an authentic stationary capture of $\rho^s X_a$, an acquisition
+procedure obtains the right clock at the original slot $w_i$:
+
+$$
+K_i^a(s)=c((\rho^s X_a)|_{w_i})=iq+a_i+s.
+\tag{SCC.2}
+$$
+
+Original-slot transport and `right_clock_iterate` supply (SCC.2);
+all these slots are reached already at epoch zero. In particular the
+initial acquired tree computes $a_i=c(X_a|_{w_i})-iq$. Distinct age
+vectors give distinct native trees, since a differing slot has a
+differing right clock.
+

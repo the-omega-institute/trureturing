@@ -1,0 +1,29 @@
+## 1. Common source, chronological history, and recovery target
+
+Let
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+Fix a known integer $d\ge0$. A legal predetermined $n$-read history has $A_0=I$ and $A_{i+1}=W_iA_i$, where each $W_i$ is a finite word in $M,J$, possibly empty. Matrices act on the left; a displayed product is executed from right to left. The recorded indices are exactly $i=0,\ldots,n-1$. Every recorded scalar advances this index, including an empty-word repeat; an unread atomic operation does not.
+
+The fixed initial relation and instrument satisfy $R=c\ell$, with $c$ a strictly positive column and $\ell$ a strictly positive row. The known operations act only on the column. There are fixed numbers $\alpha>0,\beta\in\mathbb R$ and one fixed polynomial $D\in\mathcal P_d$, where $\mathcal P_d$ denotes all real polynomials of degree at most $d$, including zero. The exact observations are
+
+$$
+z_i=(\alpha+\beta i)\operatorname{tr}(A_iR)+D(i)
+=(1+\kappa i)\operatorname{tr}(A_iS)+D(i),
+\qquad S=\alpha R,\quad\kappa=\beta/\alpha.
+$$
+
+Thus
+
+$$
+\mathcal R_+=\left\{S=\begin{pmatrix}p&q\\r&s\end{pmatrix}:
+ p,q,r,s>0,\ ps=qr\right\},
+$$
+
+and the effective recovery target is the entire triple $(S,\kappa,D)$. The slope is arbitrary real; gain zeros and negative gain samples are permitted. There is no reset, copy, physical inverse operation, or combination of observations from unexecuted histories.
+

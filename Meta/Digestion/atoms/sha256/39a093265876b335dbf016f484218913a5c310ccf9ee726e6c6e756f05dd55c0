@@ -1,0 +1,30 @@
+**Lemma 3.2 (Actual block form, exact nilpotence and quotient inverse).** For every parameter choice of Definition 2.1, the decomposition in Definition 3.1 gives
+
+$$
+\mathcal E_\theta(n+\Delta v)=Tn+B_\theta v+\Delta(Pv),
+\qquad D\mathcal E_\theta=PD.
+\tag{3.1}
+$$
+
+The nilpotency order of $T$ is exactly $H$. The map $P$ is invertible, with inverse specified for $w\in V$ by
+
+$$
+(P^{-1}w)_H=\frac{w_0}{q_0},\qquad
+(P^{-1}w)_{i-1}=w_i-\frac{q_i}{q_0}w_0\quad(1\le i\le H),
+\qquad q_0=p_H>0.
+\tag{3.2}
+$$
+
+Proof. The tick branch vanishes on $\mathcal N$. For $i\ne j$,
+
+$$
+T(E_{ij})=
+\begin{cases}E_{i+1,j+1},&i,j<H,\\0,&\max(i,j)=H.\end{cases}
+$$
+
+Every off-diagonal pair has $\max(i,j)\ge1$, so $T^H=0$. On the other hand $T^{H-1}E_{01}=E_{H-1,H}\ne0$, including $H=1$ where the exponent is zero. Thus the order is exactly $H$. This restriction must be distinguished from the no-tick map on the whole algebra: if $\mathcal L(A)=SAS^*$, then $\mathcal L^{H+1}=0$ while $\mathcal L^H(E_{00})=E_{HH}\ne0$.
+
+For arbitrary $A$, the zeroth diagonal entry of $\mathcal E_\theta(A)$ is $q_0A_{HH}$, and its $i$th diagonal entry for $1\le i\le H$ is $A_{i-1,i-1}+q_iA_{HH}$. These are precisely the coordinates of $PD(A)$. For diagonal input $\Delta(v)$ the off-diagonal output is $v_Hu_\theta$. This proves (3.1), also rechecking the block form credited to Source (23.17)–(23.18). In particular diagonal matrices need not be an invariant subspace.
+
+Solving $Pv=w$ first gives $q_0v_H=w_0$ and then $v_{i-1}+q_iv_H=w_i$. Since $q_0>0$, these equations force exactly (3.2). Substituting (3.2) back gives every coordinate of $Pv=w$, so it is both a right and a left inverse. No other $q_i$ is required to be nonzero; $q_H=p_0=0$ presents no obstruction. $\square$
+

@@ -1,0 +1,8 @@
+**定理 133.1（精确交织与判别式）。** 令 $D=2M-I$，则
+
+$$\boxed{D^2=5I,\qquad C=DJ,\qquad CW=MC,\qquad\det C=5.} \tag{133.2}$$
+
+在 $R=\mathbb Z[\theta]/(\theta^2-\theta-1)$ 的系数基 $(1,\theta)$ 上，$D$ 是乘以 $\delta=2\theta-1$ 的矩阵，$\delta^2=5$。因此 CFMP 返回观察，在交换输入坐标后，正是这个范数为负五的黄金整数的乘法。
+
+**证明。** $M^2=M+I$ 给出 $(2M-I)^2=5I$。直接乘法有 $DJ=C$；$D$ 与 $M$ 交换，故 $CW=DJJMJ=MDJ=MC$。行列式直接计算。又 $\delta(a+b\theta)=(-a+2b)+(2a+b)\theta$，其矩阵正是 $D$。这里只识别两个明确线性操作，不声称 Fibonacci 替换使任意实际四面体的边长演化。
+

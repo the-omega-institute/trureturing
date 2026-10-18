@@ -1,0 +1,46 @@
+**Definition 9.4 (even combs on an actual public scaffold).** Define
+
+$$
+T_0=\alpha,\qquad T_{j+1}=\langle T_j,\alpha\rangle.
+$$
+
+Fix integers $m\ge1$ and $h\ge0$, and put
+
+$$
+d=6m-2,\qquad n=2^h,\qquad D=h+d,\qquad
+\mathcal C_m=\{T_{2r}:0\le r<3m\}\subseteq S_d.
+\tag{LTR.26}
+$$
+
+The heights of these $3m$ distinct trees are $0,2,\ldots,d$;
+all their leaves are alpha. Let $\operatorname{Sc}_0(x)=x$ and
+recursively pair the first and second halves to form the perfect
+ordered height-$h$ scaffold $\operatorname{Sc}_h$. Its public
+frontier words $a_1,\ldots,a_n$ all have length $h$. Put
+
+$$
+\begin{aligned}
+G_{m,h}&=\operatorname{Sc}_h(\mathcal C_m^n)\subseteq S_D,\\
+X_{m,h}&=\{\langle\alpha,u\rangle:u\in G_{m,h}\}
+                  \subseteq\mathcal F_D.
+\end{aligned}
+\tag{LTR.27}
+$$
+
+The scaffold map is injective: its ordered, actually present frontier
+subtrees recover its entries. Consequently $|G_{m,h}|=(3m)^n$.
+This recovery is a mathematical identification, not a supplied subtree
+or source-identity port. At every actual occurrence, homomorphic
+substitution gives
+
+$$
+r_{\rho^k\langle\alpha,\operatorname{Sc}_h(u_1,\ldots,u_n)\rangle}
+ (Ra_iq)=r_{\rho^k u_i}(q).
+\tag{LTR.28}
+$$
+
+Every operational use of the right-hand side below submits the entire
+original-root word on the left. The presence premise is exactly that
+of `NativeDepthPatterns.original_present_transport`; it is never
+asserted at an absent occurrence.
+

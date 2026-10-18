@@ -1,0 +1,30 @@
+### 6.2 Fibonacci 的素数周期是 projective seam
+
+令
+
+\[
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+z(p)=\min\{n>0:p\mid F_n\}.
+\]
+
+对每个素数 p，Fibonacci 矩阵恒等式给出
+
+\[
+M^{z(p)}\equiv aI\pmod p,\qquad a\ne0.
+\]
+
+因此 \(z(p)\) 是 \(M\) 在 \(PGL_2(\mathbb F_p)\) 中的阶。完整的 Pisano 周期是
+
+\[
+\pi(p)=z(p)\,\operatorname{ord}_{\mathbb F_p^\times}(a),
+\]
+
+而不是一般地等于 \(z(p)\)。由 Cassini 恒等式，\(a^2\equiv(-1)^{z(p)}\pmod p\)，所以这个尺度因子是有限的；\(p=2,5\) 也必须保留为单独检查的边界案例。这个桥的几何含义是：投影到 projective phase 后，尺度信息只剩一个有限周期 seam。
+
+因此可以把同一条候选轨迹写成两层：
+
+- 连续层：\(\kappa\) 或 \(\Delta\) 沿纤维耗散；
+- 离散层：在 \(z(p)\) 或 \(\pi(p)\) 的 primitive return sector 处记录素数 seam。
+
+除非另行证明素数支撑与 reaction rate 有耦合，否则不能把 \(\sum_{z(p)=n}\ln p\) 当作内生的 \(\gamma_n\)。它只是一个新定义的 arithmetic cost。
+

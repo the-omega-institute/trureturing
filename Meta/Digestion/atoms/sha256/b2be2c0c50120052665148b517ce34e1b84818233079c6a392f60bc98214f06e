@@ -1,0 +1,64 @@
+## 8. Attribution, precise increment and unresolved mathematical obligations
+
+The increment relative to the canonical suppliers is the absolute $L^2$ bound and sharper centered score,
+their integrable two-site square expansion, the second-order localization and paid finite detection,
+integrated $C^2$ control, and the application of mean ergodic convergence to one actual local tilt.
+Support, the original cocycle, intrinsic kernels, first-order balance and pair cancellation retain their
+existing ownership. The results are a synthesis, with no worldwide-priority or empirical
+statistical-performance claim.
+
+| Source | Correspondence and limit |
+| --- | --- |
+| *FIB 合法边调和负载：普适后验缺陷与有限隐藏维数分离* [U], §§1, 3–6 | Original objective, exact $\Theta_N$, $J_\theta/P_\theta$, band, all-$n$ attained bounds, actual ergodic components and fixed-$N$ separation equivalence. The band is not sufficient for attainment. |
+| *FIB harmonic-edge load: intrinsic null kernel, dual residual and presentation obstruction* [I], Theorem 2.2, Corollary 2.3, §3 | Original collar kernel, annihilator and finite first-order certificate. No new kernel, dual wrapper or productive sign is introduced. |
+| *FIB harmonic-edge load: exterior localization and actual loss-cocycle balance* [E], Theorems 3.1, 4.2, 5.1 | Positive compatible fibers, nonsingular surgery, actual cocycle, first-order localization and conditional pair balance. Its explicit density and $L^2$ defects pay Theorem 3.1 here. |
+| *FIB harmonic-edge load: two-word exterior cancellation and a vanishing certificate* [W], Theorem 2.1 and §1 | Original common exterior laws, posterior restriction including seams, attained response and projection budget. Pair cancellation is reused, not a new quotient witness. |
+| Dawid–Lauritzen–Parry, *Proper Local Scoring Rules on Discrete Sample Spaces* [DLP], §4.2, Example 4.4, (14) | Conditional binary Brier scores are exactly the losses $\ell_i$; squared conditional discrepancies use original-law weights. Full-product strict propriety assumes everywhere-positive distributions and is not transferred to hard no11. |
+| Chandgotia–Meyerovitch, *Markov Random Fields, Markov Cocycles and The 3-colored Chessboard* [CM], §§2.2–3 | Finite-modification relations, cocycle algebra and normalized exponential specifications are mature. Their Markov cocycles require finite-boundary dependence; their specification correspondence uses conditional log ratios. Neither bridge is proved for $\Delta_P$. Zero being a safe symbol does not supply them. |
+| Balle–Panangaden–Precup, *A Canonical Form for Weighted Automata and Applications to Approximate Minimization* [BPP], §§2.2, 3.1 | The parameter correspondence is $\alpha_0^{\mathsf T}=\lambda$, $A_x=M_x$, $\alpha_\infty=\mathbf1$; algebraic forward/backward factorization is applicable. Stationary cylinder masses sum to one at each length, not over all strings. No summable-series, bounded-Hankel, SVD, minimality or nonlinear tilt-closure theorem is imported. |
+| Tao, *254A, Lecture 8: The mean ergodic theorem* [ME], Theorem 2 and conditional-expectation Corollary 2 | Von Neumann's classical Hilbert theorem and Riesz's range/telescoping proof apply to $U:v\mapsto v\circ T^{-1}$, with invariant projection $\mathbb E_P[\cdot\mid\mathcal I]$. No mixing or rate is required. |
+
+Conditional $L^2$ projections, Minkowski, monotone convergence, conditional Tonelli, finite
+signed-measure uniqueness and finite exponential-family differentiation are also classical ingredients.
+Their use here does not make them new discoveries. The references supply only the indicated
+correspondences, not cancellation of the square residual.
+
+**Open Problem 8.1 (Unpaid square cancellation and the original target).** Even under (1.5)–(1.6) and
+all-length $\mathsf Z(P)$, whether every $R_{C,f}$ vanishes remains unproved and unrefuted here. The same
+question under hypothetical attainment, retaining all of (1.9), remains unresolved. No actual nonzero
+$R$, universal productive direction or counterexample to this full necessary-attainer assertion is
+supplied. A value on a null exterior, positive quotient dimension, or a low-risk band-only example would
+not establish such a counterexample.
+
+A proof would need to cancel the signed two-site expansion on the unpaid quotient. A first-order identity
+at one exterior does not put the vector $w\mapsto f(w)d_C(w;y)$ in the original intrinsic kernel: that
+kernel requires fixed coefficients satisfying every actual exterior context. Finite rank does not provide
+this multiplication rule. Even square cancellation would leave higher orders, full preservation of
+conditional spaces, a stationary global construction and any finite-hidden realization unpaid. No
+locality, Gibbs property or conditional-log-ratio identity for the original loss cocycle has been
+established.
+
+Finally retain the entire (1.2) and set $C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$ and
+$U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta)$. The original problem is still whether some finite exact
+producer attains $c_\star$, or whether $C_N<c_\star$ for every finite $N$. [Universal, Theorem 6.2][U]
+supplies the equivalence of the latter with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad U_{N,r}<\kappa_m/(m+1).
+\tag{8.1}
+$$
+
+None of these alternatives is settled. General finite-hidden root-tail summability, effective exterior
+cylinders and detection radii, uniform parameter-family allowances, a fixed-$N$ margin and a valid bridge
+from second-order continuation to the original risk objective remain absent. All bounds here concern the
+stated law and block; no uncontrolled joint limit or new coverage of all finite producers is inferred.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[E]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[W]: FIB_LEGAL_EDGE_LOAD_TWO_WORD_EXTERIOR_CANCELLATION_AND_VANISHING_CERTIFICATE.md
+[DLP]: https://arxiv.org/html/1104.2224v2
+[CM]: https://arxiv.org/html/1305.0808v3
+[BPP]: https://arxiv.org/html/1501.06841v3
+[ME]: https://terrytao.wordpress.com/2008/01/30/254a-lecture-8-the-mean-ergodic-theorem/
+

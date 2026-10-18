@@ -1,0 +1,35 @@
+**Theorem 6.2 (current phase does not replace predictive source context).**
+There is a two-source finite relational task satisfying every interface
+hypothesis, with a successful four-state table, such that identical
+$(e,j,v,A)$ histories have different successor response vectors. Hence
+deleting the source chart coordinate from $\mathfrak e$ fails, and
+monotone bounded-rank replies do not imply (UDB.23).
+
+Proof 6.2. Take finite records $u_n$ with threshold $n\in\{1,2\}$ and a
+single port $p$. The plant stores a progress value $k\in\{0,1,2\}$, starts
+at zero and updates to $\min(k+1,2)$. The port is reached precisely when
+$k\ge n$, and its ordered reply is $c_0=\mathsf{absent}$ before reach and
+$c_1$ after. Use ranks zero and one and entry epoch $N=0$.
+Reached content has identity transport and persists. Consequently at
+epoch $j$ its exact reply is $c_1$ iff $j\ge n$. Use the chart
+$\operatorname{Adm}(n)\equiv n=1\lor n=2$, exact Same $n=m$, a single
+parameterless descriptor and distinct target rows $Y_1,Y_2$.
+
+The initial state $a$ updates to read state $e$. That read sends $c_1$ to
+halt $h_1$ with row $Y_1$ and $c_0$ to halt $h_2$ with row $Y_2$. This
+four-state table correctly halts for both sources at epoch one. At their
+initial histories the bare boundaries are both
+$(a,0,(c_0),\mathsf{Pending})$. After the update their vectors are
+respectively $(c_1)$ and $(c_0)$. The immutable chart coordinates separated
+these histories; their present phases did not. All numeric relations are
+the stated Presburger inequalities and finite admission conditions.
+$\square$
+
+The exact additional hypothesis for deleting that coordinate is (UDB.23),
+together with the corresponding legality and observation conditions if
+more actions are admitted. It can hold for some families and fail for
+others; source-independent future schedules determined by the current
+bare boundary are a sufficient condition. The example also shows why
+source coordinates in phase guards cannot be independently replaced by
+coordinates producing the desired answer in each phase.
+

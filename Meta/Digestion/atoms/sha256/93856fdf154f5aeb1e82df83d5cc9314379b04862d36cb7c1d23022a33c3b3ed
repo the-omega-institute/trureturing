@@ -1,0 +1,86 @@
+**定理 10.2（同源标定构造最小几何—预测接口）。** 在假设 10.1 下，有由标定数据唯一决定的满射线性映射 $\Pi:J\to K$，满足
+
+$$
+\Pi h_j=v_j,\qquad
+C_i(x)=\langle e_i,\Pi x\rangle_K,\qquad
+g_D(x,y)=\langle\Pi x,\Pi y\rangle_K,
+$$
+
+$$
+\ker\Pi=\ker C=E_0^\perp=E_\infty^\perp,
+\qquad \Pi D(x,y)=B(\Pi x,\Pi y).
+$$
+
+每个允许单元生成元有唯一诱导 $A_a:K\to K$ 使 $\Pi U_a=A_a\Pi$。因此同一来源的全部有限操作词读出、距离比较及有序关系组合在 $K$ 中保持；该同源任务的最小线性预测商与最小几何实现是同一个三维接口，经下列构造的等距映射连接：
+
+$$
+J/E_\infty^\perp\ \xrightarrow{\ \overline\Pi\ }\ K,
+\qquad \overline\Pi([x])=\Pi x,
+\qquad E_0\ \xrightarrow{\ \Pi|_{E_0}\ }\ K.
+$$
+
+这里联合商度量取正交代表的 $J$ 内积；它与任务度量 $g_D$ 在商上相等。若仅取实际受限来源 $S\subset J$，所得有效像为 $\Pi(S)$，其全词纤维判据按第 8.3 条；不把有限原生像称为全连续接口。
+
+**证明。** 第 2 节的经典构造给 $K$ 及其张成向量 $v_j$；第 5 节的已知面积—Jacobi 中间输入给 $\dim K=3$ 和正交基 $e_i$。以下是将它们回接到实际同一联合来源的部分。
+
+记 $S$ 为 $3\times N$ 标定矩阵，$S_{ij}=\langle e_i,v_j\rangle_K$。基的完整性给
+
+$$
+G_{jk}=\langle v_j,v_k\rangle_K
+=\sum_iS_{ij}S_{ik},\qquad G=S^{\mathsf T}S,
+\qquad CF=S. \tag{10.3}
+$$
+
+若 $F\xi=0$，则 $S\xi=CF\xi=0$，所以 $\xi^{\mathsf T}G\xi=0$，第 2 节的核计算给 $\xi\in\ker G$。因此
+
+$$
+\Pi(F\xi)=[\xi] \tag{10.4}
+$$
+
+与 $F\xi$ 的系数选择无关。$F$ 满射，(10.4) 定义整个 $J$ 上的线性映射；形式商也由这些类张成，故 $\Pi$ 满射。其在 $h_j$ 上的值固定，张成性给唯一性。
+
+对 $x=F\xi$，(10.3) 给 $C_i(x)=(S\xi)_i=\langle e_i,[\xi]\rangle_K$。三个基探针分离 $K$，所以 $\Pi x=0$ 当且仅当 $Cx=0$。又对 $x=F\xi,y=F\eta$，共同距离律给
+
+$$
+g_D(x,y)=\xi^{\mathsf T}G\eta
+=\langle[\xi],[\eta]\rangle_K
+=\langle\Pi x,\Pi y\rangle_K. \tag{10.5}
+$$
+
+这同时证明 $g_D$ 全域半正定，零域恰为 $\ker\Pi$；没有从一个任意三维距离模型改名得到结论。
+
+定义 $\iota:K\to J$、$\iota(\sum_it_ie_i)=\sum_it_ip_i$。正交单位标定使 $\iota$ 等距且像为 $E_0$。刚得的读口式给 $\Pi^*e_i=p_i$，并且 $C_i(p_j)=\delta_{ij}$，故 $\Pi p_j=e_j$。因此
+
+$$
+\Pi\iota=I_K,\qquad \iota\Pi=P_{E_0},\qquad
+J=E_0\oplus\ker\Pi. \tag{10.6}
+$$
+
+每个商类的唯一正交代表是 $P_{E_0}x$，其范数由 $\iota$ 的等距性等于 $\|\Pi x\|_K$。(10.5) 遂使距离商、联合正交商和几何商的度量一致。如果联合探针仅独立而不正交单位，则同样能构造线性 $\Pi$，但 (10.6) 的等距结论须按探针 Gram 修正；维数相同不能替代这个检查。
+
+对二元操作，取 $x=F\xi,y=F\eta$。双线性读出和 (10.2) 给
+
+$$
+\begin{aligned}
+C_i(D(x,y))
+&=\sum_{j,k}\xi_j\eta_k\beta_i(h_j,h_k)\\
+&=\left\langle e_i,B\left(\sum_j\xi_jv_j,
+\sum_k\eta_kv_k\right)\right\rangle_K\\
+&=\langle e_i,B(\Pi x,\Pi y)\rangle_K.
+\end{aligned}
+$$
+
+当前读出式和基分离性得到 $\Pi D(x,y)=B(\Pi x,\Pi y)$。所以将任一输入改为同核来源不会改变二元操作的几何响应；这证明的是任务保持，并非 $D$ 在全部记录上等于 $B$。
+
+生成元伴随不变使 $\ker\Pi=E_0^\perp$ 被 $U_a$ 保持：若 $z\perp E_0$，对每个 $e\in E_0$ 有 $\langle e,U_az\rangle_J=\langle U_a^*e,z\rangle_J=0$。故 $A_a(\Pi x)=\Pi U_ax$ 良定义；满射给唯一性，也可明确写为
+
+$$
+A_a=\Pi U_a\iota,
+\qquad A_w=A_{a_n}\cdots A_{a_1},
+\qquad \Pi U_w=A_w\Pi. \tag{10.7}
+$$
+
+最后一个等式对词长归纳：空词显然；若先执行 $w$ 再执行 $a$，则 $\Pi U_aU_w=A_a\Pi U_w=A_aA_w\Pi$。与二元桥同用，任何由这些允许操作和同源输入构成的有限表达式亦可按表达式结构归纳，保持其 $\Pi$ 值。标量距离由 (10.5) 保持，当前读出由三个坐标保持。
+
+第 8 节的完成计算给 $E_\infty=E_0$，因此行为等价恰为差在 $\ker\Pi$。$\overline\Pi$ 既单射又满射，(10.6) 给等距性。任一保全部当前及未来的线性摘要 $L$ 必有 $\ker L\subseteq\ker\Pi$，所以其像满射到三维 $K$，维数至少三；$\Pi$ 已达到。几何方面，$G$ 秩三使任何实现这些共同锚定距离的张成载体至少三维。两个最小性现由同一个明确构造的映射结合，而非分别证三维再假定相等。距离与二元响应均已因子化，所以加入这些列明比较不会再细化这个商。证毕。
+

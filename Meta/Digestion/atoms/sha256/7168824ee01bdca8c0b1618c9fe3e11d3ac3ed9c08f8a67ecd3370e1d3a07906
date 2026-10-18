@@ -1,0 +1,75 @@
+**Proposition 10.8 (The missing second-order spatial correspondence).** For
+the same varying-height rays and original controls, the source data are
+
+$$
+\begin{array}{c|c|c|c}
+\text{regime}&\text{current-ray dimension}&\text{native rank}&Q_{\rm vol}\\ \hline
+\text{neither wall}&5&2&11\\
+E_-\text{ only}&4&2&7\\
+E_+\text{ only}&4&2&7\\
+\text{both walls}&3&2&4.
+\end{array}
+\tag{10.26}
+$$
+
+No row supplies a smooth same-clock full-state Euclidean identification or
+an elliptic three-target factor of a positive native two-control operator.
+Neither the local volume/heat estimates nor the observable factor (10.24)
+satisfies the actual dual-scale or rank-three stability hypotheses.
+
+**Proof.** The table and the operator exclusions are Theorems 10.3 and 10.5.
+For precise supplier correspondence, [Boundary Geometry,
+§52.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md)
+identifies the Euclidean dual-scale contract as an infinite Euclidean spatial
+domain, isotropic second-order field, unscreened attractive point source,
+second-order localization and the specified form domain. Native probability
+and phase coordinates furnish none of those additional identifications.
+The same-source obligation in [Continuation III,
+§81.5](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+requires an actual source map inducing the operator on stated function spaces,
+with measures, variances, domains, boundaries and clocks matched. It also
+requires the field and potential to correspond under that same map. The
+factor (10.24) does meet a bounded-observable operator correspondence on its
+stated cylinder, but has only two target coordinates and loses (10.25).
+
+Continuation III Definition 82.1 instead fixes a connected simply connected
+stratified nilpotent group with $\dim V_1=3$, a positive horizontal inner
+product, three left-invariant orthonormal fields, Haar measure and the
+positive homogeneous point-source Green kernel of their sum of squares.
+Its kinetic form and attractive field use this same operator, measure and
+clock on the full punctured test core. Nonabelianity then forces $Q\ge5$;
+this rank-three implication is essential to its scaling instability.
+The literal §82.3 example is $H^1\times\mathbb R$, with a third independent
+Brownian input, topological dimension four and $Q=5$. It is not the native
+rank-two double-wall chart (10.10). Adding its extra Euclidean field would
+alter both the source and the principal symbol.
+
+Definition 83.1 fixes three smooth independent fields, strong Hörmander
+generation, a smooth positive density, a relatively compact smooth domain
+in a flow box, and a Dirichlet Friedrichs realization. Its matched field is
+the full Green integral of that realization, coupled to the same kinetic
+form. Its local implication uses $Q(o)\ge2n-3\ge5$ when $n>3$ because
+exactly three weights are one. The native structure instead has exactly two
+weights one. Even the native double-wall tangent has $Q=4$, where the
+hypothetical homogeneous Green weight and kinetic localization would both
+scale as $s^{-2}$; the strict power comparison in §82.2 or §83.2 gives no
+coupling-independent conclusion at that critical exponent. No such
+attractive potential or stability requirement is part of Definition 3.1.
+
+Thus local control volume, local diagonal heat power, real Lie-algebra
+dimension, affine response capacity and physical axes remain different
+quantities. A smooth positive two-control covariance cannot supply the
+missing third instantaneous variance. The density, stochastic clock and
+Dirichlet law in §10.5 are explicit additions, and do not establish a
+physical kinetic/field relation, a bound state, a global Green law, free
+rotations, mean selection, or a finite-bit acquisition guarantee.
+The fixed-mean law has no operation choosing $X=Y=r/2$.
+
+The separate [native affine continuation result, §§4--6](https://github.com/the-omega-institute/trureturing/blob/6ea83df2b1efe0fbbe16220bc9870321dc2b74b3/docs/develop/theory/FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md)
+concerns exact affine updates and positive-band probability-leg
+approximation; it supplies none of these metric, diffusion or physical
+correspondences. The new deductions here are their distinct native
+control-coordinate, cost, output and second-order applications. Jean's
+estimates and the cited heat results are literature-attested intermediates;
+no general classical theorem or worldwide priority is claimed. $\square$
+

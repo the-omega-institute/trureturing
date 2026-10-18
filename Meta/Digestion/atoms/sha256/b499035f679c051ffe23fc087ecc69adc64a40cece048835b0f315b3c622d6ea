@@ -1,0 +1,45 @@
+**Theorem 3.4 (actual complete instruments and exact finite reduction).** Every feasible tuple in (PG.13) has a common finite realization with acquired high effect $E\Theta(H)E^\dagger$. Consequently
+
+$$
+\mathsf E_s(\sigma)=
+ \min_{\text{tuples (PG.13)}}\operatorname{tr}(C(E^\dagger\sigma E)H),
+\tag{PG.17}
+$$
+
+and a minimizing realization needs at most twenty-four actual acquisition labels. This generic bound is credited to CA.
+
+Proof. Spectrally factor $H_r$ into at most three atoms $zz^\dagger$. For each provide encoder $K(z)E^\dagger$ into $\mathbb C^3$ and full TP decoder $X\mapsto EXE^\dagger$ in the live sector. Decompose $L_r$ into at most six singular atoms by Lemma 3.3. Fix for each nonzero atom an isometry $U_z:\mathbb C^2\to\mathbb C^3$ onto $\operatorname{ran}K(z)$. Use encoder $U_z^\dagger K(z)E^\dagger$ and full TP decoder $X\mapsto EU_zXU_z^\dagger E^\dagger$. For quadratic atoms, columns $1,2$ are independent; Gram–Schmidt on them fixes $U_z$. For a plane atom use column $0$ and the first nonzero of columns $1,2$. These choices use only public matrices, not the specimen.
+
+Since $N_r\preceq M$ kills $|0\rangle$, its at most two nonzero eigenpairs $(\nu_{rj},f_{rj})$ supply scalar encoder rows
+$\sqrt{\nu_{rj}}\langle f_{rj}|E^\dagger$. Decode scalar $z$ to the whole measure $zw_jg(t)dt\,P_f$ in each original failure label. Add one scalar complement encoder per report,
+$\mathcal A_{r,\perp}(A)=\operatorname{tr}(Q_5A)/2$, decoded to $zg(t)dt\,P_f$ only at label $2$. Its two discarded orthogonal Kraus rows are not a retained two-dimensional fibre.
+
+The actual label retains the report, branch type and atom/eigenpair index. All its fibres are the whole declared joint payload; every other dilation system is discarded permanently before the cut. One may enact the acquisition by the isometry with orthogonal branch and Kraus-index environment copies and trace that environment out, dephasing the label. This describes an actually supplied mathematical operation and grants no native port.
+
+The total encoder effect for report $r$ is
+
+$$
+E[\Theta(H_r+L_r)+N_r]E^\dagger+Q_5/2=F_r(s);
+$$
+
+summing gives $I_5$. Every positive branch effect is bounded by that sum, so each encoder is TNI. All live decoders are isometries on their entire fibres. Scalar decoders are TP because $\sum_jw_j=\int_0^1g=1$. Image reconstruction and $\sum_r(H_r+L_r)=I$ give (PG.9) on every complex matrix. There is no restriction to the selected test or the twelve histories.
+
+Explicitly, for any joint operator $X$ with passive reference $R$, the report-$r$ supported failure reference operator and complement operator are
+
+$$
+R_{r,f}=\operatorname{Tr}_5[(EN_rE^\dagger\otimes I_R)X],\qquad
+R_{r,\perp}=\tfrac12\operatorname{Tr}_5[(Q_5\otimes I_R)X].
+$$
+
+For every original label $j$ and Borel set $\mathcal B\subseteq[0,1]$, its output is exactly
+
+$$
+P_f\otimes[w_jR_{r,f}+\mathbf1_{j=2}R_{r,\perp}]
+                      \int_{\mathcal B}g(t)\,dt.
+\tag{PG.18}
+$$
+
+The live identity is the corresponding sum of Kraus conjugations tensored with $I_R$. Thus conditional reference operators, not merely their traces or an unconditional marginal, are correct at every amplification. Every cross-support matrix unit is killed; complement live output and all extra sectors vanish. Labels $1,3$ remain distinct and $0,13$ have zero maps; no singular time part or endpoint atom is introduced. Common fixed metadata may be carried identically. These are measure identities on every time set, not time binning. The original complete error therefore remains $\mathcal E_*$.
+
+Only the high fibres have dimension three, and all their decoders are wholly live, so their acquired effect is exactly the displayed one. Lemma 3.1 gives the reverse bound for arbitrary competitors, proving (PG.17). Compactness supplies a minimizing tuple. If one of its high spectral atoms is singular, move it with its report into $L_r$ and enact it with dimension two. Feasibility persists, and positive selected cost cannot increase; at a minimum it cannot strictly decrease. After these moves refactor the low parts by the six-atom theorem. Remaining nonzero high atoms have rank-three products and can be realized in genuine three-dimensional fibres. At most $2(3+6+2+1)=24$ labels suffice. The count concerns generated acquisition labels, not a finite alphabet of exact output times. $\square$
+

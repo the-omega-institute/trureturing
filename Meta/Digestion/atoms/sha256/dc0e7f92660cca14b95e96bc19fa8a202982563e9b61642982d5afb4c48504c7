@@ -1,0 +1,47 @@
+**Theorem 9.2 (quadratic no-real-root requirement).** Every uniformly recovering $n=d+5$ history must satisfy, for each $x,y>0$, exactly one of the alternatives
+
+$$
+a_2=b_1=0,\quad c\ne0,
+\qquad\hbox{or}\qquad
+a_2\ne0,\quad b_1^2-4a_2c<0.
+\tag{9.3}
+$$
+
+Moreover $c$ has one common strict sign over all positive source shapes, and every nonzero $a_2$ has that same sign. Failure of (9.3) at one positive shape gives an actual collision on that history. Satisfying (9.3) at every shape is equivalent to an everywhere nonsingular actual-target derivative; it is a necessary condition for recovery.
+
+**Proof.** The vectors $E,E_x,E_y$ are independent: their $21$, then $11$, then $22$ entries force the coefficients in a zero linear combination to vanish successively. They span the three-dimensional source tangent in (6.1), with the appropriate nonzero factors of $r$.
+
+In chart order $(r,x,y,\kappa)$ the four quotient derivative columns are
+
+$$
+\mathcal T_\kappa E,\qquad
+r\mathcal T_\kappa E_x,\qquad
+r\mathcal T_\kappa E_y,\qquad r\mathcal C E.
+$$
+
+Factoring out $r^3$ and subtracting $\kappa$ times the last column from the first gives
+
+$$
+\begin{aligned}
+\det Df
+&=r^3\det_4[\mathcal B E,
+ (\mathcal B+\kappa\mathcal C)E_x,
+ (\mathcal B+\kappa\mathcal C)E_y,\mathcal C E]\\
+&=r^3\bigl(c+b_1\kappa+a_2\kappa^2\bigr).
+\end{aligned}
+\tag{9.4}
+$$
+
+Thus the apparent cubic term vanishes exactly, without an invertibility assumption on any $\mathcal T_\kappa$.
+
+For a fixed positive shape, write $j(\kappa)=c+b_1\kappa+a_2\kappa^2$. If $a_2=0$ and $b_1\ne0$, it has the root $-c/b_1$. If $a_2=b_1=0$, it has no real root precisely when $c\ne0$; otherwise it is the zero polynomial. If $a_2\ne0$, its real roots exist exactly when the discriminant
+$\Delta=b_1^2-4a_2c$ is nonnegative, and are
+$(-b_1\pm\sqrt{\Delta})/(2a_2)$. This includes a repeated root when $\Delta=0$. When $\Delta<0$, completing the square gives
+$4a_2j(\kappa)=(2a_2\kappa+b_1)^2-\Delta>0$, so there is no real root. These are all degree and discriminant degeneracies, proving that (9.3) is exactly the no-real-root condition.
+
+Theorem 9.1 and (9.4) require this condition for recovery. Conversely, if it fails at a positive shape, choose one of the real roots just described, any $r>0$, and any allowed drift. The full derivative at that actual target is singular by (9.1)–(9.4). The exhaustive cases of Theorem 9.1 produce a collision with the actual positive factors and drift compensation of Section 6.
+
+If (9.3) holds for every shape, (9.4) and the invertible drift block show that the full derivative is everywhere nonsingular. The function
+$j(\kappa;x,y)$ is continuous and nonzero on the connected domain
+$\mathbb R\times(0,\infty)^2$, so its sign is common throughout. In particular $c=j(0;x,y)$ has a common strict sign. Wherever $a_2\ne0$, the sign for large $|\kappa|$ equals the sign of $a_2$, giving the stated agreement with $c$. These conclusions also cover singular or identically singular quotient pencils through the rank cases of Theorem 9.1. They do not supply global injectivity. ∎
+

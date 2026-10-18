@@ -1,0 +1,9 @@
+**定义 28.1（数量任务和自由来源任务）。** 来源为定义 1.1 的全部非空有序标签树，组成 $c(t)=(a,b)$；数量读出 $q_0(t)=2a+3b$。实验族此处仅为所有非负次数替换后的数量 $q_0\rho^n$，不含叶序、括号查询或外部关系测试。固定组成纤维的树数直接复用 [FIB 原子统计规律定理 2.2](FIB_ATOM_STATISTICAL_LAWS.md)、[观察者相对时空定理 11.2](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md) 和 [GenealogicalFiberTransport 的 `result`](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)：
+
+$$
+|\mathcal F(a,b)|=\operatorname{Cat}_{a+b-1}\binom{a+b}{a},
+\qquad \operatorname{Cat}_j=\frac1{j+1}\binom{2j}{j},\qquad a+b\geq1.
+$$
+
+该纤维包括所有括号与叶序，不等于一条固定 Fibonacci 轨道的可达集合。
+

@@ -1,0 +1,13 @@
+**Theorem 43.3 (the exact instance and the reused zero-weight limit).** On the half-beta instance of Theorem 42.3,
+
+$$
+ \operatorname{Tr}Y=T_{1/2}-\frac1{72},\qquad
+ g_N^2\leq T_{1/2}-\frac1{72},\qquad
+ \delta_N\geq1-\frac1{\sqrt2}+\frac1{36}.
+\tag{R.219}
+$$
+
+As $u\downarrow0$ at fixed positive beta, the channel (R.195), the witness (R.213), and the certificate (R.215) converge to the existing upper-family channel and matched certificate (R.37). The zero-weight certificate and its optimum are those of Theorem 8.1.
+
+**Proof.** Substituting $u=1/18$ in (R.216) gives (R.219). At $u=0$, the second Kraus matrix has zero third column, while the first has third column $e_4$. The limiting diagonal entries are $(a+\sqrt a)/4$, $\beta/4$, and $(1+\sqrt a)/4$ on $e_0,e_2,e_4$, exactly (R.37). This identifies the previously proved certificate rather than providing a new zero-weight optimum. For $u>0$, (R.216) is only a certified upper bound on $g_N^2$ and lower bound on $\delta_N$; neither equality nor an exact diamond optimum follows. $\square$
+

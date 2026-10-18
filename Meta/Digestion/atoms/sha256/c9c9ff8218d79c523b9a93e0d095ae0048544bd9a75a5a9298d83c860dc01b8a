@@ -1,0 +1,89 @@
+**引理 10.3（真三次的完整三分支重建）。** 对任一真三次世界，令 $\lambda=[t^3]g/s\ne0$。四次插值余项及式 (10.5) 给
+
+$$
+\begin{aligned}
+\mathscr H&=E+\lambda R_e=d+(1+t/s)g,\\
+O+k\lambda S_o&=d+[k(1+t/s)+\eta_k/s]g,\\
+\mathscr F&=O-kE+k\lambda V_o=(1-k)d+(\eta_k/s)g,\\
+N_k&=D_k\lambda,\\
+(t+s)\mathscr F-\eta_k\mathscr H
+&=d[(1-k)(t+s)-\eta_k].
+\end{aligned}
+\tag{10.8}
+$$
+
+其全部候选恰由以下三个互斥分支和全部过滤条件给出。
+
+正则分支取 $k>0,k\ne2,\eta_k\ne0,N_k\ne0$，定义
+
+$$
+\begin{aligned}
+A_2&=D_k(o_2-ke_2)+42kN_k,&A_1&=D_k(o_1-ke_1)-128kN_k,\\
+B_3&=D_ke_3-12N_k,&B_2&=D_ke_2+44N_k,\\
+\mathcal P(k)&=A_2^2-\eta_kB_3A_2-\eta_kN_kA_1+\eta_k^2N_kB_2.
+\end{aligned}
+\tag{10.9}
+$$
+
+对每个不同实根 $\mathcal P(k)=0$，置
+
+$$
+\lambda=N_k/D_k,\qquad
+s=(\eta_k\mathscr H_3-\mathscr F_2)/(\eta_k\lambda),\qquad s>2k.
+\tag{10.10}
+$$
+
+余下漂移系统写为
+
+$$
+\begin{gathered}
+\mathsf A=1-k,\qquad \mathsf B=(1-k)s-\eta_k,\\
+\mathsf C_1=\mathscr F_0+s\mathscr F_1-\eta_k\mathscr H_1,
+\qquad\mathsf C_0=s\mathscr F_0,\\
+\mathsf A\mathsf C_0-\mathsf B\mathsf C_1=0,\qquad
+ d=\frac{\mathsf A\mathsf C_1+\mathsf B\mathsf C_0}{\mathsf A^2+\mathsf B^2},\qquad
+ g=\frac{s}{\eta_k}\bigl(\mathscr F-(1-k)d\bigr).
+\end{gathered}
+\tag{10.11}
+$$
+
+每根至多一个完整世界。必须保留首项 $s\lambda\ne0$、严格来源、同一漂移、同一个实多项式、两个完整响应恒等式及全部八个原时钟读数；$\mathcal P=0$ 本身不充分。
+
+$k=2$ 分支先要求 $o_3=2e_3$，取
+
+$$
+U_2=o_2-2e_2,\quad U_1=o_1-2e_1,\quad K_2=8e_3+U_2.
+$$
+
+每个非零实根 $\lambda$ 必满足
+
+$$
+\begin{gathered}
+Q_2(\lambda)=-240\lambda^2+
+(8U_1+64e_2+84K_2-12U_2)\lambda+K_2U_2=0,\\
+s=(K_2-12\lambda)/(8\lambda)>4.
+\end{gathered}
+\tag{10.12}
+$$
+
+随后使用同一漂移系统 (10.11)，其中 $\eta_2=-8$，再作上述全部过滤。此分支至多两个世界。
+
+$k=q_0$ 分支取 $\lambda=(o_3-q_0e_3)/(4q_0)\ne0$，要求 $\mathscr F_2=\mathscr F_1=0$，置 $d=\mathscr F_0/(1-q_0)$。对每个不同实根 $\mathscr H(-s)=d$、$s>2q_0$，以 $g=s(\mathscr H-d)/(t+s)$ 精确除法，作全部过滤。此分支一般至多四个世界，在 $\mathcal B$ 上为空。
+
+证明。完整偶式的四次系数是 $\lambda$，完整奇式的四次系数是 $k\lambda$；分别在四个原偶、奇节点消去插值余项，即得式 (10.8) 的前两行。相减得到同一个 $\mathscr F$，其三次系数为 $N_k-4k\lambda=\eta_k\lambda$，故 $N_k=D_k\lambda$，最后的耦合恒等式随之成立。
+
+在正则分支，$D_k\ne0$，且
+
+$$
+\mathscr F_2=A_2/D_k,\quad\mathscr F_1=A_1/D_k,\quad
+\mathscr H_3=B_3/D_k,\quad\mathscr H_2=B_2/D_k.
+$$
+
+耦合的四次项由 $\mathscr F_3=\eta_k\lambda$ 消去，三次项给式 (10.10)。二次项乘 $\eta_k\lambda$ 后恰为 $-\mathcal P/D_k^2$，而一次、常数项分别要求 $\mathsf C_1=\mathsf A d,\mathsf C_0=\mathsf B d$。若 $\mathsf A=\mathsf B=0$，则 $k=1$ 且 $\eta_1=0$，与 $\eta_1=-1$ 矛盾；在 $k=1$ 实际有 $\mathsf B=1$。所以式 (10.11) 的正平方和分母合法，行列式与该公式恰恢复最后两式。反向逐系数恢复完整耦合，所定义 $g$ 给 $\mathscr H-d=(1+t/s)g$；再由 $O+k\lambda S_o=k\mathscr H+\mathscr F$ 得完整奇式。在原八节点取值即返回实际叶。$s>2k$ 给严格正源，首项非零给真三次。因此所有过滤既必要又充分。
+
+$k=2$ 时不形成 $N_k/D_k$。这里 $\mathscr H_3=e_3-12\lambda$、$\mathscr F_2=U_2+84\lambda$、$\mathscr F_3=-8\lambda$，三次耦合系数为 $K_2-12\lambda-8s\lambda$，故给显示的 $s$。二次条件 $\mathscr F_1+s\mathscr F_2+8\mathscr H_2=0$ 乘 $8\lambda$ 给式 (10.12)。其首项恒为 $-240$，不可能恒零；每个保留根唯一确定 $s$，再由 $\mathsf A=-1$ 的同一漂移系统确定 $d,g$。重根一次，$e_3=o_3=0$ 时仍保留此分支。
+
+$k=q_0$ 时 $D_k=4q_0\ne0$、$1-q_0>0$，完整耦合要求 $\mathscr F$ 恒为 $(1-q_0)d$。显示的两个零系数和漂移给出这一点，且 $\mathscr F_3=0$ 已自动成立。还须 $t+s$ 整除 $\mathscr H-d$；显示根条件恰保证精确整除，返回首项 $s\lambda$ 的三次增益，奇式由同一恒等式恢复。非零四次 $\mathscr H-d$ 至多四个不同合格根。引理 10.2 使其在广盒为空。
+
+对每个正 $k$，除 $k=2$、$k=q_0$ 外都属于正则域，或因 $N_k=0$ 强制 $\lambda=0$ 而不是真三次。负的 $\eta$ 零根和 $k=-1/2$ 不是正源。未除以 $g(i)$、$e_3$、$o_3$、漂移或判别式；采样零、重复根、任意系数符号及插值降次均保留在完整分支和过滤中。∎
+

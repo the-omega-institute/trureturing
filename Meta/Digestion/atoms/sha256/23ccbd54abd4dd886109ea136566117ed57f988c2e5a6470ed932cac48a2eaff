@@ -1,0 +1,34 @@
+**引理 90.2（Uniform sharp three-phase obstruction）。** For every $1\le m<k$, every actual issued index $t$ and the actual $g=\gcd(m,k+1)$, suppose $P_0$ completes successfully on an actual source and the consecutive complete word $Q_0$ rejects on it. Then
+
+$$
+\left|\{j\in\mathbb Z/T\mathbb Z:
+q_{t,P_0}(j)=q_{t+1,Q_0}(j)=1\}\right|\le3.
+\tag{90.3}
+$$
+
+The constant three is sharp uniformly over these parameters. If either word is all ones, the intersection is at most two; if $k\ge2m$, it is at most one. No coprimality or omission-length bound is imposed.
+
+证明。 Translate coordinates by the known issued displacement $tm$ for the arithmetic calculation. This is not a phase observation or physical rotation. The two paths are $[0,m]$ and $[m,2m]\pmod T$. If $k\ge2m$, then $2m<T$ and their only common vertex is $m$, proving the stronger bound one.
+
+Otherwise $1\le b<m$ and the second path wraps exactly once. Its order is $m,m+1,\ldots,T-1,0,\ldots,m-b-1$, and the common vertices are
+
+$$
+\{m\}\cup[0,m-b-1].
+\tag{90.4}
+$$
+
+If $P_0$ contains zero, set $r=\rho(P_0)$ and $\ell=\alpha(Q_0)$. Its actual outgoing tail is $r$; rejection of $Q_0$ requires $r+\ell\ge k=m+b$. Outside the endpoint $m$, the suffix of $r$ ones makes the first row's charge support a subset of $[0,m-r]$. The leading $\ell$ ones make the second row vanish at its local path positions $1,\ldots,\ell-1$. A common wrapped vertex $j$ has local position $b+1+j$, so the second row can charge it only when $j\ge\ell-b-1$. This also covers the final endpoint when $Q_0=1^m$. Consequently
+
+$$
+\{j:q_{t,P_0}(j)=q_{t+1,Q_0}(j)=1\}
+\subseteq\{m\}\cup
+\bigl([0,m-b-1]\cap[\ell-b-1,m-r]\bigr).
+\tag{90.5}
+$$
+
+Before clipping, that integer interval has $\max(0,m-r-\ell+b+2)\le2$ points. Including the boundary vertex gives (90.3). This argument counts full arithmetic rows, without exposing a rejection time or an intermediate scalar.
+
+If $P_0=1^m$, its row has only the two endpoints $0,m$, so the bound two follows directly. Its actual incoming tail is retained: success gives $\sigma+m<k$, hence outgoing tail $\sigma+m$, and rejection of $Q_0$ means $\sigma+m+\alpha(Q_0)\ge k$. Substituting $m$ for this outgoing tail is unnecessary and can be false. For example, whenever $b\ge2$, incoming tail $b-1$ lets $1^m$ succeed with tail $k-1$, after which a word beginning one rejects although $m+1<k$. These incoming records are jointly actual by [IC, (1.3)]. If $Q_0$ is all ones, its row likewise has only two endpoints. Zero words have empty charge support; moreover an all-zero predecessor leaves tail zero and an all-zero successor clears any legal tail.
+
+Sharpness is credited evidence from Lemma 82.2: at $(k,m,T,g)=(6,5,7,1)$, the actual tail-zero arrival followed by $10111\mid11101$ succeeds in its first word, rejects in its second and has common charged phases $\{1,2,5\}$. Lemma 84.2 also supplies sharp two-omission witnesses. These establish sharpness of the uniform constant, rather than a claim that it is the best bound at every fixed reader. ∎
+

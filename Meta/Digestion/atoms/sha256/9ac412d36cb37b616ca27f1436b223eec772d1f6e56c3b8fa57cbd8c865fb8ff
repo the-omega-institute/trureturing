@@ -1,0 +1,43 @@
+**Proposition 6.3 (external-cylinder calibration).** For arbitrary finite
+references $p,q$, a genuinely acquired common-version offset
+$\Delta=J^c_q(U_x)-J^c_p(U_x)$ together with the acquired old and new
+readings, all on the same authentic pure history, suffices for
+
+$$
+k=J^c_q(U_w)-J^c_p(U_v)-\Delta.
+\tag{AAR.23}
+$$
+
+The coordinate law makes $\Delta$ invariant on the pure orbit.
+This is the supplied calibration/integration mechanism, not a new
+acquisition theorem. If $q$ is chosen causally, its descriptor must
+first be computed from paid data. Evaluating both references under
+one saved equal-leaf guard, with restart on failure, is a legal
+fallback: finite native traversals acquire the reached subtree or
+blocking leaf needed by (AAR.5), followed by local evaluation.
+All traversals, descriptor construction, calibration storage, row
+work and failed attempts are charged. Whole-tree evaluation is an
+available supplier fallback, not the new result of this volume.
+No future menu is assumed; CAB's public-menu theorem applies only
+when that menu is explicitly present.
+
+For an explicit all-attempt account of this fallback, include the
+selection phase's actual query list, then for every attempt its
+guard-search list, both reference-evaluation lists, optional row-body
+list and final validation literal. The length and sum of literal
+lengths of their concatenation are exactly $T,A$; their maximum
+length is $Q$. All failed lists count. Two fixed-descriptor evaluations
+can use successive present prefixes toward each descriptor followed
+by right descent, stopping early at a blocking leaf. For a final tree
+of height $H$, each evaluation uses at most $H+1$ Reads, each of
+length at most $H$: every visited branch persists and each path grows
+by one letter. With a supplied left guard search and no row, one
+attempt thus uses at most $3H+4$ Reads. Matching the final leaf makes
+both values common-version; failed guard intervals are disjoint, so
+after selection at most $b+1$ attempts are needed for $b$ further
+updates. Selection's own traffic is added, never bounded by this
+calibration-only count. Retain the paid descriptors, their encoded
+offset and whichever origin reading the decoder consumes; writable
+paths, operands, candidates, output framing and installation remain
+separate under Definition 1.4.
+

@@ -1,0 +1,59 @@
+**Definition 4.1 (root-certificate fragment and orbit suppliers).** A retained
+input is in the fragment when it contains a positive record
+
+$$
+e=(n,\varepsilon,m,p,=),\qquad p\ne\varepsilon,
+\tag{ARH.4.1}
+$$
+
+possibly written with its endpoints exchanged. All other old data and
+finite signed mixed histories remain arbitrary. Recognition means finding
+such a record; it does not require proving that every equivalent presentation
+has one.
+
+Use the existing atomic recurrence and transport clock:
+
+$$
+\begin{gathered}
+T_0=\alpha,\quad T_1=\beta,\quad
+T_{j+2}=\langle T_{j+1},T_j\rangle,\qquad \rho^aT_j=T_{j+a},\\
+\kappa(\alpha)=0,\quad\kappa(\beta)=1,\quad
+\kappa(\langle x,y\rangle)=2+\kappa(y),\quad
+\kappa(\rho^a u)=\kappa(u)+a.
+\end{gathered}
+\tag{ARH.4.2}
+$$
+
+These are [TRANSPORT, §§23–24][TRANSPORT] and the atomic supply used by
+[SLH, §§2 and 29][SLH]. In particular $\kappa(T_j)=j$, so the $T_j$ are
+pairwise distinct. Their reached-subtree formula is
+
+$$
+\begin{aligned}
+s\ne\varepsilon:\quad
+s\in\operatorname{Pos}(T_j)&\Longleftrightarrow j\ge w(s^-)+2,\\
+T_j|_s&=T_{j-w(s)}\quad\text{when reached};
+\end{aligned}
+\tag{ARH.4.3}
+$$
+
+at the root the guard is automatic. Nonnegative $j-w(s)$ alone is not
+a reach test, as $s=LL,j=2$ shows.
+
+The exact previously established orbit classification used here is the
+first conjunct of [SourceTransportCentralizer,
+`source_transport_centralizer`][CENTRALIZER]:
+
+$$
+\operatorname{Stab}(v):=
+[\rho^2v=\langle\rho v,v\rangle]
+\quad\Longleftrightarrow\quad
+\exists j\ge0, v=T_j.
+\tag{ARH.4.4}
+$$
+
+Its `Source = FreeMagma Bool` identifies `.of true` with $\alpha$,
+`.of false` with $\beta$, and `FreeMagma.mul` with ordered pairing;
+`GenealogicalFiberTransport.substitution` is exactly (ARH.1.1).
+The classification itself is supply, not a new theorem of this volume.
+

@@ -1,0 +1,36 @@
+### 94.2. The fixed support and the exact second-order prerequisite
+
+**Proof of Theorem 94.1.** The established positive lower bound makes a hypothetical subquarter value t positive. Theorems 92.1–92.2 supply a common stress support S and a reciprocal diagonal-unitary gauge preserving the complete product coefficient and target. Fix this one gauge. There is one fixed vector a, nonzero exactly on S, such that
+
+\[
+ \ker G=\ker H=\operatorname{span}(a),\qquad G_S=H_S.
+                                                                    \tag{2}
+\]
+
+The full Grams need not coincide outside S. Every cross-fibre entry of both Grams is nonzero, since the original matrix-unit test gives |1/2−G_ijH_ij|≤t<1/2.
+
+Let 𝒜₀ be the nonempty compact common-witness subset from section 92.5, retaining both ρ and W. For every (ρ,W)∈𝒜₀, its first stress has the form α_W aa* with α_W>0. The same fixed a and the same gauge are used for all these witnesses. For every Hermitian D supported on S with D_ff=0 and Da=0, section 92.5 proves
+
+\[
+ \begin{gathered}
+ \text{there exists }(\rho,W)\in\mathcal A_0
+                    \text{ such that }Q_W(D)\ge0,\\
+ Q_W(D)=-\alpha_W
+      \sum_{i,j\text{ in different fibres}}
+       \frac{\overline{a_i}a_j}{G_{ij}}D_{ij}^{2}.
+ \end{gathered}                                                   \tag{3}
+\]
+
+The witness may depend on D. No single second-order witness for all directions is assumed. Instead, (3) rules out any one direction whose quadratic value is negative for every common witness; the only witness-dependent factor in that value is α_W>0.
+
+Write n=|S| and introduce the weighted principal matrix
+
+\[
+ J=\operatorname{diag}(\overline{a_S})G_S
+                  \operatorname{diag}(a_S),\qquad
+ h_{ij}=J_{ij},\qquad d_i=J_{ii}=|a_i|^2>0,
+ \qquad J\mathbf1_n=0.                                      \tag{4}
+\]
+
+Its distinct within-fibre entries vanish, and its cross-fibre entries are nonzero. The following lemma uses these complex entries without assuming they are positive or real.
+

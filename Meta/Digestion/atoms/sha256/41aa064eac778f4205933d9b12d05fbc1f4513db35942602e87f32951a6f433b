@@ -1,0 +1,23 @@
+**Definition 1.2 (Associated target and actual program).** For known $t,\eta\in[0,1]$ and one fixed unknown $X\in U_4$, set
+
+$$
+\begin{aligned}
+\Phi_{t,\eta,X}(Y)&=(1-\eta)(I_5+tX)\circ Y
+                    +\eta\operatorname{tr}(Y)I_5/5,\\
+\rho_{t,\eta}(X)&=\frac{1-\eta}{5}J(I_5+tX)J^\dagger+\eta I_{25}/25.
+\end{aligned}
+\tag{1.1}
+$$
+
+Here $\circ$ is entrywise multiplication and $I_{25}$ is the identity on the entire original local-support tensor product, including its twenty-dimensional nonmatching subspace. The target is defined on every $Y\in M_5(\mathbb C)$. The positive matrix $I_5+tX$ has diagonal one, so its Schur multiplier is completely positive and trace preserving (CPTP); the replacement term is CPTP. The source is positive with trace one. Neither assertion requires strict positivity.
+
+The normalized output-first Choi correspondence is
+
+$$
+\chi(\Phi)=\frac15\sum_{j,k=0}^4\Phi(E_{jk})\otimes E_{jk},\qquad
+(V\otimes W)\chi(\Phi_{t,\eta,X})(V\otimes W)^\dagger=\rho_{t,\eta}(X).
+\tag{1.2}
+$$
+
+Indeed, the Schur term is $J(I_5+tX)J^\dagger/5$ and the replacement term is $I_{25}/25$. The output partial trace of $\chi$ is $I_5/5$. This identifies the source associated with a target; it does not supply a common simulator for an unknown Choi state.
+

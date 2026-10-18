@@ -1,0 +1,131 @@
+**Theorem 43.2 (sharp strong-regime height distinguishability).** For
+$s_0\leq s\leq1$, the supremum over every optimizer in (JR.43) is
+
+$$
+\boxed{\displaystyle
+\mathcal T(s)=\frac12\left[
+ \sum_{\sigma=\pm1}|h_\sigma(s)|+
+ \sum_{\sigma,\tau=\pm1}|\ell_{\sigma,\tau}(s)|+L_f\right]
+ =T_{\rm flat}+[-\mathsf b(v_s)]_+.}
+\tag{JR.51}
+$$
+
+One common finite actual instrument for each prescribed $s$ attains
+this value with the original complete output and the sharp acquisition
+cost. There is a unique $v_c\in(v_0,1)$ with $\mathsf b(v_c)=0$.
+For $s_c=\mathfrak f(v_c)$, $\mathcal T$ strictly decreases from
+$T_{\rm flat}-\mathsf b(1)$ on $[s_0,s_c]$, then is constant at
+$T_{\rm flat}$ on $[s_c,1]$. In particular
+$\mathcal T(s_0)=T_{\rm flat}-\mathsf b(1)$ and
+$\mathcal T(1)=T_{\rm flat}$. No feasible contrast exceeds $1$ by
+Theorem 37.2.
+
+Proof of the upper bound. Theorem 42.1 fixes the low/high coefficient
+Grams to $\operatorname{diag}(u,v,1)$ and
+$\operatorname{diag}(1-u,1-v,0)$. Equation (JR.47) and the real null
+condition leave only the four low rays
+$(\sqrt u,\sigma\sqrt v,\tau)$ and two high rays
+$(\sqrt{1-u},\sigma\sqrt{1-v},0)$. The three zero low cross moments
+force total weights $1/4$ on each of the four rays: their three signed
+moments and total mass determine the four weights. The high weights
+are $1/2$ when $v<1$. At $v=1$ the high rays coincide; arbitrary
+proportional splitting leaves the same absolute-difference sum.
+The resulting product differences are exactly (JR.50)'s $h,\ell$.
+
+For an actual acquisition label $\alpha$, separate its live Kraus
+products and total later failure effect $B_\alpha\succeq0$ only to
+bound its absolute height-probability difference. By (JR.44),
+$\sum_\alpha B_\alpha=M$. On $\operatorname{ran}M$ write
+$B_\alpha=M^{1/2}E_\alpha M^{1/2}$; the positive $E_\alpha$ sum to
+identity. Then
+
+$$
+\sum_\alpha|\operatorname{tr}(B_\alpha\Delta)|
+ =\sum_\alpha|\operatorname{tr}(E_\alpha\Xi)|
+ \leq\sum_\alpha\operatorname{tr}(E_\alpha|\Xi|)=L_f.
+$$
+
+For integrals the same inequality is integrated. Splitting a label
+and analytically refining its products can only increase this upper
+bound. It creates no readable record. Combining it with the six live
+rays proves the first bound in (JR.51), without averaging height TV or
+assuming an optimizer's individual failure measures. Section 44 supplies
+actual common attainment of all its terms.
+
+For the evaluation, the exact coefficient formulas (CG.112)–(CG.116),
+(CG.134), with the rational-centre radius-$10^{-24}$ box of CG
+Proposition 13.2, give the following strict rational enclosures and
+inequalities:
+
+$$
+\begin{gathered}
+10^6(h_0,h_1,h_2,a,b,c,d)\in
+ \prod_{j=1}^7(N_j,N_j+1),\quad
+N=(984341,706284,809497,65664,145993,15496,98783),\\
+\mathfrak a,\mathfrak b>0,\quad
+\Delta A/2>\xi,\quad \mathfrak a<2\sqrt\theta\,\xi,\quad
+\mathfrak a+\mathfrak b>2\sqrt\delta\,\xi,\\
+\mathfrak a+2\sqrt\theta\,\xi>\theta\eta/\sqrt\omega,\quad
+\xi\sqrt\omega>|\zeta|,\\
+\ell_{\sigma,\tau}(u=v=v_0)>1/25000
+ \quad(\sigma,\tau=\pm1),\qquad
+-9/10000<\mathsf b(1)<-8/10000.
+\end{gathered}
+\tag{JR.52}
+$$
+
+These comparisons concern the given box, not a fitted new root.
+They can be obtained directly by interval substitution in the source
+adjugates: $H=1000\eta_0\operatorname{adj}S_0$,
+$Q^{01}=\eta_1\operatorname{adj}S_{01}$,
+$Q^{02}=\eta_2\operatorname{adj}S_{02}$, followed by the positive-pivot
+amplitude formulas (CG.134). Every denominator is strictly positive
+on that box. Rational arithmetic with outward square-root bounds
+therefore supplies (JR.52) without an inference from sampled signs.
+
+Here is the interval-wide sign argument from those finite comparisons.
+Since $u\leq v$, $1-u\geq1-v$ and $\Delta A/2>\xi$, both
+$h_\sigma$ are positive. The quadratic
+
+$$
+q(v)=(\mathfrak av+\mathfrak b)^2
+      -4\xi^2v(\theta v+\omega)
+$$
+
+is strictly concave by $\mathfrak a<2\sqrt\theta\xi$.
+Its endpoint values on $[0,1]$ are positive by (JR.52). Thus
+$\mathfrak av+\mathfrak b>2\xi\sqrt{v(\theta v+\omega)}$.
+It follows that $\ell_{-,+}>0$, since its remaining terms
+$2\eta\sqrt u-2\zeta\sqrt v$ are positive.
+Also $\ell_{+,+}>\ell_{-,+}$ because
+$\xi\sqrt u>|\zeta|$. For $\ell_{+,-}$ the derivative with respect
+to $v$, multiplied by four, is bounded below by
+$\mathfrak a+2\sqrt\theta\xi-\theta\eta/\sqrt\omega>0$;
+its value at $v_0$ is positive. Only $\ell_{-,-}=\mathsf b$ can
+change sign. Indeed
+
+$$
+4\mathsf b'(v)=\mathfrak a
+ -\xi\frac{2\theta v+\omega}{\sqrt{v(\theta v+\omega)}}
+ -\frac{\theta\eta}{\sqrt{\theta v+\omega}}
+ +\frac{\zeta}{\sqrt v}<0
+\tag{JR.53}
+$$
+
+on $[v_0,1]$, since the displayed fraction exceeds $2\sqrt\theta$.
+The endpoint signs in (JR.52) give exactly one root. The inverse
+$v_s$ strictly decreases with $s$ by Theorem 37.2. Finally TP gives
+$\operatorname{tr}(\Lambda_*(\Delta))=-\operatorname{tr}(M\Delta)=d_f$.
+Replacing a sole possibly negative live difference by its absolute
+value proves the positive-part expression and all asserted segments.
+For orientation, conditional on the same source box,
+
+$$
+\frac{18047653179}{10^{12}}<v_c<\frac{18047653180}{10^{12}},\qquad
+0.9961174281164<s_c<0.9961174281172.
+$$
+
+The first enclosure follows from opposite signs of $\mathsf b$ at
+those rational endpoints; uniqueness follows from (JR.53), not from
+floating root finding. $\square$
+

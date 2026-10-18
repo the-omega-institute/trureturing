@@ -1,0 +1,15 @@
+**Theorem 6.4 (separately attainable bridges need not glue).**
+For $D=2$, $H=1$, take an old graph with four isolated vertices and
+retain $z=4$ and $B(a)=a_1+a_2$. On the nonempty fiber $a_0=0$,
+$B(a)=1$, each of the proposed bridges $a_1-a_0=1$ and
+$a_2-a_0=1$ is attainable separately. They are not simultaneously
+attainable, even though their proposed edge graph is a tree and
+has no nontrivial cycle constraint.
+
+Proof. Sources $(0,1,0,0)$ and $(0,0,1,0)$ respectively realize the
+two bridge values. Every old component profile is zero. The joint
+values would force $a_1=a_2=1$, contradicting the actual retained
+fiber $B(a)=1$. Hence (SCC.32) has no joint solution. Both marginal
+witnesses are genuine $X_a$ sources with $z=4$; they cannot be
+combined into one source. $\square$
+

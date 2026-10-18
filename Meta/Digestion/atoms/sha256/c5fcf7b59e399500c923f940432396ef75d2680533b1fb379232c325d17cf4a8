@@ -1,0 +1,10 @@
+**定义 20.1（线性动态记忆商）。** 设 $V$ 为维数 $d$ 的实线性空间，$T:V\to V$、$C:V\to Y$ 线性，完整演化为 $s_{n+1}=Ts_n$，固定精确读出为 $y_n=Cs_n$。自本节起，涉及线性映射时的核采用零子空间 $\ker C=\{v:Cv=0\}$；定义 1.3 的纤维关系对应差向量属于此子空间。令
+
+$$
+K_0=\ker C,\qquad
+N_\infty=\bigcap_{j\ge0}\ker(CT^j),\qquad
+\mathcal M_{\mathrm{dyn}}=K_0/N_\infty.
+$$
+
+$N_\infty\subseteq K_0$；记忆商表示当前未读到而以后仍可能影响读出的方向。采用 [关系观察主卷](RECURSIVE_RELATIONAL_OBSERVATION.md) 的隐藏反馈与预测记忆结构；此处不以读数省略定义永久丢失。
+

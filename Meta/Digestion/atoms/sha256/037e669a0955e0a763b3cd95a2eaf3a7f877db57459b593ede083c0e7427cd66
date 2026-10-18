@@ -1,0 +1,48 @@
+**Theorem 2.5 (Unrestricted necessary error).** Every original legal
+complex scalar port satisfies
+
+$$
+e(T)\ge\frac{5197}{10000},\qquad
+\varepsilon_1\ge\frac{5197}{10000}.
+\tag{2.15}
+$$
+
+Proof. For any $\chi\ge0$ with $\chi^\Gamma\ge0$, Lemma 2.4 gives
+
+$$
+\operatorname{tr}\bigl(\chi(I\otimes Y-\mathcal W)\bigr)
+=\frac12\operatorname{tr}(P\chi)
++\frac12\operatorname{tr}(P\chi^\Gamma)\ge0.
+\tag{2.16}
+$$
+
+Only weak duality and PSD trace pairing are used. In particular the
+inequality holds on every complex product vector: partial transpose
+replaces its input factor by its complex conjugate in the quadratic form
+of $P$. A scalar-port rank-one Kraus term $C_i=s_i a_i b_i^\dagger$
+contributes Choi vector $s_i a_i\otimes\overline{b_i}$.
+This covers independent arbitrary complex measurement and preparation
+vectors, whether or not the Choi coefficients are real.
+The use of PSD and partial-transposed PSD matrices is the decomposable
+witness framework of
+[Doherty–Parrilo–Spedalieri, *A complete family of separability criteria*, §§IV, VI](https://arxiv.org/html/quant-ph/0308032).
+Here the explicit witness is (2.9), not a numerical relaxation value.
+
+Apply (2.16) to the separable TP Choi state of any legal $T$:
+
+$$
+\mathscr S(T)\le\operatorname{tr}(\chi_T(I\otimes Y))
+=\frac{\operatorname{tr}Y}{5}
+=\frac{4025+2(4974)+2(5021)}{50000}
+=\frac{4803}{10000}.
+\tag{2.17}
+$$
+
+The equality uses the same channel's full TP marginal. In Kraus coordinates
+it is exactly $\sum_i s_i^2b_ib_i^\dagger=I_5$, so independent atom
+maxima have not been combined without their common normalization.
+Proposition 2.2 now gives (2.15). The argument already holds before
+stationarity is imposed. It even bounds every PPT Choi matrix with this
+TP marginal, which is an outer class; feasibility in that outer class
+would not construct a scalar port. $\square$
+

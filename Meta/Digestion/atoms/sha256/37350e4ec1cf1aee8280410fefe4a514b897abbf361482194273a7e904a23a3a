@@ -1,0 +1,23 @@
+**Proposition 333.2 (The entire $t=1/2$ head edge is inherited).**
+The complete $t=1/2$ head/tail part of Theorem 333.1 already follows
+from the law of XV, 272.3 and a first-cell transfer in that law.
+
+**Proof.** In its denominator-$14880$ table, first-cell base stocks
+on schedules $(1,2),(1,3),(1,7)$ are $233,935,467$. Their total is
+
+$$
+S=\frac{233+935+467}{14880}=\frac{109}{992}>\frac1{10}.
+\tag{333.6}
+$$
+
+For $d=h-1/2\in[0,1/10]$, move the fraction $d/S$ of each of
+these first-cell stocks from label zero to label one. The change on
+the entire Boolean cube is exactly
+$d[ w_1=0](e_1-e_0)$. On class one both the target's label-one
+mass and the output's label-one mass increase by $d$; both base
+masses decrease by $d$; the union is unchanged. All other fibres
+and the positive law are unchanged. The old all-word proof and
+tail formula therefore give this whole edge at $319/992$.
+Only the feasibility portion $1/2<t\le51/100$ of 333.1 is additional
+to that inherited boundary. $\square$
+

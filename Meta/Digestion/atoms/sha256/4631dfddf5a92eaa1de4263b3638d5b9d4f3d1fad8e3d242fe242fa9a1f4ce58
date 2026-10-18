@@ -1,0 +1,42 @@
+**Theorem 7.1 (Exact attained almost-sure three-read optimum).** For
+every $0<p<1$ with $p\ne1/2$, either fixed original endpoint
+$j\in\{0,1\}$ and every specified unchanged independent auxiliary
+probability space, the minimum over all protocols of Definition 1.2
+satisfying $q_3=1$ is
+
+$$
+\begin{aligned}
+\min L_3
+&=1-\frac a2-3a^2\eta-2\eta^3\\
+&=1-\frac a2-3a^3b-2a^3b^3.
+\end{aligned}
+\tag{7.1}
+$$
+
+Definition 6.1 attains this minimum with three actual calls and finite
+return on every path. The lower bound holds for the complete
+almost-sure competitor class, including its null exceptional paths.
+
+Proof. For any competitor, Lemma 2.2 reduces its correct probability,
+at almost every seed, to at most the sum (2.3). Proposition 5.3 bounds
+that sum by $S_3$ uniformly in all address choices and outputs.
+Integrating against the unchanged $\nu$ therefore gives
+
+$$
+\mathbb P_p(A=H_j,T)\le S_3.
+\tag{7.2}
+$$
+
+The integration uses the original measurable correctness event;
+completed versions and exceptional seed sections have zero effect.
+No regular conditional probability, measurable optimizer selection or
+all-input stopping restriction enters the argument. Since $E_3$ has
+mass one, correct and incorrect state masses sum to one, giving
+$L_3\ge1-S_3$.
+
+Definition 6.1 is admissible for every specified auxiliary law and has
+$q_3=1$. Proposition 6.2 gives its correct probability $Z+D=S_3$.
+This proves equality and attainment, rather than only an infimum or
+an improved construction. The second form of (7.1) uses $\eta=ab$.
+$\square$
+

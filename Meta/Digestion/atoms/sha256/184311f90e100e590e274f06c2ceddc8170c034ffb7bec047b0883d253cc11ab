@@ -1,0 +1,113 @@
+**定理 8.1（Seven-plus-three-entry construction）。** In the fixed positional
+order define the real skew matrix
+
+$$
+M(a,b)=
+\begin{pmatrix}
+0&a&a&a&a\\
+-a&0&b&-b&a\\
+-a&-b&0&b&a\\
+-a&b&-b&0&a\\
+-a&-a&-a&-a&0
+\end{pmatrix}.
+\tag{8.1}
+$$
+
+Its skew singular parameters are $\sqrt7|a|,\sqrt3|b|$, with one zero
+direction and with further zeros when either parameter vanishes. For
+$a,b\ge0$,
+
+$$
+s(M)=7a^2+3b^2,\qquad L(M)=7a+3b.
+\tag{8.2}
+$$
+
+The upper endpoint at each $s$ is the actual state
+
+$$
+\Gamma_{\mathrm{up}}(s)
+ =\frac15J(I_5+iX_{\mathrm{up}}(s))J^\dagger,
+\qquad X_{\mathrm{up}}(s)=M(a(s),b(s)),
+\tag{8.3}
+$$
+
+where
+
+$$
+(a(s),b(s))=
+\begin{cases}
+\bigl(\sqrt{s/10},\sqrt{s/10}\bigr),&0\le s\le10/7,\\
+\bigl(1/\sqrt7,\sqrt{(s-1)/3}\bigr),&10/7\le s\le2.
+\end{cases}
+\tag{8.4}
+$$
+
+Proof. Put $G=M(1,0)$, $H=M(0,1)$, so $M(a,b)=aG+bH$. An explicit
+plane certificate for $G$ is
+
+$$
+G=uv^T-vu^T,\qquad
+u=(1,0,0,0,-1)^T,\qquad
+v=(1/2,1,1,1,1/2)^T.
+\tag{8.5}
+$$
+
+Indeed this expression gives exactly the seven unit upper entries in the
+$a$ positions of (8.1), and zero in the other three positions. The vectors
+are orthogonal, with $\|u\|^2=2$, $\|v\|^2=7/2$. Hence
+
+$$
+Gu=-2v,\qquad Gv=(7/2)u,
+\qquad G|_{\operatorname{span}(u,v)^\perp}=0.
+$$
+
+On the normalized basis of this plane, $G$ has off-diagonal magnitudes
+$\sqrt2\sqrt{7/2}=\sqrt7$; its sole nonzero skew singular parameter is
+$\sqrt7$. In particular $G$ has rank two. Equivalently, its middle three
+rows coincide, its fifth row is minus its first plus its second, and its
+first two rows are independent.
+
+The matrix $H$ vanishes outside the middle three coordinates, where it is
+
+$$
+\begin{pmatrix}0&1&-1\\-1&0&1\\1&-1&0\end{pmatrix}.
+$$
+
+It acts on the two-dimensional plane
+
+$$
+W=\{x\in\mathbb R^5:x_1=x_5=0,\quad x_2+x_3+x_4=0\}.
+\tag{8.6}
+$$
+
+The square of the middle block has diagonal $-2$ and off-diagonal $1$,
+so $H^2x=-3x$ on $W$. It kills the outer coordinate axes and the middle
+all-ones vector, which span $W^\perp$. Thus $H$ has rank two and sole
+nonzero skew singular parameter $\sqrt3$. Both $u$ and $v$ are perpendicular
+to $W$, so the active planes of $G$ and $H$ are orthogonal. The two matrices
+act independently on them and vanish on the remaining common direction.
+This proves the singular parameters of $M(a,b)$. Counting its seven $a$
+positions and three $b$ positions proves (8.2), without cancellation.
+
+On the first branch of (8.4) the squared singular parameters are
+$7s/10,3s/10$, both at most one precisely throughout the indicated range.
+The square sum is $s$ and
+$L=10\sqrt{s/10}=\sqrt{10s}$. On the second branch the singular parameters
+are $1,\sqrt{s-1}$, both at most one, and
+
+$$
+s=7\left(\frac1{\sqrt7}\right)^2
+  +3\left(\sqrt{\frac{s-1}{3}}\right)^2,
+\qquad L=\sqrt7+\sqrt{3(s-1)}.
+$$
+
+Lemma 4.1 proves positivity; the zero skew diagonal proves trace one. Thus
+the same state (8.3) realizes the given purity and the upper negativity
+simultaneously. At $s=10/7$ the two formulas give the identical matrix
+$M(1/\sqrt7,1/\sqrt7)$. At $s=2$ the parameters are both one, so the
+compressed spectrum is $2/5,2/5,1/5,0,0$. $\square$
+
+The construction is dense for $s>0$. Its invariant-plane certificate proves
+that the upper bound is attainable within the original legal source class;
+it is not an optimization over independently chosen entry magnitudes.
+

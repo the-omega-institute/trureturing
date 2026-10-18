@@ -1,0 +1,31 @@
+**Theorem 10.2 (A common 217 upper law and its exact original error).**
+For every parameter and every entire actual continuation in (1.4),
+there is one normalized law $K$, using addresses at most eight,
+whose stopped $O$ execution and counted $N$ execution have identical
+output laws and exact original marked-target error
+
+$$
+e_a(K)=5\tau+\max\left\{\frac{22u}{217},v\right\}.
+\tag{10.2}
+$$
+
+Its complete eight-bit maximum error is exactly
+
+$$
+h=5\tau+\frac{22u}{217},
+\qquad
+\nu_N(\tau,u)\le\nu_O(\tau,u)\le h.
+\tag{10.3}
+$$
+
+For $u>0$, (10.3) is strictly below
+$T=5\tau+22u/181$. In the original family this same law is strictly
+below $T$ exactly when $v<22u/181$.
+Thus the proposed universal complementary original lower relation
+(9.2) is false: for every $0<\tau\le1/24$ and $0<u\le\tau$,
+the permitted choice $v=0$, with every allowed actual continuation,
+supplies an original counterexample in both classes.
+This statement evaluates the displayed law, not either full minimum.
+The construction and proof occupy 11–14; a rational actual witness
+is given in 15.
+

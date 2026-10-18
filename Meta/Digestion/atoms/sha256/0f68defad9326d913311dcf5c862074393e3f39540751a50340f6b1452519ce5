@@ -1,0 +1,21 @@
+**Lemma 10.2 (every finite literal on the same source).** On the
+binary slice, the only nonconstant literal words are $a_i$, and each
+reports the label $x_i$. On the ternary slice, the only nonconstant
+words are $a_i,a_iL,a_iR$. The reply at $a_i$ distinguishes all three
+values of $x_i$; either child word replies alpha for $x_i=C_0$ and
+absent for $x_i\in\{\alpha,\beta\}$. Every other finite original-root
+word is constant on the slice. In particular every literal has at most
+$s$ replies on the $s$-ary slice, and each nonconstant word concerns
+one uniquely specified slot and has length at least $D$.
+
+Proof. The original root is branch. Its left child is alpha and every
+strict extension of that left child is absent. In the right cone,
+a word ending strictly before a slot ends at a scaffold branch. A word
+reaching a slot has the unique form $a_i z$. At $z=\varepsilon$ it
+reads that slot's constructor. A binary slot is a leaf, so every
+nonempty $z$ is absent. A ternary slot is either a leaf or the fixed
+pair $C_0$; suffixes of length one have the stated replies, and every
+suffix of length at least two is absent in all three cases. These
+cases include all finite words, irrespective of their length or their
+relationship to the requested target. $\square$
+

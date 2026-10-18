@@ -1,0 +1,17 @@
+**Theorem 23.6 (conditional implication for the unchanged sharp target).** If G holds, every actual original real-Kraus encoder in Definition 1.1 at positive beta satisfies
+
+$$
+m_{\min}(N)\leq\sqrt a,\qquad
+\delta_N\geq1-\sqrt a=U(\beta),\qquad
+\delta^*_{\mathcal R}(\beta)=U(\beta).
+\tag{R.114}
+$$
+
+These consequences include arbitrary complex inputs and recoveries on the whole output and all finite complex references in the original unhalved diamond convention. Failure of G would refute this sufficient seven-dimensional route only; it would not by itself refute the full $m_{\min}$ claim or the original diamond target.
+
+**Proof.** The $q=0$ branch is already a zero-output witness. For every $q>0$, Theorem 23.3 gives one actual comparison whose pair $(B,C_{\rm out}/r)$ satisfies (R.108). G gives $m_0(N^\sharp)\leq\sqrt a$, and Theorem 23.4 transports that restricted witness to the same original channel, proving $m_{\min}(N)\leq m_0(N)\leq\sqrt a$.
+
+Reuse the Jordan domain (R.98): every nonzero traceless Hermitian qutrit input, up to sign and scale, is the difference of one pure state and a density of rank at most two on its orthogonal complement. Applying (R.95) to these actual orthogonal-support states gives $\delta_N\geq1-m_{\min}(N)$. This uses one arbitrary complex CPTP recovery at a time; product lower witnesses are admissible within the full-reference diamond supremum and do not restrict that supremum. Combining with the attained upper family (P.11)–(P.16) proves the conditional class equality. At beta zero the existing isometric family already attains the nonnegative class optimum zero, without extending the positive-beta rank assumptions.
+
+Conversely, failure of G means that one feasible normalized actual channel has no required $\mathcal H_0$ witness. Its minimum over all traceless Hermitian inputs can still be smaller, and its full-reference recovery lower certificate can arise by another method. Thus neither of the broader targets follows negatively from that failure. The original alternative remains an actual original-class encoder and one complex CPTP recovery with a rigorous full-reference diamond upper certificate strictly below $U(\beta)$; no such object is constructed here. $\square$
+

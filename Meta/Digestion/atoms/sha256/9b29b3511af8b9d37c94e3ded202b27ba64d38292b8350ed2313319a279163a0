@@ -1,0 +1,19 @@
+**Definition 1.2 (Full head and entire actual continuation).**
+Throughout,
+
+$$
+\begin{gathered}
+0<\tau\le1/24,\qquad0\le v\le u\le\tau,\qquad
+a_1=a_2=1-11\tau,\\
+(a_3,a_4,a_5,a_6,a_7)=(13,10,9,8,6)\tau,\qquad
+a_8=5\tau+u,\quad a_9=5\tau+v,\\
+a_{10}\ge a_{11}\ge\cdots>0,\qquad a_{10}\le5\tau,\qquad
+a_n\longrightarrow0.
+\end{gathered}
+$$
+
+Every such entire continuation is included: ties, nonsummable tails and
+arbitrarily slow decay are permitted. Actual $a_9$ at $v=0$ is
+$5\tau>0$. These amplitudes are positive, nonincreasing and at most
+one, since $1-24\tau\ge0$ and $a_8\le6\tau=a_7$.
+

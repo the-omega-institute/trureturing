@@ -1,0 +1,47 @@
+**Mathematical citation 9.1 (ownership of the ingredients).** The source
+correspondence with the repository declarations is literal:
+$\alpha=\mathtt{FreeMagma.of\ true}$,
+$\beta=\mathtt{FreeMagma.of\ false}$, pairing is `FreeMagma.mul`,
+$\rho$ is `substitution`, and address bits false/true mean $L/R$.
+The following are mathematical suppliers, including private declarations;
+source inspection is not a new kernel validation.
+
+| Supplier | Reused content and transfer boundary |
+| --- | --- |
+| [CNA, §§2–5, 7–8][CNA] | Authentic native leaf validation, finite-interference charging, full-tree capture and right-clock subtraction, and endpoint/origin limitations. No full-tree capture is charged as a small supplement here. |
+| [CWS, §§2–5][CWS] | RA's complete reread exterior/partition, finite moving traversals, candidates, literal buffers and local work. The new guard stamp keeps this supplier's Read trace. |
+| [NAR, §§10–12, 16][NAR] | Preagreed references, absent-safe exposed $J$, row-overlap recovery and actual whole-row collisions, finite menu/separated-age codes. Given or stationary records do not themselves supply concurrent acquisition. |
+| [NARC, §§16–17, 25–30][NARC] | Conditional menu/controller results and their stationary transport and complete retained-state contracts. Internal proof epochs and finite-table state counts are not runtime clock or workspace gifts. |
+| [IDC, Reuse 2.2 and §§5–7][IDC] | Effective image parser, intrinsic-depth alternatives and stationary exponential/binary right search with paid operands. A stale bracket needs Definition 4.1's finite exit. |
+| [AOF, §§8–9][AOF] | Exact positive interval capacity, bounded-domain query replacement and joint call/peak attainment. Section 7 supplies the actual acquired interval and whole-root lower-bound correspondence; no new arithmetic optimum is attributed to it. |
+| [DOR] `right_clock_iterate`, `right_clock_readout`, private `clock_step`, `clock_at_step`, and the [matching Scribe][DOR-S] | Native right-clock and transport facts, not an independently acquired unknown epoch. |
+| [NDP] `original_present_transport` | Transport of an actually present subtree under the same global substitution; not a claim that absent subtrees existed earlier. |
+| [ACPD] `literalRecord`, `canonicalRow_record_iff`, private `eraseClasses_literal`, and the [matching Scribe][ACPD-S] | Complete addressed exterior, blocked leaves and full partition information, not a source equality port or free snapshot. |
+| [CLI] private `atomic_extremes`, `adjacent_window`, `run_replay`, and the [matching Scribe][CLI-S]; [NLC, Lemma 3.1][NLC] | Weighted-depth saturation, native indistinguishability and minimum leaf depth. The lag consumer's actual competing histories and all-state quantifiers are separately established here. |
+
+The contribution is `repo-derived`: zero-extra-Read guard retention with
+the asymmetric and full-state bounds; total concurrent right-guard
+acquisition with matching atomic-family traffic; acquired complementary
+calibration with literal-memory recovery; and the exact acquired-window
+interface with all-attempt accounting. Scalar subtraction, graph
+integration, interval capacities and generic counting retain their
+suppliers. These are ordinary mathematical proofs, not new Lean
+certification or a claim of worldwide priority.
+
+**Mathematical citation 9.2 (primary literature and parameter boundaries).**
+The relevant external antecedents have different input and operation
+contracts from Definition 1.1.
+
+| Primary source | Correspondence and limit |
+| --- | --- |
+| M. Herlihy and J. Wing, *Linearizability: A Correctness Condition for Concurrent Objects*, TOPLAS 12(3), 463–492, §2.2, [DOI 10.1145/78969.78972][HW] | The final validation is an instant between invocation and response. This safety notion supplies neither exact Return values, native leaf certificates nor finite-interference termination. |
+| Y. Afek, H. Attiya, D. Dolev, E. Gafni, M. Merritt and N. Shavit, *Atomic Snapshots of Shared Memory*, JACM 40(4), 873–890, §3, [DOI 10.1145/153724.153741][SNAP] | Repeated collects, update sequence numbers and writer-saved scans explain classical validation and helping. Our writer provides no sequence field or saved view. Its native leaf certificate substitutes for an update mark only in the stated proof; no wait-free snapshot theorem is imported. |
+| L. Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 21(7), 558–565, Clock Condition and IR1–IR2, [DOI 10.1145/359545.359563][LC] | Those logical clocks use process increments and message timestamps to respect causal order. Here $\ell,c,J$ are acquired functions of one source, advancing exactly once per native update. Neither physical duration nor a global causal-event ordering is reconstructed. |
+| R. D. Nowak, *The Geometry of Generalized Binary Search*, [arXiv:0910.4397v5][GBS], §§II-A and V-A | A fixed unknown hypothesis and the allowed query partitions control query complexity. Here four native replies and literal address lengths matter, and mixed concurrent replies need a separate termination argument. No binary-GBS bound is transplanted. |
+| N. Charpenay, M. Le Treust and A. Roumy, *Optimal Zero-Error Coding for Computing under Pairwise Shared Side Information*, [arXiv:2211.03649v2][ZERO], Definitions II.1 and III.1 | Identical decoder side information and unequal required outputs force distinct messages. Their i.i.d., prefix-free, expected asymptotic-rate setting does not give this adversarial single-handoff alphabet or pay for source acquisition. The native whole-row collisions supply those obligations. |
+
+These are `literature-attested` methods and contract comparisons. The
+bounded comparison does not assert that no other literature contains
+related results. No asymptotic coding-rate theorem, snapshot service,
+arbitrary partition query or unit-cost materialization is assumed.
+

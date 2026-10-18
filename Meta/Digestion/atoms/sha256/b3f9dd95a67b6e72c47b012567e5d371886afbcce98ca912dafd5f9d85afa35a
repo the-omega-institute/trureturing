@@ -1,0 +1,43 @@
+#### 471.1 实际对象与完整低高分解
+
+对 $y>0$ 定义
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t}.
+$$
+
+对 $x\ge e$、$s\ge x$ 保持
+
+$$
+P_x(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad Q_x(s)=sP_x(s),
+\quad b_x(s)=s[P_x(s)-P_x(2s)].
+\tag{FD.1}
+$$
+
+有限恒等式 $\sum_{n=1}^{N}\log n=\log(N!)$ 将 $\eta$ 识别为实际对数前缀的余项。经典有限阶乘误差给出
+
+$$
+\eta(y)=y(1-\log y)\quad(0<y\le1),
+\qquad |\eta(y)|\le1+\log y\quad(y\ge1).
+\tag{FD.2}
+$$
+
+第一式包含 $y=1$，因为 $0!=1!=1$。第二式使用完整有限阶乘误差，不要求 $y$ 是整数。本节直接采用已有有限对数恒等式和阶乘误差，不提出经典标量公式的优先权主张。
+
+令 $\ell=\log x\ge1$、$r=\log s\ge\ell$、$L=\log2$，并令
+
+$$
+c_\ell=\ell^{-1}-\log\ell-1,\quad d_\ell=\ell^{-1}+\ell-1,
+\qquad F_\ell(r)=r\log r+c_\ell r+d_\ell-r^{-1}.
+$$
+
+对每个 $r>0$ 定义完整有符号积分
+
+$$
+E(r)=\int_1^\infty\frac{\eta(y)}{y^2}
+\left[(r+\log y)^{-1}+(r+\log y)^{-2}\right]dy.
+\tag{FD.3}
+$$
+

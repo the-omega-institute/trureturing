@@ -1,0 +1,39 @@
+**Theorem 62.10 (full retained-state finite error, leakage and clock budget).** Put
+
+$$
+\overline A=(6\bar a+\bar g+3\bar\nu)N_*,
+\qquad
+\Delta_A=(6\delta_a+\delta_g+3\delta_\nu)N_*.
+\tag{62.27}
+$$
+
+Here the coefficient errors are certified absolute errors; exact rational inputs permit all three to be zero. For a finite history of actual accepted/refused whole-rho requests and original Reads, use the just-committed prescription at each idle interval, hold the entire carrier through service and compilation, and keep the carrier unchanged at renewal. If $U_{\rm hist}^\diamond$ is the exact finite time-ordered occupation propagator with these injections, the actually ideal dyadic circuit on a supplied clean supported input obeys, at every completed checkpoint,
+
+$$
+\eta_{\rm circ}\le
+\sum_{\ell\text{ in prefix}}\left[
+\frac{\overline A^2\theta_\ell^2}{2m_\ell}
++F_*m_\ell2^{-b_\ell}+\theta_\ell\Delta_A\right].
+\tag{62.28}
+$$
+
+This is a norm bound against the complete target vector with its phases, including a separately supplied reference branch. Every imperfect auxiliary component remains in the full carrier. No clean-subspace projection or auxiliary reset is used between pair words, slices, source events or checkpoints.
+
+Suppose additionally that the supplied preparation has norm error $\eta_P$, actual elementary gates have full-carrier unitary error bounds $\zeta_j$, all actual locking/service/retention holds have accumulated full-carrier unitary error $\eta_H$, and actual comparison intervals have discrepancy sum $\eta_\tau$. Then the state bound gains
+
+$$
+\eta_P+\sum_j\zeta_j+\eta_H
++(6a+g+3\nu)N_*\eta_\tau.
+\tag{62.29}
+$$
+
+No independence of errors is assumed. At a checkpoint the auxiliary-excitation amplitude norm is at most the total bound $\eta$; its mathematical probability is at most $\eta^2$. For any separately commissioned terminal effect $0\le F\le I$, the ideal/actual probabilities differ by at most $2\eta$ for unit inputs. Neither number is an acquired exact probability Read.
+
+Proof. On the supported occupation sector the diagonal group has norm at most $(3\bar a+\bar g)N_*$. Each matching hopping group has norm at most $\bar a N_*$: its disjoint local generators have eigenvalues $0,\pm1$, and at most $N_*$ of their pairs can have single occupation simultaneously. The pair multiplier has norm at most $\bar\nu N_*/(2\lambda)<3\bar\nu N_*$. Thus the sum of group norms is bounded by $\overline A$. The first-order Hermitian product bound used in Theorem60.4, from Childs–Su–Tran–Wiebe–Zhu, gives the first term of (62.28); this is its application to the literal occupation groups, not new product-formula theory. Duhamel with the same fixed coefficients gives $\Delta_A$.
+
+For each pair block, compare the complete 89-factor dyadic word with its real-angle word on the full $2^{K+4}$ carrier. Each local generator has norm at most one there, so its angle perturbation contributes at most $2^{-b}$. Full-space unitary telescoping gives $89\,2^{-b}$ without assuming that the perturbed input to any later factor is clean. The exact reference word returns auxiliaries to zero at block endpoints and implements (62.18), so applying this full-space estimate successively compares with the clean ideal target. The one-body factors use the same estimate. This proves the second term and, importantly, prices all imperfect components rather than deleting them.
+
+At a switch the same addressed occupation is retained. This gives an isometry, even though the killed old energy changes and even though the common generator does not intertwine. At a refusal/Read no actuator version changes. Telescope along the finite actual history. The same argument handles arbitrary correlated gate errors and holds on the whole retained carrier, including leakage. The clock term follows from the source-independent target norm bound; comparison intervals are not native receipt counts or calibrated physical durations. Finally the target has zero auxiliary components, so their orthogonal component in the actual vector is bounded by its norm difference, without performing a projection as an action. The effect estimate follows by inserting the ideal vector in the two quadratic factors.
+
+For any public rational accuracy $\epsilon>0$, finite checkpoint count $L\ge1$ and time bound $T$, one finite choice is $m=\max\{1,\lceil2\overline A^2T^2/\epsilon\rceil\}$, together with $2^b\ge4LF_*m/\epsilon$. These give at most $\epsilon/4$ each for the first two accumulated terms, since $\sum\theta_\ell^2\le T^2$. Supply coefficient enclosures with $T\Delta_A\le\epsilon/4$ and the entire preparation/gate/hold/clock sum at most $\epsilon/4$. The total is then at most $\epsilon$. Each required increase in $m,b$ changes the actual words, catalog, fetches and retention in (62.32); accuracy is not free. Zero-time intervals may retain zero interaction slots by a public choice. $\square$
+

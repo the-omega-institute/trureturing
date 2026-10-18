@@ -1,0 +1,141 @@
+### theorem 3.1: 定理 3：AURIC 作用量的梯度等于相关对数优势
+
+在纤维内部，即所有相关概率均为正时：
+
+$$
+\boxed{
+\mathcal A'(\kappa)=
+\log
+\frac{p_0p_{13}}{p_1p_3}
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal A''(\kappa)=
+\frac1{p_0}
++
+\frac1{p_1}
++
+\frac1{p_3}
++
+\frac1{p_{13}}
+>0.
+}
+$$
+
+#### 证明
+
+由于
+
+$$
+p'(\kappa)=(1,-1,0,-1,1),
+$$
+
+且
+
+$$
+\sum_i p_i'(\kappa)=0,
+$$
+
+KL 散度的导数为：
+
+$$
+\mathcal A'(\kappa)=
+\sum_i p_i'(\kappa)
+\log
+\frac{p_i(\kappa)}{p_i(\kappa_0)}.
+$$
+
+展开：
+
+$$
+\mathcal A'(\kappa)=
+\log\frac{p_0}{p_0(\kappa_0)}
+-\log\frac{p_1}{p_1(\kappa_0)}
+-\log\frac{p_3}{p_3(\kappa_0)}
++\log\frac{p_{13}}{p_{13}(\kappa_0)}.
+$$
+
+在 $\kappa_0$ 处满足条件独立：
+
+$$
+p_0(\kappa_0)p_{13}(\kappa_0)=
+p_1(\kappa_0)p_3(\kappa_0).
+$$
+
+所以参考点的比值相消，得到：
+
+$$
+\mathcal A'(\kappa)=
+\log\frac{p_0p_{13}}{p_1p_3}.
+$$
+
+再求导：
+
+$$
+\frac{d}{d\kappa}\log p_0=\frac1{p_0},
+$$
+
+$$
+\frac{d}{d\kappa}\log p_{13}=\frac1{p_{13}},
+$$
+
+$$
+\frac{d}{d\kappa}(-\log p_1)=\frac1{p_1},
+$$
+
+$$
+\frac{d}{d\kappa}(-\log p_3)=\frac1{p_3}.
+$$
+
+因此：
+
+$$
+\mathcal A''(\kappa)=
+\frac1{p_0}
++\frac1{p_1}
++\frac1{p_3}
++\frac1{p_{13}}
+>0.
+$$
+
+证毕。
+
+---
+
+由于
+
+$$
+\Delta=p_0p_{13}-p_1p_3,
+$$
+
+所以：
+
+$$
+\frac{p_0p_{13}}{p_1p_3}=
+1+\frac{\Delta}{p_1p_3}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal A'(\kappa)=
+\log
+\left(
+1+\frac{\Delta}{p_1p_3}
+\right).
+}
+$$
+
+这说明 $\Delta$ 不是单纯的代数判别式，而是热力学作用量沿隐藏方向的驱动力。
+
+- $\Delta>0$：作用量沿增大 $\kappa$ 的方向上升；
+- $\Delta<0$：作用量沿增大 $\kappa$ 的方向下降；
+- $\Delta=0$：作用量驻点，也是最大熵条件独立点。
+
+---
+

@@ -1,0 +1,73 @@
+**Theorem 3.4 (Rational common turns have identical encodings).** Every
+finite factor of Definition 2.1 obeys
+
+$$
+E(k,\alpha,\beta+2\pi q)=E(k,\alpha,\beta)
+\qquad(q\in\mathbb Q).
+$$
+
+**Proof of Theorem 3.4.** If $\mathscr L$ is a point the assertion
+is immediate. Otherwise choose affine coordinates of dimension
+$d=\dim\mathscr L$, set $N=d+1$, and homogenize every affine
+automorphism as
+
+$$
+z\mapsto Mz+b
+\quad\longmapsto\quad
+\widehat F=\begin{pmatrix}M&b\\0&1\end{pmatrix}.
+$$
+
+This faithful representation preserves multiplication and retains all
+offsets. Complexify the homogeneous space. Fix $c$ and an eigenvalue
+$\lambda\ne0$ of $\widehat{\mathcal T}_c$. Its generalized
+eigenspace
+
+$$
+V_\lambda=\ker(\widehat{\mathcal T}_c-\lambda I)^N
+$$
+
+has some dimension $1\le j\le N$. Centrality in Proposition 3.3
+makes all rectangle factors and their inverses preserve this space.
+Taking $s=s_0$ and $t=-rc/s_0$, the rectangle restricted to it gives
+
+$$
+\widehat{\mathcal T}_c|_{V_\lambda}
+=(\widehat{\mathcal V}_t|_{V_\lambda})^{-1}
+ (\widehat{\mathcal U}_{s_0}|_{V_\lambda})^{-1}
+ (\widehat{\mathcal V}_t|_{V_\lambda})
+ (\widehat{\mathcal U}_{s_0}|_{V_\lambda}).
+$$
+
+The determinant on the right is one. The left is $\lambda I$ plus
+a nilpotent map, with determinant $\lambda^j$. Hence $\lambda^j=1$.
+
+Apply this conclusion to $\widehat{\mathcal T}_{c/N!}$. Each of its
+eigenvalues has order dividing an integer between $1$ and $N$, hence
+dividing $N!$. The abstract action law gives
+
+$$
+\widehat{\mathcal T}_c
+=(\widehat{\mathcal T}_{c/N!})^{N!}.
+$$
+
+Every eigenvalue of this power is one. This follows, for example, by
+upper triangularizing the single complex matrix, using an eigenvector
+and induction on the quotient dimension; powers raise its diagonal
+entries to those powers. Cayley–Hamilton now gives
+$(\widehat{\mathcal T}_c-I)^N=0$.
+
+For $c=2\pi q$ with $q\in\mathbb Q$, some integer $a>0$ also
+gives $\widehat{\mathcal T}_c^a=I$ by the circle law. Its minimal
+polynomial divides both $(X-1)^N$ and $X^a-1$. In characteristic zero
+the root one of $X^a-1$ is simple, since its derivative there is $a$.
+The greatest common divisor is $X-1$, so
+$\widehat{\mathcal T}_c=I$. Evaluating at $E(x)$ proves the theorem.
+
+This is a direct full-open proof of the mechanism in [F, Theorem 10.6
+and Proposition 10.18]. Equivalently, a full-open model restricts to
+each positive closed interior band, and the same prior theorem on a
+band containing a given height proves its collision there. Neither
+argument evaluates an encoder at an excluded endpoint. No common fixed
+point, bounded image, regularity, or decoder hypothesis entered the
+proof. $\square$
+

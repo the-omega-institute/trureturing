@@ -1,0 +1,30 @@
+## 170. Every actual Z continuation stays in tau and rho
+
+The two faces of rho at its C axis already lead to tau. Its two residual
+faces have labels {Z,M,Q}. Track an actual Z edge slot across each such
+face; the target slot has the same actual global label Z.
+
+If Q=M, the residual face is {Z,M,M}. An axial Z target would require
+the forbidden repeated reservoir pair {M,M}. A transverse Z target
+must have companion M and axial M on this face, so has fixed pair {Z,M}
+and belongs to rho by Section 167.
+
+If Q=Z, the residual face is {Z,Z,M}. An axial Z target has complementary
+reservoir pair {Z,M}. A transverse Z target cannot have companion Z,
+since reservoir labels must be distinct, so its companion is M and its
+other Z face slot is axial. It also has pair {Z,M}. Thus either case
+belongs to rho. This tracks the actual target slot even with repeated Z.
+
+If Q=D, the residual face is {Z,M,D}. An axial Z target has pair {M,D},
+excluded by Section 168. A transverse Z target has either companion M and
+axial D, giving pair {Z,M} and hence owner rho, or companion D and axial
+M, excluded by Section 169. These exhaust the roles on that actual face.
+
+Tau's only Z slot leads to rho on both sides. Rho's transverse Z slots
+have one face at C and one residual face. If Q=Z, its extra axial Z slot
+has the two residual faces. Therefore all neighbors of every Z slot in
+tau or rho again belong to tau or rho. The complete connected normal
+circle of the original edge Z is confined to those slots. Tau has one
+Z slot; rho has two, or three when Q=Z. Hence degree(Z)<=4, contrary to
+minimum degree six. Face self-pairings do not introduce extra slots.
+

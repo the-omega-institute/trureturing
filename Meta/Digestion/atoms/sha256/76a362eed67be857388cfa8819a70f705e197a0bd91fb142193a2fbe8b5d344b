@@ -1,0 +1,126 @@
+**Theorem 6.2 (Separation at every finite length at least four).**
+For every site distribution $\omega$,
+
+$$
+\Gamma_\epsilon(1,\omega)
+\le\frac{\epsilon(M-1)}{M(1+\epsilon)}.
+\tag{6.3}
+$$
+
+For the uniform distribution $\bar\omega_i=1/n$,
+
+$$
+0<g_n\le1,\qquad
+\gamma_\epsilon(\bar\omega)\longrightarrow g_n,
+\qquad
+\lambda_{\max}(B_{\bar\omega,\epsilon})
+\longrightarrow1.
+\tag{6.4}
+$$
+
+Consequently, for each fixed $0<r<1$ and all sufficiently
+small positive $\epsilon$,
+
+$$
+\Gamma_\epsilon(r,\bar\omega)
+>\sup_\omega\Gamma_\epsilon(1,\omega).
+\tag{6.5}
+$$
+
+Thus a mode-basis setting can strictly improve the full
+pure-state information criterion under the same preparation
+budget. All compared laws have full support, and all
+horizontal directions are retained.
+
+Proof. Every site pairs the empty word with its singleton.
+The vacuum diagonal entry of each $K_i$ is $1/(1+\epsilon)$,
+and $H_\omega\psi_\epsilon=0$. Put
+
+$$
+u_\epsilon=(I-\psi_\epsilon\psi_\epsilon^{\mathsf T})e_0.
+\tag{6.6}
+$$
+
+Then $u_\epsilon\in V_\epsilon$ and
+
+$$
+\|u_\epsilon\|^2=\frac M{M+\epsilon},\qquad
+u_\epsilon^{\mathsf T}H_\omega u_\epsilon
+=\frac1{1+\epsilon}.
+\tag{6.7}
+$$
+
+The amplitude direction $(u_\epsilon,0)$ in (5.6), with
+$r=1$, has information ratio
+
+$$
+\frac{u_\epsilon^{\mathsf T}(I-H_\omega)u_\epsilon}
+{\|u_\epsilon\|^2}
+=\frac{\epsilon(M-1)}{M(1+\epsilon)}.
+\tag{6.8}
+$$
+
+This proves the uniform upper bound (6.3), independently
+of the site allocation.
+
+For uniform sites the finite matrices have the limit
+
+$$
+H_{\bar\omega,\epsilon}\longrightarrow
+\begin{pmatrix}1&0\\0&L_n^\circ/(2n)\end{pmatrix},
+\qquad
+\psi_\epsilon\longrightarrow
+\left(0,\frac{\mathbf1}{\sqrt M}\right).
+\tag{6.9}
+$$
+
+Indeed each vacuum--singleton pair has matrix entries
+$1/(1+\epsilon)$ at the vacuum,
+$\epsilon/(1+\epsilon)$ at the singleton, and
+$-\sqrt\epsilon/(1+\epsilon)$ off diagonal. Each pair of
+nonempty words has equal probabilities and contributes
+$(e_s-e_t)(e_s-e_t)^{\mathsf T}/(2n)$ to the uniform
+operator. This proves (6.9) entry by entry.
+
+The graph $G_n^\circ$ is connected. Delete occupied sites
+from any nonempty independent set until a singleton is
+reached, retaining at least one occupied site throughout.
+Singletons $i,j$ with $|i-j|\ge2$ are connected by the
+two-edge route $\{i\},\{i,j\},\{j\}$. The graph of these
+singleton compatibilities is the complement of the path
+$P_n$. Its first four vertices are connected by the edges
+$\{1,3\},\{1,4\},\{2,4\}$, and every vertex $j\ge5$
+is adjacent to vertex 1. Hence its connectivity holds for
+every $n\ge4$.
+
+Connectivity gives a simple constant kernel and a positive
+finite $g_n$. Each $H_{\bar\omega,\epsilon}$ is a convex
+combination of orthogonal projections, so it lies between
+zero and identity; its limiting nonvacuum block does also.
+Thus $g_n\le1$. At the limit the full operator has exactly
+one zero mode, the limiting ground vector, while its
+nonzero spectrum consists of the nonvacuum positive
+spectrum and the vacuum eigenvalue 1. Continuity of the
+ordered eigenvalues of these finite symmetric matrices
+therefore proves (6.4).
+
+For every positive $\epsilon$, (5.8) and the projection
+contraction give
+
+$$
+\Gamma_\epsilon(r,\bar\omega)
+\ge\min\{r\gamma_\epsilon(\bar\omega),1-r\}.
+\tag{6.10}
+$$
+
+For sufficiently small $\epsilon$ this is at least
+$\min\{rg_n/2,1-r\}>0$, whereas (6.3) tends to zero.
+This proves (6.5). $\square$
+
+The limiting graph is used to prove a bound for positive
+laws. It does not replace the tangent space by a reduced
+support space. In particular, the vacuum amplitude
+direction (6.6) remains a tested direction in every
+comparison. The result is for each fixed finite $n$;
+it supplies no uniform lower bound as $n\to\infty$.
+

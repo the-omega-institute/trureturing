@@ -1,0 +1,13 @@
+### 104.4. Every good odd prime and every auxiliary denominator
+
+Let ell not divide 30D. If d is a square in Q_ell its factor is one. Otherwise d is a nonsquare unit. The norm equation forces a,b to be ell-integral: a negative minimum valuation cannot give the unit right side, while cancellation of equally negative valuations would make d a square in the residue field.
+
+Choose a primitive integral local covering point. Its t-coordinate is a unit, because t=0 modulo ell would force z1=z2=0 by H3 and then z3=0 by H2, contradicting primitiveness. Normalize t=1. On H3 put M3=a z2-d b z1,V3=a z1-b z2,c3=5de. On H2 put M2=A0 z1-B0 z3,V2=A0 z3-B0 z1,c2=15e. The exact identities are
+
+ (M3-c3)(M3+c3)=d V3^2,
+ (M2-c2)(M2+c2)=V2^2.
+
+All entries are integral, and 2,c2,c3,d are units. If L_k=M_k-c_k has positive valuation, M_k+c_k is a unit, so that valuation is even. Unit evaluations have valuation zero. Tangent zeros can be avoided because a smooth locally soluble covering has infinitely many nearby points whereas each tangent has finitely many zeros on it. For a nonsquare unit d, (z,d)_ell depends only on the parity of v_ell(z), proving that the contribution is one.
+
+This accounts for every auxiliary prime. Where d is locally square, a denominator in a or b is harmless because the second Hilbert argument is already a square. Where it is a nonsquare unit, the preceding argument proves integrality rather than presuming it.
+

@@ -1,0 +1,19 @@
+**Definition 12.3 (the resource and source interpretation).** A
+chronological fresh call is one submission of one fully materialized
+original-root word. An $E$ request submits $L$ or $R$ and costs
+one call. A $P_t$ request has word length $1+\lceil t/2\rceil$
+using (NARC.5.8). Initial and later entire-row acquisition, parsing
+of acquired literals, retained-label representation, public tables,
+local candidate enumeration and arithmetic, changing workspace,
+controller states, address production, total submitted length, lag
+output representation and physical elapsed time are separate resource
+coordinates. No numerical relationship among them is stipulated here.
+
+The same-original pure-$\rho$ continuation, truthful entire-row
+acquisition, causal export and actual discard are premises. A correct
+lag output does not authenticate those premises or provide an absolute
+epoch or a history archive. The cut and its spatial slot identity are
+already part of the acquired entry; they are not inferred from the
+retained label. The recovered temporal relation is the number of
+intervening substitutions, not physical elapsed time.
+

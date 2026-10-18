@@ -1,0 +1,32 @@
+**Definition 1.2 (canonical frames and all lawful cuts).** Use exactly AIF's
+language $\mathsf C$. A frame has a three-bit tag, the unary length
+$U(d)=1^d0$, and $d$ payload bits. The tags are ReadE `000`, Rho `001`,
+TagRead `010`, Left `011`, and Right `100`. ReadE and Rho have empty
+payloads. A TagRead payload is its address, with 0 meaning L and 1 meaning
+R. A context payload has the prefix code branch 0, alpha 11, beta 10.
+All finite contexts are admitted as material, including those whose entire
+modification will reject. Context names and descriptors are constructed
+canonically from their actual occurrences.
+
+Put
+
+$$
+\mathsf P=\{p:\exists w\in\mathsf C,\ p\preceq w\},
+\qquad
+\operatorname{Adm}(h)=\{b\in\{0,1\}:p(h)b\in\mathsf P\},
+$$
+
+where $p(h)$ is the consumed prefix of the frame at the next prescribed
+source-frame IN. Let $\mathcal R_H$ be AIF's full actual prefix class after
+$a(u)$, over all valid $u$ and all finite lawful request sequences. It
+includes every extendible incomplete tag, unary length and payload; the
+IN-to-WR latch interval; parsing and generation; private gates; invalid
+source-write packets; rejects; counter preparation; commitment; partial
+rows; seals; both copy stages; and acknowledgement. No fixed input schedule,
+bounded context size, or completion-only restriction is imposed.
+
+An enabled raw IN consumes either physical bit, advances its native control,
+and constructs its receipt. If $p(h)b\notin\mathsf P$, that occurrence
+executes but leaves $\mathcal R_H$. It is not an illegal-unexecuted `none`.
+Subsequent malformed-frame behavior is outside this defined domain.
+

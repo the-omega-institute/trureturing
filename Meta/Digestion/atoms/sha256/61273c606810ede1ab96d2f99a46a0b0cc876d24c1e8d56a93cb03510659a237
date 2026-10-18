@@ -1,0 +1,46 @@
+### 88.1. The theorem
+
+The logical input has basis |f,i〉, 1≤f≤4 and i∈{0,1}. Define the target channel ℱ:C⁴⊗C²→C⁴ by
+
+\[
+ \mathcal F(|f,i\rangle\langle f,j|)=\delta_{ij}|f\rangle\langle f|,
+ \qquad
+ \mathcal F(|f,i\rangle\langle g,j|)=\tfrac12|f\rangle\langle g|
+ \quad(f\ne g).
+\]
+
+The fixed isometric encodings are V_in|f,i〉=|f,i〉⊗|f,i〉 and V_out|f〉=|f〉⊗|f〉, with encoding channels J_in(X)=V_in X V_in* and J_out(Y)=V_out Y V_out*. For original CPTP maps A,B:C⁸→C⁴ define
+
+\[
+ \delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                     -J_{\rm out}\circ\mathcal F\|_\diamond.
+\]
+
+The norm is unhalved and permits arbitrary references. A quarter-error pair means δ(A₀,B₀)=1/4. Kraus rank means the rank of the Choi matrix, equivalently the minimum pure Stinespring environment dimension.
+
+Let (A₀,B₀) be any original quarter-error pair of channels C⁸→C⁴, with B₀ of Kraus rank two, as classified in [section 82](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family). For any channel B let J_B be its unnormalized Choi matrix, with Tr J_B=8, and define
+
+\[
+ \epsilon_2(B)=\sum_{j=3}^{32}\lambda_j(J_B),
+ \qquad \lambda_1\ge\lambda_2\ge\cdots\ge0.
+                                                               \tag{1}
+\]
+
+For every constant
+
+\[
+ 0<\kappa<{35\over4096},                                  \tag{2}
+\]
+
+there is a neighborhood U of (A₀,B₀) in the space of original channels such that
+
+\[
+ \delta(A,B)\ge {1\over4}+\kappa\epsilon_2(B)^2
+ \quad\text{for every }(A,B)\in U\text{ with }\operatorname{rank}J_B\le3.
+                                                               \tag{3}
+\]
+
+Here δ is the original unhalved arbitrary-reference diamond error. The roles of A and B may be exchanged. The neighborhood can depend on the base equality pair and on κ. In particular rank-three B channels with positive Choi tail have strictly larger error than 1/4 in this neighborhood, irrespective of the nearby A channel's Kraus rank. Rank-two B channels retain the global lower bound 1/4.
+
+This is a restricted local-minimum theorem. It makes no local-minimum assertion for unrestricted B rank and no global-optimum assertion. The constants in (2) are valid lower-bound coefficients; no sharpness claim for the complete diamond error is made.
+

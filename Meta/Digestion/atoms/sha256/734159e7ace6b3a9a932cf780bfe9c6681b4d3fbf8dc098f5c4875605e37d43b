@@ -1,0 +1,34 @@
+**Convention 7.1 (native source correspondence).** In
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean),
+`Source` is `FreeMagma Bool`, alpha is `true`, beta is `false`, and
+`substitution` is the homomorphism (NCM.1). In
+[ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean),
+`Address` is a Boolean list, false means $L$, true means $R$, and
+`Reply` and `readout` supply all four replies on every finite legal
+word. Its recognition objective is different from (NCM.3).
+[NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean)
+supplies `original_present_transport` only at actual original
+occurrences and `original_prefix_locality` for original-boundary
+dependence. AAR §§12, 13 and 16 supply the exact factors, minimal
+passive codes and known-menu acquisition results; their menu is fixed
+before acquisition. Their full-menu zero-later-Read endpoint is
+already covered. None of these interfaces is renamed as the lower
+transport theorem here.
+
+NBP Assumption 14.1 and Theorem 14.4 supply a paid common-start
+stationary handoff discipline for a known-row predecessor task with
+an authenticated one-image family and whole-predecessor output.
+Their service assumptions do not construct isolation or authentication
+physically. The
+[`target_family_minimal_quotient`](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean)
+universal property supplies passive joint-kernel factorization, not a
+one-native-reply geometry. The
+[`compact_observation_factorization`](../../../D5/S3/ObserverMemory/ProObjects/CompactObservationFactorization.lean)
+declaration assumes a nonempty compact source, compatible continuous
+surjective finite discrete observations forming a fiber basis, and
+continuous finite readouts. It gives a sufficient finite observation
+level, also for bounded-length action words over a finite action alphabet with continuous actions. It gives
+no effective native acquisition depth, memory-rate lower certificate
+or convergence modulus. These declaration correspondences confer no
+Lean certification on the ordinary proofs here.
+

@@ -1,0 +1,67 @@
+**Theorem 5.4 (attained nonnegative rational same-run optimum).** For all
+$\lambda\in\mathbb Q_{\ge0}^3$, the exact value $W_\lambda^*$ is
+effectively computable in $\mathbb Q_{\ge0}\cup\{\infty\}$ and is
+attained by a source-total actual service. More precisely:
+
+- If $\lambda_q=\lambda_\ell=0$, its value is zero on every input.
+- If $U\ne\varnothing$, the gate is negative and
+  $\lambda_q+\lambda_\ell>0$, its value is infinity.
+- On a nonempty positive gate it is a finite rational attained by a
+  finite service and by a source witnessing that service's worst sum.
+- On the logical empty fiber its value is zero under the same convention
+  as Corollary 5.3.
+
+Proof. The static sourcewise traversal proves the first case, even when
+the unpriced read and length maxima are infinite. The negative case
+follows from the separate unboundedness in Theorem 5.2 and nonnegativity
+of the weights. The traversal attains this extended supremum; no single
+finite-source run has infinite cost.
+
+For a positive gate use the separate same-run method of [JRF, Theorem
+7.1][JRF], after the following hypothesis match and threshold proof.
+The static supplier has value at most
+$B_0=\lambda_q K_0+\lambda_\ell L_0$. Lemma 5.1 decreases each cost on
+each SAME source and so does not increase its weighted sum. Every
+comparator of value at most $B_0$, including ones with unbounded unpriced
+coordinates, can therefore be compared within update bound $D_N$.
+
+Suppose at least one of the read and length weights is positive. If
+$\lambda_q>0$ take $k_\lambda=\lfloor B_0/\lambda_q\rfloor$. If
+$\lambda_q=0<\lambda_\ell$, use (GRS.16) to take
+$k_\lambda=\lfloor B_0/\lambda_\ell\rfloor$. This bounds the read
+depth after normalization in both cases. For a threshold $b\in[0,B_0]$
+we can decide the existence of a correct skeleton satisfying, at each
+reachable leaf,
+
+$$
+\lambda_q k_t+\lambda_d d_t+\lambda_\ell L_t\le b.
+\tag{GRS.19}
+$$
+
+If $\lambda_\ell>0$, every reached physical word has length at most
+$\lfloor B_0/\lambda_\ell\rfloor$. Enumerate those words and the finite
+skeleton choices under $k_\lambda,D_N$. Test correctness, exact reachability
+and (GRS.19) by Corollary 4.3. If $\lambda_\ell=0$, then
+$\lambda_q>0$ and the displayed leaf cost is independent of suffixes.
+For every numerically over-budget leaf conjoin $\neg E_t(\mathbf z)$
+inside the existential suffix scope of (GRS.15). This is a WS2S
+unbounded-address decision by Lemma 2.2. It introduces no arithmetic
+comparison between variable lengths. Neither procedure charges an
+unreachable leaf.
+
+Every original comparator under the threshold normalizes sourcewise
+and unrolls to one of these skeletons without increasing its weighted
+sum. Conversely a successful skeleton actually executes (GRS.19) on
+each source. These are both threshold directions against the entire
+comparison class. Take a common positive denominator $a$ of the weights.
+Each finite run sum lies in $a^{-1}\mathbb N$. A bounded nonempty set
+of these sums has a maximum in that lattice. Test the finitely many
+thresholds $0,1/a,\ldots,B_0$; the static supplier ensures a true test.
+The first true one is the exact infimum and gives an attaining service.
+Corollary 4.3 gives a source attaining its worst sum.
+
+This proof does not minimize $\lambda\cdot b(A)$ or infer a same-run
+optimum from the Pareto basis. The cofinal substitution in Theorem 5.2
+is not asserted to dominate on each source and is not used here.
+$\square$
+

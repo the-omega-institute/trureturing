@@ -1,0 +1,30 @@
+**Definition 1.2 (complete acquired predicate).** Fix the input
+$I=(P,R,H_0,H_{\rm rel},Q,N)$ of [ARH, Definitions 1.1–1.2][ARH].
+Both cuts are finite and prefix-free. The attained old row $R$ includes
+its full exterior, reached set and partition. A literal $(a,p,c)$ means
+$r_{\rho^a u}(p)=c$. A signed record $(a,p,b,q,\bowtie)$ means
+
+$$
+p\in\operatorname{Pos}(\rho^a u),\qquad
+q\in\operatorname{Pos}(\rho^b u),\qquad
+(\rho^a u)|_p\ \bowtie\ (\rho^b u)|_q,
+\quad\bowtie\in\{=,\ne\}.
+\tag{FJC.3}
+$$
+
+The lists retain repetitions. An absent endpoint invalidates either
+sign. All records within one realization concern its same original
+source. Define the entire fiber and its full-row strata by
+
+$$
+\begin{aligned}
+D&=\{u\in\mathcal T:R_P(u)=R,\ H_0(u),\ H_{\rm rel}(u)\},\\
+D_r&=\{u\in D:R_Q(u)=r\}.
+\end{aligned}
+\tag{FJC.4}
+$$
+
+Thus all different old classes remain unequal, every repeated class
+remains shared, and off-task constraints remain imposed. The new target
+is the entire original $Q$-row.
+

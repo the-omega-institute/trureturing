@@ -1,0 +1,76 @@
+**Theorem 4.2 (Exact guarded identity).** For every stationary legal $P$ satisfying (2.1)–(2.2), and every $n,\nu$ as above, the cocycle difference is integrable, the nonnegative quantities in (4.3) are finite, and
+
+$$
+\mathbb E_{P\otimes\nu}\Delta_P(X,Z)
+=(n+2)d(P)-\Phi_n(\nu)-\mathcal B_n(P,\nu)
+-G_C(P,\nu)-E_C(P)-O_C(P,\nu).
+\tag{4.4}
+$$
+
+This statement requires no finite hidden structure.
+
+Proof. First justify support, versions and summation. Disintegration and (2.3) give the density
+
+$$
+\frac{dQ}{dP}(x)=
+\begin{cases}\nu(w)/p_C(0w0;x_{C^c}),&x_C=0w0,\\0,&\text{otherwise},\end{cases}
+\qquad Q\le K_nP,\qquad K_n:=2^{n+2}3^n.
+\tag{4.5}
+$$
+
+Ratios are only used on the conull exterior set where their denominators are positive; elsewhere choose any version. Since $k(w)\le n$, the stated constant is sufficient for every $\nu$. It controls original posterior null sets under $Q$. By saturation, $X,Z\in\Omega$ almost surely in the coupling, and $Z_CX=Z_CZ$. Thus
+
+$$
+\mathbb E_{P\otimes\nu}\sum_i|\ell_i(X)-\ell_i(Z)|
+\le\mathbb E_PV_C+\mathbb E_QV_C
+\le(1+K_n)B_{n+2}(P)<\infty.
+\tag{4.6}
+$$
+
+This is an estimate for each fixed $n$. It is not asserted uniform in $n$ or sublinear in the block length. No subtraction of two infinite loss totals is involved.
+
+For an interior site $1\le i\le n$, condition the actual $P$ block kernel on the two guards and on all other middle bits. The defining conditional-expectation identity then gives
+
+$$
+q_i((0w0)y)=r_{n,i}^y(w_{-i}).
+\tag{4.7}
+$$
+
+To justify the simultaneous reading, disintegrate each identity over $Y$ and the finitely many completions. Their strictly positive masses force it at every completion on a conull exterior set; take the countable intersection over intervals and sites. Hence (4.7) remains valid under (4.5), with the original $P$ versions. Under $Q$, $W$ has law $\nu$ independently of $Y$. Apply (3.2) on each exterior fiber to get
+
+$$
+\sum_{i=1}^n\mathbb E_Q\ell_i=\Phi_n(\nu)+\mathcal B_n(P,\nu).
+\tag{4.8}
+$$
+
+The guards equal zero, so their losses sum to $G_C(P,\nu)$. The predictor from $\nu$ is used only to expand the square in (3.2); the scored predictor is still $q_i$ from $P$.
+
+For an exterior site $i\notin C$, under $Q$ the inserted word is independent of $Y$. Given the other exterior coordinates and that word, the conditional mean of $Y_i$ is $a_i^C$. The $Q$ marginal of $Y$ is the original $\mu_C$. Two conditional projections therefore give
+
+$$
+\begin{aligned}
+\mathbb E_Q\ell_i
+&=\mathbb E_P(X_i-a_i^C)^2+\mathbb E_Q(q_i-a_i^C)^2,\\
+\mathbb E_P\ell_i
+&=\mathbb E_P(X_i-a_i^C)^2-\mathbb E_P(q_i-a_i^C)^2.
+\end{aligned}
+\tag{4.9}
+$$
+
+In the second line the reduced field is contained in $\mathcal E_i$. In the first, $q_i$ is measurable in the other coordinates under $Q$ as well as under $P$; it need not be the $Q$ conditional mean. Subtraction at this single site gives
+
+$$
+\mathbb E_Q\ell_i-\mathbb E_P\ell_i
+=\mathbb E_P(q_i-a_i^C)^2+\mathbb E_Q(q_i-a_i^C)^2\ge0.
+\tag{4.10}
+$$
+
+The sum of (4.10) over exterior sites is finite by (4.6), because each absolute difference of expectations is bounded by the corresponding coupled expected absolute difference. This proves finiteness of both exterior penalties and the required sign. Independently, the reduced field contains the outside half-line used in Lemma 2.2, so projection monotonicity gives
+
+$$
+E_C(P)\le\sum_{j\ge0}(e_L(j)+e_R(j))\le A_P.
+\tag{4.11}
+$$
+
+Here the sites $-1-j$ and $n+2+j$ use $e_R(j)$ and $e_L(j)$, respectively. No analogous uniform estimate for $O_C$ is asserted. Finally (4.6) permits summing the coupled differences. The original losses on $C$ have expectation $(n+2)d(P)$ by stationarity; subtract (4.8), the guard losses and (4.10). This gives (4.4). $\square$
+

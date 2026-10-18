@@ -1,0 +1,28 @@
+### 推论 32.3（量子层与 FIB 层的并行载体）
+
+若
+
+\[
+C_j^Q
+=
+\Phi_j
+\times
+\Pi_j
+\times
+N_j
+\times
+Z_j
+\times
+K_j
+\]
+
+且每一层的 bonding map 在各分量上连续仿射并满射，则
+
+\[
+\varprojlim_jC_j^Q
+\]
+
+非空紧凸。前四个分量来自 Auric FIB 图场，\(K_j\) 是量子状态分量。这个乘积构造是一个类型化统一载体，不等同于物理统一场方程。
+
+---
+

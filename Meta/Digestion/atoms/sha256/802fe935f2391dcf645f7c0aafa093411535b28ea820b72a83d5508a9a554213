@@ -1,0 +1,20 @@
+**定理 78.16（Random expected frontier and lottery qualification）。** Under the measurable seed and all-original correctness conditions of 78.15, every randomized expected cost vector is componentwise above some member of $\operatorname{conv}(F_\sigma)$. If the declared resource also supports the finite lotteries in 78.15, this convex hull is exactly the expected original-coordinate Pareto frontier. Weighted linear minima and optimal uniform-prior means remain those of 78.10–78.11 even without arbitrary lottery access, since their deterministic attainers remain available. Weighted expected cost means $\mathbb E[\sum_a(u_ac_P(a)+v_ar_P(a))]$ for nonnegative finite weights, with zero-coefficient terms contributing zero; this nonnegative integral is defined even when some unweighted expectations are infinite. A single deterministic frontier vector need not dominate a randomized expected vector.
+
+Proof. For each original its good-seed set has probability one. Their finite intersection also has probability one. Fixing any seed in that intersection gives a deterministic controller exact for all originals, so 78.8 applies on that seed with one simultaneous permutation witness.
+
+The common good-seed set is measurable: for each original, finite correct return is a countable union of measurable finite-history events. The finite-valued domination witness is measurable too. Prescribed finite action/report prefixes give finite intersections of measurable action events. Actions and return labels range over finite sets, and terminal depths over integers, so finite histories form a countable set. An extracted ordering is determined at a finite first-singleton time; its event is a countable union of these prefix events. Use a fixed convention for the equal last pair and assign any fixed frontier member on the null complement of the common good set. There are finitely many witnesses. Their expected vector $f$ belongs to $\operatorname{conv}(F_\sigma)$ and satisfies $f\le\mathbb E[z_P]$ componentwise. This inequality holds also when a cost expectation is infinite.
+
+Conversely, choose a frontier permutation before acting with the probabilities of any given finite convex combination. Original-independent finite-lottery access makes its expected vector that combination. Every hull vector has the same total read sum and total restore sum from 78.9, so distinct hull vectors cannot dominate each other. If a random feasible expected vector strictly dominated a hull vector, its measurable witness expectation would be a hull vector below it, contradicting the fixed sums. Every feasible finite expected vector outside the hull is dominated by its witness expectation. Vectors with an infinite coordinate are also dominated by a finite hull vector. This proves the expected frontier.
+
+Writing $\mathcal E$ for the raw set of finite expected feasible vectors, the precise relationship is
+
+$$
+\operatorname{conv}(F_\sigma)\subseteq\mathcal E
+\subseteq\uparrow\operatorname{conv}(F_\sigma),\qquad
+\uparrow\mathcal E=\uparrow\operatorname{conv}(F_\sigma).
+$$
+
+These inclusions and equality of upper closures use the finite-lottery hypothesis for the first inclusion. They do not identify the raw expected feasible set $\mathcal E$ with its upper closure. Without that hypothesis, the measurable-witness domination $\mathcal E\subseteq\uparrow\operatorname{conv}(F_\sigma)$ still holds, but arbitrary hull attainment and exact hull-frontier equality have not been established.
+
+For $n=3$, when the declared random resource supports the corresponding uniform finite lottery, mixing all permutations uniformly gives every original expected costs $(5L/3,2/3)$, with $L=2$. Each deterministic frontier assigns two originals $(2L,1)$, so no deterministic frontier vector is below that expected vector. Finally, a convex combination cannot reduce a linear objective below its smallest deterministic value. The weighted formula and uniform means therefore remain exact. The necessity part of 78.5 also extends seedwise: equivalent roots cannot be exactly returned on a common probability-one set of seeds. $\square$
+

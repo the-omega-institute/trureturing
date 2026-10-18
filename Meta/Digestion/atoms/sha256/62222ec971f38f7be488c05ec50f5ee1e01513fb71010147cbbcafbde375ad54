@@ -1,0 +1,50 @@
+**Theorem 8.2 (mutual recovery of a full refined boundary).** For
+any actual selected output $b=(P,C,\pi)$ of $A_D$ at validation
+source $v$, put
+
+$$
+P^D=\{pw:p\in P\}.
+\tag{NRF.37}
+$$
+
+From $b,D$ alone one can recover the entire row $R_{P^D}(v)$:
+replace every hole of $C$ by a copy of $D[-]$ whose new hole is
+addressed $pw$, and transport the partition by
+
+$$
+pw\sim_{\pi^D}qw\quad\Longleftrightarrow\quad p\sim_\pi q.
+\tag{NRF.38}
+$$
+
+Conversely, from the refined addressed row and public $D$, one can
+recover the original selected boundary $b$. The two maps are inverse
+on actual selected outputs. They require no new source Reads and
+preserve every equality and every disequality, not just the exterior
+or the number of holes. Hidden residual trees remain unrestricted.
+
+Proof. Each selected hole value belongs to (NRF.36), so it is
+$D[t_p]$ for a unique $t_p$. The one-hole constructor map is
+injective: the subtree at $w$ is exactly its argument. Therefore
+
+$$
+D[t_p]=D[t_q]\quad\Longleftrightarrow\quad t_p=t_q.
+\tag{NRF.39}
+$$
+
+The addresses $pw$ are prefix-free because distinct $p,q$ already
+are incomparable. The literal exterior at that finer cut is exactly
+the stated substitution into $C$. Equation (NRF.39) proves all
+partition bits, including cross-class inequalities. No relation
+between a hidden value and an exterior constant was assumed.
+
+For the inverse, remove the fixed suffix $w$ from every addressed
+hole of the finer row, recovering exactly $P$. For each such $p$,
+replace the entire displayed $D$ context at $p$ by a single hole
+at $p$, and pull its complete partition back by $p\mapsto pw$.
+The displayed contexts are disjoint and have their known literal
+form on the attained image, so this operation recovers exactly
+$C,\pi$. Empty $P$ gives no finer holes and leaves the same entire
+ground tree on both sides. If $w=\varepsilon$ both maps are the
+identity. This proves mutual recovery on the stated domain.
+$\square$
+

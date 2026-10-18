@@ -1,0 +1,58 @@
+**Theorem 3.1 (two unit atoms annihilate the original moment vector).**
+On the original ordered products, define the nonnegative probability measures
+
+$$
+\Gamma_B=\delta_{(\pi_5Q_B,\pi_5W_B)},\qquad
+\Gamma_A=\delta_{(\pi_5W_A,\pi_5Q_A)}.
+\tag{3.1}
+$$
+
+Their fourteen potential moments match, all seventy B input-output
+moments and all sixty-three A input-output moments vanish, and both
+centered event moments vanish. These assertions use exactly the bases
+and partitions in Definition 1.2.
+
+**Proof.** The two common feature vectors are explicitly
+
+$$
+\mathbf p(Q_B)=\mathbf p(Q_A)=(1,u,u^2,C,uC,q,y_3),
+$$
+
+$$
+\mathbf s(W_B)=\mathbf s(W_A)=(1,v,v^2,H,vH,vu,vy_3).
+\tag{3.2}
+$$
+
+Indeed, $q+cq+d_B=C=q+d_A+y_2$, and
+$1-v+vq=H$. Equation (2.3) gives the suspended alpha mass $vu$ in
+both cases, while $Q_B(w_{4,1})=cy_3$ gives
+$W_B(\alpha w_{3,1})=vy_3=W_A(\alpha w_{3,1})$.
+All remaining entries of (3.2) follow immediately from the definitions.
+Thus the integrals of every original potential cancel, separately for
+all seven p features and all seven suspended features. The event means
+are exactly $C,H$.
+
+The raw B residual at standalone beta is
+$q-U(1-v)=0$. At each of its eight retained prefixed atoms it is zero
+by (2.3). Its complete tail residual is, by (2.7),
+
+$$
+Q_B(T_p(5))-U W_B(T_\beta(4))=t^5-U\frac{t^5}{U}=0.
+\tag{3.3}
+$$
+
+The eight retained atomic A residuals vanish by (2.3), and its complete
+tail residual is
+
+$$
+W_A(T_\beta(4))-vQ_A(T_p(4))=vt^4-vt^4=0.
+\tag{3.4}
+$$
+
+Thus the entire ten-entry B residual vector and the entire nine-entry A
+residual vector are zero at their respective nodes. Multiplication by
+each of the seven original input features gives the claimed seventy and
+sixty-three zero moments. No division by a vanishing continuation factor
+occurs: $U>3/5$ and $v>1/3$. Lemma 2.2 supplies exact node membership;
+each measure in (3.1) has its single weight equal to one. $\square$
+

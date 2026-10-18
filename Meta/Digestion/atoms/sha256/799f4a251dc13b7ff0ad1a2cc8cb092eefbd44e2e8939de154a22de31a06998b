@@ -1,0 +1,30 @@
+**推论 4.3（全部中间噪声的直接相位包围）。** 对 $0<\delta<1$，定义
+
+$$
+H_\delta(y)=
+\begin{cases}
+y,&|y|\le\delta,\\
+y/(1-\delta^2+|y|^2),&|y|>\delta.
+\end{cases}
+$$
+
+若 $|x|\le1,|y-x|\le\delta$，整个 $[0,x]$ 被以 $H_\delta(y)$ 为中心、半径 $g(\delta)$ 的球包围。因此 $\mathcal U$ 的相位 1、2 单独可达误差 $g(\delta)$；本结论没有同时解决相位 0。
+
+证明。第一分支两个端点到 $y$ 的距离均不超过 $\delta\le g(\delta)$。第二分支令 $\lambda=(1-\delta^2+r^2)^{-1}\in(0,1)$，则
+
+$$
+|x-\lambda y|^2
+=(1-\lambda)|x|^2+\lambda|x-y|^2
+-\lambda(1-\lambda)|y|^2
+\le\lambda^2r^2.
+$$
+
+零端点距离也是 $\lambda r$。当 $\delta\le1/\sqrt2$，引理 4.1 的平方关系给 $\lambda r\le f_\delta$，不需它的小噪声限制。当 $\delta\ge1/\sqrt2,r>\delta$，
+
+$$
+\delta r^2-r+\delta(1-\delta^2)
+=(r-\delta)(\delta r+\delta^2-1)\ge0,
+$$
+
+故 $\lambda r\le\delta$。再用线段凸性。
+

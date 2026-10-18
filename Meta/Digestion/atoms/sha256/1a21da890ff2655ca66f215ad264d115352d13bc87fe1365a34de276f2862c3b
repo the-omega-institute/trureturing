@@ -1,0 +1,178 @@
+**Theorem 6.1 (classification).** Let a legal five-read history have $A_0=I$, actual recorded indices $0,1,2,3,4$, and
+
+$$
+(A_i)_{22}=1\qquad(0\le i\le4).
+$$
+
+Assume that deleting any noninitial endpoint leaves four independent real matrices. Define $\mathbf 1,\mathbf t,\mathbf x,\mathbf y,\mathbf d,\mathbf t\mathbf x,\mathbf t\mathbf y$ as in (3.2), and assume all four equalities (3.2). Then
+
+$$
+A_0=I,\quad
+A_1=\begin{pmatrix}1&0\\3&1\end{pmatrix},\quad
+A_2=\begin{pmatrix}6&1\\5&1\end{pmatrix},\quad
+A_3=\begin{pmatrix}17&3\\6&1\end{pmatrix},\quad
+A_4=\begin{pmatrix}35&6\\6&1\end{pmatrix}.
+\tag{6.1}
+$$
+
+Conversely, this endpoint sequence is legal, every noninitial deletion leaves four independent matrices, and all four equalities hold. The conclusion classifies endpoints only; any finite legal words producing these endpoints are allowed.
+
+**Proof.** Write
+
+$$
+A_i=\begin{pmatrix}a_i&y_i\\x_i&1\end{pmatrix},\qquad d_i=a_i-1.
+$$
+
+Every cumulative matrix and every transition word is nonnegative integral with determinant $\pm1$. The survivor hypothesis first implies that the endpoints are pairwise distinct: if two endpoints agreed, a deletion of a noninitial endpoint different from those two would leave a repeated member among four survivors. Subtracting $I$ from the other endpoints shows that the three-vectors $(d_i,x_i,y_i)$ are independent for every three of the four noninitial indices. In particular, the tail columns
+
+$$
+a=(x_1,x_2,x_3,x_4)^{\mathsf T},\quad
+b=(y_1,y_2,y_3,y_4)^{\mathsf T},\quad
+h=(d_1,d_2,d_3,d_4)^{\mathsf T}
+$$
+
+are independent.
+
+We need the following transition rigidity. If
+
+$$
+A=\begin{pmatrix}a&y\\x&1\end{pmatrix},\qquad
+W=\begin{pmatrix}h_0&b_0\\c_0&e_0\end{pmatrix},\qquad A'=WA,
+$$
+
+then the lower-right entry condition is $c_0y+e_0=1$. If $y\ge2$, nonnegative integrality gives $c_0=0,e_0=1$; unimodularity then gives $h_0=1$, so $W=U^{b_0}$. If $y=1$, either the same upper shear occurs, or $c_0=1,e_0=0$, in which case unimodularity gives $b_0=1$ and $W=U^{h_0}J$. If $y=0$, unimodularity of $A$ gives $A=L^x$. Also, for every fixed $B$,
+
+$$
+U^jB=B+jKB,\qquad K=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+$$
+
+so all upper-shear extensions of one endpoint lie in a two-dimensional linear space.
+
+The first two noninitial upper-right entries must be $y_1=0$ and $y_2=1$. If $y_2\ge2$, then $A_2,A_3,A_4$ lie in one two-dimensional upper-shear space, and deleting $A_1$ leaves span at most three. Monotonicity of upper-right entries rules out $y_1\ge2$. If $y_1=y_2=0$, then $I,A_1,A_2$ are lower shears and deleting either later endpoint leaves span at most three. If $y_1=y_2=1$, distinctness forces $A_2=JA_1$; the next distinct endpoint has upper-right at least two and the following upper-shear plane contradicts a survivor condition after deleting the other member of $\{A_1,A_2\}$. The case $y_1=1,y_2=0$ is impossible by monotonicity. Hence $A_1=L^n$ for an integer $n\ge1$ and $y_2=1$.
+
+The transition from $A_1=L^n$ to $A_2$ has multiplier $W=(\begin{smallmatrix}h_0&1\\c_0&1\end{smallmatrix})$, with $h_0,c_0$ nonnegative integers. Its determinant condition is $h_0-c_0=\pm1$, so the two first-column entries differ by one. If $h_0=c_0+1$, put $C=n+c_0+1$; if $c_0=h_0+1$, put $C=n+c_0$. In both cases $C\ge n+1$, and multiplication by $L^n$ gives the two possibilities
+
+$$
+P_C=\begin{pmatrix}C&1\\C-1&1\end{pmatrix},\qquad
+N_C(1)=\begin{pmatrix}C-1&1\\C&1\end{pmatrix}.
+$$
+
+Write more generally
+
+$$
+N_C(v)=\begin{pmatrix}Cv-1&v\\C&1\end{pmatrix}\qquad(v\ge1).
+$$
+
+If the third upper-right entry is one, the third endpoint is the swapped member of the pair and the fourth endpoint is an upper-shear extension of one of them. It cannot extend $P_C$: for every $v\ge1$,
+
+$$
+U^{v-1}P_C=\begin{pmatrix}(C-1)v+1&v\\C-1&1\end{pmatrix},
+$$
+
+whose tail satisfies $d=(C-1)y$, as does $A_1=L^n$; deleting the swapped member then leaves span at most three. Thus it extends $N_C(1)$. If the third upper-right entry is at least two, $A_3$ is an upper-shear extension of either $A_2$ or $JA_2$, and $A_4$ is an upper-shear extension of $A_3$. It cannot extend $A_2$: then $A_2,A_3,A_4$ lie in one two-dimensional upper-shear space, so deleting $A_1$ leaves span at most three. It also cannot extend $P_C$: then deleting $A_2$ leaves $I,L^n,A_3,A_4$ with the tail relation $d=(C-1)y$, again giving span at most three. Therefore $A_3$ extends $N_C(1)=JA_2$, forcing $A_2=P_C$. Therefore every survivor-regular history has one of the two forms
+
+$$
+\begin{array}{ll}
+\mathrm{Type\ A}:& I,L^n,P_C,N_C(t),N_C(u),\qquad u>t\ge1,\\[2mm]
+\mathrm{Type\ B}:& I,L^n,N_C(1),P_C,N_C(u),\qquad u\ge2.
+\end{array}
+\tag{6.2}
+$$
+
+No parameter choice is assumed to satisfy the survivor condition; (6.2) is only a necessary normal-form list.
+
+Now put
+
+$$
+e=(1,2,3,4)^{\mathsf T},\quad X=(ix_i)_{i=1}^4,\quad Y=(iy_i)_{i=1}^4,
+\quad V=\operatorname{span}(a,b,h).
+$$
+
+Expanding the four determinants in row zero gives
+
+$$
+\det[e,a,b,X]=\det[e,a,b,Y]=\det[e,a,h,X]=\det[e,h,b,Y]=0.
+\tag{6.3}
+$$
+
+Suppose first that $e\notin V$. Then $e,a,b,h$ is a basis. The two equations containing $Y$ put $Y$ in
+
+$$
+\operatorname{span}(e,a,b)\cap\operatorname{span}(e,h,b)=\operatorname{span}(e,b).
+$$
+
+The first tail coordinate of both $b$ and $Y$ is zero, while that of $e$ is one, so $Y$ is proportional to $b$. In both normal forms $y_2=1$ and $y_3>0$; proportionality would require the scalar to be two at coordinate two and three at coordinate three, a contradiction. Hence $e\in V$.
+
+Write $e=\lambda a+\mu b+\nu h$. The first coordinate gives $\lambda=1/n$, so $e,b,h$ are independent. Equation (6.3) then gives $Y\in V$. The vector $e$ is not proportional to $a$: in Type A its third and fourth coordinates are both $C$ while those of $e$ are $3$ and $4$, and in Type B its second and fourth coordinates are both $C$ while those of $e$ are $2$ and $4$. Thus at least one of $\mu,\nu$ is nonzero. If $\nu\ne0$, then $e,a,b$ is a basis and the first equation in (6.3) gives $X\in V$; if $\mu\ne0$, then $e,a,h$ is a basis and the third equation gives $X\in V$. Therefore
+
+$$
+e,X,Y\in V.
+\tag{6.4}
+$$
+
+Type B is impossible. In that form,
+
+$$
+a=(n,C,C-1,C),\quad b=(0,1,1,u),\quad h=(0,C-2,C-1,Cu-2).
+$$
+
+Let $w=(w_1,w_2,w_3,w_4)$ annihilate $V$. Its fourth coordinate is nonzero, since otherwise the first three independent tail rows would have a nontrivial left relation; normalize $w_4=1$. From $wb=wY=0$, with $Y=(0,2,3,4u)$, we obtain
+
+$$
+w_2+w_3+u=0,\qquad 2w_2+3w_3+4u=0,
+$$
+
+so $w_2=u,w_3=-2u$. But then
+
+$$
+wh=u(C-2)-2u(C-1)+(Cu-2)=-2,
+$$
+
+contradicting (6.4).
+
+In Type A,
+
+$$
+a=(n,C-1,C,C),\quad b=(0,1,t,u),\quad h=(0,C-1,Ct-2,Cu-2),
+$$
+
+with $Y=(0,2,3t,4u)$. Again normalize $w_4=1$. The equations $wb=wY=0$ give
+
+$$
+w_2=u,\qquad w_3=-\frac{2u}{t},\qquad w_1=\frac{6u}{t}-2u-4
+$$
+
+after also imposing $we=0$. Substitution into $wh=0$ gives
+
+$$
+u(4-t)=2t.
+$$
+
+Since $u>t\ge1$ are integers, $t<4$; $t=1$ gives $u=2/3$, $t=2$ gives $u=2$ contrary to $u>t$, and therefore $t=3,u=6$. Thus $w=(-4,6,-4,1)$. The remaining relations $wa=0$ and $wX=0$ give, respectively,
+
+$$
+-4n+3C-6=0,
+$$
+
+and
+
+$$
+-4n+4C-12=0.
+$$
+
+Subtracting gives $C=6$, and then $n=3$. Hence (6.1) follows from (6.2).
+
+Conversely, the displayed endpoints are reached by successive multipliers
+
+$$
+L^3,\qquad UL^2,\qquad U^2J,\qquad U^3,
+$$
+
+which are finite $M/J$ words. Their first three noninitial tail rows are $(0,3,0),(5,5,1),(16,6,3)$ and have nonzero determinant. The unique dependence is
+
+$$
+A_0-4A_1+6A_2-4A_3+A_4=0.
+$$
+
+All noninitial coefficients are nonzero, so every noninitial deletion leaves four independent matrices. Finally, for $a=(3,5,6,6)$, $b=(0,1,3,6)$ and $h=(0,5,16,34)$, the covector $w=(-4,6,-4,1)$ annihilates $a,b,h,e,X,Y$. Thus all four determinants vanish. This proves the converse and the classification. ∎
+

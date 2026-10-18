@@ -1,0 +1,130 @@
+**Convention 67.1 (objects, antecedents and inherited results).** Retain
+Convention 58.1, the source dictionary (RC.1)–(RC.5), the original
+contrast inequality, and the sharp worst-history cost of jointly acquired
+dimension at least three. The source-root existence, isolation,
+Jacobian, rank, TP normalization and minimax identifications remain CG
+antecedents. The following are ordinary conditional mathematics at that
+source, with no assertion of Lean/kernel or native certification.
+
+Write $D=D_{\rm src}$, $T=T_{\rm src}$, $S=S_{\rm src}$ and abbreviate
+their amplitudes by $a,b,c,d$ respectively. Here $b$ is the source
+amplitude in $T$, not a label's failure ratio. Use $x_G,y_G,z_G$ for
+$x,y,z$ in (RC.2); coordinates of a contact remain $z,w$. Put
+
+$$
+\begin{gathered}
+\mathscr C=\{h=(1,z,w)^T:\alpha z^2+\beta w^2=1\},\quad
+K_h=s_0D+zT+wS,\quad \ell(h)=h^TGh,\quad H_0=(1-\delta)N_{00},\\
+\widehat n_h=(dw/h_2,-bz/h_1)^T,\quad n_h=(0,\widehat n_h^T)^T,\quad
+\Delta_f=\begin{pmatrix}-11/64&(\sqrt{37}-\sqrt{59})/16\\
+(\sqrt{37}-\sqrt{59})/16&0\end{pmatrix},\quad
+f(h)=\widehat n_h^T\Delta_f\widehat n_h,\\
+\mathcal D(h)=h_0^2\delta+b^2z^2+d^2w^2,\qquad
+\mathcal N(h)=h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2,\\
+c(h)=\mathcal N(h)/\mathcal D(h),\quad
+c_*(u)=c\left(1,\sqrt u,\sqrt{(1-\alpha u)/\beta}\right),\quad
+C(h)=t c(h),\quad t=e^A-1.
+\end{gathered}
+\tag{RC.64}
+$$
+
+Both $\mathcal D$ and $\mathcal N$ are strictly positive on the circle.
+The quantity $C(h)$ is a scalar capacity, distinct from the matrix $C$
+in (RC.2). On failure support put
+
+$$
+\begin{gathered}
+M_2=\operatorname{diag}(m_1,m_2),\quad
+\Xi=M_2^{1/2}\Delta_fM_2^{1/2}
+=\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},\\
+d_f=11m_1/64,\quad z_f<0,\quad
+L_f=\sqrt{d_f^2+4z_f^2},\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad
+\mu=\alpha V+\beta W,\quad u_f=V/\mu,\quad v_f=W/\mu,\\
+c_f=c_*(u_f),\quad \nu=\mu/c_f,\quad t_0=W/c_f,\quad
+\tau=s/s_0,\quad q=\nu/t,\\
+\tau_{\max}(t)=q\sqrt{u_f}+\sqrt{(1-q)(1-qu_f)}.
+\end{gathered}
+\tag{RC.65}
+$$
+
+These are FA's $V_f,W_f,\mu,u_f,v_f,c_f,\nu$. In particular
+$0<V<W$, $\alpha u_f+\beta v_f=1$, and $c_*$ is strictly increasing
+on $[0,1/\alpha]$. The spectral eigenvectors of $\Xi$ are whitened
+coordinates: their physical effects are
+$M_2^{1/2}e_\epsilon e_\epsilon^TM_2^{1/2}$, not the bare projectors.
+No spectral direction is silently substituted for $\widehat n_h$.
+
+The original-class reduction used here is [FA69–70, FA72 and FA.37][FA67],
+with JR42's all-error-optimizer equality conditions. For an actual CP
+encoder $\mathcal E_j$, call its supported restriction
+$\mathcal E_j^P(X)=\mathcal E_j(EXE^\dagger)$, $X\in M_3$.
+Let $\mathcal J_+(\Phi)$ be the actual low labels with
+$\mathcal E_j^P\ne0$, and $\mathcal J_0(\Phi)$ the nonzero actual
+low labels with $\mathcal E_j^P=0$. In the stipulated integral case
+these are almost-everywhere domains. Every sum over $j$ and every
+label coordinate $p_j,h_j,b_j$ in §§67–76 ranges over
+$\mathcal J_+(\Phi)$ only. For each such supported-nonzero low label,
+its effective supported live product and attached failure effect have,
+for $p_j>0$, the form
+
+$$
+\begin{gathered}
+K_j=\sqrt{p_j}K_{h_j},\qquad
+N_j=p_j b_j n_{h_j}n_{h_j}^T,\qquad 0\le b_j\le C(h_j),\\
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jp_jb_j\widehat n_{h_j}\widehat n_{h_j}^T=M_2,\qquad
+\sum_jp_j|z_j|\ge\tau,\\
+2T_{\rm actual}=H_0+\sum_jp_j|\ell(h_j)+b_jf(h_j)|.
+\end{gathered}
+\tag{RC.66}
+$$
+
+Labels in $\mathcal J_0$ have no positive-$p_j$ ellipse direction and
+contribute zero to the twelve supported acquisition laws, contrast and
+height TV. They remain admitted nonzero full-$M_5$ acquisition outcomes:
+[TA Definition 1.2][TA67] counts them in the complete actual alphabet,
+and their entire joint fibres still obey the activity bound. No such
+label is deleted from the full instrument. FA Definition 77.2 counts
+only $\mathcal J_+$ in its low live-bearing minima; full actual-low
+and total-alphabet counts also include $\mathcal J_0$.
+Indeed $\mathcal E_j^P=0$ implies $C_{ja}E=0$ for every encoder
+Kraus matrix $C_{ja}$: the sum of their positive effects on support
+is zero. Every composite supported live and failure map then vanishes.
+Conversely finite whole-fibre survival ensures that a nonzero supported
+encoder has nonzero supported live composition, the domain of FA69.
+Thus the two domains exhaust the actual low labels without imposing
+an extra restriction on the original full-$M_5$ instrument.
+
+The equality conditions yield the real coefficient directions from the
+full complex, multi-Kraus comparison class on this supported-nonzero
+domain; real processors are not assumed in the lower bound. For the
+admitted countable/measurable extension, sums have their original
+integral meaning and the measurable finite-dimensional-fibre hypotheses of Convention 58.1 remain in force.
+The common canonical time density is used only to construct attainments.
+Necessity retains every admitted failure-time CP measure and TP survivor
+control. In particular finite whole-fibre activity gives terminal live
+effect at least $e^{-A}I$ by FA68's trace balance, so every nonzero
+encoded positive output has positive terminal live mass. This excludes
+failure-only full encoders, but does not make a supported-zero encoder
+nonzero on support; it leaves $\mathcal J_0$ admitted. The static
+certain-failure rows of JR44 would instead need hazard $2/(1-u^2)$
+with infinite integral. They do not supply a missing finite-$A$ competitor. At $t=0$, (RC.66) would
+force $M_2=0$, so the class is empty.
+
+Endpoint splitting of each supported-nonzero label's $b_j$ into
+$0,C(h_j)$, already supplied by FA72, preserves all moments and contrast
+and weakly increases height. It yields the attained two-sheet moment
+problem with heights
+$H_\eta(h)=\ell(h)+\eta C(h)f(h)$, $\eta\in\{0,1\}$. Its value is
+$2\mathcal T_A(s)-H_0$. Its feasibility threshold and maximum contrast
+are FA78–79's $t_0$ and (RC.65). This is reuse of those results, not a
+new survival, feasibility, or compression theorem. The finite-height
+continuation's continuous null roof, fixed-allocation rank-at-most-two
+formulas, existence of at most nine supported-nonzero low labels plus
+one high label, and identity between minimum counts
+$n_{\rm total}=n_{\rm low}+1$ retain their separate meanings. Here $n_{\rm low}$ counts $\mathcal J_+$;
+the total minimum is attained by putting the complement in the high
+fibre. This is not a count identity for every full instrument.
+None chooses the full weak finite-budget frontier.
+

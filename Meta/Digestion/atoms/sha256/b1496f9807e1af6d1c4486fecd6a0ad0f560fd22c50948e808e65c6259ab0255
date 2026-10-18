@@ -1,0 +1,48 @@
+**Definition 6.1 (fixed shape and finite feasibility family).** Fix $d$, positive integers $n_i=|X_i|,m_i=|Y_i|$, and a defect budget $D\in[0,1]$. A shape is this finite list, including its mode successor relation. Its variables are the entries of
+
+$$
+(\pi_i,\tau_i,B_i,A_i,u_i,v_i)_{i\bmod d}.
+$$
+
+All probability entries are nonnegative, all required row sums are one, (2.1) holds, and $1/3\le u_i,v_i\le2/5$. Zero-row labels are allowed in the parameter space. There is no source-dependent entry or runtime posterior variable.
+
+At level $L\ge1$, take $S_L$ from (5.7) for infinite support, or the whole finite support. Define $\mathcal F_L(D)$ by the preceding flow constraints and, for every mode and every $r\in S_L$,
+
+$$
+F_{p,i,L}(r)\le\rho_p,
+\qquad F_{\beta,i,L}(r)\le\rho_\beta,
+\tag{6.1}
+$$
+
+$$
+D_{i,L}^{p\beta}\le D,
+\qquad D_{i,L}^{\beta\alpha}\le D.
+\tag{6.2}
+$$
+
+Each of these is a finite system of polynomial equalities and inequalities with auxiliary variables for absolute values. The only denominators in defect expressions are $q_i$ and $a_i^{\rm first}$ from (5.4); they are positive and can be cleared. Coefficients are rational, except for the explicitly algebraic $r_*$ when used. This family is a finite nonlinear moment family at each level, not a single polytope.
+
+A finite level can additionally impose the necessary endpoint moment equalities
+
+$$
+\pi_i\bigl(g_i+H_ig_{i+1}+H_iH_{i+1}g_{i+2}\bigr)
+=C_p:=\frac{11758471}{22781250},
+$$
+
+$$
+\tau_i\bigl(1-v_i+V_iA_ig_{i+1}\bigr)
+=C_\beta:=\frac{5261}{6750},
+\tag{6.3}
+$$
+
+and the positive-row endpoint coordinate boxes for the complete words already represented at that level. For example each box can be written without strict positivity as
+
+$$
+\pi_i(x)(Z_{i,b}^{(j)}(x)-\ell_{p,j,b})\ge0,
+\qquad
+\pi_i(x)(u_{p,j,b}-Z_{i,b}^{(j)}(x))\ge0,
+\tag{6.4}
+$$
+
+where $\ell,u$ are the smaller and larger endpoint masses; suspended boxes use $\tau_i$. These additions do not change the infinite intersection's endpoint solutions.
+

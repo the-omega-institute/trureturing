@@ -1,0 +1,47 @@
+**定理 3.1（The framed logical factor survives the smaller records）。** For $V_2$ of Theorem 2.1 and $V_4$ of Theorem 4.1 below, the full framed internal matrix algebra is preserved by the reduced channel. In particular, the framed logical-reference marginal is preserved for every joint configuration-logical-reference density operator. This statement does not assert preservation of the whole configuration-logical-reference state.
+
+**证明。** Use exactly the published source frames (§§131–132):
+
+$$
+G_0=I_K,\quad G_1=a,\quad G_2=ca=-b,
+\quad G_3=a^\dagger ca=-c,\quad G_4=b.
+\tag{3.1}
+$$
+
+The source's edge factorization is $U_{ji}=\varepsilon_{ji}G_jG_i^\dagger$, where $\varepsilon_{ji}=-1$ exactly for $(j,i)=(0,3),(3,0)$ and is $+1$ on the other positive edges. Let
+
+$$
+D=\sum_i|i\rangle\langle i|\otimes G_i^\dagger.
+$$
+
+For either supplied vector family, changing input and output frames transforms (1.4) into a configuration map tensored with the identity on $K$:
+
+$$
+(D\otimes I_E)VD^\dagger=W\otimes I_K,\qquad
+W|i\rangle=\sum_j\varepsilon_{ji}\sqrt{P_{ij}}\,
+|j\rangle\otimes e_{ji},
+\tag{3.2}
+$$
+
+with the harmless tensor-factor permutation understood. Since $V$ is an isometry, $W^\dagger W=I_{\mathcal C}$. Its reduced configuration map $\Psi$ is trace preserving. The framed reduced channel is $\Psi\otimes\operatorname{id}_K$.
+
+For any $M\in M_2(\mathbb C)$ define
+
+$$
+\overline M=\sum_i|i\rangle\langle i|\otimes G_iMG_i^\dagger.
+$$
+
+In the changed frames this is $I_{\mathcal C}\otimes M$. Equation (3.2) and $W^\dagger W=I_{\mathcal C}$ give $\Phi^\dagger(\overline M)=\overline M$. For a joint framed density operator $\omega_{\mathcal C K R}=\sum_{i,k}|i\rangle\langle k|\otimes\omega_{ik}$, trace preservation gives
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\mathcal C}
+[(\Psi\otimes\operatorname{id}_{KR})(\omega)]
+&=\sum_{i,k}\operatorname{tr}[\Psi(|i\rangle\langle k|)]\,\omega_{ik}\\
+&=\sum_i\omega_{ii}=\operatorname{Tr}_{\mathcal C}\omega.
+\end{aligned}
+\tag{3.3}
+$$
+
+Thus the complete logical matrix algebra and its reference marginal, not just three numerical Pauli labels, survive. The source supplied this gauge mechanism for its fixed edge channel; (3.2) establishes its correspondence for the two smaller joint realizations. Actual reading or changing the frames remains an operational assumption. $\square$
+

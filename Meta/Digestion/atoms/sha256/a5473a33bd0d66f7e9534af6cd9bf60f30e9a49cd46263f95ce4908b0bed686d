@@ -1,0 +1,15 @@
+**Definition 9.1 (closure and the auxiliary reached set).** A nonempty
+fiber is forward-closed when $\rho(D)\subseteq D$. For a finite
+prefix-free $Q$ let
+
+$$
+D_Q=\{u\in D:Q\subseteq\operatorname{Pos}(u)\}.
+\tag{NSF.19}
+$$
+
+A complete finite binary cut means every infinite $L/R$ ray has a
+prefix in $Q$, equivalently $Q$ is the leaf set of a finite full
+binary prefix trie. The root singleton is complete; the empty cut is
+not. The set $D_Q$ is an auxiliary quantified domain, not a stronger
+entry promise and not a replacement for $D$.
+

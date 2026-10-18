@@ -1,0 +1,33 @@
+### 85.4. Polar separation of the old environment and the physical new-noise tangent
+
+Decompose the perturbed isometry by its orthogonal environment sectors:
+
+    V(t)=W(t) direct-sum R(t),
+    R(t)=tR+O(t^2),
+    W(t)^*W(t)=I_8-R(t)^*R(t).
+
+The old block W(t) is square: its codomain has dimension 4 times 2=8. At t=0 it is the unitary V_0, so it is invertible for sufficiently small t. Its polar factor
+
+    U(t)=W(t)[I_8-R(t)^*R(t)]^(-1/2)
+
+is therefore an 8-by-8 unitary, with U(0)=V_0. Let Bbar(t) be the original CPTP map obtained by tracing the old two-dimensional environment of U(t). It has Kraus rank two and retains the original output dimension four. This is an actual physical comparison channel, constructed from the square old block; no arbitrary contraction-block completion is assumed.
+
+Put D=R^*R. The C^2 hypothesis and the matrix square-root expansion imply, in any finite-dimensional channel norm,
+
+    B(t)-Bbar(t)=t^2 Psi_R+O(t^3),
+
+    Psi_R(X)=Tr_new(R X R^*)
+                    -(1/2) B_0(DX+XD).              (11)
+
+Indeed W(t)=U(t)[I-(t^2/2)D+O(t^3)], U(t)=V_0+O(t), and the environment-orthogonal old/new sectors contribute incoherently after partial trace. Wrong-output coherences within either sector are not discarded.
+
+The coefficient Psi_R is a genuine one-sided physical tangent at B_0. For 0<=s<=||D||op^(-1), with the evident interpretation if D=0, the isometry
+
+    V_s^R=V_0 sqrt(I_8-sD) direct-sum sqrt(s)R        (12)
+
+defines an original CPTP map C_s satisfying C_0=B_0 and C'_0=Psi_R. Combining (10) with differentiability shows
+
+    d_B f(A_0,B_0)[Psi_R]>=0.                       (13)
+
+The polar factor is used solely to identify the rank-two comparison and the order-t^2 remainder. No monotonicity of the approximation error under polar replacement is asserted or needed.
+

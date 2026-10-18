@@ -1,0 +1,35 @@
+**Definition 11.1 (eight selected original saturated singleton groups).**
+Under Assumptions 1.1 and 1.4, select eight occupied groups of
+$\mathscr G$, each a saturated singleton, with eight pairwise distinct
+finite slopes $z_i$. All other columns and their weights stay fixed,
+including both coordinates of every pair and every unused contact.
+Use the actual direction tags and maximizing height tags:
+
+$$
+\begin{gathered}
+x_i=\epsilon_i(1,z_i)^T/s_i,\quad s_i=\sqrt{1+z_i^2},\quad
+\epsilon_i\in\{\pm1\},\quad d_i=d_c(z_i),\quad n_i=n_c(z_i),\\
+\mathcal W(z)=d_c(z)\sqrt{1+z^2},\qquad
+\mathcal V(z)=d_c(z)E(z)+t n_c(z)\bar f(z),\\
+H_i=\mathcal V(z_i)+\epsilon_i\mathcal W(z_i)(l_u+l_vz_i)
+=(1+z_i^2)d_i\eta_1(x_i),\\
+\sigma_i\in\operatorname{argmax}_{\sigma\in\{\pm1\}}
+                                      \sigma\eta_1(x_i),\qquad
+\rho_i=\frac{p_i}{(1+z_i^2)d_i}>0,\\
+P_8(z)=\prod_{i=1}^8(z-z_i),\qquad
+\mathcal L_r(F)=\sum_{i=1}^8\frac{z_i^rF_i}{P_8'(z_i)}
+\quad(r=0,1,2),\\
+\mathcal R=\begin{pmatrix}
+\mathcal L_0(\epsilon\mathcal W)&\mathcal L_1(\epsilon\mathcal W)&\mathcal L_2(\epsilon\mathcal W)\\
+\mathcal L_0(\epsilon z\mathcal W)&\mathcal L_1(\epsilon z\mathcal W)&\mathcal L_2(\epsilon z\mathcal W)\\
+\mathcal L_0(\sigma H)&\mathcal L_1(\sigma H)&\mathcal L_2(\sigma H)
+\end{pmatrix}.
+\end{gathered}
+\tag{IC.48}
+$$
+
+The evaluations in a tagged row use its actual $\epsilon_i,\sigma_i$.
+Either maximizing description is retained at zero saturated height;
+$\sigma_iH_i=0$ there. $\mathcal W$ differs from the source scalar
+$W$ of (IC.4), and $\mathcal R$ differs from $R_\pm$.
+

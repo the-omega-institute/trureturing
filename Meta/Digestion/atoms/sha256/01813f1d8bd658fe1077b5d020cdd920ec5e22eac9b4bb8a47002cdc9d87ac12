@@ -1,0 +1,21 @@
+# FIB finite paid reads: explicit address compression and the exact whole-signature radius
+
+For a total hard budget of $k\ge1$ paid reads, put $M=2^k-1$.
+Every admissible rule for the original stationary XOR source has a lawful
+representative using only integer addresses in
+$[j-2M,j+2M+1]$, with exactly the same joint law of its unchanged seed,
+actual hidden endpoint, output, finite-return indicator, and paid count.
+A single relabeling of a supplied finite policy tree works at every
+allowed bias. The resulting radius $2M+1$ about $j$ is exactly optimal
+for preserving the entire oriented whole-tree signature. That stronger
+requirement has an exponential obstruction; the weaker joint-law-only
+problem is left open at polynomial radius.
+
+The quantitative component packing and this signature sharpness are the
+increment relative to [Original]. General finite representative existence,
+signature sufficiency, same-seed representation, compact attainment, and
+the budgeted-return projection already belong to that source. The proofs
+below include the interfaces needed to establish the quantitative claims
+without importing a risk inequality as an address argument. All proofs
+are ordinary mathematical arguments, without kernel certification.
+

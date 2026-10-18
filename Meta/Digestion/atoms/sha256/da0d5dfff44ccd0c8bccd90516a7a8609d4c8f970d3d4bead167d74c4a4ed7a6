@@ -1,0 +1,2 @@
+**Convention 2.5 (Coarse-grained states).** For $\pi\in\Pi_k(\mathtt q)$ with blocks listed as $B_1,\dots,B_k$, the coarse-grained colouring is $\mathrm{col}_\pi(u)=j$ when $\mathrm{col}(u)\in B_j$, and $S_3^{(k)}(\pi)=S_3^{(k)}(\psi,\mathrm{col}_\pi)$. By Corollary 3.5 this value does not depend on the order in which the blocks are listed. For the finest partition, $S_3^{(\mathtt q)}(\{\{1\},\dots,\{\mathtt q\}\})=S_3^{(\mathtt q)}(\psi,\mathrm{col})$.
+

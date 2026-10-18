@@ -1,0 +1,80 @@
+## 4. An infinite family passing the two credited tests
+
+**Theorem 4.1.** For every integer $N\ge3$, define the five-read history $H_N$ by
+
+$$
+\begin{aligned}
+A_0&=I,& A_1&=L^N=\begin{pmatrix}1&0\\N&1\end{pmatrix},\\
+A_2&=UL^{2N-1}=\begin{pmatrix}2N&1\\2N-1&1\end{pmatrix},\\
+A_3&=U^{N-1}JA_2=\begin{pmatrix}2N^2-1&N\\2N&1\end{pmatrix},\\
+A_4&=U^NA_3=\begin{pmatrix}4N^2-1&2N\\2N&1\end{pmatrix}.
+\end{aligned}
+\tag{4.1}
+$$
+
+Every deletion, including deletion of the initial endpoint, leaves four independent matrices, and $\Delta_x=\Delta_y=0$. For every $N\ge4$, $\Delta_{px}\ne0$, and the history has actual finite constant-drift collisions with positive sampled gains and both slopes arbitrarily close to zero. Thus the added tests strictly strengthen the earlier two, even after all survivor-span conditions are imposed.
+
+**Proof.** The successive left multipliers are
+
+$$
+L^N,\qquad UL^{N-1},\qquad U^{N-1}J,\qquad U^N.
+\tag{4.2}
+$$
+
+Chronologically these are $N$ copies of $(J,M)$; then $N-1$ copies of $(J,M)$ followed by $(M,J)$; then $J$ followed by $N-1$ copies of $(M,J)$; then $N$ copies of $(M,J)$. They have lengths $2N,2N,2N-1,2N$, totaling $8N-1$ literal atoms, with no interior reads. Multiplication gives exactly (4.1), at consecutive indices $0,1,2,3,4$. Equation (1.2) and the positivity of each atom give the actual single-source realization, including every unread state.
+
+After subtracting $I$, the nonconstant trace coefficient rows on $(p,q,r)$ for $A_1,A_2,A_3$ are
+
+$$
+(0,N,0),\qquad(2N-1,2N-1,1),\qquad(2N^2-2,2N,N).
+$$
+
+Their determinant is $N(N-2)\ne0$, so $I,A_1,A_2,A_3$ are independent. The unique dependence among all five, up to scalar, is
+
+$$
+(2-N)A_0+(2N-2)A_1-2NA_2+(2N-2)A_3+(2-N)A_4=0.
+\tag{4.3}
+$$
+
+To verify it entry by entry, the coefficients sum to zero, and their pairings with the three nonconstant sequences are
+
+$$
+\begin{aligned}
+\mathbf x:&\quad (2N-2)N-2N(2N-1)+(2N-2)2N+(2-N)2N=0,\\
+\mathbf y:&\quad -2N+(2N-2)N+(2-N)2N=0,\\
+\mathbf d:&\quad -2N(2N-1)+(2N-2)(2N^2-2)+(2-N)(4N^2-2)=0.
+\end{aligned}
+$$
+
+The last sum expands to $(-4N^2+2N)+(4N^3-4N^2-4N+4)+(-4N^3+8N^2+2N-4)=0$. These sequences and the constant lower-right entry determine all matrix entries. All coefficients in (4.3) are nonzero for $N\ge3$. A dependence on four survivors would extend to one on five with a zero coefficient, contradicting uniqueness. This proves every deletion assertion. The upper-right entries $0,0,1,N,2N$, together with $I\ne L^N$, also show that all endpoints are distinct.
+
+The off-diagonal sequences are
+
+$$
+\mathbf x=(0,N,2N-1,2N,2N)^{\mathsf T},\quad
+\mathbf y=(0,0,1,N,2N)^{\mathsf T},\qquad
+\mathbf t=(\mathbf x+\mathbf y)/N.
+\tag{4.4}
+$$
+
+This is an equality on the actual recorded clock. It forces both earlier determinants to vanish; the vectors $\mathbf1,\mathbf t,\mathbf x,\mathbf y$ are dependent here.
+
+Use the tails $\mathbf a,\mathbf b,\mathbf c,\mathbf e,\mathbf A$ from Section 3. The first three are independent by the span calculation, and a left null covector of their four-by-three matrix is
+
+$$
+w=(2N-2,-2N,2N-2,2-N).
+$$
+
+Equation (4.3) verifies its three zero pairings. Direct symbolic expansion gives
+
+$$
+\begin{aligned}
+w\mathbf A
+&=(2N-2)N-2N(4N-2)+(2N-2)6N+(2-N)8N\\
+&=-2N(N-3).
+\end{aligned}
+\tag{4.5}
+$$
+
+For $N\ge4$, $\mathbf A$ is therefore outside $\operatorname{span}(\mathbf a,\mathbf b,\mathbf c)$. Meanwhile $\mathbf e=(\mathbf a+\mathbf b)/N$, so $\mathbf e,\mathbf a,\mathbf c$ are independent. It follows that $\Delta_{px}=\det[\mathbf e,\mathbf a,\mathbf c,\mathbf A]\ne0$. All hypotheses of Theorem 3.1 have been verified. Its finite construction produces positive rank-one sources $S_1$ and $S_0=S_1+\epsilon\mathsf T_a^{-1}\mathsf CS_1$, slopes $a,a+\epsilon$ arbitrarily close to zero, and whole constants $0,\operatorname{tr}(S_0-S_1)$. Equations (2.4)–(2.5) give equality at all five original readings. This proves the collision and strictness assertions. ∎
+

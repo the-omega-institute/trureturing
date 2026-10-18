@@ -1,0 +1,14 @@
+**定义 16.1（确定性点集与随机圈的像）。** 令
+
+$$
+\mathcal D_n=\{(s(b),k(b)):b\in\mathcal B_n\},\qquad
+\mathcal P_n=\operatorname{conv}\{(s/n,k/n):(s,k)\in\mathcal D_n\}.
+$$
+
+$\mathcal D_n$ 是整数点集，$\mathcal P_n$ 是实概率的凸集。
+对整圈概率律 $\mu$，记
+$t=\mathbb E_\mu s/n$、$\kappa=\mathbb E_\mu k/n$。
+若每站窗口律相同，则 12.4 在同一 $\mu$ 下取期望给该律为
+$p(t,\kappa)$。任意 $\mu$ 均可通过额外均匀旋转变为具有共同站点律的
+概率律，而且这两个期望保持不变。
+

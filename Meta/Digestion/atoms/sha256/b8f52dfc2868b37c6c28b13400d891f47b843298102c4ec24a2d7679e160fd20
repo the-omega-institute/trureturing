@@ -1,0 +1,29 @@
+**Corollary 5.3 (no initial reference replaces order acquisition).** If
+$m,r>0$, no reference depending only on $t$, even the full initial syntax,
+allows recovery of every word in Definition 5.1 from that reference,
+the endpoint and the two totals alone. At $m=r=1$ the decisive pair is
+
+$$
+\rho(G_\alpha(t))=G_\beta(\rho(t)),
+\tag{ER.20}
+$$
+
+with respective actual words $\mathsf G\mathsf S$ and
+$\mathsf S\mathsf G$. More generally no one finite auxiliary archive
+alphabet suffices for all the families $m=r=s$.
+
+Proof. In (ER.20) the initial source and both counts agree, while the
+ordered action outputs differ. Theorem 5.2 gives the same obstruction for
+every $m,r>0$. For the last assertion the largest binomial coefficient
+in row $2s$ is the central one: successive-coefficient ratios are
+$(2s-k)/(k+1)$, increasing the coefficients up to the middle and
+decreasing them thereafter. As their sum is $4^s$,
+
+$$
+\binom{2s}{s}\ge\frac{4^s}{2s+1}.
+\tag{ER.21}
+$$
+
+The necessary supplementary bits are consequently at least
+$2s-\log_2(2s+1)$, an unbounded quantity. $\square$
+

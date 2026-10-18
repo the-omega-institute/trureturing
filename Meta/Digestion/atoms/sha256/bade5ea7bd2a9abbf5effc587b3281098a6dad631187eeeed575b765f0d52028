@@ -1,0 +1,35 @@
+**Example 224.3 (Reserve, existence and actual closed tails).** Uniform
+weight $1/\binom{k+1}{3}$ on the triples is the plateau law of 87.1;
+its realization and endpoint catalog are also supplied by 176.1 and
+200.4. Its existence receives no additional amplitude classification.
+For $k=3$ the four triples give weight $1/4$ each on
+
+$$
+O(1,2;1,2,3),\quad O(1,2;1,2,0),\quad
+O(1,3;1,3,0),\quad O(2,3;2,3,0).
+$$
+
+An exhaustion-zero queried-endpoint-only normalized rule has total
+correct sole-zero degree at most two. Here $ks=2+e>2$, so that
+restricted constructor cannot describe the feasible plateau; a numerical
+unqueried exhaustion reserve of exactly $e$ is necessary.
+
+On the original selected marked laws take
+
+$$
+a_n=1\ (n\le k),\qquad a_{k+j}=e2^{1-j}\ (j\ge1),\qquad
+\varepsilon=e.
+$$
+
+These amplitudes are positive, nonincreasing and tend to zero, with
+strict active length $k$ and $a_{k+1}=e$. Every low-word TV error is
+$e$, since its target is the correct point mass and its correct output
+probability is $s$. Every actual later source has tail error
+$\max(e,a_n)=e$. One source-independent seed chooses the entire triple
+before replies; its full $N$ completion obtains both replies and ignores
+the reply after the stopped rule would have halted. These ignored
+requests count. This is the reused closed-cap transport, not a necessity
+classification of arbitrary original full-carrier laws. Theorems
+224.1–224.2 impose normalization; they classify neither a general conic
+mass $M$, nor the full $N$ face, nor its $00$ cells.
+

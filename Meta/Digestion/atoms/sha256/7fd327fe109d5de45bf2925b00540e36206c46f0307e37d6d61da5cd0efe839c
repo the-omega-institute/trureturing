@@ -1,0 +1,33 @@
+**Proposition 5.5 (literal entry and return).** At every reached $R_r$, a
+completed canonical 01 call has a finite paid return to the same relation
+with the actual new source state and longer $M$. History entry has the
+stated actual retained selector and invocation token. Choice 00 reaches
+the unchanged original client entry with its required actual workspace
+loan. All partial token, input, parser and callback phases remain distinct.
+
+Proof. The choice receiver preserves latch 6 until its write/test and
+constructs its physical descriptor before bank work reuses scratch.
+Its prefix cases consume exactly one or two input bits, so none is
+silently taken as a frame header. On 01, the source-token preconditions
+are those of CAP Definition 4.6. CAP Lemma 6.7 gives complete finite
+recording, mandatory acquisition, final row ACK, source TOK and idle CTL.
+The inlining changes only that final successor. No compiler assignment
+occurs inside $F^A$, so its history-bank parity is retained in a finite
+product of the source control with the two possible parities. Its
+normalization sets the public role permutation and pays both Tail scans.
+The original source/counter/directory changes are genuine operations;
+no old current-state snapshot is restored over them. Proposition 3.5
+then gives the exact new cycle item and restored archive heads.
+
+The parked 24–27 heads/bytes and all old handle meanings survive by CAP's
+maintenance/source boundary discipline. Public scratch need not equal
+its earlier bytes; none is live for the parked entry. On 00 the twelve
+actual TOKs and final CTL establish CAP Definition 8.1's actor entry;
+its table execution positions and constructs its own state/packet work.
+Thus the entry follows from the explicit parked-client construction,
+not an assertion that an arbitrary raw call preserves a suspended
+arithmetic computation. On 1 the actual TOK and native ingress establish
+both present invocation authority and retained selector material. Every
+interior state has its installed next row; no partial seal or loan grants
+another entry. ∎
+

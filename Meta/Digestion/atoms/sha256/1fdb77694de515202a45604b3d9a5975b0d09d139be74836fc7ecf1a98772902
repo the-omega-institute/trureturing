@@ -1,0 +1,57 @@
+## 103. 局部通道不能读出配对连接
+
+**命题 C-103.1（局部后处理的连接盲性）。** 沿用定义 C-102.1。设
+\(\mathcal E:\mathcal L(\mathcal H)\to\mathcal L(\mathcal K)\) 是任意完全正保迹映射，
+\(M\) 是 \(\mathcal K\) 上的任意可观测量。则
+
+$$
+\operatorname{tr}\!\left[
+(M\otimes I)(\mathcal E\otimes\operatorname{id})(\Delta)
+\right]=0.
+\tag{C103.1}
+$$
+
+第二份上的任意局部通道也有同样结论。换句话说，给定相同的单份边缘，任意只在一份上
+进行的量子处理、测量和经典后处理，都不能把配对连接 \(\Delta\) 变成单份读数差异。
+
+**证明。** 取 \(\mathcal E^*\) 为 Hilbert--Schmidt 对偶。迹的循环性和对偶定义给出
+
+$$
+\operatorname{tr}\!\left[
+(M\otimes I)(\mathcal E\otimes\operatorname{id})(\Delta)
+\right]
+=
+\operatorname{tr}\!\left[
+(\mathcal E^*(M)\otimes I)\Delta
+\right].
+$$
+
+右端由式 (C-102.2) 为零。完全正性和保迹性只保证 \(\mathcal E\) 是合法的局部量子
+操作；零值本身只使用 \(\operatorname{Tr}_1\Delta=0\)。证毕。
+
+这条命题把两个层次分开。\(\Delta\) 可以被二份效果 \(Q\) 读出，因为
+\(\operatorname{tr}(Q\Delta)\) 未必为零；但任何单份通道都只能看到边缘 \(\rho\)。因此
+“存在非零二份连接读数”不能推出单份 coherent flag port，也不能推出纠缠。后两种
+结论分别需要二份端口的量词和独立的纠缠判据。
+
+**定义 C-103.2（二份端口的类型提升）。** 若 \(v_i\in\mathcal H\) 是单份 probe，
+二份问题的自然 probe 是
+
+$$
+w_{(i,j)}=v_i\otimes v_j\in\mathcal H\otimes\mathcal H.
+$$
+
+只有在端口的输入域、密度输入的全称量词以及保持的 probe 概率都同时提升到
+\(\mathcal H\otimes\mathcal H\) 后，才可以提出二份 port 维数下界，例如比较各
+product component 的维数与二份相干维数。C-102 的 \(\Delta\) 在这一路线上只供应
+来源敏感度
+
+$$
+\delta_{ij}=\operatorname{tr}\!\left[
+(P_i\otimes P_j)\Delta
+\right],
+$$
+
+不供应端口下界本身。当前仓内结果尚未证明该二份 product-component 下界，故该桥接
+仍标为开放问题。
+

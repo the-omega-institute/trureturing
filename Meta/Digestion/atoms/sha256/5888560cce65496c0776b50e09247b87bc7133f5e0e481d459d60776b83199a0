@@ -1,0 +1,23 @@
+**Definition 1.1 (Whole windows and the common law).** Let $n\ge4$, $0<\rho\le1/8$, and $I=\{0,\ldots,n-1\}$. The five-window alphabet, with bits written from low to high, is
+
+$$
+\Sigma=(000,100,010,101,001).
+$$
+
+An element $\mu\in\operatorname{Laws}(n)$ assigns a real mass $\mu_i(s)$ to each $i\in I$ and $s\in\Sigma$. Assume $\operatorname{Admissible}(\rho,\mu)$, meaning
+
+$$
+\mu_i(s)\ge\rho\quad(i\in I,s\in\Sigma),\qquad
+\sum_{s\in\Sigma}\mu_i(s)=1\quad(i\in I).
+$$
+
+On the complete carrier $\Omega=\Sigma^I=\operatorname{Input}(n)$, define
+
+$$
+M_\mu(w)=\prod_{i\in I}\mu_i(w_i),\qquad
+\mathbb E_\mu F=\sum_{w\in\Omega}M_\mu(w)F(w)
+=\operatorname{productExpectation}(\mu,F).
+$$
+
+This is one probability law for every function and coefficient vector below. It includes every complete word, including zero windows and words with occupied adjacent seams. The coordinates $W_i(w)=w_i$ are mutually independent whole windows with their specified, possibly unequal, laws.
+

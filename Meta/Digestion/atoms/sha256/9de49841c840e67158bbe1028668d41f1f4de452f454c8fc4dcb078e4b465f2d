@@ -1,0 +1,51 @@
+### 3.1 准备与有限参考的精确压缩
+
+先固定一个无经典随机化的协议。利用额外有限参考将输入纯化，写成
+
+$$
+|\psi\rangle=\sum_z|z\rangle|r_z\rangle,
+\qquad \pi(z)=\langle r_z,r_z\rangle.
+$$
+
+所有 $U_b$ 在 $z$ 基中对角，故来源输出的 Gram 矩阵只通过 $\pi$ 依赖输入，恰等于系统输入 $|\chi_\pi\rangle$ 所给的 Gram 矩阵。原混态测量可忽略附加纯化参考，从而保持原概率。
+
+相同的 Gram 矩阵给出两个带标签输出族张成空间之间的等距映射：将
+
+$$
+\sum_b c_b|\psi_b\rangle
+\quad\text{映到}\quad
+\sum_b c_b|\chi_{\pi,b}\rangle.
+$$
+
+Gram 相等同时证明映射良定义并保持内积。经这个等距映射转移原 POVM，在正交补上任意补全，就同时保持每个真实 $b$ 下的全部条件答案概率。映射与转移测量只依赖所选准备及公开候选模型，不依赖未知真实源。
+
+因此，优化任意输入和有限参考，精确归约为优化概率分布 $\pi$ 与 $|\chi_\pi\rangle$ 输出族的末端 POVM。经典随机化不能提高 Bayes 上确界，因为随机化的 Bayes 分数是各条件协议分数的平均。这一归约允许参考维数和准备随整数合同变化。
+
+置 $t=\sqrt{1-x^2}$。令 $D=\{i:b_i\ne c_i\}$、$s_S(b)=\prod_{i\in S}s_i(b)$，则规范化 Gram 矩阵精确为
+
+$$
+\begin{aligned}
+G_{bc}(\pi,x)
+&=\sum_z\pi(z)\prod_{i\in D}\bigl(x-it s_i(b)z_i\bigr)\\
+&=\sum_{S\subseteq D}x^{|D|-|S|}(-it)^{|S|}s_S(b)m_S,
+\qquad G_{bb}=1.
+\end{aligned}
+\tag{3.1}
+$$
+
+Walsh 特征的正交恒等式为
+
+$$
+\sum_z z_Sz_T=
+\begin{cases}2^n,&S=T,\\0,&S\ne T.\end{cases}
+$$
+
+由此得到反演
+
+$$
+\pi(z)=2^{-n}\sum_{S\subseteq\{1,\ldots,n\}}m_Sz_S.
+\tag{3.2}
+$$
+
+非空矩是概率单纯形的实坐标，零矩向量的一个邻域位于其内部。
+

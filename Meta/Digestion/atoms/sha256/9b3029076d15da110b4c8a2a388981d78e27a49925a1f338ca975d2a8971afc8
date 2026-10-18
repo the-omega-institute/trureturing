@@ -1,0 +1,39 @@
+### 105.1. Original domain and the complementary-polar hypothesis
+
+Retain the original calibrated \(\mathbb C^8\to\mathbb C^4\) channels, fixed correlated encoding, four two-coordinate fibres and unhalved arbitrary-reference error \(F(G,H)\) of (104.1). Suppose \((G,H)\) is a local minimum on the full domain \(\mathcal E^2\), with
+\[
+\operatorname{rank}G=7,\qquad \operatorname{rank}H=6,
+\qquad 0<t=F(G,H)<\tfrac14.
+\tag{105.1}
+\]
+Suppose that the support \(S\) of the full kernel vector of \(G\) has occupancy \((2,1,1,0)\). Label its whole original fibre \(F=\{1,2\}\) and its singleton coordinates \(J=\{3,4\}\); the two singleton partners remain outside \(S\).
+
+Use inner products linear in their second argument and choose the supported \(H\) record basis so that \(h_1=e_1,h_2=e_2\). The additional complementary-polar hypothesis is
+\[
+|\langle h_1,h_3\rangle|=|\langle h_2,h_4\rangle|=c,
+\qquad
+|\langle h_2,h_3\rangle|=|\langle h_1,h_4\rangle|=s,
+\qquad c,s\ge0,\quad c^2+s^2=1.
+\tag{105.2}
+\]
+This is a restriction on the two polar angles; for \(c\ne s\) they are unequal. No symmetry is imposed on the outside records or on the other Gram.
+
+**Theorem 105.1.** There is no full-domain local minimum satisfying (105.1), the stated support condition and (105.2).
+
+For the proof, [RT III §§95–97](ARITHMETIC_HOLOGRAPHIC_RT_III.md) give
+\[
+\operatorname{rank}H_S=\operatorname{rank}\mathsf R=2,
+\qquad G_S=H_S\odot\overline{\mathsf R},
+\qquad \mathsf R\succeq0,
+\qquad \mathsf R_{ii}=1,
+\qquad \mathsf R\operatorname{diag}(\overline a)H_S=0,
+\tag{105.3}
+\]
+where \(a\) spans the full kernel of \(G\) and all four supported coordinates are nonzero. The same sections give equality of principal and full complete norms and unrestricted principal one-party best responses. RT III §99 gives uniqueness of every principal norming pair, including singular competitors, and positive definiteness of its density. The same original common normer satisfies
+\[
+W_{ij}=-\frac{\alpha a_i\overline a_j}{2\overline H_{ij}},
+\qquad \alpha>0,
+\tag{105.4}
+\]
+on pairs in distinct supported original fibres. These statements concern a local minimum in the full original domain. They do not assert a joint local minimum on a principal or fixed-rank domain.
+

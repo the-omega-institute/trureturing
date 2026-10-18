@@ -1,0 +1,13 @@
+**Definition 65.1 (A target-tail finite-cover radius).** Use the original consumer events $H_y,F_y$ of (40.1), original target probabilities $h_y,e_y$, and the occupied high-target tail $D=D(C,K)$ of (61.2). This tail is nonempty. Put
+
+$$
+a=\inf_{y\in D}h_y,\qquad b=\sup_{y\in D}e_y,
+\qquad
+\chi_{\mathrm{TV}}(D)=
+\inf_{\substack{n\ge1\\\nu_1,\ldots,\nu_n\in\mathcal P(\Theta,\mathcal F)}}
+ \sup_{y\in D}\min_{1\le j\le n}\operatorname{TV}(\mu_y,\nu_j).
+\tag{65.1}
+$$
+
+Here $b$ is a scalar false-proposal bound on this tail, distinct from the prescribed profile function in (44.2). The centers are arbitrary probability measures on the entire original tape sigma algebra. They need not be targets, lie in $P_{\mathcal G}$, satisfy a row, or be lawfully acquired. The infimum concerns finite covers of the original targets, rather than the local single-center radii in (50.1).
+

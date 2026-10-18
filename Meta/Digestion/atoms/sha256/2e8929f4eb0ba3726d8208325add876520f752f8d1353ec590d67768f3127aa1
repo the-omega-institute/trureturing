@@ -1,0 +1,52 @@
+**Theorem 41.2 (realization and the unique original-frame kernel).** The map (R.195) is an actual original real-Kraus encoder. Its phase-output difference has spectrum $(a,\beta,0,-\beta,-a)$, its complementary phase blocks are
+
+$$
+ \tau=\bar\tau=\begin{pmatrix}a&0\\0&\beta\end{pmatrix},\qquad
+ C=\bar C=\sqrt{\frac{au}{2}}\,|0\rangle_E\langle1|_E,
+ \qquad
+ \sigma=\begin{pmatrix}1-u&0\\0&u\end{pmatrix},\qquad
+ S=\begin{pmatrix}1-u&0\\0&0\end{pmatrix},
+\tag{R.196}
+$$
+
+and its original-input-frame $J_0$ has rank five and one-dimensional kernel spanned by the unit vector
+
+$$
+ \xi=\frac{-\sqrt u\,|0\rangle_R|0\rangle_E
+ +\sqrt a\,|2\rangle_R|1\rangle_E}{\sqrt{a+u}}.
+\tag{R.197}
+$$
+
+**Proof.** The columns within each Kraus matrix are pairwise orthogonal, so
+
+$$
+ K_0^TK_0=\operatorname{diag}(a,a,1-u),\qquad
+ K_1^TK_1=\operatorname{diag}(\beta,\beta,u),
+$$
+
+and their sum is $I_3$. Set $f_1^\pm=(e_0\pm ie_1)/\sqrt2$, $f_2^\pm=(e_2\pm ie_3)/\sqrt2$. Directly,
+
+$$
+ N_{\beta,u}(\chi_\pm)
+ =a|f_1^\pm\rangle\langle f_1^\pm|
+ +\beta|f_2^\pm\rangle\langle f_2^\pm|.
+$$
+
+The four displayed vectors are orthonormal, so the actual difference has the stated spectrum and the real Kraus list meets the original-class conditions. The physical member is obtained by the same coordinate correspondence (P.1), without introducing additional physical operations.
+
+Contracting the actual isometry with $\chi_\pm$ and $|2\rangle$ gives the first three blocks in (R.196). Since $C^\dagger\tau^{-1}C=(u/2)|1\rangle_E\langle1|_E$, subtraction of it and its conjugate gives the displayed $S$. All trace and range conditions of (R.3)–(R.4) hold. In original reference coordinates, the five output contractions give the Gram columns
+
+$$
+ \begin{aligned}
+ b_0&=\sqrt a\,|0,0_E\rangle+\sqrt u\,|2,1_E\rangle,&
+ b_1&=\sqrt a\,|1,0_E\rangle,\\
+ b_2&=\sqrt\beta\,|0,1_E\rangle,&
+ b_3&=\sqrt\beta\,|1,1_E\rangle,&
+ b_4&=\sqrt{1-u}\,|2,0_E\rangle,
+ \qquad J_0=\sum_{j=0}^4b_jb_j^\dagger.
+ \end{aligned}
+\tag{R.198}
+$$
+
+All five are nonzero and have mutually disjoint coordinate supports; $1-u\geq\beta>0$. They are linearly independent. Their unique orthogonal direction in the six-dimensional reference/environment space is (R.197). This proves rank and kernel for every parameter in the continuum, including $u=a$ and $\beta=1/2$. $\square$
+

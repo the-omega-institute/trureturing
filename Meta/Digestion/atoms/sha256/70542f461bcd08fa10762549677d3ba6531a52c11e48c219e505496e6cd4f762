@@ -1,0 +1,70 @@
+**Corollary 14.3 (a sufficient original finite range).** Retain all
+source premises of Assumption 1.1. For finite $t\ge\max(t_0,800)$,
+every nonnegative same-$B(t)$ law satisfies
+
+$$
+M_0\succ\frac2{25}D_3.
+\tag{IC.64}
+$$
+
+In particular Theorem 14.2's exact-three-pure deletion applies
+throughout this range whenever its separate attained-face and
+companion premises hold.
+
+Proof. The integer endpoints in all nine rows of the pinned GC
+Definition 6.1, divided by $2^{224}$, lie strictly inside FC18's
+coarse intervals for the seven amplitudes and
+$0.49<m_1<0.50$, $0.34<m_2<0.35$. Each containment follows
+by multiplying its rational endpoints by $2^{224}$ and comparing
+the corresponding original integer pair. Use the cancelled formulas
+
+$$
+r_s=\frac{c_{\rm src}dh_1}{abh_2},\quad
+\alpha=\frac1{1+r_s},\quad\beta=1-\alpha,\quad
+\delta=\frac{ab}{h_0h_1}+\frac{c_{\rm src}d}{h_0h_2}.
+$$
+
+Exact outward rational interval evaluation of these expressions and
+(IC.3)–(IC.4) gives the following sufficient bounds. The capacity
+entry is a lower bound for
+$\min(N_u,N_v)/\max(D_u,D_v)$, hence also for $c_{\min}$.
+
+| Expression | Coarse rectangle | Original nine dyadic rows |
+| --- | --- | --- |
+| uniform capacity lower bound | $0.063190656152$ | $0.064355091074$ |
+| upper bound for $V$ | $8.218570560831$ | $8.062157279213$ |
+| upper bound for $W$ | $33.674855184265$ | $33.364535594888$ |
+| upper bound for $\mu$ | $11.379968841496$ | $11.156300845208$ |
+
+All lower inequalities and upper inequalities in the table are strict;
+all decimals are exact rationals. To obtain the first row, form the
+lower endpoints of $N_u,N_v$ and upper endpoints of $D_u,D_v$
+by addition, the extrema of four endpoint products, and reciprocal
+only for positive intervals, then take the indicated minimum divided
+by maximum. The remaining rows use those same outward operations on
+$V=m_2h_1^2/b^2$, $W=m_1h_2^2/d^2$ and
+$\mu=\alpha V+\beta W$. Lower endpoints round down and upper
+endpoints round up to denominator $10^{12}$. No radical, TP
+simplification, centre evaluation or sampled corner is involved.
+In particular the coarse capacity lower bound is exactly
+$7898832019/125000000000>1/16$, consistent with FC24.1.
+
+The shorter comparisons in FC (FC.147) follow independently from
+these same containing intervals:
+
+$$
+\begin{gathered}
+V<\frac{0.35(0.707)^2}{(0.1459)^2}<\frac{411}{50},\qquad
+W<\frac{0.50(0.810)^2}{(0.0987)^2}<\frac{842}{25},\\
+\alpha<0.879,\quad\beta<0.124,\qquad
+\mu<0.879\frac{411}{50}+0.124\frac{842}{25}
+=\frac{114017}{10000}<12.
+\end{gathered}
+$$
+
+Thus $c_{\min}>1/16$, $\max(V,W)<34$ and
+$T_3<16(12+34)=736$. For $t\ge800$,
+$1-T_3/t>1-736/800=2/25$. Apply (IC.59).
+These expression enclosures preserve the stipulated single source;
+they supply no root existence or off-root TP. $\square$
+

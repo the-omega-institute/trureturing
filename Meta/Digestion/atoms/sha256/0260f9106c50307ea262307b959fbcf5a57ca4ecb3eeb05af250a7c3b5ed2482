@@ -1,0 +1,41 @@
+**Lemma 5.3 (complete accepted-target binding on the actual route).** On
+$\mathcal A_{\mathrm{gc}}$, current checks and all applicable past
+predicates succeed for the authentic independently encoded body of the
+selected $h_k$. Both general arms bind the same unique actual target as
+GCA. SourceOffset includes $t=0$ before any header IN and $t=f-e$ after
+the final idle CTL; neither endpoint needs a strict-Reserve predicate.
+
+Proof. GCA's actual CoverRef/PackageRef callbacks acquire $c,p$, check
+the entire expected tagged binding and resolve their immutable backing.
+Definition 2.1 preserves these routines. The domain supplies an actual
+finite completed predecessor, including every earlier suffix. Its
+frozen five-field items supply each actual earlier mode and frame at
+their original sites. Induction along this finite witness with the
+matching literal Step proves GCA Theorem 4.2's correspondence for this
+graph; extra converter rows have no new IN. GCA's physical locator
+argument and unary range calculation, Theorems 5.5–5.6, then apply.
+This argument uses completion of the given predecessor, not completion
+of the selecting flight. Section8 proves the latter by induction.
+Thus AcquisitionOffset gives $k=a+t$ exactly in $[a,b]$, and SourceOffset
+finds its unique completed item and its physical $e,f$ with
+$a<e<f<b$, then gives $k=e+t$ exactly in $[e,f]$.
+
+Theorem 4.3 gives the actual prefix from each independent body's basic
+data. Its acquisition annotation is the one at $a$. In the source arm
+the unique entry is already included at $e$; the exit is included just
+when $k=f$. All constructed request and source facts agree because they
+are facts of this same call in this same actual predecessor. The old
+prefix need not contain its later response or acquired copy. GCA's
+current immutable cover, source-item resolution and bounded locator
+check those later facts without changing the old prefix. Mode0 is the
+existing scoped validation, with this graph's actual clocks and origins.
+Consequently no check needs a future payload as a decoder input. ∎
+
+This lemma concerns authentic, currently delivered bodies. A self-consistent
+body plus a printed reference is not a hostile-input authentication
+theorem. The current channel supplies the binding between that body
+and the selected package. Without the actual cover/package resolution
+and sealed-copy route, the old-body tests alone do not establish that
+a later $f$ or $b$ is genuine. This distinction is part of the service
+contract, not an omitted decoder hypothesis asserted as a native bridge.
+

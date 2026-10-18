@@ -1,0 +1,33 @@
+**Definition 1.1 (perfect binary leaves).** Fix $h\ge1$, put $d=h+1$ and
+$m=2^h$. For a bit string $b\in\{0,1\}^m$, let $u_b$ be the actual perfect
+height-$h$ tree whose leaves, in left-to-right order, are $\alpha$ for $0$ and
+$\beta$ for $1$. These are elements of the unchanged canonical interface
+$S_d$. Let $f:\{0,1\}^m\to\mathbb Q_{\ge0}$ and give every other state of
+$S_d$ a fixed positive rational weight $\eta$. Write
+
+$$
+W=\sum_{x\in S_d}w(x),
+\qquad w(u_b)=f(b),
+\qquad \mu(x)=w(x)/W.
+\tag{GCB.1}
+$$
+
+When $f$ is strictly positive, $\mu$ is strictly positive on all of $S_d$;
+the incidence identity itself also allows zeros in $f$.
+
+For every internal target $q$ with $|q|<h$, impose the constant factor
+$\Gamma_q=(0,0)$. For every terminal target $q$ of length $h$, choose the
+successor slot of that terminal in a cyclic partition of all terminal slots and
+use one native donor literal at that successor slot, decoding
+
+$$
+\alpha\mapsto(2,1),
+\qquad \beta\mapsto(1,0),
+\qquad \mathsf{branch},\mathsf{absent}\mapsto(2,1).
+\tag{GCB.2}
+$$
+
+The donor indices are arbitrary original block indices and may form cycles.
+Every equation is a complete native target equation; no new query port is
+introduced.
+

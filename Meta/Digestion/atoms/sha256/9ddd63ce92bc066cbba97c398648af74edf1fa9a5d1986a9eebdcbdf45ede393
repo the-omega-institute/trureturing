@@ -1,0 +1,4 @@
+**Lemma 4.2 (Connectivity and coordinate matchings).** The graph $\mathcal G_i$ is connected. For any fixed coordinate $k\ne i$, its edges labelled by a flip at $k$ form a matching.
+
+Proof. Delete every one other than the two fixed anchors. Each deletion is legal and preserves $E_i$. This reaches the complement with just those anchors equal to one. Reverse such a deletion path to reach any other complement. Empty exterior sides and the singleton case satisfy the same assertion. At a fixed coordinate a complement has at most one possible flipped neighbor, proving the matching claim. $\square$
+

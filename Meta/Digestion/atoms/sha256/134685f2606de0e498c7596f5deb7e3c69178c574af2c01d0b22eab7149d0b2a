@@ -1,0 +1,70 @@
+**Proposition 6.1 (Placement of the lower witness in the full dual).**
+In the stationary fifteen-event formulation of QPC Theorem 3.3,
+the certificate in §2 has singleton multipliers
+$A_{\{s\}}^+=w_s\Pi_s$, all negative multipliers zero, and all pair
+multipliers zero. It is a feasible decomposable dual certificate for the
+full original objective with value $5197/10000$.
+
+Proof. A single common normalized separable Choi state must obey
+$\operatorname{Tr}_{\rm out}\chi=I/5$ and all inequalities
+
+$$
+-zI\le H_J\le zI,\qquad
+H_J=\Pi_J-5\left[\operatorname{Tr}_{\rm out}
+((\Pi_J\otimes I)\chi)\right]^T,
+\quad 1\le|J|\le2.
+\tag{6.1}
+$$
+
+For PSD multipliers with
+$\sum_J\operatorname{tr}(A_J^++A_J^-)=1$, put
+$Z_J=A_J^+-A_J^-$,
+$\beta=\sum_J\operatorname{tr}(Z_J\Pi_J)$ and
+$\mathcal W_Z=5\sum_J\Pi_J\otimes Z_J^T$.
+Pairing (6.1) with those multipliers gives
+
+$$
+z\ge\beta-\operatorname{tr}(\chi\mathcal W_Z).
+\tag{6.2}
+$$
+
+For stationary $\chi$, joint rotation averaging replaces $\mathcal W_Z$
+by its twirl without changing that pairing. With the stated multipliers,
+$\beta=1$ and this twirl is exactly $\mathcal W$ in (2.4).
+Equation (2.10) is the decomposable representation $P_0+P_1^\Gamma$
+with $P_0=P_1=P/2\ge0$.
+Pair with the same PPT TP state and apply (2.17) to obtain
+$z\ge1-4803/10000$.
+Zero pair multipliers do not drop the pair constraints from the primal
+problem or assert equality with a singleton subproblem.
+
+The supplier stationary reduction preserves the whole complex class:
+conjugating a rank-one Kraus family by actual-walk matrices preserves
+rank and TP; recurrence makes time-shifted tail suprema equal to the
+original error; convex averaging cannot increase this supremum.
+Compactness of the TP separable Choi slice keeps the average admissible,
+and the supplied finite support representation replaces it by at most
+625 fixed flags. Stationarity then makes every event residual a conjugate
+of its zero-wait residual. These are precisely the hypotheses and
+conclusion of QPC Theorem 3.3, not independent local twirls or
+rank-preserving character decompositions. The lower proof in Theorem 2.5
+also avoids this reduction entirely.
+
+Replacing separability in (6.1) by PPT or an outer extension condition
+can only lower the minimum over $z$. Thus a verified dual point gives a
+necessary bound, whereas a feasible relaxed state need not be a legal
+scalar port. The extension and complex polynomial-witness frameworks of
+[Doherty–Parrilo–Spedalieri](https://arxiv.org/html/quant-ph/0308032)
+and
+[Derksen–Johnston–Lovitz, *X-arability of mixed quantum states*, §§1.1–1.2, 4](https://arxiv.org/html/2409.18948)
+apply with the product-vector Segre variety when the marginal and event
+constraints are retained. The fixed-point and fixed-marginal setting of
+[Koßmann–Zeiss, *Fixed points in de Finetti hierarchies*, §§4–5, 7.1](https://arxiv.org/html/2607.23689)
+requires its own constraint correspondence: joint diagonal walk symmetry
+here is not independent local fixed-point symmetry.
+Exact-algebraic SDP methods such as
+[Henrion–Naldi–Safey El Din, *Exact algorithms for semidefinite programs with degenerate feasible set*](https://arxiv.org/html/1802.02834)
+concern spectrahedral optimization; the explicit determinant identities
+in §§2 and 4 certify these particular points without asserting an optimum
+of an SDP or of the separable problem. $\square$
+

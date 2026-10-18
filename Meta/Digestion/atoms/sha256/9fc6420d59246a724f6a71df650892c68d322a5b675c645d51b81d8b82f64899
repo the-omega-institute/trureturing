@@ -1,0 +1,35 @@
+## Scope and theorem
+
+This is a paper-first strict hyper-ideal realization of one explicit ideal
+triangulation. It is a new finite incidence class beyond the degree-eight /
+degree-at-least-twelve three-edge packet theorem: the same three-star packet
+has a global edge of degree exactly ten (and another of degree 38).
+
+Take the 16 tetrahedra and the face pairings in the table below. Local edges
+are ordered `(01,02,03,12,13,23)`. The six degree-eight classes are the local
+edges 0,1,2 in every tetrahedron; thus every tetrahedron has one three-star
+packet. The remaining classes have degrees 10 and 38. Every degree-ten
+occurrence has a degree-38 high neighbour in the actual local incidence
+(table audit below).
+
+**Generalized incidence theorem.** The same argument applies to any finite
+orientable ideal triangulation whose global degrees lie in
+`{8,10} ∪ {d:d>=38}`, with three-star packets in every tetrahedron, provided
+that every degree-ten occurrence admits a formula-coordinate relabelling with
+low neighbours in positions 2 and 6, opposite low edge in position 4, and high
+neighbours in positions 3 and 5, with at least one of those two high neighbours
+of degree at least 38 (the other may have degree 10 or at least 38). For each high edge of degree `d>=38`, use an upper endpoint `21/20` and
+choose a lower endpoint `1+delta_d` with
+`0<delta_d<2*(1-cos(2*pi/d))/(2+cos(2*pi/d))`; the interval is nonempty
+(and the finite product is compact). The degree-ten interval is the one below.
+The explicit 16-tetrahedron table supplies a nonempty orientable instance.
+
+**Theorem.** This triangulation has a nondegenerate hyper-ideal length vector
+with zero cone curvature at every edge, hence a hyperbolic realization with
+totally geodesic boundary. Its edge degrees are
+`[8,8,8,8,8,8,10,38]`.
+
+No unrestricted minimum-eight or minimum-six CFMP claim is made. The proof is
+an actual shared-edge co-volume minimum on a heterogeneous global box; no
+zero-curvature solution is assumed in advance.
+

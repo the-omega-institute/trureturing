@@ -1,0 +1,54 @@
+**Definition 368.4 (Full scores and the signed hull).** A full score $y=(A_w,C_w,P_w;T)\ge0$ has a nonnegative real coefficient at every event row in (368.5). Its reward at a zero word and label $z$ is
+
+$$
+f_y(w,z)=A_w\mathbf1_{z=0}+C_w\mathbf1_{z=n(w)}
+              +P_w\mathbf1_{z\in\{0,n(w)\}},
+\qquad f_y(1^L,z)=T\mathbf1_{z=0}.
+\tag{368.9}
+$$
+
+Unlisted weights are zero, without deleting their rows. With $\mathcal D_N,\mathcal D_O$ the entire deterministic catalogs, define
+
+$$
+\begin{aligned}
+W_y&=y\cdot r
+ =\sum_{n(w)\ge3}A_w+\sum_{n(w)\le2}C_w+\sum_wP_w+T,\\
+B_C(y)&=\max_{D\in\mathcal D_C}y\cdot z(D),\qquad
+\Delta_C(y)=B_C(y)-W_y\ge0\quad(C=N,O),\\
+Q(y)&=(\beta,K),\qquad
+\beta_j=\sum_{n(w)=j}(C_w-A_w),\qquad
+K=\sum_w(A_w+C_w+P_w)+T.
+\end{aligned}
+\tag{368.10}
+$$
+
+For a schedule, its support is obtained by summing $f_y$ within each complete cell, maximizing over all labels in that cell, then summing those maxima. Maximizing over all schedules gives $B_C$. The anchor belongs to both catalogs, so both excesses are nonnegative. The complete common-mass bound is
+
+$$
+y\cdot\bigl(z(p)-Mr\bigr)\le M\Delta_C(y)
+\tag{368.11}
+$$
+
+for any mass-$M$ allocation in class $C$. Each cell with owning mass $m_s$ contributes at most $m_s$ times its cell maximum. Sum over cells and schedules and subtract $MW_y$. This proves (368.11) directly, including $M=0$, without normalizing a nonunit allocation.
+
+Use the unchanged closed hull
+
+$$
+\begin{aligned}
+H_L=\{(b,e):\;&1\ge b_1\ge\cdots\ge b_L\ge e\ge0,\quad b_2=b_3,\\
+ &(L+1)e\le\sum_{j=3}^Lb_j,\quad
+ b_1+\sum_{j=3}^Lb_j-(L+1)e\le1\}.
+\end{aligned}
+\tag{368.12}
+$$
+
+For any signed $q=(\beta,K)$ put
+
+$$
+F_q(b,e)=\sum_j\beta_j(b_j-\alpha_j)-Ke,\qquad
+\sigma_{H_L}(q)=\max_{(b,e)\in H_L}F_q(b,e).
+\tag{368.13}
+$$
+
+In particular $y\cdot h(b,e)=F_{Q(y)}(b,e)$. Differences of quotients remain signed; they are not replaced by positive parts. These are precisely the score and residual interfaces of [IX 207.2–207.3](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_IX.md) and [XXII 365.1](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_XXII.md#365-canonical-non-domination-and-exclusion-of-every-funded-odd-list-gauge).
+

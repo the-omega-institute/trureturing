@@ -1,0 +1,157 @@
+**Theorem 13.2 (global representatives from a weight transversal).**
+Every graph satisfying Definition 13.1 admits an injection of the entire
+count rectangle into its actual live installed hosts:
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},\qquad
+\Phi(h,z)\in F_{(h,z)}.
+\qquad
+|Q_{\mathrm{live}}|\ge G=k(n-k+1),\quad
+D\le E,\quad m\ge G+u.
+\tag{SI.103}
+$$
+
+Proof. Use the credited live freshness and support exclusions of
+Theorem 2.2, [PE, Lemma 4.1][PE] and [PCA, Theorem 35.1][PCA],
+and the one-sided private-cost consequence (SI.88) of
+[PE, Theorem 3.1(2)][PE]. Its application is to two actual histories
+of the full-fiber lift of this same graph, so retains both original
+caps and adds no statewise residual premise.
+
+First choose actual representatives. At depth $d<p$, all live histories
+have the same $\mathsf I$-prefix support. For each live cell there,
+Theorem 2.2 supplies a host. At $d\ge p$, for a live cell $(h,d-h)$ put
+
+$$
+r_d=\min(b,d-p),\qquad
+ a_d(h)=\min\bigl(p,\max(0,h-r_d)\bigr),\qquad
+ j_d(h)=\gamma(a_d(h)).
+\tag{SI.104}
+$$
+
+Let $S_j(d)$ be the first $d$ coordinates of $\pi_j$. Choose
+$\eta_{a_d(h)}$ on $\mathsf I$. There is space to complete this
+assignment to exactly $h$ ones on $S_{j_d(h)}(d)$: writing $a=a_d(h)$,
+
+$$
+0\le h-a\le d-p,
+\qquad h\ge r_d\ \Longrightarrow\ h-a\ge r_d.
+$$
+
+Indeed, below the lower truncation $a=0$ and $h\le r_d$; without
+truncation $h-a=r_d$; above the upper truncation $a=p$ and
+$r_d\le h-p\le d-p$. If $h\ge r_d$, set the entire already-read
+part $\mathsf X_{j_d(h)}^{\le r_d}$ to one and place the other
+$h-a-r_d$ ones among the remaining $d-p-r_d$ coordinates.
+If $h<r_d$, then $a=0$ and any $h$ read non-$\mathsf I$ coordinates
+can carry the ones.
+
+Each chosen assignment is an actual prefix, not merely a syntactic
+path. Complete its remaining coordinates arbitrarily. Every earlier
+prefix of the specified permutation has hit and zero counts at most
+$h,d-h$, so is live. Induct from the fixed start: correctness forbids
+a terminal while both outputs have completions, the actual-live class
+condition specifies the next coordinate, and its fixed successor follows
+the chosen reply. The completed $\mathsf I$ assignment specifies the
+chosen mode. This realizes the full prefix and its ending host.
+
+At a fixed depth, $a_d(h)$ and $j_d(h)$ are nondecreasing in $h$.
+The following polarity implication is essential: if $h<h'$ and
+$j_d(h)<j_d(h')$, then $a_d(h')>a_d(h)\ge0$, hence $h'>r_d$.
+Consequently the higher-mode representative has its entire read early
+$\mathsf X_{j_d(h')}$ portion equal to one. No such assertion is
+made about arbitrary higher-mode histories.
+
+Next compare same-depth supports. During the first block after
+$\mathsf I$, distinct modes have private sets consisting of matched
+prefixes of their early blocks. During $\mathsf U$ these are the
+full early blocks. In both regions, for $i<j$ with unequal supports,
+$S_j(d)\setminus S_i(d)$ lies in $\mathsf X_j$ and has strictly
+larger cost than $S_i(d)\setminus S_j(d)$.
+For a later block slot $1\le t<v$, after $q$ coordinates of that
+slot, where $0\le q<b$, set
+$C=\mathsf I\cup\mathsf U\cup\mathsf X_1\cup\cdots
+\cup\mathsf X_{t-1}$. The exact supports are
+
+$$
+S_j(d)=
+\begin{cases}
+C\cup\mathsf X_0\cup\mathsf X_t^{\le q},&j<t,\\
+C\cup\mathsf X_t\cup\mathsf X_0^{\le q},&j=t,\\
+C\cup\mathsf X_j\cup\mathsf X_t^{\le q},&j>t.
+\end{cases}
+\tag{SI.105}
+$$
+
+For $i<j$, all cases of the private difference are as follows.
+
+| Modes | $S_i(d)\setminus S_j(d)$ | $S_j(d)\setminus S_i(d)$ |
+| --- | --- | --- |
+| $i<j<t$ | $\varnothing$ | $\varnothing$ |
+| $i<t=j$ | $\mathsf X_0^{>q}$ | $\mathsf X_t^{>q}$ |
+| $i<t<j$ | $\mathsf X_0$ | $\mathsf X_j$ |
+| $i=t<j$ | $\mathsf X_0^{\le q}\cup\mathsf X_t^{>q}$ | $\mathsf X_j$ |
+| $t<i<j$ | $\mathsf X_i$ | $\mathsf X_j$ |
+
+Every unequal-support row gives
+
+$$
+S_j(d)\setminus S_i(d)\subseteq\mathsf X_j,
+\qquad
+C_{S_i(d)\setminus S_j(d)}
+ < C_{S_j(d)\setminus S_i(d)}.
+\tag{SI.106}
+$$
+
+For $i=t<j$, match positions $\ell\le q$ of $\mathsf X_0$
+and positions $\ell>q$ of $\mathsf X_t$ against the corresponding
+positions of $\mathsf X_j$. Each comparison is strict by (SI.101).
+The other nonempty rows compare matched full blocks or nonempty
+suffixes. Upon entering $\mathsf V$, all preceding blocks have been
+read and all mode supports agree.
+
+Two selected cells at one depth have different hit counts. Equal
+supports exclude a common host by PCA Theorem 35.1. If the supports
+differ, their selected modes strictly increase with the hit count.
+The higher representative's private bits are all one by the polarity
+implication and (SI.106). The distinct supports have equal size and
+are therefore incomparable. A common host would give the reverse
+cost inequality by (SI.88), contradicting (SI.106). Thus the selected
+hosts are distinct at every fixed depth.
+
+Finally separate different depths using each installed state's fixed
+coordinate. A coordinate in $\mathsf I,\mathsf U$ or $\mathsf V$
+has the same position in every permutation, so cannot label a common
+live host at different depths. For $x_{\ell,a}$ with $1\le\ell<v$,
+mode $\ell$ gives its early position and every other mode gives the
+same late position. The early predecessor support is
+$\mathsf I\cup\mathsf X_\ell^{\le a-1}$. Every late predecessor
+support contains this set and also an entire different early block;
+the containment is proper even if $\mathsf U$ is empty.
+For $x_{0,a}$ the possible predecessor supports are exactly
+
+$$
+\mathsf I\cup\mathsf X_0^{\le a-1},
+\qquad
+\mathsf I\cup\mathsf U\cup\mathsf X_1\cup\cdots
+ \cup\mathsf X_j\cup\mathsf X_0^{\le a-1}
+\quad(1\le j<v).
+\tag{SI.107}
+$$
+
+In their depth order these form a strictly increasing inclusion chain,
+since $b\ge1$. PE Lemma 4.1 excludes a common live host for any of
+these different-depth occurrences. The same exclusion applies to the
+early/late pair for $x_{\ell,a}$, $\ell\ge1$. These cases exhaust
+all fixed coordinate labels. They do not add a time coordinate, unroll
+the installed graph or constrain certified visits.
+
+The representatives over all depths are now distinct, proving the
+injection. The credited identity $|Q_{\mathrm{live}}|=G+E-D$
+from Theorem 5.2 gives $D\le E$, and
+$m=|Q_{\mathrm{live}}|+u$ gives the last inequality. A selected
+state visited after certification on another input still counts once.
+No discriminator is assigned automatically to $u$ or outside the
+representative image; incidences are not disjoint physical batches.
+$\square$
+

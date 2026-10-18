@@ -1,0 +1,74 @@
+**定理 83.1（整个平台的明确常数）。** 在约定 78.1 下，两个谱号的最优取向都唯一为 $o=+1$。因此，写 $h_\epsilon=h_{\epsilon,+}$，有
+
+$$
+\boxed{
+K_{\rm flat}
+=
+\nu_-\ell(h_-)
+-\frac{\psi_\star}{d_\star}
+\sum_{\epsilon=\pm1}
+\nu_\epsilon
+(k_\star-z_\epsilon-r_\star w_\epsilon)^2.
+}
+\tag{RC.145}
+$$
+
+并且
+
+$$
+K(s)=K_{\rm flat}
+\qquad(0\le s\le s_{\rm p}).
+\tag{RC.146}
+$$
+
+证明。对正谱号，
+
+$$
+b_+(r_\star)
+=
+\frac{2\psi_\star k_\star}{d_\star}
+(z_++r_\star w_+)<0.
+$$
+
+对负谱号，FA74 的物理相容参数给出
+
+$$
+w_-=-z_-/q_f,\qquad .18<q_f<.22.
+$$
+
+因此
+
+$$
+\frac{b_-(r_\star)}{2z_-}
+=
+\mathsf x-\frac{\mathsf y}{q_f}
++
+\frac{\psi_\star k_\star}{d_\star}
+\left(1-\frac{r_\star}{q_f}\right).
+\tag{RC.147}
+$$
+
+下面使用 RC58 的源盒界和平台选根区间的粗有理推论：
+
+$$
+\mathsf x<.00238,\qquad \mathsf y>.00220,\qquad
+|\psi_\star|<.00333,
+$$
+
+$$
+k_\star<1,\qquad d_\star>2.68,\qquad
+r_\star/q_f-1<4.
+$$
+
+其中 $G\succeq-.00333I$  可直接由所给七参数盒的逐行对角占优下界取得。故
+
+$$
+\frac{b_-(r_\star)}{2z_-}
+<
+-.00762+\frac{.00333\cdot4}{2.68}<0.
+$$
+
+两个选择都严格，(RC.145) 随即由 (RC.144) 得到。 $\square$
+
+这包括 $s=0$  及平台右端；没有在 $s=0$  使用含 $1/\tau$  的逆式。
+

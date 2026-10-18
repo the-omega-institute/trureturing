@@ -1,0 +1,31 @@
+**Corollary 3.6 (Finite actual-wait alternatives).** Given a rational
+$0<\delta<1$, put
+
+$$
+h=\delta/48,\qquad n=\left\lceil153600/\delta^2\right\rceil.
+\tag{3.24}
+$$
+
+For every original competitor, one of the $4n$ inputs (3.17) and actual waits
+$t=jh$, $0\leq j<n$, followed by one complete read and Stop, has TV
+strictly greater than $c-\delta$.
+
+**Proof.** The weighted score $f=\sum_sw_sf_s$ on the torus lies in $[0,1]$.
+Its Fourier support satisfies $|k|+|l|\leq4$, so it has at most forty
+nonconstant coefficients, each of absolute value at most one.
+The elementary bounds $2.13<\omega_+<2.14$ and
+$0.66<\omega_-<0.67$ imply
+$|k\omega_++l\omega_-|>1/10$ on that finite nonzero support.
+Indeed the closest opposite-sign combination is bounded below by
+$\omega_+-3\omega_->2.13-3(0.67)=0.12$; the other combinations with
+$|k|+|l|\leq4$ have the larger elementary lower bounds.
+For $H=nh$, the integral mean differs from the torus mean by at most
+$800/H\leq\delta/4$. Differentiating the two rotated projectors in
+(3.18), using trace-norm contraction of a CPTP map on Hermitian inputs,
+gives $|f'_s(t)|\leq4\|A\|<12$. The left-sum mean over $jh$ differs from
+the integral mean by at most $12h=\delta/4$. Thus the weighted mean
+of the actual signed differences is at least $c-\delta/2$ by (3.20)–(3.22).
+One of them is at least that large, hence greater than $c-\delta$.
+Every listed wait is finite and nonnegative; (3.24) is an explicit
+termination bound, without an additional physical control. $\square$
+

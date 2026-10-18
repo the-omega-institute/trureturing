@@ -1,0 +1,39 @@
+**Convention 2.2 (paid shallow and full prediction boundaries).** For
+$D\ge2$, [PPF, Theorem 4.2][PPF] actually acquires
+
+$$
+e=\pi_{D-1}(v)\in S_{D-1}
+\tag{CCF.5}
+$$
+
+with simultaneous optimal worst preparation projections
+
+$$
+(\mathsf{Reads},\mathsf{letters},\mathsf{peak})
+=\bigl(2^{D-2},(D-1)2^{D-2},D-1\bigr)
+\tag{CCF.6}
+$$
+
+when no name cap is imposed. It exports exactly $N_{D-1}$ names.
+With exactly this acquired $e$, its original selected-target reader needs
+at most one later Read. That service is reused unchanged.
+
+For $D\ge1$, the same published acquisition routine
+$\operatorname{Acquire}(R,D-1)$ acquires
+$c=\pi_D(v)$ with sufficient bounds
+
+$$
+\mathsf{Reads}\le2^{D-1},\qquad
+\mathsf{letters}\le D2^{D-1},\qquad
+\mathsf{peak}\le D.
+\tag{CCF.7}
+$$
+
+This is [PPF, Lemma 4.1][PPF] with its specified inputs, not a new
+acquisition optimum. One may instead have acquired $c$ through completion
+from $e$; that acquisition is charged once. [PPF, Theorem 5.1][PPF]
+separately supplies paid acquisition of an exact-$M_1(D)$ code, and
+[SCE, §§5–6][SCE] separately prices pooling from other exports. None of
+these codes or acquisition costs is identified with the conditional
+refinements considered here.
+

@@ -1,0 +1,70 @@
+**Theorem 53.1 (uniform general-beta actual-rank-two recovery bound).** For every actual original-real-Kraus encoder in Definition 52.1, there is one original-input-frame real density
+
+$$
+\rho=\begin{pmatrix}x&z&0\\z&y&0\\0&0&1-x-y\end{pmatrix},\qquad
+x,y\geq0,\quad x+y\leq1,\quad z\in\mathbb R,\quad z^2\leq xy,
+\qquad p_N(\rho)\leq T_\beta.
+\tag{R.288}
+$$
+
+Consequently this same input satisfies $F_e(\rho,RN)\leq T_\beta$ for every complex whole-output CPTP recovery $R:M_5\to M_3$, and
+
+$$
+g_N^2\leq T_\beta,\qquad
+\delta_N\geq1-\sqrt{1-\beta}.
+\tag{R.289}
+$$
+
+The diamond norm in this statement is unhalved and permits every finite complex reference. The witness depends on the actual encoder, including its third column; it is chosen before the recovery.
+
+**Proof.** Use the same compact convex set $\mathcal S$ of all complex $\mathcal C\oplus\mathbb C|2\rangle$ block densities as in Theorem 45.1. For a fixed actual $V$, the unrestricted fixed-input recovery/complement and rectangular Uhlmann interfaces in (R.223) give
+
+$$
+h(\rho,\omega):=F_\rho(\Gamma,\mathcal C_\omega)
+=\max_{\|U\|\leq1}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U}),
+\qquad \sqrt{p_N(\rho)}=\max_{\omega\in\mathsf D(E)}h(\rho,\omega).
+\tag{R.290}
+$$
+
+For fixed $\omega$, the first maximum makes $h$ continuous and convex in $\rho$. For fixed $\rho$, it is continuous and concave in $\omega$, being root fidelity between the fixed purified complementary output and the reference marginal tensored with $\omega$. Both $\mathcal S$ and $\mathsf D(E)$ are nonempty compact convex sets, including their singular boundaries. Thus the first convex-concave minimax exchange applies. At fixed $\omega$, the payoff is real bilinear in the Hermitian density $\rho$ and the complex contraction $U$ viewed as a real variable; both domains are nonempty compact convex sets, giving the second exchange. Precisely,
+
+$$
+\begin{aligned}
+\min_{\rho\in\mathcal S}\sqrt{p_N(\rho)}
+&=\min_{\rho\in\mathcal S}\max_\omega h(\rho,\omega)
+=\max_\omega\min_{\rho\in\mathcal S}h(\rho,\omega)\\
+&=\max_\omega\max_{\|U\|\leq1}
+\min_{\rho\in\mathcal S}\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})
+\leq v.
+\end{aligned}
+\tag{R.291}
+$$
+
+For the last inequality, a linear functional on $\mathcal S$ attains its minimum either on a pure complex phase-plane density or on $|2\rangle\langle2|$; its minimum is exactly the left side of (R.270). The minimax hypotheses are the ones already used in (R.233) and Definition 10.1. Continuity and compactness attain a single $\rho\in\mathcal S$ with $p_N(\rho)\leq T$. No independently chosen optimal centers or inputs are combined.
+
+For an original-real Kraus list, the squared trace expression (R.30) implies $p_N(\bar\rho)=p_N(\rho)$: conjugation bijects the full complex CPTP recovery set. Each recovery's expression is convex in $\rho$, as a sum of squared moduli of linear trace functionals; maximizing preserves convexity. Hence
+
+$$
+\rho_{\mathbb R}=\frac{\rho+\bar\rho}{2}\in\mathcal S,\qquad
+p_N(\rho_{\mathbb R})\leq\tfrac12[p_N(\rho)+p_N(\bar\rho)]
+=p_N(\rho)\leq T.
+\tag{R.292}
+$$
+
+This is averaging in the original real input frame, giving exactly (R.288). In phase coordinates it is instead the transported averaging (R.33). Diagonalizing the environment center did not change this input frame.
+
+Theorem 7.1 then supplies an attained dual $Y\succeq0$ for this input, with $Y\otimes I_3\succeq D_\rho D_\rho^\dagger$ and $\operatorname{Tr}Y=p_N(\rho)\leq T$, even for singular $\rho$ or $Y$. Fix one purification $|\Psi_\rho\rangle$ with reference dimension at most three. For every allowed recovery, the binary measurement onto this same pure identity target gives
+
+$$
+\begin{aligned}
+\|RN-\mathrm{id}_3\|_\diamond
+&\geq\|(RN\otimes\mathrm{id})(|\Psi_\rho\rangle\langle\Psi_\rho|)
+             -|\Psi_\rho\rangle\langle\Psi_\rho|\|_1\\
+&\geq2\bigl(1-F_e(\rho,RN)\bigr)
+\geq2(1-T)=1-\sqrt a.
+\end{aligned}
+\tag{R.293}
+$$
+
+Take the infimum over the entire complex CPTP recovery set. This reference witness lower-bounds the supremum permitting all finite complex references; Schmidt compression of the witness does not restrict that domain. Also every recovery's worst-input squared fidelity is at most its value at this one input, proving $g_N^2\leq T$. These are the existing norm implications of Theorem 7.4, now with uniform threshold-input existence on the full positive-beta actual-rank-two class. They assert neither a formula for the witness at every encoder nor equality of the restricted and unrestricted input optima. $\square$
+

@@ -1,0 +1,22 @@
+**Lemma 3.2 (simultaneous Boolean execution floors).** Every such total
+Boolean threshold graph has one actual input on which it reads all $n$
+different coordinates. Its uniform bounds therefore satisfy
+
+$$
+t\ge n,\qquad J\ge W.
+\tag{WTF.12}
+$$
+
+Proof. Answer first exposures by one until $k-1$ ones have been given,
+then by zero. Repeated queries retain their old values. Before the
+$n$th distinct exposure, fewer than $k$ ones and at most $n-k$ zeros
+have been seen, so both outputs remain possible. The graph cannot
+terminate there correctly. Nor can it repeat a running state: all
+answers on the intervening segment have been fixed, and any completion
+would then loop on that actual input. Finiteness of the installed graph
+forces eventual progress to all $n$ exposures. Complete the resulting
+assignment to its actual input; the same induction follows its path.
+That one path pays at least $n$ queries and $\sum_i c_i=W$ letters.
+This is an existence proof by consistent replies, not an executed
+enumeration. $\square$
+

@@ -1,0 +1,157 @@
+**Theorem 9.3 (strict nonoptimality of $L_{\rm full}$).** Every common
+channel in (CG.20) has error strictly greater than $L_{\rm full}$, and
+
+$$
+L_{\rm full}<E_*.
+\tag{CG.64}
+$$
+
+Proof. Suppose a channel had $E(\Phi)=L_{\rm full}$. By Proposition 8.2,
+Lemma 9.1 and the universal bound (CG.37), take it reduced and covariant
+with the same error. Use the actual phase averages $\Gamma_y,\Theta_y$
+of (CG.24) and (CG.28), only for $y=5,27$. Put
+$H=\Gamma_5-\Gamma_{27}$ and $X=\Theta_5-\Theta_{27}$. The previously
+computed exact distances give
+
+$$
+\|X\|_{1,\rm cq}=4L_{\rm full}+\|H\|_1.
+\tag{CG.65}
+$$
+
+In the identity
+
+$$
+X=(\Theta_5-\Phi\Gamma_5)+\Phi H+(\Phi\Gamma_{27}-\Theta_{27}),
+\tag{CG.66}
+$$
+
+the first and last norms are at most $2E(\Phi)$ by convexity over their
+two actual histories, while $\|\Phi H\|_{1,\rm cq}\leq\|H\|_1$.
+At the supposed equality, (CG.65) forces all these estimates and the
+triangle inequality to be equalities.
+
+Choose a norming Hermitian contraction $D$ for $X$ as follows: on the
+live block take its spectral sign, and on every stopped sector and other
+point take $+1$. This norms the entire $X$. Indeed (CG.32) gives
+$f_5(t)-f_{27}(t)>0$ at every time; all nonzero marked weights are
+positive, and the remaining record differences are zero. The choice
+$+1$ is also valid on every zero-target mode and on arbitrary singular
+simulated events. Pairing (CG.66) with this same $D$ and using the saturated
+sum of bounds forces
+
+$$
+\langle D,\Phi H\rangle=\|H\|_1.
+\tag{CG.67}
+$$
+
+Otherwise that pairing would be strictly smaller than $\|X\|_{1,\rm cq}$.
+
+On $W$, the input difference is the real matrix
+
+$$
+H=\frac1{128}\begin{pmatrix}-22&\zeta\\\zeta&22\end{pmatrix},\qquad
+\zeta=\sqrt{295}-\sqrt{999}\ne0.
+\tag{CG.68}
+$$
+
+It is zero on $|2\rangle$, and its $W$ eigenvalues are
+$\pm\lambda$, where $\lambda=\sqrt{484+\zeta^2}/128>0$.
+Choose real unit eigenvectors $e_+,e_-$. Both coordinates of each are
+nonzero, since a coordinate eigenvector would contradict the nonzero
+off-diagonal entry. Write $R=\Phi^\dagger(D)$ for the dual pullback.
+Unital positivity gives $-I\leq R\leq I$. Equation (CG.67) becomes
+
+$$
+\lambda\bigl(\langle e_+,Re_+\rangle-\langle e_-,Re_-\rangle\bigr)
+                         =2\lambda.
+\tag{CG.69}
+$$
+
+The two expectations must be $1$ and $-1$. Positivity of $I-R$ and
+$I+R$ makes the corresponding vectors eigenvectors of $R$. Thus for
+$A=\Phi^\dagger((I+D)/2)$ its $W$ compression is
+$|e_+\rangle\langle e_+|$.
+
+Let $F$ be the input effect of the whole nonlive output, including all
+mode/time and other mass. Because $D=+1$ on that event, $0\leq F\leq A$.
+Covariance makes $F$ invariant under both independent coordinate signs,
+so $F$ is diagonal in $(+,-,2)$. Its $W$ compression is a nonnegative
+diagonal matrix $\operatorname{diag}(f_+,f_-)$ dominated by
+$|e_+\rangle\langle e_+|$. Testing in $e_-$ gives
+
+$$
+0\leq f_+|\langle+|e_-\rangle|^2+
+       f_-|\langle-|e_-\rangle|^2\leq0.
+\tag{CG.70}
+$$
+
+Both squared coordinates are positive, so $f_+=f_-=0$. Every positive
+$W$-supported input therefore has no nonlive output. Its live restriction
+$\Psi:M(W)\to M(V)$ is CP and trace preserving. Equality above gives
+$\|\Psi(H)\|_1=\|H\|_1$; covariance also gives the same equality for
+$UHU^\dagger$, with $U=\operatorname{diag}(1,-1)$ on $W$.
+
+For two density matrices, trace distance one forces orthogonal supports:
+a norming Hermitian contraction for their difference must have expectation
+$+1$ on one and $-1$ on the other, placing their supports in its disjoint
+$+1$ and $-1$ eigenspaces. Applying this to
+$H=\lambda(P_{e_+}-P_{e_-})$ shows that $\Psi(P_{e_+})$ and
+$\Psi(P_{e_-})$ have orthogonal supports. The same is true for the
+eigenbasis of $UHU^\dagger$.
+
+These bases meet the nonzero-overlap hypothesis of Lemma 9.2. In fact
+$P_{e_+}=(I_W+H/\lambda)/2$ gives directly
+
+$$
+\langle e_+,Ue_+\rangle=\frac{-22}{\sqrt{484+\zeta^2}}.
+\tag{CG.71}
+$$
+
+Its absolute value is strictly between zero and one. Up to real phase
+choices the rotated basis therefore has form (CG.61), with
+$\alpha^2=484/(484+\zeta^2)$ and
+$\beta^2=\zeta^2/(484+\zeta^2)$. Lemma 9.2 implies
+$\Psi(\rho)=T_0\rho T_0^\dagger$ for a single isometry.
+
+The group element $U_0=\operatorname{diag}(-1,-1,1)$ fixes every
+$W$-supported input operator by conjugation. Covariance consequently fixes
+each pure output $|T_0z\rangle\langle T_0z|$ under $U_0$. Each nonzero
+vector in $\operatorname{range}T_0$ is an eigenvector of $U_0$.
+A linear subspace with this property lies in one eigenspace, since a sum
+of nonzero vectors from the opposite eigenspaces is not an eigenvector.
+The $+1$ eigenspace has dimension one, while this range has dimension
+two. Hence $\operatorname{range}T_0=W$.
+
+Now test the output event terminal live and in $W$ on
+$\Gamma_5=(P_2+Q_5)/2$. Its simulated probability is at least $1/2$:
+the $Q_5/2$ part goes isometrically into $W$, and the $P_2/2$ part
+contributes nonnegative mass. Its ideal probability in $\Theta_5$ is
+$s_5/2=5/22$. Complete half trace distance dominates an event probability
+difference. Explicitly, for a normalized-output difference $\Delta$ and
+an event effect $Q$, pairing with $2Q-I$ gives
+$|\operatorname{tr}Q\Delta|\leq\|\Delta\|_{1,\rm cq}/2$.
+Thus
+
+$$
+\operatorname{dist}(\Phi\Gamma_5,\Theta_5)
+                         \geq\frac12-\frac5{22}=\frac3{11}.
+\tag{CG.72}
+$$
+
+Yet (CG.39) bounds this by $L_{\rm full}<3/11$. To check the last strict
+inequality symbolically, (CG.29) gives
+$v>(18+40)/64=29/32>2/3$, using $363>18^2$ and $1643>40^2$.
+Therefore $\sqrt{49-45v^2}<\sqrt{29}<6$, whence
+$\delta_{\rm out}<6/11$ and
+$L_{\rm full}=(\delta_{\rm out}-\delta_{\rm in})/2<3/11$.
+This contradicts (CG.72).
+
+No channel can attain the old lower bound. Theorem 8.4 supplies an actual
+minimizer in the same enlarged class; if $E_*=L_{\rm full}$, that
+minimizer would contradict the result just proved. Together with (CG.37)
+this proves (CG.64). Attainment is essential to this last infimum step;
+excluding equality for individual channels alone would not give a strict
+infimum gap. No explicit positive size for $E_*-L_{\rm full}$ is obtained.
+The auxiliary $W$-supported operators are linear tests of the channel,
+not additional supplied preparations or specimens. $\square$
+

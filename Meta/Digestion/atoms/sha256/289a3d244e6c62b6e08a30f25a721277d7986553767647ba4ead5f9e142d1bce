@@ -1,0 +1,18 @@
+### Corollary 5.2 (native installed-control bound)
+
+Under the supplied correspondence (2), any original native preparer for $n=8,k=4$ that is correct on all of $\mathcal U_*$ at native caps $9$ and $W+3$ has
+
+$$
+ H_P\ge22+r. \tag{14}
+$$
+
+The Boolean interval is therefore
+
+$$
+18\le m_{\rm exec}\le20,
+$$
+
+and the corresponding conditional native interval is $22+r\le H_P\le24+r$ when the credited grid lift is used.
+
+**Proof.** The supplied projection of a native preparer has Boolean caps $8,W$ and at most $H_P-4-r$ running states. Theorem 4.1 gives $H_P-4-r\ge18$, proving (14). Proposition 5.1 gives the upper endpoint, and the supplied full-fiber lift through (2) adds the two profile states, two original-entry latches, and the $r$ mandated latches. The whole source fiber, all profiles, the prescribed pointwise code, literal complete entries, all four replies, and the separately priced eight-state predecessor-row reader remain part of that supplied lift. \(\square\)
+

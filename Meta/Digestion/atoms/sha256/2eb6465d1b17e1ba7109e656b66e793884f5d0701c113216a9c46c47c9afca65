@@ -1,0 +1,34 @@
+### 十一、信息逃逸与时间方向的条件定理
+
+设 $`M_t`$ 是观察者在时刻 $`t`$ 所拥有的全部有效记录。定义：
+
+```math
+h\sim_t h'
+\quad\Longleftrightarrow\quad
+M_t(h)=M_t(h').
+```
+
+如果无返回通道，并且后续只是继续丢弃记录，使得存在函数 $`G_t`$ 满足：
+
+```math
+M_{t+1}=G_t\circ M_t,
+```
+
+那么：
+
+```math
+M_t(h)=M_t(h')
+\Longrightarrow
+M_{t+1}(h)=M_{t+1}(h').
+```
+
+所以
+
+```math
+\boxed{
+\sim_t\subseteq\sim_{t+1}.
+}
+```
+
+观察纤维只会扩大，局部可恢复区别只会减少。
+

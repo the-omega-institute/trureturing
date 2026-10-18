@@ -1,0 +1,37 @@
+## 19. Actual-source map, ownership and finite resources
+
+**Resource statement 19.1 (supplied services and newly obtained data).**
+
+| Object or operation | Actual map and allocation |
+| --- | --- |
+| Old source | Definition 14.2 realizes both unknown heights, every real phase and signed winding from the same preparation, base, reference and cut time. Source-side $B_{\beta,m}$ and $X$ are latent; they are not installed controller parameters. |
+| Public selection | $U$ is independent of the whole old joint state before execution. It selects the same relative path at either height. The controller owns its finite dictionary and actually retained seed; the source does not choose a different path by old parity or height. |
+| Height-sensitive action | The extra source-bound actuator of Definition 14.4 executes the chosen relative command at the actual height. Its identity, calibration, access, permissions and full CP law remain supplied premises. No specimen-only implementation or original-menu acquisition is proved. |
+| Actually acquired observation | One execution supplies its actual live/failure status, and on failure its exact first timestamp/mode. On a live branch the seed is source-correlated through the probabilities $q_x(u)$; it is not an exact height label or an observed probability law. |
+| Joint successor and update | Equation (AC.45) acts on the same conditional input and actual history measure, retains all old fields and appends actual commands/events. Successful normalization reweights the history mixture; it need not leave its unconditional archive marginal fixed. Stopped branches remain absorbing. |
+| Quantum and classical memory | The original live family occupies the credited qutrit span $V$. The upper constructions use at most four seed values, plus flags, finite stage counters and their actual controller/calibration fields. These counts exclude neither old archives nor exact failure timestamps; they are not complete-memory or hardware minima. |
+| Precision and descriptions | Rational $a,b,v_n,P$ give rational $d_n,w_n$ and algebraic $e_n$, hence finite symbolic programmes and probability descriptions. Arbitrary exact real parameters require actual descriptions and exact sampling/actuation premises; a finite dictionary does not guarantee a finite effective encoding of all its reals. Exact gates, source binding, timing/reference precision, arithmetic and complete event storage are separate resources. |
+
+Each triangle in Theorem 17.1 can use one unit per leg. Pad the
+completed paths with waits to a common six-unit acquisition horizon.
+Height speed is then at most $a$, total height variation at most
+$6a$, and new phase variation and winding are zero. Each finite
+programme belongs to both original regularity alternatives.
+The universal lower proof allows any finite duration, including a
+zero-duration matching wait; it does not impose these upper-construction
+budgets on the original class.
+
+The approaching families lose their common support margin:
+$a-d_n=acv_n/(b+av_n)\to0$, and the unfavourable triangle charge
+is $-\log v_n\to\infty$. Every finite member remains strict with
+positive survival at both heights. No boundary path, infinite charge
+or zero-probability live alternative is an admissible attained guard.
+The theorem gives no sharp optimum under an additional fixed margin,
+charge, noise or precision budget.
+
+No repeated same-history copies, reset, post-failure retry, reversal,
+tomography, hidden environment port, free source callback, parity helper
+or unchanged failure helper is supplied. The inaccessible mathematical
+source label in (AC.45) is not a new port. Earlier acquisition and
+other operation classes remain outside this restricted optimization.
+

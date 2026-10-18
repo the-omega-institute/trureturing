@@ -1,0 +1,4 @@
+**Theorem 5.1 (Sufficient strong endpoint).** If a stationary legal law satisfies $\mathsf B(P)$, $A_P<\infty$ and $\mathsf Z_\Delta(P)$, then this same law attains $d(P)=c_\star$.
+
+Proof. In (4.4) take $\nu=\pi_n$. Its left side is zero by strong zero, and all four penalties are nonnegative. Thus $(n+2)d(P)\ge\kappa_n$ for every $n$. Dividing by $n+2$ and using (1.2) gives $d(P)\ge c_\star$. Equation (1.5) gives equality. Only scalar inequalities are passed to a limit; each finite replacement has its own integrability bound (4.6). $\square$
+

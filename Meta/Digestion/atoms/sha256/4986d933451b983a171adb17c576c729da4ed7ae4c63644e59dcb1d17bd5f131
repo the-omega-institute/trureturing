@@ -1,0 +1,37 @@
+### 93.8. Complete-norm consumer and the remaining original-channel cases
+
+**Theorem 93.2.** For a calibrated principal restriction to one input coordinate in each of three different original fibres, suppose the two forward local Grams coincide and have rank at most two. With G that common Gram and L=(I₃+J₃)/2−G⊙G, the complete unhalved diamond error δ_S satisfies
+
+\[
+ \delta_S\ \ge\ \frac{\|L\|_1}{3}
+       \ \ge\ \frac23\sqrt{E(G)}
+       \ \ge\ \frac{\sqrt{21-9\sqrt[3]{9}}}{6}
+       \ >\ \frac14.                                       \tag{27}
+\]
+
+The Frobenius edge minimum in Theorem 93.1 is sharp; no sharpness claim is made for the derived diamond lower bound (27).
+
+**Proof.** The uniform density ρ=I₃/3 is feasible in the complete adaptive formula of section 91. Its value is ||L||₁/3. Equivalently the uniform correlated input on the three coordinates has output error Lᵀ/3 in the correlated output basis, whose trace norm is ||L||₁/3. This verifies the original forward-Gram transpose convention and the unhalved normalization. Since it is an allowed input, the complete norm, which also allows arbitrary references, is at least this value.
+
+The Hermitian matrix L has trace zero and Tr(L²)/2=E(G). Up to a sign reversal and reordering, its eigenvalues are s,t,−s−t for s,t≥0, including zero eigenvalues and the zero matrix. Thus
+
+\[
+ \|L\|_1=2(s+t),\qquad
+ E(G)=s^2+st+t^2\le(s+t)^2.                                 \tag{28}
+\]
+
+This proves the second inequality in (27); Theorem 93.1 proves the remaining two. No singularity of L is assumed.
+
+**Corollary 93.3.** A calibrated local minimum of the original four-fibre problem with both full local Gram ranks seven and error strictly below 1/4 cannot have common active-support occupancy (1,1,1,0). Consequently the possible doubly rank-seven patterns left by section 92 are reduced from five to four, up to permutation of the original fibres:
+
+\[
+ (2,1,1,0),\qquad (1,1,1,1),\qquad
+                (2,2,1,0),\qquad (2,1,1,1).                 \tag{29}
+\]
+
+**Proof.** The common-witness theorem and exact active-support reduction of section 92 give a reciprocal phase gauge preserving the full product coefficient and target. On a support of occupancy (1,1,1,0), the principal Grams then coincide and have rank two. The complete restricted norm equals the full value because the common norming witness is supported there; restriction monotonicity alone also suffices for the lower bound. Equation (27) contradicts a value below 1/4. Combining this exclusion with Theorems 92.3–92.4 leaves precisely (29).
+
+The corollary refines the unresolved list in sections 92.7 and 92.9. A zero occupancy still means an absent whole fibre, whereas an occupancy one retains only one coordinate of a two-coordinate fibre. No pattern in (29) is excluded here. Unequal full Gram ranks and the other lower-rank common-stress cases remain unresolved. For arbitrary leaking channels, calibration is invoked only to compare the unrestricted global optimum with an attained calibrated optimum, with no rank-preservation or local-minimum transfer. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither its quarter lower bound nor a classification of all quarter-error attainters follows from this section.
+
+The proof uses ordinary real Lagrange multipliers, polynomial resultants, and Sturm's real-root theorem as established mathematical tools. For the last, see [Eisermann, The Fundamental Theorem of Algebra made effective: an elementary real-algebraic proof via Sturm chains](https://arxiv.org/abs/0808.0097). The specific sharp complex-Gram minimum is derived in Theorem 93.1, and the physical consumer uses the adaptive norm and common-support reduction of sections 91–92.
+

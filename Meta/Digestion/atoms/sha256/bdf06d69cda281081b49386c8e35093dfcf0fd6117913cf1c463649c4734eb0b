@@ -1,0 +1,20 @@
+**Assumption 1.2 (separate published suppliers).** The following hypotheses
+are used at precisely their stated scopes. The abbreviations name the
+owning mathematical volumes, not new certification of their premises.
+
+| Abbreviation and owning source | Required result and boundary |
+| --- | --- |
+| [CG, §§13–17](FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md) | The isolated original nine-coordinate source, source ranks and root TP identity; the complete stopped-output minimax certificate; the averaged-live and preaveraging consequences of Theorem 17.2 and Corollary 17.3. CG17 alone does not assert the unaveraged live channel equality used below. |
+| [JR, §§34–42](FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md) | The original sharp worst-history **jointly acquired** cost, and the additional unaveraged supported real equality face of Theorem 42.1. This is a separate supplier from CG17. |
+| [FA, §§69–72](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md), [RC, §§67 and 75](FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md) | Actual-label double rigidity for full complex, multi-Kraus implementations; the physical capacity inequality; finite endpoint attainment; the full-fibre common constructor and the corrected treatment of supported-zero full encoders. |
+| [FA, §§78–79](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md) | The complete scalar finite feasibility domain and the forced entire equality class on its weak minimum-budget boundary, including the floor. |
+| [RC, §68](FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md) | Actual two-sheet relative interiority with strict contrast slack. Feasibility alone is not substituted for this hypothesis. |
+| [FA, Theorem 90.1 and §87](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md) | A weak height optimizer with at most nine supported low labels; Theorem 87.3's one-high coherent completion and Corollary 87.4's identity of minimum total and supported-low counts. The nine-low result is an existence upper bound. |
+| [ST, Theorem 8.2](FIB_NATIVE_COMPLETE_CONTINUATION_SATURATED_CONTACT_TRANSITIONS.md) | A nonempty ordinary open strict weak region with exact seven-low/eight-total optimal actual alphabet, under ST's source, joint-moment and whole-circle certificate hypotheses. No connected atlas or global ordering follows. |
+| [ST, Definition 10.1](FIB_NATIVE_COMPLETE_CONTINUATION_SATURATED_CONTACT_TRANSITIONS.md) | The fixed-source dyadic enclosures used in §6. Source-root membership remains a hypothesis. |
+
+Here FA denotes the finite-activity frontier, RC the residual-contact
+curve, and ST the saturated-contact transitions. No source isolation,
+minimax, native implementation, or complete-plane result is inferred
+from the scalar certificate in this volume.
+

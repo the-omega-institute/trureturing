@@ -1,0 +1,96 @@
+**Theorem 106.1 (height moment, weighted horizontal energy and parity).**
+Retain exactly the source, clock and complex domains of §§81, 87--88.
+For the normalized positive mode $\Phi_c$ of Theorem 88.1,
+
+$$
+r\Phi_c\in\mathcal Q_E,\qquad
+\int r^2\bigl(|\Phi_c|^2+|X\Phi_c|^2+|Y\Phi_c|^2\bigr)d\xi<\infty,
+\qquad h_c[r\Phi_c]=a.
+\tag{106.1}
+$$
+
+The measure-preserving involution
+$\sigma(r,y,z,w)=(-r,y,-z,w)$ fixes $V$ and $\Phi_c$.
+For any fixed even height cutoff $\eta$ as in (98.6), put
+$\eta_R(r)=\eta(r/R)$. Then
+
+$$
+\int |\eta_R'|^2|\Phi_c|^2=o(R^{-4})\quad(R\to\infty).
+\tag{106.2}
+$$
+
+In particular $R_s=s^{-1/2}$ gives $o(s^2)$ in (106.2), and
+$\eta_{R_s}\Phi_c$ is admissible between both original faces for
+all sufficiently small original real $s>0$.
+
+Proof. Write $p_t(\xi)=p_E(t;0,\xi)$ and $f=V\Phi_c$.
+The decay (82.4), $|r|\le N$ and the volume $16R^7$ of
+$\{N\le R\}$ imply
+$V,rV\in L^2\cap L^\infty$. Consequently
+$f,rf\in L^1\cap L^2$ by Hölder and $\|\Phi_c\|_2=1$.
+The first coordinate is additive under (82.1), and its heat
+marginal is the law of $\sqrt2 B_t$. Thus
+
+$$
+\|r p_t\|_1\le\sqrt{2t},\qquad
+\|r p_t\|_2^2\le\|p_t\|_\infty\int r^2p_t\,d\xi
+ \le Ct^{-5/2},\qquad \|p_t\|_2\le Ct^{-7/4}.
+\tag{106.3}
+$$
+
+The convolution form of $P_t$ and Young's inequality, in the
+unimodular convention already checked in (87.6), now give
+
+$$
+\|rP_tf\|_2\le
+\begin{cases}
+\|rf\|_2+\sqrt{2t}\|f\|_2,&0<t\le1,\\
+Ct^{-7/4}\|rf\|_1+Ct^{-5/4}\|f\|_1,&t\ge1.
+\end{cases}
+\tag{106.4}
+$$
+
+Indeed split the output height as the input height plus their
+difference in the kernel integral; the corresponding column norms
+are exactly those in (106.3). Both lines are integrable on their
+stated intervals. Reconstruction (87.2), (88.3) says
+$\Phi_c=(\chi_c/a)\int_0^\infty P_tf\,dt$ in $L^2$.
+The same integrals converge in the norm of $L^2$ with weight
+$r^2$, by (106.4). Closedness of multiplication by $r$ proves
+$r\Phi_c\in L^2$.
+
+For bounded smooth real height multipliers $g$ with bounded derivative,
+the weak equation (88.1) gives the product identity used in (98.7),
+
+$$
+h_c[g\Phi_c]=a\int |g'|^2|\Phi_c|^2.
+\tag{106.5}
+$$
+
+The multiplier and its square preserve $\mathcal Q_E$, so the
+identity follows by the same form test, without separate phase
+regularity. Apply it to $g_R=r\eta_R$, and also to $g_R-g_T$.
+The already proved height moment implies that $g_R\Phi_c$ is
+Cauchy in $L^2$ and in $L^2(Vd\xi)$. The derivatives $g_R'$ are
+uniformly bounded and converge pointwise to one; hence
+$(g_R'-g_T')\Phi_c\to0$ in $L^2$. Equation (106.5) makes
+$g_R\Phi_c$ Cauchy in $\mathcal Q_E$ as well. Its limit is
+$r\Phi_c$, and (106.5) gives $h_c[r\Phi_c]=a$.
+The distributional product rules
+$X(r\Phi_c)=\Phi_c+rX\Phi_c$ and
+$Y(r\Phi_c)=rY\Phi_c$ prove the remaining integrability in (106.1).
+Finally
+
+$$
+\int |\eta_R'|^2|\Phi_c|^2
+ \le CR^{-4}\int_{|r|>R}r^2|\Phi_c|^2=o(R^{-4}).
+$$
+
+The admissibility argument is exactly the height-strip core
+approximation of (98.6), since $sR_s\to0$.
+The involution $\sigma$ sends $X$ to $-X$ and $Y$ to $Y$,
+preserves Lebesgue measure and fixes the source. It commutes with
+$\mathcal E$ and its heat, so fixes $V$. Simplicity and positivity
+in Theorem 88.1 then force $\Phi_c\circ\sigma=\Phi_c$.
+This proves the parity assertion and completes the proof. $\square$
+

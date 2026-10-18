@@ -1,0 +1,39 @@
+**Proposition 83.2 (conditional S.155 certificate).** Under the inherited interfaces of Definition 80.1, suppose for one fixed actual $N$ that
+
+$$
+ g_N^2\leq T_\beta.
+\tag{S.192}
+$$
+
+Then there are a density $\rho_N$ and a Hermitian positive semidefinite $Y_N$ such that
+
+$$
+ C_{\rho_N,N}\preceq I_3\otimes Y_N,
+\qquad
+ \operatorname{Tr}Y_N=g_N^2\leq T_\beta.
+\tag{S.193}
+$$
+
+If the channel and its Kraus frame are real in the original frame, the pair may be chosen with $\rho_N=\overline{\rho_N}=\rho_N^T$ and $Y_N=\overline{Y_N}=Y_N^T$. The selected pair is fixed before the recovery is chosen and therefore constrains every complex CPTP recovery on the whole five-dimensional output.
+
+Proof. Choose an attaining minimizer $\rho_N$ in the first equality of (S.191), then choose an attaining dual minimizer $Y_N$ in the second equality. This gives (S.193) and (S.192). For original-real data, simultaneous conjugation sends $(\rho,Y)$ to $(\bar\rho,\bar Y)$ and preserves feasibility and trace. The convexity of the squared fixed-input fidelity in the input density gives the standard conjugation average without restricting the recovery set; hence the minimizing pair can be taken real symmetric. This is exactly the previously established real-pair interface, applied at the selected $N$.
+
+For any complex recovery $R$, weak duality in the fixed-input SDP gives
+
+$$
+F_e(\rho_N,RN)\leq\operatorname{Tr}Y_N=g_N^2.
+\tag{S.194}
+$$
+
+Purify $\rho_N$ in a finite complex reference and apply the pure-target trace-distance inequality. Taking the infimum over all recoveries gives
+
+$$
+\delta_N
+\geq2(1-g_N^2)
+\geq2(1-T_\beta)
+=1-\sqrt{1-\beta}.
+\tag{S.195}
+$$
+
+This is a one-sided unhalved diamond lower bound. It does not identify the diamond optimum with a fidelity optimum. $\square$
+

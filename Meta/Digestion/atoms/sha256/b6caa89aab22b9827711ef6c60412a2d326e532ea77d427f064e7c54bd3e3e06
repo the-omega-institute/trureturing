@@ -1,0 +1,38 @@
+**定理 C-142.2（无参考差二模式时的全域前沿）。** 若固定参考满足
+
+$$
+R_{\ell+2}\zeta R_\ell=0\qquad\text{对所有整数 }\ell,
+\tag{C142.4}
+$$
+
+则对全部 $\delta\in[0,1]$，有 $A^\zeta_{\mathcal F_{\rm all}}(\delta)=\delta$。
+
+证明。选参考电荷本征基 $f_\alpha$，电荷为 $\ell_\alpha$，
+简并指标保留在 $\alpha$ 中。由 (C142.3)，有效矩阵元为
+
+$$
+T_{ij}=\sum_{\alpha,\beta}\mathsf E_{i\alpha,j\beta}\zeta_{\beta\alpha},
+\qquad
+\mathsf E_{i\alpha,j\beta}\ne0\ \Longrightarrow\
+n_i+\ell_\alpha=n_j+\ell_\beta,
+\tag{C142.5}
+$$
+
+其中 $(n_0,n_1,n_2,n_3,n_4)=(0,1,1,1,2)$。
+$i=0,j=4$ 时，允许项须有 $\ell_\alpha=\ell_\beta+2$。
+(C142.4) 及其伴随使相应 $\zeta_{\beta\alpha}$ 全为零，故 $T_{04}=0$。
+于是目标功效与风险满足
+
+$$
+\operatorname{Tr}(TP)=\tfrac12(T_{00}+T_{44})
+\le\max\{T_{00},T_{44}\}\le\beta_{\mathcal F_{\rm all}}(T),
+\tag{C142.6}
+$$
+
+最后一步只用 $P_{e_0},P_{e_4}\in\mathcal F_{\rm all}$。
+即使参考有差一模式，其他有效矩阵元也不改变此论证。
+$\mathsf E=\delta\Pi_S\otimes I_R$ 给风险和功效均为 $\delta$ 的守恒达到。
+指定参考 $P_r$ 去相位后满足 (C142.4)，故其全域增益消失。
+此结论只有所写方向；存在差二模式本身不在此推出任意参考的严格增益、
+某条统一闭式曲线或充分实现条件。一般情形保留 (C142.2) 的精确有限规划。证毕。
+

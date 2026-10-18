@@ -1,0 +1,23 @@
+**Definition 6.2 (completed-object registry).** `images` is an append-only
+list of $[U(p),b,D]$; lookup scans it completely and retains the last matching
+package key. `views` is a list of $[U(q),b,d,D]$, where $q$ is its cardinality
+before the new successful publication. $D$ is the actual full sender
+descriptor on O/39: measured base, full payload length, owner/port, flags,
+and descriptor creation ordinal in RCA's native field order. The adjacent
+$b$ field binds that descriptor to its publication; it is not an extra
+field silently inserted into the native descriptor grammar. These lists hold
+bindings and descriptors, not target snapshots or copies of bodies.
+
+For a successful Call keep its original Image result and package fields.
+After its actual publication, print and ACK, import the saved sender
+placement record and append $[p,b,D]$ before common return. Repeated calls
+of one package can have different sender origins; its last completed
+entry is selected and has the same immutable target. The client already
+acquired $p$ from Issue; no new image number is tacitly inferred.
+
+For a successful Convert choose $q$ by the actual view-list count, publish
+PVC.5 and only after print/ACK append $[q,b,d,D]$. The next service cannot
+enter before this bank update, current-frame append, invocation-token TOK
+and final Ready. A partial result, setup descriptor or unacknowledged
+publication never enters either completed registry.
+

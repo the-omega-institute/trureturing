@@ -1,0 +1,18 @@
+**定义 50.1（原树序与语义上树）。** 来源仍为 §1.1 的全部有限非空有序满树 $\mathcal T$，地址为 $\Sigma^*$，其中 $\Sigma=\{L,R\}$。在回复集上取全序
+
+$$
+\mathsf{absent}<\alpha<\beta<\mathsf{branch},
+\qquad
+u\le v\ \Longleftrightarrow\ \forall p\in\Sigma^*,\ r_u(p)\le r_v(p).
+\tag{SLH.50.1}
+$$
+
+另容许无限有序满树作为语义比较对象；每个有限地址的回复按相同规则定义。记 $\Omega$ 为每个地址都回复分支的无限树。有限表达式
+
+$$
+U::=\alpha\mid\beta\mid\langle U,U\rangle\mid\Omega
+\tag{SLH.50.2}
+$$
+
+表示其中一类语义树，$\langle\Omega,\Omega\rangle=\Omega$ 是语义等式。其规范有限写法递归消去所有 $\langle\Omega,\Omega\rangle$。扩展 $\rho$ 时保持叶和配对规则，并置 $\rho\Omega=\Omega$。这些无限对象、比较和上下确界都不是新增来源或合法来源动作。
+

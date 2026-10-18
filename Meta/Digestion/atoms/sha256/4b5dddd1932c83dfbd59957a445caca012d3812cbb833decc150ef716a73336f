@@ -1,0 +1,56 @@
+**Convention 1.2 (credited finite native data).** Keep
+
+$$
+C_0=\langle\alpha,\alpha\rangle,\quad
+S_1=\{\alpha,\beta,C_0\},\quad
+S_{d+1}=\{\alpha,\beta\}\sqcup(S_d\times S_d).
+\tag{INB.2}
+$$
+
+In the last term the ordered pair is the tree constructor. The credited
+canonicalization $\pi_d$ preserves every reply on $W_d$ and every temporal
+factor $\Gamma_q$, $q\in W_d$, and fixes $S_d$ [CBN, Convention 1.5][CBN].
+Write $r_q(x)$ for a reply. The credited all-count factor and decoder are
+[NPC, Convention 2.1][NPC]: a branch endpoint has factor $(0,0)$;
+otherwise let $q=ar$ first encounter the original leaf $\ell$ at $a$,
+put $e(\alpha)=0,e(\beta)=1$ and $s(r)=\#L(r)+2\#R(r)$, and set
+
+$$
+\Gamma_q(x)=
+\begin{cases}
+(2-e(\ell),1-e(\ell)),&r=\varepsilon,\\
+(s(r)+2-e(\ell),\mathbf1_{r\text{ ends in }R}),&r\ne\varepsilon.
+\end{cases}
+\tag{INB.3}
+$$
+
+For an attained $(b,c)$ its trajectory is branch for $k\ge b$, beta for
+$b\ge1,k=b-1$, alpha for $c=1,k=b-2$, and absent otherwise. The
+trajectory recovers the factor. This includes initially absent targets.
+
+A complete native template on $n$ blocks chooses for every $(i,q)$ either
+a constant equation or
+
+$$
+\Gamma_q(x_i)=\delta(r_a(x_j)),\qquad a\in W_d,
+\quad \delta:\mathcal A\longrightarrow\Gamma_q(S_d),
+\quad \mathcal A=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+\tag{INB.4}
+$$
+
+All equations concern one common tuple $x\in S_d^n$. Donors can be self,
+off-target or cyclic. Write $C_\Theta$ for the simultaneous solutions and
+
+$$
+Z_\Theta(\mu)=\sum_{x\in C_\Theta}\prod_i\mu(x_i),\qquad
+\beta_d(\mu)=\sup_{n\ge1,\Theta}Z_\Theta(\mu)^{1/n}.
+\tag{INB.5}
+$$
+
+NPC supplies the semantic identity
+$2^{-\sigma_d}=\min_\mu\beta_d(\mu)$. Its Definition 8.1 separately
+requires a total sound all-size cap verifier and accepted endpoints
+cofinal in $\sigma_d$. The results below concern precisely defined
+per-template estimates. A pointwise failure at a chosen $\mu$ does not
+establish a failure after optimization over $\mu$.
+

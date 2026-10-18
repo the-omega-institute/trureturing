@@ -1,0 +1,41 @@
+**定义 C-109.1（固定来源、额外人口合同与三个资源坐标）。** 记
+《递归关系观察：量子测量相对边界》为 QMB，
+《量子端口协变与认证前沿》为 QPC，
+《经典量子端口的精确证书》为 QEC。
+单系统输入、未来菜单、$\mathfrak C_q$ 及 $e(T)$ 完全沿用
+[QPC 定义 1.1–1.3](RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_PORT_COVARIANCE_AND_CERTIFIED_FRONTIER.md)：
+所有复 $\mathbb C^5$ 密度输入，非负等待 $U(t)=e^{-itK}$、完整秩一模式读数及 Stop，
+所有有限自适应历史，一个事先固定的有限经典旗编码，以及每个整个 $M_q$ 块上的 CPTP
+解码。无量子旁路、可读隐藏 Kraus 记录或外部参考测量。$e(T)$ 是该单系统的最坏完整
+历史 TV，不是相关双边来源的误差或 diamond 距离。$1\le q\le5$。
+
+原二体来源仍是 C-106 的 $B=(0,1,2,3,13)$、$f=(0\ 13)(1\ 3)$，$f(2)=2$，
+$J e_s=|s,f(s)\rangle$，以及
+
+$$
+\mathfrak D=\{JCJ^\dagger:C\succeq0,\ C_{ss}=1/5\},\qquad
+S=JI_5J^\dagger/5.
+\tag{C109.1}
+$$
+
+系数坐标 $j=0,1,2,3,4$ 依次对应原标签 $(0,1,2,3,13)$ 和行走标签
+$(N,2,3,5,25)$。令 $V e_j=|B_j\rangle_A$，$W e_j=|f(B_j)\rangle_B$；
+$T_A$ 是由 $V$ 搬运到原 $A$ 因子的通道，$B$ 因子不动，也不进入端口。
+这些是标签识别，不是新增可执行门。双边历史使用 C-108.1 的条件性实际局部菜单
+$\mathcal M_{\rm loc}$，仍不要求 $A,B$ 独立。
+
+定义额外合同
+
+$$
+\mathrm{BP}(T):\quad
+\operatorname{tr}(\Pi_sT(\rho))=\operatorname{tr}(\Pi_s\rho)
+\quad\text{对每个复密度态 }\rho\text{ 和每个原模式 }s.
+\tag{C109.2}
+$$
+
+原竞争类 $\mathfrak C_q$ 没有这个合同。对一个固定通道定义
+$q_{\rm exact}(T)=\min\{q:T\in\mathfrak C_q\}$，要求在所有复矩阵上精确实现同一个
+$T$。对 $C\succeq0$ 定义 $k(C)$ 为有限分解 $C=\sum_a z_az_a^\dagger$ 中
+$\max_a|\operatorname{supp}z_a|$ 的最小值；向量未必归一化，权重吸收入向量。
+这里的基固定。$k(C)$ 是 coherence number，既不是 $\operatorname{rank}C$，也不是旗数。
+
